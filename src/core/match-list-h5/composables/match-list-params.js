@@ -23,21 +23,6 @@ import { ref } from "vue"
 // 接口出错时，uid的 字符串
 const last_gcuuid = ref('')
 
-const get_base_params = (main_menu_type) => {
-  return {
-    cuid: UserCtr.get_cuid,
-    euid: MenuData.get_current_sub_menuid(),
-    // 一级菜单筛选类型 1滚球 2 即将开赛 3今日赛事 4早盘 11串关
-    type: main_menu_type,
-    //排序	 int 类型 1 按热门排序 2 按时间排序
-    sort: PageSourceData.sort_type,
-    //标准版和简版 1为新手版  2为标准版
-    device: PageSourceData.get_newer_standard_edition()
-  };
-}
-
-
-
 // 处于列表页时分流计算
 const get_match_params_detail = (params, main_menu_type) => {
   //竞彩足球
@@ -181,7 +166,18 @@ const get_detail_params_by_invoke_source = (params, main_menu_type) => {
   return params;
 }
 
-
+const get_base_params = (main_menu_type) => {
+  return {
+    cuid:  UserCtr.get_cuid,
+    euid: MenuData.get_current_sub_menuid(),
+    // 一级菜单筛选类型 1滚球 2 即将开赛 3今日赛事 4早盘 11串关
+    type: MenuData.current_lv_1_menu.mi,
+    //排序	 int 类型 1 按热门排序 2 按时间排序
+    sort: PageSourceData.sort_type,
+    //标准版和简版 1为新手版  2为标准版
+    device: ['', 'v2_h5', 'v2_h5_st'][UserCtr.standard_edition]
+  };
+}
 
 // todo 重新方法临时保存,沟通后再行修改 统一入口
 const get_match_list_params_all = () => {
@@ -313,5 +309,6 @@ const get_matchs_api_func = () => {
 
 export default {
   last_gcuuid,
-  get_matchs_api_func
+  get_matchs_api_func,
+  get_match_list_params_all
 }

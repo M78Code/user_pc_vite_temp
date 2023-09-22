@@ -1,7 +1,7 @@
 import { ref } from 'vue'
 import store from "src/store-redux/index.js";
-import { useMittEmit, MITT_TYPES } from "src/core/mitt"
-import { onBeforeRouterLeave } from 'vue-router'
+import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
+// import { onBeforeRouterLeave } from 'vue-router'
 
 export default use_router_scroll = () => {
   const store_state = store.getState()
@@ -20,15 +20,15 @@ export default use_router_scroll = () => {
   })
 
   //离开当前路由时 记录离开时的位置
-  onBeforeRouterLeave((to, from, next) => {
-    //容器滚动位置
-    if(store_state.get_list_scroll_top){
-      //保存滚动条元素div 的scrollTop值
-      const scroll_top = store_state.get_list_scroll_top.split('-')[0];
-      prev_remember_scrolly.value = scroll_top;
-    }
-    next()
-  })
+  // onBeforeRouterLeave((to, from, next) => {
+  //   //容器滚动位置
+  //   if(store_state.get_list_scroll_top){
+  //     //保存滚动条元素div 的scrollTop值
+  //     const scroll_top = store_state.get_list_scroll_top.split('-')[0];
+  //     prev_remember_scrolly.value = scroll_top;
+  //   }
+  //   next()
+  // })
 
   /**
     * @description: 获取滚动条位置
