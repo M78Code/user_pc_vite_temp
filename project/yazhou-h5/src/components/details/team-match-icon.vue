@@ -6,28 +6,28 @@
 <template>
   <div class='team-match-icon'>
     <div class="icon-wrap">
-          <!--  match["lvs"] == 2，显示直播按钮 t('match_info.lvs')是国际化取值 -->
+          <!--  match["lvs"] == 2，显示直播按钮 i18n_t('match_info.lvs')是国际化取值 -->
         <match-icon v-if="show_lvs" class="fl"
-          which="lvs" icon_class="lvs" :text="_.get(this.get_detail_data,'lss') == 1 ? t('match_info.lvs') : t('match_info.topic')">
+          which="lvs" icon_class="lvs" :text="_.get(this.get_detail_data,'lss') == 1 ? i18n_t('match_info.lvs') : i18n_t('match_info.topic')">
         </match-icon>
 
       <!-- mvs动画状态：-1：没有配置动画源 | 0 ：已配置，但是不可用 | 1：已配置，可用，播放中 | 2：已配置，可用，播放中 -->
       <template v-if="get_detail_data.mvs > -1 || (get_detail_data.mms > 1 && [1,2,7,10,110].includes(get_detail_data.ms*1))">
 
-        <!-- 视频状态大于1时，显示视频按钮 t('match_info.video')是国际化取值 -->
+        <!-- 视频状态大于1时，显示视频按钮 i18n_t('match_info.video')是国际化取值 -->
         <match-icon v-if="get_detail_data.mms > 1" class="fl" :status="get_detail_data.mms"
-          which="muUrl" icon_class="shipin" :text="t('match_info.video')">
+          which="muUrl" icon_class="shipin" :text="i18n_t('match_info.video')">
         </match-icon>
 
-        <!-- 动画状态大于-1时，显示动画按钮 t('match_info.animation')是国际化取值 -->
+        <!-- 动画状态大于-1时，显示动画按钮 i18n_t('match_info.animation')是国际化取值 -->
         <match-icon v-if="get_detail_data.mvs > -1" class="fl" :status="get_detail_data.mvs"
-          which="animationUrl" icon_class="donghua" :text="t('match_info.animation')">
+          which="animationUrl" icon_class="donghua" :text="i18n_t('match_info.animation')">
         </match-icon>
       </template>
       <!-- 收藏按钮 -->
       <div v-if="GlobalAccessConfig.get_collectSwitch()" class="match-icon match-icon-single" @click="details_collect(get_detail_data)">
         <div class="collect-icon" :class="{active:get_detail_data.mf}"></div>
-        <div class="text">{{t('footer_menu.collect')}}</div>
+        <div class="text">{{i18n_t('footer_menu.collect')}}</div>
       </div>
     </div>
   </div>
@@ -35,11 +35,11 @@
 
 <script>
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
-import {mapGetters, mapMutations} from "vuex"
+// import {mapGetters, mapMutations} from "vuex"
 import { api_common } from "src/api/index.js";
 import match_icon from "project_path/src/components/details/match-icon/match-icon.vue"  // 赛事icon操作
 import {utils } from 'src/core/utils/index.js';
-import { t } from "src/boot/i18n.js";;
+import { i18n_t } from "src/boot/i18n.js";;
 //国际化
 
 
@@ -52,14 +52,14 @@ export default {
     }
   },
   computed:{
-    ...mapGetters([
-      'get_detail_data',
-      'get_uid',
-      // 投注成功的赛事id
-      'get_match_id_bet_success',
-      'GlobalAccessConfig',
-      'get_lang',// 当前语言
-    ]),
+    // ...mapGetters([
+    //   'get_detail_data',
+    //   'get_uid',
+    //   // 投注成功的赛事id
+    //   'get_match_id_bet_success',
+    //   'GlobalAccessConfig',
+    //   'get_lang',// 当前语言
+    // ]),
     // 展示lvs 图标
     show_lvs() {
       return this.get_detail_data.lvs && this.get_detail_data.lvs != -1 && ['string', 'number'].includes(typeof _.get(this.get_detail_data,'lss')) && ['zh','tw'].includes(this.get_lang)
@@ -70,26 +70,26 @@ export default {
   },
   watch:{
     // 监听是否投注成功，或者列表页是否点击收藏，同步更新 收藏按钮
-    get_match_id_bet_success(bet_curr){
-      let m_detail_data = _.cloneDeep(this.get_detail_data);
-      let bet_mf = bet_curr.split('-')[1];
-      if(bet_mf == 1 || bet_mf == 0){
-        m_detail_data.mf = bet_mf == 1;
-      }
-      else{
-        m_detail_data.mf = true;
-      }
-      this.set_detail_data(m_detail_data);
-    }
+    // get_match_id_bet_success(bet_curr){
+    //   let m_detail_data = _.cloneDeep(this.get_detail_data);
+    //   let bet_mf = bet_curr.splii18n_t('-')[1];
+    //   if(bet_mf == 1 || bet_mf == 0){
+    //     m_detail_data.mf = bet_mf == 1;
+    //   }
+    //   else{
+    //     m_detail_data.mf = true;
+    //   }
+    //   this.set_detail_data(m_detail_data);
+    // }
   },
   methods: {
-    ...mapMutations([
-      "set_detail_data",
-      "set_match_id_bet_success",
-      // 修改收藏状态
-      'set_details_changing_favorite',
-      'set_toast'
-    ]),
+    // ...mapMutations([
+    //   "set_detail_data",
+    //   "set_match_id_bet_success",
+    //   // 修改收藏状态
+    //   'set_details_changing_favorite',
+    //   'set_toast'
+    // ]),
     /**
      * @description: 收藏与取消收藏
      * @param {Object} match 赛事信息
@@ -110,9 +110,9 @@ export default {
       };
       // 收藏赛事或取消收藏
       if (match_obj.mf) {
-        txt = t('common.cancel');//'取消';
+        txt = i18n_t('common.cancel');//'取消';
       } else {
-        txt = t('collect.betted_title');//'收藏';
+        txt = i18n_t('collect.betted_title');//'收藏';
       }
       this.favorite_loading = true;
       // 更新收藏状态

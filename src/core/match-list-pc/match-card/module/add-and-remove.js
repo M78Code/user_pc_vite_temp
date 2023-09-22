@@ -2,6 +2,8 @@ import { update_match_parent_card_style } from "./utils.js";
 import { compute_style_template_by_matchinfo } from "./compute-style-template.js";
 import { conpute_match_list_card_offset } from "./card-show-offset.js";
 import { compute_match_list_style_obj_and_match_list_mapping_relation_obj } from "./data-relation.js";
+import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/core/index.js";
+
 //引入菜单类
 const MenuData = {
   menu_data: {

@@ -82,19 +82,19 @@ const router = createRouter({
             },
           ],
         },
-        //   // 赛果详情页
-        //   {
-        //     path: "/result_details/:mid",
-        //     name: "result_details",
-        //     component: () => import("project_path/pages/details/result_details.vue"),
-        //     children: [
-        //       {
-        //         path: "/result_details/:mid/:index",
-        //         name: "match_result",
-        //         component: () => import("project_path/pages/details/components/result_fat_tab.vue")
-        //       }
-        //     ]
-        //   },
+          // 赛果详情页
+          // {
+          //   path: "/result_details/:mid",
+          //   name: "result_details",
+          //   component: () => import("project_path/src/pages/details/result-details.vue"),
+          //   children: [
+          //     {
+          //       path: "/result_details/:mid/:index",
+          //       name: "match_result",
+          //       component: () => import("project_path/src/pages/details/components/result-fat-tab.vue")
+          //     }
+          //   ]
+          // },
         //   // 虚拟赛事详情页
         //   {
         //     path: "/virtual_sports_details",

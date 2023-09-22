@@ -5,7 +5,7 @@
 import { api_common, api_analysis } from "src/api";
 import lodash from "lodash";
 import { computed, ref, watch } from "vue";
-import { SessionStorage } from "src/core/";
+import { SessionStorage, useMittEmit, MITT_TYPES } from "src/core/";
 import base_data_instance from "src/core/base-data/base-data.js";
 const Cache_key = {
   CACHE_CRRENT_MEN_KEY: "CACHE_CRRENT_MEN_KEY", //缓存当前菜单的key
@@ -44,7 +44,6 @@ class MenuData {
     //当前的菜单
     this.current_menu = {};
     // this.current_menu_i = 0;
-
     // 上一次的菜单 lv1
     this.previous_lv_1_menu = undefined;
     this.previous_lv_1_menu_i = undefined;
@@ -59,7 +58,7 @@ class MenuData {
 
     // 二级菜单 滚球下边的一个按钮   "全部"按钮
     this.get_sport_all_selected = computed(() => {
-      lodash.isArray(this.current_lv_2_menu) && this.menu_type.value == 1;
+      return lodash.isArray(this.current_lv_2_menu) && this.menu_type.value == 1;
     });
     //当前的菜单 lv2  注意 滚球 二级菜单 有一个【全部】选项 get_sport_all_selected
     this.current_lv_2_menu = {
@@ -201,6 +200,7 @@ class MenuData {
   }
   // 当前选中的菜单type
   get_menu_type() {
+    console.error(this);
     return this.current_lv_1_menu?.mi;
   }
   async get_db_mids(mi) {
@@ -514,6 +514,7 @@ class MenuData {
     if (!this.show_favorite_list) return true;
     let flag = true;
     // 一级菜单赛果 选中关注 不显示虚拟体育的icon (1001:虚拟足球 1002:赛狗 1011:赛马 1004:虚拟篮球 1010:虚拟摩托车)
+    //TODO  menuType?? 新接口好像变了
     if (
       this.menu_type.value == 28 &&
       [1001, 1002, 1011, 1004, 1010].includes(+item.menuType)
@@ -958,7 +959,7 @@ class MenuData {
     if (![7, 28].includes(current_lv_1_menu.mi)) {
 
     }
-
+    useMittEmit(MITT_TYPES.EMIT_MAIN_MENU_CHANGE);
   }
   /**
    * 选中二级menu
@@ -1100,7 +1101,7 @@ class MenuData {
         return item.mi || item.menuId;
       }).join(',');
     } else {
-      return this.current_lv_2_menu?.mi || this.current_lv_2_menu?.menuId || "";
+      return this.current_lv_2_menu?.mi || this.current_lv_2_menu?.menuId || "40003";
     }
   }
   /**
@@ -1113,13 +1114,21 @@ class MenuData {
    * 一级菜单顶层菜单的 菜单类型  ，没有则是0
    */
   get_current_lv_1_menu_type() {
-    return this.current_menu || "1";
+    return this.current_lv_1_menu?.mi || 0;
   }
   /**
    * 获取当前选中得页脚子菜单
    */
   get_footer_sub_menu_id() {
     return this.footer_sub_menu_id || "1";
+  }
+  /**
+   * 设置当前选中得页脚子菜单
+   */
+  set_footer_sub_menu_id(footer_sub_menu_id) {
+    this.set_cache_class({
+      footer_sub_menu_id
+    })
   }
 }
 export default new MenuData();

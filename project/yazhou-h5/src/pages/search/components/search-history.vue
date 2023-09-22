@@ -1,66 +1,49 @@
-<!--
- * @Author: ledron
- * @Date: 2020-08-20 18:35:53
- * @Description: 搜索历史
--->
 <template>
   <div class='searchHistory'>
     <div class="q-mx-md">
-      <div
-        class="text-bol half-border-bottom"
-      >
+      <div class="text-bol half-border-bottom">
         <!-- 搜索历史 -->
-        {{$t('search.search_history')}}
+        {{ $t('search.search_history') }}
       </div>
       <!-- h5的搜索历史记录只显示3个，做兜底处理，免得后台返回多了，样式错乱，编辑器报错不用管 -->
-      <div
-        v-for="(item,index) in history_list"
-        :key="index"
-        class="historyItem half-border-bottom"
-        v-show="index <= 2"
-      >
-        <div  @click="item_click(item.keyword)">
-          <span class="color-000000">{{item.keyword}}</span>
+      <div v-for="(item, index) in history_list" :key="index" class="historyItem half-border-bottom" v-show="index <= 2">
+        <div @click="item_click(item.keyword)">
+          <span class="color-000000">{{ item.keyword }}</span>
         </div>
 
-       <img  src="image/wwwassets/bw3/svg/delete4.svg" alt="" style="width:0.12rem" class="float-right" @click="remove_history_item(item)">
+        <img src="image/wwwassets/bw3/svg/delete4.svg" alt="" style="width:0.12rem" class="float-right"
+          @click="remove_history_item(item)">
       </div>
-      <div
-        class="text-center clear-all remove-history-item"
-        @click="remove_history_item('')"
-      >
+      <div class="text-center clear-all remove-history-item" @click="remove_history_item('')">
         <!-- 清除搜索记录 -->
-        {{$t('search.clear_search_history')}}
+        {{ $t('search.clear_search_history') }}
       </div>
     </div>
   </div>
 </template>
 
 <script>
-  import {mapGetters, mapMutations} from "vuex"
-
+import { SearchData } from "src/core/";
 export default {
   name: 'searchHistory',
-  props:{
+  props: {
     // 搜索历史数据源
-    history_list:{
-      type:Array,
-      default:[]
+    history_list: {
+      type: Array,
+      default: []
     }
   },
-  computed: {
-    ...mapGetters(['get_search_txt']),
-  },
+
   methods: {
-    ...mapMutations(['set_search_txt']),
     // 点击调用模糊搜索接口，
-    item_click(val){
-      this.set_search_txt(val);
-      this.$emit('get_search_result',true);
+    item_click(val) {
+      //TODO
+      SearchData.set_cur_csid(val);
+      this.$emit('get_search_result', true);
     },
     // 去除当前点击的历史记录
-    remove_history_item (item) {
-      this.$emit('delete_history',item)
+    remove_history_item(item) {
+      this.$emit('delete_history', item)
     }
   },
   destroyed() {
@@ -120,7 +103,7 @@ export default {
     //   border-radius: 8px;
     // }
 
-    > div {
+    >div {
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
@@ -136,9 +119,7 @@ export default {
       font-size: 0.16rem;
     }
 
-    i {
-
-    }
+    i {}
 
     .float-right {
       height: 44px;

@@ -26,6 +26,7 @@ import {
   MITT_TYPES,
 } from "src/core/mitt/index.js";
 import uid from "src/core/uuid/index.js";
+import SearchData from "src/core/search-class/search-data-class.js";
 import VrSportCtr from "src/core/vr-sport/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import MatchDetailCtr from "src/core/match-detail/match-detail-class.js";
@@ -215,6 +216,7 @@ export {
   useMittEmitterGenerator,
   MITT_TYPES,
   uid,
+  SearchData,
   VrSportCtr,
   MatchDetailCtr,
   UserCtr,

@@ -3,6 +3,7 @@
  */
 import lodash from 'lodash'
 import { nextTick } from 'vue';
+import { useRoute } from 'vue-router'
 import MatchCtr from '../match-class/match-ctr'
 import MatchPage from '../match-class/match-page'
 import store from "src/store-redux/index.js";
@@ -242,7 +243,8 @@ class MatchListCard {
    * @param {Array} match_res_data 列表数据
    */
   after_set_match_list_data(params, match_res_data) {
-    if (this.$route.name === "match_result") {
+    const route =  useRoute()
+    if (route?.name === "match_result") {
       return;
     }
     if (this.newer_standard_changing) {
@@ -255,19 +257,19 @@ class MatchListCard {
       clearTimeout(this.set_scroll_top_timer1);
       this.set_scroll_top_timer1 = setTimeout(() => {
         // 由详情页返回列表才计算上次滚动位置
-        if (["category"].includes(this.get_last_route_info.name)) {
+        if (["category"].includes(this.get_last_route_info && this.get_last_route_info.name)) {
           // 记录上一次滑动的距离
           this.calac_scrolltop();
         } else {
           this.prev_remember_scrolly = 0;
         }
-        this.setScrollTop();
+        // use_router_scroll().setScrollTop();
         this.run_process_when_need_recompute_container_list(true);
         //数据加载成功骨架屏消失
         this.is_close_load();
 
         // 记录路由信息
-        const { fullPath, hash, name, params, path, query } = this.$route;
+        const { fullPath = '', hash = '', name = '', params = '', path = '', query = '' } = route;
         this.set_last_route_info({ fullPath, hash, name, params, path, query });
         MatchPage.subscription();
       }, 10);
@@ -275,7 +277,7 @@ class MatchListCard {
       // 如果是赛果返回的，则 计算滚动距离
       this.calac_scrolltop();
       // 赋值滚动距离
-      this.setScrollTop();
+      // use_router_scroll().setScrollTop();
       // 数据加载成功后 骨架屏消失
       this.is_close_load();
       this.set_goto_detail_matchid("");

@@ -10,20 +10,15 @@
     <div class="q-mx-md">
       <div class="text-bol half-border-bottom">
         <!-- 热门搜索 -->
-        {{$t('search.search_hot')}}
+        {{ $t('search.search_hot') }}
       </div>
       <!-- 热门内容 -->
       <div class="row">
-        <div
-          class="col-6 hotItem"
-          v-for="(item, index) in hot_list"
-          :key="index"
-          @click="hotItem_click(item.keyWord)"
-        >
-          <span class="defaultText" :class="{redText:index <= 2,'normal-1':index > 2 }">
-            {{index + 1}}.
+        <div class="col-6 hotItem" v-for="(item, index) in hot_list" :key="index" @click="hotItem_click(item.keyWord)">
+          <span class="defaultText" :class="{ redText: index <= 2, 'normal-1': index > 2 }">
+            {{ index + 1 }}.
           </span>
-          <span class="q-ml-sm" :class="{keyWordText:index <= 2}">{{item.keyWord}}</span>
+          <span class="q-ml-sm" :class="{ keyWordText: index <= 2 }">{{ item.keyWord }}</span>
         </div>
       </div>
 
@@ -33,7 +28,8 @@
 </template>
 
 <script>
-  import {mapGetters, mapMutations} from "vuex"
+import { SearchData } from "src/core/";
+
 export default {
   name: 'searchHot',
   props: {
@@ -42,15 +38,12 @@ export default {
       type: Array
     }
   },
-  computed: {
-    ...mapGetters(['get_search_txt']),
-  },
   methods: {
-    ...mapMutations(['set_search_txt']),
     // 点击调用模糊搜索接口
-    hotItem_click(text){
-      this.set_search_txt(text);
-      this.$emit('get_search_result',true);
+    hotItem_click(text) {
+      //TODO
+      SearchData.set_cur_csid(text);
+      this.$emit('get_search_result', true);
     }
   },
   destroyed() {

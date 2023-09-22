@@ -19,15 +19,15 @@
             <!-- 左边联赛箭头及名称  -->
             <span>
               <img class="arrow_up" :class="{ collapse: !item1.hide }"
-                src="image/wwwassets/bw3/list/league-collapse-icon-black.svg" alt="">
+                src="/public/yazhou-h5/image/list/league-collapse-icon-black.svg" alt="">
               <span class="name-text">{{ ((type == 1 && get_sport_all_selected == true) || (type == 28 &&
                 get_curr_sub_menu_type == 29)) ? item1.nameText : item1.introduction }}</span>
             </span>
             <!-- 右边选择icon -->
             <img class="icon-search" @click.stop.prevent="select_sport_ctr(item1, index)"
               v-if="(item1.select || (((type != 1 && get_curr_sub_menu_type != 29) || (type == 1 && get_sport_all_selected == false)) && item1.sportVOs[0].select))"
-              :src="`${$g_image_preffix}/image/bw3/svg/check_circle_outline-24px${on_suffix}.svg`" />
-            <img src="image/wwwassets/bw3/svg/selected-no.svg" alt="" class="icon-search"
+              :src="`${$g_image_preffix}/image/svg/check_circle_outline-24px${on_suffix}.svg`" />
+            <img src="/public/yazhou-h5/image/svg/selected-no.svg" alt="" class="icon-search"
               @click.stop.prevent="select_sport_ctr(item1, index)" v-else>
           </div>
           <!-- 联赛名称部分 -->
@@ -51,8 +51,8 @@
                     </div>
                   </div>
                   <img v-if="item2.select" class="icon-search"
-                    :src="`${$g_image_preffix}/image/bw3/svg/check_circle_outline-24px${on_suffix}.svg`" />
-                  <img src="image/wwwassets/bw3/svg/selected-no.svg" alt="" class="icon-search" v-else>
+                    :src="`${$g_image_preffix}/image/svg/check_circle_outline-24px${on_suffix}.svg`" />
+                  <img src="/public/yazhou-h5/image/svg/selected-no.svg" alt="" class="icon-search" v-else>
                 </div>
               </div>
             </div>
@@ -67,30 +67,29 @@
         v-for="(item, index) in anchor_arr" :key="index + 'letter'">
         <template v-if="item == $t('search.hot')">
           <img style="width: 28px;"
-            :src="`${$g_image_preffix}/image/bw3/svg/match-list/match_filter${active_index == item ? '_select' : ''}${on_suffix}.svg`"
+            :src="`${$g_image_preffix}/image/svg/match-list/match_filter${active_index == item ? '_select' : ''}${on_suffix}.svg`"
             alt="">
         </template>
         <div class="t-wrap" v-else>{{ item }}</div>
       </li>
     </ul>
-
     <!-- 字母悬浮图标 -->
     <div class="active-point" v-if="is_show" :style="{ top: fixed_top + 150 + 'px' }"
       :class="{ 'is-black': get_theme.includes('theme02'), 'y0-bg-img-zimu': get_theme.includes('y0') }">
       <span>{{ active_index }}</span>
     </div>
-
     <!-- 底部固定部分 -->
     <!-- 全选/反选/确定 -->
     <div class="allCheck row justify-between items-center" v-if="change && !list_data_loading">
       <div class="row items-center"
         :style="{ lineHeight: ['vi', 'en', 'th', 'ms', 'ad'].includes(get_lang) ? '1' : 'unset' }">
-        <template>
-          <img v-if="all_checked" class="icon-search" @click="all_checked_click"
-            :src="`${$g_image_preffix}/image/bw3/svg/check_circle_outline-24px${on_suffix}.svg`" />
-          <img src="image/wwwassets/bw3/svg/selected-no.svg" alt="" class="icon-search" @click="all_checked_click" v-else>
-          <span class="txt ellipsis-2-lines" @click="all_checked_click">{{ $t('common.all_select') }}</span>
-        </template>
+        <!-- <template> -->
+        <img v-if="all_checked" class="icon-search" @click="all_checked_click"
+          :src="`${$g_image_preffix}/image/svg/check_circle_outline-24px${on_suffix}.svg`" />
+        <img src="/public/yazhou-h5/image/svg/selected-no.svg" alt="" class="icon-search" @click="all_checked_click"
+          v-else>
+        <span class="txt ellipsis-2-lines" @click="all_checked_click">{{ $t('common.all_select') }}</span>
+        <!-- </template> -->
         <span class="txt ellipsis-3-lines" @click="select_btn_click">{{ $t('filter.reverse_election') }}</span>
       </div>
       <!-- 确定选择按钮 -->
@@ -110,15 +109,16 @@ import { api_filter } from "src/api/index.js";
 // 无网络展示组件
 import noData from "project_path/src/components/common/no-data.vue";
 import SFilter from "project_path/src/components/skeleton/filter.vue"
-import { UserCtr, MenuData, i18n_t } from 'src/core/'
-import { ref, watch, computed, onMounted, onBeforeUnmount } from 'vue'
+import { UserCtr, MenuData, i18n_t, get_file_path, useMittEmit, MITT_TYPES } from 'src/core/'
+import { ref, watch, computed, nextTick, onMounted, onBeforeUnmount } from 'vue'
 import lodash from 'lodash'
 
 // 构建版本
 // BUILD_VERSION:window.env.config.BUILD_VERSION,
+const $g_image_preffix = '/public/yazhou-h5/';
 const list_data_loading = ref(false);    //数据加载中
-const default_url = "/public/yazou-h5/image/svg/match_cup.svg"  //默认图片地址 // 无联赛logo图标黑色版
-const none_league_icon_black = "/public/yazou-h5/image/svg/match_cup_black.svg"
+const default_url = "/public/yazhou-h5/image/svg/match_cup.svg"  //默认图片地址 // 无联赛logo图标黑色版
+const none_league_icon_black = "/public/yazhou-h5/image/svg/match_cup_black.svg"
 const list = ref([]); //数据列表整个赛事
 const type = MenuData.menu_type;  //筛选类型 1-滚球 3-今日  4-早盘  100-冠军 28 赛果
 const all_checked = ref(false); //是否全选
@@ -206,9 +206,9 @@ watch(select_num, (new_) => {
  */
 function league_icon_error($event) {
   if (get_theme.includes('theme02')) {
-    $event.target.src = none_league_icon_black.value;
+    $event.target.src = none_league_icon_black;
   } else {
-    $event.target.src = default_url.value;
+    $event.target.src = default_url;
   }
   $event.target.onerror = null
 }
@@ -283,7 +283,7 @@ function default_selected() {
 
     })
   }
-  this.$forceUpdate()
+  // this.$forceUpdate()
 }
 function get_top() {
   if (window.screen.availHeight > 700) {
@@ -316,7 +316,7 @@ function scrolled(position) {
   if (position >= scroll_obj2_val.value[scroll_obj2_val.value.length - 1]) {
     position2 = scroll_obj2_val.value[scroll_obj2_val.value.length - 1];
   }
-  let key =lodash.findKey(scroll_obj2.value, function (val) {
+  let key = lodash.findKey(scroll_obj2.value, function (val) {
     return val == position2;
   });
   if (key) {
@@ -335,7 +335,7 @@ function scroll_obj_fn(index_num) {
   scroll_obj.value = {};
   let scrollY = 0;
   // 页面渲染后执行
-  this.$nextTick(() => {
+  nextTick(() => {
     let dom_title = tittle_text.vlaue && tittle_text.vlaue[index_num]
     let dom_bg = bg_f6f7f8.vlaue
     list.value.map((item, index2) => {
@@ -441,17 +441,16 @@ function search_btn() {
     }
   }
 
-  // 筛选前重置联赛折叠状态
-  this.set_collapse_csid_map({})
-  this.set_collapse_map_match({});
+  //TODO  筛选前重置联赛折叠状态
+  // this.set_collapse_csid_map({})
+  // this.set_collapse_map_match({});
+  // this.set_filter_list(data);
 
-  this.set_filter_list(data);
-  this.$root.$emit(emit_cmd.value.EMIT_HID_SEARCH_DIA)
+  useMittEmit(MITT_TYPES.EMIT_HID_SEARCH_DIA)
   //触发列表页监听事件，调接口拉取指定赛事
-  this.$root.$emit(emit_cmd.value.EMIT_MENU_CHANGE_FOOTER_CMD, {
+  useMittEmit(MITT_TYPES.EMIT_MENU_CHANGE_FOOTER_CMD, {
     text: "filter"
   });
-
 }
 /**
  *@description 数据处理，不同的菜单返回的结构不一样
@@ -489,7 +488,7 @@ function all_checked_click() {
       });
     }
   });
-  this.$forceUpdate(); //强制刷新页面，解决页面不会重新渲染的问题
+  // this.$forceUpdate(); //强制刷新页面，解决页面不会重新渲染的问题
 }
 // 反选按钮事件
 function select_btn_click() {
@@ -516,12 +515,12 @@ function select_btn_click() {
         }
 
       });
-      item.select =lodash.every(item.tournamentList, item2 => {
+      item.select = lodash.every(item.tournamentList, item2 => {
         return item2.select == true
       })
     }
   });
-  this.$forceUpdate(); //强制刷新页面，解决页面不会重新渲染的问题
+  // this.$forceUpdate(); //强制刷新页面，解决页面不会重新渲染的问题
 }
 /**
  * @Description:选择/取消联赛
@@ -532,8 +531,8 @@ function select_sport_ctr(sport_item) {
   let list;
   //不在滚球
   if ((type.value != 1 && get_curr_sub_menu_type.value != 29) || (type.value == 1 && get_sport_all_selected.value == false)) {
-    list =lodash.map(list.value, "sportVOs");
-    list =lodash.map(list, item => {
+    list = lodash.map(list.value, "sportVOs");
+    list = lodash.map(list, item => {
       return item[0];
     });
     sport_item.sportVOs[0].spell = sport_item.spell || '';
@@ -555,22 +554,22 @@ function select_sport_ctr(sport_item) {
     });
   }
   if (status) {
-    if (this.all_true_select_item(list)) {
+    if (all_true_select_item(list)) {
       all_checked.value = true;
     }
   } else {
-    if (this.all_false_select_item(list)) {
+    if (all_false_select_item(list)) {
       all_checked.value = false;
     }
   }
-  this.$forceUpdate();
+  // this.$forceUpdate();
 }
 // @Description:单个选择
 function select_li_ctr(li_item, wrapItem, item1) {
   let list;
   if ((type.value != 1 && get_curr_sub_menu_type.value != 29) || (type.value == 1 && get_sport_all_selected.value == false)) {
-    list =lodash.map(list.value, "sportVOs");
-    list =lodash.map(list, item => {
+    list = lodash.map(list.value, "sportVOs");
+    list = lodash.map(list, item => {
       return item[0];
     });
     item1.sportVOs[0].spell = item1.spell || '';
@@ -595,12 +594,12 @@ function select_li_ctr(li_item, wrapItem, item1) {
         item1 = item1.sportVOs[0];
       }
       item1.select = true;
-      if (this.all_true_select_item(list)) {
+      if (all_true_select_item(list)) {
         all_checked.value = true;
       }
     }
   }
-  this.$forceUpdate();
+  // this.$forceUpdate();
 }
 function all_true_select_item(wrapItem) {
   return lodash.every(wrapItem, ["select", true]);
@@ -617,8 +616,8 @@ function part_false_select_item(wrapItem) {
 // 设置是否隐藏
 function is_hide(sport_item, index) {
   sport_item.hide = !sport_item.hide;
-  this.$forceUpdate();
-  this.scroll_obj_fn(index);
+  // this.$forceUpdate();
+  scroll_obj_fn(index);
 }
 // 获取筛选数据外层列表
 function fetch_filter_match() {
@@ -705,13 +704,13 @@ function fetch_filter_match() {
         list.value = data || [];
       }
       // 筛选时，把首字母相同的集合 放在第一个item 上,
-      this.filter_alphabet(list.value)
+      filter_alphabet(list.value)
       // 动态生成有联赛的字母，并非A - Z 全量字母；
-      this.dynamic_letters(list.value)
-      this.scroll_obj_fn(-1);
+      dynamic_letters(list.value)
+      scroll_obj_fn(-1);
       if (JSON.stringify(selected.value) !== "{}") {
         //初始化默认选中
-        this.default_selected();
+        default_selected();
       }
     } catch (e) {
       console.error(e);
