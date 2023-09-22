@@ -10,7 +10,7 @@
     'scrolling-down': scroll_dir < 0,
   }">
 
-    <bet-bar v-if="get_betbar_show && route.name == 'matchList'"></bet-bar>
+    <!-- <bet-bar v-if="get_betbar_show && route.name == 'matchList'"></bet-bar> -->
     <!-- 底部菜单资源配置图片 -->
     <div v-if="isshow_bottom_banner" class="bottom-banner">
       <img :src="calc_resources_obj.img_src" alt="" class="banner" @click="jump" />
