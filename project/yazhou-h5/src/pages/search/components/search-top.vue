@@ -18,7 +18,7 @@
             @focus="search_input_focus_or_blur($event, true)" @blur="search_input_focus_or_blur">
             <!-- 输入框的扩大镜图片 -->
             <template v-slot:append>
-              <img src="image/wwwassets/bw3/svg/delete.svg" alt="" class="icon-delete"
+              <img src="/public/yazhou-h5/image/svg/delete.svg" alt="" class="icon-delete"
                 @click.stop.prevent.self="clear_search" v-show="text.length > 0">
               <span :class="[`icon-search ${get_y0_suffix}`, { 'input-without-word': !text.length }]"
                 @click.stop.prevent.self="go_to_details"></span>
@@ -41,7 +41,7 @@
 </template>
 
 <script setup>
-import { utils, useMittEmit, useMittOn, MenuData, UserCtr, MITT_TYPES } from "src/core/";
+import { utils, SearchData, useMittEmit, useMittOn, MenuData, UserCtr, MITT_TYPES } from "src/core/";
 import SSearch from "project_path/src/components/skeleton/search.vue"// 骨架屏
 import { api_search } from 'src/api/'
 const { get_hot_push, get_sport } = api_search || {}
@@ -71,7 +71,9 @@ let cancleTimer, event_handle_timer, timer00, fun;
 
 // ...mapGetters([
 const get_search_txt = ref('')
-const get_search_term = ref('')
+const get_search_term = ref(SearchData.search_term)
+
+
 //   'get_current_menu',
 const get_cur_csid = ref("")
 const get_useid_ievname = ref()
@@ -80,12 +82,10 @@ const get_useid_ievname = ref()
 const results_of_the_virtual_display = MenuData.is_results_virtual_sports();
 
 // ...mapMutations([
-//       'set_search_txt',
 //       'set_show_match_filter',
-//       'set_cur_csid',
 //       'set_goto_detail_matchid',
 //       'set_details_item',
-//       'set_search_term',
+
 
 
 function set_hot_history_handle() {
@@ -124,7 +124,7 @@ function List_econdary_menu(data) {
         if (get_cur_csid.value == item.id) {
           index_num.value = index
           // 存储列表页二级菜单 球类id
-          //TODO set_cur_csid(get_cur_csid.value);
+          SearchData.set_cur_csid(get_cur_csid.value);
           nextTick(() => {
             utils.tab_move2(index, scrollBox.value, true)
           })
@@ -139,14 +139,15 @@ function List_econdary_menu(data) {
     // 选中下标
     index_num.value = index
     // 赛种id储存
-    //TODO set_cur_csid(data[index].id);
+
+    SearchData.set_cur_csid(data[index].id);
     // 赛种滚动条
     nextTick(() => {
       utils.tab_move2(index, scrollBox.value, true)
     })
   } else {
     // 存储 球类id
-    //TODO set_cur_csid(data[0].id);
+    SearchData.set_cur_csid(data[0].id);
   }
 }
 // 获取搜索占位符字段
@@ -161,6 +162,7 @@ function get_hot_push_fun() {
 }
 // 跳转到赛事详情
 function go_to_details() {
+  console.error('search', 123)
   if (details_search.value != null && details_search.value.word.length > 0) {
     // 如果是冠军，跳转到冠军的列表页面
     if (details_search.value.isChampion == 1) {
@@ -178,7 +180,7 @@ function go_to_details() {
     useMittEmit(MITT_TYPES.EMIT_HID_SEARCH_DIA)
     clearTimeout(timer00);
     timer00 = setTimeout(() => {
-      //TODO set_search_txt('')
+      SearchData.set_search_txt('')
     }, 300)
   }
 }
@@ -192,14 +194,14 @@ function goto_details(match) {
   //TODO set_goto_detail_matchid(match.matchId);
   //TODO set_details_item(0);
   router.push({ name: 'category', params: { mid: match.matchId, csid: match.csid } });
-  //TODO set_search_term(get_search_txt.value)
+  SearchData.set_search_term(get_search_txt.value)
 }
 // 点击球种调用搜索接口
 function change_record(val) {
   index_num.value = val;
   utils.tab_move2(val, scrollBox.value)
   // 点击球种更换球类ID
-  //TODO set_cur_csid(sport_list.value[val].id);
+  SearchData.set_cur_csid(sport_list.value[val].id);
   // 点击球种,搜索框内容不为空时,调用搜索接口
   if (get_search_txt.value.length > 0) {
     emits('get_search_result')
@@ -218,6 +220,7 @@ function key_down(event) {
   }
 }
 function changeStr(evt) {
+  console.log(11111)
   is_hot_history.value = false
   if (evt && evt.keyCode == 13) {
     if (details_search.value != null && details_search.value.word.length > 0 && !get_search_term.value) {
@@ -260,20 +263,20 @@ function cancle_btn() {
     clearTimeout(cancleTimer)
     cancleTimer = setTimeout(() => {
       emits('change_show_content', text.value);
-      //TODO set_search_term('')
+      SearchData.set_search_term('')
       text.value = '';
       useMittEmit(MITT_TYPES.EMIT_HID_SEARCH_DIA)
     }, 300)
   } else {
     emits('change_show_content', text.value);
-    //TODO set_search_term('')
+    SearchData.set_search_term('')
     text.value = '';
     useMittEmit(MITT_TYPES.EMIT_HID_SEARCH_DIA)
   }
 }
 function clear_search() {
   emits('change_show_content', text.value);
-  //TODO set_search_term('')
+  SearchData.set_search_term('')
   text.value = '';
 }
 function resizeHandler() {
@@ -293,15 +296,15 @@ function resizeHandler() {
     searchInputFocusin = false
   }
 }
-
 watch(text, (newV, oldV) => {
-  // //TODO set_search_txt(newV);
+  SearchData.set_search_txt(newV);
   debounce(changeStr, is_hot_history.value ? 0 : 1000);
   if (!newV.length) clear_search()
   details_search.value = null
 })
-watch(get_search_txt, () => {
-  text.value = get_search_txt.value;
+watch(SearchData.update_time, () => {
+  text.value = SearchData.search_txt;
+  get_search_term.value = SearchData.search_term;
 })
 text.value = get_search_txt.value;
 get_hot_push_fun()
@@ -452,7 +455,7 @@ onBeforeUnmount(() => {
           // 由于使用了变量，这个代码无效，对应的js也要优化。
           &._y0 {
             /*  在search_top中设置无效 原因暂不明 因此在此处添加类 */
-            // background-image: url('~public/image/wwwassets/bw3/svg/search3_y0.svg');
+            // background-image: url('~public/image/svg/search3_y0.svg');
 
             &:before {
               color: #569FFD;

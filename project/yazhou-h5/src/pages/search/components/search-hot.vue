@@ -28,6 +28,8 @@
 </template>
 
 <script>
+import { SearchData } from "src/core/";
+
 export default {
   name: 'searchHot',
   props: {
@@ -36,13 +38,11 @@ export default {
       type: Array
     }
   },
-
   methods: {
-    // ...mapMutations(['set_search_txt']),
     // 点击调用模糊搜索接口
     hotItem_click(text) {
       //TODO
-      // this.set_search_txt(text);
+      SearchData.set_cur_csid(text);
       this.$emit('get_search_result', true);
     }
   },
