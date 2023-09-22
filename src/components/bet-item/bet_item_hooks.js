@@ -17,14 +17,16 @@ import store from "src/store-redux/index.js";
 import lodash from "lodash";
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/";
-import { i18n_t, is_eports_csid } from "src/core/index.js";;
+import { i18n_t, is_eports_csid,compute_value_by_cur_odd_type } from "src/core/index.js";
+import math  from "src/core/utils/module/mathjs.js"
+
 import ZhuGe from "src/core/http/zhuge-tag";
 // import { useGetStore } from "src/core/match-detail-pc/use_get_store.js";
 import { useRoute, useRouter } from "vue-router";
 import {get_odds_active}from 'src/core/bet/module/status.js'
 
 import BetData from "src/core/bet/class/bet-data-class.js";
-
+import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
 export const useGetItem = ({ props }) => {
   const route = useRoute();
   const state = reactive({
@@ -56,34 +58,65 @@ export const useGetItem = ({ props }) => {
     DOM_ID_SHOW:''
   });
 
+  // const format_odds_value=(val)=> {
+  //   if(val=='' || val == undefined){
+  //     return '';
+  //   }
+  //   val = (val || '0').toString();
+  //   let ret = val;
+  //   console.log(state.ol_data_item,'ol_data');
+  //   if (!is_eports_csid(state.ol_data_item.csid) && val.includes('.')){
+  //     if (val >= 100) {
+  //       if (val.split('.')[1] == '00') {
+  //         ret = val.split('.')[0];
+  //       } else {
+  //         let len = val.length;
+  //         if(val.indexOf('.0') == (len-2)){
+  //           ret = val.substring(0,len-2);
+  //         } else {
+  //           ret = val;
+  //         }
+  //       }
+  //     } else if (val >= 10) {
+  //       if (val.split('.')[1][1] == '0') {
+  //         ret = val.slice(0,val.length-1);
+  //       } else {
+  //         ret = val;
+  //       }
+  //     }
+  //   }
+  //   return ret;
+  // };
+
   const format_odds_value=(val)=> {
+    // debugger
     if(val=='' || val == undefined){
       return '';
     }
     val = (val || '0').toString();
     let ret = val;
-    if (!is_eports_csid(this.ol_data.csid) && val.includes('.')){
+    if (val.includes('.')){
       if (val >= 100) {
         if (val.split('.')[1] == '00') {
           ret = val.split('.')[0];
-        } else {
+            } else {
           let len = val.length;
           if(val.indexOf('.0') == (len-2)){
             ret = val.substring(0,len-2);
-          } else {
+              } else {
             ret = val;
-          }
-        }
-      } else if (val >= 10) {
+              }
+            }
+          } else if (val >= 10) {
         if (val.split('.')[1][1] == '0') {
           ret = val.slice(0,val.length-1);
-        } else {
+            } else {
           ret = val;
+            }
+          }
         }
-      }
-    }
     return ret;
-  };
+  }
 
   // ===========================computed===================================
   // 投注项信息 ++
@@ -204,6 +237,7 @@ export const useGetItem = ({ props }) => {
    * @return {undefined} undefined
    */
   const format_odds = (ov, obv) => {
+    // console.log(ov, obv,'ov, obv',props.play_data);
     // 列表取 hsw
     let hsw = lodash.get(props.play_data, `hl._play.hsw`) || "";
     // 非列表
@@ -215,12 +249,12 @@ export const useGetItem = ({ props }) => {
     if (lodash.isUndefined(sport_id) && menu_config.is_esports()) {
       sport_id = "101";
     }
-    // state.match_odds = this.compute_value_by_cur_odd_type(
-    //   this.$mathjs.divide(ov, 100000),
-    //   this.$mathjs.divide(obv, 100000),  //todo
-    //   hsw,
-    //   sport_id
-    // );
+    state.match_odds = compute_value_by_cur_odd_type(
+      ov,
+     obv,  //todo
+      hsw,
+      sport_id
+    );
   };
 
   /**
@@ -355,7 +389,7 @@ export const useGetItem = ({ props }) => {
       // let match_info = lodash.cloneDeep(this.match_info);
       //点击来源是赛事详情
       if (props.bet_source === "match_details" && !is_chat_room) {
-        props.match_info.hps = [this.play_data];
+        props.match_info.hps = [props.play_data];
         props.bet_path.hps_index = 0;
       }
 
@@ -377,60 +411,55 @@ export const useGetItem = ({ props }) => {
           "$options.parent.$options._componentTag"
         );
         if (parent_component_tag == "q-carousel-slide") {
-          this.$utils.send_zhuge_event("PC_首页_投注点击分类", {
+         send_zhuge_event("PC_首页_投注点击分类", {
             详情区域: "列表详情",
           });
         } else if (parent_component_tag == "recents") {
-          this.$utils.send_zhuge_event("PC_首页_投注点击分类", {
+         send_zhuge_event("PC_首页_投注点击分类", {
             详情区域: "列表详情",
           });
         } else {
-          this.$utils.send_zhuge_event("PC_首页_投注点击分类", {
+         send_zhuge_event("PC_首页_投注点击分类", {
             详情区域: "中间详情",
           });
         }
       } else if (this.$route.name == "video") {
-        this.$utils.send_zhuge_event("PC_首页_投注点击分类", {
+       send_zhuge_event("PC_首页_投注点击分类", {
           详情区域: "大视频",
         });
       }
       if (!is_chat_room) {
-        this.match_info.ispo = this.match_info.hps[0].ispo;
+        props.match_info.ispo = props.match_info.hps[0].ispo;
       }
-      console.log("this.bet_info1===", this.bet_info);
-      console.log("this.bet_path1===", this.bet_path);
-      console.log("this.bet_source1===", this.bet_source);
-      console.log("this.row_index1===", this.row_index);
-      console.log("this.bet_ids1===", this.bet_ids);
-      if (this.bet_source === "hot") {
+      if (props.bet_source === "hot") {
         // 热门推荐
-        this.hand_click_event("PC_热门推荐_投注项点击");
+        hand_click_event("PC_热门推荐_投注项点击");
       }
-      if (this.bet_source === "recent") {
+      if (props.bet_source === "recent") {
         // 近期关注
-        this.hand_click_event("PC_近期关注_投注项点击");
+        hand_click_event("PC_近期关注_投注项点击");
       }
       let obj_info = this.bet_info;
       if (is_chat_room) {
         obj_info = bet_item_info[0];
       }
       console.log("obj_info1----1===", obj_info);
-      console.log("bet_source :>>>>>>>>>>>>>>>>>> ", this.bet_source);
+      console.log("bet_source :>>>>>>>>>>>>>>>>>> ", props.bet_source);
       let obj = {
         id,
-        match_info: is_chat_room ? value : this.match_info, //赛事信息
-        bet_ids: this.bet_ids, // 投注项id集合
-        bet_path: this.bet_path, // 选中的投注项路径
+        match_info: is_chat_room ? value : props.match_info, //赛事信息
+        bet_ids: props.bet_ids, // 投注项id集合
+        bet_path: props.bet_path, // 选中的投注项路径
         ...obj_info, //投注项信息
-        bet_source: is_chat_room ? "is_chat_room" : this.bet_source, // 投注项来源
-        row_index: this.row_index, // tpl2 行 index
+        bet_source: is_chat_room ? "is_chat_room" : props.bet_source, // 投注项来源
+        row_index: props.row_index, // tpl2 行 index
       };
       if (BetData.is_virtual_bet) {
         //点击押注按钮操作 (虚拟体育)
-        this.virtual_bat_click(obj);
+        // virtual_bat_click(obj); //todo
       } else {
         //点击押注按钮操作
-        this.bat_click(obj, is_chat_room);
+        bat_click(obj, is_chat_room);
       }
     }
   };
