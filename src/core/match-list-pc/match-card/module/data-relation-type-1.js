@@ -13,6 +13,7 @@
      * 处理  13
      */
     import { MatchDataWarehouse_PC_List_Common as MatchListData } from 'src/core/index.js'
+    import match_list_card from "src/core/match-list-pc/match-card/match-list-card-class.js";
     import MatchListCardData from "./match-list-card-data-class.js";
     import lodash from "lodash";
 
@@ -21,7 +22,6 @@
     import {set_new_league_fold} from  "./fold-tid.js"
     import {
       match_status_title_card_template,
-   
       league_title_card_template,
       fold_template,
       league_container_card_template,
@@ -114,8 +114,6 @@
     let league_repeat_count_obj = {}
     // 自定义联赛ID
     let cus_tid = ''
-    console.log('执行了几次');
-
     // 遍历所有赛事数据
     let match_status_type_arr = ['livedata','nolivedata']
     match_status_type_arr.forEach(match_status_type => {
@@ -216,19 +214,17 @@
           // 未开赛 到卡片key的 映射对象
           no_start_to_card_key_arr.push(card_key)
         }
-
         // 联赛容器卡片总高度
         let league_card_total_height = 0
         mids_arr.forEach( mid => {
           unfold_match_count++
           // 赛事表征数据
-            let match = MatchListData.list_to_obj.mid_obj[mid+'_']
-            let match_style_obj = compute_style_template_by_matchinfo(match,template_id)
-            all_card_obj[mid+'_'] = match_style_obj
-            league_card_total_height += match_style_obj.total_height
-            // 设置父级卡片key
-            match_style_obj.parent_card_key = card_key
-            
+          let match = MatchListData.quick_query_obj.mid_obj[mid+'_']
+          let match_style_obj = compute_style_template_by_matchinfo(match, template_id)
+          all_card_obj[mid+'_'] = match_style_obj
+          league_card_total_height += match_style_obj.total_height
+          // 设置父级卡片key
+          match_style_obj.parent_card_key = card_key
         })
         // 打入联赛容器卡片特征
         all_card_obj[card_key] = {
@@ -269,7 +265,7 @@
     MatchListCardData.no_start_to_card_key_arr = no_start_to_card_key_arr
     // 所有卡片列表
     MatchListCardData.match_list_card_key_arr = match_list_card_key_arr
-
+    MatchListCardData.set_list_version()
     // 遍历所有联赛容器卡片
     all_league_container_keys_arr.forEach( card_key => {
       // 设置联赛容器卡片
@@ -282,7 +278,6 @@
         Object.assign(league_title_card_obj,fold_template)
         league_container_card_obj.load_data_status = 'loading'
       }
-
       if(league_container_card_obj.is_show_card){
         // 卡片显示  还原卡片总高度
         league_container_card_obj.card_total_height = league_container_card_obj.card_total_height_back

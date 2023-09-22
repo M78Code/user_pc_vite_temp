@@ -36,6 +36,8 @@ import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import 'vue-draggable-resizable/dist/VueDraggableResizable.css'
 import { onMounted, ref, computed, reactive, onUnmounted, toRefs } from 'vue'
 import store from "src/store-redux/index.js";
+// 是否pc项目
+const IS_PC = window.BUILDIN_CONFIG.TARGET_PROJECT_NAME.includes('pc')
 /** stroe仓库 */
 /** stroe仓库 */
 const { layoutReducer, menuReducer, betInfoReducer, userReducer, themeReducer } = store.getState()
@@ -251,7 +253,7 @@ const video_zone_event = (obj) => {
   const lang = window.reset_lang || window.vue.lang || "zh";
   // 获取命令
   let cmd = _.get(obj, 'cmd');
-  let live_domains = window.BUILDIN_CONFIG.live_domains[0] || _.get(UserCtr.user_info, 'oss.live_pc');
+  let live_domains = window.BUILDIN_CONFIG.live_domains[0] || _.get(UserCtr.user_info, `'oss.live_${IS_PC?'pc':'h5'}`);
   let lang_obj = { full_screen: i18n_t('video.full_screen_mode'), back: i18n_t('common.back'), back_live: i18n_t('video.back_live') };
   switch (cmd) {
     case 'play': // 播放

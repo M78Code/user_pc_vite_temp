@@ -194,11 +194,14 @@ const set_route_url = () => {
       display: flex;
       align-items: center;
       justify-content: space-between;
+      &:hover{
+        background: var(--q-gb-bg-lg-9);
+      }
 
       &.active {
         font-weight: 700;
         border-bottom: 0;
-        background-image: var(--q-gb-bg-lg-23);
+        background: var(--q-gb-bg-lg-8);
         border-right: 0;
         position: relative;
         border-width: 0;

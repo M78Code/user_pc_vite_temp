@@ -9,48 +9,57 @@
     <appload v-if="init_load"></appload>
   </div>
 </template>
-<script>
+<script setup>
 
 
 
 import _ from "lodash";
-import appload from "./App_load.vue";
+import appload from "./app-load.vue";
 import apiDomain from "./apiDomain.js";
-import { useRouter } from "vue-router";
 import STANDARD_KEY from "src/core/standard-key"; 
-import GlobalAccessConfig from "src/core/access-config/access-config.js"
-import { onMounted } from "vue";
 
 import { enter_params, compute_css_variables } from "src/core/index.js";
 import BetDataCtr from "src/core/bet/class/bet-data-class-h5.js";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
-
+import { http, AllDomain } from "src/core/http/";
+import { loadLanguageAsync } from "src/core/index.js";
+import { Quasar } from "quasar";
+import { ref } from "vue";
 import './src/css/pages/app.scss'
 import './src/css/pages/public.scss'
 import './src/css/pages/main-layout.scss'
 const token_key = STANDARD_KEY.get("token"); //token键
-export default {
-  name: 'App',
-  components: {
-    appload,
-  },
-  mixins: [apiDomain],
-  data() {
-    return {
-      init_load: false
-    };
-  },
-  created() {
-    BetData.init_core()
-    BetViewDataClass.init()
-    BetDataCtr.init()
 
-    enter_params()
 
-    // 检测目前的系统类型ios,android,h5
-    window.platform_type = (this.$q.platform.is.ios ? 'ios' : '') || (this.$q.platform.is.android ? 'android' : '') || 'h5';
-  },
-}
+const { DEFAULT_VERSION_NAME } = window.BUILDIN_CONFIG;
+const init_load = ref(false); //用于加载是否完成
+
+(async () => {
+  try {
+    // // 检测目前的系统类型ios,android,h5
+    // window.platform_type = (Quasar.$q.platform.is.ios ? 'ios' : '') || (Quasar.$q.platform.is.android ? 'android' : '') || 'h5';
+    
+    let languageName = "zh";
+    await loadLanguageAsync(languageName);
+  } catch (error) {
+    console.error('init',error);
+  } finally {
+    console.log(" init_domain --  开始执行:");
+    // 实例化域名检测类对象
+    AllDomain.create(() => {
+      // 首次进入,发现最快的域名
+      // http初始化方法 会调用 setApiDomain
+      // ws和http域名切换逻辑
+      http.setApiDomain();
+      BetData.init_core()
+      BetViewDataClass.init()
+      BetDataCtr.init()
+      enter_params()
+      init_load.value = true;
+    });
+    AllDomain.run();
+  }
+})();
 </script>
 <style lang="scss"></style>

@@ -39,7 +39,7 @@ import { MATCH_LIST_TEMPLATE_CONFIG } from "../../list-template/index.js";
  */
 const get_tab_play_height = (mid) => {
 	let { play_current_key, other_handicap_list = [] } =
-		MatchListData.list_to_obj.mid_obj[mid+'_'] || {};
+		MatchListData.quick_query_obj.mid_obj[mid+'_'] || {};
 	let { tab_play_handicap_height: handicap_height } =
 		MATCH_LIST_TEMPLATE_CONFIG[`template_1_config`]["match_template_config"] ||
 		{};
@@ -162,7 +162,7 @@ const compute_style_template_by_matchinfo_template7_lanqiu = (
  * @param {object} match 赛事
  **/
 const compute_style_template_by_matchinfo_template18 = (match) => {
-	let cur_match = MatchListData.list_to_obj.mid_obj[`mid_${match.mid}`] || {
+	let cur_match = MatchListData.quick_query_obj.mid_obj[`${match.mid}_`] || {
 		main_handicap_list: [],
 	};
 	// 附加盘口高度
@@ -237,6 +237,7 @@ export const get_league_title_card_height = (template_id) => {
  */
 
 export const compute_style_template_by_matchinfo = (match, template_id) => {
+
 	if (template_id == 13) {
 		template_id = 0;
 	}
@@ -276,7 +277,6 @@ export const compute_style_template_by_matchinfo = (match, template_id) => {
 		// 当前局盘口高度
 		cur_handicap_height: 0,
 	};
-
 	// 如果没有赛事信息
 	if (!match || !match.mid) {
 		return style_obj;

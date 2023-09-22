@@ -10,7 +10,6 @@ import MatchListScrollClass from 'src/core/match-list-pc/match-scroll.js'
 import MenuData from "src/core/menu-pc/menu-data-class.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import * as api_websocket from "src/api/module/socket/socket_api.js";
-import { compute_match_list_style_obj_and_match_list_mapping_relation_obj } from 'src/core/match-list-pc/match-card/module/data-relation.js'
 
 import store from "src/store-redux/index.js";
 
@@ -63,7 +62,7 @@ const set_home_loading_time_record = (status) => {
 const set_match_base_info_by_mids_info = (match_list, mids_arr, ts1) => {
 	// 设置列表数据仓库
 	MatchListData.set_list(match_list, true);
-
+// 计算赛事卡片
 	// 重新计算赛事样式
 	MatchListCardClass.recompute_match_list_style_obj_and_match_list_mapping_relation_obj_by_matchs(
 		mids_arr
@@ -219,7 +218,7 @@ const api_bymids = (
         let code = res.code
         let match_list = lodash.get(res, "data.data") || [];
         let ts1 = res.ts
-        MatchListData.set_list(match_list, true)
+        MatchListData.set_quick_query_list(match_list, true)
         let mids_arr = [];
         // set_quick_query_list
         match_list.forEach((match) => {

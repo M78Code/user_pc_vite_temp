@@ -108,7 +108,9 @@ const DOMAIN_API_STORAGE_KEY = STANDARD_KEY.get("domain_api_01");
 
 const BUILDIN_CONFIG = window.BUILDIN_CONFIG;
 //当前目标环境
-const { CURRENT_ENV, NODE_ENV, OSS_FILE_ARR, OSS_FILE_NAME } = BUILDIN_CONFIG;
+const { CURRENT_ENV, NODE_ENV, OSS_FILE_ARR, OSS_FILE_NAME, TARGET_PROJECT_NAME} = BUILDIN_CONFIG;
+// 判断是否PC项目
+const IS_PC = TARGET_PROJECT_NAME.includes('pc')
 
 import lodash from "lodash";
 
@@ -144,9 +146,9 @@ class AllDomain {
     this.force_reload_to_use_oss_file_api = false;
     //  H5,PC 差异点
     //oss 文件内 视频播放地址
-    this.live_domains_oss_path_file = "live_domains.pc";
+    this.live_domains_oss_path_file = `live_domains.${IS_PC?'pc':'h5'}`;
     //api  内 视频播放地址
-    this.live_domains_oss_path_api = "live_pc";
+    this.live_domains_oss_path_api = `live_${IS_PC?'pc':'h5'}`;
   }
   /**
    * @description: 构造函数

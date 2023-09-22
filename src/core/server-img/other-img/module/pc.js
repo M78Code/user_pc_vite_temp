@@ -30,7 +30,12 @@ export default {
   },
   // 今日早盘选中
  'today_menu_bg_1_active': {
-  default: "today_menu_bg_1_active",
+    default: "today_menu_bg_1_active",
+  },
+   // 今日早盘选中
+ 'live_text': {
+  default: "live_text",
 },
+
 }
 
