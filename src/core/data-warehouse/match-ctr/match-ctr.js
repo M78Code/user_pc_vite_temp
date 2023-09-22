@@ -285,17 +285,37 @@ export default class MatchDataBase
    * @description: 格式化比分数组(数组转对象)
    * @param {Object} msc 比分数据列表
    */
-  serialized_score_obj(msc){
+  serialized_score_obj(msc,is_init = false){
     let score_obj = {}
-      // 遍历接口比分数据 转成比分对象
-      lodash.each(msc, score_str => {
-        let [key,value] = score_str.split('|')
-        if(value){
-          let [home,away] = value.split(':')
-          score_obj[key] = {home,away}
+    if(is_init){
+      score_obj = {
+        S11:{
+          home:'',
+          away:''
+        },
+        S103:{
+          home:'0',
+          away:'0'
+        },
+        S5:{
+          home:'',
+          away:''
+        },
+        S10102:{
+          home:'',
+          away:''
         }
-      })
-      return  score_obj
+      }
+    }
+    // 遍历接口比分数据 转成比分对象
+    lodash.each(msc, score_str => {
+      let [key,value] = score_str.split('|')
+      if(value){
+        let [home,away] = value.split(':')
+        score_obj[key] = {home,away}
+      }
+    })
+    return  score_obj
   }
   /**
    * @description: 格式化列表数据(比分数组转对象)
@@ -308,7 +328,7 @@ export default class MatchDataBase
         const score_obj = lodash.get(match, 'msc_obj');
         const msc = lodash.get(match, 'msc',[]);
         // 转换比分
-        const msc_obj = this.serialized_score_obj(msc);
+        const msc_obj = this.serialized_score_obj(msc,true);
         // 数据赋值和合并逻辑
         if(score_obj){
           this.assign_with(score_obj, msc_obj)
@@ -317,24 +337,141 @@ export default class MatchDataBase
         }
 
         // 转换玩法
-        const hps_pns_obj = lodash.get(match, 'hps_pns_obj');
+        const play_obj = lodash.get(match, 'play_obj');
         const hps_pns_arr = lodash.get(match, 'hpsPns',[]);
-        const hps_pns_obj_temp = lodash.keyBy(hps_pns_arr, function(o) {
-                                  return o.hpid;
+        const play_obj_temp = lodash.keyBy(hps_pns_arr, function(o) {
+                                  let res = `hpid_${o.hpid}`;
+                                  if(o.hSpecial){
+                                    res = res +`_${o.hSpecial}`;
+                                  }
+                                  return res;
                                 });
         // 数据赋值和合并逻辑
-        if(hps_pns_obj){
-          this.assign_with(hps_pns_obj, hps_pns_obj_temp)
+        if(play_obj){
+          this.assign_with(play_obj, play_obj_temp)
         } else {
-          match.hps_pns_obj = hps_pns_obj_temp;
+          match.play_obj = play_obj_temp;
         }
+
+        // 设置赛事默认数据
+        this.set_match_default_data(match);
+
         // 赛事数据格式化
         match && this.list_to_many_obj([match]);
 
       });
     }
   }
+
+  /**
+   * @Description 获取其他玩法tab标题
+   * @param {object} match 赛事对象
+  */
+  get_tab_play_keys(match) {
+
+    let tab_play_keys = []
+    let play_keys = Object.keys(other_play_name_to_playid)
+    lodash.each(play_keys,key=>{
+      let status_key = 'cos'+key.slice(3)
+      let status =  match[status_key]
+      //15分钟次要玩法前端强制关闭
+      let cos15min_status = !(status_key === 'cos15Minutes' && match.hSpecial == 6)
+      //5分钟次要玩法前端强制关闭状态
+      let cos5min_status = !(status_key === 'cos5Minutes' && match.hSpecial5min == 6)
+      if( status && cos15min_status  && cos5min_status){
+          tab_play_keys.push(key)
+      }
+    })
+    // match.tab_play_keys = tab_play_keys.join(',')
+    // // 是否有其他玩法
+    // match.has_other_play = tab_play_keys.length > 0
+    return  tab_play_keys.join(',');
+  }
   
+
+   /**
+   * @Description 设置赛事默认数据
+   * @param {Object} match 赛事信息
+   * @param {undefined} undefined
+  */
+   set_match_default_data(match){
+    // api数据更新时间
+    match.api_update_time = new Date().getTime();
+    // 是否有附加盘1
+    match.has_add1 = false
+    // 是否有附加盘2
+    match.has_add2 = false
+    // 设置是否显示当前局玩法 // 组件显示时,组件内进行设置
+    match.is_show_cur_handicap = false
+    // 主客队名称后面是否显示上半场字符串
+    match.up_half_text = '' // 组件显示时,组件内进行设置
+    // 当前局盘口列表
+    match.cur_handicap_list = [] // 特定模版才会使用(模版7)
+    // 足球角球玩法tab
+    // match.tab_play_keys = this.get_tab_play_keys(match);
+    // 是否有其他玩法
+    match.has_other_play = ((match.tab_play_keys || '').split(',')).length > 0; // 该值设置取决于match.tab_play_keys字段,可以删除
+    // 默认比分数据
+    // match.score_obj = utils.serialized_score([],true)
+    // 当前局比分 
+    match.cur_score = { // 组件显示时,组件内进行设置
+      home:'',
+      away:''
+    }
+    // 主队比分
+    match.home_score = '' // 组件显示时,组件内进行设置
+    // 客队比分
+    match.away_score = '' // 组件显示时,组件内进行设置
+    // 历史比分列表
+    match.score_list = []
+    // 赛事比分总分
+    match.total_score_str = ''
+    // 15分钟玩法阶段
+    match.hSpecial = 1
+    // 5分钟玩法阶段
+    match.hSpecial5min = 1
+
+    // tpl_21_hpids = ""
+    // all_oid_arr = [] 可以移除,主要用于生成all_oids对象
+    // all_oids="" //过期旧投注项ID列表 ,删除无用投注项数据使用
+    
+    // all_ol_data={} // 坑位数据操作使用 可以移除
+    // all_hids="" // 快速修改数据时使用 可以移除
+    
+    // main_handicap_list = [] // 赛事显示时自行根据模版进行逻辑动态设置显示
+    
+    
+    // play_current_index = 0
+    // play_current_key = ''
+    // other_handicap_list = []
+    // add1_handicap_list = []
+    // add2_handicap_list = []
+    // 让球方
+    // team_let_ball = ""
+    // other_team_let_ball=""
+    // 设置赛事logo
+    match.match_logo = {
+      home_1_logo:lodash.get(match,'mhlu[0]'),
+      home_1_letter:lodash.get(match,'frmhn[0]'),
+      home_2_logo:lodash.get(match,'mhlu[1]'),
+      home_2_letter:lodash.get(match,'frmhn[1]'),
+      away_1_logo:lodash.get(match,'malu[0]'),
+      away_1_letter:lodash.get(match,'frman[0]'),
+      away_2_logo:lodash.get(match,'malu[1]'),
+      away_2_letter:lodash.get(match,'frman[1]'),
+      is_double:lodash.get(match,'mhlu.length') > 1
+    }
+
+    // 历史比分处理(在各自组建显示时设置)
+    // home_red_score = ""
+    // away_red_score = ""
+    // home_yellow_score = ""
+    // away_yellow_score = ""
+
+    // msc_format = [] // 代码中只有设置的地方,没有使用的地方,可以删除
+    // send = "" //自定义属性send取值为my_self表示有用户模拟发送的指令, 可以删除
+
+  }
 
   /**
    * @description: 设置所有列表数据
@@ -520,7 +657,6 @@ export default class MatchDataBase
         Object.assign(this.quick_query_list, list);
       }
       const many_obj = this.list_to_many_obj(list, timestap);
-
       // 快速检索对象数据合并
       this._quick_query_obj_assign(this.quick_query_obj, many_obj);
       // this.match_assign(this.quick_query_obj.mid_obj, many_obj.mid_obj);
@@ -583,7 +719,7 @@ export default class MatchDataBase
               // 遍历玩法数据
               hps_data_arr.forEach(item2 => {
                 if(!lodash.get(item2,'hsw')){
-                  item2.hsw = lodash.get(item,`hps_pns_obj.${item2.hpid}.hsw`);
+                  item2.hsw = lodash.get(item,`play_obj.${item2.hpid}.hsw`);
                 }
                 // 检查是否有盘口数据
                 if (lodash.get(item2,'hl.length')) {
@@ -640,7 +776,7 @@ export default class MatchDataBase
               // 遍历玩法数据
               hps_data_arr.forEach(item2 => {
                 if(!lodash.get(item2,'hsw')){
-                  item2.hsw = lodash.get(item,`hps_pns_obj.${item2.hpid}.hsw`);
+                  item2.hsw = lodash.get(item,`play_obj.${item2.hpid}.hsw`);
                 }
                 // 检查是否有盘口数据
                 if (lodash.get(item2,'hl.ol.length')) {

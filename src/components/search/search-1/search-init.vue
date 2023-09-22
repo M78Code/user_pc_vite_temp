@@ -1,25 +1,43 @@
 <!-- @Description: 搜索面板初始化 -->
 
 <template>
-    <div class="wrap-init" @click.stop>
+    <div
+        class="wrap-init"
+        @click.stop
+    >
         <div style="height:50px"></div>
-        <div class="init-wrap " v-if="histroy_data.length > 0">
+        <div
+            class="init-wrap "
+            v-if="histroy_data.length > 0"
+        >
             <div class="init-row">
                 <div class="line"></div>
                 <div class="row-title col">
                     {{ i18n_t('search.search_record') }}
                     <!-- 搜索记录 -->
                 </div>
-                <div class="clear-history" @click="delete_histroy('')" v-if="histroy_data.length">
+                <div
+                    class="clear-history"
+                    @click="delete_histroy('')"
+                    v-if="histroy_data.length"
+                >
                     {{ i18n_t('search.clear_search_history') }}
                     <!-- 清除历史记录 -->
                 </div>
             </div>
-            <div class="histroy-item" v-for="(item, index) in histroy_data" :key="index"
-                @click="click_keyword(item.keyword)">
+            <div
+                class="histroy-item"
+                v-for="(item, index) in histroy_data"
+                :key="index"
+                @click="click_keyword(item.keyword)"
+            >
                 <div class="ellipsis">{{ item.keyword }}</div>
                 <div @click.stop="delete_histroy(item.keyword, index)">
-                    <icon class="search_deleteIcon" name="icon-del" size="8px" />
+                    <icon-wapper
+                        class="search_deleteIcon"
+                        name="icon-del"
+                        size="8px"
+                    />
                 </div>
             </div>
         </div>
@@ -31,18 +49,29 @@
                     {{ i18n_t('search.search_hot') }}
                     <!-- 热词搜索 -->
                 </div>
-                <div class="clear-history" @click="get_hot_search">
+                <div
+                    class="clear-history"
+                    @click="get_hot_search"
+                >
                     {{ i18n_t('search.change') }}
                     <!-- 换一换 -->
                 </div>
             </div>
-            <div class="hot histroy-item" v-for="(item, index) in hot_data" v-show="index < 3" :key="index"
-                @click="click_keyword(item.keyWord, true)">
+            <div
+                class="hot histroy-item"
+                v-for="(item, index) in hot_data"
+                v-show="index < 3"
+                :key="index"
+                @click="click_keyword(item.keyWord, true)"
+            >
                 {{ index + 1 }}&ensp;&ensp;{{ item.keyWord }}
             </div>
         </div>
         <!-- 其他搜索   本期不做 -->
-        <div class="init-wrap" v-if="false">
+        <div
+            class="init-wrap"
+            v-if="false"
+        >
             <div class="init-row">
                 <div class="line"></div>
                 <div class="row-title col">
@@ -50,12 +79,18 @@
                     <!-- 其他搜索 -->
                 </div>
             </div>
-            <div class="histroy-item other" @click="other_search('sports')">
+            <div
+                class="histroy-item other"
+                @click="other_search('sports')"
+            >
                 <!-- 搜球类 -->
                 <div>{{ i18n_t('search.search_sports') }}</div>
                 <div class="yb-icon-arrow"></div>
             </div>
-            <div class="histroy-item other" @click="other_search('play')">
+            <div
+                class="histroy-item other"
+                @click="other_search('play')"
+            >
                 <!-- 搜玩法 -->
                 <div>{{ i18n_t('search.search_play') }}</div>
                 <div class="yb-icon-arrow"></div>
@@ -65,10 +100,12 @@
 </template>
   
 <script setup>
-import { reactive, ref, watch, onMounted } from 'vue'
+import { ref, watch, onMounted } from 'vue'
+import lodash from 'lodash'
 import { i18n_t } from "src/boot/i18n.js"
 import search from "src/core/search-class/search.js"
 import store from "src/store-redux/index.js";
+import { IconWapper } from 'src/components/icon/index.js'
 
 const props = defineProps({
     show_type: {
@@ -77,9 +114,6 @@ const props = defineProps({
     }
 })
 const emit = defineEmits(['update:set_show_type'])
-
-/** 国际化 */
-
 
 /** 历史搜索数据 */
 const histroy_data = ref([])
@@ -137,7 +171,7 @@ function get_history() {
     search.get_history(data => {
         histroy_data.value = data
     })
- 
+
 }
 
 /**
@@ -146,7 +180,7 @@ function get_history() {
  * @param {number} index 删除的关键字索引
  * @return {Undefined} Undefined
  */
-function delete_histroy(keyword, index) {
+const delete_histroy = lodash.debounce((keyword, index) => {
     search.delete_histroy(keyword, () => {
         if (keyword) {
             histroy_data.value.splice(index, 1);
@@ -154,7 +188,7 @@ function delete_histroy(keyword, index) {
             histroy_data.value = [];
         }
     })
-}
+}, 300)
 
 /**
  * @Description:点击其他搜索
@@ -254,6 +288,4 @@ onMounted(init)
             margin-left: 10px;
         }
     }
-}
-
-</style>
+}</style>

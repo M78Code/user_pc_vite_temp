@@ -6,7 +6,7 @@
 
 }
 .select-dia {
-  background: var(--q-gb-bg-c-12) !important;
+  background: var(--q-gb-bg-c-15) !important;
   backdrop-filter: blur(5px);
 
   .select-box {
@@ -14,13 +14,13 @@
 
     .composite {
       .filter-trn {
-        color: var(--q-color-fs-color-3);
+        color: var(--q-gb-t-c-3);
 
         &.t_color {
-          color: var(--q-color-fs-color-114) !important;
+          color: var(--q-gb-t-c-1) !important;
 
           &:after {
-            background: var(--q-color-page-bg-color-50);
+            background: var(--q-gb-t-c-1);
           }
         }
       }
