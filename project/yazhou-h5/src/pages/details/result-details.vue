@@ -120,7 +120,7 @@ let route = useRoute()
       }
     })
     // 监听is_dialog_details(控制是否显示联赛列表)
-   watch(() => is_dialog_details, (new_value, old_value) => {
+   watch(() => is_dialog_details.value, (new_value, old_value) => {
       // 新的值等于true的时候也就是点击下三角准备查看联赛列表 此时调用接口:详情页下拉列表接口(/v1/m/matchDetail/getMatchDetailByTournamentIdPB)
       if (new_value) {
         let time_,mgt,date_,dateTime;  //菜单里取不到dateTime 就去详情数据对象里取
@@ -132,7 +132,7 @@ let route = useRoute()
           console.error(error)
         }
         // tid: 联赛id
-        let tId = result_detail_data.tid;
+        let tId = result_detail_data.value.tid;
         if (get_current_menu && get_current_menu.date_menu && get_current_menu.date_menu.field1) {
           dateTime = get_current_menu.date_menu.field1
         } else {
@@ -176,14 +176,14 @@ let route = useRoute()
     //  足篮显示分析页
    const ana_show = (val) => {
       if(val == 1) { // 足球
-        analysis_show.football = true;
+        analysis_show.value.football = true;
         return
       }else if(val == 2){ // 篮球
-        analysis_show.basketball = true;
+        analysis_show.value.basketball = true;
         return
       }else{
-        Object.getOwnPropertyNames(analysis_show).forEach((key) => {
-          analysis_show[key] = false
+        Object.getOwnPropertyNames(analysis_show.value).forEach((key) => {
+          analysis_show.value[key] = false
         });
       }
     }
@@ -193,11 +193,11 @@ let route = useRoute()
      *@return {Undefined} undefined
      */
    const get_match_detail_info = () => {
-      // 从url取值赛事id：mid
-      let mid = route.params.mid || get_goto_detail_matchid;
-      if(mid){
-        set_goto_detail_matchid(mid);
-      }
+      // 从url取值赛事id：mid  || get_goto_detail_matchid
+      let mid = route.params.mid ;
+      // if(mid){
+      //   set_goto_detail_matchid(mid);
+      // }
       let params = {
         mid: mid,
         type: 1,
@@ -210,9 +210,9 @@ let route = useRoute()
           router.push({name: 'matchList'})
         }else if(code === 200){
           skeleton.header = true
-          loading = true
+          loading.value = true
           if(!data) return false
-          result_detail_data = data;
+          result_detail_data.value = data;
           // 61-比赛延迟,80-比赛中断,90-比赛放弃
           if(!(['90','80','61'].includes(data.mmp+''))){
             data.mmp = '999'
@@ -228,7 +228,7 @@ let route = useRoute()
           set_detail_data(cloneData);
         }
       }).catch((err) =>{
-        loading = true
+        loading.value = true
         skeleton.header = true
       });
     }
@@ -242,7 +242,7 @@ let route = useRoute()
       if(sessiong_store) {
         let store_data = JSON.parse(sessiong_store);
         if(store_data.tId == params.tId){
-          math_list_data = store_data.list;
+          math_list_data.value = store_data.list;
         }
       }
       if(get_menu_type == 28 && [100,101,102,103,104].includes(+get_detail_data.csid)){
@@ -264,7 +264,7 @@ let route = useRoute()
             });
 
           sessionStorage.setItem('match_list_ofdetails','');
-          math_list_data = [];
+          math_list_data.value = [];
           set_sanjiao_is_bool(false);
         }else{
           let store_data = {
@@ -275,7 +275,7 @@ let route = useRoute()
           let sessiong_store = JSON.stringify(store_data);
           // 将sessiong_store的值存在sessionStorage里面
           sessionStorage.setItem('match_list_ofdetails',sessiong_store);
-          math_list_data = data;
+          math_list_data.value = data;
           set_sanjiao_is_bool(true);
         }
       });
@@ -287,7 +287,7 @@ let route = useRoute()
      */
    const changge_bool = (bool) => {
       // bool 的值为true或者是false
-      is_dialog_details = bool;
+      is_dialog_details.value = bool;
     }
   onUnmounted(() => {
     // 清除监听下拉联赛列表

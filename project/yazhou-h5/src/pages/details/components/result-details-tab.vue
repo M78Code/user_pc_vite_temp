@@ -19,7 +19,7 @@
   </div>
 </template>
 
-<script>
+<script setup>
 // import { mapGetters,mapMutations } from "vuex"
 import {api_betting, api_analysis} from 'src/api/index.js'
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
@@ -27,187 +27,176 @@ import { useRouter, useRoute } from "vue-router"
 import lodash from "lodash"
 import { i18n_t } from "src/boot/i18n.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
+import { onMounted, onUnmounted, ref, watch } from "vue"
 //国际化
 
 const router = useRouter()
 const route = useRoute()
 
-export default {
-  name: 'result_details_tab',
-  props: {
+const props = defineProps({
     // 详情Details接口的数据
     result_detail_data: Object,
     tab_index: Number | String,
-  },
-  data(){
-    return {
-      // 默认高亮显示第一个
-      item_index:0,
-      tab_item_list:[
-        // 所有赛果
-        {id:1, text: i18n_t('match_info.all_result')},
-        // 精选赛事
-        {id:2, text: i18n_t('match_info.select_event')}
-      ],
-      list_data: [],
-    }
-  },
-  watch: {
-    // 监听csid的变化
-    'result_detail_data.csid': {
-      handler(n,o){
-        // 切换顶部菜单，csid变化，触发tab事件
-        result_tab(0, tab_item_list[0])
-        get_list()
-      },
-      deep: true
+  }) 
+  // 默认高亮显示第一个
+const item_index = ref(0)
+const tab_item_list = ref([
+    // 所有赛果
+    {id:1, text: i18n_t('match_info.all_result')},
+    // 精选赛事
+    {id:2, text: i18n_t('match_info.select_event')}
+  ])
+const list_data = ref([])
+  // 监听csid的变化
+ watch(() => 'result_detail_data.csid', (n,o) =>{
+      // 切换顶部菜单，csid变化，触发tab事件
+      result_tab(0, tab_item_list[0])
+      get_list()
     },
-    tab_index(n,o){
-      if(n!=2){
-        result_tab(n, tab_item_list[n])
-      }
+    {deep: true})
+watch(() => props.tab_index, (n,o) => {
+  if(n!=2){
+      result_tab(n, tab_item_list[n])
     }
-  },
-  created() {
+})
+let off_ = () => {}
+  onMounted(() => {
     // 监听 刷新 注单记录----请求
-    useMittOn(MITT_TYPES.EMIT_UPDATE_ORDER_LIST, update_order_list)
-  },
+   let { off: off_ } = useMittOn(MITT_TYPES.EMIT_UPDATE_ORDER_LIST, update_order_list)
+  })
   // computed:{
   //   ...mapGetters(["get_fewer","get_menu_type", "get_current_menu", ]),
   //   ...mapGetters({ matchid: "get_goto_detail_matchid" }),
   // },
-  methods:{
     // ...mapMutations(['set_fewer','set_note_sheet_records_data']),
-    /**
-     * 标签数据初始化
-     */
-    tab_data_init(){
+  /**
+   * 标签数据初始化
+   */
+const tab_data_init = () => {
+    tab_item_list =[
+      // 所有赛果
+      {id:1, text: i18n_t('match_info.all_result')},
+      // 精选赛事
+      {id:2, text: i18n_t('match_info.select_event')}
+    ];
+    if(get_menu_type == 28 && [100,101,102,103,104].includes(+result_detail_data.csid))  {
       tab_item_list =[
         // 所有赛果
-        {id:1, text: i18n_t('match_info.all_result')},
-        // 精选赛事
-        {id:2, text: i18n_t('match_info.select_event')}
+        {id:1, text: i18n_t('match_info.all_result')}
       ];
-      if(get_menu_type == 28 && [100,101,102,103,104].includes(+result_detail_data.csid))  {
-        tab_item_list =[
-          // 所有赛果
-          {id:1, text: i18n_t('match_info.all_result')}
-        ];
-      }
-    },
-    // 点击高亮显示tab
-    result_tab(index,tab_item){
-      let search_term =route.query.search_term
-      useMittEmit(MITT_TYPES.EMIT_CHANGE_TAB, true)
-      if(item_index != index){
-        item_index = tab_item.id === 4 ? 3 : index
-      }
-      if(tab_item && tab_item.id == 3 && [100,101,102,103,104].includes(+result_detail_data.csid)){
-        index = 2
-        item_index = 1
-      }
-      if(result_detail_data && result_detail_data.mid){
-        let mid = result_detail_data.mid;
-        // todo 考虑优化此处代码
-        $router.replace({
-          name:'match_result',
-          params:{mid, index: item_index},
-          query: {search_term: search_term}
-        });
-      }
-    },
-    // 获取订单记录页面接口，判断赛果有没有 订单记录，有则显示在页面
-    async get_list() {
-      try {
-        let params = {
-          matchId: matchid,
-          timeType: 3,
-          orderStatus: 1,
-          orderBy: 2,
-          }
-        let {code , data} = await api_betting.post_getOrderList(params)
-        useMittEmit(MITT_TYPES.EMIT_RESULT_LIST_LOADING, true)
-
-        if(code == 200) {
-          tab_data_init()
-          if (data && data.record) {
-            list_data = data.record
-            set_note_sheet_records_data(list_data)
-            if(Object.keys(list_data).length>0) {
-              tab_item_list.push({
-                id:3,
-                // 我的注单
-                text: i18n_t('match_info.my_bets')
-              });
-            }
-
-            // 刷新 注单记录----重载页面
-            useMittEmit(MITT_TYPES.EMIT_RELOAD_NOTE_SHEET)
-          }
-        }
-      } catch (error) {
-        no_data = false;
-        console.error(error)
-        useMittEmit(MITT_TYPES.EMIT_RESULT_LIST_LOADING, false)
-        tab_data_init()
-      } finally {
-        const { configValue, eventSwitch } = lodash.get(UserCtr, 'user_info.merchantEventSwitchVO', {})
-        if (configValue == 1 && eventSwitch == 1 && lodash.get(result_detail_data, 'csid') == 1) {
-          get_football_replay(0)
-        }
-      }
-    },
-    /**
-     * 获取精彩回放事件
-     * @param {String} event_code 事件code
-     */
-    get_football_replay(event_code) {
-      const params = {
-        mid: lodash.get(result_detail_data, 'mid'),
-        device: 'H5',
-        eventCode: event_code
-      }
-      api_analysis.post_playback_video_url(params)
-          .then(res => {
-            if (res.code == 200 && lodash.get(res.data, 'eventList.length')) {
-              // 足球类型赛果需添加精彩回放菜单
-              tab_item_list.push({
-                id: 4,
-                // 精彩回放
-                text: i18n_t('highlights.title')
-              });
-            }
-          })
-          .catch(err => {
-            console.error(err)
-          })
-          .finally(() => {
-
-          })
-    },
-    // 展开收起按钮
-    change_btn(){
-      // 设置vuex变量值,当选中"所有赛果"时才可以点击
-      if (item_index != 0) return;
-      if(get_fewer == 1 || get_fewer == 3){
-        set_fewer(2)
-      }else{
-        set_fewer(1)
-      }
-    },
-    // 刷新 注单记录----请求
-    update_order_list() {
-      if (tab_index === 2) {
-        get_list()
-      }
-    },
-  },
-  beforeUnmount() {
-    set_fewer(1);
-
-    useMittOn(MITT_TYPES.EMIT_UPDATE_ORDER_LIST, update_order_list).off
+    }
   }
-}
+  // 点击高亮显示tab
+const result_tab = (index,tab_item) => {
+    let search_term =route.query.search_term
+    useMittEmit(MITT_TYPES.EMIT_CHANGE_TAB, true)
+    if(item_index != index){
+      item_index = tab_item.id === 4 ? 3 : index
+    }
+    if(tab_item && tab_item.id == 3 && [100,101,102,103,104].includes(+result_detail_data.csid)){
+      index = 2
+      item_index = 1
+    }
+    if(result_detail_data && result_detail_data.mid){
+      let mid = result_detail_data.mid;
+      // todo 考虑优化此处代码
+      $router.replace({
+        name:'match_result',
+        params:{mid, index: item_index},
+        query: {search_term: search_term}
+      });
+    }
+  }
+  // 获取订单记录页面接口，判断赛果有没有 订单记录，有则显示在页面
+ const get_list = async() => {
+    try {
+      let params = {
+        matchId: matchid,
+        timeType: 3,
+        orderStatus: 1,
+        orderBy: 2,
+        }
+      let {code , data} = await api_betting.post_getOrderList(params)
+      useMittEmit(MITT_TYPES.EMIT_RESULT_LIST_LOADING, true)
+
+      if(code == 200) {
+        tab_data_init()
+        if (data && data.record) {
+          list_data = data.record
+          set_note_sheet_records_data(list_data)
+          if(Object.keys(list_data).length>0) {
+            tab_item_list.push({
+              id:3,
+              // 我的注单
+              text: i18n_t('match_info.my_bets')
+            });
+          }
+
+          // 刷新 注单记录----重载页面
+          useMittEmit(MITT_TYPES.EMIT_RELOAD_NOTE_SHEET)
+        }
+      }
+    } catch (error) {
+      no_data = false;
+      console.error(error)
+      useMittEmit(MITT_TYPES.EMIT_RESULT_LIST_LOADING, false)
+      tab_data_init()
+    } finally {
+      const { configValue, eventSwitch } = lodash.get(UserCtr, 'user_info.merchantEventSwitchVO', {})
+      if (configValue == 1 && eventSwitch == 1 && lodash.get(result_detail_data, 'csid') == 1) {
+        get_football_replay(0)
+      }
+    }
+  }
+  /**
+   * 获取精彩回放事件
+   * @param {String} event_code 事件code
+   */
+const get_football_replay = (event_code) => {
+    const params = {
+      mid: lodash.get(result_detail_data, 'mid'),
+      device: 'H5',
+      eventCode: event_code
+    }
+    api_analysis.post_playback_video_url(params)
+        .then(res => {
+          if (res.code == 200 && lodash.get(res.data, 'eventList.length')) {
+            // 足球类型赛果需添加精彩回放菜单
+            tab_item_list.push({
+              id: 4,
+              // 精彩回放
+              text: i18n_t('highlights.title')
+            });
+          }
+        })
+        .catch(err => {
+          console.error(err)
+        })
+        .finally(() => {
+
+        })
+  }
+  // 展开收起按钮
+const change_btn = () => {
+    // 设置vuex变量值,当选中"所有赛果"时才可以点击
+    if (item_index != 0) return;
+    if(get_fewer == 1 || get_fewer == 3){
+      set_fewer(2)
+    }else{
+      set_fewer(1)
+    }
+  }
+  // 刷新 注单记录----请求
+const update_order_list = () => {
+    if (tab_index === 2) {
+      get_list()
+    }
+  }
+  
+onUnmounted(() => {
+    set_fewer(1);
+    off_()
+  }) 
 </script>
 
 <style lang="scss" scoped>

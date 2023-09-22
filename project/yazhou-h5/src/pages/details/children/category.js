@@ -44,7 +44,7 @@ export const category_info = () => {
     // 单个玩法集下的玩法数量
     playlist_length: undefined,
     // 所有数据集合
-    matchInfoCtr: new MatchInfoCtr({
+    matchInfoCtr: new MatchDetailCtr({
       route,
       get_detail_data: {
         mid: route.params.mid
@@ -134,7 +134,7 @@ export const category_info = () => {
   // 置顶列表
   const match_list_new = computed(() => {
     // console.log("match_info_list=-===", component_data.match_info_list)
-    return component_data.matchInfoCtr.listSortNew();
+    // return component_data.matchInfoCtr.listSortNew();
   });
   // 非置顶列表
   const match_list_normal = computed(() => {
