@@ -26,8 +26,8 @@
 </template>
 
 <script>
-import {mapGetters, mapMutations} from "vuex"
-import {api_common} from 'src/project/api/index.js';
+// import {mapGetters, mapMutations} from "vuex"
+import {api_common} from 'src/api/index.js';
 import video from "src/core/index.js"   // 视频相关公共方法
 import uid from "src/core/uuid/index.js"
 import { t } from "src/boot/i18n.js";;

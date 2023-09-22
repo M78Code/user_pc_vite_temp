@@ -153,6 +153,7 @@ import store from "src/store-redux/index.js";
 import { details_main } from "./details.js";
 import { ref, defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch, provide } from "vue";
 import UserCtr from "src/core/user-config/user-ctr.js";
+
 //国际化
 
 export default defineComponent({

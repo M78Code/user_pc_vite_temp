@@ -78,14 +78,14 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from "vuex";
-import global_filters from 'src/boot/global-filters.js'
-import dialog_header from 'src/project/components/details/dialog/dialog_header.vue'
-import team_img from 'src/project/components/details/team_img.vue'
-import match_stage from 'src/project/components/match/match_stage.vue';
-import match_dialog_stage from 'src/project/components/match/match_dialog_stage.vue';
-import show_start_time from 'src/project/components/details/wight/show_start_time.vue'
-import { format_total_score } from 'src/core/format'
+// import { mapGetters, mapMutations } from "vuex";
+// import global_filters from 'src/boot/global-filters.js'
+import dialog_header from 'project_path/src/components/details/dialog/dialog-header.vue'
+import team_img from 'project_path/src/components/details/team-img.vue'
+import match_stage from 'project_path/src/components/match/match-stage.vue';
+import match_dialog_stage from 'project_path/src/components/match/match-dialog-stage.vue';
+import show_start_time from 'project_path/src/components/details/wight/show-start-time.vue'
+import { format_total_score } from 'src/core/format/index.js'
 import { useRoute, useRouter } from "vue-router"
 let route = useRoute()
 let router = useRouter()
