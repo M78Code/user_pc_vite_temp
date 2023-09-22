@@ -7,7 +7,7 @@
   <div
     class="c-match-process text-center"
     :class="rows == 1 ? 'row a-row' : 'column'"
-  >
+  >{{ match_props.match.mcid }}
     <div
       v-show="match_props.match.mcid && show_page == 'match-list'"
       class="jingcai"
