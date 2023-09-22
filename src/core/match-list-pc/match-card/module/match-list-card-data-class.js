@@ -19,7 +19,7 @@ class MatchListCardDataClass {
     this.match_list_card_key_arr = [
       // 'card_key'
     ];
-    this.match_list_style_info = {}
+    this.match_list_style_info = ref({})
     // 赛种ID到card_key的映射对象
     this.csid_to_card_key_obj = {
       // 'csid_1':[ 'card_0', 'card_1' ]
@@ -68,8 +68,7 @@ class MatchListCardDataClass {
   }
 
   set_match_list_style_info(payload) {
-    this.match_list_style_info = payload;
-    this.set_list_version()
+    this.match_list_style_info.value = payload;
   }
 
   set_list_version() {

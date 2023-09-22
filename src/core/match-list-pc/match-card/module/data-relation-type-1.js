@@ -219,8 +219,8 @@
         mids_arr.forEach( mid => {
           unfold_match_count++
           // 赛事表征数据
-          let match = MatchListCardData.match_list_style_info[mid+'_']
-          console.log('matchmatchmatchmatch', MatchListCardData.match_list_style_info);
+          let match = MatchListData.quick_query_obj.mid_obj[mid+'_']
+          console.log('matchmatchmatch', match);
           let match_style_obj = compute_style_template_by_matchinfo(match, template_id)
           all_card_obj[mid+'_'] = match_style_obj
           league_card_total_height += match_style_obj.total_height

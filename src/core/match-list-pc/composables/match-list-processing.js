@@ -2,6 +2,7 @@ import { ref } from 'vue';
 
 import lodash from 'lodash';
 
+import store from "src/store-redux/index.js";
 import { virtual_sport_format } from 'src/core/format/module/format-match.js'
 import MenuData from "src/core/menu-pc/menu-data-class.js";
 import collect_composable_fn from "./match-list-collect.js";
@@ -13,11 +14,15 @@ import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/core/ind
 import MatchListCardClass from "src/core/match-list-pc/match-card/match-list-card-class.js";
 
 // const { api_bymids } = useMatchListMx();
-
-const { mx_collect_count } = collect_composable_fn();
+let state = store.getState();
+const { mx_collect_count, set_collect_count } = collect_composable_fn();
 const { virtual_list_timeout_id } = virtual_composable_fn();
 const { show_mids_change } = ws_composable_fn();
 const { api_bymids } = use_featch_fn();
+
+const vx_filter_select_obj = ref([])
+// 上次筛选选中的数据
+const vx_pre_filter_select_obj = ref(state.filterReducer?.show_filter_popup);
 
 const load_data_state = ref(null);
 let hot_match_list_timeout;
@@ -27,6 +32,36 @@ let is_virtual = MenuData.is_virtual_sport;
 //
 let is_search = PageSourceData.is_search();
 let is_show_hot = ref(false);
+
+/**
+ * @Description 合并连续相同的联赛
+ * @param {undefined} undefined
+ */
+const merge_same_league = (league_obj) => {
+	let new_data = {
+		livedata: [],
+		nolivedata: [],
+	};
+	let new_league = {};
+	// 上一个联赛
+	let pre_league = {};
+	// 遍历所有联赛列表
+	lodash.each(["livedata", "nolivedata"], (type) => {
+		pre_league = {};
+		lodash.each(league_obj[type], (league) => {
+			// 联赛ID相同 合并赛事ID
+			if (league.tid == pre_league.tid) {
+				new_league.mids += "," + league.mids;
+			} else {
+				// 联赛ID不同 添加到新联赛数据
+				new_league = league;
+				new_data[type].push(new_league);
+			}
+			pre_league = league;
+		});
+	});
+	return new_data;
+};
 /**
  * @description 专业处理服务器返回的 列表 数据---联赛结构
  * @param {object} data   服务器返回数据
@@ -47,13 +82,14 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 	if (code == 200 && all_league_list.length > 0) {
 		is_show_hot.value = false;
 		// 设置收藏数量
-		if (this.vx_filter_select_obj.length > 0) {
+    // lockie
+		if (vx_filter_select_obj.value.length > 0) {
 			// 只有预加载会传 true
 			if (!collect) {
 				mx_collect_count();
 			}
 		} else {
-			this.set_collect_count({
+			set_collect_count({
 				type: "set",
 				count: lodash.get(data, "data.collectCount", 0),
 			});
@@ -63,8 +99,8 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 			!backend_run &&
 			[2, 3].includes(MenuData.menu_root) &&
 			[2, 3].includes(MenuData.menu_root) &&
-			this.vx_pre_filter_select_obj.length > 0 &&
-			this.vx_filter_select_obj.length == 0
+			vx_pre_filter_select_obj.value.length > 0 &&
+			vx_filter_select_obj.value.length == 0
 		) {
 			let new_data = {
 				livedata: [],
@@ -78,7 +114,7 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 					if (
 						tid &&
 						new_data[key] &&
-						this.vx_pre_filter_select_obj.includes(tid)
+						vx_pre_filter_select_obj.value.includes(tid)
 					) {
 						new_data[key].push(league);
 						if (!new_filter.includes(tid)) {
@@ -89,27 +125,30 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 			});
 			if (new_filter.length > 0) {
 				// 合并连续相同的联赛
-				new_data = this.merge_same_league(new_data);
+				new_data = merge_same_league(new_data);
 				Object.assign(res_data, new_data);
-				if (new_filter.length != this.vx_filter_select_obj.length) {
-					this.set_filter_checked_all(false);
+				if (new_filter.length != vx_filter_select_obj.value.length) {
+					// this.set_filter_checked_all(false);
 				}
 			}
 			MenuData.set_filter_select_obj(new_filter);
 		}
 		if (![2, 3].includes(MenuData.menu_root) && pre_name) {
-			this.remove_pre_filter_select_obj();
+      store.dispatch({
+        type: 'remove_pre_filter_select_obj',
+        data: {}
+      })
 		}
 		// 设置数据仓库 联赛列表对象
-		this.match_list_data.set_league_list_obj(res_data);
+		// this.match_list_data.set_league_list_obj(res_data);
 		// 计算列表卡片样式
 		MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
 			res_data,
 		);
-		if (lodash.isFunction(this.SCMD_C9)) {
-			// C9订阅
-			this.SCMD_C9(all_league_list);
-		}
+		// if (lodash.isFunction(this.SCMD_C9)) {
+		// 	// C9订阅
+		// 	this.SCMD_C9(all_league_list);
+		// }
 		if (backend_run) {
 			// 静默拉取列表 设置数据加载状态
 			load_data_state.value = "data";
@@ -118,7 +157,7 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 		} else {
 			if (MenuData.is_guanjun()) {
 				// 冠军玩法 调用接口切换右侧
-				this.mx_autoset_active_match();
+				// this.mx_autoset_active_match();
 			} else if (!MenuData.is_esports()) {
 				// 非电竞切换右侧 为列表第一场赛事
 				let first_league = all_league_list[0];
@@ -130,7 +169,8 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 					sportId: first_league.csid,
 				};
 				callback_func = () => {
-					this.regular_events_set_match_details_params(cut, params);
+          // lockie
+					// this.regular_events_set_match_details_params(cut, params);
 				};
 			}
 			// 调用bymids更新前12场赛事
@@ -148,14 +188,14 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 		// this.load_data_state = "empty";
 		hot_match_list_timeout = setTimeout(() => {
 			if (load_data_state.value !== "data") {
-				this.get_hot_match_list();
+				// this.get_hot_match_list();
 				clearTimeout(hot_match_list_timeout);
 			}
 		}, delay);
 	} else {
 		load_data_state.value = "empty";
 		// 设置数据仓库 联赛列表对象
-		this.match_list_data.set_league_list_obj(res_data);
+		// this.match_list_data.set_league_list_obj(res_data);
 		// 计算列表卡片样式
 		MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
 			res_data,
@@ -183,7 +223,7 @@ const mx_use_list_res_when_code_200_and_list_length_gt_0 = ({match_list, collect
 				MenuData.is_guanjun() ||
 				MenuData.menu_root == 400
 			) {
-				this.mx_autoset_active_match();
+				// this.mx_autoset_active_match();
 			}
 			// 非详情页 切换右侧为列表第一场赛事
 			else if (route.name != "details") {
@@ -226,7 +266,7 @@ const mx_use_list_res_when_code_error_or_list_length_0 = (match_list) => {
 		is_vr_numer.value++;
 		// 重复拉列表的次数小于5   3秒后再次拉接口
 		if (is_vr_numer.value < 5) {
-			this.virtual_list_timeout_id = setTimeout(
+			virtual_list_timeout_id = setTimeout(
 				() => fetch_match_list(true),
 				3000
 			);

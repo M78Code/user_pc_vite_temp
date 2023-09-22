@@ -245,7 +245,6 @@ onMounted(() => {
   no_user.value = is_invalid.value;
   // 绑定接收用户失效事件
   useMittOn(MITT_TYPES.EMIT_SHOW_ALERT_CMD,no_user_event)
-  console.error("+-+-+-+-+-+-+-+-+-",props);
 })
 
 onUnmounted(()=>{
@@ -253,7 +252,6 @@ onUnmounted(()=>{
 })
 
 const cur_state = computed(()=>{
-  console.error(props);
   return props.state
 })
 

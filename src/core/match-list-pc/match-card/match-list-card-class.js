@@ -75,6 +75,7 @@ import {
   remove_league,
 } from "./module/add-and-remove.js";
 import { update_match_style } from './module/update-match-style.js'
+import { set_card_show_level } from './module/card-show-offset.js'
 import MenuData from "src/core/menu-pc/menu-data-class.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import { ref } from "vue";
@@ -148,8 +149,8 @@ class MatchListCardInfo {
    */
   update_match_style(mids) {
     let current_match_info = update_match_style(mids);
-    console.log('current_match_info', current_match_info);
     MatchListCardData.set_match_list_style_info(current_match_info)
+    MatchListCardData.set_list_version()
   }
 
   /**
@@ -179,6 +180,13 @@ class MatchListCardInfo {
    */
   fold_all_league() {
     fold_all_league();
+  }
+
+  /**
+   * @Description 设置卡片偏移量
+   */
+  set_card_show_level() {
+    set_card_show_level()
   }
 
   /**

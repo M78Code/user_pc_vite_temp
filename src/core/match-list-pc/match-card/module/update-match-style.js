@@ -12,7 +12,7 @@
  * @param {Object} mids 
  * @description 这里接收的是需要重新计算表征的mids  会去重新计算表征
  */
-export const update_match_style = ({ mids }) => {
+export const update_match_style = (mids) => {
   // 用于盛放需要重新计算表征的match 对象
   let match_update_style_info = {};
   for (const mid in mids) {
