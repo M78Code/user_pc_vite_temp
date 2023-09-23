@@ -49,20 +49,20 @@
       </div>
       <div class="main-finals" v-if="list_data.length == 1 && !list_data[0].list">
         <div class="finals-team">
-          <img  src="image/wwwassets/bw3/svg/finals.svg" alt="">
+          <img  src="/yazhou-h5/image/svg/finals.svg" alt="">
           <span>{{ list_data[0].homeName }}</span>
         </div>
         <div class="middle">
-          <img src="image/wwwassets/bw3/images/v-s-finals.png" alt="">
+          <img src="/yazhou-h5/image/images/v-s-finals.png" alt="">
           <span>VS</span>
         </div>
         <div class="finals-team">
-          <img  src="image/wwwassets/bw3/svg/finals.svg" alt="">
+          <img  src="/yazhou-h5/image/svg/finals.svg" alt="">
           <span>{{ list_data[0].awayName }}</span>
         </div>
       </div>
       <q-inner-loading :showing="visible">
-        <img alt class="loading-static-animation" src="image/wwwassets/bw3/svg/loading-more.svg"/>
+        <img alt class="loading-static-animation" src="/yazhou-h5/image/svg/loading-more.svg"/>
       </q-inner-loading>
     </div>
     <!-- 没有数据 组件 -->

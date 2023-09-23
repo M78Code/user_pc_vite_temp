@@ -9,10 +9,10 @@
     <div class="row mx-8 items-center" @click.stop="icon_click($event)">
       <!-- 动画或视频icon -->
       <template v-if="icon_class == 'donghua'">
-        <img  src="image/wwwassets/bw3/svg/donghua.svg" alt="" class="icon-style">
+        <img  src="/yazhou-h5/image/svg/donghua.svg" alt="" class="icon-style">
       </template>
       <template v-if="icon_class == 'shipin'">
-        <img  src="image/wwwassets/bw3/svg/shipin.svg" alt="" class="icon-style">
+        <img  src="/yazhou-h5/image/svg/shipin.svg" alt="" class="icon-style">
       </template>
       <template v-if="icon_class == 'lvs'">
         <img :src="lvs_state_obj.icon_path" alt="" class="icon-style">
@@ -58,9 +58,9 @@ export default {
   data() {
     return {
       // 正在直播的
-      lvs_icon_ing :  "image/wwwassets/bw3/common/zhibo-l.png",
+      lvs_icon_ing :  "/yazhou-h5/image/common/zhibo-l.png",
       // 赛前直播的
-      lvs_icon_pre : "image/wwwassets/bw3/common/zhibo-before.svg",
+      lvs_icon_pre : "/yazhou-h5/image/common/zhibo-before.svg",
       //演播厅的图标
       lvs_state_obj:{lvs:'',icon_path:''}
     }

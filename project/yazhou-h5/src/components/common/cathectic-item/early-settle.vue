@@ -39,20 +39,20 @@
 
           <!-- 转圈按钮 -->
           <p class="btn-spin" v-if="status != 1 && status != 5">
-            <img  src="image/wwwassets/bw3/record/loading.svg" alt="" v-if="status == 3" class="loading2">
-            <img  src="image/wwwassets/bw3/record/done.svg" alt="" v-if="status == 4">
+            <img  src="/yazhou-h5/image/record/loading.svg" alt="" v-if="status == 3" class="loading2">
+            <img  src="/yazhou-h5/image/record/done.svg" alt="" v-if="status == 4">
           </p>
         </div>
 
         <!-- 右边设置按钮 -->
         <div class="btn-r text-center" @click="change_slider_show" v-if="(status == 1 || status == 5 || status == 6) && lodash.get(UserCtr, 'pcs')" :style="{opacity:status == 5||status == 6?0.3:1}">
           <template v-if="slider_show">
-            <img  src="image/wwwassets/bw3/record/set4.svg" alt="" v-if="UserCtr.theme.includes('y0')">
-            <img  src="image/wwwassets/bw3/record/set.svg" alt="" v-else>
+            <img  src="/yazhou-h5/image/record/set4.svg" alt="" v-if="UserCtr.theme.includes('y0')">
+            <img  src="/yazhou-h5/image/record/set.svg" alt="" v-else>
           </template>
           <template v-else>
-            <img  src="image/wwwassets/bw3/record/set2.svg"  v-if="UserCtr.theme.includes('day')"  alt="">
-            <img  src="image/wwwassets/bw3/record/set3.svg" v-else alt="">
+            <img  src="/yazhou-h5/image/record/set2.svg"  v-if="UserCtr.theme.includes('day')"  alt="">
+            <img  src="/yazhou-h5/image/record/set3.svg" v-else alt="">
           </template>
 
         </div>
@@ -92,7 +92,7 @@
     <p class="row justify-between yb_pl10 yb_py4" @click="fetch_early_settle_detail" v-if="details_show2">
       <!-- 提前结算详情 -->
       <span>{{t('early.list1')}}</span>
-      <img src="image/wwwassets/bw3/list/league-collapse-icon.svg" alt="" :class="{arrow2: details_show}" class="arrow">
+      <img src="/yazhou-h5/image/list/league-collapse-icon.svg" alt="" :class="{arrow2: details_show}" class="arrow">
     </p>
     <q-slide-transition>
       <div v-show="details_show">
@@ -102,7 +102,7 @@
             <!-- 注单号和时间 -->
             <p class="order-title row yb_px10">
               <span class="order-num" v-if="item.preOrderNo">{{item.preOrderNo}}
-                &ensp;<img  src="image/wwwassets/bw3/svg/copy.svg" style="width:0.1rem;vertical-align:-2px" alt="" @click="copy($event, item.preOrderNo)">
+                &ensp;<img  src="/yazhou-h5/image/svg/copy.svg" style="width:0.1rem;vertical-align:-2px" alt="" @click="copy($event, item.preOrderNo)">
               </span>
               <span class="order-num" v-else>{{t('early.list6')}}</span>
               <!-- .Format(t('time4')) -->

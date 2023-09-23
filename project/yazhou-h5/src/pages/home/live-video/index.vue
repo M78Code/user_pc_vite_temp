@@ -33,7 +33,7 @@
               <!-- 联赛icon -->
               <img class="match_logo" v-if="index != 0" :src="item.field2 && get_file_path(item.field2)"
                 @error="league_icon_error" />
-              <!--<img class="match_logo" v-else  src="image/wwwassets/bw3/svg/home/all.svg" alt="">-->
+              <!--<img class="match_logo" v-else  src="/yazhou-h5/image/svg/home/all.svg" alt="">-->
               <i v-else class="match_logo"></i>
               <span class="label">{{ item.name }}</span>
             </div>
@@ -124,7 +124,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";;
   let loading = ref(true)
   // 代表的是联赛id  tid
   let field_tid = ref('')
-  let y0_img_favorite_black = ref("image/wwwassets/bw3/common/m-list-favorite-s-y0.svg")
+  let y0_img_favorite_black = ref("/yazhou-h5/image/common/m-list-favorite-s-y0.svg")
   // 赛事列表滑动高度
   let list_scroll_top = ref(0)
   // 锚点

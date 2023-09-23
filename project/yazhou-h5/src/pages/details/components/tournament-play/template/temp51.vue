@@ -31,7 +31,7 @@
                       <!-- lock 锁状态 start -->
                       <div class="play-box">
                         <div class="ellipsis">{{ol_item.on || ol_item.ott}}</div>
-                        <img src="image/wwwassets/bw3/common/match-icon-lock.svg">
+                        <img src="/yazhou-h5/image/common/match-icon-lock.svg">
                       </div>
                       <!-- lock 锁状态 end -->
                     </template>
@@ -45,7 +45,7 @@
                       <!-- lock 锁状态 start -->
                       <div class="play-box">
                         <div class="ellipsis">{{ol_item.on || ol_item.ott}}</div>
-                        <img src="image/wwwassets/bw3/common/match-icon-lock.svg">
+                        <img src="/yazhou-h5/image/common/match-icon-lock.svg">
                       </div>
                       <!-- lock 锁状态 end -->
                     </template>
@@ -60,7 +60,7 @@
                   <!-- lock 锁状态 start -->
                   <div class="play-box">
                     <div class="ellipsis">{{ol_item.on || ol_item.ott}}</div>
-                    <img src="image/wwwassets/bw3/common/match-icon-lock.svg">
+                    <img src="/yazhou-h5/image/common/match-icon-lock.svg">
                   </div>
                   <!-- lock 锁状态 end -->
                 </template>

@@ -23,8 +23,7 @@
       <!-- 列表页主内容 -->
       <match-list ref="match_list" :matchCtr="matchCtr" :menu_type="MenuData.current_menu"
         :data_get_empty="match_is_empty" :source="invok_source ? invok_source : 'match_main'"
-        :window_scrolly="window_scrolly" :match_list_wrapper_height="match_list_wrapper_height"
-        @change_favorite_state="change_favorite_state">
+        :window_scrolly="window_scrolly" :match_list_wrapper_height="match_list_wrapper_height">
         <!--        @unfold_league="unfold_league_handle"-->
       </match-list>
       <!-- 到底了容器原加载更多容器-->

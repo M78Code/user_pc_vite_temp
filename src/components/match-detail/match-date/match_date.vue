@@ -347,10 +347,10 @@ export default {
       let time_tmp = (match_start_time - now_time) / 1000;
       if (time_tmp < 60) {
         //一分钟之内
-        obj.time_str = 1 + i18n_t("list.after_time_start2");
+        time_str = 1 + i18n_t("list.after_time_start2");
       } else {
         //大于一分钟的提示
-        obj.time_str =
+        time_str =
           Math.floor(parseInt(time_tmp / 60)) +
           " " +
           i18n_t("list.after_time_start2");

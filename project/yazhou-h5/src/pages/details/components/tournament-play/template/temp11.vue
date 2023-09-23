@@ -21,7 +21,7 @@
           </div>
           <div class="odds-style">
             <div v-if="item.os != 2">{{compute_value_by_cur_odd_type(item.odds,null,hsw_single)}}</div>
-            <div v-else><img src="image/wwwassets/bw3/common/match-icon-lock.svg" /></div>
+            <div v-else><img src="/yazhou-h5/image/common/match-icon-lock.svg" /></div>
           </div>
         </div>
       </div>

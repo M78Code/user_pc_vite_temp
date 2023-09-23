@@ -126,7 +126,7 @@ export default {
 <style lang="scss" scoped>
 .yb-match-list {
   /*  重写背景色 */
-  ::v-deep .q-table__card {
+  :deep(.q-table__card) {
     box-shadow: none;
     background: transparent;
     .q-virtual-scroll__content {
@@ -134,7 +134,7 @@ export default {
     }
   }
 
-  ::v-deep .data_layout {
+  :deep(.data_layout) {
     z-index: 10;
   }
 }
@@ -196,7 +196,7 @@ export default {
   justify-content: flex-end;
   .pager-wrap {
     color: #fff;
-    ::v-deep .q-pagination {
+    :deep(.q-pagination) {
       .q-btn {
         margin: 0 5px;
         color: #999 !important;

@@ -15,7 +15,7 @@
             :class="[tab_Index == index ? 'tabs-active' : '']" @click="changeTab(tab, index, true)">
             <!-- 竞足 tab图标 -->
             <template v-if='tab.menuId == "30101"'>
-              <img src="image/wwwassets/bw3/home/chinaBet.png" alt="">
+              <img src="/yazhou-h5/image/home/chinaBet.png" alt="">
             </template>
             <template v-else>
               <!-- 精选的tab图标 -->
@@ -28,7 +28,7 @@
                 :src="(`${$g_image_preffix}/image/wwwassets/bw3/home/hot_jx_esport_${tab.field1}.svg`)" alt="" />
               <!-- 体育类的图标 -->
               <!-- <img v-else :src="tab.field3 && get_file_path(tab.field3)" @error="league_icon_error" alt=""> -->
-              <!-- <img v-else  src="image/wwwassets/bw3/home/chinaBet.png" @error="league_icon_error" alt=""> -->
+              <!-- <img v-else  src="/yazhou-h5/image/home/chinaBet.png" @error="league_icon_error" alt=""> -->
              
             </template>
             <span class="menu-name">{{ tab.menuName }}</span>

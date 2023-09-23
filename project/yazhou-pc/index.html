@@ -11,7 +11,7 @@
     <meta name="version-branch" content="%VITE_APP_BRANCH%" />
     <meta name="version-tag" content="%VITE_APP_TAG%" />
     <meta name="version-build_tag" content="%VITE_APP_BUILD_TAG%" />
-    <meta name="version-BUILD_VERSION" content="%VITE_APP_BUILD_VERSION%" />
+    <meta name="version-BUILD_VERSION_HTML" content="%VITE_APP_BUILD_VERSION_HTML%" />
     <meta name="format-detection" content="telephone=no" />
     <meta name="msapplication-tap-highlight" content="no" />
     <meta name="hid-api" content="%VITE_APP_hidApi%" />
@@ -26,13 +26,13 @@
       rel="icon"
       id="link_icon"
       type="image/png"
-      href="%VITE_APP_BUILD_VERSION%/image/common/favicon.ico"
+      href="%VITE_APP_BUILD_VERSION_HTML%/image/common/favicon.ico"
     />
     <link
       rel="stylesheet"
-      href="%VITE_APP_BUILD_VERSION%/lib/font/font-roboto.min.css"
+      href="%VITE_APP_BUILD_VERSION_HTML%/font/font-roboto.min.css"
     />
-    <script src="%VITE_APP_BUILD_VERSION%/lib/js/crypto-js.min.js"></script>
+    <script src="%VITE_APP_BUILD_VERSION_HTML%/lib/js/crypto-js.min.js"></script>
     <style>
       /* 取消默认选中样式 */
       body,html {
@@ -434,7 +434,7 @@
     <script>
       window.CURRENT_ENV_BUILD_IN_OSS = "%VITE_APP_current_env_build_in_oss%";
     </script>
-        <script src="%VITE_APP_BUILD_VERSION%/lib/js/crypto-js.min.js"></script>
+        <script src="%VITE_APP_BUILD_VERSION_HTML%/lib/js/crypto-js.min.js"></script>
    
     <script>
       //版本兼容判定
@@ -448,10 +448,10 @@
           var chrome_version = parseInt(chrome_agent[0].split("/")[1]);
           // 谷歌版本小于56
           if (chrome_version < 56) {
-            location.href = "%VITE_APP_BUILD_VERSION%/page/tips.html";
+            location.href = "%VITE_APP_BUILD_VERSION_HTML%/page/tips.html";
           }
         } else if (ie_agent && ie_agent[0]) {
-          location.href = "%VITE_APP_BUILD_VERSION%/page/tips.html";
+          location.href = "%VITE_APP_BUILD_VERSION_HTML%/page/tips.html";
         }
       })();
 

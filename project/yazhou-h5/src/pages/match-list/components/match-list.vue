@@ -64,7 +64,7 @@
             {{current_way_name}}
           </div>
           <img class='close-o-info-icon' @click="close_other_w_info"
-            :src="(`${ $g_image_preffix }/public/image/menu/set_close_${get_theme && get_theme.includes('day')?'theme01':'theme02'}.svg`)" />
+            :src="(`/public/image/menu/set_close_${get_theme && get_theme.includes('day')?'theme01':'theme02'}.svg`)" />
         </div>
 
           <!-- 次要玩法如果是数组 例如15分钟展开 -->
@@ -119,6 +119,7 @@ import noData from "project_path/src/components/common/no-data.vue"; // 无网�
 import UserCtr from 'src/core/user-config/user-ctr.js'
 import PageSourceData from "src/core/page-source/page-source.js";
 import { MenuData } from "src/core/index.js"
+// import { change_favorite_state } from 'src/core/match-list-h5/composables/match-list-collect.js'
 // import matchListCardFold from 'src/core/match-list-h5/match-card/match-list-card-fold.js'
  
 const props = defineProps({
@@ -132,8 +133,6 @@ const props = defineProps({
   window_scrolly:Number | String,
   match_list_wrapper_height:Number,
 })
-
-const emits = defineEmits(['change_favorite_state', 'unfold_changed'])
 
 const emitters = ref({})
 const store_state = store.getState();
@@ -382,7 +381,7 @@ const toggle_collect = ($event) => {
     number: number,
     sportId: match.csid,
   };
-  emits('change_favorite_state', changedParam);
+  change_favorite_state(changedParam)
 
   favorite_loading.value = true;
   api(params).then(res => {
