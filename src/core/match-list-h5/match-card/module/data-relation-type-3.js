@@ -17,7 +17,7 @@
     import lodash from "lodash";
     import {set_new_sport_title_card_fold} from "./add-and-remove.js"
     import {set_new_league_fold} from  "./fold-tid.js"
-    import {compute_style_template_by_matchinfo} from "./compute-style-template.js"
+    import {compute_style_template_by_match_info} from "./compute-style-template.js"
     import {
    
       sport_title_card_template,
@@ -171,7 +171,7 @@
       league_card_mids_arr[card_key].push(match.mid)
 
       // 赛事表征数据
-      let match_style_obj =  compute_style_template_by_matchinfo(match,18)
+      let match_style_obj =  compute_style_template_by_match_info(match,18)
       all_card_obj['mid_'+match.mid] = match_style_obj
 
     })
