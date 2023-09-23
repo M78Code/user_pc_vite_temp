@@ -5,15 +5,16 @@
 -->
 <template>
   <div :class="['c-match-handicap', { 'unfold_multi_column': match.tpl_id == 13 }, get_5min_classname()]">
+    <div v-show="false">{{ MatchListCardDataClass.list_version }}</div>
     <div class="row no-wrap">
       <!-- 玩法列表 -->
       <div class="handicap-col" v-for="(col, col_index) in handicap_list" :key="col_index">
-        <div :class="['bet-item-wrap', ol_data.other_class]"
-          :style="get_bet_style(col_index, lodash.get(col, 'ols.length'), ol_data)" v-for="(ol_data, ol_index) in col.ols"
+        <div :class="['bet-item-wrap', ]"
+          :style="get_bet_style(col_index, lodash.get(col, 'ols.length'))" v-for="(ol_data, ol_index) in deal_width_handicap_ols(col.ols)"
           :key="ol_index">
           <!-- 投注项组件 -->
           <template v-if="match.tpl_id != 'esports' || (match.tpl_id == 'esports' && getCurState(ol_data._hipo))">
-            <bet-item v-if="is_mounted && ol_data._hpid" :ol_data="ol_data" />
+            <bet-item v-if="is_mounted && ol_data && ol_data._hpid" :ol_data="ol_data" />
           </template>
         </div>
       </div>
@@ -27,13 +28,15 @@
 </template>
 
 <script setup>
-import { defineProps, ref, onMounted } from 'vue';
+import { defineProps, ref, onMounted, computed } from 'vue';
 import lodash from 'lodash';
 
 import { utils_info } from 'src/core/utils/module/match-list-utils.js';
 import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
 import {component_symbol ,need_register_props} from "../config/index.js"
 import { get_match_status } from 'src/core/utils/index'
+import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/core/index.js";
+import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import betItem from "src/components/bet-item/bet-item-list-new-data.vue"
 import { MatchFooterScoreFullVersionWapper as MatchFooterScore } from "src/components/match-list/match-footer-score/index.js"
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
@@ -80,6 +83,23 @@ onMounted(() => {
     is_mounted.value = true
   })
 })
+
+const deal_width_handicap_ols = (payload) => {
+  const { match } = props;
+  let handicap_type = 1
+  let { hn, mid } =  match
+  if(hn){
+    handicap_type =  hn
+  }else{
+    handicap_type = 1
+  }
+  let new_ols = payload.map(item => {
+    if (item.empty) { return }
+    item = lodash.get(MatchListData, 'list_to_obj.hn_obj')[`${mid}_${mid}_${item._hpid}_${handicap_type}_${item.ot}`]
+    return item;
+  })
+  return new_ols
+}
 
 /**
  * @description 获取5分钟玩法时的类名，滚球时不需要背景色，早盘时需要背景色

@@ -8,12 +8,12 @@
       <p class="copy">{{ copy_content }}</p>
     </div>
     <!-- 为了计算总文本宽度，通过css在页面中隐藏 -->
-    <p class="full_content" :ref="refs.full_content">{{ content }}</p>
+    <p class="full_content" :ref="refs.full_content">{{ content }}111111</p>
   </div>
 </template>
 
 <script setup>
-import { ref, onBeforeUnmount } from 'vue'
+import { ref, reactive, onMounted, onBeforeUnmount } from 'vue'
 
 const props = defineProps({
   content: {
@@ -107,7 +107,7 @@ function init() {
     set_move_style(dom_)
     // 兜底处理，dom 元素没拿到的话重新执行一遍
     if (timer2_.value) {
-      timer2_ = setTimeout(() => set_move_style(dom_), 2000);
+      timer2_.value = setTimeout(() => set_move_style(dom_), 2000);
     }
   }, 800)
 }

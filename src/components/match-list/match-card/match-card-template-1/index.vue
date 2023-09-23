@@ -3,7 +3,7 @@
   <div
     class="c-match-card relative-position"
     :id="DOM_ID_SHOW && `list-mid-${mid}`"
-    :style="`height:300px  !important;width:1920px  !important;`"
+    :style="`height:${match_style_obj.total_height}px !important;width:${LayOutMain_pc.layout_content_width}px  !important;`"
   >
   <div v-show="false">{{ MatchListCardData.list_version }}</div>
     <!-- <component
@@ -22,10 +22,10 @@
 import { computed, defineProps, ref, onMounted, onUnmounted, shallowRef } from 'vue';
 import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card-class.js'
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
+import { LayOutMain_pc } from "src/core/index.js";
 import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
 import {component_symbol ,need_register_props} from "../config/index.js"
 import store from 'src/store-redux/index.js'
-
 // inject:['match_list_card'],
 
 // 玩法模板 0   足球-让球&大小  、 足球-角球 、 美足-让球&大小 、 手球-让球&大小
@@ -66,7 +66,6 @@ const test = ref(sessionStorage.getItem('wsl'))
 const is_mounted = ref(false)
 // 显示部分dom ID
 // this.DOM_ID_SHOW = window.BUILDIN_CONFIG.DOM_ID_SHOW;
-const vx_get_layout_size = ref(state.layoutReducer.layout_size)
 // 赛事模板名称
 const match_components_name = computed(() => {
   let {tpl_id = 0} = match_style_obj.value

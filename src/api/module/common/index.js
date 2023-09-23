@@ -30,6 +30,7 @@ export const post_match_full_list = (params) => {
   if(params.query){
     url += params.query;
   }
+  // const queryParams = {"euid":"40003","type":2,"sort":1,"device":"v2_h5"}
   const queryParams = {"cuid":"508169450736300035","euid":"40003","type":1,"sort":2,"device":"v2_h5_st","hpsFlag":0}
   // const queryParams = {"cuid":"508169450736300035","euid":"40003,40004,40006,40007,40008,40009,40012,40010,40015,40016,40017,40020,40021,40022,40011,40013","type":1,"sort":2,"device":"v2_h5_st","hpsFlag":0}
   return http.post(`${prefix_job}${url}`, queryParams, {axios_debounce_cache_key:'post_match_full_list',type:2});
@@ -131,7 +132,7 @@ export const get_collect_live_matchs = (params, config, url = "/v1/m/getCollectL
 export const get_Video_MaxTime = (params, config, url = "/v1/w/virtual/getVideoMaxTime") => http.get(`${prefix}${url}`, params,config)
 // 获取详情页面玩法集接口（christion）
 export const get_category_list = (params, config, url = "/v1/m/category/getCategoryList") => {
-  return http.get(`${prefix}${url}`, params,{axios_debounce_cache_key: 'get_category_list'});
+  return http.get(`${prefix_job}${url}`, params,{axios_debounce_cache_key: 'get_category_list'});
 }
 // 获取虚拟体育赛果页面接口
 export const get_virtual_matchResult = (params,config, url = "/v1/m/matchDetail/getVirtualMatchResult") => {

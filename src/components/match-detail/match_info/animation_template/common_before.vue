@@ -77,10 +77,10 @@
         <!-- 主队 结束 -->
         <!-- 开赛时间 S-->
         <div class="match_time">
-          <match-date
+          <matchProcess
             class="match_time-text"
             :match_props="{ match: match_info }"
-          ></match-date>
+          ></matchProcess>
           <!-- 中立场 -->
           <div class="neutral-wrap" v-if="match_info.mng">
             <span class="icon-neutral q-icon c-icon"
@@ -167,7 +167,8 @@
 import sprite_img from "src/core/server-img/sprite-img/index.js";
 import common_before from "./common_before";
 import UserCtr from "src/core/user-config/user-ctr.js";;
-console.log(UserCtr,'UserCtr');
+// import { MatchProcessFullVersionWapper as matchProcess } from "src/components/match-process/index.js"
+import matchProcess  from "src/components/match-process/match-process-template-1/index.vue"
 export default {
   mixins: [common_before],
   data() {
@@ -175,6 +176,9 @@ export default {
       sprite_img,
       isRouterAlive: true, //重载页面开关
     };
+  },
+  components:{
+    matchProcess
   },
   methods: {
     /**

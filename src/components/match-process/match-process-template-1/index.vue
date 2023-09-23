@@ -7,7 +7,7 @@
   <div
     class="c-match-process text-center"
     :class="rows == 1 ? 'row a-row' : 'column'"
-  >
+  >{{ match_props.match.mcid }}
     <div
       v-show="match_props.match.mcid && show_page == 'match-list'"
       class="jingcai"
@@ -121,7 +121,7 @@
 
 <script setup>
 import { computed, defineProps, ref, watch, onUnmounted } from "vue";
-import matchDate from "src/components/match-date/match_date.vue";
+import matchDate from "src/components/match-detail/match-date/match_date.vue";
 import { utils_info } from 'src/core/utils/module/match-list-utils.js';
 // import { format_second_ms } from "src/core/format/index.js";
 import {

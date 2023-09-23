@@ -323,7 +323,6 @@ export const compute_style_template_by_matchinfo = (match, template_id) => {
 		style_obj.add_handicap_height +
 		style_obj.tab_play_total_height +
 		6;
-	console.log('设置卡片总高度', style_obj);
 
 	return style_obj;
 };

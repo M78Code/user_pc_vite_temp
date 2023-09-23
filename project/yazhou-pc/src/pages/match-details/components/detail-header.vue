@@ -36,12 +36,11 @@
             :other_icon="true"
             icon_name="icon-balance_refresh"
             :loaded="data_loaded"
-            @click="refresh()"
+            @click="refreshFun()"
           />
         </div>
       </div>
     </div>
-
     <!-- 赛事基本信息 start -->
     <template v-if="toggle_panel">
       <div
@@ -74,7 +73,7 @@
       @on_go_top="on_go_top"
       @change-loading-state="change_loading_state"
       :class="{
-        all_empty: ['all_empty', 'new_empty'].includes(handicap_state),
+        all_empty: ['all_empty','new_empty'].includes(handicap_state),
       }"
       whitchDetail="details"
     />
@@ -94,7 +93,7 @@ import { useRoute, useRouter } from "vue-router";
 // import { useMittEmit, MITT_TYPES } from "src/core/mitt/";
 import { IconWapper } from 'src/components/icon'
 import store from "src/store-redux/index.js";
-
+import refresh from "src/components/refresh/refresh.vue"
 const props = defineProps({
   match_infoData: Object,   //赛事状态比分信息
   background_img: String,
@@ -169,7 +168,7 @@ const on_go_top = () => {
 /**
  * @description 刷新页面
  */
-const refresh = () => {
+const refreshFun = () => {
   // 接口请求中
   if (props.is_request) {
     return;

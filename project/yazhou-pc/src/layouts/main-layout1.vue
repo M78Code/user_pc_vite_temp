@@ -1,6 +1,6 @@
 
 <template>
-  <div class="page-main full-height">
+  <div class="page-main full-height" :style="page_style">
     <div :style="{ height: LayOutMain_pc.layout_top_height  }">
       <!-- 搜索 -->
       <search-wapper />
@@ -50,6 +50,11 @@ import toastComponents from "project_path/src/components/toast/toast.vue";
 import alertComponents from "project_path/src/components/toast/alert.vue";
 import confirmComponents from "project_path/src/components/toast/confirm.vue";
 
+import { compute_css_variables } from "src/core/css-var/index.js"
+
+const page_style = ref('')
+page_style.value = compute_css_variables({ category: 'component', module: 'layout' })
+
 const route = useRoute();
 console.error(route);
 //重新计算高度
@@ -61,6 +66,8 @@ const mitt_offs = [
 </script>
 <style lang="scss" scoped>
 @import url(./main-layout.scss);
+@import url(./content-layout.scss);
+@import url(./match-list.scss);
 
 .page-main {
   width: 100%;

@@ -26,11 +26,11 @@
 </template>
 
 <script>
-import {mapGetters, mapMutations} from "vuex"
-import {api_common} from 'src/project/api/index.js';
-import video from "src/core/index.js"   // 视频相关公共方法
+// import {mapGetters, mapMutations} from "vuex"
+import {api_common} from 'src/api/index.js';
+import video  from "src/core/video/video.js"   // 视频相关公共方法
 import uid from "src/core/uuid/index.js"
-import { t } from "src/boot/i18n.js";;
+import { i18n_t } from "src/boot/i18n.js";;
 //国际化
 
 
@@ -73,17 +73,17 @@ export default {
     }
   },
   computed: {
-    ...mapGetters([
-      'get_show_video',
-      'get_goto_detail_matchid',
-      'get_detail_data',
-      'get_play_video',
-      // 列表跳详情是播放视频或者动画
-      'get_is_in_play',
-      // 标清0 高清1
-      "get_hd_sd",
-      'get_lang',
-    ]),
+    // ...mapGetters([
+    //   'get_show_video',
+    //   'get_goto_detail_matchid',
+    //   'get_detail_data',
+    //   'get_play_video',
+    //   // 列表跳详情是播放视频或者动画
+    //   'get_is_in_play',
+    //   // 标清0 高清1
+    //   "get_hd_sd",
+    //   'get_lang',
+    // ]),
     // 赛事id
     match_id() {
       return $route.params.mid || get_detail_data.mid
@@ -112,7 +112,7 @@ export default {
     timer1_ = null
   },
   methods: {
-    ...mapMutations(['set_video_url', 'set_show_video', 'set_toast', 'set_iframe_onload']),
+    // ...mapMutations(['set_video_url', 'set_show_video', 'set_toast', 'set_iframe_onload']),
 
     /**
      * 计算真正回落的点击按钮   直播 视频  动画
@@ -160,12 +160,12 @@ export default {
           }, 2000)
         } else {
           set_toast({
-            txt: t('video.sorry'),
+            txt: i18n_t('video.sorry'),
           });
         }
       }).catch((v) => {
         set_toast({
-          txt: t('video.sorry'),
+          txt: i18n_t('video.sorry'),
         });
       })
     },
@@ -250,7 +250,7 @@ export default {
         } else {
           if(_.get(res,'code')=='0401038'){
             set_toast({
-              txt: t('msg.msg_nodata_22'),
+              txt: i18n_t('msg.msg_nodata_22'),
             });
             return;
           }
@@ -264,7 +264,7 @@ export default {
             video_sorry_temp="!";
           }
           set_toast({
-            txt: t('video.sorry')+video_sorry_temp,
+            txt: i18n_t('video.sorry')+video_sorry_temp,
           });
         }
       }).catch((v) => {
@@ -275,7 +275,7 @@ export default {
         }
 
         set_toast({
-          txt: t('video.sorry')+video_sorry_temp,
+          txt: i18n_t('video.sorry')+video_sorry_temp,
         });
       })
 

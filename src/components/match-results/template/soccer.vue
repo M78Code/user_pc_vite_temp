@@ -680,7 +680,6 @@ export default {
     // 精彩回播配置信息
     // UserCtrInfo:{
     //     handler(res) {
-    //       debugger
     //       // tab按钮开关
     //       let _tab_list = [
     //         {title: i18n_t('replay_video.all'), code: '0'},

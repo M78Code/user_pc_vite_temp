@@ -9,7 +9,9 @@
     </span>
   </div>
 </template>
-<script>
+
+
+<script >
 // #TODO vuex
 // import { mapGetters } from "vuex"
 import team_match_icon from "src/components/details/team-match-icon/team-match-icon-template-1/team-match-icon.vue"  // 动画和视频按钮的展示
@@ -18,7 +20,7 @@ import team_match_icon from "src/components/details/team-match-icon/team-match-i
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { useRoute } from "vue-router"
 
-let route = useRoute()
+
 export default defineComponent({
   name: "header_bottom",
   props: {
@@ -31,6 +33,7 @@ export default defineComponent({
     // "match-score": match_score,
   },
   setup(props, evnet) {
+    let route = useRoute()
     let data = reactive({
       get_menu_type: "",
     });
@@ -44,6 +47,7 @@ export default defineComponent({
     return {
       ...toRefs(data),
       ...toRefs(props),
+      route,
       get_menu_type
     }
   }

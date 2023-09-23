@@ -15,22 +15,26 @@
     <highlights v-if="filtration(4)"></highlights>
   </div>
 </template>
-<script>
+
+<script setup>
 // import { mapGetters } from "vuex";
-import category from 'project_path/src/pages/details/children/category.vue' // 所有赛果
-import detailMatchList from 'project_path/src/pages/details/components/detail_match_list.vue' // 精选赛事
-import myNoteSheet from 'project_path/src/pages/details/components/details_match_results/my_note_sheet.vue' // 我的注单
-import highlights from 'project_path/src/pages/details/analysis-matches/highlights/highlights.vue';   // 精彩回放
+// 所有赛果
+import category from 'project_path/src/pages/details/children/category.vue' 
+// 精选赛事
+import detailMatchList from 'project_path/src/pages/details/components/detail-match-list.vue' 
+// 我的注单
+import myNoteSheet from 'project_path/src/pages/details/components/details-match-results/my-note-sheet.vue' 
+// 精彩回放
+import highlights from 'project_path/src/pages/details/analysis-matches/highlights/highlights.vue';   
 import { useRoute, useRouter } from "vue-router"
+import { onMounted } from 'vue';
 
 const route = useRoute()
 const router = useRouter()
-export default {
-  name:"result_fat_tab",
-  computed:{
-    // ...mapGetters(["get_detail_data","get_goto_detail_matchid"]),
-  },
-  created() {
+  // computed:{
+  //   // ...mapGetters(["get_detail_data","get_goto_detail_matchid"]),
+  // },
+  onMounted(() => {
     let search_term = route.query.search_term
     if(search_term){
 
@@ -39,7 +43,7 @@ export default {
         name: 'match_result',
         params: {
           // mid: route.params.mid,
-          mid: get_goto_detail_matchid,
+          mid: route.params.mid,
           index: '0'
         }
       })
@@ -51,23 +55,22 @@ export default {
       }, 0);
 
     }
-  },
-  components:{
-    // 所有赛果
-    category,
-    // 精选赛事
-    detailMatchList,
-    // 注单
-    myNoteSheet,
-    // 精彩回放
-    highlights
-  },
-  methods:{
-    filtration(i) {
+  })
+  // components:{
+  //   // 所有赛果
+  //   category,
+  //   // 精选赛事
+  //   detailMatchList,
+  //   // 注单
+  //   myNoteSheet,
+  //   // 精彩回放
+  //   highlights
+  // },
+  // methods:{
+  const filtration = (i) => {
       return  route.params.index == i - 1
     }
-  }
-}
+  // }
 </script>
 
 <style lang="scss" scoped>

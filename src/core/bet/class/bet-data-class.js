@@ -427,6 +427,7 @@ this.bet_appoint_ball_head= null */
     }
     this.set_bet_data_class_version()
   }
+  
   // 设置 投注版本
   set_bet_data_class_version = lodash_.debounce(() => {
     this.bet_data_class_version.value = Date.now()

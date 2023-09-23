@@ -65,7 +65,9 @@ const WebStorage = class WebStorage {
    * @memberof Cache
    */
   get(key, def) {
-    const val = this.storage.getItem(this.getKey(key));
+    const _val = this.storage.getItem(this.getKey(key));
+    const native = this.storage.getItem(key) //获取没有经过此类存储的值
+    const val = _val || native
     if (!val) return def;
     try {
       const decVal = this.hasEncrypt ? this.encryption.decryptByAES(val) : val;

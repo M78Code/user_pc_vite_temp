@@ -14,13 +14,13 @@
 </template>
 
 <script>
-import commonCathecticItem from "src/project/components/common/common_cathectic_item";
-import {mapGetters} from "vuex";
-import settleVoid from "src/project/pages/cathectic/settle_void";
-import common from "src/project/mixins/constant/module/common.js"
+import commonCathecticItem from "project_path/src/components/common/common-cathectic-item.vue";
+// import {mapGetters} from "vuex";
+import settleVoid from "project_path/src/pages/cathectic/settle-void.vue";
+// import common from "project_path/src/mixins/constant/module/common.js"
 
 export default {
-  mixins:[common],
+  // mixins:[common],
   name: "",
   components: {
     commonCathecticItem,
@@ -41,7 +41,7 @@ export default {
     tcontainer_height = innerHeight - trem(1.68);
   },
   computed: {
-    ...mapGetters(["get_note_sheet_records_data"])// 待确认中的提前结算订单
+    // ...mapGetters(["get_note_sheet_records_data"])// 待确认中的提前结算订单
   },
 };
 </script>

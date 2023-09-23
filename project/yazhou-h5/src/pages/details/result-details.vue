@@ -40,45 +40,42 @@
   </div>
 </template>
 
-<script>
+<script setup>
 // import { mapGetters, mapMutations } from "vuex";
-import { api_common } from "src/project/api/index.js";
-import resultHeader from "project_path/src/pages/details/components/result_header.vue";
-import resultDetailsTab from "project_path/src/pages/details/components/result_details_tab.vue";
-import resultDetailsDialog from "src/project/components/details/result_details_dialog.vue";
-import noData from "src/project/components/common/no_data.vue";
-import analysis_football_matches from "project_path/src/pages/details/analysis-matches/football_match_analysis/analysis_football_matches";
-import basketball_match_analysis from "project_path/src/pages/details/analysis-matches/basketball_match_analysis/basketball_match_analysis";
-import SResult from "src/project/components/skeleton/match-result" // 赛果详情骨架屏
+import { api_common } from "src/api/index.js";
+import resultHeader from "project_path/src/pages/details/components/result-header.vue";
+import resultDetailsTab from "project_path/src/pages/details/components/result-details-tab.vue";
+import resultDetailsDialog from "project_path/src/components/details/result-details-dialog.vue";
+import noData from "project_path/src/components/common/no-data.vue";
+import analysisFootballMatches from "project_path/src/pages/details/analysis-matches/football-match-analysis/analysis-football-matches.vue";
+import basketballMatchAnalysis from "project_path/src/pages/details/analysis-matches/basketball-match-analysis/basketball-match-analysis.vue";
+// 赛果详情骨架屏
+import SResult from "project_path/src/components/skeleton/match-result.vue" 
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import { useRouter, useRoute } from "vue-router";
 import lodash from "lodash";
+import { computed, onMounted, onUnmounted, watch, ref } from "vue";
 
-export default {
-  name:"result_details",
-  data() {
-    return {
-      // 详情接口所有数据
-      result_detail_data: {},
-      // 是否显示下拉联赛列表
-      is_dialog_details: false,
-      // 赛事列表数据
-      math_list_data: [],
-      loading: false,
-      // 是否显示分析页面
-      analysis_show: {
-        football: false,
-        basketball: false,
-      },
-      //骨架屏加载状态
-      skeleton:{
-        header: false,//头部数据
-        list: false,//列表数据
-        changeTab: false,//切换tab
-      }
-    };
-  },
-  computed: {
+let route = useRoute()
+  // 详情接口所有数据
+  const result_detail_data = ref({}) 
+  // 是否显示下拉联赛列表
+  const is_dialog_details = ref(false) 
+  // 赛事列表数据
+  const math_list_data = ref([]) 
+  const loading = ref(false) 
+  // 是否显示分析页面
+  const analysis_show = ref({
+    football: false,
+    basketball: false,
+  }) 
+  //骨架屏加载状态
+  const skeleton = ref({
+    header: false,//头部数据
+    list: false,//列表数据
+    changeTab: false,//切换tab
+  }
+  )
     // ...mapGetters([
     //   // 获取列表页当前选中二级菜单时间
     //   "get_current_menu",
@@ -94,48 +91,36 @@ export default {
     //   "get_detail_data",
     //   "get_goto_detail_matchid",
     //   "get_curr_sub_menu_type"
-    get_current_menu(){
+   const get_current_menu = computed(() =>{
       return ""
-    },
-    get_menu_type(){
+    })
+   const get_menu_type = computed(() =>{
       return ""
-    },
-    get_uid(){
+    })
+   const get_uid = computed(() =>{
       return ""
-    },
-    get_detail_data(){
+    })
+   const get_detail_data = computed(() =>{
       return ""
-    },
-    get_goto_detail_matchid(){
+    })
+   const get_goto_detail_matchid = computed(() =>{
       return ""
-    },
-    get_curr_sub_menu_type(){
+    })
+   const get_curr_sub_menu_type = computed(() =>{
       return ""
-    },
-    is_match_result(){
+    })
+   const is_match_result = computed(() =>{
       return ['result_details', 'match_result'].includes(route.name)
-    },
-    skeleton_loading(){
+    })
+   const skeleton_loading = computed(() =>{
       if(skeleton.header && skeleton.list){
         return false
       } else{
         return true
       }
-    }
-  },
-  components: {
-    resultHeader,
-    resultDetailsDialog,
-    resultDetailsTab,
-    noData,
-    "analysis-football-matches": analysis_football_matches,
-    "basketball-match-analysis": basketball_match_analysis,
-
-    SResult
-  },
-  watch: {
+    })
     // 监听is_dialog_details(控制是否显示联赛列表)
-    is_dialog_details(new_value, old_value) {
+   watch(() => is_dialog_details.value, (new_value, old_value) => {
       // 新的值等于true的时候也就是点击下三角准备查看联赛列表 此时调用接口:详情页下拉列表接口(/v1/m/matchDetail/getMatchDetailByTournamentIdPB)
       if (new_value) {
         let time_,mgt,date_,dateTime;  //菜单里取不到dateTime 就去详情数据对象里取
@@ -147,7 +132,7 @@ export default {
           console.error(error)
         }
         // tid: 联赛id
-        let tId = result_detail_data.tid;
+        let tId = result_detail_data.value.tid;
         if (get_current_menu && get_current_menu.date_menu && get_current_menu.date_menu.field1) {
           dateTime = get_current_menu.date_menu.field1
         } else {
@@ -161,9 +146,8 @@ export default {
           };
         get_match_list(params);
       }
-    },
-  },
-  created() {
+    })
+  onMounted(() => {
     // 默认加载赛事详情页面接口getMatchDetail
     get_match_detail_info()
     // 监听是否下拉联赛列表
@@ -180,8 +164,7 @@ export default {
       skeleton.changeTab = true
     });
 
-  },
-  methods: {
+  }) 
     // ...mapMutations([
     //   // 三角状态
     //   "set_sanjiao_is_bool",
@@ -191,30 +174,30 @@ export default {
     //   "set_event_list",
     // ]),
     //  足篮显示分析页
-    ana_show(val){
+   const ana_show = (val) => {
       if(val == 1) { // 足球
-        analysis_show.football = true;
+        analysis_show.value.football = true;
         return
       }else if(val == 2){ // 篮球
-        analysis_show.basketball = true;
+        analysis_show.value.basketball = true;
         return
       }else{
-        Object.getOwnPropertyNames(analysis_show).forEach((key) => {
-          analysis_show[key] = false
+        Object.getOwnPropertyNames(analysis_show.value).forEach((key) => {
+          analysis_show.value[key] = false
         });
       }
-    },
+    }
     /**
      *@description: 赛事详情页面接口(/v1/m/matchDetail/getMatchDetailPB)
      *@param {Undefined}
      *@return {Undefined} undefined
      */
-    get_match_detail_info() {
-      // 从url取值赛事id：mid
-      let mid = route.params.mid || get_goto_detail_matchid;
-      if(mid){
-        set_goto_detail_matchid(mid);
-      }
+   const get_match_detail_info = () => {
+      // 从url取值赛事id：mid  || get_goto_detail_matchid
+      let mid = route.params.mid ;
+      // if(mid){
+      //   set_goto_detail_matchid(mid);
+      // }
       let params = {
         mid: mid,
         type: 1,
@@ -227,9 +210,9 @@ export default {
           router.push({name: 'matchList'})
         }else if(code === 200){
           skeleton.header = true
-          loading = true
+          loading.value = true
           if(!data) return false
-          result_detail_data = data;
+          result_detail_data.value = data;
           // 61-比赛延迟,80-比赛中断,90-比赛放弃
           if(!(['90','80','61'].includes(data.mmp+''))){
             data.mmp = '999'
@@ -245,21 +228,21 @@ export default {
           set_detail_data(cloneData);
         }
       }).catch((err) =>{
-        loading = true
+        loading.value = true
         skeleton.header = true
       });
-    },
+    }
     /**
      *@description: 联赛下拉选择组件展开时的联赛列表获取
      *@param {Undefined}
      *@return {Undefined} undefined
      */
-    get_match_list(params) {
+   const get_match_list = (params) => {
       let sessiong_store = sessionStorage.getItem('match_list_ofdetails');
       if(sessiong_store) {
         let store_data = JSON.parse(sessiong_store);
         if(store_data.tId == params.tId){
-          math_list_data = store_data.list;
+          math_list_data.value = store_data.list;
         }
       }
       if(get_menu_type == 28 && [100,101,102,103,104].includes(+get_detail_data.csid)){
@@ -281,7 +264,7 @@ export default {
             });
 
           sessionStorage.setItem('match_list_ofdetails','');
-          math_list_data = [];
+          math_list_data.value = [];
           set_sanjiao_is_bool(false);
         }else{
           let store_data = {
@@ -292,22 +275,21 @@ export default {
           let sessiong_store = JSON.stringify(store_data);
           // 将sessiong_store的值存在sessionStorage里面
           sessionStorage.setItem('match_list_ofdetails',sessiong_store);
-          math_list_data = data;
+          math_list_data.value = data;
           set_sanjiao_is_bool(true);
         }
       });
-    },
+    }
     /**
      *@description: 监听is_bool_dialog_details事件，控制是否显示下拉联赛列表
      *@param {String} 判断是否下拉
      *@return {Undefined} undefined
      */
-    changge_bool(bool) {
+   const changge_bool = (bool) => {
       // bool 的值为true或者是false
-      is_dialog_details = bool;
-    },
-  },
-  beforeUnmount() {
+      is_dialog_details.value = bool;
+    }
+  onUnmounted(() => {
     // 清除监听下拉联赛列表
     useMittOn(MITT_TYPES.EMIT_IS_BOOL_DIALOG_DETAILS, changge_bool).off;
     // 清除刷新详情页;
@@ -318,8 +300,7 @@ export default {
     useMittOn(MITT_TYPES.EMIT_RESULT_LIST_LOADING).off
     useMittOn(MITT_TYPES.EMIT_CHANGE_TAB).off
     set_event_list([])
-  },
-}
+  }) 
 </script>
 
 <style lang="scss" scoped>

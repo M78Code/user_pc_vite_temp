@@ -2,7 +2,7 @@
  * @Description: 站点页眉 - 语言等切换
 -->
 <template>
-    <div class="col-right row items-center" :style="`width:${is_iframe ? 390 : parseInt(layout_size.main_width * .3)}px`">
+    <div class="col-right row items-center" :style="`width:${is_iframe ? 390 : parseInt(main_width)}px`">
 
         <template v-if="is_iframe && menu_collapse_status">
             <div class="swipper" v-if="['normal', 'mini-normal'].includes(main_menu_toggle)">
@@ -86,7 +86,7 @@ import popupLanguage from "project_path/src/components/popup-select/popup-langua
 /* api */
 import { api_account, api_common } from "src/api/index.js";
 
-import {utils } from 'src/core/index.js'
+import {LayOutMain_pc } from 'src/core/index.js'
 import store from "src/store-redux/index.js";
 import { format_money2 } from "src/core/format/index.js"
 // import userCtr from 'src/core/index.js'
@@ -98,12 +98,11 @@ const night_left = '/yazhou-pc/image/svg/night_left.svg'
 const night_right = '/yazhou-pc/image/svg/night_right.svg'
 
 /** 是否内嵌 */
-const is_iframe = ref(utils.is_iframe)
+const is_iframe = ref(LayOutMain_pc.is_iframe)
 
 /** stroe仓库 */
-const { layoutReducer, menuReducer } = store.getState()
+const { menuReducer } = store.getState()
 const unsubscribe = store.subscribe(() => {
-    layout_size.value = layoutReducer.layout_size
     main_menu_toggle.value = menuReducer.main_menu_toggle
     menu_collapse_status.value = menuReducer.menu_collapse_status
     // left_menu_toggle.value = betInfoReducer.left_menu_toggle
@@ -111,11 +110,8 @@ const unsubscribe = store.subscribe(() => {
 })
 /** 销毁监听 */
 onUnmounted(unsubscribe)
-/** 
- * 浏览器 宽高等数据 default: object
- * 路径: project_path\src\store\module\layout.js
- */
-const layout_size = ref(layoutReducer.layout_size)
+const main_width = ref(LayOutMain_pc.layout_main_width * .3)
+// const layout_size = ref(LayOutMain_pc)
 /** 
  * 左侧列表显示形式 -- normal：展开 mini：收起 default: 'normal'
  * 路径: project_path\src\store\module\menu.js

@@ -3,8 +3,10 @@ import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template
 
 import {utils} from "src/core/index.js";
 import store from "src/store-redux/index.js";
-
+import { compute_sport_id  } from 'src/core/constant/index.js'
+import { LayOutMain_pc } from "src/core/index.js";
 import { ref } from "vue";
+import lodash from 'lodash';
 
 const state = store.getState();
 // 热门除了50199-30199  赛事、50101-30101 竞足外，
@@ -74,7 +76,7 @@ class MenuData {
     this.match_list_api_config = {
       match_list: {
         //lockie
-        params: {"apiType":1,"cuid":"508173877382400101","euid":"3020101","orpt":"0","pids":"","sort":1,"tid":"","selectionHour":null}
+        params: {"apiType":1,"cuid":"508173877382400101","euid":"3020101","orpt":"1","pids":"","sort":1,"tid":"","selectionHour":null}
       },
       bymids: {},
     };
@@ -265,6 +267,8 @@ class MenuData {
       "set_left_menu_result--------定义左侧菜单-----",
       JSON.stringify(this.left_menu_result)
     );
+    const { lv1_mi } = this.left_menu_result;
+    MATCH_LIST_TEMPLATE_CONFIG[`template_${compute_sport_id(lv1_mi)}_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width, 'px'))
     if ([2, 3].includes(Number(obj.root))) {
       // 角球
       if ([101210, 101310].includes(+obj.lv2_mi)) {
@@ -631,8 +635,6 @@ class MenuData {
   set_match_list_api_config(config) {
     let match_list_api_config = JSON.parse(JSON.stringify(config));
     match_list_api_config.version = Date.now();
-    // const {  } = match_list_api_config;
-    // MATCH_LIST_TEMPLATE_CONFIG.
     console.error(
       "set_match_list_api_config-------列表结构AP参数的------",
       JSON.stringify(match_list_api_config)
@@ -679,7 +681,10 @@ class MenuData {
    */
   get_match_tpl_number() {
     let { match_list } = this.match_list_api_config;
-    let r = (match_list.params || {}).orpt || 0;
+    let r = (match_list.params || {}).orpt || 1;
+    if (r == '0') {
+      r = 1
+    }
     // 电竞常规赛事
     if (this.is_esports()) {
       r = "esports";
@@ -690,7 +695,7 @@ class MenuData {
     }
     // console.error( 'get_match_tpl_number----------get_match_tpl_number----',r );
 
-    return r || 0;
+    return r || 1;
   }
 
   is_guanjun() {

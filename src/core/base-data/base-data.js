@@ -537,7 +537,7 @@ class BaseData {
    */
   async init_mi_tid_mids() {
     let res = await api_base_data.post_base_data_mi_tid_mids({});
-    this.set_mi_tid_mids_res(res);
+    await this.set_mi_tid_mids_res(res);
   }
   /**
    * 获取 元数据接口
@@ -545,14 +545,15 @@ class BaseData {
   async init_base_data() {
     try {
       let res = await api_base_data.get_base_data({});
-      res && this.set_base_data_res(res);
+      console.log('resresresres', res);
+      res &&  await this.set_base_data_res(res);
     } catch (error) {
       console.log("获取 元数据接口 error", error);
     }
   }
 
   // 设置基础数据  res.data 实体
-  set_base_data_res(res) {
+  async set_base_data_res(res) {
     this.base_data_res = lodash_.get(res, 'data')
     let mids_info = [],
       menus_i18n = [],
@@ -585,8 +586,11 @@ class BaseData {
     //   });
     // });
     console.warn("menus_i18n", menus_i18n);
-    db.mids_info.bulkAdd(mids_info, "mid");
 
+
+   await  db.mids_info.clear()
+   await db.mids_info.bulkAdd(mids_info, "mid");
+   await  db.menus_i18n.clear()
     db.menus_i18n.bulkAdd(menus_i18n, "play_id");
 
     // db.sp_list.bulkAdd(sp_list,'mi')
@@ -694,7 +698,7 @@ class BaseData {
    * 菜单id 到 联赛 id 到 赛事ID 的 映射关系
    * @param {*} res
    */
-  set_mi_tid_mids_res(res) {
+  async set_mi_tid_mids_res(res) {
     let data = lodash_.get(res, 'data', {})
     this.mi_tid_mids_res = data;
     let db_data = [];
@@ -704,8 +708,9 @@ class BaseData {
         match_info: data[item],
       });
     });
+  await  db.match_info.clear()
     //mi作为主键
-    db.match_info.bulkAdd(db_data, "mi");
+    await  db.match_info.bulkAdd(db_data, "mi");
   }
   /**
    * 菜单切换  提取到菜单ID 之后 调用这个方法

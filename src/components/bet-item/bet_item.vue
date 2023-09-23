@@ -27,7 +27,7 @@
         ? odds_state
         : 'odds_state',
     ]"
-    @click.stop="bet_click"
+   @click="set_bet_obj_config(match_info,play_data,play_data.hl,ol_data_item)"
     :id="DOM_ID_SHOW && `${bet_source}-${ol_data_item.oid}`"
   >
     <div
@@ -60,7 +60,7 @@
         </slot>
       </div>
       <!-- 赔率 -->
-      <div :class="['odds yb-number-font', odds_lift]" @click.stop="bet_click">
+      <div :class="['odds yb-number-font', odds_lift]"  @click="set_bet_obj_config(match_info,play_data,play_data.hl,ol_data_item)">
         <div
           v-if="odds_state == 'seal'"
           class="lock"
@@ -88,7 +88,8 @@
 
 <script setup>
 import lodash from "lodash";
-import { useGetItem } from "./bet_item_mixin.js";
+import { useGetItem } from "./bet_item_hooks.js";
+import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
 const props = defineProps({
   // 当前玩法信息
   play_data: Object,
@@ -164,7 +165,6 @@ const props = defineProps({
     default: -1,
   },
 });
-
 const {
   DOM_ID_SHOW,
   ol_data_item,
@@ -178,6 +178,7 @@ const {
   bet_click,
   format_odds_value
 } = useGetItem({ props });
+
 </script>
 
 <style lang="scss" scoped>

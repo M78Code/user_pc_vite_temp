@@ -30,3 +30,6 @@ job/output/*
 
 .history
 .env* 
+
+./public/yazhou-pc/server-resource/*
+./public/yazhou-h5/server-resource/*

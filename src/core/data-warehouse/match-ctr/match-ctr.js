@@ -309,7 +309,7 @@ export default class MatchDataBase
     }
     // 遍历接口比分数据 转成比分对象
     lodash.each(msc, score_str => {
-      let [key,value] = score_str.split('|')
+      let [key,value] = score_str && score_str.split('|') || []
       if(value){
         let [home,away] = value.split(':')
         score_obj[key] = {home,away}
@@ -352,10 +352,8 @@ export default class MatchDataBase
         } else {
           match.play_obj = play_obj_temp;
         }
-
         // 设置赛事默认数据
         this.set_match_default_data(match);
-
         // 赛事数据格式化
         match && this.list_to_many_obj([match]);
 
@@ -567,7 +565,7 @@ export default class MatchDataBase
         const mid = item.mid;
         if(obj.upd[mid]){
          // 需要更新的赛事
-         const match = this.quick_query_obj.mid_ob[this.get_format_quick_query_key(mid,mid,'mid')];
+         const match = this.quick_query_obj.mid_obj[this.get_format_quick_query_key(mid,mid,'mid')];
          if(match){
           // 赛事信息合并
           this.match_assign(match,obj.upd[mid]);
@@ -664,6 +662,7 @@ export default class MatchDataBase
       // this.hn_obj_assign(this.quick_query_obj.hn_obj, many_obj.hn_obj);
       // this.hl_obj_assign(this.quick_query_obj.hl_obj, many_obj.hl_obj);
     }
+    console.error('this.quick_query_obj',this.quick_query_obj)
   }
   /**
    * @description: 获取快速查询的key值

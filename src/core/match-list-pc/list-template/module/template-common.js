@@ -19,6 +19,8 @@
 
 
 import lodash from "lodash";
+
+import { utils } from 'src/core/index.js'
 /**
  * @Description 设置默认模板
  * @param {Number} num 列数
@@ -165,6 +167,7 @@ export const set_template_width_base = (
   config,
   middle_fn = () => {}
 ) => {
+  console.log('total_width', total_width);
   // 基础信息宽度
   config.process_team_width = parseInt(total_width * 0.292);
   //设置最小宽度
@@ -176,7 +179,7 @@ export const set_template_width_base = (
   if (total_width < 930) {
     config.media_width = 40;
   }
-  if (is_iframe) {
+  if (utils.is_iframe) {
     config.process_team_width = 56 + 182;
     config.media_width = 44;
   }
@@ -195,7 +198,7 @@ export const set_template_width_base = (
   // 设置赛事阶段加主客队宽度
   config.process_team_width = config.process_team_width;
   // 设置主客队信息宽度
-  if (is_iframe) {
+  if (utils.is_iframe) {
     config.team_width = config.process_team_width - 56;
   } else {
     config.team_width = config.process_team_width - 77;
