@@ -52,12 +52,12 @@ const set_move_style = (dom_) => {
     // 如果文本内容的宽度小于页面宽度，则表示文字小于等于一行，则不需要滚动
     if (text_width < 160) {
       scroll.style.justifyContent = 'center'
-      start_roll = false
+      start_roll.value = false
       return
     } else {
-      start_roll = true
+      start_roll.value = true
       // title内容副本，为了动画文字流畅衔接
-      copy_content = content
+      copy_content.value = content
       // 定时器动画（部分机型动画卡顿，导致的样式问题）换为css原生动画
       // move(text_width, scroll)
 
@@ -83,7 +83,7 @@ const set_move_style = (dom_) => {
     timer2_ = null
   }
 const move = (text_width, scroll) => {
-    copy_content= content // 文字副本填充
+    copy_content.value = content // 文字副本填充
     let distance = 0 // 位移距离
     // 设置位移
     timer = setInterval(() => {

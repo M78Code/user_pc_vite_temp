@@ -50,13 +50,13 @@ const list_data = ref([])
   // 监听csid的变化
  watch(() => 'result_detail_data.csid', (n,o) =>{
       // 切换顶部菜单，csid变化，触发tab事件
-      result_tab(0, tab_item_list[0])
+      result_tab(0, tab_item_list.value[0])
       get_list()
     },
     {deep: true})
 watch(() => props.tab_index, (n,o) => {
   if(n!=2){
-      result_tab(n, tab_item_list[n])
+      result_tab(n, tab_item_list.value[n])
     }
 })
 let off_ = () => {}
@@ -73,14 +73,14 @@ let off_ = () => {}
    * 标签数据初始化
    */
 const tab_data_init = () => {
-    tab_item_list =[
+    tab_item_list.value =[
       // 所有赛果
       {id:1, text: i18n_t('match_info.all_result')},
       // 精选赛事
       {id:2, text: i18n_t('match_info.select_event')}
     ];
     if(get_menu_type == 28 && [100,101,102,103,104].includes(+result_detail_data.csid))  {
-      tab_item_list =[
+      tab_item_list.value =[
         // 所有赛果
         {id:1, text: i18n_t('match_info.all_result')}
       ];
@@ -125,7 +125,7 @@ const result_tab = (index,tab_item) => {
           list_data = data.record
           set_note_sheet_records_data(list_data)
           if(Object.keys(list_data).length>0) {
-            tab_item_list.push({
+            tab_item_list.value.push({
               id:3,
               // 我的注单
               text: i18n_t('match_info.my_bets')
@@ -162,7 +162,7 @@ const get_football_replay = (event_code) => {
         .then(res => {
           if (res.code == 200 && lodash.get(res.data, 'eventList.length')) {
             // 足球类型赛果需添加精彩回放菜单
-            tab_item_list.push({
+            tab_item_list.value.push({
               id: 4,
               // 精彩回放
               text: i18n_t('highlights.title')
