@@ -94,7 +94,7 @@ onBeforeUnmount(() => cancel_ref.cancel())
 
 // 返回列表页亦或是返回上一级
 const go_to_back = lodash.debounce(() => {
-  // $common.go_where({back_to: 'go_to_back'})
+  router.back()
 }, 500, { leading: true })
 onBeforeUnmount(() => go_to_back.cancel())
 
@@ -208,6 +208,7 @@ const interface_b_header = () => {
 
 // 点击下拉三角加载联赛列表
 const show_dialog = () => {
+  alert(1)
   let params0 = { tId: get_detail_data.tid, page: 1, count: 50 };
   // 加载联赛列表
   interface_b_header(params0)
