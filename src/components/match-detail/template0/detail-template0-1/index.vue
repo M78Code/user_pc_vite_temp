@@ -11,7 +11,7 @@
     v-if="curIsShow"
   >
     <!-- 主盘 S-->
-    <div class="main-handicap">
+    <div class="main-handicap">2222
       <handicap-title
         :index="index"
         :item_details="item_details"

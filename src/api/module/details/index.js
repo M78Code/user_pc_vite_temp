@@ -22,7 +22,7 @@ export const get_full_url = (url='') => {
 export const get_category_list = (params, config = {}, url = "/v1/w/category/getCategoryList") => http.get(`${prefix}${url}`, params, {axios_debounce_cache_key:'get_category_list'})
 
 //赛事详情页比分板接口
-export const get_match_detail_MatchInfo = function(params, config = {}, url = "/v1/w/matchDetail/getMatchDetailPB"){
+export const get_match_detail_MatchInfo = function(params, config = {}, url = "/v1/w/matchDetail/getMatchDetail"){
   let now_time = new Date().getTime()
   // 如果和上次调用mid一样 并且两次调接口时间间隔小于100毫秒 使用上次接口结果
   if(params.mid == pre_detail_params.mid && (now_time - pre_get_match_detail_time) < 100){
@@ -51,7 +51,7 @@ export const get_match_odds_info_ES = (params, config = {}, url = "/v1/w/matchDe
 export const get_match_detail2 = (params, config = {}, url = "/v1/w/matchDetail/getMatchOddsInfo2PB") => http.post(`${prefix}${url}`, params, {axios_debounce_cache_key:'match_odds_Info2'})
 
 //赛事盘口详情（2021-05-23 接口变更从getMatchOddsInfo变为getMatchOddsInfo1）
-export const get_match_odds_info = (params, config = {}, url = "/v1/w/matchDetail/getMatchOddsInfo1PB") => http.get(`${prefix}${url}`, params, {...config, cancel_other: 'getMatchOddsInfo1'})
+export const get_match_odds_info = (params, config = {}, url = "/v1/w/matchDetail/getMatchOddsInfo1") => http.get(`${prefix}${url}`, params, {...config, cancel_other: 'getMatchOddsInfo1'})
 
 //赛事盘口详情 （视频页，调用H5接口）PB
 export const get_match_detail_m = (params, config = {}, url = "/v1/m/matchDetail/getMatchOddsInfoPB") => http.get(`${prefix}${url}`, params)
