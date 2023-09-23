@@ -946,7 +946,6 @@ class MenuData {
     });
     //设置二级菜单 賽果和電機是不需要設置二級菜單的
     switch (current_lv_1_menu.mi) {
-
       case 28:
         this.get_results_menu();
         break;
@@ -954,10 +953,6 @@ class MenuData {
         this.set_cache_class({
           menu_lv2: current_lv_1_menu.sl || [],
         });
-    }
-
-    if (![7, 28].includes(current_lv_1_menu.mi)) {
-
     }
     useMittEmit(MITT_TYPES.EMIT_MAIN_MENU_CHANGE);
   }

@@ -38,7 +38,7 @@ export default {
     // 点击调用模糊搜索接口，
     item_click(val) {
       //TODO
-      SearchData.set_cur_csid(val);
+      SearchData.set_search_txt(val);
       this.$emit('get_search_result', true);
     },
     // 去除当前点击的历史记录

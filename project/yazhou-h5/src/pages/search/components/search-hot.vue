@@ -42,7 +42,7 @@ export default {
     // 点击调用模糊搜索接口
     hotItem_click(text) {
       //TODO
-      SearchData.set_cur_csid(text);
+      SearchData.set_search_txt(text);
       this.$emit('get_search_result', true);
     }
   },
