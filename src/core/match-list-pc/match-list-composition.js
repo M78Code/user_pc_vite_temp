@@ -317,6 +317,7 @@ const set_base_data_init = () => {
 	}
 	if (menu_root == 3) return;
 	// 赛事列表 卡片数据
+	console.log('datadatadatadata', matchs_list);
 	handle_match_list_request_when_ok(data, true, true, true);
 	let ts1 = Date.now();
 	let mids_arr = [];
@@ -325,7 +326,7 @@ const set_base_data_init = () => {
 		match.api_update_time = ts1;
 	});
 	// 联赛数据
-	set_match_base_info_by_mids_info(matchs_list, mids_arr, ts1);
+	// set_match_base_info_by_mids_info(matchs_list, mids_arr, ts1);
 };
 
 /**
@@ -387,6 +388,8 @@ const fetch_match_list = (is_socket = false, cut) => {
 		_params.selectionHour = null;
 	}
 	// 无感刷新 不走预加载
+	set_base_data_init();
+
 	if (typeof is_socket == "boolean" && !is_socket) {
 		// console.error('不是无感刷新')
 		// 使用元数据默认显示
