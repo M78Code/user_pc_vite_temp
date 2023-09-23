@@ -19,7 +19,7 @@
             <!-- 左边联赛箭头及名称  -->
             <span>
               <img class="arrow_up" :class="{ collapse: !item1.hide }"
-                src="/public/yazhou-h5/image/list/league-collapse-icon-black.svg" alt="">
+                src="/yazhou-h5/image/list/league-collapse-icon-black.svg" alt="">
               <span class="name-text">{{ ((type == 1 && get_sport_all_selected == true) || (type == 28 &&
                 get_curr_sub_menu_type == 29)) ? item1.nameText : item1.introduction }}</span>
             </span>
@@ -27,7 +27,7 @@
             <img class="icon-search" @click.stop.prevent="select_sport_ctr(item1, index)"
               v-if="(item1.select || (((type != 1 && get_curr_sub_menu_type != 29) || (type == 1 && get_sport_all_selected == false)) && item1.sportVOs[0].select))"
               :src="`${$g_image_preffix}/image/svg/check_circle_outline-24px${on_suffix}.svg`" />
-            <img src="/public/yazhou-h5/image/svg/selected-no.svg" alt="" class="icon-search"
+            <img src="/yazhou-h5/image/svg/selected-no.svg" alt="" class="icon-search"
               @click.stop.prevent="select_sport_ctr(item1, index)" v-else>
           </div>
           <!-- 联赛名称部分 -->
@@ -52,7 +52,7 @@
                   </div>
                   <img v-if="item2.select" class="icon-search"
                     :src="`${$g_image_preffix}/image/svg/check_circle_outline-24px${on_suffix}.svg`" />
-                  <img src="/public/yazhou-h5/image/svg/selected-no.svg" alt="" class="icon-search" v-else>
+                  <img src="/yazhou-h5/image/svg/selected-no.svg" alt="" class="icon-search" v-else>
                 </div>
               </div>
             </div>
@@ -86,7 +86,7 @@
         <!-- <template> -->
         <img v-if="all_checked" class="icon-search" @click="all_checked_click"
           :src="`${$g_image_preffix}/image/svg/check_circle_outline-24px${on_suffix}.svg`" />
-        <img src="/public/yazhou-h5/image/svg/selected-no.svg" alt="" class="icon-search" @click="all_checked_click"
+        <img src="/yazhou-h5/image/svg/selected-no.svg" alt="" class="icon-search" @click="all_checked_click"
           v-else>
         <span class="txt ellipsis-2-lines" @click="all_checked_click">{{ $t('common.all_select') }}</span>
         <!-- </template> -->
@@ -115,10 +115,10 @@ import lodash from 'lodash'
 
 // 构建版本
 // BUILD_VERSION:window.env.config.BUILD_VERSION,
-const $g_image_preffix = '/public/yazhou-h5/';
+const $g_image_preffix = '/yazhou-h5/';
 const list_data_loading = ref(false);    //数据加载中
-const default_url = "/public/yazhou-h5/image/svg/match_cup.svg"  //默认图片地址 // 无联赛logo图标黑色版
-const none_league_icon_black = "/public/yazhou-h5/image/svg/match_cup_black.svg"
+const default_url = "/yazhou-h5/image/svg/match_cup.svg"  //默认图片地址 // 无联赛logo图标黑色版
+const none_league_icon_black = "/yazhou-h5/image/svg/match_cup_black.svg"
 const list = ref([]); //数据列表整个赛事
 const type = MenuData.menu_type;  //筛选类型 1-滚球 3-今日  4-早盘  100-冠军 28 赛果
 const all_checked = ref(false); //是否全选

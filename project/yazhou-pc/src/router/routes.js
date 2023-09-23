@@ -7,15 +7,13 @@ const routes = [
     redirect: {
       name: "home",
     },
-    component: () => import(`../layouts/main-layout1.vue`),
+    component: () => import('project_path/src/layouts/main-layout1.vue'),
     children: [
       //       // 首页
       {
         path: "/home",
         name: "home",
-        component: () => import(`../pages/test/index.vue`),
-        // component: () => import(`../pages/match-list/match-list.vue`),
-        // component: () =>import(`../pages/match-details/details_main.vue`),
+        component: () => import('project_path/src/pages/test/index.vue'),
         meta: {
           keepAlive: true, // 需要缓存
         },
@@ -24,7 +22,7 @@ const routes = [
       {
         path: "/match",
         name: "match",
-        component: () => import.meta.global(`../pages/match-list/match-list.vue`),
+        component: () => import('project_path/src/pages/match-list/match-list.vue'),
         meta: {
           keepAlive: true, // 需要缓存
         },
@@ -41,8 +39,7 @@ const routes = [
       {
         path: "/details/:mid/:tid/:csid",
         name: "details",
-        component: () =>
-          import(`../pages/match-details/details-main.vue`),
+        component: () => import('project_path/src/pages/match-details/details-main.vue')
       },
       //       {
       //         path: "/virtual_details/:mid/:tid/:csid",
@@ -57,16 +54,17 @@ const routes = [
     ],
   },
   //赛事分析
-  // {
-  //   path: "/analysis_header/:csid/:mid",
-  //   name: "analysis_header",
-  //   component: () => import(`../pages/test/index.vue`),
-  // },
+  {
+    path: "/analysis_header/:csid/:mid",
+    name: "analysis_header",
+
+    component: () => import('project_path/src/pages/test/index.vue'),
+  },
   // //投注记录
   {
     path: "/bet_record",
     name: "bet_record",
-    component: () => import("../pages/bet-record/index.vue"),//project/yazhou-pc/src/pages/bet-record/index.vue
+    component: () => import('project_path/src/pages/bet-record/index.vue'),
   },
   // 赛果
   {

@@ -327,15 +327,18 @@ export default class MatchDataBase
       list.forEach(match => {
         const score_obj = lodash.get(match, 'msc_obj');
         const msc = lodash.get(match, 'msc',[]);
-        // 转换比分
-        const msc_obj = this.serialized_score_obj(msc,true);
-        // 数据赋值和合并逻辑
-        if(score_obj){
-          this.assign_with(score_obj, msc_obj)
-        } else {
-          match.msc_obj = msc_obj;
+        try {
+          // 转换比分
+          const msc_obj = this.serialized_score_obj(msc,true);
+          // 数据赋值和合并逻辑
+          if(score_obj){
+            this.assign_with(score_obj, msc_obj)
+          } else {
+            match.msc_obj = msc_obj;
+          }
+        } catch (error) {
+          console.error(error);
         }
-
         // 转换玩法
         const play_obj = lodash.get(match, 'play_obj');
         const hps_pns_arr = lodash.get(match, 'hpsPns',[]);

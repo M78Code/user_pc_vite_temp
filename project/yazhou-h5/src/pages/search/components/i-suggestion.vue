@@ -18,7 +18,7 @@
           <span class="score" v-if="item.msc.S1">{{ lodash.get(item, "msc.S1.home", "0") }}-{{ lodash.get(item,
             "msc.S1.away", "0") }}</span>
           <span class="time" v-else>{{ (new Date(+item.mgt)).Format($t('time4')) }}</span>
-          <img src="image/wwwassets/bw3/list/league-collapse-icon.svg" alt="">
+          <img src="/yazhou-h5/image/list/league-collapse-icon.svg" alt="">
         </div>
       </li>
     </ul>
@@ -38,7 +38,7 @@
             <span class="score" v-if="item.msc.S1">{{ lodash.get(item, "msc.S1.home", "0") }}-{{ lodash.get(item,
               "msc.S1.away", "0") }}</span>
             <span class="time" v-else>{{ (new Date(+item.mgt)).Format($t('time4')) }}</span>
-            <img src="image/wwwassets/bw3/list/league-collapse-icon.svg" alt="">
+            <img src="/yazhou-h5/image/list/league-collapse-icon.svg" alt="">
           </div>
         </li>
       </ul>
@@ -74,7 +74,7 @@
                 "msc.S1.away", "0") }}</span>
               <span class="time" v-else>{{ (new Date(+item.mgt)).Format($t('time4')) }}</span>
             </template>
-            <img src="image/wwwassets/bw3/list/league-collapse-icon.svg" alt="">
+            <img src="/yazhou-h5/image/list/league-collapse-icon.svg" alt="">
           </div>
         </li>
       </ul>
@@ -103,9 +103,9 @@ const props = defineProps({
     default: () => ([])
   },
 })
-const default_url = "/public/yazhou-h5/image/svg/match_cup.svg"  //默认图片地址
+const default_url = "/yazhou-h5/image/svg/match_cup.svg"  //默认图片地址
 // 无联赛logo图标黑色版
-const none_league_icon_black = "/public/yazhou-h5/image/svg/match_cup_black.svg"
+const none_league_icon_black = "/yazhou-h5/image/svg/match_cup_black.svg"
 const there_any_data = computed(() => {
   // 没有数据时，显示 无数据组件
   if (Array.isArray(props.SuggestionList)) {

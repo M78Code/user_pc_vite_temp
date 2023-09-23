@@ -28,10 +28,10 @@
       </div>
       <div class="col-6">
         <!-- 描述比赛进度相关start -->
-        <team-text
+        <!-- <team-text
           :detail_data="detail_data"
           v-if="MenuData.get_menu_type() != 3000"
-        ></team-text>
+        ></team-text> -->
         <!-- 描述比赛进度相关end -->
       </div>
       <div class="col-3 logo-double">
@@ -63,7 +63,7 @@
       <div
         class="eports_scoring_tip"
         v-if="eports_scoring"
-      >{{ $root.$t('mmp.eports_scoring') }}</div>
+      >{{ i18n_t('mmp.eports_scoring') }}</div>
       <div
         class="information-score"
         v-else-if="[1, 2, 3, 4].includes(+detail_data.ms)"
@@ -84,16 +84,17 @@
         <!-- 开赛时间 -->
         <span v-if="detail_data.ms == 0">
           <span
-            v-if="start_time"
+            v-if="show_someone.start_time"
             class="fz_12"
             style="font-weight:400"
           >
             <!-- 距离开赛时间小于一小时显示倒计时 -->
-            {{ $root.$t("list.after_time_start", [longTime]) }}
+            {{ i18n_t("list.after_time_start", [longTime]) }}
           </span>
           <template v-else>
-            <div class="sj-time-day">{{ utils.format_time_zone(+detail_data.mgt).Format($root.$t('time3')) }}</div>
-            <span class="sj-time-soon">{{ utils.format_time_zone_time(+detail_data.mgt) | format_H_M }}</span>
+            <!-- .Format(i18n_t('time3')) -->
+            <div class="sj-time-day">{{ format_time_zone(+detail_data.mgt) }}</div>
+            <span class="sj-time-soon">{{ format_time_zone_time(+detail_data.mgt) | format_H_M }}</span>
           </template>
         </span>
         <!-- 赛前切滚球 ms=110时:显示即将开赛 -->
@@ -102,19 +103,19 @@
           class="fz_12"
           style="font-weight:400"
         >
-          {{ $root.$t(`ms[${detail_data.ms}]`) }}
+          {{ i18n_t(`ms[${detail_data.ms}]`) }}
         </span>
         <template v-else>
-          <span>{{ $root.$t('mmp')[detail_data.csid][detail_data.mmp] }}</span>
+          <span>{{ i18n_t('mmp')[detail_data.csid][detail_data.mmp] }}</span>
           <!-- 倒/正计时组件 -->
-          <counting-down
+          <!-- <counting-down
             :title="null"
             :mmp="detail_data.mmp"
             :m_id="detail_data.mid"
             :second="detail_data.mst"
             :match="detail_data"
             :is_add="[100, 101, 102, 103, 104].includes(+detail_data.csid)"
-          />
+          /> -->
         </template>
       </div>
     </div>
@@ -127,15 +128,15 @@
       <!-- 比赛分数or开赛时间 -->
       <span v-if="detail_data.ms == 0">
         <span
-          v-if="start_time"
+          v-if="show_someone.start_time"
           class="fz_12"
           style="font-weight:400"
         >
           <!-- 距离开赛时间小于一小时显示倒计时 -->
-          {{ $root.$t("list.after_time_start", [longTime]) }}
+          {{ i18n_t("list.after_time_start", [longTime]) }}
         </span>
         <span v-else>
-          {{ utils.format_time_zone_time(+detail_data.mgt) | format_H_M }}
+          {{ format_time_zone_time(+detail_data.mgt) | format_H_M }}
         </span>
       </span>
       <!-- 赛前切滚球 ms=110时:显示即将开赛 -->
@@ -144,7 +145,7 @@
         class="fz_12"
         style="font-weight:400"
       >
-        {{ $root.$t(`ms[${detail_data.ms}]`) }}
+        {{ i18n_t(`ms[${detail_data.ms}]`) }}
       </span>
       <!-- 棒球的进攻方绿点在大比分两侧展示 -->
       <span
@@ -166,7 +167,7 @@
       ></span>
 
       <!-- 局间比分 -->
-      <match-between-score :detail_data="detail_data"></match-between-score>
+      <!-- <match-between-score :detail_data="detail_data"></match-between-score> -->
     </div>
 
     <!-- 队名 -->
@@ -184,19 +185,19 @@
         <!-- 进球动画 -->
         <div
           class="goal-wrap"
-          v-if="is_show_home_goal"
+          v-if="show_someone.is_show_home_goal"
         >
           <div class="inner yb-flex-center left">
             <div
               class="yb-goal-gif"
               :class="{ 'yb-goal-yo': UserCtr.theme.includes('y0') }"
             ></div>
-            <div class="gif-text">{{ $root.$t('match_result.goal') }}</div>
+            <div class="gif-text">{{ i18n_t('match_result.goal') }}</div>
           </div>
         </div>
         <div
           class="red-gif"
-          :class="{ flash: is_show_home_red }"
+          :class="{ flash: show_someone.is_show_home_red }"
         >
           <div class="inner left"></div>
         </div>
@@ -204,21 +205,21 @@
       <div class="row name-wrap">
         <div
           class="red-gif"
-          :class="{ flash: is_show_away_red }"
+          :class="{ flash: show_someone.is_show_away_red }"
         >
           <div class="inner right"></div>
         </div>
         <!-- 进球动画 -->
         <div
           class="goal-wrap"
-          v-if="is_show_away_goal"
+          v-if="show_someone.is_show_away_goal"
         >
           <div class="inner yb-flex-center right">
             <div
               class="yb-goal-gif"
               :class="{ 'yb-goal-yo': UserCtr.theme.includes('y0') }"
             ></div>
-            <div class="gif-text">{{ $root.$t('match_result.goal') }}</div>
+            <div class="gif-text">{{ i18n_t('match_result.goal') }}</div>
           </div>
         </div>
         <div class="man-name ellipsis-2-lines">
@@ -251,7 +252,8 @@ import { utils } from 'src/core/utils/index.js';
 import { MenuData, UserCtr } from "src/core/index.js";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import store from "src/store-redux/index.js";
-import { format_total_score } from "src/core/format/index.js"
+import { format_total_score, format_time_zone_time, format_time_zone } from "src/core/format/index.js"
+import { i18n_t } from "src/boot/i18n.js"
 
 const props = defineProps({
   detail_data: {
@@ -259,6 +261,29 @@ const props = defineProps({
     default: () => { }
   }
 })
+
+/** 赛事开始倒计时时间(赛事开始时间-当前时间) */
+const longTime = ref('')
+const show_someone = reactive({
+  /** 赛事开赛时间倒计时是否显示 */
+  start_time: true,
+  /** 是否显示主队进球动画 */
+  is_show_home_goal: false,
+  /** 是否显示客队进球动画 */
+  is_show_away_goal: false,
+  /** 是否显示主队红牌动画 */
+  is_show_home_red: false,
+  /** 是否显示客队红牌动画 */
+  is_show_away_red: false,
+})
+/** 比分和红牌数值变化时设置时间 */
+const scoreTime = reactive({
+  S1: 0,
+  S11: 0
+})
+/** 顶部赛事是否切换 */
+const change_match = ref(false)
+
 /** 初始化 */
 const initEvent = () => {
   // mgt:赛事开始时间
@@ -291,29 +316,9 @@ const initEvent = () => {
   }, 1000 * 1)
 }
 onMounted(initEvent)
-watch(props.detail_data.mgt, initEvent)
+watch(() => props.detail_data.mgt, () => initEvent())
 
-/** 赛事开始倒计时时间(赛事开始时间-当前时间) */
-const longTime = ref('')
-const show_someone = reactive({
-  /** 赛事开赛时间倒计时是否显示 */
-  start_time: true,
-  /** 是否显示主队进球动画 */
-  is_show_home_goal: false,
-  /** 是否显示客队进球动画 */
-  is_show_away_goal: false,
-  /** 是否显示主队红牌动画 */
-  is_show_home_red: false,
-  /** 是否显示客队红牌动画 */
-  is_show_away_red: false,
-})
-/** 比分和红牌数值变化时设置时间 */
-const scoreTime = reactive({
-  S1: 0,
-  S11: 0
-})
-/** 顶部赛事是否切换 */
-const change_match = ref(false)
+
 
 /**
  * @Description 主比分
@@ -547,7 +552,7 @@ onBeforeUnmount(clear_timer1_)
 const { detailsReducer } = store.getState()
 const goto_detail_matchid = ref(detailsReducer.goto_detail_matchid)
 const unsubscribe = store.subscribe(() => {
-  const { new_detailsReducer } = store.getState()
+  const { detailsReducer: new_detailsReducer } = store.getState()
   goto_detail_matchid.value = new_detailsReducer.goto_detail_matchid
 
 })
