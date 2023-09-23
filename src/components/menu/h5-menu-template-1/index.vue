@@ -54,7 +54,7 @@
               :title="i18n_t('footer_menu.all')" @click="select_all_sub_menu_handle" :count="all_sport_count_calc"
               v-if="GlobalAccessConfig.get_playAllShow()">
               <span class="sport-icon-wrap" :style="compute_css(
-                !(current_lv2.mi) ?
+                !(current_lv2?.mi) ?
                   'menu-sport-active-image' : 'menu-sport-icon-image'
                 , 0
               )

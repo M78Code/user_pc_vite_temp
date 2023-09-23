@@ -31,7 +31,12 @@ if (!project) {
 export default defineConfig({
   plugins: [
     vue({
-      template: { transformAssetUrls },
+      template: { 
+        transformAssetUrls,
+        compilerOptions: {
+          isCustomElement: (tag) => tag == 'marquee'
+        }
+       },
     }),
 
     quasar({

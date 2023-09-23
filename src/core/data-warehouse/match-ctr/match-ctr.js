@@ -27,7 +27,7 @@
 import MatchDataBaseWS from  "./match-ctr-ws.js"
 import { ref } from 'vue'
 
-export default class MatchDataBase
+class MatchDataBase
 {
   /**
    * @description: 构造函数
@@ -1386,3 +1386,5 @@ export default class MatchDataBase
     this.ws_ctr && this.ws_ctr.destroy();
   }
 }
+
+export default new MatchDataBase()

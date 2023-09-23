@@ -38,7 +38,13 @@ class MatchCtr {
     this.mid_obj = {};
     // 所有坑位对象
     this.hn_obj = {};
+    this.match_data_version = ref(0);
   }
+
+  // 设置 赛事版本
+  set_match_data_version = lodash.debounce(() => {
+    this.match_data_version.value = Date.now()
+  }, 50)
 
   /**
    * @description: list转字典
@@ -110,6 +116,7 @@ class MatchCtr {
       this.match_list_data_sources = null;
       //  把接口请求到的 数据，赋值到 数据仓库
       this.match_list_data_sources = sortList
+      this.set_match_data_version()
     }
   }
   /**
@@ -129,6 +136,7 @@ class MatchCtr {
       }
     })
     return obj
+    this.set_match_data_version()
   }
   /**
    * @description: 用户修正组件中的key值
@@ -222,6 +230,7 @@ class MatchCtr {
         this.list = lodash.cloneDeep(sortList);
       }
     }
+    this.set_match_data_version()
   }
   appendListObj(match_list) {
     let manyObj = this.listToManyObj(match_list);
@@ -252,6 +261,7 @@ class MatchCtr {
     } else {
       this.clearData();
     }
+    this.set_match_data_version()
   }
   /**
    * 更新数据源赛事列表和页面中的赛事列表
@@ -275,6 +285,7 @@ class MatchCtr {
     };
     update_list(this.match_list_data_sources, match_list);
     update_list(this.list, match_list);
+    this.set_match_data_version()
   }
   /**
    * @description: 将赛事详情对象转成多个对象,以便提高操作速度和效率
@@ -436,6 +447,7 @@ class MatchCtr {
       fun(mid, status, 'hpsPunish');
       fun(mid, status, 'hpsBold');
     }
+    this.set_match_data_version()
   }
   /**
    * @description: ws C105更新列表中的赛事
@@ -514,6 +526,7 @@ class MatchCtr {
       update_match(this.match_list_data_sources);
       update_match(this.list);
     }
+    this.set_match_data_version()
   }
   /**
    * @description: 修改盘口级别状态变化
@@ -556,6 +569,7 @@ class MatchCtr {
         });
       }
     }
+    this.set_match_data_version()
   }
   /**
   * @description: 增加赛事信息
@@ -619,6 +633,7 @@ class MatchCtr {
         this.mid_obj[obj.mid] = item;
       }
     }
+    this.set_match_data_version()
   }
 
   /**
@@ -880,6 +895,7 @@ class MatchCtr {
     fun2(match, hpsPunish, 'hpsPunish');
     fun2(match, hpsAdd, 'hpsAdd');
     fun2(match, hpsBold, 'hpsBold');
+    this.set_match_data_version()
   }
 
   /**
@@ -906,6 +922,7 @@ class MatchCtr {
         }
       }
     }
+    this.set_match_data_version()
   }
 
   /**
@@ -1047,6 +1064,7 @@ class MatchCtr {
       fun(obj, addPlay, 'hpsPunish');
       fun(obj, addPlay, 'hpsBold');
     }
+    this.set_match_data_version()
   }
 
   /**
@@ -1154,6 +1172,7 @@ class MatchCtr {
     else {
       this.match_list_data_sources.push(match);
     }
+    this.set_match_data_version()
   }
 
   /**
