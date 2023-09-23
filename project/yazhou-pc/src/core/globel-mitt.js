@@ -1,7 +1,7 @@
 import { http, AllDomain } from "src/core/http/";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/";
-import { LocalStorage, SessionStorage  } from "src/core/index.js";
-import { onBeforeMount } from "vue";
+import { LocalStorage, SessionStorage } from "src/core/index.js";
+import { onBeforeUnmount } from "vue";
 import { throttle } from "lodash";
 const { NODE_ENV, TAG, PRO_ARR } = window.BUILDIN_CONFIG;
 import STANDARD_KEY from "src/core/standard-key/";
@@ -19,7 +19,7 @@ let api_cmd_data;
 const resetApiDemo = throttle(
   (data) => {
     // 如果用户失效,ws停止请求
-   
+
     //let token = SessionStorage .get(token_key);
     if (data && !SessionStorage.get(token_key)) {
       return;
@@ -96,7 +96,7 @@ const send_user_pro_info = () => {
     projectHref: location.href, // 当前项目的 url  , 例如 https://user-pc.35ri3g.com/#/home  ，有什么 拿什么 不一定带token ,页面的 哈希路径一定 要带上  location.href
     projectInfo: { final_type: project_name }, // 项目信息对象内 必须有一个字段 final_type :  取值范围 ： [  'pc-zhuanye',  'h5-xinban', 'h5-jiuban' ]
     userInfo: userInfo, // 用户信息 对象   user/getUserInfo  这个接口返回的 对象  ，包含商户的一些配置
-    userToken: SessionStorage .get("pc_token"), // 用户的token
+    userToken: SessionStorage.get("pc_token"), // 用户的token
     tag: TAG, // 项目的tag版本号
     lang: lang, // 当前用户的选择的页面展示语言
     description: "", // 描述自己附加的描述信息,便于分析问题
@@ -177,7 +177,7 @@ const send_api_error_data = throttle(
       projectInfo: PRO_ARR, // 项目信息 对象
       config: window.BUILDIN_CONFIG, // 所有配置信息
       userInfo: userInfo, // 用户信息 对象  ，  //  user/getUserInfo  这个接口返回的 对象  ，包含商户的一些配置
-      userToken: SessionStorage .get("pc_token"), //用户 的  token
+      userToken: SessionStorage.get("pc_token"), //用户 的  token
       apiStatus: apiStatus, // 目前页面上 允许的请求 域对象  以及   各自目前的  状态 延迟信息
       lang: lang, // 当前用户的 选择 的 页面展示语言
       description: "", // 描述  ，自己 附加的  描述信息 ，便于分析问题
@@ -200,19 +200,14 @@ const send_api_error_data = throttle(
   }
 );
 // 接受ws断开命令
-const ws_mitt = useMittOn(MITT_TYPES.EMIT_API_DOMAIN_UPD_CMD, resetApiDemo);
-// 发送用户基本信息到服务命令
-const user_mitt = useMittOn(
+
+useMittOn(MITT_TYPES.EMIT_API_DOMAIN_UPD_CMD, resetApiDemo)
+useMittOn(// 发送用户基本信息到服务命令
   MITT_TYPES.EMIT_API_USER_PRO_INFO_CMD,
   send_user_pro_info
-);
+)
 // 调用用户接口，更新 域名流程
-const api_mitt = useMittOn(MITT_TYPES.EMIT_SET_GETUSERINFO_OSS_API, (oss_) => {
+useMittOn(MITT_TYPES.EMIT_SET_GETUSERINFO_OSS_API, (oss_) => {
   AllDomain.set_getuserinfo_oss(oss_);
-});
+})
 
-onBeforeMount(() => {
-  ws_mitt.off();
-  user_mitt.off();
-  api_mitt.off();
-});

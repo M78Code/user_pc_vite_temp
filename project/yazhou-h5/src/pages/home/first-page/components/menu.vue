@@ -66,6 +66,9 @@ let no_data_txt = ref("moMatch");
 let noMenu = ref(false);
 let no_menu_txt = ref("moMatch");
 const get_lang = ref(UserCtr.lang);
+const thumbStyle = {
+  background: "transparent"
+}
 const loading_done = ref(false)// 代表接口加载结束
 //点击动画
 let animation = ref(false);
