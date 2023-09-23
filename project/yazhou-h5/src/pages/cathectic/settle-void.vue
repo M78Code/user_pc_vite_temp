@@ -18,7 +18,7 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import store from 'src/store-redux/index.js'
 import { i18n_t } from "src/boot/i18n.js";;
 import { MITT_TYPES, useMittEmit } from "src/core/mitt/"
@@ -38,6 +38,7 @@ const props = defineProps({
     defalut: false,
   },
 })
+const get_main_item = ref(0)
 const calc_text = computed(() => {
   if (props.is_limit) {
     // 如果结算图标被选中
