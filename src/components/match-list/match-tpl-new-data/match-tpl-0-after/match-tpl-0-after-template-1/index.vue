@@ -6,7 +6,7 @@
       <img class="match-hot" src="~public/image/common/svg/hot.svg" v-if="match.is_hot" />
       <!-- 比赛进程 -->
       <match-process v-if="is_mounted" :match_props="{ match, source: 'match_list' }"
-        show_page="match-list" :rows="2" :match_list_data="match_list_data" />
+        show_page="match-list" :rows="2" />
     </div>
     <div v-show="false">{{ MatchListCardData.list_version }}</div>
     <!-- 盘口 -->
@@ -103,7 +103,7 @@
 
 <script setup>
 
-import { ref, computed, watch, defineProps, reactive, onMounted } from 'vue';
+import { ref, computed, watch, defineProps, onMounted } from 'vue';
 import lodash from 'lodash'
 
 import { t, get_match_status, MatchDataWarehouse_PC_List_Common as MatchListData } from "src/core/index.js";
@@ -130,7 +130,7 @@ const props = defineProps({
 const play_name_list = ref([]);
 const match_style_obj = ref(lodash.get(MatchListCardData.match_all_card_obj, `all_card_obj.mid_${props.mid}`, {}));
 const match_list_tpl_size = ref(MATCH_LIST_TEMPLATE_CONFIG['template_1_config'])
-const match = reactive(MatchListData.list_to_obj.mid_obj[props.mid+'_'] || {});
+const match = MatchListData.list_to_obj.mid_obj[props.mid+'_'] || {};
 const is_mounted = ref(false);
 // 其他玩法标题
 const bet_col = computed(() => {

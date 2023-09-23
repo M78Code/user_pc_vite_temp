@@ -6,6 +6,7 @@
 
 // import { store } from "src/store/index.js"
 import { api_details } from "src/api/index";
+import { UserCtr } from "src/core/index.js";
 // import { update_match_time } from "src/core/common-helper/common.js"
 import {utils } from 'src/core/index.js'
 export default {
@@ -270,6 +271,6 @@ export default {
       es: "es",
       ad: "ad", // 印尼语
     }
-    return all_sr_lang[store.getters.get_lang];
+    return all_sr_lang[UserCtr.lang];
   }
 }

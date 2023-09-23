@@ -3,7 +3,7 @@
  *
  */
 import * as TemplateCommon from "./template-common.js";
-
+import { UserCtr } from "src/core/index.js";
 let hps_15_minute = TemplateCommon.hps_15_minute;
 //0号模板  模板主盘
 export const template_1_main = [
@@ -372,7 +372,7 @@ export const reset_match_template_config = () => {
     ...match_template_config,
     tab_play_handicap_height:
       145 -
-      (!["en", "ad", "ms"].includes(localStorage.getItem("get_lang")) ? 16 : 0),
+      (!["en", "ad", "ms"].includes(UserCtr.lang) ? 16 : 0),
   };
 
   return obj;
