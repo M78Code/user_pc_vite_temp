@@ -5,6 +5,7 @@
       <div class="team-logo">
         <img v-if="show_type == 'all'" style="width: 22px; max-height: 24px;" v-img="[((match.match_logo || {}) || {}).home_1_logo,(match.match_logo || {}).home_1_letter]" />
       </div>
+      {{ match }}
       <div class="ellipsis-wrap">
         <div class="row no-wrap">
           <div class="team-name home ellipsis allow-user-select" :class="{'bold':match.team_let_ball=='T1'}" v-tooltip="{content:match.mhn+play_name_obj.suffix_name,overflow:1}">

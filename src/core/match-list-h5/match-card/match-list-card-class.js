@@ -446,8 +446,7 @@ class MatchListCard {
       this.match_height_map_list = MatchCtr.match_list_data_sources.map((match, i) => {
         let obj = get_match_dom_show_property(i);
         let r = get_template_config(obj);
-        // console.log(compute_style_template_by_match_info(match))
-        // console.log(MATCH_LIST_TEMPLATE_CONFIG[`template_${match.csid}_config`])
+        // if (match.mhid === '118875') compute_style_template_by_match_info(match)
         // 在列表下,第一个元素的偏移量减去0.09rem 因为第一个元素没有玩法标题padingtop
         if (location.hash.includes("match") && i == 0) {
           r.odd_list_height -= 0.11;

@@ -7,8 +7,8 @@
  *
  */
 import { onBeforeUnmount, ref, watch, unref } from "vue";
-import  lodash from "lodash";
- 
+import lodash from "lodash";
+
 /**
  * 劫持tab页 visibilityChange显示事件
  * @param {function} visible
@@ -113,7 +113,7 @@ function useEventListener({
   wait = 50,
 }) {
   /* eslint-disable-next-line */
-  let remove = () => {};
+  let remove = () => { };
   const isAddRef = ref(false);
   if (el) {
     const element = ref(el);
@@ -123,7 +123,7 @@ function useEventListener({
         : (isDebounce
           ? lodash.debounce(listener, wait, config)
           : lodash.throttle(listener, wait, config)
-          );
+        );
 
 
 
@@ -151,7 +151,7 @@ function useEventListener({
       removeEventListener(element.value);
       removeWatch();
     };
-    autoRemove && onBeforeUnmount(() => remove(element.value));
+    // autoRemove && onBeforeUnmount(() => remove(element.value));
   }
 
   return remove;
