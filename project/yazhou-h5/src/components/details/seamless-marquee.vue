@@ -17,7 +17,7 @@
 </template>
 
 <script setup>
-import { onMounted, onUnmounted, ref } from "vue"
+import { onMounted, onUnmounted, reactive, ref } from "vue"
 const props = defineProps({
     content: {
       type: String, // 类型字符串
@@ -26,16 +26,23 @@ const props = defineProps({
   })
 const start_roll = ref(false)
 const copy_content = ref('')
+const timer2_ = ref(null)
+const timer = ref(null)
+const refs_ = reactive({
+  marquee_wrap: null,
+  scroll_wrap: null,
+  full_content: null,
+})
 
   // 把父组件传入的arr转化成字符串
 onMounted(() => {
-    let dom_ = $refs
-    clearTimeout(timer2_)
-    timer2_ = setTimeout(() => {
+    let dom_ = refs_
+    clearTimeout(timer2_.value)
+    timer2_.value = setTimeout(() => {
       set_move_style(dom_)
       // 兜底处理，dom 元素没拿到的话重新执行一遍
-      if(timer2_) {
-        timer2_ = setTimeout(() => {
+      if(timer2_.value) {
+        timer2_.value= setTimeout(() => {
           set_move_style(dom_)
         }, 2000);
       }
@@ -79,14 +86,14 @@ const set_move_style = (dom_) => {
       document.querySelector('head').appendChild(style);
       scroll.style.animation = `titleScroll ${scrollTiming}s linear infinite`
     }
-    clearTimeout(timer2_)
-    timer2_ = null
+    clearTimeout(timer2_.value)
+    timer2_.value = null
   }
 const move = (text_width, scroll) => {
     copy_content.value = content // 文字副本填充
     let distance = 0 // 位移距离
     // 设置位移
-    timer = setInterval(() => {
+    timer.value = setInterval(() => {
       distance -= .5
       // 如果位移超过文字宽度，则回到起点
       if (-distance >= text_width) {
@@ -97,11 +104,11 @@ const move = (text_width, scroll) => {
   }
   onUnmounted(() => {
   	// 清除计时器
-    clearInterval(timer)
-    timer = null
+    clearInterval(timer.value)
+    timer.value = null
 
-    clearTimeout(timer2_)
-    timer2_ = null
+    clearTimeout(timer2_.value)
+    timer2_.value = null
   }) 
 </script>
 <style lang="scss" scoped>

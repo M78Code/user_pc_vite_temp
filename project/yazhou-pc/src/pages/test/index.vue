@@ -48,7 +48,7 @@ import MatchCtr from 'src/core/data-warehouse/match-ctr/match-ctr.js'
 
 import { useRouter } from "vue-router"
 
-const match_class = reactive(MatchCtr)
+const match_class = reactive(new MatchCtr())
 const router = useRouter()
     onMounted(()=>{
       api_list_data()

@@ -879,14 +879,14 @@ const get_detail_data = ref({})
 
     // 批量清除timeout定时器
     for (const timer of timeout_timer_arr) {
-      clearTimeout(this[timer]);
-      this[timer] = null;
+      clearTimeout(timeout_timer_arr[timer]);
+      timeout_timer_arr[timer] = null;
     }
 
     // 批量清除interval定时器
     for (const timer of interval_timer_arr) {
-      clearInterval(this[timer]);
-      this[timer] = null;
+      clearInterval(interval_timer_arr[timer]);
+      interval_timer_arr[timer] = null;
     }
   };
 

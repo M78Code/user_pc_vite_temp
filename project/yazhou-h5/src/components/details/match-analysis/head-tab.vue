@@ -44,8 +44,6 @@ let get_detail_data = inject("get_detail_data", {})
   const show_tab = ref(true)
   const tab_ul_scroller = ref(null)
   const tab_item = ref(null)
-    let get_lang = ref('zh')
-    let get_current_menu = ref('')
     
   onMounted(() => {
     
@@ -66,7 +64,6 @@ let get_detail_data = inject("get_detail_data", {})
       useMittEmit(MITT_TYPES.EMIT_ANA_SHOW, false)
     }
   const child_tab_click = (tab, i, type, text) => {
-    console.error(tab, i, type, text);
       tabIndex.value = i
       // set_curr_tab_info(tab)
       emit('tab_click',[tab, type]);

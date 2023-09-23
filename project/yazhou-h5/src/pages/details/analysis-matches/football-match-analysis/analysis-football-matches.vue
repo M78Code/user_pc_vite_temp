@@ -30,33 +30,34 @@ import store from "src/store-redux/index.js"
 import zhuge from "src/core/http/zhuge-tag.js"
 import {utils } from 'src/core/index.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
-
-
   // 资讯页
-  const articleMain = shallowRef(() => import("project_path/src/pages/details/analysis-matches/article/article-main.vue"))
+  import articleMain from "project_path/src/pages/details/analysis-matches/article/article-main.vue"
   // 赛果详情 赛况统计 和 事件
-  const matchResult = shallowRef(() => import("project_path/src/pages/details/components/details-match-results/match-results.vue"))
+  import matchResult from "project_path/src/pages/details/components/details-match-results/match-results.vue"
   // 详情页  足球赛事分析 战绩 模块
-  const standings = shallowRef(() => import("project_path/src/pages/details/analysis-matches/components/standings.vue"))
+  import standings from "project_path/src/pages/details/analysis-matches/components/standings.vue"
   // 详情页 或者 赛果  篮球足球公共组件，阵容tab页面
-  const lineUp = shallowRef(() => import("project_path/src/pages/details/analysis-matches/components/line-up.vue"))
+  import lineUp from "project_path/src/pages/details/analysis-matches/components/line-up.vue"
   // 详情页足球赛事分析情报页面
-  const intelligence = shallowRef(() => import("project_path/src/pages/details/analysis-matches/football-match-analysis/components/intelligence.vue"))
+  import intelligence from "project_path/src/pages/details/analysis-matches/football-match-analysis/components/intelligence.vue"
   // 详情页足球赛事分析赔率页面
-  const analysisOdds = shallowRef(() => import("project_path/src/pages/details/analysis-matches/football-match-analysis/components/analysis-odds.vue"))
+  import analysisOdds from "project_path/src/pages/details/analysis-matches/football-match-analysis/components/analysis-odds.vue"
   // 精彩回放
-  const highlights = shallowRef(() => import("project_path/src/pages/details/analysis-matches/highlights/highlights.vue"))
-      // 详情数据
-      const get_detail_data = ref({
-        csid: 1,
-        mid: 1,
-    })
+  import highlights from "project_path/src/pages/details/analysis-matches/highlights/highlights.vue"
+
+
+
+    // 详情数据
+    const get_detail_data = ref({
+      csid: 1,
+      mid: 1,
+  })
     // 锚点
     const analysis_football_matches = ref(null)
     // tab 数据
     const tabList = ref([])
     // 当前选中tab
-    const currentContent = ref('match-result')
+    const currentContent = ref(matchResult)
     // 仓库数据
     let {  userInfoReducer } = store.getState()
     // TODO: 临时用

@@ -874,7 +874,7 @@ export const category_info = () => {
   const off_listeners = () => {
     // #TODO emit
     component_data.emitters.map((x) => x());
-    useMittOn(MITT_TYPES.EMIT_CATEGORY_SKT, sendSocketInitCmd).off;
+    // useMittOn(MITT_TYPES.EMIT_CATEGORY_SKT, sendSocketInitCmd).off;
     useMittOn(MITT_TYPES.EMIT_REF_API, initEvent).off;
     useMittOn(MITT_TYPES.EMIT_HIDE_DETAIL_MATCH_LIST, hide_detail_match_list).off
   };
