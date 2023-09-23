@@ -73,17 +73,12 @@ let cancleTimer, event_handle_timer, timer00, fun;
 const get_search_txt = ref('')
 const get_search_term = ref(SearchData.search_term)
 const get_useid_ievname = ref()
-
 // 是赛果虚拟体育赛事
 const results_of_the_virtual_display = MenuData.is_results_virtual_sports();
-
 // ...mapMutations([
 //       'set_show_match_filter',
 //       'set_goto_detail_matchid',
 //       'set_details_item',
-
-
-
 
 // 获取搜索球类
 // 列表页二级菜单 对应 搜索头部的 球类二级菜单
@@ -102,7 +97,7 @@ async function get_sport_list() {
     // menuType 5 足球， 7 篮球， 13 网球， 14 斯诺克， 15 羽毛球， 16 乒乓球，  17 排球，  18 冰球，  19 棒球， 20 美式足球
     //TODO if (this.get_current_menu && this.get_current_menu.sub) {
     const get_current_menu_sub = MenuData.get_current_sub_menuid()
-    if (get_current_menu_sub) {
+    if (get_current_menu_sub && data) {
       // 赛果使用get_current_menu中二级菜单数据，其他则使用get_useid_ievname
       let usid_type = menu_type.value == 28 ? get_current_menu_sub : Math.abs(get_useid_ievname.value)
       if (get_search_term.value && SearchData.cur_csid) {
@@ -133,10 +128,10 @@ async function get_sport_list() {
       })
     } else {
       // 存储 球类id
-      SearchData.set_cur_csid(data[0].id);
+      data && SearchData.set_cur_csid(data[0].id);
     }
   } catch (error) {
-    console.error(err);
+    console.error(error, '123');
     skeleton_loading.value = true
   }
 }

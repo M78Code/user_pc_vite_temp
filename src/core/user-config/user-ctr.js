@@ -209,9 +209,9 @@ class UserCtr {
     this.is_invalid = false;
     this.user_logined_id = user_obj.userId
     // 判断是不是新用户登录
-    if(uid_ && uid_!= user_obj.userId){
+    if (uid_ && uid_ != user_obj.userId) {
       // 发送订阅ws公共命令
-      window.postMessage({event: 'WS', cmd:`WS_RESEND_SCMD_EVENT`, data:{user_id : user_obj.userId}},'*');
+      window.postMessage({ event: 'WS', cmd: `WS_RESEND_SCMD_EVENT`, data: { user_id: user_obj.userId } }, '*');
     }
   }
   set_user_activity(activity) {
@@ -271,6 +271,7 @@ class UserCtr {
     let edition = this.standard_edition == 2 ? 1 : 2;
     this.standard_edition = edition;
     this.update()
+    useMittEmit(MITT_TYPES.EMIT_STANDARD_EDITION_CHANGE, edition)
     // set_newer_standard_edition(edition);
     // set_secondary_unfold_map({}); // 清空次要玩法折叠的记录，收起来
     // // 发送埋点
