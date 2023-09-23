@@ -1,4 +1,4 @@
-import ResultDetailsDialog from "../result-details-dialog-template-1/index.vue";
+import ResultDetailsDialog from "../result-details-dialog-template-1/result-details-dialog.vue";
 import { compute_component_wapper_config } from "app/job/use-output/index.js";
 const all_components_obj = {
   ResultDetailsDialog,

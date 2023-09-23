@@ -45,6 +45,7 @@
 import { api_common } from "src/api/index.js";
 import resultHeader from "project_path/src/pages/details/components/result-header.vue";
 import resultDetailsTab from "project_path/src/pages/details/components/result-details-tab.vue";
+// TODO: src/components有相同的组件
 import resultDetailsDialog from "project_path/src/components/details/result-details-dialog.vue";
 import noData from "project_path/src/components/common/no-data.vue";
 import analysisFootballMatches from "project_path/src/pages/details/analysis-matches/football-match-analysis/analysis-football-matches.vue";
@@ -147,11 +148,11 @@ let route = useRoute()
         get_match_list(params);
       }
     })
+     
   onMounted(() => {
     // 默认加载赛事详情页面接口getMatchDetail
     get_match_detail_info()
-    // 监听是否下拉联赛列表
-    useMittOn(MITT_TYPES.EMIT_IS_BOOL_DIALOG_DETAILS, changge_bool);
+   
     // 监听调用赛事详情页面接口
     useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS, get_match_detail_info);
     useMittOn(MITT_TYPES.EMIT_ANA_SHOW,ana_show);
@@ -285,13 +286,16 @@ let route = useRoute()
      *@param {String} 判断是否下拉
      *@return {Undefined} undefined
      */
-   const changge_bool = (bool) => {
-      // bool 的值为true或者是false
-      is_dialog_details.value = bool;
-    }
+  const change_bool = (bool) => {
+    // bool 的值为true或者是false
+    is_dialog_details.value = bool;
+  }
+  // 监听是否下拉联赛列表
+  const { off: change_bool_off } =  useMittOn(MITT_TYPES.EMIT_IS_BOOL_DIALOG_DETAILS, change_bool);
+  // 清除监听下拉联赛列表
+  onUnmounted(change_bool_off)
+
   onUnmounted(() => {
-    // 清除监听下拉联赛列表
-    useMittOn(MITT_TYPES.EMIT_IS_BOOL_DIALOG_DETAILS, changge_bool).off;
     // 清除刷新详情页;
     useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS, get_match_detail_info).off;
     // 组件销毁时设置vuex的值为空对象

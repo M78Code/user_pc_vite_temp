@@ -48,8 +48,9 @@
 import { computed, onBeforeUnmount, ref } from 'vue';
 import { useRoute, useRouter } from "vue-router"
 import lodash from 'lodash'
-import GlobalAccessConfig from "src/core/access-config/access-config.js"
+
 import seamlessMarquee from 'project_path/src/components/details/seamless-marquee.vue'  // 详情页头部联赛名文字超出隐藏无缝滚动
+import GlobalAccessConfig from "src/core/access-config/access-config.js"
 import { api_common } from "src/api/index.js";
 import { utils } from 'src/core/index.js'
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
@@ -197,23 +198,9 @@ const analysis_show = (obj) => {
   useMittEmit(MITT_TYPES.EMIT_ANA_SHOW, csid)
 }
 
-/**
- *@description 加载联赛列表
- *@param {obj}
- *@return {obj}
- */
-const interface_b_header = () => {
-  // 显示联赛列表传true
-  useMittEmit(MITT_TYPES.EMIT_IS_BOOL_DIALOG_DETAILS, true);
-}
+// 点击下拉三角加载联赛列表 显示联赛列表传true
+const show_dialog = () => useMittEmit(MITT_TYPES.EMIT_IS_BOOL_DIALOG_DETAILS, true);
 
-// 点击下拉三角加载联赛列表
-const show_dialog = () => {
-  alert(1)
-  let params0 = { tId: get_detail_data.tid, page: 1, count: 50 };
-  // 加载联赛列表
-  interface_b_header(params0)
-}
 /**
  *@description: 点击注单icon显示注单历史
  *@param {Undefined}
@@ -380,5 +367,4 @@ export default {
   position: absolute;
   left: 0.1rem;
   top: 0.13rem;
-}
-</style>
+}</style>
