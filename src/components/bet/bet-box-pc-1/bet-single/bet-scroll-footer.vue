@@ -3,10 +3,8 @@
 -->
 <template>
   <div class="bet-menu-wrap" :class="{ 'bet-menu-wrap-mix': !BetData.is_bet_single }">
-    <div v-if="BetViewDataClass.bet_order_status == 2">投注中</div>
-    <div v-if="BetViewDataClass.bet_order_status == 3">投注成功</div>
-    <div v-if="BetViewDataClass.bet_order_status == 4">{{ BetViewDataClass.error_message }}</div>
-
+    <!-- 错误信息 -->
+    <div class="bet-message">{{ BetViewDataClass.error_message }}</div>
 
     <div class="full-width cursor-pointer bet-submit" @click.stop="submit_handle('submit')">
       <template
@@ -20,9 +18,13 @@
       </template>
     </div>
 
-    
+    <div class="full-width cursor-pointer bet-delete-all" @click.stop="bet_this.cancel_handle">
+      <!-- 取消投注 -->
+      {{ $t('bet.bet_cancel') }}
+    </div>
 
-    <div style="margin-top:20px">{{ BetViewDataClass.bet_view_version }} -- {{ BetViewDataClass.bet_order_status }} -- {{ BetViewDataClass.error_code }}</div>
+
+    <div style="display:none">{{ BetViewDataClass.bet_view_version }}</div>
 
   </div>
 </template>
@@ -53,14 +55,38 @@ const set_lock_btn = value => {
 </script>
 
 <style scoped lang="scss">
+.bet-menu-wrap {
+  padding: 10px 10px 0;
 
-.bet-submit{
-  width: 100%;
-  margin-top: 30px;
-  text-align: center;
-  background: #000;
-  height: 40px;
-  line-height: 40px;
-  color: #fff;
+  .bet-submit {
+    height: 40px;
+    line-height: 40px;
+    font-size: 14px;
+    color: #fff;
+    text-align: center;
+    font-weight: 600;
+    border-radius: 4px;
+    background: var(--q-gb-bg-lg-1);
+  }
+
+  .bet-delete-all {
+    margin-top: 10px;
+    text-align: center;
+    height: 36px;
+    line-height: 36px;
+    border-radius: 4px;
+    font-weight: 400;
+    font-size: 12px;
+    border: 0.5px solid var(--q-gb-bd-c-8);
+    color: var(--q-gb-t-c-5);
+  }
+  .bet-message {
+    text-align: center;
+    color: #ff4040;
+    height: 30px;
+    line-height: 30px;
+    background: transparent;
+    font-size: 12px;
+  }
 }
 </style>
