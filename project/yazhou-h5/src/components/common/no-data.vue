@@ -125,10 +125,10 @@ const arr_const = {
     onMounted(init)
 
     // 监听国际化语种变化,一旦变化修正国际化字符串
-    watch(
-        // () => $i18n.locale,
-        () => arr.value = arr_const
-    )
+    // watch(
+    //     // () => $i18n.locale,
+    //     () => arr.value = arr_const
+    // )
 
     function refresh_data() {
         // TODO: mitt?

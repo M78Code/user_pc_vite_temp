@@ -11,8 +11,8 @@
       <div class="rad-style">
         <i class="slide_icon slide_icon_l animate-effect" v-show="is_show_slide && !get_is_hengping"></i>
         <i class="slide_icon slide_icon_r animate-effect-r" v-show="is_show_slide_r && !get_is_hengping"></i>
-        <!--<img v-show="is_show_slide && !get_is_hengping" class="slide_icon slide_icon_l animate-effect"  src="image/wwwassets/bw3/common/slide_icon.svg" alt="">-->
-        <!--<img v-show="is_show_slide_r && !get_is_hengping" class="slide_icon slide_icon_r animate-effect-r"  src="image/wwwassets/bw3/common/slide_icon_r.svg" alt="">-->
+        <!--<img v-show="is_show_slide && !get_is_hengping" class="slide_icon slide_icon_l animate-effect"  src="/yazhou-h5/image/common/slide_icon.svg" alt="">-->
+        <!--<img v-show="is_show_slide_r && !get_is_hengping" class="slide_icon slide_icon_r animate-effect-r"  src="/yazhou-h5/image/common/slide_icon_r.svg" alt="">-->
 
         <div class="play-name-wrapper" v-show="get_is_hengping">
           <div class="item-name ellipsis">{{lodash.get(item_data, 'title[0].osn')}}</div>
@@ -58,7 +58,7 @@
                               {{append_single.on}}
                             </span>
                             </div>
-                            <img class="icon-lock" src="image/wwwassets/bw3/common/match-icon-lock.svg" />
+                            <img class="icon-lock" src="/yazhou-h5/image/common/match-icon-lock.svg" />
                           </div>
                         </template>
                         <!-- 新增start -->
@@ -78,7 +78,7 @@
                               {{append_single.on}}
                             </span>
                             </div>
-                            <img class="icon-lock" src="image/wwwassets/bw3/common/match-icon-lock.svg" />
+                            <img class="icon-lock" src="/yazhou-h5/image/common/match-icon-lock.svg" />
                           </div>
                         </template>
                       </template>
@@ -101,7 +101,7 @@
                           {{append_single.on}}
                         </span>
                         </div>
-                        <img class="icon-lock" src="image/wwwassets/bw3/common/match-icon-lock.svg" />
+                        <img class="icon-lock" src="/yazhou-h5/image/common/match-icon-lock.svg" />
                       </div>
                     </template>
                     <!-- 关盘ms=2 -->
@@ -154,7 +154,7 @@
                               {{append_single.on}}
                             </span>
                             </div>
-                            <img class="icon-lock" src="image/wwwassets/bw3/common/match-icon-lock.svg" />
+                            <img class="icon-lock" src="/yazhou-h5/image/common/match-icon-lock.svg" />
                           </div>
                         </template>
                         <!-- 新增start -->
@@ -174,7 +174,7 @@
                               {{append_single.on}}
                             </span>
                             </div>
-                            <img class="icon-lock" src="image/wwwassets/bw3/common/match-icon-lock.svg" />
+                            <img class="icon-lock" src="/yazhou-h5/image/common/match-icon-lock.svg" />
                           </div>
                         </template>
                       </template>
@@ -194,7 +194,7 @@
                           {{append_single.on}}
                         </span>
                         </div>
-                        <img class="icon-lock" src="image/wwwassets/bw3/common/match-icon-lock.svg" />
+                        <img class="icon-lock" src="/yazhou-h5/image/common/match-icon-lock.svg" />
                       </div>
                     </template>
                     <!-- 关盘ms=2 -->

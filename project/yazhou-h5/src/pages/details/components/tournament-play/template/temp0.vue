@@ -46,7 +46,7 @@
                           <div class="play-box-style details_color" :class="{'bor-btm':ol_index != item.ol.length-1 || index_ != item_data.hl.length-1}">
                             <div class="ellipsis remark details_t_color7 fz_13" v-show="get_detail_data.csid != 1">{{ol_item.on || ol_item.ott}}</div>
                             <div class="text-left">
-                              <img class="icon-lock" src="image/wwwassets/bw3/common/match-icon-lock.svg" />
+                              <img class="icon-lock" src="/yazhou-h5/image/common/match-icon-lock.svg" />
                             </div>
                           </div>
                           <!-- lock 锁状态 end -->
@@ -60,7 +60,7 @@
                           <div class="play-box-style details_color" :class="{'bor-btm':ol_index != item.ol.length-1 || index_ != item_data.hl.length-1}">
                             <div class="ellipsis remark details_t_color6 fz_14" v-show="get_detail_data.csid != 1">{{ol_item.on || ol_item.ott}}</div>
                             <div class="text-left">
-                              <img class="icon-lock" src="image/wwwassets/bw3/common/match-icon-lock.svg" />
+                              <img class="icon-lock" src="/yazhou-h5/image/common/match-icon-lock.svg" />
                             </div>
                           </div>
                         </template>
@@ -78,7 +78,7 @@
                       <div class="play-box-style details_color" :class="{'bor-btm':ol_index != item.ol.length-1 || index_ != item_data.hl.length-1}">
                         <div class="ellipsis remark details_t_color7 fz_13" v-show="get_detail_data.csid != 1">{{ol_item.on || ol_item.ott}}</div>
                         <div class="text-left">
-                          <img class="icon-lock" src="image/wwwassets/bw3/common/match-icon-lock.svg" />
+                          <img class="icon-lock" src="/yazhou-h5/image/common/match-icon-lock.svg" />
                         </div>
                       </div>
                       <!-- lock 锁状态 end -->
@@ -130,7 +130,7 @@
                     <div class="play-box-style details_color" :class="{'bor-btm':ol_index != item.ol.length-1 || index_ != item_data.hl.length-1}">
                       <div class="ellipsis remark details_t_color7 fz_13" v-show="get_detail_data.csid != 1">{{ol_item.on || ol_item.ott}}</div>
                       <div class="text-left">
-                        <img class="icon-lock" src="image/wwwassets/bw3/common/match-icon-lock.svg" />
+                        <img class="icon-lock" src="/yazhou-h5/image/common/match-icon-lock.svg" />
                       </div>
                     </div>
                     <!-- lock 锁状态 end -->
@@ -144,7 +144,7 @@
                     <div class="play-box-style details_color" :class="{'bor-btm':ol_index != item.ol.length-1 || index_ != item_data.hl.length-1}">
                       <div class="ellipsis remark details_t_color6 fz_14" v-show="get_detail_data.csid != 1">{{ol_item.on || ol_item.ott}}</div>
                       <div class="text-left">
-                        <img class="icon-lock" src="image/wwwassets/bw3/common/match-icon-lock.svg" />
+                        <img class="icon-lock" src="/yazhou-h5/image/common/match-icon-lock.svg" />
                       </div>
                     </div>
                     <!-- lock 锁状态 end -->
@@ -162,7 +162,7 @@
                 <div class="play-box-style details_color" :class="{'bor-btm':ol_index != item.ol.length-1 || index_ != item_data.hl.length-1}">
                   <div class="ellipsis remark details_t_color7 fz_13" v-show="get_detail_data.csid != 1">{{ol_item.on || ol_item.ott}}</div>
                   <div class="text-left">
-                    <img class="icon-lock" src="image/wwwassets/bw3/common/match-icon-lock.svg" />
+                    <img class="icon-lock" src="/yazhou-h5/image/common/match-icon-lock.svg" />
                   </div>
                 </div>
                 <!-- lock 锁状态 end -->
@@ -197,7 +197,7 @@ import { useRoute } from "vue-router"
 import { t } from "src/boot/i18n.js";;
 //国际化
 
-const route = useRoute()
+
 export default defineComponent({
   // #TODO mixins
   // mixins:[odd_convert],
@@ -208,6 +208,7 @@ export default defineComponent({
   props: ["item_data", "title"],
   setup(props, evnet) {
     const store_state = store.getState()
+    const route = useRoute()
     let data = reactive({
       utils,
       // 最大显示行数

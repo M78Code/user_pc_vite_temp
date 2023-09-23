@@ -9,7 +9,7 @@
     <div class="scroll-i-con" :class="{
       high_scrolling: set_ishigh_scrolling && !(lodash.get(get_current_menu, 'date_menu.menuType') == 100) && !(get_menu_type == 28 && [1001, 1002, 1004, 1011, 1010, 1009].includes(get_curr_sub_menu_type)) && get_menu_type != 100,
       detail_list: main_source == 'detail_match_list',
-      simple: get_newer_standard_edition == 1,
+      simple: newer_standard_edition == 1,
       theme02: UserCtr.theme.includes('night'),
     }" :style="{ 'min-height': `${get_menu_type == 100 ? list_wrap_height : match_list_wrapper_height}rem` }">
       <!-- 循环内部有多个dom时,为了减少最终dom数,可以循环template 当要v-for与v-if同时使用在一个dom上时,可以使用template -->
@@ -47,6 +47,7 @@ import lodash from 'lodash'
 import store from "src/store-redux/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import MenuData from  "src/core/menu-h5/menu-data-class.js";
+import PageSourceData from "src/core/page-source/page-source.js";
 
 // 避免定时器每次滚动总是触发
 let is_on_check_time_out = false;
@@ -70,7 +71,8 @@ let list_wrap_height = ref(0)
 let target_scroll_obj = ref(null)
 let scroll_frame_timer = ref(0)
 let scroll_frame_timer_2 = ref(0)
-
+//新手版标准版 1 2
+const newer_standard_edition = ref(PageSourceData.newer_standard_edition);
 const get_menu_type = ref(MenuData.get_menu_type())
 const get_current_menu = ref(MenuData.current_menu)
 const get_curr_sub_menu_type = ref(lodash.get(MenuData.current_lv_2_menu, 'type'))

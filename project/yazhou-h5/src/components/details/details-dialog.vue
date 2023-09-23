@@ -114,8 +114,8 @@ export default {
   },
   data() {
     return {
-      icon_video: "image/wwwassets/bw3/common/icon_video.png",
-      icon_video_black: "image/wwwassets/bw3/common/icon_video_black.png",
+      icon_video: "/yazhou-h5/image/common/icon_video.png",
+      icon_video_black: "/yazhou-h5/image/common/icon_video_black.png",
     }
   },
   computed: {

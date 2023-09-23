@@ -44,7 +44,7 @@ const del_collect = (k, index) => {
  * @param {Object} params
  * @return {Undefined} Undefined
  */
-const change_favorite_state = (params) => {
+export const change_favorite_state = (params) => {
     let match = MatchCtr.list[params.index];
     // 联赛收藏图标状态样式更新
     if (match && match.mid) {

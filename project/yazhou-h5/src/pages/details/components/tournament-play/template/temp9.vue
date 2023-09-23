@@ -17,7 +17,7 @@
           </div>
           <div class="temp9-ov">
             <div v-if="item.os != 2">{{get_odds(item)}}</div>
-            <div v-else><img src="image/wwwassets/bw3/common/match-icon-lock.svg" /></div>
+            <div v-else><img src="/yazhou-h5/image/common/match-icon-lock.svg" /></div>
           </div>
         </div>
       </div>

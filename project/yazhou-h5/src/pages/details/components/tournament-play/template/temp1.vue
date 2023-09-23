@@ -32,7 +32,7 @@
                       <div class="play-box-style details_color">
                         <div class="text-center odds-wrap warp ">
                         <div class="col text-center ellipsis led details_t_color7">{{ol_item.ott}}{{ol_item.on}}</div>
-                          <img class="icon-lock" src="image/wwwassets/bw3/common/match-icon-lock.svg" />
+                          <img class="icon-lock" src="/yazhou-h5/image/common/match-icon-lock.svg" />
                         </div>
                       </div>
                       <!-- lock 锁状态 end -->
@@ -48,7 +48,7 @@
                       <div class="play-box-style details_color first-radius">
                         <div class="text-center odds-wrap warp ">
                         <div class="col text-center ellipsis led details_t_color7">{{ol_item.ott}}{{ol_item.on}}</div>
-                          <img class="icon-lock" src="image/wwwassets/bw3/common/match-icon-lock.svg" />
+                          <img class="icon-lock" src="/yazhou-h5/image/common/match-icon-lock.svg" />
                         </div>
                       </div>
                       <!-- lock 锁状态 end -->
@@ -66,7 +66,7 @@
                   <div class="play-box-style details_color">
                     <div class="text-center odds-wrap warp ">
                     <div class="col text-center ellipsis led details_t_color7">{{ol_item.ott}}{{ol_item.on}}</div>
-                      <img class="icon-lock" src="image/wwwassets/bw3/common/match-icon-lock.svg" />
+                      <img class="icon-lock" src="/yazhou-h5/image/common/match-icon-lock.svg" />
                     </div>
                   </div>
                   <!-- lock 锁状态 end -->
@@ -105,7 +105,7 @@
                         <div class="play-box-style details_color" :class="get_detail_data.csid == 1? 'odds-lock' : '' ">
                           <div class="text-center odds-wrap warp flex-center">
                             <div class="col text-center ellipsis led details_t_color7"  v-show="get_detail_data.csid != 1">{{ol_item.ott}}{{ol_item.on}}</div>
-                            <img class="icon-lock" src="image/wwwassets/bw3/common/match-icon-lock.svg" />
+                            <img class="icon-lock" src="/yazhou-h5/image/common/match-icon-lock.svg" />
                           </div>
                         </div>
                         <!-- lock 锁状态 end -->
@@ -121,7 +121,7 @@
                         <div class="play-box-style details_color first-radius">
                           <div class="text-center odds-wrap warp"  :class="get_detail_data.csid == 1? 'odds-lock' : '' ">
                             <div class="col text-center ellipsis led" v-show="get_detail_data.csid != 1">{{ol_item.ott}}{{ol_item.on}}</div>
-                            <img class="icon-lock" src="image/wwwassets/bw3/common/match-icon-lock.svg" />
+                            <img class="icon-lock" src="/yazhou-h5/image/common/match-icon-lock.svg" />
                           </div>
                         </div>
                         <!-- lock 锁状态 end -->
@@ -139,7 +139,7 @@
                     <div class="play-box-style details_color">
                       <div class="text-center odds-wrap warp" :class="get_detail_data.csid == 1? 'odds-lock' : '' ">
                         <div class="col text-center ellipsis led details_t_color7" v-show="get_detail_data.csid != 1">{{ol_item.ott}}{{ol_item.on}}</div>
-                        <img class="icon-lock" src="image/wwwassets/bw3/common/match-icon-lock.svg" />
+                        <img class="icon-lock" src="/yazhou-h5/image/common/match-icon-lock.svg" />
                       </div>
                     </div>
                     <!-- lock 锁状态 end -->
@@ -180,7 +180,7 @@
                         <div class="play-box-style details_color">
                           <div class="text-center odds-wrap warp" :class="get_detail_data.csid == 1? 'odds-lock' : '' ">
                             <div class="col text-center ellipsis led details_t_color7"  v-show="get_detail_data.csid != 1">{{ol_item.ott}}{{ol_item.on}}</div>
-                            <img class="icon-lock" src="image/wwwassets/bw3/common/match-icon-lock.svg" />
+                            <img class="icon-lock" src="/yazhou-h5/image/common/match-icon-lock.svg" />
                           </div>
                         </div>
                         <!-- lock 锁状态 end -->
@@ -196,7 +196,7 @@
                         <div class="play-box-style details_color">
                           <div class="text-center odds-wrap warp" :class="get_detail_data.csid == 1? 'odds-lock' : '' ">
                             <div class="col text-center ellipsis led"  v-show="get_detail_data.csid != 1">{{ol_item.ott}}{{ol_item.on}}</div>
-                            <img class="icon-lock" src="image/wwwassets/bw3/common/match-icon-lock.svg" />
+                            <img class="icon-lock" src="/yazhou-h5/image/common/match-icon-lock.svg" />
                           </div>
                         </div>
                         <!-- lock 锁状态 end -->
@@ -214,7 +214,7 @@
                     <div class="play-box-style details_color">
                       <div class="text-center odds-wrap warp" :class="get_detail_data.csid == 1? 'odds-lock' : '' ">
                         <div class="col text-center ellipsis led details_t_color7" v-show="get_detail_data.csid != 1">{{ol_item.ott}}{{ol_item.on}}</div>
-                        <img class="icon-lock" src="image/wwwassets/bw3/common/match-icon-lock.svg" />
+                        <img class="icon-lock" src="/yazhou-h5/image/common/match-icon-lock.svg" />
                       </div>
                     </div>
                     <!-- lock 锁状态 end -->
@@ -256,7 +256,7 @@
                         <div class="play-box-style details_color">
                           <div class="text-center odds-wrap" :class="get_detail_data.csid == 1? 'odds-lock' : '' ">
                             <div class="col text-center ellipsis led details_t_color7" v-show="get_detail_data.csid != 1">{{ol_item.ott}}{{ol_item.on}}</div>
-                            <img class="icon-lock" src="image/wwwassets/bw3/common/match-icon-lock.svg" />
+                            <img class="icon-lock" src="/yazhou-h5/image/common/match-icon-lock.svg" />
                           </div>
                         </div>
                         <!-- lock 锁状态 end -->
@@ -274,7 +274,7 @@
                         <div class="play-box-style details_color last-radius">
                           <div class="text-center odds-wrap " :class="get_detail_data.csid == 1? 'odds-lock' : '' ">
                             <div class="col text-center ellipsis led" v-show="get_detail_data.csid != 1">{{ol_item.ott}}{{ol_item.on}}</div>
-                            <img class="icon-lock" src="image/wwwassets/bw3/common/match-icon-lock.svg" />
+                            <img class="icon-lock" src="/yazhou-h5/image/common/match-icon-lock.svg" />
                           </div>
                         </div>
                         <!-- lock 锁状态 end -->
