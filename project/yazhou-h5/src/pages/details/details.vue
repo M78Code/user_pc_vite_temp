@@ -171,7 +171,7 @@ export default defineComponent({
 //     // "analysis-football-matches": analysis_football_matches,
 //     // "basketball-match-analysis": basketball_match_analysis,
 //     // SDetails,
-    // category,
+    category,
 //     // chatroom
   },
   // 从首页轮播区域跳转到详情页 增加判断
