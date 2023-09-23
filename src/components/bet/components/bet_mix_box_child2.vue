@@ -35,12 +35,8 @@
         <!-- <bet-mix-show v-for="(value, name, index1) in view_ctr_obj" :order_detail_resp_list="order_detail_resp_list"
           :query_order_obj="query_order_obj" :key="name" :index_="index1" :name_="name">
         </bet-mix-show> -->
-        <!-- <bet-mix-show
-        :name_ ="name"
-        v-for="(value, name, index1) in bet_view_obj"
-        :bet_view_obj="bet_view_obj"
-        >
-        </bet-mix-show> -->
+        <bet-mix-show v-if="bet_show_single">
+        </bet-mix-show>
 
         <!-- 串关投注成功组件 单个几串几的信息展示-->
         <template v-if="btn_show == 1">
@@ -217,7 +213,7 @@
 
 <script setup>
 // import betMixShow from 'src/components/bet/components/bet_mix_show.vue';
-// import betMixShow from 'src/components/bet/components/bet_mix_show3.vue';
+import betMixShow from 'src/components/bet/components/bet_mix_show3.vue';
 // import betMixShow2 from 'src/components/bet/components/bet_mix_show2.vue';
 // import betMixDetail from 'src/components/bet/components/bet-mix-detail.vue';
 // import betMixSingleDetail from 'src/components/bet/components/bet-mix-single-detail.vue';
@@ -249,10 +245,10 @@ const bet_min_max_money = ref()  // 投注限额
 const bet_list_data = ref([])
 const tips_msg = ref('失效')  // 提示信息
 
-const bet_view_obj = ref({})  // 多个投注对象 调试
-const get_bet_status = ref(2) // 投注状态
+let bet_show_single = ref(false)  // 单关显示
+const get_bet_status = ref(0) // 投注状态
 const btn_show = ref() // 投注状态2
-const max_height1 = ref(40) // 高度变化
+const max_height1 = ref(150) // 投注赛事高度
 const get_mix_bet_flag = ref(false) // 最小投注开关
 const exist_code = ref(666)
 
@@ -354,15 +350,9 @@ onMounted(() => {
 
 const set_ref_data_bet_money = () => {
  
-  let markInfo = lodash.get(BetViewDataClass, 'bet_single_list')
-  // let markInfo = lodash.get(BetData, 'bet_list')
-  console.error('BetViewDataClass', markInfo)
-  // bet_min_max_money.value = BetViewDataClass.bet_min_max_money
-  bet_view_obj.value = markInfo
-  
-  console.error('sssssss888',bet_view_obj.value)
- 
-
+  // let markInfo = lodash.get(BetData, 'bet_single_list')
+  console.error('bet_single_list',BetData.bet_single_list);
+  bet_show_single.value = true
 }
 onUnmounted(() => {
   useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money).off

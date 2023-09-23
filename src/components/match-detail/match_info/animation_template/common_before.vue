@@ -173,6 +173,7 @@ export default {
   mixins: [common_before],
   data() {
     return {
+      UserCtr,
       sprite_img,
       isRouterAlive: true, //重载页面开关
     };

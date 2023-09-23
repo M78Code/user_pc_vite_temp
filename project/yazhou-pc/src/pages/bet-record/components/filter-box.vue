@@ -149,8 +149,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted,watch,onUnmounted, nextTick, inject, computed } from "vue";
-// import { IconWapper } from 'src/components/icon'
+import { ref, reactive, onMounted,watch,onUnmounted, nextTick, computed } from "vue";
 import { FilterRadioFullVersionWapper } from "src/components/match-list/filter-radio/index.js";
 import { FilterCheckboxFullVersionWapper } from "src/components/match-list/filter-checkbox/index.js";
 import { formatTime } from "src/core/format/index.js";
@@ -188,7 +187,6 @@ const props = defineProps({
     type: String
   },
   });
-const reload = inject('reload')
 
 // 日历多语言配置
 const locale = {

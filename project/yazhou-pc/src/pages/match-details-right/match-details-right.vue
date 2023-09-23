@@ -188,10 +188,9 @@ import store from 'src/store-redux/index.js';
 let state = store.getState();
    // 获取当前页路由信息
 const layout_cur_page = ref(state.layoutReducer.layout_cur_page);
-// const {
-//   show_load_status,
-//   layout_cur_page
-// } =useRightDetails({route})
+const {
+  show_load_status,
+} =useRightDetails({route})
 </script>
  
  <style lang="scss" scoped>

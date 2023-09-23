@@ -291,8 +291,8 @@ import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, wa
 import { i18n_t } from "src/boot/i18n.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 const get_detail_data = ref({
-        csid: 1,
-        mid: 1,
+        csid: '1',
+        mid: '1',
     })
 
 //国际化

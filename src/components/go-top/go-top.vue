@@ -8,13 +8,14 @@
 
     <!-- 返回顶部 -->
     <div class="go-top-btn" @click="on_go_top">
-      <icon name="icon-go_top" size="14px"></icon>
+      <icon-wapper name="icon-go_top" size="14px"></icon-wapper>
       <div class="msg">{{$t("common.back_top") || ""}}</div>
     </div>
   </div>
 </template>
 
 <script setup>
+import { IconWapper } from 'src/components/icon'
 const emit = defineEmits(['on_go_top'])
 
     /**

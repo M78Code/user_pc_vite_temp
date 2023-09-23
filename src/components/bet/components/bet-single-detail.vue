@@ -19,11 +19,11 @@
 
     <!-- 右 -->
     <div class="content-b"
-      :class="{ 'red-color': !money_ok, 'content-b2': !(BetData.active_index === index_ && [1, 7].includes(+get_bet_status)) }"
+      :class="{ 'red-color': !money_ok, 'content-b2': !(BetData.active_index === bet_index && [1, 7].includes(+get_bet_status)) }"
       @click.stop="input_click">
       <span v-if="money" class="yb_fontsize20 money-number">{{ format_money3(money) }}</span>
       <span class="money-span" ref="money_span"
-        :style="{ opacity: BetData.active_index === index_ && [1, 7].includes(+get_bet_status) ? '1' : '0' }"></span>
+        :style="{ opacity: BetData.active_index === bet_index && [1, 7].includes(+get_bet_status) ? '1' : '0' }"></span>
       <span v-if="!money && max_money_back" class="yb_fontsize14 limit-txt">{{ get_money_format() }}</span>
       <span @click.stop="clear_money" class="money-close" :style="{ opacity: money > 0 ? '1' : '0' }">x</span>
     </div>
@@ -49,11 +49,18 @@ const is_watch = ref(false)    //组件渲染时是否监听money
 const max_money_back = ref(false)   //最高可赢金额的接口是否有返回(不管成功与失败)
 const obj_pre_max_money = ref(null) // 单关预约最高可投注金额
 
+let timer1 = null
+let timer3 = null;
+let  timer4 = null;
+let flicker_timer = null
 
 const get_cur_odd = ref()
 const get_bet_status = ref()
 const get_used_money = ref()
 const get_money_notok_list2 = ref()
+
+const bet_single_detail = ref()  // 实列
+const money_span = ref()  // 实列
 
 // 复式连串过关投注
 const special_series = reactive({
@@ -77,7 +84,7 @@ const ref_data = reactive({
 })
 
 const props = defineProps({
-  index: {
+  bet_index: {
     type: Number,
     default: 0
   },
@@ -128,6 +135,7 @@ const item_ = computed(() => {
 })
 // 计算单关最高可赢
 const max_win_money = computed(() => {
+  return 300
   // 串关使用 限额赔率 = 每一个赛事赔率相乘
   let money = BetData.is_bet_single ? props.item.oddFinally : ref_data.seriesOdds
   // 常量 精度值（赔率为+万位）
@@ -141,7 +149,7 @@ const max_win_money = computed(() => {
 })
 // 转化过后的坑位id
 const hn_id = computed(() => {
-  return BetData.bet_list[index_]
+  return BetData.bet_list[bet_index]
 })
 // 单关监听最高可投注金额
 const obj_max_money = computed(() => {
@@ -281,7 +289,7 @@ const get_money_format = () => {
 const cursor_flashing = () => {
   clearInterval(flicker_timer)
   flicker_timer = setInterval(() => {
-    $refs.money_span && $refs.money_span.classList.toggle('money-span3')
+    money_span.value && money_span.value.classList.toggle('money-span3')
   }, 700);
 }
 /**
@@ -289,7 +297,7 @@ const cursor_flashing = () => {
  *@param {Number} new_money 最新金额值
  */
 const change_money_handle = (new_money) => {
-  if (index_ != BetData.active_index) { return };
+  if (bet_index != BetData.active_index) { return };
 
   if (max_money.value < 0.01 && max_money_back.value) {
     if (new_money) {
@@ -358,22 +366,23 @@ const input_click = (evnet) => {
 
   if ([4, 5].includes(+get_bet_status)) { return };
 
-  set_active_index(index_);
+  set_active_index(bet_index);
 
-  let ele = $refs.bet_single_detail
+  let ele = bet_single_detail.value
   ele && ele.scrollIntoView({ block: "nearest" })
 
   send_money_to_keyboard()
 }
 // 将当前活动项的金额和最高可投金额传递给键盘
 const send_money_to_keyboard = () => {
-  if (BetData.active_index == index_) {
+  if (BetData.active_index == bet_index) {
     useMittEmit(MITT_TYPES.EMIT_SEND_VALUE, { money: money.value, max_money: max_money.value })
   }
 }
 
 // 限额赋值
 const set_ref_data_bet_money = () => {
+  console.error('出发了')
   // 串关获取 复试连串
   if (!BetData.is_bet_single) {
 
@@ -400,7 +409,7 @@ const set_ref_data_bet_money = () => {
 onUnmounted(() => {
   // clear_timer()
 
-  useMittOn(MITT_TYPES.EMIT_CHANGE_MONEY, change_money_).off;
+  useMittOn(MITT_TYPES.EMIT_CHANGE_MONEY, change_money_handle).off;
   useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money).off
 
   // for (const key in $data) {

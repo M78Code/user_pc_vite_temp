@@ -13,7 +13,7 @@ import { get_match_dom_show_property } from "./module/match-show-property.js";
 import { useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import UserCtr from 'src/core/user-config/user-ctr.js'
 import MatchListCardScroll from './match-list-card-scroll'
-import { compute_style_template_by_match_info } from './module/compute-style-template.js'
+import { compute_style_template_by_match_height } from './module/compute-style-template.js'
 
 class MatchListCard {
   constructor() {
@@ -444,22 +444,21 @@ class MatchListCard {
       this.mid_dom_height_dict = {};
       // 每一个赛事的高度
       this.match_height_map_list = MatchCtr.match_list_data_sources.map((match, i) => {
-        let obj = get_match_dom_show_property(i);
-        let r = get_template_config(obj);
-        // if (match.mhid === '118875') compute_style_template_by_match_info(match)
-        // 在列表下,第一个元素的偏移量减去0.09rem 因为第一个元素没有玩法标题padingtop
-        if (location.hash.includes("match") && i == 0) {
-          r.odd_list_height -= 0.11;
-        }
-        this.mid_dom_height_dict[r.mid] = r;
-        return r; //每个赛事占的dom高度和mid映射r
+        // let obj = get_match_dom_show_property(i);
+        // let r = get_template_config(obj);
+        // if (match.mhid === '111065') compute_style_template_by_match_height(match)
+        // // 在列表下,第一个元素的偏移量减去0.09rem 因为第一个元素没有玩法标题padingtop
+        // if (location.hash.includes("match") && i == 0) {
+        //   r.odd_list_height -= 0.11;
+        // }
+        // this.mid_dom_height_dict[r.mid] = r;
+        return compute_style_template_by_match_height(match); //每个赛事占的dom高度和mid映射r
       });
+      // console.log(this.match_height_map_list)
       // 计算每个赛事容器的高度，累加 = 总高度
       let total_height = this.match_height_map_list.reduce((total, map_obj) => {
         let p_total = 0;
-        if (typeof total == "number") {
-          p_total = total;
-        }
+        if (typeof total == "number") p_total = total;
         return p_total + this.get_match_dom_height_by_matchdata(map_obj);
       }, 0);
       //页面容器 总高度

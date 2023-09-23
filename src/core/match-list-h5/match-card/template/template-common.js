@@ -176,8 +176,10 @@ export const match_style_template = {
   match_title_height: 30,
   // 主盘口高度
   main_handicap_height: 110,
-  // 次要玩法高度
-  tab_play_total_height: 36,
+  // 次要玩法标题高度
+  play_title_height: 36,
+  // 次要玩法盘口默认高度
+  tab_play_total_height: 111,
   // 是否需要动态计算高度
   is_dynamic_compute_height: false,
 }

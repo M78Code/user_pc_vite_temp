@@ -13,6 +13,10 @@ const store = configureStore({
     themeReducer,
     ...project_store,
   },
+  middleware:getDefaultMiddleware=>getDefaultMiddleware({
+    //关闭redux序列化检测
+    serializableCheck:false
+  })
 });
 
 export default store;
