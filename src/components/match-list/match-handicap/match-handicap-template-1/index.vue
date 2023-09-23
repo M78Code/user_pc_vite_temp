@@ -75,13 +75,13 @@ const props = defineProps({
 const match_list_tpl_size = ref(MATCH_LIST_TEMPLATE_CONFIG['template_1_config'].width_config)
 
 // 组件是否已挂载
-const is_mounted = ref(false)
+const is_mounted = ref(true);
 const cur_esports_mode = ref(BetData.cur_esports_mode);
 onMounted(() => {
   // 异步设置组件是否挂载完成
-  setTimeout(() => {
-    is_mounted.value = true
-  })
+  // setTimeout(() => {
+  //   is_mounted.value = true
+  // })
 })
 
 const deal_width_handicap_ols = (payload) => {

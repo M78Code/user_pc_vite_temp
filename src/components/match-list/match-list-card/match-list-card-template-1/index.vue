@@ -95,7 +95,7 @@ const card_style_obj = ref(MatchListCardDataClass.all_card_obj[props.card_key] |
 
 let sticky_top = ref(null)
 // 组件是否加载完成
-let is_mounted = ref(false);
+const is_mounted = ref(true);
 let vx_get_layout_size = ref(state.layoutReducer.layout_size)
 /**
  * @Description 设置卡片样式
@@ -132,9 +132,9 @@ const mids_arr = computed(() => {
 
 onMounted(() => {
   // 异步设置组件是否挂载完成
-  setTimeout(()=>{
-    is_mounted.value = true
-  })
+  // setTimeout(()=>{
+  //   is_mounted.value = true
+  // })
 })
 
 onUnmounted(() => {
@@ -157,11 +157,11 @@ onUnmounted(() => {
   .load-data-wrap {
     width: 100%;
     height: 100%;
-    ::v-deep .empty-wrap .img {
+    :deep(.empty-wrap .img) {
       width: 130px !important;
       height: 130px !important;
     }
-    ::v-deep .user_api_limited {
+    :deep(.user_api_limited) {
       .img {
         display: none;
       }

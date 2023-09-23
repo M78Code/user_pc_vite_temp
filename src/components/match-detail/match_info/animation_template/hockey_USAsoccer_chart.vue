@@ -209,10 +209,10 @@
   }
   /*************** 条形图 *************** -E*/
 }
-::v-deep .text-orange {
+:deep(.text-orange) {
   color: var(--qq--yb-text-color1) !important;
 }
-::v-deep .text-blue {
+:deep(.text-blue) {
   color: #546bec !important;
 }
 </style>

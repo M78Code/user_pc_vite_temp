@@ -244,7 +244,7 @@ export default {
     }
   }
 
-  ::v-deep .c-match-date {
+  :deep(.c-match-date) {
     margin: 0 auto;
   }
 

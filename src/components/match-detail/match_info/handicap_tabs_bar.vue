@@ -124,10 +124,10 @@ export default defineComponent({
     const tab = ref(null);
     const isRouterAlive = ref(false);
 
-    defineExpose({
-      tab,
-      currentIndex,
-    });
+    // defineExpose({
+    //   tab,
+    //   currentIndex,
+    // });
 
     // 当前所选的玩法集子项id
     const tabs_active_index = ref(store_state.matchesReducer.tabs_active_index);

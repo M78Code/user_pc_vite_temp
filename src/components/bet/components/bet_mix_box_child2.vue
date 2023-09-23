@@ -43,8 +43,8 @@
         </bet-mix-show> -->
 
         <!-- 串关投注成功组件 单个几串几的信息展示-->
-        <template v-if="btn_show == 1 || mixnew_bet || part_bet">
-          <div v-show="btn_show == 1 && !mixnew_bet || part_bet">
+        <template v-if="btn_show == 1">
+          <div v-show="btn_show == 1">
             <div v-for="(item, index) in series_order_respList" :key="index">
               <!-- <betSuccessBar :item_="item" @update_money="update_money" :query_order_obj="query_order_obj"
                 :len='series_order_respList.length'></betSuccessBar> -->
@@ -67,7 +67,7 @@
         <!-- 串关投注完成后底部的显示 -->
         <!-- <template v-if="btn_show == 1 && series_order_respList.length > 1 || mixnew_bet"> -->
         <template v-if="0">
-          <div v-show="btn_show == 1 && series_order_respList.length > 1 && !mixnew_bet"
+          <div v-show="btn_show == 1 && series_order_respList.length > 1"
             class="order-ok row yb_px14 yb_py8 yb_fontsize14">
             <div class="col-6">
               <!-- 可赢总金额 -->
@@ -251,6 +251,10 @@ const tips_msg = ref('失效')  // 提示信息
 
 const bet_view_obj = ref({})  // 多个投注对象 调试
 const get_bet_status = ref(2) // 投注状态
+const btn_show = ref() // 投注状态2
+const max_height1 = ref(40) // 高度变化
+const get_mix_bet_flag = ref(false) // 最小投注开关
+const exist_code = ref(666)
 
 const hide_bet_series_but = () => {
   let res = false;
@@ -301,6 +305,44 @@ const is_bet_check_rc = () => {
   }
   return res;
 }
+
+// 投注事件
+const pack_up = (val)=>{
+
+}
+
+//是否有重复的球员id或者球队id，有的话要禁止串关
+const is_conflict = computed(() => {
+  return false
+})
+
+// 是否展示不支持串关提示
+const is_conflict2 = computed(() => {
+  return true
+  let flag =
+    (get_cannot_mix_len.value || get_invalid_ids.value.length) &&
+    BetData.bet_list.length > 1 &&
+    ![900, 3000].includes(+get_menu_type)
+
+  if (flag) {
+    btn_show.value = 5
+  } else if (get_bet_status.value == 1) {
+    btn_show.value = 0
+  }
+  return flag
+})
+
+//计算样式，下面几种情况左下角按钮需要置灰不让点击
+const calc_class = computed(() => {
+  return true
+  let flag = [2, 4].includes(+get_bet_status.value)
+    || get_is_champion.value() && !BetData.is_bet_success_status
+    || get_bet_status.value == 5 && BetData.bet_list.length == 1
+    || get_menu_type == 3000 && lodash.get(single_item, 'hps[0].hl[0].hipo') != 1 && !BetData.is_bet_success_status
+    || get_menu_type != 3000 && lodash.get(single_item, 'hps[0].hids') == 0 && !BetData.is_bet_success_status
+    || btn_show.value == 5;
+  return flag
+})
 
 onMounted(() => {
   useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money)

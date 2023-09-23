@@ -9,7 +9,7 @@
       odds_lift,
       { 'show-odds-icon': odds_state != 'seal' },
     ]"
-    @click.stop="bet_click"
+    @click.stop="bet_click_ol"
     :id="`list-${ol_data.oid}`"
   >
     <!-- 盘口 -->
@@ -65,14 +65,13 @@ import lodash from 'lodash'
 import {
   get_odds_active,
   utils,
-  MatchDataWarehouse_PC_List_Common as MatchListData,
 } from "src/core/index.js";
 import { format_odds_value } from 'src/core/format/module/format-odds.js';
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
 import { compute_value_by_cur_odd_type } from "src/core/format/module/format-odds-conversion-mixin.js";
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 
-const is_mounted = ref(false);
+const is_mounted = ref(true);
 // 盘口状态 active:选中 lock:锁盘 seal:封盘 close:关盘
 const odds_state = ref("");
 // 赔率值
@@ -109,32 +108,32 @@ const score = computed(() => {
 
 onMounted(() => {
   // 异步设置组件是否挂载完成
-  setTimeout(() => {
-    is_mounted.value = true;
-  });
+  // setTimeout(() => {
+  //   is_mounted.value = true;
+  // });
 });
 
 // 监听玩法ID变化 取消赔率升降
-watch(props.ol_data._hpid, () => {
-  clear_odds_lift()
-}) 
+// watch(props.ol_data._hpid, () => {
+//   clear_odds_lift()
+// }) 
 
 // 监听oid 取消赔率升降
-watch(props.ol_data.oid, () => {
-  clear_odds_lift()
-})  
+// watch(props.ol_data.oid, () => {
+//   clear_odds_lift()
+// })  
 
 // 监听投注项赔率变化
-watch(props.ol_data.ov, (cur, old) => {
-  // 赔率值处理
-  format_odds(cur, 1);
-  if (props.ol_data) {
-    let { _mhs, _hs, os } = props.ol_data;
-    odds_state.value = get_odds_state(_mhs, _hs, os);
-  }
-  // 红升绿降变化
-  set_odds_lift(cur, old);
-})  
+// watch(props.ol_data.ov, (cur, old) => {
+//   // 赔率值处理
+//   format_odds(cur, 1);
+//   if (props.ol_data) {
+//     let { _mhs, _hs, os } = props.ol_data;
+//     odds_state.value = get_odds_state(_mhs, _hs, os);
+//   }
+//   // 红升绿降变化
+//   set_odds_lift(cur, old);
+// })  
 
 /**
  * 赔率转换
@@ -251,9 +250,15 @@ const get_odds_state = (mhs, hs, os) => {
  * @description 投注项点击
  * @return {undefined} undefined  组装投注项的数据
  */
-const bet_click = () => {
-  // set_bet_obj_config(item,obj,obj.hl,obj_ol)
-  set_bet_obj_config()
+const bet_click_ol = () => {
+  const {oid,_hid,_hn,_mid } = props.ol_data
+  let params = {
+    oid, // 投注项id ol_obj
+    _hid, // hl_obj 
+    _hn,  // hn_obj
+    _mid,  //赛事id mid_obj
+  }
+  set_bet_obj_config(params,{})
 };
 
 onUnmounted(() => {

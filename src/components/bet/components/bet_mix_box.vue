@@ -8,7 +8,7 @@
     <!-- <betMixBoxChild1 v-if="[100, 900, 3000].includes(+get_menu_type)"></betMixBoxChild1> -->
     <!-- 普通赛事菜单 -->
     <!-- <betMixBoxChild2 v-else></betMixBoxChild2> -->
-    <betMixBoxChild2></betMixBoxChild2>
+    <!-- <betMixBoxChild2></betMixBoxChild2> -->
   </div>
 </template>
 
@@ -27,7 +27,6 @@ const bet_show = ref(true)
 
 
 const set_ref_data_bet_money = (ref)=>{
-  console.error('ref',ref)
   bet_show.value = ref
   // 单关数据
   console.error('qweqweq',BetData.bet_single_list)

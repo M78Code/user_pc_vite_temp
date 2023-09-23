@@ -258,7 +258,7 @@ const get_bet_item_class = (item_details, item, ol, hl_index) => {
     text-align: center;
     flex: unset !important;
   }
-  ::v-deep .handicap {
+  :deep(.handicap) {
     flex-wrap: wrap;
     justify-content: flex-start;
     &:last-child {
@@ -292,10 +292,10 @@ const get_bet_item_class = (item_details, item, ol, hl_index) => {
     }
   }
 
-  ::v-deep .bet-item {
+  :deep(.bet-item) {
     margin-left: 5px;
   }
-  ::v-deep .c-bet-item.zhuanye .odds {
+  :deep(.c-bet-item.zhuanye .odds) {
     margin-right: 6px;
   }
 }

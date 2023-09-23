@@ -121,17 +121,19 @@ const props = defineProps({
   }
 })
 
-watchEffect(() => {
-  value_show.value = props.bet_view_obj[props.name_]
-  value_name.value = props.name_
-  console.error('ssss7789', value_show.value)
-  console.error('name_', props.name_)
-})
+// watchEffect(() => {
+//   value_show.value = props.bet_view_obj[props.name_]
+//   value_name.value = props.name_
+//   console.error('ssss7789', value_show.value)
+//   console.error('name_', props.name_)
+// })
 
 // const value_show = computed(()=>{
 //   console.error('变化了')
 //   return props.bet_view_obj
 // })
+
+
 
 
 
