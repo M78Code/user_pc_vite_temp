@@ -50,10 +50,13 @@ let balance_timer = null // 延时器
 
 let bet_list = ref(BetData.bet_list)
 
+const get_bet_status = ref(true)
+const is_loading_balance = ref(false) // 金额刷新中？
+
+
 // const store_state = store.getState()
 // const get_s_count_data = ref(store_state.get_s_count_data)
 // const get_mix_bet_flag = ref(store_state.get_mix_bet_flag)
-// const get_bet_status = ref(store_state.get_bet_status)
 // const get_menu_type = ref(store_state.get_menu_type) // 当前主菜单的menu_type
 // // const get_bet_obj = ref(store_state.get_bet_obj)  // 投注相关对象
 // // const get_is_combine = ref(store_state.get_is_combine)  //是不是冠军
