@@ -264,7 +264,7 @@ onUnmounted(() => {
       font-weight: 600;
     }
     .article {
-      ::v-deep {
+      :deep {
         * {
           max-width: 100%;
         }
@@ -382,7 +382,7 @@ onUnmounted(() => {
     }
   }
 
-  ::v-deep .load-data-wrap {
+  :deep(.load-data-wrap) {
     .empty-wrap {
       .text-center {
         color: var(--qq--analysis-text-color-10);

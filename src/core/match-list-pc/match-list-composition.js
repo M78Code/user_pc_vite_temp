@@ -2,8 +2,8 @@ import {
 	ref,
 	computed,
 } from "vue";
-import { useRoute } from "vue-router";
 import lodash from "lodash";
+// import router from "@/router/index"
 
 import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache.js";
 import { PageSourceData, MatchDataWarehouse_PC_List_Common as MatchListData } from "src/core/index.js";
@@ -27,7 +27,8 @@ import store from "src/store-redux/index.js";
 import ServerTime from 'src/core/server-time/server-time.js';
 
 
-// const route = useRoute() || {};
+// const route = router.currentRoute.value
+
 let state = store.getState();
 const { page_source } = PageSourceData;
 const { mx_use_list_res, mx_list_res, mx_collect_match } = process_composable_fn();
@@ -158,7 +159,7 @@ const set_base_data_init = () => {
 		left_menu_base_mi_arr,
 	} = BaseData;
 	// 没有数据 不执行
-	if (!mi_tid_mids_res[mid]) {
+	if (!(mi_tid_mids_res && mi_tid_mids_res[mid])) {
 		return;
 	}
 	// 常规赛种
@@ -344,7 +345,7 @@ const fetch_match_list = (is_socket = false, cut) => {
 		_params.selectionHour = null;
 	}
 	// 无感刷新 不走预加载
-	set_base_data_init();
+	// set_base_data_init();
 
 	if (typeof is_socket == "boolean" && !is_socket) {
 		// console.error('不是无感刷新')
@@ -357,7 +358,7 @@ const fetch_match_list = (is_socket = false, cut) => {
 		api && api(_params)
 			.then((res) => {
 				// 组件和路由不匹配 菜单id不匹配aa
-				if ((page_source == "details" && page_source != "details") || _params.euid != match_api.params.euid) return;
+				if ((page_source != "details") || _params.euid != match_api.params.euid) return;
 				api_error_count.value = 0;
 				if (res.code == 200) {
 					//处理服务器返回的 列表 数据   fetch_match_list

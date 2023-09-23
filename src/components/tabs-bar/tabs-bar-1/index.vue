@@ -160,7 +160,7 @@ const goToPage = (val) => {
     display: flex;
     align-items: center;
     margin: 0 30px 0 18px;
-    ::v-deep .q-field--focused .q-field__control:after {
+    :deep(.q-field--focused .q-field__control:after) {
       transform: scale3d(0, 1, 1);
     }
     .select {
@@ -187,7 +187,7 @@ const goToPage = (val) => {
       outline: medium;
     }
   }
-  ::v-deep .q-field--auto-height {
+  :deep(.q-field--auto-height) {
     .q-field__control {
       padding: 0;
       min-height: 0px;
@@ -209,14 +209,14 @@ const goToPage = (val) => {
       }
     }
   }
-  ::v-deep .q-field--auto-height .q-field__native span {
+  :deep(.q-field--auto-height .q-field__native span) {
     margin: 0 auto;
     font-weight: 500;
     font-size: 12px;
   }
 }
 .q-pagination {
-  ::v-deep .q-btn {
+  :deep(.q-btn) {
     margin: 0 3px;
     width: 24px;
     height: 24px;

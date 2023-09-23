@@ -769,7 +769,7 @@ console.log("111111")
   overflow-x: hidden;
   overflow-y: auto;
 
-  ::v-deep.q-scrollarea__thumb--v {
+  :deep(.q-scrollarea__thumb--v) {
     display: none;
     width: 5px;
   }

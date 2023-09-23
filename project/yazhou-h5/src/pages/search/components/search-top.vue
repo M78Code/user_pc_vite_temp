@@ -354,7 +354,7 @@ onBeforeUnmount(() => {
     }
   }
 
-  ::v-deep input {
+  :deep(input) {
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
@@ -421,7 +421,7 @@ onBeforeUnmount(() => {
       border-radius: 0.5rem;
 
       &.q-field--focused {
-        ::v-deep.q-field__control:after {
+        :deep().q-field__control:after {
           border-width: 1px;
         }
 
@@ -452,7 +452,7 @@ onBeforeUnmount(() => {
         }
       }
 
-      ::v-deep .q-field__control {
+      :deep(.q-field__control) {
         height: 100%;
         border-radius: .5rem;
 
@@ -461,7 +461,7 @@ onBeforeUnmount(() => {
         }
       }
 
-      ::v-deep .q-field__marginal {
+      :deep(.q-field__marginal) {
         height: 100%;
       }
     }
@@ -510,7 +510,7 @@ onBeforeUnmount(() => {
   }
 
   /*******兼容部分ios下输入框背景色等样式异常情况 开始*******/
-  ::v-deep.search-keyword-input {
+  :deep(.search-keyword-input) {
     -webkit-appearance: none;
     border-radius: 0;
     outline: 0;
@@ -547,27 +547,27 @@ onBeforeUnmount(() => {
   }
 
   /*******兼容部分ios下输入框背景色等样式异常情况 结束*******/
-  ::v-deep.q-placeholder {
+  :deep(.q-placeholder) {
     height: 0.4rem;
     vertical-align: middle;
     font-size: 0.16rem;
     min-height: unset;
   }
 
-  ::v-deep .q-field__control,
-  ::v-deep .q-field__prepend,
-  ::v-deep.q-field__append {
+  :deep(.q-field__control),
+  :deep(.q-field__prepend),
+  :deep(.q-field__append) {
     height: 0.4rem;
     vertical-align: middle;
   }
 
-  ::v-deep .q-field__control-container,
-  ::v-deep.q-field__native {
+  :deep(.q-field__control-container),
+  :deep(.q-field__native) {
     height: 0.38rem;
     background: transparent;
   }
 
-  ::v-deep.q-field__control {
+  :deep(.q-field__control) {
 
 
     border-radius: 0.5rem;

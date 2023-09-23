@@ -187,10 +187,10 @@ const filter_temp_data = (otd) => {
 }
 
 .wrap-template {
-  ::v-deep .bet-item {
+  :deep(.bet-item) {
     margin-left: 5px;
   }
-  ::v-deep .c-bet-item.zhuanye .odds {
+  :deep(.c-bet-item.zhuanye .odds) {
     margin-right: 6px;
   }
 }

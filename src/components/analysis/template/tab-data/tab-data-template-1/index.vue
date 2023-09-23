@@ -441,7 +441,7 @@ const getAge = (birthdate) => {
   }
 
   .article {
-    ::v-deep {
+    :deep {
       * {
         max-width: 100%;
         color: var(--qq--analysis-text-color-10);

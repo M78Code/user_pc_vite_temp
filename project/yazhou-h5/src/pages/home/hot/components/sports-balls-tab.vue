@@ -231,7 +231,7 @@ onUnmounted(()=>{
 
   }
 
-  ::v-deep.no-list {
+  :deep(.no-list) {
     position: absolute;
     top: 0;
     left: 0;
