@@ -6,23 +6,23 @@
 
       <div v-for="(page,index) in item.hpsData" :key="index"> 
         <div>主盘口
-          <div v-for="obj in page.hps" :key="obj.chpid">
+          <div v-for="(obj,index1) in page.hps" :key="index1">
             <div> 玩法ID：{{ obj.hpid }} - {{ play_id[obj.hpid] }}</div>
             <ul v-if="obj.hl.ol">
               <div> 盘口id: {{ obj.hl.hid }} - {{ obj.hl.hv }}</div>
-              <li v-for="obj_ol in obj.hl.ol" :key="obj_ol.oid" class="ty-li" @click="set_bet_obj_config(item,obj,obj.hl,obj_ol)">
+              <li v-for="(obj_ol,index2) in obj.hl.ol" :key="index2" class="ty-li" @click="set_bet_obj_config(item,obj,obj.hl,obj_ol)">
                投注项： {{ obj_ol.oid }} - {{ obj_ol.onb }} - 1 - {{ obj_ol.ov }} - {{ compute_value_by_cur_odd_type(obj_ol.ov,'','',item.csid) }}
               </li>
             </ul>
           </div>
         </div>
         <div>副盘口
-          <div v-for="obj in page.hpsAdd" :key="obj.chpid">
+          <div v-for="(obj,index3) in page.hpsAdd" :key="index3">
             <div>玩法ID：  {{ obj.hpid }}  - {{ play_id[obj.hpid] }}</div>
               <template v-if="obj.hl.length">
-                  <ul v-for="obj_hl in obj.hl" :key="obj_hl.hid">
+                  <ul v-for="(obj_hl,index4) in obj.hl" :key="index4">
                     <div> 盘口id: {{ obj_hl.hid }} - {{ obj_hl.hv }} </div>
-                    <li v-for="obj_ol in obj_hl.ol" :key="obj_ol.oid" class="ty-li" @click="set_bet_obj_config(item,obj,obj_hl,obj_ol)">
+                    <li v-for="(obj_ol,index5) in obj_hl.ol" :key="index5" class="ty-li" @click="set_bet_obj_config(item,obj,obj_hl,obj_ol)">
                       投注项： {{ obj_ol.oid }} - {{ obj_ol.onb }} -  {{ obj_ol.ov }} - {{ compute_value_by_cur_odd_type(obj_ol.ov,'','',item.csid) }}
                       <!-- obj_ol.ov,'','', -->
                     </li>

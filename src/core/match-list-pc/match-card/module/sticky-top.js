@@ -1,9 +1,7 @@
-import { useRoute } from "vue-router";
 
 import PageSourceData from "src/core/page-source/page-source.js";
 import MatchListCardData from "./match-list-card-data-class.js";
 import MenuData from "src/core/menu-pc/menu-data-class.js";
-const route = useRoute() || {};
 
 /**
  * @Description 设置吸顶高度
@@ -17,7 +15,7 @@ export const set_sticky_top = () => {
   };
 
   // 搜索页面
-  if (route.name == "search") {
+  if (page_source == "search") {
     obj = {
       type: 36,
       league: 74,

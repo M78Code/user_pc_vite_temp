@@ -130,6 +130,7 @@ import { ListFilterDateFullVersionWapper as listFilterDate } from "src/component
 import { MatchListCardFullVersionWapper as MatchListCard } from "src/components/match-list/match-list-card/index.js"; //赛事列表
 import { ListFilterHotFullVersionWapper as ListFilterHot } from "src/components/match-list/list-filter-hot/index.js"; //热门赛事列表
 import ScrollList from 'src/components/cus-scroll/scroll_list.vue';
+import refresh from 'project_path/src/components/refresh/refresh.vue'
 // import { EsportsHeaderFullVersionWapper as EsportsHeader } from "src/components/match-list/esports-header/index.js";//电竞赛事列表筛选
 // import { VirtualMatchTypeFullVersionWapper as VirtualMatchType } from "src/components/match-list/match-list-card/index.js";//虚拟体育 赛事列表 赛事头
 import { PlayVirtualMatchTypeFullVersionWapper as PlayVirtualMatchType } from "src/components/match-list/play-virtual-match-type/index.js";//赛事列表头部——滚球——赛事类型

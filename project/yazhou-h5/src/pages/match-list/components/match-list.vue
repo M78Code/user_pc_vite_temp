@@ -6,7 +6,7 @@
   <div class="refresh-container">
     <!--列表页-->
     <scroll-wrapper ref="scroll_wrapper" :matchCtr="matchCtr" :data_source="matchCtr.list" :class="{'data-get-empty':data_get_empty}"
-      v-if="matchCtr" :main_source="source" :is_goto_top_random="is_goto_top_random"
+      v-if="matchCtr.list.length > 0" :main_source="source" :is_goto_top_random="is_goto_top_random"
       :match_list_wrapper_height="match_list_wrapper_height">
       <template v-slot="{ match_item, index}">
         <!--虚拟体育(赛果)-->
