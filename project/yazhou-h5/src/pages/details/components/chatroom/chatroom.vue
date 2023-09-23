@@ -347,7 +347,7 @@ export default defineComponent({
     }
   }
 
-  ::v-deep .lucky-user {
+  :deep(.lucky-user) {
     width: 3.36rem;
     left: .35rem;
   }

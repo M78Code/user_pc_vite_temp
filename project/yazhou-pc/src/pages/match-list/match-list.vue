@@ -147,6 +147,7 @@ import useMatchListMx from "src/core/match-list-pc/match-list-composition.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import { PageSourceData } from 'src/core/index.js';
 import "./match_list.scss";
+
 const { mounted_fn, load_data_state, show_refresh_mask, collect_count, is_show_hot } = useMatchListMx();
 const { page_source } = PageSourceData;
 export default {

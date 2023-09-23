@@ -55,7 +55,7 @@
       .details-tab-wrap {
         position: unset;
 
-        ::v-deep .details-tab {
+        :deep(.details-tab) {
           position: relative;
           height: 0.32rem;
           background: transparent;
@@ -91,13 +91,13 @@
           }
         }
 
-        ::v-deep .fat-btn {
+        :deep(.fat-btn) {
           width: 0.36rem;
           float: right;
           padding-top: 0;
         }
 
-        ::v-deep .menu-third {
+        :deep(.menu-third) {
           padding-right: 0;
 
           &::after {
@@ -105,14 +105,14 @@
           }
         }
 
-        ::v-deep .menu-item {
+        :deep(.menu-item) {
           font-size: 0.12rem;
           line-height: 0.32rem;
 
-          &.t_color {
+          // &.t_color {
             // color: $details-header-team-name;
             // color: $details-header-team-name !important;
-          }
+          // }
         }
       }
 
@@ -130,17 +130,17 @@
         }
       }
 
-      ::v-deep .virtual-bet-wrapper {
+      :deep(.virtual-bet-wrapper) {
         border-radius: 0;
         overflow: initial;
       }
 
-      ::v-deep .esport-bet-wrapper {
+      :deep(.esport-bet-wrapper) {
         border-radius: 0;
         overflow: initial;
       }
 
-      ::v-deep .category {
+      :deep(.category) {
         .mat-info, .mat-info2 {
           left: unset !important;
           right: 0.3rem !important;
@@ -271,11 +271,11 @@
         height: 3.43rem;
       }
 
-      ::v-deep [class^=temp] {
+      :deep([class^=temp]) {
         padding: 0.04rem 0.05rem 0.06rem 0.05rem;
       }
 
-      ::v-deep .play-name-wrapper {
+      :deep(.play-name-wrapper) {
         position: relative;
         display: flex;
         align-items: center;
@@ -303,7 +303,7 @@
         }
       }
 
-      ::v-deep .title-style {
+      :deep(.title-style) {
         position: relative;
         height: 0.2rem;
         margin-bottom: 0;
@@ -329,12 +329,12 @@
         }
       }
 
-      ::v-deep .fz_16 {
+      :deep(.fz_16) {
         font-size: 0.11rem;
         font-weight: 400;
       }
 
-      ::v-deep .odds_new {
+      :deep(.odds_new) {
         font-size: 0.12rem;
         font-weight: 700;
         // color: $details-header-team-name;
@@ -344,17 +344,17 @@
         }
       }
 
-      ::v-deep .details_t_color6, ::v-deep .details_t_color7 {
+      :deep(.details_t_color6), :deep(.details_t_color7) {
         font-size: 0.11rem;
         font-weight: 400;
         color: var(--q-color-com-fs-color-11);
       }
 
-      ::v-deep .size-color {
+      :deep(.size-color) {
         color: var(--q-color-fs-color-50);
       }
 
-      ::v-deep .details_t_color7 {
+      :deep(.details_t_color7) {
         color: var(--q-color-com-fs-color-26) !important;
 
         .size-color {
@@ -362,7 +362,7 @@
         }
       }
 
-      ::v-deep .play-box-style {
+      :deep(.play-box-style) {
         position: relative;
         height: 0.31rem;
         line-height: 0.31rem;
@@ -392,21 +392,21 @@
         }
       }
 
-      ::v-deep .play-box-lock {
+      :deep(.play-box-lock) {
         display: flex;
         justify-content: center;
         align-items: center;
       }
 
-      ::v-deep .item-wrap {
+      :deep(.item-wrap) {
         overflow: initial;
       }
 
-      ::v-deep .rad-style {
+      :deep(.rad-style) {
         background-color: transparent !important;
       }
 
-      ::v-deep .temp0 {
+      :deep(.temp0) {
         .bor-style {
           border-radius: 0;
           overflow: initial;
@@ -417,7 +417,7 @@
         }
       }
 
-      ::v-deep .temp1 {
+      :deep(.temp1) {
         .item-wrap .row {
           justify-content: space-between;
         }
@@ -466,7 +466,7 @@
         }
       }
 
-      ::v-deep .temp2 {
+      :deep(.temp2) {
         .bet-wrapper {
           border-radius: 0;
           overflow: initial;
@@ -526,7 +526,7 @@
         }
       }
 
-      ::v-deep .temp3 {
+      :deep(.temp3) {
         .item-wrap {
           justify-content: space-between;
           border-radius: 0;
@@ -564,7 +564,7 @@
         }
       }
 
-      ::v-deep .temp4 {
+      :deep(.temp4) {
         .item-wrap {
           overflow: initial;
 
@@ -607,7 +607,7 @@
         }
       }
 
-      ::v-deep .temp5 {
+      :deep(.temp5) {
         .head {
           position: relative;
           height: 0.2rem;
@@ -663,7 +663,7 @@
         }
       }
 
-      ::v-deep .temp6 {
+      :deep(.temp6) {
         .title-style {
           position: relative;
           height: 0.2rem;
@@ -725,7 +725,7 @@
         }
       }
 
-      ::v-deep .temp7 {
+      :deep(.temp7) {
         .item-wrap {
           .bor-style {
             border: 0;
@@ -785,7 +785,7 @@
         }
       }
 
-      ::v-deep .temp13 {
+      :deep(.temp13) {
         .rad-style {
           overflow: initial;
 
@@ -879,7 +879,7 @@
         }
       }
 
-      ::v-deep .temp14 {
+      :deep(.temp14) {
         .tittle {
           position: relative;
           height: 0.2rem;
@@ -1007,7 +1007,7 @@
         }
       }
 
-      ::v-deep .temp15 {
+      :deep(.temp15) {
         overflow: initial;
         .play-box {
           position: relative;
@@ -1073,7 +1073,7 @@
         }
       }
 
-      ::v-deep .temp16 {
+      :deep(.temp16) {
         .tittle {
           position: relative;
           height: 0.2rem;

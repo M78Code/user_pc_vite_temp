@@ -2,7 +2,7 @@
   <!--赛事玩法模板-->
   <div
     class="c-match-card relative-position"
-    :id="DOM_ID_SHOW && `list-mid-${mid}`"
+    :id="`list-mid-${mid}`"
     :style="`height:${match_style_obj.total_height}px !important;width:${LayOutMain_pc.layout_content_width}px  !important;`"
   >
   <div v-show="false">{{ MatchListCardData.list_version }}</div>
@@ -63,7 +63,7 @@ const match_style_obj = ref(MatchListCardDataClass.all_card_obj[props.mid+'_'] |
 // 是否显示调试信息
 const test = ref(sessionStorage.getItem('wsl'))
 // 组件是否加载完成
-const is_mounted = ref(false)
+const is_mounted = ref(true);
 // 显示部分dom ID
 // this.DOM_ID_SHOW = window.BUILDIN_CONFIG.DOM_ID_SHOW;
 // 赛事模板名称
@@ -84,9 +84,9 @@ const match_components_name = computed(() => {
 
 onMounted(() => {
   // 异步设置组件是否挂载完成
-  setTimeout(()=>{
-    is_mounted.value = true
-  })
+  // setTimeout(()=>{
+  //   is_mounted.value = true
+  // })
 })
 
 onUnmounted(() => {

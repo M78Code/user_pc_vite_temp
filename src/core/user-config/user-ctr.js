@@ -10,11 +10,11 @@ import { ref } from "vue";
 import { get_file_path } from "src/core/file-path/file-path.js";
 import pako_pb from "src/core/pb-decode/custom_pb_pako.js";
 import { infoUpload } from "src/core/http/";
+import { LocalStorage } from "src/core/";
 // import { loadLanguageAsync } from "src/core/index.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 // #TODO 接口统一管理的文件，后续替换
-import { api_details } from "src/api/index";
-import { api_account } from "src/api/";
+import { api_details, api_account, api_common } from "src/api/index";
 import store from "../../store-redux/";
 // #TODO 还有使用到的loadash,如果全局配置则无需引入，或者按需引入，等正是开发组件决定,  _  (lodash)
 import lodash from "lodash";
@@ -104,6 +104,11 @@ class UserCtr {
       this.user_version.value = v || Date.now()
     }
     this.callbackUrl = ''
+    // 获取持久化的电竞图片域名
+    this.e_sports_domain_img = LocalStorage.get('e_sports_domain_img', '');
+    setTimeout(() => {
+      this.set_e_sports_domain_img()
+    })
   }
   /**
    * 获取初始化uid
@@ -111,12 +116,12 @@ class UserCtr {
    */
   init_uid() {
     let res = '';
-    let unique = localStorage.getItem("unique_uuid");
+    let unique = LocalStorage.get("unique_uuid");
     if (unique) {
       res = unique;
     } else {
       res = uid().replace(/-/g, "");
-      localStorage.setItem("unique_uuid", res);
+      LocalStorage.set("unique_uuid", res);
     }
     return res;
   }
@@ -159,7 +164,7 @@ class UserCtr {
     useMittEmit(MITT_TYPES.EMIT_THEME_CHANGE, theme);
     this.update()
     // 替换body上className
-    const old_theme = localStorage.getItem("theme") || sessionStorage.getItem("theme") || theme == 'day' ? 'theme02' : 'theme01';
+    const old_theme = LocalStorage.get("theme") || sessionStorage.getItem("theme") || theme == 'day' ? 'theme02' : 'theme01';
     document.getElementById('ty-body').classList.replace(old_theme, theme == 'day' ? 'theme01' : 'theme02')
     // store.dispatch({ type: "SET_THEME", data });
     // loadLanguageAsync(lang);//加载语言
@@ -848,7 +853,7 @@ class UserCtr {
     }
     if (user_data.stm == "blue") {
       //同步 商户主题色系
-      localStorage.setItem("merchant_style", "y0");
+      LocalStorage.set("merchant_style", "y0");
       // 修正session主题
       let session_theme = sessionStorage.getItem("theme");
       if (session_theme) {
@@ -857,7 +862,7 @@ class UserCtr {
       }
     } else {
       //同步 商户主题色系
-      localStorage.setItem("merchant_style", "common");
+      LocalStorage.set("merchant_style", "common");
       // 修正session主题
       let session_theme = sessionStorage.getItem("theme") || "";
       sessionStorage.setItem("theme", session_theme.replace("_y0", ""));
@@ -899,7 +904,7 @@ class UserCtr {
    *
    */
   get_user_base_info() {
-    let str = localStorage.getItem(this.local_storage_key);
+    let str = LocalStorage.get(this.local_storage_key);
     let data = null;
     if (str) {
       try {
@@ -923,7 +928,7 @@ class UserCtr {
           languageName: obj.languageName,
           userMarketPrefer: obj.userMarketPrefer,
         };
-        localStorage.setItem(this.local_storage_key, JSON.stringify(data));
+        LocalStorage.set(this.local_storage_key, JSON.stringify(data));
       } catch (error) {
         console.error("userCtr  set_user_base_info() 错误:", error);
       }
@@ -997,7 +1002,33 @@ class UserCtr {
     //上传数据
     infoUpload.upload_data(lodash.get(res, "data.data", {}));
   }
-
+  /**
+     * @description: 设置电竞图片资源域名
+     */
+  async set_e_sports_domain_img() {
+    try {
+      var send_gcuuid = uid();
+      const res = await api_common.get_games_imgDomain({
+        gcuuid: send_gcuuid
+      })
+      if (send_gcuuid != res.gcuuid) return;
+      if (res && res.data) {
+        // 请求成功,获取服务器返回的数据
+        let temp = lodash.get(res, 'data');
+        // 切除域名后面多余的/
+        if (temp && lodash.endsWith(temp, '/')) {
+          temp = temp.substring(0, temp.length - 1);
+        }
+        // 持久化电竞图片域名
+        LocalStorage.set('e_sports_domain_img', temp);
+        // 设置全局电竞图片域名信息
+        this.e_sports_domain_img = temp;
+        // window.env.config.e_sports.domain_img = temp;
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
   /**
    * 通过 res.config.url  判定哪些纳入统计
    *   计算 all_expired_count
@@ -1097,7 +1128,7 @@ class UserCtr {
       gr = gr.toLocaleUpperCase();
       // localStorage持久化用户分组信息
       sessionStorage.setItem("gr", gr);
-      localStorage.setItem(
+      LocalStorage.set(
         "user_gr",
         JSON.stringify({ token: sessionStorage.getItem("h5_token"), gr })
       );
@@ -1138,7 +1169,7 @@ class UserCtr {
       }
     } else {
       // localStorage持久化用户分组信息清空
-      localStorage.setItem("user_gr", "");
+      LocalStorage.set("user_gr", "");
     }
 
     return reload_flg;

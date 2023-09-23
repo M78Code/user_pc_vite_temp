@@ -90,19 +90,19 @@ const tab_data_init = () => {
 const result_tab = (index,tab_item) => {
     let search_term =route.query.search_term
     useMittEmit(MITT_TYPES.EMIT_CHANGE_TAB, true)
-    if(item_index != index){
-      item_index = tab_item.id === 4 ? 3 : index
+    if(item_index.value != index){
+      item_index.value = tab_item.id === 4 ? 3 : index
     }
     if(tab_item && tab_item.id == 3 && [100,101,102,103,104].includes(+result_detail_data.csid)){
       index = 2
-      item_index = 1
+      item_index.value = 1
     }
     if(result_detail_data && result_detail_data.mid){
       let mid = result_detail_data.mid;
       // todo 考虑优化此处代码
       $router.replace({
         name:'match_result',
-        params:{mid, index: item_index},
+        params:{mid, index: item_index.value},
         query: {search_term: search_term}
       });
     }
@@ -122,9 +122,9 @@ const result_tab = (index,tab_item) => {
       if(code == 200) {
         tab_data_init()
         if (data && data.record) {
-          list_data = data.record
-          set_note_sheet_records_data(list_data)
-          if(Object.keys(list_data).length>0) {
+          list_data.value = data.record
+          set_note_sheet_records_data(list_data.value)
+          if(Object.keys(list_data.value).length>0) {
             tab_item_list.value.push({
               id:3,
               // 我的注单
@@ -179,7 +179,7 @@ const get_football_replay = (event_code) => {
   // 展开收起按钮
 const change_btn = () => {
     // 设置vuex变量值,当选中"所有赛果"时才可以点击
-    if (item_index != 0) return;
+    if (item_index.value != 0) return;
     if(get_fewer == 1 || get_fewer == 3){
       set_fewer(2)
     }else{

@@ -260,6 +260,7 @@ const {
   HandicapTitle,
   betItem,
   lodash,
+  isShow
 } = useCommon({ emit, props });
 
 const hl_index = ref(0);
@@ -289,10 +290,10 @@ watch(
     flex-wrap: wrap;
   }
 
-  ::v-deep .bet-item {
+  :deep(.bet-item) {
     margin-left: 5px;
   }
-  ::v-deep .c-bet-item.zhuanye .odds {
+  :deep(.c-bet-item.zhuanye .odds) {
     margin-right: 6px;
   }
 }

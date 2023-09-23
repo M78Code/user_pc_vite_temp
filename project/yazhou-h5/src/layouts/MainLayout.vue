@@ -15,7 +15,7 @@
           </template>
         </MenuWapper>
         <router-view />
-        <betMixBox />
+        <!-- <betMixBox /> -->
         <!--页脚-->
         <FooterWapper class="m-layout" v-if="['sport_menu', 'matchList'].includes(route.name)">
         </FooterWapper>

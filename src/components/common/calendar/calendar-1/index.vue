@@ -316,7 +316,7 @@ export default {
         &.text-wrap2 {
           width: 58px;
         }
-        ::v-deep .scroll {
+        :deep(.scroll) {
           overflow: hidden;
         }
         .text {

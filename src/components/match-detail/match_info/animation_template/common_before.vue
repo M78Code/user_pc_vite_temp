@@ -4,7 +4,7 @@
  * @Description: 公共赛前组件
 -->
 <template>
-  <div class="before" v-if="isRouterAlive">{{ UserCtr }}
+  <div class="before" v-if="isRouterAlive">
     <div
       class="content"
       :style="{
@@ -247,7 +247,7 @@ export default {
           display: flex;
           justify-content: center;
         }
-        ::v-deep .c-match-date {
+        :deep(.c-match-date) {
           min-width: 58px;
           padding: 0 0;
         }

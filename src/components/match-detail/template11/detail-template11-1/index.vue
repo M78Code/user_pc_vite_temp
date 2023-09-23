@@ -112,7 +112,7 @@ const renderBorder = computed(() => {
     .no_border-right {
       border-right: none !important;
     }
-    ::v-deep .c-bet-item {
+    :deep(.c-bet-item) {
       height: 100%;
       .bet-inner {
         .handicap-wrap {

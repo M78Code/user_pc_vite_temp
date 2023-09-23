@@ -9,90 +9,123 @@
 -->
 <template>
   <div class="timer-layout">
-    <span class="timer-layout0">{{ time_str_old }}</span>
-    <span class="timer-layout2">{{ time_str }}</span>
+    <span class="timer-layout0">{{time_str_old}}</span>
+    <span class="timer-layout2">{{time_str}}</span>
   </div>
 </template>
-<script setup>
-import { onUnmounted, ref, watch } from "vue";
-
-import useTimer from "./useTimer";
-import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
-
-const { clear, start, replay, time_str, timer_tmp } = useTimer();
-// 定时器
-const timer_status = ref("");
-// 定时器
-const time_str_old = ref("");
-let timer = null;
-
-const props = defineProps({
-  tconfig: {
-    // 时间
-    time: 0,
-    // 时间格式化函数
-    time_format: "",
-    // 步长 0-不增长, 1-增长, -1-递减
-    step: 0,
-    // 定时器延迟毫秒数,
-    timer_ms: 1000,
-    // 时间变化事件
-    on_time_change: "",
+<script>
+export default {
+  name: "Timer",
+  data() {
+    return {
+      // 定时器
+      timer_status: "",
+      // 页面显示字符串
+      time_str: "",
+      time_str_old: "",
+      // 增量临时值
+      timer_tmp: 0
+    };
   },
-});
-
-
-const set_date_time = (e) => {
-  if (!timer_status.value) {
-    return;
-  }
-  
-  timer_tmp.value += props.tconfig.step;
-  // 设置格式化时间
-  if (props.tconfig.time_format) {
-    time_str.value = props.tconfig.time_format(
-      parseInt(props.tconfig.time) + timer_tmp.value
-    );
-  } else {
-    time_str.value = props.tconfig.time + timer_tmp.value;
-  }
-  // 回调时间变更事件
-  if (props.tconfig.on_time_change) {
-    props.tconfig.on_time_change();
+  props: {
+    tconfig: {
+      // 时间
+      time: 0,
+      // 时间格式化函数
+      time_format: "",
+      // 步长 0-不增长, 1-增长, -1-递减
+      step: 0,
+      // 定时器延迟毫秒数,
+      timer_ms: 1000,
+      // 时间变化事件
+      on_time_change: ""
+    }
+  },
+  created() {
+    // 启动计时器
+    this.start();
+    this.$root.$on(this.emit_cmd.EMIT_UPD_TIME_REFRESH_CMD, this.set_date_time);
+  },
+  destroyed() {
+    this.$root.$off(this.emit_cmd.EMIT_UPD_TIME_REFRESH_CMD, this.set_date_time);
+    this.clear();
+  },
+  watch: {
+    time_str(new_){
+      if((new_?new_:'').length!=(this.time_str_old?this.time_str_old:'').length){
+        this.time_str_old = (new_?new_:'');
+      }
+    },
+    // 监测是否重新设置时间
+    "tconfig.time": {
+      handler(new_, old_) {
+        this.timer_tmp = 0;
+        this.start();
+      }
+    },
+    "tconfig.step": {
+      handler(new_, old_) {
+        if(new_ != 0)
+        {
+          this.timer_tmp = 0;
+          this.start();
+        }
+      }
+    }
+  },
+  methods: {
+    // 启动计时器
+    start() {
+      const that = this;
+      if (that.tconfig.step) {
+        if (!that.timer || that.replay) {
+          // clearInterval(that.timer);
+          // 设置格式化时间
+          if (that.tconfig.time_format) {
+            that.time_str = that.tconfig.time_format(
+              that.tconfig.time + that.timer_tmp
+            );
+          } else {
+            that.time_str = that.tconfig.time + that.timer_tmp;
+          }
+          if (that.tconfig.on_time_change) {
+            that.tconfig.on_time_change(that);
+          }
+          this.timer_status = true;
+        }
+      } else {
+        that.time_str = that.tconfig.time_format(
+          that.tconfig.time + that.timer_tmp
+        );
+      }
+      return that;
+    },
+    set_date_time() {
+      if(!this.timer_status){
+        return;
+      }
+      const that = this;
+      that.timer_tmp += that.tconfig.step;
+      // 设置格式化时间
+      if (that.tconfig.time_format) {
+        that.time_str = that.tconfig.time_format(
+          parseInt(that.tconfig.time) + that.timer_tmp
+        );
+      } else {
+        that.time_str = that.tconfig.time + that.timer_tmp;
+      }
+      // 回调时间变更事件
+      if (that.tconfig.on_time_change) {
+        that.tconfig.on_time_change(that);
+      }
+    },
+    //销毁计时器
+    clear() {
+      this.timer = false;
+    }
   }
 };
-
-
-useMittOn(MITT_TYPES.EMIT_UPD_TIME_REFRESH_CMD, set_date_time);
-start();
-
-onUnmounted(() => {
-  clear();
-});
-
-watch(time_str, (new_) => {
-  if (
-    (new_ ? new_ : "").length !=
-    (time_str_old.value ? time_str_old.value : "").length
-  ) {
-    time_str_old.value = new_ ? new_ : "";
-  }
-});
-
-watch(props.tconfig.time, () => {
-  timer_tmp.value = 0;
-  start();
-});
-
-watch(props.tconfig.step, () => {
-  timer_tmp.value = 0;
-  start();
-});
-
-
-
 </script>
-
 <style scoped>
 .timer-layout {
   position: relative;
