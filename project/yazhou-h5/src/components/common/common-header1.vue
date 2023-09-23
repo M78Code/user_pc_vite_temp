@@ -1,91 +1,232 @@
 <!--
- * @Author: Supermark
- * @Date: 2020-08-20 18:35:53
  * @Description: 详情页头部置顶title
 -->
 <template>
-  <div ref="common_header" class="common-header" @touchmove.prevent>
-    <div class="row justify-between full-height mx-15" >
+  <div
+    ref="common_header"
+    class="common-header"
+    @touchmove.prevent
+  >
+    <div class="row justify-between full-height mx-15">
       <!-- 返回上一页 -->
-      <div class="go-back-btn-wrap a1" @click="go_to_back">
+      <div
+        class="go-back-btn-wrap a1"
+        @click="go_to_back"
+      >
         <div class="go-back"></div>
       </div>
-      <div ref="contents" class="ellipsis title-style details-c" @click.stop="show_dialog">
+      <div
+        ref="contents"
+        class="ellipsis title-style details-c"
+        @click.stop="show_dialog"
+      >
         <!-- 联赛名 -->
-        <seamless-marquee :content="title"/>
+        <seamless-marquee :content="title" />
         &nbsp;
         <!-- 三角形logo -->
-        <template>
-          <span class="triangle-down"></span>
-        </template>
+        <span class="triangle-down"></span>
       </div>
-      <div class="row common-header-right" >
+      <div class="row common-header-right">
         <div
           class="collect-icon"
-          :class="{active:get_detail_data.mf}"
-          v-if="GlobalAccessConfig.get_collectSwitch()&& is_DJ_show && MenuData.get_menu_type() !== 28"
+          :class="{ active: get_detail_data.mf }"
+          v-if="GlobalAccessConfig.get_collectSwitch() && is_DJ_show && MenuData.get_menu_type() !== 28"
           @click="details_collect(get_detail_data)"
         ></div>
-        <div class="det-ref" :class="{'refreshing':refreshing,'refreshing-common': MenuData.get_menu_type() !== 3000}" @click="details_refresh"></div>
+        <div
+          class="det-ref"
+          :class="{ 'refreshing': refreshing, 'refreshing-common': MenuData.get_menu_type() !== 3000 }"
+          @click="details_refresh"
+        ></div>
         <!--<div class="analysis_new" v-if="(get_detail_data.csid == 1 || get_detail_data.csid == 2)" @click="analysis_show(get_detail_data)"></div>-->
       </div>
     </div>
   </div>
 </template>
 
-<script>
-// import { mapMutations, mapGetters } from "vuex";
-import lodash from 'lodash'
-import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
-import seamlessMarquee from './seamless-marquee.vue'  // 详情页头部联赛名文字超出隐藏无缝滚动
-import {api_common} from "src/api/index.js";
-import {utils } from 'src/core/index.js'
-import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
-import { t } from "src/boot/i18n.js";
+<script setup>
+import { computed, onBeforeUnmount, ref } from 'vue';
 import { useRoute } from "vue-router"
+import lodash from 'lodash'
+import GlobalAccessConfig from "src/core/access-config/access-config.js"
+import seamlessMarquee from './seamless-marquee.vue'  // 详情页头部联赛名文字超出隐藏无缝滚动
+import { api_common } from "src/api/index.js";
+import { utils } from 'src/core/index.js'
+import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
+import { i18n_t } from "src/boot/i18n.js";
 import { MenuData } from "src/core/index.js";
+import uid from "src/core/uuid/index.js";
+import store from "src/store-redux/index.js";
+
+const props = defineProps({
+  // 联赛名
+  title: {
+    type: String, // 类型字符串
+    default: "" // 默认值为空
+  },
+  // 当前tab
+  view_tab: {
+    type: String,
+    default: 'bet'
+  }
+})
 
 const route = useRoute()
-export default {
-  name: "common_header",
-  data() {
-    return {
-      dialog:false,
-      position: 'top',
-      // 默认不刷新
-      refreshing:false,
-      // 收藏|取消收藏是否请求中
-      favorite_loading: false,
-      // 延时器
-      timer1_: null,
-      timer2_: null,
-      GlobalAccessConfig,
-      MenuData
-    };
-  },
-  created() {
-    lodash.debounce(this.cancel_ref,200)
 
-    lodash.debounce(this.go_to_back, 500, {leading: true})
+/** 默认不刷新 */
+const refreshing = ref(false)
+const position = ref('top')
+/** 收藏|取消收藏是否请求中 */
+const favorite_loading = ref(false)
+// 延时器
+const timer1_ = ref(null)
+const clear_timer1_ = () => {
+  if (timer1_.value) {
+    clearTimeout(timer1_.value)
+    timer1_.value = null
+  }
+}
 
-    useMittOn(MITT_TYPES.EMIT_VISIBILITYCHANGE_EVENT, this.details_refresh).on
-  },
-  // 接受父组件传递的数据
-  props: {
-    // 联赛名
-    title: {
-      type: String, // 类型字符串
-      default: "" // 默认值为空
-    },
-    // 当前tab
-    view_tab: {
-      type: String,
-      default: 'bet'
+const cancel_ref = lodash.debounce(() => {
+  refreshing.value = false;
+}, 200)
+onBeforeUnmount(() => cancel_ref.cancel())
+
+// 返回列表页亦或是返回上一级
+const go_to_back = lodash.debounce(() => {
+  // $common.go_where({back_to: 'go_to_back'})
+}, 500, { leading: true })
+onBeforeUnmount(() => go_to_back.cancel())
+
+/**
+ * @description: 详情页刷新
+ * @param {Undefined}
+ * @return {Undefined} undefined
+ */
+const details_refresh = () => {
+  if (refreshing.value) return;
+  // 赛果详情页
+  const curr_tab = props.view_tab
+  if (route.name === 'match_result') {
+    // 刷新 盘口赔率信息
+    useMittEmit(MITT_TYPES.EMIT_REF_API, 'details_refresh')
+    // 触发列表页监听事件，调接口拉取指定赛事
+    useMittEmit(MITT_TYPES.EMIT_MENU_CHANGE_FOOTER_CMD, {
+      text: "footer-refresh"
+    });
+    // 刷新 注单记录----请求
+    useMittEmit(MITT_TYPES.EMIT_UPDATE_ORDER_LIST)
+  }
+  else if (curr_tab === 'bet') {
+    // 刷新 盘口赔率信息
+    useMittEmit(MITT_TYPES.EMIT_REFRESH_DETAILS)
+    // useMittEmit(MITT_TYPES.EMIT_REF_API, 'details_refresh')
+  }
+  else if (curr_tab === 'match_analysis') {
+    // 刷新 赛事分析信息
+    useMittEmit(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS)
+  }
+  else {
+    useMittEmit(MITT_TYPES.EMIT_REFRESH_CHATROOM)
+  }
+  // useMittEmit(MITT_TYPES.EMIT_REFRESH_DETAILS)
+  refreshing.value = true;
+  clear_timer1_()
+  timer1_.value = setTimeout(() => {
+    // 取消刷新 已做节流
+    cancel_ref();
+  }, 700);
+}
+const { off } = useMittOn(MITT_TYPES.EMIT_VISIBILITYCHANGE_EVENT, details_refresh)
+onBeforeUnmount(off)
+
+const set_is_show_settle_tab = (data = false) => store.dispatch({ type: 'detailsSlice.set_is_show_settle_tab', data })
+onBeforeUnmount(set_is_show_settle_tab)
+
+/**
+ * @description: 电竞 收藏与取消收藏
+ * @param {Object} match 赛事信息
+ * @return {String}
+ */
+const details_collect = (match_obj) => {
+  if (!utils.judge_collectSwitch(GlobalAccessConfig.get_collectSwitch())) return
+  // 如果还在请求中则return
+  if (favorite_loading) return;
+  let txt = 0;
+  let params = {
+    // 赛事ID
+    mid: match_obj.mid,
+    // 1收藏||0取消收藏
+    cf: Number(!match_obj.mf),
+    // 用户id
+    cuid: uid,
+  };
+  // 收藏赛事或取消收藏
+  if (match_obj.mf) {
+    txt = i18n_t('common.cancel');//'取消';
+  } else {
+    txt = i18n_t('collect.betted_title');//'收藏';
+  }
+  favorite_loading.value = true;
+  // 更新收藏状态
+  set_details_changing_favorite(1)
+
+  api_common.add_or_cancel_match(params).then(res => {
+    favorite_loading.value = false;
+    if (res.code == 200) {
+      let cloneData = lodash.clone(get_detail_data)
+      cloneData.mf = params.cf
+      set_detail_data(cloneData);
+    } else if (res.msg) {
+      set_toast({ 'txt': res.msg });
     }
-  },
-  components:{
-    seamlessMarquee
-  },
+  }).catch((e) => { console.error(e) });
+}
+
+/**
+ *@description 显示足篮分析页
+ *@param {obj} 赛事详情
+ *@return {obj}
+ */
+const analysis_show = (obj) => {
+  let csid = lodash.get(obj, 'csid')
+  useMittEmit(MITT_TYPES.EMIT_ANA_SHOW, csid)
+}
+
+/**
+ *@description 加载联赛列表
+ *@param {obj}
+ *@return {obj}
+ */
+const interface_b_header = () => {
+  // 显示联赛列表传true
+  useMittEmit(MITT_TYPES.EMIT_IS_BOOL_DIALOG_DETAILS, true);
+}
+
+// 点击下拉三角加载联赛列表
+const show_dialog = () => {
+  let params0 = { tId: get_detail_data.tid, page: 1, count: 50 };
+  // 加载联赛列表
+  interface_b_header(params0)
+}
+/**
+ *@description: 点击注单icon显示注单历史
+ *@param {Undefined}
+ *@return {Undefined} undefined
+ */
+const open = (position) => {
+  useMittEmit(MITT_TYPES.EMIT_CHANGE_RECORD_SHOW, true)
+}
+
+// 是否是电竞
+const is_DJ_show = computed(() => MenuData.get_menu_type() == 3000 || (MenuData.get_menu_type() == 28 && [100, 101, 102, 103, 104].includes(+get_detail_data.csid)))
+
+</script>
+
+<script>
+
+export default {
+  name: "common-header",
   computed: {
     // ...mapGetters([
     //   // 赛事id
@@ -115,148 +256,9 @@ export default {
     //   'get_godetailpage',
     //   'get_curr_sub_menu_type',
     // ]),
-    // 是否是电竞
-    is_DJ_show() {
-      return MenuData.get_menu_type() == 3000 || (MenuData.get_menu_type() == 28 && [100,101,102,103,104].includes(+get_detail_data.csid))
-    }
+
   },
-  beforeUnmount() {
-    // 恢复默认的注单icon
-    set_is_show_settle_tab(false)
-    debounce_throttle_cancel(this.cancel_ref);
-    debounce_throttle_cancel(this.go_to_back);
 
-    useMittOn(MITT_TYPES.EMIT_VISIBILITYCHANGE_EVENT, this.details_refresh).off
-
-    clearTimeout(this.timer1_)
-    this.timer1_ = null
-
-    clearTimeout(timer2_)
-    timer2_ = null
-  },
-  methods: {
-    // ...mapMutations(["set_is_matchpage","set_toast","set_is_show_settle_tab","set_godetailpage",
-    // "set_detail_data","set_details_changing_favorite"]),
-    /**
-     * @description: 电竞 收藏与取消收藏
-     * @param {Object} match 赛事信息
-     * @return {String}
-     */
-    details_collect(match_obj) {
-      if( !utils.judge_collectSwitch( GlobalAccessConfig.get_collectSwitch(),this ) ) return
-      // 如果还在请求中则return
-      if ( favorite_loading ) return;
-      let txt = 0;
-      let params = {
-        // 赛事ID
-        mid: match_obj.mid,
-        // 1收藏||0取消收藏
-        cf: Number(!match_obj.mf),
-        // 用户id
-        cuid: get_uid,
-      };
-      // 收藏赛事或取消收藏
-      if (match_obj.mf) {
-        txt = t('common.cancel');//'取消';
-      } else {
-        txt = t('collect.betted_title');//'收藏';
-      }
-      favorite_loading = true;
-      // 更新收藏状态
-      set_details_changing_favorite(1)
-
-      api_common.add_or_cancel_match( params ).then( res => {
-        favorite_loading = false;
-        if (res.code == 200) {
-          let cloneData = _.clone(get_detail_data)
-          cloneData.mf = params.cf
-          set_detail_data(cloneData);
-        } else if (res.msg) {
-          set_toast({ 'txt': res.msg });
-        }
-      }).catch((e) => {console.error(e)});
-    },
-    /**
-     *@description: 详情页刷新
-     *@param {Undefined}
-     *@return {Undefined} undefined
-     */
-    details_refresh(){
-      if(refreshing) return;
-
-      // 赛果详情页
-      const curr_tab = view_tab
-      if (route.name === 'match_result') {
-        // 刷新 盘口赔率信息
-        useMittEmit(MITT_TYPES.EMIT_REF_API, 'details_refresh')
-        // 触发列表页监听事件，调接口拉取指定赛事
-        useMittEmit(MITT_TYPES.EMIT_MENU_CHANGE_FOOTER_CMD, {
-          text: "footer-refresh"
-        });
-        // 刷新 注单记录----请求
-        useMittEmit(MITT_TYPES.EMIT_UPDATE_ORDER_LIST)
-      }
-      else if (curr_tab === 'bet') {
-        // 刷新 盘口赔率信息
-        useMittEmit(MITT_TYPES.EMIT_REFRESH_DETAILS)
-        // useMittEmit(MITT_TYPES.EMIT_REF_API, 'details_refresh')
-      }
-      else if (curr_tab === 'match_analysis') {
-        // 刷新 赛事分析信息
-        useMittEmit(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS)
-      }
-      else {
-        useMittEmit(MITT_TYPES.EMIT_REFRESH_CHATROOM)
-      }
-
-      // useMittEmit(MITT_TYPES.EMIT_REFRESH_DETAILS)
-      refreshing = true;
-      clearTimeout(this.timer1_)
-      this.timer1_ = setTimeout(() => {
-        // 取消刷新 已做节流
-        cancel_ref();
-      },700);
-    },
-    cancel_ref(){
-      refreshing = false;
-    },
-    /**
-     *@description 显示足篮分析页
-     *@param {obj} 赛事详情
-     *@return {obj}
-     */
-    analysis_show(obj){
-      let csid = _.get(obj,'csid')
-      useMittEmit(MITT_TYPES.EMIT_ANA_SHOW,csid)
-    },
-    /**
-     *@description 加载联赛列表
-     *@param {obj}
-     *@return {obj}
-     */
-    async interface_b_header() {
-      // 显示联赛列表传true
-      useMittEmit(MITT_TYPES.EMIT_IS_BOOL_DIALOG_DETAILS, true);
-    },
-    // 返回列表页亦或是返回上一级
-    go_to_back() {
-      // $common.go_where({back_to: 'go_to_back'})
-    },
-    // 点击下拉三角加载联赛列表
-    show_dialog(){
-      let params0 = { tId: get_detail_data.tid , page: 1, count: 50 };
-      // 加载联赛列表
-      interface_b_header(params0)
-    },
-    /**
-     *@description: 点击注单icon显示注单历史
-     *@param {Undefined}
-     *@return {Undefined} undefined
-     */
-    open(position){
-      useMittEmit(MITT_TYPES.EMIT_CHANGE_RECORD_SHOW,true)
-    },
-  },
 };
 </script>
 
@@ -268,7 +270,8 @@ export default {
   .go-back-btn-wrap {
     display: flex;
     align-items: center;
-    border-right: .15rem solid transparent;   /*扩大可点击范围*/
+    border-right: .15rem solid transparent;
+    /*扩大可点击范围*/
 
     .iocn {
       top: 50%;
@@ -333,7 +336,8 @@ export default {
 .det-ref {
   width: 0.28rem;
   height: 100%;
-  background: var(--q-color-com-img-bg-70) center no-repeat;
+  // TODO: 后续上传
+  background: url('/yazhou-h5/image/list/virtual-ref.svg') center no-repeat;
   background-size: 0.2rem auto;
 
   &.refreshing {
@@ -349,21 +353,24 @@ export default {
   display: inline-block;
   width: 0.12rem;
   height: 0.2rem;
-  background: var(--q-color-com-img-bg-3) no-repeat center / 96% 96%;
+  // TODO: 后续上传
+  background: url('/yazhou-h5/image/common/go_back.svg') no-repeat center / 96% 96%;
   background-size: 100% 100%;
 }
 
 .analysis_new {
   width: 0.2rem;
   height: 92.5%;
-  background: var(--q-color-com-img-bg-71) center no-repeat;
+  // TODO: 后续上传
+  background: url('/yazhou-h5/image/svg/analysis_new.svg') center no-repeat;
   background-size: 0.2rem auto;
 }
 
 .collect-icon {
   width: 0.18rem;
   height: 0.18rem;
-  background-image: var(--q-color-com-img-bg-72);
+  // TODO: 后续上传
+  background-image: url('/yazhou-h5/image/common/m-list-favorite.svg');
   background-size: 100% 100%;
   position: absolute;
   left: 0.1rem;
