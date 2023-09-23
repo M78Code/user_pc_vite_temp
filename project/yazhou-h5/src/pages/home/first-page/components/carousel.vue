@@ -134,6 +134,9 @@
 <script setup>
 import lodash from 'lodash'
 import { api_home } from "src/api/index.js";
+import CountingDownStart from 'project_path/src/components/common/counting-down-start.vue';   // 一小时以内的开赛计时器（累加计时|倒计时）
+import CountingDownSecond from 'project_path/src/components/common/counting-down.vue';   // 一小时以内的开赛计时器（累加计时|倒计时）
+
 import { ref, watch, onMounted, computed, onUnmounted, reactive } from "vue";
 import { SessionStorage, useMittOn, useMittEmit, ServerTime, MITT_TYPES, get_file_path, UserCtr, format_total_score } from 'src/core/'
 import { useRoute, useRouter } from "vue-router";
