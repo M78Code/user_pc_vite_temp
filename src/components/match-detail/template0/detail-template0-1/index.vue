@@ -11,7 +11,7 @@
     v-if="curIsShow"
   >
     <!-- 主盘 S-->
-    <div class="main-handicap">2222
+    <div class="main-handicap">
       <handicap-title
         :index="index"
         :item_details="item_details"
@@ -50,7 +50,7 @@
                 :bet_data="item"
                 :bet_path="{ hl_index: j, ol_index: i }"
                 :team_name="
-                  !$utils.is_eports_csid(match_info.csid)
+                 is_eports_csid(match_info.csid)
                     ? lodash.get(item_details, `title[${i}].osn`)
                     : ''
                 "
@@ -124,7 +124,7 @@
 
 <script setup>
 import { useCommon } from "../../use-common";
-
+import {is_eports_csid} from 'src/core/index.js';
 const emit = defineEmits(["sort_index", "set_panel_status"]);
 
 const props = defineProps({
@@ -147,7 +147,7 @@ const props = defineProps({
   panel_status: String, //列表展开收起
 });
 
-const { sort_index, filter_odds, toggle_menu, curIsShow, HandicapTitle,lodash } =
+const { sort_index, filter_odds, toggle_menu, curIsShow, HandicapTitle,lodash,isShow } =
   useCommon({ emit, props });
 </script>
 <style lang="scss" scoped>
@@ -158,10 +158,10 @@ const { sort_index, filter_odds, toggle_menu, curIsShow, HandicapTitle,lodash } 
     flex-wrap: wrap;
   }
 
-  ::v-deep .bet-item {
+  :deep(.bet-item) {
     margin-left: 5px;
   }
-  ::v-deep .c-bet-item.zhuanye .odds {
+  :deep(.c-bet-item.zhuanye .odds) {
     margin-right: 6px;
   }
 }

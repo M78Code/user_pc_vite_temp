@@ -29,6 +29,7 @@ const compute_str = (params = {}) => {
 };
 
 export const write_env_file = (params = {}) => {
+  
   write_file(`./.env.${model}`, compute_str(params));
   write_file(`./.env`, compute_str(params));
 };

@@ -389,11 +389,11 @@ const time_sort = (sort) => {
         position: relative;
         left: -55px;
         z-index: 1;
-        ::v-deep .q-date__calendar-item > div {
+        :deep(.q-date__calendar-item > div) {
           width: auto;
         }
         /*  星期X 字体颜色正常显示 */
-        ::v-deep .q-date__calendar-weekdays > div {
+        :deep(.q-date__calendar-weekdays > div) {
           opacity: 1;
         }
       }
@@ -403,7 +403,7 @@ const time_sort = (sort) => {
       }
       .calendar-wrap:nth-child(1) {
         left: -380px;
-        ::v-deep .horn {
+        :deep(.horn) {
           display: none !important;
         }
       }

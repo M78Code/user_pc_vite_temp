@@ -473,7 +473,7 @@ export default {
       display: flex;
       color: #ffffff;
       .no_cuntdowm {
-        ::v-deep .c-match-date {
+        :deep(.c-match-date) {
           display: none;
         }
       }

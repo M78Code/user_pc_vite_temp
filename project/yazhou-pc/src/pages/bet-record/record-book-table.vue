@@ -944,7 +944,7 @@ onMounted(() => {
     }
   }
 
-  ::v-deep .load-data-wrap {
+  :deep(.load-data-wrap) {
     .refresh {
       padding-top: 5%;
     }
@@ -1007,7 +1007,7 @@ onMounted(() => {
   }
   .bet-compute-money {
     margin-bottom: 25px;
-    ::v-deep .vue-slider {
+    :deep(.vue-slider) {
       cursor: pointer;
       .vue-slider-rail {
         .vue-slider-marks {

@@ -223,10 +223,10 @@ export default {
     }
   }
 
-  ::v-deep .text-orange {
+  :deep(.text-orange) {
     color: var(--qq--chat-text-orange-1) !important;
   }
-  ::v-deep .text-blue {
+  :deep(.text-blue) {
     color: var(--qq--chat-text-blue-1) !important;
   }
 }
@@ -255,7 +255,7 @@ export default {
     span.text-orange {
       color: var(--qq--num-zero-text-color) !important;
     }
-    ::v-deep {
+    :deep() {
       .text-blue,
       .text-orange {
         color: var(--qq--analysis-bg-color-10) !important;

@@ -50,13 +50,13 @@ const list_data = ref([])
   // 监听csid的变化
  watch(() => 'result_detail_data.csid', (n,o) =>{
       // 切换顶部菜单，csid变化，触发tab事件
-      result_tab(0, tab_item_list[0])
+      result_tab(0, tab_item_list.value[0])
       get_list()
     },
     {deep: true})
 watch(() => props.tab_index, (n,o) => {
   if(n!=2){
-      result_tab(n, tab_item_list[n])
+      result_tab(n, tab_item_list.value[n])
     }
 })
 let off_ = () => {}
@@ -73,14 +73,14 @@ let off_ = () => {}
    * 标签数据初始化
    */
 const tab_data_init = () => {
-    tab_item_list =[
+    tab_item_list.value =[
       // 所有赛果
       {id:1, text: i18n_t('match_info.all_result')},
       // 精选赛事
       {id:2, text: i18n_t('match_info.select_event')}
     ];
     if(get_menu_type == 28 && [100,101,102,103,104].includes(+result_detail_data.csid))  {
-      tab_item_list =[
+      tab_item_list.value =[
         // 所有赛果
         {id:1, text: i18n_t('match_info.all_result')}
       ];
@@ -90,19 +90,19 @@ const tab_data_init = () => {
 const result_tab = (index,tab_item) => {
     let search_term =route.query.search_term
     useMittEmit(MITT_TYPES.EMIT_CHANGE_TAB, true)
-    if(item_index != index){
-      item_index = tab_item.id === 4 ? 3 : index
+    if(item_index.value != index){
+      item_index.value = tab_item.id === 4 ? 3 : index
     }
     if(tab_item && tab_item.id == 3 && [100,101,102,103,104].includes(+result_detail_data.csid)){
       index = 2
-      item_index = 1
+      item_index.value = 1
     }
     if(result_detail_data && result_detail_data.mid){
       let mid = result_detail_data.mid;
       // todo 考虑优化此处代码
       $router.replace({
         name:'match_result',
-        params:{mid, index: item_index},
+        params:{mid, index: item_index.value},
         query: {search_term: search_term}
       });
     }
@@ -122,10 +122,10 @@ const result_tab = (index,tab_item) => {
       if(code == 200) {
         tab_data_init()
         if (data && data.record) {
-          list_data = data.record
-          set_note_sheet_records_data(list_data)
-          if(Object.keys(list_data).length>0) {
-            tab_item_list.push({
+          list_data.value = data.record
+          set_note_sheet_records_data(list_data.value)
+          if(Object.keys(list_data.value).length>0) {
+            tab_item_list.value.push({
               id:3,
               // 我的注单
               text: i18n_t('match_info.my_bets')
@@ -162,7 +162,7 @@ const get_football_replay = (event_code) => {
         .then(res => {
           if (res.code == 200 && lodash.get(res.data, 'eventList.length')) {
             // 足球类型赛果需添加精彩回放菜单
-            tab_item_list.push({
+            tab_item_list.value.push({
               id: 4,
               // 精彩回放
               text: i18n_t('highlights.title')
@@ -179,7 +179,7 @@ const get_football_replay = (event_code) => {
   // 展开收起按钮
 const change_btn = () => {
     // 设置vuex变量值,当选中"所有赛果"时才可以点击
-    if (item_index != 0) return;
+    if (item_index.value != 0) return;
     if(get_fewer == 1 || get_fewer == 3){
       set_fewer(2)
     }else{

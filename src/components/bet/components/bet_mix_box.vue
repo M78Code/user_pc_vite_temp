@@ -8,7 +8,7 @@
     <!-- <betMixBoxChild1 v-if="[100, 900, 3000].includes(+get_menu_type)"></betMixBoxChild1> -->
     <!-- 普通赛事菜单 -->
     <!-- <betMixBoxChild2 v-else></betMixBoxChild2> -->
-    <betMixBoxChild2></betMixBoxChild2>
+    <!-- <betMixBoxChild2></betMixBoxChild2> -->
   </div>
 </template>
 
@@ -23,7 +23,7 @@ import BetData from "src/core/bet/class/bet-data-class.js";
 
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js"
 
-const bet_show = ref(true)
+const bet_show = ref(false)
 
 
 const set_ref_data_bet_money = (ref)=>{

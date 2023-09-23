@@ -9,7 +9,7 @@
     z-index: 100;
   
     // 滚动组件
-    ::v-deep .v-scroll-area{
+    :deep(.v-scroll-area) {
       &:after{
         display: none;
       }
@@ -30,7 +30,7 @@
       }
     }
     // 暂无数据
-    ::v-deep .details_data_load{
+    :deep(.details_data_load) {
       height: calc(100% - 44px);
       border-radius: 0 0 6px 6px;
     }
@@ -40,7 +40,7 @@
       height: 44px;
       display: flex;
   
-      ::v-deep .tab-wrap{
+      :deep(.tab-wrap) {
         width: 348px !important;
         .btn{
           display: none;
@@ -63,7 +63,7 @@
       }
     }
     // 玩法模板
-    ::v-deep .wrap-template {
+    :deep(.wrap-template) {
       margin-top: 0;
       border-radius: 0;
       border: 0 none!important;
@@ -277,7 +277,7 @@
     position: absolute;
     z-index: 2;
     width: 100%;
-    ::v-deep .yb-flex-center {
+    :deep(.yb-flex-center) {
       justify-content: unset;
     }
   }
@@ -349,7 +349,7 @@
       &.no-bottom-border{
         border-bottom: none;
       }
-      ::v-deep .match_time {
+      :deep(.match_time) {
         .timer-layout2 {
           width: 100%;
           min-width: 42px;
@@ -398,7 +398,7 @@
     .wrap-recents,
     .wrap-hot {
        /*  红升绿降样式 */
-      ::v-deep .c-bet-item {
+      :deep(.c-bet-item) {
         .odds-icon {
           top: auto;
           bottom: auto;
@@ -407,7 +407,7 @@
           }
         }
       }
-      ::v-deep .c-bet-item.up {
+      :deep(.c-bet-item.up) {
         background: rgba(233, 61, 61, 0.05);
         &.normal,
         &.active {
@@ -425,7 +425,7 @@
           }
         }
       }
-      ::v-deep .c-bet-item.down {
+      :deep(.c-bet-item.down) {
         background: rgba(80, 192, 66, 0.05);
         &.normal,
         &.active {
@@ -450,17 +450,17 @@
   
   /* ************** 视频块穿透 *************** -S */
   .video-page {
-    ::v-deep .c-bet-item {
+    :deep(.c-bet-item) {
       height: 34px !important;
       line-height: 34px !important;
     }
-    ::v-deep .handicap .handicap-item {
+    :deep(.handicap .handicap-item) {
       height: 34px;
     }
-    ::v-deep .handicap-sub-title .handicap .handicap-item {
+    :deep(.handicap-sub-title .handicap .handicap-item) {
       height: 34px;
     }
-    ::v-deep .other-item {
+    :deep(.other-item) {
       height: 34px;
     }
   }
@@ -508,7 +508,7 @@
         }
       }
     }
-    ::v-deep .q-card {
+    :deep(.q-card) {
       border-radius: 0;
       padding: 16px 20px;
     }
@@ -564,7 +564,7 @@
       padding: 0;
       background-color: var(--qq--yb-bg-color7);
       border: 1px solid var(--qq--go-top-btn-border);
-      ::v-deep .icon-wrap {
+      :deep(.icon-wrap ) {
         width: 24px;
         height: 24px;
         display: flex;

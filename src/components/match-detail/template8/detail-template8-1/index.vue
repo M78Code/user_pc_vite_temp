@@ -160,7 +160,7 @@ const { sort_index, filter_odds, toggle_menu, curIsShow, HandicapTitle,lodash,be
     text-align: center;
     flex: unset !important;
   }
-  ::v-deep .handicap {
+  :deep(.handicap) {
     flex-wrap: wrap;
     .handicap-item {
       flex: unset;
@@ -175,10 +175,10 @@ const { sort_index, filter_odds, toggle_menu, curIsShow, HandicapTitle,lodash,be
     }
   }
 
-  ::v-deep .bet-item {
+  :deep(.bet-item) {
     margin-left: 5px;
   }
-  ::v-deep .c-bet-item.zhuanye .odds {
+  :deep(.c-bet-item.zhuanye .odds) {
     margin-right: 6px;
   }
 }

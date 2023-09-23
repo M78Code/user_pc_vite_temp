@@ -172,7 +172,7 @@ export const useGetItem = ({ props }) => {
   });
   // 监听赛事ID变化 取消赔率升降
   const mid_ = computed(() => {
-    return props.match_info.mid;
+    return props.match_info?.mid;
   });
   // 监听投注项赔率变化
   const ol_data_item_ov = computed(() => {

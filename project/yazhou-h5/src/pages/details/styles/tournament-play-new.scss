@@ -402,7 +402,7 @@
       padding-left: 0;
     }
 
-    ::v-deep [class^=temp] {
+    :deep([class^=temp]) {
       padding-bottom: 0.04rem;
 
       .rad-style {
@@ -500,7 +500,7 @@
       }
     }
 
-    ::v-deep .temp0 {
+    :deep(.temp0) {
       background-color: transparent;
 
       .bor-style {
@@ -517,7 +517,7 @@
       }
     }
 
-    ::v-deep .temp1 {
+    :deep(.temp1) {
       .item-wrap {
         > div {
           border-radius: 0.08rem;
@@ -526,7 +526,7 @@
       }
     }
 
-    ::v-deep .temp3 {
+    :deep(.temp3) {
       .hairline-border {
         .item-wrap {
           border-radius: 0.08rem;
@@ -543,7 +543,7 @@
       }
     }
 
-    ::v-deep .temp5, .temp6 {
+    :deep(.temp5), .temp6 {
       .col {
         .play-box-style {
           margin-bottom: 0;
@@ -560,7 +560,7 @@
       }
     }
 
-    ::v-deep .temp4 {
+    :deep(.temp4) {
       background-color: transparent;
 
       .item-wrap {
@@ -594,7 +594,7 @@
       }
     }
 
-    ::v-deep .temp5 {
+    :deep(.temp5) {
       .head {
         height: 0.34rem;
         line-height: 0.34rem;
@@ -618,7 +618,7 @@
       }
     }
 
-    ::v-deep .temp6 {
+    :deep(.temp6) {
       .item-wrap {
         border-radius: 0 0 0.08rem 0.08rem;
         overflow: hidden;
@@ -628,7 +628,7 @@
       }
     }
 
-    ::v-deep .temp7 {
+    :deep(.temp7) {
       .item-wrap {
         border-radius: 0 0 0.08rem 0.08rem;
         overflow: hidden !important;
@@ -639,7 +639,7 @@
       }
     }
 
-    ::v-deep .temp9 {
+    :deep(.temp9) {
       > .row::after {
         border: 0 !important;
       }
@@ -651,19 +651,19 @@
       }
     }
 
-    ::v-deep .temp10 {
+    :deep(.temp10) {
       .virtual-bet-wrapper {
         padding: 0.1rem 0.08rem;
       }
     }
 
-    ::v-deep .temp11 {
+    :deep(.temp11) {
       .virtual-bet-wrapper {
         padding: 0.1rem 0.08rem;
       }
     }
 
-    ::v-deep .temp13 {
+    :deep(.temp13) {
       .rad-style {
         border-radius: 0.08rem;
         overflow: hidden;
@@ -678,7 +678,7 @@
       }
     }
 
-    ::v-deep .temp14 {
+    :deep(.temp14) {
       background-color: transparent;
 
       .content {
@@ -709,7 +709,7 @@
       }
     }
 
-    ::v-deep .temp15 {
+    :deep(.temp15) {
       > .hairline-border {
 
         .sigle-item-border{
@@ -732,7 +732,7 @@
       }
     }
 
-    ::v-deep .temp16 {
+    :deep(.temp16) {
       background-color: transparent;
 
       .content {
@@ -765,7 +765,7 @@
     }
 
     &.esports-play {
-      ::v-deep [class^=temp] {
+      :deep([class^=temp]) {
         background-color: transparent;
 
         &:not(.temp5) > .row:not(:first-child) {
@@ -775,7 +775,7 @@
     }
 
     &.result-details {
-      ::v-deep [class^=temp] {
+      :deep([class^=temp]) {
         .bor-style {
           // border-bottom: 0;
         }

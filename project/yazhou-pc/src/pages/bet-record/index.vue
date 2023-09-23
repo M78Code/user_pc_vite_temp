@@ -212,7 +212,7 @@ console.error(compute_css_variables({ category: 'component', module: 'bet-record
     justify-content: space-between;
     align-items: flex-end;
     margin-bottom: 10px;
-    ::v-deep .material-icons {
+    :deep(.material-icons) {
       font-family: "Material Icons";
       font-weight: normal;
       font-style: normal;
@@ -310,12 +310,12 @@ console.error(compute_css_variables({ category: 'component', module: 'bet-record
         height: 100%;
         border-radius: 2px;
         cursor: pointer;
-        & ::v-deep .icon-calendar {
+        & :deep(.icon-calendar) {
           font-size: 14px;
         }
       }
       .date-picker-wrap {
-        ::v-deep .q-date {
+        :deep(.q-date) {
           .q-icon {
             font-size: 12px;
             &::before {
@@ -327,11 +327,11 @@ console.error(compute_css_variables({ category: 'component', module: 'bet-record
           position: relative;
           left: -55px;
           z-index: 1;
-          ::v-deep .q-date__calendar-item > div {
+          :deep(.q-date__calendar-item > div) {
             width: auto;
           }
           /*  星期X 字体颜色正常显示 */
-          ::v-deep .q-date__calendar-weekdays > div {
+          :deep(.q-date__calendar-weekdays > div) {
             opacity: 1;
           }
         }
@@ -341,7 +341,7 @@ console.error(compute_css_variables({ category: 'component', module: 'bet-record
         }
         .calendar-wrap:nth-child(1) {
           left: -380px;
-          ::v-deep .horn {
+          :deep(.horn) {
             display: none !important;
           }
         }

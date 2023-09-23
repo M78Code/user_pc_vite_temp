@@ -128,8 +128,10 @@ import BaseData from "src/core/base-data/base-data.js"
 import sprite_img from "src/core/server-img/sprite-img/index.js"
 import { compute_css_variables } from "src/core/css-var/index.js"
 import { compute_css } from 'src/core/server-img/index.js'
+import lodash_ from "lodash"
 
 import MenuItem from "./menu-item.vue";
+
 
 const route = useRoute();
 const router = useRouter();
@@ -744,7 +746,7 @@ const lv_2_click_common = (detail = {}) => {
     // 常规赛种 euid
     if (lv1_mi != 118) {
       let mid = `mi_${lv1_mi}${jinri_zaopan_.value}`;
-      obj.euid = BaseData.mi_info_map[mid].euid;
+      obj.euid = lodash_.get(BaseData.mi_info_map,`${mid}.euid`) ;
     }
   }
   // 常规赛种下 冠军模板都是18

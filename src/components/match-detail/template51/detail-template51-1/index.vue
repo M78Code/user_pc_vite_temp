@@ -83,7 +83,8 @@ const {
   curIsShow,
   HandicapTitle,
   lodash,
-  betItem
+  betItem,
+  isShow
 } = useCommon({ emit, props });
 
 </script>
@@ -115,7 +116,7 @@ const {
     width: 50%;
   }
 
-  ::v-deep .c-bet-item.zhuanye .odds {
+  :deep(.c-bet-item.zhuanye .odds) {
     margin-right: 6px;
   }
 }

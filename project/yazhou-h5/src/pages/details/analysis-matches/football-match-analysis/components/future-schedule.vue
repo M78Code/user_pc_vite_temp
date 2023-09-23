@@ -104,7 +104,7 @@ const get_detail_data = ref({
     align-items: center;
     padding-left: 0.1rem;
 
-    ::v-deep .team-img {
+    :deep(.team-img) {
       width: 0.2rem;
       height: 0.2rem;
       margin: 0.05rem;

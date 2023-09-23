@@ -6,7 +6,7 @@
   overflow-x: hidden;
 }
 .play-wrapper {
-  ::v-deep .q-tab {
+  :deep(.q-tab) {
     min-height: 0.4rem;
     height: 0.4rem;
 
@@ -21,7 +21,7 @@
     }
   }
 
-  ::v-deep .q-tab__indicator {
+  :deep(.q-tab__indicator) {
     color: var(--q-gb-bd-c-13);
     border-radius: 1.5px;
     z-index: 1;
@@ -67,7 +67,7 @@
     z-index: 81;
   }
 
-  ::v-deep [class*=tab-match-analysis]{
+  :deep([class*=tab-match-analysis]) {
     .q-tab__alert-icon {
       top: .118rem;
       right: -.19rem;

@@ -144,7 +144,7 @@
             height: 100%;
             background: var(--q-color-com-bg-color-5);
   
-            ::v-deep {
+            :deep {
               .dplayer-icons-right {
                 display: none !important;
               }
@@ -176,7 +176,7 @@
   
           .video-wrapper {
   
-            ::v-deep {
+            :deep {
               .dplayer-controller {
                 .dplayer-bar-wrap {
                   left: .64rem;
@@ -243,7 +243,7 @@
             z-index: 100000;
           }
   
-          ::v-deep {
+          :deep {
             .tabs-wrapper {
               position: absolute;
               bottom: 1.18rem;
@@ -322,7 +322,7 @@
           background-color: var(--q-color-com-bg-color-37);
           .video-wrapper {
   
-            ::v-deep {
+            :deep {
               .dplayer-controller {
                 bottom: .15rem;
                 .dplayer-bar-wrap {
@@ -423,7 +423,7 @@
             }
           }
   
-          ::v-deep .team-img {
+          :deep(.team-img) {
             width: .13rem;
             height: .13rem;
             .img-style {
@@ -497,7 +497,7 @@
           .text:not(.text-move) {
             margin-right: .04rem;
           }
-          ::v-deep .text {
+          :deep(.text) {
             display: inline-block;
             margin-right: .2rem;
           }

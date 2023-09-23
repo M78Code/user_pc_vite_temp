@@ -257,13 +257,13 @@ export default defineComponent({
     top: -1px;
     background: var(--q-header-search-color-2);
 
-    ::v-deep .serach-background {
+    :deep(.serach-background) {
       background-color: var(--q-gb-bg-c-11);
       min-height: 400px;
       overflow: hidden;
     }
 
-    ::v-deep .sports-tab {
+    :deep(.sports-tab) {
       position: absolute;
       top: 0;
       left: 0;
