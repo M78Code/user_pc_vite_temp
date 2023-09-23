@@ -144,7 +144,7 @@
       </template>
 
       <!-- 键盘 -->
-      <key-board v-show="bet_keyboard_show" :bet_min_max_money="bet_min_max_money"></key-board>
+      <!-- <key-board v-show="bet_keyboard_show" :bet_min_max_money="bet_min_max_money"></key-board> -->
 
       <!-- 底部按钮 -->
       <div class="row yb_px10 yb_pb8 justify-between" @touchmove.prevent>
@@ -217,13 +217,13 @@
 
 <script setup>
 // import betMixShow from 'src/components/bet/components/bet_mix_show.vue';
-import betMixShow from 'src/components/bet/components/bet_mix_show3.vue';
+// import betMixShow from 'src/components/bet/components/bet_mix_show3.vue';
 // import betMixShow2 from 'src/components/bet/components/bet_mix_show2.vue';
-import betMixDetail from 'src/components/bet/components/bet-mix-detail.vue';
+// import betMixDetail from 'src/components/bet/components/bet-mix-detail.vue';
 // import betMixSingleDetail from 'src/components/bet/components/bet-mix-single-detail.vue';
-import betSuccessBar from 'src/components/bet/components/bet-success-bar.vue';
+// import betSuccessBar from 'src/components/bet/components/bet-success-bar.vue';
 // import betting from 'src/mixins/betting/betting.js';
-import keyBoard from 'src/components/bet/components/bet-keyboard.vue';
+// import keyBoard from 'src/components/bet/components/bet-keyboard.vue';
 // import ballSpin from 'src/components/bet/components/ball-spin.vue';
 import betBar from "src/components/bet/components/bet-bar.vue";
 
@@ -311,21 +311,9 @@ onMounted(() => {
 
 const set_ref_data_bet_money = () => {
  
-  let markInfo = lodash.get(BetViewDataClass, 'bet_special_h5')
+  let markInfo = lodash.get(BetViewDataClass, 'bet_single_list')
   // let markInfo = lodash.get(BetData, 'bet_list')
   console.error('BetViewDataClass', markInfo)
-  console.error('BetData.bet_list', BetData.bet_list)
-  // markInfo.forEach(item => {
-  //   let obj = {
-  //     bs: {
-  //       'playName': item.playName,  // 玩法名称
-  //       'playId': item.playId,   // 玩法id
-  //       'away': item.away,  // 客队
-  //       'home': item.home,  // 主队
-  //     }
-  //   }
-  //   bet_list_data.value.push(obj)
-  // });
   // bet_min_max_money.value = BetViewDataClass.bet_min_max_money
   bet_view_obj.value = markInfo
   
