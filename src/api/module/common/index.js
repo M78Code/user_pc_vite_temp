@@ -42,8 +42,7 @@ export const post_esport_collect = (params, config, url="/v1/m/escnh5") => {
 };
 //电竞图片资源域名
 export const get_games_imgDomain = (params, config, url="/v1/games/imgDomain") => {
-
-  return http.get(`${prefix}${url}`, params, config);
+  return http.get(`${prefix_job}${url}`, params, config);
 };
 
 
