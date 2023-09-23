@@ -19,11 +19,11 @@
 
     <!-- 右 -->
     <div class="content-b"
-      :class="{ 'red-color': !money_ok, 'content-b2': !(BetData.active_index === index_ && [1, 7].includes(+get_bet_status)) }"
+      :class="{ 'red-color': !money_ok, 'content-b2': !(BetData.active_index === bet_index && [1, 7].includes(+get_bet_status)) }"
       @click.stop="input_click">
       <span v-if="money" class="yb_fontsize20 money-number">{{ format_money3(money) }}</span>
       <span class="money-span" ref="money_span"
-        :style="{ opacity: BetData.active_index === index_ && [1, 7].includes(+get_bet_status) ? '1' : '0' }"></span>
+        :style="{ opacity: BetData.active_index === bet_index && [1, 7].includes(+get_bet_status) ? '1' : '0' }"></span>
       <span v-if="!money && max_money_back" class="yb_fontsize14 limit-txt">{{ get_money_format() }}</span>
       <span @click.stop="clear_money" class="money-close" :style="{ opacity: money > 0 ? '1' : '0' }">x</span>
     </div>
@@ -84,7 +84,7 @@ const ref_data = reactive({
 })
 
 const props = defineProps({
-  index: {
+  bet_index: {
     type: Number,
     default: 0
   },
@@ -149,7 +149,7 @@ const max_win_money = computed(() => {
 })
 // 转化过后的坑位id
 const hn_id = computed(() => {
-  return BetData.bet_list[index_]
+  return BetData.bet_list[bet_index]
 })
 // 单关监听最高可投注金额
 const obj_max_money = computed(() => {
@@ -297,7 +297,7 @@ const cursor_flashing = () => {
  *@param {Number} new_money 最新金额值
  */
 const change_money_handle = (new_money) => {
-  if (index_ != BetData.active_index) { return };
+  if (bet_index != BetData.active_index) { return };
 
   if (max_money.value < 0.01 && max_money_back.value) {
     if (new_money) {
@@ -366,7 +366,7 @@ const input_click = (evnet) => {
 
   if ([4, 5].includes(+get_bet_status)) { return };
 
-  set_active_index(index_);
+  set_active_index(bet_index);
 
   let ele = bet_single_detail.value
   ele && ele.scrollIntoView({ block: "nearest" })
@@ -375,7 +375,7 @@ const input_click = (evnet) => {
 }
 // 将当前活动项的金额和最高可投金额传递给键盘
 const send_money_to_keyboard = () => {
-  if (BetData.active_index == index_) {
+  if (BetData.active_index == bet_index) {
     useMittEmit(MITT_TYPES.EMIT_SEND_VALUE, { money: money.value, max_money: max_money.value })
   }
 }
