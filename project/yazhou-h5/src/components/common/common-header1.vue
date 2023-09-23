@@ -46,7 +46,7 @@
 
 <script setup>
 import { computed, onBeforeUnmount, ref } from 'vue';
-import { useRoute } from "vue-router"
+import { useRoute, useRouter } from "vue-router"
 import lodash from 'lodash'
 import GlobalAccessConfig from "src/core/access-config/access-config.js"
 import seamlessMarquee from 'project_path/src/components/details/seamless-marquee.vue'  // 详情页头部联赛名文字超出隐藏无缝滚动
@@ -72,6 +72,7 @@ const props = defineProps({
 })
 
 const route = useRoute()
+const router = useRouter()
 
 /** 默认不刷新 */
 const refreshing = ref(false)
