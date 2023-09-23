@@ -18,7 +18,7 @@
             @focus="search_input_focus_or_blur($event, true)" @blur="search_input_focus_or_blur">
             <!-- 输入框的扩大镜图片 -->
             <template v-slot:append>
-              <img src="/public/yazhou-h5/image/svg/delete.svg" alt="" class="icon-delete"
+              <img src="/yazhou-h5/image/svg/delete.svg" alt="" class="icon-delete"
                 @click.stop.prevent.self="clear_search" v-show="text.length > 0">
               <span :class="[`icon-search ${get_y0_suffix}`, { 'input-without-word': !text.length }]"
                 @click.stop.prevent.self="go_to_details"></span>
