@@ -20,7 +20,10 @@
 import { computed, ref, toRefs } from 'vue'
 import loadsh from 'lodash'
 import matchScore from 'project_path/src/components/match/match-score.vue' // 比分组件
-const get_detail_data = inject('get_detail_data', {})
+const get_detail_data = ref({
+        csid: 1,
+        mid: 1,
+    })
   // name: "title_x",
   // components: {
   //   matchScore,

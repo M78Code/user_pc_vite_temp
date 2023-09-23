@@ -54,13 +54,13 @@
 
       <!-- 历史记录 -->
       <template v-if="MenuData.layout_left_show == 'bet_history'">
-        <bet-record-view @set_scroll_this="set_scroll_this" />
+        <!-- <bet-record-view @set_scroll_this="set_scroll_this" /> -->
       </template>
       </div>
     </v-scroll-area>
     <!--提示区域-->
     <q-tooltip content-class="bet-bg-tooltip" anchor="bottom left" self="top left" :offset="[181, 10]"
-      target="#merge-info" v-if="show_merge_info">
+      target="#merge-info" v-if="BetData.show_merge_info">
       <div style="
           width: 170px;
           min-height: 60px;
@@ -69,7 +69,7 @@
           padding-left: 5px;
           word-break: break-all;
         ">
-        <!-- {{ $t('bet.merge_info')}} -->
+        {{ $t('bet.merge_info')}}
       </div>
     </q-tooltip>
   </div>
@@ -93,7 +93,6 @@ import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 
 import { compute_css } from 'src/core/server-img/index.js'
 
-import bet_record from "/public/yazhou-pc/image/png/bet-record.png";
 
 onMounted(() => {
   get_unsettle_tickets_count_config();

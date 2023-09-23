@@ -41,8 +41,11 @@ import timeLine from 'project_path/src/pages/details/components/details-match-re
 import { i18n_t } from "src/boot/i18n.js";
 import {utils } from 'src/core/index.js'
 
-  import { ref, onMounted, inject } from "vue";
-  const get_detail_data = inject('get_detail_data', {})
+  import { ref, onMounted } from "vue";
+  const get_detail_data = ref({
+        csid: 1,
+        mid: 1,
+    })
   // TODO: ；临时调试用
   const get_is_hengping = ref(true)
   const get_analyze_show = ref(false)

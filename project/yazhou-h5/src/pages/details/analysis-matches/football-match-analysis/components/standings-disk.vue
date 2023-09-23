@@ -84,7 +84,7 @@
 <script setup>
 // TODO: 后续修改调整
 // import {mapGetters} from "vuex";
-import { defineComponent, ref, inject } from 'vue'
+import { defineComponent, ref } from 'vue'
 // 详情页蓝色背景上的大型字母图标
 import teamImg from "project_path/src/components/details/team-img.vue";
 import { i18n_t } from "src/boot/i18n.js";
@@ -92,7 +92,10 @@ import lodash from "lodash"
 
 
 //详情页面数据
-const get_detail_data = inject('get_detail_data', {})
+const get_detail_data = ref({
+        csid: 1,
+        mid: 1,
+    })
 
   const props = defineProps({
     // 盘面的数据

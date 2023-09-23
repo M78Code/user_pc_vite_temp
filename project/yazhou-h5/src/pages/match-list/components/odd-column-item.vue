@@ -3,7 +3,7 @@
 -->
 
 <template>
-  <div class="odd-column-item" :class="odds_class_object" @click.stop="item_click3" :id="DOM_ID_SHOW && `list-${lodash.get(odd_item, 'oid')}`">
+  <div class="odd-column-item" :class="odds_class_object" @click.stop="item_click3" :id="dom_id_show && `list-${lodash.get(odd_item, 'oid')}`">
     <!-- 占位  或者  关盘 -->
     <div v-if="placeholder == 1 || is_close(get_odd_status())" class="item-inner">
       <img class="icon-lock" :class="{standard:n_s}" :src="match_icon_lock" />

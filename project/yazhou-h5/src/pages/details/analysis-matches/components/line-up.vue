@@ -162,7 +162,7 @@
 
 <script setup>
 import { api_analysis } from "src/api/index.js";
-import { ref, computed, nextTick, onUnmounted, onMounted, inject } from "vue";
+import { ref, computed, nextTick, onUnmounted, onMounted } from "vue";
 import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
 import { useRoute } from 'vue-router'
 import { i18n_t } from "src/boot/i18n.js";
@@ -173,7 +173,10 @@ import lodash from "lodash"
 
 // TODO: 后续修改调整
 // import {mapGetters} from "vuex";
-const get_detail_data = inject('get_detail_data', {})
+const get_detail_data = ref({
+        csid: 1,
+        mid: 1,
+    })
   const radio_button_index = ref(0)
   const tab_radio_button = ref(['曼联', '德联'])
   // 列表数据

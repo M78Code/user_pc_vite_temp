@@ -45,6 +45,7 @@ const store_state = store.getState()
 const timer_ = ref(null)
 const red_green_status = ref(0)
 const get_theme = ref(store_state.get_theme)
+const DOM_ID_SHOW = ref(null)
 
 // TODO: 其他模块得 store  待添加
 // mixins:[odd_convert],
@@ -56,7 +57,7 @@ const unsubscribe = store.subscribe(() => {
 
 onMounted(() => {
   // 设置是否显示投注项dom的id属性值
-  DOM_ID_SHOW =  window.BUILDIN_CONFIG.LOCAL_FUNCTION_SWITCH.DOM_ID_SHOW;
+  DOM_ID_SHOW.value =  window.BUILDIN_CONFIG.LOCAL_FUNCTION_SWITCH.DOM_ID_SHOW;
 })
 
 watch(() => ol_item.ov, () => {

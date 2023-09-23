@@ -163,6 +163,7 @@ this.bet_appoint_ball_head= null */
     this.odds_coversion_map = []
     // 版本变更
     this.bet_data_class_version = ref('123')
+    this.show_merge_info = false
 
   }
 

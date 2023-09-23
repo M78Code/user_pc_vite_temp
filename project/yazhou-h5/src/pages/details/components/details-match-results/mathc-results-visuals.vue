@@ -93,10 +93,13 @@ import { i18n_t } from "src/boot/i18n.js"
 import { transform_score } from "src/core/format/index.js"
  // 国际化比赛阶段比分转换工具
 // import msc from "project_path/src/mixins/common/msc.js";
-import { onMounted, onUnmounted, ref, watch, inject } from "vue";
+import { onMounted, onUnmounted, ref, watch } from "vue";
 
 
-const get_detail_data = inject('get_detail_data', {})
+const get_detail_data = ref({
+        csid: 1,
+        mid: 1,
+    })
   // mixins: [ msc ],
   const props = defineProps({
     // 圆环图形
