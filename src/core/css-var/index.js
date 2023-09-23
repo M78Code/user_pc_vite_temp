@@ -10,7 +10,6 @@ import UserCtr from "src/core/user-config/user-ctr.js";
  * @param {*} module   :    css 目录下 ：  global   /  component  目录下 ：文件名字  ： 例如  background
  */
 export const compute_css_variables = ({ category, module }) => {
-  console.error(category, module)
   let css_obj = final_css_config[category][module] || {}
   let keys = Object.keys(css_obj)
   let final_obj = {}
