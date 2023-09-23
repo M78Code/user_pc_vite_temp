@@ -18,7 +18,7 @@
         <icon-wapper class="icon balance-btn-eye cursor-pointer" name="icon-eye_show" size="14px" />
       </div>
       <!-- 刷新余额按钮 -->
-      <refresh-balance
+      <refrech-blance
         v-show="UserCtr.show_balance"
         class="refresh-btn"
         :other_icon="true"
