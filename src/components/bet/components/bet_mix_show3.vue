@@ -4,17 +4,19 @@
 -->
 
 <template>
-  <div class="bet-mix-show" @click="handleonmousedown">
+  <div class="bet-mix-show" @click="handleonmousedown" v-if="value_show.length > 0">
     <!-- 失效蒙层 -->
     <!-- 左边 -->
-    <div class="row justify-start items-center"
-      :class="[get_bet_success ? 'yb_px14' : 'yb_pl12 yb_pr18', { 'bet-mix-show2': is_conflict }]">
+    <div 
+      class="row justify-start items-center"
+      v-for="(item,index) in value_show"
+      :class="[get_bet_success ? 'yb_px14' : 'yb_pl12 yb_pr18', { 'bet-mix-show2': is_conflict }]
+      ">
       <!-- 左边 -->
       <!-- <div class="yb_mr12 dele-left" v-if="!get_bet_success">
        <img  src="image/wwwassets/bw3/svg/bet_xuanx.svg" @click.stop="remove_(value_show.id_)">
      </div> -->
       <div>
-        <!-- {{ value_show }} -->
       </div>
       <!-- 右边 -->
       <div style="flex:1;">
@@ -25,16 +27,16 @@
               <!-- 投注成功后的展示值用接口返回的 -->
               <!-- <template v-if="bet_success_obj.playOptionName && [3, 6].includes(+get_bet_status)">{{bet_success_obj.playOptionName}} </template> -->
               <template>
-                <span class="yb_mr4">{{ value_show.home }}</span>
-                <span :class="pankou_change == 1 ? 'pankou-change' : null">{{ value_show.away }}</span>
+                <span class="yb_mr4">{{ item.home }}</span>
+                <span :class="pankou_change == 1 ? 'pankou-change' : null">{{ item.away }}</span>
               </template>
-              [{{ value_show.marketTypeFinally }}]
+              [{{ item.marketTypeFinally }}]
             </span>
           </div>
 
           <div class="col-3 row justify-end items-center">
             <span class="yb_fontsize22" :class="{ 'red': odds_change == 1, 'green': odds_change == 2 }">
-              <template>{{ value_show.oddFinally }}</template>
+              <template>{{ item.oddFinally }}</template>
               <!-- <template v-else>{{odds_value()}}</template> -->
             </span>
             <!-- 红升绿降 -->
@@ -45,22 +47,22 @@
 
         <div class="row justify-between yb_my4 yb_fontsize14">
           <span :class="get_lang == 'vi' && get_bet_success ? 'col-6' : 'col-7'">
-            <span>{{ value_show.playId }}&thinsp;</span>
-            <span>{{ value_show.playName }}&thinsp;</span>
-            <span>{{ value_show.playOptions }}&thinsp;</span>
+            <span>{{ item.playId }}&thinsp;</span>
+            <span>{{ item.playName }}&thinsp;</span>
+            <span>{{ item.playOptions }}&thinsp;</span>
 
           </span>
         </div>
         <!-- 联赛名称 -->
-        <div class="xia" v-if="value_show.tn_name">{{ value_show.tn_name }}</div>
+        <div class="xia" v-if="item.tn_name">{{ item.tid_name }}</div>
 
         <!-- 下 -->
         <div class="xia row justify-between flex-end yb_my4" style="min-height: 0.22rem">
-          <div class="col-9 row" :class="{ 'col-12': !(authorityOptionFlag || show_pre) }">
+          <div class="col-9 row">
           <span>
-            {{ value_show.away }}
+            {{ item.home}}
             <span>v</span>
-            {{ value_show.home }}
+            {{ item.away }}
           </span>
           </div>
         </div>
@@ -69,9 +71,8 @@
 
      <!-- 对应单关多个注单样式 -->
      <div>
-      <div>ssssss1</div>
        <!-- 单关金额输入框 v-bind="$attrs"-->
-      <bet-single-detail ref="bet_single_detail"  :name_="name_" :index_="index_"></bet-single-detail>
+      <bet-single-detail ref="bet_single_detail" ></bet-single-detail>
      </div>
   </div>
 </template>
@@ -82,7 +83,6 @@
 // import {FOOTBALL_PLAY_LET_BALL,BASKETBALL_PLAY_LET_BALL,market_flag_list,market_flag_basketball_list} from "src/core/constant/config/bet-config-data.js";
 import betSingleDetail from './bet-single-detail.vue';
 import BetData from "src/core/bet/class/bet-data-class.js";
-import BetData_H5 from "src/core/bet/class/bet-data-class-h5.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 // import { UserCtr } from "src/core/index.js";
 import { calc_bifen, format_odds } from "src/core/format/index.js";
@@ -94,33 +94,39 @@ import UserCtr from 'src/core/user-config/user-ctr.js'
 import lodash from 'lodash'
 
 const get_bet_success = ref(true)
-const value_show = ref()
+const value_show = ref([])
 const value_name = ref()
-
+const is_conflict = ref(true)
+const pankou_change = ref(false)
+const odds_change = ref(1)
+const get_lang = ref(2)
 
 const props = defineProps({
   name_: String | Number,
   index_: Number,
-  order_detail_resp_list: {
-    type: Array,
-    default: () => {
-      return []
-    }
-  },
-  query_order_obj: {
-    type: Array,
-    default: () => {
-      return []
-    }
-  },
-  bet_view_obj: {
-    type: Object,
-    default: () => {
-      return {}
-    }
-  }
+  item: {}
 })
 
+onMounted(() => {
+  // 监听 变化
+  useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_bet_info)
+  console.error('BetData',BetData.bet_single_list)
+  value_show.value = BetData.bet_single_list
+})
+onUnmounted(() => {
+  useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_bet_info).off
+})
+
+const set_bet_info = ()=>{
+  console.error('BetData',BetData.bet_single_list)
+  value_show.value = BetData.bet_single_list
+  console.error(11111,value_show.value)
+}
+
+const handleonmousedown = () =>{
+  console.error(11111)
+  value_show.value = BetData.bet_single_list
+}
 // watchEffect(() => {
 //   value_show.value = props.bet_view_obj[props.name_]
 //   value_name.value = props.name_
