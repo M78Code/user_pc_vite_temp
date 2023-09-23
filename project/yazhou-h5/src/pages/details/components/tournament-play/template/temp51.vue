@@ -161,7 +161,7 @@ export default defineComponent({
     line-height: 0.52rem;
   }
 
-  .win ::v-deep .odds-new2 {
+  .win :deep(.odds-new2) {
     color: #FF4A4A !important;
   }
 }

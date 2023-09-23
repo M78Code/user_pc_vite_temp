@@ -547,7 +547,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";;
     max-width:3.78rem;
     margin: 0 auto;
 
-    ::v-deep.q-scrollarea {
+    :deep(.q-scrollarea) {
       height: 100%;
     }
   }
@@ -557,7 +557,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";;
     width: 0.8rem;
     margin-right: 0.12rem;
 
-    ::v-deep .absolute-right {
+    :deep(.absolute-right) {
       height: 200px !important;
     }
 
@@ -692,7 +692,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";;
             width: 0.8rem;
             height: 100%;
 
-            ::v-deep.counting-down-wrap {
+            :deep(.counting-down-wrap) {
               height: 0.16rem;
 
               .counting {
@@ -702,7 +702,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";;
 
             > span:nth-child(2) {
               margin-left: 0.06rem;
-              ont-family: DIN-Regular;
+              font-family: DIN-Regular;
               text-align: left;
               line-height: 16px;
             }
@@ -743,7 +743,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";;
     }
   }
 
-  ::v-deep .no-list {
+  :deep(.no-list) {
     position: fixed;
     top: 1.15rem;
     left: 0;

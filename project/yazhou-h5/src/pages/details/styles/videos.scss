@@ -263,7 +263,7 @@
     transition: all 1s;
   }
 
-  ::v-deep {
+  :deep {
     .tabs-wrapper {
       position: absolute;
       bottom: 1.18rem;

@@ -258,7 +258,7 @@ export default {
   .base-header-font {
     display: block;
 
-    ::v-deep.counting-down-wrap {
+    :deep(.counting-down-wrap) {
       .counting {
         font-family: dinMedium;
         color: rgba(255, 255, 255, 0.8);

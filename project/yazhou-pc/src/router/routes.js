@@ -64,11 +64,7 @@ const routes = [
   {
     path: "/bet_record",
     name: "bet_record",
-<<<<<<< HEAD
-    component: () => import("project_path/src/pages/bet-record/index.vue"),//project/yazhou-pc/src/pages/bet-record/index.vue
-=======
     component: () => import('project_path/src/pages/bet-record/index.vue'),
->>>>>>> fe6ea01c81445f9074c96eba5095f2725d1ece5e
   },
   // 赛果
   {

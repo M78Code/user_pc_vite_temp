@@ -36,7 +36,7 @@ import { formete_date  } from "src/core/index.js";
 <style scoped lang="scss">
 .article-content {
   /* ************** 富文本框 quill 样式 ************** -S */
-  ::v-deep {
+  :deep {
     * {
       color: unset;
       line-height: inherit;
