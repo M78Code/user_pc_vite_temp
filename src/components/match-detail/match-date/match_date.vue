@@ -62,7 +62,7 @@
 import timer from "src/components/timer/timer.vue";
 import {utils,get_match_status,i18n_t,format_second_ms ,t,useMittEmit, useMittOn, MITT_TYPES,format_time_zone_millisecond} from 'src/core/index.js';
 import {is_eports_csid}  from "src/core/constant/util/csid-util";
-console.log(is_eports_csid,'is_eports_csid');
+import useTimer from 'src/components/timer/useTimer.js'
 import lodash from "lodash";
 
 // import { format_second_ms } from "src/core/format/index.js";
@@ -70,7 +70,7 @@ import lodash from "lodash";
 // import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/";
 import { get_remote_time,format_date_base_obj } from "src/core/format/index.js"
 // const licia_format = require("licia/format");
-
+const { clear, start, replay, time_str, timer_tmp } = useTimer();
 export default {
   name: "MatchDate",
 
@@ -259,7 +259,7 @@ export default {
     "match_props.match.mess": {
       handler(cur, pre) {
         if (cur == "0" && this.match_props.match.csid == 2) {
-          this.timer_obj && this.timer_obj.clear();
+          clear();
         } else if (cur == 1 && pre != 1) {
           if (this.timer_obj) {
             this.set_ininplay_match(this.match_props.match.mmp);
@@ -299,10 +299,10 @@ export default {
      */
     inplay_timer_change(obj) {
       this.timer_obj = obj;
-      let _cur_time = Number(obj.tconfig.time);
-      if (_cur_time + obj.timer_tmp < 1) {
-        obj.time_str = `00:00`;
-        obj.clear();
+      let _cur_time = Number(this.tconfig.time);
+      if (_cur_time + timer_tmp < 1) {
+        time_str = `00:00`;
+        clear();
       }
       let {
         csid,
@@ -313,14 +313,14 @@ export default {
       // 水球（16）显示为  < X分钟
       if (csid == 16) {
         let mins = _cur_time / 60;
-        obj.time_str = i18n_t("match_info.match_date_format").replace("%s", mins);
+        time_str = i18n_t("match_info.match_date_format").replace("%s", mins);
       }
       // 足球计算15分钟玩法阶段 根据倒计时计算15分钟玩法阶段 避免时间改变赛事阶段切换延迟
       if (
         (tab_play_keys.includes("Minutes") || tpl_id == 24) &&
         this.match_list_data
       ) {
-        let mst = parseInt(obj.tconfig.time) + obj.timer_tmp;
+        let mst = parseInt(tconfig.time) + timer_tmp;
         this.match_list_data.set_min15(this.match_props.match, mst, () => {
           useMittEmit(MITT_TYPES.EMIT_API_BYMIDS, { mids: [mid] });
         });

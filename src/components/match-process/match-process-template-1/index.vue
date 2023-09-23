@@ -1,13 +1,8 @@
-<!--
- * @Author: Amor
- * @Date: 2020-08-04 17:13:55
- * @Description: 赛事日期【列表、详情】
--->
 <template>
   <div
     class="c-match-process text-center"
     :class="rows == 1 ? 'row a-row' : 'column'"
-  >{{ match_props.match.mcid }}
+  >
     <div
       v-show="match_props.match.mcid && show_page == 'match-list'"
       class="jingcai"
@@ -15,87 +10,15 @@
       {{ match_props.match.mcid }}
     </div>
     <!-- ms值3-比赛结束 4-比赛关闭 -->
-    <!-- 内嵌版时间信息显示 -->
-    <template v-if="utils_info.is_iframe">
-      <template v-if="right">
-        <div :class="utils_info.is_iframe ? 'show_row' : ''">
-          <div
-            v-show="
-              get_match_status(match_props.match.ms) ||
-              [3, 4].includes(1 * match_props.match.ms) ||
-              (match_props.match.mcid && match_props.match.mmp != 0)
-            "
-            class="process-name"
-          >
-            <div v-html="computed_process_name"></div>
-            <q-tooltip
-              anchor="top middle"
-              self="center middle"
-              :content-style="tooltip_style"
-              >{{ computed_process_name }}</q-tooltip
-            >
-          </div>
-          <match-date
-            :rows="date_rows"
-            v-if="computed_show_date"
-            :match_props="match_props"
-            :match_list_data="match_list_data"
-            class="date-wrap"
-          />
-        </div>
-      </template>
-      <template v-else>
-        <div
-          v-show="
-            get_match_status(match_props.match.ms) ||
-            [3, 4].includes(1 * match_props.match.ms) ||
-            (match_props.match.mcid && match_props.match.mmp != 0)
-          "
-          class="process-name"
-        >
-          <div v-html="computed_process_name"></div>
-          <q-tooltip
-            anchor="top middle"
-            self="center middle"
-            :content-style="tooltip_style"
-            >{{ computed_process_name }}</q-tooltip
-          >
-        </div>
-        <match-date
-          :rows="date_rows"
-          v-if="computed_show_date"
-          :match_props="match_props"
-          :match_list_data="match_list_data"
-          class="date-wrap"
-        />
-      </template>
-    </template>
-    <!-- 非内嵌版时间信息显示 -->
     <div
-      v-if="!utils_info.is_iframe"
       v-show="
-        get_match_status(match_props.match.ms) ||
-        [3, 4].includes(1 * match_props.match.ms) ||
+        get_match_status(match_props.match.ms)  || [3,4].includes(1*match_props.match.ms) ||
         (match_props.match.mcid && match_props.match.mmp != 0)
       "
       class="process-name"
+      v-html="computed_process_name"
     >
-      <div v-html="computed_process_name"></div>
-      <q-tooltip
-        anchor="top middle"
-        self="center middle"
-        :content-style="tooltip_style"
-        >{{ computed_process_name }}</q-tooltip
-      >
     </div>
-    <match-date
-      :rows="date_rows"
-      v-if="computed_show_date && !utils_info.is_iframe"
-      :match_props="match_props"
-      :match_list_data="match_list_data"
-      class="date-wrap"
-    />
-
     <!--补充时间-->
     <!-- <template v-if="show_fill_time">
       第二行显示的时间阶段时间+补时分钟数
@@ -114,15 +37,20 @@
       </div>
     </template>
     <template v-else> -->
-
+      <!-- <match-date
+        :rows="date_rows"
+        v-if="computed_show_date"
+        :match_props="match_props"
+        :match_list_data="match_list_data"
+        class="date-wrap"
+      /> -->
+      
     <!-- </template> -->
   </div>
 </template>
-
 <script setup>
 import { computed, defineProps, ref, watch, onUnmounted } from "vue";
 import matchDate from "src/components/match-detail/match-date/match_date.vue";
-import { utils_info } from 'src/core/utils/module/match-list-utils.js';
 // import { format_second_ms } from "src/core/format/index.js";
 import {
   get_match_status,
