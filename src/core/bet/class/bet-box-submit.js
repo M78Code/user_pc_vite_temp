@@ -39,7 +39,7 @@ const set_min_max_money = (bet_list, is_single, is_merge) => {
             "tournamentId": item.tournamentId,   // 联赛id
             "dataSource": item.dataSource,   // 数据源
             "matchType": item.matchType, // 1 ：早盘赛事 ，2： 滚球盘赛事，3：冠军，4：虚拟赛事，5：电竞赛事
-            "userId": UserCtr.get_uid()
+            // "userId": UserCtr.get_uid()
         }
         // 串关没有 这个字段 
         if (is_single) {
@@ -180,6 +180,12 @@ const get_query_bet_amount_common = (obj) => {
             BetViewDataClass.set_bet_min_max_money(res.data)
             // 通知页面更新 
             useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY)
+        }else{
+            // 获取限额失败的信息
+            BetViewDataClass.set_bet_error_code({
+                code:res.code,
+                message:res.message
+            })
         }
     })
 }

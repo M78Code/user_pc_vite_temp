@@ -8,7 +8,7 @@
       <p class="copy">{{ copy_content }}</p>
     </div>
     <!-- 为了计算总文本宽度，通过css在页面中隐藏 -->
-    <p class="full_content" :ref="refs.full_content">{{ content }}</p>
+    <p class="full_content" :ref="refs.full_content">{{ content }}111111</p>
   </div>
 </template>
 

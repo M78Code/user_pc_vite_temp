@@ -59,7 +59,6 @@
               <q-tab name="chatroom" :content-class="viewTab === 'chatroom' ? 'tab-chatroom' : ''" v-if="show_chatroom_tab" :ripple="false" :label="i18n_t('bet.chatroom')" />
             </q-tabs>
             <!-- 玩法集展示内容 -->
-            
             <details-tab v-show="viewTab === 'bet' || get_is_hengping" :data_list="data_list" :scroller_scroll_top="scroller_scroll_top"></details-tab>
           </div>
 
@@ -164,7 +163,7 @@ export default defineComponent({
     "details-header": detailsHeader,
 //     // "details-dialog": details_dialog,
     // "change-header": change_header,
-    // "detailsTab": detailsTab,
+    detailsTab,
 //     // "no-data": no_data,
 //     "info-rules": info_rules,
 //     // videos: videos,
@@ -231,6 +230,7 @@ export default defineComponent({
       off_listeners,
       clear_timer
     } = details_main();
+    console.error(state_data);
     watch(
       () => state_data.data_list,
       (data) => {
@@ -260,9 +260,9 @@ export default defineComponent({
         const deep_data_list = lodash.cloneDeep(state_data.data_list)
 
         // 非横屏并且"所有投注"不在最后
-        if (!get_is_hengping && all_bet_index !== data.length - 1) {
+        if (!state_data.get_is_hengping && all_bet_index !== data.length - 1) {
           state_data.data_list = utils.swapArray(deep_data_list, all_bet_index, deep_data_list.length - 1)
-        } else if (get_is_hengping && all_bet_index !== 1) {
+        } else if (state_data.get_is_hengping && all_bet_index !== 1) {
           // 横屏并且"所有投注"不在热门后面
           state_data.data_list = utils.swapArray(deep_data_list, 1, all_bet_index)
         }
