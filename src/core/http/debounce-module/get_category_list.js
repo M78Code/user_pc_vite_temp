@@ -5,9 +5,9 @@
 import lodash from 'lodash'
 
 import AxiosDebounceCache from "./axios-debounce-cache.js"
-import { useRoute } from "vue-router";
+// import { useRoute } from "vue-router";
 
-const route = useRoute();
+// const route = useRoute();
 
 // 实例化
 const instance = new AxiosDebounceCache('get_category_list');

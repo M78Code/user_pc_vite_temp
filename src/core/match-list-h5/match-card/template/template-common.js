@@ -170,17 +170,29 @@ export const set_template_width_base = (
 };
 
 
-
 // 赛事样式模板
 export const match_style_template = {
-  // 角球标题高度
-  tab_play_title_height: 0,
-  // 角球盘口高度
-  tab_play_handicap_height: 0,
+  // 赛事标题高度
+  match_title_height: 30,
   // 主盘口高度
-  main_handicap_height:105,
-  // 当前局玩法高度
-  cur_handicap_height:0,
+  main_handicap_height: 110,
+  // 次要玩法高度
+  tab_play_total_height: 36,
   // 是否需要动态计算高度
-  is_dynamic_compute_height:false,
+  is_dynamic_compute_height: false,
 }
+
+
+// 赛事样式模板
+// export const match_style_template = {
+//   // 角球标题高度
+//   tab_play_title_height: 0,
+//   // 角球盘口高度
+//   tab_play_handicap_height: 0,
+//   // 主盘口高度
+//   main_handicap_height: 110,
+//   // 当前局玩法高度
+//   cur_handicap_height:0,
+//   // 是否需要动态计算高度
+//   is_dynamic_compute_height:false,
+// }

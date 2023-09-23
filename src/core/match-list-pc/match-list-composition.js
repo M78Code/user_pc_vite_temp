@@ -10,7 +10,7 @@ import { PageSourceData } from "src/core/index.js";
 import { api_match } from "src/api/index.js";
 import BaseData from 'src/core/base-data/base-data.js';
 import { useMittEmit, MITT_TYPES, useMittOn } from "src/core/mitt/index.js";
-import { set_sticky_top } from 'src/core/match-list-pc/match-card/module/sticky-top.js'
+// import { set_sticky_top } from 'src/core/match-list-pc/match-card/module/sticky-top.js'
 // import scrollList from "src/components/cus-scroll/scroll_list.vue";
 import Refresh from "src/components/refresh/refresh.vue";
 import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/core/index.js";

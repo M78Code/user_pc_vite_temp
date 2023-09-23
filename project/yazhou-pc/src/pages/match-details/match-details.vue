@@ -111,6 +111,8 @@ const {
   sportId,
   handicap_this,
   is_request,
+  cur_expand_layout,
+  headerHeight,
   init,
   back_to,
   set_handicap_this,

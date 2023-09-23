@@ -226,6 +226,7 @@ const mx_list_res = (data, backend_run, cut, collect) => {
  * @description 当接口状态为成功且有数据时 调用此方法
  */
 const mx_use_list_res_when_code_200_and_list_length_gt_0 = ({match_list, collect, backend_run}) => {
+	console.error('aaaaaaaaaa')
 	is_show_hot.value = false;
 	// 计算赛事卡片
 	MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
