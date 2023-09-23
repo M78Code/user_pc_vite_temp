@@ -28,7 +28,7 @@
           :record_time_sort="record_time_sort"
           :startDateSearch="startDateSearch"
           :endDateSearch="endDateSearch"
-          v-mdel:model="model"
+          v-model:model="model"
           :settleSwitch="UserCtr.user_info.settleSwitch"
           :toolIndex="toolIndex"
           :submit="submit"
@@ -52,7 +52,7 @@
             @res_timer_get_cashout="res_timer_get_cashout"
             @clear_timer_get_cashout="clear_timer_get_cashout"
             :random="random"
-            :lang="lang"
+            :lang="UserCtr.lang"
           ></record-table>
         </template>
         <!-- 预约记录表单 -->
@@ -66,7 +66,7 @@
             @choosePage="changePage"
             @delete_book_record="delete_book_record"
             :random="random"
-            :lang="lang"
+            :lang="UserCtr.lang"
           ></record-book-table>
         </template>
       </div>
@@ -97,7 +97,6 @@ import { compute_css_variables } from "src/core/css-var/index.js"
 const page_style = ref('')
 
 page_style.value = compute_css_variables({ category: 'component', module: 'bet-record' })
-console.error(compute_css_variables({ category: 'component', module: 'bet-record' }));
 
   const {
   params,
