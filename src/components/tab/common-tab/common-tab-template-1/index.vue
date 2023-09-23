@@ -157,6 +157,36 @@ const DOM_ID_SHOW = window.BUILDIN_CONFIG.DOM_ID_SHOW;
 // 鼠标是否按下
 const is_mousedown = ref(false);
 const clientX = ref("");
+
+/**
+ * @Description 鼠标移动事件
+ * @param {object} e 鼠标事件
+ * @param {undefined} undefined
+ */
+ const mousemove = (e) => {
+  if (!is_mousedown.value || item_wrap_width.value > item_total_width.value) {
+    return;
+  }
+  let left = last_left.value + (e.clientX - clientX.value);
+  if (left > 0) {
+    left = 0;
+  }
+  // 最大偏移量
+  let max_left = 0 - (item_total_width.value - item_wrap_width.value + 50);
+  if (left < max_left) {
+    left = max_left;
+  }
+  item_wrap_left.value = left;
+};
+
+/**
+ * @Description 鼠标弹起
+ * @param {undefined} undefined
+ */
+ const mouseup = () => {
+  is_mousedown.value = false;
+};
+
 // 鼠标事件监听
 if (props.is_drag) {
   document.addEventListener("mousemove", mousemove);
@@ -352,81 +382,56 @@ const mousedown = (e) => {
   is_mousedown.value = true;
 };
 
-/**
- * @Description 鼠标弹起
- * @param {undefined} undefined
- */
-const mouseup = () => {
-  is_mousedown.value = false;
-};
 
-/**
- * @Description 鼠标移动事件
- * @param {object} e 鼠标事件
- * @param {undefined} undefined
- */
-const mousemove = (e) => {
-  if (!is_mousedown.value || item_wrap_width.value > item_total_width.value) {
-    return;
-  }
-  let left = last_left.value + (e.clientX - clientX.value);
-  if (left > 0) {
-    left = 0;
-  }
-  // 最大偏移量
-  let max_left = 0 - (item_total_width.value - item_wrap_width.value + 50);
-  if (left < max_left) {
-    left = max_left;
-  }
-  item_wrap_left.value = left;
-};
+
+
 
 //监听屏幕宽度改变  设置是否显示按钮
-watch(get_layout_list_size.width, () => {
+// watch(get_layout_list_size.width, () => {
   // item_wrap_width.value = BetCommonHelper.get_refs_info(
   //   "wrap",
   //   null,
   //   this
   // ).clientWidth;
-});
+// });
 
 //监听list长度发生改变
-watch(props.list.length, () => {
-  // 做异步处理防止data数据发生改变
-  nextTick(() => {
-    init();
-  });
-});
+// watch(props.list.length, () => {
+//   // 做异步处理防止data数据发生改变
+//   nextTick(() => {
+//     init();
+//   });
+// });
 
 //监听list长度发生改变
-watch(props.list[0], () => {
-  // 做异步处理防止data数据发生改变
-  nextTick(() => {
-    init();
-  });
-});
+// watch(props.list[0], () => {
+//   // 做异步处理防止data数据发生改变
+//   nextTick(() => {
+//     init();
+//   });
+// });
 
 //监听选中改变
-watch(
-  () => props.currentIndex,
-  () => {
-    if (timer.value) {
-      clearTimeout(timer.value);
-      timer.value = null;
-    }
-    timer.value = setTimeout(() => {
-      if (!sizes.value[props.currentIndex]) return;
-      left.value = lodash.get(sizes.value, `${props.currentIndex}.left`);
-      width.value = lodash.get(sizes.value, `${props.currentIndex}.width`);
-      // 固定下划线宽度
-      if (props.line_width) {
-        left.value = left.value + (width.value - props.line_width) / 2;
-        width.value = props.line_width;
-      }
-    });
-  },
-  { immediate: true }
-);
+// watch(
+//   () => props.currentIndex,
+//   () => {
+//     if (timer.value) {
+//       clearTimeout(timer.value);
+//       timer.value = null;
+//     }
+//     timer.value = setTimeout(() => {
+//       if (!sizes.value[props.currentIndex]) return;
+//       left.value = lodash.get(sizes.value, `${props.currentIndex}.left`);
+//       width.value = lodash.get(sizes.value, `${props.currentIndex}.width`);
+//       // 固定下划线宽度
+//       if (props.line_width) {
+//         left.value = left.value + (width.value - props.line_width) / 2;
+//         width.value = props.line_width;
+//       }
+//     });
+//   },
+//   { immediate: true }
+// );
 const debounce_throttle_cancel = (fun) => {
   if (fun && fun.cancel && typeof fun.cancel == "function") {
     fun.cancel();

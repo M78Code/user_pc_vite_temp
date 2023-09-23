@@ -64,7 +64,7 @@
         <div class="media-col"></div>
       </div>
       <!-- 次要玩法标题 -->
-      <div :class="['fifteen-box', { 'double-title': ['en', 'ad', 'ms'].includes(get_lang) }]"
+      <div :class="['fifteen-box', { 'double-title': ['en', 'ad', 'ms'].includes(UserCtr.lang) }]"
         v-if="match.has_other_play && !match_style_obj.is_fold_tab_play">
         <div class="basic-col" :style="`width:${match_list_tpl_size.team_width}px !important;`"></div>
         <div class="row">
@@ -113,12 +113,14 @@ import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
 // useRegistPropsHelper(component_symbol, need_register_props)
 import { utils_info } from 'src/core/utils/module/match-list-utils.js';
+import { UserCtr } from 'src/core/index.js';
 
 import { MatchProcessFullVersionWapper as MatchProcess } from 'src/components/match-process/index.js';
 import { MatchListTem1FullVersionWapper as BasisInfo1 } from 'src/components/match-list/match-basis-info/template-1/index.js'
 import { MatchListTem4FullVersionWapper as BasisInfo4 } from 'src/components/match-list/match-basis-info/template-4/index.js'
 import { MatchHandicapFullVersionWapper as MatchHandicap } from 'src/components/match-list/match-handicap/index.js'
 import { MatchMediaFullVersionWapper as MatchMedia } from 'src/components/match-list/match-media/index.js'
+import { CommonTabFullVersionWapper as Tab } from "src/components/tab/common-tab/index.js";
 
 const props = defineProps({
   mid: {
@@ -360,17 +362,17 @@ onMounted(() => {
 })
 
 // 监听其他tab玩法标题变化  设置其他玩法tab栏
-watch(match.tab_play_keys, (tab_play_keys) => {
-  set_play_name_list(tab_play_keys)
-}, { immediate: true })
+// watch(match.tab_play_keys, (tab_play_keys) => {
+//   set_play_name_list(tab_play_keys)
+// }, { immediate: true })
 
 //赛事阶段变化时跟新次要玩法
-watch(match.ms, () => {
-  let tab_play_keys = lodash.get( 'match.tab_play_keys', '') || ''
-  if (tab_play_keys.includes('hps5Minutes')) {
-    set_play_name_list(tab_play_keys)
-  }
-}, { immediate: true })
+// watch(match.ms, () => {
+//   let tab_play_keys = lodash.get( 'match.tab_play_keys', '') || ''
+//   if (tab_play_keys.includes('hps5Minutes')) {
+//     set_play_name_list(tab_play_keys)
+//   }
+// }, { immediate: true })
 </script>
 
 <style lang="scss" scoped>

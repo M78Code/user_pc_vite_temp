@@ -12,8 +12,9 @@
         <i class="icon-arrow q-icon c-icon" size="14px"></i>
         <!-- 联赛图标 -->
         <div class="league-icon-wrap">
-          <sport-icon v-if="menu_config.is_esports()" :sport_id="card_style_obj.league_obj.csid" status="2" size="18px"
-            is_esports />
+            <span class="soprts_id_icon"
+            v-if="menu_config.is_esports()"
+            :style="sprite_img['pc-left-menu-bg-image']({ position: `item_${BaseData.compute_sport_id(card_style_obj.league_obj.csid)}` })"></span>
           <img v-else v-img="[lodash.get(card_style_obj, 'league_obj.lurl')]" />
         </div>
         <!-- 联赛名称 -->
@@ -98,6 +99,8 @@
 import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card-class.js'
 import lodash from 'lodash';
 import { ref, computed, defineProps, reactive } from 'vue';
+import sprite_img from "src/core/server-img/sprite-img/index.js"
+import BaseData from "src/core/base-data/base-data.js"
 import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
 import {component_symbol ,need_register_props} from "../config/index.js"
 import { t } from "src/core/index.js";
@@ -400,5 +403,9 @@ const set_fold = () => {
   .tr-col-name {
     display: none;
   }
+}
+.soprts_id_icon {
+  width: 18px;
+  height: 18px;
 }
 </style>

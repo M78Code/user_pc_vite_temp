@@ -115,26 +115,26 @@ onMounted(() => {
 });
 
 // 监听玩法ID变化 取消赔率升降
-watch(props.ol_data._hpid, () => {
-  clear_odds_lift()
-}) 
+// watch(props.ol_data._hpid, () => {
+//   clear_odds_lift()
+// }) 
 
 // 监听oid 取消赔率升降
-watch(props.ol_data.oid, () => {
-  clear_odds_lift()
-})  
+// watch(props.ol_data.oid, () => {
+//   clear_odds_lift()
+// })  
 
 // 监听投注项赔率变化
-watch(props.ol_data.ov, (cur, old) => {
-  // 赔率值处理
-  format_odds(cur, 1);
-  if (props.ol_data) {
-    let { _mhs, _hs, os } = props.ol_data;
-    odds_state.value = get_odds_state(_mhs, _hs, os);
-  }
-  // 红升绿降变化
-  set_odds_lift(cur, old);
-})  
+// watch(props.ol_data.ov, (cur, old) => {
+//   // 赔率值处理
+//   format_odds(cur, 1);
+//   if (props.ol_data) {
+//     let { _mhs, _hs, os } = props.ol_data;
+//     odds_state.value = get_odds_state(_mhs, _hs, os);
+//   }
+//   // 红升绿降变化
+//   set_odds_lift(cur, old);
+// })  
 
 /**
  * 赔率转换

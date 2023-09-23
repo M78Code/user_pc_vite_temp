@@ -217,17 +217,17 @@ const bet_col = computed(() => {
 })
 
 // 监听其他tab玩法标题变化  设置其他玩法tab栏
-watch(match.tab_play_keys, (tab_play_keys) => {
-  set_play_name_list(tab_play_keys)
-}, { immediate: true })
+// watch(match.tab_play_keys, (tab_play_keys) => {
+//   set_play_name_list(tab_play_keys)
+// }, { immediate: true })
 
 //赛事阶段变化时跟新次要玩法
-watch(match.ms, () => {
-  let tab_play_keys = lodash.get( 'match.tab_play_keys', '') || ''
-  if (tab_play_keys.includes('hps5Minutes')) {
-    set_play_name_list(tab_play_keys)
-  }
-}, { immediate: true })
+// watch(match.ms, () => {
+//   let tab_play_keys = lodash.get( 'match.tab_play_keys', '') || ''
+//   if (tab_play_keys.includes('hps5Minutes')) {
+//     set_play_name_list(tab_play_keys)
+//   }
+// }, { immediate: true })
 
 /**
  * @Description 设置次要玩法 tab

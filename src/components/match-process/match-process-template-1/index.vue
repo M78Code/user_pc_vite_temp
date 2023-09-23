@@ -37,12 +37,12 @@
       </div>
     </template>
     <template v-else> -->
-      <!-- <match-date
+      <match-date
         :rows="date_rows"
         v-if="computed_show_date"
         :match_props="match_props"
         class="date-wrap"
-      /> -->
+      />
       
     <!-- </template> -->
   </div>
