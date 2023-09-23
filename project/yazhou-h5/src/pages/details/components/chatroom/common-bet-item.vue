@@ -12,7 +12,7 @@
           <p class="p1 yb_mr4">
             <img v-if="UserCtr.theme.includes('day')"  :src="$utils.compute_img_tag_src('/image/wwwassets/bw3/common/match_cup.svg')"
               class="beif_src">
-            <img v-else  src="image/wwwassets/bw3/common/match_cup2.svg" class="beif_src">
+            <img v-else  src="/yazhou-h5/image/common/match_cup2.svg" class="beif_src">
           </p>
           <template v-if="item.sportName">{{item.matchName}}</template>
           <template

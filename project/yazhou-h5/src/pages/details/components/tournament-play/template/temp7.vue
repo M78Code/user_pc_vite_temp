@@ -48,7 +48,7 @@
                           <div class="play-box-style details_color warp">
                             <div class="size-color-imp size-color ellipsis remark details_t_color7 fz_16">{{ol_item.on}}</div>
                             <div class="text-left text-right odds-wrap">
-                              <img class="icon-lock" src="image/wwwassets/bw3/common/match-icon-lock.svg" />
+                              <img class="icon-lock" src="/yazhou-h5/image/common/match-icon-lock.svg" />
                             </div>
                           </div>
                           <!-- lock 锁状态 end -->
@@ -64,7 +64,7 @@
                           <div class="play-box-style details_color warp">
                             <div class="size-color-imp ellipsis remark details_t_color6 fz_16">{{ol_item.on}}</div>
                             <div class="text-left text-right odds-wrap">
-                              <img class="icon-lock" src="image/wwwassets/bw3/common/match-icon-lock.svg" />
+                              <img class="icon-lock" src="/yazhou-h5/image/common/match-icon-lock.svg" />
                             </div>
                           </div>
                           <!-- lock 锁状态 end -->
@@ -82,7 +82,7 @@
                       <div class="play-box-style details_color warp">
                         <div class="size-color-imp ellipsis remark details_t_color6 fz_16">{{ol_item.on}}</div>
                         <div class="text-left text-right odds-wrap">
-                          <img class="icon-lock" src="image/wwwassets/bw3/common/match-icon-lock.svg" />
+                          <img class="icon-lock" src="/yazhou-h5/image/common/match-icon-lock.svg" />
                         </div>
                       </div>
                       <!-- lock 锁状态 end -->
@@ -125,7 +125,7 @@
                           <div class="play-box-style details_color warp">
                             <div class="size-color-imp ellipsis remark details_t_color7 fz_16">{{ol_item.on}}</div>
                             <div class="text-left text-right odds-wrap">
-                              <img class="icon-lock" src="image/wwwassets/bw3/common/match-icon-lock.svg" />
+                              <img class="icon-lock" src="/yazhou-h5/image/common/match-icon-lock.svg" />
                             </div>
                           </div>
                           <!-- lock 锁状态 end -->
@@ -141,7 +141,7 @@
                           <div class="play-box-style details_color warp">
                             <div class="size-color-imp ellipsis remark details_t_color7 fz_16">{{ol_item.on}}</div>
                             <div class="text-left text-right odds-wrap">
-                              <img class="icon-lock" src="image/wwwassets/bw3/common/match-icon-lock.svg" />
+                              <img class="icon-lock" src="/yazhou-h5/image/common/match-icon-lock.svg" />
                             </div>
                           </div>
                           <!-- lock 锁状态 end -->
@@ -159,7 +159,7 @@
                       <div class="play-box-style details_color warp">
                         <div class="size-color-imp ellipsis remark details_t_color7 fz_16">{{ol_item.on}}</div>
                         <div class="text-left text-right odds-wrap">
-                          <img class="icon-lock" src="image/wwwassets/bw3/common/match-icon-lock.svg" />
+                          <img class="icon-lock" src="/yazhou-h5/image/common/match-icon-lock.svg" />
                         </div>
                       </div>
                       <!-- lock 锁状态 end -->
@@ -202,7 +202,7 @@
                           <div class="play-box-style details_color">
                             <div class="size-color-imp ellipsis remark details_t_color7 fz_16">{{ol_item.on}}</div>
                             <div class="text-left text-right odds-wrap">
-                              <img class="icon-lock" src="image/wwwassets/bw3/common/match-icon-lock.svg" />
+                              <img class="icon-lock" src="/yazhou-h5/image/common/match-icon-lock.svg" />
                             </div>
                           </div>
                           <!-- lock 锁状态 end -->
@@ -218,7 +218,7 @@
                           <div class="play-box-style details_color">
                             <div class="size-color-imp size-color-imp ellipsis remark details_t_color6 fz_16">{{ol_item.on}}</div>
                             <div class="text-left text-right odds-wrap">
-                              <img class="icon-lock" src="image/wwwassets/bw3/common/match-icon-lock.svg" />
+                              <img class="icon-lock" src="/yazhou-h5/image/common/match-icon-lock.svg" />
                             </div>
                           </div>
                           <!-- lock 锁状态 end -->
@@ -236,7 +236,7 @@
                       <div class="play-box-style details_color">
                         <div class="size-color-imp ellipsis remark details_t_color7 fz_16">{{ol_item.on}}</div>
                         <div class="text-left text-right odds-wrap">
-                          <img class="icon-lock" src="image/wwwassets/bw3/common/match-icon-lock.svg" />
+                          <img class="icon-lock" src="/yazhou-h5/image/common/match-icon-lock.svg" />
                         </div>
                       </div>
                       <!-- lock 锁状态 end -->

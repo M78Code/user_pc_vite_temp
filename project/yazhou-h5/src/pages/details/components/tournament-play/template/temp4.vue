@@ -50,7 +50,7 @@
                             <div class="play-box-style details_color warp" :class="ol_index != max_count_ol-1?'bor-style':''">
                               <div class="size-color-imp ellipsis remark details_t_color7 fz_16" v-show="get_detail_data.csid != 1">{{ol_list_0[ol_index0 - 1].on}}</div>
                               <div class="text-left mar-left">
-                                <img class="icon-lock" src="image/wwwassets/bw3/common/match-icon-lock.svg" />
+                                <img class="icon-lock" src="/yazhou-h5/image/common/match-icon-lock.svg" />
                               </div>
                             </div>
                             <!-- lock 锁状态 end -->
@@ -64,7 +64,7 @@
                             <div class="play-box-style details_color warp" :class="ol_index != max_count_ol-1 ?'bor-style':''">
                               <div class="size-color-imp ellipsis remark details_t_color6 fz_16" v-show="get_detail_data.csid != 1">{{ol_list_0[ol_index0 - 1].on}}</div>
                               <div class="text-left mar-left">
-                                <img class="icon-lock" src="image/wwwassets/bw3/common/match-icon-lock.svg" />
+                                <img class="icon-lock" src="/yazhou-h5/image/common/match-icon-lock.svg" />
                               </div>
                             </div>
                             <!-- lock 锁状态 end -->
@@ -82,7 +82,7 @@
                         <div class="play-box-style details_color warp" :class="ol_index != max_count_ol-1?'bor-style':''">
                           <div class="size-color-imp ellipsis remark details_t_color7 fz_16" v-show="get_detail_data.csid != 1">{{ol_list_0[ol_index0 - 1].on}}</div>
                           <div class="text-left mar-left">
-                            <img class="icon-lock" src="image/wwwassets/bw3/common/match-icon-lock.svg" />
+                            <img class="icon-lock" src="/yazhou-h5/image/common/match-icon-lock.svg" />
                           </div>
                         </div>
                         <!-- lock 锁状态 end -->
@@ -134,7 +134,7 @@
                             <div class="play-box-style details_color warp" :class="ol_index != max_count_ol-1 ? 'bor-style':''">
                               <div class="size-color-imp ellipsis remark details_t_color7 fz_16" v-show="get_detail_data.csid != 1">{{ol_list_1[ol_index1 - 1].on}}</div>
                               <div class="text-left mar-left">
-                                <img class="icon-lock" src="image/wwwassets/bw3/common/match-icon-lock.svg" />
+                                <img class="icon-lock" src="/yazhou-h5/image/common/match-icon-lock.svg" />
                               </div>
                             </div>
                             <!-- lock 锁状态 end -->
@@ -148,7 +148,7 @@
                             <div class="play-box-style details_color warp" :class="ol_index != max_count_ol-1 ? 'bor-style':''">
                               <div class="size-color-imp ellipsis remark details_t_color6 fz_16" v-show="get_detail_data.csid != 1">{{ol_list_1[ol_index1 - 1].on}}</div>
                               <div class="text-left mar-left">
-                                <img class="icon-lock" src="image/wwwassets/bw3/common/match-icon-lock.svg" />
+                                <img class="icon-lock" src="/yazhou-h5/image/common/match-icon-lock.svg" />
                               </div>
                             </div>
                             <!-- lock 锁状态 end -->
@@ -166,7 +166,7 @@
                         <div class="play-box-style details_color warp" :class="ol_index != max_count_ol-1 ? 'bor-style':''">
                           <div class="size-color-imp ellipsis remark details_t_color7 fz_16" v-show="get_detail_data.csid != 1">{{ol_list_1[ol_index1 - 1].on}}</div>
                           <div class="text-left mar-left ">
-                            <img class="icon-lock" src="image/wwwassets/bw3/common/match-icon-lock.svg" />
+                            <img class="icon-lock" src="/yazhou-h5/image/common/match-icon-lock.svg" />
                           </div>
                         </div>
                         <!-- lock 锁状态 end -->
@@ -216,7 +216,7 @@
                             <div class="play-box-style details_color" :class="ol_index != max_count_ol-1 ? 'bor-style':''">
                               <div class="size-color-imp ellipsis remark details_t_color7 fz_16" v-show="get_detail_data.csid != 1">{{ol_list_2[ol_index2 - 1].on}}</div>
                               <div class="text-left mar-left">
-                                <img class="icon-lock" src="image/wwwassets/bw3/common/match-icon-lock.svg" />
+                                <img class="icon-lock" src="/yazhou-h5/image/common/match-icon-lock.svg" />
                               </div>
                             </div>
                             <!-- lock 锁状态 end -->
@@ -230,7 +230,7 @@
                             <div class="play-box-style details_color" :class="ol_index != max_count_ol-1 ? 'bor-style':''">
                               <div class="size-color-imp ellipsis remark details_t_color6 fz_16" v-show="get_detail_data.csid != 1">{{ol_list_2[ol_index2 - 1].on}}</div>
                               <div class="text-left mar-left">
-                                <img class="icon-lock" src="image/wwwassets/bw3/common/match-icon-lock.svg" />
+                                <img class="icon-lock" src="/yazhou-h5/image/common/match-icon-lock.svg" />
                               </div>
                             </div>
                             <!-- lock 锁状态 end -->
@@ -248,7 +248,7 @@
                         <div class="play-box-style details_color" :class="ol_index != max_count_ol-1 ? 'bor-style':''">
                           <div class="size-color-imp ellipsis remark details_t_color7 fz_16" v-show="get_detail_data.csid != 1">{{ol_list_2[ol_index2 - 1].on}}</div>
                           <div class="text-left mar-left">
-                            <img class="icon-lock" src="image/wwwassets/bw3/common/match-icon-lock.svg" />
+                            <img class="icon-lock" src="/yazhou-h5/image/common/match-icon-lock.svg" />
                           </div>
                         </div>
                         <!-- lock 锁状态 end -->
@@ -297,7 +297,7 @@
                         :class="{'text-right': !['344'].includes(item_data.hpid)}"
                        >{{ol_item.on}}</div>
                       <div class="text-left mar-left">
-                        <img class="icon-lock" src="image/wwwassets/bw3/common/match-icon-lock.svg" />
+                        <img class="icon-lock" src="/yazhou-h5/image/common/match-icon-lock.svg" />
                       </div>
                     </div>
                     <!-- lock 锁状态 end -->
@@ -315,7 +315,7 @@
                           :class="{'text-right': !['344'].includes(item_data.hpid)}"
                       >{{ol_item.on}}</div>
                       <div class="text-left mar-left">
-                        <img class="icon-lock" src="image/wwwassets/bw3/common/match-icon-lock.svg" />
+                        <img class="icon-lock" src="/yazhou-h5/image/common/match-icon-lock.svg" />
                       </div>
                     </div>
                     <!-- lock 锁状态 end -->
@@ -337,7 +337,7 @@
                       :class="{'text-right': !['344'].includes(item_data.hpid)}"
                   >{{ol_item.on}}</div>
                   <div class="text-left mar-left">
-                    <img class="icon-lock" src="image/wwwassets/bw3/common/match-icon-lock.svg" />
+                    <img class="icon-lock" src="/yazhou-h5/image/common/match-icon-lock.svg" />
                   </div>
                 </div>
                 <!-- lock 锁状态 end -->

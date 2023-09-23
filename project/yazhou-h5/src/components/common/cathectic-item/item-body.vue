@@ -20,7 +20,7 @@
       <div class="toggle row justify-center" v-if="data_b.orderVOS.length > 2">
         <span class="btn_style" @click="toggle_box">
           <span class="text_c">{{btn_text}}</span>
-          <img src="image/wwwassets/bw3/list/league-collapse-icon.svg" alt="" :class="direction">
+          <img src="/yazhou-h5/image/list/league-collapse-icon.svg" alt="" :class="direction">
         </span>
       </div>
     </template>

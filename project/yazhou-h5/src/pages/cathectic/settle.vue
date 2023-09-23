@@ -53,7 +53,7 @@
                         v-if="value.profit > 0">+</template>{{ value.profit }}</span>
                   </span>
                   <span v-show="!value.open"><img class="icon-down-arrow"
-                      src="image/wwwassets/bw3/list/league-collapse-icon.svg" /></span>
+                      src="/yazhou-h5/image/list/league-collapse-icon.svg" /></span>
                 </p>
                 <div class="line" :class="!value.open && (index != Object.keys(list_data).length - 1) && 'line2'"></div>
                 <q-slide-transition>

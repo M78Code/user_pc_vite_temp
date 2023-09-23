@@ -24,21 +24,21 @@
       <!-- 角球数 -->
       <span v-if="red_flag">
         <span>&nbsp;&nbsp;</span>
-        <span><q-img style="width: 0.12rem;margin-top:-3px;"  src="image/wwwassets/bw3/svg/corner_kick.svg"></q-img></span>
+        <span><q-img style="width: 0.12rem;margin-top:-3px;"  src="/yazhou-h5/image/svg/corner_kick.svg"></q-img></span>
         <span>&nbsp;&nbsp;</span>
         <span>{{score_array_status[0] | score_format}}</span>
       </span>
       <!-- 黄牌数 -->
       <span v-if="yellow_card">
         <span>&nbsp;&nbsp;</span>
-        <span><q-img style="width: 0.12rem;margin-top:-3px;"  src="image/wwwassets/bw3/svg/details_yellow.svg"></q-img></span>
+        <span><q-img style="width: 0.12rem;margin-top:-3px;"  src="/yazhou-h5/image/svg/details_yellow.svg"></q-img></span>
         <span>&nbsp;&nbsp;</span>
         <span>{{score_array_status[2] | score_format}}</span>
       </span>
       <!-- 红牌数 -->
       <span v-if="red_card">
         <span>&nbsp;&nbsp;</span>
-        <span><q-img style="width: 0.12rem;margin-top:-3px;"  src="image/wwwassets/bw3/svg/details_red_card.svg"></q-img></span>
+        <span><q-img style="width: 0.12rem;margin-top:-3px;"  src="/yazhou-h5/image/svg/details_red_card.svg"></q-img></span>
         <span>&nbsp;&nbsp;</span>
         <span>{{score_array_status[1] | score_format}}</span>
       </span>

@@ -12,7 +12,7 @@
     <div class="team-text" :class="{baseball: detail_data.csid == '3' }">
         {{ match_status }}
       <span class="style_icon" v-if="detail_data.mng == 1">
-        <img  src="image/wwwassets/bw3/svg/zhonglichang.svg" alt />
+        <img  src="/yazhou-h5/image/svg/zhonglichang.svg" alt />
       </span>
     </div>
   </div>

@@ -29,7 +29,7 @@
                 <div class="play-box-style details_color warp bor-style">
                   <div class="ellipsis remark details_t_color7 fz_14" v-show="get_detail_data.csid != 1">{{ol_item.on || ol_item.ott}}</div>
                   <div class="text-left">
-                    <img class="icon-lock" src="image/wwwassets/bw3/common/match-icon-lock.svg" />
+                    <img class="icon-lock" src="/yazhou-h5/image/common/match-icon-lock.svg" />
                   </div>
                 </div>
                 <!-- lock 锁状态 end -->
@@ -39,7 +39,7 @@
                 <!-- 关盘 锁占位 -->
                 <div class="play-box-style details_color warp bor-style">
                   <div class="text-left">
-                    <img class="icon-lock" src="image/wwwassets/bw3/common/match-icon-lock.svg" />
+                    <img class="icon-lock" src="/yazhou-h5/image/common/match-icon-lock.svg" />
                   </div>
                 </div>
               </template>
@@ -50,7 +50,7 @@
                 <!-- 关盘 锁占位 -->
                 <div class="play-box-style details_color warp bor-style">
                   <div class="text-left">
-                    <img class="icon-lock" src="image/wwwassets/bw3/common/match-icon-lock.svg" />
+                    <img class="icon-lock" src="/yazhou-h5/image/common/match-icon-lock.svg" />
                   </div>
                 </div>
               </template>
@@ -59,7 +59,7 @@
                 <div class="play-box-style details_color warp bor-style">
                   <div class="ellipsis remark details_t_color7 fz_14" v-show="get_detail_data.csid != 1">{{ol_item.on || ol_item.ott}}</div>
                   <div class="text-left">
-                    <img class="icon-lock" src="image/wwwassets/bw3/common/match-icon-lock.svg" />
+                    <img class="icon-lock" src="/yazhou-h5/image/common/match-icon-lock.svg" />
                   </div>
                 </div>
                 <!-- lock 锁状态 end -->
@@ -69,7 +69,7 @@
               <!-- 盘口级别状态关盘时，要占位 -->
               <div class="play-box-style details_color warp bor-style">
                 <div class="text-left">
-                  <img class="icon-lock" src="image/wwwassets/bw3/common/match-icon-lock.svg" />
+                  <img class="icon-lock" src="/yazhou-h5/image/common/match-icon-lock.svg" />
                 </div>
               </div>
             </template>
@@ -80,7 +80,7 @@
             <div class="play-box-style details_color warp bor-style">
               <div class="ellipsis remark details_t_color7 fz_14" v-show="get_detail_data.csid != 1">{{ol_item.on || ol_item.ott}}</div>
               <div class="text-left">
-                <img class="icon-lock" src="image/wwwassets/bw3/common/match-icon-lock.svg" />
+                <img class="icon-lock" src="/yazhou-h5/image/common/match-icon-lock.svg" />
               </div>
             </div>
             <!-- lock 锁状态 end -->
@@ -90,7 +90,7 @@
             <!-- 关盘 锁占位 -->
             <div class="play-box-style details_color warp bor-style">
               <div class="text-left">
-                <img class="icon-lock" src="image/wwwassets/bw3/common/match-icon-lock.svg" />
+                <img class="icon-lock" src="/yazhou-h5/image/common/match-icon-lock.svg" />
               </div>
             </div>
           </template>

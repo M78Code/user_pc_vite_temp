@@ -11,7 +11,7 @@
           <span class="color-000000">{{ item.keyword }}</span>
         </div>
 
-        <img src="image/wwwassets/bw3/svg/delete4.svg" alt="" style="width:0.12rem" class="float-right"
+        <img src="/yazhou-h5/image/svg/delete4.svg" alt="" style="width:0.12rem" class="float-right"
           @click="remove_history_item(item)">
       </div>
       <div class="text-center clear-all remove-history-item" @click="remove_history_item('')">

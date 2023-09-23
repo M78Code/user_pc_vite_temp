@@ -5,7 +5,7 @@
 
 <template>
   <div class="popper t-popper">
-    <img src="image/wwwassets/bw3/svg/bet_close.svg" class="close_icon" @click.stop="onEmojiSelect('')" />
+    <img src="/yazhou-h5/image/svg/bet_close.svg" class="close_icon" @click.stop="onEmojiSelect('')" />
     <div class="popper_content">
       <div v-for="emoji in emojiList" class="emoji-container flex flex-center" @click="onEmojiSelect(emoji)">
         {{ emoji }}

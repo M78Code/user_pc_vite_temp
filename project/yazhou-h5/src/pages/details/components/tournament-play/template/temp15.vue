@@ -29,7 +29,7 @@
                 <!-- 锁状态 -->
                 <div class="play-box" :class="[name_, get_detail_data.csid == 1? 'play-box-lock' : '', {'border-top': index2 > 2}]" :key="index2" >
                   <div class="remark" v-show="get_detail_data.csid != 1">{{olitem_name(ol_item)}}</div>
-                  <img src="image/wwwassets/bw3/common/match-icon-lock.svg" class="icon-lock">
+                  <img src="/yazhou-h5/image/common/match-icon-lock.svg" class="icon-lock">
                 </div>
               </template>
               <template v-if="ol_item.os == 3"></template>
@@ -39,7 +39,7 @@
               <template v-else>
                 <div class="play-box" :class="[name_, get_detail_data.csid == 1? 'play-box-lock' : '', {'border-top': index2 > 2} ]" :key="index2">
                   <div class="remark" v-show="get_detail_data.csid != 1">{{olitem_name(ol_item)}}</div>
-                  <img src="image/wwwassets/bw3/common/match-icon-lock.svg" class="icon-lock">
+                  <img src="/yazhou-h5/image/common/match-icon-lock.svg" class="icon-lock">
                 </div>
               </template>
             </template>
@@ -48,7 +48,7 @@
           <template v-if="ol_item.ms == 1">
             <div class="play-box" :class="[name_ , get_detail_data.csid == 1? 'play-box-lock' : '', {'border-top': index2 > 2} ]" :key="index2">
               <div class="remark" v-show="get_detail_data.csid != 1">{{olitem_name(ol_item)}}</div>
-              <img src="image/wwwassets/bw3/common/match-icon-lock.svg" class="icon-lock">
+              <img src="/yazhou-h5/image/common/match-icon-lock.svg" class="icon-lock">
             </div>
           </template>
           <template v-if="ol_item.ms == 2"></template>
