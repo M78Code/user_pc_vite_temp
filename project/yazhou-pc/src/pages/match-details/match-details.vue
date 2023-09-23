@@ -45,7 +45,7 @@
           <div>
             <div
               class="col wrap-scroll"
-              v-show="['data', 'loading'].includes(load_detail_statu)"
+              v-show="['data', 'loading'].includes(load_detail_statu) && match_infoData"
             >
               <div class="column fit">
                 <!-- 盘口模板start -->

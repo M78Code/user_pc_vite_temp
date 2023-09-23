@@ -59,10 +59,10 @@ import { t } from "src/core/index.js";
   .c-bet-item {
     justify-content: space-between;
     padding: 0 15px;
-    ::v-deep .handicap-value {
+    :deep(.handicap-value) {
       justify-content: flex-start !important;
     }
-    ::v-deep .odds {
+    :deep(.odds) {
       justify-content: flex-end;
     }
   }

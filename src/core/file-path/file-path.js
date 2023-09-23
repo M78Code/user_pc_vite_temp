@@ -9,9 +9,13 @@
 // 电竞赛种csid
 import lodash from 'lodash'
 
-const NODE_ENV = process.env.NODE_ENV
 const e_sport_csids = [101, 100, 102, 103];
-
+import { AllDomain } from 'src/core/'
+setTimeout(() => {
+  console.error(AllDomain, 1111111)
+}, 3000);
+// 目前环境信息
+const { NODE_ENV, CURRENT_ENV, OSS_FILE_ARR, DOMAIN_RESULT } = window.BUILDIN_CONFIG;
 let config = {
   domain_img: {
     idc_online: {}
@@ -53,12 +57,12 @@ const letter_num = {
  * @return {String} csid 球种类型
  */
 const get_file_path = (path, csid = 0) => {
-  // 目前环境信息
-  // const current_env = config.current_env;
-  const current_env = "idc_online";
   if (!path || path == 'undefined') {
     return '';
   }
+  const { oss_file_content } = AllDomain
+
+
   // 如果是http开头 直接返回地址
   if (lodash.toString(path).indexOf('http') == 0) {
     return path
@@ -72,33 +76,39 @@ const get_file_path = (path, csid = 0) => {
   if (e_sport_csids.includes(1 * csid)) {
     return `${config.e_sports.domain_img}/${path}`;
   }
+
+  // 优先使用oss返回的有效图片域名地址
+  // let domain_img_str = '';
+  // if (config.oss_img_domains) {
+  //   domain_img_str = config.oss_img_domains[0];
+  // }
   // 优先使用oss返回的有效图片域名地址
   let domain_img_str = '';
-  if (config.oss_img_domains) {
-    domain_img_str = config.oss_img_domains[0];
+  if (oss_file_content) {
+    domain_img_str = oss_file_content.img[0];
   }
   if (domain_img_str) {
     return `${domain_img_str}/${path}`;
   }
-
-  domain_img_str = config.domain_img[current_env];
-  if (!lodash.isEmpty(domain_img_str) ) {
+  //新配置是 数组
+  domain_img_str = DOMAIN_RESULT.img_domains[0];
+  if (!lodash.isEmpty(domain_img_str)) {
     return `${domain_img_str}/${path}`;
   }
 
-  if (current_env == 'idc_sandbox' || current_env == 'idc_pre' || current_env == 'idc_ylcs') {
-    let api_domain = config.domain[current_env][0];
+  if (CURRENT_ENV == 'idc_sandbox' || CURRENT_ENV == 'idc_pre' || CURRENT_ENV == 'idc_ylcs') {
+    // let api_domain = config.domain[CURRENT_ENV][0];
+    let api_domain = DOMAIN_RESULT.first_one
     // 试玩环境使用生产api图片
-    api_domain = config.domain['idc_online'][0];
+    // api_domain = config.domain['idc_online'][0];
     api_domain = api_domain.replace(/\/\/.*?\./, '//image.');
     return `${api_domain}/${path}`;
   }
 
   if ((NODE_ENV == 'development')) {
-    // console.log(window.BUILDIN_CONFIG,'window.BUILDIN_CONFIG');
-    // let api_domain = config.domain[current_env][0]; //config没有赋值domain 从老项目迁移
-    let api_domain = lodash.get(window,"BUILDIN_CONFIG.DOMAIN_RESULT.img_domains[0]","")
-    // let api_domain = window.BUILDIN_CONFIG [current_env][0];
+    // let api_domain = config.domain[CURRENT_ENV][0]; //config没有赋值domain 从老项目迁移
+    const { img_domains } = DOMAIN_RESULT
+    let api_domain = img_domains[0]
     api_domain = api_domain.replace(/\/\/.*?\./, '//image.');
     return `${api_domain}/${path}`;
   }

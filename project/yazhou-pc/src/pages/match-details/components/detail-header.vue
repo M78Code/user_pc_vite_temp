@@ -14,7 +14,7 @@
       </div>
       <!-- 联赛标题 -->
       <div class="title ellipsis allow-user-select">
-        {{ match_infoData.tn }}  
+        {{ match_infoData?.tn }}  
       </div>
       <div class="right-icon">
         <!-- 显示比分栏 -->

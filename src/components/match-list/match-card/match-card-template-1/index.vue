@@ -2,7 +2,7 @@
   <!--赛事玩法模板-->
   <div
     class="c-match-card relative-position"
-    :id="DOM_ID_SHOW && `list-mid-${mid}`"
+    :id="`list-mid-${mid}`"
     :style="`height:${match_style_obj.total_height}px !important;width:${LayOutMain_pc.layout_content_width}px  !important;`"
   >
   <div v-show="false">{{ MatchListCardData.list_version }}</div>

@@ -385,14 +385,4 @@ export default defineComponent({
 .on-color {
   font-size: 0.14rem;
 }
-
-.bet-click {
-  .on-color {
-
-  }
-}
-
-.win ::v-deep .odds-new2 {
-
-}
 </style>
