@@ -34,7 +34,7 @@
                   <img v-if="item1.select" class="icon-search"
                     :src="`${$g_image_preffix}/image/svg/check_circle_outline-24px${on_suffix}.svg`" />
                   <img v-else
-                    :src="`/public/yazhou-h5/image/svg/selected-no${get_theme.includes('02') ? '-2' : get_theme.includes('y0') ? '_y0' : ''}.svg`"
+                    :src="`/yazhou-h5/image/svg/selected-no${get_theme.includes('02') ? '-2' : get_theme.includes('y0') ? '_y0' : ''}.svg`"
                     alt="" class="icon-search">
                 </div>
               </div>
@@ -71,7 +71,7 @@
           <img v-if="all_checked" class="icon-search" @click="all_checked_click"
             :src="`${$g_image_preffix}/image/svg/check_circle_outline-24px${on_suffix}.svg`" />
           <img
-            :src="`/public/yazhou-h5/image//svg/selected-no${get_theme.includes('02') ? '-2' : get_theme.includes('y0') ? '_y0' : ''}.svg`"
+            :src="`/yazhou-h5/image//svg/selected-no${get_theme.includes('02') ? '-2' : get_theme.includes('y0') ? '_y0' : ''}.svg`"
             alt="" class="icon-search" @click="all_checked_click" v-else>
           <span class="txt ellipsis-2-lines" @click="all_checked_click">{{ $t('common.all_select') }}</span>
         <!-- </template> -->
@@ -98,9 +98,9 @@ import SFilter from "project_path/src/components/skeleton/filter.vue";
 import lodash from 'lodash';
 import { i18n_t, MITT_TYPES, useMittEmit, MenuData, UserCtr, get_file_path } from 'src/core/'
 import { ref, watch, computed, nextTick, onBeforeUnmount } from 'vue';
-const default_url = "/public/yazhou-h5/image/svg/match_cup.svg"  //默认图片地址
+const default_url = "/yazhou-h5/image/svg/match_cup.svg"  //默认图片地址
 // 无联赛logo图标黑色版
-const none_league_icon_black = "/public/yazhou-h5/image/svg/match_cup_black.svg"
+const none_league_icon_black = "/yazhou-h5/image/svg/match_cup_black.svg"
 
 const list_data_loading = ref(false)     //数据加载中
 const list = ref([]) //数据列表整个赛事
@@ -119,7 +119,7 @@ const change = ref(true) //是否显示全选按钮
 const selected = ref({})   //选中的赛事集合
 const select_num = ref(0) //选中的赛事数量
 
-const $g_image_preffix='/public/yazhou-h5/'
+const $g_image_preffix='/yazhou-h5/'
 //ref对象
 const scrollArea = ref(null);
 const tittle_text = ref(null);
