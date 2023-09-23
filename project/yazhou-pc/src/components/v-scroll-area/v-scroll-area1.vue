@@ -190,14 +190,12 @@ const set_scroll_position = (position) => {
 
 onMounted(()=>{
    // 监听窗口发生变化解决点击游览器全屏非全屏变化导致的css样式兼容问题
-   window.addEventListener("resize", () => {
-     set_footer_position();
-    });
+   window.addEventListener("resize", set_footer_position);
 })
 
 onMounted(()=>{
    // 移除窗口监听，优化组件性能
-   window.removeEventListener("resize", () => {});
+   window.removeEventListener("resize", set_footer_position);
 })
 </script>
 
