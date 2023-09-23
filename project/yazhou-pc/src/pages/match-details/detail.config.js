@@ -439,7 +439,7 @@ export const useGetConfig = () => {
               // 处理当前玩法集数据
               handle_match_details_data(tabs_active_data_cache, Date.now());
             } else {
-              MatchDataWarehouseInstance.set_quick_query_list_from_match_details([]);
+              // MatchDataWarehouseInstance.set_quick_query_list_from_match_details([]);
               state.match_details = [];
               set_handicap_state("empty");
             }
@@ -556,7 +556,7 @@ export const useGetConfig = () => {
         // 处理当前玩法集数据
         handle_match_details_data(tabs_active_data_cache, timestap);
       } else {
-        MatchDataWarehouseInstance.set_quick_query_list_from_match_details([]);
+        // MatchDataWarehouseInstance.set_quick_query_list_from_match_details([]);
         state.match_details = [];
         set_handicap_state("empty");
       }
@@ -564,7 +564,7 @@ export const useGetConfig = () => {
   
     // 将当前玩法盘口信息记为上次玩法数据
     const last_tab_data_index =
-      detail_header.value["handicap_tabs_bar"].currentIndex || 0;
+      detail_header.value["handicap_tabs_bar"].value.currentIndex || 0;
     state.last_tab_data = {
       index: last_tab_data_index,
       item: state.category_list[last_tab_data_index],
