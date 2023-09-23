@@ -240,7 +240,7 @@ export default {
       width: 285px;
       line-height: 17px;
       text-align: center;
-      ::v-deep .c-match-process {
+      :deep(.c-match-process) {
         .process-name {
           padding: 0 5px 0 0;
         }
@@ -332,7 +332,7 @@ export default {
   .rule-scroll-area {
     flex: 1;
   }
-  ::v-deep {
+  :deep{
     .panel {
       border-top: transparent;
       .panel-title {

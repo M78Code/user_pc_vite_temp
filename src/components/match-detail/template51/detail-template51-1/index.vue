@@ -115,7 +115,7 @@ const {
     width: 50%;
   }
 
-  ::v-deep .c-bet-item.zhuanye .odds {
+  :deep(.c-bet-item.zhuanye .odds) {
     margin-right: 6px;
   }
 }

@@ -233,7 +233,7 @@ export default {
       margin-left: 8px;
       background-color: var(--qq--yb-bg-color7);
       border: 1px solid var(--qq--go-top-btn-border);
-      ::v-deep .icon-wrap {
+      :deep(.icon-wrap) {
         width: 24px;
         height: 24px;
         display: flex;
@@ -281,7 +281,7 @@ export default {
     .scroll-area {
       width: 100%;
       height: 180px;
-      ::v-deep .q-scrollarea__thumb {
+      :deep(.q-scrollarea__thumb) {
         right: 4px;
       }
     }

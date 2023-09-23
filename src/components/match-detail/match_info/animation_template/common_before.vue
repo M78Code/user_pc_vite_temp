@@ -247,7 +247,7 @@ export default {
           display: flex;
           justify-content: center;
         }
-        ::v-deep .c-match-date {
+        :deep(.c-match-date) {
           min-width: 58px;
           padding: 0 0;
         }

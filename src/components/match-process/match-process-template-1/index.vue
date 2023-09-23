@@ -346,7 +346,7 @@ onUnmounted(() => {
     .date-wrap {
       padding: 0 10px;
 
-      ::v-deep .timer-layout {
+      :deep(.timer-layout) {
         padding: 0;
       }
     }

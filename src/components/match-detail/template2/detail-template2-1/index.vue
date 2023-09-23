@@ -110,10 +110,10 @@ const { sort_index,  toggle_menu, HandicapTitle,betItem } =
     width: 50%;
   }
 
-  ::v-deep .bet-item {
+  :deep(.bet-item) {
     margin-left: 5px;
   }
-  ::v-deep .c-bet-item.zhuanye .odds {
+  :deep(.c-bet-item.zhuanye .odds) {
     margin-right: 6px;
   }
 }

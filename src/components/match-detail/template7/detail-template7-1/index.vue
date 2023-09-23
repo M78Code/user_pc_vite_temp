@@ -86,10 +86,10 @@ const { sort_index, filter_odds, toggle_menu, curIsShow, HandicapTitle,lodash ,b
     flex-wrap: wrap;
   }
 
-  ::v-deep .bet-item {
+  :deep(.bet-item) {
     margin-left: 5px;
   }
-  ::v-deep .c-bet-item.zhuanye .odds {
+  :deep(.c-bet-item.zhuanye .odds) {
     margin-right: 6px;
   }
 }

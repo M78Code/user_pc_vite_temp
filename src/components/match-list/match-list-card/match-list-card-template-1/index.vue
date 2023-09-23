@@ -157,11 +157,11 @@ onUnmounted(() => {
   .load-data-wrap {
     width: 100%;
     height: 100%;
-    ::v-deep .empty-wrap .img {
+    :deep(.empty-wrap .img) {
       width: 130px !important;
       height: 130px !important;
     }
-    ::v-deep .user_api_limited {
+    :deep(.user_api_limited) {
       .img {
         display: none;
       }
