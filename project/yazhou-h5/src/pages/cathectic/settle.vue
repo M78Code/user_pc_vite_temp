@@ -455,7 +455,7 @@ onUnmounted(() => {
   }
 
   .calendar {
-    background-image: url("public/image/record/calendar2.svg");  //public/yazhou-h5/image/record/calendar2.svg
+    background-image: url("public/image/record/calendar2.svg");  //yazhou-h5/image/record/calendar2.svg
   }
   /* ************** 排序按钮图标 ************** -S */
 

@@ -39,7 +39,7 @@ import headerSearch from 'project_path/src/components/site-header/header-search.
 import marqueeCst from "project_path/src/components/marquee/marquee-cst.vue";
 import headerSelect from 'project_path/src/components/site-header/header-select.vue'
 // import timer from "project_path/src/components/site-header/timer.vue"
-import gift_package from '/public/yazhou-pc/image/common/activity_banner/gift_package.png'
+import gift_package from '/yazhou-pc/image/common/activity_banner/gift_package.png'
 import { compute_css_variables } from "src/core/css-var/index.js"
 
 const page_style = ref('')

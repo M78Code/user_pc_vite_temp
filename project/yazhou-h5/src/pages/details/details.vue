@@ -26,7 +26,7 @@
         <!-- 滚动时置顶的悬浮条 -->
         <!-- <div style="position: fixed;z-index: 1000; top: 100px;background:#000;color: #fff;">{{ scroll_visible_1 }}{{ get_show_video }}</div> -->
         <div class="mini-header-container" :class="{'no-z-index': get_is_dp_video_full_screen}" :style="{ visibility: scroll_visible_1 && !get_show_video&& viewTab != 'chatroom'? 'visible' : 'hidden' }">
-          <change-header :detail_data="detail_data"></change-header>
+          <!-- <change-header :detail_data="detail_data"></change-header> -->
         </div>
 
         <!-- @click.stop -->
@@ -111,13 +111,13 @@
     </div>
     <template v-if="!is_show_detail_header_data">
       <!-- 活动返回按钮 及 标题 -->
-      <div class="head yb_px14 yb_fontsize14">
+      <!-- <div class="head yb_px14 yb_fontsize14"> -->
         <!-- <img
             :src="UserCtr.theme.includes('day') ? `${ $g_image_preffix }/image/wwwassets/bw3/svg/go-back-icon-theme02.svg` : `${ $g_image_preffix }/image/wwwassets/bw3/svg/go-back-icon.svg`"
             @click="$common.go_where({back_to: 'go_to_back'})"
         /> -->
-      </div>
-      <no-data which='noMatch' height='500'></no-data>
+      <!-- </div> -->
+      <!-- <no-data which='noMatch' height='500'></no-data> -->
     </template>
   </div>
 </template>
@@ -186,6 +186,11 @@ export default defineComponent({
   setup(props, evnet) {
     const router = useRouter();
     const route = useRoute();
+    const scroll_box = ref(null)
+    const content_box = ref(null)
+    const fixedHeight = ref(null)
+    const scroll_visible_1 = ref(true)
+    const get_bet_show = ref(false)
     const {
       state_data,
       get_detail_data,
@@ -536,6 +541,11 @@ export default defineComponent({
       matchid,
       curr_active_tab,
       icon_replay,
+      scroll_box,
+      content_box,
+      fixedHeight,
+      scroll_visible_1,
+      get_bet_show,
       details_click,
       change_go_back,
       details_refresh,
