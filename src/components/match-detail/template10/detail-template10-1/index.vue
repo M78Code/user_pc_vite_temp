@@ -234,7 +234,8 @@ const {
   curIsShow,
   HandicapTitle,
   betItem,
-  lodash
+  lodash,
+  isShow
 } = useCommon({ emit, props });
 
 const handicap_data = ref([]);

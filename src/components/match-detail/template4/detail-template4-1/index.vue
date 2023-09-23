@@ -5,7 +5,7 @@
 -->
 
 <template>
- <div class="wrap-template template4" data-template="template4">
+  <div class="wrap-template template4" data-template="template4">
     <handicap-title
       :index="index"
       :item_details="item_details"
@@ -17,26 +17,24 @@
     <div v-if="isShow">
       <div class="handicap-sub-title">
         <!-- 主队、平局、客队 S-->
-        <div 
+        <div
           class="flex-1 overflow-hidden"
           :class="{
             'part-left': cur_index == 0,
             'part-middle': cur_index == 1,
-            'part-right': cur_index == 2
+            'part-right': cur_index == 2,
           }"
-          v-for="(cur_key,cur_index) in ['home','dogfall','away']" 
+          v-for="(cur_key, cur_index) in ['home', 'dogfall', 'away']"
           :key="cur_key"
         >
-          <div
-            class="sub-title ellipsis"
-            v-if="item_details.title.length"
-          >{{lodash.get(item_details,`title[${cur_index}].osn`)}}
-        </div>
+          <div class="sub-title ellipsis" v-if="item_details.title.length">
+            {{ lodash.get(item_details, `title[${cur_index}].osn`) }}
+          </div>
           <div class="handicap">
             <div
               class="handicap-item"
               :class="`os-${item.os}`"
-              v-for="(item, i) in lodash.get(handicap,cur_key,[])"
+              v-for="(item, i) in lodash.get(handicap, cur_key, [])"
               :key="`bet_oid_${item.oid ? item.oid : 'placeholder_' + i}`"
             >
               <bet-item
@@ -44,15 +42,16 @@
                 :match_info="match_info"
                 :play_data="item_details"
                 :bet_data="item"
-                :bet_path="{hl_index: item.hl_index, ol_index: item.ol_index}"
+                :bet_path="{ hl_index: item.hl_index, ol_index: item.ol_index }"
                 bet_source="match_details"
                 v-if="item"
               >
-                  <div class="bet-item" >
+                <div class="bet-item">
                   <div class="bet-ellipsis ellipsis" v-if="item.on">
-                    <span class="bet_handicap yb-family-odds">{{item.on}}</span>
+                    <span class="bet_handicap yb-family-odds">{{
+                      item.on
+                    }}</span>
                   </div>
-        
                 </div>
               </bet-item>
             </div>
@@ -64,16 +63,21 @@
         <div class="other-item">
           <div class="placehold"><div class="empty"></div></div>
           <div class="placehold"><div class="empty"></div></div>
-          <div class="placehold other no_border_bottom" :class="`os-${other.os}`">
+          <div
+            class="placehold other no_border_bottom"
+            :class="`os-${other.os}`"
+          >
             <bet-item
               :key="'bet_oid_' + other.oid"
               :match_info="match_info"
               :play_data="item_details"
               :bet_data="other"
-              :bet_path="{hl_index: other.hl_index, ol_index: other.ol_index}"
+              :bet_path="{ hl_index: other.hl_index, ol_index: other.ol_index }"
               bet_source="match_details"
             >
-              <div class="bet_handicap ellipsis" style="margin-left:12px">{{other.on}}</div>
+              <div class="bet_handicap ellipsis" style="margin-left: 12px">
+                {{ other.on }}
+              </div>
             </bet-item>
           </div>
         </div>
@@ -84,7 +88,9 @@
 
 <script setup>
 import { useCommon } from "../../use-common";
-
+import { computed, ref } from "vue";
+import { format_three_data } from "src/core/index";
+const other = ref({});
 const emit = defineEmits(["sort_index", "set_panel_status"]);
 
 const props = defineProps({
@@ -107,89 +113,95 @@ const props = defineProps({
   panel_status: String, //列表展开收起
 });
 
-const { sort_index, toggle_menu, curIsShow, HandicapTitle,lodash,betItem } =
-  useCommon({ emit, props });
+const {
+  sort_index,
+  toggle_menu,
+  curIsShow,
+  HandicapTitle,
+  lodash,
+  betItem,
+  isShow,
+} = useCommon({ emit, props });
 
-
-   /**
-    * @description: 左中右格式化数据
-    * @return {undefined} undefined
-    */
-  const formatData = ()=> {
-      let formatData = {
-        home: [],
-        dogfall: [],
-        away: [],
-      };
-      let title = this.item_details.title;
-      if (title.length) {
-        let hl = this.item_details.hl;
-        hl.forEach((item, i) => {
-          item.ol.forEach((list, j) => {
-            list.hl_index = i;
-            list.ol_index = j;
-            if (list.otd == title[0].otd) {
-              formatData.home.push(list);
-            } else if (list.otd == title[1].otd) {
-              formatData.dogfall.push(list);
-            } else if (list.otd == title[2].otd) {
-              formatData.away.push(list);
-            } else {
-              this.other = list;
-            }
-          });
-        });
+/**
+ * @description: 左中右格式化数据
+ * @return {undefined} undefined
+ */
+const formatData = () => {
+  let formatData = {
+    home: [],
+    dogfall: [],
+    away: [],
+  };
+  let title = props.item_details.title;
+  if (title.length) {
+    let hl = props.item_details.hl;
+    hl.forEach((item, i) => {
+      item.ol.forEach((list, j) => {
+        list.hl_index = i;
+        list.ol_index = j;
+        if (list.otd == title[0].otd) {
+          formatData.home.push(list);
+        } else if (list.otd == title[1].otd) {
+          formatData.dogfall.push(list);
+        } else if (list.otd == title[2].otd) {
+          formatData.away.push(list);
+        } else {
+          other.value = list;
+        }
+      });
+    });
+  } else {
+    let hl = props.item_details.hl[0].ol;
+    hl.forEach((item, i) => {
+      item.hl_index = 0;
+      item.ol_index = i;
+      if (item.otd == -1) {
+        other.value = item;
       } else {
-        let hl = this.item_details.hl[0].ol;
-        hl.forEach((item, i) => {
-          item.hl_index = 0;
-          item.ol_index = i;
-          if (item.otd == -1) {
-            this.other = item;
-          } else {
-            let arr = item.on.split("-");
-            if (arr[0] > arr[1]) {
-              formatData.home.push(item);
-            } else if (arr[0] == arr[1]) {
-              formatData.dogfall.push(item);
-            } else if (arr[0] < arr[1]) {
-              formatData.away.push(item);
-            }
-          }
-        });
-      }
-    }
-    
-    /**
-    * @description: 补充占位符
-    * @return {undefined} undefined
-    *  (待修改)
-    */
-   const sort_data=()=> {
-      let res = this.format_three_data(this.item_details);
-      const home_length = res.home.length;
-      const away_length = res.away.length;
-      const center_length = res.dogfall.length;
-      const max_length = Math.max(home_length, away_length, center_length);
-
-      for (var i = 0; i < max_length; i++) {
-        if (!res.home[i]) {
-          res.home.push("");
-        }
-        if (!res.away[i]) {
-          res.away.push("");
-        }
-
-        if (!res.dogfall[i]) {
-          res.dogfall.push("");
+        let arr = item.on.split("-");
+        if (arr[0] > arr[1]) {
+          formatData.home.push(item);
+        } else if (arr[0] == arr[1]) {
+          formatData.dogfall.push(item);
+        } else if (arr[0] < arr[1]) {
+          formatData.away.push(item);
         }
       }
+    });
+  }
+};
 
-      this.other = res.other;
-      return res;
+/**
+ * @description: 补充占位符
+ * @return {undefined} undefined
+ *  (待修改)
+ */
+const sort_data = () => {
+  let res = format_three_data(props.item_details);
+  const home_length = res.home.length;
+  const away_length = res.away.length;
+  const center_length = res.dogfall.length;
+  const max_length = Math.max(home_length, away_length, center_length);
+
+  for (var i = 0; i < max_length; i++) {
+    if (!res.home[i]) {
+      res.home.push("");
     }
-  
+    if (!res.away[i]) {
+      res.away.push("");
+    }
 
+    if (!res.dogfall[i]) {
+      res.dogfall.push("");
+    }
+  }
+  other.value = res.other;
+  return res;
+};
+const handicap = computed(() => {
+  return sort_data();
+});
 </script>
 <style lang="scss" scoped>
 .other-item {
@@ -228,7 +240,7 @@ const { sort_index, toggle_menu, curIsShow, HandicapTitle,lodash,betItem } =
     }
     &:last-child {
       .handicap-item {
-        border-right: none!important;
+        border-right: none !important;
       }
     }
   }
