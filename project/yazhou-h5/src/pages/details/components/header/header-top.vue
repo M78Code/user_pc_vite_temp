@@ -251,6 +251,7 @@ import { utils } from 'src/core/utils/index.js';
 import { MenuData, UserCtr } from "src/core/index.js";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import store from "src/store-redux/index.js";
+import { format_total_score } from "src/core/format/index.js"
 
 const props = defineProps({
   detail_data: {
@@ -284,9 +285,9 @@ const initEvent = () => {
       useMittEmit(MITT_TYPES.EMIT_MATCH_NOSTART);
     }
     // 同上注释
-    let longTime = Math.floor((+props.detail_data.mgt - now) / 1000 / 60);
-    if (longTime == 0) { longTime += 1 }
-    longTime.value = longTime;
+    let new_long_time = Math.floor((+props.detail_data.mgt - now) / 1000 / 60);
+    if (new_long_time == 0) { new_long_time += 1 }
+    longTime.value = new_long_time;
   }, 1000 * 1)
 }
 onMounted(initEvent)
