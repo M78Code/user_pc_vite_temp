@@ -71,7 +71,6 @@
       </template>
     </template>
     <!-- 非内嵌版时间信息显示 -->
-    {{ match_props.match }}
     <div
       v-if="!utils_info.is_iframe"
       v-show="

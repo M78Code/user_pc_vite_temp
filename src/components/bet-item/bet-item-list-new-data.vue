@@ -68,6 +68,7 @@ import {
   MatchDataWarehouse_PC_List_Common as MatchListData,
 } from "src/core/index.js";
 import { format_odds_value } from 'src/core/format/module/format-odds.js';
+import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
 import { compute_value_by_cur_odd_type } from "src/core/format/module/format-odds-conversion-mixin.js";
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 
@@ -251,7 +252,8 @@ const get_odds_state = (mhs, hs, os) => {
  * @return {undefined} undefined  组装投注项的数据
  */
 const bet_click = () => {
-  console.log(1111);
+  // set_bet_obj_config(item,obj,obj.hl,obj_ol)
+  set_bet_obj_config()
 };
 
 onUnmounted(() => {
