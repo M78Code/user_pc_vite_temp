@@ -728,7 +728,6 @@ const overtime_tab_handle = (item, unfold, operate_type, sub_i) => {
 }
 // 次要玩法   展开   显示本地已有赔率
 // set_local_hps_by_key(item,o_hps_key){
-//   // debugger
 //   //显示本地已有赔率
 //   if(match && match_info.value[o_hps_key] && match_info.value[o_hps_key].length){
 //     current_tab_item.value.hps = lodash.cloneDeep(match_info.value[o_hps_key]);

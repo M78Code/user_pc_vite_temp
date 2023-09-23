@@ -305,7 +305,6 @@ export const category_info = () => {
    * @returns {Promise<void>}
    */
   const initEvent = async (to_refresh, init_req) => {
-    // debugger
     if (to_refresh) {
       to_refresh = to_refresh;
     } else {
