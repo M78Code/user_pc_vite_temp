@@ -345,7 +345,7 @@ const fetch_match_list = (is_socket = false, cut) => {
 		_params.selectionHour = null;
 	}
 	// 无感刷新 不走预加载
-	// set_base_data_init();
+	set_base_data_init();
 
 	if (typeof is_socket == "boolean" && !is_socket) {
 		// console.error('不是无感刷新')
