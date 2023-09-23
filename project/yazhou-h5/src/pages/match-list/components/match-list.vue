@@ -31,7 +31,7 @@
           />
           <!--真实体育玩法 -->
           <match-container
-            v-if="(lodash.get(get_current_menu, 'main.menuType') == 28 ||
+            v-if="(lodash.get(MenuData.current_menu, 'main.menuType') == 28 ||
             !is_champion && match_item.ms != 3 ) && !(menu_type ==28 && 100 == get_curr_sub_menu_type)"
             :match_of_list="match_item"
             :matchCtr="matchCtr"
@@ -119,6 +119,7 @@ import noData from "project_path/src/components/common/no-data.vue"; // 无网�
 import UserCtr from 'src/core/user-config/user-ctr.js'
 import PageSourceData from "src/core/page-source/page-source.js";
 import { MenuData } from "src/core/index.js"
+// import matchListCardFold from 'src/core/match-list-h5/match-card/match-list-card-fold.js'
  
 const props = defineProps({
   // 赛事列表无数据
@@ -397,7 +398,7 @@ const toggle_collect = ($event) => {
  * 折叠状态变化
  */
 const unfold_changed_handle = ($event) => {
-  emits('unfold_changed',$event);
+  // matchListCardFold.unfold_changed_handle($event)
 }
 
 onDeactivated(() => {

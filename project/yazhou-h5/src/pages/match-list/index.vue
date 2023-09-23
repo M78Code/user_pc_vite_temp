@@ -24,7 +24,7 @@
       <match-list ref="match_list" :matchCtr="matchCtr" :menu_type="MenuData.current_menu"
         :data_get_empty="match_is_empty" :source="invok_source ? invok_source : 'match_main'"
         :window_scrolly="window_scrolly" :match_list_wrapper_height="match_list_wrapper_height"
-        @unfold_changed="unfold_changed_handle" @change_favorite_state="change_favorite_state">
+        @change_favorite_state="change_favorite_state">
         <!--        @unfold_league="unfold_league_handle"-->
       </match-list>
       <!-- 到底了容器原加载更多容器-->
@@ -128,6 +128,7 @@ import SList from "project_path/src/components/skeleton/skeleton-list.vue"   // 
 import scrollTop from "project_path/src/components/common/record-scroll/scroll-top.vue";
 import { compute_css_variables } from "src/core/css-var/index.js"
 import { MenuData, score_switch_handle, utils } from "src/core/index.js";
+// import matchListCardFold from 'src/core/match-list-h5/match-card/match-list-card-fold.js'
 
 import 'project_path/src/css/pages/match-main.scss'
 
@@ -148,7 +149,7 @@ const scroll_top = ref(null);
 const page_style = ref(null);
 const match_list_container = ref(null);
 const emitters = ref({});
-
+const match_list_wrapper_height = 0
 const ws_invoke_key = ref("match_main");
 // 获取赛事列表接口超时setTimeout 6000
 const requesting_timeout = ref(null);
