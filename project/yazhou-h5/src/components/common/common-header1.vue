@@ -176,7 +176,10 @@ const details_collect = (match_obj) => {
     if (res.code == 200) {
       let cloneData = lodash.clone(get_detail_data)
       cloneData.mf = params.cf
-      set_detail_data(cloneData);
+      store.dispatch({
+        type: 'SET_DETAIL_DATA',
+        data: cloneData
+      });
     } else if (res.msg) {
       set_toast({ 'txt': res.msg });
     }
