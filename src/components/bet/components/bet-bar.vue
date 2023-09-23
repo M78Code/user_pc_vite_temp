@@ -9,7 +9,7 @@
   <div class="bet-bar row justify-between items-center" @touchmove.prevent @click="menu_click"
     :class="{ 'fixed-bottom': $route.name != 'matchList' && get_bet_status == 0 }">
     <div>
-      <span class="bet-num">{{ bet_list}}</span>
+      <span class="bet-num">{{ BetData.bet_single_list.length}}</span>
       <!-- 投注单 -->
       <span class="yb_fontsize16 yb_ml8">
         <template v-if="get_bet_status != 0"><span>{{}}</span></template>
@@ -48,7 +48,6 @@ import { ref,computed,onUnmounted } from 'vue';
 
 let balance_timer = null // 延时器
 
-let bet_list = ref(BetData.bet_list)
 
 const get_bet_status = ref(true)
 const is_loading_balance = ref(false) // 金额刷新中？

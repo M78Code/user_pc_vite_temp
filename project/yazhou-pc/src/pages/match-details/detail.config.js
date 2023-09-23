@@ -137,7 +137,7 @@ export const useGetConfig = () => {
     }
   );
   // 监听玩法集菜单id变化
-  watch(tabs_active_index, (val) => {
+  watch(()=>tabs_active_index, (val) => {
     set_cur_match_plays_list();
   });
   // 监听赛事状态ms的值，0:未开赛 1:滚球阶段 2:暂停 3:结束 4:关闭 5:取消 6:比赛放弃 7:延迟 8:未知 9:延期 10:比赛中断 110:即将开赛
@@ -439,7 +439,7 @@ export const useGetConfig = () => {
               // 处理当前玩法集数据
               handle_match_details_data(tabs_active_data_cache, Date.now());
             } else {
-              // MatchDataWarehouseInstance.value.init_plays_data([]);
+              MatchDataWarehouseInstance.set_quick_query_list_from_match_details([]);
               state.match_details = [];
               set_handicap_state("empty");
             }
@@ -556,7 +556,7 @@ export const useGetConfig = () => {
         // 处理当前玩法集数据
         handle_match_details_data(tabs_active_data_cache, timestap);
       } else {
-        // MatchDataWarehouseInstance.value.init_plays_data([]);
+        MatchDataWarehouseInstance.set_quick_query_list_from_match_details([]);
         state.match_details = [];
         set_handicap_state("empty");
       }
@@ -680,7 +680,7 @@ export const useGetConfig = () => {
           handicap_this.value['category_list'] = res
         
           // 初始化玩法列表
-          // MatchDataWarehouseInstance.value.init_play_menu_list(res);
+          MatchDataWarehouseInstance.set_quick_query_list_from_match_details(res);
           if (callback) {
             callback();
           }
@@ -934,7 +934,7 @@ export const useGetConfig = () => {
     // path: "/details/:mid/:tid/:csid",
     
       state.mid = mid; // 赛事id
-      state.sportId = sportId; // 赛种 id
+      state.sportId = Number(sportId); // 赛种 id
       // 电竞不用切右侧
       if (!is_eports_csid(sportId)) {
         // 设置赛事详情的请求参数

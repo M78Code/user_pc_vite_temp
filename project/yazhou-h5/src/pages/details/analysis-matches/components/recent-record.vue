@@ -30,15 +30,15 @@
         <div>
           <template v-if="index == 0">
             <!-- 左侧双打图标 type 0 表示主队,mhlu 主队的url -->
-            <team-img :type="0" :csid="get_detail_data.csid" :url="get_detail_data.mhlu[0]" :fr="get_detail_data.frmhn[0]" :size="22"></team-img>
-            <team-img v-if="get_detail_data.mhlu.length > 1" :type="0" :csid="get_detail_data.csid" :url="get_detail_data.mhlu[1]" :fr="get_detail_data.frmhn[1]" :size="22" style="margin-top: 0.11rem; margin-left:-0.08rem;"></team-img>
+            <team-img :type="0" :csid="lodash.get(get_detail_data,'csid')" :url="lodash.get(get_detail_data, 'mhlu[0]')" :fr="lodash.get(get_detail_data, 'frmhn[0]')" :size="22"></team-img>
+            <team-img v-if="lodash.get(get_detail_data,'mhlu.length') > 1" :type="0" :csid="lodash.get(get_detail_data,'csid')" :url="lodash.get(get_detail_data,'mhlu[1]')" :fr="lodash.get(get_detail_data,'frmhn[1]')" :size="22" style="margin-top: 0.11rem; margin-left:-0.08rem;"></team-img>
           </template>
           <template v-if="index == 1">
             <!-- 右侧双打图标 type 1 表示客队,malu 客队的url  -->
-            <team-img :type="1" :csid="get_detail_data.csid" :url="get_detail_data.malu[0]" :fr="get_detail_data.frman[0]" :size="22"></team-img>
-            <team-img v-if="get_detail_data.malu.length > 1" :type="1" :csid="get_detail_data.csid" :url="get_detail_data.malu[1]" :fr="get_detail_data.frman[1]" :size="22" style="margin-top: 0.11rem; margin-left:-0.08rem;"></team-img>
+            <team-img :type="1" :csid="lodash.get(get_detail_data,'csid')" :url="lodash.get(get_detail_data, 'mhlu[0]')" :fr="lodash.get(get_detail_data, 'frmhn[0]')" :size="22"></team-img>
+            <team-img v-if="lodash.get(get_detail_data,'malu.length') > 1" :type="1" :csid="lodash.get(get_detail_data,'csid')" :url="lodash.get(get_detail_data,'malu[1]')" :fr="lodash.get(get_detail_data,'frman[1]')" :size="22" style="margin-top: 0.11rem; margin-left:-0.08rem;"></team-img>
           </template>
-          <span class="team-name-limit ellipsis">{{ index == 0 ? get_detail_data.mhn : get_detail_data.man }}</span>
+          <span class="team-name-limit ellipsis">{{ index == 0 ? lodash.get(get_detail_data,'mhn') : lodash.get(get_detail_data,'man') }}</span>
         </div>
         <div>
           <span v-for="(score,index) in item.records_list" :key="index">
@@ -48,7 +48,7 @@
         </div>
       </div>
       <!-- // :key='index' -->
-      <public-form :liat_data="item.new_recent_record_data" :hm_index_name="index == 0 ? get_detail_data.mhn : get_detail_data.man"></public-form>
+      <public-form :liat_data="item.new_recent_record_data" :hm_index_name="index == 0 ? lodash.get(get_detail_data,'mhn') : lodash.get(get_detail_data,'man')"></public-form>
     </template>
   </div>
 </template>
@@ -63,9 +63,12 @@ import publicForm from "project_path/src/pages/details/analysis-matches/componen
 import { computed } from "vue";
 import { useRoute } from 'vue-router'
 import { i18n_t } from "src/boot/i18n.js";
+import lodash from "lodash"
+
+
 const get_detail_data = ref({
-        csid: 1,
-        mid: 1,
+        csid: '1',
+        mid: '1',
     })
 //国际化
 

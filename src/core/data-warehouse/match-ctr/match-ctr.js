@@ -25,6 +25,8 @@
  * MatchDataWarehouseInstance.upd_match(match, 1); 更新赛事数据-简单合并数据(无盘口信息合并时使用)
  */
 import MatchDataBaseWS from  "./match-ctr-ws.js"
+import { ref } from 'vue'
+
 export default class MatchDataBase
 {
   /**
@@ -115,6 +117,7 @@ export default class MatchDataBase
     this.cache_match={
       '23432234':{mmp:111111111111,ms:222222222}
     };
+    this.data_version = ref('123'),
     // 所有投注项动态数据时间更新
     this.cache_oid={
     };
@@ -599,6 +602,7 @@ export default class MatchDataBase
     this.syn_del_quick_query_obj();
     // ws命令赛事订阅
     this.ws_ctr.scmd_c8();
+    this.data_version = String(new Date().getTime());
   }
   /**
    * @description: 同步清除赛事快捷操作对象中的无用赛事数据挂载
@@ -1382,3 +1386,4 @@ export default class MatchDataBase
     this.ws_ctr && this.ws_ctr.destroy();
   }
 }
+

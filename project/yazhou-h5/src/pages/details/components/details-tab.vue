@@ -89,17 +89,17 @@ export default defineComponent({
     })
     onUnmounted(() => {
       off_listeners();
-      set_fewer(1);
+      // set_fewer(1);
       clearTimeout(data.timer1_)
-      set_subscript_game_index(0)
+      // set_subscript_game_index(0)
     });
     const change_btn = () => {
       // 设置vuex变量值,没有玩法数据时不能点击
       // if (data_list && data_list.length == 1 && get_details_item == '0') return;
       if(get_fewer.value == 1 || get_fewer.value == 3){
-        set_fewer(2)
+        // set_fewer(2)
       }else{
-        set_fewer(1)
+        // set_fewer(1)
       }
     };
     // 单击玩法集
@@ -110,7 +110,7 @@ export default defineComponent({
       // 移动当前玩法的位置
       utils.tab_move2(index, data.reset_scroll_dom)
       // set_details_item(uId);
-      set_subscript_game_index(index)
+      // set_subscript_game_index(index)
       let search_term = route.query.search_term
       // 重新加载category组件，触发重新请求
       router.replace({name: 'category', params: {mid: match_id, mcid: uId}, query: {search_term: search_term}})
@@ -119,7 +119,7 @@ export default defineComponent({
       useMittEmit(MITT_TYPES.EMIT_DETAILILS_TAB_CHANGED);
       // useMittEmit(MITT_TYPES.EMIT_DETAILILS_TAB_CHANGED)
       if(get_fewer.value == 3){
-        set_fewer(1)
+        // set_fewer(1)
       }
       // 发送埋点
       let zhuge_obj = {
@@ -279,9 +279,9 @@ export default defineComponent({
   }
 }
 
-.tab-fixed {
-  position: fixed;
-  top: 2.04rem;
-  z-index: 90;
-}
+// .tab-fixed {
+//   position: fixed;
+//   top: 2.04rem;
+//   z-index: 90;
+// }
 </style>

@@ -18,10 +18,10 @@
             <span class="number">
               {{`${item.home}%`}}
             </span>
-            <span class="text-span" :class="{'vi-top': get_lang == 'vi'}">{{ item.text }}</span>
+            <span class="text-span" :class="{'vi-top': UserCtr.lang == 'vi'}">{{ item.text }}</span>
             <q-knob
                 readonly
-                :value="item.away"
+                :model-value="item.away"
                 :max="item.home + item.away"
                 :size="get_analyze_show?'':'.56rem'"
                 :thickness="0.3"
@@ -37,10 +37,10 @@
             <span class="number">
               {{`${item.proportion> 0 ? 100- item.proportion : '0'}%`}}
             </span>
-            <span class="text-span" :class="{'vi-top': get_lang == 'vi'}">{{ item.text }}</span>
+            <span class="text-span" :class="{'vi-top': UserCtr.lang == 'vi'}">{{ item.text }}</span>
             <q-knob
                 readonly
-                :value="item.proportion"
+                :model-value="item.proportion"
                 :size="get_analyze_show?'':'.56rem'"
                 :thickness="0.3"
                 color="orange"
@@ -91,14 +91,15 @@
 import lodash from "lodash";
 import { i18n_t } from "src/boot/i18n.js"
 import { transform_score } from "src/core/format/index.js"
+import UserCtr from "src/core/user-config/user-ctr.js";
  // 国际化比赛阶段比分转换工具
 // import msc from "project_path/src/mixins/common/msc.js";
 import { onMounted, onUnmounted, ref, watch } from "vue";
 
 
 const get_detail_data = ref({
-        csid: 1,
-        mid: 1,
+        csid: '1',
+        mid: '1',
     })
   // mixins: [ msc ],
   const props = defineProps({
@@ -115,8 +116,10 @@ const get_detail_data = ref({
       type: Array
     }
   })
-  let statistics_table = ref({})
-  let timer1_ = ref(null)
+  const get_analyze_show = ref(false)
+  const statistics_table = ref({})
+  const timer1_ = ref(null)
+
   onMounted(() => {
     get_list()
     

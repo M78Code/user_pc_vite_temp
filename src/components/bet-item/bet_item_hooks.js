@@ -496,7 +496,7 @@ export const useGetItem = ({ props }) => {
    */
 
   watch(
-    () => ol_data.value,
+    () => ol_data,
     (cur) => {
       if (cur) {
         let { _mhs, _hs, os } = cur;
@@ -508,7 +508,7 @@ export const useGetItem = ({ props }) => {
   );
 
   watch(
-    BetData.cur_odd,
+    ()=>BetData.cur_odd,
     (cur) => {
       // 投注项赔率值处理
       let ov = lodash.get(state.ol_data_item, "ov");
@@ -523,7 +523,7 @@ export const useGetItem = ({ props }) => {
   );
   // 监听赛事ID变化 取消赔率升降
   watch(
-    () => mid_.value,
+    () => mid_,
     () => {
       nextTick(() => {
         state.odds_lift = "";
@@ -533,7 +533,7 @@ export const useGetItem = ({ props }) => {
 
   // 监听投注项赔率变化
   watch(
-    () => ol_data_item_ov.value,
+    () => ol_data_item_ov,
     (cur, old) => {
       // 赔率值处理
       format_odds(cur, 1);
@@ -548,7 +548,7 @@ export const useGetItem = ({ props }) => {
 
   // 计算是否需要选中,用来控制热门推荐轮播是否需要继续
   watch(
-    () => computed_bet_select.value,
+    () => computed_bet_select,
     (new_) => {
       // 热门推荐模块是否有投注项选中选中则停止轮播,没有选中则继续轮播
       if (props.bet_source == "hot") {
@@ -564,7 +564,7 @@ export const useGetItem = ({ props }) => {
   );
   // 监控串关切换时设置投注项的选中
   watch(
-    BetData.bet_list,
+    ()=>BetData.bet_list,
     (val) => {
       if (state.ol_data_item) {
         let { _mhs, _hs, os } = state.ol_data_item;
@@ -575,7 +575,7 @@ export const useGetItem = ({ props }) => {
   );
 
   // 监控串关切换时设置投注项的选中
-  watch(BetData.is_bet_single, (val) => {
+  watch(()=>BetData.is_bet_single, (val) => {
     if (state.ol_data_item) {
       let { _mhs, _hs, os } = state.ol_data_item;
       state.odds_state = get_odds_state(_mhs, _hs, os);
@@ -584,7 +584,7 @@ export const useGetItem = ({ props }) => {
 
   // 监控单关列表的投注项选中
   watch(
-    BetData.bet_single_list,
+   ()=>BetData.bet_single_list,
     (val) => {
       if (state.ol_data_item) {
         let { _mhs, _hs, os } = state.ol_data_item;
@@ -596,7 +596,7 @@ export const useGetItem = ({ props }) => {
 
   // 监控串关切换时设置投注项的选中
   watch(
-    BetData.virtual_bet_list,
+    ()=>BetData.virtual_bet_list,
     (val) => {
       if (state.ol_data_item) {
         let { _mhs, _hs, os } = state.ol_data_item;
@@ -607,7 +607,7 @@ export const useGetItem = ({ props }) => {
   );
 
   //  投注类别 1: 普通赛事 2: 虚拟体育 3: 电竞
-  watch(BetData.bet_category, (new_) => {
+  watch(()=>BetData.bet_category, (new_) => {
     if ([2, 3].includes(new_ * 1)) {
       store.dispatch({
         type: "set_is_virtual_bet",

@@ -11,11 +11,9 @@ import { get_file_path } from "src/core/file-path/file-path.js";
 import pako_pb from "src/core/pb-decode/custom_pb_pako.js";
 import { infoUpload } from "src/core/http/";
 import { LocalStorage } from "src/core/";
-// import { loadLanguageAsync } from "src/core/index.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 // #TODO 接口统一管理的文件，后续替换
-import { api_details, api_account, api_common } from "src/api/index";
-import store from "../../store-redux/";
+import { api_details, api_account, api_common } from "src/api/";
 // #TODO 还有使用到的loadash,如果全局配置则无需引入，或者按需引入，等正是开发组件决定,  _  (lodash)
 import lodash from "lodash";
 // #TODO 使用axios，等正式开发组件时候 npm install axios
@@ -25,7 +23,6 @@ import { uid } from 'quasar';
 const axios_instance = axios.create();
 const { htmlVariables = {} } = window.BUILDIN_CONFIG;
 class UserCtr {
-
   constructor() {
     this.init();
   }
@@ -33,7 +30,6 @@ class UserCtr {
    * 初始化
    */
   init() {
-    const { langReducer, themeReducer } = store.getState();
     //所有接口上报的 用户信息失效，这里不包含 OSS域名检测的  src\public\utils\http\all_domain.js
     //接口会去 清除 这个 统计 ， 连续累计 一定 次数才会弹出 token 失效
     this.all_expired_count = 0;
@@ -107,8 +103,8 @@ class UserCtr {
     // 获取持久化的电竞图片域名
     this.e_sports_domain_img = LocalStorage.get('e_sports_domain_img', '');
     setTimeout(() => {
-      this.set_e_sports_domain_img()
-    })
+      this.set_e_sports_domain_img();
+    }, 0)
   }
   /**
    * 获取初始化uid
@@ -1023,7 +1019,6 @@ class UserCtr {
         LocalStorage.set('e_sports_domain_img', temp);
         // 设置全局电竞图片域名信息
         this.e_sports_domain_img = temp;
-        // window.env.config.e_sports.domain_img = temp;
       }
     } catch (error) {
       console.error(error);
