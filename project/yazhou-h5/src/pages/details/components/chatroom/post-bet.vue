@@ -73,8 +73,8 @@ export default defineComponent({
       hasSharedIdList: [],  // 已经晒单的orderID列表
     });
     const get_detail_data = ref({
-        csid: 1,
-        mid: 1,
+        csid: '1',
+        mid: '1',
     })
     watch(
       () => props.visible,

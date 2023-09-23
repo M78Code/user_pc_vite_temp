@@ -176,8 +176,8 @@ import lodash from "lodash"
 // TODO: 后续修改调整
 // import {mapGetters} from "vuex";
 const get_detail_data = ref({
-        csid: 1,
-        mid: 1,
+        csid: '1',
+        mid: '1',
     })
   const radio_button_index = ref(0)
   const tab_radio_button = ref(['曼联', '德联'])

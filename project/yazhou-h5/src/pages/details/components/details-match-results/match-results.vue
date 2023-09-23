@@ -43,8 +43,8 @@ import {utils } from 'src/core/index.js'
 
   import { ref, onMounted } from "vue";
   const get_detail_data = ref({
-        csid: 1,
-        mid: 1,
+        csid: '1',
+        mid: '1',
     })
   // TODO: ；临时调试用
   const get_is_hengping = ref(true)

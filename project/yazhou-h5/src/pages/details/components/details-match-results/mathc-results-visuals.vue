@@ -98,8 +98,8 @@ import { onMounted, onUnmounted, ref, watch } from "vue";
 
 
 const get_detail_data = ref({
-        csid: 1,
-        mid: 1,
+        csid: '1',
+        mid: '1',
     })
   // mixins: [ msc ],
   const props = defineProps({
