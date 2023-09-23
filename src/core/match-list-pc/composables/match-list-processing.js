@@ -89,6 +89,7 @@ const deal_with_list_data = (data) => {
  * @return {undefined} undefined
  */
 const mx_list_res = (data, backend_run, cut, collect) => {
+	console.error('现在走进来了', '22');
 	let code = lodash.get(data, "code");
 	let res_data = lodash.get(data, "data");
   // 将全量数据接口 切割成含有mid元素的对象数组
@@ -98,8 +99,10 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 	let all_league_list = [];
 	all_league_list.push(...lodash.get(res_data, "livedata", []));
 	all_league_list.push(...lodash.get(res_data, "nolivedata", []));
-  deal_with_list_data(all_league_list);
+      deal_with_list_data(all_league_list);
+	  console.error('现在走进来了', '22--1');
 	if (code == 200 && all_league_list.length > 0) {
+		console.error('现在走进来了', '22--2');
 		is_show_hot.value = false;
 		// 设置收藏数量
     // lockie
@@ -159,6 +162,7 @@ const mx_list_res = (data, backend_run, cut, collect) => {
         data: {}
       })
 		}
+		console.error('现在走进来了', '22---3');
 		// 设置数据仓库 联赛列表对象
 		// this.match_list_data.set_league_list_obj(res_data);
 		// 计算列表卡片样式
@@ -169,6 +173,7 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 		// 	// C9订阅
 		// 	this.SCMD_C9(all_league_list);
 		// }
+		console.error('现在走进来了', '22---4');
 		if (backend_run) {
 			// 静默拉取列表 设置数据加载状态
 			load_data_state.value = "data";
@@ -199,6 +204,9 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 				callback_func
 			);
 		}
+
+
+
 	} else if (!backend_run) {
 		let delay = 10000;
 		if (sessionStorage.getItem("is_select_time")) {
@@ -221,6 +229,8 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 			res_data,
 		);
 	}
+	console.error('现在走进来了', '22---222');
+	
 };
 /***
  * @description 当接口状态为成功且有数据时 调用此方法
@@ -342,6 +352,7 @@ const mx_use_list_res_when_code_error_or_list_length_0 = (match_list) => {
  * @return {undefined} undefined
  */
 const mx_use_list_res = (data, backend_run, cut, collect) => {
+	console.error('现在走进来了', '33');
 	let code = lodash.get(data, "code");
 	clearTimeout(virtual_list_timeout_id);
 	// 赛事列表

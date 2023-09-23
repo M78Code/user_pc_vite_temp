@@ -7,6 +7,7 @@
     }"
     :style="`height:${card_style_obj.card_total_height}px  !important;width:${LayOutMain_pc.layout_content_width}px  !important;${card_style}`"
   >
+  {{ card_key }}
   <!-- lockie  ${card_style_obj.card_total_height} -->
   <div v-show="false">{{ MatchListCardDataClass.list_version }}</div>
   <div

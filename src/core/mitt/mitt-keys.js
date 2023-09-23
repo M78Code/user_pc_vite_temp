@@ -17,4 +17,7 @@ export const EMIT_FAVORITE_CHANGE_CMD = "EMIT_FAVORITE_CHANGE_CMD";
 // 版本变化
 export const EMIT_STANDARD_EDITION_CHANGE = "EMIT_STANDARD_EDITION_CHANGE";
 
+
+//  元数据的  赛事 基础信息 加载完成 
+export const EMIT_BASE_DATA_FIRST_LOADED = "EMIT_BASE_DATA_FIRST_LOADED";
 //------------------------------------------------------------------命令定义-E-------------------------------------------------------------------------------------

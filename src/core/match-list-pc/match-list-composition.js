@@ -113,8 +113,7 @@ const get_match_list_by_mid_for_base_data_res = (mid, csid, type) => {
 };
 // 使用元数据默认显示 后面替换
 const set_base_data_init = () => {
-	// 列表数据仓库
-	MatchListData.init();
+ 
 	// return
 	// 当前的分类 左侧菜单数据 中间件数据
 	const {
@@ -343,8 +342,7 @@ const fetch_match_list = (is_socket = false, cut) => {
 	} else {
 		_params.selectionHour = null;
 	}
-	// 无感刷新 不走预加载
-	set_base_data_init();
+
 
 	if (typeof is_socket == "boolean" && !is_socket) {
 		// console.error('不是无感刷新')
@@ -447,15 +445,32 @@ const handle_destroyed = () => {
 	timer_obj.value = {};
 }
 
+const init_page_when_base_data_first_loaded=()=>{
+  
+	console.error('init_page_when_base_data_first_loaded');
+			 // 元数据 
+			 set_base_data_init();
+			 //释放试图 
+			 load_data_state.value ='data'
+
+			 console.error('load_data_state.value',load_data_state.value);
+	 
+			check_match_last_update_timer_id = setInterval(
+			 check_match_last_update_time(),
+			 30000
+		 );
+
+}
+
+
+
 const mounted_fn = () => {
 // 开启自动化测试功能
-	// this.DOM_ID_SHOW = window.BUILDIN_CONFIG.DOM_ID_SHOW;
-	// 列表数据仓库
-	MatchListData.init();
-	check_match_last_update_timer_id = setInterval(
-		check_match_last_update_time(),
-		30000
-	);
+	 // this.DOM_ID_SHOW = window.BUILDIN_CONFIG.DOM_ID_SHOW;
+	 // 列表数据仓库
+	 MatchListData.init();
+	 
+
 	timer_obj.value = {};
 	store.dispatch({
 		type: "SET_IS_ROLL_SHOW_BANNER",
@@ -476,6 +491,7 @@ const mounted_fn = () => {
 	useMittOn(MITT_TYPES.EMIT_API_BYMIDS, api_bymids({}));
 	useMittOn(MITT_TYPES.EMIT_MX_COLLECT_MATCH, mx_collect_match);
 	useMittOn(MITT_TYPES.EMIT_MiMATCH_LIST_SHOW_MIDS_CHANGE, show_mids_change);
+	useMittOn(MITT_TYPES.EMIT_BASE_DATA_FIRST_LOADED, init_page_when_base_data_first_loaded);
 	load_video_resources();
 }
 
@@ -512,7 +528,7 @@ const handle_match_list_request_when_ok = (data, is_socket, cut, collect) => {
 		match_list_api_type,
 		left_menu_result,
 	} = MenuData;
-  console.log('现在走进来了', 11);
+  console.error('现在走进来了', 11);
 	// let  use_mx_list_res =
 	if (
 		(menu_root == 2000 ||
@@ -535,8 +551,8 @@ const handle_match_list_request_when_ok = (data, is_socket, cut, collect) => {
 		// 收藏
 		mx_use_list_res(data, is_socket, cut, collect);
 	}
-  load_data_state.value = "data";
-  console.log('load_data_state', load_data_state.value);
+	console.error('现在走进来了', '11-00');
+ 
 };
 /**
  * @description 获取强力推荐赛事
@@ -713,17 +729,21 @@ const emit_site_tab_active = () => {
 	fetch_match_list(true);
 };
 
-const useMatchListMx = () => {
+
+
+export  default function(){
+
 	return {
+
 		match_list,
 		is_loading,
 		vx_filter_checked_all,
 		vx_show_filter_popup,
 		match_tpl_component,
-    show_refresh_mask,
-    collect_count,
-    is_show_hot,
-    load_data_state,
+		show_refresh_mask,
+		collect_count,
+		is_show_hot,
+		load_data_state,
 		on_go_top,
 		on_refresh,
 		remove_match_data,
@@ -733,7 +753,9 @@ const useMatchListMx = () => {
 		get_match_list_by_mid_for_base_data_res,
 		mounted_fn,
 		api_bymids,
-	};
-};
 
-export default useMatchListMx;
+	}
+ 
+
+ 
+}; ;

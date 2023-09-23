@@ -39,6 +39,7 @@ import {
 } from "src/core/http/index.js";
 
 import PageSourceData from "src/core/page-source/page-source.js";
+import GlobalAccessConfig from "src/core/access-config/access-config.js";
 
 // ==============================  间接转出     默认输出   项目有差异的    ======================================
 
@@ -225,6 +226,7 @@ export {
   MatchListCard,
   MatchListCardData,
   PageSourceData,
+  GlobalAccessConfig,
   MatchDataWarehouse_PC_List_Common,
   MatchDataWarehouse_PC_Detail_Common,
   MatchDataWarehouse_H5_List_Common,

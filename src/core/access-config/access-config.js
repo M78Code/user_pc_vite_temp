@@ -8,6 +8,11 @@
  * 会加上 日志 开关 等乱七八糟的 开关
  *
  */
+import BUILDIN_CONFIG from "app/job/output/env/final.js";
+const {LOCAL_FUNCTION_SWITCH} = BUILDIN_CONFIG
+
+
+
 
 import { api_common } from "src/api/index.js";
 const default_value = {
@@ -32,6 +37,10 @@ class GlobalAccessConfig {
     this.config = {
       ...default_value,
     };
+    this.other={
+      wsl:true
+
+    }
   }
   async init() {
     return new Promise(async (resolve, reject) => {

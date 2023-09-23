@@ -5,8 +5,12 @@
 -->
 <template>
   <div class="yb-match-list column full-height   relative-position"
+  :data-version="MatchListCardDataClass.list_version"
     >
-    <!-- <div class="test-info-wrap" v-if="wsl">
+    <div class="test-info-wrap" v-if="GlobalAccessConfig.other.wsl">
+      {{ load_data_state }}
+    </div>
+    <!-- <div class="test-info-wrap" v-if="GlobalAccessConfig.other.wsl">
       <div>{{ menu_config.mid_menu_result.match_tpl_number }}</div>
       <div class="fold-btn" @click="match_list_card.unfold_all_league()">展开联赛</div>
       <div class="fold-btn" @click="match_list_card.fold_all_league()">折叠联赛</div>
@@ -53,11 +57,13 @@
         <LeagueTab />
       </div>
     </div>
-    <div v-show="false">{{ MatchListCardDataClass.list_version }}</div>
+ 
     <!-- 列表容器 -->
-    <load-data :state="load_data_state">
-      <div v-show="false">{{ MatchListCardDataClass.list_version }}</div>
+ 
+    <load-data :state="load_data_state" :limit_height="10000" >
+      
       <!-- 滚球虚拟体育列表 -->
+ 
       <scroll-list v-if="menu_config.menu_root_show_shoucang == 300">
         <template v-slot:before>
           <div :style="{ height: MatchListCardDataClass.sticky_top.fixed_header_height }"></div>
@@ -78,11 +84,15 @@
         <template v-slot:after>
           <div style="height:15px"></div>
         </template>
+        11111
       </scroll-list>
-
+     
+     
       <!-- 滚球其他列表 -->
-      <scroll-list v-else>
-
+      <scroll-list  v-if="menu_config.menu_root_show_shoucang != 300">
+ 
+2222  
+{{ MatchListCardDataClass.match_list_card_key_arr }}
         <template v-slot:before>
           <div :style="{ height: MatchListCardDataClass.sticky_top.fixed_header_height }"></div>
         </template>
@@ -140,8 +150,8 @@ import useMatchListMx from "src/core/match-list-pc/match-list-composition.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import { PageSourceData } from 'src/core/index.js';
 import "./match_list.scss";
-import {MatchDataWarehouse_PC_List_Common as MatchListData } from "src/core/index.js";
-const { mounted_fn, load_data_state, show_refresh_mask, collect_count, is_show_hot } = useMatchListMx();
+import {MatchDataWarehouse_PC_List_Common as MatchListData ,GlobalAccessConfig} from "src/core/index.js";
+ const { mounted_fn, load_data_state, show_refresh_mask, collect_count, is_show_hot } = useMatchListMx();
 const { page_source } = PageSourceData;
 
 console.log('MatchListDataMatchListData', MatchListData.quick_query_obj, load_data_state.value);
@@ -166,20 +176,22 @@ export default {
     });
     return {
       menu_config,
-      load_data_state,
-      MatchListCardDataClass,
+ 
+   
       MatchListData,
       show_refresh_mask,
       collect_count,
       is_show_hot,
-      page_source
+      page_source,
+      GlobalAccessConfig
     };
   },
-  // data() {
-  //   return {
-
-  //   }
-  // },
+  data() {
+    return {
+      MatchListCardDataClass   ,
+      load_data_state
+    }
+  },
 };
 // 赛事列表筛选：滚球-球种、早盘-日期
 // 列表视图滚动容器

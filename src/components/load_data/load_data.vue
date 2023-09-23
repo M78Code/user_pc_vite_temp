@@ -5,22 +5,28 @@
 -->
 <template>
   <!-- 用户失效隐藏load中的所有布局元素 -->
-  <div class="load-data-wrap col"  v-show="!no_user" :class="{'is-detail':is_detail,'not-list':cur_state!='data', 'limit_height':limit_height}">
-    <div v-if="cur_state=='data' || limit_height" class="fit" :style="limit_height?`height:${limit_height}px !important;`:''">
-      <slot />
+  <div class="load-data-wrap col"   :class="{'is-detail':is_detail,'not-list':state!='data', 'limit_height':limit_height}">
+ 
+    <div v-show="state=='data'" class="fit" :style="limit_height?`height:${limit_height}px !important;`:''">
+ 
+      <slot></slot>
     </div>
-    <!-- cur_state=='empty' || cur_state=='loading' -->
-    <div class="column yb-flex-center empty" :class="{'fit': ['empty','notice-empty', 'loading', 'box_opening', 'right_details_loading','code_empty'].includes(cur_state)}" >
-      <div v-if="cur_state=='loading' || cur_state == 'box_opening'" class="loading-wrap padding-top" >
+    
+ 
+ 
+
+    <!-- state=='empty' || state=='loading' -->
+    <div class="column yb-flex-center empty sdc" v-if=" state=='empty' || state=='loading'"    :class="{'fit': ['empty','notice-empty', 'loading', 'box_opening', 'right_details_loading','code_empty'].includes(state)}" >
+      <div v-if="state=='loading' || state == 'box_opening'" class="loading-wrap padding-top" >
         <div class="img-loading custom-format-img-loading"></div>
         <div class="text-center loading-text flex items-end justify-center">
-          <span v-if="cur_state == 'box_opening'" style="font-size: 16px">抽盒中......</span>
+          <span v-if="state == 'box_opening'" style="font-size: 16px">抽盒中......</span>
           <span v-else>{{ i18n_t('common.loading')}}</span>
           <!-- 内容加载中... -->
         </div>
       </div>
       <!-- 右侧详情内容加载中... -->
-      <div v-if="cur_state=='right_details_loading'" class="loading-wrap right_details_loading" >
+      <div v-if="state=='right_details_loading'" class="loading-wrap right_details_loading" >
         <div class="img-loading custom-format-img-loading"></div>
         <div class="text-center loading-text flex items-end justify-center">
           <span>{{ i18n_t('common.loading')}}</span>
@@ -28,8 +34,8 @@
         </div>
       </div>
       <no-data
-        v-else-if="['empty','notice-empty','code_empty'].includes(cur_state)"
-        :msg="no_data_msg?no_data_msg:('code_empty' == cur_state?i18n_t('common.code_empty'):((store_data.filterReducer.open_select_time?i18n_t('filter.empty'):i18n_t('common.no_data'))))"
+        v-else-if="['empty','notice-empty','code_empty'].includes(state)"
+        :msg="no_data_msg?no_data_msg:('code_empty' == state?i18n_t('common.code_empty'):((store_data.filterReducer.open_select_time?i18n_t('filter.empty'):i18n_t('common.no_data'))))"
         :msg2="no_data_msg2"
         :marginBottom="'0px'"
         width="180px"
@@ -39,7 +45,7 @@
         :class="{filter_img: store_data.filterReducer.open_select_time}"
       >
       </no-data>
-      <no-data v-else-if="['all_empty','new_empty'].includes(cur_state) &&is_eports"
+      <no-data v-else-if="['all_empty','new_empty'].includes(state) &&is_eports"
         :msg="i18n_t('common.no_data')"
         :type_name="'esports-size'"
         :marginBottom="'0px'"
@@ -54,34 +60,34 @@
            </div>
         </div> -->
       </no-data>
-      <div class="list_right_empty" v-else-if="['all_empty','new_empty'].includes(cur_state)">
+      <div class="list_right_empty" v-else-if="['all_empty','new_empty'].includes(state)">
         <div class="img"></div>
-        <span>{{ i18n_t(`common.${cur_state}`)}}</span>
+        <span>{{ i18n_t(`common.${state}`)}}</span>
       </div>
     </div>
     <!-- refresh || 404 -->
-    <div class="refresh fit" v-if="cur_state=='refresh' || cur_state=='404'">
+    <div class="refresh fit" v-if="state=='refresh' || state=='404'">
       <div class="row column items-center">
         <div
-          v-if="cur_state=='refresh'"
+          v-if="state=='refresh'"
           class="img refresh-img"
           :class="color"
         />
         <!-- 网络不给力 -->
-        <div v-if="cur_state=='refresh'" class="text1">{{ i18n_t('common.no_network2')}}</div>
+        <div v-if="state=='refresh'" class="text1">{{ i18n_t('common.no_network2')}}</div>
         <div
-          v-if="cur_state=='404'"
+          v-if="state=='404'"
           class="img img404"
           :class="color"
         ></div>
         <!-- 哦豁~页面不见了 -->
-        <div v-if="cur_state=='404'" class="text1">{{ i18n_t('common.page404')}}</div>
+        <div v-if="state=='404'" class="text1">{{ i18n_t('common.page404')}}</div>
         <div class="text2">{{ i18n_t('common.nervous')}}</div>
         <div class="btn" @click="refresh">{{ i18n_t('common.refresh')}}</div>
       </div>
     </div>
     <!-- 用户接口限流提示 -->
-    <div class="user_api_limited fit" v-if="cur_state == 'user_api_limited'">
+    <div class="user_api_limited fit" v-if="state == 'user_api_limited'">
       <div class="row column items-center">
         <div class="img"></div>
         <div class="text1">
@@ -95,7 +101,7 @@
       </div>
     </div>
     <!-- 接口限流提示 -->
-    <div class="record_api_limited fit column yb-flex-center" v-if="cur_state == 'api_limited'">
+    <div class="record_api_limited fit column yb-flex-center" v-if="state == 'api_limited'">
       <div class="row column items-center">
         <div class="img"></div>
         <div class="text1">
@@ -105,15 +111,15 @@
       </div>
     </div>
     <!-- 投注记录 refresh -->
-    <div class="refresh fit" v-if="cur_state=='record_refresh'">
+    <div class="refresh fit" v-if="state=='record_refresh'">
       <div class="row column items-center">
         <div
-          v-if="cur_state=='record_refresh'"
+          v-if="state=='record_refresh'"
           class="img refresh-img"
           :class="color"
         />
         <!-- 网络不给力 -->
-        <div v-if="cur_state=='record_refresh'" class="text1">{{ i18n_t('common.limited')}}</div>
+        <div v-if="state=='record_refresh'" class="text1">{{ i18n_t('common.limited')}}</div>
       </div>
     </div>
   </div>
@@ -209,9 +215,7 @@ export default {
     is_eports(){
         return is_eports_csid(+this.$route.params.csid)
     },
-    cur_state(){
-      return this.state
-    }
+   
   },
 
   methods: {

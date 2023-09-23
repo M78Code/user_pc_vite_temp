@@ -33,13 +33,19 @@ import menu_i18n_default from "./config/menu-i18n.json";
 import ws_user_info from "./config/user_info.json";
 //vr 默认的 用于ws模拟
 import vr_menu_info from "./config/vr_menu_info.json";
+import {
+  useMittOn,
+  useMittEmit,
+  useMittEmitterGenerator,
+  MITT_TYPES,
+} from "src/core/index.js"
 
 class BaseData {
   constructor() {
     //基础数据返回值
     this.base_data_res = {};
     //基础数据 版本
-    this.base_data_version = ref(1);
+    this.base_data_version = ref(0);
     // 赛种 基础数据  arr
     this.csids_arr = [];
     // 赛种 基础数据  map
@@ -113,6 +119,7 @@ class BaseData {
     this.esport_menu_version = "1111";
     // 菜单接口类型 old 旧  new 新
     this.menu_type_old_or_new = "new";
+     
   }
   /**
    * 初始化数据
@@ -545,6 +552,9 @@ class BaseData {
       let res = await api_base_data.get_base_data({});
       console.log('resresresres', res);
       res &&  await this.set_base_data_res(res);
+    //  元数据加载完成 
+      useMittEmit(MITT_TYPES.EMIT_BASE_DATA_FIRST_LOADED  )
+    this.base_data_version.value = Date.now();
     } catch (error) {
       console.log("获取 元数据接口 error", error);
     }
