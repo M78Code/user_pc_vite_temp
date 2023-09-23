@@ -66,7 +66,6 @@ const test = ref(sessionStorage.getItem('wsl'))
 const is_mounted = ref(false)
 // 显示部分dom ID
 // this.DOM_ID_SHOW = window.BUILDIN_CONFIG.DOM_ID_SHOW;
-const vx_get_layout_size = ref(state.layoutReducer.layout_size)
 // 赛事模板名称
 const match_components_name = computed(() => {
   let {tpl_id = 0} = match_style_obj.value

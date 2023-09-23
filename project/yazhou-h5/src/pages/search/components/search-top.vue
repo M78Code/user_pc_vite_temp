@@ -55,7 +55,7 @@ const emits = defineEmits(['get_suggestion_list', 'get_search_result', 'change_s
 // 输入框输入的文字
 const text = ref('');
 const index_num = ref(0); // 下标
-const is_hot_history = ref(false) // 代表的是 点击 历史搜索 和 热门搜索的模块
+let is_hot_history = false // 代表的是 点击 历史搜索 和 热门搜索的模块
 const details_search = ref(null)// 搜索占位符
 const sport_list = ref([]) //搜索下面的球种+球类ID
 const skeleton_loading = ref(false)  //搜索数据是否加载中
@@ -73,97 +73,74 @@ let cancleTimer, event_handle_timer, timer00, fun;
 const get_search_txt = ref('')
 const get_search_term = ref(SearchData.search_term)
 const get_useid_ievname = ref()
-
 // 是赛果虚拟体育赛事
 const results_of_the_virtual_display = MenuData.is_results_virtual_sports();
-
 // ...mapMutations([
 //       'set_show_match_filter',
 //       'set_goto_detail_matchid',
 //       'set_details_item',
 
-
-
-function set_hot_history_handle() {
-  is_hot_history.value = true
-}
 // 获取搜索球类
-function get_sport_list() {
-  let params = {}
-  skeleton_loading.value = false
-  // 如果是赛果
-  if (menu_type.value == '28') {
-    // 增加参数：分球类搜索
-    params.from = 2;
-  }
-  get_sport(params).then(({ data }) => {
+// 列表页二级菜单 对应 搜索头部的 球类二级菜单
+async function get_sport_list() {
+  try {
+    let params = {}
+    skeleton_loading.value = false
+    // 如果是赛果
+    if (menu_type.value == '28') {
+      // 增加参数：分球类搜索
+      params.from = 2;
+    }
+    const { data = [] } = await get_sport(params)
     skeleton_loading.value = true
     sport_list.value = data;
-    List_econdary_menu(data)
-  }).catch((err) => {
-    console.error(err);
-    skeleton_loading.value = true
-  })
-}
-// 列表页二级菜单 对应 搜索头部的 球类二级菜单
-function List_econdary_menu(data) {
+    // menuType 5 足球， 7 篮球， 13 网球， 14 斯诺克， 15 羽毛球， 16 乒乓球，  17 排球，  18 冰球，  19 棒球， 20 美式足球
+    //TODO if (this.get_current_menu && this.get_current_menu.sub) {
+    const get_current_menu_sub = MenuData.get_current_sub_menuid()
+    if (get_current_menu_sub && data) {
+      // 赛果使用get_current_menu中二级菜单数据，其他则使用get_useid_ievname
+      let usid_type = menu_type.value == 28 ? get_current_menu_sub : Math.abs(get_useid_ievname.value)
+      if (get_search_term.value && SearchData.cur_csid) {
+        data.forEach((item, index, arr) => {
+          if (SearchData.cur_csid == item.id) {
+            index_num.value = index
+            // 存储列表页二级菜单 球类id
+            SearchData.set_cur_csid(SearchData.cur_csid);
+            nextTick(() => {
+              utils.tab_move2(index, scrollBox.value, true)
+            })
+            return
+          }
+        })
+        return
+      }
+      // 默认选中对应二级菜单赛种
+      let index = data.findIndex(item => item.id == usid_type)
+      if (index < 0) index = 0
+      // 选中下标
+      index_num.value = index
+      // 赛种id储存
 
-  // menuType 5 足球， 7 篮球， 13 网球， 14 斯诺克， 15 羽毛球， 16 乒乓球，  17 排球，  18 冰球，  19 棒球， 20 美式足球
-
-  //TODO if (this.get_current_menu && this.get_current_menu.sub) {
-  const get_current_menu_sub = MenuData.get_current_sub_menuid()
-  if (get_current_menu_sub) {
-    // 赛果使用get_current_menu中二级菜单数据，其他则使用get_useid_ievname
-    let usid_type = menu_type.value == 28 ? get_current_menu_sub : Math.abs(get_useid_ievname.value)
-    if (get_search_term.value && SearchData.cur_csid) {
-      data.forEach((item, index, arr) => {
-        if (SearchData.cur_csid == item.id) {
-          index_num.value = index
-          // 存储列表页二级菜单 球类id
-          SearchData.set_cur_csid(SearchData.cur_csid);
-          nextTick(() => {
-            utils.tab_move2(index, scrollBox.value, true)
-          })
-          return
-        }
+      SearchData.set_cur_csid(data[index].id);
+      // 赛种滚动条
+      nextTick(() => {
+        utils.tab_move2(index, scrollBox.value, true)
       })
-      return
+    } else {
+      // 存储 球类id
+      data && SearchData.set_cur_csid(data[0].id);
     }
-    // 默认选中对应二级菜单赛种
-    let index = data.findIndex(item => item.id == usid_type)
-    if (index < 0) index = 0
-    // 选中下标
-    index_num.value = index
-    // 赛种id储存
-
-    SearchData.set_cur_csid(data[index].id);
-    // 赛种滚动条
-    nextTick(() => {
-      utils.tab_move2(index, scrollBox.value, true)
-    })
-  } else {
-    // 存储 球类id
-    SearchData.set_cur_csid(data[0].id);
+  } catch (error) {
+    console.error(error, '123');
+    skeleton_loading.value = true
   }
-}
-// 获取搜索占位符字段
-function get_hot_push_fun() {
-  get_hot_push().then(({ code, data }) => {
-    if (code === 200 && data != null) {
-      data.word.length > 0 ? details_search.value = data : ''
-    }
-  }).catch((err) => {
-    console.error(err);
-  })
 }
 // 跳转到赛事详情
 function go_to_details() {
-  console.error('search', 123)
   if (details_search.value != null && details_search.value.word.length > 0) {
     // 如果是冠军，跳转到冠军的列表页面
     if (details_search.value.isChampion == 1) {
       //TODO set_show_match_filter(false)
-      // useMittEmit(MITT_TYPES.EMIT_SEARCH_GOTO_BY_MAIN_SPORT, details_search.value.h5MenuId.slice(-2));
       useMittEmit(MITT_TYPES.EMIT_SEARCH_GOTO_BY_MAIN_SPORT, details_search.value.menuId.slice(-2));
     } else {
       goto_details(details_search.value)
@@ -216,8 +193,7 @@ function key_down(event) {
   }
 }
 function changeStr(evt) {
-  console.log(11111)
-  is_hot_history.value = false
+  is_hot_history = false
   if (evt && evt.keyCode == 13) {
     if (details_search.value != null && details_search.value.word.length > 0 && !get_search_term.value) {
       goto_details(details_search.value)
@@ -292,9 +268,19 @@ function resizeHandler() {
     searchInputFocusin = false
   }
 }
+// 获取搜索占位符字段
+function get_hot_push_fun() {
+  get_hot_push().then(({ code, data }) => {
+    if (code === 200 && data != null) {
+      data.word.length > 0 ? details_search.value = data : ''
+    }
+  }).catch((err) => {
+    console.error(err);
+  })
+}
 watch(text, (newV, oldV) => {
   SearchData.set_search_txt(newV);
-  debounce(changeStr, is_hot_history.value ? 0 : 1000);
+  debounce(changeStr, is_hot_history ? 0 : 1000);
   if (!newV.length) clear_search()
   details_search.value = null
 })
@@ -302,12 +288,14 @@ watch(SearchData.update_time, () => {
   text.value = SearchData.search_txt;
   get_search_term.value = SearchData.search_term;
 })
-text.value = get_search_txt.value;
+text.value = get_search_txt.value; //TODO 没有太懂二次赋值
 get_hot_push_fun()
 get_sport_list();
-text.value = get_search_term.value;
+text.value = get_search_term.value; //TODO 没有太懂二次赋值
 const mitt_list = [
-  useMittOn(MITT_TYPES.EMIT_SET_IS_HOT_HISTORY, set_hot_history_handle).off
+  useMittOn(MITT_TYPES.EMIT_SET_IS_HOT_HISTORY, function set_hot_history_handle() {
+    is_hot_history = true
+  }).off
 ];
 onMounted(() => {
   originHeight = document.querySelector('.select-dia').clientHeight

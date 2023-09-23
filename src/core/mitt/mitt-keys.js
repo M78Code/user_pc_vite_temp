@@ -14,4 +14,7 @@ export const EMIT_LANG_CHANGE = "EMIT_LANG_CHANGE";
 // 是否显示收藏 变化
 export const EMIT_FAVORITE_CHANGE_CMD = "EMIT_FAVORITE_CHANGE_CMD";
 
+// 版本变化
+export const EMIT_STANDARD_EDITION_CHANGE = "EMIT_STANDARD_EDITION_CHANGE";
+
 //------------------------------------------------------------------命令定义-E-------------------------------------------------------------------------------------

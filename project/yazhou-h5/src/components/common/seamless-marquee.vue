@@ -107,7 +107,7 @@ function init() {
     set_move_style(dom_)
     // 兜底处理，dom 元素没拿到的话重新执行一遍
     if (timer2_.value) {
-      timer2_ = setTimeout(() => set_move_style(dom_), 2000);
+      timer2_.value = setTimeout(() => set_move_style(dom_), 2000);
     }
   }, 800)
 }

@@ -1,8 +1,6 @@
 import { reactive, computed } from "vue";
 // 引入接口封装文件
 import { api_common, api_analysis } from "src/api/index.js";
-//  无数据显示组件
-// import no_data from "project_path/src/components/common/no-data.vue"
 
 // #TODO mixins
 // 引入skt_data_info
@@ -10,15 +8,11 @@ import { api_common, api_analysis } from "src/api/index.js";
 // 引入投注逻辑mixin
 // import betting from "project_path/src/mixins/betting/betting.js";
 
-// 引入加载中的组件
-// import loading from "project_path/src/components/common/loading.vue"
 // 引入处理数据的封装方法
 import { MatchDetailCtr } from "src/core/index.js";
 // 引入redux
 import store from "src/store-redux/index.js";
 // import { Level_one_detail_odd_info } from "../category-list.js";
-// 精选赛事
-// import detailMatchList from 'project_path/src/pages/details/components/detail-match-list.vue';
 import uid from "src/core/uuid/index.js";
 import lodash from "lodash";
 import { useRouter, useRoute } from "vue-router";
@@ -305,7 +299,6 @@ export const category_info = () => {
    * @returns {Promise<void>}
    */
   const initEvent = async (to_refresh, init_req) => {
-    // debugger
     if (to_refresh) {
       to_refresh = to_refresh;
     } else {

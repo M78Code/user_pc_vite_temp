@@ -309,7 +309,7 @@ export default class MatchDataBase
     }
     // 遍历接口比分数据 转成比分对象
     lodash.each(msc, score_str => {
-      let [key,value] = score_str.split('|')
+      let [key,value] = score_str && score_str.split('|') || []
       if(value){
         let [home,away] = value.split(':')
         score_obj[key] = {home,away}
@@ -356,6 +356,7 @@ export default class MatchDataBase
         this.set_match_default_data(match);
         // 赛事数据格式化
         match && this.list_to_many_obj([match]);
+
       });
     }
   }
@@ -595,7 +596,6 @@ export default class MatchDataBase
     this.syn_del_quick_query_obj();
     // ws命令赛事订阅
     this.ws_ctr.scmd_c8();
-    console.log('quick_query_obj', this.quick_query_obj);
   }
   /**
    * @description: 同步清除赛事快捷操作对象中的无用赛事数据挂载

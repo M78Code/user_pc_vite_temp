@@ -267,6 +267,7 @@ const submit_handle = type => {
 // obj_hl 盘口层 
 // obj_ol 赔率层
 const set_bet_obj_config = (item,obj_hp,obj_hl,obj_ol) =>{
+    console.log('投注项需要数据', item,obj_hp,obj_hl,obj_ol);
     // 切换投注状态
     BetViewDataClass.set_bet_order_status(1)
     

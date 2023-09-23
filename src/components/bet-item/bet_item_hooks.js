@@ -89,7 +89,6 @@ export const useGetItem = ({ props }) => {
   // };
 
   const format_odds_value=(val)=> {
-    // debugger
     if(val=='' || val == undefined){
       return '';
     }

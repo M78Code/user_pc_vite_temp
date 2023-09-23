@@ -133,7 +133,7 @@ const tab_click = (obj) => {
   }
   .date-wrap {
     border-radius: 0 0 6px 6px;
-    border: 1px solid var(--qq--yb-border-color12);
+    border: 1px solid var(--qq--gb-bd-c-3);
     border-top: 0;
     height: 40px;
     padding-left: 10px;
@@ -145,7 +145,7 @@ const tab_click = (obj) => {
     bottom: -4px;
     height: 10px;
     width: 100%;
-    background-color: var(--qq--match-bg-color11);
+    background-color: var(--qq--gb-bd-c-3);
     z-index: -1;
   }
 }

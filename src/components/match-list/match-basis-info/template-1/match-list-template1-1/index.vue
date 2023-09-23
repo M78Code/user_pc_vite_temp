@@ -219,8 +219,8 @@ const hide_away_goal = () => {
 }
 
 onUnmounted(() => {
-  this.debounce_throttle_cancel(hide_home_goal());
-  this.debounce_throttle_cancel(hide_away_goal());
+  // this.debounce_throttle_cancel(hide_home_goal());
+  // this.debounce_throttle_cancel(hide_away_goal());
 })
 </script>
 <style lang="scss" scoped>

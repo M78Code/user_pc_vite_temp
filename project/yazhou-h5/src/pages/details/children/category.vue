@@ -1,11 +1,11 @@
 <template>
   <div class="category relative-position" ref="category">
     <!-- loading效果 -->
-    <!-- <loading
+    <loading
         v-if="is_loading"
         :top="get_is_hengping ? '50%' : '58%'"
         :style="get_is_hengping ? 'left: unset;width: 2.8rem;' : ''"
-    ></loading> -->
+    ></loading>
     <!--无盘口数据时,赛事推荐-->
     <div class="match-recommend-wrapper" v-if="show_recommend">
       <!-- 无数据背景图 -->
@@ -31,7 +31,7 @@
           </div>
         </div>
         <!-- 热门赛事列表 -->
-        <!-- <detailMatchList invoke='category' ref="detail_match_list" /> -->
+        <detailMatchList invoke='category' ref="detail_match_list" />
       </div>
     </div>
     <!-- 详情玩法投注项有数据 -->
@@ -80,7 +80,7 @@ import { api_common, api_analysis} from 'src/api/index.js'
 // 引入国际化
 import { t } from "src/boot/i18n.js";;
 //  无数据显示组件
-// import no_data from "project_path/src/components/common/no-data.vue"
+import no_data from "project_path/src/components/common/no-data.vue"
 
 // #TODO mixins
 // 引入skt_data_info
@@ -90,9 +90,9 @@ import { t } from "src/boot/i18n.js";;
 
 
 // 引入加载中的组件
-// import loading from "project_path/src/components/common/loading.vue"
+import loading from "project_path/src/components/common/loading.vue"
 // 精选赛事
-// import detailMatchList from 'project_path/src/pages/details/components/detail-match-list.vue';
+import detailMatchList from 'project_path/src/pages/details/components/detail-match-list.vue';
 import uid from "src/core/uuid/index.js"
 import lodash from "lodash";
 import { useRouter, useRoute } from "vue-router";
@@ -106,9 +106,9 @@ export default defineComponent({
   // mixins:[websocket_data, betting],
   components: {
     'tournament-play-new': tournament_play_new,
-    // 'no-data':no_data,
-    // loading,
-    // detailMatchList
+    'no-data':no_data,
+    loading,
+    detailMatchList
   },
   props: {},
   setup(props, evnet) {
@@ -154,7 +154,7 @@ export default defineComponent({
       on_listeners,
       off_listeners,
     } = category_info();
-
+    console.error(show_recommend);
     watch(
       () => route,
       (to, from) => {

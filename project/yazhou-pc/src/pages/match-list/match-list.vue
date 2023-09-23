@@ -94,11 +94,11 @@
           <div :style="{ height: fixed_header_height }"></div>
         </template>
         <div class="today-champion-bg" v-if="menu_config.menu_root == '2' || menu_config.menu_root == 400 || menu_config.menu_root != 2000"></div>
-          <match-list-card 
-            v-for="card_key in MatchListCardDataClass.match_list_card_key_arr"
-            :key="card_key + MatchListCardDataClass.match_list_render_key" 
-            :card_key="card_key" 
-          />
+        <match-list-card 
+          v-for="card_key in MatchListCardDataClass.match_list_card_key_arr"
+          :key="card_key + MatchListCardDataClass.match_list_render_key" 
+          :card_key="card_key" 
+        />
         <template v-slot:after>
           <div style="height:15px"></div>
           <div class="pager-wrap row justify-end">
@@ -142,11 +142,9 @@ import { PlayVirtualMatchTypeFullVersionWapper as PlayVirtualMatchType } from "s
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 import useMatchListMx from "src/core/match-list-pc/match-list-composition.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
-import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/core/index.js";
 import "./match_list.scss";
 
 const { mounted_fn } = useMatchListMx();
-console.log('MatchListCardDataClass', MatchListCardDataClass.match_list_card_key_arr);
 export default {
   components: {
     LeagueTab,
@@ -166,7 +164,6 @@ export default {
       menu_config,
       // match_list_card,
       MatchListCardDataClass,
-      MatchListData,
     };
   },
   // data() {
