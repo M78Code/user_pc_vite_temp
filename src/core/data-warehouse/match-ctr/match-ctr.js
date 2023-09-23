@@ -342,7 +342,7 @@ export default class MatchDataBase
         const play_obj_temp = lodash.keyBy(hps_pns_arr, function(o) {
                                   let res = `hpid_${o.hpid}`;
                                   if(o.hSpecial){
-                                    res = res +`_${o.hSpecial}`;
+                                    // res = res +`_${o.hSpecial}`;
                                   }
                                   return res;
                                 });
@@ -719,7 +719,7 @@ export default class MatchDataBase
               // 遍历玩法数据
               hps_data_arr.forEach(item2 => {
                 if(!lodash.get(item2,'hsw')){
-                  item2.hsw = lodash.get(item,`play_obj.${item2.hpid}.hsw`);
+                  item2.hsw = lodash.get(item,`play_obj.hpid_${item2.hpid}.hsw`);
                 }
                 // 检查是否有盘口数据
                 if (lodash.get(item2,'hl.length')) {
@@ -776,7 +776,7 @@ export default class MatchDataBase
               // 遍历玩法数据
               hps_data_arr.forEach(item2 => {
                 if(!lodash.get(item2,'hsw')){
-                  item2.hsw = lodash.get(item,`play_obj.${item2.hpid}.hsw`);
+                  item2.hsw = lodash.get(item,`play_obj.hpid_${item2.hpid}.hsw`);
                 }
                 // 检查是否有盘口数据
                 if (lodash.get(item2,'hl.ol.length')) {
