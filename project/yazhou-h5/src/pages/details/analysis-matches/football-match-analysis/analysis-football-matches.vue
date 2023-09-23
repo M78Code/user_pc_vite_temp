@@ -17,10 +17,10 @@
   </div>
 </template>
 
-<script setup>
+<script>
 // TODO: vuex 后续修改调整
 // import {mapGetters} from "vuex";
-import { onMounted, onUnmounted, ref, watch, nextTick, defineAsyncComponent, shallowRef } from 'vue'
+import { onMounted, onUnmounted, ref, watch, nextTick, defineComponent, shallowRef } from 'vue'
 import lodash from 'lodash'
 // 详情页 或者 赛果 赛事分析 公共tab 组件
 import headTab from "project_path/src/components/details/match-analysis/head-tab.vue";
@@ -30,34 +30,65 @@ import store from "src/store-redux/index.js"
 import zhuge from "src/core/http/zhuge-tag.js"
 import {utils } from 'src/core/index.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
-  // 资讯页
-  import articleMain from "project_path/src/pages/details/analysis-matches/article/article-main.vue"
-  // 赛果详情 赛况统计 和 事件
-  import matchResult from "project_path/src/pages/details/components/details-match-results/match-results.vue"
-  // 详情页  足球赛事分析 战绩 模块
-  import standings from "project_path/src/pages/details/analysis-matches/components/standings.vue"
-  // 详情页 或者 赛果  篮球足球公共组件，阵容tab页面
-  import lineUp from "project_path/src/pages/details/analysis-matches/components/line-up.vue"
-  // 详情页足球赛事分析情报页面
-  import intelligence from "project_path/src/pages/details/analysis-matches/football-match-analysis/components/intelligence.vue"
-  // 详情页足球赛事分析赔率页面
-  import analysisOdds from "project_path/src/pages/details/analysis-matches/football-match-analysis/components/analysis-odds.vue"
-  // 精彩回放
-  import highlights from "project_path/src/pages/details/analysis-matches/highlights/highlights.vue"
+// 资讯页
+import articleMain from "project_path/src/pages/details/analysis-matches/article/article-main.vue"
+// 赛果详情 赛况统计 和 事件
+import matchResult from "project_path/src/pages/details/components/details-match-results/match-results.vue"
+// 详情页  足球赛事分析 战绩 模块
+import standings from "project_path/src/pages/details/analysis-matches/components/standings.vue"
+// 详情页 或者 赛果  篮球足球公共组件，阵容tab页面
+import lineUp from "project_path/src/pages/details/analysis-matches/components/line-up.vue"
+// 详情页足球赛事分析情报页面
+import intelligence from "project_path/src/pages/details/analysis-matches/football-match-analysis/components/intelligence.vue"
+// 详情页足球赛事分析赔率页面
+import analysisOdds from "project_path/src/pages/details/analysis-matches/football-match-analysis/components/analysis-odds.vue"
+// 精彩回放
+import highlights from "project_path/src/pages/details/analysis-matches/highlights/highlights.vue"
 
-
-
-    // 详情数据
-    const get_detail_data = ref({
-      csid: 1,
-      mid: 1,
+export default defineComponent({
+  components: {
+    articleMain,
+    matchResult,
+    standings,
+    lineUp,
+    intelligence,
+    analysisOdds,
+    highlights,
+    headTab,
+  },
+  setup() {
+     // 详情数据
+     const get_detail_data = ref({
+      csid: '1',
+      mid: '1',
   })
     // 锚点
     const analysis_football_matches = ref(null)
     // tab 数据
-    const tabList = ref([])
+    const tabList = ref([
+        {
+          name: i18n_t('analysis_football_matches.match'),
+          component: 'match-result'
+        },
+        {
+          name: i18n_t('analysis_football_matches.analysis_data'),
+          component: 'standings'
+        },
+        {
+          name: i18n_t('analysis_football_matches.line_up'),
+          component: 'line-up'
+        },
+        {
+          name: i18n_t('analysis_football_matches.intelligence'),
+          component: 'intelligence'
+        },
+        {
+          name: i18n_t('analysis_football_matches.Odds'),
+          component: 'analysis-odds'
+        },
+      ])
     // 当前选中tab
-    const currentContent = ref('matchResult')
+    const currentContent = ref('articleMain')
     // 仓库数据
     let {  userInfoReducer } = store.getState()
     // TODO: 临时用
@@ -159,24 +190,25 @@ import UserCtr from "src/core/user-config/user-ctr.js";
     }
     // 点击一级tab 菜单切换 // TODO: $utils UserCtr 后续修改调整
     const tab_click = ([tab, type]) => {
+      console.error(tab);
       switch(tab.component) {
         case "article-main":
-        currentContent.value = articleMain
+        currentContent.value = tab.component
         break
         case "match-result":
-        currentContent.value = matchResult
+        currentContent.value = tab.component
         break
         case "standings":
-        currentContent.value = standings
+        currentContent.value = tab.component
         break
         case "line-up":
-        currentContent.value = lineUp
+        currentContent.value = tab.component
         break
         case "intelligence":
-        currentContent.value = intelligence
+        currentContent.value = tab.component
         break
         case "analysis-odds":
-        currentContent.value = analysisOdds
+        currentContent.value = tab.component
         break
 
       }
@@ -203,6 +235,18 @@ import UserCtr from "src/core/user-config/user-ctr.js";
         zhuge.send_zhuge_event(eventLabel, UserCtr.user_info);
       }
     }
+    return {
+      get_detail_data,
+      analysis_football_matches,
+      tabList,
+      currentContent,
+      get_event_list,
+      get_analyze_show,
+      // 方法
+      createTabds,
+      close_analysis,
+      tab_click,
+    }
   // TODO: 后续修改调整
   // computed: {
   //   ...mapGetters([
@@ -224,6 +268,9 @@ import UserCtr from "src/core/user-config/user-ctr.js";
   //     this.$data[key] = null
   //   }
   // }
+  }
+   
+})
 </script>
 
 <style lang="scss" scoped>
