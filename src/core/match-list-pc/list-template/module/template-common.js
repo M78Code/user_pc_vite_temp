@@ -167,6 +167,7 @@ export const set_template_width_base = (
   config,
   middle_fn = () => {}
 ) => {
+  console.log('total_width', total_width);
   // 基础信息宽度
   config.process_team_width = parseInt(total_width * 0.292);
   //设置最小宽度

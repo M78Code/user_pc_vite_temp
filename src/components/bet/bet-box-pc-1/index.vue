@@ -9,28 +9,45 @@
     <div class="bet-mode-zone" v-if="BetData.is_bet_single">
       <div class="left">
         <span>{{ $t("bet.bet_one_") }}</span>
-        <span class="bet-single-count" style="color:blue">
+        <span class="bet-single-count">
           {{ BetData.bet_single_list.length }}
         </span>
       </div>
       <div class="right">
         <!-- 单关 合并 -->
-        <span class="check-box">
-          <span class="check-wrap relative-position" :class="{ 'active': BetData.is_bet_merge }" :style="results_checkbox_style" />
+        <span class="check-box" @click="toggle_merge">
+          <span class="check-wrap relative-position" :class="{ 'active': BetData.is_bet_merge }" />
           <span>{{ $t('bet.merge') }}</span>
         </span>
 
         <span @mouseover="show_merge_info = true" @mouseout="show_merge_info = false">
-          <icon id="merge-info" name="icon-tips" class="bet-info" size="14px" />
+          <icon-wapper id="merge-info" name="icon-tips" class="bet-info" size="14px" />
         </span>
       </div>
     </div>
-    <!-- 正常入口的单关 -->
-    <bet-single v-show="BetData.is_bet_single" @set_scroll_this="set_scroll_this" />
-    <!-- 正常入口的串关 -->
-    <bet-mix v-show="!BetData.is_bet_single" class="full-height" @set_scroll_this="set_scroll_this" />
+    
+    <div class="bet-view">
+      <!-- 正常入口的单关 -->
+      <bet-single v-show="BetData.is_bet_single" @set_scroll_this="set_scroll_this" />
+      <!-- 正常入口的串关 -->
+      <bet-mix v-show="!BetData.is_bet_single" class="full-height" @set_scroll_this="set_scroll_this" />
+    </div>
 
     <bet-scroll-footer />
+
+     <!--提示区域-->
+     <q-tooltip
+     content-class="bet-bg-tooltip"
+     anchor="bottom left"
+     self="top left"
+     :offset="[181,10]"
+     target="#merge-info"
+     v-if="show_merge_info"
+   >
+     <div style="width:170px;min-height:60px;padding-top:5px;padding-bottom:10px;padding-left:5px;word-break:break-all;">
+       {{$t('bet.merge_info')}}
+     </div>
+   </q-tooltip>
 
   </div>
 </template>
@@ -45,6 +62,8 @@ import BetScrollFooter from './bet-single/bet-scroll-footer.vue'
 import BetSingle from "./bet-single/bet-single.vue"
 import BetMix from "./bet-single/bet-mix.vue"
 
+import { IconWapper } from 'src/components/icon'
+
 // 是否显示合并信息A
 const show_merge_info = ref(false)
 
@@ -52,13 +71,17 @@ const set_scroll_this = val => {
   console.error('val', val)
 }
 
-// 合并投注 单关
+// 单关 合并切换
 const toggle_merge = () => {
   BetData.set_is_bet_merge();
 }
 
 
 </script>
+
+<style lang="scss">
+@import "./css/bet_single.scss";
+</style>
 
 <style scoped lang="scss">
 .bet-mode-zone {
@@ -82,6 +105,7 @@ const toggle_merge = () => {
       margin-left: 5px;
       text-align: center;
       transform: scale(0.8);
+      background: var(--q-gb-bg-c-18);
     }
   }
 
@@ -96,7 +120,7 @@ const toggle_merge = () => {
       align-items: center;
       padding-left: 5px;
       padding-right: 5px;
-
+      cursor: pointer;
       .check-wrap {
         padding: 0;
         margin-right: 5px;
@@ -116,6 +140,7 @@ const toggle_merge = () => {
   position: relative;
   &.active {
     border: none;
+    background: var(--q-gb-bg-c-16);
     &::before {
       position: absolute;
       content: "";
@@ -126,6 +151,7 @@ const toggle_merge = () => {
       border-top: 2px solid transparent;
       border-right: 2px solid transparent;
       transform: rotate(135deg);
+      border-color: var(--q-gb-bd-c-13);
     }
   }
 }

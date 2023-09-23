@@ -37,13 +37,13 @@ export default defineComponent({
   // #TODO mixins
   // mixins: [chatroom_mixin],
   setup(props, evnet) {
-    let data = reactive({
+    const data = reactive({
       data_list: ''
     });
     watch(
-      () => detail_data,
+      () => props.detail_data,
       (n,o) => {
-        data_list = lodash.cloneDeep(detail_data)
+        data.data_list = lodash.cloneDeep(props.detail_data)
       },
       {
         immediate: true,
@@ -51,7 +51,7 @@ export default defineComponent({
       }
     );
     const match_status = computed(() => {
-      const { mmp, ms } = detail_data
+      const { mmp, ms } = props.detail_data
       // mmp赛事阶段对应展示文案map
       const detail_data_mmp_map = {
         '90': 'mmp.3.90',
@@ -73,7 +73,8 @@ export default defineComponent({
     });
     return {
       ...toRefs(data),
-      match_status
+      match_status,
+      format_total_score,
     }
   }
 })

@@ -1,7 +1,7 @@
 
 <template>
-  <div class="q-gutter-xs keyboard-zone" :class="{ 'is_big_vedio': is_big_vedio }">
-    <div class="keyboard-btn" :class="{
+  <div class="q-gutter-xs keyboard-zone bet-keyboard-content" :class="{ 'is_big_vedio': is_big_vedio }">
+    <div class="keyboard-btn " :class="{
       'disable-key-btn': item.disabled || [2, 3].includes(status * 1),
       'key-btn-click': is_keydown,
       'big_keyboard-btn': is_big_vedio,
@@ -86,7 +86,15 @@ const keypress_handle = (obj, e) => {
 }
 
 </script>
+
+
+
 <style lang="scss" scoped>
+ /*  键盘按钮之间的间距 */
+ .bet-keyboard-content {
+  margin-left: 10px !important;
+  margin-right: 12px !important;
+}
 /*  键盘区域样式设置 */
 .keyboard-zone {
   display: flex;
@@ -124,4 +132,7 @@ const keypress_handle = (obj, e) => {
 .big_keyboard-btn {
   margin-right: 10px;
 }
+</style>
+<style lang="scss" scoped>
+@import "../css/bet_keyword.scss";
 </style>

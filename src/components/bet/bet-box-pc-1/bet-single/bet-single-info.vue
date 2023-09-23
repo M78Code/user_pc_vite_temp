@@ -20,7 +20,7 @@
         </div>
         <!--删除按钮-->
         <div class="col-auto col-delete">
-          <icon size="12px" name="icon-del" class="bet-del" @click="del_bet_item" />
+          <icon-wapper name="icon-del" class="bet-del" @click="del_bet_item" size="14px" />
         </div>
       </div>
       <div class="row">
@@ -36,8 +36,8 @@
               {{ item.home }}<span class='bet-pk'> v </span>{{ item.away }}
             </span>
             <!--足,蓝,棒,乒,排[1,2,3,8,9]-->
-            <span v-if="[1, 2, 3, 8, 9].includes(item.csid * 1) && ref_data.timerly_basic_score"
-              class="score">({{ ref_data.timerly_basic_score }})</span>
+            <span v-if="[1, 2, 3, 8, 9].includes(item.csid * 1) && ref_data.timerly_basic_score" class="score">({{
+              ref_data.timerly_basic_score }})</span>
           </template>
         </div>
         <!--删除按钮-->
@@ -60,78 +60,72 @@
               <template v-if="ref_data.match_ms == 1">
                 <label class="bet-match-playing">[{{ $t('menu.match_playing') }}]</label>
               </template>
-              {{ item.playName }} 
+              {{ item.playName }}
               <label v-if="ref_data.basic_score" class="score">({{ ref_data.basic_score }})</label>
               <label class="bet-handicap-name">[{{ $t(`odds.${item.marketTypeFinally}`) }}] </label>
             </label>
           </div>
         </div>
         <!--队名及盘口区域-->
-       
-         
-          <div>
-            <div class="col bet-odds-value" :class="{
-              'up-red': ref_data.odds_change_up,
-              'down-green': ref_data.odds_change_down
-            }">
-              <!--投注赔率1.87-->
-              <span class="odds-value yb-number-bold">
-                <span>@</span>{{ format_odds(item.oddFinally,item.csid) }}
-              </span>
-            </div>
-            <div class="auto-col" v-if="!(ref_data.active == 1 || ref_data.active == 4)">
-              <span class="invalid">
-                {{ $t('common.invalid') }}
-              </span>
-            </div>
+
+        <div>
+          <div class="col bet-odds-value" :class="{
+            'up-red': ref_data.odds_change_up,
+            'down-green': ref_data.odds_change_down
+          }">
+            <!--投注赔率1.87-->
+            <span class="odds-value yb-number-bold">
+              <span>@</span>{{ format_odds(item.oddFinally, item.csid) }}
+            </span>
           </div>
+          <div class="auto-col" v-if="!(ref_data.active == 1 || ref_data.active == 4)">
+            <span class="invalid">
+              {{ $t('common.invalid') }}
+            </span>
+          </div>
+        </div>
       </div>
       <!--金额输入区域 'pr32': is_show_keyboard, 'input-focus':is_show_keyboard,-->
-      <div class="row bet-single-input">
+      <div class="row">
         <bet-input :item="item" />
       </div>
     </q-card-section>
-  
 
-    
+
+
     <!-- <div class="mask-appointment" v-if="is_forward != index && is_forward != -1"></div> -->
 
     <!-- <tips v-if='is_show_tip' type="hps15Minutes" :tipstatus="true" :offset="getArr()" /> -->
   </q-card>
 </template>
 <script setup>
-import { ref,toRefs, defineComponent, reactive, onMounted, onUnmounted } from "vue"
+import { ref, toRefs, defineComponent, reactive, onMounted, onUnmounted } from "vue"
 import _ from 'lodash'
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
-import { format_odds,format_currency } from "src/core/format/index.js"
+import { format_odds, format_currency } from "src/core/format/index.js"
 import { odds_type_name } from "src/core/constant/index.js"
 
 
 
 import BetInput from "./bet-input.vue"
 import BetData from "src/core/bet/class/bet-data-class.js";
+import { IconWapper } from 'src/components/icon'
 
 const props = defineProps({
   index: {
-      type: Number,
-      default: 0
-    },
-    item: {}
+    type: Number,
+    default: 0
+  },
+  item: {}
 })
 
-
-
-
- // 投注金额
-const money = ref('')
-
 const ref_data = reactive({
-  DOM_ID_SHOW: false, 
+  DOM_ID_SHOW: false,
   match_type: 1,  // match_type 盘口类型 1:赛前盘，2: 滚球盘 3: 冠军盘 
   active: 1,    //投注项状态
   season: '',   // 赛季
   timerly_basic_score: "",   // 计时比分 返回比分格式为: (主队得分-客队得分)
-  market_type: '' ,     // 赛事状态 0未开赛 滚球:进行中
+  market_type: '',     // 赛事状态 0未开赛 滚球:进行中
   basic_score: "",    /// 赛事比分 返回比分格式为: (主队得分-客队得分)
   handicap_name: '',  // 当前盘口名称 欧洲盘/香港盘
   appoint: true, // 是否预约
@@ -139,6 +133,8 @@ const ref_data = reactive({
   odds_change_down: false, // 赔率下降
 })
 </script>
+
+
 <style lang="scss" scoped>
 /**预约投注遮罩*/
 .mask-appointment {
@@ -155,7 +151,7 @@ const ref_data = reactive({
 
 /**投注卡片*/
 .bet-card {
-  line-height: 0 !important;
+  //line-height: 0 !important;
 
   /* *蒙层* */
   .cathectic-shade {
@@ -270,7 +266,6 @@ const ref_data = reactive({
 /*  单关输入框样式 */
 .bet-single-input {
   margin-top: 8px !important;
-  margin-bottom: 10px !important;
 
   /* *蒙层* */
   .cathectic-shade {
@@ -344,18 +339,7 @@ const ref_data = reactive({
   align-items: center;
 }
 
-/*  投注键盘区域 */
-.bet-keyboard-zone {
-  padding-top: 8px !important;
-  margin-left: -10px !important;
-  margin-right: -10px !important;
 
-  /*  键盘按钮之间的间距 */
-  .bet-keyboard-content {
-    margin-left: 13px !important;
-    margin-right: 13px !important;
-  }
-}
 
 // 赔率换行
 .book-content>div {
@@ -373,5 +357,4 @@ const ref_data = reactive({
 .ref_data.appoint {
   height: 50px;
 }
-
 </style>

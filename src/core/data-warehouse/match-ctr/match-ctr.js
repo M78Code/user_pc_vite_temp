@@ -352,13 +352,10 @@ export default class MatchDataBase
         } else {
           match.play_obj = play_obj_temp;
         }
-
         // 设置赛事默认数据
         this.set_match_default_data(match);
-
         // 赛事数据格式化
         match && this.list_to_many_obj([match]);
-
       });
     }
   }
@@ -567,7 +564,7 @@ export default class MatchDataBase
         const mid = item.mid;
         if(obj.upd[mid]){
          // 需要更新的赛事
-         const match = this.quick_query_obj.mid_ob[this.get_format_quick_query_key(mid,mid,'mid')];
+         const match = this.quick_query_obj.mid_obj[this.get_format_quick_query_key(mid,mid,'mid')];
          if(match){
           // 赛事信息合并
           this.match_assign(match,obj.upd[mid]);
@@ -598,8 +595,7 @@ export default class MatchDataBase
     this.syn_del_quick_query_obj();
     // ws命令赛事订阅
     this.ws_ctr.scmd_c8();
-    // 重新调用表征类里的计算表征方法 
-    // MatchListCard.update_match_style(this.quick_query_obj.mid_obj)
+    console.log('quick_query_obj', this.quick_query_obj);
   }
   /**
    * @description: 同步清除赛事快捷操作对象中的无用赛事数据挂载
