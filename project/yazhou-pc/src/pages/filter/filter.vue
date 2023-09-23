@@ -541,12 +541,12 @@ const set_botton_top = () => {
     height: 100%;
     color: #99a3b1;
 
-    ::v-deep .scroll-inner-wrap {
+    :deep(.scroll-inner-wrap) {
         padding-bottom: 30px;
     }
 }
 
-.v-scroll-area.yb-match-list .filter-content ::v-deep .q-scrollarea__thumb {
+.v-scroll-area.yb-match-list .filter-content :deep(.q-scrollarea__thumb) {
     right: -10.5px !important;
 }
 

@@ -582,59 +582,55 @@ const play_video = () => {
   z-index: 999999;
 }
 
-//::v-deep video::-webkit-media-controls-fullscreen-button {
-//  display: none;
-//}
-
-::v-deep .handle.handle-tr {
+:deep(.handle.handle-tr) {
   top: -5px !important;
   right: -5px !important;
 }
 
-::v-deep .handle.handle-tl {
+:deep(.handle.handle-tl) {
   top: -5px !important;
   left: -5px !important;
 }
 
-::v-deep .handle.handle-bl {
+:deep(.handle.handle-bl) {
   bottom: -5px !important;
   left: -5px !important;
 }
 
-::v-deep .handle.handle-br {
+:deep(.handle.handle-br) {
   bottom: -5px !important;
   right: -5px !important;
 }
 
-::v-deep .handle.handle-tm {
+:deep(.handle.handle-tm) {
   width: 100%;
   left: 5px !important;
   top: -5px;
   z-index: -1;
 }
 
-::v-deep .handle.handle-bm {
+:deep(.handle.handle-bm) {
   width: 100%;
   left: 5px !important;
   bottom: -5px;
   z-index: -1;
 }
 
-::v-deep .handle.handle-ml {
+:deep(.handle.handle-ml) {
   height: 100%;
   left: -5px !important;
   top: 5px;
   z-index: 1;
 }
 
-::v-deep .handle.handle-mr {
+:deep(.handle.handle-mr ) {
   height: 100%;
   right: -5px !important;
   top: 5px;
   z-index: 1;
 }
 
-::v-deep .handle {
+:deep(.handle) {
   border-color: transparent !important;
   background: transparent !important;
 }

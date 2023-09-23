@@ -326,7 +326,7 @@ const getNulllength = () => {
           width: 58px;
         }
 
-        ::v-deep .scroll {
+        :deep(.scroll) {
           overflow: hidden;
         }
 
