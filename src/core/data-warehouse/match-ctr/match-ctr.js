@@ -25,7 +25,7 @@
  * MatchDataWarehouseInstance.upd_match(match, 1); 更新赛事数据-简单合并数据(无盘口信息合并时使用)
  */
 import MatchDataBaseWS from  "./match-ctr-ws.js"
-class MatchDataBase
+export default class MatchDataBase
 {
   /**
    * @description: 构造函数
@@ -1383,4 +1383,3 @@ class MatchDataBase
   }
 }
 
-export default new MatchDataBase()
