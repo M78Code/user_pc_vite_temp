@@ -9,7 +9,7 @@ class SearchClass {
     update = debounce(() => {
         this.update_time.value = Date.now()
     }, 10)
-    set_search_txt(search_txt) {
+    set_search_txt(search_txt) { 
         this.search_txt = search_txt;
         this.update()
     }

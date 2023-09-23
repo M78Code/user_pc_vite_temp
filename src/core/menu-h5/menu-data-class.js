@@ -5,8 +5,8 @@
 import { api_common, api_analysis } from "src/api";
 import lodash from "lodash";
 import { computed, ref, watch } from "vue";
-import { SessionStorage, useMittEmit, MITT_TYPES } from "src/core/";
-import base_data_instance from "src/core/base-data/base-data.js";
+import { SessionStorage, useMittEmit, MITT_TYPES, UserCtr } from "src/core/";
+import BaseData from "src/core/base-data/base-data.js";
 const Cache_key = {
   CACHE_CRRENT_MEN_KEY: "CACHE_CRRENT_MEN_KEY", //缓存当前菜单的key
   RESULT_SUB_MENU_CACHE: "RESULT_SUB_MENU_CACHE", //赛果 缓存
@@ -14,101 +14,69 @@ const Cache_key = {
 class MenuData {
   constructor() {
     const that = this;
-    this.show_favorite_list = false;
     this.update_time = ref(Date.now()); //更新触发
     //通知数据变化 防止调用多次 20毫秒再更新
     this.update = lodash.debounce(() => {
       that.update_time.value = Date.now();
     }, 10);
-    // "1": "滚球",
-    // "2": "今日",
-    // "3": "早盘",
-    // "4": "冠军",
-    // "5": "即将开赛",
-    // "6": "串关",
-    // "7": "电竞",
-    // "8": "VR",
-    // "30": "竞足",
-    // "28": "赛果",
+    // "1": "滚球",  "2": "今日", "3": "早盘",  "4": "冠军","5": "即将开赛", "6": "串关","7": "电竞",
+    // "8": "VR",// "30": "竞足",// "28": "赛果",
+
     // 500热门 2000 电竞  400 冠军
     this.menu_type = ref(0); //一级菜单 menu_type 很常用所以设定为ref
     this.menu_lv1 = []; //1级菜单列表
     this.menu_lv2 = []; //2级菜单列表
     this.menu_lv3 = []; //3级菜单列表
     this.menu_lv4 = []; //4级菜单列表
-
     //================主列表用的  开始==================
-    //上一次的 菜单
-    // this.previous_menu = {};
-    // this.previous_menu_i = {};
     //当前的菜单
     this.current_menu = {};
     // this.current_menu_i = 0;
-    // 上一次的菜单 lv1
-    this.previous_lv_1_menu = undefined;
-    this.previous_lv_1_menu_i = undefined;
-
     //当前的菜单 lv1
     this.current_lv_1_menu = undefined;
     this.current_lv_1_menu_i = undefined;
-
     // //上一次的菜单 lv2
     this.previous_lv_2_menu = undefined;
     this.previous_lv_2_menu_i = 0;
-
     // 二级菜单 滚球下边的一个按钮   "全部"按钮
     this.get_sport_all_selected = computed(() => {
       return lodash.isArray(this.current_lv_2_menu) && this.menu_type.value == 1;
     });
     //当前的菜单 lv2  注意 滚球 二级菜单 有一个【全部】选项 get_sport_all_selected
-    this.current_lv_2_menu = {
-      id: "",
-      type: "",
-      name: "",
-    };
+    this.current_lv_2_menu = undefined;
     this.current_lv_2_menu_i = undefined;
-    // //上一次的菜单 lv3
-    // this.previous_lv_3_menu = {};
-    // this.previous_lv_3_menu_i = 0;
     //当前的菜单 lv3
     this.current_lv_3_menu = null;
     this.current_lv_3_menu_i = undefined;
     //当前的菜单 lv4
     this.current_lv_4_menu = {};
     this.current_lv_4_menu_i = undefined;
-
     //================主列表用的  结束==================
     //热门的
     this.hot_tab_menu = {};
-    //国际化
-    this.menus_i18n_map = {};
     this.menu_list = SessionStorage.get("menu_list", []);
     this.menu_original_data = {};
+
+
     // 页脚菜单
-    this.footer_sub_menu_id = "";
+    this.footer_sub_menu_id = ""; //页脚子菜单id
+    this.footer_sub_changing = false //页脚子菜单变化 
     // 上一次选择的页脚菜单
     this.prev_footer_sub_menu_id = "";
-    this.lv_1_menu_map = {
-      1: "滚球",
-      2: "今日",
-      3: "早盘",
-      4: "冠军",
-      30: "热门",
-    };
+
     this.init();
   }
   init() {
     setTimeout(() => {
-      base_data_instance.init(); //初始化菜单数据
+      BaseData.init(); //初始化菜单数据
     }, 0);
     //菜单数据有变化
     watch(
-      base_data_instance.base_data_version,
+      BaseData.base_data_version,
       lodash.debounce(() => {
-        const { mew_menu_list_res } = base_data_instance; //获取主数据
+        const { mew_menu_list_res } = BaseData; //获取主数据
         this.recombine_menu(mew_menu_list_res, mew_menu_list_res);
         this.update();
-        // current_menu.value = menu_list.value[0];
       }, 50)
     );
     //设置从缓存拿到的数据 到class
@@ -116,8 +84,6 @@ class MenuData {
       SessionStorage.get(Cache_key.CACHE_CRRENT_MEN_KEY, {}),
       false
     );
-    //初始化完成后进行一次数据更新
-    this.update();
   }
   /**
    * 设置值 并且缓存
@@ -198,9 +164,13 @@ class MenuData {
     // }
     return [menu_list, pop_main_items];
   }
+  //设置选中的菜单
+  set_menu_type(v) {
+    const idx = this.menu_list.findIndex(i => i.mi == v)
+    idx > -1 && this.set_current_lv1_menu(this.menu_list[idx], idx, 'click')
+  }
   // 当前选中的菜单type
   get_menu_type() {
-    console.error(this);
     return this.current_lv_1_menu?.mi;
   }
   async get_db_mids(mi) {
@@ -235,7 +205,7 @@ class MenuData {
   async get_euid(arg_mi, menu_type) {
     let mi = arg_mi;
     if (!mi) return "";
-    return base_data_instance.mi_euid_map_res[parseInt(mi)]?.h;
+    return BaseData.mi_euid_map_res[parseInt(mi)]?.h;
     const euid = await db.menus_mapping.get(arg_mi + "2", "mi");
     if (euid) return euid.menus_mapping.h || "";
 
@@ -319,11 +289,6 @@ class MenuData {
       db.match_info.bulkAdd(db_data, "mi");
     }
   }
-  //菜单列表
-  get_menu_list() {
-    return base_data_instance.left_menu_base_mi_arr;
-  }
-
   /**
    * 根据 球类型 获取图标
    * @param {boolean} is_focus 是否选中
@@ -331,11 +296,11 @@ class MenuData {
   get_sport_icon(is_focus) {
     let favorite = "";
     if (is_focus) {
-      if (this.show_favorite_list) {
+      if (UserCtr.show_favorite_list) {
         favorite = "f";
       }
     }
-    if (this.show_favorite_list) {
+    if (UserCtr.show_favorite_list) {
       favorite = "f";
     }
     // 赛果 408  sport-match-count
@@ -343,26 +308,23 @@ class MenuData {
       favorite = "";
     }
     //赛果我的投注
-    // if (is_focus) {
-    //   //选中情况下的 关注 和 非关注
-    //   return favorite
-    //     ? UserCtr.theme.includes("y0")
-    //       ? "focus-e"
-    //       : "focus-c"
-    //     : UserCtr.theme.includes("y0")
-    //     ? "focus-b"
-    //     : "focus-a";
-    // }
+    if (is_focus) {
+      //选中情况下的 关注 和 非关注
+      return favorite
+        ? UserCtr.theme.includes("y0")
+          ? "focus-e"
+          : "focus-c"
+        : UserCtr.theme.includes("y0")
+          ? "focus-b"
+          : "focus-a";
+    }
     // //默认黑色版还是白色版
-    // return UserCtr.theme.includes("night") ? "focus-d" : "";
-    return "focus-d";
+    return UserCtr.theme.includes("night") ? "focus-d" : "";
   }
-
-  //菜单名称
+  //菜单名称 国际化获取菜单名称
   get_menus_i18n_map(item) {
-    return base_data_instance.menus_i18n_map[item];
+    return BaseData.menus_i18n_map[item];
   }
-
   // /**
   //  * @description: 球类id转化背景
   //  * @param {String} id 球类id
@@ -511,7 +473,7 @@ class MenuData {
 
   // 是否展示二级菜单 图标
   show_secondary_menu_icon(item) {
-    if (!this.show_favorite_list) return true;
+    if (!UserCtr.show_favorite_list) return true;
     let flag = true;
     // 一级菜单赛果 选中关注 不显示虚拟体育的icon (1001:虚拟足球 1002:赛狗 1011:赛马 1004:虚拟篮球 1010:虚拟摩托车)
     //TODO  menuType?? 新接口好像变了
@@ -619,56 +581,7 @@ class MenuData {
   init_amidithion(data) {
     let result_menu = {
       mi: 28,
-      sl: [
-        {
-          mi: "101",
-        },
-        {
-          mi: "102",
-        },
-        {
-          mi: "105",
-        },
-        {
-          mi: "107",
-        },
-        {
-          mi: "110",
-        },
-        {
-          mi: "108",
-        },
-        {
-          mi: "103",
-        },
-        {
-          mi: "109",
-        },
-        {
-          mi: "111",
-        },
-        {
-          mi: "112",
-        },
-        {
-          mi: "113",
-        },
-        {
-          mi: "116",
-        },
-        {
-          mi: "115",
-        },
-        {
-          mi: "114",
-        },
-        {
-          mi: "104",
-        },
-        {
-          mi: "106",
-        },
-      ],
+      sl: ["101", "102", "105", "107", "110", "108", "103", "109", "111", "112", "113", "116", "115", "114", "104", "106"].map((mi) => ({ mi }))
     };
     let list = {
       mi: 28,
@@ -699,7 +612,6 @@ class MenuData {
     };
   }
   //- 三级菜单 日期 (只有 串关，早盘，赛果，电竞，才有) -->
-
   get_is_show_three_menu(mi) {
     console.error(this.current_lv_1_menu?.mi);
     return [3, 6, 7, 28].includes(mi || this.current_lv_1_menu?.mi);
@@ -738,17 +650,17 @@ class MenuData {
             // 赛果二级菜单数据处理
             this.result_sub_menu_api_handle(cache_data, "init");
           }
-          // this.$root.$emit(this.emit_cmd.EMIT_MAIN_LIST_MATCH_IS_EMPTY, {
-          //   type: "result",
-          //   event: { cmd: "list_empty" },
-          // });
+          useMittEmit(MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, {
+            type: "result",
+            event: { cmd: "list_empty" },
+          });
         }
       } catch (error) {
         // // 接口异常时逻辑处理
-        // this.$root.$emit(this.emit_cmd.EMIT_MAIN_LIST_MATCH_IS_EMPTY, {
-        //   type: "result",
-        //   event: { cmd: "list_empty" },
-        // });
+        useMittEmit(MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, {
+          type: "result",
+          event: { cmd: "list_empty" },
+        });
       }
       this.update();
     });
@@ -766,16 +678,6 @@ class MenuData {
     this.set_cache_class({
       menu_lv2: res_data,
     });
-    // 如果上次刷新的，则保存上一次的状态，如果是点击的则初始化下标 为 默认第一个 0
-    // if (type == "click") {
-    //   this.set_current_lv2_menu(res_data[0],0);
-    // }
-    // 如果是小于0，则默认展示成 0
-    // if (this.current_lv_2_menu_i < 0) {
-    //   this.set_current_lv2_menu(res_data[0], 0);
-    //   // // 选中的子菜单下标集合
-    //   // this.selected_sub_menu_i_list = [this.sub_menu_i];
-    // }
     //设置第二级菜单
     this.set_current_lv2_menu(res_data[0], 0);
   }
@@ -785,12 +687,12 @@ class MenuData {
     const menu_type = this.menu_type.value;
     //euid
     const euid = lodash.get(
-      base_data_instance.mi_euid_map_res,
+      BaseData.mi_euid_map_res,
       this.get_current_sub_menuid()
     );
     if ([3, 6, 7].includes(menu_type) && euid) {
       // 三级菜单先显示骨架屏，接口回来后，再隐藏骨架屏
-      // this.$root.$emit(this.emit_cmd.EMIT_BEFORE_LOAD_THIRD_MENU_HANDLE);
+      useMittEmit(MITT_TYPES.EMIT_BEFORE_LOAD_THIRD_MENU_HANDLE);
       let api_func = null,
         params = { euid: euid.h };
       if (7 == menu_type) {
@@ -841,18 +743,12 @@ class MenuData {
       } else {
         this.set_current_lv3_menu(this.menu_lv3[0], 0);
       }
-      // this.date_menu_list = this.current_lv_2_menu.subList;
-      // // 设置日期选中项 调用三级菜单点击事件，默认第一个
-      // // this.select_result_date_menu();
     } else {
       //  设置三级日期 菜单
       this.set_cache_class({
         menu_lv3: [],
       });
-      this.set_current_lv3_menu(); //设置空
-      // this.set_one_two_three_level_menu_data();
-      // 菜单实例 初始化
-      // this.handle_MenuInfoInstance_init();
+      this.set_current_lv3_menu(); //设置4级空
     }
     this.update();
   }
@@ -931,7 +827,6 @@ class MenuData {
       this.update();
     }
   }
-
   /**
    * 选中1级menu
    * item [object]当前点击对象
@@ -1007,10 +902,6 @@ class MenuData {
         this.set_cache_class({
           menu_lv4: lodash.get(this.current_lv_3_menu, "subList"),
         });
-        // this.virtual_sports_results_click_handle(
-        //   this.virtual_sports_results_tab[this.virtual_sports_results_tab_item_i],
-        //   this.virtual_sports_results_tab_item_i
-        // );
         this.set_current_lv4_menu(this.menu_lv4[0], 0);
         this.update();
       }
@@ -1020,10 +911,6 @@ class MenuData {
         menu_lv4: [],
       });
       this.set_current_lv4_menu();
-      //  是三级菜单
-      // this.four_menu_item = null;
-      // 菜单实例 初始化
-      // this.handle_MenuInfoInstance_init();
     }
   }
   /**
@@ -1039,24 +926,9 @@ class MenuData {
     });
     this.update()
   }
-  //根据一级菜单筛选二级菜单列表
-  get_current_lv_2_menu_list() {
-    let mi = this.menu_type.value;
-    return (
-      base_data.mew_menu_list_res.find((x) => x.mi == mi) || {
-        sl: [],
-      }
-    );
-  }
-
-  //国际化获取菜单名称
-  get_menu_name_i18n(mi) {
-    return this.menus_i18n_map[mi] || "-";
-  }
   get_level_four_menu() {
     return "";
   }
-
   get_current_lv_2_menu_type() {
     return "0";
   }
@@ -1068,7 +940,6 @@ class MenuData {
       return obj2.sl || [];
     }
   }
-
   /**
    * 电竞菜单要保留上一个 电竞菜单 的 csid
    */
@@ -1124,6 +995,12 @@ class MenuData {
     this.set_cache_class({
       footer_sub_menu_id
     })
+  }
+  /**
+  * 设置当前选中得页脚子菜单变化 
+  */
+  set_footer_sub_changing(footer_sub_changing) {
+    this.footer_sub_changing = footer_sub_changing //页脚子菜单变化 
   }
 }
 export default new MenuData();
