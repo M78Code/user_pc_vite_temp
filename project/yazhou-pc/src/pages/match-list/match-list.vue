@@ -35,18 +35,18 @@
       <!-- <div>menu_config.match_list_menu_show.list_filter {{ menu_config.match_list_menu_show.list_filter }}</div> -->
 
       <!-- 顶部菜单  // 滚球  冠军 -->
-      <list-filter v-if="[1, 400].includes(parseInt(menu_config.menu_root)) && vx_layout_list_type != 'collect'"
+      <list-filter v-if="[1, 400].includes(parseInt(menu_config.menu_root)) && page_source != 'collect'"
         :collect_count="collect_count" :load_data_state="load_data_state" />
 
       <!-- 日期菜单   早盘 日期 -->
 
-      <list-filter-date v-if="menu_config.menu_root == 3 && vx_layout_list_type != 'collect'"
+      <list-filter-date v-if="menu_config.menu_root == 3 && page_source != 'collect'"
         :collect_count="collect_count" :load_data_state="load_data_state" />
 
 
 
       <!-- 热门赛事顶部菜单 -->
-      <list-filter-hot v-if="menu_config.menu_root == 500 && vx_layout_list_type != 'collect'"
+      <list-filter-hot v-if="menu_config.menu_root == 500 && page_source != 'collect'"
         :collect_count="collect_count" :load_data_state="load_data_state" />
 
       <!-- 电竞顶部菜单 -->
@@ -67,7 +67,7 @@
       <!-- 滚球虚拟体育列表 -->
       <scroll-list v-if="menu_config.menu_root_show_shoucang == 300">
         <template v-slot:before>
-          <div :style="{ height: fixed_header_height }"></div>
+          <div :style="{ height: MatchListCardDataClass.sticky_top.fixed_header_height }"></div>
         </template>
         <template>
           <!--虚拟体育 赛事列表 赛事头-->
@@ -91,7 +91,7 @@
       <scroll-list v-else>
 
         <template v-slot:before>
-          <div :style="{ height: fixed_header_height }"></div>
+          <div :style="{ height: MatchListCardDataClass.sticky_top.fixed_header_height }"></div>
         </template>
         <div class="today-champion-bg" v-if="menu_config.menu_root == '2' || menu_config.menu_root == 400 || menu_config.menu_root != 2000"></div>
         <match-list-card 
@@ -130,7 +130,7 @@ import { ListFilterDateFullVersionWapper as listFilterDate } from "src/component
 import { MatchListCardFullVersionWapper as MatchListCard } from "src/components/match-list/match-list-card/index.js"; //赛事列表
 import { ListFilterHotFullVersionWapper as ListFilterHot } from "src/components/match-list/list-filter-hot/index.js"; //热门赛事列表
 import ScrollList from 'src/components/cus-scroll/scroll_list.vue';
-import refresh from 'project_path/src/components/refresh/refresh.vue'
+import refresh from "src/components/refresh/refresh.vue"
 // import { EsportsHeaderFullVersionWapper as EsportsHeader } from "src/components/match-list/esports-header/index.js";//电竞赛事列表筛选
 // import { VirtualMatchTypeFullVersionWapper as VirtualMatchType } from "src/components/match-list/match-list-card/index.js";//虚拟体育 赛事列表 赛事头
 import { PlayVirtualMatchTypeFullVersionWapper as PlayVirtualMatchType } from "src/components/match-list/play-virtual-match-type/index.js";//赛事列表头部——滚球——赛事类型
@@ -143,9 +143,11 @@ import { PlayVirtualMatchTypeFullVersionWapper as PlayVirtualMatchType } from "s
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 import useMatchListMx from "src/core/match-list-pc/match-list-composition.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
+import { PageSourceData } from 'src/core/index.js';
 import "./match_list.scss";
 
-const { mounted_fn } = useMatchListMx();
+const { mounted_fn, load_data_state, show_refresh_mask, collect_count, is_show_hot } = useMatchListMx();
+const { page_source } = PageSourceData;
 export default {
   components: {
     LeagueTab,
@@ -163,8 +165,11 @@ export default {
     });
     return {
       menu_config,
-      // match_list_card,
+      load_data_state,
       MatchListCardDataClass,
+      show_refresh_mask,
+      collect_count,
+      is_show_hot
     };
   },
   // data() {

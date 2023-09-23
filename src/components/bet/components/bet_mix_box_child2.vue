@@ -35,19 +35,19 @@
         <!-- <bet-mix-show v-for="(value, name, index1) in view_ctr_obj" :order_detail_resp_list="order_detail_resp_list"
           :query_order_obj="query_order_obj" :key="name" :index_="index1" :name_="name">
         </bet-mix-show> -->
-        <bet-mix-show
+        <!-- <bet-mix-show
         :name_ ="name"
         v-for="(value, name, index1) in bet_view_obj"
         :bet_view_obj="bet_view_obj"
         >
-        </bet-mix-show>
+        </bet-mix-show> -->
 
         <!-- 串关投注成功组件 单个几串几的信息展示-->
         <template v-if="btn_show == 1 || mixnew_bet || part_bet">
           <div v-show="btn_show == 1 && !mixnew_bet || part_bet">
             <div v-for="(item, index) in series_order_respList" :key="index">
-              <betSuccessBar :item_="item" @update_money="update_money" :query_order_obj="query_order_obj"
-                :len='series_order_respList.length'></betSuccessBar>
+              <!-- <betSuccessBar :item_="item" @update_money="update_money" :query_order_obj="query_order_obj"
+                :len='series_order_respList.length'></betSuccessBar> -->
             </div>
           </div>
         </template>
@@ -144,7 +144,7 @@
       </template>
 
       <!-- 键盘 -->
-      <!-- <key-board v-show="bet_keyboard_show" :bet_min_max_money="bet_min_max_money"></key-board> -->
+      <key-board v-show="bet_keyboard_show" :bet_min_max_money="bet_min_max_money"></key-board>
 
       <!-- 底部按钮 -->
       <div class="row yb_px10 yb_pb8 justify-between" @touchmove.prevent>
@@ -223,8 +223,8 @@
 // import betMixSingleDetail from 'src/components/bet/components/bet-mix-single-detail.vue';
 // import betSuccessBar from 'src/components/bet/components/bet-success-bar.vue';
 // import betting from 'src/mixins/betting/betting.js';
-// import keyBoard from 'src/components/bet/components/bet-keyboard.vue';
-// import ballSpin from 'src/components/bet/components/ball-spin.vue';
+import keyBoard from 'src/components/bet/components/bet-keyboard.vue';
+import ballSpin from 'src/components/bet/components/ball-spin.vue';
 import betBar from "src/components/bet/components/bet-bar.vue";
 
 // import {utils } from 'src/core/index.js';
@@ -250,6 +250,7 @@ const bet_list_data = ref([])
 const tips_msg = ref('失效')  // 提示信息
 
 const bet_view_obj = ref({})  // 多个投注对象 调试
+const get_bet_status = ref(2) // 投注状态
 
 const hide_bet_series_but = () => {
   let res = false;

@@ -60,7 +60,7 @@
     </v-scroll-area>
     <!--提示区域-->
     <q-tooltip content-class="bet-bg-tooltip" anchor="bottom left" self="top left" :offset="[181, 10]"
-      target="#merge-info" v-if="show_merge_info">
+      target="#merge-info" v-if="BetData.show_merge_info">
       <div style="
           width: 170px;
           min-height: 60px;

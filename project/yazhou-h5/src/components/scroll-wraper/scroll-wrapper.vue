@@ -73,7 +73,7 @@ let scroll_frame_timer_2 = ref(0)
 
 const get_menu_type = ref(MenuData.get_menu_type())
 const get_current_menu = ref(MenuData.current_menu)
-const get_curr_sub_menu_type = ref(MenuData.current_lv_2_menu.type)
+const get_curr_sub_menu_type = ref(lodash.get(MenuData.current_lv_2_menu, 'type'))
 
 onMounted(() => {
   test.value = sessionStorage.getItem('wsl') == '9999';
