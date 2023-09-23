@@ -382,6 +382,7 @@ const send_money_to_keyboard = () => {
 
 // 限额赋值
 const set_ref_data_bet_money = () => {
+  console.error('出发了')
   // 串关获取 复试连串
   if (!BetData.is_bet_single) {
 
@@ -408,7 +409,7 @@ const set_ref_data_bet_money = () => {
 onUnmounted(() => {
   // clear_timer()
 
-  useMittOn(MITT_TYPES.EMIT_CHANGE_MONEY, change_money_).off;
+  useMittOn(MITT_TYPES.EMIT_CHANGE_MONEY, change_money_handle).off;
   useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money).off
 
   // for (const key in $data) {
