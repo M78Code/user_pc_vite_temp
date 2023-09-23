@@ -15,7 +15,7 @@
       margin: .55rem auto;
     }
 
-    ::v-deep.q-carousel {
+    :deep(.q-carousel) {
       height: 100%;
       background: transparent;
 
@@ -178,7 +178,7 @@
           flex-direction: column;
           justify-content: center;
 
-          ::v-deep.counting-down-wrap {
+          :deep(.counting-down-wrap) {
             left: 50%;
             transform: translate3d(-50%, 0, 0);
             max-width: 1rem;
@@ -203,7 +203,7 @@
             }
           }
 
-          ::v-deep.counting-down-start {
+          :deep(.counting-down-start) {
             color: var(--q-gb-bd-c-2);
           }
         }
@@ -328,7 +328,7 @@
       height: 100%;
       margin: 0 0.1rem;
 
-      ::v-deep.q-scrollarea {
+      :deep(.q-scrollarea) {
         height: 100%;
       }
     }
@@ -464,7 +464,7 @@
     }
   }
 
-  ::v-deep.q-scrollarea__thumb {
+  :deep(.q-scrollarea__thumb) {
     opacity: 0 !important;
   }
 

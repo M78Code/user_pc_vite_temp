@@ -429,7 +429,7 @@ const refresh_data = () => {
     .data-template {
       display: flex;
       justify-content: center;
-      ::v-deep .column-between {
+      :deep(.column-between)  {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -441,7 +441,7 @@ const refresh_data = () => {
       margin-bottom: 1px;
       &.iframe-video-bottom-panel {
         .panel-wrapper {
-          ::v-deep {
+          :deep {
             .chatroom {
               margin-top: 0;
               .chat-scroll-area {
@@ -470,7 +470,7 @@ const refresh_data = () => {
           border: none;
           // border: 1px solid var(--qq--match-border-color2);
         }
-        ::v-deep {
+        :deep {
           .video-history-line {
             margin-bottom: 4px;
           }

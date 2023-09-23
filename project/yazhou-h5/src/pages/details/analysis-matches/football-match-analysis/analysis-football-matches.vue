@@ -236,7 +236,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";
 }
 
 .football-tab-header {
-  ::v-deep .home-tab {
+  :deep(.home-tab) {
     width: 100%;
     ul {
       width: 100%;

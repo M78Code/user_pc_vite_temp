@@ -650,7 +650,7 @@ const props = defineProps({
   padding: 0 0.1rem;
 }
 .slider-content{
-  ::v-deep .q-slider__track-container--h{
+  :deep(.q-slider__track-container--h){
     padding:0;
   }
 }

@@ -80,7 +80,7 @@
       font-weight: 500;
     }
 
-    ::v-deep.counting-down-wrap {
+    :deep(.counting-down-wrap) {
       position: relative;
       top: 0.01rem;
       width: 0.52rem !important;
