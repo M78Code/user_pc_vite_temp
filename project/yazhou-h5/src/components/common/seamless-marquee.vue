@@ -8,12 +8,13 @@
       <p class="copy">{{ copy_content }}</p>
     </div>
     <!-- 为了计算总文本宽度，通过css在页面中隐藏 -->
-    <p class="full_content" :ref="refs.full_content">{{ content }}111111</p>
+    <p class="full_content" :ref="refs.full_content">{{ content }}</p>
   </div>
 </template>
 
 <script setup>
 import { ref, reactive, onMounted, onBeforeUnmount } from 'vue'
+import lodash from 'lodash'
 
 const props = defineProps({
   content: {
@@ -44,7 +45,7 @@ onBeforeUnmount(clearTimer2)
 function set_move_style(dom_) {
   if (!(dom_.full_content || dom_.scroll_wrap)) return
   // 获取文字text 的计算后宽度 （由于overflow的存在，直接获取不到，需要独立的node计算）
-  let text_width = _.get(dom_.full_content, 'scrollWidth')
+  let text_width = lodash.get(dom_.full_content, 'scrollWidth')
   let scroll = dom_.scroll_wrap
   // 如果文本内容的宽度小于页面宽度，则表示文字小于等于一行，则不需要滚动
   if (text_width < 160) {
