@@ -14,7 +14,7 @@
 <script setup>
 // TODO: 后续修改调整
 // import {mapGetters} from "vuex";
-import { ref, watch, nextTick, onMounted, defineAsyncComponent, inject } from 'vue';
+import { ref, watch, nextTick, onMounted, defineAsyncComponent } from 'vue';
 import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/index.js"
 import { i18n_t } from "src/boot/i18n.js";
 import {utils } from 'src/core/index.js'
@@ -32,7 +32,10 @@ import headTab from  "project_path/src/components/details/match-analysis/head-ta
 
 
 // 获取详情数据
-const get_detail_data = inject('get_detail_data', {})
+const get_detail_data = ref({
+        csid: 1,
+        mid: 1,
+    })
 
 //国际化
 

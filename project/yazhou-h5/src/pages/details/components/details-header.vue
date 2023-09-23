@@ -20,7 +20,7 @@
   </div>
 </template>
 <script setup>
-import { reactive, computed, defineComponent, inject } from "vue";
+import { reactive, computed, defineComponent } from "vue";
 import { useRoute } from "vue-router";
 import lodash from "lodash";
 import commonHeader from "project_path/src/components/common/common-header1.vue";
@@ -46,7 +46,10 @@ const props = defineProps(
 )
 
 const route = useRoute();
-let get_detail_data = inject("get_detail_data", {})
+const get_detail_data = ref({
+        csid: 1,
+        mid: 1,
+    })
 let ballTypeBackground = computed(() => detail_csid_config['CSID_' + get_detail_data.value.csid].detail.B)
 let data = reactive({
   // 此处空对象请勿删除;

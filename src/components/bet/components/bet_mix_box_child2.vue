@@ -35,19 +35,19 @@
         <!-- <bet-mix-show v-for="(value, name, index1) in view_ctr_obj" :order_detail_resp_list="order_detail_resp_list"
           :query_order_obj="query_order_obj" :key="name" :index_="index1" :name_="name">
         </bet-mix-show> -->
-        <bet-mix-show
+        <!-- <bet-mix-show
         :name_ ="name"
         v-for="(value, name, index1) in bet_view_obj"
         :bet_view_obj="bet_view_obj"
         >
-        </bet-mix-show>
+        </bet-mix-show> -->
 
         <!-- 串关投注成功组件 单个几串几的信息展示-->
         <template v-if="btn_show == 1 || mixnew_bet || part_bet">
           <div v-show="btn_show == 1 && !mixnew_bet || part_bet">
             <div v-for="(item, index) in series_order_respList" :key="index">
-              <betSuccessBar :item_="item" @update_money="update_money" :query_order_obj="query_order_obj"
-                :len='series_order_respList.length'></betSuccessBar>
+              <!-- <betSuccessBar :item_="item" @update_money="update_money" :query_order_obj="query_order_obj"
+                :len='series_order_respList.length'></betSuccessBar> -->
             </div>
           </div>
         </template>
@@ -217,14 +217,14 @@
 
 <script setup>
 // import betMixShow from 'src/components/bet/components/bet_mix_show.vue';
-import betMixShow from 'src/components/bet/components/bet_mix_show3.vue';
+// import betMixShow from 'src/components/bet/components/bet_mix_show3.vue';
 // import betMixShow2 from 'src/components/bet/components/bet_mix_show2.vue';
-import betMixDetail from 'src/components/bet/components/bet-mix-detail.vue';
+// import betMixDetail from 'src/components/bet/components/bet-mix-detail.vue';
 // import betMixSingleDetail from 'src/components/bet/components/bet-mix-single-detail.vue';
-import betSuccessBar from 'src/components/bet/components/bet-success-bar.vue';
+// import betSuccessBar from 'src/components/bet/components/bet-success-bar.vue';
 // import betting from 'src/mixins/betting/betting.js';
 import keyBoard from 'src/components/bet/components/bet-keyboard.vue';
-// import ballSpin from 'src/components/bet/components/ball-spin.vue';
+import ballSpin from 'src/components/bet/components/ball-spin.vue';
 import betBar from "src/components/bet/components/bet-bar.vue";
 
 // import {utils } from 'src/core/index.js';
@@ -250,6 +250,7 @@ const bet_list_data = ref([])
 const tips_msg = ref('失效')  // 提示信息
 
 const bet_view_obj = ref({})  // 多个投注对象 调试
+const get_bet_status = ref(2) // 投注状态
 
 const hide_bet_series_but = () => {
   let res = false;
@@ -311,21 +312,9 @@ onMounted(() => {
 
 const set_ref_data_bet_money = () => {
  
-  let markInfo = lodash.get(BetViewDataClass, 'bet_special_h5')
+  let markInfo = lodash.get(BetViewDataClass, 'bet_single_list')
   // let markInfo = lodash.get(BetData, 'bet_list')
   console.error('BetViewDataClass', markInfo)
-  console.error('BetData.bet_list', BetData.bet_list)
-  // markInfo.forEach(item => {
-  //   let obj = {
-  //     bs: {
-  //       'playName': item.playName,  // 玩法名称
-  //       'playId': item.playId,   // 玩法id
-  //       'away': item.away,  // 客队
-  //       'home': item.home,  // 主队
-  //     }
-  //   }
-  //   bet_list_data.value.push(obj)
-  // });
   // bet_min_max_money.value = BetViewDataClass.bet_min_max_money
   bet_view_obj.value = markInfo
   

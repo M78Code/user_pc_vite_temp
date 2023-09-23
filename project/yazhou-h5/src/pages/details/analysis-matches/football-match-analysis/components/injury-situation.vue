@@ -27,13 +27,16 @@
 </template>
 
 <script setup>
-import { defineComponent, ref,inject } from 'vue'
+import { defineComponent, ref } from 'vue'
 // 详情页蓝色背景上的大型字母图标
 import teamImg from "project_path/src/components/details/team-img.vue";
  // 伤停情况列表
 import injuryForm from "project_path/src/pages/details/analysis-matches/components/injury-form.vue";
 import { i18n_t } from "src/boot/i18n.js";
-const get_detail_data = inject('get_detail_data', {})
+const get_detail_data = ref({
+        csid: 1,
+        mid: 1,
+    })
 //国际化
 
 

@@ -19,7 +19,7 @@
       </div>
     </div>
     <!-- 左侧 mini -->
-    <left-main-min v-show="LayOutMain_pc.layout_left_menu_status == 'mini'" />
+    <!-- <left-main-min v-show="LayOutMain_pc.layout_left_menu_status == 'mini'" /> -->
     <!-- 左侧 -->
     <left-main v-show="LayOutMain_pc.layout_left_menu_status == 'normal'" />
   </div>

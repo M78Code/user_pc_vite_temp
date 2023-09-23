@@ -21,7 +21,7 @@ const vx_match_sort = ref(state.filterReducer?.show_filter_popup);
 // 是否展开多列玩法
 const get_unfold_multi_column = ref(state.filterReducer?.show_filter_popup);
 
-const route = useRoute() || {};
+// const route = useRoute() || {};
 
 // 自动化测试页面加载时间时使用
 const set_home_loading_time_record = (status) => {
@@ -104,9 +104,9 @@ const api_bymids = (
   callback
 ) => {
   let panduan_1 = MenuData.is_virtual_sport();
-  let panduan_2 = ["details", "video"].includes(route.name);
+  let panduan_2 = ["details", "video"].includes(page_source);
   let first_load_time;
-  if ((panduan_1 && route.name !== "search") || panduan_2) {
+  if ((panduan_1 && page_source !== "search") || panduan_2) {
     return;
   }
   // 联赛结构类型列表 首次加载拉前12场赛事
@@ -166,7 +166,7 @@ const api_bymids = (
   // 	params.tabs = tabs;
   // }
   // 非滚球传 玩法ID
-  if (MenuData.menu_root != "1" && route.name != "search") {
+  if (MenuData.menu_root != "1" && page_source != "search") {
     params.pids = _params.pids;
   }
   //today：今日  early：早盘 角球玩法
@@ -177,7 +177,7 @@ const api_bymids = (
   }
   let api;
   // 电竞
-  if (MenuData.is_esports() && route.name !== "search") {
+  if (MenuData.is_esports() && page_source !== "search") {
     api = api_websocket.get_esports_by_mids;
     params = {
       mids: mids.join(","),
@@ -205,12 +205,12 @@ const api_bymids = (
         set_home_loading_time_record("ok");
         
         // 组件和路由不匹配
-        if (route.name == "details" && page_source != "details")
+        if (page_source == "details" && page_source != "details")
           return;
         //更新电竞右侧视频
         if (
           MenuData.is_esports() &&
-          route.name !== "search" &&
+          page_source !== "search" &&
           !is_first_load
         ) {
           useMittEmit(MITT_TYPES.GET_ESPORTS_VIDEO_LIST);

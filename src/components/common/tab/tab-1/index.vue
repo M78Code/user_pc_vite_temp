@@ -36,7 +36,7 @@
   </div>
 </template>
 <script setup>
-import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch, toRefs, defineComponent } from 'vue'
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch, defineComponent } from 'vue'
 import lodash from 'lodash'
 // import BetCommonHelper from "src/core/bet/common-helper/index.js";
 import store from 'src/store-redux'
@@ -322,18 +322,21 @@ onBeforeUnmount(() => tabs_hover.cancel())
 /** stroe仓库 */
 const { layoutReducer } = store.getState()
 /** 页面宽高信息 */
-const layout_list_size = toRefs(layoutReducer, 'layout_list_size')
+const layout_list_size = ref(layoutReducer.layout_list_size)
 
 /** 监听屏幕宽度改变  设置是否显示按钮 */
 watch(
   () => layout_list_size.value,
-  () =>wrap.value.clientWidth
+  () => wrap.value.clientWidth
 )
 /**
  * list语言变化时
  * 做异步处理防止data数据发生改变，初始化
 */
-watch(props.list.value, nextTick(init), { deep: true })
+watch(
+  () => props.list.value,
+  () => nextTick(init), { deep: true }
+)
 
 /** 定时器 */
 const timer = ref(null)
