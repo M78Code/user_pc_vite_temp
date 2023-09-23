@@ -268,7 +268,7 @@
     // 未开赛 到卡片key的 映射对象
     MatchListCardData.no_start_to_card_key_arr = no_start_to_card_key_arr
     // 所有卡片列表
-    MatchListCardData.match_list_card_key_arr =  ref(match_list_card_key_arr) 
+    MatchListCardData.match_list_card_key_arr =  match_list_card_key_arr 
     MatchListCardData.set_list_version()
     // 遍历所有联赛容器卡片
     all_league_container_keys_arr.forEach( card_key => {

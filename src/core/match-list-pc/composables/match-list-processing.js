@@ -164,7 +164,7 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 		}
 		console.error('现在走进来了', '22---3');
 		// 设置数据仓库 联赛列表对象
-		// this.match_list_data.set_league_list_obj(res_data);
+		 
 		// 计算列表卡片样式
 		MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
 			res_data,

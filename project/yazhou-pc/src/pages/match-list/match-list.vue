@@ -60,7 +60,7 @@
  
     <!-- 列表容器 -->
  
-    <load-data :state="load_data_state" :limit_height="10000" >
+    <load-data :state="load_data_state"  >
       
       <!-- 滚球虚拟体育列表 -->
  
@@ -86,20 +86,25 @@
         </template>
         11111
       </scroll-list>
-     
+      
+      <div> {{ MatchListCardDataClass.list_version }}</div>
+      <!-- <div> {{match_list_card_key_arr }}</div> -->
      
       <!-- 滚球其他列表 -->
       <scroll-list  v-if="menu_config.menu_root_show_shoucang != 300">
+        in MatchListCardDataClass.match_li
+        <!-- v-for="card_key in MatchListCardDataClass.match_list_card_key_arr" -->
  
-2222  
-{{ MatchListCardDataClass.match_list_card_key_arr }}
         <template v-slot:before>
           <div :style="{ height: MatchListCardDataClass.sticky_top.fixed_header_height }"></div>
         </template>
         <div class="today-champion-bg" v-if="menu_config.menu_root == '2' || menu_config.menu_root == 400 || menu_config.menu_root != 2000"></div>
+      
+        match_list_card_key_arr  {{ match_list_card_key_arr.length }}
         <match-list-card 
-          v-for="card_key in MatchListCardDataClass.match_list_card_key_arr"
-          :key="card_key + MatchListCardDataClass.match_list_render_key" 
+    
+          v-for="card_key in match_list_card_key_arr"
+          :key="card_key" 
           :card_key="card_key" 
         />
         <template v-slot:after>
@@ -189,7 +194,20 @@ export default {
   data() {
     return {
       MatchListCardDataClass   ,
-      load_data_state
+      load_data_state,
+      match_list_card_key_arr:[]
+    }
+  },
+  watch: {
+    'MatchListCardDataClass.list_version'(newValue, oldValue) {
+      this.MatchListCardDataClass_match_list_card_key_arr()
+       this.$forceUpdate()
+    }
+  },
+  methods: {
+    MatchListCardDataClass_match_list_card_key_arr() {
+      this.match_list_card_key_arr= MatchListCardDataClass.match_list_card_key_arr
+      
     }
   },
 };

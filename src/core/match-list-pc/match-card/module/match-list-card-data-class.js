@@ -16,9 +16,9 @@ class MatchListCardDataClass {
     };
     this.list_version = ref('123')
     //当前列表的卡片key列表  不包含赛事卡片
-    this.match_list_card_key_arr = ref( [
+    this.match_list_card_key_arr =    [
       // 'card_key'
-    ]);
+    ] ;
     this.match_list_style_info = ref({})
     // 赛种ID到card_key的映射对象
     this.csid_to_card_key_obj = {

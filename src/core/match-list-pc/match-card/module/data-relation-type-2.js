@@ -263,7 +263,7 @@
     // 赛种ID 到卡片key的 映射对象
     MatchListCardData.csid_to_card_key_obj = csid_to_card_key_obj
     // 卡片key列表
-    MatchListCardData.match_list_card_key_arr =  ref(match_list_card_key_arr) 
+    MatchListCardData.match_list_card_key_arr =  match_list_card_key_arr 
 
     // 重新计算所有的联赛卡片样式
     for(let card_key in league_card_mids_arr){
