@@ -197,10 +197,10 @@ export default defineComponent({
       vsports:null,
       standard_odd_status:0,
       is_basketball_score:false,
-      arrows: "image/wwwassets/bw3/common/slide_icon_y0.svg",
-      arrows_default: "image/wwwassets/bw3/common/slide_icon.svg",
-      arrows_reverse: "image/wwwassets/bw3/common/slide_icon_reverse_y0.svg",
-      arrows_default_balck:"image/wwwassets/bw3/common/slide_icon_r.svg"
+      arrows: "/yazhou-h5/image/common/slide_icon_y0.svg",
+      arrows_default: "/yazhou-h5/image/common/slide_icon.svg",
+      arrows_reverse: "/yazhou-h5/image/common/slide_icon_reverse_y0.svg",
+      arrows_default_balck:"/yazhou-h5/image/common/slide_icon_r.svg"
     })
     // #TODO EMIT
       // created(){

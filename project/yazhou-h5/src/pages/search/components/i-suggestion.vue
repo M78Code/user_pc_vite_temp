@@ -18,7 +18,7 @@
           <span class="score" v-if="item.msc.S1">{{ lodash.get(item, "msc.S1.home", "0") }}-{{ lodash.get(item,
             "msc.S1.away", "0") }}</span>
           <span class="time" v-else>{{ (new Date(+item.mgt)).Format($t('time4')) }}</span>
-          <img src="image/wwwassets/bw3/list/league-collapse-icon.svg" alt="">
+          <img src="/yazhou-h5/image/list/league-collapse-icon.svg" alt="">
         </div>
       </li>
     </ul>
@@ -38,7 +38,7 @@
             <span class="score" v-if="item.msc.S1">{{ lodash.get(item, "msc.S1.home", "0") }}-{{ lodash.get(item,
               "msc.S1.away", "0") }}</span>
             <span class="time" v-else>{{ (new Date(+item.mgt)).Format($t('time4')) }}</span>
-            <img src="image/wwwassets/bw3/list/league-collapse-icon.svg" alt="">
+            <img src="/yazhou-h5/image/list/league-collapse-icon.svg" alt="">
           </div>
         </li>
       </ul>
@@ -74,7 +74,7 @@
                 "msc.S1.away", "0") }}</span>
               <span class="time" v-else>{{ (new Date(+item.mgt)).Format($t('time4')) }}</span>
             </template>
-            <img src="image/wwwassets/bw3/list/league-collapse-icon.svg" alt="">
+            <img src="/yazhou-h5/image/list/league-collapse-icon.svg" alt="">
           </div>
         </li>
       </ul>

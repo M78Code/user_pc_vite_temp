@@ -14,20 +14,20 @@
           </div>
           <div class="row team justify-between">
             <div class="col-4 team-odds" @click="go_to_bet(`20033${team.teamId}`,index)" :class="[is_select(`20033${team.teamId}`) && 'team-odds2']">
-              <div v-if="lodash.get(play_obj,`20033${team.teamId}.os`) == 2"><img src="image/wwwassets/bw3/common/match-icon-lock.svg" /></div>
+              <div v-if="lodash.get(play_obj,`20033${team.teamId}.os`) == 2"><img src="/yazhou-h5/image/common/match-icon-lock.svg" /></div>
               <div v-else>
                 {{compute_value_by_cur_odd_type(lodash.get(play_obj,`20033${team.teamId}.ov`) / 100000,null,hsw_obj[20033])}}
               </div>
             </div>
             <div class="col-4 team-odds" @click="go_to_bet(`20034${team.teamId}`,index)" :class="[is_select(`20034${team.teamId}`) && 'team-odds2']">
-              <div v-if="lodash.get(play_obj,`20034${team.teamId}.os`) == 2"><img src="image/wwwassets/bw3/common/match-icon-lock.svg" /></div>
+              <div v-if="lodash.get(play_obj,`20034${team.teamId}.os`) == 2"><img src="/yazhou-h5/image/common/match-icon-lock.svg" /></div>
               <div v-else>
                 {{compute_value_by_cur_odd_type(lodash.get(play_obj,`20034${team.teamId}.ov`) / 100000,null,hsw_obj[20034])}}
               </div>
             </div>
             <div v-if="'1009' != sub_menu_type"
             class="col-4 team-odds" @click="go_to_bet(`20035${team.teamId}`,index)" :class="is_select(`20035${team.teamId}`) && 'team-odds2'">
-              <div v-if="lodash.get(play_obj,`20035${team.teamId}.os`) == 2"><img src="image/wwwassets/bw3/common/match-icon-lock.svg" /></div>
+              <div v-if="lodash.get(play_obj,`20035${team.teamId}.os`) == 2"><img src="/yazhou-h5/image/common/match-icon-lock.svg" /></div>
               <div v-else>
                 {{compute_value_by_cur_odd_type(lodash.get(play_obj,`20035${team.teamId}.ov`) / 100000,null,hsw_obj[20035])}}
               </div>
