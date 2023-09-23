@@ -21,14 +21,14 @@
         <div class="row sub-title-1" v-if="$route.params.video_size == 1">
           <span
             style="text-align:center"
-            v-for="(item, i) in _.get(item_details,'title')"
+            v-for="(item, i) in lodash.get(item_details,'title')"
             :key="i"
           >{{item.osn}}</span>
         </div>
-        <div class="handicap" v-for="(item,j) in _.get(item_details,'hl')" :key="item.hid">
+        <div class="handicap" v-for="(item,j) in lodash.get(item_details,'hl')" :key="item.hid">
           <div
             class="handicap-item"
-            :class="[`os-${list.os}`, {'no_border_bottom': j > (_.get(item_details,'hl').length - 2)}]"
+            :class="[`os-${list.os}`, {'no_border_bottom': j > (lodash.get(item_details,'hl').length - 2)}]"
             v-for="(list,i) in item.ol"
             :key="i"
           >
@@ -85,7 +85,7 @@ const props = defineProps({
   panel_status: String, //列表展开收起
 });
 
-const { sort_index,  toggle_menu, HandicapTitle,betItem } =
+const { sort_index,  toggle_menu, HandicapTitle,betItem,isShow,lodash } =
   useCommon({ emit, props });
 </script>
 <style lang="scss" scoped>

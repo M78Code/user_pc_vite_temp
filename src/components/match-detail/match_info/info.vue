@@ -41,7 +41,7 @@ import more from "src/components/match-detail/match_info/more/after.vue";
 import baseball from "src/components/match-detail/match_info/more/baseball_after.vue";
 import before from "src/components/match-detail/match_info/animation_template/common_before.vue";
 
-// import dota2_started from "src/components/match-detail/match_info/dota2/dota2-started.vue"
+import dota2_started from "src/components/match-detail/match_info/dota2/dota2-started.vue"
 import lodash from 'lodash'
 export default {
   props: {
@@ -50,11 +50,11 @@ export default {
   },
   components: {
     football,
-    // basketball,
-    // more,
-    // baseball,
+    basketball,
+    more,
+    baseball,
     before,
-    // dota2: dota2_started
+    dota2: dota2_started
   },
   data(){
     return {

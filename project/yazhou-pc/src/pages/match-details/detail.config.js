@@ -41,7 +41,7 @@ export const useGetConfig = () => {
     // menu_data: $menu.menu_data,
     // MatchDataWarehouseInstance: "",
     mid: "", //赛事id
-    sportId: "", //球类id
+    sportId: 0, //球类id
     match_infoData: {}, //赛事状态比分信息
     category_list: [], //玩法集
     mcid: 0, //默认玩法集id
@@ -324,7 +324,7 @@ export const useGetConfig = () => {
              */
             data.msc = details.build_msc(data);
             // 设置赛事信息
-            console.log(data,'data.msc ');
+            console.error( JSON.stringify(data),'data.msc');
             MatchDataWarehouseInstance.set_list_from_match_details(data)  
             let str =state.mid+'_'
             // state.match_infoData = data;
@@ -467,7 +467,7 @@ export const useGetConfig = () => {
     }
     let data = lodash.get(res, "data");
     let timestap = lodash.get(res, "ts");
-    if (code == 200 && data.length && state.match_infoData.mhs != 2) {
+    if (code == 200 && data.length && state.match_infoData?.mhs != 2) {
       data.forEach((item) => {
         // 筛选--删掉已经关盘的投注项
         item = format_plays(item);
