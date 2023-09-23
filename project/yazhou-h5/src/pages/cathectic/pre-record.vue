@@ -72,7 +72,8 @@ const store_cathectic = ref(cathecticReducer)
 
 const props = defineProps({
     main_item: {
-        type: Number || Srting
+        type: [Number, String],
+        default: ''
     }
 })
 // 页面锚点

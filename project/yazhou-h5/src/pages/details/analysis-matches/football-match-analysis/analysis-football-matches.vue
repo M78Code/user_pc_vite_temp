@@ -57,7 +57,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";
     // tab 数据
     const tabList = ref([])
     // 当前选中tab
-    const currentContent = ref(matchResult)
+    const currentContent = ref('matchResult')
     // 仓库数据
     let {  userInfoReducer } = store.getState()
     // TODO: 临时用
