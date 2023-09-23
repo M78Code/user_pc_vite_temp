@@ -1,6 +1,6 @@
 <template>
   <div class="hiegsada">
-    <div v-for="item in match_class" :key="item.mid">
+    <div v-for="item in match_list_s" :key="item.mid">
       <div>{{ item.tid }} - {{ item.csna }} - {{ item.tnjc }}</div>
       <div @click="on_go_detail(item) ">{{ item.mid }} - {{ item.man }} vs {{ item.mhn }}</div>
 
@@ -44,11 +44,9 @@ import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js"
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
 import { get_query_bet_amount_common } from "src/core/bet/class/bet-box-submit.js"
 
-import MatchCtr from 'src/core/data-warehouse/match-ctr/match-ctr.js'
 
 import { useRouter } from "vue-router"
 
-const match_class = reactive(new MatchCtr())
 const router = useRouter()
     onMounted(()=>{
       api_list_data()
