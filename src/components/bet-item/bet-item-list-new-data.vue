@@ -9,7 +9,7 @@
       odds_lift,
       { 'show-odds-icon': odds_state != 'seal' },
     ]"
-    @click.stop="bet_click"
+    @click.stop="bet_click_ol"
     :id="`list-${ol_data.oid}`"
   >
     <!-- 盘口 -->
@@ -251,9 +251,15 @@ const get_odds_state = (mhs, hs, os) => {
  * @description 投注项点击
  * @return {undefined} undefined  组装投注项的数据
  */
-const bet_click = () => {
-  // set_bet_obj_config(item,obj,obj.hl,obj_ol)
-  set_bet_obj_config()
+const bet_click_ol = () => {
+  const {oid,_hid,_hn,_mid } = props.ol_data
+  let params = {
+    oid, // 投注项id ol_obj
+    _hid, // hl_obj 
+    _hn,  // hn_obj
+    _mid,  //赛事id mid_obj
+  }
+  set_bet_obj_config(params,{})
 };
 
 onUnmounted(() => {
