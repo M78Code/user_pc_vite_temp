@@ -43,7 +43,7 @@ import scroll from "src/project/components/record_scroll/scroll.vue";
 import { api_chatroom } from "src/project/api/index.js";
 import chatroom_mixin from 'project_path/src/pages/details/components/chatroom/chatroom_mixin'
 import no_data from "src/project/components/common/no_data.vue";   // 无数据展示组件
-import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, inject } from "vue";
+import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { i18n_t } from "src/boot/i18n.js";;
 //国际化
 
@@ -72,7 +72,10 @@ export default defineComponent({
       is_hasnext: true,  // 是否有下一页
       hasSharedIdList: [],  // 已经晒单的orderID列表
     });
-    const get_detail_data = inject('get_detail_data', {})
+    const get_detail_data = ref({
+        csid: 1,
+        mid: 1,
+    })
     watch(
       () => props.visible,
       (val) => {

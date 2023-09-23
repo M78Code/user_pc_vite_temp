@@ -287,10 +287,13 @@ import { useRouter, useRoute } from "vue-router";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { format_mgt_time, format_total_score } from "src/core/format/index.js"
 import { video_info } from "./videos.js";
-import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
+import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch,ref } from "vue";
 import { i18n_t } from "src/boot/i18n.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
-const get_detail_data = inject('get_detail_data', {})
+const get_detail_data = ref({
+        csid: 1,
+        mid: 1,
+    })
 
 //国际化
 

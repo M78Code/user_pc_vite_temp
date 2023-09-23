@@ -93,12 +93,15 @@
 </template>
 
 <script setup>
-import { defineComponent, ref, nextTick, onUnmounted, onMounted, computed, inject } from 'vue'
+import { defineComponent, ref, nextTick, onUnmounted, onMounted, computed } from 'vue'
 import { api_analysis } from "src/api/index.js";
 import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
 import { useRoute } from 'vue-router'
 import { i18n_t } from "src/boot/i18n.js";;
-const get_detail_data = inject('get_detail_data', {})
+const get_detail_data = ref({
+        csid: 1,
+        mid: 1,
+    })
 
 
 //路由

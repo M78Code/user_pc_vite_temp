@@ -32,12 +32,15 @@ import { useRoute } from 'vue-router'
 
 // TODO: 后续修改调整
 // import { mapGetters } from "vuex";
-import { ref, nextTick, onMounted, onUnmounted, computed, inject } from 'vue'
+import { ref, nextTick, onMounted, onUnmounted, computed } from 'vue'
 import { i18n_t } from "src/boot/i18n.js";
 //国际化
 
 
-    const get_detail_data = inject('get_detail_data', {})
+const get_detail_data = ref({
+        csid: 1,
+        mid: 1,
+    })
     //按钮下标
     const radio_button_index = ref(0)
     //主客队名称

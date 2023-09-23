@@ -64,14 +64,17 @@ import standingsDisk from "project_path/src/pages/details/analysis-matches/footb
 import {api_analysis} from "src/api/index.js";
  // 加载中
 import loadingPage from "project_path/src/components/common/loading.vue" // project/yazhou-h5/src/components/common/loading.vue
-import { computed, ref, nextTick, onUnmounted, onMounted, inject } from 'vue'
+import { computed, ref, nextTick, onUnmounted, onMounted } from 'vue'
 import lodash from 'lodash'
 import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
 import { useRoute } from 'vue-router'
 import { i18n_t } from "src/boot/i18n.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 
-const get_detail_data = inject('get_detail_data', {})
+const get_detail_data = ref({
+        csid: 1,
+        mid: 1,
+    })
   // components: {
   //   "football-standings": football_standings,
   //   "history-engagement": history_engagement,

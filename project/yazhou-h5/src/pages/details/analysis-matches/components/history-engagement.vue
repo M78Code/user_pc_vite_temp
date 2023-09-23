@@ -38,11 +38,14 @@ import {api_analysis} from "src/api/index.js";
 import publicForm from "project_path/src/pages/details/analysis-matches/components/public-form.vue";
  // 无网络展示组件
 // import noData from "project_path/src/components/common/no-data.vue";
-import { ref, computed, onUnmounted, onMounted, inject } from "vue";
+import { ref, computed, onUnmounted, onMounted } from "vue";
 import { useRoute } from 'vue-router'
 import { i18n_t } from "src/boot/i18n.js";
 // 获取详情数据
-const get_detail_data = inject('get_detail_data', {})
+const get_detail_data = ref({
+        csid: 1,
+        mid: 1,
+    })
 
   // components: {
   //   "public-form": public_form,

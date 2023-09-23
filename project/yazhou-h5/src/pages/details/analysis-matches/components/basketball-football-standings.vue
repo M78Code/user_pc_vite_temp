@@ -62,11 +62,14 @@
 
 <script setup>
 import {api_analysis} from "src/api/index.js";
-import { computed, onMounted, onUnmounted, ref, inject } from "vue";
+import { computed, onMounted, onUnmounted, ref } from "vue";
 import lodash from 'lodash'
 import { useRoute } from 'vue-router'
 import { i18n_t } from "src/boot/i18n.js";
-const get_detail_data = inject('get_detail_data', {})
+const get_detail_data = ref({
+        csid: 1,
+        mid: 1,
+    })
 
 // TODO: 后续修改调整
 // import {mapGetters} from "vuex";

@@ -20,7 +20,7 @@
 <script setup>
 // TODO: vuex 后续修改调整
 // import {mapGetters} from "vuex";
-import { onMounted, onUnmounted, ref, watch, nextTick, defineAsyncComponent, inject } from 'vue'
+import { onMounted, onUnmounted, ref, watch, nextTick, defineAsyncComponent } from 'vue'
 import lodash from 'lodash'
 // 详情页 或者 赛果 赛事分析 公共tab 组件
 import headTab from "project_path/src/components/details/match-analysis/head-tab.vue";
@@ -47,7 +47,10 @@ import UserCtr from "src/core/user-config/user-ctr.js";
   // 精彩回放
   const highlights = defineAsyncComponent(() => import("project_path/src/pages/details/analysis-matches/highlights/highlights.vue"))
       // 详情数据
-    const get_detail_data = inject('get_detail_data', {})
+      const get_detail_data = ref({
+        csid: 1,
+        mid: 1,
+    })
     // 锚点
     const analysis_football_matches = ref(null)
     // tab 数据
