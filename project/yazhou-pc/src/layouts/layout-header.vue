@@ -39,7 +39,7 @@ import headerSearch from 'project_path/src/components/site-header/header-search.
 import marqueeCst from "project_path/src/components/marquee/marquee-cst.vue";
 import headerSelect from 'project_path/src/components/site-header/header-select.vue'
 // import timer from "project_path/src/components/site-header/timer.vue"
-import gift_package from '/public/yazhou-pc/image/common/activity_banner/gift_package.png'
+import gift_package from '/yazhou-pc/image/common/activity_banner/gift_package.png'
 import { compute_css_variables } from "src/core/css-var/index.js"
 
 const page_style = ref('')
@@ -208,7 +208,7 @@ const showActivityTime = ref(SessionStorage.get('showActivityTime'))
 const allowClick = ref(false)
 /** 活动弹框显隐 */
 const showActivity = ref(false)
-const userBannerTimer = reactive(i18n_t('common.auto_close').replace('%s', 5))
+const userBannerTimer = ref(i18n_t('common.auto_close').replace('%s', 5))
 /***
  * 运营位活动弹窗
  */

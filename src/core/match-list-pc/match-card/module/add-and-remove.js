@@ -3,6 +3,8 @@ import { compute_style_template_by_matchinfo } from "./compute-style-template.js
 import { conpute_match_list_card_offset } from "./card-show-offset.js";
 import { compute_match_list_style_obj_and_match_list_mapping_relation_obj } from "./data-relation.js";
 import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/core/index.js";
+import { PageSourceData } from 'src/core/index.js';
+
 
 //引入菜单类
 const MenuData = {
@@ -10,6 +12,9 @@ const MenuData = {
     is_show_hot: false,
   },
 };
+
+const { page_source } = PageSourceData;
+
 /**
  * @Description 移除一场联赛
  * @param {number} remove_tid 移除的联赛ID
@@ -203,7 +208,7 @@ const remove_match_when_match_list_mapping_relation_obj_type_other = (
   // 滚球 重新计算菜单数量
   if (
     MenuData.menu_data.cur_level1_menu == "play" &&
-    !localStorage.getItem("get_layout_list_type") == "collect"
+    !page_source == "collect"
   ) {
     MatchListData.match_list_data.compute_sport_count(remove_mid);
   }

@@ -9,16 +9,16 @@
 import { computed } from "vue"
 
 const props = defineProps({
-  width: Boolean,
-  height: Boolean,
-  radius: Boolean,
+  width: [Boolean, Number],
+  height: [Boolean, Number],
+  radius: [Boolean, Number],
 })
 
-const skeleton_style = computed(()=>{
+const skeleton_style = computed(() => {
   return {
-        width: props.width? `${props.width}rem`: '100%',
-        height: `${props.height}rem`
-      }
+    width: props.width ? `${props.width}rem` : '100%',
+    height: `${props.height}rem`
+  }
 })
 
 </script>

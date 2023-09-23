@@ -6,14 +6,11 @@ import { useRoute } from "vue-router";
 import lodash from "lodash";
 
 import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache.js";
-import { PageSourceData } from "src/core/index.js";
+import { PageSourceData, MatchDataWarehouse_PC_List_Common as MatchListData } from "src/core/index.js";
 import { api_match } from "src/api/index.js";
 import BaseData from 'src/core/base-data/base-data.js';
 import { useMittEmit, MITT_TYPES, useMittOn } from "src/core/mitt/index.js";
 // import { set_sticky_top } from 'src/core/match-list-pc/match-card/module/sticky-top.js'
-// import scrollList from "src/components/cus-scroll/scroll_list.vue";
-import Refresh from "src/components/refresh/refresh.vue";
-import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/core/index.js";
 import MatchListScrollClass from 'src/core/match-list-pc/match-scroll.js'
 import MatchListCardClass from "src/core/match-list-pc/match-card/match-list-card-class.js";
 // import video from "src/core/video/video.js";
@@ -30,11 +27,11 @@ import store from "src/store-redux/index.js";
 import ServerTime from 'src/core/server-time/server-time.js';
 
 
-const route = useRoute() || {};
+// const route = useRoute() || {};
 let state = store.getState();
 const { page_source } = PageSourceData;
 const { mx_use_list_res, mx_list_res, mx_collect_match } = process_composable_fn();
-const { update_collect_data, mx_collect_count } = collect_composable_fn();
+const { update_collect_data, mx_collect_count, collect_count } = collect_composable_fn();
 const { show_mids_change } = ws_composable_fn();
 const { api_bymids } = use_featch_fn();
 const { load_video_resources } = pre_load_video
@@ -55,13 +52,13 @@ const vx_filter_checked_all = ref(state.filterReducer?.show_filter_popup);
 const vx_detail_params = ref(state.filterReducer.show_filter_popup);
 // 获取联赛筛选框显示状态
 const vx_show_filter_popup = ref(state.filterReducer.show_filter_popup);
+let show_refresh_mask = ref(false);
 
 const timer_obj = ref({});
 const api_error_count = ref(0);
 let check_match_last_update_timer_id;
 let get_match_list_timeid;
 let hot_match_list_timeout;
-let show_refresh_mask;
 let current_hash_code;
 let axios_debounce_timer;
 let axios_debounce_timer2;
@@ -313,23 +310,23 @@ const fetch_match_list = (is_socket = false, cut) => {
 	// }
 	MatchListScrollClass.fetch_match_list_time = new Date().getTime();
 	// 组件和路由不匹配
-	if (route.name == "details" && page_source != "details") {
-		return;
-	}
+	// if (page_source == "details" && page_source != "details") {
+	// 	return;
+	// }
 	// 强力推荐 静默拉取
 	if (is_socket && is_show_hot.value) {
 		get_hot_match_list(true);
 		return;
 	}
 	// 【搜索列表】 WS 之类的调用 fetch_match_list 转向到 fetch_search_match_list
-	if (route.name == "search") {
+	if (page_source == "search") {
 		this.fetch_search_match_list && this.fetch_search_match_list(is_socket);
 		return false;
 	}
 	if (!is_socket) {
 		load_data_state.value = "loading";
 		// 设置列表滚动条scrollTop
-		route.name != "details" && MatchListScrollClass.set_scroll_top(0);
+		page_source != "details" && MatchListScrollClass.set_scroll_top(0);
 	}
 	let match_api = MenuData.match_list_api_config.match_list || {};
 	// 设置列表接口 和 参数
@@ -360,7 +357,7 @@ const fetch_match_list = (is_socket = false, cut) => {
 		api && api(_params)
 			.then((res) => {
 				// 组件和路由不匹配 菜单id不匹配aa
-				if ((route.name == "details" && page_source != "details") || _params.euid != match_api.params.euid) return;
+				if ((page_source == "details" && page_source != "details") || _params.euid != match_api.params.euid) return;
 				api_error_count.value = 0;
 				if (res.code == 200) {
 					//处理服务器返回的 列表 数据   fetch_match_list
@@ -383,10 +380,10 @@ const fetch_match_list = (is_socket = false, cut) => {
 						load_data_state.value = "empty";
 					}
 				}
-				show_refresh_mask = false;
+				show_refresh_mask.value = false;
 			})
 			.catch((err) => {
-				show_refresh_mask = false;
+				show_refresh_mask.value = false;
 				// 如果是用户切换菜单
 				if (!is_socket) {
 					api_error_count.value++;
@@ -556,13 +553,13 @@ const get_hot_match_list = (backend_run = false) => {
 	api(_params)
 		.then((res) => {
 			// 组件和路由不匹配
-			if (route.name == "details" && page_source != "details") {
+			if (page_source == "details" && page_source != "details") {
 				return;
 			}
 			if (handle_destroyed()) {
 				return;
 			}
-			show_refresh_mask = false;
+			show_refresh_mask.value = false;
 			let code = lodash.get(res, "data.code");
 			// 赛事列表
 			let match_list = lodash.get(res, "data.data") || [];
@@ -605,7 +602,7 @@ const get_hot_match_list = (backend_run = false) => {
 		})
 		.catch((err) => {
 			// console.error(err)
-			show_refresh_mask = false;
+			show_refresh_mask.value = false;
 			if (!backend_run) {
 				load_data_state.value = "empty";
 			}
@@ -626,7 +623,7 @@ const on_go_top = () => {
  */
 const on_refresh = () => {
 	fetch_match_list(2);
-	show_refresh_mask = true;
+	show_refresh_mask.value = true;
 };
 
 
@@ -722,6 +719,9 @@ const useMatchListMx = () => {
 		vx_filter_checked_all,
 		vx_show_filter_popup,
 		match_tpl_component,
+    show_refresh_mask,
+    collect_count,
+    is_show_hot,
 		on_go_top,
 		on_refresh,
 		remove_match_data,

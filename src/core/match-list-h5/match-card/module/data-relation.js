@@ -41,7 +41,7 @@ const set_match_list_mapping_relation_obj_type = () => {
     type = 4
   }
   // 电竞收藏
-  else if (menu_data.is_esports && localStorage.getItem('get_layout_list_type') == 'collect') {
+  else if (menu_data.is_esports && page_source == 'search') {
     type = 7
   }
   // 冠军聚合页

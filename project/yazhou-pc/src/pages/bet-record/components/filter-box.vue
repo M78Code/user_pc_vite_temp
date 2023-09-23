@@ -252,23 +252,21 @@ const startTimeShow = ref(false); // 开始时间展示
 const endTimeShow = ref(false); // 结束时间展示
   // 预约注单默认状态
   const default_value= ref('0')
-
+// 点击操作方法
+const click_fun = ()=>{
+  startTimeShow.value = false
+  show_select_time_sort.value = false
+}
 onMounted(() => {
   toolWords.value = ["今天", "昨天", "七天内", "一个月内"] //JSON.parse(i18n_t("time.time_date_list_1")); 
-  document.addEventListener("click", () => {
-    startTimeShow.value = false
-    show_select_time_sort.value = false
-  })
+  document.addEventListener("click", click_fun)
 });
 watch(() => props.startDateSearch, () => {
   console.error('时间改变了', props);
 })
 onUnmounted(()=>{
    toolWords.value = null;
-   document.removeEventListener("click", () => {
-    startTimeShow.value = !startTimeShow.value
-    show_select_time_sort.value = false
-  })
+   document.removeEventListener("click", click_fun)
 })
 
 

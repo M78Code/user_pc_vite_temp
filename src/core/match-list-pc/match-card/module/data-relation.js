@@ -46,7 +46,7 @@ const MenuData ={
           type = 4
         }
         // 电竞收藏
-        else if(menu_data.is_esports && localStorage.getItem('get_layout_list_type') == 'collect'){
+        else if(menu_data.is_esports && page_source == 'collect'){
           type = 7
         }
         // 冠军聚合页

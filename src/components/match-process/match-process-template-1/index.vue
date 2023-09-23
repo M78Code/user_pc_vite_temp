@@ -41,7 +41,6 @@
         :rows="date_rows"
         v-if="computed_show_date"
         :match_props="match_props"
-        :match_list_data="match_list_data"
         class="date-wrap"
       /> -->
       
@@ -73,7 +72,6 @@ import lodash from "lodash";
 const props = defineProps({
   // 当场赛事信息
   match_props: Object,
-  match_list_data: Object,
   // 显示的页面
   show_page: {
     type: String,
