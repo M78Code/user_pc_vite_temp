@@ -93,15 +93,14 @@
                     }
 
                     &.current {
-                        color: var(--q-color-fs-color-41);
+                        color: var(--q-gb-t-c-3);
 
                         .dir-triangle {
-
-                            border-top-color: var(--q-color-border-color-4);
+                            border-top-color: var(--q-gb-bd-c-2);
                         }
 
                         .count {
-                            color: var(--q-color-fs-color-41) !important;
+                            color: var(--q-gb-t-c-3) !important;
                         }
 
                         .i-title {
@@ -122,7 +121,7 @@
                     }
 
                     .dir-triangle {
-                        border-top: 0.04rem solid var(--q-color-border-color-4);
+                        border-top: 0.04rem solid var(--q-gb-bd-c-2);
                     }
                 }
             }
@@ -169,18 +168,18 @@
                         }
 
                         .sport-match-count {
-                            color: var(--q-color-fs-color-41) !important;
+                            color: var(--q-gb-t-c-3) !important;
                             // font-weight: 700;
                         }
                     }
 
                     .inner-w {
                         .s-w-i-title {
-                            color: var(--q-color-fs-color-41);
+                            color: var(--q-gb-t-c-3);
 
                             // font-weight: 700;
                             &.esport {
-                                color: var(--q-color-com-fs-color-8);
+                                color: var(--q-gb-t-c-14);
                             }
                         }
                     }
@@ -188,16 +187,16 @@
 
                 .inner-w {
                     .s-w-i-title {
-                        color: var(--q-color-fs-color-129);
+                        color: var(--q-gb-t-c-3);
 
                         &.esport {
-                            color: var(--q-color-fs-color-133);
+                            color: -var(--q-gb-t-c-5);
                         }
                     }
 
                     .sport-w-icon {
                         .sport-match-count {
-                            color: var(--q-color-fs-color-129);
+                            color: var(--q-gb-t-c-3);
                             // font-weight: 700;
                         }
                     }
@@ -279,7 +278,7 @@
 
         /* **************日期菜单********************************** -S*/
         .d-c-wrapper {
-            background-color: var(--q-color-page-bg-color-91);
+            background-color: var(--q-gb-bg-c-15);
         }
 
         .date-container {
@@ -305,7 +304,7 @@
                 }
 
                 &.focus2 {
-                    color: var(--q-color-com-fs-color-8) !important;
+                    color: var(--q-gb-t-c-14) !important;
                     border-bottom: 2px solid var(--q-color-com-border-color-13);
                 }
 
@@ -320,7 +319,7 @@
         /* **************体育类型菜单********************************** -S*/
         .sport-menu-container2 {
             .sport-selector {
-                color: var(--q-color-com-fs-color-8) !important;
+                color: var(--q-gb-t-c-14) !important;
             }
         }
 
@@ -358,7 +357,7 @@
     }
 
     .no-shadow3 * {
-        color: var(--q-color-com-fs-color-8) !important;
+        color: var(--q-gb-t-c-14) !important;
     }
 
     .theme-div .date-menu-item:not(.focus) {
@@ -384,7 +383,7 @@
 
         .actived2 {
             span {
-                color: var(--q-color-com-fs-color-8) !important;
+                color: var(--q-gb-t-c-14) !important;
                 border-bottom: 2px solid var(--q-color-border-color-19) !important;
             }
         }
