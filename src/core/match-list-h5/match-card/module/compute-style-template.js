@@ -36,18 +36,21 @@ import lodash from "lodash"
 import { update_match_parent_card_style } from "./utils.js"
 import { league_title_card_template } from "../template/card-template-config.js"
 import { MATCH_LIST_TEMPLATE_CONFIG } from "../template"
+import { LocalStorage, utils } from "src/core/index.js";
 /**
  * @Description 获取其他玩法盘口高度
+ * @param {string | Number } csid  赛种id
  * @param {string | Number } mid  赛事id
 */
-const get_tab_play_height = (mid) => {
+const get_tab_play_height = (mid, csid) => {
+  const lang =  LocalStorage.get("__LANG")
   let { play_current_key, other_handicap_list = [] } = MatchListData.list_to_obj.mid_obj['mid_' + mid] || {}
-  let { tab_play_handicap_height: handicap_height } = MATCH_LIST_TEMPLATE_CONFIG[`template_1_config`]['match_template_config'] || {}
+  let { tab_play_total_height: handicap_height } = lodash.get(MATCH_LIST_TEMPLATE_CONFIG, `template_${csid}_config.match_template_config`)
   let length = lodash.get(other_handicap_list, '0.ols.length', 3)
   //5分钟      波胆
   if (['hps5Minutes', 'hpsBold'].includes(play_current_key)) {
-    // 计算0号模板次要玩法 盘口+玩法标题高度
-    handicap_height = length * 35 + (40 - (!['en', 'ad', 'ms'].includes(localStorage.getItem('get_lang')) ? 16 : 0))
+    // 计算1号模板次要玩法 盘口+玩法标题高度
+    handicap_height = length * 35 + (40 - (!['en', 'ad', 'ms'].includes(lang.value) ? 16 : 0))
   }
   return handicap_height
 }
@@ -59,8 +62,8 @@ const get_tab_play_height = (mid) => {
 */
 const compute_style_template_by_match_info_template1_zuqiu = (match, match_style_obj) => {
 
-  // 角球、罚牌、点球大战等玩法 是否折叠
-  let is_fold_tab_play = lodash.get(MatchListCardData.all_card_obj['mid_' + match.mid], 'is_fold_tab_play', false)
+  // 是否展示次要玩法
+  let is_show_tab_play = lodash.get(match_style_obj, 'is_show_tab_play', false)
 
   let tab_play_total_height = 0
   if (is_show_tab_play && !is_fold_tab_play) {
@@ -72,12 +75,10 @@ const compute_style_template_by_match_info_template1_zuqiu = (match, match_style
   }
 
   return {
-    // 是否显示角球、罚牌、点球大战等玩法
-    is_show_tab_play,
     // 角球、罚牌、点球大战等玩法 是否折叠
     is_fold_tab_play,
     // 角球区域高度
-    tab_play_total_height
+    tab_play_total_height 
   }
 }
 
@@ -263,25 +264,28 @@ export const compute_style_template_by_match_info1 = (match, template_id) => {
   return style_obj
 }
 
-export const compute_style_template_by_match_info = (match) => {
-  let { cosCorner = [], cosOvertime = [], cosPenalty = [], cosPromotion = [], cosBold = [], cosOutright = [], cosPunish = [], hpsAdd = [], 
-    cos15Minutes = [], cos5Minutes = [], csid = 1 } = match;
-  // 是否显示次要玩法标题
-  let is_show_tab_play = cosCorner.length > 0 || cosOvertime.length > 0 || cosPenalty.length > 0 || cosPromotion.length > 0 || cosBold.length > 0 ||
-    cosOutright.length > 0 || cosPunish.length > 0 || hpsAdd.length > 0 || cos15Minutes.length > 0 || cos5Minutes.length > 0
-  // 模板对应配置
+/**
+ * @description 计算赛事对应模板高度
+ * @param { match } 赛事对象 
+ * @returns 
+ */
+export const compute_style_template_by_match_height = (match) => {
+  
+  const { csid, mid } = match
+
+  // 对应模板默认配置
   let template_config = lodash.get(MATCH_LIST_TEMPLATE_CONFIG, `template_${csid}_config.match_template_config`)
+
+  let is_show_tab_play = compute_show_tab_play(match)
 
   // 赛事样式对象
   let match_style_obj = {
-    // 是否显示次要玩法标题
+    // 是否显示次要玩法
     is_show_tab_play,
     // 次要玩法是否折叠
-    is_fold_tab_play: false,
-    // 次要玩法总高度
-    tab_play_total_height: 0,
+    is_fold_tab_play: is_show_tab_play ? compute_fold_tab_play(match) : false,
     //次要玩法盘口高度
-    tab_play_handicap_height: get_tab_play_height(lodash.get(match, 'mid')),
+    tab_play_total_height: is_show_tab_play ? get_tab_play_height(mid, csid) : 0,
     // 是否需要动态计算高度
     is_dynamic_compute_height: template_config.is_dynamic_compute_height,
     // 卡片总高度
@@ -289,7 +293,7 @@ export const compute_style_template_by_match_info = (match) => {
     // 是否显示该赛事卡片
     is_show_card: true,
     // 卡片 id
-    csid: match.csid
+    csid
   }
 
   // 如果没有赛事信息
@@ -313,12 +317,35 @@ export const compute_style_template_by_match_info = (match) => {
     Object.assign(match_style_obj, obj)
   }
 
-  console.log({
-    ...template_config,
-    ...match_style_obj,
-  })
   return {
-    ...template_config,
-    ...match_style_obj,
+    mid,
+    total_height: compute_match_total({ ...template_config, ...match_style_obj })
   }
+}
+
+/**
+ * 计算赛事卡片总高度
+ * @param {match_style_obj} 卡片配置 
+ */
+const compute_match_total = (match_style_obj) => {
+  let height = Object.values(match_style_obj).filter(t => typeof t === 'number').reduce((a, b) => a + b, 0)
+  return utils.px_2_rem(height)
+}
+
+/**
+ * 是否显示次要玩法
+ * @param {match} 赛事对象 
+ */
+const compute_show_tab_play = (match) => {
+  const { cosCorner = false, cosOvertime = false, cosPenalty = false, cosPromotion = false, cosBold = false, cosOutright = false, cosPunish = false, hpsAdd = false, 
+    cos15Minutes = false, cos5Minutes = false } = match;
+  return cosCorner || cosOvertime || cosPenalty || cosPromotion || cosBold || cosOutright || cosPunish || hpsAdd || cos15Minutes || cos5Minutes
+}
+
+/**
+ * 次要玩法是否折叠
+ * @param {match} 赛事对象 
+ */
+const compute_fold_tab_play = (match) => {
+  return lodash.get(MatchListCardData.all_card_obj['mid_' + match.mid], 'is_fold_tab_play', false)
 }

@@ -106,6 +106,7 @@ import { CommonTabFullVersionWapper } from "src/components/tab/common-tab/index.
 import { IconWapper } from 'src/components/icon'
 import lodash from 'lodash'
 import {i18n_t} from 'src/core/index'
+const tooltip_style = 'background:rgba(0,0,0,0.8);padding:4px 5px;border-radius:0px;color:#fff'
 export default defineComponent({
   name: "HandicapTab",
   components: {
@@ -223,7 +224,8 @@ export default defineComponent({
       is_details,
       get_layout_statu,
       currentIndex,
-      category_list_length
+      category_list_length,
+      tooltip_style
     };
   },
 });

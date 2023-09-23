@@ -47,8 +47,8 @@ const props = defineProps(
 
 const route = useRoute();
 const get_detail_data = ref({
-        csid: 1,
-        mid: 1,
+        csid: '1',
+        mid: '1',
     })
 let ballTypeBackground = computed(() => detail_csid_config['CSID_' + get_detail_data.value.csid].detail.B)
 let data = reactive({

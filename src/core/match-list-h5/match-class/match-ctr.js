@@ -5,6 +5,7 @@
  */
 import { ref } from 'vue'
 import lodash from 'lodash'
+import { MATCH_LIST_TEMPLATE_CONFIG } from "../match-card/template/index"
 
 class MatchCtr {
   /**
@@ -232,6 +233,28 @@ class MatchCtr {
     }
     this.set_match_data_version()
   }
+  /**
+   * @description: 设置赛事默认盘口
+   */
+  // set_default_disk_port() {
+  //   return this.list.map(t => {
+  //     let main_disk_data_by_csid = lodash.get(MATCH_LIST_TEMPLATE_CONFIG, `template_${t.csid}_config.template_${t.csid}_main`)
+  //     t.hps.forEach(l => {
+
+  //     })
+  //     let hps_data = main_disk_data_by_csid.map(l => {
+  //       return {
+  //         hpid: t.chpid,
+  //         chpid: l.chpid,
+  //         h1: [{ ol: l }]
+  //       }
+  //     })
+  //     return {
+  //       ...t,
+  //       hps: default_disk_data_by_csid
+  //     }
+  //   })
+  // }
   appendListObj(match_list) {
     let manyObj = this.listToManyObj(match_list);
     Object.keys(manyObj.hn_obj).forEach(hn_id => {

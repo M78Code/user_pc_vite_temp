@@ -66,7 +66,7 @@ const timer_1 = ref(null)
 // 待确认中的提前结算单
 const provided_ = ref({})
 // 选中tab的下标
-const main_item = ref(0)
+const main_item = ref('0')
 // 锚点
 const unsettle_child = ref(null)
 const record_box = ref(null)

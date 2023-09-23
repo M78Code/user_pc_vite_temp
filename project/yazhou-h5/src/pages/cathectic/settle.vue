@@ -94,7 +94,8 @@ import { i18n_t } from "src/boot/i18n.js";
 // mixins: [skt_order]
 const props = defineProps({
   main_item: {
-    type: String
+    type: [String, Number],
+    default: ''
   }
 })
 // 仓库数据

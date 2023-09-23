@@ -1,8 +1,3 @@
-<!--
- * @Author:
- * @Date:
- * @Description: 赛事列表页 底部菜单
--->
 <template>
   <div class="container-menu-w" :class="{
     black2: UserCtr.theme.includes('night'),
@@ -557,15 +552,10 @@ watch(UserCtr.user_version, () => {
 //   'get_curr_third_menu_id',
 //   'get_access_config',
 //   'get_resources_obj',
-//   'get_golistpage',
+//   'get_golistpage', TODO
 //   'get_hot_list_item'
-
 // ]),
-// ...mapGetters({
-//   menu_type: "get_menu_type",
-//   get_newer_standard_edition:'get_newer_standard_edition',// 新手版与标准版
-//   current_esport_csid:'get_current_esport_csid',
-// }),
+
 const isshow_bottom_banner = computed(() => {
   // TODO:获取商户信息
   // return get_resources_obj.is_show && !get_betbar_show && calc_resources_obj.img_src

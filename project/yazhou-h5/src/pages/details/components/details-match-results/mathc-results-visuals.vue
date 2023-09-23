@@ -21,7 +21,7 @@
             <span class="text-span" :class="{'vi-top': UserCtr.lang == 'vi'}">{{ item.text }}</span>
             <q-knob
                 readonly
-                :value="item.away"
+                :model-value="item.away"
                 :max="item.home + item.away"
                 :size="get_analyze_show?'':'.56rem'"
                 :thickness="0.3"
@@ -40,7 +40,7 @@
             <span class="text-span" :class="{'vi-top': UserCtr.lang == 'vi'}">{{ item.text }}</span>
             <q-knob
                 readonly
-                :value="item.proportion"
+                :model-value="item.proportion"
                 :size="get_analyze_show?'':'.56rem'"
                 :thickness="0.3"
                 color="orange"
@@ -98,8 +98,8 @@ import { onMounted, onUnmounted, ref, watch } from "vue";
 
 
 const get_detail_data = ref({
-        csid: 1,
-        mid: 1,
+        csid: '1',
+        mid: '1',
     })
   // mixins: [ msc ],
   const props = defineProps({

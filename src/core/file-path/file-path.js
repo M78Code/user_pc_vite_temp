@@ -1,26 +1,10 @@
-/*
- * @Author         : lane jstylane@itcom888.com
- * @Date           : 2023-07-30 19:59:10
- * @LastEditors: lowen pmtylowen@itcom888.com
- * @LastEditTime: 2023-09-19 14:49:07
- * @FilePath       : \user-pc-vite\src\core\file-path\file-path.js
- * @Description    : 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
- */
-// 电竞赛种csid
 import lodash from 'lodash'
-
+// 电竞赛种csid
 const e_sport_csids = [101, 100, 102, 103];
 import { AllDomain, UserCtr } from 'src/core/'
-setTimeout(() => {
-  console.error(AllDomain, 1111111)
-}, 3000);
 // 目前环境信息
-const { NODE_ENV, CURRENT_ENV, OSS_FILE_ARR, DOMAIN_RESULT } = window.BUILDIN_CONFIG;
-let config = {
-  domain_img: {
-    idc_online: {}
-  }
-};
+const { NODE_ENV, CURRENT_ENV, DOMAIN_RESULT } = window.BUILDIN_CONFIG;
+
 // 字母顺序
 const letter_num = {
   A: 0,

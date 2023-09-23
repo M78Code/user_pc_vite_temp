@@ -445,10 +445,6 @@ export const template_1 = {
 // 赛事模板配置
 export const match_template_config = {
   ...TemplateCommon.match_style_template,
-  // 玩法标题高度
-  play_title_height: 36,
-  // 角球盘口高度
-  tab_play_handicap_height: 111,
   // 是否需要动态计算高度
   is_dynamic_compute_height: true,
 }

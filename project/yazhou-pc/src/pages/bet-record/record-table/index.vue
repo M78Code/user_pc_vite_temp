@@ -452,10 +452,10 @@ const props = defineProps({
     default: 0,
   },
   random: Number,
-  // lang:{
-  //   type: String,
-  //   default: "zh"
-  // }
+  lang:{
+    type: String,
+    default: "zh"
+  }
 });
 console.error(props);
 const emit = defineEmits([
