@@ -30,11 +30,11 @@
 
     <div class="content-m" ref="record_box">
       <!--未结算  -->
-        <unsettle ref="unsettle_child" v-show="main_item == 0" :main_item="main_item"></unsettle>      
+        <unsettle ref="unsettle_child" v-show="main_item == '0'" :main_item="main_item"></unsettle>      
       <!--已结算-->
-      <settle v-show="main_item == 1" :main_item="main_item"></settle>
+      <settle v-show="main_item == '1'" :main_item="main_item"></settle>
       <!--预约-->
-      <preRecord v-show="main_item == 2" :main_item="main_item"></preRecord>
+      <preRecord v-show="main_item == '2'" :main_item="main_item"></preRecord>
     </div>
   </div>
 </template>

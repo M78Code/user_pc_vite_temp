@@ -7,6 +7,8 @@ import BetData from "src/core/bet/class/bet-data-class.js"
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js"
 import { get_query_bet_amount_common } from "src/core/bet/class/bet-box-submit.js"
 import {compute_value_by_cur_odd_type} from  "src/core/format/module/format-odds-conversion-mixin.js"
+import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
+
 
 
 /**
@@ -165,7 +167,8 @@ export const bet_click = (item,obj_hp,obj_hl) =>{
     // 以下为 投注显示或者逻辑计算用到的参数
     tid_name: item.tnjc,  // 联赛名称
     tn_name: item.tn,  // 联赛名称2
-    match_ms: item.ms, // 赛事阶段
+    match_ms: item.mgt, // 赛事阶段
+    bet_type: 'common_bet', // 投注类型
   }
   BetViewDataClass.bet_special_h5[item.mid] = bet_obj
   BetData.bet_list[item.mid] = bet_obj
@@ -173,6 +176,7 @@ export const bet_click = (item,obj_hp,obj_hl) =>{
 
   BetData.set_bet_read_write_refer_obj(bet_obj)
   get_query_bet_amount_common(bet_obj)
+  useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX,true)
   BetViewDataClass.set_bet_show(true)
   
 }

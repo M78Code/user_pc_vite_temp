@@ -37,9 +37,6 @@ const theme = ref("day")
 //图标出错 与 记录
 const img_error_map = ref({})
 
-const default_league_img = ref('')
-
-const oss_img_http = window.BUILDIN_CONFIG.DOMAIN_RESULT.first_one
 onMounted(() => {
   //设置 默认 图片
   set_default_icon();

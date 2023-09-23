@@ -257,6 +257,7 @@ export const EMIT_SHOW_DEFAULT_BANNER_EVENT = "EMIT_SHOW_DEFAULT_BANNER_EVENT";
 export const EMIT_USER_LOGON_OK_EVENT = "EMIT_USER_LOGON_OK_EVENT";
 // 触发首页跳转
 export const EMIT_HOME_TAB = "EMIT_HOME_TAB";
+export const EMIT_MAIN_LIST_MATCH_IS_EMPTY = "EMIT_MAIN_LIST_MATCH_IS_EMPTY";
 
 
 export const IFRAME_VIDEO_VOLUME = "IFRAME_VIDEO_VOLUME";
@@ -264,4 +265,6 @@ export const EMIT_EVENT_DATA = "EMIT_EVENT_DATA";
 export const TOGGLE_COLLECT_LEAGUE = "TOGGLE_COLLECT_LEAGUE";
 // 限额
 export const EMIT_REF_DATA_BET_MONEY = "EMIT_REF_DATA_BET_MONEY"
+// 投注弹窗显示
+export const EMIT_REF_SHOW_BET_BOX = "EMIT_REF_SHOW_BET_BOX"
 //------------------------------------------------------------------命令定义-E-------------------------------------------------------------------------------------

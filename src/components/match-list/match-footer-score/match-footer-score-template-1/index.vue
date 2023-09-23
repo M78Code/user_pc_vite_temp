@@ -69,8 +69,14 @@ import store from 'src/store-redux/index.js'
 import { get_match_status } from 'src/core/index.js'
 import lodash from 'lodash';
 let state = store.getState();
-const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
-;
+// const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
+
+const props = defineProps({
+  match: {
+    type: Object,
+    default: () => {},
+  }
+})
 
 const more_right_icon = ref(false);
 const more_left_icon = ref(false);

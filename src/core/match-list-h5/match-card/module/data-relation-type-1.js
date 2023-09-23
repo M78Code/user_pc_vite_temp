@@ -18,7 +18,7 @@
 
     import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 
-    import {get_league_title_card_height,compute_style_template_by_matchinfo } from  "./compute-style-template.js"
+    import {get_league_title_card_height,compute_style_template_by_match_info } from  "./compute-style-template.js"
     import {set_new_sport_title_card_fold} from "./add-and-remove.js"
     import {set_new_league_fold} from  "./fold-tid.js"
     import {
@@ -229,7 +229,7 @@ import { template_3 } from "../template/module/template-3.js";
           unfold_match_count++
           // 赛事表征数据
           let match = MatchListData.match_list_data.mid_obj['mid_'+mid]
-          let match_style_obj =  compute_style_template_by_matchinfo(match,template_id)
+          let match_style_obj =  compute_style_template_by_match_info(match,template_id)
           all_card_obj['mid_'+mid] = match_style_obj
           league_card_total_height += match_style_obj.total_height
           // 设置父级卡片key

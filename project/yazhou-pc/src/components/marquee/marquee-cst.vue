@@ -75,6 +75,9 @@ import globalAccessConfig from "src/core/access-config/access-config.js"
 const emit = defineEmits(['navigate'])
 const $q = useQuasar()
 
+// TODO: 控制台warn -> tooltip_style
+const tooltip_style = 'background:rgba(0,0,0,0.8);padding:4px 5px;border-radius:0px;color:#fff'
+
 /** 公告栏信息集合 */
 const notice_info = reactive({
     /** 公告栏总宽度 */
