@@ -3,11 +3,8 @@ import VSport from "./vsport.js"
 import { i18n_t} from  "src/core/index.js"
 import { useMittOn, useMittEmit, useMittEmitterGenerator,MITT_TYPES  } from "src/core/mitt/index.js"
 import PageSourceData  from  "src/core/page-source/page-source.js"
-import { useRouter, useRoute } from 'vue-router'
 import {msc_array_obj} from "src/core/format/index.js"
 import { throttle } from "lodash";
-const router = useRouter()
-const route = useRoute()
 let video_voice = false
 export default class VsportCtr {
   /**
