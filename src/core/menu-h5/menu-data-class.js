@@ -46,7 +46,6 @@ class MenuData {
     this.current_lv_2_menu = undefined;
     this.current_lv_2_menu_i = undefined;
     //当前的菜单 lv3
-    this.current_esport_csid = undefined;
     this.current_lv_3_menu = null;
     this.current_lv_3_menu_i = undefined;
     //当前的菜单 lv4
@@ -770,7 +769,7 @@ class MenuData {
       this.set_current_lv3_menu();
       return;
     }
-    this.get_date_menu_api_when_subchange(item)
+    this.get_date_menu_api_when_subchange(current_lv_2_menu, type)
   }
 
   /**
@@ -822,6 +821,10 @@ class MenuData {
     });
     this.update()
   }
+
+
+
+
   get_level_four_menu() {
     return "";
   }
