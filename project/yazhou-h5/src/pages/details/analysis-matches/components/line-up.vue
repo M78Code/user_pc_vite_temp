@@ -114,7 +114,7 @@
           </div>
           <div class="col2">{{ item.positionName || '-' }}</div>
           <div class="col3 ellipsis">
-            <template v-if="get_lang == 'en'">&ensp;</template>
+            <template v-if="UserCtr.lang == 'en'">&ensp;</template>
             {{ item.thirdPlayerName || '-' }}
           </div>
           <div class="col4 end-btn">
@@ -166,6 +166,8 @@ import { ref, computed, nextTick, onUnmounted, onMounted } from "vue";
 import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
 import { useRoute } from 'vue-router'
 import { i18n_t } from "src/boot/i18n.js";
+import { get_file_path } from "src/core/file-path/file-path.js"
+import UserCtr from "src/core/user-config/user-ctr.js";
 import lodash from "lodash"
 
 //国际化
@@ -183,7 +185,7 @@ const get_detail_data = ref({
   const line_up_data = ref([])
   const no_data = ref(true)
   //默认图片地址
-  const default_url = ref("image/bw3/png/my.png")
+  const default_url = ref("/yazhou-h5/image/png/my.png")
   // 最后一位数
   const number = ref('')
   // 代表多少列 并且里边的数字
