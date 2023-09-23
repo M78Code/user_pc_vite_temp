@@ -53,7 +53,7 @@ class PageSourceData {
     //初始化 页面根据  page_source 计算出来的 一些参照值
     this.rebase_other_property();
     //排序	 int 类型 1 按热门排序 2 按时间排序
-    this.sort_type =1 ;
+    this.sort_type = 1 ;
     // //标准版和简版 1为新手版  2为标准版    ['','v2_h5','v2_h5_st']
     this.newer_standard_edition = 2 
     // 列表 搜素 文字 
