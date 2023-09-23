@@ -46,6 +46,7 @@ class MenuData {
     this.current_lv_2_menu = undefined;
     this.current_lv_2_menu_i = undefined;
     //当前的菜单 lv3
+    this.current_esport_csid = undefined;
     this.current_lv_3_menu = null;
     this.current_lv_3_menu_i = undefined;
     //当前的菜单 lv4
@@ -55,9 +56,6 @@ class MenuData {
     //热门的
     this.hot_tab_menu = {};
     this.menu_list = SessionStorage.get("menu_list", []);
-    this.menu_original_data = {};
-
-
     // 页脚菜单
     this.footer_sub_menu_id = ""; //页脚子菜单id
     this.footer_sub_changing = false //页脚子菜单变化 
@@ -77,7 +75,7 @@ class MenuData {
         const { mew_menu_list_res } = BaseData; //获取主数据
         this.recombine_menu(mew_menu_list_res, mew_menu_list_res);
         this.update();
-      }, 50)
+      }, 10)
     );
     //设置从缓存拿到的数据 到class
     this.set_cache_class(
@@ -186,39 +184,20 @@ class MenuData {
     }
     return mids;
   }
-  get_csna(csid, use_storage = false) {
-    if (use_storage) {
-      const sp_list = JSON.parse(sessionStorage.getItem("sp_list"));
-      if (sp_list) {
-        return sp_list.find((item) => item.csid == csid);
-      }
-    }
-  }
-  get_tn(tid, use_storage = false) {
-    if (use_storage) {
-      const tids_list = JSON.parse(sessionStorage.getItem("tids_obj"));
-      if (tids_list) {
-        return tids_list.find((item) => item.tid == tid);
-      }
-    }
-  }
   //get euid
-  async get_euid(arg_mi, menu_type) {
+  get_euid(arg_mi) {
+    const menu_type = this.menu_type.value;
     let mi = arg_mi;
     if (!mi) return "";
-    return BaseData.mi_euid_map_res[parseInt(mi)]?.h;
-    const euid = await db.menus_mapping.get(arg_mi + "2", "mi");
-    if (euid) return euid.menus_mapping.h || "";
-
     if (menu_type == 4) {
       //冠军特殊处理
       mi = 400 + (mi?.substr(0, 3) - 100);
     }
     // 赛果mi
     if (menu_type == 28) return arg_mi;
-    let menu_mapping = JSON.parse(localStorage.getItem("menu_mapping"));
-    if (!lodash.isEmpty(menu_mapping[mi])) {
-      return menu_mapping[mi].h;
+    let menu_mapping = BaseData.mi_euid_map_res[mi];
+    if (!lodash.isEmpty(menu_mapping)) {
+      return menu_mapping.h;
     } else {
       // 电竞无旧菜单id处理
       let menu_dianjing = {
@@ -228,66 +207,6 @@ class MenuData {
         2103: 41003,
       };
       return menu_dianjing[mi];
-    }
-  }
-  //indexDB 存储菜单元数据
-  set_db_menus_info(data) {
-    if (!lodash.isEmpty(data)) {
-      let db_data = [];
-      lodash.each(Object.keys(data), (item) => {
-        if (data[item].sl && this.count_menu(data[item]) > 0) {
-          //过滤没有赛事数据球类
-          db_data.push({
-            mi: item,
-            menu_info: data[item],
-          });
-        }
-      });
-      //mi作为主键
-      db.menus_info.bulkAdd(db_data, "mi");
-    }
-  }
-  //indexDB 存储菜单元数据mapping
-  set_db_menus_mapping(data) {
-    if (!lodash.isEmpty(data)) {
-      let db_data = [];
-      lodash.each(Object.keys(data), (item) => {
-        db_data.push({
-          mi: item,
-          menus_mapping: data[item],
-        });
-      });
-      //mi作为主键
-      db.menus_mapping.bulkAdd(db_data, "mi");
-    }
-  }
-  //indexDB 存储名称列表元数据
-  set_db_name_list(data) {
-    if (!lodash.isEmpty(data)) {
-      let db_data = [];
-      lodash.each(Object.keys(data), (item) => {
-        db_data.push({
-          mi: item,
-          menu_lang: data[item],
-        });
-      });
-      //mi作为主键
-      db.menu_lang.bulkAdd(db_data, "mi");
-    }
-    // console.log(data,"======data")
-  }
-  //db 存储元数据
-  set_db_match(data) {
-    if (!lodash.isEmpty(data)) {
-      let db_data = [];
-      lodash.each(Object.keys(data), (item) => {
-        db_data.push({
-          mi: item,
-          match_info: data[item],
-        });
-      });
-      //mi作为主键
-      db.match_info.bulkAdd(db_data, "mi");
     }
   }
   /**
@@ -509,51 +428,9 @@ class MenuData {
     }
     return false;
   }
-  vr_menu() {
-    const vr_list = [
-      {
-        field1: "1001",
-        menuId: "1001",
-        name: "足球",
-        subList: [],
-      },
-      {
-        field1: "1004",
-        menuId: "1004",
-        name: "篮球",
-        subList: [],
-      },
-      {
-        field1: "1011",
-        menuId: "1011",
-        name: "赛马",
-        subList: [],
-      },
-      {
-        field1: "1002",
-        menuId: "1002",
-        name: "赛狗",
-        subList: [],
-      },
-      {
-        field1: "1010",
-        menuId: "1010",
-        name: "摩托车",
-        subList: [],
-      },
-      {
-        field1: "1009",
-        menuId: "1009",
-        name: "泥地摩托车",
-        subList: [],
-      },
-    ];
-    return vr_list;
-  }
   recombine_menu_desc(item) {
     return String(item).substr(0, 3);
   }
-
   // 查找竞足数据
   init_lottery(data) {
     let obj1 = data.find((v) => v.mi == 500) || {};
@@ -565,7 +442,6 @@ class MenuData {
   champion_menu_euid(mi) {
     return 400 + parseInt(mi.substr(1, 2));
   }
-
   // 电竞菜单csid
   menu_csid(mi) {
     if (mi) {
@@ -603,18 +479,8 @@ class MenuData {
       return result_menu;
     }
   }
-  //整点随机规则
-  time_random_req() {
-    const random_minutes = lodash.random(0, 15);
-    //现在时间分钟数-随机分钟数 大于45  开始更新api
-    return {
-      can_update_data: new Date().getMinutes() - random_minutes > 45,
-      random_minutes,
-    };
-  }
   //- 三级菜单 日期 (只有 串关，早盘，赛果，电竞，才有) -->
   get_is_show_three_menu(mi) {
-    console.error(this.current_lv_1_menu?.mi);
     return [3, 6, 7, 28].includes(mi || this.current_lv_1_menu?.mi);
   }
   // 赛果下数据
@@ -682,16 +548,12 @@ class MenuData {
   async get_date_menu_api_when_subchange(item, type) {
     // 如果是早盘，串关，电竞的话
     const menu_type = this.menu_type.value;
-    //euid
-    const euid = lodash.get(
-      BaseData.mi_euid_map_res,
-      this.get_current_sub_menuid()
-    );
+    const euid = this.get_euid(item.mi)
     if ([3, 6, 7].includes(menu_type) && euid) {
       // 三级菜单先显示骨架屏，接口回来后，再隐藏骨架屏
       useMittEmit(MITT_TYPES.EMIT_BEFORE_LOAD_THIRD_MENU_HANDLE);
       let api_func = null,
-        params = { euid: euid.h };
+        params = { euid: euid };
       if (7 == menu_type) {
         api_func = api_common.get_esports_date_menu;
         let value = item.mi.slice(1, 4);
@@ -727,8 +589,7 @@ class MenuData {
         });
       }
     } else if ([28].includes(menu_type)) {
-      console.error(this.current_lv_2_menu.subList)
-      // 如果是赛果
+      // 如果是赛果 在一级菜单时候已经获取过二级菜单
       this.set_cache_class({
         menu_lv3: this.current_lv_2_menu.subList,
       });
@@ -775,8 +636,6 @@ class MenuData {
         menu_jingzu.sl.push(item);
       }
     });
-    // 赛果数据处理
-    let result_menu = this.init_amidithion(mew_menu_list_res);
     let new_menu = [];
     lodash.each(menuRule, (menu_item, index) => {
       new_menu[index] = { mi: menu_item, sl: [] };
@@ -795,7 +654,7 @@ class MenuData {
         menu_dianjing,
         { mi: 8 },
         menu_jingzu,
-        result_menu,
+        this.init_amidithion(mew_menu_list_res),  // 赛果数据处理
       ],
     });
     return this.menu_list;
@@ -824,6 +683,47 @@ class MenuData {
       this.update();
     }
   }
+  vr_menu() {
+    const vr_list = [
+      {
+        field1: "1001",
+        menuId: "1001",
+        name: "足球",
+        subList: [],
+      },
+      {
+        field1: "1004",
+        menuId: "1004",
+        name: "篮球",
+        subList: [],
+      },
+      {
+        field1: "1011",
+        menuId: "1011",
+        name: "赛马",
+        subList: [],
+      },
+      {
+        field1: "1002",
+        menuId: "1002",
+        name: "赛狗",
+        subList: [],
+      },
+      {
+        field1: "1010",
+        menuId: "1010",
+        name: "摩托车",
+        subList: [],
+      },
+      {
+        field1: "1009",
+        menuId: "1009",
+        name: "泥地摩托车",
+        subList: [],
+      },
+    ];
+    return vr_list;
+  }
   /**
    * 选中1级menu
    * item [object]当前点击对象
@@ -831,12 +731,13 @@ class MenuData {
    * type [string] click | init
    */
   set_current_lv1_menu(current_lv_1_menu, current_lv_1_menu_i, type = "click") {
+    console.error('set_current_lv1_menu')
     this.set_cache_class({
       current_lv_1_menu,
       current_lv_1_menu_i,
       menu_type: current_lv_1_menu.mi, //设置一级菜单menutype
     });
-    //设置二级菜单 賽果和電機是不需要設置二級菜單的
+    //设置二级菜单 赛果和电竞是不需要設置二級菜單的
     switch (current_lv_1_menu.mi) {
       case 28:
         this.get_results_menu();
@@ -854,8 +755,7 @@ class MenuData {
    * index [number]
    * type [string] click | init
    */
-  set_current_lv2_menu(current_lv_2_menu, current_lv_2_menu_i, type = "click") {
-    console.error("11111")
+  async set_current_lv2_menu(current_lv_2_menu, current_lv_2_menu_i, type = "click") {
     this.set_cache_class({
       current_lv_2_menu,
       current_lv_2_menu_i,
@@ -868,11 +768,9 @@ class MenuData {
         menu_lv2: [],
       });
       this.set_current_lv3_menu();
+      return;
     }
-    else {
-      // 早盘,串关,电竞拉取接口更新日期菜单 3,6,7
-      this.get_date_menu_api_when_subchange(current_lv_2_menu, type);
-    }
+    this.get_date_menu_api_when_subchange(item)
   }
 
   /**
@@ -951,9 +849,10 @@ class MenuData {
       };
       return menu_dianjing[mi] || "";
     }
-    if (this.menu_original_data.sp_list) {
+    if (BaseData.base_data_res.spList
+    ) {
       this.previous_lv_1_menu = item;
-      return this.menu_original_data.sp_list.find((i) => i.csid == item.csid);
+      return BaseData.base_data_res.spList.find((i) => i.csid == item.csid);
     }
     return "";
   }
@@ -965,6 +864,11 @@ class MenuData {
         return item.mi || item.menuId;
       }).join(',');
     } else {
+      // 竟足处理 50101
+      if (this.get_menu_type() == 30) {
+        const euid = this.get_euid('50101') || 40603; // 获取euid
+        return euid;
+      }
       return this.current_lv_2_menu?.mi || this.current_lv_2_menu?.menuId || "40003";
     }
   }

@@ -201,6 +201,8 @@ const current_lv2 = ref(MenuData.current_lv_2_menu || {})//二级菜单选中
 const pop_main_items = ref([]); //弹出框数据
 const show_selector_sub = ref(false); //展示弹出框
 const show_favorite_list = ref(UserCtr.show_favorite_list); //是否显示收藏列表
+// 切换到电竞时 的菜单 背景图片
+const dj_back_type = ref("lol")
 // 一级菜单mi ref
 const { menu_type, update_time, } =
   MenuData;
@@ -246,18 +248,7 @@ watch(update_time, (update_time) => {
   current_lv2.value = MenuData.current_lv_2_menu
 });
 
-//初始化菜单
-function init() {
-  //如果二级菜单有数据缓存
-  if (MenuData.current_lv_2_menu) {
-    set_menu_lv2(
-      MenuData.current_lv_2_menu,
-      MenuData.current_lv_2_menu_i,
-      "init"
-    );
-  }
-}
-init();
+
 /**
  * 一级菜单事件 还要执行二级菜单事件哦 因为一级菜单只是展示 没有数据 靠二级菜单以下来数据的
  * item [object]当前点击对象
@@ -307,6 +298,18 @@ const all_sport_count_calc = computed(() => {
   }
   return 0;
 });
+// 切换到电竞时 的菜单 背景图片
+function dj_back_img(item) {
+  let value = +item || 2100
+  let type = ''
+  switch (value) {
+    case 2100: type = "lol"; break;
+    case 2101: type = "dota"; break;
+    case 2102: type = "csgo"; break;
+    case 2103: type = "wangzhe"; break;
+  }
+  dj_back_type.value = type
+}
 //点击滚球下的全部
 function select_all_sub_menu_handle() {
   let data_list = menu_list.value.find((item) => lodash.get(item, 'mi') == 1);
@@ -340,8 +343,6 @@ function select_all_sub_menu_handle() {
  */
 async function set_menu_lv2(item, index, type = "click") {
   MenuData.set_current_lv2_menu(item, index, type);
-
-
   switch (menu_type.value) {
     case 7:
       dj_back_img(item.mi)
@@ -431,19 +432,7 @@ const format_type = (id) => {
   if ([2100, 2101, 2103, 2102].includes(+id?.mi)) return +id?.mi
   return MenuData.recombine_menu_bg(id, true)
 }
-const dj_back_type = ref("lol")
-// 切换到电竞时 的菜单 背景图片
-const dj_back_img = (item) => {
-  let value = +item || 2100
-  let type = ''
-  switch (value) {
-    case 2100: type = "lol"; break;
-    case 2101: type = "dota"; break;
-    case 2102: type = "csgo"; break;
-    case 2103: type = "wangzhe"; break;
-  }
-  dj_back_type.value = type
-}
+
 //弹出框 是否展示
 function is_menu_show(item) {
   if (lodash.get(item, 'mi') == 28 && show_favorite_list.value) {
@@ -465,6 +454,16 @@ const mitt_list = [
 onBeforeUnmount(() => {
   mitt_list.forEach(i => i())
 })
+//初始化菜单
+//如果二级菜单有数据缓存
+if (MenuData.current_lv_2_menu) {
+  set_menu_lv2(
+    MenuData.current_lv_2_menu,
+    MenuData.current_lv_2_menu_i,
+    "init"
+  );
+}
+
 </script>
 
 <style scoped lang="scss">
