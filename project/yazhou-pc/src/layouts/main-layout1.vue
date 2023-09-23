@@ -5,7 +5,7 @@
       <!-- 搜索 -->
       <search-wapper />
       <!-- 页面头部容器-->
-      <layout-header :has_bonus_type="1" />
+      <layout-header />
     </div>
     <div style="display: none;"> {{ LayOutMain_pc.layout_version }}</div>
     <div class="flex">
