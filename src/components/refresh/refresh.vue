@@ -6,7 +6,7 @@
 <template>
   <div class="c-refresh fit yb-flex-center cursor-pointer" @click="on_click">
     <div :class="['icon-wrap',{'loading-static-animation': cur_active}]">
-      <icon v-if="!other_icon" :name="icon_name" size="13px" />
+      <icon-wapper v-if="!other_icon" :name="icon_name" size="13px" />
       <template v-else>
         <span  :class="[icon_name]">
           <span class="path1"></span>
@@ -19,9 +19,13 @@
 </template>
 
 <script>
+import { IconWapper } from 'src/components/icon'
+
 export default {
   name: "Refresh",
-
+  components: {
+    IconWapper
+  },
   props: {
     // 是否加载完成
     loaded: true,

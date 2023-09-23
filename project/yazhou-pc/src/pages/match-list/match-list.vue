@@ -103,7 +103,7 @@
           <div style="height:15px"></div>
           <div class="pager-wrap row justify-end">
             <div class="go-top-btn yb-flex-center" @click="on_go_top">
-              <icon name="icon-go_top" size="14px" />
+              <icon-wapper name="icon-go_top" size="14px" />
               <div class="msg">{{ $t("common.back_top") || "" }}</div>
             </div>
           </div>
@@ -129,6 +129,8 @@ import { ListFilterFullVersionWapper as listFilter } from "src/components/match-
 import { ListFilterDateFullVersionWapper as listFilterDate } from "src/components/match-list/list-filter-date/index.js"; //热门赛事列表  早盘-日期
 import { MatchListCardFullVersionWapper as MatchListCard } from "src/components/match-list/match-list-card/index.js"; //赛事列表
 import { ListFilterHotFullVersionWapper as ListFilterHot } from "src/components/match-list/list-filter-hot/index.js"; //热门赛事列表
+import { ListHeaderFullVersionWapper as ListHeader } from "src/components/match-list/list-header/index.js"; //头部
+import { IconWapper } from 'src/components/icon'
 import ScrollList from 'src/components/cus-scroll/scroll_list.vue';
 import refresh from "src/components/refresh/refresh.vue"
 // import { EsportsHeaderFullVersionWapper as EsportsHeader } from "src/components/match-list/esports-header/index.js";//电竞赛事列表筛选
@@ -145,7 +147,6 @@ import useMatchListMx from "src/core/match-list-pc/match-list-composition.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import { PageSourceData } from 'src/core/index.js';
 import "./match_list.scss";
-
 const { mounted_fn, load_data_state, show_refresh_mask, collect_count, is_show_hot } = useMatchListMx();
 const { page_source } = PageSourceData;
 export default {
@@ -157,7 +158,11 @@ export default {
     ListFilterHot,
     PlayVirtualMatchType,
     LoadData,
-    ScrollList
+    ScrollList,
+    IconWapper,
+    LoadData,
+    refresh,
+    ListHeader
   },
   setup() {
     onMounted(() => {
@@ -169,7 +174,8 @@ export default {
       MatchListCardDataClass,
       show_refresh_mask,
       collect_count,
-      is_show_hot
+      is_show_hot,
+      page_source
     };
   },
   // data() {

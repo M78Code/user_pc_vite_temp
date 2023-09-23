@@ -1,7 +1,7 @@
 import { ref } from "vue";
 import { useRoute } from "vue-router";
 import { PageSourceData  } from "src/core/index.js";
-import { send_zhuge_event } from 'src/core/http/zhuge-tag.js'
+import ZhuGe from 'src/core/http/zhuge-tag.js'
 import NewMenu from "src/core/menu-pc/menu-data-class.js";
 import details from "src/core/match-list-pc/details-class/details.js";
 import UserCtr from 'src/core/user-config/user-ctr.js'
@@ -15,9 +15,9 @@ const get_full_sr_url = (match) => {
 const sr_click_handle = (match, type) => {
 	if (type == "details") {
 		// 发送埋点事件
-		send_zhuge_event("PC_情报分析");
+		ZhuGe.send_zhuge_event("PC_情报分析");
 	} else if (type == 1) {
-		send_zhuge_event("PC_热门推荐_赛事分析点击");
+		ZhuGe.send_zhuge_event("PC_热门推荐_赛事分析点击");
 	}
 	details.sr_click_handle(match);
 };
