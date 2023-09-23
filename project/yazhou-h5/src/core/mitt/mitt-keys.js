@@ -265,4 +265,6 @@ export const EMIT_EVENT_DATA = "EMIT_EVENT_DATA";
 export const TOGGLE_COLLECT_LEAGUE = "TOGGLE_COLLECT_LEAGUE";
 // 限额
 export const EMIT_REF_DATA_BET_MONEY = "EMIT_REF_DATA_BET_MONEY"
+// 投注弹窗显示
+export const EMIT_REF_SHOW_BET_BOX = "EMIT_REF_SHOW_BET_BOX"
 //------------------------------------------------------------------命令定义-E-------------------------------------------------------------------------------------
