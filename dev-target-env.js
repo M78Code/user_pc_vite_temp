@@ -52,7 +52,7 @@ let  DEV_TARGET_VERSION = ''
 // 打包 亚洲版 H5（新版)   生产环境    
 DEV_TARGET_VERSION = "project_3-0b1d5ec0284611eea47c132df8d8e15d-1691927205605-shiwan";
 // 打包 亚洲版 H5（新版)   测试环境
-// DEV_TARGET_VERSION = "project_3-36304ea0499e11ee8848ada2b8a1d739-1695005829428-test";
+DEV_TARGET_VERSION = "project_3-36304ea0499e11ee8848ada2b8a1d739-1695005829428-test";
 
 
 
