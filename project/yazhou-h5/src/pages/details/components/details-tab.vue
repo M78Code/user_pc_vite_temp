@@ -21,8 +21,7 @@ import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineCompon
 import { useRoute, useRouter } from "vue-router"
 import UserCtr from "src/core/user-config/user-ctr.js";
 
-const route = useRoute()
-const router = useRouter()
+
 export default defineComponent({
   name: "details_tab",
   props: {
@@ -37,6 +36,8 @@ export default defineComponent({
   },
   
   setup(props, evnet) {
+    const route = useRoute()
+    const router = useRouter()
     const data = reactive({
       emitters: [],
       timer1_: null,
@@ -58,6 +59,7 @@ export default defineComponent({
     // ]),
     // 玩法tab 所有投注 - 进球 - 上半场 - 球队 - 让球&大小
     const get_details_item = ref(" ");
+    const get_tab_fix = ref(" ");
     // 当用户未登录时返回uuid, 当用户登录时返回userId
     // const get_uid = computed(() => {
     //   return ""
@@ -94,7 +96,7 @@ export default defineComponent({
     const change_btn = () => {
       // 设置vuex变量值,没有玩法数据时不能点击
       // if (data_list && data_list.length == 1 && get_details_item == '0') return;
-      if(get_fewer == 1 || get_fewer == 3){
+      if(get_fewer.value == 1 || get_fewer.value == 3){
         set_fewer(2)
       }else{
         set_fewer(1)
@@ -104,10 +106,10 @@ export default defineComponent({
     const selete_item = (uId, index,item) => {
       console.log(item,"itemitemitem");
       // 点击的玩法是当前选中的玩法
-      if(get_details_item == uId) return false;
+      if(get_details_item.value == uId) return false;
       // 移动当前玩法的位置
       utils.tab_move2(index, data.reset_scroll_dom)
-      set_details_item(uId);
+      // set_details_item(uId);
       set_subscript_game_index(index)
       let search_term = route.query.search_term
       // 重新加载category组件，触发重新请求
@@ -116,7 +118,7 @@ export default defineComponent({
       // #TODO emit
       useMittEmit(MITT_TYPES.EMIT_DETAILILS_TAB_CHANGED);
       // useMittEmit(MITT_TYPES.EMIT_DETAILILS_TAB_CHANGED)
-      if(get_fewer == 3){
+      if(get_fewer.value == 3){
         set_fewer(1)
       }
       // 发送埋点
@@ -132,7 +134,7 @@ export default defineComponent({
      * @param {undefined} undefined
     */
     const get_active_details_play_tab = (callback) => {
-      let item = data_list.filter(item => get_details_item == item.id)[0]
+      let item = data_list.filter(item => get_details_item.value == item.id)[0]
       callback(item)
     };
     const initEvent = () => {
@@ -169,6 +171,9 @@ export default defineComponent({
     return {
       ...toRefs(data),
       match_id,
+      get_details_item,
+      get_tab_fix,
+      get_fewer,
       change_btn,
       selete_item,
       get_active_details_play_tab,

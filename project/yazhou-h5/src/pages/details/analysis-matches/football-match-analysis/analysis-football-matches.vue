@@ -20,7 +20,7 @@
 <script setup>
 // TODO: vuex 后续修改调整
 // import {mapGetters} from "vuex";
-import { onMounted, onUnmounted, ref, watch, nextTick, defineAsyncComponent } from 'vue'
+import { onMounted, onUnmounted, ref, watch, nextTick, defineAsyncComponent, shallowRef } from 'vue'
 import lodash from 'lodash'
 // 详情页 或者 赛果 赛事分析 公共tab 组件
 import headTab from "project_path/src/components/details/match-analysis/head-tab.vue";
@@ -33,19 +33,19 @@ import UserCtr from "src/core/user-config/user-ctr.js";
 
 
   // 资讯页
-  const articleMain = defineAsyncComponent(() => import("project_path/src/pages/details/analysis-matches/article/article-main.vue"))
+  const articleMain = shallowRef(() => import("project_path/src/pages/details/analysis-matches/article/article-main.vue"))
   // 赛果详情 赛况统计 和 事件
-  const matchResult = defineAsyncComponent(() => import("project_path/src/pages/details/components/details-match-results/match-results.vue"))
+  const matchResult = shallowRef(() => import("project_path/src/pages/details/components/details-match-results/match-results.vue"))
   // 详情页  足球赛事分析 战绩 模块
-  const standings = defineAsyncComponent(() => import("project_path/src/pages/details/analysis-matches/components/standings.vue"))
+  const standings = shallowRef(() => import("project_path/src/pages/details/analysis-matches/components/standings.vue"))
   // 详情页 或者 赛果  篮球足球公共组件，阵容tab页面
-  const lineUp = defineAsyncComponent(() => import("project_path/src/pages/details/analysis-matches/components/line-up.vue"))
+  const lineUp = shallowRef(() => import("project_path/src/pages/details/analysis-matches/components/line-up.vue"))
   // 详情页足球赛事分析情报页面
-  const intelligence = defineAsyncComponent(() => import("project_path/src/pages/details/analysis-matches/football-match-analysis/components/intelligence.vue"))
+  const intelligence = shallowRef(() => import("project_path/src/pages/details/analysis-matches/football-match-analysis/components/intelligence.vue"))
   // 详情页足球赛事分析赔率页面
-  const analysisOdds = defineAsyncComponent(() => import("project_path/src/pages/details/analysis-matches/football-match-analysis/components/analysis-odds.vue"))
+  const analysisOdds = shallowRef(() => import("project_path/src/pages/details/analysis-matches/football-match-analysis/components/analysis-odds.vue"))
   // 精彩回放
-  const highlights = defineAsyncComponent(() => import("project_path/src/pages/details/analysis-matches/highlights/highlights.vue"))
+  const highlights = shallowRef(() => import("project_path/src/pages/details/analysis-matches/highlights/highlights.vue"))
       // 详情数据
       const get_detail_data = ref({
         csid: 1,
