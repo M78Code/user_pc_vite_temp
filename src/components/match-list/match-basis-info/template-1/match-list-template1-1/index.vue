@@ -181,26 +181,26 @@ is_collect.value = Boolean (props.match.mf)
 // })
 
 // 监听主比分变化
-watch(props.match.home_score, (n) => {
-  //推送时间是否过期
-  let is_time_out = (get_remote_time()-props.match.ws_update_time)<3000
-  // 足球 并且已开赛
-  if(props.match.csid == 1 && get_match_status(props.match.ms,[110]) == 1 && n!=0 && is_time_out ){
-    is_show_home_goal.value = true;
-    hide_home_goal();
-  }
-})
+// watch(props.match.home_score, (n) => {
+//   //推送时间是否过期
+//   let is_time_out = (get_remote_time()-props.match.ws_update_time)<3000
+//   // 足球 并且已开赛
+//   if(props.match.csid == 1 && get_match_status(props.match.ms,[110]) == 1 && n!=0 && is_time_out ){
+//     is_show_home_goal.value = true;
+//     hide_home_goal();
+//   }
+// })
 
-// 监听主比分变化
-watch(props.match.away_score, (n) => {
-  //推送时间是否过期
-  let is_time_out = (get_remote_time()-props.match.ws_update_time)<3000
-  // 足球 并且已开赛
-  if(props.match.csid == 1 && get_match_status(props.match.ms,[110]) == 1  && n!=0 && is_time_out ){
-    is_show_away_goal.value = true;
-    hide_away_goal();
-  }
-})
+// // 监听主比分变化
+// watch(props.match.away_score, (n) => {
+//   //推送时间是否过期
+//   let is_time_out = (get_remote_time()-props.match.ws_update_time)<3000
+//   // 足球 并且已开赛
+//   if(props.match.csid == 1 && get_match_status(props.match.ms,[110]) == 1  && n!=0 && is_time_out ){
+//     is_show_away_goal.value = true;
+//     hide_away_goal();
+//   }
+// })
 
 /**
  * @Description 隐藏主队进球动画
