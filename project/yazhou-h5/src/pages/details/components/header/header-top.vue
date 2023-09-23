@@ -251,6 +251,7 @@ import { utils } from 'src/core/utils/index.js';
 import { MenuData, UserCtr } from "src/core/index.js";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import store from "src/store-redux/index.js";
+import { format_total_score } from "src/core/format/index.js"
 
 const props = defineProps({
   detail_data: {
