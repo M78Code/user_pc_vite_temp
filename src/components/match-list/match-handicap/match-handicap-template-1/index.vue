@@ -7,6 +7,7 @@
   <div :class="['c-match-handicap', { 'unfold_multi_column': match.tpl_id == 13 }, get_5min_classname()]">
     <div class="row no-wrap">
       <!-- 玩法列表 -->
+      {{ handicap_list }}
       <div class="handicap-col" v-for="(col, col_index) in handicap_list" :key="col_index">
         <div :class="['bet-item-wrap', ol_data.other_class]"
           :style="get_bet_style(col_index, lodash.get(col, 'ols.length'), ol_data)" v-for="(ol_data, ol_index) in col.ols"

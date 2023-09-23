@@ -5,7 +5,7 @@
       'sticky-wrap':['sport_title','play_title','no_start_title','league_title','champion_league_title'].includes(card_style_obj.card_type),
       'matc-type-card':['sport_title','play_title','no_start_title'].includes(card_style_obj.card_type)
     }"
-    :style="`height:200px  !important;width:1920px  !important;${card_style}`"
+    :style="`height:${card_style_obj.card_total_height}px  !important;width:${LayOutMain_pc.layout_content_width}px  !important;${card_style}`"
   >
   <!-- lockie  ${card_style_obj.card_total_height} -->
   <div v-show="false">{{ MatchListCardDataClass.list_version }}</div>
@@ -78,6 +78,7 @@ import { MatchCardFullVersionWapper as MatchCard } from "src/components/match-li
 import LoadData from 'project_path/src/components/load-data/load-data.vue'
 import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card-class.js'
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
+import { LayOutMain_pc } from "src/core/index.js";
 import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
 import {component_symbol ,need_register_props} from "../config/index.js"
 import store from 'src/store-redux/index.js'

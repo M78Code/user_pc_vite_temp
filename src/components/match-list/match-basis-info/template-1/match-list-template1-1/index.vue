@@ -99,7 +99,7 @@ import { get_match_status } from 'src/core/utils/index'
 import { get_remote_time } from 'src/core/utils/module/match-list-utils.js';
 import { utils } from 'src/core/utils/module/utils.js'
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
-import {MenuData } from "src/core/index.js"
+import { MenuData, MatchDataWarehouse_PC_List_Common } from "src/core/index.js"
 
 import { i18n_t } from "src/core/index.js";
 
@@ -125,7 +125,6 @@ const is_show_away_goal = ref(false) // 是否显示客队进球动画
 const is_show_home_red = ref(false) // 是否显示主队红牌动画
 const is_show_away_red = ref(false) // 是否显示客队红牌动画
 const is_collect = ref(false) //赛事是否收藏
-
 
 const handicap_num = computed(() => {
   if(GlobalAccessConfig.get_handicapNum()){

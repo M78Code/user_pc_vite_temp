@@ -60,16 +60,10 @@
         <LeagueTab />
       </div>
     </div>
-
-
-    <template>
-      <match-list-card v-for="card_key in match_list_card.get_match_list_card_key_arr"
-        :key="card_key + match_list_card.match_list_render_key" :card_key="card_key" />
-    </template>
-
+    <div v-show="false">{{ MatchListCardDataClass.list_version }}</div>
     <!-- 列表容器 -->
     <load-data :state="'data'">
-
+      <div v-show="false">{{ MatchListCardDataClass.list_version }}</div>
       <!-- 滚球虚拟体育列表 -->
       <scroll-list v-if="menu_config.menu_root_show_shoucang == 300">
         <template v-slot:before>
@@ -99,13 +93,12 @@
         <template v-slot:before>
           <div :style="{ height: fixed_header_height }"></div>
         </template>
-        <div class="today-champion-bg"
-          v-if="menu_config.menu_root == '2' || menu_config.menu_root == 400 || menu_config.menu_root != 2000"></div>
-        <template>
-          <match-list-card v-for="card_key in MatchListCardDataClass.match_list_card_key_arr"
-            :key="card_key + MatchListCardDataClass.match_list_render_key" :card_key="card_key" />
-        </template>
-
+        <div class="today-champion-bg" v-if="menu_config.menu_root == '2' || menu_config.menu_root == 400 || menu_config.menu_root != 2000"></div>
+          <match-list-card 
+            v-for="card_key in MatchListCardDataClass.match_list_card_key_arr"
+            :key="card_key + MatchListCardDataClass.match_list_render_key" 
+            :card_key="card_key" 
+          />
         <template v-slot:after>
           <div style="height:15px"></div>
           <div class="pager-wrap row justify-end">
@@ -116,12 +109,9 @@
           </div>
         </template>
       </scroll-list>
-
-
     </load-data>
-
     <!-- 联赛筛选层 -->
-    <leagues-filter v-if="vx_show_filter_popup" />
+    <!-- <leagues-filter v-if="vx_show_filter_popup" /> -->
     <!-- 点击头部刷新弹出 loading 蒙层 -->
     <div v-show="show_refresh_mask" class="refresh-mask absolute-full yb-flex-center" :style="{ top: '36px' }">
       <!-- <div v-show="show_refresh_mask" class="refresh-mask absolute-full yb-flex-center" :style="{top:get_is_show_banner && get_is_roll_show_banner ? '156px' : '36px'}"> -->
@@ -146,7 +136,7 @@ import { PlayVirtualMatchTypeFullVersionWapper as PlayVirtualMatchType } from "s
 // import { LeaguesFilterFullVersionWapper as LeaguesFilter } from "src/components/match-list/match-list-card/index.js";//联赛筛选页面
 // import { VirtualMatchTpl1FullVersionWapper as VirtualMatchTpl1 } from "src/components/match-list/match-list-card/index.js"; //拟足球 、 虚拟篮球
 // import { VirtualMatchTpl2FullVersionWapper as VirtualMatchTpl2 } from "src/components/match-list/match-list-card/index.js"; //拟赛马 、 虚拟赛狗
-import match_list_card from "src/core/match-list-pc/match-card/match-list-card-class.js";
+// import match_list_card from "src/core/match-list-pc/match-card/match-list-card-class.js";
 // import match_list_version_mixin from "src/project/yabo/mixins/match_list/match_list_version_mixin.js";//模板引入及主要业务逻辑
 // import skt_data_list from "src/public/mixins/websocket/data/skt_data_list_new_data.js";// 发送websocket命令时使用
 import menu_config from "src/core/menu-pc/menu-data-class.js";
@@ -156,7 +146,7 @@ import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/core/ind
 import "./match_list.scss";
 
 const { mounted_fn } = useMatchListMx();
-console.log('MatchListCardDataClass', MatchListCardDataClass);
+console.log('MatchListCardDataClass', MatchListCardDataClass.match_list_card_key_arr);
 export default {
   components: {
     LeagueTab,
@@ -174,7 +164,7 @@ export default {
     });
     return {
       menu_config,
-      match_list_card,
+      // match_list_card,
       MatchListCardDataClass,
       MatchListData,
     };
