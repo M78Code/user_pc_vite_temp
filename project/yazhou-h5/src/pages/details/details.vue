@@ -304,7 +304,7 @@ export default defineComponent({
       () => state_data.is_banner_jump,
       (_new) => {
         if(_new == true){
-          set_is_banner_jump(true)
+          // set_is_banner_jump(true)
         }
       }
     );
@@ -441,14 +441,14 @@ export default defineComponent({
       }
     });
     onUnmounted(() => {
-      debounce_throttle_cancel(cancel_ref);
+      // debounce_throttle_cancel(cancel_ref);
       // 组件销毁时,不显示视频
-      set_play_video(false)
+      // set_play_video(false)
       // 组件销毁时设置轮播区域跳转到详情的值为false
-      set_is_banner_jump(false)
+      // set_is_banner_jump(false)
 
-      set_tab_fix(false);
-      set_event_list([])
+      // set_tab_fix(false);
+      // set_event_list([])
 
       // vuex--清空详情页的数据
       // set_detail_data('');

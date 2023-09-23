@@ -99,6 +99,7 @@ const {
   HandicapTitle,
   betItem,
   lodash,
+  isShow
 } = useCommon({ emit, props });
 /**
  * @description: 玩法数据

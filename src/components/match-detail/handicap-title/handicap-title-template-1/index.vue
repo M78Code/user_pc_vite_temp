@@ -64,7 +64,7 @@
         class="set_top"
         v-show="lodash.get(item_details, 'hton') != '0'"
       >
-        <icon name="icon-set_top" />
+        <icon-wapper name="icon-set_top" />
       </span>
     </div>
   </div>
@@ -73,17 +73,17 @@
 <script setup>
 // tips1 组件待引入
 
-
+import tips1 from "src/components/match-detail/tips1/tips1.vue"
 import lodash from "lodash";
 import { computed,ref } from "vue";
-
+import { IconWapper } from 'src/components/icon'
 //角球玩法hpid
 const corner_dist = [
   111, 113, 114, 115, 116, 117, 118, 119, 121, 122, 123, 124, 125, 226, 227,
   228, 229, 230, 33, 306, 307, 308, 309, 310, 311, 312, 313, 314, 315, 316, 317,
   318, 319, 320, 321, 322, 323, 324, 325, 326, 327, 328, 329,
 ];
-
+const wsl= sessionStorage.getItem("wsl")
 const props = defineProps({
   item_details: Object,
   index: Number,

@@ -33,8 +33,8 @@ import headTab from  "project_path/src/components/details/match-analysis/head-ta
 
 // 获取详情数据
 const get_detail_data = ref({
-        csid: 1,
-        mid: 1,
+        csid: '1',
+        mid: '1',
     })
 
 //国际化

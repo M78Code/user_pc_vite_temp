@@ -25,13 +25,6 @@
         </template>
       </list-header>
 
-
-
-
-
-
-
-
       <!-- <div>menu_config.match_list_menu_show.list_filter {{ menu_config.match_list_menu_show.list_filter }}</div> -->
 
       <!-- 顶部菜单  // 滚球  冠军 -->
@@ -62,7 +55,7 @@
     </div>
     <div v-show="false">{{ MatchListCardDataClass.list_version }}</div>
     <!-- 列表容器 -->
-    <load-data :state="'data'">
+    <load-data :state="load_data_state">
       <div v-show="false">{{ MatchListCardDataClass.list_version }}</div>
       <!-- 滚球虚拟体育列表 -->
       <scroll-list v-if="menu_config.menu_root_show_shoucang == 300">
@@ -147,9 +140,11 @@ import useMatchListMx from "src/core/match-list-pc/match-list-composition.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import { PageSourceData } from 'src/core/index.js';
 import "./match_list.scss";
-
+import {MatchDataWarehouse_PC_List_Common as MatchListData } from "src/core/index.js";
 const { mounted_fn, load_data_state, show_refresh_mask, collect_count, is_show_hot } = useMatchListMx();
 const { page_source } = PageSourceData;
+
+console.log('MatchListDataMatchListData', MatchListData.quick_query_obj, load_data_state.value);
 export default {
   components: {
     LeagueTab,
@@ -173,6 +168,7 @@ export default {
       menu_config,
       load_data_state,
       MatchListCardDataClass,
+      MatchListData,
       show_refresh_mask,
       collect_count,
       is_show_hot,

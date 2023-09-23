@@ -287,7 +287,7 @@ const mx_use_list_res_when_code_error_or_list_length_0 = (match_list) => {
 		is_vr_numer.value++;
 		// 重复拉列表的次数小于5   3秒后再次拉接口
 		if (is_vr_numer.value < 5) {
-			virtual_list_timeout_id = setTimeout(
+			virtual_list_timeout_id.value = setTimeout(
 				() => fetch_match_list(true),
 				3000
 			);

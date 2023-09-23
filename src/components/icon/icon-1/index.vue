@@ -30,7 +30,6 @@ const props = defineProps({
 // const tableClass_computed = useComputed.tableClass_computed(props)
 // const title_computed = useComputed.title_computed(props)
 //-------------------- 对接参数 prop 注册  结束  -------------------- 
-console.error('icon props', props);
 const emit = defineEmits(['click'])
 
 const styles = computed(() => {

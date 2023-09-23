@@ -268,8 +268,8 @@ export default defineComponent({
 
       if(component_data.matchInfoCtr) {
         component_data.arr_hshow = []
-        component_data.matchInfoCtr.clearData()
-        component_data.matchInfoCtr.destroy()
+        // component_data.matchInfoCtr.clearData()
+        // component_data.matchInfoCtr.destroy()
       }
     })
     return {

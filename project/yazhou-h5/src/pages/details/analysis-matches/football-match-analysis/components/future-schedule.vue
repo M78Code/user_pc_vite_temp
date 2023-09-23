@@ -47,8 +47,8 @@ import teamImg from "project_path/src/components/details/team-img.vue";
 import publicForm from "project_path/src/pages/details/analysis-matches/components/public-form.vue";
 import { i18n_t } from "src/boot/i18n.js"
 const get_detail_data = ref({
-        csid: 1,
-        mid: 1,
+        csid: '1',
+        mid: '1',
     })
 
   // components: {

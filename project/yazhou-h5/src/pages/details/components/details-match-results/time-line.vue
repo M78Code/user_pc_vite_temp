@@ -73,8 +73,8 @@ import lodash from "lodash"
   // },
   // 国际化
   const get_detail_data = ref({
-        csid: 1,
-        mid: 1,
+        csid: '1',
+        mid: '1',
     })
   // 图片
   let yellow_img = ref('image/bw3/svg/match-results/yellow.svg')
