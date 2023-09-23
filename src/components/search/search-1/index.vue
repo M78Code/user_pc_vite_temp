@@ -132,9 +132,11 @@ const { off } = useMittOn(MITT_TYPES.EMIT_LAYOUT_HEADER_SEARCH_ISSHOW, (bool) =>
   search_isShow.value = bool
 })
 onUnmounted(off)
+
+const click_fun = () => set_search_status(false);
 // TODO:
-onMounted(() => document.addEventListener('click', () => set_search_status(false)))
-onMounted(() => document.removeEventListener('click', () => set_search_status(false)))
+onMounted(() => document.addEventListener('click', click_fun))
+onUnmounted(() => document.removeEventListener('click', click_fun))
 
 /** 
  * 浏览器 宽高等数据 default: object

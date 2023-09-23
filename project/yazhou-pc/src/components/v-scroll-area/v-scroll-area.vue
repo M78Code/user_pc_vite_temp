@@ -171,21 +171,18 @@ const set_scroll_position = (position) => {
  ref_v_scroll_area.value.setScrollPosition(position[0], position[1])
 }
 
-
 onMounted(() => {
   // 添加设置滚动位置监听
   useMittOn(MITT_TYPES.EMIT_SET_SCROLL_POSITION, set_scroll_position)
   // 监听窗口发生变化解决点击游览器全屏非全屏变化导致的css样式兼容问题
-  window.addEventListener('resize', () => {
-    set_footer_position()
-  })
+  window.addEventListener('resize', set_footer_position)
 })
 
 onUnmounted(() => {
   // 组件销毁清除设置滚动位置监听
   useMittOn(MITT_TYPES.EMIT_SET_SCROLL_POSITION, set_scroll_position).off
   // 移除窗口监听，优化组件性能
-  window.removeEventListener('resize', () => { })
+  window.removeEventListener('resize', set_footer_position)
 })
 
 </script>

@@ -854,7 +854,7 @@ export const video_info = () => {
         this.iframe_src = this.get_video_url.animationUrl
       }
       this.fade_icons();
-      window.addEventListener("message", this.handleMessage);
+      window.addEventListener("message", handleMessage);
       this.title.mhn = this.get_detail_data.mhn;
       this.title.man = this.get_detail_data.man;
       this.get_msc()
@@ -911,6 +911,10 @@ export const video_info = () => {
     const click_video_screen = (e) => {
       this.is_controller_show = !this.$refs.video_wrapper.classList.contains('dplayer-hide-controller')
     };
+
+    onUnmounted(() => {
+      window.removeEventListener("message", handleMessage);
+    })
     return {
         component_data,
     }
