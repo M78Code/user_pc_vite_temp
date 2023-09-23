@@ -49,11 +49,18 @@ const is_watch = ref(false)    //组件渲染时是否监听money
 const max_money_back = ref(false)   //最高可赢金额的接口是否有返回(不管成功与失败)
 const obj_pre_max_money = ref(null) // 单关预约最高可投注金额
 
+let timer1 = null
+let timer3 = null;
+let  timer4 = null;
+let flicker_timer = null
 
 const get_cur_odd = ref()
 const get_bet_status = ref()
 const get_used_money = ref()
 const get_money_notok_list2 = ref()
+
+const bet_single_detail = ref()  // 实列
+const money_span = ref()  // 实列
 
 // 复式连串过关投注
 const special_series = reactive({
@@ -128,6 +135,7 @@ const item_ = computed(() => {
 })
 // 计算单关最高可赢
 const max_win_money = computed(() => {
+  return 300
   // 串关使用 限额赔率 = 每一个赛事赔率相乘
   let money = BetData.is_bet_single ? props.item.oddFinally : ref_data.seriesOdds
   // 常量 精度值（赔率为+万位）
@@ -281,7 +289,7 @@ const get_money_format = () => {
 const cursor_flashing = () => {
   clearInterval(flicker_timer)
   flicker_timer = setInterval(() => {
-    $refs.money_span && $refs.money_span.classList.toggle('money-span3')
+    money_span.value && money_span.value.classList.toggle('money-span3')
   }, 700);
 }
 /**
@@ -360,7 +368,7 @@ const input_click = (evnet) => {
 
   set_active_index(index_);
 
-  let ele = $refs.bet_single_detail
+  let ele = bet_single_detail.value
   ele && ele.scrollIntoView({ block: "nearest" })
 
   send_money_to_keyboard()
