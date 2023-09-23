@@ -17,8 +17,6 @@ import { dianjing_sublist } from "src/core/constant/config/csid.js"
 //  1001  1004
 import userCtr from "src/core/user-config/user-ctr.js";
 import lodash_ from "lodash";
-// indexeDb
-import { db } from "src/core/base-data/config/indexedPB.js";
 
 import { api_base_data, api_common } from "src/api/index.js";
 
@@ -545,6 +543,7 @@ class BaseData {
   async init_base_data() {
     try {
       let res = await api_base_data.get_base_data({});
+      console.log('resresresres', res);
       res &&  await this.set_base_data_res(res);
     } catch (error) {
       console.log("获取 元数据接口 error", error);
@@ -554,46 +553,6 @@ class BaseData {
   // 设置基础数据  res.data 实体
   async set_base_data_res(res) {
     this.base_data_res = lodash_.get(res, 'data')
-    let mids_info = [],
-      menus_i18n = [],
-      sp_list = [];
-    let data = this.base_data_res;
-
-    // 赛事信息 mid 对应
-    data.matchsList.forEach((item) => {
-      mids_info.push({
-        mid: item.mid,
-        mid_info: item,
-      });
-    });
-
-    // 国际化信息 csid对应
-    lodash_.each(Object.keys(data.menus), (item) => {
-      menus_i18n.push({
-        play_id: item,
-        play_name: data.menus[item],
-      });
-    });
-    // lodash_.each(Object.keys(data.matchsList), (item) => {
-    //   tids_obj.push({
-    //     mi: item,
-    //     value: data[item],
-    //   });
-    //   sp_list.push({
-    //     mi: item,
-    //     value: data[item],
-    //   });
-    // });
-    console.warn("menus_i18n", menus_i18n);
-
-
-   await  db.mids_info.clear()
-   await db.mids_info.bulkAdd(mids_info, "mid");
-
-   await  db.menus_i18n.clear()
-    db.menus_i18n.bulkAdd(menus_i18n, "play_id");
-
-    // db.sp_list.bulkAdd(sp_list,'mi')
 
     this.resolve_base_data_res();
 
@@ -701,16 +660,6 @@ class BaseData {
   async set_mi_tid_mids_res(res) {
     let data = lodash_.get(res, 'data', {})
     this.mi_tid_mids_res = data;
-    let db_data = [];
-    data && lodash_.each(Object.keys(data), (item) => {
-      db_data.push({
-        mi: item,
-        match_info: data[item],
-      });
-    });
-  await  db.match_info.clear()
-    //mi作为主键
-    await  db.match_info.bulkAdd(db_data, "mi");
   }
   /**
    * 菜单切换  提取到菜单ID 之后 调用这个方法

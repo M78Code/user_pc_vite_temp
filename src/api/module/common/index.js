@@ -130,7 +130,7 @@ export const get_collect_live_matchs = (params, config, url = "/v1/m/getCollectL
 export const get_Video_MaxTime = (params, config, url = "/v1/w/virtual/getVideoMaxTime") => http.get(`${prefix}${url}`, params,config)
 // 获取详情页面玩法集接口（christion）
 export const get_category_list = (params, config, url = "/v1/m/category/getCategoryList") => {
-  return http.get(`${prefix}${url}`, params,{axios_debounce_cache_key: 'get_category_list'});
+  return http.get(`${prefix_job}${url}`, params,{axios_debounce_cache_key: 'get_category_list'});
 }
 // 获取虚拟体育赛果页面接口
 export const get_virtual_matchResult = (params,config, url = "/v1/m/matchDetail/getVirtualMatchResult") => {

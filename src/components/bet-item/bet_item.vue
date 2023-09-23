@@ -27,7 +27,7 @@
         ? odds_state
         : 'odds_state',
     ]"
-   @click="set_bet_obj_config(bet_info)"
+   @click="set_bet_obj_config(match_info,play_data,play_data.hl,ol_data_item)"
     :id="DOM_ID_SHOW && `${bet_source}-${ol_data_item.oid}`"
   >
     <div
@@ -60,7 +60,7 @@
         </slot>
       </div>
       <!-- 赔率 -->
-      <div :class="['odds yb-number-font', odds_lift]" @click="set_bet_obj_config(bet_info)">
+      <div :class="['odds yb-number-font', odds_lift]"  @click="set_bet_obj_config(match_info,play_data,play_data.hl,ol_data_item)">
         <div
           v-if="odds_state == 'seal'"
           class="lock"

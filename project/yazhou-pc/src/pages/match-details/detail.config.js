@@ -326,11 +326,9 @@ export const useGetConfig = () => {
             // 设置赛事信息
             console.log(data,'data.msc ');
             MatchDataWarehouseInstance.set_list_from_match_details(data)  
-            // MatchDataWarehouseInstance.set_quick_query_list_from_match_details(data)  
-            
-            console.log(MatchDataWarehouseInstance,'MatchDataWarehouseInstance');
-            state.match_infoData = data;
-            // state.match_infoData = lodash.get(MatchDataWarehouseInstance,`quick_query_obj.mid_obj[${state.mid}+'_']`);
+            let str =state.mid+'_'
+            // state.match_infoData = data;
+            state.match_infoData = lodash.get(MatchDataWarehouseInstance.quick_query_obj.mid_obj,str);
             console.log(state.match_infoData,'match_infoData');
           } else {
             // 处理报错，置换替补数据
@@ -550,9 +548,6 @@ export const useGetConfig = () => {
       //   type: "set_lang_change",
       //   data: false,
       // });
-      
-      MatchDataWarehouseInstance.set_quick_query_list_from_match_details(data)
-      console.log(MatchDataWarehouseInstance,'MatchDataWarehouseInstance222');
     } else {
       const tabs_active_data_cache =
         get_details_data_cache.value[`${state.mid}-${tabs_active_index.value}`];
@@ -764,7 +759,7 @@ export const useGetConfig = () => {
   const handle_match_details_data = (data, timestap) => {
     // 初始化赛事控制类玩法数据
     MatchDataWarehouseInstance.set_quick_query_list_from_match_details(data);
-    console.log(MatchDataWarehouseInstance.list,'quick_query_obj');
+    console.log(MatchDataWarehouseInstance.quick_query_list,'quick_query_obj');
     match_details_data_set(MatchDataWarehouseInstance.quick_query_list);
     state.handicap_state = "data";
     // 同步投注项
@@ -783,7 +778,6 @@ export const useGetConfig = () => {
    * 玩法列表渲染
    */
   const match_details_data_set = (list) => {
-    
     let match_details_arr = list;
     // 用户折叠/展开了的玩法
     let handle_state = window.sessionStorage.getItem("handle_state") || "";

@@ -125,7 +125,7 @@ const on_bootom = lodash.throttle(() => {
  * @param {number}
  */
  const emit_on_scroll = lodash.throttle(() => {
-  useMittEmit("emit_list_on_scroll");
+  useMittEmit(MITT_TYPES.EMIT_LIST_ON_SCROLL);
 }, 500);
 /**
  * @Description 滚动条滚动事件

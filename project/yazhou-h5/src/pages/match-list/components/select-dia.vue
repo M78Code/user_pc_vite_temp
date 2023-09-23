@@ -36,7 +36,8 @@ const props = defineProps(['detail_data'])
 const { menu_type, get_sport_all_selected } = MenuData;
 const change_show = ref(true)
 const search_tab = ref([i18n_t('footer_menu.filter'), i18n_t('search.search_title')])
-const get_search_for_choose = SearchData.search_for_choose;//0筛选 1搜索
+//外层是 v-if 所以直接取就行
+const get_search_for_choose = ref(SearchData.search_for_choose);//0筛选 1搜索
 const get_curr_sub_menu_type = MenuData.get_current_sub_menuid() //二级菜单id
 // 弹框的高度
 let rem_1 = window.innerWidth * 100 / 375;
@@ -47,19 +48,17 @@ const results_of_the_virtual_display = MenuData.is_results_virtual_sports()
 
 
 onMounted(() => {
-  // 默认选中筛选
-  change_record(get_search_for_choose)
+
   // 如果是冠军，则默认展示筛选
   if (menu_type.value == 100) {
     change_record(0)
+  } else {
+    // 默认选中筛选
+    change_record(get_search_for_choose.value)
   }
   // 如果是赛果虚拟体育赛事，则显示 筛选
-  if (results_of_the_virtual_display) {
-    search_tab.value = [i18n_t('search.search_title')]
-    change_show.value = false
-  }
   // 筛选
-  if (!GlobalAccessConfig.get_filterSwitch()) {
+  if (results_of_the_virtual_display || !GlobalAccessConfig.get_filterSwitch()) {
     search_tab.value = [i18n_t('search.search_title')]
     change_show.value = false
   }
@@ -81,13 +80,7 @@ const change_record = (key) => {
   }
 }
 const is_search_hide = (i) => {
-  let f = false;
-  if (i == 1) {
-    if ([1001, 1002, 1011, 1004, 1010, 1009].includes(get_curr_sub_menu_type)) {
-      f = true;
-    }
-  }
-  return f;
+  return i == 1 && [1001, 1002, 1011, 1004, 1010, 1009].includes(get_curr_sub_menu_type)
 }
 </script>
  

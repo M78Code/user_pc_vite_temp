@@ -429,7 +429,6 @@ const  post_submit_bet_list_gcuuid = ref(uid())
         post_submit_bet_list_gcuuid.value = uid();
         parm.gcuuid = post_submit_bet_list_gcuuid.value ;
         // console.log('post_submit_bet_list====',parm);
-        // debugger
         // 押注项调用提交接口
         api_betting.post_submit_bet_list(parm).then(res => {
         

@@ -38,7 +38,7 @@ function useMittEmit(type, param) {
   if(String(type).startsWith('EMIT_')&&MITT_TYPES[type]){
     emitter.emit(type, param);
   }else{
-    console.error("mitt type 未注册 或者 不规范 :", param);
+    console.error("mitt type 未注册 或者 不规范 :", type);
   }
 
 }

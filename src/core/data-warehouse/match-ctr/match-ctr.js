@@ -309,7 +309,7 @@ export default class MatchDataBase
     }
     // 遍历接口比分数据 转成比分对象
     lodash.each(msc, score_str => {
-      let [key,value] = score_str.split('|')
+      let [key,value] = score_str && score_str.split('|') || []
       if(value){
         let [home,away] = value.split(':')
         score_obj[key] = {home,away}
@@ -342,7 +342,7 @@ export default class MatchDataBase
         const play_obj_temp = lodash.keyBy(hps_pns_arr, function(o) {
                                   let res = `hpid_${o.hpid}`;
                                   if(o.hSpecial){
-                                    res = res +`_${o.hSpecial}`;
+                                    // res = res +`_${o.hSpecial}`;
                                   }
                                   return res;
                                 });
@@ -356,6 +356,7 @@ export default class MatchDataBase
         this.set_match_default_data(match);
         // 赛事数据格式化
         match && this.list_to_many_obj([match]);
+
       });
     }
   }
@@ -595,7 +596,6 @@ export default class MatchDataBase
     this.syn_del_quick_query_obj();
     // ws命令赛事订阅
     this.ws_ctr.scmd_c8();
-    console.log('quick_query_obj', this.quick_query_obj);
   }
   /**
    * @description: 同步清除赛事快捷操作对象中的无用赛事数据挂载
@@ -662,6 +662,7 @@ export default class MatchDataBase
       // this.hn_obj_assign(this.quick_query_obj.hn_obj, many_obj.hn_obj);
       // this.hl_obj_assign(this.quick_query_obj.hl_obj, many_obj.hl_obj);
     }
+    console.error('this.quick_query_obj',this.quick_query_obj)
   }
   /**
    * @description: 获取快速查询的key值
@@ -717,7 +718,7 @@ export default class MatchDataBase
               // 遍历玩法数据
               hps_data_arr.forEach(item2 => {
                 if(!lodash.get(item2,'hsw')){
-                  item2.hsw = lodash.get(item,`play_obj.${item2.hpid}.hsw`);
+                  item2.hsw = lodash.get(item,`play_obj.hpid_${item2.hpid}.hsw`);
                 }
                 // 检查是否有盘口数据
                 if (lodash.get(item2,'hl.length')) {
@@ -774,7 +775,7 @@ export default class MatchDataBase
               // 遍历玩法数据
               hps_data_arr.forEach(item2 => {
                 if(!lodash.get(item2,'hsw')){
-                  item2.hsw = lodash.get(item,`play_obj.${item2.hpid}.hsw`);
+                  item2.hsw = lodash.get(item,`play_obj.hpid_${item2.hpid}.hsw`);
                 }
                 // 检查是否有盘口数据
                 if (lodash.get(item2,'hl.ol.length')) {

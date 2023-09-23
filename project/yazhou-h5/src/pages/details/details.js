@@ -8,6 +8,8 @@ import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-c
 // import { Level_one_category_list, Level_one_detail_data } from "./category-list.js";
 import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch, nextTick, ref } from "vue";
 import UserCtr from "src/core/user-config/user-ctr.js";
+import {MatchDataWarehouse_H5_Detail_Common,format_plays, format_sort_data} from "src/core/index"; 
+
 export const details_main = () => {
 const router = useRouter();
 const route = useRoute();
@@ -141,6 +143,8 @@ const get_detail_data = ref({})
     get_event_list: "get_event_list",
     get_curr_tab_info: "get_curr_tab_info",
   });
+  // 详情初始化接口数据处理
+  const MatchDataWarehouseInstance =reactive(MatchDataWarehouse_H5_Detail_Common)
   const is_highlights = computed(() => {
     return lodash.get(state_data.get_curr_tab_info, "component") === "highlights";
   });
@@ -394,11 +398,14 @@ const get_detail_data = ref({})
     // bool 的值为true或者是false
     is_dialog_details = bool;
   };
-  //  赛事详情页面接口(/v1/m/matchDetail/getMatchDetailPB)
+
+
+  //  赛事详情页面接口(/v1/m/matchDetail/getMatchDetail)
   const initEvent = () => {
     // get_uid为空时循环检测进行拉取逻辑处理
     if (state_data.get_uid || state_data.init_event_timer_count > 30) {
       get_football_replay(0);
+      // 请求接口数据
       get_match_details({
         // 赛事id
         // mid: '33522226000129832', // matchid,
@@ -467,12 +474,15 @@ const get_detail_data = ref({})
       .then((res) => {
         let { data: res_data, ts, code } = res
         // #TODO
+        
         // 当状态码为0400500, data:null,data:{} 去到列表中的早盘
         if (code == "0400500" || !res_data || Object.keys(res_data).length === 0) {
           // router.push({ name: "matchList" });
         } else if (code == 200) {
           if (res_data && Object.keys(res_data).length) {
             match_detail_data_handle(res_data)
+            // 数据传入数据仓库
+        MatchDataWarehouseInstance.set_list_from_match_details(res_data)
           } else {
             // 赛事下发999后, 显示空空如也
             state_data.skeleton.details = true
@@ -599,13 +609,11 @@ const get_detail_data = ref({})
     init_req
   ) => {
     // state_data.data_list = Level_one_category_list();
-    const _get_category_list = () => {
-      // #TODO 暂时使用假数据
-
+    const get_details_category_list = () => {
       api_common
         .get_category_list(params)
         .then((res) => {
-          const res_data = lodash.get(res, "data.data");
+          const res_data = lodash.get(res, "data");
           state_data.data_list = res_data;
 
           // 给vuex 设置玩法集数据
@@ -669,18 +677,18 @@ const get_detail_data = ref({})
       let info = get_category_list_debounce.can_send_request(params);
       if(info.can_send){
         //直接发请求    单次数 请求的方法
-        _get_category_list();
+        get_details_category_list();
       }else{
         // 记录timer
         clearTimeout(state_data.axios_debounce_timer)
         state_data.axios_debounce_timer = setTimeout(() => {
           //直接发请求    单次数 请求的方法
-          _get_category_list();
+          get_details_category_list();
         }, info.delay_time || 1000);
       }
     } else {
       // 直接发请求    多 次数  循环请求 的方法
-      _get_category_list();
+      get_details_category_list();
     }
   };
   /**

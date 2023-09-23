@@ -159,15 +159,14 @@ onMounted(() => {
  * @return {undefined} undefined
  */
 const set_vr_or_guanjun_border = computed(()=> item =>{
+  // 菜单ID == 300 vr体育
   if(item == 300){
-    console.error('300 item',item)
     return 'menu-b-border'
   }
+  // 菜单ID 400 冠军
   if(item == 400){
-    console.error('400 item',item)
     return 'menu-y-border'
   }
-  
 })
 
 /**

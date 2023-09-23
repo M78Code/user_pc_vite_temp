@@ -14,6 +14,7 @@
 
 <script setup>
 import { ref, reactive, onMounted, onBeforeUnmount } from 'vue'
+import lodash from 'lodash'
 
 const props = defineProps({
   content: {
@@ -44,7 +45,7 @@ onBeforeUnmount(clearTimer2)
 function set_move_style(dom_) {
   if (!(dom_.full_content || dom_.scroll_wrap)) return
   // 获取文字text 的计算后宽度 （由于overflow的存在，直接获取不到，需要独立的node计算）
-  let text_width = _.get(dom_.full_content, 'scrollWidth')
+  let text_width = lodash.get(dom_.full_content, 'scrollWidth')
   let scroll = dom_.scroll_wrap
   // 如果文本内容的宽度小于页面宽度，则表示文字小于等于一行，则不需要滚动
   if (text_width < 160) {
@@ -107,7 +108,7 @@ function init() {
     set_move_style(dom_)
     // 兜底处理，dom 元素没拿到的话重新执行一遍
     if (timer2_.value) {
-      timer2_ = setTimeout(() => set_move_style(dom_), 2000);
+      timer2_.value = setTimeout(() => set_move_style(dom_), 2000);
     }
   }, 800)
 }

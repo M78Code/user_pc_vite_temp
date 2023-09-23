@@ -644,7 +644,6 @@ class MatchCtr {
       return match;
     }
     if (match.mid == 2250301) {
-      // debugger
     }
     // 使用到的数据
     let ret_arr = [];
@@ -756,7 +755,6 @@ class MatchCtr {
      */
     function fun(match_inner, item, type_name = 'hps') {
       // if(item.mid == '2277882'){
-      //   debugger
       // }
       // 获取久的  盘口数据 hps 或者  其它玩法集
       let hps_old = [];

@@ -1,15 +1,18 @@
 <template>
-  <div class="match-main-menu">
+  <div class="menu  match-main-menu">
     <div class="menu-inner-wrap">
+      <!--  电竞背景图片  -->
+      <div class="m-i-background" v-if="menu_type == 7" :style="compute_css('menu-bg-' + dj_back_type)"></div>
       <div class="main-wrap flex">
+        <!--  返回按鈕  -->
         <slot name="menu-left">
           <div class="goback-icon-wrapper column justify-center" @click="router.back()">
             <div class="img" :style="compute_css('menu-go-back-icon')"></div>
           </div>
         </slot>
-        <div class="main-menu-container">
+        <div class="main-menu-container" :class="{ esport }">
           <template v-for="(item, index) in menu_list" :key="lodash.get(item, 'mi')">
-            <div class="m-menu-item" :class="{ current: lodash.get(item, 'mi') == menu_type }"
+            <div class="m-menu-item" :class="{ current: lodash.get(item, 'mi') == menu_type, esport }"
               v-show="show_dianjing(item, index)">
               <span class="i-title" @click="set_menu_lv1(item, index)">
                 {{ i18n_t("new_menu." + lodash.get(item, 'mi')) || lodash.get(item, 'mi') }}
@@ -21,8 +24,9 @@
                 }">
                   {{ MenuData.count_menu(item) }}
                 </span><!---->
-
-                <i v-if="index == 1" @click="show_selector_sub = !show_selector_sub" class="dir-triangle"></i>
+                <i v-if="index == 1" @click="show_selector_sub = !show_selector_sub" class="dir-triangle"
+                  :class="{ open: show_selector_sub, arrow_esport: menu_type == 7 || UserCtr.theme == 'theme02' }">
+                </i>
               </div>
 
             </div>
@@ -34,21 +38,18 @@
         </slot>
       </div>
       <!--二级菜单, 三级菜单，上下滑动 隐藏显示 , 竞彩足球 (get_menu_type:30 不显示二级菜单) -->
-      <div class="sub-menu-date-w" v-if="menu_type !== 30">
-        <!-- :class="{
-          simple: menu_wrap_simple && menu_type != 7,
-          zaopan: [4, 11, 28, 3000].includes(+menu_type),
-          esport: 3000 == menu_type,
-        }" -->
+      <div class="sub-menu-date-w" v-if="menu_type !== 30" :class="{
+        simple: menu_wrap_simple && menu_type != 7,
+        zaopan: [4, 11, 28, 3000].includes(+menu_type),
+        esport: 3000 == menu_type,
+      }">
         <!-- 二级菜单, 三级菜单, 四级菜单  -->
-        <div class="sport-m-container">
-          <!-- :class="{
-            simple: sport_container_simple && menu_type != 7,
-            'shadow-down': menu_type != 7,
-          }" -->
-          <!--   二级菜单 除了‘全部’按钮的其他所有 二级菜单  -->
-          <div class="s-menu-container flex">
-            <!--  二级菜单 滚球下边的一个按钮   "全部"按钮  -->
+        <div class="sport-m-container" :class="{
+          simple: sport_container_simple && menu_type != 7,
+          'shadow-down': menu_type != 7,
+        }">
+          <div class="s-menu-container flex" ref="sub_menu_scroller">
+            <!--二级菜单 除了‘全部’按钮的其他所有 二级菜单  二级菜单 滚球下边的一个按钮   "全部"按钮  -->
             <sub-menu-specially v-show="GlobalAccessConfig.get_playAllShow() && menu_type == 1"
               :title="i18n_t('footer_menu.all')" @click="select_all_sub_menu_handle" :count="all_sport_count_calc"
               v-if="GlobalAccessConfig.get_playAllShow()">
@@ -56,15 +57,17 @@
                 !(current_lv2.mi) ?
                   'menu-sport-active-image' : 'menu-sport-icon-image'
                 , 0
-              )"></span>
+              )
+                "></span>
             </sub-menu-specially>
-            <template v-for="(item, index) in current_menu" :key="lodash.get(item, 'mi')">
+            <template v-for="( item, index ) in  current_menu " :key="lodash.get(item, 'mi')">
               <div class="sport-menu-item flex justify-center" v-show="![7, 28].includes(menu_type) ? item.ct > 0 : true"
                 @click="set_menu_lv2(item, index)">
                 <div class="inner-w flex justify-between items-center" :class="{
                   favorite: show_favorite_list,
                   current: current_lv2?.mi == item.mi
-                }">
+                }
+                  ">
                   <div class="sport-w-icon">
                     <span class="sport-icon-wrap" :class="`${'s' + format_type(item)}`"
                       :style="compute_css(current_lv2?.mi == item.mi ? 'menu-sport-active-image' : 'menu-sport-icon-image')"></span>
@@ -72,13 +75,15 @@
                     <!-- :class="[get_sport_icon(selected_sub_menu_i_list.includes(sub_i)), `${'s' + format_type(sub)}`]" -->
 
                     <div class="sport-match-count" v-show="two_menu_show(item)">
+
                       {{ show_favorite_list ? '' : item.ct ? item.ct : 0 }}
                     </div>
                   </div>
                   <div class="s-w-i-title" :class="{
                     esport,
                     'din-regular': esport
-                  }">
+                  }
+                    ">
                     {{ item.name || MenuData.get_menus_i18n_map(
                       MenuData.recombine_menu_desc(lodash.get(item, 'mi'))
                     ) }}
@@ -88,7 +93,6 @@
               </div>
             </template>
           </div>
-
           <!-- 三级菜单 日期 (只有 串关，早盘，赛果，电竞，才有) -->
           <div class="d-c-wrapper" :class="{ esport }" v-if="is_show_three_menu">
             <div class="date-container" ref="date_menu_container" :class="{ esport }">
@@ -99,8 +103,9 @@
                   show_favorite_list &&
                   esport &&
                   date_menu_item.menuId === '-999',
-              }" @click="set_menu_lv3(date_index, 'date_click')"
-                v-for="(date_menu_item, date_index) of date_menu_list">
+              }
+                " @click="set_menu_lv3(date_index, 'date_click')"
+                v-for="( date_menu_item, date_index ) of  date_menu_list ">
                 <div>
                   <!-- 串关不显示日期菜单后面的数量 -->
                   {{ date_menu_item.menuName }}
@@ -116,7 +121,7 @@
           </div>
           <!--四级菜单 虚拟体育赛果才有的 联赛tab-->
           <div class="virtual-sports-results" v-if="is_show_four_menu">
-            <div class="tab-item" v-for="(tab_item, i) of virtual_sports_results_tab" :key="i"
+            <div class="tab-item" v-for="( tab_item, i ) of  virtual_sports_results_tab " :key="i"
               @click="set_menu_lv4(tab_item, i)">
               {{ tab_item.name }}
             </div>
@@ -128,19 +133,18 @@
   <!--主菜单里边---中间下拉弹框-->
   <div v-show="show_selector_sub" class="main-m-selector-w" @click="show_selector_sub = false" :class="{
     'effct-in': show_selector_sub,
-  }" style="background: rgba(0, 0, 0, 0.2)">
-    <!-- :class="{ 'effct-in': show_selector_s2 }"
-
-    中间下拉弹框内容=》 -->
+  }
+    ">
+    <!--  中间下拉弹框内容=》 -->
     <!-- v-show="show_selector_sub" -->
     <div class="selector-w-inner flex wrap justify-left hairline-border show" :class="{
       favorite: show_favorite_list,
       show: show_selector_sub,
-    }" style="background: #fff">
-      <template :key="i_m" v-for="(item, i_m) in pop_main_items">
+    }
+      " style="background: #fff">
+      <template :key="i_m" v-for="( item, i_m ) in  pop_main_items ">
         <div @click="set_menu_lv1(item, i_m)" class="main-m-select-item flex justify-center items-center"
           v-show="is_menu_show(item, i_m)" :class="{ current: menu_type == lodash.get(item, 'mi') }">
-
           <div class="m-menu-name-m">
             {{ i18n_t(`new_menu.${lodash.get(item, 'mi')}`) }}
           </div>
@@ -180,6 +184,10 @@ const props = defineProps({
     default: () => { },
   },
 });
+//菜单容器是否收起
+const menu_wrap_simple = ref(false);
+//菜单容器二级菜单是否收起
+const sport_container_simple = ref(false);
 
 //一级菜单
 let menu_list = ref([]);
@@ -189,7 +197,7 @@ let current_menu = ref({});
 let date_menu_list = ref([]);
 // 如果是赛果，并且是 虚拟体育, 即 是  四级菜单
 let virtual_sports_results_tab = ref([]);
-const current_lv2 = ref({})//二级菜单选中
+const current_lv2 = ref(MenuData.current_lv_2_menu || {})//二级菜单选中
 const pop_main_items = ref([]); //弹出框数据
 const show_selector_sub = ref(false); //展示弹出框
 const show_favorite_list = ref(UserCtr.show_favorite_list); //是否显示收藏列表
@@ -332,6 +340,13 @@ function select_all_sub_menu_handle() {
  */
 async function set_menu_lv2(item, index, type = "click") {
   MenuData.set_current_lv2_menu(item, index, type);
+
+
+  switch (menu_type.value) {
+    case 7:
+      dj_back_img(item.mi)
+      break
+  }
   // // 早盘,串关,电竞拉取接口更新日期菜单 3,6,7
   // const three_menu = await MenuData.get_date_menu_api_when_subchange();
   // console.error(three_menu);
@@ -415,6 +430,19 @@ const format_type = (id) => {
   //电竞背景处理
   if ([2100, 2101, 2103, 2102].includes(+id?.mi)) return +id?.mi
   return MenuData.recombine_menu_bg(id, true)
+}
+const dj_back_type = ref("lol")
+// 切换到电竞时 的菜单 背景图片
+const dj_back_img = (item) => {
+  let value = +item || 2100
+  let type = ''
+  switch (value) {
+    case 2100: type = "lol"; break;
+    case 2101: type = "dota"; break;
+    case 2102: type = "csgo"; break;
+    case 2103: type = "wangzhe"; break;
+  }
+  dj_back_type.value = type
 }
 //弹出框 是否展示
 function is_menu_show(item) {

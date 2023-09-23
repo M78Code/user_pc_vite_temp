@@ -328,7 +328,6 @@ const get_vs_info = (flag) => {
 */
 const get_team_vs_history = () => {
   api_analysis.get_team_vs_history(params.value).then(({ data }) => {
-    debugger
     if (data.code == 200 && data.data) {
       team_vs_history.value = data.data
       let result = format_result(data.data)
