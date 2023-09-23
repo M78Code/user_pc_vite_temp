@@ -10,7 +10,7 @@
 import lodash from 'lodash'
 
 const e_sport_csids = [101, 100, 102, 103];
-import { AllDomain } from 'src/core/'
+import { AllDomain, UserCtr } from 'src/core/'
 setTimeout(() => {
   console.error(AllDomain, 1111111)
 }, 3000);
@@ -61,8 +61,6 @@ const get_file_path = (path, csid = 0) => {
     return '';
   }
   const { oss_file_content } = AllDomain
-
-
   // 如果是http开头 直接返回地址
   if (lodash.toString(path).indexOf('http') == 0) {
     return path
@@ -74,14 +72,8 @@ const get_file_path = (path, csid = 0) => {
   // }
   // 电竞图片域名模式
   if (e_sport_csids.includes(1 * csid)) {
-    return `${config.e_sports.domain_img}/${path}`;
+    return `${UserCtr.e_sports_domain_img}/${path}`;
   }
-
-  // 优先使用oss返回的有效图片域名地址
-  // let domain_img_str = '';
-  // if (config.oss_img_domains) {
-  //   domain_img_str = config.oss_img_domains[0];
-  // }
   // 优先使用oss返回的有效图片域名地址
   let domain_img_str = '';
   if (oss_file_content) {
