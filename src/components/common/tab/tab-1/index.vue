@@ -327,13 +327,16 @@ const layout_list_size = ref(layoutReducer.layout_list_size)
 /** 监听屏幕宽度改变  设置是否显示按钮 */
 watch(
   () => layout_list_size.value,
-  () =>wrap.value.clientWidth
+  () => wrap.value.clientWidth
 )
 /**
  * list语言变化时
  * 做异步处理防止data数据发生改变，初始化
 */
-watch(props.list.value, nextTick(init), { deep: true })
+watch(
+  () => props.list.value,
+  () => nextTick(init), { deep: true }
+)
 
 /** 定时器 */
 const timer = ref(null)
