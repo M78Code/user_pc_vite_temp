@@ -24,8 +24,9 @@
                 }">
                   {{ MenuData.count_menu(item) }}
                 </span><!---->
-
-                <i v-if="index == 1" @click="show_selector_sub = !show_selector_sub" class="dir-triangle"></i>
+                <i v-if="index == 1" @click="show_selector_sub = !show_selector_sub" class="dir-triangle"
+                  :class="{ open: show_selector_sub, arrow_esport: menu_type == 7 || UserCtr.theme == 'theme02' }">
+                </i>
               </div>
 
             </div>
@@ -133,10 +134,8 @@
   <div v-show="show_selector_sub" class="main-m-selector-w" @click="show_selector_sub = false" :class="{
     'effct-in': show_selector_sub,
   }
-    " style="background: rgba(0, 0, 0, 0.2)">
-    <!-- :class="{ 'effct-in': show_selector_s2 }"
-
-    中间下拉弹框内容=》 -->
+    ">
+    <!--  中间下拉弹框内容=》 -->
     <!-- v-show="show_selector_sub" -->
     <div class="selector-w-inner flex wrap justify-left hairline-border show" :class="{
       favorite: show_favorite_list,

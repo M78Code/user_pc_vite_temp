@@ -14,7 +14,7 @@
             <setMenu />
           </template>
         </MenuWapper>
-        <!-- <router-view /> -->
+        <router-view />
         <betMixBox />
         <!--页脚-->
         <FooterWapper class="m-layout" v-if="['sport_menu', 'matchList'].includes(route.name)">
@@ -195,14 +195,15 @@ onUnmounted(() => {
 });
 </script>
 <style lang="scss" scoped>
-.select-mask{
+.select-mask {
   position: fixed;
   width: 100vw;
-  background: rgba(0,0,0,0.4);
-    top: 0;
-    z-index:2000;
-    left: 0
+  background: rgba(0, 0, 0, 0.4);
+  top: 0;
+  z-index: 2000;
+  left: 0
 }
+
 .layout_container {
   height: 100%;
   overflow: hidden;
