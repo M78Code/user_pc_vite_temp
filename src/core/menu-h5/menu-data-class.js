@@ -84,6 +84,7 @@ class MenuData {
       SessionStorage.get(Cache_key.CACHE_CRRENT_MEN_KEY, {}),
       false
     );
+    this.update()
   }
   /**
    * 设置值 并且缓存
@@ -618,52 +619,47 @@ class MenuData {
   }
   // 赛果下数据
   async get_results_menu() {
-    if (this.menu_type.value !== 28) {
-      return;
-    }
-    return new Promise(async (resolve) => {
-      // 如果有缓存，则使用缓存
-      let cache_data = SessionStorage.get(Cache_key.RESULT_SUB_MENU_CACHE);
-      try {
-        // 如果当前主菜单是赛果, 获取赛果二级菜单
-        let { code, data } = await api_analysis.get_result_menu({});
-        if (code == 200 && Array.isArray(data)) {
-          if (lodash.get(data, "[0].menuType") == 29) {
-            // 当是我的投注时菜单进行时间排序
-            let arr = lodash.get(data, "[0].subList");
-            if (arr) {
-              arr.sort((a, b) => {
-                if (b.field1 < a.field1) {
-                  return -1;
-                } else {
-                  return 1;
-                }
-              });
-            }
+    // 如果有缓存，则使用缓存
+    let cache_data = SessionStorage.get(Cache_key.RESULT_SUB_MENU_CACHE);
+    try {
+      // 如果当前主菜单是赛果, 获取赛果二级菜单
+      let { code, data } = await api_analysis.get_result_menu({});
+      if (code == 200 && Array.isArray(data)) {
+        if (lodash.get(data, "[0].menuType") == 29) {
+          // 当是我的投注时菜单进行时间排序
+          let arr = lodash.get(data, "[0].subList");
+          if (arr) {
+            arr.sort((a, b) => {
+              if (b.field1 < a.field1) {
+                return -1;
+              } else {
+                return 1;
+              }
+            });
           }
-          SessionStorage.set(Cache_key.RESULT_SUB_MENU_CACHE, data);
-          // 赛果二级菜单数据处理
-          this.result_sub_menu_api_handle(data, "init");
-        } else {
-          // 出错时使用缓存数据
-          if (cache_data) {
-            // 赛果二级菜单数据处理
-            this.result_sub_menu_api_handle(cache_data, "init");
-          }
-          useMittEmit(MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, {
-            type: "result",
-            event: { cmd: "list_empty" },
-          });
         }
-      } catch (error) {
-        // // 接口异常时逻辑处理
+        SessionStorage.set(Cache_key.RESULT_SUB_MENU_CACHE, data);
+        // 赛果二级菜单数据处理
+        this.result_sub_menu_api_handle(data, "init");
+      } else {
+        // 出错时使用缓存数据
+        if (cache_data) {
+          // 赛果二级菜单数据处理
+          this.result_sub_menu_api_handle(cache_data, "init");
+        }
         useMittEmit(MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, {
           type: "result",
           event: { cmd: "list_empty" },
         });
       }
-      this.update();
-    });
+    } catch (error) {
+      // // 接口异常时逻辑处理
+      useMittEmit(MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, {
+        type: "result",
+        event: { cmd: "list_empty" },
+      });
+    }
+    this.update();
   }
   // 赛果二级菜单  数据（名称） 特殊处理 成 menuName
   result_sub_menu_api_handle(res_data, type = "click") {
@@ -671,6 +667,7 @@ class MenuData {
     res_data.forEach((sub_menu) => {
       sub_menu.menuName = sub_menu.name;
       sub_menu.ct = sub_menu.count;
+      sub_menu.mi = sub_menu.menuId;
       sub_menu.subList.forEach((date_menu) => {
         date_menu.menuName = date_menu.name;
       });
@@ -682,7 +679,7 @@ class MenuData {
     this.set_current_lv2_menu(res_data[0], 0);
   }
   // 早盘,串关,电竞拉取接口更新日期菜单 3,6,7
-  async get_date_menu_api_when_subchange(type) {
+  async get_date_menu_api_when_subchange(item, type) {
     // 如果是早盘，串关，电竞的话
     const menu_type = this.menu_type.value;
     //euid
@@ -858,6 +855,7 @@ class MenuData {
    * type [string] click | init
    */
   set_current_lv2_menu(current_lv_2_menu, current_lv_2_menu_i, type = "click") {
+    console.error("11111")
     this.set_cache_class({
       current_lv_2_menu,
       current_lv_2_menu_i,
@@ -873,7 +871,7 @@ class MenuData {
     }
     else {
       // 早盘,串关,电竞拉取接口更新日期菜单 3,6,7
-      this.get_date_menu_api_when_subchange(type);
+      this.get_date_menu_api_when_subchange(current_lv_2_menu, type);
     }
   }
 
