@@ -274,7 +274,6 @@ const set_base_data_init = () => {
 	}
 	if (menu_root == 3) return;
 	// 赛事列表 卡片数据
-	console.log('datadatadatadata', matchs_list);
 	handle_match_list_request_when_ok(data, true, true, true);
 	let ts1 = Date.now();
 	let mids_arr = [];
@@ -507,14 +506,13 @@ const mounted_fn = () => {
  * // 处理服务器返回的 列表 数据   fetch_match_list
  */
 const handle_match_list_request_when_ok = (data, is_socket, cut, collect) => {
-	// console.warn('daya',data)
 	let {
 		match_list_api_config,
 		menu_root,
 		match_list_api_type,
 		left_menu_result,
 	} = MenuData;
-	//  console.warn('left_menu_result.gunjun',MenuData.left_menu_result.guanjun)
+  console.log('现在走进来了', 11);
 	// let  use_mx_list_res =
 	if (
 		(menu_root == 2000 ||
@@ -537,6 +535,8 @@ const handle_match_list_request_when_ok = (data, is_socket, cut, collect) => {
 		// 收藏
 		mx_use_list_res(data, is_socket, cut, collect);
 	}
+  load_data_state.value = "data";
+  console.log('load_data_state', load_data_state.value);
 };
 /**
  * @description 获取强力推荐赛事
@@ -723,6 +723,7 @@ const useMatchListMx = () => {
     show_refresh_mask,
     collect_count,
     is_show_hot,
+    load_data_state,
 		on_go_top,
 		on_refresh,
 		remove_match_data,

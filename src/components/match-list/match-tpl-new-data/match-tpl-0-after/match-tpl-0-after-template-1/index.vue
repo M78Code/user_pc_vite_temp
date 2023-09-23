@@ -1,9 +1,12 @@
 <template>
-  <div class="c-match-item  match-tpl0-bg" :class="{ 'more-handicap': match.has_add1 || match.has_add2 }">
+  <div class="c-match-item  match-tpl0-bg">
+  <!-- <div class="c-match-item  match-tpl0-bg" :class="{ 'more-handicap': match.has_add1 || match.has_add2 }"> -->
+    <div>{{ MatchListData.data_version }}</div>
+    <div>{{ match }}</div>
     <!-- 比赛进程 -->
     <div class="process-col yb-flex-center">
       <!--热门赛事显示hot标识-->
-      <img class="match-hot" src="~public/image/common/svg/hot.svg" v-if="match.is_hot" />
+      <img class="match-hot" src="~public/image/common/svg/hot.svg"/>
       <!-- 比赛进程 -->
       <match-process v-if="is_mounted" :match_props="{ match, source: 'match_list' }"
         show_page="match-list" :rows="2" />
@@ -97,7 +100,6 @@
       </div>
 
     </div>
-
   </div>
 </template>
 
@@ -132,8 +134,9 @@ const props = defineProps({
 const play_name_list = ref([]);
 const match_style_obj = ref(lodash.get(MatchListCardData.match_all_card_obj, `all_card_obj.mid_${props.mid}`, {}));
 const match_list_tpl_size = ref(MATCH_LIST_TEMPLATE_CONFIG['template_1_config'])
-const match = MatchListData.list_to_obj.mid_obj[props.mid+'_'] || {};
-const is_mounted = ref(false);
+const match = MatchListData.quick_query_obj.mid_obj[props.mid+'_'];
+console.log('MatchListDataMatchListData', JSON.stringify(MatchListData.quick_query_obj.mid_obj));
+const is_mounted = ref(true);
 // 其他玩法标题
 const bet_col = computed(() => {
   let bet_col = []
@@ -356,9 +359,9 @@ const fold_tab_play = () => {
 
 onMounted(() => {
   // 异步设置组件是否挂载完成
-  setTimeout(()=>{
-    is_mounted.value = true
-  })
+  // setTimeout(()=>{
+  //   is_mounted.value = true
+  // })
 })
 
 // 监听其他tab玩法标题变化  设置其他玩法tab栏
