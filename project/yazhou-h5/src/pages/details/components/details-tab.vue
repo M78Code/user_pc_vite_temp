@@ -4,7 +4,6 @@
       <div class="tab-btn" :class="{collapsed:get_fewer != 2}"></div>
     </div>
     <span class="menu-third"></span>
-
     <div class="menu-s" ref="reset_scroll_dom">
       <div class="menu-item" v-for="(item,index) in data_list" :key="index" @click.self="selete_item(item['id'],index,item)" :class="get_details_item == item['id']?'t_color':''">
         {{item.marketName}}
@@ -18,7 +17,7 @@
 // import { mapGetters, mapActions,mapMutations } from "vuex"
 import {utils } from 'src/core/index.js';
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
-import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
+import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, ref } from "vue";
 import { useRoute, useRouter } from "vue-router"
 import UserCtr from "src/core/user-config/user-ctr.js";
 
@@ -36,12 +35,14 @@ export default defineComponent({
       default: 0
     }
   },
+  
   setup(props, evnet) {
     const data = reactive({
       emitters: [],
       timer1_: null,
       reset_scroll_dom: null,
     });
+    console.error(props);
     // #TODO VUEX
     // computed:{
     // ...mapGetters([
@@ -56,28 +57,19 @@ export default defineComponent({
     //   "get_detail_data",
     // ]),
     // 玩法tab 所有投注 - 进球 - 上半场 - 球队 - 让球&大小
-    const get_details_item = computed(() => {
-      return ""
-    });
+    const get_details_item = ref(" ");
     // 当用户未登录时返回uuid, 当用户登录时返回userId
-    const get_uid = computed(() => {
-      return ""
-    });
+    // const get_uid = computed(() => {
+    //   return ""
+    // });
     // 点击视频或者是动画的时候玩法集是否固定
-    const get_tab_fix = computed(() => {
-      return ""
-    });
+    // const get_tab_fix = computed(() => {
+    //   return ""
+    // });
     // 一键收起状态: 1.全展开 2.全收起 3.部分展开 1和3箭头向上
-    const get_fewer = computed(() => {
-      return ""
-    });
-    const get_detail_data = computed(() => {
-      return ""
-    });
-    // TODO:待修改
-    const UserCtr = computed(() => {
-      return ""
-    });
+    const get_fewer = ref('');
+    const get_detail_data = ref("");
+    
     const match_id = computed(() => {
       return route.params.mid || get_detail_data.mid
     });
@@ -85,9 +77,7 @@ export default defineComponent({
     // methods:{
     // ...mapActions(['set_details_item','set_subscript_game_index']),
     // ...mapMutations(['set_fewer']),
-    const set_fewer = () => {
-
-    }
+    const set_fewer = ref('')
     onMounted(() => {
       on_listeners();
 

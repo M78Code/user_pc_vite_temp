@@ -154,7 +154,7 @@ export default defineComponent({
       on_listeners,
       off_listeners,
     } = category_info();
-
+    console.error(show_recommend);
     watch(
       () => route,
       (to, from) => {

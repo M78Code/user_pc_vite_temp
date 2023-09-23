@@ -545,6 +545,7 @@ class BaseData {
   async init_base_data() {
     try {
       let res = await api_base_data.get_base_data({});
+      console.log('resresresres', res);
       res &&  await this.set_base_data_res(res);
     } catch (error) {
       console.log("获取 元数据接口 error", error);
