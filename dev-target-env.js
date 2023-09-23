@@ -28,8 +28,8 @@ DEV_TARGET_ENV = "local_test";
 
  
 //本地开发 目标项目
-// let DEV_PROJECT_NAME = "yazhou-pc";
-let DEV_PROJECT_NAME = "yazhou-h5";
+let DEV_PROJECT_NAME = "yazhou-pc";
+// let DEV_PROJECT_NAME = "yazhou-h5";
 
 
 
@@ -48,7 +48,7 @@ DEV_TARGET_VERSION = "project_4-36304ea0499e11ee8848ada2b8a1d739-1695005815463-t
 // DEV_TARGET_VERSION = "project_4-36304ea0499e11ee8848ada2b8a1d739-1695460244072-online";
 
 // 打包 亚洲版 H5（新版)   测试环境
-DEV_TARGET_VERSION = "project_3-36304ea0499e11ee8848ada2b8a1d739-1695005829428-test";
+// DEV_TARGET_VERSION = "project_3-36304ea0499e11ee8848ada2b8a1d739-1695005829428-test";
 // 打包 亚洲版 H5（新版)   试玩环境     
 // DEV_TARGET_VERSION = "project_3-36304ea0499e11ee8848ada2b8a1d739-1694942233473-shiwan";
 // 打包 亚洲版 H5（新版)   生产环境    

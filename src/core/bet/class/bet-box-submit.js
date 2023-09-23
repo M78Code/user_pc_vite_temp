@@ -5,15 +5,17 @@ import { compute_value_by_cur_odd_type } from "src/core/format/module/format-odd
 import UserCtr from "src/core/user-config/user-ctr.js"
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import { getSeriesCountJointNumber } from "src/core/bet/common-helper/module/bet-single-config.js"
+import { MatchDataWarehouse_PC_List_Common } from 'src/core/index.js'
+import lodash_ from "lodash"
 
 const play_id = {
-    '1':"全场独赢",
-    '4':"全场让球",
-    '2':"全场大小",
-    '17':"半场独赢",
-    '19':"半场让球",
-    '18':"半场大小",
-  }
+    '1': "全场独赢",
+    '4': "全场让球",
+    '2': "全场大小",
+    '17': "半场独赢",
+    '19': "半场让球",
+    '18': "半场大小",
+}
 
 // 获取限额请求数据
 // bet_list 投注列表
@@ -44,7 +46,7 @@ const set_min_max_money = (bet_list, is_single, is_merge) => {
         // 串关没有 这个字段 
         if (is_single) {
             obj.openMiltSingle = is_merge ? 1 : 0 //是否开启 多单关投注模式，1：是，非1（0或者其他）：否
-            
+
         }
         return obj
     }) || []
@@ -64,7 +66,7 @@ const set_min_max_money = (bet_list, is_single, is_merge) => {
 // bet_list  投注列表
 // is_single 是否单关/串关 
 const set_bet_order_list = (bet_list, is_single) => {
-    
+
     let order_list = [], single_bet = BetViewDataClass.bet_special_series
     // 串关
     if (!is_single) {
@@ -180,11 +182,11 @@ const get_query_bet_amount_common = (obj) => {
             BetViewDataClass.set_bet_min_max_money(res.data)
             // 通知页面更新 
             useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY)
-        }else{
+        } else {
             // 获取限额失败的信息
             BetViewDataClass.set_bet_error_code({
-                code:res.code,
-                message:res.message
+                code: res.code,
+                message: res.message
             })
         }
     })
@@ -251,69 +253,73 @@ const submit_handle = type => {
             setTimeout(() => {
                 // 投注成功 更新余额
                 UserCtr.get_balance()
-              
+
             }, 1000);
             // 通知页面更新 
             // useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY)
-        } 
+        }
         // 设置投注 code 码
         BetViewDataClass.set_bet_error_code(res)
     })
 }
 
 // 选择投注项数据 
-// item 列表层 
-// obj_hp 玩法层 hpdata
-// obj_hl 盘口层 
-// obj_ol 赔率层
-const set_bet_obj_config = (item,obj_hp,obj_hl,obj_ol) =>{
-    console.log('投注项需要数据', item,obj_hp,obj_hl,obj_ol);
+// params 各种id 用于查找数据对应的值 
+// other 灵活数据
+const set_bet_obj_config = (params = {}, other = {}) => {
+    console.log('投注项需要数据', params, 'other', other);
     // 切换投注状态
     BetViewDataClass.set_bet_order_status(1)
-    
+
+    const { oid, _hid, _hn, _mid } = params
+    console.error('MatchDataWarehouse_PC_List_Common',MatchDataWarehouse_PC_List_Common)
+    const hl_obj = lodash_.get(MatchDataWarehouse_PC_List_Common.list_to_obj, `hl_obj.${_mid}_${_hid}`)
+    const hn_obj = lodash_.get(MatchDataWarehouse_PC_List_Common.list_to_obj, `hn_obj.${_hn}`)
+    const mid_obj = lodash_.get(MatchDataWarehouse_PC_List_Common.list_to_obj, `mid_obj.${_mid}_`)
+    const ol_obj = lodash_.get(MatchDataWarehouse_PC_List_Common.list_to_obj, `ol_obj.${_mid}_${oid}`)
+
+
     // 1 ：早盘赛事 ，2： 滚球盘赛事，3：冠军，4：虚拟赛事，5：电竞赛事")
-    let matchType = 1 
-    if( [1,2].includes(Number(item.ms)) ){
-      matchType = 2
+    let matchType = 1
+    if ([1, 2].includes(Number(mid_obj.ms))) {
+        matchType = 2
     }
     const bet_obj = {
-      sportId: item.csid, // 球种id
-      matchId: item.mid,  // 赛事id
-      tournamentId: item.tid,  // 联赛id
-      scoreBenchmark: item.msc[0],  //比分
-      marketId: obj_hl.hid, //盘口ID
-      marketValue: obj_hl.hv,
-      playOptionsId: obj_ol.oid, //投注项id
-      marketTypeFinally: 'EU',  // 欧洲版默认是欧洲盘 HK代表香港盘
-      odds: obj_ol.ov,  //十万位赔率
-      oddFinally: compute_value_by_cur_odd_type(obj_ol.ov,'','',item.csid), //最终赔率
-      sportName: item.csna, //球种名称
-      matchType,  //赛事类型
-      matchName: item.tn, //赛事名称
-      playOptionName: obj_ol.on, // 投注项名称
-      playOptions: obj_ol.on,   // 投注项
-      tournamentLevel: item.tlev, //联赛级别
-      playId: obj_hp.hpid, //玩法ID
-      playName: play_id[obj_hp.hpid], //玩法名称
-      dataSource: item.cds, //数据源
-      home: item.mhn, //主队名称
-      away: item.man, //客队名称
-      ot: obj_ol.ot, //投注項类型
-      placeNum: null, //盘口坑位
-      // 以下为 投注显示或者逻辑计算用到的参数
-      bet_type: 'common_bet', // 投注类型
-      tid_name: item.tnjc,  // 联赛名称
-      match_ms: item.ms, // 赛事阶段
-      match_time: item.mgt, // 开赛时间
+        sportId: mid_obj.csid, // 球种id
+        matchId: mid_obj.mid,  // 赛事id
+        tournamentId: mid_obj.tid,  // 联赛id
+        scoreBenchmark: mid_obj.msc[0],  //比分
+        marketId: hl_obj.hid, //盘口ID
+        marketValue: hl_obj.hv,
+        playOptionsId: ol_obj.oid, //投注项id
+        marketTypeFinally: 'EU',  // 欧洲版默认是欧洲盘 HK代表香港盘
+        odds: ol_obj.ov,  //十万位赔率
+        oddFinally: compute_value_by_cur_odd_type(ol_obj.ov, '', '', mid_obj.csid), //最终赔率
+        sportName: mid_obj.csna, //球种名称
+        matchType,  //赛事类型
+        matchName: mid_obj.tn, //赛事名称
+        playOptionName: ol_obj.on, // 投注项名称
+        playOptions: ol_obj.on,   // 投注项
+        tournamentLevel: mid_obj.tlev, //联赛级别
+        playId: hl_obj.hpid, //玩法ID
+        playName: play_id[hl_obj.hpid], //玩法名称
+        dataSource: mid_obj.cds, //数据源
+        home: mid_obj.mhn, //主队名称
+        away: mid_obj.man, //客队名称
+        ot: ol_obj.ot, //投注項类型
+        placeNum: null, //盘口坑位
+        // 以下为 投注显示或者逻辑计算用到的参数
+        bet_type: 'common_bet', // 投注类型
+        tid_name: mid_obj.tnjc,  // 联赛名称
+        match_ms: mid_obj.ms, // 赛事阶段
+        match_time: mid_obj.mgt, // 开赛时间
     }
-    console.error('playOptionsId',bet_obj.playOptionsId)
+    console.error('playOptionsId', bet_obj.playOptionsId)
     BetData.set_bet_read_write_refer_obj(bet_obj)
 
     // 获取限额 常规
     get_query_bet_amount_common(bet_obj)
 }
-
-
 
 export {
     get_query_bet_amount_common,

@@ -27,7 +27,7 @@
         ? odds_state
         : 'odds_state',
     ]"
-   @click="set_bet_obj_config(match_info,play_data,play_data.hl,ol_data_item)"
+   @click="bet_click_ol()"
     :id="DOM_ID_SHOW && `${bet_source}-${ol_data_item.oid}`"
   >
     <div
@@ -60,7 +60,7 @@
         </slot>
       </div>
       <!-- 赔率 -->
-      <div :class="['odds yb-number-font', odds_lift]"  @click="set_bet_obj_config(match_info,play_data,play_data.hl,ol_data_item)">
+      <div :class="['odds yb-number-font', odds_lift]"  @click="bet_click_ol()">
         <div
           v-if="odds_state == 'seal'"
           class="lock"
@@ -178,6 +178,21 @@ const {
   bet_click,
   format_odds_value
 } = useGetItem({ props });
+
+/**
+ * @description 投注项点击
+ * @return {undefined} undefined  组装投注项的数据
+ */
+ const bet_click_ol = () => {
+  const {oid,_hid,_hn,_mid } = props.ol_data
+  let params = {
+    oid, // 投注项id ol_obj
+    _hid, // hl_obj 
+    _hn,  // hn_obj
+    _mid,  //赛事id mid_obj
+  }
+  set_bet_obj_config(params,{})
+};
 
 </script>
 
