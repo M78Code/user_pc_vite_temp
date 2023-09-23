@@ -260,6 +260,7 @@ const {
   HandicapTitle,
   betItem,
   lodash,
+  isShow
 } = useCommon({ emit, props });
 
 const hl_index = ref(0);

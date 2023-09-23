@@ -48,11 +48,11 @@ let  DEV_TARGET_VERSION = ''
 // DEV_TARGET_VERSION = "project_4-36304ea0499e11ee8848ada2b8a1d739-1695460244072-online";
 
 // 打包 亚洲版 H5（新版)   测试环境
-// DEV_TARGET_VERSION = "project_3-36304ea0499e11ee8848ada2b8a1d739-1695005829428-test";
+DEV_TARGET_VERSION = "project_3-36304ea0499e11ee8848ada2b8a1d739-1695005829428-test";
 // 打包 亚洲版 H5（新版)   试玩环境     
 // DEV_TARGET_VERSION = "project_3-36304ea0499e11ee8848ada2b8a1d739-1694942233473-shiwan";
 // 打包 亚洲版 H5（新版)   生产环境    
-DEV_TARGET_VERSION = "project_3-36304ea0499e11ee8848ada2b8a1d739-1695459148383-online";
+// DEV_TARGET_VERSION = "project_3-36304ea0499e11ee8848ada2b8a1d739-1695459148383-online";
 
 
 

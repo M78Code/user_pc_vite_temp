@@ -65,7 +65,7 @@ export const useMethods = ({ props,emit }) => {
       return list;
     });
     const mmp = computed(() => {
-      return props.match_info.mmp;
+      return props.match_info?.mmp;
     });
 
   //  ============================watch===================
@@ -176,7 +176,7 @@ export const useMethods = ({ props,emit }) => {
       2: 3,
       11: 4,
     };
-    if (props.match_info.mhs) {
+    if (props.match_info?.mhs) {
       let status = 1;
       status = obj[props.match_info.mhs];
 

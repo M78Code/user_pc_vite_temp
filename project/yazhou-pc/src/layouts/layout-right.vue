@@ -33,7 +33,7 @@ import { LayOutMain_pc } from "src/core/index.js";
 import { useRoute, useRouter } from "vue-router"
 
 const route = useRoute()
-
+const right_status=ref(null)
 
 onBeforeUnmount(() => {
   list_emit.forEach((i) => i());

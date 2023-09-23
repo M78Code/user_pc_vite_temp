@@ -29,7 +29,7 @@
               :play_data="item_details"
               :bet_data="item"
               :bet_path="{hl_index: j, ol_index: i}"
-              :team_name="!$utils.is_eports_csid(match_info.csid) ? lodash.get(item_details, `title[${i}].osn`) : ''"
+              :team_name="is_eports_csid(match_info.csid) ? lodash.get(item_details, `title[${i}].osn`) : ''"
               bet_source="match_details"
             >
               <div class="bet-item">
@@ -54,7 +54,7 @@
 import { useCommon } from "../../use-common";
 
 const emit = defineEmits(["sort_index", "set_panel_status"]);
-
+import { is_eports_csid} from "src/core/index"
 const props = defineProps({
   match_info: Object, //赛事详情
   screen: String, //match-detail详情页，match-list列表右侧
@@ -75,7 +75,7 @@ const props = defineProps({
   panel_status: String, //列表展开收起
 });
 
-const { sort_index, filter_odds, toggle_menu, curIsShow, HandicapTitle,lodash,betItem } =
+const { sort_index, filter_odds, toggle_menu, curIsShow, HandicapTitle,lodash,betItem,isShow } =
   useCommon({ emit, props });
 </script>
 <style lang="scss" scoped>
