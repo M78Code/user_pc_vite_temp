@@ -394,7 +394,7 @@ const get_detail_data = ref({})
     // bool 的值为true或者是false
     is_dialog_details = bool;
   };
-  //  赛事详情页面接口(/v1/m/matchDetail/getMatchDetailPB)
+  //  赛事详情页面接口(/v1/m/matchDetail/getMatchDetail)
   const initEvent = () => {
     // get_uid为空时循环检测进行拉取逻辑处理
     if (state_data.get_uid || state_data.init_event_timer_count > 30) {

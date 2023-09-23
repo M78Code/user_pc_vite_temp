@@ -5,8 +5,8 @@ import STANDARD_KEY from "../standard-key";
 import axios_debounce_cache from "./debounce-module/index";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import domain from "./domain";
-import { SessionStorage , LocalStorage } from "src/core/utils/module/web-storage.js";
-import {Qs} from "src/core/index.js";
+import { SessionStorage, LocalStorage } from "src/core/utils/module/web-storage.js";
+import { Qs } from "src/core/index.js";
 import { useMittEmit, MITT_TYPES } from "../mitt";
 // import userCtr from "../user-config/user-ctr";
 const token_key = STANDARD_KEY.get("token"); //token键
@@ -49,11 +49,11 @@ const requestHook = {
     }
     //请求token
     // const requestId = "68e6c351022cec470f7cc3195fbabda7adb46a8d"
-    const requestId = SessionStorage.get(token_key) || sessionStorage.getItem("token") ||Qs.token ||  "";
+    const requestId = SessionStorage.get(token_key) || sessionStorage.getItem("token") || Qs.token || "";
     config.headers["requestId"] = requestId;
     //请求语言
-    config.headers["lang"] = "zh"; // 语言调整
-    config.headers["checkId"] = `pc-${requestId}-${(UserCtr.get_uid()).replace(/-/g,"")}-${Date.now()}`;
+    config.headers["lang"] = SessionStorage.get('lang'); // 语言调整
+    config.headers["checkId"] = `pc-${requestId}-${(UserCtr.get_uid()).replace(/-/g, "")}-${Date.now()}`;
     // config.url 后面是不带 ？的  会被 axios 解析掉参数放在其他地方
     if (SessionStorage.get(STANDARD_KEY.get("pb"))) {
       if (endsWith(config.url, "PB")) {

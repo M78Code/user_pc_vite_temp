@@ -86,6 +86,7 @@ const results_of_the_virtual_display = MenuData.is_results_virtual_sports();
 
 
 // 获取搜索球类
+// 列表页二级菜单 对应 搜索头部的 球类二级菜单
 async function get_sport_list() {
   try {
     let params = {}
@@ -139,12 +140,6 @@ async function get_sport_list() {
     skeleton_loading.value = true
   }
 }
-// 列表页二级菜单 对应 搜索头部的 球类二级菜单
-function List_econdary_menu(data) {
-
-
-}
-
 // 跳转到赛事详情
 function go_to_details() {
   if (details_search.value != null && details_search.value.word.length > 0) {

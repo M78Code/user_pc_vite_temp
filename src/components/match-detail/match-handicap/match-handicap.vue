@@ -26,7 +26,7 @@
               :key="`hpid_${item.hpid}_topKey_${item.topKey}`"
               class="template"
             >
-              <!-- <div>{{ plays_list }}----{{ item.hpid }}---{{ item.chpid }}---{{ item.hpn }}---{{ currentRound }}</div> -->
+              <!-- <div>{{ plays_list }}----{{ item.hpt }}---{{ item.chpid }}---{{ item.hpn }}---{{ currentRound }}</div> -->
               <div v-show="is_component_show(item)">
                 <!--修改全场让球赛果为有附加盘时不出现的问题 item.hpt == 1|| ['3'].includes(item.hpid)-->
                 <component
