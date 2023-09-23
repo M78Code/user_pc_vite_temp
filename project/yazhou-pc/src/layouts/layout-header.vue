@@ -21,7 +21,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted } from 'vue'
+import { ref, reactive, onMounted, onUnmounted, watch } from 'vue'
 import lodash from 'lodash'
 import { useRoute, useRouter } from "vue-router";
 
@@ -32,6 +32,7 @@ import globalAccessConfig from "src/core/access-config/access-config.js"
 import { i18n_t } from "src/boot/i18n.js"
 import { get_file_path } from "src/core/file-path/file-path.js"
 import { api_activity, api_account } from "src/api/index";
+import { useMittOn, MITT_TYPES } from "src/core/mitt/"
 
 /** 组件 */
 import siteHeader from 'project_path/src/components/site-header/site-header.vue'
@@ -261,11 +262,12 @@ function activity_dialog() {
   })
 }
 
+const { off: menu_init_done_off } = useMittOn(MITT_TYPES.EMIT_MENU_INIT_DONE, menu_init_done)
+onUnmounted(menu_init_done_off)
 /**
  * @Description 菜单初始化完成
  * @param {undefined} undefined
  */
-// this.$root.$on("menu_init_done",this.menu_init_done)
 function menu_init_done() {
   // 如果有电竞
   // TODO: 菜单
@@ -287,6 +289,10 @@ function menu_init_done() {
     }
   }
 }
+
+// 监听语言切换 
+const { off: init_site_header_off } = useMittOn(MITT_TYPES.EMIT_LANG_CHANGE, () => init_site_header(2))
+onUnmounted(init_site_header_off)
 /**
  * @description 设置顶部菜单
  * @param {number} type  类型(null-自然触发，1-导航栏二次触发，2-切换语言)
