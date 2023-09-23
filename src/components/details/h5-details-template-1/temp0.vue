@@ -181,10 +181,11 @@ import odds_new from "project_path/src/pages/details/components/tournament_play/
 // import odd_convert from "/mixins/odds_conversion/odds_conversion.js";
 import {utils } from 'src/core/index.js';
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
+
 export default defineComponent({
   // #TODO mixins
   // mixins:[odd_convert],
-  name: "temp0",
+  // name: "temp0",
   components: {
     "odds-new": odds_new
   },

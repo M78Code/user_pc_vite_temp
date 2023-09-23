@@ -366,7 +366,7 @@ export default {
     }
 
     .event-icon {
-        background: url('/public/yazhou-pc/image/common/png/sports_play_icon.png');
+        background: url('/yazhou-pc/image/common/png/sports_play_icon.png');
         background-repeat: no-repeat;
         width: 10px;
         height: 10px;

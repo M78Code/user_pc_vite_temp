@@ -197,7 +197,7 @@ import { useRoute } from "vue-router"
 import { t } from "src/boot/i18n.js";;
 //国际化
 
-const route = useRoute()
+
 export default defineComponent({
   // #TODO mixins
   // mixins:[odd_convert],
@@ -208,6 +208,7 @@ export default defineComponent({
   props: ["item_data", "title"],
   setup(props, evnet) {
     const store_state = store.getState()
+    const route = useRoute()
     let data = reactive({
       utils,
       // 最大显示行数
