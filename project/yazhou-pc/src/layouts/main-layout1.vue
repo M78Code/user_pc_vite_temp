@@ -67,6 +67,7 @@ const mitt_offs = [
 <style lang="scss" scoped>
 @import url(./main-layout.scss);
 @import url(./content-layout.scss);
+@import url(./match-list.scss);
 
 .page-main {
   width: 100%;

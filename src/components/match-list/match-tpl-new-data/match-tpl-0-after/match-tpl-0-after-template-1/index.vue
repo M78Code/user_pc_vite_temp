@@ -132,7 +132,6 @@ const match_style_obj = ref(lodash.get(MatchListCardData.match_all_card_obj, `al
 const match_list_tpl_size = ref(MATCH_LIST_TEMPLATE_CONFIG['template_1_config'])
 const match = reactive(MatchListData.list_to_obj.mid_obj[props.mid+'_'] || {});
 const is_mounted = ref(false);
-
 // 其他玩法标题
 const bet_col = computed(() => {
   let bet_col = []

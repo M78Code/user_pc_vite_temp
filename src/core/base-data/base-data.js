@@ -589,7 +589,6 @@ class BaseData {
 
    await  db.mids_info.clear()
    await db.mids_info.bulkAdd(mids_info, "mid");
-
    await  db.menus_i18n.clear()
     db.menus_i18n.bulkAdd(menus_i18n, "play_id");
 

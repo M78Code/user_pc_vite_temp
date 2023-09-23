@@ -44,7 +44,7 @@
     >
       <div v-if="odds_state == 'seal'" class="lock" />
       <span v-else>
-        {{ match_odds }}
+        {{ ol_data.ov / 100000 }}
       </span>
       <div
         class="odds-arrows-wrap"
@@ -60,11 +60,16 @@
 
 <script setup>
 // import bet_item_mixin  from "src/public/components/bet_item/bet_item_list_new_data_mixin.js";
-import { onMounted, ref, defineProps, onUnmounted, computed } from "vue";
-
-import { get_odds_active, utils, MatchDataWarehouse_PC_List_Common as MatchListData } from "src/core/index.js";
+import { onMounted, ref, defineProps, onUnmounted, computed, watch } from "vue";
+import lodash from 'lodash'
+import {
+  get_odds_active,
+  utils,
+  MatchDataWarehouse_PC_List_Common as MatchListData,
+} from "src/core/index.js";
+import { format_odds_value } from 'src/core/format/module/format-odds.js';
+import { compute_value_by_cur_odd_type } from "src/core/format/module/format-odds-conversion-mixin.js";
 import menu_config from "src/core/menu-pc/menu-data-class.js";
-
 
 const is_mounted = ref(false);
 // 盘口状态 active:选中 lock:锁盘 seal:封盘 close:关盘
@@ -107,6 +112,49 @@ onMounted(() => {
     is_mounted.value = true;
   });
 });
+
+// 监听玩法ID变化 取消赔率升降
+watch(props.ol_data._hpid, () => {
+  clear_odds_lift()
+}) 
+
+// 监听oid 取消赔率升降
+watch(props.ol_data.oid, () => {
+  clear_odds_lift()
+})  
+
+// 监听投注项赔率变化
+watch(props.ol_data.ov, (cur, old) => {
+  // 赔率值处理
+  format_odds(cur, 1);
+  if (props.ol_data) {
+    let { _mhs, _hs, os } = props.ol_data;
+    odds_state.value = get_odds_state(_mhs, _hs, os);
+  }
+  // 红升绿降变化
+  set_odds_lift(cur, old);
+})  
+
+/**
+ * 赔率转换
+ * @param  {number} ov - 赔率值
+ * @param  {number} obv - 断档赔率值
+ * @return {undefined} undefined
+ */
+const format_odds = () => {
+  let ov = lodash.get(props.ol_data, "ov");
+  let obv = lodash.get(props.ol_data, "obv");
+  // 列表取 hsw
+  let hsw = props.ol_data._hsw;
+  let match_odds_info = compute_value_by_cur_odd_type(
+    ov / 100000,
+    obv / 100000 || '',
+    hsw || '',
+    1
+  );
+  console.log('match_odds_info', props.ol_data);
+  match_odds.value = format_odds_value(match_odds_info);
+};
 
 /**
  * 设置赔率升降
