@@ -58,6 +58,7 @@ import stage_child_16 from "./stage/stage-child-16.vue";  // 详情页显示水�
 import stage_child_101 from "./stage/stage-child-101.vue";  // 详情页 电竞第几局 以及 赛事时间
 // import {mapGetters} from "vuex";
 import { utils } from 'src/core/utils/index.js';
+import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
 
 export default {
   name: "match_stage",
@@ -92,10 +93,9 @@ export default {
     }
   },
   props: ["detail_data","dialog"],
-
   created() {
     // 监听match_nostart事件
-    $root.$on(emit_cmd.EMIT_MATCH_NOSTART,initEvent);
+   let {off: off_} = useMittOn(MITT_TYPES.EMIT_MATCH_NOSTART,initEvent);
   },
   components: {
     stage_child_1,
@@ -118,7 +118,7 @@ export default {
   },
   destroyed() {
     // 组件销毁,关闭监听
-    $root.$off(emit_cmd.EMIT_MATCH_NOSTART);
+    off_()
   },
   methods: {
     // 计算bool的值 控制是否显示赛事时间

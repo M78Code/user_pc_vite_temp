@@ -21,6 +21,7 @@
 <script>
 // import msc from "src/public/mixins/common/msc.js";
 import { format_mgt_time } from "src/core/format/index.js"
+import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/index.js";
 
 export default {
   // mixins: [msc],
@@ -73,11 +74,11 @@ export default {
     // 时间延时器
     showTimeInterval = 0;
     init_event();
-    $root.$on(emit_cmd.EMIT_UPDATE_GAME_TIME, init_event);
+    let { off: off_ } = useMittOn(MITT_TYPES.EMIT_UPDATE_GAME_TIME, init_event);
   },
   destroyed(){
     clear_time_obj();
-    $root.$off(emit_cmd.EMIT_UPDATE_GAME_TIME, init_event);
+    // off_()
   },
   methods: {
     /**
@@ -145,7 +146,7 @@ export default {
      */
     save_page_time(){
       if(dialog) return;
-      $root.$emit(emit_cmd.EMIT_SET_MATCH_TIME, Number(showTime));
+      useMittEmit(MITT_TYPES.EMIT_SET_MATCH_TIME, Number(showTime));
     },
     /**
      *@description 组件销毁时清除时间自增方法

@@ -192,6 +192,7 @@
 <script>
 // import format from "src/project/yabo/mixins/match_details/index";
 import {MatchProcessFullVersionWapper} from "src/components/match-process/index.js";
+import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/index.js";
 export default {
   components: {
     "match-date": MatchProcessFullVersionWapper,
@@ -220,6 +221,7 @@ export default {
       is_show_home_red:false,
       // 是否显示客队红牌动画
       is_show_away_red:false,
+      off_: ''
     };
   },
   methods: {
@@ -252,10 +254,10 @@ export default {
       this.is_show_away_red = false
     },
     start_timer() {
-      this.$root.$on(
-        MITT_TYPES.EMIT_UPD_TIME_REFRESH_CMD,
-        this.start_timer_loop
-      );
+      // let {off: this.off_} = useMittOn(
+      //   MITT_TYPES.EMIT_UPD_TIME_REFRESH_CMD,
+      //   this.start_timer_loop
+      // );
     },
     start_timer_loop() {
       let date = this.timestamp++;
@@ -283,10 +285,7 @@ export default {
     this.debounce_throttle_cancel(this.hide_away_goal);
     this.debounce_throttle_cancel(this.hide_home_red);
     this.debounce_throttle_cancel(this.hide_away_red);
-    this.$root.$off(
-      MITT_TYPES.EMIT_UPD_TIME_REFRESH_CMD,
-      this.start_timer_loop
-    );
+    // this.off_();
   },
   watch: {
     match_info: {

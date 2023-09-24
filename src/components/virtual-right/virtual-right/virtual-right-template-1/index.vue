@@ -170,14 +170,14 @@ export default defineComponent({
     );
     onMounted(() => {
       $utils.load_player_js()
-      useMittOn(MITT_TYPES.EMIT_UPD_TIME_REFRESH_CMD, timer);
+      // useMittOn(MITT_TYPES.EMIT_UPD_TIME_REFRESH_CMD, timer);
 
       // 原mounted
       vsport_ctr.set_result_style()
 
     })
     onUnmounted(() => {
-      useMittOn(MITT_TYPES.EMIT_UPD_TIME_REFRESH_CMD, timer);
+      // useMittOn(MITT_TYPES.EMIT_UPD_TIME_REFRESH_CMD, timer);
     });
     /**
      * @Description 计时器

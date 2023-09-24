@@ -18,14 +18,15 @@
                 {{ i18n_t("new_menu." + lodash.get(item, 'mi')) || lodash.get(item, 'mi') }}
               </span>
               <div class="m-menu-count">
-                <span class="count" :style="{
-                  visibility: show_favorite_list ||
-                    [7, 8].includes(lodash.get(item, 'mi')) ? 'hidden' : 'visible'
-                }">
-                  {{ MenuData.count_menu(item) }}
+                <span class="count" :style="{ visibility: show_favorite_list }"
+                  :class="{ is_unit: MenuData.count_menu(item) < 10 && index == 1, esport }">
+                  <!-- show_favorite_list || main_m.menuId==408 ||
+                    3000 == main_m.menuType ? 'hidden' : 'visible'
+                     -->
+                  {{ item.mi == 8 ? '295' : MenuData.count_menu(item) }}
                 </span><!---->
                 <i v-if="index == 1" @click="show_selector_sub = !show_selector_sub" class="dir-triangle"
-                  :class="{ open: show_selector_sub, arrow_esport: menu_type == 7 || UserCtr.theme == 'theme02' }">
+                  :class="{ open: show_selector_sub, arrow_esport: esport || UserCtr.theme == 'night' }">
                 </i>
               </div>
 
@@ -41,7 +42,7 @@
       <div class="sub-menu-date-w" v-if="menu_type !== 30" :class="{
         simple: menu_wrap_simple && menu_type != 7,
         zaopan: [4, 11, 28, 3000].includes(+menu_type),
-        esport: 3000 == menu_type,
+        esport,
       }">
         <!-- 二级菜单, 三级菜单, 四级菜单  -->
         <div class="sport-m-container" :class="{
@@ -84,9 +85,7 @@
                     'din-regular': esport
                   }
                     ">
-                    {{ item.name || MenuData.get_menus_i18n_map(
-                      MenuData.recombine_menu_desc(lodash.get(item, 'mi'))
-                    ) }}
+                    {{ item.name || MenuData.get_menus_i18n_map(item?.mi) }}
                   </div>
                 </div>
 
@@ -137,13 +136,13 @@
         <div class="selector-w-inner flex wrap justify-left hairline-border show" :class="{
           favorite: show_favorite_list,
           show: show_selector_sub,
-        }
-          " style="background: #fff">
+        }">
           <template :key="i_m" v-for="( item, i_m ) in  pop_main_items ">
             <div @click="set_menu_lv1(item, i_m)" class="main-m-select-item flex justify-center items-center"
-              v-show="is_menu_show(item, i_m)" :class="{ current: menu_type == lodash.get(item, 'mi') }">
+              v-show="is_menu_show(item, i_m)"
+              :class="{ current: menu_type == item?.mi, 'is-favorite': show_favorite_list }">
               <div class="m-menu-name-m">
-                {{ i18n_t(`new_menu.${lodash.get(item, 'mi')}`) }}
+                {{ i18n_t(`new_menu.${item?.mi}`) }}
               </div>
               <div class="m-count-match" v-if="!show_favorite_list">
                 {{ MenuData.count_menu(item) }}
@@ -261,7 +260,6 @@ function set_menu_lv1(item, index, type = "click") {
         set_menu_lv2(item.sl[0], 0, type);
       }
       break;
-    case 7:  // "7": "电竞",
     case 28: //赛果
       break;
     //VR是直接跳 url

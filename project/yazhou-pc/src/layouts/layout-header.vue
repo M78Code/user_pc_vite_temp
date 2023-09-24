@@ -117,7 +117,7 @@ const activityIds = ref('')
 const isFirstLoadPage = ref(true)
 /** 是否有小红点提示 */
 const hasBonusType3 = ref(false)
-// TODO: this.$root.$on('update-bonus', this.getActivityLists);
+// TODO: useMittOn('update-bonus', this.getActivityLists);
 /** 检查是否有可领取奖券 */
 function getActivityLists({ id = 1, type }) {
   // 如果是首次加载页面并且由用户信息接口发起，则不发起请求
@@ -193,7 +193,7 @@ function special_page() {
 }
 /** 是否是最新版本 */
 const new_version = ref(false)
-// TODO: this.$root.$on('request_user_banner', this.newVersion);
+// TODO: useMittOn('request_user_banner', this.newVersion);
 /**
  * 检查当前代码是不是最新版本
  */

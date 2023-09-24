@@ -19,6 +19,7 @@
 
 <script>
 // import { mapGetters } from "vuex"
+import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 export default {
   name: 'score_child_5',
   data(){
@@ -47,24 +48,24 @@ export default {
       handler(n){
         switch( n.mmp ){
           case '8': //8 第一盘  S23 第1盘比分（网球）
-            $root.$emit(emit_cmd.EMIT_SET_NATIVE_DETAIL_DATA, 'S23|0:0')
-            $root.$emit(emit_cmd.EMIT_SET_NATIVE_DETAIL_DATA, 'S103|0:0')
+            useMittEmit(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, 'S23|0:0')
+            useMittEmit(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, 'S103|0:0')
             break;
           case '9': //9 第二盘  S39 第2盘比分（网球）
-            $root.$emit(emit_cmd.EMIT_SET_NATIVE_DETAIL_DATA, 'S39|0:0')
-            $root.$emit(emit_cmd.EMIT_SET_NATIVE_DETAIL_DATA, 'S103|0:0')
+            useMittEmit(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, 'S39|0:0')
+            useMittEmit(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, 'S103|0:0')
             break;
           case '10': //10 第三盘 S55 第3盘比分（网球）
-            $root.$emit(emit_cmd.EMIT_SET_NATIVE_DETAIL_DATA, 'S55|0:0')
-            $root.$emit(emit_cmd.EMIT_SET_NATIVE_DETAIL_DATA, 'S103|0:0')
+            useMittEmit(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, 'S55|0:0')
+            useMittEmit(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, 'S103|0:0')
             break;
           case '11': //11 第四盘 S71 第4盘比分（网球）
-            $root.$emit(emit_cmd.EMIT_SET_NATIVE_DETAIL_DATA, 'S71|0:0')
-            $root.$emit(emit_cmd.EMIT_SET_NATIVE_DETAIL_DATA, 'S103|0:0')
+            useMittEmit(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, 'S71|0:0')
+            useMittEmit(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, 'S103|0:0')
             break;
           case '12': //12 第五盘 S87 第5盘比分（网球）
-            $root.$emit(emit_cmd.EMIT_SET_NATIVE_DETAIL_DATA, 'S87|0:0')
-            $root.$emit(emit_cmd.EMIT_SET_NATIVE_DETAIL_DATA, 'S103|0:0')
+            useMittEmit(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, 'S87|0:0')
+            useMittEmit(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, 'S103|0:0')
             break;
         }
       },
@@ -118,24 +119,24 @@ export default {
     validateStage(){
       switch(detail_data.mmp){
         case '8': //8 第一盘  S23 第1盘比分（网球）
-          $root.$emit(emit_cmd.EMIT_SET_NATIVE_DETAIL_DATA, 'S23|0:0')
-          $root.$emit(emit_cmd.EMIT_SET_NATIVE_DETAIL_DATA, 'S103|0:0')
+          useMittEmit(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, 'S23|0:0')
+          useMittEmit(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, 'S103|0:0')
           break;
         case '9': //9 第二盘  S39 第2盘比分（网球）
-          $root.$emit(emit_cmd.EMIT_SET_NATIVE_DETAIL_DATA, 'S39|0:0')
-          $root.$emit(emit_cmd.EMIT_SET_NATIVE_DETAIL_DATA, 'S103|0:0')
+          useMittEmit(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, 'S39|0:0')
+          useMittEmit(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, 'S103|0:0')
           break;
         case '10': //10 第三盘 S55 第3盘比分（网球）
-          $root.$emit(emit_cmd.EMIT_SET_NATIVE_DETAIL_DATA, 'S55|0:0')
-          $root.$emit(emit_cmd.EMIT_SET_NATIVE_DETAIL_DATA, 'S103|0:0')
+          useMittEmit(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, 'S55|0:0')
+          useMittEmit(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, 'S103|0:0')
           break;
         case '11': //11 第四盘 S71 第4盘比分（网球）
-          $root.$emit(emit_cmd.EMIT_SET_NATIVE_DETAIL_DATA, 'S71|0:0')
-          $root.$emit(emit_cmd.EMIT_SET_NATIVE_DETAIL_DATA, 'S103|0:0')
+          useMittEmit(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, 'S71|0:0')
+          useMittEmit(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, 'S103|0:0')
           break;
         case '12': //12 第五盘 S87 第5盘比分（网球）
-          $root.$emit(emit_cmd.EMIT_SET_NATIVE_DETAIL_DATA, 'S87|0:0')
-          $root.$emit(emit_cmd.EMIT_SET_NATIVE_DETAIL_DATA, 'S103|0:0')
+          useMittEmit(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, 'S87|0:0')
+          useMittEmit(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, 'S103|0:0')
           break;
       }
     }

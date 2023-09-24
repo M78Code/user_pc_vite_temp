@@ -27,6 +27,7 @@ import lodash from "lodash";
 //  import saidan_list from 'src/project/yabo/components/match_details/panel/saidan/saidan_list.vue'
 //  import videoHistoryLine from "src/project/yabo/components/video/video_history_line.vue";
 //  import refresh from "src/public/components/refresh/refresh.vue";
+import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/index.js";
 import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache.js";
 import {
   loadLanguageAsync,
@@ -42,6 +43,8 @@ import {
 } from "src/core/index.js";
 import { reactive, toRefs, ref, onMounted, onUnmounted } from "vue";
 import store from "src/store-redux/index.js";
+import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/index.js";
+
 import { off } from "licia/$event";
 let state = store.getState();
 export const useRightDetails = (props) => {
@@ -380,7 +383,7 @@ export const useRightDetails = (props) => {
           });
       }
       ["new_empty", "all_empty"].includes(this.handicap_state) &&
-        this.$root.$emit("get_history");
+        useMittEmit("get_history");
     };
     let api_axios_flg = "match_odds_Info2";
     if (
@@ -515,7 +518,7 @@ export const useRightDetails = (props) => {
 
     /*  mitt todo*/
     // // 自动切换赛事
-    // useMittOn("autoset_match", emit_autoset_match);
+    // useMittOn("autoset_match", this.emit_autoset_match);
     // // 检查玩法关盘
     // useMittOn("check_plays_show", this.check_plays_show);
 
@@ -540,7 +543,7 @@ export const useRightDetails = (props) => {
     //   this.getHeaderHeight
     // );
     // useMittOn("saidan_page_change", this.change_saidan);
-    /*  mitt todo*/
+     /*  mitt todo*/
 
     // 刷新按钮节流
     refresh()

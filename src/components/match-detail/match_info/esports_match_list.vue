@@ -27,6 +27,8 @@ import { api_match } from "src/api/index.js";
 // import MatchCtr from "/utils/dataClassCtr/match_ctr.js";
 // import skt_data_esports_score from "/mixins/websocket/data/skt_data_esports_score.js";
 // import { mapGetters, mapActions } from "vuex"
+import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/index.js";
+
 export default {
   name:'esportsMatchList',
   mixins: [skt_data_esports_score],
@@ -84,7 +86,7 @@ export default {
           }
     }
     //更新电竞右侧视频
-    this.$root.$on(MITT_TYPES.GET_ESPORTS_VIDEO_LIST, this.get_match_list)
+    let { off: off_ } = useMittOn(MITT_TYPES.GET_ESPORTS_VIDEO_LIST, this.get_match_list)
   },
   methods:{
     ...mapActions({
@@ -184,7 +186,7 @@ export default {
   },
   beforeUnmount() {
     //更新电竞右侧视频
-    this.$root.$off(MITT_TYPES.GET_ESPORTS_VIDEO_LIST, this.get_match_list)
+    off_()
     this.match_ctr.destroy();
   },
 };

@@ -28,7 +28,7 @@ const props = defineProps({
   }
 })
 /** 滚动赛事列表时切换赛事重启倒计时 */
-watch(props.match, counting_down)
+watch(() => props.match, counting_down)
 const emit = defineEmits(['is_show'])
 
 /** 开赛时间 */

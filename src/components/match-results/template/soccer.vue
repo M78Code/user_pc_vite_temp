@@ -580,6 +580,7 @@
 import results from "src/core/match-results/match-results-mixin/index";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import loadData from "src/components/load_data/load_data.vue"
+import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/index.js";
 // import Tabs from "../components/playback_tabs.vue";
 // import SliderX from "../components/playback_slider.vue";
 // import no_data from "src/components/no_data/no_data";
@@ -626,7 +627,7 @@ export default {
     handle_item_click(item) {
       // 弹出新视频
       let title = item.homeAway+' '+this.format_second_ms(item.secondsFromStart)+' '+this.show_code_name(item.eventCode)+': '+item.firstNum;
-      this.$root.$emit("VIDEO_ZONE_EVENT_CMD", {
+      useMittEmit("VIDEO_ZONE_EVENT_CMD", {
         cmd: "resultPlay",
         url: item.fragmentVideo,
         video_info:item,

@@ -71,11 +71,11 @@ export default {
     showTimeInterval = 0;
     // mess 1:开始 0:暂停
     initEvent();
-    $root.$on(emit_cmd.EMIT_UPDATE_GAME_TIME, initEvent);
+    let {off: off_} = useMittOn(MITT_TYPES.EMIT_UPDATE_GAME_TIME, initEvent);
   },
   destroyed() {
     clearTimeObj();
-    $root.$off(emit_cmd.EMIT_UPDATE_GAME_TIME, initEvent);
+    // off_()
   },
   methods: {
     /**
@@ -134,7 +134,7 @@ export default {
      */
     savePageTime(){
       if(dialog) return;
-      $root.$emit(emit_cmd.EMIT_SET_MATCH_TIME, Number(showTime));
+      useMittEmit(MITT_TYPES.EMIT_SET_MATCH_TIME, Number(showTime));
     },
     /**
      *@description 清除时间倒计时
