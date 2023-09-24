@@ -1,5 +1,5 @@
 <template>
-  <div class="c-match-item  match-tpl0-bg" :class="{ 'more-handicap': lodash.get(match, 'has_add1') || lodash.get(match, 'has_add2') }">
+  <div class="c-match-item  match-tpl0-bg" :class="{ 'more-handicap': lodash.get(match, 'has_add1') || lodash.get(match, 'has_add2') }" v-if="match">
   <!-- <div class="c-match-item  match-tpl0-bg" :class="{ 'more-handicap': match.has_add1 || match.has_add2 }"> -->
     <div v-show="false">{{ MatchListData.data_version }}</div>
     <!-- 比赛进程 -->

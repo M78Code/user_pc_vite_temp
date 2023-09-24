@@ -13,7 +13,7 @@
       :mid="mid"
       :class="'csid-'+match_style_obj.csid"
     /> -->
-    - <MatchTpl0After :mid="mid" />  
+    <MatchTpl0After :mid="mid" />  
    
  
   </div>
@@ -32,25 +32,25 @@ import store from 'src/store-redux/index.js'
 // 玩法模板 0   足球-让球&大小  、 足球-角球 、 美足-让球&大小 、 手球-让球&大小
 import { MatchTpl0AfterFullVersionWapper as MatchTpl0After } from "src/components/match-list/match-tpl-new-data/match-tpl-0-after/index.js";
 // // 玩法模板 2   足球-半/全
-// import { MatchTpl2AfterFullVersionWapper as matchTpl2After } from "src/components/match-list/match-tpl-new-data/match-tpl-2-after/index.js";
-// // 玩法模板 7   篮球-让球&大
-// import { MatchTpl7AfterFullVersionWapper as matchTpl7After } from "src/components/match-list/match-tpl-new-data/match-tpl-7-after/index.js";
-// // 玩法模板 9   网球-让球&大
-// import { MatchTpl9AfterFullVersionWapper as matchTpl9After } from "src/components/match-list/match-tpl-new-data/match-tpl-9-after/index.js";
-// // 玩法模板 10  网球-准确盘
-// import { MatchTpl10AfterFullVersionWapper as matchTpl10After } from "src/components/match-list/match-tpl-new-data/match-tpl-10-after/index.js";
-// // 玩法模板 12  热门赛事-竟足-让球/胜平
-// import { MatchTpl12AfterFullVersionWapper as matchTpl12After } from "src/components/match-list/match-tpl-new-data/match-tpl-12-after/index.js";
-// // 玩法模板 17  棒球-让球&大
-// import { MatchTpl17AfterFullVersionWapper as matchTpl17After } from "src/components/match-list/match-tpl-new-data/match-tpl-17-after/index.js";
-// // 玩法模板 18  所有冠军玩法 政治娱
-// import { MatchTpl18AfterFullVersionWapper as matchTpl18After } from "src/components/match-list/match-tpl-new-data/match-tpl-18-after/index.js";
-// // 玩法模板 21  足球-比分
-// import { MatchTpl21AfterFullVersionWapper as matchTpl21After } from "src/components/match-list/match-tpl-new-data/match-tpl-21-after/index.js";
-// // 玩法模板 24  足球-15分钟
-// import { MatchTpl24AfterFullVersionWapper as matchTpl24After } from "src/components/match-list/match-tpl-new-data/match-tpl-24-after/index.js";
+// import { MatchTpl2AfterFullVersionWapper as MatchTpl2After } from "src/components/match-list/match-tpl-new-data/match-tpl-2-after/index.js";
+// // // 玩法模板 7   篮球-让球&大
+// import { MatchTpl7AfterFullVersionWapper as MatchTpl7After } from "src/components/match-list/match-tpl-new-data/match-tpl-7-after/index.js";
+// // // 玩法模板 9   网球-让球&大
+// import { MatchTpl9AfterFullVersionWapper as MatchTpl9After } from "src/components/match-list/match-tpl-new-data/match-tpl-9-after/index.js";
+// // // 玩法模板 10  网球-准确盘
+// import { MatchTpl10AfterFullVersionWapper as MatchTpl10After } from "src/components/match-list/match-tpl-new-data/match-tpl-10-after/index.js";
+// // // 玩法模板 12  热门赛事-竟足-让球/胜平
+// import { MatchTpl12AfterFullVersionWapper as MatchTpl12After } from "src/components/match-list/match-tpl-new-data/match-tpl-12-after/index.js";
+// // // 玩法模板 17  棒球-让球&大
+// import { MatchTpl17AfterFullVersionWapper as MatchTpl17After } from "src/components/match-list/match-tpl-new-data/match-tpl-17-after/index.js";
+// // // 玩法模板 18  所有冠军玩法 政治娱
+// import { MatchTpl18AfterFullVersionWapper as MatchTpl18After } from "src/components/match-list/match-tpl-new-data/match-tpl-18-after/index.js";
+// // // 玩法模板 21  足球-比分
+// import { MatchTpl21AfterFullVersionWapper as MatchTpl21After } from "src/components/match-list/match-tpl-new-data/match-tpl-21-after/index.js";
+// // // 玩法模板 24  足球-15分钟
+// import { MatchTpl24AfterFullVersionWapper as MatchTpl24After } from "src/components/match-list/match-tpl-new-data/match-tpl-24-after/index.js";
 // // 电竞玩法模板
-// import { MatchTplEsportsAfterFullVersionWapper as matchTplesportsAfter } from "src/components/match-list/match-tpl-new-data/match-tpl-esports-after/index.js";
+// import { MatchTplEsportsAfterFullVersionWapper as MatchTplesportsAfter } from "src/components/match-list/match-tpl-new-data/match-tpl-esports-after/index.js";
 let state = store.getState()
 // const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
 const props = defineProps({
@@ -69,7 +69,7 @@ const is_mounted = ref(true);
 // this.DOM_ID_SHOW = window.BUILDIN_CONFIG.DOM_ID_SHOW;
 // 赛事模板名称
 const match_components_name = computed(() => {
-  let {tpl_id = 0} = match_style_obj.value
+  let {tpl_id = 1} = match_style_obj.value
   // 25 罚牌主盘口
   if([3,5,6,8,19,20,22,23,25].includes(+tpl_id)){
     tpl_id = 2
@@ -80,7 +80,9 @@ const match_components_name = computed(() => {
   }else if([13].includes(+tpl_id)){
     tpl_id = 0
   }
-  return `match-tpl${tpl_id}-after`
+  console.log( `MatchTpl${tpl_id}After`);
+
+  return `MatchTpl${tpl_id}After`
 })
 
 onMounted(() => {

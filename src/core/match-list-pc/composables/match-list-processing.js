@@ -194,10 +194,10 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 				};
 			}
 			// 调用bymids更新前12场赛事
-			// api_bymids(
-			// 	{ is_league_first: true, inner_param: true },
-			// 	callback_func
-			// );
+			api_bymids(
+				{ is_league_first: true, inner_param: true },
+				callback_func
+			);
 		}
 
 
@@ -271,7 +271,7 @@ const mx_use_list_res_when_code_200_and_list_length_gt_0 = ({match_list, collect
 		!backend_run
 	) {
 		// 调用bymids接口
-		// api_bymids({ is_first_load: true, inner_param: true });
+		api_bymids({ is_first_load: true, inner_param: true });
 	}
 	load_data_state.value = "data";
 };
