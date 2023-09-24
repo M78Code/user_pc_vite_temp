@@ -227,7 +227,7 @@
                         @mouseover="data_ref.show_merge_info = true"
                         @mouseout="data_ref.show_merge_info = false"
                       >
-                        <icon
+                        <icon-wapper
                           id="merge-info"
                           name="icon-tips"
                           class="bet-info"
@@ -323,6 +323,7 @@ import { t } from "src/core/index.js";;
 import { api_account, api_common } from "src/api/";
 import { get_file_path } from "src/core/file-path/file-path.js";
 import { pre_load_iframe } from "src/core/pre-load";
+import { IconWapper } from 'src/components/icon'
 
 /**组件*/
 import LayoutLeft from "./layout-left.vue";

@@ -12,7 +12,7 @@
     <div class="stop_layout" :style="{ width: width + 'px', height: height + 'px' }" v-show="stop_layout"></div>
     <div class="test-text" v-if="is_test"> {{ video_url }}</div>
     <div class="col-auto col-delete" @click.stop="close_video">
-      <icon size="12px" name="icon-del" class="bet-del" />
+      <icon-wapper size="12px" name="icon-del" class="bet-del" />
     </div>
     <img class="replay-icon2" src="public/yazhou-pc/image/svg/replay_icon2.svg" />
     <div id="dplayer-video-zone" :style="{ width: width + 'px', height: height + 'px' }" @click.stop="" @mouseover="mouseover"
@@ -36,6 +36,8 @@ import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import 'vue-draggable-resizable/dist/VueDraggableResizable.css'
 import { onMounted, ref, computed, reactive, onUnmounted, toRefs } from 'vue'
 import store from "src/store-redux/index.js";
+import { IconWapper } from 'src/components/icon'
+
 // 是否pc项目
 const IS_PC = window.BUILDIN_CONFIG.TARGET_PROJECT_NAME.includes('pc')
 /** stroe仓库 */
