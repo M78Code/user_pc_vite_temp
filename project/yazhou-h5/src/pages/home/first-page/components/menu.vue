@@ -42,10 +42,8 @@
   </div>
 </template>
 <script setup>
-import { api_home } from "src/api/index.js";
-import { watch, ref, computed } from "vue";
-import { useMittEmit, uid, axios_loop, useMittOn, MITT_TYPES } from "src/core/";
-import { db } from "src/core/menu-h5/common/db.js";
+import { watch, ref, onMounted } from "vue";
+import { useMittOn, MITT_TYPES } from "src/core/";
 // 无网络展示组件
 import no_data from "project_path/src/components/common/no-data.vue";
 import { MenuData, UserCtr, compute_css } from "src/core/";
@@ -72,6 +70,7 @@ const { menu_type } = MenuData;
 const loading_done = ref(false)// 代表接口加载结束
 //点击动画
 let animation = ref(false);
+let home_timer1_;
 let el_height = ref(window.innerHeight - 2.7 * (window.innerWidth / 3.75));
 //处理menu
 const menu_data_config = (data) => {
@@ -92,7 +91,7 @@ const menu_data_config = (data) => {
     noData.value = false;
   }
 };
-watch(menu_type, (i) => {
+const cancel_watch = watch(menu_type, (i) => {
   list_area.value.setScrollPosition("vertical", 0);
 });
 //用戶信息變化
@@ -161,12 +160,17 @@ const change_menu = (item, index) => {
   if (item.mi == menu_type.value) return;
   let mi = item.mi;
 
-  animation.value = false;
+  animation.value = true;
   // 动画效果
   //   if (home_timer1_) clearTimeout(home_timer1_);
   //   home_timer1_ = setTimeout(() => {
   //     animation.value = true;
   //   }, 50);
+  // 动画效果
+  clearTimeout(home_timer1_)
+  home_timer1_ = setTimeout(() => {
+    animation.value = false
+  }, 5000)
   let newMeuRouter = {
     //H5_首页_虚拟体育
     8: { name: "virtual_sports", query: { home: "home" } },
@@ -186,9 +190,12 @@ const change_menu = (item, index) => {
       },
     },
   };
-  list_area.value.setScrollPosition("vertical", 0);
+  list_area.value?.setScrollPosition("vertical", 0);
   MenuData.set_current_lv1_menu(item)
-  newMeuRouter[mi] && router.push(newMeuRouter[mi]);
+  if (newMeuRouter[mi]) {
+    cancel_watch()
+    router.push(newMeuRouter[mi]);
+  }
 };
 /**
  * @description 跳转列表页
@@ -232,4 +239,7 @@ const remove_crosstalk = (data = []) => {
 useMittOn(MITT_TYPES.EMIT_WINDOW_RESIZE, window_resize_on);
 // 保证赛事框初始高度正确
 window_resize_on();
+onMounted(() => {
+  chang_index(menu_list.value)
+})
 </script>
