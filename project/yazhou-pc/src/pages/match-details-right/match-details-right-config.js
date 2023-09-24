@@ -295,7 +295,7 @@ export const useRightDetails = (props) => {
 
             if (!lodash.isEmpty(match_info) && !obj.is_bymids) {
               // 同步列表的赛事数据
-              this.$root.$emit(MITT_TYPES.EMIT_SYNCH_FROM_DETAIL, res);
+             useMittEmit(MITT_TYPES.EMIT_SYNCH_FROM_DETAIL, res);
               if (allData.is_go_match_list) {
                 let match_obj = {};
                 for (let [key, value] of Object.entries(match_info)) {
@@ -670,7 +670,7 @@ export const useRightDetails = (props) => {
    * @return {Undefined} Undefined
    */
   const on_go_top = () => {
-    this.$root.$emit("set_scroll_position", [0, 0]);
+   useMittEmit("set_scroll_position", [0, 0]);
   };
   /**
    * @description: 检查玩法关盘
