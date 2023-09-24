@@ -11,7 +11,7 @@
   <!-- && [1,2].includes(match_style_obj.show_level) -->
     <component
       v-if="is_mounted"
-      :is="match_components_name"
+      :is="match_components_name()"
       :mid="mid"
       :class="'csid-'+match_style_obj.csid"
     />
@@ -78,11 +78,7 @@ export default {
     // 显示部分dom ID
     // this.DOM_ID_SHOW = window.BUILDIN_CONFIG.DOM_ID_SHOW;
     // 赛事模板名称
-    const match_components_name = computed(() => {
-      return computed_template_name()
-    })
-
-    const computed_template_name = () => {
+    const match_components_name = () => {
       let {tpl_id = 1} = match_style_obj
       // 25 罚牌主盘口
       if([3,5,6,8,19,20,22,23,25].includes(+tpl_id)){
