@@ -139,10 +139,10 @@ const props = defineProps({
      * @returns {number}
      */
      const pending_order_status = computed(() => {
-        let bet_obj = BetData.bet_single_obj[props.id];
-        if(bet_obj) {
-          return lodash.get(bet_obj, 'cs.pending_order_status')
-        }
+        // let bet_obj = BetData.bet_single_obj[props.id];
+        // if(bet_obj) {
+        //   return lodash.get(bet_obj, 'cs.pending_order_status')
+        // }
         return 0;
      })
 
