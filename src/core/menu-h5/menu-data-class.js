@@ -775,11 +775,11 @@ class MenuData {
    * type [string] click | init
    */
   set_current_lv3_menu(current_lv_3_menu, current_lv_3_menu_i, type = "click") {
-    this.set_cache_class({
-      current_lv_3_menu,
-      current_lv_3_menu_i,
-    });
     if (!current_lv_3_menu) {
+      //置空3级菜单
+      this.set_cache_class({
+        menu_lv3: [],
+      });
       //三级菜单为空 4级也滞空
       this.set_current_lv4_menu();
     }
@@ -787,22 +787,28 @@ class MenuData {
       // 如果有三级菜单
       // 赛果下边的 虚拟体育 的四级菜单 数据
       if (this.current_lv_3_menu) {
-        this.set_cache_class({
-          menu_lv3: [],
-        });
+        /*保持日期的选中 例如选中了 9.24号 下一次切换二级菜单如果还有9.24号就选中 9.24号 */
+        const idx = this.menu_lv3.findIndex((item) => current_lv_3_menu.menuId == item.menuId);
+        if (idx && idx > -1) {
+          current_lv_3_menu = this.menu_lv3[idx]
+          current_lv_3_menu_i = idx;
+        }
+        //设定4级菜单数据
         this.set_cache_class({
           menu_lv4: lodash.get(this.current_lv_3_menu, "subList"),
         });
+        //设定4级点击
         this.set_current_lv4_menu(this.menu_lv4[0], 0);
         this.update();
       }
     } else {
-      //置空4级
-      this.set_cache_class({
-        menu_lv4: [],
-      });
       this.set_current_lv4_menu();
     }
+    //置空4级菜单
+    this.set_cache_class({
+      current_lv_3_menu,
+      current_lv_3_menu_i,
+    });
   }
   /**
    * 选中4级menu
@@ -812,6 +818,7 @@ class MenuData {
    */
   set_current_lv4_menu(current_lv_4_menu, current_lv_4_menu_i, type = "click") {
     this.set_cache_class({
+      menu_lv4: [],
       current_lv_4_menu,
       current_lv_4_menu_i,
     });
