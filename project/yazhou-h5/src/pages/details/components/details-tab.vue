@@ -252,7 +252,7 @@ export default defineComponent({
   width: 0.12rem;
   height: 0.12rem;
   margin-top: 0.09rem;
-  background-image: var(--q-color-img-bg-97);
+  background-image: url("public/image/svg/tab_up_btn.svg");
   background-size: 100% 100%;
   transform: rotateZ(180deg);
   // @include webkit(transition, transform 0.3s);

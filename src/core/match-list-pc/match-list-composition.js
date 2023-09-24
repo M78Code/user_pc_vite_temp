@@ -272,6 +272,7 @@ const set_base_data_init = () => {
 	}
 	if (menu_root == 3) return;
 	// 赛事列表 卡片数据
+	console.error('set_list---------------',matchs_list.length);
   // 设置列表数据仓库
   MatchListData.set_list(
     matchs_list,

@@ -4,9 +4,9 @@
 
 <template>
   <div class="refresh-container">
-    <!--列表页-->
+    <!--列表页  v-if="matchCtr.list.length > 0" -->
     <scroll-wrapper ref="scroll_wrapper" :matchCtr="matchCtr" :data_source="matchCtr.list" :class="{'data-get-empty':data_get_empty}"
-      v-if="matchCtr.list.length > 0" :main_source="source" :is_goto_top_random="is_goto_top_random"
+     :main_source="source" :is_goto_top_random="is_goto_top_random"
       :match_list_wrapper_height="match_list_wrapper_height">
       <template v-slot="{ match_item, index}">
         <!--虚拟体育(赛果)-->
@@ -14,7 +14,7 @@
           :i_list="index"
           :match_list="matchCtr.list"
           :sport_id="match_item.sportId"
-          v-if="[1001,1002,1004,1011,1010,1009].includes(+match_item.sportId)">
+          v-if="[1001,1002,1004,1011,1010,1009].includes(+match_item?.sportId)">
         </v-match-container>
         <div class="data_mid" v-else> <!--此data-mid用于分频订阅赛事,请勿修改-->
           <!--真实体育赛果 -->
@@ -32,7 +32,7 @@
           <!--真实体育玩法 -->
           <match-container
             v-if="(lodash.get(MenuData.current_menu, 'main.menuType') == 28 ||
-            !is_champion && match_item.ms != 3 ) && !(menu_type ==28 && 100 == get_curr_sub_menu_type)"
+            !is_champion && match_item?.ms != 3 ) && !(menu_type ==28 && 100 == get_curr_sub_menu_type)"
             :match_of_list="match_item"
             :matchCtr="matchCtr"
             :i="index"
@@ -119,6 +119,7 @@ import noData from "project_path/src/components/common/no-data.vue"; // 无网�
 import UserCtr from 'src/core/user-config/user-ctr.js'
 import PageSourceData from "src/core/page-source/page-source.js";
 import { MenuData } from "src/core/index.js"
+
 // import { change_favorite_state } from 'src/core/match-list-h5/composables/match-list-collect.js'
 // import matchListCardFold from 'src/core/match-list-h5/match-card/match-list-card-fold.js'
  

@@ -379,6 +379,8 @@ export const useGetConfig = () => {
    * @param {is_init} 是否需要走初始流程，如第一次进入
    */
   const get_match_detail = ({ is_ws = false, is_init = false } = {}) => {
+    console.log(is_init,'is_init',is_ws);
+    
     let params = {
       // mcid: this.mcid, //玩法集id
       mcid: "0", //玩法集id
@@ -405,11 +407,10 @@ export const useGetConfig = () => {
       // axios api对象参数
       params: params,
       // 轮询次数
-      max_loop: is_init ? 3 : 1,
+      // max_loop: is_init ? 3 : 1,
+      max_loop:  1,
       // axios中then回调方法
       fun_then: (res,data) => {
-        
-        
         set_details_loading_time_record("ok");
         // 检查gcuuid
         // if (state.send_gcuuid != res.config.gcuuid) return;
@@ -424,6 +425,7 @@ export const useGetConfig = () => {
         }
 
         if (!is_init) {
+          
           // 若当前玩法接口请求错误，则回退到存在盘口信息的玩法
           if (
             detail_header.value["handicap_tabs_bar"].value &&
@@ -439,13 +441,12 @@ export const useGetConfig = () => {
               // 处理当前玩法集数据
               handle_match_details_data(tabs_active_data_cache, Date.now());
             } else {
-              // MatchDataWarehouseInstance.set_quick_query_list_from_match_details([]);
               state.match_details = [];
               set_handicap_state("empty");
             }
           }
         } else if (!is_ws) {
-          err_tips(err);
+          // err_tips(err);
         }
       },
     };
@@ -556,7 +557,6 @@ export const useGetConfig = () => {
         // 处理当前玩法集数据
         handle_match_details_data(tabs_active_data_cache, timestap);
       } else {
-        // MatchDataWarehouseInstance.set_quick_query_list_from_match_details([]);
         state.match_details = [];
         set_handicap_state("empty");
       }
@@ -587,6 +587,7 @@ export const useGetConfig = () => {
    * @return {}
    */
   const err_tips = (err) => {
+    
     state.match_details = [];
     store.dispatch({
       type: "SET_ERROR_DATA",
@@ -894,6 +895,7 @@ export const useGetConfig = () => {
    */
   const change_loading_state = (n) => {
     state.handicap_state = n;
+    
     state.match_details = [];
   };
     /** 批量注册mitt */

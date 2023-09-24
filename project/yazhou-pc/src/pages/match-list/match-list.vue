@@ -7,8 +7,9 @@
   <div class="yb-match-list column full-height   relative-position"
   :data-version="MatchListCardDataClass.list_version"
     >
+ 
     <div class="test-info-wrap" v-if="GlobalAccessConfig.other.wsl">
-      {{ load_data_state }}
+   {{ MatchListCardDataClass.list_version }}--   {{ load_data_state }}-- length---  {{ match_list_card_key_arr.length }}
     </div>
     <!-- <div class="test-info-wrap" v-if="GlobalAccessConfig.other.wsl">
       <div>{{ menu_config.mid_menu_result.match_tpl_number }}</div>
@@ -78,17 +79,49 @@
       <div v-show="false"> {{ MatchListCardDataClass.list_version }}</div>
       <!-- <div> {{match_list_card_key_arr }}</div> -->
       <!-- 滚球其他列表 -->
-      <scroll-list  v-if="menu_config.menu_root_show_shoucang != 300">
+      <scroll-list  v-if="menu_config.menu_root_show_shoucang != 300" style="height:1000px">
         <!-- v-for="card_key in MatchListCardDataClass.match_list_card_key_arr" -->
         <template v-slot:before>
           <div :style="{ height: MatchListCardDataClass.sticky_top.fixed_header_height }"></div>
         </template>
         <div class="today-champion-bg" v-if="menu_config.menu_root == '2' || menu_config.menu_root == 400 || menu_config.menu_root != 2000"></div>
-        <match-list-card 
+        <!-- ssssssssssssssssss66666666666666666 -->
+
+        <!-- <div
           v-for="card_key in match_list_card_key_arr"
           :key="card_key" 
           :card_key="card_key" 
+        >
+        <div>     {{  card_key }}  </div>
+        
+   
+        
+      
+      </div>   -->
+
+
+    <div
+          v-for="card_key in match_list_card_key_arr"
+          :key="card_key" 
+          :card_key="card_key" 
+          :data-card-key="card_key"
+          :class="`card_key   ${card_key}`"
+        >
+        <div>     {{  card_key }}  </div>
+        
+   
+        <match-list-card 
+      
+       
+          :card_key="card_key" 
         />
+      
+      </div>  
+
+     
+
+
+
         <template v-slot:after>
           <div style="height:15px"></div>
           <div class="pager-wrap row justify-end">
@@ -179,6 +212,9 @@ export default {
       match_list_card_key_arr:[]
     }
   },
+  mounted () {
+    this.MatchListCardDataClass_match_list_card_key_arr()  ;
+  },
   watch: {
     'MatchListCardDataClass.list_version'(newValue, oldValue) {
       this.MatchListCardDataClass_match_list_card_key_arr()
@@ -187,6 +223,7 @@ export default {
   },
   methods: {
     MatchListCardDataClass_match_list_card_key_arr() {
+      console.error('MatchListCardDataClass_match_list_card_key_arr');
       this.match_list_card_key_arr= MatchListCardDataClass.match_list_card_key_arr
       
     }

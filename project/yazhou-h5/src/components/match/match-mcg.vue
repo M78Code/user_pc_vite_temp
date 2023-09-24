@@ -11,6 +11,7 @@
 
 <script>
 import counting_down_start from 'src/project/components/common/counting_down_start.vue';
+import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 export default {
   name: "match_mcg",
   data() {
@@ -26,7 +27,7 @@ export default {
     // 页面赛事开赛时间对应消失后，详情状态变更;
     is_show_counting(bool) {
       if (!!bool) {
-        $root.$emit(emit_cmd.EMIT_REFRESH_DETAILS); // 刷新详情状态;
+        useMittEmit(MITT_TYPES.EMIT_REFRESH_DETAILS); // 刷新详情状态;
       }
     }
   },
