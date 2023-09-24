@@ -67,7 +67,7 @@ export const useCommon = ({ emit, props }) => {
   });
 
   onUnmounted(() => {
-    un_subscribe();
+    // un_subscribe();
   });
 
   // ( 待改造)
