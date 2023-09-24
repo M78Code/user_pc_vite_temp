@@ -34,9 +34,11 @@ class GlobalAccessConfig {
     ...default_value,
   };
   constructor() {
+    // 纯接口的 次要服务开关
     this.config = {
       ...default_value,
     };
+    // 代码内构建打入的  以及 进入参数 计算出来的一些开关
     this.other={
       wsl:true
 
@@ -60,6 +62,11 @@ class GlobalAccessConfig {
       };
       resolve();
     });
+  }
+
+
+  set_enter_params_switch(){
+
   }
   get_activitySwitch() {
     return this.config?.activitySwitch;
