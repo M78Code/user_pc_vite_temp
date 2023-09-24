@@ -9,7 +9,7 @@
   <div class="more-info" v-if="isRouterAlive">
     <div class="more-time">
       <div class="time-tips">
-        <match-date :match_props="{match:match_info}"></match-date>
+        <match-date :match="match_info"></match-date>
       </div>
       <div class="scorll-handel">
         <span
