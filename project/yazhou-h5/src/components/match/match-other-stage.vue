@@ -96,7 +96,6 @@ export default {
     'stage-child-16': stage_child_16,
     'stage-child-101': stage_child_101,
   },
-  let off_ = ''
   created() {
     timerInterval_other=0;
     initEvent()

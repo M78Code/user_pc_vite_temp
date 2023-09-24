@@ -70,7 +70,6 @@ export default {
       }
     }
   },
-  let off_ = ''
   created(){
     // 时间延时器
     showTimeInterval = 0;
@@ -79,7 +78,7 @@ export default {
   },
   destroyed(){
     clear_time_obj();
-    off_()
+    // off_()
   },
   methods: {
     /**

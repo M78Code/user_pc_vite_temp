@@ -78,7 +78,6 @@ export default {
       immediate: true
     }
   },
-  let off_ = ''
   created(){
     this.set_is_pause_video(this.vx_layout_cur_page.from != 'video')
     if(this.$route.name =='details'){

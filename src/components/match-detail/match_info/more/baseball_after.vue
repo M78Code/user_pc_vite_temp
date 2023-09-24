@@ -199,7 +199,6 @@ export default {
       default:false
     }
   },
-  let off_ = ''
   created() {
     // ws 推送时更新比分
    let { off: off_ } = useMittOn('update_baseball_score', this.update_baseball_score);

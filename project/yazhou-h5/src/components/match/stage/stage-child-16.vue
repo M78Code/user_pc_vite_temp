@@ -66,7 +66,6 @@ export default {
   },
   props: ["detail_data", "dialog"],
   components: {},
-  let off_ = ''
   created() {
     // 时间延时器
     showTimeInterval = 0;
@@ -76,7 +75,7 @@ export default {
   },
   destroyed() {
     clearTimeObj();
-    off_()
+    // off_()
   },
   methods: {
     /**

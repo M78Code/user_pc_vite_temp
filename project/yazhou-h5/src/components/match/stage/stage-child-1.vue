@@ -61,7 +61,6 @@ export default {
     }
   },
   props: ['detail_data',"dialog"],
-  let off_ = ''
   created(){
     // 初始化修正设置步长
     step = utils.match_vr_step(detail_data,step);
@@ -77,7 +76,7 @@ export default {
   },
   destroyed(){
     clearTimeObj();
-    off_()
+    // off_()
   },
   methods: {
     // ...mapMutations([

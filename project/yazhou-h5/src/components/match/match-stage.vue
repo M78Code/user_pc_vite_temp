@@ -93,7 +93,6 @@ export default {
     }
   },
   props: ["detail_data","dialog"],
-  let off_ = ''
   created() {
     // 监听match_nostart事件
    let {off: off_} = useMittOn(MITT_TYPES.EMIT_MATCH_NOSTART,initEvent);
