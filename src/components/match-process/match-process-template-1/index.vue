@@ -110,7 +110,7 @@ const cur_fill_second = ref(0); // 补充的分钟
  * 显示补时时间
  */
  const show_fill_time = computed(() => {
-  let { match } = props.match;
+  let  match  = props.match;
   let  source  = props.source;
   // 足球需要显示不是时间的阶段 6:上半场 7:下半场 41:加时赛上半场 42:加时赛下半场
   let football_mmp = ["6", "7", "41", "42"];
@@ -133,18 +133,18 @@ const cur_fill_second = ref(0); // 补充的分钟
     return;
   }
   // 补充时间(倒计时部分)
-  cur_fill_time.value = lodash.get(props.match, "match.mstst") || 0;
+  cur_fill_time.value = lodash.get(props.match, "mstst") || 0;
   // 当前阶段对应的正常时间(在第多少分钟时结束)
   cur_mmp_time.value = mmp_time_obj.value[csid][mmp];
   // 补充时间(+分钟部分) (补时多少分钟)
-  cur_fill_second.value = lodash.get(props.match, "match.mststi") || 0;
+  cur_fill_second.value = lodash.get(props.match, "mststi") || 0;
 };
 // useMittOn(MITT_TYPES.EMIT_INIT_FILL_TIME_CMD, init_fill_time);
 init_fill_time();
 
 // 获取阶段名称
 const computed_process_name = computed(() => {
-  let { match } = props.match;
+  let  match  = props.match;
   let process_name = get_mmp_name(match.csid, match.mmp) || "";
   // 即将开赛
   if (match.ms == 110) {
