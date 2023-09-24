@@ -275,6 +275,7 @@ class MenuData {
       JSON.stringify(this.left_menu_result)
     );
     const { lv1_mi } = this.left_menu_result;
+    console.log('compute_sport_id(lv1_mi)compute_sport_id(lv1_mi)', compute_sport_id(lv1_mi));
     MATCH_LIST_TEMPLATE_CONFIG[`template_${compute_sport_id(lv1_mi)}_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width, 'px'))
     if ([2, 3].includes(Number(obj.root))) {
       // 角球

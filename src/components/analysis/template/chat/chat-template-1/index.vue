@@ -81,7 +81,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onUnmounted, defineProps } from 'vue';
+import { ref, computed, onUnmounted } from 'vue';
 import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
 import {component_symbol ,need_register_props} from "../config/index.js"
 const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));

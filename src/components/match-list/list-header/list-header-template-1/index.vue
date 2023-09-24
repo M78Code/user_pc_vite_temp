@@ -93,7 +93,7 @@ import menu_config from "src/core/menu-pc/menu-data-class.js";
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import { t } from "src/core/index.js";
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
-import { defineProps, ref, computed, reactive } from 'vue';
+import { ref, computed, reactive } from 'vue';
 import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
 import UserCtr from 'src/core/user-config/user-ctr.js'
 import {component_symbol ,need_register_props} from "../config/index.js"

@@ -60,7 +60,7 @@
 
 <script setup>
 // import bet_item_mixin  from "src/public/components/bet_item/bet_item_list_new_data_mixin.js";
-import { onMounted, ref, defineProps, onUnmounted, computed, watch } from "vue";
+import { onMounted, ref, onUnmounted, computed, watch } from "vue";
 import lodash from 'lodash'
 import {
   get_odds_active,

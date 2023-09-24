@@ -28,7 +28,7 @@
 </template>
 
 <script setup>
-import { defineProps, ref, onMounted, computed } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import lodash from 'lodash';
 
 import { utils_info } from 'src/core/utils/module/match-list-utils.js';

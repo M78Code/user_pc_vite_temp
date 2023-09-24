@@ -98,7 +98,7 @@
 // import sportIcon from "src/public/components/sport_icon/sport_icon.vue"
 import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card-class.js'
 import lodash from 'lodash';
-import { ref, computed, defineProps, reactive } from 'vue';
+import { ref, computed, reactive } from 'vue';
 import sprite_img from "src/core/server-img/sprite-img/index.js"
 import BaseData from "src/core/base-data/base-data.js"
 import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"

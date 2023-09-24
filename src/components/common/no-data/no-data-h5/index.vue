@@ -44,7 +44,7 @@
 </template>
   
 <script setup>
-import { ref, onMounted, onUnmounted, defineProps, watch } from 'vue'
+import { ref, onMounted, onUnmounted, watch } from 'vue'
 import { useMittEmit, MITT_TYPES } from "src/core/mitt"
 import { i18n_t } from "src/core/index.js";
 import { useRoute } from "vue-router"

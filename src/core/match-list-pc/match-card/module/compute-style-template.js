@@ -246,6 +246,7 @@ export const compute_style_template_by_matchinfo = (match, template_id) => {
 		MATCH_LIST_TEMPLATE_CONFIG[`template_${template_id}_config`][
 			"match_template_config"
 		] || {};
+		console.log('template_idtemplate_id-11111', template_id);
 	// 赛事样式对象
 	let style_obj = {
 		// 显示等级
@@ -284,7 +285,7 @@ export const compute_style_template_by_matchinfo = (match, template_id) => {
 		return style_obj;
 	}
 	style_obj.csid = match.csid;
-	style_obj.tpl_id = match.tpl_id;
+	// style_obj.tpl_id = match.tpl_id;
 	style_obj.is_show_card = true;
 	// 0号模板设置角球玩法数据
 	if (template_id == 0) {
