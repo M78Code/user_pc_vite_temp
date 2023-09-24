@@ -1,5 +1,6 @@
 import base_data_instance from "src/core/base-data/base-data.js";
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
+import { computed_menu_to_match_templte } from 'src/core/match-list-pc/list-template/pc-menu-match-template.js'
 import {
   useMittOn,
   useMittEmit,
@@ -688,22 +689,26 @@ class MenuData {
    * 获取当前的列表的默认的 模板配置
    */
   get_match_tpl_number() {
-    let { match_list } = this.match_list_api_config;
-    let r = (match_list.params || {}).orpt || 1;
-    if (r == '0') {
-      r = 1
-    }
-    // 电竞常规赛事
-    if (this.is_esports()) {
-      r = "esports";
-    }
-    //搜索13列玩法
-    if (this.is_multi_column && state.configReducer.config.multi_column) {
-      r = 13;
-    }
-    // console.error( 'get_match_tpl_number----------get_match_tpl_number----',r );
+    let euid = lodash.get(this.left_menu_result, 'lv2_mi');
+    // 根据当前的菜单id 取到对应的模板id
+    let current_template_id = computed_menu_to_match_templte(euid)
+    return current_template_id
 
-    return r || 1;
+    // let r = (match_list.params || {}).orpt || 1;
+    // if (r == '0') {
+    //   r = 1
+    // }
+    // // 电竞常规赛事
+    // if (this.is_esports()) {
+    //   r = "esports";
+    // }
+    // //搜索13列玩法
+    // if (this.is_multi_column && state.configReducer.config.multi_column) {
+    //   r = 13;
+    // }
+    // // console.error( 'get_match_tpl_number----------get_match_tpl_number----',r );
+
+    // return r || 1;
   }
 
   is_guanjun() {

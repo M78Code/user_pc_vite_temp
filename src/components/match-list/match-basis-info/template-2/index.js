@@ -1,4 +1,3 @@
+import MatchBasisInfo2FullVersionWapper from "./full-version-wapper/index.vue";
 
-import MatchListTem2FullVersionWapper from "./full-version-wapper/index.vue";
-
-export { MatchListTem2FullVersionWapper };
+export { MatchBasisInfo2FullVersionWapper };

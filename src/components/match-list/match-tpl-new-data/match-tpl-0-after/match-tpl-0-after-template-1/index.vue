@@ -20,7 +20,7 @@
           <basis-info1 v-if="is_mounted" :match="match" show_type="all" />
         </div>
         <!-- 赛事盘口投注项 -->
-        <match-handicap :handicap_list="match_list_tpl_size.template_1_main" :match="match" />
+        <match-handicap :handicap_list="match_list_tpl_size[`template_${match_style_obj.data_tpl_id}_main`]" :match="match" />
 
         <!-- 视频按钮 -->
         <div class="media-col">
@@ -118,8 +118,8 @@ import { UserCtr } from 'src/core/index.js';
 
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import { MatchProcessFullVersionWapper as MatchProcess } from 'src/components/match-process/index.js';
-import { MatchListTem1FullVersionWapper as BasisInfo1 } from 'src/components/match-list/match-basis-info/template-1/index.js'
-import { MatchListTem4FullVersionWapper as BasisInfo4 } from 'src/components/match-list/match-basis-info/template-4/index.js'
+import { MatchBasisInfo1FullVersionWapper as BasisInfo1 } from 'src/components/match-list/match-basis-info/template-1/index.js'
+import { MatchBasisInfo4FullVersionWapper as BasisInfo4 } from 'src/components/match-list/match-basis-info/template-4/index.js'
 import { MatchHandicapFullVersionWapper as MatchHandicap } from 'src/components/match-list/match-handicap/index.js'
 import { MatchMediaFullVersionWapper as MatchMedia } from 'src/components/match-list/match-media/index.js'
 import { CommonTabFullVersionWapper as Tab } from "src/components/tab/common-tab/index.js";
@@ -132,8 +132,8 @@ const props = defineProps({
 })
 
 const play_name_list = ref([]);
-const match_style_obj = ref(lodash.get(MatchListCardData.match_all_card_obj, `all_card_obj.mid_${props.mid}`, {}));
-const match_list_tpl_size = ref(MATCH_LIST_TEMPLATE_CONFIG['template_1_config'])
+let match_style_obj = MatchListCardDataClass.all_card_obj[props.mid+'_']
+const match_list_tpl_size = ref(MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`])
 const match = MatchListData.list_to_obj.mid_obj[props.mid+'_'];
 const is_mounted = ref(true);
 // 其他玩法标题

@@ -1,4 +1,4 @@
 
-import MatchListTem5FullVersionWapper from "./full-version-wapper/index.vue";
+import MatchBasisInfo5FullVersionWapper from "./full-version-wapper/index.vue";
 
-export { MatchListTem5FullVersionWapper };
+export { MatchBasisInfo5FullVersionWapper };

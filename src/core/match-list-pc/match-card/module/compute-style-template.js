@@ -52,6 +52,28 @@ const get_tab_play_height = (mid) => {
 	return handicap_height;
 };
 
+// 赛事模板名称
+const compute_view_tpl_id = (data_tpl_id) => {
+	// 这里 是数据模板id 映射出来的视图模板id
+	let view_tpl_id = data_tpl_id
+	// 25 罚牌主盘口
+	if([3,5,6,8,19,20,22,23,25].includes(+data_tpl_id)){
+	  // return MatchTpl2After
+	  view_tpl_id = 2
+	}else if([11,16].includes(+data_tpl_id)){
+	  // return MatchTpl9After
+	  view_tpl_id = 9
+	}else if([15].includes(+data_tpl_id)){
+	  // return MatchTpl10After
+	  view_tpl_id = 10
+	}else if([13].includes(+data_tpl_id)){
+	  // return matchtpl1after
+	  view_tpl_id = 1
+	}
+
+	return view_tpl_id
+  }
+
 /**
  * @Description 获取足篮附加盘数量
  */
@@ -246,7 +268,6 @@ export const compute_style_template_by_matchinfo = (match, template_id) => {
 		MATCH_LIST_TEMPLATE_CONFIG[`template_${template_id}_config`][
 			"match_template_config"
 		] || {};
-		console.log('template_idtemplate_id-11111', template_id);
 	// 赛事样式对象
 	let style_obj = {
 		// 显示等级
@@ -277,15 +298,17 @@ export const compute_style_template_by_matchinfo = (match, template_id) => {
 		is_show_cur_handicap: false,
 		// 当前局盘口高度
 		cur_handicap_height: 0,
-		// 模板id
-		tpl_id: template_id
+		// 数据模板id
+		data_tpl_id: template_id,
+		// 渲染的视图模板id
+		view_tpl_id: compute_view_tpl_id(template_id)
 	};
 	// 如果没有赛事信息
 	if (!match || !match.mid) {
 		return style_obj;
 	}
 	style_obj.csid = match.csid;
-	// style_obj.tpl_id = match.tpl_id;
+	// style_obj.data_tpl_id = match.data_tpl_id;
 	style_obj.is_show_card = true;
 	// 0号模板设置角球玩法数据
 	if (template_id == 0) {

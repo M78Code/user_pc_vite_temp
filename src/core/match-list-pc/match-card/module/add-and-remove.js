@@ -79,7 +79,7 @@ export const recompute_match_list_style_obj_and_match_list_mapping_relation_obj_
         let match = MatchListData.match_list_data.mid_obj[mid+'_'] || {};
         let match_style_obj = compute_style_template_by_matchinfo(
           match,
-          match.tpl_id
+          match.data_tpl_id
         );
         Object.assign(old_match_style_obj, match_style_obj);
         // 更新赛事父级卡片样式 即对应的联赛容器卡片样式

@@ -1,7 +1,7 @@
 <template>
   <div class="basic-wrap relative-position" @click.stop="on_go_detail" >
     <!-- 棒球发球方 -->
-    <div class="serve-ball" :class="match.mat" v-if="match.csid == 3 && $utils.get_match_status(match.ms) == 1">
+    <div class="serve-ball" :class="match.mat" v-if="match.csid == 3 && get_match_status(match.ms) == 1">
       <div class="point home"></div>
       <div class="point away"></div>
     </div>
@@ -86,20 +86,34 @@
 // import match_basis_info_mixin from "src/project/yabo/components/match_list/match_basis_info/match_basis_info_mixin.js"
 // mixins:[match_basis_info_mixin],
 
-import { computed } from 'vue';
+import { computed, defineProps } from 'vue';
 import lodash from 'lodash'
-import { t } from "src/core/index.js";
+import { t, is_eports_csid } from "src/core/index.js";
 import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
 import {component_symbol ,need_register_props} from "../config/index.js"
-import { get_match_status, is_eports_csid } from 'src/core/utils/index'
+import { get_match_status } from 'src/core/utils/index'
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 
-const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
-
+// const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
+const props = defineProps({
+  match: {
+    type: Object,
+    default: () => {}
+  },
+  show_type: {
+    type: String,
+    default: () => ''
+  },
+  is_15min:{
+    type:Boolean,
+    default:false
+  }
+})
 
 //是否展示为比分判定中
 const scoring = computed(() => {
-  const {csid, ms, mmp, home_score, away_score} = this.match
+  console.log(`props.match`,JSON.stringify(props.match));
+  const {csid, ms, mmp, home_score, away_score} = props.match
   let scoring = false
   if (
     is_eports_csid(csid) && // 电竞赛事

@@ -33,7 +33,7 @@ const ws_c8_subscribe = () => {
 			match.hpsPns.map((item) => {
 				match_c8 = _skt_mid_obj[match.mid];
 				if (match_c8) {
-					if (match.tpl_id == 18) {
+					if (match.data_tpl_id == 18) {
 						match_c8.hpids.push("*");
 					} else {
 						match_c8.hpids.push(item.hpid);
