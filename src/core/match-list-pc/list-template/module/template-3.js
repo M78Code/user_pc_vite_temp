@@ -58,7 +58,7 @@ export const template_3 = {
 
 
 //   列表宽度计算模板
-const  width_config ={
+export const  width_config ={
   ...TemplateCommon.width_config_template,
   bet_col_count:  4
 }

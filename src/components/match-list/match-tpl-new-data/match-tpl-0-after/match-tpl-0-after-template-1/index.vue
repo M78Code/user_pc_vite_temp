@@ -104,7 +104,7 @@
 
 <script setup>
 
-import { ref, computed, watch, defineProps, onMounted } from 'vue';
+import { ref, computed, watch, onMounted } from 'vue';
 import lodash from 'lodash'
 
 import { t, get_match_status, MatchDataWarehouse_PC_List_Common as MatchListData } from "src/core/index.js";

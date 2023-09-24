@@ -348,8 +348,10 @@ export default class MatchDataBase
         const play_obj = lodash.get(match, 'play_obj');
         const hps_pns_arr = lodash.get(match, 'hpsPns',[]);
         const play_obj_temp = lodash.keyBy(hps_pns_arr, function(o) {
-                                  let res = `hpid_${o.hpid}`;
-                                  if(o.hSpecial){
+          let hpid = o && o.hpid || null
+          let hSpecial = o && o.hSpecial || null
+                                  let res = `hpid_${hpid}`;
+                                  if(hSpecial){
                                     // res = res +`_${o.hSpecial}`;
                                   }
                                   return res;

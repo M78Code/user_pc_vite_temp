@@ -3,7 +3,7 @@
  *  13号模板 足球 13列玩法 
  */
 import * as TemplateCommon from "./template-common.js"
-import { template_1 } from './template-0.js'
+import { template_1 } from './template-1.js'
 
 let hps_15_minute = TemplateCommon.hps_15_minute
 import lodash from  "lodash"
@@ -200,7 +200,7 @@ const set_tpl_13_config = (template_left, template_right) => {
 
 
   //   列表宽度计算模板
-const  width_config ={
+  export const  width_config ={
   ...TemplateCommon.width_config_template,
   bet_col_count:  13
 }

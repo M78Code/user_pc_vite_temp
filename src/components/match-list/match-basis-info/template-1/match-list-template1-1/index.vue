@@ -91,7 +91,7 @@
 
 <script setup>
 
-import { computed, defineProps, ref, watch, onUnmounted } from 'vue';
+import { computed, ref, watch, onUnmounted } from 'vue';
 import lodash from 'lodash'
 import  { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import {component_symbol ,need_register_props} from "../config/index.js"
