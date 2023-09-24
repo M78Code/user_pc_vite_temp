@@ -59,7 +59,7 @@
   </div>
 </template>
 
-<script>
+<script setup>
 
 import { computed, defineProps, onMounted, reactive, ref, watch } from 'vue';
 import { t } from "src/core/index.js";

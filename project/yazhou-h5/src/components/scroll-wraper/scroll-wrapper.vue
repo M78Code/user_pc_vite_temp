@@ -13,9 +13,9 @@
       theme02: UserCtr.theme.includes('night'),
     }" :style="{ 'min-height': `${get_menu_type == 100 ? list_wrap_height : match_list_wrapper_height}rem` }">
       <!-- 循环内部有多个dom时,为了减少最终dom数,可以循环template 当要v-for与v-if同时使用在一个dom上时,可以使用template -->
-      <template v-for="(scrollItem, index) of data_source">
+      <template v-for="(scrollItem, index) of csid_map_mid_data">
         <div v-if="scrollItem" class="s-w-item" :key="scrollItem.flex_index" :index="index"
-          :class="{ static: is_static_item, last: index == data_source.length - 1 }" :style="{
+          :class="{ static: is_static_item, last: index == csid_map_mid_data.length - 1 }" :style="{
             transform: `translateY(${is_static_item ? 0 : get_match_top_by_mid(scrollItem.mid)}rem)`,
             zIndex: `${200 - index}`
           }">
@@ -29,11 +29,11 @@
               <span>
                 {{ get_match_top_by_mid(scrollItem.mid) ? "-" + get_match_top_by_mid(scrollItem.mid) : 'none!' }}
               </span>
-              <span>ms: {{ scrollItem.ms }}</span>
+              <span>ms: {{ scrollItem?.ms }}</span>
             </span>
           </div>
           <div class="s-w-i-inner">
-            <slot :match_item="scrollItem" :index="index"></slot>
+            <slot :match_item="get_match_item(scrollItem.mid)" :index="index"></slot>
           </div>
         </div>
       </template>
@@ -48,6 +48,7 @@ import store from "src/store-redux/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import MenuData from  "src/core/menu-h5/menu-data-class.js";
 import PageSourceData from "src/core/page-source/page-source.js";
+import { MatchDataWarehouse_H5_List_Common } from 'src/core'
 
 // 避免定时器每次滚动总是触发
 let is_on_check_time_out = false;
@@ -76,14 +77,26 @@ const newer_standard_edition = ref(PageSourceData.newer_standard_edition);
 const get_menu_type = ref(MenuData.get_menu_type())
 const get_current_menu = ref(MenuData.current_menu)
 const get_curr_sub_menu_type = ref(lodash.get(MenuData.current_lv_2_menu, 'type'))
+const csid_map_mid_data = ref([])
+const mid_obj = {}
 
 onMounted(() => {
+  setTimeout(() => {
+    csid_map_mid_data.value = MatchDataWarehouse_H5_List_Common.csid_map_mid_data
+    mid_obj.value = MatchDataWarehouse_H5_List_Common.list_to_obj.mid_obj
+    console.log(MatchDataWarehouse_H5_List_Common)
+    console.log(88888888888888)
+  }, 1000)
   test.value = sessionStorage.getItem('wsl') == '9999';
   // 详情页以外的列表才设置最小高度
   if (props.main_source !== 'detail_match_list') {
     list_wrap_height = 8;
   }
 })
+
+const get_match_item = (mid) => {
+  return mid_obj.value[`${mid}_`]
+}
 
 const get_index_f_data_source = (mid) => {
   return lodash.findIndex(props.matchCtr.match_list_data_sources, { mid });

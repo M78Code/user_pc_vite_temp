@@ -6,8 +6,7 @@ import lodash from 'lodash'
 import store from "src/store-redux/index.js";
 import { utils } from 'src/core/index.js'
 import { get_handicap_w_id } from "src/core/index.js";
-import MatchListCardClass from '../match-card/match-list-card-class'
-import matchListParams from '../composables/match-list-params'
+
 import { useMittEmit, MITT_TYPES } from "src/core/mitt"
 import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache"
 import { get_esports_match_by_mids, get_match_base_info_by_mids } from "src/api/module/common/index.js";
@@ -18,6 +17,10 @@ import MenuData from "src/core/menu-h5/menu-data-class.js";
 import PageSourceData from "src/core/page-source/page-source.js";
 import { ws_c8_obj_format } from 'src/core/data-warehouse/util/index.js'
 import { get_handicap_index_by } from 'src/core/utils/index.js'
+import MatchListCardClass from '../match-card/match-list-card-class'
+import matchListParams from '../composables/match-list-params'
+import { MatchDataWarehouse_H5_List_Common } from 'src/core'
+// import MatchDataBase from "src/core/data-warehouse/match-ctr/match-ctr.js"
 
 class MatchPage {
   //当前调用的赛事列表接口方法
@@ -301,6 +304,7 @@ class MatchPage {
    * @return {Undefined} Undefined
    */
   get_match_info_upd_when_other(mid, is_subscribe, other) {
+    
     if ([100].includes(+this.menu_type) ||        // menu_type 100 冠军下 不再刷新接口
       (['category', 'virtual_sports'].includes(PageSourceData.route_name) || [4, 900].includes(+this.menu_type)) && is_subscribe != "is-subscribe") {
       return;
@@ -374,7 +378,8 @@ class MatchPage {
           this.update_match_by_mids_timer = null
         }, 2000);
         // 1. 更新指定mid 盘口数据
-        this.update_match_databy_mid(res.data);
+        // this.update_match_databy_mid(res.data);
+        MatchDataWarehouse_H5_List_Common.set_list(res.data, 1)
         // 2.列表页 数据源赋值操作,为了排序
         const source_list = this.get_obj(MatchCtr.match_list_data_sources)
         MatchCtr.set_source_list(source_list);
