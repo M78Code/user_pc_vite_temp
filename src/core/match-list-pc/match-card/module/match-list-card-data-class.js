@@ -14,7 +14,7 @@ class MatchListCardDataClass {
     this.all_card_obj = {
       // 'card_key':{}
     };
-    this.list_version = ref('123')
+    this.list_version =  ref('1') 
     //当前列表的卡片key列表  不包含赛事卡片
     this.match_list_card_key_arr =    [
       // 'card_key'
@@ -72,7 +72,7 @@ class MatchListCardDataClass {
   }
 
   set_list_version() {
-    this.list_version.value = new Date().getTime();
+    this.list_version.value =   Date.now() ;
   }
 }
 export default new MatchListCardDataClass();
