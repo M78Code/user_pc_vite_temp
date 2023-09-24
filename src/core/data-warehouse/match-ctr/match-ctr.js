@@ -46,7 +46,7 @@ export default class MatchDataBase
     this.name_code = name_code;
 
     // 是否启动this.list转换this.list_to_obj
-    this.set_list_to_obj = set_list_to_obj;
+    this.set_list_to_obj = true;
     
     // 设置ws数据通信实例
     this.ws_ctr = new MatchDataBaseWS(this);
