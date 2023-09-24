@@ -7,7 +7,7 @@
     }"
     :style="`height:${card_style_obj.card_total_height}px  !important;width:${LayOutMain_pc.layout_content_width}px  !important;${card_style}`"
   >
-  {{ card_key }}
+  <!-- {{ card_key }} -->
   <!-- lockie  ${card_style_obj.card_total_height} -->
   <div v-show="false">{{ MatchListCardDataClass.list_version }}</div>
   <div
@@ -44,11 +44,6 @@
       </div>
       <!-- 赛事卡片 -->
       <template v-else>
-        <match-card
-          v-for="mid in mids_arr"
-          :key="mid"
-          :mid="mid"
-        />
         <!-- 数据加载状态 -->
         <load-data
           v-if="card_style_obj.load_data_status != 'loaded'"
@@ -93,7 +88,7 @@ const props = defineProps({
 })
 // 卡片样式对象
 const card_style_obj = ref(MatchListCardDataClass.all_card_obj[props.card_key] || {})
-
+console.log('MatchListCardDataClass', MatchListCardDataClass.all_card_obj);
 let sticky_top = ref(null)
 // 组件是否加载完成
 const is_mounted = ref(true);

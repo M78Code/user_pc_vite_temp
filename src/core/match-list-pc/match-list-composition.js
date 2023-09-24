@@ -446,20 +446,14 @@ const handle_destroyed = () => {
 }
 
 const init_page_when_base_data_first_loaded=()=>{
-  
-	console.error('init_page_when_base_data_first_loaded');
-			 // 元数据 
-			 set_base_data_init();
-			 //释放试图 
-			 load_data_state.value ='data'
-
-			 console.error('load_data_state.value',load_data_state.value);
-	 
-			check_match_last_update_timer_id = setInterval(
-			 check_match_last_update_time(),
-			 30000
-		 );
-
+    // 元数据 
+  set_base_data_init();
+  //释放试图 
+  load_data_state.value ='data'
+  // check_match_last_update_timer_id = setInterval(
+  //   check_match_last_update_time(),
+  //   30000
+  // );
 }
 
 
@@ -528,7 +522,6 @@ const handle_match_list_request_when_ok = (data, is_socket, cut, collect) => {
 		match_list_api_type,
 		left_menu_result,
 	} = MenuData;
-  console.error('现在走进来了', 11);
 	// let  use_mx_list_res =
 	if (
 		(menu_root == 2000 ||
@@ -551,8 +544,6 @@ const handle_match_list_request_when_ok = (data, is_socket, cut, collect) => {
 		// 收藏
 		mx_use_list_res(data, is_socket, cut, collect);
 	}
-	console.error('现在走进来了', '11-00');
- 
 };
 /**
  * @description 获取强力推荐赛事

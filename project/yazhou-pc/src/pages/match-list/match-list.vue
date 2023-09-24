@@ -34,36 +34,25 @@
       <!-- 顶部菜单  // 滚球  冠军 -->
       <list-filter v-if="[1, 400].includes(parseInt(menu_config.menu_root)) && page_source != 'collect'"
         :collect_count="collect_count" :load_data_state="load_data_state" />
-
       <!-- 日期菜单   早盘 日期 -->
-
       <list-filter-date v-if="menu_config.menu_root == 3 && page_source != 'collect'"
         :collect_count="collect_count" :load_data_state="load_data_state" />
-
-
-
       <!-- 热门赛事顶部菜单 -->
       <list-filter-hot v-if="menu_config.menu_root == 500 && page_source != 'collect'"
         :collect_count="collect_count" :load_data_state="load_data_state" />
-
       <!-- 电竞顶部菜单 -->
       <!-- <esports-header v-if="menu_config.menu_root == 2000" :load_data_state="load_data_state" /> -->
       <!-- 赛事状态 | 赛种类型      -->
       <!-- <play-virtual-match-type class="sticky-wrap" v-if="menu_config.menu_root_show_shoucang == 300" style="top:100px" /> -->
-
       <!-- 联赛  VR 足球才会有联赛-->
       <div class="leagues-tabs leagues-bg" v-if="menu_config.mid_menu_result.mi == '1001'">
         <!-- 联赛菜单 -->
         <LeagueTab />
       </div>
     </div>
- 
     <!-- 列表容器 -->
- 
     <load-data :state="load_data_state"  >
-      
       <!-- 滚球虚拟体育列表 -->
- 
       <scroll-list v-if="menu_config.menu_root_show_shoucang == 300">
         <template v-slot:before>
           <div :style="{ height: MatchListCardDataClass.sticky_top.fixed_header_height }"></div>
@@ -84,25 +73,18 @@
         <template v-slot:after>
           <div style="height:15px"></div>
         </template>
-        11111
       </scroll-list>
       
-      <div> {{ MatchListCardDataClass.list_version }}</div>
+      <div v-show="false"> {{ MatchListCardDataClass.list_version }}</div>
       <!-- <div> {{match_list_card_key_arr }}</div> -->
-     
       <!-- 滚球其他列表 -->
       <scroll-list  v-if="menu_config.menu_root_show_shoucang != 300">
-        in MatchListCardDataClass.match_li
         <!-- v-for="card_key in MatchListCardDataClass.match_list_card_key_arr" -->
- 
         <template v-slot:before>
           <div :style="{ height: MatchListCardDataClass.sticky_top.fixed_header_height }"></div>
         </template>
         <div class="today-champion-bg" v-if="menu_config.menu_root == '2' || menu_config.menu_root == 400 || menu_config.menu_root != 2000"></div>
-      
-        match_list_card_key_arr  {{ match_list_card_key_arr.length }}
         <match-list-card 
-    
           v-for="card_key in match_list_card_key_arr"
           :key="card_key" 
           :card_key="card_key" 
