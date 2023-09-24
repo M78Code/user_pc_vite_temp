@@ -1,6 +1,6 @@
 import { isDate } from "lodash";
 import { i18n_t } from "src/core/index.js"
-import ServerTime from  "src/core/server-time/server-time.js"
+import ServerTime from "src/core/server-time/server-time.js"
 
 
 export const format_Y_M_D_H_M = function (payload) {
@@ -23,16 +23,16 @@ export const formcht_Y_M_D_H_M = function (payload) {
   let m = (time.getMinutes() + "").padStart(2, 0);
   return `${y}年${M}月${d}日  ${h}:${m}`;
 };
- // 判断是 今天 或者 明天，还是距离多少天，后面扩展
+// 判断是 今天 或者 明天，还是距离多少天，后面扩展
 export const format_how_many_days = (val) => {
   let date_begin_time = new Date(new Date(val).Format("yyyy-MM-dd")).getTime()
-  let date_end_time  = new Date().getTime()
+  let date_end_time = new Date().getTime()
   let dateDiff_time = date_end_time - date_begin_time;//时间差的毫秒数
   let difValue_time = Math.floor(dateDiff_time / (24 * 3600 * 1000));
   let day_value;
-  if(difValue_time == 0){
+  if (difValue_time == 0) {
     day_value = t('today')
-  }else if(difValue_time == '-1'){
+  } else if (difValue_time == '-1') {
     day_value = t('tomorrow')
   }
   return day_value
@@ -181,7 +181,7 @@ export const format_time_zone_millisecond = (time, offset = 8) => {
  * @Description 获取格式化时间对象
  * @param {undefined} undefined
  */
- export const format_date_base_obj = (value) => {
+export const format_date_base_obj = (value) => {
   let time = new Date(parseInt(value));
   let y = time.getFullYear();
   let m = (time.getMonth() + 1 + "").padStart(2, 0);
@@ -199,7 +199,7 @@ export const format_time_zone_millisecond = (time, offset = 8) => {
  * @return {int} 转换后的时区的时间戳
  */
 export const format_time_zone_time = (time, offset = 8) => {
-  
+
   var d = new Date(time); //创建一个Date对象 time时间 offset 时区 中国为 8
   var localTime = d.getTime(); //获取的是毫秒级
   var localOffset = d.getTimezoneOffset() * 60000; //获得当地时间偏移的毫秒数,时区是以分钟为单位的
@@ -247,7 +247,7 @@ export const formatTime = (timestamp, fmt) => {
   try {
     // const date = new Date(parseInt(timestamp))
     const date = new Date(
-     format_time_zone_millisecond(parseInt(timestamp))
+      format_time_zone_millisecond(parseInt(timestamp))
     );
     let ret;
     let opt = {
@@ -279,7 +279,7 @@ export const formatTime = (timestamp, fmt) => {
       }
     }
     return fmt;
-  } catch (error) {}
+  } catch (error) { }
 };
 
 export const format_date_by_manage = (value) => {
@@ -459,37 +459,6 @@ export const format_second_ms = (second, model = "default") => {
     return date;
   }
 };
-
-
-
-    /**
-     * @description: 获取服务器时间戳
-     * @param {Function} callback 回调函数
-     * @return {undefined} undefined
-     */
-   export const  get_server_time=(callback)=> {
-      let param = {};
-      const send_gcuuid = uid();
-      param.gcuuid = send_gcuuid;
-      api_common.get_server_time(param).then(res => {
-        let gcuuid = _.get(res,'config.gcuuid')
-        if(gcuuid && send_gcuuid != gcuuid) {
-          return;
-        }
-
-        let code = _.get(res, "data.code");
-        if (code == 200) {
-          let data = new Date(parseInt(_.get(res, "data.data")));
-          if (_.isFunction(callback)) {
-            callback(code, data);
-          }
-        } else {
-          if (_.isFunction(callback)) {
-            callback(code, '');
-          }
-        }
-      });
-    }
 /**
  * 处理时间戳
  */
@@ -507,14 +476,11 @@ export const formatDate = (date) => {
   return _date;
 }
 
-
-
 /**
  * 获取与服务器的修正时间
  */
-export const get_remote_time =  () => {
-
-  return  ServerTime.get_remote_time()
+export const get_remote_time = () => {
+  return ServerTime.get_remote_time()
 };
 
 // 格式化时间

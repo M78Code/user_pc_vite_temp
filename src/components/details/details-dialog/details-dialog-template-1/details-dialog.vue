@@ -149,7 +149,7 @@ import { useRoute, useRouter } from 'vue-router';
 import lodash from 'lodash';
 // 组件
 import dialogHeader from 'project_path/src/components/details/dialog/dialog-header.vue'   // 赛事详情头部点击下拉后显示  "↑ 收起" + "< 返回按钮"
-import teamImg from 'project_path/src/pages/details/team-img.vue'    // 详情页蓝色背景上的大型字母图标
+import teamImg from 'project_path/src/components/details/team-img.vue'    // 详情页蓝色背景上的大型字母图标
 import matchStage from 'project_path/src/components/match/match-stage.vue';   // 下拉列表赛事时间展示
 import matchDialogStage from 'project_path/src/components/match/match-dialog-stage.vue';   // 详情点击下拉显示当前赛事的时间
 import showStartTime from 'project_path/src/components/details/wight/show-start-time.vue'   // 详情页同联赛的赛事即将开赛显示时间

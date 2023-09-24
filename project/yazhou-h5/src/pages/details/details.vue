@@ -59,7 +59,13 @@
               <q-tab name="chatroom" :content-class="viewTab === 'chatroom' ? 'tab-chatroom' : ''" v-if="show_chatroom_tab" :ripple="false" :label="i18n_t('bet.chatroom')" />
             </q-tabs>
             <!-- 玩法集展示内容 -->
-            <details-tab v-show="viewTab === 'bet' || get_is_hengping" :data_list="data_list" :scroller_scroll_top="scroller_scroll_top"></details-tab>
+            <details-tab 
+            v-show="viewTab === 'bet' || get_is_hengping" 
+            :data_list="data_list" 
+            :scroller_scroll_top="scroller_scroll_top"
+            :get_details_item="get_details_item"
+            :new_match_detail_ctr="new_match_detail_ctr"
+            ></details-tab>
           </div>
 
           <!-- tab 激活投注展示内容 -->
@@ -233,7 +239,8 @@ export default defineComponent({
       detail_scroller_height,
       on_listeners,
       off_listeners,
-      clear_timer
+      clear_timer,
+      new_match_detail_ctr,
     } = details_main();
     console.error(state_data);
     watch(
@@ -576,7 +583,8 @@ export default defineComponent({
       detail_scroller_height,
       on_listeners,
       off_listeners,
-      clear_timer
+      clear_timer,
+      new_match_detail_ctr,
     }
   }
 })

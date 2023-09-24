@@ -9,11 +9,13 @@ import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-c
 import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch, nextTick, ref } from "vue";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import {MatchDataWarehouse_H5_Detail_Common,format_plays, format_sort_data} from "src/core/index"; 
+import MatchDetailCtr from "src/core/match-detail/match-detail-class.js"
 
 export const details_main = () => {
 const router = useRouter();
 const route = useRoute();
 const get_detail_data = ref({})
+const new_match_detail_ctr = ref(new MatchDetailCtr())
   // console.log("Store", store)
   // const state = store.getState()
   let state_data = reactive({
@@ -143,6 +145,9 @@ const get_detail_data = ref({})
     get_event_list: "get_event_list",
     get_curr_tab_info: "get_curr_tab_info",
   });
+
+
+  console.error(new_match_detail_ctr.value);
   // 详情初始化接口数据处理
   const MatchDataWarehouseInstance =reactive(MatchDataWarehouse_H5_Detail_Common)
   const is_highlights = computed(() => {
@@ -629,7 +634,7 @@ const get_detail_data = ref({})
             );
             // 找不到就赋值为玩法集第一项
             if (!set_details_item_flag) {
-              // set_details_item(res_data[0]["id"]);
+              state_data.get_details_item =res_data[0]["id"];
             }
           } else {
             // 当第一次进来就会走这里默认赋值第一项
@@ -838,16 +843,27 @@ const get_detail_data = ref({})
       state_data.scroller_height = window.innerHeight;
     }
   };
+   // 玩法集tab的id
+   const set_details_item_id = (uid) => {
+    console.error(uid);
+    state_data.get_details_item = uid
+    new_match_detail_ctr.value.current_category_id = uid
+  }
   const { emitters_off } = useMittEmitterGenerator([
     /** 详情赛事下拉三角形, dialog展示 */
     { type: MITT_TYPES.EMIT_IS_BOOL_DIALOG_DETAILS, callback: change_bool },
+    // 接受玩法集的ID
+    { type: MITT_TYPES.EMIT_DETAILS_TAB_ITEM, callback: set_details_item_id },
   ])
+ 
   /**
    * TODO: 下面的mitt根据业务场景移到上面来 批量注册 销毁
    * ! on_listeners 不需要再onMounted调用，setup = vue2的created()
    * 后面可以删除 on_listeners
    */
-  onUnmounted(emitters_off)
+  onUnmounted(() => {
+    emitters_off()
+  })
   const on_listeners = () => {
     // #TODO IMIT
     state_data.emitters = [
@@ -910,6 +926,7 @@ const get_detail_data = ref({})
     curr_active_tab,
     icon_replay,
     get_detail_data,
+    new_match_detail_ctr,
     details_click,
     change_go_back,
     details_refresh,

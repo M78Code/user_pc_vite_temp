@@ -54,7 +54,7 @@ import { template_3 } from "../template/module/template-3.js";
         // 遍历联赛下 所有赛事
         mids_arr.forEach(mid => {
           // 判断数据仓库是否有数据  没有数据 就更新
-          if(!MatchListData.list_to_obj.mid_obj['mid_'+mid]){
+          if(!MatchListData.list_to_obj.mid_obj[`${mid}_`]){
             update_mids_arr.push(...mids_arr)
           }
         })
