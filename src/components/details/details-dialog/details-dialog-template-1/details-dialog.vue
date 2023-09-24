@@ -1,31 +1,61 @@
 <!--
- * @Author: Supermark
- * @Date: 2020-08-20 18:35:53
  * @Description: 详情赛事下拉,赛事列表组件(包括引入的dialog-header子组件)
 -->
 <template>
   <div class="details-dialog">
     <div class="detail-d-container">
       <!-- 引入的赛事顶部组件 -->
-      <dialog-header v-if="detail_data.tn" :tn="detail_data.tn"></dialog-header>
+      <dialog-header
+        v-if="detail_data.tn"
+        :tn="detail_data.tn"
+      ></dialog-header>
       <!-- 赛事列表部分 -->
-      <div class="scroll" style="margin-top: 0.44rem; min-height:.35rem; max-height:520px;" ref="details_dialog_content">
+      <div
+        class="scroll"
+        style="margin-top: 0.44rem; min-height:.35rem; max-height:520px;"
+        ref="details_dialog_content"
+      >
 
-        <div v-for="(item,index) in math_list_data" :key="index" @click="change_active(item)">
+        <div
+          v-for="(item, index) in math_list_data"
+          :key="index"
+          @click="change_active(item)"
+        >
           <!-- 赛事列表里面每一项赛事 -->
-          <div class="mx-12 new-dialog-item" :data-mid="item.mid">
+          <div
+            class="mx-12 new-dialog-item"
+            :data-mid="item.mid"
+          >
             <!-- 灰色背景部分 -->
-            <div class="row text-center new-dialog-item-main" :class="detail_data.mid == item.mid?'details-dialog-bg':''">
+            <div
+              class="row text-center new-dialog-item-main"
+              :class="detail_data.mid == item.mid ? 'details-dialog-bg' : ''"
+            >
               <!-- 单项赛事的左侧队伍 -->
               <div class="col">
                 <!-- 字母图标 -->
                 <div class="col">
                   <!-- 左侧双打图标 type 0 表示主队,mhlu 主队的url -->
-                  <team-img :type="0" :url="item.mhlu[0]" :fr="item.frmhn[0]" :size="22" :csid="item.csid" style="margin-top: 0.11rem;"></team-img>
-                  <team-img v-if="item.mhlu.length > 1" :type="0" :url="item.mhlu[1]" :fr="item.frmhn[1]" :size="22" :csid="item.csid" style="margin-top: 0.11rem; margin-left:-0.08rem;"></team-img>
+                  <team-img
+                    :type="0"
+                    :url="item.mhlu[0]"
+                    :fr="item.frmhn[0]"
+                    :size="22"
+                    :csid="item.csid"
+                    style="margin-top: 0.11rem;"
+                  ></team-img>
+                  <team-img
+                    v-if="item.mhlu.length > 1"
+                    :type="0"
+                    :url="item.mhlu[1]"
+                    :fr="item.frmhn[1]"
+                    :size="22"
+                    :csid="item.csid"
+                    style="margin-top: 0.11rem; margin-left:-0.08rem;"
+                  ></team-img>
                 </div>
                 <!-- 队伍名称 -->
-                <div class="col ellipsis-2-lines dialog-text-style">{{item.mhn}}</div>
+                <div class="col ellipsis-2-lines dialog-text-style">{{ item.mhn }}</div>
               </div>
               <!-- 单项赛事的中间显示时间 -->
               <div class="col column score-wrapper-con">
@@ -33,9 +63,16 @@
                 <div class="show-font-style-a">
                   <span class="base-header-font">
                     <!-- 只有足球，篮球，有计时的时候才执行 -->
-                    <match-dialog-stage :detail_data="detail_data" v-if="(detail_data.mid == item.mid) && (detail_data.csid == 1 || detail_data.csid == 2)"></match-dialog-stage>
+                    <match-dialog-stage
+                      :detail_data="detail_data"
+                      v-if="(detail_data.mid == item.mid) && (detail_data.csid == 1 || detail_data.csid == 2)"
+                    ></match-dialog-stage>
                     <!-- normal -->
-                    <match-stage :detail_data="item" :dialog="true" v-else> </match-stage>
+                    <match-stage
+                      :detail_data="item"
+                      :dialog="true"
+                      v-else
+                    > </match-stage>
                   </span>
                 </div>
                 <!-- 相关联赛下的比赛 具体时间展示 -->
@@ -43,16 +80,19 @@
                   <span v-if="item.ms == 0 && !is_match_result">
                     <show-start-time :detail_data="item"></show-start-time>
                   </span>
-                  <span v-if="item.ms == 1 || item.ms == 2 || item.ms == 3 || item.ms == 4 || is_match_result" class="decated">
+                  <span
+                    v-if="item.ms == 1 || item.ms == 2 || item.ms == 3 || item.ms == 4 || is_match_result"
+                    class="decated"
+                  >
                     <!-- 增加比分判定中的判断和显示 -->
                     <template v-if="is_eports_scoring(item)">
-                      {{ $t('mmp.eports_scoring')}}
+                      {{ $t('mmp.eports_scoring') }}
                     </template>
                     <template v-else-if="is_match_result">
-                      {{calc_score(item)}}
+                      {{ calc_score(item) }}
                     </template>
                     <template v-else>
-                      {{  format_total_score(item,0)}} - {{   format_total_score(item,1)}}
+                      {{ format_total_score(item, 0) }} - {{ format_total_score(item, 1) }}
                     </template>
                   </span>
                 </div>
@@ -62,18 +102,40 @@
                 <!-- 字母图标 -->
                 <div class="col">
                   <!-- 右侧双打图标 type 1 表示客队,malu 客队的url  -->
-                  <team-img :type="1" :url="item.malu[0]" :fr="item.frman[0]" :size="22" :csid="item.csid" style="margin-top: 0.11rem;"></team-img>
-                  <team-img v-if="item.malu.length > 1" :type="1" :url="item.malu[1]" :fr="item.frman[1]" :size="22" :csid="item.csid" style="margin-top: 0.11rem; margin-left:-0.08rem;"></team-img>
+                  <team-img
+                    :type="1"
+                    :url="item.malu[0]"
+                    :fr="item.frman[0]"
+                    :size="22"
+                    :csid="item.csid"
+                    style="margin-top: 0.11rem;"
+                  ></team-img>
+                  <team-img
+                    v-if="item.malu.length > 1"
+                    :type="1"
+                    :url="item.malu[1]"
+                    :fr="item.frman[1]"
+                    :size="22"
+                    :csid="item.csid"
+                    style="margin-top: 0.11rem; margin-left:-0.08rem;"
+                  ></team-img>
                 </div>
                 <!-- 队伍名称 -->
-                <div class="col ellipsis-2-lines dialog-text-style">{{item.man}}</div>
+                <div class="col ellipsis-2-lines dialog-text-style">{{ item.man }}</div>
               </div>
             </div>
-            <div v-if="index != math_list_data.length-1" class="new-dialog-item-line details-border1-bottom"></div>
+            <div
+              v-if="index != math_list_data.length - 1"
+              class="new-dialog-item-line details-border1-bottom"
+            ></div>
 
-            <img v-if="show_lvs(item)" :src="UserCtr.theme.includes('day') ? icon_video :
-            icon_video_black" alt=""
-                 class="icon-style">
+            <img
+              v-if="show_lvs(item)"
+              :src="UserCtr.theme.includes('day') ? icon_video :
+                icon_video_black"
+              alt=""
+              class="icon-style"
+            >
           </div>
         </div>
       </div>
@@ -81,121 +143,122 @@
   </div>
 </template>
 
+<script setup>
+import { ref, computed, defineComponent, getCurrentInstance, onMounted, onUnmounted } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import lodash from 'lodash';
+// 组件
+import dialogHeader from 'project_path/src/components/details/dialog/dialog-header.vue'   // 赛事详情头部点击下拉后显示  "↑ 收起" + "< 返回按钮"
+import teamImg from 'project_path/src/pages/details/team-img.vue'    // 详情页蓝色背景上的大型字母图标
+import matchStage from 'project_path/src/components/match/match-stage.vue';   // 下拉列表赛事时间展示
+import matchDialogStage from 'project_path/src/components/match/match-dialog-stage.vue';   // 详情点击下拉显示当前赛事的时间
+import showStartTime from 'project_path/src/components/details/wight/show-start-time.vue'   // 详情页同联赛的赛事即将开赛显示时间
+// 工具
+import { format_total_score } from 'src/core/format/module/format-score.js'
+import { UserCtr, MenuData } from "src/core/index.js";
+import { useMittEmit, MITT_TYPES } from  "src/core/mitt"
+
+import icon_video from 'project_path/image/common/icon_video.png'
+import icon_video_black from 'project_path/image/common/icon_video_black.png'
+
+const props = defineProps(['detail_data', 'math_list_data'])
+
+const route = useRoute()
+const router = useRouter()
+const is_match_result = computed(() => ['result_details', 'match_result'].includes(route.name))
+
+// 定时器变量
+const timer1_ = ref(null)
+const clear_timer1_ = () => {
+  if (timer1_.value) {
+    clearInterval(timer1_.value)
+    timer1_.value = null
+  }
+}
+onUnmounted(clear_timer1_)
+const timer2_ = ref(null)
+const clear_timer2_ = () => {
+  if (timer2_.value) {
+    clearInterval(timer2_.value)
+    timer2_.value = null
+  }
+}
+onUnmounted(clear_timer2_)
+
+const { menu_type, current_menu } = MenuData; //菜单选中项
+
+// 展示lvs 图标
+function show_lvs(item) {
+  return item.lvs != -1 && ['string', 'number'].includes(typeof lodash.get(item, 'lss')) &&
+    ['zh', 'tw'].includes(UserCtr.lang) && menu_type != 3000
+}
+function is_eports_scoring(item) {
+  //计算主分和客分，用全局的分支处理方法进行处理
+  const home = format_total_score(item, 0)
+  const away = format_total_score(item, 1)
+  //比分判断处理
+  let scoring = false
+  //如果是电竞，则进行比分判定处理
+  if (menu_type == 3000) {
+    const mmp_state = item.mmp || 1
+    if (mmp_state != (Number(home) + Number(away) + 1)) {
+      scoring = true
+    }
+  }
+  return scoring
+}
+/**
+ *@description 赛果进来时，这里直接取S1比分
+ *@param {Object} val 赛事详情对象
+ *@return {String} 比分
+ */
+function calc_score(val) {
+  try {
+    let { groups: { m, s } } = /S1\|(?<m>\d+):(?<s>\d+)/.exec(val.msc.toString())
+    return m + '-' + s
+  } catch (error) {
+    console.error(error)
+    return "0-0"
+  }
+}
+
+function change_active(item) {
+  useMittEmit(MITT_TYPES.EMIT_IS_BOOL_DIALOG_DETAILS, false);
+  if (props.detail_data.mid == item.mid) return; // 如果选择当前页的比赛,则不给予跳转;
+  // TODO:  
+  // set_goto_detail_matchid(item.mid); //设置mid;
+  // set_event_list([])
+
+  if (!(lodash.get(current_menu, 'sub.menuType') == '5' && ['result_details', 'match_result'].includes(route.name))) {
+    // TODO:  
+    // set_details_item(get_details_tabs_list[0].id); // 选中的tab的item项;
+  }
+  router.replace({ name: "category", params: { mid: item.mid, index: 0 } }); // todo 优化此处
+  useMittEmit(MITT_TYPES.EMIT_REFRESH_DETAILS); // 刷新详情页头部信息;
+  useMittEmit(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB); // 将tab的滚动距离回复到初始点;
+  useMittEmit(MITT_TYPES.EMIT_CATEGORY_SKT); // 底部信息skt连接
+  useMittEmit(MITT_TYPES.EMIT_DETAILS_SKT); // 头部信息skt连接
+  timer1_.value = setInterval(() => {
+    useMittEmit(MITT_TYPES.EMIT_MATCH_TIME_SHOW_INIT);
+    useMittEmit(MITT_TYPES.EMIT_UPDATE_GAME_TIME)
+    clearInterval(timer1_.value)
+    clearInterval(timer2_.value)
+  }, 100)
+}
+
+const { ctx } = getCurrentInstance()
+// 解决三星手机图片不出来问题
+onMounted(() => ctx.$forceUpdate())
+timer2_.value = setInterval(ctx.$forceUpdate, 2000);
+</script>
+
 <script>
-import { mapGetters, mapMutations } from "vuex";
-import global_filters from 'src/boot/global-filters.js'
-import dialog_header from 'src/project/components/details/dialog/dialog_header.vue'   // 赛事详情头部点击下拉后显示  "↑ 收起" + "< 返回按钮"
-import team_img from 'src/project/components/details/team_img.vue'    // 详情页蓝色背景上的大型字母图标
-import match_stage from 'src/project/components/match/match_stage.vue';   // 下拉列表赛事时间展示
-import match_dialog_stage from 'src/project/components/match/match_dialog_stage.vue';   // 详情点击下拉显示当前赛事的时间
-import show_start_time from 'src/project/components/details/wight/show_start_time.vue'   // 详情页同联赛的赛事即将开赛显示时间
-
-import { UserCtr } from "src/core/index.js";
-
-export default {
-  name: "details_dialog",
-  props:['detail_data','math_list_data'],
-  components: {
-    "dialog-header": dialog_header,
-    "team-img": team_img,
-    "match-stage": match_stage,
-    "match-dialog-stage": match_dialog_stage,
-    "show-start-time": show_start_time,
-  },
-  data() {
-    return {
-      icon_video: "image/wwwassets/bw3/common/icon_video.png",
-      icon_video_black: "image/wwwassets/bw3/common/icon_video_black.png",
-    }
-  },
-  computed: {
-    ...mapGetters([
-      'get_menu_type',
-      'get_lang',
-      'get_current_menu',
-      'get_details_tabs_list',
-    ]),
-    is_match_result(){
-      return ['result_details', 'match_result'].includes(this.$route.name)
-    }
-  },
-  created () {
-    // 定时器变量
-    this.timer1_ = null
-    this.timer2_ = null;
-  },
-  methods: {
-    ...mapMutations(["set_goto_detail_matchid", "set_details_item", 'set_event_list']),
-    // 展示lvs 图标
-    show_lvs(item) {
-      return item.lvs != -1  && ['string', 'number'].includes(typeof _.get(item,'lss')) &&
-          ['zh','tw'].includes(this.get_lang) && this.get_menu_type != 3000
-    },
-    is_eports_scoring(item) {
-      //计算主分和客分，用全局的分支处理方法进行处理
-      const home = global_filters.format_total_score(item, 0)
-      const away = global_filters.format_total_score(item, 1)
-      //比分判断处理
-      let scoring = false
-      //如果是电竞，则进行比分判定处理
-      if(this.get_menu_type == 3000) {
-        const mmp_state = item.mmp || 1
-        if(mmp_state != (Number(home) + Number(away) +1)) {
-          scoring = true
-        }
-      }
-      return scoring
-    },
-    /**
-     *@description 赛果进来时，这里直接取S1比分
-     *@param {Object} val 赛事详情对象
-     *@return {String} 比分
-     */
-    calc_score(val){
-      try {
-        let {groups:{m,s}} = /S1\|(?<m>\d+):(?<s>\d+)/.exec(val.msc.toString())
-        return m + '-' + s
-      } catch (error) {
-        console.error(error)
-        return "0-0"
-      }
-    },
-    change_active(item) {
-      useMittEmit(MITT_TYPES.EMIT_IS_BOOL_DIALOG_DETAILS, false);
-      if (this.detail_data.mid == item.mid) return; // 如果选择当前页的比赛,则不给予跳转;
-      this.set_goto_detail_matchid(item.mid); //设置mid;
-      this.set_event_list([])
-
-      if(!(_.get(this.get_current_menu,'sub.menuType') == '5' && ['result_details', 'match_result'].includes(this.$route.name))) {
-        this.set_details_item(this.get_details_tabs_list[0].id); // 选中的tab的item项;
-      }
-      this.$router.replace({ name: "category", params: {mid: item.mid,index: 0 }}); // todo 优化此处
-      useMittEmit(MITT_TYPES.EMIT_REFRESH_DETAILS); // 刷新详情页头部信息;
-      useMittEmit(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB); // 将tab的滚动距离回复到初始点;
-      useMittEmit(MITT_TYPES.EMIT_CATEGORY_SKT); // 底部信息skt连接
-      useMittEmit(MITT_TYPES.EMIT_DETAILS_SKT); // 头部信息skt连接
-      this.timer1_ = setInterval(()=>{
-        useMittEmit(MITT_TYPES.EMIT_MATCH_TIME_SHOW_INIT);
-        useMittEmit(MITT_TYPES.EMIT_UPDATE_GAME_TIME)
-        clearInterval(this.timer1_)
-        clearInterval(this.timer2_)
-      },100)
-    }
-  },
-  mounted () {
-    // 解决三星手机图片不出来问题
-    this.$forceUpdate();
-    this.timer2_ = setInterval(this.$forceUpdate, 2000);
-  },
-  beforeDestroy () {
-    clearInterval(this.timer2_)
-    this.timer2_ = null
-    clearInterval(this.timer1_)
-    this.timer1_ = null
-  },
-};
+export default defineComponent({
+  name: "details-dialog",
+})
 </script>
 <style lang="scss" scoped>
+@import 'project_path/src/pages/details/styles/details-theme/details_dialog.scss';
 .details-dialog {
   max-width: 100%;
   width: 100%;
@@ -209,7 +272,8 @@ export default {
   height: 1rem;
   font-size: 0.12rem;
   position: relative;
-  .icon-style{
+
+  .icon-style {
     width: 0.16rem;
     height: 0.16rem;
     position: absolute;
@@ -223,9 +287,7 @@ export default {
   border-radius: 0.04rem;
 }
 
-.new-dialog-item-line {
-
-}
+.new-dialog-item-line {}
 
 .dialog-text-style {
   width: 100%;
@@ -267,7 +329,7 @@ export default {
   font-size: 0.14rem;
 }
 
-.q-dialog__inner > .details-dialog {
+.q-dialog__inner>.details-dialog {
   border-radius: 0;
 }
 </style>

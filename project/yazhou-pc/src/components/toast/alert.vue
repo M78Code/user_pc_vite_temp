@@ -7,8 +7,6 @@
     <div class="dialog_content">
       <div class="alert-wrap">
         <img :src="imgSrc[lang]" alt="" width="100%">
-        <!-- <icon class="close" name="icon-close" @click="close_alert" size="10px" color="#99A3B1"></icon> -->
-
         <div class="row items-center  relative-position">
           <div class="text">{{ i18n_t("login.login_out_dear_user") }}</div>
           <!-- 域名错误弹窗 -->

@@ -120,6 +120,7 @@ const set_base_data_init = () => {
 		menu_root,
 		left_menu_result: { lv2_mi, lv1_mi, has_mid_menu, guanjun },
 		mid_menu_result: { mi, mif, root },
+    menu_data_version,
 	} = MenuData;
 	let mid = lv2_mi;
 	let midf = lv1_mi;
@@ -449,10 +450,10 @@ const init_page_when_base_data_first_loaded=()=>{
   set_base_data_init();
   //释放试图 
   load_data_state.value ='data'
-  // check_match_last_update_timer_id = setInterval(
-  //   check_match_last_update_time(),
-  //   30000
-  // );
+  check_match_last_update_timer_id = setInterval(
+    check_match_last_update_time(),
+    30000
+  );
 }
 
 
@@ -476,15 +477,15 @@ const mounted_fn = () => {
 	api_error_count.value = 0;
 	// is_vr_numer.value = 0;
 	useMittOn(MITT_TYPES.EMIT_MX_COLLECT_COUNT_CMD, update_collect_data);
-	useMittOn(MITT_TYPES.EMIT_MX_COLLECT_COUNT2_CMD, mx_collect_count());
+	useMittOn(MITT_TYPES.EMIT_MX_COLLECT_COUNT2_CMD, mx_collect_count);
 	// 站点 tab 休眠状态转激活
-	useMittOn(MITT_TYPES.EMIT_SITE_TAB_ACTIVE, emit_site_tab_active());
+	useMittOn(MITT_TYPES.EMIT_SITE_TAB_ACTIVE, emit_site_tab_active);
 	// 调用列表接口
 	useMittOn(MITT_TYPES.EMIT_FETCH_MATCH_LIST, fetch_match_list);
-	useMittOn(MITT_TYPES.EMIT_API_BYMIDS, api_bymids({}));
+	useMittOn(MITT_TYPES.EMIT_API_BYMIDS, api_bymids);
 	useMittOn(MITT_TYPES.EMIT_MX_COLLECT_MATCH, mx_collect_match);
 	useMittOn(MITT_TYPES.EMIT_MiMATCH_LIST_SHOW_MIDS_CHANGE, show_mids_change);
-	useMittOn(MITT_TYPES.EMIT_BASE_DATA_FIRST_LOADED, init_page_when_base_data_first_loaded);
+	useMittOn(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA, init_page_when_base_data_first_loaded);
 	load_video_resources();
 }
 

@@ -13,7 +13,7 @@ import uid from "src/core/uuid/index.js";
 import { ref } from "vue";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import lodash from "lodash";
-import play_mapping from "src/core/constant/config/play_mapping/index.js";
+import { PLAY_LET_BALL,PLAY_GOAL,PLAY_ALL_KINDS,PLAYER_ID,PLAY_RESULT} from "src/core/constant/config/play-mapping.js";
 
 
 /**
@@ -48,7 +48,7 @@ const get_team_name = ( ) => {
       }else//非聊天室
       if(!['details','match_details'].includes(item_cs.source)) {
         // 让球玩法数组中PLAY_LET_BALL中包含的则显示队伍名称与盘口值 具体注释请见\user-pc\src\project\yabo\config\mapping\play_id_mapping.js
-        if(play_mapping.PLAY_LET_BALL.includes(hpid)) {
+        if(PLAY_LET_BALL.includes(hpid)) {
           team_name = `${team_name} ${_.get(item_bs, 'hps[0].hl[0].ol[0].on')}`;
         }else if(['341','342'].includes(hpid)) {
           let arr = _.get(item_bs, 'hps[0].hl[0].ol[0].on', '') || _.get(item_bs, 'hps[0].hl[0].ol[0].ot');
@@ -60,7 +60,7 @@ const get_team_name = ( ) => {
           
         }
         // 进球玩法
-         else if(!play_mapping.PLAY_GOAL.includes(hpid) ||(play_mapping.PLAY_GOAL.includes(hpid) && target_side=='')) {//如果不在进球玩法中且target_side值不存在
+         else if(!PLAY_GOAL.includes(hpid) ||(PLAY_GOAL.includes(hpid) && target_side=='')) {//如果不在进球玩法中且target_side值不存在
           team_name = _.get(item_bs, 'hps[0].hl[0].ol[0].on') || _.get(item_bs, 'hps[0].hl[0].ol[0].ot');
            //on没取到就去取ot 这个是玩法id为7得时候会取到ot，然后把冒号替换成-  这里做个标记5分钟可能改动这里
           if(team_name.indexOf(':') > -1 && !['361', '362'].includes(hpid)){
@@ -68,7 +68,7 @@ const get_team_name = ( ) => {
           }
         }
         //玩法名称存在 盘口存在 并且玩法id不是在PLAY_ALL_KINDS中包含 具体注释请见\user-pc\src\project\yabo\config\mapping\play_id_mapping.js
-        if(team_name && handicap && handicap!='' && !play_mapping.PLAY_ALL_KINDS.includes(hpid)) {
+        if(team_name && handicap && handicap!='' && !PLAY_ALL_KINDS.includes(hpid)) {
           if(!handicap.includes('/') && !isNaN(handicap)){
             if (handicap.includes('.')) { // 精度问题
               handicap = Math.abs(handicap).toFixed(1);
@@ -103,7 +103,7 @@ const get_team_name = ( ) => {
         }
       } else {
         //详情部分特殊玩法
-        if(play_mapping.PLAY_RESULT.includes(hpid)){
+        if(PLAY_RESULT.includes(hpid)){
           // 投注项显示值
           let on = _.get(item_bs, 'hps[0].hl[0].ol[0].on', '');
           // 投注时所需展示的信息
@@ -122,7 +122,7 @@ const get_team_name = ( ) => {
           }
         } else {
           // 球员玩法id
-          if(play_mapping.PLAYER_ID.includes(hpid)) {
+          if(PLAYER_ID.includes(hpid)) {
             team_name = `${_.get(item_bs, 'hps[0].hl[0].ad2', '')}-${_.get(item_bs, 'hps[0].hl[0].ol[0].ott', '')}` ;
           } else {
             // 如果是详情部分则取ott字段进行投注项名称显示

@@ -12,7 +12,8 @@ import uid from "src/core/uuid/index.js";
 import { ref } from "vue";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import lodash from "lodash";
-import * as play_mapping from "src/core/constant/config/play-mapping.js";
+
+import { MARKET_RANG_FLAG_LIST,BASKETBALL_BY_APPOINTMENT_let } from "src/core/constant/config/play-mapping.js";
 
 
 const  post_submit_bet_list_gcuuid = ref(uid())
@@ -79,10 +80,10 @@ const  post_submit_bet_list_gcuuid = ref(uid())
         if(is_pre && BetData.bet_appoint_obj && !_.isUndefined(BetData.bet_appoint_obj.appoint_ball_head)) {
            let dl =  BetData.pre_bet_list;
            if(dl) {
-            let play_mapping_market = _.get(item_bs, 'hps[0].hl[0].ol[0].csid') == 1 ? play_mapping.MARKET_RANG_FLAG_LIST.includes(_.get(item_cs, 'play_id')) : play_mapping.BASKETBALL_BY_APPOINTMENT_let.includes(_.get(item_cs, 'play_id'))
+            let play_mapping_market = _.get(item_bs, 'hps[0].hl[0].ol[0].csid') == 1 ?MARKET_RANG_FLAG_LIST.includes(_.get(item_cs, 'play_id')) :BASKETBALL_BY_APPOINTMENT_let.includes(_.get(item_cs, 'play_id'))
            
-            // if(play_mapping.MARKET_RANG_FLAG_LIST.includes(_.get(item_cs, 'play_id'))
-            // ||play_mapping.BASKETBALL_BY_APPOINTMENT.includes(_.get(item_cs, 'play_id'))//这里是篮球让球
+            // if(MARKET_RANG_FLAG_LIST.includes(_.get(item_cs, 'play_id'))
+            // ||BASKETBALL_BY_APPOINTMENT.includes(_.get(item_cs, 'play_id'))//这里是篮球让球
             // )
 
             //让球过滤数据 过滤出盘口 和oddsType 对应数据
@@ -229,7 +230,7 @@ const  post_submit_bet_list_gcuuid = ref(uid())
               let head = computed_appoint_ball_head;
               // if(_.startsWith(computed_appoint_ball_head, "+")) {
                 // head = '+' + head
-              // }else if(play_mapping.BASKETBALL_BY_APPOINTMENT_let.includes(_.get(item_cs, 'play_id')) && computed_appoint_ball_head > 0 && !_.startsWith(computed_appoint_ball_head, "+")){
+              // }else if(BASKETBALL_BY_APPOINTMENT_let.includes(_.get(item_cs, 'play_id')) && computed_appoint_ball_head > 0 && !_.startsWith(computed_appoint_ball_head, "+")){
               //    head = '+' + head
               // }
               temp.playOptionName = _.trim(`${team_name}${head}`);

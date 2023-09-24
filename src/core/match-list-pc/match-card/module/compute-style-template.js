@@ -239,13 +239,14 @@ export const get_league_title_card_height = (template_id) => {
 export const compute_style_template_by_matchinfo = (match, template_id) => {
 
 	if (template_id == 13) {
-		template_id = 0;
+		template_id = 1;
 	}
 	// 赛事列表模板配置
 	let template_config =
 		MATCH_LIST_TEMPLATE_CONFIG[`template_${template_id}_config`][
 			"match_template_config"
 		] || {};
+		console.log('template_idtemplate_id-11111', template_id);
 	// 赛事样式对象
 	let style_obj = {
 		// 显示等级
@@ -276,13 +277,15 @@ export const compute_style_template_by_matchinfo = (match, template_id) => {
 		is_show_cur_handicap: false,
 		// 当前局盘口高度
 		cur_handicap_height: 0,
+		// 模板id
+		tpl_id: template_id
 	};
 	// 如果没有赛事信息
 	if (!match || !match.mid) {
 		return style_obj;
 	}
 	style_obj.csid = match.csid;
-	style_obj.tpl_id = match.tpl_id;
+	// style_obj.tpl_id = match.tpl_id;
 	style_obj.is_show_card = true;
 	// 0号模板设置角球玩法数据
 	if (template_id == 0) {

@@ -50,7 +50,7 @@
                 <span class="text-big">{{_.get(match_info,'msc[S1].away')}}</span>
               </template>
             </div>
-            <match-date class="match_time-text" :match_props="{match:match_info}"></match-date>
+            <match-date class="match_time-text" :match="match"></match-date>
           </template>
         </div>
         <!-- 开始时间 E -->

@@ -21,7 +21,7 @@
   
  <script setup>
 
-  import { defineProps } from 'vue';
+  import {  } from 'vue';
   import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
   import {component_symbol ,need_register_props} from "../config/index.js"
   useRegistPropsHelper(component_symbol, need_register_props)

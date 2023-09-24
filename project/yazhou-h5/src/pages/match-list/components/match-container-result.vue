@@ -127,6 +127,7 @@ import ImageCacheLoad from "./public-cache-image.vue";
 import { format_time_zone_time } from "src/core/format/index.js"
 import {MenuData } from "src/core/index.js"
 import { league_icon, league_icon_back } from 'project_path/src/core/utils/local-image.js'
+// import { SPORT_ID_TO_NUMBER_MAPPING } from "src/core/constant/config/play-mapping.js";
 
 
 const props = defineProps({
@@ -194,7 +195,7 @@ const get_sport_show = (i) => {
 }
 const get_num_to_csid = (csid) => {
 // 从映射中获取球种id与精灵图中图片的位置
-return $utils.play_mapping.SPORT_ID_TO_NUMBER_MAPPING[csid];
+  // return SPORT_ID_TO_NUMBER_MAPPING[csid];
 }
 
 /**

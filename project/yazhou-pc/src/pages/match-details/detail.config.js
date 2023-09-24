@@ -328,7 +328,7 @@ export const useGetConfig = () => {
             MatchDataWarehouseInstance.set_list_from_match_details(data)  
             let str =state.mid+'_'
             // state.match_infoData = data;
-            state.match_infoData = lodash.get(MatchDataWarehouseInstance.quick_query_obj.mid_obj,str);
+            state.match_infoData = lodash.get(MatchDataWarehouseInstance.list_to_obj.mid_obj,str);
             console.log(state.match_infoData,'match_infoData');
           } else {
             // 处理报错，置换替补数据
@@ -428,12 +428,12 @@ export const useGetConfig = () => {
           
           // 若当前玩法接口请求错误，则回退到存在盘口信息的玩法
           if (
-            detail_header.value["handicap_tabs_bar"].value &&
-            detail_header.value["handicap_tabs_bar"].value.tab.value
+            detail_header.value["handicap_tabs_bar"] &&
+            detail_header.value["handicap_tabs_bar"].tab.value
           ) {
             const { index, item } = state.last_tab_data || {};
             // this.$refs['handicap-tabs-bar'].$refs['tab'].onclick(index, item)
-            detail_header.value["handicap_tabs_bar"].value.currentIndex = index;
+            detail_header.value["handicap_tabs_bar"].currentIndex = index;
 
             const tabs_active_data_cache =
               get_details_data_cache.value[`${this.mid}-${item.id}`];
@@ -564,7 +564,7 @@ export const useGetConfig = () => {
   
     // 将当前玩法盘口信息记为上次玩法数据
     const last_tab_data_index =
-      detail_header.value["handicap_tabs_bar"].value.currentIndex || 0;
+      detail_header.value["handicap_tabs_bar"].currentIndex || 0;
     state.last_tab_data = {
       index: last_tab_data_index,
       item: state.category_list[last_tab_data_index],
@@ -760,8 +760,7 @@ export const useGetConfig = () => {
   const handle_match_details_data = (data, timestap) => {
     // 初始化赛事控制类玩法数据
     MatchDataWarehouseInstance.set_quick_query_list_from_match_details(data);
-    console.log(MatchDataWarehouseInstance.quick_query_list,'quick_query_obj');
-    match_details_data_set(MatchDataWarehouseInstance.quick_query_list);
+    match_details_data_set(MatchDataWarehouseInstance.list);
     state.handicap_state = "data";
     // 同步投注项
     if (!get_lang_change.value) {

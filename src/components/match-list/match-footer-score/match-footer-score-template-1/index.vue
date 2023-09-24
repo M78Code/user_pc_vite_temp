@@ -59,9 +59,9 @@
   </div>
 </template>
 
-<script>
+<script setup>
 
-import { computed, defineProps, onMounted, reactive, ref, watch } from 'vue';
+import { computed, onMounted, reactive, ref, watch } from 'vue';
 import { t } from "src/core/index.js";
 import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
 import {component_symbol ,need_register_props} from "../config/index.js"

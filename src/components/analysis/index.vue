@@ -19,7 +19,7 @@
         <div>{{matchDetail.tn}}</div>
         <!-- 未开始 -->
         <span v-if="[0,110].includes(matchDetail.ms)">{{ $t("analysis.not_start")}}</span>
-        <match-date v-else :match_props="{match: matchDetail}" style="justify-content:center;"></match-date>
+        <match-date v-else :match="matchDetail" style="justify-content:center;"></match-date>
       </div>
       <div class="both away">
         <span class="score">{{[0,110].includes(matchDetail.ms)?"—":_.get(matchDetail, 'msc.S1.away')}}</span>

@@ -27,6 +27,9 @@
       league_container_card_template,
     
     } from "../config/card-template-config.js"
+    import { compute_sport_id  } from 'src/core/constant/index.js'
+    import MenuData from "src/core/menu-pc/menu-data-class.js";
+
   /**
    * @Description 计算所有卡片样式数据   5. 冠军赛事列表 全部赛种 不区分是否开赛  6. 冠军赛事列表    单一赛种 不区分是否开赛
    * @param {Array} match_list 赛事列表
@@ -34,7 +37,8 @@
    * @param {undefined} undefined
   */
   export const compute_match_list_style_obj_and_match_list_mapping_relation_obj_type5=(match_list,is_ws_call)=>{
-
+    let current_csid = MenuData.left_menu_result.lv1_mi
+    let template_id = compute_sport_id(current_csid)
     // 赛种ID 到卡片key的 映射对象
     let csid_to_card_key_obj = {}
     // 所有卡片列表

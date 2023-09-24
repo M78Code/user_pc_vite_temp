@@ -5,7 +5,7 @@ import { compute_value_by_cur_odd_type } from "src/core/format/module/format-odd
 import UserCtr from "src/core/user-config/user-ctr.js"
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import { getSeriesCountJointNumber } from "src/core/bet/common-helper/module/bet-single-config.js"
-// import { MatchDataWarehouse_PC_List_Common } from 'src/core/index.js'
+import { MatchDataWarehouse_PC_List_Common, MatchDataWarehouse_PC_Detail_Common } from 'src/core/index.js'
 import lodash_ from "lodash"
 
 const play_id = {
@@ -41,7 +41,7 @@ const set_min_max_money = (bet_list, is_single, is_merge) => {
             "tournamentId": item.tournamentId,   // 联赛id
             "dataSource": item.dataSource,   // 数据源
             "matchType": item.matchType, // 1 ：早盘赛事 ，2： 滚球盘赛事，3：冠军，4：虚拟赛事，5：电竞赛事
-            "userId": UserCtr.get_uid()
+            // "userId": UserCtr.get_uid()
         }
         // 串关没有 这个字段 
         if (is_single) {
@@ -266,18 +266,25 @@ const submit_handle = type => {
 // 选择投注项数据 
 // params 各种id 用于查找数据对应的值 
 // other 灵活数据
-const set_bet_obj_config = (mid_obj,hn_obj,hl_obj,ol_obj) =>{
-// const set_bet_obj_config = (params = {}, other = {}) => {
+// const set_bet_obj_config = (mid_obj,hn_obj,hl_obj,ol_obj) =>{
+const set_bet_obj_config = (params = {}, other = {}) => {
     // console.log('投注项需要数据', params, 'other', other);
     // 切换投注状态
     BetViewDataClass.set_bet_order_status(1)
 
-    // const { oid, _hid, _hn, _mid } = params
+    const { oid, _hid, _hn, _mid } = params
     // console.error('MatchDataWarehouse_PC_List_Common',MatchDataWarehouse_PC_List_Common)
-    // const hl_obj = lodash_.get(MatchDataWarehouse_PC_List_Common.list_to_obj, `hl_obj.${_mid}_${_hid}`)
-    // const hn_obj = lodash_.get(MatchDataWarehouse_PC_List_Common.list_to_obj, `hn_obj.${_hn}`)
-    // const mid_obj = lodash_.get(MatchDataWarehouse_PC_List_Common.list_to_obj, `mid_obj.${_mid}_`)
-    // const ol_obj = lodash_.get(MatchDataWarehouse_PC_List_Common.list_to_obj, `ol_obj.${_mid}_${oid}`)
+    // 列表数据仓库
+    let query = MatchDataWarehouse_PC_List_Common
+    // 判断是不是详情点击 详情使用详情数据仓库
+    if (other.is_detail) {
+        query = MatchDataWarehouse_PC_Detail_Common
+    }
+    // 获取对应的仓库数据
+    const hl_obj = lodash_.get(query.list_to_obj, `hl_obj.${_mid}_${_hid}`, {})
+    const hn_obj = lodash_.get(query.list_to_obj, `hn_obj.${_hn}`, {})
+    const mid_obj = lodash_.get(query.list_to_obj, `mid_obj.${_mid}_`, {})
+    const ol_obj = lodash_.get(query.list_to_obj, `ol_obj.${_mid}_${oid}`, {})
 
 
     // 1 ：早盘赛事 ，2： 滚球盘赛事，3：冠军，4：虚拟赛事，5：电竞赛事")
@@ -302,8 +309,8 @@ const set_bet_obj_config = (mid_obj,hn_obj,hl_obj,ol_obj) =>{
         playOptionName: ol_obj.on, // 投注项名称
         playOptions: ol_obj.on,   // 投注项
         tournamentLevel: mid_obj.tlev, //联赛级别
-        playId: hn_obj.hpid, //玩法ID
-        playName: play_id[hn_obj.hpid], //玩法名称
+        playId: hn_obj.hpid || ol_obj._hpid, //玩法ID
+        playName: play_id[hn_obj.hpid || ol_obj._hpid], //玩法名称
         dataSource: mid_obj.cds, //数据源
         home: mid_obj.mhn, //主队名称
         away: mid_obj.man, //客队名称
@@ -314,12 +321,31 @@ const set_bet_obj_config = (mid_obj,hn_obj,hl_obj,ol_obj) =>{
         tid_name: mid_obj.tn,  // 联赛名称
         match_ms: mid_obj.ms, // 赛事阶段
         match_time: mid_obj.mgt, // 开赛时间
+        handicap: get_handicap({ mid_obj, hn_obj, hl_obj, ol_obj }, other), // 盘盘口值
     }
-    console.error('playOptionsId', bet_obj.playOptionsId)
+    console.error('playOptionsId', bet_obj)
     BetData.set_bet_read_write_refer_obj(bet_obj)
 
     // 获取限额 常规
     get_query_bet_amount_common(bet_obj)
+}
+
+// 获取盘口值
+const get_handicap = ({ mid_obj, hn_obj, hl_obj, ol_obj }, other) => {
+    // 需要显示主客队名称的 玩法id
+    // 直接显示投注项 1 7 367 344 68 14 8 9 17 341 368 342 369 344 68 14 23  21 22 12 24 76 104 340 359 
+    // 展示用的 + 投注项  2 4 12 18 114 26 10 3  33 34 11 351 347
+
+    // 显示基准分
+    // 玩法id 34 33 32 114 92 78 91 77 107 101 13 102 336 28 80 79 11 10 15 5 6 3 12 9 8 14 68 367 7 1 4 2 
+
+    let playId = [1, 4, 17, 19, 28, 5, 32, 33, 5, 149, 71, 25, 143, 142, 13, 336, 352, 43, 69, 340, 3, 6, 383, 77, 91, 360, 349, 357, 106, 105, 347, 107, 346, 345, 353, 101, 70, 359, 340, 104]
+    let text = ol_obj.on
+    if (!playId.includes(Number(hn_obj.hpid))) {
+        text = ol_obj.on + ' '
+    }
+
+    return text
 }
 
 export {

@@ -3,8 +3,7 @@
 // import odds_conversion from "src/public/mixins/odds_conversion/compute_max_win_money";
 // import betting from "src/public/mixins/betting/betting.js";
 // import BetKeyboard from "src/public/components/bet/bet_keyboard.vue";
-
-import play_mapping from "src/core/constant/config/play_mapping/index.js";
+import { BASKETBALL_BY_APPOINTMENT_let,BASKETBALL_BY_APPOINTMENT_total,MARKET_AWAY_PLAY_LIST,FOOTBALL_PLAY_LET_BALL,MARKET_BIG_SMALL_PLAY_LIST,MARKET_HOME_PLAY_LIST } from "src/core/constant/config/play-mapping.js";
 
 // import * as bet_utils from "src/public/mixins/bet/bet_utils.js";
 import { format_str } from "src/core/format/index.js";
@@ -80,7 +79,6 @@ export default {
       init_odds_value: null, // 初始化时的赔率
       min_odds_value: null, //最小赔率
       pre_min_odds_value: null, //预约最小赔率
-      play_mapping: null, // 玩法id映射
 
 
       timer_obj: {},//计时器对象
@@ -131,7 +129,6 @@ this.handle_generat_emitters()
       this.keyboard_data = this.big_keyboard_data();
     }
     //id映射
-    this.play_mapping = play_mapping;    
     //玩法id
     this.play_id = BetCommonHelper.get_play_id();
     console.log('this.play_id===', this.play_id);
@@ -152,12 +149,12 @@ this.handle_generat_emitters()
       this.first_click = localStorage.getItem('first_click')*1;
     }
     //初始化最大最小球头和赔率值（篮球）
-    if(play_mapping.BASKETBALL_BY_APPOINTMENT_let.includes(this.play_id)){
+    if(BASKETBALL_BY_APPOINTMENT_let.includes(this.play_id)){
       //让球玩法预约时最大球头99.5， 最小球头-99.5
       this.min_head_value = -99.5;
       this.max_head_value = 99.5;
     }
-    if(this.play_mapping.BASKETBALL_BY_APPOINTMENT_total.includes(this.play_id)) {
+    if(BASKETBALL_BY_APPOINTMENT_total.includes(this.play_id)) {
       //大小玩法预约时最大球头400， 最小球头-0.5
       this.min_head_value = 50.5;
       this.max_head_value = 400.5;
@@ -226,7 +223,7 @@ this.handle_generat_emitters()
     head_add_style() {
       let sty = false;
       if('1' == this.sport_id) {
-        if(this.play_mapping.FOOTBALL_PLAY_LET_BALL.includes(this.play_id) ) {
+        if(FOOTBALL_PLAY_LET_BALL.includes(this.play_id) ) {
           if(this.appoint_ball_head >= 10){
             sty = true;
           }
@@ -236,11 +233,11 @@ this.handle_generat_emitters()
           }
         }
       }else if('2' == this.sport_id) {
-        if(this.play_mapping.BASKETBALL_BY_APPOINTMENT_let.includes(this.play_id)) {//让球
+        if(BASKETBALL_BY_APPOINTMENT_let.includes(this.play_id)) {//让球
            if(this.appoint_ball_head >= 99.5) {
               sty = true;
            }
-        }else if(this.play_mapping.BASKETBALL_BY_APPOINTMENT_total.includes(this.play_id)) {//大小
+        }else if(BASKETBALL_BY_APPOINTMENT_total.includes(this.play_id)) {//大小
           if(this.appoint_ball_head >= 400.5) {
             sty = true;
          }
@@ -256,15 +253,15 @@ this.handle_generat_emitters()
     head_sub_style() {
       let sty = false;
       if('1' == this.sport_id) {
-        if(this.play_mapping.FOOTBALL_PLAY_LET_BALL.includes(this.play_id) ) {
+        if(FOOTBALL_PLAY_LET_BALL.includes(this.play_id) ) {
           if(this.appoint_ball_head<=-10){
             sty = true;
           }
         }else{
-          // sty = (!this.play_mapping.FOOTBALL_PLAY_LET_BALL.includes(this.play_id) && this.appoint_ball_head<=0) ||
-          if((this.play_mapping.MARKET_BIG_SMALL_PLAY_LIST.includes(this.play_id) || 
-          this.play_mapping.MARKET_HOME_PLAY_LIST.includes(this.play_id) || 
-          play_mapping.MARKET_AWAY_PLAY_LIST.includes(this.play_id)) && 
+          // sty = (!FOOTBALL_PLAY_LET_BALL.includes(this.play_id) && this.appoint_ball_head<=0) ||
+          if((MARKET_BIG_SMALL_PLAY_LIST.includes(this.play_id) || 
+          MARKET_HOME_PLAY_LIST.includes(this.play_id) || 
+          MARKET_AWAY_PLAY_LIST.includes(this.play_id)) && 
           this.appoint_ball_head <= this.ball_score) {
             sty = true;
           }else if( this.appoint_ball_head<=0) {
@@ -272,11 +269,11 @@ this.handle_generat_emitters()
           }
         }
       }else if('2' == this.sport_id) {
-        if(this.play_mapping.BASKETBALL_BY_APPOINTMENT_let.includes(this.play_id)) {//让球
+        if(BASKETBALL_BY_APPOINTMENT_let.includes(this.play_id)) {//让球
             if(this.appoint_ball_head <= -99.5) {
               sty = true;
             }
-        }else if(this.play_mapping.BASKETBALL_BY_APPOINTMENT_total.includes(this.play_id)) {//大小
+        }else if(BASKETBALL_BY_APPOINTMENT_total.includes(this.play_id)) {//大小
           if(this.appoint_ball_head <= 50.5) {
             sty = true;
           }
@@ -511,7 +508,7 @@ this.handle_generat_emitters()
             }
           }
           //显示球头值得玩法 中的所有让球玩法 且不是-号开头 且不等于0
-          if(play_mapping.MARKET_RANG_FLAG_LIST.includes(this.play_id) && !_.startsWith(ball_head,'-') && ball_head != 0) {
+          if(MARKET_RANG_FLAG_LIST.includes(this.play_id) && !_.startsWith(ball_head,'-') && ball_head != 0) {
             ball_head = '+' + ball_head
           }
         }else if(this.sport_id == 2){
@@ -526,7 +523,7 @@ this.handle_generat_emitters()
             ball_head = this.appoint_ball_head;
           }
           if(!(this.$refs['ball-head-input'] && this.$refs['ball-head-input'] == document.activeElement)){
-            if(play_mapping.BASKETBALL_BY_APPOINTMENT_let.includes(this.play_id) && !_.startsWith(ball_head,'-') && !_.startsWith(ball_head,'+') && ball_head != 0) {
+            if(BASKETBALL_BY_APPOINTMENT_let.includes(this.play_id) && !_.startsWith(ball_head,'-') && !_.startsWith(ball_head,'+') && ball_head != 0) {
               ball_head = '+' + ball_head
             }
           }
@@ -1714,12 +1711,12 @@ handle_generat_emitters(){
       ]
     },
     appoint_odds_head_handle(event) {
-      // if(play_mapping.BASKETBALL_BY_APPOINTMENT_let.includes(this.play_id)){//让球
+      // if(BASKETBALL_BY_APPOINTMENT_let.includes(this.play_id)){//让球
       //   min_head_value = 99.5;
       //   max_head_value = -99.5;
        
       //   this.appoint_ball_head = 
-      // }if(this.play_mapping.BASKETBALL_BY_APPOINTMENT_total.includes(this.play_id)) {//大小
+      // }if(BASKETBALL_BY_APPOINTMENT_total.includes(this.play_id)) {//大小
       //   min_head_value = 0;
       //   max_head_value = 400;
       // }
@@ -1785,7 +1782,7 @@ handle_generat_emitters(){
         const max_big = 30;
         //足球
         if('1' == this.sport_id) { 
-          if(play_mapping.MARKET_RANG_FLAG_LIST.includes(this.play_id)) {//让球
+          if(MARKET_RANG_FLAG_LIST.includes(this.play_id)) {//让球
             if(this.appoint_ball_head >= max_rang){
               this.appoint_ball_head = max_rang
             //给出弹框提示（已为最高预约盘口值，请重新调整）
@@ -1802,7 +1799,7 @@ handle_generat_emitters(){
         }else if('2' == this.sport_id){
           let max_let = 99.5;
           let max_small = 400.5;
-          if(play_mapping.BASKETBALL_BY_APPOINTMENT_let.includes(this.play_id)){//让球
+          if(BASKETBALL_BY_APPOINTMENT_let.includes(this.play_id)){//让球
             if(this.appoint_ball_head >= max_let){
               this.appoint_ball_head = max_let
             //给出弹框提示（已为最高预约盘口值，请重新调整）
@@ -1860,47 +1857,47 @@ handle_generat_emitters(){
           // let ball_score = nnn ? Math.max(nnn.split('-')[0], nnn.split('-')[1]) + 0.5: 0.5;
           //规则又改了，全场是主客队分数相加再加0.5， 非全场是主客队对应得分数加0.5，这里有三种情况，全场， 主队和客队
           let arr = this.timerly_basic_score.split('-');
-          if(this.play_mapping.MARKET_BIG_SMALL_PLAY_LIST.includes(this.play_id)) {
+          if(MARKET_BIG_SMALL_PLAY_LIST.includes(this.play_id)) {
             this.ball_score = this.timerly_basic_score ? parseInt(arr[0]) +  parseInt(arr[1]) + 0.5: 0.5;
-          }else if(this.play_mapping.MARKET_HOME_PLAY_LIST.includes(this.play_id)) {
+          }else if(MARKET_HOME_PLAY_LIST.includes(this.play_id)) {
             this.ball_score = this.timerly_basic_score ? parseInt(arr[0]) + 0.5: 0.5;
-          }else if(this.play_mapping.MARKET_AWAY_PLAY_LIST.includes(this.play_id)) {
+          }else if(MARKET_AWAY_PLAY_LIST.includes(this.play_id)) {
             this.ball_score = this.timerly_basic_score ? parseInt(arr[1]) + 0.5: 0.5;
           }
           //下面还有一种获取分数的渠道，那就是直接在betpreamount接口获取
           // let new_score =  _.get(this.BetData.pre_bet_list, 'currentMarket.preBetBenchmarkScore', '')
           // this.ball_score = -1;
-          // if(this.play_mapping.MARKET_BIG_SMALL_PLAY_LIST.includes(this.play_id)) {
+          // if(MARKET_BIG_SMALL_PLAY_LIST.includes(this.play_id)) {
           //   this.ball_score = new_score ? parseInt(new_score.split('-')[0]) +  parseInt(new_score.split('-')[1]) + 0.5: 0.5;
-          // }else if(this.play_mapping.MARKET_HOME_PLAY_LIST.includes(this.play_id)) {
+          // }else if(MARKET_HOME_PLAY_LIST.includes(this.play_id)) {
           //   this.ball_score = new_score ? parseInt(new_score.split('-')[0]) + 0.5: 0.5;
-          // }else if(this.play_mapping.MARKET_AWAY_PLAY_LIST.includes(this.play_id)) {
+          // }else if(MARKET_AWAY_PLAY_LIST.includes(this.play_id)) {
           //   this.ball_score = new_score ? parseInt(new_score.split('-')[1]) + 0.5: 0.5;
           // }
           // console.log('this.ball_score===', this.ball_score); 
   
           //玩法id在MARKET_BIG_SMALL_PLAY_LIST里面的，球头下限要限制在当前进球数+0.5
           const mix_rang = -10;
-          if((this.play_mapping.MARKET_BIG_SMALL_PLAY_LIST.includes(this.play_id) || this.play_mapping.MARKET_HOME_PLAY_LIST.includes(this.play_id) || this.play_mapping.MARKET_AWAY_PLAY_LIST.includes(this.play_id)) && this.appoint_ball_head <= this.ball_score) {
+          if((MARKET_BIG_SMALL_PLAY_LIST.includes(this.play_id) || MARKET_HOME_PLAY_LIST.includes(this.play_id) || MARKET_AWAY_PLAY_LIST.includes(this.play_id)) && this.appoint_ball_head <= this.ball_score) {
             this.appoint_ball_head =  this.ball_score;
             console.log('this.appoint_ball_head====', this.appoint_ball_head);
             console.log('basic_score===', this.basic_score);
             //给出弹框提示（已为最低预约盘口值，请重新调整）
             useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD,`${i18n_t('bet.bet_header_adjust')}`);
-          }else if(this.play_mapping.FOOTBALL_PLAY_LET_BALL.includes(this.play_id)){
+          }else if(FOOTBALL_PLAY_LET_BALL.includes(this.play_id)){
               if(this.appoint_ball_head <= mix_rang) {
                 this.appoint_ball_head = mix_rang
                 useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD,`${i18n_t('bet.bet_header_adjust')}`);
               }
           }
           else
-          if(this.appoint_ball_head<0 && !this.play_mapping.FOOTBALL_PLAY_LET_BALL.includes(this.play_id)) {
+          if(this.appoint_ball_head<0 && !FOOTBALL_PLAY_LET_BALL.includes(this.play_id)) {
             this.appoint_ball_head = 0;
           }
         }else if('2' == this.sport_id){//篮球
           let mix_let = -99.5;
           let mix_small = 50.5;
-          if(play_mapping.BASKETBALL_BY_APPOINTMENT_let.includes(this.play_id)){//让球
+          if(BASKETBALL_BY_APPOINTMENT_let.includes(this.play_id)){//让球
             if(this.appoint_ball_head < mix_let){
               this.appoint_ball_head = mix_let
             //给出弹框提示（已为最低预约盘口值，请重新调整）
@@ -1934,7 +1931,7 @@ handle_generat_emitters(){
       // console.log('外围数据BetData.pre_bet_list===', list);
       // console.log('外围数据head===', head);
       //让球处理
-      if(play_mapping.MARKET_RANG_FLAG_LIST.includes(this.play_id)) {
+      if(MARKET_RANG_FLAG_LIST.includes(this.play_id)) {
         let cur_i = -1;
         let ml_len = list.marketList.length;
         for(let i = 0; i < ml_len; i++) {

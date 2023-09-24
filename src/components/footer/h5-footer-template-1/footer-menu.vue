@@ -81,18 +81,15 @@
 <script setup>
 // TODO: 后续修改调整
 import GlobalAccessConfig from "src/core/access-config/access-config.js";
-// import betBar from 'src/components/bet/bet-bar.vue';  // 投注栏收起后的底部条
 import { utils, SessionStorage } from "src/core/index.js";
 import { ref, computed, onBeforeUnmount, onMounted, watch } from "vue";
 import lodash from "lodash";
 import { useRoute, useRouter } from "vue-router";
 import store from "src/store-redux/index.js";
 import { UserCtr, i18n_t, compute_css, useMittOn, useMittEmit, MITT_TYPES, MenuData } from "src/core/index.js";
-import BetDataCtr from "src/core/bet/class/bet-data-class-h5.js";
 
 const { matchReducer } = store.getState();
 const { menu_type, update_time, get_sport_all_selected } = MenuData;
-
 const is_effecting_ref = ref(true);
 const is_refreshing = ref(false);
 // 子菜单是否显示
@@ -142,8 +139,7 @@ let timer1_,
   timer3_,
   timer4_,
   timer5_,
-  timer6_,
-  timer7_;
+  timer6_;
 //第一个页脚菜单更新相关逻辑
 let timer_super9;
 //简版足球角球图标分割线相关
@@ -152,6 +148,11 @@ let timer_super10;
 // 路由
 const route = useRoute();
 const router = useRouter();
+const get_resources_obj = UserCtr.get_resources_obj()
+const get_user = ref(UserCtr.user_info);
+watch(UserCtr.user_version, () => {
+  get_user.value = UserCtr.user_info
+})
 /**
  * 是否显示菜单
 */
@@ -163,15 +164,14 @@ function get_is_hidden(item, k) {
       item.id == 3)
 }
 
-
 // ...mapMutations([
 //   'set_goto_list_top', // 设置赛事列表回到顶部
 //   'set_toast',          // 设置提示信息
 //   'set_settle_dialog_bool',
 //   'set_resources_obj',
 
-//   'set_menu_type',
 //   'set_goto_detail_matchid',
+
 //   'set_details_item',
 //   'set_home_tab_item',
 //   'set_hot_tab_item'
@@ -531,10 +531,6 @@ const set_footer_menulist = (init_footer_menulist_data = true) => {
   // $forceUpdate()
 };
 
-const get_user = ref(UserCtr.user_info);
-watch(UserCtr.user_version, () => {
-  get_user.value = UserCtr.user_info
-})
 // computed:{
 // ...mapGetters([
 //   "get_user",
@@ -555,10 +551,9 @@ watch(UserCtr.user_version, () => {
 //   'get_golistpage', TODO
 //   'get_hot_list_item'
 // ]),
-
 const isshow_bottom_banner = computed(() => {
   // TODO:获取商户信息
-  // return get_resources_obj.is_show && !get_betbar_show && calc_resources_obj.img_src
+  return get_resources_obj.is_show && !get_betbar_show && calc_resources_obj.img_src
 });
 const calc_resources_obj = computed(() => {
   if (UserCtr.theme.includes("day")) {
@@ -725,19 +720,7 @@ watch(
     virtual_disable_follow_filter();
   }
 );
-//投注栏弹层显示非0否则0
-watch(
-  () => BetDataCtr.bet_status,
-  (c_status) => {
-    if (c_status == 0) {
-      timer7_ = setTimeout(() => {
-        local_bet_status.value = c_status;
-      }, 400);
-    } else {
-      local_bet_status.value = c_status;
-    }
-  }
-);
+
 const mitt_list = [
   useMittOn(MITT_TYPES.EMIT_STANDARD_EDITION_CHANGE, (v) => {
     sub_menu_l_show.value = false;
@@ -770,7 +753,6 @@ onBeforeUnmount(() => {
     timer4_,
     timer5_,
     timer6_,
-    timer7_,
     timer_super9,
     timer_super10,
   ].forEach(i => {

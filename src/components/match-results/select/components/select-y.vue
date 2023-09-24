@@ -25,7 +25,7 @@
         :class="{ is_select: is_select }"
         :placeholder="i18n_t('select.placeholder')"
       />
-      <icon name="icon-search" color="#99A3B1" size="12px" />
+      <icon-wapper name="icon-search" color="#99A3B1" size="12px" />
     </div>
 
     <div class="select-content" v-if="isShow">
@@ -74,6 +74,8 @@
 <script setup>
 import { onMounted, onUnmounted, ref, watch, computed } from "vue";
 import { useRoute } from "vue-router";
+import { IconWapper } from 'src/components/icon'
+
 const route = useRoute();
 
 import { i18n_t } from "src/core/index";

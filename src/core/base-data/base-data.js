@@ -119,7 +119,7 @@ class BaseData {
     this.esport_menu_version = "1111";
     // 菜单接口类型 old 旧  new 新
     this.menu_type_old_or_new = "new";
-     
+
   }
   /**
    * 初始化数据
@@ -551,10 +551,10 @@ class BaseData {
     try {
       let res = await api_base_data.get_base_data({});
       console.log('resresresres', res);
-      res &&  await this.set_base_data_res(res);
-    //  元数据加载完成 
-      useMittEmit(MITT_TYPES.EMIT_BASE_DATA_FIRST_LOADED  )
-    this.base_data_version.value = Date.now();
+      res && await this.set_base_data_res(res);
+      //  元数据加载完成 
+      useMittEmit(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA)
+      this.base_data_version.value = Date.now();
     } catch (error) {
       console.log("获取 元数据接口 error", error);
     }

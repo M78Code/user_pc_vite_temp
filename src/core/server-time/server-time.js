@@ -3,9 +3,9 @@ import lodash from "lodash";
 class ServerTime {
   constructor() {
     //远程服务器时间 
-    this.remote_time =  Date.now() +100;
+    this.remote_time = Date.now() + 100;
     // 用户本机 时间戳
-    this.local_time =  Date.now();
+    this.local_time = Date.now();
   }
   /**
    * 获取服务器时间
@@ -22,20 +22,21 @@ class ServerTime {
         this.local_time = Date.now();
         this.remote_time = Date.now();
       }
+      return res;
     } catch (error) {
       this.local_time = Date.now();
       this.remote_time = Date.now();
     }
   }
-/***
- * 获取当前服务器时间 时间戳
- */
+  /***
+   * 获取当前服务器时间 时间戳
+   */
   get_remote_time() {
     let now = Date.now();
     let time = this.remote_time + (now - this.local_time);
     return time;
   }
-  
+
 }
 
 

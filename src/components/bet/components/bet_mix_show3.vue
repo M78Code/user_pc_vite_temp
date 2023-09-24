@@ -72,7 +72,6 @@
 
      <!-- 对应单关多个注单样式 -->
      <div>
-      <div>ssss123</div>
        <!-- 单关金额输入框 v-bind="$attrs"-->
       <bet-single-detail ref="bet_single_detail" ></bet-single-detail>
      </div>

@@ -380,7 +380,7 @@
                     <!-- 已提前结算 -->
                     <div class="bet-row-1">
                       {{ i18n_t("bet_record.finish_bet_pre") }}
-                    </div>/src/core/match-constant/config/play-mapping.js
+                    </div>
                     <div class="bet-row-2">
                       {{ format_btn_balance(data.computed_bet_amount) }}
                     </div>

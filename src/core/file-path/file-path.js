@@ -4,7 +4,7 @@ const e_sport_csids = [101, 100, 102, 103];
 import { AllDomain, UserCtr } from 'src/core/'
 // 目前环境信息
 const { NODE_ENV, CURRENT_ENV, DOMAIN_RESULT } = window.BUILDIN_CONFIG;
-
+const src_rdm = Date.now();
 // 字母顺序
 const letter_num = {
   A: 0,

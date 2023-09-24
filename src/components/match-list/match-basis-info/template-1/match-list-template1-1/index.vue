@@ -1,6 +1,6 @@
 <template>
   <div class="basic-wrap" @click.stop="on_go_detail" >
-    <!-- 主队信息 --> {{ match }}
+    <!-- 主队信息 --> 
     <div class="row-item team-item">
       <div class="team-logo">
         <img v-if="show_type == 'all'" style="width: 22px; max-height: 24px;" v-img="[((match.match_logo || {}) || {}).home_1_logo,(match.match_logo || {}).home_1_letter]" />
@@ -73,7 +73,7 @@
             <i aria-hidden="true" class="icon-star q-icon c-icon" :class="is_collect && 'active'"></i>
           </span>
           <!-- 统计分析 -->
-          <div class="sr-link-icon-w" v-tooltip="{content:i18n_t('common.analysis')}" v-if="utils.is_show_sr_flg(match)" @click.stop='sr_click_handle(match)'>
+          <div class="sr-link-icon-w" v-tooltip="{content:i18n_t('common.analysis')}" v-if="utils.is_show_sr_flg(match)" @click.stop='details.sr_click_handle(match)'>
             <i aria-hidden="true" class="icon-signal q-icon c-icon"></i>
           </div>
           <!-- 玩法数量 -->
@@ -91,7 +91,7 @@
 
 <script setup>
 
-import { computed, defineProps, ref, watch, onUnmounted } from 'vue';
+import { computed, ref, watch, onUnmounted } from 'vue';
 import lodash from 'lodash'
 import  { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import {component_symbol ,need_register_props} from "../config/index.js"
@@ -100,6 +100,7 @@ import { get_remote_time } from 'src/core/utils/module/match-list-utils.js';
 import { utils } from 'src/core/utils/module/utils.js'
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import { MenuData, MatchDataWarehouse_PC_List_Common } from "src/core/index.js"
+import details  from "src/core/match-list-pc/details-class/details.js"
 
 import { i18n_t } from "src/core/index.js";
 
@@ -125,7 +126,6 @@ const is_show_away_goal = ref(false) // 是否显示客队进球动画
 const is_show_home_red = ref(false) // 是否显示主队红牌动画
 const is_show_away_red = ref(false) // 是否显示客队红牌动画
 const is_collect = ref(false) //赛事是否收藏
-
 const handicap_num = computed(() => {
   if(GlobalAccessConfig.get_handicapNum()){
     return `+${ props.match.mc || 0}`

@@ -15,11 +15,11 @@
         <div class="col-auto bet-icon-info">
           <template v-if="series_obj.orderStatusCode==0">
             <!--投注失败图标-->
-            <icon name="icon-failure" size="18px"/>
+            <icon-wapper name="icon-failure" size="18px"/>
           </template>
           <template v-if="series_obj.orderStatusCode==1">
             <!--投注成功图标-->
-            <icon name="icon-success" size="18px"/>
+            <icon-wapper name="icon-success" size="18px"/>
           </template>
           <template v-if="series_obj.orderStatusCode==2">
             <!--投注确认中转圈-->
@@ -48,7 +48,8 @@
     </q-card-section>
   </q-card>
 </template>
-<script>
+<script setup>
+import { IconWapper } from 'src/components/icon'
 // import bet_mix_result from "src/public/mixins/bet/bet_mix_result.js";
 // import { format_currency } from 'src/core/index.js'
 

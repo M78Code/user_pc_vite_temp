@@ -28,12 +28,10 @@
 </template>
 
 <script setup>
-import { defineProps, ref, onMounted, computed } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import lodash from 'lodash';
 
 import { utils_info } from 'src/core/utils/module/match-list-utils.js';
-import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
-import {component_symbol ,need_register_props} from "../config/index.js"
 import { get_match_status } from 'src/core/utils/index'
 import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/core/index.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
@@ -41,9 +39,9 @@ import betItem from "src/components/bet-item/bet-item-list-new-data.vue"
 import { MatchFooterScoreFullVersionWapper as MatchFooterScore } from "src/components/match-list/match-footer-score/index.js"
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import BetData from 'src/core/bet/class/bet-data-class.js'
+import MenuData from "src/core/menu-pc/menu-data-class.js";
+import { compute_sport_id  } from 'src/core/constant/index.js'
 
-
-// const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
 const props = defineProps({
   // 盘口列表
   handicap_list: {
@@ -71,8 +69,9 @@ const props = defineProps({
     default: () => false,
   }
 })
+let current_csid = MenuData.left_menu_result.lv1_mi
 // 赛事模板宽度
-const match_list_tpl_size = ref(MATCH_LIST_TEMPLATE_CONFIG['template_1_config'].width_config)
+const match_list_tpl_size = ref(MATCH_LIST_TEMPLATE_CONFIG[`template_${compute_sport_id(current_csid)}_config`].width_config)
 
 // 组件是否已挂载
 const is_mounted = ref(true);
@@ -95,7 +94,10 @@ const deal_width_handicap_ols = (payload) => {
   }
   let new_ols = payload.map(item => {
     if (item.empty) { return }
-    item = lodash.get(MatchListData, 'list_to_obj.hn_obj')[`${mid}_${mid}_${item._hpid}_${handicap_type}_${item.ot}`]
+    // 投注项数据拼接
+    let hn_obj_config = `list_to_obj.hn_obj.${mid}_${mid}_${item._hpid}_${handicap_type}_${item.ot}`
+    // 获取投注项内容 
+    item = lodash.get(MatchListData, hn_obj_config,{})
     return item;
   })
   return new_ols
