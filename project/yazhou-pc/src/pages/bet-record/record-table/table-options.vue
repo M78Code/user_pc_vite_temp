@@ -95,7 +95,7 @@
                             <span style="margin:0 5px">
                             {{
                               formatTime(
-                                ['zh','tw'].includes(lang) ? "yyyy-mm-dd hh:MM" : "dd/mm/yyyy hh:MM"
+                                ['zh','tw'].includes(UserCtr.lang) ? "yyyy-mm-dd hh:MM" : "dd/mm/yyyy hh:MM"
                               )
                             }}</span>                     
                           </div> -->
@@ -132,13 +132,13 @@
             <span v-if="!data.acCode && item.beginTime">{{
               formatTime(
                 item.beginTime,
-                lang == "vi" ? "hh:MM dd/mm" : "mm/dd hh:MM"
+                UserCtr.lang == "vi" ? "hh:MM dd/mm" : "mm/dd hh:MM"
               )
             }}</span>
           </div>
           <div
             class="play-type settle-score"
-            v-if="tool_selected == 1 && item.settleScore"
+            v-if="tool_selected == '1' && item.settleScore"
           >
             <!-- 赛果比分 -->
             <span>{{ item.settleScore }}</span>
@@ -146,7 +146,7 @@
           <!--提前结算按钮-->
           <template
             v-if="
-              tool_selected == 0 &&
+              tool_selected == '0' &&
               get_user.settleSwitch &&
               data.enablePreSettle &&
               data.initPresettleWs &&
@@ -239,7 +239,7 @@
                     class="bet-pre-handle"
                     v-if="get_user.pcs == '1'"
                   >
-                    <icon
+                    <icon-wapper
                       name="icon-bet_pre"
                       class="bet-pre-info"
                       :class="{
@@ -255,7 +255,7 @@
                                   :ref="`bet_pre_${data.orderNo}`"
                                   class="bet-pre-handle"
                                   v-if="get_user.pcs=='1'">
-                                    <icon name="icon-bet_pre" :class="['bet-pre-info','bet-pre-over']"  size="14px"/>
+                                    <icon-wapper name="icon-bet_pre" :class="['bet-pre-info','bet-pre-over']"  size="14px"/>
                                 </div> -->
                 </div>
                 <template
@@ -278,7 +278,7 @@
                     </div>
                     <div class="bet-compute-money">
                       <!--提前结算滑块展示-->
-                      <vue-slider
+                      <!-- <vue-slider
                         :ref="`vue-slider-${i}`"
                         :adsorb="true"
                         :minRange="money_obj[i].min_money"
@@ -301,7 +301,7 @@
                             {{ label }}%
                           </div>
                         </template>
-                      </vue-slider>
+                      </vue-slider> -->
                     </div>
                   </template>
 
@@ -325,7 +325,7 @@
                       "
                       class="bet-tips-info"
                     >
-                      <icon name="icon-tips" class="bet-info" size="14px" />
+                      <icon-wapper name="icon-tips" class="bet-info" size="14px" />
                       <span class="tips-info">
                         <template>
                           <!--仅支持全额结算-->
@@ -386,7 +386,7 @@
                     </div>
                   </div>
                   <div class="bet-pre-right">
-                    <icon name="icon-success" size="18px" color="#FFF" />
+                    <icon-wapper name="icon-success" size="18px" color="#FFF" />
                   </div>
                 </div>
               </template>
@@ -407,7 +407,7 @@
                     class="bet-pre-handle"
                     v-if="get_user.pcs == '1'"
                   >
-                    <icon
+                    <icon-wapper
                       name="icon-bet_pre"
                       class="bet-pre-info"
                       size="14px"
@@ -518,9 +518,11 @@ import {
 // import vueSlider from "vue-slider-component";
 import { CANCEL_TYPE } from "./config";
 import { ref } from "vue";
+import { IconWapper } from 'src/components/icon/index.js'
 // import "vue-slider-component/theme/default.css";
 import lodash from "lodash";
 import { i18n_t } from "src/boot/i18n.js"
+import UserCtr from "src/core/user-config/user-ctr.js";
 
 const props = defineProps({
   data: {
@@ -532,8 +534,8 @@ const props = defineProps({
     default: () => {},
   },
   tool_selected: {
-    type: Number,
-    default: 0,
+    type: String,
+    default: '0',
   },
   matchType:{
     type: Function,
