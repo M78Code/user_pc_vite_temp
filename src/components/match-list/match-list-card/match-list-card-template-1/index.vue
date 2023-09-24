@@ -88,7 +88,6 @@ const props = defineProps({
 })
 // 卡片样式对象
 const card_style_obj = ref(MatchListCardDataClass.all_card_obj[props.card_key] || {})
-console.log('MatchListCardDataClass', MatchListCardDataClass.all_card_obj);
 let sticky_top = ref(null)
 // 组件是否加载完成
 const is_mounted = ref(true);
