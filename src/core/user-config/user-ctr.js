@@ -102,10 +102,13 @@ class UserCtr {
       this.user_version.value = v || Date.now()
     }
     this.callbackUrl = ''
-    // 获取持久化的电竞图片域名
+
     this.e_sports_domain_img = LocalStorage.get('e_sports_domain_img', '');
     setTimeout(() => {
+      // 获取持久化的电竞图片域名
       this.set_e_sports_domain_img();
+      //获取资源配置(商户后台配置的图片、跳转链接)
+      this.fetch_resourcesimg()
     }, 0)
   }
   /**
