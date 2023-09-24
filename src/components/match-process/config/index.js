@@ -6,7 +6,7 @@ export  const need_register_props = {
     type: Number,
     default: () => null,
   },
-  match_props: {
+  match: {
     type: Object,
     default: () => {},
   },
