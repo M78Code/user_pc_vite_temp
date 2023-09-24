@@ -6,6 +6,7 @@
  * 这个 后面会加上 本地开关 ，用户个人设置 ，以及 一起其他乱七八糟的算法
  *
  * 会加上 日志 开关 等乱七八糟的 开关
+ * 
  *
  */
 import BUILDIN_CONFIG from "app/job/output/env/final.js";
@@ -66,13 +67,43 @@ class GlobalAccessConfig {
   set_access_config(data = {}) {
     this.config = Object.assign({}, default_value, data);
   }
+  /**
+   * url所带的部分参数
+   * s=01
+   * &tag=01
+   * &jz=1
+   * &wsl=9999
+   * &ignore_iframe_pc=1
+   * &gr=common
+   * &tm=2
+   * &lg=zh
+   * &mk=EU
+   * &stm=blue
+   * &api=gK6ht5G1Ja18klV1FYiUaTBkn99JB4/vZh48JQpZOQ=
+   * &activity=10007,10008,10010&
+   * gr=common
+   * &api=F44HJ+atFdYQqXLm85ADtiugr0ZrwutNsM85t6cxNP9Hzf/22TCB/6e++ProM/DCOtWXfg8JnJSNy6Cnjhqp1g==
+   * &keep_url=1
+   * &ag=1
+   * &pb=1
+   * &env=line1
+   * &httplog=1
+   * &timestamp=1695535910860
+   * &clearcache=1
+  */
   set_enter_params_switch(data = {}) {
     this.other = Object.assign({}, LOCAL_FUNCTION_SWITCH, data);
+  }
+  get_http_log() {
+    return this.other?.httplog;
+  }
+  get_tag() {
+    return this.other?.tag;
   }
   get_LOG() {
     return this.other?.LOG;
   }
-  get_ENABLE_COLLECT_API() {
+  GET_ENABLE_COLLECT_API() {
     return this.other?.ENABLE_COLLECT_API;
   }
   get_DOM_ID_SHOW() {
