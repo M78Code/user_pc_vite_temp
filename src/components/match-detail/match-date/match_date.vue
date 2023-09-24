@@ -81,7 +81,10 @@ export default {
   },
   props: {
     // 当前赛事信息
-    match: Object,
+    match: {
+      type: Object,
+      default: () => {}
+    },
     // 行数
     rows: {
       type: Number,
@@ -364,7 +367,7 @@ export default {
      */
     set_ininplay_match(mmp) {
       mmp = Number(mmp);
-      let { match } = this.match;
+      let match = this.match;
       let csid = Number(match.csid);
       /** 足球 | 手球 | 橄榄球************************************* */
       if (get_match_status(match.ms)) {
