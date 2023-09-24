@@ -77,7 +77,7 @@ const router = useRouter()
     const euid = "3020201"
 
     const api_list_data = () => {
-      let params ={"apiType":1,"cuid":UserCtr.get_uid(),euid,md:'',"orpt":"0","pids":"","sort":1,"tid":"","selectionHour":null}
+      let params ={"apiType":1,"cuid":UserCtr.get_uid(),euid,"orpt":"0","pids":"","sort":1,"tid":"","selectionHour":null}
       api_match.post_league_list(params).then(res=>{
         const {livedata,nolivedata} = res.data
         let mids = ''

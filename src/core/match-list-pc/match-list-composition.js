@@ -347,12 +347,6 @@ const fetch_match_list = (is_socket = false, cut) => {
 		_params.selectionHour = null;
 	}
 
-
-	if (typeof is_socket == "boolean" && !is_socket) {
-		// console.error('不是无感刷新')
-		// 使用元数据默认显示
-		set_base_data_init();
-	}
 	// return
 	let send_match_list_request = () => {
 		/**返回数据处理************/
@@ -588,7 +582,7 @@ const get_hot_match_list = (backend_run = false) => {
 				
 				if (!backend_run) {
 					// 调用bymids接口
-					api_bymids({ is_first_load: true });
+					// api_bymids({ is_first_load: true });
 					// 切换右侧赛事
 					let first_match = match_list[0];
 					let params = {
@@ -714,7 +708,7 @@ const check_match_last_update_time = () => {
 		}
 	});
 	if (mids.length > 0) {
-		api_bymids({ mids });
+		// api_bymids({ mids });
 	}
 };
 /**
