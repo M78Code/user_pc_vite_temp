@@ -64,7 +64,7 @@ export default {
     // 时间延时器
     showTimeInterval = 0;
     initEvent();
-    let { off: off_ } = useMittOn(MITT_TYPES.EMIT_UPDATE_GAME_TIME, initEvent);
+    // let { off: off_ } = useMittOn(MITT_TYPES.EMIT_UPDATE_GAME_TIME, initEvent);
   },
   destroyed(){
     clearTimeObj();
