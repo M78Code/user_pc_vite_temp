@@ -41,7 +41,7 @@ const set_min_max_money = (bet_list, is_single, is_merge) => {
             "tournamentId": item.tournamentId,   // 联赛id
             "dataSource": item.dataSource,   // 数据源
             "matchType": item.matchType, // 1 ：早盘赛事 ，2： 滚球盘赛事，3：冠军，4：虚拟赛事，5：电竞赛事
-            "userId": UserCtr.get_uid()
+            // "userId": UserCtr.get_uid()
         }
         // 串关没有 这个字段 
         if (is_single) {
@@ -274,10 +274,13 @@ const set_bet_obj_config = (params = {}, other = {}) => {
 
     const { oid, _hid, _hn, _mid } = params
     // console.error('MatchDataWarehouse_PC_List_Common',MatchDataWarehouse_PC_List_Common)
+    // 列表数据仓库
     let query = MatchDataWarehouse_PC_List_Common
+    // 判断是不是详情点击 详情使用详情数据仓库
     if (other.is_detail) {
         query = MatchDataWarehouse_PC_Detail_Common
     }
+    // 获取对应的仓库数据
     const hl_obj = lodash_.get(query.list_to_obj, `hl_obj.${_mid}_${_hid}`, {})
     const hn_obj = lodash_.get(query.list_to_obj, `hn_obj.${_hn}`, {})
     const mid_obj = lodash_.get(query.list_to_obj, `mid_obj.${_mid}_`, {})
@@ -330,8 +333,12 @@ const set_bet_obj_config = (params = {}, other = {}) => {
 // 获取盘口值
 const get_handicap = ({ mid_obj, hn_obj, hl_obj, ol_obj }, other) => {
     // 需要显示主客队名称的 玩法id
-    // 1 4 17 19 28 5 32 33  5 149  71 25 143  142 13 336 352 43 69
-    // 340 3 6 争议 383 77 91 360 349  357 106 105 347 107 346 345 353 101 70  359 340 104
+    // 直接显示投注项 1 7 367 344 68 14 8 9 17 341 368 342 369 344 68 14 23  21 22 12 24 76 104 340 359 
+    // 展示用的 + 投注项  2 4 12 18 114 26 10 3  33 34 11 351 347
+
+    // 显示基准分
+    // 玩法id 34 33 32 114 92 78 91 77 107 101 13 102 336 28 80 79 11 10 15 5 6 3 12 9 8 14 68 367 7 1 4 2 
+
     let playId = [1, 4, 17, 19, 28, 5, 32, 33, 5, 149, 71, 25, 143, 142, 13, 336, 352, 43, 69, 340, 3, 6, 383, 77, 91, 360, 349, 357, 106, 105, 347, 107, 346, 345, 353, 101, 70, 359, 340, 104]
     let text = ol_obj.on
     if (!playId.includes(Number(hn_obj.hpid))) {
