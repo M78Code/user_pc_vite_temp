@@ -46,9 +46,11 @@
         </div>
       </div>
       <!--不是滚球-->
-      <div class="row" v-if="ref_data.market_type != 0">
+       <!-- ms的值，0:未开赛 1:滚球阶段 2:暂停 3:结束 4:关闭 5:取消 6:比赛放弃 7:延迟 8:未知 9:延期 10:比赛中断 110:即将开赛 -->
+       <div class="row" v-if="item.match_ms == 0">
         <div class="col match-time">
-          {{ ref_data.match_time }}
+          <!--赛事时间-->
+          {{ formatTime(item.match_time, "mm月DD日 HH:MM") }}
         </div>
       </div>
       <div class="bet-content">
@@ -67,7 +69,24 @@
           </div>
         </div>
         <!--队名及盘口区域-->
-
+        <div class="col bet-play-team yb-fontsize13" >
+        <!--卡赫利赛哈特 :class="{'bet-handicap': handicap_change}"-->
+        <label class="bet-team-handicap">
+          <!-- <template v-if="handicap!==''">
+            {{team_name}}
+            <template v-if="team_name!=handicap">
+              <label class="yb-number-bold" :class="{'margin-left-0': team_name=='','bet-handicap': handicap_change}">{{handicap}}</label>
+            </template>
+          </template>
+          <template v-else> -->
+             <!--队伍名称-->
+            <!-- {{_.trim(team_name)}} -->
+          <!-- </template> -->
+          <!--【预约】-->
+          <!-- <label v-if="active == 1 && (sport_id == 1 || sport_id == 2)&& pending_order_status == 1 && appoint">{{`[${$root.$t('bet.bet_book2')}]`}}</label> -->
+        </label>
+        <!--+/1.5-->
+      </div>
         <div>
           <div class="col bet-odds-value" :class="{
             'up-red': ref_data.odds_change_up,
@@ -102,13 +121,11 @@
 import { ref, toRefs, defineComponent, reactive, onMounted, onUnmounted } from "vue"
 import _ from 'lodash'
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
-import { format_odds, format_currency } from "src/core/format/index.js"
+import { format_odds, format_currency,formatTime } from "src/core/format/index.js"
 import { odds_type_name } from "src/core/constant/index.js"
-
-
+import BetData from "src/core/bet/class/bet-data-class.js";
 
 import BetInput from "./bet-input.vue"
-import BetData from "src/core/bet/class/bet-data-class.js";
 import { IconWapper } from 'src/components/icon'
 
 const props = defineProps({
