@@ -3,9 +3,9 @@
  *
  * 【示例】
  * 单色（显示不出来需找 UI 处理）
- * <icon name="icon-uniE900" color="#ff0000" size="16px" />
+ * <icon-wapper name="icon-uniE900" color="#ff0000" size="16px" />
  * 多色（不能设置颜色）
- * <icon name="img:xxx/xx.svg" size="14px"/>
+ * <icon-wapper name="img:xxx/xx.svg" size="14px"/>
 -->
 <template>
   <q-icon

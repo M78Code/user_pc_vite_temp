@@ -5,7 +5,7 @@
       <!-- 比赛进程 -->
       <div class="process-col yb-flex-center">
         <!-- 比赛进程 -->
-        <match-process v-if="is_mounted && match.api_update_time !=0" :match_props="{match, source: 'match_list'}" show_page="match-list" :rows="2" />
+        <match-process v-if="is_mounted && match.api_update_time !=0" :match="match" source='match_list' show_page="match-list" :rows="2" />
       </div>
       <!-- 赛事基础信息 -->
       <div class="basic-col" :style="`width:${match_list_tpl_size.team_width}px !important;`" @click.stop="on_go_detail">
@@ -111,9 +111,9 @@ import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import { useMittEmit, MITT_TYPES } from "src/core/mitt"
 import { is_eports_csid } from 'src/core/utils/module/match-list-utils.js';
 import { get_match_status, is_show_sr_flg } from 'src/core/index.js'
-import store from 'prject_path/src/store/index.js'
+import store from 'src/store/index.js'
 let state = store.getState()
-;
+
 
 const hv = ref('');
 const hv_ol = ref({_hid: -1});

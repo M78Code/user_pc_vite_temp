@@ -16,7 +16,7 @@
         </div>
 
         <!-- 比赛进程 -->
-        <match-process v-if="is_mounted && match.api_update_time !=0" :match_props="{match, source: 'match_list'}" 
+        <match-process v-if="is_mounted && match.api_update_time !=0" :match="match" source='match_list' 
           :class="pos_class" show_page="match-list" :rows="2" />
       </div>
       <!-- 赛事基础信息 -->

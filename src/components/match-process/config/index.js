@@ -6,7 +6,7 @@ export  const need_register_props = {
     type: Number,
     default: () => null,
   },
-  match_props: {
+  match: {
     type: Object,
     default: () => {},
   },
@@ -21,6 +21,10 @@ export  const need_register_props = {
   date_rows: {
     type: Number,
     default: () => 1,
+  },
+  source:{
+    type:String,
+    default:() => null
   }
 }
 

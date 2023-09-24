@@ -38,7 +38,7 @@ import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
 import { tooltip_style } from "src/core/config/global-component-style.js";
 import { utils } from 'src/core/index.js';
 
-import { IconWapper } from 'src/components/icon'
+import { IconWapper } from 'src/components/icon/index.js'
 
 import UserCtr from "src/core/user-config/user-ctr.js";
 import globalAccessConfig from "src/core/access-config/access-config.js"

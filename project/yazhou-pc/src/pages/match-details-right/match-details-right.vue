@@ -5,7 +5,7 @@
 -->
 <template>
    <!-- 详情右侧 -->
-   <div class="right_details_wrap relative-position" :class="$route.params.video_size == 1 && 'full-screen'" v-show="$route.params.video_size != 1 || get_is_show_full_bet">
+   <div class="right_details_wrap relative-position" :class="route.params.video_size == 1 && 'full-screen'" v-show="route.params.video_size != 1 || get_is_show_full_bet">
      <!-- 加载数据 -->
      <load-data
        v-show="show_load_status"
@@ -13,14 +13,14 @@
        :state="load_detail_statu"
        :style="{'margin-top': headerHeight + 'px'}"
        :is_detail="true" />
-     <div class="screen" :class="{'video-page':$route.name == 'video'}">
+     <div class="screen" :class="{'video-page':route.name == 'video'}">
        <!-- 滚动区域 -->
        <v-scroll-area :observer_area="1" @on_scroll="$root.$emit('right_details_on_scroll',$event)" ref="v_scroll" page_type="right_details" class="right_details_wrap">
  
          <template v-slot:header>
            <!-- 全屏模式玩法集tab -->
-           <div class="full-video-tab" v-if="$route.params.video_size == 1 && handicap_this && get_is_show_full_bet">
-             <tab
+           <div class="full-video-tab" v-if="route.params.video_size == 1 && handicap_this && get_is_show_full_bet">
+             <Tab
                :list="handicap_this.category_list"
                tab_name_key="marketName"
                @onclick="switchTabs"
@@ -31,12 +31,12 @@
              <div class="tab-arraw" :class="handicap_this.panel_status =='hide' && 'hide'" @click="handicap_this.toggle_panel"></div>
            </div>
            <!-- 非全屏模式-->
-           <div class="right_details_header" :class="{'no-bottom-border':$route.name != 'details',is_esports}" v-else>
+           <div class="right_details_header" :class="{'no-bottom-border':route.name != 'details',is_esports}" v-else>
              <!-- bet 体育竞猜 -->
-             <div class="sports-guessing" v-if="$route.name == 'video'">
+             <div class="sports-guessing" v-if="route.name == 'video'">
                <div>
                  <template v-if="$utils.is_iframe">
-                   <sport-icon :sport_id="$route.params.csid" :is_esports="is_esports" size="18px" class="icon sport-img-new" status="2" />
+                   <!-- <sport-icon :sport_id="route.params.csid" :is_esports="is_esports" size="18px" class="icon sport-img-new" status="2" />  todo 雪碧图组件 -->
                    <span class="home-vs-away">
                      <span>{{ match_infoData.mhn }}</span>
                      <span class="vs">v</span>
@@ -58,12 +58,12 @@
                :refresh_loading="refresh_loading"
                @refresh="refresh()"
                @setfoldStatus="setfoldStatus"
-               v-if="$route.name != 'video' && !is_esports" />
+               v-if="route.name != 'video' && !is_esports" />
              <!-- 电竞多媒体控制头 -->
-             <video-ctrl-esports :match_info="match_infoData" v-if="$route.name != 'video' && is_esports" />
+             <video-ctrl-esports :match_info="match_infoData" v-if="route.name != 'video' && is_esports" />
              <!-- 战队信息 start -->
              <match-info
-               v-if="$route.name != 'video'"
+               v-if="route.name != 'video'"
                v-show="vx_get_is_fold_status  || is_esports"
                :screen="vx_cur_expand_layout"
                :match_info="match_infoData"
@@ -92,7 +92,7 @@
  
          <!-- 【列表】 ------------->
          <template v-if="(layout_cur_page.cur!=='details' && !is_esports) ||route.name == 'video'">
-           <div class="cathectic-handicap" v-if="$route.params.video_size == '1' && vx_get_bet_single_list.length==1">
+           <div class="cathectic-handicap" v-if="route.params.video_size == '1' && vx_get_bet_single_list.length==1">
            </div>
            <!-- 盘口模板start -->
            <match-handicap
@@ -119,7 +119,7 @@
            <chatroom v-if="show_chatroom" :chatroom_info.sync="chatroom_info" :chatroom_height="chatroom_height"/>
  
            <!-- 如果当前赛事盘口关闭，就给200px 上边距，用来展示 盘口关闭的提示图 -->
-           <div class="wrap-total total" :class="($route.name !=='details' && load_detail_statu)" :style="{'margin-top': is_show_margin ? '200px' : '4px'}" v-if="show_wrap_total">
+           <div class="wrap-total total" :class="(route.name !=='details' && load_detail_statu)" :style="{'margin-top': is_show_margin ? '200px' : '4px'}" v-if="show_wrap_total">
              <div class="w-sub-item">
                <div class="item-title">
                  <div class="panel-title"></div>
@@ -145,7 +145,7 @@
  
        </v-scroll-area>
        <!-- 全屏投注区域 -->
-       <div v-if="$route.params.video_size == '1' &&((!is_esports && vx_get_bet_single_list.length==1) || (is_esports && vx_get_virtual_bet_list.length==1))">
+       <div v-if="route.params.video_size == '1' &&((!is_esports && vx_get_bet_single_list.length==1) || (is_esports && vx_get_virtual_bet_list.length==1))">
          <div class="big-cathectic-zone">
            <div class="cathectic-shade" v-if="bet_this && bet_this.bet_loadding">
              <div class="shade-fixed">
@@ -179,6 +179,7 @@
  </template>
 <script setup>
 import matchHandicap from "src/components/match-detail/match-handicap/match-handicap.vue";
+import { TabWapper as Tab } from "src/components/common/tab"
 import {useRightDetails} from "./match-details-right-config"
 import { useRoute } from "vue-router"
 import {ref} from 'vue'

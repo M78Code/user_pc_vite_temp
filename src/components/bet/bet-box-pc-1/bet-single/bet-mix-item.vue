@@ -14,7 +14,7 @@
         </div>
         <div class="col-auto">
           <!--删除按钮-->
-          <icon size="12px" name="icon-del" class="bet-del" @click="del_bet_item" v-if="is_close" />
+          <icon-wapper size="12px" name="icon-del" class="bet-del" @click="del_bet_item" v-if="is_close" />
         </div>
       </div>
       <div class="row">
@@ -110,6 +110,7 @@ import lodash from 'lodash'
 import { format_odds,formatTime } from 'src/core/index.js'
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
+import { IconWapper } from 'src/components/icon'
 
 const props = defineProps({
   index: {

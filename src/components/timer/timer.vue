@@ -42,14 +42,14 @@ export default {
       on_time_change: ""
     }
   },
- 
+  // let off_ = ''
   created() {
     // 启动计时器
     this.start();
-    let { off: off_ } = useMittOn( MITT_TYPES.EMIT_UPD_TIME_REFRESH_CMD, this.set_date_time);
+    // let { off: off_ } = useMittOn(MITT_TYPES.EMIT_UPD_TIME_REFRESH_CMD, set_date_time);
   },
   destroyed() {
-    off_()
+    // off_()
     this.clear();
   },
   watch: {

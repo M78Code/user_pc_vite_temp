@@ -9,7 +9,7 @@
   <div class="more-info" v-if="isRouterAlive">
     <div class="more-time">
       <div class="time-tips">
-        <match-date :match_props="{match:match_info}"></match-date>
+        <match-date :match="match_info"></match-date>
       </div>
       <div class="scorll-handel">
         <span
@@ -19,7 +19,7 @@
           @mouseenter="enter(0)"
           @mouseleave="leave"
         >
-          <icon
+          <icon-wapper
             name="icon-arrow-left"
             size="10px"
             :color="el_active=='left'?'#FF7000':'#6D7278'"
@@ -50,7 +50,7 @@
           @mouseenter="enter(1)"
           @mouseleave="leave"
         >
-          <icon
+          <icon-wapper
             name="icon-arrow-right"
             size="10px"
             :color="el_active=='right'?'#FF7000':'#6D7278'"
@@ -255,10 +255,12 @@
 // import format_desc from "src/project/yabo/mixins/match_details/index";
 import {MatchProcessFullVersionWapper} from "src/components/match-process/index.js";
 import BetCommonHelper from "src/core/bet/common-helper/index.js";
+import { IconWapper } from 'src/components/icon'
 
 export default {
   components: {
     "match-date": MatchProcessFullVersionWapper,
+    IconWapper,
   },
   // mixins: [format_desc],
   data() {

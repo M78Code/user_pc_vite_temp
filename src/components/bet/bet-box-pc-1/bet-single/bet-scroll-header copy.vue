@@ -9,7 +9,7 @@
       <!-- 返回菜单（投注记录、单/串关投注栏） -->
       <div class="col yb-flex cursor-pointer" v-if="LayOutMain_pc.is_iframe">
         <!--箭头图标-->
-        <icon name="icon-back" size="14px" />
+        <icon-wapper name="icon-back" size="14px" />
         <!--返回菜单-->
         <div class="back-text ellipsis" v-if="BetData.is_bet_single">{{ $t('common.return_sports') }}</div>
         <div class="back-text2 ellipsis"
@@ -31,22 +31,22 @@
               </template>
             </div>
             <span>
-              <icon class="mr15" :name="`img:${iocn_img_unfold}`" size="14px" v-if="is_expand" />
-              <icon class="mr15" :name="`img:${iocn_img_fold}`" size="14px" v-else />
+              <icon-wapper class="mr15" :name="`img:${iocn_img_unfold}`" size="14px" v-if="is_expand" />
+              <icon-wapper class="mr15" :name="`img:${iocn_img_fold}`" size="14px" v-else />
             </span>
           </template>
           <template v-else>
             <div>
               <template v-if="!$route.name.includes('world_cup')"> <!--世界杯rn-->
-                <icon class="mr15" :name="`img:${iocn_img_unfold}`" size="14px"
+                <icon-wapper class="mr15" :name="`img:${iocn_img_unfold}`" size="14px"
                   v-if="BetData.theme.includes('y0') ? is_expand : !is_expand" />
-                <icon class="mr15" :name="`img:${iocn_img_fold}`" size="14px" v-else />
+                <icon-wapper class="mr15" :name="`img:${iocn_img_fold}`" size="14px" v-else />
                 <span>{{ $t('bet.bet_order') }}</span> <!--投注单-->
               </template> <!--世界杯rn-->
               <template v-else> <!--世界杯rn-->
-                <icon class="mr15" :name="`img:${require('public/yabo/shijiebei_unfold.svg')}`" size="14px"
+                <icon-wapper class="mr15" :name="`img:${require('public/yabo/shijiebei_unfold.svg')}`" size="14px"
                   v-if="is_expand" />
-                <icon class="mr15" :name="`img:${require('public/yabo/shijiebei_fold.svg')}`" size="14px" v-else />
+                <icon-wapper class="mr15" :name="`img:${require('public/yabo/shijiebei_fold.svg')}`" size="14px" v-else />
                 <!--世界杯rn-->
                 <span>{{ $t('bet.bet_order') }}</span>
               </template>
@@ -134,7 +134,7 @@
 import { computed, onMounted } from "vue"
 import { UserCtr,MenuData,LayOutMain_pc } from "src/core/index.js";
 import BetData from "src/core/bet/class/bet-data-class.js";
-
+import { IconWapper } from 'src/components/icon'
 import lodash from 'lodash'
 const props = defineProps({
   bet_recode_this: Object,

@@ -18,7 +18,7 @@
         @click="(enable_collect_api ? collect_count : true) && on_change_list_type('collect')"
         class="btn-wrap collect-btn yb-flex-center cursor-pointer"
         :class="{ 'active': vx_layout_list_type == 'collect', }" :title="t('list.my_collect')">
-        <icon name="icon-star" :class="{ active: collect_count }" size="14px"
+        <icon-wapper name="icon-star" :class="{ active: collect_count }" size="14px"
           :color="vx_layout_list_type == 'collect' ? '#272A33' : collect_count ? '#EFCC6E' : '#ABBAC8'" />
         <span class="number" :class="{ 'had-count': collect_count }">
           {{ collect_count }}
@@ -40,7 +40,7 @@
     <!-- 冠军 电子竞技 vr  没有 -->
     <div class="col-right yb-flex-center">
       <div class="search-wrap" v-if="is_show_input">
-        <icon class="search-icon" color="#ABBAC8" name="icon-search" size="12px" />
+        <icon-wapper class="search-icon" color="#ABBAC8" name="icon-search" size="12px" />
         <input class="search-input" @input="$emit('filter_league_data', leagueName)" v-model="leagueName"
           :placeholder="t('common.search_text')" type="search">
       </div>
@@ -98,6 +98,8 @@ import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
 import UserCtr from 'src/core/user-config/user-ctr.js'
 import {component_symbol ,need_register_props} from "../config/index.js"
 import store from 'src/store-redux/index.js';
+import { IconWapper } from 'src/components/icon'
+
 let state = store.getState();
 const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
 

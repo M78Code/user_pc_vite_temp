@@ -22,7 +22,7 @@
     <!-- 详情右侧 排序、单列、双列 || 右侧详情视频区域-->
     <div v-if="is_details || whitchDetail == 'rightDetails'" class="row">
       <div class="right-icons" @click="handicap_this.toggle_panel">
-        <icon
+        <icon-wapper
           :name="
             handicap_this.panel_status == 'hide' ? 'icon-open' : 'icon-hide'
           "
@@ -50,7 +50,7 @@
         "
       >
         <span>
-          <icon
+          <icon-wapper
             name="icon-play_stop"
             size="14px"
             class="icon-toggle"
@@ -67,7 +67,7 @@
           <!-- 一栏布局 -->
         </span>
         <span>
-          <icon
+          <icon-wapper
             name="icon-play_pause"
             size="14px"
             class="icon-toggle"
