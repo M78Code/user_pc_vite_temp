@@ -46,8 +46,8 @@
         </div>
       </div>
       <!--不是滚球-->
-       <!-- ms的值，0:未开赛 1:滚球阶段 2:暂停 3:结束 4:关闭 5:取消 6:比赛放弃 7:延迟 8:未知 9:延期 10:比赛中断 110:即将开赛 -->
-       <div class="row" v-if="item.match_ms == 0">
+      <!-- ms的值，0:未开赛 1:滚球阶段 2:暂停 3:结束 4:关闭 5:取消 6:比赛放弃 7:延迟 8:未知 9:延期 10:比赛中断 110:即将开赛 -->
+      <div class="row" v-if="item.match_ms == 0">
         <div class="col match-time">
           <!--赛事时间-->
           {{ formatTime(item.match_time, "mm月DD日 HH:MM") }}
@@ -69,17 +69,18 @@
           </div>
         </div>
         <!--队名及盘口区域-->
-        <div class="col bet-play-team yb-fontsize13" >
-        <!--卡赫利赛哈特 :class="{'bet-handicap': handicap_change}"-->
-        <label class="bet-team-handicap">
+        <div class="col bet-play-team yb-fontsize13">
+          <!--卡赫利赛哈特 :class="{'bet-handicap': handicap_change}"-->
+          <label class="bet-team-handicap">
 
-          <label class="yb-number-bold">{{item.handicap}}</label>
-        
-          <!--【预约】-->
-          <label v-if="ref_data.active == 1 && (item.sportId == 1 || item.sportId == 2)&& pending_order_status == 1 && appoint">{{`[${$root.$t('bet.bet_book2')}]`}}</label>
-        </label>
-        <!--+/1.5-->
-      </div>
+            <label class="yb-number-bold">{{ item.handicap }}</label>
+
+            <!--【预约】-->
+            <label
+              v-if="ref_data.active == 1 && (item.sportId == 1 || item.sportId == 2) && pending_order_status == 1 && appoint">{{ `[${$root.$t('bet.bet_book2')}]` }}</label>
+          </label>
+          <!--+/1.5-->
+        </div>
         <div>
           <div class="col bet-odds-value" :class="{
             'up-red': ref_data.odds_change_up,
@@ -114,13 +115,13 @@
 import { ref, toRefs, defineComponent, reactive, onMounted, onUnmounted, computed } from "vue"
 import lodash from 'lodash'
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
-import { format_odds, format_currency,formatTime } from "src/core/format/index.js"
+import { format_odds, format_currency, formatTime } from "src/core/format/index.js"
 import { odds_type_name } from "src/core/constant/index.js"
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { i18n_t } from "src/boot/i18n.js"
 import BetInput from "./bet-input.vue"
 import { IconWapper } from 'src/components/icon'
-import { del_bet_item } from "./config/bet_single_info.js"
+// import { del_bet_item } from "./config/bet_single_info.js"
 
 const props = defineProps({
   index: {
@@ -134,18 +135,18 @@ const props = defineProps({
   item: {}
 })
 
-     /**
-     * @description:是否支持预约 0 关闭 1 支持
-     * @param {undefined} undefined
-     * @returns {number}
-     */
-     const pending_order_status = computed(() => {
-        // let bet_obj = BetData.bet_single_obj[props.id];
-        // if(bet_obj) {
-        //   return lodash.get(bet_obj, 'cs.pending_order_status')
-        // }
-        return 0;
-     })
+/**
+* @description:是否支持预约 0 关闭 1 支持
+* @param {undefined} undefined
+* @returns {number}
+*/
+const pending_order_status = computed(() => {
+  // let bet_obj = BetData.bet_single_obj[props.id];
+  // if(bet_obj) {
+  //   return lodash.get(bet_obj, 'cs.pending_order_status')
+  // }
+  return 0;
+})
 
 const ref_data = reactive({
   DOM_ID_SHOW: false,
@@ -159,6 +160,10 @@ const ref_data = reactive({
   odds_change_up: false,  // 赔率上升
   odds_change_down: false, // 赔率下降
 })
+
+const del_bet_item = () => {
+
+}
 </script>
 
 

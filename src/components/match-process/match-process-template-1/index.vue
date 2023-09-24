@@ -48,7 +48,7 @@
   </div>
 </template>
 <script setup>
-import { computed, defineProps, ref, watch, onUnmounted } from "vue";
+import { computed, ref, watch, onUnmounted } from "vue";
 import matchDate from "src/components/match-detail/match-date/match_date.vue";
 // import { format_second_ms } from "src/core/format/index.js";
 import {

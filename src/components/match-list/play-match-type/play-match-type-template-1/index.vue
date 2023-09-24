@@ -13,7 +13,7 @@
   
 <script setup>
 
-import { defineProps, computed, ref } from 'vue';
+import { computed, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import lodash from 'lodash';
 

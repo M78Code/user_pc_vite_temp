@@ -42,7 +42,7 @@
 
 <script setup>
 
-import { computed, defineProps, ref, reactive } from 'vue';
+import { computed, ref, reactive } from 'vue';
 import { useRoute } from 'vue-router';
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"

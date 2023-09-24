@@ -4,7 +4,9 @@
 <template>
   <div class="match-main no-padding-bottom" :style="page_style" ref="match_main">
     <!--赛事列表-->
-    <div class="match-list-container" ref="match_list_container" :class="{
+    <div class="match-list-container"
+      ref="match_list_container" 
+      @scroll="wrapper_scroll_handler" :class="{
       zaopan: [4, 11, 28, 3000].includes(+MenuData.current_menu) && invok_source != 'home_hot_page_schedule',
       guanjun: [100].includes(+MenuData.current_menu),
       level_four_menu: MenuData.current_menu == 28 && [1001, 1002, 1004, 1011, 1010, 1009].includes(get_curr_sub_menu_type),
@@ -12,19 +14,22 @@
       jingzu: MenuData.current_menu == 30,
       jinri: MenuData.current_menu == 3,
       esport: 3000 == MenuData.current_menu,
-    }" @scroll="wrapper_scroll_handler">
+    }" >
       <!--缝隙 不通层级 遮罩 存在渲染偏差， 边界 双线 或者 侵蚀问题-->
-      <div class="gap" v-if="on_match && MenuData.current_menu != 3000"
-        :class="{ zaopan: [4, 11, 28, 3000].includes(+MenuData.current_menu) }" />
+      <div class="gap" v-if="on_match && MenuData.current_menu != 3000" :class="{ zaopan: [4, 11, 28, 3000].includes(+MenuData.current_menu) }" />
       <!-- 跳转到其他场馆的banner图 和猜你喜欢-->
       <tiaozhuan-panel v-if="calc_show"></tiaozhuan-panel>
       <!-- 列表骨架屏 -->
       <!-- <SList v-if="show_skeleton_screen" :loading_body="true" /> -->
       <!-- 列表页主内容 -->
-      <match-list ref="match_list" :matchCtr="MatchDataWarehouse_H5_List_Common" :menu_type="MenuData.current_menu"
-        :data_get_empty="match_is_empty" :source="invok_source ? invok_source : 'match_main'"
-        :window_scrolly="window_scrolly" :match_list_wrapper_height="match_list_wrapper_height">
-        <!--        @unfold_league="unfold_league_handle"-->
+      <match-list
+        ref="match_list" 
+        :matchCtr="matchCtr" 
+        :menu_type="MenuData.current_menu"
+        :data_get_empty="match_is_empty" 
+        :source="invok_source ? invok_source : 'match_main'"
+        :window_scrolly="window_scrolly" 
+        :match_list_wrapper_height="match_list_wrapper_height">
       </match-list>
       <!-- 到底了容器原加载更多容器-->
       <div class="loading-more-container" v-if="!match_is_empty && lodash.size(matchCtr.match_list_data_sources) > 3"
@@ -55,11 +60,7 @@ export default defineComponent({
       }
       let match_total = vm.matchCtr && vm.matchCtr.list.length;
 
-      if (
-        !vm.get_details_changing_favorite && //不是详情页更改过赛事收藏到了列表也就不用重新拉数据r
-        match_total &&
-        ["match_result", "virtual_sports"].includes(from.name)
-      ) {
+      if ( match_total && ["match_result", "virtual_sports"].includes(from.name) ) {
         // 详情， 赛果，虚拟体育返回到列表也的时候不更新数据，保持上次的数据r
         if (["virtual_sports"].includes(from.name)) {
           // vm.set_current_esport_csid(vm.prev_export_csid);
@@ -127,7 +128,7 @@ import scrollTop from "project_path/src/components/common/record-scroll/scroll-t
 import { compute_css_variables } from "src/core/css-var/index.js"
 import { MenuData, score_switch_handle, utils } from "src/core/index.js";
 import MatchCtrClass from "src/core/match-list-h5/match-class/match-ctr.js";
-import { MatchDataWarehouse_H5_List_Common } from 'src/core'
+import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from 'src/core'
 import BaseData from 'src/core/base-data/base-data.js';
 // import matchListCardFold from 'src/core/match-list-h5/match-card/match-list-card-fold.js'
 
@@ -156,7 +157,7 @@ const requesting_timeout = ref(null);
 // 赛事列表无数据
 const match_is_empty = ref(false);
 // 赛事操作工具类
-const matchCtr = ref(MatchCtrClass);
+const matchCtr = ref(MatchDataBaseH5);
 // 赛事列表接口请求中提示
 const is_data_requesting = ref(true);
 //窗口向上滚动距离
@@ -179,7 +180,6 @@ const subscription_timer1 = ref(null);
 //新手版标准版 1 2
 const newer_standard_edition = ref(PageSourceData.newer_standard_edition);
 
-const get_uid = ref(store_state.get_uid);
 
 const get_bet_status = ref(store_state.get_bet_status);
 // 显示收藏弹窗
@@ -187,15 +187,8 @@ const show_favorite_list = ref(store_state.show_favorite_list);
 // 显示筛选頁面
 const get_show_match_filter = ref(store_state.get_show_match_filter);
 
-// 详情页的数据
-const get_detail_data = ref(store_state.get_detail_data);
-// 改变了收藏状态
-const get_details_changing_favorite = ref(store_state.get_details_changing_favorite);
 // 右侧设置菜单显示时 , 不显示骨架屏
 const get_is_show_menu = ref(store_state.get_is_show_menu);
-// 次要玩法展开映射
-const get_secondary_unfold_map = ref(store_state.get_secondary_unfold_map);
-const get_list_scroll_top = ref(store_state.get_list_scroll_top);
 const get_preload_animation_url = ref(store_state.get_preload_animation_url);
 
 onBeforeMount(() => {
@@ -283,25 +276,10 @@ watch(() => MenuData.current_menu, () => {
 }
 );
 
-// 筛选过滤弹层消失
-watch(() => get_show_match_filter.value, () => {
-  if (!flag) {
-    // store.dispatch({ type: 'matchReducer/set_goto_detail_matchid',  payload: '' })
-    subscription();
-  }
-}
-);
-
 // 页脚子菜单
 watch(() => MenuData.footer_sub_menu_id, () => {
-  if (
-    (MenuData.prev_footer_sub_menu_id != curr && curr == 114) ||
-    (MenuData.prev_footer_sub_menu_id != curr &&
-      MenuData.prev_footer_sub_menu_id == 114)
-  ) {
-    matchCtr.value.match_list_data_sources.forEach((item) => {
-      score_switch_handle(item);
-    });
+  const prev_footer_sub_menu_id = lodash.get(MenuData, 'prev_footer_sub_menu_id')
+  if ( (prev_footer_sub_menu_id != curr && curr == 114) || (prev_footer_sub_menu_id != curr && prev_footer_sub_menu_id == 114) ) {
     matchCtr.value.list.forEach((item) => {
       score_switch_handle(item);
     });
@@ -312,8 +290,8 @@ watch(() => MenuData.footer_sub_menu_id, () => {
 
 // 新手版标准版切换
 watch(() => newer_standard_edition.value, () => {
+  //虚拟体育
   if (MenuData.current_menu == 900) {
-    //虚拟体育
     return;
   }
   // 如果是简版
@@ -361,15 +339,16 @@ watch(() => get_show_match_filter, () => {
   store.dispatch({ type: 'detailReducer/set_goto_detail_matchid', payload: '1111' })
   // 切换球种时 清空赛种折叠状态
   store.dispatch({ type: 'topMenuReducer/set_collapse_csid_map', payload: {} })
-}
-);
+  if (!flag) {
+    // store.dispatch({ type: 'matchReducer/set_goto_detail_matchid',  payload: '' })
+    subscription();
+  }
+});
 
 // 筛选过滤弹层消失
-watch(
-  () => matchCtr.value,
-  (match_list) => {
+watch( () => matchCtr.value, (match_list) => {
     // 进入列表后，若preload_animation_url为未缓存状态，则执行动画资源预加载逻辑
-    if (!get_preload_animation_url && match_list.length) {
+    if (!get_preload_animation_url.value && match_list.length) {
       // 通过遍历列表，查找动画状态mvs > 0（可播放）的赛事mid，然后获取相应动画加载资源
       for (let i = 0, len = match_list.length; i < len; i++) {
         if (match_list[i].mvs > 0) {
@@ -452,7 +431,7 @@ const back_top = () => {
  */
 const event_init = () => {
   // 详情页的视频预加载
-  utils.load_video_resources(get_uid, "is_details_page");
+  utils.load_video_resources(store_state.get_uid, "is_details_page");
   // 不让浏览器记住上次的滚动位置
   if ("scrollRestoration" in History) {
     history.scrollRestoration = "manual";
@@ -472,6 +451,7 @@ const event_init = () => {
   }
   // set_hide_skeleton_screen(true)
 };
+
 /**
  * @Description 次要玩法展开加载数据
  * @param {Object} match 赛事
@@ -481,9 +461,9 @@ const special_hps_load_handle = (match, key) => {
   if (["category"].includes(route.name)) {
     return;
   }
-  if (matchCtr.value.mid_obj[match.mid] && match[key] && match[key].length) {
-    matchCtr.value.mid_obj[match.mid][key] = match[key];
-    matchCtr.value.addMatchInfo(match);
+  if (matchCtr.value.list_to_obj.mid_obj[`${match.mid}_`] && match[key] && match[key].length) {
+    matchCtr.value.list_to_obj.mid_obj[`${match.mid}_`] = match[key];
+    // matchCtr.value.addMatchInfo(match);
     // websocket_store.SCMD_SPECIAL_C8(1,'list',key,match);
   }
 };
@@ -522,15 +502,10 @@ const unsubscribe = store.subscribe(() => {
 });
 const update_state = () => {
   const new_state = store.getState();
-  get_uid.value = new_state.get_uid;
   get_bet_status.value = new_state.get_bet_status;
   show_favorite_list.value = new_state.show_favorite_list;
   get_show_match_filter.value = new_state.get_show_match_filter;
-  get_detail_data.value = new_state.get_detail_data;
-  get_details_changing_favorite.value = new_state.get_details_changing_favorite;
   get_is_show_menu.value = new_state.get_is_show_menu;
-  get_secondary_unfold_map.value = new_state.get_secondary_unfold_map;
-  get_list_scroll_top.value = new_state.get_list_scroll_top;
   get_preload_animation_url.value = new_state.get_preload_animation_url;
 };
 // 批量清除定时器

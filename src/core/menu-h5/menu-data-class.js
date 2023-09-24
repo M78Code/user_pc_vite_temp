@@ -18,7 +18,7 @@ class MenuData {
     //通知数据变化 防止调用多次 20毫秒再更新
     this.update = lodash.debounce(() => {
       that.update_time.value = Date.now();
-    }, 10);
+    }, 16);
     // "1": "滚球",  "2": "今日", "3": "早盘",  "4": "冠军","5": "即将开赛", "6": "串关","7": "电竞",
     // "8": "VR",// "30": "竞足",// "28": "赛果",
 
@@ -733,12 +733,11 @@ class MenuData {
       current_lv_1_menu_i,
       menu_type: current_lv_1_menu.mi, //设置一级菜单menutype
     });
-    setTimeout(() => {
-      const mid_item = this.pop_list.find((item) => {
-        return current_lv_1_menu.mi == item.mi;
-      });//重新设定中间项
-      mid_item && this.menu_lv1.splice(1, 1, mid_item);
-    }, 0);
+
+    const mid_item = this.pop_list.find((item) => {
+      return current_lv_1_menu.mi == item.mi;
+    });//重新设定中间项
+    mid_item && this.menu_lv1.splice(1, 1, mid_item);
     //设置二级菜单 赛果和电竞是不需要設置二級菜單的
     switch (current_lv_1_menu.mi) {
       case 28:

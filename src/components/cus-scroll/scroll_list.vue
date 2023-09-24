@@ -29,7 +29,7 @@
 // import resizeObserver from "src/components/match-results/resize-observer/resize-observer.vue"
 // import {mapGetters,mapActions} from 'vuex'
 // import { store } from "src/store/index.js"
-import { onMounted, onUnmounted, ref, defineProps } from "vue";
+import { onMounted, onUnmounted, ref } from "vue";
 import { useMittEmit, MITT_TYPES, useMittOn } from "src/core/mitt";
 import MatchListCard from "src/core/match-list-pc/match-card/match-list-card-class.js";
 import { utils_info } from 'src/core/utils/module/match-list-utils.js';

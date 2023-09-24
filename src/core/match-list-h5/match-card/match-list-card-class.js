@@ -4,16 +4,15 @@
 import lodash from 'lodash'
 import { nextTick } from 'vue';
 import { useRoute } from 'vue-router'
-import MatchCtr from '../match-class/match-ctr'
 import MatchPage from '../match-class/match-page'
 import store from "src/store-redux/index.js";
 import { get_template_config } from "./template/template-config.js";
-import { MATCH_LIST_TEMPLATE_CONFIG } from "./template";
 import { get_match_dom_show_property } from "./module/match-show-property.js";
 import { useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import UserCtr from 'src/core/user-config/user-ctr.js'
+import MenuData from "src/core/menu-h5/menu-data-class.js";
 import MatchListCardScroll from './match-list-card-scroll'
-import { MatchDataWarehouse_H5_List_Common } from 'src/core'
+import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from 'src/core'
 import { compute_style_template_by_match_height } from './module/compute-style-template.js'
 
 class MatchListCard {
@@ -36,6 +35,9 @@ class MatchListCard {
     this.screen_changing_timer = 0;
     //足球正在切换第一屏与第二屏
     this. foot_ball_screen_changing=0;
+    this.menu_type = 0
+    this.get_current_menu = 0
+    this.get_curr_sub_menu_type = 0
   }
 
   // // 足球正在切换第一屏与第二屏
@@ -51,18 +53,18 @@ class MatchListCard {
   update_match_to_list(compare_obj) {
     //从赛事列表中删除赛事
     Object.keys(compare_obj.del).forEach((mid) => {
-      MatchCtr.clearMidObj(mid);
+      MatchDataBaseH5.clearMidObj(mid);
     });
     //插入赛事到列表
     let add_to_list_arr = [];
     Object.keys(compare_obj.add).forEach((mid) => {
       let match = compare_obj.add[mid];
       let insert_i = compare_obj.add_index_obj[mid];
-      MatchCtr.insertMatchToList(match, insert_i);
+      MatchDataBaseH5.insertMatchToList(match, insert_i);
       add_to_list_arr.push(match);
     });
     //设置赛事字典对象  setListObj
-    MatchCtr.appendListObj(add_to_list_arr);
+    MatchDataBaseH5.appendListObj(add_to_list_arr);
     //从新计算容器
     this.run_process_when_need_recompute_container_list_when_first_load_list();
   }
@@ -71,7 +73,7 @@ class MatchListCard {
    */
   tab_changing_handle() {
     // 切换菜单，先清除所有数据仓库的数据
-    MatchCtr.init();
+    MatchDataBaseH5.init();
     // if (this.scroll_list_wrapper_by) {
     //   this.scroll_list_wrapper_by(0);
     // }
@@ -118,7 +120,7 @@ class MatchListCard {
   match_list_api_after_handle(res) {
     // 当接口数据返回错误码时
     if (lodash.get(res, "code") != 200) {
-      // MatchCtr.clearData();
+      // MatchDataBaseH5.clearData();
       useMittEmit(MITT_TYPES.EMIT_IS_FIRST_LOADED);
       useMittEmit(MITT_TYPES.EMIT_MATCH_LIST_DATA_TAKED);
       // this.show_favorite_list==true代表收藏时
@@ -224,13 +226,13 @@ class MatchListCard {
     // 添加赛事对象前端使用字段 : 让球方  ， 在 update_match_databy_mid  已经调用了，所以注释
     // match_res_data = this.match_list_init(match_res_data);
     // 初始化  hn_obj = {}; hl_obj = {};设置赛事 mid
-    MatchCtr.setListObj(data_source);
+    // MatchDataBaseH5.setListObj(data_source);
     //主流程赛事请求的数据显示
     if (data_source) {
       // 1.开赛 和 未开赛  和 其他赛事(电竞,冠军)     时间 排序
       match_res_data = MatchPage.get_obj(data_source);
-      // 2.列表页set_source_list 数据源赋值操作
-      MatchCtr.set_source_list(data_source);
+      // 2.列表页set_list 数据源赋值操作
+      MatchDataBaseH5.set_list(data_source, 1);
     }
     //  赛事列表进程 对数据源进行了截取
     this.run_process_when_need_recompute_container_list_when_first_load_list(
@@ -296,8 +298,8 @@ class MatchListCard {
     // 如果当前请求的接口uid和 返回的是一样的，才做处理
     if (this.last_gcuuid == e.gcuuid) {
       this.match_is_empty = true;
-      if (MatchCtr && MatchCtr.setList) {
-        MatchCtr.setList([]);
+      if (MatchDataBaseH5 && MatchDataBaseH5.setList) {
+        MatchDataBaseH5.setList([]);
       }
     }
     this.is_close_load();
@@ -361,7 +363,7 @@ class MatchListCard {
   //  更新 赛事列表 进程 综合 控制方法
   run_process_when_need_recompute_container_list(need_pre_process, scroll_obj) {
     // 需要执行前置进程
-    if ( !MatchCtr.match_list_data_sources || !MatchCtr.match_list_data_sources.length ) {
+    if ( !MatchDataBaseH5.list || !MatchDataBaseH5.list.length ) {
       // 如果条件达不到 ，不可以执行主进程 ，或者不需要执行主进程 则 方法终止
       return false;
     }
@@ -410,15 +412,15 @@ class MatchListCard {
     }
     //  这个方法只是做简单的 赛事数据源去重，数组去重
     let mid_dict = {};
-    let len = MatchCtr.match_list_data_sources.length;
+    let len = MatchDataBaseH5.list.length;
     for (let i = 0; i < len; i++) {
-      let match_frame = MatchCtr.match_list_data_sources[i];
+      let match_frame = MatchDataBaseH5.list[i];
       if (!match_frame) {
         continue;
       }
       if (match_frame.mid in mid_dict) {
         let old_index = mid_dict[match_frame.mid];
-        MatchCtr.match_list_data_sources.splice(old_index, 1);
+        MatchDataBaseH5.list.splice(old_index, 1);
         i--;
       }
       mid_dict[match_frame.mid] = i;
@@ -444,7 +446,7 @@ class MatchListCard {
       //赛事与dom高度的映射
       this.mid_dom_height_dict = {};
       // 每一个赛事的高度
-      this.match_height_map_list = MatchCtr.match_list_data_sources.map((match, i) => {
+      this.match_height_map_list = MatchDataBaseH5.list.map((match, i) => {
         // let obj = get_match_dom_show_property(i);
         // let r = get_template_config(obj);
         // if (match.mhid === '111065') compute_style_template_by_match_height(match)
@@ -472,18 +474,11 @@ class MatchListCard {
    *  调用  vuex 里面 set_match_top_map_dict 设置容器 定位 top 值 表征对象
    */
   run_process_when_need_recompute_container_list_step_three_recompute_next_list_container_top_obj( scroll_obj ) {
-
     // 冠军  或者  电竞冠军 或者   赛果虚拟体育  ，赋值全部数据， 不走下边计算逻辑
-    if (
-      this.menu_type == 100 ||
-      (this.menu_type == 3000 &&
-        lodash.get(this.get_current_menu, "date_menu.menuType") == 100) ||
-      (this.menu_type == 28 &&
-        [1001, 1002, 1004, 1011, 1010, 1009, 100].includes(
-          this.get_curr_sub_menu_type
-        ))
+    if (this.menu_type == 100 || (this.menu_type == 3000 && lodash.get(this.get_current_menu, "date_menu.menuType") == 100) || (this.menu_type == 28 &&
+        [1001, 1002, 1004, 1011, 1010, 1009, 100].includes( this.get_curr_sub_menu_type ))
     ) {
-      MatchCtr.setList(MatchCtr.match_list_data_sources, false);
+      MatchDataBaseH5.setList(MatchDataBaseH5.list, false);
       return;
     }
     // scroll_top 是 滚动的距离
@@ -497,7 +492,7 @@ class MatchListCard {
     //赛果虚拟赛狗|赛马 摩托车
     if (this.menu_type == 28) {
       if ([1002, 1011, 1010, 1009].includes(this.get_curr_sub_menu_type)) {
-        page_count = MatchCtr.match_list_data_sources.length;
+        page_count = MatchDataBaseH5.list.length;
       } else {
         page_count = 20;
       }
@@ -530,14 +525,14 @@ class MatchListCard {
             break;
           }
           // 当前赛事
-          let match = MatchCtr.mid_obj[h_map.mid];
+          let match = MatchDataBaseH5.list_to_obj.mid_obj[`${h_map.mid}_`];
           if (match && match_height > 0) {
             // 列表页赛事的数据
             current_screen_match.push(match);
             get_match_total++; //赛事容器数量加1
           }
           // 获取赛事对应的dom显示区域属性
-          let dom_show_obj = get_match_dom_show_property(i);
+          let dom_show_obj = compute_style_template_by_match_height(match);
           // 如果当前折叠 并且 当前赛事 显示联赛，则 -1 操作
           if (dom_show_obj.is_collapse && dom_show_obj.is_show_league) {
             if (this.already_folded <= 7) {
@@ -579,7 +574,7 @@ class MatchListCard {
             } else {
               break;
             }
-            let match = MatchCtr.mid_obj[h_map.mid];
+            let match = MatchDataBaseH5.list_to_obj.mid_obj[`${h_map.mid}_`];
             if (match && match_height > 0) {
               current_screen_match.push(match);
               get_match_total++; //赛事容器数量加1
@@ -596,13 +591,13 @@ class MatchListCard {
       }
 
       // H5 列表页显示的 可视区域的  数据源
-      MatchCtr.setList(current_screen_match, false);
-      MatchDataWarehouse_H5_List_Common.set_list(current_screen_match, 1)
+      // MatchCtr.setList(current_screen_match, false);
+      MatchDataBaseH5.set_list(current_screen_match, 1)
     } else {
 
       // H5 列表页显示的 可视区域的  数据源
-      // MatchCtr.setList(MatchCtr.match_list_data_sources, false);
-      MatchDataWarehouse_H5_List_Common.set_list(current_screen_match, 1)
+      // MatchCtr.setList(MatchDataBaseH5.list, false);
+      MatchDataBaseH5.set_list(current_screen_match, 1)
     }
     // 防止滚动切换赛事时触发赛事红升绿降
     clearTimeout(this.screen_changing_timer);

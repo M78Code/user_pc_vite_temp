@@ -5,7 +5,7 @@
  */
 
 // import betting from "src/public/mixins/betting/betting.js";
-import play_mapping from "src/core/constant/config/play_mapping/index.js";
+// import { xxx } from "src/core/constant/config/play-mapping.js";
 
 import { format_str } from "src/core/format/index.js";
 
@@ -37,7 +37,7 @@ export default {
     }
   },
   created() {
-     this.play_mapping = play_mapping;
+    //  this.play_mapping = play_mapping;
     // 投注项oid
     this.oid = _.get(this.single_record_obj,'playOptionsId');
     // 通过投注项的oid获取投注项id

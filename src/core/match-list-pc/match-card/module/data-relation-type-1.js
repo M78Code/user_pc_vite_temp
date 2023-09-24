@@ -70,6 +70,7 @@
   */
   export const  compute_match_list_style_obj_and_match_list_mapping_relation_obj_type1 =(all_league_obj,is_ws_call,is_remove_call)=>{
     let current_csid = MenuData.left_menu_result.lv1_mi
+    console.log('current_csidcurrent_csid', current_csid, compute_sport_id(current_csid));
     // 赛事模板ID
     let template_id = compute_sport_id(current_csid)
 

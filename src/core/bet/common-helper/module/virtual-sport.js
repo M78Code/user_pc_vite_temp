@@ -29,8 +29,7 @@ import {
   useMittEmit,
   MITT_TYPES
 } from "src/core/mitt/index.js";
-
-import * as play_mapping from "src/core/constant/config/play-mapping.js";
+import {VIRTUAL_PLAY_LET_BALL, ESPORTS_PLAY_LET_BALL} from "src/core/constant/config/play-mapping.js";
 import _ from "lodash";
 
 
@@ -221,8 +220,8 @@ export const tidy_virtual_bet_item = (cur_obj, bet_obj, source) => {
       cur_on.startsWith(cur_home) &&
       cur_on.endsWith(hv) &&
       cur_on.endsWith(hv) && [
-        ...play_mapping.VIRTUAL_PLAY_LET_BALL,
-        ...play_mapping.ESPORTS_PLAY_LET_BALL,
+        ...VIRTUAL_PLAY_LET_BALL,
+        ...ESPORTS_PLAY_LET_BALL,
       ].includes(hpid)
     ) {
       //on值包含了主对名称和盘口
@@ -235,8 +234,8 @@ export const tidy_virtual_bet_item = (cur_obj, bet_obj, source) => {
       hv &&
       cur_on.startsWith(cur_away) &&
       cur_on.endsWith(hv) && [
-        ...play_mapping.VIRTUAL_PLAY_LET_BALL,
-        ...play_mapping.ESPORTS_PLAY_LET_BALL,
+        ...VIRTUAL_PLAY_LET_BALL,
+        ...ESPORTS_PLAY_LET_BALL,
       ].includes(hpid)
     ) {
       //on值包含了客对名称和盘口
