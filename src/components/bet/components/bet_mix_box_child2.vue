@@ -229,6 +229,7 @@ import { get_query_bet_amount_common } from "src/core/bet/class/bet-box-submit.j
 import lodash from 'lodash'
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import { format_money3, format_money2 } from 'src/core/format/index.js'
+import { submit_handle } from "src/core/bet/class/bet-box-submit.js"
 
 
 
@@ -301,6 +302,11 @@ const is_bet_check_rc = () => {
 // 投注事件
 const pack_up = (val)=>{
 
+}
+
+const submit_order = (type)=>{
+  console.error('fhuasss')
+  submit_handle()
 }
 
 //是否有重复的球员id或者球队id，有的话要禁止串关
