@@ -259,7 +259,6 @@ const set_base_data_init = () => {
 		} else {
 			// 常规赛事以外的 不分滚球和未开赛的数据
 			matchs_list = get_match_list_by_mid_for_base_data_res( mid, csid, csid );
-			// console.warn('matchs_list',matchs_list)
 			// 如果没有数据 使用其他有数据的 赛种玩法
 			if (!matchs_list.length) {
 				// 常规赛种/联赛  滚球
@@ -273,6 +272,11 @@ const set_base_data_init = () => {
 	}
 	if (menu_root == 3) return;
 	// 赛事列表 卡片数据
+  // 设置列表数据仓库
+  MatchListData.set_list(
+    matchs_list,
+    true,
+  );
 	handle_match_list_request_when_ok(data, true, true, true);
 	let ts1 = Date.now();
 	let mids_arr = [];
