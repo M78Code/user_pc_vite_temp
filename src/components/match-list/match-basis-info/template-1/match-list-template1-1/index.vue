@@ -73,7 +73,7 @@
             <i aria-hidden="true" class="icon-star q-icon c-icon" :class="is_collect && 'active'"></i>
           </span>
           <!-- 统计分析 -->
-          <div class="sr-link-icon-w" v-tooltip="{content:i18n_t('common.analysis')}" v-if="utils.is_show_sr_flg(match)" @click.stop='sr_click_handle(match)'>
+          <div class="sr-link-icon-w" v-tooltip="{content:i18n_t('common.analysis')}" v-if="utils.is_show_sr_flg(match)" @click.stop='details.sr_click_handle(match)'>
             <i aria-hidden="true" class="icon-signal q-icon c-icon"></i>
           </div>
           <!-- 玩法数量 -->
@@ -100,6 +100,7 @@ import { get_remote_time } from 'src/core/utils/module/match-list-utils.js';
 import { utils } from 'src/core/utils/module/utils.js'
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import { MenuData, MatchDataWarehouse_PC_List_Common } from "src/core/index.js"
+import details  from "src/core/match-list-pc/details-class/details.js"
 
 import { i18n_t } from "src/core/index.js";
 

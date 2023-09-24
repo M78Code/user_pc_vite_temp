@@ -1,5 +1,11 @@
 import base_data_instance from "src/core/base-data/base-data.js";
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
+import {
+  useMittOn,
+  useMittEmit,
+  useMittEmitterGenerator,
+  MITT_TYPES,
+} from "src/core/index.js"
 
 import {utils} from "src/core/index.js";
 import store from "src/store-redux/index.js";
@@ -105,6 +111,7 @@ class MenuData {
   }
   // 设置 菜单的版本变化
   set_menu_data_version(){
+    useMittEmit(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA)
     this.menu_data_version.value = Date.now()
   }
   /**
