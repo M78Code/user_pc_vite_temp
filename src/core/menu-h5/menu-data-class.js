@@ -190,7 +190,7 @@ class MenuData {
     // 赛果mi
     if (menu_type == 28) return arg_mi;
     if (BaseData.mi_euid_map_res && BaseData.mi_euid_map_res[mi]) {
-      return menu_mapping.h;
+      return BaseData.mi_euid_map_res[mi].h;
     } else {
       // 电竞无旧菜单id处理
       let menu_dianjing = {
