@@ -275,7 +275,7 @@ const set_bet_obj_config = (mid_obj,hn_obj,hl_obj,ol_obj) =>{
     let other = {}
     // const { oid, _hid, _hn, _mid } = params
     // console.error('MatchDataWarehouse_PC_List_Common',MatchDataWarehouse_PC_List_Common)
-    const query = MatchDataWarehouse_PC_List_Common 
+    let query = MatchDataWarehouse_PC_List_Common 
     if(other.is_detail){
         query = MatchDataWarehouse_PC_Detail_Common
     }
