@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { IconWapper } from 'src/components/icon'
+import { IconWapper } from 'src/components/icon/index.js'
 export default {
   name: "Refresh",
   components: {
