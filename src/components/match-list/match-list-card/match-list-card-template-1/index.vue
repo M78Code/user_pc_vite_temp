@@ -71,7 +71,7 @@
 </template>
 
 <script setup>
-import { computed, defineProps, onMounted, onUnmounted, reactive, ref } from 'vue';
+import { computed, onMounted, onUnmounted, reactive, ref } from 'vue';
 
 import { PlayMatchTypeFullVersionWapper as PlayMatchType } from 'src/components/match-list/play-match-type/index.js'
 import { PlayMatchLeagueFullVersionWapper as PlayMatchLeague } from 'src/components/match-list/play-match-league/index.js'

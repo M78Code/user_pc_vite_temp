@@ -21,7 +21,7 @@
   </div>
 </template>
 <script setup>
-import { defineProps, onMounted } from 'vue';
+import { onMounted } from 'vue';
 import { DateTabFullVersionWapper as DateTab} from "src/components/tab/date-tab/index.js";
 // import sportIcon from "src/public/components/sport_icon/sport_icon.vue";
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"

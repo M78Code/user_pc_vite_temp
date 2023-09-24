@@ -32,7 +32,7 @@
 // import match_basis_info_mixin from "src/project/yabo/components/match_list/match_basis_info/match_basis_info_mixin.js"
 // mixins:[match_basis_info_mixin],
 
-import { defineProps } from 'vue';
+import { } from 'vue';
 import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
 import {component_symbol ,need_register_props} from "../config/index.js"
 const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));

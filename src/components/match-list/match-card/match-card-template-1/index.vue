@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import { computed, defineProps, ref, onMounted, onUnmounted, shallowRef } from 'vue';
+import { computed, ref, onMounted, onUnmounted, shallowRef } from 'vue';
 import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card-class.js'
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import { LayOutMain_pc } from "src/core/index.js";
