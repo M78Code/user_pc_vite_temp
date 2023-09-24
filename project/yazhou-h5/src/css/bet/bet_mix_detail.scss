@@ -2,7 +2,7 @@
  * @Author: router
  * @Description: bw3新版混合过关投注选项 白色版样式
  */
-[class*=theme0] {
+
   .bet-mix-detail {
     color: var(--q-gb-t-c-3);
     &.bet-mix-detail2 {
@@ -24,7 +24,7 @@
       border-color: var(--q-color-com-border-color-14);
     }
     .content-b {
-      border: 1px solid var(--q-color-border-color-3);
+      border: 1px solid var(--q-gb-t-c-1);
       background:var(--q-gb-bd-c-15);
     }
     .set-opacity {
@@ -51,4 +51,4 @@
       color:  var(--q-color-fs-color-17);
     }
   }
-}
+

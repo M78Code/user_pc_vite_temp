@@ -36,6 +36,7 @@
 
 <script>
 // import { mapGetters } from "vuex"
+import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 export default {
   name: 'score_child_3',
   data() {
@@ -90,12 +91,12 @@ export default {
     detail_data: {
       handler(n, o) {
         if (n.mmp in mmp_obj) {
-          $root.$emit(emit_cmd.EMIT_SET_NATIVE_DETAIL_DATA, `${mmp_obj[n.mmp]}|0:0`)
+          useMittEmit(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, `${mmp_obj[n.mmp]}|0:0`)
         }
         //mct根据这个确定第几局，第九局后如果推送了10就把第十局比分搞出来,等待加时时候，mct = 10，就追加第十局的比分，mct = 11就追加11局的比分，以此类推
         //mct变化不及时 这个逻辑有问题，先注掉
         // if (n.mct >= 10) {
-        //   $root.$emit(emit_cmd.EMIT_SET_NATIVE_DETAIL_DATA, `S${n.mct + 119}|0:0`)
+        //   useMittEmit(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, `S${n.mct + 119}|0:0`)
         // }
       },
       deep: true,
@@ -106,7 +107,7 @@ export default {
     //页面刷新后检查mmp的阶段，来判断是否需要填充比分
     $nextTick(() => {
       if(detail_data.mmp in mmp_obj){
-        $root.$emit(emit_cmd.EMIT_SET_NATIVE_DETAIL_DATA, `${mmp_obj[detail_data.mmp]}|0:0`)
+        useMittEmit(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, `${mmp_obj[detail_data.mmp]}|0:0`)
       }
     })
   },

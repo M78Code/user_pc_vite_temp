@@ -17,6 +17,7 @@
 </template>
 
 <script>
+import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 export default {
   name: 'score_child_8',
   data(){
@@ -40,40 +41,40 @@ export default {
       handler(n, o){
         switch(n.mmp){
           case '301':  //301   第一局结束
-            $root.$emit(emit_cmd.EMIT_SET_NATIVE_DETAIL_DATA, 'S121|0:0')
+            useMittEmit(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, 'S121|0:0')
             break;
           case '9':    //9     第二局
-            $root.$emit(emit_cmd.EMIT_SET_NATIVE_DETAIL_DATA, 'S121|0:0')
+            useMittEmit(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, 'S121|0:0')
             break;
           case '302':  //302   第二局结束
-            $root.$emit(emit_cmd.EMIT_SET_NATIVE_DETAIL_DATA, 'S122|0:0')
+            useMittEmit(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, 'S122|0:0')
             break;
           case '10':   //10    第三局
-            $root.$emit(emit_cmd.EMIT_SET_NATIVE_DETAIL_DATA, 'S122|0:0')
+            useMittEmit(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, 'S122|0:0')
             break;
           case '303':  //303   第三局结束
-            $root.$emit(emit_cmd.EMIT_SET_NATIVE_DETAIL_DATA, 'S123|0:0')
+            useMittEmit(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, 'S123|0:0')
             break;
           case '11':   //11    第四局
-            $root.$emit(emit_cmd.EMIT_SET_NATIVE_DETAIL_DATA, 'S123|0:0')
+            useMittEmit(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, 'S123|0:0')
             break;
           case '304':  //304   第四局结束
-            $root.$emit(emit_cmd.EMIT_SET_NATIVE_DETAIL_DATA, 'S124|0:0')
+            useMittEmit(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, 'S124|0:0')
             break;
           case '12':   //12    第五局
-            $root.$emit(emit_cmd.EMIT_SET_NATIVE_DETAIL_DATA, 'S124|0:0')
+            useMittEmit(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, 'S124|0:0')
             break;
           case '305':  //305   第五局结束
-            $root.$emit(emit_cmd.EMIT_SET_NATIVE_DETAIL_DATA, 'S125|0:0')
+            useMittEmit(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, 'S125|0:0')
             break;
           case '441':  //441   第六局
-            $root.$emit(emit_cmd.EMIT_SET_NATIVE_DETAIL_DATA, 'S125|0:0')
+            useMittEmit(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, 'S125|0:0')
             break;
           case '306':  //306   第六局结束
-            $root.$emit(emit_cmd.EMIT_SET_NATIVE_DETAIL_DATA, 'S126|0:0')
+            useMittEmit(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, 'S126|0:0')
             break;
           case '442':  //442   第七局
-            $root.$emit(emit_cmd.EMIT_SET_NATIVE_DETAIL_DATA, 'S126|0:0')
+            useMittEmit(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, 'S126|0:0')
             break;
         }
       },
@@ -118,40 +119,40 @@ export default {
     validateStage(){
       switch(detail_data.mmp){
         case '301':  //301  第一局结束
-          $root.$emit(emit_cmd.EMIT_SET_NATIVE_DETAIL_DATA, 'S121|0:0')
+          useMittEmit(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, 'S121|0:0')
           break;
         case '9':    //9    第二局
-          $root.$emit(emit_cmd.EMIT_SET_NATIVE_DETAIL_DATA, 'S121|0:0')
+          useMittEmit(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, 'S121|0:0')
           break;
         case '302':  //302  第二局结束
-          $root.$emit(emit_cmd.EMIT_SET_NATIVE_DETAIL_DATA, 'S122|0:0')
+          useMittEmit(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, 'S122|0:0')
           break;
         case '10':   //10   第三局
-          $root.$emit(emit_cmd.EMIT_SET_NATIVE_DETAIL_DATA, 'S122|0:0')
+          useMittEmit(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, 'S122|0:0')
           break;
         case '303':  //303  第三局结束
-          $root.$emit(emit_cmd.EMIT_SET_NATIVE_DETAIL_DATA, 'S123|0:0')
+          useMittEmit(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, 'S123|0:0')
           break;
         case '11':   //11   第四局
-          $root.$emit(emit_cmd.EMIT_SET_NATIVE_DETAIL_DATA, 'S123|0:0')
+          useMittEmit(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, 'S123|0:0')
           break;
         case '304':  //304  第四局结束
-          $root.$emit(emit_cmd.EMIT_SET_NATIVE_DETAIL_DATA, 'S124|0:0')
+          useMittEmit(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, 'S124|0:0')
           break;
         case '12':   //12   第五局
-          $root.$emit(emit_cmd.EMIT_SET_NATIVE_DETAIL_DATA, 'S124|0:0')
+          useMittEmit(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, 'S124|0:0')
           break;
         case '305':  //305  第五局结束
-          $root.$emit(emit_cmd.EMIT_SET_NATIVE_DETAIL_DATA, 'S125|0:0')
+          useMittEmit(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, 'S125|0:0')
           break;
         case '441':  //441  第六局
-          $root.$emit(emit_cmd.EMIT_SET_NATIVE_DETAIL_DATA, 'S125|0:0')
+          useMittEmit(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, 'S125|0:0')
           break;
         case '306':  //306  第六局结束
-          $root.$emit(emit_cmd.EMIT_SET_NATIVE_DETAIL_DATA, 'S126|0:0')
+          useMittEmit(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, 'S126|0:0')
           break;
         case '442':  //442  第七局
-          $root.$emit(emit_cmd.EMIT_SET_NATIVE_DETAIL_DATA, 'S126|0:0')
+          useMittEmit(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, 'S126|0:0')
           break;
       }
     },

@@ -121,6 +121,8 @@ export default class MatchDataBase
     // 所有投注项动态数据时间更新
     this.cache_oid={
     };
+    // 当前 csid 对应的 mids
+    this.csid_map_mid_data = []
   }
   /**
    * @description: 更新赛事的基本属性时间
@@ -487,6 +489,8 @@ export default class MatchDataBase
     console.error('数据仓库设置--set_list---',list);
     if(list){
       // 设置使用类型:类表-list,赛事详情-match
+      // TODO： 测试用
+      list.length > 0 && this.set_csid_map_mid_data(list)
       this.type = 'list';
       // 格式化列表赛事(部分数组转对象)
       this.list_serialized_match_obj(list);
@@ -563,7 +567,12 @@ export default class MatchDataBase
       }
     }
   }
-
+  // 设置当前球种下所需 渲染 mids 集合
+  set_csid_map_mid_data (list) {
+    this.csid_map_mid_data = list.map(t => {
+      return { mid: t.mid }
+    })
+  }
   set_quick_query_list(list,is_merge){
     let obj = this.list_comparison(this.quick_query_list,list);
     if(is_merge){
@@ -666,6 +675,27 @@ export default class MatchDataBase
       const many_obj = this.list_to_many_obj(list, timestap);
       // 快速检索对象数据合并
       this._quick_query_obj_assign(this.quick_query_obj, many_obj);
+      if(this.set_list_to_obj){
+        this.assign_with(this.list_to_obj,this.quick_query_obj);
+        try {
+          // 同步list中的赛事数据
+          let mids = Object.keys(many_obj.mid_obj);
+          let len = 0;
+          for (let i = 0; i < this.list.length; i++) {
+            const item = this.list[i];
+            if(item && mids.includes(item.mid+'_')){
+              this.assign_with(item, many_obj.mid_obj[item.mid+'_']);
+              len++;
+              if(mids.length == len){
+                // 数量够时,直接结束循环
+                break;
+              }
+            }
+          }
+        } catch (error) {
+          console.error('仓库列表数据同步一次:',error);
+        }
+      }
       // this.match_assign(this.quick_query_obj.mid_obj, many_obj.mid_obj);
       // this.ol_obj_assign(this.quick_query_obj.ol_obj, many_obj.ol_obj);
       // this.hn_obj_assign(this.quick_query_obj.hn_obj, many_obj.hn_obj);

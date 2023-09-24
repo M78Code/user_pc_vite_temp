@@ -27,6 +27,7 @@ import lodash from "lodash";
 //  import saidan_list from 'src/project/yabo/components/match_details/panel/saidan/saidan_list.vue'
 //  import videoHistoryLine from "src/project/yabo/components/video/video_history_line.vue";
 //  import refresh from "src/public/components/refresh/refresh.vue";
+import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/index.js";
 import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache.js";
 import {
   loadLanguageAsync,
@@ -42,6 +43,8 @@ import {
 } from "src/core/index.js";
 import { reactive, toRefs, ref, onMounted, onUnmounted } from "vue";
 import store from "src/store-redux/index.js";
+import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/index.js";
+
 import { off } from "licia/$event";
 let state = store.getState();
 export const useRightDetails = (props) => {
@@ -277,7 +280,7 @@ export const useRightDetails = (props) => {
 
             if (!lodash.isEmpty(match_info) && !obj.is_bymids) {
               // 同步列表的赛事数据
-              this.$root.$emit(MITT_TYPES.EMIT_SYNCH_FROM_DETAIL, res);
+              useMittEmit(this.MITT_TYPES.EMIT_SYNCH_FROM_DETAIL, res);
               if (this.is_go_match_list) {
                 let match_obj = {};
                 for (let [key, value] of Object.entries(match_info)) {
@@ -361,7 +364,7 @@ export const useRightDetails = (props) => {
           });
       }
       ["new_empty", "all_empty"].includes(this.handicap_state) &&
-        this.$root.$emit("get_history");
+        useMittEmit("get_history");
     };
     let api_axios_flg = "match_odds_Info2";
     if (
@@ -492,19 +495,15 @@ export const useRightDetails = (props) => {
 
     /*  mitt todo*/
     // // 自动切换赛事
-    // useMittOn("autoset_match", emit_autoset_match);
+    // useMittOn("autoset_match", this.emit_autoset_match);
     // // 检查玩法关盘
     // useMittOn("check_plays_show", this.check_plays_show);
 
     // // 站点 tab 休眠状态转激活
-<<<<<<< HEAD
     // useMittOn(
-    //   this.emit_cmd.EMIT_SITE_TAB_ACTIVE,
-=======
-    // this.$root.$on(
     //   MITT_TYPES.EMIT_SITE_TAB_ACTIVE,
->>>>>>> f04121b22d5dcf4205e1939bd54caf0f69e3aa9b
-    //   this.emit_site_tab_active
+    // useMittOn(
+    //   MITT_TYPES..EMIT_SITE_TAB_ACTIVE,
     // );
     // // 关闭 tips
     // useMittOn("close_tips", this.close_tips);
@@ -522,7 +521,7 @@ export const useRightDetails = (props) => {
     //   this.getHeaderHeight
     // );
     // useMittOn("saidan_page_change", this.change_saidan);
-    /*  mitt todo*/
+     /*  mitt todo*/
 
     // 刷新按钮节流
     refresh = lodash.throttle(refresh, 1000, {
@@ -691,7 +690,7 @@ export const useRightDetails = (props) => {
        if(lodash.some(this.category_list,item=> item.id === this.get_tabs_active_id) && !this.change_mid){
          mcid = this.get_tabs_active_id
        }
-       this.mcid = mcid;
+      //  this.mcid = mcid;
        let { plays = []}  = lodash.find(this.category_list,item=> item.id === this.mcid,{})
        this.plays_list = plays
        // 保存当前选中的玩法集子项id
@@ -1263,9 +1262,6 @@ export const useRightDetails = (props) => {
 //    },
 //  },
 
-<<<<<<< HEAD
- 
-=======
 //  /**
 //   *设置视频展开关状态
 //   */
@@ -1345,7 +1341,7 @@ export const useRightDetails = (props) => {
 //     * @return {Undefined} Undefined
 //     */
 //    on_go_top() {
-//      this.$root.$emit("set_scroll_position", [0, 0])
+//      useMittEmit("set_scroll_position", [0, 0])
 //    },
 //    /**
 //    * @description: 检查玩法关盘
@@ -1709,7 +1705,7 @@ export const useRightDetails = (props) => {
 //    this.debounce_throttle_cancel(this.refresh);
 //    this.refresh_loading_timer && clearTimeout(this.refresh_loading_timer)
 //    // 站点 tab 休眠状态转激活
-//    this.$root.$off(MITT_TYPES.EMIT_SITE_TAB_ACTIVE, this.emit_site_tab_active);
+//    this.$root.$off(this.MITT_TYPES.EMIT_SITE_TAB_ACTIVE, this.emit_site_tab_active);
 
 //    this.$root.$off("match_detail_base", this.get_match_detail_base);
 
@@ -1721,4 +1717,3 @@ export const useRightDetails = (props) => {
 //    this.category_list = null;
 //    this.match_details = null;
 //  },
->>>>>>> f04121b22d5dcf4205e1939bd54caf0f69e3aa9b

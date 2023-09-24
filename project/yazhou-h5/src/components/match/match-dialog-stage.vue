@@ -27,6 +27,7 @@
 import { utils } from 'src/core/utils/index.js';
 import stage_child_1 from "project_path/src/components/match/dialogStage/dialogStage-1.vue";  // 详情点击下拉-足球联赛-显示当前赛事的时间
 import stage_child_2 from "project_path/src/components/match/dialogStage/dialogStage-2.vue";  // 详情点击下拉-篮球联赛-显示当前赛事的时间
+import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
 
 export default {
   name: "match_dialog_stage",
@@ -50,9 +51,10 @@ export default {
     'stage-child-1': stage_child_1,
     'stage-child-2': stage_child_2,
   },
+  let off_ = ''
   created() {
     initEvent()
-    $root.$on(emit_cmd.EMIT_SET_MATCH_TIME, set_match_time); // 储存时间，保证时间同步;
+    let {off: off_} = useMittOn(MITT_TYPES.EMIT_SET_MATCH_TIME, set_match_time); // 储存时间，保证时间同步;
   },
   methods: {
     initEvent(){
@@ -66,7 +68,7 @@ export default {
     },
   },
   destroyed () {
-    $root.$off(emit_cmd.EMIT_SET_MATCH_TIME, set_match_time); // 清除储存时间
+    off_() // 清除储存时间
   },
 };
 </script>

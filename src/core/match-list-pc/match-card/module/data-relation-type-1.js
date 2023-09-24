@@ -180,7 +180,7 @@
         }else{
           is_league_fold = true
         }
-        console.log('league_objleague_obj', league_obj);
+        // console.log('league_objleague_obj', league_obj);
         // 打入联赛标题卡片特征
         all_card_obj[card_key] = {
           ...league_title_card_template,

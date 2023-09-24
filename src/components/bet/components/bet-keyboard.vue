@@ -41,8 +41,9 @@
 </template>
   
 <script setup>
-import { ref, onMounted,watch,computed,onUnmounted } from 'vue';
+import { ref, reactive,onMounted,watch,computed,onUnmounted } from 'vue';
 import BetData from "src/core/bet/class/bet-data-class.js";
+import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 // import BetData from "src/core/bet/class/bet-data-class-h5.js";
 import { UserCtr } from "src/core/index.js";
 import lodash from 'lodash'
@@ -54,7 +55,14 @@ const delete_all = ref(false) //键盘出现时，第一次按删除键把金额
 const max_money = ref()   //最大可投注的金额
 const pre_odds_value = ref("") //预约输入赔率或者盘口
 
-
+const ref_data = reactive({
+  DOM_ID_SHOW: false,
+  active: 1,    //投注项状态
+  min_money: 10, // 最小投注金额
+  max_money: 8888, // 最大投注金额
+  money: '', // 投注金额
+  keyborard: true, // 是否显示 最高可赢 和 键盘
+})
 // bet_min_max_money max_money最大可投注的金额 min_money最小可投注的金额
 const props = defineProps({
   bet_min_max_money: {
@@ -105,7 +113,7 @@ watch(() => pre_odds_value, (new_) => {
   }
 })
 watch(() => money, (new_) => {
-  useMittEmit(MITT_TYPES.EMIT_CHANGE_MONEY, money.value);
+  useMittEmit(MITT_TYPES.EMIT_INPUT_BET_MONEY,money.value)
 })
 watch(() => active_index, (new_) => {
   if (money.value) delete_all.value = true;
@@ -139,7 +147,7 @@ const _handleKeyPress = (e) => {
       _handleNumberKey(num);
       break;
   }
-  EMITTER.emit("input_bet_money", money)
+  useMittEmit(MITT_TYPES.EMIT_INPUT_BET_MONEY,money.value)
 }
 
 // 小数点 .
@@ -186,12 +194,11 @@ const _handleDecimalPoint = () => {
 
 // MAX键
 const _handmaxKey = () => {
-  if (+amount.value < +props.items.orderMaxPay) {
-    money.value = amount.value
-    return
-  }
-  money.value = props.items.orderMaxPay
-  // money_s.value = money.value
+  // if (+amount.value < +props.items.orderMaxPay) {
+  //   money.value = amount.value
+  //   return
+  // }
+  money.value = ref_data.max_money
 }
 // 删除键
 const _handleDeleteKey = () => {
@@ -216,21 +223,18 @@ const _handleNumberKey = (num) => {
       money.value = num === '0' ? '0.' : num // 第一位输入0 则显示0.  其他的正常显示
     } else {
       money.value = money.value + num
-
     }
-
     let S = money.value
     let S_length = S.substring(S.indexOf(".") + 1).length // 0. 后面输入的字符长度  最多只保留两位
     if (S.includes(".") && S_length > 1) {
       money.value = S.substring(0, S.indexOf(".") + 3);// 最多只保留小数点两位
     }
 
-
   }
 
   //超过最大金额  显示最大金额
-  if (money.value && +money.value >= +props.items.orderMaxPay) {
-    money.value = props.items.orderMaxPay
+  if (money.value && +money.value >= +ref_data.max_money) {
+    money.value =ref_data.max_money
   }
 
 }
