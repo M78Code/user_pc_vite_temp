@@ -19,11 +19,13 @@
 </template>
 
 <script>
+import lodash from 'lodash';
 // import { mapGetters, mapMutations } from "vuex"
 // import msc from "src/public/mixins/common/msc.js";  // 国际化比赛阶段比分转换工具
 import { format_mgt_time } from "src/core/format/index.js"
 import { utils } from 'src/core/utils/index.js';
 import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/index.js";
+import { i18n_t } from "src/boot/i18n.js"
 
 export default {
   // mixins: [msc],
@@ -38,17 +40,19 @@ export default {
       showTime: '',
       // 上下半场
       mmp_arr1:["31", "33"],
+      i18n_t,
+      utils
     }
   },
   watch: {
     detail_data:{
       handler(n, o){
-        if( mmp_arr.includes(n.mmp) ){ // 比赛的时候，更新mst时间;
+        if(this.mmp_arr.includes(n.mmp) ){ // 比赛的时候，更新mst时间;
           let num = 0;
           if(n.c_time){ num = (new Date().getTime() - n.c_time) / 1000 }
-          initRestTime(num);
+          this.initRestTime(num);
         }else{
-          initRestTime(0);
+          this.initRestTime(0);
         }
       },
       deep: true,
@@ -57,22 +61,22 @@ export default {
   computed: {
     // ...mapGetters(['get_menu_type']),
     match_result_state(){
-      return detail_data.ms == 3 || detail_data.ms == 4 || detail_data.mo == 1
+      return this.detail_data.ms == 3 || this.detail_data.ms == 4 || this.detail_data.mo == 1
     }
   },
   props: ['detail_data',"dialog"],
   created(){
     // 初始化修正设置步长
-    step = utils.match_vr_step(detail_data,step);
+    this.step = utils.match_vr_step(this.detail_data, this.step);
     // C01赛事使用mstrc字段数据
-    let mstrc = _.get(detail_data,'mstrc');
-    if(_.get(detail_data,'cds')=='C01' && mstrc){
-      detail_data.mst = mstrc;
+    let mstrc = lodash.get(this.detail_data,'mstrc');
+    if(lodash.get(this.detail_data,'cds')=='C01' && mstrc){
+      this.detail_data.mst = mstrc;
     }
     // 时间延时器
-    showTimeInterval = 0,
-    initEvent();
-    // useMittOn(MITT_TYPES.EMIT_UPDATE_GAME_TIME, initEvent);
+    this.showTimeInterval = 0,
+    this.initEvent();
+    // useMittOn(MITT_TYPES.EMIT_UPDATE_GAME_TIME, this.initEvent);
   },
   destroyed(){
     clearTimeObj();
@@ -88,13 +92,13 @@ export default {
      *@return {Undefined}
      */
     initEvent(){
-      let detail_data = detail_data;
+      let detail_data = this.detail_data;
       // mess 0:暂停 1:开始
-      if(detail_data.mess == 0 && !mmp_arr1.includes(detail_data.mmp)){
-        showTime = Number(detail_data.mst);
+      if(detail_data.mess == 0 && !this.mmp_arr1.includes(detail_data.mmp)){
+        this.showTime = Number(detail_data.mst);
         savePageTime();
       }else{
-        initRestTime(0);
+        this.initRestTime(0);
       }
     },
     /**
@@ -103,12 +107,12 @@ export default {
      *@return {Undefined}
      */
     initRestTime(num){
-      let detail_data = detail_data;
+      let detail_data = this.detail_data;
       // 清除相关倒计时;
-      if(showTimeInterval){ clearInterval(showTimeInterval) }
+      if(this.showTimeInterval){ clearInterval(this.showTimeInterval) }
       // 比赛进行时; 6, 上半场， 7，下半场, 41 加时赛上半场， 42 加时下半场；
       if(detail_data.mmp == '6' || detail_data.mmp == '7' || detail_data.mmp == '41' || detail_data.mmp == '42'){
-         calculagraph(num);
+         this.calculagraph(num);
       }
     },
     /**
@@ -117,12 +121,12 @@ export default {
      *@return {Undefined}
      */
     calculagraph(num){
-      showTime = Number(detail_data.mst) + Number(num);
-      savePageTime();
-      showTimeInterval = setInterval(() => {
-        showTime += step;
-        savePageTime();
-        set_match_real_time(format_mgt_time(showTime))
+      this.showTime = Number(this.detail_data.mst) + Number(num);
+      this.savePageTime();
+      this.showTimeInterval = setInterval(() => {
+        this.showTime += this.step;
+        this.savePageTime();
+        // set_match_real_time(format_mgt_time(this.showTime))
       }, 1000);
     },
     /**
@@ -131,8 +135,8 @@ export default {
      *@return {Undefined}
      */
     savePageTime(){
-      if(dialog) return;
-      useMittEmit(MITT_TYPES.EMIT_SET_MATCH_TIME, Number(showTime));
+      if(this.dialog) return;
+      useMittEmit(MITT_TYPES.EMIT_SET_MATCH_TIME, Number(this.showTime));
     },
     /**
      *@description 清除计时器
@@ -140,9 +144,9 @@ export default {
      *@return {Undefined}
      */
     clearTimeObj(){
-      if(!!showTimeInterval){
-        clearInterval(showTimeInterval)
-        showTimeInterval = null
+      if(!!this.showTimeInterval){
+        clearInterval(this.showTimeInterval)
+        this.showTimeInterval = null
       }
     }
   },

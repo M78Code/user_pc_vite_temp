@@ -28,10 +28,10 @@
       </div>
       <div class="col-6">
         <!-- 描述比赛进度相关start -->
-        <!-- <team-text
+        <team-text
           :detail_data="detail_data"
           v-if="MenuData.get_menu_type() != 3000"
-        ></team-text> -->
+        ></team-text>
         <!-- 描述比赛进度相关end -->
       </div>
       <div class="col-3 logo-double">
@@ -108,18 +108,17 @@
         <template v-else>
           <span>{{ i18n_t('mmp')[detail_data.csid][detail_data.mmp] }}</span>
           <!-- 倒/正计时组件 -->
-          <!-- <counting-down
+          <counting-down
             :title="null"
             :mmp="detail_data.mmp"
             :m_id="detail_data.mid"
             :second="detail_data.mst"
             :match="detail_data"
             :is_add="[100, 101, 102, 103, 104].includes(+detail_data.csid)"
-          /> -->
+          />
         </template>
       </div>
     </div>
-
     <div
       class="score-style"
       v-if="MenuData.get_menu_type() != 3000"
@@ -241,12 +240,12 @@ import { computed, onBeforeUnmount, onMounted, reactive, ref, watch, defineCompo
 import lodash from "lodash";
 // 1-足球 2-篮球 3-棒球 4冰球 5-网球 6-美式足球 7-斯诺克 8-乒乓球 9-排球 10-羽毛球
 import TeamImg from "project_path/src/components/details/team-img.vue";   // 详情页蓝色背景上的大型字母图标
-// import TeamText from "project_path/src/components/details/team-text.vue";   // 中立场赛事展示
+import TeamText from "project_path/src/components/details/team-text.vue";   // 中立场赛事展示
 // import TeamName from "project_path/src/components/details/team-name.vue";   // 详情页背景上的队伍名称
 // import msc from "project_path/src/mixins/common/msc.js";    // 国际化比赛阶段比分转换工具
 // src/core/constant/util/msc-util.js
 // import match_between_score from 'src/project/components/match/match_between_score.vue'  // 详情页显示赛事当前局比分以及绿色小圆点显示发球方
-// import countingDown from 'src/project/components/common/counting-down'   // 赛事进行中每秒变化的计时器
+import countingDown from 'project_path/src/components/common/counting-down.vue'   // 赛事进行中每秒变化的计时器
 // 公共方法
 import { utils } from 'src/core/utils/index.js';
 import { MenuData, UserCtr } from "src/core/index.js";
