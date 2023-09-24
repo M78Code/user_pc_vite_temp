@@ -103,7 +103,7 @@ import { useRoute } from "vue-router";
 import store from "src/store-redux/index.js";
 import ZhuGe from "src/core/http/zhuge-tag";
 import { CommonTabFullVersionWapper } from "src/components/tab/common-tab/index.js";
-import { IconWapper } from 'src/components/icon'
+import { IconWapper } from 'src/components/icon/index.js'
 import lodash from 'lodash'
 import {i18n_t} from 'src/core/index'
 const tooltip_style = 'background:rgba(0,0,0,0.8);padding:4px 5px;border-radius:0px;color:#fff'
@@ -111,7 +111,7 @@ export default defineComponent({
   name: "HandicapTab",
   components: {
     tab: CommonTabFullVersionWapper,
-    icon: IconWapper,
+    IconWapper
   },
   props: {
     handicap_this: Object,

@@ -553,7 +553,7 @@ class BaseData {
       console.log('resresresres', res);
       res && await this.set_base_data_res(res);
       //  元数据加载完成 
-      useMittEmit(MITT_TYPES.EMIT_BASE_DATA_FIRST_LOADED)
+      useMittEmit(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA)
       this.base_data_version.value = Date.now();
     } catch (error) {
       console.log("获取 元数据接口 error", error);

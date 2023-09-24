@@ -32,8 +32,6 @@ import { defineProps, ref, onMounted, computed } from 'vue';
 import lodash from 'lodash';
 
 import { utils_info } from 'src/core/utils/module/match-list-utils.js';
-import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
-import {component_symbol ,need_register_props} from "../config/index.js"
 import { get_match_status } from 'src/core/utils/index'
 import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/core/index.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
@@ -44,7 +42,6 @@ import BetData from 'src/core/bet/class/bet-data-class.js'
 import MenuData from "src/core/menu-pc/menu-data-class.js";
 import { compute_sport_id  } from 'src/core/constant/index.js'
 
-// const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
 const props = defineProps({
   // 盘口列表
   handicap_list: {
@@ -101,7 +98,6 @@ const deal_width_handicap_ols = (payload) => {
     let hn_obj_config = `list_to_obj.hn_obj.${mid}_${mid}_${item._hpid}_${handicap_type}_${item.ot}`
     // 获取投注项内容 
     item = lodash.get(MatchListData, hn_obj_config,{})
-    item.type_ = hn_obj_config
     return item;
   })
   return new_ols
