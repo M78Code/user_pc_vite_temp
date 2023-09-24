@@ -245,7 +245,7 @@ const bet_min_max_money = ref()  // 投注限额
 const bet_list_data = ref([])
 const tips_msg = ref('失效')  // 提示信息
 
-let bet_show_single = ref(false)  // 单关显示
+let bet_show_single = ref(true)  // 单关显示
 const get_bet_status = ref(0) // 投注状态
 const btn_show = ref() // 投注状态2
 const max_height1 = ref(150) // 投注赛事高度
