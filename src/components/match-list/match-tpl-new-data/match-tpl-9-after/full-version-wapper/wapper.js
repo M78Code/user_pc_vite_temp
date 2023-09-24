@@ -1,11 +1,11 @@
-import MatchTpl9After from "../match-tpl-0-after-template-1/index.vue";
+import MatchTpl9After from "../match-tpl-9-after-template-1/index.vue";
 import { compute_component_wapper_config } from "app/job/use-output/index.js";
 const all_components_obj = {
   MatchTpl9After,
 };
 const component_config = {
   registered_component_key: "MatchTpl9After",
-  default_component_key: "MatchTpl9After_1",
+  default_component_key: "MatchTpl9After",
   all_components_obj,
 };
 const wapper_config = compute_component_wapper_config(component_config);
