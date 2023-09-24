@@ -1,6 +1,7 @@
 <template>
   <div class="basic-wrap" @click.stop="on_go_detail" >
-    <!-- 主队信息 --> {{ match }}
+    <!-- 主队信息 --> 
+    <!-- {{ match }} -->
     <div class="row-item team-item">
       <div class="team-logo">
         <img v-if="show_type == 'all'" style="width: 22px; max-height: 24px;" v-img="[((match.match_logo || {}) || {}).home_1_logo,(match.match_logo || {}).home_1_letter]" />

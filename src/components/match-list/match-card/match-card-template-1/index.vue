@@ -5,7 +5,7 @@
     :id="`list-mid-${mid}`"
     :style="`height:${match_style_obj.total_height}px !important;width:${LayOutMain_pc.layout_content_width}px  !important;`"
   >
-  赛事玩法模板赛事玩法模板赛事玩法模板赛事玩法模板赛事玩法模板  {{mid}}
+  <!-- 赛事玩法模板赛事玩法模板赛事玩法模板赛事玩法模板赛事玩法模板  {{mid}} -->
   <div v-show="false">{{ MatchListCardData.list_version }}</div>
     <!-- <component
       v-if="is_mounted && [1,2].includes(match_style_obj.show_level)"
