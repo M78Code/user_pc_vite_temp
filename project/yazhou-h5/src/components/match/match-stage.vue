@@ -95,7 +95,7 @@ export default {
   props: ["detail_data","dialog"],
   created() {
     // 监听match_nostart事件
-   let {off: off_} = useMittOn(MITT_TYPES.EMIT_MATCH_NOSTART,initEvent);
+  //  let {off: off_} = useMittOn(MITT_TYPES.EMIT_MATCH_NOSTART,initEvent);
   },
   components: {
     stage_child_1,
@@ -118,7 +118,7 @@ export default {
   },
   destroyed() {
     // 组件销毁,关闭监听
-    off_()
+    // off_()
   },
   methods: {
     // 计算bool的值 控制是否显示赛事时间

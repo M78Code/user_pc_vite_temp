@@ -201,7 +201,7 @@ export default {
   },
   created() {
     // ws 推送时更新比分
-   let { off: off_ } = useMittOn('update_baseball_score', this.update_baseball_score);
+  //  let { off: off_ } = useMittOn('update_baseball_score', this.update_baseball_score);
   },
   methods: {
     /**
@@ -511,7 +511,7 @@ export default {
   beforeUnmount() {
     this.un_subscribe();
     clearTimeout(this.scrollTimer);
-    off_()
+    // off_()
     this.matchInfo = null;
   }
 };

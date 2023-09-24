@@ -72,7 +72,7 @@ export default {
     // 时间延时器
     showTimeInterval = 0,
     initEvent();
-    useMittOn(MITT_TYPES.EMIT_UPDATE_GAME_TIME, initEvent);
+    // useMittOn(MITT_TYPES.EMIT_UPDATE_GAME_TIME, initEvent);
   },
   destroyed(){
     clearTimeObj();
