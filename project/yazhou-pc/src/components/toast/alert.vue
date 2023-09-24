@@ -7,7 +7,7 @@
     <div class="dialog_content">
       <div class="alert-wrap">
         <img :src="imgSrc[lang]" alt="" width="100%">
-        <!-- <icon class="close" name="icon-close" @click="close_alert" size="10px" color="#99A3B1"></icon> -->
+        <icon-wapper class="close" name="icon-close" @click="close_alert" size="10px" color="#99A3B1"></icon-wapper>
 
         <div class="row items-center  relative-position">
           <div class="text">{{ i18n_t("login.login_out_dear_user") }}</div>
@@ -42,6 +42,7 @@ import { useMittEmitterGenerator, useMittEmit, MITT_TYPES } from 'src/core/mitt/
 import store from "src/store-redux/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { utils } from "src/core/index.js";
+import { IconWapper } from 'src/components/icon/index.js'
 
 /* 退出登录通知-中文 */
 const logout_notice = '/yazhou-pc/image/image/logout_notice.png'

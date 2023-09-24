@@ -12,7 +12,7 @@
     <div class="stop_layout" :style="{ width: width + 'px', height: height + 'px' }" v-show="stop_layout"></div>
     <div class="test-text" v-if="is_test"> {{ video_url }}</div>
     <div class="col-auto col-delete" @click.stop="close_video">
-      <icon size="12px" name="icon-del" class="bet-del" />
+      <icon-wapper size="12px" name="icon-del" class="bet-del" />
     </div>
     <img class="replay-icon2" src="public/yazhou-pc/image/svg/replay_icon2.svg" />
     <div id="dplayer-video-zone" :style="{ width: width + 'px', height: height + 'px' }" @click.stop="" @mouseover="mouseover"
@@ -32,6 +32,7 @@
 import videoReplayError from "./video-replay-error.vue"
 import VueDraggableResizable from 'vue-draggable-resizable'
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
+import { IconWapper } from 'src/components/icon/index.js'
 // VueDraggableResizable组件api: https://gitcode.net/mirrors/mauricius/vue-draggable-resizable?utm_source=csdn_github_accelerator
 import 'vue-draggable-resizable/dist/VueDraggableResizable.css'
 import { onMounted, ref, computed, reactive, onUnmounted, toRefs } from 'vue'

@@ -1,7 +1,8 @@
 <template>
   <div ref='details_tab' :class="['details-tab',{'tab-fixed':get_tab_fix}]" v-cloak>
     <div class="fat-btn" @click="change_btn()">
-      <div class="tab-btn" :class="{collapsed:get_fewer != 2}"></div>
+      {{get_fewer}}
+      <div class="tab-btn" :class="{collapsed: get_fewer != 2}"></div>
     </div>
     <span class="menu-third"></span>
     <div class="menu-s" ref="reset_scroll_dom">
@@ -38,6 +39,8 @@ export default defineComponent({
   setup(props, evnet) {
     const route = useRoute()
     const router = useRouter()
+    // 一键收起状态: 1.全展开 2.全收起 3.部分展开 1和3箭头向上
+    const get_fewer = ref(1)
     const data = reactive({
       emitters: [],
       timer1_: null,
@@ -69,7 +72,6 @@ export default defineComponent({
     //   return ""
     // });
     // 一键收起状态: 1.全展开 2.全收起 3.部分展开 1和3箭头向上
-    const get_fewer = ref('');
     const get_detail_data = ref("");
     
     const match_id = computed(() => {
@@ -98,8 +100,10 @@ export default defineComponent({
       // if (data_list && data_list.length == 1 && get_details_item == '0') return;
       if(get_fewer.value == 1 || get_fewer.value == 3){
         // set_fewer(2)
+        get_fewer.value = 2
       }else{
         // set_fewer(1)
+        get_fewer.value = 1
       }
     };
     // 单击玩法集
@@ -120,6 +124,7 @@ export default defineComponent({
       // useMittEmit(MITT_TYPES.EMIT_DETAILILS_TAB_CHANGED)
       if(get_fewer.value == 3){
         // set_fewer(1)
+        get_fewer.value = 1
       }
       // 发送埋点
       let zhuge_obj = {
@@ -257,11 +262,13 @@ export default defineComponent({
   transform: rotateZ(180deg);
   // @include webkit(transition, transform 0.3s);
 
-  // &.collapsed {
-  //   transform: rotateZ(0);
-  //   @include webkit(transition, transform 0.3s);
-  // }
+  &.collapsed {
+    transform: rotateZ(0);
+    transition: transform 0.3s
+    // @include webkit(transition, transform 0.3s);
+  }
 }
+
 
 .menu-third {
   padding-right: 0.1rem;
