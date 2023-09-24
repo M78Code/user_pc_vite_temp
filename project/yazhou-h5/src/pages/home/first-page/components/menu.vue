@@ -165,8 +165,6 @@ const change_menu = (index) => {
   let mi = menu_list.value[index].mi;
   menu_index.value = index;
   animation.value = false;
-  MenuData.set_current_lv1_menu(menu_list.value[index], index);
-
   // 动画效果
   //   if (home_timer1_) clearTimeout(home_timer1_);
   //   home_timer1_ = setTimeout(() => {
@@ -201,6 +199,7 @@ const change_menu = (index) => {
  */
 const to_list = (item, index) => {
   if (item.ct) {
+    MenuData.set_current_lv1_menu(menu_list.value[menu_index.value]);
     MenuData.set_current_lv2_menu(item);
     // const euid = MenuData.get_euid(item.mi);
     // console.log(euid)

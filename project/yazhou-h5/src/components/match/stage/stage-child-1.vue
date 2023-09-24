@@ -23,6 +23,7 @@
 // import msc from "src/public/mixins/common/msc.js";  // 国际化比赛阶段比分转换工具
 import { format_mgt_time } from "src/core/format/index.js"
 import { utils } from 'src/core/utils/index.js';
+import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/index.js";
 
 export default {
   // mixins: [msc],
@@ -60,6 +61,7 @@ export default {
     }
   },
   props: ['detail_data',"dialog"],
+  let off_ = ''
   created(){
     // 初始化修正设置步长
     step = utils.match_vr_step(detail_data,step);
@@ -71,11 +73,11 @@ export default {
     // 时间延时器
     showTimeInterval = 0,
     initEvent();
-    $root.$on(emit_cmd.EMIT_UPDATE_GAME_TIME, initEvent);
+    useMittOn(MITT_TYPES.EMIT_UPDATE_GAME_TIME, initEvent);
   },
   destroyed(){
     clearTimeObj();
-    $root.$off(emit_cmd.EMIT_UPDATE_GAME_TIME, initEvent);
+    off_()
   },
   methods: {
     // ...mapMutations([
@@ -131,7 +133,7 @@ export default {
      */
     savePageTime(){
       if(dialog) return;
-      $root.$emit(emit_cmd.EMIT_SET_MATCH_TIME, Number(showTime));
+      useMittEmit(MITT_TYPES.EMIT_SET_MATCH_TIME, Number(showTime));
     },
     /**
      *@description 清除计时器

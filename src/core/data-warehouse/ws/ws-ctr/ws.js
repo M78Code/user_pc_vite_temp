@@ -9,6 +9,7 @@ import STANDARD_KEY from "src/core/standard-key";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { SessionStorage , LocalStorage } from "src/core/utils/module/web-storage.js";
 import { Qs } from "src/core/index.js";
+import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/index.js";
 const token_key = STANDARD_KEY.get("token"); //token键
 export default class Ws {
   // 链接异常次数
@@ -236,7 +237,7 @@ export default class Ws {
     // 发送api域名切换命令
     if(!this.ctr)
     {
-      // this.view.$root.$emit('EMIT_API_DOMAIN_UPD_CMD',{type:'ws', data:{url:this.url}});
+      // useMittEmit('EMIT_API_DOMAIN_UPD_CMD',{type:'ws', data:{url:this.url}});
       // 改用postmessage消息机制
       window.postMessage({event: 'WS', cmd:`WS_DOMAIN_UPD_CMD`, data:{name:'api域名切换命令'}},'*');
     }

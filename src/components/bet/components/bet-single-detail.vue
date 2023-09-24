@@ -19,12 +19,12 @@
 
     <!-- 右 -->
     <div class="content-b"
-      :class="{ 'red-color': !money_ok, 'content-b2': !(BetData.active_index === bet_index && [1, 7].includes(+get_bet_status)) }"
+      :class="{ 'red-color': !money_ok }"
       @click.stop="input_click">
       <span v-if="money" class="yb_fontsize20 money-number">{{ format_money3(money) }}</span>
       <span class="money-span" ref="money_span"
         :style="{ opacity: BetData.active_index === bet_index && [1, 7].includes(+get_bet_status) ? '1' : '0' }"></span>
-      <span v-if="!money && max_money_back" class="yb_fontsize14 limit-txt">{{ get_money_format() }}</span>
+      <span class="yb_fontsize14 limit-txt">{{ get_money_format() }}</span>
       <span @click.stop="clear_money" class="money-close" :style="{ opacity: money > 0 ? '1' : '0' }">x</span>
     </div>
   </div>
@@ -41,12 +41,12 @@ import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 
 import { format_money3, format_money2 } from 'src/core/format/index.js'
 
-const money = ref('')  //输入框金额
+const money = ref('10')  //输入框金额
 const money_ok = ref(true)   //金额是否合适
 const min_money = ref(10)   //最低投注金额
 const max_money = ref(0)   //最高可投金额
 const is_watch = ref(false)    //组件渲染时是否监听money
-const max_money_back = ref(false)   //最高可赢金额的接口是否有返回(不管成功与失败)
+const max_money_back = ref(true)   //最高可赢金额的接口是否有返回(不管成功与失败)
 const obj_pre_max_money = ref(null) // 单关预约最高可投注金额
 
 let timer1 = null
@@ -124,7 +124,7 @@ onMounted(() => {
   }, 5000);
 
   //监听键盘金额改变事件
-  useMittOn(MITT_TYPES.EMIT_CHANGE_MONEY, change_money_handle)
+  useMittOn(MITT_TYPES.EMIT_INPUT_BET_MONEY, change_money_handle)
   useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money)
 })
 
@@ -278,8 +278,10 @@ const clear_money = () => {
  *@return {Undefined} undefined
  */
 const get_money_format = () => {
-  let mi = format_money3(min_money.value)
-  let ma = format_money3(max_money.value)
+  let mi = format_money3(ref_data.min_money)
+  let ma = format_money3(ref_data.max_money)
+  console.error('ref_data',ref_data)
+  return `限额 ${mi}~${ma}`
   // return licia_format(i18n_t('bet.money_limit2'), mi, ma);
 }
 /**
@@ -297,8 +299,10 @@ const cursor_flashing = () => {
  *@param {Number} new_money 最新金额值
  */
 const change_money_handle = (new_money) => {
-  if (bet_index != BetData.active_index) { return };
-
+  // if (bet_index != BetData.active_index) { return };
+  console.error('ssss',new_money)
+  money.value = new_money
+  return
   if (max_money.value < 0.01 && max_money_back.value) {
     if (new_money) {
       money.value = '0.00';
@@ -409,7 +413,7 @@ const set_ref_data_bet_money = () => {
 onUnmounted(() => {
   // clear_timer()
 
-  useMittOn(MITT_TYPES.EMIT_CHANGE_MONEY, change_money_handle).off;
+  useMittOn(MITT_TYPES.EMIT_INPUT_BET_MONEY, change_money_handle).off;
   useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money).off
 
   // for (const key in $data) {
@@ -421,6 +425,9 @@ onUnmounted(() => {
 
 </script>
 <style lang="scss" scoped>
+
+@import "project/yazhou-h5/src/css/bet/bet_single_detail.scss";
+
 .bet-single-detail {
   height: 0.56rem;
   position: relative;
