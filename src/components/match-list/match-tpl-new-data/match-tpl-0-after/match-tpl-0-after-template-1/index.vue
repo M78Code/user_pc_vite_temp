@@ -7,7 +7,7 @@
       <!--热门赛事显示hot标识-->
       <img class="match-hot" src="~public/image/common/svg/hot.svg" v-show="lodash.get(match, 'is_hot')" />
       <!-- 比赛进程 -->
-      <match-process v-if="is_mounted" :match_props="{ match, source: 'match_list' }"
+      <match-process v-if="is_mounted" :match_props="{ match: MatchListData.list_to_obj.mid_obj[mid+'_'], source: 'match_list' }"
         show_page="match-list" :rows="2" />
     </div>
     <div v-show="false">{{ MatchListCardData.list_version }}</div>
@@ -17,7 +17,7 @@
       <div class="match-handicap-item">
         <!-- 赛事基础信息 -->
         <div class="basic-col" :style="`width:${match_list_tpl_size.team_width}px !important;height:105px !important;`">
-          <basis-info1 v-if="is_mounted" :match="match" show_type="all" />
+          <basis-info1 v-if="is_mounted" :match="MatchListData.list_to_obj.mid_obj[mid+'_']" show_type="all" />
         </div>
         <!-- 赛事盘口投注项 -->
         <match-handicap :handicap_list="match_list_tpl_size.template_1_main" :match="match" />
@@ -116,6 +116,7 @@ import { component_symbol, need_register_props } from "../config/index.js"
 import { utils_info } from 'src/core/utils/module/match-list-utils.js';
 import { UserCtr } from 'src/core/index.js';
 
+import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import { MatchProcessFullVersionWapper as MatchProcess } from 'src/components/match-process/index.js';
 import { MatchListTem1FullVersionWapper as BasisInfo1 } from 'src/components/match-list/match-basis-info/template-1/index.js'
 import { MatchListTem4FullVersionWapper as BasisInfo4 } from 'src/components/match-list/match-basis-info/template-4/index.js'
@@ -134,6 +135,7 @@ const play_name_list = ref([]);
 const match_style_obj = ref(lodash.get(MatchListCardData.match_all_card_obj, `all_card_obj.mid_${props.mid}`, {}));
 const match_list_tpl_size = ref(MATCH_LIST_TEMPLATE_CONFIG['template_1_config'])
 const match = MatchListData.list_to_obj.mid_obj[props.mid+'_'];
+console.log('matchmatchmatch', match, MatchListData.list_to_obj, MatchListData.list_to_obj.mid_obj);
 const is_mounted = ref(true);
 // 其他玩法标题
 const bet_col = computed(() => {
