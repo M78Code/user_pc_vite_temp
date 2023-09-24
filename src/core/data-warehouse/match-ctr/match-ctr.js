@@ -6,7 +6,7 @@
  * h5和pc赛事列表使用
  * 
  * MatchDataWarehouseInstance.set_list(list); 设置全部列表数据-初次使用
- * MatchDataWarehouseInstance.set_list(list,1); 同步更新全部列表数据(对部分赛事数据进行删除和更新数据合并逻辑操作)
+ * MatchDataWarehouseInstance.set_list(list); 同步更新全部列表数据(对部分赛事数据进行删除和更新数据合并逻辑操作)
  * MatchDataWarehouseInstance.set_quick_query_list(list); 设置快速查询对象列表数据-初次使用
  * MatchDataWarehouseInstance.set_quick_query_list(list,1); 同步更新快速查询对象列表数据(对部分赛事数据进行删除和更新数据合并逻辑操作)
  * 

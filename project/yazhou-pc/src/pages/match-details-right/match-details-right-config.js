@@ -274,7 +274,7 @@ export const useRightDetails = (props) => {
 
             if (!lodash.isEmpty(match_info) && !obj.is_bymids) {
               // 同步列表的赛事数据
-              this.$root.$emit(this.emit_cmd.EMIT_SYNCH_FROM_DETAIL, res);
+              this.$root.$emit(MITT_TYPES.EMIT_SYNCH_FROM_DETAIL, res);
               if (this.is_go_match_list) {
                 let match_obj = {};
                 for (let [key, value] of Object.entries(match_info)) {
@@ -484,7 +484,7 @@ export const useRightDetails = (props) => {
 
     // // 站点 tab 休眠状态转激活
     // this.$root.$on(
-    //   this.emit_cmd.EMIT_SITE_TAB_ACTIVE,
+    //   MITT_TYPES.EMIT_SITE_TAB_ACTIVE,
     //   this.emit_site_tab_active
     // );
     // // 关闭 tips
@@ -1228,7 +1228,7 @@ export const useRightDetails = (props) => {
 //    this.debounce_throttle_cancel(this.refresh);
 //    this.refresh_loading_timer && clearTimeout(this.refresh_loading_timer)
 //    // 站点 tab 休眠状态转激活
-//    this.$root.$off(this.emit_cmd.EMIT_SITE_TAB_ACTIVE, this.emit_site_tab_active);
+//    this.$root.$off(MITT_TYPES.EMIT_SITE_TAB_ACTIVE, this.emit_site_tab_active);
 
 //    this.$root.$off("match_detail_base", this.get_match_detail_base);
 
