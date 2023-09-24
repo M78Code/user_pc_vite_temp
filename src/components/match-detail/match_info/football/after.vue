@@ -93,7 +93,7 @@
             :content-style="tooltip_style"
           >{{i18n_t('icon_tips.penalty_shootout')}}</q-tooltip>
           <!-- 点球大战进球 -->
-          <icon class="result-icon" name="icon-jia-dian" size="15px"></icon>
+          <icon-wapper class="result-icon" name="icon-jia-dian" size="15px"></icon-wapper>
         </div>
       </div>
     </div>
@@ -205,9 +205,12 @@ import lodash from 'lodash'
 import { get_match_status,i18n_t,formatSeconds,debounce_throttle_cancel } from 'src/core/index'
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/";
 import rs_hong from '/yazhou-pc/image/svg/rs_hong.svg'
+import { IconWapper } from 'src/components/icon'
+
 export default {
   components: {
     "match-date":MatchProcessFullVersionWapper,
+    IconWapper,
   },
   name: "football_after",
   // mixins: [format],

@@ -42,7 +42,7 @@
         </div>
         <!--删除按钮-->
         <div class="col-auto col-delete" v-if="ref_data.match_type == 3">
-          <icon size="12px" name="icon-del" class="bet-del" @click="del_bet_item" />
+          <icon-wapper size="12px" name="icon-del" class="bet-del" @click="del_bet_item" />
         </div>
       </div>
       <!--不是滚球-->

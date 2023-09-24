@@ -193,9 +193,12 @@
 // import format from "src/project/yabo/mixins/match_details/index";
 import {MatchProcessFullVersionWapper} from "src/components/match-process/index.js";
 import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/index.js";
+import { IconWapper } from 'src/components/icon'
+
 export default {
   components: {
     "match-date": MatchProcessFullVersionWapper,
+    IconWapper,
   },
   name: "football_after",
   // mixins: [format],

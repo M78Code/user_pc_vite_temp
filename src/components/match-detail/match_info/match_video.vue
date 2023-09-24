@@ -14,7 +14,7 @@
     </div>
     <div class="right-icon"  @click.stop="is_show_content = !is_show_content">
       <!-- 提示消息 -->
-    <icon class="icon" v-if="!is_esports" :class="is_show_content && 'active'" size="14px" name="icon-tips3" :color="is_show_content ? 'rgba(255,255,255,.7)' : '#fff'"/>
+    <icon-wapper class="icon" v-if="!is_esports" :class="is_show_content && 'active'" size="14px" name="icon-tips3" :color="is_show_content ? 'rgba(255,255,255,.7)' : '#fff'"/>
          <!-- 提示内容 -->
     <div :class="['tip-content',{'is-iframe':$utils.is_iframe}]" v-if="is_show_content" @click.stop>
       <div class="content-wrap relative-position">
@@ -133,6 +133,8 @@ import match_video from "src/project/yabo/mixins/match_details/match_info/match_
 // import video_type_ctr from "/utils/video/video_type_ctr.vue";
 import noVideo from "src/project/yabo/components/match_details/match_info/no_video.vue"
 import videoReplayError from "src/project/yabo/components/video/video_replay_error.vue"
+import { IconWapper } from 'src/components/icon'
+
 export default {
   mixins: [match_video],
   components: {

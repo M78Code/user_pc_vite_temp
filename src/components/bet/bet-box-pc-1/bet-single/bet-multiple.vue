@@ -44,7 +44,7 @@
             autocomplete="off"
             locale="zh"/>
           <!--清除输入金额按钮-->
-          <div class="bet-input-close" @click.stop="bet_clear_handle" v-show="!is_empty_money"><icon name="icon-failure" size="12px"/></div>
+          <div class="bet-input-close" @click.stop="bet_clear_handle" v-show="!is_empty_money"><icon-wapper name="icon-failure" size="12px"/></div>
 				</div>
 			</div>
       <!--最高可赢-->
@@ -78,6 +78,7 @@
 import BetKeyboard from "../common/bet-keyboard.vue";
 // import { format_currency } from 'src/core/index.js'
 import lodash from 'lodash'
+import { IconWapper } from 'src/components/icon'
 
 </script>
 <style scoped lang="scss">
