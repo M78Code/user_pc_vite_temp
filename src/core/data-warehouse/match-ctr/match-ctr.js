@@ -121,8 +121,6 @@ export default class MatchDataBase
     // 所有投注项动态数据时间更新
     this.cache_oid={
     };
-    // 当前 csid 对应的 mids
-    this.csid_map_mid_data = []
   }
   /**
    * @description: 更新赛事的基本属性时间
@@ -487,12 +485,9 @@ export default class MatchDataBase
    * @param {Boolean} is_merge 是否进行合并数据同步(保证地址不变)
    */
   set_list(list,is_merge=1){
-
     console.error('数据仓库设置--set_list---',list);
     if(list){
       // 设置使用类型:类表-list,赛事详情-match
-      // TODO： 测试用
-      list.length > 0 && this.set_csid_map_mid_data(list)
       this.type = 'list';
       // 格式化列表赛事(部分数组转对象)
       this.list_serialized_match_obj(list);
@@ -569,13 +564,8 @@ export default class MatchDataBase
       }
     }
   }
-  // 设置当前球种下所需 渲染 mids 集合
-  set_csid_map_mid_data (list) {
-    this.csid_map_mid_data = list.map(t => {
-      return { mid: t.mid }
-    })
-  }
   set_quick_query_list(list,is_merge){
+    console.log(list,is_merge)
     let obj = this.list_comparison(this.quick_query_list,list);
     if(is_merge){
       // {add:{}, del:{}, upd:{}}

@@ -1,6 +1,5 @@
 
 import uid from "src/core/uuid/index.js";
-import MatchCtr from './match-ctr'
 import { useRoute } from 'vue-router'
 import lodash from 'lodash'
 import store from "src/store-redux/index.js";
@@ -19,7 +18,7 @@ import { ws_c8_obj_format } from 'src/core/data-warehouse/util/index.js'
 import { get_handicap_index_by } from 'src/core/utils/index.js'
 import MatchListCardClass from '../match-card/match-list-card-class'
 import matchListParams from '../composables/match-list-params'
-import { MatchDataWarehouse_H5_List_Common } from 'src/core'
+import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from 'src/core'
 // import MatchDataBase from "src/core/data-warehouse/match-ctr/match-ctr.js"
 
 class MatchPage {
@@ -38,6 +37,22 @@ class MatchPage {
 
   constructor() {
     this.clear_mixin_timer()
+  }
+
+  /**
+   * @description 设置 赛事 元数据
+   * @param { list } 赛事数据 
+   */
+  set_origin_match_data (list) {
+
+  }
+
+  /**
+   * @description 根据菜单筛选赛事数据
+   * @param { type } type 菜单类型
+   */
+  filter_match_by_menu (type) {
+
   }
 
   /**
@@ -92,10 +107,10 @@ class MatchPage {
       let syn_match = data_dict[mid];
       if (syn_match.hls && syn_match.hls.length) {
         syn_match.hls.forEach(hl => {
-          MatchCtr.setMatchHsStatus(hl.hid, (hl.hs ? hl.hs : 0), hl.ol);
+          MatchDataBaseH5.setMatchHsStatus(hl.hid, (hl.hs ? hl.hs : 0), hl.ol);
         });
       }
-      MatchCtr.set_match_odd_list(syn_match);
+      MatchDataBaseH5.set_match_odd_list(syn_match);
     });
   }
   /**
@@ -106,7 +121,7 @@ class MatchPage {
   removeMatch(callback) {
     if (callback)
       callback();
-    if (!MatchCtr.list.length) {
+    if (!MatchDataBaseH5.list.length) {
       this.match_is_empty = true;
     }
   }
@@ -124,7 +139,7 @@ class MatchPage {
    * @return {Undefined} Undefined
    */
   del() {
-    MatchCtr.clearData()
+    // MatchDataBaseH5.clear_quick_query_obj()
   }
   /**
    * @description: 页脚菜单事件
@@ -169,7 +184,7 @@ class MatchPage {
     else if (obj.text == "footer-follow") {
       //即将改为收藏模式清除赛事列表数据
       if (!obj.before_status) {
-        MatchCtr.clearData();
+        MatchDataBaseH5.clearData();
         this.is_data_requesting = true;
       }
     }
@@ -185,19 +200,19 @@ class MatchPage {
       // 冠军收藏时,mid是唯一的,tn不一定有值
       // get_current_menu.date_menu.menuType == 100 电竞冠军
       if (lodash.get(this.get_current_menu, 'date_menu.menuType') == 100) {
-        MatchCtr.clearMidObj(MatchCtr.list[index]);
+        MatchDataBaseH5.clearMidObj(MatchDataBaseH5.list[index]);
       } else {
-        let tid = MatchCtr.list[index].tid;
-        MatchCtr.list.forEach(item => {
+        let tid = MatchDataBaseH5.list[index].tid;
+        MatchDataBaseH5.list.forEach(item => {
           if (item.tid == tid) {
-            MatchCtr.clearMidObj(item);
+            MatchDataBaseH5.clearMidObj(item);
           }
         });
       }
     } else {
-      MatchCtr.clearMidObj(MatchCtr.list[index]);
+      MatchDataBaseH5.clearMidObj(MatchDataBaseH5.list[index]);
     }
-    if (MatchCtr.list.length == 0) {
+    if (MatchDataBaseH5.list.length == 0) {
       this.match_is_empty = true;
     }
     //列表页移除赛事
@@ -217,14 +232,14 @@ class MatchPage {
     }
     clearTimeout(this.sub_list_timeout);
     this.sub_list_timeout = setTimeout(() => {
-      if (!MatchCtr) { return; }
+      if (!MatchDataBaseH5) { return; }
       let now = new Date().getTime();
       // 当前时间，减去 上一次的 时间，小于1s，则return 掉，否则，调用订阅赛事推送
       if (now - this.prev_invoke_match_details_time < 1000) {
         return;
       }
       this.prev_invoke_match_details_time = now;
-      let sliced = MatchCtr.list;
+      let sliced = MatchDataBaseH5.list;
       //数组转对象
       this.matchIds = ws_c8_obj_format(sliced);
       //列表除了电竞外，调用详情数据
@@ -238,7 +253,7 @@ class MatchPage {
   // 菜单变化，调用列表接口
   main_menu_change() {
     // 切换菜单，先清除所有数据仓库的数据
-    MatchCtr.init()
+    MatchDataBaseH5.init()
     // 回到页面顶部
     if (this.scroll_list_wrapper_by) {
       this.scroll_list_wrapper_by(0);
@@ -259,10 +274,10 @@ class MatchPage {
       let list = this.match_list_init(match_list);
       list.forEach(item => {
         if (item && item.mid) {
-          if (MatchCtr.mid_obj[item.mid]) {
-            MatchCtr.updMatchInfo(item);
+          if (MatchDataBaseH5.list_to_obj.mid_obj[`${item.mid}_`]) {
+            MatchDataBaseH5.updMatchInfo(item);
           } else {
-            MatchCtr.addMatchInfo(item);
+            MatchDataBaseH5.addMatchInfo(item);
           }
           //应对主副盘变更时，投注框盘口和赔率的变化
           // if(this.get_bet_status == 1 || this.get_bet_status == 7 || this.get_bet_status == 5){
@@ -271,12 +286,12 @@ class MatchPage {
           // 如果是滚球
           if (lodash.get(this.get_current_menu, 'main') == 1) {
             if (![1, 2, 7, 10, 110].includes(+item.ms)) { // 赛事状态无效，清除该场赛事的 对象
-              MatchCtr.clearMidObj(item);
+              MatchDataBaseH5.clearMidObj(item);
             }
           }
           //赛事状态无效  并且不是  赛果和冠军时，清除该场赛事的 对象
           if (!this.is_valid(+item.ms) && ![28, 100].includes(+this.menu_type)) {
-            MatchCtr.clearMidObj(item);
+            MatchDataBaseH5.clearMidObj(item);
           }
         }
       });
@@ -309,15 +324,15 @@ class MatchPage {
       (['category', 'virtual_sports'].includes(PageSourceData.route_name) || [4, 900].includes(+this.menu_type)) && is_subscribe != "is-subscribe") {
       return;
     }
-    if (!mid || !MatchCtr) return;
+    if (!mid || !MatchDataBaseH5) return;
     //非赛事列表中的赛事不更新
     if (Array.isArray(mid)) {
       let flag = false;
       mid.forEach(_mid => {
-        if (MatchCtr.mid_obj[_mid]) flag = true;
+        if (MatchDataBaseH5.list_to_obj.mid_obj[`${mid}_`]) flag = true;
       });
       if (!flag && is_subscribe != "is-subscribe") return;
-    } else if (!MatchCtr.mid_obj[mid]) {
+    } else if (!MatchDataBaseH5.list_to_obj.mid_obj[`${mid}_`]) {
       return;
     }
     //竞足409 不需要euid
@@ -361,12 +376,11 @@ class MatchPage {
       api_func(params).then(res => {
         // if(this.send_gcuuid != res.gcuuid) return;
         let mid_first = Array.isArray(mid) ? mid[0] : mid;
-        if (MatchCtr && MatchCtr.mid_obj && MatchCtr.mid_obj[mid_first] &&
-          MatchCtr.mid_obj[mid_first].handle_time &&
-          MatchCtr.mid_obj[mid_first].handle_time > res.ts) {
+        const match_obj = lodash.get(MatchDataBaseH5.list_to_obj.mid_obj, `${mid_first}_`)
+        if (MatchDataBaseH5 && match_obj && match_obj.handle_time && match_obj.handle_time > res.ts) {
           return;
         }
-        if (!MatchCtr || !MatchCtr.mid_obj || !MatchCtr.mid_obj[mid_first]) {
+        if (!MatchDataBaseH5 || !match_obj) {
           return
         }
         // 拉取赛事详情数据导致的赛事比分变化不触发红升绿降
@@ -379,17 +393,16 @@ class MatchPage {
         }, 2000);
         // 1. 更新指定mid 盘口数据
         // this.update_match_databy_mid(res.data);
-        MatchDataWarehouse_H5_List_Common.set_list(res.data, 1)
         // 2.列表页 数据源赋值操作,为了排序
-        const source_list = this.get_obj(MatchCtr.match_list_data_sources)
-        MatchCtr.set_source_list(source_list);
+        const source_list = this.get_obj(MatchDataBaseH5.list_to_obj.list)
+        // MatchDataBaseH5.set_list(source_list, 1);
         if (res.data && res.data.length) {
           // 列表页盘口数据 获取后重新计算是否显示次要玩法
           this.run_process_when_need_recompute_container_list && this.run_process_when_need_recompute_container_list(true);
           //  赛事状态变化
           this.match_status_changed(res.data[0]);
-          if (MatchCtr.mid_obj[mid_first]) {
-            MatchCtr.mid_obj[mid_first].handle_time = res.ts;
+          if (match_obj) {
+            match_obj.handle_time = res.ts;
           }
         }
         if (lodash.get(other, 'cb')) {
@@ -483,7 +496,7 @@ class MatchPage {
           // 二.设置页面显示的数据   （增加字段，改了排序，改变 接口原数据），最核心的方法
           // 1.设置赛事对象字典对象 MatchCtr.setListObj(match_res_data)
           // 2.开赛 和 未开赛  和其他赛事(电竞,冠军) 时间 排序
-          // 3.列表页set_source_list 数据源赋值操作 MatchCtr.set_source_list(data_source)
+          // 3.列表页set_list 数据源赋值操作 MatchCtr.set_list(data_source)
           // 4. 更新 赛事列表 进程 综合 控制方法（虚拟滚性能核心方法）  => a.数据数组去重   b. 计算每个容器的高度   c.列表页可视区域数据this.matchCtr.setList('可视区域数据') d. 发布订阅
           MatchListCardClass.set_match_list_page_data(match_res_data, cb);
 
@@ -560,7 +573,7 @@ class MatchPage {
           let match_res_data = MatchListCardClass.match_list_api_after_handle(res);
           // 添加赛事对象前端使用字段 : 让球方
           this.match_list_init(match_res_data);
-          MatchCtr.update_match_list(match_res_data);
+          MatchDataBaseH5.update_match_list(match_res_data);
           if (this.run_process_when_need_recompute_container_list_when_scroll) {
             this.run_process_when_need_recompute_container_list_when_scroll(false, { force: 1 });
           }
@@ -673,7 +686,7 @@ class MatchPage {
             // 前端进行  开赛 和 未开赛  和 其他赛事(电竞,冠军)   赛事阶段 排序
             data_page = this.get_obj(data_page);
             this.match_is_empty = false;
-            let temp_ = MatchCtr.listComparison(data_page, MatchCtr.match_list_data_sources)
+            let temp_ = MatchDataBaseH5.listComparison(data_page, MatchDataBaseH5.list)
             this.update_match_to_list(temp_);
             if (callback) callback();
           }
@@ -835,7 +848,7 @@ class MatchPage {
   match_status_changed(state_changed) {
     const _this = this;
 
-    const match_data_list = MatchCtr.list;
+    const match_data_list = MatchDataBaseH5.list;
     let match_id = state_changed.mid;
     // 删除数据源对应赛事下标的赛事
     let delete_source = function () {
@@ -846,7 +859,7 @@ class MatchPage {
           deleted_match = 1;
           // 删除数据仓库 一些数据操作
           _this.removeMatch(() => {
-            _this.matchCtr.clearMidObj(_this.matchCtr.list[p].mid);
+            MatchDataBaseH5.clearMidObj(_this.MatchDataBaseH5.list[p].mid);
           });
           p--;
           break;
@@ -863,7 +876,7 @@ class MatchPage {
     };
     // csid:12 拳击   开赛时间小于当前时间则移除
     let delete_boxing_match = () => {
-      let c_match = _this.matchCtr.mid_obj[match_id];
+      let c_match = MatchDataBaseH5.list_to_obj.mid_obj[`${match_id}_`];
       if (c_match && c_match.csid == 12) {
         let server_now = _this.get_now_server();
         let now_sub = Number(c_match.mgt) - server_now;
