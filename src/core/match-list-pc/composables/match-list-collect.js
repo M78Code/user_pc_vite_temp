@@ -251,7 +251,7 @@ const update_collect_data = (params) => {
       break;
     // 设置收藏状态
     case "set_status":
-      let match = MatchListData.list_to_obj.mid_obj["mid_" + params.mid] || {};
+      let match = MatchListData.list_to_obj.mid_obj[`${params.mid}_`] || {};
       if (match.mid) {
         match.mf = params.mf;
         set_collect_count({ type: "inc", count: params.mf ? 1 : -1 });

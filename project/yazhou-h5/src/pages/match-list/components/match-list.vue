@@ -36,6 +36,7 @@
             :match_of_list="match_item"
             :matchCtr="matchCtr"
             :i="index"
+            :key="match_item.mid"
             :menu_type="menu_type"
             :main_source="source"
             @unfold_changed="unfold_changed_handle"
@@ -48,7 +49,7 @@
             :matchCtr="matchCtr"
             :i="index"
             :menu_type="menu_type"
-            :key="index"
+            :key="match_item.mid"
             @toggle_collect_league="toggle_collect"
             v-if="is_champion">
           </match-container-champion>
@@ -70,7 +71,7 @@
           <!-- 次要玩法如果是数组 例如15分钟展开 -->
           <div v-if="Array.isArray(play_way_info)">
             <template v-if="!(show_Xth_title && index === 5)">
-              <div  class="s-table"  v-for="(item,index) in play_way_info" :key="index" >
+              <div class="s-table"  v-for="(item,index) in play_way_info" :key="index" >
                 <template v-if="item.title =='5min-icon'">
                   <div class="wrap-box yb-flex-center">
                     <div :class="['item-icon',`item-icon-${index}`]" v-for="index in 4" :key="`${index}_before`"></div>
@@ -177,6 +178,11 @@ const get_curr_sub_menu_type = ref(store_state.get_curr_sub_menu_type)
 
 onMounted(() => {
   timer_super12.value = null;
+})
+
+watch(() => props.matchCtr, () => {
+  console.log(props.matchCtr)
+  console.log(111111111111)
 })
 
 watch(() => other_way_info_show, (curr) => {

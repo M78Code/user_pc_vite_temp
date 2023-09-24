@@ -129,10 +129,10 @@
 </template>
 
 <script>
-import match_video from "src/project/yabo/mixins/match_details/match_info/match_video";
-// import video_type_ctr from "/utils/video/video_type_ctr.vue";
-import noVideo from "src/project/yabo/components/match_details/match_info/no_video.vue"
-import videoReplayError from "src/project/yabo/components/video/video_replay_error.vue"
+import match_video from "src/components/match-detail/match_info/match_info_mixin/match_video.js";
+import video_type_ctr from "src/core/video/video_type_ctr.vue";
+import noVideo from "src/components/match-detail/match_info/no_video.vue"
+import videoReplayError from "src/components/match-detail/match_info/video_replay_error.vue"
 import { IconWapper } from 'src/components/icon'
 
 export default {
