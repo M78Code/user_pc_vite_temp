@@ -138,10 +138,9 @@ import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/mat
 import { PageSourceData } from 'src/core/index.js';
 import "./match_list.scss";
 import {MatchDataWarehouse_PC_List_Common as MatchListData ,GlobalAccessConfig} from "src/core/index.js";
- const { mounted_fn, load_data_state, show_refresh_mask, collect_count, is_show_hot } = useMatchListMx();
+const { mounted_fn, load_data_state, show_refresh_mask, collect_count, is_show_hot } = useMatchListMx();
 const { page_source } = PageSourceData;
 
-console.log('MatchListDataMatchListData', MatchListData.quick_query_obj, load_data_state.value);
 export default {
   components: {
     LeagueTab,

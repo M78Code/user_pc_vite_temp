@@ -18,6 +18,7 @@
 
 <script>
 // import { mapGetters } from "vuex"
+import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 export default {
   name: 'score_child_7',
   data(){
@@ -44,7 +45,7 @@ export default {
         if (msc && Array.isArray( msc )){
           const len = msc.length-1
           let middle_number = Number((msc[len].split("|")[0]).substring(1)) + 1;
-          $root.$emit(emit_cmd.EMIT_SET_NATIVE_DETAIL_DATA, `S${middle_number}|0:0`);
+          useMittEmit(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, `S${middle_number}|0:0`);
       }
       } catch (error) {
         console.error(error);
@@ -62,7 +63,7 @@ export default {
             if ( msc && Array.isArray( msc )){
               const len = msc.length-1
               let middle_number = Number((msc[len].split("|")[0]).substring(1)) + 1;
-              $root.$emit(emit_cmd.EMIT_SET_NATIVE_DETAIL_DATA, `S${middle_number}|0:0`);
+              useMittEmit(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, `S${middle_number}|0:0`);
           }
           } catch (error) {
             console.error(error);
@@ -116,7 +117,7 @@ export default {
           if (msc && Array.isArray( msc )){
             const len = msc.length-1
             let middle_number = Number((msc[len].split("|")[0]).substring(1)) + 1;
-            $root.$emit(emit_cmd.EMIT_SET_NATIVE_DETAIL_DATA, `S${middle_number}|0:0`);
+            useMittEmit(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, `S${middle_number}|0:0`);
           }
         } catch (error) {
           console.error(error);

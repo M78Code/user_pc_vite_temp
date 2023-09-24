@@ -83,6 +83,10 @@
     let play_to_card_key_arr = ['play_title']
     // 未开赛 到卡片key的 映射对象
     let no_start_to_card_key_arr = ['no_start_title']
+    // 赛种ID 到卡片key的 映射对象
+    let csid_to_card_key_obj = {}
+    // 卡片key 到 赛事 id 映射 对象
+    let league_card_mids_arr = {}
     // 所有卡片列表
     let match_list_card_key_arr = []
     // 所有卡片样式对象

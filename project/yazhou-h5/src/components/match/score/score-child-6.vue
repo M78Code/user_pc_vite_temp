@@ -37,6 +37,7 @@
 </template>
 
 <script>
+import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 export default {
   name: 'score_child_2',
   data(){
@@ -69,16 +70,16 @@ export default {
       handler(n, o){
         switch( n.mmp ){
           case "301":   //301  第一节结束  S20 第二节比分(美足)
-            $root.$emit(emit_cmd.EMIT_SET_NATIVE_DETAIL_DATA, 'S20|0:0')
+            useMittEmit(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, 'S20|0:0')
             break;
           case "302":   //302  第二节结束  S21 第三节比分(美足)
-            $root.$emit(emit_cmd.EMIT_SET_NATIVE_DETAIL_DATA, 'S21|0:0')
+            useMittEmit(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, 'S21|0:0')
             break;
           case "303":   //303  第三节结束  S22 第四节比分(美足)
-            $root.$emit(emit_cmd.EMIT_SET_NATIVE_DETAIL_DATA, 'S22|0:0')
+            useMittEmit(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, 'S22|0:0')
             break;
           case "40":    //40   加时赛 S7 加时赛比分(美足)
-            $root.$emit(emit_cmd.EMIT_SET_NATIVE_DETAIL_DATA, 'S7|0:0')
+            useMittEmit(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, 'S7|0:0')
             break;
         }
       },
@@ -135,16 +136,16 @@ export default {
     validate_stage(){
       switch( detail_data.mmp ){
         case "301":   //301 第一节结束 S20 第二节比分(美足)
-          $root.$emit(emit_cmd.EMIT_SET_NATIVE_DETAIL_DATA, 'S20|0:0')
+          useMittEmit(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, 'S20|0:0')
           break;
         case "302":   //302 第二节结束 S21 第三节比分(美足)
-          $root.$emit(emit_cmd.EMIT_SET_NATIVE_DETAIL_DATA, 'S21|0:0')
+          useMittEmit(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, 'S21|0:0')
           break;
         case "303":   //303 第三节结束 S22 第四节比分(美足)
-          $root.$emit(emit_cmd.EMIT_SET_NATIVE_DETAIL_DATA, 'S22|0:0')
+          useMittEmit(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, 'S22|0:0')
           break;
         case "40":    //40  加时赛 S7 加时赛比分(美足)
-          $root.$emit(emit_cmd.EMIT_SET_NATIVE_DETAIL_DATA, 'S7|0:0')
+          useMittEmit(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, 'S7|0:0')
           break;
       }
     }

@@ -39,7 +39,7 @@ import { MATCH_LIST_TEMPLATE_CONFIG } from "../../list-template/index.js";
  */
 const get_tab_play_height = (mid) => {
 	let { play_current_key, other_handicap_list = [] } =
-		MatchListData.quick_query_obj.mid_obj[mid+'_'] || {};
+		MatchListData.list_to_obj.mid_obj[mid+'_'] || {};
 	let { tab_play_handicap_height: handicap_height } =
 		MATCH_LIST_TEMPLATE_CONFIG[`template_1_config`]["match_template_config"] ||
 		{};

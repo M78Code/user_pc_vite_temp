@@ -4,11 +4,12 @@
 -->
 
 <template>
-  <div class="bet-mix-show" @click="handleonmousedown" v-if="value_show.length > 0">
+  <div class="bet-mix-show" @click="handleonmousedown" >
     <!-- 失效蒙层 -->
     <!-- 左边 -->
     <div 
       class="row justify-start items-center"
+      v-if="value_show.length > 0"
       v-for="(item,index) in value_show"
       :class="[get_bet_success ? 'yb_px14' : 'yb_pl12 yb_pr18', { 'bet-mix-show2': is_conflict }]
       ">
@@ -71,6 +72,7 @@
 
      <!-- 对应单关多个注单样式 -->
      <div>
+      <div>ssss123</div>
        <!-- 单关金额输入框 v-bind="$attrs"-->
       <bet-single-detail ref="bet_single_detail" ></bet-single-detail>
      </div>
