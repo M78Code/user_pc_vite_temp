@@ -277,7 +277,7 @@ export const useRightDetails = (props) => {
 
             if (!lodash.isEmpty(match_info) && !obj.is_bymids) {
               // 同步列表的赛事数据
-              this.$root.$emit(this.emit_cmd.EMIT_SYNCH_FROM_DETAIL, res);
+              this.$root.$emit(MITT_TYPES.EMIT_SYNCH_FROM_DETAIL, res);
               if (this.is_go_match_list) {
                 let match_obj = {};
                 for (let [key, value] of Object.entries(match_info)) {
@@ -497,8 +497,13 @@ export const useRightDetails = (props) => {
     // useMittOn("check_plays_show", this.check_plays_show);
 
     // // 站点 tab 休眠状态转激活
+<<<<<<< HEAD
     // useMittOn(
     //   this.emit_cmd.EMIT_SITE_TAB_ACTIVE,
+=======
+    // this.$root.$on(
+    //   MITT_TYPES.EMIT_SITE_TAB_ACTIVE,
+>>>>>>> f04121b22d5dcf4205e1939bd54caf0f69e3aa9b
     //   this.emit_site_tab_active
     // );
     // // 关闭 tips
@@ -1258,4 +1263,462 @@ export const useRightDetails = (props) => {
 //    },
 //  },
 
+<<<<<<< HEAD
  
+=======
+//  /**
+//   *设置视频展开关状态
+//   */
+//    setfoldStatus(){
+//      this.vx_set_is_fold_status(!this.vx_get_is_fold_status)
+//      if(this.vx_get_is_fold_status){
+//        let { mid, media_type, play_id } = this.vx_details_params;
+//        this.vx_set_play_media({
+//          mid,
+//          media_type,
+//          play_id,
+//          time:new Date()*1,
+//        });
+//      }
+//    },
+//    /**
+//     * @description 获取头部高度
+//     */
+//    getHeaderHeight(height) {
+//      this.headerHeight = height || 0;
+//    },
+//    /**
+//     * @description 获取loading状态
+//     */
+//    getLoading(status) {
+//      this.load_detail_statu = status;
+//    },
+//    /**
+//     * 页面从休眠状态被激活时重新拉取数据
+//     */
+//    emit_site_tab_active(){
+//      let{ mid = null }= route.params
+//      mid = mid || this.vx_details_params.mid
+//      // 如果当前是详情或者视频，就直接初始化
+//      if (["video"].includes(this.layout_cur_page.cur)) {
+//        init.value({mid,is_ws:true})
+//      // 否则就拉取比分面板数据
+//      } else {
+//        api_details
+//        .get_match_detail_MatchInfo({mid}).then(({ data }) => {
+//          let code = lodash.get(data, "code");
+
+//          if (code == '0400500') {
+//            this.emit_autoset_match(0);
+//            return;
+//          }
+
+//          if (code == 200) {
+//            let match = lodash.get(data, "data") || {};
+//            // 当赛事不是 未开赛 0 不是滚球 1 不是暂停 2 也不是即将开赛 110
+//            if(match.ms > 2 && match.ms != 110){
+//              // 重新设置详情选中的赛事
+//              this.mx_autoset_active_match()
+//            } else {
+//              // 否则就直接初始化
+//              init.value({mid,is_ws:true})
+//            }
+//          } else {
+//            this.mx_autoset_active_match()
+//          }
+//        })
+//      }
+//    },
+//    /**
+//    * @description: 隐藏其他tips
+//    * @param {}
+//    * @return {}
+//    */
+//    close_tips(hpid){
+//      this.match_details.forEach(item =>{
+//        item.tipstatus = item.hpid == hpid
+//      })
+//    },
+
+//    /**
+//     * @description 返回顶部
+//     * @return {Undefined} Undefined
+//     */
+//    on_go_top() {
+//      this.$root.$emit("set_scroll_position", [0, 0])
+//    },
+//    /**
+//    * @description: 检查玩法关盘
+//    * @return {undefined} undefined
+//    */
+//    check_plays_show(){
+//      this.match_details.forEach(item =>{
+//        item = this.format_plays(item)
+//      })
+//    },
+//    /**
+//     * 把当前页面的数据给到玩法集
+//     */
+//    set_handicap_this(_this) {
+//      this.handicap_this = _this;
+//    },
+//    /**
+//     * 自动切换赛事
+//     */
+//    emit_autoset_match(mid) {
+//      if (this.autoset_mid != mid || !mid) {
+//        this.mx_autoset_active_match({ mid: mid || 0 });
+//        this.autoset_mid = mid;
+//      }
+//    },
+
+
+//    /**
+//     * @description: 设置选中玩法集 （mcid,plays_list）
+//     */
+//    set_cur_match_plays_list(){
+//       // 获取当前玩法集里第一个子项的
+//      let mcid = lodash.get(this.category_list,'0.id', '')
+//      if(lodash.some(this.category_list,item=> item.id === this.get_tabs_active_id) && !this.change_mid){
+//        mcid = this.get_tabs_active_id
+//      }
+//      this.mcid = mcid;
+//      let { plays = []}  = lodash.find(this.category_list,item=> item.id === this.mcid,{})
+//      this.plays_list = plays
+//      // 保存当前选中的玩法集子项id
+//      this.set_tabs_active_id(this.mcid)
+//      // 保存当前选中的玩法集子项玩法集合
+//      this.set_tabs_active_plays(this.plays_list)
+//      this.change_mid = false
+//    },
+
+//    /**
+//     * @description: 赛事详情比分板数据
+//     * @param {number} loop_count 循环调用次数
+//     */
+//    get_matchInfo(loop_count) {
+//      let params = {
+//        mid: allData.mid || 0, //赛事id
+//      };
+//      if(params.mid == -1 ){
+//        this.match_infoData = {mid:-1, csid:-1}
+//       allData.handicap_state  = 'all_empty'
+//        return
+//      }
+//      let api
+//      // 如果是电竞就用电竞的请求配置
+//      if(is_esports){
+//        api = api_details.get_match_detail_ESMatchInfo
+//        // 非电竞就用通用的请求配置
+//      }else{
+//        api = api_details.get_match_detail_MatchInfo
+//      }
+//      let send_request = () => {
+//        api(params)
+//          .then((res) => {
+//            const code = lodash.get(res, "data.code");
+//            const data = lodash.cloneDeep(lodash.get(res, "data.data"));
+//            const timestap = lodash.get(res, "data.ts");
+
+//            if (code == '0400500') {
+//              // 跳转赛事
+//              this.emit_autoset_match(0);
+//              return;
+//            }
+
+//            if (code === 200 && data && Object.keys(data).length) {
+//              // 请求成功就清零错误次数
+//              this.countMatchDetailErr = 0;
+//              // 设置当前赛种的背景图
+//              this.background_img = this.computed_background(data.csid)
+//              // mmp状态修正
+//              if(['4','5','7','8','9','10','11','12','13','16','15','14'].includes(data.csid)){
+//                if (data.ms !=0 && data.mmp == "0") {
+//                  Object.assign(data, {
+//                    mmp: "8",
+//                    mct: 1,
+//                  });
+//                }
+//              }
+//              /**
+//               * @description 格式化msc数据
+//               * msc: ["S1|48:52"] => msc: {S1:{home: 48,away: 52}}
+//               */
+//              data.msc = this.build_msc(data);
+//              this.match_info_ctr.init_match_obj(data, timestap);
+//              this.match_infoData = this.match_info_ctr.match_obj;
+//              let mid = lodash.get(data, "mid");
+//              let mst = lodash.get(data, "mst");
+//              let mstst = lodash.get(data, "mstst");
+//              let mststs = lodash.get(data, "mststs");
+
+//              //同步赛事时间
+//              this.yabo_common.update_match_time({mid, mst, mstst, mststs});
+//              let { media_type, play_id } = this.vx_details_params;
+//              this.vx_set_play_media({
+//                mid: data.mid,
+//                media_type,
+//                play_id,
+//                time:new Date()*1,
+//              });
+
+//              this.load_data_state = "data";
+//              // 保存数据,用于接口报错时填充
+//              this.save_match_info(lodash.cloneDeep(this.match_infoData));
+//            } else {
+//              this.countMatchDetail()
+//            }
+//            sessionStorage.setItem("currentIndex", 0);
+//          })
+//          .catch((err) => {
+//            console.error(err)
+//            this.set_error_data({
+//              site: "match_details--get_matchInfo",
+//              error: err,
+//            });
+//            this.countMatchDetail();
+//          })
+//          .finally(() => {
+//            // 循环调用 赛事详情页比分板接口，固定间隔3s
+//            if (loop_count) {
+//              clearTimeout(this.get_match_details_timer2)
+//              this.get_match_details_timer2 = setTimeout(() => {
+//                loop_count--
+//               get_matchInfo(loop_count)
+//              }, 3000)
+//            } else {
+
+//            }
+//          })
+//      }
+//      const match_details_debounce_cache = oun.get_match_details
+//      if(match_details_debounce_cache && match_details_debounce_cache['ENABLED']){
+//        let info = match_details_debounce_cache.can_send_request(params);
+//        if(info.can_send){
+//          //直接发请求    单次数 请求的方法
+//          send_request();
+//        }else{
+//          // 记录timer
+//          this.current_hash_code = 0
+//          clearTimeout(this.axios_debounce_timer)
+//          this.axios_debounce_timer = setTimeout(() => {
+//            //直接发请求    单次数 请求的方法
+//            send_request();
+//            this.current_hash_code = 0
+//          }, info.delay_time || 1000);
+//        }
+//      } else {
+//        //直接发请求    多 次数  循环请求 的方法
+//        send_request();
+//      }
+//    },
+//    /**
+//     * @description: 详情比分面板接口报错处理
+//     * @param {*}
+//     * @return {*}
+//     */
+//    countMatchDetail() {
+//      // 计算错误次数
+//      this.countMatchDetailErr += 1;
+//      // 如果接口一直报错，最多拉取5次
+//      if (this.countMatchDetailErr < 5) {
+//        // 延迟3秒 再次调详情接口
+//        this.get_match_details_timer = setTimeout(() => {
+//         get_matchInfo();
+//        },3000)
+//      }else{
+//        this.match_infoData = {mid:-1, csid:-1}
+//       allData.handicap_state  = 'all_empty'
+//      }
+//    },
+
+//    /**
+//     * @description: 玩法集
+//     * @param {function} callback 判断是否调玩法列表接口
+//     */
+//    get_category_list(callback,is_ws) {
+
+//      let params = {
+//        sportId: this.sportId || 0, //球类id
+//        mid: this.vx_details_params.mid || 0, //赛事id
+//      };
+//      // 全屏模式
+//      if(route.params.video_size == 1){
+//        params.type = 2
+//      }
+//      const _obj = {
+//        axios_api: api_details.get_category_list,
+//        error_codes:['0401038'],
+//        params: params,
+//        fun_then: res => {
+//          if(!this.match_info_ctr){
+//            return
+//          }
+//          const code = lodash.get(res, "data.code");
+//          if(code == '0400500'){
+//            this.emit_autoset_match(0);
+//            return;
+//          }
+//          const data = lodash.get(res, "data.data");
+//          if (code === 200 && data.length) {
+
+//            this.category_list = data;
+//            // 初始化玩法列表
+//            this.match_info_ctr.init_play_menu_list(data);
+//            if (callback) {
+//              callback();
+//            }
+//          }else{
+//            this.load_data_state = "empty";
+//          }
+//        },
+//        fun_catch: err => {
+//          // 连续3次请求无响应则网络异常
+//          if(!is_ws){
+//             this.load_data_state = "user_api_limited";
+//          }
+//        },
+//        timers:1500,
+//        max_loop:5,
+//      }
+//      this.$utils.axios_api_loop(_obj);
+//    },
+
+//    /**
+//    * @description: 弹出报错提示
+//    * @param {}
+//    * @return {}
+//    */
+//    err_tips(err){
+//      this.match_details = [];
+//      this.set_error_data({
+//        site: "details--get_match_detail",
+//        error: err,
+//      });
+//      if (
+//        lodash.isPlainObject(err) ||
+//        lodash.get(err, "response.status") == 404
+//      ) {
+//       allData.handicap_state  = "404";
+//      } else {
+//       allData.handicap_state  = "refresh";
+//      }
+//    },
+//    /**
+//     * @description: ws逻辑调取玩法列表
+//     */
+//    get_match_detail(isWs) {
+//      this.get_match_detail_base({isWs});
+//    },
+
+//    /**
+//     * @description: 子组件玩法切换
+//     * @param {string} id 玩法集id
+//     */
+//    get_mattch_details(obj) {
+//      this.mcid = lodash.get(obj, 'id');
+//      this.round = lodash.get(obj, 'round');
+//      this.plays_list = lodash.get(obj, 'plays',[]);
+//    //   this.get_match_detail_base();
+//    },
+//    /**
+//     * 切换玩法集时增加 loading 效果
+//     */
+//    change_loading_state(n) {
+//     allData.handicap_state  = n
+//    },
+//    /**
+//     * @description 设置滚动数据
+//     * @param  {string} type  类型
+//     * @param  {oject} _this  上下文对象
+//     * @return {undefined} undefined
+//     */
+//    set_scroll_this({ type, _this }) {
+//      this[type] = _this
+//    },
+//    /**
+//     * 切换玩法集
+//     * @param {*} obj 从tab里获取的玩法集参数
+//     */
+//    switchTabs(obj) {
+//      this.currentIndex = obj.index
+//      // 设置当前玩法集所在的id
+//      this.set_tabs_active_id(obj.item.id)
+//      // 设置当前玩法集对应的盘口玩法
+//      this.set_tabs_active_plays(obj.item.plays)
+//      // 请求当前选中的玩法项
+//      this.get_mattch_details({id: obj.item.id, plays: obj.item.plays, round: obj.item.round})
+//      // 投注项列表回到顶部
+//      this.on_go_top()
+//      if (this.match_infoData.csid == 1) {
+//        // 发送埋点
+//        let zhuge_obj = {
+//          "玩法集名称": obj.item.marketName,
+//          "玩法集ID": obj.item.id,
+//          "区域位置": "大屏"
+//        }
+//        this.$utils.send_zhuge_event("TY_PC_足球_玩法分类导航_点击", zhuge_obj);
+//      }
+//    },
+//    // 批量清除定时器
+//    clear_timer() {
+//      const timer_arr = [
+//        'axios_debounce_timer',
+//        'axios_debounce_timer2',
+//        'get_match_details_timer',
+//        'get_match_details_timer2',
+//      ]
+
+//      for (const timer of timer_arr) {
+//        clearTimeout(this[timer])
+//        this[timer] = null
+//      }
+//    },
+//    // 自动化测试页面加载时间时使用
+//    set_home_loading_time_record(status){
+//      if(window.init_loading_time_obj && lodash.get(window, 'env.config.DOM_ID_SHOW')){
+//        if(!window.init_loading_time_obj.right_details_end_time){
+//          window.init_loading_time_obj.right_details_end_time = new Date().getTime();
+//        }
+//        let time_obj = window.init_loading_time_obj;
+//        if(!time_obj.start){
+//          time_obj.start = new Date(time_obj.start_time).Format('yyyy-MM-dd hh:mm:ss');
+//        }
+//        if(time_obj.list_end_time && time_obj.right_details_end_time){
+//          let end_time = (time_obj.list_end_time > time_obj.right_details_end_time)?time_obj.list_end_time:time_obj.right_details_end_time;
+//          time_obj.end = new Date(end_time).Format('yyyy-MM-dd hh:mm:ss'),
+//          time_obj.end_time = end_time;
+//          time_obj.status = status;
+//          time_obj.duration = time_obj.end_time - time_obj.start_time;
+//          sessionStorage.setItem('home_loading_time_record',JSON.stringify(time_obj))
+//          window.init_loading_time_obj = null;
+//        }
+//      }
+//    },
+
+//  /**
+//   * @description: 组件销毁前回调方法
+//   */
+//  destroyed() {
+//    this.clear_timer()
+//    this.$root.$off("autoset_match", this.emit_autoset_match);
+//    this.$root.$off("check_plays_show", this.check_plays_show);
+//    this.$root.$off("close_tips", this.close_tips);
+//    this.$utils.del(this.ol_obj);
+//    this.$utils.del(this.hl_obj);
+//    this.debounce_throttle_cancel(this.refresh);
+//    this.refresh_loading_timer && clearTimeout(this.refresh_loading_timer)
+//    // 站点 tab 休眠状态转激活
+//    this.$root.$off(MITT_TYPES.EMIT_SITE_TAB_ACTIVE, this.emit_site_tab_active);
+
+//    this.$root.$off("match_detail_base", this.get_match_detail_base);
+
+//    this.$root.$off("change_loading_status_right_details", this.getLoading)
+//    this.$root.$off("match_details_header_height_right_details", this.getHeaderHeight)
+
+//    this.match_info_ctr.destroy();
+//    this.match_infoData = null;
+//    this.category_list = null;
+//    this.match_details = null;
+//  },
+>>>>>>> f04121b22d5dcf4205e1939bd54caf0f69e3aa9b

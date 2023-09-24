@@ -7,7 +7,7 @@
 <template>
   <div>
     <!-- 勾选框 和 提前结算-->    
-    <div v-if="toolSelected === 0 && settleSwitch">
+    <div v-if="toolSelected == '0' && settleSwitch">
       <!-- 勾选框 -->
       <div class="date-time-choice checkbox" @click="search_pre_record">
         <filter-checkbox-full-version-wapper
@@ -19,7 +19,7 @@
       </div>
     </div>
     <!-- 已结算下面的今天等tab页 勾选框 默认排序 查询 表格内容 -->
-    <div v-if="toolSelected === 1" class="wrap_success">
+    <div v-if="toolSelected == '1'" class="wrap_success">
       <!-- 今天等tab页 -->
       <div class="tool-time">
         <div
@@ -27,7 +27,7 @@
           @click="chooseTime(i)"
           v-for="(tool, i) of toolWords"
           :class="{
-            current: toolIndex === i,
+            current: toolIndex == i,
             'tool-item-hover': hoverIndex == i,
           }"
           :key="i"
@@ -82,7 +82,7 @@
                 :class="sort.id == time_sort_record_item.id && 'active'"
                 @click="time_sort(sort)"
               >
-                <icon :name="sort.icon" size="14px" color="#ABBAC8" />
+                <icon-wapper :name="sort.icon" size="14px" color="#ABBAC8" />
                 <span class="text">{{ sort.name }}</span>
               </div>
             </template>
@@ -95,7 +95,7 @@
           <div class="date-wrap" @click.stop="startTimeShowFunc">
             <div>
               {{
-                ["vi", "th", "en", "ms", "ad"].includes(lang)
+                ["vi", "th", "en", "ms", "ad"].includes(UserCtr.lang)
                   ? formatTime(
                       new Date(startDateSearch).getTime(),
                       "dd/mm/yyyy"
@@ -104,7 +104,7 @@
               }}
               -
               {{
-                ["vi", "th", "en", "ms", "ad"].includes(lang)
+                ["vi", "th", "en", "ms", "ad"].includes(UserCtr.lang)
                   ? formatTime(new Date(endDateSearch).getTime(), "dd/mm/yyyy")
                   : endDateSearch
               }}
@@ -133,7 +133,7 @@
       </div>
     </div>
     <!-- 预约注单tab 进行中 已取消 预约失败  勾选框 -->
-    <div v-if="toolSelected === 2 && settleSwitch">
+    <div v-if="toolSelected == '2' && settleSwitch">
       <!-- 勾选框 -->
       <div class="checkbox">
         <!--联赛筛选单选框组件-->
@@ -155,9 +155,12 @@ import { FilterCheckboxFullVersionWapper } from "src/components/match-list/filte
 import { formatTime } from "src/core/format/index.js";
 import { i18n_t } from "src/boot/i18n.js"
 import UserCtr from "src/core/user-config/user-ctr.js"
+import { IconWapper } from 'src/components/icon/index.js'
+
 const props = defineProps({
   toolSelected: {
-    type: Number
+    type: String,
+    default: '0'
   },
   time_sort_record_item: {
     type: Object

@@ -259,7 +259,6 @@ const set_base_data_init = () => {
 		} else {
 			// 常规赛事以外的 不分滚球和未开赛的数据
 			matchs_list = get_match_list_by_mid_for_base_data_res( mid, csid, csid );
-			// console.warn('matchs_list',matchs_list)
 			// 如果没有数据 使用其他有数据的 赛种玩法
 			if (!matchs_list.length) {
 				// 常规赛种/联赛  滚球
@@ -273,6 +272,12 @@ const set_base_data_init = () => {
 	}
 	if (menu_root == 3) return;
 	// 赛事列表 卡片数据
+	console.error('set_list---------------',matchs_list.length);
+  // 设置列表数据仓库
+  MatchListData.set_list(
+    matchs_list,
+    true,
+  );
 	handle_match_list_request_when_ok(data, true, true, true);
 	let ts1 = Date.now();
 	let mids_arr = [];
@@ -343,12 +348,6 @@ const fetch_match_list = (is_socket = false, cut) => {
 		_params.selectionHour = null;
 	}
 
-
-	if (typeof is_socket == "boolean" && !is_socket) {
-		// console.error('不是无感刷新')
-		// 使用元数据默认显示
-		set_base_data_init();
-	}
 	// return
 	let send_match_list_request = () => {
 		/**返回数据处理************/
@@ -584,7 +583,7 @@ const get_hot_match_list = (backend_run = false) => {
 				
 				if (!backend_run) {
 					// 调用bymids接口
-					api_bymids({ is_first_load: true });
+					// api_bymids({ is_first_load: true });
 					// 切换右侧赛事
 					let first_match = match_list[0];
 					let params = {
@@ -710,7 +709,7 @@ const check_match_last_update_time = () => {
 		}
 	});
 	if (mids.length > 0) {
-		api_bymids({ mids });
+		// api_bymids({ mids });
 	}
 };
 /**

@@ -6,24 +6,24 @@
       <!-- 未结算注单按钮 -->
       <div
         class="btn"
-        @click="toolClicked(0)"
-        :class="{ active: toolSelected === 0 }"
+        @click="tool_clicked('0')"
+        :class="{ active: toolSelected == '0' }"
       >
         {{ i18n_t("bet_record.outstanding_notes") }}
       </div>
       <!-- 已结算注单按钮 -->
       <div
         class="btn"
-        @click="toolClicked(1)"
-        :class="{ active: toolSelected === 1 }"
+        @click="tool_clicked('1')"
+        :class="{ active: toolSelected == '1' }"
       >
         {{ i18n_t("bet_record.settled_note") }}
       </div>
       <!-- 预约注单按钮 -->
       <div
         class="btn"
-        @click="toolClicked(2)"
-        :class="{ active: toolSelected === 2 }"
+        @click="tool_clicked('2')"
+        :class="{ active: toolSelected == '2' }"
       >
         {{ i18n_t("bet_record.book_note") }}
       </div>
@@ -33,24 +33,24 @@
       <!-- 文字前面的点-->
       <div class="point"></div>
       <!--未结算文字描述-->
-      <div class="text" v-if="toolSelected == 0">
+      <div class="text" v-if="toolSelected == '0'">
         {{ i18n_t("bet_record.msg_1") }}
       </div>
       <!--已结算文字描述-->
-      <div class="text" v-if="toolSelected == 1">
-        <template v-if="toolIndex === 0">
+      <div class="text" v-if="toolSelected == '1'">
+        <template v-if="toolIndex == '0'">
           <!--此记录将显示今天所有已派奖彩的投注-->
           {{ i18n_t("bet_record.msg_2") }}
         </template>
-        <template v-else-if="toolIndex == 1">
+        <template v-else-if="toolIndex == '1'">
           <!--此记录将显示昨天所有已派奖彩的投注-->
           {{ i18n_t("bet_record.msg_3") }}
         </template>
-        <template v-else-if="toolIndex == 2">
+        <template v-else-if="toolIndex == '2'">
           <!--此记录将显示7天内所有已派奖彩的投注-->
           {{ i18n_t("bet_record.msg_4") }}
         </template>
-        <template v-else-if="toolIndex == 3">
+        <template v-else-if="toolIndex == '3'">
           <!--此记录将显示30天内所有已派奖彩的投注-->
           {{ i18n_t("bet_record.msg_5") }}
         </template>
@@ -60,7 +60,7 @@
         </template>
       </div>
       <!-- 预约注单文字描述 此记录将显示所有未派彩的投注 -->
-      <div class="text" v-if="toolSelected == 2">{{i18n_t('bet_record.msg_7')}}</div>
+      <div class="text" v-if="toolSelected == '2'">{{i18n_t('bet_record.msg_7')}}</div>
     </div>
   </div>
 </template>
@@ -68,23 +68,23 @@
 <script setup>
 import { ref, reactive, onMounted } from "vue";
 import { i18n_t } from "src/boot/i18n.js"
-const toolSelected = ref(0);
+const toolSelected = ref('0');
 
 const props = defineProps({
-    toolIndex: Number, // 当前选中 tab 的下标
+    toolIndex: String, // 当前选中 tab 的下标
 })
 
-const emit = defineEmits("toolClicked");
+const emit = defineEmits(["tool_clicked"]);
 
 /**
  * @description:记录切换 结算、未结算
  * @param f 0:未结算 1:已结算 2:预约注单
  * @return {undefined} undefined
  */
-const toolClicked = (f) => {
+const tool_clicked = (f) => {
   if (toolSelected.value != f) {
     toolSelected.value = f;
-    emit("toolClicked", f);
+    emit("tool_clicked", f);
   }
 };
 </script>

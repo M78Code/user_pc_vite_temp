@@ -134,7 +134,7 @@
         }
 
         .sport-m-container {
-            background: var(--q-color-page-bg-color-95);
+            background: var(--q-gb-bg-c-15);
 
             .virtual-sports-results {
                 background-color: var(--q-color-page-bg-color-2);
@@ -219,7 +219,7 @@
             backdrop-filter: var(--q-color-backdrop-filter-bg-1);
 
             .selector-w-inner {
-                background: var(--q-color-page-bg-color-95);
+                background: var(--q-gb-bg-c-15);
                 backdrop-filter: blur(5px);
 
                 &.hairline-border {
@@ -288,14 +288,14 @@
                 color: var(--q-color-fs-color-7);
 
                 &.focus {
-                    color: var(--q-color-fs-color-51);
+                    color: var(--q-gb-t-c-1);
 
                     &.is-favorite {
                         color: var(--q-color-fs-color-6);
                     }
 
                     &:after {
-                        background-color: var(--q-color-fs-color-51);
+                        background-color: var(--q-gb-t-c-1);
                     }
 
                     span {

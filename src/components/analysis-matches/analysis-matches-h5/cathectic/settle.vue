@@ -201,7 +201,7 @@ const init_data = (flag) => {
   // 接口参数
   var params = {
     searchAfter: last_record.value || undefined,
-    orderStatus: 1,
+    orderStatus: '1',
     orderBy: sort_active.value,
     timeType: date_limit.value == 7 ? 3 : 4,
   };
@@ -263,7 +263,7 @@ const init_data = (flag) => {
 const onPull = () => {
   var params = {
     searchAfter: last_record.value || undefined,
-    orderStatus: 1,
+    orderStatus: '1',
     orderBy: sort_active.value,
     timeType: date_limit.value == 7 ? 3 : 4,
   };

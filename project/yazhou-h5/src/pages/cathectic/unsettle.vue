@@ -197,7 +197,7 @@ import store from 'src/store-redux/index.js'
   const init_data = (flag) => {
     var params = {
       searchAfter: last_record.value || undefined,
-      orderStatus: 0,
+      orderStatus: '0',
     }
     is_loading.value = !flag
     //请求注单记录接口
@@ -283,7 +283,7 @@ import store from 'src/store-redux/index.js'
   const onPull = () => {
     var params = {
       searchAfter: last_record.value || undefined,
-      orderStatus: 0,
+      orderStatus: '0',
     };
     let ele = myScroll.value
     if (!is_hasnext.value || last_record.value === undefined) {

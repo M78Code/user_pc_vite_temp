@@ -16,7 +16,7 @@
     </simple-header-wapper>
     <div class="wrap-records" ref="record">
       <!--表格头部分 未结算已结算预约注单按钮tab-->
-      <bt-tab @toolClicked="toolClicked" :toolIndex="toolIndex"></bt-tab>
+      <bt-tab @tool_clicked="tool_clicked" :toolIndex="toolIndex"></bt-tab>
 
       <!-- 表格内容部分 包含勾选框-->
       <div class="bet-records col">
@@ -39,7 +39,7 @@
           :dateChanged="dateChanged"
         ></filter-box>
         <!-- 押注记录表单 表格内容 如编号和对应值 -->
-        <template v-if="[0, 1].includes(toolSelected)">
+        <template v-if="['0', '1'].includes(toolSelected)">
           <record-table
             ref="filter_box"
             :order_list="order_list"
@@ -83,6 +83,7 @@ import btTab from "./components/btn-tab.vue";
 import filterBox from "./components/filter-box.vue";
 import recordTable from "./record-table/index.vue";
 import recordBookTable from "./record-book-table.vue";
+
 import lodash from "lodash";
 import { api_betting } from "src/api/index";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
@@ -140,9 +141,10 @@ page_style.value = compute_css_variables({ category: 'component', module: 'bet-r
   resetParams,
   chooseTime,
   search_pre_record,
-  toolClicked,
+  tool_clicked,
   submit,
   dateChanged,
+  delete_book_record,
 } = useConfig();
 
 </script>

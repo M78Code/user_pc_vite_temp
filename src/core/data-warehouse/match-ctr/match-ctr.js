@@ -6,7 +6,7 @@
  * h5和pc赛事列表使用
  * 
  * MatchDataWarehouseInstance.set_list(list); 设置全部列表数据-初次使用
- * MatchDataWarehouseInstance.set_list(list,1); 同步更新全部列表数据(对部分赛事数据进行删除和更新数据合并逻辑操作)
+ * MatchDataWarehouseInstance.set_list(list); 同步更新全部列表数据(对部分赛事数据进行删除和更新数据合并逻辑操作)
  * MatchDataWarehouseInstance.set_quick_query_list(list); 设置快速查询对象列表数据-初次使用
  * MatchDataWarehouseInstance.set_quick_query_list(list,1); 同步更新快速查询对象列表数据(对部分赛事数据进行删除和更新数据合并逻辑操作)
  * 
@@ -46,7 +46,7 @@ export default class MatchDataBase
     this.name_code = name_code;
 
     // 是否启动this.list转换this.list_to_obj
-    this.set_list_to_obj = set_list_to_obj;
+    this.set_list_to_obj = true;
     
     // 设置ws数据通信实例
     this.ws_ctr = new MatchDataBaseWS(this);
@@ -117,7 +117,7 @@ export default class MatchDataBase
     this.cache_match={
       '23432234':{mmp:111111111111,ms:222222222}
     };
-    this.data_version =  '123' ,
+    this.data_version =  ref('123'),
     // 所有投注项动态数据时间更新
     this.cache_oid={
     };
@@ -482,7 +482,9 @@ export default class MatchDataBase
    * @param {Object} list 所有列表数据
    * @param {Boolean} is_merge 是否进行合并数据同步(保证地址不变)
    */
-  set_list(list,is_merge){
+  set_list(list,is_merge=1){
+
+    console.error('数据仓库设置--set_list---',list);
     if(list){
       // 设置使用类型:类表-list,赛事详情-match
       this.type = 'list';
@@ -556,6 +558,7 @@ export default class MatchDataBase
         // 合并数据删除多余数据
         let list_to_obj = this.list_to_many_obj(this.list);
         this.assign_with(this.list_to_obj, list_to_obj);
+        this.data_version.value = String(new Date().getTime());
         // 删除list_obj之前的无用赛事
       }
     }
@@ -602,7 +605,6 @@ export default class MatchDataBase
     this.syn_del_quick_query_obj();
     // ws命令赛事订阅
     this.ws_ctr.scmd_c8();
-    this.data_version= String(new Date().getTime());
   }
   /**
    * @description: 同步清除赛事快捷操作对象中的无用赛事数据挂载
@@ -849,6 +851,7 @@ export default class MatchDataBase
     if(match_details){
       // 设置使用类型:类表-list,赛事详情-match
       this.type = 'match';
+      this.set_list_to_obj = true;
       // 格式化列表赛事(部分数组转对象)
       this.list_serialized_match_obj([match_details]);
       if(is_merge){
@@ -865,6 +868,11 @@ export default class MatchDataBase
         Object.assign(this.list,[match_details])
         // 将要显示的赛事同步到快捷操作对象中
         this.list_to_quick_query_obj(this.list);
+      }
+
+      if(this.set_list_to_obj){
+        // 合并数据删除多余数据
+        this.assign_with(this.list_to_obj, this.quick_query_obj);
       }
     }
   }
@@ -891,6 +899,10 @@ export default class MatchDataBase
           this.list_to_quick_query_obj(this.quick_query_list);
         }
       }
+    }
+    if(this.set_list_to_obj){
+      // 合并数据删除多余数据
+      this.assign_with(this.list_to_obj, this.quick_query_obj);
     }
   }
 
