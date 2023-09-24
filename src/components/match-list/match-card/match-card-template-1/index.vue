@@ -61,6 +61,13 @@ export default {
       default: () => null,
     },
   },
+  components: {
+    matchtpl1after,
+    MatchTpl2After,
+    MatchTpl7After,
+    MatchTpl9After,
+    MatchTpl10After
+  },
   setup(props) {
     // 赛事样式对象
     const match_style_obj = MatchListCardDataClass.all_card_obj[props.mid+'_']
@@ -72,6 +79,10 @@ export default {
     // this.DOM_ID_SHOW = window.BUILDIN_CONFIG.DOM_ID_SHOW;
     // 赛事模板名称
     const match_components_name = computed(() => {
+      return computed_template_name()
+    })
+
+    const computed_template_name = () => {
       let {tpl_id = 1} = match_style_obj
       // 25 罚牌主盘口
       if([3,5,6,8,19,20,22,23,25].includes(+tpl_id)){
@@ -89,7 +100,7 @@ export default {
       }
 
       return `MatchTpl${tpl_id}After`
-    })
+    }
 
     onMounted(() => {
       // 异步设置组件是否挂载完成
@@ -107,7 +118,7 @@ export default {
       match_components_name,
       is_mounted,
       LayOutMain_pc,
-      MatchListCardData
+      MatchListCardData,
     }
   }
 }
