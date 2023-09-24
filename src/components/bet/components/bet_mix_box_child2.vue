@@ -150,7 +150,7 @@
         <div class="add-box add-box2" :class="{ 'add-box2': BetData.is_bet_success_status, 'add-box3': calc_class }"
           @click.stop="pack_up(4)" v-if="BetData.is_bet_success_status">{{ $t('bet.save') }}</div>
         <!-- 单关 -->
-        <div v-else-if="BetData.bet_is_mix" class="bet-add-box text-bold display_center one_text_color"
+        <div v-else-if="true" class="bet-add-box text-bold display_center one_text_color"
           :class="{ 'add-box3': calc_class }" @click.stop="pack_up(5)">
           <div class="bet-add-new bet_margin_left"></div>
           <div class="bet_text_left bet-one">{{ $t('bet.kushikatsu') }}</div>
@@ -176,15 +176,15 @@
           </template>
           <template v-else>
             <!-- 投注 -->
-            <div v-if="btn_show == 0" @click="submit_order" :class="{ 'set-opacity': get_money_notok_list.length }"
+            <div v-if="btn_show == 0" @click="submit_order" :class="{ 'set-opacity': true}"
               class="row justify-center items-center content-center">
               <p class="yb_fontsize12 yb_mr10">{{ $t('bet_record.bet_val') }}</p>
-              <p class="yb_fontsize20">{{ format_money2(BetData.bet_money_total.toFixed(2)) }}</p>
+              <p class="yb_fontsize20">{{ format_money2('500') }}</p>
             </div>
             <!-- 投注 有投注项失效后点击接受变化的置灰样式-->
             <div v-if="btn_show == 5" class="row justify-center items-center content-center set-opacity">
               <p class="yb_fontsize12 yb_mr10">{{ $t('bet_record.bet_val') }}</p>
-              <p class="yb_fontsize20">{{ format_money2(BetData.bet_money_total.toFixed(2)) }}</p>
+              <p class="yb_fontsize20">{{ format_money2(500) }}</p>
             </div>
             <!-- 确定 -->
             <p v-if="btn_show == 1" @click="pack_up" class="yb_fontsize16">{{ $t('common.ok') }}</p>
@@ -198,12 +198,6 @@
             <!-- 接受变化并投注 -->
             <p v-if="btn_show == 4" @click="submit_order" class="yb_fontsize16">{{ $t('bet.agree_change2') }}</p>
           </template>
-        </div>
-
-        <div  class="bet-add-box text-bold display_center one_text_color"
-          :class="{ 'add-box3': calc_class }" @click.stop="pack_up(5)">
-          <div class="bet-add-new bet_margin_left">取消</div>
-          <div class="bet_text_left bet-one">投注</div>
         </div>
       </div>
 
@@ -234,6 +228,8 @@ import { ref, onMounted, watch, computed, onUnmounted } from 'vue';
 import { get_query_bet_amount_common } from "src/core/bet/class/bet-box-submit.js"
 import lodash from 'lodash'
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
+import { format_money3, format_money2 } from 'src/core/format/index.js'
+
 
 
 
@@ -247,10 +243,10 @@ const tips_msg = ref('失效')  // 提示信息
 
 let bet_show_single = ref(true)  // 单关显示
 const get_bet_status = ref(0) // 投注状态
-const btn_show = ref() // 投注状态2
+const btn_show = ref(0) // 投注状态2
 const max_height1 = ref(150) // 投注赛事高度
 const get_mix_bet_flag = ref(false) // 最小投注开关
-const exist_code = ref(666)
+const exist_code = ref(555)
 
 const hide_bet_series_but = () => {
   let res = false;
