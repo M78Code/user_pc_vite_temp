@@ -36,6 +36,7 @@
 <script>
 // import msc from "src/public/mixins/common/msc.js";
 import { format_mgt_time } from "src/core/format/index.js"
+import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/index.js";
 
 export default {
   // mixins: [msc],
@@ -81,16 +82,17 @@ export default {
   },
   props: ["detail_data", "dialog"],
   components: {},
+  let off_ = ''
   created() {
     // 延时器
     showTimeInterval = 0;
     // mess 1:开始 0:暂停
     initEvent();
-    $root.$on(emit_cmd.EMIT_UPDATE_GAME_TIME, initEvent);
+    let {off: off_} = useMittOn(MITT_TYPES.EMIT_UPDATE_GAME_TIME, initEvent);
   },
   destroyed() {
     clearTimeObj();
-    $root.$off(emit_cmd.EMIT_UPDATE_GAME_TIME, initEvent);
+   off_()
   },
   methods: {
     /**
@@ -152,7 +154,7 @@ export default {
      */
     savePageTime(){
       if(dialog) return;
-      $root.$emit(emit_cmd.EMIT_SET_MATCH_TIME, Number(showTime));
+      useMittEmit(MITT_TYPES.EMIT_SET_MATCH_TIME, Number(showTime));
     },
     /**
      *@description 清除时间倒计时

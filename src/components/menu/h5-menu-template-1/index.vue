@@ -41,7 +41,7 @@
       <div class="sub-menu-date-w" v-if="menu_type !== 30" :class="{
         simple: menu_wrap_simple && menu_type != 7,
         zaopan: [4, 11, 28, 3000].includes(+menu_type),
-        esport: 3000 == menu_type,
+        esport,
       }">
         <!-- 二级菜单, 三级菜单, 四级菜单  -->
         <div class="sport-m-container" :class="{
@@ -84,9 +84,7 @@
                     'din-regular': esport
                   }
                     ">
-                    {{ item.name || MenuData.get_menus_i18n_map(
-                      MenuData.recombine_menu_desc(lodash.get(item, 'mi'))
-                    ) }}
+                    {{ item.name || MenuData.get_menus_i18n_map(item?.mi) }}
                   </div>
                 </div>
 
@@ -261,7 +259,6 @@ function set_menu_lv1(item, index, type = "click") {
         set_menu_lv2(item.sl[0], 0, type);
       }
       break;
-    case 7:  // "7": "电竞",
     case 28: //赛果
       break;
     //VR是直接跳 url

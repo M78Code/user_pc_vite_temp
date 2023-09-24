@@ -1,6 +1,6 @@
 <template>
   <div class="news">
-    <load-data :state="state" :style="{'margin-top': (articleDetail && articleDetail.articleContent) ? 0 : '10%'}" :no_data_msg="$root.$t('common.empty_data')">
+    <load-data :state="state" :style="{'margin-top': (articleDetail && articleDetail.articleContent) ? 0 : '10%'}" :no_data_msg="i18n_t('common.empty_data')">
       <div class="article_detail">
         <p class="article_title">{{articleDetail.articleTittle}}</p>
         <p class="author">
@@ -13,7 +13,7 @@
       <div class="favorite_list_title">
         猜你喜欢
       </div>
-      <load-data :state="showEmpty" :class="[showEmpty && 'empty_data_padding_b']" :no_data_msg="$root.$t('common.empty_data')">
+      <load-data :state="showEmpty" :class="[showEmpty && 'empty_data_padding_b']" :no_data_msg="i18n_t('common.empty_data')">
         <ul class="favorite_list" v-if="articleList.length > 0">
           <li v-for="(item, i) in articleList" :key="item.id" @click="showArticle(item)">
             <div class="wrap" v-if="i < 3">
@@ -59,6 +59,7 @@ useRegistPropsHelper(component_symbol, need_register_props)
 import { api_analysis } from 'src/api/index'
 import { formatDate } from 'src/core/format/index.js'
 import { get_file_path } from 'src/core/file-path/file-path.js'
+import { i18n_t } from "src/boot/i18n.js"
 const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
 const router = useRouter();
 const articleDetail = ref({});

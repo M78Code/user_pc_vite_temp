@@ -21,7 +21,7 @@
       <!-- 列表骨架屏 -->
       <!-- <SList v-if="show_skeleton_screen" :loading_body="true" /> -->
       <!-- 列表页主内容 -->
-      <match-list ref="match_list" :matchCtr="matchCtr" :menu_type="MenuData.current_menu"
+      <match-list ref="match_list" :matchCtr="MatchDataWarehouse_H5_List_Common" :menu_type="MenuData.current_menu"
         :data_get_empty="match_is_empty" :source="invok_source ? invok_source : 'match_main'"
         :window_scrolly="window_scrolly" :match_list_wrapper_height="match_list_wrapper_height">
         <!--        @unfold_league="unfold_league_handle"-->
@@ -51,7 +51,7 @@ export default defineComponent({
     next((vm) => {
       // 由首页进入，就不在此处初始化
       if (from.name !== "home") {
-        vm.event_init();
+        // vm.event_init();
       }
       let match_total = vm.matchCtr && vm.matchCtr.list.length;
 
@@ -110,7 +110,7 @@ export default defineComponent({
 </script>
 <script setup>
 import { computed, onBeforeMount, onUnmounted, onMounted, watch, onDeactivated, onActivated, ref } from "vue";
-import { useRoute, useRouter } from "vue-router";
+import { useRoute } from "vue-router";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt";
 import lodash from "lodash";
 import store from "src/store-redux/index.js";
@@ -118,7 +118,6 @@ import store from "src/store-redux/index.js";
 // import use_router_scroll from 'src/core/match-list-h5/use-hooks/router-scroll.js'
 // import use_websocket_store from 'src/core/match-list-h5/websocket/skt_data_list.js'
 import tiaozhuanPanel from "./components/tiaozhuan-panel.vue";    //  跳转banner图和猜你喜欢
-import MatchCtrClass from "src/core/match-list-h5/match-class/match-ctr.js";
 import MatchListCard from "src/core/match-list-h5/match-card/match-list-card-class";
 import MatchPage from "src/core/match-list-h5/match-class/match-page.js";
 import matchList from "./components/match-list.vue";
@@ -127,6 +126,9 @@ import SList from "project_path/src/components/skeleton/skeleton-list.vue"   // 
 import scrollTop from "project_path/src/components/common/record-scroll/scroll-top.vue";
 import { compute_css_variables } from "src/core/css-var/index.js"
 import { MenuData, score_switch_handle, utils } from "src/core/index.js";
+import MatchCtrClass from "src/core/match-list-h5/match-class/match-ctr.js";
+import { MatchDataWarehouse_H5_List_Common } from 'src/core'
+import BaseData from 'src/core/base-data/base-data.js';
 // import matchListCardFold from 'src/core/match-list-h5/match-card/match-list-card-fold.js'
 
 import 'project_path/src/css/pages/match-main.scss'
@@ -137,7 +139,6 @@ const props = defineProps({
 });
 
 const route = useRoute();
-const router = useRouter();
 const store_state = store.getState();
 // const websocket_store = use_websocket_store()
 
@@ -205,7 +206,6 @@ onBeforeMount(() => {
 
 onMounted(() => {
   page_style.value = compute_css_variables({ category: 'component', module: 'match' })
-
   if (props.invok_source) {
     ws_invoke_key.value = props.invok_source;
   }
