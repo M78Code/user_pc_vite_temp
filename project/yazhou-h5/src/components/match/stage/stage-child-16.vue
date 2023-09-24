@@ -66,17 +66,16 @@ export default {
   },
   props: ["detail_data", "dialog"],
   components: {},
-  let off_ = ''
   created() {
     // 时间延时器
     showTimeInterval = 0;
     // mess 1:开始 0:暂停
     initEvent();
-    let {off: off_} = useMittOn(MITT_TYPES.EMIT_UPDATE_GAME_TIME, initEvent);
+    // let {off: off_} = useMittOn(MITT_TYPES.EMIT_UPDATE_GAME_TIME, initEvent);
   },
   destroyed() {
     clearTimeObj();
-    off_()
+    // off_()
   },
   methods: {
     /**

@@ -21,6 +21,10 @@ export  const need_register_props = {
   date_rows: {
     type: Number,
     default: () => 1,
+  },
+  source:{
+    type:String,
+    default:() => null
   }
 }
 

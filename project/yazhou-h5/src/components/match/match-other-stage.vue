@@ -96,11 +96,10 @@ export default {
     'stage-child-16': stage_child_16,
     'stage-child-101': stage_child_101,
   },
-  let off_ = ''
   created() {
     timerInterval_other=0;
     initEvent()
-    let {off: off_} = useMittOn(MITT_TYPES.EMIT_SET_MATCH_TIME, set_match_time); // 储存时间，保证时间同步;
+    // let {off: off_} = useMittOn(MITT_TYPES.EMIT_SET_MATCH_TIME, set_match_time); // 储存时间，保证时间同步;
  },
   methods: {
     initEvent(){
@@ -132,7 +131,7 @@ export default {
     clearInterval(timerInterval_other);
     timerInterval_other = null;
 
-    off_() // 清除储存时间
+    // off_() // 清除储存时间
   },
 };
 </script>

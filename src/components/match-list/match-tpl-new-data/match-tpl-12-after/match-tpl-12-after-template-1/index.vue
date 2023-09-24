@@ -5,7 +5,7 @@
       <!-- 比赛进程 -->
       <div class="process-col yb-flex-center">
         <!-- 比赛进程 -->
-        <match-process v-if="is_mounted && match.api_update_time !=0" :match_props="{match, source: 'match_list'}" show_page="match-list" :rows="2" />
+        <match-process v-if="is_mounted && match.api_update_time !=0" :match_props="{match}" source='match_list' show_page="match-list" :rows="2" />
       </div>
       <!-- 赛事基础信息 -->
       <div class="basic-col" :style="`width:${match_list_tpl_size.team_width}px !important;`" @click.stop="on_go_detail">

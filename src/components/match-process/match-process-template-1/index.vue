@@ -22,16 +22,16 @@
     <!--补充时间-->
     <!-- <template v-if="show_fill_time">
       第二行显示的时间阶段时间+补时分钟数
-      <div :class="{'fill-time': match_props.source=='detail'}">{{format_second_ms(cur_mmp_time,'default')}} + {{cur_fill_second}}'</div>
+      <div :class="{'fill-time': source=='detail'}">{{format_second_ms(cur_mmp_time,'default')}} + {{cur_fill_second}}'</div>
       第三行补时倒计时部分
-      <div class="c-match-date text-center date-wrap" :class="{'count-down': match_props.source=='detail'}">
+      <div class="c-match-date text-center date-wrap" :class="{'count-down': source=='detail'}">
         <timer :tconfig="{
           time:Number(cur_fill_time),
           time_format:(second)=>format_second_ms(second,'default'),
           step:-1,
           timer_ms:1000,
           on_time_change:count_down_change,
-          source: (match_props.source)
+          source: (source)
         }"
       />
       </div>
@@ -107,7 +107,8 @@ const cur_fill_second = ref(0); // 补充的分钟
  * 显示补时时间
  */
  const show_fill_time = computed(() => {
-  let { match, source } = props.match_props;
+  let { match } = props.match_props;
+  let  source  = props.source;
   // 足球需要显示不是时间的阶段 6:上半场 7:下半场 41:加时赛上半场 42:加时赛下半场
   let football_mmp = ["6", "7", "41", "42"];
   return (

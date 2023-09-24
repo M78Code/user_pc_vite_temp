@@ -1,6 +1,6 @@
 <template>
-  <div class="c-match-item  match-tpl0-bg" :class="{ 'more-handicap': lodash.get(match, 'has_add1') || lodash.get(match, 'has_add2') }" v-if="match">
-    match-tpl-0-after-template-1   {{ match }}
+  <div class="c-match-item  match-tpl0-bg" :class="{ 'more-handicap': lodash.get(match, 'has_add1') || lodash.get(match, 'has_add2') }">
+    match-tpl-0-after-template-1   
   <!-- <div class="c-match-item  match-tpl0-bg" :class="{ 'more-handicap': match.has_add1 || match.has_add2 }"> -->
     <div v-show="false">{{ MatchListData.data_version }}</div>
     <!-- 比赛进程 -->
@@ -8,8 +8,8 @@
       <!--热门赛事显示hot标识-->
       <img class="match-hot" src="~public/image/common/svg/hot.svg" v-show="lodash.get(match, 'is_hot')" />
       <!-- 比赛进程 -->
-      <!-- <match-process v-if="is_mounted" :match_props="{ match: match, source: 'match_list' }"
-        show_page="match-list" :rows="2" /> -->
+      <match-process v-if="is_mounted" :match_props="{ match: match }" source='match_list'
+        show_page="match-list" :rows="2" />
     </div>
     <div v-show="false">{{ MatchListCardData.list_version }}</div>
     <!-- 盘口 -->
