@@ -120,6 +120,7 @@ const set_base_data_init = () => {
 		menu_root,
 		left_menu_result: { lv2_mi, lv1_mi, has_mid_menu, guanjun },
 		mid_menu_result: { mi, mif, root },
+    menu_data_version,
 	} = MenuData;
 	let mid = lv2_mi;
 	let midf = lv1_mi;
@@ -484,7 +485,7 @@ const mounted_fn = () => {
 	useMittOn(MITT_TYPES.EMIT_API_BYMIDS, api_bymids({}));
 	useMittOn(MITT_TYPES.EMIT_MX_COLLECT_MATCH, mx_collect_match);
 	useMittOn(MITT_TYPES.EMIT_MiMATCH_LIST_SHOW_MIDS_CHANGE, show_mids_change);
-	useMittOn(MITT_TYPES.EMIT_BASE_DATA_FIRST_LOADED, init_page_when_base_data_first_loaded);
+	useMittOn(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA, init_page_when_base_data_first_loaded);
 	load_video_resources();
 }
 

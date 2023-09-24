@@ -9,14 +9,14 @@
   <div v-show="false">{{ MatchListCardData.list_version }}</div>
   <!-- {{ match_style_obj.show_level }} -->
   <!-- && [1,2].includes(match_style_obj.show_level) -->
-    <component
+    <!-- <component
       v-if="is_mounted"
       :is="match_components_name()"
       :mid="mid"
       :class="'csid-'+match_style_obj.csid"
-    />
+    /> -->
     <!-- <MatchTpl0After :mid="mid" />   -->
-   <!-- {{ match_components_name }} -->
+   {{ match_components_name() }}
  
   </div>
 </template>
@@ -68,9 +68,12 @@ export default {
     MatchTpl9After,
     MatchTpl10After
   },
+  watch: {
+  
+  },
   setup(props) {
     // 赛事样式对象
-    const match_style_obj = MatchListCardDataClass.all_card_obj[props.mid+'_']
+    let match_style_obj = MatchListCardDataClass.all_card_obj[props.mid+'_']
     // 是否显示调试信息
     const test = ref(sessionStorage.getItem('wsl'))
     // 组件是否加载完成
