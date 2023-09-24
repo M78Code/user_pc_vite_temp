@@ -107,17 +107,17 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+// import { mapGetters } from "vuex";
 export default {
   props: {
     // 赛事比分数据
     match_info: Object,
   },
-  computed: {
-    ...mapGetters({
-      get_right_zoom: "get_right_zoom",
-    }),
-  },
+  // computed: {
+  //   ...mapGetters({
+  //     get_right_zoom: "get_right_zoom",
+  //   }),
+  // },
   watch: {
     match_info: {
       handler(res, old) {

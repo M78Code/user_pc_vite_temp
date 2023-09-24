@@ -32,17 +32,20 @@ import {
   compute_css,
   useMittOn,
   MITT_TYPES,
-  MenuData,
+  // MenuData,
   UserCtr,
   is_eports_csid,
   MatchDataWarehouse_PC_Detail_Common,
   format_plays,
   utils,
 } from "src/core/index.js";
+//moni
+// import MenuData from "./menuData"
+
 import { reactive, toRefs, ref, onMounted, onUnmounted } from "vue";
 import store from "src/store-redux/index.js";
-
-
+import MenuData from 'src/core/menu-pc/menu-data-class.js'
+console.log(MenuData,'MenuData');
 import { off } from "licia/$event";
 let state = store.getState();
 export const useRightDetails = (props) => {
@@ -55,7 +58,7 @@ export const useRightDetails = (props) => {
   const allData = reactive({
     // 菜单数据
     menu_data: MenuData,
-    mid: "", //赛事id
+    mid: "3538268", //赛事id
     sportId: "", //球类id
     match_infoData: {},
     category_list: [], //玩法集
@@ -90,21 +93,24 @@ export const useRightDetails = (props) => {
     share_order_time: 0,
     refresh_loading: false, // 刷新按钮loading
     refresh_time: 0, // 刷新次数
-    axios_debounce_timer:null,//定时器
-    axios_debounce_timer2:null,//定时器
-    get_match_details_timer:null,//定时器
-    get_match_details_timer2:null,//定时器
+    axios_debounce_timer: null, //定时器
+    axios_debounce_timer2: null, //定时器
+    get_match_details_timer: null, //定时器
+    get_match_details_timer2: null, //定时器
     last_by_mids_uuid: null, //暂时不知道数据是从哪里定义的  todo
     refresh_loading_timer: null, //暂时不知道数据是从哪里定义的  todo
     // 之前vuex的数据暂时放这里
     set_match_detail_count: null, //暂时不知道数据是从哪里定义的  todo
-    details_params: { //赛事参数
-      media_type:"info",
-      mid:"3538429",
-      sportId:"1",
-      tid:"1188757",
-      time:1695546310766,
-    }
+    details_params: {
+      //赛事参数
+      media_type: "info",
+      mid: "3538429",
+      sportId: "1",
+      tid: "1188757",
+      time: 1695546310766,
+    },
+    match_sort: 1,
+    cur_menu_type: { pre_name: "", type_name: "today" }, //todo
   });
   const init = ref(null);
 
@@ -117,8 +123,10 @@ export const useRightDetails = (props) => {
     } else if (route.name == "search") {
       is_esports_val = false;
     } else {
-      is_esports_val = state.menu_data.is_esports;
+      // is_esports_val = allData.menu_data.is_esports //todo
+      is_esports_val = false
     }
+    console.log(is_esports_val, "is_esports_val");
     return is_esports_val;
   };
 
@@ -131,7 +139,7 @@ export const useRightDetails = (props) => {
     obj = { isWs: false, mid: "", is_bymids: false }
   ) => {
     // 如果当前是电竞页，就不请求右侧玩法列表
-    if (is_esports && route.name != "video") {
+    if (is_esports() && route.name != "video") {
       return false;
     }
     // 如果当前在详情页或者接收数据的 mid 和当前 mid 不一样也不展示玩法列表
@@ -142,16 +150,17 @@ export const useRightDetails = (props) => {
     if (!obj.isWs && allData.handicap_state != "loading") {
       allData.handicap_state = "loading";
     }
-    let euid = MenuData.match_list_api_params.euid;
+    // let euid = MenuData.match_list_api_params.euid;todo
+    let euid = 11;
 
     // 获得当前的模板ID
-    let orpt = MenuData.menu_data.match_tpl_number;
+    let orpt = 0; //todo
     let { play_id } = allData.details_params;
     let baseParam = {
       cuid: UserCtr.get_uid(),
       euid,
       orpt,
-      sort: this.vx_match_sort,
+      sort: allData.match_sort,
     };
     let params = {
       baseParam,
@@ -160,7 +169,7 @@ export const useRightDetails = (props) => {
       mid: allData.mid, //赛事id
       cuid: UserCtr.get_uid(), //用户id
     };
-    let type_name = this.vx_cur_menu_type.type_name;
+    let type_name = allData.cur_menu_type.type_name;
     //today：今日  early：早盘
     if (["today", "early"].includes(type_name)) {
       params.baseParam.cos = MenuData.is_corner_menu() || orpt == 25 ? 1 : 0;
@@ -169,7 +178,8 @@ export const useRightDetails = (props) => {
     }
     // 非滚球传 玩法ID
     if (type_name != "play") {
-      params.baseParam.pids = MenuData.match_list_api_params.pids;
+      // params.baseParam.pids = MenuData.match_list_api_params.pids;
+      params.baseParam.pids = "";
     }
     // 竟足
     if (euid == 30101) {
@@ -184,7 +194,7 @@ export const useRightDetails = (props) => {
 
     let fun_temp = async () => {
       // 记录当前请求gcuuid
-      allData.last_by_mids_uuid = params.gcuuid = UserCtr.uid();
+      allData.last_by_mids_uuid = params.gcuuid = UserCtr.uid;
 
       // 如果当前是电竞
       if (is_esports) {
@@ -192,11 +202,10 @@ export const useRightDetails = (props) => {
         // 电竞接口无用的参数删除
         delete params.baseParam;
         // 电竞接口参数补全，round 是电竞赛事才有的动态玩法id
-        params.round = this.round;
+        params.round = allData.round;
         await api_details
           .get_match_odds_info_ES(params)
           .then((res) => {
-            debugger
             set_home_loading_time_record("ok");
             // 检查gcuuid
             if (allData.last_by_mids_uuid != res.config.gcuuid) return;
@@ -294,7 +303,7 @@ export const useRightDetails = (props) => {
 
             if (!lodash.isEmpty(match_info) && !obj.is_bymids) {
               // 同步列表的赛事数据
-             useMittEmit(MITT_TYPES.EMIT_SYNCH_FROM_DETAIL, res);
+              useMittEmit(MITT_TYPES.EMIT_SYNCH_FROM_DETAIL, res);
               if (allData.is_go_match_list) {
                 let match_obj = {};
                 for (let [key, value] of Object.entries(match_info)) {
@@ -454,7 +463,7 @@ export const useRightDetails = (props) => {
     allData.countMatchDetailErr = 0;
     let params = allData.details_params; //vx_details_params，列表页点击进入详情所保存的赛事参数
     // allData.details_params.mid = mid;
-   allData.sportId = params.sportId; //球类id
+    allData.sportId = params.sportId; //球类id
 
     // 1. C104 mhs 0  仅开盘 循环四次调用  每两次发起之间次间隔最低3秒 一共 理论上9秒以上，
     // 两个原则：
@@ -498,7 +507,7 @@ export const useRightDetails = (props) => {
   // 对获取玩法集所有玩法接口进行节流操作
   const get_match_detail_base_throttle = lodash.throttle(
     () => {
-      get_match_detail_base;
+      get_match_detail_base();
     },
     1000,
     {
@@ -513,7 +522,8 @@ export const useRightDetails = (props) => {
      */
     init.value = lodash.debounce(m_init, 1000);
     init.value();
-    get_match_detail_base_throttle();
+    // get_match_detail_base_throttle();
+    get_match_detail_base();
 
     /*  mitt todo*/
     // // 自动切换赛事
@@ -542,10 +552,10 @@ export const useRightDetails = (props) => {
     //   this.getHeaderHeight
     // );
     // useMittOn("saidan_page_change", this.change_saidan);
-     /*  mitt todo*/
+    /*  mitt todo*/
 
     // 刷新按钮节流
-    refresh()
+    refresh();
   });
 
   //  ...mapActions({
@@ -669,7 +679,7 @@ export const useRightDetails = (props) => {
    * @return {Undefined} Undefined
    */
   const on_go_top = () => {
-   useMittEmit("set_scroll_position", [0, 0]);
+    useMittEmit("set_scroll_position", [0, 0]);
   };
   /**
    * @description: 检查玩法关盘
@@ -717,7 +727,7 @@ export const useRightDetails = (props) => {
       (item) => item.id === allData.mcid,
       {}
     );
-    this.plays_list = plays;
+   allData.plays_list = plays;
     // 保存当前选中的玩法集子项id
     this.set_tabs_active_id(allData.mcid);
     // 保存当前选中的玩法集子项玩法集合
@@ -814,7 +824,7 @@ export const useRightDetails = (props) => {
             // 保存数据,用于接口报错时填充
             this.save_match_info(lodash.cloneDeep(allData.match_infoData));
           } else {
-           countMatchDetail();
+            countMatchDetail();
           }
           sessionStorage.setItem("currentIndex", 0);
         })
@@ -889,7 +899,7 @@ export const useRightDetails = (props) => {
    */
   const get_category_list = (callback, is_ws) => {
     let params = {
-      sportId:allData.sportId || 0, //球类id
+      sportId: allData.sportId || 0, //球类id
       mid: allData.details_params.mid || 0, //赛事id
     };
     // 全屏模式
@@ -967,8 +977,8 @@ export const useRightDetails = (props) => {
    */
   const get_mattch_details = (obj) => {
     allData.mcid = lodash.get(obj, "id");
-    this.round = lodash.get(obj, "round");
-    this.plays_list = lodash.get(obj, "plays", []);
+    allData.round = lodash.get(obj, "round");
+   allData.plays_list = lodash.get(obj, "plays", []);
     //   this.get_match_detail_base();
   };
   /**
@@ -1074,7 +1084,8 @@ export const useRightDetails = (props) => {
     utils.del(this.ol_obj);
     utils.del(this.hl_obj);
     this.debounce_throttle_cancel(refresh());
-    allData.refresh_loading_timer && clearTimeout(allData.refresh_loading_timer);
+    allData.refresh_loading_timer &&
+      clearTimeout(allData.refresh_loading_timer);
     // 站点 tab 休眠状态转激活
     // off(useMittOn.EMIT_SITE_TAB_ACTIVE, this.emit_site_tab_active);
 
@@ -1094,8 +1105,7 @@ export const useRightDetails = (props) => {
     layout_cur_page,
   };
 };
-
-//  mixins: [global_mixin, skt_data_details, format,  details_mixins, live_chatroom],
+//  mixins: [global_mixin,   details_mixins,],
 //  components: {
 //   //  "match-info": match_info,
 //   //  "match-handicap": match_handicap,
