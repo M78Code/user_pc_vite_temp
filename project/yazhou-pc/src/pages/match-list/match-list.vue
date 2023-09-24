@@ -141,7 +141,7 @@ import {MatchDataWarehouse_PC_List_Common as MatchListData ,GlobalAccessConfig} 
  const { mounted_fn, load_data_state, show_refresh_mask, collect_count, is_show_hot } = useMatchListMx();
 const { page_source } = PageSourceData;
 
-console.log('MatchListDataMatchListData', MatchListData.quick_query_obj, load_data_state.value);
+console.log('MatchListDataMatchListData', MatchListData.list_to_obj, load_data_state.value);
 export default {
   components: {
     LeagueTab,
