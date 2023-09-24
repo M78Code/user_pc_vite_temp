@@ -42,7 +42,7 @@ export default {
       on_time_change: ""
     }
   },
-  let off_ = ''
+ 
   created() {
     // 启动计时器
     this.start();
