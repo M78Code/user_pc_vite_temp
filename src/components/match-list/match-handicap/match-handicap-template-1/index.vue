@@ -42,7 +42,8 @@ import betItem from "src/components/bet-item/bet-item-list-new-data.vue"
 import { MatchFooterScoreFullVersionWapper as MatchFooterScore } from "src/components/match-list/match-footer-score/index.js"
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import BetData from 'src/core/bet/class/bet-data-class.js'
-
+import MenuData from "src/core/menu-pc/menu-data-class.js";
+import { compute_sport_id  } from 'src/core/constant/index.js'
 
 // const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
 const props = defineProps({
@@ -72,8 +73,9 @@ const props = defineProps({
     default: () => false,
   }
 })
+let current_csid = MenuData.left_menu_result.lv1_mi
 // 赛事模板宽度
-const match_list_tpl_size = ref(MATCH_LIST_TEMPLATE_CONFIG['template_1_config'].width_config)
+const match_list_tpl_size = ref(MATCH_LIST_TEMPLATE_CONFIG[`template_${compute_sport_id(current_csid)}_config`].width_config)
 
 // 组件是否已挂载
 const is_mounted = ref(true);
