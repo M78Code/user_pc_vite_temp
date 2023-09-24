@@ -364,7 +364,7 @@ export default {
      */
     set_ininplay_match(mmp) {
       mmp = Number(mmp);
-      let { match } = this.match;
+      let { match } = this ;
       let csid = Number(match.csid);
       /** 足球 | 手球 | 橄榄球************************************* */
       if (get_match_status(match.ms)) {
