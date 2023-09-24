@@ -2,7 +2,31 @@ import { Qs } from "src/core/index.js";
 import { LocalStorage } from "src/core/index.js";
 import menu_obj from "src/core/menu-h5/menu-data-class.js";
 import lodash from "lodash";
-import { UserCtr } from "src/core/index.js";
+import { UserCtr, GlobalAccessConfig } from "src/core/index.js";
+/**
+ * url所带的部分参数
+ * s=01
+ * &tag=01
+ * &jz=1
+ * &wsl=9999
+ * &ignore_iframe_pc=1
+ * &gr=common
+ * &tm=2
+ * &lg=zh
+ * &mk=EU
+ * & stm=blue
+ * &api=gK6ht5G1Ja18klV1FYiU aTBkn99JB4/vZh48JQpZOQ=
+ * &activity=10007,10008,10010&
+ * gr=common
+ * &api=F44HJ+atFdYQqXLm85ADtiugr0ZrwutNsM85t6cxNP9Hzf/22TCB/6e++ProM/DCOtWXfg8JnJSNy6Cnjhqp1g==
+ * &keep_url=1
+ * &ag=1&pb=1
+ * &env=line1
+ * &httplog=1
+ * &timestamp=1695535910860
+ * &clearcache=1
+*/
+
 class EnterParamsYazhouH5 {
   constructor() {
     this.url = "";
@@ -10,7 +34,9 @@ class EnterParamsYazhouH5 {
     // 是否已经加载过
     this.init_load = false;
     this.app_init_loading_timer = null;
-    this.get_activity_msg = null
+    this.get_activity_msg = null;
+    //TODO
+    GlobalAccessConfig.set_enter_params_switch({})
   }
   set_enter_url(url) {
     this.url = url;

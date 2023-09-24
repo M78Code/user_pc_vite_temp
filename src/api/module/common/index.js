@@ -233,7 +233,7 @@ export const queryFestivalBanner = (params, config, url = "/v2/festival/queryBan
 
 
 //获取全局开关
-export const get_access_config = (params, config={}, url = "/v1/art/getAccessConfig") => http.get(`${prefix}${url}`, params, config);
+export const get_access_config = (params, config={}, url = "/v1/art/getAccessConfig") => http.get(`${prefix_job}${url}`, params, config);
 
 export const get_menu_init = (params, config={}, url = "/v2/w/menu/initPB") => {
   return http.get(`${prefix}${url}`, params, config);

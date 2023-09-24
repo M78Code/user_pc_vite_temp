@@ -158,8 +158,7 @@
 <script setup>
 import subMenuSpecially from "./sub-menu-specially.vue";
 import { ref, watch, computed, onBeforeUnmount, } from "vue";
-import GlobalAccessConfig from "src/core/access-config/access-config.js";
-import { i18n_t, compute_css, useMittOn, MITT_TYPES, UserCtr, MenuData } from "src/core/index.js";
+import { i18n_t, compute_css, GlobalAccessConfig, useMittOn, MITT_TYPES, UserCtr, MenuData } from "src/core/index.js";
 import base_data from "src/core/base-data/base-data.js";
 import { useRoute, useRouter } from "vue-router";
 import lodash from "lodash"
