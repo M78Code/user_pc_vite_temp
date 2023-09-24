@@ -178,8 +178,8 @@
    </div>
  </template>
 <script setup>
-// import matchHandicap from "src/components/match-detail/match-handicap/match-handicap.vue";
-// import {useRightDetails} from "./match-details-right-config"
+import matchHandicap from "src/components/match-detail/match-handicap/match-handicap.vue";
+import {useRightDetails} from "./match-details-right-config"
 import { useRoute } from "vue-router"
 import {ref} from 'vue'
 const route = useRoute()
