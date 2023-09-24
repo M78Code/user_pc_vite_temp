@@ -13,6 +13,7 @@ import { get_match_dom_show_property } from "./module/match-show-property.js";
 import { useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import UserCtr from 'src/core/user-config/user-ctr.js'
 import MatchListCardScroll from './match-list-card-scroll'
+import { MatchDataWarehouse_H5_List_Common } from 'src/core'
 import { compute_style_template_by_match_height } from './module/compute-style-template.js'
 
 class MatchListCard {
@@ -471,6 +472,7 @@ class MatchListCard {
    *  调用  vuex 里面 set_match_top_map_dict 设置容器 定位 top 值 表征对象
    */
   run_process_when_need_recompute_container_list_step_three_recompute_next_list_container_top_obj( scroll_obj ) {
+
     // 冠军  或者  电竞冠军 或者   赛果虚拟体育  ，赋值全部数据， 不走下边计算逻辑
     if (
       this.menu_type == 100 ||
@@ -592,11 +594,15 @@ class MatchListCard {
           this.sliding_can_trigger_process_distance = 500;
         }
       }
+
       // H5 列表页显示的 可视区域的  数据源
       MatchCtr.setList(current_screen_match, false);
+      MatchDataWarehouse_H5_List_Common.set_list(current_screen_match, 1)
     } else {
+
       // H5 列表页显示的 可视区域的  数据源
-      MatchCtr.setList(MatchCtr.match_list_data_sources, false);
+      // MatchCtr.setList(MatchCtr.match_list_data_sources, false);
+      MatchDataWarehouse_H5_List_Common.set_list(current_screen_match, 1)
     }
     // 防止滚动切换赛事时触发赛事红升绿降
     clearTimeout(this.screen_changing_timer);
