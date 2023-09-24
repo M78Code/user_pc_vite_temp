@@ -28,6 +28,7 @@ import lodash from "lodash";
 //  import axios_debounce_cache from "src/public/utils/http/axios_debounce_cache.js"
 //  import videoHistoryLine from "src/project/yabo/components/video/video_history_line.vue";
 //  import refresh from "src/public/components/refresh/refresh.vue";
+import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/index.js";
 import {
   loadLanguageAsync,
   compute_css,
@@ -40,6 +41,8 @@ import {
 } from "src/core/index.js";
 import { reactive, toRefs, ref, onMounted } from "vue";
 import store from "src/store-redux/index.js";
+import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/index.js";
+
 let state = store.getState();
 export const useRightDetails = (props) => {
   // 获取当前页路由信息
@@ -274,7 +277,7 @@ export const useRightDetails = (props) => {
 
             if (!lodash.isEmpty(match_info) && !obj.is_bymids) {
               // 同步列表的赛事数据
-              this.$root.$emit(this.emit_cmd.EMIT_SYNCH_FROM_DETAIL, res);
+              useMittEmit(this.MITT_TYPES.EMIT_SYNCH_FROM_DETAIL, res);
               if (this.is_go_match_list) {
                 let match_obj = {};
                 for (let [key, value] of Object.entries(match_info)) {
@@ -358,7 +361,7 @@ export const useRightDetails = (props) => {
           });
       }
       ["new_empty", "all_empty"].includes(this.handicap_state) &&
-        this.$root.$emit("get_history");
+        useMittEmit("get_history");
     };
     let api_axios_flg = "match_odds_Info2";
     if (
@@ -478,31 +481,31 @@ export const useRightDetails = (props) => {
 
     /*  mitt todo*/
     // // 自动切换赛事
-    // this.$root.$on("autoset_match", this.emit_autoset_match);
+    // useMittOn("autoset_match", this.emit_autoset_match);
     // // 检查玩法关盘
-    // this.$root.$on("check_plays_show", this.check_plays_show);
+    // useMittOn("check_plays_show", this.check_plays_show);
 
     // // 站点 tab 休眠状态转激活
-    // this.$root.$on(
-    //   this.emit_cmd.EMIT_SITE_TAB_ACTIVE,
+    // useMittOn(
+    //   this.MITT_TYPES.EMIT_SITE_TAB_ACTIVE,
     //   this.emit_site_tab_active
     // );
     // // 关闭 tips
-    // this.$root.$on("close_tips", this.close_tips);
+    // useMittOn("close_tips", this.close_tips);
 
     // //列表刷新拉取详情数据
-    // // this.$root.$on("refreshList", init.value);
+    // // useMittOn("refreshList", init.value);
     // // 拉取玩法列表
-    // this.$root.$on("match_detail_base", this.get_match_detail_base);
+    // useMittOn("match_detail_base", this.get_match_detail_base);
 
     // // 接受 loading 状态
-    // this.$root.$on("change_loading_status_right_details", this.getLoading);
+    // useMittOn("change_loading_status_right_details", this.getLoading);
     // // 右侧头部高度
-    // this.$root.$on(
+    // useMittOn(
     //   "match_details_header_height_right_details",
     //   this.getHeaderHeight
     // );
-    // this.$root.$on("saidan_page_change", this.change_saidan);
+    // useMittOn("saidan_page_change", this.change_saidan);
      /*  mitt todo*/
 
     // 刷新按钮节流
@@ -864,7 +867,7 @@ export const useRightDetails = (props) => {
 //     * @return {Undefined} Undefined
 //     */
 //    on_go_top() {
-//      this.$root.$emit("set_scroll_position", [0, 0])
+//      useMittEmit("set_scroll_position", [0, 0])
 //    },
 //    /**
 //    * @description: 检查玩法关盘
@@ -1228,7 +1231,7 @@ export const useRightDetails = (props) => {
 //    this.debounce_throttle_cancel(this.refresh);
 //    this.refresh_loading_timer && clearTimeout(this.refresh_loading_timer)
 //    // 站点 tab 休眠状态转激活
-//    this.$root.$off(this.emit_cmd.EMIT_SITE_TAB_ACTIVE, this.emit_site_tab_active);
+//    this.$root.$off(this.MITT_TYPES.EMIT_SITE_TAB_ACTIVE, this.emit_site_tab_active);
 
 //    this.$root.$off("match_detail_base", this.get_match_detail_base);
 

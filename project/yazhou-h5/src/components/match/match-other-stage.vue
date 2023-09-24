@@ -26,6 +26,7 @@
 
 <script>
 import { utils } from 'src/core/utils/index.js';
+import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
 import stage_child_1 from "src/project/components/match/otherStage/otherStage-1.vue";    // 详情页下滑动置顶title栏-足球的赛事时间
 import stage_child_2 from "src/project/components/match/otherStage/otherStage-2.vue";    // 详情页下滑动置顶title栏-篮球的赛事时间
 import stage_child_3 from "src/project/components/match/stage/stage-child-3.vue";        // 详情页显示棒球赛事第几节以及赛事时间
@@ -95,10 +96,11 @@ export default {
     'stage-child-16': stage_child_16,
     'stage-child-101': stage_child_101,
   },
+  let off_ = ''
   created() {
     timerInterval_other=0;
     initEvent()
-    $root.$on(emit_cmd.EMIT_SET_MATCH_TIME, set_match_time); // 储存时间，保证时间同步;
+    let {off: off_} = useMittOn(MITT_TYPES.EMIT_SET_MATCH_TIME, set_match_time); // 储存时间，保证时间同步;
  },
   methods: {
     initEvent(){
@@ -130,7 +132,7 @@ export default {
     clearInterval(timerInterval_other);
     timerInterval_other = null;
 
-    $root.$off(emit_cmd.EMIT_SET_MATCH_TIME, set_match_time); // 清除储存时间
+    off_() // 清除储存时间
   },
 };
 </script>

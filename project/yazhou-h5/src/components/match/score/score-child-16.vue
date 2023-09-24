@@ -32,6 +32,7 @@
 
 <script>
 // import { mapGetters } from "vuex"
+import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 export default {
   name: 'stage_child_16',
   data(){
@@ -62,16 +63,16 @@ export default {
       handler(n, o){
         switch( n.mmp ){
           case "301": //301 第一节结束 S20 第二节比分(水球)
-            $root.$emit(emit_cmd.EMIT_SET_NATIVE_DETAIL_DATA, 'S20|0:0')
+            useMittEmit(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, 'S20|0:0')
             break;
           case "302": //302 第二节结束 S21 第三节比分(水球)
-            $root.$emit(emit_cmd.EMIT_SET_NATIVE_DETAIL_DATA, 'S21|0:0')
+            useMittEmit(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, 'S21|0:0')
             break;
           case "303": //303 第三节结束 S22 第四节比分(水球)
-            $root.$emit(emit_cmd.EMIT_SET_NATIVE_DETAIL_DATA, 'S22|0:0')
+            useMittEmit(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, 'S22|0:0')
             break;
           case "34":  //等待点球大战阶段 前端显示点球大战 S170是点球大战比分
-            $root.$emit(emit_cmd.EMIT_SET_NATIVE_DETAIL_DATA, 'S170|0:0')
+            useMittEmit(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, 'S170|0:0')
             break;
         }
       },
@@ -128,16 +129,16 @@ export default {
     validateStage(){
       switch( detail_data.mmp ){
         case "301": //301 第一节结束   S20 第二节比分(水球)
-          $root.$emit(emit_cmd.EMIT_SET_NATIVE_DETAIL_DATA, 'S20|0:0')
+          useMittEmit(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, 'S20|0:0')
           break;
         case "302": //302 第二节结束 S21 第三节比分(水球)
-          $root.$emit(emit_cmd.EMIT_SET_NATIVE_DETAIL_DATA, 'S21|0:0')
+          useMittEmit(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, 'S21|0:0')
           break;
         case "303": //303  第三节结束 S22 第四节比分(水球)
-          $root.$emit(emit_cmd.EMIT_SET_NATIVE_DETAIL_DATA, 'S22|0:0')
+          useMittEmit(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, 'S22|0:0')
           break;
         case "34":  //等待点球大战阶段 前端显示点球大战 S170是点球大战比分
-          $root.$emit(emit_cmd.EMIT_SET_NATIVE_DETAIL_DATA, 'S170|0:0')
+          useMittEmit(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, 'S170|0:0')
           break;
       }
     }

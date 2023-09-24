@@ -60,11 +60,11 @@
             <!--market_type: 0:滚球 若有比分是显示比分 以及盘口名称-->
             <label class="bet-play-text">
               <template v-if="ref_data.match_ms == 1">
-                <label class="bet-match-playing">[{{ $t('menu.match_playing') }}]</label>
+                <label class="bet-match-playing">[{{ i18n_t('menu.match_playing') }}]</label>
               </template>
               {{ item.playName }}
               <label v-if="ref_data.basic_score" class="score">({{ ref_data.basic_score }})</label>
-              <label class="bet-handicap-name">[{{ $t(`odds.${item.marketTypeFinally}`) }}] </label>
+              <label class="bet-handicap-name">[{{ i18n_t(`odds.${item.marketTypeFinally}`) }}] </label>
             </label>
           </div>
         </div>
@@ -83,7 +83,7 @@
             <!-- {{_.trim(team_name)}} -->
           <!-- </template> -->
           <!--【预约】-->
-          <!-- <label v-if="active == 1 && (sport_id == 1 || sport_id == 2)&& pending_order_status == 1 && appoint">{{`[${$root.$t('bet.bet_book2')}]`}}</label> -->
+          <!-- <label v-if="active == 1 && (sport_id == 1 || sport_id == 2)&& pending_order_status == 1 && appoint">{{`[${i18n_t('bet.bet_book2')}]`}}</label> -->
         </label>
         <!--+/1.5-->
       </div>
@@ -99,7 +99,7 @@
           </div>
           <div class="auto-col" v-if="!(ref_data.active == 1 || ref_data.active == 4)">
             <span class="invalid">
-              {{ $t('common.invalid') }}
+              {{ i18n_t('common.invalid') }}
             </span>
           </div>
         </div>
@@ -124,7 +124,7 @@ import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import { format_odds, format_currency,formatTime } from "src/core/format/index.js"
 import { odds_type_name } from "src/core/constant/index.js"
 import BetData from "src/core/bet/class/bet-data-class.js";
-
+import { i18n_t } from "src/boot/i18n.js"
 import BetInput from "./bet-input.vue"
 import { IconWapper } from 'src/components/icon'
 

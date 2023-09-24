@@ -14,6 +14,7 @@
   </div>
 </template>
 <script>
+import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/index.js";
 export default {
   name: "Timer",
   data() {
@@ -41,13 +42,14 @@ export default {
       on_time_change: ""
     }
   },
+  let off_ = ''
   created() {
     // 启动计时器
     this.start();
-    this.$root.$on(this.emit_cmd.EMIT_UPD_TIME_REFRESH_CMD, this.set_date_time);
+    let { off: off_ } = useMittOn(this.MITT_TYPES.EMIT_UPD_TIME_REFRESH_CMD, this.set_date_time);
   },
   destroyed() {
-    this.$root.$off(this.emit_cmd.EMIT_UPD_TIME_REFRESH_CMD, this.set_date_time);
+    off_()
     this.clear();
   },
   watch: {

@@ -19,6 +19,7 @@
 
 <script>
 // import { mapGetters } from "vuex"
+import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 export default {
   name: 'score_child_14',
   data(){
@@ -54,7 +55,7 @@ export default {
       handler(n){
         switch( n.mmp ){
           case "34":    //34  等待点球大战阶段 前端显示点球大战 S170是点球大战比分
-            $root.$emit(emit_cmd.EMIT_SET_NATIVE_DETAIL_DATA, 'S170|0:0')
+            useMittEmit(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, 'S170|0:0')
             break;
         }
       },
@@ -106,7 +107,7 @@ export default {
     validateStage(){
       switch( detail_data.mmp ){
         case "34":  //34  等待点球大战阶段 前端显示点球大战 S170是点球大战比分
-          $root.$emit(emit_cmd.EMIT_SET_NATIVE_DETAIL_DATA, 'S170|0:0')
+          useMittEmit(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, 'S170|0:0')
           break;
       }
     }
