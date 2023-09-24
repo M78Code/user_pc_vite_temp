@@ -47,8 +47,8 @@
           <label class="bet-play-text"><template v-if="match_type === 2"><label class="bet-match-playing">[{{ $t('menu.match_playing')}}]</label></template>{{single_record_obj.playName}}
             <template v-if="single_record_obj.scoreBenchmark!=''
             && match_type===2 &&
-            !((single_record_obj.preOrderDetailStatus != null) && play_mapping.MARKET_RANG_FLAG_LIST.includes(BetData.pre_bet_list.playId.toString())) &&!
-            play_mapping.MARKET_NO_SCORE_LIST.includes(play_id)">
+            !((single_record_obj.preOrderDetailStatus != null) && MARKET_RANG_FLAG_LIST.includes(BetData.pre_bet_list.playId.toString())) &&!
+            MARKET_NO_SCORE_LIST.includes(play_id)">
               ({{single_record_obj.scoreBenchmark.replace(':','-')}})
             </template>
              <!--盘口类型-->
@@ -123,6 +123,8 @@
 import { format_odds } from 'src/core/index.js'
 import lodash from 'lodash'
 import { IconWapper } from 'src/components/icon'
+import { MARKET_RANG_FLAG_LIST,MARKET_NO_SCORE_LIST } from "src/core/constant/config/play-mapping.js";
+
 </script>
 <style lang="scss" scoped>
 .mt5 {

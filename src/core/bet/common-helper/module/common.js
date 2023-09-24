@@ -12,8 +12,7 @@ import BetViewData from "src/core/bet/class/bet-view-data-class.js";
 import uid from "src/core/uuid/index.js";
 import { ref } from "vue";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
-
-import * as play_mapping from "src/core/constant/config/play-mapping.js";
+import { PLAY_LET_BALL,PLAY_GOAL,PLAY_TODAY_SCORE,PLAY_ALL_KINDS,PLAY_RESULT } from "src/core/constant/config/play-mapping.js";
 import { play_name_mapping_csid } from "src/core/constant/config/csid.js";
 import _ from "lodash";
 
@@ -301,9 +300,9 @@ export const get_handicap = (bet_custom_id) => {
     ) {
       // 让球玩法数组中PLAY_LET_BALL中包含的则显示队伍名称与盘口值 具体注释请见\user-pc\src\project\yabo\config\mapping\play_id_mapping.js
       if (
-        play_mapping.PLAY_LET_BALL.includes(hpid) ||
-        !play_mapping.PLAY_GOAL.includes(hpid) ||
-        (play_mapping.PLAY_GOAL.includes(hpid) && target_side == "")
+        PLAY_LET_BALL.includes(hpid) ||
+        !PLAY_GOAL.includes(hpid) ||
+        (PLAY_GOAL.includes(hpid) && target_side == "")
       ) {
         team_name = `${_.get(item_bs, "hps[0].hl[0].ol[0].on", "")}`;
       }
@@ -312,7 +311,7 @@ export const get_handicap = (bet_custom_id) => {
         team_name &&
         handicap &&
         handicap != "" &&
-        !play_mapping.PLAY_ALL_KINDS.includes(hpid)
+        !PLAY_ALL_KINDS.includes(hpid)
       ) {
         // 如果盘口存在且可以转化成数字,则去掉正负号后进行匹配(防止接口hv字段的盘口值与on或者otv字段中盘口值正负号不一致造成页面显示问题)
         if (!handicap.includes("/") && !isNaN(handicap)) {
@@ -369,7 +368,7 @@ export const get_handicap = (bet_custom_id) => {
       }
     } else {
       //如果是详情部分特殊玩法
-      if (play_mapping.PLAY_RESULT.includes(hpid)) {
+      if (PLAY_RESULT.includes(hpid)) {
         console.log("正常投注参数playOptionName处理------------991", handicap);
         //投注项显示值
         let on = _.get(item_bs, "hps[0].hl[0].ol[0].on", "");
@@ -675,7 +674,7 @@ export const update_odds_info = (bet_item_id) => {
       let hps;
       //游戏和今日里面玩法
       if (
-        play_mapping.PLAY_TODAY_SCORE.includes(cs.play_id) &&
+        PLAY_TODAY_SCORE.includes(cs.play_id) &&
         _.has(cs, "score_type")
       ) {
         hps = `${_.get(cs, "score_type")}|${_.get(
