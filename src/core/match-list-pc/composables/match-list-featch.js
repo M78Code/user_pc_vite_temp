@@ -60,8 +60,7 @@ const set_home_loading_time_record = (status) => {
  * get_match_base_info_by_mids 数据解析
  */
 const set_match_base_info_by_mids_info = (match_list, mids_arr, ts1) => {
-	// 设置列表数据仓库
-	MatchListData.set_list(match_list, true);
+ 
 // 计算赛事卡片
 	// 重新计算赛事样式
 	MatchListCardClass.recompute_match_list_style_obj_and_match_list_mapping_relation_obj_by_matchs(

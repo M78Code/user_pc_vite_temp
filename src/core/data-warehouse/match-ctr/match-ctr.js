@@ -6,7 +6,7 @@
  * h5和pc赛事列表使用
  * 
  * MatchDataWarehouseInstance.set_list(list); 设置全部列表数据-初次使用
- * MatchDataWarehouseInstance.set_list(list,1); 同步更新全部列表数据(对部分赛事数据进行删除和更新数据合并逻辑操作)
+ * MatchDataWarehouseInstance.set_list(list); 同步更新全部列表数据(对部分赛事数据进行删除和更新数据合并逻辑操作)
  * MatchDataWarehouseInstance.set_quick_query_list(list); 设置快速查询对象列表数据-初次使用
  * MatchDataWarehouseInstance.set_quick_query_list(list,1); 同步更新快速查询对象列表数据(对部分赛事数据进行删除和更新数据合并逻辑操作)
  * 
@@ -558,7 +558,7 @@ export default class MatchDataBase
         // 合并数据删除多余数据
         let list_to_obj = this.list_to_many_obj(this.list);
         this.assign_with(this.list_to_obj, list_to_obj);
-        this.data_version.value = String(new Date().getTime());
+        this.data_version = String(new Date().getTime());
         // 删除list_obj之前的无用赛事
       }
     }

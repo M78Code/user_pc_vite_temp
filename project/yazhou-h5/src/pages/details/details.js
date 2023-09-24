@@ -1,7 +1,7 @@
 import lodash from "lodash";
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import {api_common, api_analysis} from "src/api/index.js";  // API 公共入口
-import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
+import { useMittOn, useMittEmit, useMittEmitterGenerator, MITT_TYPES } from  "src/core/mitt"
 import { useRouter, useRoute } from "vue-router";
 import store from "src/store-redux/index.js";
 import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache.js";
@@ -394,9 +394,9 @@ const get_detail_data = ref({})
     }
   };
   // 监听is_bool_dialog_details事件，控制是否显示下拉联赛列表
-  const changge_bool = (bool) => {
+  const change_bool = (bool) => {
     // bool 的值为true或者是false
-    is_dialog_details = bool;
+    state_data.is_dialog_details = bool;
   };
 
 
@@ -838,24 +838,33 @@ const get_detail_data = ref({})
       state_data.scroller_height = window.innerHeight;
     }
   };
+  const { emitters_off } = useMittEmitterGenerator([
+    /** 详情赛事下拉三角形, dialog展示 */
+    { type: MITT_TYPES.EMIT_IS_BOOL_DIALOG_DETAILS, callback: change_bool },
+  ])
+  /**
+   * TODO: 下面的mitt根据业务场景移到上面来 批量注册 销毁
+   * ! on_listeners 不需要再onMounted调用，setup = vue2的created()
+   * 后面可以删除 on_listeners
+   */
+  onUnmounted(emitters_off)
   const on_listeners = () => {
     // #TODO IMIT
     state_data.emitters = [
-      // useMittOn(MITT_TYPES.EMIT_IS_BOOL_DIALOG_DETAILS, info_icon_click_h).off,
-      // useMittOn(MITT_TYPES.EMIT_RESET_SET_HTON, info_icon_click_h).off,
-      // useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS, info_icon_click_h).off,
+      // useMittOn(MITT_TYPES.EMIT_RESET_SET_HTON, info_icon_click_h),
+      // useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS, info_icon_click_h),
       // // 拳击赛事级别关盘+当前时间(服务器时间)>=赛事开赛时间(mgt) 此时详情页拳击赛事切换下一场
-      // useMittOn(MITT_TYPES.EMIT_CHANGE_DETAILS_MATCH, info_icon_click_h).off,
-      // useMittOn(MITT_TYPES.EMIT_DETAILS_SKT, info_icon_click_h).off,
-      // useMittOn(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, info_icon_click_h).off,
-      // useMittOn(MITT_TYPES.EMIT_ANA_SHOW, info_icon_click_h).off,
+      // useMittOn(MITT_TYPES.EMIT_CHANGE_DETAILS_MATCH, info_icon_click_h),
+      // useMittOn(MITT_TYPES.EMIT_DETAILS_SKT, info_icon_click_h),
+      // useMittOn(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, info_icon_click_h),
+      // useMittOn(MITT_TYPES.EMIT_ANA_SHOW, info_icon_click_h),
       // // 0号模板点击收起的时候，要调整滚动距离
-      // useMittOn(MITT_TYPES.EMIT_SET_DETAILDS_SCROLL, info_icon_click_h).off,
-      // useMittOn(MITT_TYPES.EMIT_MATCHINFO_LOADING, info_icon_click_h).off,
-      // useMittOn(MITT_TYPES.EMIT_DETAILILS_TAB_CHANGED, info_icon_click_h).off,
-      // useMittOn(MITT_TYPES.EMIT_TABS_LIST_UPDATE_HANDLE, info_icon_click_h).off,
+      // useMittOn(MITT_TYPES.EMIT_SET_DETAILDS_SCROLL, info_icon_click_h),
+      // useMittOn(MITT_TYPES.EMIT_MATCHINFO_LOADING, info_icon_click_h),
+      // useMittOn(MITT_TYPES.EMIT_DETAILILS_TAB_CHANGED, info_icon_click_h),
+      // useMittOn(MITT_TYPES.EMIT_TABS_LIST_UPDATE_HANDLE, info_icon_click_h),
       // // 监听页面高度的变化 及时动态更新最新的页面高度
-      // useMittOn(MITT_TYPES.EMIT_WINDOW_RESIZE, info_icon_click_h).off,
+      // useMittOn(MITT_TYPES.EMIT_WINDOW_RESIZE, info_icon_click_h),
     ];
   };
   const off_listeners = () => {
@@ -916,7 +925,7 @@ const get_detail_data = ref({})
     moved,
     rem,
     scrollMethod,
-    changge_bool,
+    change_bool,
     initEvent,
     get_chatroom_info,
     get_football_replay,

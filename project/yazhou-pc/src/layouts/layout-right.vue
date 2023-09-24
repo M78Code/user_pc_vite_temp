@@ -20,7 +20,7 @@
       "
     /> -->
     <!-- 常规竞猜 -->
-    <!-- <matchDetailsRight class="page-match-detail fit" /> -->
+    <matchDetailsRight class="page-match-detail fit" />
   </div>
   </div>
 </template>
