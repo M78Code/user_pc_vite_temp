@@ -1,6 +1,5 @@
 <template>
   <div class="c-match-item  match-tpl0-bg" :class="{ 'more-handicap': lodash.get(match, 'has_add1') || lodash.get(match, 'has_add2') }">
-    match-tpl-0-after-template-1   
   <!-- <div class="c-match-item  match-tpl0-bg" :class="{ 'more-handicap': match.has_add1 || match.has_add2 }"> -->
     <div v-show="false">{{ MatchListData.data_version }}</div>
     <!-- 比赛进程 -->
@@ -136,7 +135,6 @@ const play_name_list = ref([]);
 const match_style_obj = ref(lodash.get(MatchListCardData.match_all_card_obj, `all_card_obj.mid_${props.mid}`, {}));
 const match_list_tpl_size = ref(MATCH_LIST_TEMPLATE_CONFIG['template_1_config'])
 const match = MatchListData.list_to_obj.mid_obj[props.mid+'_'];
-console.log('matchmatchmatch', match, MatchListData.list_to_obj, MatchListData.list_to_obj.mid_obj);
 const is_mounted = ref(true);
 // 其他玩法标题
 const bet_col = computed(() => {

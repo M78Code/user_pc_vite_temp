@@ -12,6 +12,7 @@
         <div :class="['bet-item-wrap', ]"
           :style="get_bet_style(col_index, lodash.get(col, 'ols.length'))" v-for="(ol_data, ol_index) in deal_width_handicap_ols(col.ols)"
           :key="ol_index">
+          {{ ol_data }}
           <!-- 投注项组件 -->
           <template v-if="match.tpl_id != 'esports' || (match.tpl_id == 'esports' && getCurState(ol_data._hipo))">
             <bet-item v-if="is_mounted && ol_data && ol_data._hpid" :ol_data="ol_data" />

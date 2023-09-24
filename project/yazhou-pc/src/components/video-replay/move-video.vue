@@ -32,6 +32,7 @@
 import videoReplayError from "./video-replay-error.vue"
 import VueDraggableResizable from 'vue-draggable-resizable'
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
+import { IconWapper } from 'src/components/icon/index.js'
 // VueDraggableResizable组件api: https://gitcode.net/mirrors/mauricius/vue-draggable-resizable?utm_source=csdn_github_accelerator
 import 'vue-draggable-resizable/dist/VueDraggableResizable.css'
 import { onMounted, ref, computed, reactive, onUnmounted, toRefs } from 'vue'
