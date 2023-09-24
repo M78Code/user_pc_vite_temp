@@ -10,26 +10,26 @@
       <scroll ref="myScroll" :on-pull="onPull" v-else>
         <div class="edit row items-center yb_fontsize12">
           <div class="time yb_mr6 relative-position" @click="change_date">
-            <i class="calendar"></i><span>{{ date_limit == 7 ? t('bet_record.7day') :
-              t('bet_record.30day') }}</span>
+            <i class="calendar"></i><span>{{ date_limit == 7 ? i18n_t('bet_record.7day') :
+              i18n_t('bet_record.30day') }}</span>
           </div>
           <div class="sort relative-position" @click.stop="change_sort($event)">
             <i :class="'sort-'+sort_active"></i>
-            <span>{{sort_active == 2 ? t('bet_record.sort0') : sort_active == 1 ? t('bet_record.sort1') : t('bet_record.sort2')}}</span><span></span>
+            <span>{{sort_active == 2 ? i18n_t('bet_record.sort0') : sort_active == 1 ? i18n_t('bet_record.sort1') : i18n_t('bet_record.sort2')}}</span><span></span>
             <!-- 默認排序 -->
             <!-- 按投注时间排序 -->
             <!-- 按开赛时间排序 -->
             <!-- <p v-if="is_sort_show && 0" class="absolute">
-              <span class="sort-text" :class="{'select': sort_active == 2}" data-num='2'><i class="sort0" :class="{'sort-2':sort_active == 2}"></i>{{ $root.$t('bet_record.sort3') }}</span>
-              <span class="sort-text" :class="{'select': sort_active == 1}" data-num='1'><i class="sort1" :class="{'sort-1':sort_active == 1}"></i>{{ $root.$t('bet_record.sort4') }}</span>
-              <span class="sort-text" :class="{'select': sort_active == 3}" data-num='3'><i class="sort2" :class="{'sort-3':sort_active == 3}"></i>{{ $root.$t('bet_record.sort5') }}</span>
+              <span class="sort-text" :class="{'select': sort_active == 2}" data-num='2'><i class="sort0" :class="{'sort-2':sort_active == 2}"></i>{{ i18n_t('bet_record.sort3') }}</span>
+              <span class="sort-text" :class="{'select': sort_active == 1}" data-num='1'><i class="sort1" :class="{'sort-1':sort_active == 1}"></i>{{ i18n_t('bet_record.sort4') }}</span>
+              <span class="sort-text" :class="{'select': sort_active == 3}" data-num='3'><i class="sort2" :class="{'sort-3':sort_active == 3}"></i>{{ i18n_t('bet_record.sort5') }}</span>
             </p> -->
           </div>
           <div>
             <!-- 提前结算 -->
             <span class="yb_fontsize12" @click.stop="change_early"
               :class="{ 'select': is_early, 'is-show': UserCtr.user_info.settleSwitch != 1 }">
-              {{ t('early.btn2') }}<i class="early yb_ml4" :class="{ 'early2': is_early }"></i>
+              {{ i18n_t('early.btn2') }}<i class="early yb_ml4" :class="{ 'early2': is_early }"></i>
             </span>
           </div>
         </div>
@@ -39,14 +39,14 @@
           <template v-if="!is_all_early_flag">
             <div v-for="(value, name, index) in list_data" :key="index">
               <template v-if="!is_early || (is_early && clac_is_early(value.data))">
-                <!-- 时间和输赢统计  .Format(t('time2')) -->
+                <!-- 时间和输赢统计  .Format(i18n_t('time2')) -->
                 <p class="tittle-p row justify-between yb_px4" :class="{ 'tittle-p2': index == 0 }"
                   @click="toggle_show(value)">
                   <span>{{ format_M_D(new Date(name).getTime()) }}</span>
                   <span class="betamount" v-show="store_cathectic.main_item == 1 && value.open">{{
-                    t('bet.number_transactions') }}<span class="color-1 yb_m">{{ value.totalOrders }}</span>&emsp;{{
-                      t('bet.betting') }}<span class="color-1">{{ value.betAmount }}</span>&emsp;{{
-                        t('bet_record.bet_no_status03') }}/{{ t('bet_record.bet_no_status04') }}<span
+                    i18n_t('bet.number_transactions') }}<span class="color-1 yb_m">{{ value.totalOrders }}</span>&emsp;{{
+                      i18n_t('bet.betting') }}<span class="color-1">{{ value.betAmount }}</span>&emsp;{{
+                        i18n_t('bet_record.bet_no_status03') }}/{{ i18n_t('bet_record.bet_no_status04') }}<span
                       class="color-1" :class="{ 'color-2': value.profit > 0 }"><template
                         v-if="value.profit > 0">+</template>{{ value.profit }}</span>
                   </span>
@@ -84,7 +84,7 @@ import lodash from "lodash"
 import store from 'src/store-redux/index.js'
 import { format_M_D } from 'src/core/format/index.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
-import { t } from "src/boot/i18n.js";
+import { i18n_t } from "src/boot/i18n.js";
 //国际化
 
 
@@ -201,7 +201,7 @@ const init_data = (flag) => {
   // 接口参数
   var params = {
     searchAfter: last_record.value || undefined,
-    orderStatus: 1,
+    orderStatus: '1',
     orderBy: sort_active.value,
     timeType: date_limit.value == 7 ? 3 : 4,
   };
@@ -263,7 +263,7 @@ const init_data = (flag) => {
 const onPull = () => {
   var params = {
     searchAfter: last_record.value || undefined,
-    orderStatus: 1,
+    orderStatus: '1',
     orderBy: sort_active.value,
     timeType: date_limit.value == 7 ? 3 : 4,
   };

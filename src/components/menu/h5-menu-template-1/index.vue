@@ -1,5 +1,5 @@
 <template>
-  <div class="menu  match-main-menu">
+  <div class="menu  match-main-menu" :style="{ 'z-index': 501 }">
     <div class="menu-inner-wrap">
       <!--  电竞背景图片  -->
       <div class="m-i-background" v-if="menu_type == 7" :style="compute_css('menu-bg-' + dj_back_type)"></div>
@@ -41,7 +41,7 @@
       <div class="sub-menu-date-w" v-if="menu_type !== 30" :class="{
         simple: menu_wrap_simple && menu_type != 7,
         zaopan: [4, 11, 28, 3000].includes(+menu_type),
-        esport: 3000 == menu_type,
+        esport,
       }">
         <!-- 二级菜单, 三级菜单, 四级菜单  -->
         <div class="sport-m-container" :class="{
@@ -84,9 +84,7 @@
                     'din-regular': esport
                   }
                     ">
-                    {{ item.name || MenuData.get_menus_i18n_map(
-                      MenuData.recombine_menu_desc(lodash.get(item, 'mi'))
-                    ) }}
+                    {{ item.name || MenuData.get_menus_i18n_map(item?.mi) }}
                   </div>
                 </div>
 
@@ -158,8 +156,7 @@
 <script setup>
 import subMenuSpecially from "./sub-menu-specially.vue";
 import { ref, watch, computed, onBeforeUnmount, } from "vue";
-import GlobalAccessConfig from "src/core/access-config/access-config.js";
-import { i18n_t, compute_css, useMittOn, MITT_TYPES, UserCtr, MenuData } from "src/core/index.js";
+import { i18n_t, compute_css, GlobalAccessConfig, useMittOn, MITT_TYPES, UserCtr, MenuData } from "src/core/index.js";
 import base_data from "src/core/base-data/base-data.js";
 import { useRoute, useRouter } from "vue-router";
 import lodash from "lodash"
@@ -211,18 +208,12 @@ const esport = computed(() => {
 });
 //是否显示三级菜单
 const is_show_three_menu = computed(() => {
-  console.error("是否展示三级", date_menu_list.value.length);
-  return (
-    MenuData.get_is_show_three_menu() && date_menu_list.value.length > 0
-  );
+  return date_menu_list.value.length > 0 && MenuData.get_is_show_three_menu()
+
 });
 //是否显示四级菜单
 const is_show_four_menu = computed(() => {
-  console.error("是否展示四级", virtual_sports_results_tab.value.length);
-  return (
-    MenuData.is_results_virtual_sports() &&
-    virtual_sports_results_tab.value.length > 0
-  );
+  return virtual_sports_results_tab.value.length > 0 && MenuData.is_results_virtual_sports();
 });
 /**
     * 二级菜单数量 是否展示
@@ -237,11 +228,9 @@ const two_menu_show = (sub) => {
   return ![7, 8, 28].includes(menu_type.value) && !mi_list.includes(+sub.mi)
 }
 // 获取主菜单列表  main_select_items 弹出的一级 菜单数据   main_menu_list_items 一级菜单数据
-watch(update_time, (update_time) => {
-  const [lv1, pop] = MenuData.get_sport_menu(); //获取体育菜单 【一级菜单，弹出框菜单】
-  console.error(update_time, lv1);
-  menu_list.value = lv1; //一级
-  pop_main_items.value = pop; //pop级
+watch(update_time, (v) => {
+  menu_list.value = MenuData.menu_lv1; //一级
+  pop_main_items.value = MenuData.pop_list; //pop级
   current_menu.value = MenuData.menu_lv2; //2级
   date_menu_list.value = MenuData.menu_lv3; //三级
   virtual_sports_results_tab.value = MenuData.menu_lv4; //4级
@@ -270,7 +259,6 @@ function set_menu_lv1(item, index, type = "click") {
         set_menu_lv2(item.sl[0], 0, type);
       }
       break;
-    case 7:  // "7": "电竞",
     case 28: //赛果
       break;
     //VR是直接跳 url

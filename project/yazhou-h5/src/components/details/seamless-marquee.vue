@@ -18,6 +18,7 @@
 
 <script setup>
 import { onMounted, onUnmounted, reactive, ref } from "vue"
+import lodash from 'lodash'
 const props = defineProps({
     content: {
       type: String, // 类型字符串
@@ -28,15 +29,17 @@ const start_roll = ref(false)
 const copy_content = ref('')
 const timer2_ = ref(null)
 const timer = ref(null)
-const refs_ = reactive({
-  marquee_wrap: null,
-  scroll_wrap: null,
-  full_content: null,
-})
+const marquee_wrap = ref(null)
+const scroll_wrap = ref(null)
+const full_content = ref(null)
 
   // 把父组件传入的arr转化成字符串
 onMounted(() => {
-    let dom_ = refs_
+    let dom_ = {
+      marquee_wrap: marquee_wrap.value,
+      scroll_wrap: scroll_wrap.value,
+      full_content: full_content.value,
+    }
     clearTimeout(timer2_.value)
     timer2_.value = setTimeout(() => {
       set_move_style(dom_)
@@ -52,11 +55,13 @@ onMounted(() => {
    *@description 设置滚动样式
     */
 const set_move_style = (dom_) => {
+  console.error('text_width', dom_);
     if(!(dom_.full_content || dom_.scroll_wrap)) return
     // 获取文字text 的计算后宽度 （由于overflow的存在，直接获取不到，需要独立的node计算）
-    let text_width = _.get(dom_.full_content,'scrollWidth')
+    let text_width = lodash.get(dom_.full_content,'scrollWidth')
     let scroll = dom_.scroll_wrap
     // 如果文本内容的宽度小于页面宽度，则表示文字小于等于一行，则不需要滚动
+    console.error('text_width', text_width);
     if (text_width < 160) {
       scroll.style.justifyContent = 'center'
       start_roll.value = false
@@ -64,7 +69,7 @@ const set_move_style = (dom_) => {
     } else {
       start_roll.value = true
       // title内容副本，为了动画文字流畅衔接
-      copy_content.value = content
+      copy_content.value = props.content
       // 定时器动画（部分机型动画卡顿，导致的样式问题）换为css原生动画
       // move(text_width, scroll)
 
@@ -84,13 +89,14 @@ const set_move_style = (dom_) => {
       style.innerHTML = runkeyframes;
       // 将style样式存放到head标签
       document.querySelector('head').appendChild(style);
+      console.error(style);
       scroll.style.animation = `titleScroll ${scrollTiming}s linear infinite`
     }
     clearTimeout(timer2_.value)
     timer2_.value = null
   }
 const move = (text_width, scroll) => {
-    copy_content.value = content // 文字副本填充
+    copy_content.value = props.content // 文字副本填充
     let distance = 0 // 位移距离
     // 设置位移
     timer.value = setInterval(() => {

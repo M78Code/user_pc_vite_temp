@@ -11,6 +11,7 @@
 import WsMan from './ws-man.js';
 import UserCtr from "src/core/user-config/user-ctr.js";
 import MatchDataBase from "src/core/data-warehouse/match-ctr/match-ctr.js";
+import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/index.js";
 
 // 页面 失去 焦点后  WS 断开时间
 const DOCUMENT_HIDDEN_WS_CLOSE_TIME = 5 * 60 * 1000;
@@ -33,7 +34,7 @@ let lase_socket_close_time = new Date().getTime();
 // ws状态变化
 const ws_status = ref(0)
 // 测试使用到的仓库对象
-const match_data_base1 = reactive(new MatchDataBase({name_code:'1111'}));
+// const match_data_base1 = reactive(new MatchDataBase({name_code:'1111'}));
 // 测试使用到的方法
 function test(){
   let a=function(){
@@ -43,9 +44,13 @@ function test(){
   // this.match_data_base1= new MatchDataBase({name_code:'1111'});
   clearTimeout(timer_text);
   timer_text=setTimeout(() => {
-    console.error('match_data_base1=',match_data_base1);
-    match_data_base1.set_list(b.data.data);
-    match_data_base1.set_quick_query_list(b.data.data);
+    // console.error('match_data_base1=',match_data_base1);
+    // match_data_base1.set_list(b.data.data);
+    // match_data_base1.set_quick_query_list(b.data.data);
+
+    // match_data_base1.set_list_from_match_details(b.data.data[0]);
+    
+
   }, 6000);
 }
 /**
@@ -99,7 +104,7 @@ function socket_status(status, old_status) {
       this.set_socket_status(1);
     }
     // 发送刷新菜单数量命令
-    this.$root.$emit(this.emit_cmd.EMIT_MENU_REFRESH_COUNT_CMD);
+    useMittEmit(MITT_TYPES.EMIT_MENU_REFRESH_COUNT_CMD);
   } else {
     lase_socket_close_time = new Date().getTime();
   }
@@ -316,11 +321,11 @@ function RCMD_C201(obj) {
   if ([1,2].includes(skt_data.status)) {
     // console.log(`===================RCMD_C201RCMD_C201RCMD_C201===============================${JSON.stringify(this.view_ctr_obj)}`);
     // 自动收藏
-    this.$root.$emit(this.emit_cmd.EMIT_MX_COLLECT_COUNT_CMD, { type: "bet" });
+    useMittEmit(MITT_TYPES.EMIT_MX_COLLECT_COUNT_CMD, { type: "bet" });
     // 统计未计算订单
-    this.$root.$emit(this.emit_cmd.EMIT_UNSETTLE_TICKETS_COUNT_CMD);
+    useMittEmit(MITT_TYPES.EMIT_UNSETTLE_TICKETS_COUNT_CMD);
     // 更新提前结算金额
-    this.$root.$emit(this.emit_cmd.EMIT_UPD_CASHOUT_MAX_AMOUNT_LIST_CMD, skt_data);
+    useMittEmit(MITT_TYPES.EMIT_UPD_CASHOUT_MAX_AMOUNT_LIST_CMD, skt_data);
   }
 }
 // 用户账变(C203)

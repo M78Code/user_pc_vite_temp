@@ -5,7 +5,7 @@ import { compute_value_by_cur_odd_type } from "src/core/format/module/format-odd
 import UserCtr from "src/core/user-config/user-ctr.js"
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import { getSeriesCountJointNumber } from "src/core/bet/common-helper/module/bet-single-config.js"
-import { MatchDataWarehouse_PC_List_Common } from 'src/core/index.js'
+// import { MatchDataWarehouse_PC_List_Common } from 'src/core/index.js'
 import lodash_ from "lodash"
 
 const play_id = {
@@ -41,7 +41,7 @@ const set_min_max_money = (bet_list, is_single, is_merge) => {
             "tournamentId": item.tournamentId,   // 联赛id
             "dataSource": item.dataSource,   // 数据源
             "matchType": item.matchType, // 1 ：早盘赛事 ，2： 滚球盘赛事，3：冠军，4：虚拟赛事，5：电竞赛事
-            // "userId": UserCtr.get_uid()
+            "userId": UserCtr.get_uid()
         }
         // 串关没有 这个字段 
         if (is_single) {
@@ -266,17 +266,18 @@ const submit_handle = type => {
 // 选择投注项数据 
 // params 各种id 用于查找数据对应的值 
 // other 灵活数据
-const set_bet_obj_config = (params = {}, other = {}) => {
-    console.log('投注项需要数据', params, 'other', other);
+const set_bet_obj_config = (mid_obj,hn_obj,hl_obj,ol_obj) =>{
+// const set_bet_obj_config = (params = {}, other = {}) => {
+    // console.log('投注项需要数据', params, 'other', other);
     // 切换投注状态
     BetViewDataClass.set_bet_order_status(1)
 
-    const { oid, _hid, _hn, _mid } = params
-    console.error('MatchDataWarehouse_PC_List_Common',MatchDataWarehouse_PC_List_Common)
-    const hl_obj = lodash_.get(MatchDataWarehouse_PC_List_Common.list_to_obj, `hl_obj.${_mid}_${_hid}`)
-    const hn_obj = lodash_.get(MatchDataWarehouse_PC_List_Common.list_to_obj, `hn_obj.${_hn}`)
-    const mid_obj = lodash_.get(MatchDataWarehouse_PC_List_Common.list_to_obj, `mid_obj.${_mid}_`)
-    const ol_obj = lodash_.get(MatchDataWarehouse_PC_List_Common.list_to_obj, `ol_obj.${_mid}_${oid}`)
+    // const { oid, _hid, _hn, _mid } = params
+    // console.error('MatchDataWarehouse_PC_List_Common',MatchDataWarehouse_PC_List_Common)
+    // const hl_obj = lodash_.get(MatchDataWarehouse_PC_List_Common.list_to_obj, `hl_obj.${_mid}_${_hid}`)
+    // const hn_obj = lodash_.get(MatchDataWarehouse_PC_List_Common.list_to_obj, `hn_obj.${_hn}`)
+    // const mid_obj = lodash_.get(MatchDataWarehouse_PC_List_Common.list_to_obj, `mid_obj.${_mid}_`)
+    // const ol_obj = lodash_.get(MatchDataWarehouse_PC_List_Common.list_to_obj, `ol_obj.${_mid}_${oid}`)
 
 
     // 1 ：早盘赛事 ，2： 滚球盘赛事，3：冠军，4：虚拟赛事，5：电竞赛事")
@@ -301,8 +302,8 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         playOptionName: ol_obj.on, // 投注项名称
         playOptions: ol_obj.on,   // 投注项
         tournamentLevel: mid_obj.tlev, //联赛级别
-        playId: hl_obj.hpid, //玩法ID
-        playName: play_id[hl_obj.hpid], //玩法名称
+        playId: hn_obj.hpid, //玩法ID
+        playName: play_id[hn_obj.hpid], //玩法名称
         dataSource: mid_obj.cds, //数据源
         home: mid_obj.mhn, //主队名称
         away: mid_obj.man, //客队名称
@@ -310,7 +311,7 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         placeNum: null, //盘口坑位
         // 以下为 投注显示或者逻辑计算用到的参数
         bet_type: 'common_bet', // 投注类型
-        tid_name: mid_obj.tnjc,  // 联赛名称
+        tid_name: mid_obj.tn,  // 联赛名称
         match_ms: mid_obj.ms, // 赛事阶段
         match_time: mid_obj.mgt, // 开赛时间
     }

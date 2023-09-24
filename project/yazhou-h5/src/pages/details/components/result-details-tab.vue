@@ -113,7 +113,7 @@ const result_tab = (index,tab_item) => {
       let params = {
         matchId: matchid,
         timeType: 3,
-        orderStatus: 1,
+        orderStatus: '1',
         orderBy: 2,
         }
       let {code , data} = await api_betting.post_getOrderList(params)
@@ -237,7 +237,7 @@ onUnmounted(() => {
   position: relative;
   width: 0.4rem;
   height: 0.4rem;
-  background-image: var(--q-color-img-bg-97);
+  background-image: url("public/yazhou-h5/image/svg/tab_up_btn.svg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: 0.12rem 0.12rem;

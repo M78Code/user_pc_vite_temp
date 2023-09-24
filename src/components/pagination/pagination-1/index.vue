@@ -9,7 +9,7 @@
         <span class="footer-text">{{ count }}</span>
       </span>
       <span>
-        {{ toolSelected == 2 ? i18n_t('bet.bet_book_total') : i18n_t('bet_record.total_v') }}
+        {{ toolSelected == '2' ? i18n_t('bet.bet_book_total') : i18n_t('bet_record.total_v') }}
         <!-- 总投注额/预约总投资额 -->
         ：
         <span class="footer-text">{{  format_balance(betTotalAmount)   }}</span>
@@ -39,7 +39,7 @@
             <div class="select-item" v-bind="scope.itemProps" v-on="scope.itemEvents">{{ scope.opt.value }}</div>
           </template>
           <template v-slot:append>
-            <icon :name="icon_name" color="#99A3B1" size="14px" />
+            <icon-wapper :name="icon_name" color="#99A3B1" size="14px" />
           </template>
         </q-select>
         <span>
@@ -54,7 +54,7 @@
           <!-- 跳转至 -->
         </span>
         <input type="text" v-model="goPage" @blur="goToPage(goPage)" @keyup.enter="goToPage(goPage)" :max="max" />
-        <span v-show="lang != 'vi'">
+        <span v-show="UserCtr.lang != 'vi'">
           {{ i18n_t('common.page') }}
           <!-- 页 -->
         </span>
@@ -70,14 +70,20 @@ import { useGetValue } from './use-value.js'
 import { watch } from 'vue'
 import { i18n_t } from "src/boot/i18n.js"
 import { format_balance  } from "src/core/index.js";
+import UserCtr from "src/core/user-config/user-ctr.js";
+import { IconWapper } from 'src/components/icon/index.js'
 
 useRegistPropsHelper(component_symbol, need_register_props)
 const props = defineProps(
   {
     // ...useProps,
+    icon_name: {
+      type: String,
+      default: '',
+    },
     count: {
-      type: Number,
-      default: 0,
+      type: String,
+      default: '0',
     },
     betTotalAmount: {
       type: String,
@@ -92,16 +98,16 @@ const props = defineProps(
       default: "",
     },
     recordType: {
-      type: Number,
-      default: 0,
+      type: String,
+      default: '0',
     },
     random: {
       type: Number,
       default: 0,
     },
     toolSelected: {
-      type: Number,
-      default: 0,
+      type: String,
+      default: '0',
     },
     is_bet_record: {
       type: Boolean,

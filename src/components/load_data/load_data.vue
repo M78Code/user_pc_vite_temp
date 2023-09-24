@@ -135,6 +135,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";
 import {i18n_t} from "src/core/index"
 import { is_eports_csid } from 'src/core/index.js'
 import store from "src/store-redux/index.js";
+import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/index.js";
  
 const store_data = store.getState();
 export default {
@@ -197,11 +198,12 @@ export default {
       store_data
     };
   },
+  let off_ = ''
   created () {
     // 用户登录失效时,直接关闭loading中动画
     this.no_user = UserCtr.is_invalid;
     // 绑定接收用户失效事件
-    // this.$root.$on(MITT_TYPES.EMIT_SHOW_ALERT_CMD, this.no_user_event);
+    let { off: off_ } = useMittOn(MITT_TYPES.EMIT_SHOW_ALERT_CMD, this.no_user_event);
   },
 
   computed: {
@@ -253,7 +255,7 @@ export default {
   },
   destroyed () {
     // 解绑接收用户失效事件
-    // this.$root.$off(MITT_TYPES.EMIT_SHOW_ALERT_CMD, this.no_user_event);
+    off_()
   },
 };
 </script>
