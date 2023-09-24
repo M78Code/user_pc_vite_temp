@@ -7,14 +7,16 @@
   >
   <!-- 赛事玩法模板赛事玩法模板赛事玩法模板赛事玩法模板赛事玩法模板  {{mid}} -->
   <div v-show="false">{{ MatchListCardData.list_version }}</div>
-    <!-- <component
-      v-if="is_mounted && [1,2].includes(match_style_obj.show_level)"
+  <!-- {{ match_style_obj.show_level }} -->
+  <!-- && [1,2].includes(match_style_obj.show_level) -->
+    <component
+      v-if="is_mounted"
       :is="match_components_name"
       :mid="mid"
       :class="'csid-'+match_style_obj.csid"
-    /> -->
-    <MatchTpl0After :mid="mid" />  
-   
+    />
+    <!-- <MatchTpl0After :mid="mid" />   -->
+   <!-- {{ match_components_name }} -->
  
   </div>
 </template>
@@ -30,7 +32,7 @@ import store from 'src/store-redux/index.js'
 // inject:['match_list_card'],
 
 // 玩法模板 0   足球-让球&大小  、 足球-角球 、 美足-让球&大小 、 手球-让球&大小
-import { MatchTpl0AfterFullVersionWapper as MatchTpl0After } from "src/components/match-list/match-tpl-new-data/match-tpl-0-after/index.js";
+import { MatchTpl0AfterFullVersionWapper as MatchTpl1After } from "src/components/match-list/match-tpl-new-data/match-tpl-0-after/index.js";
 // // 玩法模板 2   足球-半/全
 // import { MatchTpl2AfterFullVersionWapper as MatchTpl2After } from "src/components/match-list/match-tpl-new-data/match-tpl-2-after/index.js";
 // // // 玩法模板 7   篮球-让球&大
@@ -60,7 +62,7 @@ const props = defineProps({
   },
 })
 // 赛事样式对象
-const match_style_obj = ref(MatchListCardDataClass.all_card_obj[props.mid+'_'] || {})
+const match_style_obj = MatchListCardDataClass.all_card_obj[props.mid+'_']
 // 是否显示调试信息
 const test = ref(sessionStorage.getItem('wsl'))
 // 组件是否加载完成
@@ -69,7 +71,7 @@ const is_mounted = ref(true);
 // this.DOM_ID_SHOW = window.BUILDIN_CONFIG.DOM_ID_SHOW;
 // 赛事模板名称
 const match_components_name = computed(() => {
-  let {tpl_id = 1} = match_style_obj.value
+  let {tpl_id = 1} = match_style_obj
   // 25 罚牌主盘口
   if([3,5,6,8,19,20,22,23,25].includes(+tpl_id)){
     tpl_id = 2
@@ -78,9 +80,8 @@ const match_components_name = computed(() => {
   }else if([15].includes(+tpl_id)){
     tpl_id = 10
   }else if([13].includes(+tpl_id)){
-    tpl_id = 0
+    tpl_id = 1
   }
-  console.log( `MatchTpl${tpl_id}After`);
 
   return `MatchTpl${tpl_id}After`
 })
@@ -93,7 +94,7 @@ onMounted(() => {
 })
 
 onUnmounted(() => {
-  match_style_obj.value = null
+  match_style_obj = null
 })
 
 </script>
