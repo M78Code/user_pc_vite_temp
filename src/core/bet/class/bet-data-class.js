@@ -406,6 +406,12 @@ this.bet_appoint_ball_head= null */
     this.is_single_handle = val
   }
 
+  // 设置预约投注项id
+  set_bet_appoint_obj(val) {
+    this.bet_appoint_obj = val
+    this.set_bet_data_class_version()
+  }
+
   // 设置 切换单关/串关切换
   set_is_bet_single() {
     // true 单关 false 串关
