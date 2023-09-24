@@ -6,34 +6,31 @@
 
 <template>
   <div class="scroll-wrapper">
-    <div class="scroll-i-con" :class="{
-      high_scrolling: set_ishigh_scrolling && !(lodash.get(get_current_menu, 'date_menu.menuType') == 100) && !(get_menu_type == 28 && [1001, 1002, 1004, 1011, 1010, 1009].includes(get_curr_sub_menu_type)) && get_menu_type != 100,
-      detail_list: main_source == 'detail_match_list',
-      simple: newer_standard_edition == 1,
-      theme02: UserCtr.theme.includes('night'),
-    }" :style="{ 'min-height': `${get_menu_type == 100 ? list_wrap_height : match_list_wrapper_height}rem` }">
+    <div class="scroll-i-con" 
+      :class="{high_scrolling: set_ishigh_scrolling && !(lodash.get(get_current_menu, 'date_menu.menuType') == 100) &&
+       !(get_menu_type == 28 && [1001, 1002, 1004, 1011, 1010, 1009].includes(get_curr_sub_menu_type)) && get_menu_type != 100,
+        detail_list: main_source == 'detail_match_list',
+        simple: newer_standard_edition == 1,
+        theme02: UserCtr.theme.includes('night'),
+      }" 
+      :style="{ 'min-height': `${get_menu_type == 100 ? list_wrap_height : match_list_wrapper_height}rem` }">
       <!-- 循环内部有多个dom时,为了减少最终dom数,可以循环template 当要v-for与v-if同时使用在一个dom上时,可以使用template -->
-      <template v-for="(scrollItem, index) of csid_map_mid_data">
-        <div v-if="scrollItem" class="s-w-item" :key="scrollItem.flex_index" :index="index"
-          :class="{ static: is_static_item, last: index == csid_map_mid_data.length - 1 }" :style="{
-            transform: `translateY(${is_static_item ? 0 : get_match_top_by_mid(scrollItem.mid)}rem)`,
+      <template v-for="(match_item, index) in match_list">
+        <div v-if="match_item" class="s-w-item" :key="match_item.mid" :index="index"
+          :class="{ static: is_static_item, last: index == match_list.length - 1 }" :style="{
+            transform: `translateY(${is_static_item ? 0 : get_match_top_by_mid(match_item.mid)}rem)`,
             zIndex: `${200 - index}`
           }">
-          <div v-if="test" class="debug-head data_mid" :data-mid="scrollItem.mid" :class="{ first: index === 0 }">
-            <span>
-              {{ get_index_f_data_source(scrollItem.mid) + '-' + index }}
-            </span>
-            <span>
-              key={{ scrollItem.flex_index }}-----{{ 'tid:' + scrollItem.tid }}-{{ 'mid: ' + scrollItem.mid }}
-              {{ get_secondary_unfold_map[scrollItem.mid] ? '-unfold: ' + get_secondary_unfold_map[scrollItem.mid] : '' }}
-              <span>
-                {{ get_match_top_by_mid(scrollItem.mid) ? "-" + get_match_top_by_mid(scrollItem.mid) : 'none!' }}
-              </span>
-              <span>ms: {{ scrollItem?.ms }}</span>
+          <div v-if="test" class="debug-head data_mid" :data-mid="match_item.mid" :class="{ first: index === 0 }">
+            <span> {{ get_index_f_data_source(match_item.mid) + '-' + index }} </span>
+            <span> key={{ match_item.flex_index }}-----{{ 'tid:' + match_item.tid }}-{{ 'mid: ' + match_item.mid }}
+              {{ get_secondary_unfold_map[match_item.mid] ? '-unfold: ' + get_secondary_unfold_map[match_item.mid] : '' }}
+              <span> {{ get_match_top_by_mid(match_item.mid) ? "-" + get_match_top_by_mid(match_item.mid) : 'none!' }} </span>
+              <span>ms: {{ match_item?.ms }}</span>
             </span>
           </div>
           <div class="s-w-i-inner">
-            <slot :match_item="get_match_item(scrollItem.mid)" :index="index"></slot>
+            <slot :match_item="get_match_item(match_item.mid)" :index="index"></slot>
           </div>
         </div>
       </template>
@@ -51,7 +48,6 @@ import PageSourceData from "src/core/page-source/page-source.js";
 import { MatchDataWarehouse_H5_List_Common } from 'src/core'
 
 // 避免定时器每次滚动总是触发
-let is_on_check_time_out = false;
 const props = defineProps({
   data_source: Array | Object,
   match_list_wrapper_height: Number,
@@ -65,7 +61,6 @@ const store_state = store.getState();
 // 调试信息
 let test = ref('')
 let prev_frame_time = ref(0)
-let is_arrived_bottom = ref(1)
 //滚动中上一帧的scroll top
 let prev_frame_poi = ref(0)
 let list_wrap_height = ref(0)
@@ -77,20 +72,19 @@ const newer_standard_edition = ref(PageSourceData.newer_standard_edition);
 const get_menu_type = ref(MenuData.get_menu_type())
 const get_current_menu = ref(MenuData.current_menu)
 const get_curr_sub_menu_type = ref(lodash.get(MenuData.current_lv_2_menu, 'type'))
-const csid_map_mid_data = ref([])
+const match_list = ref([])
 const mid_obj = {}
 
 onMounted(() => {
   setTimeout(() => {
-    csid_map_mid_data.value = MatchDataWarehouse_H5_List_Common.csid_map_mid_data
+    match_list.value = MatchDataWarehouse_H5_List_Common.list
     mid_obj.value = MatchDataWarehouse_H5_List_Common.list_to_obj.mid_obj
     console.log(MatchDataWarehouse_H5_List_Common)
-    console.log(88888888888888)
   }, 1000)
   test.value = sessionStorage.getItem('wsl') == '9999';
   // 详情页以外的列表才设置最小高度
   if (props.main_source !== 'detail_match_list') {
-    list_wrap_height = 8;
+    list_wrap_height.value = 8;
   }
 })
 
@@ -109,7 +103,7 @@ const get_index_f_data_source = (mid) => {
  */
 const window_scrolling = () => {
   let splited = store_state.matchReducer.list_scroll_top.split('-');
-  target_scroll_obj = {
+  target_scroll_obj.value = {
     scroll_y: +splited[0],
     client_height: +splited[1],
     scroll_height: +splited[2],
@@ -147,14 +141,14 @@ const window_scrolling = () => {
 const get_is_show_footer_animate = () => {
   let scroll_top = null;
   scroll_top = store_state.matchReducer.list_scroll_top.split('-')[0]
-  let scroll_dir = scroll_top - prev_frame_poi;
+  let scroll_dir = scroll_top - prev_frame_poi.value;
   if (scroll_dir > 0) {
     scroll_dir = 1;
   } else if (scroll_dir < 0) {
     scroll_dir = -1;
   }
   store.dispatch({ type: 'matchReducer/set_list_scroll_direction',  payload: scroll_dir })
-  prev_frame_poi = scroll_top;
+  prev_frame_poi.value = scroll_top;
 }
 /**
  * @description: 列表回到顶部
@@ -199,7 +193,7 @@ const set_ishigh_scrolling = computed(() => {
   } else {
     flag = get_to_bottom_space > 350 && !is_champion
     // 一般热门推荐赛事长度为4，详情页内需过滤掉
-    if (props.main_source !== 'detail_match_list' && lodash.get(target_scroll_obj, 'scroll_height') > 1800) {
+    if (props.main_source !== 'detail_match_list' && lodash.get(target_scroll_obj.value, 'scroll_height') > 1800) {
       flag = true
     }
     // 如果是隐藏骨架屏
@@ -215,7 +209,7 @@ const set_ishigh_scrolling = computed(() => {
 
 const get_to_bottom_space = computed(() => {
   let delta = 0
-  let list_scroll_top = target_scroll_obj
+  let list_scroll_top = target_scroll_obj.value
   //容器的滚动数据
   if (list_scroll_top && props.data_source) {
     delta = list_scroll_top.scroll_height - (list_scroll_top.scroll_y + list_scroll_top.client_height);

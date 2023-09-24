@@ -140,8 +140,8 @@
       <!--  5分钟 图标  -->
       <div class="team-t-title-w" v-if="[1,3,5,7,8,9].includes(+match.csid) && lodash.size(lodash.get(five_minutes_all_list, 'hl[0].ol'))">
         <img @click="info_icon_click($event,match.mid)"
-             :src="show_tips ? (UserCtr.theme.includes('y0') ? `${ $g_image_preffix}/image/bw3/svg/match-list/information-icon_y0.svg` : `${ $g_image_preffix }/image/bw3/svg/match-list/information-icon.svg`):
-                  (UserCtr.theme.includes('02') ? `${ $g_image_preffix }/image/bw3/svg/match-list/information-icon-gray2.svg` : `${ $g_image_preffix }/image/bw3/svg/match-list/information-icon-gray.svg`)" alt="">
+             :src="show_tips ? (UserCtr.theme.includes('y0') ? `/image/bw3/svg/match-list/information-icon_y0.svg` : `/image/bw3/svg/match-list/information-icon.svg`):
+                  (UserCtr.theme.includes('02') ? `/image/bw3/svg/match-list/information-icon-gray2.svg` : `/image/bw3/svg/match-list/information-icon-gray.svg`)" alt="">
         <span class="ellipsis">
           {{[1,2,7,10].includes(+match['ms']) ? i18n_t('football_playing_way.minutes_of_the_Xth_goal', {goalnr: minutes_of_the_Xth_goal}) : i18n_t('football_playing_way.any_goal')}}
         </span>
