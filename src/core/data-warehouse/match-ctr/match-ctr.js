@@ -666,6 +666,27 @@ export default class MatchDataBase
       const many_obj = this.list_to_many_obj(list, timestap);
       // 快速检索对象数据合并
       this._quick_query_obj_assign(this.quick_query_obj, many_obj);
+      if(this.set_list_to_obj){
+        this.assign_with(this.list_to_obj,this.quick_query_obj);
+        try {
+          // 同步list中的赛事数据
+          let mids = Object.keys(many_obj.mid_obj);
+          let len = 0;
+          for (let i = 0; i < this.list.length; i++) {
+            const item = this.list[i];
+            if(item && mids.includes(item.mid+'_')){
+              this.assign_with(item, many_obj.mid_obj[item.mid+'_']);
+              len++;
+              if(mids.length == len){
+                // 数量够时,直接结束循环
+                break;
+              }
+            }
+          }
+        } catch (error) {
+          console.error('仓库列表数据同步一次:',error);
+        }
+      }
       // this.match_assign(this.quick_query_obj.mid_obj, many_obj.mid_obj);
       // this.ol_obj_assign(this.quick_query_obj.ol_obj, many_obj.ol_obj);
       // this.hn_obj_assign(this.quick_query_obj.hn_obj, many_obj.hn_obj);
