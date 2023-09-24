@@ -275,7 +275,7 @@ export default {
     start_timer_loop() {
       let date = this.timestamp++;
       this.format_date = formatSeconds(date);
-      useMittEmit(MITT_TYPES.EMIT_UPD_TIME_REFRESH_CMD,  this.format_date)
+      // useMittEmit(MITT_TYPES.EMIT_UPD_TIME_REFRESH_CMD,  format_date)
     },
     /**
     * @description: 重载页面
