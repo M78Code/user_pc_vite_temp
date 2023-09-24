@@ -104,7 +104,7 @@ function socket_status(status, old_status) {
       this.set_socket_status(1);
     }
     // 发送刷新菜单数量命令
-    useMittEmit(MITT_TYPES..EMIT_MENU_REFRESH_COUNT_CMD);
+    useMittEmit(MITT_TYPES.EMIT_MENU_REFRESH_COUNT_CMD);
   } else {
     lase_socket_close_time = new Date().getTime();
   }
@@ -321,11 +321,11 @@ function RCMD_C201(obj) {
   if ([1,2].includes(skt_data.status)) {
     // console.log(`===================RCMD_C201RCMD_C201RCMD_C201===============================${JSON.stringify(this.view_ctr_obj)}`);
     // 自动收藏
-    useMittEmit(MITT_TYPES..EMIT_MX_COLLECT_COUNT_CMD, { type: "bet" });
+    useMittEmit(MITT_TYPES.EMIT_MX_COLLECT_COUNT_CMD, { type: "bet" });
     // 统计未计算订单
-    useMittEmit(MITT_TYPES..EMIT_UNSETTLE_TICKETS_COUNT_CMD);
+    useMittEmit(MITT_TYPES.EMIT_UNSETTLE_TICKETS_COUNT_CMD);
     // 更新提前结算金额
-    useMittEmit(MITT_TYPES..EMIT_UPD_CASHOUT_MAX_AMOUNT_LIST_CMD, skt_data);
+    useMittEmit(MITT_TYPES.EMIT_UPD_CASHOUT_MAX_AMOUNT_LIST_CMD, skt_data);
   }
 }
 // 用户账变(C203)
