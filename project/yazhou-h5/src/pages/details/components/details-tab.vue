@@ -1,12 +1,16 @@
 <template>
   <div ref='details_tab' :class="['details-tab',{'tab-fixed':get_tab_fix}]" v-cloak>
     <div class="fat-btn" @click="change_btn()">
-      {{get_fewer}}
       <div class="tab-btn" :class="{collapsed: get_fewer != 2}"></div>
     </div>
     <span class="menu-third"></span>
     <div class="menu-s" ref="reset_scroll_dom">
-      <div class="menu-item" v-for="(item,index) in data_list" :key="index" @click.self="selete_item(item['id'],index,item)" :class="get_details_item == item['id']?'t_color':''">
+      <div class="menu-item" 
+      v-for="(item,index) in data_list" 
+      :key="index" 
+      @click.self="selete_item(item['id'],index,item)" 
+      :class="get_details_item == item['id']?'t_color':''"
+      >
         {{item.marketName}}
       </div>
     </div>
@@ -16,7 +20,7 @@
 <script>
 // #TODO vuex
 // import { mapGetters, mapActions,mapMutations } from "vuex"
-import {utils } from 'src/core/index.js';
+import { utils } from 'src/core/index.js';
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, ref } from "vue";
 import { useRoute, useRouter } from "vue-router"
@@ -33,6 +37,14 @@ export default defineComponent({
     scroller_scroll_top: {
       type: Number,
       default: 0
+    },
+    get_details_item: {
+      type: String,
+      default: '0'
+    },
+    new_match_detail_ctr: {
+      type: Object,
+      default: {}
     }
   },
   
@@ -46,7 +58,7 @@ export default defineComponent({
       timer1_: null,
       reset_scroll_dom: null,
     });
-    console.error(props);
+    console.error(props.new_match_detail_ctr);
     // #TODO VUEX
     // computed:{
     // ...mapGetters([
@@ -61,7 +73,6 @@ export default defineComponent({
     //   "get_detail_data",
     // ]),
     // 玩法tab 所有投注 - 进球 - 上半场 - 球队 - 让球&大小
-    const get_details_item = ref(" ");
     const get_tab_fix = ref(" ");
     // 当用户未登录时返回uuid, 当用户登录时返回userId
     // const get_uid = computed(() => {
@@ -97,7 +108,7 @@ export default defineComponent({
     });
     const change_btn = () => {
       // 设置vuex变量值,没有玩法数据时不能点击
-      // if (data_list && data_list.length == 1 && get_details_item == '0') return;
+      // if (data_list && data_list.length == 1 && props.get_details_item == '0') return;
       if(get_fewer.value == 1 || get_fewer.value == 3){
         // set_fewer(2)
         get_fewer.value = 2
@@ -110,7 +121,7 @@ export default defineComponent({
     const selete_item = (uId, index,item) => {
       console.log(item,"itemitemitem");
       // 点击的玩法是当前选中的玩法
-      if(get_details_item.value == uId) return false;
+      if(props.get_details_item == uId) return false;
       // 移动当前玩法的位置
       utils.tab_move2(index, data.reset_scroll_dom)
       // set_details_item(uId);
@@ -119,8 +130,9 @@ export default defineComponent({
       // 重新加载category组件，触发重新请求
       router.replace({name: 'category', params: {mid: match_id, mcid: uId}, query: {search_term: search_term}})
       // 点击玩法对页面吸顶tab做高度处理
-      // #TODO emit
       useMittEmit(MITT_TYPES.EMIT_DETAILILS_TAB_CHANGED);
+      // 记录当前玩法集ID
+      useMittEmit(MITT_TYPES.EMIT_DETAILS_TAB_ITEM, uId)
       // useMittEmit(MITT_TYPES.EMIT_DETAILILS_TAB_CHANGED)
       if(get_fewer.value == 3){
         // set_fewer(1)
@@ -130,16 +142,16 @@ export default defineComponent({
       let zhuge_obj = {
         "玩法集名称": item.marketName,
         "玩法集ID": item.id,
-        "球种名称": $utils.csid_to_sport_name(get_detail_data.csid)
+        "球种名称": utils.csid_to_sport_name(get_detail_data.csid)
       }
-      $utils.zhuge_event_send('TY_H5_详情页/大屏_玩法分类导航_点击', UserCtr,zhuge_obj);
+      utils.zhuge_event_send('TY_H5_详情页/大屏_玩法分类导航_点击', UserCtr,zhuge_obj);
     };
     /**
      * @Description 获取当前选中详情玩法集
      * @param {undefined} undefined
     */
     const get_active_details_play_tab = (callback) => {
-      let item = data_list.filter(item => get_details_item.value == item.id)[0]
+      let item = data_list.filter(item => props.get_details_item == item.id)[0]
       callback(item)
     };
     const initEvent = () => {
@@ -176,7 +188,6 @@ export default defineComponent({
     return {
       ...toRefs(data),
       match_id,
-      get_details_item,
       get_tab_fix,
       get_fewer,
       change_btn,
@@ -228,6 +239,7 @@ export default defineComponent({
   letter-spacing: 0;
   text-align: center;
   font-weight: bold;
+  color: var(--q-gb-t-c-12);
 
   &:after {
     content: ' ';
@@ -239,6 +251,7 @@ export default defineComponent({
     transform: translateX(-50%);
     bottom: 0.05rem;
     border-radius: 0.08rem;
+    background-color: var(--q-gb-bg-c-13);
   }
 }
 
