@@ -261,13 +261,13 @@ const mststi = computed(() => {
   return props.match.mststi;
 });
 
-watch(
-  () => computed_process_name.value,
-  () => {
-    score_switch_handle(props.match);
-  },
-  { immediate: true }
-);
+// watch(
+//   () => computed_process_name.value,
+//   () => {
+//     score_switch_handle(props.match);
+//   },
+//   { immediate: true }
+// );
 
 watch(
   () => show_fill_time.value,
