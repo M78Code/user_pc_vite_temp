@@ -37,7 +37,6 @@ import { IconWapper } from 'src/components/icon/index.js'
 import 'vue-draggable-resizable/dist/VueDraggableResizable.css'
 import { onMounted, ref, computed, reactive, onUnmounted, toRefs } from 'vue'
 import store from "src/store-redux/index.js";
-import { IconWapper } from 'src/components/icon'
 
 // 是否pc项目
 const IS_PC = window.BUILDIN_CONFIG.TARGET_PROJECT_NAME.includes('pc')

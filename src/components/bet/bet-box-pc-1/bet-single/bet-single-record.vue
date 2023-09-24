@@ -13,11 +13,11 @@
         <div class="col-auto bet-icon-info">
           <template v-if="single_record_obj.orderStatusCode == 0">
             <!--投注失败图标-->
-            <icon name="icon-failure" size="18px"/>
+            <icon-wapper name="icon-failure" size="18px"/>
           </template>
           <template v-if="single_record_obj.orderStatusCode == 1">
             <!--投注成功图标 绿色的勾勾-->
-            <icon name="icon-success" size="18px"/>
+            <icon-wapper name="icon-success" size="18px"/>
           </template>
           <template v-if="single_record_obj.orderStatusCode == 2">
             <!--投注确认中转圈，滚球才有的转圈圈-->
@@ -122,7 +122,7 @@
 // import bet_single_record from "src/public/mixins/bet/bet_single_record";
 import { format_odds } from 'src/core/index.js'
 import lodash from 'lodash'
-
+import { IconWapper } from 'src/components/icon'
 </script>
 <style lang="scss" scoped>
 .mt5 {

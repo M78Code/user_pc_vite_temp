@@ -32,7 +32,7 @@
           @mouseenter="enter(0)"
           @mouseleave="leave"
         >
-          <icon
+          <icon-wapper
             name="icon-arrow-left"
             size="10px"
             :color="el_active == 'left' ? '#FF7000' : '#6D7278'"
@@ -84,7 +84,7 @@
             @mouseenter="enter(1)"
             @mouseleave="leave"
           >
-            <icon
+            <icon-wapper
               name="icon-arrow-right"
               size="10px"
               :color="el_active == 'right' ? '#FF7000' : '#6D7278'"
@@ -235,10 +235,12 @@ import { MatchProcessFullVersionWapper } from "src/components/match-process/inde
 import BetCommonHelper from "src/core/bet/common-helper/index.js";
 import lodash from "lodash";
 import store from "src/store-redux/index.js";
+import { IconWapper } from 'src/components/icon'
 
 export default {
   components: {
     "match-date": MatchProcessFullVersionWapper,
+    IconWapper,
   },
   // mixins: [format],
   props: {

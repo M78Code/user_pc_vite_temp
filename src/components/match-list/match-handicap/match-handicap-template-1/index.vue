@@ -12,7 +12,6 @@
         <div :class="['bet-item-wrap', ]"
           :style="get_bet_style(col_index, lodash.get(col, 'ols.length'))" v-for="(ol_data, ol_index) in deal_width_handicap_ols(col.ols)"
           :key="ol_index">
-          {{ ol_data }}
           <!-- 投注项组件 -->
           <template v-if="match.tpl_id != 'esports' || (match.tpl_id == 'esports' && getCurState(ol_data._hipo))">
             <bet-item v-if="is_mounted && ol_data && ol_data._hpid" :ol_data="ol_data" />
@@ -98,7 +97,11 @@ const deal_width_handicap_ols = (payload) => {
   }
   let new_ols = payload.map(item => {
     if (item.empty) { return }
-    item = lodash.get(MatchListData, 'list_to_obj.hn_obj')[`${mid}_${mid}_${item._hpid}_${handicap_type}_${item.ot}`]
+    // 投注项数据拼接
+    let hn_obj_config = `list_to_obj.hn_obj.${mid}_${mid}_${item._hpid}_${handicap_type}_${item.ot}`
+    // 获取投注项内容 
+    item = lodash.get(MatchListData, hn_obj_config,{})
+    item.type_ = hn_obj_config
     return item;
   })
   return new_ols

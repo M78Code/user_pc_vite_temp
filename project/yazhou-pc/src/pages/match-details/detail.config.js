@@ -428,12 +428,12 @@ export const useGetConfig = () => {
           
           // 若当前玩法接口请求错误，则回退到存在盘口信息的玩法
           if (
-            detail_header.value["handicap_tabs_bar"].value &&
-            detail_header.value["handicap_tabs_bar"].value.tab.value
+            detail_header.value["handicap_tabs_bar"] &&
+            detail_header.value["handicap_tabs_bar"].tab.value
           ) {
             const { index, item } = state.last_tab_data || {};
             // this.$refs['handicap-tabs-bar'].$refs['tab'].onclick(index, item)
-            detail_header.value["handicap_tabs_bar"].value.currentIndex = index;
+            detail_header.value["handicap_tabs_bar"].currentIndex = index;
 
             const tabs_active_data_cache =
               get_details_data_cache.value[`${this.mid}-${item.id}`];
@@ -564,7 +564,7 @@ export const useGetConfig = () => {
   
     // 将当前玩法盘口信息记为上次玩法数据
     const last_tab_data_index =
-      detail_header.value["handicap_tabs_bar"].value.currentIndex || 0;
+      detail_header.value["handicap_tabs_bar"].currentIndex || 0;
     state.last_tab_data = {
       index: last_tab_data_index,
       item: state.category_list[last_tab_data_index],

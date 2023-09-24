@@ -28,9 +28,9 @@
     <!-- 大屏 -->
     <div class="full-screen-wrap" :class="{esports:is_esports}" v-if="$route.params.video_size !=1 && !is_esports">
       <!-- 退出中屏 -->
-      <icon v-if="$route.name == 'video'" size="14px" src="" color="#FFFFFF" name="icon-small"  @click="exit_full_screen" />
+      <icon-wappers v-if="$route.name == 'video'" size="14px" src="" color="#FFFFFF" name="icon-small"  @click="exit_full_screen" />
       <!-- 进入中屏 -->
-      <icon v-else size="14px" color="#FFFFFF" :name="`img:${img_big_screen}`" @click="full_screen()" />
+      <icon-wapper v-else size="14px" color="#FFFFFF" :name="`img:${img_big_screen}`" @click="full_screen()" />
       <q-tooltip
         anchor="top middle"
         self="center middle"
@@ -40,9 +40,9 @@
     <!-- 全屏 -->
     <div class="xl-screen-wrap" v-if="$route.params.play_type != 2" :class="{esports:is_esports, disabled: video_fullscreen_disabled}">
       <!-- 退出全屏 -->
-      <icon v-if="$route.name == 'video' && ($route.params.video_size === '1' || is_esports)" size="14px" color="#FFFFFF" name="icon-small" @click="exit_full_screen('xl')" />
+      <icon-wapper v-if="$route.name == 'video' && ($route.params.video_size === '1' || is_esports)" size="14px" color="#FFFFFF" name="icon-small" @click="exit_full_screen('xl')" />
       <!-- 进入全屏 -->
-      <icon v-else  size="14px" color="#FFFFFF" name="icon-big"  @click="full_screen('xl')" />
+      <icon-wapper v-else  size="14px" color="#FFFFFF" name="icon-big"  @click="full_screen('xl')" />
       <q-tooltip
         anchor="top middle"
         self="center middle"
@@ -55,7 +55,12 @@
 <script>
 import { mapGetters, mapActions } from "vuex"
 import video from "src/core/video/video.js"
+import { IconWapper } from 'src/components/icon'
+
 export default {
+  components: {
+    IconWapper,
+  }
   props: {
     ctr_data: {
       type: Object,

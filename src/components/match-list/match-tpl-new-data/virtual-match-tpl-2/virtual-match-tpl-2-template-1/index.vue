@@ -35,7 +35,7 @@
     <div @click.stop="on_go_detail" class="more-row row items-center justify-end cursor-pointer">
       <!-- 显示所有盘口 -->
       {{ t("list.show_more_handicap") }}
-      <icon name="icon-triangle3" color="#99A3B1" />
+      <icon-wapper name="icon-triangle3" color="#99A3B1" />
     </div>
   </div>
 </template>
@@ -45,7 +45,7 @@
 // mixins: [match_item_mixin],
 
 import details from "src/core/match-list/details-class/details.js";
-
+import { IconWapper } from 'src/components/icon'
 import { ref, computed, watch } from 'vue';
 import { t } from "src/core/index.js";
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"

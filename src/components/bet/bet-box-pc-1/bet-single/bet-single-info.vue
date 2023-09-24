@@ -42,7 +42,7 @@
         </div>
         <!--删除按钮-->
         <div class="col-auto col-delete" v-if="ref_data.match_type == 3">
-          <icon size="12px" name="icon-del" class="bet-del" @click="del_bet_item" />
+          <icon-wapper size="12px" name="icon-del" class="bet-del" @click="del_bet_item" />
         </div>
       </div>
       <!--不是滚球-->
@@ -139,10 +139,10 @@ const props = defineProps({
      * @returns {number}
      */
      const pending_order_status = computed(() => {
-        let bet_obj = BetData.bet_single_obj[props.id];
-        if(bet_obj) {
-          return lodash.get(bet_obj, 'cs.pending_order_status')
-        }
+        // let bet_obj = BetData.bet_single_obj[props.id];
+        // if(bet_obj) {
+        //   return lodash.get(bet_obj, 'cs.pending_order_status')
+        // }
         return 0;
      })
 
