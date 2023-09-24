@@ -254,10 +254,10 @@ export default {
       this.is_show_away_red = false
     },
     start_timer() {
-      let {off: this.off_} = useMittOn(
-        MITT_TYPES.EMIT_UPD_TIME_REFRESH_CMD,
-        this.start_timer_loop
-      );
+      // let {off: this.off_} = useMittOn(
+      //   MITT_TYPES.EMIT_UPD_TIME_REFRESH_CMD,
+      //   this.start_timer_loop
+      // );
     },
     start_timer_loop() {
       let date = this.timestamp++;
@@ -285,7 +285,7 @@ export default {
     this.debounce_throttle_cancel(this.hide_away_goal);
     this.debounce_throttle_cancel(this.hide_home_red);
     this.debounce_throttle_cancel(this.hide_away_red);
-    this.off_();
+    // this.off_();
   },
   watch: {
     match_info: {

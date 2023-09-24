@@ -582,7 +582,7 @@ export default defineComponent({
 })
 </script>
 <style scoped lang="scss">
-  // @import "./styles/details.scss";
+  
 </style>
 
 <style scoped lang="scss">
@@ -590,6 +590,7 @@ export default defineComponent({
   // @import "./styles/details-bet.scss";
 </style>
 <style scoped lang="scss">
+@import "./styles/details.scss";
 .details-fat {
 .details-f9 {
   // background: var(--q-color-page-bg-color-9);
@@ -598,6 +599,13 @@ export default defineComponent({
   // background: $details-odds-bg-color;
 }
 }
+.bg-tabs {
+    background: var(--q-gb-bg-c-10);
+    .bg-active-tab {
+    background: var(--q-gb-bg-c-15);
+  }
+  }
+
 </style>
 <style lang="scss">
 .detail-top-pop .q-dialog__inner--minimized {
