@@ -72,18 +72,11 @@
         <div class="col bet-play-team yb-fontsize13" >
         <!--卡赫利赛哈特 :class="{'bet-handicap': handicap_change}"-->
         <label class="bet-team-handicap">
-          <!-- <template v-if="handicap!==''">
-            {{team_name}}
-            <template v-if="team_name!=handicap">
-              <label class="yb-number-bold" :class="{'margin-left-0': team_name=='','bet-handicap': handicap_change}">{{handicap}}</label>
-            </template>
-          </template>
-          <template v-else> -->
-             <!--队伍名称-->
-            <!-- {{_.trim(team_name)}} -->
-          <!-- </template> -->
+
+          <label class="yb-number-bold">{{item.handicap}}</label>
+        
           <!--【预约】-->
-          <!-- <label v-if="active == 1 && (sport_id == 1 || sport_id == 2)&& pending_order_status == 1 && appoint">{{`[${$root.$t('bet.bet_book2')}]`}}</label> -->
+          <label v-if="ref_data.active == 1 && (item.sportId == 1 || item.sportId == 2)&& pending_order_status == 1 && appoint">{{`[${$root.$t('bet.bet_book2')}]`}}</label>
         </label>
         <!--+/1.5-->
       </div>
@@ -144,7 +137,6 @@ const ref_data = reactive({
   timerly_basic_score: "",   // 计时比分 返回比分格式为: (主队得分-客队得分)
   market_type: '',     // 赛事状态 0未开赛 滚球:进行中
   basic_score: "",    /// 赛事比分 返回比分格式为: (主队得分-客队得分)
-  handicap_name: '',  // 当前盘口名称 欧洲盘/香港盘
   appoint: true, // 是否预约
   odds_change_up: false,  // 赔率上升
   odds_change_down: false, // 赔率下降
