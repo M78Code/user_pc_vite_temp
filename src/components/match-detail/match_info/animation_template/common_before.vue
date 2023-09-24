@@ -77,10 +77,10 @@
         <!-- 主队 结束 -->
         <!-- 开赛时间 S-->
         <div class="match_time">
-          <matchProcess
+          <match-process
             class="match_time-text"
-            :match_props="{ match: match_info }"
-          ></matchProcess>
+            :match="match_info"
+          ></match-process>
           <!-- 中立场 -->
           <div class="neutral-wrap" v-if="match_info.mng">
             <span class="icon-neutral q-icon c-icon"

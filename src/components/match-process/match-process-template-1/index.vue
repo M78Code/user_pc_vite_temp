@@ -70,6 +70,9 @@ import lodash from "lodash";
 // mixins: [global_mixin, msc_mixin, time_format_mixin],
 
 const props = defineProps({
+  source:{
+    type:String,
+  },
   // 当场赛事信息
   match:{
     type:Object,
