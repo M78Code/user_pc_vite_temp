@@ -1,7 +1,6 @@
 <template>
   <div class="basic-wrap" @click.stop="on_go_detail" >
     <!-- 主队信息 --> 
-    <!-- {{ match }} -->
     <div class="row-item team-item">
       <div class="team-logo">
         <img v-if="show_type == 'all'" style="width: 22px; max-height: 24px;" v-img="[((match.match_logo || {}) || {}).home_1_logo,(match.match_logo || {}).home_1_letter]" />
@@ -126,7 +125,6 @@ const is_show_away_goal = ref(false) // 是否显示客队进球动画
 const is_show_home_red = ref(false) // 是否显示主队红牌动画
 const is_show_away_red = ref(false) // 是否显示客队红牌动画
 const is_collect = ref(false) //赛事是否收藏
-
 const handicap_num = computed(() => {
   if(GlobalAccessConfig.get_handicapNum()){
     return `+${ props.match.mc || 0}`
