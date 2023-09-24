@@ -133,11 +133,11 @@ const cur_fill_second = ref(0); // 补充的分钟
     return;
   }
   // 补充时间(倒计时部分)
-  cur_fill_time.value = lodash.get(props.match, "match.mstst") || 0;
+  cur_fill_time.value = lodash.get(props.match, "mstst") || 0;
   // 当前阶段对应的正常时间(在第多少分钟时结束)
   cur_mmp_time.value = mmp_time_obj.value[csid][mmp];
   // 补充时间(+分钟部分) (补时多少分钟)
-  cur_fill_second.value = lodash.get(props.match, "match.mststi") || 0;
+  cur_fill_second.value = lodash.get(props.match, "mststi") || 0;
 };
 // useMittOn(MITT_TYPES.EMIT_INIT_FILL_TIME_CMD, init_fill_time);
 init_fill_time();
