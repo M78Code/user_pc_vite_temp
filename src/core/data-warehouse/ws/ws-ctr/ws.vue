@@ -33,7 +33,7 @@ let lase_socket_close_time = new Date().getTime();
 // ws状态变化
 const ws_status = ref(0)
 // 测试使用到的仓库对象
-const match_data_base1 = reactive(new MatchDataBase({name_code:'1111'}));
+// const match_data_base1 = reactive(new MatchDataBase({name_code:'1111'}));
 // 测试使用到的方法
 function test(){
   let a=function(){
@@ -43,9 +43,13 @@ function test(){
   // this.match_data_base1= new MatchDataBase({name_code:'1111'});
   clearTimeout(timer_text);
   timer_text=setTimeout(() => {
-    console.error('match_data_base1=',match_data_base1);
-    match_data_base1.set_list(b.data.data);
-    match_data_base1.set_quick_query_list(b.data.data);
+    // console.error('match_data_base1=',match_data_base1);
+    // match_data_base1.set_list(b.data.data);
+    // match_data_base1.set_quick_query_list(b.data.data);
+
+    // match_data_base1.set_list_from_match_details(b.data.data[0]);
+    
+
   }, 6000);
 }
 /**
