@@ -347,12 +347,6 @@ const fetch_match_list = (is_socket = false, cut) => {
 		_params.selectionHour = null;
 	}
 
-
-	if (typeof is_socket == "boolean" && !is_socket) {
-		// console.error('不是无感刷新')
-		// 使用元数据默认显示
-		set_base_data_init();
-	}
 	// return
 	let send_match_list_request = () => {
 		/**返回数据处理************/

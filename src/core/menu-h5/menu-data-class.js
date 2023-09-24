@@ -28,6 +28,8 @@ class MenuData {
     this.menu_lv2 = []; //2级菜单列表
     this.menu_lv3 = []; //3级菜单列表
     this.menu_lv4 = []; //4级菜单列表
+    this.pop_list = []; //pop级菜单列表
+
     //================主列表用的  开始==================
     //当前的菜单
     this.current_menu = {};
@@ -64,18 +66,19 @@ class MenuData {
     this.init();
   }
   init() {
-    setTimeout(() => {
-      BaseData.init(); //初始化菜单数据
-    }, 0);
     //菜单数据有变化
     watch(
       BaseData.base_data_version,
-      lodash.debounce(() => {
+      lodash.debounce((v) => {
         const { mew_menu_list_res } = BaseData; //获取主数据
         this.recombine_menu(mew_menu_list_res, mew_menu_list_res);
+        this.get_sport_menu();
         this.update();
       }, 10)
     );
+    // setTimeout(() => {
+    BaseData.init(); //初始化菜单数据
+    // }, 0)
     //设置从缓存拿到的数据 到class
     this.set_cache_class(
       SessionStorage.get(Cache_key.CACHE_CRRENT_MEN_KEY, {}),
@@ -106,26 +109,6 @@ class MenuData {
       );
     }
   }
-  //=============================
-  count_menu(menu_list = { sl: [] }, list) {
-    //传入sl mi eg: sl:[{"ct":0,"mi":"1011","st":1},{"ct":0,"mi":"1015","st":2}]
-    //计算数量
-    const { sl, mi } = menu_list;
-    if (mi == 30) {
-      const data = lodash.find(sl, (item) => {
-        //竞足特殊处理
-        return item.mi == "50101";
-      });
-      if (data)
-        return data.ct || data.count || 0
-      return 0;
-    }
-    return sl && sl.reduce
-      ? sl.reduce((pre, cur) => {
-        return pre + (cur.ct || cur.count || 0);
-      }, 0)
-      : 0;
-  }
   //获取match菜单
   get_sport_menu() {
     let menu_list = [];
@@ -147,16 +130,86 @@ class MenuData {
     } else {
       menu_list.splice(1, 0, pop_main_items[0], {});
     }
-    console.error('menu_list', menu_list)
     this.set_cache_class({
-      menu_lv1: menu_list
+      menu_lv1: menu_list,
+      pop_list: pop_main_items
     })
     //如果没有设定过1级菜单
     if (!this.current_lv_1_menu && this.menu_list[0]) {
       this.set_current_lv1_menu(this.menu_list[0], 0, "init");
     }
-    return [menu_list, pop_main_items];
   }
+  //setter=======
+  recombine_menu(data, mew_menu_list_res = []) {
+    //常规
+    let conventional = [
+      101, 102, 105, 107, 110, 108, 103, 109, 111, 112, 113, 116, 115, 114, 104,
+      106, 118, 400, 300,
+    ];
+    const menuRule = [2, 1, 3, 4];
+    let mi_list = [];
+    //1=滚球,2=今日,3=早盘,4=冠军,5=即将开赛,6=串关   左侧一级菜单隐藏 串关和即将开赛
+    // // 竟足
+    // let lottery = this.init_lottery(data);
+    // 电竞 2100 = 英雄联盟
+    let menu_dianjing = { mi: 7, sl: [] };
+    let menu_jingzu = { mi: 30, sl: [] };
+    lodash.each(data, (item) => {
+      if (item && item.sl && item.sl.length > 0) {
+        mi_list.push(...item.sl);
+      }
+      if ([2100, 2101, 2103, 2102].includes(+item.mi)) {
+        menu_dianjing.sl.push(item);
+      }
+      if ([500].includes(+item.mi)) {
+        menu_jingzu.sl.push(item);
+      }
+    });
+    let new_menu = [];
+    lodash.each(menuRule, (menu_item, index) => {
+      new_menu[index] = { mi: menu_item, sl: [] };
+      lodash.each(mi_list, (item) => {
+        const filter_data = lodash.find(conventional, (item1) => {
+          return item.mi == `${item1}${menu_item}`;
+        });
+        if (filter_data) {
+          new_menu[index].sl.push(item);
+        }
+      });
+    });
+    this.set_cache_class({
+      menu_list: [
+        ...new_menu,
+        menu_dianjing,
+        { mi: 8 },
+        menu_jingzu,
+        this.init_amidithion(mew_menu_list_res),  // 赛果数据处理
+      ],
+
+    });
+    return this.menu_list;
+  }
+  //=============================
+  count_menu(menu_list = { sl: [] }, list) {
+    //传入sl mi eg: sl:[{"ct":0,"mi":"1011","st":1},{"ct":0,"mi":"1015","st":2}]
+    //计算数量
+    const { sl, mi } = menu_list;
+    if (mi == 30) {
+      const data = lodash.find(sl, (item) => {
+        //竞足特殊处理
+        return item.mi == "50101";
+      });
+      if (data)
+        return data.ct || data.count || 0
+      return 0;
+    }
+    return sl && sl.reduce
+      ? sl.reduce((pre, cur) => {
+        return pre + (cur.ct || cur.count || 0);
+      }, 0)
+      : 0;
+  }
+
   //设置选中的菜单
   set_menu_type(v) {
     const idx = this.menu_list.findIndex(i => i.mi == v)
@@ -166,22 +219,13 @@ class MenuData {
   get_menu_type() {
     return this.current_lv_1_menu?.mi;
   }
-  async get_db_mids(mi) {
-    //返回mi 筛选赛事 获取mid 用于筛选列表赛事
-    let mids = [];
-    let match_mi_list = await db.match_info.bulkGet([mi || "110602"]);
-    if (match_mi_list && match_mi_list[0]?.match_info?.nd) {
-      //nd 滚球
-      lodash.each(match_mi_list[0].match_info.nd, (mi_item) => {
-        mids.push(...mi_item.mids);
-      });
-    }
-    return mids;
-  }
-  //get euid
+  /**
+   * 获取 euid
+   * arg_mi 如果传值 则获取特定值euid 如果没有就是二级菜单的euis
+   * */
   get_euid(arg_mi) {
     const menu_type = this.menu_type.value;
-    let mi = arg_mi;
+    let mi = arg_mi || this.current_lv_2_menu?.mi;
     if (!mi) return "";
     if (menu_type == 4) {
       //冠军特殊处理
@@ -603,55 +647,7 @@ class MenuData {
     }
     this.update();
   }
-  //setter=======
-  recombine_menu(data, mew_menu_list_res = []) {
-    //常规
-    let conventional = [
-      101, 102, 105, 107, 110, 108, 103, 109, 111, 112, 113, 116, 115, 114, 104,
-      106, 118, 400, 300,
-    ];
-    const menuRule = [2, 1, 3, 4];
-    let mi_list = [];
-    //1=滚球,2=今日,3=早盘,4=冠军,5=即将开赛,6=串关   左侧一级菜单隐藏 串关和即将开赛
-    // // 竟足
-    // let lottery = this.init_lottery(data);
-    // 电竞 2100 = 英雄联盟
-    let menu_dianjing = { mi: 7, sl: [] };
-    let menu_jingzu = { mi: 30, sl: [] };
-    lodash.each(data, (item) => {
-      if (item && item.sl && item.sl.length > 0) {
-        mi_list.push(...item.sl);
-      }
-      if ([2100, 2101, 2103, 2102].includes(+item.mi)) {
-        menu_dianjing.sl.push(item);
-      }
-      if ([500].includes(+item.mi)) {
-        menu_jingzu.sl.push(item);
-      }
-    });
-    let new_menu = [];
-    lodash.each(menuRule, (menu_item, index) => {
-      new_menu[index] = { mi: menu_item, sl: [] };
-      lodash.each(mi_list, (item) => {
-        const filter_data = lodash.find(conventional, (item1) => {
-          return item.mi == `${item1}${menu_item}`;
-        });
-        if (filter_data) {
-          new_menu[index].sl.push(item);
-        }
-      });
-    });
-    this.set_cache_class({
-      menu_list: [
-        ...new_menu,
-        menu_dianjing,
-        { mi: 8 },
-        menu_jingzu,
-        this.init_amidithion(mew_menu_list_res),  // 赛果数据处理
-      ],
-    });
-    return this.menu_list;
-  }
+
   //根据路由参数 设置菜单信息 选中一级menu
   set_query_menu({ m, s, t, mt1, mt2 }) {
     if (!m && !mt1) {
@@ -880,6 +876,10 @@ class MenuData {
    */
   get_current_lv_1_menu_type() {
     return this.current_lv_1_menu?.mi || 0;
+  }
+  // 传给筛选里面的搜索下Bat选中
+  get_useid_ievname() {
+    return this.current_lv_2_menu?.mi?.substr(1, 2)
   }
   /**
    * 获取当前选中得页脚子菜单

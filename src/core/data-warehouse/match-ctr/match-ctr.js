@@ -482,7 +482,9 @@ export default class MatchDataBase
    * @param {Object} list 所有列表数据
    * @param {Boolean} is_merge 是否进行合并数据同步(保证地址不变)
    */
-  set_list(list,is_merge){
+  set_list(list,is_merge=1){
+
+    console.error('数据仓库设置--set_list---',list);
     if(list){
       // 设置使用类型:类表-list,赛事详情-match
       this.type = 'list';

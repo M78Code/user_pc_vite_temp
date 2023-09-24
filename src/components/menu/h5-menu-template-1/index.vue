@@ -210,14 +210,12 @@ const esport = computed(() => {
 });
 //是否显示三级菜单
 const is_show_three_menu = computed(() => {
-  console.error("是否展示三级", date_menu_list.value.length);
   return (
     MenuData.get_is_show_three_menu() && date_menu_list.value.length > 0
   );
 });
 //是否显示四级菜单
 const is_show_four_menu = computed(() => {
-  console.error("是否展示四级", virtual_sports_results_tab.value.length);
   return (
     MenuData.is_results_virtual_sports() &&
     virtual_sports_results_tab.value.length > 0
@@ -236,11 +234,9 @@ const two_menu_show = (sub) => {
   return ![7, 8, 28].includes(menu_type.value) && !mi_list.includes(+sub.mi)
 }
 // 获取主菜单列表  main_select_items 弹出的一级 菜单数据   main_menu_list_items 一级菜单数据
-watch(update_time, (update_time) => {
-  const [lv1, pop] = MenuData.get_sport_menu(); //获取体育菜单 【一级菜单，弹出框菜单】
-  console.error(update_time, lv1);
-  menu_list.value = lv1; //一级
-  pop_main_items.value = pop; //pop级
+watch(update_time, (v) => {
+  menu_list.value = MenuData.menu_lv1; //一级
+  pop_main_items.value = MenuData.pop_list; //pop级
   current_menu.value = MenuData.menu_lv2; //2级
   date_menu_list.value = MenuData.menu_lv3; //三级
   virtual_sports_results_tab.value = MenuData.menu_lv4; //4级
