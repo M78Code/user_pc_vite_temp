@@ -7,7 +7,7 @@
   <div class="football-after" v-if="isRouterAlive">
     <div class="info-time">
       <div class="match-date">
-        <match-date :match_props="{match:match_info}"  source='detail'  :right="right" class="count_down" style="flex-flow: row;"></match-date>
+        <match-date :match="match_info"  source='detail'  :right="right" class="count_down" style="flex-flow: row;"></match-date>
       </div>
       <!-- 中立场 -->
       <span v-if="match_info.mng"   class="icon-neutral q-icon c-icon"><span class="path1"></span><span class="path2"></span></span>
