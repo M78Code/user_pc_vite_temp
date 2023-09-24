@@ -156,6 +156,7 @@ import showStartTime from 'project_path/src/components/details/wight/show-start-
 // 工具
 import { format_total_score } from 'src/core/format/module/format-score.js'
 import { UserCtr, MenuData } from "src/core/index.js";
+import { useMittEmit, MITT_TYPES } from  "src/core/mitt"
 
 import icon_video from 'project_path/image/common/icon_video.png'
 import icon_video_black from 'project_path/image/common/icon_video_black.png'
@@ -257,6 +258,7 @@ export default defineComponent({
 })
 </script>
 <style lang="scss" scoped>
+@import 'project_path/src/pages/details/styles/details-theme/details_dialog.scss';
 .details-dialog {
   max-width: 100%;
   width: 100%;

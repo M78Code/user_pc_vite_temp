@@ -31,6 +31,7 @@ import { utils } from 'src/core/index.js';
 import dialogStageFootball from "project_path//src/components/match/dialogStage/dialogStage-1.vue";  // 详情点击下拉-足球联赛-显示当前赛事的时间
 import stageChildBasketball from "project_path/src/components/match/dialogStage/dialogStage-2.vue";  // 详情点击下拉-篮球联赛-显示当前赛事的时间
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
+import { UserCtr, MenuData } from "src/core/index.js";
 
 const props = defineProps(['detail_data'])
 const one_hour = ref(false)
@@ -39,14 +40,14 @@ const type_map = {
   1: 'Football',
   2: 'basketball'
 }
-const componentId = computed(() => get_menu_type != 3000 ? `stage-child${type_map[props.detail_data.csid]}` : '')
+const componentId = computed(() =>MenuData.menu_type != 3000 ? `stage-child-${type_map[props.detail_data.csid]}` : '')
 
 const { off } = useMittOn(MITT_TYPES.EMIT_SET_MATCH_TIME, set_match_time); // 储存时间，保证时间同步;
 onUnmounted(off)
 
 function initEvent() {
   let now = new Date().getTime();
-  one_hour.value = Number(detail_data.mgt) - now < 3600 * 1000;
+  one_hour.value = Number(props.detail_data.mgt) - now < 3600 * 1000;
 }
 onMounted(initEvent)
 // 监听set_match_time事件，储存赛事时间
