@@ -733,12 +733,11 @@ class MenuData {
       current_lv_1_menu_i,
       menu_type: current_lv_1_menu.mi, //设置一级菜单menutype
     });
-    setTimeout(() => {
-      const mid_item = this.pop_list.find((item) => {
-        return current_lv_1_menu.mi == item.mi;
-      });//重新设定中间项
-      mid_item && this.menu_lv1.splice(1, 1, mid_item);
-    }, 0);
+
+    const mid_item = this.pop_list.find((item) => {
+      return current_lv_1_menu.mi == item.mi;
+    });//重新设定中间项
+    mid_item && this.menu_lv1.splice(1, 1, mid_item);
     //设置二级菜单 赛果和电竞是不需要設置二級菜單的
     switch (current_lv_1_menu.mi) {
       case 28:
