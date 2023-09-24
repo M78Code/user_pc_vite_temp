@@ -1,5 +1,5 @@
 <template>
-  <div class="menu  match-main-menu">
+  <div class="menu  match-main-menu" :style="{ 'z-index': 501 }">
     <div class="menu-inner-wrap">
       <!--  电竞背景图片  -->
       <div class="m-i-background" v-if="menu_type == 7" :style="compute_css('menu-bg-' + dj_back_type)"></div>
@@ -210,16 +210,12 @@ const esport = computed(() => {
 });
 //是否显示三级菜单
 const is_show_three_menu = computed(() => {
-  return (
-    MenuData.get_is_show_three_menu() && date_menu_list.value.length > 0
-  );
+  return date_menu_list.value.length > 0 && MenuData.get_is_show_three_menu()
+
 });
 //是否显示四级菜单
 const is_show_four_menu = computed(() => {
-  return (
-    MenuData.is_results_virtual_sports() &&
-    virtual_sports_results_tab.value.length > 0
-  );
+  return virtual_sports_results_tab.value.length > 0 && MenuData.is_results_virtual_sports();
 });
 /**
     * 二级菜单数量 是否展示

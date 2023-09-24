@@ -23,6 +23,7 @@ class MenuData {
     // "8": "VR",// "30": "竞足",// "28": "赛果",
 
     // 500热门 2000 电竞  400 冠军
+
     this.menu_type = ref(0); //一级菜单 menu_type 很常用所以设定为ref
     this.menu_lv1 = []; //1级菜单列表
     this.menu_lv2 = []; //2级菜单列表
@@ -183,11 +184,44 @@ class MenuData {
         menu_dianjing,
         { mi: 8 },
         menu_jingzu,
-        this.init_amidithion(mew_menu_list_res),  // 赛果数据处理
+        this.init_amidithion(data),  // 赛果数据处理
       ],
 
     });
     return this.menu_list;
+  }
+  //赛果数据处理
+  init_amidithion(data) {
+    let result_menu = {
+      mi: 28,
+      sl: ["101", "102", "105", "107", "110", "108", "103", "109", "111", "112", "113", "116", "115", "114", "104", "106"].map((mi) => ({ mi }))
+    };
+    let list = {
+      mi: 28,
+      sl: [],
+    };
+    if (data) {
+      lodash.each(data, (item, index) => {
+        list.sl.push({
+          count: item.count || 0,
+          name: item.name || "",
+          menuId: item.menuId || item.field1,
+          menuType: item.menuType || "",
+          mi: item.mi
+        });
+      });
+      return list;
+    } else {
+      return result_menu;
+    }
+  }
+  // 查找竞足数据
+  init_lottery(data) {
+    let obj1 = data.find((v) => v.mi == 500) || {};
+    if (obj1?.sl) {
+      let obj2 = obj1.sl.find((v) => v.mi == 50101) || {};
+      return obj2.sl || [];
+    }
   }
   //=============================
   count_menu(menu_list = { sl: [] }, list) {
@@ -468,14 +502,6 @@ class MenuData {
   recombine_menu_desc(item) {
     return String(item).substr(0, 3);
   }
-  // 查找竞足数据
-  init_lottery(data) {
-    let obj1 = data.find((v) => v.mi == 500) || {};
-    if (obj1?.sl) {
-      let obj2 = obj1.sl.find((v) => v.mi == 50101) || {};
-      return obj2.sl || [];
-    }
-  }
   champion_menu_euid(mi) {
     return 400 + parseInt(mi.substr(1, 2));
   }
@@ -491,37 +517,13 @@ class MenuData {
       return menu_dianjing[mi];
     }
   }
-  //赛果数据处理
-  init_amidithion(data) {
-    let result_menu = {
-      mi: 28,
-      sl: ["101", "102", "105", "107", "110", "108", "103", "109", "111", "112", "113", "116", "115", "114", "104", "106"].map((mi) => ({ mi }))
-    };
-    let list = {
-      mi: 28,
-      sl: [],
-    };
-    if (data) {
-      lodash.each(data, (item, index) => {
-        list.sl.push({
-          count: item.count || 0,
-          name: item.name || "",
-          menuId: item.menuId || item.field1,
-          menuType: item.menuType || "",
-          mi: item.mi
-        });
-      });
-      return list;
-    } else {
-      return result_menu;
-    }
-  }
   //- 三级菜单 日期 (只有 串关，早盘，赛果，电竞，才有) -->
   get_is_show_three_menu(mi) {
     return [3, 6, 7, 28].includes(mi || this.current_lv_1_menu?.mi);
   }
   // 赛果下数据
   async get_results_menu() {
+    console.error('赛果菜单 get')
     // 如果有缓存，则使用缓存
     let cache_data = SessionStorage.get(Cache_key.RESULT_SUB_MENU_CACHE);
     try {
@@ -726,6 +728,12 @@ class MenuData {
       current_lv_1_menu_i,
       menu_type: current_lv_1_menu.mi, //设置一级菜单menutype
     });
+    setTimeout(() => {
+      const mid_item = this.pop_list.find((item) => {
+        return current_lv_1_menu.mi == item.mi;
+      });//重新设定中间项
+      mid_item && this.menu_lv1.splice(1, 1, mid_item);
+    }, 0);
     //设置二级菜单 赛果和电竞是不需要設置二級菜單的
     switch (current_lv_1_menu.mi) {
       case 28:
@@ -748,8 +756,6 @@ class MenuData {
     this.set_cache_class({
       current_lv_2_menu,
       current_lv_2_menu_i,
-      previous_lv_2_menu_i: this.previous_lv_2_menu_i,
-      previous_lv_2_menu: this.previous_lv_2_menu,
     });
     if (!current_lv_2_menu) {
       //2级菜单为空 3级也滞空
