@@ -184,7 +184,7 @@ const {
  * @return {undefined} undefined  组装投注项的数据
  */
  const bet_click_ol = () => {
-  const {oid,_hid,_hn,_mid } = props.ol_data_item
+  const {oid,_hid,_hn,_mid } = ol_data_item
   let params = {
     oid, // 投注项id ol_obj
     _hid, // hl_obj 
