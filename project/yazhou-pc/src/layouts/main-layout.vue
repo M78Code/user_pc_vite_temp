@@ -26,7 +26,23 @@
           <layout-left :loading:="data_ref.bet_loadding" />
 
           <!-- 中间区域 -->
-          <keep-alive include="matchListRouter" max="1">
+
+
+          <router-view v-slot="{ Component }"  
+          class="page-center"
+              :class="data_ref.screen_width"
+              :style="
+                route.params.video_size == 1
+                  ? 'position: fixed; top: 0;  bottom: 0;right: 0;  left: 0; width: 100%;height: 100%;'
+                  : `width:${computed_data.layout_size.center_width}px  !important; height:${computed_data.layout_size.content_height}px  !important;`
+              "
+          >
+  <keep-alive include="matchListRouter" max="1">
+    <component :is="Component" />
+  </keep-alive>
+</router-view>
+
+          <!-- <keep-alive include="matchListRouter" max="1">
             <router-view
               class="page-center"
               :class="data_ref.screen_width"
@@ -36,7 +52,7 @@
                   : `width:${computed_data.layout_size.center_width}px  !important; height:${computed_data.layout_size.content_height}px  !important;`
               "
             />
-          </keep-alive>
+          </keep-alive> -->
 
           <!-- 右侧区域 -->
           <div
@@ -211,7 +227,7 @@
                         @mouseover="data_ref.show_merge_info = true"
                         @mouseout="data_ref.show_merge_info = false"
                       >
-                        <icon
+                        <icon-wapper
                           id="merge-info"
                           name="icon-tips"
                           class="bet-info"
@@ -307,6 +323,7 @@ import { t } from "src/core/index.js";;
 import { api_account, api_common } from "src/api/";
 import { get_file_path } from "src/core/file-path/file-path.js";
 import { pre_load_iframe } from "src/core/pre-load";
+import { IconWapper } from 'src/components/icon'
 
 /**组件*/
 import LayoutLeft from "./layout-left.vue";

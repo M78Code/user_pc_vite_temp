@@ -25,6 +25,7 @@
 
 <script>
 import seamlessMarquee from 'project_path/src/components/details/seamless-marquee.vue' // 详情页头部联赛名文字超出隐藏无缝滚动
+import { useMittEmit, MITT_TYPES } from  "src/core/mitt"
 
 export default {
   name: 'dialog_header',

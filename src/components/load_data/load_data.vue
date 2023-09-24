@@ -198,7 +198,7 @@ export default {
       store_data
     };
   },
-  let off_ = ''
+ 
   created () {
     // 用户登录失效时,直接关闭loading中动画
     this.no_user = UserCtr.is_invalid;

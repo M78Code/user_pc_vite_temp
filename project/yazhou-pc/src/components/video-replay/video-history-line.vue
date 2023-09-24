@@ -126,7 +126,7 @@ export default {
         // 关闭弹窗iframe
         closePopIframe()
         historyPlayTimer && clearInterval(historyPlayTimer)
-        useMittOnf(MITT_TYPES.EMIT_UPD_TIME_REFRESH_CMD, set_date_time).off;
+        // useMittOn(MITT_TYPES.EMIT_UPD_TIME_REFRESH_CMD, set_date_time).off;
         clear();
     },
     methods: {

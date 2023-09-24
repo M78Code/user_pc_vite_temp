@@ -55,13 +55,11 @@ onMounted(() => {
    *@description 设置滚动样式
     */
 const set_move_style = (dom_) => {
-  console.error('text_width', dom_);
     if(!(dom_.full_content || dom_.scroll_wrap)) return
     // 获取文字text 的计算后宽度 （由于overflow的存在，直接获取不到，需要独立的node计算）
     let text_width = lodash.get(dom_.full_content,'scrollWidth')
     let scroll = dom_.scroll_wrap
     // 如果文本内容的宽度小于页面宽度，则表示文字小于等于一行，则不需要滚动
-    console.error('text_width', text_width);
     if (text_width < 160) {
       scroll.style.justifyContent = 'center'
       start_roll.value = false
@@ -89,7 +87,6 @@ const set_move_style = (dom_) => {
       style.innerHTML = runkeyframes;
       // 将style样式存放到head标签
       document.querySelector('head').appendChild(style);
-      console.error(style);
       scroll.style.animation = `titleScroll ${scrollTiming}s linear infinite`
     }
     clearTimeout(timer2_.value)

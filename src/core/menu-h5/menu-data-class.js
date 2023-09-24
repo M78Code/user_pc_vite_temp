@@ -43,7 +43,7 @@ class MenuData {
     this.previous_lv_2_menu_i = 0;
     // 二级菜单 滚球下边的一个按钮   "全部"按钮
     this.get_sport_all_selected = computed(() => {
-      return lodash.isArray(this.current_lv_2_menu) && this.menu_type.value == 1;
+      return this.menu_type.value == 1 && lodash.isArray(this.current_lv_2_menu);
     });
     //当前的菜单 lv2  注意 滚球 二级菜单 有一个【全部】选项 get_sport_all_selected
     this.current_lv_2_menu = undefined;
@@ -63,7 +63,6 @@ class MenuData {
     this.footer_sub_changing = false //页脚子菜单变化 
     // 上一次选择的页脚菜单
     this.prev_footer_sub_menu_id = "";
-
     this.init();
   }
   init() {
@@ -159,9 +158,11 @@ class MenuData {
       if (item && item.sl && item.sl.length > 0) {
         mi_list.push(...item.sl);
       }
+      //电竞
       if ([2100, 2101, 2103, 2102].includes(+item.mi)) {
         menu_dianjing.sl.push(item);
       }
+      //竟足
       if ([500].includes(+item.mi)) {
         menu_jingzu.sl.push(item);
       }
@@ -224,7 +225,7 @@ class MenuData {
     }
   }
   //=============================
-  count_menu(menu_list = { sl: [] }, list) {
+  count_menu(menu_list = {}, list) {
     //传入sl mi eg: sl:[{"ct":0,"mi":"1011","st":1},{"ct":0,"mi":"1015","st":2}]
     //计算数量
     const { sl, mi } = menu_list;
@@ -234,14 +235,15 @@ class MenuData {
         return item.mi == "50101";
       });
       if (data)
-        return data.ct || data.count || 0
-      return 0;
+        return data.ct || data.count || ''
+      return '';
     }
-    return sl && sl.reduce
+    const count = sl && sl.reduce
       ? sl.reduce((pre, cur) => {
         return pre + (cur.ct || cur.count || 0);
       }, 0)
       : 0;
+    return count || ''
   }
 
   //设置选中的菜单

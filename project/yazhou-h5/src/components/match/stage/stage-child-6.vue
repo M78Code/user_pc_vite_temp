@@ -70,16 +70,15 @@ export default {
       }
     }
   },
-  let off_ = ''
   created(){
     // 时间延时器
     showTimeInterval = 0;
     init_event();
-    let { off: off_ } = useMittOn(MITT_TYPES.EMIT_UPDATE_GAME_TIME, init_event);
+    // let { off: off_ } = useMittOn(MITT_TYPES.EMIT_UPDATE_GAME_TIME, init_event);
   },
   destroyed(){
     clear_time_obj();
-    off_()
+    // off_()
   },
   methods: {
     /**

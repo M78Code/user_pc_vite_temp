@@ -16,7 +16,7 @@
     <!-- 详情右侧 排序、单列、双列 || 右侧详情视频区域-->
     <div v-if="is_details || whitchDetail == 'rightDetails'" class="row">
       <div class="right-icons" @click="handicap_this.toggle_panel">
-        <icon
+        <icon-wapper
           :name="handicap_this.panel_status =='hide'?'icon-open':'icon-hide'"
           color="#5A6074"
           size="14px"
@@ -34,7 +34,7 @@
         v-if="handicap_this.check_half()&&handicap_this.get_layout_list_size.width>=1680"
       >
         <span>
-          <icon
+          <icon-wapper
             name="icon-play_stop"
             size="14px"
             class="icon-toggle"
@@ -50,7 +50,7 @@
           <!-- 一栏布局 -->
         </span>
         <span>
-          <icon
+          <icon-wapper
             name="icon-play_pause"
             size="14px"
             class="icon-toggle"
@@ -76,7 +76,7 @@ import { useRegistPropsHelper} from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
 import { useGetValue } from './use-get-value'
 import { watch } from 'vue'
-
+import { IconWapper } from 'src/components/icon'
 
 
 useRegistPropsHelper(component_symbol, need_register_props)

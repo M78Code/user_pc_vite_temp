@@ -11,7 +11,7 @@
             :placeholder="`${$t('bet.money_range')} ${ref_data.min_money} ~ ${ref_data.max_money}`" maxLength="11" />
         <!--清除输入金额按钮-->
         <div class="bet-input-close" @click.stop="bet_clear_handle">
-            <icon name="icon-failure" size="12px" />
+            <icon-wapper name="icon-failure" size="12px" />
         </div>
 
         <!-- <div> {{ special_series }} </div> -->
@@ -42,7 +42,7 @@ import BetKeyboard from "../common/bet-keyboard.vue"
 import lodash_ from 'lodash'
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import { format_odds, format_currency, format_currency2 } from "src/core/format/index.js"
-
+import { IconWapper } from 'src/components/icon'
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import mathJs from './config/mathjs.js'

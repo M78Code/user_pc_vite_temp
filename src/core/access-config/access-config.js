@@ -93,6 +93,7 @@ class GlobalAccessConfig {
   */
   set_enter_params_switch(data = {}) {
     this.other = Object.assign({}, LOCAL_FUNCTION_SWITCH, data);
+    this.other.wsl=9999
   }
   get_http_log() {
     return this.other?.httplog;

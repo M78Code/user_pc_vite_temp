@@ -1,5 +1,5 @@
 import { get_file_path } from "src/core/file-path/file-path.js";
-
+const src_rdm = Date.now();
 const installer = (app) => {
   app.directive("img", {
     // 只调用一次，指令第一次绑定到元素时调用。在这里可以进行一次性的初始化设置。
@@ -99,9 +99,9 @@ const installer = (app) => {
         : get_file_path(self_img, el.getAttribute("data-csid"));
     if (img_url) {
       if (img_url.indexOf("?") == -1) {
-        img_url = img_url + "?rdm=" + window.src_rdm;
+        img_url = img_url + "?rdm=" + src_rdm;
       } else {
-        img_url = img_url + "&rdm=" + window.src_rdm;
+        img_url = img_url + "&rdm=" + src_rdm;
       }
     }
     image_is_exist(img_url, el).then((res) => {

@@ -4,16 +4,16 @@
     :class="rows == 1 ? 'row a-row' : 'column'"
   >
     <div
-      v-show="match_props.match.mcid && show_page == 'match-list'"
+      v-show="match.mcid && show_page == 'match-list'"
       class="jingcai"
     >
-      {{ match_props.match.mcid }}
+      {{ match.mcid }}
     </div>
     <!-- ms值3-比赛结束 4-比赛关闭 -->
     <div
       v-show="
-        get_match_status(match_props.match.ms)  || [3,4].includes(1*match_props.match.ms) ||
-        (match_props.match.mcid && match_props.match.mmp != 0)
+        get_match_status(match.ms)  || [3,4].includes(1*match.ms) ||
+        (match.mcid && match.mmp != 0)
       "
       class="process-name"
       v-html="computed_process_name"
@@ -22,16 +22,16 @@
     <!--补充时间-->
     <!-- <template v-if="show_fill_time">
       第二行显示的时间阶段时间+补时分钟数
-      <div :class="{'fill-time': match_props.source=='detail'}">{{format_second_ms(cur_mmp_time,'default')}} + {{cur_fill_second}}'</div>
+      <div :class="{'fill-time': source=='detail'}">{{format_second_ms(cur_mmp_time,'default')}} + {{cur_fill_second}}'</div>
       第三行补时倒计时部分
-      <div class="c-match-date text-center date-wrap" :class="{'count-down': match_props.source=='detail'}">
+      <div class="c-match-date text-center date-wrap" :class="{'count-down': source=='detail'}">
         <timer :tconfig="{
           time:Number(cur_fill_time),
           time_format:(second)=>format_second_ms(second,'default'),
           step:-1,
           timer_ms:1000,
           on_time_change:count_down_change,
-          source: (match_props.source)
+          source: (source)
         }"
       />
       </div>
@@ -40,7 +40,7 @@
       <match-date
         :rows="date_rows"
         v-if="computed_show_date"
-        :match_props="match_props"
+        :match="match"
         class="date-wrap"
       />
       
@@ -70,8 +70,14 @@ import lodash from "lodash";
 // mixins: [global_mixin, msc_mixin, time_format_mixin],
 
 const props = defineProps({
+  source:{
+    type:String,
+  },
   // 当场赛事信息
-  match_props: Object,
+  match:{
+    type:Object,
+    default:()=>{}
+  },
   // 显示的页面
   show_page: {
     type: String,
@@ -107,7 +113,8 @@ const cur_fill_second = ref(0); // 补充的分钟
  * 显示补时时间
  */
  const show_fill_time = computed(() => {
-  let { match, source } = props.match_props;
+  let { match } = props;
+  let  source  = props.source;
   // 足球需要显示不是时间的阶段 6:上半场 7:下半场 41:加时赛上半场 42:加时赛下半场
   let football_mmp = ["6", "7", "41", "42"];
   return (
@@ -123,24 +130,24 @@ const cur_fill_second = ref(0); // 补充的分钟
  * 初始化补充时间
  */
  const init_fill_time = (skt_mid) => {
-  console.log('props.match_props', props.match_props);
-  let { mid, mmp, csid } = props.match_props.match;
+  // console.log('props.match', props.match);
+  let { mid, mmp, csid } = props.match;
   if ((skt_mid && skt_mid != mid) || !show_fill_time.value) {
     return;
   }
   // 补充时间(倒计时部分)
-  cur_fill_time.value = lodash.get(props.match_props, "match.mstst") || 0;
+  cur_fill_time.value = lodash.get(props.match, "mstst") || 0;
   // 当前阶段对应的正常时间(在第多少分钟时结束)
   cur_mmp_time.value = mmp_time_obj.value[csid][mmp];
   // 补充时间(+分钟部分) (补时多少分钟)
-  cur_fill_second.value = lodash.get(props.match_props, "match.mststi") || 0;
+  cur_fill_second.value = lodash.get(props.match, "mststi") || 0;
 };
 // useMittOn(MITT_TYPES.EMIT_INIT_FILL_TIME_CMD, init_fill_time);
 init_fill_time();
 
 // 获取阶段名称
 const computed_process_name = computed(() => {
-  let { match } = props.match_props;
+  let { match } = props;
   let process_name = get_mmp_name(match.csid, match.mmp) || "";
   // 即将开赛
   if (match.ms == 110) {
@@ -210,7 +217,7 @@ const computed_process_name = computed(() => {
   }
   //是否列表页棒球第X局，换行显示
   if (
-    props.match_props.match.csid == 3 &&
+    props.match.csid == 3 &&
     props.show_page == "match-list" &&
     process_name.indexOf("第") == 0
   ) {
@@ -222,7 +229,7 @@ const computed_process_name = computed(() => {
 
 //是否赛事显示时间
 const computed_show_date = computed(() => {
-  let { mmp, csid, ms, mlet } = props.match_props.match;
+  let { mmp, csid, ms, mlet } = props.match;
   csid = Number(csid);
   let show = false;
 
@@ -253,20 +260,20 @@ const computed_show_date = computed(() => {
 
 
 const mstst = computed(() => {
-  return props.match_props.match.mstst;
+  return props.match.mstst;
 });
 
 const mststi = computed(() => {
-  return props.match_props.match.mststi;
+  return props.match.mststi;
 });
 
-watch(
-  () => computed_process_name.value,
-  () => {
-    score_switch_handle(props.match_props.match);
-  },
-  { immediate: true }
-);
+// watch(
+//   () => computed_process_name.value,
+//   () => {
+//     score_switch_handle(props.match);
+//   },
+//   { immediate: true }
+// );
 
 watch(
   () => show_fill_time.value,

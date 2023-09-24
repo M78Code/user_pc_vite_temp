@@ -7,7 +7,7 @@
   <div class="football-after" v-if="isRouterAlive">
     <div class="info-time">
       <div class="match-date">
-        <match-date :match_props="{match:match_info, source:'detail'}" class="count_down" style="flex-flow: row;"></match-date>
+        <match-date :match="match_info" source='detail' class="count_down" style="flex-flow: row;"></match-date>
       </div>
       <!-- 中立场 -->
       <span v-if="match_info.mng"   class="icon-neutral q-icon c-icon"><span class="path1"></span><span class="path2"></span></span>
@@ -193,9 +193,12 @@
 // import format from "src/project/yabo/mixins/match_details/index";
 import {MatchProcessFullVersionWapper} from "src/components/match-process/index.js";
 import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/index.js";
+import { IconWapper } from 'src/components/icon'
+
 export default {
   components: {
     "match-date": MatchProcessFullVersionWapper,
+    IconWapper,
   },
   name: "football_after",
   // mixins: [format],
@@ -254,10 +257,10 @@ export default {
       this.is_show_away_red = false
     },
     start_timer() {
-      let {off: this.off_} = useMittOn(
-        MITT_TYPES.EMIT_UPD_TIME_REFRESH_CMD,
-        this.start_timer_loop
-      );
+      // let {off: this.off_} = useMittOn(
+      //   MITT_TYPES.EMIT_UPD_TIME_REFRESH_CMD,
+      //   this.start_timer_loop
+      // );
     },
     start_timer_loop() {
       let date = this.timestamp++;
@@ -285,7 +288,7 @@ export default {
     this.debounce_throttle_cancel(this.hide_away_goal);
     this.debounce_throttle_cancel(this.hide_home_red);
     this.debounce_throttle_cancel(this.hide_away_red);
-    this.off_();
+    // this.off_();
   },
   watch: {
     match_info: {

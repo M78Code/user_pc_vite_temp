@@ -4,17 +4,14 @@
 import { MatchDataWarehouse_PC_List_Common as MatchListData } from 'src/core/index.js'
 import MatchListCardData from "./match-list-card-data-class.js";
 import lodash from "lodash";
+import { compute_sport_id  } from 'src/core/constant/index.js'
 import {compute_match_list_style_obj_and_match_list_mapping_relation_obj_type1} from  "./data-relation-type-1.js"
 import {compute_match_list_style_obj_and_match_list_mapping_relation_obj_type2} from  "./data-relation-type-2.js"
 import {compute_match_list_style_obj_and_match_list_mapping_relation_obj_type5} from  "./data-relation-type-3.js"
 import PageSourceData  from  "src/core/page-source/page-source.js"
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import {conpute_match_list_card_offset } from  "./card-show-offset.js"
-
-const MenuData ={
-    menu_data:{},
- 
-  }
+import MenuData from "src/core/menu-pc/menu-data-class.js";
 
     /**
    * @Description 设置是哪种列表类型
@@ -32,7 +29,7 @@ const MenuData ={
          */
         let type
         const   page_source = PageSourceData.page_source
-        const   menu_data = MenuData.menu_data
+        const   menu_data = MenuData
         // 列表页强力推荐
         if(PageSourceData.is_show_hot){
           type = menu_data.is_esports ? 7 : 2
@@ -131,9 +128,9 @@ const MenuData ={
     
 
   export const  compute_match_list_style_obj_and_match_list_mapping_relation_obj=(match_list,is_ws_call,is_remove_call)=>{
-
+    let current_csid = MenuData.left_menu_result.lv1_mi
     // 虚拟体育 不走卡片逻辑
-    if(MenuData.menu_data.is_virtual_sport && window.vue.$route.name !=='search'){
+    if(MenuData.menu_root == 300){
         MatchListCardData.is_run_card_function = false
       return
     }else{
@@ -144,8 +141,8 @@ const MenuData ={
     if(!is_ws_call){
         MatchListCardData.match_list_render_key++
        // 重置 赛事模板配置  开始
-      //  let template_id = MenuData.menu_data.match_tpl_number
-       let reset_template_config_fn = MATCH_LIST_TEMPLATE_CONFIG['template_'+1+'_config']['reset_match_template_config']
+      //  let template_id = MenuData.match_tpl_number
+       let reset_template_config_fn = MATCH_LIST_TEMPLATE_CONFIG['template_'+compute_sport_id(current_csid)+'_config']['reset_match_template_config']
        if(reset_template_config_fn){reset_template_config_fn()}
       // 重置 赛事模板配置  结束
       reset_all_card_data()

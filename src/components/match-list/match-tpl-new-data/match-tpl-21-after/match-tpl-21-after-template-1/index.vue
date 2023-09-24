@@ -6,7 +6,7 @@
       <img class="match-hot" src="~public/image/common/svg/hot.svg" v-if="match.is_hot"/>
         <!-- 比赛进程 -->
       <div class="yb-flex-center full-width" :style="`height:105px;`">
-        <match-process v-if="is_mounted" :match_props="{match, source: 'match_list'}" show_page="match-list" :rows="2" />
+        <match-process v-if="is_mounted" :match="match" source='match_list' show_page="match-list" :rows="2" />
       </div>
     </div>
 

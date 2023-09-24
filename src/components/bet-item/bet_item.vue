@@ -184,14 +184,17 @@ const {
  * @return {undefined} undefined  组装投注项的数据
  */
  const bet_click_ol = () => {
-  const {oid,_hid,_hn,_mid } = ol_data_item
+  const {oid,_hid,_hn,_mid } = ol_data_item.value
   let params = {
     oid, // 投注项id ol_obj
     _hid, // hl_obj 
     _hn,  // hn_obj
     _mid,  //赛事id mid_obj
   }
-  set_bet_obj_config(params,{})
+  let other = {
+    is_detail: true
+  }
+  set_bet_obj_config(params,other)
 };
 
 </script>

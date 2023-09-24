@@ -25,7 +25,7 @@
             <div class="col-auto">
               <!--折叠/展开按钮-->
               <span :class="{'disabled-toggle': expend_disable}">
-                <icon
+                <icon-wapper
                   name="icon-triangle"
                   size="16px"                     
                   :class="{'icon-pull-down': !is_expend, 'icon-pull-up': is_expend}"
@@ -58,7 +58,7 @@ import { ref } from "vue"
 // import bet_mix from "src/public/mixins/bet/bet_mix.js"; // 下注混入js
 import BetMixInfo from "./bet-mix-info.vue"; // 下注混入信息组件
 import BetInput from "./bet-input.vue"; // 下注输入框
-
+import { IconWapper } from 'src/components/icon'
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"

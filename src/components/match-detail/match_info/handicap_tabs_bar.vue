@@ -22,7 +22,7 @@
     <!-- 详情右侧 排序、单列、双列 || 右侧详情视频区域-->
     <div v-if="is_details || whitchDetail == 'rightDetails'" class="row">
       <div class="right-icons" @click="handicap_this.toggle_panel">
-        <icon
+        <icon-wapper
           :name="
             handicap_this.panel_status == 'hide' ? 'icon-open' : 'icon-hide'
           "
@@ -50,7 +50,7 @@
         "
       >
         <span>
-          <icon
+          <icon-wapper
             name="icon-play_stop"
             size="14px"
             class="icon-toggle"
@@ -67,7 +67,7 @@
           <!-- 一栏布局 -->
         </span>
         <span>
-          <icon
+          <icon-wapper
             name="icon-play_pause"
             size="14px"
             class="icon-toggle"
@@ -103,7 +103,7 @@ import { useRoute } from "vue-router";
 import store from "src/store-redux/index.js";
 import ZhuGe from "src/core/http/zhuge-tag";
 import { CommonTabFullVersionWapper } from "src/components/tab/common-tab/index.js";
-import { IconWapper } from 'src/components/icon'
+import { IconWapper } from 'src/components/icon/index.js'
 import lodash from 'lodash'
 import {i18n_t} from 'src/core/index'
 const tooltip_style = 'background:rgba(0,0,0,0.8);padding:4px 5px;border-radius:0px;color:#fff'
@@ -111,7 +111,7 @@ export default defineComponent({
   name: "HandicapTab",
   components: {
     tab: CommonTabFullVersionWapper,
-    icon: IconWapper,
+    IconWapper
   },
   props: {
     handicap_this: Object,

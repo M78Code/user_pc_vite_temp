@@ -38,7 +38,7 @@
                                 </div>
                             </div>
                             <div class="text-wrap">
-                                <match-process :match_props="{ match }" show_page="match-list" :rows="1" />
+                                <match-process :match="match" show_page="match-list" :rows="1" />
                                 <div class="score" v-if="type.is_inplay">{{ match.msc.S1.home }}-{{ match.msc.S1.away }}
                                 </div>
                             </div>

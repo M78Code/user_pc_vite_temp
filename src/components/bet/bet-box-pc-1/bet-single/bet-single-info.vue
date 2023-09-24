@@ -42,7 +42,7 @@
         </div>
         <!--删除按钮-->
         <div class="col-auto col-delete" v-if="ref_data.match_type == 3">
-          <icon size="12px" name="icon-del" class="bet-del" @click="del_bet_item" />
+          <icon-wapper size="12px" name="icon-del" class="bet-del" @click="del_bet_item" />
         </div>
       </div>
       <!--不是滚球-->
@@ -72,18 +72,11 @@
         <div class="col bet-play-team yb-fontsize13" >
         <!--卡赫利赛哈特 :class="{'bet-handicap': handicap_change}"-->
         <label class="bet-team-handicap">
-          <!-- <template v-if="handicap!==''">
-            {{team_name}}
-            <template v-if="team_name!=handicap">
-              <label class="yb-number-bold" :class="{'margin-left-0': team_name=='','bet-handicap': handicap_change}">{{handicap}}</label>
-            </template>
-          </template>
-          <template v-else> -->
-             <!--队伍名称-->
-            <!-- {{_.trim(team_name)}} -->
-          <!-- </template> -->
+
+          <label class="yb-number-bold">{{item.handicap}}</label>
+        
           <!--【预约】-->
-          <!-- <label v-if="active == 1 && (sport_id == 1 || sport_id == 2)&& pending_order_status == 1 && appoint">{{`[${i18n_t('bet.bet_book2')}]`}}</label> -->
+          <label v-if="ref_data.active == 1 && (item.sportId == 1 || item.sportId == 2)&& pending_order_status == 1 && appoint">{{`[${$root.$t('bet.bet_book2')}]`}}</label>
         </label>
         <!--+/1.5-->
       </div>
@@ -118,8 +111,8 @@
   </q-card>
 </template>
 <script setup>
-import { ref, toRefs, defineComponent, reactive, onMounted, onUnmounted } from "vue"
-import _ from 'lodash'
+import { ref, toRefs, defineComponent, reactive, onMounted, onUnmounted, computed } from "vue"
+import lodash from 'lodash'
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import { format_odds, format_currency,formatTime } from "src/core/format/index.js"
 import { odds_type_name } from "src/core/constant/index.js"
@@ -133,8 +126,25 @@ const props = defineProps({
     type: Number,
     default: 0
   },
+  id: {   //赛事id
+    type: String,
+    default: "0"
+  },
   item: {}
 })
+
+     /**
+     * @description:是否支持预约 0 关闭 1 支持
+     * @param {undefined} undefined
+     * @returns {number}
+     */
+     const pending_order_status = computed(() => {
+        // let bet_obj = BetData.bet_single_obj[props.id];
+        // if(bet_obj) {
+        //   return lodash.get(bet_obj, 'cs.pending_order_status')
+        // }
+        return 0;
+     })
 
 const ref_data = reactive({
   DOM_ID_SHOW: false,
@@ -144,7 +154,6 @@ const ref_data = reactive({
   timerly_basic_score: "",   // 计时比分 返回比分格式为: (主队得分-客队得分)
   market_type: '',     // 赛事状态 0未开赛 滚球:进行中
   basic_score: "",    /// 赛事比分 返回比分格式为: (主队得分-客队得分)
-  handicap_name: '',  // 当前盘口名称 欧洲盘/香港盘
   appoint: true, // 是否预约
   odds_change_up: false,  // 赔率上升
   odds_change_down: false, // 赔率下降

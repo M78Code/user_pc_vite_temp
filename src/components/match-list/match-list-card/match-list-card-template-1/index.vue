@@ -7,7 +7,8 @@
     }"
     :style="`height:${card_style_obj.card_total_height}px  !important;width:${LayOutMain_pc.layout_content_width}px  !important;${card_style}`"
   >
-  <!-- {{ card_key }} -->
+  <!-- {{ card_key }}===> {{ card_style_obj.card_type }}===>      {{  mids_arr }} -->
+  <!-- {{ card_key }}  {{ card_style_obj }} -->
   <!-- lockie  ${card_style_obj.card_total_height} -->
   <div v-show="false">{{ MatchListCardDataClass.list_version }}</div>
   <div
@@ -42,24 +43,29 @@
           <div class="list-hot-text">{{$root.$t('list.hot_match')}}</div>
         </div>
       </div>
-      <!-- 赛事卡片 -->
-      <template v-else>
+   
+
+      <!-- 赛事卡片 -->  
+      <template   v-else-if="card_style_obj.card_type == 'league_container'">
         <!-- 数据加载状态 -->
-        <load-data
-          v-if="card_style_obj.load_data_status != 'loaded'"
-          :state="card_style_obj.load_data_status"
-          @refresh="MatchListCardData.refresh_league"
-          load_type="league_fold"
-        />
+       
         <!-- 赛事列表 -->
-        <template v-else>
-          <match-card
+    
+       
+        <match-card
             v-for="mid in mids_arr"
             :key="mid"
             :mid="mid"
-          />
-        </template>
+          /> 
+       
+
       </template>
+
+      <template v-else>
+       列表卡片类型未知 ，  
+      </template>
+
+ 
     </div>
   </div>
 </template>
