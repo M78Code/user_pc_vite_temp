@@ -14,9 +14,9 @@
 </template> 
 
 <script>
-import { mapGetters } from "vuex";
-import match_video from "src/project/yabo/components/match_details/match_info/match_video.vue";
-import info from "src/project/yabo/components/match_details/match_info/info";
+// import { mapGetters } from "vuex";
+import match_video from "src/components/match-detail/match_info/match_video.vue";
+import info from "src/components/match-detail/match_info/info.vue";
 
 export default {
   components: {
@@ -30,12 +30,12 @@ export default {
     refresh_time: Number
   },
   computed: {
-    ...mapGetters({
-      vx_play_media: "get_play_media",
-      vx_layout_cur_page: "get_layout_cur_page",
-      vx_is_invalid: "get_is_invalid",
-      vx_details_params: "get_match_details_params",
-    }),
+    // ...mapGetters({
+    //   vx_play_media: "get_play_media",
+    //   vx_layout_cur_page: "get_layout_cur_page",
+    //   vx_is_invalid: "get_is_invalid",
+    //   vx_details_params: "get_match_details_params",
+    // }),
 
     media_useful() {
       let { media_type } = this.vx_play_media;

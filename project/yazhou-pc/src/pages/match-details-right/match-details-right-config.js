@@ -4,7 +4,6 @@ import lodash from "lodash";
 //  // 全局混入
 // import { useGetGlobal } from "project_path/src/pages/match-details/global_mixin.js";
 //  import format from "src/project/yabo/mixins/match_details/index";
-//  import video_ctrl from "src/project/yabo/components/match_details/match_info/video_ctrl.vue";
 //  import videoCtrlEsports from "src/project/yabo/components/match_details/match_info/video_ctrl_esports.vue";
 //  import match_info from "src/project/yabo/components/match_details/match_info/match_info.vue";
 //  import recents from "src/project/yabo/components/match_details/panel/recents";
@@ -27,7 +26,6 @@ import lodash from "lodash";
 //  import saidan_list from 'src/project/yabo/components/match_details/panel/saidan/saidan_list.vue'
 //  import videoHistoryLine from "src/project/yabo/components/video/video_history_line.vue";
 //  import refresh from "src/public/components/refresh/refresh.vue";
-import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/index.js";
 import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache.js";
 import {
   loadLanguageAsync,
@@ -43,7 +41,7 @@ import {
 } from "src/core/index.js";
 import { reactive, toRefs, ref, onMounted, onUnmounted } from "vue";
 import store from "src/store-redux/index.js";
-import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/index.js";
+
 
 import { off } from "licia/$event";
 let state = store.getState();
@@ -157,7 +155,7 @@ export const useRightDetails = (props) => {
     };
     let params = {
       baseParam,
-      // mcid: this.mcid, //玩法集id
+      // mcid: allData.mcid, //玩法集id
       mcid: "0", //玩法集id
       mid: allData.mid, //赛事id
       cuid: UserCtr.get_uid(), //用户id
@@ -198,6 +196,7 @@ export const useRightDetails = (props) => {
         await api_details
           .get_match_odds_info_ES(params)
           .then((res) => {
+            debugger
             set_home_loading_time_record("ok");
             // 检查gcuuid
             if (allData.last_by_mids_uuid != res.config.gcuuid) return;
@@ -712,15 +711,15 @@ export const useRightDetails = (props) => {
     ) {
       mcid = this.get_tabs_active_id;
     }
-    this.mcid = mcid;
+    allData.mcid = mcid;
     let { plays = [] } = lodash.find(
       this.category_list,
-      (item) => item.id === this.mcid,
+      (item) => item.id === allData.mcid,
       {}
     );
     this.plays_list = plays;
     // 保存当前选中的玩法集子项id
-    this.set_tabs_active_id(this.mcid);
+    this.set_tabs_active_id(allData.mcid);
     // 保存当前选中的玩法集子项玩法集合
     this.set_tabs_active_plays(this.plays_list);
     this.change_mid = false;
@@ -967,7 +966,7 @@ export const useRightDetails = (props) => {
    * @param {string} id 玩法集id
    */
   const get_mattch_details = (obj) => {
-    this.mcid = lodash.get(obj, "id");
+    allData.mcid = lodash.get(obj, "id");
     this.round = lodash.get(obj, "round");
     this.plays_list = lodash.get(obj, "plays", []);
     //   this.get_match_detail_base();
@@ -1100,7 +1099,6 @@ export const useRightDetails = (props) => {
 //  components: {
 //   //  "match-info": match_info,
 //   //  "match-handicap": match_handicap,
-//   //  "video-ctrl": video_ctrl,
 //   //  "chart": chart,
 //   //  "handicap-tabs-bar": handicap_tabs_bar,
 //   //  vScrollArea,
