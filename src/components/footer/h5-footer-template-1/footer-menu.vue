@@ -81,7 +81,6 @@
 <script setup>
 // TODO: 后续修改调整
 import GlobalAccessConfig from "src/core/access-config/access-config.js";
-// import betBar from 'src/components/bet/bet-bar.vue';  // 投注栏收起后的底部条
 import { utils, SessionStorage } from "src/core/index.js";
 import { ref, computed, onBeforeUnmount, onMounted, watch } from "vue";
 import lodash from "lodash";
