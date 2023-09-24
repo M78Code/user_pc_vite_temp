@@ -30,7 +30,7 @@
           v-if="bet_this.show_invalid_btn">
           <!--  移除无效(串关包括不支持串关投注项)投注 -->
           {{ $t('bet.remove_invalid_item') }}
-          <icon name="icon-del" class="bet-del" />
+          <icon-wapper name="icon-del" class="bet-del" />
         </div>
         <template v-if="BetDataCtr.is_bet_single">
           <template v-if="bet_this.bet_fail_flag">
@@ -245,7 +245,7 @@
                     <!--  移除所有投下注 -->
                     {{ $t('bet.remove_all') }}
                     &nbsp;
-                    <icon name="icon-del" class="bet-del" />
+                    <icon-wapper name="icon-del" class="bet-del" />
                     <!-- 取消 -->
                   </div>
                 </div>
@@ -318,7 +318,7 @@ import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import BetData from "src/core/bet/class/bet-view-data-class.js";
 import { format_currency } from 'src/core/index.js'
 import lodash from 'lodash'
-
+import { IconWapper } from 'src/components/icon'
 
 const props = defineProps({
   // 投注记录组件this

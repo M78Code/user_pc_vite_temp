@@ -34,7 +34,7 @@
           <!-- 底部分页 -->
           <div class="pager-wrap row justify-end">
             <div class="go-top-btn yb-flex-center" @click="on_go_top">
-              <icon name="icon-go_top" size="14px" />
+              <icon-wapper name="icon-go_top" size="14px" />
               <div class="msg">{{ $t("common.back_top") || "" }}</div>
             </div>
           </div>
@@ -49,6 +49,7 @@ import { mapGetters } from "vuex";
 import { api_match } from "src/api/index.js";
 import match_list_version_mixin from "src/project/yabo/mixins/match_list/match_list_version_mixin.js";
 import skt_data_list from "src/public/mixins/websocket/data/skt_data_list_new_data.js";// 发送websocket命令时使用
+import { IconWapper } from 'src/components/icon'
 export default {
   name: "SearchMatchList",
 

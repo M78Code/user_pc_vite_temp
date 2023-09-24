@@ -153,7 +153,7 @@
               }}{{ i18n_t("icon_tips.goal") }}
             </template>
           </q-tooltip>
-          <!-- <icon name="icon-rs_jin_quan" size="16px" /> -->
+          <!-- <icon-wapper name="icon-rs_jin_quan" size="16px" /> -->
         </div>
       </div>
       <!-- 加时赛进球 -->
@@ -581,13 +581,15 @@ import results from "src/core/match-results/match-results-mixin/index";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import loadData from "src/components/load_data/load_data.vue"
 import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/index.js";
+import { IconWapper } from 'src/components/icon'
 // import Tabs from "../components/playback_tabs.vue";
 // import SliderX from "../components/playback_slider.vue";
 // import no_data from "src/components/no_data/no_data";
 export default {
   mixins: [results],
   components: {
-    loadData
+    loadData,
+    IconWapper,
     // Tabs,
     // SliderX,
     // "no-data": no_data

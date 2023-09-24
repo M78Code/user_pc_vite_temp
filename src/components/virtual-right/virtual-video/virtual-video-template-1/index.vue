@@ -36,7 +36,7 @@
               <!-- 点球比分 -->
               <div  class="yb-flex-center yb-width" v-if="vsport_ctr.info.csid == 1001 && vsport_ctr.info.isc == 1">
                 <!-- 点球图标 -->
-                <div class="col icon-wrap"><icon class="icon" :name="`img:${img_white_point}`" size="13px"/></div>
+                <div class="col icon-wrap"><icon-wapper class="icon" :name="`img:${img_white_point}`" size="13px"/></div>
                 <!-- 点球比分 -->
                 <div class="score din-medium">{{vsport_ctr.replay_list[vsport_ctr.replay_index].penalty_score_home ?  `${vsport_ctr.replay_list[vsport_ctr.replay_index].penalty_score_home}-${vsport_ctr.replay_list[vsport_ctr.replay_index].penalty_score_away}` :'-'}}</div>
                 <div class="col"></div>
@@ -96,13 +96,16 @@ import arcProgress from "src/project/yabo/components/virtual_right/arc_progress.
 import basketballResult from "src/project/yabo/components/virtual_right/basketball_result.vue"
 import noVideo from "src/project/yabo/components/match_details/match_info/no_video.vue"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, nextTick, defineComponent } from "vue";
+import { IconWapper } from 'src/components/icon'
+
 export default defineComponent({
   name: "virtualVideo",
   components:{
     arcProgress,
     loadData,
     basketballResult,
-    noVideo
+    noVideo,
+    IconWapper,
   },
   props:{
     // 虚拟体育控制类

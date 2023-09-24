@@ -82,10 +82,11 @@
 
 <script>
 import video_ctrl from "src/project/yabo/mixins/match_details/match_info/video_ctrl";
+import { IconWapper } from 'src/components/icon'
 // import refresh from "/components/refresh/refresh.vue";
 export default {
   mixins: [video_ctrl],
-  components: {refresh},
+  components: {refresh, IconWapper},
   props: {
     refresh_loading: {
       type: Boolean,
