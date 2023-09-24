@@ -120,6 +120,7 @@ import BetData from "src/core/bet/class/bet-data-class.js";
 import { i18n_t } from "src/boot/i18n.js"
 import BetInput from "./bet-input.vue"
 import { IconWapper } from 'src/components/icon'
+import { del_bet_item } from "./config/bet_single_info.js"
 
 const props = defineProps({
   index: {
@@ -139,10 +140,10 @@ const props = defineProps({
      * @returns {number}
      */
      const pending_order_status = computed(() => {
-        let bet_obj = BetData.bet_single_obj[props.id];
-        if(bet_obj) {
-          return lodash.get(bet_obj, 'cs.pending_order_status')
-        }
+        // let bet_obj = BetData.bet_single_obj[props.id];
+        // if(bet_obj) {
+        //   return lodash.get(bet_obj, 'cs.pending_order_status')
+        // }
         return 0;
      })
 

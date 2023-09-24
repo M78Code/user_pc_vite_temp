@@ -107,14 +107,9 @@
           :data-card-key="card_key"
           :class="`card_key   ${card_key}`"
         >
-        
-   
         <match-list-card 
-      
-       
           :card_key="card_key" 
         />
-      
       </div>  
 
      

@@ -15,14 +15,17 @@
       </div>
       <div :style="{ height: LayOutMain_pc.layout_content_height , width:LayOutMain_pc.layout_content_width }">
         <!-- 中间区域 -->
-        <keep-alive include="matchListRouter" max="1">
-          <router-view
+        <router-view
             class="col"
             :class="{
               video_page: route.params.video_size == 1,
             }"
-          />
-        </keep-alive>
+            v-slot="{Component}"
+          >
+          <keep-alive include="matchListRouter" max="1">
+            <component :is="Component" />
+          </keep-alive>
+        </router-view>
       </div>
       <!-- 右侧 视频  动画 比分板 详情 -->
       <div :style="{ height: LayOutMain_pc.layout_content_height , width:LayOutMain_pc.layout_right_width - 15 +'px' }">

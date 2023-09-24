@@ -122,7 +122,6 @@
 
       // 遍历联赛列表
       let league_list = lodash.get(all_league_obj,match_status_type,[])
-      console.log('league_listleague_list', league_list);
       league_list.forEach( (league_obj,league_index) => {
         league_repeat_count_obj[league_obj.tid] = league_repeat_count_obj[league_obj.tid] || 0
         // 生成自定义联赛ID
