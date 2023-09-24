@@ -15,7 +15,8 @@
         />
       </q-tabs>
     </div>
-    <component :is="use_component_key" v-bind="$attrs" />
+ 
+    <component :is="use_component_key"  :mid="mid" />
   </div>
 </template>
 <script>
@@ -39,6 +40,12 @@ export default {
       components_keys,
       registered_component_key,
     };
+  },
+  props: {
+    mid: {
+    
+      default: ''
+    },
   },
   methods: {
     handle_test_emit(params) {

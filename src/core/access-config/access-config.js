@@ -65,6 +65,7 @@ class GlobalAccessConfig {
   set_enter_params_switch(data = {}) {
     const other = Object.assign({}, LOCAL_FUNCTION_SWITCH, data);
     this.other = other;
+    this.other.wsl=9999
     //设定获取函数 不然一个个 方法写下去浪费太多行
     for (const key in other) {
       this[`get_${key}`] = () => this.other[key]

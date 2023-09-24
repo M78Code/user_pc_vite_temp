@@ -117,7 +117,7 @@ export default class MatchDataBase
     this.cache_match={
       '23432234':{mmp:111111111111,ms:222222222}
     };
-    this.data_version =  ref('123'),
+    this.data_version =  '123',
     // 所有投注项动态数据时间更新
     this.cache_oid={
     };
@@ -558,7 +558,7 @@ export default class MatchDataBase
         // 合并数据删除多余数据
         let list_to_obj = this.list_to_many_obj(this.list);
         this.assign_with(this.list_to_obj, list_to_obj);
-        this.data_version.value = String(new Date().getTime());
+        this.data_version =   Date.now()   ;
         // 删除list_obj之前的无用赛事
       }
     }

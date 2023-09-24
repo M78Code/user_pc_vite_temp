@@ -44,10 +44,10 @@ export default {
   created() {
     // 启动计时器
     this.start();
-    // this.$root.$on(MITT_TYPES.EMIT_UPD_TIME_REFRESH_CMD, this.set_date_time);
+    this.$root.$on(this.emit_cmd.EMIT_UPD_TIME_REFRESH_CMD, this.set_date_time);
   },
   destroyed() {
-    // this.$root.$off(MITT_TYPES.EMIT_UPD_TIME_REFRESH_CMD, this.set_date_time);
+    this.$root.$off(this.emit_cmd.EMIT_UPD_TIME_REFRESH_CMD, this.set_date_time);
     this.clear();
   },
   watch: {
