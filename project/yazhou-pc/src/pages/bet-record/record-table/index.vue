@@ -67,7 +67,7 @@
                       <span>{{ data.orderNo }} {{ data.copy_color }}</span>
                       <span class="copy" @click="copy(data.orderNo)">
                         <!--copy图标-->
-                        <icon name="icon-icon_copy" />
+                        <icon-wapper name="icon-icon_copy" />
                       </span>
                     </div>
                     <!--单关，部分获取全额提前结算显示详情展示按钮-->
@@ -85,7 +85,7 @@
                         <span>{{ i18n_t("bet_record.settlement_pre_info") }}</span>
                         <span>
                           <!--详情展示部分箭头-->
-                          <icon
+                          <icon-wapper
                             name="icon-triangle"
                             size="16px"
                             color="#99A3B1"
@@ -160,10 +160,10 @@
                     <!-- :class="outcome_class(data.orderOutCome)" -->
                     <span
                       :class="{ 'win-color': [4, 5].includes(data.outcome) }"
-                      v-if="tool_selected === 0 || tool_selected === 1"
+                      v-if="tool_selected == '0' || tool_selected == '1'"
                       >{{
                         format_balance(
-                          tool_selected === 0
+                          tool_selected == '0'
                             ? data.maxWinAmount
                             : data.backAmount
                         )
@@ -182,7 +182,7 @@
                       order_status(data.orderStatus)
                     }}</span>
                     <!--显示部分提前结算或者全额提前结算-->
-                    <span v-if="tool_selected == 1" class="bet-pre-color">
+                    <span v-if="tool_selected == '1'" class="bet-pre-color">
                       <template v-if="data.settleType == 4">{{
                         i18n_t("bet_record.settlement_pre_part2")
                       }}</template>
@@ -267,7 +267,7 @@
                             >
                             <span class="copy" @click="copy(obj.preOrderNo)">
                               <!--copy图标-->
-                              <icon
+                              <icon-wapper
                                 name="icon-icon_copy"
                                 :color="color_list[i]"
                               />
@@ -416,7 +416,7 @@ import { formatTime,format_balance,format_score_t } from "src/core/format/index.
 import loadData from "project_path/src/components/load-data/load-data.vue"
 import {defineExpose, watch } from 'vue';
 import UserCtr from "src/core/user-config/user-ctr.js";
-
+import { IconWapper } from 'src/components/icon/index.js'
 
 const props = defineProps({
   record_obj: {
@@ -448,8 +448,8 @@ const props = defineProps({
     },
   },
   tool_selected: {
-    type: Number,
-    default: 0,
+    type: String,
+    default: '0',
   },
   random: Number,
   lang:{
@@ -472,7 +472,7 @@ const lineList = [
   { label: i18n_t("bet_record.bets_forehead"), id: 5 },
   {
     label:
-      // props.tool_selected === 0
+      // props.tool_selected == '0'
         // ? i18n_t("common.maxn_amount_val")
       i18n_t("common.donate_win"),
     id: 6,

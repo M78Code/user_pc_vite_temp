@@ -45,7 +45,7 @@ export const useConfig = () => {
     params: {
       page: 1, //当前页
       size: 50, //每页显示大小
-      orderStatus: 0, //(0:未结算 1:已结算)
+      orderStatus: '0', //(0:未结算 1:已结算)
       // timeType: 4, //查询类型	(1:今天 2:昨日 3:七日内 4:一月内)
       // userId: "", //用户ID
       orderBy: 1, // 排序 1投注时间,2 结算时间,3 开赛时间
@@ -90,7 +90,7 @@ export const useConfig = () => {
     has_confirm_status: "", 
     getBook_gcuuid: '',
     // 用户信息
-    toolSelected: 0,
+    toolSelected: '0',
     // 提前结算勾选
     is_pre_bet: 'false', 
     // 开始时间展示
@@ -216,7 +216,7 @@ export const useConfig = () => {
       let data = lodash.get(res, "data.data");
       if (code == 200) {
         // 过滤订单未结算状态
-        state.orderNo_data_obj = lodash.filter(data, { orderStatus: 0 });
+        state.orderNo_data_obj = lodash.filter(data, { orderStatus: '0' });
         state.orderNo_data_list = lodash.map(state.orderNo_data_obj, "orderNo");
         // 判断每5秒实时拉取新的投注额maxout是否为null，是则重新拉取列表数据
         count_cashout(state.orderNo_data_obj);
@@ -273,7 +273,7 @@ export const useConfig = () => {
     // 过滤提前结算条件，同步提前结算按钮显示条件
     let orderNo_ = lodash.filter(state.order_list.records, {
       enablePreSettle: true,
-      orderStatus: "0",
+      orderStatus: '0',
       initPresettleWs: true,
     });
     let orderNo = lodash.map(orderNo_, "orderNo");
@@ -538,7 +538,8 @@ export const useConfig = () => {
  * @param f 0:未结算 1:已结算 2:预约注单
  * @return {undefined} undefined
  */
-const toolClicked = (f) => {
+const tool_clicked = (f) => {
+  console.error(f);
   state.toolSelected = f;
   clear_timer_get_cashout();
   clear_timer_get_book();
@@ -573,7 +574,7 @@ const toolClicked = (f) => {
     state.params.orderBy = state.time_sort_record_item.id;
     state.params.page = 1;
     state.params.timeType = 1;
-    state.toolIndex = 0;
+    state.toolIndex = '0';
     set_search_time(0);
     if (state.old_page_size) {
       state.params.size = state.old_page_size;
@@ -665,7 +666,7 @@ const check_change = (value) => {
 const changePage = (tableData) => {
   state.params.size = tableData[0];
   state.params.page = tableData[2];
-  if (state.toolSelected == 2) {
+  if (state.toolSelected == '2') {
     getBookList();
   } else {
     getOrderList();
@@ -778,7 +779,7 @@ const getOrderList = (isScoket, callback) => {
           if (!record_list) {
             // 已结算注单没有提前结算时的逻辑
             state.data_state.load_data_state = "empty";
-            betRecord.value.recordData.total = "0";
+            lodash.get(betRecord, "value.recordData.total") && (betRecord.value.recordData.total = "0")
             return;
           }
           let new_record_obj = get_obj(record_list, data);
@@ -795,7 +796,7 @@ const getOrderList = (isScoket, callback) => {
             state.data_state.load_data_state = "empty";
           } else {
             // 订阅为结算注单
-            if (state.toolSelected == 0 && UserCtr.user_info.settleSwitch) {
+            if (state.toolSelected == '0' && UserCtr.user_info.settleSwitch) {
               // SCMD_C21();   //todo
               // 提前结算实时查询，取里面orderNo，做提前结算实时查询最新数据处理
               get_order_no();
@@ -990,7 +991,7 @@ const get_obj = (record_list, data) => {
     resetParams,
     chooseTime,
     search_pre_record,
-    toolClicked,
+    tool_clicked,
     submit,
     dateChanged,
   };

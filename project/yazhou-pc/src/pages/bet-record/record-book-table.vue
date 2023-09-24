@@ -73,7 +73,7 @@
                         class="copy"
                         @click="copy(data.orderNo)"
                       >
-                        <icon name="icon-icon_copy"/>
+                        <icon-wapper name="icon-icon_copy"/>
                       </span>  
                     </div>
                   </div>
@@ -148,7 +148,7 @@
                           <!-- 赛事开始时间10/20 15:30 -->
                           <span v-if="!data.acCode">{{formatTime(item.beginTime, lang=='vi'?'hh:MM dd/mm':'mm/dd hh:MM')}}</span>
                         </div>
-                        <div class="play-type settle-score" v-if="tool_selected == 1 && item.settleScore">
+                        <div class="play-type settle-score" v-if="tool_selected == '1' && item.settleScore">
                           <!-- 赛果比分 -->
                           <span>{{item.settleScore}}</span>
                         </div> 
@@ -307,6 +307,7 @@ import { PaginationWrapper } from "src/components/pagination/index.js";
 import { onMounted, onUnmounted, ref, watch } from "vue";
 // import VueSlider from 'vue-slider-component'
 // import 'vue-slider-component/theme/default.css'
+import { IconWapper } from 'src/components/icon/index.js'
 import loadData from "project_path/src/components/load-data/load-data.vue"
 import lodash from "lodash";
 import { format_score ,format_odds,formatTime  } from "src/core/format/index.js";
@@ -341,8 +342,8 @@ import BetCommonHelper from "src/core/bet/common-helper/index.js";
       },
     },
     tool_selected: {
-      type: Number,
-      default: 0,
+      type: String,
+      default: '0',
     },
     random: Number,
     // lang:{
@@ -350,7 +351,7 @@ import BetCommonHelper from "src/core/bet/common-helper/index.js";
     //   default: "zh"
     // }
   })
-    const toolIndex = ref(0)
+    const toolIndex = ref('0')
     const recordData = ref({})
     const current = ref(1)
     const toPage = ref(1)

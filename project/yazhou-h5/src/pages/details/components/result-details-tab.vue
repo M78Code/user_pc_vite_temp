@@ -113,7 +113,7 @@ const result_tab = (index,tab_item) => {
       let params = {
         matchId: matchid,
         timeType: 3,
-        orderStatus: 1,
+        orderStatus: '1',
         orderBy: 2,
         }
       let {code , data} = await api_betting.post_getOrderList(params)

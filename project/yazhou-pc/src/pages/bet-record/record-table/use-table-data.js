@@ -22,7 +22,7 @@ import { i18n_t } from "src/boot/i18n.js"
 export const useTableData = ({ props, emit }) => {
 
   const state = reactive({
-    toolIndex: 0,
+    toolIndex: '0',
     recordData: {},
     toolWords: [],
     current: 1,
@@ -632,7 +632,7 @@ export const useTableData = ({ props, emit }) => {
     if (props.tool_selected) {
       emit("clear_timer_get_cashout");
       get_init_data();
-    } else if (props.tool_selected == 0 && UserCtr.user_info.settleSwitch) {
+    } else if (props.tool_selected == '0' && UserCtr.user_info.settleSwitch) {
       let param = {};
       let send_gcuuid = uid();
       param.gcuuid = send_gcuuid;
