@@ -7,7 +7,7 @@
       <!-- 比赛进程 -->
       <!-- :style="`height:105px;margin-top:${process_margin}px`" -->
       <!-- <div class="yb-flex-center full-width" > -->
-      <match-process v-if="is_mounted && match.api_update_time != 0" :match_props="{ match }" source='match_list'
+      <match-process v-if="is_mounted && match.api_update_time != 0" :match="match" source='match_list'
         show_page="match-list" :rows="2" />
       <!-- </div> -->
     </div>
