@@ -43,7 +43,7 @@ class MenuData {
     this.previous_lv_2_menu_i = 0;
     // 二级菜单 滚球下边的一个按钮   "全部"按钮
     this.get_sport_all_selected = computed(() => {
-      return lodash.isArray(this.current_lv_2_menu) && this.menu_type.value == 1;
+      return this.menu_type.value == 1 && lodash.isArray(this.current_lv_2_menu);
     });
     //当前的菜单 lv2  注意 滚球 二级菜单 有一个【全部】选项 get_sport_all_selected
     this.current_lv_2_menu = undefined;
