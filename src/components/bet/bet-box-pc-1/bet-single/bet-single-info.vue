@@ -111,8 +111,8 @@
   </q-card>
 </template>
 <script setup>
-import { ref, toRefs, defineComponent, reactive, onMounted, onUnmounted } from "vue"
-import _ from 'lodash'
+import { ref, toRefs, defineComponent, reactive, onMounted, onUnmounted, computed } from "vue"
+import lodash from 'lodash'
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import { format_odds, format_currency,formatTime } from "src/core/format/index.js"
 import { odds_type_name } from "src/core/constant/index.js"
@@ -126,8 +126,25 @@ const props = defineProps({
     type: Number,
     default: 0
   },
+  id: {   //赛事id
+    type: String,
+    default: "0"
+  },
   item: {}
 })
+
+     /**
+     * @description:是否支持预约 0 关闭 1 支持
+     * @param {undefined} undefined
+     * @returns {number}
+     */
+     const pending_order_status = computed(() => {
+        let bet_obj = BetData.bet_single_obj[props.id];
+        if(bet_obj) {
+          return lodash.get(bet_obj, 'cs.pending_order_status')
+        }
+        return 0;
+     })
 
 const ref_data = reactive({
   DOM_ID_SHOW: false,
