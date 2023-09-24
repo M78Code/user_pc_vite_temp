@@ -78,8 +78,7 @@ const deal_with_list_data = (data) => {
       mid_arr.push(mid_info)
     })
   })
-  MatchListData.set_list(mid_arr)
-  console.log('MatchListDataMatchListData', MatchListData);
+  MatchListData.set_list(mid_arr, true)
 }
 /**
  * @description 专业处理服务器返回的 列表 数据---联赛结构

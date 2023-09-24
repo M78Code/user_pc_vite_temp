@@ -147,19 +147,14 @@ class MenuData {
     } else {
       menu_list.splice(1, 0, pop_main_items[0], {});
     }
-    this.menu_lv1 = menu_list;
+    console.error('menu_list', menu_list)
+    this.set_cache_class({
+      menu_lv1: menu_list
+    })
     //如果没有设定过1级菜单
     if (!this.current_lv_1_menu && this.menu_list[0]) {
       this.set_current_lv1_menu(this.menu_list[0], 0, "init");
     }
-    // //如果有设定过二级菜单 先设置二级菜单加载数据先
-    // if (this.current_lv_2_menu) {
-    //   this.set_current_lv2_menu(
-    //     this.current_lv_2_menu,
-    //     this.current_lv_2_menu_i,
-    //     "init"
-    //   );
-    // }
     return [menu_list, pop_main_items];
   }
   //设置选中的菜单
@@ -194,9 +189,8 @@ class MenuData {
     }
     // 赛果mi
     if (menu_type == 28) return arg_mi;
-    let menu_mapping = BaseData.mi_euid_map_res[mi];
-    if (!lodash.isEmpty(menu_mapping)) {
-      return menu_mapping.h;
+    if (BaseData.mi_euid_map_res && BaseData.mi_euid_map_res[mi]) {
+      return BaseData.mi_euid_map_res[mi].h;
     } else {
       // 电竞无旧菜单id处理
       let menu_dianjing = {
