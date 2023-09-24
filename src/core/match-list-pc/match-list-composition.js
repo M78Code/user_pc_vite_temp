@@ -588,7 +588,7 @@ const get_hot_match_list = (backend_run = false) => {
 				
 				if (!backend_run) {
 					// 调用bymids接口
-					api_bymids({ is_first_load: true });
+					// api_bymids({ is_first_load: true });
 					// 切换右侧赛事
 					let first_match = match_list[0];
 					let params = {
@@ -714,7 +714,7 @@ const check_match_last_update_time = () => {
 		}
 	});
 	if (mids.length > 0) {
-		api_bymids({ mids });
+		// api_bymids({ mids });
 	}
 };
 /**
