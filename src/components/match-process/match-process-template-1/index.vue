@@ -71,7 +71,10 @@ import lodash from "lodash";
 
 const props = defineProps({
   // 当场赛事信息
-  match: Object,
+  match:{
+    type:Object,
+    default:()=>{}
+  },
   // 显示的页面
   show_page: {
     type: String,
