@@ -7,7 +7,7 @@
 
 <script setup>
 
-import { defineProps, watch, watchEffect } from 'vue';
+import { watch, watchEffect } from 'vue';
 import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
 import {component_symbol ,need_register_props} from "../config/index.js"
 const props = defineProps({

@@ -41,7 +41,7 @@
 </template>
 
 <script setup>
-import { computed, defineProps, reactive, ref } from 'vue';
+import { computed, reactive, ref } from 'vue';
 import { useRoute } from 'vue-router';
 
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"

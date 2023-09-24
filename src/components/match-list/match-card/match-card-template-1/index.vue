@@ -9,20 +9,20 @@
   <div v-show="false">{{ MatchListCardDataClass.list_version }}</div>
   <!-- {{ match_style_obj.show_level }} -->
   <!-- && [1,2].includes(match_style_obj.show_level) -->
-    <component
+    <!-- <component
       v-if="is_mounted"
       :is="match_components_name()"
       :mid="mid"
       :class="'csid-'+match_style_obj.csid"
-    />
+    /> -->
     <!-- <MatchTpl0After :mid="mid" />   -->
-   <!-- {{ match_components_name() }} -->
+   {{ match_components_name() }}
  
   </div>
 </template>
 
 <script>
-import { computed, defineProps, ref, onMounted, onUnmounted, shallowRef } from 'vue';
+import { computed, ref, onMounted, onUnmounted, shallowRef } from 'vue';
 import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card-class.js'
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import { LayOutMain_pc } from "src/core/index.js";

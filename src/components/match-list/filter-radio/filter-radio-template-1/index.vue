@@ -10,7 +10,7 @@
 
 <script setup>
 
-import { ref, defineProps } from 'vue';
+import { ref } from 'vue';
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
 import {component_symbol ,need_register_props} from "../config/index.js"

@@ -120,6 +120,7 @@ import BetData from "src/core/bet/class/bet-data-class.js";
 import { i18n_t } from "src/boot/i18n.js"
 import BetInput from "./bet-input.vue"
 import { IconWapper } from 'src/components/icon'
+import { del_bet_item } from "./config/bet_single_info.js"
 
 const props = defineProps({
   index: {
