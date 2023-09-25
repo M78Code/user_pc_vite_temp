@@ -31,7 +31,7 @@ import { i18n_t } from "src/boot/i18n.js"
 import { SimpleHeaderWapper as simpleHeader} from "src/components/common/simple-header/index.js";
 import leftMenu from "./left-menu.vue";
 import loadData from "src/components/load_data/load_data.vue"
-import { api_announce } from "src/api/index.js"
+import { api_home } from "src/api/index.js"
 import { format_str } from "src/core/format/index.js";
 import UserCtr from 'src/core/user-config/user-ctr.js'
 
@@ -111,7 +111,7 @@ function timestr(time1) {
 * @return {undefined} undefined
 */
 function get_list() {
-    api_announce.post_announce_list().then((res) => {
+    api_home.post_announce_list().then((res) => {
         let code = lodash.get(res, "data.code");
         let status = lodash.get(res, "status");
         const data = lodash.get(res, "data.data");
