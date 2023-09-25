@@ -1181,7 +1181,7 @@
         "match_no_start": "ยังไม่เริ่ม",
         "match_start": "เริ่ม",
         "match_tpl_title": {
-            "tpl0": {
+            "tpl1": {
                 "bet_col": [
                     "1X2",
                     "แฮนดิแคป",

@@ -111,12 +111,12 @@
          </template>
  
          <!-- 电竞 有视频赛事列表 -->
-         <esports-match-list v-if="is_esports &&route.name != 'video'" />
+         <!-- <esports-match-list v-if="is_esports &&route.name != 'video'" /> -->
  
          <!-- 【详情信息】 ------------->
          <div v-if="show_more &&route.params.video_size != 1" class="detail_right_model">
            <!-- 聊天室 -->
-           <chatroom v-if="show_chatroom" :chatroom_info.sync="chatroom_info" :chatroom_height="chatroom_height"/>
+           <!-- <chatroom v-if="show_chatroom" :chatroom_info.sync="chatroom_info" :chatroom_height="chatroom_height"/> -->
  
            <!-- 如果当前赛事盘口关闭，就给200px 上边距，用来展示 盘口关闭的提示图 -->
            <div class="wrap-total total" :class="(route.name !=='details' && load_detail_statu)" :style="{'margin-top': is_show_margin ? '200px' : '4px'}" v-if="show_wrap_total">
@@ -185,6 +185,8 @@ import refresh from "src/components/refresh/refresh.vue"
 import videoCtrl from "src/components/match-detail/match_info/video_ctrl.vue"
 import  matchInfo from "src/components/match-detail/match_info/match_info.vue"
 import  handicapTabsBar from "src/components/match-detail/match_info/handicap_tabs_bar.vue"
+import chart from "src/components/match-detail/match_info/chart.vue"
+// import hot from "src/components/match-detail/panel/hot.vue"
 import { useRoute } from "vue-router"
 import {ref} from 'vue'
 const route = useRoute()

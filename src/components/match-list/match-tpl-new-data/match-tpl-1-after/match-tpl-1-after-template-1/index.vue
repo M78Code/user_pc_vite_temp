@@ -1,6 +1,6 @@
 <template>
-  <div class="c-match-item  match-tpl0-bg" :class="{ 'more-handicap': lodash.get(match, 'has_add1') || lodash.get(match, 'has_add2') }" v-if="match">
-  <!-- <div class="c-match-item  match-tpl0-bg" :class="{ 'more-handicap': match.has_add1 || match.has_add2 }"> -->
+  <div class="c-match-item  match-tpl1-bg" :class="{ 'more-handicap': lodash.get(match, 'has_add1') || lodash.get(match, 'has_add2') }" v-if="match">
+  <!-- <div class="c-match-item  match-tpl1-bg" :class="{ 'more-handicap': match.has_add1 || match.has_add2 }"> -->
     <div v-show="false">{{ MatchListData.data_version }}</div>
     <!-- 比赛进程 -->
     <div class="process-col yb-flex-center">
@@ -20,7 +20,7 @@
           <basis-info1 v-if="is_mounted" :match="match" show_type="all" />
         </div>
         <!-- 赛事盘口投注项 -->
-        <match-handicap :handicap_list="match_list_tpl_size[`template_${match_style_obj.data_tpl_id}_main`]" :match="match" />
+        <match-handicap :handicap_list="match_tpl_info[`template_${match_style_obj.data_tpl_id}`].main_handicap_list" :match="match" />
 
         <!-- 视频按钮 -->
         <div class="media-col">
@@ -131,9 +131,12 @@ const props = defineProps({
   },
 })
 
+console.log('进来了  进来了  进来了');
+
 const play_name_list = ref([]);
 let match_style_obj = MatchListCardDataClass.all_card_obj[props.mid+'_']
-const match_list_tpl_size = ref(MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`])
+const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`].width_config
+const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`]
 const match = MatchListData.list_to_obj.mid_obj[props.mid+'_'];
 const is_mounted = ref(true);
 // 其他玩法标题
@@ -155,7 +158,7 @@ const bet_col = computed(() => {
     // 波胆
   } else if (play_current_key == 'hpsBold') {
     let { mhn, man } = match
-    let [draw, ht_draw] = t('list.match_tpl_title.tpl0.bold_bet_col')
+    let [draw, ht_draw] = t('list.match_tpl_title.tpl1.bold_bet_col')
     bet_col = [mhn, draw, man, mhn, ht_draw, man]
     if (multi_column) {
       bet_col.push(...['', '', '', '', '', '', ''])
@@ -164,7 +167,7 @@ const bet_col = computed(() => {
   } else if (play_current_key == 'hps15Minutes') {
     let start = match.hSpecial - 1,
       end = match.hSpecial + (multi_column ? 3 : 1);
-    bet_col = [...t('list.match_tpl_title.tpl0.15minutes_bet_col')]
+    bet_col = [...t('list.match_tpl_title.tpl1.15minutes_bet_col')]
     if (match.hSpecial > 3) {
       start -= 1
       end -= 1
@@ -203,31 +206,31 @@ const bet_col = computed(() => {
     }
     //角球
   } else if (play_current_key === 'hpsCorner') {
-    bet_col = [...t('list.match_tpl_title.tpl0.corner_bet_col')]
+    bet_col = [...t('list.match_tpl_title.tpl1.corner_bet_col')]
     if (multi_column) {
       bet_col.push(...[...t('list.match_tpl_title.tpl13_m.corner_col'), '', '', ''])
     }
     //点球
   } else if (play_current_key == 'hpsPenalty') {
-    bet_col = [...t('list.match_tpl_title.tpl0.penalty_bet_col')]
+    bet_col = [...t('list.match_tpl_title.tpl1.penalty_bet_col')]
     if (multi_column) {
       bet_col = bet_col.slice(0, 3)
       bet_col.push(...[...t('list.match_tpl_title.tpl13_m.penalty_col'), '', '', '', '', '', '', '', ''])
     }
     //加时赛
   } else if (play_current_key == 'hpsOvertime') {
-    bet_col = [...t('list.match_tpl_title.tpl0.overtime_bet_col')]
+    bet_col = [...t('list.match_tpl_title.tpl1.overtime_bet_col')]
     if (multi_column) {
       bet_col.push(...[...t('list.match_tpl_title.tpl13_m.overtime_col'), '', '', '', '', ''])
     }
     // 罚牌
   } else if (play_current_key == 'hpsPunish') {
-    bet_col = [...t('list.match_tpl_title.tpl0.punish_bet_col')]
+    bet_col = [...t('list.match_tpl_title.tpl1.punish_bet_col')]
     if (multi_column) {
       bet_col.push(...[...t('list.match_tpl_title.tpl13_m.punish_col'), '', '', ''])
     }
   } else {
-    bet_col = [...t('list.match_tpl_title.tpl0.bet_col')]
+    bet_col = [...t('list.match_tpl_title.tpl1.bet_col')]
     if (multi_column) {
       bet_col.push(...['', '', '', '', '', '', ''])
     }
@@ -293,7 +296,7 @@ const set_secondary_bg = (index, length) => {
 const get_bet_width = (index, length) => {
   //是否多列
   let multi_column = lodash.get( 'match.tpl_id') == 13
-  let bet_width = match_list_tpl_size.value.bet_width
+  let bet_width = match_list_tpl_size.bet_width
   if (multi_column) {
     if (length == 5) {
       if (index < 4) {
@@ -316,9 +319,9 @@ const get_bet_width = (index, length) => {
     } else {
       if (utils_info.is_iframe) {
         if ([0, 3].includes(index)) {
-          bet_width = match_list_tpl_size.value.bet_width - 4
+          bet_width = match_list_tpl_size.bet_width - 4
         } else {
-          bet_width = match_list_tpl_size.value.bet_width + 2
+          bet_width = match_list_tpl_size.bet_width + 2
         }
       }
     }

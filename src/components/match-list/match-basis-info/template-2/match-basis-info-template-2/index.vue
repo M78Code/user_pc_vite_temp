@@ -112,7 +112,6 @@ const props = defineProps({
 
 //是否展示为比分判定中
 const scoring = computed(() => {
-  console.log(`props.match`,JSON.stringify(props.match));
   const {csid, ms, mmp, home_score, away_score} = props.match
   let scoring = false
   if (

@@ -1,15 +1,14 @@
 <template>
   <div class="container-menu-w" :class="{
-    black2: UserCtr.theme.includes('night'),
+    black2: get_theme.includes('night'),
     'scrolling-up': scroll_dir > 0,
     'scrolling-down': scroll_dir < 0,
   }">
-
-    <!-- <bet-bar v-if="get_betbar_show && route.name == 'matchList'"></bet-bar> -->
+    <div>{{ UserCtr.theme }}</div>
     <!-- 底部菜单资源配置图片 -->
     <div v-if="isshow_bottom_banner" class="bottom-banner">
       <img :src="calc_resources_obj.img_src" alt="" class="banner" @click="jump" />
-      <img src="/yazhou-h5/image/svg/close9.svg" alt="" class="close" @click.self="close_banner" />
+      <img src="/yazhou-h5/image/svg/close9.svg" alt="" class="close" @click.self="isshow_bottom_banner = false" />
     </div>
     <div class="floating-menu">
       <div class="footer-menu-item" @click="menu_item_click(item, k)" v-for="(item, k) of footer_menulist" :key="k"
@@ -35,7 +34,7 @@
           <div class="menu-item-title" :class="{
             'theme02-focus':
               show_favorite_list &&
-              UserCtr.theme.includes('night') &&
+              get_theme.includes('night') &&
               item.id == 1,
           }" v-show="item.id != 5">
             <span class="title-p1" :class="{ 'title-p2': item.title1 }">
@@ -90,6 +89,10 @@ import { UserCtr, i18n_t, compute_css, useMittOn, useMittEmit, MITT_TYPES, MenuD
 
 const { matchReducer } = store.getState();
 const { menu_type, update_time, get_sport_all_selected } = MenuData;
+// 路由
+const route = useRoute();
+const router = useRouter();
+
 const is_effecting_ref = ref(true);
 const is_refreshing = ref(false);
 // 子菜单是否显示
@@ -98,26 +101,6 @@ const sub_menu_l_show = ref(false);
 const sub_menu_l_show_slow = ref(false);
 // 选中的子菜单下标
 const sub_footer_menu_i = ref(0);
-// 返回顶部按钮显示
-const scroll_to_top_show = ref(false);
-// 返回顶部时钟对象
-const scroll_to_top_timeout = ref(0);
-// 拖拽x坐标
-const init_poi_y = ref(0);
-// 拖拽过程中上一帧的鼠标x坐标
-const prev_x = ref(null);
-// 拖拽过程中上一帧的鼠标y坐标
-const prev_y = ref(null);
-// 是否拖拽到上方限制区
-const flat_topped = ref(false);
-// 滚动时点击返回顶部无效
-const list_scroll_timeout = ref(0);
-//列表滚动距离
-const scroll_h = ref(0);
-//上次记录的滚动方向 1向上滚  -1向下滚
-const scroll_prev_dir = ref(-1);
-//上一帧滚动位置
-const prev_frame_poi = ref(0);
 //处理中
 const footer_clicked_handleing = ref(false);
 //上一次的key
@@ -128,12 +111,25 @@ const footer_menulist = ref([]);
 const is_sub_first_effect = ref(false);
 //子菜单隐藏
 const is_sub_first_hidden = ref(false);
-//投注栏弹层显示非0否则0
-const local_bet_status = ref(0);
+
 //小于0显示页脚,大于0隐藏页脚
 const scroll_dir = ref(0);
 //关注、收藏 模式
 const show_favorite_list = ref(UserCtr.show_favorite_list)
+const get_lang = ref(UserCtr.lang);
+const get_theme = ref(UserCtr.theme);
+const get_user = ref(UserCtr.user_info);//用户信息
+//商户配置的广告信息
+const get_resources_obj = ref(UserCtr.get_resources_obj() || {})
+//用户信息更新 同步状态
+watch(UserCtr.user_version, () => {
+  const { theme, lang } = UserCtr;
+  get_theme.value = theme;
+  get_lang.value = lang;
+  show_favorite_list.value = UserCtr.show_favorite_list;
+  get_user.value = UserCtr.user_info
+  get_resources_obj.value = UserCtr.get_resources_obj()
+})
 let timer1_,
   timer2_,
   timer3_,
@@ -144,15 +140,14 @@ let timer1_,
 let timer_super9;
 //简版足球角球图标分割线相关
 let timer_super10;
-
-// 路由
-const route = useRoute();
-const router = useRouter();
-const get_resources_obj = UserCtr.get_resources_obj()
-const get_user = ref(UserCtr.user_info);
-watch(UserCtr.user_version, () => {
-  get_user.value = UserCtr.user_info
-})
+const isshow_bottom_banner = ref(get_resources_obj.value.is_show && get_resources_obj.value.img_src);
+const calc_resources_obj = computed(() => {
+  if (get_theme.value.includes("day")) {
+    return get_resources_obj.value.day;
+  } else {
+    return get_resources_obj.value.night;
+  }
+});
 /**
  * 是否显示菜单
 */
@@ -163,8 +158,24 @@ function get_is_hidden(item, k) {
       !GlobalAccessConfig.get_searchSwitch() &&
       item.id == 3)
 }
+//TODO computed:{
+// ...mapGetters([
+//   "get_user",
+//   "get_bet_list",
+//   "get_curr_sub_menu_type",
+//   "show_favorite_list",
+//   "get_current_main_menu",
+//   "get_filter_list",
+//   "get_current_menu",
+//   "get_lang.value",
 
-// ...mapMutations([
+//   'get_list_scroll_direction',
+
+//   'get_golistpage', TODO
+//   'get_hot_list_item'
+// ]),
+
+//TODO ...mapMutations([
 //   'set_goto_list_top', // 设置赛事列表回到顶部
 //   'set_toast',          // 设置提示信息
 //   'set_settle_dialog_bool',
@@ -220,12 +231,6 @@ const jump = () => {
       }
     }
   }
-};
-/**
- * 关闭UI挂件
- */
-const close_banner = () => {
-  set_resources_obj({ is_show: false });
 };
 
 /**
@@ -297,6 +302,8 @@ const sub_menu_changed = (sub_menu, i) => {
     update_first_menu();
   }
 };
+
+
 /**
  * 更新第一个页脚菜单
  * @param {Undefined} Undefined
@@ -307,7 +314,7 @@ const update_first_menu = () => {
   footer_menulist.value[0].title = sub_menu.title;
   footer_menulist.value[0].title1 = sub_menu.title1;
   footer_menulist.value[0].icon = sub_menu.icon;
-  footer_menulist.value[0].icon_black = UserCtr.theme.includes("day")
+  footer_menulist.value[0].icon_black = get_theme.value.includes("day")
     ? sub_menu.icon
     : sub_menu.icon1;
 
@@ -441,7 +448,7 @@ const virtual_disable_follow_filter = () => {
       if (
         f_m.id === 1 &&
         menu_type.value === 7 &&
-        lodash.get(MenuData.current_lv_2_menu, "date_menu.menuType") == 100
+        lodash.get(MenuData.current_lv_3_menu, "menuType") == 100
       ) {
         f_m.is_disabled = true;
       } else {
@@ -477,7 +484,7 @@ const set_footer_menulist = (init_footer_menulist_data = true) => {
       // 玩法菜单(独赢|大小|让球|角球等)
       {
         title: i18n_t("footer_menu.win_alone"),
-        title1: UserCtr.lang == "en" ? "" : i18n_t("footer_menu.play_way_f"),
+        title1: get_lang.value == "en" ? "" : i18n_t("footer_menu.play_way_f"),
         icon: "f-icon-sub-duying.svg",
         icon_black: "f-icon-sub-duying-black.svg",
         id: 0,
@@ -531,43 +538,13 @@ const set_footer_menulist = (init_footer_menulist_data = true) => {
   // $forceUpdate()
 };
 
-// computed:{
-// ...mapGetters([
-//   "get_user",
-//   "get_bet_list",
-//   "get_curr_sub_menu_type",
-//   "show_favorite_list",
-//   "get_current_main_menu",
-//   "get_filter_list",
-//   "get_current_menu",
-//   "UserCtr.lang",
-//   "get_bet_status",
-//   'get_list_scroll_direction',
-//   'get_bet_list',
-//   'get_betbar_show',
-//   'get_curr_third_menu_id',
-//   'get_access_config',
-//   'get_resources_obj',
-//   'get_golistpage', TODO
-//   'get_hot_list_item'
-// ]),
-const isshow_bottom_banner = computed(() => {
-  // TODO:获取商户信息
-  return get_resources_obj.is_show && !get_betbar_show && calc_resources_obj.img_src
-});
-const calc_resources_obj = computed(() => {
-  if (UserCtr.theme.includes("day")) {
-    return get_resources_obj.day;
-  } else {
-    return get_resources_obj.night;
-  }
-});
+
 // 是否展示 底部菜单 选项
 const bottom_option_show = computed(() => {
   return function (item) {
     return !(
       menu_type.value == 7 &&
-      lodash.get(MenuData.current_lv_2_menu, "date_menu.menuType") == 100 &&
+      lodash.get(MenuData.current_lv_3_menu, "menuType") == 100 &&
       item.id == 0
     );
   };
@@ -580,7 +557,7 @@ const menu_item_img = computed(() => {
       typeof get_filter_list == "object" &&
       Object.keys(get_filter_list).length &&
       "fillter-high-light";
-    if (UserCtr.theme.includes("y0"))
+    if (get_theme.value.includes("y0"))
       obj =
         item.id == 3 &&
         typeof get_filter_list == "object" &&
@@ -592,7 +569,7 @@ const menu_item_img = computed(() => {
 const footer_sub_m_list = computed(() => {
   return [
     {
-      title: ["en", "th", "ms", "ad"].includes(UserCtr.lang)
+      title: ["en", "th", "ms", "ad"].includes(get_lang.value)
         ? ""
         : i18n_t("footer_menu.full_time"),
       title1: i18n_t("footer_menu.win_alone"),
@@ -603,7 +580,7 @@ const footer_sub_m_list = computed(() => {
       id: 1,
     },
     {
-      title: ["en", "th", "ms", "ad"].includes(UserCtr.lang)
+      title: ["en", "th", "ms", "ad"].includes(get_lang.value)
         ? ""
         : i18n_t("footer_menu.full_time"),
       title1: i18n_t("footer_menu.rangqiu"),
@@ -614,7 +591,7 @@ const footer_sub_m_list = computed(() => {
       id: 4,
     },
     {
-      title: ["en", "th", "ms", "ad"].includes(UserCtr.lang)
+      title: ["en", "th", "ms", "ad"].includes(get_lang.value)
         ? ""
         : i18n_t("footer_menu.full_time"),
       title1: i18n_t("footer_menu.daxiao"),
@@ -625,7 +602,7 @@ const footer_sub_m_list = computed(() => {
       id: 2,
     },
     {
-      title: ["en", "th", "ms", "ad"].includes(UserCtr.lang)
+      title: ["en", "th", "ms", "ad"].includes(get_lang.value)
         ? ""
         : i18n_t("footer_menu.corner_kick"),
       title1: i18n_t("footer_menu.corner"),
@@ -658,9 +635,7 @@ watch(
   () => matchReducer.list_scroll_direction,
   (direction) => {
     //不显示投注弹层时改变页脚菜单显示状态
-    if (local_bet_status.value == 0) {
-      scroll_dir.value = direction;
-    }
+    scroll_dir.value = direction;
   }
 );
 //收藏改变
@@ -671,9 +646,9 @@ watch(show_favorite_list,
       item.icon = item.icon1;
       item.icon_black = item.icon1;
     } else {
-      if (UserCtr.theme.includes("day")) {
+      if (get_theme.value.includes("day")) {
         item.icon = item.icon0;
-      } else if (UserCtr.theme.includes("night")) {
+      } else if (get_theme.value.includes("night")) {
         item.icon_black = item.icon2;
       }
     }

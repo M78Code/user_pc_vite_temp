@@ -1,12 +1,12 @@
 <template>
   <div class="c-match-league"
-    :class="[{ 'match-tpl0-bg': tpl_id == 0 }, card_style_obj.is_league_fold ? 'leagues-pack' : `match-tpl${tpl_id}`]"
+    :class="[{ 'match-tpl1-bg': match_style_obj.data_tpl_id == 0 }, card_style_obj.is_league_fold ? 'leagues-pack' : `match-tpl${match_style_obj.data_tpl_id}`]"
     v-if="lodash.get(card_style_obj, 'league_obj.csid')">
     <!-- 第一行 -->
     <div v-show="false">{{ MatchListCardData.list_version }}</div>
     <div class="tr-match-head" @click="set_fold">
       <!-- 联赛信息 -->
-      <div class="leagues-wrap" :class="tpl_id == 12 && 'jingcai'"
+      <div class="leagues-wrap" :class="match_style_obj.data_tpl_id == 12 && 'jingcai'"
         :style="`width:${match_list_tpl_size.process_team_width}px !important;`">
         <!-- 箭头 -->
         <i class="icon-arrow q-icon c-icon" size="14px"></i>
@@ -22,7 +22,7 @@
           <div class="absolute-full">
             <!-- 联赛数量 -->
             <span class="ellipsis allow-user-select" v-tooltip="{ content: card_style_obj.league_obj.tn, overflow: 1 }">
-              {{ card_style_obj.league_obj.tn }}
+              {{ card_style_obj.league_obj.tid }}
             </span>
             <span class="league-match-count">{{ card_style_obj.match_count}}</span>
           </div>
@@ -30,16 +30,16 @@
       </div>
       <!-- 玩法名称 -->
       <div class="play-name row col">
-        <template v-if="[1, 3, 5, 21].includes(+tpl_id)">
+        <template v-if="[13, 3, 5, 21].includes(+match_style_obj.data_tpl_id)">
           <div class="col">
             {{ bet_title[0] }}
           </div>
 
-          <div class="col" :class="{ 'bet-col4 y0-col4': [3, 21].includes(+tpl_id) }" v-if="tpl_id != 5">
+          <div class="col" :class="{ 'bet-col4 y0-col4': [3, 21].includes(+match_style_obj.data_tpl_id) }" v-if="match_style_obj.data_tpl_id != 5">
             {{ bet_title[1] }}
           </div>
         </template>
-        <template v-else-if="[22].includes(+tpl_id)">
+        <template v-else-if="[22].includes(+match_style_obj.data_tpl_id)">
           <div class="col" :style="get_title_style()">
             {{ bet_title[0] }}
           </div>
@@ -51,7 +51,7 @@
           </div>
         </template>
         <!-- 篮球 -->
-        <template v-else-if="tpl_id == 7">
+        <template v-else-if="match_style_obj.data_tpl_id == 7">
           <div v-for="(item, key) in bet_col" class="col" :class="key == 3 && 'col2'" :key="key">
             {{ item }}
           </div>
@@ -70,7 +70,7 @@
           </div>
         </template>
       </div>
-      <div class="action-col" style="width:60px" v-if="tpl_id == 12"></div>
+      <div class="action-col" style="width:60px" v-if="match_style_obj.data_tpl_id == 12"></div>
       <div class="yb-flex-center" :style="`width:${match_list_tpl_size.media_width - 3}px !important;`">
         <!-- 联赛是否收藏 -->
         <div @click.stop="match_list_card.view.mx_collect({ type: 'leagues', match: card_style_obj.league_obj })"
@@ -80,11 +80,11 @@
       </div>
     </div>
     <!-- 第二行 玩法名称 -->
-    <!-- <div class="tr-col-name" v-if="[1, 3, 5, 21, 22].includes(+tpl_id)">
+    <!-- <div class="tr-col-name" v-if="[1, 3, 5, 21, 22].includes(+match_style_obj.data_tpl_id)">
       <div :style="`width:${match_list_tpl_size.process_team_width}px !important;`"></div>
       <div class="play-name row col">
         <div v-for="(item, key) in bet_col" class="col ellipsis"
-          :style="`width: ${(tpl_id == 22 && key <= 5) ? match_list_tpl_size.bet_width + 5 + 'px !important; flex:auto' : ''}`"
+          :style="`width: ${(match_style_obj.data_tpl_id == 22 && key <= 5) ? match_list_tpl_size.bet_width + 5 + 'px !important; flex:auto' : ''}`"
           v-tooltip="{ content: item, overflow: 1 }" :key="key">
           {{ item }}
         </div>
@@ -106,13 +106,12 @@ import {component_symbol ,need_register_props} from "../config/index.js"
 import { t } from "src/core/index.js";
 import { get_match_tpl_title } from 'src/core/format/index.js'
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
-import { csid_to_tpl_id } from 'src/core/constant/index.js';
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import { utils_info } from 'src/core/utils/module/match-list-utils.js';
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import store from 'src/store-redux/index.js'
+import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import menu_config from "src/core/menu-pc/menu-data-class.js";
-let state = store.getState();
 
 // const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
 
@@ -121,17 +120,21 @@ const props = defineProps({
     type: Object,
     default: () => {},
   },
+  card_key: {
+    type: String,
+    default: () => ''
+  }
 })
 
-const tpl_id = ref(menu_config.get_match_tpl_number() || 1)
-const match_list_tpl_size = ref(MATCH_LIST_TEMPLATE_CONFIG[`template_${tpl_id.value}_config`].width_config || {});
+let match_style_obj = MatchListCardDataClass.all_card_obj[lodash.get(props, 'card_style_obj.mid')+'_']
+const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`].width_config
 // 获取菜单类型
-if (!lodash.get( 'card_style_obj.league_obj.csid') && ['1', '500'].includes(menu_config.menu_root)) {
+if (!lodash.get(props, 'card_style_obj.league_obj.csid') && ['1', '500'].includes(menu_config.menu_root)) {
   useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST, true)
 }
 
 const is_HDP = computed(() => {
-  return [0, 20, 24, 13, 25].includes(+tpl_id.value)
+  return [0, 20, 24, 13, 25].includes(+match_style_obj.data_tpl_id)
 })
 
 /**
@@ -141,26 +144,26 @@ const is_HDP = computed(() => {
 const bet_col = computed(() => {
   let csid = props.card_style_obj.league_obj.csid
   let bet_col = []
-  if (tpl_id.value == 13) {
-    tpl_id.value = 0
+  if (match_style_obj.data_tpl_id == 13) {
+    match_style_obj.data_tpl_id = 1
     bet_col = [...t('list.match_tpl_title.tpl13_m.bet_col')]
   }
   let title_name = 'bet_col'
   //角球
-  if (tpl_id.value == 0 && menu_config.is_corner_menu()) {
+  if (match_style_obj.data_tpl_id == 1 && menu_config.is_corner_menu()) {
     title_name = "corner_bet_col"
   }
   //罚牌主盘
-  if (tpl_id.value == 25) {
-    tpl_id.value = 0
+  if (match_style_obj.data_tpl_id == 25) {
+    match_style_obj.data_tpl_id = 1
     title_name = "punish_bet_col"
   }
-  bet_col = [...get_match_tpl_title(`list.match_tpl_title.tpl${tpl_id.value}.${title_name}`, csid), ...bet_col]
+  bet_col = [...get_match_tpl_title(`list.match_tpl_title.tpl${match_style_obj.data_tpl_id}.${title_name}`, csid), ...bet_col]
 
   let mft = lodash.get(MatchListCardData.match_mid_obj, `mid_${props.card_style_obj.mid}.mft`)
 
   // 模板10
-  if (tpl_id.value == 10) {
+  if (match_style_obj.data_tpl_id == 10) {
     if (mft == 3) {
       bet_col = bet_col.slice(0, 3)
     } else {
@@ -168,7 +171,7 @@ const bet_col = computed(() => {
     }
   }
   // 模板15
-  if (tpl_id.value == 15) {
+  if (match_style_obj.data_tpl_id == 15) {
     if (mft == 5) {
       bet_col = bet_col.slice(4, 8);
     } else {
@@ -176,17 +179,17 @@ const bet_col = computed(() => {
     }
   }
   // 模板11 && 斯诺克
-  if (tpl_id.value == 11 && csid == 7) {
+  if (match_style_obj.data_tpl_id == 11 && csid == 7) {
     bet_col = get_match_tpl_title("list.match_tpl_title.tpl11.bet_col2", csid)
   }
 
   // 模板20 && 曲棍球
-  if (tpl_id.value == 20 && csid == 15) {
+  if (match_style_obj.data_tpl_id == 20 && csid == 15) {
     bet_col = get_match_tpl_title("list.match_tpl_title.tpl20.bet_col2")
   }
   // 模板 esport && CSGO
-  if (tpl_id.value == 'esports' && csid == 102) {
-    bet_col = get_match_tpl_title(`list.match_tpl_title.tpl${tpl_id}.bet_col102`)
+  if (match_style_obj.data_tpl_id == 'esports' && csid == 102) {
+    bet_col = get_match_tpl_title(`list.match_tpl_title.tpl${match_style_obj.data_tpl_id}.bet_col102`)
   }
   return bet_col
 })
@@ -196,7 +199,7 @@ const bet_col = computed(() => {
  * @param {undefined} undefined
 */
 const bet_title = computed(() => {
-  let bet_col = get_match_tpl_title(`list.match_tpl_title.tpl${tpl_id.value}.title2`, props.card_style_obj.league_obj.csid)
+  let bet_col = get_match_tpl_title(`list.match_tpl_title.tpl${match_style_obj.data_tpl_id}.title2`, props.card_style_obj.league_obj.csid)
   return bet_col
 })
 
@@ -207,7 +210,7 @@ const bet_title = computed(() => {
    * @param {NUmber}  i(0|1)  双行标题第几个
   */
 const get_highlight_title = (is_double, key, i) => {
-  let highlight = [3, 4, 5].includes(key) && [0, 13, 25].includes(+tpl_id.value)
+  let highlight = [3, 4, 5].includes(key) && [0, 13, 25].includes(+match_style_obj.data_tpl_id)
   if (is_double) {
     highlight = (highlight && i === 1)
   }
@@ -227,7 +230,7 @@ const get_title_style = () => {
 const get_bet_width = (index) => {
   let bet_width = match_list_tpl_size.bet_width
   let flex = 'none'
-  if (is_HDP && tpl_id.value != 13 && index == 5) {
+  if (is_HDP && match_style_obj.data_tpl_id != 13 && index == 5) {
     flex = 1
   }
   let style = `width:${bet_width}px !important; flex: ${flex};`

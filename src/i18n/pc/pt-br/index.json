@@ -1267,7 +1267,7 @@
     "match_no_start": "Ainda não começou",
     "match_no": "Inacabado",
     "match_tpl_title": {
-      "tpl0": {
+      "tpl1": {
         "bet_col": [
           "Casa cheia",
           "Handicap completo",
@@ -1344,17 +1344,6 @@
           "60:00~74:59(Especial 5)",
           "75:00~Tribunal Pleno (Especial 6)"
         ]
-      },
-      "tpl1": {
-        "bet_col": [
-          "Vitória em casa",
-          "Empate",
-          "Vitória fora",
-          "Vitória em casa",
-          "Sorteio",
-          "Vitória fora"
-        ],
-        "title2": ["Tribunal Pleno", "Meio tempo"]
       },
       "tpl10": {
         "bet_col": ["2", "3", "", "3", "4", "5"]

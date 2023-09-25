@@ -1182,7 +1182,7 @@ export default {
         "match_no_start": "未開賽",
         "match_start": "已開賽",
         "match_tpl_title": {
-            "tpl0": {
+            "tpl1": {
                 "bet_col": [
                     "全場獨贏",
                     "全場讓球",

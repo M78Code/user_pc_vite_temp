@@ -1265,7 +1265,7 @@
 		"match_no_start": "No iniciado",
 		"match_no": "Sin terminar",
 		"match_tpl_title": {
-			"tpl0": {
+			"tpl1": {
 				"bet_col": [
 					"1X2",
 					"Hándicap",
@@ -1342,10 +1342,6 @@
 					"60:00~74:59",
 					"75:00~FT"
 				]
-			},
-			"tpl1": {
-				"bet_col": ["1", "X", "2", "1", "X", "2"],
-				"title2": ["Tiempo completo", "Media jornada"]
 			},
 			"tpl10": {
 				"bet_col": ["2", "3", "", "3", "4", "5"]
