@@ -149,7 +149,7 @@ export const bet_click = (item,obj_hp,obj_hl) =>{
     matchId: item.mid,  // 赛事id
     tournamentId: item.tid,  // 联赛id
     scoreBenchmark: item.msc[0],  //比分
-    marketId: obj_hl.hid, //盘口ID
+    marketId: obj_hl._hid, //盘口ID
     playOptionsId: obj_hl.oid, //投注项id
     marketTypeFinally: 'EU',  // 欧洲版默认是欧洲盘 HK代表香港盘
     odds: obj_hl.ov,  //十万位赔率
