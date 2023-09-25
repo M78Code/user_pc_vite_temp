@@ -565,6 +565,8 @@ export default class MatchDataBase
   }
   set_quick_query_list(list,is_merge){
     console.log(list,is_merge)
+    // 格式化列表赛事(部分数组转对象)
+    this.list_serialized_match_obj(list);
     let obj = this.list_comparison(this.quick_query_list,list);
     if(is_merge){
       // {add:{}, del:{}, upd:{}}
@@ -1060,6 +1062,32 @@ export default class MatchDataBase
     }
     return res;
   }
+  /**
+   * @description: 获取quick_query_list列表中的赛事
+   * @param {Array} mids 赛事mid集合
+   * @return {Object} 赛事信息集合
+   */
+  _get_match_form_quick_query_list(mids){
+    let res = {};
+    try {
+      let len = 0;
+      for (let i = 0; i < this.quick_query_list.length; i++) {
+        const item = this.quick_query_list[i];
+        if(item && mids.includes(item.mid)){
+          res[item.mid]= item;
+          len++;
+          if(mids.length == len){
+            // 数量够时,直接结束循环
+            break;
+          }
+        }
+      }
+    } catch (error) {
+      console.error('_get_match_form_quick_query_list:',error);
+    }
+    return res;
+  }
+
 
   /**
    * @description: 获取list_to_obj中的赛事
@@ -1067,13 +1095,30 @@ export default class MatchDataBase
    * @return {Object} 赛事信息集合
    */
   _get_match_form_list_to_obj(mids){
-    let res = [];
+    let res = {};
     try {
       mids.forEach(mid => {
         res[mid] = lodash.get(this.list_to_obj,`mid_obj[${mid}]`);
       });
     } catch (error) {
       console.error('_get_match_form_list_to_obj:',error);
+    }
+    return res;
+  }
+
+  /**
+   * @description: 获取quick_query_obj中的赛事
+   * @param {Array} mids 赛事mid集合
+   * @return {Object} 赛事信息集合
+   */
+  _get_match_form_quick_query_obj(mids){
+    let res = {};
+    try {
+      mids.forEach(mid => {
+        res[mid] = lodash.get(this.quick_query_obj,`mid_obj[${mid}]`);
+      });
+    } catch (error) {
+      console.error('_get_match_form_quick_query_obj:',error);
     }
     return res;
   }
@@ -1091,6 +1136,7 @@ export default class MatchDataBase
         // 获取列表指定赛事
         const list_match_item = lodash.get(this._get_match_form_list([mid]),`[${mid}]`);
         const list_to_obj_match_item = lodash.get(this._get_match_form_list_to_obj([mid]),`[${mid}]`);
+        match.api_update_time = new Date().getTime();
         if(is_merge){
           // 数据合并模式
           this.assign_with(this.quick_query_obj.mid_obj[mid_obj_key], match);
@@ -1113,6 +1159,30 @@ export default class MatchDataBase
         }
       }
     }
+  }
+  /**
+   * @description: 更新单个赛事数据
+   * @param {String} mid 赛事mid
+   * @param {Object} match_data 赛事数据
+   * @return 
+   */
+  upd_all_any_match(mid,match_data) {
+    if(!mid || !match_data){
+      return
+    }
+    // 获取全量列表中的赛事
+    let match_form_list_match =  lodash.get(this._get_match_form_list([mid]),`[${mid}]`);
+    // 获取quick_query_list中的赛事
+    let quick_query_list_match =  lodash.get(this._get_match_form_quick_query_list([mid]),`[${mid}]`);
+    // 获取list_to_obj中的赛事
+    let list_to_obj_match =  lodash.get(this._get_match_form_list_to_obj([mid]),`[${mid}]`);
+    // 获取quick_query_obj中的赛事
+    let quick_query_obj_match =  lodash.get(this._get_match_form_quick_query_obj([mid]),`[${mid}]`);
+
+    match_form_list_match && this.assign_with(match_form_list_match,match_data);
+    quick_query_list_match && this.assign_with(quick_query_list_match,match_data);
+    list_to_obj_match && this.assign_with(list_to_obj_match,match_data);
+    quick_query_obj_match && this.assign_with(quick_query_obj_match,match_data);
   }
   /**
    * @description: 快速检索数据对象合并逻辑
