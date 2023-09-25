@@ -9,67 +9,55 @@
     </div>
 </template>
   
-<script>
-import { defineComponent, ref, nextTick, onMounted } from 'vue'
+<script setup>
+import { ref, nextTick, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 // TODO: 
 import { api_home } from "src/api/index";
-export default defineComponent({
-    name: "marquee",
-    setup() {
-        /** 传参到公告携带的参数 */
-        const parameters = ref(null)
-        /** 公告内容 */
-        const luckyUsers = ref('')
-        const notice_animation_duration = ref(0)
 
-        const router = useRouter()
-        /** 跳转到公告页面 */
-        function to_notice() {
-            if (!this.parameters) return;
-            router.push({
-                name: "notice",
-                query: { noticeTypeName: parameters.value },
-            });
-        }
+/** 传参到公告携带的参数 */
+const parameters = ref(null)
+/** 公告内容 */
+const luckyUsers = ref('')
+const notice_animation_duration = ref(0)
+const router = useRouter()
+/** 跳转到公告页面 */
+function to_notice() {
+    if (!parameters.value) return;
+    router.push({
+        name: "notice",
+        query: { noticeTypeName: parameters.value },
+    });
+}
 
-        const user_list = ref(null)
-        /**
-         * @Description:获取公告栏数据
-         * @return {undefined} undefined
-         */
-        function get_marquee_data() {
-            api_home.post_marquee_data().then((res) => {
-                let { code, data } = res || {};
-                if (code == 200 && data && data[0]) {
-                    parameters.value = data[0].noticeTypeName;
-                    data.forEach((item) => {
-                        // 单行显示 需去掉 换行标签
-                        if (item.context) {
-                            luckyUsers.value += item.context.replace(/<br\/>/g, '')
-                        }
-                    });
-
-                    // 通过内容滚动宽度来计算对应的动画时间
-                    nextTick(() => {
-                        // notice_animation_duration.value = _.get(this.$refs, 'user_list.scrollWidth', 0) / 30 / 2
-                        notice_animation_duration.value = user_list.value ? (user_list.value.scrollWidth || 0) / 30 / 2 : 0
-                    })
+const user_list = ref(null)
+/**
+ * @Description:获取公告栏数据
+ * @return {undefined} undefined
+ */
+function get_marquee_data() {
+    api_home.post_marquee_data().then((res) => {
+        let { code, data } = res || {};
+        if (code == 200 && data && data[0]) {
+            parameters.value = data[0].noticeTypeName;
+            data.forEach((item) => {
+                // 单行显示 需去掉 换行标签
+                if (item.context) {
+                    luckyUsers.value += item.context.replace(/<br\/>/g, '')
                 }
             });
-        }
-        /** 钩子触发 */
-        onMounted(get_marquee_data)
 
-        return {
-            parameters,
-            luckyUsers,
-            user_list,
-            notice_animation_duration,
-            to_notice
+            // 通过内容滚动宽度来计算对应的动画时间
+            nextTick(() => {
+                // notice_animation_duration.value = _.get(this.$refs, 'user_list.scrollWidth', 0) / 30 / 2
+                notice_animation_duration.value = user_list.value ? (user_list.value.scrollWidth || 0) / 30 / 2 : 0
+            })
         }
-    }
-});
+    });
+}
+/** 钩子触发 */
+onMounted(get_marquee_data)
+
 </script>
   
 <style lang="scss" scoped>
@@ -102,6 +90,7 @@ export default defineComponent({
     0% {
         transform: translateX(0px);
     }
+
     100% {
         transform: translateX(-50%);
         /* Q2 */

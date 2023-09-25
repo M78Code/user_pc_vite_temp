@@ -3,19 +3,15 @@
   <div
     class="c-match-card relative-position"
     :id="`list-mid-${mid}`"
-    :style="`height:${match_style_obj.total_height}px !important;width:${LayOutMain_pc.layout_content_width}px  !important;`"
+    :style="`height:${match_style_obj.total_height}px !important;width:${LayOutMain_pc.layout_content_width}  !important;`"
   >
-  <!-- 赛事玩法模板赛事玩法模板赛事玩法模板赛事玩法模板赛事玩法模板  {{mid}} -->
   <div v-show="false">{{ MatchListCardDataClass.list_version }}</div>
   <!-- {{ match_style_obj.show_level }} -->
   <!-- && [1,2].includes(match_style_obj.show_level) -->
     <component
-      v-if="is_mounted"
       :is="`MatchTpl${match_style_obj.view_tpl_id}After`"
       :mid="mid"
-      :class="'csid-'+match_style_obj.csid"
     />
-    <!-- <MatchTpl0After :mid="mid" />   -->
  
   </div>
 </template>
@@ -31,7 +27,7 @@ import store from 'src/store-redux/index.js'
 // inject:['match_list_card'],
 
 // 玩法模板 0   足球-让球&大小  、 足球-角球 、 美足-让球&大小 、 手球-让球&大小
-import { MatchTpl0AfterFullVersionWapper as Matchtpl1after } from "src/components/match-list/match-tpl-new-data/match-tpl-0-after/index.js";
+import { MatchTpl1AfterFullVersionWapper as MatchTpl1After } from "src/components/match-list/match-tpl-new-data/match-tpl-1-after/index.js";
 // // 玩法模板 2   足球-半/全
 import { MatchTpl2AfterFullVersionWapper as MatchTpl2After } from "src/components/match-list/match-tpl-new-data/match-tpl-2-after/index.js";
 // // // 玩法模板 7   篮球-让球&大
@@ -61,43 +57,34 @@ export default {
     },
   },
   components: {
-    Matchtpl1after,
+    MatchTpl1After,
     MatchTpl2After,
     MatchTpl7After,
     MatchTpl9After,
-    MatchTpl10After
-  },
-  watch: {
-  
+    MatchTpl10After,
   },
   setup(props) {
     // 赛事样式对象
     let match_style_obj = MatchListCardDataClass.all_card_obj[props.mid+'_']
-    // 是否显示调试信息
-    const test = ref(sessionStorage.getItem('wsl'))
     // 组件是否加载完成
     const is_mounted = ref(true);
     // 显示部分dom ID
     // this.DOM_ID_SHOW = window.BUILDIN_CONFIG.DOM_ID_SHOW;
-    
-
     onMounted(() => {
       // 异步设置组件是否挂载完成
       // setTimeout(()=>{
       //   is_mounted.value = true
       // })
     })
-
     onUnmounted(() => {
       match_style_obj = null
     })
-    
     return {
       match_style_obj,
       is_mounted,
       LayOutMain_pc,
       MatchListCardData,
-      MatchListCardDataClass
+      MatchListCardDataClass,
     }
   }
 }

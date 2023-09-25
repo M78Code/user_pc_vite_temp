@@ -14,11 +14,11 @@
       <div class="empty-m-list-w">
         <!-- 当前赛事盘口已全部关闭-->
         <span v-if="get_details_item == 0">
-          {{t('detail.odd_all_closed')}}
+          {{i18n_t('detail.odd_all_closed')}}
         </span>
         <!-- 盘口已关闭 -->
         <span v-else>
-          {{t('detail.odd_closed')}}
+          {{i18n_t('detail.odd_closed')}}
         </span>
       </div>
 
@@ -27,7 +27,7 @@
         <!-- 热门推荐国际化 -->
         <div class="h-recommend-head row items-center">
           <div class="w">
-            {{t('detail.popular_recommendation')}}
+            {{i18n_t('detail.popular_recommendation')}}
           </div>
         </div>
         <!-- 热门赛事列表 -->
@@ -38,7 +38,6 @@
     <!-- <div style="position: fixed; top: 0;color: red">11{{ is_no_data }}</div> -->
     <div v-if="!is_no_data && !is_loading" style="width:100%;height:auto;padding-bottom: 0.18rem;">
       <!-- <div slot="scrollList"> -->
-
       <slot name="scrollList">
         <!-- 置顶操作时增加动画 -->
         <transition-group name="transition-play-list" tag="div" class="transition-zhiding">
@@ -78,7 +77,7 @@ import tournament_play_new from "project_path/src/pages/details/components/tourn
 // 引入接口封装文件
 import { api_common, api_analysis} from 'src/api/index.js'
 // 引入国际化
-import { t } from "src/boot/i18n.js";;
+import { i18n_t } from "src/boot/i18n.js";;
 //  无数据显示组件
 import no_data from "project_path/src/components/common/no-data.vue"
 
@@ -152,17 +151,18 @@ export default defineComponent({
       remove_session_storage,
       remove_detail_storage,
       on_listeners,
-      off_listeners,
     } = category_info();
-    console.error(show_recommend);
+    
     watch(
-      () => route,
+      () => route.params,
       (to, from) => {
         // 1. 非赛果页 且 不是通过搜索进入 2.搜索进入且已切换过玩法集
+        
         if (
-            get_menu_type.value !== 28 && !to.query.search_term && to.params.mid === from.params.mid
-            || to.query.search_term && component_data.match_play_item_changed
+            get_menu_type.value != 28 && !to.search_term && to.mid == from.mid
+            || to.search_term && component_data.match_play_item_changed
         ) {
+          console.error(to, from);
           initEvent();
         }
         // 当切换玩法集的时候变为: true
@@ -260,7 +260,6 @@ export default defineComponent({
     *@return {Undefined} undefined
     */
     onUnmounted(() => {
-      off_listeners();
       // debounce_throttle_cancel(socket_upd_list);
 
       // 清除数据避免下次进来产生干扰
@@ -274,7 +273,7 @@ export default defineComponent({
     })
     return {
       ...toRefs(component_data),
-      t,
+      i18n_t,
       show_recommend,
       match_list_new,
       match_list_normal,
@@ -308,7 +307,6 @@ export default defineComponent({
       remove_session_storage,
       remove_detail_storage,
       on_listeners,
-      off_listeners
     }
   }
 })

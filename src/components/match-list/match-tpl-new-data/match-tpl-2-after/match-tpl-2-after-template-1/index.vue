@@ -13,7 +13,7 @@
       <!-- 主盘 -->
       <div class="match-handicap-item">
         <!-- 赛事基础信息 -->
-        <div class="basic-col" :style="`width:${match_list_tpl_size.team_width}px !important;`">
+        <div class="basic-col" :style="`width:${match_list_tpl_size.width_config.team_width}px !important;`">
           <basis-info1 show_type="all" v-if="is_mounted && match_style_obj.data_tpl_id == 25" :match="match" />
           <basis-info2 v-else-if="match" :match="match" />
         </div>
@@ -21,7 +21,7 @@
         <!-- 赛事盘口投注项 -->
         <match-handicap
           v-if="match"
-          :handicap_list="match_list_tpl_size[`template_${match_style_obj.data_tpl_id}_main`]"
+          :handicap_list="match_list_tpl_size[`template_${match_style_obj.data_tpl_id}`].main_handicap_list"
           :match="match"
           :is_show_score="![20,22,23,25].includes(+match_style_obj.data_tpl_id)"
           :is_show_score_content="false"

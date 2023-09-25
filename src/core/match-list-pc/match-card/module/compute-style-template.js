@@ -259,7 +259,6 @@ export const get_league_title_card_height = (template_id) => {
  */
 
 export const compute_style_template_by_matchinfo = (match, template_id) => {
-
 	if (template_id == 13) {
 		template_id = 1;
 	}
@@ -311,7 +310,7 @@ export const compute_style_template_by_matchinfo = (match, template_id) => {
 	// style_obj.data_tpl_id = match.data_tpl_id;
 	style_obj.is_show_card = true;
 	// 0号模板设置角球玩法数据
-	if (template_id == 0) {
+	if (template_id == 1) {
 		let obj = compute_style_template_by_matchinfo_template0_zuqiu(
 			match,
 			template_config
