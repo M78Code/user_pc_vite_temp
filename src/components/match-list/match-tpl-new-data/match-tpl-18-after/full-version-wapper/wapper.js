@@ -1,11 +1,11 @@
-import MatchTpl18AfterFullVersionWapper from "../match-tpl-18-after-template-1/index.vue";
+import MatchTpl18After from "../match-tpl-18-after-template-1/index.vue";
 import { compute_component_wapper_config } from "app/job/use-output/index.js";
 const all_components_obj = {
-  MatchTpl18AfterFullVersionWapper,
+  MatchTpl18After,
 };
 const component_config = {
-  registered_component_key: "MatchTpl18AfterFullVersionWapper",
-  default_component_key: "MatchTpl18AfterFullVersionWapper_1",
+  registered_component_key: "MatchTpl18After",
+  default_component_key: "MatchTpl18After",
   all_components_obj,
 };
 const wapper_config = compute_component_wapper_config(component_config);

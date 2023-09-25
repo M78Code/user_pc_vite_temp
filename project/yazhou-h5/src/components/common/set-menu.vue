@@ -88,7 +88,7 @@
                 : $t("setting_menu.odd_optimal2")
               }}
             </div>
-            <div class="op-icon" :style="compute_css('set-switch')"></div>
+            <div class="op-icon" :style="compute_css('menu-set-switch')"></div>
             <div class="op-item">
               {{
                 bet_is_accept

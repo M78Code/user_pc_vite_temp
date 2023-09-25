@@ -60,7 +60,7 @@
                @setfoldStatus="setfoldStatus"
                v-if="route.name != 'video' && !is_esports" />
              <!-- 电竞多媒体控制头 -->
-             <video-ctrl-esports :match_info="match_infoData" v-if="route.name != 'video' && is_esports" />
+             <!-- <video-ctrl-esports :match_info="match_infoData" v-if="route.name != 'video' && is_esports" /> -->
              <!-- 战队信息 start -->
              <match-info
                v-if="route.name != 'video'"
@@ -71,12 +71,12 @@
                :background_img="background_img"
              />
              <!-- 精彩回放 -->
-             <video-history-line
+             <!-- <video-history-line
                v-if="show_video_replay && _.get(match_infoData,'cds')!='C01'"
                :match_info="match_infoData"
                :mid="mid"
                :mmp="+_.get(match_infoData,'mmp')"
-               :matchTime="+_.get(match_infoData,'mst')" />
+               :matchTime="+_.get(match_infoData,'mst')" /> -->
              <!-- 玩法tab -->
              <handicap-tabs-bar
                v-if="(layout_cur_page.cur!=='details' && !is_esports) ||route.name == 'video'"
@@ -111,12 +111,12 @@
          </template>
  
          <!-- 电竞 有视频赛事列表 -->
-         <esports-match-list v-if="is_esports &&route.name != 'video'" />
+         <!-- <esports-match-list v-if="is_esports &&route.name != 'video'" /> -->
  
          <!-- 【详情信息】 ------------->
          <div v-if="show_more &&route.params.video_size != 1" class="detail_right_model">
            <!-- 聊天室 -->
-           <chatroom v-if="show_chatroom" :chatroom_info.sync="chatroom_info" :chatroom_height="chatroom_height"/>
+           <!-- <chatroom v-if="show_chatroom" :chatroom_info.sync="chatroom_info" :chatroom_height="chatroom_height"/> -->
  
            <!-- 如果当前赛事盘口关闭，就给200px 上边距，用来展示 盘口关闭的提示图 -->
            <div class="wrap-total total" :class="(route.name !=='details' && load_detail_statu)" :style="{'margin-top': is_show_margin ? '200px' : '4px'}" v-if="show_wrap_total">
@@ -181,6 +181,12 @@
 import matchHandicap from "src/components/match-detail/match-handicap/match-handicap.vue";
 import { TabWapper as Tab } from "src/components/common/tab"
 import {useRightDetails} from "./match-details-right-config"
+import refresh from "src/components/refresh/refresh.vue"
+import videoCtrl from "src/components/match-detail/match_info/video_ctrl.vue"
+import  matchInfo from "src/components/match-detail/match_info/match_info.vue"
+import  handicapTabsBar from "src/components/match-detail/match_info/handicap_tabs_bar.vue"
+import chart from "src/components/match-detail/match_info/chart.vue"
+// import hot from "src/components/match-detail/panel/hot.vue"
 import { useRoute } from "vue-router"
 import {ref} from 'vue'
 const route = useRoute()

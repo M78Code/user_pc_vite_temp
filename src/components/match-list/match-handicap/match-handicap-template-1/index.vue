@@ -4,7 +4,7 @@
  * @Description: 列表赛事盘口
 -->
 <template>
-  <div :class="['c-match-handicap', { 'unfold_multi_column': match.tpl_id == 13 }, get_5min_classname()]">
+  <div :class="['c-match-handicap', { 'unfold_multi_column': match_style_obj.data_tpl_id == 13 }, get_5min_classname()]">
     <div v-show="false">{{ MatchListCardDataClass.list_version }}</div>
     <div class="row no-wrap">
       <!-- 玩法列表 -->
@@ -13,7 +13,7 @@
           :style="get_bet_style(col_index, lodash.get(col, 'ols.length'))" v-for="(ol_data, ol_index) in deal_width_handicap_ols(col.ols)"
           :key="ol_index">
           <!-- 投注项组件 -->
-          <template v-if="match.tpl_id != 'esports' || (match.tpl_id == 'esports' && getCurState(ol_data._hipo))">
+          <template v-if="match_style_obj.data_tpl_id != 'esports' || (match_style_obj.data_tpl_id == 'esports' && getCurState(ol_data._hipo))">
             <bet-item v-if="is_mounted && ol_data && ol_data._hpid" :ol_data="ol_data" />
           </template>
         </div>
@@ -39,7 +39,6 @@ import betItem from "src/components/bet-item/bet-item-list-new-data.vue"
 import { MatchFooterScoreFullVersionWapper as MatchFooterScore } from "src/components/match-list/match-footer-score/index.js"
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import BetData from 'src/core/bet/class/bet-data-class.js'
-import MenuData from "src/core/menu-pc/menu-data-class.js";
 import { compute_sport_id  } from 'src/core/constant/index.js'
 
 const props = defineProps({
@@ -69,9 +68,9 @@ const props = defineProps({
     default: () => false,
   }
 })
-let current_csid = MenuData.left_menu_result.lv1_mi
+let match_style_obj = MatchListCardDataClass.all_card_obj[props.match.mid+'_']
 // 赛事模板宽度
-const match_list_tpl_size = ref(MATCH_LIST_TEMPLATE_CONFIG[`template_${compute_sport_id(current_csid)}_config`].width_config)
+const match_list_tpl_size = ref(MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`].width_config)
 
 // 组件是否已挂载
 const is_mounted = ref(true);

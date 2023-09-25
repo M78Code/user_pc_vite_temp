@@ -133,6 +133,8 @@ export const EMIT_SET_DETAILDS_SCROLL = "EMIT_SET_DETAILDS_SCROLL";
 export const EMIT_MATCHINFO_LOADING = "EMIT_MATCHINFO_LOADING";
 // 切换玩法集时候的动作,判断页面距离顶部的距离(视频和动画没点开的时候), 当点开视频或者动画时,设置玩法区域的高度
 export const EMIT_DETAILILS_TAB_CHANGED = "EMIT_DETAILILS_TAB_CHANGED";
+// 切换玩法集时记录当前玩法的ID
+export const EMIT_DETAILS_TAB_ITEM = "EMIT_DETAILS_TAB_ITEM"
 // 调用 玩法集列表接口
 export const EMIT_TABS_LIST_UPDATE_HANDLE = "EMIT_TABS_LIST_UPDATE_HANDLE";
 // 赛果骨架屏

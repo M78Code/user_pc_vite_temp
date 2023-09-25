@@ -1,5 +1,6 @@
 import base_data_instance from "src/core/base-data/base-data.js";
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
+import { computed_menu_to_match_templte } from 'src/core/match-list-pc/list-template/pc-menu-match-template.js'
 import {
   useMittOn,
   useMittEmit,
@@ -112,6 +113,7 @@ class MenuData {
   // 设置 菜单的版本变化
   set_menu_data_version(){
     useMittEmit(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA)
+    // useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST);
     this.menu_data_version.value = Date.now()
   }
   /**
@@ -232,6 +234,33 @@ class MenuData {
     //   this.set_cur_odd(this.vx_get_pre_odd);
     // }
   }
+
+   /**
+   * 获取当前的列表的默认的 模板配置
+   */
+   get_match_tpl_number() {
+    let euid = lodash.get(this.left_menu_result, 'lv2_mi');
+    // 根据当前的菜单id 取到对应的模板id
+    let current_template_id = computed_menu_to_match_templte(euid)
+    return current_template_id
+
+    // let r = (match_list.params || {}).orpt || 1;
+    // if (r == '0') {
+    //   r = 1
+    // }
+    // // 电竞常规赛事
+    // if (this.is_esports()) {
+    //   r = "esports";
+    // }
+    // //搜索13列玩法
+    // if (this.is_multi_column && state.configReducer.config.multi_column) {
+    //   r = 13;
+    // }
+    // // console.error( 'get_match_tpl_number----------get_match_tpl_number----',r );
+
+    // return r || 1;
+  }
+
   /**
    * 设置    左侧菜单输出
    *
@@ -274,9 +303,7 @@ class MenuData {
       "set_left_menu_result--------定义左侧菜单-----",
       JSON.stringify(this.left_menu_result)
     );
-    const { lv1_mi } = this.left_menu_result;
-    console.log('compute_sport_id(lv1_mi)compute_sport_id(lv1_mi)', compute_sport_id(lv1_mi));
-    MATCH_LIST_TEMPLATE_CONFIG[`template_${compute_sport_id(lv1_mi)}_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width, 'px'))
+    MATCH_LIST_TEMPLATE_CONFIG[`template_${this.get_match_tpl_number()}_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width, 'px'))
     if ([2, 3].includes(Number(obj.root))) {
       // 角球
       if ([101210, 101310].includes(+obj.lv2_mi)) {
@@ -684,28 +711,7 @@ class MenuData {
   update_menu_version() {
     base_data_instance.menu_version = Date.now();
   }
-  /**
-   * 获取当前的列表的默认的 模板配置
-   */
-  get_match_tpl_number() {
-    let { match_list } = this.match_list_api_config;
-    let r = (match_list.params || {}).orpt || 1;
-    if (r == '0') {
-      r = 1
-    }
-    // 电竞常规赛事
-    if (this.is_esports()) {
-      r = "esports";
-    }
-    //搜索13列玩法
-    if (this.is_multi_column && state.configReducer.config.multi_column) {
-      r = 13;
-    }
-    // console.error( 'get_match_tpl_number----------get_match_tpl_number----',r );
-
-    return r || 1;
-  }
-
+ 
   is_guanjun() {
     return (this.match_list_api_config.guanjun || "").includes("guanjun");
   }

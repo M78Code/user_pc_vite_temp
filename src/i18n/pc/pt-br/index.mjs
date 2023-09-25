@@ -1178,7 +1178,7 @@ export default {
         "match_no_start": "Not Started",
         "match_start": "Started",
         "match_tpl_title": {
-            "tpl0": {
+            "tpl1": {
                 "bet_col": [
                     "1x2",
                     "HDP",
@@ -1247,20 +1247,6 @@ export default {
 					"Draw",
 					"HT Draw"
 				],
-            },
-            "tpl1": {
-                "bet_col": [
-                    "1",
-                    "X",
-                    "2",
-                    "1",
-                    "X",
-                    "2"
-                ],
-                "title2": [
-                    "Full Time",
-                    "Half Time"
-                ]
             },
             "tpl10": {
                 "bet_col": [

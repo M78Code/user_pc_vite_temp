@@ -69,10 +69,8 @@
    * @Description 计算所有卡片样式数据 1. 单一赛种，有未开赛 已开赛 ，不区分赛种   3 单一赛种，不区分赛种 ，只有未开赛，只有联赛
   */
   export const  compute_match_list_style_obj_and_match_list_mapping_relation_obj_type1 =(all_league_obj,is_ws_call,is_remove_call)=>{
-    let current_csid = MenuData.left_menu_result.lv1_mi
-    console.log('current_csidcurrent_csid', current_csid, compute_sport_id(current_csid));
+    let template_id = MenuData.get_match_tpl_number()
     // 赛事模板ID
-    let template_id = compute_sport_id(current_csid)
 
     // 已开赛 到卡片key的 映射对象
     let play_to_card_key_arr = ['play_title']
@@ -174,7 +172,6 @@
         }else{
           is_league_fold = true
         }
-        // console.log('league_objleague_obj', league_obj);
         // 打入联赛标题卡片特征
         all_card_obj[card_key] = {
           ...league_title_card_template,
@@ -193,7 +190,6 @@
           league_obj:{...league_obj},
           // 可能未来要加上他自己下面的所有赛事的内容高度
         }
-
         temp_card_obj = all_card_obj[card_key]
 
         if(!is_ws_call){
@@ -223,6 +219,7 @@
           let match = MatchListData.list_to_obj.mid_obj[mid+'_']
           let match_style_obj = compute_style_template_by_matchinfo(match, template_id)
           all_card_obj[mid+'_'] = match_style_obj
+
           league_card_total_height += match_style_obj.total_height
           // 设置父级卡片key
           match_style_obj.parent_card_key = card_key

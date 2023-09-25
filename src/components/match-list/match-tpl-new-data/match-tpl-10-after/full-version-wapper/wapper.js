@@ -1,11 +1,11 @@
-import MatchTpl10AfterFullVersionWapper from "../match-tpl-10-after-template-1/index.vue";
+import MatchTpl10After from "../match-tpl-10-after-template-1/index.vue";
 import { compute_component_wapper_config } from "app/job/use-output/index.js";
 const all_components_obj = {
-  MatchTpl10AfterFullVersionWapper,
+  MatchTpl10After,
 };
 const component_config = {
-  registered_component_key: "MatchTpl10AfterFullVersionWapper",
-  default_component_key: "MatchTpl10AfterFullVersionWapper_1",
+  registered_component_key: "MatchTpl10After",
+  default_component_key: "MatchTpl10After",
   all_components_obj,
 };
 const wapper_config = compute_component_wapper_config(component_config);

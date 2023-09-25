@@ -1,11 +1,11 @@
-import MatchListTem4 from "../match-list-template4-1/index.vue";
+import MatchBasisInfo4 from "../match-basis-info-template-4/index.vue";
 import { compute_component_wapper_config } from "app/job/use-output/index.js";
 const all_components_obj = {
-  MatchListTem4,
+  MatchBasisInfo4,
 };
 const component_config = {
-  registered_component_key: "MatchListTem4",
-  default_component_key: "MatchListTem4_1",
+  registered_component_key: "MatchBasisInfo4",
+  default_component_key: "MatchBasisInfo4",
   all_components_obj,
 };
 const wapper_config = compute_component_wapper_config(component_config);

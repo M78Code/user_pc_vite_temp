@@ -136,9 +136,10 @@ import lodash from 'lodash'
 import { api_home } from "src/api/index.js";
 import CountingDownStart from 'project_path/src/components/common/counting-down-start.vue';   // 一小时以内的开赛计时器（累加计时|倒计时）
 import CountingDownSecond from 'project_path/src/components/common/counting-down.vue';   // 一小时以内的开赛计时器（累加计时|倒计时）
-
-import { ref, watch, onMounted, computed, onUnmounted, reactive } from "vue";
-import { SessionStorage, useMittOn, useMittEmit, ServerTime, MITT_TYPES, get_file_path, UserCtr, format_total_score } from 'src/core/'
+// 列表数据和对象结合操作类-实现快速检索,修改等功能
+import ListMap from 'src/core/match-list-h5/match-class/list-map.js';
+import { ref, watch, onUnmounted } from "vue";
+import { SessionStorage, LocalStorage, useMittOn, useMittEmit, ServerTime, MITT_TYPES, get_file_path, UserCtr, format_total_score, uid } from 'src/core/'
 import { useRoute, useRouter } from "vue-router";
 // 路由
 const route = useRoute();
@@ -148,7 +149,7 @@ const router = useRouter();
 let carousel_data = ref({ list: [], obj: {} });
 let banner_bg = ref(//轮播背景图片,
     localStorage.getItem("home_banner_default") ||
-    sessionStorage.getItem("banner_bg") ||
+    SessionStorage.get("banner_bg") ||
     ""
 );
 const show_banner_loading = ref(true)
@@ -184,11 +185,7 @@ const league_icon_error = ($event) => {
 const show_start_counting_down = (match) => {
     let r = false;
     let start_time = match.mgt * 1;
-    let init_server = ServerTime.server_time * 1;
-    let init_local = ServerTime.local_time_init;
-    let now_local = new Date().getTime();
-    let sub_local_time = now_local - init_local;
-    let now_server_time = init_server + sub_local_time;
+    let now_server_time = ServerTime.get_remote_time();
     let sub_time = start_time - now_server_time;
     // mcg 1:滚球 2:即将开赛 3:今日赛事 4:早盘
     r = match.mcg != 1 && 0 < sub_time && sub_time < 60 * 60 * 1000;
@@ -271,32 +268,25 @@ const confirm = (val) => {
  * @description: 获取轮播数据
  * @return {}
  */
-const get_carousel = (callback) => {
-    return api_home
-        .hot_ulike_recommendation({ isHot: 101 })
-        .then((res) => {
-            const code = lodash.get(res, "code");
-            let data = lodash.get(res, "data");
-            console.error(1111, red)
-            if (code == 200 && data.length) {
-                if (callback) {
-                    callback(data);
-                    // 更新获取轮播数据的时间,用于左右滑动轮播时,保持时间同步
-                    // updateHotReqTime(Date.now());
-                }
-            }
-        })
-        .catch(() => { })
-        .finally(() => {
-            //添加活动banner图
-            if (lodash.get(get_banner_obj, "type1")) {
-                banner_img_updata(get_banner_obj.type1);
-            }
-            //获取无轮播赛事背景图片
-            if (!lodash.get(carousel_data.value, "list.length")) {
-                get_banner_url();
-            }
-        });
+async function get_carousel(callback) {
+    try {
+        const { code, data } = await api_home.hot_ulike_recommendation({ isHot: 101 })
+        if (code == 200 && data && data.length) {
+            callback && callback(data);
+            // 更新获取轮播数据的时间,用于左右滑动轮播时,保持时间同步
+            // updateHotReqTime(Date.now());
+        }
+    } finally {
+        //添加活动banner图
+        if (lodash.get(get_banner_obj.value, "type1")) {
+            banner_img_updata(get_banner_obj.value.type1);
+        }
+        //获取无轮播赛事背景图片
+        if (!lodash.get(carousel_data.value, "list.length")) {
+            get_banner_url();
+        }
+    };
+
 };
 /**
  *@description 活动的banner图片跟新
@@ -345,7 +335,7 @@ const get_banner_url = () => {
  *@description 合并轮播图list数据
  *@return {Undefined} undefined
  */
-const updata_list = () => {
+watch(get_banner_obj, () => {
     // 展示banner loading
     show_banner_loading.value = true;
     get_carousel((data) => {
@@ -356,17 +346,12 @@ const updata_list = () => {
         // 关闭banner loading展示
         show_banner_loading.value = false;
     });
-};
-watch(get_banner_obj, updata_list);
+});
 //用戶信息變化
 watch(UserCtr.user_version, () => {
     get_lang.value = UserCtr.lang;
 });
-get_carousel((data) => {
-    carousel_data.value = new ListMap("mid", data);
-}).finally(() => {
-    show_banner_loading.value = false;
-});
+
 /**
  * @description: 清空轮播图数据
  */
@@ -377,9 +362,334 @@ const mitt_list = [
 ]
 onUnmounted(() => {
     mitt_list.forEach(i => i())
-
     if (lodash.get(carousel_data.value, "list.length")) {
         carousel_data.value.destroy && carousel_data.value.destroy();
     }
 })
+get_carousel((data) => {
+    carousel_data.value = new ListMap("mid", data);
+}).finally(() => {
+    show_banner_loading.value = false;
+});
+
+/** TODO 
+    * @description 获取运营位活动相关的配置图片, 延迟触发以优化首屏加载速度
+    * @return {Undefined} undefined
+    */
+var send_gcuuid4;
+function fetch_actimg() {
+    lodash.delay(async () => {
+        try {
+            let param = {
+                token: UserCtr.get_user_token()
+            }
+            send_gcuuid4 = uid();
+            param.gcuuid = send_gcuuid4;
+            const res = await api_home.get_bannerList(param)
+            if (send_gcuuid4 != res.gcuuid) return;
+            if (res && lodash.get(res, 'code') == 200 && lodash.get(res, 'data')) {
+                let arr = lodash.cloneDeep(lodash.get(res, 'data')), arr1 = [], arr2 = [], obj3 = '', obj4 = '';
+                arr.forEach(item => {
+                    if (item.tType == 3 && !obj3) {
+                        obj3 = item
+                    } else if (item.tType == 4 && !obj4) {
+                        obj4 = item
+                        // 去掉一个自然日展示一次的判断，有值就展示
+                        if (SessionStorage.get('showActivityTime')) {
+                            // 判断日期如果不在同一天就展示弹窗
+                            if (new Date(+SessionStorage.gegettItem('showActivityTime')).getDate() != new Date().getDate()) {
+                                this.showActivity = true
+                            }
+                        } else {
+                            // this.showActivity = true
+                            SessionStorage.set('showActivityTime', new Date().getTime())
+                        }
+                    } else if (item.tType == 1) {
+                        arr1.push(item)
+                        LocalStorage.set('home_banner_default', get_file_path(item.imgUrl))
+                    } else if (item.tType == 2) {
+                        arr2.push(item)
+                    }
+                })
+                // 左下角浮层图标
+                // this.float_btnobj = obj3
+                // if (obj4) {
+                //     // 首页中间弹窗
+                //     this.activity_layerimg = obj4.imgUrl
+                // }
+                // 类型：1-首页banner  2-列表banner  3-左下角浮层图标   4-首页中间弹窗
+                let obj = {
+                    "type1": arr1,
+                    "type2": arr2,
+                    "type3": obj3,
+                    "type4": obj4,
+                }
+                get_banner_obj.value = obj
+                // 首页banner没有数据，则展示默认banner
+                if (!arr1.length) {
+                    useMittEmit(MITT_TYPES.EMIT_SHOW_DEFAULT_BANNER_EVENT)
+                }
+            }
+            // T弹框5秒之后 自动关闭
+            // let time = 5;
+            // this.userBannerTimer = i18n_t('common.auto_close').replace('%s', time);
+            // this.timer1_ = setInterval(() => {
+            //     time--
+            //     this.userBannerTimer = i18n_t('common.auto_close').replace('%s', time);
+            //     if (time == 0) {
+            //         this.showActivity = false
+            //         clearInterval(this.timer1_)
+            //     }
+            // }, 1000)
+        } catch (error) {
+            // 接口错误 则首页轮播展示默认banner
+            useMittEmit(MITT_TYPES.EMIT_SHOW_DEFAULT_BANNER_EVENT)
+        } finally {
+            // // 热门、视频直播页需关闭语言切换状态
+            // if (this.get_home_tab_item.index !== 0) {
+            //     this.set_is_language_changing(false)
+            // }
+        }
+    }, 1000)
+}
+fetch_actimg()
 </script>
+
+<style lang="scss" scoped>
+/*  轮播 */
+.slide {
+    margin-top: 0.11rem;
+    border-radius: 0.16rem;
+    -webkit-appearance: none;
+    overflow: hidden;
+    height: 1.6rem;
+    .banner-loading {
+        display: block;
+        width: .5rem;
+        margin: .55rem auto;
+    }
+    ::v-deep .q-carousel {
+        height: 100%;
+        background: transparent;
+
+        &.q-panel-parent {
+            border-radius: .16rem;
+            z-index: 9;
+        }
+
+        .q-carousel__slide {
+            background: var(--q-color-img-bg-11) no-repeat center / cover;
+            padding: 0;
+        }
+
+        .q-carousel__control {
+            bottom: 0.08rem;
+            margin: 0 !important;
+        }
+    }
+
+    .act-banner.q-carousel__slide {
+        background: none;
+    }
+
+    .info {
+
+        height: 1.6rem;
+        text-align: center;
+        border-radius: 0.16rem 0.16rem 0 0;
+        overflow: hidden;
+
+        .info-wrap {
+            font-size: 0.16rem;
+            color: var(--q-color-com-fs-color-24);
+            line-height: 0.2rem;
+            padding: 0 0.2rem;
+            align-items: center;
+            justify-content: center;
+            height: 0.56rem;
+            flex-wrap: nowrap;
+        }
+
+        .sport-icon-wrap {
+            --per: -0.24rem;
+            width: auto;
+            height: 0.16rem;
+            width: 0.16rem;
+            margin-right: 0.04rem;
+            background: var(--q-color-com-img-bg-209) no-repeat 0 0 / 0.16rem 14.16rem;
+        }
+
+        .info-title {
+            max-width: 2.9rem;
+        }
+
+        // 16个常规赛种和4个电竞赛种
+        @each $csid,
+        $y in (s1, 1),
+        (s2, 3),
+        (s3, 28),
+        (s4, 2),
+        (s5, 19),
+        (s6, 4),
+        (s7, 15),
+        (s8, 7),
+        (s9, 6),
+        (s10, 22),
+        (s11, 13),
+        (s12, 10),
+        (s13, 12),
+        (s14, 20),
+        (s15, 8),
+        (s16, 14),
+        (s101, 39),
+        (s103, 40),
+        (s102, 41),
+        (s100, 42) {
+            .#{$csid} {
+                background-position-y: calc(var(--per) * #{$y});
+            }
+        }
+
+        .info-more {
+            display: flex;
+            justify-content: center;
+            padding: 0 0.08rem;
+
+            /*  .home */
+            .wrap-logo {
+                height: 0.46rem;
+                margin-bottom: 0.1rem;
+                pointer-events: none;
+
+                img {
+                    /* iPhone 11下需去掉宽高 */
+                    //width: 0.46rem;
+                    //height: 0.46rem;
+                    min-width: 0.46rem;
+                    min-height: 0.46rem;
+                    max-width: 0.46rem;
+                    max-height: 0.46rem;
+                }
+
+                .logo-double {
+                    margin-left: -0.14rem;
+                }
+            }
+
+            .both-item {
+                color: var(--q-color-com-fs-color-8);
+                font-size: 0.14rem;
+                /*line-height: 1;*/
+                width: 1.1rem;
+                text-align: center;
+                padding-top: 1px;
+
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                line-clamp: 2;
+                -webkit-box-orient: vertical;
+            }
+
+            .socre {
+                min-width: 1rem;
+                flex: 1;
+            }
+
+            .vs-wrap {
+                .score-wrap {
+                    font-size: 0.36rem;
+                    color: var(--q-color-com-fs-color-8);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    .both-score {
+                        flex: 1;
+                        text-align: left;
+
+                        &:first-child {
+                            text-align: right;
+                        }
+                    }
+
+                    .crossing {
+                        flex: 0 0 0.1rem;
+                        height: 0.04rem;
+                        background: var(--q-color-com-fs-color-8);
+                        margin: 0 0.06rem;
+                    }
+                }
+            }
+
+            .both-timer {
+                flex: 1;
+                height: 100%;
+                color: var(--q-color-com-fs-color-8);
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+
+                ::v-deep.counting-down-wrap {
+                    left: 50%;
+                    transform: translate3d(-50%, 0, 0);
+                    max-width: 1rem;
+                    width: 1rem !important;
+                    height: 0.32rem;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    line-height: 1;
+                    font-size: 0.12rem;
+                    color: var(--q-color-com-fs-color-8);
+
+                    .title-space-1 {
+                        margin: 0;
+                    }
+
+                    .counting,
+                    .special {
+                        font-size: 0.12rem;
+                        line-height: 0.16rem;
+                        color: var(--q-color-com-fs-color-8);
+                    }
+                }
+
+                ::v-deep.counting-down-start {
+                    color: var(--q-color-com-fs-color-8);
+                }
+            }
+        }
+    }
+
+    /* ************** 轮播icon *************** -S */
+    .control {
+        display: flex;
+        justify-content: center;
+
+        .control-item {
+            margin-right: 0.06rem;
+            width: 0.04rem;
+            height: 0.01rem;
+            border-radius: 0.03rem;
+            background: var(--q-color-com-bg-color-27);
+            cursor: pointer;
+
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+
+        .active {
+            width: 0.1rem;
+            background: var(--q-color-com-bg-color-12);
+        }
+    }
+
+    .carousel_bg {
+        width: 100%;
+        height: 1.6rem;
+    }
+}
+</style>

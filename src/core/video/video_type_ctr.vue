@@ -53,14 +53,14 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex"
+// import { mapGetters, mapActions } from "vuex"
 import video from "src/core/video/video.js"
 import { IconWapper } from 'src/components/icon'
 
 export default {
   components: {
     IconWapper,
-  }
+  },
   props: {
     ctr_data: {
       type: Object,
@@ -92,9 +92,9 @@ export default {
     }
   },
   computed:{
-    ...mapGetters({
-      vx_play_media: "get_play_media",//获取右侧赛事详情视频信息
-    }),
+    // ...mapGetters({
+    //   vx_play_media: "get_play_media",//获取右侧赛事详情视频信息
+    // }),
     //是否专题
     is_topic(){
       let index  = _.get('$route.params.play_type')  ||  this.$utils.get_media_icon_index(this.vx_play_media.media_type)
@@ -110,10 +110,10 @@ export default {
     }
   },
   methods:{
-    ...mapActions({
-      set_play_media: "set_play_media", //设置右侧赛事详情视频信息
-      set_is_back_btn_click: "set_is_back_btn_click"//设置获取是否从详情页返回
-    }),
+    // ...mapActions({
+    //   set_play_media: "set_play_media", //设置右侧赛事详情视频信息
+    //   set_is_back_btn_click: "set_is_back_btn_click"//设置获取是否从详情页返回
+    // }),
      get_video_clarity_name(){
       let  type  = _.get('$route.params.play_type')  || this.$utils.get_media_icon_index(this.vx_play_media.media_type)
       let text = ""

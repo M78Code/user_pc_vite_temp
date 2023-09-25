@@ -550,7 +550,6 @@ class BaseData {
   async init_base_data() {
     try {
       let res = await api_base_data.get_base_data({});
-      console.log('resresresres', res);
       res && await this.set_base_data_res(res);
       //  元数据加载完成 
       useMittEmit(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA)

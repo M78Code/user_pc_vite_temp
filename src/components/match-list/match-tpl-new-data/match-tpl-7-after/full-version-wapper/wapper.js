@@ -5,7 +5,7 @@ const all_components_obj = {
 };
 const component_config = {
   registered_component_key: "MatchTpl7After",
-  default_component_key: "MatchTpl7After_1",
+  default_component_key: "MatchTpl7After",
   all_components_obj,
 };
 const wapper_config = compute_component_wapper_config(component_config);

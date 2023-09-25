@@ -44,7 +44,7 @@ import { LocalStorage, utils } from "src/core/index.js";
 */
 const get_tab_play_height = (mid, csid) => {
   const lang =  LocalStorage.get("__LANG")
-  let { play_current_key, other_handicap_list = [] } = MatchListData.list_to_obj.mid_obj['mid_' + mid] || {}
+  let { play_current_key, other_handicap_list = [] } = MatchListData.list_to_obj.mid_obj[`${mid}_`] || {}
   let { tab_play_total_height: handicap_height } = lodash.get(MATCH_LIST_TEMPLATE_CONFIG, `template_${csid}_config.match_template_config`)
   let length = lodash.get(other_handicap_list, '0.ols.length', 3)
   //5分钟      波胆
@@ -119,7 +119,7 @@ const compute_style_template_by_match_info_template7_lanqiu = (match, template_c
  * @param {object} match 赛事
  **/
 const compute_style_template_by_match_info_template18 = (match) => {
-  let cur_match = MatchListData.list_to_obj.mid_obj[`mid_${match.mid}`] || { main_handicap_list: [] }
+  let cur_match = MatchListData.list_to_obj.mid_obj[`${match.mid}_`] || { main_handicap_list: [] }
   // 附加盘口高度
   let add_handicap_height = 0
   // 投注项数量

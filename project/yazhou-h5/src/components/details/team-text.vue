@@ -16,16 +16,16 @@
   </div>
 </template>
 
-<script>
-import match_stage from "src/project/components/match/match_stage.vue";   // 下拉列表赛事时间展示
+<script setup>
+import { defineComponent } from "vue";
+import matchStage from "project_path/src/components/match/match-stage.vue";   // 下拉列表赛事时间展示
+const props = defineProps(['detail_data'])
+</script>
 
-export default {
-  name: "team_text",
-  props: ["detail_data"],
-  components: {
-    "match-stage": match_stage
-  },
-};
+<script>
+export default defineComponent({
+  name: "team-text",
+})
 </script>
 
 <style lang="scss" scoped>
