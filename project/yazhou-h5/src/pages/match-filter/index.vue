@@ -23,7 +23,7 @@
                     <div class="row items-center">
                       <!-- 联赛icon -->
                       <img
-                        :src="item1.picUrlthumb ? get_file_path(item1.picUrlthumb) : get_theme.includes('theme02') ? none_league_icon_black : default_url"
+                        :src="item1.picUrlthumb ? get_file_path(item1.picUrlthumb) : get_theme.includes('night') ? none_league_icon_black : default_url"
                         @error="league_icon_error" class="match_logo" />
                       <div class="name-overhide">{{ item1.nameText }}</div>
                       <div class="nums"
@@ -139,12 +139,12 @@ const get_theme = ref(UserCtr.theme)
 // ]),
 const on_suffix = computed(() => {
   let suffix = '';
-  // if(get_theme.value.includes('_y0')){
-  //   suffix+= '_y0';
-  // }
-  // if(get_theme.value.includes('theme02')){
-  //   suffix+= '_dark';
-  // }
+  if (get_theme.value.includes('_y0')) {
+    suffix += '_y0';
+  }
+  if (get_theme.value.includes('night')) {
+    suffix += '_dark';
+  }
   return suffix;
 })
 const all_checked = computed(() => {
@@ -179,7 +179,7 @@ watch(select_num, (new_) => {
  * @param {Object} $event 错误事件对象
  */
 function league_icon_error($event) {
-  if (get_theme.value.includes('theme02')) {
+  if (get_theme.value.includes('night')) {
     $event.target.src = none_league_icon_black.value;
   } else {
     $event.target.src = default_url;
@@ -357,13 +357,8 @@ function all_checked_click() {
     item.select = check_value;
     number_of_filters += item.num
   });
-  // this.$forceUpdate(); //强制刷新页面，解决页面不会重新渲染的问题
-  // 如果是 全选
-  if (all_checked.value) {
-    select_num.value = number_of_filters;
-  } else {// 如果不是 全选
-    select_num.value = 0;
-  }
+  //设置全选//反选 数量 
+  select_num.value = all_checked.value ? number_of_filters : 0;
 }
 // 反选按钮事件
 function select_btn_click() {
