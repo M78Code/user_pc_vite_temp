@@ -533,17 +533,18 @@ const rang = ref([])
       163, 172, 176, 181, 185, 232, 243, 249, 253, 268, 269, 270, 278, 280, 294,
       306, 308, 324, 327, 334, 20003, 20004, 20015,
     ];
-
-
-   const data={
+  });
+  watch(()=>props.category_list,(newVal)=>{
+    const data={
       ...toRefs(state),
       category_list:props.category_list,
       toggele_layout,
       check_half,
     }
     useMittEmit(MITT_TYPES.EMIT_SET_HANDICAP_THIS, data)
-
-  });
+  })
+    
+  
   onUnmounted(() => {
     // useMittOn(MITT_TYPES.EMIT_SET_MATCH_DETAIL_LOAD_STATE, set_load_state).off;
     // useMittOn(
