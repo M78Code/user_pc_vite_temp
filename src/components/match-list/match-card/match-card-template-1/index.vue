@@ -5,7 +5,6 @@
     :id="`list-mid-${mid}`"
     :style="`height:${match_style_obj.total_height}px !important;width:${LayOutMain_pc.layout_content_width}  !important;`"
   >
-  <!-- 赛事玩法模板赛事玩法模板赛事玩法模板赛事玩法模板赛事玩法模板  {{mid}} -->
   <div v-show="false">{{ MatchListCardDataClass.list_version }}</div>
   <!-- {{ match_style_obj.show_level }} -->
   <!-- && [1,2].includes(match_style_obj.show_level) -->
@@ -13,7 +12,6 @@
       :is="`MatchTpl${match_style_obj.view_tpl_id}After`"
       :mid="mid"
     />
-    <!-- <MatchTpl0After :mid="mid" />   -->
  
   </div>
 </template>
@@ -29,7 +27,7 @@ import store from 'src/store-redux/index.js'
 // inject:['match_list_card'],
 
 // 玩法模板 0   足球-让球&大小  、 足球-角球 、 美足-让球&大小 、 手球-让球&大小
-import { MatchTpl0AfterFullVersionWapper as Matchtpl1after } from "src/components/match-list/match-tpl-new-data/match-tpl-0-after/index.js";
+import { MatchTpl1AfterFullVersionWapper as MatchTpl1After } from "src/components/match-list/match-tpl-new-data/match-tpl-1-after/index.js";
 // // 玩法模板 2   足球-半/全
 import { MatchTpl2AfterFullVersionWapper as MatchTpl2After } from "src/components/match-list/match-tpl-new-data/match-tpl-2-after/index.js";
 // // // 玩法模板 7   篮球-让球&大
@@ -59,7 +57,7 @@ export default {
     },
   },
   components: {
-    Matchtpl1after,
+    MatchTpl1After,
     MatchTpl2After,
     MatchTpl7After,
     MatchTpl9After,

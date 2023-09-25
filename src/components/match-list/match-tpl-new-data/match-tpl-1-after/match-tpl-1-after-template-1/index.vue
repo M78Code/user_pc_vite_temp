@@ -20,7 +20,7 @@
           <basis-info1 v-if="is_mounted" :match="match" show_type="all" />
         </div>
         <!-- 赛事盘口投注项 -->
-        <match-handicap :handicap_list="match_list_tpl_size[`template_${match_style_obj.data_tpl_id}`].main_handicap_list" :match="match" />
+        <match-handicap :handicap_list="match_tpl_info[`template_${match_style_obj.data_tpl_id}`].main_handicap_list" :match="match" />
 
         <!-- 视频按钮 -->
         <div class="media-col">
@@ -131,9 +131,12 @@ const props = defineProps({
   },
 })
 
+console.log('进来了  进来了  进来了');
+
 const play_name_list = ref([]);
 let match_style_obj = MatchListCardDataClass.all_card_obj[props.mid+'_']
-const match_list_tpl_size = ref(MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`]).width_config
+const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`].width_config
+const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`]
 const match = MatchListData.list_to_obj.mid_obj[props.mid+'_'];
 const is_mounted = ref(true);
 // 其他玩法标题
@@ -293,7 +296,7 @@ const set_secondary_bg = (index, length) => {
 const get_bet_width = (index, length) => {
   //是否多列
   let multi_column = lodash.get( 'match.tpl_id') == 13
-  let bet_width = match_list_tpl_size.value.bet_width
+  let bet_width = match_list_tpl_size.bet_width
   if (multi_column) {
     if (length == 5) {
       if (index < 4) {
@@ -316,9 +319,9 @@ const get_bet_width = (index, length) => {
     } else {
       if (utils_info.is_iframe) {
         if ([0, 3].includes(index)) {
-          bet_width = match_list_tpl_size.value.bet_width - 4
+          bet_width = match_list_tpl_size.bet_width - 4
         } else {
-          bet_width = match_list_tpl_size.value.bet_width + 2
+          bet_width = match_list_tpl_size.bet_width + 2
         }
       }
     }
