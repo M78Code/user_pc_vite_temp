@@ -158,7 +158,6 @@ const bet_col = computed(() => {
     match_style_obj.data_tpl_id = 1
     title_name = "punish_bet_col"
   }
-  console.log('bet_colbet_colbet_col', `list.match_tpl_title.tpl${match_style_obj.data_tpl_id}.${title_name}`);
   bet_col = [...get_match_tpl_title(`list.match_tpl_title.tpl${match_style_obj.data_tpl_id}.${title_name}`, csid), ...bet_col]
 
   let mft = lodash.get(MatchListCardData.match_mid_obj, `mid_${props.card_style_obj.mid}.mft`)
@@ -192,7 +191,6 @@ const bet_col = computed(() => {
   if (match_style_obj.data_tpl_id == 'esports' && csid == 102) {
     bet_col = get_match_tpl_title(`list.match_tpl_title.tpl${match_style_obj.data_tpl_id}.bet_col102`)
   }
-  console.log('bet_colbet_colbet_col', bet_col);
   return bet_col
 })
 
