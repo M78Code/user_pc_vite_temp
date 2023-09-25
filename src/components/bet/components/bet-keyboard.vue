@@ -112,7 +112,7 @@ watch(() => pre_odds_value, (new_) => {
     }
   }
 })
-watch(() => money, (new_) => {
+watch(() => money.value, (new_) => {
   useMittEmit(MITT_TYPES.EMIT_INPUT_BET_MONEY,money.value)
 })
 watch(() => active_index, (new_) => {
@@ -268,6 +268,8 @@ onUnmounted(()=>{
 </script>
 
 <style lang="scss" scoped>
+@import "project/yazhou-h5/src/css/bet/bet_single_detail.scss";
+
 .keyboard {
   height: 216px;
   -webkit-overflow-scrolling: touch;

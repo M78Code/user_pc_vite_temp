@@ -5,7 +5,7 @@
  */
 import BetData from "src/core/bet/class/bet-data-class.js";
 import SetData from "src/core/bet/bet-data-ctr-class.js";
-
+import MenuData from "src/core/menu-pc/menu-data-class.js";
 
 const bet_item = {
   inject:['match_list_data'], //子组件inject 接收数据
@@ -17,7 +17,7 @@ const bet_item = {
   data() {
     return {
       // 菜单数据
-      menu_data: $menu.menu_data,
+      menu_data: MenuData,
       // 赔率值
       match_odds: "",
       // 盘口状态 active:选中 lock:锁盘 seal:封盘 close:关盘

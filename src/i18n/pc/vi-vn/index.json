@@ -1233,17 +1233,6 @@
         ],
         "bold_bet_col": ["Hòa", "Hòa - Hiệp"]
       },
-      "tpl1": {
-        "bet_col": [
-          "Chủ thắng",
-          "Hòa",
-          "Khách thắng",
-          "Chủ thắng",
-          "Hòa",
-          "Khách thắng"
-        ],
-        "title2": ["FT", "1H"]
-      },
       "tpl10": {
         "bet_col": ["2", "3", "", "3", "4", "5"]
       },

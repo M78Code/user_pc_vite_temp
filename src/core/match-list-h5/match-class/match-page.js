@@ -40,22 +40,6 @@ class MatchPage {
   }
 
   /**
-   * @description 设置 赛事 元数据
-   * @param { list } 赛事数据 
-   */
-  set_origin_match_data (list) {
-
-  }
-
-  /**
-   * @description 根据菜单筛选赛事数据
-   * @param { type } type 菜单类型
-   */
-  filter_match_by_menu (type) {
-
-  }
-
-  /**
    * 添加赛事对象前端使用字段 : 让球方
    * @param {Array} match_list
    * @return {Array}  filtered
@@ -394,8 +378,8 @@ class MatchPage {
         // 1. 更新指定mid 盘口数据
         // this.update_match_databy_mid(res.data);
         // 2.列表页 数据源赋值操作,为了排序
-        const source_list = this.get_obj(MatchDataBaseH5.list_to_obj.list)
-        // MatchDataBaseH5.set_list(source_list, 1);
+        const source_list = this.get_obj(res.data)
+        MatchDataBaseH5.set_list(source_list, 1);
         if (res.data && res.data.length) {
           // 列表页盘口数据 获取后重新计算是否显示次要玩法
           this.run_process_when_need_recompute_container_list && this.run_process_when_need_recompute_container_list(true);

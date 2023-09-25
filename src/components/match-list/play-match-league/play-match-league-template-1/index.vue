@@ -1,12 +1,12 @@
 <template>
   <div class="c-match-league"
-    :class="[{ 'match-tpl1-bg': tpl_id == 0 }, card_style_obj.is_league_fold ? 'leagues-pack' : `match-tpl${tpl_id}`]"
+    :class="[{ 'match-tpl1-bg': match_style_obj.data_tpl_id == 0 }, card_style_obj.is_league_fold ? 'leagues-pack' : `match-tpl${match_style_obj.data_tpl_id}`]"
     v-if="lodash.get(card_style_obj, 'league_obj.csid')">
     <!-- 第一行 -->
     <div v-show="false">{{ MatchListCardData.list_version }}</div>
     <div class="tr-match-head" @click="set_fold">
       <!-- 联赛信息 -->
-      <div class="leagues-wrap" :class="tpl_id == 12 && 'jingcai'"
+      <div class="leagues-wrap" :class="match_style_obj.data_tpl_id == 12 && 'jingcai'"
         :style="`width:${match_list_tpl_size.process_team_width}px !important;`">
         <!-- 箭头 -->
         <i class="icon-arrow q-icon c-icon" size="14px"></i>
@@ -30,16 +30,16 @@
       </div>
       <!-- 玩法名称 -->
       <div class="play-name row col">
-        <template v-if="[1, 3, 5, 21].includes(+tpl_id)">
+        <template v-if="[13, 3, 5, 21].includes(+match_style_obj.data_tpl_id)">
           <div class="col">
             {{ bet_title[0] }}
           </div>
 
-          <div class="col" :class="{ 'bet-col4 y0-col4': [3, 21].includes(+tpl_id) }" v-if="tpl_id != 5">
+          <div class="col" :class="{ 'bet-col4 y0-col4': [3, 21].includes(+match_style_obj.data_tpl_id) }" v-if="match_style_obj.data_tpl_id != 5">
             {{ bet_title[1] }}
           </div>
         </template>
-        <template v-else-if="[22].includes(+tpl_id)">
+        <template v-else-if="[22].includes(+match_style_obj.data_tpl_id)">
           <div class="col" :style="get_title_style()">
             {{ bet_title[0] }}
           </div>
@@ -51,7 +51,7 @@
           </div>
         </template>
         <!-- 篮球 -->
-        <template v-else-if="tpl_id == 7">
+        <template v-else-if="match_style_obj.data_tpl_id == 7">
           <div v-for="(item, key) in bet_col" class="col" :class="key == 3 && 'col2'" :key="key">
             {{ item }}
           </div>
@@ -70,7 +70,7 @@
           </div>
         </template>
       </div>
-      <div class="action-col" style="width:60px" v-if="tpl_id == 12"></div>
+      <div class="action-col" style="width:60px" v-if="match_style_obj.data_tpl_id == 12"></div>
       <div class="yb-flex-center" :style="`width:${match_list_tpl_size.media_width - 3}px !important;`">
         <!-- 联赛是否收藏 -->
         <div @click.stop="match_list_card.view.mx_collect({ type: 'leagues', match: card_style_obj.league_obj })"
@@ -80,11 +80,11 @@
       </div>
     </div>
     <!-- 第二行 玩法名称 -->
-    <!-- <div class="tr-col-name" v-if="[1, 3, 5, 21, 22].includes(+tpl_id)">
+    <!-- <div class="tr-col-name" v-if="[1, 3, 5, 21, 22].includes(+match_style_obj.data_tpl_id)">
       <div :style="`width:${match_list_tpl_size.process_team_width}px !important;`"></div>
       <div class="play-name row col">
         <div v-for="(item, key) in bet_col" class="col ellipsis"
-          :style="`width: ${(tpl_id == 22 && key <= 5) ? match_list_tpl_size.bet_width + 5 + 'px !important; flex:auto' : ''}`"
+          :style="`width: ${(match_style_obj.data_tpl_id == 22 && key <= 5) ? match_list_tpl_size.bet_width + 5 + 'px !important; flex:auto' : ''}`"
           v-tooltip="{ content: item, overflow: 1 }" :key="key">
           {{ item }}
         </div>
@@ -150,7 +150,7 @@ const bet_col = computed(() => {
   }
   let title_name = 'bet_col'
   //角球
-  if (match_style_obj.data_tpl_id == 0 && menu_config.is_corner_menu()) {
+  if (match_style_obj.data_tpl_id == 1 && menu_config.is_corner_menu()) {
     title_name = "corner_bet_col"
   }
   //罚牌主盘
@@ -189,7 +189,7 @@ const bet_col = computed(() => {
   }
   // 模板 esport && CSGO
   if (match_style_obj.data_tpl_id == 'esports' && csid == 102) {
-    bet_col = get_match_tpl_title(`list.match_tpl_title.tpl${tpl_id}.bet_col102`)
+    bet_col = get_match_tpl_title(`list.match_tpl_title.tpl${match_style_obj.data_tpl_id}.bet_col102`)
   }
   return bet_col
 })

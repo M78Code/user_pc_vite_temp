@@ -84,6 +84,7 @@
 import video_ctrl from "./match_info_mixin/video_ctrl";
 import { IconWapper } from 'src/components/icon'
 import refresh from "src/components/refresh/refresh.vue";
+import { i18n_t } from "src/core/index"
 export default {
   mixins: [video_ctrl],
   components: {refresh, IconWapper},

@@ -219,7 +219,6 @@ const api_bymids = (
         let ts1 = res.ts
         MatchListData.set_quick_query_list(match_list, true)
         let mids_arr = [];
-        // set_quick_query_list
         match_list.forEach((match) => {
           mids_arr.push(String(match.mid));
           match.api_update_time = ts1;

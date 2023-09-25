@@ -69,9 +69,8 @@
    * @Description 计算所有卡片样式数据 1. 单一赛种，有未开赛 已开赛 ，不区分赛种   3 单一赛种，不区分赛种 ，只有未开赛，只有联赛
   */
   export const  compute_match_list_style_obj_and_match_list_mapping_relation_obj_type1 =(all_league_obj,is_ws_call,is_remove_call)=>{
-    let current_csid = MenuData.left_menu_result.lv1_mi
+    let template_id = MenuData.get_match_tpl_number()
     // 赛事模板ID
-    let template_id = compute_sport_id(current_csid)
 
     // 已开赛 到卡片key的 映射对象
     let play_to_card_key_arr = ['play_title']

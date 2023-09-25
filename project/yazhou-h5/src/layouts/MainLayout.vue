@@ -3,44 +3,46 @@
  * @Description:
 -->
 <template>
-  <div>
-    <q-layout view="lHh Lpr lFf" class="layout_container">
-      <q-page-container class="page_container">
-        <!-- <layout-header /> -->
-        <!-- <layout-conent /> -->
-        <MenuWapper v-if="['sport_menu', 'matchList'].includes(route.name)">
-          <template #menu-right>
-            <activityIcon />
-            <setMenu />
-          </template>
-        </MenuWapper>
-        <router-view />
-        <betMixBox />
-        <!--页脚-->
-        <FooterWapper class="m-layout" v-if="['sport_menu', 'matchList'].includes(route.name)">
-        </FooterWapper>
+  <q-layout view="lHh Lpr lFf" class="layout_container">
+    <q-page-container class="page_container">
+      <!-- <layout-header /> -->
+      <!-- <layout-conent /> -->
+      <MenuWapper v-if="['sport_menu', 'matchList'].includes(route.name)">
+        <template #menu-right>
+          <activityIcon />
+          <setMenu />
+        </template>
+      </MenuWapper>
+      <router-view />
+      <betMixBox />
+      <!--页脚-->
+      <FooterWapper class="m-layout" v-if="['sport_menu', 'matchList'].includes(route.name)">
+      </FooterWapper>
 
-        <!-- 筛选+搜索   已脱离文档流-->
-        <div v-if="select_dialog" position="bottom" class="select-mask" :style="`height:${inner_height}px`">
-          <div style="height:100%;width: 100%" @click="select_dialog = false" />
-          <!-- 筛选弹窗 -->
-          <select-dia />
-        </div>
+      <!-- 筛选+搜索   已脱离文档流-->
+      <div v-if="select_dialog" position="bottom" class="select-mask" :style="`height:${inner_height}px`">
+        <div style="height:100%;width: 100%" @click="select_dialog = false" />
+        <!-- 筛选弹窗 -->
+        <select-dia />
+      </div>
 
-        <!-- 投注记录弹层 -->
-        <div v-if="record_show" :class="settle_dialog_bool && 'shadow-box2'" class="shadow-box"
-          @click="change_settle_status(false)" @touchmove.prevent></div>
-        <!-- 投注记录弹框（已结算+未结算） -->
-        <div class="bet-record-box" v-if="record_show" :class="settle_dialog_bool && 'bet-record-box2'"
-          :style="{ bottom: calc_bottom }">
-          <!-- 结算弹窗 -->
-          <settle-dialog></settle-dialog>
-        </div>
-        <!-- 吐司提示框 v-if="toast_show" -->
-        <toast></toast>
-      </q-page-container>
-    </q-layout>
-  </div>
+      <!-- 投注记录弹层 -->
+      <div v-if="record_show" :class="settle_dialog_bool && 'shadow-box2'" class="shadow-box"
+        @click="change_settle_status(false)" @touchmove.prevent></div>
+      <!-- 投注记录弹框（已结算+未结算） -->
+      <div class="bet-record-box" v-if="record_show" :class="settle_dialog_bool && 'bet-record-box2'"
+        :style="{ bottom: calc_bottom }">
+        <!-- 结算弹窗 -->
+        <settle-dialog></settle-dialog>
+      </div>
+      <!-- 吐司提示框 v-if="toast_show" -->
+      <toast></toast>
+
+    </q-page-container>
+  </q-layout>
+  <!-- 商户活动的弹层,只在home页展示，两个都已 脱离文档流-->
+  <activity-layer v-if="activity_status" @activity_hide="activity_status = false" :activity_layerimg="activity_layerimg"
+    :count_down_time="userBannerTimer" />
 </template>
 
 <script setup>
@@ -48,21 +50,24 @@ import {
   ref,
   onMounted,
   onUnmounted,
-  reactive,
   defineAsyncComponent,
   nextTick,
 } from "vue";
-import { useMittOn, MITT_TYPES, compute_css_variables } from "src/core/";
+import { useMittOn, MITT_TYPES, i18n_t } from "src/core/";
 import { FooterWapper } from "src/components/footer/index.js";
 import { MenuWapper } from "src/components/menu";
 import activityIcon from "project_path/src/components/common/activity-icon.vue"; // 设置
 import setMenu from "project_path/src/components/common/set-menu.vue"; // 设置
 import selectDia from "../pages/match-list/components/select-dia.vue"
 import { useRoute } from "vue-router";
-import betMixBox from "src/components/bet/components/bet_mix_box.vue";
 import store from "src/store-redux/index.js";
+// 活动弹出框
+const activityLayer = defineAsyncComponent(() => import("../components/common/activity-layer.vue"))
 const settleDialog = defineAsyncComponent(() =>
   import("../pages/cathectic/index.vue")
+);
+const betMixBox = defineAsyncComponent(() =>
+  import("src/components/bet/components/bet_mix_box.vue")
 );
 const toast = defineAsyncComponent(() =>
   import("../components/common/toast.vue")
@@ -82,6 +87,9 @@ const get_combine_tips_show = ref(false); // 合并投注项提示弹框 弹窗
 const record_show = ref(false);
 const lastTouchEnd = ref(0);
 const select_dialog = ref(false)//暂时筛选窗口
+const activity_status = ref(false)//首页活动弹框
+const activity_layerimg = ref("") //首页活动图
+const userBannerTimer = ref(5);
 const timer_3 = ref(null);
 // 开启注单历史弹窗及遮罩
 const settle_dialog_bool = ref(footerMenuReducer.settle_dialog_bool);
@@ -181,7 +189,27 @@ const mitt_list = [
     // this.select_cleck = type
     //   this.select_dialog = val
     select_dialog.value = value
-  })
+  }).off,
+  //首页活动弹框
+  useMittOn(MITT_TYPES.EMIT_INDEX_ACTIVITY_STATUS, function (imgUrl) {
+    if (route.name == 'home' && imgUrl) {
+      activity_status.value = true;
+      activity_layerimg.value = imgUrl;
+      //T弹框5秒之后 自动关闭
+      let time = 5;
+      userBannerTimer.value = i18n_t('common.auto_close').replace('%s', time);
+      const _timme1 = setInterval(() => {
+        time--
+        console.error(time)
+        userBannerTimer.value = i18n_t('common.auto_close').replace('%s', time);
+        if (time == 0) {
+          activity_status.value = false;
+          clearInterval(_timme1)
+        }
+      }, 1000)
+    }
+  }).off,
+
 ]
 // 监听搜索弹框是否展示
 

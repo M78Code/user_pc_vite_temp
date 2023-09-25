@@ -153,7 +153,7 @@ class BaseData {
     this.init_mew_menu_list();
 
     // 定时请求菜单接口
-    this.set_menu_init_time(1500);
+    // this.set_menu_init_time(1500);
 
     this.reset_menu_init_time = setTimeout(() => {
       this.clear_menu_init_time();
@@ -550,7 +550,6 @@ class BaseData {
   async init_base_data() {
     try {
       let res = await api_base_data.get_base_data({});
-      console.log('resresresres', res);
       res && await this.set_base_data_res(res);
       //  元数据加载完成 
       useMittEmit(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA)

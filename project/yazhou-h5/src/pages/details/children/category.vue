@@ -38,7 +38,6 @@
     <!-- <div style="position: fixed; top: 0;color: red">11{{ is_no_data }}</div> -->
     <div v-if="!is_no_data && !is_loading" style="width:100%;height:auto;padding-bottom: 0.18rem;">
       <!-- <div slot="scrollList"> -->
-
       <slot name="scrollList">
         <!-- 置顶操作时增加动画 -->
         <transition-group name="transition-play-list" tag="div" class="transition-zhiding">
@@ -152,17 +151,18 @@ export default defineComponent({
       remove_session_storage,
       remove_detail_storage,
       on_listeners,
-      off_listeners,
     } = category_info();
-    console.error(show_recommend);
+    
     watch(
-      () => route,
+      () => route.params,
       (to, from) => {
         // 1. 非赛果页 且 不是通过搜索进入 2.搜索进入且已切换过玩法集
+        
         if (
-            get_menu_type.value !== 28 && !to.query.search_term && to.params.mid === from.params.mid
-            || to.query.search_term && component_data.match_play_item_changed
+            get_menu_type.value != 28 && !to.search_term && to.mid == from.mid
+            || to.search_term && component_data.match_play_item_changed
         ) {
+          console.error(to, from);
           initEvent();
         }
         // 当切换玩法集的时候变为: true
@@ -260,7 +260,6 @@ export default defineComponent({
     *@return {Undefined} undefined
     */
     onUnmounted(() => {
-      off_listeners();
       // debounce_throttle_cancel(socket_upd_list);
 
       // 清除数据避免下次进来产生干扰
@@ -308,7 +307,6 @@ export default defineComponent({
       remove_session_storage,
       remove_detail_storage,
       on_listeners,
-      off_listeners
     }
   }
 })
