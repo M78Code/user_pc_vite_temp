@@ -7,7 +7,7 @@
 // import { store } from "src/store/index.js"
 import { api_details } from "src/api/index";
 import { UserCtr } from "src/core/index.js";
-// import { update_match_time } from "src/core/common-helper/common.js"
+import { update_match_time } from "src/core/bet/common-helper/module/common-sport.js"
 import {utils } from 'src/core/index.js'
 export default {
   //统计分析URL

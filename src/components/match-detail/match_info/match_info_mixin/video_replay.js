@@ -76,38 +76,38 @@
           }
         },
         // 精彩回播配置信息
-        'vx_get_user.merchantEventSwitchVO':{
-          handler(res) {
-            // 开启关闭
-            if(res.eventSwitch) {
-              this.get_video_replay()
-              this.replayDataTimer && clearInterval(this.replayDataTimer)
-              this.replayDataTimer = setInterval(() => this.get_video_replay(), 60 * 1000)
-              this.show_video_replay = true
-            } else {
-              this.replayDataTimer && clearInterval(this.replayDataTimer)
-              this.show_video_replay = false
-            }
+        // 'vx_get_user.merchantEventSwitchVO':{
+        //   handler(res) {
+        //     // 开启关闭
+        //     if(res.eventSwitch) {
+        //       this.get_video_replay()
+        //       this.replayDataTimer && clearInterval(this.replayDataTimer)
+        //       this.replayDataTimer = setInterval(() => this.get_video_replay(), 60 * 1000)
+        //       this.show_video_replay = true
+        //     } else {
+        //       this.replayDataTimer && clearInterval(this.replayDataTimer)
+        //       this.show_video_replay = false
+        //     }
 
-            // tab按钮开关
-            let _tab_list = [
-              {title: this.$root.$t('replay_video.all'), code: 0},
-              {title:this.$root.$t('replay_video.goal'), code: 1},
-            ]
-            if (res.cornerEvent) {
-              _tab_list.push({title:this.$root.$t('replay_video.corner_kick'), code: 2})
-            }
-            if (res.penaltyEvent) {
-              _tab_list.push({title:this.$root.$t('replay_video.punish'), code: 3})
-            }
-            // 当角球和罚牌都没有时不显示tab
-            // if (!res.cornerEvent && !res.penaltyEvent) {
-            //   _tab_list = []
-            // }
-            this.tab_list = _tab_list
-          },
-          immediate: true,
-        },
+        //     // tab按钮开关
+        //     let _tab_list = [
+        //       {title: this.$root.$t('replay_video.all'), code: 0},
+        //       {title:this.$root.$t('replay_video.goal'), code: 1},
+        //     ]
+        //     if (res.cornerEvent) {
+        //       _tab_list.push({title:this.$root.$t('replay_video.corner_kick'), code: 2})
+        //     }
+        //     if (res.penaltyEvent) {
+        //       _tab_list.push({title:this.$root.$t('replay_video.punish'), code: 3})
+        //     }
+        //     // 当角球和罚牌都没有时不显示tab
+        //     // if (!res.cornerEvent && !res.penaltyEvent) {
+        //     //   _tab_list = []
+        //     // }
+        //     this.tab_list = _tab_list
+        //   },
+        //   immediate: true,
+        // },
         //视屏播放类型
         'vx_play_media.media_type': {
           handler(res) {
@@ -125,13 +125,13 @@
       },
       created() {
         this.get_video_replay();
-        this.$root.$on('VIDEO_ZONE_EVENT_CMD_END', this.video_event);
+        // useMittEmit('VIDEO_ZONE_EVENT_CMD_END', this.video_event); //todo
       },
       mounted(){
       },
-      
+ 
       beforeDestroy() {
-        this.$root.$off('VIDEO_ZONE_EVENT_CMD_END', this.video_event);
+      // ('VIDEO_ZONE_EVENT_CMD_END', this.video_event); //todo
         this.replayDataTimer && clearInterval(this.replayDataTimer)
         this.hide_replay_fullscreen_btn_timer && clearTimeout(this.hide_replay_fullscreen_btn_timer)
         clearTimeout(this.get_video_replay_timer);
