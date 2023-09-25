@@ -21,7 +21,7 @@
 // #TODO vuex
 // import { mapGetters, mapActions,mapMutations } from "vuex"
 import { utils } from 'src/core/index.js';
-import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
+import { useMittEmitterGenerator, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, ref } from "vue";
 import { useRoute, useRouter } from "vue-router"
 import UserCtr from "src/core/user-config/user-ctr.js";
@@ -89,14 +89,11 @@ export default defineComponent({
     // ...mapMutations(['set_fewer']),
     const set_fewer = ref('')
     onMounted(() => {
-      on_listeners();
-
       // 延时器
       data.timer1_ = null;
       initEvent();
     })
     onUnmounted(() => {
-      off_listeners();
       // set_fewer(1);
       clearTimeout(data.timer1_)
       // set_subscript_game_index(0)
@@ -160,18 +157,15 @@ export default defineComponent({
         console.error(e);
       }
     };
+
     // 添加相应监听事件
-    const on_listeners = () => {
-      data.emitters = [
-        useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB, initEvent),
-        useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB_BET, initEvent),
-        useMittOn(MITT_TYPES.EMIT_GET_ACTIVE_DETAILS_PLAY_TAB, get_active_details_play_tab),
-      ]
-    };
+    const { emitters_off } = useMittEmitterGenerator([
+      { type: MITT_TYPES.EMIT_REFRESH_DETAILS_TAB, callback: initEvent },
+      { type: MITT_TYPES.EMIT_REFRESH_DETAILS_TAB_BET, callback: initEvent },
+      { type: MITT_TYPES.EMIT_GET_ACTIVE_DETAILS_PLAY_TAB, callback: get_active_details_play_tab },
+    ])
     // 移除相应监听事件
-    const off_listeners = () => {
-      data.emitters.map((x) => x())
-    };
+    onUnmounted(emitters_off)
     return {
       ...toRefs(data),
       match_id,
@@ -182,8 +176,6 @@ export default defineComponent({
       selete_item,
       get_active_details_play_tab,
       initEvent,
-      on_listeners,
-      off_listeners,
       set_fewer,
     }
   }
