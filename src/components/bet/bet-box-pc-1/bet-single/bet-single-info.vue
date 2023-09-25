@@ -74,10 +74,9 @@
           <label class="bet-team-handicap">
 
             <label class="yb-number-bold">{{ item.handicap }}</label>
-
             <!--【预约】-->
             <label
-              v-if="ref_data.active == 1 && (item.sportId == 1 || item.sportId == 2) && pending_order_status == 1 && appoint">{{ `[${$root.$t('bet.bet_book2')}]` }}</label>
+              v-if="ref_data.active == 1 && (item.sportId == 1 || item.sportId == 2) && pending_order_status(item.playOptionsId) == 1 && ref_data.appoint">{{ `[${$t('bet.bet_book2')}]` }}</label>
           </label>
           <!--+/1.5-->
         </div>
@@ -140,11 +139,11 @@ const props = defineProps({
 * @param {undefined} undefined
 * @returns {number}
 */
-const pending_order_status = computed(() => {
-  // let bet_obj = BetData.bet_single_obj[props.id];
-  // if(bet_obj) {
-  //   return lodash.get(bet_obj, 'cs.pending_order_status')
-  // }
+const pending_order_status = computed(() => options_id => {
+  let bet_obj = BetData.bet_appoint_obj.find(item => item == options_id) || '';
+  if(bet_obj) {
+    return 1
+  }
   return 0;
 })
 

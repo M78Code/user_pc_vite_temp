@@ -209,7 +209,7 @@ const set_pre_bet_appoint = bet_appoint => {
         }
     })
     // 设置预约投注项id
-    BetData.set_bet_appoint_obj(oid)
+    BetData.set_bet_appoint_obj(appoint_list)
 }
 
 
