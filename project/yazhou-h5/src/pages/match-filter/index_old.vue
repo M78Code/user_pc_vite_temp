@@ -86,8 +86,7 @@
         <!-- <template> -->
         <img v-if="all_checked" class="icon-search" @click="all_checked_click"
           :src="`${$g_image_preffix}/image/svg/check_circle_outline-24px${on_suffix}.svg`" />
-        <img src="/yazhou-h5/image/svg/selected-no.svg" alt="" class="icon-search" @click="all_checked_click"
-          v-else>
+        <img src="/yazhou-h5/image/svg/selected-no.svg" alt="" class="icon-search" @click="all_checked_click" v-else>
         <span class="txt ellipsis-2-lines" @click="all_checked_click">{{ $t('common.all_select') }}</span>
         <!-- </template> -->
         <span class="txt ellipsis-3-lines" @click="select_btn_click">{{ $t('filter.reverse_election') }}</span>
@@ -151,6 +150,7 @@ let timer2;
 
 // ...mapGetters([
 const get_lang = UserCtr.lang
+const get_theme = UserCtr.theme
 // TODO
 const get_curr_sub_menu_type = ref(MenuData.get_current_lv_2_menu_type())
 const get_menu_type = MenuData.menu_type;
@@ -160,14 +160,14 @@ const get_uid = ref()  //uid????
 const get_current_menu = ref(MenuData.current_lv_1_menu)
 const get_sport_all_selected = MenuData.get_sport_all_selected
 const get_md = ref(MenuData.current_lv_3_menu)    //TODO三级日期菜单时间戳
-const get_theme = UserCtr.theme
+
 // ]),
 var on_suffix = computed(() => {
   let suffix = '';
   if (get_theme.includes('_y0')) {
     suffix += '_y0';
   }
-  if (get_theme.includes('theme02')) {
+  if (get_theme.includes('night')) {
     suffix += '_dark';
   }
   return suffix;
@@ -205,7 +205,7 @@ watch(select_num, (new_) => {
  * @param {Object} $event 错误事件对象
  */
 function league_icon_error($event) {
-  if (get_theme.includes('theme02')) {
+  if (get_theme.includes('night')) {
     $event.target.src = none_league_icon_black;
   } else {
     $event.target.src = default_url;
@@ -446,7 +446,7 @@ function search_btn() {
   // this.set_collapse_map_match({});
   // this.set_filter_list(data);
 
-  useMittEmit(MITT_TYPES.EMIT_HID_SEARCH_DIA)
+  useMittEmit(MITT_TYPES.EMIT_CHANGE_SELECT_DIALOG, false)
   //触发列表页监听事件，调接口拉取指定赛事
   useMittEmit(MITT_TYPES.EMIT_MENU_CHANGE_FOOTER_CMD, {
     text: "filter"

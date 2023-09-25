@@ -243,3 +243,175 @@ onMounted(() => {
   chang_index(menu_list.value)
 })
 </script>
+<style lang="scss" scoped>
+/*  赛事框 */
+.main-content-match {
+  .match-warp {
+    display: flex;
+    height: 100%;
+    margin: 0 0.1rem;
+
+    :deep(.q-scrollarea) {
+      height: 100%;
+    }
+  }
+
+  .left-menu {
+    padding-top: 0.08rem;
+    width: 0.55rem;
+    margin-right: 0.13rem;
+    overflow-x: hidden;
+    /* 兼容火狐 */
+    scrollbar-width: none;
+    /* 兼容IE10+ */
+    -ms-overflow-style: none;
+
+    /* 使用伪类选择器 ::-webkit-scrollbar ,兼容chrome和safari浏览器 */
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    .item {
+      width: 0.53rem;
+      height: 0.63rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+      margin-bottom: 0.05rem;
+      position: relative;
+
+      .label {
+        width: 100%;
+        font-size: 0.11rem;
+        line-height: 0.16rem;
+        text-align: center;
+        font-weight: bold;
+
+        &.is_chinise {
+          font-size: 0.14rem;
+          width: 0.36rem;
+        }
+      }
+
+      .num {
+        font-size: 0.16rem;
+        line-height: 0.19rem;
+      }
+    }
+  }
+
+  .match-content {
+
+    flex: 1;
+
+    .item {
+      width: 100%;
+      height: 1.22rem;
+      padding-left: 0.2rem;
+      background-repeat: no-repeat;
+      margin-bottom: -0.03rem;
+      display: flex;
+      position: relative;
+
+      .item-bg {
+        width: 2.67rem;
+        height: 1.028rem;
+        position: absolute;
+        left: 0;
+        top: 0.11rem;
+        z-index: -1;
+        overflow: hidden;
+      }
+
+      .item-info {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 1rem;
+        height: 100%;
+        text-align: center;
+
+        &.is-english {
+          width: auto;
+          align-items: flex-start;
+        }
+
+        .match-type {
+          font-size: 0.18rem;
+          width: 1rem;
+          font-weight: bold;
+          white-space: nowrap;
+        }
+
+        .match-num {
+          width: 1rem;
+          font-size: 0.4rem;
+          height: 0.44rem;
+          line-height: 0.44rem;
+        }
+
+        .match-label {
+
+          font-size: 0.12rem;
+
+          display: flex;
+          align-items: center;
+          line-height: 1;
+          min-height: 0.15rem;
+
+          &:before,
+          &:after {
+            content: "";
+            width: 0.15rem;
+            height: 0.01rem;
+
+            position: relative;
+          }
+
+          &:before {
+            margin-right: 0.04rem;
+          }
+
+          &:after {
+            margin-left: 0.04rem;
+          }
+        }
+      }
+    }
+  }
+}
+
+.fadeInUp {
+  -webkit-animation: fadeInUp 1s;
+  animation: fadeInUp 1s;
+  animation-fill-mode: both;
+}
+
+@keyframes fadeInUp {
+  0% {
+    -webkit-transform: translate3d(0, 5%, 0);
+    transform: translate3d(0, 5%, 0);
+  }
+
+  10% {
+    -webkit-transform: translate3d(0, 10%, 0);
+    transform: translate3d(0, 10%, 0);
+  }
+
+  30% {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+  }
+
+  100% {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+  }
+}
+</style>

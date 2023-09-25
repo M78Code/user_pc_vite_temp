@@ -19,6 +19,7 @@ import lodash from "lodash";
 // #TODO 使用axios，等正式开发组件时候 npm install axios
 import axios from "axios";
 import { uid } from 'quasar';
+import { i18n_t } from "..";
 
 const axios_instance = axios.create();
 const { htmlVariables = {} } = window.BUILDIN_CONFIG;
@@ -83,7 +84,7 @@ class UserCtr {
     //  用户余额是否展示状态
     this.show_balance = false;
     //用户版本 移动端有简版 1 和标准版 2
-    this.standard_edition = 1
+    this.standard_edition = 2
     //登录弹窗状态
     this.show_login_popup = false;
     // 是否首次登录
@@ -1288,38 +1289,38 @@ class UserCtr {
   }
   /**
    * TODO 暂时放这里 后续可以挪动
-   * 获取资源配置(商户后台配置的图片、跳转链接)
+   * 获取资源配置(商户后台配置的图片、跳转链接)  延迟触发以优化首屏加载速度
    */
   async fetch_resourcesimg() {
-    // lodash.delay(async () => {
-    try {
-      let param = {
-        token: this.get_user_token()
-      }
-      this.send_gcuuid3 = uid();
-      param.gcuuid = this.send_gcuuid3;
-      const res = await api_common.queryFestivalBanner(param)
-      if (this.send_gcuuid3 != res.gcuuid) { return };
-      const data = lodash.get(res, 'data')
-      if (res && res.code == 200 && data) {
-        const stime = ServerTime.get_remote_time() //获取服务器时间
-        const { img11, img11Type, img11Url, img12, img12Type, img12Url, startTime, endTime } = data
-        if (stime <= endTime && stime >= startTime) {
-          if (img11) {
-            this.resources_obj = ({ is_show: true, theme01: { img_src: get_file_path(img11), type: img11Type, jump_url: img11Url } })
-          }
-          if (img12) {
-            this.resources_obj = ({ is_show: true, theme02: { img_src: get_file_path(img12), type: img12Type, jump_url: img12Url } })
-          }
-        } else {
-          this.resources_obj = ({ is_show: false, theme02: {}, theme01: {} })
+    lodash.delay(async () => {
+      try {
+        let param = {
+          token: this.get_user_token()
         }
-      }
+        this.send_gcuuid3 = uid();
+        param.gcuuid = this.send_gcuuid3;
+        const res = await api_common.queryFestivalBanner(param)
+        if (this.send_gcuuid3 != res.gcuuid) { return };
+        const data = lodash.get(res, 'data')
+        if (res && res.code == 200 && data) {
+          const stime = ServerTime.get_remote_time() //获取服务器时间
+          const { img11, img11Type, img11Url, img12, img12Type, img12Url, startTime, endTime } = data
+          if (stime <= endTime && stime >= startTime) {
+            if (img11) {
+              this.resources_obj = ({ is_show: true, theme01: { img_src: get_file_path(img11), type: img11Type, jump_url: img11Url } })
+            }
+            if (img12) {
+              this.resources_obj = ({ is_show: true, theme02: { img_src: get_file_path(img12), type: img12Type, jump_url: img12Url } })
+            }
+          } else {
+            this.resources_obj = ({ is_show: false, theme02: {}, theme01: {} })
+          }
+        }
 
-    } catch (e) {
-      console.error(e)
-    }
-    // }, 1000)
+      } catch (e) {
+        console.error(e)
+      }
+    }, 1000)
   }
 }
 

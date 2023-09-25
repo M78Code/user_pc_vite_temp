@@ -37,8 +37,7 @@
    * @param {boolean} is_ws_call 是否ws调用
   */
   export const compute_match_list_style_obj_and_match_list_mapping_relation_obj_type2=(match_list,is_ws_call)=>{
-    let current_csid = MenuData.left_menu_result.lv1_mi
-    let template_id = compute_sport_id(current_csid)
+    let template_id = MenuData.get_match_tpl_number()
     // 已开赛 到卡片key的 映射对象
     let play_to_card_key_arr = ['play_title']
     // 未开赛 到卡片key的 映射对象

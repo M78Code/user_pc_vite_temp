@@ -164,6 +164,7 @@ import bet_item from "src/public/components/bet_item/bet_item";
 import skt_data_list_hot from "src/public/mixins/websocket/data/skt_data_list_hot.js";
 import MatchCtr from "src/public/utils/dataClassCtr/match_ctr.js";
 import details_mixins from "src/public/mixins/details/index.js";
+
 export default {
   mixins: [skt_data_list_hot, details_mixins],
   components: {

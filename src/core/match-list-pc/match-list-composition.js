@@ -710,7 +710,7 @@ const check_match_last_update_time = () => {
 		}
 	});
 	if (mids.length > 0) {
-		// api_bymids({ mids });
+		api_bymids({ mids });
 	}
 };
 /**
@@ -743,7 +743,6 @@ export  default function(){
 		check_match_last_update_time,
 		get_match_list_by_mid_for_base_data_res,
 		mounted_fn,
-		api_bymids,
 
 	}
  
