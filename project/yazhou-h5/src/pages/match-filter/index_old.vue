@@ -446,7 +446,7 @@ function search_btn() {
   // this.set_collapse_map_match({});
   // this.set_filter_list(data);
 
-  useMittEmit(MITT_TYPES.EMIT_HID_SEARCH_DIA)
+  useMittEmit(MITT_TYPES.EMIT_CHANGE_SELECT_DIALOG,false)
   //触发列表页监听事件，调接口拉取指定赛事
   useMittEmit(MITT_TYPES.EMIT_MENU_CHANGE_FOOTER_CMD, {
     text: "filter"

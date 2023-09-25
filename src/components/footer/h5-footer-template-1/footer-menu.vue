@@ -4,8 +4,7 @@
     'scrolling-up': scroll_dir > 0,
     'scrolling-down': scroll_dir < 0,
   }">
-
-    <!-- <bet-bar v-if="get_betbar_show && route.name == 'matchList'"></bet-bar> -->
+    {{ isshow_bottom_banner }}
     <!-- 底部菜单资源配置图片 -->
     <div v-if="isshow_bottom_banner" class="bottom-banner">
       <img :src="calc_resources_obj.img_src" alt="" class="banner" @click="jump" />
@@ -153,6 +152,16 @@ const get_user = ref(UserCtr.user_info);
 watch(UserCtr.user_version, () => {
   get_user.value = UserCtr.user_info
 })
+const isshow_bottom_banner = computed(() => {
+  return get_resources_obj.is_show && !get_betbar_show && calc_resources_obj.img_src
+});
+const calc_resources_obj = computed(() => {
+  if (UserCtr.theme.includes("day")) {
+    return get_resources_obj.day;
+  } else {
+    return get_resources_obj.night;
+  }
+});
 /**
  * 是否显示菜单
 */
@@ -441,7 +450,7 @@ const virtual_disable_follow_filter = () => {
       if (
         f_m.id === 1 &&
         menu_type.value === 7 &&
-        lodash.get(MenuData.current_lv_2_menu, "date_menu.menuType") == 100
+        lodash.get(MenuData.current_lv_3_menu, "menuType") == 100
       ) {
         f_m.is_disabled = true;
       } else {
@@ -541,33 +550,19 @@ const set_footer_menulist = (init_footer_menulist_data = true) => {
 //   "get_filter_list",
 //   "get_current_menu",
 //   "UserCtr.lang",
-//   "get_bet_status",
+
 //   'get_list_scroll_direction',
-//   'get_bet_list',
-//   'get_betbar_show',
-//   'get_curr_third_menu_id',
-//   'get_access_config',
-//   'get_resources_obj',
+
 //   'get_golistpage', TODO
 //   'get_hot_list_item'
 // ]),
-const isshow_bottom_banner = computed(() => {
-  // TODO:获取商户信息
-  return get_resources_obj.is_show && !get_betbar_show && calc_resources_obj.img_src
-});
-const calc_resources_obj = computed(() => {
-  if (UserCtr.theme.includes("day")) {
-    return get_resources_obj.day;
-  } else {
-    return get_resources_obj.night;
-  }
-});
+
 // 是否展示 底部菜单 选项
 const bottom_option_show = computed(() => {
   return function (item) {
     return !(
       menu_type.value == 7 &&
-      lodash.get(MenuData.current_lv_2_menu, "date_menu.menuType") == 100 &&
+      lodash.get(MenuData.current_lv_3_menu, "menuType") == 100 &&
       item.id == 0
     );
   };
