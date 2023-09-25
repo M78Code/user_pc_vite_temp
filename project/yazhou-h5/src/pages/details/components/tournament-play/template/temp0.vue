@@ -177,7 +177,7 @@
       </div>
       <!-- 显示更多 -->
       <div v-if="!hide_show_more_layout" class="show-more play-box-style" :class="{'pack-up': show_more}"  @click="change_show">
-        <span class="fz_13">{{show_more?t('match_info.pack_up'):t('match_info.show_more')}}
+        <span class="fz_13">{{show_more? i18n_t('match_info.pack_up'):i18n_t('match_info.show_more')}}
         </span>
       </div>
     </div>
@@ -194,7 +194,7 @@ import store from "src/store-redux/index.js";
 import {utils } from 'src/core/index.js';
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { useRoute } from "vue-router"
-import { t } from "src/boot/i18n.js";;
+import { i18n_t } from "src/boot/i18n.js";;
 //国际化
 
 
@@ -312,6 +312,7 @@ export default defineComponent({
       get_bet_list,
       get_cur_odd,
       get_detail_data,
+      i18n_t,
       is_number,
       go_to_bet,
       change_show,

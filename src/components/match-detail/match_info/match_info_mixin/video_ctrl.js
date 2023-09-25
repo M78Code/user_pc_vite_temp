@@ -8,6 +8,8 @@
 import sport_icon from "project_path/image/common/png/sport_icon.png";
 import video from "src/core/video/video.js"
 import details from "src/core/match-list-pc/details-class/details.js"
+import store from "src/store-redux/index.js";
+import MenuData from "src/core/menu-pc/menu-data-class.js";
 export default {
   components: {
     "sport-icon": sport_icon
@@ -27,7 +29,7 @@ export default {
       videos: [],//有视频的赛事列表
       is_hover: false,//视频icon是否hover
        // 菜单数据
-       menu_data: $menu.menu_data,
+       menu_data:MenuData,
     }
   },
   computed: {
@@ -232,7 +234,15 @@ export default {
 
           clearTimeout(this.set_play_media_timer)
           this.set_play_media_timer = setTimeout(() => {
-            this.vx_set_play_media({ media_type, mid, time: Date.now() });
+            {
+              mid,
+              media_type,
+              time
+            }
+            store.dispatch({
+              type: 'SET_PLAY_MEDIA',
+              data: { media_type, mid, time: Date.now() }
+            });
           }, 50)
 
         }

@@ -49,6 +49,9 @@
 
 <script>
 // import { mapGetters } from "vuex"
+import lodash from "lodash"
+import { i18n_t } from "src/boot/i18n.js";
+
 export default {
   name: 'score_child_1',
   data(){
@@ -70,17 +73,18 @@ export default {
       // 加时赛比分是否有
       add_score: false,
       // 点球比分是否有
-      shoot_score: false
+      shoot_score: false,
+      i18n_t
     }
   },
   computed: {
     // 比分集合
     score_array(){
-      return initEvent();
+      return this.initEvent();
     },
     // 角球 红牌 黄牌数集合
     score_array_status(){
-      return initEvent_status();
+      return this.initEvent_status();
     },
     // ...mapGetters([
     //   // 赛果标识
@@ -91,9 +95,9 @@ export default {
     detail_data:{
       handler(n, o){
         // 数据改变，重新赋值 status_array;
-        status_array = ["S5", "S11", "S12"]
+        this.status_array = ["S5", "S11", "S12"]
         // 监听到detail_data改变 同时更新:角球/红牌/黄牌比分
-        initEvent_status();
+        this.initEvent_status();
       },
       deep:true,
     },
@@ -106,26 +110,26 @@ export default {
      *@return {Array} 足球比分
      */
     initEvent(){
-      let msc = detail_data.msc;
+      let msc = this.detail_data.msc;
       // sortBy方法  比分升序排列 取出比分阶段后面的数字作为判断条件 返回是数组
-      msc = _.sortBy( msc, (item) => {
+      msc = lodash.sortBy( msc, (item) => {
         return +(item.split("|")[0]).substring(1)
       })
 
       let score_arr = [];
       // 循环只取出接口返回的比分里面符合足球阶段的比分
-      _.forEach(msc, (item, index)=>{
+      lodash.forEach(msc, (item, index)=>{
         // S1 S2 S3 S19 S20 ...
         let num_index = item.split("|")[0];
         // 加时赛
         if(num_index == 'S7'){
-          add_score = item.split("|")[1];
+          this.add_score = item.split("|")[1];
         }
         // 点球
         if(num_index == 'S170'){
-          shoot_score = item.split("|")[1];
+          this.shoot_score = item.split("|")[1];
         }
-        if(msc_array.includes(num_index)){
+        if(this.msc_array.includes(num_index)){
           score_arr.push(item.split("|")[1]);
         }
       })
@@ -137,13 +141,13 @@ export default {
      *@return {Array} 角球 红牌 黄牌数
      */
     initEvent_status(){
-      let msc = detail_data.msc;
+      let msc = this.detail_data.msc;
       // sortBy方法  比分升序排列 取出比分阶段后面的数字作为判断条件 返回是数组
-      msc = _.sortBy( msc, (item) => {
+      msc = lodash.sortBy( msc, (item) => {
         return +(item.split("|")[0]).substring(1)
       })
       let score_arr = ['0:0','0:0','0:0'];
-      _.forEach(msc, (item, index)=>{
+      lodash.forEach(msc, (item, index)=>{
         let num_index = item.split("|")[0];
         if(num_index == 'S5'){
           score_arr[0] = item.split("|")[1]
@@ -154,11 +158,11 @@ export default {
         }
       })
       // 角球
-      red_flag = show_status(score_arr[0]) > 0 ? true: false;
+      this.red_flag = this.show_status(score_arr[0]) > 0 ? true: false;
       // 红牌
-      red_card = show_status(score_arr[1]) > 0 ? true: false;
+      this.red_card = this.show_status(score_arr[1]) > 0 ? true: false;
       // 黄牌
-      yellow_card = show_status(score_arr[2]) > 0 ? true: false;
+      this.yellow_card = this.show_status(score_arr[2]) > 0 ? true: false;
       return score_arr;
     },
     /**

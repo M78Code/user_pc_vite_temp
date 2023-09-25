@@ -9,7 +9,10 @@ import info from "src/components/match-detail/match_info/info.vue";
  import video  from "src/core/video/video.js"
 import video_replay from "src/components/match-detail/match_info/match_info_mixin/video_replay.js";
 import LoadData from 'src/components/load_data/load_data.vue';
-
+import MenuData from "src/core/menu-pc/menu-data-class.js";
+import { useMittEmit, MITT_TYPES } from  "src/core/mitt"
+import {is_eports_csid} from "src/core/index"
+import lodash from "lodash"
 export default {
   components: {
     info,
@@ -28,7 +31,7 @@ export default {
     this.moveTimerReplay = null // 移动定时器
     return {
       // 菜单数据
-      menu_data: $menu.menu_data,
+      menu_data: MenuData,
       video_height: "190px",//视频高度
       show_type: '',//显示类型
       media_src: "",//视频url地址
@@ -79,7 +82,7 @@ export default {
       let is_esports
       // 详情页判断球种ID  其他页面取菜单
       if(this.$route.name == 'details'){
-        is_esports = this.$utils.is_eports_csid(this.$route.params.csid)
+        is_esports = is_eports_csid(this.$route.params.csid)
       }else if(this.$route.name == 'search'){
         is_esports = false
       }else {
@@ -241,7 +244,7 @@ export default {
             this.media_src = url
             this.show_type = this.vx_is_pause_video ? 'pause' : 'play-video'
           }else{
-            if(this.$utils.is_eports_csid(csid) || csid == -1){
+            if(is_eports_csid(csid) || csid == -1){
               this.show_type = 'no-video'
             }else{
               this.show_type = ''
@@ -380,11 +383,14 @@ export default {
     refresh_time() {
       const { mid, media_type } = this.vx_play_media
       const time = Date.now()
-      this.vx_set_play_media({
-        mid,
-        media_type,
-        time
-      })
+      store.dispatch({
+        type: 'SET_PLAY_MEDIA',
+        data: {
+          mid,
+          media_type,
+          time
+        }
+      });
     }
   },
 
@@ -503,11 +509,14 @@ export default {
     auto_play() {
       let { mid } = this.vx_play_media
       let time = Date.now()
-      this.vx_set_play_media({
-        mid,
-        media_type: 'auto',
-        time
-      })
+      store.dispatch({
+        type: 'SET_PLAY_MEDIA',
+        data: {
+          mid,
+          media_type: 'auto',
+          time
+        }
+      });
     },
     /**
      * @Description:设置视频高度
@@ -558,22 +567,23 @@ export default {
   },
   created() {
     this.is_video_error = false
-    this.auto_play = this.debounce(this.auto_play, 100)
+    this.auto_play = lodash.debounce(this.auto_play, 100)
     window.addEventListener("message", this.handleMessage);
-    this.$root.$on('IFRAME_VIDEO_VOLUME', this.video_volume);
-    this.$root.$on('IFRAME_VIDEO_STATUS_CHANGE', this.video_status_change);
-    this.$root.$on('VIDEO_ZONE_EVENT_CMD_END', this.video_end);
-    this.$root.$on('IFRAME_VIDEO_MSG_EVENT', this.iframe_video_msg_event);
+    //todo
+  //  useMittEmit('IFRAME_VIDEO_VOLUME', this.video_volume);
+  //  useMittEmit('IFRAME_VIDEO_STATUS_CHANGE', this.video_status_change);
+  //  useMittEmit('VIDEO_ZONE_EVENT_CMD_END', this.video_end);
+  //  useMittEmit('IFRAME_VIDEO_MSG_EVENT', this.iframe_video_msg_event);
   },
   destroyed() {
     this.debounce_throttle_cancel(this.auto_play);
     window.removeEventListener("message", this.handleMessage);
     clearTimeout(this.timer_id_1)
     clearTimeout(this.is_video_pause_change_timer)
-    this.$root.$off('IFRAME_VIDEO_VOLUME', this.video_volume);
-    this.$root.$off('IFRAME_VIDEO_STATUS_CHANGE', this.video_status_change);
-    this.$root.$off('VIDEO_ZONE_EVENT_CMD_END', this.video_end);
-    this.moveTimerReplay && clearTimeout(this.moveTimerReplay)
-    this.$root.$off('IFRAME_VIDEO_MSG_EVENT', this.iframe_video_msg_event);
+    // ('IFRAME_VIDEO_VOLUME', this.video_volume); todo
+    // ('IFRAME_VIDEO_STATUS_CHANGE', this.video_status_change);
+    // ('VIDEO_ZONE_EVENT_CMD_END', this.video_end);
+    // this.moveTimerReplay && clearTimeout(this.moveTimerReplay)
+    // ('IFRAME_VIDEO_MSG_EVENT', this.iframe_video_msg_event);
   },
 }

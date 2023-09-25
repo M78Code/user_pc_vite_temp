@@ -136,7 +136,7 @@ import {i18n_t} from "src/core/index"
 import { is_eports_csid } from 'src/core/index.js'
 import store from "src/store-redux/index.js";
 import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/index.js";
- 
+import MenuData from "src/core/menu-pc/menu-data-class.js";
 const store_data = store.getState();
 export default {
   name: "loadData",

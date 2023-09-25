@@ -235,9 +235,7 @@ class MatchListCard {
       MatchDataBaseH5.set_list(data_source, 1);
     }
     //  赛事列表进程 对数据源进行了截取
-    this.run_process_when_need_recompute_container_list_when_first_load_list(
-      true
-    );
+    this.run_process_when_need_recompute_container_list_when_first_load_list( true );
     //数据显示后的回调
     if (cb) cb(!data_source || !data_source.length);
   }

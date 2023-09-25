@@ -372,7 +372,7 @@ get_carousel((data) => {
     show_banner_loading.value = false;
 });
 
-/** TODO 
+/** TODO  后续 挪移
     * @description 获取运营位活动相关的配置图片, 延迟触发以优化首屏加载速度
     * @return {Undefined} undefined
     */
@@ -389,6 +389,7 @@ function fetch_actimg() {
             if (send_gcuuid4 != res.gcuuid) return;
             if (res && lodash.get(res, 'code') == 200 && lodash.get(res, 'data')) {
                 let arr = lodash.cloneDeep(lodash.get(res, 'data')), arr1 = [], arr2 = [], obj3 = '', obj4 = '';
+                let showActivity = false;
                 arr.forEach(item => {
                     if (item.tType == 3 && !obj3) {
                         obj3 = item
@@ -397,11 +398,13 @@ function fetch_actimg() {
                         // 去掉一个自然日展示一次的判断，有值就展示
                         if (SessionStorage.get('showActivityTime')) {
                             // 判断日期如果不在同一天就展示弹窗
-                            if (new Date(+SessionStorage.gegettItem('showActivityTime')).getDate() != new Date().getDate()) {
-                                this.showActivity = true
+                            if (new Date(+SessionStorage.get('showActivityTime')).getDate() != new Date().getDate()) {
+                                showActivity = true
                             }
                         } else {
-                            // this.showActivity = true
+
+
+                            showActivity = true
                             SessionStorage.set('showActivityTime', new Date().getTime())
                         }
                     } else if (item.tType == 1) {
@@ -411,6 +414,10 @@ function fetch_actimg() {
                         arr2.push(item)
                     }
                 })
+                if (showActivity && obj4) {
+                    //首页活动弹框 
+                    useMittEmit(MITT_TYPES.EMIT_INDEX_ACTIVITY_STATUS, obj4.imgUrl)
+                }
                 // 左下角浮层图标
                 // this.float_btnobj = obj3
                 // if (obj4) {
@@ -427,20 +434,9 @@ function fetch_actimg() {
                 get_banner_obj.value = obj
                 // 首页banner没有数据，则展示默认banner
                 if (!arr1.length) {
-                    useMittEmit(MITT_TYPES.EMIT_SHOW_DEFAULT_BANNER_EVENT)
+                    useMittEmit(MITT_TYPES.EMIT_SHOW_DEFAULT_BANNER_EVENT, true)
                 }
             }
-            // T弹框5秒之后 自动关闭
-            // let time = 5;
-            // this.userBannerTimer = i18n_t('common.auto_close').replace('%s', time);
-            // this.timer1_ = setInterval(() => {
-            //     time--
-            //     this.userBannerTimer = i18n_t('common.auto_close').replace('%s', time);
-            //     if (time == 0) {
-            //         this.showActivity = false
-            //         clearInterval(this.timer1_)
-            //     }
-            // }, 1000)
         } catch (error) {
             // 接口错误 则首页轮播展示默认banner
             useMittEmit(MITT_TYPES.EMIT_SHOW_DEFAULT_BANNER_EVENT)
@@ -463,11 +459,13 @@ fetch_actimg()
     -webkit-appearance: none;
     overflow: hidden;
     height: 1.6rem;
+
     .banner-loading {
         display: block;
         width: .5rem;
         margin: .55rem auto;
     }
+
     ::v-deep .q-carousel {
         height: 100%;
         background: transparent;

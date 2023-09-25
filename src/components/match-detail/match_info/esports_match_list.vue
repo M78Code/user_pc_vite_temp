@@ -28,14 +28,14 @@ import { api_match } from "src/api/index.js";
 // import skt_data_esports_score from "/mixins/websocket/data/skt_data_esports_score.js";
 // import { mapGetters, mapActions } from "vuex"
 import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/index.js";
-
+import MenuData from "src/core/menu-pc/menu-data-class.js";
 export default {
   name:'esportsMatchList',
   mixins: [skt_data_esports_score],
   data() {
     return {
       // 菜单数据
-      menu_data: $menu.menu_data,
+      menu_data: MenuData,
       // 赛事列表
       match_list:[],
       match_ctr: new MatchCtr( 'esport_match_list'),
