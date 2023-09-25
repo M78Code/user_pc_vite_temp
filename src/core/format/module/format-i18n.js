@@ -9,6 +9,7 @@ import lodash from 'lodash';
    */
 export  const get_match_tpl_title=(t_path, csid)=>{
     let ret = lodash.cloneDeep(i18n_t(t_path));
+    console.log('bet_colbet_col1111', t_path, csid);
     try {
       if(csid){
         if(i18n_t.locale == 'en'){
