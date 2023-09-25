@@ -28,7 +28,7 @@
 // #TODO vuex
 // import { mapGetters } from "vuex";
 import store from "src/store-redux/index.js";
-import odd_convert from "project_path/src/mixins/odds_conversion/odds_conversion.js";
+// import odd_convert from "project_path/src/mixins/odds_conversion/odds_conversion.js";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 export default defineComponent({
   name: "temp9",

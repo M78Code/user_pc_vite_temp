@@ -2,16 +2,14 @@
     <!--金额输入区域包括键盘 -->
     <div class="row bet-single-input" :data-check-money="BetViewDataClass.input_money_state">
         <!--金额输入区-->
-        <div v-if="!BetData.is_bet_single">
-            {{ special_series.name }} -- {{ special_series.id }} - {{ ref_data.seriesOdds }} -- {{ index }} -- {{
-                item.custom_id }}
-        </div>
-        <!--投注金额输入框-->
-        <input v-model="ref_data.money" type="number" @input="set_win_money"
-            :placeholder="`${$t('bet.money_range')} ${ref_data.min_money} ~ ${ref_data.max_money}`" maxLength="11" />
-        <!--清除输入金额按钮-->
-        <div class="bet-input-close" @click.stop="bet_clear_handle">
-            <icon-wapper name="icon-failure" size="12px" />
+        <div class="bet-input-failure">
+            <!--投注金额输入框-->
+            <input v-model="ref_data.money" type="number" @input="set_win_money"
+                :placeholder="`${$t('bet.money_range')} ${ref_data.min_money} ~ ${ref_data.max_money}`" maxLength="11" />
+            <!--清除输入金额按钮-->
+            <div class="bet-input-close" @click.stop="bet_clear_handle">
+                <icon-wapper name="icon-failure" size="12px" />
+            </div>
         </div>
 
         <!-- <div> {{ special_series }} </div> -->
@@ -84,6 +82,10 @@ onMounted(() => {
 onUnmounted(() => {
     useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money).off
 })
+
+const bet_clear_handle = () => {
+    ref_data.money = ''
+}
 
 // 计算最高可赢金额
 const set_bet_money = computed(() => {
@@ -240,15 +242,19 @@ input[type="number"] {
         width: auto;
         height: auto;
     }
-    .bet-win-key{
+
+    .bet-win-key {
         margin-top: 10px;
     }
+
     /*  投注键盘区域 */
-.bet-keyboard-zone {
-    padding-top: 8px !important;
-    margin-left: -10px !important;
-    margin-right: -10px !important;
-  
-   
-  }
+    .bet-keyboard-zone {
+        padding-top: 8px !important;
+        margin-left: -10px !important;
+        margin-right: -10px !important;
+    }
+}
+
+.bet-input-failure {
+    position: relative;
 }</style>

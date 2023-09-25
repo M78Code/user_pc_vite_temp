@@ -131,7 +131,7 @@ class BetData {
     // 最大串关数
     this.mix_max_count = 10;
     // 被预约的投注项id
-    this.bet_appoint_obj = null;
+    this.bet_appoint_obj = [];
     //需要预约的盘口
     /* this bet_appoint_odds_value= null;
 this.bet_appoint_ball_head= null */
