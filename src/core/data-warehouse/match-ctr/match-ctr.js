@@ -565,7 +565,6 @@ export default class MatchDataBase
         let list_to_obj = this.list_to_many_obj(this.list);
         this.assign_with(this.list_to_obj, list_to_obj);
         this.data_version = String(new Date().getTime());
-        // 删除list_obj之前的无用赛事
       }
     }
   }
@@ -1045,6 +1044,49 @@ export default class MatchDataBase
     this.delete_match_from_quick_query_obj(mid, mid,'mid');
   }
 
+
+  /**
+   * @description: 获取全量列表中的赛事
+   * @param {Array} mids 赛事mid集合
+   * @return {Object} 赛事信息集合
+   */
+  _get_match_form_list(mids){
+    let res = {};
+    try {
+      let len = 0;
+      for (let i = 0; i < this.list.length; i++) {
+        const item = this.list[i];
+        if(item && mids.includes(item.mid)){
+          res[item.mid]= item;
+          len++;
+          if(mids.length == len){
+            // 数量够时,直接结束循环
+            break;
+          }
+        }
+      }
+    } catch (error) {
+      console.error('_get_match_form_list:',error);
+    }
+    return res;
+  }
+
+  /**
+   * @description: 获取list_to_obj中的赛事
+   * @param {Array} mids 赛事mid集合
+   * @return {Object} 赛事信息集合
+   */
+  _get_match_form_list_to_obj(mids){
+    let res = [];
+    try {
+      mids.forEach(mid => {
+        res[mid] = lodash.get(this.list_to_obj,`mid_obj[${mid}]`);
+      });
+    } catch (error) {
+      console.error('_get_match_form_list_to_obj:',error);
+    }
+    return res;
+  }
    /**
    * @description: 更新赛事数据(也可更新部分数据)
    * @param {Object} match 需要更新的赛事信息
@@ -1056,16 +1098,24 @@ export default class MatchDataBase
       let mid_obj_key = this.get_format_quick_query_key(mid, mid,'mid');
       // 快速赛事对象查找赛事
       if(this.quick_query_obj.mid_obj[mid_obj_key]){
+        // 获取列表指定赛事
+        const list_match_item = lodash.get(this._get_match_form_list([mid]),`[${mid}]`);
+        const list_to_obj_match_item = lodash.get(this._get_match_form_list_to_obj([mid]),`[${mid}]`);
         if(is_merge){
           // 数据合并模式
           this.assign_with(this.quick_query_obj.mid_obj[mid_obj_key], match);
+          this.assign_with(list_match_item, match);
+          this.assign_with(list_to_obj_match_item, match);
         } else {
           this.assign_with(this.quick_query_obj.mid_obj[mid_obj_key], match);
           const many_obj = this.list_to_many_obj([match]);
-
-          
           // 快速检索对象数据合并
           this._quick_query_obj_assign(this.quick_query_obj, many_obj, [mid]);
+          if(this.set_list_to_obj){
+            // 快速检索对象数据合并
+            this._quick_query_obj_assign(this.list_to_obj, many_obj, [mid], false);
+          }
+          this.assign_with(list_match_item, match);
           // this.match_assign(this.quick_query_obj.mid_obj, many_obj.mid_obj);
           // this.ol_obj_assign(this.quick_query_obj.ol_obj, many_obj.ol_obj);
           // this.hn_obj_assign(this.quick_query_obj.hn_obj, many_obj.hn_obj);
@@ -1079,9 +1129,10 @@ export default class MatchDataBase
    * @param {Object} many_obj_old 老数据对象
    * @param {Object} many_obj_new 新数据对象
    * @param {Array} mids 赛事mid数组(为空时表示取obj所有key值)
+   * @param {Boolean} gc 是否回收垃圾
    * @return 
    */
-  _quick_query_obj_assign(many_obj_old, many_obj_new, mids){
+  _quick_query_obj_assign(many_obj_old, many_obj_new, mids, gc=true){
     // 获取老数据对象keys
     let old_ol_obj_keys = this._get_quick_query_obj_obj_keys(many_obj_old.ol_obj, mids);
     let old_hn_obj_keys = this._get_quick_query_obj_obj_keys(many_obj_old.hn_obj, mids);
@@ -1096,20 +1147,22 @@ export default class MatchDataBase
     this.ol_obj_assign(many_obj_old.ol_obj, many_obj_new.ol_obj);
     this.hn_obj_assign(many_obj_old.hn_obj, many_obj_new.hn_obj);
     this.hl_obj_assign(many_obj_old.hl_obj, many_obj_new.hl_obj);
-    // 获取无用数据
-    let ol_obj_keys = lodash.difference(old_ol_obj_keys, new_ol_obj_keys);
-    let hn_obj_keys = lodash.difference(old_hn_obj_keys, new_hn_obj_keys);
-    let hl_obj_keys = lodash.difference(old_hl_obj_keys, new_hl_obj_keys);
-    // 删除无用数据
-    ol_obj_keys.forEach(keys => {
-      delete many_obj_old.ol_obj[keys];
-    });
-    hn_obj_keys.forEach(keys => {
-      delete many_obj_old.hn_obj[keys];
-    });
-    hl_obj_keys.forEach(keys => {
-      delete many_obj_old.hl_obj[keys];
-    });
+    if(gc){
+      // 获取无用数据
+      let ol_obj_keys = lodash.difference(old_ol_obj_keys, new_ol_obj_keys);
+      let hn_obj_keys = lodash.difference(old_hn_obj_keys, new_hn_obj_keys);
+      let hl_obj_keys = lodash.difference(old_hl_obj_keys, new_hl_obj_keys);
+      // 删除无用数据
+      ol_obj_keys.forEach(keys => {
+        delete many_obj_old.ol_obj[keys];
+      });
+      hn_obj_keys.forEach(keys => {
+        delete many_obj_old.hn_obj[keys];
+      });
+      hl_obj_keys.forEach(keys => {
+        delete many_obj_old.hl_obj[keys];
+      });
+    }
   }
 
   /**
