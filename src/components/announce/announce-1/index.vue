@@ -50,7 +50,7 @@ let res_list = reactive([])
 /** 左侧菜单 */
 let announce_title = ref([])
 /** 大列表 */
-let announce_list = reactive([])
+let announce_list = ref([])
 /** 全部分类数据 */
 let class_list = reactive([])
 /** 当前标题 */
@@ -69,7 +69,7 @@ const loadd_finish = ref(false)
 function tabs_click(item, i) {
     index.value = i;
     current_title.value = announce_title.value[i].type;
-    announce_list = i
+    announce_list.value = i
         ? class_list[i - 1].mtl
         : res_list;
 }
@@ -112,11 +112,11 @@ function timestr(time1) {
 */
 function get_list() {
     api_home.post_announce_list().then((res) => {
-        let code = lodash.get(res, "data.code");
-        let status = lodash.get(res, "status");
-        const data = lodash.get(res, "data.data");
-
-        if (code == 200 && status && data) {
+        console.error('post_announce_list res', res);
+        let code = lodash.get(res, "code");
+        const data = lodash.get(res, "data");
+        // debugger
+        if (code == 200 && data) {
             data.nt.unshift({
                 id: 0,
                 type: i18n_t('common.all_notice'),
@@ -127,7 +127,7 @@ function get_list() {
             announce_title.value = data.nt; //左侧菜单
             class_list = data.nl; //分类
             res_list = data.nb;
-            announce_list = data.nb; //大列表
+            announce_list.value = data.nb; //大列表
             current_title.value = data.nt[0].type || "";
         }
     }).finally(() => loadd_finish.value = true)
