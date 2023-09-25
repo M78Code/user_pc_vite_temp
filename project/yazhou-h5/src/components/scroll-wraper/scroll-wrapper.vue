@@ -31,7 +31,7 @@
             </span>
           </div>
           <div class="s-w-i-inner">
-            <slot :match_item="get_match_item(match_item.mid)" :index="index"></slot>
+            <slot :match_item="get_match_item(match_item.mid)" :mid="match_item.mid" :index="index"></slot>
           </div>
         </div>
       </template>

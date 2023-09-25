@@ -161,6 +161,7 @@ import { i18n_t, compute_css, GlobalAccessConfig, useMittOn, MITT_TYPES, UserCtr
 import base_data from "src/core/base-data/base-data.js";
 import { useRoute, useRouter } from "vue-router";
 import lodash from "lodash"
+import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 // import 'project_path/src/css/pages/menu.scss'
 // "1": "滚球",
 //   "2": "今日",
@@ -311,8 +312,8 @@ function select_all_sub_menu_handle() {
  * 二级菜单事件
  */
 async function set_menu_lv2(item, index, type = "click") {
-  console.log(item)
   MenuData.set_current_lv2_menu(item, index, type);
+  MatchMeta.set_origin_match_data(item.mi)
   switch (menu_type.value) {
     case 7://电竞需要改变背景图片
       dj_back_img(item.mi)
