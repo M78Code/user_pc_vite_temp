@@ -313,10 +313,12 @@
 // #TODO vuex 
 // import { mapGetters } from "vuex";
 import lodash from "lodash"
-import odds_new from "project_path/src/pages/details/components/tournament_play/unit/odds_new.vue";
-import odd_convert from "src/core/odds_conversion/odds_conversion_mixin.js";
+import odds_new from "project_path/src/pages/details/components/tournament-play/unit/odds-new.vue";
+// import odd_convert from "src/core/odds-conversion/odds_conversion-mixin.js";
 import {utils } from 'src/core/index.js';
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
+import { useRoute } from "vue-router"
+
 export default defineComponent({
   // #TODO mixins
   // mixins:[odd_convert],
@@ -326,6 +328,7 @@ export default defineComponent({
     "odds-new": odds_new
   },
   setup(props, evnet) {
+    const route = useRoute()
     // #TODO vuex 
     // computed: {
     // ...mapGetters(["get_bet_list","get_cur_odd","get_menu_type","get_detail_data"]),
@@ -342,7 +345,7 @@ export default defineComponent({
       return ""
     });
     const is_match_result = computed(() => {
-      return ['result_details', 'match_result'].includes($route.name)
+      return ['result_details', 'match_result'].includes(route.name)
     });
     const go_to_bet = (ol_item) => {
       // #TODO emit 

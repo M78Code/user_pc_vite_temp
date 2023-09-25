@@ -171,7 +171,7 @@ const {
   odds_state,
   odds_lift,
   version_name,
-  match,
+  match = {},
   score,
   is_odds_value_red,
   match_odds,

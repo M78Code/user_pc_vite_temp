@@ -447,8 +447,7 @@
           <!--角球，罚牌，晋级，加时赛，点球大战玩法-->
           <!-- cisd:1 足球， 2 篮球， 5 网球， 7 斯诺克， 8 乒乓球 -->
           <match-overtime-pen v-if="!['detail_match_list', 'home_hot_page_schedule'].includes(main_source) &&
-            [1, 2, 5, 7, 8].includes(+match.csid) &&
-            get_newer_standard_edition != 1" 
+            [1, 2, 5, 7, 8].includes(+match.csid) && get_newer_standard_edition != 1" 
             :main_source="main_source" 
             :matchCtr="matchCtr" 
             :i="i" />
@@ -1501,7 +1500,7 @@ watch(() => props.match_of_list, (c_match) => {
   mmp_map_title.value = matchListClass.match_period_map(props.match_of_list);
 }, { deep: true })
 
-watch(() => props.match_of_list.mid, (mid_new,mid_old) => {
+watch(() => props.match_of_list?.mid, (mid_new,mid_old) => {
   if (mid_new) {
     match_changing.value = true;
     /*
@@ -1555,7 +1554,7 @@ watch(() => home_red_score.value, () => {
 })
 // 监听客队红牌比分变化
 watch(() => away_red_score.value, (new_,old_) => {
-  if (props.match_of_list.csid != 1) return
+  if (props.match_of_list?.csid != 1) return
   if (away_red_first_change.value) {
     away_red_first_change.value = false;
     return;
@@ -1567,12 +1566,12 @@ watch(() => away_red_score.value, (new_,old_) => {
 })
 
 // 监听比分变化
-watch(() => props.match_of_list.msc, () => {
+watch(() => props.match_of_list?.msc, () => {
   score_switch_handle(props.match_of_list);
   score_value();
 })
 
-watch(() => props.match_of_list.mmp, () => {
+watch(() => props.match_of_list?.mmp, () => {
   mmp_map_title.value = matchListClass.match_period_map(props.match_of_list);
 })
 

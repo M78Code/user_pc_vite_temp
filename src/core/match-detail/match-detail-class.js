@@ -6,7 +6,7 @@
  */
  
 import { ref ,reactive} from "vue"
-export default class MatchDetailCtr {
+class MatchDetailCtr {
  
   constructor( ) {
  
@@ -54,6 +54,7 @@ export default class MatchDetailCtr {
  * @param {*} obj  玩法集对象 
  */
   category_tab_click(obj={}){
+    console.error(obj);
     this.current_category_id= obj.id
     this.current_category_plays =obj.plays
   }
@@ -154,3 +155,4 @@ export default class MatchDetailCtr {
     return play;
   }
 }
+export default new MatchDetailCtr()

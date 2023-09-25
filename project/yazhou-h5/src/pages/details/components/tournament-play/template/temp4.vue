@@ -354,12 +354,12 @@
 <script>
 // #TODO vuex
 // import { mapGetters, mapMutations } from "vuex";
-import odds_new from "project_path/src/pages/details/components/tournament_play/unit/odds_new.vue";
+import odds_new from "project_path/src/pages/details/components/tournament-play/unit/odds-new.vue";
 // import odd_convert from "project_path/src/mixins/odds_conversion/odds_conversion.js";
 import {utils } from 'src/core/index.js';
 import lodash from "lodash";
 import store from "src/store-redux/index.js";
-import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
+import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, ref } from "vue";
 export default defineComponent({
   // #TODO mixins
   // mixins: [odd_convert],
@@ -370,11 +370,16 @@ export default defineComponent({
   },
   setup(props, evnet) {
     const store_state = store.getState()
+    const other_item_list = ref([])
+    const ol_list_0 = ref([])
+    const ol_list_1 = ref([])
+    const ol_list_2 = ref([])
+    const max_count_ol = ref([])
     // #TODO vuex
     // computed: {
     //   ...mapGetters(["get_bet_list","get_cur_odd","get_flag_get_ol_list", "get_menu_type","get_detail_data"]),
     //   change_ms(){
-    //     return lodash.get(item_data,'hl[0].ol[0].os')
+    //     return lodash.get(props.item_data,'hl[0].ol[0].os')
     //   }
     // },
     const get_bet_list = computed(() => {
@@ -395,7 +400,7 @@ export default defineComponent({
 
 
     const change_ms = computed(() => {
-      return lodash.get(item_data,'hl[0].ol[0].os')
+      return lodash.get(props.item_data,'hl[0].ol[0].os')
     });
     const go_to_bet = (ol_item) => {
       // #TODO emit
@@ -404,20 +409,55 @@ export default defineComponent({
     watch(
       () => get_flag_get_ol_list,
       () => {
-        max_count_ol = get_ol_list();
+        max_count_ol.value = get_ol_list();
       }
     );
     watch(
       () => change_ms,
       (new_) => {
         if(new_ == 2 && get_menu_type == 900){
-          max_count_ol = get_ol_list();
+          max_count_ol.value = get_ol_list();
         }
       }
     );
     onMounted(() => {
-      max_count_ol = get_ol_list();
+      max_count_ol.value = get_ol_list();
     })
+    const get_ol_list = () =>{
+      let max = 0,
+        hl = props.item_data.hl[0],
+        ol_list = hl.ol;
+
+        props.item_data.title.forEach((tit,i) => {
+        let other_items = ol_list.filter(ol_item => ol_item.ot == 'Other');
+        if(other_items.length){
+          // 合并数据，根据id去重
+          const arr = [...other_items,...other_item_list.value]
+          const uniq_arr = lodash.uniqWith(arr, (arr_val, oth_val)=>{
+            if(arr_val.id_ === oth_val.id_ ) {
+              return true
+            }
+            return false
+          });
+          other_item_list.value = uniq_arr
+        }
+        //os等于3需要隐藏投注项
+        let filtered = ol_list.filter(ol_item => ol_item.otd == tit.otd && ol_item.ot != 'Other' && ol_item.os != 3 );
+        if(i == 0){
+          ol_list_0.value = filtered;
+        }
+        else if(i == 1){
+          ol_list_1.value = filtered;
+        }
+        else if(i == 2){
+          ol_list_2.value = filtered;
+        }
+        let m_len = filtered.length;
+        if(m_len > max) max = m_len;
+      });
+
+      return max;
+    }
     return {
       utils,
       change_ms,
@@ -427,6 +467,7 @@ export default defineComponent({
       get_flag_get_ol_list,
       get_menu_type,
       get_detail_data,
+      other_item_list,
     }
   }
 })

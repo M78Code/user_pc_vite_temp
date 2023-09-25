@@ -167,7 +167,7 @@
       </div>
       <!-- 显示更多 -->
       <div v-if="!hide_show_more_layout" class="show-more play-box-style" :class="{'pack-up': show_more}"  @click="change_show">
-        <span class="fz_13">{{show_more?i18n_t('match_info.pack_up'):i18n_t('match_info.show_more')}}
+        <span class="fz_13">{{show_more? i18n_t('match_info.pack_up'):i18n_t('match_info.show_more')}}
         </span>
       </div>
     </div>
@@ -177,6 +177,7 @@
 // #TODO vuex 
 // import { mapGetters } from "vuex";
 import odds_new from "project_path/src/pages/details/components/tournament_play/unit/odds_new.vue";
+import { i18n_t } from "src/boot/i18n.js"
 // #TODO mixins 
 // import odd_convert from "/mixins/odds_conversion/odds_conversion.js";
 import {utils } from 'src/core/index.js';

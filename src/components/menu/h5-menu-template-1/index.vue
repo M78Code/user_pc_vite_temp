@@ -230,8 +230,9 @@ const two_menu_show = (sub) => {
 }
 // 获取主菜单列表  main_select_items 弹出的一级 菜单数据   main_menu_list_items 一级菜单数据
 watch(update_time, (v) => {
-  menu_list.value = MenuData.menu_lv1; //一级
-  pop_main_items.value = MenuData.pop_list; //pop级
+  const [menu_lv1, pop_list] = get_sport_menu(MenuData.menu_list)
+  menu_list.value = menu_lv1; //一级
+  pop_main_items.value = pop_list; //pop级
   current_menu.value = MenuData.menu_lv2; //2级
   date_menu_list.value = MenuData.menu_lv3; //三级
   virtual_sports_results_tab.value = MenuData.menu_lv4; //4级
@@ -373,6 +374,63 @@ const format_type = (id) => {
   return MenuData.recombine_menu_bg(id, true)
 }
 
+/**
+  * 根据 球类型 获取图标
+  * @param {boolean} is_focus 是否选中
+  */
+function get_sport_icon(is_focus) {
+  let favorite = "";
+  if (is_focus) {
+    if (UserCtr.show_favorite_list) {
+      favorite = "f";
+    }
+  }
+  if (UserCtr.show_favorite_list) {
+    favorite = "f";
+  }
+  // 赛果 408  sport-match-count
+  if (this.main_menu_id_c == 408) {
+    favorite = "";
+  }
+  //赛果我的投注
+  if (is_focus) {
+    //选中情况下的 关注 和 非关注
+    return favorite
+      ? UserCtr.theme.includes("y0")
+        ? "focus-e"
+        : "focus-c"
+      : UserCtr.theme.includes("y0")
+        ? "focus-b"
+        : "focus-a";
+  }
+  // //默认黑色版还是白色版
+  return UserCtr.theme.includes("night") ? "focus-d" : "";
+}
+//获取match菜单
+function get_sport_menu(all_menu) {
+  let menu_list = [];
+  let pop_main_items = [];
+  all_menu.forEach((m_m) => {
+    // 滚球 虚拟体育 電競 放入一级菜单
+    if ([1, 7, 8].includes(m_m.mi)) {
+      menu_list.push(lodash.cloneDeep(m_m));
+    } else {
+      pop_main_items.push(lodash.cloneDeep(m_m));
+    } // 中间的 一级菜单
+  });
+  //插入中间项 第二项是  弹出框的
+  if (menu_type.value) {
+    const mid_item = pop_main_items.find((item) => {
+      return menu_type.value == item.mi;
+    });
+    menu_list.splice(1, 0, mid_item || pop_main_items[0]);
+  } else {
+    menu_list.splice(1, 0, pop_main_items[0]);
+    //如果没有设定过1级菜单
+    set_menu_lv1(menu_list[0], 0, 'init')
+  }
+  return [menu_list, pop_main_items]
+}
 //弹出框 是否展示
 function is_menu_show(item) {
   if (lodash.get(item, 'mi') == 28 && show_favorite_list.value) {

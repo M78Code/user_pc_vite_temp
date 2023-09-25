@@ -11,6 +11,7 @@ import video_replay from "src/components/match-detail/match_info/match_info_mixi
 import LoadData from 'src/components/load_data/load_data.vue';
 import MenuData from "src/core/menu-pc/menu-data-class.js";
 import { useMittEmit, MITT_TYPES } from  "src/core/mitt"
+import {is_eports_csid} from "src/core/index"
 import lodash from "lodash"
 export default {
   components: {
@@ -81,7 +82,7 @@ export default {
       let is_esports
       // 详情页判断球种ID  其他页面取菜单
       if(this.$route.name == 'details'){
-        is_esports = this.$utils.is_eports_csid(this.$route.params.csid)
+        is_esports = is_eports_csid(this.$route.params.csid)
       }else if(this.$route.name == 'search'){
         is_esports = false
       }else {
@@ -243,7 +244,7 @@ export default {
             this.media_src = url
             this.show_type = this.vx_is_pause_video ? 'pause' : 'play-video'
           }else{
-            if(this.$utils.is_eports_csid(csid) || csid == -1){
+            if(is_eports_csid(csid) || csid == -1){
               this.show_type = 'no-video'
             }else{
               this.show_type = ''

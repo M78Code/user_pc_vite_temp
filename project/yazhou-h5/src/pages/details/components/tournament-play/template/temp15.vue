@@ -64,19 +64,21 @@
 // import { mapGetters} from "vuex";
 import { colors } from 'quasar';
 // import odd_convert from "project_path/src/mixins/odds_conversion/odds_conversion.js";
+import odds_new from "project_path/src/pages/details/components/tournament-play/unit/odds-new.vue";
 import store from "src/store-redux/index.js";
+import {utils } from 'src/core/index.js';
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 export default defineComponent({
   name: "temp15",
   props: ["item_data"],
   components: {
-    oddsNew,
+    oddsNew: odds_new,
   },
   // #TODO mixins
   // mixins:[odd_convert],
   setup(props, evnet) {
     const store_state = store.getState()
-    let data = reactive({
+    let init_data = reactive({
       utils,
       name_: '',  //计算类名
       len: 0,  //有效的ol的个数
@@ -100,20 +102,16 @@ export default defineComponent({
       }
     })
     onUnmounted(() => {
-      for (const key in $data) {
-        $data[key] = null
-      }
+      // for (const key in $data) {
+      //   $data[key] = null
+      // }
     });
     watch(
-      () => item_data,
+      () => props.item_data,
       (data) => {
         if (data.hl && data.hl[0] && data.hl[0].ol) {
           calc_classname(data.hl[0].ol)
         }
-      },
-      {
-        deep: true,
-        immediate: true
       }
     );
     const go_to_bet = (ol_item) => {
@@ -128,8 +126,8 @@ export default defineComponent({
         return item.ms == 2 || item.hs == 2 || item.os == 3
       })
       if (flag) return 0
-      if (len % 3 && len >= 5) {
-        return 3 - len % 3
+      if (init_data.len % 3 && init_data.len >= 5) {
+        return 3 - linit_data.en % 3
       } else {
         return 0
       }
@@ -141,7 +139,7 @@ export default defineComponent({
      */
     const calc_classname = (val) => {
       let name;
-      len = val.filter(item => {
+      init_data.len = val.filter(item => {
         return item.os != 3
       }).length;
       switch (len) {
@@ -155,7 +153,7 @@ export default defineComponent({
       name_ = name
     };
     return {
-      ...toRefs(data),
+      ...toRefs(init_data),
       get_bet_list,
       get_detail_data,
       olitem_name,

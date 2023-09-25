@@ -56,7 +56,7 @@ const compute_PROJECT_NAME_when_DEV_TARGET_VERSION = () => {
     }
   }
 
-  return 'yazhou-h5'
+  return project_name
 };
 
 

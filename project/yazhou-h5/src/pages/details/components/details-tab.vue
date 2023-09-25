@@ -9,7 +9,7 @@
       v-for="(item,index) in data_list" 
       :key="index" 
       @click.self="selete_item(item['id'],index,item)" 
-      :class="get_details_item == item['id']?'t_color':''"
+      :class="MatchDetailCtr.current_category_id == item['id']?'t_color':''"
       >
         {{item.marketName}}
       </div>
@@ -21,7 +21,7 @@
 // #TODO vuex
 // import { mapGetters, mapActions,mapMutations } from "vuex"
 import { utils } from 'src/core/index.js';
-import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
+import { useMittEmitterGenerator, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, ref } from "vue";
 import { useRoute, useRouter } from "vue-router"
 import UserCtr from "src/core/user-config/user-ctr.js";
@@ -37,10 +37,6 @@ export default defineComponent({
     scroller_scroll_top: {
       type: Number,
       default: 0
-    },
-    get_details_item: {
-      type: String,
-      default: '0'
     },
     new_match_detail_ctr: {
       type: Object,
@@ -58,12 +54,11 @@ export default defineComponent({
       timer1_: null,
       reset_scroll_dom: null,
     });
-    console.error(props.new_match_detail_ctr);
+    console.error(MatchDetailCtr.current_category_id);
     // #TODO VUEX
     // computed:{
     // ...mapGetters([
     //   // 玩法tab 所有投注 - 进球 - 上半场 - 球队 - 让球&大小
-    //   'get_details_item',
     //   // 当用户未登录时返回uuid, 当用户登录时返回userId
     //   'get_uid',
     //   // 点击视频或者是动画的时候玩法集是否固定
@@ -94,21 +89,18 @@ export default defineComponent({
     // ...mapMutations(['set_fewer']),
     const set_fewer = ref('')
     onMounted(() => {
-      on_listeners();
-
       // 延时器
       data.timer1_ = null;
       initEvent();
     })
     onUnmounted(() => {
-      off_listeners();
       // set_fewer(1);
       clearTimeout(data.timer1_)
       // set_subscript_game_index(0)
     });
     const change_btn = () => {
       // 设置vuex变量值,没有玩法数据时不能点击
-      // if (data_list && data_list.length == 1 && props.get_details_item == '0') return;
+      // if (data_list && data_list.length == 1 && MatchDetailCtr.current_category_id == '0') return;
       if(get_fewer.value == 1 || get_fewer.value == 3){
         // set_fewer(2)
         get_fewer.value = 2
@@ -117,11 +109,11 @@ export default defineComponent({
         get_fewer.value = 1
       }
     };
-    // 单击玩法集
+    // 单击玩法集--玩法集和tab 点击 
     const selete_item = (uId, index,item) => {
-      console.log(item,"itemitemitem");
+      console.error(MatchDetailCtr.current_category_id,"MatchDetailCtr.current_category_id");
       // 点击的玩法是当前选中的玩法
-      if(props.get_details_item == uId) return false;
+      if(MatchDetailCtr.current_category_id == uId) return false;
       // 移动当前玩法的位置
       utils.tab_move2(index, data.reset_scroll_dom)
       // set_details_item(uId);
@@ -131,8 +123,8 @@ export default defineComponent({
       router.replace({name: 'category', params: {mid: match_id.value, mcid: uId}, query: {search_term: search_term}})
       // 点击玩法对页面吸顶tab做高度处理
       useMittEmit(MITT_TYPES.EMIT_DETAILILS_TAB_CHANGED);
-      // 记录当前玩法集ID
-      MatchDetailCtr.category_tab_click(MITT_TYPES.EMIT_DETAILS_TAB_ITEM, uId)
+      // 记录当前玩法集ID和玩法集合
+      MatchDetailCtr.category_tab_click(item)
       // useMittEmit(MITT_TYPES.EMIT_DETAILILS_TAB_CHANGED)
       if(get_fewer.value == 3){
         // set_fewer(1)
@@ -151,7 +143,7 @@ export default defineComponent({
      * @param {undefined} undefined
     */
     const get_active_details_play_tab = (callback) => {
-      let item = data_list.filter(item => props.get_details_item == item.id)[0]
+      let item = data_list.filter(item => MatchDetailCtr.current_category_id == item.id)[0]
       callback(item)
     };
     const initEvent = () => {
@@ -165,29 +157,25 @@ export default defineComponent({
         console.error(e);
       }
     };
+
     // 添加相应监听事件
-    const on_listeners = () => {
-      data.emitters = [
-        useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB, initEvent),
-        useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB_BET, initEvent),
-        useMittOn(MITT_TYPES.EMIT_GET_ACTIVE_DETAILS_PLAY_TAB, get_active_details_play_tab),
-      ]
-    };
+    const { emitters_off } = useMittEmitterGenerator([
+      { type: MITT_TYPES.EMIT_REFRESH_DETAILS_TAB, callback: initEvent },
+      { type: MITT_TYPES.EMIT_REFRESH_DETAILS_TAB_BET, callback: initEvent },
+      { type: MITT_TYPES.EMIT_GET_ACTIVE_DETAILS_PLAY_TAB, callback: get_active_details_play_tab },
+    ])
     // 移除相应监听事件
-    const off_listeners = () => {
-      data.emitters.map((x) => x())
-    };
+    onUnmounted(emitters_off)
     return {
       ...toRefs(data),
       match_id,
       get_tab_fix,
       get_fewer,
+      MatchDetailCtr,
       change_btn,
       selete_item,
       get_active_details_play_tab,
       initEvent,
-      on_listeners,
-      off_listeners,
       set_fewer,
     }
   }

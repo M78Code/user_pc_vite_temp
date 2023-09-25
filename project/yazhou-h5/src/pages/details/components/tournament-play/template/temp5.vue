@@ -181,11 +181,11 @@
 <script>
 // #TODO vuex 
 // import { mapGetters } from "vuex";
-import oddsNew from "project_path/src/pages/details/components/tournament_play/unit/odds_new.vue";
+import oddsNew from "project_path/src/pages/details/components/tournament-play/unit/odds-new.vue";
 import {utils } from 'src/core/index.js';
 import lodash from "lodash";
 import store from "src/store-redux/index.js";
-import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
+import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, ref } from "vue";
 export default defineComponent({
   name: "temp5",
   props: ["item_data"],
@@ -208,28 +208,8 @@ export default defineComponent({
       // #TODO emit 
       // $emit("bet_click_", {ol_item});
     };
-    watch(
-      () => get_flag_get_ol_list,
-      () => {
-        max_count_ol = get_ol_list();
-      }
-    );
-    watch(
-      () => change_ms,
-      (new_) => {
-        if(new_ == 2 && get_menu_type == 900){
-          max_count_ol = get_ol_list();
-        }
-      }
-    );
-    onMounted(() => {
-      max_count_ol = get_ol_list();
-    })
     return {
-      utils,
-      change_ms,
-      go_to_bet,
-      get_bet_list
+      go_to_bet
     }
   }
 })

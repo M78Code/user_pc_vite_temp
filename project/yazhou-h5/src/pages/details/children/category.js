@@ -1,13 +1,13 @@
-import { reactive, computed } from "vue";
+import { reactive, computed, ref, onMounted, onUnmounted } from "vue";
 // 引入接口封装文件
 import { api_common, api_analysis } from "src/api/index.js";
-
+import UserCtr from "src/core/user-config/user-ctr.js";
 // #TODO mixins
 // 引入skt_data_info
 // import websocket_data from "project_path/src/mixins/websocket/data/skt_data_info.js";
 // 引入投注逻辑mixin
-// import betting from "project_path/src/mixins/betting/betting.js";
-
+// import betting from "project_path/src/mixins/betting/betting.js";MatchDataWarehouseInstance.set_quick_query_list_from_match_details(match_details_odds_info)
+import {MatchDataWarehouse_H5_Detail_Common,format_plays, format_sort_data} from "src/core/index"; 
 // 引入处理数据的封装方法
 import { MatchDetailCtr } from "src/core/index.js";
 // 引入redux
@@ -17,10 +17,14 @@ import uid from "src/core/uuid/index.js";
 import lodash from "lodash";
 import { useRouter, useRoute } from "vue-router";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt";
+import { useMittEmitterGenerator } from "../../../../../../src/core";
+
+
 export const category_info = () => {
   const router = useRouter();
   const route = useRoute();
   const store_state = store.getState()
+  const category = ref(null)
   let component_data = reactive({
     // 测试数据
     match_info_list: [],
@@ -28,22 +32,16 @@ export const category_info = () => {
     send_gcuuid: "",
     emitters: [],
     // 加载数据的效果
-    // is_loading: true,
-    is_loading: false,
+    is_loading: true,
     // 玩法集无数据
-    is_no_data: false,
-    // is_no_data: true,
+    // is_no_data: false,
+    is_no_data: true,
     // 是否无热门推荐赛事 // 改为真
     no_recommend_match_list: true,
     // 单个玩法集下的玩法数量
     playlist_length: undefined,
     // 所有数据集合
-    matchInfoCtr: new MatchDetailCtr({
-      route,
-      get_detail_data: {
-        mid: route.params.mid
-      }
-    }),
+    matchInfoCtr: MatchDetailCtr,
     // dom_play元素的观察对象
     observer_: undefined,
     // 第一次进来根据数据是否折叠玩法
@@ -55,6 +53,8 @@ export const category_info = () => {
     // 玩法集是否已切换过
     match_play_item_changed: false,
   });
+    // 详情初始化接口数据处理
+    const MatchDataWarehouseInstance =reactive(MatchDataWarehouse_H5_Detail_Common)
   // #TODO vuex
   // computed:{
   // ...mapGetters([
@@ -116,7 +116,7 @@ export const category_info = () => {
     let flag = false;
     if (!component_data.is_loading && component_data.is_no_data) {
       if (route.name != "match_result") {
-        if (get_details_item.value) {
+        if (component_data.matchInfoCtr.current_category_id) {
           //当前玩法下无数据就显示
           flag = true;
         }
@@ -127,8 +127,8 @@ export const category_info = () => {
   });
   // 置顶列表
   const match_list_new = computed(() => {
-    // console.log("match_info_list=-===", component_data.match_info_list)
-    // return component_data.matchInfoCtr.listSortNew();
+    console.log("match_info_list=-===", MatchDataWarehouseInstance.list_to_obj)
+    return MatchDataWarehouseInstance.list;
   });
   // 非置顶列表
   const match_list_normal = computed(() => {
@@ -138,11 +138,13 @@ export const category_info = () => {
   // 赛事id
   const match_id = computed(() => {
     return (
-      get_goto_detail_matchid.value ||
-      get_detail_data.mid.value ||
+     MatchDetailCtr.mid ||
       route.params.mid
     );
   });
+  onMounted(() => {
+    initEvent()
+  })
   // #TODO VUEX
   // methods: {
   // ...mapMutations([
@@ -154,7 +156,7 @@ export const category_info = () => {
    *@description 设置外层容器的最小高
    */
   const change_minheight = () => {
-    if ($refs.category) {
+    if (category.value) {
       // 0.44 + 0.4 + 0.4 = 1.24
       let val = [1, 2].includes(+get_detail_data.value.csid) ? 1.24 : 0.84;
 
@@ -163,9 +165,9 @@ export const category_info = () => {
         get_is_hengping ||
         (show_recommend.value && !$refs.detail_match_list)
       ) {
-        $refs.category.style.minHeight = "unset";
+        category.value.style.minHeight = "unset";
       } else {
-        $refs.category.style.minHeight = window.innerHeight - rem(val) + "px";
+        category.value.style.minHeight = window.innerHeight - rem(val) + "px";
       }
     }
   };
@@ -252,27 +254,12 @@ export const category_info = () => {
     const mcid =
       get_details_item.value || (route.params.csid ? "" : route.params.mcid);
     const findItme = get_details_tabs_list.value.find((item) => item.id == mcid) || {};
-    console.log(findItme,"findItme");
     const { plays = [], round = "" } = findItme;
 
-    // console.log(get_chpid_obj,"set_chpid_objset_chpid_obj");
     const res = all_data.filter((item) => {
       // 电竞需要判断第一局和第二局的原因，需要加上chpid判断
       if (get_menu_type == 3000) {
         if (round) {
-          console.log(
-            get_chpid_obj[`${item.hpid}-${round}`],
-            round,
-            item.chpid,
-            item.hpid,
-            "dsjfkldskjfs"
-          );
-          //
-          console.log(
-            get_chpid_obj[`${item.hpid}-${round}`],
-            item.chpid,
-            "get_chpid_obj[`${item.hpid}-${round}`] == `${item.hpid}-${round}`"
-          );
           return (
             plays.includes(+item.hpid) &&
             (get_chpid_obj[`${item.hpid}-${round}`] == item.chpid ||
@@ -306,14 +293,11 @@ export const category_info = () => {
     }
     let params = {
       // 赛果，赛果详情默认采用0，即是拉取所有的赛果
-      // mcid: ['result_details', 'match_result'].includes(route.name) ? 0 : get_details_item || (route.params.csid?'':route.params.mcid), // 玩法集id
-      // 2023/3/4 普通赛事,电竞详情拉取所有玩法集数据
-      mcid: 0,
+      mcid: MatchDetailCtr.current_category_id,
       // mid: match_id.value, // 赛事id
       // cuid: get_uid.value, // userId或者uuid
-      cuid: '507708033232540302',
+      cuid: UserCtr.uid,
       mid: route.params.mid,
-      // round: get_menu_type == 3000 ? (get_details_tabs_list && get_details_tabs_list[get_subscript_game_index] && get_details_tabs_list[get_subscript_game_index].round) : null
       round: null,
     };
     // 如果是 赛果下边的 电竞，则加 isESport 参数
@@ -325,16 +309,15 @@ export const category_info = () => {
     } else {
       params.isESport = null;
     }
-
     component_data.is_loading = to_refresh !== "hide_loading";
-    // #TODO
     const tabs_active_data_cache =
-      get_details_data_cache.value[
-        `${match_id.value}-${get_details_item.value}`
+      MatchDetailCtr.category_obj[
+        `${match_id.value}-${MatchDetailCtr.current_category_id}`
       ];
     if (tabs_active_data_cache) {
       component_data.is_no_data = false;
     }
+    
     // 调用: /v1/m/matchDetail/getMatchOddsInfoPB接口
     //赛果页面调用赛果玩法详情接口
     let http = ["result_details", "match_result"].includes(route.name)
@@ -342,10 +325,9 @@ export const category_info = () => {
       : get_menu_type.value == 3000
       ? api_common.get_DJ_matchDetail_getMatchOddsInfo
       : api_common.get_matchDetail_getMatchOddsInfo;
-    component_data.send_gcuuid = uid();
-    params.gcuuid = component_data.send_gcuuid;
-    // console.log(params,"paramsparamsparams");
-
+    component_data.send_gcuuid = uid()
+    params.cuid = component_data.send_gcuuid;
+    console.error(params,"paramsparamsparams",MatchDetailCtr.category_obj);
     let temp = [];
     // 记录是否走的是缓存
     let is_cache = false;
@@ -385,10 +367,13 @@ export const category_info = () => {
           },
         };
         /************** 响应成功则继续往下走，失败则执行fun_catch **************/
-        const { data: res } = await axios_api_loop(_obj);
-        if (component_data.send_gcuuid != res.gcuuid) {
-          return;
-        }
+        const res = await axios_api_loop(_obj);
+        console.error(res);
+        // 数据存入数据仓库
+        MatchDataWarehouseInstance.set_quick_query_list_from_match_details(res.data)
+        // if (component_data.send_gcuuid != res.gcuuid) {
+        //   return;
+        // }
         component_data.first_load = false;
         if (!lodash.get(res, "data") || lodash.get(res, "data.length") == 0) {
           component_data.is_loading = false;
@@ -406,7 +391,7 @@ export const category_info = () => {
             chpid_obj[item.chpid] = item.chpid;
           }
         });
-        component_data.matchInfoCtr.setList(data);
+        // component_data.matchInfoCtr.setList(data);
         component_data.match_info_list = data;
         // console.log(chpid_obj,"chpid_obj");
         // set_chpid_obj(chpid_obj)
@@ -422,7 +407,6 @@ export const category_info = () => {
         console.error(error);
       }
     }
-
     // 接着正常走历史逻辑
     try {
       //getMatchOddsInfo 接口拉取时，联动跟新投注框的数据
@@ -460,10 +444,13 @@ export const category_info = () => {
       // 当前玩法集下数据缓存和所有的投注项
       details_data_cache[`${match_id}-${get_details_item.value}`] = temp;
       // set_details_data_cache(details_data_cache);
+      
+      console.error('成功');
     } catch (err) {
       console.error(err);
     } finally {
-      if (is_cache) {
+      console.error('finally' + component_data);
+      if (component_data.is_cache) {
         setTimeout(() => {
           component_data.is_loading = false;
         }, 100);
@@ -603,15 +590,10 @@ export const category_info = () => {
     return new Promise((resolve, reject) => {
       //调用接口数据
       axios_api(params)
-        .then((result) => {
-          let res = {}
-          if (result.status) {
-            res = result.data
-          } else {
-            res = result
-          }
+        .then((res) => {
           clearTimeout(timer);
           resolve(res);
+          console.error('----axios_api---',res);
         })
         .catch((e) => {
           console.error("----请求loop----", e);
@@ -694,15 +676,10 @@ export const category_info = () => {
       ? api_common.get_DJ_matchDetail_getMatchOddsInfo
       : api_common.get_matchDetail_getMatchOddsInfo;
       component_data.send_gcuuid = uid();
-    params.gcuuid = component_data.send_gcuuid;
+    params.cuid = component_data.send_gcuuid;
     http(params)
-      .then((result) => {
-        let res = {}
-          if (result.status) {
-            res = result.data
-          } else {
-            res = result
-          }
+      .then((res) => {
+        console.error(res);
         if (component_data.send_gcuuid != res.gcuuid) return;
         component_data.is_loading = false;
         if (!res.data || res.data.length == 0) {
@@ -753,13 +730,13 @@ export const category_info = () => {
 
         // 当前赛事对应玩法集存在缓存数据
         if (tabs_active_data_cache) {
-          component_data.matchInfoCtr.setList(
-            lodash.cloneDeep(tabs_active_data_cache)
-          );
+          // component_data.matchInfoCtr.setList(
+          //   lodash.cloneDeep(tabs_active_data_cache)
+          // );
         } else {
           // 无数据
           component_data.is_no_data = true;
-          component_data.matchInfoCtr.setList([]);
+          // component_data.matchInfoCtr.setList([]);
         }
       });
   };
@@ -861,23 +838,23 @@ export const category_info = () => {
   // 添加相应监听事件
   const on_listeners = () => {
     // #TODO emit
-    component_data.emitters = [
+    component_data.emitters = useMittEmitterGenerator([
       // #TODO
-      // useMittOn(MITT_TYPES.EMIT_CATEGORY_SKT, sendSocketInitCmd).off,
-      useMittOn(MITT_TYPES.EMIT_REF_API, initEvent).off,
-      useMittOn(MITT_TYPES.EMIT_HIDE_DETAIL_MATCH_LIST, hide_detail_match_list)
-        .off,
-    ];
+      // useMittOn(MITT_TYPES.EMIT_CATEGORY_SKT, sendSocketInitCmd),
+
+      useMittOn(MITT_TYPES.EMIT_REF_API, initEvent),
+      useMittOn(MITT_TYPES.EMIT_HIDE_DETAIL_MATCH_LIST, hide_detail_match_list),
+    ]);
 
   };
-  // 移除相应监听事件
-  const off_listeners = () => {
-    // #TODO emit
-    component_data.emitters.map((x) => x());
-    // useMittOn(MITT_TYPES.EMIT_CATEGORY_SKT, sendSocketInitCmd).off;
-    useMittOn(MITT_TYPES.EMIT_REF_API, initEvent).off;
-    useMittOn(MITT_TYPES.EMIT_HIDE_DETAIL_MATCH_LIST, hide_detail_match_list).off
-  };
+  /** 批量注册mitt */
+const { emitters_off } = useMittEmitterGenerator([
+  { type: MITT_TYPES.EMIT_REF_API, initEvent },
+  { type: MITT_TYPES.EMIT_HIDE_DETAIL_MATCH_LIST, hide_detail_match_list },
+])
+  onUnmounted(() => {
+    emitters_off()
+  })
   return {
     component_data,
     show_recommend,
@@ -913,6 +890,5 @@ export const category_info = () => {
     remove_session_storage,
     remove_detail_storage,
     on_listeners,
-    off_listeners,
   };
 };

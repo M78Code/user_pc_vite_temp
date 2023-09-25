@@ -4,6 +4,19 @@
   -webkit-overflow-scrolling: touch;
   overflow-y: auto;
   overflow-x: hidden;
+  .details-f {
+    background-color: #f7f9fe;
+    :deep(.transition-zhiding) {
+      .play-name-outer-wrapper {
+        .play-name {
+          background-image: linear-gradient(180deg, #ffffff 22.04%, #f7f8ff 100%);
+          &::after {
+            border: 1px solid #cfcfcf ;
+          }
+        }
+      }
+    }
+  }
 }
 .play-wrapper {
   :deep(.q-tab) {
