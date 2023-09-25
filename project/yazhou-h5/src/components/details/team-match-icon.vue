@@ -8,7 +8,7 @@
     <div class="icon-wrap">
           <!--  match["lvs"] == 2，显示直播按钮 i18n_t('match_info.lvs')是国际化取值 -->
         <match-icon v-if="show_lvs" class="fl"
-          which="lvs" icon_class="lvs" :text="_.get(this.get_detail_data,'lss') == 1 ? i18n_t('match_info.lvs') : i18n_t('match_info.topic')">
+          which="lvs" icon_class="lvs" :text="lodash.get(get_detail_data,'lss') == 1 ? i18n_t('match_info.lvs') : i18n_t('match_info.topic')">
         </match-icon>
 
       <!-- mvs动画状态：-1：没有配置动画源 | 0 ：已配置，但是不可用 | 1：已配置，可用，播放中 | 2：已配置，可用，播放中 -->
@@ -27,62 +27,69 @@
       <!-- 收藏按钮 -->
       <div v-if="GlobalAccessConfig.get_collectSwitch()" class="match-icon match-icon-single" @click="details_collect(get_detail_data)">
         <div class="collect-icon" :class="{active:get_detail_data.mf}"></div>
-        <div class="text">{{i18n_t('footer_menu.collect')}}</div>
+        <div class="text">{{ $t('footer_menu.collect')}}</div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
+// #TODO vuex
 // import {mapGetters, mapMutations} from "vuex"
-import { api_common } from "src/api/index.js";
+import { reactive, computed, toRefs, defineComponent } from "vue";
+import lodash from "lodash";
+
 import match_icon from "project_path/src/components/details/match-icon/match-icon.vue"  // 赛事icon操作
-import {utils } from 'src/core/utils/index.js';
-import { i18n_t } from "src/boot/i18n.js";;
-//国际化
 
+import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
+import { api_common } from "src/api/index.js";
+import {utils } from 'src/core/index.js'
+import { i18n_t } from "src/boot/i18n.js";
+import { useDetailsDataFromDataWarehouse } from "project_path/src/pages/details/details.js";
 
-export default {
-  name: 'team_match_icon',
-  data(){
-    return {
+export default defineComponent({
+  name: "team_match_icon",
+  components: {
+    'match-icon': match_icon,
+  },
+  setup(props, evnet) {
+    const data = reactive({
       // 收藏|取消收藏是否请求中
       favorite_loading: false,
-    }
-  },
-  computed:{
+    });
+    const { details_data } = useDetailsDataFromDataWarehouse()
+    const get_detail_data = reactive(details_data)
+    // #TODO vuex
+    // computed:{
     // ...mapGetters([
     //   'get_detail_data',
     //   'get_uid',
     //   // 投注成功的赛事id
     //   'get_match_id_bet_success',
-    //   'GlobalAccessConfig',
+    //   'get_access_config',
     //   'get_lang',// 当前语言
     // ]),
     // 展示lvs 图标
-    show_lvs() {
-      return this.get_detail_data.lvs && this.get_detail_data.lvs != -1 && ['string', 'number'].includes(typeof _.get(this.get_detail_data,'lss')) && ['zh','tw'].includes(this.get_lang)
-    },
-  },
-  components: {
-    'match-icon': match_icon,
-  },
-  watch:{
+    const show_lvs = computed(() => {
+      return get_detail_data.lvs && get_detail_data.lvs != -1 && ['string', 'number'].includes(typeof lodash.get(get_detail_data,'lss')) && ['zh','tw'].includes(get_lang)
+    });
     // 监听是否投注成功，或者列表页是否点击收藏，同步更新 收藏按钮
-    // get_match_id_bet_success(bet_curr){
-    //   let m_detail_data = _.cloneDeep(this.get_detail_data);
-    //   let bet_mf = bet_curr.splii18n_t('-')[1];
-    //   if(bet_mf == 1 || bet_mf == 0){
-    //     m_detail_data.mf = bet_mf == 1;
+    // watch(
+    //   () => get_match_id_bet_success,
+    //   (bet_curr) => {
+    //     let m_detail_data = lodash.cloneDeep(get_detail_data);
+    //     let bet_mf = bet_curr.split('-')[1];
+    //     if(bet_mf == 1 || bet_mf == 0){
+    //       m_detail_data.mf = bet_mf == 1;
+    //     }
+    //     else{
+    //       m_detail_data.mf = true;
+    //     }
+    //     set_detail_data(m_detail_data);
     //   }
-    //   else{
-    //     m_detail_data.mf = true;
-    //   }
-    //   this.set_detail_data(m_detail_data);
-    // }
-  },
-  methods: {
+    // );
+    // #TODO vuex
+    // methods: {
     // ...mapMutations([
     //   "set_detail_data",
     //   "set_match_id_bet_success",
@@ -95,10 +102,11 @@ export default {
      * @param {Object} match 赛事信息
      * @return {String}
      */
-    details_collect(match_obj) {
+    const details_collect = (match_obj) => {
       if( !utils.judge_collectSwitch( GlobalAccessConfig.get_collectSwitch(),this ) ) return
+
       // 如果还在请求中则return
-      if ( this.favorite_loading ) return;
+      if ( favorite_loading ) return;
       let txt = 0;
       let params = {
         // 赛事ID
@@ -106,7 +114,7 @@ export default {
         // 1收藏||0取消收藏
         cf: Number(!match_obj.mf),
         // 用户id
-        cuid: this.get_uid,
+        cuid: get_uid,
       };
       // 收藏赛事或取消收藏
       if (match_obj.mf) {
@@ -114,28 +122,37 @@ export default {
       } else {
         txt = i18n_t('collect.betted_title');//'收藏';
       }
-      this.favorite_loading = true;
+      favorite_loading = true;
       // 更新收藏状态
-      this.set_details_changing_favorite(1)
+      set_details_changing_favorite(1)
 
       api_common.add_or_cancel_match( params ).then( res => {
-        this.favorite_loading = false;
+        favorite_loading = false;
         if (res.code == 200) {
-          let cloneData = _.clone(this.get_detail_data)
+          let cloneData = lodash.clone(get_detail_data)
           cloneData.mf = params.cf
-          this.set_detail_data(cloneData);
+          set_detail_data(cloneData);
           //同步列表页收藏状态
-          this.set_match_id_bet_success(`${match_obj.mid}-${cloneData.mf}-${Math.random()}`);
+          set_match_id_bet_success(`${match_obj.mid}-${cloneData.mf}-${Math.random()}`);
         } else if (res.msg) {
-          this.set_toast({ 'txt': res.msg });
+          set_toast({ 'txt': res.msg });
         }
       }).catch((e) => {
         console.error(e)
-        this.favorite_loading = false;
+        favorite_loading = false;
       });
-    },
-  },
-}
+    };
+    return {
+      ...toRefs(data),
+      show_lvs,
+      details_collect,
+      get_detail_data,
+      GlobalAccessConfig,
+      lodash,
+      i18n_t
+    }
+  }
+})
 </script>
 
 <style lang="scss" scoped>
@@ -183,7 +200,8 @@ export default {
   .collect-icon {
     width: 0.16rem;
     height: 0.16rem;
-    background-image: var(--q-color-com-img-bg-72);
+    // TODO:
+    background-image: url('/yazhou-h5/image/common/m-list-favorite.svg');
     background-size: 100% 100%;
     margin-right: 0.05rem;
     margin-left: 0.08rem;

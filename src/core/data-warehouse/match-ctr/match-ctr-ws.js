@@ -362,7 +362,7 @@ export default class MatchDataBaseWS
             this.match_ctr.assign_with(quick_hl_obj, hl_obj);
           });
         }
-
+        match.api_update_time = new Date().getTime();
       }
     }
   }
