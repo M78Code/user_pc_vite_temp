@@ -8,7 +8,7 @@
     <div class="icon-wrap">
           <!--  match["lvs"] == 2，显示直播按钮 i18n_t('match_info.lvs')是国际化取值 -->
         <match-icon v-if="show_lvs" class="fl"
-          which="lvs" icon_class="lvs" :text="_.get(get_detail_data,'lss') == 1 ? i18n_t('match_info.lvs') : i18n_t('match_info.topic')">
+          which="lvs" icon_class="lvs" :text="lodash.get(get_detail_data,'lss') == 1 ? i18n_t('match_info.lvs') : i18n_t('match_info.topic')">
         </match-icon>
 
       <!-- mvs动画状态：-1：没有配置动画源 | 0 ：已配置，但是不可用 | 1：已配置，可用，播放中 | 2：已配置，可用，播放中 -->
@@ -32,14 +32,20 @@
     </div>
   </div>
 </template>
+
 <script>
 // #TODO vuex
 // import {mapGetters, mapMutations} from "vuex"
+import { reactive, computed, toRefs, defineComponent } from "vue";
+import lodash from "lodash";
+
+import match_icon from "project_path/src/components/details/match-icon/match-icon.vue"  // 赛事icon操作
+
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import { api_common } from "src/api/index.js";
-import match_icon from "project_path/src/components/details/match-icon/match-icon.vue"  // 赛事icon操作
 import {utils } from 'src/core/index.js'
-import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
+import { i18n_t } from "src/boot/i18n.js";
+import { useDetailsDataFromDataWarehouse } from "project_path/src/pages/details/details.js";
 
 export default defineComponent({
   name: "team_match_icon",
@@ -51,7 +57,8 @@ export default defineComponent({
       // 收藏|取消收藏是否请求中
       favorite_loading: false,
     });
-    const get_detail_data = reactive({})
+    const { details_data } = useDetailsDataFromDataWarehouse()
+    const get_detail_data = reactive(details_data)
     // #TODO vuex
     // computed:{
     // ...mapGetters([
@@ -64,14 +71,13 @@ export default defineComponent({
     // ]),
     // 展示lvs 图标
     const show_lvs = computed(() => {
-      return ''
-      // return get_detail_data.lvs && get_detail_data.lvs != -1 && ['string', 'number'].includes(typeof _.get(get_detail_data,'lss')) && ['zh','tw'].includes(get_lang)
+      return get_detail_data.lvs && get_detail_data.lvs != -1 && ['string', 'number'].includes(typeof lodash.get(get_detail_data,'lss')) && ['zh','tw'].includes(get_lang)
     });
     // 监听是否投注成功，或者列表页是否点击收藏，同步更新 收藏按钮
     // watch(
     //   () => get_match_id_bet_success,
     //   (bet_curr) => {
-    //     let m_detail_data = _.cloneDeep(get_detail_data);
+    //     let m_detail_data = lodash.cloneDeep(get_detail_data);
     //     let bet_mf = bet_curr.split('-')[1];
     //     if(bet_mf == 1 || bet_mf == 0){
     //       m_detail_data.mf = bet_mf == 1;
@@ -123,7 +129,7 @@ export default defineComponent({
       api_common.add_or_cancel_match( params ).then( res => {
         favorite_loading = false;
         if (res.code == 200) {
-          let cloneData = _.clone(get_detail_data)
+          let cloneData = lodash.clone(get_detail_data)
           cloneData.mf = params.cf
           set_detail_data(cloneData);
           //同步列表页收藏状态
@@ -141,7 +147,9 @@ export default defineComponent({
       show_lvs,
       details_collect,
       get_detail_data,
-      GlobalAccessConfig
+      GlobalAccessConfig,
+      lodash,
+      i18n_t
     }
   }
 })

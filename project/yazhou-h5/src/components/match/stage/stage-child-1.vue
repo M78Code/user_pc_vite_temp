@@ -20,15 +20,12 @@
 
 <script>
 import lodash from 'lodash';
-// import { mapGetters, mapMutations } from "vuex"
-// import msc from "src/public/mixins/common/msc.js";  // 国际化比赛阶段比分转换工具
 import { format_mgt_time } from "src/core/format/index.js"
 import { utils } from 'src/core/utils/index.js';
 import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/index.js";
 import { i18n_t } from "src/boot/i18n.js"
 
 export default {
-  // mixins: [msc],
   name: 'stage_child_1',
   data(){
     // 详细描述请参考国际化文件:/user-h5/src/i18n/zh-cn/index.js
@@ -41,7 +38,8 @@ export default {
       // 上下半场
       mmp_arr1:["31", "33"],
       i18n_t,
-      utils
+      utils,
+      format_mgt_time
     }
   },
   watch: {

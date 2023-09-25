@@ -1,21 +1,21 @@
 import lodash from "lodash";
-import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
-import {api_common, api_analysis} from "src/api/index.js";  // API 公共入口
-import { useMittOn, useMittEmit, useMittEmitterGenerator, MITT_TYPES } from  "src/core/mitt"
+import GlobalAccessConfig from "src/core/access-config/access-config.js"
+import { api_common, api_analysis } from "src/api/index.js";  // API 公共入口
+import { useMittOn, useMittEmit, useMittEmitterGenerator, MITT_TYPES } from "src/core/mitt"
 import { useRouter, useRoute } from "vue-router";
 import store from "src/store-redux/index.js";
 import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache.js";
 // import { Level_one_category_list, Level_one_detail_data } from "./category-list.js";
 import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch, nextTick, ref } from "vue";
 import UserCtr from "src/core/user-config/user-ctr.js";
-import {MatchDataWarehouse_H5_Detail_Common,format_plays, format_sort_data} from "src/core/index"; 
+import { MatchDataWarehouse_H5_Detail_Common, format_plays, format_sort_data } from "src/core/index";
 import MatchDetailCtr from "src/core/match-detail/match-detail-class.js"
 
 export const details_main = () => {
-const router = useRouter();
-const route = useRoute();
-const get_detail_data = ref({})
-const new_match_detail_ctr = ref(new MatchDetailCtr())
+  const router = useRouter();
+  const route = useRoute();
+  const get_detail_data = ref({})
+  const new_match_detail_ctr = ref(new MatchDetailCtr())
   // console.log("Store", store)
   // const state = store.getState()
   let state_data = reactive({
@@ -137,7 +137,7 @@ const new_match_detail_ctr = ref(new MatchDetailCtr())
     get_match_base_info_obj: "get_match_base_info_obj",
     // 'get_analyze_show',
     // 'get_goto_detail_matchid',
-    get_access_config:GlobalAccessConfig.config,
+    get_access_config: GlobalAccessConfig.config,
     // 聊天室ID
     // 'get_chatroom_id',
     // 获取语言
@@ -149,7 +149,7 @@ const new_match_detail_ctr = ref(new MatchDetailCtr())
 
   console.error(new_match_detail_ctr.value);
   // 详情初始化接口数据处理
-  const MatchDataWarehouseInstance =reactive(MatchDataWarehouse_H5_Detail_Common)
+  const MatchDataWarehouseInstance = reactive(MatchDataWarehouse_H5_Detail_Common)
   const is_highlights = computed(() => {
     return lodash.get(state_data.get_curr_tab_info, "component") === "highlights";
   });
@@ -205,7 +205,7 @@ const new_match_detail_ctr = ref(new MatchDetailCtr())
     const suffix_theme = UserCtr.theme.includes("night") ? "2" : "";
     // y0后缀
     const suffix_y0 = UserCtr.theme.includes("_y0") ? "_y0" : "";
-// img:${$g_image_preffix}/image/bw3/svg/details/replay${suffix_theme}${suffix_y0}.svg
+    // img:${$g_image_preffix}/image/bw3/svg/details/replay${suffix_theme}${suffix_y0}.svg
     return ``;
   });
   /**
@@ -322,7 +322,7 @@ const new_match_detail_ctr = ref(new MatchDetailCtr())
         dom_box.scrollTop = rem(1.67);
       }
       // 当点开视频或者动画时,设置玩法区域的高度
-      if(get_tab_fix){
+      if (get_tab_fix) {
         dom_box.scrollTop = rem(0);
       }
     });
@@ -470,16 +470,16 @@ const new_match_detail_ctr = ref(new MatchDetailCtr())
    * 赛事详情页面接口(/v1/m/matchDetail/getMatchDetailPB)
    */
   const get_match_details = (params) => {
-    
+
     let api =
-    state_data.get_menu_type == 3000
+      state_data.get_menu_type == 3000
         ? api_common.get_DJ_matchDetail_MatchInfo
         : api_common.get_matchDetail_MatchInfo;
     api(params)
       .then((res) => {
         let { data: res_data, ts, code } = res
         // #TODO
-        
+
         // 当状态码为0400500, data:null,data:{} 去到列表中的早盘
         if (code == "0400500" || !res_data || Object.keys(res_data).length === 0) {
           // router.push({ name: "matchList" });
@@ -487,7 +487,7 @@ const new_match_detail_ctr = ref(new MatchDetailCtr())
           if (res_data && Object.keys(res_data).length) {
             match_detail_data_handle(res_data)
             // 数据传入数据仓库
-        MatchDataWarehouseInstance.set_list_from_match_details(res_data)
+            MatchDataWarehouseInstance.set_list_from_match_details(res_data)
           } else {
             // 赛事下发999后, 显示空空如也
             state_data.skeleton.details = true
@@ -498,7 +498,7 @@ const new_match_detail_ctr = ref(new MatchDetailCtr())
             clearTimeout(state_data.back_main_list_timer)
             state_data.back_main_list_timer = setTimeout(() => {
               // 如果不是演播厅的，才有退出回到 列表
-              if(lodash.get(state_data.get_video_url, 'active') != 'lvs' ){
+              if (lodash.get(state_data.get_video_url, 'active') != 'lvs') {
                 // $common.go_where({back_to: 'go_to_back'})
               }
             }, 1500)
@@ -534,7 +534,7 @@ const new_match_detail_ctr = ref(new MatchDetailCtr())
       state_data.requestCount = 0;
       state_data.is_show_detail_header_data = true;
       state_data.detail_data = res_data;
-      
+
       // #TODO 暂时使用假数据
       // state_data.detail_data = Level_one_detail_data();
       state_data.math_list_data = [res_data];
@@ -634,7 +634,7 @@ const new_match_detail_ctr = ref(new MatchDetailCtr())
             );
             // 找不到就赋值为玩法集第一项
             if (!set_details_item_flag) {
-              state_data.get_details_item =res_data[0]["id"];
+              state_data.get_details_item = res_data[0]["id"];
             }
           } else {
             // 当第一次进来就会走这里默认赋值第一项
@@ -678,12 +678,12 @@ const new_match_detail_ctr = ref(new MatchDetailCtr())
     };
 
     const get_category_list_debounce = axios_debounce_cache.get_category_list
-    if(get_category_list_debounce && get_category_list_debounce['ENABLED']){
+    if (get_category_list_debounce && get_category_list_debounce['ENABLED']) {
       let info = get_category_list_debounce.can_send_request(params);
-      if(info.can_send){
+      if (info.can_send) {
         //直接发请求    单次数 请求的方法
         get_details_category_list();
-      }else{
+      } else {
         // 记录timer
         clearTimeout(state_data.axios_debounce_timer)
         state_data.axios_debounce_timer = setTimeout(() => {
@@ -843,8 +843,8 @@ const new_match_detail_ctr = ref(new MatchDetailCtr())
       state_data.scroller_height = window.innerHeight;
     }
   };
-   // 玩法集tab的id
-   const set_details_item_id = (uid) => {
+  // 玩法集tab的id
+  const set_details_item_id = (uid) => {
     console.error(uid);
     state_data.get_details_item = uid
     new_match_detail_ctr.value.current_category_id = uid
@@ -855,7 +855,7 @@ const new_match_detail_ctr = ref(new MatchDetailCtr())
     // 接受玩法集的ID
     { type: MITT_TYPES.EMIT_DETAILS_TAB_ITEM, callback: set_details_item_id },
   ])
- 
+
   /**
    * TODO: 下面的mitt根据业务场景移到上面来 批量注册 销毁
    * ! on_listeners 不需要再onMounted调用，setup = vue2的created()
@@ -960,3 +960,13 @@ const new_match_detail_ctr = ref(new MatchDetailCtr())
     clear_timer,
   };
 };
+
+/** 统一从数据参数获取详情数据Hook */
+export const useDetailsDataFromDataWarehouse = () => {
+  const route = useRoute()
+  const mid = lodash.get(route, 'params.mid')
+  const details_data = lodash.get(MatchDataWarehouse_H5_Detail_Common, `list_to_obj.mid_obj.${mid}_`)
+  return {
+    details_data
+  }
+}
