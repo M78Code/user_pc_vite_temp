@@ -107,30 +107,25 @@ function on_popup() {
  * @return {undefined} undefined
  */
 function on_click_handicap(row) {
-    if (cur_odd.value != row.value) {
-        set_user_preference(row.value);
-    }
-}
-
-function set_user_preference(curr_odd) {
-    if (curr_odd) {
-        UserCtr.set_pre_odds(curr_odd);
-        UserCtr.set_cur_odds(curr_odd);
-        // 设置用户偏好    
-        api_betting.record_user_preference({ userMarketPrefer: curr_odd }).then((res) => {
-            let code = lodash.get(res, 'code');
-            if (code != 200) {
-                UserCtr.set_pre_odds(pre_odd.value);
-                UserCtr.set_cur_odds(cur_odd.value);
-            }
-            cur_odd.value = curr_odd
-            pre_odd.value = curr_odd
-        }).catch(err => {
-            console.error(err);
+    console.error(row.value, cur_odd.value);
+    const curr_odd = row.value
+    if (cur_odd.value == curr_odd) return
+    UserCtr.set_pre_odds(curr_odd);
+    UserCtr.set_cur_odds(curr_odd);
+    // 设置用户偏好    
+    api_betting.record_user_preference({ userMarketPrefer: curr_odd }).then((res) => {
+        let code = lodash.get(res, 'code');
+        if (code != 200) {
             UserCtr.set_pre_odds(pre_odd.value);
             UserCtr.set_cur_odds(cur_odd.value);
-        });
-    }
+        }
+        cur_odd.value = curr_odd
+        pre_odd.value = curr_odd
+    }).catch(err => {
+        console.error(err);
+        UserCtr.set_pre_odds(pre_odd.value);
+        UserCtr.set_cur_odds(cur_odd.value);
+    });
 }
 
 watch(

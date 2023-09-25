@@ -4,9 +4,8 @@
  * @Description: 右侧视频播放组件
 -->
 <template>
-
   <div ref="video" class="c-match-video relative-position" @mousemove="onMousemove">
-    <!-- 精彩回播 header -->
+    <!-- 精彩回播 header -->{{ current_replay }}
     <div v-if="current_replay" class="video-replay-header">
       <div class="btn-back-live"></div>
       <div class="replay-info">{{current_replay.titleInfo}}</div>
@@ -20,7 +19,7 @@
       <div class="content-wrap relative-position">
         <div class="yb-icon-triangle"></div>
         <!-- 此版面现实的所有直播内容仅供参考........ -->
-        <div class="content">{{ $t('common.live_notice')}}</div>
+        <div class="content">{{ i18n_t('common.live_notice')}}</div>
       </div>
     </div>
       </div>
@@ -34,8 +33,8 @@
     <!-- 未登录 视频不可播 2 -->
     <div class="video-not fit column yb-flex-center no-video-bg" v-if="show_type == 'no-login'">
       <!-- 账户信息已经失效 /  请重新进入后观看 -->
-      <div class="label" v-if="is_limited">{{ $t('common.limited')}}</div>
-      <div class="label" v-else>{{ $t('common.account_invalid')}}<br/>{{ $t('common.account_invalid2')}}</div>
+      <div class="label" v-if="is_limited">{{ i18n_t('common.limited')}}</div>
+      <div class="label" v-else>{{ i18n_t('common.account_invalid')}}<br/>{{ i18n_t('common.account_invalid2')}}</div>
     </div>
 
     <!-- 有直播可放 3-->
@@ -45,7 +44,7 @@
     >
       <div class="img-loading custom-format-img-loading" v-show="show_loading"></div>
       <div class="loading-text">
-        {{ $t('common.loading')}}
+        {{ i18n_t('common.loading')}}
         <!-- 数据加载中... 请稍后 -->
       </div>
 
@@ -112,7 +111,7 @@
 
     <!-- 长时间未操作暂停 -->
     <div class="video-not fit no-video-bg custom-format-web-icon-06" v-if="show_type == 'no-handle'">
-      <div class="no-handle-text">{{ $t('video.novideo6')}}</div>
+      <div class="no-handle-text">{{ i18n_t('video.novideo6')}}</div>
       <div class="pause-icon" @click="show_type = 'play-video'"></div>
     </div>
 
@@ -134,17 +133,21 @@ import video_type_ctr from "src/core/video/video_type_ctr.vue";
 import noVideo from "src/components/match-detail/match_info/no_video.vue"
 import videoReplayError from "src/components/match-detail/match_info/video_replay_error.vue"
 import { IconWapper } from 'src/components/icon'
-
+import info from "src/components/match-detail/match_info/info.vue";
+import { i18n_t} from "src/core/index"
 export default {
   mixins: [match_video],
   components: {
     "video-type-ctr": video_type_ctr,
     noVideo,
     videoReplayError,
-    IconWapper
+    IconWapper,
+    info
   },
   data(){
     return {
+      i18n_t,
+      show_type:"info", //todo默认
       ctr_data:{ // 高清flv, 2:流畅m3u8 切换配置参数
       video_type:1 //1:高清flv, 2:流畅m3u8
       },

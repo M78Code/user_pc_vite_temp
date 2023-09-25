@@ -141,7 +141,7 @@ export const tennis_score_handle = (match) => {
     if (!match.away_score) match.away_score = 0;
     match.msc_format = msc_list;
   }
-  match.msc_list_dict.forEach(dict => {
+  match.msc_list_dict && match.msc_list_dict.length && match.msc_list_dict.forEach(dict => {
     dict_msc_list.push(format_msc(dict));
   });
   match.msc_s_format = dict_msc_list;

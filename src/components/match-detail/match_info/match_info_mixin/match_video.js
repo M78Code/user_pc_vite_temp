@@ -33,7 +33,7 @@ export default {
       // 菜单数据
       menu_data: MenuData,
       video_height: "190px",//视频高度
-      show_type: '',//显示类型
+      show_type: 'info',//显示类型 todo  默认info
       media_src: "",//视频url地址
       callback_id:0,//回调ID 解决短时间内连续切换视频 回调错误
       show_loading:true, // 是否显示视频loading图片
@@ -79,16 +79,16 @@ export default {
     // }),
     // 是否为电竞
     is_esports() {
-      let is_esports
+      let is_esports_val
       // 详情页判断球种ID  其他页面取菜单
       if(this.$route.name == 'details'){
-        is_esports = is_eports_csid(this.$route.params.csid)
+        is_esports_val = is_eports_csid(this.$route.params.csid)
       }else if(this.$route.name == 'search'){
-        is_esports = false
+        is_esports_val = false
       }else {
-        is_esports = this.menu_data.is_esports
+        is_esports_val = false
       }
-      return is_esports;
+      return is_esports_val;
     },
   },
 

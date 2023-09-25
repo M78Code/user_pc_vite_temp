@@ -69,9 +69,9 @@ function sub_click(item, index) {
 .left-menu-content {
     width: 169px;
     padding-right: 14px;
-    border-top: 1px solid var(--qq--announce-left-menu-border-color1);
-    background: var(--qq--announce-left-menu-bg-color1);
-    color: var(--qq--announce-left-menu-text-color1);
+    border-top: 1px solid var(--q-announce-left-menu-border-color1);
+    background: var(--q-announce-left-menu-bg-color1);
+    color: var(--q-announce-left-menu-text-color1);
 
     &:after {
         content: "";
@@ -80,9 +80,9 @@ function sub_click(item, index) {
         height: 100%;
         top: 0;
         right: 0;
-        border-left: 1px solid var(--qq--announce-left-menu-border-color1);
-        border-right: 1px solid var(--qq--announce-left-menu-border-color1);
-        background-color: var(--qq--announce-left-menu-bg-color2);
+        border-left: 1px solid var(--q-announce-left-menu-border-color1);
+        border-right: 1px solid var(--q-announce-left-menu-border-color1);
+        background-color: var(--q-announce-left-menu-bg-color2);
     }
 
     :deep(.q-scrollarea__thumb) {
@@ -97,18 +97,18 @@ function sub_click(item, index) {
         padding: 0 15px;
         height: 34px;
         text-align: left;
-        border-bottom: 1px solid var(--qq--announce-left-menu-border-color1);
+        border-bottom: 1px solid var(--q-announce-left-menu-border-color1);
 
         &.no-subtab {
             &.active {
-                border-right: 2px solid var(--qq--announce-left-menu-border-color2);
-                background: var(--qq--announce-left-menu-bg-color3);
+                border-right: 2px solid var(--q-announce-left-menu-border-color2);
+                background: var(--q-announce-left-menu-bg-color3);
             }
         }
 
         &:hover {
-            background: var(--qq--announce-left-menu-border-color3);
-            color: var(--qq--announce-left-menu-text-color2);
+            background: var(--q-announce-left-menu-border-color3);
+            color: var(--q-announce-left-menu-text-color2);
         }
 
         &.no-subtab {
@@ -122,17 +122,17 @@ function sub_click(item, index) {
             transition: transform 0.15s;
             transform: rotate(180deg);
             opacity: 0.5;
-            color: var(--qq--announce-left-menu-text-color3);
+            color: var(--q-announce-left-menu-text-color3);
         }
 
         &.active {
             font-weight: 600;
-            color: var(--qq--announce-left-menu-text-color4);
+            color: var(--q-announce-left-menu-text-color4);
 
             .q-icon {
                 transform: rotate(0deg);
                 opacity: 1;
-                color: var(--qq--announce-left-menu-text-color4);
+                color: var(--q-announce-left-menu-text-color4);
             }
         }
     }
@@ -141,24 +141,24 @@ function sub_click(item, index) {
         overflow: hidden;
         max-height: 0px;
         transition: max-height 0.15s;
-        background: var(--qq--announce-left-menu-bg-color4);
+        background: var(--q-announce-left-menu-bg-color4);
 
         &:hover {
-            color: var(--qq--announce-left-menu-text-color4);
+            color: var(--q-announce-left-menu-text-color4);
 
             .point {
-                background: var(--qq--announce-left-menu-bg-color5);
+                background: var(--q-announce-left-menu-bg-color5);
             }
         }
 
         &.active {
             max-height: 400px;
-            border-right: 2px solid var(--qq--announce-left-menu-border-color2);
-            background: var(--qq--announce-left-menu-bg-color6);
-            color: var(--qq--announce-left-menu-text-color4);
+            border-right: 2px solid var(--q-announce-left-menu-border-color2);
+            background: var(--q-announce-left-menu-bg-color6);
+            color: var(--q-announce-left-menu-text-color4);
 
             .point {
-                background: var(--qq--announce-left-menu-bg-color5);
+                background: var(--q-announce-left-menu-bg-color5);
             }
         }
 

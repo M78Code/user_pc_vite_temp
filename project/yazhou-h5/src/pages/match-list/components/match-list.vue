@@ -8,7 +8,7 @@
     <scroll-wrapper ref="scroll_wrapper" :matchCtr="matchCtr" :data_source="matchCtr.list" :class="{'data-get-empty':data_get_empty}"
      :main_source="source" :is_goto_top_random="is_goto_top_random"
       :match_list_wrapper_height="match_list_wrapper_height">
-      <template v-slot="{ match_item, index}">
+      <template v-slot="{ match_item, mid, index}">
         <!--虚拟体育(赛果)-->
         <v-match-container :match="match_item"
           :i_list="index"
@@ -22,7 +22,7 @@
             v-if="match_item && menu_type ==28 && 100 == get_curr_sub_menu_type"
             :match_of_list="match_item"
             :matchCtr="matchCtr"
-            :i="i"
+            :i="index"
             :menu_type="menu_type"
             :main_source="source"
             @unfold_changed="unfold_changed_handle"
@@ -36,6 +36,7 @@
             :match_of_list="match_item"
             :matchCtr="matchCtr"
             :i="index"
+            :mid="mid"
             :key="match_item?.mid"
             :menu_type="menu_type"
             :main_source="source"

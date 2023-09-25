@@ -138,7 +138,7 @@
 // #TODO vuex
 // import { mapGetters } from "vuex";
 import lodash from "lodash";
-import oddsNew from "project_path/src/pages/details/components/tournament_play/unit/odds_new.vue";
+import oddsNew from "project_path/src/pages/details/components/tournament-play/unit/odds-new.vue";
 // import odd_convert from "project_path/src/mixins/odds_conversion/odds_conversion.js";
 import {utils } from 'src/core/index.js';
 import store from "src/store-redux/index.js";

@@ -10,7 +10,6 @@ import MenuData from "src/core/menu-h5/menu-data-class.js"
 import { MATCH_LIST_TEMPLATE_CONFIG } from "src/core/match-list-h5/match-card/template"
 import mi_euid_mapping_default from "src/core/base-data/config/mi-euid-mapping.json"
 import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from 'src/core'
-
 class MatchMeta {
 
   constructor() {
@@ -22,14 +21,15 @@ class MatchMeta {
   
   /**
    * @description 设置 赛事 元数据
-   * @param { type } 菜单类型 目前只处理了足球
+   * @param { mi } 菜单类型 目前只处理了足球
    */
-  set_origin_match_data (type = '1011') {
+  set_origin_match_data (mi = '1011') {
+    if (typeof mi !== 'string') return
     // 菜单 ID 对应的 赛事 mids
     const mi_tid_mids_res = lodash.get(BaseData, 'mi_tid_mids_res')
     if (mi_tid_mids_res.length < 1) return
     // 当前菜单的 mid 详情
-    const mid_obj = mi_tid_mids_res[type]
+    const mid_obj = mi_tid_mids_res[mi]
     if (!mid_obj) return
     const arr = []
     Object.values(mid_obj).forEach(t => {
@@ -74,8 +74,11 @@ class MatchMeta {
         ...template_config['template_1']
       }
     })
+    // 设置仓库渲染数据
     MatchDataBaseH5.set_list(data_list)
+    // 订阅赛事，获取赛事赔率
     MatchPage.subscription()
+
   }
 
   /**
