@@ -23,7 +23,7 @@
                     <div class="row items-center">
                       <!-- 联赛icon -->
                       <img
-                        :src="item1.picUrlthumb ? get_file_path(item1.picUrlthumb) : get_theme.includes('theme02') ? none_league_icon_black : default_url"
+                        :src="item1.picUrlthumb ? get_file_path(item1.picUrlthumb) : get_theme.includes('night') ? none_league_icon_black : default_url"
                         @error="league_icon_error" class="match_logo" />
                       <div class="name-overhide">{{ item1.nameText }}</div>
                       <div class="nums"
@@ -68,12 +68,12 @@
       <div class="row items-center"
         :style="{ lineHeight: ['vi', 'en', 'th', 'ms', 'ad'].includes(get_lang) ? '1' : 'unset' }">
         <!-- <template> -->
-          <img v-if="all_checked" class="icon-search" @click="all_checked_click"
-            :src="`${$g_image_preffix}/image/svg/check_circle_outline-24px${on_suffix}.svg`" />
-          <img
-            :src="`/yazhou-h5/image//svg/selected-no${get_theme.includes('02') ? '-2' : get_theme.includes('y0') ? '_y0' : ''}.svg`"
-            alt="" class="icon-search" @click="all_checked_click" v-else>
-          <span class="txt ellipsis-2-lines" @click="all_checked_click">{{ $t('common.all_select') }}</span>
+        <img v-if="all_checked" class="icon-search" @click="all_checked_click"
+          :src="`${$g_image_preffix}/image/svg/check_circle_outline-24px${on_suffix}.svg`" />
+        <img
+          :src="`/yazhou-h5/image//svg/selected-no${get_theme.includes('02') ? '-2' : get_theme.includes('y0') ? '_y0' : ''}.svg`"
+          alt="" class="icon-search" @click="all_checked_click" v-else>
+        <span class="txt ellipsis-2-lines" @click="all_checked_click">{{ $t('common.all_select') }}</span>
         <!-- </template> -->
         <span class="txt ellipsis-3-lines" @click="select_btn_click">{{ $t('filter.reverse_election') }}</span>
       </div>
@@ -116,38 +116,35 @@ const scroll_obj2_val = ref([]) //滚动对象集合备份
 const fixed_top = ref(0)   //到顶部的距离
 const no_find_content = ref(false) //是否显示未查找到相关搜索
 const change = ref(true) //是否显示全选按钮
-const selected = ref({})   //选中的赛事集合
+const selected = ref({})   //选中的赛事集合 //TODO get_filter_list
 const select_num = ref(0) //选中的赛事数量
 
-const $g_image_preffix='/yazhou-h5/'
+const $g_image_preffix = '/yazhou-h5/'
 //ref对象
 const scrollArea = ref(null);
 const tittle_text = ref(null);
 const scroll_area1 = ref(null);
 const bg_f6f7f8 = ref(null);
 let timer2;
-
 // computed: {
 // ...mapGetters([
 const get_lang = ref(UserCtr.lang)
-const get_current_sub_menuid = ref()
 const get_curr_sub_menu_type = ref(MenuData.get_current_lv_2_menu_type())
-const get_menu_type = MenuData.menu_type;
-const get_req_match_list_params = ref({})
-const get_filter_list = ref({})
-const get_uid = ref()  //uid????
+const get_req_match_list_params = ref({})//TODO
+
+const get_uid = ref(UserCtr.get_uid())//userid
 const get_current_menu = ref(MenuData.current_lv_1_menu)
 const get_md = ref(MenuData.current_lv_3_menu)    //三级日期菜单时间戳
 const get_theme = ref(UserCtr.theme)
 // ]),
 const on_suffix = computed(() => {
   let suffix = '';
-  // if(get_theme.value.includes('_y0')){
-  //   suffix+= '_y0';
-  // }
-  // if(get_theme.value.includes('theme02')){
-  //   suffix+= '_dark';
-  // }
+  if (get_theme.value.includes('_y0')) {
+    suffix += '_y0';
+  }
+  if (get_theme.value.includes('night')) {
+    suffix += '_dark';
+  }
   return suffix;
 })
 const all_checked = computed(() => {
@@ -182,7 +179,7 @@ watch(select_num, (new_) => {
  * @param {Object} $event 错误事件对象
  */
 function league_icon_error($event) {
-  if (get_theme.value.includes('theme02')) {
+  if (get_theme.value.includes('night')) {
     $event.target.src = none_league_icon_black.value;
   } else {
     $event.target.src = default_url;
@@ -339,12 +336,11 @@ function search_btn() {
       });
     }
   }
-
   //TODO 筛选前重置联赛折叠状态
   // set_collapse_csid_map({})
   // set_collapse_map_match({});
   //this.set_filter_list(data);
-  useMittEmit(MITT_TYPES.EMIT_HID_SEARCH_DIA)
+  useMittEmit(MITT_TYPES.EMIT_CHANGE_SELECT_DIALOG, false)
   //触发列表页监听事件，调接口拉取指定赛事
   useMittEmit(MITT_TYPES.EMIT_MENU_CHANGE_FOOTER_CMD, {
     text: "filter"
@@ -361,13 +357,8 @@ function all_checked_click() {
     item.select = check_value;
     number_of_filters += item.num
   });
-  // this.$forceUpdate(); //强制刷新页面，解决页面不会重新渲染的问题
-  // 如果是 全选
-  if (all_checked.value) {
-    select_num.value = number_of_filters;
-  } else {// 如果不是 全选
-    select_num.value = 0;
-  }
+  //设置全选//反选 数量 
+  select_num.value = all_checked.value ? number_of_filters : 0;
 }
 // 反选按钮事件
 function select_btn_click() {
@@ -392,7 +383,6 @@ function select_btn_click() {
     });
     select_num.value = cumulative_quantity
   }
-  // this.$forceUpdate(); //强制刷新页面，解决页面不会重新渲染的问题
 }
 // @Description:单个选择
 function select_li_ctr(li_item) {
@@ -402,19 +392,6 @@ function select_li_ctr(li_item) {
     select_num.value += li_item.num;
   }
   li_item.select = !li_item.select;
-  // this.$forceUpdate();
-}
-function part_true_select_item(wrapItem) {
-  return lodash.every(wrapItem, ["select", true]);
-}
-function part_false_select_item(wrapItem) {
-  return lodash.some(wrapItem, ["select", false]);
-}
-// 设置是否隐藏
-function is_hide(sport_item, index) {
-  sport_item.hide = !sport_item.hide;
-  // this.$forceUpdate();
-  scroll_obj_fn(index);
 }
 // 获取筛选数据外层列表
 function fetch_filter_match() {
@@ -481,7 +458,6 @@ function fetch_filter_match() {
       }
       );
       list.value = (data || []).map(i => ({ ...i, select: i.id in selected.value })); // 初始化select
-      console.error("list.value", list.value)
       // 筛选时，把首字母相同的集合 放在第一个item 上,
       filter_alphabet(list.value)
       // 动态生成有联赛的字母，并非A - Z 全量字母；
@@ -519,7 +495,6 @@ function filter_alphabet(arr) {
       }
     }
   }
-  console.log({ arr })
 }
 // 动态生成有联赛的字母，并非A - Z 全量字母；
 function dynamic_letters(arr) {
@@ -542,16 +517,12 @@ function dynamic_letters(arr) {
 onBeforeUnmount(() => {
   clearTimeout(timer2)
 })
-// 当前二级菜单选中的菜单类型
-// type.value = this.$store.state.topmenu.menu_type||1;
 get_top();
 fetch_filter_match();
-selected.value = get_filter_list.value || {};
-// // 如果是 竟足，则初始化 二级菜单的值为 null，解决赛果我的投注 切换到竞足时的  22690 bug单号
-if (get_menu_type.value == 30) {
-  // set_curr_sub_menu_type(null);
+// 如果是 竟足，则初始化 二级菜单的值为 null，解决赛果我的投注 切换到竞足时的  22690 bug单号
+if (type.value == 30) {
+  MenuData.set_current_lv2_menu();
 }
-console.log("111111")
 </script>
 <style lang="scss" scoped>
 .boss-box {
