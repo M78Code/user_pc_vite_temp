@@ -200,7 +200,8 @@ export default defineComponent({
   .collect-icon {
     width: 0.16rem;
     height: 0.16rem;
-    background-image: var(--q-color-com-img-bg-72);
+    // TODO:
+    background-image: url('/yazhou-h5/image/common/m-list-favorite.svg');
     background-size: 100% 100%;
     margin-right: 0.05rem;
     margin-left: 0.08rem;
