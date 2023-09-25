@@ -96,6 +96,7 @@ const deal_width_handicap_ols = (payload) => {
     // 投注项数据拼接
     let hn_obj_config = `list_to_obj.hn_obj.${mid}_${mid}_${item._hpid}_${handicap_type}_${item.ot}`
     // 获取投注项内容 
+    console.log('MatchListData', MatchListData.list_to_obj, hn_obj_config);
     item = lodash.get(MatchListData, hn_obj_config,{})
     return item;
   })
