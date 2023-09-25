@@ -45,7 +45,7 @@ export const query_pre_bet_amount = (params, config={}, url = "/v1/betOrder/quer
 
 
 // 用户偏好设置
-export const record_user_preference = (params, config={}, url = "/v1/betOrder/recordUserPreference") => http.post(`${prefix}${url}`, params, config);
+export const record_user_preference = (params, config={}, url = "/v1/betOrder/recordUserPreference") => http.post(`${prefix3}${url}`, params, config);
 
 // 虚拟赛事投注模块-投注项最大最小金额
 /* export const virtual_query_max_min_money = (params, config={}, url = "/v1/betOrder/virtualQueryMarketMaxMinBetMoney") => http.post(`${prefix}${url}`, params, config); */

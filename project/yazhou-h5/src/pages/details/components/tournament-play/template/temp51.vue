@@ -9,8 +9,8 @@
       <div class="esport-bet-wrapper">
         <div v-for="(item,index) in item_data.hl" :key="index" class="row">
           <template v-if="item">
-            <template v-for="(ol_item, ol_index) in item.ol">
-              <div class="col" :key="ol_index">
+            <template v-for="(ol_item, ol_index) in item.ol" :key="ol_index">
+              <div class="col">
                 <!-- ms就是外层的赛事级别状态mhs: 0开 2关 1封 11锁 -->
                 <!-- 开盘or锁盘 正常显示 -->
                 <template v-if="ol_item.ms == 0 || ol_item.ms == 11">
@@ -77,7 +77,7 @@
 <script>
 // #TODO vuex
 // import { mapGetters } from "vuex";
-import oddsNew from "project_path/src/pages/details/components/tournament_play/unit/odds_new.vue";
+import oddsNew from "project_path/src/pages/details/components/tournament-play/unit/odds-new.vue";
 // import odd_convert from "project_path/src/mixins/odds_conversion/odds_conversion.js";
 import {utils } from 'src/core/index.js';
 import store from "src/store-redux/index.js";

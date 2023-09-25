@@ -39,7 +39,7 @@
                         <!-- os=1 开盘 -->
                         <template v-if="append_single.os == 1">
                           <div class="play-box-sty details-color" @click="go_to_bet(append_single)"
-                               :class="[get_bet_list.includes(append_single.id_)?['details-bg5','white_text']:'',{'win':utils.calc_win(append_single.result)}]">
+                               :class="[get_bet_list.includes(append_single.id_)?['details-bg5','white_text']:'',{'win': utils.calc_win(append_single.result)}]">
                             <div class="single-name">
                               <span class="fz_14 ver-ali-top">{{devote_value_d(append_single.ot)}}</span>
                               <span :class="get_bet_list.includes(append_single.id_) ? 'size-color-wit':'size-color'" class="fz_16">
@@ -219,12 +219,14 @@
 // 引入redux
 import store from "src/store-redux/index.js";
 import lodash from "lodash";
-import odds_new from "project_path/src/pages/details/components/tournament_play/unit/odds_new.vue";
+import odds_new from "project_path/src/pages/details/components/tournament-play/unit/odds-new.vue";
 import {utils } from 'src/core/index.js';
-import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
+import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, ref } from "vue";
 export default defineComponent({
   name: "temp13",
-  props:{},
+  props:{
+    item_data: Object,
+  },
   // #TODO mixins
   // mixins:[odd_convert],
   components: {
@@ -232,11 +234,12 @@ export default defineComponent({
   },
   setup(props, evnet) {
     const store_state = store.getState()
-    let data = reactive({
+    let init_data = reactive({
       utils,
       // 滑动left
       left: 0
     });
+    const bet_slide = ref(null)
     // #TODO vuex
     // computed: {
     // ...mapGetters(["get_bet_list", "get_detail_data", 'get_is_hengping']),
@@ -272,19 +275,19 @@ export default defineComponent({
     // is_wining_score() {
     //   // 净胜分(不含加时)/净胜分3项/净胜分6项/净胜分12项/净胜分14项/点球大战-净胜分/净胜分（虚拟体育独有）
     //   let hpid_list = ['141', '200', '209', '211', '212', '238', '20024']
-    //   let w_hpid = item_data.hpid
+    //   let w_hpid = props.item_data.hpid
     //   return hpid_list.includes(w_hpid)
     // },
     // ol的长度
     const ol_length = computed(() => {
-      return item_data.hl[0].ol.length;
+      return props.item_data.hl[0].ol.length;
     })
     // 附加盘投注项集合
     const append_single_list = computed(() => {
       let result = [];
-      for (let i = 0; i < item_data.hl.length; i++) {
-        for (let i_ = 0; i_ < item_data.hl[i].ol.length; i_++) {
-          result.push(item_data.hl[i].ol[i_]);
+      for (let i = 0; i < props.item_data.hl.length; i++) {
+        for (let i_ = 0; i_ < props.item_data.hl[i].ol.length; i_++) {
+          result.push(props.item_data.hl[i].ol[i_]);
         }
       }
       return result;
@@ -297,14 +300,14 @@ export default defineComponent({
       let arr_max = false
       // 小玩法数据
       let arr_min = false
-      for (let i = 0; i < item_data.hl.length; i++) {
-        for (let i_ = 0; i_ < item_data.hl[i].ol.length; i_++) {
+      for (let i = 0; i < props.item_data.hl.length; i++) {
+        for (let i_ = 0; i_ < props.item_data.hl[i].ol.length; i_++) {
           // 如果此时otd满足title里面第一个otd 则为true
-          if (item_data.hl[i].ol[i_].otd == lodash.get(item_data, 'title[0].otd')) {
+          if (props.item_data.hl[i].ol[i_].otd == lodash.get(props.item_data, 'title[0].otd')) {
             arr_max = true
           }
           // 如果此时otd满足title里面第二个otd 则为true
-          if (item_data.hl[i].ol[i_].otd == lodash.get(item_data, 'title[1].otd')) {
+          if (props.item_data.hl[i].ol[i_].otd == lodash.get(props.item_data, 'title[1].otd')) {
             arr_min = true
           }
         }
@@ -324,10 +327,10 @@ export default defineComponent({
       return arr
     })
     const is_show_slide = computed(() => {
-      return (append_single_list.length / 2) > 3 && left == 0
+      return (append_single_list.length / 2) > 3 && init_data.left == 0
     })
     const is_show_slide_r = computed(() => {
-      return (append_single_list.length / 2) > 3 && left != 0
+      return (append_single_list.length / 2) > 3 && init_data.left != 0
     })
     const is_match_result = computed(() => {
       return ['result_details', 'match_result'].includes($route.name)
@@ -337,19 +340,19 @@ export default defineComponent({
      * @param {object} e 滑动参数
      * @param {undefined} undefined
     */
-    const touch_pan = (e) => {
-      let dom_width = $refs.bet_slide.clientWidth
+    const touch_pan = lodash.debounce((e) => {
+      let dom_width = bet_slide.value?.clientWidth
 
       if ((append_single_list.length / 2) < 4) {
         return
       }
-      if (e.direction == 'left') {
+      if (bet_slide.value?.direction == 'left') {
         // 左滑
         let slide_num
-        let temp_num = item_data.hl.length / 3
+        let temp_num = props.item_data.hl.length / 3
 
         // 是整数则减一，否则向下取整
-        if (utils.is_integer(temp_num)) {
+        if (init_data.utils.is_integer(temp_num)) {
           slide_num = temp_num - 1
         } else {
           slide_num = Math.floor(temp_num)
@@ -357,32 +360,32 @@ export default defineComponent({
 
         // 左滑最大距离
         let max_left = dom_width * slide_num
-        if (Math.abs(left) >= max_left) {
+        if (Math.abs(init_data.left) >= max_left) {
           return
         }
 
-        left -= dom_width
+        init_data.left -= dom_width
 
       } else {
         // 右滑
-        if (left >= 0) {
+        if (init_data.left >= 0) {
           return
         }
-        left += dom_width
+        init_data.left += dom_width
       }
-    };
+    }, 500);
     const go_to_bet = (ol_item) => {
       $emit("bet_click_", { ol_item });
     };
     onMounted(() => {
       // 原created
-      touch_pan = debounce(touch_pan, 50)
+      touch_pan()
     })
     onUnmounted(() => {
-      debounce_throttle_cancel(touch_pan);
+      touch_pan.cancel();
     })
     return {
-      ...toRefs(data),
+      ...toRefs(init_data),
       lodash,
       get_bet_list,
       get_detail_data,
@@ -396,6 +399,7 @@ export default defineComponent({
       is_show_slide_r,
       is_match_result,
       touch_pan,
+      bet_slide,
       go_to_bet
     }
   }

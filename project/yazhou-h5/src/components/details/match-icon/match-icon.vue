@@ -148,7 +148,7 @@ const check_url = (url, which) => {
       set_video_url(data);
       set_show_video(true);
       set_iframe_onload(false);
-      timer1_ = setTimeout(() => {
+      timer1_.value = setTimeout(() => {
         set_iframe_onload(true);
       }, 2000)
     } else {

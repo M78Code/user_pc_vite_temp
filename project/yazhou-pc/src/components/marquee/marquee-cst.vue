@@ -61,7 +61,7 @@ import lodash from 'lodash'
 import { i18n_t } from "src/boot/i18n.js"
 
 // api接口
-import { api_announce } from "src/api/index";
+import { api_home } from "src/api/index";
 import gSettings from 'project_path/src/components/settings/index.vue';
 import langs from "src/i18n/pc/langs/index.mjs";
 import { utils } from 'src/core/index.js'
@@ -350,7 +350,7 @@ function animation_start() {
  */
 function get_marquee_data() {
     notice_info.data = ""
-    api_announce.post_marquee_data().then(res => {
+    api_home.post_marquee_data().then(res => {
         const { code, data, } = res
         if (code == 200) {
             lodash.each(data, (item, index) => {

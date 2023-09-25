@@ -576,6 +576,7 @@ export const useGetConfig = () => {
    * @param {undefined} undefined
    */
   const set_handicap_state = (val) => {
+    debugger
     if (val == "empty") {
       val = state.mcid == 0 ? "all_empty" : "new_empty";
     }

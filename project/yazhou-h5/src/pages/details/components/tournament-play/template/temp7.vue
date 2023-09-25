@@ -256,7 +256,7 @@
 <script>
 // #TODO vuex
 // import { mapGetters } from "vuex";
-import odds_new from "project_path/src/pages/details/components/tournament_play/unit/odds_new.vue";
+import odds_new from "project_path/src/pages/details/components/tournament-play/unit/odds-new.vue";
 // import odd_convert from "project_path/src/mixins/odds_conversion/odds_conversion.js";
 import {utils } from 'src/core/index.js';
 import lodash from "lodash";
@@ -274,9 +274,6 @@ export default defineComponent({
       // #TODO emit
       // $emit("bet_click_", {ol_item});
     };
-    onMounted(() => {
-      max_count_ol = get_ol_list();
-    })
     return {
       utils,
       go_to_bet
