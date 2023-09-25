@@ -982,7 +982,6 @@ export const useRightDetails = (props) => {
    * @return {}
    */
   const err_tips = (err) => {
-    debugger;
     allData.match_details = [];
     //todo
     // this.set_error_data({
