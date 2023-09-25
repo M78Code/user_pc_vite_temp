@@ -140,7 +140,8 @@ export default {
   components: {
     "video-type-ctr": video_type_ctr,
     noVideo,
-    videoReplayError
+    videoReplayError,
+    IconWapper
   },
   data(){
     return {

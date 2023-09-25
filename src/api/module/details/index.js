@@ -48,7 +48,7 @@ export const get_match_detail_ESMatchInfo = (params, config = {}, url = "/v1/w/m
 export const get_match_odds_info_ES = (params, config = {}, url = "/v1/w/matchDetail/getESMatchOddsInfo") => http.get(`${prefix}${url}`, params)
 
 //赛事盘口详情（2021-09-09 列表部分的详情调用getMatchOddsInfo2）
-export const get_match_detail2 = (params, config = {}, url = "/v1/w/matchDetail/getMatchOddsInfo2PB") => http.post(`${prefix}${url}`, params, {axios_debounce_cache_key:'match_odds_Info2'})
+export const get_match_detail2 = (params, config = {}, url = "/v1/w/matchDetail/getMatchOddsInfo2") => http.post(`${prefix}${url}`, params, {axios_debounce_cache_key:'match_odds_Info2'})
 
 //赛事盘口详情（2021-05-23 接口变更从getMatchOddsInfo变为getMatchOddsInfo1）
 export const get_match_odds_info = (params, config = {}, url = "/v1/w/matchDetail/getMatchOddsInfo1") => http.get(`${prefix}${url}`, params, {...config, cancel_other: 'getMatchOddsInfo1'})
