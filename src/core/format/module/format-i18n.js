@@ -21,7 +21,7 @@ export  const get_match_tpl_title=(t_path, csid)=>{
                 }
               }
               break;
-            case 'list.match_tpl_title.tpl0.bet_col':
+            case 'list.match_tpl_title.tpl1.bet_col':
             case 'list.match_tpl_title.tpl16.bet_col':
               if(ret){
                 if(csid == 2 || csid == 6) { //2-篮球
@@ -54,10 +54,10 @@ export  const get_match_tpl_title=(t_path, csid)=>{
         } else if(i18n_t.locale == 'zh'){
           // csid：1-足球 2-篮球 3-棒球 4-冰球 5-网球 6-美式足球 7-斯诺克 8-乒乓球 9-排球  10-羽毛球 11-手球
           switch (t_path) {
-            case 'list.match_tpl_title.tpl0.bet_col':
+            case 'list.match_tpl_title.tpl1.bet_col':
               if(ret){
                 if(csid == 11) { //11-手球
-                  ret = lodash.cloneDeep(i18n_t('list.match_tpl_title.tpl0.bet_col_csid_11'));
+                  ret = lodash.cloneDeep(i18n_t('list.match_tpl_title.tpl1.bet_col_csid_11'));
                 }
               }
               break;

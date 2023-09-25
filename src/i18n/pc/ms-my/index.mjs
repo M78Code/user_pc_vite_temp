@@ -1182,7 +1182,7 @@ export default {
         "match_no_start": "Belum mula",
         "match_start": "Telah mula",
         "match_tpl_title": {
-            "tpl0": {
+            "tpl1": {
                 "bet_col": [
                     "1x2",
                     "HDP",

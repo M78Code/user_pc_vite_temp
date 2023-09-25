@@ -1180,7 +1180,7 @@ export default {
         "match_no_start": "Chưa bắt đầu",
         "match_start": "Đã bắt đầu",
         "match_tpl_title": {
-            "tpl0": {
+            "tpl1": {
                 "bet_col": [
                     "1X2",
                     "Kèo chấp",

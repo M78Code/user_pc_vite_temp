@@ -14,11 +14,11 @@
       <div class="empty-m-list-w">
         <!-- 当前赛事盘口已全部关闭-->
         <span v-if="get_details_item == 0">
-          {{t('detail.odd_all_closed')}}
+          {{i18n_t('detail.odd_all_closed')}}
         </span>
         <!-- 盘口已关闭 -->
         <span v-else>
-          {{t('detail.odd_closed')}}
+          {{i18n_t('detail.odd_closed')}}
         </span>
       </div>
 
@@ -27,7 +27,7 @@
         <!-- 热门推荐国际化 -->
         <div class="h-recommend-head row items-center">
           <div class="w">
-            {{t('detail.popular_recommendation')}}
+            {{i18n_t('detail.popular_recommendation')}}
           </div>
         </div>
         <!-- 热门赛事列表 -->
@@ -78,7 +78,7 @@ import tournament_play_new from "project_path/src/pages/details/components/tourn
 // 引入接口封装文件
 import { api_common, api_analysis} from 'src/api/index.js'
 // 引入国际化
-import { t } from "src/boot/i18n.js";;
+import { i18n_t } from "src/boot/i18n.js";;
 //  无数据显示组件
 import no_data from "project_path/src/components/common/no-data.vue"
 
@@ -274,7 +274,7 @@ export default defineComponent({
     })
     return {
       ...toRefs(component_data),
-      t,
+      i18n_t,
       show_recommend,
       match_list_new,
       match_list_normal,

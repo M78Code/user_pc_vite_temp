@@ -25,7 +25,7 @@ import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, ref } from "vue";
 import { useRoute, useRouter } from "vue-router"
 import UserCtr from "src/core/user-config/user-ctr.js";
-
+import MatchDetailCtr from "src/core/match-detail/match-detail-class.js"
 
 export default defineComponent({
   name: "details_tab",
@@ -132,7 +132,7 @@ export default defineComponent({
       // 点击玩法对页面吸顶tab做高度处理
       useMittEmit(MITT_TYPES.EMIT_DETAILILS_TAB_CHANGED);
       // 记录当前玩法集ID
-      useMittEmit(MITT_TYPES.EMIT_DETAILS_TAB_ITEM, uId)
+      MatchDetailCtr.category_tab_click(MITT_TYPES.EMIT_DETAILS_TAB_ITEM, uId)
       // useMittEmit(MITT_TYPES.EMIT_DETAILILS_TAB_CHANGED)
       if(get_fewer.value == 3){
         // set_fewer(1)
@@ -167,23 +167,15 @@ export default defineComponent({
     };
     // 添加相应监听事件
     const on_listeners = () => {
-      // #TODO emit
       data.emitters = [
-        useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB, initEvent).off,
-        useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB_BET, initEvent).off,
-        useMittOn(MITT_TYPES.EMIT_GET_ACTIVE_DETAILS_PLAY_TAB, get_active_details_play_tab).off,
+        useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB, initEvent),
+        useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB_BET, initEvent),
+        useMittOn(MITT_TYPES.EMIT_GET_ACTIVE_DETAILS_PLAY_TAB, get_active_details_play_tab),
       ]
-      // useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB, initEvent)
-      // useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB_BET, initEvent)
-      // useMittOn(MITT_TYPES.EMIT_GET_ACTIVE_DETAILS_PLAY_TAB,get_active_details_play_tab)
     };
     // 移除相应监听事件
     const off_listeners = () => {
-      // #TODO emit
       data.emitters.map((x) => x())
-      // useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB, initEvent).off;
-      // useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB_BET, initEvent).off
-      // useMittOn(MITT_TYPES.EMIT_GET_ACTIVE_DETAILS_PLAY_TAB,get_active_details_play_tab).off
     };
     return {
       ...toRefs(data),
