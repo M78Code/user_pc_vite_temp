@@ -3,17 +3,15 @@
   <div
     class="c-match-card relative-position"
     :id="`list-mid-${mid}`"
-    :style="`height:${match_style_obj.total_height}px !important;width:${LayOutMain_pc.layout_content_width}px  !important;`"
+    :style="`height:${match_style_obj.total_height}px !important;width:${LayOutMain_pc.layout_content_width}  !important;`"
   >
   <!-- 赛事玩法模板赛事玩法模板赛事玩法模板赛事玩法模板赛事玩法模板  {{mid}} -->
   <div v-show="false">{{ MatchListCardDataClass.list_version }}</div>
   <!-- {{ match_style_obj.show_level }} -->
   <!-- && [1,2].includes(match_style_obj.show_level) -->
     <component
-      v-if="is_mounted"
       :is="`MatchTpl${match_style_obj.view_tpl_id}After`"
       :mid="mid"
-      :class="'csid-'+match_style_obj.csid"
     />
     <!-- <MatchTpl0After :mid="mid" />   -->
  
@@ -65,39 +63,30 @@ export default {
     MatchTpl2After,
     MatchTpl7After,
     MatchTpl9After,
-    MatchTpl10After
-  },
-  watch: {
-  
+    MatchTpl10After,
   },
   setup(props) {
     // 赛事样式对象
     let match_style_obj = MatchListCardDataClass.all_card_obj[props.mid+'_']
-    // 是否显示调试信息
-    const test = ref(sessionStorage.getItem('wsl'))
     // 组件是否加载完成
     const is_mounted = ref(true);
     // 显示部分dom ID
     // this.DOM_ID_SHOW = window.BUILDIN_CONFIG.DOM_ID_SHOW;
-    
-
     onMounted(() => {
       // 异步设置组件是否挂载完成
       // setTimeout(()=>{
       //   is_mounted.value = true
       // })
     })
-
     onUnmounted(() => {
       match_style_obj = null
     })
-    
     return {
       match_style_obj,
       is_mounted,
       LayOutMain_pc,
       MatchListCardData,
-      MatchListCardDataClass
+      MatchListCardDataClass,
     }
   }
 }

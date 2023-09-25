@@ -1178,7 +1178,7 @@ export default {
         "match_no_start": "Not Started",
         "match_start": "Started",
         "match_tpl_title": {
-            "tpl0": {
+            "tpl1": {
                 "bet_col": [
                     "1x2",
                     "HDP",

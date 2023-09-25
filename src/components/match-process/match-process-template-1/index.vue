@@ -130,7 +130,6 @@ const cur_fill_second = ref(0); // 补充的分钟
  * 初始化补充时间
  */
  const init_fill_time = (skt_mid) => {
-  console.log('props.match', props.match);
   let { mid, mmp, csid } = props.match;
   if ((skt_mid && skt_mid != mid) || !show_fill_time.value) {
     return;
