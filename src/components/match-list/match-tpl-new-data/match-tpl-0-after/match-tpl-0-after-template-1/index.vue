@@ -20,7 +20,7 @@
           <basis-info1 v-if="is_mounted" :match="match" show_type="all" />
         </div>
         <!-- 赛事盘口投注项 -->
-        <match-handicap :handicap_list="match_list_tpl_size[`template_${match_style_obj.data_tpl_id}_main`]" :match="match" />
+        <match-handicap :handicap_list="match_list_tpl_size[`template_${match_style_obj.data_tpl_id}`].main_handicap_list" :match="match" />
 
         <!-- 视频按钮 -->
         <div class="media-col">

@@ -37,8 +37,7 @@
    * @param {undefined} undefined
   */
   export const compute_match_list_style_obj_and_match_list_mapping_relation_obj_type5=(match_list,is_ws_call)=>{
-    let current_csid = MenuData.left_menu_result.lv1_mi
-    let template_id = compute_sport_id(current_csid)
+    let template_id = MenuData.get_match_tpl_number()
     // 赛种ID 到卡片key的 映射对象
     let csid_to_card_key_obj = {}
     // 所有卡片列表
