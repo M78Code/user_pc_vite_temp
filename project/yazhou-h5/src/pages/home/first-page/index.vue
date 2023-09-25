@@ -11,7 +11,7 @@
       <div class="money-wrap" @click="get_balance">
         <div class="balance-wrap">
           <i class="icon-balance" :style="compute_css('icon-balance')"></i>
-          <span class="balance">{{ t("common.money") }}</span>
+          <span class="balance">{{ $t("common.money") }}</span>
         </div>
         <div class="money">
           <span class="int">{{ balance_obj.int || "0" }}</span>
@@ -25,7 +25,7 @@
             <i class="icon-notice" :style="compute_css('icon-notice')"></i>
           </div>
         </div>
-        <marquee></marquee>
+        <v-marquee />
       </div>
     </div>
     <!-- 跑马灯、余额 -->
@@ -42,22 +42,8 @@ import carousel from "./components/carousel.vue";
 // bw3版首页websocket逻辑处理
 // import skt_home_bw3 from "project_path/src/mixins/websocket/data/skt_home_bw3.js";
 // 公告栏跑马灯
-import marquee from 'project_path/src/components/marquee/marquee.vue'
-// 无网络展示组件
-// import no_data from "project_path/src/components/common/no-data.vue";
-// 赛事进行中每秒变化的计时器
-// import counting_down from 'project_path/src/components/common/counting-down.vue';
-// 一小时以内的开赛计时器（累加计时|倒计时）
-// import counting_down_start from 'project_path/src/components/common/counting-down-start.vue';
-// 为赛事列表(专业版和新手版)提供逻辑方法，拆分组件复杂度
-// import match_list_mixin from "project_path/src/mixins/match_list/match_list_mixin";
+import VMarquee from 'project_path/src/components/marquee/marquee.vue'
 import { compute_css } from "src/core/";
-//  一二级菜单 本地化假数据
-// import { common_menu_list, secondary_menu } from "project_path/src/config/common-menu.js"
-//  api1.5 菜单 本地化假数据
-
-import { t } from "src/boot/i18n.js";
-import store from "src/store-redux/index.js";
 // mixins: [skt_home_bw3, match_list_mixin],
 //余额
 let balance_obj = ref({});
