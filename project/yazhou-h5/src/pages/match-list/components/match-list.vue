@@ -14,12 +14,12 @@
           :i_list="index"
           :match_list="matchCtr.list"
           :sport_id="match_item.sportId"
-          v-if="[1001,1002,1004,1011,1010,1009].includes(+match_item?.sportId)">
+          v-if="match_item && [1001,1002,1004,1011,1010,1009].includes(+match_item?.sportId)">
         </v-match-container>
         <div class="data_mid" v-else> <!--此data-mid用于分频订阅赛事,请勿修改-->
           <!--真实体育赛果 -->
           <match-container-result
-            v-if="menu_type ==28 && 100 == get_curr_sub_menu_type"
+            v-if="match_item && menu_type ==28 && 100 == get_curr_sub_menu_type"
             :match_of_list="match_item"
             :matchCtr="matchCtr"
             :i="i"
@@ -31,12 +31,12 @@
           />
           <!--真实体育玩法 -->
           <match-container
-            v-if="(lodash.get(MenuData.current_menu, 'main.menuType') == 28 ||
+            v-if="match_item && (lodash.get(MenuData.current_menu, 'main.menuType') == 28 ||
             !is_champion && match_item?.ms != 3 ) && !(menu_type ==28 && 100 == get_curr_sub_menu_type)"
             :match_of_list="match_item"
             :matchCtr="matchCtr"
             :i="index"
-            :key="match_item.mid"
+            :key="match_item?.mid"
             :menu_type="menu_type"
             :main_source="source"
             @unfold_changed="unfold_changed_handle"
@@ -49,9 +49,9 @@
             :matchCtr="matchCtr"
             :i="index"
             :menu_type="menu_type"
-            :key="match_item.mid"
+            :key="match_item?.mid"
             @toggle_collect_league="toggle_collect"
-            v-if="is_champion">
+            v-if="match_item && is_champion">
           </match-container-champion>
         </div>
       </template>
@@ -103,7 +103,7 @@
 </template>
  
 <script setup>
-import { ref, computed, onActivated, onDeactivated, onMounted, onUnmounted, watch } from "vue";
+import { ref, computed, onActivated, onDeactivated, onMounted, onUnmounted, watch, nextTick } from "vue";
 import store from "src/store-redux/index.js";
 import lodash from 'lodash'
 import { i18n_t} from 'src/core/index.js'
@@ -120,6 +120,8 @@ import noData from "project_path/src/components/common/no-data.vue"; // 无网�
 import UserCtr from 'src/core/user-config/user-ctr.js'
 import PageSourceData from "src/core/page-source/page-source.js";
 import { MenuData } from "src/core/index.js"
+import BaseData from 'src/core/base-data/base-data.js'
+import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 
 // import { change_favorite_state } from 'src/core/match-list-h5/composables/match-list-collect.js'
 // import matchListCardFold from 'src/core/match-list-h5/match-card/match-list-card-fold.js'
@@ -180,12 +182,7 @@ onMounted(() => {
   timer_super12.value = null;
 })
 
-watch(() => props.matchCtr, () => {
-  console.log(props.matchCtr)
-  console.log(111111111111)
-})
-
-watch(() => other_way_info_show, (curr) => {
+watch(() => other_way_info_show.value, (curr) => {
   useMittEmit(MITT_TYPES.EMIT_FAPAI_WAY_TIPS_STATUS_CHANGE,curr);
 })
 

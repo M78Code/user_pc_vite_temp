@@ -6,6 +6,7 @@
 
 <template>
   <div class="scroll-wrapper">
+    <div style="display: none;">{{ MatchDataBaseH5.data_version }}</div>
     <div class="scroll-i-con" 
       :class="{high_scrolling: set_ishigh_scrolling && !(lodash.get(get_current_menu, 'date_menu.menuType') == 100) &&
        !(get_menu_type == 28 && [1001, 1002, 1004, 1011, 1010, 1009].includes(get_curr_sub_menu_type)) && get_menu_type != 100,
@@ -39,13 +40,13 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch, computed, onUnmounted } from 'vue' 
+import { ref, onMounted, watch, computed, onUnmounted, nextTick, getCurrentInstance } from 'vue' 
 import lodash from 'lodash'
 import store from "src/store-redux/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import MenuData from  "src/core/menu-h5/menu-data-class.js";
 import PageSourceData from "src/core/page-source/page-source.js";
-import { MatchDataWarehouse_H5_List_Common } from 'src/core'
+import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from 'src/core'
 
 // 避免定时器每次滚动总是触发
 const props = defineProps({
@@ -76,11 +77,10 @@ const match_list = ref([])
 const mid_obj = {}
 
 onMounted(() => {
-  setTimeout(() => {
-    match_list.value = MatchDataWarehouse_H5_List_Common.list
-    mid_obj.value = MatchDataWarehouse_H5_List_Common.list_to_obj.mid_obj
-    console.log(MatchDataWarehouse_H5_List_Common)
-  }, 1000)
+  // setTimeout(() => {
+  //   match_list.value = MatchDataBaseH5.list
+  //   mid_obj.value = MatchDataBaseH5.list_to_obj.mid_obj
+  // }, 1000)
   test.value = sessionStorage.getItem('wsl') == '9999';
   // 详情页以外的列表才设置最小高度
   if (props.main_source !== 'detail_match_list') {
@@ -88,12 +88,18 @@ onMounted(() => {
   }
 })
 
+// 监听 数据仓库版本号改变
+watch(() => MatchDataBaseH5.data_version.value, () => {
+  match_list.value = MatchDataBaseH5.list
+  mid_obj.value = MatchDataBaseH5.list_to_obj.mid_obj
+})
+
 const get_match_item = (mid) => {
   return mid_obj.value[`${mid}_`]
 }
 
 const get_index_f_data_source = (mid) => {
-  return lodash.findIndex(props.matchCtr.match_list_data_sources, { mid });
+  return lodash.findIndex(props.matchCtr.list, { mid });
 }
 
 /**

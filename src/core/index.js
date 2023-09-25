@@ -135,7 +135,6 @@ const MatchDataWarehouse_PC_Detail_Common = new MatchDataBase({
 /**
  * H5  数据仓库 常规赛事   通用列表
  */
-
 const MatchDataWarehouse_H5_List_Common = new MatchDataBase({
   name_code: "MatchDataWarehouse_H5_List_Common",
   set_list_to_obj: 1,
