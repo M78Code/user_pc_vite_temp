@@ -68,5 +68,100 @@ get_lang_v3();
 </script>
 <style lang="scss">
 @import "project_path/src/css/pages/first_page.scss";
-@import "./index.scss";
+
+.home-wrap {
+  padding: 0 0.1rem;
+  /* ************** 轮播icon *************** -E */
+  /* 跑马灯、余额 */
+  .wrap-notice {
+    display: flex;
+    align-items: center;
+    margin: 0.14rem 0 0.1rem 0;
+
+    .money-wrap {
+      margin-right: 0.2rem;
+
+      .balance-wrap {
+        display: flex;
+        align-items: center;
+        margin-bottom: 0.04rem;
+
+        .icon-balance {
+          width: 0.14rem;
+          height: 0.14rem;
+        }
+
+        .balance {
+          font-size: 0.12rem;
+
+          margin: 0.03rem 0 0 0.05rem;
+          line-height: 0.17rem;
+        }
+      }
+
+      .money {
+
+        line-height: 0.12rem;
+
+        .int {
+          font-size: 0.14rem;
+        }
+
+        .dec {
+          font-size: 0.12rem;
+        }
+      }
+    }
+
+    .wrap-marquee {
+      flex: 1;
+      height: 0.3rem;
+      border-radius: 0.15rem;
+
+      display: flex;
+      align-items: center;
+      padding: 0 0.13rem 0 0.04rem;
+      overflow: hidden;
+      position: relative;
+
+      .marquee-left-wrap {
+        border-right-radius: 50%;
+      }
+
+      .marquee-icon {
+        width: 0.24rem;
+        height: 0.24rem;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 0.24rem;
+        margin-right: 0.04rem;
+
+        .icon-notice {
+          width: 0.14rem;
+          height: 0.14rem;
+        }
+      }
+
+      .marquee {
+        flex: 1;
+        height: 0.3rem;
+        overflow: hidden;
+      }
+    }
+  }
+  :deep(.q-scrollarea__thumb) {
+    opacity: 0 !important;
+  }
+  .wrap-loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: calc(var(--vh, 1vh) * 100);
+  }
+}
 </style>

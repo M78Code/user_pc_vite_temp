@@ -335,7 +335,7 @@ const get_banner_url = () => {
  *@description 合并轮播图list数据
  *@return {Undefined} undefined
  */
-const updata_list = () => {
+watch(get_banner_obj, () => {
     // 展示banner loading
     show_banner_loading.value = true;
     get_carousel((data) => {
@@ -346,8 +346,7 @@ const updata_list = () => {
         // 关闭banner loading展示
         show_banner_loading.value = false;
     });
-};
-watch(get_banner_obj, updata_list);
+});
 //用戶信息變化
 watch(UserCtr.user_version, () => {
     get_lang.value = UserCtr.lang;
@@ -464,14 +463,12 @@ fetch_actimg()
     -webkit-appearance: none;
     overflow: hidden;
     height: 1.6rem;
-
     .banner-loading {
         display: block;
         width: .5rem;
         margin: .55rem auto;
     }
-
-    ::v-deep.q-carousel {
+    ::v-deep .q-carousel {
         height: 100%;
         background: transparent;
 
