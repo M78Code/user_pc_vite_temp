@@ -8,6 +8,8 @@ import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js"
 import { get_query_bet_amount_common } from "src/core/bet/class/bet-box-submit.js"
 import {compute_value_by_cur_odd_type} from  "src/core/format/module/format-odds-conversion-mixin.js"
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
+import UserCtr from  "src/core/user-config/user-ctr.js";
+
 
 
 
@@ -116,6 +118,7 @@ export const get_bet_amount = async obj => {
 			"dataSource": obj.dataSource,
 			"matchType": 1, // 1 ：早盘赛事 ，2： 滚球盘赛事，3：冠军，4：虚拟赛事，5：电竞赛事
 			"openMiltSingle": 0, //是否开启 多单关投注模式，1：是，非1（0或者其他）：否
+      "userId":UserCtr.user_info ? UserCtr.user_info.userId : ""
     }]
   }
   let res = await api_betting.query_bet_amount(params);
