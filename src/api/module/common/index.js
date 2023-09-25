@@ -17,7 +17,7 @@ export const get_full_url = (url='') => {
 
 //详情页 里边的  聊天室直播视频拉流地址接口   接口调用
 export const get_chat_datainfo = (params, config, url = "/v1/w/liveVideoUrl") => {
-  return http.post(`${prefix}${url}`, params, config);
+  return http.post(`${prefix_job}${url}`, params, config);
 };
 
 //联赛列表接口
@@ -156,8 +156,8 @@ export const get_matchResultDetail_MatchInfo = (params, config, url = "/v1/m/mat
 export const get_DJ_matchDetail_MatchInfo = (params, config, url = "/v1/m/matchDetail/getESMatchDetail") => http.get(`${prefix}${url}`, params, config)
 
 // 根据玩法查询盘口信息
-export const get_matchDetail_getMatchOddsInfo = (params, config, url = "/v1/m/matchDetail/getMatchOddsInfo1PB") => {
-  return http.get(`${prefix}${url}`, params, {axios_debounce_cache_key: 'match_detail_odds_info'});
+export const get_matchDetail_getMatchOddsInfo = (params, config, url = "/v1/m/matchDetail/getMatchOddsInfo1") => {
+  return http.get(`${prefix_job}${url}`, params, {axios_debounce_cache_key: 'match_detail_odds_info'});
 };
 
 // 电竞 根据玩法查询盘口信息 （start）

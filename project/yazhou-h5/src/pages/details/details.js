@@ -15,8 +15,6 @@ export const details_main = () => {
 const router = useRouter();
 const route = useRoute();
 const get_detail_data = ref({})
-// new 实例类
-const new_match_detail_ctr = ref(new MatchDetailCtr())
   // console.log("Store", store)
   // const state = store.getState()
   let state_data = reactive({
@@ -148,7 +146,6 @@ const new_match_detail_ctr = ref(new MatchDetailCtr())
   });
 
 
-  console.error(new_match_detail_ctr.value);
   // 详情初始化接口数据处理
   const MatchDataWarehouseInstance =reactive(MatchDataWarehouse_H5_Detail_Common)
   const is_highlights = computed(() => {
@@ -209,6 +206,14 @@ const new_match_detail_ctr = ref(new MatchDetailCtr())
 // img:${$g_image_preffix}/image/bw3/svg/details/replay${suffix_theme}${suffix_y0}.svg
     return ``;
   });
+
+
+  // // 刷新页面时获取当前玩法集ID
+  // onMounted(() => {
+  //   console.error(route);
+  //   MatchDetailCtr.current_category_id = route.params.mcid
+  // })
+  console.error(MatchDetailCtr.current_category_id);
   /**
    *@description: 点击详情任意地方显示视频对阵信息
    *@param {Undefined}
@@ -488,7 +493,7 @@ const new_match_detail_ctr = ref(new MatchDetailCtr())
           if (res_data && Object.keys(res_data).length) {
             match_detail_data_handle(res_data)
             // 数据传入数据仓库
-        MatchDataWarehouseInstance.set_list_from_match_details(res_data)
+            MatchDataWarehouseInstance.set_list_from_match_details(res_data)
           } else {
             // 赛事下发999后, 显示空空如也
             state_data.skeleton.details = true
@@ -629,17 +634,19 @@ const new_match_detail_ctr = ref(new MatchDetailCtr())
             data: res_data
           });
           // 当玩法集存在激活得项，循环找到对用得id，找得到就不管，找不到就赋值为玩法集第一项
+          console.error(MatchDetailCtr.current_category_id);
           if (state_data.get_details_item && res_data.length) {
             const set_details_item_flag = res_data.some(
-              (item) => item.id === state_data.get_details_item
+              (item) => item.id == MatchDetailCtr.current_category_id
             );
             // 找不到就赋值为玩法集第一项
             if (!set_details_item_flag) {
-              state_data.get_details_item =res_data[0]["id"];
+              MatchDetailCtr.current_category_id =res_data[0]["id"];
             }
           } else {
             // 当第一次进来就会走这里默认赋值第一项
             // res_data && set_details_item(res_data[0]["id"]);
+            MatchDetailCtr.current_category_id = res_data[0]["id"]
           }
           let search_term = route.query && route.query.search_term;
           if (search_term) {
@@ -844,17 +851,9 @@ const new_match_detail_ctr = ref(new MatchDetailCtr())
       state_data.scroller_height = window.innerHeight;
     }
   };
-   // 玩法集tab的id
-   const set_details_item_id = (uid) => {
-    console.error(uid);
-    state_data.get_details_item = uid
-    new_match_detail_ctr.value.current_category_id = uid
-  }
   const { emitters_off } = useMittEmitterGenerator([
     /** 详情赛事下拉三角形, dialog展示 */
     { type: MITT_TYPES.EMIT_IS_BOOL_DIALOG_DETAILS, callback: change_bool },
-    // 接受玩法集的ID
-    { type: MITT_TYPES.EMIT_DETAILS_TAB_ITEM, callback: set_details_item_id },
   ])
  
   /**
@@ -927,7 +926,6 @@ const new_match_detail_ctr = ref(new MatchDetailCtr())
     curr_active_tab,
     icon_replay,
     get_detail_data,
-    new_match_detail_ctr,
     details_click,
     change_go_back,
     details_refresh,
