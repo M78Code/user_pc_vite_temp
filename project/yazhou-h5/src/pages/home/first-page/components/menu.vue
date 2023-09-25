@@ -157,8 +157,8 @@ const change_menu = (item, index) => {
     [objKey.terminal]: "H5",
   };
   //====================menu router
-  if (item.mi == menu_type.value) return;
-  let mi = item.mi;
+  if (lodash.get(item, 'mi') == menu_type.value) return;
+  let mi = lodash.get(item, 'mi')
 
   animation.value = true;
   // 动画效果

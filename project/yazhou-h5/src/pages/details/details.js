@@ -15,6 +15,7 @@ export const details_main = () => {
 const router = useRouter();
 const route = useRoute();
 const get_detail_data = ref({})
+// new 实例类
 const new_match_detail_ctr = ref(new MatchDetailCtr())
   // console.log("Store", store)
   // const state = store.getState()
