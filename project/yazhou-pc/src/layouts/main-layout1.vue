@@ -52,6 +52,7 @@ import layoutRight from "./layout-right.vue";
 import toastComponents from "project_path/src/components/toast/toast.vue";
 import alertComponents from "project_path/src/components/toast/alert.vue";
 import confirmComponents from "project_path/src/components/toast/confirm.vue";
+import "./match-list.scss";
 
 import { compute_css_variables } from "src/core/css-var/index.js"
 
