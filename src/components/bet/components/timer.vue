@@ -12,7 +12,7 @@
 
 <script setup>
 // import common from "src/project/mixins/constant/module/common.js"
-import { ref, onMounted,watch,computed,onUnmounted } from 'vue';
+import { ref, onMounted, watch, computed, onUnmounted } from 'vue';
 import lodash from 'lodash'
 
 
@@ -33,7 +33,7 @@ const props = defineProps({
      * 时钟变化
      * @param {Number} remaining_time
      */
-const timer_format_handle = () =>{
+const timer_format_handle = () => {
   let now = get_now_server();
   let remaining_time = props.mgt - now;
 

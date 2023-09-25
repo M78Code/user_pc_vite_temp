@@ -176,10 +176,10 @@
           </template>
           <template v-else>
             <!-- 投注 -->
-            <div v-if="btn_show == 0" @click="submit_order" :class="{ 'set-opacity': true}"
+            <div v-if="btn_show == 0" @click="submit_order" :class="{ 'set-opacity': true }"
               class="row justify-center items-center content-center">
               <p class="yb_fontsize12 yb_mr10">{{ $t('bet_record.bet_val') }}</p>
-              <p class="yb_fontsize20">{{ format_money2('500') }}</p>
+              <p class="yb_fontsize20">{{ bet_amount }}</p>
             </div>
             <!-- 投注 有投注项失效后点击接受变化的置灰样式-->
             <div v-if="btn_show == 5" class="row justify-center items-center content-center set-opacity">
@@ -248,6 +248,7 @@ const btn_show = ref(0) // 投注状态2
 const max_height1 = ref(150) // 投注赛事高度
 const get_mix_bet_flag = ref(false) // 最小投注开关
 const exist_code = ref(555)
+const bet_amount = ref(0)
 
 const hide_bet_series_but = () => {
   let res = false;
@@ -300,11 +301,11 @@ const is_bet_check_rc = () => {
 }
 
 // 投注事件
-const pack_up = (val)=>{
+const pack_up = (val) => {
 
 }
 
-const submit_order = (type)=>{
+const submit_order = (type) => {
   console.error('fhuasss')
   submit_handle()
 }
@@ -341,9 +342,13 @@ const calc_class = computed(() => {
     || btn_show.value == 5;
   return flag
 })
-
+// 投注金额赋值
+const change_money_handle = (val)=>{
+  bet_amount.value = format_money2(val)
+}
 onMounted(() => {
   useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money)
+  useMittOn(MITT_TYPES.EMIT_INPUT_BET_MONEY, change_money_handle)
   let munu_type = true
   if (munu_type) {
     // get_query_bet_amount_common()
@@ -351,13 +356,13 @@ onMounted(() => {
 })
 
 const set_ref_data_bet_money = () => {
- 
   // let markInfo = lodash.get(BetData, 'bet_single_list')
-  console.error('bet_single_list',BetData.bet_single_list);
+  console.error('bet_single_list', BetData.bet_single_list);
   bet_show_single.value = true
 }
 onUnmounted(() => {
   useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money).off
+  useMittOn(MITT_TYPES.EMIT_INPUT_BET_MONEY, change_money_handle).off
 })
 </script>
 <style lang="scss" scoped>
