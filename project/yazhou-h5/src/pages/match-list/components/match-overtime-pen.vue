@@ -3,6 +3,7 @@
 -->
 <template>
   <div class="m-o-p-wrapper" v-show="show_tab_by_data">
+    
     <span v-if="wsl_flag" class="wsl_flag_777">
       {{ 'csid:' + match_info.csid + '---mid:' + match_info.mid + '---tid:' + match_info.tid }}---{{
         get_secondary_unfold_map[match_info.mid] }}
@@ -91,7 +92,7 @@ import { MenuData } from "src/core/index.js"
 import matchListClass from 'src/core/match-list-h5/match-class/match-list.js'
 import { api_common } from "src/api/index.js";
 import oddListWrap from './odd-list-wrap.vue';
-import { MatchDataWarehouse_H5_List_Common as MatchBaseDataH5 } from 'src/core'
+import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from 'src/core'
 
 // TODO: 其他模块得 store  待添加
 // mixins:[match_list_mixin],
@@ -266,7 +267,7 @@ watch(() => get_c303_data_change.value, (curr) => {
               // 根据业务需求，修改冠军小节玩法  1585 单对应
               Object.assign(match_info.value, res.data[0]);
               // props.matchCtr.updMatchInfo(res.data[0]); // 更新赛事盘口数据
-              MatchBaseDataH5.set_quick_query_list(res.data[0],1)
+              MatchDataBaseH5.set_quick_query_list(res.data[0],1)
               // if(operate_type == 'is-user'){
               //   // 次要玩法展开加载数据  订阅指定玩法赛事(C8)  status 1订阅赛事推送  0退订赛事推送
               //   useMittEmit(MITT_TYPES.EMIT_SPECIAL_HPS_LOADED,res.data[0],o_hps_key);
@@ -684,7 +685,7 @@ const overtime_tab_handle = (item, unfold, operate_type, sub_i) => {
             // 根据业务需求，修改冠军小节玩法  1585 单对应
             Object.assign(match_info.value, res.data[0]);
             // props.matchCtr.updMatchInfo(res.data[0]); // 更新赛事盘口数据
-            MatchBaseDataH5.set_quick_query_list(res.data[0],1)
+            MatchDataBaseH5.set_quick_query_list(res.data[0],1)
             if (operate_type == 'is-user') {
               // 次要玩法展开加载数据  订阅指定玩法赛事(C8)  status 1订阅赛事推送  0退订赛事推送
               useMittEmit(MITT_TYPES.EMIT_SPECIAL_HPS_LOADED, res.data[0], o_hps_key);

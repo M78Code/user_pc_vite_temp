@@ -559,8 +559,10 @@ export default class MatchDataBase
         // 合并数据删除多余数据
         let list_to_obj = this.list_to_many_obj(this.list);
         this.assign_with(this.list_to_obj, list_to_obj);
-        this.data_version = String(new Date().getTime());
+        
+        // 删除list_obj之前的无用赛事
       }
+      this.data_version.value = Date.now();
     }
   }
   set_quick_query_list(list,is_merge){

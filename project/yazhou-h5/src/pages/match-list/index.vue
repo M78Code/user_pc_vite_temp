@@ -110,7 +110,7 @@ export default defineComponent({
 });
 </script>
 <script setup>
-import { computed, onBeforeMount, onUnmounted, onMounted, watch, onDeactivated, onActivated, ref } from "vue";
+import { computed, onBeforeMount, onUnmounted, onMounted, watch, onDeactivated, onActivated, ref, nextTick } from "vue";
 import { useRoute } from "vue-router";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt";
 import lodash from "lodash";
@@ -120,7 +120,6 @@ import store from "src/store-redux/index.js";
 // import use_websocket_store from 'src/core/match-list-h5/websocket/skt_data_list.js'
 import tiaozhuanPanel from "./components/tiaozhuan-panel.vue";    //  跳转banner图和猜你喜欢
 import MatchListCard from "src/core/match-list-h5/match-card/match-list-card-class";
-import MatchPage from "src/core/match-list-h5/match-class/match-page.js";
 import matchList from "./components/match-list.vue";
 import PageSourceData from "src/core/page-source/page-source.js";
 import SList from "project_path/src/components/skeleton/skeleton-list.vue"   // 赛事列表骨架屏
@@ -128,8 +127,11 @@ import scrollTop from "project_path/src/components/common/record-scroll/scroll-t
 import { compute_css_variables } from "src/core/css-var/index.js"
 import { MenuData, score_switch_handle, utils } from "src/core/index.js";
 import MatchCtrClass from "src/core/match-list-h5/match-class/match-ctr.js";
+import BaseData from 'src/core/base-data/base-data.js'
+import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
+import MatchPage from "src/core/match-list-h5/match-class/match-page.js";
 import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from 'src/core'
-import BaseData from 'src/core/base-data/base-data.js';
+
 // import matchListCardFold from 'src/core/match-list-h5/match-card/match-list-card-fold.js'
 
 import 'project_path/src/css/pages/match-main.scss'
@@ -217,13 +219,17 @@ onMounted(() => {
   event_init();
 });
 
+// 监听元数据加载完成
+watch(() => BaseData.base_data_version.value, () => {
+  MatchMeta.set_origin_match_data()
+})
+
 // 详情若无热门推荐赛事，则隐藏相应内容
 watch(() => match_is_empty.value, () => {
   if (props.invok_source === "detail_match_list" && is_empty) {
     useMittEmit(MITT_TYPES.EMIT_HIDE_DETAIL_MATCH_LIST, true);
   }
-}
-);
+});
 
 // 早盘时，并且是 足球时，执行下边操作
 watch(() => MenuData.current_menu, () => {
@@ -475,8 +481,7 @@ const match_detail_m_list_init = () => {
   // } else if([1,3,30,100].includes(MenuData.current_menu)){
   //   MatchPage.get_match_data_list()
   // }
-  // TODO: 逻辑待添加
-  MatchPage.get_match_data_list();
+  // MatchPage.get_match_data_list();
 };
 /**
  * @description: 赛事列表为空通知事件函数

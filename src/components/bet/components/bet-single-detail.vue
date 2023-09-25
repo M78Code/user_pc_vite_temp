@@ -18,9 +18,7 @@
     </div>
 
     <!-- 右 -->
-    <div class="content-b"
-      :class="{ 'red-color': !money_ok }"
-      @click.stop="input_click">
+    <div class="content-b" :class="{ 'red-color': !money_ok }" @click.stop="input_click">
       <span v-if="money" class="yb_fontsize20 money-number">{{ format_money3(money) }}</span>
       <span class="money-span" ref="money_span"
         :style="{ opacity: BetData.active_index === bet_index && [1, 7].includes(+get_bet_status) ? '1' : '0' }"></span>
@@ -36,7 +34,7 @@ import lodash from 'lodash'
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import UserCtr from 'src/core/user-config/user-ctr.js'
-import { ref,reactive, onMounted, watch, computed, onUnmounted } from 'vue';
+import { ref, reactive, onMounted, watch, computed, onUnmounted } from 'vue';
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 
 import { format_money3, format_money2 } from 'src/core/format/index.js'
@@ -51,7 +49,7 @@ const obj_pre_max_money = ref(null) // 单关预约最高可投注金额
 
 let timer1 = null
 let timer3 = null;
-let  timer4 = null;
+let timer4 = null;
 let flicker_timer = null
 
 const get_cur_odd = ref()
@@ -280,7 +278,7 @@ const clear_money = () => {
 const get_money_format = () => {
   let mi = format_money3(ref_data.min_money)
   let ma = format_money3(ref_data.max_money)
-  console.error('ref_data',ref_data)
+  console.error('ref_data', ref_data)
   return `限额 ${mi}~${ma}`
   // return licia_format(i18n_t('bet.money_limit2'), mi, ma);
 }
@@ -300,7 +298,7 @@ const cursor_flashing = () => {
  */
 const change_money_handle = (new_money) => {
   // if (bet_index != BetData.active_index) { return };
-  console.error('ssss',new_money)
+  console.error('ssss', new_money)
   money.value = new_money
   BetData.bet_amount = new_money
   return
@@ -426,7 +424,6 @@ onUnmounted(() => {
 
 </script>
 <style lang="scss" scoped>
-
 @import "project/yazhou-h5/src/css/bet/bet_single_detail.scss";
 
 .bet-single-detail {

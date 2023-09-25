@@ -112,7 +112,7 @@ watch(() => pre_odds_value, (new_) => {
     }
   }
 })
-watch(() => money, (new_) => {
+watch(() => money.value, (new_) => {
   useMittEmit(MITT_TYPES.EMIT_INPUT_BET_MONEY,money.value)
 })
 watch(() => active_index, (new_) => {
