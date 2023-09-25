@@ -1249,20 +1249,6 @@ export default {
 					"HT Draw"
 				],
             },
-            "tpl1": {
-                "bet_col": [
-                    "1",
-                    "X",
-                    "2",
-                    "1",
-                    "X",
-                    "2"
-                ],
-                "title2": [
-                    "Full Time",
-                    "Half Time"
-                ]
-            },
             "tpl10": {
                 "bet_col": [
                     "2",
