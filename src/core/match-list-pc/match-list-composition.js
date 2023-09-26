@@ -417,18 +417,18 @@ const handle_destroyed = () => {
 		clearTimeout(hot_match_list_timeout);
 	}
 	// this.debounce_throttle_cancel();
-	useMittOn(MITT_TYPES.EMIT_MiMATCH_LIST_SHOW_MIDS_CHANGE, show_mids_change()).off();
-	useMittOn(MITT_TYPES.EMIT_MX_COLLECT_COUNT_CMD, update_collect_data()).off();
-	useMittOn(MITT_TYPES.EMIT_MX_COLLECT_COUNT2_CMD, mx_collect_count()).off();
+	useMittOn(MITT_TYPES.EMIT_MiMATCH_LIST_SHOW_MIDS_CHANGE, show_mids_change()).off;
+	useMittOn(MITT_TYPES.EMIT_MX_COLLECT_COUNT_CMD, update_collect_data()).off;
+	useMittOn(MITT_TYPES.EMIT_MX_COLLECT_COUNT2_CMD, mx_collect_count()).off;
 	// 站点 tab 休眠状态转激活
-	useMittOn(MITT_TYPES.EMIT_SITE_TAB_ACTIVE, emit_site_tab_active()).off();
+	useMittOn(MITT_TYPES.EMIT_SITE_TAB_ACTIVE, emit_site_tab_active()).off;
 	clearTimeout(virtual_list_timeout_id);
 	clearTimeout(switch_timer_id);
 	clearTimeout(get_match_list_timeid);
 	// 调用列表接口
-	useMittOn(MITT_TYPES.EMIT_FETCH_MATCH_LIST, fetch_match_list()).off();
-	useMittOn(MITT_TYPES.EMIT_API_BYMIDS, api_bymids({})).off();
-	useMittOn(MITT_TYPES.EMIT_MX_COLLECT_MATCH, mx_collect_match()).off();
+	useMittOn(MITT_TYPES.EMIT_FETCH_MATCH_LIST, fetch_match_list()).off;
+	useMittOn(MITT_TYPES.EMIT_API_BYMIDS, api_bymids({})).off;
+	useMittOn(MITT_TYPES.EMIT_MX_COLLECT_MATCH, mx_collect_match()).off;
 	timer_obj.value = {};
 }
 const init_page_when_base_data_first_loaded=()=>{

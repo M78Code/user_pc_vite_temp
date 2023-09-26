@@ -565,7 +565,7 @@ export default class MatchDataBase
       if(this.data_version.value){
         this.data_version.value = Date.now();
       } else {
-        this.data_version = Date.now();
+        this.data_version.value = Date.now();
       }
     }
   }
@@ -616,7 +616,7 @@ export default class MatchDataBase
     if(this.data_version.value){
       this.data_version.value = Date.now();
     } else {
-      this.data_version = Date.now();
+      this.data_version.value = Date.now();
     }
   }
   /**
@@ -910,7 +910,7 @@ export default class MatchDataBase
       if(this.data_version.value){
         this.data_version.value = Date.now();
       } else {
-        this.data_version = Date.now();
+        this.data_version.value = Date.now();
       }
     }
   }
@@ -944,7 +944,7 @@ export default class MatchDataBase
       if(this.data_version.value){
         this.data_version.value = Date.now();
       } else {
-        this.data_version = Date.now();
+        this.data_version.value = Date.now();
       }
     }
   }
