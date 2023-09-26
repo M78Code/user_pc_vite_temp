@@ -13,7 +13,6 @@ import PageSourceData  from  "src/core/page-source/page-source.js";
 import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/core/index.js";
 import MatchListCardClass from "src/core/match-list-pc/match-card/match-list-card-class.js";
 
-// const { api_bymids } = useMatchListMx();
 let state = store.getState();
 const { mx_collect_count, set_collect_count } = collect_composable_fn();
 const { virtual_list_timeout_id } = virtual_composable_fn();
@@ -161,7 +160,6 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 		}
 		// 设置数据仓库 联赛列表对象
 		 
-	console.log('match_listmatch_list44');
 	// 计算列表卡片样式
 		MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
 			res_data,
@@ -195,10 +193,10 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 				};
 			}
 			// 调用bymids更新前12场赛事
-			api_bymids(
-				{ is_league_first: true, inner_param: true },
-				callback_func
-			);
+			// api_bymids(
+			// 	{ is_league_first: true, inner_param: true },
+			// 	callback_func
+			// );
 		}
 
 
@@ -274,7 +272,7 @@ const mx_use_list_res_when_code_200_and_list_length_gt_0 = ({match_list, collect
 		!backend_run
 	) {
 		// 调用bymids接口
-		api_bymids({ is_first_load: true, inner_param: true });
+		// api_bymids({ is_first_load: true, inner_param: true });
 	}
 	load_data_state.value = "data";
 };

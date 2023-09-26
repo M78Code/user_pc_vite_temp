@@ -21,7 +21,6 @@ const show_level_refer = MatchListCardData.show_level_refer;
  * @Description 获取显示等级
  */
 const get_show_level = (card_obj) => {
-  console.log('card_obj.offset_top', card_obj.offset_top);
   let show_level;
   if (
     (card_obj.offset_top > show_level_refer.level1_offset_top &&
