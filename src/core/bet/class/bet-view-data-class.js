@@ -7,8 +7,9 @@ import { ref } from "vue";
 import _lodash from "lodash"
 import BetData from "./bet-data-class"
 
+
 class BetViewData {
-  constructor() {}
+  constructor() { }
   init() {
     // 金额的范围  -1:输入金额小于最低限额时，1: 输入金额超出最大限额时 2:输入金额超出用户余额时 3:用户余额是小于等于输入金额(转换后)
     this.input_money_state = 0;
@@ -78,7 +79,7 @@ class BetViewData {
 
     // 限额
     this.bet_min_max_money = {
-      "11":{
+      "11": {
         min_money: 10,
         max_money: 8888
       }
@@ -103,12 +104,12 @@ class BetViewData {
   }
 
   // 设置当前 投注页面显示 版本
-  set_bet_view_version(){
+  set_bet_view_version() {
     this.bet_view_version.value = Date.now()
   }
 
   // 设置 金额的范围  -1:输入金额小于最低限额时，1: 输入金额超出最大限额时 2:输入金额超出用户余额时 3:用户余额是小于等于输入金额(转换后)
-  set_input_money_state(val){
+  set_input_money_state(val) {
     this.input_money_state = val
     this.set_bet_view_version()
   }
@@ -116,22 +117,22 @@ class BetViewData {
   // 设置限额
   // obj 接口返回数据
   // type 接口类型 min_max 或者最大值 最小值接口 数据结构不同
-  set_bet_min_max_money(obj,type = ''){
+  set_bet_min_max_money(obj, type = '') {
     // 获取query_bet_amount数据对应的限额
     let bet_amount_list = _lodash.get(obj, 'betAmountInfo')
     // min_max 或者最大值 最小值接口 数据结构不同
-    if(type == 'min_max'){
+    if (type == 'min_max') {
       bet_amount_list = obj
     }
     let bet_amount = {}
-    bet_amount_list.forEach(item=>{
+    bet_amount_list.forEach(item => {
       // 单关 使用 投注项作为 key值 在投注列表做对应关系
       //  串关使用 type 复连串 30001
       let value = BetData.is_bet_single ? item.playOptionsId : item.type
       bet_amount[value] = {
         min_money: item.minBet, // 最小限额
         max_money: item.orderMaxPay, // 最大限额
-        globalId : item.globalId,  //  风控响应id
+        globalId: item.globalId,  //  风控响应id
         seriesOdds: item.seriesOdds, // 赔率  // 串关使用 3串1
       }
     })
@@ -140,13 +141,13 @@ class BetViewData {
     this.set_bet_view_version()
   }
   // 显示投注框
-  set_bet_show(val){
+  set_bet_show(val) {
     this.bet_show = val
   }
 
   // 设置投注状态
   // 1-投注状态,2-投注中状态,3-投注成功状态(主要控制完成按钮),4-投注失败状态,5-投注项失效
-  set_bet_order_status(code){
+  set_bet_order_status(code) {
     this.bet_order_status = code
     // 更新页面
     this.set_bet_view_version()
@@ -154,22 +155,188 @@ class BetViewData {
   // 设置提示信息 
   // code code码
   // msg 提示信息
-  set_bet_error_code({code,message}){
-    
+  set_bet_error_code({ code, message }) {
     this.error_message = message
     this.error_code = code
 
-    if(code == 200){
+    if (code == 200) {
       // 3-投注成功状态(主要控制完成按钮)
       this.set_bet_order_status(3)
-    }else{
+    } else {
       // 4-投注失败状态 显示错误信息
       this.set_bet_order_status(4)
     }
   }
 
+  // 设置 code对应的 message数据 
+  set_code_message_config(code,message) {
+    let text = ''
+    switch (code) {
+      case 200:
+        text = '下注成功'
+        break
+
+      case '0402001':
+      case '0402002':
+      case '0402003':
+      case '0402005':
+      case '0402006':
+      case '0402007':
+      case '0402008':
+      case '0402011':
+      case '0402012':
+      case '0402016':
+      case '0402022':
+      case '0402024':
+      case '0402025':
+      case '0402026':
+      case '0402043':
+      case '0402044':
+      case '0402045':
+      case '0402046':
+      case '0402047':
+      case '04020448':
+      case '04020449':
+      case '0400451':
+      case '0400452':
+      case '0400461':
+      case 'DJ006':
+        text = '已失效'
+        break
+
+      case '0402009':
+      case '0402010':
+      case '0402023':
+      case '0402027':
+      case '0402028':
+        text = '投注项盘口、赔率或有效性产生变化!'
+        break
+      case '0402014':
+        text = '网络异常，请在注单中查看投注结果'
+        break
+
+      case '0402015':
+      case '0402017':
+      case '0402020':
+      case '0402021':
+      case '0402039':
+      case '0402040':
+      case '0402041':
+      case '0400456':
+      case '0400457':
+      case '0400458':
+      case '0400462':
+      case '0400463':
+      case 'XXXXXX':
+      case 'DJ999':
+        text = '投注未成功~再试一次吧！'
+        break
+
+      case '0402018':
+      case '0402019':
+      case '0402038':
+      case '0400450':
+        text = '投注未成功,请稍后再试'
+        break
+
+      case '132113':
+        text = '投注失败，请重新选择投注项'
+        break
+
+      case '0402035':
+      case '0400454':
+      case '0400455':
+        text = '余额不足,请您先充值'
+        break
+
+      case '0402042':
+        text = '网络异常,请联系客服'
+        break
+
+      case '0400453':
+        text = '账户异常,请联系客服'
+        break
+
+      case '0400459':
+        text = '盘口确认中，请稍等'
+        break
+
+      case '0400460':
+        text = '拒绝投注'
+        break
+
+      case '0400464':
+      case '0400475':
+        text = '额度已变更,再试一次吧~'
+        break
+
+      case '0400468':
+        text = '比分已变更 再试一次吧'
+        break
+
+      case '0400469':
+        text = '投注项盘口、赔率或有效性产生变化!'
+        break
+
+      case 'M400004':
+        text = '赔率更新中'
+        break
+
+      case 'M400005':
+        text = '请您输入投注金额'
+        break
+
+      case 'M400007':
+        text = '请您留意每个选项的投注范围'
+        break
+
+      case 'M400009':
+        text = '该选项当前不可投注，请选择其他选项'
+        break
+
+      case 'M400010':
+      case 'DJ002':
+        text = '投注金额未达最低限额'
+        break
+
+      case 'M400011':
+        text = '投注金额超过最高限额'
+        break
+
+      case 'M400012':
+        text = '限额获取中请稍后'
+        break
+
+      case '0401038':
+        text = '网路异常，请再试一次!'
+        break
+
+      case 'DJ001':
+        text = '您无法投注电竞赛事'
+        break
+
+      case 'DJ003':
+        text = '投注金额只能为整数'
+        break
+
+      case 'DJ004':
+        text = '存在不支持串关赛事'
+        break
+
+      case 'DJ005':
+        text = '存在不支持串关盘口'
+        break
+
+       default:
+          text = message
+          break
+    }
+
+    return text
+  }
+
   // 串关专用参数
-  set_bet_special_series(array){
+  set_bet_special_series(array) {
     this.bet_special_series = array
     this.set_bet_view_version()
   }
