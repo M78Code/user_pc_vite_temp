@@ -313,6 +313,7 @@ function select_all_sub_menu_handle() {
  * 二级菜单事件
  */
 async function set_menu_lv2(item, index, type = "click") {
+  console.log(item)
   MenuData.set_current_lv2_menu(item, index, type);
   MatchMeta.set_origin_match_data(item.mi)
   switch (menu_type.value) {

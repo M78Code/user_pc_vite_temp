@@ -154,8 +154,7 @@ export const useMethods = ({ props,emit }) => {
   watch(
     () => props.match_details,
     (res) => {
-      console.log(!lodash.get(res,'[0].odds_info'),'!lodash.get');
-      if(!lodash.get(res,'[0].odds_info'))  return
+      if(!lodash.get(res,'[0].odds_info'))  return false
       state.load_detail_statu = props.handicap_state;
       if (props.handicap_state != "data") {
         state.details_data = [];
@@ -164,7 +163,7 @@ export const useMethods = ({ props,emit }) => {
       }
       change_detail(res[0].odds_info);
     },
-    { immediate: true, deep: true }
+    // {  deep: true }
   );
   // watch(get_right_zoom, (val) => {
   //   this.wrap_tabs_width = this.$refs.warp.offsetWidth;

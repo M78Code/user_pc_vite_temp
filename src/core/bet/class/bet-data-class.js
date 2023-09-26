@@ -364,7 +364,6 @@ this.bet_appoint_ball_head= null */
   设置 常规 投注分类
   */
   set_common_bet_obj(obj) {
-    console.error('sssss', obj.custom_id)
     this.common_bet_obj[obj.custom_id] = obj
   }
 

@@ -593,8 +593,8 @@ class MenuData {
     this.update();
   }
 
-  //根据路由参数 设置菜单信息 选中一级menu
-  set_query_menu({ m, s, t, mt1, mt2 }) {
+  //根据路由参数 设置菜单信息 选中一级 二级menu
+  set_enter_params({ m, s, t, mt1, mt2 }) {
     if (!m && !mt1) {
       return;
     }

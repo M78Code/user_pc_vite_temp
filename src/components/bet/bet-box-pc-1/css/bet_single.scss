@@ -48,7 +48,7 @@
           .bet-match-playing,
           .bet-handicap-name {
             font-size: 12px;
-            color: var(--qq--theme-color-bet-handicap-name);
+            color: var(--q-gb-t-c-7);
             font-weight: 400;
           }
           .bet-match-playing {
@@ -73,7 +73,7 @@
             /*  投注项盘口样式 */
             .bet-team-handicap {
               font-size: 14px;
-              color: var(--qq--y0-text-color1);
+              color: var(--q--gb-t-c-16);
               font-weight: 400;
               label {
                 /**盘口名称*/
@@ -92,7 +92,7 @@
             }
             /**队伍名称*/
             .ranking-team-name {
-              color: var(--qq--y0-text-color1);
+              color: var(--q--gb-t-c-16);
             }
           }
           /* *赔率的样式* */
@@ -141,15 +141,15 @@
           position: relative;
           padding: 3px 8px;
           font-size: 12px;
-          color: var(--qq--y0-text-color1);
+          color: var(--q--gb-t-c-16);
           text-align: center;
-          background: var(--qq--theme-bg-bet-btn-appoint);
-          border: 0.5px solid var(--qq--y0-text-color1);
+          background: var(--q-gb-bg-c-18);
+          border: 0.5px solid var(--q-gb-bd-c-11);
           border-radius: 10px;
         }
          //预约投注内容
         .book-content {
-          color: var(--qq--y0-text-color1);
+          color: var(--q--gb-t-c-16);
           .input-number {
             display: flex;
              //预约加
@@ -266,7 +266,7 @@
             border-radius: 6px;
              color: var(--q-gb-t-c-6);
             font-size: 16px;
-            caret-color: var(--qq--y0-text-color1);
+            caret-color: var(--q--gb-t-c-16);
           }
           // .input-money {
           //   background: var(--q-gb-bg-c-11);
@@ -367,7 +367,7 @@
             background: var(--qq--theme-cathectic-appoint)
           }
           .line {
-            background: var(--qq--y0-text-color1);
+            background: var(--q--gb-t-c-16);
             width: 2px;
             height: 12px;
             margin-top: 0px;
@@ -408,7 +408,7 @@
               border: 0.5px solid var(--q-gb-bd-c-7);
               border-radius: 6px;
                color: var(--q-gb-t-c-6);
-              caret-color: var(--qq--y0-text-color1);
+              caret-color: var(--q--gb-t-c-16);
               // 输入金额时的样式
               &.bet-input-money {
                 outline: none;
@@ -550,7 +550,7 @@ body {
           }
           /*  队伍名称 */
           .bet-play-team {
-            color: var(--qq--y0-text-color1);
+            color: var(--q--gb-t-c-16);
             font-size: 14px;
             word-break: break-all;
             font-weight: 400;
@@ -575,7 +575,7 @@ body {
               margin-left: 5px;
             }
             .part-one {
-              color: var(--qq--y0-text-color1);
+              color: var(--q--gb-t-c-16);
             }
             .part-two {
               margin-left: 5px;
@@ -671,7 +671,7 @@ body {
       font-size: 10px;
       .balance {
         font-size: 14px;
-        color: var(--qq--y0-text-color1);
+        color: var(--q--gb-t-c-16);
       }
     }
     .bet-card {
@@ -924,7 +924,7 @@ body {
         border: 1px solid rgba(127,129,127,1);
         &.active {
           border: 0;
-          background-color:var(--qq--y0-text-color1);
+          background-color:var(--q--gb-t-c-16);
           &::before {
             border-color: #fff;
           }

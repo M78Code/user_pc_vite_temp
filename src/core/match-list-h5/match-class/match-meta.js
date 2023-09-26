@@ -7,6 +7,7 @@ import lodash from 'lodash'
 import BaseData from 'src/core/base-data/base-data.js'
 import MatchPage from 'src/core/match-list-h5/match-class/match-page'
 import MenuData from "src/core/menu-h5/menu-data-class.js"
+import MatchListCardClass from '../match-card/match-list-card-class'
 import { MATCH_LIST_TEMPLATE_CONFIG } from "src/core/match-list-h5/match-card/template"
 import mi_euid_mapping_default from "src/core/base-data/config/mi-euid-mapping.json"
 import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from 'src/core'
@@ -76,9 +77,10 @@ class MatchMeta {
     })
     // 设置仓库渲染数据
     MatchDataBaseH5.set_list(data_list)
+    // 计算卡片高度, 需要在赔率接口之前调用， 避免卡片抖动
+    MatchListCardClass.run_process_when_need_recompute_container_list_step_two_match_list_wrapper_height()
     // 订阅赛事，获取赛事赔率
     MatchPage.subscription()
-
   }
 
   /**

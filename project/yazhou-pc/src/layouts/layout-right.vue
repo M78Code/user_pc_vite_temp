@@ -1,13 +1,13 @@
 <template>
   <div class="layout-right" :class="{ mini_hide: right_status }">
-    <button @click="handle_click">隐藏右侧</button>
+    <!-- <button @click="handle_click">隐藏右侧</button> -->
     <!-- 右侧区域 -->
     <div
     class="page-right"
     :style="
       route.params.video_size == 1
         ? ''
-        : `width:${LayOutMain_pc.layout_right_width}px  !important; height:${LayOutMain_pc.layout_content_height}px  !important;`
+        : `width:${LayOutMain_pc.layout_right_width}px  !important; height:${LayOutMain_pc.layout_content_height}  !important;`
     "
     v-if="LayOutMain_pc.layout_right_width > 0"
   >

@@ -439,8 +439,8 @@ export const useRightDetails = (props) => {
                 MatchDataWarehouseInstance,
                 "MatchDataWarehouseInstance"
               );
-              // allData.match_details = MatchDataWarehouseInstance.list_to_obj.ol_obj;
-              allData.match_details = data;
+              allData.match_details = MatchDataWarehouseInstance.list;
+              // allData.match_details = data;
               // 玩法列表loading状态值
               allData.handicap_state = "data";
               // 同步投注项

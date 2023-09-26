@@ -250,7 +250,7 @@ class MatchListCard {
       return;
     }
     if (this.newer_standard_changing) {
-      this.set_n_s_changed_loaded(Math.random());
+      // this.set_n_s_changed_loaded(Math.random());
       this.newer_standard_changing = false;
     }
     // 由详情页返回列表才计算上次滚动位置
@@ -261,7 +261,7 @@ class MatchListCard {
         // 由详情页返回列表才计算上次滚动位置
         if (["category"].includes(this.get_last_route_info && this.get_last_route_info.name)) {
           // 记录上一次滑动的距离
-          this.calac_scrolltop();
+          MatchListCardScroll.calac_scrolltop();
         } else {
           this.prev_remember_scrolly = 0;
         }
@@ -272,17 +272,17 @@ class MatchListCard {
 
         // 记录路由信息
         const { fullPath = '', hash = '', name = '', params = '', path = '', query = '' } = route;
-        this.set_last_route_info({ fullPath, hash, name, params, path, query });
+        // this.set_last_route_info({ fullPath, hash, name, params, path, query });
         MatchPage.subscription();
       }, 10);
     } else {
       // 如果是赛果返回的，则 计算滚动距离
-      this.calac_scrolltop();
+      MatchListCardScroll.calac_scrolltop();
       // 赋值滚动距离
       // use_router_scroll().setScrollTop();
       // 数据加载成功后 骨架屏消失
       this.is_close_load();
-      this.set_goto_detail_matchid("");
+      // this.set_goto_detail_matchid("");
     }
   }
   /**
@@ -370,7 +370,7 @@ class MatchListCard {
     // 1. 第一步：数组去重
     this.run_process_when_need_recompute_container_list_step_one_recompute_next_list_mids();
     // 2. 第二步：重新计算 容器的每个高度，还有 所有列表总和的 整体高度
-    this.run_process_when_need_recompute_container_list_step_two_match_list_wrapper_height( scroll_obj );
+    this.run_process_when_need_recompute_container_list_step_two_match_list_wrapper_height();
     // 3. 第三步：重新计算 每个容器 的 top 定位 数值
     this.run_process_when_need_recompute_container_list_step_three_recompute_next_list_container_top_obj( scroll_obj );
     // 理论上目前的 项目需求内不需要 后置进程 ， 如果需要后置进程  这里进行 后置进程 单独 方法  ， 可以方法复写
@@ -431,13 +431,9 @@ class MatchListCard {
    *    次理论高度 因为采用的是绝对定位， 所以这个高度仅仅影响最下面一页的展示的 空白区域，因此 计算在前在后都不影响
    * ： 备注应该在前计算 ： 例如场景 ： 从 联赛全部折叠了到 展开全部联赛 ， 这种从低到高， 从少到多的 过程
    */
-  run_process_when_need_recompute_container_list_step_two_match_list_wrapper_height( scroll_obj ) {
+  run_process_when_need_recompute_container_list_step_two_match_list_wrapper_height() {
     // 只有在列表页才有计算逻辑，节省性能
-    if (
-      !["detail_match_list", "home_hot_page_schedule"].includes(
-        this.invok_source
-      )
-    ) {
+    if ( !["detail_match_list", "home_hot_page_schedule"].includes( this.invok_source ) ) {
       //获取赛事与dom高度的映射
       //赛事是否折叠
       this.already_folded = 0;
@@ -453,6 +449,7 @@ class MatchListCard {
         //   r.odd_list_height -= 0.11;
         // }
         // this.mid_dom_height_dict[r.mid] = r;
+        match.is_show_league = this.compute_show_league(match, i)
         return compute_style_template_by_match_height(match); //每个赛事占的dom高度和mid映射r
       });
       // console.log(this.match_height_map_list)
@@ -609,6 +606,30 @@ class MatchListCard {
     if (scroll_obj != "ciyao_bold") {
       MatchPage.subscription();
     }
+  }
+  /**
+   * 是否显示联赛标题
+   * @param {match} 赛事对象 
+   * @param {i} 赛事下标
+   */
+  compute_show_league (match, i) {
+    let flag = false;
+    // 虚拟体育没有tid而是tnameCode
+    let property_key = "tnameCode";
+    if(!match[property_key]){
+      property_key = "tid";
+    }
+    if (i == 0) {
+      flag = true;
+    } else {
+      // 前一个赛事
+      let prev = MatchDataBaseH5.list[i - 1];
+      // 如果显示  赛事未开赛标题， 或者是  上一次和这一次tid 不一样  则显示联赛标题高度 is_show_no_play(i) || 
+      if (match[property_key] !== prev[property_key]) {
+        flag = true;
+      }
+    }
+    return flag;
   }
   // 浏览器得到焦点
   window_focused_handle() {

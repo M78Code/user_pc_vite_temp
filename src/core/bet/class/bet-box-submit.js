@@ -7,22 +7,13 @@ import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import { getSeriesCountJointNumber } from "src/core/bet/common-helper/module/bet-single-config.js"
 import { MatchDataWarehouse_PC_List_Common, MatchDataWarehouse_PC_Detail_Common } from 'src/core/index.js'
 import lodash_ from "lodash"
-
-const play_id = {
-    '1': "全场独赢",
-    '4': "全场让球",
-    '2': "全场大小",
-    '17': "半场独赢",
-    '19': "半场让球",
-    '18': "半场大小",
-}
+import { ALL_SPORT_PLAY } from "src/core/constant/config/play-mapping.js"
 
 // 获取限额请求数据
 // bet_list 投注列表
 // is_single 是否单关/串关 
 // is_merge  是否单关合并
 const set_min_max_money = (bet_list, is_single, is_merge) => {
-    console.error('sssssss999ss',bet_list)
     let order_min_max_money = bet_list.map(item => {
         let obj = {
             "sportId": item.sportId,   // 赛种id
@@ -178,14 +169,14 @@ const get_query_bet_amount_common = (obj) => {
     params.orderMaxBetMoney = order_min_max_money
 
 
-    api_betting.query_bet_amount(params).then( (res = {}) => {
+    api_betting.query_bet_amount(params).then((res = {}) => {
         if (res.code == 200) {
             BetViewDataClass.set_bet_min_max_money(res.data)
             // 通知页面更新 
             useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY)
 
             // 获取盘口值 
-            const latestMarketInfo = lodash_.get(res,'data.latestMarketInfo')
+            const latestMarketInfo = lodash_.get(res, 'data.latestMarketInfo')
             // 获取预约投注项
             set_pre_bet_appoint(latestMarketInfo)
         } else {
@@ -203,12 +194,13 @@ const set_pre_bet_appoint = bet_appoint => {
     const appoint_list = []
     bet_appoint.forEach(item => {
         // 判断是否可以预约
-        if(item.pendingOrderStatus){
+        if (item.pendingOrderStatus) {
             // 获取预约投注项id
             let oid = lodash_.get(item.currentMarket, 'marketOddsList[0].id')
             appoint_list.push(oid)
         }
     })
+    console.error('appoint_list',appoint_list)
     // 设置预约投注项id
     BetData.set_bet_appoint_obj(appoint_list)
 }
@@ -317,7 +309,7 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         sportId: mid_obj.csid, // 球种id
         matchId: mid_obj.mid,  // 赛事id
         tournamentId: mid_obj.tid,  // 联赛id
-        scoreBenchmark: mid_obj.msc[0],  //比分
+        scoreBenchmark: lodash_.get(mid_obj, 'msc[0]'),  //比分
         marketId: hl_obj.hid, //盘口ID
         marketValue: hl_obj.hv,
         playOptionsId: ol_obj.oid, //投注项id
@@ -331,7 +323,7 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         playOptions: ol_obj.on,   // 投注项
         tournamentLevel: mid_obj.tlev, //联赛级别
         playId: hn_obj.hpid || ol_obj._hpid, //玩法ID
-        playName: play_id[hn_obj.hpid || ol_obj._hpid], //玩法名称
+        playName: ALL_SPORT_PLAY[hn_obj.hpid || ol_obj._hpid], //玩法名称
         dataSource: mid_obj.cds, //数据源
         home: mid_obj.mhn, //主队名称
         away: mid_obj.man, //客队名称
@@ -342,31 +334,40 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         tid_name: mid_obj.tn,  // 联赛名称
         match_ms: mid_obj.ms, // 赛事阶段
         match_time: mid_obj.mgt, // 开赛时间
-        handicap: get_handicap({ mid_obj, hn_obj, hl_obj, ol_obj }, other), // 盘盘口值
+        handicap: ol_obj.ott, // 盘盘口值
+        handicap_attach: get_handicap(ol_obj), // 盘盘口值
+        show_mark_score: get_mark_score(ol_obj), // 是否显示基准分
     }
-    console.error('playOptionsId', bet_obj)
+    // 设置投注内容 
     BetData.set_bet_read_write_refer_obj(bet_obj)
-
+    console.error('aaaaaaa')
     // 获取限额 常规
     get_query_bet_amount_common(bet_obj)
 }
 
-// 获取盘口值
-const get_handicap = ({ mid_obj, hn_obj, hl_obj, ol_obj }, other) => {
+// 获取盘口值 附加值
+const get_handicap = ol_obj => {
     // 需要显示主客队名称的 玩法id
     // 直接显示投注项 1 7 367 344 68 14 8 9 17 341 368 342 369 344 68 14 23  21 22 12 24 76 104 340 359 
     // 展示用的 + 投注项  2 4 12 18 114 26 10 3  33 34 11 351 347
 
+    let playId = [1, 7, 367, 344, 68, 14, 8, 9, 17, 341, 368, 342, 369, 344, 68, 14, 23, 21, 22, 12, 24, 76, 104, 340, 359]
+    // 直接显示投注项
+    let text = ''
+    // 展示用的 + 投注项 
+    if (!playId.includes(Number(ol_obj._hpid))) {
+        text = ol_obj.on
+    }
+    return text
+}
+
+// 是否显示基准分 
+const get_mark_score = ol_obj => {
     // 显示基准分
     // 玩法id 34 33 32 114 92 78 91 77 107 101 13 102 336 28 80 79 11 10 15 5 6 3 12 9 8 14 68 367 7 1 4 2 
-
-    let playId = [1, 4, 17, 19, 28, 5, 32, 33, 5, 149, 71, 25, 143, 142, 13, 336, 352, 43, 69, 340, 3, 6, 383, 77, 91, 360, 349, 357, 106, 105, 347, 107, 346, 345, 353, 101, 70, 359, 340, 104]
-    let text = ol_obj.on
-    if (!playId.includes(Number(hn_obj.hpid))) {
-        text = ol_obj.on + ' '
-    }
-
-    return text
+    let playId = [34, 33, 32, 114, 92, 78, 91, 77, 107, 101, 13, 102, 336, 28, 80, 79, 11, 10, 15, 5, 6, 3, 12, 9, 8, 14, 68, 367, 7, 1, 4, 2]
+    // 判断需要显示基准分的玩法
+    return !playId.includes(Number(ol_obj._hpid))
 }
 
 export {

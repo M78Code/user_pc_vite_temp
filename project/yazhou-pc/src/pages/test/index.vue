@@ -74,7 +74,7 @@ const router = useRouter()
     }
     const match_list_s = ref([])
 
-    const euid = "3020201"
+    const euid = "3020101"
 
     const api_list_data = () => {
       let params ={"apiType":1,"cuid":UserCtr.get_uid(),euid,"orpt":"0","pids":"","sort":1,"tid":"","selectionHour":null}
