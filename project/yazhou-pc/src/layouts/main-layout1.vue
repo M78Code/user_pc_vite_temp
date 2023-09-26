@@ -13,7 +13,7 @@
       <div :style="{ height: LayOutMain_pc.layout_content_height , width:LayOutMain_pc.layout_left_width }" class="layout_main_left">
         <layout-left />
       </div>
-      <div :style="{ height: LayOutMain_pc.layout_content_height , width:LayOutMain_pc.layout_content_width }">
+      <div :style="{ height: LayOutMain_pc.layout_content_height , width:LayOutMain_pc.layout_content_width + 'px' }">
         <!-- 中间区域 -->
         <router-view
             class="col"
@@ -28,7 +28,7 @@
         </router-view>
       </div>
       <!-- 右侧 视频  动画 比分板 详情 -->
-      <div :style="{ height: LayOutMain_pc.layout_content_height , width:LayOutMain_pc.layout_right_width - 15 +'px' }">
+      <div :style="{ height: LayOutMain_pc.layout_content_height , width:LayOutMain_pc.layout_right_width +'px' }">
         <layout-right />
       </div>
     </div>

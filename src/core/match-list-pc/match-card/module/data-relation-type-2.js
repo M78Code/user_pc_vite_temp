@@ -73,7 +73,7 @@
     let cus_tid = ''
 
     // 暂无数据热门赛事 添加暂无数据卡片
-    if(MenuData.menu_data.is_show_hot){
+    if(MenuData.is_show_hot){
       card_index++
       card_key = 'no_data'
       match_list_card_key_arr.push(card_key)
@@ -84,10 +84,11 @@
         card_index,
       }
     }
+    console.log('MatchListCardData.all_card_obj', MatchListData.list_to_obj.mid_obj, match_list);
 
     // 遍历所有赛事列表
     lodash.each(match_list, _match => {
-      let match = MatchListData.match_list_data.mid_obj['mid_'+_match.mid] || {}
+      let match = MatchListData.list_to_obj.mid_obj[_match.mid + '_'] || {}
       league_repeat_count_obj[match.tid] = league_repeat_count_obj[match.tid] || 0
       let match_ms =  get_match_status(match.ms)
       // 赛事数量统计
@@ -251,6 +252,7 @@
 
     // 合并所有卡片样式对象
     lodash.merge(MatchListCardData.all_card_obj,all_card_obj)
+    console.log('MatchListCardData.all_card_obj', all_card_obj);
     // 已开赛 到卡片key的 映射对象
     MatchListCardData.play_to_card_key_arr = play_to_card_key_arr
     // 未开赛 到卡片key的 映射对象
@@ -271,6 +273,8 @@
       let mids_arr = league_card_mids_arr[card_key]
       let mids = mids_arr.join(',')
       mids_arr.forEach( mid => {
+        console.log('MatchListCardData.all_card_obj', MatchListCardData.all_card_obj);
+
         let match_style_obj = MatchListCardData.all_card_obj[mid+'_']
         // 设置父级卡片key
         match_style_obj.parent_card_key = card_key

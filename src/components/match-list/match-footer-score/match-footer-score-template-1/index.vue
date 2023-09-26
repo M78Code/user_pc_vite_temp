@@ -1,8 +1,8 @@
 <template>
   <!-- 赛事比分 -->
-  <div :class="['score-more', { 'items-center': match.tpl_id == 17 }]" :style="`width:${score_wrap_width}px`">
+  <div :class="['score-more', { 'items-center': match_style_obj.data_tpl_id == 17 }]" :style="`width:${score_wrap_width}px`">
     <!-- 棒球 -->
-    <template v-if="match.tpl_id == 17 && match_status">
+    <template v-if="match_style_obj.data_tpl_id == 17 && match_status">
       <!-- 上垒图标 icon-on_base0~3 -->
       <span class="icon-on_base1">
         <!-- 2垒 -->
@@ -63,10 +63,12 @@
 
 import { computed, onMounted, reactive, ref, watch } from 'vue';
 import { t } from "src/core/index.js";
+import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
 import {component_symbol ,need_register_props} from "../config/index.js"
 import store from 'src/store-redux/index.js'
 import { get_match_status } from 'src/core/index.js'
+import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import lodash from 'lodash';
 let state = store.getState();
 // const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
@@ -78,11 +80,13 @@ const props = defineProps({
   }
 })
 
+let match_style_obj = MatchListCardDataClass.all_card_obj[props.match.mid+'_']
+// 赛事模板宽度
+const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`].width_config
+
 const more_right_icon = ref(false);
 const more_left_icon = ref(false);
 const stage_score = ref(null);
-// 页面布局大小信息
-const vx_get_layout_size = reactive(state.layoutReducer.layout_size);
 // 当前赛事状态
 const match_status = computed(() => {
   get_match_status(props.match.ms, [110]);
@@ -93,10 +97,6 @@ onMounted(() => {
   setTimeout(() => {
     scorll("init");
   });
-})
-
-watch(vx_get_layout_size.center_width, () => {
-  compute_is_show_more();
 })
 
 /**

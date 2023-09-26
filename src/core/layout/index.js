@@ -59,7 +59,7 @@ class LayOutMain {
   // 设置 中间内容区域 宽度 高度
   set_layout_content_config(){
     this.layout_content_height = client_height - this.layout_nav_height - this.layout_notice_height + "px"
-    this.layout_content_width = client_width - this.layout_left_width - this.layout_right_width + "px"
+    this.layout_content_width = client_width - this.layout_left_width - this.layout_right_width
     this.set_layout_version()
   }
  

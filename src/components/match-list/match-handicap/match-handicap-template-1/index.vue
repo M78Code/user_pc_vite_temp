@@ -70,7 +70,7 @@ const props = defineProps({
 })
 let match_style_obj = MatchListCardDataClass.all_card_obj[props.match.mid+'_']
 // 赛事模板宽度
-const match_list_tpl_size = ref(MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`].width_config)
+const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`].width_config
 
 // 组件是否已挂载
 const is_mounted = ref(true);
@@ -128,22 +128,22 @@ const get_5min_classname = () => {
  * @return {Number}  bet_width 投注项宽度 
  */
 const get_bet_width = (index, other_class = '') => {
-  // let { bet_width } = match_list_tpl_size.value
-  let bet_width = 110;
-  let { tpl_id } = props.match
+  let { bet_width } = match_list_tpl_size
+  // let bet_width = 110;
+  let { data_tpl_id } = match_style_obj
   if (other_class.includes('col1.5')) {
     bet_width *= 1.5
   } else if (other_class.includes('col2')) {
     bet_width *= 2
   } else if (other_class.includes('col3')) {
     bet_width *= 3
-  } else if (tpl_id == 22) {
+  } else if (data_tpl_id == 22) {
     if (index <= 5) {
       bet_width += 5
     } else {
       bet_width -= 10
     }
-  } else if ([0, 24, 1001].includes(+tpl_id) && utils_info.is_iframe) {
+  } else if ([0, 24, 1001].includes(+data_tpl_id) && utils_info.is_iframe) {
     if ([0, 3].includes(index)) {
       bet_width -= 4
     } else {
@@ -162,9 +162,9 @@ const get_bet_width = (index, other_class = '') => {
  */
 const get_bet_height = (length) => {
   let height = 35
-  let { tpl_id } = props.match
+  let { data_tpl_id } = match_style_obj
   if (length == 1) {
-    if (+tpl_id === 22) {
+    if (+data_tpl_id === 22) {
       height = height * 3
     } else {
       height = height * 2
@@ -181,9 +181,9 @@ const get_bet_style = (col_index, length, ol_data) => {
   let other_class = lodash.get(ol_data, 'other_class', '')
   let style = `width:${get_bet_width(col_index, other_class)}px !important;height:${get_bet_height(length)}px !important;`
   if (other_class.includes('displacement')) {
-    let { tpl_id } = props.match
-    let { bet_width, media_width } = match_list_tpl_size.value
-    let right = tpl_id == 13 ? bet_width * 7 + media_width - 1 : media_width - 1
+    let { data_tpl_id } = match_style_obj
+    let { bet_width, media_width } = match_list_tpl_size
+    let right = data_tpl_id == 13 ? bet_width * 7 + media_width - 1 : media_width - 1
     style += `right: ${right}px;`
   }
   if (other_class.includes('row2')) {

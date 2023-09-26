@@ -55,7 +55,7 @@
        <!-- 提前结算 -->
        <div @click.stop="">
          <div
-          v-if="lodash.get(match, 'mearlys', 0) && match.tpl_id != 12"
+          v-if="lodash.get(match, 'mearlys', 0) && match_style_obj.data_tpl_id != 12"
           class="icon-wrap settlement-pre relative-position"
           v-tooltip="{content: i18n_t('bet_record.settlement_pre')}"
         >
@@ -101,7 +101,7 @@ import { utils } from 'src/core/utils/module/utils.js'
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import { MenuData, MatchDataWarehouse_PC_List_Common } from "src/core/index.js"
 import details  from "src/core/match-list-pc/details-class/details.js"
-
+import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import { i18n_t } from "src/core/index.js";
 
 
@@ -126,6 +126,9 @@ const is_show_away_goal = ref(false) // 是否显示客队进球动画
 const is_show_home_red = ref(false) // 是否显示主队红牌动画
 const is_show_away_red = ref(false) // 是否显示客队红牌动画
 const is_collect = ref(false) //赛事是否收藏
+let match_style_obj = MatchListCardDataClass.all_card_obj[props.match.mid+'_']
+
+
 const handicap_num = computed(() => {
   if(GlobalAccessConfig.get_handicapNum()){
     return `+${ props.match.mc || 0}`
@@ -140,7 +143,7 @@ const play_name_obj = computed(() => {
     suffix_name: '',
     score_key: ''
   }
-  let {ms,tpl_id,hSpecial}  =  props.match || {}
+  let {ms, hSpecial}  =  props.match || {}
   //滚球
   if (get_match_status(ms, [110]) == 1) {
       //角球后缀
@@ -151,14 +154,14 @@ const play_name_obj = computed(() => {
         score_key: 'S5'
       }
       //罚牌后缀
-    } else if (tpl_id == 25) {
+    } else if (match_style_obj.data_tpl_id == 25) {
       play_name_obj = {
         key: 'punish',
         suffix_name: ' - ' + i18n_t('list.punish'),
         score_key: 'S10102'
       }
       // 15分钟比分
-    }else if(tpl_id == 24 ){
+    }else if(match_style_obj.data_tpl_id == 24 ){
       play_name_obj = {
         key: 'main',
         suffix_name: '',

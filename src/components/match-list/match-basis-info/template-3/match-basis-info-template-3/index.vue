@@ -17,7 +17,7 @@
        <!-- 提前结算 -->
        <div @click.stop="">
          <div
-          v-if="lodash.get(match, 'mearlys', 0) && match.tpl_id != 12 && vx_cur_menu_type.type_name!='bet'"
+          v-if="lodash.get(match, 'mearlys', 0) && match_style_obj.data_tpl_id != 12 && vx_cur_menu_type.type_name!='bet'"
           class="icon-wrap settlement-pre relative-position"
           v-tooltip="{content: t('bet_record.settlement_pre')}"
         >
@@ -59,9 +59,21 @@ import lodash from 'lodash';
 import { t } from "src/core/index.js";
 import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
-
+import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
+import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import {component_symbol ,need_register_props} from "../config/index.js"
-const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
+// const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
+const props = {
+  match: {
+    type: Object,
+    default: () => {}
+  }
+}
+
+let match_style_obj = MatchListCardDataClass.all_card_obj[props.match.mid+'_']
+// 赛事模板宽度
+const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`].width_config
+
 
 
 const team_names = computed(() => {

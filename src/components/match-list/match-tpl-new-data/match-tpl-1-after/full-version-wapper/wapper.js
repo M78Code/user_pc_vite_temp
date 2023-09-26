@@ -10,7 +10,6 @@ const component_config = {
   all_components_obj,
 };
 const wapper_config = compute_component_wapper_config(component_config);
-console.log('进来了  进来了  进来了', wapper_config);
 
 // const TestComponent = all_components_obj[wapper_config.use_component_key];
 // export { TestComponent };
