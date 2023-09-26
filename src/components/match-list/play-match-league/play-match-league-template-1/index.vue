@@ -71,7 +71,7 @@
         </template>
       </div>
       <div class="action-col" style="width:60px" v-if="match_style_obj.data_tpl_id == 12"></div>
-      <div class="yb-flex-center" :style="`width:${match_list_tpl_size.media_width - 18}px !important;`">
+      <div class="yb-flex-center" :style="`width:${match_list_tpl_size.media_width - 3}px !important;`">
         <!-- 联赛是否收藏 -->
         <div @click.stop="mx_collect({ type: 'leagues', match: card_style_obj.league_obj })"
           class="icon-wrap m-star-wrap-league" v-if="!menu_config.is_esports() && GlobalAccessConfig.get_collectSwitch">
