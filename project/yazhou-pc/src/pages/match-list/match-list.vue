@@ -77,10 +77,10 @@
       <!-- 滚球其他列表 -->
       <scroll-list  v-if="menu_config.menu_root_show_shoucang != 300" style="height:1000px">
         <!-- v-for="card_key in MatchListCardDataClass.match_list_card_key_arr" -->
-        <template v-slot:before>
+        <!-- <template v-slot:before>
           <div :style="{ height: MatchListCardDataClass.sticky_top.fixed_header_height }"></div>
-        </template>
-        <div class="today-champion-bg" v-if="menu_config.menu_root == '2' || menu_config.menu_root == 400 || menu_config.menu_root != 2000"></div>
+        </template> -->
+        <!-- <div class="today-champion-bg" v-if="menu_config.menu_root == '2' || menu_config.menu_root == 400 || menu_config.menu_root != 2000"></div> -->
         <!-- ssssssssssssssssss66666666666666666 -->
         <!-- <div
           v-for="card_key in match_list_card_key_arr"
