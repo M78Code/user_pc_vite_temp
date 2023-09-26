@@ -1,4 +1,6 @@
 import { ref } from "vue";
+import lodash from 'lodash'
+
 // import MatchListData from "src/core/match-list-pc/match-data/match-list-data-class.js";
 import use_featch_fn from "./match-list-featch.js";
 import {utils } from 'src/core/index.js';
@@ -99,15 +101,15 @@ const refresh_c8_subscribe = () => {
 		 * @Description 可视赛事ID改变
 		 * @param {undefined} undefined
 		 */
-const show_mids_change = () => {
+const show_mids_change = lodash.throttle(() => {
 	// 列表没加载完 不执行
 	if (load_data_state.value != "data") {
 		return;
 	}
 	// 重新订阅C8
 	// refresh_c8_subscribe();
-	api_bymids({ is_show_mids_change: true });
-}
+	api_bymids({ is_show_mids_change: true })
+}, 3000)
 
 const ws_composable_fn = () => {
 	return {

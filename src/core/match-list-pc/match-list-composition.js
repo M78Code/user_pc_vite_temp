@@ -417,7 +417,7 @@ const handle_destroyed = () => {
 		clearTimeout(hot_match_list_timeout);
 	}
 	// this.debounce_throttle_cancel();
-	useMittOn(MITT_TYPES.EMIT_MiMATCH_LIST_SHOW_MIDS_CHANGE, show_mids_change()).off;
+	// useMittOn(MITT_TYPES.EMIT_MiMATCH_LIST_SHOW_MIDS_CHANGE, show_mids_change()).off;
 	useMittOn(MITT_TYPES.EMIT_MX_COLLECT_COUNT_CMD, update_collect_data()).off;
 	useMittOn(MITT_TYPES.EMIT_MX_COLLECT_COUNT2_CMD, mx_collect_count()).off;
 	// 站点 tab 休眠状态转激活
@@ -433,6 +433,7 @@ const handle_destroyed = () => {
 }
 const init_page_when_base_data_first_loaded=()=>{
     // 元数据 
+	console.log("lockie --- 进入了几次");
   set_base_data_init();
   //释放试图 
   load_data_state.value ='data'
@@ -465,7 +466,7 @@ const mounted_fn = () => {
 	useMittOn(MITT_TYPES.EMIT_FETCH_MATCH_LIST, fetch_match_list);
 	useMittOn(MITT_TYPES.EMIT_API_BYMIDS, api_bymids);
 	useMittOn(MITT_TYPES.EMIT_MX_COLLECT_MATCH, mx_collect_match);
-	useMittOn(MITT_TYPES.EMIT_MiMATCH_LIST_SHOW_MIDS_CHANGE, show_mids_change);
+	// useMittOn(MITT_TYPES.EMIT_MiMATCH_LIST_SHOW_MIDS_CHANGE, show_mids_change);
 	useMittOn(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA, init_page_when_base_data_first_loaded);
 	load_video_resources();
 }
@@ -605,7 +606,7 @@ const on_go_top = () => {
  * @return {undefined} undefined
  */
 const on_refresh = () => {
-	fetch_match_list(2);
+	// fetch_match_list(2);
 	show_refresh_mask.value = true;
 };
 /**
@@ -690,7 +691,7 @@ const check_match_last_update_time = () => {
  * 发送站点选项卡事件
  */
 const emit_site_tab_active = () => {
-	fetch_match_list(true);
+	// fetch_match_list(true);
 };
 export  default function(){
 	return {
