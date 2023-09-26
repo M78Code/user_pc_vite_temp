@@ -16,7 +16,7 @@
     <div class="filter-css-5" v-show="is_show_menu"></div>
     <div class="c-set-menu" @click.stop="is_show_menu = false" v-show="is_show_menu"
       :class="{ show: is_show_menu, effect: wrapper_effect }" :style="{ right: `-3.77rem` }">
-      <div class="menu-inner" @click.stop="" :style="{ width: `${calc_width}px`, background: '#fff' }">
+      <div class="menu-inner" @click.stop="" :style="{ width: `${calc_width}px`, }">
         <!-- 关闭按钮 -->
         <div class="close-wrap">
           <div :style="compute_css('menu-close-icon')" class="img" @click="is_show_menu = false"></div>
@@ -396,6 +396,7 @@ const get_balance = () => {
 </script>
 
 <style lang="scss" scoped>
+@import url(project_path/src/css/pages/set-menu.scss);
 .set-menu {
   .filter-icon-wrapper {
     width: 0.18rem;

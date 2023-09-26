@@ -60,7 +60,7 @@
         </slot>
       </div>
       <!-- 赔率 -->
-      <div :class="['odds yb-number-font', odds_lift]"  @click="bet_click_ol()">
+      <div :class="['odds yb-number-font', odds_lift]" >
         <div
           v-if="odds_state == 'seal'"
           class="lock"

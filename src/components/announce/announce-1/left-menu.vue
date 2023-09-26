@@ -1,7 +1,7 @@
 <!-- @Description: 公告栏、体育规则 左侧菜单组件 -->
 <template>
     <!-- 左侧菜单内容 -->
-    <div class="left-menu-content">
+    <div class="left-menu-content" :style="page_style">
         <q-scroll-area class="fit rule-scroll-area">
             <div class="cursor-pointer" v-for="(item, index) in data" :key="index" @click="tabs_click(item, index)">
                 <div class="left-menu-title"
@@ -24,6 +24,7 @@
   
 <script setup>
 import { ref } from 'vue'
+import { compute_css_variables } from "src/core/css-var/index.js"
 
 const props = defineProps({
     data: {
@@ -33,6 +34,10 @@ const props = defineProps({
 })
 
 const emits = defineEmits(['tabs_click', 'sub_click'])
+
+const page_style = ref('')
+
+page_style.value = compute_css_variables({ category: 'component', module: 'rule-left-menu' })
 
 /** 一级菜单选择索引 */
 const tab_index = ref(0)
@@ -69,9 +74,9 @@ function sub_click(item, index) {
 .left-menu-content {
     width: 169px;
     padding-right: 14px;
-    border-top: 1px solid var(--q-announce-left-menu-border-color1);
-    background: var(--q-announce-left-menu-bg-color1);
-    color: var(--q-announce-left-menu-text-color1);
+    border-top: 1px solid var(--q-announce-left-menu-color-2);
+    background: var(--q-gb-bg-c-11);
+    color: var(--q-gb-t-c-6);
 
     &:after {
         content: "";
@@ -80,14 +85,15 @@ function sub_click(item, index) {
         height: 100%;
         top: 0;
         right: 0;
-        border-left: 1px solid var(--q-announce-left-menu-border-color1);
-        border-right: 1px solid var(--q-announce-left-menu-border-color1);
-        background-color: var(--q-announce-left-menu-bg-color2);
+        border-left: 1px solid var(--q-announce-left-menu-color-2);
+        border-right: 1px solid var(--q-announce-left-menu-color-2);
+        background-color: var(--q-gb-bg-c-21);
     }
 
     :deep(.q-scrollarea__thumb) {
         width: 7px;
         right: -11px;
+        background-color: var(--q-announce-left-menu-color-2) !important;
     }
 
     .left-menu-title {
@@ -97,24 +103,27 @@ function sub_click(item, index) {
         padding: 0 15px;
         height: 34px;
         text-align: left;
-        border-bottom: 1px solid var(--q-announce-left-menu-border-color1);
-
-        &.no-subtab {
-            &.active {
-                border-right: 2px solid var(--q-announce-left-menu-border-color2);
-                background: var(--q-announce-left-menu-bg-color3);
-            }
-        }
-
-        &:hover {
-            background: var(--q-announce-left-menu-border-color3);
-            color: var(--q-announce-left-menu-text-color2);
-        }
+        border-bottom: 1px solid var(--q-announce-left-menu-color-2);
 
         &.no-subtab {
             .q-icon {
                 display: none;
             }
+            &.active {
+                border-right: 2px solid var(--q-gb-bd-c-11);
+                background: var(--q-announce-left-menu-color-3);
+            }
+        }
+        
+        .q-icon {
+            font-size: 16px;
+            transition: transform 0.15s;
+            transform: rotate(180deg);
+            opacity: 0.5;
+        }
+        &:hover {
+            background: var(--q-gb-bg-c-20);
+            color: var(--q-gb-t-c-16);
         }
 
         .q-icon {
@@ -122,17 +131,17 @@ function sub_click(item, index) {
             transition: transform 0.15s;
             transform: rotate(180deg);
             opacity: 0.5;
-            color: var(--q-announce-left-menu-text-color3);
+            color: var(--q-announce-left-menu-color-1);
         }
 
         &.active {
             font-weight: 600;
-            color: var(--q-announce-left-menu-text-color4);
+            color: var(--q-gb-t-c-6);
 
             .q-icon {
                 transform: rotate(0deg);
                 opacity: 1;
-                color: var(--q-announce-left-menu-text-color4);
+                color: var(--q-gb-t-c-6);
             }
         }
     }
@@ -141,24 +150,24 @@ function sub_click(item, index) {
         overflow: hidden;
         max-height: 0px;
         transition: max-height 0.15s;
-        background: var(--q-announce-left-menu-bg-color4);
+        background: var(--q-gb-bg-c-11);
 
         &:hover {
-            color: var(--q-announce-left-menu-text-color4);
+            color: var(--q-gb-t-c-6);
 
             .point {
-                background: var(--q-announce-left-menu-bg-color5);
+                background: var(--q-gb-bg-c-17);
             }
         }
 
         &.active {
             max-height: 400px;
-            border-right: 2px solid var(--q-announce-left-menu-border-color2);
-            background: var(--q-announce-left-menu-bg-color6);
-            color: var(--q-announce-left-menu-text-color4);
+            border-right: 2px solid var(--q-gb-bd-c-11);
+            background: var(--q-announce-left-menu-color-3);
+            color: var(--q-gb-t-c-6);
 
             .point {
-                background: var(--q-announce-left-menu-bg-color5);
+                background: var(--q-gb-bg-c-17);
             }
         }
 

@@ -562,7 +562,11 @@ export default class MatchDataBase
         
         // 删除list_obj之前的无用赛事
       }
-      this.data_version.value = Date.now();
+      if(this.data_version.value){
+        this.data_version.value = Date.now();
+      } else {
+        this.data_version = Date.now();
+      }
     }
   }
   set_quick_query_list(list,is_merge){
@@ -609,6 +613,11 @@ export default class MatchDataBase
     this.syn_del_quick_query_obj();
     // ws命令赛事订阅
     this.ws_ctr.scmd_c8();
+    if(this.data_version.value){
+      this.data_version.value = Date.now();
+    } else {
+      this.data_version = Date.now();
+    }
   }
   /**
    * @description: 同步清除赛事快捷操作对象中的无用赛事数据挂载
@@ -898,6 +907,11 @@ export default class MatchDataBase
         // 合并数据删除多余数据
         this.assign_with(this.list_to_obj, this.quick_query_obj);
       }
+      if(this.data_version.value){
+        this.data_version.value = Date.now();
+      } else {
+        this.data_version = Date.now();
+      }
     }
   }
   /**
@@ -923,10 +937,15 @@ export default class MatchDataBase
           this.list_to_quick_query_obj(this.quick_query_list);
         }
       }
-    }
-    if(this.set_list_to_obj){
-      // 合并数据删除多余数据
-      this.assign_with(this.list_to_obj, this.quick_query_obj);
+      if(this.set_list_to_obj){
+        // 合并数据删除多余数据
+        this.assign_with(this.list_to_obj, this.quick_query_obj);
+      }
+      if(this.data_version.value){
+        this.data_version.value = Date.now();
+      } else {
+        this.data_version = Date.now();
+      }
     }
   }
 

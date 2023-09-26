@@ -1,5 +1,5 @@
 <template>
-  <div class="basic-wrap" @click.stop="on_go_detail" >
+  <div class="basic-wrap" @click.stop="details.on_go_detail(match)">
     <!-- 主队信息 -->
     <div class="row-item team-item" v-for="(item,index) in ['home','away']" :key="item">
       <div class="team-logo">
