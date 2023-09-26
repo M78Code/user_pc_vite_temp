@@ -19,7 +19,7 @@ body {
       top: 0;
       left: 0;
       height: 6px;
-      background-color: var(--qq--match-bg-color11);
+      background-color: var(--q-gb-bg-c-11);
     }
 
     /*顶部下横线*/
@@ -39,7 +39,7 @@ body {
 
           .date-wrap {
             border-radius: 0 0 6px 6px;
-            border: 1px solid var(--qq--yb-border-color12);
+            border: 1px solid var(--q-gb-bg-c-9);
             border-top: 0;
           }
 
@@ -49,7 +49,7 @@ body {
             bottom: -4px;
             height: 10px;
             width: 100%;
-            background-color: var(--qq--match-bg-color11);
+            background-color: var(--q-gb-bg-c-11);
             z-index: -1;
           }
         }
@@ -58,26 +58,26 @@ body {
 
 
     &:after {
-      background-color: var(--qq--match-bg-color11);
+      background-color: var(--q-gb-bg-c-11);
       border-left: none;
     }
 
 
     /*  详情页热门赛事 */
     .detais-hot-head {
-      color: var(--qq--list-replay-text-color);
+      color: var(gb-t-c-1);
     }
 
     /* 无数据边框 */
     .scroll-fixed-header.no-data {
-      border-bottom: 1px solid var(--qq--border-color3);
+      border-bottom: 1px solid var(--q-gb-bg-c-5);
     }
 
     /*  赛事边框、背景色样式 */
     .c-match-item {
       border-radius: 6px;
-      border: 1px solid var(--qq--yb-border-color12);
-      background-color: var(--qq--y0-bg-color12);
+      border: 1px solid var(--q-gb-bg-c-9);
+      background-color: var(--q-gb-bd-c-13);
       overflow: hidden;
 
       //让球              虚拟足球     曲棍球和联合橄榄球 比分  独赢/让球胜平负   电竞背景
@@ -92,7 +92,7 @@ body {
         .c-match-handicap {
           .handicap-col:nth-of-type(n+4):nth-of-type(-n+6) {
             .bet-item-wrap {
-              background-color: var(--qq--yb-bg-color23);
+              background-color: var(--q-gb-bg-c-14);
             }
           }
         }
@@ -105,13 +105,13 @@ body {
         }
       }
       .high_light {
-        background-color: var(--qq--yb-bg-color23) !important;
+        background-color: var(--q-gb-bg-c-14) !important;
       }
       // 5分钟玩法 早盘
       .min5-early-handicap {
         .handicap-col:nth-of-type(n+3):nth-of-type(-n+4) {
           .bet-item-wrap {
-            background-color: var(--qq--yb-bg-color23) !important;
+            background-color: var(--q-gb-bg-c-14) !important;
           }
         }
         &.unfold_multi_column {
@@ -148,7 +148,7 @@ body {
         .c-match-handicap {
           .handicap-col:nth-of-type(n+3):nth-of-type(-n+4) {
             .bet-item-wrap {
-              background-color: var(--qq--yb-bg-color23);
+              background-color: var(--q-gb-bg-c-14);
               ;
             }
           }
@@ -158,7 +158,7 @@ body {
       &.virtual-match-tpl2 {
         .team-wrap {
           .team-item {
-            border-top: 1px solid var(--qq--match-border-color2);
+            border-top: 1px solid var(--q-gb-bd-c-8);
 
             &:first-child {
               border-top: 0;
@@ -167,7 +167,7 @@ body {
         }
 
         .more-row {
-          border-top: 1px solid var(--qq--match-border-color2);
+          border-top: 1px solid var(--q-gb-bd-c-8);
         }
 
         .c-match-handicap,
@@ -177,7 +177,7 @@ body {
 
         .media-col {
           .media-item {
-            border-top: 1px solid var(--qq--match-border-color2);
+            border-top: 1px solid var(--q-gb-bd-c-8);
 
             &:first-child {
               border-top: 0;
@@ -196,14 +196,14 @@ body {
           width: 100%;
           
           >div{display: inline-block;overflow:hidden}
-          .wd,.wd1{color: var(--qq--match-bg-color6);}
+          .wd,.wd1{color: var(--q-gb-bg-c-16);}
           .wd{margin-right: 3px;}
           .wd1{width: 10px;}
         }
 
         .c-match-process {
           .jingcai {
-            color: var(--qq--y0-text-color1);
+            color: var(--q-gb-bd-c-11);
           }
         }
 
@@ -227,24 +227,24 @@ body {
       }
 
       .process-col {
-        border-right: 1px solid var(--qq--match-border-color2);
+        border-right: 1px solid var(--q-gb-bd-c-8);
       }
 
       .basic-col {
-        border-right: 1px solid var(--qq--match-border-color2);
-        border-top: 1px solid var(--qq--match-border-color2);
+        border-right: 1px solid var(--q-gb-bd-c-8);
+        border-top: 1px solid var(--q-gb-bd-c-8);
       }
 
       .c-match-handicap {
-        border-right: 1px solid var(--qq--match-border-color2);
+        border-right: 1px solid var(--q-gb-bd-c-8);
       }
 
       .bet-item-wrap {
-        border-top: 0.5px solid var(--qq--match-border-color2);
-        border-right: 0.5px solid var(--qq--match-border-color2);
+        border-top: 0.5px solid var(--q-gb-bd-c-8);
+        border-right: 0.5px solid var(--q-gb-bd-c-8);
 
         &:first-child {
-          border-top: 0.5px solid var(--qq--match-border-color2);
+          border-top: 0.5px solid var(--q-gb-bd-c-8);
         }
 
         &:last-child {
@@ -253,50 +253,50 @@ body {
       }
 
       .score-more {
-        border-top: 1px solid var(--qq--match-border-color2);
+        border-top: 1px solid var(--q-gb-bd-c-8);
 
         .stage-score {
           .item:last-child {
-            color: var(--qq--y0-text-color1);
+            color: var(--q-gb-bd-c-11);
           }
         }
       }
 
       .action-wrap {
-        border-right: 1px solid var(--qq--match-border-color2);
+        border-right: 1px solid var(--q-gb-bd-c-8);
       }
 
       .other-play-tab {
         .arrow-wrap {
-          border-right: 1px solid var(--qq--match-border-color2);
+          border-right: 1px solid var(--q-gb-bd-c-8);
         }
       }
 
       .fifteen-box .row {
-        border-right: 1px solid var(--qq--match-border-color2);
+        border-right: 1px solid var(--q-gb-bd-c-8);
 
         .tab-tilte-bg {
-          background-color: var(--qq--yb-bg-color23);
+          background-color: var(--q-gb-bg-c-14);
         }
       }
     }
 
 
     .process-name {
-      color: var(--qq--yb-text-color21);
+      color: var(--q-gb-bd-c-2);
     }
 
     /*  竞彩足球样式 */
     .jingcai {
       .basic-col {
-        color: var(--qq--match-text-color1);
+        color: var(--q-gb-bd-c-11);
 
         .font-vs {
-          color: var(--qq--match-text-color1);
+          color: var(--q-gb-bd-c-11);
         }
 
         .score-wrap {
-          background-color: var(--qq--match-bg-color12);
+          background-color: var(--q-gb-bg-c-14);
 
           .onset-team {
             &:after {
@@ -305,7 +305,7 @@ body {
           }
 
           .score {
-            color: var(--qq--y0-text-color1);
+            color: var(--q-gb-bd-c-11);
           }
         }
       }
@@ -314,7 +314,7 @@ body {
     /* 其他背景样式 */
     .c-match-item {
       .process-col {
-        color: var(--qq--y0-text-color5);
+        color: var(--q-gb-bg-c-2);
       }
 
       .basic-col {
@@ -339,40 +339,40 @@ body {
 
             &.home .home,
             &.away .away {
-              background-color: var(--qq--y0-text-color1);
+              background-color: var(--q-gb-bd-c-11);
             }
 
             .point {
-              background-color: var(--qq--bg-wrap-point);
+              background-color: var(---q-gb-bd-c-7);
             }
           }
 
           .team-wrap {
-            background-color: var(--qq--match-text-color5);
+            background-color: var(--q-gb-bg-c-8);
           }
 
           .team-item {
             .team-name {
               &.bold {
-                color: var(--qq--yb-text-color17);
+                color: var(--q-gb-t-c-12);
               }
             }
 
             .red-ball {
               background: #ba0e0e;
-              color: rgba(255, 255, 255, 0.7);
+              color: var(--q-gb-t-c-18);
             }
 
             .score {
-              color: var(--qq--y0-text-color1);
+              color: var(--q-gb-bd-c-11);
               font-weight: 700;
 
               &.score-cur {
-                color: var(--qq--match-text-color5);
+                color: var(--q-gb-bg-c-8);
               }
 
               &.score-game {
-                color: var(--qq--match-text-color4);
+                color: var(--q-gb-bd-c-3);
               }
             }
             .scoring {
@@ -387,22 +387,22 @@ body {
 
             .team-name,
             .up-half-text {
-              color: var(--qq--match-text-color3);
+              color: var(--q-gb-bd-c-11);
 
               &.bold {
-                color: var(--qq--yb-text-color17) !important;
+                color: var(--q-gb-t-c-12) !important;
               }
             }
           }
 
           .play-count-wrap {
             .play-count {
-              color: var(--qq--match-text-color1);
+              color: var(--q-gb-bd-c-11);
             }
             &:hover {
               .icon-triangle-right {
                 &:before {
-                  color: var(--qq--match-text-color5);
+                  color: var(--q-gb-bg-c-8);
                 }
               }
             }
@@ -430,7 +430,7 @@ body {
         .handicap-col {
           &:nth-child(3) {
             .col3 {
-              border-right: 0.5px solid var(--qq--theme-bd-bet-item) !important;
+              border-right: 0.5px solid var(--q-gb-bd-c-8) !important;
             }
           }
         }
@@ -438,7 +438,7 @@ body {
     }
 
     .highlight-t {
-      color: var(--qq--match-text-color3) !important;
+      color: var(--q-gb-bd-c-11) !important;
     }
 
     /*  足球其他玩法（角球、罚牌等） 玩法标题 边框 颜色 */
@@ -446,17 +446,17 @@ body {
       .other-play-tab {
         .yb-icon-arrow {
           &::before {
-            border-color: var(--qq--match-text-color3);
+            border-color: var(--q-gb-bd-c-11);
           }
         }
         .play-title.col {
-          border-top: .5px solid var(--qq--match-border-color2);
-          background-color: var(--qq--y0-bg-color12);
+          border-top: .5px solid var(--q-gb-bd-c-8);
+          background-color: var(--q-gb-bd-c-13);
           position: relative;
           .tab-wrap {
             overflow: unset;
             font-size: 12px;
-            color: var(--qq--y0-text-color5);
+            color: var(--q-gb-bg-c-2);
             height: 32px !important;
 
             .item-wrap {
@@ -473,28 +473,28 @@ body {
                 min-width: 70px;
                 height: 24px;
                 line-height: 22px;
-                border: 0.5px solid var(--qq--match-border-color2);
+                border: 0.5px solid var(--q-gb-bd-c-8);
                 border-radius: 17px;
                 margin-right: 6px;
 
                 &.active {
-                  color: var(--qq--match-text-color3);
-                  background-color: var(--qq--match-bg-color8);
-                  border: 0.5px solid var(--qq--match-text-color3) !important;
+                  color: var(--q-gb-bd-c-11);
+                  background-color: var(--q-gb-bg-c-19);
+                  border: 0.5px solid var(--q-gb-bd-c-11) !important;
                 }
               }
             }
           }
         }
         .media-col{
-          border-left: 1px solid var(--qq--match-border-color2);
+          border-left: 1px solid var(--q-gb-bd-c-8);
         }
       }
 
       .media-col {
         .media-item {
           &:nth-of-type(odd) {
-            background-color: var(--qq--match-bg-color2);
+            background-color: var(--q-gb-bg-c-11);
           }
         }
       }
@@ -509,14 +509,14 @@ body {
         width: 100%;
         left: 0;
         bottom: 0;
-        background-color: var(--qq--match-bg-color11);
+        background-color: var(--q-gb-bg-c-11);
         z-index: 0;
       }
 
       &:nth-of-type(2) {
         .match-type {
           border-radius: 0 0 6px 6px;
-          border: 1px solid var(--qq--yb-border-color12);
+          border: 1px solid var(--q-gb-bg-c-9);
           border-top:0;
         }
       }
@@ -534,7 +534,7 @@ body {
         width: 100%;
         left: 0;
         top: -5px;
-        background-color: var(--qq--match-bg-color11);
+        background-color: var(--q-gb-bg-c-11);
         z-index: 0;
       }
     }
@@ -547,7 +547,7 @@ body {
         .c-virtual-list-header {
           border-radius: 6px;
           position: relative;
-          border: 1px solid var(--qq--yb-border-color12);
+          border: 1px solid var(--q-gb-bg-c-9);
           overflow: hidden;
 
           .list-header {
@@ -574,14 +574,14 @@ body {
     }
 
     .match-type {
-      border: 1px solid var(--qq--yb-border-color12);
-      background-image: linear-gradient(225deg, var(--qq--background-gradient-color-2-s) 0%, var(--qq--background-gradient-color-2-e) 100%);
+      border: 1px solid var(--q-gb-bg-c-9);
+      background-image: linear-gradient(225deg, var(--q-gb-bg-lg-7));
       border-radius: 6px;
-      color: var(--qq--yb-text-color19);
+      color: var(--q-gb-t-c-18);
 
       &.match-type-even {
-        border: 1px solid var(--qq--yb-border-color12);
-        background-image: linear-gradient(225deg, var(--qq--background-gradient-color-2-s) 0%, var(--qq--background-gradient-color-2-e) 100%);
+        border: 1px solid var(--q-gb-bg-c-9);
+        background-image: linear-gradient(225deg, var(--q-gb-bg-lg-7));
       }
     }
 
@@ -592,26 +592,26 @@ body {
         position: absolute;
         width: 100%;
         height: 6px;
-        background-color: var(--qq--match-bg-color11);
+        background-color: var(--q-gb-bg-c-11);
         left: 0;
         top: 0;
         z-index: -1;
       }
 
       .tr-match-head {
-        background-image: var(--qq--background-gradient-1);
-        border: 1px solid var(--qq--yb-border-color12);
+        background-image: var(--q-gb-bg-lg-18);
+        border: 1px solid var(--q-gb-bg-c-9);
         border-radius: 6px;
 
-        // color: var(--qq--match-text-color5)FFF;
+        // color: var(--q-gb-bg-c-8)FFF;
         .leagues-wrap {
-          color: var(--qq--y0-text-color5);
+          color: var(--q-gb-bg-c-2);
           font-weight: 550;
         }
 
         .icon-arrow {
           &::before {
-            color: var(--qq--y0-text-color1);
+            color: var(--q-gb-bd-c-11);
           }
         }
 
@@ -619,28 +619,28 @@ body {
           .col {
             font-size: 13px;
             font-weight: 500;
-            color: var(--qq--y0-text-color5);
+            color: var(--q-gb-bg-c-2);
             font-family: "PingFangSC-Medium";
             border-left: .5px solid transparent;
 
             &.bet-col3,
             &.bet-col4,
             &.bet-col5 {
-              background: var(--qq--background-gradient-8);
+              background: var(--q-gb-bg-c-22);
               // font-weight: 400;
               &.no-bg {
                 background: none;
               }
 
               &.y0-col4 {
-                border-right: 1px solid var(--qq--match-border-color2);
-                border-left: 1px solid var(--qq--match-border-color2);
+                border-right: 1px solid var(--q-gb-bd-c-8);
+                border-left: 1px solid var(--q-gb-bd-c-8);
               }
             }
 
             &.bet-col2,
             &.bet-col5 {
-              border-right: .5px solid var(--qq--match-border-color2);
+              border-right: .5px solid var(--q-gb-bd-c-8);
             }
           }
 
@@ -649,8 +649,8 @@ body {
       }
 
       .tr-col-name {
-        background: var(--qq--match-bg-color11);
-        color: var(--qq--y0-text-color5);
+        background: var(--q-gb-bg-c-11);
+        color: var(--q-gb-bg-c-2);
         position: relative;
 
         &::before {
@@ -658,7 +658,7 @@ body {
           position: absolute;
           width: 100%;
           height: 6px;
-          background-color: var(--qq--match-bg-color11);
+          background-color: var(--q-gb-bg-c-11);
           left: 0;
           top: -6px;
           z-index: -1;
@@ -671,15 +671,15 @@ body {
       .play-wrap {
         /*  玩法基本信息 */
         .play-info {
-          background: var(--qq--handicap-sub-title-bg-color);
+          background: var(--q-site-header-color-6);
           // border-color: rgba(0, 0, 0, 0.15);
-          color: var(--qq--y0-text-color1);
+          color: var(--q-gb-bd-c-11);
         }
       }
 
       .bet-col {
-        border-top: 1px solid var(--qq--match-border-color2);
-        border-right: 1px solid var(--qq--match-border-color2);
+        border-top: 1px solid var(--q-gb-bd-c-8);
+        border-right: 1px solid var(--q-gb-bd-c-8);
 
         &:nth-of-type(even) {
           border-right: none;
@@ -687,7 +687,7 @@ body {
 
         .handicap-value {
           &.color-highlight {
-            color: var(--qq--match-text-color4) !important;
+            color: var(--q-gb-bd-c-3) !important;
           }
         }
       }
@@ -698,7 +698,7 @@ body {
 
           .bet-col:nth-last-child(2),
           .bet-col:last-child {
-            border-bottom: 1px solid var(--qq--match-border-color2);
+            border-bottom: 1px solid var(--q-gb-bd-c-8);
           }
         }
       }
@@ -710,12 +710,12 @@ body {
       .score-more {
         .result {
           .yb-text-color1 {
-            color: var(--qq--y0-text-color1);
+            color: var(--q-gb-bd-c-11);
           }
         }
 
         .active-text {
-          color: var(--qq--y0-text-color1);
+          color: var(--q-gb-bd-c-11);
         }
 
         .icon-on_base1 {
@@ -724,11 +724,11 @@ body {
           .path2,
           .path3 {
             &:before {
-              color: var(--qq--match-border-color2);
+              color: var(--q-gb-bd-c-8);
             }
 
             &.active:before {
-              color: var(--qq--y0-text-color1);
+              color: var(--q-gb-bd-c-11);
             }
           }
         }
@@ -736,18 +736,18 @@ body {
     }
 
     .v-scroll-item-hot:last-child {
-      border-bottom: 1px solid var(--qq--match-border-color2);
+      border-bottom: 1px solid var(--q-gb-bd-c-8);
     }
 
     /*  联赛折叠样式 */
     .leagues-fold .tr-match-head th {
-      border-bottom: 1px solid var(--qq--match-bg-color4);
+      border-bottom: 1px solid var(--q-gb-bg-c-11);
     }
 
     /* *** 单场赛事公共样式++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
     .list-card-inner {
-      border-top-color: var(--qq--yb-bg-color1);
-      color: var(--qq--y0-text-color5);
+      border-top-color: var(--q-gb-bg-c-11);
+      color: var(--q-gb-bg-c-2);
     }
 
     /* *** 统计分析 ************************ -S */
@@ -756,14 +756,14 @@ body {
 
       i.icon-signal {
         &:before {
-          color: var(--qq--icon-star-bg-color);
+          color: var(--q-gb-bg-c-8);
         }
       }
 
       &:hover {
         i.icon-signal {
           &:before {
-            color: var(--qq--y0-text-color1);
+            color: var(--q-gb-bd-c-11);
           }
         }
       }
@@ -771,7 +771,7 @@ body {
 
     /* *** 蒙层 ************************ -E */
     .refresh-mask {
-      background: var(--qq--match-bg-color10);
+      background: var(--q-gb-bg-c-9);
 
       .img-loading {
         background-image: var(--qq--bg-image-url10);
@@ -780,31 +780,31 @@ body {
   }
 
   .tips-box {
-    background: var(--qq--match-bg-color4);
-    border: 1px solid var(--qq--yb-border-color8);
-    color: var(--qq--y0-text-color5);
+    background: var(--q-gb-bg-c-11);
+    border: 1px solid var(--q-gb-bd-c-7);
+    color: var(--q-gb-bg-c-2);
     .tips-title {
-      background: var(--qq--yb-bg-color21);
-      color: var(--qq--y0-text-color5);
+      background: var(--q-gb-bg-c-14);
+      color: var(--q-gb-bg-c-2);
 
       .tip-before {
         &::before {
-          background: var(--qq--y0-text-color1);
+          background: var(--q-gb-bd-c-11);
         }
       }
     }
      /* 15分钟内容 下边线及文字颜色 */
     .tips-item {
-      border-bottom: 1px solid var(--qq--yb-border-color8) !important;
+      border-bottom: 1px solid var(--q-gb-bd-c-7) !important;
     }
   }
 
   /* 下拉箭头及边框 */
   .fifteen-arrow {
-    border-bottom: 7px solid var(--qq--yb-border-color8);
+    border-bottom: 7px solid var(--q-gb-bd-c-7);
 
     &::after {
-      border-color: transparent transparent var(--qq--yb-bg-color21);
+      border-color: transparent transparent var(--q-gb-bg-c-14);
     }
   }
 
@@ -818,27 +818,27 @@ body {
   }
 
   .leagues-bg {
-    background: var(--qq--background-gradient-12);
+    background: var(--q-gb-bg-lg-15);
   }
 
   .virtual-list {
     .media-col-wrap {
       .icon-signal {
         &:before {
-          color: var(--qq--match-bg-color9);
+          color: #99a3b1;
         }
       }
 
       .icon-play {
         &:before {
-          color: var(--qq--match-bg-color9);
+          color: #99a3b1;
         }
       }
 
       &.active {
         .icon-play {
           &:before {
-            color: var(--qq--match-bg-color6);
+            color: var(--q-gb-bg-c-16);
           }
         }
       }
@@ -852,21 +852,21 @@ body {
           top: -10px;
           height: 20px;
           width: 100%;
-          background-color: var(--qq--match-bg-color11);
+          background-color: var(--q-gb-bg-c-11);
           z-index: -1;
         }
       }
 
       .match-type {
-        border: 1px solid var(--qq--yb-border-color12);
-        background-image: var(--qq--background-gradient-1);
-        color: var(--qq--y0-text-color5);
+        border: 1px solid var(--q-gb-bg-c-9);
+        background-image: var(--q-gb-bg-lg-18);
+        color: var(--q-gb-bg-c-2);
 
         .basic-width {
 
           .icon-timer:before,
           .timer-wrap {
-            color: var(--qq--y0-text-color5);
+            color: var(--q-gb-bg-c-2);
           }
         }
 
@@ -879,12 +879,12 @@ body {
             &.bet-col3,
             &.bet-col4,
             &.bet-col5 {
-              background: var(--qq--background-gradient-8);
+              background: var(--q-gb-bg-c-22);
             }
 
             &.bet-col2,
             &.bet-col5 {
-              border-right: .5px solid var(--qq--match-border-color2);
+              border-right: .5px solid var(--q-gb-bd-c-8);
             }
           }
         }
@@ -898,7 +898,7 @@ body {
 
           .timer-wrap,
           .icon-timer:before {
-            color: var(--qq--match-text-color3);
+            color: var(--q-gb-bd-c-11);
           }
         }
       }
@@ -910,14 +910,14 @@ body {
         .match-type {
             margin-top: 4px;
           
-            background-image: var(--qq--background-gradient-9);
-            color: var(--qq--match-text-color2);
+            background-image: var(--q-gb-bg-lg-1);
+            color: #ffffff;
             border: 0;
 
           .media-col-wrap {
             .icon-play {
               &:before {
-                color: var(--qq--match-text-color2);
+                color: #ffffff;
                 opacity: .8;
               }
             }
@@ -939,7 +939,7 @@ body {
 
       .hscroll-handler {
         &:hover {
-          background: var(--qq--match-bg-color4);
+          background: var(--q-gb-bg-c-11);
         }
       }
     }
@@ -947,7 +947,7 @@ body {
     .virtual-match-tpl1 {
       .virtual-match-item {
         .match-handicap-item {
-          border-top: 1px solid var(--qq--match-border-color2);
+          border-top: 1px solid var(--q-gb-bd-c-8);
         }
       }
     }
@@ -955,41 +955,41 @@ body {
     .media-col-wrap,
     .virtual-match-tpl2 {
       .team-wrap {
-        color: var(--qq--yb-text-color9);
+        color: var(--q-gb-t-c-3);
 
         .team-item {
           &:nth-of-type(odd) {
-            background-color: var(--qq--match-bg-color5);
+            background-color: var(--q-gb-bg-c-11);
           }
         }
       }
 
       .bet-item-wrap {
         &:nth-of-type(odd) {
-          background-color: var(--qq--match-bg-color5);
+          background-color: var(--q-gb-bg-c-11);
         }
       }
 
       .more-row {
-        color: var(--qq--y0-text-color5);
-        border-top: 1px solid var(--qq--match-border-color2);
-        background-color: var(--qq--match-bg-color5);
+        color: var(--q-gb-bg-c-2);
+        border-top: 1px solid var(--q-gb-bd-c-8);
+        background-color: var(--q-gb-bg-c-11);
       }
 
       .media-col {
         .media-item {
           &:nth-of-type(odd) {
-            background-color: var(--qq--match-bg-color5);
+            background-color: var(--q-gb-bg-c-11);
           }
 
-          border-top: 1px solid var(--qq--match-border-color2);
+          border-top: 1px solid var(--q-gb-bd-c-8);
         }
       }
 
       .c-match-startistic {
         .item {
           .name {
-            color: var(--qq--match-border-color2);
+            color: var(--q-gb-bd-c-8);
           }
         }
       }
@@ -999,13 +999,13 @@ body {
   /* *** 投注项样式 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
   .main {
     .c-bet-item {
-      color: var(--qq--y0-text-color5);
+      color: var(--q-gb-bg-c-2);
       /*  赔率升 */
       &.show-odds-icon.up {
         background-color: rgba(233, 61, 61, 0.05);
 
         .odds {
-          color: var(--qq--yb-text-color14) !important;
+          color: #e93d3d !important;
         }
       }
 
@@ -1019,14 +1019,14 @@ body {
       }
       
       .handicap-value {
-        color: var(--qq--y0-text-color5);
+        color: var(--q-gb-bg-c-2);
 
         &.color-highlight {
-          color: var(--qq--yb-text-color20);
+          color: var(--q-gb-t-c-16);
         }
           
         .handicap-more {
-          color: var(--qq--y0-text-color5);
+          color: var(--q-gb-bg-c-2);
         }
       }
       .lock {
@@ -1035,7 +1035,7 @@ body {
 
       .icon-odds_up {
         &:before {
-          color: var(--qq--y0-text-color14);
+          color: var(--q-gb-t-c-3);
         }
       }
 
@@ -1049,9 +1049,9 @@ body {
         font-weight: 600;        
         span {
           &:hover {
-            background-color: var(--qq--match-bg-color6);
+            background-color: var(--q-gb-bg-c-16);
             border-radius: 2px;
-            color: var(--qq--match-text-color2);
+            color: #ffffff;
             padding: 0 2px;
           }
         }
@@ -1061,29 +1061,29 @@ body {
       &.active,
       &.lock {
         &:hover {
-          background: var(--qq--match-bg-color7);
+          background: var(--q-gb-bg-c-10);
         }
       }
 
       /*  详情默认 */
       &.active {
-        background: var(--qq--match-bg-color6) !important;
+        background: var(--q-gb-bg-c-16) !important;
 
         .color-highlight {
-          color: var(--qq--match-text-color2);
+          color: #ffffff;
         }
 
         .handicap-value {
-          color: var(--qq--match-text-color2);
+          color: #ffffff;
         }
 
         .handicap-more {
-          color: var(--qq--match-text-color2);
+          color: #ffffff;
         }
 
         .odds,
         .handicap-value-text {
-          color: var(--qq--match-text-color2) !important;
+          color: #ffffff !important;
         }
 
         .odds {
@@ -1100,48 +1100,48 @@ body {
 
   /* *** 收藏 ************ -S */
   .icon-star:before {
-    color: var(--qq--icon-star-bg-color) !important;
+    color: var(--q-gb-bg-c-8) !important;
   }
 
   .icon-star {
     &.active:before {
-      color: var(--qq--y0-collect-start-text-color-3) !important;
+      color: var(--q-gb-t-c-16) !important;
     }
   }
 
   /* 虚拟赛事—赛事分析 弹窗容器 */
   .c-match-startistic {
-    color: var(--qq--match-text-color4) !important;
-    background: var(--qq--match-bg-color4) !important;
+    color: var(--q-gb-bd-c-3) !important;
+    background: var(--q-gb-bg-c-11) !important;
   }
 
   /* 弹窗箭头 */
   .tips-body {
     .direction {
-      border-bottom: 7px solid var(--qq--match-border-color3);
+      border-bottom: 7px solid var(--q-gb-bd-c-8);
 
       &::after {
-        border-color: transparent transparent var(--qq--match-bg-color4);
+        border-color: transparent transparent var(--q-gb-bg-c-11);
       }
     }
   }
 
   /** 返回顶部*/
   .go-top-btn {
-    background: var(--qq--yb-bg-color24) !important;
-    color: var(--qq--yb-text-color13) !important;
-    border: 1px solid var(--qq--go-top-btn-border);
+    background: var(--q-gb-bg-c-11) !important;
+    color: var(--q-gb-t-c-5) !important;
+    border: 1px solid var(--q-gb-bd-c-8);
     .icon-go_top {
       &:before {
-        color: var(--qq--go-top-btn-icon)  !important;
+        color: var(--q-gb-bd-c-4)  !important;
       }
     }
     &:hover {
-      background: var(--qq--go-top-btn-bg-color-hover) !important;
-      color: var(--qq--yb-text-hover-color13) !important;
+      background: var(--q-gb-bg-c-18) !important;
+      color: var(--q-gb-bd-c-13) !important;
       .icon-go_top {
         &:before {
-          color: var(--qq--yb-text-hover-color13) !important;
+          color: var(--q-gb-bd-c-13) !important;
         }
       }
     }
