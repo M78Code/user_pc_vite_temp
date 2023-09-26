@@ -16,6 +16,7 @@ import {
   utils,
   format_sort_data,
   useMittEmitterGenerator,
+  useMittEmit
 } from "src/core/index.js";
 //moni
 // import MenuData from "./menuData"
@@ -323,10 +324,6 @@ export const useRightDetails = (props) => {
 
               MatchDataWarehouseInstance.set_quick_query_list_from_match_details(
                 data
-              );
-              console.log(
-                MatchDataWarehouseInstance,
-                "MatchDataWarehouseInstance"
               );
               // allData.match_details = MatchDataWarehouseInstance.list_to_obj.ol_obj;
               allData.match_details = data;
@@ -723,7 +720,7 @@ export const useRightDetails = (props) => {
    * @return {Undefined} Undefined
    */
   const on_go_top = () => {
-    useMittEmit("set_scroll_position", [0, 0]);
+    useMittEmit(MITT_TYPES.EMIT_SET_SCROLL_POSITION, [0, 0])
   };
   /**
    * @description: 检查玩法关盘
@@ -1175,6 +1172,7 @@ export const useRightDetails = (props) => {
     on_go_top,
     change_loading_state,
     set_handicap_this,
+    setfoldStatus
   };
 };
 //  mixins: [global_mixin,   details_mixins,],
