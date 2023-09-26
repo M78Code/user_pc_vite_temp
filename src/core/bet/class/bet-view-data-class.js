@@ -114,8 +114,15 @@ class BetViewData {
   }
 
   // 设置限额
-  set_bet_min_max_money(obj){
+  // obj 接口返回数据
+  // type 接口类型 min_max 或者最大值 最小值接口 数据结构不同
+  set_bet_min_max_money(obj,type = ''){
+    // 获取query_bet_amount数据对应的限额
     let bet_amount_list = _lodash.get(obj, 'betAmountInfo')
+    // min_max 或者最大值 最小值接口 数据结构不同
+    if(type == 'min_max'){
+      bet_amount_list = obj
+    }
     let bet_amount = {}
     bet_amount_list.forEach(item=>{
       // 单关 使用 投注项作为 key值 在投注列表做对应关系
@@ -125,7 +132,7 @@ class BetViewData {
         min_money: item.minBet, // 最小限额
         max_money: item.orderMaxPay, // 最大限额
         globalId : item.globalId,  //  风控响应id
-        seriesOdds: item.seriesOdds, // 赔率
+        seriesOdds: item.seriesOdds, // 赔率  // 串关使用 3串1
       }
     })
 

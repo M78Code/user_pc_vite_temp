@@ -25,7 +25,7 @@ export const get_exist_match_result = (params, config={}, url = "/order/betRecor
 export const get_unsettle_tickets_count = (params, config={}, url = "/order/betRecord/countUnsettleTickets") =>  http.get(`${prefix3}${url}`, params, config);
 
 // 获取最大值和最小值接口
-export const post_getBetMinAndMaxMoney = (params, config={}, url = "/v1/betOrder/queryMarketMaxMinBetMoney") => http.post(`${prefix}${url}`, params, config);
+export const post_getBetMinAndMaxMoney = (params, config={}, url = "/v1/betOrder/queryMarketMaxMinBetMoney") => http.post(`${prefix3}${url}`, params, config);
 
 // 投注模块-统计串关数
 export const get_seriesCountJointNumbe = (params, config={}, url = "/v1/betOrder/countJointNumber") => http.get(`${prefix}${url}`, params, config);
