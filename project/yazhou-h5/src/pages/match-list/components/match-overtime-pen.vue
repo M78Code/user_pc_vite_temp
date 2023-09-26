@@ -188,7 +188,7 @@ const init_tab_async_show = () => {
   }, 200);
 }
 
-watch(() => MatchDataBaseH5.data_version.value, () => {
+watch(() => MatchDataBaseH5.data_version.version, () => {
   init_tab_show(true); // 加载tab
   get_new_match_info()
 })
