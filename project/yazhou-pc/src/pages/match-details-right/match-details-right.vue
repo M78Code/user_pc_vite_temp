@@ -128,9 +128,9 @@
         </template>
 
         <!-- 【列表】 ------------->
-        <template
+        <!-- <template
    
-        >
+        > -->
         <div class="cathectic-handicap">111</div>
         <!-- 盘口模板start -->{{ category_list }}11{{ match_infoData }}
         <match-handicap
@@ -146,7 +146,7 @@
           pageType="right_details"
         />
         <!-- 盘口模板end -->
-        </template>
+        <!-- </template> -->
 
         <!-- 电竞 有视频赛事列表 -->
         <!-- <esports-match-list v-if="is_esports &&route.name != 'video'" /> -->
@@ -374,4 +374,8 @@ const is_show_margin = computed(() => {
 
 <style lang="scss" scoped>
 @import "./index.scss";
+</style>
+
+<style lang="scss" >
+@import "../match-details//match-details.scss";
 </style>
