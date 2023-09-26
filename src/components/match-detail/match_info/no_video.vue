@@ -9,13 +9,13 @@
       <div class="top-wrap">
         <div class="img img1"></div>
         <!-- 暂无直播视频，请耐心等待 -->
-        <div class="text1">{{ $t('video.novideo1')}}</div>
+        <div class="text1">{{ i18n_t('video.novideo1')}}</div>
       </div>
       <div class="img-list">
         <div class="item">
           <div class="img img2"></div>
           <!-- 快速结算注单 -->
-          <div class="text">{{ $t('video.novideo2')}}</div>
+          <div class="text">{{ i18n_t('video.novideo2')}}</div>
         </div>
         <div class="item">
           <div class="img img3"></div>
@@ -25,12 +25,12 @@
         <div class="item">
           <div class="img img4"></div>
           <!-- 极致用户体验 -->
-          <div class="text">{{ $t('video.novideo4')}}</div>
+          <div class="text">{{ i18n_t('video.novideo4')}}</div>
         </div>
         <div class="item">
           <div class="img img5"></div>
           <!-- 极致服务团队 -->
-          <div class="text">{{ $t('video.novideo5')}}</div>
+          <div class="text">{{ i18n_t('video.novideo5')}}</div>
         </div>
       </div>
     </div>
@@ -38,9 +38,15 @@
 </template>
 
 <script>
+import { i18n_t} from "src/core/index"
 export default {
   props:{
     show_type: String
+  },
+  data(){
+    return{
+      i18n_t
+    }
   }
 };
 </script>

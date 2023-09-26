@@ -259,7 +259,7 @@ class MatchPage {
       list.forEach(item => {
         if (item && item.mid) {
           if (MatchDataBaseH5.list_to_obj.mid_obj[`${item.mid}_`]) {
-            MatchDataBaseH5.updMatchInfo(item);
+            MatchDataBaseH5.upd_match(item);
           } else {
             MatchDataBaseH5.addMatchInfo(item);
           }
