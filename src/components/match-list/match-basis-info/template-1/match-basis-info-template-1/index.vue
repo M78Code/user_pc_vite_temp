@@ -1,5 +1,5 @@
 <template>
-  <div class="basic-wrap" @click.stop="on_go_detail" >
+  <div class="basic-wrap" @click.stop="details.on_go_detail(match)" >
     <!-- 主队信息 --> 
     <div class="row-item team-item">
       <div class="team-logo">
@@ -101,7 +101,6 @@ import { utils } from 'src/core/utils/module/utils.js'
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import { MenuData, MatchDataWarehouse_PC_List_Common } from "src/core/index.js"
 import details  from "src/core/match-list-pc/details-class/details.js"
-
 import { i18n_t } from "src/core/index.js";
 
 
