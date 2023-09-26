@@ -23,7 +23,7 @@
                   <!-- show_favorite_list || main_m.menuId==408 ||
                     3000 == main_m.menuType ? 'hidden' : 'visible'
                      -->
-                  {{ item.mi == 8 ? '295' : MenuData.count_menu(item) }}
+                  {{ MenuData.count_menu(item) }}
                 </span><!---->
                 <i v-if="index == 1" @click="show_selector_sub = !show_selector_sub" class="dir-triangle"
                   :class="{ open: show_selector_sub, arrow_esport: esport || UserCtr.theme == 'night' }">
@@ -70,8 +70,8 @@
                 }
                   ">
                   <div class="sport-w-icon">
-                    <span class="sport-icon-wrap" :class="`${'s' + format_type(item)}`"
-                      :style="compute_css(current_lv2?.mi == item.mi ? 'menu-sport-active-image' : 'menu-sport-icon-image')"></span>
+                    <span class="sport-icon-wrap"
+                      :style="compute_css(current_lv2?.mi == item.mi ? 'menu-sport-active-image' : 'menu-sport-icon-image', format_type(item))"></span>
                     <!-- :data-type="format_menu_type(sub)" -->
                     <!-- :class="[get_sport_icon(selected_sub_menu_i_list.includes(sub_i)), `${'s' + format_type(sub)}`]" -->
 
@@ -808,79 +808,6 @@ if (MenuData.current_lv_2_menu) {
 
                 &.focus-b {
                   background-image: var(--q-color-com-img-bg-209);
-                }
-              }
-
-              @each $s-number,
-              $y in (s1, 1),
-              (s2, 3),
-              (s3, 28),
-              (s4, 6),
-              (s5, 19),
-              (s6, 4),
-              (s7, 15),
-              (s10, 22),
-              (s11, 13),
-              (s12, 10),
-              (s13, 12),
-              (s8, 7),
-              (s9, 6),
-              (s20, 4),
-              (s17, 6),
-              (s2101, 39),
-              (s2103, 40),
-              (s2102, 41),
-              (s2100, 42),
-              (s16, 14),
-              (s23, 8),
-              (s41, 9),
-              (s44, 10),
-              (s1002, 11),
-              (s45, 12),
-              (s43, 13),
-              (s24, 14),
-              (s14, 20),
-              (s27, 16),
-              (s25, 17),
-              (s39, 18),
-              (s13, 19),
-              (s22, 20),
-              (s26, 21),
-              (s15, 8),
-              (s1011, 23),
-              (s1009, 24),
-              (s30, 26),
-              (s19, 28),
-              (s1001, 29),
-              (s1004, 30),
-              (s29, 31),
-              (s48, 32),
-              (s49, 33),
-              (s50, 34),
-              (s51, 35),
-              (s52, 36),
-              (s53, 38),
-              (s3001, 39),
-              (s3003, 40),
-              (s3004, 41),
-              (s3002, 42),
-              (s20030, 43),
-              (s20031, 44),
-              (s20032, 45),
-              (s20026, 46),
-              (s20027, 47),
-              (s20033, 48),
-              (s20034, 49),
-              (s20035, 50),
-              (s20036, 51),
-              (s20037, 52),
-              (s20038, 53),
-              (s20039, 54),
-              (s100, 55),
-              (s40, 56),
-              (s1010, 57) {
-                .#{$s-number} {
-                  background-position-y: calc(var(--per) * #{$y});
                 }
               }
 

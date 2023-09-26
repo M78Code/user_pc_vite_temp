@@ -88,16 +88,16 @@
               </div>
             </div>
             <!-- 多媒体控制头 -->
-            <!-- <video-ctrl
+            <video-ctrl
                :match_info="match_infoData"
                :refresh_loading="refresh_loading"
                @refresh="refresh()"
                @setfoldStatus="setfoldStatus"
-               v-if="route.name != 'video' && !is_esports" /> -->
+               v-if="route.name != 'video' && !is_esports" />
             <!-- 电竞多媒体控制头 -->
             <!-- <video-ctrl-esports :match_info="match_infoData" v-if="route.name != 'video' && is_esports" /> -->
             <!-- 战队信息 start -->
-            <!-- v-show和v-if 是masterJ写的  牛啊-->
+        
 
             <match-info
               v-if="route.name != 'video'"
@@ -300,16 +300,15 @@ const {
   plays_list,
   round,
   close_all_handicap,
+  refresh_loading,
   /* func */
   get_mattch_details,
   on_go_top,
   change_loading_state,
   set_handicap_this,
+  setfoldStatus
   /* func */
 } = useRightDetails({ route });
-
-console.log(match_infoData, "match_infoData");
-
 // 是否显示 统计版块
 const show_wrap_total = computed(() => {
   return (
