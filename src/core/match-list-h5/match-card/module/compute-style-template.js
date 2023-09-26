@@ -271,7 +271,7 @@ export const compute_style_template_by_match_info1 = (match, template_id) => {
  */
 export const compute_style_template_by_match_height = (match) => {
   
-  const { csid, mid } = match
+  const { csid, mid, is_show_league } = match
 
   // 对应模板默认配置
   let template_config = lodash.get(MATCH_LIST_TEMPLATE_CONFIG, `template_${csid}_config.match_template_config`)
@@ -287,7 +287,9 @@ export const compute_style_template_by_match_height = (match) => {
     //次要玩法盘口高度
     tab_play_total_height: is_show_tab_play ? get_tab_play_height(mid, csid) : 0,
     // 是否需要动态计算高度
-    is_dynamic_compute_height: template_config.is_dynamic_compute_height,
+    is_dynamic_compute_height: template_config?.is_dynamic_compute_height,
+    // 联赛标题高度
+    show_league_height: is_show_league ? template_config?.show_league_height : 0,
     // 卡片总高度
     card_total_height: 0,
     // 是否显示该赛事卡片
@@ -298,7 +300,7 @@ export const compute_style_template_by_match_height = (match) => {
 
   // 如果没有赛事信息
   if (!match || !match.mid) {
-    return style_obj
+    return match_style_obj
   }
 
   // 0号模板设置次要玩法数据
