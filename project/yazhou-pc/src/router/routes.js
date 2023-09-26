@@ -13,7 +13,7 @@ const routes = [
       {
         path: "/home",
         name: "home",
-        component: () => import('project_path/src/pages/test/index.vue'),
+        component: () => import('project_path/src/pages/match-list/match-list.vue'),
         meta: {
           keepAlive: true, // 需要缓存
         },

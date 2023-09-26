@@ -13,7 +13,6 @@ import PageSourceData  from  "src/core/page-source/page-source.js";
 import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/core/index.js";
 import MatchListCardClass from "src/core/match-list-pc/match-card/match-list-card-class.js";
 
-// const { api_bymids } = useMatchListMx();
 let state = store.getState();
 const { mx_collect_count, set_collect_count } = collect_composable_fn();
 const { virtual_list_timeout_id } = virtual_composable_fn();
@@ -154,14 +153,14 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 			MenuData.set_filter_select_obj(new_filter);
 		}
 		if (![2, 3].includes(MenuData.menu_root) && pre_name) {
-      store.dispatch({
-        type: 'remove_pre_filter_select_obj',
-        data: {}
-      })
+			store.dispatch({
+				type: 'remove_pre_filter_select_obj',
+				data: {}
+			})
 		}
 		// 设置数据仓库 联赛列表对象
 		 
-		// 计算列表卡片样式
+	// 计算列表卡片样式
 		MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
 			res_data,
 		);
@@ -194,10 +193,10 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 				};
 			}
 			// 调用bymids更新前12场赛事
-			api_bymids(
-				{ is_league_first: true, inner_param: true },
-				callback_func
-			);
+			// api_bymids(
+			// 	{ is_league_first: true, inner_param: true },
+			// 	callback_func
+			// );
 		}
 
 
@@ -219,7 +218,8 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 		load_data_state.value = "empty";
 		// 设置数据仓库 联赛列表对象
 		// this.match_list_data.set_league_list_obj(res_data);
-		// 计算列表卡片样式
+	console.log('match_listmatch_list33');
+	// 计算列表卡片样式
 		MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
 			res_data,
 		);
@@ -230,6 +230,7 @@ const mx_list_res = (data, backend_run, cut, collect) => {
  */
 const mx_use_list_res_when_code_200_and_list_length_gt_0 = ({match_list, collect, backend_run}) => {
 	is_show_hot.value = false;
+	console.log('match_listmatch_list11');
 	// 计算赛事卡片
 	MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
 		match_list,
@@ -271,7 +272,7 @@ const mx_use_list_res_when_code_200_and_list_length_gt_0 = ({match_list, collect
 		!backend_run
 	) {
 		// 调用bymids接口
-		api_bymids({ is_first_load: true, inner_param: true });
+		// api_bymids({ is_first_load: true, inner_param: true });
 	}
 	load_data_state.value = "data";
 };
@@ -329,6 +330,7 @@ const mx_use_list_res_when_code_error_or_list_length_0 = (match_list) => {
 		// 	backend_run,
 		// 	true
 		// );
+	console.log('match_listmatch_list22');
 		// 计算赛事卡片
 		MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
 			match_list,

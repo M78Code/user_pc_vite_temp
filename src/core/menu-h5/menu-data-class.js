@@ -118,7 +118,7 @@ class MenuData {
       101, 102, 105, 107, 110, 108, 103, 109, 111, 112, 113, 116, 115, 114, 104,
       106, 118, 400, 300,
     ];
-    const menuRule = [2, 1, 3, 4];
+
     let mi_list = [];
     //1=滚球,2=今日,3=早盘,4=冠军,5=即将开赛,6=串关   左侧一级菜单隐藏 串关和即将开赛
     // // 竟足
@@ -127,6 +127,7 @@ class MenuData {
     let menu_dianjing = { mi: 7, sl: [] };
     let menu_jingzu = { mi: 30, sl: [] };
     lodash.each(data, (item) => {
+      //这里是放入全部的数据
       if (item && item.sl && item.sl.length > 0) {
         mi_list.push(...item.sl);
       }
@@ -140,9 +141,11 @@ class MenuData {
       }
     });
     let new_menu = [];
-    lodash.each(menuRule, (menu_item, index) => {
+    //处理普通数据 1=滚球,2=今日,3=早盘,4=冠军
+    lodash.each([1, 2, 3, 4], (menu_item, index) => {
       new_menu[index] = { mi: menu_item, sl: [] };
       lodash.each(mi_list, (item) => {
+        //常规赛总的mi是 赛种id+主菜单mi
         const filter_data = lodash.find(conventional, (item1) => {
           return item.mi == `${item1}${menu_item}`;
         });
@@ -151,6 +154,7 @@ class MenuData {
         }
       });
     });
+    //存储数据
     this.set_cache_class({
       menu_list: [
         ...new_menu,
@@ -196,11 +200,17 @@ class MenuData {
       return obj2.sl || [];
     }
   }
-  //=============================
+  /**
+   * 此处计算总数量 传入sl mi eg: sl:[{"ct":0,"mi":"1011","st":1},{"ct":0,"mi":"1015","st":2}]
+   * @param {{mi,sl}} menu_list 
+   * @param {*} list 
+   * @returns 
+   */
   count_menu(menu_list = {}, list) {
-    //传入sl mi eg: sl:[{"ct":0,"mi":"1011","st":1},{"ct":0,"mi":"1015","st":2}]
     //计算数量
     const { sl, mi } = menu_list;
+    //VR默认295
+    if (mi == 8) return 295
     if (mi == 30) {
       const data = lodash.find(sl, (item) => {
         //竞足特殊处理
@@ -210,6 +220,7 @@ class MenuData {
         return data.ct || data.count || ''
       return '';
     }
+    //计算数量
     const count = sl && sl.reduce
       ? sl.reduce((pre, cur) => {
         return pre + (cur.ct || cur.count || 0);
@@ -218,12 +229,16 @@ class MenuData {
     return count || ''
   }
 
-  //设置选中的菜单
+  /**
+   * 设置选中的菜单只需要传入 mi就可以了
+  */
   set_menu_type(v) {
     const idx = this.menu_list.findIndex(i => i.mi == v)
     idx > -1 && this.set_current_lv1_menu(this.menu_list[idx], idx, 'click')
   }
-  // 当前选中的菜单type
+  /**
+   * 当前选中的主菜单的 mi
+   * */
   get_menu_type() {
     return this.current_lv_1_menu?.mi;
   }
@@ -255,12 +270,27 @@ class MenuData {
     }
   }
 
-  //菜单名称 国际化获取菜单名称
+  /**
+   * 菜单名称 国际化获取菜单名称
+   * 这里获取大部分菜单的名称 有些是固定名称的这里获取不到
+   * @param {*} mi 
+   * @returns 
+   */
   get_menus_i18n_map(mi) {
     if (this.menu_type.value == 7) {
       return BaseData.menus_i18n_map[mi]
     }
     return BaseData.menus_i18n_map[this.recombine_menu_desc(mi)];
+  }
+  /**
+   * 获取后台接口所对应的名称mi
+   * 因为mi对应的 赛种ID + 主菜单mi
+   * 例如如：1001 =》 100是足球 而1是早盘 滚球什么的 什么的
+   * @param {*} mi 
+   * @returns 
+   */
+  recombine_menu_desc(mi) {
+    return String(mi).substr(0, 3);
   }
   // /**
   //  * @description: 球类id转化背景
@@ -445,9 +475,7 @@ class MenuData {
     }
     return false;
   }
-  recombine_menu_desc(item) {
-    return String(item).substr(0, 3);
-  }
+
   // 电竞菜单csid
   menu_csid(mi) {
     if (mi) {
@@ -593,8 +621,8 @@ class MenuData {
     this.update();
   }
 
-  //根据路由参数 设置菜单信息 选中一级menu
-  set_query_menu({ m, s, t, mt1, mt2 }) {
+  //根据路由参数 设置菜单信息 选中一级 二级menu
+  set_enter_params({ m, s, t, mt1, mt2 }) {
     if (!m && !mt1) {
       return;
     }
@@ -617,6 +645,9 @@ class MenuData {
       this.update();
     }
   }
+  /**
+   * VR总类的菜单 这是固定的
+  */
   vr_menu() {
     const vr_list = [
       {
@@ -764,16 +795,20 @@ class MenuData {
     });
     this.update()
   }
+  //获取4级菜单 menu
   get_level_four_menu() {
     return "";
   }
+  //获取二级菜单ID　以前有　menuType这个东西
   get_current_lv_2_menu_type() {
-    return "0";
+    return this.current_lv_2_menu?.menuType;
   }
   //竞足数据
   get_competing(data) {
+
     let obj1 = data.find((v) => v.mi == 500) || {};
     if (obj1?.sl) {
+      // 竟足处理 50101
       let obj2 = obj1.sl.find((v) => v.mi == 50101) || {};
       return obj2.sl || [];
     }

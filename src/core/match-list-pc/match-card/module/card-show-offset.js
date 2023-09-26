@@ -82,8 +82,8 @@ export const set_card_show_level = (scroll_top) => {
     // 是否联赛容器卡片
     if (card_obj.card_type == "league_container") {
       // 设置卡片显示等级
-      // card_obj.show_level = get_show_level(card_obj);
-      card_obj.show_level = 1;
+      card_obj.show_level = get_show_level(card_obj);
+      // card_obj.show_level = 1;
 
       // 设置对应的联赛标题卡片显示等级
       let league_title_card_obj = MatchListCardData.all_card_obj[card_obj.league_title_card_key] || {};
@@ -94,8 +94,8 @@ export const set_card_show_level = (scroll_top) => {
       // 遍历联赛容器下的赛事卡片  设置显示等级
       mids_arr.forEach((mid) => {
         let match_card_obj = MatchListCardData.all_card_obj[mid+'_'] || {};
-        // match_card_obj.show_level = get_show_level(match_card_obj);
-        match_card_obj.show_level = 1;
+        match_card_obj.show_level = get_show_level(match_card_obj);
+        // match_card_obj.show_level = 1;
 
         if ((match_card_obj.show_level == 1 && card_obj.is_show_card) || true) {
           show_mids_arr.push(mid);

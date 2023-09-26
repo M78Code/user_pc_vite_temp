@@ -28,11 +28,10 @@ import MenuData from "src/core/menu-pc/menu-data-class.js";
          * 7. 列表数据类型为赛事列表   只有联赛
          */
         let type
-        const   page_source = PageSourceData.page_source
-        const   menu_data = MenuData
+        const page_source = PageSourceData.page_source
         // 列表页强力推荐
         if(PageSourceData.is_show_hot){
-          type = menu_data.is_esports ? 7 : 2
+          type = MenuData.is_esports ? 7 : 2
         }
         // 详情页强力推荐
         else if(page_source == 'details'){
@@ -43,7 +42,7 @@ import MenuData from "src/core/menu-pc/menu-data-class.js";
           type = 4
         }
         // 电竞收藏
-        else if(menu_data.is_esports && page_source == 'collect'){
+        else if(MenuData.is_esports && page_source == 'collect'){
           type = 7
         }
         // 冠军聚合页
@@ -51,11 +50,11 @@ import MenuData from "src/core/menu-pc/menu-data-class.js";
           type = 5
         }
         // 电竞冠军
-        else if(menu_data.is_esports_champion){
+        else if(MenuData.is_esports_champion){
           type = 3
         }
         // 今日冠军
-        else if(menu_data.match_tpl_number == 18){
+        else if(MenuData.match_tpl_number == 18){
           type = 6
         }
         // 列表接口类型为赛事列表
@@ -68,11 +67,12 @@ import MenuData from "src/core/menu-pc/menu-data-class.js";
           }
         }
         // 早盘 和 电竞只有未开赛  不区分赛种
-        else if(page_source == 'early' || (menu_data.is_esports && page_source != 'hot')){
+        else if(page_source == 'early' || (MenuData.is_esports && page_source != 'hot')){
           type = 3
         }else{
           type = 1
         }
+        console.log('page_sourcepage_source', page_source);
         MatchListCardData.match_list_mapping_relation_obj_type = type
       }
     
@@ -128,6 +128,7 @@ import MenuData from "src/core/menu-pc/menu-data-class.js";
     
 
   export const  compute_match_list_style_obj_and_match_list_mapping_relation_obj=(match_list,is_ws_call,is_remove_call)=>{
+    console.log('match_listmatch_list', match_list);
     let current_csid = MenuData.left_menu_result.lv1_mi
     // 虚拟体育 不走卡片逻辑
     if(MenuData.menu_root == 300){
@@ -136,7 +137,7 @@ import MenuData from "src/core/menu-pc/menu-data-class.js";
     }else{
         MatchListCardData.is_run_card_function = true
     }
-     set_match_list_mapping_relation_obj_type()
+    set_match_list_mapping_relation_obj_type()
     // 非ws调用  清空卡片数据
     if(!is_ws_call){
         MatchListCardData.match_list_render_key++

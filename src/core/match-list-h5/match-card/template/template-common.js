@@ -172,6 +172,8 @@ export const set_template_width_base = (
 
 // 赛事样式模板
 export const match_style_template = {
+  // 联赛标题高度
+  show_league_height: 40,
   // 赛事标题高度
   match_title_height: 30,
   // 主盘口高度

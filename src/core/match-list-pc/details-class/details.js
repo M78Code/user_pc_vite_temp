@@ -4,12 +4,14 @@
  * @Description: 赛事详情相关操作类
  */
 
-// import { store } from "src/store/index.js"
+import store from "src/store-redux/index.js";
 import { api_details } from "src/api/index";
 import { UserCtr } from "src/core/index.js";
 import { update_match_time } from "src/core/bet/common-helper/module/common-sport.js"
-import {utils } from 'src/core/index.js'
+import {utils,is_virtual_csid,is_eports_csid } from 'src/core/index.js'
+import router from "project_path/src/router/index.js"
 export default {
+  
   //统计分析URL
   signal_url:'https://s5.sir.swiftscore.com',
   /**
@@ -24,7 +26,7 @@ export default {
       return
     }
       //是否虚拟体育球种id
-    let is_virtual= utils.is_virtual_csid(csid)
+    let is_virtual= is_virtual_csid(csid)
     let route_name =  is_virtual ? 'virtual_details' : 'details'
     let route_query = {}
     
@@ -33,8 +35,8 @@ export default {
         keyword
       }
     }
-    
-    window.vue.$router.push({
+
+    router.push({
       name: route_name,
       params: {
         mid,
@@ -57,7 +59,7 @@ export default {
   */
   sync_mst(mid,csid){
     // 电竞赛事
-    if (utils.is_eports_csid(csid)) {
+    if (is_eports_csid(csid)) {
       api_details.get_match_detail_ESMatchInfo({mid}).then(res => {
         let mst = _.get(res,'data.data.mst')
         if(mst){

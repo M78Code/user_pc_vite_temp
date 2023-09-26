@@ -303,7 +303,8 @@ class MenuData {
       "set_left_menu_result--------定义左侧菜单-----",
       JSON.stringify(this.left_menu_result)
     );
-    MATCH_LIST_TEMPLATE_CONFIG[`template_${this.get_match_tpl_number()}_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width, 'px'))
+    console.log('layout_content_width', LayOutMain_pc.layout_content_width - 15);
+    MATCH_LIST_TEMPLATE_CONFIG[`template_${this.get_match_tpl_number()}_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'))
     if ([2, 3].includes(Number(obj.root))) {
       // 角球
       if ([101210, 101310].includes(+obj.lv2_mi)) {

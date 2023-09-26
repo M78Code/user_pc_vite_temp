@@ -7,7 +7,6 @@
   <div class="yb-match-list column full-height   relative-position"
   :data-version="MatchListCardDataClass.list_version"
     >
- 
     <div class="test-info-wrap" v-if="GlobalAccessConfig.other.wsl">
    {{ MatchListCardDataClass.list_version }}--   {{ load_data_state }}-- length---  {{ match_list_card_key_arr.length }}
     </div>
@@ -29,9 +28,7 @@
             @click="on_refresh" />
         </template>
       </list-header>
-
       <!-- <div>menu_config.match_list_menu_show.list_filter {{ menu_config.match_list_menu_show.list_filter }}</div> -->
-
       <!-- 顶部菜单  // 滚球  冠军 -->
       <list-filter v-if="[1, 400].includes(parseInt(menu_config.menu_root)) && page_source != 'collect'"
         :collect_count="collect_count" :load_data_state="load_data_state" />
@@ -75,31 +72,23 @@
           <div style="height:15px"></div>
         </template>
       </scroll-list>
-      
       <div v-show="false"> {{ MatchListCardDataClass.list_version }}</div>
       <!-- <div> {{match_list_card_key_arr }}</div> -->
       <!-- 滚球其他列表 -->
       <scroll-list  v-if="menu_config.menu_root_show_shoucang != 300" style="height:1000px">
         <!-- v-for="card_key in MatchListCardDataClass.match_list_card_key_arr" -->
-        <template v-slot:before>
+        <!-- <template v-slot:before>
           <div :style="{ height: MatchListCardDataClass.sticky_top.fixed_header_height }"></div>
-        </template>
-        <div class="today-champion-bg" v-if="menu_config.menu_root == '2' || menu_config.menu_root == 400 || menu_config.menu_root != 2000"></div>
+        </template> -->
+        <!-- <div class="today-champion-bg" v-if="menu_config.menu_root == '2' || menu_config.menu_root == 400 || menu_config.menu_root != 2000"></div> -->
         <!-- ssssssssssssssssss66666666666666666 -->
-
         <!-- <div
           v-for="card_key in match_list_card_key_arr"
           :key="card_key" 
           :card_key="card_key" 
         >
         <div>     {{  card_key }}  </div>
-        
-   
-        
-      
       </div>   -->
-
-
     <div
           v-for="card_key in match_list_card_key_arr"
           :key="card_key" 
@@ -111,11 +100,6 @@
           :card_key="card_key" 
         />
       </div>  
-
-     
-
-
-
         <template v-slot:after>
           <div style="height:15px"></div>
           <div class="pager-wrap row justify-end">
@@ -136,10 +120,8 @@
     </div>
   </div>
 </template>
-
 <script>
 import { onMounted } from "vue";
-
 import LoadData from 'src/components/load_data/load_data.vue';
 import { LeagueTabFullVersionWapper as LeagueTab } from "src/components/tab/league-tab/index.js"; //联赛菜单
 import { ListFilterFullVersionWapper as listFilter } from "src/components/match-list/list-filter/index.js"; //赛事列表筛选：滚球-球种、早盘-日期
@@ -167,7 +149,6 @@ import "./match_list.scss";
 import {MatchDataWarehouse_PC_List_Common as MatchListData ,GlobalAccessConfig} from "src/core/index.js";
 const { mounted_fn, load_data_state, show_refresh_mask, collect_count, is_show_hot } = useMatchListMx();
 const { page_source } = PageSourceData;
-
 export default {
   components: {
     LeagueTab,
@@ -189,8 +170,6 @@ export default {
     });
     return {
       menu_config,
- 
-   
       MatchListData,
       show_refresh_mask,
       collect_count,
@@ -219,7 +198,6 @@ export default {
     MatchListCardDataClass_match_list_card_key_arr() {
       console.error('MatchListCardDataClass_match_list_card_key_arr');
       this.match_list_card_key_arr= MatchListCardDataClass.match_list_card_key_arr
-      
     }
   },
 };
@@ -240,7 +218,6 @@ export default {
 // virtualMatchTpl1: () => import( /* webpackChunkName: "details" */ "src/project/yabo/components/match_list/match_tpl_new_data/virtual_match_tpl1.vue"),  //拟足球 、 虚拟篮球
 // virtualMatchTpl2: () => import( /* webpackChunkName: "details" */ "src/project/yabo/components/match_list/match_tpl_new_data/virtual_match_tpl2.vue")   //拟赛马 、 虚拟赛狗
 </script>
-
 <style lang="scss" scoped>
 .test-info-wrap {
   color: red;
@@ -250,7 +227,6 @@ export default {
   left: 200px;
   z-index: 99999;
   display: flex;
-
   .fold-btn {
     border: 1px solid #ccc;
     font-size: 16px;
@@ -258,7 +234,6 @@ export default {
     padding: 5px;
   }
 }
-
 .leagues-tabs {
   height: 40px;
   position: sticky;

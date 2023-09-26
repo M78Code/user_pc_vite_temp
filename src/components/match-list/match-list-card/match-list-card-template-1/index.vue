@@ -5,7 +5,7 @@
       'sticky-wrap':['sport_title','play_title','no_start_title','league_title','champion_league_title'].includes(card_style_obj.card_type),
       'matc-type-card':['sport_title','play_title','no_start_title'].includes(card_style_obj.card_type)
     }"
-    :style="`height:${card_style_obj.card_total_height}px  !important;width:${LayOutMain_pc.layout_content_width}px  !important;${card_style}`"
+    :style="`height:${card_style_obj.card_total_height}px  !important;width:${LayOutMain_pc.layout_content_width - 15}px  !important;${card_style}`"
   >
   <!-- {{ card_key }}===> {{ card_style_obj.card_type }}===>      {{  mids_arr }} -->
   <!-- {{ card_key }}  {{ card_style_obj }} -->

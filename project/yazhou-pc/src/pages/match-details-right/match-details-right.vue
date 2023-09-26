@@ -21,6 +21,7 @@
       :style="{ 'margin-top': headerHeight + 'px' }"
       :is_detail="true"
     />
+
     <div class="screen" :class="{ 'video-page': route.name == 'video' }">
       <!-- 滚动区域 -->
       <v-scroll-area
@@ -32,6 +33,7 @@
       >
         <template v-slot:header>
           <!-- 全屏模式玩法集tab -->
+          
           <div
             class="full-video-tab"
             v-if="
@@ -86,16 +88,17 @@
               </div>
             </div>
             <!-- 多媒体控制头 -->
-            <!-- <video-ctrl
+            <video-ctrl
                :match_info="match_infoData"
                :refresh_loading="refresh_loading"
                @refresh="refresh()"
                @setfoldStatus="setfoldStatus"
-               v-if="route.name != 'video' && !is_esports" /> -->
+               v-if="route.name != 'video' && !is_esports" />
             <!-- 电竞多媒体控制头 -->
             <!-- <video-ctrl-esports :match_info="match_infoData" v-if="route.name != 'video' && is_esports" /> -->
             <!-- 战队信息 start -->
-            <!-- v-show和v-if 是masterJ写的  牛啊-->
+        
+
             <match-info
               v-if="route.name != 'video'"
               v-show="get_is_fold_status || is_esports"
@@ -112,11 +115,8 @@
                :mmp="+_.get(match_infoData,'mmp')"
                :matchTime="+_.get(match_infoData,'mst')" /> -->
             <!-- 玩法tab -->
+
             <handicap-tabs-bar
-              v-if="
-                (layout_cur_page.cur !== 'details' && !is_esports) ||
-                route.name == 'video'
-              "
               :handicap_this="handicap_this"
               :match_info="match_infoData"
               @get_mattch_details="get_mattch_details"
@@ -128,34 +128,25 @@
         </template>
 
         <!-- 【列表】 ------------->
-        <template
-          v-if="
-            (layout_cur_page.cur !== 'details' && !is_esports) ||
-            route.name == 'video'
-          "
-        >
-          <div
-            class="cathectic-handicap"
-            v-if="
-              route.params.video_size == '1' &&
-              vx_get_bet_single_list.length == 1
-            "
-          ></div>
-          <!-- 盘口模板start -->
-          <match-handicap
-            :match_info="match_infoData"
-            :category_list="category_list"
-            :match_details="match_details"
-            :plays_list="plays_list"
-            :currentRound="round"
-            :is_list="true"
-            @set_handicap_this="set_handicap_this"
-            :close_all_handicap="close_all_handicap"
-            :handicap_state="handicap_state"
-            pageType="right_details"
-          />
-          <!-- 盘口模板end -->
-        </template>
+        <!-- <template
+   
+        > -->
+        <!-- 盘口模板start -->
+        <match-handicap
+          :match_info="match_infoData"
+          :category_list="category_list"
+          :match_details="match_details"
+          :plays_list="plays_list"
+          :currentRound="round"
+          :is_list="true"
+          @set_handicap_this="set_handicap_this"
+          :close_all_handicap="close_all_handicap"
+          :handicap_state="handicap_state"
+          pageType="right_details"
+          load_type="details"
+        />
+        <!-- 盘口模板end -->
+        <!-- </template> -->
 
         <!-- 电竞 有视频赛事列表 -->
         <!-- <esports-match-list v-if="is_esports &&route.name != 'video'" /> -->
@@ -214,6 +205,7 @@
          /> -->
       </v-scroll-area>
       <!-- 全屏投注区域 -->
+
       <div
         v-if="
           route.params.video_size == '1' &&
@@ -288,8 +280,10 @@ let state = store.getState();
 const cur_expand_layout = ref(state.layoutReducer.cur_expand_layout);
 // 获取当前页路由信息
 const layout_cur_page = ref(state.layoutReducer.layout_cur_page);
-const handicap_this = ref(null);
+console.log(layout_cur_page, "layout_cur_page");
+
 const {
+  handicap_this,
   show_load_status,
   match_infoData,
   is_esports,
@@ -306,66 +300,81 @@ const {
   plays_list,
   round,
   close_all_handicap,
+  refresh_loading,
   /* func */
   get_mattch_details,
   on_go_top,
-  change_loading_state
+  change_loading_state,
+  set_handicap_this,
+  setfoldStatus
   /* func */
 } = useRightDetails({ route });
-/**
- * 把当前页面的数据给到玩法集
- */
-const set_handicap_this = (val) => {
-  handicap_this.value = val;
+// 是否显示 统计版块
+const show_wrap_total = computed(() => {
+  return (
+    match_infoData.mcg == 1 &&
+    [1, 2, 3, 4, 6, 5, 7, 9, 10].includes(
+      +lodash.get(match_infoData, "csid")
+    ) &&
+    get_global_switch.statistics_switch &&
+    match_infoData.cds !== "C01"
+  );
+});
+// 是否显示 聊天室
+const show_chatroom = computed(() => {
+  return (
+    route.name === "details" &&
+    vx_get_chatroom_available &&
+    ["zh", "tw"].includes(get_lang)
+  );
+});
+// 是否显示精彩回播
+const show_video_replay = computed(() => {
+  // 配置信息
+  const replayInfo = vx_get_user.merchantEventSwitchVO;
+  return (
+    replayInfo &&
+    replayInfo.eventSwitch &&
+    route.name === "details" &&
+    get_is_fold_status &&
+    details_params.media_type === "video" &&
+    Number(match_infoData.csid) === 1
+  );
+});
+// 展示热门推荐、近期关注等
+const show_more = computed(() => {
+  // 当前在详情页或者电竞页的时候展示
+  if (
+    (route.name == "details" || (is_esports && route.name != "video")) &&
+    route.name !== "search"
+  ) {
+    return true;
+  } else {
+    // 如果不在详情页，就在关盘的时候展示
+    return ["new_empty", "all_empty"].includes(handicap_state) && mid;
+  }
+});
+// 聊天室高度
+const chatroom_height = () => {
+  // 内嵌右侧
+  if (utils.is_iframe) {
+    return vx_get_layout_size.content_height - headerHeight - 7;
+  }
 };
-console.log(match_infoData, "match_infoData");
 
-  // 是否显示 统计版块
- const   show_wrap_total =computed( ()=>{
-     return (
-       match_infoData.mcg == 1 && [1, 2, 3,4,6,5,7,9,10].includes(+lodash.get(match_infoData,'csid')) &&get_global_switch.statistics_switch&&match_infoData.cds!=='C01'
-     )
-
-   })
-   // 是否显示 聊天室
-  const show_chatroom =computed(()=> {
-     return (
-         route.name === 'details' &&
-         vx_get_chatroom_available &&
-         ['zh', 'tw'].includes(get_lang)
-     )
-   })
-   // 是否显示精彩回播
-   const show_video_replay =computed(()=> {
-     // 配置信息
-     const replayInfo = vx_get_user.merchantEventSwitchVO
-     return replayInfo && replayInfo.eventSwitch && route.name === 'details' && get_is_fold_status && details_params.media_type === 'video' &&  Number(match_infoData.csid) === 1
-   })
-   // 展示热门推荐、近期关注等
-   const show_more=computed(()=>{
-     // 当前在详情页或者电竞页的时候展示
-     if((route.name=='details' || (is_esports && route.name != 'video')) &&  route.name !=='search'){
-       return true
-     } else{
-       // 如果不在详情页，就在关盘的时候展示
-       return ['new_empty','all_empty'].includes(handicap_state) && mid
-     }
-   })
-   // 聊天室高度
-   const chatroom_height =(()=> {
-     // 内嵌右侧
-     if (utils.is_iframe) {
-       return vx_get_layout_size.content_height - headerHeight - 7
-     }
-   })
-
-   // 是否展示右侧热门推荐处的margin
-   const is_show_margin= computed(()=> {
-       return ['new_empty','all_empty'].includes(load_detail_statu) && route.name !== 'details'
-   })
-
+// 是否展示右侧热门推荐处的margin
+const is_show_margin = computed(() => {
+  return (
+    ["new_empty", "all_empty"].includes(load_detail_statu) &&
+    route.name !== "details"
+  );
+});
 </script>
 
 <style lang="scss" scoped>
 @import "./index.scss";
+</style>
+
+<style lang="scss" >
+@import "../match-details//match-details.scss";
 </style>

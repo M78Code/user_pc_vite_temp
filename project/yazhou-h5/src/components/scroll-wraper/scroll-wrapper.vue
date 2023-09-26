@@ -31,7 +31,7 @@
             </span>
           </div>
           <div class="s-w-i-inner">
-            <slot :match_item="get_match_item(match_item.mid)" :index="index"></slot>
+            <slot :match_item="get_match_item(match_item.mid)" :mid="match_item.mid" :index="index"></slot>
           </div>
         </div>
       </template>
@@ -89,7 +89,7 @@ onMounted(() => {
 })
 
 // 监听 数据仓库版本号改变
-watch(() => MatchDataBaseH5.data_version.value, () => {
+watch(() => MatchDataBaseH5.data_version.version, () => {
   match_list.value = MatchDataBaseH5.list
   mid_obj.value = MatchDataBaseH5.list_to_obj.mid_obj
 })

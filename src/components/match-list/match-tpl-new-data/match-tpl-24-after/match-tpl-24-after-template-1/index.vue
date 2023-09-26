@@ -1,5 +1,5 @@
 <template>
-  <div class="c-match-item " :class="'tpl-'+match.tpl_id"  >
+  <div class="c-match-item " :class="'tpl-'+match_style_obj.data_tpl_id"  >
     <!-- 15分钟玩法标题 -->
     <div class=" flex absolute c15min-title">
       <div  :style="`width:${match_list_tpl_size.team_width+77}px !important;`"></div>
@@ -45,12 +45,21 @@
 <script setup>
 // import match_item_mixin from "src/project/yabo/mixins/match_list/match_item_mixin_new_data.js";
 // mixins: [match_item_mixin],
-import { computed } from 'vue';
+import { computed, defineProps } from 'vue';
+import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
 import { t } from "src/core/index.js";
-useRegistPropsHelper(component_symbol, need_register_props)
-;
+// useRegistPropsHelper(component_symbol, need_register_props)
+const props = defineProps ({
+  match: {
+    type: Object,
+    default: () => {}
+  }
+})
+
+let match_style_obj = MatchListCardDataClass.all_card_obj[props.match.mid+'_']
+
 
 // 其他玩法标题
 const bet_col = computed(() => {

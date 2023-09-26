@@ -8,7 +8,7 @@
                 :no_data_msg2="i18n_t('search.null2')" />
         </div>
         <!-- 滚动区域 -->
-        <q-scroll-area v-show="load_data_state == 'data'" class="fit rule-scroll-area" ref="scroll">
+        <q-scroll-area v-show="load_data_state == 'data'" class="fit rule-scroll-area" ref="scrollRef">
             <div class="serach-background" @click.stop>
                 <div style="height:70px"></div>
                 <!-- 赛种 -->
@@ -100,7 +100,6 @@ const keyword = ref(searchReducer.keyword)
 watch(
     () => keyword.value,
     (res) => {
-        console.error('keyword res', res);
         if (search_type.value == 2) {
             update_show_type('none')
         } else {
@@ -156,7 +155,7 @@ const scrollRef = ref(null)
  * @return {undefined} undefined
  */
 function match_click(match) {
-    search.result_scroll = scroll.value.scrollPosition
+    search.result_scroll = scrollRef.value.getScrollPosition()
     search.insert_history(match.name)
     details.on_go_detail(match, keyword.value.substr(5))
     set_search_status(false)
@@ -180,21 +179,20 @@ function get_search_result(keyword, is_loading) {
     //调用接口获取获取搜索结果数据
     search.get_search_result(keyword, props.search_csid).then(res => {
         const { state, list } = res
-        console.error('get_search_result', state, list);
         update_show_type('result')
         load_data_state.value = state
         res_list = list
-        let _ref_scroll = scroll.value;
+        let _ref_scroll = scrollRef.value;
         timer.value = setTimeout(() => {
             // 如果是从详情页返回
             if (search.back_keyword.keyword) {
                 nextTick(() => {
                     //重新设置滚动高度
-                    _ref_scroll && _ref_scroll.setScrollPosition && _ref_scroll.setScrollPosition(search.result_scroll, 0);
+                    _ref_scroll && _ref_scroll.setScrollPosition && _ref_scroll.setScrollPosition('vertical', search.result_scroll.top);
                 })
             } else {
                 //重新设置滚动高度
-                _ref_scroll && _ref_scroll.setScrollPosition && _ref_scroll.setScrollPosition(0, 0);
+                _ref_scroll && _ref_scroll.setScrollPosition && _ref_scroll.setScrollPosition('vertical', 0);
             }
         })
     })

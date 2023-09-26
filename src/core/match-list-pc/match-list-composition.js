@@ -4,7 +4,6 @@ import {
 } from "vue";
 import lodash from "lodash";
 // import router from "@/router/index"
-
 import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache.js";
 import { PageSourceData, MatchDataWarehouse_PC_List_Common as MatchListData } from "src/core/index.js";
 import { api_match } from "src/api/index.js";
@@ -25,14 +24,11 @@ import process_composable_fn from './composables/match-list-processing.js'
 // import MatchListDetailMiddleware from "src/core/match-list-detail-pc/index.js";
 import store from "src/store-redux/index.js";
 import ServerTime from 'src/core/server-time/server-time.js';
-
-
 // const route = router.currentRoute.value
-
 let state = store.getState();
 const { page_source } = PageSourceData;
 const { mx_use_list_res, mx_list_res, mx_collect_match } = process_composable_fn();
-const { update_collect_data, mx_collect_count, collect_count } = collect_composable_fn();
+const { update_collect_data, mx_collect_count, collect_count, mx_collect } = collect_composable_fn();
 const { show_mids_change } = ws_composable_fn();
 const { api_bymids } = use_featch_fn();
 const { load_video_resources } = pre_load_video
@@ -48,13 +44,11 @@ const is_loading = ref(true);
 const vx_match_sort = ref(state.filterReducer?.show_filter_popup);
 // 筛选是否全选
 const vx_filter_checked_all = ref(state.filterReducer?.show_filter_popup);
-
 // 左侧详情参数
 const vx_detail_params = ref(state.filterReducer.show_filter_popup);
 // 获取联赛筛选框显示状态
 const vx_show_filter_popup = ref(state.filterReducer.show_filter_popup);
 let show_refresh_mask = ref(false);
-
 const timer_obj = ref({});
 const api_error_count = ref(0);
 let check_match_last_update_timer_id;
@@ -65,7 +59,6 @@ let axios_debounce_timer;
 let axios_debounce_timer2;
 let virtual_list_timeout_id;
 let switch_timer_id
-
 const match_tpl_component = computed(() => {
 	let match_tpl;
 	let lv2_mi;
@@ -84,7 +77,6 @@ const match_tpl_component = computed(() => {
 	}
 	return match_tpl;
 });
-
 // 根据 mid 获取 联赛列表数据
 const get_match_list_by_mid_for_base_data_res = (mid, csid, type) => {
 	// 元数据
@@ -113,7 +105,6 @@ const get_match_list_by_mid_for_base_data_res = (mid, csid, type) => {
 };
 // 使用元数据默认显示 后面替换
 const set_base_data_init = () => {
- 
 	// return
 	// 当前的分类 左侧菜单数据 中间件数据
 	const {
@@ -289,14 +280,12 @@ const set_base_data_init = () => {
 	// 联赛数据
 	// set_match_base_info_by_mids_info(matchs_list, mids_arr, ts1);
 };
-
 /**
  * @description 请求数据
  * @param  {boolean} is_socket   是否 socket 调用
  * @param  {boolean} cut   是否 切换右侧详情  true 不切换
  * @param {Object} params 其他参数
  */
-
 const fetch_match_list = (is_socket = false, cut) => {
 	// 设置当前为赛事列表
 	// 如果有拉列表定时器 清除定时器
@@ -348,7 +337,6 @@ const fetch_match_list = (is_socket = false, cut) => {
 	} else {
 		_params.selectionHour = null;
 	}
-
 	// return
 	let send_match_list_request = () => {
 		/**返回数据处理************/
@@ -417,7 +405,6 @@ const fetch_match_list = (is_socket = false, cut) => {
 		send_match_list_request();
 	}
 };
-
 const handle_destroyed = () => {
 	clearTimeout(axios_debounce_timer);
 	clearTimeout(axios_debounce_timer2);
@@ -430,21 +417,20 @@ const handle_destroyed = () => {
 		clearTimeout(hot_match_list_timeout);
 	}
 	// this.debounce_throttle_cancel();
-	useMittOn(MITT_TYPES.EMIT_MiMATCH_LIST_SHOW_MIDS_CHANGE, show_mids_change()).off();
-	useMittOn(MITT_TYPES.EMIT_MX_COLLECT_COUNT_CMD, update_collect_data()).off();
-	useMittOn(MITT_TYPES.EMIT_MX_COLLECT_COUNT2_CMD, mx_collect_count()).off();
+	useMittOn(MITT_TYPES.EMIT_MiMATCH_LIST_SHOW_MIDS_CHANGE, show_mids_change()).off;
+	useMittOn(MITT_TYPES.EMIT_MX_COLLECT_COUNT_CMD, update_collect_data()).off;
+	useMittOn(MITT_TYPES.EMIT_MX_COLLECT_COUNT2_CMD, mx_collect_count()).off;
 	// 站点 tab 休眠状态转激活
-	useMittOn(MITT_TYPES.EMIT_SITE_TAB_ACTIVE, emit_site_tab_active()).off();
+	useMittOn(MITT_TYPES.EMIT_SITE_TAB_ACTIVE, emit_site_tab_active()).off;
 	clearTimeout(virtual_list_timeout_id);
 	clearTimeout(switch_timer_id);
 	clearTimeout(get_match_list_timeid);
 	// 调用列表接口
-	useMittOn(MITT_TYPES.EMIT_FETCH_MATCH_LIST, fetch_match_list()).off();
-	useMittOn(MITT_TYPES.EMIT_API_BYMIDS, api_bymids({})).off();
-	useMittOn(MITT_TYPES.EMIT_MX_COLLECT_MATCH, mx_collect_match()).off();
+	useMittOn(MITT_TYPES.EMIT_FETCH_MATCH_LIST, fetch_match_list()).off;
+	useMittOn(MITT_TYPES.EMIT_API_BYMIDS, api_bymids({})).off;
+	useMittOn(MITT_TYPES.EMIT_MX_COLLECT_MATCH, mx_collect_match()).off;
 	timer_obj.value = {};
 }
-
 const init_page_when_base_data_first_loaded=()=>{
     // 元数据 
   set_base_data_init();
@@ -455,16 +441,11 @@ const init_page_when_base_data_first_loaded=()=>{
     30000
   );
 }
-
-
-
 const mounted_fn = () => {
 // 开启自动化测试功能
 	 // this.DOM_ID_SHOW = window.BUILDIN_CONFIG.DOM_ID_SHOW;
 	 // 列表数据仓库
 	 MatchListData.init();
-	 
-
 	timer_obj.value = {};
 	store.dispatch({
 		type: "SET_IS_ROLL_SHOW_BANNER",
@@ -488,7 +469,6 @@ const mounted_fn = () => {
 	useMittOn(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA, init_page_when_base_data_first_loaded);
 	load_video_resources();
 }
-
 // watch(MenuData.match_list_api_config.version, (cur) => {
 // 		// bug 版本没有变化 也可以进入
 // 		if (MenuData.api_config_version != cur) {
@@ -507,11 +487,9 @@ const mounted_fn = () => {
 // 	},
 // 	{ deep: true }
 // );
-
 // onUnmounted(() => {
 // 	handle_destroyed()
 // });
-
 /**
  * // 处理服务器返回的 列表 数据   fetch_match_list
  */
@@ -581,7 +559,6 @@ const get_hot_match_list = (backend_run = false) => {
 					match_list,
 					true
 				);
-				
 				if (!backend_run) {
 					// 调用bymids接口
 					// api_bymids({ is_first_load: true });
@@ -616,8 +593,6 @@ const get_hot_match_list = (backend_run = false) => {
 			}
 		});
 };
-
-
 /**
  * @description 返回顶部
  * @return {undefined} undefined
@@ -633,8 +608,6 @@ const on_refresh = () => {
 	fetch_match_list(2);
 	show_refresh_mask.value = true;
 };
-
-
 /**
  * @Description 删除赛事数据 卡片
  * @param {*} mid 删除赛事id
@@ -719,13 +692,8 @@ const check_match_last_update_time = () => {
 const emit_site_tab_active = () => {
 	fetch_match_list(true);
 };
-
-
-
 export  default function(){
-
 	return {
-
 		match_list,
 		is_loading,
 		vx_filter_checked_all,
@@ -743,9 +711,6 @@ export  default function(){
 		check_match_last_update_time,
 		get_match_list_by_mid_for_base_data_res,
 		mounted_fn,
-
+		mx_collect,
 	}
- 
-
- 
 }; ;

@@ -154,8 +154,7 @@ export const useMethods = ({ props,emit }) => {
   watch(
     () => props.match_details,
     (res) => {
-      console.log(!lodash.get(res,'[0].odds_info'),'!lodash.get');
-      if(!lodash.get(res,'[0].odds_info'))  return
+      if(!lodash.get(res,'[0].odds_info'))  return false
       state.load_detail_statu = props.handicap_state;
       if (props.handicap_state != "data") {
         state.details_data = [];
@@ -164,7 +163,7 @@ export const useMethods = ({ props,emit }) => {
       }
       change_detail(res[0].odds_info);
     },
-    { immediate: true, deep: true }
+    // {  deep: true }
   );
   // watch(get_right_zoom, (val) => {
   //   this.wrap_tabs_width = this.$refs.warp.offsetWidth;
@@ -533,17 +532,18 @@ const rang = ref([])
       163, 172, 176, 181, 185, 232, 243, 249, 253, 268, 269, 270, 278, 280, 294,
       306, 308, 324, 327, 334, 20003, 20004, 20015,
     ];
-
-
-   const data={
+  });
+  watch(()=>props.category_list,(newVal)=>{
+    const data={
       ...toRefs(state),
       category_list:props.category_list,
       toggele_layout,
       check_half,
     }
     useMittEmit(MITT_TYPES.EMIT_SET_HANDICAP_THIS, data)
-
-  });
+  })
+    
+  
   onUnmounted(() => {
     // useMittOn(MITT_TYPES.EMIT_SET_MATCH_DETAIL_LOAD_STATE, set_load_state).off;
     // useMittOn(

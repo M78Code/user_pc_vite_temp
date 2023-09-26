@@ -449,8 +449,7 @@
           <match-overtime-pen v-if="!['detail_match_list', 'home_hot_page_schedule'].includes(main_source) &&
             [1, 2, 5, 7, 8].includes(+match.csid) && get_newer_standard_edition != 1" 
             :main_source="main_source" 
-            :matchCtr="matchCtr" 
-            :i="i" />
+            :mid="mid" />
         </div>
       </div>
     </div>
@@ -484,6 +483,7 @@ import { normal_img_not_favorite_white, normal_img_not_favorite_black, normal_im
 // mixins: [formatmixin, odd_convert, bettings, match_list_mixin, msc_bw3, common],
 const emits = defineEmits(['unfold_changed', 'toggle_collect_league', 'toggle_collect_match'])
 const props = defineProps({
+  mid: String,
   // 当前组件的赛事数据对应列表的赛事
   match_of_list: Object,
   // 赛事处于列表中的下标

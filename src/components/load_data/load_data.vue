@@ -263,7 +263,7 @@ export default {
 <style lang="scss" scoped>
 .load-data-wrap {
   min-height: 60%;
-  overflow: auto;
+  // overflow: auto;
   &.is-detail {
     .loading-wrap,
     .empty-wrap {

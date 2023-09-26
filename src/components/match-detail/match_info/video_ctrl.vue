@@ -7,63 +7,145 @@
   <div class="c-video-ctrl">
     <!-- 控制区 -->
     <div class="ctrl-wrap row items-center justify-between">
-      <div class="unfold" :class="{ 'open': vx_get_is_fold_status }" @click="$emit('setfoldStatus')"></div>
+      <div
+        class="unfold"
+        :class="{ open: vx_get_is_fold_status }"
+        @click="$emit('setfoldStatus')"
+      ></div>
 
       <div class="col-center row full-height">
         <!-- 媒体图标 -->
-        <div v-for="item in media_icons" :key="item.type" class="wrap_source relative-position"
-          :class="{ active: vx_play_media.media_type == item.type, line: vx_play_media.media_type == item.type && !is_hover }"
-          @click="toggle_play_media(item.type)" @mouseenter="is_hover = true" @mouseleave="is_hover = false"
-          v-show="get_media_icon_show(item.type)">
-          <q-tooltip anchor="top middle" self="center middle"
-            :content-style="tooltip_style + ';transform:translateY(8px)'">{{ item.text }}</q-tooltip>
-          <div :class="['vicon', `${item.icon}-icon`, { active: vx_play_media.media_type == item.type }]"></div>
+        <div
+          v-for="item in media_icons"
+          :key="item.type"
+          class="wrap_source relative-position"
+          :class="{
+            active: vx_play_media.media_type == item.type,
+            line: vx_play_media.media_type == item.type && !is_hover,
+          }"
+          @click="toggle_play_media(item.type)"
+          @mouseenter="is_hover = true"
+          @mouseleave="is_hover = false"
+          v-show="get_media_icon_show(item.type)"
+        >
+          <q-tooltip
+            anchor="top middle"
+            self="center middle"
+            :content-style="tooltip_style + ';transform:translateY(8px)'"
+            >{{ item.text }}</q-tooltip
+          >
+          <div
+            :class="[
+              'vicon',
+              `${item.icon}-icon`,
+              { active: vx_play_media.media_type == item.type },
+            ]"
+          ></div>
         </div>
       </div>
       <!-- 全屏 -->
       <div class="col-right">
-        <div class="fold-btn" @click="set_unfold_multi_column(true)"
-          v-if="menu_data.is_multi_column && get_global_switch.multi_column && !get_unfold_multi_column && ['search', 'home'].includes($route.name) && !vx_show_filter_popup">
-          <span class="text">{{ $t('icon_tips.fold') }}</span>
+        <div
+          class="fold-btn"
+          @click="set_unfold_multi_column(true)"
+          v-if="
+            menu_data.is_multi_column &&
+            get_global_switch.multi_column &&
+            !get_unfold_multi_column &&
+            ['search', 'home'].includes($route.name) &&
+            !vx_show_filter_popup
+          "
+        >
+          <span class="text">{{ $t("icon_tips.fold") }}</span>
           <i class="icon-arrow q-icon c-icon" size="12px"></i>
         </div>
-        <div v-if="animation_btn_show && ['animation'].includes(vx_play_media.media_type) && vx_get_is_fold_status">
-          <icon name="icon-big" color="#5A6074" size="14px" @click="full_screen" />
-          <q-tooltip anchor="top middle" self="center middle"
-            :content-style="tooltip_style + ';white-space: nowrap;'">{{ $t('video.big_screen_mode') }}</q-tooltip>
+        <div
+          v-if="
+            animation_btn_show &&
+            ['animation'].includes(vx_play_media.media_type) &&
+            vx_get_is_fold_status
+          "
+        >
+          <icon-wapper
+            name="icon-big"
+            color="#5A6074"
+            size="14px"
+            @click="full_screen"
+          />
+          <q-tooltip
+            anchor="top middle"
+            self="center middle"
+            :content-style="tooltip_style + ';white-space: nowrap;'"
+            >{{ $t("video.big_screen_mode") }}</q-tooltip
+          >
           <!-- 全屏 -->
         </div>
         <!-- 刷新按钮 -->
         <div class="refresh">
-          <refresh :other_icon="true" icon_name="icon-balance_refresh" :loaded="refresh_loading" @click="refresh()" />
+          <refresh
+            :other_icon="true"
+            icon_name="icon-balance_refresh"
+            :loaded="refresh_loading"
+            @click="refreshFunc()"
+          />
         </div>
       </div>
     </div>
 
     <!-- 战队信息 -->
     <div class="vs-team-wrap relative-position" v-if="match_info.mid != -1">
-      <div class="absolute-wrap" :data-mid='match_info.mid' :style="{ height: team_height }">
+      <div
+        class="absolute-wrap"
+        :data-mid="match_info.mid"
+        :style="{ height: team_height }"
+      >
         <!--对战队伍展示-->
-        <div class="item current vs-team-container"
-          :class="{ 'cursor-pointer': vx_play_media.media_type == 'video', 'team-wrap-bg': !vx_get_is_fold_status }"
-          @click.stop="toggle_item">
+        <div
+          class="item current vs-team-container"
+          :class="{
+            'cursor-pointer': vx_play_media.media_type == 'video',
+            'team-wrap-bg': !vx_get_is_fold_status,
+          }"
+          @click.stop="toggle_item"
+        >
           <div class="line"></div>
-          <sport-icon v-if="match_info.csid && match_info.csid != -1" :sport_id="match_info.csid" status="2"
-            size="18px" />
-          <div class="team-wrap ellipsis col allow-user-select" v-if="match_info.mhn">
+          <sport-icon
+            v-if="match_info.csid && match_info.csid != -1"
+            :sport_id="match_info.csid"
+            status="2"
+            size="18px"
+          />
+          <div
+            class="team-wrap ellipsis col allow-user-select"
+            v-if="match_info.mhn"
+          >
             {{ match_info.mhn }}
             <span class="separate">v</span>
             {{ match_info.man }}
           </div>
-          <div class="yb-icon-arrow" :class="{ active: team_height == this.height1 }"
-            v-show="videos.length > 0 && ['video', 'animation'].includes(vx_play_media.media_type) && vx_get_is_fold_status">
-          </div>
+          <div
+            class="yb-icon-arrow"
+            :class="{ active: team_height == height1 }"
+            v-show="
+              videos.length > 0 &&
+              ['video', 'animation'].includes(vx_play_media.media_type) &&
+              vx_get_is_fold_status
+            "
+          ></div>
         </div>
 
         <!--视频切换-->
-        <q-scroll-area class="scroll-area rule-scroll-area" ref="match_scroll_area">
-          <div class="item" :class="{ active: val.mid == match_info.mid }" v-for="(val, key) in videos" :key="key"
-            @click="switch_video(val)">
+        <q-scroll-area
+          class="scroll-area rule-scroll-area"
+          ref="match_scroll_area"
+        >
+          <div
+            class="item"
+            :class="{ active: val.mid == match_info.mid }"
+            v-for="(val, key) in videos"
+            :key="key"
+            @click="switch_video(val)"
+          >
             <div class="line"></div>
             <sport-icon :sport_id="val.csid" status="2" size="18px" />
             <div class="team-wrap ellipsis col">
@@ -75,106 +157,350 @@
         </q-scroll-area>
       </div>
     </div>
-
-
   </div>
 </template>
-
-<script>
-import video_ctrl from "./match_info_mixin/video_ctrl";
-import { IconWapper } from 'src/components/icon'
+<script setup>
+import { tooltip_style } from "src/core/config/global-component-style.js";
+import sportIcon from "src/components/sport_icon/sport_icon.vue";
+// import video from "src/core/video/video.js"
+import details from "src/core/match-list-pc/details-class/details.js";
+import { computed, onMounted, onUnmounted, ref, watch } from "vue";
+import MenuData from "src/core/menu-pc/menu-data-class.js";
+import { IconWapper } from "src/components/icon";
 import refresh from "src/components/refresh/refresh.vue";
-import { i18n_t } from "src/core/index"
-export default {
-  mixins: [video_ctrl],
-  components: {refresh, IconWapper},
-  props: {
-    refresh_loading: {
-      type: Boolean,
-      default: false
-    }
+import { i18n_t, get_match_status } from "src/core/index";
+import lodash from "lodash";
+const props = defineProps({
+  refresh_loading: {
+    type: Boolean,
+    default: false,
   },
-  data(){
-    return {
-       media_icons:[
-        /**比分版 */
-        {
-          type:"info",
-          text:i18n_t('common.score_board'),
-          icon:"switch"
-        },
-        /**演播室 */
-        {
-          type:"studio",
-          text:i18n_t('common.studio'),
-          icon:"studio"
-        },
-        /**主播 */
-        {
-          type:"anchor",
-          text:i18n_t('common.anchor'),
-          icon:"anchor"
-        },
-        /** 专题*/
-        {
-          type:"topic",
-          text:i18n_t('common.topic'),
-          icon:"topic"
-        },
-        /**源视频 */
-        {
-          type:"video",
-          text:i18n_t('common.o_video'),
-          icon:"video"
-        },
-         /**动画 */
-       {
-          type:"animation",
-          text:i18n_t('common.animate'),
-          icon:"animation"
-        },
-       ]
-    }
+  match_info: Object, //赛事详情
+  icons_right: Number,
+});
+const emit = defineEmits(["refresh"]);
+const thumb_style2 = ref({}); //赛事列表滚动条样式
+const height0 = ref("100%"); //战队信息盒子高度初始高度
+const height1 = ref("216px"); //有视频的赛事列表滚动区域高度
+const team_height = ref(height0.value); //战队信息盒子高度
+const videos = ref([]); //有视频的赛事列表
+const is_hover = ref(false); //视频icon是否hover
+const menu_data = ref(MenuData); //菜单数据
+const media_icons = [
+  /**比分版 */
+  {
+    type: "info",
+    text: i18n_t("common.score_board"),
+    icon: "switch",
   },
-  methods:{
-    /**
-     * @Description:获取图标是否显示
-     * @returns
-     */
-    get_media_icon_show(type){
-      switch (type) {
-        case 'info':
-          return true
-        case 'video':
-          return  this.video_btn_show
-        case 'animation':
-          return  this.animation_btn_show
-        case 'studio':
-          return this.studio_btn_show
-        case 'topic':
-          return this.topic_btn_show
-        default:
-          return false
-      }
-
-    },
-    refresh() {
-      this.$emit('refresh')
-    }
+  /**演播室 */
+  {
+    type: "studio",
+    text: i18n_t("common.studio"),
+    icon: "studio",
   },
-  created(){
-    let autoPlay = sessionStorage.getItem('auto_play_media')
-    if(autoPlay) {
-      this.toggle_play_media('video')
-      sessionStorage.removeItem('auto_play_media');
-    }
-    // 刷新按钮节流
-    this.refresh = this.throttle(this.refresh, 1000,{leading:true, trailing:false});
+  /**主播 */
+  {
+    type: "anchor",
+    text: i18n_t("common.anchor"),
+    icon: "anchor",
   },
-  beforeUnmount() {
-    this.debounce_throttle_cancel(this.refresh);
+  /** 专题*/
+  {
+    type: "topic",
+    text: i18n_t("common.topic"),
+    icon: "topic",
+  },
+  /**源视频 */
+  {
+    type: "video",
+    text: i18n_t("common.o_video"),
+    icon: "video",
+  },
+  /**动画 */
+  {
+    type: "animation",
+    text: i18n_t("common.animate"),
+    icon: "animation",
+  },
+];
+//todo
+const vx_play_media = {
+  mid: "2771471",
+  media_type: "info",
+  is_auto: true,
+};
+const vx_get_is_fold_status =ref(false)
+const set_play_media_timer = ref(null);
+/**
+ * @Description:获取图标是否显示
+ * @returns
+ */
+const get_media_icon_show = (type) => {
+  switch (type) {
+    case "info":
+      return true;
+    case "video":
+      return video_btn_show;
+    case "animation":
+      return animation_btn_show;
+    case "studio":
+      return studio_btn_show;
+    case "topic":
+      return topic_btn_show;
+    default:
+      return false;
   }
 };
+const refreshFunc = lodash.throttle(
+  () => {
+    // 刷新按钮节流
+    emit("refresh");
+  },
+  1000,
+  {
+    leading: true,
+    trailing: false,
+  }
+);
+
+//     computed: {
+//   // ...mapGetters({
+//   //   //视频播放类型
+//   //   vx_play_media: "get_play_media",
+//   //   //全局点击事件
+//   //   get_global_click: 'get_global_click',
+//   //   // 左侧详情参数
+//   //   vx_details_params: "get_match_details_params",
+//   //    //是否展开多列玩法
+//   //   get_unfold_multi_column:"get_unfold_multi_column",
+//   //   // 是否显示联赛筛选框
+//   //   vx_show_filter_popup: "get_show_filter_popup",
+//   //   //全局开关
+//   //   get_global_switch:'get_global_switch',
+//   //   //多语言
+//   //   lang: "get_lang",
+//   //   //视频是否展开状态
+//   //   vx_get_is_fold_status:'get_is_fold_status'
+//   // }),
+/**
+ * @Description:视频按钮是否显示
+ * @return {boolean}
+ */
+const video_btn_show = computed(() => {
+  return (
+    props.match_info.mms == 2 && get_match_status(props.match_info.ms) == 1
+  );
+});
+/**
+ * @Description:动画按钮是否显示
+ * @return {boolean}
+ */
+const animation_btn_show = computed(() => {
+  return props.match_info.mvs > -1;
+});
+/**
+ * @Description:演播室按钮是否显示
+ * @returns
+ */
+const studio_btn_show = computed(() => {
+  return (
+    props.match_info.lvs == 2 &&
+    props.match_info.lss === 1 &&
+    ["zh", "tw"].includes(this.lang)
+  );
+});
+/**
+ * @Description:演播室按钮是否显示
+ * @returns
+ */
+const topic_btn_show = computed(() => {
+  return (
+    props.match_info.lvs == 2 &&
+    props.match_info.lss === 0 &&
+    ["zh", "tw"].includes(this.lang) &&
+    this.$utils.get_match_status(props.match_info.ms) !== 1
+  );
+});
+//切换赛事列表盒子高度改变
+watch(
+  () => team_height,
+  (res) => {
+    if (res == height1.value) {
+      get_videos();
+    }
+  }
+);
+//全局点击事件
+// watch(
+//   () => get_global_click,
+//   () => {
+//     this.team_height = this.height0;
+//     this.is_show_content = false;
+//   }
+// );
+
+// ...mapActions({
+//   // 视频置顶开关
+//   set_isTop: "set_isTop",
+//   // 视频播放信息
+//   vx_set_play_media: "set_play_media",
+//   // ---未使用
+//   vx_set_video_init: "set_video_init",
+//   // ---未使用
+//   set_right_zoom: "set_right_zoom",
+//   // 赛事详细参数（赛事/联赛/球类/直播类型）
+//   vx_set_match_details_params: "set_match_details_params",
+//   //收起右侧详情 展开多列玩法
+//   set_unfold_multi_column:"set_unfold_multi_column",
+//   // 设置获取视频是否展开状态
+//   vx_set_is_fold_status: "set_is_fold_status"
+// }),
+/**
+ * @Description:切换视频
+ * @param {string} match 赛事信息
+ */
+const switch_video = (match) => {
+  this.team_height = this.height0;
+  if (match.mid == props.match_info.mid) return;
+
+  let { mid, tid, csid: sportId } = match;
+  let play_id = this.vx_details_params.play_id;
+  this.vx_set_match_details_params({
+    mid,
+    tid,
+    sportId,
+    play_id,
+    media_type: this.vx_play_media.media_type,
+    category: this.$route.name == "details" ? 1 : 0,
+  });
+  if (this.$route.name == "details") {
+    this.$router.push({
+      name: "details",
+      params: {
+        mid,
+        tid,
+        csid: sportId,
+      },
+    });
+  }
+};
+/**
+ * @Description:切换赛事列表弹层
+ * @return {undefined} undefined
+ */
+const toggle_item = () => {
+  // 如果右侧视频区是折叠，则会展开
+  if (!vx_get_is_fold_status.value) {
+    this.vx_set_is_fold_status(!vx_get_is_fold_status.value);
+  }
+  if (
+    !["video", "animation", "studio", "anchor", "topic"].includes(
+      this.vx_play_media.media_type
+    ) ||
+    !vx_get_is_fold_status.value
+  ) {
+    this.team_height = this.height0;
+    return;
+  }
+  this.team_height =
+    this.team_height == this.height1 ? this.height0 : this.height1;
+};
+/**
+ * @Description:获取有视频的赛事列表
+ * @return {undefined} undefined
+ */
+const get_videos = () => {
+  video.get_videos((res) => {
+    this.videos = res;
+    let index = details.get_match_index(props.match_info.mid, res);
+    //当前选择赛事不在可见区域时 滚动到可见区域
+    if (index > 4) {
+      this.$nextTick(() => {
+        let top = (index - 3) * 36;
+        this.$refs.match_scroll_area &&
+          this.$refs.match_scroll_area.setScrollPosition(top, 0);
+      });
+    }
+  });
+};
+/**
+ * @Description:切换视频或动画
+ * @param {string} media_type 切换类型
+ */
+const toggle_play_media = (media_type) => {
+  // 如果右侧视频区是折叠，则会展开
+  if (!vx_get_is_fold_status.value) {
+    this.vx_set_is_fold_status(!vx_get_is_fold_status.value);
+  }
+  let { mms, mvs, mid, lvs = -1, lss = -1 } = props.match_info;
+  let { mid: play_mid, media_type: play_media_type } = this.vx_play_media;
+
+  // 当前已在播放了 则不在重新加载
+  if (mid != play_mid || (mid == play_mid && media_type != play_media_type)) {
+    if (
+      (media_type == "video" && mms == 2) ||
+      (media_type == "animation" && mvs > -1) ||
+      (media_type == "studio" && lvs == 2 && lss === 1) ||
+      (media_type == "topic" && lvs == 2 && lss === 0) ||
+      media_type == "info"
+    ) {
+      if (media_type == "info") {
+        details.sync_mst(mid);
+      }
+
+      // 专题视频切换其他媒体类型前 通知子iframe记录当前播放时间
+      if (play_media_type === "topic") {
+        video.send_message({
+          cmd: "record_play_info",
+          val: {
+            record_play_time: true,
+          },
+        });
+      }
+
+      clearTimeout(this.set_play_media_timer);
+      this.set_play_media_timer = setTimeout(() => {
+        {
+          mid, media_type, time;
+        }
+        store.dispatch({
+          type: "SET_PLAY_MEDIA",
+          data: { media_type, mid, time: Date.now() },
+        });
+      }, 50);
+    }
+  }
+};
+/**
+ * @Description:视频进入全屏
+ */
+const full_screen = () => {
+  // 根据icon获取数据源类型
+  let play_type = this.$utils.get_media_icon_index(
+    this.vx_play_media.media_type
+  );
+  video.full_screen(props.match_info, play_type);
+};
+
+onMounted(() => {
+  let autoPlay = sessionStorage.getItem("auto_play_media");
+  if (autoPlay) {
+    this.toggle_play_media("video");
+    sessionStorage.removeItem("auto_play_media");
+    Object.assign(this.thumb_style2, {
+      width: "8px",
+      right: "4px",
+    });
+    get_videos();
+    refreshFunc();
+  }
+});
+onUnmounted(() => {
+  lodash.debounce_throttle_cancel(refresh);
+  clearTimeout(set_play_media_timer);
+  set_play_media_timer.value = null;
+});
 </script>
 
 <style lang="scss" scoped>
@@ -191,7 +517,7 @@ export default {
     background-size: 100%;
     cursor: pointer;
   }
-  .col-center{
+  .col-center {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
@@ -201,12 +527,12 @@ export default {
     width: 20px;
     height: 14px;
   }
-  .q-icon  {
+  .q-icon {
     cursor: pointer;
   }
-  .col-right  {
+  .col-right {
     display: flex;
-    .fold-btn{
+    .fold-btn {
       border-radius: 11px;
       padding: 2px 7px 2px 11px;
       color: #fff;
@@ -214,17 +540,17 @@ export default {
       align-items: center;
       font-size: 12px;
       cursor: pointer;
-       .text{
+      .text {
         margin-right: 2px;
       }
-      .icon-arrow{
-          transform: rotate(90deg);
-          &::before{
-           color: #fff;
-          }
+      .icon-arrow {
+        transform: rotate(90deg);
+        &::before {
+          color: #fff;
+        }
       }
     }
-    .icon-big{
+    .icon-big {
       padding-left: 8px;
     }
     .refresh {
@@ -242,9 +568,9 @@ export default {
         align-items: center;
         justify-content: center;
         .icon-balance_refresh {
-          span{
+          span {
             font-size: 18px;
-            &::before{
+            &::before {
               color: #999;
             }
           }
@@ -332,7 +658,7 @@ export default {
       padding: 9px 28px;
       font-size: 12px;
     }
-    .yb-icon-triangle  {
+    .yb-icon-triangle {
       position: absolute;
       top: -5px;
       left: 17px;

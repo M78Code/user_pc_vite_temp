@@ -9,7 +9,7 @@
     <!-- <div class="cathectic-ref_data.appoint"
       v-if="!_.isEmpty(BetData.bet_appoint_obj) && BetData.bet_appoint_obj.bet_appoint_id != id"></div> -->
     <!--玩法,提示及删除区域-->
-    <!-- <div>{{ BetData.bet_data_class_version }}</div> -->
+    <div>{{ BetData.bet_data_class_version }}</div>
 
     <q-card-section>
       <!--不是冠军-->
@@ -36,8 +36,11 @@
               {{ item.home }}<span class='bet-pk'> v </span>{{ item.away }}
             </span>
             <!--足,蓝,棒,乒,排[1,2,3,8,9]-->
-            <span v-if="[1, 2, 3, 8, 9].includes(item.csid * 1) && ref_data.timerly_basic_score" class="score">({{
-              ref_data.timerly_basic_score }})</span>
+            <span
+              v-if="[1, 2, 3, 8, 9].includes(item.sportId * 1) && item.show_mark_score && ![0, 100].includes(Number(item.match_ms))"
+              class="score">
+              ({{ item.show_mark_score }})
+            </span>
           </template>
         </div>
         <!--删除按钮-->
@@ -73,28 +76,28 @@
           <!--卡赫利赛哈特 :class="{'bet-handicap': handicap_change}"-->
           <label class="bet-team-handicap">
 
-            <label class="yb-number-bold">{{ item.handicap }}</label>
-            <!--【预约】-->
-            <label
-              v-if="ref_data.active == 1 && (item.sportId == 1 || item.sportId == 2) && pending_order_status(item.playOptionsId) == 1 && ref_data.appoint">{{ `[${$t('bet.bet_book2')}]` }}</label>
+            <label class="yb-number-bold">
+              <span class="bet-handicap-color">{{ item.handicap }}</span>
+              <span>{{ item.handicap_attach }}</span>
+            </label>
+
           </label>
           <!--+/1.5-->
         </div>
-        <div>
+        <div class="bet-team-handicap-odd">
           <div class="col bet-odds-value" :class="{
             'up-red': ref_data.odds_change_up,
             'down-green': ref_data.odds_change_down
           }">
             <!--投注赔率1.87-->
             <span class="odds-value yb-number-bold">
-              <span>@</span>{{ format_odds(item.oddFinally, item.csid) }}
+              <span>@</span>{{ format_odds(item.oddFinally, item.sportId) }}
             </span>
           </div>
-          <div class="auto-col" v-if="!(ref_data.active == 1 || ref_data.active == 4)">
-            <span class="invalid">
-              {{ i18n_t('common.invalid') }}
-            </span>
-          </div>
+          <!--【预约】-->
+          <label class="appoint" v-if="pending_order_status(item.playOptionsId)">
+            {{ `[${$t('bet.bet_book2')}]` }}
+          </label>
         </div>
       </div>
       <!--金额输入区域 'pr32': is_show_keyboard, 'input-focus':is_show_keyboard,-->
@@ -141,7 +144,7 @@ const props = defineProps({
 */
 const pending_order_status = computed(() => options_id => {
   let bet_obj = BetData.bet_appoint_obj.find(item => item == options_id) || '';
-  if(bet_obj) {
+  if (bet_obj && ref_data.active == 1 && [1, 2].includes(Number(props.item.sportId))) {
     return 1
   }
   return 0;
@@ -155,7 +158,6 @@ const ref_data = reactive({
   timerly_basic_score: "",   // 计时比分 返回比分格式为: (主队得分-客队得分)
   market_type: '',     // 赛事状态 0未开赛 滚球:进行中
   basic_score: "",    /// 赛事比分 返回比分格式为: (主队得分-客队得分)
-  appoint: true, // 是否预约
   odds_change_up: false,  // 赔率上升
   odds_change_down: false, // 赔率下降
 })
@@ -228,6 +230,7 @@ const del_bet_item = () => {
     /**盘口*/
     .bet-handicap-name {
       white-space: pre-wrap;
+
     }
   }
 }
@@ -257,6 +260,11 @@ const del_bet_item = () => {
       &.margin-left-0 {
         margin-left: 0px;
       }
+    }
+
+    .bet-handicap-color {
+      color: var(--q-gb-t-c-16);
+      margin-right: 5px;
     }
   }
 }
@@ -388,4 +396,14 @@ const del_bet_item = () => {
 .ref_data.appoint {
   height: 50px;
 }
+
+.bet-team-handicap-odd {
+  display: flex;
+  justify-content: space-between;
+
+  .appoint {
+    
+  }
+}
+
 </style>

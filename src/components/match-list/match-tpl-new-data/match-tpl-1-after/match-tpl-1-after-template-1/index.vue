@@ -55,7 +55,7 @@
       <div class="other-play-tab" v-if="lodash.get(match, 'has_other_play')">
         <!-- <div class="process-col"></div> -->
         <div class="play-title col" @click="fold_tab_play"
-          :style="`width:${match_list_tpl_size.team_width + match_list_tpl_size.bet_width * (match.tpl_id == 13 ? 13 : 6)}px !important;flex:none`">
+          :style="`width:${match_list_tpl_size.team_width + match_list_tpl_size.bet_width * (match_style_obj.data_tpl_id == 13 ? 13 : 6)}px !important;flex:none`">
           <div class="arrow-wrap yb-flex-center">
             <div class="yb-icon-arrow" :class="{ active: match_style_obj.is_fold_tab_play }"></div>
           </div>
@@ -131,8 +131,6 @@ const props = defineProps({
   },
 })
 
-console.log('进来了  进来了  进来了');
-
 const play_name_list = ref([]);
 let match_style_obj = MatchListCardDataClass.all_card_obj[props.mid+'_']
 const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`].width_config
@@ -143,7 +141,7 @@ const is_mounted = ref(true);
 const bet_col = computed(() => {
   let bet_col = []
   //是否多列
-  let multi_column = lodash.get( 'match.tpl_id') == 13
+  let multi_column = lodash.get( 'match_style_obj.data_tpl_id') == 13
   let play_current_key = lodash.get( 'match.play_current_key')
   // 5分钟玩法
   if (play_current_key == 'hps5Minutes') {
@@ -295,7 +293,7 @@ const set_secondary_bg = (index, length) => {
 */
 const get_bet_width = (index, length) => {
   //是否多列
-  let multi_column = lodash.get( 'match.tpl_id') == 13
+  let multi_column = lodash.get( 'match_style_obj.data_tpl_id') == 13
   let bet_width = match_list_tpl_size.bet_width
   if (multi_column) {
     if (length == 5) {

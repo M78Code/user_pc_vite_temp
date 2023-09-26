@@ -73,7 +73,7 @@
       <div class="action-col" style="width:60px" v-if="match_style_obj.data_tpl_id == 12"></div>
       <div class="yb-flex-center" :style="`width:${match_list_tpl_size.media_width - 3}px !important;`">
         <!-- 联赛是否收藏 -->
-        <div @click.stop="match_list_card.view.mx_collect({ type: 'leagues', match: card_style_obj.league_obj })"
+        <div @click.stop="mx_collect({ type: 'leagues', match: card_style_obj.league_obj })"
           class="icon-wrap m-star-wrap-league" v-if="!menu_config.is_esports() && GlobalAccessConfig.get_collectSwitch">
           <i class="icon-star q-icon c-icon" :class="card_style_obj.league_obj.tf && 'active'"></i>
         </div>
@@ -111,9 +111,12 @@ import { utils_info } from 'src/core/utils/module/match-list-utils.js';
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import store from 'src/store-redux/index.js'
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
+import useMatchListMx from "src/core/match-list-pc/match-list-composition.js";
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 
 // const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
+
+const { mx_collect } = useMatchListMx();
 
 const props = defineProps({
   card_style_obj: {
@@ -134,7 +137,7 @@ if (!lodash.get(props, 'card_style_obj.league_obj.csid') && ['1', '500'].include
 }
 
 const is_HDP = computed(() => {
-  return [0, 20, 24, 13, 25].includes(+match_style_obj.data_tpl_id)
+  return [1, 20, 24, 13, 25].includes(+match_style_obj.data_tpl_id)
 })
 
 /**
