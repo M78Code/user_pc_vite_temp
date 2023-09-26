@@ -134,9 +134,7 @@ const set_bet_order_list = (bet_list, is_single) => {
             return obj
 
         }) || []
-
     }
-
 
     return order_list
 }
@@ -149,26 +147,10 @@ const get_query_bet_amount_common = (obj) => {
     let params = {
         orderMaxBetMoney: []
     }
-    let order_min_max_money = []
-    // 单关 
-    if (BetData.is_bet_single) {
-        // 单关 合并 多条数据 
-        if (BetData.is_bet_merge) {
-            // 参数 投注列表 +  是否单关/串关  + 是否单关合并
-            order_min_max_money = set_min_max_money(BetData.bet_single_list, true, true)
-        } else {
-            // 单关 不合并 只有一条
-            order_min_max_money = set_min_max_money(BetData.bet_single_list, true, false)
-        }
-    } else {
-        // 串关数据 
-        // 参数 投注列表 +  是否单关/串关  + 是否单关合并
-        order_min_max_money = set_min_max_money(BetData.bet_s_list, false, false)
-    }
+    // 获取限额请求参数数据
+    params.orderMaxBetMoney = get_query_ber_amount_parmas()
 
-    params.orderMaxBetMoney = order_min_max_money
-
-
+    // 获取额度接口合并
     api_betting.query_bet_amount(params).then((res = {}) => {
         if (res.code == 200) {
             BetViewDataClass.set_bet_min_max_money(res.data)
@@ -189,6 +171,60 @@ const get_query_bet_amount_common = (obj) => {
     })
 }
 
+// 获取限额 预约投注
+// obj 投注数据
+const get_query_bet_amount_pre = () => {
+
+}
+
+// 获取限额 电竞/电竞冠军/VR体育
+// obj 投注数据
+const get_query_bet_amount_esports_or_vr = () => {
+    // console.error('chufa',obj)
+    let params = {
+        orderMaxBetMoney: []
+    }
+    // 获取限额请求参数数据
+    params.orderMaxBetMoney = get_query_ber_amount_parmas()
+
+    // 获取最大值和最小值接口
+    api_betting.post_getBetMinAndMaxMoney(params).then((res = {}) => {
+        if (res.code == 200) {
+            BetViewDataClass.set_bet_min_max_money(res.data,'min_max')
+            // 通知页面更新 
+            useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY)
+
+        } else {
+            // 获取限额失败的信息
+            BetViewDataClass.set_bet_error_code({
+                code: res.code,
+                message: res.message
+            })
+        }
+    })
+}
+
+//设置获取限额参数 
+const get_query_ber_amount_parmas = () =>{
+    let order_min_max_money = []
+    // 单关 
+    if (BetData.is_bet_single) {
+        // 单关 合并 多条数据 
+        if (BetData.is_bet_merge) {
+            // 参数 投注列表 +  是否单关/串关  + 是否单关合并
+            order_min_max_money = set_min_max_money(BetData.bet_single_list, true, true)
+        } else {
+            // 单关 不合并 只有一条
+            order_min_max_money = set_min_max_money(BetData.bet_single_list, true, false)
+        }
+    } else {
+        // 串关数据 
+        // 参数 投注列表 +  是否单关/串关  + 是否单关合并
+        order_min_max_money = set_min_max_money(BetData.bet_s_list, false, false)
+    }
+    return order_min_max_money
+}
+
 // 设置预约投注显示状态
 const set_pre_bet_appoint = bet_appoint => {
     const appoint_list = []
@@ -200,22 +236,8 @@ const set_pre_bet_appoint = bet_appoint => {
             appoint_list.push(oid)
         }
     })
-    console.error('appoint_list',appoint_list)
     // 设置预约投注项id
     BetData.set_bet_appoint_obj(appoint_list)
-}
-
-
-// 获取限额 预约投注
-// obj 投注数据
-const get_query_bet_amount_pre = obj => {
-
-}
-
-// 获取限额 电竞/电竞冠军/VR体育
-// obj 投注数据
-const get_query_bet_amount_esports_or_vr = obj => {
-
 }
 
 // 提交投注信息 
@@ -330,7 +352,7 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         ot: ol_obj.ot, //投注項类型
         placeNum: null, //盘口坑位
         // 以下为 投注显示或者逻辑计算用到的参数
-        bet_type: 'common_bet', // 投注类型
+        bet_type: other.bet_type, // 投注类型
         tid_name: mid_obj.tn,  // 联赛名称
         match_ms: mid_obj.ms, // 赛事阶段
         match_time: mid_obj.mgt, // 开赛时间
@@ -340,9 +362,15 @@ const set_bet_obj_config = (params = {}, other = {}) => {
     }
     // 设置投注内容 
     BetData.set_bet_read_write_refer_obj(bet_obj)
-    console.error('aaaaaaa')
-    // 获取限额 常规
-    get_query_bet_amount_common(bet_obj)
+
+    // 判断获取限额接口类型
+    if(bet_obj.dataSource == 'C01' || ['esports_bet','vr_bet'].includes(other.bet_type)){
+        // C01 电竞/电竞冠军/VR体育
+        get_query_bet_amount_esports_or_vr(bet_obj)
+    }else{
+        // 获取限额 常规
+        get_query_bet_amount_common(bet_obj)
+    }
 }
 
 // 获取盘口值 附加值

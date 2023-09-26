@@ -9,7 +9,7 @@
     <!-- <div class="cathectic-ref_data.appoint"
       v-if="!_.isEmpty(BetData.bet_appoint_obj) && BetData.bet_appoint_obj.bet_appoint_id != id"></div> -->
     <!--玩法,提示及删除区域-->
-    <div>{{ BetData.bet_data_class_version }}</div>
+    <div style="display:none">{{ BetData.bet_data_class_version }}</div>
 
     <q-card-section>
       <!--不是冠军-->
@@ -39,7 +39,7 @@
             <span
               v-if="[1, 2, 3, 8, 9].includes(item.sportId * 1) && item.show_mark_score && ![0, 100].includes(Number(item.match_ms))"
               class="score">
-              ({{ item.show_mark_score }})
+              ({{ item.scoreBenchmark }})
             </span>
           </template>
         </div>
@@ -96,7 +96,7 @@
           </div>
           <!--【预约】-->
           <label class="appoint" v-if="pending_order_status(item.playOptionsId)">
-            {{ `[${$t('bet.bet_book2')}]` }}
+            +{{ `${$t('bet.bet_book2')}` }}
           </label>
         </div>
       </div>
@@ -400,10 +400,8 @@ const del_bet_item = () => {
 .bet-team-handicap-odd {
   display: flex;
   justify-content: space-between;
-
-  .appoint {
-    
-  }
+  height: 20px;
+  align-items: center;
 }
 
 </style>
