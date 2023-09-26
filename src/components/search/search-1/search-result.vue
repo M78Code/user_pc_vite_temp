@@ -155,7 +155,7 @@ const scrollRef = ref(null)
  * @return {undefined} undefined
  */
 function match_click(match) {
-    search.result_scroll = scrollRef.value.getScrollPosition
+    search.result_scroll = scrollRef.value.getScrollPosition()
     search.insert_history(match.name)
     details.on_go_detail(match, keyword.value.substr(5))
     set_search_status(false)
@@ -188,11 +188,11 @@ function get_search_result(keyword, is_loading) {
             if (search.back_keyword.keyword) {
                 nextTick(() => {
                     //重新设置滚动高度
-                    _ref_scroll && _ref_scroll.setScrollPosition && _ref_scroll.setScrollPosition(search.result_scroll, 0);
+                    _ref_scroll && _ref_scroll.setScrollPosition && _ref_scroll.setScrollPosition('vertical', search.result_scroll.top);
                 })
             } else {
                 //重新设置滚动高度
-                _ref_scroll && _ref_scroll.setScrollPosition && _ref_scroll.setScrollPosition(0, 0);
+                _ref_scroll && _ref_scroll.setScrollPosition && _ref_scroll.setScrollPosition('vertical', 0);
             }
         })
     })
