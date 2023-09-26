@@ -45,8 +45,8 @@
       <div
         class="tabs-handel"
         v-if="
-          handicap_this.check_half() &&
-          handicap_this.get_layout_list_size.width >= 1680
+          handicap_this.check_half &&
+          handicap_this.get_layout_list_size?.width >= 1680
         "
       >
         <span>
