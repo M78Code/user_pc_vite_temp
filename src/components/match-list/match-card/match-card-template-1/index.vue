@@ -3,7 +3,7 @@
   <div
     class="c-match-card relative-position"
     :id="`list-mid-${mid}`"
-    :style="`height:${match_style_obj.total_height}px !important;width:${LayOutMain_pc.layout_content_width}px  !important;`"
+    :style="`height:${match_style_obj.total_height}px !important;width:${LayOutMain_pc.layout_content_width - 15}px  !important;`"
   >
   <div v-show="false">{{ MatchListCardDataClass.list_version }}</div>
   <!-- {{ match_style_obj.show_level }} -->
