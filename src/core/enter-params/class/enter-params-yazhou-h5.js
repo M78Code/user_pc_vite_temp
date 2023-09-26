@@ -2,7 +2,7 @@ import { Qs } from "src/core/index.js";
 import { LocalStorage } from "src/core/index.js";
 import menu_obj from "src/core/menu-h5/menu-data-class.js";
 import lodash from "lodash";
-import { UserCtr, GlobalAccessConfig } from "src/core/index.js";
+import { UserCtr, GlobalAccessConfig, MenuData } from "src/core/index.js";
 /**
  * url所带的部分参数
  * s=01
@@ -36,7 +36,10 @@ class EnterParamsYazhouH5 {
     this.app_init_loading_timer = null;
     this.get_activity_msg = null;
     //TODO
+    //设置全家config参数
     GlobalAccessConfig.set_enter_params_switch({})
+    //TODO后续改动位置 设置菜单页参数
+    MenuData.set_enter_params({})
   }
   set_enter_url(url) {
     this.url = url;

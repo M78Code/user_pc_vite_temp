@@ -1,6 +1,6 @@
 <template>
   <div class="layout-right" :class="{ mini_hide: right_status }">
-    <button @click="handle_click">隐藏右侧</button>
+    <!-- <button @click="handle_click">隐藏右侧</button> -->
     <!-- 右侧区域 -->
     <div
     class="page-right"

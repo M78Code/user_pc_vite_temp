@@ -1,5 +1,5 @@
 <template>
-  <div class="basic-wrap relative-position" @click.stop="on_go_detail" >
+  <div class="basic-wrap relative-position" @click.stop="details.on_go_detail(match)" >
     <!-- 棒球发球方 -->
     <div class="serve-ball" :class="match.mat" v-if="match.csid == 3 && get_match_status(match.ms) == 1">
       <div class="point home"></div>

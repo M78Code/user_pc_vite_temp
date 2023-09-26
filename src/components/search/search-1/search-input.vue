@@ -103,10 +103,10 @@ function change_txt() {
  * @return {undefined} undefined
  */
 function submit() {
-    const keyword = keyword.value.trim();
-    if (!keyword) return;
+    const res = keyword.value.trim();
+    if (!res) return;
     set_search_type(1)
-    set_search_keyword(keyword);
+    set_search_keyword(res);
 }
 
 /**
