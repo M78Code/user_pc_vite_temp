@@ -243,7 +243,6 @@ import TeamImg from "project_path/src/components/details/team-img.vue";   // 详
 import TeamText from "project_path/src/components/details/team-text.vue";   // 中立场赛事展示
 // import TeamName from "project_path/src/components/details/team-name.vue";   // 详情页背景上的队伍名称
 // import msc from "project_path/src/mixins/common/msc.js";    // 国际化比赛阶段比分转换工具
-// src/core/constant/util/msc-util.js
 // import match_between_score from 'src/project/components/match/match_between_score.vue'  // 详情页显示赛事当前局比分以及绿色小圆点显示发球方
 import countingDown from 'project_path/src/components/common/counting-down.vue'   // 赛事进行中每秒变化的计时器
 // 公共方法

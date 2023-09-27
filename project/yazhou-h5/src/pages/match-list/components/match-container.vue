@@ -11,6 +11,7 @@
     started_and_un_started: match.is_show_no_play,
     favorite_un_start_title: favorite_un_start_title(i, match_of_list.ms),
   }'>
+    <div style="display: none;">{{ MatchDataBaseH5.data_version.version }}</div>
     <!--体育类别 -- 标题  menuType 1:滚球 2:即将开赛 3:今日 4:早盘 11:串关 -->
     <div class="sport-title match-indent" v-if="get_sport_show"
       :class="{ home_hot_page: is_it_popular, is_gunqiu: [1].includes(+menu_type), first: i == 0, }"
@@ -177,7 +178,7 @@
             <!-- 标准版 比分组件 -->
             <!-- 电竞中，如果是比分判定中，则不显示该比分 -->
             <div class="eports_scoring_tip" v-if="eports_scoring">{{ $t('mmp.eports_scoring') }}</div>
-            <score-list :match="match" v-else-if="main_source != 'home_hot_page_schedule'"></score-list>
+            <score-list v-else-if="main_source != 'home_hot_page_schedule'" :match="match"></score-list>
           </div>
           <!-- 下边的模块，左方是  队名和 队比分,  右面是  盘口  模块 -->
           <div class="odd-list match-indent" :class="{ 'simple': show_newer_edition, result: is_show_result() }">
@@ -449,7 +450,7 @@
           <match-overtime-pen v-if="!['detail_match_list', 'home_hot_page_schedule'].includes(main_source) &&
             [1, 2, 5, 7, 8].includes(+match.csid) && get_newer_standard_edition != 1" 
             :main_source="main_source" 
-            :mid="mid" />
+            :mid="match_of_list.mid" />
         </div>
       </div>
     </div>
@@ -470,7 +471,7 @@ import matchOvertimePen from './match-overtime-pen.vue'
 import ImageCacheLoad from "./public-cache-image.vue";
 import { i18n_t } from 'src/core/index.js'
 import UserCtr from 'src/core/user-config/user-ctr.js'
-import { MenuData, score_switch_handle } from "src/core/index.js"
+import { MenuData, score_switch_handle, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/index.js"
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import matchListClass from 'src/core/match-list-h5/match-class/match-list.js'
 import { format_time_zone, format_time_zone_time, format_how_many_days, format_week } from "src/core/format/index.js"
@@ -483,7 +484,6 @@ import { normal_img_not_favorite_white, normal_img_not_favorite_black, normal_im
 // mixins: [formatmixin, odd_convert, bettings, match_list_mixin, msc_bw3, common],
 const emits = defineEmits(['unfold_changed', 'toggle_collect_league', 'toggle_collect_match'])
 const props = defineProps({
-  mid: String,
   // 当前组件的赛事数据对应列表的赛事
   match_of_list: Object,
   // 赛事处于列表中的下标
@@ -518,8 +518,6 @@ const home_yellow_score = ref(0)
 const away_yellow_score = ref(0)
 const home_red_first_change = ref(true)
 const away_red_first_change = ref(true)
-// 上次的页脚子菜单id
-const prev_footer_sub_menu_id = ref(null)
 // 是否显示主队进球动画
 const is_show_home_goal = ref(false)
 // 是否显示客队进球动画
@@ -573,7 +571,9 @@ onMounted(() => {
   },1000);
   clear_timer();
   run_new_init_timer();
-  score_value();
+  setTimeout(() => {
+    score_value();
+  }, 3050)
  
   media_button_button_type_check()
   emitters.value = {
@@ -1320,7 +1320,7 @@ const favorite_un_start_title = (i, ms) => {
  * @return {Undefined}
  */
 const score_value = () => {
-  if (!props.match_of_list.value) {
+  if (!props.match_of_list) {
     home_score.value = 0;
     away_score.value = 0;
     home_red_score.value = 0;
@@ -1333,7 +1333,7 @@ const score_value = () => {
   //比分
   if (!props.match_of_list.home_score && props.match_of_list.home_score != 0) {
     home_score.value = 0;
-  } else {home_yellow_score
+  } else {
     home_score.value = props.match_of_list.home_score;
   }
   if (!props.match_of_list.away_score && props.match_of_list.away_score != 0) {
@@ -1566,7 +1566,7 @@ watch(() => away_red_score.value, (new_,old_) => {
 })
 
 // 监听比分变化
-watch(() => props.match_of_list?.msc, () => {
+watch(() => props.match_of_list.msc, () => {
   score_switch_handle(props.match_of_list);
   score_value();
 })
