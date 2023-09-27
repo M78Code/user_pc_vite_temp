@@ -58,7 +58,7 @@
             !vx_show_filter_popup
           "
         >
-          <span class="text">{{ $t("icon_tips.fold") }}</span>
+          <span class="text">{{i18n_t("icon_tips.fold") }}</span>
           <i class="icon-arrow q-icon c-icon" size="12px"></i>
         </div>
         <div
@@ -78,7 +78,7 @@
             anchor="top middle"
             self="center middle"
             :content-style="tooltip_style + ';white-space: nowrap;'"
-            >{{ $t("video.big_screen_mode") }}</q-tooltip
+            >{{i18n_t("video.big_screen_mode") }}</q-tooltip
           >
           <!-- 全屏 -->
         </div>
@@ -170,7 +170,7 @@ import { computed, onMounted, onUnmounted, ref, watch } from "vue";
 import MenuData from "src/core/menu-pc/menu-data-class.js";
 import { IconWapper } from "src/components/icon";
 import refresh from "src/components/refresh/refresh.vue";
-import { i18n_t, get_match_status } from "src/core/index";
+import { i18n_t, get_match_status,UserCtr } from "src/core/index";
 import { compute_css } from "src/core/server-img/index.js";
 import lodash from "lodash";
 const props = defineProps({
@@ -189,6 +189,7 @@ const team_height = ref(height0.value); //战队信息盒子高度
 const videos = ref([]); //有视频的赛事列表
 const is_hover = ref(false); //视频icon是否hover
 const menu_data = ref(MenuData); //菜单数据
+const lang = ref(UserCtr.lang)// 语言
 const media_icons = [
   /**比分版 */
   {
@@ -240,17 +241,18 @@ const set_play_media_timer = ref(null);
  * @returns
  */
 const get_media_icon_show = (type) => {
+  console.log(animation_btn_show,'animation_btn_show');
   switch (type) {
     case "info":
       return true;
     case "video":
-      return video_btn_show;
+      return video_btn_show.value;
     case "animation":
-      return animation_btn_show;
+      return animation_btn_show.value;
     case "studio":
-      return studio_btn_show;
+      return studio_btn_show.value;
     case "topic":
-      return topic_btn_show;
+      return topic_btn_show.value;
     default:
       return false;
   }
@@ -310,7 +312,7 @@ const studio_btn_show = computed(() => {
   return (
     props.match_info.lvs == 2 &&
     props.match_info.lss === 1 &&
-    ["zh", "tw"].includes(this.lang)
+    ["zh", "tw"].includes(lang.value)
   );
 });
 /**
@@ -321,8 +323,8 @@ const topic_btn_show = computed(() => {
   return (
     props.match_info.lvs == 2 &&
     props.match_info.lss === 0 &&
-    ["zh", "tw"].includes(this.lang) &&
-    this.$utils.get_match_status(props.match_info.ms) !== 1
+    ["zh", "tw"].includes(lang.value) &&
+    get_match_status(props.match_info.ms) !== 1
   );
 });
 //切换赛事列表盒子高度改变
