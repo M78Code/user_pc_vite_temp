@@ -63,6 +63,7 @@ export default class MatchDataBase
    */
   set_active_mids(mids){
     if(mids){
+      // 设置激活的赛事mids数组
       this.mids_ation = mids;
       mids.forEach(mid => {
         const match = lodash.get(this.list_to_obj, `mid_obj[${mid}_]`);
@@ -136,7 +137,8 @@ export default class MatchDataBase
     this.cache_match={
       '23432234':{mmp:111111111111,ms:222222222}
     };
-    this.data_version =  ref('123'),
+    // 数据版本更新参数
+    this.data_version =  reactive({ version: '123'}),
     // 所有投注项动态数据时间更新
     this.cache_oid={
     };
@@ -486,13 +488,9 @@ init(){
     // send = "" //自定义属性send取值为my_self表示有用户模拟发送的指令, 可以删除
 
   }
-  // 更新版本号
+  // 数据更新版本号
   upd_data_version(){
-    if(this.data_version.value){
-      this.data_version.value = Date.now();
-    } else {
-      this.data_version = Date.now();
-    }
+    this.data_version.version = Date.now();
   }
 
   /**
@@ -508,7 +506,7 @@ init(){
       // 列表数据同步到快捷操作对象中
       this._list_to_obj_fun(list,this.list_to_obj)
       // ws命令赛事订阅
-      // this.ws_ctr.scmd_c8();
+      this.ws_ctr.scmd_c8();
       this.upd_data_version();
     }
   }
@@ -744,8 +742,10 @@ init(){
       }
       // 列表数据同步到快捷操作对象中
       this._list_to_obj_fun([match_details], this.list_to_obj);
+      // 设置激活的赛事mids数组
+      this.mids_ation=[match_details.mid];
       // ws命令赛事订阅
-      // this.ws_ctr.scmd_c8();
+      this.ws_ctr.scmd_c8();
       this.upd_data_version();
     }
   }
