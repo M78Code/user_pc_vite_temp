@@ -301,6 +301,7 @@ const {
   round,
   close_all_handicap,
   refresh_loading,
+  MatchDataWarehouseInstance,
   /* func */
   get_mattch_details,
   on_go_top,

@@ -35,11 +35,12 @@
         <!-- 结算弹窗 -->
         <settle-dialog></settle-dialog>
       </div>
-      <!-- 吐司提示框 v-if="toast_show" -->
-      <toast></toast>
+
 
     </q-page-container>
   </q-layout>
+  <!-- 吐司提示框 v-if="toast_show" -->
+  <toast></toast>
   <!-- 商户活动的弹层,只在home页展示，两个都已 脱离文档流-->
   <activity-layer v-if="activity_status" @activity_hide="activity_status = false" :activity_layerimg="activity_layerimg"
     :count_down_time="userBannerTimer" />

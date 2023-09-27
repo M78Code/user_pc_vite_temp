@@ -27,7 +27,6 @@
           <match-media :match="match" />
         </div>
       </div>
-
       <!-- 附加盘1 -->
       <div class="match-handicap-item" v-if="lodash.get(match, 'has_add1')">
         <!-- 赛事基础信息 -->
@@ -93,7 +92,7 @@
           <basis-info4 v-if="is_mounted" :is_other_concede="true" :match="match" :is_show_score="true" />
         </div>
         <!-- 赛事盘口投注项 -->
-        <match-handicap :handicap_list="match.other_handicap_list" :match="match" other_play />
+        <match-handicap :handicap_list="match_tpl_info[`template_${match_style_obj.data_tpl_id}`].other" :match="match" other_play />
         <!-- 视频按钮 -->
         <div class="media-col"></div>
       </div>
@@ -136,13 +135,16 @@ let match_style_obj = MatchListCardDataClass.all_card_obj[props.mid+'_']
 const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`].width_config
 const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`]
 const match = MatchListData.list_to_obj.mid_obj[props.mid+'_'];
+console.log('matchmatchmatch', match);
 const is_mounted = ref(true);
+
 // 其他玩法标题
 const bet_col = computed(() => {
   let bet_col = []
   //是否多列
   let multi_column = lodash.get( 'match_style_obj.data_tpl_id') == 13
   let play_current_key = lodash.get( 'match.play_current_key')
+
   // 5分钟玩法
   if (play_current_key == 'hps5Minutes') {
     let hpid = 361

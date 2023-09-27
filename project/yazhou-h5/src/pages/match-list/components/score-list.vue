@@ -4,16 +4,8 @@
 
 <template>
   <div v-show="show_score_match_line(match)" class="score-section"
-    :class="{
-      'flex-star':[3].includes(+match.csid),
-      standard:get_newer_standard_edition == 2,
-      result:get_menu_type == 28
-      }">
-
-    <div class="scroll-container-w" :class="{
-        'left_scroll':show_left_triangle,
-        'right_scroll':show_right_triangle}"
-      :ref="`match_score_scroll_w_${match.mid}`">
+    :class="{ 'flex-star':[3].includes(+match.csid), standard:get_newer_standard_edition == 2, result:get_menu_type == 28 }">
+    <div class="scroll-container-w" :class="{ 'left_scroll':show_left_triangle, 'right_scroll':show_right_triangle}" :ref="`match_score_scroll_w_${match.mid}`">
       <!-- 需求：棒球，斯诺克，拳击 不显示比分  -->
       <div class="score-se-inner" ref='scoreWrapScroller' v-if="![3,7,12].includes(+match.csid)"
         :class="{
@@ -26,26 +18,16 @@
           'badminton':match.csid == 10,
           'is-table-tennis':match.csid == 8,
           'is-volley-ball':match.csid == 9 || match.csid == 13}"
-        @scroll="score_inner2_scrolling($event,match)">
+          @scroll="score_inner2_scrolling($event,match)">
         <div class="score-se-inner2" :ref="`score_se_inner2_${match.mid}`">
-          <div class="row items-center score-fle-container-1" :class="{
-              result:get_menu_type == 28 && main_source !== 'detail_match_list',
-              }">
+          <div class="row items-center score-fle-container-1" :class="{ result:get_menu_type == 28 && main_source !== 'detail_match_list', }">
             <template v-for="(score,i) of msc_converted">
               <div class="score row items-start" :key="i"
-                :class="{
-                  'basket-ball':match.csid == 2,
-                  'important-color-number':
-                    i == msc_converted.length - 1 && //蓝球时取对应比分高亮
-                    match.csid == 2 &&
-                    get_menu_type != 28,
-                }"
+                :class="{ 'basket-ball':match.csid == 2, 'important-color-number':  i == msc_converted.length - 1 &&  match.csid == 2 && get_menu_type != 28}"
                 :data-scores="`${i}-${msc_converted.length}-${match.csid}`"
                 v-if="is_show_score(match,score)">
                 <!--角球图标-->
-                <img class="kk-icon" alt=""
-                  v-if="match.csid == 1 && score[0] == 'S5' && score[4]"
-                  src="public/image/list/m-list-jiaoqiu.svg" />
+                <img class="kk-icon" alt="" v-if="match.csid == 1 && score[0] == 'S5' && score[4]" src="/yazhou-h5/image/list/m-list-jiaoqiu.svg" />
                 <!--HT(半场)或FT(全场)或OT-->
                 <span class="f-ht-ot" style="margin-right:.02rem"
                   :score="`${match.csid}-${score[4]}`"
@@ -156,7 +138,6 @@ const { match, main_source } = defineProps({
 })
 
 const scoreWrapScroller = ref(null)
-
 const store_state = store.getState()
 const timer_1 = ref(null)   
 const timer_2 = ref(null)   
@@ -177,6 +158,7 @@ const unsubscribe = store.subscribe(() => {
   get_newer_standard_edition.value = new_state.get_newer_standard_edition
 })
 
+
 onMounted(() => {
   get_last_list_score();
   //获取最新比分延迟时钟对象
@@ -189,6 +171,14 @@ onMounted(() => {
     score_layout_init();
   },300);
 })
+
+// 监听 数据仓库版本号改变
+// watch(() => MatchDataBaseH5.data_version.version, () => {
+// })
+
+watch(() => match, () => {
+  console.log(match)
+}, { deep: true })
 
 // 监听赛事比分变化
 watch(() => match.ms, () => {
@@ -391,7 +381,6 @@ const get_msc_converted = () => {
   if(!msc_converted.value || !msc_converted.value.length){
     show_right_triangle.value = false;
   }
-
   return r0;
 }
 /**

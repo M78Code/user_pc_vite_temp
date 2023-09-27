@@ -34,9 +34,9 @@
                   >
                     <!-- ms就是外层的赛事级别状态mhs: 0开 2关 1封 11锁 -->
                     <!-- 开盘or锁盘 正常显示 -->
-                    <template v-if="ol_item.ms == 0 || ol_item.ms == 11">
+                    <template v-if="ol_item._mhs == 0 || ol_item._mhs == 11">
                       <!-- hs是盘口级别状态: 0开 2关 1封 11锁 -->
-                      <template v-if="ol_item.hs == 0 || ol_item.hs == 11">
+                      <template v-if="ol_item._hs == 0 || ol_item._hs == 11">
                         <!-- os: 1、开盘 2、封盘 -->
                         <template v-if="ol_item.os == 1">
                           <div class="on-color" v-if="ol_item.otd == home_name.otd">
@@ -78,7 +78,7 @@
                         <template v-if="ol_item.os == 3"></template>
                         <!-- 新增over -->
                       </template>
-                      <template v-if="ol_item.hs == 1">
+                      <template v-if="ol_item._hs == 1">
                         <template v-if="ol_item.os == 3"></template>
                         <template v-else>
                           <!-- lock 锁状态 start -->
@@ -103,7 +103,7 @@
                       </template>
                     </template>
                     <!-- 封盘，一把锁的居中显示 -->
-                    <template v-if="ol_item.ms == 1">
+                    <template v-if="ol_item._mhs == 1">
                       <!-- lock 锁状态 start -->
                       <div class="on-color" v-if="ol_item.otd == home_name.otd">
                         <!-- 投注项值 -->
@@ -124,7 +124,7 @@
                       <!-- lock 锁状态 end -->
                     </template>
                     <!-- 关盘 -->
-                    <template v-if="ol_item.ms == 2"></template>
+                    <template v-if="ol_item._mhs == 2"></template>
                   </div>
                 </div>
               </div>
@@ -158,9 +158,9 @@
                   >
                     <!-- ms就是外层的赛事级别状态mhs: 0开 2关 1封 11锁 -->
                     <!-- 开盘or锁盘 正常显示 -->
-                    <template v-if="ol_item.ms == 0 || ol_item.ms == 11">
+                    <template v-if="ol_item._mhs == 0 || ol_item._mhs == 11">
                       <!-- hs是盘口级别状态: 0开 2关 1封 11锁 -->
-                      <template v-if="ol_item.hs == 0 || ol_item.hs == 11">
+                      <template v-if="ol_item._hs == 0 || ol_item._hs == 11">
                         <!-- os: 1、开盘 2、封盘 -->
                         <template v-if="ol_item.os == 1">
                           <div class="on-color" v-if="ol_item.otd == home_name.otd">
@@ -202,7 +202,7 @@
                         <template v-if="ol_item.os == 3"></template>
                         <!-- 新增over -->
                       </template>
-                      <template v-if="ol_item.hs == 1">
+                      <template v-if="ol_item._hs == 1">
                         <template v-if="ol_item.os == 3"></template>
                         <template v-else>
                           <!-- lock 锁状态 start -->
@@ -227,7 +227,7 @@
                       </template>
                     </template>
                     <!-- 封盘，一把锁的居中显示 -->
-                    <template v-if="ol_item.ms == 1">
+                    <template v-if="ol_item._mhs == 1">
                       <!-- lock 锁状态 start -->
                       <div class="on-color" v-if="ol_item.otd == home_name.otd">
                         <!-- 投注项值 -->
@@ -248,7 +248,7 @@
                       <!-- lock 锁状态 end -->
                     </template>
                     <!-- 关盘 -->
-                    <template v-if="ol_item.ms == 2"></template>
+                    <template v-if="ol_item._mhs == 2"></template>
                   </div>
                 </div>
               </div>
@@ -320,7 +320,7 @@ export default defineComponent({
       }
     );
     const go_to_bet = (ol_item) => {
-      if(ol_item.os == 1 && ol_item.hs != 1){
+      if(ol_item.os == 1 && ol_item._hs != 1){
         $emit("bet_click_", {ol_item});
       }
     };

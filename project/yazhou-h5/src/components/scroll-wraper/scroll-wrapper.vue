@@ -6,7 +6,7 @@
 
 <template>
   <div class="scroll-wrapper">
-    <div style="display: none;">{{ MatchDataBaseH5.data_version }}</div>
+    <div style="display: none;">{{ MatchDataBaseH5.data_version.version }}</div>
     <div class="scroll-i-con" 
       :class="{high_scrolling: set_ishigh_scrolling && !(lodash.get(get_current_menu, 'date_menu.menuType') == 100) &&
        !(get_menu_type == 28 && [1001, 1002, 1004, 1011, 1010, 1009].includes(get_curr_sub_menu_type)) && get_menu_type != 100,

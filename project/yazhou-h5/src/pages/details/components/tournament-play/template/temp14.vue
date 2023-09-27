@@ -20,8 +20,8 @@
           <div class="col" :class="{col3: item_data.title.length > 2}">
             <template v-for="(ol_item, ol_index) in item.ol">
               <div v-if="lodash.get(item_data.title,'[0].otd') == ol_item.otd" :key="ol_index" class="bet-box-bg">
-                <template v-if="ol_item.ms == 0 || ol_item.ms == 11">
-                  <template v-if="ol_item.hs == 0 || ol_item.hs == 11">
+                <template v-if="ol_item._mhs == 0 || ol_item._mhs == 11">
+                  <template v-if="ol_item._hs == 0 || ol_item._hs == 11">
                     <template v-if="ol_item.os == 1">
                       <!-- 主程序 start -->
                       <div class="play-box" @click="go_to_bet(ol_item)" :class="{'win':utils.calc_win(ol_item.result),'active':get_bet_list.includes(ol_item.id_)}">
@@ -49,7 +49,7 @@
                     <template v-if="ol_item.os == 3"></template>
                     <!-- 新增over -->
                   </template>
-                  <template v-if="ol_item.hs == 1">
+                  <template v-if="ol_item._hs == 1">
                     <template v-if="ol_item.os == 3"></template>
                     <template v-else>
                       <div class="play-box" :class="get_detail_data.csid == 1? 'play-box-lock' : '' ">
@@ -58,12 +58,12 @@
                       </div>
                     </template>
                   </template>
-                  <template v-if="ol_item.hs == 2">
+                  <template v-if="ol_item._hs == 2">
                     <div class="play-box"></div>
                   </template>
                 </template>
                 <!-- 封盘，一把锁的居中显示 -->
-                <template v-if="ol_item.ms == 1">
+                <template v-if="ol_item._mhs == 1">
                   <!-- lock 锁状态 start -->
                   <div class="play-box" :class="get_detail_data.csid == 1? 'play-box-lock' : '' ">
                     <div class="ellipsis remark" v-show="get_detail_data.csid != 1">{{ol_item.on}}</div>
@@ -72,7 +72,7 @@
                   <!-- lock 锁状态 end -->
                 </template>
                 <!-- 关盘 -->
-                <template v-if="ol_item.ms == 2"></template>
+                <template v-if="ol_item._mhs == 2"></template>
               </div>
             </template>
           </div>
@@ -81,8 +81,8 @@
           <div class="col" :class="{col3: item_data.title.length > 2}">
             <template v-for="(ol_item,ol_index) in item.ol">
               <div v-if="lodash.get(item_data.title,'[1].otd') == ol_item.otd" :key="ol_index" class="bet-box-bg">
-                <template v-if="ol_item.ms == 0 || ol_item.ms == 11">
-                  <template v-if="ol_item.hs == 0 || ol_item.hs == 11">
+                <template v-if="ol_item._mhs == 0 || ol_item._mhs == 11">
+                  <template v-if="ol_item._hs == 0 || ol_item._hs == 11">
                     <template v-if="ol_item.os == 1">
                       <div class="play-box" @click="go_to_bet(ol_item)" :class="{'win':utils.calc_win(ol_item.result),'active':get_bet_list.includes(ol_item.id_)}">
                         <div class="ellipsis remark">
@@ -104,7 +104,7 @@
                     </template>
                     <template v-if="ol_item.os == 3"></template>
                   </template>
-                  <template v-if="ol_item.hs == 1">
+                  <template v-if="ol_item._hs == 1">
                     <template v-if="ol_item.os == 3"></template>
                     <template v-else>
                       <div class="play-box" :class="get_detail_data.csid == 1? 'play-box-lock' : '' ">
@@ -113,17 +113,17 @@
                       </div>
                     </template>
                   </template>
-                  <template v-if="ol_item.hs == 2">
+                  <template v-if="ol_item._hs == 2">
                     <div class="play-box"></div>
                   </template>
                 </template>
-                <template v-if="ol_item.ms == 1">
+                <template v-if="ol_item._mhs == 1">
                   <div class="play-box" :class="get_detail_data.csid == 1? 'play-box-lock' : '' ">
                     <div class="ellipsis remark" v-show="get_detail_data.csid != 1">{{ol_item.on}}</div>
                     <img src="/yazhou-h5/image/common/match-icon-lock.svg" />
                   </div>
                 </template>
-                <template v-if="ol_item.ms == 2"></template>
+                <template v-if="ol_item._mhs == 2"></template>
               </div>
             </template>
           </div>
@@ -132,8 +132,8 @@
           <div v-if="item_data.title.length > 2" class="col" :class="{col3: item_data.title.length > 2}">
             <template v-for="(ol_item,ol_index) in item.ol">
               <div v-if="lodash.get(item_data.title,'[2].otd') == ol_item.otd" :key="ol_index" class="bet-box-bg">
-                <template v-if="ol_item.ms == 0 || ol_item.ms == 11">
-                  <template v-if="ol_item.hs == 0 || ol_item.hs == 11">
+                <template v-if="ol_item._mhs == 0 || ol_item._mhs == 11">
+                  <template v-if="ol_item._hs == 0 || ol_item._hs == 11">
                     <template v-if="ol_item.os == 1">
                       <div class="play-box" @click="go_to_bet(ol_item)" :class="{'win':utils.calc_win(ol_item.result),'active':get_bet_list.includes(ol_item.id_)}">
                         <div class="ellipsis remark">
@@ -155,7 +155,7 @@
                     </template>
                     <template v-if="ol_item.os == 3"></template>
                   </template>
-                  <template v-if="ol_item.hs == 1">
+                  <template v-if="ol_item._hs == 1">
                     <template v-if="ol_item.os == 3"></template>
                     <template v-else>
                       <div class="play-box" :class="get_detail_data.csid == 1? 'play-box-lock' : '' ">
@@ -164,17 +164,17 @@
                       </div>
                     </template>
                   </template>
-                  <template v-if="ol_item.hs == 2">
+                  <template v-if="ol_item._hs == 2">
                     <div class="play-box"></div>
                   </template>
                 </template>
-                <template v-if="ol_item.ms == 1">
+                <template v-if="ol_item._mhs == 1">
                   <div class="play-box" :class="get_detail_data.csid == 1? 'play-box-lock' : '' ">
                     <div class="ellipsis remark" v-show="get_detail_data.csid != 1">{{ol_item.on}}</div>
                     <img src="/yazhou-h5/image/common/match-icon-lock.svg" />
                   </div>
                 </template>
-                <template v-if="ol_item.ms == 2"></template>
+                <template v-if="ol_item._mhs == 2"></template>
               </div>
             </template>
           </div>
@@ -189,7 +189,7 @@
 import lodash from "lodash";
 import store from "src/store-redux/index.js";
 import odds_new from "project_path/src/pages/details/components/tournament-play/unit/odds-new.vue";
-import {utils } from 'src/core/index.js';
+import { utils } from 'src/core/index.js';
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 export default defineComponent({
   name: "temp14",

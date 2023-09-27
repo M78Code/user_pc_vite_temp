@@ -13,7 +13,6 @@
         <div class="col text-center ellipsis fam" v-if="item_data.title.length > 2">{{item_data.title[2].osn}}</div>
       </div>
       <div class="item-wrap">
-        <template>
           <div v-for="(item,index) in item_data.hl" :key="index">
             <div class="row" v-if="index > 0 || index == 0">
               <!-- 左 -->
@@ -23,8 +22,8 @@
                     <div :key="ol_index" :data-ii="ol_index0 - 1">
                       <!--  0开 2关 1封 11锁 -->
                       <!-- 开盘or锁盘 正常显示 -->
-                      <template v-if="ol_list_0[ol_index0 - 1].ms == 0 || ol_list_0[ol_index0 - 1].ms == 11">
-                        <template v-if="ol_list_0[ol_index0 - 1].hs == 0 || ol_list_0[ol_index0 - 1].hs == 11">
+                      <template v-if="ol_list_0[ol_index0 - 1]._mhs == 0 || ol_list_0[ol_index0 - 1]._mhs == 11">
+                        <template v-if="ol_list_0[ol_index0 - 1]._hs == 0 || ol_list_0[ol_index0 - 1]._hs == 11">
                           <template v-if="ol_list_0[ol_index0 - 1].os == 1">
                             <!-- 主程序 start -->
                             <div
@@ -57,7 +56,7 @@
                           </template>
                           <template v-if="ol_list_0[ol_index0 - 1].os == 3"></template>
                         </template>
-                        <template v-if="ol_list_0[ol_index0 - 1].hs == 1">
+                        <template v-if="ol_list_0[ol_index0 - 1]._hs == 1">
                           <template v-if="ol_list_0[ol_index0 - 1].os == 3"></template>
                           <template v-else>
                             <!-- lock 锁状态 start -->
@@ -70,14 +69,14 @@
                             <!-- lock 锁状态 end -->
                           </template>
                         </template>
-                        <template v-if="ol_list_0[ol_index0 - 1].hs == 2">
+                        <template v-if="ol_list_0[ol_index0 - 1]._hs == 2">
                           <!-- 盘口级别状态关盘时，要占位 -->
                           <div class="play-box-style details_color" :class="ol_index != max_count_ol-1?'bor-style':''">
                           </div>
                         </template>
                       </template>
                       <!-- 封盘，一把锁的居中显示 -->
-                      <template v-if="ol_list_0[ol_index0 - 1].ms == 1">
+                      <template v-if="ol_list_0[ol_index0 - 1]._mhs == 1">
                         <!-- lock 锁状态 start -->
                         <div class="play-box-style details_color warp" :class="ol_index != max_count_ol-1?'bor-style':''">
                           <div class="size-color-imp ellipsis remark details_t_color7 fz_16" v-show="get_detail_data.csid != 1">{{ol_list_0[ol_index0 - 1].on}}</div>
@@ -88,7 +87,7 @@
                         <!-- lock 锁状态 end -->
                       </template>
                       <!-- 关盘 -->
-                      <template v-if="ol_list_0[ol_index0 - 1].ms == 2">
+                      <template v-if="ol_list_0[ol_index0 - 1]._mhs == 2">
                         <div class="play-box-style details_color" :class="ol_index != max_count_ol-1?'bor-style':''"></div>
                       </template>
                     </div>
@@ -106,8 +105,8 @@
                     <div :key="ol_index" :data-oid="ol_list_1[ol_index1 - 1].oid">
                       <!--  0开 2关 1封 11锁 -->
                       <!-- 开盘or锁盘 正常显示 -->
-                      <template v-if="ol_list_1[ol_index1 - 1].ms == 0 || ol_list_1[ol_index1 - 1].ms == 11">
-                        <template v-if="ol_list_1[ol_index1 - 1].hs == 0 || ol_list_1[ol_index1 - 1].hs == 11">
+                      <template v-if="ol_list_1[ol_index1 - 1]._mhs == 0 || ol_list_1[ol_index1 - 1]._mhs == 11">
+                        <template v-if="ol_list_1[ol_index1 - 1]._hs == 0 || ol_list_1[ol_index1 - 1]._hs == 11">
                           <template v-if="ol_list_1[ol_index1 - 1].os == 1">
                             <!-- 主程序 start -->
                             <div
@@ -141,7 +140,7 @@
                           </template>
                           <template v-if="ol_list_1[ol_index1 - 1].os == 3"></template>
                         </template>
-                        <template v-if="ol_list_1[ol_index1 - 1].hs == 1">
+                        <template v-if="ol_list_1[ol_index1 - 1]._hs == 1">
                           <template v-if="ol_list_1[ol_index1 - 1].os == 3"></template>
                           <template v-else>
                             <!-- lock 锁状态 start -->
@@ -154,14 +153,14 @@
                             <!-- lock 锁状态 end -->
                           </template>
                         </template>
-                        <template v-if="ol_list_1[ol_index1 - 1].hs == 2">
+                        <template v-if="ol_list_1[ol_index1 - 1]._hs == 2">
                           <!-- 盘口级别状态关盘时，要占位 -->
                           <div class="play-box-style details_color" :class="ol_index != max_count_ol-1 ? 'bor-style':''">
                           </div>
                         </template>
                       </template>
                       <!-- 封盘，一把锁的居中显示 -->
-                      <template v-if="ol_list_1[ol_index1 - 1].ms == 1">
+                      <template v-if="ol_list_1[ol_index1 - 1]._mhs == 1">
                         <!-- lock 锁状态 start -->
                         <div class="play-box-style details_color warp" :class="ol_index != max_count_ol-1 ? 'bor-style':''">
                           <div class="size-color-imp ellipsis remark details_t_color7 fz_16" v-show="get_detail_data.csid != 1">{{ol_list_1[ol_index1 - 1].on}}</div>
@@ -172,7 +171,7 @@
                         <!-- lock 锁状态 end -->
                       </template>
                       <!-- 关盘 -->
-                      <template v-if="ol_list_1[ol_index1 - 1].ms == 2"></template>
+                      <template v-if="ol_list_1[ol_index1 - 1]._mhs == 2"></template>
                     </div>
                   </template>
                   <template v-else>
@@ -188,8 +187,8 @@
                     <div :key="ol_index">
                       <!--  0开 2关 1封 11锁 -->
                       <!-- 开盘or锁盘 正常显示 -->
-                      <template v-if="ol_list_2[ol_index2 - 1].ms == 0 || ol_list_2[ol_index2 - 1].ms == 11">
-                        <template v-if="ol_list_2[ol_index2 - 1].hs == 0 || ol_list_2[ol_index2 - 1].hs == 11">
+                      <template v-if="ol_list_2[ol_index2 - 1]._mhs == 0 || ol_list_2[ol_index2 - 1]._mhs == 11">
+                        <template v-if="ol_list_2[ol_index2 - 1]._hs == 0 || ol_list_2[ol_index2 - 1]._hs == 11">
                           <template v-if="ol_list_2[ol_index2 - 1].os == 1">
                             <!-- 主程序 start -->
                             <div
@@ -223,7 +222,7 @@
                           </template>
                           <template v-if="ol_list_2[ol_index2 - 1].os == 3"></template>
                         </template>
-                        <template v-if="ol_list_2[ol_index2 - 1].hs == 1">
+                        <template v-if="ol_list_2[ol_index2 - 1]._hs == 1">
                           <template v-if="ol_list_2[ol_index2 - 1].os == 3"></template>
                           <template v-else>
                             <!-- lock 锁状态 start -->
@@ -236,14 +235,14 @@
                             <!-- lock 锁状态 end -->
                           </template>
                         </template>
-                        <template v-if="ol_list_2[ol_index2 - 1].hs == 2">
+                        <template v-if="ol_list_2[ol_index2 - 1]._hs == 2">
                           <!-- 盘口级别状态关盘时，要占位 -->
                           <div class="play-box-style details_color" :class="ol_index != max_count_ol-1 ? 'bor-style':''">
                           </div>
                         </template>
                       </template>
                       <!-- 封盘，一把锁的居中显示 -->
-                      <template v-if="ol_list_2[ol_index2 - 1].ms == 1">
+                      <template v-if="ol_list_2[ol_index2 - 1]._mhs == 1">
                         <!-- lock 锁状态 start -->
                         <div class="play-box-style details_color" :class="ol_index != max_count_ol-1 ? 'bor-style':''">
                           <div class="size-color-imp ellipsis remark details_t_color7 fz_16" v-show="get_detail_data.csid != 1">{{ol_list_2[ol_index2 - 1].on}}</div>
@@ -254,7 +253,7 @@
                         <!-- lock 锁状态 end -->
                       </template>
                       <!-- 关盘 -->
-                      <template v-if="ol_list_2[ol_index2 - 1].ms == 2"></template>
+                      <template v-if="ol_list_2[ol_index2 - 1]._mhs == 2"></template>
                     </div>
                   </template>
                   <template v-else>
@@ -269,8 +268,8 @@
 
               <!--  0开 2关 1封 11锁 -->
               <!-- 开盘or锁盘 正常显示 -->
-              <template v-if="ol_item.ms == 0 || ol_item.ms == 11">
-                <template v-if="ol_item.hs == 0 || ol_item.hs == 11">
+              <template v-if="ol_item._mhs == 0 || ol_item._mhs == 11">
+                <template v-if="ol_item._hs == 0 || ol_item._hs == 11">
                   <template v-if="ol_item.os == 1">
                     <!-- 主程序 start -->
                     <div
@@ -304,7 +303,7 @@
                   </template>
                   <template v-if="ol_item.os == 3"></template>
                 </template>
-                <template v-if="ol_item.hs == 1">
+                <template v-if="ol_item._hs == 1">
                   <template v-if="ol_item.os == 3"></template>
                   <template v-else>
                     <!-- lock 锁状态 start -->
@@ -321,14 +320,14 @@
                     <!-- lock 锁状态 end -->
                   </template>
                 </template>
-                <template v-if="ol_item.hs == 2">
+                <template v-if="ol_item._hs == 2">
                   <!-- 盘口级别状态关盘时，要占位 -->
                   <div class="play-box-style details_color">
                   </div>
                 </template>
               </template>
               <!-- 封盘，一把锁的居中显示 -->
-              <template v-if="ol_item.ms == 1">
+              <template v-if="ol_item._mhs == 1">
                 <!-- lock 锁状态 start -->
                 <div class="play-box-style details_color">
                   <div
@@ -343,10 +342,9 @@
                 <!-- lock 锁状态 end -->
               </template>
               <!-- 关盘 -->
-              <template v-if="ol_item.ms == 2"></template>
+              <template v-if="ol_item._mhs == 2"></template>
             </div>
           </div>
-        </template>
       </div>
     </div>
   </div>
@@ -354,7 +352,7 @@
 <script>
 // #TODO vuex
 // import { mapGetters, mapMutations } from "vuex";
-import odds_new from "project_path/src/pages/details/components/tournament-play/unit/odds-new.vue";
+import oddsNew from "project_path/src/pages/details/components/tournament-play/unit/odds-new.vue";
 // import odd_convert from "project_path/src/mixins/odds_conversion/odds_conversion.js";
 import {utils } from 'src/core/index.js';
 import lodash from "lodash";
@@ -366,7 +364,7 @@ export default defineComponent({
   name: "temp4",
   props: ["item_data", "title"],
   components: {
-    oddsNew: 'odds_new',
+    oddsNew,
   },
   setup(props, evnet) {
     const store_state = store.getState()
@@ -442,6 +440,7 @@ export default defineComponent({
           other_item_list.value = uniq_arr
         }
         //os等于3需要隐藏投注项
+        
         let filtered = ol_list.filter(ol_item => ol_item.otd == tit.otd && ol_item.ot != 'Other' && ol_item.os != 3 );
         if(i == 0){
           ol_list_0.value = filtered;
@@ -455,19 +454,22 @@ export default defineComponent({
         let m_len = filtered.length;
         if(m_len > max) max = m_len;
       });
-
       return max;
     }
     return {
       utils,
       change_ms,
       go_to_bet,
+      ol_list_0,
+      ol_list_1,
+      ol_list_2,
       get_bet_list,
       get_cur_odd,
       get_flag_get_ol_list,
       get_menu_type,
       get_detail_data,
       other_item_list,
+      max_count_ol,
     }
   }
 })

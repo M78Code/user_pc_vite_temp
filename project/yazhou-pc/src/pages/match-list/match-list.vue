@@ -196,7 +196,6 @@ export default {
   },
   methods: {
     MatchListCardDataClass_match_list_card_key_arr() {
-      console.error('MatchListCardDataClass_match_list_card_key_arr');
       this.match_list_card_key_arr= MatchListCardDataClass.match_list_card_key_arr
     }
   },
