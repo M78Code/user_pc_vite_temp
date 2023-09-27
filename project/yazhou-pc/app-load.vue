@@ -15,7 +15,7 @@ import "./src/core/globel-mitt";
 import { PageSourceData } from "src/core/index.js";
 import { useMittOn, MITT_TYPES } from "src/core/mitt/";
 import { wslog, httplog } from "src/core/log/";
-import { Qs as urlparams } from "src/core/";
+import {get_query_string as urlparams } from "src/core/";
 import { copyToClipboard } from "quasar";
 import { reactive, onBeforeMount, onMounted, onUnmounted, ref, watch } from "vue";
 import store from "src/store-redux/index.js";

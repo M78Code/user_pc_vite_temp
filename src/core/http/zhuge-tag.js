@@ -8,7 +8,7 @@
  */
 import { get } from "lodash";
 import { DateForMat } from "src/core/format/index.js";
-import { deepMerge, Qs } from "../utils";
+import { deepMerge,get_query_string } from "../utils";
 const { LOCAL_FUNCTION_SWITCH } = window.BUILDIN_CONFIG;
 import { UserCtr } from "src/core/index.js";
 class ZhuGe {
@@ -44,7 +44,7 @@ class ZhuGe {
     try {
       // 获取诸葛埋点开关
       this.config.enable =
-        Qs.zhuge || this.config.mid.includes(mid);
+       get_query_string.zhuge || this.config.mid.includes(mid);
     } catch (error) { }
     // 诸葛埋点开关关闭时,直接终止
     if (!this.config.enable) {
