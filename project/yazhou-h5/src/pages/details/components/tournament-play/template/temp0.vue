@@ -10,11 +10,11 @@
               <template v-if=" (hide_show_more_layout || (!hide_show_more_layout && (show_more || (!show_more && ol_index<5))))">
                 <template v-if="item2.otd == ol_item.otd && ((odds_conut<show_more_max && !show_more) || show_more)">
                     {{void(odds_conut++)}}
-                    <!-- ms就是外层的赛事级别状态mhs: 0开 2关 1封 11锁 -->
+                    <!-- ms就是外层的赛事级别状态 mhs: 0开 2关 1封 11锁 -->
                     <!-- 开盘or锁盘 正常显示 -->
-                    <template v-if="ol_item.ms == 0 || ol_item.ms == 11">
+                    <template v-if="ol_item._mhs == 0 || ol_item._mhs == 11">
                       <!-- hs是盘口级别状态: 0开 2关 1封 11锁 -->
-                      <template v-if="ol_item.hs == 0 || ol_item.hs == 11">
+                      <template v-if="ol_item._hs == 0 || ol_item._hs == 11">
                         <!-- os: 1、开盘 2、封盘 3、隐藏不显示，不占地方-->
                         <template v-if="ol_item.os == 1">
                           <!-- 主程序 start -->
@@ -53,7 +53,7 @@
                         </template>
                         <template v-if="ol_item.os == 3"></template>
                       </template>
-                      <template v-if="ol_item.hs == 1">
+                      <template v-if="ol_item._hs == 1">
                         <template v-if="ol_item.os == 3"></template>
                         <template v-else>
                           <!-- lock 锁状态 start -->
@@ -66,14 +66,14 @@
                         </template>
                         <!-- lock 锁状态 end -->
                       </template>
-                      <template v-if="ol_item.hs == 2">
+                      <template v-if="ol_item._hs == 2">
                         <!-- 盘口级别状态关盘时，要占位 -->
                         <div class="play-box-style details_color" :class="{'bor-btm':ol_index != item.ol.length-1 || index_ != item_data.hl.length-1}">
                         </div>
                       </template>
                     </template>
                     <!-- 封盘，一把锁的居中显示 -->
-                    <template v-if="ol_item.ms == 1">
+                    <template v-if="ol_item._mhs == 1">
                       <!-- lock 锁状态 start -->
                       <div class="play-box-style details_color" :class="{'bor-btm':ol_index != item.ol.length-1 || index_ != item_data.hl.length-1}">
                         <div class="ellipsis remark details_t_color7 fz_13" v-show="get_detail_data.csid != 1">{{ol_item.on || ol_item.ott}}</div>
@@ -84,7 +84,7 @@
                       <!-- lock 锁状态 end -->
                     </template>
                     <!-- 关盘 -->
-                    <template v-if="ol_item.ms == 2"></template>
+                    <template v-if="ol_item._mhs == 2"></template>
                 </template>
                 </template>
               </div>
@@ -98,21 +98,16 @@
                   {{void(odds_conut++)}}
               <!-- ms: 0开 2关 1封 11锁 -->
               <!-- 开盘or锁盘 正常显示 -->
-              <template v-if="ol_item.ms == 0 || ol_item.ms == 11">
+              <template v-if="ol_item._mhs == 0 || ol_item._mhs == 11">
                 <!-- hs: 0开 2关 1封 11锁 -->
-                <template v-if="ol_item.hs == 0 || ol_item.hs == 11">
+                <template v-if="ol_item._hs == 0 || ol_item._hs == 11">
                   <!-- os: 1、开盘 2、封盘 3、隐藏不显示，不占地方-->
                   <template v-if="ol_item.os == 1">
                     <!-- 主程序 start -->
-                    <!-- <div
-                      class="play-box-style details_color"
-                      @click="go_to_bet(ol_item)"
-                      :class="[get_bet_list.includes(ol_item.id_)?'details-bg5':'',{'win':utils.calc_win(ol_item.result),'bor-btm':ol_index != item.ol.length-1 || index_ != item_data.hl.length-1}]"
-                    > -->
                     <div
                       class="play-box-style details_color"
                       @click="go_to_bet(ol_item)"
-                      :class="[get_bet_list.includes(ol_item.id_)?'details-bg5':'',{'win':true,'bor-btm':ol_index != item.ol.length-1 || index_ != item_data.hl.length-1}]"
+                      :class="[get_bet_list.includes(ol_item.id_)?'details-bg5':'',{'win':utils.calc_win(ol_item.result),'bor-btm':ol_index != item.ol.length-1 || index_ != item_data.hl.length-1}]"
                     >
                       <div class="ellipsis remark details_t_color6 fz_13">
                         <span class="size-color" :class="[{'white_text':get_bet_list.includes(ol_item.id_)},{'gray': is_number(ol_item.ott) || is_number(ol_item.on) }]">
@@ -137,7 +132,7 @@
                   </template>
                   <template v-if="ol_item.os == 3"></template>
                 </template>
-                <template v-if="ol_item.hs == 1">
+                <template v-if="ol_item._hs == 1">
                   <template v-if="ol_item.os == 3"></template>
                   <template v-else>
                     <!-- lock 锁状态 start -->
@@ -150,14 +145,14 @@
                     <!-- lock 锁状态 end -->
                   </template>
                 </template>
-                <template v-if="ol_item.hs == 2">
+                <template v-if="ol_item._hs == 2">
                   <!-- 盘口级别状态关盘时，要占位 -->
                   <div class="play-box-style details_color" :class="{'bor-btm':ol_index != item.ol.length-1 || index_ != item_data.hl.length-1}">
                   </div>
                 </template>
               </template>
               <!-- 封盘，一把锁的居中显示 -->
-              <template v-if="ol_item.ms == 1">
+              <template v-if="ol_item._mhs == 1">
                 <!-- lock 锁状态 start -->
                 <div class="play-box-style details_color" :class="{'bor-btm':ol_index != item.ol.length-1 || index_ != item_data.hl.length-1}">
                   <div class="ellipsis remark details_t_color7 fz_13" v-show="get_detail_data.csid != 1">{{ol_item.on || ol_item.ott}}</div>
@@ -168,7 +163,7 @@
                 <!-- lock 锁状态 end -->
               </template>
               <!-- 关盘 -->
-              <template v-if="ol_item.ms == 2"></template>
+              <template v-if="ol_item._mhs == 2"></template>
               </template>
               </template>
             </div>
@@ -192,9 +187,10 @@ import lodash from "lodash";
 import store from "src/store-redux/index.js";
 // import odd_convert from "project_path/src/mixins/odds_conversion/odds_conversion.js";
 import {utils } from 'src/core/index.js';
-import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
+import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, ref } from "vue";
 import { useRoute } from "vue-router"
-import { i18n_t } from "src/boot/i18n.js";;
+import { i18n_t } from "src/boot/i18n.js";
+import BetData from "src/core/bet/class/bet-data-class.js"
 //国际化
 
 
@@ -221,9 +217,7 @@ export default defineComponent({
     // #TODO vuex
     // computed: {
     // ...mapGetters(["get_bet_list","get_cur_odd","get_detail_data"]),
-    const get_bet_list = computed(() => {
-      return []
-    });
+    const get_bet_list = ref(BetData.bet_list)
     const get_cur_odd = computed(() => {
       return ""
     });
@@ -316,6 +310,7 @@ export default defineComponent({
       is_number,
       go_to_bet,
       change_show,
+      hide_show_more_layout,
     }
   }
 })

@@ -1,5 +1,5 @@
 //获取URL参数 
-const getQueryString = function () {
+function getQueryString() {
   const result = {};
   const param = window.location.href.split("?")[1];
   const search = decodeURIComponent("?" + param);
@@ -13,5 +13,5 @@ const getQueryString = function () {
   return result;
 };
 
-const Qs = getQueryString();
-export { Qs };
+export const get_query_string = getQueryString()
+

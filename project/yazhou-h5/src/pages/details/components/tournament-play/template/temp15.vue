@@ -13,8 +13,8 @@
         <!-- 按ol循环，不考虑按tittle循环-->
         <template v-for="(ol_item,index2) in item.ol">
           <!-- 开盘or锁盘 正常显示 -->
-          <template v-if="ol_item.ms == 0 || ol_item.ms == 11">
-            <template v-if="ol_item.hs == 0 || ol_item.hs == 11">
+          <template v-if="ol_item._mhs == 0 || ol_item._mhs == 11">
+            <template v-if="ol_item._hs == 0 || ol_item._hs == 11">
               <template v-if="ol_item.os == 1">
                 <div @click="go_to_bet(ol_item)"
                      :class="[{'win':utils.calc_win(ol_item.result),'active-play':get_bet_list.includes(ol_item.id_), 'border-top': index2 > 2},name_]"
@@ -34,7 +34,7 @@
               </template>
               <template v-if="ol_item.os == 3"></template>
             </template>
-            <template v-if="ol_item.hs == 1">
+            <template v-if="ol_item._hs == 1">
               <template v-if="ol_item.os == 3"></template>
               <template v-else>
                 <div class="play-box" :class="[name_, get_detail_data.csid == 1? 'play-box-lock' : '', {'border-top': index2 > 2} ]" :key="index2">
@@ -43,15 +43,15 @@
                 </div>
               </template>
             </template>
-            <template v-if="ol_item.hs == 2"></template>
+            <template v-if="ol_item._hs == 2"></template>
           </template>
-          <template v-if="ol_item.ms == 1">
+          <template v-if="ol_item._mhs == 1">
             <div class="play-box" :class="[name_ , get_detail_data.csid == 1? 'play-box-lock' : '', {'border-top': index2 > 2} ]" :key="index2">
               <div class="remark" v-show="get_detail_data.csid != 1">{{olitem_name(ol_item)}}</div>
               <img src="/yazhou-h5/image/common/match-icon-lock.svg" class="icon-lock">
             </div>
           </template>
-          <template v-if="ol_item.ms == 2"></template>
+          <template v-if="ol_item._mhs == 2"></template>
         </template>
         <!-- 数量不够时用来占位 -->
         <i class="play-box" :class="{'border-top': item.ol.length > 3}" v-for="(n) in calc_num(item.ol)" :key="'i' + n"></i>
@@ -123,7 +123,7 @@ export default defineComponent({
      */
     const calc_num = (val) => {
       let flag = val.every(item => {
-        return item.ms == 2 || item.hs == 2 || item.os == 3
+        return item._mhs == 2 || item._hs == 2 || item.os == 3
       })
       if (flag) return 0
       if (init_data.len % 3 && init_data.len >= 5) {

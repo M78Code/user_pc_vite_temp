@@ -6,7 +6,7 @@
         <img v-if="show_type == 'all'" style="width: 22px; max-height: 24px;" v-img="[((match.match_logo || {}) || {}).home_1_logo,(match.match_logo || {}).home_1_letter]" />
       </div>
       <div class="ellipsis-wrap">
-        <div class="row no-wrap">
+        <div class="row no-wrap absolute-full">
           <div class="team-name home ellipsis allow-user-select" :class="{'bold':match.team_let_ball=='T1'}" v-tooltip="{content:match.mhn+play_name_obj.suffix_name,overflow:1}">
             {{match.mhn}}{{play_name_obj.suffix_name}}
           </div>
@@ -24,7 +24,7 @@
         </div>
       </div>
       <!-- 主比分 -->
-      <div class="score" v-if="show_type == 'all'" v-tooltip="{content: is_15min ? i18n_t('list.15min_stage'):'' ,overflow:1}">{{  play_name_obj.score_key ?  lodash.get(match,`msc_obj.${play_name_obj.score_key}.home`) : match.home_score}}</div>
+      <div class="score" v-if="show_type == 'all'" v-tooltip="{content: is_15min ? i18n_t('list.15min_stage'):'' ,overflow:1}">{{  play_name_obj.score_key ?  lodash.get(match,`msc_obj.${play_name_obj.score_key}.home`) : match.cur_score.home}}</div>
     </div>
     <!-- 客队信息 -->
     <div class="row-item team-item">
@@ -32,7 +32,7 @@
         <img v-if="show_type == 'all'" style="width: 22px; max-height: 24px;" v-img="[(match.match_logo || {}).away_1_logo,(match.match_logo || {}).away_1_letter]" />
       </div>
       <div class="ellipsis-wrap">
-        <div class="row no-wrap">
+        <div class="row no-wrap absolute-full">
           <div class="team-name away ellipsis allow-user-select" :class="{'bold':match.team_let_ball=='T2'}" v-tooltip="{content:lodash.get(match,'man')+play_name_obj.suffix_name,overflow:1}">{{match.man}}{{play_name_obj.suffix_name}}</div>
           <!-- 进球动画 -->
           <div class="yb-flex-center" v-if="is_show_away_goal">
@@ -48,7 +48,14 @@
         </div>
       </div>
       <!-- 主比分 -->
-      <div class="score" :key="match.mid" v-if="show_type == 'all'" v-tooltip="{content: is_15min ? i18n_t('list.15min_stage'):'' ,overflow:1}">{{play_name_obj.score_key ?  lodash.get(match,`msc_obj.${play_name_obj.score_key}.away`) :  match.away_score}}</div>
+      <div 
+        class="score" 
+        :key="match.mid" 
+        v-if="show_type == 'all'" 
+        v-tooltip="{content: is_15min ? i18n_t('list.15min_stage'):'' ,overflow:1}"
+      >
+        {{play_name_obj.score_key ?  lodash.get(match,`msc_obj.${play_name_obj.score_key}.away`) :  match.cur_score.away}}
+      </div>
     </div>
     <!-- 中立场、盘口数 -->
     <div class="row-item match-icon" v-if="show_type == 'all' ">

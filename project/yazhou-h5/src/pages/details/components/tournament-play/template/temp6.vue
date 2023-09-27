@@ -25,8 +25,8 @@
                       <div v-if="lodash.get(item_data.title,'[0].otd') == ol_list_0[ol_index0 - 1].otd" :key="ol_index">
                         <!--  0开 2关 1封 11锁 -->
                         <!-- 开盘or锁盘 正常显示 -->
-                        <template v-if="ol_list_0[ol_index0 - 1].ms == 0 || ol_list_0[ol_index0 - 1].ms == 11">
-                          <template v-if="ol_list_0[ol_index0 - 1].hs == 0 || ol_list_0[ol_index0 - 1].hs == 11">
+                        <template v-if="ol_list_0[ol_index0 - 1]._mhs == 0 || ol_list_0[ol_index0 - 1]._mhs == 11">
+                          <template v-if="ol_list_0[ol_index0 - 1]._hs == 0 || ol_list_0[ol_index0 - 1]._hs == 11">
                             <!-- os: 1、开盘 2、封盘 3、隐藏不显示，不占地方-->
                             <template v-if="ol_list_0[ol_index0 - 1].os == 1">
                               <!-- 主程序 start -->
@@ -58,7 +58,7 @@
                             </template>
                             <template v-if="ol_list_0[ol_index0 - 1].os == 3"></template>
                           </template>
-                          <template v-if="ol_list_0[ol_index0 - 1].hs == 1">
+                          <template v-if="ol_list_0[ol_index0 - 1]._hs == 1">
                             <template v-if="ol_list_0[ol_index0 - 1].os == 3"></template>
                             <template v-else>
                               <!-- lock 锁状态 start -->
@@ -71,14 +71,14 @@
                               <!-- lock 锁状态 end -->
                             </template>
                           </template>
-                          <template v-if="ol_list_0[ol_index0 - 1].hs == 2">
+                          <template v-if="ol_list_0[ol_index0 - 1]._hs == 2">
                             <!-- 盘口级别状态关盘时，要占位 -->
                             <div class="play-box-style details_color">
                             </div>
                           </template>
                         </template>
                         <!-- 封盘，一把锁的居中显示 -->
-                        <template v-if="ol_list_0[ol_index0 - 1].ms == 1">
+                        <template v-if="ol_list_0[ol_index0 - 1]._mhs == 1">
                           <!-- lock 锁状态 start -->
                           <div class="play-box-style details_color warp bor-style">
                             <div class="size-color ellipsis remark details_t_color7 fz_16" :class="{'is-score':check_score(ol_list_0[ol_index0 - 1].on)}" v-show="get_detail_data.csid != 1">{{ ol_list_0[ol_index0 - 1].on }}</div>
@@ -89,7 +89,7 @@
                           <!-- lock 锁状态 end -->
                         </template>
                         <!-- 关盘 -->
-                        <template v-if="ol_list_0[ol_index0 - 1].ms == 2"></template>
+                        <template v-if="ol_list_0[ol_index0 - 1]._mhs == 2"></template>
                       </div>
                     </template>
                     <template v-else>
@@ -108,8 +108,8 @@
                           v-if="lodash.get(item_data.title,'[1].otd') == ol_list_1[ol_index1 - 1].otd" :key="ol_index">
                         <!--  0开 2关 1封 11锁 -->
                         <!-- 开盘or锁盘 正常显示 -->
-                        <template v-if="ol_list_1[ol_index1 - 1].ms == 0 || ol_list_1[ol_index1 - 1].ms == 11">
-                          <template v-if="ol_list_1[ol_index1 - 1].hs == 0 || ol_list_1[ol_index1 - 1].hs == 11">
+                        <template v-if="ol_list_1[ol_index1 - 1]._mhs == 0 || ol_list_1[ol_index1 - 1]._mhs == 11">
+                          <template v-if="ol_list_1[ol_index1 - 1]._hs == 0 || ol_list_1[ol_index1 - 1]._hs == 11">
                             <!-- os: 1、开盘 2、封盘 3、隐藏不显示，不占地方-->
                             <template v-if="ol_list_1[ol_index1 - 1].os == 1">
                               <!-- 主程序 start -->
@@ -140,7 +140,7 @@
                             </template>
                             <template v-if="ol_list_1[ol_index1 - 1].os == 3"></template>
                           </template>
-                          <template v-if="ol_list_1[ol_index1 - 1].hs == 1">
+                          <template v-if="ol_list_1[ol_index1 - 1]._hs == 1">
                             <template v-if="ol_list_1[ol_index1 - 1].os == 3"></template>
                             <template v-else>
                               <!-- lock 锁状态 start -->
@@ -153,14 +153,14 @@
                               <!-- lock 锁状态 end -->
                             </template>
                           </template>
-                          <template v-if="ol_list_1[ol_index1 - 1].hs == 2">
+                          <template v-if="ol_list_1[ol_index1 - 1]._hs == 2">
                             <!-- 盘口级别状态关盘时，要占位 -->
                             <div class="play-box-style details_color bor-style">
                             </div>
                           </template>
                         </template>
                         <!-- 封盘，一把锁的居中显示 -->
-                        <template v-if="ol_list_1[ol_index1 - 1].ms == 1">
+                        <template v-if="ol_list_1[ol_index1 - 1]._mhs == 1">
                           <!-- lock 锁状态 start -->
                           <div class="play-box-style details_color bor-style">
                             <div class="size-color ellipsis remark details_t_color7 fz_16" :class="{'is-score':check_score(ol_list_1[ol_index1 - 1].on)}" v-show="get_detail_data.csid != 1">{{ ol_list_1[ol_index1 - 1].on }}</div>
@@ -171,7 +171,7 @@
                           <!-- lock 锁状态 end -->
                         </template>
                         <!-- 关盘 -->
-                        <template v-if="ol_list_1[ol_index1 - 1].ms == 2"></template>
+                        <template v-if="ol_list_1[ol_index1 - 1]._mhs == 2"></template>
                       </div>
                     </template>
                     <template v-else>
@@ -191,8 +191,8 @@
                     <div :key="ol_index"  v-if="((hide_show_more_layout || (!hide_show_more_layout && (show_more || (!show_more && (line1+line2)<5)))))">
                       <!--  0开 2关 1封 11锁 -->
                       <!-- 开盘or锁盘 正常显示 -->
-                      <template v-if="ol_item.ms == 0 || ol_item.ms == 11">
-                        <template v-if="ol_item.hs == 0 || ol_item.hs == 11">
+                      <template v-if="ol_item._mhs == 0 || ol_item._mhs == 11">
+                        <template v-if="ol_item._hs == 0 || ol_item._hs == 11">
                           <!-- os: 1、开盘 2、封盘 3、隐藏不显示，不占地方-->
                           <template v-if="ol_item.os == 1">
                             <!-- 主程序 start -->
@@ -223,7 +223,7 @@
                           </template>
                           <template v-if="ol_item.os == 3"></template>
                         </template>
-                        <template v-if="ol_item.hs == 1">
+                        <template v-if="ol_item._hs == 1">
                           <template v-if="ol_item.os == 3"></template>
                           <template v-else>
                             <!-- lock 锁状态 start -->
@@ -236,14 +236,14 @@
                             <!-- lock 锁状态 end -->
                           </template>
                         </template>
-                        <template v-if="ol_item.hs == 2">
+                        <template v-if="ol_item._hs == 2">
                           <!-- 盘口级别状态关盘时，要占位 -->
                           <div class="play-box-style details_color">
                           </div>
                         </template>
                       </template>
                       <!-- 封盘，一把锁的居中显示 -->
-                      <template v-if="ol_item.ms == 1">
+                      <template v-if="ol_item._mhs == 1">
                         <!-- lock 锁状态 start -->
                         <div class="play-box-style details_color">
                           <div class="ellipsis remark details_t_color7 fz_16" v-show="get_detail_data.csid != 1">{{ ol_item.on }}</div>
@@ -254,7 +254,7 @@
                         <!-- lock 锁状态 end -->
                       </template>
                       <!-- 关盘 -->
-                      <template v-if="ol_item.ms == 2"></template>
+                      <template v-if="ol_item._mhs == 2"></template>
                     </div>
                   </template>
                 </template>
@@ -265,7 +265,7 @@
 
           <!-- 展开和收起按钮 -->
           <div v-if="!hide_show_more_layout" class="show-more play-box-style"  @click="change_show">
-          <span class="fz_13">{{show_more?t('match_info.pack_up'):t('match_info.show_more')}}
+          <span class="fz_13">{{show_more?i18n_t('match_info.pack_up'):i18n_t('match_info.show_more')}}
           </span>
           </div>
 
@@ -284,7 +284,7 @@ import lodash from "lodash";
 import store from "src/store-redux/index.js";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { useRoute } from "vue-router"
-import { t } from "src/boot/i18n.js";;
+import { i18n_t } from "src/boot/i18n.js";;
 //国际化
 
 const route = useRoute()
@@ -393,6 +393,7 @@ export default defineComponent({
     return {
       ...toRefs(data),
       utils,
+      i18n_t,
       get_bet_list,
       get_cur_odd,
       get_detail_data,

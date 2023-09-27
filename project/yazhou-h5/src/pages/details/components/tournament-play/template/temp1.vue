@@ -3,16 +3,16 @@
   <div class="temp1 mx-10" v-cloak>
     <div class="item-wrap">
       <div v-for="(item,index) in item_data.hl" :key="index">
-        <div class="row" v-if="index>0||index==0" :class="{'result-style':is_match_result}">
+        <div class="row" v-if="index > 0||index == 0" :class="{'result-style':is_match_result}">
           <!-- 如果是电竞，展示这个模板-->
-          <div class="col fat-warp first-radius DJ_special_treatment" v-if="get_menu_type ==3000">
+          <div class="col fat-warp first-radius DJ_special_treatment" v-if="menu_type ==3000">
             <template v-for="(ol_item,ol_index) in item.ol" :key="ol_index">
               <div class="col" >
                 <!-- ms---是外层的赛事级别状态值  mhs: 0开 2关 1封 11锁 -->
                 <!--  0开 2关 1封 11锁 -->
                 <!-- 开盘or锁盘 正常显示 -->
-                <template v-if="ol_item.ms == 0 || ol_item.ms == 11">
-                  <template v-if="ol_item.hs == 0 || ol_item.hs == 11">
+                <template v-if="ol_item._mhs == 0 || ol_item._mhs == 11">
+                  <template v-if="ol_item._hs == 0 || ol_item._hs == 11">
                     <template v-if="ol_item.os == 1">
                       <!-- 主程序 start -->
                       <div
@@ -41,7 +41,7 @@
                     <template v-if="ol_item.os == 3"></template>
                     <!-- 新增over -->
                   </template>
-                  <template v-if="ol_item.hs == 1">
+                  <template v-if="ol_item._hs == 1">
                     <template v-if="ol_item.os == 3"></template>
                     <template v-else>
                       <!-- lock 锁状态 start -->
@@ -54,14 +54,14 @@
                       <!-- lock 锁状态 end -->
                     </template>
                   </template>
-                  <template v-if="ol_item.hs == 2">
+                  <template v-if="ol_item._hs == 2">
                     <!-- 盘口级别状态关盘时，要占位 -->
                     <div class="play-box-style details_color">
                     </div>
                   </template>
                 </template>
                 <!-- 封盘，一把锁的居中显示 -->
-                <template v-if="ol_item.ms == 1">
+                <template v-if="ol_item._mhs == 1">
                   <!-- lock 锁状态 start -->
                   <div class="play-box-style details_color">
                     <div class="text-center odds-wrap warp ">
@@ -72,20 +72,20 @@
                   <!-- lock 锁状态 end -->
                 </template>
                 <!-- 关盘 -->
-                <template v-if="ol_item.ms == 2"></template>
+                <template v-if="ol_item._mhs == 2"></template>
               </div>
             </template>
           </div>
           <!-- 如果不是电竞，展示这个模板-->
-          <template v-if="get_menu_type !=3000">
+          <template v-if="menu_type !=3000">
             <div class="col fat-warp first-radius">
               <template v-for="(ol_item,ol_index) in item.ol">
                 <div class="col" v-if="lodash.get(item_data.title,'[0].otd') == ol_item.otd" :key="ol_index">
-                  <!-- ms---是外层的赛事级别状态值  mhs: 0开 2关 1封 11锁 -->
+                  <!-- _mhs---是外层的赛事级别状态值  mhs: 0开 2关 1封 11锁 -->
                   <!--  0开 2关 1封 11锁 -->
                   <!-- 开盘or锁盘 正常显示 -->
-                  <template v-if="ol_item.ms == 0 || ol_item.ms == 11">
-                    <template v-if="ol_item.hs == 0 || ol_item.hs == 11">
+                  <template v-if="ol_item._mhs == 0 || ol_item._mhs == 11">
+                    <template v-if="ol_item._hs == 0 || ol_item._hs == 11">
                       <template v-if="ol_item.os == 1">
                         <!-- 主程序 start -->
                         <div
@@ -114,7 +114,7 @@
                       <template v-if="ol_item.os == 3"></template>
                       <!-- 新增over -->
                     </template>
-                    <template v-if="ol_item.hs == 1">
+                    <template v-if="ol_item._hs == 1">
                       <template v-if="ol_item.os == 3"></template>
                       <template v-else>
                         <!-- lock 锁状态 start -->
@@ -127,14 +127,14 @@
                         <!-- lock 锁状态 end -->
                       </template>
                     </template>
-                    <template v-if="ol_item.hs == 2">
+                    <template v-if="ol_item._hs == 2">
                       <!-- 盘口级别状态关盘时，要占位 -->
                       <div class="play-box-style details_color">
                       </div>
                     </template>
                   </template>
                   <!-- 封盘，一把锁的居中显示 -->
-                  <template v-if="ol_item.ms == 1">
+                  <template v-if="ol_item._mhs == 1">
                     <!-- lock 锁状态 start -->
                     <div class="play-box-style details_color">
                       <div class="text-center odds-wrap warp" :class="get_detail_data.csid == 1? 'odds-lock' : '' ">
@@ -145,7 +145,7 @@
                     <!-- lock 锁状态 end -->
                   </template>
                   <!-- 关盘 -->
-                  <template v-if="ol_item.ms == 2"></template>
+                  <template v-if="ol_item._mhs == 2"></template>
                 </div>
               </template>
             </div>
@@ -159,8 +159,8 @@
                 >
                   <!--  0开 2关 1封 11锁 -->
                   <!-- 开盘or锁盘 正常显示 -->
-                  <template v-if="ol_item.ms == 0 || ol_item.ms == 11">
-                    <template v-if="ol_item.hs == 0 || ol_item.hs == 11">
+                  <template v-if="ol_item._mhs == 0 || ol_item._mhs == 11">
+                    <template v-if="ol_item._hs == 0 || ol_item._hs == 11">
                       <template v-if="ol_item.os == 1">
                         <!-- 主程序 start -->
                         <div
@@ -189,7 +189,7 @@
                       <template v-if="ol_item.os == 3"></template>
                       <!-- 新增over -->
                     </template>
-                    <template v-if="ol_item.hs == 1">
+                    <template v-if="ol_item._hs == 1">
                       <template v-if="ol_item.os == 3"></template>
                       <template v-else>
                         <!-- lock 锁状态 start -->
@@ -202,14 +202,14 @@
                         <!-- lock 锁状态 end -->
                       </template>
                     </template>
-                    <template v-if="ol_item.hs == 2">
+                    <template v-if="ol_item._hs == 2">
                       <!-- 盘口级别状态关盘时，要占位 -->
                       <div class="play-box-style details_color">
                       </div>
                     </template>
                   </template>
                   <!-- 封盘，一把锁的居中显示 -->
-                  <template v-if="ol_item.ms == 1">
+                  <template v-if="ol_item._mhs == 1">
                     <!-- lock 锁状态 start -->
                     <div class="play-box-style details_color">
                       <div class="text-center odds-wrap warp" :class="get_detail_data.csid == 1? 'odds-lock' : '' ">
@@ -220,7 +220,7 @@
                     <!-- lock 锁状态 end -->
                   </template>
                   <!-- 关盘 -->
-                  <template v-if="ol_item.ms == 2"></template>
+                  <template v-if="ol_item._mhs == 2"></template>
                 </div>
               </template>
             </div>
@@ -234,8 +234,8 @@
                 >
                   <!--  0开 2关 1封 11锁 -->
                   <!-- 开盘or锁盘 正常显示 -->
-                  <template v-if="ol_item.ms == 0 || ol_item.ms == 11">
-                    <template v-if="ol_item.hs == 0 || ol_item.hs == 11">
+                  <template v-if="ol_item._mhs == 0 || ol_item._mhs == 11">
+                    <template v-if="ol_item._hs == 0 || ol_item._hs == 11">
                       <template v-if="ol_item.os == 1">
                         <!-- 主程序 start -->
                         <div
@@ -267,7 +267,7 @@
                       <!-- 新增over -->
                     </template>
 
-                    <template v-if="ol_item.hs == 1">
+                    <template v-if="ol_item._hs == 1">
                       <template v-if="ol_item.os == 3"></template>
                       <template v-else>
                         <!-- lock 锁状态 start -->
@@ -281,14 +281,14 @@
                       </template>
                     </template>
 
-                    <template v-if="ol_item.hs == 2">
+                    <template v-if="ol_item._hs == 2">
                       <!-- 盘口级别状态关盘时，要占位 -->
                       <div class="play-box-style details_color">
                       </div>
                     </template>
                   </template>
                   <!-- 封盘，一把锁的居中显示 -->
-                  <template v-if="ol_item.ms == 1">
+                  <template v-if="ol_item._mhs == 1">
                     <!-- lock 锁状态 start -->
                     <div class="play-box-style details_color">
                       <div class="text-center odds-wrap">
@@ -298,7 +298,7 @@
                     <!-- lock 锁状态 end -->
                   </template>
                   <!-- 关盘 -->
-                  <template v-if="ol_item.ms == 2"></template>
+                  <template v-if="ol_item._mhs == 2"></template>
                 </div>
               </template>
               </div>
@@ -315,7 +315,7 @@
 import lodash from "lodash"
 import odds_new from "project_path/src/pages/details/components/tournament-play/unit/odds-new.vue";
 // import odd_convert from "src/core/odds-conversion/odds_conversion-mixin.js";
-import {utils } from 'src/core/index.js';
+import {utils, MenuData } from 'src/core/index.js';
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { useRoute } from "vue-router"
 
@@ -329,16 +329,14 @@ export default defineComponent({
   },
   setup(props, evnet) {
     const route = useRoute()
+    const { menu_type } = MenuData; //菜单选中项
     // #TODO vuex 
     // computed: {
-    // ...mapGetters(["get_bet_list","get_cur_odd","get_menu_type","get_detail_data"]),
+    // ...mapGetters(["get_bet_list","get_cur_odd","menu_type","get_detail_data"]),
     const get_bet_list = computed(() => {
       return ""
     });
     const get_cur_odd = computed(() => {
-      return ""
-    });
-    const get_menu_type = computed(() => {
       return ""
     });
     const get_detail_data = computed(() => {
@@ -356,7 +354,7 @@ export default defineComponent({
       lodash,
       get_bet_list,
       get_cur_odd,
-      get_menu_type,
+      menu_type,
       get_detail_data,
       is_match_result,
       go_to_bet

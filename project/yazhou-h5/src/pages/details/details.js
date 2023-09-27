@@ -213,7 +213,6 @@ const get_detail_data = ref({})
   //   console.error(route);
   //   MatchDetailCtr.current_category_id = route.params.mcid
   // })
-  console.error(MatchDetailCtr.current_category_id);
   /**
    *@description: 点击详情任意地方显示视频对阵信息
    *@param {Undefined}
@@ -634,7 +633,6 @@ const get_detail_data = ref({})
             data: res_data
           });
           // 当玩法集存在激活得项，循环找到对用得id，找得到就不管，找不到就赋值为玩法集第一项
-          console.error(MatchDetailCtr.current_category_id);
           if (state_data.get_details_item && res_data.length) {
             const set_details_item_flag = res_data.some(
               (item) => item.id == MatchDetailCtr.current_category_id

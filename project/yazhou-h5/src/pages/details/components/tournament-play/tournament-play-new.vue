@@ -135,7 +135,6 @@ import { api_common } from "src/api/index.js";
 // import betting from "src/project/mixins/betting/betting.js";
 import lodash from "lodash";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
-import { i18n_t } from "src/boot/i18n.js"
 // 模板id=0(默认模板)
 import temp0 from "./template/temp0.vue"
 // 模板id=1
@@ -173,7 +172,7 @@ import temp18 from "./template/temp18.vue"
 // 模板id=51
 import temp51 from "./template/temp51.vue"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, nextTick, defineAsyncComponent, markRaw } from "vue";
-import { t } from "src/boot/i18n.js";;
+import { i18n_t } from "src/boot/i18n.js";;
 import UserCtr from "src/core/user-config/user-ctr.js";;
 
 //国际化
@@ -221,7 +220,7 @@ export default defineComponent({
   // #TODO mixins
   // mixins: [betting],
   setup(props, evnet) {
-    console.error("tournament-play-new", props);
+    // console.error("tournament-play-new", props);
     let component_data = reactive({
       emitters: [],
       wsl_flag:sessionStorage.getItem('wsl') == 9999,
@@ -587,7 +586,7 @@ export default defineComponent({
         component_data.is_show_underline = false;
       }
       set_hshow_map(payload)
-      $emit("change_show")
+      // $emit("change_show")
     };
     /**
      *@description 点击置顶或者取消置顶
