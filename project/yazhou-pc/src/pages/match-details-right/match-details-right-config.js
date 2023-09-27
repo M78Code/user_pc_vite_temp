@@ -122,7 +122,7 @@ export const useRightDetails = (props) => {
     handicap_this: null,
     // 菜单数据
     menu_data: MenuData,
-    mid: "2759587", //赛事id
+    mid: "2773256", //赛事id
     sportId: "", //球类id
     match_infoData: {},
     category_list: [], //玩法集
@@ -167,7 +167,7 @@ export const useRightDetails = (props) => {
     details_params: {
       //赛事参数
       media_type: "info",
-      mid: "2759587",
+      mid: "2773256",
       sportId: "1",
       tid: "1188757",
       time: 1695546310766,
@@ -1169,6 +1169,7 @@ export const useRightDetails = (props) => {
     layout_cur_page,
     is_esports,
     show_load_status,
+    MatchDataWarehouseInstance,
     on_go_top,
     change_loading_state,
     set_handicap_this,
