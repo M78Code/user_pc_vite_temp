@@ -125,7 +125,6 @@ export const category_info = () => {
   });
   // 置顶列表
   const match_list_new = computed(() => {
-    console.log("match_info_list=-===", MatchDataWarehouseInstance.list_to_obj)
     return MatchDataWarehouseInstance.list;
   });
   // 非置顶列表
