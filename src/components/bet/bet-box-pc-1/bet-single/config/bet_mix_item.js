@@ -5,7 +5,7 @@
  */
 
 // import betting from "src/public/mixins/betting/betting.js";
-import { ref, reactive, onMounted, defineComponent, computed } from "vue"
+import { ref, reactive, onMounted, defineComponent, computed, nextTick } from "vue"
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetDataCtr from "src/core/bet/bet-data-ctr-class.js";
 import { format_str } from "src/core/format/index.js";
@@ -615,7 +615,7 @@ export default defineComponent({
           BetDataCtr.bet_single_clear();
         }
         if (BetDataCtr.cur_menu_type.type_name != 'bet') {
-          $nextTick(() => {
+          nextTick(() => {
             BetDataCtr.set_is_bet_merge(false);    //是否合并
             BetDataCtr.set_is_bet_single(true);    //是否单关
           });

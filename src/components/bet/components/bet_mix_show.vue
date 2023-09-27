@@ -382,7 +382,7 @@ const props = defineProps({
 //   if (newVal > oldVal) return
 
 //   is_suspend_watch.value = true
-//   $nextTick(() => {
+//   nextTick(() => {
 //     is_suspend_watch.value = false
 
 //   })

@@ -100,7 +100,7 @@ onMounted(() => {
   money.value = BetData.bet_money_total && view_ctr_obj[name_].money || ''
 
   // // 同步程序走完后再处理逻辑
-  // $nextTick(() => {
+  // nextTick(() => {
   //   is_watch.value = true;
   // })
 
@@ -249,7 +249,7 @@ watch(() => BetData.bet_list.length, (newVal, oldVal) => {
     money.value = BetData.bet_money_total && view_ctr_obj[name_].money || ''
 
     is_watch.value = false
-    $nextTick(() => {
+    nextTick(() => {
       is_watch.value = true;
     })
   }

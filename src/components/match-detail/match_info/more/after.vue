@@ -438,7 +438,7 @@ export default {
    */
     reload_data() {
       this.isRouterAlive = false;
-      this.$nextTick(function () {
+      nextTick(function () {
         this.isRouterAlive = true;
       });
     },
@@ -522,7 +522,7 @@ export default {
         if (this.is_scroll) {
           if (this.scrollTimer) clearTimeout(this.scrollTimer);
           this.scrollTimer = setTimeout(() => {
-            this.$nextTick(() => {
+            nextTick(() => {
               // 如果是右侧就是5个，中间就是9个
               if (this.right) {
                 this.offset = 5

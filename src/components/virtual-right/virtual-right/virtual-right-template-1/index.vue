@@ -100,7 +100,7 @@ import footbalReplay from "src/project/yabo/components/virtual_right/footbal_rep
 // import vsport_ctr from "/utils/vsport/vsport_ctr.js"
 // #TODO vuex
 // import { mapGetters } from "vuex"
-import { reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
+import { reactive, computed, onMounted, onUnmounted, toRefs, watch,nextTick } from "vue";
 export default defineComponent({
   name: "virtualRight",
   components:{
@@ -157,7 +157,7 @@ export default defineComponent({
     watch(
       () => get_layout_list_size.width,
       () => {
-        $nextTick(() => {
+        nextTick(() => {
           vsport_ctr.set_result_style()
         })
       }
