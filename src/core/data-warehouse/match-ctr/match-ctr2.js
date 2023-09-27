@@ -26,7 +26,7 @@
  * MatchDataWarehouseInstance.clear_list_other(list);
  */
 import MatchDataBaseWS from  "./match-ctr-ws2.js"
-import { ref } from 'vue'
+import { reactive } from 'vue'
 
 export default class MatchDataBase
 {
@@ -1241,6 +1241,7 @@ init(){
   clear(){
     // 清除快速检索对象
     this._clear_quick_query_obj(this.list_to_obj);
+    this.mids_ation = [];
   }
 
   /**
@@ -1257,6 +1258,7 @@ init(){
     this._clear_obj(this.cache);
     this._clear_obj(this.cache_match);
     this._clear_obj(this.cache_oid);
+    this.mids_ation = [];
     // 销毁ws数据通信实例
     this.ws_ctr && this.ws_ctr.destroy();
   }
