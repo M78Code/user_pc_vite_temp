@@ -16,6 +16,7 @@ export * from "src/core/constant/index.js";
 export * from "src/core/utils/index.js";
 export * from "src/core/enter-params/index.js";
 
+export * from 'src/core/file-path/file-path'
 // ==============================   间接转出     项目无差异的        ======================================
 import { i18n, loadLanguageAsync, map_lang, t, i18n_t } from "src/boot/i18n.js";
 

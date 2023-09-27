@@ -4,7 +4,7 @@ import { useRoute } from 'vue-router'
 import lodash from 'lodash'
 import store from "src/store-redux/index.js";
 import { utils } from 'src/core/index.js'
-import { get_handicap_w_id } from "src/core/index.js";
+import { csid_map_concede_points_id } from "src/core/index.js";
 
 import { useMittEmit, MITT_TYPES } from "src/core/mitt"
 import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache"
@@ -15,12 +15,58 @@ import UserCtr from 'src/core/user-config/user-ctr.js'
 import MenuData from "src/core/menu-h5/menu-data-class.js";
 import PageSourceData from "src/core/page-source/page-source.js";
 import { ws_c8_obj_format } from 'src/core/data-warehouse/util/index.js'
-import { get_handicap_index_by } from 'src/core/utils/index.js'
 import MatchListCardClass from '../match-card/match-list-card-class'
 import matchListParams from '../composables/match-list-params'
 import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from 'src/core'
 // import MatchDataBase from "src/core/data-warehouse/match-ctr/match-ctr.js"
+/**
+ * @description: 获取赛事的让球方
+ * @param {Object} match
+ * @return {Number} 0未找到让球方 1主队为让球方 2客队为让球方
+ */
+export const get_handicap_index_by = (match) => {
+  let result = 0;
+  if (match && match.hps) {
+    let hpid = get_handicap_w_id(match.csid);
+    let hp_item = match.hps.filter((item) => item.hpid == hpid)[0];
+    if (hp_item) {
+      let hl_item = hp_item.hl[0];
 
+      // 网球csid 5  让盘hpid 154
+      if (!hl_item || !hl_item.ol) {
+        if (match.csid == 5) {
+          hp_item = match.hps.filter((item) => item.hpid == 154)[0];
+          if (hp_item) {
+            hl_item = hp_item.hl[0];
+          }
+        }
+      }
+
+      if (hl_item && hl_item.ol) {
+        let found_i = 0;
+        hl_item.ol.forEach((ol_item, i) => {
+          if (ol_item.on) {
+            let on_str = String(ol_item.on);
+            if (on_str[0] == "-") {
+              found_i = i + 1;
+            }
+          }
+        });
+        result = found_i;
+      }
+    }
+  }
+  return result;
+};
+/**
+ * 根据体育类型的csid获取赛事的让球玩法id
+ * @param {Number} csid 体育类型id
+ */
+const get_handicap_w_id = (csid) => {
+  return csid_map_concede_points_id[+csid]
+    ? csid_map_concede_points_id[+csid]
+    : 4;
+};
 class MatchPage {
   //当前调用的赛事列表接口方法
   current_invoke_api_func = null
@@ -306,8 +352,8 @@ class MatchPage {
     if (!mid || !MatchDataBaseH5) return;
 
     // menu_type 100 冠军下 不再刷新接口
-    if ([100,4, 900].includes(+MenuData.menu_type) || (['category', 'virtual_sports'].includes(PageSourceData.route_name)) && is_subscribe != "is-subscribe") return;
-    
+    if ([100, 4, 900].includes(+MenuData.menu_type) || (['category', 'virtual_sports'].includes(PageSourceData.route_name)) && is_subscribe != "is-subscribe") return;
+
     // 非赛事列表中的赛事不更新
     if (Array.isArray(mid)) {
       let flag = false;
@@ -346,7 +392,7 @@ class MatchPage {
 
     //如果在其他情况下携带了参数 取其他情况下的参数
     if (lodash.get(other, 'params')) {
-      params = other.params; 
+      params = other.params;
     }
     params.inner_param = 'is_by_mids'
     // this.send_gcuuid = uid();
@@ -415,7 +461,7 @@ class MatchPage {
    * @description 比对 更新 赛事
    * @param {list} 赛事 list 
    */
-  comparison_updata_match (list) {
+  comparison_updata_match(list) {
     const cur_list = MatchDataBaseH5.list
     lodash.forEach(list, t => {
       const match = lodash.find(cur_list, (l) => l.mid === t.mid)

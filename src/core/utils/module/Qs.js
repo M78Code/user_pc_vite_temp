@@ -7,7 +7,7 @@ const getQueryString = function () {
   arr.forEach((item) => {
     if (item) {
       const itemArr = item.split("=");
-      result[itemArr[0]] = itemArr[1];
+      result[String(itemArr[0]).toLowerCase()] = itemArr[1];
     }
   });
   return result;

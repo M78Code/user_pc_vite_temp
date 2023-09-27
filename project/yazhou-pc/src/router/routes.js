@@ -20,9 +20,9 @@ const routes = [
       },
       //       // 首页
       {
-        path: "/match",
-        name: "match",
-        component: () => import('project_path/src/pages/match-list/match-list.vue'),
+        path: "/bet",
+        name: "bet",
+        component: () => import('project_path/src/pages/test/index.vue'),
         meta: {
           keepAlive: true, // 需要缓存
         },

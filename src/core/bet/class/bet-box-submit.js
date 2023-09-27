@@ -301,32 +301,34 @@ const submit_handle = type => {
 // 选择投注项数据 
 // params 各种id 用于查找数据对应的值 
 // other 灵活数据
-// const set_bet_obj_config = (mid_obj,hn_obj,hl_obj,ol_obj) =>{
-const set_bet_obj_config = (params = {}, other = {}) => {
+const set_bet_obj_config = (mid_obj,hn_obj,hl_obj,ol_obj) =>{
+// const set_bet_obj_config = (params = {}, other = {}) => {
     // console.log('投注项需要数据', params, 'other', other);
     // 切换投注状态
     BetViewDataClass.set_bet_order_status(1)
 
-    const { oid, _hid, _hn, _mid } = params
-    // console.error('MatchDataWarehouse_PC_List_Common',MatchDataWarehouse_PC_List_Common)
-    // 列表数据仓库
-    let query = MatchDataWarehouse_PC_List_Common
-    // 判断是不是详情点击 详情使用详情数据仓库
-    if (other.is_detail) {
-        query = MatchDataWarehouse_PC_Detail_Common
-    }
-    // 获取对应的仓库数据
-    const hl_obj = lodash_.get(query.list_to_obj, `hl_obj.${_mid}_${_hid}`, {})
-    const hn_obj = lodash_.get(query.list_to_obj, `hn_obj.${_hn}`, {})
-    const mid_obj = lodash_.get(query.list_to_obj, `mid_obj.${_mid}_`, {})
-    const ol_obj = lodash_.get(query.list_to_obj, `ol_obj.${_mid}_${oid}`, {})
-
+    // const { oid, _hid, _hn, _mid } = params
+    // // console.error('MatchDataWarehouse_PC_List_Common',MatchDataWarehouse_PC_List_Common)
+    // // 列表数据仓库
+    // let query = MatchDataWarehouse_PC_List_Common
+    // // 判断是不是详情点击 详情使用详情数据仓库
+    // if (other.is_detail) {
+    //     query = MatchDataWarehouse_PC_Detail_Common
+    // }
+    // // 获取对应的仓库数据
+    // const hl_obj = lodash_.get(query.list_to_obj, `hl_obj.${_mid}_${_hid}`, {})
+    // const hn_obj = lodash_.get(query.list_to_obj, `hn_obj.${_hn}`, {})
+    // const mid_obj = lodash_.get(query.list_to_obj, `mid_obj.${_mid}_`, {})
+    // const ol_obj = lodash_.get(query.list_to_obj, `ol_obj.${_mid}_${oid}`, {})
+    let other = { bet_type:'common_bet'}
 
     // 1 ：早盘赛事 ，2： 滚球盘赛事，3：冠军，4：虚拟赛事，5：电竞赛事")
     let matchType = 1
     if ([1, 2].includes(Number(mid_obj.ms))) {
         matchType = 2
     }
+    console.error('ol_obj.on',ol_obj.on)
+    console.error('ol_obj.ott',ol_obj.ott)
     const bet_obj = {
         sportId: mid_obj.csid, // 球种id
         matchId: mid_obj.mid,  // 赛事id
@@ -356,7 +358,7 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         tid_name: mid_obj.tn,  // 联赛名称
         match_ms: mid_obj.ms, // 赛事阶段
         match_time: mid_obj.mgt, // 开赛时间
-        handicap: ol_obj.ott, // 盘盘口值
+        handicap: ol_obj.on, // 盘盘口值
         handicap_attach: get_handicap(ol_obj), // 盘盘口值
         show_mark_score: get_mark_score(ol_obj), // 是否显示基准分
     }
@@ -384,7 +386,7 @@ const get_handicap = ol_obj => {
     let text = ''
     // 展示用的 + 投注项 
     if (!playId.includes(Number(ol_obj._hpid))) {
-        text = ol_obj.on
+        text = ol_obj.ott
     }
     return text
 }
