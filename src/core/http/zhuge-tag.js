@@ -8,7 +8,7 @@
  */
 import { get } from "lodash";
 import { DateForMat } from "src/core/format/index.js";
-import { deepMerge, GetUrlParams } from "../utils";
+import { deepMerge,get_query_string } from "../utils";
 const { LOCAL_FUNCTION_SWITCH } = window.BUILDIN_CONFIG;
 import { UserCtr } from "src/core/index.js";
 class ZhuGe {
@@ -32,27 +32,27 @@ class ZhuGe {
     },
   };
   constructor(confg = {}) {
-  //  this.init()
+    //  this.init()
   }
-init(){
-  const _this = this;
-  this.config = deepMerge(this.config, confg);
-  for (var i = 0; i < _this.length; i++) {
-    var key = _this.methods[i];
-    this[key] = this.factory(key);
-  }
-  try {
-    // 获取诸葛埋点开关
-    this.config.enable =
-      GetUrlParams("zhuge") || this.config.mid.includes(mid);
-  } catch (error) {}
-  // 诸葛埋点开关关闭时,直接终止
-  if (!this.config.enable) {
-    return;
-  }
-  this.load(this.app_key, this.config.config);
+  init() {
+    const _this = this;
+    this.config = deepMerge(this.config, confg);
+    for (var i = 0; i < _this.length; i++) {
+      var key = _this.methods[i];
+      this[key] = this.factory(key);
+    }
+    try {
+      // 获取诸葛埋点开关
+      this.config.enable =
+       get_query_string.zhuge || this.config.mid.includes(mid);
+    } catch (error) { }
+    // 诸葛埋点开关关闭时,直接终止
+    if (!this.config.enable) {
+      return;
+    }
+    this.load(this.app_key, this.config.config);
 
-}
+  }
 
 
 

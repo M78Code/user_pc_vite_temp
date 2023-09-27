@@ -120,7 +120,7 @@
   </div>
 </template>
 <script setup>
-import { ref, onMounted, computed } from "vue";
+import { ref, onMounted, computed,nextTick } from "vue";
 import { useRoute, useRouter } from 'vue-router'
 // 菜单配置
 import { MenuData, UserCtr } from "src/core/index.js"

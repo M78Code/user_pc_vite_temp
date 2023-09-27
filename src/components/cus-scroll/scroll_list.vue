@@ -93,7 +93,7 @@ onMounted(() => {
   is_mounted.value = true;
   // let { status, height } = this.get_retain_scroll_obj;
   // if (status) {
-  //   this.$nextTick(() => {
+  //   nextTick(() => {
   //     set_scrollTop(height);
   //     this.set_retain_scroll_obj({ status: false, height: 0 });
   //   });
@@ -126,7 +126,7 @@ const on_bootom = lodash.throttle(() => {
  */
  const emit_on_scroll = lodash.throttle(() => {
   useMittEmit(MITT_TYPES.EMIT_LIST_ON_SCROLL);
-}, 500);
+}, 3000);
 /**
  * @Description 滚动条滚动事件
  * @param {object} e 滚动事件

@@ -7,7 +7,8 @@
 // import betting from "src/public/mixins/betting/betting.js"; // 押注相关功能
 // import skt_data_single_order from "src/public/mixins/websocket/data/skt_data_single_order.js";  //websocket数据页面数据接入 ---- 单关投注订单
 import { api_betting } from "src/api/index.js";  //API 共通入口 
-import { useMittOn, useMittEmit, useMittEmitterGenerator,MITT_TYPES  } from "src/core/mitt/index.js";
+import { useMittOn, useMittEmit, useMittEmitterGenerator, MITT_TYPES } from "src/core/mitt/index.js";
+import { nextTick } from "vue"
 export default {
   name: "bet-single",
   // mixins: [betting, skt_data_single_order],
@@ -33,13 +34,13 @@ export default {
   created() {
     // 显示部分dom ID
     this.DOM_ID_SHOW = window.BUILDIN_CONFIG.LOCAL_FUNCTION_SWITCH.DOM_ID_SHOW;
- 
 
 
-   //生成事件监听  
-   this.handle_generat_emitters()
 
- 
+    //生成事件监听  
+    this.handle_generat_emitters()
+
+
 
 
     // 投注模式默认为未知
@@ -51,13 +52,13 @@ export default {
     // 菜单是否改变设置为未改变
     BetDataCtr.set_menu_change(false);
     //选中赔率喜好后退出，再次唤起投注栏，赔率喜好没有被保存
-    this.$nextTick(() => {
-      this.user_bet_prefer = _.get(this.BetData.user,'userBetPrefer') == 1;
+    nextTick(() => {
+      this.user_bet_prefer = _.get(this.BetData.user, 'userBetPrefer') == 1;
     });
-//生成事件监听
-this.handle_generat_emitters()
+    //生成事件监听
+    this.handle_generat_emitters()
     window.addEventListener("keyup", this.keyup_handle); // 监听键盘抬起事件
-    this.$emit("set_scroll_this", {type:'bet_this', _this:this}); //设置滚动数据
+    this.$emit("set_scroll_this", { type: 'bet_this', _this: this }); //设置滚动数据
   },
   beforeUnmount() {
     // 清除计时器对象
@@ -66,23 +67,23 @@ this.handle_generat_emitters()
     }
     //清空计时器对象
     this.timer_obj = {};
- 
+
     //移除相应监听事件 //视图销毁钩子函数内执行
-    if(this.emitters_off){this.emitters_off()}  
+    if (this.emitters_off) { this.emitters_off() }
     //清除计时器
     if (this.view_ctr_obj.timer_) {
       clearTimeout(this.view_ctr_obj.timer_);
       this.view_ctr_obj.timer_ = undefined;
     }
- 
+
     this.valid_money_obj = {};
     // this.valid_error_codes = {};
     //清除触发enter键执行
-    useMittEmit(MITT_TYPES.EMIT_ENTER_PRESS_EVENT,this.keyup_handle).off
-    window.removeEventListener("keyup",this.keyup_handle); // 取消监听键盘抬起事件
+    useMittEmit(MITT_TYPES.EMIT_ENTER_PRESS_EVENT, this.keyup_handle).off
+    window.removeEventListener("keyup", this.keyup_handle); // 取消监听键盘抬起事件
   },
   computed: {
- 
+
 
     /**
      * @description: 确定按钮是否显示  
@@ -142,7 +143,7 @@ this.handle_generat_emitters()
      * @return {Boolean} 是否未投注: true, 已投注: false
      */
     bet_flag() {
-      if(this.BetData.bet_mode == 0) {
+      if (this.BetData.bet_mode == 0) {
         return false;
       }
       return this.BetData.bet_mode == -1 || (this.BetData.bet_mode == 1 && this.view_ctr_obj.order_confirm_complete != 2);
@@ -153,7 +154,7 @@ this.handle_generat_emitters()
      * @return {undefined} undefined
      */
     bet_fail_flag() {
-      return this.BetData.bet_mode == -1 && [3,4].includes(this.view_ctr_obj.order_confirm_complete);
+      return this.BetData.bet_mode == -1 && [3, 4].includes(this.view_ctr_obj.order_confirm_complete);
     },
     /**
      * @description 判断是否有无效的投注项
@@ -188,7 +189,7 @@ this.handle_generat_emitters()
      * @return {undefined} undefined
      */
     "view_ctr_obj.input_money_state"(new_) {
-      if(![-4,0].includes(new_) && this.view_ctr_obj.error_code != "M400005") {
+      if (![-4, 0].includes(new_) && this.view_ctr_obj.error_code != "M400005") {
         clearTimeout(this.timer_obj['range_money']);
         this.timer_obj['range_money'] = setTimeout(() => {
           this.view_ctr_obj.error_code = "";
@@ -204,29 +205,29 @@ this.handle_generat_emitters()
      */
     "view_ctr_obj.order_confirm_complete"(new_) {
       // 新的投注流程会到投注页面
-      if([3,4].includes(new_)) {
+      if ([3, 4].includes(new_)) {
         this.view_ctr_obj.bet_order_status = 4;
-        if(this.BetData.bet_mode === 1) {
+        if (this.BetData.bet_mode === 1) {
           BetDataCtr.set_bet_mode(-1);
         } else {
           this.view_ctr_obj.bet_order_status = 3;
         }
       }
-      if([2,3,4].includes(new_)) {
+      if ([2, 3, 4].includes(new_)) {
         clearTimeout(this.timer_obj['time_over']);
         useMittEmit(MITT_TYPES.EMIT_CLOSE_MENU_LOADDING_CMD);
-        
+
         let mids = [], has_match_collect = false, has_hot_collect = false;
         let len = this.BetData.bet_single_list.length
-        for(let i = 0;i < len; i++) {
+        for (let i = 0; i < len; i++) {
           let id = this.BetData.bet_single_list[i];
           if (id && this.BetData.bet_single_obj[id]) {
             let bet_single_obj = this.BetData.bet_single_obj[id];
-            if(bet_single_obj.cs.source == 'hot') {
+            if (bet_single_obj.cs.source == 'hot') {
               has_hot_collect = true;
             } else {
               let mid = _.get(bet_single_obj, 'cs.match_id');
-              if(mid && !mids.includes(mid)) {
+              if (mid && !mids.includes(mid)) {
                 mids.push(mid);
                 has_match_collect = true;
               }
@@ -248,7 +249,7 @@ this.handle_generat_emitters()
       }
 
       // 投注项锁住不让点击
-      if(this.BetData.bet_mode == 1 && new_ == 1) {
+      if (this.BetData.bet_mode == 1 && new_ == 1) {
         BetDataCtr.set_bet_item_lock(true);
       } else {
         BetDataCtr.set_bet_item_lock(false);
@@ -262,99 +263,99 @@ this.handle_generat_emitters()
      */
     "view_ctr_obj.error_code": {
       handler(new_) {
-        if(new_) {
+        if (new_) {
           BetDataCtr.set_bet_mode(-1);
           BetDataCtr.set_bet_item_lock(false);
         }
-        if(new_ != 'M400015') {
+        if (new_ != 'M400015') {
           this.show_valid_btn = false;
         }
-        if(this.valid_error_codes.includes(new_)) {
+        if (this.valid_error_codes.includes(new_)) {
           this.show_valid_btn = true;
         }
       },
       immediate: true
     },
 
-     /**
-     * @description: 投注失败标识
-     * @param {Boolean} new_ 是否在最大最小值范围内
-     * @return {undefined} undefined
-     */
+    /**
+    * @description: 投注失败标识
+    * @param {Boolean} new_ 是否在最大最小值范围内
+    * @return {undefined} undefined
+    */
     bet_fail_flag(new_) {
       this.view_ctr_obj.bet_fail_flag = new_;
     },
-     /**
-     * @description: 监听单关列表变化
-     * @param {Object} new_ 新的单关列表
-     * @param {Object} old_ 旧的单关列表
-     * @return {undefined} undefined
-     */
-    "BetData.bet_single_list":{
+    /**
+    * @description: 监听单关列表变化
+    * @param {Object} new_ 新的单关列表
+    * @param {Object} old_ 旧的单关列表
+    * @return {undefined} undefined
+    */
+    "BetData.bet_single_list": {
       handler(new_, old_) {
         //flag是bet_single_big_video且当前页面是video时return;
-        if(this.flag == 'bet_single_big_video' && BetDataCtr.layout_cur_page.cur == 'video') return;
-          // if(BetDataCtr.layout_left_show != 'bet_list') {
-          //   return;
-          // }
-          if(new_.length == 0) {
-            BetDataCtr.set_layout_left_show('menu');
-            return;
-          }
-          let count_pa = 0;
-          for(let key in this.BetData.bet_single_obj) {
-            if(!this.BetData.bet_single_list.includes(key)) { // 如果单关对象中的key在投注项列表中不存在则移除对象
-              BetDataCtr.bet_single_obj_remove_attr(key);
-            } else if (this.BetData.bet_single_obj[key].cs.operate_type == 'PA') { // 统计类型为PA的投注项
-              count_pa++;
-            }
-          }
-          //初始化视图
-          this.init_view();
-          // 投注模式默认为未知
-          BetDataCtr.set_bet_mode(-1);
-          // 设置投注项为可选
-          BetDataCtr.set_bet_item_lock(false);
-          BetDataCtr.set_is_single_handle(false);
-          if(new_.length == 1) {
-            let is_common_amount = localStorage.getItem("is_common_amount");
-            this.is_common_amount = JSON.parse(is_common_amount);
-            this.common_amount = this.is_common_amount ? Number(localStorage.getItem("common_amount")) : null;
-          } else {
-            this.is_common_amount = false;
-            this.common_amount = null;
-          }
-          if(new_ && new_.length > 0) {
-            this.view_ctr_obj.input_max_flag = 1;
-          } else {
-            this.view_ctr_obj.input_max_flag = 0;
-          }
-          if(new_ && old_ && new_.length < old_.length) {
-            return;
-          }
-          // 设置默认的最大最小值
-          this.set_default_min_max();                
-          if(count_pa > 0) {
-            this.query_bet_amount((code, betAmountInfo)=>{    
-              this.bet_reset_money_msg();
-              if(code == 200 && betAmountInfo && betAmountInfo.length > 0) { 
-                let bet_single_obj = _.cloneDeep(this.BetData.bet_single_obj);       
-                this.min_max_handle(bet_single_obj, betAmountInfo);
-              }
-            });
-          } else {
-            // 同步赔率数据
-            this.check_odds_beforebet(() => {
-              let bet_single_obj = _.cloneDeep(this.BetData.bet_single_obj); 
-              //获取最大最小值接口
-              this.set_min_max_money(() => {             
-                useMittEmit(MITT_TYPES.EMIT_SINGLE_UPDATE_KEYBOARD_STATUS_CMD);
-              }, bet_single_obj);
-              this.view_ctr_obj.bet_order_status = 1;
-            });
-          }
+        if (this.flag == 'bet_single_big_video' && BetDataCtr.layout_cur_page.cur == 'video') return;
+        // if(BetDataCtr.layout_left_show != 'bet_list') {
+        //   return;
         // }
-       
+        if (new_.length == 0) {
+          BetDataCtr.set_layout_left_show('menu');
+          return;
+        }
+        let count_pa = 0;
+        for (let key in this.BetData.bet_single_obj) {
+          if (!this.BetData.bet_single_list.includes(key)) { // 如果单关对象中的key在投注项列表中不存在则移除对象
+            BetDataCtr.bet_single_obj_remove_attr(key);
+          } else if (this.BetData.bet_single_obj[key].cs.operate_type == 'PA') { // 统计类型为PA的投注项
+            count_pa++;
+          }
+        }
+        //初始化视图
+        this.init_view();
+        // 投注模式默认为未知
+        BetDataCtr.set_bet_mode(-1);
+        // 设置投注项为可选
+        BetDataCtr.set_bet_item_lock(false);
+        BetDataCtr.set_is_single_handle(false);
+        if (new_.length == 1) {
+          let is_common_amount = localStorage.getItem("is_common_amount");
+          this.is_common_amount = JSON.parse(is_common_amount);
+          this.common_amount = this.is_common_amount ? Number(localStorage.getItem("common_amount")) : null;
+        } else {
+          this.is_common_amount = false;
+          this.common_amount = null;
+        }
+        if (new_ && new_.length > 0) {
+          this.view_ctr_obj.input_max_flag = 1;
+        } else {
+          this.view_ctr_obj.input_max_flag = 0;
+        }
+        if (new_ && old_ && new_.length < old_.length) {
+          return;
+        }
+        // 设置默认的最大最小值
+        this.set_default_min_max();
+        if (count_pa > 0) {
+          this.query_bet_amount((code, betAmountInfo) => {
+            this.bet_reset_money_msg();
+            if (code == 200 && betAmountInfo && betAmountInfo.length > 0) {
+              let bet_single_obj = _.cloneDeep(this.BetData.bet_single_obj);
+              this.min_max_handle(bet_single_obj, betAmountInfo);
+            }
+          });
+        } else {
+          // 同步赔率数据
+          this.check_odds_beforebet(() => {
+            let bet_single_obj = _.cloneDeep(this.BetData.bet_single_obj);
+            //获取最大最小值接口
+            this.set_min_max_money(() => {
+              useMittEmit(MITT_TYPES.EMIT_SINGLE_UPDATE_KEYBOARD_STATUS_CMD);
+            }, bet_single_obj);
+            this.view_ctr_obj.bet_order_status = 1;
+          });
+        }
+        // }
+
       },
       immediate: true
     },
@@ -365,32 +366,32 @@ this.handle_generat_emitters()
      * @return {undefined} undefined
      */
     "BetDataCtr.is_bet_single"(new_) {
-      if(!this.BetData.is_bet_merge && new_) {
-        let count_pa = 0;        
-        for(let key in this.BetData.bet_single_obj) {
-          if(!this.BetData.bet_single_list.includes(key)) { // 如果单关对象中的key在投注项列表中不存在则移除对象
+      if (!this.BetData.is_bet_merge && new_) {
+        let count_pa = 0;
+        for (let key in this.BetData.bet_single_obj) {
+          if (!this.BetData.bet_single_list.includes(key)) { // 如果单关对象中的key在投注项列表中不存在则移除对象
             BetDataCtr.bet_single_obj_remove_attr(key);
-          } else if (this.BetData.bet_single_obj[key].cs.operate_type=='PA') { // 统计类型为PA的投注项
+          } else if (this.BetData.bet_single_obj[key].cs.operate_type == 'PA') { // 统计类型为PA的投注项
             count_pa++;
           }
         }
         // 设置默认的最大最小值
         this.set_default_min_max();
         // 当存在类型为PA的投注项时调用queryBetAmount接口(并将拉取的数据同步到vuex中)
-        if(count_pa>0) {
-          this.query_bet_amount((code, betAmountInfo)=>{        
+        if (count_pa > 0) {
+          this.query_bet_amount((code, betAmountInfo) => {
             this.bet_reset_money_msg();
-            if(code==200 && betAmountInfo&& betAmountInfo.length>0) {  
-              let bet_single_obj = _.cloneDeep(this.BetData.bet_single_obj);          
+            if (code == 200 && betAmountInfo && betAmountInfo.length > 0) {
+              let bet_single_obj = _.cloneDeep(this.BetData.bet_single_obj);
               this.min_max_handle(bet_single_obj, betAmountInfo);
             }
           });
         } else {
           // 当都是类型都为MTS的投注项时调用checkOddsBeforeBet接口 (并将拉取的数据同步到vuex中)
-          this.check_odds_beforebet(()=>{
+          this.check_odds_beforebet(() => {
             let bet_single_obj = _.cloneDeep(this.BetData.bet_single_obj);
             //获取最大最小值接口
-            this.set_min_max_money(null,bet_single_obj);
+            this.set_min_max_money(null, bet_single_obj);
             this.view_ctr_obj.bet_order_status = 1;
           });
         }
@@ -402,37 +403,37 @@ this.handle_generat_emitters()
      * @param {Boolean} new_ 新的菜单开关标识
      * @return {undefined} undefined
      */
-    vx_main_menu_toggle:{
+    vx_main_menu_toggle: {
       handler() {
-        this.user_bet_prefer = _.get(this.BetData.user,'userBetPrefer')==1;
+        this.user_bet_prefer = _.get(this.BetData.user, 'userBetPrefer') == 1;
       }
     }
   },
   methods: {
-  
+
 
     /**
 * 生成事件监听  
 */
-handle_generat_emitters(){
-  let event_pairs=  [
-   //单关投注完成
-  { type:MITT_TYPES.EMIT_SINGLE_COMPLETE_HANDLE_CMD, callback:this.complete_handle} ,
-   //检查单关无效的金额
-  { type:MITT_TYPES.EMIT_SINGLE_CHECK_VALID_MOENY_CMD, callback:this.check_valid_money} ,
-  //单关保留选项
-  { type:MITT_TYPES.EMIT_SINGLE_SAVE_BET_CMD, callback:this.save_bet_items} ,
-  //重新调用单关最大最小值接口
-  { type:MITT_TYPES.EMIT_BET_SINGLE_RECALL_MONEY_CMD, callback:this.get_min_max_money_by_id} ,
-   //触发enter键执行
-  { type:MITT_TYPES.EMIT_ENTER_PRESS_EVENT, callback:this.keyup_handle} ,
-  ]
-  let  { emitters_off } =  useMittEmitterGenerator(event_pairs)
-  this.emitters_off=emitters_off
-},
- 
+    handle_generat_emitters() {
+      let event_pairs = [
+        //单关投注完成
+        { type: MITT_TYPES.EMIT_SINGLE_COMPLETE_HANDLE_CMD, callback: this.complete_handle },
+        //检查单关无效的金额
+        { type: MITT_TYPES.EMIT_SINGLE_CHECK_VALID_MOENY_CMD, callback: this.check_valid_money },
+        //单关保留选项
+        { type: MITT_TYPES.EMIT_SINGLE_SAVE_BET_CMD, callback: this.save_bet_items },
+        //重新调用单关最大最小值接口
+        { type: MITT_TYPES.EMIT_BET_SINGLE_RECALL_MONEY_CMD, callback: this.get_min_max_money_by_id },
+        //触发enter键执行
+        { type: MITT_TYPES.EMIT_ENTER_PRESS_EVENT, callback: this.keyup_handle },
+      ]
+      let { emitters_off } = useMittEmitterGenerator(event_pairs)
+      this.emitters_off = emitters_off
+    },
 
-  
+
+
     /**
      * @description: 返回体育项目
      * @param {undefined} undefined
@@ -458,41 +459,41 @@ handle_generat_emitters(){
       // 删除处理时间
       for (let key in bet_single_obj) {
         let obj = _.get(bet_single_obj, `${key}`);
-        if (_.has(obj,'cs.handle_time')) {
+        if (_.has(obj, 'cs.handle_time')) {
           delete obj.cs.handle_time;
         }
-        if(_.has(obj,'cs')) {
+        if (_.has(obj, 'cs')) {
           obj.cs.money = "";
           obj.cs.win_money = "";
           obj.cs.min_money = "";
           obj.cs.max_money = "";
-          BetCommonHelper.set_bet_obj_value( obj);
-          if(obj.cs.operate_type=='PA') {
+          BetCommonHelper.set_bet_obj_value(obj);
+          if (obj.cs.operate_type == 'PA') {
             count_pa++;
           }
         }
       }
       this.set_default_min_max();
-      if(count_pa>0) {
-        this.query_bet_amount((code, betAmountInfo)=>{        
+      if (count_pa > 0) {
+        this.query_bet_amount((code, betAmountInfo) => {
           clearTimeout(this.timer_obj['min_max_timer']);
           this.view_ctr_obj.input_max_flag = 2;
-          if(this.view_ctr_obj.error_code=='M400012') {
-            this.view_ctr_obj.input_money_state = 0; 
+          if (this.view_ctr_obj.error_code == 'M400012') {
+            this.view_ctr_obj.input_money_state = 0;
             this.view_ctr_obj.error_code = '';
             this.view_ctr_obj.error_message = '';
-          } 
-          if(code==200 && betAmountInfo&& betAmountInfo.length>0) {  
-            let bet_single_obj2 = _.cloneDeep(this.BetData.bet_single_obj);          
+          }
+          if (code == 200 && betAmountInfo && betAmountInfo.length > 0) {
+            let bet_single_obj2 = _.cloneDeep(this.BetData.bet_single_obj);
             this.min_max_handle(bet_single_obj2, betAmountInfo);
           }
         });
       } else {
         // 同步赔率数据
-        this.check_odds_beforebet(()=>{
+        this.check_odds_beforebet(() => {
           let bet_single_obj2 = _.cloneDeep(this.BetData.bet_single_obj);
           //获取最大最小值接口
-          this.set_min_max_money(null,bet_single_obj2);
+          this.set_min_max_money(null, bet_single_obj2);
         });
       }
       //清除球头数据
@@ -510,37 +511,37 @@ handle_generat_emitters(){
       }
       let user = this.BetData.user;
       //验证账户金额
-      if(user.balance == 0 || this.check_balance(user.balance)) {
+      if (user.balance == 0 || this.check_balance(user.balance)) {
         //余额不足，请充值
         this.set_message('0400454');
         return;
       }
       //这里是要给预约投注加一个赔率过低的提示  只有预约对象不为空进入
-      if(!_.isNull(this.BetData.bet_appoint_obj)) {
-        let appoint_value = this.$mathjs.multiply(this.BetData.bet_appoint_obj.appoint_odds_value,100000);
+      if (!_.isNull(this.BetData.bet_appoint_obj)) {
+        let appoint_value = this.$mathjs.multiply(this.BetData.bet_appoint_obj.appoint_odds_value, 100000);
         let odds;
         //赔率不为null
-        if(!_.isNull(appoint_value)) {
-          odds =   appoint_value;
+        if (!_.isNull(appoint_value)) {
+          odds = appoint_value;
         }
         let oddFinally;
         //最终赔率
         // if (hsw != 1) {
         //   oddFinally = this.compute_value_by_cur_odd_type(temp.odds / 100000, _.get(item_cs, 'break_odds_value') / 100000, hsw);
         // } else {
-          oddFinally = this.compute_value_by_cur_odd_type(odds / 100000, null, []);
-          if(_.isUndefined(oddFinally)) oddFinally = 0
+        oddFinally = this.compute_value_by_cur_odd_type(odds / 100000, null, []);
+        if (_.isUndefined(oddFinally)) oddFinally = 0
         // }    
-          if(Number(oddFinally) < this.BetData.pre_min_odd_value) { //获取预约投注最小限制额
-            this.set_message('0400540');
-            let obj = _.cloneDeep(this.BetData.bet_appoint_obj);
-            if(obj && !_.isNull(obj.appoint_odds_value)) {
-              obj.appoint_odds_value = _.clone(this.BetData.pre_min_odd_value); //获取预约投注最小限制额
-                // 设置预约投注项
-              BetDataCtr.set_bet_appoint_obj(obj);
-            }
-            return 
+        if (Number(oddFinally) < this.BetData.pre_min_odd_value) { //获取预约投注最小限制额
+          this.set_message('0400540');
+          let obj = _.cloneDeep(this.BetData.bet_appoint_obj);
+          if (obj && !_.isNull(obj.appoint_odds_value)) {
+            obj.appoint_odds_value = _.clone(this.BetData.pre_min_odd_value); //获取预约投注最小限制额
+            // 设置预约投注项
+            BetDataCtr.set_bet_appoint_obj(obj);
           }
+          return
+        }
       }
       // 1.如果正在处理中 2.最大小值正在获取中 3.输入的限额不在范围内，4.输入框为空 等都不可提交
       if (this.BetData.is_single_handle || ["M400012"].includes(this.view_ctr_obj.error_code)) return;
@@ -555,20 +556,20 @@ handle_generat_emitters(){
         return;
       }
       // 投注项失效
-      if(this.valid_error_codes.includes(this.view_ctr_obj.error_code)) {
+      if (this.valid_error_codes.includes(this.view_ctr_obj.error_code)) {
         this.view_ctr_obj.error_code = "M400015";
         this.show_valid_btn = true;
         return;
       }
       this.show_valid_btn = false;
       //防止串关走到这里
-      if(this.BetData.bet_single_list.length == 0) return;
+      if (this.BetData.bet_single_list.length == 0) return;
       // 金额为空时提交校验
-      if(this.view_ctr_obj.is_empty_money) {
+      if (this.view_ctr_obj.is_empty_money) {
         this.check_money(MITT_TYPES.EMIT_BET_SINGLE_CHECK_MONEY_CMD);
         return;
       }
-      if(this.view_ctr_obj.input_money_state == -4) {
+      if (this.view_ctr_obj.input_money_state == -4) {
         //设置单关最小金额
         useMittEmit(MITT_TYPES.EMIT_BET_SINGLE_MIN_MONEY);
         return;
@@ -592,19 +593,19 @@ handle_generat_emitters(){
         useMittEmit(MITT_TYPES.EMIT_CLOSE_MENU_LOADDING_CMD);
         this.set_message('0400483');//网络异常，请稍后再试
         clearTimeout(this.timer_obj['time_over']);
-        if(this.view_ctr_obj.timer_) {
+        if (this.view_ctr_obj.timer_) {
           clearTimeout(this.view_ctr_obj.timer_);
           this.view_ctr_obj.timer_ = undefined;
-        }        
+        }
       }, 1000 * 25); // 原本30s Aden要求修改为25s
       // 同步赔率数据
       this.check_odds_beforebet((before_code) => {
         // 清除check_odds_beforebet接口超时
-        if(before_code) {
-          if(this.timer_obj['time_over']) {
+        if (before_code) {
+          if (this.timer_obj['time_over']) {
             clearTimeout(this.timer_obj['time_over']);
           }
-          if(this.view_ctr_obj.timer_) {
+          if (this.view_ctr_obj.timer_) {
             clearTimeout(this.view_ctr_obj.timer_);
             this.view_ctr_obj.timer_ = undefined;
           }
@@ -664,7 +665,7 @@ handle_generat_emitters(){
             return;
           } else if (this.check_active()) {
             //校验投注项状态
-            this.view_ctr_obj.bet_order_status = 1;  
+            this.view_ctr_obj.bet_order_status = 1;
             this.set_message('M400004');//赔率更新中!
             this.reset_bet_single();
             return;
@@ -701,7 +702,7 @@ handle_generat_emitters(){
             }, 1000 * 25); // 原本30s Aden要求修改为25s
             // console.log(`===========is_single_handle:${this.BetData.is_single_handle}==========`);
             //正式调用投注接口
-            this.bet_submit_data(1, (code, data, msg) =>{
+            this.bet_submit_data(1, (code, data, msg) => {
               if (code) {
                 this.code_exist = true;
                 clearTimeout(this.timer_obj['time_over']);
@@ -717,27 +718,27 @@ handle_generat_emitters(){
                 let confirm_count = 0; // 注单确认中的个数
                 let fail_count = 0; // 注单失败的个数
                 _.forEach(data.orderDetailRespList, item => {
-                  let oid =  _.get(item, 'playOptionsId');
-                  let bet_single_obj = _.cloneDeep(BetCommonHelper.get_bet_obj( oid));
-                  if(bet_single_obj && bet_single_obj.cs) {
+                  let oid = _.get(item, 'playOptionsId');
+                  let bet_single_obj = _.cloneDeep(BetCommonHelper.get_bet_obj(oid));
+                  if (bet_single_obj && bet_single_obj.cs) {
                     bet_single_obj.cs.handle_time = new Date().getTime();
                   }
-                  BetCommonHelper.set_bet_obj_value( bet_single_obj); 
+                  BetCommonHelper.set_bet_obj_value(bet_single_obj);
                   //正常注单统计数量
-                  if(_.isNull(item.preOrderDetailStatus) || !_.hasIn(item,'preOrderDetailStatus' )) {
+                  if (_.isNull(item.preOrderDetailStatus) || !_.hasIn(item, 'preOrderDetailStatus')) {
                     // 订单失败
-                    if(item.orderStatusCode == 0) {
+                    if (item.orderStatusCode == 0) {
                       // 失败的订单数量统计
                       fail_count++;
-                    } else if(item.orderStatusCode == 1) { // 订单处理成功
+                    } else if (item.orderStatusCode == 1) { // 订单处理成功
                       // 成功的订单数量统
                       success_count++;
-                    } else if(item.orderStatusCode == 2) { // 订单确认中
+                    } else if (item.orderStatusCode == 2) { // 订单确认中
                       // 确认中的订单数量统计
                       confirm_count++;
                     }
-                  }else {
-                  //预约统计数量
+                  } else {
+                    //预约统计数量
                     // if(item.preOrderDetailStatus == 0) { //预约中
                     //     confirm_count++;
                     // } else if(item.preOrderDetailStatus == 1) { // 预约成功
@@ -745,30 +746,30 @@ handle_generat_emitters(){
                     // } else if(item.preOrderDetailStatus == 2) { //预约取消
                     //     fail_count++;
                     // }
-                  if(item.preOrderDetailStatus == 0 || item.preOrderDetailStatus == 1) { //预约中 和 预约成功 都算成功
+                    if (item.preOrderDetailStatus == 0 || item.preOrderDetailStatus == 1) { //预约中 和 预约成功 都算成功
                       success_count++
-                    } else if(item.preOrderDetailStatus == 2) { //预约取消
-                        fail_count++;
+                    } else if (item.preOrderDetailStatus == 2) { //预约取消
+                      fail_count++;
                     }
                   }
                 });
-               
+
                 // 确认中的
-                if(confirm_count > 0) {
+                if (confirm_count > 0) {
                   this.view_ctr_obj.order_confirm_complete = 1; //投注状态
                   // 进行轮询拉去接口
                   this.get_timed_task();
                 }
-                if(success_count > 0 && success_count == data.orderDetailRespList.length) {
+                if (success_count > 0 && success_count == data.orderDetailRespList.length) {
                   // 全部成功
                   this.view_ctr_obj.order_confirm_complete = 2;
                 }
                 // 全部失败
-                if(fail_count == data.orderDetailRespList.length) {
+                if (fail_count == data.orderDetailRespList.length) {
                   this.view_ctr_obj.order_confirm_complete = 3;
                 }
                 // 有成功有失败的
-                if(fail_count > 0 && success_count > 0 && ((fail_count+success_count) == data.orderDetailRespList.length)) {
+                if (fail_count > 0 && success_count > 0 && ((fail_count + success_count) == data.orderDetailRespList.length)) {
                   this.view_ctr_obj.order_confirm_complete = 4
                 }
                 // console.log(`===========================>>>>order_confirm_complete:${this.view_ctr_obj.order_confirm_complete}`);
@@ -776,22 +777,22 @@ handle_generat_emitters(){
                 //console.log('========================submit_handle=========order_status:'+order_status)
                 // 进行轮询拉去接口
                 // 老流程在投注接口相应后关闭遮罩
-                if(this.BetData.bet_mode == 0) {
+                if (this.BetData.bet_mode == 0) {
                   BetDataCtr.set_bet_item_lock(false);
                   // 关闭遮罩
                   useMittEmit(MITT_TYPES.EMIT_CLOSE_MENU_LOADDING_CMD);
-                } else if(this.BetData.bet_mode == 1 && this.view_ctr_obj.order_confirm_complete == 1){ // 新流程调用接口22秒后还在确认中的时候拉取一次查询状态的接口
+                } else if (this.BetData.bet_mode == 1 && this.view_ctr_obj.order_confirm_complete == 1) { // 新流程调用接口22秒后还在确认中的时候拉取一次查询状态的接口
                   clearTimeout(this.timer_obj['time_over']);
-                  this.timer_obj['time_over'] = setTimeout(()=>{
-                    this.check_odds_beforebet(()=>{
-                      if(this.view_ctr_obj.error_code=='') {
+                  this.timer_obj['time_over'] = setTimeout(() => {
+                    this.check_odds_beforebet(() => {
+                      if (this.view_ctr_obj.error_code == '') {
                         this.set_message('0400483');//服务繁忙，再试一次吧~
                       }
                     });
-                    if(this.timer_obj['time_over']) {
+                    if (this.timer_obj['time_over']) {
                       clearTimeout(this.timer_obj['time_over']);
                     }
-                    if(this.view_ctr_obj.timer_) {
+                    if (this.view_ctr_obj.timer_) {
                       clearTimeout(this.view_ctr_obj.timer_);
                       this.view_ctr_obj.timer_ = undefined;
                     }
@@ -802,7 +803,7 @@ handle_generat_emitters(){
                 //是不是预约投注
                 let is_pre_bet_back = false;
                 _.forEach(data.orderDetailRespList, item => {
-                  if(_.hasIn(item,'preOrderDetailStatus') && !_.isNull(item.preOrderDetailStatus)) {
+                  if (_.hasIn(item, 'preOrderDetailStatus') && !_.isNull(item.preOrderDetailStatus)) {
                     is_pre_bet_back = true;
                   }
                 })
@@ -813,24 +814,24 @@ handle_generat_emitters(){
                  * (2)若单关有多个投注项，不用移除预约的投注项，还是停留在当前投注页面
                  * 二、若业务返回来最新的球头和赔率与当前预约的球头与赔率不一致则返回投注成功页面
                  */
-                if(this.BetData.bet_appoint_obj && is_pre_bet_back) {
-                  let {bet_appoint_id} = this.BetData.bet_appoint_obj;// 被预约的投注项id
+                if (this.BetData.bet_appoint_obj && is_pre_bet_back) {
+                  let { bet_appoint_id } = this.BetData.bet_appoint_obj;// 被预约的投注项id
                   // 主队，客队，玩法名称
                   let cs = _.get(this.BetData.bet_single_obj, `${bet_appoint_id}.cs`);
-                  if(cs) {
-                    let {home, away, play_name} = cs;
-                    useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD,`${home} v ${away} - ${play_name} ${i18n_t('bet.bet_booked')}`);
+                  if (cs) {
+                    let { home, away, play_name } = cs;
+                    useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, `${home} v ${away} - ${play_name} ${i18n_t('bet.bet_booked')}`);
                   }
                 }
-              } else if(code=='0400532'){
+              } else if (code == '0400532') {
                 this.view_ctr_obj.error_code = code;
                 this.set_message(code);
                 // 拉取投注前校验接口更新赔率
-                this.check_odds_beforebet(()=>{
-                  if(this.timer_obj['time_over']) {
+                this.check_odds_beforebet(() => {
+                  if (this.timer_obj['time_over']) {
                     clearTimeout(this.timer_obj['time_over']);
                   }
-                  if(this.view_ctr_obj.timer_) {
+                  if (this.view_ctr_obj.timer_) {
                     clearTimeout(this.view_ctr_obj.timer_);
                     this.view_ctr_obj.timer_ = undefined;
                   }
@@ -842,13 +843,13 @@ handle_generat_emitters(){
                 // 关闭遮罩
                 useMittEmit(MITT_TYPES.EMIT_CLOSE_MENU_LOADDING_CMD);
                 this.view_ctr_obj.bet_order_status = 4;
-                if(code == '111111') {
+                if (code == '111111') {
                   this.view_ctr_obj.error_code = code;
                   this.view_ctr_obj.error_message = msg;
                 } else {
                   this.submit_error_result(code, data, handle_type);
                 }
-              } 
+              }
             });
           }, 300);
         } else {
@@ -890,7 +891,7 @@ handle_generat_emitters(){
         // 投注失败返回的投注项oid
         let oid = _.get(data, '[0].data.playOptionsId');
         // 通过oid获取投注项对象
-        let bet_obj = BetCommonHelper.get_bet_obj( oid);
+        let bet_obj = BetCommonHelper.get_bet_obj(oid);
         if (bet_obj) {
           let obj = _.cloneDeep(bet_obj);
           if (obj && obj.cs) {
@@ -928,29 +929,29 @@ handle_generat_emitters(){
         this.view_ctr_obj.error_message = i18n_t(`error_msg_info.${code}`).client_msg1;
       } else {
         // 说明对应的id变化了(业务提示:坑位已发生改变，投注失败)
-        if(['0402010','0400467'].includes(code)) {
-          this.check_odds_beforebet(()=>{
-            if(this.timer_obj['time_over']) {
+        if (['0402010', '0400467'].includes(code)) {
+          this.check_odds_beforebet(() => {
+            if (this.timer_obj['time_over']) {
               clearTimeout(this.timer_obj['time_over']);
             }
-            if(this.view_ctr_obj.timer_) {
+            if (this.view_ctr_obj.timer_) {
               clearTimeout(this.view_ctr_obj.timer_);
               this.view_ctr_obj.timer_ = undefined;
             }
           });
-        } else if (['0400475','0400517'].includes(code)) {
+        } else if (['0400475', '0400517'].includes(code)) {
           let id;
-          if(!this.BetData.is_bet_merge) {
+          if (!this.BetData.is_bet_merge) {
             id = this.BetData.bet_single_list[0];
           } else {
             let oid = _.get(data, '[0].data.playOptionsId');
             // 通过oid获取投注项对象
-            let bet_obj = BetCommonHelper.get_bet_obj( oid);
-            if(bet_obj) {
+            let bet_obj = BetCommonHelper.get_bet_obj(oid);
+            if (bet_obj) {
               id = bet_obj.id;
             }
-          }   
-          useMittEmit(MITT_TYPES.EMIT_BET_SINGLE_RECALL_MONEY_CMD, id);       
+          }
+          useMittEmit(MITT_TYPES.EMIT_BET_SINGLE_RECALL_MONEY_CMD, id);
         }
         this.set_message(code, handle_type);
       }
@@ -970,19 +971,19 @@ handle_generat_emitters(){
       }
       // 如果最大值是0,点击确定再同步一次最大值后进行删除判断
       if (this.view_ctr_obj.error_code == "M400009") {
-        if(!this.BetData.is_bet_merge) {
-          this.set_min_max_money(()=>{
-            if(this.timer_obj['time_over']) {
+        if (!this.BetData.is_bet_merge) {
+          this.set_min_max_money(() => {
+            if (this.timer_obj['time_over']) {
               clearTimeout(this.timer_obj['time_over']);
             }
-            if(this.view_ctr_obj.timer_) {
+            if (this.view_ctr_obj.timer_) {
               clearTimeout(this.view_ctr_obj.timer_);
               this.view_ctr_obj.timer_ = undefined;
-            }            
+            }
             if (this.view_ctr_obj.error_code == "M400009") {
               this.reset_bet_single();
               this.cancel_handle();
-            } else if(this.view_ctr_obj.error_code=='M400012') {
+            } else if (this.view_ctr_obj.error_code == 'M400012') {
               this.view_ctr_obj.input_money_state = 0; // 最大最小值正在获取中
               this.view_ctr_obj.error_code = '';
               this.view_ctr_obj.error_message = '';
@@ -999,10 +1000,10 @@ handle_generat_emitters(){
             this.reset_bet_single();
             this.cancel_handle();
           }
-          if(this.timer_obj['time_over']) {
+          if (this.timer_obj['time_over']) {
             clearTimeout(this.timer_obj['time_over']);
           }
-          if(this.view_ctr_obj.timer_) {
+          if (this.view_ctr_obj.timer_) {
             clearTimeout(this.view_ctr_obj.timer_);
             this.view_ctr_obj.timer_ = undefined;
           }
@@ -1032,7 +1033,7 @@ handle_generat_emitters(){
           count++;
         }
       }
-      return count>0 && count == len;
+      return count > 0 && count == len;
     },
     /**
      * @description: 检测投注项状态
@@ -1069,25 +1070,25 @@ handle_generat_emitters(){
       this.view_ctr_obj.input_max_flag = 0;
       let len = this.BetData.bet_single_list.length;
       // 如果单关列表为一个值时，输入的金额即使小于最小金额也可以提交
-      if(len>1) {       
+      if (len > 1) {
         useMittEmit(cmd);
         return this.view_ctr_obj.input_money_state;
       } else {
         let id = this.BetData.bet_single_list[0];
-        
-        if(_.get(this.BetData.bet_single_obj,`${id}.cs`)) {
-          let {min_money, money} = _.get(this.BetData.bet_single_obj,`${id}.cs`);      
-          let user = this.BetData.user;   
-           // 用户账户金额小于最小金额时可以投注
+
+        if (_.get(this.BetData.bet_single_obj, `${id}.cs`)) {
+          let { min_money, money } = _.get(this.BetData.bet_single_obj, `${id}.cs`);
+          let user = this.BetData.user;
+          // 用户账户金额小于最小金额时可以投注
           //下注金额大于0 且用户余额等于下注额且最小金额大于下注额返回0
-          if(money>0 && user.balance==money && min_money>money) {
+          if (money > 0 && user.balance == money && min_money > money) {
             return 0;
           }
         }
         //当用户余额不足时，且最低投注金额比用户余额更大时 需要让用户能投注更小的金额
         useMittEmit(cmd);
         return this.view_ctr_obj.input_money_state;
-      }      
+      }
     },
     /**
      * @description: 初始化视图
@@ -1115,7 +1116,7 @@ handle_generat_emitters(){
       }
       // console.log('==================code=========================', code);
       let count = BetCommonHelper.get_deactive_count();
-      if(count > 0) return;
+      if (count > 0) return;
 
       BetCommonHelper.init_message();
       let msg = i18n_t(`error_msg_info.${code}`);
@@ -1154,13 +1155,13 @@ handle_generat_emitters(){
       //console.log('=======================cancel_handle======11111111======================');
       this.go_back_project();
       BetDataCtr.bet_single_clear();
-      if(this.BetData.is_bet_merge) {
+      if (this.BetData.is_bet_merge) {
         BetDataCtr.bet_mix_clear();
       }
-      if(this.$route.params.video_size=='1') {
+      if (this.$route.params.video_size == '1') {
         BetDataCtr.set_is_show_full_bet(false);
       }
-      if(this.BetData.bet_appoint_obj) { // 被预约的投注项id 
+      if (this.BetData.bet_appoint_obj) { // 被预约的投注项id 
         //清除球头数据
         BetDataCtr.set_bet_appoint_obj(null);
       }
@@ -1230,18 +1231,18 @@ handle_generat_emitters(){
       // 老流程需要判断是否轮询
       if (this.interval_time()) return;
       // 如果无数据则不用往下进行
-      if(this.view_ctr_obj.bet_order_success_all.length == 0) return;
+      if (this.view_ctr_obj.bet_order_success_all.length == 0) return;
       let orderNos = [];
       // 调用接口获取订单的最新数据
       _.forEach(this.view_ctr_obj.bet_order_success_all, item => {
-        if((item.orderStatusCode == 2) && !orderNos.includes(item.orderNo)) {
+        if ((item.orderStatusCode == 2) && !orderNos.includes(item.orderNo)) {
           orderNos.push(item.orderNo);
         }
       });
-      if(orderNos.length > 0) {
+      if (orderNos.length > 0) {
         orderNos = orderNos.join(',');
         // console.log(`=====================================${orderNos}`);
-        api_betting.query_order_status({orderNos}).then(res => {
+        api_betting.query_order_status({ orderNos }).then(res => {
           let code = _.get(res, "data.code");
           let data = _.get(res, "data.data");
           let handle_time = _.get(res, 'data.ts');
@@ -1251,28 +1252,28 @@ handle_generat_emitters(){
             clearTimeout(this.view_ctr_obj.timer_);
             this.view_ctr_obj.timer_ = undefined;
           }
-          if (code == 200 && data && data.length) {          
+          if (code == 200 && data && data.length) {
             _.forEach(data, item => {
               status = this.change_status(item.status);
               let single_index = _.findIndex(this.view_ctr_obj.bet_order_success_all, item2 => item.orderNo == item2.orderNo);
-              if(single_index > -1) {
-                if(this.view_ctr_obj.bet_order_success_all[single_index].handle_time && this.view_ctr_obj.bet_order_success_all[single_index].handle_time>handle_time) {
+              if (single_index > -1) {
+                if (this.view_ctr_obj.bet_order_success_all[single_index].handle_time && this.view_ctr_obj.bet_order_success_all[single_index].handle_time > handle_time) {
                   return;
                 }
                 // 对应订单状态以及处理时间设置
                 // console.log(`================status:${status}=====================${JSON.stringify(data)}`);
                 Object.assign(this.view_ctr_obj.bet_order_success_all[single_index], { orderStatusCode: status, handle_time });
                 // 订单状态为成功时 合并一下最新的数据,如果为失败则什么都不做                  
-                if(item.oddsChangeList && item.oddsChangeList.length) {
-                  if(this.view_ctr_obj.bet_order_success_all[single_index].playOptionsId == item.oddsChangeList[0].playOptionsId) {
-                    Object.assign(this.view_ctr_obj.bet_order_success_all[single_index],{maxWinMoney: parseFloat(item.newMaxWinAmount).toFixed(2)});
-                    _.forEach(item.oddsChangeList, item2=>{
-                      if(item2) {
-                        _.forEach(this.view_ctr_obj.bet_order_success_all, (detail_item, detail_index)=> {
-                          if(item2.playOptionsId == detail_item.playOptionsId) {
+                if (item.oddsChangeList && item.oddsChangeList.length) {
+                  if (this.view_ctr_obj.bet_order_success_all[single_index].playOptionsId == item.oddsChangeList[0].playOptionsId) {
+                    Object.assign(this.view_ctr_obj.bet_order_success_all[single_index], { maxWinMoney: parseFloat(item.newMaxWinAmount).toFixed(2) });
+                    _.forEach(item.oddsChangeList, item2 => {
+                      if (item2) {
+                        _.forEach(this.view_ctr_obj.bet_order_success_all, (detail_item, detail_index) => {
+                          if (item2.playOptionsId == detail_item.playOptionsId) {
                             // 赔率数据合并
-                            Object.assign(this.view_ctr_obj.bet_order_success_all[detail_index], {oddsValues: item2.usedOdds});                           
-                            if(item.refuseCode=='0400532') {
+                            Object.assign(this.view_ctr_obj.bet_order_success_all[detail_index], { oddsValues: item2.usedOdds });
+                            if (item.refuseCode == '0400532') {
                               this.view_ctr_obj.error_code = item.refuseCode;
                             }
                           }
@@ -1288,34 +1289,34 @@ handle_generat_emitters(){
             let fail_count = 0; // 注单失败的个数
             _.forEach(this.view_ctr_obj.bet_order_success_all, item => {
               // 订单状态失败
-              if(item.orderStatusCode == 0) {
+              if (item.orderStatusCode == 0) {
                 // 失败订单数量统计
                 fail_count++;
-              } else if(item.orderStatusCode == 1) { // 成功的订单
+              } else if (item.orderStatusCode == 1) { // 成功的订单
                 // 投注成功的订单数量统计
                 success_count++;
-              } else if(item.orderStatusCode == 2) { // 订单确认中
+              } else if (item.orderStatusCode == 2) { // 订单确认中
                 // 确认中的订单数量统计
                 confirm_count++;
               }
             });
             // 全部成功
-            if(success_count == this.view_ctr_obj.bet_order_success_all.length) {
+            if (success_count == this.view_ctr_obj.bet_order_success_all.length) {
               this.view_ctr_obj.order_confirm_complete = 2;
             }
             // 全部失败
-            if(fail_count == this.view_ctr_obj.bet_order_success_all.length) {
+            if (fail_count == this.view_ctr_obj.bet_order_success_all.length) {
               this.view_ctr_obj.order_confirm_complete = 3;
             }
             // 确认中的
-            if(confirm_count > 0) {
+            if (confirm_count > 0) {
               this.view_ctr_obj.order_confirm_complete = 1;
             }
             // 有成功有失败的
-            if(fail_count > 0 && success_count > 0 && ((fail_count+success_count) == this.view_ctr_obj.bet_order_success_all.length)) {
+            if (fail_count > 0 && success_count > 0 && ((fail_count + success_count) == this.view_ctr_obj.bet_order_success_all.length)) {
               this.view_ctr_obj.order_confirm_complete = 4
             }
-            if(confirm_count==0 && [2,3,4].includes(this.view_ctr_obj.order_confirm_complete)) { // 如果没有待确认的订单，则需要拉去一次接口
+            if (confirm_count == 0 && [2, 3, 4].includes(this.view_ctr_obj.order_confirm_complete)) { // 如果没有待确认的订单，则需要拉去一次接口
               this.call_final();
             }
           }
@@ -1327,7 +1328,7 @@ handle_generat_emitters(){
           }
           // 老投注流程进行轮询
           this.view_ctr_obj.timer_ = setTimeout(() => {
-            if(this.BetData.bet_mode==-1) {
+            if (this.BetData.bet_mode == -1) {
               clearTimeout(this.view_ctr_obj.timer_);
             } else {
               this.get_order_result();
@@ -1342,7 +1343,7 @@ handle_generat_emitters(){
             this.view_ctr_obj.timer_ = undefined;
           }
           this.view_ctr_obj.timer_ = setTimeout(() => {
-            if(this.BetData.bet_mode==-1) {
+            if (this.BetData.bet_mode == -1) {
               clearTimeout(this.view_ctr_obj.timer_);
             } else {
               this.get_order_result();
@@ -1395,7 +1396,7 @@ handle_generat_emitters(){
      * @return {undefined}
      */
     check_valid_money(obj) {
-      if(obj.flag != 0 && obj.id && _.isEmpty(this.valid_money_obj)) {
+      if (obj.flag != 0 && obj.id && _.isEmpty(this.valid_money_obj)) {
         this.valid_money_obj = {};
         this.valid_money_obj[obj.id] = "";
       } else {
@@ -1411,35 +1412,34 @@ handle_generat_emitters(){
       this.is_common_amount = !this.is_common_amount;
       localStorage.setItem("is_common_amount", this.is_common_amount);
     },
-     /**
-     * @description: 键盘事件
-     * @param {event} event 事件类型
-     * @return {undefined}
-     */
+    /**
+    * @description: 键盘事件
+    * @param {event} event 事件类型
+    * @return {undefined}
+    */
     keyup_handle(event) {
-      if(event.stopPropagation)
-      {
+      if (event.stopPropagation) {
         event.stopPropagation();
       }
-      if(this.BetData.is_single_handle) {
+      if (this.BetData.is_single_handle) {
         BetDataCtr.set_layout_left_show("bet_list");
       }
       // 当前是串关 或 在搜索页面 或 单关正在处理中 或 loadding还在执行
-      if(!BetDataCtr.is_bet_single || this.BetData.is_single_handle || this.bet_loadding) return false;
+      if (!BetDataCtr.is_bet_single || this.BetData.is_single_handle || this.bet_loadding) return false;
       // 按enter按键
-      if(this.bet_complete_show &&
-        event.keyCode==13 &&
+      if (this.bet_complete_show &&
+        event.keyCode == 13 &&
         !this.bet_loadding) {
         this.complete_handle();
-      } else if(event.keyCode==13) {
-        if(this.accept_button_show) {
+      } else if (event.keyCode == 13) {
+        if (this.accept_button_show) {
           this.submit_handle('accept');
         } else {
           this.submit_handle('submit');
         }
       }
       // 按esc按键
-      else if(event.keyCode==27) {
+      else if (event.keyCode == 27) {
         this.cancel_handle();
       }
     },
@@ -1449,32 +1449,32 @@ handle_generat_emitters(){
      * @param {bet_single_obj} bet_single_obj 单关投注对象
      * @return {undefined} undefined
      */
-    set_min_max_money(callback,bet_single_obj) {
+    set_min_max_money(callback, bet_single_obj) {
       //最小投注额
       let min_money = "10";
       //最大投注额 之前是2000 世界杯改为8888
-      let max_money = "8888"; 
+      let max_money = "8888";
       try {
         this.get_min_max_money(null, 1, (code, data) => {
           this.bet_reset_money_msg();
-          if(code==200 && _.isArray(data) && data.length>0) {
+          if (code == 200 && _.isArray(data) && data.length > 0) {
             this.min_max_handle(bet_single_obj, data);
           }
-          if(_.isFunction(callback)) {
+          if (_.isFunction(callback)) {
             callback();
           }
         });
       } catch (e) {
         console.error(e);
         this.bet_reset_money_msg();
-        for(let obj of Object.values(bet_single_obj)) {
-          if(obj) {
-            Object.assign( obj, {"key": obj.cs.id});
+        for (let obj of Object.values(bet_single_obj)) {
+          if (obj) {
+            Object.assign(obj, { "key": obj.cs.id });
             // 最小值
             obj.cs.min_money = min_money;
             // 最大值
             obj.cs.max_money = max_money;
-            if(obj.cs.money > parseFloat(max_money)) {
+            if (obj.cs.money > parseFloat(max_money)) {
               // 输入金额转换为最高限额
               obj.cs.money = parseFloat(max_money);
             }
@@ -1492,39 +1492,39 @@ handle_generat_emitters(){
     get_min_max_money_by_id(id, callback) {
       this.get_min_max_money([id], 1, (code, data) => {
         this.bet_reset_money_msg();
-        if(code==200 && _.isArray(data) && data.length>0) {
+        if (code == 200 && _.isArray(data) && data.length > 0) {
           let bet_single_obj = _.cloneDeep(this.BetData.bet_single_obj);
           this.min_max_handle(bet_single_obj, data);
         }
-        if(_.isFunction(callback)) {
+        if (_.isFunction(callback)) {
           callback();
         }
       });
     },
     /**
-     * @description: 取整
-     * @param {String} min_money 最低限额(整数)
+     * @description: 取整
+     * @param {String} min_money 最低限额(整数)
      * @param {String} max_money 最高小值(非整数)
-     * @return {String}
-     */
-    round_money(min_money, max_money) {
-      let min_interal='', max_integral = '', min_len = 0, max_len = 0; //max_integral:最大金额整数部分 min_len:最小值的长度，max_len:最大值的长度
-      if(!_.isEmpty(min_money) && !_.isEmpty(max_money)) {   
-        min_interal = min_money.split('.')[0]   
+     * @return {String}
+     */
+    round_money(min_money, max_money) {
+      let min_interal = '', max_integral = '', min_len = 0, max_len = 0; //max_integral:最大金额整数部分 min_len:最小值的长度，max_len:最大值的长度
+      if (!_.isEmpty(min_money) && !_.isEmpty(max_money)) {
+        min_interal = min_money.split('.')[0]
         min_len = min_interal.length; // 最小值整数部分长度
         max_integral = max_money.split('.')[0]; // 最大值整数部分的长度
         max_len = max_integral.length;
       }
       // 最低投注金额数值为四位及以上
-      if(min_len >= 4) {
+      if (min_len >= 4) {
         min_len = 4;
       }
       // 最高限额整数位和最低限额整数位数相同时, 取整为减少一位
-      if(max_len == min_len) {
+      if (max_len == min_len) {
         min_len = min_len - 1;
       }
-      max_integral = max_integral.substr(0, max_len - min_len);
-      max_money = _.padEnd(max_integral,(max_integral.length + min_len),'0');
+      max_integral = max_integral.substr(0, max_len - min_len);
+      max_money = _.padEnd(max_integral, (max_integral.length + min_len), '0');
       return max_money;
     },
     /**
@@ -1534,13 +1534,13 @@ handle_generat_emitters(){
      */
     remove_invalid_item() {
       // 移除无效盘口
-      this.remove_close_handicap(()=>{
-        if(this.BetData.bet_single_list.length==0) {
-          if(this.BetData.is_bet_merge) {
+      this.remove_close_handicap(() => {
+        if (this.BetData.bet_single_list.length == 0) {
+          if (this.BetData.is_bet_merge) {
             BetDataCtr.bet_mix_clear();
           } else {
             BetDataCtr.is_bet_single(false);
-          }          
+          }
         }
         this.show_valid_btn = false;
       });
@@ -1554,10 +1554,10 @@ handle_generat_emitters(){
       this.user_bet_prefer = !this.user_bet_prefer;
       if (this.user_bet_prefer) {
         BetDataCtr.set_user_bet_prefer(1);
-        api_betting.record_user_preference({userBetPrefer: 1});
+        api_betting.record_user_preference({ userBetPrefer: 1 });
       } else {
         BetDataCtr.set_user_bet_prefer(2)
-        api_betting.record_user_preference({userBetPrefer: 2});
+        api_betting.record_user_preference({ userBetPrefer: 2 });
       }
     },
     /**
@@ -1573,26 +1573,26 @@ handle_generat_emitters(){
       let bet_single_obj = _.cloneDeep(this.BetData.bet_single_obj);
       let len = this.BetData.bet_single_list.length;
       clearTimeout(this.timer_obj['min_max_timer']);
-      this.timer_obj['min_max_timer'] = setTimeout(() => { 
+      this.timer_obj['min_max_timer'] = setTimeout(() => {
         this.bet_reset_money_msg();
-        for(let obj of Object.values(bet_single_obj)) {
-          if(obj) {
-            Object.assign( obj, {"key": obj.cs.id});
+        for (let obj of Object.values(bet_single_obj)) {
+          if (obj) {
+            Object.assign(obj, { "key": obj.cs.id });
             // 最小值
             obj.cs.min_money = min_money;
             // 最大值
             obj.cs.max_money = max_money;
-            if(len == 1 && this.is_common_amount) {
+            if (len == 1 && this.is_common_amount) {
               // 常用金额
               obj.cs.money = this.common_amount;
             }
-            if(obj.cs.money && obj.cs.money > parseFloat(max_money)) {
+            if (obj.cs.money && obj.cs.money > parseFloat(max_money)) {
               // 输入金额转换为最高限额
               obj.cs.money = parseFloat(max_money);
             }
             BetCommonHelper.set_bet_obj_value(obj);
           }
-        }         
+        }
       }, 5000);
     },
     /**
@@ -1606,27 +1606,27 @@ handle_generat_emitters(){
       //最大投注额 之前是2000 世界杯改为8888
       let max_money = "8888";
       let len = this.BetData.bet_single_list.length;
-      _.forEach(data, item =>{
-        if(item.playOptionsId) {               
+      _.forEach(data, item => {
+        if (item.playOptionsId) {
           let obj;
-          if(bet_single_obj[item.playOptionsId]) {
+          if (bet_single_obj[item.playOptionsId]) {
             obj = bet_single_obj[item.playOptionsId];
           } else {
-            for(let bet_obj of Object.values(bet_single_obj)) {
-              let oid = _.get(bet_obj,'cs.oid');
-              if(oid == item.playOptionsId) {
+            for (let bet_obj of Object.values(bet_single_obj)) {
+              let oid = _.get(bet_obj, 'cs.oid');
+              if (oid == item.playOptionsId) {
                 obj = bet_obj;
                 break;
               }
             }
           }
-          if(obj) {
+          if (obj) {
             min_money = _.get(item, 'minBet', '10');
-            max_money = this.round_money(min_money,item.orderMaxPay);
-            if(parseFloat(max_money) < parseFloat(min_money)) {
+            max_money = this.round_money(min_money, item.orderMaxPay);
+            if (parseFloat(max_money) < parseFloat(min_money)) {
               max_money = item.orderMaxPay;
             }
-            if(parseFloat(max_money) == 0) {
+            if (parseFloat(max_money) == 0) {
               this.view_ctr_obj.bet_order_status = 5;  //投注项失败
               this.view_ctr_obj.error_code = "M400009"; //"该选项当前不可投注，请选择其他选项"
               this.view_ctr_obj.error_message = i18n_t(`error_msg_info.${this.view_ctr_obj.error_code}`).client_msg1;
@@ -1635,16 +1635,16 @@ handle_generat_emitters(){
             obj.cs.min_money = min_money;
             // 最大值
             obj.cs.max_money = max_money;
-            if(len == 1 && this.is_common_amount && parseFloat(this.common_amount) > 0) {
+            if (len == 1 && this.is_common_amount && parseFloat(this.common_amount) > 0) {
               // 设置常用金额为输入金额
               obj.cs.money = parseFloat(this.common_amount);
             }
-            if(max_money && obj.cs.money && obj.cs.money > parseFloat(max_money)) {
+            if (max_money && obj.cs.money && obj.cs.money > parseFloat(max_money)) {
               // 设置最大限额为输入金额
               obj.cs.money = parseFloat(max_money);
             }
             BetCommonHelper.set_bet_obj_value(obj);
-          }                
+          }
         }
       });
       this.view_ctr_obj.input_max_flag = 2;
@@ -1657,9 +1657,9 @@ handle_generat_emitters(){
      */
     check_balance(balance) {
       let total_money = 0;
-      for(let obj of Object.values(this.BetData.bet_single_obj)) {
+      for (let obj of Object.values(this.BetData.bet_single_obj)) {
         let { cs } = obj;
-        if(cs.money) {
+        if (cs.money) {
           total_money += parseFloat(cs.money);
         }
       }
@@ -1674,18 +1674,18 @@ handle_generat_emitters(){
       clearTimeout(this.timer_obj['min_max_timer']);
       this.view_ctr_obj.input_max_flag = 2;
       // 大于最大金额,小于最小金额,金额为空,最大最小值正在获取中的code码
-      if(["M400005","M400010","M400011","M400012","M400009"].includes(this.view_ctr_obj.error_code)) {
-        this.view_ctr_obj.input_money_state = 0; 
+      if (["M400005", "M400010", "M400011", "M400012", "M400009"].includes(this.view_ctr_obj.error_code)) {
+        this.view_ctr_obj.input_money_state = 0;
         // 重新初始化错误信息
         BetCommonHelper.init_message();
       }
     }
   },
   mounted() {
-    this.$nextTick().then(() => {
+    nextTick().then(() => {
       let count = BetCommonHelper.get_deactive_count();
       // 如果存在无效项需要提示
-      if(count > 0) {
+      if (count > 0) {
         this.view_ctr_obj.error_code = "0402049"; //已失效
         this.view_ctr_obj.error_message = i18n_t(`error_msg_info.0402049.client_msg1`);
       }

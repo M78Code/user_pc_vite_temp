@@ -78,7 +78,7 @@
     </div>
 </template>
 <script setup>
-import { onMounted, ref, onUnmounted, watch } from "vue";
+import { onMounted, ref, onUnmounted, watch,nextTick } from "vue";
 // import { api_filter } from "src/api/index";
 // import global_mixin from "src/public/mixins/global/global_mixin.js"; 需替换
 // import { mapGetters, mapActions } from "vuex"; 需替换
@@ -479,7 +479,7 @@ const fetch_filter_match = () => {
  * @return {undefined} undefined
  */
 const set_botton_top = () => {
-    this.$nextTick(() => {
+    nextTick(() => {
         let content = document.getElementById("filter-content") || {}
         let container = document.querySelector("#filter-content .middle-content") || {};
         if (container.clientHeight > (content.clientHeight - 36)) {

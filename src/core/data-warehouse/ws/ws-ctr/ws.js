@@ -8,7 +8,7 @@ import WsSendManger from "./ws-send-manger.js";
 import STANDARD_KEY from "src/core/standard-key";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { SessionStorage , LocalStorage } from "src/core/utils/module/web-storage.js";
-import { Qs } from "src/core/index.js";
+import { get_query_string } from "src/core/index.js";
 import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/index.js";
 const token_key = STANDARD_KEY.get("token"); //token键
 export default class Ws {

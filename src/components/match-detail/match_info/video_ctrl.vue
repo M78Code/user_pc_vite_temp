@@ -11,6 +11,7 @@
         class="unfold"
         :class="{ open: vx_get_is_fold_status }"
         @click="$emit('setfoldStatus')"
+        :style="compute_css('pc-img-match-info-unfold-open')"
       ></div>
 
       <div class="col-center row full-height">
@@ -35,6 +36,7 @@
             >{{ item.text }}</q-tooltip
           >
           <div
+            :style="compute_css(item.icon)"
             :class="[
               'vicon',
               `${item.icon}-icon`,
@@ -169,6 +171,7 @@ import MenuData from "src/core/menu-pc/menu-data-class.js";
 import { IconWapper } from "src/components/icon";
 import refresh from "src/components/refresh/refresh.vue";
 import { i18n_t, get_match_status } from "src/core/index";
+import { compute_css } from "src/core/server-img/index.js";
 import lodash from "lodash";
 const props = defineProps({
   refresh_loading: {
@@ -191,7 +194,7 @@ const media_icons = [
   {
     type: "info",
     text: i18n_t("common.score_board"),
-    icon: "switch",
+    icon: "pc-img-match-info-switch2",
   },
   /**演播室 */
   {
@@ -215,13 +218,13 @@ const media_icons = [
   {
     type: "video",
     text: i18n_t("common.o_video"),
-    icon: "video",
+    icon: "pc-img-match-info-video0",
   },
   /**动画 */
   {
     type: "animation",
     text: i18n_t("common.animate"),
-    icon: "animation",
+    icon: "pc-img-match-info-animation0",
   },
 ];
 //todo
@@ -230,7 +233,7 @@ const vx_play_media = {
   media_type: "info",
   is_auto: true,
 };
-const vx_get_is_fold_status =ref(false)
+const vx_get_is_fold_status = ref(true);
 const set_play_media_timer = ref(null);
 /**
  * @Description:获取图标是否显示
@@ -416,7 +419,7 @@ const get_videos = () => {
     let index = details.get_match_index(props.match_info.mid, res);
     //当前选择赛事不在可见区域时 滚动到可见区域
     if (index > 4) {
-      this.$nextTick(() => {
+      nextTick(() => {
         let top = (index - 3) * 36;
         this.$refs.match_scroll_area &&
           this.$refs.match_scroll_area.setScrollPosition(top, 0);

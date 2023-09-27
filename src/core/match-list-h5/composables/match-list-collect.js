@@ -52,7 +52,7 @@ export const change_favorite_state = (params) => {
         MatchCtr.list.forEach((match_iterate) => {
           let match_dic = MatchCtr.mid_obj[match_iterate.mid];
           //冠军玩法的mid是唯一的
-      let  main_menu_type =  +MenuData.get_current_lv_1_menu_type()
+      let  main_menu_type =  +MenuData.get_menu_type()
           let flag =
             ([100, 3000].includes(main_menu_type) &&
               match_iterate.mid == match.mid) ||

@@ -205,7 +205,7 @@ import store from "src/store-redux/index.js";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { UserCtr } from "src/core/index.js";
 import { format_odds, calc_bifen } from 'src/core/index.js'
-import { ref, onMounted, watch, computed, onUnmounted } from 'vue';
+import { ref, onMounted, watch, computed, onUnmounted,nextTick } from 'vue';
 
 
 
@@ -482,7 +482,7 @@ const single_bet = () => {
           case 1:
             need_bet_again.value = true
             // 同步程序走完后再处理逻辑
-            $nextTick(() => {
+            nextTick(() => {
               if (!BetData.odds_change) {
                 set_bet_status(1);
               }

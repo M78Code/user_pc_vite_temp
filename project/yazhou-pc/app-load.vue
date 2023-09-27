@@ -1,32 +1,31 @@
 <template>
-  <div class="full-height" @click="set_global_click"  :style="page_style">
+  <div class="full-height" @click="set_global_click" :style="page_style">
     <div v-if="_data.is_ws_run" class="timeShow" @click="copyToken()">
       {{ _data.current_env }}
     </div>
-    <ws/>
+    <ws />
     <!-- 页面路由开始 -->
     <router-view />
     <div class="error-data">{{ get_error_data }}</div>
     <div id="v-tooltip"></div>
   </div>
 </template>
-  <script setup>
+<script setup>
 import "./src/core/globel-mitt";
-import {  PageSourceData  } from "src/core/index.js";
+import { PageSourceData } from "src/core/index.js";
 import { useMittOn, MITT_TYPES } from "src/core/mitt/";
 import { wslog, httplog } from "src/core/log/";
-import { GetUrlParams } from "src/core/utils/";
+import {get_query_string as urlparams } from "src/core/";
 import { copyToClipboard } from "quasar";
-import { reactive, onBeforeMount, onMounted, onUnmounted,ref, watch } from "vue";
+import { reactive, onBeforeMount, onMounted, onUnmounted, ref, watch } from "vue";
 import store from "src/store-redux/index.js";
 // import { set_remote_server_time } from "./src/store/module/global";
 import { t } from "src/core/index.js";
 import { useRouter } from "vue-router";
-import WsMan from  "src/core/data-warehouse/ws/ws-ctr/ws-man.js"
+import WsMan from "src/core/data-warehouse/ws/ws-ctr/ws-man.js"
 import { compute_css_variables } from "src/core/css-var/index.js"
-import ws from  "src/core/data-warehouse/ws/ws-ctr/ws.vue"
+import ws from "src/core/data-warehouse/ws/ws-ctr/ws.vue"
 const { NODE_ENV, CURRENT_ENV, DEFAULT_VERSION_NAME } = window.BUILDIN_CONFIG;
-const urlparams = GetUrlParams();
 const router = useRouter();
 const _data = reactive({
   is_ws_run: wslog.ws_run, //// 初始化启动日志系统--开发模式时日志打开
@@ -78,7 +77,7 @@ const global_color_obj = () => {
   let tc = compute_css_variables({ category: 'global', module: 'color' })
   // 渐变色
   let lg = compute_css_variables({ category: 'global', module: 'linear-gradient' })
-  return {...bg, ...bd, ...tc, ...lg}
+  return { ...bg, ...bd, ...tc, ...lg }
 }
 /**
  * 监听路由变化设置全局路由信息  来源和目标
@@ -222,9 +221,11 @@ onUnmounted(() => {
   font-size: 20px;
   text-align: right;
 }
+
 .error-data {
   display: none;
 }
+
 #v-tooltip {
   position: fixed;
   transform: translateX(-50%);
