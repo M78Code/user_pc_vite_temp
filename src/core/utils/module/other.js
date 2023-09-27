@@ -10,7 +10,7 @@ import lodash from "lodash";
 import { csid_map_concede_points_id } from "src/core/index.js";
 import { MenuData } from "src/core/index.js";
 // 目前环境信息
-const { current_env,NODE_ENV} = window.BUILDIN_CONFIG
+const { current_env, NODE_ENV } = window.BUILDIN_CONFIG
 
 // import { image_panda_placeholder } from 'project_path/src/core/utils/local-image.js'
 
@@ -167,8 +167,7 @@ export const get_handicap_index_by = (match) => {
 
 export const match_init = (match) => {
   // 当前选中的主菜单 类型
-  let main_menu_type = MenuData.get_current_lv_1_menu_type();
-
+  let main_menu_type = MenuData.get_menu_type();
   if (main_menu_type != 28) {
     // 28 赛果
     //ms = 1 为 已开赛 否则未完赛 ms: 3	结束
@@ -282,73 +281,6 @@ export const get_now_server = () => {
   return remote_time + (now - local_time);
 };
 
-// TODO: window.BUILDIN_CONFIG 待替換
-/**
- * @description: 获取图片完整网络路径
- * @param {String} path 图片路径
- * @return {String} csid 球种类型
- */
-export const get_file_path = (path, csid = 0) => {
-
-  if (!path || path == "undefined") {
-    return "";
-  }
-  // 如果是http开头 直接返回地址
-  if (lodash.toString(path).indexOf("http") == 0) {
-    return path;
-  }
-  // // 电竞菜单下如果type没有传值，默认为2
-  // let _menutype =lodash.get(window,'vue.$store.getters.get_menu_type')
-  // if (_menutype == 3000 && !type) {
-  //   type = 2
-  // }
-  // 电竞图片域名模式
-  if ([101, 100, 102, 103].includes(1 * csid)) {
-    return `${window.BUILDIN_CONFIG.e_sports.domain_img}/${path}`;
-  }
-  // 优先使用oss返回的有效图片域名地址
-  let domain_img_str = "";
-  if (window.BUILDIN_CONFIG.oss_img_domains) {
-    domain_img_str = window.BUILDIN_CONFIG.oss_img_domains[0];
-  }
-  if (domain_img_str) {
-    return `${domain_img_str}/${path}`;
-  }
-
-  domain_img_str =
-    window.BUILDIN_CONFIG.DOMAIN_RESULT.img_domains[current_env];
-  if (domain_img_str) {
-    return `${domain_img_str}/${path}`;
-  }
-
-  if (
-    current_env == "idc_sandbox" ||
-    current_env == "idc_pre" ||
-    current_env == "idc_ylcs"
-  ) {
-    let api_domain =
-      window.BUILDIN_CONFIG.domain[current_env][0];
-    // 试玩环境使用生产api图片
-    api_domain = window.BUILDIN_CONFIG.domain["idc_online"][0];
-    api_domain = api_domain.replace(/\/\/.*?\./, "//image.");
-    return `${api_domain}/${path}`;
-  }
-  //TODO:
-  if (NODE_ENV == "development") {
-    let api_domain =
-      window.BUILDIN_CONFIG.DOMAIN_RESULT
-      .first_one;
-    api_domain = api_domain.replace(/\/\/.*?\./, "//image.");
-    return `${api_domain}/${path}`;
-  }
-
-  let arr = location.host.split(".");
-  let api_domain_2 = `${location.protocol}//image.${arr[arr.length - 2]}.${arr[arr.length - 1]
-    }`;
-
-  // api_domain = api_domain.replace(/\/\/.*?\./,'//image.');
-  return `${api_domain_2}/${path}`;
-};
 /**
  * @description: 解绑防抖
  * @param {String} fun 函数
