@@ -28,8 +28,8 @@
               <template v-for="(append_single, index) of append_single_list">
                 <div class="col bet-item" :key="index" v-if="lodash.get(item_data, 'title[0].otd') == append_single.otd">
                   <div class="row row-fat">
-                    <!-- (开盘ms=0或者锁盘ms=11 TODO: -->
-                    <div v-if="append_single.ms !== 0 || append_single.ms !== 11" style="flex:1;">
+                    <!-- (开盘_mhs=0或者锁盘_mhs=11 -->
+                    <div v-if="append_single._mhs == 0 || append_single._mhs == 11" style="flex:1;">
                       <template v-if="append_single._hs == 0 || append_single._hs == 11">
                         <!-- os=1 开盘 -->
                         <template v-if="append_single.os == 1">
@@ -88,7 +88,7 @@
                       </template>
                     </div>
                     <!-- 封盘ms=1 -->
-                    <template v-if="append_single.ms == 1">
+                    <template v-if="append_single._mhs == 1">
                       <div class="play-box-sty details-color " style="flex:1;" :class="get_detail_data.csid == 1? 'odds-lock' : '' ">
                         <div class="single-name details_t_color7" v-show="get_detail_data.csid != 1">
                           <span class="fz_14 ver-ali-top">{{devote_value_d(append_single.ot)}}</span>
@@ -100,7 +100,7 @@
                       </div>
                     </template>
                     <!-- 关盘ms=2 -->
-                    <template v-if="append_single.ms == 2"></template>
+                    <template v-if="append_single._mhs == 2"></template>
                   </div>
                 </div>
               </template>
@@ -124,8 +124,8 @@
               <template v-for="(append_single,index) of append_single_list">
                 <div class="col bet-item" :key="index" v-if="lodash.get(item_data, 'title[1].otd') == append_single.otd">
                   <div class="row row-fat" v-if="lodash.get(item_data, 'title[1].otd') == append_single.otd">
-                    <!-- (开盘ms=0或者锁盘ms=11) -->
-                    <div v-if="append_single.ms == 0 || append_single.ms == 11" style="flex:1;">
+                    <!-- (开盘_mhs=0或者锁盘_mhs=11) -->
+                    <div v-if="append_single._mhs == 0 || append_single._mhs == 11" style="flex:1;">
                       <template v-if="append_single._hs == 0 || append_single._hs == 11">
                         <!-- os=1 开盘 -->
                         <template v-if="append_single.os == 1">
@@ -181,7 +181,7 @@
                       </template>
                     </div>
                     <!-- 封盘ms=1 -->
-                    <template v-if="append_single.ms == 1">
+                    <template v-if="append_single._mhs == 1">
                       <div class="play-box-sty details-color " style="flex:1;" :class="get_detail_data.csid == 1? 'odds-lock' : '' ">
                         <div class="single-name details_t_color7" v-show="get_detail_data.csid != 1">
                           <span class="fz_14 ver-ali-top">{{devote_value_x(append_single.ot)}}</span>
@@ -193,7 +193,7 @@
                       </div>
                     </template>
                     <!-- 关盘ms=2 -->
-                    <template v-if="append_single.ms == 2"></template>
+                    <template v-if="append_single._mhs == 2"></template>
                   </div>
                 </div>
               </template>
@@ -283,7 +283,6 @@ export default defineComponent({
     // 附加盘投注项集合
     const append_single_list = computed(() => {
       let result = [];
-      console.error(props.item_data);
       for (let i = 0; i < props.item_data.hl.length; i++) {
         for (let i_ = 0; i_ < props.item_data.hl[i].ol.length; i_++) {
           result.push(props.item_data.hl[i].ol[i_]);

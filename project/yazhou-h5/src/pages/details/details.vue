@@ -537,7 +537,6 @@ export default defineComponent({
     //   'set_event_list',
     // ]),
     provide('get_detail_data', get_detail_data)
-    console.error(MatchDataWarehouseInstance);
     return {
       ...toRefs(state_data),
       i18n_t,

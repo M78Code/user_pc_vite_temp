@@ -7,8 +7,8 @@
     <div class="hairline-border">
       <div class="item-wrap" v-if="item_data.hl[0] && item_data.hl[0].ol">
         <div v-for="(ol_item,index) in item_data.hl[0].ol" :key="index" class="item2">
-          <template v-if="ol_item.ms == 0 || ol_item.ms == 11">
-            <template v-if="ol_item.hs == 0 || ol_item.hs == 11">
+          <template v-if="ol_item._mhs == 0 || ol_item._mhs == 11">
+            <template v-if="ol_item._hs == 0 || ol_item._hs == 11">
               <template v-if="ol_item.os == 1">
                 <!-- 主程序 start -->
                 <div class="play-box-style details_color warp" @click="go_to_bet(ol_item)"
@@ -45,7 +45,7 @@
               </template>
               <!-- 新增over -->
             </template>
-            <template v-if="ol_item.hs == 1">
+            <template v-if="ol_item._hs == 1">
               <template v-if="ol_item.os == 3">
                 <!-- 关盘 锁占位 -->
                 <div class="play-box-style details_color warp bor-style">
@@ -65,7 +65,7 @@
                 <!-- lock 锁状态 end -->
               </template>
             </template>
-            <template v-if="ol_item.hs == 2">
+            <template v-if="ol_item._hs == 2">
               <!-- 盘口级别状态关盘时，要占位 -->
               <div class="play-box-style details_color warp bor-style">
                 <div class="text-left">
@@ -75,7 +75,7 @@
             </template>
           </template>
           <!-- 封盘，一把锁的居中显示 -->
-          <template v-if="ol_item.ms == 1">
+          <template v-if="ol_item._mhs == 1">
             <!-- lock 锁状态 start -->
             <div class="play-box-style details_color warp bor-style">
               <div class="ellipsis remark details_t_color7 fz_14" v-show="get_detail_data.csid != 1">{{ol_item.on || ol_item.ott}}</div>
@@ -86,7 +86,7 @@
             <!-- lock 锁状态 end -->
           </template>
           <!-- 关盘 -->
-          <template v-if="ol_item.ms == 2">
+          <template v-if="ol_item._mhs == 2">
             <!-- 关盘 锁占位 -->
             <div class="play-box-style details_color warp bor-style">
               <div class="text-left">
