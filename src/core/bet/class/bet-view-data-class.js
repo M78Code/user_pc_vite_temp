@@ -169,7 +169,7 @@ class BetViewData {
   }
 
   // 设置 code对应的 message数据 
-  set_code_message_config(code,message) {
+  set_code_message_config(code, message) {
     let text = ''
     switch (code) {
       case 200:
@@ -327,9 +327,9 @@ class BetViewData {
         text = '存在不支持串关盘口'
         break
 
-       default:
-          text = message
-          break
+      default:
+        text = message
+        break
     }
 
     return text

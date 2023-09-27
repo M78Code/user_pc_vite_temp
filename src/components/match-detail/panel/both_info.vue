@@ -116,7 +116,7 @@ export default {
      */
     reload_data() {
       this.isRouterAlive = false;
-      this.$nextTick(function () {
+      nextTick(function () {
         this.isRouterAlive = true;
       });
     },

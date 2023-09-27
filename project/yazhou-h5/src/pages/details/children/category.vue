@@ -49,7 +49,6 @@
           </template>
           <!-- 非置顶 -->
           <template v-for="(item, keyscorll) in match_list_normal">
-            {{match_list_new.length}}
             <template v-if="item.hton==0">
               <template v-if="match_list_new.length == 0">
                 <tournament-play-new @change_show="change_show" :key="item.topKey + item.hpid" :list="matchInfoCtr.list" :item_data="item" :scorllIndex="keyscorll"></tournament-play-new>
@@ -151,7 +150,6 @@ export default defineComponent({
       remove_session_storage,
       remove_detail_storage,
     } = category_info();
-    console.error(match_list_new);
     watch(
       () => route.params,
       (to, from) => {
@@ -269,7 +267,6 @@ export default defineComponent({
         // component_data.matchInfoCtr.destroy()
       }
     })
-    console.error("match_list_normal", match_list_normal);
     return {
       ...toRefs(component_data),
       i18n_t,

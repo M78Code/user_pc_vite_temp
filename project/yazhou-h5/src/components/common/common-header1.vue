@@ -2,24 +2,13 @@
  * @Description: 详情页头部置顶title
 -->
 <template>
-  <div
-    ref="common_header"
-    class="common-header"
-    @touchmove.prevent
-  >
+  <div ref="common_header" class="common-header" @touchmove.prevent>
     <div class="row justify-between full-height mx-15">
       <!-- 返回上一页 -->
-      <div
-        class="go-back-btn-wrap a1"
-        @click="go_to_back"
-      >
+      <div class="go-back-btn-wrap a1" @click="go_to_back">
         <div class="go-back"></div>
       </div>
-      <div
-        ref="contents"
-        class="ellipsis title-style details-c"
-        @click.stop="show_dialog"
-      >
+      <div ref="contents" class="ellipsis title-style details-c" @click.stop="show_dialog">
         <!-- 联赛名 -->
         <seamless-marquee :content="title" />
         &nbsp;
@@ -27,17 +16,11 @@
         <span class="triangle-down"></span>
       </div>
       <div class="row common-header-right">
-        <div
-          class="collect-icon"
-          :class="{ active: get_detail_data.mf }"
+        <div class="collect-icon" :class="{ active: get_detail_data.mf }"
           v-if="GlobalAccessConfig.get_collectSwitch() && is_DJ_show && MenuData.get_menu_type() !== 28"
-          @click="details_collect(get_detail_data)"
-        ></div>
-        <div
-          class="det-ref"
-          :class="{ 'refreshing': refreshing, 'refreshing-common': MenuData.get_menu_type() !== 3000 }"
-          @click="details_refresh"
-        ></div>
+          @click="details_collect(get_detail_data)"></div>
+        <div class="det-ref" :class="{ 'refreshing': refreshing, 'refreshing-common': MenuData.get_menu_type() !== 3000 }"
+          @click="details_refresh"></div>
         <!--<div class="analysis_new" v-if="(get_detail_data.csid == 1 || get_detail_data.csid == 2)" @click="analysis_show(get_detail_data)"></div>-->
       </div>
     </div>
@@ -183,7 +166,7 @@ const details_collect = (match_obj) => {
         data: cloneData
       });
     } else if (res.msg) {
-      set_toast({ 'txt': res.msg });
+      useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, res.msg)
     }
   }).catch((e) => { console.error(e) });
 }
@@ -367,4 +350,5 @@ export default {
   position: absolute;
   left: 0.1rem;
   top: 0.13rem;
-}</style>
+}
+</style>

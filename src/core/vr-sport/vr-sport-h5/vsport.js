@@ -13,7 +13,7 @@
  */
 import { api_v_sports } from "src/project/api/index.js";
 // import LoopCallback from "/utils/loop_callback.js";
-
+import { nextTick } from "vue";
 import sleep from  "licia/sleep"  
 import Queue from  "licia/Queue"  
 export default class VSport {
@@ -103,7 +103,7 @@ export default class VSport {
    */
   set_data(sport_data,callback){
     this.stop();
-    this.$nextTick(() => {
+    nextTick(() => {
       // 设置定时器开关
       this.run = true;
       // 初始化时间

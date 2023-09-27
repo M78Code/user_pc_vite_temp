@@ -26,7 +26,7 @@ const spread_options = () => {
 
     set_is_spread(!BetData.is_spread);
     //设置投注项滚动距离，同步程序走完后再处理逻辑
-    $nextTick(() => {
+    nextTick(() => {
         if (BetData.is_spread) {
             ele.scrollTop = sh + 0.56 * rem_1 - ch;
         } else {
@@ -161,7 +161,7 @@ const mix_bet = () => {
                     case 1:
                         need_bet_again.value = true
                         // 同步程序走完后再处理逻辑
-                        $nextTick(() => {
+                        nextTick(() => {
                             if (!BetData.odds_change) {
                                 BetData.set_bet_status(1);
                             }

@@ -1,7 +1,7 @@
 import MatchCtr from "src/core/match-list-h5/match-class/match-ctr.js";
 import store from "src/store-redux/index.js";
-import MenuData from  "src/core/menu-h5/menu-data-class.js";
-import PageSourceData  from  "src/core/page-source/page-source.js";
+import MenuData from "src/core/menu-h5/menu-data-class.js";
+import PageSourceData from "src/core/page-source/page-source.js";
 
 const main_menu_type = 3
 //是否显示次要玩法头部
@@ -100,7 +100,7 @@ let is_show_league = (i) => {
 };
 //赛事未开赛标题
 let is_show_no_play = (i) => {
-  
+
   let match = MatchCtr.match_list_data_sources[i];
   let result = false;
   // 详情页，或者  非今日串关不显示
@@ -211,7 +211,7 @@ const is_show_time_title = () => {
 };
 // 获取赛事对应的dom显示区域属性
 export const get_match_dom_show_property = (i) => {
-  let main_menu_type = +MenuData.get_current_lv_1_menu_type();
+  let main_menu_type = +MenuData.get_menu_type();
   let match = MatchCtr.match_list_data_sources[i];
   // 5分钟玩法，波胆玩法 要展开的行数
   let number_of_bets = 0;

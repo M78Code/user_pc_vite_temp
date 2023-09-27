@@ -34,7 +34,7 @@ import betting from 'src/core/bet/common-helper/index.js';
 // const licia_format = require('licia/format');
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { format_money3,format_money2 } from 'src/core/format/index.js'
-
+import { nextTick } from "vue"
 
 const money = ref('')  //输入框金额
 const money_ok = ref(true)   //金额是否合适
@@ -238,7 +238,7 @@ onMounted(() => {
   useMittOn(MITT_TYPES.EMIT_CHANGE_MONEY, change_money_)
 
   //将金额和最高可投传递给键盘
-  $nextTick(() => {
+  nextTick(() => {
     if (BetData.active_index == index_.value) {
       useMittEmit(MITT_TYPES.EMIT_SEND_VALUE, { money: money.value, max_money: max_money })
     }
@@ -366,7 +366,7 @@ const change_kbdshow = () => {
   //将金额和最高可投传递给键盘
   if (BetData.active_index == index_.value) {
     // 同步程序走完后再处理逻辑
-    $nextTick(() => {
+    nextTick(() => {
       useMittEmit(MITT_TYPES.EMIT_SEND_VALUE, { money: money.value, max_money: max_money })
     })
   }

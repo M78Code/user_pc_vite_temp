@@ -5,7 +5,8 @@
  * @Description: src/public/mixins/results/index
  */
 import lodash from 'lodash'
-import { i18n_t,formatTime} from 'src/core/index.js' 
+import { i18n_t,formatTime} from 'src/core/index.js'
+import { nextTick } from "vue";
 export default {
   data() {
     return {
@@ -113,7 +114,7 @@ export default {
     cur_row: {
       handler(new_) {
         if(new_>0) {
-          this.$nextTick(()=>{
+          nextTick(()=>{
             let top = this.cur_row * 40;
             let obj = this.yabo_common.get_refs_info('scrollArea', null, this);
             obj && obj.setScrollPosition(top);
@@ -207,7 +208,7 @@ export default {
       }
      this.timer_ac = setTimeout(() => {
         let _ref = this.$refs
-        this.$nextTick(()=>{
+        nextTick(()=>{
           this.scroll_wrap_width = _ref.ref_scorll && _ref.ref_scorll.length && _ref.ref_scorll[0].offsetWidth
           this.content_width = _ref.ref_content && _ref.ref_content.length && _ref.ref_content[0].offsetWidth
           if(this.content_width > this.scroll_wrap_width){

@@ -122,7 +122,7 @@ export const useRightDetails = (props) => {
     handicap_this: null,
     // 菜单数据
     menu_data: MenuData,
-    mid: "2773256", //赛事id
+    mid: "2776464", //赛事id
     sportId: "", //球类id
     match_infoData: {},
     category_list: [], //玩法集
@@ -167,7 +167,7 @@ export const useRightDetails = (props) => {
     details_params: {
       //赛事参数
       media_type: "info",
-      mid: "2773256",
+      mid: "2776464",
       sportId: "1",
       tid: "1188757",
       time: 1695546310766,
@@ -326,7 +326,13 @@ export const useRightDetails = (props) => {
                 data
               );
               // allData.match_details = MatchDataWarehouseInstance.list_to_obj.ol_obj;
-              allData.match_details = data;
+
+              let str = allData.mid + "_";
+              allData.match_details = [lodash.get(
+                MatchDataWarehouseInstance.list_to_obj.mid_obj,
+                str
+              )];
+              // allData.match_details = data;
               // 玩法列表loading状态值
               allData.handicap_state = "data";
               // 同步投注项 todo
@@ -384,7 +390,7 @@ export const useRightDetails = (props) => {
                 let msc = detailUtils.build_msc(match_obj);
                 match_obj.msc = msc;
                 Object.assign(
-                  this.MatchDataWarehouseInstance.match_obj,
+                  MatchDataWarehouseInstance.match_obj,
                   match_obj
                 );
               }
@@ -432,12 +438,13 @@ export const useRightDetails = (props) => {
               MatchDataWarehouseInstance.set_quick_query_list_from_match_details(
                 data
               );
-              console.log(
-                MatchDataWarehouseInstance,
-                "MatchDataWarehouseInstance"
-              );
-              allData.match_details = MatchDataWarehouseInstance.list;
-              // allData.match_details = data;
+      
+              // allData.match_details = MatchDataWarehouseInstance.list;
+              let str = allData.mid + "_";
+              allData.match_details = [lodash.get(
+                MatchDataWarehouseInstance.list_to_obj.mid_obj,
+                str
+              )];
               // 玩法列表loading状态值
               allData.handicap_state = "data";
               // 同步投注项

@@ -11,6 +11,7 @@
         class="unfold"
         :class="{ open: vx_get_is_fold_status }"
         @click="$emit('setfoldStatus')"
+        :style="compute_css('pc-img-match-info-unfold-open')"
       ></div>
 
       <div class="col-center row full-height">
@@ -35,6 +36,7 @@
             >{{ item.text }}</q-tooltip
           >
           <div
+            :style="compute_css(item.icon)"
             :class="[
               'vicon',
               `${item.icon}-icon`,
@@ -56,7 +58,7 @@
             !vx_show_filter_popup
           "
         >
-          <span class="text">{{ $t("icon_tips.fold") }}</span>
+          <span class="text">{{i18n_t("icon_tips.fold") }}</span>
           <i class="icon-arrow q-icon c-icon" size="12px"></i>
         </div>
         <div
@@ -76,7 +78,7 @@
             anchor="top middle"
             self="center middle"
             :content-style="tooltip_style + ';white-space: nowrap;'"
-            >{{ $t("video.big_screen_mode") }}</q-tooltip
+            >{{i18n_t("video.big_screen_mode") }}</q-tooltip
           >
           <!-- 全屏 -->
         </div>
@@ -168,7 +170,8 @@ import { computed, onMounted, onUnmounted, ref, watch } from "vue";
 import MenuData from "src/core/menu-pc/menu-data-class.js";
 import { IconWapper } from "src/components/icon";
 import refresh from "src/components/refresh/refresh.vue";
-import { i18n_t, get_match_status } from "src/core/index";
+import { i18n_t, get_match_status,UserCtr } from "src/core/index";
+import { compute_css } from "src/core/server-img/index.js";
 import lodash from "lodash";
 const props = defineProps({
   refresh_loading: {
@@ -186,12 +189,13 @@ const team_height = ref(height0.value); //战队信息盒子高度
 const videos = ref([]); //有视频的赛事列表
 const is_hover = ref(false); //视频icon是否hover
 const menu_data = ref(MenuData); //菜单数据
+const lang = ref(UserCtr.lang)// 语言
 const media_icons = [
   /**比分版 */
   {
     type: "info",
     text: i18n_t("common.score_board"),
-    icon: "switch",
+    icon: "pc-img-match-info-switch2",
   },
   /**演播室 */
   {
@@ -215,13 +219,13 @@ const media_icons = [
   {
     type: "video",
     text: i18n_t("common.o_video"),
-    icon: "video",
+    icon: "pc-img-match-info-video0",
   },
   /**动画 */
   {
     type: "animation",
     text: i18n_t("common.animate"),
-    icon: "animation",
+    icon: "pc-img-match-info-animation0",
   },
 ];
 //todo
@@ -230,24 +234,25 @@ const vx_play_media = {
   media_type: "info",
   is_auto: true,
 };
-const vx_get_is_fold_status =ref(false)
+const vx_get_is_fold_status = ref(true);
 const set_play_media_timer = ref(null);
 /**
  * @Description:获取图标是否显示
  * @returns
  */
 const get_media_icon_show = (type) => {
+  console.log(animation_btn_show,'animation_btn_show');
   switch (type) {
     case "info":
       return true;
     case "video":
-      return video_btn_show;
+      return video_btn_show.value;
     case "animation":
-      return animation_btn_show;
+      return animation_btn_show.value;
     case "studio":
-      return studio_btn_show;
+      return studio_btn_show.value;
     case "topic":
-      return topic_btn_show;
+      return topic_btn_show.value;
     default:
       return false;
   }
@@ -307,7 +312,7 @@ const studio_btn_show = computed(() => {
   return (
     props.match_info.lvs == 2 &&
     props.match_info.lss === 1 &&
-    ["zh", "tw"].includes(this.lang)
+    ["zh", "tw"].includes(lang.value)
   );
 });
 /**
@@ -318,8 +323,8 @@ const topic_btn_show = computed(() => {
   return (
     props.match_info.lvs == 2 &&
     props.match_info.lss === 0 &&
-    ["zh", "tw"].includes(this.lang) &&
-    this.$utils.get_match_status(props.match_info.ms) !== 1
+    ["zh", "tw"].includes(lang.value) &&
+    get_match_status(props.match_info.ms) !== 1
   );
 });
 //切换赛事列表盒子高度改变
@@ -416,7 +421,7 @@ const get_videos = () => {
     let index = details.get_match_index(props.match_info.mid, res);
     //当前选择赛事不在可见区域时 滚动到可见区域
     if (index > 4) {
-      this.$nextTick(() => {
+      nextTick(() => {
         let top = (index - 3) * 36;
         this.$refs.match_scroll_area &&
           this.$refs.match_scroll_area.setScrollPosition(top, 0);

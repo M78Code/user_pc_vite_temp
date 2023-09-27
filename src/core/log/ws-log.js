@@ -3,9 +3,9 @@
  * @LastEditors: jiffy
  * @Description: ws通信日志功能类
  */
-import { GetUrlParams } from "../utils";
+import { get_query_string } from "src/core/utils/module/Qs.js";
 import { DateForMat } from "src/core/format/index.js";
-import { SessionStorage  } from "src/core/utils/module/web-storage.js";
+import { SessionStorage } from "src/core/utils/module/web-storage.js";
 const { LOCAL_FUNCTION_SWITCH } = window.BUILDIN_CONFIG;
 
 class WsLog {
@@ -20,9 +20,9 @@ class WsLog {
     this.ws_run = ws_run;
     // 项目名
     this.name = name;
-    if (GetUrlParams("wsl") == 9999 || SessionStorage .get("wsl") == "9999" || this.ws_run) {
+    if (get_query_string.wsl == 9999 || SessionStorage.get("wsl") == "9999" || this.ws_run) {
       this.ws_run = true;
-      SessionStorage .set("wsl", "9999");
+      SessionStorage.set("wsl", "9999");
     }
     if (this.ws_run) {
       // WS操作对象
@@ -62,12 +62,12 @@ class WsLog {
         if (this.ws) {
           this.ws.send(
             DateForMat(new Date(), "yyyy-MM-dd hh:mm:ss") +
-              "&" +
-              this.name +
-              "-" +
-              flg +
-              " " +
-              msg
+            "&" +
+            this.name +
+            "-" +
+            flg +
+            " " +
+            msg
           );
         }
       } catch (error) {

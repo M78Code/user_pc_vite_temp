@@ -54,7 +54,6 @@ class MatchDetailCtr {
  * @param {*} obj  玩法集对象 
  */
   category_tab_click(obj={}){
-    console.error(obj);
     this.current_category_id= obj.id
     this.current_category_plays =obj.plays
   }

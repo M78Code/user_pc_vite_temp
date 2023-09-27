@@ -131,7 +131,7 @@ export const category_info = () => {
   // 非置顶列表
   const match_list_normal = computed(() => {
     // return component_data.matchInfoCtr.listSortNormal();
-    return component_data.match_info_list;
+    return lodash.get(MatchDataWarehouseInstance, `list_to_obj.mid_obj[${route.params.mid}_].odds_info`);
   });
   // 赛事id
   const match_id = computed(() => {
@@ -325,7 +325,6 @@ export const category_info = () => {
       : api_common.get_matchDetail_getMatchOddsInfo;
     component_data.send_gcuuid = UserCtr.uid
     params.cuid = component_data.send_gcuuid;
-    // console.error(params,"paramsparamsparams",MatchDetailCtr.category_obj);
     let temp = [];
     // 记录是否走的是缓存
     let is_cache = false;
@@ -366,10 +365,8 @@ export const category_info = () => {
         };
         /************** 响应成功则继续往下走，失败则执行fun_catch **************/
         const res = await axios_api_loop(_obj);
-        console.error(res);
         // 数据存入数据仓库
         MatchDataWarehouseInstance.set_quick_query_list_from_match_details(res.data)
-        console.error(MatchDataWarehouseInstance);
         // if (component_data.send_gcuuid != res.gcuuid) {
         //   return;
         // }
@@ -391,7 +388,6 @@ export const category_info = () => {
           }
         });
         // component_data.matchInfoCtr.setList(data);
-        console.error(data);
         component_data.match_info_list = data;
         // console.log(chpid_obj,"chpid_obj");
         // set_chpid_obj(chpid_obj)
@@ -445,11 +441,9 @@ export const category_info = () => {
       details_data_cache[`${match_id}-${get_details_item.value}`] = temp;
       // set_details_data_cache(details_data_cache);
       
-      // console.error('成功');
     } catch (err) {
       console.error(err);
     } finally {
-      // console.error('finally' + component_data);
       if (component_data.is_cache) {
         setTimeout(() => {
           component_data.is_loading = false;

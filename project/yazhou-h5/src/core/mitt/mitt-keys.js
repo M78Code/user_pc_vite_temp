@@ -262,6 +262,10 @@ export const EMIT_USER_LOGON_OK_EVENT = "EMIT_USER_LOGON_OK_EVENT";
 // 触发首页跳转
 export const EMIT_HOME_TAB = "EMIT_HOME_TAB";
 export const EMIT_MAIN_LIST_MATCH_IS_EMPTY = "EMIT_MAIN_LIST_MATCH_IS_EMPTY";
+/**
+ * 触发toast弹框
+ */
+export const EMIT_SHOW_TOAST_CMD = "EMIT_SHOW_TOAST_CMD";
 
 
 export const IFRAME_VIDEO_VOLUME = "IFRAME_VIDEO_VOLUME";

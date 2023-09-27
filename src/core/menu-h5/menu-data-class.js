@@ -237,10 +237,10 @@ class MenuData {
     idx > -1 && this.set_current_lv1_menu(this.menu_list[idx], idx, 'click')
   }
   /**
-   * 当前选中的主菜单的 mi
+   *一级菜单顶层菜单的 菜单类型  ，没有则是0
    * */
   get_menu_type() {
-    return this.current_lv_1_menu?.mi;
+    return this.current_lv_1_menu?.mi || 0;
   }
   /**
    * 获取 euid
@@ -277,6 +277,7 @@ class MenuData {
    * @returns 
    */
   get_menus_i18n_map(mi) {
+    //"7": "电竞" 直接可以返回不做处理 slice(0,3)
     if (this.menu_type.value == 7) {
       return BaseData.menus_i18n_map[mi]
     }
@@ -805,7 +806,6 @@ class MenuData {
   }
   //竞足数据
   get_competing(data) {
-
     let obj1 = data.find((v) => v.mi == 500) || {};
     if (obj1?.sl) {
       // 竟足处理 50101
@@ -854,12 +854,6 @@ class MenuData {
    */
   get_mm_is_champion() {
     return lodash.get(this.current_lv_3_menu, "menuType") == 100;
-  }
-  /**
-   * 一级菜单顶层菜单的 菜单类型  ，没有则是0
-   */
-  get_current_lv_1_menu_type() {
-    return this.current_lv_1_menu?.mi || 0;
   }
   // 传给筛选里面的搜索下Bat选中
   get_useid_ievname() {
