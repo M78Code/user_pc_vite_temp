@@ -121,46 +121,6 @@ export const get_match_tpl_title = (t_path, csid) => {
 };
 
 /**
- * @description: 获取赛事的让球方
- * @param {Object} match
- * @return {Number} 0未找到让球方 1主队为让球方 2客队为让球方
- */
-export const get_handicap_index_by = (match) => {
-  let result = 0;
-  if (match && match.hps) {
-    let hpid = get_handicap_w_id(match.csid);
-    let hp_item = match.hps.filter((item) => item.hpid == hpid)[0];
-    if (hp_item) {
-      let hl_item = hp_item.hl[0];
-
-      // 网球csid 5  让盘hpid 154
-      if (!hl_item || !hl_item.ol) {
-        if (match.csid == 5) {
-          hp_item = match.hps.filter((item) => item.hpid == 154)[0];
-          if (hp_item) {
-            hl_item = hp_item.hl[0];
-          }
-        }
-      }
-
-      if (hl_item && hl_item.ol) {
-        let found_i = 0;
-        hl_item.ol.forEach((ol_item, i) => {
-          if (ol_item.on) {
-            let on_str = String(ol_item.on);
-            if (on_str[0] == "-") {
-              found_i = i + 1;
-            }
-          }
-        });
-        result = found_i;
-      }
-    }
-  }
-  return result;
-};
-
-/**
  * @description: 参考iphone6,7,8窗口宽度(375)模拟rem
  * @param {Number} value 需要转换的值
  * @return {Number}
@@ -184,6 +144,14 @@ export const rem_height = (value) => {
   return Math.ceil(value * font_size);
 };
 /**
+ * @description: 拼接图片地址
+ * @param {String} str 需要拼接的图片尾部
+ * @return {String}
+ */
+export const compute_image_src = (str) => {
+  return str ? get_file_path(str) : "";
+};
+/**
  * @description: 判断是否为低端机
  * @param {Undefined} Undefined
  * @return {Boolean}
@@ -193,6 +161,25 @@ export const is_low = () => {
   let sub = Math.abs(timing.domComplete - timing.connectStart);
   return sub > 2600;
 };
+/**
+ * 获取当前服务器时间
+ * @param {Undefined} Undefined
+ * @return {Boolean}
+ */
+export const get_now_server = () => {
+  if (!window.vue.get_local_server_time) {
+    let now = new Date();
+    window.vue.get_local_server_time = {
+      server_time: now.getTime(),
+      local_time_init: now.getTime(),
+    };
+  }
+  let remote_time = window.vue.get_local_server_time.server_time * 1;
+  let local_time = window.vue.get_local_server_time.local_time_init * 1;
+  let now = new Date().getTime();
+  return remote_time + (now - local_time);
+};
+
 /**
  * @description: 解绑防抖
  * @param {String} fun 函数
