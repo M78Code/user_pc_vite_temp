@@ -385,13 +385,14 @@ init(){
       const arr_name = TAB_KEY_DATA[key].field;
       // key-cos5Minutes , arr_name-hps5Minutes
       let has_data = lodash.get(match_new,`${arr_name}.length`);
-      if(!has_data && lodash.get(match_new,key)){
+      const upd_time = `_${arr_name}_upd_time`;
+      if(!has_data && lodash.get(match_new,key) && lodash.get(match_old,key)){
         // 新赛事设置tab开关为开时,赛时数据中未发现数据时,从历史数据中获取最新数据
         const tab_data_old = lodash.get(match_old,arr_name,[]);
         // 给新赛事tab名称设置历史数据
         match_new[arr_name] = lodash.cloneDeep(tab_data_old);
         // 设置tab数据更新时间
-        match_new[`_${arr_name}_upd_time`] = new Date().getTime();
+        match_new[upd_time] = new Date().getTime();
       }
     }
   }
