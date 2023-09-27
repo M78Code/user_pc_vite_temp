@@ -27,7 +27,6 @@
           <match-media :match="match" />
         </div>
       </div>
-
       <!-- 附加盘1 -->
       <div class="match-handicap-item" v-if="lodash.get(match, 'has_add1')">
         <!-- 赛事基础信息 -->
@@ -137,6 +136,7 @@ const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_o
 const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`]
 const match = MatchListData.list_to_obj.mid_obj[props.mid+'_'];
 const is_mounted = ref(true);
+
 // 其他玩法标题
 const bet_col = computed(() => {
   let bet_col = []
