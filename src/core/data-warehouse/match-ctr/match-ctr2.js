@@ -320,6 +320,81 @@ init(){
     })
     return  score_obj
   }
+
+  /**
+   * @description: 保存历史tab玩法数据
+   * @param {Object} match_new 新数据老数据
+   * @param {Object} match_old 老数据老数据
+   */
+  set_sava_tab_play_data(match_new,match_old){
+    if(!(match_new && match_old)){
+      // 无效数据放弃设置
+      return;
+    }
+    // tab菜单字段开关和数key据对应关系
+    const TAB_KEY_DATA = {
+      // 角球开关
+      cosCorner: {
+        play_name: '角球',
+        field: "hpsCorner",
+      },
+      // 罚牌
+      hpsPunish: {
+        play_name: '罚牌',
+        field: "hpsPunish",
+      },
+      // 冠军
+      cosOutright: {
+        play_name: '冠军',
+        field: "hpsOutright",
+      },
+      // 晋级赛
+      cosPromotion: {
+        play_name: '晋级赛',
+        field: "hpsPromotion",
+      },
+      // 加时赛
+      cosOvertime: {
+        play_name: '加时赛',
+        field: "hpsOvertime",
+      },
+      // 点球大战
+      cosPenalty: {
+        play_name: 'hpsPenalty',
+        field: "hpsPenalty",
+      },
+      // 15分钟玩法
+      cos15Minutes: {
+        play_name: '15分钟玩法',
+        field: "hps15Minutes",
+      },
+      // 波胆
+      cosBold: { 
+        play_name: '波胆',
+        field: "hpsBold" 
+      },
+      // 5分钟玩法 
+      cos5Minutes: {
+        play_name: '5分钟玩法',
+        field: "hps5Minutes"
+      },
+    };
+
+    // 设置历史数据
+    for (const key in TAB_KEY_DATA) {
+      const arr_name = TAB_KEY_DATA[key].field;
+      // key-cos5Minutes , arr_name-hps5Minutes
+      let has_data = lodash.get(match_new,`${arr_name}.length`);
+      if(!has_data && lodash.get(match_new,key)){
+        // 新赛事设置tab开关为开时,赛时数据中未发现数据时,从历史数据中获取最新数据
+        const tab_data_old = lodash.get(match_old,arr_name,[]);
+        // 给新赛事tab名称设置历史数据
+        match_new[arr_name] = lodash.cloneDeep(tab_data_old);
+        // 设置tab数据更新时间
+        match_new[`_${arr_name}_upd_time`] = new Date().getTime();
+      }
+    }
+  }
   /**
    * @description: 格式化列表数据(比分数组转对象)
    * @param {Object} list 所有列表数据
@@ -328,6 +403,8 @@ init(){
     if(lodash.get(list,'length')){
       // 格式化比分信息
       list.forEach(match => {
+        // 保存历史tab玩法数据
+        this.set_sava_tab_play_data(match,this.get_quick_mid_obj(match.mid));
         const score_obj = lodash.get(match, 'msc_obj');
         const msc = lodash.get(match, 'msc',[]);
         try {
@@ -593,7 +670,20 @@ init(){
       // 快速查询对象mid_obj增加数据
       many_obj.mid_obj[this.get_list_to_obj_key(item.mid,item.mid,'mid')] = item;
       // 需要解析的投注项赛事基础数据的路径
-      const hps_key_arr = ['hps','hpsAdd','hpsData[0].hps','hpsData[0].hpsAdd',"hpsBold","hpsOvertime","hps15Minutes","hps5Minutes","hpsCorner","hpsPunish","hpsPenalty","hpsPromotion","odds_info"];
+      const hps_key_arr = ['hps','hpsAdd','hpsData[0].hps','hpsData[0].hpsAdd',"hpsBold","hpsOvertime","hps15Minutes","hps5Minutes","hpsCorner","hpsPunish","hpsPenalty","hpsPromotion","hpsOutright","odds_info"];
+      // 角球开关----------------------hpsCorner
+      // 罚牌开关----------------------hpsPunish
+      // 冠军开关----------------------hpsOutright
+      // 晋级赛开关--------------------hpsPromotion
+      // 加时赛开关--------------------hpsOvertime
+      // 点球大战开关------------------hpsPenalty
+      // 15分钟开关--------------------hps15Minutes
+      // 5分钟开关 ----------------------hps5Minutes                              
+      // 波胆开关-----------------------hpsBold
+      // 主盘口------------------------hps
+      // 副盘口------------------------hpsAdd
+      // 赛事详情,所有投注数据----------odds_info
+
       // 投注项赛事列表数据
       let hps_data_arr = null
       hps_key_arr.forEach(hps_key_str => {

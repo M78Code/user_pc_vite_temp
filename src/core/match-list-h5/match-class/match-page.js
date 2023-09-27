@@ -1,25 +1,17 @@
 
-import uid from "src/core/uuid/index.js";
-import { useRoute } from 'vue-router'
 import lodash from 'lodash'
 import store from "src/store-redux/index.js";
-import { utils } from 'src/core/index.js'
 import { csid_map_concede_points_id } from "src/core/index.js";
-
-import { useMittEmit, MITT_TYPES } from "src/core/mitt"
 import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache"
 import { get_esports_match_by_mids, get_match_base_info_by_mids } from "src/api/module/common/index.js";
-
-import { i18n_t } from "src/boot/i18n.js";
-import UserCtr from 'src/core/user-config/user-ctr.js'
-import MenuData from "src/core/menu-h5/menu-data-class.js";
 import PageSourceData from "src/core/page-source/page-source.js";
 import { ws_c8_obj_format } from 'src/core/data-warehouse/util/index.js'
 import MatchListCardClass from '../match-card/match-list-card-class'
 import matchListParams from '../composables/match-list-params'
-import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from 'src/core'
+import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, i18n_t, UserCtr, MenuData, useMittEmit, MITT_TYPES, utils } from 'src/core'
+import { nextTick } from "vue";
 // import MatchDataBase from "src/core/data-warehouse/match-ctr/match-ctr.js"
-/**
+/** TODO临时放置
  * @description: 获取赛事的让球方
  * @param {Object} match
  * @return {Number} 0未找到让球方 1主队为让球方 2客队为让球方
@@ -948,7 +940,7 @@ class MatchPage {
       // 将赛事移动至列表开头
       if (found_index > -1) {
         let changed_match = match_data_list.splice(found_index, 1);
-        this.$nextTick(() => {
+        nextTick(() => {
           match_data_list.splice(0, 0, changed_match[0]);
         })
       }

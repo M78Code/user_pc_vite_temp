@@ -13,7 +13,7 @@
  */
 import Vue from 'vue'
 import { api_v_sports } from "src/project/api/index.js";
-
+import { nextTick } from "vue";
 // import LoopCallback from "/utils/loop_callback.js";
 
 
@@ -107,7 +107,7 @@ export default class VSport {
    */
   set_data(sport_data, callback) {
     this.stop();
-    this.$nextTick(() => {
+    nextTick(() => {
       // 设置定时器开关
       this.run = true;
       // 初始化时间

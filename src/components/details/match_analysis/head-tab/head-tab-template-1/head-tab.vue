@@ -40,7 +40,7 @@ export default {
   mounted() {
     this.useMittOn(MITT_TYPES.EVENT_DATA, this.change_show_tab)
     // 初始化标签选中，足球和篮球在简体中文和繁体中文环境下，下标往后挪动一位,未开赛的赛事，再往后挪动一位
-    this.$nextTick(()=> {
+    nextTick(()=> {
       let i = 0
       if (['zh', 'tw'].includes(this.get_lang)) {
         i++
@@ -75,7 +75,7 @@ export default {
       this.set_curr_tab_info(tab)
       this.$emit('tab_click',[tab, type]);
       // 滚动目标到屏幕显示区域
-      this.$nextTick(()=>{
+      nextTick(()=>{
         this.$utils.tab_move(i, this.$refs.tab_ul_scroller, this.$refs.tab_item)
       })
     },
