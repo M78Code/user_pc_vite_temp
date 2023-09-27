@@ -161,67 +161,6 @@ export const get_handicap_index_by = (match) => {
 };
 
 /**
- * @param { }   match  赛事对象
- * @return {Array}  filtered
- */
-
-export const match_init = (match) => {
-  // 当前选中的主菜单 类型
-  let main_menu_type = MenuData.get_menu_type();
-  if (main_menu_type != 28) {
-    // 28 赛果
-    //ms = 1 为 已开赛 否则未完赛 ms: 3	结束
-    if (match.ms == 3) {
-      return;
-    }
-    // 当前选中的日期（串关与早盘）
-    let third_menu_type = lodash.get(this.get_current_menu, "date_menu.menuType");
-    if (main_menu_type != 100 && third_menu_type != 100) {
-      if (match && match.hps && match.hps.length < 3) {
-        // 如果盘口投注项小于3个，则push 进hps
-        for (let i1 = match.hps.length; i1 < 3; i1++) {
-          match.hps.push({
-            hl: [{}],
-          });
-        }
-      }
-    }
-    if (!match.hps) {
-      match.hps = [];
-    }
-  }
-  let assign_obj = { handicap_index: 0 };
-  // 如果当前赛事没有mid，有 matchId，则赋值给mid
-  if (!match.mid && match.matchId) {
-    match.mid = match.matchId;
-  }
-  // 获取赛事的让球方 0未找到让球方 1主队为让球方 2客队为让球方
-  assign_obj.handicap_index = this.get_handicap_index_by(match);
-  // 对象浅拷贝
-  Object.assign(match, assign_obj);
-};
-
-/**
- * @param {Array} match_list
- * @return {Array}  filtered
- */
-export const match_list_init = (match_list) => {
-  //附加前端逻辑字段
-  match_list.map((match) => match_init(match));
-  return match_list;
-};
-
-/**
- * 根据体育类型的csid获取赛事的让球玩法id
- * @param {Number} csid 体育类型id
- */
-export const get_handicap_w_id = (csid) => {
-  return csid_map_concede_points_id[+csid]
-    ? csid_map_concede_points_id[+csid]
-    : 4;
-};
-
-/**
  * @description: 参考iphone6,7,8窗口宽度(375)模拟rem
  * @param {Number} value 需要转换的值
  * @return {Number}
@@ -245,14 +184,6 @@ export const rem_height = (value) => {
   return Math.ceil(value * font_size);
 };
 /**
- * @description: 拼接图片地址
- * @param {String} str 需要拼接的图片尾部
- * @return {String}
- */
-export const compute_image_src = (str) => {
-  return str ? get_file_path(str) : "";
-};
-/**
  * @description: 判断是否为低端机
  * @param {Undefined} Undefined
  * @return {Boolean}
@@ -262,25 +193,6 @@ export const is_low = () => {
   let sub = Math.abs(timing.domComplete - timing.connectStart);
   return sub > 2600;
 };
-/**
- * 获取当前服务器时间
- * @param {Undefined} Undefined
- * @return {Boolean}
- */
-export const get_now_server = () => {
-  if (!window.vue.get_local_server_time) {
-    let now = new Date();
-    window.vue.get_local_server_time = {
-      server_time: now.getTime(),
-      local_time_init: now.getTime(),
-    };
-  }
-  let remote_time = window.vue.get_local_server_time.server_time * 1;
-  let local_time = window.vue.get_local_server_time.local_time_init * 1;
-  let now = new Date().getTime();
-  return remote_time + (now - local_time);
-};
-
 /**
  * @description: 解绑防抖
  * @param {String} fun 函数
