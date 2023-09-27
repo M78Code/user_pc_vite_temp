@@ -518,10 +518,7 @@ const props = defineProps({
         text: () => orderno
       })
       clipboard.on('success', () => {
-        set_toast({
-          txt: t("bet_record.copy_suc"),
-        });
-
+        useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, t("bet_record.copy_suc"))
         // h5嵌入时Safari阻止弹窗
         if (!Platform.is.safari) {
           try {
