@@ -218,9 +218,9 @@ export default defineComponent({
       return store_state.detailsReducer.details_data || {}
     });
     onUnmounted(() => {
-      for (const key in $data) {
-        $data[key] = null
-      }
+      // for (const key in $data) {
+      //   $data[key] = null
+      // }
     });
     const go_to_bet = (ol_item) => {
       $emit("bet_click_", { ol_item });

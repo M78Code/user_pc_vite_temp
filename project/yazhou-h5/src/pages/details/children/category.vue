@@ -8,8 +8,8 @@
     ></loading>
     <!--无盘口数据时,赛事推荐-->
     <div class="match-recommend-wrapper" v-if="show_recommend">
-      <!-- 无数据背景图 -->
-      <img :src="get_is_hengping ? (`${ $g_image_preffix }/image/wwwassets/bw3/svg/full_screen_match_odds_closed.svg`) : `${ $g_image_preffix }/image/wwwassets/bw3/svg/match_odds_closed.svg`" />
+      <!-- 无数据背景图  :src="get_is_hengping ? (`${ $g_image_preffix }/image/wwwassets/bw3/svg/full_screen_match_odds_closed.svg`) : `${ $g_image_preffix }/image/wwwassets/bw3/svg/match_odds_closed.svg`"-->
+      <img src="/yazhou-h5/image/svg/match_odds_closed.svg" />
       <!-- 背景下面文字说明 -->
       <div class="empty-m-list-w">
         <!-- 当前赛事盘口已全部关闭-->
@@ -42,14 +42,14 @@
         <!-- 置顶操作时增加动画 -->
         <transition-group name="transition-play-list" tag="div" class="transition-zhiding">
           <!-- 置顶 -->
-
           <template v-for="(item,keyscorll) in match_list_new">
             <template v-if="item.hton!=0">
               <tournament-play-new @change_show="change_show" :key="item.topKey + item.hpid" :list="matchInfoCtr.list" :item_data="item" :scorllIndex="keyscorll"></tournament-play-new>
             </template>
           </template>
           <!-- 非置顶 -->
-          <template v-for="(item,keyscorll) in match_list_normal">
+          <template v-for="(item, keyscorll) in match_list_normal">
+            {{match_list_new.length}}
             <template v-if="item.hton==0">
               <template v-if="match_list_new.length == 0">
                 <tournament-play-new @change_show="change_show" :key="item.topKey + item.hpid" :list="matchInfoCtr.list" :item_data="item" :scorllIndex="keyscorll"></tournament-play-new>
@@ -150,9 +150,8 @@ export default defineComponent({
       set_detail_data_storage,
       remove_session_storage,
       remove_detail_storage,
-      on_listeners,
     } = category_info();
-    
+    console.error(match_list_new);
     watch(
       () => route.params,
       (to, from) => {
@@ -217,7 +216,6 @@ export default defineComponent({
 
       // console.log("match_list_new", match_list_normal.value)
       // 原created
-      on_listeners();
 
       // 满足刷新页面保持向上展开的状态
       // set_fewer(1);
@@ -271,6 +269,7 @@ export default defineComponent({
         // component_data.matchInfoCtr.destroy()
       }
     })
+    console.error("match_list_normal", match_list_normal);
     return {
       ...toRefs(component_data),
       i18n_t,
@@ -306,7 +305,6 @@ export default defineComponent({
       set_detail_data_storage,
       remove_session_storage,
       remove_detail_storage,
-      on_listeners,
     }
   }
 })

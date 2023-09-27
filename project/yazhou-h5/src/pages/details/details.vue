@@ -241,8 +241,8 @@ export default defineComponent({
       off_listeners,
       clear_timer,
       new_match_detail_ctr,
+      MatchDataWarehouseInstance,
     } = details_main();
-    console.error(state_data);
     watch(
       () => state_data.data_list,
       (data) => {
@@ -537,6 +537,7 @@ export default defineComponent({
     //   'set_event_list',
     // ]),
     provide('get_detail_data', get_detail_data)
+    console.error(MatchDataWarehouseInstance);
     return {
       ...toRefs(state_data),
       i18n_t,
@@ -585,6 +586,7 @@ export default defineComponent({
       off_listeners,
       clear_timer,
       new_match_detail_ctr,
+      MatchDataWarehouseInstance,
     }
   }
 })

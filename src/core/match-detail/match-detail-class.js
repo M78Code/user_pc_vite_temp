@@ -9,7 +9,7 @@ import { ref ,reactive} from "vue"
 class MatchDetailCtr {
  
   constructor( ) {
- 
+
     // 初始化数据
     this.init();
   }

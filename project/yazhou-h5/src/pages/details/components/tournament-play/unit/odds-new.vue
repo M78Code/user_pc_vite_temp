@@ -27,9 +27,8 @@
 // import odd_convert from "project_path/src/mixins/odds_conversion/odds_conversion.js";
 import lodash from "lodash";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
-import { t } from "src/boot/i18n.js";;
-//国际化
-
+import { i18n_t } from "src/boot/i18n.js";
+import { compute_value_by_cur_odd_type } from "src/core/format/module/format-odds-conversion-mixin.js"
 
 export default defineComponent({
   // #TODO mixins
@@ -52,6 +51,15 @@ export default defineComponent({
     const get_bet_list = computed(() => {
       return "";
     });
+     //输、赢、无效···
+    const calc_text = computed(() => {
+      let n = Number(props.ol_data.result)
+      if ([0, 1, 2, 3, 4, 5, 6].includes(n)){
+        return i18n_t(`virtual_sports.result[${n}]`)
+      } else {
+        return i18n_t(`virtual_sports.result[0]`)
+      }
+    })
     watch(
       () => props.ol_data,
       (n) => {
@@ -90,22 +98,22 @@ export default defineComponent({
     const odds_value = () => {
       if(props.ol_data.result || props.ol_data.result == 0){
         let result_ = props.ol_data.result
-        // #TODO $root
         return t(`virtual_sports.result.${result_}`)
       }else{
+        console.error(props.ol_data.ov / 100000);
         let r = '';
-        // let r1 = compute_value_by_cur_odd_type(
-        //   props.ol_data.ov / 100000,
-        //   null,
-        //   props.item_data.hsw,
-        //   false,
-        //   props.ol_data.csid
-        // )
-        // if(r1){
-        //   r = r1;
-        // }else{
-        //   r = 0;
-        // }
+        let r1 = compute_value_by_cur_odd_type(
+          props.ol_data.ov,
+          null,
+          props.item_data.hsw,
+          false,
+          props.ol_data.csid
+        )
+        if(r1){
+          r = r1;
+        }else{
+          r = 0;
+        }
         return r;
       }
     };
@@ -117,6 +125,7 @@ export default defineComponent({
       get_cur_odd,
       get_bet_list,
       odds_value,
+      calc_text,
       lodash
     }
   }

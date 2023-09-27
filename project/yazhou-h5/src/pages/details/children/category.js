@@ -7,9 +7,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";
 // import websocket_data from "project_path/src/mixins/websocket/data/skt_data_info.js";
 // 引入投注逻辑mixin
 // import betting from "project_path/src/mixins/betting/betting.js";MatchDataWarehouseInstance.set_quick_query_list_from_match_details(match_details_odds_info)
-import {MatchDataWarehouse_H5_Detail_Common,format_plays, format_sort_data} from "src/core/index"; 
-// 引入处理数据的封装方法
-import { MatchDetailCtr } from "src/core/index.js";
+import {MatchDataWarehouse_H5_Detail_Common,format_plays, MatchDetailCtr} from "src/core/index"; 
 // 引入redux
 import store from "src/store-redux/index.js";
 // import { Level_one_detail_odd_info } from "../category-list.js";
@@ -17,7 +15,7 @@ import uid from "src/core/uuid/index.js";
 import lodash from "lodash";
 import { useRouter, useRoute } from "vue-router";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt";
-import { useMittEmitterGenerator } from "../../../../../../src/core";
+import { useMittEmitterGenerator } from "src/core/index.js";
 
 
 export const category_info = () => {
@@ -325,9 +323,9 @@ export const category_info = () => {
       : get_menu_type.value == 3000
       ? api_common.get_DJ_matchDetail_getMatchOddsInfo
       : api_common.get_matchDetail_getMatchOddsInfo;
-    component_data.send_gcuuid = uid()
+    component_data.send_gcuuid = UserCtr.uid
     params.cuid = component_data.send_gcuuid;
-    console.error(params,"paramsparamsparams",MatchDetailCtr.category_obj);
+    // console.error(params,"paramsparamsparams",MatchDetailCtr.category_obj);
     let temp = [];
     // 记录是否走的是缓存
     let is_cache = false;
@@ -371,6 +369,7 @@ export const category_info = () => {
         console.error(res);
         // 数据存入数据仓库
         MatchDataWarehouseInstance.set_quick_query_list_from_match_details(res.data)
+        console.error(MatchDataWarehouseInstance);
         // if (component_data.send_gcuuid != res.gcuuid) {
         //   return;
         // }
@@ -392,6 +391,7 @@ export const category_info = () => {
           }
         });
         // component_data.matchInfoCtr.setList(data);
+        console.error(data);
         component_data.match_info_list = data;
         // console.log(chpid_obj,"chpid_obj");
         // set_chpid_obj(chpid_obj)
@@ -445,11 +445,11 @@ export const category_info = () => {
       details_data_cache[`${match_id}-${get_details_item.value}`] = temp;
       // set_details_data_cache(details_data_cache);
       
-      console.error('成功');
+      // console.error('成功');
     } catch (err) {
       console.error(err);
     } finally {
-      console.error('finally' + component_data);
+      // console.error('finally' + component_data);
       if (component_data.is_cache) {
         setTimeout(() => {
           component_data.is_loading = false;
@@ -593,10 +593,9 @@ export const category_info = () => {
         .then((res) => {
           clearTimeout(timer);
           resolve(res);
-          console.error('----axios_api---',res);
         })
         .catch((e) => {
-          console.error("----请求loop----", e);
+          // console.error("----请求loop----", e);
           clearTimeout(timer);
           if (loop_count++ >= max_loop - 1) {
             fun_catch && fun_catch();
@@ -675,11 +674,10 @@ export const category_info = () => {
       : get_menu_type == 3000
       ? api_common.get_DJ_matchDetail_getMatchOddsInfo
       : api_common.get_matchDetail_getMatchOddsInfo;
-      component_data.send_gcuuid = uid();
+      component_data.send_gcuuid = UserCtr.uid;
     params.cuid = component_data.send_gcuuid;
     http(params)
       .then((res) => {
-        console.error(res);
         if (component_data.send_gcuuid != res.gcuuid) return;
         component_data.is_loading = false;
         if (!res.data || res.data.length == 0) {
@@ -835,18 +833,7 @@ export const category_info = () => {
         sessionStorage.removeItem(cach_key);
       });
   };
-  // 添加相应监听事件
-  const on_listeners = () => {
-    // #TODO emit
-    component_data.emitters = useMittEmitterGenerator([
-      // #TODO
-      // useMittOn(MITT_TYPES.EMIT_CATEGORY_SKT, sendSocketInitCmd),
 
-      useMittOn(MITT_TYPES.EMIT_REF_API, initEvent),
-      useMittOn(MITT_TYPES.EMIT_HIDE_DETAIL_MATCH_LIST, hide_detail_match_list),
-    ]);
-
-  };
   /** 批量注册mitt */
 const { emitters_off } = useMittEmitterGenerator([
   { type: MITT_TYPES.EMIT_REF_API, initEvent },
@@ -889,6 +876,5 @@ const { emitters_off } = useMittEmitterGenerator([
     set_detail_data_storage,
     remove_session_storage,
     remove_detail_storage,
-    on_listeners,
   };
 };
