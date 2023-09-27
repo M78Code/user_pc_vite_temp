@@ -143,7 +143,7 @@
 // import BetData from "src/core/bet/class/bet-data-class.js";
 import BetData_H5 from "src/core/bet/class/bet-data-class-h5.js";
 import { format_money2 } from "src/core/format/index.js"
-import { ref, onMounted,watch,computed,onUnmounted } from 'vue';
+import { ref, onMounted,watch,computed,onUnmounted,nextTick } from 'vue';
 import lodash from 'lodash'
 
 const btn_show = ref(0)  //右下角显示状态，0投注，1确定（知道了），2注单处理中...,3接受变化  4 接受变化并投注 5 有投注项失效后点击接受变化的置灰样式
@@ -269,7 +269,7 @@ watch(() => get_order_ing.value.length, (new_, old_) => {
       }, 0)
 
       // 同步程序走完后再设置总金额
-      $nextTick(() => {
+      nextTick(() => {
         set_money_total('clear_')
         set_money_total(money_remain)
       })

@@ -55,7 +55,7 @@
 </template>
   
 <script setup>
-import { ref, reactive, watch, onBeforeUnmount } from 'vue'
+import { ref, reactive, watch, onBeforeUnmount ,nextTick} from 'vue'
 import loadData from "src/components/load_data/load_data.vue"
 import { i18n_t } from "src/boot/i18n.js"
 import { useRouter } from 'vue-router'

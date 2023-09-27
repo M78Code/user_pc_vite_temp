@@ -93,7 +93,7 @@ onMounted(() => {
   is_mounted.value = true;
   // let { status, height } = this.get_retain_scroll_obj;
   // if (status) {
-  //   this.$nextTick(() => {
+  //   nextTick(() => {
   //     set_scrollTop(height);
   //     this.set_retain_scroll_obj({ status: false, height: 0 });
   //   });

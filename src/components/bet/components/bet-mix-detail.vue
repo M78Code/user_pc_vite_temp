@@ -11,13 +11,13 @@
         }}</p>
         <p style="font-size:0.11rem">{{ $t('bet.total_win2') }} <span
             :class="{ 'red-color': !(max_win_money == '0.00' || money_ok), 'yellow-color': money_ok && money }"
-            class="yb_fontsize12">&thinsp;{{  format_money2() }}</span></p>
+            class="yb_fontsize12">&thinsp;{{ format_money2() }}</span></p>
       </div>
       <!-- 右 -->
       <div class="content-b"
         :class="{ 'red-color': !money_ok, 'content-b2': !(BetData.active_index == index_ && [1, 7].includes(+get_bet_status)) }"
         @click="change_kbdshow">
-        <span v-if="money" class="yb_fontsize20 money-number">{{  format_money3(money) }}</span>
+        <span v-if="money" class="yb_fontsize20 money-number">{{ format_money3(money) }}</span>
         <span class="money-span" ref="money_span"
           :class="{ 'money-span2': !(BetData.active_index == index_ && [1, 7].includes(+get_bet_status)) }"></span>
         <span v-if="!money && max_money_back" class="yb_fontsize14 limit-txt">{{ BetData.bet_money_format() }}</span>
@@ -31,13 +31,14 @@
 // import betting from 'src/project/mixins/betting/betting.js';
 // const licia_format = require('licia/format');
 // import global_filters from 'src/boot/global-filters.js';
-import { ref, onMounted,watch,computed,onUnmounted } from 'vue';
+import { ref, onMounted, watch, computed, onUnmounted, nextTick } from 'vue';
+
 import lodash from 'lodash'
 import store from "src/store-redux/index.js";
-import { useMittOn , useMittEmit , MITT_TYPES } from  "src/core/mitt/"
+import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { UserCtr } from "src/core/index.js";
-import { format_money2 , format_money3} from 'src/core/index.js'
+import { format_money2, format_money3 } from 'src/core/index.js'
 
 
 const money = ref('')  //输入框金额
@@ -47,7 +48,7 @@ const max_money = ref(0)   //最高可投金额
 const is_watch = ref(true)    //组件渲染时是否监听money，后期再优化
 const max_money_back = ref(false)   //最高可赢金额的接口是否有返回(不管成功与失败)
 emitters.value = ref({
-    emitter_1: useMittOn(MITT_TYPES.EMIT_CHANGE_MONEY, change_money_).off,
+  emitter_1: useMittOn(MITT_TYPES.EMIT_CHANGE_MONEY, change_money_).off,
 })
 
 
@@ -103,7 +104,7 @@ onMounted(() => {
 
   // 第一个自动弹起键盘
   if (index_ == 0) {
-    $nextTick(() => {
+    nextTick(() => {
       let ele = $refs.bet_mix_detail
       ele && ele.scrollIntoView({ block: "end" })
     })
@@ -134,7 +135,7 @@ onMounted(() => {
   useMittOn(MITT_TYPES.EMIT_CHANGE_MONEY, change_money_)
 
   //将金额和最高可投传递给键盘
-  $nextTick(() => {
+  nextTick(() => {
     if (BetData.active_index == index_) {
       useMittEmit(MITT_TYPES.EMIT_SEND_VALUE, { money: money.value, max_money: max_money.value })
     }
@@ -282,7 +283,7 @@ watch(() => index_obj, (new_) => {
     }
     max_money_back.value = true
     // 同步程序走完后再检查金额
-    $nextTick(() => {
+    nextTick(() => {
       check_moneyok(money.value)
     })
   }
@@ -401,7 +402,7 @@ const change_kbdshow = () => {
   //将金额和最高可投传递给键盘
   if (BetData.active_index == index_) {
     // 同步程序走完后再处理逻辑
-    $nextTick(() => {
+    nextTick(() => {
       useMittEmit(MITT_TYPES.EMIT_SEND_VALUE, { money: money.value, max_money: max_money.value })
     })
   }
@@ -454,6 +455,7 @@ onUnmounted(() => {
     min-height: 0.56rem;
     position: relative;
   }
+
   .content-b {
     width: 1.6rem;
     height: 0.4rem;
@@ -468,19 +470,23 @@ onUnmounted(() => {
     justify-content: flex-start;
     align-items: center;
   }
+
   .set-opacity {
     opacity: 0.2;
     pointer-events: none;
   }
-  .money-number{
+
+  .money-number {
     margin-top: 1px;
   }
+
   .money-span {
     width: 0.02rem;
     height: 0.16rem;
     margin: 0 1px;
   }
-  .money-close{
+
+  .money-close {
     position: absolute;
     top: 50%;
     right: 0.08rem;
@@ -493,7 +499,8 @@ onUnmounted(() => {
     color: #FFFFFF;
     border-radius: 50%;
     font-size: 13px;
-}
+  }
+
   /* ************** 左边元素相关样式 ************** -S */
   .content-t {
     padding-left: 0.12rem;
@@ -501,6 +508,7 @@ onUnmounted(() => {
 
     p:nth-child(1) {
       position: relative;
+
       &::after {
         content: "";
         width: 3px;
@@ -518,6 +526,6 @@ onUnmounted(() => {
       line-height: 0.14rem;
     }
   }
+
   /* ************** 左边元素相关样式 ************** -E */
-}
-</style>
+}</style>

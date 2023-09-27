@@ -419,7 +419,7 @@ const get_videos = () => {
     let index = details.get_match_index(props.match_info.mid, res);
     //当前选择赛事不在可见区域时 滚动到可见区域
     if (index > 4) {
-      this.$nextTick(() => {
+      nextTick(() => {
         let top = (index - 3) * 36;
         this.$refs.match_scroll_area &&
           this.$refs.match_scroll_area.setScrollPosition(top, 0);

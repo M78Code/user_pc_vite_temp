@@ -15,7 +15,7 @@
 // ?gotohash={体育类型}-{赛事id}-{联赛tid}-{球种csid}
 // 例子：?gotohash=sports-2267075-239-1
 
-import { Qs } from "src/core/index.js";
+import { get_query_string } from "src/core/index.js";
 import { LocalStorage } from "src/core/index.js";
 import menu_obj from "src/core/menu-h5/menu-data-class.js";
 import lodash from "lodash";
@@ -82,12 +82,12 @@ class EnterParamsYazhouPc {
   //默认打开赛事详情
   go_match_detail(data) {
     //定位赛事id
-    const mid = Qs.mid;
+    const mid =get_query_string.mid;
   }
   //默认打开赛果详情
   go_match_result(data) {
     //定位赛事id
-    const mid = Qs.mid;
+    const mid =get_query_string.mid;
   }
   //活动页面
   go_activity(activityList, act_copy) {
@@ -124,7 +124,7 @@ class EnterParamsYazhouPc {
   analyze() {
     //设置国际化
     if (Qs.lang) {
-      LocalStorage.set("lang", Qs.lang);
+      LocalStorage.set("lang",get_query_string.lang);
     }
     // gotohash={体育类型}-{赛事id}-{联赛tid}-{球种csid}
     const gotohashList = (Qs.gotohash || "sports-2267075-239-1").split("-");
@@ -132,12 +132,12 @@ class EnterParamsYazhouPc {
     if (["sports"].includes(gotohashList[0])) {
     }
     menu_obj.set_query_menu({
-      mt1: Qs.mt1, //一级菜单 设置menu
-      mt2: Qs.mt1, //二级菜单 设置menu
+      mt1:get_query_string.mt1, //一级菜单 设置menu
+      mt2:get_query_string.mt1, //二级菜单 设置menu
     });
     // 用户token
     if (Qs.token) {
-      LocalStorage.set("token", Qs.token);
+      LocalStorage.set("token",get_query_string.token);
     }
     //是否展示首页页面1 代表去掉H5页面首页模块 不传则代表需要使用H5 页面的首页模块
     if (Qs.sy) {
@@ -148,9 +148,9 @@ class EnterParamsYazhouPc {
     //赛事回放参数
     if (Qs.mid) {
       this.paramsVideo.eventCode = {
-        device: Qs.device || "PC",
-        mid: Qs.mid, //赛事id
-        eventCode: Qs.eventCode || 0,
+        device:get_query_string.device || "PC",
+        mid:get_query_string.mid, //赛事id
+        eventCode:get_query_string.eventCode || 0,
       };
     }
     //标记 开启列表和详情页跳转功能

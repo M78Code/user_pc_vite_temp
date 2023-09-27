@@ -829,7 +829,7 @@ export default {
             let message_scroll_height = this.$refs['chat_scroll_area'].scrollHeight
             this.message_list.unshift(...message_data)
 
-            this.$nextTick(() => {
+            nextTick(() => {
               this.$refs['chat_scroll_area'].scrollTop = this.$refs['chat_scroll_area'].scrollHeight - message_scroll_height
             })
 
@@ -1180,7 +1180,7 @@ export default {
      * @Description: 滚动消息内容至底部
      */
     scroll_to_bottom() {
-      this.$nextTick(() => {
+      nextTick(() => {
         this.can_show_more_msg = false
         this.show_more_msg = false
         

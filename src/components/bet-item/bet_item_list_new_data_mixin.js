@@ -139,7 +139,7 @@ const bet_item = {
      * 取消赔率升降
      */
     clear_odds_lift(){
-      this.$nextTick(()=>{
+      nextTick(()=>{
         this.odds_lift = ''
       })
     },

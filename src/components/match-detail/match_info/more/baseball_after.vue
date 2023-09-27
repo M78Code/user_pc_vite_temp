@@ -420,7 +420,7 @@ export default {
    */
     reload_data() {
       this.isRouterAlive = false;
-      this.$nextTick(function () {
+      nextTick(function () {
         this.isRouterAlive = true;
       });
     },
@@ -484,7 +484,7 @@ export default {
       if (this.is_scroll) {
         clearTimeout(this.scrollTimer);
         this.scrollTimer = setTimeout(() => {
-          this.$nextTick(() => {
+          nextTick(() => {
             this.init_scroll()
           });
         }, 10);
