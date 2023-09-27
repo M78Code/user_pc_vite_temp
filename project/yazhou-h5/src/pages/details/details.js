@@ -422,7 +422,7 @@ const get_detail_data = ref({})
         // mid: '33522226000129832', // matchid,
         mid: matchid.value,
         // 用户id
-        cuid: state_data.get_uid,
+        cuid: UserCtr.uid,
       });
       state_data.init_event_timer_count = 0;
     } else {
@@ -957,6 +957,7 @@ const get_detail_data = ref({})
     on_listeners,
     off_listeners,
     clear_timer,
+    MatchDataWarehouseInstance,
   };
 };
 

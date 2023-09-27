@@ -5,14 +5,10 @@
 -->
 <template>
   <div class="temp13 mx-10">
-    <!-- 主盘-大小玩法且投注项只有一个 -->
-    <!-- <div class="rad-style" v-if="item_data.hl.length <= 6 && item_data.title.length == 2"> -->
     <div class="hairline-border">
       <div class="rad-style">
         <i class="slide_icon slide_icon_l animate-effect" v-show="is_show_slide && !get_is_hengping"></i>
         <i class="slide_icon slide_icon_r animate-effect-r" v-show="is_show_slide_r && !get_is_hengping"></i>
-        <!--<img v-show="is_show_slide && !get_is_hengping" class="slide_icon slide_icon_l animate-effect"  src="/yazhou-h5/image/common/slide_icon.svg" alt="">-->
-        <!--<img v-show="is_show_slide_r && !get_is_hengping" class="slide_icon slide_icon_r animate-effect-r"  src="/yazhou-h5/image/common/slide_icon_r.svg" alt="">-->
 
         <div class="play-name-wrapper" v-show="get_is_hengping">
           <div class="item-name ellipsis">{{lodash.get(item_data, 'title[0].osn')}}</div>
@@ -30,12 +26,11 @@
                 'slide-wrap-width-50': append_single_list.filter(append_single=>lodash.get(item_data, 'title[0].otd') == append_single.otd).length===2 }]"
               :style="{left:`${left}px`}">
               <template v-for="(append_single, index) of append_single_list">
-                <!-- ---{{append_single_list.filter(append_single=>lodash.get(item_data, 'title[0].otd') == append_single.otd).length}}--- -->
                 <div class="col bet-item" :key="index" v-if="lodash.get(item_data, 'title[0].otd') == append_single.otd">
                   <div class="row row-fat">
-                    <!-- (开盘ms=0或者锁盘ms=11) -->
-                    <div v-if="append_single.ms == 0 || append_single.ms == 11" style="flex:1;">
-                      <template v-if="append_single.hs == 0 || append_single.hs == 11">
+                    <!-- (开盘ms=0或者锁盘ms=11 TODO: -->
+                    <div v-if="append_single.ms !== 0 || append_single.ms !== 11" style="flex:1;">
+                      <template v-if="append_single._hs == 0 || append_single._hs == 11">
                         <!-- os=1 开盘 -->
                         <template v-if="append_single.os == 1">
                           <div class="play-box-sty details-color" @click="go_to_bet(append_single)"
@@ -66,7 +61,7 @@
                         <!-- 新增over -->
                       </template>
                       <!-- hs=1 封盘 -->
-                      <template v-if="append_single.hs == 1">
+                      <template v-if="append_single._hs == 1">
                         <template v-if="append_single.os == 3">
                           <div style="height: 0.32rem;"></div>
                         </template>
@@ -83,7 +78,7 @@
                         </template>
                       </template>
                       <!-- hs=2 空白占位 -->
-                      <template v-if="append_single.hs == 2">
+                      <template v-if="append_single._hs == 2">
                         <div class="play-box-sty details-color" style="flex:1;">
                           <div class="single-name">
                             <span class="fz_14 ver-ali-top"></span>
@@ -131,7 +126,7 @@
                   <div class="row row-fat" v-if="lodash.get(item_data, 'title[1].otd') == append_single.otd">
                     <!-- (开盘ms=0或者锁盘ms=11) -->
                     <div v-if="append_single.ms == 0 || append_single.ms == 11" style="flex:1;">
-                      <template v-if="append_single.hs == 0 || append_single.hs == 11">
+                      <template v-if="append_single._hs == 0 || append_single._hs == 11">
                         <!-- os=1 开盘 -->
                         <template v-if="append_single.os == 1">
                           <div class="play-box-sty details-color" @click="go_to_bet(append_single)"
@@ -162,7 +157,7 @@
                         <!-- 新增over -->
                       </template>
                       <!-- hs=1 封盘 -->
-                      <template v-if="append_single.hs == 1">
+                      <template v-if="append_single._hs == 1">
                         <template v-if="append_single.os == 3">
                           <div style="height: 0.32rem;"></div>
                         </template>
@@ -179,7 +174,7 @@
                         </template>
                       </template>
                       <!-- hs=2 空白占位 -->
-                      <template v-if="append_single.hs == 2">
+                      <template v-if="append_single._hs == 2">
                         <div class="play-box-sty details-color" style="flex:1;">
                           <div class="single-name"><span class="fz_14 ver-ali-top"></span><span class="fz_16"></span></div>
                         </div>
@@ -222,6 +217,8 @@ import lodash from "lodash";
 import odds_new from "project_path/src/pages/details/components/tournament-play/unit/odds-new.vue";
 import {utils } from 'src/core/index.js';
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, ref } from "vue";
+import { useRoute } from "vue-router";
+
 export default defineComponent({
   name: "temp13",
   props:{
@@ -234,6 +231,7 @@ export default defineComponent({
   },
   setup(props, evnet) {
     const store_state = store.getState()
+    const route = useRoute()
     let init_data = reactive({
       utils,
       // 滑动left
@@ -285,11 +283,13 @@ export default defineComponent({
     // 附加盘投注项集合
     const append_single_list = computed(() => {
       let result = [];
+      console.error(props.item_data);
       for (let i = 0; i < props.item_data.hl.length; i++) {
         for (let i_ = 0; i_ < props.item_data.hl[i].ol.length; i_++) {
           result.push(props.item_data.hl[i].ol[i_]);
         }
       }
+      
       return result;
     })
     // 空白盒子个数
@@ -333,7 +333,7 @@ export default defineComponent({
       return (append_single_list.length / 2) > 3 && init_data.left != 0
     })
     const is_match_result = computed(() => {
-      return ['result_details', 'match_result'].includes($route.name)
+      return ['result_details', 'match_result'].includes(route.name)
     })
     /**
      * @Description 左右滑动
@@ -400,6 +400,7 @@ export default defineComponent({
       is_match_result,
       touch_pan,
       bet_slide,
+      route,
       go_to_bet
     }
   }

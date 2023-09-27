@@ -184,7 +184,7 @@ const get_base_params = (main_menu_type) => {
 const get_match_list_params_all = () => {
   let params = null;
   // 一级菜单筛选类型 1滚球 2 即将开赛 3今日赛事 4早盘 11串关
-  let main_menu_type = +MenuData.get_current_lv_1_menu_type(); //菜单类型
+  let main_menu_type = +MenuData.get_menu_type(); //菜单类型
   // 第一步 计算最基础参数
   params = get_base_params(main_menu_type);
   //第二步,传入第一步获得的参数 按照首页/详情/列表进行分流处理 其中列表中会第二次进行分流处理
@@ -241,7 +241,7 @@ const get_matchs_api_func = () => {
     api_handle: null,
     api_params: params
   };
-  const menu_type = lodash.get(MenuData.current_menu, 'main') || MenuData.get_current_lv_1_menu_type()
+  const menu_type = MenuData.get_menu_type()
   // 竟足赛事固定uid
   if (menu_type == 30) {
     result.api_params.euid = '409'
@@ -290,7 +290,7 @@ const get_matchs_api_func = () => {
   //滚球今日早盘串关等获取赛事列表
   else {
     // 电竞
-    if (MenuData.get_current_lv_1_menu_type() == 3000) {
+    if (MenuData.get_menu_type() == 3000) {
       // 如果是 收藏
       if (PageSourceData.is_show_favorite_list()) {
         result.api_handle = post_esport_collect;
