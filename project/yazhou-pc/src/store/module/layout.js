@@ -51,6 +51,8 @@ const initialState = {
     // // 主内容高度（菜单、列表、详情、右侧）
     content_height: 900,
   },
+  //收起右侧详情 展开多列玩法
+  is_unfold_multi_column:false
 };
 
 export default function layoutReducer(state = initialState, action) {
@@ -107,7 +109,9 @@ export default function layoutReducer(state = initialState, action) {
     //页面所有布局宽高信息
     case "SET_LAYOUT_LIST_SIZE":
       return { ...state, layout_list_size: action.data };
-
+    //右侧详情 展开多列玩法
+    case "SET_UNFOLD_MULTI_COLUMN":
+      return { ...state, is_unfold_multi_column: action.data };
     default:
       return state;
   }
