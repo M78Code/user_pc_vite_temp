@@ -562,6 +562,7 @@ export default class MatchDataBase
         
         // 删除list_obj之前的无用赛事
       }
+      console.error('this.list_to_obj',this.list_to_obj)
       this.data_version.version = Date.now();
     }
   }

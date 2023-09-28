@@ -321,17 +321,42 @@ const set_bet_obj_config = (params = {}, other = {}) => {
     const mid_obj = lodash_.get(query.list_to_obj, `mid_obj.${_mid}_`, {})
     const ol_obj = lodash_.get(query.list_to_obj, `ol_obj.${_mid}_${oid}`, {})
     // let other = { bet_type:'common_bet'}
-
+debugger
     // 1 ：早盘赛事 ，2： 滚球盘赛事，3：冠军，4：虚拟赛事，5：电竞赛事")
     let matchType = 1
     if ([1, 2].includes(Number(mid_obj.ms))) {
         matchType = 2
     }
-    console.error('ol_obj',ol_obj)
-    console.error('ol_obj.on',ol_obj.on)
-    console.error('ol_obj.onb',ol_obj.onb)
-    console.error('ol_obj.onbl',ol_obj.onbl)
-    console.error('ol_obj.ott',ol_obj.ott)
+    
+    // 列表和详情 取值字段不同
+    // 投注项 显示
+    let handicap = '', handicap_attach = ''
+    if (other.is_detail) {
+
+    }else{
+        // 列表数据
+        let text = ''
+        switch(ol_obj.ot){
+            case '1':
+                // 主
+                text= mid_obj.mhn
+                break
+            case '2':
+                // 客
+                text = mid_obj.man
+                break
+        }
+        // 直接显示投注项 )
+        if(get_handicap(ol_obj)){
+            handicap = text
+        }else{
+            handicap = ol_obj.on
+        }
+        handicap_attach = ol_obj.onbl
+    }
+
+    console.error('sssssss',ol_obj.oid)
+
     const bet_obj = {
         sportId: mid_obj.csid, // 球种id
         matchId: mid_obj.mid,  // 赛事id
@@ -361,9 +386,9 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         tid_name: mid_obj.tn,  // 联赛名称
         match_ms: mid_obj.ms, // 赛事阶段
         match_time: mid_obj.mgt, // 开赛时间
-        handicap: ol_obj.onb, // 盘盘口值
-        handicap_attach: ol_obj.onbl, // 盘盘口值
-        show_handicap: get_handicap(ol_obj), // 直接显示投注项 
+        handicap, // 盘盘口值
+        handicap_attach, // 盘盘口值
+        show_handicap: '',
         show_mark_score: get_mark_score(ol_obj), // 是否显示基准分
     }
     // 设置投注内容 
