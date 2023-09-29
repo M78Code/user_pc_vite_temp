@@ -20,7 +20,7 @@
       <template v-if="is_it_popular">
         <div v-if="main_source == 'home_hot_page_schedule' && lodash.get(get_hot_tab_item, 'index') == 0" class="ball_img">
           <img
-            :src="global_theme.includes('day') ? `${$g_image_preffix}/image/bw3/png/home_page/polular_spirite.png` : `${$g_image_preffix}/image/bw3/png/home_page/polular_spirite_theme02.png`"
+            :src="global_theme.includes('day') ? polular_spirite : polular_spirite_theme02"
             alt="" :style="{ objectPosition: `0 ${calculate_ball_type_picture()}rem` }">
 
           <span>
@@ -477,8 +477,8 @@ import matchListClass from 'src/core/match-list-h5/match-class/match-list.js'
 import { format_time_zone, format_time_zone_time, format_how_many_days, format_week } from "src/core/format/index.js"
 
 import { normal_img_not_favorite_white, normal_img_not_favorite_black, normal_img_is_favorite, y0_img_favorite_black, lvs_icon_theme01, lvs_icon_theme02, animationUrl_icon_theme01,
-  animationUrl_icon_theme02, muUrl_theme01, muUrl_theme01_y0, muUrl_theme02, muUrl_theme02_y0, none_league_icon, none_league_icon_black, match_analysis, match_analysis2, 
-  mearlys_icon } from 'project_path/src/core/utils/local-image.js'
+  animationUrl_icon_theme02, muUrl_theme01, muUrl_theme01_y0, muUrl_theme02, muUrl_theme02_y0, none_league_icon, none_league_icon_black, match_analysis, match_analysis2, polular_spirite_theme02,
+  polular_spirite,  mearlys_icon } from 'project_path/src/core/utils/local-image.js'
 
 // TODO: 其他模块得 store  待添加
 // mixins: [formatmixin, odd_convert, bettings, match_list_mixin, msc_bw3, common],
@@ -543,19 +543,11 @@ const global_theme = UserCtr.theme
 
 const get_hot_tab_item = ref(store_state.get_hot_tab_item)
 const get_footer_sub_changing = ref(store_state.get_footer_sub_changing)
-const get_uid = ref(store_state.get_uid)
 const get_lang = ref(store_state.get_lang)
 const get_local_server_time = ref(store_state.get_local_server_time)
 const get_collapse_map_match = ref(store_state.get_collapse_map_match)
-const get_secondary_unfold_map = ref(store_state.get_secondary_unfold_map)
-const get_collapse_csid_map = ref(store_state.get_collapse_csid_map)
-const get_collapse_all_ball = ref(store_state.get_collapse_all_ball)
 const get_newer_standard_edition = ref(store_state.get_newer_standard_edition)
-const get_sport_all_selected = ref(store_state.get_sport_all_selected)
-const get_last_ball_csid = ref(store_state.get_last_ball_csid)
-const get_sort_type = ref(store_state.get_sort_type)
 const get_show_favorite_list = ref(store_state.get_show_favorite_list)
-const get_list_scroll_top = ref(store_state.get_list_scroll_top)
 const get_img_error_map_mid = ref(store_state.get_img_error_map_mid)
 const get_goto_detail_matchid = ref(store_state.get_goto_detail_matchid)
 const get_goto_detail_match_info = ref(store_state.get_goto_detail_match_info)
@@ -571,9 +563,6 @@ onMounted(() => {
   },1000);
   clear_timer();
   run_new_init_timer();
-  setTimeout(() => {
-    score_value();
-  }, 3050)
  
   media_button_button_type_check()
   emitters.value = {
@@ -628,7 +617,7 @@ const get_sport_show = computed(() => {
         return p.csid !== c.csid;
       }
     } else {
-      if (lodash.get(get_hot_tab_item, 'index') != 0) { return false }
+      if (lodash.get(get_hot_tab_item.value, 'index') != 0) { return false }
       return true;
     }
   } else if ([1, 2, 3, 4, 11, 12, 28, 30, 3000].includes(+props.menu_type)) {
@@ -730,7 +719,7 @@ const time_change = computed(() => {
 
 const collapsed = computed(() => {
   if (['home_hot_page_schedule'].includes(props.main_source)) return false
-  return get_collapse_map_match[props.match_of_list.tid];
+  return get_collapse_map_match.value ? get_collapse_map_match.value[props.match_of_list.tid] : false
 })
 
 const eports_scoring = computed(() => {
@@ -842,7 +831,7 @@ const media_button_button_type_check = (button_type = 'lvs') => {
       }
       state_obj.final_button_type = "lvs"
       // 如果不是中文和繁体，则隐藏
-      if (!['zh', 'tw'].includes(get_lang)) {
+      if (!['zh', 'tw'].includes(get_lang.value)) {
         state_obj.lvs = false
         button_type = "muUrl";
         state_obj.icon_path = ''
@@ -943,7 +932,7 @@ const league_l_clicked = () => {
   // 首页热门，详情页，不需要用到折叠
   if (['detail_match_list', 'home_hot_page_schedule'].includes(props.main_source)) return;
   // get_secondary_unfold_map  次要玩法 折叠状态
-  let map_collapse = lodash.cloneDeep(get_collapse_map_match);
+  let map_collapse = lodash.cloneDeep(get_collapse_map_match.value);
   let { tid, ms } = props.match_of_list;
 
   // 如果是折叠, 则展开赛事
@@ -1078,8 +1067,8 @@ const get_file_path_local = (path, csid) => {
  * @return {Number} is_second 0:不是双打  1:双打
  */
 const home_avatar = (item, is_second) => {
-  if (get_img_error_map_mid[item.mid] && get_img_error_map_mid[item.mid].home) {
-    return get_img_error_map_mid[item.mid].home;
+  if (get_img_error_map_mid.value[item.mid] && get_img_error_map_mid.value[item.mid].home) {
+    return get_img_error_map_mid.value[item.mid].home;
   }
   // 获取双打第二个头像
   if (is_second) {
@@ -1110,8 +1099,8 @@ const home_avatar = (item, is_second) => {
  * @return {Number} is_second 0:不是双打  1:双打
  */
 const away_avatar = (item, is_second) => {
-  if (get_img_error_map_mid[item.mid] && get_img_error_map_mid[item.mid].away) {
-    return get_img_error_map_mid[item.mid].away;
+  if (get_img_error_map_mid.value[item.mid] && get_img_error_map_mid.value[item.mid].away) {
+    return get_img_error_map_mid.value[item.mid].away;
   }
   // 获取双打第二个头像
   if (is_second) {
@@ -1212,8 +1201,8 @@ const show_start_counting_down = (item) => {
     return r;
   }
   let start_time = item.mgt * 1;
-  let init_server = get_local_server_time.server_time * 1;
-  let init_local = get_local_server_time.local_time_init;
+  let init_server = get_local_server_time.value.server_time * 1;
+  let init_local = get_local_server_time.value.local_time_init;
   let now_local = new Date().getTime();
   let sub_local_time = now_local - init_local;
   let now_server_time = init_server + sub_local_time;
@@ -1382,14 +1371,14 @@ const set_scroll_top = (scrollTop) => {
   clearTimeout(scroll_top_timer)
   nextTick (() => {
     scroll_top_timer = setTimeout(() => {
-      let matchId = 'mid-' + get_goto_detail_matchid
+      let matchId = 'mid-' + get_goto_detail_matchid.value
       const mid_dom = $refs[matchId]
       //若存在赛事dom，则执行相应滚动逻辑
       if (mid_dom) {
         // 获取目标赛事dom视口top
         const top = mid_dom.getBoundingClientRect().top
         // 目标赛事视图top阈值
-        let view_top = lodash.get(get_goto_detail_match_info, 'top', 0)
+        let view_top = lodash.get(get_goto_detail_match_info.value, 'top', 0)
         // view_top = MenuData.current_menu === 4 ? 160 : 120
 
         if (view_top) {
@@ -1420,7 +1409,7 @@ const set_scroll_top = (scrollTop) => {
         }
 
       } else {
-        let not_found_target_dom_count = get_not_found_target_dom_count
+        let not_found_target_dom_count = get_not_found_target_dom_count.value
         if (not_found_target_dom_count >= 0) {
           not_found_target_dom_count++
           store.dispatch({ type: 'matchReducer/set_not_found_target_dom_count',  payload: not_found_target_dom_count });
@@ -1519,7 +1508,7 @@ watch(() => props.match_of_list?.mid, (mid_new,mid_old) => {
 watch(() => home_score.value, (new_,old_) => {
   if (is_first_coming.value) return;
   if (props.match_of_list.csid != 1) return;
-  if (get_footer_sub_changing) return;
+  if (get_footer_sub_changing.value) return;
   if (match_changing.value) return;
 
   if (new_ > 0 && new_ != old_ && old_ !== null && (props.menu_type == 1 || props.menu_type == 3)) {
@@ -1532,7 +1521,7 @@ watch(() => home_score.value, (new_,old_) => {
 watch(() => away_score.value, (new_,old_) => {
   if (is_first_coming.value) return;
   if (props.match_of_list.csid != 1) return;
-  if (get_footer_sub_changing) return;
+  if (get_footer_sub_changing.value) return;
   if (match_changing.value) return;
 
   if (new_ > 0 && new_ != old_ && old_ !== null && (props.menu_type == 1 || props.menu_type == 3)) {
@@ -1595,19 +1584,11 @@ const unsubscribe = store.subscribe(() => {
   const new_state = store.getState()
   get_hot_tab_item.value = new_state.get_hot_tab_item
   get_footer_sub_changing.value = new_state.get_footer_sub_changing
-  get_uid.value = new_state.get_uid
   get_lang.value = new_state.get_lang
   get_local_server_time.value = new_state.get_local_server_time
   get_collapse_map_match.value = new_state.get_collapse_map_match
-  get_secondary_unfold_map.value = new_state.get_secondary_unfold_map
-  get_collapse_csid_map.value = new_state.get_collapse_csid_map
-  get_collapse_all_ball.value = new_state.get_collapse_all_ball
   get_newer_standard_edition.value = new_state.get_newer_standard_edition
-  get_sport_all_selected.value = new_state.get_sport_all_selected
-  get_last_ball_csid.value = new_state.get_last_ball_csid
-  get_sort_type.value = new_state.get_sort_type
   get_show_favorite_list.value = new_state.get_show_favorite_list
-  get_list_scroll_top.value = new_state.get_list_scroll_top
   get_img_error_map_mid.value = new_state.get_img_error_map_mid
   get_goto_detail_matchid.value = new_state.get_goto_detail_matchid
   get_goto_detail_match_info.value = new_state.get_goto_detail_match_info

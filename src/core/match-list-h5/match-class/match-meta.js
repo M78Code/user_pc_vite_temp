@@ -24,7 +24,8 @@ class MatchMeta {
    * @description 设置 赛事 元数据
    * @param { mi } 菜单类型 目前只处理了足球
    */
-  set_origin_match_data (mi = '1011') {
+  set_origin_match_data () {
+    const mi = lodash.get(MenuData.current_lv_2_menu, 'mi')
     if (typeof mi !== 'string') return
     // 菜单 ID 对应的 赛事 mids
     const mi_tid_mids_res = lodash.get(BaseData, 'mi_tid_mids_res')
@@ -57,30 +58,63 @@ class MatchMeta {
     const match_list = mids.map(t => {
       return lodash.find(mids_arr, (l) => l.mid === t)
     })
-    this.set_matchs_default_template(match_list)
+    this.set_match_default_template(match_list)
   }
 
   /**
    * @description 设置赛事默认模板 输出最终赛事完整数据 更新仓库
    * @param { list } 赛事集合
    */
-  set_matchs_default_template (list) {
+  set_match_default_template (list) {
     const data_list = list.map(t => {
-      const template_config = this.get_match_default_template_config(t?.csid)
+      const csid = lodash.get(t, 'csid')
+      const template_config = this.get_match_default_template_config(csid)
       if (!template_config) return
-      const hps = template_config['template_1_main']
+      // 主要玩法默认参数
+      const hps = template_config[`template_${csid}_main`]
+      let handicap = ''
+      if (+csid === 2) {
+        handicap = this.get_basketball_default_template(t, template_config)
+      } else {
+        handicap = this.get_match_default_template(t, template_config)
+      }
       return {
         ...t,
         hps,
-        ...template_config['template_1']
+        ...handicap
       }
     })
-    // 设置仓库渲染数据
-    MatchDataBaseH5.set_list(data_list)
-    // 计算卡片高度, 需要在赔率接口之前调用， 避免卡片抖动
-    MatchListCardClass.run_process_when_need_recompute_container_list_step_two_match_list_wrapper_height()
-    // 订阅赛事，获取赛事赔率
-    MatchPage.subscription()
+    this.handle_update_warehouse(data_list)
+  }
+
+  /**
+   * @description 获取 赛事 次要玩法
+   * @param { list } 赛事集合
+   * @param { template } 赛事默认模板
+   */
+  get_match_default_template (t, template) {
+    const csid = lodash.get(t, 'csid')
+    return {
+      ...template[`template_${csid}`]
+    }
+  }
+
+  /**
+   * @description 获取 篮球 赛事 2号 次要玩法
+   * @param { template }  赛事默认模板  
+   *  mmp: "1": "上半场",
+   *       "2": "下半场",
+   *       "13": "第一节",
+   *       "14": "第二节",
+   *       "15": "第三节",
+   *       "16": "第四节",
+   */
+  get_basketball_default_template (t, template) {
+    const mmp = lodash.get(t, 'mmp')
+    const hpsAdd = template[`template_2`][`cur_handicap_list_${mmp}`]
+    return {
+      hpsAdd
+    }
   }
 
   /**
@@ -93,20 +127,25 @@ class MatchMeta {
   }
 
   /**
-   * @description 根据菜单筛选赛事数据
-   * @param { type } type 菜单类型
-   */
-  filter_origin_match_by_menu (type) {
-
-  }
-
-  /**
    * @description 计算菜单 ID
    * @param {*} id 
    * @returns 
    */
   compute_menu_key = (id) => {
     return lodash.get(this.origin_menu[`${id}1`], 'h', '40003')
+  }
+
+  /**
+   * @description 更新仓库
+   * @param { list } 赛事赛事
+   */
+  handle_update_warehouse (list) {
+    // 设置仓库渲染数据
+    MatchDataBaseH5.set_list(list)
+    // 计算卡片高度, 需要在赔率接口之前调用， 避免卡片抖动
+    MatchListCardClass.run_process_when_need_recompute_container_list_step_two_match_list_wrapper_height()
+    // 订阅赛事，获取赛事赔率
+    MatchPage.subscription()
   }
 }
 

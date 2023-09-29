@@ -49,7 +49,7 @@
           .score-row {
             color:var(--q-gb-t-c-3);
             &.win-way {
-              color:var(--q-gb-t-c-13);
+              color:var(--q-match-fs-color-135);
             }
           }
           .go-to-d-detail-w {
@@ -401,7 +401,7 @@
           .score-value {
             &.jiaoqiu-score-value,
             &.orange {
-              color:var(--q-gb-t-c-13);
+              color:var(--q-match-fs-color-135);
             }
           }
           .triangle-wrapper {
@@ -464,7 +464,7 @@
           }
           .score-fle-container-1 {
             .last-color {
-              color:var(--q-gb-t-c-13);
+              color:var(--q-match-fs-color-135);
             }
             .basket-ball {
               &:last-child {
@@ -483,7 +483,7 @@
         .score {
           color: var(--q-gb-t-c-3);
           .jiaoqiu-score-value, .orange {
-            color:var(--q-gb-t-c-13);
+            color:var(--q-match-fs-color-135);
           }
           .f-ht-ot{
             color:var(--q-color-fs-color-126);
@@ -491,7 +491,7 @@
         }
       }
       .score-important {
-        color:var(--q-gb-t-c-13) !important;
+        color:var(--q-match-fs-color-135) !important;
       }
       .score-important2 {
         color: var(--q-color-com-fs-color-14) !important;

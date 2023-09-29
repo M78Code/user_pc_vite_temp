@@ -3,284 +3,183 @@
  */
 import * as TemplateCommon from "../template-common.js"
 
+export const template_2_main = [
+  // 全场独赢
+  {
+    chpid: '37',
+    hl: [{ 
+      ol: [{ ot: '1' }, { ot: '2' }]
+    }]
+  },
+  // 全场让分
+  {
+    chpid: '39',
+    hl: [{
+      ol: [{ ot: '1' }, { ot: '2' }]
+    }]
+  },
+  // 全场大小
+  {
+    chpid: '38',
+    hl: [{
+      ol: [{ ot: 'Over' }, { ot: 'Under' }]
+    }]
+  },
+]
 
-
-  // 7号模板  篮球让球与大小
-  export const template_2 = {
-    main_handicap_list: [
-      {
-        ols: [
-          {  _hpid: 37, ot: '1', class: 'no-handicap' },
-          {  _hpid: 37, ot: '2', class: 'no-handicap' },
-        ],
-      },
-      {
-        ols: [
-          {  _hpid: 39, ot: '1' },
-          {  _hpid: 39, ot: '2' },
-        ],
-      },
-      {
-        ols: [
-          {  _hpid: 38, ot: 'Over' },
-          {  _hpid: 38, ot: 'Under' },
-        ],
-      },
-      {
-        ols: [
-          {  _hpid: 198, ot: 'Over' },
-          {  _hpid: 199, ot: 'Over' },
-        ],
-      },
-      {
-        ols: [
-          {  _hpid: 198, ot: 'Under' },
-          {  _hpid: 199, ot: 'Under' },
-        ],
-      },
-    ],
-    cur_handicap_list: TemplateCommon.set_default_tpl(5,2),
-    // 篮球第一节玩法
-    cur_handicap_list_1: [
-      {
-        ols: [
-          {  _hpid: 48, ot: '1', class: 'no-handicap' },
-          {  _hpid: 48, ot: '2', class: 'no-handicap' },
-        ],
-      },
-      {
-        ols: [
-          {  _hpid: 46, ot: '1' },
-          {  _hpid: 46, ot: '2' },
-        ],
-      },
-      {
-        ols: [
-          {  _hpid: 45, ot: 'Over' },
-          {  _hpid: 45, ot: 'Under' },
-        ],
-      },
-      {
-        ols: [
-          {  _hpid: 145, ot: 'Over' },
-          {  _hpid: 146, ot: 'Over' },
-        ],
-      },
-      {
-        ols: [
-          {  _hpid: 145, ot: 'Under' },
-          {  _hpid: 146, ot: 'Under' },
-        ],
-      },
-    ],
-    // 篮球第一节休息玩法
-    cur_handicap_list_1_rest: [
-      {
-        ols: [
-          {  _hpid: 54, ot: '1', class: 'no-handicap' },
-          {  _hpid: 54, ot: '2', class: 'no-handicap' },
-        ],
-      },
-      {
-        ols: [
-          {  _hpid: 52, ot: '1' },
-          {  _hpid: 52, ot: '2' },
-        ],
-      },
-      {
-        ols: [
-          {  _hpid: 51, ot: 'Over' },
-          {  _hpid: 51, ot: 'Under' },
-        ],
-      },
-      {
-        ols: [
-          {  _hpid: 145, ot: 'Over' },
-          {  _hpid: 146, ot: 'Over' },
-        ],
-      },
-      {
-        ols: [
-          {  _hpid: 145, ot: 'Under' },
-          {  _hpid: 146, ot: 'Under' },
-        ],
-      },
-    ],
-    // 篮球第二节玩法
-    cur_handicap_list_2: [
-      {
-        ols: [
-          {  _hpid: 43, ot: '1', class: 'no-handicap' },
-          {  _hpid: 43, ot: '2', class: 'no-handicap' },
-        ],
-      },
-      {
-        ols: [
-          {  _hpid: 19, ot: '1' },
-          {  _hpid: 19, ot: '2' },
-        ],
-      },
-      {
-        ols: [
-          {  _hpid: 18, ot: 'Over' },
-          {  _hpid: 18, ot: 'Under' },
-        ],
-      },
-      {
-        ols: [
-          {  _hpid: 87, ot: 'Over' },
-          {  _hpid: 97, ot: 'Over' },
-        ],
-      },
-      {
-        ols: [
-          {  _hpid: 87, ot: 'Under' },
-          {  _hpid: 97, ot: 'Under' },
-        ],
-      },
-    ],
-    // 篮球第三节玩法
-    cur_handicap_list_3: [
-      {
-        ols: [
-          {  _hpid: 60, ot: '1', class: 'no-handicap' },
-          {  _hpid: 60, ot: '2', class: 'no-handicap' },
-        ],
-      },
-      {
-        ols: [
-          {  _hpid: 58, ot: '1' },
-          {  _hpid: 58, ot: '2' },
-        ],
-      },
-      {
-        ols: [
-          {  _hpid: 57, ot: 'Over' },
-          {  _hpid: 57, ot: 'Under' },
-        ],
-      },
-      {
-        ols: [
-          {  _hpid: 145, ot: 'Over' },
-          {  _hpid: 146, ot: 'Over' },
-        ],
-      },
-      {
-        ols: [
-          {  _hpid: 145, ot: 'Under' },
-          {  _hpid: 146, ot: 'Under' },
-        ],
-      },
-    ],
-    // 篮球第四节玩法
-    cur_handicap_list_4: [
-      {
-        ols: [
-          {  _hpid: 66, ot: '1', class: 'no-handicap' },
-          {  _hpid: 66, ot: '2', class: 'no-handicap' },
-        ],
-      },
-      {
-        ols: [
-          {  _hpid: 64, ot: '1' },
-          {  _hpid: 64, ot: '2' },
-        ],
-      },
-      {
-        ols: [
-          {  _hpid: 63, ot: 'Over' },
-          {  _hpid: 63, ot: 'Under' },
-        ],
-      },
-      {
-        ols: [
-          {  _hpid: 145, ot: 'Over' },
-          {  _hpid: 146, ot: 'Over' },
-        ],
-      },
-      {
-        ols: [
-          {  _hpid: 145, ot: 'Under' },
-          {  _hpid: 146, ot: 'Under' },
-        ],
-      },
-    ],
-    // 篮球上半场玩法
-    cur_handicap_list_up: [
-      {
-        ols: [
-          {  _hpid: 43, ot: '1', class: 'no-handicap' },
-          {  _hpid: 43, ot: '2', class: 'no-handicap' },
-        ],
-      },
-      {
-        ols: [
-          {  _hpid: 19, ot: '1' },
-          {  _hpid: 19, ot: '2' },
-        ],
-      },
-      {
-        ols: [
-          {  _hpid: 18, ot: 'Over' },
-          {  _hpid: 18, ot: 'Under' },
-        ],
-      },
-      {
-        ols: [
-          {  _hpid: 87, ot: 'Over' },
-          {  _hpid: 97, ot: 'Over' },
-        ],
-      },
-      {
-        ols: [
-          {  _hpid: 87, ot: 'Under' },
-          {  _hpid: 97, ot: 'Under' },
-        ],
-      },
-    ],
-    // 篮球下半场玩法
-    cur_handicap_list_down: [
-      {
-        ols: [
-          {  _hpid: 142, ot: '1', class: 'no-handicap' },
-          {  _hpid: 142, ot: '2', class: 'no-handicap' },
-        ],
-      },
-      {
-        ols: [
-          {  _hpid: 143, ot: '1' },
-          {  _hpid: 143, ot: '2' },
-        ],
-      },
-      {
-        ols: [
-          {  _hpid: 26, ot: 'Over' },
-          {  _hpid: 26, ot: 'Under' },
-        ],
-      },
-      {
-        ols: [
-          {  _hpid: 88, ot: 'Over' },
-          {  _hpid: 98, ot: 'Over' },
-        ],
-      },
-      {
-        ols: [
-          {  _hpid: 88, ot: 'Under' },
-          {  _hpid: 98, ot: 'Under' },
-        ],
-      },
-    ],
-  }
-
+export const template_2 = {
+  cur_handicap_list: TemplateCommon.set_default_tpl(5, 2),
+  // 篮球第一节玩法
+  cur_handicap_list_13: [
+    // 第一节独赢
+    {
+      chpid: '48',
+      hl: [{ 
+        ol: [{ ot: '1' }, { ot: '2' }]
+      }]
+    },
+    // 第一节让分
+    {
+      chpid: '46',
+      hl: [{
+        ol: [{ ot: '1' }, { ot: '2' }]
+      }]
+    },
+    // 第一节大小
+    {
+      chpid: '45',
+      hl: [{
+        ol: [{ ot: 'Over' }, { ot: 'Under' }]
+      }]
+    },
+  ],
+  // 篮球第二节玩法
+  cur_handicap_list_14: [
+    // 第二节独赢
+    {
+      chpid: '43',
+      hl: [{ 
+        ol: [{ ot: '1' }, { ot: '2' }]
+      }]
+    },
+    // 第二节让分
+    {
+      chpid: '19',
+      hl: [{
+        ol: [{ ot: '1' }, { ot: '2' }]
+      }]
+    },
+    // 第二节大小
+    {
+      chpid: '18',
+      hl: [{
+        ol: [{ ot: 'Over' }, { ot: 'Under' }]
+      }]
+    }
+  ],
+  // 篮球第三节玩法
+  cur_handicap_list_15: [
+    // 下半场独赢
+    {
+      chpid: '60',
+      hl: [{ 
+        ol: [{ ot: '1' }, { ot: '2' }]
+      }]
+    },
+    // 下半场让分
+    {
+      chpid: '58',
+      hl: [{
+        ol: [{ ot: '1' }, { ot: '2' }]
+      }]
+    },
+    // 下半场大小
+    {
+      chpid: '57',
+      hl: [{
+        ol: [{ ot: 'Over' }, { ot: 'Under' }]
+      }]
+    },
+  ],
+  // 篮球第四节玩法
+  cur_handicap_list_16: [
+     // 第四节独赢
+     {
+      chpid: '66',
+      hl: [{ 
+        ol: [{ ot: '1' }, { ot: '2' }]
+      }]
+    },
+    // 第四节让分
+    {
+      chpid: '64',
+      hl: [{
+        ol: [{ ot: '1' }, { ot: '2' }]
+      }]
+    },
+    // 第四节大小
+    {
+      chpid: '63',
+      hl: [{
+        ol: [{ ot: 'Over' }, { ot: 'Under' }]
+      }]
+    }
+  ],
+  // 篮球上半场玩法
+  cur_handicap_list_1: [
+    // 上半场独赢
+    {
+      chpid: '43',
+      hl: [{ 
+        ol: [{ ot: '1' }, { ot: '2' }]
+      }]
+    },
+    // 上半场让分
+    {
+      chpid: '19',
+      hl: [{
+        ol: [{ ot: '1' }, { ot: '2' }]
+      }]
+    },
+    // 上半场大小
+    {
+      chpid: '18',
+      hl: [{
+        ol: [{ ot: 'Over' }, { ot: 'Under' }]
+      }]
+    },
+  ],
+  // 篮球下半场玩法
+  cur_handicap_list_2: [
+    // 下半场独赢
+    {
+      chpid: '43',
+      hl: [{ 
+        ol: [{ ot: '1' }, { ot: '2' }]
+      }]
+    },
+    // 下半场让分
+    {
+      chpid: '19',
+      hl: [{
+        ol: [{ ot: '1' }, { ot: '2' }]
+      }]
+    },
+    // 下半场大小
+    {
+      chpid: '18',
+      hl: [{
+        ol: [{ ot: 'Over' }, { ot: 'Under' }]
+      }]
+    },
+  ],
+}
 
 // 赛事模板配置
 export const match_template_config = {
   ...TemplateCommon.match_style_template,
-      // 当前局玩法高度
-      cur_handicap_height:70,
-      // 是否需要动态计算高度
-      is_dynamic_compute_height:true,
- 
+  // 是否需要动态计算高度
+  is_dynamic_compute_height: true,
+
 }
 

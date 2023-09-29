@@ -12,9 +12,7 @@
       <div v-for="(t_item, i) of tab_list.filter(x => x.show_tab)" :key="i" ref="sub_play_scroll_item"
         class="tab-item-h row items-center" :class="{ 'collapsed': t_item.unfold == 1 }"
         @click="overtime_tab_handle(t_item, undefined, 'is-user', i)">
-        <div>
-          {{ t_item.title }}
-        </div>
+        <div> {{ t_item.title }} </div>
         <!--折叠得箭头图标-->
         <img class="league-collapse-dir" :class="{ 'collapsed': t_item.unfold == 1 }"
           :src="(`/yazhou-h5/image/list/league-collapse-icon${UserCtr.theme.includes('night') ? '-black' : ''}${t_item.unfold == 1 ? (UserCtr.theme.includes('y0') ? '-collapse-y0' : '-collapse') : ''}.svg`)" />
@@ -68,8 +66,7 @@
         </div>
         <!--次要玩法 盘口 右边的 区域-->
         <odd-list-wrap :main_source="main_source" :match="match_info" :hps="current_tab_item.hps"
-          :current_tab_item="current_tab_item" :invoke_source="'attached'" :bold_all_list="bold_all_list"
-          :five_minutes_all_list="five_minutes_all_list" />
+          :current_tab_item="current_tab_item" :invoke_source="'attached'" :bold_all_list="bold_all_list" :five_minutes_all_list="five_minutes_all_list" />
       </div>
     </div>
 
@@ -78,7 +75,7 @@
 
 <script setup>
 import { ref, computed, onDeactivated, onMounted, onUnmounted, watch, nextTick } from "vue"
-import { useRouter, useRoute } from 'vue-router'
+import { useRoute } from 'vue-router'
 import { play_title } from 'src/core/utils/module/play-title.js'
 import store from "src/store-redux/index.js";
 import lodash from 'lodash'
@@ -103,7 +100,6 @@ const props = defineProps({
 })
 
 const route = useRoute()
-const router = useRouter()
 const store_state = store.getState()
 const emitters = ref({})
 
@@ -140,10 +136,7 @@ const get_uid = ref(store_state.get_uid)
 const get_standard_odd_status = ref(store_state.get_standard_odd_status)
 const get_c303_data_change = ref(store_state.get_c303_data_change)
 const get_corner_oc_change = ref(store_state.get_corner_oc_change)
-const get_c305_data_change = ref(store_state.get_c305_data_change)
 const get_secondary_unfold_map = ref(store_state.get_secondary_unfold_map)
-const get_is_user_change_status = ref(store_state.get_is_user_change_status)
-const get_match_top_map_dict = ref(store_state.get_match_top_map_dict)
 
 const unsubscribe = store.subscribe(() => {
   update_state()
@@ -154,11 +147,8 @@ const update_state = () => {
   get_uid.value = new_state.get_uid
   get_standard_odd_status.value = new_state.get_standard_odd_status
   get_c303_data_change.value = new_state.get_c303_data_change
-  get_c305_data_change.value = new_state.get_c305_data_change
   get_corner_oc_change.value = new_state.get_corner_oc_change
   get_secondary_unfold_map.value = new_state.get_secondary_unfold_map
-  get_is_user_change_status.value = new_state.get_is_user_change_status
-  get_match_top_map_dict.value = new_state.get_match_top_map_dict
 }
 
 onMounted(() => {
@@ -166,7 +156,7 @@ onMounted(() => {
     return;
   }
   // mmp映射赛事阶段名，国际化语言
-  matchListClass.match_period_map(match_info.value, 'replace');
+  mmp_map_title.value = matchListClass.match_period_map(match_info.value, 'replace');
 
   //自动展开次要玩法
   init_unfold_play_way('mounted');
@@ -362,8 +352,8 @@ watch(() => match_info.value.mmp, () => {
   //足球进行到加时赛及以后阶段不显示加时赛玩法
   not_show_overtime_play()
   //篮球赛事阶段变化处理
-  basketball_mmp_change();
-  matchListClass.match_period_map(match_info.value, 'replace');
+  match_info.value.csid === '2' && basketball_mmp_change();
+  mmp_map_title.value = matchListClass.match_period_map(match_info.value, 'replace');
 })
 // 15分钟 次要玩法模块  左下角的 小标
 watch(() => get_standard_odd_status.value, () => {
@@ -734,22 +724,7 @@ const overtime_tab_handle = (item, unfold, operate_type, sub_i) => {
   //次要玩法展开或者关闭通知列表页重新计算dom高度
   useMittEmit(MITT_TYPES.EMIT_SECONDARY_PLAY_UNFOLD_CHANGE, 'ciyao_bold');
 }
-// 次要玩法   展开   显示本地已有赔率
-// set_local_hps_by_key(item,o_hps_key){
-//   //显示本地已有赔率
-//   if(match && match_info.value[o_hps_key] && match_info.value[o_hps_key].length){
-//     current_tab_item.value.hps = lodash.cloneDeep(match_info.value[o_hps_key]);
-//     if(!match_info.value.csid == 1){
-//       current_tab_item.value.title = mmp_map_title.value;
-//     }
-//     tab_list.value.filter(tab => tab.id == item.id)[0].hps = lodash.cloneDeep(match_info.value[o_hps_key]);
-//     current_hps_key.value = o_hps_key;
-//   }else{
-//     current_tab_item.value.hps = [{
-//       hl:[{}]
-//     }];
-//   }
-// },
+
 //玩法说明图标点击
 // $event 时间对象 mid 赛事id
 const info_icon_click = ($event, mid) => {
@@ -853,11 +828,11 @@ const init_tab_show = (is_change_match, show_tab_by_data) => {
     // 斯诺克
     tab_list.value.filter(t => t.id == 9)[0].show_tab = match.hpsAdd && match.hpsAdd.length > 0;
   }
-  matchListClass.match_period_map(match, 'replace');
+  mmp_map_title.value = matchListClass.match_period_map(match, 'replace');
   if (match.csid != 1) {
     tab_list.value.forEach(tab => {
       if ([6, 7, 8, 9].includes(+tab.id)) {
-        matchListClass.match_period_map(match, 'replace');
+        mmp_map_title.value = matchListClass.match_period_map(match, 'replace');
         tab.title = mmp_map_title.value;
       }
     });
@@ -865,10 +840,6 @@ const init_tab_show = (is_change_match, show_tab_by_data) => {
   //检测到有一个tab是展开的,就显示次要玩法投注项
   if (!show_tab_by_data) {
     any_unfold.value = tab_list.value.filter(t => t.unfold == 1).length;
-  }
-  if (props.mid === '2771735') {
-    console.log(tab_list.value)
-    console.log(2222222222222)
   }
 }
 
@@ -916,7 +887,6 @@ const basketball_mmp_change = (mmp) => {
       }
       store.dispatch({ type: 'matchReducer/set_secondary_unfold_map', payload: unfold_map });
     }
-
     //#region 参数说明
     // 第一节 "48,46,45"
     // 第二节 "54,52,51"
