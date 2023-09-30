@@ -63,7 +63,7 @@ const MatchListCardData = IS_PC ? MatchListCardData_PC : MatchListCardData_H5;
 
 //=================================     数据仓库=================================
 
-import MatchDataBase from "src/core/data-warehouse/match-ctr/match-ctr.js";
+import MatchDataBase from "src/core/data-warehouse/match-ctr/match-ctr2.js";
 
 /**
  * 1. 数据仓库会存在多个实例 ，
