@@ -7,7 +7,7 @@
     :style="
       route.params.video_size == 1
         ? ''
-        : `width:${LayOutMain_pc.layout_right_width}px  !important; height:${LayOutMain_pc.layout_content_height}  !important;`
+        : `width:${LayOutMain_pc.layout_right_width}px  !important; height:${LayOutMain_pc.layout_content_height}px  !important;`
     "
     v-if="LayOutMain_pc.layout_right_width > 0"
   >

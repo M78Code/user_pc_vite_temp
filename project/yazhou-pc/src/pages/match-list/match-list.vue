@@ -121,7 +121,7 @@
   </div>
 </template>
 <script>
-import { onMounted } from "vue";
+import { onMounted, onUnmounted } from "vue";
 import LoadData from 'src/components/load_data/load_data.vue';
 import { LeagueTabFullVersionWapper as LeagueTab } from "src/components/tab/league-tab/index.js"; //联赛菜单
 import { ListFilterFullVersionWapper as listFilter } from "src/components/match-list/list-filter/index.js"; //赛事列表筛选：滚球-球种、早盘-日期
@@ -168,6 +168,9 @@ export default {
     onMounted(() => {
       mounted_fn();
     });
+    onUnmounted(() => {
+      // handle_destroyed()
+    })
     return {
       menu_config,
       MatchListData,

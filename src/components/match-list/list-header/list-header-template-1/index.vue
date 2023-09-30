@@ -593,6 +593,7 @@ const on_change_list_type = (type) => {
 }
 </style>
 <style lang="scss">
+@import url('./list_header.scss');
 /** 联赛排序 -S*/
 .match-sort-wrap {
   margin: 0 !important;

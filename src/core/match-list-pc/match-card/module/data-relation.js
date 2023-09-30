@@ -72,8 +72,7 @@ import MenuData from "src/core/menu-pc/menu-data-class.js";
         }else{
           type = 1
         }
-        console.log('page_sourcepage_source', page_source);
-        MatchListCardData.match_list_mapping_relation_obj_type = type
+        MatchListCardData.match_list_mapping_relation_obj_type = 1
       }
     
 

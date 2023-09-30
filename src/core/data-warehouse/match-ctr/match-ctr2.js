@@ -24,6 +24,10 @@
  * 
  * 清除list赛事mid之外的无用数据
  * MatchDataWarehouseInstance.clear_list_other(list);
+ * 
+ * 获取快速查询对象中的指定mid赛事对象
+ * get_quick_mid_obj(mid)
+ * 
  */
 import MatchDataBaseWS from  "./match-ctr-ws2.js"
 import { reactive } from 'vue'
@@ -525,7 +529,7 @@ init(){
     // 5分钟玩法阶段
     match.hSpecial5min = 1
     // 赛事更新
-    match._upd_time = Date().now()
+    match._upd_time = '1111'
     // tpl_21_hpids = ""
     // all_oid_arr = [] 可以移除,主要用于生成all_oids对象
     // all_oids="" //过期旧投注项ID列表 ,删除无用投注项数据使用
@@ -578,6 +582,7 @@ init(){
    * @param {Boolean} is_merge 是否进行合并数据同步(保证地址不变)
    */
   set_list(list, param={}){
+    console.log('list', list);
     if(list){
       this.type = param.type || 'list';
       // 格式化列表赛事(部分数组转对象)
