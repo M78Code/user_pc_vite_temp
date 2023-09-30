@@ -83,7 +83,7 @@
               <div style="height:inherit" ref="scroll_box">
                 <div>
                   <!-- ms 为0 或者 1时，表示未开赛或进行中 -->
-                  <category v-if="[0,1,110].includes(+detail_data.ms)" ref="category"></category>
+                  <category v-if="[0,1,110].includes(+detail_data.ms)" :category_arr="matchDetailCtr.category_arr" ref="category"></category>
                   <!-- <no-data v-else which='noMatch' height='500'></no-data> -->
                 </div>
               </div>
@@ -157,7 +157,6 @@ import store from "src/store-redux/index.js";
 // import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { details_main } from "./details.js";
 import { ref, defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch, provide } from "vue";
-import MatchDetailCtr from "src/core/match-detail/match-detail-class.js"
 import UserCtr from "src/core/user-config/user-ctr.js";
 
 //国际化
@@ -253,7 +252,7 @@ export default defineComponent({
         // 只有一个玩法集时，及时更新当前玩法集id
         if (lodash.get(data,'length') == 1) {
           // set_details_item(data[0].id)
-          MatchDetailCtr.current_category_id = data[0].id
+          state_data.matchDetailCtr.current_category_id = data[0].id
         }
         // 玩法个数不及3个时，提前退出
         if (lodash.get(state_data.data_list, 'length', 0) < 3) {

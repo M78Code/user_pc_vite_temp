@@ -6,7 +6,8 @@
  */
  
 import { ref ,reactive} from "vue"
-class MatchDetailCtr {
+import { SessionStorage } from "src/core/utils/index.js"
+export default class MatchDetailCtr {
  
   constructor( ) {
 
@@ -27,7 +28,7 @@ class MatchDetailCtr {
     //玩法集 对象
     this.category_obj={}
     //当前玩法集ID 
-    this.current_category_id = '0';
+    this.current_category_id = SessionStorage.get('DETAIL_TAB_ID') ? SessionStorage.get('DETAIL_TAB_ID') : '0';
     //当前显示 玩法 数组 
     this.current_category_plays=[]
     // hpid 玩法ID 
@@ -56,6 +57,8 @@ class MatchDetailCtr {
   category_tab_click(obj={}){
     this.current_category_id= obj.id
     this.current_category_plays =obj.plays
+    // 存储tab的id
+    SessionStorage.set('DETAIL_TAB_ID', obj.id)
   }
     /**
    * 计算 玩法集 数组  参照对象
@@ -154,4 +157,3 @@ class MatchDetailCtr {
     return play;
   }
 }
-export default new MatchDetailCtr()

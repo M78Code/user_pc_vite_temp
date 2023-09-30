@@ -1,4 +1,4 @@
-import { reactive, computed, ref, onMounted, onUnmounted } from "vue";
+import { reactive, computed, ref, onMounted, onUnmounted, watch } from "vue";
 // 引入接口封装文件
 import { api_common, api_analysis } from "src/api/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
@@ -7,7 +7,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";
 // import websocket_data from "project_path/src/mixins/websocket/data/skt_data_info.js";
 // 引入投注逻辑mixin
 // import betting from "project_path/src/mixins/betting/betting.js";MatchDataWarehouseInstance.set_quick_query_list_from_match_details(match_details_odds_info)
-import {MatchDataWarehouse_H5_Detail_Common,format_plays, MatchDetailCtr} from "src/core/index"; 
+import {MatchDataWarehouse_H5_Detail_Common,format_plays, MatchDetailCalss} from "src/core/index"; 
 // 引入redux
 import store from "src/store-redux/index.js";
 // import { Level_one_detail_odd_info } from "../category-list.js";
@@ -16,9 +16,10 @@ import lodash from "lodash";
 import { useRouter, useRoute } from "vue-router";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt";
 import { useMittEmitterGenerator } from "src/core/index.js";
+import { SessionStorage } from "src/core/utils/index.js"
 
 
-export const category_info = () => {
+export const category_info = (category_arr=[]) => {
   const router = useRouter();
   const route = useRoute();
   const store_state = store.getState()
@@ -39,7 +40,7 @@ export const category_info = () => {
     // 单个玩法集下的玩法数量
     playlist_length: undefined,
     // 所有数据集合
-    matchInfoCtr: MatchDetailCtr,
+    matchInfoCtr: MatchDetailCalss,
     // dom_play元素的观察对象
     observer_: undefined,
     // 第一次进来根据数据是否折叠玩法
@@ -51,6 +52,8 @@ export const category_info = () => {
     // 玩法集是否已切换过
     match_play_item_changed: false,
   });
+  // 赛事id
+  const match_id = ref(component_data.matchInfoCtr.mid || route.params.mid);
     // 详情初始化接口数据处理
     const MatchDataWarehouseInstance =reactive(MatchDataWarehouse_H5_Detail_Common)
   // #TODO vuex
@@ -73,9 +76,8 @@ export const category_info = () => {
   const get_detail_data = computed(() => {
     return "";
   });
-  const get_details_item = computed(() => {
-    return 0;
-  });
+  const get_details_item = ref(component_data.matchInfoCtr.current_category_id);
+  
   const get_goto_detail_matchid = computed(() => {
     return "get_goto_detail_matchid";
   });
@@ -84,9 +86,6 @@ export const category_info = () => {
   });
   const get_uid = computed(() => {
     return "get_uid";
-  });
-  const get_details_tabs_list = computed(() => {
-    return store_state.detailsReducer.details_tabs_list || [];
   });
   const get_subscript_game_index = computed(() => {
     return "get_subscript_game_index";
@@ -106,6 +105,10 @@ export const category_info = () => {
   const get_chpid_obj = computed(() => {
     return "gt_chpid_obj";
   });
+  // 监听tab的ID变动时重新赋值
+  watch(() => component_data.matchInfoCtr.current_category_id, () => {
+    get_details_item.value = component_data.matchInfoCtr.current_category_id;
+  })
   //押注状态0-隐藏状态 1-初始弹出状态,2-注单处理中状态,3-投注成功,4-投注失败(bet接口没返回200),5-盘口变化、失效，赔率变化，6-注单确认中（提交成功）,7-有投注项锁盘，8-单关投注失败(bet接口返回200)
   const get_bet_status = computed(() => {
     return 0;
@@ -125,20 +128,14 @@ export const category_info = () => {
   });
   // 置顶列表
   const match_list_new = computed(() => {
-    return MatchDataWarehouseInstance.list;
+    return component_data.match_info_list;
   });
   // 非置顶列表
   const match_list_normal = computed(() => {
     // return component_data.matchInfoCtr.listSortNormal();
     return lodash.get(MatchDataWarehouseInstance, `list_to_obj.mid_obj[${route.params.mid}_].odds_info`);
   });
-  // 赛事id
-  const match_id = computed(() => {
-    return (
-     MatchDetailCtr.mid ||
-      route.params.mid
-    );
-  });
+
   onMounted(() => {
     initEvent()
   })
@@ -200,16 +197,17 @@ export const category_info = () => {
     if (!item) {
       return;
     }
-    if (get_fewer == 2 && playlist_length) {
+    if (get_fewer == 2 && component_data.playlist_length) {
       item.hshow = "No";
     }
-    if (get_fewer == 1 && playlist_length && first_load) {
+    if (get_fewer == 1 && component_data.playlist_length && first_load) {
       item.hshow = "Yes";
     }
     if (item && item.hl && item.hl.length) {
       item.hl.forEach((item2) => {
         if (item2.hid) {
-          component_data.matchInfoCtr.hl_obj[item2.hid] = item2;
+          MatchDataWarehouseInstance.list_to_obj.hl_obj[item2.hid] = item2;
+          
         }
         if (item2 && item2.ol && item2.ol.length) {
           item2.ol.forEach((item3) => {
@@ -250,9 +248,8 @@ export const category_info = () => {
   const get_details_data_cache_fillter = (all_data) => {
     const mcid =
       get_details_item.value || (route.params.csid ? "" : route.params.mcid);
-    const findItme = get_details_tabs_list.value.find((item) => item.id == mcid) || {};
+    const findItme = component_data.matchInfoCtr.category_arr.find((item) => item.id == mcid) || {};
     const { plays = [], round = "" } = findItme;
-
     const res = all_data.filter((item) => {
       // 电竞需要判断第一局和第二局的原因，需要加上chpid判断
       if (get_menu_type == 3000) {
@@ -290,11 +287,10 @@ export const category_info = () => {
     }
     let params = {
       // 赛果，赛果详情默认采用0，即是拉取所有的赛果
-      mcid: MatchDetailCtr.current_category_id,
-      // mid: match_id.value, // 赛事id
+      mcid: component_data.matchInfoCtr.current_category_id,
+      mid: match_id.value, // 赛事id
       // cuid: get_uid.value, // userId或者uuid
       cuid: UserCtr.uid,
-      mid: route.params.mid,
       round: null,
     };
     // 如果是 赛果下边的 电竞，则加 isESport 参数
@@ -308,8 +304,8 @@ export const category_info = () => {
     }
     component_data.is_loading = to_refresh !== "hide_loading";
     const tabs_active_data_cache =
-      MatchDetailCtr.category_obj[
-        `${match_id.value}-${MatchDetailCtr.current_category_id}`
+    component_data.matchInfoCtr.category_obj[
+        `${match_id.value}-${component_data.matchInfoCtr.current_category_id}`
       ];
     if (tabs_active_data_cache) {
       component_data.is_no_data = false;
@@ -327,19 +323,21 @@ export const category_info = () => {
     let temp = [];
     // 记录是否走的是缓存
     let is_cache = false;
-    // 将要设置vuex中的详情玩法数据
-    const details_data_cache = {};
+    // 将要设置Session中的详情玩法数据details_data_cache
+    const details_data_cache = JSON.parse(
+      JSON.stringify(SessionStorage.get("DETAILS_DATA_CACHE") || {})
+    );
     // 切换玩法集的时候先去判断历史的玩法集是否有数据，有数据则拦截返回 get_details_data_cache 中所有投注得信息，没有则继续请求
     if (
       !to_refresh &&
       !["result_details", "match_result"].includes(route.name) &&
-      Object.keys(get_details_data_cache.value).length &&
-      get_details_data_cache.value[`${match_id.value}-0`] &&
-      get_details_data_cache.value[`${match_id.value}-0`].length
+      Object.keys(details_data_cache).length &&
+      details_data_cache[`${match_id.value}-0`] &&
+      details_data_cache[`${match_id.value}-0`].length
     ) {
       // 将 get_details_data_cache 中所有投注得信息的数据给details_data_cache
       details_data_cache[`${match_id.value}-0`] = JSON.parse(
-        JSON.stringify(get_details_data_cache.value[`${match_id.value}-0`])
+        JSON.stringify(details_data_cache[`${match_id.value}-0`])
       );
       temp = get_details_data_cache_fillter(
         details_data_cache[`${match_id.value}-0`]
@@ -349,7 +347,7 @@ export const category_info = () => {
       component_data.is_loading = true;
     }
     // temp.length === 0 在这里更新所有投注得信息
-    if (temp.length === 0) {
+    if (temp.length == 0) {
       try {
         const _obj = {
           // axios api对象
@@ -365,7 +363,7 @@ export const category_info = () => {
         /************** 响应成功则继续往下走，失败则执行fun_catch **************/
         const res = await axios_api_loop(_obj);
         // 数据存入数据仓库
-        MatchDataWarehouseInstance.set_quick_query_list_from_match_details(res.data)
+        MatchDataWarehouseInstance.set_match_details(MatchDataWarehouseInstance.get_quick_mid_obj(params.mid) ,res.data)
         // if (component_data.send_gcuuid != res.gcuuid) {
         //   return;
         // }
@@ -378,7 +376,7 @@ export const category_info = () => {
 
         component_data.is_no_data = false;
         const data = lodash.get(res, "data");
-        details_data_cache[`${match_id}-0`] = data;
+        details_data_cache[`${match_id.value}-0`] = data;
         // chipid进行处理
         const chpid_obj = {};
         data.forEach((item) => {
@@ -392,10 +390,10 @@ export const category_info = () => {
         // set_chpid_obj(chpid_obj)
 
         if (["result_details", "match_result"].includes(route.name)) {
-          temp = details_data_cache[`${match_id}-0`];
+          temp = details_data_cache[`${match_id.value}-0`];
         } else {
           temp = get_details_data_cache_fillter(
-            details_data_cache[`${match_id}-0`]
+            details_data_cache[`${match_id.value}-0`]
           );
         }
       } catch (error) {
@@ -418,7 +416,7 @@ export const category_info = () => {
         if (to_refresh == "details_refresh" && arr_hshow.length > 0) {
           save_expanded_state(temp);
         }
-        playlist_length = temp.length;
+        component_data.playlist_length = temp.length;
         temp.forEach((item) => {
           // 盘口赔率同级别增加赛事类编号csid
           if (lodash.isArray(item.hl)) {
@@ -437,7 +435,11 @@ export const category_info = () => {
 
       temp = save_hshow(temp); // 保存当前相关hshow状态;
       // 当前玩法集下数据缓存和所有的投注项
-      details_data_cache[`${match_id}-${get_details_item.value}`] = temp;
+      
+      details_data_cache[`${match_id.value}-${get_details_item.value}`] = temp;
+      SessionStorage.set("DETAILS_DATA_CACHE", details_data_cache)
+      // 切换tab时变更mid_obj里面的odds_info对象数据
+      MatchDataWarehouseInstance.set_match_details(MatchDataWarehouseInstance.get_quick_mid_obj(params.mid) ,temp)
       // set_details_data_cache(details_data_cache);
       
     } catch (err) {
@@ -456,7 +458,7 @@ export const category_info = () => {
         // useMittEmit(MITT_TYPES.EMIT_MATCHINFO_LOADING, true)
       }
       const tabs_active_data_cache =
-        get_details_data_cache[`${match_id}-${get_details_item.value}`];
+      details_data_cache[`${match_id.value}-${get_details_item.value}`];
 
       // 当前赛事对应玩法集存在缓存数据
       // #TODO
@@ -509,7 +511,7 @@ export const category_info = () => {
 
     //   // 当前玩法集下数据缓存
     //   const details_data_cache = {
-    //     [`${match_id}-${get_details_item}`]: temp
+    //     [`${.value}-${get_details_item}`]: temp
     //   }
     //   set_details_data_cache(details_data_cache)
     // })
@@ -521,15 +523,15 @@ export const category_info = () => {
     //     if(!['result_details', 'match_result'].includes(route.name)){
     //       useMittEmit(MITT_TYPES.EMIT_MATCHINFO_LOADING, true)
     //     }
-    //     const tabs_active_data_cache = get_details_data_cache[`${match_id}-${get_details_item}`]
+    //     const tabs_active_data_cache = get_details_data_cache[`${match_id.value}-${get_details_item}`]
 
     //     // 当前赛事对应玩法集存在缓存数据
     //     if (tabs_active_data_cache) {
-    //       matchInfoCtr.setList(lodash.cloneDeep(tabs_active_data_cache))
+    //       component_data.matchInfoCtr.setList(lodash.cloneDeep(tabs_active_data_cache))
     //     } else {
     //       // 无数据
     //       component_data.is_no_data = true;
-    //       matchInfoCtr.setList([])
+    //       component_data.matchInfoCtr.setList([])
     //     }
     //   })
   };
@@ -638,14 +640,14 @@ export const category_info = () => {
       // 当前选中玩法项的id
       mcid: get_details_item.value,
       // 赛事id
-      mid: match_id,
+      mid: match_id.value,
       // userId或者uuid
       cuid: get_uid,
       round:
         get_menu_type == 3000
-          ? get_details_tabs_list.value &&
-            get_details_tabs_list.value[get_subscript_game_index] &&
-            get_details_tabs_list.value[get_subscript_game_index].round
+          ? component_data.matchInfoCtr.category_arr &&
+          component_data.matchInfoCtr.category_arr[get_subscript_game_index] &&
+          component_data.matchInfoCtr.category_arr[get_subscript_game_index].round
           : null,
     };
     // 如果是 赛果下边的 电竞，则加 isESport 参数
@@ -687,7 +689,7 @@ export const category_info = () => {
           if (component_data.arr_hshow.length > 0) {
             save_expanded_state(temp);
           }
-          playlist_length = temp.length;
+          component_data.playlist_length = temp.length;
           temp.forEach((item) => {
             // 盘口赔率同级别增加赛事类编号csid
             if (lodash.isArray(item.hl)) {
@@ -709,13 +711,18 @@ export const category_info = () => {
         const details_data_cache = {
           [`${match_id.value}-${get_details_item.value}`]: temp,
         };
-        // set_details_data_cache(details_data_cache)
+        SessionStorage.set("DETAILS_DATA_CACHE", details_data_cache)
+        
+        // 切换tab时变更mid_obj里面的odds_info对象数据
+      MatchDataWarehouseInstance.set_match_details(MatchDataWarehouseInstance.get_quick_mid_obj(params.mid) ,temp)
         if (callback) callback();
       })
       .catch((err) => console.error(err))
       .finally(() => {
-        const tabs_active_data_cache =
-          get_details_data_cache.value[
+        const details_data_cache = JSON.parse(
+          JSON.stringify(SessionStorage.get("DETAILS_DATA_CACHE") || {})
+        );
+        const tabs_active_data_cache = details_data_cache[
             `${match_id.value}-${get_details_item.value}`
           ];
 
@@ -754,13 +761,12 @@ export const category_info = () => {
     });
     return temp;
   };
-
   // 获取缓存数据
   const getdetail_cache_session = (params) => {
     // cach_key是存储在SessionStorage里面的单个玩法项
     let cach_key = `${params.mid}-${params.cuid}-${params.mcid}-cache`;
     // 获取在SessionStorage里面的缓存
-    let cach_string = sessionStorage.getItem(cach_key);
+    let cach_string = SessionStorage.get(cach_key);
     // 如果玩法存在
     if (cach_string) {
       // 解析JSON字符串
@@ -770,7 +776,7 @@ export const category_info = () => {
           save_expanded_state(data);
         }
         // data是数组，其中每一项表示单个投注项
-        playlist_length = data.length;
+        component_data.playlist_length = data.length;
         data.forEach((item) => {
           // 盘口赔率同级别增加赛事类编号csid
           if (lodash.isArray(item.hl)) {
@@ -795,9 +801,9 @@ export const category_info = () => {
   const set_detail_data_storage = (params, detail_data) => {
     let cach_key = `${params.mid}-${params.cuid}-${params.mcid}-cache`;
     if (!detail_data) {
-      sessionStorage.removeItem(cach_key);
+      SessionStorage.remove(cach_key);
     } else {
-      sessionStorage.setItem(cach_key, JSON.stringify(detail_data));
+      SessionStorage.set(cach_key, JSON.stringify(detail_data));
     }
   };
 
@@ -805,7 +811,7 @@ export const category_info = () => {
   const remove_session_storage = () => {
     let params = {
       mcid: get_details_item.value, // 玩法集id
-      mid: match_id, // 赛事id
+      mid: match_id.value, // 赛事id
       cuid: get_uid, // userId或者uuid
     };
     let cach_key = `${params.mid}-${params.cuid}-${params.mcid}-cache`;
@@ -816,11 +822,11 @@ export const category_info = () => {
   const remove_detail_storage = () => {
     remove_session_storage();
 
-    let mid = match_id, // 赛事id
+    let mid = match_id.value, // 赛事id
       cuid = get_uid.value; // userId或者uuid
 
-    get_details_tabs_list.value &&
-      get_details_tabs_list.value.forEach((tab) => {
+      component_data.matchInfoCtr.category_arr &&
+      component_data.matchInfoCtr.category_arr.forEach((tab) => {
         let mcid = tab.id;
         let cach_key = `${mid}-${cuid}-${mcid}-cache`;
         sessionStorage.removeItem(cach_key);
@@ -846,7 +852,6 @@ const { emitters_off } = useMittEmitterGenerator([
     get_goto_detail_matchid,
     get_menu_type,
     get_uid,
-    get_details_tabs_list,
     get_subscript_game_index,
     get_fewer,
     get_curr_sub_menu_type,

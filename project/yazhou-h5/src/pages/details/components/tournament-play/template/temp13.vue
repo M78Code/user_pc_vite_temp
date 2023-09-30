@@ -118,8 +118,8 @@
           <div class="row slide-con" ref="bet_slide" style="flex:1;" v-touch-pan.horizontal.prevent.mouse="touch_pan">
             <div class="slide-wrap"
             :class="[
-              {'slide-wrap-width-100': append_single_list.filter(append_single=>lodash.get(item_data, 'title[1].otd') == append_single.otd).length===1,
-                'slide-wrap-width-50': append_single_list.filter(append_single=>lodash.get(item_data, 'title[1].otd') == append_single.otd).length===2 }]"
+              {'slide-wrap-width-100': append_single_list.filter(append_single=>lodash.get(item_data, 'title[1].otd') == append_single.otd).length==1,
+                'slide-wrap-width-50': append_single_list.filter(append_single=>lodash.get(item_data, 'title[1].otd') == append_single.otd).length==2 }]"
             :style="{left:`${left}px`}">
               <template v-for="(append_single,index) of append_single_list">
                 <div class="col bet-item" :key="index" v-if="lodash.get(item_data, 'title[1].otd') == append_single.otd">
@@ -288,7 +288,6 @@ export default defineComponent({
           result.push(props.item_data.hl[i].ol[i_]);
         }
       }
-      
       return result;
     })
     // 空白盒子个数

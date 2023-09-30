@@ -63,7 +63,7 @@ const MatchListCardData = IS_PC ? MatchListCardData_PC : MatchListCardData_H5;
 
 //=================================     数据仓库=================================
 
-import MatchDataBase from "src/core/data-warehouse/match-ctr/match-ctr.js";
+import MatchDataBase from "src/core/data-warehouse/match-ctr/match-ctr2.js";
 
 /**
  * 1. 数据仓库会存在多个实例 ，
@@ -172,7 +172,10 @@ const MatchDataWarehouse_H5_List_Jingxuan = new MatchDataBase({
 const MatchDataWarehouse_H5_Detail_Jingxuan = new MatchDataBase({
   name_code: "MatchDataWarehouse_H5_Detail_Jingxuan",
 });
-
+/***
+ * 详情操作类
+ */
+const MatchDetailCalss = new MatchDetailCtr()
 /**
  * PC  布局
  */
@@ -221,6 +224,7 @@ export {
   SearchData,
   VrSportCtr,
   MatchDetailCtr,
+  MatchDetailCalss,
   UserCtr,
   IS_PC,
   MenuData,

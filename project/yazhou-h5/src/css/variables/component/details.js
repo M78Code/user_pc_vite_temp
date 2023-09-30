@@ -2,6 +2,7 @@ export default {
   "detials-color-1": "linear-gradient(180deg, #ffffff 22.04%, #f7f8ff 100%)",
   "detials-color-2": "#f7f9fe",
   "detials-color-3": "#cfcfcf",
+  "detials-color-4": "#4987fb",
   // 详情页玩法集背景颜色
   "details-tab-bg-color": "#ffffff",
   // 详情页玩法模板背景颜色

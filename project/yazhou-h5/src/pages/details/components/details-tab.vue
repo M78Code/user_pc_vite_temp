@@ -9,12 +9,11 @@
       v-for="(item,index) in data_list" 
       :key="index" 
       @click.self="selete_item(item['id'],index,item)" 
-      :class="MatchDetailCtr.current_category_id == item['id']?'t_color':''"
+      :class="matchDetailCtr.current_category_id == item['id']?'t_color':''"
       >
         {{item.marketName}}
       </div>
     </div>
-
   </div>
 </template>
 <script>
@@ -25,7 +24,8 @@ import { useMittEmitterGenerator, useMittEmit, MITT_TYPES } from  "src/core/mitt
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, ref } from "vue";
 import { useRoute, useRouter } from "vue-router"
 import UserCtr from "src/core/user-config/user-ctr.js";
-import MatchDetailCtr from "src/core/match-detail/match-detail-class.js"
+import { MatchDetailCalss } from "src/core/index.js"
+import { SessionStorage } from "src/core/utils/index.js"
 
 export default defineComponent({
   name: "details_tab",
@@ -49,12 +49,12 @@ export default defineComponent({
     const router = useRouter()
     // 一键收起状态: 1.全展开 2.全收起 3.部分展开 1和3箭头向上
     const get_fewer = ref(1)
+    const matchDetailCtr = ref(MatchDetailCalss)
     const data = reactive({
       emitters: [],
       timer1_: null,
       reset_scroll_dom: null,
     });
-    console.error(MatchDetailCtr.current_category_id);
     // #TODO VUEX
     // computed:{
     // ...mapGetters([
@@ -79,40 +79,35 @@ export default defineComponent({
     // });
     // 一键收起状态: 1.全展开 2.全收起 3.部分展开 1和3箭头向上
     const get_detail_data = ref("");
-    
+    // 列表mid
     const match_id = computed(() => {
       return route.params.mid || get_detail_data.mid
     });
     // #TODO VUEX
     // methods:{
     // ...mapActions(['set_details_item','set_subscript_game_index']),
-    // ...mapMutations(['set_fewer']),
-    const set_fewer = ref('')
     onMounted(() => {
       // 延时器
       data.timer1_ = null;
       initEvent();
     })
     onUnmounted(() => {
-      // set_fewer(1);
       clearTimeout(data.timer1_)
       // set_subscript_game_index(0)
     });
     const change_btn = () => {
       // 设置vuex变量值,没有玩法数据时不能点击
-      if (data_list && data_list.length == 1 && MatchDetailCtr.current_category_id == '0') return;
+      if (data_list && data_list.length == 1 && matchDetailCtr.value.current_category_id == '0') return;
       if(get_fewer.value == 1 || get_fewer.value == 3){
-        // set_fewer(2)
         get_fewer.value = 2
       }else{
-        // set_fewer(1)
         get_fewer.value = 1
       }
     };
     // 单击玩法集--玩法集和tab 点击 
     const selete_item = (uId, index,item) => {
       // 点击的玩法是当前选中的玩法
-      if(MatchDetailCtr.current_category_id == uId) return false;
+      if(matchDetailCtr.value.current_category_id == uId) return false;
       // 移动当前玩法的位置
       utils.tab_move2(index, data.reset_scroll_dom)
       // set_details_item(uId);
@@ -123,10 +118,9 @@ export default defineComponent({
       // 点击玩法对页面吸顶tab做高度处理
       useMittEmit(MITT_TYPES.EMIT_DETAILILS_TAB_CHANGED);
       // 记录当前玩法集ID和玩法集合
-      MatchDetailCtr.category_tab_click(item)
+      matchDetailCtr.value.category_tab_click(item)
       // useMittEmit(MITT_TYPES.EMIT_DETAILILS_TAB_CHANGED)
       if(get_fewer.value == 3){
-        // set_fewer(1)
         get_fewer.value = 1
       }
       // 发送埋点
@@ -142,7 +136,7 @@ export default defineComponent({
      * @param {undefined} undefined
     */
     const get_active_details_play_tab = (callback) => {
-      let item = data_list.filter(item => MatchDetailCtr.current_category_id == item.id)[0]
+      let item = data_list.filter(item => matchDetailCtr.value.current_category_id == item.id)[0]
       callback(item)
     };
     const initEvent = () => {
@@ -170,12 +164,11 @@ export default defineComponent({
       match_id,
       get_tab_fix,
       get_fewer,
-      MatchDetailCtr,
+      matchDetailCtr,
       change_btn,
       selete_item,
       get_active_details_play_tab,
       initEvent,
-      set_fewer,
     }
   }
 })

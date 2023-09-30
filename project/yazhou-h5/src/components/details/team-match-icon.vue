@@ -38,7 +38,7 @@
 // import {mapGetters, mapMutations} from "vuex"
 import { reactive, computed, toRefs, defineComponent } from "vue";
 import lodash from "lodash";
-
+import UserCtr from "src/core/user-config/user-ctr.js";
 import match_icon from "project_path/src/components/details/match-icon/match-icon.vue"  // 赛事icon操作
 
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
@@ -67,11 +67,11 @@ export default defineComponent({
     //   // 投注成功的赛事id
     //   'get_match_id_bet_success',
     //   'get_access_config',
-    //   'get_lang',// 当前语言
+    //   'UserCtr.lang',// 当前语言
     // ]),
     // 展示lvs 图标
     const show_lvs = computed(() => {
-      return get_detail_data.lvs && get_detail_data.lvs != -1 && ['string', 'number'].includes(typeof lodash.get(get_detail_data,'lss')) && ['zh','tw'].includes(get_lang)
+      return get_detail_data.lvs && get_detail_data.lvs != -1 && ['string', 'number'].includes(typeof lodash.get(get_detail_data,'lss')) && ['zh','tw'].includes(UserCtr.lang)
     });
     // 监听是否投注成功，或者列表页是否点击收藏，同步更新 收藏按钮
     // watch(
