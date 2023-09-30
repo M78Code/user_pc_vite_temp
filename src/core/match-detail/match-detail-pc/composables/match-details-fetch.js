@@ -505,10 +505,32 @@ const is_esports = computed(() => {
   }
   return is_esports_val;
 });
+
+  /**
+   * @description: 详情比分面板接口报错处理
+   * @param {*}
+   * @return {*}
+   */
+  const countMatchDetail = () => {
+    // 计算错误次数
+  let get_match_details_timer =null
+  countMatchDetailErr.value += 1;
+    // 如果接口一直报错，最多拉取5次
+    if (countMatchDetailErr.value < 5) {
+      // 延迟3秒 再次调详情接口
+    get_match_details_timer = setTimeout(() => {
+      get_matchInfo_fun();
+      }, 3000);
+    } else {
+   
+    handicap_state.value = "all_empty";
+    }
+  };
 onUnmounted(() => {
   clearTimeout(get_match_details_timer2);
   clearTimeout(axios_debounce_timer);
   clearTimeout(axios_debounce_timer2);
+  clearTimeout(get_match_details_timer);
 });
 const use_featch_fn = () => {
   return {
