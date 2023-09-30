@@ -5,10 +5,9 @@
  * */ 
 import MatchListCardData from "./match-list-card-data-class.js";
 import PageSourceData  from  "src/core/page-source/page-source.js"
-import store from "src/store-redux/index.js"
+import { LayOutMain_pc } from "src/core/index.js";
 import MatchListScrollClass from 'src/core/match-list-pc/match-scroll.js'
 
-let state = store.getState();
 const MenuData ={
   is_show_hot :false
 }
@@ -21,7 +20,7 @@ const show_level_refer = MatchListCardData.show_level_refer;
  * @Description 获取显示等级
  */
 const get_show_level = (card_obj) => {
-  let show_level;
+  let show_level = 1;
   if (
     (card_obj.offset_top > show_level_refer.level1_offset_top &&
       card_obj.offset_top < show_level_refer.level1_offset_bottom) ||
@@ -56,9 +55,9 @@ const get_show_level = (card_obj) => {
  * 四级   列表可视区域 加前2000px 和后2000px
  * 五级   列表可视区域 加前3000px 和后3000px
  */
-export const set_card_show_level = (scroll_top) => {
+export const set_card_show_level = (scroll_top = 0) => {
   // 列表高度
-  let list_content_height = state.layoutReducer.layout_size;
+  let list_content_height = LayOutMain_pc.layout_content_height;
   // 一级区域offset_top
   show_level_refer.level1_offset_top = scroll_top;
   // 一级区域offset_bottom
@@ -95,9 +94,7 @@ export const set_card_show_level = (scroll_top) => {
       mids_arr.forEach((mid) => {
         let match_card_obj = MatchListCardData.all_card_obj[mid+'_'] || {};
         match_card_obj.show_level = get_show_level(match_card_obj);
-        // match_card_obj.show_level = 1;
-
-        if ((match_card_obj.show_level == 1 && card_obj.is_show_card) || true) {
+        if (match_card_obj.show_level == 1 && card_obj.is_show_card) {
           show_mids_arr.push(mid);
         }
       });

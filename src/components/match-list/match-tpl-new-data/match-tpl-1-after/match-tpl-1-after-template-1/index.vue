@@ -101,7 +101,7 @@
 
 <script setup>
 
-import { ref, computed, watch, onMounted } from 'vue';
+import { ref, computed, watch, onMounted, nextTick } from 'vue';
 import lodash from 'lodash'
 
 import { t, get_match_status, MatchDataWarehouse_PC_List_Common as MatchListData } from "src/core/index.js";
@@ -132,9 +132,16 @@ const play_name_list = ref([]);
 let match_style_obj = MatchListCardDataClass.all_card_obj[props.mid+'_']
 const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`].width_config
 const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`]
-const match = MatchListData.list_to_obj.mid_obj[props.mid+'_'];
+const match = MatchListData.get_quick_mid_obj(props.mid);
 const is_mounted = ref(true);
 
+// nextTick(() => {
+//   match = MatchListData.get_quick_mid_obj(props.mid)
+// })
+
+// const match = computed(() => {
+//   return MatchListData.get_quick_mid_obj(props.mid)
+// })
 // 其他玩法标题
 const bet_col = computed(() => {
   let bet_col = []

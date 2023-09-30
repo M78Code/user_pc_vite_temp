@@ -10,10 +10,10 @@
     <div style="display: none;"> {{ LayOutMain_pc.layout_version }}</div>
     <div class="flex">
       <!-- 左侧 菜单 -->
-      <div :style="{ height: LayOutMain_pc.layout_content_height , width:LayOutMain_pc.layout_left_width }" class="layout_main_left">
+      <div :style="{ height: LayOutMain_pc.layout_content_height + 'px' , width:LayOutMain_pc.layout_left_width }" class="layout_main_left">
         <layout-left />
       </div>
-      <div :style="{ height: LayOutMain_pc.layout_content_height , width:LayOutMain_pc.layout_content_width + 'px' }" class="layout_main_center">
+      <div :style="{ height: LayOutMain_pc.layout_content_height + 'px' , width:LayOutMain_pc.layout_content_width + 'px' }" class="layout_main_center">
         <!-- 中间区域 -->
         <router-view
             class="col"
@@ -28,7 +28,7 @@
         </router-view>
       </div>
       <!-- 右侧 视频  动画 比分板 详情 -->
-      <div :style="{ height: LayOutMain_pc.layout_content_height , width:LayOutMain_pc.layout_right_width +'px' }" class="layout_main_right">
+      <div :style="{ height: LayOutMain_pc.layout_content_height + 'px' , width:LayOutMain_pc.layout_right_width +'px' }" class="layout_main_right">
         <layout-right />
       </div>
     </div>

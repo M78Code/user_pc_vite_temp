@@ -83,7 +83,7 @@ const cur_title_info = computed(() => {
   &.text-left {
     &.yb-flex-between {
       border-radius: 0 0 6px 6px;
-      border: 1px solid var(--qq--yb-border-color12);
+      border: 1px solid var(--q-gb-bd-c-6);
       border-top: 0;
     }
   }

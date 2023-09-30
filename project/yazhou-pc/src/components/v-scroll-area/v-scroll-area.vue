@@ -127,7 +127,7 @@ const on_footer_change = ({ height }) => {
 const set_footer_position = () => {
   // 监听滚动变化触发逻辑
   if (props.observer_middle) {
-    let left_height = LayOutMain_pc.layout_content_height;
+    let left_height = LayOutMain_pc.layout_content_height + 'px';
     //mac上面
     let dis = 5;
     if (/macintosh|mac os x/i.test(navigator.userAgent)) {

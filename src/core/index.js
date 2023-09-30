@@ -63,7 +63,7 @@ const MatchListCardData = IS_PC ? MatchListCardData_PC : MatchListCardData_H5;
 
 //=================================     数据仓库=================================
 
-import MatchDataBase from "src/core/data-warehouse/match-ctr/match-ctr.js";
+import MatchDataBase from "src/core/data-warehouse/match-ctr/match-ctr2.js";
 
 /**
  * 1. 数据仓库会存在多个实例 ，
@@ -109,7 +109,6 @@ import MatchDataBase from "src/core/data-warehouse/match-ctr/match-ctr.js";
 
 const MatchDataWarehouse_PC_List_Common = new MatchDataBase({
   name_code: "MatchDataWarehouse_PC_List_Common",
-  set_list_to_obj: 1,
 });
 
 /**
