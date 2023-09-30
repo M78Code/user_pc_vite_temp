@@ -1,7 +1,7 @@
 /*
  *封装赛事详情api接口数据，给赛事详情仓库设置数据
  */
-import { ref, computed, onUnmounted,getCurrentInstance } from "vue";
+import { ref, computed, onUnmounted, getCurrentInstance } from "vue";
 // import { useRoute } from "vue-router";
 import lodash from "lodash";
 //  // api详情
@@ -20,7 +20,7 @@ import MenuData from "src/core/menu-pc/menu-data-class.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 
 import * as api_websocket from "src/api/module/socket/socket_api.js";
-import route  from "project_path/src/router/index.js"
+import route from "project_path/src/router/index.js";
 import store from "src/store-redux/index.js";
 // const route = useRoute();
 let state = store.getState();
@@ -28,7 +28,7 @@ const background_img = ref(null); //详情背景图片
 const countMatchDetailErr = ref(0); //错误接口次数统计
 const handicap_state = ref("loading"); //玩法加载状态状态
 const load_data_state = ref("loading"); //整块加载状态
-const is_go_match_list = ref(true) // 判断是不是从详情页返回列表
+const is_go_match_list = ref(true); // 判断是不是从详情页返回列表
 //暂时不知道数据是从哪里定义的  todo
 const details_params = ref({
   //赛事参数
@@ -90,6 +90,7 @@ let axios_debounce_timer2 = null;
  * @param {boolean} is_esports 是否为电子赛事
  */
 const get_matchInfo_fun = (loop_count, mid) => {
+  ;
   let params = {
     mid: mid || 0, //赛事id
   };
@@ -154,12 +155,12 @@ const get_matchInfo_fun = (loop_count, mid) => {
           data.msc = detailUtils.build_msc(data);
           MatchDetailsData.set_list_from_match_details(data);
           let str = mid + "_";
-          let mid = lodash.get(data, "mid");
+          let midval = lodash.get(data, "mid");
           let mst = lodash.get(data, "mst");
           let mstst = lodash.get(data, "mstst");
           let mststs = lodash.get(data, "mststs");
           //获取赔率
-          get_match_detail_base({ isWs: false, mid, is_bymids: false });
+          get_match_detail_base({ isWs: false, midval, is_bymids: false });
           //同步赛事时间
           update_match_time({ mid, mst, mstst, mststs });
           let { media_type, play_id } = details_params.value;
@@ -182,7 +183,7 @@ const get_matchInfo_fun = (loop_count, mid) => {
             ),
           });
         } else {
-          countMatchDetail();
+          // countMatchDetail();
         }
         sessionStorage.setItem("currentIndex", 0);
       })
@@ -193,7 +194,7 @@ const get_matchInfo_fun = (loop_count, mid) => {
         //   site: "match_details--get_matchInfo_fun",
         //   error: err,
         // });
-        countMatchDetail();
+        // countMatchDetail();
       })
       .finally(() => {
         // 循环调用 赛事详情页比分板接口，固定间隔3s
@@ -215,12 +216,11 @@ const get_matchInfo_fun = (loop_count, mid) => {
       send_request();
     } else {
       // 记录timer
-    
+
       clearTimeout(axios_debounce_timer);
       axios_debounce_timer = setTimeout(() => {
         //直接发请求    单次数 请求的方法
         send_request();
-      
       }, info.delay_time || 1000);
     }
   } else {
@@ -236,6 +236,7 @@ const get_matchInfo_fun = (loop_count, mid) => {
 const get_match_detail_base = (
   obj = { isWs: false, mid: "", is_bymids: false }
 ) => {
+  
   // 如果当前是电竞页，就不请求右侧玩法列表
   if (is_esports.value && route.name != "video") {
     return false;
@@ -311,7 +312,11 @@ const get_match_detail_base = (
           // 获取详情下所有玩法集数据
           let data = lodash.get(res, "data.data", []);
           //mhs赛事盘口状态 0:开, 封, 2:关, 11:锁
-          if (code === 200 && data.length && lodash.get(MatchDetailsData.list_to_obj.mid_obj, str).mhs != 2) {
+          if (
+            code === 200 &&
+            data.length &&
+            lodash.get(MatchDetailsData.list_to_obj.mid_obj, str).mhs != 2
+          ) {
             data.forEach((item) => {
               item = format_plays(item);
               item.tipstatus = false;
@@ -390,7 +395,11 @@ const get_match_detail_base = (
             if (is_go_match_list.value) {
               let match_obj = {};
               for (let [key, value] of Object.entries(match_info)) {
-                if (!lodash.isUndefined(lodash.get(MatchDetailsData.list_to_obj.mid_obj, str))) {
+                if (
+                  !lodash.isUndefined(
+                    lodash.get(MatchDetailsData.list_to_obj.mid_obj, str)
+                  )
+                ) {
                   match_obj[key] = value;
                 } else {
                   delete match_obj[key];
@@ -405,7 +414,11 @@ const get_match_detail_base = (
             is_go_match_list.value = true;
           }
           //mhs赛事盘口状态 0:开, 封, 2:关, 11:锁
-          if (code == 200 && data.length && lodash.get(MatchDetailsData.list_to_obj.mid_obj, str).mhs != 2) {
+          if (
+            code == 200 &&
+            data.length &&
+            lodash.get(MatchDetailsData.list_to_obj.mid_obj, str).mhs != 2
+          ) {
             data.forEach((item) => {
               item = format_plays(item);
               item.tipstatus = false;
@@ -479,17 +492,38 @@ const get_match_detail_base = (
       fun_temp();
     } else {
       // 记录timer
-    
+
       clearTimeout(axios_debounce_timer2);
       axios_debounce_timer2 = setTimeout(() => {
         //直接发请求    单次数 请求的方法
         fun_temp();
-      
       }, info.delay_time || 1000);
     }
   } else {
     //直接发请求    多 次数  循环请求 的方法
     fun_temp();
+  }
+};
+
+ /**
+   * @description: 弹出报错提示
+   * @param {}
+   * @return {}
+   */
+ const err_tips = (err) => {
+  console.log(err,'err');
+  //todo
+  // this.set_error_data({
+  //   site: "details--get_match_detail",
+  //   error: err,
+  // });
+  if (
+    lodash.isPlainObject(err) ||
+    lodash.get(err, "response.status") == 404
+  ) {
+   handicap_state.value = "404";
+  } else {
+   handicap_state.value = "refresh";
   }
 };
 //    // 是否为电竞
@@ -506,26 +540,26 @@ const is_esports = computed(() => {
   return is_esports_val;
 });
 
-  /**
-   * @description: 详情比分面板接口报错处理
-   * @param {*}
-   * @return {*}
-   */
-  const countMatchDetail = () => {
-    // 计算错误次数
-  let get_match_details_timer =null
+/**
+ * @description: 详情比分面板接口报错处理
+ * @param {*}
+ * @return {*}
+ */
+let get_match_details_timer = null;
+const countMatchDetail = () => {
+  
+  // 计算错误次数
   countMatchDetailErr.value += 1;
-    // 如果接口一直报错，最多拉取5次
-    if (countMatchDetailErr.value < 5) {
-      // 延迟3秒 再次调详情接口
+  // 如果接口一直报错，最多拉取5次
+  if (countMatchDetailErr.value < 5) {
+    // 延迟3秒 再次调详情接口
     get_match_details_timer = setTimeout(() => {
       get_matchInfo_fun();
-      }, 3000);
-    } else {
-   
+    }, 3000);
+  } else {
     handicap_state.value = "all_empty";
-    }
-  };
+  }
+};
 onUnmounted(() => {
   clearTimeout(get_match_details_timer2);
   clearTimeout(axios_debounce_timer);

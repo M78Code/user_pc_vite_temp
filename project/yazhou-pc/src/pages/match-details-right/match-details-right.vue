@@ -93,7 +93,7 @@
               :refresh_loading="refresh_loading"
               @refresh="refresh()"
               @setfoldStatus="setfoldStatus"
-              v-if="route.name != 'video' && !is_esports"
+              v-if="route.name != 'video' && !is_esports && match_infoData"
             />
             <!-- 电竞多媒体控制头 -->
             <!-- <video-ctrl-esports :match_info="match_infoData" v-if="route.name != 'video' && is_esports" /> -->
@@ -279,21 +279,21 @@ import { computed, reactive, ref } from "vue";
 const route = useRoute();
 import LoadData from "project_path/src/components/load-data/load-data.vue";
 import store from "src/store-redux/index.js";
+import lodash from "lodash"
 let state = store.getState();
 
 // 获取右侧布局类型
 const cur_expand_layout = ref(state.layoutReducer.cur_expand_layout);
 // 获取当前页路由信息
 const layout_cur_page = ref(state.layoutReducer.layout_cur_page);
-console.log(MatchDetailsData, "MatchDetailsData");
 
 const {
   handicap_this,
   show_load_status,
-
+  match_infoData,
+  match_details,
   is_esports,
   get_is_fold_status,
-  match_infoData,
   getLoading,
   load_detail_statu,
   headerHeight,
@@ -317,8 +317,11 @@ const {
   /* func */
 } = useRightDetails({ route });
 let str = mid.value + "_";
-// const match_infoData =ref(lodash.get(MatchDetailsData.list_to_obj.mid_obj, str)) ;
-console.log(MatchDetailsData,'match_infoData');
+console.log(str,'str');
+
+// const match_infoData =ref(lodash.get(MatchDetailsData.list_to_obj.mid_obj, str)  ) ;
+console.log(match_infoData,'match_infoData',MatchDetailsData);
+
 // 是否显示 统计版块
 const show_wrap_total = computed(() => {
   return (
