@@ -4,11 +4,14 @@
 
 <template>
   <div class="refresh-container">
-    <!--列表页  v-if="matchCtr.list.length > 0" -->
-    <scroll-wrapper ref="scroll_wrapper" :matchCtr="matchCtr" :data_source="matchCtr.list" :class="{'data-get-empty':data_get_empty}"
-     :main_source="source" :is_goto_top_random="is_goto_top_random"
-      :match_list_wrapper_height="match_list_wrapper_height">
-      <template v-slot="{ match_item, mid, index}">
+    <!--列表页 -->
+    <scroll-wrapper ref="scroll_wrapper" 
+      :data_source="matchCtr.list" 
+      :main_source="source" 
+      :is_goto_top_random="is_goto_top_random"
+      :match_list_wrapper_height="match_list_wrapper_height"
+      :class="{'data-get-empty':data_get_empty}">
+      <template v-slot="{ match_item, index}">
         <!--虚拟体育(赛果)-->
         <v-match-container :match="match_item"
           :i_list="index"
@@ -36,7 +39,6 @@
             :match_of_list="match_item"
             :matchCtr="matchCtr"
             :i="index"
-            :mid="mid"
             :key="match_item?.mid"
             :menu_type="menu_type"
             :main_source="source"

@@ -38,7 +38,7 @@
     <!-- <div style="position: fixed; top: 0;color: red">11{{ is_no_data }}</div> -->
     <div v-if="!is_no_data && !is_loading" style="width:100%;height:auto;padding-bottom: 0.18rem;">
       <!-- <div slot="scrollList"> -->
-      <slot name="scrollList">
+      <div slot="scrollList">
         <!-- 置顶操作时增加动画 -->
         <transition-group name="transition-play-list" tag="div" class="transition-zhiding">
           <!-- 置顶 -->
@@ -49,7 +49,6 @@
           </template>
           <!-- 非置顶 -->
           <template v-for="(item, keyscorll) in match_list_normal">
-            {{match_list_new.length}}
             <template v-if="item.hton==0">
               <template v-if="match_list_new.length == 0">
                 <tournament-play-new @change_show="change_show" :key="item.topKey + item.hpid" :list="matchInfoCtr.list" :item_data="item" :scorllIndex="keyscorll"></tournament-play-new>
@@ -61,7 +60,7 @@
           </template>
         </transition-group>
       <!-- </div> -->
-      </slot>
+      </div>
     </div>
     <!-- 详情玩法投注项无数据 -->
     <div v-if="!is_loading && is_no_data && !show_recommend" class="no-data-style">
@@ -151,7 +150,6 @@ export default defineComponent({
       remove_session_storage,
       remove_detail_storage,
     } = category_info();
-    console.error(match_list_new);
     watch(
       () => route.params,
       (to, from) => {
@@ -269,7 +267,6 @@ export default defineComponent({
         // component_data.matchInfoCtr.destroy()
       }
     })
-    console.error("match_list_normal", match_list_normal);
     return {
       ...toRefs(component_data),
       i18n_t,

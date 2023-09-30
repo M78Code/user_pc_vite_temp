@@ -100,7 +100,7 @@ export default defineComponent({
     });
     const change_btn = () => {
       // 设置vuex变量值,没有玩法数据时不能点击
-      // if (data_list && data_list.length == 1 && MatchDetailCtr.current_category_id == '0') return;
+      if (data_list && data_list.length == 1 && MatchDetailCtr.current_category_id == '0') return;
       if(get_fewer.value == 1 || get_fewer.value == 3){
         // set_fewer(2)
         get_fewer.value = 2
@@ -111,7 +111,6 @@ export default defineComponent({
     };
     // 单击玩法集--玩法集和tab 点击 
     const selete_item = (uId, index,item) => {
-      console.error(MatchDetailCtr.current_category_id,"MatchDetailCtr.current_category_id");
       // 点击的玩法是当前选中的玩法
       if(MatchDetailCtr.current_category_id == uId) return false;
       // 移动当前玩法的位置

@@ -157,6 +157,7 @@ import store from "src/store-redux/index.js";
 // import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { details_main } from "./details.js";
 import { ref, defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch, provide } from "vue";
+import MatchDetailCtr from "src/core/match-detail/match-detail-class.js"
 import UserCtr from "src/core/user-config/user-ctr.js";
 
 //国际化
@@ -249,14 +250,10 @@ export default defineComponent({
         if (!data) {
           return
         }
-
         // 只有一个玩法集时，及时更新当前玩法集id
         if (lodash.get(data,'length') == 1) {
           // set_details_item(data[0].id)
-          store.dispatch({
-            type: 'SET_DETAILS_ITEM',
-            data: data[0].id
-          })
+          MatchDetailCtr.current_category_id = data[0].id
         }
         // 玩法个数不及3个时，提前退出
         if (lodash.get(state_data.data_list, 'length', 0) < 3) {
@@ -264,7 +261,7 @@ export default defineComponent({
         }
 
         // "所有投注"下标值
-        const all_bet_index = state_data.data_list.findIndex(item => item.id === '0')
+        const all_bet_index = state_data.data_list.findIndex(item => item.id == '0')
         if (all_bet_index < 0) {
           return
         }
@@ -273,10 +270,10 @@ export default defineComponent({
 
         // 非横屏并且"所有投注"不在最后
         if (!state_data.get_is_hengping && all_bet_index !== data.length - 1) {
-          state_data.data_list = utils.swapArray(deep_data_list, all_bet_index, deep_data_list.length - 1)
+          // state_data.data_list = utils.swapArray(deep_data_list, all_bet_index, deep_data_list.length - 1)
         } else if (state_data.get_is_hengping && all_bet_index !== 1) {
           // 横屏并且"所有投注"不在热门后面
-          state_data.data_list = utils.swapArray(deep_data_list, 1, all_bet_index)
+          // state_data.data_list = utils.swapArray(deep_data_list, 1, all_bet_index)
         }
       },
       { deep: true }
@@ -537,7 +534,6 @@ export default defineComponent({
     //   'set_event_list',
     // ]),
     provide('get_detail_data', get_detail_data)
-    console.error(MatchDataWarehouseInstance);
     return {
       ...toRefs(state_data),
       i18n_t,

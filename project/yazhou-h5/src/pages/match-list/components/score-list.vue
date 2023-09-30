@@ -4,16 +4,8 @@
 
 <template>
   <div v-show="show_score_match_line(match)" class="score-section"
-    :class="{
-      'flex-star':[3].includes(+match.csid),
-      standard:get_newer_standard_edition == 2,
-      result:get_menu_type == 28
-      }">
-
-    <div class="scroll-container-w" :class="{
-        'left_scroll':show_left_triangle,
-        'right_scroll':show_right_triangle}"
-      :ref="`match_score_scroll_w_${match.mid}`">
+    :class="{ 'flex-star':[3].includes(+match.csid), standard:get_newer_standard_edition == 2, result:get_menu_type == 28 }">
+    <div class="scroll-container-w" :class="{ 'left_scroll':show_left_triangle, 'right_scroll':show_right_triangle}" :ref="`match_score_scroll_w_${match.mid}`">
       <!-- 需求：棒球，斯诺克，拳击 不显示比分  -->
       <div class="score-se-inner" ref='scoreWrapScroller' v-if="![3,7,12].includes(+match.csid)"
         :class="{
@@ -26,26 +18,15 @@
           'badminton':match.csid == 10,
           'is-table-tennis':match.csid == 8,
           'is-volley-ball':match.csid == 9 || match.csid == 13}"
-        @scroll="score_inner2_scrolling($event,match)">
+          @scroll="score_inner2_scrolling($event,match)">
         <div class="score-se-inner2" :ref="`score_se_inner2_${match.mid}`">
-          <div class="row items-center score-fle-container-1" :class="{
-              result:get_menu_type == 28 && main_source !== 'detail_match_list',
-              }">
+          <div class="row items-center score-fle-container-1" :class="{ result:get_menu_type == 28 && main_source !== 'detail_match_list', }">
             <template v-for="(score,i) of msc_converted">
-              <div class="score row items-start" :key="i"
-                :class="{
-                  'basket-ball':match.csid == 2,
-                  'important-color-number':
-                    i == msc_converted.length - 1 && //蓝球时取对应比分高亮
-                    match.csid == 2 &&
-                    get_menu_type != 28,
-                }"
-                :data-scores="`${i}-${msc_converted.length}-${match.csid}`"
-                v-if="is_show_score(match,score)">
+              <div v-if="is_show_score(match,score)" class="score row items-start"
+                :class="{ 'basket-ball':match.csid == 2, 'important-color-number':  i == msc_converted.length - 1 &&  match.csid == 2 && get_menu_type != 28}"
+                :key="i" :data-scores="`${i}-${msc_converted.length}-${match.csid}`">
                 <!--角球图标-->
-                <img class="kk-icon" alt=""
-                  v-if="match.csid == 1 && score[0] == 'S5' && score[4]"
-                  src="public/image/list/m-list-jiaoqiu.svg" />
+                <img class="kk-icon" alt="" v-if="match.csid == 1 && score[0] == 'S5' && score[4]" src="/yazhou-h5/image/list/m-list-jiaoqiu.svg" />
                 <!--HT(半场)或FT(全场)或OT-->
                 <span class="f-ht-ot" style="margin-right:.02rem"
                   :score="`${match.csid}-${score[4]}`"
@@ -74,7 +55,7 @@
                 {{ $t('list.score-disparity')}}
               </div>
               <div class="important-color-number sub">
-                {{score_sub_win_faild.score_sub?score_sub_win_faild.score_sub:score_sub_win_faild}}
+                {{score_sub_win_faild.score_sub?score_sub_win_faild.score_sub:0}}
               </div>
             </div>
             <!--总分-->
@@ -119,44 +100,25 @@
       <div class="score-important2" v-if="![1,2,3,7,8,9,10,11,12,13].includes(+match.csid)">
         {{last_list_score}}
       </div>
-      <div class="score last score-important"
-        v-if="![1,2,3,4,6,7,8,9,10,13,11,12].includes(+match.csid)">
-        <!-- {{all_s1 || score_format()}} -->
-        {{all_s1}}
+      <div class="score last score-important" v-if="![1,2,3,4,6,7,8,9,10,13,11,12].includes(+match.csid)">
+        {{all_s1 || score_format(all_s1)}}
       </div>
-
-      <!--棒球-->
-      <!-- <div class="baseball-poi-ia" v-if="match.csid == 3" :data-csid="match.csid">
-        <template v-if="get_menu_type != 28 && !['result_details', 'match_result'].includes($route.name)">
-          <div class="baseball-poi-w">
-            <div class="poi" :class="{p:match.mbtlp == 1}"></div>
-            <div class="poi" :class="{p:match.mbolp == 1}"></div>
-            <div class="poi" :class="{p:match.mbthlp == 1}"></div>
-          </div>
-          <div class="poi-des">
-            {{ $t('match_info.strike_out')}}&nbsp;<span style="color:#C84D4D">{{match.mbcn}}</span>
-          </div>
-        </template>
-      </div> -->
-
     </div>
   </div>
 </template>
  
 <script setup>
-import { ref, computed, onMounted, onUnmounted, watch } from "vue";
-// import { score_format } from 'project_path/src/boot/global-filters.js'
+import { ref, computed, onMounted, onUnmounted, watch, nextTick } from "vue";
 import store from "src/store-redux/index.js";
 import lodash from 'lodash'
-import { MenuData, score_switch_handle } from "src/core/index.js"
+import { MenuData, score_switch_handle, score_format } from "src/core/index.js"
 
-const { match, main_source } = defineProps({
+const props = defineProps({
   match: Object,
   main_source: String,
 })
 
 const scoreWrapScroller = ref(null)
-
 const store_state = store.getState()
 const timer_1 = ref(null)   
 const timer_2 = ref(null)   
@@ -177,6 +139,7 @@ const unsubscribe = store.subscribe(() => {
   get_newer_standard_edition.value = new_state.get_newer_standard_edition
 })
 
+
 onMounted(() => {
   get_last_list_score();
   //获取最新比分延迟时钟对象
@@ -190,21 +153,25 @@ onMounted(() => {
   },300);
 })
 
+watch(() => props.match.msc, () => {
+  get_msc_converted();
+})
+
 // 监听赛事比分变化
-watch(() => match.ms, () => {
+watch(() => props.match.ms, () => {
   get_last_list_score()
 })
 
 // 监听赛事阶段变化
-watch(() => match.mmp, () => {
+watch(() => props.match.mmp, () => {
   get_msc_converted();
   get_last_list_score();
 })
 
 // 总比分（大比分s1）斯洛克列表页的大比分不在这里计算
 const all_s1 = computed(() => {
-  if(match.msc && match.msc.toString().includes('S1|')){
-    return '['+match.msc[0].split('S1|')[1]+']'
+  if(props.match.msc && props.match.msc.toString().includes('S1|')){
+    return '['+props.match.msc[0].split('S1|')[1]+']'
   }else{
     return '[0:0]'
   }
@@ -225,17 +192,18 @@ const score_sub_win_faild = computed(() => {
   return r;
 })
 
+
 // 所有盘/局加起来的总比分
 const get_total_scores = computed(() => {
   let msc_format = get_msc_converted();
   //4冰球 8乒乓球 9排球 10羽毛球 13 16不统计S1
-  let csid = Number(match.csid);
+  let csid = Number(props.match.csid);
   let {home,away} = get_match_total_score();
   if (msc_format && msc_format.length) {
     let t = home + away;
     let total_sum = t ? `[${t}]` : '';
     // 斯诺克
-    if (match.csid == 7 || match.csid ==12) {
+    if (props.match.csid == 7 || props.match.csid ==12) {
       return get_snooker_score_space_data();
     }
     //2篮球;4冰球;5网球;6美足;
@@ -247,9 +215,9 @@ const get_total_scores = computed(() => {
     }
     //
     if([14,15].includes(csid)){
-      if(match.msc && match.msc.length){
+      if(props.match.msc && props.match.msc.length){
         let flag = 'S1|'
-        let found = match.msc.filter(score => score.indexOf(flag) > -1)[0];
+        let found = props.match.msc.filter(score => score.indexOf(flag) > -1)[0];
         if(found){
           let score_str = found.split(flag)[1];
           home = score_str.split(':')[0];
@@ -280,7 +248,7 @@ const get_total_scores = computed(() => {
   }
   return "";
 })
- 
+
 /**
  * 判断单个比分是否显示
  */
@@ -361,11 +329,11 @@ const score_layout_init = () => {
  * @return {Undefined} Undefined
  */
 const get_msc_converted = () => {
-  let msc = match.msc;
+  let msc = props.match.msc;
   let r0 = [];
   if(msc && msc.length){
-    let f = score_switch_handle(match);
-    if (match.csid == 7 || match.csid ==12) {
+    let f = score_switch_handle(props.match);
+    if (props.match.csid == 7 || props.match.csid ==12) {
       if (f.msc_list && f.msc_list.length) {
         r0 = f.msc_list;
       }
@@ -391,7 +359,6 @@ const get_msc_converted = () => {
   if(!msc_converted.value || !msc_converted.value.length){
     show_right_triangle.value = false;
   }
-
   return r0;
 }
 /**
@@ -401,7 +368,7 @@ const get_match_total_score = () => {
   let result = {};
   let msc_format = get_msc_converted();
   //4冰球 8乒乓球 9排球 10羽毛球 13 16不统计S1
-  let csid = Number(match.csid);
+  let csid = Number(props.match.csid);
   if (msc_format && msc_format.length) {
     let m = 0,a = 0;
     msc_format.forEach(score => {
@@ -429,7 +396,7 @@ const get_snooker_score_space_data = () => {
     result = `${snoocker_s1.value[1]}-${snoocker_s1.value[2]}[${+snoocker_s1.value[1] + +snoocker_s1.value[2]}]`;
   }
   else{
-    let f = score_switch_handle(match);
+    let f = score_switch_handle(props.match);
     if (f.s1_score) {
       snoocker_s1.value = f.s1_score;
     } else {

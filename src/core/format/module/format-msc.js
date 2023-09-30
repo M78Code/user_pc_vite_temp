@@ -87,7 +87,6 @@ export const get_punish_score = (match) => {
  * @return {Undefined}
  */
 export const full_msc = (match, msc_dict) => {
-  return
   if (!match.msc) match.msc = [];
   match.msc_list_dict = [];
   msc_dict.forEach(msc_d => {
@@ -531,17 +530,17 @@ export const foot_basket_ball = (match) => {
     }
   }
 
-  let msc_dict_list = [];
+  let msc_list_dict = [];
   if (match.msc_list_dict && match.msc_list_dict.length) {
     match.msc_list_dict.forEach(f_score => {
       let formated_msc = format_msc(f_score);
       formated_msc = football_score_no(match, formated_msc);
-      msc_dict_list.push(formated_msc);
+      msc_list_dict.push(formated_msc);
     });
-    match.msc_s_format = msc_dict_list;
+    match.msc_s_format = msc_list_dict;
   }
-  match.msc_format = msc_dict_list;
-  return msc_dict_list;
+  match.msc_format = msc_list_dict;
+  return msc_list_dict;
 }
 /**
  * 附加足球比分编号
@@ -607,7 +606,6 @@ export const basket_ball_score_handle = (match) => {
   }
   full_msc(match, msc_dict);
   let result = foot_basket_ball(match); // 篮球足球比分处理
-
   if (match.msc_s_format && match.msc_s_format.length > 2) {
     let sorted = [];
     msc_dict.forEach(key => {
@@ -707,7 +705,7 @@ export const foot_ball_score_handle = (match) => {
       msc_dict = ["S5", "S2", "S1", "S7"];
     }
   }
-  // full_msc(match, msc_dict);
+  full_msc(match, msc_dict);
   let result = foot_basket_ball(match);
   if (match.msc_s_format) {
     let sorted = [];
@@ -736,7 +734,7 @@ export const baseball_score_handle = (match) => {
     'S133', 'S134', 'S135', 'S136', 'S137', 'S138', 'S139', 'S140', 'S141', 'S142',
     'S143', 'S144', 'S145', 'S146'];
   // H5使用了这个方法
-  // full_msc(match, msc_dict);
+  full_msc(match, msc_dict);
   let msc_list = [], dict_msc_list = [];
 
   // 按从小到大顺序获取比分序列

@@ -77,8 +77,8 @@
           <label class="bet-team-handicap">
 
             <label class="yb-number-bold">
-              <span class="bet-handicap-color">{{ item.handicap_attach || item.handicap }}</span>
-              <span v-if="item.handicap_attach">{{ item.handicap }}</span>
+              <span class="bet-handicap-color">{{ item.handicap }}</span>
+              <span v-if="item.show_handicap">{{ item.handicap_attach }}</span>
             </label>
 
           </label>

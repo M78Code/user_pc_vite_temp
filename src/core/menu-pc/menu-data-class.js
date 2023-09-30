@@ -610,7 +610,7 @@ class MenuData {
     // is_unfold_multi_column: false, //是否展开多列玩法
     this.is_multi_column =
       is_multi_column &&
-      !utils.is_iframe &&
+      !window.frames.length != parent.frames.length &&
       state.layoutReducer.is_unfold_multi_column;
     // store.dispatch("set_unfold_multi_column", this.is_multi_column);
     // console.warn('this.is_multi_column ',this.is_multi_column )

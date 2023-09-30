@@ -96,13 +96,13 @@
 .icon_zd_select {
   width: 0.16rem;
   height: 0.14rem;
-  background: var(--q-color-img-bg-35) no-repeat center / 96% 96%;
+  background: url("/yazhou-h5/image/svg/stick_btn_y0.svg") no-repeat center / 96% 96%;
 }
 
 .icon_zd_default {
   width: 0.16rem;
   height: 0.14rem;
-  background: var(--q-color-com-img-bg-93) no-repeat center / 96% 96%;
+  background: url("/yazhou-h5/image/svg/stick_btn_def.svg") no-repeat center / 96% 96%;
 }
 
 /* ************** 置顶按钮 *************** -E */
@@ -146,6 +146,7 @@
 
   &:after {
     content: ' ';
+    background-color: #4987fb; // var(--q-detials-color-4);
     display: block;
     position: absolute;
     width: 3px;

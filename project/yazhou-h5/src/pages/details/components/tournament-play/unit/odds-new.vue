@@ -100,7 +100,6 @@ export default defineComponent({
         let result_ = props.ol_data.result
         return t(`virtual_sports.result.${result_}`)
       }else{
-        console.error(props.ol_data.ov / 100000);
         let r = '';
         let r1 = compute_value_by_cur_odd_type(
           props.ol_data.ov,

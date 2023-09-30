@@ -697,7 +697,6 @@ class MenuData {
    * type [string] click | init
    */
   async set_current_lv1_menu(current_lv_1_menu, current_lv_1_menu_i, type = "click") {
-    console.error('set_current_lv1_menu')
     this.set_cache_class({
       current_lv_1_menu,
       current_lv_1_menu_i,
@@ -714,7 +713,6 @@ class MenuData {
         });
     }
     this.update();
-    useMittEmit(MITT_TYPES.EMIT_MAIN_MENU_CHANGE);
   }
   /**
    * 选中二级menu
@@ -837,7 +835,7 @@ class MenuData {
   get_current_sub_menuid() {
     //二级菜单可能有个选中 全部 此刻 当前菜单应该是数组
     if (this.get_sport_all_selected.value) {
-      return this.current_lv_2_menu && this.current_lv_2_menu.map((item) => {
+      return this.current_lv_2_menu.map((item) => {
         return item.mi || item.menuId;
       }).join(',');
     } else {

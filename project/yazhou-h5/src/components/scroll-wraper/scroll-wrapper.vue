@@ -6,7 +6,7 @@
 
 <template>
   <div class="scroll-wrapper">
-    <div style="display: none;">{{ MatchDataBaseH5.data_version }}</div>
+    <div style="display: none;">{{ MatchDataBaseH5.data_version.version }}</div>
     <div class="scroll-i-con" 
       :class="{high_scrolling: set_ishigh_scrolling && !(lodash.get(get_current_menu, 'date_menu.menuType') == 100) &&
        !(get_menu_type == 28 && [1001, 1002, 1004, 1011, 1010, 1009].includes(get_curr_sub_menu_type)) && get_menu_type != 100,
@@ -40,7 +40,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch, computed, onUnmounted, nextTick, getCurrentInstance } from 'vue' 
+import { ref, onMounted, watch, computed, onUnmounted } from 'vue' 
 import lodash from 'lodash'
 import store from "src/store-redux/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
@@ -50,12 +50,9 @@ import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from 'src/core'
 
 // 避免定时器每次滚动总是触发
 const props = defineProps({
-  data_source: Array | Object,
   match_list_wrapper_height: Number,
   is_goto_top_random: Number,
-  is_search: Boolean,
   main_source: String,
-  matchCtr: Object,
 })
 
 const store_state = store.getState();
@@ -99,7 +96,7 @@ const get_match_item = (mid) => {
 }
 
 const get_index_f_data_source = (mid) => {
-  return lodash.findIndex(props.matchCtr.list, { mid });
+  return lodash.findIndex(match_list.value, { mid });
 }
 
 /**
@@ -194,7 +191,7 @@ watch(() => props.is_goto_top_random, () => {
 const set_ishigh_scrolling = computed(() => {
   // 滚动过程中，是否显示  骨架屏背景图片
   let flag = false;
-  if (["home_hot_page_schedule"].includes(props.main_source) || (props.data_source && props.data_source.length <= 0)) {
+  if (["home_hot_page_schedule"].includes(props.main_source) || (MatchDataBaseH5.list && MatchDataBaseH5.list.length <= 0)) {
     flag = false;
   } else {
     flag = get_to_bottom_space > 350 && !is_champion
@@ -217,7 +214,7 @@ const get_to_bottom_space = computed(() => {
   let delta = 0
   let list_scroll_top = target_scroll_obj.value
   //容器的滚动数据
-  if (list_scroll_top && props.data_source) {
+  if (list_scroll_top && MatchDataBaseH5.list) {
     delta = list_scroll_top.scroll_height - (list_scroll_top.scroll_y + list_scroll_top.client_height);
   } else {
     //window的滚动数据

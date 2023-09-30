@@ -44,8 +44,11 @@ const match_analysis2 = "/yazhou-h5/image/svg/match_analysis2.svg"
 const mearlys_icon = '/yazhou-h5/image/list/mearlys.png'
 
 const league_collapse_icon = '/yazhou-h5/image/list/league-collapse-icon.svg'
-const league_icon = '/public/image/list/league-collapse-icon.svg'
-const league_icon_back = '/public/image/list/league-collapse-icon-black.svg'
+const league_icon = '/yazhou-h5/image/list/league-collapse-icon.svg'
+const league_icon_back = '/yazhou-h5/image/list/league-collapse-icon-black.svg'
+
+const polular_spirite =  `/yazhou-h5/image/bw3/png/home_page/polular_spirite.png`
+const polular_spirite_theme02 =  `/yazhou-h5/image/bw3/png/home_page/polular_spirite_theme02.png`
 
 //弹出框菜单图片
 const popup_menu = {
@@ -63,5 +66,5 @@ export {
   img1, img2, img3, img4, Y0_img_white, match_icon_lock, normal_img_not_favorite_white, normal_img_not_favorite_black, normal_img_is_favorite, y0_img_favorite_black,
   lvs_icon_theme01, lvs_icon_theme02, animationUrl_icon_theme01, animationUrl_icon_theme02, muUrl_theme01, muUrl_theme01_y0, muUrl_theme02, muUrl_theme02_y0,
   none_league_icon, none_league_icon_black, image_panda_placeholder, default_league_icon, home_default_avatar, away_default_avatar, match_analysis, match_analysis2, mearlys_icon,
-  league_collapse_icon, league_icon, league_icon_back, popup_menu
+  league_collapse_icon, league_icon, league_icon_back, popup_menu, polular_spirite, polular_spirite_theme02
 }
