@@ -6,6 +6,7 @@ import { ref } from 'vue';
 
 // 次要玩法标题
 const play_current_key = ref('');
+const tab_play_keys = ref([]);
 
 import { other_play_name_to_playid } from 'src/core/constant/config/data-class-ctr/index.js';
 
