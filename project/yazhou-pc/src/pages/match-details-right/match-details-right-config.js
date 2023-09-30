@@ -840,12 +840,8 @@ export const useRightDetails = (props) => {
              * msc: ["S1|48:52"] => msc: {S1:{home: 48,away: 52}}
              */
             data.msc = detailUtils.build_msc(data);
-            MatchDataWarehouseInstance.set_list_from_match_details(data);
-            let str = allData.mid + "_";
-            allData.match_infoData = lodash.get(
-              MatchDataWarehouseInstance.list_to_obj.mid_obj,
-              str
-            );
+            MatchDataWarehouseInstance.set_match_details(MatchDataWarehouseInstance.get_quick_mid_obj(allData.mid),data);
+            allData.match_infoData = MatchDataWarehouseInstance.get_quick_mid_obj(allData.mid);
             console.log(allData.match_infoData, "allData.match_infoData");
             let mid = lodash.get(data, "mid");
             let mst = lodash.get(data, "mst");
