@@ -33,7 +33,7 @@
       >
         <template v-slot:header>
           <!-- 全屏模式玩法集tab -->
-          
+
           <div
             class="full-video-tab"
             v-if="
@@ -89,15 +89,15 @@
             </div>
             <!-- 多媒体控制头 -->
             <video-ctrl
-               :match_info="match_infoData"
-               :refresh_loading="refresh_loading"
-               @refresh="refresh()"
-               @setfoldStatus="setfoldStatus"
-               v-if="route.name != 'video' && !is_esports" />
+              :match_info="match_infoData"
+              :refresh_loading="refresh_loading"
+              @refresh="refresh()"
+              @setfoldStatus="setfoldStatus"
+              v-if="route.name != 'video' && !is_esports"
+            />
             <!-- 电竞多媒体控制头 -->
             <!-- <video-ctrl-esports :match_info="match_infoData" v-if="route.name != 'video' && is_esports" /> -->
             <!-- 战队信息 start -->
-        
 
             <match-info
               v-if="route.name != 'video'"
@@ -259,7 +259,12 @@
 </template>
 <script setup>
 import vScrollArea from "project_path/src/components/v-scroll-area/v-scroll-area.vue";
-import { i18n_t, MITT_TYPES, useMittOn } from "src/core/index";
+import {
+  i18n_t,
+  MITT_TYPES,
+  useMittOn,
+  MatchDataWarehouse_PC_Detail_Common as MatchDetailsData,
+} from "src/core/index";
 import matchHandicap from "src/components/match-detail/match-handicap/match-handicap.vue";
 import { TabWapper as Tab } from "src/components/common/tab";
 import { useRightDetails } from "./match-details-right-config";
@@ -280,15 +285,15 @@ let state = store.getState();
 const cur_expand_layout = ref(state.layoutReducer.cur_expand_layout);
 // 获取当前页路由信息
 const layout_cur_page = ref(state.layoutReducer.layout_cur_page);
-console.log(layout_cur_page, "layout_cur_page");
+console.log(MatchDetailsData, "MatchDetailsData");
 
 const {
   handicap_this,
   show_load_status,
-  match_infoData,
+
   is_esports,
   get_is_fold_status,
-  match_details,
+  match_infoData,
   getLoading,
   load_detail_statu,
   headerHeight,
@@ -302,14 +307,18 @@ const {
   close_all_handicap,
   refresh_loading,
   MatchDataWarehouseInstance,
+  mid,
   /* func */
   get_mattch_details,
   on_go_top,
   change_loading_state,
   set_handicap_this,
-  setfoldStatus
+  setfoldStatus,
   /* func */
 } = useRightDetails({ route });
+let str = mid.value + "_";
+// const match_infoData =ref(lodash.get(MatchDetailsData.list_to_obj.mid_obj, str)) ;
+console.log(MatchDetailsData,'match_infoData');
 // 是否显示 统计版块
 const show_wrap_total = computed(() => {
   return (
@@ -376,6 +385,6 @@ const is_show_margin = computed(() => {
 @import "./index.scss";
 </style>
 
-<style lang="scss" >
+<style lang="scss">
 @import "../match-details//match-details.scss";
 </style>
