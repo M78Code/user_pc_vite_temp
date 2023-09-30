@@ -524,7 +524,8 @@ init(){
     match.hSpecial = 1
     // 5分钟玩法阶段
     match.hSpecial5min = 1
-
+    // 赛事更新
+    match._upd_time = Date().now()
     // tpl_21_hpids = ""
     // all_oid_arr = [] 可以移除,主要用于生成all_oids对象
     // all_oids="" //过期旧投注项ID列表 ,删除无用投注项数据使用

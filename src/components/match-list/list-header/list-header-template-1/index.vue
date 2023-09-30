@@ -47,7 +47,7 @@
       <!-- 即将开赛筛选 -->
       <!-- 今日有 收藏没有 冠军没有 -->
       <com-select v-else-if="menu_config.menu_root == 2 && vx_layout_list_type != 'collect' && !menu_config.is_guanjun()"
-        :options="time_list" v-model="$store.state.filter.open_select_time" showKey="title" @input="select_time_change">
+        :options="time_list" v-model="open_select_time" showKey="title" @input="select_time_change">
         <template #prefix><span class="fg1">{{ $t("common.match_soon_filtr") }}</span></template>
       </com-select>
       <!-- 选择联赛按钮 -->
@@ -93,7 +93,7 @@ import menu_config from "src/core/menu-pc/menu-data-class.js";
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import { t } from "src/core/index.js";
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
-import { ref, computed, reactive } from 'vue';
+import { ref, computed, defineProps } from 'vue';
 import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
 import UserCtr from 'src/core/user-config/user-ctr.js'
 import {component_symbol ,need_register_props} from "../config/index.js"
@@ -101,7 +101,25 @@ import store from 'src/store-redux/index.js';
 import { IconWapper } from 'src/components/icon'
 
 let state = store.getState();
-const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
+// const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
+const props = defineProps({
+  collect_count: {
+    type: Number,
+    default: () => null,
+  },
+  load_data_state: {
+    type: String,
+    default: () => '',
+  },
+  is_show_input: {
+    type: Boolean,
+    default: () => false,
+  },
+  is_show_hot: {
+    type: Boolean,
+    default: () => false,
+  },
+})
 
 
 // 列表显示内容  match:赛事 collect:收藏 search:搜索
@@ -113,7 +131,7 @@ const vx_show_filter_popup = ref(state.filterReducer.show_filter_popup);
 // 获取联赛筛选是否全选
 const vx_filter_checked_all = ref(state.filterReducer.filter_checked_all);
 // 获取当前菜单类型
-const vx_cur_menu_type = ref(state.menusReducer.cur_menu_type);
+const vx_cur_menu_type = ref(null);
 // 收起右侧详情 展开多列玩法
 const get_unfold_multi_column = ref(state.globalReducer.is_unfold_multi_column);
 // 获取选中的赛事数量(列表右上角赛选功能)
@@ -146,7 +164,8 @@ const sort_option = computed(() => {
 })
 // 是否显示刷新 btn
 const computed_show_refresh = computed(() => {
-  let _show = !["hot_all"].includes(vx_cur_menu_type.value.type_name) &&
+  // !["hot_all"].includes(vx_cur_menu_type.value.type_name) &&
+  let _show = 
     vx_show_filter_popup.value == false &&
     vx_layout_cur_page.value.cur != "search"
   return _show
@@ -158,7 +177,7 @@ const is_search_page = computed(() => {
 //当前页面菜单title
 const page_title = computed(() => {
   //当前点击的是今日还是早盘 今日 2 早盘为3
-  let { jinri_zaopan } = menu_config.left_menu_result
+  let { jinri_zaopan } = menu_config.left_menu_result || {}
   let TITLE = {
     1: t("menu.match_play"), //"滚球",
     2: t("menu.match_today"), //"今日",
@@ -167,7 +186,7 @@ const page_title = computed(() => {
     400: t("menu.match_winner"), //"冠军"
   };
   let _page_title = ""
-  let _menu_type = menu_config.left_menu_result.root
+  let _menu_type = menu_config.menu_root
   if (is_search_page) {
     _page_title = t("common.search_title")
     // 今日|早盘|串关
@@ -178,7 +197,7 @@ const page_title = computed(() => {
     } else {
       _page_title = TITLE[_menu_type]
     }
-  } else if ([1, 500].includes(menu_config.menu_root)) {
+  } else if ([1, 500].includes(_menu_type)) {
     _page_title = TITLE[_menu_type]
   } else if (_menu_type == 400) {
     _page_title = TITLE[_menu_type]

@@ -264,11 +264,9 @@ const set_base_data_init = () => {
 	}
 	if (menu_root == 3) return;
 	// 赛事列表 卡片数据
-	console.error('set_list---------------',matchs_list.length);
   // 设置列表数据仓库
   MatchListData.set_list(
     matchs_list,
-    true,
   );
 	handle_match_list_request_when_ok(data, true, true, true);
 	let ts1 = Date.now();
@@ -557,7 +555,6 @@ const get_hot_match_list = (backend_run = false) => {
 				// 设置列表数据仓库
 				MatchListData.set_list(
 					match_list,
-					true
 				);
 				if (!backend_run) {
 					// 调用bymids接口

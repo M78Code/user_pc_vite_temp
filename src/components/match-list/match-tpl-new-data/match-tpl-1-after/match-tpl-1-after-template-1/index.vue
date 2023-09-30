@@ -135,6 +135,10 @@ const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.da
 const match = MatchListData.list_to_obj.mid_obj[props.mid+'_'];
 const is_mounted = ref(true);
 
+// const match = computed(() => {
+//   return MatchListData.list_to_obj.mid_obj[props.mid+'_']
+// })
+
 // 其他玩法标题
 const bet_col = computed(() => {
   let bet_col = []

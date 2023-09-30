@@ -217,7 +217,7 @@ const api_bymids = (
         let code = res.code
         let match_list = lodash.get(res, "data.data") || [];
         let ts1 = res.ts
-        MatchListData.set_list(match_list, true)
+        MatchListData.set_list(match_list)
         let mids_arr = [];
         match_list.forEach((match) => {
           mids_arr.push(String(match.mid));
