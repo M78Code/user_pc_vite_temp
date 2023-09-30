@@ -2,7 +2,58 @@
  * 这里是处理次要玩法的逻辑  
  */
 
+import { ref } from 'vue';
+
+// 次要玩法标题
+const play_current_key = ref('');
+
 import { other_play_name_to_playid } from 'src/core/constant/config/data-class-ctr/index.js';
+
+/**
+	 * @Description 克隆数组
+	 * @param {array} arr 需要克隆的数值
+	 */
+const clone_arr = (arr) => {
+    let new_arr = [];
+    lodash.merge(new_arr, arr || []);
+    return new_arr;
+}
+
+/**
+   * @Description 计算角球、罚牌等其他玩法数据 (获取角球、罚牌模板数据，并与接口数据合并)
+   * @param {undefined} undefined
+  */
+const compute_other_play_data = (mid) => {
+    let {cos15Minutes,cos5Minutes ,mst,mid,tpl_id } = match
+    if(cos15Minutes || cos5Minutes){
+      this.set_min15(match,mst)
+    }
+    this.set_tab_play_keys(match)
+    //当前选中玩法
+    let cur_other_play = play_current_key
+    let template_name = get_data_template_id()
+    // 其他玩法盘口列表
+    let other_handicap_list = clone_arr(match_list_play_config[template_name][cur_other_play])
+    // 波胆
+    if(cur_other_play == 'hpsBold'){
+      other_handicap_list = this.get_21_bold_template(match);
+    }
+    //5分钟
+    if(cur_other_play == 'hps5Minutes'){
+      other_handicap_list = this.get_5minutes_template(match);
+    }
+
+    if(!cur_other_play){
+      other_handicap_list = clone_arr(match_list_play_config[template_name].hpsCorner)
+    }
+    // 4：15分钟玩法 1：其他玩法
+    let type = cur_other_play == 'hps15Minutes' ? 4 : 1
+    other_handicap_list = this.merge_template_data({match,handicap_list:other_handicap_list,type,play_key:cur_other_play })
+
+
+    this.coverage_match_data({other_handicap_list},mid)
+    match.other_handicap_list = other_handicap_list
+  }
 
 /**
    * @Description 设置其他玩法选中索引    更新玩法模板及数据
@@ -57,7 +108,7 @@ const set_tab_play_keys = (match) => {
     set_match_play_current_index(match,play_key)
     let {tpl_id} =  match
     let template_name = `template_${tpl_id}`
-    let other_handicap_list = this.clone_arr(match_list_play_config[template_name][play_key])
+    let other_handicap_list = clone_arr(match_list_play_config[template_name][play_key])
     if(play_key === 'hpsBold'){
       other_handicap_list = this.get_21_bold_template(match);
       match = {}
