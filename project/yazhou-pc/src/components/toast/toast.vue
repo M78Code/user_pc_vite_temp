@@ -30,18 +30,12 @@ const text = ref('')
 /* 监听打开弹窗mitt */
 const { off } = useMittOn(MITT_TYPES.EMIT_SHOW_TOAST_CMD, show_toast)
 /* 销毁mitt */
-onUnmounted(off)
-
 /* 定时器相关 */
-const timer = ref(null)
-function clear_timer() {
-  if (timer.value) {
-    clearTimeout(timer.value)
-    timer.value = null
-  };
-}
-onUnmounted(clear_timer)
-
+let timer;
+onUnmounted(() => {
+  off()
+  clearTimeout(timer)
+})
 /**
 * @Description:显示消息框
 * @Author Cable
@@ -53,9 +47,8 @@ function show_toast(msg, delay = 2000) {
   text.value = msg || "";
   if (text.value == "" || is_show.value) return;
   is_show.value = true;
-
   /* 延时关闭 */
-  timer.value = setTimeout(() => {
+  timer = setTimeout(() => {
     is_show.value = false;
     text.value = "";
   }, delay);

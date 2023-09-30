@@ -2,7 +2,7 @@
  * @Description: 单独处理二级菜单,全部菜单
 -->
 <template>
-  <div class="sport-menu-item flex justify-center" ref="scrollItem" @click="$emit('click')">
+  <div class="sport-menu-item flex justify-center" ref="scrollItem" @click.capture="emits('click')">
     <div class="inner-w flex justify-between items-center" :class="{ favorite: show_favorite_list }">
       <div></div>
       <div class="sport-w-icon">
@@ -29,6 +29,7 @@ const props = defineProps({
     type: String,
   }
 })
+const emits = defineEmits(['click'])
 const show_favorite_list = ref(UserCtr.show_favorite_list)
 const mitt_list = [
   useMittOn(MITT_TYPES.EMIT_FAVORITE_CHANGE_CMD, (v, old) => {
