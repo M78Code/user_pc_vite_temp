@@ -24,6 +24,10 @@
  * 
  * 清除list赛事mid之外的无用数据
  * MatchDataWarehouseInstance.clear_list_other(list);
+ * 
+ * 获取快速查询对象中的指定mid赛事对象
+ * get_quick_mid_obj(mid)
+ * 
  */
 import MatchDataBaseWS from  "./match-ctr-ws2.js"
 import { reactive } from 'vue'
