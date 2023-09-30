@@ -132,15 +132,16 @@ const play_name_list = ref([]);
 let match_style_obj = MatchListCardDataClass.all_card_obj[props.mid+'_']
 const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`].width_config
 const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`]
-const match = MatchListData.get_quick_mid_obj(props.mid);
+let match = MatchListData.list_to_obj.mid_obj[props.mid+'_'];
 const is_mounted = ref(true);
 
-// nextTick(() => {
-//   match = MatchListData.get_quick_mid_obj(props.mid)
-// })
+watch(() => MatchListData.data_version.version, (new_value, old_value) => {
+  match = MatchListData.list_to_obj.mid_obj[props.mid+'_'];
+  console.log('matchmatch', new_value, old_value, MatchListData.list_to_obj.mid_obj[props.mid+'_']);
+})
 
 // const match = computed(() => {
-//   return MatchListData.get_quick_mid_obj(props.mid)
+//   return MatchListData.list_to_obj.mid_obj[props.mid+'_']
 // })
 // 其他玩法标题
 const bet_col = computed(() => {

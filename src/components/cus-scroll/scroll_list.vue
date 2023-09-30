@@ -134,7 +134,6 @@ const on_bootom = lodash.throttle(() => {
  */
 const on_scroll = (e) => {
   let scrollTop = e.target.scrollTop;
-  console.log('scrollTop', scrollTop);
   if (scrollTop > is_bootom_height.value) {
     on_bootom();
   }
