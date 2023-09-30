@@ -108,7 +108,7 @@ const show_mids_change = lodash.throttle(() => {
 	}
 	// 重新订阅C8
 	// refresh_c8_subscribe();
-	api_bymids({ is_show_mids_change: true })
+	// api_bymids({ is_show_mids_change: true })
 }, 3000)
 
 const ws_composable_fn = () => {

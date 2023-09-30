@@ -1,6 +1,7 @@
 import {
 	ref,
 	computed,
+	nextTick
 } from "vue";
 import lodash from "lodash";
 // import router from "@/router/index"
@@ -264,12 +265,10 @@ const set_base_data_init = () => {
 	}
 	if (menu_root == 3) return;
 	// 赛事列表 卡片数据
-	console.error('set_list---------------',matchs_list.length);
-  // 设置列表数据仓库
-  MatchListData.set_list(
-    matchs_list,
-    true,
-  );
+	// 设置列表数据仓库
+		MatchListData.set_list(
+			matchs_list,
+		);
 	handle_match_list_request_when_ok(data, true, true, true);
 	let ts1 = Date.now();
 	let mids_arr = [];
@@ -320,7 +319,7 @@ const fetch_match_list = (is_socket = false, cut) => {
 	if (!is_socket) {
 		load_data_state.value = "loading";
 		// 设置列表滚动条scrollTop
-		page_source != "details" && MatchListScrollClass.set_scroll_top(0);
+		MatchListScrollClass.set_scroll_top(0);
 	}
 	let match_api = MenuData.match_list_api_config.match_list || {};
 	// 设置列表接口 和 参数
@@ -433,10 +432,10 @@ const handle_destroyed = () => {
 }
 const init_page_when_base_data_first_loaded=()=>{
     // 元数据 
-	console.log("lockie --- 进入了几次");
   set_base_data_init();
   //释放试图 
   load_data_state.value ='data'
+
   check_match_last_update_timer_id = setInterval(
     check_match_last_update_time(),
     30000
@@ -446,7 +445,7 @@ const mounted_fn = () => {
 // 开启自动化测试功能
 	 // this.DOM_ID_SHOW = window.BUILDIN_CONFIG.DOM_ID_SHOW;
 	 // 列表数据仓库
-	 MatchListData.init();
+	MatchListData.init();
 	timer_obj.value = {};
 	store.dispatch({
 		type: "SET_IS_ROLL_SHOW_BANNER",
@@ -558,11 +557,10 @@ const get_hot_match_list = (backend_run = false) => {
 				// 设置列表数据仓库
 				MatchListData.set_list(
 					match_list,
-					true
 				);
 				if (!backend_run) {
 					// 调用bymids接口
-					// api_bymids({ is_first_load: true });
+					api_bymids({ is_first_load: true });
 					// 切换右侧赛事
 					let first_match = match_list[0];
 					let params = {
@@ -679,7 +677,7 @@ const check_match_last_update_time = () => {
 			ws_time_dif = 70000;
 		}
 		// 超过一分钟 未更新过数据
-		if (api_time_dif > 60000 && ws_time_dif > 60000) {
+		if (ws_time_dif > 60000) {
 			mids.push(mid);
 		}
 	});

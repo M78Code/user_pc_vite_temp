@@ -1,7 +1,7 @@
 <template>
   <div class="c-match-item  match-tpl1-bg" :class="{ 'more-handicap': lodash.get(match, 'has_add1') || lodash.get(match, 'has_add2') }" v-if="match">
   <!-- <div class="c-match-item  match-tpl1-bg" :class="{ 'more-handicap': match.has_add1 || match.has_add2 }"> -->
-    <div v-show="false">{{ MatchListData.data_version }}</div>
+    <div v-show="false">{{ MatchListData.data_version.version }}</div>
     <!-- 比赛进程 -->
     <div class="process-col yb-flex-center">
       <!--热门赛事显示hot标识-->
@@ -21,7 +21,6 @@
         </div>
         <!-- 赛事盘口投注项 -->
         <match-handicap :handicap_list="match_tpl_info[`template_${match_style_obj.data_tpl_id}`].main_handicap_list" :match="match" />
-
         <!-- 视频按钮 -->
         <div class="media-col">
           <match-media :match="match" />
@@ -38,7 +37,6 @@
         <!-- 视频按钮 -->
         <div class="media-col"></div>
       </div>
-
       <!-- 附加盘2 -->
       <div class="match-handicap-item" v-if="lodash.get(match, 'has_add2')">
         <!-- 赛事基础信息 -->
@@ -92,7 +90,7 @@
           <basis-info4 v-if="is_mounted" :is_other_concede="true" :match="match" :is_show_score="true" />
         </div>
         <!-- 赛事盘口投注项 -->
-        <match-handicap :handicap_list="match_tpl_info[`template_${match_style_obj.data_tpl_id}`].other" :match="match" other_play />
+        <match-handicap :handicap_list="match_tpl_info[`template_${match_style_obj.data_tpl_id}`].hpsOutright" :match="match" other_play />
         <!-- 视频按钮 -->
         <div class="media-col"></div>
       </div>
@@ -103,7 +101,7 @@
 
 <script setup>
 
-import { ref, computed, watch, onMounted } from 'vue';
+import { ref, computed, watch, onMounted, nextTick } from 'vue';
 import lodash from 'lodash'
 
 import { t, get_match_status, MatchDataWarehouse_PC_List_Common as MatchListData } from "src/core/index.js";
@@ -134,10 +132,17 @@ const play_name_list = ref([]);
 let match_style_obj = MatchListCardDataClass.all_card_obj[props.mid+'_']
 const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`].width_config
 const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`]
-const match = MatchListData.list_to_obj.mid_obj[props.mid+'_'];
-console.log('matchmatchmatch', match);
+let match = MatchListData.list_to_obj.mid_obj[props.mid+'_'];
 const is_mounted = ref(true);
 
+watch(() => MatchListData.data_version.version, (new_value, old_value) => {
+  match = MatchListData.list_to_obj.mid_obj[props.mid+'_'];
+  console.log('matchmatch', new_value, old_value, MatchListData.list_to_obj.mid_obj[props.mid+'_']);
+})
+
+// const match = computed(() => {
+//   return MatchListData.list_to_obj.mid_obj[props.mid+'_']
+// })
 // 其他玩法标题
 const bet_col = computed(() => {
   let bet_col = []

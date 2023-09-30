@@ -24,7 +24,7 @@
         </div>
       </div>
       <!-- 主比分 -->
-      <div class="score" v-if="show_type == 'all'" v-tooltip="{content: is_15min ? i18n_t('list.15min_stage'):'' ,overflow:1}">{{  play_name_obj.score_key ?  lodash.get(match,`msc_obj.${play_name_obj.score_key}.home`) : match.cur_score.home}}</div>
+      <div class="score" v-if="show_type == 'all'" v-tooltip="{content: is_15min ? i18n_t('list.15min_stage'):'' ,overflow:1}">{{  play_name_obj.score_key ? lodash.get(match,`msc_obj.${play_name_obj.score_key}.home`) : lodash.get(match, 'cur_score.home')}}</div>
     </div>
     <!-- 客队信息 -->
     <div class="row-item team-item">
@@ -54,7 +54,7 @@
         v-if="show_type == 'all'" 
         v-tooltip="{content: is_15min ? i18n_t('list.15min_stage'):'' ,overflow:1}"
       >
-        {{play_name_obj.score_key ?  lodash.get(match,`msc_obj.${play_name_obj.score_key}.away`) :  match.cur_score.away}}
+        {{play_name_obj.score_key ?  lodash.get(match,`msc_obj.${play_name_obj.score_key}.away`) : lodash.get(match, 'cur_score.away')}}
       </div>
     </div>
     <!-- 中立场、盘口数 -->
@@ -133,6 +133,7 @@ const is_show_away_goal = ref(false) // 是否显示客队进球动画
 const is_show_home_red = ref(false) // 是否显示主队红牌动画
 const is_show_away_red = ref(false) // 是否显示客队红牌动画
 const is_collect = ref(false) //赛事是否收藏
+
 let match_style_obj = MatchListCardDataClass.all_card_obj[props.match.mid+'_']
 
 

@@ -30,13 +30,13 @@
       </list-header>
       <!-- <div>menu_config.match_list_menu_show.list_filter {{ menu_config.match_list_menu_show.list_filter }}</div> -->
       <!-- 顶部菜单  // 滚球  冠军 -->
-      <list-filter v-if="[1, 400].includes(parseInt(menu_config.menu_root)) && page_source != 'collect'"
+      <list-filter v-if="[1, 400].includes(parseInt(menu_config.menu_root))"
         :collect_count="collect_count" :load_data_state="load_data_state" />
       <!-- 日期菜单   早盘 日期 -->
-      <list-filter-date v-if="menu_config.menu_root == 3 && page_source != 'collect'"
+      <list-filter-date v-if="menu_config.menu_root == 3"
         :collect_count="collect_count" :load_data_state="load_data_state" />
       <!-- 热门赛事顶部菜单 -->
-      <list-filter-hot v-if="menu_config.menu_root == 500 && page_source != 'collect'"
+      <list-filter-hot v-if="menu_config.menu_root == 500"
         :collect_count="collect_count" :load_data_state="load_data_state" />
       <!-- 电竞顶部菜单 -->
       <!-- <esports-header v-if="menu_config.menu_root == 2000" :load_data_state="load_data_state" /> -->
@@ -77,9 +77,9 @@
       <!-- 滚球其他列表 -->
       <scroll-list  v-if="menu_config.menu_root_show_shoucang != 300" style="height:1000px">
         <!-- v-for="card_key in MatchListCardDataClass.match_list_card_key_arr" -->
-        <!-- <template v-slot:before>
+        <template v-slot:before>
           <div :style="{ height: MatchListCardDataClass.sticky_top.fixed_header_height }"></div>
-        </template> -->
+        </template>
         <!-- <div class="today-champion-bg" v-if="menu_config.menu_root == '2' || menu_config.menu_root == 400 || menu_config.menu_root != 2000"></div> -->
         <!-- ssssssssssssssssss66666666666666666 -->
         <!-- <div
@@ -121,7 +121,7 @@
   </div>
 </template>
 <script>
-import { onMounted } from "vue";
+import { onMounted, onUnmounted } from "vue";
 import LoadData from 'src/components/load_data/load_data.vue';
 import { LeagueTabFullVersionWapper as LeagueTab } from "src/components/tab/league-tab/index.js"; //联赛菜单
 import { ListFilterFullVersionWapper as listFilter } from "src/components/match-list/list-filter/index.js"; //赛事列表筛选：滚球-球种、早盘-日期
@@ -168,6 +168,9 @@ export default {
     onMounted(() => {
       mounted_fn();
     });
+    onUnmounted(() => {
+      // handle_destroyed()
+    })
     return {
       menu_config,
       MatchListData,

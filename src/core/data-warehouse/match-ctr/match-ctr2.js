@@ -24,6 +24,10 @@
  * 
  * 清除list赛事mid之外的无用数据
  * MatchDataWarehouseInstance.clear_list_other(list);
+ * 
+ * 获取快速查询对象中的指定mid赛事对象
+ * get_quick_mid_obj(mid)
+ * 
  */
 import MatchDataBaseWS from  "./match-ctr-ws2.js"
 import { reactive } from 'vue'
@@ -481,6 +485,76 @@ init(){
     // match.has_other_play = tab_play_keys.length > 0
     return  tab_play_keys.join(',');
   }
+
+
+  /**
+   * @Description 获取是否有附加盘数据
+   * @param {Object} match 赛事信息
+   * @return {Object} {has_add1:false,has_add2:false}
+   */
+  _get_has_add_n(match){
+    let res = {has_add1:false,has_add2:false};
+    try {
+      // 获取附加盘数据 
+      let hps_add_n_data = lodash.get(match,'hpsData[0].hpsAdd');
+      // 获取玩法的最大坑位
+      let main_fun = function(item){
+        // 坑位
+        let hn_obj = {hn:0,hpid:lodash.get(item,'hpid'),item};
+        // 获取赔率信息数据
+        let hl_arr = lodash.get(item,'hl');
+        hl_arr && hl_arr.forEach(item2 => {
+          // 检查是否有赔率数据
+          const ol_length = lodash.get(item2,'ol.length');
+          // 获取坑位
+          const hn_ = lodash.get(item2,'hn',0);
+          // 获取最大有效坑位
+          if(hn_ && ((hn_*1)>hn_obj.hn))
+          {
+            hn_obj.hn = hn_*1;
+          }
+        });
+        return hn_obj;
+      }
+      // 获取赛事的玩法的最大坑位
+      let hn_max = 0;
+      if(hps_add_n_data && Array.isArray(hps_add_n_data)){
+        for (let i = 0; i < hps_add_n_data.length; i++) {
+          const item = hps_add_n_data[i];
+          // 获取最大坑位
+          const hn_obj = main_fun(item);
+          if(hn_obj.hn>hn_max){
+            hn_max = hn_obj.hn;
+          }
+        }
+      }
+
+      // 附加盘1
+      let has_add1 = false;
+      // 附加盘2
+      let has_add2 = false;
+      
+      // 根据最大坑位设置附加盘状态
+      if(hn_max>=3){
+        // 附加盘1
+        has_add1 = true;
+        // 附加盘2
+        has_add2 = true;
+      }else if(hn_max>=2){
+        // 附加盘1
+        has_add1 = true;
+        // 附加盘2
+        has_add2 = false;
+      }
+      // 设置是否有附加盘1
+      res.has_add1 = has_add1;
+      // 设置是否有附加盘2
+      res.has_add2 = has_add2;
+    } catch (error) {
+      console.error('_set_has_add_n:',error);
+    }
+    return res;
+  }
   
 
    /**
@@ -491,10 +565,13 @@ init(){
    set_match_default_data(match){
     // api数据更新时间
     this.match_upd_time_ret_change(match);
+    // 获取是否有附加盘数据
+    const has_add_n =this._get_has_add_n(match);
     // 是否有附加盘1
-    match.has_add1 = false
+    match.has_add1 = has_add_n.has_add1;
     // 是否有附加盘2
-    match.has_add2 = false
+    match.has_add2 = has_add_n.has_add2;
+
     // 设置是否显示当前局玩法 // 组件显示时,组件内进行设置
     match.is_show_cur_handicap = false
     // 主客队名称后面是否显示上半场字符串
@@ -524,7 +601,8 @@ init(){
     match.hSpecial = 1
     // 5分钟玩法阶段
     match.hSpecial5min = 1
-
+    // 赛事更新
+    match._upd_time = '1111'
     // tpl_21_hpids = ""
     // all_oid_arr = [] 可以移除,主要用于生成all_oids对象
     // all_oids="" //过期旧投注项ID列表 ,删除无用投注项数据使用
@@ -577,6 +655,7 @@ init(){
    * @param {Boolean} is_merge 是否进行合并数据同步(保证地址不变)
    */
   set_list(list, param={}){
+    console.log('list', list);
     if(list){
       this.type = param.type || 'list';
       // 格式化列表赛事(部分数组转对象)
