@@ -239,9 +239,10 @@ export const fold_tab_play = (mid) => {
  * @param {undefined} undefined
  */
 export const get_league_title_card_height = (template_id) => {
+	console.log('template_id', template_id);
 	let height;
 	// 个别模板有两行玩法标题
-	if ([1, 3, 5, 21, 22].includes(+template_id)) {
+	if ([3, 5, 21, 22].includes(+template_id)) {
 		height = 56;
 	} else {
 		height = league_title_card_template.league_nofold_height;
