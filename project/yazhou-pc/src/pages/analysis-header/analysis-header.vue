@@ -7,18 +7,18 @@
 <template>
   <div class="analysis">
     <!-- 赛事分析 -->
-    <simple-header><span>{{$root.$t('common.analysis')}}</span></simple-header>
-    <analysis-page/>
+    <simple-header><span>{{ $root.$t('common.analysis') }}</span></simple-header>
+    <!-- <analysis-page /> -->
   </div>
 </template>
 
 <script>
-import simpleHeader from "src/project/yabo/components/site_header/simple_header";
-import analysisPage from "src/public/components/analysis/index";
+import simpleHeader from "project_path/src/components/site-header/simple-header.vue";
+// import analysisPage from "src/components/analysis/index.vue"; // 暂时注释 处理simple-header
 export default {
   components: {
     simpleHeader,
-    analysisPage
+    // analysisPage
   },
 };
 </script>
