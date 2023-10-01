@@ -203,6 +203,7 @@ export default defineComponent({
   components: {
     temp0,
     temp1,
+    temp2,
     temp3,
     temp4,
     temp5,
@@ -216,6 +217,7 @@ export default defineComponent({
     temp14,
     temp15,
     temp18,
+    temp51,
   },
   // #TODO mixins
   // mixins: [betting],

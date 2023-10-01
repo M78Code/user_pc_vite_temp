@@ -106,7 +106,77 @@ export const useRightDetails = (props) => {
       item.tipstatus = item.hpid == hpid;
     });
   };
+    /**
+   * @description: 初始化数据（赛事详情、玩法集、玩法列表）
+   * @param {string} mcid玩法集id默认0
+   */
+  /**
+   * @description 初始化详情数据，获取赛事比分信息、玩法集数据以及玩法投注项
+   *
+   * 调用后通过传参判断是否是 ws 调用
+   */
+  const m_init = (param = { is_ws: false }) => {
+    clearTimeout(allData.get_match_details_timer);
+    let { mid, is_ws } = param;
+    // 如果有传参，并且不是 ws 调用
+    if (mid) {
+      allData.mid = mid;
+    } else {
+      allData.mid = allData.details_params.mid; //赛事id
+    }
+    if (!allData.mid || allData.mid == -1) {
+      allData.match_infoData = { mid: -1, csid: -1 };
+      allData.handicap_state = "all_empty";
+      return;
+    }
+    // 重置比分接口调用失败次数
+    allData.countMatchDetailErr = 0;
+    let params = allData.details_params; //vx_details_params，列表页点击进入详情所保存的赛事参数
+    // allData.details_params.mid = mid;
+    allData.sportId = params.sportId; //球类id
 
+    // 1. C104 mhs 0  仅开盘 循环四次调用  每两次发起之间次间隔最低3秒 一共 理论上9秒以上，
+    // 两个原则：
+    //   1：上次回来再调用下一次
+    //   2：两次发起之间至少间隔差3秒
+    if (param.cmd === "C104") {
+      get_matchInfo(3);
+    } else if (!allData.is_go_match_list) {
+      // 2.详情页 返回列表页 ，多调用一次 matchdetail
+      get_matchInfo(1);
+    } else {
+      // 其他情况只调用一次
+      get_matchInfo();
+    }
+
+    // 电竞不用请求玩法数据
+    if (
+      (is_esports.value && route.name != "video") ||
+      route.name == "details"
+    ) {
+      return;
+    }
+    console.log(
+      "get_category_list 888",
+      allData.details_params.category,
+      allData.details_params
+    );
+    // 如果是 右侧动画区切换赛事 并且当前在详情页就不请求玩法集
+    if (!allData.details_params.category) {
+      // 获取玩法集数据
+      get_category_list(() => {
+        set_cur_match_plays_list();
+        // 如果不是 ws 推送的，就展示 loading
+        if (!is_ws) {
+          allData.handicap_state = "loading";
+        }
+        //玩法投注项列表
+        get_match_detail(is_ws);
+      }, is_ws);
+    } else {
+      // this.vx_set_match_details_params({ category: 0 });
+    }
+  };
   /** 批量注册mitt */
   const { emitters_off } = useMittEmitterGenerator([
     //获取tab数据
@@ -118,6 +188,8 @@ export const useRightDetails = (props) => {
     { type: MITT_TYPES.EMIT_SITE_TAB_ACTIVE, callback: emit_site_tab_active },
     // 隐藏tips
     { type: MITT_TYPES.EMIT_SET_CLOSE_TIPS, callback: close_tips },
+    //mid更新触发
+    { type: MITT_TYPES.EMIT_SHOW_DETAILS, callback: m_init },
   ]);
   onUnmounted(emitters_off);
 
@@ -321,21 +393,16 @@ export const useRightDetails = (props) => {
                 item.initIndex = index;
                 item.index = index;
               });
-
               // 初始化控制类中的玩法数据
-              // MatchDataWarehouseInstance.init_plays_data(data);
-
               MatchDataWarehouseInstance.set_match_details(allData.match_infoData,
                 data
               );
-              // allData.match_details = MatchDataWarehouseInstance.list_to_obj.ol_obj;
 
               let str = allData.mid + "_";
               allData.match_details = [lodash.get(
                 MatchDataWarehouseInstance.list_to_obj.mid_obj,
                 str
               )];
-              // allData.match_details = data;
               // 玩法列表loading状态值
               allData.handicap_state = "data";
               // 同步投注项 todo
@@ -518,77 +585,7 @@ export const useRightDetails = (props) => {
       trailing: false,
     }
   );
-  /**
-   * @description: 初始化数据（赛事详情、玩法集、玩法列表）
-   * @param {string} mcid玩法集id默认0
-   */
-  /**
-   * @description 初始化详情数据，获取赛事比分信息、玩法集数据以及玩法投注项
-   *
-   * 调用后通过传参判断是否是 ws 调用
-   */
-  const m_init = (param = { is_ws: false }) => {
-    clearTimeout(allData.get_match_details_timer);
-    let { mid, is_ws } = param;
-    // 如果有传参，并且不是 ws 调用
-    if (mid) {
-      allData.mid = mid;
-    } else {
-      allData.mid = allData.details_params.mid; //赛事id
-    }
-    if (!allData.mid || allData.mid == -1) {
-      allData.match_infoData = { mid: -1, csid: -1 };
-      allData.handicap_state = "all_empty";
-      return;
-    }
-    // 重置比分接口调用失败次数
-    allData.countMatchDetailErr = 0;
-    let params = allData.details_params; //vx_details_params，列表页点击进入详情所保存的赛事参数
-    // allData.details_params.mid = mid;
-    allData.sportId = params.sportId; //球类id
 
-    // 1. C104 mhs 0  仅开盘 循环四次调用  每两次发起之间次间隔最低3秒 一共 理论上9秒以上，
-    // 两个原则：
-    //   1：上次回来再调用下一次
-    //   2：两次发起之间至少间隔差3秒
-    if (param.cmd === "C104") {
-      get_matchInfo(3);
-    } else if (!allData.is_go_match_list) {
-      // 2.详情页 返回列表页 ，多调用一次 matchdetail
-      get_matchInfo(1);
-    } else {
-      // 其他情况只调用一次
-      get_matchInfo();
-    }
-
-    // 电竞不用请求玩法数据
-    if (
-      (is_esports.value && route.name != "video") ||
-      route.name == "details"
-    ) {
-      return;
-    }
-    console.log(
-      "get_category_list 888",
-      allData.details_params.category,
-      allData.details_params
-    );
-    // 如果是 右侧动画区切换赛事 并且当前在详情页就不请求玩法集
-    if (!allData.details_params.category) {
-      // 获取玩法集数据
-      get_category_list(() => {
-        set_cur_match_plays_list();
-        // 如果不是 ws 推送的，就展示 loading
-        if (!is_ws) {
-          allData.handicap_state = "loading";
-        }
-        //玩法投注项列表
-        get_match_detail(is_ws);
-      }, is_ws);
-    } else {
-      // this.vx_set_match_details_params({ category: 0 });
-    }
-  };
   // 对获取玩法集所有玩法接口进行节流操作
   const get_match_detail_base_throttle = lodash.throttle(
     () => {
@@ -1081,8 +1078,8 @@ export const useRightDetails = (props) => {
     ];
 
     for (const timer of timer_arr) {
-      clearTimeout(this[timer]);
-      this[timer] = null;
+      clearTimeout(allData[timer]);
+      allData[timer] = null;
     }
   };
   // 自动化测试页面加载时间时使用

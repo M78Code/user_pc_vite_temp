@@ -97,7 +97,7 @@ export default defineComponent({
     });
     const change_btn = () => {
       // 设置vuex变量值,没有玩法数据时不能点击
-      if (data_list && data_list.length == 1 && matchDetailCtr.value.current_category_id == '0') return;
+      if (props.data_list && props.data_list.length == 1 && matchDetailCtr.value.current_category_id == '0') return;
       if(get_fewer.value == 1 || get_fewer.value == 3){
         get_fewer.value = 2
       }else{
@@ -119,6 +119,8 @@ export default defineComponent({
       useMittEmit(MITT_TYPES.EMIT_DETAILILS_TAB_CHANGED);
       // 记录当前玩法集ID和玩法集合
       matchDetailCtr.value.category_tab_click(item)
+      // 存储tab的id
+    SessionStorage.set('DETAIL_TAB_ID', item.id)
       // useMittEmit(MITT_TYPES.EMIT_DETAILILS_TAB_CHANGED)
       if(get_fewer.value == 3){
         get_fewer.value = 1
@@ -136,7 +138,7 @@ export default defineComponent({
      * @param {undefined} undefined
     */
     const get_active_details_play_tab = (callback) => {
-      let item = data_list.filter(item => matchDetailCtr.value.current_category_id == item.id)[0]
+      let item = props.data_list.filter(item => matchDetailCtr.value.current_category_id == item.id)[0]
       callback(item)
     };
     const initEvent = () => {
@@ -245,6 +247,7 @@ export default defineComponent({
   background-image: url("public/image/svg/tab_up_btn.svg");
   background-size: 100% 100%;
   transform: rotateZ(180deg);
+  transition: transform 0.3s;
   // @include webkit(transition, transform 0.3s);
 
   &.collapsed {

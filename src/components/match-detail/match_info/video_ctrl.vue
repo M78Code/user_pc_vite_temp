@@ -242,7 +242,6 @@ const set_play_media_timer = ref(null);
  * @returns
  */
 const get_media_icon_show = (type) => {
-  console.log(animation_btn_show,'animation_btn_show');
   switch (type) {
     case "info":
       return true;

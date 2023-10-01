@@ -22,7 +22,7 @@
                   <template v-if="((hide_show_more_layout || (!hide_show_more_layout && (show_more || (!show_more && ol_index<5)))))">
                     {{void (line1++)}}
                     <template v-if="ol_list_0[ol_index0 - 1]">
-                      <div v-if="_.get(item_data.title,'[0].otd') == ol_list_0[ol_index0 - 1].otd" :key="ol_index">
+                      <div v-if="lodash.get(item_data.title,'[0].otd') == ol_list_0[ol_index0 - 1].otd" :key="ol_index">
                         <!--  0开 2关 1封 11锁 -->
                         <!-- 开盘or锁盘 正常显示 -->
                         <template v-if="ol_list_0[ol_index0 - 1].ms == 0 || ol_list_0[ol_index0 - 1].ms == 11">
@@ -105,7 +105,7 @@
                   <template v-if="((hide_show_more_layout || (!hide_show_more_layout && (show_more || (!show_more && ol_index<5)))))">
                     <template v-if="ol_list_1[ol_index1 - 1]">
                       <div
-                          v-if="_.get(item_data.title,'[1].otd') == ol_list_1[ol_index1 - 1].otd" :key="ol_index">
+                          v-if="lodash.get(item_data.title,'[1].otd') == ol_list_1[ol_index1 - 1].otd" :key="ol_index">
                         <!--  0开 2关 1封 11锁 -->
                         <!-- 开盘or锁盘 正常显示 -->
                         <template v-if="ol_list_1[ol_index1 - 1].ms == 0 || ol_list_1[ol_index1 - 1].ms == 11">
@@ -281,6 +281,8 @@ import odds_new from "project_path/src/pages/details/components/tournament_play/
 // import odd_convert from "/mixins/odds_conversion/odds_conversion.js";
 import {utils } from 'src/core/index.js';
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
+import lodash from "lodash"
+
 export default defineComponent({
   // #TODO mixins
   // mixins: [odd_convert],
@@ -305,7 +307,7 @@ export default defineComponent({
 
     const hide_show_more_layout = computed(() => {
       let ret = true;
-      let len = _.get(this.item_data,'hl[0].ol.length');
+      let len = lodash.get(this.item_data,'hl[0].ol.length');
       if(!len){
         len = 0;
       }
@@ -325,7 +327,7 @@ export default defineComponent({
     onMounted(() => {
       // 根据指定模板,对模板下数据量大的玩法进行折叠处理
       // 获取玩法下的数量
-      let temp = _.get(this.item_data,'hl[0].ol.length');
+      let temp = lodash.get(this.item_data,'hl[0].ol.length');
       if(temp && temp>10){
         this.show_more = false;
       }

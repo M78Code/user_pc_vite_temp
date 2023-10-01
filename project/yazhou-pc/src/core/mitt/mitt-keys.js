@@ -377,3 +377,6 @@ export const EMIT_SET_HANDICAP_THIS = 'EMIT_SET_HANDICAP_THIS'
 /**  赛果时间选择器   */
 export const EMIT_SHOW_SELECT= 'EMIT_SHOW_SELECT'
 
+/**   赛事详情更新   */
+export const EMIT_SHOW_DETAILS= 'EMIT_SHOW_DETAILS'
+

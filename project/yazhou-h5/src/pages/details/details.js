@@ -863,6 +863,7 @@ const get_detail_data = ref(MatchDataWarehouse_H5_Detail_Common.list_to_obj.mid_
   onUnmounted(() => {
     emitters_off()
     SessionStorage.remove('DETAIL_TAB_ID')
+    SessionStorage.remove('DETAILS_DATA_CACHE')
   })
   const on_listeners = () => {
     // #TODO IMIT

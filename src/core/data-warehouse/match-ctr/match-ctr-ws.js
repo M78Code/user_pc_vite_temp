@@ -330,13 +330,13 @@ export default class MatchDataBaseWS
           hls.forEach(hl_obj => {
             let ol = lodash.get(hl_obj,'ol');
             // 拼接快速查找对象所需的id
-            const hid_str = this.match_ctr.get_format_quick_query_key(mid,hl_obj.hid,'hl');
+            const hid_str = this.match_ctr.get_list_to_obj_key(mid,hl_obj.hid,'hl');
             // 获取指定的盘口对象
             const quick_hl_obj = this.match_ctr.quick_query_obj.hl_obj[hid_str];
             ol.forEach(ol_obj => {
               if(ol_obj){
                 // 拼接快速查找对象所需的id
-                const oid_str = this.match_ctr.get_format_quick_query_key(mid,ol_obj.oid,'ol');
+                const oid_str = this.match_ctr.get_list_to_obj_key(mid,ol_obj.oid,'ol');
                 // 获取指定的投注项对象
                 const quick_ol_obj = this.match_ctr.quick_query_obj.ol_obj[oid_str];
                 // 处理ot是小数的情况,进行数据修正
@@ -355,14 +355,14 @@ export default class MatchDataBaseWS
                 // 合并投注项数据信息
                 quick_ol_obj && Object.assign(quick_ol_obj, ol_obj);
                 // 更新坑位信息
-                this.match_ctr.quick_query_obj.hn_obj[this.match_ctr.get_format_quick_query_key(mid,_hn,'hn')] = quick_ol_obj;
+                this.match_ctr.quick_query_obj.hn_obj[this.match_ctr.get_list_to_obj_key(mid,_hn,'hn')] = quick_ol_obj;
               }
             });
             // 合并投注项数据信息
             this.match_ctr.assign_with(quick_hl_obj, hl_obj);
           });
         }
-        match.api_update_time = new Date().getTime();
+        this.match_ctr.match_upd_time_ret_change(match)
       }
     }
   }
@@ -435,6 +435,7 @@ export default class MatchDataBaseWS
       if(match){
         // 数据同步逻辑
         this.match_ctr.assign_with(match, cd_obj);
+        this.match_ctr.match_upd_time_ret_change(match);
       }
     }
   }
@@ -502,6 +503,7 @@ export default class MatchDataBaseWS
       if(match){
         // 数据同步逻辑
         this.match_ctr.assign_with(match, cd_obj);
+        this.match_ctr.match_upd_time_ret_change(match);
       }
     }
   }
@@ -663,6 +665,7 @@ export default class MatchDataBaseWS
           this.match_ctr.list_serialized_match_obj([match]);
           // 同步更新快速查询对象中的赛事状态
           this.match_ctr.upd_match_all_status({mid:mid, mhs:cd_obj.mhs});
+          this.match_ctr.match_upd_time_ret_change(match);
         }
       });
     }
@@ -738,11 +741,13 @@ export default class MatchDataBaseWS
    * @return {undefined} undefined
    */
   scmd_c8(ctr_cmd) {  
-    if(lodash.get(this.match_ctr,'quick_query_list.length')){
+    if(lodash.get(this.match_ctr,'mids_ation.length')){
+      // 获取赛事列表信息
+      const list = this.match_ctr.get_match_object_form_list_to_obj(this.match_ctr.mids_ation,'Array');
       let obj = {};
       obj.key = this.match_ctr.name_code;
       obj.module = 'match-ctr';
-      obj.list = this._get_c8_list(lodash.get(this.match_ctr,'quick_query_list',[]));      
+      obj.list = this._get_c8_list(list);      
       obj.one_send = false; 
       obj.ctr_cmd = ctr_cmd;
       // cufm 详情用LM列表为L

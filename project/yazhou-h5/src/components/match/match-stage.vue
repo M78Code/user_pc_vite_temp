@@ -9,9 +9,9 @@
       <!-- 赛事未开赛 -->
       <span v-if="detail_data.ms == 0">
         <span v-if="!one_hour">
-          <!-- 距离开赛时间大于1小时 显示月和日 -->
+          <!-- 距离开赛时间大于1小时 显示月和日 .Format(i18n_t('time3'))-->
           <!-- {{(new Date(+detail_data.mgt)).Format(i18n_t('time3'))}} -->
-          {{ utils.format_time_zone(+detail_data.mgt).Format(i18n_t('time3')) }}
+          {{ format_time_zone(+detail_data.mgt) }}
         </span>
       </span>
 
@@ -48,6 +48,7 @@ import { utils } from 'src/core/utils/index.js';
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
 import { MenuData } from "src/core/index.js";
 import { i18n_t } from "src/boot/i18n.js"
+import { format_time_zone } from 'src/core/format/index.js'
 
 // import stage_child_1 from "./stage/stage-child-1.vue";  // 详情页显示足球赛事第几节以及赛事时间
 // import stage_child_2 from "./stage/stage-child-2.vue";  // 详情页显示篮球赛事第几节以及赛事时间
