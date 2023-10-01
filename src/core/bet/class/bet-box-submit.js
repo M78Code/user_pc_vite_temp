@@ -350,13 +350,12 @@ const set_bet_obj_config = (mid_obj,hn_obj,hl_obj,ol_obj) =>{
                 text = mid_obj.man
                 break
         }
-        // 直接显示投注项 )
-        if(!get_handicap(ol_obj)){
-            handicap = text
+        handicap = text
+        //展示用的 + 投注项  
+        if(get_handicap(ol_obj)){
             handicap_attach = ol_obj.on
-        }else{
-            handicap = text
         }
+       
     }else{
         // 列表数据
         let text = ''
@@ -370,12 +369,10 @@ const set_bet_obj_config = (mid_obj,hn_obj,hl_obj,ol_obj) =>{
                 text = mid_obj.man
                 break
         }
-        // 直接显示投注项 )
-        if(!get_handicap(ol_obj)){
-            handicap = text
+        handicap = text
+        //展示用的 + 投注项  
+        if(get_handicap(ol_obj)){
             handicap_attach = ol_obj.on
-        }else{
-            handicap = text
         }
     }
 
@@ -436,7 +433,7 @@ const get_handicap = ol_obj => {
     // 直接显示投注项
     return playId.includes(Number(ol_obj._hpid))
 }
-
+1
 // 设置投注后的数据内容
 const set_orderNo_bet_obj = order_no_list => {
     let order_list = order_no_list.map( item => {
