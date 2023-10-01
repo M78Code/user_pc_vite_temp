@@ -148,9 +148,6 @@ const first_change = ref(false);
 
 
 onMounted(() => {
-  console.error('ss', sprite_img['pc-left-menu-bg-image']({ position: `item_${BaseData.compute_sport_id(1)}` }))
-
-  console.error('sss', compute_css_variables({ category: 'global', module: "background" })['--q-gb-bg-c-2'])
   handle_click_jinri_zaopan(2)
 })
 
@@ -792,7 +789,6 @@ const lv_2_click_common = (detail = {}) => {
     result.mid_menu_refer_params = mid_menu_refer_params;
   }
   // jinri_zaopan_men_result.value = result; ????????
-  console.error("当前选中的 侧边 二级菜单 ------------ ", result);
   MenuData.set_left_menu_result(result);
 };
 
