@@ -6,7 +6,7 @@
   <div class="bet-record-container" data-container="bet-record-container">
     <!--投注记录卡片-->
     <q-card flat class="bet-record-card full-width">
-      <template v-for="(item, index) in ref_data.record_data.records" :key="index">
+      <template v-for="(item, index) in ref_data.record_data" :key="index">
         <!--单关start (0:未结算,1:已结算,2:注单取消,3:确认中,4:投注失败)-->
         <div class="border-shq-card-actionsadow">
           <!--卡片标题-->
@@ -23,22 +23,24 @@
           <!--结算内容-->
           <template v-if="item.is_expand">
             <!-- 0:未结算 1:已结算 2: 预约 -->
-            <template v-if="[0, 1].includes(selected)">
+            <template v-if="[0, 1].includes(ref_data.selected)">
               <div v-for="(order, order_index) in item.orderVOS" :key="'bet-item-' + index + '-' + order_index"
                 class="bet-item  relative-position" :class="{ 'cursor-pointer': show_arrow(item, order) }"
                 @click="go_match(item, order)">
                 <!--卡片内容-->
                 <q-card-section>
                   <!--投注记录中投注项 selected是否被选择 appoint_order_status预约状态 order_status订单状态pre_bet_amount提前结算金额-->
-                  <bet-record-item :selected="selected" :appoint_order_status="appoint_order_status" :item="item" :index="index" :order="order"></bet-record-item>
+                  <bet-record-item :selected="ref_data.selected" :appoint_order_status="ref_data.appoint_order_status" :item="item"
+                    :index="index" :order="order"></bet-record-item>
                 </q-card-section>
               </div>
             </template>
-       
-      
+
+
           </template>
           <q-card-section class="bet-item-separator"
-            :class="{ 'bet-item-separator-last': (index == (record_data.records.length - 1)) }" :key="index"></q-card-section>
+            :class="{ 'bet-item-separator-last': (index == (ref_data.record_data.length - 1)) }"
+            :key="index"></q-card-section>
         </div>
       </template>
     </q-card>
@@ -61,16 +63,18 @@ onMounted(() => {
 })
 
 const ref_data = reactive({
-  cur_page:1,
+  cur_page: 1,
   page_size: 20,
   // 0:未结算 1:已结算 2: 预约
-  selected: 0,
+  selected: 1,
   load_data_state: 'loading',
-  get_cashout_num:0,
-  is_more_show:false,
-  total_page:20,
-  record_data:[],
-  orderNo_list:[]
+ // 预约订单状态当appoint_status为投注预约时取值为 0: 进行中 2: 已失效
+ appoint_order_status: 0,
+  get_cashout_num: 0,
+  is_more_show: false,
+  total_page: 20,
+  record_data: [],
+  orderNo_list: []
 
 })
 
@@ -94,12 +98,12 @@ const get_record_list = (cur_page = 1) => {
   ref_data.load_data_state = "loading";
 
   api_betting.post_getOrderList(params).then(res => {
-    let code = lodashlodash_.get(res, 'code')
-    let data = lodashlodash_.get(res,'data')
+    
+    let code = lodash_.get(res, 'code')
+    let data = lodash_.get(res, 'data')
     if (code == 200) {
       // 投注记录
       let record_data = data;
-      let record_fields;
       let records = data && data.records;
       // 当maxcashout为null时，定时1秒重新拉次数据，最多查询5次
       let records_ = lodash_.filter(records, { 'enablePreSettle': true, 'orderStatus': '0', 'initPresettleWs': true });
@@ -110,10 +114,10 @@ const get_record_list = (cur_page = 1) => {
         ref_data.get_cashout_num++;
         if (ref_data.get_cashout_num <= 4) {
           // 清除重新拉取投注记录定时器
-        clear_send_cashout()
-         send_cashout = setTimeout(() => {
+          clear_send_cashout()
+          send_cashout = setTimeout(() => {
             // 重新拉取列表数据
-          get_record_list(ref_data.cur_page);
+            get_record_list(ref_data.cur_page);
           }, 1000)
         } else {
           ref_data.get_cashout_num = 0
@@ -142,45 +146,26 @@ const get_record_list = (cur_page = 1) => {
           ref_data.total_page = parseInt(record_data.total / ref_data.page_size);
           ref_data.total_page = ((record_data.total % ref_data.page_size) == 0) ? ref_data.total_page : (ref_data.total_page + 1);
         }
-        // 当前在第一页
-        if (ref_data.cur_page == 1) {
-          // 保存投注记录到变量
-          ref_data.record_data = data;
-          record_fields = lodash_.cloneDeep(data);
-          record_fields.records = [];
-          Object.assign(ref_data.record_data, record_fields);
-          ref_data.record_data.records = [];
-          ref_data.orderNo_list = []
-        }
+       
         if (!records) {
           // 投注记录不存在设置加载状态为empty
           ref_data.load_data_state = "empty";
           return;
         }
         // 最新数据替换，不同数据拼接在一起
-        let orderNo_list_ = lodash_.map(ref_data.record_data.records, 'orderNo')
+        let orderNo_list_ = lodash_.map(ref_data.record_data, 'orderNo')
         lodash_.forEach(records, item => {
           if (lodash_.includes(orderNo_list_, item.orderNo)) {
-            let index = lodash_.findIndex(ref_data.record_data.records, ['orderNo', item.orderNo]);
-            // this.$set(ref_data.record_data.records, index, item)
+            // this.$set(ref_data.record_data, index, item)
           } else {
-            ref_data.record_data.records.push(item)
+            ref_data.record_data.push(item)
           }
         })
-        // this.record_data.records.push(...records);
-        let record_list = lodash_.cloneDeep(ref_data.record_data.records);
         // 如果是已结算
-        if (ref_data.selected) {
-          // 投注记录对象话
-          // get_record_obj(record_list);
-        } else if (ref_data.selected == 0 && UserCtr.user_info.settleSwitch) {
-          // 如果是未结算 且结算开关打开的调用提前结算确认中接口
-        //  query_order_pre_settle_confirm(record_list);
-          // 提前结算实时查询，取里面orderNo，做提前结算实时查询最新数据处理
-        //  get_order_no()
-        } else {
-          // 其他情况投注记录对象话
-          // get_record_obj(record_list);
+        // 提前结算开关打开时订阅提前结算注单
+        if (ref_data.selected == 0 && this.vx_get_user.settleSwitch) {
+          // 订阅C21
+          this.SCMD_C21();
         }
       }
     } else {
@@ -195,6 +180,13 @@ const get_record_list = (cur_page = 1) => {
   }).catch(err => { console.error(err) });
 }
 
+const change_handle = ()=>{}
+const order_status = ()=>{}
+const show_arrow = ()=>{}
+
+const go_match = () =>{}
+
+const order_class = () =>{}
 </script>
 <style lang="scss" scoped>
 /**投注记录内容样式*/

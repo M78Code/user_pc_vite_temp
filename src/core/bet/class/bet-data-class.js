@@ -341,9 +341,10 @@ this.bet_appoint_ball_head= null */
         this.bet_s_list.push(bet_refer_obj)
       }
     }
-
     // 显示 投注信息窗口
-    MenuData.set_layout_left_show('bet_list')
+    if(MenuData.set_layout_left_show != 'bet_list'){
+      MenuData.set_layout_left_show('bet_list')
+    }
 
     this.set_bet_data_class_version()
   }
