@@ -567,6 +567,7 @@ onUnmounted(() => {
   clearTimeout(get_match_details_timer);
 });
 const use_featch_fn = () => {
+  
   return {
     get_matchInfo_fun,
   };
