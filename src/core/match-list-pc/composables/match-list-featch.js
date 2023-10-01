@@ -90,7 +90,6 @@ const set_match_base_info_by_mids_info = (match_list, mids_arr, ts1) => {
 	 */
 const set_league_list_obj = (league_list_obj) => {
   league_list_obj.value = league_list_obj;
-
 }
 
 /**
