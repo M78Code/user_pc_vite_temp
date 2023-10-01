@@ -78,12 +78,7 @@ class BetViewData {
     this.bet_show = ref(false)
 
     // 限额
-    this.bet_min_max_money = {
-      "11": {
-        min_money: 10,
-        max_money: 8888
-      }
-    }
+    this.bet_min_max_money = {}
 
     this.bet_view_version = ref('11')
 
@@ -166,6 +161,24 @@ class BetViewData {
       // 4-投注失败状态 显示错误信息
       this.set_bet_order_status(4)
     }
+  }
+  /**
+   * @description: 完成按钮是否显示
+   * @param {undefined} undefined
+   * @return {Boolean}
+   */
+  set_bet_complete_show() {
+    //bet_order_status:3-投注成功状态 order_confirm_complete:2.所有注单已经确认完成 且全部成功 3.所有注单已经确认完成 且全部失败  4.所有注单已经确认完成 部分成功部分失败
+    return this.bet_order_status === 3 || [2, 3, 4].includes(this.order_confirm_complete);
+  }
+  /**
+   * @description: 是否在投注中
+   * @param {undefined} undefined
+   * @return {Boolean}
+   */
+  set_bet_loadding() {
+    //bet_order_status:2-投注中状态 order_confirm_complete:1.注单确认中
+    return this.bet_order_status == 2 || this.order_confirm_complete == 1;
   }
 
   // 设置 code对应的 message数据 
