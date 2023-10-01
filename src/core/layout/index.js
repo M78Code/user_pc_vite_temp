@@ -1,4 +1,5 @@
 import { ref } from "vue";
+import { useRoute } from "vue-router";
 // 浏览器高度
 let client_height = Math.max(
   document.body.clientHeight,
@@ -46,6 +47,8 @@ class LayOutMain {
     this.layout_main_width = 1440
     /** 搜索框宽度 */
     this.layout_search_width = 0
+    // 来源 当前路由
+    this.layout_current_path = ''
   }
 
   // 初始化
@@ -101,6 +104,13 @@ class LayOutMain {
       this.layout_search_width = 390
     }
   }
+  /** 设置当前路由页面 */
+  set_layout_current_path() {
+    const route = useRoute();
+    this.layout_current_path = route.name
+    this.set_layout_version()
+  }
+  
 
 }
 
