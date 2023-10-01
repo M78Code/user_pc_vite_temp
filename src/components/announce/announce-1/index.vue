@@ -115,7 +115,6 @@ function get_list() {
         console.error('post_announce_list res', res);
         let code = lodash.get(res, "code");
         const data = lodash.get(res, "data");
-        // debugger
         if (code == 200 && data) {
             data.nt.unshift({
                 id: 0,

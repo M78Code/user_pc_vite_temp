@@ -282,12 +282,12 @@ import odds_new from "project_path/src/pages/details/components/tournament-play/
 import {utils } from 'src/core/index.js';
 import lodash from "lodash";
 import store from "src/store-redux/index.js";
-import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
+import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, ref } from "vue";
 import { useRoute } from "vue-router"
 import { i18n_t } from "src/boot/i18n.js";;
 //国际化
 
-const route = useRoute()
+
 export default defineComponent({
   // #TODO mixins
   // mixins: [odd_convert],
@@ -297,10 +297,17 @@ export default defineComponent({
     "odds-new": odds_new
   },
   setup(props, evnet) {
+    const route = useRoute()
     const store_state = store.getState()
-    let data = reactive({
+    let state_data = reactive({
       show_more:true,
     })
+  const element = ref(null)
+  const other_item_list = ref([])
+    const ol_list_0 = ref([])
+    const ol_list_1 = ref([])
+    const ol_list_2 = ref([])
+    const max_count_ol = ref([])
     // #TODO vuex
     // computed: {
     // ...mapGetters([
@@ -324,7 +331,7 @@ export default defineComponent({
     });
     const hide_show_more_layout = computed(() => {
       let ret = true;
-      let len = lodash.get(this.item_data,'hl[0].ol.length');
+      let len = lodash.get(props.item_data,'hl[0].ol.length');
       if(!len){
         len = 0;
       }
@@ -338,31 +345,66 @@ export default defineComponent({
     watch(
       () => get_flag_get_ol_list,
       () => {
-        this.max_count_ol = this.get_ol_list();
+        max_count_ol = get_ol_list();
       }
     );
     onMounted(() => {
       // 根据指定模板,对模板下数据量大的玩法进行折叠处理
       // 获取玩法下的数量
-      let temp = lodash.get(this.item_data,'hl[0].ol.length');
+      let temp = lodash.get(props.item_data,'hl[0].ol.length');
       if(temp && temp>10){
-        this.show_more = false;
+        state_data.show_more = false;
       }
     })
+    const get_ol_list = () =>{
+      let max = 0,
+        hl = props.item_data.hl[0],
+        ol_list = hl.ol;
+
+        props.item_data.title.forEach((tit,i) => {
+        let other_items = ol_list.filter(ol_item => ol_item.ot == 'Other');
+        if(other_items.length){
+          // 合并数据，根据id去重
+          const arr = [...other_items,...other_item_list.value]
+          const uniq_arr = lodash.uniqWith(arr, (arr_val, oth_val)=>{
+            if(arr_val.id_ === oth_val.id_ ) {
+              return true
+            }
+            return false
+          });
+          other_item_list.value = uniq_arr
+        }
+        //os等于3需要隐藏投注项
+        
+        let filtered = ol_list.filter(ol_item => ol_item.otd == tit.otd && ol_item.ot != 'Other' && ol_item.os != 3 );
+        if(i == 0){
+          ol_list_0.value = filtered;
+        }
+        else if(i == 1){
+          ol_list_1.value = filtered;
+        }
+        else if(i == 2){
+          ol_list_2.value = filtered;
+        }
+        let m_len = filtered.length;
+        if(m_len > max) max = m_len;
+      });
+      return max;
+    }
     /**
      *@description 6号模板点击收起的时候，要调整滚动距离回到展开之前的高度
      *@return {Undefined} undefined
      */
     const change_show = () => {
-      if (this.show_more) {
-        let distance = this.$refs.element.offsetHeight - (6 * utils.rem(0.52))
-        if (this.route.name == 'virtual_sports_details') {
+      if (state_data.show_more) {
+        let distance = element.value.offsetHeight - (6 * utils.rem(0.52))
+        if (route.name == 'virtual_sports_details') {
           document.documentElement.scrollTop -= distance
         } else {
           useMittEmit(MITT_TYPES.EMIT_SET_DETAILDS_SCROLL,distance)
         }
       }
-      this.show_more = !this.show_more
+      state_data.show_more = !state_data.show_more
     };
     /**
      * @description: 检测是不是比分格式5-9
@@ -391,7 +433,7 @@ export default defineComponent({
       // $emit("bet_click_", {ol_item});
     };
     return {
-      ...toRefs(data),
+      ...toRefs(state_data),
       utils,
       i18n_t,
       get_bet_list,

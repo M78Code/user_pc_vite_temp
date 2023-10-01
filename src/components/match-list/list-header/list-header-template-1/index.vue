@@ -79,7 +79,7 @@
       <div class="unfold-btn" @click="set_unfold_multi_column(false)"
         v-if="menu_config.is_multi_column && !vx_show_filter_popup && !is_search_page && get_unfold_multi_column">
         <span class="text">{{ t('icon_tips.unfold') }}</span>
-        <i class="icon-arrow q-icon c-icon" size="12px"></i>
+        <icon-wapper class="icon-arrow q-icon c-icon" size="12px"></icon-wapper>
       </div>
     </div>
   </div>

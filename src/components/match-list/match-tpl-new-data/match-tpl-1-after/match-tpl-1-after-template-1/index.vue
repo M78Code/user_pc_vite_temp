@@ -30,10 +30,11 @@
       <div class="match-handicap-item" v-if="lodash.get(match, 'has_add1')">
         <!-- 赛事基础信息 -->
         <div class="basic-col" :style="`width:${match_list_tpl_size.team_width}px !important;height:70px !important;`">
-          <basis-info4 v-if="is_mounted" :match="match" />
+          <!-- <basis-info4 v-if="is_mounted" :match="match" /> -->
         </div>
         <!-- 赛事盘口投注项 -->
-        <match-handicap :handicap_list="lodash.get(match, 'add1_handicap_list')" :match="match" />
+        {{ match.add1_handicap_list }}
+        <match-handicap :handicap_list="match_tpl_info[`template_${match_style_obj.data_tpl_id}`].add_handicap_list" :match="match" />
         <!-- 视频按钮 -->
         <div class="media-col"></div>
       </div>
@@ -41,10 +42,10 @@
       <div class="match-handicap-item" v-if="lodash.get(match, 'has_add2')">
         <!-- 赛事基础信息 -->
         <div class="basic-col" :style="`width:${match_list_tpl_size.team_width}px !important;height:70px !important;`">
-          <basis-info4 v-if="is_mounted" :match="match" />
+          <!-- <basis-info4 v-if="is_mounted" :match="match" /> -->
         </div>
         <!-- 赛事盘口投注项 -->
-        <match-handicap :handicap_list="lodash.get(match, 'add2_handicap_list')" :match="match" />
+        <match-handicap :handicap_list="match_tpl_info[`template_${match_style_obj.data_tpl_id}`].add_handicap_list" :match="match" />
         <!-- 视频按钮 -->
         <div class="media-col"></div>
       </div>
@@ -137,7 +138,6 @@ const is_mounted = ref(true);
 
 watch(() => MatchListData.data_version.version, (new_value, old_value) => {
   match = MatchListData.list_to_obj.mid_obj[props.mid+'_'];
-  console.log('matchmatch', new_value, old_value, MatchListData.list_to_obj.mid_obj[props.mid+'_']);
 })
 
 // const match = computed(() => {

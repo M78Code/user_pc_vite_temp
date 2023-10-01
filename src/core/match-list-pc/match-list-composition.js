@@ -286,6 +286,7 @@ const set_base_data_init = () => {
  * @param {Object} params 其他参数
  */
 const fetch_match_list = (is_socket = false, cut) => {
+	debugger;
 	// 设置当前为赛事列表
 	// 如果有拉列表定时器 清除定时器
 	if (!is_socket && get_match_list_timeid) {
@@ -323,7 +324,7 @@ const fetch_match_list = (is_socket = false, cut) => {
 	}
 	let match_api = MenuData.match_list_api_config.match_list || {};
 	// 设置列表接口 和 参数
-	let api = api_match['post_league_list'];
+	let api = api_match[match_api.api_name];
 	let _params = lodash.clone(match_api.params) || {};
 	// 切换是 排序后 设置当前的排序
 	_params.sort = vx_match_sort.value;
@@ -461,8 +462,8 @@ const mounted_fn = () => {
 	useMittOn(MITT_TYPES.EMIT_MX_COLLECT_COUNT2_CMD, mx_collect_count);
 	// 站点 tab 休眠状态转激活
 	useMittOn(MITT_TYPES.EMIT_SITE_TAB_ACTIVE, emit_site_tab_active);
-	// 调用列表接口
-	useMittOn(MITT_TYPES.EMIT_FETCH_MATCH_LIST, fetch_match_list);
+	// 调用列表接口fetch_match_list
+	useMittOn(MITT_TYPES.EMIT_FETCH_MATCH_LIST, () => {console.log('进来了了了了了了了了');});
 	useMittOn(MITT_TYPES.EMIT_API_BYMIDS, api_bymids);
 	useMittOn(MITT_TYPES.EMIT_MX_COLLECT_MATCH, mx_collect_match);
 	// useMittOn(MITT_TYPES.EMIT_MiMATCH_LIST_SHOW_MIDS_CHANGE, show_mids_change);
@@ -604,7 +605,7 @@ const on_go_top = () => {
  * @return {undefined} undefined
  */
 const on_refresh = () => {
-	// fetch_match_list(2);
+	fetch_match_list(2);
 	show_refresh_mask.value = true;
 };
 /**
@@ -689,7 +690,7 @@ const check_match_last_update_time = () => {
  * 发送站点选项卡事件
  */
 const emit_site_tab_active = () => {
-	// fetch_match_list(true);
+	fetch_match_list(true);
 };
 export  default function(){
 	return {

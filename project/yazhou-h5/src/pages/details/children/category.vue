@@ -108,7 +108,7 @@ export default defineComponent({
     loading,
     detailMatchList
   },
-  props: {},
+  props: ['category_arr'],
   setup(props, evnet) {
     // 路由
     const router = useRouter();
@@ -126,7 +126,6 @@ export default defineComponent({
       get_goto_detail_matchid,
       get_menu_type,
       get_uid,
-      get_details_tabs_list,
       get_subscript_game_index,
       get_fewer,
       get_curr_sub_menu_type,
@@ -149,7 +148,7 @@ export default defineComponent({
       set_detail_data_storage,
       remove_session_storage,
       remove_detail_storage,
-    } = category_info();
+    } = category_info(props.category_arr);
     watch(
       () => route.params,
       (to, from) => {
@@ -159,7 +158,6 @@ export default defineComponent({
             get_menu_type.value != 28 && !to.search_term && to.mid == from.mid
             || to.search_term && component_data.match_play_item_changed
         ) {
-          console.error(to, from);
           initEvent();
         }
         // 当切换玩法集的时候变为: true
@@ -279,7 +277,6 @@ export default defineComponent({
       get_goto_detail_matchid,
       get_menu_type,
       get_uid,
-      get_details_tabs_list,
       get_subscript_game_index,
       get_fewer,
       get_curr_sub_menu_type,

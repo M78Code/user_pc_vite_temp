@@ -309,7 +309,6 @@ export default {
                 //     num_arr.push(item.hl[j].ol[p]);
 
                 //   }
-                  // debugger
                   if(item.hl[j].hs == 0){
                     // hs 盘口状态 0:开盘 1:封盘 2:关盘 11:锁盘
                     item.hl[j].ol[p].hid = item.hl[j].hid;

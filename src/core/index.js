@@ -171,7 +171,10 @@ const MatchDataWarehouse_H5_List_Jingxuan = new MatchDataBase({
 const MatchDataWarehouse_H5_Detail_Jingxuan = new MatchDataBase({
   name_code: "MatchDataWarehouse_H5_Detail_Jingxuan",
 });
-
+/***
+ * 详情操作类
+ */
+const MatchDetailCalss = new MatchDetailCtr()
 /**
  * PC  布局
  */
@@ -220,6 +223,7 @@ export {
   SearchData,
   VrSportCtr,
   MatchDetailCtr,
+  MatchDetailCalss,
   UserCtr,
   IS_PC,
   MenuData,

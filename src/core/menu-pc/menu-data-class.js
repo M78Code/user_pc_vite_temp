@@ -113,7 +113,7 @@ class MenuData {
   // 设置 菜单的版本变化
   set_menu_data_version(){
     useMittEmit(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA)
-    // useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST);
+    useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST);
     this.menu_data_version.value = Date.now()
   }
   /**

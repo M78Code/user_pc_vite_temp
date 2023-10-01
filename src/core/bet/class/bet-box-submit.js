@@ -321,7 +321,6 @@ const set_bet_obj_config = (params = {}, other = {}) => {
     const mid_obj = lodash_.get(query.list_to_obj, `mid_obj.${_mid}_`, {})
     const ol_obj = lodash_.get(query.list_to_obj, `ol_obj.${_mid}_${oid}`, {})
     // let other = { bet_type:'common_bet'}
-debugger
     // 1 ：早盘赛事 ，2： 滚球盘赛事，3：冠军，4：虚拟赛事，5：电竞赛事")
     let matchType = 1
     if ([1, 2].includes(Number(mid_obj.ms))) {

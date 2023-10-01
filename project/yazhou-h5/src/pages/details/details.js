@@ -8,16 +8,18 @@ import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-c
 // import { Level_one_category_list, Level_one_detail_data } from "./category-list.js";
 import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch, nextTick, ref } from "vue";
 import UserCtr from "src/core/user-config/user-ctr.js";
-import { MatchDataWarehouse_H5_Detail_Common, format_plays, format_sort_data } from "src/core/index";
-import MatchDetailCtr from "src/core/match-detail/match-detail-class.js"
+import { MatchDataWarehouse_H5_Detail_Common, format_plays, format_sort_data, MatchDetailCalss } from "src/core/index";
+import { SessionStorage } from "src/core/utils/index.js"
 
 export const details_main = () => {
 const router = useRouter();
 const route = useRoute();
-const get_detail_data = ref({})
+const get_detail_data = ref(MatchDataWarehouse_H5_Detail_Common.list_to_obj.mid_obj)
   // console.log("Store", store)
   // const state = store.getState()
+  const matchDetailCtr = ref(MatchDetailCalss)
   let state_data = reactive({
+    matchDetailCtr: MatchDetailCalss,
     // 切换赛事时，重置玩法集请求次数计数
     get_category_list_req_count: 0,
     // refs['fixedHeight']
@@ -154,9 +156,7 @@ const get_detail_data = ref({})
   // 足篮赛种和后台开关开了才显示显示赛事分析tab
   const show_match_analysis_tab = computed(() => {
     return (
-      [1, 2].includes(+get_detail_data.value.csid) &&
-      // GlobalAccessConfig.get_statisticsSwitch()
-      true
+      [1, 2].includes(+get_detail_data.value.csid) && GlobalAccessConfig.get_statisticsSwitch()
     );
   });
   // 是否显示聊天室tab
@@ -211,7 +211,7 @@ const get_detail_data = ref({})
   // // 刷新页面时获取当前玩法集ID
   // onMounted(() => {
   //   console.error(route);
-  //   MatchDetailCtr.current_category_id = route.params.mcid
+  //   matchDetailCtr.value.current_category_id = route.params.mcid
   // })
   /**
    *@description: 点击详情任意地方显示视频对阵信息
@@ -492,7 +492,7 @@ const get_detail_data = ref({})
           if (res_data && Object.keys(res_data).length) {
             match_detail_data_handle(res_data)
             // 数据传入数据仓库
-            MatchDataWarehouseInstance.set_list_from_match_details(res_data)
+            MatchDataWarehouseInstance.set_match_details(res_data)
           } else {
             // 赛事下发999后, 显示空空如也
             state_data.skeleton.details = true
@@ -632,19 +632,20 @@ const get_detail_data = ref({})
             type: 'SET_DETAILS_TABS_LIST',
             data: res_data
           });
+          matchDetailCtr.value.compute_category_refer(res_data)
           // 当玩法集存在激活得项，循环找到对用得id，找得到就不管，找不到就赋值为玩法集第一项
           if (state_data.get_details_item && res_data.length) {
             const set_details_item_flag = res_data.some(
-              (item) => item.id == MatchDetailCtr.current_category_id
+              (item) => item.id == matchDetailCtr.value.current_category_id
             );
             // 找不到就赋值为玩法集第一项
             if (!set_details_item_flag) {
-              MatchDetailCtr.current_category_id =res_data[0]["id"];
+              matchDetailCtr.value.category_tab_click(res_data[0]);
             }
           } else {
             // 当第一次进来就会走这里默认赋值第一项
             // res_data && set_details_item(res_data[0]["id"]);
-            MatchDetailCtr.current_category_id = res_data[0]["id"]
+            matchDetailCtr.value.category_tab_click(res_data[0])
           }
           let search_term = route.query && route.query.search_term;
           if (search_term) {
@@ -861,6 +862,7 @@ const get_detail_data = ref({})
    */
   onUnmounted(() => {
     emitters_off()
+    SessionStorage.remove('DETAIL_TAB_ID')
   })
   const on_listeners = () => {
     // #TODO IMIT
