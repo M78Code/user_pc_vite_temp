@@ -281,3 +281,4 @@ class MatchListDetailMiddleware {
     }
   }
 }
+export default new MatchListDetailMiddleware()
