@@ -19,9 +19,6 @@
       LayOutMain_pc.layout_content_width - 15
     }px  !important;${card_style}`"
   >
-    <!-- {{ card_key }}===> {{ card_style_obj.card_type }}===>      {{  mids_arr }} -->
-    <!-- {{ card_key }}  {{ card_style_obj }} -->
-    <!-- lockie  ${card_style_obj.card_total_height} -->
     <div v-show="false">{{ MatchListCardDataClass.list_version }}</div>
     <div
       v-if="is_mounted"

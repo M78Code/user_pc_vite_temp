@@ -3,6 +3,7 @@
  * 
  * 列表可视区 显示级别 算法  
  * */ 
+import { nextTick } from 'vue'
 import MatchListCardData from "./match-list-card-data-class.js";
 import PageSourceData  from  "src/core/page-source/page-source.js"
 import { LayOutMain_pc } from "src/core/index.js";
@@ -162,7 +163,8 @@ export const set_card_show_level = (scroll_top = 0) => {
       // 设置上一个卡片对象
       pre_card_obj = card_obj
     })
-   set_card_show_level()
+    set_card_show_level()
+      MatchListCardData.set_list_version()    
   }
 
 

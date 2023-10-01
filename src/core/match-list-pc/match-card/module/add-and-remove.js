@@ -3,7 +3,7 @@ import { compute_style_template_by_matchinfo } from "./compute-style-template.js
 import { conpute_match_list_card_offset } from "./card-show-offset.js";
 import { compute_match_list_style_obj_and_match_list_mapping_relation_obj } from "./data-relation.js";
 import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/core/index.js";
-import MatchListCardClass from "src/core/match-list-pc/match-card/match-list-card-class.js";
+import MatchListCardData from "./match-list-card-data-class";
 import use_featch_fn from '../../composables/match-list-featch.js'
 import { PageSourceData } from 'src/core/index.js';
 
@@ -66,40 +66,31 @@ export const remove_league = (remove_tid) => {
 export const recompute_match_list_style_obj_and_match_list_mapping_relation_obj_by_matchs =
   (mids_arr) => {
     // 是否走卡片逻辑
-    if (!MatchListCardClass.is_run_card_function) {
+    if (!MatchListCardData.is_run_card_function) {
       return;
     }
     mids_arr.forEach((mid) => {
       // 原来的样式数据
-      let old_match_style_obj =
-        MatchListCardClass.all_card_obj[mid+'_'] || {};
-        debugger
+      let old_match_style_obj = MatchListCardData.all_card_obj[mid+'_'];
       // 判断是否需要动态计算高度
       if (
         old_match_style_obj.is_dynamic_compute_height ||
         !old_match_style_obj.card_total_height
       ) {
-        // 更新赛事表征数据
-        let match = MatchListData.list_to_obj.mid_obj[mid+'_'] || {};
-        console.log('mids_arrmids_arr', match);
-
+        let match = MatchListData.list_to_obj.mid_obj[mid+'_'];
         let match_style_obj = compute_style_template_by_matchinfo(
           match,
-          match.data_tpl_id
+          old_match_style_obj.data_tpl_id
         );
+        // 更新赛事表征数据
         Object.assign(old_match_style_obj, match_style_obj);
         // 更新赛事父级卡片样式 即对应的联赛容器卡片样式
         update_match_parent_card_style(
           old_match_style_obj,
-          MatchListCardClass.all_card_obj
+          MatchListCardData.all_card_obj
         );
       }
     });
-    // 重新计算卡片样式
-    compute_match_list_style_obj_and_match_list_mapping_relation_obj(
-      match_list,
-      true
-    );
     // 设置列表总高度
     conpute_match_list_card_offset();
   };
@@ -110,7 +101,7 @@ export const recompute_match_list_style_obj_and_match_list_mapping_relation_obj_
  *  并且 在调用   remove_match  方法的时候 传入  回调   { length_0_fn：xxxx_fn   }
  */
 const remove_match_callback_when_match_list_length_0_demo = () => {
-  // if([1,3].includes(MatchListCardClass.match_list_mapping_relation_obj_type)){
+  // if([1,3].includes(MatchListCardData.match_list_mapping_relation_obj_type)){
   //   // this.view.set_load_data_state('empty')
   // }else{
   //      // 收藏时当列表为空时跳转菜单
@@ -228,7 +219,7 @@ export const remove_match = (remove_mid, callback) => {
   if (window.vue.$route.name == "search") {
     return;
   }
-  if ([1, 3].includes(MatchListCardClass.match_list_mapping_relation_obj_type)) {
+  if ([1, 3].includes(MatchListCardData.match_list_mapping_relation_obj_type)) {
     remove_match_when_match_list_mapping_relation_obj_type_1_3(
       remove_mid,
       callback
@@ -245,21 +236,21 @@ export const remove_match = (remove_mid, callback) => {
  */
 export const set_new_sport_title_card_fold = () => {
   // 新增球种操作
-  lodash.each(MatchListCardClass.csid_to_card_key_obj, (card_key_arr) => {
-    let sport_card_obj = MatchListCardClass.all_card_obj[card_key_arr[0]] || {};
+  lodash.each(MatchListCardData.csid_to_card_key_obj, (card_key_arr) => {
+    let sport_card_obj = MatchListCardData.all_card_obj[card_key_arr[0]] || {};
     // 如果未设置折叠数据  设置折叠数据
     if (!sport_card_obj.hasOwnProperty("is_show_card")) {
       Object.assign(sport_card_obj, fold_template);
     }
   });
   // 滚球标题卡片折叠数据处理
-  let play_card_obj = MatchListCardClass.all_card_obj["play_title"] || {};
+  let play_card_obj = MatchListCardData.all_card_obj["play_title"] || {};
   if (!play_card_obj.hasOwnProperty("is_show_card")) {
     Object.assign(play_card_obj, fold_template);
   }
   // 未开赛标题卡片折叠数据处理
   let no_start_card_obj =
-    MatchListCardClass.all_card_obj["no_start_title"] || {};
+    MatchListCardData.all_card_obj["no_start_title"] || {};
   if (!no_start_card_obj.hasOwnProperty("is_show_card")) {
     Object.assign(no_start_card_obj, fold_template);
   }
