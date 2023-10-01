@@ -28,7 +28,7 @@ import itemFooter from "project_path/src/components/common/cathectic-item/item-f
 import itemOrder from "project_path/src/components/common/cathectic-item/item-order.vue";
 import earlySettle from "project_path/src/components/common/cathectic-item/early-settle.vue";
 import lodash from 'lodash';
-import { computed, ref, onMounted, onUnmounted } from "vue";
+import { computed, ref, onMounted, onUnmounted, nextTick } from "vue";
 import { useMittOn, MITT_TYPES } from "src/core/mitt/"
 
 

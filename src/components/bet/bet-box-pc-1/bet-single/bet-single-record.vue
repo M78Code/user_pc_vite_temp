@@ -2,64 +2,72 @@
  * @Description: 单住投注项信息组件 正常
 -->
 <template>
-  <q-card flat class="bet-single-record">
+  <q-card flat class="bet-single-record bet-card">
     <q-card-section class="bet-item">
-      <div class="row first-row no-wrap" v-if="match_type != 3">
+      <div class="row first-row no-wrap" v-if="item.matchType != 3">
         <div class="col bet-league-name">
           <!--联赛名称-->
-          {{league_name}}
+          {{item.matchName}}
         </div>
         <!--orderStatusCode: 0:投注失败 1:投注成功 2:确认中-->
         <div class="col-auto bet-icon-info">
-          <template v-if="single_record_obj.orderStatusCode == 0">
+          <template v-if="item.orderStatusCode == 0">
             <!--投注失败图标-->
             <icon-wapper name="icon-failure" size="18px"/>
           </template>
-          <template v-if="single_record_obj.orderStatusCode == 1">
+          <template v-if="item.orderStatusCode == 1">
             <!--投注成功图标 绿色的勾勾-->
             <icon-wapper name="icon-success" size="18px"/>
           </template>
-          <template v-if="single_record_obj.orderStatusCode == 2">
+          <template v-if="item.orderStatusCode == 2">
             <!--投注确认中转圈，滚球才有的转圈圈-->
-            <span class="bet-confirm-handle"><img :src="(`${$g_image_preffix}/image/wwwassets/yabo/gif/${BetData.theme}/${BetData.theme}_confirming.gif`)" style="height:18px;width:18px" /></span>
-          </template>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col bet-against" :class="{'bet-outweight':match_type == 3}">
-          <!--如果是冠军显示赛季-->
-          <template v-if="match_type == 3">{{season}}</template>
-          <template v-else>
-            <!--不是冠军显示 主队 v 客队-->
-            <span class="home-vs-away">
-              {{home}}<span class='bet-pk'>v</span>{{away}}
+            <span class="bet-confirm-handle">
+              <img />
             </span>
           </template>
         </div>
       </div>
-      <div class="row" v-if="match_type != 3">
+      <div class="row">
+        <div class="col bet-against" :class="{'bet-outweight':item.matchType == 3}">
+          <!--如果是冠军显示赛季-->
+          <template v-if="item.matchType == 3">{{season}}</template>
+          <template v-else>
+            <!--不是冠军显示 主队 v 客队-->
+            <span class="home-vs-away">
+              {{item.matchInfo}}
+            </span>
+          </template>
+        </div>
+      </div>
+      <div class="row" v-if="item.matchType != 3">
         <!--时间例如 06月22日-->
-        <div class="col match-time">{{match_time}}</div>
+        <div class="col match-time">
+          {{ formatTime(item.match_time, "mm月DD日 HH:MM") }}
+        </div>
       </div>
       <div class="bet-content">
         <div class="row">
-          <!--match_type 1: 早盘 2: 滚球  玩法名称  比分  盘口类型-->
-          <label class="bet-play-text"><template v-if="match_type === 2"><label class="bet-match-playing">[{{ $t('menu.match_playing')}}]</label></template>{{single_record_obj.playName}}
-            <template v-if="single_record_obj.scoreBenchmark!=''
-            && match_type===2 &&
-            !((single_record_obj.preOrderDetailStatus != null) && MARKET_RANG_FLAG_LIST.includes(BetData.pre_bet_list.playId.toString())) &&!
-            MARKET_NO_SCORE_LIST.includes(play_id)">
-              ({{single_record_obj.scoreBenchmark.replace(':','-')}})
+          <!--item.matchType 1: 早盘 2: 滚球  玩法名称  比分  盘口类型-->
+          <label class="bet-play-text">
+            <template v-if="item.matchType === 2">
+              <label class="bet-match-playing">[{{ i18n_t('menu.match_playing')}}]</label>
+            </template>
+            {{item.playName}}
+            <template v-if="item.scoreBenchmark!=''
+            && item.matchType===2 &&
+            !((item.preOrderDetailStatus != null) && MARKET_RANG_FLAG_LIST.includes(BetData.pre_bet_list.playId.toString())) &&!
+            MARKET_NO_SCORE_LIST.includes(item.playId)">
+              ({{item.scoreBenchmark.replace(':','-')}})
             </template>
              <!--盘口类型-->
-            <label class="bet-handicap-name">[{{ $t('odds')[single_record_obj.marketType]}}]</label>
+            <label class="bet-handicap-name">[{{ i18n_t('odds')[item.marketType]}}]</label>
           </label>
         </div>
         <!--队名及盘口区域-->
         <div class="row">
           <div class="col bet-play-team yb-fontsize14">
             <!--投注项名称(可能待盘口值或者比分等)-->
-            <template v-if="!lodash.isEmpty(single_record_obj.playOptionName)">
+            <template v-if="!lodash.isEmpty(item.playOptionName)">
               <div class="bet-team-handicap">
                 {{part1}} {{lodash.trim(part2)}}
               </div>
@@ -69,47 +77,41 @@
         </div>
         <div class="row">
           <!--赔率-->
-          <div
-            class="col-auto yb-fontsize16 bet-odds-value"
-            :class="{
-              'up-red': odds_change_up,
-              'down-green': odds_change_down
-            }"
-          ><span class="odds-value yb-number-bold"><span>@</span>{{single_record_obj.oddsValues || format_odds}}</span></div>
+          <div class="col-auto yb-fontsize16 bet-odds-value" >
+            <span class="odds-value yb-number-bold"><span>@</span>{{ item.oddsValues }}</span>
+          </div>
         </div>
       </div>
 
       <div class="row bet-win yb-fontsize12">
-        <div class="col" v-if="single_record_obj.preOrderDetailStatus == 0 || single_record_obj.preOrderDetailStatus == 1">
+        <div class="col" v-if="item.preOrderDetailStatus == 0 || item.preOrderDetailStatus == 1">
           <!--投注额-->
-          {{ $t("bet.bet_book_stake")}}
+          {{ i18n_t("bet.bet_book_stake")}}
         </div>
         <div class="col" v-else>
           <!--投注额-->
-          {{ $t('common.bets_val')}}
+          {{ i18n_t('common.bets_val')}}
         </div>
         <div class="col-auto">
-         {{ $t('common.maxn_amount_val')}}
+         {{ i18n_t('common.maxn_amount_val')}}
          <!-- 最高可赢额 -->
         </div>
       </div>
       <div class="row bet-win2 yb-fontsize12">
         <!--投注额值-->
         <div class="col black-money-text">
-           {{(parseFloat(single_record_obj.betMoney)/100)||format_currency}}
+           {{ format_currency(parseFloat(item.betMoney)/100) }}
         </div>
         <!-- 最高可赢额值 -->
         <div class="col-auto black-money-text">
-          {{(parseFloat(single_record_obj.maxWinMoney)/100)||format_currency}}
+          {{ format_currency(parseFloat(item.maxWinMoney)/100) }}
         </div>
       </div>
       <template v-if="is_indonesia">
         <div class="row bet-win-money yb-fontsize12">
           <div class="col">
             <div class="bet-addition">
-              [
-              {{(parseFloat(single_record_obj.addition)/100)||format_currency}}
-              ]
+              [ {{ format_currency(parseFloat(item.addition)/100) }} ]
             </div>
           </div>
           <div class="col-auto"></div>
@@ -118,12 +120,24 @@
     </q-card-section>
   </q-card>
 </template>
-<script>
-// import bet_single_record from "src/public/mixins/bet/bet_single_record";
-import { format_odds } from 'src/core/index.js'
+<script setup>
 import lodash from 'lodash'
+import { format_odds,format_currency,formatTime } from 'src/core/index.js'
 import { IconWapper } from 'src/components/icon'
 import { MARKET_RANG_FLAG_LIST,MARKET_NO_SCORE_LIST } from "src/core/constant/config/play-mapping.js";
+import { i18n_t } from "src/boot/i18n.js"
+
+const props = defineProps({
+  index: {
+    type: Number,
+    default: 0
+  },
+  id: {   //赛事id
+    type: String,
+    default: "0"
+  },
+  item: {}
+})
 
 </script>
 <style lang="scss" scoped>
