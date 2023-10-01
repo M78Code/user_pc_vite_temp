@@ -1,7 +1,7 @@
 import { ref } from 'vue';
 
 import lodash from 'lodash';
-
+import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import store from "src/store-redux/index.js";
 import { virtual_sport_format } from 'src/core/format/module/format-match.js'
 import MenuData from "src/core/menu-pc/menu-data-class.js";
