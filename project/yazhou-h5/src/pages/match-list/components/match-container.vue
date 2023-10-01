@@ -478,6 +478,7 @@ import { format_time_zone, format_time_zone_time, format_how_many_days, format_w
 import { normal_img_not_favorite_white, normal_img_not_favorite_black, normal_img_is_favorite, y0_img_favorite_black, lvs_icon_theme01, lvs_icon_theme02, animationUrl_icon_theme01,
   animationUrl_icon_theme02, muUrl_theme01, muUrl_theme01_y0, muUrl_theme02, muUrl_theme02_y0, none_league_icon, none_league_icon_black, match_analysis, match_analysis2, polular_spirite_theme02,
   polular_spirite,  mearlys_icon } from 'project_path/src/core/utils/local-image.js'
+import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 
 // TODO: 其他模块得 store  待添加
 // mixins: [formatmixin, odd_convert, bettings, match_list_mixin, msc_bw3, common],
@@ -569,7 +570,6 @@ onMounted(() => {
 
 // 当前显示的赛事数据
 const match = computed(() => {
-  console.log( props.match_of_list.is_show_league)
   return props.match_of_list;
 })
 
@@ -610,7 +610,7 @@ const get_sport_show = computed(() => {
   // 代表是首页模块
   if (!lodash.get(MenuData.current_menu, 'main')) {
     if (props.i > 0) {
-      let p = MatchDataBaseH5.get_quick_mid_obj(MatchDataBaseH5.mids_ation[props.i - 1])
+      let p = MatchDataBaseH5.get_quick_mid_obj(MatchMeta.match_mids[props.i - 1])
       let c = MatchDataBaseH5.get_quick_mid_obj(match.value.mid)
       if (p && c) {
         return p.csid !== c.csid;
@@ -678,7 +678,7 @@ const is_show_video_icon = computed(() => {
 const no_start_total = computed(() => {
   let r = [];
   if (props.match_of_list.is_show_no_play) {
-    r = lodash.filter(MatchDataBaseH5.mids_ation, mid => {
+    r = lodash.filter(MatchMeta.match_mids, mid => {
       const match = MatchDataBaseH5.get_quick_mid_obj(mid)
       return !match.ms
     })
@@ -1227,7 +1227,7 @@ const show_counting_down = (item) => {
  * @returns {Boolean}
  */
 const get_m_status_show = (i) => {
-  let item = MatchDataBaseH5.get_quick_mid_obj(MatchDataBaseH5.mids_ation[i])
+  let item = MatchDataBaseH5.get_quick_mid_obj(MatchMeta.match_mids[i])
   let result = false;
   if (props.main_source == 'detail_match_list') {
     return false
@@ -1245,7 +1245,7 @@ const get_m_status_show = (i) => {
   
   if (item) {
     if (i > 0) {
-      let prev_match = MatchDataBaseH5.get_quick_mid_obj(MatchDataBaseH5.mids_ation[i - 1])
+      let prev_match = MatchDataBaseH5.get_quick_mid_obj(MatchMeta.match_mids[i - 1])
       if ([1, 110].includes(+item.ms)) {
         result = false;
       }
@@ -1267,7 +1267,7 @@ const get_league_show = (i) => {
   let flag = true;
   let c = null, p = null;
   if (i) {
-    p = MatchDataBaseH5.get_quick_mid_obj(MatchDataBaseH5.mids_ation[i - 1])
+    p = MatchDataBaseH5.get_quick_mid_obj(MatchMeta.match_mids[i - 1])
     c = MatchDataBaseH5.get_quick_mid_obj(match.value.mid)
     if (p && c) {
       if (p.tid != c.tid) {
@@ -1415,7 +1415,7 @@ const set_scroll_top = (scrollTop) => {
           store.dispatch({ type: 'matchReducer/set_not_found_target_dom_count',  payload: not_found_target_dom_count });
 
           // 当由详情返回后，未滚动至目标计数 和 赛事展示数量相等时，让列表滑动一些距离，防止页面列表展示空白
-          if (not_found_target_dom_count === props.matchCtr.mids_ation.length) {
+          if (not_found_target_dom_count === MatchMeta.match_mids.length) {
             document.querySelector('.match-list-container').scrollTop += 1
             store.dispatch({ type: 'matchReducer/set_goto_detail_matchid',  payload: '' });
           }

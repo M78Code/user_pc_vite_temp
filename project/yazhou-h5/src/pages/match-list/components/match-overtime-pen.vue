@@ -179,13 +179,12 @@ const init_tab_async_show = () => {
 }
 
 watch(() => MatchDataBaseH5.data_version.version, () => {
-  init_tab_show(true); // 加载tab
   get_new_match_info()
 })
 
 // 滚动列表时,组件赛事变化异步还原赛事次要玩法的显示状态
 const get_new_match_info = () => {
-  match_info.value = lodash.get(MatchDataBaseH5.list_to_obj.mid_obj, `${props.mid}_`, {})
+  match_info.value = MatchDataBaseH5.get_quick_mid_obj(props.mid)
   if (match_info.value) {
     init_tab_async_show();
     if (current_hps_key.value) {
@@ -261,10 +260,10 @@ watch(() => get_c303_data_change.value, (curr) => {
               // 根据业务需求，修改冠军小节玩法  1585 单对应
               Object.assign(match_info.value, res.data[0]);
               MatchMeta.handle_update_match_info(res.data)// 更新赛事盘口数据
-              // if(operate_type == 'is-user'){
-              //   // 次要玩法展开加载数据  订阅指定玩法赛事(C8)  status 1订阅赛事推送  0退订赛事推送
-              //   useMittEmit(MITT_TYPES.EMIT_SPECIAL_HPS_LOADED,res.data[0],o_hps_key);
-              // }
+              if(operate_type == 'is-user'){
+                // 次要玩法展开加载数据  订阅指定玩法赛事(C8)  status 1订阅赛事推送  0退订赛事推送
+                useMittEmit(MITT_TYPES.EMIT_SPECIAL_HPS_LOADED,res.data[0],o_hps_key);
+              }
               current_tab_item.value.hps = match_info.value[o_hps_key];
               if ([18].includes(+ lodash.get(current_tab_item.value, 'id'))) {
                 // 波胆玩法 数据加工处理
@@ -275,7 +274,7 @@ watch(() => get_c303_data_change.value, (curr) => {
               }
               // current_hps_key.value = o_hps_key;
             }
-            // init_tab_show(); // 获取请求后重新计算tab
+            init_tab_show(); // 获取请求后重新计算tab
             // 波胆玩法，5分钟玩法 其他次要玩法 展开显示， 波胆和5分钟，虚拟滚高度计算
             // save_second_play_mid_map_unfold_status(item, bold_all_list.value, five_minutes_all_list.value);
             //次要玩法展开或者关闭通知列表页重新计算dom高度
@@ -292,9 +291,10 @@ watch(() => get_c303_data_change.value, (curr) => {
   }
 })
 // 是否至少存在一个展开tab状态变化,tab展开 属于唯一有用的方法之一
-watch(() => any_unfold, () => {
+watch(() => any_unfold.value, () => {
   let any_unfold = 0;
   let unfold_map = lodash.cloneDeep(get_secondary_unfold_map.value);
+  if (!unfold_map) return
   if (match_info.mid in unfold_map) {
     let u_status = unfold_map[match_info.mid] && unfold_map[match_info.mid].split('-')[1];
     any_unfold = +u_status;
@@ -778,7 +778,7 @@ const get_tabid_by_csid = () => {
  * @param {Boolean} is_change_match 有值时， 收起所有tab
  */
 const init_tab_show = (is_change_match, show_tab_by_data) => {
-  const match = lodash.get(MatchDataBaseH5.list_to_obj.mid_obj, `${props.mid}_`, {})
+  const match = MatchDataBaseH5.get_quick_mid_obj(props.mid)
   if (is_change_match) {
     tab_list.value.forEach(t => {
       t.show_tab = false;

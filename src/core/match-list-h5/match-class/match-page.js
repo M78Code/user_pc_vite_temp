@@ -10,7 +10,7 @@ import MatchListCardClass from '../match-card/match-list-card-class'
 import matchListParams from '../composables/match-list-params'
 import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, i18n_t, UserCtr, MenuData, useMittEmit, MITT_TYPES, utils } from 'src/core'
 import { nextTick } from "vue";
-import MatchMeta from './match-meta';
+import MatchMeta from './match-meta'
 // import MatchDataBase from "src/core/data-warehouse/match-ctr/match-ctr.js"
 /** TODO临时放置
  * @description: 获取赛事的让球方
@@ -300,7 +300,8 @@ class MatchPage {
       let list = this.match_list_init(match_list);
       list.forEach(item => {
         if (item && item.mid) {
-          if (MatchDataBaseH5.list_to_obj.mid_obj[`${item.mid}_`]) {
+          const match = MatchDataBaseH5.get_quick_mid_obj(item.mid)
+          if (match) {
             MatchDataBaseH5.upd_match(item);
           } else {
             MatchDataBaseH5.addMatchInfo(item);
@@ -312,12 +313,12 @@ class MatchPage {
           // 如果是滚球
           if (lodash.get(this.get_current_menu, 'main') == 1) {
             if (![1, 2, 7, 10, 110].includes(+item.ms)) { // 赛事状态无效，清除该场赛事的 对象
-              MatchDataBaseH5.clearMidObj(item);
+              MatchDataBaseH5.remove_match(item.mid);
             }
           }
           //赛事状态无效  并且不是  赛果和冠军时，清除该场赛事的 对象
           if (!this.is_valid(+item.ms) && ![28, 100].includes(+MenuData.menu_type)) {
-            MatchDataBaseH5.clearMidObj(item);
+            MatchDataBaseH5.remove_match(item.mid);
           }
         }
       });
@@ -353,8 +354,8 @@ class MatchPage {
     // 非赛事列表中的赛事不更新
     if (Array.isArray(mid)) {
       let flag = false;
-      mid.forEach(_mid => {
-        if (lodash.get(MatchDataBaseH5.list_to_obj.mid_obj, `${mid}_`)) flag = true;
+      mid.forEach(mid => {
+        if (MatchDataBaseH5.get_quick_mid_obj(mid)) flag = true;
       });
       if (!flag && is_subscribe != "is-subscribe") return;
     }
@@ -398,7 +399,7 @@ class MatchPage {
       api_func(params).then(res => {
         // if(this.send_gcuuid != res.gcuuid) return;
         let mid_first = Array.isArray(mid) ? mid[0] : mid;
-        const match_obj = lodash.get(MatchDataBaseH5.list_to_obj.mid_obj, `${mid_first}_`)
+        const match_obj = MatchDataBaseH5.get_quick_mid_obj(mid_first)
         // if (MatchDataBaseH5 && match_obj && match_obj.handle_time && match_obj.handle_time > res.ts) {
         //   return;
         // }
@@ -594,7 +595,7 @@ class MatchPage {
           let match_res_data = MatchListCardClass.match_list_api_after_handle(res);
           // 添加赛事对象前端使用字段 : 让球方
           this.match_list_init(match_res_data);
-          MatchDataBaseH5.update_match_list(match_res_data);
+          // MatchDataBaseH5.update_match_list(match_res_data);
           if (this.run_process_when_need_recompute_container_list_when_scroll) {
             this.run_process_when_need_recompute_container_list_when_scroll(false, { force: 1 });
           }
@@ -897,7 +898,7 @@ class MatchPage {
     };
     // csid:12 拳击   开赛时间小于当前时间则移除
     let delete_boxing_match = () => {
-      let c_match = MatchDataBaseH5.list_to_obj.mid_obj[`${match_id}_`];
+      let c_match = MatchDataBaseH5.get_quick_mid_obj(match_id);
       if (c_match && c_match.csid == 12) {
         let server_now = _this.get_now_server();
         let now_sub = Number(c_match.mgt) - server_now;

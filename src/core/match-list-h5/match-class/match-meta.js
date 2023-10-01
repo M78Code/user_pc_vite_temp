@@ -86,7 +86,7 @@ class MatchMeta {
         ...handicap
       }
     })
-    this.assembly_match_data(data_list)
+    this.set_match_default_properties(data_list)
   }
 
   /**
@@ -138,10 +138,10 @@ class MatchMeta {
   }
 
   /**
-   * @description 组装赛事数据
+   * @description 设置赛事默认属性
    * @param { list } 赛事数据 
    */
-  assembly_match_data (list = []) {
+  set_match_default_properties (list = []) {
     const length = lodash.get(list, 'length')
     if (length < 1) return
     const result = []
@@ -158,14 +158,14 @@ class MatchMeta {
       } else {
         is_show_league = list[i].tid !== list[i - 1].tid
       }
-      result.push(t.mid)
+      i < 20 && result.push(t.mid)
       Object.assign(t, {
         is_show_tab_play,
         is_fold_tab_play,
         is_show_league,
       })
     })
-    this.match_mids = new Set(result)
+    this.match_mids = [...new Set(result)]
     this.handle_submit_warehouse(list)
   }
 
@@ -174,9 +174,9 @@ class MatchMeta {
    * @param { list } 赛事数据 
    */
   handle_update_match_info (list) {
-    lodash.forEach(list, t => {
+    list = lodash.map(list, t => {
       const match = MatchDataBaseH5.get_quick_mid_obj(t.mid)
-      Object.assign(t, { ...match })
+      return Object.assign({}, match, t)
     })
     // 设置仓库渲染数据
     MatchDataBaseH5.set_list(list)

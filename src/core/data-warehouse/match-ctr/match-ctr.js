@@ -158,12 +158,6 @@ init(){
   this.clear();
 }
 
-get_match_mids (list) {
-  this.mids_ation = []
-  list && list.length > 0 && list.forEach((t, i) => {
-    t.mid && i < 20 && this.mids_ation.push(t.mid)
-  })
-}
   /**
    * @description: 更新赛事的基本属性时间
    * @param {Array} matches 赛事列表
@@ -670,7 +664,6 @@ get_match_mids (list) {
   set_list(list, param={}){
     console.log('list', list);
     if(list){
-      this.get_match_mids(list)
       this.type = param.type || 'list';
       // 格式化列表赛事(部分数组转对象)
       this.list_serialized_match_obj(list);
