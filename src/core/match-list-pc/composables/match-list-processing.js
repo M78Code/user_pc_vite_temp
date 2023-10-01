@@ -159,6 +159,8 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 			})
 		}
 		// 设置数据仓库 联赛列表对象
+		console.log('league_list_obj', res_data);
+		set_league_list_obj(res_data)
 		 
 	// 计算列表卡片样式
 	console.log('lockie-1');
