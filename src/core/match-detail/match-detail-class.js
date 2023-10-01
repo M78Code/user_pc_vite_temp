@@ -49,6 +49,41 @@ export default class MatchDetailCtr {
     this.all_plays_sort_arr=[]
     //玩法 集 TAB 点击自动滚动居中 算法  需要在这里实现 或者其他地方实现
     //可以使用quasar 的scroll util 实现
+
+    this.params= {
+      mid: "", //赛事id
+      tid: "", // 联赛 id
+      sportId: "", //球类id
+      media_type: "auto", // 直播类型
+      time: Date.now()
+    }
+    this.isTop= true;//视频置顶
+    this.topId = [];//置顶的玩法id
+    this.play_media= {
+      mid: 0,
+      media_type: "",
+      is_auto: true,
+      time: Date.now()
+    };
+    // 点返回按钮 返到列表
+    this.is_back_btn_click = false;
+    // 电竞视频是否暂停
+    this.is_pause_video = true;
+    this.zoom = true;
+    this.layout_statu = 0;//玩法列表单双列 0单列， 1双列
+    this.is_fullscreen = false; //是否全屏
+    // 赛事详情数量
+    this.match_detail_count = 0;
+    this.history_random=1;
+    // 当前选中玩法id
+    this.tabs_active_index = 0;
+            // 当前选中玩法对应的盘口玩法
+    this.tabs_active_plays = [];
+    this.detail_show_type =''//详情页 显示类型 play:滚球   today：今日  early：早盘
+    // 是否显示全屏投注
+    this.is_show_full_bet =false
+    this.active_detail = {}; //详情比分面板，接口报错时的备用数据
+    this.details_data_cache = {} // 玩法集对应玩法缓存数据
   }
 /**
  * 玩法集和tab 点击 

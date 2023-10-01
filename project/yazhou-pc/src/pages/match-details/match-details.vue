@@ -17,7 +17,6 @@
       :style="{ 'margin-top': headerHeight + 'px' }"
       :is_detail="true"
     />
-    111
     <div class="wrap-handicap v-scroll-area-bar">
       <!-- 详情面板 -->
       <div class="screen">
