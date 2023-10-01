@@ -3,43 +3,36 @@
     <template v-if="!no_data">
       <span class="navigation-title">{{ $t('virtual_sports.leaderboard') }}</span>
       <div class="ranking-item hairline-border" v-for="(item, index) in ranking_data" :key="index">
-      <div class="ranking-item-top">
-        <div class="left ellipsis">
-          <span class="virtual-num" :class="get_rank_background(item.number,get_curr_sub_menu_type)"></span>
-          <span class="ellipsis">{{ item.name }}</span>
+        <div class="ranking-item-top">
+          <div class="left ellipsis">
+            <span class="virtual-num" :class="get_rank_background(item.number, get_curr_sub_menu_type)"></span>
+            <span class="ellipsis">{{ item.name }}</span>
+          </div>
+          <div class="right">
+            <span>{{ $t('virtual_sports.vitality_performance') }}</span>
+            <!-- <q-linear-progress :value="Number(item.form/100)" color="warning" class="q-mt-sm"/> -->
+            <div class="virtual-progress-bg">
+              <div class="virtual-progress-bar" :style="{ width: `${item.form}%` }">
+              </div>
+            </div>
+            <span>{{ item.form }}%</span>
+          </div>
         </div>
-        <div class="right">
-          <span>{{ $t('virtual_sports.vitality_performance') }}</span>
-          <!-- <q-linear-progress :value="Number(item.form/100)" color="warning" class="q-mt-sm"/> -->
-          <div class="virtual-progress-bg">
-            <div class="virtual-progress-bar" :style="{width:`${item.form}%`}">
+        <div class="ranking-item-bottom">
+          <div class="left">
+            <span>{{ $t('virtual_sports.results_previous') }}</span>
+            <div v-for="(results, i) in item.forecast" :key="i">
+              <span :class="results != 0 ? 'score-number' : 'score-x'">{{ results != 0 ? results : 'X' }}</span>
             </div>
           </div>
-          <span>{{ item.form }}%</span>
-        </div>
-      </div>
-      <div class="ranking-item-bottom">
-        <div class="left">
-          <span>{{ $t('virtual_sports.results_previous') }}</span>
-          <div v-for="(results, i) in item.forecast" :key="i">
-            <span :class="results != 0 ? 'score-number' : 'score-x'">{{results != 0 ? results : 'X'}}</span>
+          <div class="right">
+            <span>{{ $t('virtual_sports.comprehensive_rating') }}</span>
+            <q-rating style="min-width:.85rem" :value="Number(item.star)" size="3.5em"
+              :icon="`img:/image/bw3/svg/match-list/m-list-favorite.svg`" :icon-selected="get_theme.includes('y0') ? `img:/image/bw3/svg/match-list/m-list-favorite-s_y0.svg` :
+                `img:/image/bw3/svg/match-list/m-list-favorite-s.svg`" readonly />
           </div>
         </div>
-        <div class="right">
-          <span>{{ $t('virtual_sports.comprehensive_rating')}}</span>
-          <q-rating
-            style="min-width:.85rem"
-            :value="Number(item.star)"
-            size="3.5em"
-            :icon="`img:${ $g_image_preffix }/image/bw3/svg/match-list/m-list-favorite.svg`"
-            :icon-selected="get_theme.includes('y0') ? `img:${ $g_image_preffix 
-            }/image/bw3/svg/match-list/m-list-favorite-s_y0.svg`: 
-            `img:${ $g_image_preffix }/image/bw3/svg/match-list/m-list-favorite-s.svg`"
-            readonly
-          />
-        </div>
       </div>
-    </div>
     </template>
     <!-- 没有数据 组件 -->
     <no-data v-if="no_data" which='noMatch' height='500' class="no-list"></no-data>
@@ -60,9 +53,9 @@ export default defineComponent({
     "no-data": no_data
   },
 
-  props:{
+  props: {
     mid: {
-      type: Number|String,
+      type: Number | String,
       default: null,
       require: true
     },
@@ -71,7 +64,7 @@ export default defineComponent({
 
   setup(props, evnet) {
     const data = reactive({
-      ranking_data:[],
+      ranking_data: [],
       no_data: false
     });
 
@@ -105,29 +98,29 @@ export default defineComponent({
      *@param {Number} sportId 球类id
      *@return {String} 类名
      */
-    const get_rank_background = (rank_i,sportId) => {
+    const get_rank_background = (rank_i, sportId) => {
       let s_type = 'dog';//赛马horse或赛狗dog
-      let virtual_sports_1= ''
-      if(sportId == 1011){  // 赛马
+      let virtual_sports_1 = ''
+      if (sportId == 1011) {  // 赛马
         s_type = 'horse'
       }
-      else if([1002, 1010, 1009].includes(+sportId)){ // 赛狗 摩托车
+      else if ([1002, 1010, 1009].includes(+sportId)) { // 赛狗 摩托车
         s_type = 'dog'
       } else {
         return null
       }
-      if([1010].includes(+sportId)){
+      if ([1010].includes(+sportId)) {
         virtual_sports_1 = `motorcycle${rank_i}`
       }
-      if([1009].includes(+sportId)){
+      if ([1009].includes(+sportId)) {
         virtual_sports_1 = `dirt_motorcycle${rank_i}`
       }
       return `match-${s_type}${rank_i} ${virtual_sports_1}`;
     };
     const get_list = async () => {
       try {
-        let {code , data} = await api_v_sports.get_virtual_match_detail_count({mid: this.get_current_mid})
-        if(code == 200 && data.length > 0) {
+        let { code, data } = await api_v_sports.get_virtual_match_detail_count({ mid: this.get_current_mid })
+        if (code == 200 && data.length > 0) {
           this.ranking_data = data
           // this.results_filter(this.ranking_data)
         } else {
@@ -210,7 +203,7 @@ export default defineComponent({
     border-radius: 0.08rem;
     margin-bottom: 0.08rem;
 
-    > div {
+    >div {
       display: flex;
       justify-content: space-between;
 
@@ -222,7 +215,7 @@ export default defineComponent({
           display: flex;
           align-items: center;
 
-          > span {
+          >span {
             &:nth-child(1) {
               width: 0.16rem;
               height: 0.16rem;
@@ -258,7 +251,7 @@ export default defineComponent({
           min-width: 1.63rem;
           align-items: center;
 
-          > span {
+          >span {
             min-width: fit-content;
 
             font-size: 0.12rem;
@@ -307,11 +300,11 @@ export default defineComponent({
           display: flex;
           min-width: fit-content;
 
-          > span {
+          >span {
             margin-right: 0.08rem;
           }
 
-          > div {
+          >div {
 
             font-size: 0.1rem;
             line-height: 0.16rem;
@@ -334,12 +327,12 @@ export default defineComponent({
           display: flex;
           align-items: center;
 
-          > span {
+          >span {
             margin-right: 0.05rem;
           }
 
           :deep(.q-rating) {
-            > i {
+            >i {
               font-size: 0.12rem;
             }
 
@@ -349,9 +342,7 @@ export default defineComponent({
 
               margin-right: 0.05rem;
 
-              &.q-rating__icon--active {
-
-              }
+              &.q-rating__icon--active {}
             }
 
             img {

@@ -164,7 +164,7 @@ export const set_card_show_level = (scroll_top = 0) => {
       pre_card_obj = card_obj
     })
     set_card_show_level()
-      MatchListCardData.set_list_version()    
+    MatchListCardData.set_list_version()    
   }
 
 

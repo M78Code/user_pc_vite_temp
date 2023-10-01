@@ -67,7 +67,7 @@
                       <img
                           @click="info_icon_close"
                           style="margin-top:-0.04rem"
-                          :src="`${ $g_image_preffix }/image/wwwassets/bw3/menu/set_close${UserCtr.theme.includes('02') ? '_2' : ''}.svg`"
+                          :src="`/image/wwwassets/bw3/menu/set_close${UserCtr.theme.includes('02') ? '_2' : ''}.svg`"
                       >
                     </div>
                     <!-- 角球说明文本 -->

@@ -9,7 +9,7 @@
     ></loading>
     <!--无盘口数据时,赛事推荐-->
     <div class="match-recommend-wrapper" v-if="show_recommend">
-      <!-- 无数据背景图  :src="get_is_hengping ? (`${ $g_image_preffix }/image/wwwassets/bw3/svg/full_screen_match_odds_closed.svg`) : `${ $g_image_preffix }/image/wwwassets/bw3/svg/match_odds_closed.svg`"-->
+      <!-- 无数据背景图  :src="get_is_hengping ? (`/image/wwwassets/bw3/svg/full_screen_match_odds_closed.svg`) : `/image/wwwassets/bw3/svg/match_odds_closed.svg`"-->
       <img src="/yazhou-h5/image/svg/match_odds_closed.svg" />
       <!-- 背景下面文字说明 -->
       <div class="empty-m-list-w">

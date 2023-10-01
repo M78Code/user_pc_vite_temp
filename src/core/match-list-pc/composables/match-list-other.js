@@ -6,7 +6,7 @@ import { ref } from 'vue';
 
 // 次要玩法标题
 const play_current_key = ref('');
-const tab_play_keys = ref([]);
+const tab_play_keys_info = ref('');
 
 import { other_play_name_to_playid } from 'src/core/constant/config/data-class-ctr/index.js';
 
@@ -61,7 +61,7 @@ const compute_other_play_data = (mid) => {
    * @param {undefined} undefined
   */
 const set_match_play_current_index = (match,play_key) => {
-    let tab_play_keys = match.tab_play_keys.split(',')
+    let tab_play_keys = tab_play_keys_info.value.split(',')
     // 设置选中的玩法索引
     match.play_current_index = tab_play_keys.findIndex( key => key == play_key)
     // 设置选中的玩法key

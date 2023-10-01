@@ -1,7 +1,7 @@
 <template>
     <div id="box" ref="box">
       <div class="marquee-box" ref="marquee" @mouseover="menter" @mouseleave="mleave">
-        <img :src="(`${ $g_image_preffix }/image/wwwassets/bw3/svg/icon-notice${UserCtr.theme.includes('y0') ? '-y0' : ''}.svg`)" alt="">
+        <img :src="(`/image/wwwassets/bw3/svg/icon-notice${UserCtr.theme.includes('y0') ? '-y0' : ''}.svg`)" alt="">
 
         <p ref="notice_list" id="pWidth">
           <span ref="notice_content">{{text}}</span>

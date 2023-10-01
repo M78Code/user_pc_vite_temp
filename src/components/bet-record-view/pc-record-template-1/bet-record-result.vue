@@ -117,10 +117,10 @@
                   </div>
                   <div class="bet-pre-right" v-if="item_obj.bet_confirm">
                     <template v-if="['theme01','theme02'].includes(vx_get_theme)">
-                      <img :src="(`${$g_image_preffix}/image/wwwassets/yabo/gif/${vx_get_theme}/${vx_get_theme}_confirming.gif`)" style="height:18px;width:18px"/>
+                      <img :src="(`/image/wwwassets/yabo/gif/${vx_get_theme}/${vx_get_theme}_confirming.gif`)" style="height:18px;width:18px"/>
                     </template>
                     <template v-else>
-                      <img :src="(`${$g_image_preffix}/image/wwwassets/yabo/gif/${vx_get_theme}/${vx_get_theme}_pre_confirming.gif`)" style="height:18px;width:18px"/>
+                      <img :src="(`/image/wwwassets/yabo/gif/${vx_get_theme}/${vx_get_theme}_pre_confirming.gif`)" style="height:18px;width:18px"/>
                     </template>
                   </div>
                 </div>

@@ -1,6 +1,4 @@
 <!--
- * @Author: Sword
- * @Date: 2020-08-04 17:13:55
  * @Description: 投注记录投注项部分
 -->
 <template>
@@ -13,7 +11,7 @@
       </div>
     </template>
     <!--如果是虚拟体育-->
-    <template v-if="play_mapping.VIRTUAL_SPORT_ID.includes(`${order.sportId}`)">
+    <template v-if="VIRTUAL_SPORT_ID.includes(`${order.sportId}`)">
       <div class="row">
         <div class="col bet-name-info">
           <template v-if="order_status == 1">
@@ -24,8 +22,8 @@
           <span>{{order.matchName}}</span>
           <!--虚拟足球,篮球-->
           <template v-if="[
-            play_mapping.VIURTUAL_SPORT.football,
-            play_mapping.VIURTUAL_SPORT.basketball
+            VIURTUAL_SPORT.football,
+            VIURTUAL_SPORT.basketball
           ].includes(_.trim(order.sportId))">
             <!--批次号-->
             <span>{{order.matchDay}} {{order.batchNo}}</span>
@@ -38,8 +36,8 @@
       </div>
       <!--虚拟足球,篮球-->
       <template v-if="[
-        play_mapping.VIURTUAL_SPORT.football,
-        play_mapping.VIURTUAL_SPORT.basketball
+        VIURTUAL_SPORT.football,
+        VIURTUAL_SPORT.basketball
       ].includes(_.trim(order.sportId))">
         <div class="row">
           <div class="col bet-against">
@@ -105,7 +103,7 @@
       <div class="row">
         <div class="col bet-play-game yb-fontsize13">
           <!--虚拟体育-->
-          <template v-if="play_mapping.VIRTUAL_SPORT_ID.includes(`${order.sportId}`)">
+          <template v-if="VIRTUAL_SPORT_ID.includes(`${order.sportId}`)">
             <template v-if="order_status==0">
               <label class="bet-play-name">
                 <!--球种名称-->
@@ -139,7 +137,7 @@
               {{match_type(order.matchType,lang_code)}}{{order.playName}}
               <template v-if="order.scoreBenchmark && order.playId != '334'">
                 <!--基本分-->
-                {{order.scoreBenchmark | socre_format}}
+                {{ socre_format(order.scoreBenchmark ) }}
               </template>
               <template v-if="!['1','2','4','8','16'].includes(ac_code)">
                 <!--盘口名称-->
@@ -151,10 +149,10 @@
       </div>    
       <!--虚拟赛狗,赛马,摩托车,泥地摩托车-->
       <template v-if="[
-        play_mapping.VIURTUAL_SPORT.horse,
-        play_mapping.VIURTUAL_SPORT.dog,
-        play_mapping.VIURTUAL_SPORT.mudland_motorcycle,
-        play_mapping.VIURTUAL_SPORT.motorcycle
+        VIURTUAL_SPORT.horse,
+        VIURTUAL_SPORT.dog,
+        VIURTUAL_SPORT.mudland_motorcycle,
+        VIURTUAL_SPORT.motorcycle
         ].includes(`${order.sportId}`) 
         && order_status==1">
         <div class="row">
@@ -168,14 +166,14 @@
         <div class="col bet-play-team">
           <!--虚拟赛马,虚拟赛狗,虚拟摩托车,泥地摩托车玩法显示数字样式-->
           <template v-if="[
-            play_mapping.VIURTUAL_SPORT.horse,
-            play_mapping.VIURTUAL_SPORT.dog,
-            play_mapping.VIURTUAL_SPORT.mudland_motorcycle,
-            play_mapping.VIURTUAL_SPORT.motorcycle
+            VIURTUAL_SPORT.horse,
+            VIURTUAL_SPORT.dog,
+            VIURTUAL_SPORT.mudland_motorcycle,
+            VIURTUAL_SPORT.motorcycle
           ].includes(`${order.sportId}`)">
-            <template v-if="!play_mapping.VIRTUAL_PLAY_NOT_NUMBER2.includes(`${order.playId}`)">
-              <template v-for="num in get_numbers()">
-                  <div :key="num" :class="[`ranking-icon ranking-bg-style1-${num}`, `csid-$ {order.sportId}`]"></div>
+            <template v-if="!VIRTUAL_PLAY_NOT_NUMBER2.includes(`${order.playId}`)">
+              <template v-for="num in get_numbers()" :key="num">
+                  <div :class="[`ranking-icon ranking-bg-style1-${num}`, `csid-$ {order.sportId}`]"></div>
               </template>
             </template>
             <!--盘口值-->
@@ -218,12 +216,23 @@
       </div>
   </div>
 </template>
-<script>
-import bet_record_item from "src/public/mixins/bet_record_view/bet_record_item.js";
-import formartmixin from "src/public/mixins/common/time_format";
-export default {
-  mixins: [bet_record_item,formartmixin]
-};
+<script setup>
+import { VIURTUAL_SPORT,VIRTUAL_PLAY_NOT_NUMBER2,VIRTUAL_SPORT_ID } from "src/core/constant/config/play-mapping.js";
+
+const props = defineProps({
+    index: {
+        type: Number,
+        default: 0
+    },
+    order: {},
+    order_status:{},
+    selected:{}
+
+})
+
+const socre_format = () =>{
+
+}
 </script>
 <style lang="scss" scoped>
 // 英文和泰语可能会换行
