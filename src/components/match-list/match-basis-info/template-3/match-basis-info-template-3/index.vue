@@ -21,7 +21,7 @@
           class="icon-wrap settlement-pre relative-position"
           v-tooltip="{content: t('bet_record.settlement_pre')}"
         >
-           <img class="match_pre" :src="`${$g_image_preffix}/image/yabo/png/match_pre.png`"/>
+           <img class="match_pre" :src="`/yazhou-pc/image/png/match_pre.png`"/>
         </div>
        </div>
         <!-- 中立场、盘口数 -->

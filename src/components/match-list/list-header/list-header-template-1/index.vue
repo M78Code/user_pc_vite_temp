@@ -78,18 +78,15 @@
       </div>
       <div class="unfold-btn" @click="set_unfold_multi_column(false)"
         v-if="menu_config.is_multi_column && !vx_show_filter_popup && !is_search_page && get_unfold_multi_column">
-        <span class="text">{{ t('icon_tips.unfold') }}</span>
+        <!-- <span class="text">{{ t('icon_tips.unfold') }}</span> -->
         <icon-wapper class="icon-arrow q-icon c-icon" size="12px"></icon-wapper>
       </div>
     </div>
   </div>
 </template>
 <script setup>
-// import global_mixin from "src/public/mixins/global/global_mixin.js";
-// import match_list_global from 'src/components/match-list/composables/match-list-gloab.js'
-// import comSelect from "src/public/components/select";
+import comSelect from "src/components/match-results/select/select/index.vue";
 import menu_config from "src/core/menu-pc/menu-data-class.js";
-// import BaseData from "src/public/utils/base_data/base-data.js";
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import { t } from "src/core/index.js";
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
