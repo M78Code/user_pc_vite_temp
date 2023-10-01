@@ -1,8 +1,8 @@
 <template>
   <div class="temp2 mx-10 text-center">
     <div class="play-name-wrapper" v-show="get_is_hengping">
-      <div class="item-name ellipsis">{{_.get(item_data, 'title[0].osn')}}</div>
-      <div class="item-name ellipsis">{{_.get(item_data, 'title[1].osn')}}</div>
+      <div class="item-name ellipsis">{{lodash.get(item_data, 'title[0].osn')}}</div>
+      <div class="item-name ellipsis">{{lodash.get(item_data, 'title[1].osn')}}</div>
     </div>
     <div class="hairline-border">
       <div class="bet-wrapper">
@@ -10,12 +10,12 @@
           <template v-if="item">
             <template v-for="(ol_item,ol_index) in item.ol">
               <!-- 左 -->
-              <div class="col border-style" v-if="_.get(item_data.title,'[0].otd') == ol_item.otd" :key="ol_index">
+              <div class="col border-style" v-if="lodash.get(item_data.title,'[0].otd') == ol_item.otd" :key="ol_index">
                 <!-- ms就是外层的赛事级别状态mhs: 0开 2关 1封 11锁 -->
                 <!-- 开盘or锁盘 正常显示 -->
-                <template v-if="ol_item.ms == 0 || ol_item.ms == 11">
+                <template v-if="ol_item._mhs == 0 || ol_item._mhs == 11">
                   <!-- hs是盘口级别状态: 0开 2关 1封 11锁 -->
-                  <template v-if="ol_item.hs == 0 || ol_item.hs == 11">
+                  <template v-if="ol_item._hs == 0 || ol_item._hs == 11">
                     <!-- os: 1、开盘 2、封盘 -->
                     <template v-if="ol_item.os == 1">
                       <!-- 主程序 start -->
@@ -40,7 +40,7 @@
                     <template v-if="ol_item.os == 3"></template>
                     <!-- 新增over -->
                   </template>
-                  <template v-if="ol_item.hs == 1">
+                  <template v-if="ol_item._hs == 1">
                     <template v-if="ol_item.os == 3"></template>
                     <template v-else>
                       <!-- lock 锁状态 start -->
@@ -51,13 +51,13 @@
                       <!-- lock 锁状态 end -->
                     </template>
                   </template>
-                  <template v-if="ol_item.hs == 2">
+                  <template v-if="ol_item._hs == 2">
                     <!-- 盘口级别状态关盘时，要占位 -->
                     <div class="play-box"></div>
                   </template>
                 </template>
                 <!-- 封盘，一把锁的居中显示 -->
-                <template v-if="ol_item.ms == 1">
+                <template v-if="ol_item._mhs == 1">
                   <!-- lock 锁状态 start -->
                   <div class="play-box " :class="get_detail_data.csid == 1? 'play-box-lock' : '' ">
                     <div class="ellipsis" v-show="get_detail_data.csid != 1">{{item_data.title[0].osn}}{{ol_item.on || ol_item.ott}}</div>
@@ -66,15 +66,15 @@
                   <!-- lock 锁状态 end -->
                 </template>
                 <!-- 关盘 -->
-                <template v-if="ol_item.ms == 2"></template>
+                <template v-if="ol_item._mhs == 2"></template>
               </div>
 
               <!-- 右 -->
-              <div class="col" v-if="_.get(item_data.title,'[1].otd') == ol_item.otd" :key="ol_index">
+              <div class="col" v-if="lodash.get(item_data.title,'[1].otd') == ol_item.otd" :key="ol_index">
                 <!--  0开 2关 1封 11锁 -->
                 <!-- 开盘or锁盘 正常显示 -->
-                <template v-if="ol_item.ms == 0 || ol_item.ms == 11">
-                  <template v-if="ol_item.hs == 0 || ol_item.hs == 11">
+                <template v-if="ol_item._mhs == 0 || ol_item._mhs == 11">
+                  <template v-if="ol_item._hs == 0 || ol_item._hs == 11">
                     <!-- os: 1、开盘 2、封盘 3、隐藏不显示，不占地方 -->
                     <template v-if="ol_item.os == 1">
                       <!-- 主程序 start -->
@@ -99,7 +99,7 @@
                     <template v-if="ol_item.os == 3"></template>
                     <!-- 新增over -->
                   </template>
-                  <template v-if="ol_item.hs == 1">
+                  <template v-if="ol_item._hs == 1">
                     <template v-if="ol_item.os == 3"></template>
                     <template v-else>
                       <!-- lock 锁状态 start -->
@@ -110,13 +110,13 @@
                       <!-- lock 锁状态 end -->
                     </template>
                   </template>
-                  <template v-if="ol_item.hs == 2">
+                  <template v-if="ol_item._hs == 2">
                     <!-- 盘口级别状态关盘时，要占位 -->
                     <div class="play-box"></div>
                   </template>
                 </template>
                 <!-- 封盘，一把锁的居中显示 -->
-                <template v-if="ol_item.ms == 1">
+                <template v-if="ol_item._mhs == 1">
                   <!-- lock 锁状态 start -->
                   <div class="play-box " :class="get_detail_data.csid == 1? 'play-box-lock' : '' ">
                     <div class="ellipsis" v-show="get_detail_data.csid != 1">{{item_data.title[1].osn}}{{ol_item.on || ol_item.ott}}</div>
@@ -125,7 +125,7 @@
                   <!-- lock 锁状态 end -->
                 </template>
                 <!-- 关盘 -->
-                <template v-if="ol_item.ms == 2"></template>
+                <template v-if="ol_item._mhs == 2"></template>
               </div>
             </template>
           </template>
@@ -141,6 +141,8 @@ import oddsNew from "project_path/src/pages/details/components/tournament_play/u
 // import odd_convert from "/mixins/odds_conversion/odds_conversion.js";
 import {utils } from 'src/core/index.js';
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
+import lodash from "lodash"
+
 export default defineComponent({
   // #TODO mixins
   // mixins: [odd_convert],
@@ -150,6 +152,7 @@ export default defineComponent({
     oddsNew,
   },
   setup(props, evnet) {
+    console.error(props.item_data);
     // #TODO vuex 
     // computed: {
     //   ...mapGetters(["get_bet_list","get_detail_data", 'get_is_hengping'])
