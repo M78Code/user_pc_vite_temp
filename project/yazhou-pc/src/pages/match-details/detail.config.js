@@ -264,7 +264,6 @@ export const useGetConfig = () => {
     } else {
       api_ = api_details.get_match_detail_MatchInfo;
     }
-    console.log(api_,'api_');
     let send_request = () => {
       state.is_request = true;
       api_(params)
@@ -324,7 +323,6 @@ export const useGetConfig = () => {
              */
             data.msc = details.build_msc(data);
             // 设置赛事信息
-            console.error( JSON.stringify(data),'data.msc');
             MatchDataWarehouseInstance.set_match_details(data,[])  
             let str =state.mid+'_'
             // state.match_infoData = data;

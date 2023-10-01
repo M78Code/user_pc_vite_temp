@@ -6,12 +6,11 @@
 
 import store from "src/store-redux/index.js";
 import { api_details } from "src/api/index";
-import { UserCtr } from "src/core/index.js";
+import { UserCtr, MITT_TYPES,useMittEmit } from "src/core/index.js"; 
 import { update_match_time } from "src/core/bet/common-helper/module/common-sport.js"
 import {utils,is_virtual_csid,is_eports_csid } from 'src/core/index.js'
 import router from "project_path/src/router/index.js"
 export default {
-  
   //统计分析URL
   signal_url:'https://s5.sir.swiftscore.com',
   /**
@@ -35,7 +34,12 @@ export default {
         keyword
       }
     }
-
+    //触发右侧详情更新
+    useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, {
+      mid,
+      tid,
+      csid
+    });
     router.push({
       name: route_name,
       params: {
