@@ -258,7 +258,6 @@ class UserCtr {
       token,
     });
     let obj = lodash.get(res, 'data', {});
-    console.error("obj", obj);
     this.set_user_token(token);
     this.set_user_info(obj);
     this.update()

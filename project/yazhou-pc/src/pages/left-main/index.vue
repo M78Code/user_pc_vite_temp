@@ -3,61 +3,63 @@
 -->
 <template>
   <div class="c-main-menu column" :class="{ 'bet-menu-upd': MenuData.layout_left_show == 'bet_history' }">
+    <!-- 昵称、余额 -->
+    <main-header />
 
-    <v-scroll-area ref="ref_bet_scroll_area" position="menu" :observer_area="3"
-      :observer_middle="MenuData.layout_left_show == 'bet_list'"
-      :class="{ 'bet-list': MenuData.layout_left_show == 'bet_list' }">
-      <!-- 滚动：头部 --------------------------------->
-      <template v-slot:header>
-        <!-- 昵称、余额 -->
-        <main-header />
+    <div style="display:none;"> {{ MenuData.menu_data_version }} --- {{ BetData.bet_data_class_version }} </div>
 
-        <div style="display:none;"> {{ MenuData.menu_data_version }} --- {{ BetData.bet_data_class_version }} </div>
+    <div class="menu-wrap scroll-fixed-bg relative-position bet_history border-bottom">
+      <div>
+        <!-- 投注记录 入口 -->
+        <div v-show="MenuData.layout_left_show != 'bet_history'" @click="change_left_menu('bet_history')"
+          class="menu-item menu-top menu-border item" :class="[bet_count > 0 ? 'justify-end' : 'justify-start']">
 
-        <div class="menu-wrap scroll-fixed-bg relative-position bet_history border-bottom">
-          <!-- 投注记录 入口 -->
-          <div v-show="MenuData.layout_left_show != 'bet_history'" @click="change_left_menu('bet_history')"
-            class="menu-item menu-top menu-border item" :class="[bet_count > 0 ? 'justify-end' : 'justify-start']">
+          <span class="record-icon" :style="compute_css('pc-img-bet-record')" alt=""></span>
 
-            <span class="record-icon" :style="compute_css('pc-img-bet-record')" alt="" ></span>
-
-            <div class="col">
-              {{ $t("common.betting_record") }}
-            </div>
-            <span class="bet-count" v-show="bet_record_count > 0">{{ bet_record_count }}</span>
+          <div class="col">
+            {{ $t("common.betting_record") }}
           </div>
-          <!-- 单/串关投注栏 入口 -->
-          <template v-if="bet_count && ['menu'].includes(MenuData.layout_left_show)">
-            <div @click="change_left_menu('bet_list')" class="menu-item menu-top item-bet menu-border">
-              <span class="text">
-                {{ $t("bet.bet_my_count") }}
-              </span>
-              <span class="bet-count">{{ bet_count }}</span>
-            </div>
-          </template>
+          <span class="bet-count" v-show="bet_record_count > 0">{{ bet_record_count }}</span>
         </div>
-
-
-      </template>
-
-      <div class="ssssss">
-      <!-- 滚动：内容 --------------------------------->
-      <!-- 菜单项 -->
-      <template v-if="MenuData.layout_left_show == 'menu'">
-        <left-main-menu />
-      </template>
-
-      <!-- 投注栏 -->
-      <template v-if="MenuData.layout_left_show == 'bet_list'">
-        <bet-box-wapper use_component_key="bet_box_pc_1" />
-      </template>
-
-      <!-- 历史记录 -->
-      <template v-if="MenuData.layout_left_show == 'bet_history'">
-        <bet-record-view-wapper />
-      </template>
+        <!-- 单/串关投注栏 入口 -->
+        <template v-if="bet_count && ['menu'].includes(MenuData.layout_left_show)">
+          <div @click="change_left_menu('bet_list')" class="menu-item menu-top item-bet menu-border">
+            <span class="text">
+              {{ $t("bet.bet_my_count") }}
+            </span>
+            <span class="bet-count">{{ bet_count }}</span>
+          </div>
+        </template>
       </div>
-    </v-scroll-area>
+
+
+      <div>
+
+        <v-scroll-area ref="ref_bet_scroll_area" position="menu" :observer_area="3"
+          :observer_middle="MenuData.layout_left_show == 'bet_list'"
+          :class="{ 'bet-list': MenuData.layout_left_show == 'bet_list' }">
+          <!-- 滚动：头部 --------------------------------->
+
+          <div>
+            <!-- 滚动：内容 --------------------------------->
+            <!-- 菜单项 -->
+            <template v-if="MenuData.layout_left_show == 'menu'">
+              <left-main-menu />
+            </template>
+
+            <!-- 投注栏 -->
+            <template v-if="MenuData.layout_left_show == 'bet_list'">
+              <bet-box-wapper use_component_key="bet_box_pc_1" />
+            </template>
+
+            <!-- 历史记录 -->
+            <template v-if="MenuData.layout_left_show == 'bet_history'">
+              <bet-record-view-wapper />
+            </template>
+          </div>
+        </v-scroll-area>
+      </div>
+    </div>
     <!--提示区域-->
     <q-tooltip content-class="bet-bg-tooltip" anchor="bottom left" self="top left" :offset="[181, 10]"
       target="#merge-info" v-if="BetData.show_merge_info">
@@ -69,14 +71,14 @@
           padding-left: 5px;
           word-break: break-all;
         ">
-        {{ $t('bet.merge_info')}}
+        {{ $t('bet.merge_info') }}
       </div>
     </q-tooltip>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted,computed } from "vue";
+import { ref, onMounted, onUnmounted, computed } from "vue";
 import lodash_ from "lodash";
 
 import MainHeader from "./main-header.vue";
@@ -185,12 +187,16 @@ const get_unsettle_tickets_count_config = () => {
       bet_record_count.value = count;
     }
   }).catch((error) => {
-      console.error(error);
-    });
+    console.error(error);
+  });
 };
 </script>
 
 <style lang="scss" scoped>
+.bet_history {
+  background: var(--q-gb-bg-c-11);
+}
+
 .c-main-menu {
   font-size: 13px;
   /* *** 头部 ************ -S */
@@ -209,7 +215,7 @@ const get_unsettle_tickets_count_config = () => {
     font-size: 13px;
 
     .menu-item {
-      
+
       &.menu-tab {
         font-size: 13px;
         justify-content: space-around;
@@ -575,13 +581,14 @@ const get_unsettle_tickets_count_config = () => {
   border-radius: 2px;
   box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.2);
 }
-.record-icon{
+
+.record-icon {
   background-size: 100% 100%;
   width: 14px;
   height: 14px;
   margin-right: 10px;
 }
-.border-bottom{
+
+.border-bottom {
   border-bottom: 1px solid var(--q-gb-bd-c-8);
-}
-</style>
+}</style>

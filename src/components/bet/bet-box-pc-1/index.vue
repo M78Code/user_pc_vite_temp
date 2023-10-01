@@ -1,6 +1,6 @@
 <template>
   <!--当前投注-->
-  <div>
+  <div class="relative-position bet-list-info">
     <!-- 投注头部 -->
     <bet-scroll-header />
 

@@ -3,7 +3,7 @@
 -->
 <template v-if="show_image">
   <!-- 有缓存图片优先使用缓存图片 @error="league_icon_error" -->
-  <img class="team-icon row no-wrap" loading="lazy" decoding="async" :src="image_src" @error="league_icon_error" />
+  <img class="team-icon row no-wrap" loading="lazy" decoding="async" :src="image_src"  />
 </template>
  
 <script setup>
@@ -113,7 +113,7 @@ const load_image_first_time = (params) => {
       myImage = null;
     });
   };
-  myImage.src = full_path.value;
+  // myImage.src = full_path.value;
 }
 /**
  * 根据类型 返回默认图片

@@ -560,12 +560,12 @@ const countMatchDetail = () => {
     handicap_state.value = "all_empty";
   }
 };
-onUnmounted(() => {
-  clearTimeout(get_match_details_timer2);
-  clearTimeout(axios_debounce_timer);
-  clearTimeout(axios_debounce_timer2);
-  clearTimeout(get_match_details_timer);
-});
+// onUnmounted(() => {
+//   clearTimeout(get_match_details_timer2);
+//   clearTimeout(axios_debounce_timer);
+//   clearTimeout(axios_debounce_timer2);
+//   clearTimeout(get_match_details_timer);
+// });
 const use_featch_fn = () => {
   
   return {

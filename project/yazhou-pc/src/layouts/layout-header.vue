@@ -346,7 +346,7 @@ function init_site_header(type = null) {
       timeOutIds.timer2 = setTimeout(activity_dialog, 5000);
     }
   }
-  site_header_data.nav_list = nav_list;
+  // site_header_data.nav_list = nav_list;
   emit('close_home_loading', false);
   // menu_init_done()
 }
