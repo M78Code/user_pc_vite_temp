@@ -54,7 +54,7 @@
 
       <!-- 历史记录 -->
       <template v-if="MenuData.layout_left_show == 'bet_history'">
-        <!-- <bet-record-view @set_scroll_this="set_scroll_this" /> -->
+        <bet-record-view-wapper />
       </template>
       </div>
     </v-scroll-area>
@@ -82,10 +82,9 @@ import lodash_ from "lodash";
 import MainHeader from "./main-header.vue";
 import LeftMainMenu from "./menu/index.vue";
 import { BetBoxWapper } from "src/components/bet";
+import { BetRecordViewWapper } from "src/components/bet-record-view";
 // // 通屏垂直滚动
 import vScrollArea from "../../components/v-scroll-area/v-scroll-area.vue";
-
-// import betRecordView from "../bet-record/index.vue";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { MenuData } from "src/core/index.js";
 import { api_betting } from "src/api/index.js";

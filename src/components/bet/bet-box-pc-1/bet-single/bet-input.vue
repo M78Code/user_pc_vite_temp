@@ -155,6 +155,7 @@ const set_win_money = () => {
         // 修改页面提示 1: 输入金额超出最大限额时
         BetViewDataClass.set_input_money_state(1)
     }
+    BetData.set_bet_amount(ref_data.money)
     // 计算最高可赢金额
     // ref_data.win_money = ref_data.money * props.item.oddFinally
 }

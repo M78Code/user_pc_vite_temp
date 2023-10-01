@@ -103,15 +103,24 @@ class UserCtr {
       this.user_version.value = v || Date.now()
     }
     this.callbackUrl = ''
+    //电竞图片地址 
+    this.e_sports_img_domain=  '' 
+ 
 
-    this.e_sports_domain_img = LocalStorage.get('e_sports_domain_img', '');
-    setTimeout(() => {
-      // 获取持久化的电竞图片域名
-      this.set_e_sports_domain_img();
-      //获取资源配置(商户后台配置的图片、跳转链接)
-      this.fetch_resourcesimg()
-    }, 0)
+    // 常规体育的 图片地址 
+    this.common_img_domain =  '' 
+   
   }
+
+
+
+
+ 
+
+
+
+
+
   /**
    * 获取初始化uid
    * @return {String} uid
@@ -249,7 +258,6 @@ class UserCtr {
       token,
     });
     let obj = lodash.get(res, 'data', {});
-    console.error("obj", obj);
     this.set_user_token(token);
     this.set_user_info(obj);
     this.update()
@@ -1008,6 +1016,8 @@ class UserCtr {
      * @description: 设置电竞图片资源域名
      */
   async set_e_sports_domain_img() {
+       //电竞图片地址 
+       this.e_sports_img_domain= LocalStorage.get('e_sports_domain_img', '');
     try {
       var send_gcuuid = uid();
       const res = await api_common.get_games_imgDomain({
@@ -1024,7 +1034,7 @@ class UserCtr {
         // 持久化电竞图片域名
         LocalStorage.set('e_sports_domain_img', temp);
         // 设置全局电竞图片域名信息
-        this.e_sports_domain_img = temp;
+        this.e_sports_img_domain= temp;
       }
     } catch (error) {
       console.error(error);

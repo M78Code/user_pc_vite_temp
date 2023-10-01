@@ -20,7 +20,7 @@
           @mouseenter="tabs_enter(index)"
           @mouseleave="tabs_leave(index)"
         >
-          <!-- <img v-if="item.img_src" v-check-img="{src: val.img_src, default: `${$g_image_preffix}/image/common/activity_banner/gift_package.png`}" /> -->
+          <!-- <img v-if="item.img_src" v-check-img="{src: val.img_src, default: `/image/common/activity_banner/gift_package.png`}" /> -->
 
           <span class="match-count">   {{ item.name }}</span>
         </div>

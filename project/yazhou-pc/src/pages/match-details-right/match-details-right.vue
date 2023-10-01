@@ -132,8 +132,6 @@
    
         > -->
         <!-- 盘口模板start -->
-        <!-- <div style="">{{  }}{{ MatchDetailsData.data_version }}</div> -->
-        
         <match-handicap
           :match_info="match_infoData"
           :category_list="category_list"
@@ -141,6 +139,7 @@
           :plays_list="plays_list"
           :currentRound="round"
           :is_list="true"
+          :mid="mid"
           @set_handicap_this="set_handicap_this"
           :close_all_handicap="close_all_handicap"
           :handicap_state="handicap_state"
@@ -166,7 +165,6 @@
             class="wrap-total total"
             :class="route.name !== 'details' && load_detail_statu"
             :style="{ 'margin-top': is_show_margin ? '200px' : '4px' }"
-            v-if="show_wrap_total"
           >
             <div class="w-sub-item">
               <div class="item-title">
@@ -174,7 +172,7 @@
                 <!-- 统计 -->
                 <span>{{ i18n_t("common.panel_total") }}</span>
               </div>
-              <chart class="total_chart" :match_info="match_infoData" />
+              <!-- <chart class="total_chart" :match_info="match_infoData" /> -->
             </div>
           </div>
           <!-- 撑起盘口关闭高度的 -->
@@ -277,13 +275,12 @@ import handicapTabsBar from "src/components/match-detail/match_info/handicap_tab
 import chart from "src/components/match-detail/match_info/chart.vue";
 // import hot from "src/components/match-detail/panel/hot.vue"
 import { useRoute } from "vue-router";
-import { computed, reactive, ref } from "vue";
+import { computed, reactive, ref, watch } from "vue";
 const route = useRoute();
 import LoadData from "project_path/src/components/load-data/load-data.vue";
 import store from "src/store-redux/index.js";
 import lodash from "lodash"
-let state = store.getState();
-
+let state = store.getState(); 
 // 获取右侧布局类型
 const cur_expand_layout = ref(state.layoutReducer.cur_expand_layout);
 // 获取当前页路由信息
@@ -292,8 +289,8 @@ const layout_cur_page = ref(state.layoutReducer.layout_cur_page);
 const {
   handicap_this,
   show_load_status,
-  match_infoData,
-  match_details,
+  // match_infoData,
+  // match_details,
   is_esports,
   get_is_fold_status,
   getLoading,
@@ -318,21 +315,15 @@ const {
   setfoldStatus,
   /* func */
 } = useRightDetails({ route });
-let str = mid.value + "_";
-console.log(str,'str');
-
-// const match_infoData =lodash.get(MatchDetailsData.list_to_obj.mid_obj, str)  ) ;
-console.log(match_infoData,'match_infoData',MatchDetailsData);
-
 // 是否显示 统计版块
 const show_wrap_total = computed(() => {
   return (
-    match_infoData.mcg == 1 &&
+    match_infoData.value.mcg == 1 &&
     [1, 2, 3, 4, 6, 5, 7, 9, 10].includes(
-      +lodash.get(match_infoData, "csid")
+      +lodash.get(match_infoData.value, "csid")
     ) &&
     get_global_switch.statistics_switch &&
-    match_infoData.cds !== "C01"
+    match_infoData.value.cds !== "C01"
   );
 });
 // 是否显示 聊天室
@@ -376,7 +367,20 @@ const chatroom_height = () => {
     return vx_get_layout_size.content_height - headerHeight - 7;
   }
 };
-
+/* 
+**监听数据仓库版本号
+*/
+const  MatchDetailsDataRef = reactive(MatchDetailsData)
+const  match_infoData = ref({})
+const  match_details = ref([])
+watch(()=>MatchDetailsDataRef.data_version,(val,oldval)=>{
+  if(val.version ){
+    console.log(222222);
+    match_infoData.value =  MatchDetailsData.get_quick_mid_obj(mid.value)  
+    match_details.value =  [MatchDetailsData.get_quick_mid_obj(mid.value)]
+    
+  }
+},{deep:true})
 // 是否展示右侧热门推荐处的margin
 const is_show_margin = computed(() => {
   return (

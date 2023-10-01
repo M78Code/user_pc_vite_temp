@@ -97,6 +97,7 @@
 
 <script>
 import common_before from "src/project/yabo/mixins/match_details/animation_template/common_before";
+import { nextTick } from "vue";
 export default {
   mixins: [common_before],
   data() {
@@ -116,7 +117,7 @@ export default {
      */
     reload_data() {
       this.isRouterAlive = false;
-      nextTick(function () {
+      nextTick( ()=> {
         this.isRouterAlive = true;
       });
     },

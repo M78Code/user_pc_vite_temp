@@ -19,7 +19,7 @@
       <div
         class="handicap-item"
         :class="[
-          `os-${item.os}`,
+          `os-${item?.os}`,
           { 'no_border-right': (i + 1) % 5 == 0 },
           {
             'border-right':

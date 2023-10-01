@@ -74,7 +74,7 @@
             i18n_t('bet.bet_err') }}</span>
           <!-- 提交成功 -->
           <span v-if="get_bet_status == 6" class="color2"><img
-              :src="(`${$g_image_preffix}/image/wwwassets/bw3/svg/bet_tijiao${UserCtr.theme.includes('y0') ? '2' : ''}.svg`)"
+              :src="(`/image/wwwassets/bw3/svg/bet_tijiao${UserCtr.theme.includes('y0') ? '2' : ''}.svg`)"
               class="img0">{{ $t('bet.submitted_successfully') }}</span>
         </template>
         <template v-else>

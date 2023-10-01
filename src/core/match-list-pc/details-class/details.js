@@ -9,7 +9,9 @@ import { api_details } from "src/api/index";
 import { UserCtr, MITT_TYPES,useMittEmit } from "src/core/index.js"; 
 import { update_match_time } from "src/core/bet/common-helper/module/common-sport.js"
 import {utils,is_virtual_csid,is_eports_csid,MatchDetailCalss } from 'src/core/index.js'
+import GlobalAccessConfig from "src/core/access-config/access-config.js"
 import router from "project_path/src/router/index.js"
+import lodash from 'lodash';
 export default {
   //统计分析URL
   signal_url:'https://s5.sir.swiftscore.com',
@@ -35,11 +37,11 @@ export default {
       }
     }
     //触发右侧详情更新
-    useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, {
-      mid,
-      tid,
-      csid
-    });
+    // useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, {
+    //   mid,
+    //   tid,
+    //   csid
+    // });
 
     // MatchDetailCalss.set_score_button({
     //   mid,
@@ -72,17 +74,17 @@ export default {
     // 电竞赛事
     if (is_eports_csid(csid)) {
       api_details.get_match_detail_ESMatchInfo({mid}).then(res => {
-        let mst = _.get(res,'data.data.mst')
+        let mst = lodash.get(res,'data.data.mst')
         if(mst){
           update_match_time({mid, mst});
         }
       })
     } else {
       api_details.get_match_detail_MatchInfo({mid}).then(res => {
-        let mst = _.get(res,'data.data.mst')
+        let mst = lodash.get(res,'data.data.mst')
         if(mst){
-          let mstst = _.get(res,'data.data.mstst');
-          let mststs = _.get(res,'data.data.mststs');
+          let mstst = lodash.get(res,'data.data.mstst');
+          let mststs = lodash.get(res,'data.data.mststs');
           update_match_time({mid, mst, mstst, mststs});
         }
       })
@@ -124,7 +126,7 @@ export default {
     if(window.vue.$route.name != 'home'){
       return
     }
-    let match = _.get(match_list,'[0]') || {}
+    let match = lodash.get(match_list,'[0]') || {}
     if(!match.mid){
       let play_id = store.getters.get_match_details_params.play_id;
       store.dispatch('set_match_details_params',{
@@ -160,27 +162,34 @@ export default {
   */
   sr_click_handle(match) {
     let full_url = this.get_full_sr_url(match) // seid,match.srid
-    if(!store.getters.get_global_switch.statistics_switch) return window.vue.useMittEmit(window.vue.MITT_TYPES.EMIT_SHOW_TOAST_CMD, window.vue.i18n_t("msg.msg_09")); 
-    if([1,2].includes(match.csid*1)){
+    // lockie
+    // if(!GlobalAccessConfig.get_statisticsSwitch()) return window.vue.useMittEmit(window.vue.MITT_TYPES.EMIT_SHOW_TOAST_CMD, window.vue.i18n_t("msg.msg_09")); 
+    // if([1,2].includes(match.csid*1)){
       full_url = `/#/analysis_header/${match.csid}/${match.mid}` // seid,match.srid
-      store.dispatch("set_active_detail", match)
-    }
+    //   store.dispatch("set_active_detail", match)
+    // }
     
     let _window_width = 1000
     let _window_height = 650
     let _window_offset_left = (screen.width - _window_width) / 2
     let _window_offset_top = (screen.height - _window_height) / 2
-
-    if (full_url) {
-      window.open(
-        full_url,
-        "",
-        `height=${_window_height}, width=${_window_width},
-        top=${_window_offset_top}, left=${_window_offset_left},
-        toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no,fullscreen=no`
-      );
-      return full_url;
-    }
+    window.open(
+      full_url,
+      "",
+      `height=${_window_height}, width=${_window_width},
+      top=${_window_offset_top}, left=${_window_offset_left},
+      toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no,fullscreen=no`
+    );
+    // if (full_url) {
+    //   window.open(
+    //     full_url,
+    //     "",
+    //     `height=${_window_height}, width=${_window_width},
+    //     top=${_window_offset_top}, left=${_window_offset_left},
+    //     toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no,fullscreen=no`
+    //   );
+    //   return full_url;
+    // }
     
   },
   /**
@@ -190,8 +199,8 @@ export default {
   * @return:
   */
   get_full_sr_url(match) {
-    let csid = _.get(match,'csid')
-    let srid = _.get(match,'srid')
+    let csid = lodash.get(match,'csid')
+    let srid = lodash.get(match,'srid')
     if(!csid || !srid) return ''
 
     let csid_translate = csid, sr_prev = '';
@@ -259,7 +268,7 @@ export default {
    * @return {number} 数组索引
    */
   get_match_index(mid,list){
-    if(!_.isArray(list)) return -1
+    if(!lodash.isArray(list)) return -1
     for (let i = 0; i < list.length; i++) {
       if(list[i].mid == mid){
         return i

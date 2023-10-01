@@ -55,7 +55,7 @@ export const category_info = (category_arr=[]) => {
   // 赛事id
   const match_id = ref(component_data.matchInfoCtr.mid || route.params.mid);
     // 详情初始化接口数据处理
-    const MatchDataWarehouseInstance =reactive(MatchDataWarehouse_H5_Detail_Common)
+  const MatchDataWarehouseInstance =reactive(MatchDataWarehouse_H5_Detail_Common)
   // #TODO vuex
   // computed:{
   // ...mapGetters([
@@ -73,6 +73,8 @@ export const category_info = (category_arr=[]) => {
   //   'get_details_tabs_list',
   //   'get_chpid_obj'
   // ]),
+
+  // ==================待优化之前遗留================
   const get_detail_data = computed(() => {
     return "";
   });
@@ -105,6 +107,8 @@ export const category_info = (category_arr=[]) => {
   const get_chpid_obj = computed(() => {
     return "gt_chpid_obj";
   });
+  // ==================================
+  
   // 监听tab的ID变动时重新赋值
   watch(() => component_data.matchInfoCtr.current_category_id, () => {
     get_details_item.value = component_data.matchInfoCtr.current_category_id;

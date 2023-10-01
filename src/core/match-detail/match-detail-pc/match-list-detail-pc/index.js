@@ -37,6 +37,39 @@ import PageSourceData from "src/core/page-source/page-source.js";
  * 
  */
 
+//
+
+/**
+ *
+ * 假设现在列表内点击某场赛事   现在需要进详情 页面
+ *
+ * 步骤：
+ * 1. set_back_to_source_params
+ * 2. set_params
+ * 3. init_detail_form_list
+ * 4. 路由跳转
+ *
+ *
+ *
+ * 假设现在列表内点击某场赛事   现在显示右侧详情
+ * 步骤：
+ * 1.set_params
+ * 2.init_detail_form_list
+ *
+ *
+ *
+ * 列表内右侧自动切
+ * 详情页面自动切  可能列表内么有这个赛事 ，但是元数据一定有 ,如果没有 则： {mid}
+ * 1.set_params
+ * 2.拿元数据组装 mid 基础信息对象
+ * 3.init_detail_form_base_data
+ *
+ *
+ *
+ *
+ *
+ */
+
 class MatchListDetailMiddleware {
   constructor() {
     // 前一个 详情 赛事ID
@@ -56,6 +89,8 @@ class MatchListDetailMiddleware {
     this.common_params = {};
     //当前详情 赛事类型  : vr  dianjing  common
     this.match_category = "";
+    // 详情进入列表场景下：返回来源列表页面必须参数
+    this.back_to_list_params = {};
   }
 
   /**
@@ -103,17 +138,37 @@ class MatchListDetailMiddleware {
   }
 
   /**
-   * @description 常规赛事右侧切换
-   * @param {*} cut 列表多行切换  cut   是否 切换右侧详情  true 不切换
+   * 列表 数据  初始化详情数据
    * @param {*} params
    */
-  regular_events_set_match_details_params(cut, params) {
-    if (this.match_details_params_timer) {
-      clearTimeout(this.match_details_params_timer);
-    }
-    this.match_details_params_timer = setTimeout(() => {
-      if (!cut) this.vx_set_match_details_params(params);
-    }, 200);
+  init_detail_form_list(params) {
+    let { MatchDataWarehouse_source, MatchDataWarehouse_target, mid } = params;
+    // 读取 来源数据仓库 赛事基础信息
+    let mid_data = MatchDataWarehouse_source.mid_obj[`${mid}_`];
+    // 写入 目标数据仓库 赛事基础信息
+    MatchDataWarehouse_target.set_match_details(mid_data);
+  }
+
+  /**
+   * 拿元数据组装 mid 基础信息对象
+   * @param {*} mid
+   */
+  init_detail_form_base_data(params) {
+    let { MatchDataWarehouse_target, mid } = params;
+
+    // 从 元数据 拿基础信息
+    let mid_obj = { mid };
+
+    // 写入 目标数据仓库 赛事基础信息
+    MatchDataWarehouse_target.set_match_details(mid_obj);
+  }
+
+  /**
+   * 列表进入详情的 返回参数留存
+   * @param {*} params
+   */
+  set_back_to_source_params(params) {
+    this.back_to_source_params = params;
   }
 
   /**
@@ -272,3 +327,4 @@ class MatchListDetailMiddleware {
     }
   }
 }
+export default new MatchListDetailMiddleware()

@@ -1,0 +1,17 @@
+{
+  "bet_record": {
+    "level": 2,
+    "menuName": "客户端PC",
+    "sonName": "PC-投注记录组件"
+  },
+  "category": "BetRecordViewWapper",
+  "component-name": "BetRecordViewWapper",
+  "support-customization": "1",
+  "descriptions": ["菜投注记录组件单组件"],
+  "optional-component": [
+    {
+      "component-name": "BetRecordViewWapper",
+      "descriptions": ["投注记录组件-版本1"]
+    }
+  ]
+}

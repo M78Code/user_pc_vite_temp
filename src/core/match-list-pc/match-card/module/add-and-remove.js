@@ -3,6 +3,8 @@ import { compute_style_template_by_matchinfo } from "./compute-style-template.js
 import { conpute_match_list_card_offset } from "./card-show-offset.js";
 import { compute_match_list_style_obj_and_match_list_mapping_relation_obj } from "./data-relation.js";
 import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/core/index.js";
+import MatchListCardData from "./match-list-card-data-class";
+import use_featch_fn from '../../composables/match-list-featch.js'
 import { PageSourceData } from 'src/core/index.js';
 
 
@@ -14,6 +16,7 @@ const MenuData = {
 };
 
 const { page_source } = PageSourceData;
+const { league_list_obj } = use_featch_fn();
 
 /**
  * @Description 移除一场联赛
@@ -22,7 +25,7 @@ const { page_source } = PageSourceData;
 export const remove_league = (remove_tid) => {
   if (MenuData.menu_data.is_esports) {
     // 列表接口数据类型为联赛列表
-    let all_league_obj = MatchListData.match_list_data.league_list_obj;
+    let all_league_obj = league_list_obj;
     // 遍历所有赛事数据
     let match_status_type_arr = ["livedata", "nolivedata"];
     match_status_type_arr.forEach((match_status_type) => {
@@ -68,19 +71,18 @@ export const recompute_match_list_style_obj_and_match_list_mapping_relation_obj_
     }
     mids_arr.forEach((mid) => {
       // 原来的样式数据
-      let old_match_style_obj =
-        MatchListCardData.all_card_obj[mid+'_'] || {};
+      let old_match_style_obj = MatchListCardData.all_card_obj[mid+'_'];
       // 判断是否需要动态计算高度
       if (
         old_match_style_obj.is_dynamic_compute_height ||
         !old_match_style_obj.card_total_height
       ) {
-        // 更新赛事表征数据
-        let match = MatchListData.match_list_data.mid_obj[mid+'_'] || {};
+        let match = MatchListData.list_to_obj.mid_obj[mid+'_'];
         let match_style_obj = compute_style_template_by_matchinfo(
           match,
-          match.data_tpl_id
+          old_match_style_obj.data_tpl_id
         );
+        // 更新赛事表征数据
         Object.assign(old_match_style_obj, match_style_obj);
         // 更新赛事父级卡片样式 即对应的联赛容器卡片样式
         update_match_parent_card_style(
@@ -89,11 +91,6 @@ export const recompute_match_list_style_obj_and_match_list_mapping_relation_obj_
         );
       }
     });
-    // 重新计算卡片样式
-    compute_match_list_style_obj_and_match_list_mapping_relation_obj(
-      match_list,
-      true
-    );
     // 设置列表总高度
     conpute_match_list_card_offset();
   };
@@ -129,7 +126,7 @@ const remove_match_when_match_list_mapping_relation_obj_type_1_3 = (
   // 列表接口数据类型为联赛列表
   // 移除的赛事联赛ID
   let remove_tid = lodash.get(
-    MatchListData.match_list_data.mid_obj,
+    MatchListData.list_to_obj.mid_obj,
     `mid_${remove_mid}.tid`
   );
   let all_league_obj = MatchListData.match_list_data.league_list_obj;

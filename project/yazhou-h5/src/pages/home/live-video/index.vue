@@ -45,13 +45,13 @@
             <div class="video_list" v-for="(item, index) in carousel_data.list" :key="index" :ref="'mid-' + item.mid"
               @click="goto_detail_video(item)">
               <div class="video_list_left"
-                :style="{ backgroundImage: 'url(' + (item.mgif ? item.mgif : `${$g_image_preffix}/image/bw3/png/live_loading.png`) + ')' }">
+                :style="{ backgroundImage: 'url(' + (item.mgif ? item.mgif : `/image/bw3/png/live_loading.png`) + ')' }">
                 <div class="player">
                   <img src="image/bw3/svg/home/play.svg" alt="">
                   <span>{{ money_filter(item.plnum) }}</span>
                 </div>
                 <img v-if="GlobalAccessConfig.get_collectSwitch()"
-                  :src="item.mf ? (!_.get(UserCtr, 'favoriteButton') && UserCtr.theme.includes('y0') ? y0_img_favorite_black : `${$g_image_preffix}/image/bw3/svg/home/pentagram_s.svg`) : `${$g_image_preffix}/image/bw3/svg/home/pentagram.svg`"
+                  :src="item.mf ? (!_.get(UserCtr, 'favoriteButton') && UserCtr.theme.includes('y0') ? y0_img_favorite_black : `/image/bw3/svg/home/pentagram_s.svg`) : `/image/bw3/svg/home/pentagram.svg`"
                   @click.stop="on_collection(item)">
               </div>
               <div class="video-list-right">
