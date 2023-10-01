@@ -188,6 +188,8 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 					tid: first_league.tid,
 					sportId: first_league.csid,
 				};
+				//触发右侧详情更新
+				useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, params);
 				callback_func = () => {
           // lockie
 					// this.regular_events_set_match_details_params(cut, params);
