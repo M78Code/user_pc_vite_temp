@@ -15,6 +15,7 @@ import store from "src/store-redux/index.js";
 
 let state = store.getState();
 
+const league_list_obj = ref([]);
 const { page_source } = PageSourceData;
 // 赛事列表排序 1:按联赛排序 2:按时间排序
 const vx_match_sort = ref(state.filterReducer?.show_filter_popup);
@@ -84,6 +85,44 @@ const set_match_base_info_by_mids_info = (match_list, mids_arr, ts1) => {
 };
 
 /**
+	 * @Description 设置联赛列表对象
+	 * @param {object} league_list_obj
+	 */
+const set_league_list_obj = (league_list_obj) => {
+  league_list_obj.value = league_list_obj;
+
+}
+
+/**
+	 * @Description 获取前12场展开的赛事mid
+	 * @returns {array} mids 前12场赛事id
+	 */
+const get_first_unfold_mids = () => {
+  let mids = [];
+  // 展开的赛事数量计数  用于计数首次加载列表 只展开前12场赛事
+  let unfold_match_count = 0;
+  // 遍历所有赛事数据
+  let match_status_type_arr = ["livedata", "nolivedata"];
+  match_status_type_arr.forEach((match_status_type) => {
+    // 遍历联赛列表
+    let league_list = lodash.get(league_list_obj.value, match_status_type, []);
+    league_list.forEach((league_obj) => {
+      // 赛事计数大于12 不执行
+      if (unfold_match_count >= 12) {
+        return;
+      }
+      // 赛事ID数组
+      let mids_arr = league_obj.mids.split(",");
+      mids_arr.forEach((mid) => {
+        unfold_match_count++;
+        mids.push(mid);
+      });
+    });
+  });
+  return mids;
+}
+
+/**
  * @description 调用列表bymids接口
  * @param  {boolean} is_first_load 是否用户切换菜单  第一次加载调用
  * @param  {boolean} is_show_mids_change 是否可视区域赛事改变 调用
@@ -110,7 +149,7 @@ const api_bymids = (
   }
   // 联赛结构类型列表 首次加载拉前12场赛事
   if (is_league_first) {
-    mids = MatchListData.get_first_unfold_mids();
+    mids = get_first_unfold_mids();
   }
   // 第一次加载拉取所有赛事
   else if (is_first_load) {
@@ -314,7 +353,9 @@ const api_bymids = (
 
 const use_featch_fn = () => {
     return {
-        api_bymids
+        api_bymids,
+        set_league_list_obj,
+        league_list_obj
     }
 }
 
