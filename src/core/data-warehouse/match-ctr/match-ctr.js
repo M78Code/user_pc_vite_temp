@@ -285,7 +285,7 @@ init(){
    */
   get_quick_mid_obj(mid){
     // 获取指定mid的赛事
-    return this.list_to_obj.mid_obj[this.get_list_to_obj_key(mid,mid,'mid')];
+    return lodash.get(this.list_to_obj,`mid_obj[${this.get_list_to_obj_key(mid,mid,'mid')}]`,{mid});
   }
 
   /**
