@@ -172,6 +172,7 @@ import { IconWapper } from "src/components/icon";
 import refresh from "src/components/refresh/refresh.vue";
 import { i18n_t, get_match_status,UserCtr } from "src/core/index";
 import { compute_css } from "src/core/server-img/index.js";
+import { debounce_throttle_cancel } from "src/core/utils/module/other.js";
 import lodash from "lodash";
 const props = defineProps({
   refresh_loading: {
@@ -502,7 +503,7 @@ onMounted(() => {
   }
 });
 onUnmounted(() => {
-  lodash.debounce_throttle_cancel(refresh);
+  debounce_throttle_cancel(refresh);
   clearTimeout(set_play_media_timer);
   set_play_media_timer.value = null;
 });

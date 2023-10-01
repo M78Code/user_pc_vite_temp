@@ -84,6 +84,7 @@ export default {
    * @return {undefined} undefined
    */
   on_switch_match(media_type,match,play_id) {
+    return false //todo
     this.auto_swich_match = false
     let { mid, tid, csid: sportId } = match;
     let old_mid = store.getters.get_match_details_params.mid
