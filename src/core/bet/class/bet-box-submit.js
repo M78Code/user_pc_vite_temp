@@ -290,6 +290,11 @@ const submit_handle = type => {
                 UserCtr.get_balance()
                 // 投注成功后获取投注记录数据 24小时内的
                 useMittEmit(MITT_TYPES.EMIT_TICKRTS_COUNT_CONFIG)
+                // 获取
+                BetData.set_bet_mode(lodash_.get(res,'data.lock'),-1)
+                // 获取投注后的数据列表
+                let orderDetailRespList = lodash_.get(res,'data.orderDetailRespList') || []
+                set_orderNo_bet_obj(orderDetailRespList)
             }, 1000);
             // 通知页面更新 
             // useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY)
@@ -302,26 +307,27 @@ const submit_handle = type => {
 // 选择投注项数据 
 // params 各种id 用于查找数据对应的值 
 // other 灵活数据
-// const set_bet_obj_config = (mid_obj,hn_obj,hl_obj,ol_obj) =>{
-const set_bet_obj_config = (params = {}, other = {}) => {
+const set_bet_obj_config = (mid_obj,hn_obj,hl_obj,ol_obj) =>{
+// const set_bet_obj_config = (params = {}, other = {}) => {
     // console.log('投注项需要数据', params, 'other', other);
     // 切换投注状态
     BetViewDataClass.set_bet_order_status(1)
+    BetData.set_bet_mode(-1)
 
-    const { oid, _hid, _hn, _mid } = params
-    // console.error('MatchDataWarehouse_PC_List_Common',MatchDataWarehouse_PC_List_Common)
-    // 列表数据仓库
-    let query = MatchDataWarehouse_PC_List_Common
-    // 判断是不是详情点击 详情使用详情数据仓库
-    if (other.is_detail) {
-        query = MatchDataWarehouse_PC_Detail_Common
-    }
-    // 获取对应的仓库数据
-    const hl_obj = lodash_.get(query.list_to_obj, `hl_obj.${_mid}_${_hid}`, {})
-    const hn_obj = lodash_.get(query.list_to_obj, `hn_obj.${_hn}`, {})
-    const mid_obj = lodash_.get(query.list_to_obj, `mid_obj.${_mid}_`, {})
-    const ol_obj = lodash_.get(query.list_to_obj, `ol_obj.${_mid}_${oid}`, {})
-    // let other = { bet_type:'common_bet'}
+    // const { oid, _hid, _hn, _mid } = params
+    // // console.error('MatchDataWarehouse_PC_List_Common',MatchDataWarehouse_PC_List_Common)
+    // // 列表数据仓库
+    // let query = MatchDataWarehouse_PC_List_Common
+    // // 判断是不是详情点击 详情使用详情数据仓库
+    // if (other.is_detail) {
+    //     query = MatchDataWarehouse_PC_Detail_Common
+    // }
+    // // 获取对应的仓库数据
+    // const hl_obj = lodash_.get(query.list_to_obj, `hl_obj.${_mid}_${_hid}`, {})
+    // const hn_obj = lodash_.get(query.list_to_obj, `hn_obj.${_hn}`, {})
+    // const mid_obj = lodash_.get(query.list_to_obj, `mid_obj.${_mid}_`, {})
+    // const ol_obj = lodash_.get(query.list_to_obj, `ol_obj.${_mid}_${oid}`, {})
+    let other = { bet_type:'common_bet'}
     // 1 ：早盘赛事 ，2： 滚球盘赛事，3：冠军，4：虚拟赛事，5：电竞赛事")
     let matchType = 1
     if ([1, 2].includes(Number(mid_obj.ms))) {
@@ -431,6 +437,23 @@ const get_handicap = ol_obj => {
     return playId.includes(Number(ol_obj._hpid))
 }
 
+// 设置投注后的数据内容
+const set_orderNo_bet_obj = order_no_list => {
+    let order_list = order_no_list.map( item => {
+        // 获取投注项内对应的数据
+        let refer_obj = lodash_.get( BetData.bet_read_write_refer_obj, `${item.playOptionsId}`)
+        // 开赛时间
+        let match_time = lodash_.get( refer_obj, `match_time`)
+        // 玩法id
+        let playId = lodash_.get( refer_obj, `playId`)
+        return {
+            ...item,
+            match_time,
+            playId,
+        }
+    })
+    BetData.set_orderNo_bet_obj(order_list)
+}
 // 是否显示基准分 
 const get_mark_score = ol_obj => {
     // 显示基准分

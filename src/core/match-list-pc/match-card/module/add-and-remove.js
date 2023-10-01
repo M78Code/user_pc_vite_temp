@@ -3,6 +3,8 @@ import { compute_style_template_by_matchinfo } from "./compute-style-template.js
 import { conpute_match_list_card_offset } from "./card-show-offset.js";
 import { compute_match_list_style_obj_and_match_list_mapping_relation_obj } from "./data-relation.js";
 import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/core/index.js";
+import MatchListCardClass from "src/core/match-list-pc/match-card/match-list-card-class.js";
+import use_featch_fn from '../../composables/match-list-featch.js'
 import { PageSourceData } from 'src/core/index.js';
 
 
@@ -14,6 +16,7 @@ const MenuData = {
 };
 
 const { page_source } = PageSourceData;
+const { league_list_obj } = use_featch_fn();
 
 /**
  * @Description 移除一场联赛
@@ -22,7 +25,7 @@ const { page_source } = PageSourceData;
 export const remove_league = (remove_tid) => {
   if (MenuData.menu_data.is_esports) {
     // 列表接口数据类型为联赛列表
-    let all_league_obj = MatchListData.match_list_data.league_list_obj;
+    let all_league_obj = league_list_obj;
     // 遍历所有赛事数据
     let match_status_type_arr = ["livedata", "nolivedata"];
     match_status_type_arr.forEach((match_status_type) => {
@@ -63,20 +66,23 @@ export const remove_league = (remove_tid) => {
 export const recompute_match_list_style_obj_and_match_list_mapping_relation_obj_by_matchs =
   (mids_arr) => {
     // 是否走卡片逻辑
-    if (!MatchListCardData.is_run_card_function) {
+    if (!MatchListCardClass.is_run_card_function) {
       return;
     }
     mids_arr.forEach((mid) => {
       // 原来的样式数据
       let old_match_style_obj =
-        MatchListCardData.all_card_obj[mid+'_'] || {};
+        MatchListCardClass.all_card_obj[mid+'_'] || {};
+        debugger
       // 判断是否需要动态计算高度
       if (
         old_match_style_obj.is_dynamic_compute_height ||
         !old_match_style_obj.card_total_height
       ) {
         // 更新赛事表征数据
-        let match = MatchListData.match_list_data.mid_obj[mid+'_'] || {};
+        let match = MatchListData.list_to_obj.mid_obj[mid+'_'] || {};
+        console.log('mids_arrmids_arr', match);
+
         let match_style_obj = compute_style_template_by_matchinfo(
           match,
           match.data_tpl_id
@@ -85,7 +91,7 @@ export const recompute_match_list_style_obj_and_match_list_mapping_relation_obj_
         // 更新赛事父级卡片样式 即对应的联赛容器卡片样式
         update_match_parent_card_style(
           old_match_style_obj,
-          MatchListCardData.all_card_obj
+          MatchListCardClass.all_card_obj
         );
       }
     });
@@ -104,7 +110,7 @@ export const recompute_match_list_style_obj_and_match_list_mapping_relation_obj_
  *  并且 在调用   remove_match  方法的时候 传入  回调   { length_0_fn：xxxx_fn   }
  */
 const remove_match_callback_when_match_list_length_0_demo = () => {
-  // if([1,3].includes(MatchListCardData.match_list_mapping_relation_obj_type)){
+  // if([1,3].includes(MatchListCardClass.match_list_mapping_relation_obj_type)){
   //   // this.view.set_load_data_state('empty')
   // }else{
   //      // 收藏时当列表为空时跳转菜单
@@ -129,7 +135,7 @@ const remove_match_when_match_list_mapping_relation_obj_type_1_3 = (
   // 列表接口数据类型为联赛列表
   // 移除的赛事联赛ID
   let remove_tid = lodash.get(
-    MatchListData.match_list_data.mid_obj,
+    MatchListData.list_to_obj.mid_obj,
     `mid_${remove_mid}.tid`
   );
   let all_league_obj = MatchListData.match_list_data.league_list_obj;
@@ -222,7 +228,7 @@ export const remove_match = (remove_mid, callback) => {
   if (window.vue.$route.name == "search") {
     return;
   }
-  if ([1, 3].includes(MatchListCardData.match_list_mapping_relation_obj_type)) {
+  if ([1, 3].includes(MatchListCardClass.match_list_mapping_relation_obj_type)) {
     remove_match_when_match_list_mapping_relation_obj_type_1_3(
       remove_mid,
       callback
@@ -239,21 +245,21 @@ export const remove_match = (remove_mid, callback) => {
  */
 export const set_new_sport_title_card_fold = () => {
   // 新增球种操作
-  lodash.each(MatchListCardData.csid_to_card_key_obj, (card_key_arr) => {
-    let sport_card_obj = MatchListCardData.all_card_obj[card_key_arr[0]] || {};
+  lodash.each(MatchListCardClass.csid_to_card_key_obj, (card_key_arr) => {
+    let sport_card_obj = MatchListCardClass.all_card_obj[card_key_arr[0]] || {};
     // 如果未设置折叠数据  设置折叠数据
     if (!sport_card_obj.hasOwnProperty("is_show_card")) {
       Object.assign(sport_card_obj, fold_template);
     }
   });
   // 滚球标题卡片折叠数据处理
-  let play_card_obj = MatchListCardData.all_card_obj["play_title"] || {};
+  let play_card_obj = MatchListCardClass.all_card_obj["play_title"] || {};
   if (!play_card_obj.hasOwnProperty("is_show_card")) {
     Object.assign(play_card_obj, fold_template);
   }
   // 未开赛标题卡片折叠数据处理
   let no_start_card_obj =
-    MatchListCardData.all_card_obj["no_start_title"] || {};
+    MatchListCardClass.all_card_obj["no_start_title"] || {};
   if (!no_start_card_obj.hasOwnProperty("is_show_card")) {
     Object.assign(no_start_card_obj, fold_template);
   }

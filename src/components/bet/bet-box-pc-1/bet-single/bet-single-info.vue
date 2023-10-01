@@ -13,7 +13,7 @@
 
     <q-card-section>
       <!--不是冠军-->
-      <div class="row" v-if="ref_data.match_type != 3">
+      <div class="row" v-if="item.matchType != 3">
         <div class="col bet-league-name">
           <!--联赛名称-->
           {{ item.tid_name }}
@@ -24,14 +24,14 @@
         </div>
       </div>
       <div class="row">
-        <div class="col" :class="{ 'bet-against': ref_data.match_type != 3, 'bet-outweight': ref_data.match_type == 3 }">
+        <div class="col" :class="{ 'bet-against': item.matchType != 3, 'bet-outweight': item.matchType == 3 }">
           <!--是冠军且来源是列表-->
-          <!-- match_type 盘口类型 1:赛前盘，2: 滚球盘 3: 冠军盘 -->
-          <template v-if="ref_data.match_type == 3 && ref_data.source == 'match_list'">
+          <!-- matchType 盘口类型 1:赛前盘，2: 滚球盘 3: 冠军盘 -->
+          <template v-if="item.matchType == 3 && ref_data.source == 'match_list'">
             <!-- 冠军玩法联赛赛季名称 -->
             {{ ref_data.season }}
           </template>
-          <template v-if="ref_data.match_type != 3">
+          <template v-if="item.matchType != 3">
             <span class="home-vs-away">
               {{ item.home }}<span class='bet-pk'>v</span>{{ item.away }}
             </span>
@@ -44,7 +44,7 @@
           </template>
         </div>
         <!--删除按钮-->
-        <div class="col-auto col-delete" v-if="ref_data.match_type == 3">
+        <div class="col-auto col-delete" v-if="item.matchType == 3">
           <icon-wapper size="12px" name="icon-del" class="bet-del" @click="del_bet_item" />
         </div>
       </div>
@@ -65,7 +65,7 @@
               <template v-if="item.match_ms == 1">
                 <label class="bet-match-playing">[{{ i18n_t('menu.match_playing') }}]</label>
               </template>
-              {{ item.playName }}-{{ item.playId }}-
+              {{ item.playName }}
               <label v-if="ref_data.basic_score" class="score">({{ ref_data.basic_score }})</label>
               <label class="bet-handicap-name">[{{ i18n_t(`odds.${item.marketTypeFinally}`) }}] </label>
             </label>
@@ -153,7 +153,7 @@ const pending_order_status = computed(() => options_id => {
 
 const ref_data = reactive({
   DOM_ID_SHOW: false,
-  match_type: 1,  // match_type 盘口类型 1:赛前盘，2: 滚球盘 3: 冠军盘 
+  matchType: 1,  // matchType 盘口类型 1:赛前盘，2: 滚球盘 3: 冠军盘 
   active: 1,    //投注项状态
   season: '',   // 赛季
   timerly_basic_score: "",   // 计时比分 返回比分格式为: (主队得分-客队得分)

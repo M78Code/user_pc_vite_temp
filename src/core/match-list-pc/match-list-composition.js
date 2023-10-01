@@ -344,6 +344,8 @@ const fetch_match_list = (is_socket = false, cut) => {
 				// 组件和路由不匹配 菜单id不匹配aa
 				if ((page_source != "details") || _params.euid != match_api.params.euid) return;
 				api_error_count.value = 0;
+				console.log('进来了几次', res);
+
 				if (res.code == 200) {
 					//处理服务器返回的 列表 数据   fetch_match_list
 					handle_match_list_request_when_ok(
@@ -368,15 +370,16 @@ const fetch_match_list = (is_socket = false, cut) => {
 				show_refresh_mask.value = false;
 			})
 			.catch((err) => {
+				console.log('error', err);
 				show_refresh_mask.value = false;
 				// 如果是用户切换菜单
 				if (!is_socket) {
 					api_error_count.value++;
 					// 重复拉列表的次数小于5   3秒后再次拉接口
 					if (api_error_count.value < 5) {
-						// get_match_list_timeid = setTimeout(() => {
-						// 	fetch_match_list();
-						// }, 3000);
+						get_match_list_timeid = setTimeout(() => {
+							fetch_match_list();
+						}, 3000);
 					} else {
 						load_data_state.value = "refresh";
 					}
@@ -466,7 +469,7 @@ const mounted_fn = () => {
 	useMittOn(MITT_TYPES.EMIT_FETCH_MATCH_LIST, fetch_match_list);
 	useMittOn(MITT_TYPES.EMIT_API_BYMIDS, api_bymids);
 	useMittOn(MITT_TYPES.EMIT_MX_COLLECT_MATCH, mx_collect_match);
-	// useMittOn(MITT_TYPES.EMIT_MiMATCH_LIST_SHOW_MIDS_CHANGE, show_mids_change);
+	useMittOn(MITT_TYPES.EMIT_MiMATCH_LIST_SHOW_MIDS_CHANGE, show_mids_change);
 	useMittOn(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA, init_page_when_base_data_first_loaded);
 	load_video_resources();
 }
@@ -501,13 +504,8 @@ const handle_match_list_request_when_ok = (data, is_socket, cut, collect) => {
 		match_list_api_type,
 		left_menu_result,
 	} = MenuData;
-	// let  use_mx_list_res =
-	if (
-		(menu_root == 2000 ||
-			([2, 3].includes(Number(menu_root)) &&
-				left_menu_result.guanjun != "common-guanjun")) &&
-		!match_list_api_config.is_collect
-	) {
+	let current_menu = ([2, 3].includes(Number(menu_root)) && left_menu_result.guanjun != "common-guanjun")
+	if ((menu_root == 2000 || current_menu) && !match_list_api_config.is_collect) {
 		//       mx_list_res
 		//    今日早盘   常规球种下的  常规 玩法
 		//    电竞 单页  所有玩法

@@ -955,7 +955,6 @@ export const useRightDetails = (props) => {
       error_codes: ["0401038"],
       params: params,
       fun_then: (res) => {
-        debugger
         if (!MatchDataWarehouseInstance) {
           return;
         }
