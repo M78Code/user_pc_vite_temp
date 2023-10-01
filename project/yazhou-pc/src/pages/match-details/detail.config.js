@@ -230,9 +230,9 @@ export const useGetConfig = () => {
         });
       }
       let { from_path, from } = cur_menu_type.value;
-      from_path = from_path || "/match";
+      from_path = from_path || "/home";
       if (from == "video") {
-        from_path = "/match";
+        from_path = "/home";
       }
       // 告知列表是详情返回：用于是否重新自动拉右侧内容
       store.dispatch({
