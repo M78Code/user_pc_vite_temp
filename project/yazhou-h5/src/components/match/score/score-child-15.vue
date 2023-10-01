@@ -16,7 +16,8 @@
       <template v-if="model_a.includes(detail_data.mmp) && detail_data.mle == 17 && !['result_details', 'match_result'].includes($route.name)">
         <span v-for="(item, key) of score_array" :key="key">
           <span>&nbsp;&nbsp;</span>
-          <span :class="score_array.length == key + 1 ? 'active-text': '' ">{{`${key + 1}H`}}<span style="letter-spacing: 0.01rem">{{item | score_format}}</span></span>
+          <!-- TODO:  | score_format 过滤后续修改 -->
+          <span :class="score_array.length == key + 1 ? 'active-text': '' ">{{`${key + 1}H`}}<span style="letter-spacing: 0.01rem">{{item}}</span></span>
         </span>
       </template>
 
@@ -25,7 +26,7 @@
       <template v-if="model_b.includes(detail_data.mmp) && detail_data.mo != 1">
         <span v-for="(item, key) of score_array" :key="key">
           <span>&nbsp;&nbsp;</span>
-          <span :class="score_array.length == key + 1 ? 'active-text': '' "><span style="letter-spacing: 0.01rem">{{item | score_format}}</span></span>
+          <span :class="score_array.length == key + 1 ? 'active-text': '' "><span style="letter-spacing: 0.01rem">{{item}}</span></span>
         </span>
       </template>
 
@@ -36,25 +37,25 @@
         <template v-if="score_array.length == 2">
           <span v-for="(item, key) of score_array" :key="key">
             <span>&nbsp;&nbsp;</span>
-            <span>{{`${key + 1}H`}}{{item | score_format}}</span>
+            <span>{{`${key + 1}H`}}{{item}}</span>
           </span>
         </template>
         <template v-if="score_array.length == 4">
           <span v-for="(item, key) of score_array" :key="key">
             <span>&nbsp;&nbsp;</span>
-            <span>{{item | score_format}}</span>
+            <span>{{item}}</span>
           </span>
         </template>
         <!-- 加时赛比分展示 -->
         <span v-if="extraTime">
           <span>&nbsp;&nbsp;</span>
-          <span>{{i18n_t('match_info.add')}}: <span class="active-text">{{extraTime | score_format}}</span></span>
+          <span>{{i18n_t('match_info.add')}}: <span class="active-text">{{extraTime}}</span></span>
         </span>
 
         <!-- 点球比分展示 -->
         <span v-if="penaltyScore">
           <span>&ensp;</span>
-          <span>{{i18n_t('match_info.shoot_out')}}: <span class="active-text">{{penaltyScore | score_format}}</span></span>
+          <span>{{i18n_t('match_info.shoot_out')}}: <span class="active-text">{{penaltyScore}}</span></span>
         </span>
       </template>
     </template>

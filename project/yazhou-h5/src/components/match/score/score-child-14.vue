@@ -7,13 +7,14 @@
   <div class='score_child_14 row mx-12 font-style'>
     <!-- 半场 -->
     <span>&nbsp;&nbsp;</span>
-    <span v-if="score_array[1] && collection_a.includes(detail_data.mmp)">{{i18n_t('match_info.half')}}: <span class="active-text">{{score_array[1] | score_format}}</span></span>
+    <!-- TODO:  | score_format 过滤后续修改 -->
+    <span v-if="score_array[1] && collection_a.includes(detail_data.mmp)">{{i18n_t('match_info.half')}}: <span class="active-text">{{score_array[1]}}</span></span>
     <!-- 加时赛 -->
-    <span v-if="add_score && collection_c.includes(detail_data.mmp)">&nbsp;&nbsp;{{i18n_t('match_info.add')}}: <span class="active-text">{{add_score | score_format}}</span></span>
+    <span v-if="add_score && collection_c.includes(detail_data.mmp)">&nbsp;&nbsp;{{i18n_t('match_info.add')}}: <span class="active-text">{{add_score}}</span></span>
     <!-- 点球大战 -->
-    <span v-if="shoot_score && collection_d.includes(detail_data.mmp)">&nbsp;&nbsp;{{i18n_t('match_info.shoot_out')}}: <span class="active-text">{{shoot_score | score_format}}</span></span>
+    <span v-if="shoot_score && collection_d.includes(detail_data.mmp)">&nbsp;&nbsp;{{i18n_t('match_info.shoot_out')}}: <span class="active-text">{{shoot_score}}</span></span>
     <!-- 全场 -->
-    <span v-if="score_array[0] && collection_b.includes(detail_data.mmp)">&nbsp;&nbsp;{{i18n_t('match_info.full')}}: <span class="active-text">{{score_array[0] | score_format}}</span></span>
+    <span v-if="score_array[0] && collection_b.includes(detail_data.mmp)">&nbsp;&nbsp;{{i18n_t('match_info.full')}}: <span class="active-text">{{score_array[0]}}</span></span>
   </div>
 </template>
 
