@@ -125,7 +125,7 @@ export const useRightDetails = (props) => {
     handicap_this: null,
     // 菜单数据
     menu_data: MenuData,
-    mid: "2759654", //赛事id
+    mid: "2771987", //赛事id
     sportId: "", //球类id
     match_infoData: {},
     category_list: [], //玩法集
@@ -170,7 +170,7 @@ export const useRightDetails = (props) => {
     details_params: {
       //赛事参数
       media_type: "info",
-      mid: "2759654",
+      mid: "2771987",
       sportId: "1",
       tid: "1188757",
       time: 1695546310766,
@@ -325,7 +325,7 @@ export const useRightDetails = (props) => {
               // 初始化控制类中的玩法数据
               // MatchDataWarehouseInstance.init_plays_data(data);
 
-              MatchDataWarehouseInstance.set_quick_query_list_from_match_details(
+              MatchDataWarehouseInstance.set_match_details(allData.match_infoData,
                 data
               );
               // allData.match_details = MatchDataWarehouseInstance.list_to_obj.ol_obj;
@@ -438,7 +438,7 @@ export const useRightDetails = (props) => {
               });
 
               // 初始化控制类中的玩法数据
-              MatchDataWarehouseInstance.set_quick_query_list_from_match_details(
+              MatchDataWarehouseInstance.set_match_details(allData.match_infoData,
                 data
               );
       
@@ -840,7 +840,8 @@ export const useRightDetails = (props) => {
              * msc: ["S1|48:52"] => msc: {S1:{home: 48,away: 52}}
              */
             data.msc = detailUtils.build_msc(data);
-            MatchDataWarehouseInstance.set_match_details(MatchDataWarehouseInstance.get_quick_mid_obj(allData.mid),data);
+            // MatchDataWarehouseInstance.set_match_details(MatchDataWarehouseInstance.get_quick_mid_obj(allData.mid),data);
+            MatchDataWarehouseInstance.set_match_details(data,[]);
             allData.match_infoData = MatchDataWarehouseInstance.get_quick_mid_obj(allData.mid);
             console.log(allData.match_infoData, "allData.match_infoData");
             let mid = lodash.get(data, "mid");

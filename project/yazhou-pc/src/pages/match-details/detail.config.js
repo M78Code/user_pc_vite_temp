@@ -150,7 +150,7 @@ export const useGetConfig = () => {
       // 2.ms变更时才调用
       if (arr_ms.includes(Number(_new)) && _old) {
         // 更新右侧详情
-        init();
+        // init();
       }
     }
   );
@@ -161,7 +161,7 @@ export const useGetConfig = () => {
       if (_new !== 999 && _old) {
         console.log(11111111111111)
         // 更新右侧详情
-        init();
+        // init();
       }
     }
   );
@@ -325,7 +325,7 @@ export const useGetConfig = () => {
             data.msc = details.build_msc(data);
             // 设置赛事信息
             console.error( JSON.stringify(data),'data.msc');
-            MatchDataWarehouseInstance.set_list_from_match_details(data)  
+            MatchDataWarehouseInstance.set_match_details(data,[])  
             let str =state.mid+'_'
             // state.match_infoData = data;
             state.match_infoData = lodash.get(MatchDataWarehouseInstance.list_to_obj.mid_obj,str);
@@ -679,9 +679,8 @@ export const useGetConfig = () => {
           state.category_list = res;
           console.log( handicap_this.value,' state.handicap_this');
           handicap_this.value['category_list'] = res
-        
           // 初始化玩法列表
-          MatchDataWarehouseInstance.set_quick_query_list_from_match_details(res);
+          // MatchDataWarehouseInstance.set_quick_query_list_from_match_details(res);
           if (callback) {
             callback();
           }
@@ -759,8 +758,9 @@ export const useGetConfig = () => {
    */
   const handle_match_details_data = (data, timestap) => {
     // 初始化赛事控制类玩法数据
-    MatchDataWarehouseInstance.set_quick_query_list_from_match_details(data);
-    match_details_data_set(MatchDataWarehouseInstance.list);
+    MatchDataWarehouseInstance.set_match_details(state.match_infoData, data);
+    let str =state.mid+'_'
+    match_details_data_set([lodash.get(MatchDataWarehouseInstance.list_to_obj.mid_obj,str)]);
     state.handicap_state = "data";
     // 同步投注项
     if (!get_lang_change.value) {
