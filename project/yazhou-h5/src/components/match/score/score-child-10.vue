@@ -9,7 +9,8 @@
     <template v-if="detail_data.ms != 111">
       <span v-for="(item, key) of score_array" :key="key">
         <span>&nbsp;&nbsp;</span>
-        <span :class="(score_array.length == key + 1&&detail_data.mo != 1) ? 'activeText': '' ">{{item | score_format}}</span>
+        <!-- TODO:  | score_format 过滤后续修改 -->
+        <span :class="(score_array.length == key + 1&&detail_data.mo != 1) ? 'activeText': '' ">{{item}}</span>
         <span>&nbsp;&nbsp;</span>
       </span>
     </template>
