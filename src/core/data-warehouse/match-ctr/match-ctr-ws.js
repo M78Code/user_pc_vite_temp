@@ -332,7 +332,7 @@ export default class MatchDataBaseWS
             // 拼接快速查找对象所需的id
             const hid_str = this.match_ctr.get_list_to_obj_key(mid,hl_obj.hid,'hl');
             // 获取指定的盘口对象
-            const quick_hl_obj = this.match_ctr.quick_query_obj.hl_obj[hid_str];
+            const quick_hl_obj = this.match_ctr.list_to_obj.hl_obj[hid_str];
             ol.forEach(ol_obj => {
               if(ol_obj){
                 // 拼接快速查找对象所需的id
