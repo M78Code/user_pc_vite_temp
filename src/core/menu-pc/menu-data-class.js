@@ -106,9 +106,8 @@ class MenuData {
 
   // 设置左侧显示内容
   set_layout_left_show(val){
-    console.error('ssssss',val)
     this.layout_left_show = val
-    // this.set_menu_data_version()
+    this.set_menu_data_version()
   }
   // 设置 菜单的版本变化
   set_menu_data_version(){

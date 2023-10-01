@@ -13,11 +13,11 @@ let DEV_TARGET_ENV = "local_test";
 // IDC  预发布
 // DEV_TARGET_ENV = 'idc_pre'
 // IDC 试玩环境
-DEV_TARGET_ENV = "idc_sandbox";
+// DEV_TARGET_ENV = "idc_sandbox";
 // IDC  隔离预发布
 // DEV_TARGET_ENV = 'idc_lspre'
 // IDC  生产环境
-// DEV_TARGET_ENV = 'idc_online'
+DEV_TARGET_ENV = 'idc_online'
 // IDC 微型测试环境
 // DEV_TARGET_ENV = 'idc_ylcs'
 

@@ -8,10 +8,11 @@
 <!-- 可能会产生滚动，故用class  menu-s -->
   <div class='score_child_4 mx-12 font-style menu-s'>
     <!-- 常规三节赛事 -->
+    <!-- TODO:  | score_format 过滤后续修改 -->
     <template v-if="mmp_arr.includes(detail_data.mmp) && !is_match_result">
       <span v-for="(item, key) of score_array" :key="key">
         <span>&ensp;</span>
-        <span :class="{'active-text':(score_array.length == key + 1 && detail_data.mo != 1)}">{{item | score_format}}</span>
+        <span :class="{'active-text':(score_array.length == key + 1 && detail_data.mo != 1)}">{{item}}</span>
         <span>&ensp;</span>
       </span>
     </template>
@@ -20,19 +21,19 @@
       <!-- 解决key重复 -->
       <span v-for="(item, key) of score_array" :key="key">
         <span>&ensp;</span>
-        <span>{{item | score_format}}</span>
+        <span>{{item}}</span>
         <span>&ensp;</span>
       </span>
       <!-- 加时赛比分展示 -->
       <span v-if="extraTime">
         <span>&ensp;</span>
-        <span class="activeText">{{i18n_t('match_info.ice_add')}}:{{extraTime | score_format}}</span>
+        <span class="activeText">{{i18n_t('match_info.ice_add')}}:{{extraTime}}</span>
         <span>&ensp;</span>
       </span>
       <!-- 点球比分展示 -->
       <span v-if="penaltyScore">
         <span>&ensp;</span>
-        <span class="activeText">{{i18n_t('match_info.shoot_out')}}:{{penaltyScore | score_format}}</span>
+        <span class="activeText">{{i18n_t('match_info.shoot_out')}}:{{penaltyScore}}</span>
       </span>
     </template>
   </div>

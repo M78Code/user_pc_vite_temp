@@ -12,7 +12,8 @@
       <template v-if="model_a.includes(detail_data.mmp) && detail_data.mo != 1">
         <span v-for="(item, key) of score_array" :key="key">
           <span>&ensp;</span>
-          <span :class="(score_array.length == key + 1&&detail_data.mo != 1) ? 'active-text': '' " style="letter-spacing: 0.015rem">{{item | score_format}}</span>
+          <!-- TODO:  | score_format 过滤后续修改 -->
+          <span :class="(score_array.length == key + 1&&detail_data.mo != 1) ? 'active-text': '' " style="letter-spacing: 0.015rem">{{item}}</span>
         </span>
       </template>
       <!-- 加时赛 -->
@@ -22,12 +23,12 @@
           <!-- 历史比分展示 -->
           <span v-for="(item, key) of score_array" :key="key">
             <span>&ensp;</span>
-            <span style="letter-spacing: 0.015rem" >{{item | score_format}}</span>
+            <span style="letter-spacing: 0.015rem" >{{item}}</span>
           </span>
           <!-- 加时赛比分展示 -->
           <span v-if="detail_data.mmp != '32' && extraTime">
             <span>&ensp;</span>
-            <span>{{'OT'}}&nbsp;<span style="letter-spacing: 0.015rem" :class=" (history_score&&detail_data.mo != 1) ? 'active-text': ''">{{extraTime | score_format}}</span></span>
+            <span>{{'OT'}}&nbsp;<span style="letter-spacing: 0.015rem" :class=" (history_score&&detail_data.mo != 1) ? 'active-text': ''">{{extraTime}}</span></span>
           </span>
         </template>
       </template>

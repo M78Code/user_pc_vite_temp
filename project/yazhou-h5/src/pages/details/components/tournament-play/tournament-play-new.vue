@@ -130,6 +130,7 @@
 <script>
 // #TODO vuex
 // import { mapGetters, mapMutations } from "vuex";
+import { ref } from "vue";
 import { api_common } from "src/api/index.js";
 // #TODO mixins
 // import betting from "src/project/mixins/betting/betting.js";
@@ -223,6 +224,7 @@ export default defineComponent({
   // mixins: [betting],
   setup(props, evnet) {
     // console.error("tournament-play-new", props);
+    const get_menu_type = ref(0)
     let component_data = reactive({
       emitters: [],
       wsl_flag:sessionStorage.getItem('wsl') == 9999,
@@ -742,6 +744,7 @@ export default defineComponent({
       icon_name,
       isEmpty,
       i18n_t,
+      get_menu_type,
       set_is_close_info,
       set_hshow_map,
       set_details_data_cache,

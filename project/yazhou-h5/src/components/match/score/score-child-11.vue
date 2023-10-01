@@ -12,11 +12,11 @@
       <span v-if="score_array[0] && collection_b.includes(detail_data.mmp)">/{{i18n_t('match_info.full')}}</span>
       <span v-if="add_score && collection_c.includes(detail_data.mmp)">/{{i18n_t('match_info.add')}}</span>
       <span v-if="shoot_score && collection_c.includes(detail_data.mmp)">/{{i18n_t('match_info.shoot_out')}}</span>
-
-      <span v-if="score_array[1] && collection_a.includes(detail_data.mmp)"> : {{score_array[1] | score_format}}</span>
-      <span v-if="score_array[0] && collection_b.includes(detail_data.mmp)"> / {{score_array[0] | score_format}}</span>
-      <span v-if="add_score && collection_c.includes(detail_data.mmp)"> / {{add_score | score_format}}</span>
-      <span v-if="shoot_score && collection_c.includes(detail_data.mmp)"> / {{shoot_score | score_format}}</span>
+<!-- TODO:  | score_format 过滤后续修改 -->
+      <span v-if="score_array[1] && collection_a.includes(detail_data.mmp)"> : {{score_array[1]}}</span>
+      <span v-if="score_array[0] && collection_b.includes(detail_data.mmp)"> / {{score_array[0]}}</span>
+      <span v-if="add_score && collection_c.includes(detail_data.mmp)"> / {{add_score}}</span>
+      <span v-if="shoot_score && collection_c.includes(detail_data.mmp)"> / {{shoot_score}}</span>
     </div>
   </div>
 </template>

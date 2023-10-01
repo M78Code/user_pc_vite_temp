@@ -8,7 +8,8 @@
   <div class='score_child_9 mx-12 font-style menu-s'>
     <span v-for="(item, key) of score_array" :key="key">
       <span>&nbsp;&nbsp;</span>
-      <span :class="(score_array.length == key + 1&&detail_data.mo != 1) ? 'active-text': '' ">{{item | score_format}}</span>
+      <!-- TODO:  | score_format 过滤后续修改 -->
+      <span :class="(score_array.length == key + 1&&detail_data.mo != 1) ? 'active-text': '' ">{{item}}</span>
       <span>&nbsp;&nbsp;</span>
     </span>
   </div>
