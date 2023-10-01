@@ -18,7 +18,7 @@
       </template>
     </div>
 
-    <div class="full-width cursor-pointer bet-delete-all" @click.stop="bet_this.cancel_handle">
+    <div class="full-width cursor-pointer bet-delete-all" @click.stop="cancel_handle">
       <!-- 取消投注 -->
       {{ $t('bet.bet_cancel') }}
     </div>
@@ -36,7 +36,7 @@ import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import BetData from "src/core/bet/class/bet-view-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import { submit_handle } from "src/core/bet/class/bet-box-submit.js"
-import lodash from 'lodash'
+import { MenuData } from "src/core/index.js";
 
 //是否失效
 const lock_btn = ref(false)
@@ -52,6 +52,11 @@ onMounted(() => {
 const set_lock_btn = value => {
   lock_btn.value = value;
 }
+// 取消投注 返回菜单
+const cancel_handle = () => {
+  MenuData.set_layout_left_show('menu')
+}
+
 </script>
 
 <style scoped lang="scss">

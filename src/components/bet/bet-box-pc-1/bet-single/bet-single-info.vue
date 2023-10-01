@@ -16,7 +16,7 @@
       <div class="row" v-if="item.matchType != 3">
         <div class="col bet-league-name">
           <!--联赛名称-->
-          {{ item.tid_name }}
+          {{ item.tid_name }} {{ item.playId }}
         </div>
         <!--删除按钮-->
         <div class="col-auto col-delete">

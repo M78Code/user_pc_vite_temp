@@ -220,6 +220,7 @@ export default defineComponent({
     });
 
     return {
+      i18n_t,
       toggle_play,
       is_details,
       get_layout_statu,

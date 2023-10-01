@@ -92,9 +92,9 @@
             {{ i18n_t("list.after_time_start", [longTime]) }}
           </span>
           <template v-else>
-            <!-- .Format(i18n_t('time3')) -->
+            <!-- .Format(i18n_t('time3'))  | format_H_M -->
             <div class="sj-time-day">{{ format_time_zone(+detail_data.mgt) }}</div>
-            <span class="sj-time-soon">{{ format_time_zone_time(+detail_data.mgt) | format_H_M }}</span>
+            <span class="sj-time-soon">{{ format_time_zone_time(+detail_data.mgt)}}</span>
           </template>
         </span>
         <!-- 赛前切滚球 ms=110时:显示即将开赛 -->
@@ -135,7 +135,8 @@
           {{ i18n_t("list.after_time_start", [longTime]) }}
         </span>
         <span v-else>
-          {{ format_time_zone_time(+detail_data.mgt) | format_H_M }}
+          <!--  | format_H_M -->
+          {{ format_time_zone_time(+detail_data.mgt) }}
         </span>
       </span>
       <!-- 赛前切滚球 ms=110时:显示即将开赛 -->

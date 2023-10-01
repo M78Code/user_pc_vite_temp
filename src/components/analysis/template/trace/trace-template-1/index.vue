@@ -9,7 +9,7 @@
       <div class="info">
         <!-- 足球 -->
         <template v-if="match.csid == '1'">
-          <img :src="`${$g_image_preffix}/image/yabo/svg/analysis-${item.icon}.svg`" alt="" class="sign-icon"
+          <img :src="`/image/yabo/svg/analysis-${item.icon}.svg`" alt="" class="sign-icon"
             v-if="item.icon" width="14" style="vertical-align: middle">
         </template>
         <!-- 篮球 -->
