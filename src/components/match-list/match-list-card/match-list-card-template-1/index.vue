@@ -70,7 +70,6 @@
           /> 
        
       </template>
-      <template v-else> 列表卡片类型未知 ， </template>
     </div>
   </div>
 </template>

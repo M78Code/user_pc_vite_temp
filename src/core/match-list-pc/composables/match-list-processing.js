@@ -161,6 +161,7 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 		// 设置数据仓库 联赛列表对象
 		 
 	// 计算列表卡片样式
+	console.log('lockie-1');
 		MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
 			res_data,
 		);
@@ -218,7 +219,8 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 		load_data_state.value = "empty";
 		// 设置数据仓库 联赛列表对象
 		// this.match_list_data.set_league_list_obj(res_data);
-	console.log('match_listmatch_list33');
+		console.log('lockie-2');
+
 	// 计算列表卡片样式
 		MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
 			res_data,
@@ -230,7 +232,8 @@ const mx_list_res = (data, backend_run, cut, collect) => {
  */
 const mx_use_list_res_when_code_200_and_list_length_gt_0 = ({match_list, collect, backend_run}) => {
 	is_show_hot.value = false;
-	console.log('match_listmatch_list11');
+	console.log('lockie-3');
+
 	// 计算赛事卡片
 	MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
 		match_list,
@@ -330,7 +333,8 @@ const mx_use_list_res_when_code_error_or_list_length_0 = (match_list) => {
 		// 	backend_run,
 		// 	true
 		// );
-	console.log('match_listmatch_list22');
+		console.log('lockie-4');
+
 		// 计算赛事卡片
 		MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
 			match_list,

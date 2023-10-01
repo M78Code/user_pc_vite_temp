@@ -127,7 +127,7 @@ import MenuData from "src/core/menu-pc/menu-data-class.js";
     
 
   export const  compute_match_list_style_obj_and_match_list_mapping_relation_obj=(match_list,is_ws_call,is_remove_call)=>{
-    console.log('match_listmatch_list', match_list);
+    console.log('进来了几次');
     let current_csid = MenuData.left_menu_result.lv1_mi
     // 虚拟体育 不走卡片逻辑
     if(MenuData.menu_root == 300){
