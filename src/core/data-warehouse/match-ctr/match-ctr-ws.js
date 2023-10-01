@@ -717,14 +717,16 @@ export default class MatchDataBaseWS
   _get_c8_list(match_list) {
     let list = [];
     match_list.forEach(item => {
-      // hpid *为全部玩法订阅      
-      let mid = "", hpid="*";
-      mid = item.mid;
-      if(Array.isArray(item.hpids) && item.hpids.length > 0 && !item.hpids.includes("*")) {
-        hpid = item.hpids.join(',')
+      if(item){
+        // hpid *为全部玩法订阅      
+        let mid = "", hpid="*";
+        mid = item.mid;
+        if(Array.isArray(item.hpids) && item.hpids.length > 0 && !item.hpids.includes("*")) {
+          hpid = item.hpids.join(',')
+        }
+        let obj = { mid, hpid, level: 3 }; // level：2 值针对C303
+        list.push(obj);
       }
-      let obj = { mid, hpid, level: 3 }; // level：2 值针对C303
-      list.push(obj);
     });    
     return list;
   }

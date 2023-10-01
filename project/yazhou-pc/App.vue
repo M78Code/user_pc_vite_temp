@@ -16,7 +16,7 @@ import appload from "./app-load.vue";
 import { ref } from "vue";
 import { http, AllDomain } from "src/core/http/";
 import { SessionStorage,enter_params } from "src/core/index.js";
-import { loadLanguageAsync, LayOutMain_pc } from "src/core/index.js";
+import { loadLanguageAsync, LayOutMain_pc,MatchDetailCalss } from "src/core/index.js";
 import base_data from "src/core/base-data/base-data.js";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
@@ -67,6 +67,7 @@ const init_load = ref(false); //用于加载是否完成
       BetViewDataClass.init();
       // 布局初始化
       LayOutMain_pc.init();
+      MatchDetailCalss.init()
       init_load.value = true;
     });
     AllDomain.run();

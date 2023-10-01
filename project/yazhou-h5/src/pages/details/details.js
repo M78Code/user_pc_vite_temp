@@ -6,7 +6,7 @@ import { useRouter, useRoute } from "vue-router";
 import store from "src/store-redux/index.js";
 import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache.js";
 // import { Level_one_category_list, Level_one_detail_data } from "./category-list.js";
-import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch, nextTick, ref } from "vue";
+import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch, nextTick, ref, onBeforeMount } from "vue";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { MatchDataWarehouse_H5_Detail_Common, format_plays, format_sort_data, MatchDetailCalss } from "src/core/index";
 import { SessionStorage } from "src/core/utils/index.js"
@@ -147,7 +147,11 @@ const get_detail_data = ref(MatchDataWarehouse_H5_Detail_Common.list_to_obj.mid_
     get_curr_tab_info: "get_curr_tab_info",
   });
 
+// 组件挂载前
+onBeforeMount(() => {
 
+  console.error('进入详情页前', route);
+})
   // 详情初始化接口数据处理
   const MatchDataWarehouseInstance = reactive(MatchDataWarehouse_H5_Detail_Common)
   const is_highlights = computed(() => {

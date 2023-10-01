@@ -8,7 +8,7 @@ import store from "src/store-redux/index.js";
 import { api_details } from "src/api/index";
 import { UserCtr, MITT_TYPES,useMittEmit } from "src/core/index.js"; 
 import { update_match_time } from "src/core/bet/common-helper/module/common-sport.js"
-import {utils,is_virtual_csid,is_eports_csid } from 'src/core/index.js'
+import {utils,is_virtual_csid,is_eports_csid,MatchDetailCalss } from 'src/core/index.js'
 import router from "project_path/src/router/index.js"
 export default {
   //统计分析URL
@@ -40,6 +40,13 @@ export default {
       tid,
       csid
     });
+
+    // MatchDetailCalss.set_score_button({
+    //   mid,
+    //   tid,
+    //   csid
+    // })
+
     router.push({
       name: route_name,
       params: {
