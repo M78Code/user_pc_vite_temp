@@ -76,8 +76,8 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed, watch } from "vue";
-import _ from "lodash";
+import { ref, onMounted, onUnmounted,computed } from "vue";
+import lodash_ from "lodash";
 
 import MainHeader from "./main-header.vue";
 import LeftMainMenu from "./menu/index.vue";
@@ -89,15 +89,20 @@ import vScrollArea from "../../components/v-scroll-area/v-scroll-area.vue";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { MenuData } from "src/core/index.js";
 import { api_betting } from "src/api/index.js";
-import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
+import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
 
 import { compute_css } from 'src/core/server-img/index.js'
 
 
 onMounted(() => {
-  get_unsettle_tickets_count_config();
-  // console.error('收拾收拾',compute_css({key:'pc-img-hot-match'}))
-});
+  // 投注成功后获取投注记录数据 24小时内的
+  get_unsettle_tickets_count_config()
+  useMittOn(MITT_TYPES.EMIT_TICKRTS_COUNT_CONFIG, get_unsettle_tickets_count_config).on
+})
+
+onUnmounted(() => {
+  useMittOn(MITT_TYPES.EMIT_TICKRTS_COUNT_CONFIG, get_unsettle_tickets_count_config).off
+})
 
 const bet_record_count = ref(0)
 
@@ -150,7 +155,7 @@ const set_user_preference = (cur, old) => {
   }
   // 设置用户偏好
   api_betting.record_user_preference({ userMarketPrefer }).then((res) => {
-    let code = _.get(res, "data.code");
+    let code = lodash_.get(res, "data.code");
     if (code == 200) {
       if (cur == 18) {
         // 设置盘口类型
@@ -173,15 +178,14 @@ const set_scroll_this = ({ type, _this }) => {
 };
 const get_unsettle_tickets_count_config = () => {
   let param = {};
-  // console.log('get_unsettle_tickets_count====',param);
-  api_betting.get_unsettle_tickets_count(param).then((response) => {
-    let count = _.get(response, "data.data") || 0;
-    let status = _.get(response, "status");
+  api_betting.get_unsettle_tickets_count(param).then(response => {
+    let status = lodash_.get(response, "code");
     if (status == 200) {
+      // 获取24小时内的投注量 
+      let count = lodash_.get(response, "data", 0);
       bet_record_count.value = count;
     }
-  })
-    .catch((error) => {
+  }).catch((error) => {
       console.error(error);
     });
 };

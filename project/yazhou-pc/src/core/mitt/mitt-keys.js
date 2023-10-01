@@ -290,6 +290,8 @@ export const EMIT_VITTUAL_BET_OBJ_DEL = "EMIT_VITTUAL_BET_OBJ_DEL";
 export const EMIT_VITTUAL_BET_LIST_DEL = "EMIT_VITTUAL_BET_LIST_DEL";
 // 获取投注项状态
 export const EMIT_GET_ODDS_ACTIVE = "EMIT_GET_ODDS_ACTIVE";
+// 投注成功后获取投注记录数据 24小时内的
+export const EMIT_TICKRTS_COUNT_CONFIG = "EMIT_TICKRTS_COUNT_CONFIG"
 
 // ------------------------------------------------------------------详情相关-----------------------------------------------------------------------------------
 

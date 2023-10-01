@@ -33,7 +33,7 @@
           </template>
           <template v-if="ref_data.match_type != 3">
             <span class="home-vs-away">
-              {{ item.home }}<span class='bet-pk'> v </span>{{ item.away }}
+              {{ item.home }}<span class='bet-pk'>v</span>{{ item.away }}
             </span>
             <!--足,蓝,棒,乒,排[1,2,3,8,9]-->
             <span
@@ -62,10 +62,10 @@
           <div class="col bet-play-game">
             <!--market_type: 0:滚球 若有比分是显示比分 以及盘口名称-->
             <label class="bet-play-text">
-              <template v-if="ref_data.match_ms == 1">
+              <template v-if="item.match_ms == 1">
                 <label class="bet-match-playing">[{{ i18n_t('menu.match_playing') }}]</label>
               </template>
-              {{ item.playName }}
+              {{ item.playName }}-{{ item.playId }}-
               <label v-if="ref_data.basic_score" class="score">({{ ref_data.basic_score }})</label>
               <label class="bet-handicap-name">[{{ i18n_t(`odds.${item.marketTypeFinally}`) }}] </label>
             </label>
@@ -75,7 +75,8 @@
         <div class="col bet-play-team yb-fontsize13">
           <!--卡赫利赛哈特 :class="{'bet-handicap': handicap_change}"-->
           <label class="bet-team-handicap">
-
+            {{ item.handicap  }}
+             <!-- -- {{ item.handicap_attach }}- {{ item.show_handicap }} -->
             <label class="yb-number-bold">
               <span class="bet-handicap-color">{{ item.handicap }}</span>
               <span v-if="item.show_handicap">{{ item.handicap_attach }}</span>

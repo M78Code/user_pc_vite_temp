@@ -288,7 +288,8 @@ const submit_handle = type => {
             setTimeout(() => {
                 // 投注成功 更新余额
                 UserCtr.get_balance()
-
+                // 投注成功后获取投注记录数据 24小时内的
+                useMittEmit(MITT_TYPES.EMIT_TICKRTS_COUNT_CONFIG)
             }, 1000);
             // 通知页面更新 
             // useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY)
@@ -326,12 +327,30 @@ const set_bet_obj_config = (params = {}, other = {}) => {
     if ([1, 2].includes(Number(mid_obj.ms))) {
         matchType = 2
     }
-    
+    console.error('sssssss',ol_obj)
     // 列表和详情 取值字段不同
     // 投注项 显示
     let handicap = '', handicap_attach = ''
     if (other.is_detail) {
-
+        // 列表数据
+        let text = ''
+        switch(ol_obj.ot){
+            case '1':
+                // 主
+                text= mid_obj.mhn
+                break
+            case '2':
+                // 客
+                text = mid_obj.man
+                break
+        }
+        // 直接显示投注项 )
+        if(!get_handicap(ol_obj)){
+            handicap = text
+            handicap_attach = ol_obj.on
+        }else{
+            handicap = text
+        }
     }else{
         // 列表数据
         let text = ''
@@ -346,15 +365,13 @@ const set_bet_obj_config = (params = {}, other = {}) => {
                 break
         }
         // 直接显示投注项 )
-        if(get_handicap(ol_obj)){
+        if(!get_handicap(ol_obj)){
             handicap = text
+            handicap_attach = ol_obj.on
         }else{
-            handicap = ol_obj.on
+            handicap = text
         }
-        handicap_attach = ol_obj.onbl
     }
-
-    console.error('sssssss',ol_obj.oid)
 
     const bet_obj = {
         sportId: mid_obj.csid, // 球种id
@@ -387,7 +404,7 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         match_time: mid_obj.mgt, // 开赛时间
         handicap, // 盘盘口值
         handicap_attach, // 盘盘口值
-        show_handicap: '',
+        show_handicap: get_handicap(ol_obj),
         show_mark_score: get_mark_score(ol_obj), // 是否显示基准分
     }
     // 设置投注内容 
@@ -406,10 +423,10 @@ const set_bet_obj_config = (params = {}, other = {}) => {
 // 获取盘口值 附加值
 const get_handicap = ol_obj => {
     // 需要显示主客队名称的 玩法id
-    // 直接显示投注项 1 7 367 344 68 14 8 9 17 341 368 342 369 344 68 14 23  21 22 12 24 76 104 340 359 
-    // 展示用的 + 投注项  2 4 12 18 114 26 10 3  33 34 11 351 347
+    // 直接显示投注项 [1, 7, 367, 344, 68, 14, 8, 9, 17, 341, 368, 342, 369, 344, 68, 14, 23, 21, 22, 12, 24, 76, 104, 340, 359]
+    // 展示用的 + 投注项  
 
-    let playId = [1, 7, 367, 344, 68, 14, 8, 9, 17, 341, 368, 342, 369, 344, 68, 14, 23, 21, 22, 12, 24, 76, 104, 340, 359]
+    let playId = [2,4, 12, 18, 114, 26, 10, 3 , 33 ,34, 11, 351, 347]
     // 直接显示投注项
     return playId.includes(Number(ol_obj._hpid))
 }

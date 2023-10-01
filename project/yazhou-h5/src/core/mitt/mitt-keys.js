@@ -277,4 +277,5 @@ export const EMIT_REF_DATA_BET_MONEY = "EMIT_REF_DATA_BET_MONEY"
 export const EMIT_REF_SHOW_BET_BOX = "EMIT_REF_SHOW_BET_BOX"
 // 
 export const EMIT_INPUT_BET_MONEY = "EMIT_INPUT_BET_MONEY"
+
 //------------------------------------------------------------------命令定义-E-------------------------------------------------------------------------------------

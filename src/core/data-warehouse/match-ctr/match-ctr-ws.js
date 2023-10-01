@@ -338,7 +338,7 @@ export default class MatchDataBaseWS
                 // 拼接快速查找对象所需的id
                 const oid_str = this.match_ctr.get_list_to_obj_key(mid,ol_obj.oid,'ol');
                 // 获取指定的投注项对象
-                const quick_ol_obj = this.match_ctr.quick_query_obj.ol_obj[oid_str];
+                const quick_ol_obj = this.match_ctr.list_to_obj.ol_obj[oid_str];
                 // 处理ot是小数的情况,进行数据修正
                 let ot = '';
                 if(ol_obj.ot && ol_obj.ot.includes('.')) {
@@ -355,7 +355,7 @@ export default class MatchDataBaseWS
                 // 合并投注项数据信息
                 quick_ol_obj && Object.assign(quick_ol_obj, ol_obj);
                 // 更新坑位信息
-                this.match_ctr.quick_query_obj.hn_obj[this.match_ctr.get_list_to_obj_key(mid,_hn,'hn')] = quick_ol_obj;
+                this.match_ctr.list_to_obj.hn_obj[this.match_ctr.get_list_to_obj_key(mid,_hn,'hn')] = quick_ol_obj;
               }
             });
             // 合并投注项数据信息

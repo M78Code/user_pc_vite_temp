@@ -13,11 +13,11 @@ let DEV_TARGET_ENV = "local_test";
 // IDC  预发布
 // DEV_TARGET_ENV = 'idc_pre'
 // IDC 试玩环境
-// DEV_TARGET_ENV = "idc_sandbox";
+DEV_TARGET_ENV = "idc_sandbox";
 // IDC  隔离预发布
 // DEV_TARGET_ENV = 'idc_lspre'
 // IDC  生产环境
-DEV_TARGET_ENV = 'idc_online'
+// DEV_TARGET_ENV = 'idc_online'
 // IDC 微型测试环境
 // DEV_TARGET_ENV = 'idc_ylcs'
 
@@ -43,9 +43,9 @@ let  DEV_TARGET_VERSION = ''
 // 打包 亚洲版 PC（新版)   测试环境  
 // DEV_TARGET_VERSION = "project_4-36304ea0499e11ee8848ada2b8a1d739-1695005815463-test";
 // 打包 亚洲版 PC（新版)   试玩环境  
-// DEV_TARGET_VERSION = "project_4-36304ea0499e11ee8848ada2b8a1d739-1694942162566-shiwan";
+DEV_TARGET_VERSION = "project_4-36304ea0499e11ee8848ada2b8a1d739-1696128558491-shiwan";
 // 打包 亚洲版 PC（新版)   生产环境
-DEV_TARGET_VERSION = "project_4-36304ea0499e11ee8848ada2b8a1d739-1695695964067-online";
+// DEV_TARGET_VERSION = "project_4-36304ea0499e11ee8848ada2b8a1d739-1695695964067-online";
 
 // 打包 亚洲版 H5（新版)   测试环境
 // DEV_TARGET_VERSION = "project_3-36304ea0499e11ee8848ada2b8a1d739-1695005829428-test";
