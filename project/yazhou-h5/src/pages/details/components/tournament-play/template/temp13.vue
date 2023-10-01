@@ -607,21 +607,5 @@ export default defineComponent({
   .ver-ali-top {
     vertical-align: top;
   }
-
-  .odd-color {
-
-  }
-
-  .size-color {
-
-  }
-
-  .size-color-wit {
-
-  }
-
-  .details-bg5 {
-
-  }
 }
 </style>

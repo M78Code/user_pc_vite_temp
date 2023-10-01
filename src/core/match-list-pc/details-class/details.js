@@ -37,11 +37,11 @@ export default {
       }
     }
     //触发右侧详情更新
-    useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, {
-      mid,
-      tid,
-      csid
-    });
+    // useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, {
+    //   mid,
+    //   tid,
+    //   csid
+    // });
 
     // MatchDetailCalss.set_score_button({
     //   mid,

@@ -5,6 +5,7 @@
     </div>
     <span class="menu-third"></span>
     <div class="menu-s" ref="reset_scroll_dom">
+      
       <div class="menu-item" 
       v-for="(item,index) in data_list" 
       :key="index" 
@@ -51,24 +52,13 @@ export default defineComponent({
     // 一键收起状态: 1.全展开 2.全收起 3.部分展开 1和3箭头向上
     const get_fewer = ref(1)
     const matchDetailCtr = ref(MatchDetailCalss)
-    const current_category_id = ref(MatchDetailCalss.current_category_id)
+    const current_category_id = ref(SessionStorage.get("DETAIL_TAB_ID"))
     const data = reactive({
       emitters: [],
       timer1_: null,
       reset_scroll_dom: null,
     });
-    // #TODO VUEX
-    // computed:{
-    // ...mapGetters([
-    //   // 玩法tab 所有投注 - 进球 - 上半场 - 球队 - 让球&大小
-    //   // 当用户未登录时返回uuid, 当用户登录时返回userId
-    //   'get_uid',
-    //   // 点击视频或者是动画的时候玩法集是否固定
-    //   'get_tab_fix',
-    //   // 一键收起状态: 1.全展开 2.全收起 3.部分展开 1和3箭头向上
-    //   "get_fewer",
-    //   "get_detail_data",
-    // ]),
+   
     // 玩法tab 所有投注 - 进球 - 上半场 - 球队 - 让球&大小
     const get_tab_fix = ref(" ");
     // 当用户未登录时返回uuid, 当用户登录时返回userId
@@ -85,14 +75,12 @@ export default defineComponent({
     const match_id = computed(() => {
       return route.params.mid || get_detail_data.mid
     });
-    console.error(MatchDetailCalss);
-    watch(() => matchDetailCtr.details_data_version, () => {
-      console.error(MatchDetailCalss.details_data_version);
-      current_category_id.value = MatchDetailCalss.current_category_id
+    
+    watch(() => matchDetailCtr.value.details_data_version, (val, old) => {
+      console.error(MatchDetailCalss.current_category_id);
+      current_category_id.value = lodash.get(MatchDetailCalss, "current_category_id", SessionStorage.get("DETAIL_TAB_ID"))
     })
-    // #TODO VUEX
-    // methods:{
-    // ...mapActions(['set_details_item','set_subscript_game_index']),
+   
     onMounted(() => {
       // 延时器
       data.timer1_ = null;
@@ -168,6 +156,7 @@ export default defineComponent({
     ])
     // 移除相应监听事件
     onUnmounted(emitters_off)
+    console.error(current_category_id.value);
     return {
       ...toRefs(data),
       match_id,

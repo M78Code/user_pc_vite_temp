@@ -31,20 +31,20 @@
             <!-- os参数： 1开盘、2封盘、3关盘、4锁盘 -->
             <div
               class="handicap-item"
-              v-if="item.os != 3"
+              v-if="item?.os != 3"
               :class="[
-                `os-${item.os}`,
+                `os-${item?.os}`,
                 {
                   no_border_bottom:
                     i > lodash.get(list, 'ol.length') - 3 &&
                     j > lodash.get(item_details, 'hl.length') - 2,
                 },
               ]"
-              :key="`bet_oid_${item.oid ? item.oid : 'placeholder_' + i}`"
+              :key="`bet_oid_${item?.oid ? item.oid : 'placeholder_' + i}`"
             >
               <!--osn：投注项显示名称，空则不需要显示 -->
               <bet-item
-                :key="`bet_oid_${item.oid ? item.oid : 'placeholder_' + i}`"
+                :key="`bet_oid_${item?.oid ? item.oid : 'placeholder_' + i}`"
                 :match_info="match_info"
                 :play_data="item_details"
                 :bet_data="item"
@@ -63,7 +63,7 @@
                       ['1002', '1011', '1010', '1009'].includes(match_info.csid)
                     "
                     class="rank-no"
-                    :class="`ranking-bg-style1-${item.ot} csid-${match_info.csid}`"
+                    :class="`ranking-bg-style1-${item?.ot} csid-${match_info.csid}`"
                   ></div>
                   <div class="item-label bet-ellipsis ellipsis">
                     <!-- ott 展示用的和title一样 -->
@@ -94,11 +94,11 @@
                         ].includes(lodash.get(item_details, 'hpid'))
                       "
                       class="bet_handicap yb-family-odds"
-                      :class="{ normal_color: item.on.indexOf('&') > -1 }"
+                      :class="{ normal_color: item?.on.indexOf('&') > -1 }"
                       v-html="
-                        item.on.indexOf('&') > -1
-                          ? filter_odds(item.on)
-                          : item.on
+                        item?.on.indexOf('&') > -1
+                          ? filter_odds(item?.on)
+                          : item?.on
                       "
                     ></span>
                     <!-- on 投注项显示值 例：on: "0-1"  on: "莱昂 & 大 3.5"-->
@@ -108,7 +108,7 @@
                       :class="{
                         normal_color: lodash.get(item_details, 'hpid') == 31,
                       }"
-                      >{{ item.on }}</span
+                      >{{ item?.on }}</span
                     >
                   </div>
                 </div>

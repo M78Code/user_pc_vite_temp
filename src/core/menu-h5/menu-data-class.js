@@ -1,6 +1,14 @@
 /**
  * 菜单 需要实现 保留 各级菜单 以及最终输出结果的   两个版本 ，
  */
+// "1": "滚球",  "2": "今日", "3": "早盘",  "4": "冠军","5": "即将开赛", "6": "串关","7": "电竞",
+// "8": "VR",// "28": "赛果", "30": "竞足",//
+
+/*以下是老的菜单对应ID*/
+// menu_type // 100（冠军）  3000（电竞） 赛果28 
+// 滚球:1 今日:3 早盘:4 串关:11 冠军:100 虚拟体育:900  赛果:20,
+// 如果不是 虚拟体育 900.则设置当前菜单
+/*--------------end----------*/
 
 import { api_common, api_analysis } from "src/api";
 import lodash from "lodash";
@@ -19,10 +27,9 @@ class MenuData {
     this.update = lodash.debounce(() => {
       that.update_time.value = Date.now();
     }, 16);
-    // "1": "滚球",  "2": "今日", "3": "早盘",  "4": "冠军","5": "即将开赛", "6": "串关","7": "电竞",
-    // "8": "VR",// "30": "竞足",// "28": "赛果",
 
-    // 500热门 2000 电竞  400 冠军
+
+
 
     this.menu_type = ref(0); //一级菜单 menu_type 很常用所以设定为ref
     //所有的菜单数据
@@ -108,6 +115,26 @@ class MenuData {
         lodash.assign({}, current, obj)
       );
     }
+  }
+  /**
+   * 兼容老的菜单ID?
+  */
+  menu_id_map(mi, menu_arr = false) {
+    const menu_type_config = {
+      1: 1,
+      2: 3,
+      3: 4,
+      4: 100,
+      5: "",
+      6: 11,
+      7: 3000,
+      8: 900,
+      28: 28,
+      30: 30,
+    };
+    return menu_arr
+      ? Object.values(menu_type_config)[mi]
+      : menu_type_config[mi];
   }
   /**
    * 根据后台数据 初始化菜单数据

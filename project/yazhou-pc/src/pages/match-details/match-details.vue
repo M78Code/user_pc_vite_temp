@@ -94,16 +94,18 @@ import matchListHot from "project_path/src/pages/match-list/match-list-hot.vue";
 import { useGetConfig } from "./detail.config";
 //引入组件样式
 import { compute_css_variables } from "src/core/css-var/index.js"
-import { ref } from "vue";
+import { reactive, ref, watch } from "vue";
+import { MatchDataWarehouse_PC_Detail_Common as MatchDetailsData } from "src/core/index";  
 const page_style = ref(null)
 page_style.value = compute_css_variables({ category: 'component', module: 'match-details' })
 const {
+  mid,
   load_detail_statu,
-  match_infoData,
+  // match_infoData,
   category_list,
   plays_list,
   currentRound,
-  match_details,
+  // match_details,
   close_all_handicap,
   handicap_state,
   detail_header,
@@ -123,6 +125,17 @@ const {
   MatchDataWarehouseInstance
 } = useGetConfig();
 console.log(MatchDataWarehouseInstance,'MatchDataWarehouseInstance');
+const  MatchDetailsDataRef = reactive(MatchDetailsData)
+const  match_infoData = ref({})
+const  match_details = ref([])
+watch(()=>MatchDetailsDataRef.data_version,(val,oldval)=>{
+  if(val.version ){
+    console.log(222222);
+    match_infoData.value =  MatchDetailsData.get_quick_mid_obj(mid.value)  
+    match_details.value =  [MatchDetailsData.get_quick_mid_obj(mid.value)]
+    
+  }
+},{deep:true})
 </script>
 
 <style lang="scss" scoped>
