@@ -943,7 +943,7 @@ export const useRightDetails = (props) => {
   const get_category_list = (callback, is_ws) => {
     let params = {
       sportId: allData.sportId || 0, //球类id
-      mid: allData.details_params.mid || 0, //赛事id
+      mid: allData.mid || 0, //赛事id
     };
     // 全屏模式
     if (route.params.video_size == 1) {
@@ -955,6 +955,7 @@ export const useRightDetails = (props) => {
       error_codes: ["0401038"],
       params: params,
       fun_then: (res) => {
+        debugger
         if (!MatchDataWarehouseInstance) {
           return;
         }

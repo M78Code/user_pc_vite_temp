@@ -132,7 +132,7 @@
    
         > -->
         <!-- 盘口模板start -->
-        <div style="">{{ match_details.odds_info }}{{ MatchDetailsData.data_version }}</div>
+        <!-- <div style="">{{  }}{{ MatchDetailsData.data_version }}</div> -->
         
         <match-handicap
           :match_info="match_infoData"
