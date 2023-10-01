@@ -53,18 +53,18 @@ class MatchListCard {
   update_match_to_list(compare_obj) {
     //从赛事列表中删除赛事
     Object.keys(compare_obj.del).forEach((mid) => {
-      MatchDataBaseH5.clearMidObj(mid);
+      MatchDataBaseH5.clear(mid);
     });
     //插入赛事到列表
     let add_to_list_arr = [];
     Object.keys(compare_obj.add).forEach((mid) => {
       let match = compare_obj.add[mid];
       let insert_i = compare_obj.add_index_obj[mid];
-      MatchDataBaseH5.insertMatchToList(match, insert_i);
+      // MatchDataBaseH5.insertMatchToList(match, insert_i);
       add_to_list_arr.push(match);
     });
     //设置赛事字典对象  setListObj
-    MatchDataBaseH5.appendListObj(add_to_list_arr);
+    // MatchDataBaseH5.appendListObj(add_to_list_arr);
     //从新计算容器
     this.run_process_when_need_recompute_container_list_when_first_load_list();
   }
@@ -361,7 +361,7 @@ class MatchListCard {
   //  更新 赛事列表 进程 综合 控制方法
   run_process_when_need_recompute_container_list(need_pre_process, scroll_obj) {
     // 需要执行前置进程
-    if ( !MatchDataBaseH5.list || !MatchDataBaseH5.list.length ) {
+    if ( !MatchDataBaseH5.mids_ation || !MatchDataBaseH5.mids_ation.length ) {
       // 如果条件达不到 ，不可以执行主进程 ，或者不需要执行主进程 则 方法终止
       return false;
     }
@@ -405,24 +405,24 @@ class MatchListCard {
   // 赛事数据源去重，数组 相同的mid 去重
   run_process_when_need_recompute_container_list_step_one_recompute_next_list_mids() {
     // 如果是赛果，不用去重 骚操作
-    if (this.menu_type == 28) {
-      return;
-    }
+    // if (this.menu_type == 28) {
+    //   return;
+    // }
     //  这个方法只是做简单的 赛事数据源去重，数组去重
-    let mid_dict = {};
-    let len = MatchDataBaseH5.list.length;
-    for (let i = 0; i < len; i++) {
-      let match_frame = MatchDataBaseH5.list[i];
-      if (!match_frame) {
-        continue;
-      }
-      if (match_frame.mid in mid_dict) {
-        let old_index = mid_dict[match_frame.mid];
-        MatchDataBaseH5.list.splice(old_index, 1);
-        i--;
-      }
-      mid_dict[match_frame.mid] = i;
-    }
+    // let mid_dict = {};
+    // let len = MatchDataBaseH5.list.length;
+    // for (let i = 0; i < len; i++) {
+    //   let match_frame = MatchDataBaseH5.list[i];
+    //   if (!match_frame) {
+    //     continue;
+    //   }
+    //   if (match_frame.mid in mid_dict) {
+    //     let old_index = mid_dict[match_frame.mid];
+    //     MatchDataBaseH5.list.splice(old_index, 1);
+    //     i--;
+    //   }
+    //   mid_dict[match_frame.mid] = i;
+    // }
   }
 
   /**
@@ -440,7 +440,8 @@ class MatchListCard {
       //赛事与dom高度的映射
       this.mid_dom_height_dict = {};
       // 每一个赛事的高度
-      this.match_height_map_list = MatchDataBaseH5.list.map((match, i) => {
+      this.match_height_map_list = MatchDataBaseH5.mids_ation.map((mid, i) => {
+        const match = MatchDataBaseH5.get_quick_mid_obj(mid)
         // let obj = get_match_dom_show_property(i);
         // let r = get_template_config(obj);
         // if (match.mhid === '111065') compute_style_template_by_match_height(match)
@@ -449,7 +450,7 @@ class MatchListCard {
         //   r.odd_list_height -= 0.11;
         // }
         // this.mid_dom_height_dict[r.mid] = r;
-        match.is_show_league = this.compute_show_league(match, i)
+        // match.is_show_league = this.compute_show_league(match, i)
         return compute_style_template_by_match_height(match); //每个赛事占的dom高度和mid映射r
       });
       // console.log(this.match_height_map_list)
@@ -473,7 +474,7 @@ class MatchListCard {
     if (this.menu_type == 100 || (this.menu_type == 3000 && lodash.get(this.get_current_menu, "date_menu.menuType") == 100) || (this.menu_type == 28 &&
         [1001, 1002, 1004, 1011, 1010, 1009, 100].includes( this.get_curr_sub_menu_type ))
     ) {
-      MatchDataBaseH5.setList(MatchDataBaseH5.list, false);
+      // MatchDataBaseH5.set_list(MatchDataBaseH5.mids_ation, false);
       return;
     }
     // scroll_top 是 滚动的距离
@@ -487,7 +488,7 @@ class MatchListCard {
     //赛果虚拟赛狗|赛马 摩托车
     if (this.menu_type == 28) {
       if ([1002, 1011, 1010, 1009].includes(this.get_curr_sub_menu_type)) {
-        page_count = MatchDataBaseH5.list.length;
+        page_count = lodash.get(MatchDataBaseH5.mids_atio, 'length')
       } else {
         page_count = 20;
       }
@@ -520,7 +521,7 @@ class MatchListCard {
             break;
           }
           // 当前赛事
-          let match = MatchDataBaseH5.list_to_obj.mid_obj[`${h_map.mid}_`];
+          const match = MatchDataBaseH5.get_quick_mid_obj(h_map.mid)
           if (match && match_height > 0) {
             // 列表页赛事的数据
             current_screen_match.push(match);
@@ -569,7 +570,7 @@ class MatchListCard {
             } else {
               break;
             }
-            let match = MatchDataBaseH5.list_to_obj.mid_obj[`${h_map.mid}_`];
+            const match = MatchDataBaseH5.get_quick_mid_obj(h_map.mid)
             if (match && match_height > 0) {
               current_screen_match.push(match);
               get_match_total++; //赛事容器数量加1
@@ -587,12 +588,12 @@ class MatchListCard {
 
       // H5 列表页显示的 可视区域的  数据源
       // MatchCtr.setList(current_screen_match, false);
-      MatchDataBaseH5.set_list(current_screen_match, 1)
+      MatchDataBaseH5.set_list(current_screen_match)
     } else {
 
       // H5 列表页显示的 可视区域的  数据源
       // MatchCtr.setList(MatchDataBaseH5.list, false);
-      MatchDataBaseH5.set_list(current_screen_match, 1)
+      MatchDataBaseH5.set_list(current_screen_match)
     }
     // 防止滚动切换赛事时触发赛事红升绿降
     clearTimeout(this.screen_changing_timer);
@@ -623,9 +624,10 @@ class MatchListCard {
       flag = true;
     } else {
       // 前一个赛事
-      let prev = MatchDataBaseH5.list[i - 1];
+      let prev_mid = MatchDataBaseH5.mids_ation[i - 1];
+      const prev_match = MatchDataBaseH5.get_quick_mid_obj(prev_mid)
       // 如果显示  赛事未开赛标题， 或者是  上一次和这一次tid 不一样  则显示联赛标题高度 is_show_no_play(i) || 
-      if (match[property_key] !== prev[property_key]) {
+      if (match[property_key] !== prev_match[property_key]) {
         flag = true;
       }
     }

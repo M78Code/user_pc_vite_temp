@@ -143,7 +143,7 @@ class MatchPage {
   removeMatch(callback) {
     if (callback)
       callback();
-    if (!MatchDataBaseH5.list.length) {
+    if (!MatchDataBaseH5.mids_ation.length) {
       this.match_is_empty = true;
     }
   }
@@ -218,23 +218,26 @@ class MatchPage {
    * @return {Undefined} Undefined
    */
   del_collect(k, index) {
+    const mid = MatchDataBaseH5.mids_ation[index]
     if (k == "tf") {
       // 冠军收藏时,mid是唯一的,tn不一定有值
       // get_current_menu.date_menu.menuType == 100 电竞冠军
       if (lodash.get(this.get_current_menu, 'date_menu.menuType') == 100) {
-        MatchDataBaseH5.clearMidObj(MatchDataBaseH5.list[index]);
+        MatchDataBaseH5.remove_match(mid);
       } else {
-        let tid = MatchDataBaseH5.list[index].tid;
-        MatchDataBaseH5.list.forEach(item => {
-          if (item.tid == tid) {
-            MatchDataBaseH5.clearMidObj(item);
+        const match = MatchDataBaseH5.get_quick_mid_obj(mid)
+        let tid = match.tid;
+        MatchDataBaseH5.mids_ation.forEach(item => {
+          const match_item = MatchDataBaseH5.get_quick_mid_obj(item)
+          if (match_item.tid == tid) {
+            MatchDataBaseH5.remove_match(item);
           }
         });
       }
     } else {
-      MatchDataBaseH5.clearMidObj(MatchDataBaseH5.list[index]);
+      MatchDataBaseH5.remove_match(mid);
     }
-    if (MatchDataBaseH5.list.length == 0) {
+    if (MatchDataBaseH5.mids_ation.length == 0) {
       this.match_is_empty = true;
     }
     //列表页移除赛事
@@ -261,12 +264,12 @@ class MatchPage {
         return;
       }
       this.prev_invoke_match_details_time = now;
-      let sliced = MatchDataBaseH5.list;
+      let sliced = MatchDataBaseH5.mids_ation;
       //数组转对象
       this.matchIds = ws_c8_obj_format(sliced);
       //列表除了电竞外，调用详情数据
       if (this.get_menu_type != 3000) {
-        this.get_match_info_upd(sliced.map(match => match.mid), 'is-subscribe');
+        this.get_match_info_upd(sliced.map(mid => mid), 'is-subscribe');
       }
       clearTimeout(this.sub_list_timeout);
       this.sub_list_timeout = null
@@ -454,14 +457,14 @@ class MatchPage {
    * @param {list} 赛事 list 
    */
   comparison_updata_match(list) {
-    const cur_list = MatchDataBaseH5.list
+    const cur_list = MatchDataBaseH5.mids_ation
     lodash.forEach(list, t => {
-      const match = lodash.find(cur_list, (l) => l.mid === t.mid)
+      const match = lodash.find(cur_list, (l) => l === t)
       if (!match) return
       t.is_show_league = match.is_show_league
     })
     // 更新数据仓库赛事
-    MatchDataBaseH5.set_list(list, 1);
+    MatchDataBaseH5.set_list(list);
   }
   /**
    * 赛事进行中
@@ -717,7 +720,7 @@ class MatchPage {
             // 前端进行  开赛 和 未开赛  和 其他赛事(电竞,冠军)   赛事阶段 排序
             data_page = this.get_obj(data_page);
             this.match_is_empty = false;
-            let temp_ = MatchDataBaseH5.listComparison(data_page, MatchDataBaseH5.list)
+            let temp_ = MatchDataBaseH5.list_comparison(data_page, MatchDataBaseH5.mids_ation)
             this.update_match_to_list(temp_);
             if (callback) callback();
           }
@@ -879,18 +882,18 @@ class MatchPage {
   match_status_changed(state_changed) {
     const _this = this;
 
-    const match_data_list = MatchDataBaseH5.list;
+    const match_data_list = MatchDataBaseH5.mids_ation;
     let match_id = state_changed.mid;
     // 删除数据源对应赛事下标的赛事
     let delete_source = function () {
       let deleted_match = 0;
       for (let p = 0, l = match_data_list.length; p < l; p++) {
         let item = match_data_list[p];
-        if (match_id == item.mid) {
+        if (match_id == item) {
           deleted_match = 1;
           // 删除数据仓库 一些数据操作
           _this.removeMatch(() => {
-            MatchDataBaseH5.clearMidObj(_this.MatchDataBaseH5.list[p].mid);
+            MatchDataBaseH5.remove_match(item);
           });
           p--;
           break;

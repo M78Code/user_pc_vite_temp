@@ -37,9 +37,7 @@
             v-if="match_item && (lodash.get(MenuData.current_menu, 'main.menuType') == 28 ||
             !is_champion && match_item?.ms != 3 ) && !(menu_type ==28 && 100 == get_curr_sub_menu_type)"
             :match_of_list="match_item"
-            :matchCtr="matchCtr"
             :i="index"
-            :key="match_item?.mid"
             :menu_type="menu_type"
             :main_source="source"
             @unfold_changed="unfold_changed_handle"
@@ -52,7 +50,6 @@
             :matchCtr="matchCtr"
             :i="index"
             :menu_type="menu_type"
-            :key="match_item?.mid"
             @toggle_collect_league="toggle_collect"
             v-if="match_item && is_champion">
           </match-container-champion>

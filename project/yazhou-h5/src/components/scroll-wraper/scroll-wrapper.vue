@@ -16,22 +16,22 @@
       }" 
       :style="{ 'min-height': `${get_menu_type == 100 ? list_wrap_height : match_list_wrapper_height}rem` }">
       <!-- 循环内部有多个dom时,为了减少最终dom数,可以循环template 当要v-for与v-if同时使用在一个dom上时,可以使用template -->
-      <template v-for="(match_item, index) in match_list">
-        <div v-if="match_item" class="s-w-item" :key="match_item.mid" :index="index"
-          :class="{ static: is_static_item, last: index == match_list.length - 1 }" :style="{
-            transform: `translateY(${is_static_item ? 0 : get_match_top_by_mid(match_item.mid)}rem)`,
+      <template v-for="(match_mid, index) in MatchDataBaseH5.mids_ation">
+        <div v-if="match_mid" class="s-w-item" :key="match_mid" :index="index"
+          :class="{ static: is_static_item, last: index == mids_ation.length - 1 }" :style="{
+            transform: `translateY(${is_static_item ? 0 : get_match_top_by_mid(match_mid)}rem)`,
             zIndex: `${200 - index}`
           }">
-          <div v-if="test" class="debug-head data_mid" :data-mid="match_item.mid" :class="{ first: index === 0 }">
-            <span> {{ get_index_f_data_source(match_item.mid) + '-' + index }} </span>
-            <span> key={{ match_item.flex_index }}-----{{ 'tid:' + match_item.tid }}-{{ 'mid: ' + match_item.mid }}
-              {{ get_secondary_unfold_map[match_item.mid] ? '-unfold: ' + get_secondary_unfold_map[match_item.mid] : '' }}
-              <span> {{ get_match_top_by_mid(match_item.mid) ? "-" + get_match_top_by_mid(match_item.mid) : 'none!' }} </span>
+          <div v-if="test" class="debug-head data_mid" :data-mid="match_mid" :class="{ first: index === 0 }">
+            <span> {{ get_index_f_data_source(match_mid) + '-' + index }} </span>
+            <span> key={{match_mid }}-----{{ match_mid }}-{{ 'mid: ' + match_mid }}
+              {{ get_secondary_unfold_map[match_mid] ? '-unfold: ' + get_secondary_unfold_map[match_mid] : '' }}
+              <span> {{ get_match_top_by_mid(match_mid) ? "-" + get_match_top_by_mid(match_mid) : 'none!' }} </span>
               <span>ms: {{ match_item?.ms }}</span>
             </span>
           </div>
           <div class="s-w-i-inner">
-            <slot :match_item="get_match_item(match_item.mid)" :mid="match_item.mid" :index="index"></slot>
+            <slot :match_item="get_match_item(match_mid)" :mid="match_mid" :index="index"></slot>
           </div>
         </div>
       </template>
@@ -70,33 +70,32 @@ const newer_standard_edition = ref(PageSourceData.newer_standard_edition);
 const get_menu_type = ref(MenuData.get_menu_type())
 const get_current_menu = ref(MenuData.current_menu)
 const get_curr_sub_menu_type = ref(lodash.get(MenuData.current_lv_2_menu, 'type'))
-const match_list = ref([])
-const mid_obj = {}
+const mids_ation = ref([])
 
 onMounted(() => {
-  // setTimeout(() => {
-  //   match_list.value = MatchDataBaseH5.list
-  //   mid_obj.value = MatchDataBaseH5.list_to_obj.mid_obj
-  // }, 1000)
+  setTimeout(() => {
+    mids_ation.value = MatchDataBaseH5.mids_ation
+    console.log(MatchDataBaseH5)
+    console.log(11111111111111)
+  }, 3000)
   test.value = sessionStorage.getItem('wsl') == '9999';
   // 详情页以外的列表才设置最小高度
   if (props.main_source !== 'detail_match_list') {
     list_wrap_height.value = 8;
   }
 })
-
 // 监听 数据仓库版本号改变
 watch(() => MatchDataBaseH5.data_version.version, () => {
-  match_list.value = MatchDataBaseH5.list
-  mid_obj.value = MatchDataBaseH5.list_to_obj.mid_obj
+  console.log(MatchDataBaseH5)
+  mids_ation.value = MatchDataBaseH5.mids_ation
 })
 
 const get_match_item = (mid) => {
-  return mid_obj.value[`${mid}_`]
+  return MatchDataBaseH5.get_quick_mid_obj(mid)
 }
 
 const get_index_f_data_source = (mid) => {
-  return lodash.findIndex(match_list.value, { mid });
+  return lodash.findIndex(mids_ation.value, { mid });
 }
 
 /**
@@ -191,7 +190,7 @@ watch(() => props.is_goto_top_random, () => {
 const set_ishigh_scrolling = computed(() => {
   // 滚动过程中，是否显示  骨架屏背景图片
   let flag = false;
-  if (["home_hot_page_schedule"].includes(props.main_source) || (MatchDataBaseH5.list && MatchDataBaseH5.list.length <= 0)) {
+  if (["home_hot_page_schedule"].includes(props.main_source) || (MatchDataBaseH5.mids_ation && MatchDataBaseH5.mids_ation <= 0)) {
     flag = false;
   } else {
     flag = get_to_bottom_space > 350 && !is_champion
@@ -214,7 +213,7 @@ const get_to_bottom_space = computed(() => {
   let delta = 0
   let list_scroll_top = target_scroll_obj.value
   //容器的滚动数据
-  if (list_scroll_top && MatchDataBaseH5.list) {
+  if (list_scroll_top && MatchDataBaseH5.mids_ation) {
     delta = list_scroll_top.scroll_height - (list_scroll_top.scroll_y + list_scroll_top.client_height);
   } else {
     //window的滚动数据
