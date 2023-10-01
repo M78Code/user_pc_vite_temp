@@ -98,7 +98,7 @@
             <!-- 电竞多媒体控制头 -->
             <!-- <video-ctrl-esports :match_info="match_infoData" v-if="route.name != 'video' && is_esports" /> -->
             <!-- 战队信息 start -->
-
+           
             <match-info
               v-if="route.name != 'video'"
               v-show="get_is_fold_status || is_esports"
@@ -115,7 +115,7 @@
                :mmp="+_.get(match_infoData,'mmp')"
                :matchTime="+_.get(match_infoData,'mst')" /> -->
             <!-- 玩法tab -->
-
+           
             <handicap-tabs-bar
               :handicap_this="handicap_this"
               :match_info="match_infoData"
@@ -132,6 +132,8 @@
    
         > -->
         <!-- 盘口模板start -->
+        <div style="">{{ match_details.odds_info }}{{ MatchDetailsData.data_version }}</div>
+        
         <match-handicap
           :match_info="match_infoData"
           :category_list="category_list"
@@ -319,7 +321,7 @@ const {
 let str = mid.value + "_";
 console.log(str,'str');
 
-// const match_infoData =ref(lodash.get(MatchDetailsData.list_to_obj.mid_obj, str)  ) ;
+// const match_infoData =lodash.get(MatchDetailsData.list_to_obj.mid_obj, str)  ) ;
 console.log(match_infoData,'match_infoData',MatchDetailsData);
 
 // 是否显示 统计版块
