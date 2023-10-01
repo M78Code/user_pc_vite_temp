@@ -176,6 +176,16 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 			load_data_state.value = "data";
 			// 更新可视区域赛事盘口数据
 			show_mids_change();
+			let first_league = all_league_list[0];
+			let mids = first_league.mids.split(",");
+			let params = {
+				media_type: "auto",
+				mid: mids[0],
+				tid: first_league.tid,
+				sportId: first_league.csid,
+			};
+			//触发右侧详情更新
+			useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, params);
 		} else {
 			if (MenuData.is_guanjun()) {
 				// 冠军玩法 调用接口切换右侧

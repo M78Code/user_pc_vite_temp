@@ -206,7 +206,7 @@ import { get_match_status,i18n_t,formatSeconds,debounce_throttle_cancel } from '
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/";
 import rs_hong from '/yazhou-pc/image/svg/rs_hong.svg'
 import { IconWapper } from 'src/components/icon'
-
+const tooltip_style = 'background:rgba(0,0,0,0.8);padding:4px 5px;border-radius:0px;color:#fff'
 export default {
   components: {
     "match-date":MatchProcessFullVersionWapper,
@@ -220,6 +220,7 @@ export default {
   },
   data() {
     return {
+      tooltip_style,
       sprite_img,
       i18n_t,
       lodash,

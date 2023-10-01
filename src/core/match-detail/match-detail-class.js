@@ -84,6 +84,7 @@ export default class MatchDetailCtr {
     this.is_show_full_bet =false
     this.active_detail = {}; //详情比分面板，接口报错时的备用数据
     this.details_data_cache = {} // 玩法集对应玩法缓存数据
+    this.details_data_version = ref('1223')
   }
 /**
  * 玩法集和tab 点击 
@@ -194,5 +195,22 @@ export default class MatchDetailCtr {
       }
     }
     return play;
+  }
+
+  // 设置详情版本变更
+  set_details_data_version(){
+    this.details_data_version.value = Date.now()
+  }
+
+  set_score_button(val){
+    const {mid,tid,sportId,media_type} = val
+    this.params = {
+      mid,
+      tid, // 联赛 id
+      sportId, //球类id
+      media_type, // 直播类型
+      time: Date.now()
+    }
+    this.set_details_data_version()
   }
 }
