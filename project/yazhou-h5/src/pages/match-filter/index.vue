@@ -32,7 +32,7 @@
                     </div>
                   </div>
                   <img v-if="item1.select" class="icon-search"
-                    :src="`${$g_image_preffix}/image/svg/check_circle_outline-24px${on_suffix}.svg`" />
+                    :src="`/image/svg/check_circle_outline-24px${on_suffix}.svg`" />
                   <img v-else
                     :src="`/yazhou-h5/image/svg/selected-no${get_theme.includes('02') ? '-2' : get_theme.includes('y0') ? '_y0' : ''}.svg`"
                     alt="" class="icon-search">
@@ -50,7 +50,7 @@
         v-for="(item, index) in anchor_arr" :key="index + 'letter'">
         <template v-if="item == $t('search.hot')">
           <img style="width: 28px;"
-            :src="`${$g_image_preffix}/image/bw3/svg/match-list/match_filter${active_index == item ? '_select' : ''}${on_suffix}.svg`"
+            :src="`/image/bw3/svg/match-list/match_filter${active_index == item ? '_select' : ''}${on_suffix}.svg`"
             alt="">
         </template>
         <div class="t-wrap" v-else>{{ item }}</div>
@@ -69,7 +69,7 @@
         :style="{ lineHeight: ['vi', 'en', 'th', 'ms', 'ad'].includes(get_lang) ? '1' : 'unset' }">
         <!-- <template> -->
         <img v-if="all_checked" class="icon-search" @click="all_checked_click"
-          :src="`${$g_image_preffix}/image/svg/check_circle_outline-24px${on_suffix}.svg`" />
+          :src="`/image/svg/check_circle_outline-24px${on_suffix}.svg`" />
         <img
           :src="`/yazhou-h5/image//svg/selected-no${get_theme.includes('02') ? '-2' : get_theme.includes('y0') ? '_y0' : ''}.svg`"
           alt="" class="icon-search" @click="all_checked_click" v-else>

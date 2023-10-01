@@ -66,7 +66,7 @@
           class="icon-wrap settlement-pre relative-position"
           v-tooltip="{content: i18n_t('bet_record.settlement_pre')}"
         >
-          <img class="match_pre" :src="`${$g_image_preffix}/image/yabo/png/match_pre.png`"/>
+          <img class="match_pre" :src="`/image/yabo/png/match_pre.png`"/>
         </div>
        </div>
        <div class="more-info flex">

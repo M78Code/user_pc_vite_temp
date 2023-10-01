@@ -8,7 +8,7 @@
         <div v-for="(item, index) in list" class="tab-item yb-flex-center" :class="[{ active: final_index == index }]"
           :key="item.menuName + '_' + index" @click.stop="handle_click_menu_mi_3_date({ ...item, index })"
           @mouseenter="tabs_enter(index)" @mouseleave="tabs_leave(index)">
-          <!-- <img v-if="item.img_src" v-check-img="{src: val.img_src, default: `${$g_image_preffix}/image/common/activity_banner/gift_package.png`}" /> -->
+          <!-- <img v-if="item.img_src" v-check-img="{src: val.img_src, default: `/image/common/activity_banner/gift_package.png`}" /> -->
 
           <!--   电竞 不显示赛事数量  早盘常规体育显示-->
           <span class="match-count">{{

@@ -21,7 +21,7 @@
           v-if="val.img_src"
           v-check-img="{
             src: val.img_src,
-            default: `${$g_image_preffix}/image/common/activity_banner/gift_package.png`,
+            default: `/image/common/activity_banner/gift_package.png`,
           }"
         />
         {{ val[tab_name_key] }}

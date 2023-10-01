@@ -1,7 +1,7 @@
 <template>
   <div class="q-pb-md">
     <div class="lineup-bg  relative-position">
-      <img :src="`${$g_image_preffix}/image/yabo/png/analysis-lineup-${match.csid}.png`" alt="" class="lineup-img" />
+      <img :src="`/image/yabo/png/analysis-lineup-${match.csid}.png`" alt="" class="lineup-img" />
       <div class="lineup-bg-wrap" :class="{ 'basketball': match.csid == '2' }">
         <!-- 主队 -->
         <div class="home" :class="`lineup-${_.get(lineupData, 'home.homeFormation')}`">

@@ -360,13 +360,13 @@
                       v-if="['day'].includes(UserCtr.get_theme)"
                     >
                       <img
-                        :src="`${$g_image_preffix}/image/wwwassets/yabo/gif/${UserCtr.get_theme}/${UserCtr.get_theme}_confirming.gif`"
+                        :src="`/image/wwwassets/yabo/gif/${UserCtr.get_theme}/${UserCtr.get_theme}_confirming.gif`"
                         style="height: 18px; width: 18px"
                       />
                     </template>
                     <template v-else>
                       <img
-                        :src="`${$g_image_preffix}/image/wwwassets/yabo/gif/${UserCtr.get_theme}/${UserCtr.get_theme}_pre_confirming.gif`"
+                        :src="`/image/wwwassets/yabo/gif/${UserCtr.get_theme}/${UserCtr.get_theme}_pre_confirming.gif`"
                         style="height: 18px; width: 18px"
                       />
                     </template>
