@@ -3,6 +3,7 @@
     class="c-match-process text-center"
     :class="rows == 1 ? 'row a-row' : 'column'"
   >
+  <template v-if="match">
     <div
       v-show="match.mcid && show_page == 'match-list'"
       class="jingcai"
@@ -45,10 +46,11 @@
       />
       
     <!-- </template> -->
+  </template>
   </div>
 </template>
 <script setup>
-import { computed, ref, watch, onUnmounted } from "vue";
+import { computed, ref, watch,onMounted, onUnmounted } from "vue";
 import matchDate from "src/components/match-detail/match-date/match_date.vue";
 // import { format_second_ms } from "src/core/format/index.js";
 import {
@@ -130,8 +132,8 @@ const cur_fill_second = ref(0); // 补充的分钟
  * 初始化补充时间
  */
  const init_fill_time = (skt_mid) => {
-  let { mid, mmp, csid } = props.match;
-  if ((skt_mid && skt_mid != mid) || !show_fill_time.value) {
+  let { mid, mmp, csid } = props.match || {};
+  if (!mid || (skt_mid && skt_mid != mid) || !show_fill_time.value) {
     return;
   }
   // 补充时间(倒计时部分)
@@ -147,6 +149,9 @@ init_fill_time();
 // 获取阶段名称
 const computed_process_name = computed(() => {
   let { match } = props;
+  if(!match){
+    return '';
+  }
   let process_name = get_mmp_name(match.csid, match.mmp) || "";
   // 即将开赛
   if (match.ms == 110) {
@@ -259,11 +264,11 @@ const computed_show_date = computed(() => {
 
 
 const mstst = computed(() => {
-  return props.match.mstst;
+  return lodash.get(props.match,'mstst');
 });
 
 const mststi = computed(() => {
-  return props.match.mststi;
+  return lodash.get(props.match,'mststi');
 });
 
 // watch(
@@ -334,6 +339,9 @@ const count_down_change = (obj) => {
   }
 };
 
+onMounted(() => {
+  init_fill_time();
+});
 
 
 onUnmounted(() => {

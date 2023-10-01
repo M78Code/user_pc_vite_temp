@@ -31,7 +31,7 @@
             <!-- os参数： 1开盘、2封盘、3关盘、4锁盘 -->
             <div
               class="handicap-item"
-              v-if="item.os != 3"
+              v-if="item && item.os != 3"
               :class="[
                 `os-${item.os}`,
                 {
