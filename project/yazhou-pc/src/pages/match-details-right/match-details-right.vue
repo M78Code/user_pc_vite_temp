@@ -132,22 +132,23 @@
    
         > -->
         <!-- 盘口模板start -->
-        <match-handicap
-          :match_info="match_infoData"
-          :category_list="category_list"
-          :match_details="match_details"
-          :plays_list="plays_list"
-          :currentRound="round"
-          :is_list="true"
-          :mid="mid"
-          @set_handicap_this="set_handicap_this"
-          :close_all_handicap="close_all_handicap"
-          :handicap_state="handicap_state"
-          pageType="right_details"
-          load_type="details"
-        />
+        <template v-if="(layout_cur_page.cur!=='details' && !is_esports) || route.name == 'video'">
+          <match-handicap
+            :match_info="match_infoData"
+            :category_list="category_list"
+            :match_details="match_details"
+            :plays_list="plays_list"
+            :currentRound="round"
+            :is_list="true"
+            :mid="mid"
+            @set_handicap_this="set_handicap_this"
+            :close_all_handicap="close_all_handicap"
+            :handicap_state="handicap_state"
+            pageType="right_details"
+            load_type="details"
+          />
         <!-- 盘口模板end -->
-        <!-- </template> -->
+        </template>
 
         <!-- 电竞 有视频赛事列表 -->
         <!-- <esports-match-list v-if="is_esports &&route.name != 'video'" /> -->
@@ -165,7 +166,6 @@
             class="wrap-total total"
             :class="route.name !== 'details' && load_detail_statu"
             :style="{ 'margin-top': is_show_margin ? '200px' : '4px' }"
-            v-if="show_wrap_total"
           >
             <div class="w-sub-item">
               <div class="item-title">
@@ -173,7 +173,7 @@
                 <!-- 统计 -->
                 <span>{{ i18n_t("common.panel_total") }}</span>
               </div>
-              <chart class="total_chart" :match_info="match_infoData" />
+              <!-- <chart class="total_chart" :match_info="match_infoData" /> -->
             </div>
           </div>
           <!-- 撑起盘口关闭高度的 -->
@@ -290,8 +290,8 @@ const layout_cur_page = ref(state.layoutReducer.layout_cur_page);
 const {
   handicap_this,
   show_load_status,
-  match_infoData,
-  match_details,
+  // match_infoData,
+  // match_details,
   is_esports,
   get_is_fold_status,
   getLoading,
@@ -316,19 +316,15 @@ const {
   setfoldStatus,
   /* func */
 } = useRightDetails({ route });
-let str = mid.value + "_";
-console.log(str,'str');
-console.log(match_infoData,'match_infoData',MatchDetailsData);
-const  MatchDetailsDataRef = ref(MatchDetailsData)
 // 是否显示 统计版块
 const show_wrap_total = computed(() => {
   return (
-    match_infoData.mcg == 1 &&
+    match_infoData.value.mcg == 1 &&
     [1, 2, 3, 4, 6, 5, 7, 9, 10].includes(
-      +lodash.get(match_infoData, "csid")
+      +lodash.get(match_infoData.value, "csid")
     ) &&
     get_global_switch.statistics_switch &&
-    match_infoData.cds !== "C01"
+    match_infoData.value.cds !== "C01"
   );
 });
 // 是否显示 聊天室
@@ -375,9 +371,15 @@ const chatroom_height = () => {
 /* 
 **监听数据仓库版本号
 */
-watch(()=>MatchDetailsDataRef.value.data_version,(val,oldval)=>{
+const  MatchDetailsDataRef = reactive(MatchDetailsData)
+const  match_infoData = ref({})
+const  match_details = ref([])
+watch(()=>MatchDetailsDataRef.data_version,(val,oldval)=>{
   if(val.version ){
-    // console.log(val.version,MatchDetailsData.get_quick_mid_obj(mid.value),'22222');
+    console.log(222222);
+    match_infoData.value =  MatchDetailsData.get_quick_mid_obj(mid.value)  
+    match_details.value =  [MatchDetailsData.get_quick_mid_obj(mid.value)]
+    
   }
 },{deep:true})
 // 是否展示右侧热门推荐处的margin

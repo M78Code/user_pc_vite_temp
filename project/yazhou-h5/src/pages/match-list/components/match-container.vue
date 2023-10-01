@@ -15,7 +15,7 @@
     <div style="display: none;">{{ MatchDataBaseH5.data_version.version }}</div>
     <!--体育类别 -- 标题  menuType 1:滚球 2:即将开赛 3:今日 4:早盘 11:串关 -->
     <div class="sport-title match-indent" v-if="get_sport_show"
-      :class="{ home_hot_page: is_it_popular, is_gunqiu: [1].includes(+menu_type), first: i == 0, }"
+      :class="{ home_hot_page: is_it_popular, is_gunqiu: [1].includes(+MenuData.get_menu_type()), first: i == 0, }"
       @click="ball_folding_click(match_of_list.csid)">
       <!-- 首页热门 -->
       <template v-if="is_it_popular">
@@ -63,9 +63,8 @@
     <!-- 最核心的div模块     标题 + 倒计时 + 比分 + 赔率盘口模块 -->
     <div class="match-inner-container">
       <!--联赛标题 -->
-      <div class="league match-indent hairline-border"
-        :class="{ 'no-radius': get_sport_show && is_it_popular && !['home_hot_page_schedule'].includes(main_source), 'home-hot': main_source == 'home_hot_page_schedule' }"
-        v-if="match.is_show_league || (main_source == 'home_hot_page_schedule' && get_league_show(i))"
+      <div v-if="match.is_show_league || (main_source == 'home_hot_page_schedule' && get_league_show(i))"
+        :class="[('league match-indent hairline-border'), { 'no-radius': get_sport_show && is_it_popular && !['home_hot_page_schedule'].includes(main_source), 'home-hot': main_source == 'home_hot_page_schedule' }]"
         @click="league_l_clicked()">
         <div class="league-t-wrap">
           <!-- 电竞图标 写死 -->
@@ -83,7 +82,7 @@
               </span>
             </span>
             <!--标准版 赔率标题栏-->
-            <div class="odd-title-wraper row " v-if="main_source == 'home_hot_page_schedule' || match.is_show_league"
+            <div class="odd-title-wraper row " v-if="get_league_show(i)"
               v-show="!show_newer_edition && !is_show_result() && !collapsed">
               <div class="odd-title-i-w flex">
                 <div class="odd-t-i-wrapper flex items-center"
@@ -116,7 +115,7 @@
             v-if="!show_newer_edition && !is_show_result()">
             <div class='l standard'>
               <!--竞彩足球 星期与编号-->
-              <div class="week-mcid row items-center" v-if="menu_type == 30">
+              <div class="week-mcid row items-center" v-if="MenuData.get_menu_type() == 30">
                 <span class="din-regular">
                   {{ lodash.get(match,'mcid')}}
                 </span>
@@ -131,7 +130,7 @@
               </div>
               <!-- 赛事日期标准版 -->
               <div class="timer-wrapper-c flex items-center"
-                :class="{ esports: 3000 == menu_type, 'din-regular': 3000 == menu_type }">
+                :class="{ esports: 3000 == MenuData.get_menu_type(), 'din-regular': 3000 == MenuData.get_menu_type() }">
 
                 <!-- 赛事回合数mfo -->
                 <div v-if="match.mfo" class="mfo-title" :class="{ 'is-ms1': match.ms == 1 }">
@@ -172,7 +171,7 @@
               </div>
 
               <!-- 电竞串关标识 -->
-              <div v-if="menu_type == 3000 && match.ispo" class="flag-chuan"
+              <div v-if="MenuData.get_menu_type() == 3000 && match.ispo" class="flag-chuan"
                 :class="{ 'special-lang': ['zh', 'tw'].includes(get_lang) }">{{ $t('match_info.match_parlay') }}
               </div>
             </div>
@@ -317,7 +316,7 @@
 
                       <!--玩法数量-->
                       <div class="goto-detail" @click='goto_details(match)'>
-                        <span class="count_span" :class="{ esports: 3000 == menu_type }">
+                        <span class="count_span" :class="{ esports: 3000 == MenuData.get_menu_type() }">
                           <span class="mc-n">
                             {{GlobalAccessConfig.get_handicapNum()? get_match_mc(match) :
                               i18n_t('footer_menu.more') }}
@@ -379,7 +378,7 @@
                 </div>
               </div>
               <!--竞彩足球 星期与编号-->
-              <div class="week-mcid row items-center" v-if="menu_type == 30">
+              <div class="week-mcid row items-center" v-if="MenuData.get_menu_type() == 30">
                 <span class="din-regular" style="font-size:.14rem">
                   {{ match.mcid }}
                 </span>
@@ -481,6 +480,7 @@ import { format_time_zone, format_time_zone_time, format_how_many_days, format_w
 import { normal_img_not_favorite_white, normal_img_not_favorite_black, normal_img_is_favorite, y0_img_favorite_black, lvs_icon_theme01, lvs_icon_theme02, animationUrl_icon_theme01,
   animationUrl_icon_theme02, muUrl_theme01, muUrl_theme01_y0, muUrl_theme02, muUrl_theme02_y0, none_league_icon, none_league_icon_black, match_analysis, match_analysis2, polular_spirite_theme02,
   polular_spirite,  mearlys_icon } from 'project_path/src/core/utils/local-image.js'
+import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 
 // TODO: 其他模块得 store  待添加
 // mixins: [formatmixin, odd_convert, bettings, match_list_mixin, msc_bw3, common],
@@ -490,8 +490,6 @@ const props = defineProps({
   match_of_list: Object,
   // 赛事处于列表中的下标
   i: Number,
-  // 值为6当前为收藏页
-  menu_type: Number | String,
   // 赛事列表相关操作的类型封装对象
   matchCtr: Object,
   main_source:String,
@@ -614,7 +612,8 @@ const get_sport_show = computed(() => {
   // 代表是首页模块
   if (!lodash.get(MenuData.current_menu, 'main')) {
     if (props.i > 0) {
-      let p = props.matchCtr.list[props.i - 1], c = props.matchCtr.list[props.i];
+      let p = MatchDataBaseH5.get_quick_mid_obj(MatchMeta.match_mids[props.i - 1])
+      let c = MatchDataBaseH5.get_quick_mid_obj(match.value.mid)
       if (p && c) {
         return p.csid !== c.csid;
       }
@@ -622,7 +621,7 @@ const get_sport_show = computed(() => {
       if (lodash.get(get_hot_tab_item.value, 'index') != 0) { return false }
       return true;
     }
-  } else if ([1, 2, 3, 4, 11, 12, 28, 30, 3000].includes(+props.menu_type)) {
+  } else if ([1, 2, 3, 4, 11, 12, 28, 30, 3000].includes(+MenuData.get_menu_type())) {
     if (props.match_of_list.show_sport_type) {
       return true
     } else {
@@ -659,7 +658,7 @@ const not_favorited_computing_icon = computed(() => {
 const is_show_video_icon = computed(() => {
   let r = false;
   let ios_Android = null
-  if (3000 == props.menu_type) {
+  if (3000 == MenuData.get_menu_type()) {
     // PC、安卓优先用varl，如果varl没有值，再用vurl   IOS只用   vurl
     // 判断是否是苹果手机，是则是true
     let ua = navigator.userAgent.toLowerCase();
@@ -681,8 +680,9 @@ const is_show_video_icon = computed(() => {
 const no_start_total = computed(() => {
   let r = [];
   if (props.match_of_list.is_show_no_play) {
-    r = lodash.filter(props.matchCtr.match_list_data_sources, item => {
-      return !item.ms
+    r = lodash.filter(MatchMeta.match_mids, mid => {
+      const match = MatchDataBaseH5.get_quick_mid_obj(mid)
+      return !match.ms
     })
   }
   return r.length;
@@ -728,7 +728,7 @@ const eports_scoring = computed(() => {
   //比分判断处理
   let scoring = false
   //如果是电竞，则进行比分判定处理
-  if (props.menu_type == 3000) {
+  if (MenuData.get_menu_type() == 3000) {
     const { mmp, home_score, away_score } = props.match_of_list
     const mmp_state = mmp || 1
     if (mmp_state != (Number(home_score) + Number(away_score) + 1)) {
@@ -866,7 +866,7 @@ const media_button_button_type_check = (button_type = 'lvs') => {
 const media_button_handle_when_muUrl = () => {
   // PC、安卓优先用varl，如果varl没有值，再用vurl   IOS只用   vurl
   // 判断是否是苹果手机，是则是true
-  if (3000 == props.menu_type) {
+  if (3000 == MenuData.get_menu_type()) {
     let video_url = {
       active: "muUrl",
       media_src: "",
@@ -948,7 +948,7 @@ const league_l_clicked = () => {
   }
 
   // 今日下目标联赛折叠前（赛事dom未隐藏前计算）
-  if (props.menu_type === 3 && ms === 0 && map_collapse[tid] === 1) {
+  if (MenuData.get_menu_type() === 3 && ms === 0 && map_collapse[tid] === 1) {
     const scroll_height = need_scroll_height_handle(tid)
 
     // 使用原生dom操作，this.matchCtr.view.$refs有时会获取不到目标dom
@@ -960,7 +960,7 @@ const league_l_clicked = () => {
   emits('unfold_changed', props.match_of_list)
 
   // 今日下目标联赛展开后（赛事dom显示后计算）
-  if (props.menu_type === 3 && ms === 0 && map_collapse[tid] === 0) {
+  if (MenuData.get_menu_type() === 3 && ms === 0 && map_collapse[tid] === 0) {
     const scroll_height = need_scroll_height_handle(tid)
 
     clearTimeout(need_scroll_height_timer)
@@ -1044,7 +1044,7 @@ const get_match_dom_height_by_matchdata = (match_height_map) => {
  * @return {Boolean} 是否显示发球方
  */
 const set_serving_side = (item, side) => {
-  if (props.menu_type == 28 && !["detail_match_list"].includes(props.main_source)) { //赛果不显示发球方绿点
+  if (MenuData.get_menu_type() == 28 && !["detail_match_list"].includes(props.main_source)) { //赛果不显示发球方绿点
     return false
   }
   return item.ms == 1 && item.mat == side;
@@ -1229,15 +1229,15 @@ const show_counting_down = (item) => {
  * @returns {Boolean}
  */
 const get_m_status_show = (i) => {
-  let item = props.matchCtr.list[i];
+  let item = MatchDataBaseH5.get_quick_mid_obj(MatchMeta.match_mids[i])
   let result = false;
   if (props.main_source == 'detail_match_list') {
     return false
   }
   //非今日串关不显示
-  if (![3, 11].includes(+props.menu_type)) {
+  if (![3, 11].includes(+MenuData.get_menu_type())) {
     return result;
-  } else if (props.menu_type == 11) {
+  } else if (MenuData.get_menu_type() == 11) {
     let third_m_id = lodash.get(MenuData.current_menu, 'date_menu.field1');
     //串关今日id为0或'0'
     if (third_m_id !== 0 && third_m_id !== '0') {
@@ -1247,7 +1247,7 @@ const get_m_status_show = (i) => {
   
   if (item) {
     if (i > 0) {
-      let prev_match = props.matchCtr.list[i - 1];
+      let prev_match = MatchDataBaseH5.get_quick_mid_obj(MatchMeta.match_mids[i - 1])
       if ([1, 110].includes(+item.ms)) {
         result = false;
       }
@@ -1269,8 +1269,8 @@ const get_league_show = (i) => {
   let flag = true;
   let c = null, p = null;
   if (i) {
-    p = props.matchCtr.list[i - 1];
-    c = props.matchCtr.list[i];
+    p = MatchDataBaseH5.get_quick_mid_obj(MatchMeta.match_mids[i - 1])
+    c = MatchDataBaseH5.get_quick_mid_obj(match.value.mid)
     if (p && c) {
       if (p.tid != c.tid) {
         flag = true;
@@ -1298,7 +1298,7 @@ const favorite_un_start_title = (i, ms) => {
   if (i == 0) {
     return false;
   }
-  if (props.menu_type == 6) {
+  if (MenuData.get_menu_type() == 6) {
     if (props.match_of_list.is_show_no_play && ms == 0) {
       return true;
     }
@@ -1417,7 +1417,7 @@ const set_scroll_top = (scrollTop) => {
           store.dispatch({ type: 'matchReducer/set_not_found_target_dom_count',  payload: not_found_target_dom_count });
 
           // 当由详情返回后，未滚动至目标计数 和 赛事展示数量相等时，让列表滑动一些距离，防止页面列表展示空白
-          if (not_found_target_dom_count === props.matchCtr.list.length) {
+          if (not_found_target_dom_count === MatchMeta.match_mids.length) {
             document.querySelector('.match-list-container').scrollTop += 1
             store.dispatch({ type: 'matchReducer/set_goto_detail_matchid',  payload: '' });
           }
@@ -1513,7 +1513,7 @@ watch(() => home_score.value, (new_,old_) => {
   if (get_footer_sub_changing.value) return;
   if (match_changing.value) return;
 
-  if (new_ > 0 && new_ != old_ && old_ !== null && (props.menu_type == 1 || props.menu_type == 3)) {
+  if (new_ > 0 && new_ != old_ && old_ !== null && (MenuData.get_menu_type() == 1 || MenuData.get_menu_type() == 3)) {
     is_show_home_goal.value = true
     hide_home_goal()
   }
@@ -1526,7 +1526,7 @@ watch(() => away_score.value, (new_,old_) => {
   if (get_footer_sub_changing.value) return;
   if (match_changing.value) return;
 
-  if (new_ > 0 && new_ != old_ && old_ !== null && (props.menu_type == 1 || props.menu_type == 3)) {
+  if (new_ > 0 && new_ != old_ && old_ !== null && (MenuData.get_menu_type() == 1 || MenuData.get_menu_type() == 3)) {
     is_show_away_goal.value = true
     hide_away_goal()
   }

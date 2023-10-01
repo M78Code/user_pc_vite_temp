@@ -2,11 +2,11 @@
  * @Description: 主菜单
 -->
 <template>
-  <div class="c-main-menu column" :class="{ 'bet-menu-upd': MenuData.layout_left_show == 'bet_history' }">
+  <div class="c-main-menu column" :class="{ 'bet-menu-upd': LayOutMain_pc.layout_left_show == 'bet_history' }">
 
     <v-scroll-area ref="ref_bet_scroll_area" position="menu" :observer_area="3"
-      :observer_middle="MenuData.layout_left_show == 'bet_list'"
-      :class="{ 'bet-list': MenuData.layout_left_show == 'bet_list' }">
+      :observer_middle="LayOutMain_pc.layout_left_show == 'bet_list'"
+      :class="{ 'bet-list': LayOutMain_pc.layout_left_show == 'bet_list' }">
       <!-- 滚动：头部 --------------------------------->
       <template v-slot:header>
         <!-- 昵称、余额 -->
@@ -16,7 +16,7 @@
 
         <div class="menu-wrap scroll-fixed-bg relative-position bet_history border-bottom">
           <!-- 投注记录 入口 -->
-          <div v-show="MenuData.layout_left_show != 'bet_history'" @click="change_left_menu('bet_history')"
+          <div v-show="LayOutMain_pc.layout_left_show != 'bet_history'" @click="change_left_menu('bet_history')"
             class="menu-item menu-top menu-border item" :class="[bet_count > 0 ? 'justify-end' : 'justify-start']">
 
             <span class="record-icon" :style="compute_css('pc-img-bet-record')" alt="" ></span>
@@ -27,7 +27,7 @@
             <span class="bet-count" v-show="bet_record_count > 0">{{ bet_record_count }}</span>
           </div>
           <!-- 单/串关投注栏 入口 -->
-          <template v-if="bet_count && ['menu'].includes(MenuData.layout_left_show)">
+          <template v-if="bet_count && ['menu'].includes(LayOutMain_pc.layout_left_show)">
             <div @click="change_left_menu('bet_list')" class="menu-item menu-top item-bet menu-border">
               <span class="text">
                 {{ $t("bet.bet_my_count") }}
@@ -43,17 +43,17 @@
       <div class="ssssss">
       <!-- 滚动：内容 --------------------------------->
       <!-- 菜单项 -->
-      <template v-if="MenuData.layout_left_show == 'menu'">
+      <template v-if="LayOutMain_pc.layout_left_show == 'menu'">
         <left-main-menu />
       </template>
 
       <!-- 投注栏 -->
-      <template v-if="MenuData.layout_left_show == 'bet_list'">
+      <template v-if="LayOutMain_pc.layout_left_show == 'bet_list'">
         <bet-box-wapper use_component_key="bet_box_pc_1" />
       </template>
 
       <!-- 历史记录 -->
-      <template v-if="MenuData.layout_left_show == 'bet_history'">
+      <template v-if="LayOutMain_pc.layout_left_show == 'bet_history'">
         <bet-record-view-wapper />
       </template>
       </div>
@@ -86,7 +86,7 @@ import { BetRecordViewWapper } from "src/components/bet-record-view";
 // // 通屏垂直滚动
 import vScrollArea from "../../components/v-scroll-area/v-scroll-area.vue";
 import BetData from "src/core/bet/class/bet-data-class.js";
-import { MenuData } from "src/core/index.js";
+import { MenuData,LayOutMain_pc } from "src/core/index.js";
 import { api_betting } from "src/api/index.js";
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
 

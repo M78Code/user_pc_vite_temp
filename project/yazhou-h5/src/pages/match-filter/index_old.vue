@@ -114,7 +114,6 @@ import lodash from 'lodash'
 
 // 构建版本
 // BUILD_VERSION:window.env.config.BUILD_VERSION,
-const $g_image_preffix = '/yazhou-h5/';
 const list_data_loading = ref(false);    //数据加载中
 const default_url = "/yazhou-h5/image/svg/match_cup.svg"  //默认图片地址 // 无联赛logo图标黑色版
 const none_league_icon_black = "/yazhou-h5/image/svg/match_cup_black.svg"

@@ -5,16 +5,16 @@
   >
   <template v-if="match">
     <div
-      v-show="match.mcid && show_page == 'match-list'"
+      v-show="lodash.get(match, 'mcid') && show_page == 'match-list'"
       class="jingcai"
     >
-      {{ match.mcid }}
+      {{ lodash.get(match, 'mcid') }}
     </div>
     <!-- ms值3-比赛结束 4-比赛关闭 -->
     <div
       v-show="
-        get_match_status(match.ms)  || [3,4].includes(1*match.ms) ||
-        (match.mcid && match.mmp != 0)
+        get_match_status(lodash.get(props, 'match.ms'))  || [3,4].includes(1*lodash.get(props, 'match.ms')) ||
+        (lodash.get(match, 'mcid') && lodash.get(match, 'mmp') != 0)
       "
       class="process-name"
       v-html="computed_process_name"
@@ -115,14 +115,14 @@ const cur_fill_second = ref(0); // 补充的分钟
  * 显示补时时间
  */
  const show_fill_time = computed(() => {
-  let { match } = props;
-  let  source  = props.source;
+  let match = lodash.get(props, 'match')
+  let source = lodash.get(props, 'source')
   // 足球需要显示不是时间的阶段 6:上半场 7:下半场 41:加时赛上半场 42:加时赛下半场
   let football_mmp = ["6", "7", "41", "42"];
   return (
     source &&
     match.csid == 1 &&
-    get_match_status(match.ms, [110]) &&
+    get_match_status(lodash.get(props, 'match.ms'), [110]) &&
     football_mmp.includes(match.mmp) &&
     match.mststs == 1
   );
@@ -148,17 +148,20 @@ init_fill_time();
 
 // 获取阶段名称
 const computed_process_name = computed(() => {
-  let { match } = props;
+  let { match } = props || {};
   if(!match){
     return '';
   }
-  let process_name = get_mmp_name(match.csid, match.mmp) || "";
+  let csid = lodash.get(props, 'match.csid')
+  let mmp = lodash.get(props, 'match.mmp')
+  let mle = lodash.get(props, 'match.mle')
+  let process_name = get_mmp_name(csid, mmp) || "";
   // 即将开赛
-  if (match.ms == 110) {
+  if (lodash.get(props, 'match.ms') == 110) {
     process_name = i18n_t("common.match_soon");
   }
   // 滚球 && 未开赛
-  else if (get_match_status(match.ms) && match.mmp == 0) {
+  else if (get_match_status(lodash.get(props, 'match.ms')) && match.mmp == 0) {
     switch (Number(match.csid)) {
       // 足
       case 1:
@@ -205,23 +208,23 @@ const computed_process_name = computed(() => {
     }
   } else {
     // 篮球(2) && 赛制为 17分钟 && 第四节(100) ====> 阶段名称显示 "下半场"
-    if (match.csid == 2 && match.mle == 17 && match.mmp == 100) {
+    if (csid == 2 && mle == 17 && mmp == 100) {
       process_name = i18n_t("mmp.2.2");
     }
 
     // 斯诺克(7) 的滚球(21)
-    if (match.csid == 7 && match.mmp == 21) {
+    if (csid == 7 && mmp == 21) {
       process_name = covert_mct(match);
     }
   }
 
   // 篮球3X3滚球时显示"全场"
-  if (match.csid == 2 && match.mle == 73 && get_match_status(match.ms)) {
+  if (csid == 2 && mle == 73 && get_match_status(lodash.get(props, 'match.ms'))) {
     process_name = i18n_t("mmp.2.21");
   }
   //是否列表页棒球第X局，换行显示
   if (
-    props.match.csid == 3 &&
+    lodash.get(props, 'match.csid')== 3 &&
     props.show_page == "match-list" &&
     process_name.indexOf("第") == 0
   ) {
@@ -233,7 +236,7 @@ const computed_process_name = computed(() => {
 
 //是否赛事显示时间
 const computed_show_date = computed(() => {
-  let { mmp, csid, ms, mlet } = props.match;
+  let { mmp, csid, ms, mlet } = props.match || {};
   csid = Number(csid);
   let show = false;
 
@@ -264,11 +267,11 @@ const computed_show_date = computed(() => {
 
 
 const mstst = computed(() => {
-  return lodash.get(props.match,'mstst');
+  return lodash.get(props, 'match.mstst')
 });
 
 const mststi = computed(() => {
-  return lodash.get(props.match,'mststi');
+  return lodash.get(props, 'match.mststi')
 });
 
 // watch(

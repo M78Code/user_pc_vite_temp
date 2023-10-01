@@ -49,6 +49,8 @@ class LayOutMain {
     this.layout_search_width = 0
     // 来源 当前路由
     this.layout_current_path = ''
+    // 左侧菜单显示 menu bet history
+    this.layout_left_show = 'menu'
   }
 
   // 初始化
@@ -110,7 +112,12 @@ class LayOutMain {
     this.layout_current_path = route.name
     this.set_layout_version()
   }
-  
+
+  // 设置左侧显示内容
+  set_layout_left_show(val){
+    this.layout_left_show = val
+    this.set_layout_version()
+  }
 
 }
 

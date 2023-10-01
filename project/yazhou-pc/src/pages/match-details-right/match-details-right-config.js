@@ -3,7 +3,6 @@ import { api_details } from "src/api";
 import lodash from "lodash";
 import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache.js";
 import { update_match_time } from "src/core/bet/common-helper/module/common-sport.js";
-import use_featch_fn from "src/core/match-detail/match-detail-pc/composables/match-details-fetch.js"
 
 import {
   loadLanguageAsync,
@@ -28,7 +27,6 @@ import store from "src/store-redux/index.js";
 import MenuData from "src/core/menu-pc/menu-data-class.js";
 let state = store.getState();
 export const useRightDetails = (props) => {
-  const { get_matchInfo_fun } = use_featch_fn();
   //视频是否展开状态
   const get_is_fold_status = ref(state.globalReducer.is_fold_status);
   // 获取当前页路由信息

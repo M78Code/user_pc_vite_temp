@@ -58,10 +58,6 @@ class PageSourceData {
     this.newer_standard_edition = 2 
     // 列表 搜素 文字 
     this.get_search_txt =''
-
-     //路由名字 
-     this.router_name = '';
-
     // 列表查询额外辅助参数
     this.list_query_other_params={
       // batchNo  ： 虚拟体育期号，

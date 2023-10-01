@@ -78,6 +78,7 @@
         <!-- 开赛时间 S-->
         <div class="match_time">
           <match-process
+            v-if="match_info"
             class="match_time-text"
             :match="match_info"
           ></match-process>

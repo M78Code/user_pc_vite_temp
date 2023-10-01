@@ -7,7 +7,7 @@
       <!--热门赛事显示hot标识-->
       <img class="match-hot" src="~public/image/common/svg/hot.svg" v-show="lodash.get(match, 'is_hot')" />
       <!-- 比赛进程 -->
-      <match-process v-if="is_mounted" :match="match" source='match_list'
+      <match-process v-if="is_mounted && match" :match="match" source='match_list'
         show_page="match-list" :rows="2" />
     </div>
     <div v-show="false">{{ MatchListCardData.list_version }}</div>

@@ -67,7 +67,7 @@
                       <img
                           @click="info_icon_close"
                           style="margin-top:-0.04rem"
-                          :src="`${ $g_image_preffix }/image/wwwassets/bw3/menu/set_close${UserCtr.theme.includes('02') ? '_2' : ''}.svg`"
+                          :src="`/image/wwwassets/bw3/menu/set_close${UserCtr.theme.includes('02') ? '_2' : ''}.svg`"
                       >
                     </div>
                     <!-- 角球说明文本 -->
@@ -161,7 +161,7 @@ import temp10 from "./template/temp10.vue"
 // 模板id=11
 import temp11 from "./template/temp11.vue"
 // 模板id=12
-import tem12 from "./template/temp12.vue"
+import temp12 from "./template/temp12.vue"
 // 模板id=13
 import temp13 from "./template/temp13.vue"
 // 模板id=14
@@ -214,6 +214,7 @@ export default defineComponent({
     temp9,
     temp10,
     temp11,
+    temp12,
     temp13,
     temp14,
     temp15,
@@ -315,7 +316,7 @@ export default defineComponent({
     //   'get_hshow_map',
     //   'get_details_data_cache',
     // ]),
-
+    //=================TODO: 后续修改===================
     const get_uid = computed(() => {
       return "";
     });
@@ -343,6 +344,7 @@ export default defineComponent({
     const get_details_data_cache = computed(() => {
       return "";
     });
+    // ==============================================
     const judage_hshow = computed(() => {
       const hshow = props.item_data.hshow
       const vuex_hshow = get_hshow_map.value[`${props.item_data.mid}_${props.item_data.hpid}`]

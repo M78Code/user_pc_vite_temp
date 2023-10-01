@@ -98,17 +98,11 @@ class MenuData {
     this.hot_500_sport_1 = false;
     //是否可以多列玩法的菜单
     this.is_multi_column = false;
-    // 左侧菜单显示 menu bet history
-    this.layout_left_show = 'menu'
+    
     // 菜单版本变更
     this.menu_data_version = ref('12')
   }
 
-  // 设置左侧显示内容
-  set_layout_left_show(val){
-    this.layout_left_show = val
-    this.set_menu_data_version()
-  }
   // 设置 菜单的版本变化
   set_menu_data_version(){
     useMittEmit(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA)
@@ -298,11 +292,6 @@ class MenuData {
         version: Date.now(),
       };
     }
-    console.error(
-      "set_left_menu_result--------定义左侧菜单-----",
-      JSON.stringify(this.left_menu_result)
-    );
-    console.log('layout_content_width', LayOutMain_pc.layout_content_width - 15);
     MATCH_LIST_TEMPLATE_CONFIG[`template_${this.get_match_tpl_number()}_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'))
     if ([2, 3].includes(Number(obj.root))) {
       // 角球
@@ -670,10 +659,6 @@ class MenuData {
   set_match_list_api_config(config) {
     let match_list_api_config = JSON.parse(JSON.stringify(config));
     match_list_api_config.version = Date.now();
-    console.error(
-      "set_match_list_api_config-------列表结构AP参数的------",
-      JSON.stringify(match_list_api_config)
-    );
 
     //  //菜单切换是筛选数据置空
     // store.dispatch("set_filter_select_obj", []);
