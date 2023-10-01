@@ -5,7 +5,7 @@
  * @Path:
 -->
 <template>
-  <div class="analysis-page relative-position">
+  <div class="analysis-page relative-position" :style="page_style">
     <div class="match-header">
       <div class="both home">
         <span class="team-name">
@@ -68,16 +68,23 @@ import { TabOddsFullVersionWapper as tabOdds} from 'src/components/analysis/temp
 import { TabNewssFullVersionWapper as news} from 'src/components/analysis/template/table-news/index.js'
 import { MatchProcessFullVersionWapper as matchDate } from "src/components/match-process/index.js";
 import {api_analysis} from 'src/api/index.js' 
+import { compute_css_variables } from "src/core/css-var/index.js"
 import { formatTime } from 'src/core/format/index.js'
 import store from 'src/store-redux/index.js'
 
 const route = useRoute();
 let state = store.getState();
 
+
+
+
 export default {
   setup() {
     //赛况，数据，阵容，情报，赔率
     const tab = ref(['result','data','lineup','information','odds'])
+    // 赛事分析页面  css变量
+    const page_style = ref('')
+    page_style.value = compute_css_variables({ category: 'component', module: 'analysis' })
     const activeTab = ref(null)
     const sportDict = ref({
       allScore:['S1','S11','S12','S5','S8','S105','S104','S1101',"S17", "S18",'S106','S109','S12345','S12346','S111','S108','S107','S110'],
@@ -93,7 +100,8 @@ export default {
       sportDict,
       hasNews,
       articleDetail,
-      newsTabName
+      newsTabName,
+      page_style
     }
   },
   mixins:[time_format],

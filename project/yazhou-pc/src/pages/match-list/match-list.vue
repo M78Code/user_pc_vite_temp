@@ -49,7 +49,7 @@
       </div>
     </div>
     <!-- 列表容器 -->
-    <load-data :state="load_data_state"  >
+    <load-data :state="'data'"  >
       <!-- 滚球虚拟体育列表 -->
       <scroll-list v-if="menu_config.menu_root_show_shoucang == 300">
         <template v-slot:before>
