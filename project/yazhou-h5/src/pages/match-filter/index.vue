@@ -119,7 +119,6 @@ const change = ref(true) //是否显示全选按钮
 const selected = ref({})   //选中的赛事集合 //TODO get_filter_list
 const select_num = ref(0) //选中的赛事数量
 
-const $g_image_preffix = '/yazhou-h5/'
 //ref对象
 const scrollArea = ref(null);
 const tittle_text = ref(null);

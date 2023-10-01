@@ -19,7 +19,7 @@
             </template>
             <template v-else>
               <!-- 精选的tab图标 -->
-              <!-- <img v-if='tab.index == 0' :src="(`${ $g_image_preffix }/image/wwwassets/bw3/home/hot_jx_black${UserCtr.theme.includes('y0') ? '_y0' : ''}.svg`)" alt=""> -->
+              <!-- <img v-if='tab.index == 0' :src="(`/image/wwwassets/bw3/home/hot_jx_black${UserCtr.theme.includes('y0') ? '_y0' : ''}.svg`)" alt=""> -->
               <img v-if='tab.index == 0'
                 :src="(`/image/wwwassets/bw3/home/hot_jx_black2${UserCtr.theme.includes('y0') ? '_y0' : ''}.svg`)"
                 alt="">

@@ -104,7 +104,7 @@ const get_detail_data = ref(MatchDataWarehouse_H5_Detail_Common.list_to_obj.mid_
     // 视频置顶
     // "get_video_zhiding",
     // 玩法tab
-    get_details_item: "get_details_item",
+    get_details_item: MatchDetailCalss,
     // 登录用户Id
     get_uid: "505915677417900030",
     // 早盘或者串关日期参数
@@ -147,11 +147,6 @@ const get_detail_data = ref(MatchDataWarehouse_H5_Detail_Common.list_to_obj.mid_
     get_curr_tab_info: "get_curr_tab_info",
   });
 
-// 组件挂载前
-onBeforeMount(() => {
-
-  console.error('进入详情页前', route);
-})
   // 详情初始化接口数据处理
   const MatchDataWarehouseInstance = reactive(MatchDataWarehouse_H5_Detail_Common)
   const is_highlights = computed(() => {
@@ -185,6 +180,7 @@ onBeforeMount(() => {
       return true;
     }
   });
+  // mid 
   const matchid = computed(() => {
     return route.params.mid || get_detail_data.value.mid;
   });
@@ -444,7 +440,7 @@ onBeforeMount(() => {
       .get_chat_datainfo({ mid: matchid.value, device: "H5" })
       .then(({ data }) => {
         if (data) {
-          set_details_chatroom_data(data);
+          // set_details_chatroom_data(data);
         }
       })
       .catch((res) => {
@@ -630,17 +626,12 @@ onBeforeMount(() => {
           const res_data = lodash.get(res, "data");
           state_data.data_list = res_data;
 
-          // 给vuex 设置玩法集数据
           // set_details_tabs_list(res_data);
-          store.dispatch({
-            type: 'SET_DETAILS_TABS_LIST',
-            data: res_data
-          });
           matchDetailCtr.value.compute_category_refer(res_data)
           // 当玩法集存在激活得项，循环找到对用得id，找得到就不管，找不到就赋值为玩法集第一项
           if (state_data.get_details_item && res_data.length) {
             const set_details_item_flag = res_data.some(
-              (item) => item.id == matchDetailCtr.value.current_category_id
+              (item) => item.id == SessionStorage.get("DETAIL_TAB_ID")
             );
             // 找不到就赋值为玩法集第一项
             if (!set_details_item_flag) {
@@ -665,9 +656,7 @@ onBeforeMount(() => {
         })
         .finally(() => {
           // 玩法集接口请求结果返回后，再请求盘口信息接口
-          console.log("category", state_data.category);
           let get_category_list_req_count = ''
-          // if ($refs['category']) {
           if (state_data.category) {
             // 初次进入详情，请求赔率信息需显示loading，其他情况触发玩法集更新，走到这里，请求赔率信息则不显示loading
             const flag = state_data.get_category_list_req_count ? "hide_loading" : "";
@@ -870,7 +859,7 @@ onBeforeMount(() => {
     SessionStorage.remove('DETAILS_DATA_CACHE')
   })
   const on_listeners = () => {
-    // #TODO IMIT
+    // #TODO: IMIT
     state_data.emitters = [
       // useMittOn(MITT_TYPES.EMIT_RESET_SET_HTON, info_icon_click_h),
       // useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS, info_icon_click_h),

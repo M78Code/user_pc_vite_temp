@@ -92,9 +92,9 @@ export default class MatchDetailCtr {
  */
   category_tab_click(obj={}){
     // 如果本地缓存有玩法ID则取本地缓存，没有就取传入的ID
-    let category_id = SessionStorage.get('DETAIL_TAB_ID') ? SessionStorage.get('DETAIL_TAB_ID') : obj.id
-    this.current_category_id=  category_id
-    this.current_category_plays =obj.plays
+    let category_id = obj.id
+    this.current_category_id= category_id
+    this.current_category_plays = obj.plays
     this.set_details_data_version() 
   }
     /**

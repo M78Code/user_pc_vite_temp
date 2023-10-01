@@ -227,10 +227,14 @@ const right_btn_show = computed(() => {
  */
 const onclick = (index, item) => {
     //展开右侧详情
-  store.dispatch({
-    type: 'SET_UNFOLD_MULTI_COLUMN',
-    data: false
-  })
+  try {
+    store.dispatch({
+      type: 'SET_UNFOLD_MULTI_COLUMN',
+      data: false
+    })
+  } catch (error) {
+    console.error(error);
+  }
   // return
   let num = index - props.currentIndex;
   if (!num) return;
