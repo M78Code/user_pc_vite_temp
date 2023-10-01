@@ -36,7 +36,7 @@ import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import BetData from "src/core/bet/class/bet-view-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import { submit_handle } from "src/core/bet/class/bet-box-submit.js"
-import { MenuData } from "src/core/index.js";
+import { LayOutMain_pc } from "src/core/index.js";
 
 //是否失效
 const lock_btn = ref(false)
@@ -54,7 +54,7 @@ const set_lock_btn = value => {
 }
 // 取消投注 返回菜单
 const cancel_handle = () => {
-  MenuData.set_layout_left_show('menu')
+  LayOutMain_pc.set_layout_left_show('menu')
 }
 
 </script>
