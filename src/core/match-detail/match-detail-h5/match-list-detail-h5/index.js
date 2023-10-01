@@ -48,13 +48,13 @@ export default class  MatchListDetailMiddleware{
      * 列表进详情
      * @param {*} params 
      */
-before_enter_detail_form_list(params){
-    let { MatchDataWarehouse_source , MatchDataWarehouse_target ,mid  ,back_to_source_params={}   } =  params
-    // 读取 来源数据仓库 赛事基础信息
-    let mid_data =  MatchDataWarehouse_source.mid_obj[`${mid}_`]
-    // 写入 目标数据仓库 赛事基础信息
-    MatchDataWarehouse_target.set_match_details(mid_data)
-    // 详情进入列表场景下：返回来源列表页面必须参数  
-    this.back_to_source_params =back_to_source_params
-}
+    before_enter_detail_form_list(params){
+        let { MatchDataWarehouse_source , MatchDataWarehouse_target ,mid  ,back_to_source_params={}   } =  params
+        // 读取 来源数据仓库 赛事基础信息
+        let mid_data =  MatchDataWarehouse_source.mid_obj[`${mid}_`]
+        // 写入 目标数据仓库 赛事基础信息
+        MatchDataWarehouse_target.set_match_details(mid_data)
+        // 详情进入列表场景下：返回来源列表页面必须参数  
+        this.back_to_source_params =back_to_source_params
+    }
 }

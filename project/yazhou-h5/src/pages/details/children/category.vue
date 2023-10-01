@@ -1,6 +1,7 @@
 <template>
   <div class="category relative-position" ref="category">
     <!-- loading效果 -->
+    <div style="display: none;">{{MatchDataWarehouseInstance.data_version}}</div>
     <loading
         v-if="is_loading"
         :top="get_is_hengping ? '50%' : '58%'"
@@ -86,7 +87,7 @@ import no_data from "project_path/src/components/common/no-data.vue"
 // 引入投注逻辑mixin
 // import betting from "project_path/src/mixins/betting/betting.js";
 
-
+import { MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance } from "src/core/index";
 // 引入加载中的组件
 import loading from "project_path/src/components/common/loading.vue"
 // 精选赛事
@@ -283,6 +284,7 @@ export default defineComponent({
       get_is_hengping,
       get_details_data_cache,
       get_chpid_obj,
+      MatchDataWarehouseInstance,
       change_minheight,
       change_show,
       listItemAddCustomAttr,

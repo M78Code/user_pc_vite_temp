@@ -91,14 +91,11 @@ export default class MatchDetailCtr {
  * @param {*} obj  玩法集对象 
  */
   category_tab_click(obj={}){
-    let category_id = ''
-    // if ([SessionStorage.get('DETAIL_TAB_ID')].includes(obj.id)) {
-      // category_id = SessionStorage.get('DETAIL_TAB_ID')
-    // } else {
-      category_id = SessionStorage.get('DETAIL_TAB_ID') ? SessionStorage.get('DETAIL_TAB_ID') : obj.id
-    // }
+    // 如果本地缓存有玩法ID则取本地缓存，没有就取传入的ID
+    let category_id = SessionStorage.get('DETAIL_TAB_ID') ? SessionStorage.get('DETAIL_TAB_ID') : obj.id
     this.current_category_id=  category_id
     this.current_category_plays =obj.plays
+    this.set_details_data_version() 
   }
     /**
    * 计算 玩法集 数组  参照对象
@@ -199,7 +196,7 @@ export default class MatchDetailCtr {
 
   // 设置详情版本变更
   set_details_data_version(){
-    this.details_data_version.value = Date.now()
+    this.details_data_version = Date.now()
   }
 
   set_score_button(val){

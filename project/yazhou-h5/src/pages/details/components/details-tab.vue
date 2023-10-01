@@ -9,7 +9,7 @@
       v-for="(item,index) in data_list" 
       :key="index" 
       @click.self="selete_item(item['id'],index,item)" 
-      :class="matchDetailCtr.current_category_id == item['id']?'t_color':''"
+      :class="current_category_id == item['id']?'t_color':''"
       >
         {{item.marketName}}
       </div>
@@ -19,6 +19,7 @@
 <script>
 // #TODO vuex
 // import { mapGetters, mapActions,mapMutations } from "vuex"
+import { MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance } from "src/core/index";
 import { utils } from 'src/core/index.js';
 import { useMittEmitterGenerator, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, ref } from "vue";
@@ -50,6 +51,7 @@ export default defineComponent({
     // 一键收起状态: 1.全展开 2.全收起 3.部分展开 1和3箭头向上
     const get_fewer = ref(1)
     const matchDetailCtr = ref(MatchDetailCalss)
+    const current_category_id = ref(MatchDetailCalss.current_category_id)
     const data = reactive({
       emitters: [],
       timer1_: null,
@@ -83,6 +85,11 @@ export default defineComponent({
     const match_id = computed(() => {
       return route.params.mid || get_detail_data.mid
     });
+    console.error(MatchDetailCalss);
+    watch(() => matchDetailCtr.details_data_version, () => {
+      console.error(MatchDetailCalss.details_data_version);
+      current_category_id.value = MatchDetailCalss.current_category_id
+    })
     // #TODO VUEX
     // methods:{
     // ...mapActions(['set_details_item','set_subscript_game_index']),
@@ -120,7 +127,7 @@ export default defineComponent({
       // 记录当前玩法集ID和玩法集合
       matchDetailCtr.value.category_tab_click(item)
       // 存储tab的id
-    SessionStorage.set('DETAIL_TAB_ID', item.id)
+      SessionStorage.set('DETAIL_TAB_ID', item.id)
       // useMittEmit(MITT_TYPES.EMIT_DETAILILS_TAB_CHANGED)
       if(get_fewer.value == 3){
         get_fewer.value = 1
@@ -167,6 +174,9 @@ export default defineComponent({
       get_tab_fix,
       get_fewer,
       matchDetailCtr,
+      MatchDetailCalss,
+      current_category_id,
+      MatchDataWarehouseInstance,
       change_btn,
       selete_item,
       get_active_details_play_tab,
