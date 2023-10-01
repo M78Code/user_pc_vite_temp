@@ -14,6 +14,8 @@ import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from 'src/core'
 class MatchMeta {
 
   constructor() {
+    // 当前页面数据mids集合
+    this.match_mids = [],
     // 新的菜单到旧的菜单的映射关系  接口返回值
     this.origin_menu = mi_euid_mapping_default.data
     // ms 1： 滚球 2： 今日； 3： 早盘;  
@@ -84,7 +86,7 @@ class MatchMeta {
         ...handicap
       }
     })
-    this.handle_update_warehouse(data_list)
+    this.assembly_match_data(data_list)
   }
 
   /**
@@ -131,15 +133,63 @@ class MatchMeta {
    * @param {*} id 
    * @returns 
    */
-  compute_menu_key = (id) => {
+  compute_menu_key (id) {
     return lodash.get(this.origin_menu[`${id}1`], 'h', '40003')
   }
 
   /**
-   * @description 更新仓库
-   * @param { list } 赛事赛事
+   * @description 组装赛事数据
+   * @param { list } 赛事数据 
    */
-  handle_update_warehouse (list) {
+  assembly_match_data (list = []) {
+    const length = lodash.get(list, 'length')
+    if (length < 1) return
+    const result = []
+    // 是否展示联赛标题
+    let is_show_league = false
+    // 是否显示次要玩法
+    let is_show_tab_play = false
+    // 是否折叠
+    let is_fold_tab_play = false
+    
+    list.forEach((t, i) => {
+      if (i === 0) {
+        is_show_league = true
+      } else {
+        is_show_league = list[i].tid !== list[i - 1].tid
+      }
+      result.push(t.mid)
+      Object.assign(t, {
+        is_show_tab_play,
+        is_fold_tab_play,
+        is_show_league,
+      })
+    })
+    this.match_mids = new Set(result)
+    this.handle_submit_warehouse(list)
+  }
+
+  /**
+   * @description 更新对应赛事
+   * @param { list } 赛事数据 
+   */
+  handle_update_match_info (list) {
+    lodash.forEach(list, t => {
+      const match = MatchDataBaseH5.get_quick_mid_obj(t.mid)
+      Object.assign(t, { ...match })
+    })
+    // 设置仓库渲染数据
+    MatchDataBaseH5.set_list(list)
+    // 计算卡片高度, 需要在赔率接口之前调用， 避免卡片抖动
+    MatchListCardClass.run_process_when_need_recompute_container_list_step_two_match_list_wrapper_height()
+  }
+
+  /**
+   * @description 提交更新仓库
+   * @param { list } 赛事数据
+   * @param { type } 是否获取赔率
+   */
+  handle_submit_warehouse (list, type = 'mids') {
     // 设置仓库渲染数据
     MatchDataBaseH5.set_list(list)
     // 计算卡片高度, 需要在赔率接口之前调用， 避免卡片抖动

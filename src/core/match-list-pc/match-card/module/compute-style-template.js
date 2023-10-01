@@ -117,7 +117,6 @@ const compute_style_template_by_matchinfo_template0_zuqiu = (
 		// 如果有角球玩法并且未折叠  角球区域总高度 等于角球标题高度
 		tab_play_total_height = template_config.tab_play_title_height;
 	}
-
 	// 足球篮球  附加盘数量
 	let add_handicap_count = get_add_handicap_count(match);
 	// 附加盘高度 等于附加盘数量*模板配置附加盘高度
@@ -258,7 +257,8 @@ export const get_league_title_card_height = (template_id) => {
  * @returns
  */
 
-export const compute_style_template_by_matchinfo = (match, template_id) => {
+export const compute_style_template_by_matchinfo = (match, template_id, mid) => {
+	console.log('list', MatchListData.list_to_obj.mid_obj[mid+'_']);
 	if (template_id == 13) {
 		template_id = 1;
 	}

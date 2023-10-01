@@ -102,7 +102,7 @@ export const useRightDetails = (props) => {
    * @return {}
    */
   const close_tips = (hpid) => {
-    allData.match_details.forEach((item) => {
+    match_details.value.forEach((item) => {
       item.tipstatus = item.hpid == hpid;
     });
   };
@@ -192,7 +192,7 @@ export const useRightDetails = (props) => {
     { type: MITT_TYPES.EMIT_SHOW_DETAILS, callback: m_init },
   ]);
   onUnmounted(emitters_off);
-
+  const  match_details = ref([]); //详情盘口
   const allData = reactive({
     handicap_this: null,
     // 菜单数据
@@ -203,7 +203,7 @@ export const useRightDetails = (props) => {
     category_list: [], //玩法集
     mcid: 0, //默认玩法集id
     plays_list: [], //选中玩法集的盘口玩法集
-    match_details: [], //详情盘口
+   
     // isInit: false, //是否首次加载
     load_data_state: "loading", //整块加载状态
     handicap_state: "loading", //玩法加载状态状态
@@ -399,7 +399,7 @@ export const useRightDetails = (props) => {
               );
 
               let str = allData.mid + "_";
-              allData.match_details = [lodash.get(
+              match_details.value = [lodash.get(
                 MatchDataWarehouseInstance.list_to_obj.mid_obj,
                 str
               )];
@@ -411,7 +411,7 @@ export const useRightDetails = (props) => {
               // }
               // this.vx_set_lang_change(false);
             } else {
-              allData.match_details = [];
+              match_details.value = [];
               allData.handicap_state =
                 params.mcid == 0 ? "all_empty" : "new_empty";
             }
@@ -509,9 +509,9 @@ export const useRightDetails = (props) => {
                 data
               );
       
-              // allData.match_details = MatchDataWarehouseInstance.list;
+              // match_details.value = MatchDataWarehouseInstance.list;
               let str = allData.mid + "_";
-              allData.match_details = [lodash.get(
+              match_details.value = [lodash.get(
                 MatchDataWarehouseInstance.list_to_obj.mid_obj,
                 str
               )];
@@ -523,7 +523,7 @@ export const useRightDetails = (props) => {
               // }
               // this.vx_set_lang_change(false);
             } else {
-              allData.match_details = [];
+              match_details.value = [];
               if (code == "0401038") {
                 allData.handicap_state = "api_limited";
                 return;
@@ -606,7 +606,7 @@ export const useRightDetails = (props) => {
     // init.value();
     // get_match_detail_base_throttle();
     // get_matchInfo_fun(1,allData.mid)
-    m_init();
+    // m_init();
     //获取详情
     // get_matchInfo();
 
@@ -735,7 +735,7 @@ export const useRightDetails = (props) => {
    * @return {undefined} undefined
    */
   const check_plays_show = () => {
-    allData.match_details.forEach((item) => {
+    match_details.value.forEach((item) => {
       item = format_plays(item);
     });
   };
@@ -943,7 +943,7 @@ export const useRightDetails = (props) => {
   const get_category_list = (callback, is_ws) => {
     let params = {
       sportId: allData.sportId || 0, //球类id
-      mid: allData.details_params.mid || 0, //赛事id
+      mid: allData.mid || 0, //赛事id
     };
     // 全屏模式
     if (route.params.video_size == 1) {
@@ -993,7 +993,7 @@ export const useRightDetails = (props) => {
    * @return {}
    */
   const err_tips = (err) => {
-    allData.match_details = [];
+    match_details.value = [];
     //todo
     // this.set_error_data({
     //   site: "details--get_match_detail",
@@ -1165,7 +1165,7 @@ export const useRightDetails = (props) => {
     MatchDataWarehouseInstance.destroy();
     allData.match_infoData = null;
     allData.category_list = null;
-    allData.match_details = null;
+    match_details.value = null;
   });
 
   return {
@@ -1175,6 +1175,7 @@ export const useRightDetails = (props) => {
     is_esports,
     show_load_status,
     MatchDataWarehouseInstance,
+    match_details,
     on_go_top,
     change_loading_state,
     set_handicap_this,
@@ -1266,7 +1267,7 @@ export const useRightDetails = (props) => {
 //  watch: {
 //    "vx_details_params.mid"() {
 //      // this.isInit = true;
-//      allData.match_details.splice(0, allData.match_details.length);
+//      match_details.value.splice(0, match_details.value.length);
 //      allData.category_list.splice(0, allData.category_list.length);
 //     MatchDataWarehouseInstance.clear_hl_obj();
 //     MatchDataWarehouseInstance.clear_hn_obj();

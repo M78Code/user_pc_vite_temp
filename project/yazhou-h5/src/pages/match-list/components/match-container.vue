@@ -62,7 +62,7 @@
     <!-- 最核心的div模块     标题 + 倒计时 + 比分 + 赔率盘口模块 -->
     <div class="match-inner-container">
       <!--联赛标题 -->
-      <div v-if="get_league_show(i)"
+      <div v-if="match.is_show_league || (main_source == 'home_hot_page_schedule' && get_league_show(i))"
         :class="[('league match-indent hairline-border'), { 'no-radius': get_sport_show && is_it_popular && !['home_hot_page_schedule'].includes(main_source), 'home-hot': main_source == 'home_hot_page_schedule' }]"
         @click="league_l_clicked()">
         <div class="league-t-wrap">
@@ -569,6 +569,7 @@ onMounted(() => {
 
 // 当前显示的赛事数据
 const match = computed(() => {
+  console.log( props.match_of_list.is_show_league)
   return props.match_of_list;
 })
 

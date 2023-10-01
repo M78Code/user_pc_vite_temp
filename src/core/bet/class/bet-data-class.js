@@ -1,5 +1,6 @@
 import { PageSourceData, fileds_map_common } from "src/core/index.js";
 import MenuData from "src/core/menu-pc/menu-data-class.js";
+import BetViewDataClass from "./bet-view-data-class"
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { ref } from "vue"
 import lodash_ from "lodash"
@@ -111,15 +112,8 @@ class BetData {
     //==============================================投注之后 有注单ID=============
 
     // 投注后的 
-    this.orderNo_bet_obj = {
-      // [bet_custom_id]:{
-
-      // }
-    };
+    this.orderNo_bet_obj = []
     ///////////////////
-
-
-
 
     // 当前电竞查询的模式 false单关模式
     this.cur_esports_mode = false;
@@ -164,7 +158,8 @@ this.bet_appoint_ball_head= null */
     // 版本变更
     this.bet_data_class_version = ref('123')
     this.show_merge_info = false
-
+    // 投注状态 是否 在投注
+    this.bet_flag = true
   }
 
   // 通过  mount_point_key 计算 取值字段映射
@@ -256,7 +251,7 @@ this.bet_appoint_ball_head= null */
     设置 投注项立马生成的前端索引ID
   */
   set_bet_read_write_refer_obj(obj) {
-    let custom_id = Date.now()
+    let custom_id = obj.playOptionsId
     const bet_refer_obj = {
       // mount_point_key:'virtual_bet_obj',
       // shuju_laiyuan: 'xiangqing',       //  
@@ -410,6 +405,21 @@ this.bet_appoint_ball_head= null */
     this.bet_appoint_obj = val
     this.set_bet_data_class_version()
   }
+  // 设置 是否已投注
+  set_bet_flag() {
+    if (this.bet_mode == 0) {
+      this.bet_flag = false;
+    }else{
+      this.bet_flag = this.bet_mode == -1 || (this.bet_mode == 1 && BetViewDataClass.order_confirm_complete != 2);
+    }
+    this.set_bet_data_class_version()
+  }
+
+  // 操盘方 投注模式  -1.还不知道使用哪种模式 0.足球PA滚球 1.非足球PA滚球 bet后接口返回
+  set_bet_mode(val) {
+    this.bet_mode = val
+    this.set_bet_flag()
+  }
 
   // 设置 切换单关/串关切换
   set_is_bet_single() {
@@ -433,7 +443,7 @@ this.bet_appoint_ball_head= null */
     }
     this.set_bet_data_class_version()
   }
-  
+
   // 设置 投注版本
   set_bet_data_class_version = lodash_.debounce(() => {
     this.bet_data_class_version.value = Date.now()
@@ -520,6 +530,7 @@ this.bet_appoint_ball_head= null */
       this.bet_s_obj = _.cloneDeep(this.bet_s_obj);
     }
   }
+
   /**
    * @description: 存储最高可赢额
    * @param {*}win_money 存储字段
@@ -535,6 +546,7 @@ this.bet_appoint_ball_head= null */
   set_odds_coversion_map(value) {
     this.odds_coversion_map = value
   }
+
 
   /**
   * @description: 根据oid或者坑位id获取投注项id
@@ -587,6 +599,12 @@ this.bet_appoint_ball_head= null */
   set_device_type(val) {
     // 设备类型 "设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备"
     this.deviceType = val
+  }
+
+  // 投注后的数据
+  set_orderNo_bet_obj(array) {
+    this.orderNo_bet_obj = array
+    this.set_bet_data_class_version()
   }
 
 

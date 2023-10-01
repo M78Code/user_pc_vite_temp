@@ -322,11 +322,13 @@ get_match_mids (list) {
     }
     try {
       // 遍历接口比分数据 转成比分对象
-      lodash.each(msc, score_str => {
-        let [key,value] = score_str && score_str.split('|') || []
-        if(value){
-          let [home,away] = value.split(':')
-          score_obj[key] = {home,away}
+      msc && lodash.each(msc, score_str => {
+        if(typeof(score_str) == 'string'){
+          let [key,value] = score_str && score_str.split('|') || []
+          if(value){
+            let [home,away] = value.split(':')
+            score_obj[key] = {home,away}
+          }
         }
       })
     } catch (error) {

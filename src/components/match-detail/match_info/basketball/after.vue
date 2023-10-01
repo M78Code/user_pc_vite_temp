@@ -236,6 +236,7 @@ import BetCommonHelper from "src/core/bet/common-helper/index.js";
 import lodash from "lodash";
 import store from "src/store-redux/index.js";
 import { IconWapper } from 'src/components/icon'
+import { nextTick } from "vue";
 
 export default {
   components: {

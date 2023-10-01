@@ -16,9 +16,9 @@
       }" 
       :style="{ 'min-height': `${get_menu_type == 100 ? list_wrap_height : match_list_wrapper_height}rem` }">
       <!-- 循环内部有多个dom时,为了减少最终dom数,可以循环template 当要v-for与v-if同时使用在一个dom上时,可以使用template -->
-      <template v-for="(match_mid, index) in MatchDataBaseH5.mids_ation">
+      <template v-for="(match_mid, index) in MatchMeta.match_mids">
         <div v-if="match_mid" class="s-w-item" :key="match_mid" :index="index"
-          :class="{ static: is_static_item, last: index == mids_ation.length - 1 }" :style="{
+          :class="{ static: is_static_item, last: index == match_mids.length - 1 }" :style="{
             transform: `translateY(${is_static_item ? 0 : get_match_top_by_mid(match_mid)}rem)`,
             zIndex: `${200 - index}`
           }">
@@ -46,6 +46,7 @@ import store from "src/store-redux/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import MenuData from  "src/core/menu-h5/menu-data-class.js";
 import PageSourceData from "src/core/page-source/page-source.js";
+import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from 'src/core'
 
 // 避免定时器每次滚动总是触发
@@ -70,14 +71,12 @@ const newer_standard_edition = ref(PageSourceData.newer_standard_edition);
 const get_menu_type = ref(MenuData.get_menu_type())
 const get_current_menu = ref(MenuData.current_menu)
 const get_curr_sub_menu_type = ref(lodash.get(MenuData.current_lv_2_menu, 'type'))
-const mids_ation = ref([])
+const match_mids = ref([])
 
 onMounted(() => {
-  setTimeout(() => {
-    mids_ation.value = MatchDataBaseH5.mids_ation
-    console.log(MatchDataBaseH5)
-    console.log(11111111111111)
-  }, 3000)
+  // setTimeout(() => {
+  //   match_mids.value = MatchMeta.match_mids
+  // }, 3000)
   test.value = sessionStorage.getItem('wsl') == '9999';
   // 详情页以外的列表才设置最小高度
   if (props.main_source !== 'detail_match_list') {
@@ -86,8 +85,7 @@ onMounted(() => {
 })
 // 监听 数据仓库版本号改变
 watch(() => MatchDataBaseH5.data_version.version, () => {
-  console.log(MatchDataBaseH5)
-  mids_ation.value = MatchDataBaseH5.mids_ation
+  match_mids.value = MatchMeta.match_mids
 })
 
 const get_match_item = (mid) => {
@@ -95,7 +93,7 @@ const get_match_item = (mid) => {
 }
 
 const get_index_f_data_source = (mid) => {
-  return lodash.findIndex(mids_ation.value, { mid });
+  return lodash.findIndex(match_mids.value, { mid });
 }
 
 /**
@@ -190,7 +188,7 @@ watch(() => props.is_goto_top_random, () => {
 const set_ishigh_scrolling = computed(() => {
   // 滚动过程中，是否显示  骨架屏背景图片
   let flag = false;
-  if (["home_hot_page_schedule"].includes(props.main_source) || (MatchDataBaseH5.mids_ation && MatchDataBaseH5.mids_ation <= 0)) {
+  if (["home_hot_page_schedule"].includes(props.main_source) || (MatchMeta.match_mids && MatchMeta.match_mids <= 0)) {
     flag = false;
   } else {
     flag = get_to_bottom_space > 350 && !is_champion
@@ -213,7 +211,7 @@ const get_to_bottom_space = computed(() => {
   let delta = 0
   let list_scroll_top = target_scroll_obj.value
   //容器的滚动数据
-  if (list_scroll_top && MatchDataBaseH5.mids_ation) {
+  if (list_scroll_top && MatchMeta.match_mids) {
     delta = list_scroll_top.scroll_height - (list_scroll_top.scroll_y + list_scroll_top.client_height);
   } else {
     //window的滚动数据

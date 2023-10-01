@@ -36,7 +36,7 @@ const styles = computed(() => {
   const { color = '', size = '' } = props;
   return {
     color,
-    size
+    'font-size':size
   };
 })
 

@@ -88,8 +88,8 @@ import { MenuData } from "src/core/index.js"
 import matchListClass from 'src/core/match-list-h5/match-class/match-list.js'
 import { api_common } from "src/api/index.js";
 import oddListWrap from './odd-list-wrap.vue';
+import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from 'src/core'
-import { debug } from "licia";
 
 // TODO: 其他模块得 store  待添加
 // mixins:[match_list_mixin],
@@ -260,8 +260,7 @@ watch(() => get_c303_data_change.value, (curr) => {
             if (res.data && res.data[0] && res.data[0][o_hps_key]) {
               // 根据业务需求，修改冠军小节玩法  1585 单对应
               Object.assign(match_info.value, res.data[0]);
-              MatchDataBaseH5.upd_match(res.data[0]); // 更新赛事盘口数据
-              MatchDataBaseH5.set_quick_query_list(res.data[0], 1)
+              MatchMeta.handle_update_match_info(res.data)// 更新赛事盘口数据
               // if(operate_type == 'is-user'){
               //   // 次要玩法展开加载数据  订阅指定玩法赛事(C8)  status 1订阅赛事推送  0退订赛事推送
               //   useMittEmit(MITT_TYPES.EMIT_SPECIAL_HPS_LOADED,res.data[0],o_hps_key);
@@ -678,8 +677,7 @@ const overtime_tab_handle = (item, unfold, operate_type, sub_i) => {
           if (res.data && res.data[0] && res.data[0][o_hps_key]) {
             // 根据业务需求，修改冠军小节玩法  1585 单对应
             Object.assign(match_info.value, res.data[0]);
-            MatchDataBaseH5.upd_match(res.data[0]); // 更新赛事盘口数据
-            // MatchDataBaseH5.set_quick_query_list(res.data[0],1)
+            MatchMeta.handle_update_match_info(res.data)
             if (operate_type == 'is-user') {
               // 次要玩法展开加载数据  订阅指定玩法赛事(C8)  status 1订阅赛事推送  0退订赛事推送
               useMittEmit(MITT_TYPES.EMIT_SPECIAL_HPS_LOADED, res.data[0], o_hps_key);
