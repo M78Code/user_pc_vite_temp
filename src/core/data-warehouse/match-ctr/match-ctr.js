@@ -314,14 +314,19 @@ init(){
         }
       }
     }
-    // 遍历接口比分数据 转成比分对象
-    lodash.each(msc, score_str => {
-      let [key,value] = score_str && score_str.split('|') || []
-      if(value){
-        let [home,away] = value.split(':')
-        score_obj[key] = {home,away}
-      }
-    })
+    try {
+      // 遍历接口比分数据 转成比分对象
+      lodash.each(msc, score_str => {
+        let [key,value] = score_str && score_str.split('|') || []
+        if(value){
+          let [home,away] = value.split(':')
+          score_obj[key] = {home,away}
+        }
+      })
+    } catch (error) {
+      console.error('serialized_score_obj msc:', msc);
+      console.error('serialized_score_obj:',error);
+    }
     return  score_obj
   }
 
