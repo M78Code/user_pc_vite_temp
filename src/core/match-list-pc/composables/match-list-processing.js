@@ -17,7 +17,7 @@ let state = store.getState();
 const { mx_collect_count, set_collect_count } = collect_composable_fn();
 const { virtual_list_timeout_id } = virtual_composable_fn();
 const { show_mids_change } = ws_composable_fn();
-const { api_bymids } = use_featch_fn();
+const { api_bymids, set_league_list_obj } = use_featch_fn();
 
 const vx_filter_select_obj = ref([])
 // 上次筛选选中的数据
@@ -196,10 +196,10 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 				};
 			}
 			// 调用bymids更新前12场赛事
-			// api_bymids(
-			// 	{ is_league_first: true, inner_param: true },
-			// 	callback_func
-			// );
+			api_bymids(
+				{ is_league_first: true, inner_param: true },
+				callback_func
+			);
 		}
 
 
@@ -220,7 +220,7 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 	} else {
 		load_data_state.value = "empty";
 		// 设置数据仓库 联赛列表对象
-		// this.match_list_data.set_league_list_obj(res_data);
+		set_league_list_obj(res_data);
 		console.log('lockie-2');
 
 	// 计算列表卡片样式

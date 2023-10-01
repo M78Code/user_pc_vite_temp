@@ -269,7 +269,7 @@ const set_base_data_init = () => {
 		MatchListData.set_list(
 			matchs_list,
 		);
-	handle_match_list_request_when_ok(data, true, true, true);
+	handle_match_list_request_when_ok(data, false, true, true);
 	let ts1 = Date.now();
 	let mids_arr = [];
 	(matchs_list || []).forEach((match) => {
