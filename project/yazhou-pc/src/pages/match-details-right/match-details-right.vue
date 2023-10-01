@@ -132,22 +132,23 @@
    
         > -->
         <!-- 盘口模板start -->
-        <match-handicap
-          :match_info="match_infoData"
-          :category_list="category_list"
-          :match_details="match_details"
-          :plays_list="plays_list"
-          :currentRound="round"
-          :is_list="true"
-          :mid="mid"
-          @set_handicap_this="set_handicap_this"
-          :close_all_handicap="close_all_handicap"
-          :handicap_state="handicap_state"
-          pageType="right_details"
-          load_type="details"
-        />
+        <template v-if="(layout_cur_page.cur!=='details' && !is_esports) || route.name == 'video'">
+          <match-handicap
+            :match_info="match_infoData"
+            :category_list="category_list"
+            :match_details="match_details"
+            :plays_list="plays_list"
+            :currentRound="round"
+            :is_list="true"
+            :mid="mid"
+            @set_handicap_this="set_handicap_this"
+            :close_all_handicap="close_all_handicap"
+            :handicap_state="handicap_state"
+            pageType="right_details"
+            load_type="details"
+          />
         <!-- 盘口模板end -->
-        <!-- </template> -->
+        </template>
 
         <!-- 电竞 有视频赛事列表 -->
         <!-- <esports-match-list v-if="is_esports &&route.name != 'video'" /> -->
