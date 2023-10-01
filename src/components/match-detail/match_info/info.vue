@@ -5,6 +5,7 @@
 -->
 <template>
   <div class="right_match_info">
+  <template v-if="match_info">
     <!-- ms，0未开赛；1进行中；3完赛 110 即将开赛 -->
     <template v-if="[0, 110].includes(lodash.get(match_info,'ms')*1)">
       <before :match_info="match_info" :is_new="true" />
@@ -30,6 +31,7 @@
       <template v-else-if="[1, 2, 3, 4].includes(lodash.get(match_info,'ms')*1) && $utils.is_eports_csid(match_info.csid)">
         <dota2 :match_info="match_info"></dota2>
       </template>
+    </template>
     </template>
   </div>
 </template>

@@ -11,6 +11,7 @@
     started_and_un_started: match.is_show_no_play,
     favorite_un_start_title: favorite_un_start_title(i, match_of_list.ms),
   }'>
+  <template v-if="match" >
     <div style="display: none;">{{ MatchDataBaseH5.data_version.version }}</div>
     <!--体育类别 -- 标题  menuType 1:滚球 2:即将开赛 3:今日 4:早盘 11:串关 -->
     <div class="sport-title match-indent" v-if="get_sport_show"
@@ -116,7 +117,7 @@
               <!--竞彩足球 星期与编号-->
               <div class="week-mcid row items-center" v-if="MenuData.get_menu_type() == 30">
                 <span class="din-regular">
-                  {{ match.mcid }}
+                  {{ lodash.get(match,'mcid')}}
                 </span>
               </div>
               <!--赛事列表收藏-->
@@ -453,6 +454,7 @@
         </div>
       </div>
     </div>
+  </template>
   </div>
 </template>
 
