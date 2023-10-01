@@ -1,5 +1,5 @@
 import { PageSourceData, fileds_map_common } from "src/core/index.js";
-import MenuData from "src/core/menu-pc/menu-data-class.js";
+import LayOutMain_pc from "src/core/layout/index.js";
 import BetViewDataClass from "./bet-view-data-class"
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { ref } from "vue"
@@ -341,9 +341,10 @@ this.bet_appoint_ball_head= null */
         this.bet_s_list.push(bet_refer_obj)
       }
     }
+    
     // 显示 投注信息窗口
-    if(MenuData.set_layout_left_show != 'bet_list'){
-      MenuData.set_layout_left_show('bet_list')
+    if(LayOutMain_pc.layout_left_show != 'bet_list'){
+      LayOutMain_pc.set_layout_left_show('bet_list')
     }
 
     this.set_bet_data_class_version()

@@ -1,6 +1,6 @@
 <template>
   <!-- 菜单项 -->
-  <div v-show="MenuData.layout_left_show == 'menu'" class="menu-wrap">
+  <div v-show="LayOutMain_pc.layout_left_show == 'menu'" class="menu-wrap">
     <!-- 现场滚球盘 -->
     <div @click="new_menu_click(1)" class="menu-item menu-top menu-roll menu-border border-bottom" style="margin-bottom: 0px"
       :class="MenuData.menu_root == 1 && 'active'">
@@ -48,7 +48,7 @@ import { useRouter } from "vue-router";
 
 import base_data_instance from "src/core/base-data/base-data.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
-import { MenuData } from "src/core/index.js";
+import { MenuData,LayOutMain_pc } from "src/core/index.js";
 import { compute_css } from 'src/core/server-img/index.js'
 
 import { MenuWapper } from "src/components/menu/index.js";

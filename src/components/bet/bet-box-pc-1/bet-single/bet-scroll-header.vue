@@ -29,7 +29,7 @@
       </div>
 
        <!--右边的单关或者复式串关按钮-->
-      <template v-if="!BetData.is_virtual_bet && (MenuData.layout_left_show != 'bet_history')">
+      <template v-if="!BetData.is_virtual_bet && (LayOutMain_pc.layout_left_show != 'bet_history')">
         <div class="bet-series-box" @click="set_change_bet_single">
           <span class="bet-series-text" :class="!BetData.is_bet_single ? 'actions':'' ">{{$t('bet.bet_series')}}</span>
             <!--复式串关已改为串关-->
