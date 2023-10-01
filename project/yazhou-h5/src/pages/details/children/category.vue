@@ -43,15 +43,15 @@
         <!-- 置顶操作时增加动画 -->
         <transition-group name="transition-play-list" tag="div" class="transition-zhiding">
           <!-- 置顶 -->
-          <template v-for="(item,keyscorll) in match_list_new">
+          <template v-for="(item,keyscorll) in match_list_new_data">
             <template v-if="item.hton!=0">
               <tournament-play-new @change_show="change_show" :key="item.topKey + item.hpid" :list="matchInfoCtr.list" :item_data="item" :scorllIndex="keyscorll"></tournament-play-new>
             </template>
           </template>
           <!-- 非置顶 -->
-          <template v-for="(item, keyscorll) in match_list_normal">
+          <template v-for="(item, keyscorll) in match_list_normal_data">
             <template v-if="item.hton==0">
-              <template v-if="match_list_new.length == 0">
+              <template v-if="match_list_new_data.length == 0">
                 <tournament-play-new @change_show="change_show" :key="item.topKey + item.hpid" :list="matchInfoCtr.list" :item_data="item" :scorllIndex="keyscorll"></tournament-play-new>
               </template>
               <template v-else>
@@ -119,8 +119,8 @@ export default defineComponent({
     const {
       component_data,
       show_recommend,
-      match_list_new,
-      match_list_normal,
+      match_list_new_data,
+      match_list_normal_data,
       match_id,
       get_detail_data,
       get_details_item,
@@ -270,8 +270,8 @@ export default defineComponent({
       ...toRefs(component_data),
       i18n_t,
       show_recommend,
-      match_list_new,
-      match_list_normal,
+      match_list_new_data,
+      match_list_normal_data,
       match_id,
       get_detail_data,
       get_details_item,
