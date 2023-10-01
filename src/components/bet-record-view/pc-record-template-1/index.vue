@@ -1,6 +1,4 @@
 <!--
- * @Author: Sword
- * @Date: 2020-08-04 17:13:55
  * @Description: 投注记录菜单 未结算 已结算 预约
 -->
 <template>
@@ -8,7 +6,7 @@
   <div class="bet-record-container" data-container="bet-record-container">
     <!--投注记录卡片-->
     <q-card flat class="bet-record-card full-width">
-      <template v-for="(item, index) in record_data.records" :key="index">
+      <template v-for="(item, index) in ref_data.record_data.records" :key="index">
         <!--单关start (0:未结算,1:已结算,2:注单取消,3:确认中,4:投注失败)-->
         <div class="border-shq-card-actionsadow">
           <!--卡片标题-->
@@ -32,39 +30,12 @@
                 <!--卡片内容-->
                 <q-card-section>
                   <!--投注记录中投注项 selected是否被选择 appoint_order_status预约状态 order_status订单状态pre_bet_amount提前结算金额-->
-                  <bet-record-item :selected="selected" :appoint_order_status="appoint_order_status"
-                    :order_status="item.orderStatus" :preOrder="item.preOrder" :ac_code="item.acCode"
-                    :series_type="item.seriesType" :addition="item.addition" :lang_code="item.langCode"
-                    :pre_bet_amount="item.preBetAmount" :out_come="item.outcome" :index="index"
-                    :order="order"></bet-record-item>
+                  <bet-record-item :selected="selected" :appoint_order_status="appoint_order_status" :item="item" :index="index" :order="order"></bet-record-item>
                 </q-card-section>
               </div>
             </template>
-            <!-- 预约项 -->
-            <template v-else>
-              <div v-for="(order, order_index) in item.detailList" :key="'bet-item-' + index + '-' + order_index"
-                class="bet-item  relative-position" :class="{ 'cursor-pointer': show_arrow(item, order) }"
-                @click="go_match(item, order)">
-                <!--卡片内容-->
-                <q-card-section>
-                  <!--投注记录中预约项-->
-                  <bet-book-item :selected="selected" :appoint_status="item.preOrderStatus"
-                    :appoint_order_status="appoint_order_status" :order_status="item.orderStatus" :ac_code="item.acCode"
-                    :series_type="item.seriesType" :addition="item.addition" :lang_code="item.langCode"
-                    :pre_bet_amount="item.preBetAmount" :out_come="item.outcome" :orderNo="item.orderNo" :index="index"
-                    :order="order"></bet-book-item>
-                </q-card-section>
-              </div>
-            </template>
-            <q-card-section class="bet-item-result" :key="'bet-result-' + index">
-              <!--结算结果-->
-              <bet-record-result :index="index" :selected="selected" :item_obj="item"
-                :orderNo_data_list="orderNo_data_list" :orderNo_data_obj="orderNo_data_obj"
-                :profit_amount="item.profitAmount" :back_amount="item.backAmount" :addition="item.addition"
-                :order_amount="item.orderAmountTotal" :bet_pre_amount="item.setBetAmount" :win_amount="item.maxWinAmount"
-                :out_come="item.outcome" @res_timer_get_cashout="res_timer_get_cashout"
-                @clear_timer_get_cashout="clear_timer_get_cashout"></bet-record-result>
-            </q-card-section>
+       
+      
           </template>
           <q-card-section class="bet-item-separator"
             :class="{ 'bet-item-separator-last': (index == (record_data.records.length - 1)) }" :key="index"></q-card-section>
@@ -78,8 +49,8 @@
 import { onMounted, reactive } from "vue";
 
 import BetRecordItem from "./bet-record-item.vue";
-import BetBookItem from "./bet-book-item.vue";
-import BetRecordResult from "./bet-record-result.vue";
+// import BetBookItem from "./bet-book-item.vue";
+// import BetRecordResult from "./bet-record-result.vue";
 
 import { api_betting } from "src/api/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js"

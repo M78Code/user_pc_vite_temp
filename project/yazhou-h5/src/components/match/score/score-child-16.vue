@@ -11,7 +11,8 @@
     <template v-if="model_a.includes(detail_data.mmp) && detail_data.mo != 1">
       <span v-for="(item, key) of score_array" :key="key">
         <span>&nbsp;&nbsp;</span>
-        <span :class="score_array.length == key + 1 ? 'active-text': '' "><span style="letter-spacing: 0.01rem">{{item | score_format}}</span></span>
+        <!-- TODO:  | score_format 过滤后续修改 -->
+        <span :class="score_array.length == key + 1 ? 'active-text': '' "><span style="letter-spacing: 0.01rem">{{item}}</span></span>
       </span>
     </template>
     <!-- 水球点球比分展示 -->
@@ -19,12 +20,12 @@
       <!-- 常规4节比分 -->
       <span v-for="(item, key) of score_array" :key="key">
         <span>&ensp;</span>
-        <span>{{item | score_format}}</span>
+        <span>{{item}}</span>
         <span>&ensp;</span>
       </span>
       <span v-if="penaltyScore">
         <span>&ensp;</span>
-        <span>{{i18n_t('match_info.shoot_out')}}:&nbsp;<span class="active-text">{{penaltyScore | score_format}}</span></span>
+        <span>{{i18n_t('match_info.shoot_out')}}:&nbsp;<span class="active-text">{{penaltyScore}}</span></span>
       </span>
     </template>
   </div>

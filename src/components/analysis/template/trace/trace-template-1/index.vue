@@ -2,14 +2,14 @@
   <div>
     <div class="event-item  relative-position" v-for="(item, index) in event_data" :key="index">
       <div class="time">
-        <template v-if="match.csid == '1'">{{ format_time(item.secondsFromStart) }}</template>
+        <template v-if="match.csid == '1'">{{ formatTime(item.secondsFromStart) }}</template>
         <template v-else>{{ formatTime(item.createTime, 'MM\'ss\"') }}</template>
       </div>
       <div class="sign relative-position" :class="'team-' + item.team"></div>
       <div class="info">
         <!-- 足球 -->
         <template v-if="match.csid == '1'">
-          <img :src="`${$g_image_preffix}/image/yabo/svg/analysis-${item.icon}.svg`" alt="" class="sign-icon"
+          <img :src="`/image/yabo/svg/analysis-${item.icon}.svg`" alt="" class="sign-icon"
             v-if="item.icon" width="14" style="vertical-align: middle">
         </template>
         <!-- 篮球 -->
@@ -26,7 +26,7 @@
 
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
-useRegistPropsHelper(component_symbol, need_register_props)
+// useRegistPropsHelper(component_symbol, need_register_props)
 import { formatTime } from 'src/core/format/index.js'
 </script>
 

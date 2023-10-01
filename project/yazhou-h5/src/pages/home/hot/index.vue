@@ -21,11 +21,11 @@
               <!-- 精选的tab图标 -->
               <!-- <img v-if='tab.index == 0' :src="(`${ $g_image_preffix }/image/wwwassets/bw3/home/hot_jx_black${UserCtr.theme.includes('y0') ? '_y0' : ''}.svg`)" alt=""> -->
               <img v-if='tab.index == 0'
-                :src="(`${$g_image_preffix}/image/wwwassets/bw3/home/hot_jx_black2${UserCtr.theme.includes('y0') ? '_y0' : ''}.svg`)"
+                :src="(`/image/wwwassets/bw3/home/hot_jx_black2${UserCtr.theme.includes('y0') ? '_y0' : ''}.svg`)"
                 alt="">
               <!-- 电竞类的tab图标 -->
               <img v-else-if="[100, 101, 102, 103].includes(+tab.field1)"
-                :src="(`${$g_image_preffix}/image/wwwassets/bw3/home/hot_jx_esport_${tab.field1}.svg`)" alt="" />
+                :src="(`/image/wwwassets/bw3/home/hot_jx_esport_${tab.field1}.svg`)" alt="" />
               <!-- 体育类的图标 -->
               <!-- <img v-else :src="tab.field3 && get_file_path(tab.field3)" @error="league_icon_error" alt=""> -->
               <!-- <img v-else  src="/yazhou-h5/image/home/chinaBet.png" @error="league_icon_error" alt=""> -->

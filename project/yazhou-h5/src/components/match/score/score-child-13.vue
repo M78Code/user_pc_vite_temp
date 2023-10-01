@@ -8,11 +8,12 @@
   <div v-if="detail_data.ms != 0" class='score_child_13 mx-12 font-style menu-s'>
     <span v-for="(item, key) of score_array" :key="key">
       <span>&nbsp;&nbsp;</span>
-      <span :class="(score_array.length == key + 1 && detail_data.mo != 1) ? 'active-text': '' ">{{item | score_format}}</span>
+      <!-- TODO:  | score_format 过滤后续修改 -->
+      <span :class="(score_array.length == key + 1 && detail_data.mo != 1) ? 'active-text': '' ">{{item}}</span>
       <span>&nbsp;&nbsp;</span>
     </span>&nbsp;&nbsp;
     <!-- 总分 -->
-    <span>{{i18n_t('analysis_football_matches.total_all')}}:&nbsp;<span class="active-text">{{count_total(score_array) | score_format}}</span></span>
+    <span>{{i18n_t('analysis_football_matches.total_all')}}:&nbsp;<span class="active-text">{{count_total(score_array)}}</span></span>
   </div>
 </template>
 
