@@ -27,7 +27,7 @@ import virtual_dog from "/yazhou-pc/image/png/virtual_dog.png"; //赛狗
 import virtual_racing from "/yazhou-pc/image/png/virtual_racing.png"; //赛马
 import motorcycle from "/yazhou-pc/image/png/motorcycle.png"; // 虚拟摩托车
 import virtual_dirt_bike_details from "/yazhou-pc/image/png/virtual_dirt_bike_details.png"; // 虚拟泥地摩托车
-
+import GlobalAccessConfig from "src/core/access-config/access-config.js"
 //统计分析URL
 const signal_url = "https://s5.sir.swiftscore.com";
 
@@ -337,7 +337,7 @@ const show_wrap_total = (match_infoData) => {
  */
 const sr_click_handle = (match) => {
   let full_url = get_full_sr_url(match); // seid,match.srid
-  if (!store.getters.get_global_switch.statistics_switch)
+  if (!GlobalAccessConfig.get_statisticsSwitch())
     return window.vue.useMittEmit(
       window.vue.MITT_TYPES.EMIT_SHOW_TOAST_CMD,
       window.vue.i18n_t("msg.msg_09")

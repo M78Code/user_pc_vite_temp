@@ -502,16 +502,16 @@ body {
 
     /*  赛事类型 */
     .v-scroll-content .matc-type-card {
-      &::before {
-        content: '';
-        position: absolute;
-        height: 10px;
-        width: 100%;
-        left: 0;
-        bottom: 0;
-        background-color: var(--q-gb-bg-c-11);
-        z-index: 0;
-      }
+      // &::before {
+      //   content: '';
+      //   position: absolute;
+      //   height: 10px;
+      //   width: 100%;
+      //   left: 0;
+      //   bottom: 0;
+      //   background-color: var(--q-gb-bg-c-11);
+      //   z-index: 0;
+      // }
 
       &:nth-of-type(2) {
         .match-type {

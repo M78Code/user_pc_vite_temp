@@ -258,7 +258,6 @@ export const get_league_title_card_height = (template_id) => {
  */
 
 export const compute_style_template_by_matchinfo = (match, template_id, mid) => {
-	console.log('list', MatchListData.list_to_obj.mid_obj[mid+'_']);
 	if (template_id == 13) {
 		template_id = 1;
 	}
