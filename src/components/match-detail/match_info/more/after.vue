@@ -256,7 +256,7 @@
 import {MatchProcessFullVersionWapper} from "src/components/match-process/index.js";
 import BetCommonHelper from "src/core/bet/common-helper/index.js";
 import { IconWapper } from 'src/components/icon'
-
+import { nextTick } from "vue";
 export default {
   components: {
     "match-date": MatchProcessFullVersionWapper,
@@ -438,7 +438,7 @@ export default {
    */
     reload_data() {
       this.isRouterAlive = false;
-      nextTick(function () {
+      nextTick(()=> {
         this.isRouterAlive = true;
       });
     },

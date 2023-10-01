@@ -349,7 +349,7 @@ export default {
      */
     reload_data() {
       this.isRouterAlive = false;
-      nextTick(function () {
+      nextTick(()=> {
         this.isRouterAlive = true;
       });
     },
