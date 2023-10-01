@@ -90,10 +90,14 @@ export default class MatchDetailCtr {
  * @param {*} obj  玩法集对象 
  */
   category_tab_click(obj={}){
-    this.current_category_id= obj.id
+    let category_id = ''
+    // if ([SessionStorage.get('DETAIL_TAB_ID')].includes(obj.id)) {
+      // category_id = SessionStorage.get('DETAIL_TAB_ID')
+    // } else {
+      category_id = SessionStorage.get('DETAIL_TAB_ID') ? SessionStorage.get('DETAIL_TAB_ID') : obj.id
+    // }
+    this.current_category_id=  category_id
     this.current_category_plays =obj.plays
-    // 存储tab的id
-    SessionStorage.set('DETAIL_TAB_ID', obj.id)
   }
     /**
    * 计算 玩法集 数组  参照对象
