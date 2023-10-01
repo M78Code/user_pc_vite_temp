@@ -169,6 +169,7 @@ import common_before from "./common_before";
 import UserCtr from "src/core/user-config/user-ctr.js";;
 // import { MatchProcessFullVersionWapper as matchProcess } from "src/components/match-process/index.js"
 import matchProcess  from "src/components/match-process/match-process-template-1/index.vue"
+import { nextTick } from "vue";
 export default {
   mixins: [common_before],
   data() {
@@ -188,7 +189,7 @@ export default {
      */
     reload_data() {
       this.isRouterAlive = false;
-      nextTick(function () {
+      nextTick(()=> {
         this.isRouterAlive = true;
       });
     },

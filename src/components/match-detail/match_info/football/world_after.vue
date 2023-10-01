@@ -194,7 +194,7 @@
 import {MatchProcessFullVersionWapper} from "src/components/match-process/index.js";
 import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/index.js";
 import { IconWapper } from 'src/components/icon'
-
+import { nextTick } from "vue";
 export default {
   components: {
     "match-date": MatchProcessFullVersionWapper,
@@ -272,7 +272,7 @@ export default {
     */
     reload_data() {
       this.isRouterAlive = false;
-      nextTick(function () {
+      nextTick(()=> {
         this.isRouterAlive = true;
       });
     },
