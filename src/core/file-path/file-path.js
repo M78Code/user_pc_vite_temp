@@ -44,6 +44,7 @@ const get_file_path = (path, csid = 0) => {
   if (!path || path == 'undefined') {
     return '';
   }
+  return `https://image.bricblogy.com/${path}`;
   const { oss_file_content } = AllDomain
   // 如果是http开头 直接返回地址
   if (lodash.toString(path).indexOf('http') == 0) {

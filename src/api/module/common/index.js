@@ -6,8 +6,9 @@
 
 
 import {http} from "src/core/http/index.js";
+
 const { API_PREFIX = {}} = window.BUILDIN_CONFIG;
-const { API_PREFIX_USER:prefix,API_PREFIX_BAT:prefix_yewu13,API_PREFIX_JOB:prefix_job} = API_PREFIX;
+const { API_PREFIX_JOB: prefix,API_PREFIX_USER:prefix_, API_PREFIX_JOB:prefix_job} = API_PREFIX;
 
 // 全url   获取  一般用于 视频动画域名检测
 export const get_full_url = (url='') => {
@@ -150,7 +151,7 @@ export const get_matchDetail_getMatchDetailByTournamentId = (params, config, url
 // 赛事详情页面接口（christion）
 export const get_matchDetail_MatchInfo = (params, config, url = "/v1/m/matchDetail/getMatchDetail") => http.get(`${prefix_job}${url}`, params, config)
 // 赛果详情页面接口（christion）
-export const get_matchResultDetail_MatchInfo = (params, config, url = "/v1/m/matchDetail/getResultMatchDetailPB") => http.get(`${prefix}${url}`, params, config)
+export const get_matchResultDetail_MatchInfo = (params, config, url = "/v1/m/matchDetail/getResultMatchDetail") => http.get(`${prefix_job}${url}`, params, config)
 
 // 电竞赛事详情页面接口（start）
 export const get_DJ_matchDetail_MatchInfo = (params, config, url = "/v1/m/matchDetail/getESMatchDetail") => http.get(`${prefix}${url}`, params, config)

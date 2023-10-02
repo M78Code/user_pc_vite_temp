@@ -346,7 +346,7 @@ export default defineComponent({
     watch(
       () => get_flag_get_ol_list,
       () => {
-        max_count_ol = get_ol_list();
+        max_count_ol.value = get_ol_list();
       }
     );
     onMounted(() => {
@@ -438,6 +438,7 @@ export default defineComponent({
       i18n_t,
       get_bet_list,
       get_cur_odd,
+      max_count_ol,
       get_detail_data,
       // 收到C105推送赔率,生成一个浮点, 伪随机数在范围从0到小于1
       get_flag_get_ol_list,

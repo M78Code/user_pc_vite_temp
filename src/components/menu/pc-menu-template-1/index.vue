@@ -148,6 +148,7 @@ const first_change = ref(false);
 
 
 onMounted(() => {
+  console.log('进入了');
   handle_click_jinri_zaopan(2)
 })
 

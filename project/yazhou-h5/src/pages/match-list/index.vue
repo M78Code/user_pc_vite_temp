@@ -7,16 +7,16 @@
     <div class="match-list-container"
       ref="match_list_container" 
       @scroll="wrapper_scroll_handler" :class="{
-      zaopan: [4, 11, 28, 3000].includes(+MenuData.current_menu) && invok_source != 'home_hot_page_schedule',
-      guanjun: [100].includes(+MenuData.current_menu),
-      level_four_menu: MenuData.current_menu == 28 && [1001, 1002, 1004, 1011, 1010, 1009].includes(get_curr_sub_menu_type),
+      zaopan: [3, 11, 28, 3000].includes(+MenuData.menu_type) && invok_source != 'home_hot_page_schedule',
+      guanjun: [100].includes(+MenuData.menu_type),
+      level_four_menu: MenuData.menu_type == 28 && [1001, 1002, 1004, 1011, 1010, 1009].includes(get_curr_sub_menu_type),
       detail_match_list: ['detail_match_list', 'home_hot_page_schedule', ].includes(invok_source),
-      jingzu: MenuData.current_menu == 30,
-      jinri: MenuData.current_menu == 3,
-      esport: 3000 == MenuData.current_menu,
+      jingzu: MenuData.menu_type == 30,
+      jinri: MenuData.menu_type == 2,
+      esport: 3000 == MenuData.menu_type,
     }" >
       <!--缝隙 不通层级 遮罩 存在渲染偏差， 边界 双线 或者 侵蚀问题-->
-      <div class="gap" v-if="on_match && MenuData.current_menu != 3000" :class="{ zaopan: [4, 11, 28, 3000].includes(+MenuData.current_menu) }" />
+      <div class="gap" v-if="on_match && MenuData.menu_type != 3000" :class="{ zaopan: [4, 11, 28, 3000].includes(+MenuData.menu_type) }" />
       <!-- 跳转到其他场馆的banner图 和猜你喜欢-->
       <tiaozhuan-panel v-if="calc_show"></tiaozhuan-panel>
       <!-- 列表骨架屏 -->
@@ -25,7 +25,7 @@
       <match-list
         ref="match_list" 
         :matchCtr="matchCtr" 
-        :menu_type="MenuData.current_menu"
+        :menu_type="MenuData.menu_type"
         :data_get_empty="match_is_empty" 
         :source="invok_source ? invok_source : 'match_main'"
         :window_scrolly="window_scrolly" 
@@ -45,70 +45,6 @@
     </div>
   </div>
 </template>
-<script>
-import { defineComponent } from "vue";
-import { i18n_t } from "src/core/index.js";
-import store from "src/store-redux/index.js";
-import MatchListCard from "src/core/match-list-h5/match-card/match-list-card-class";
-
-export default defineComponent({
-  beforeRouteEnter(to, from, next) {
-    next((vm) => {
-      // 由首页进入，就不在此处初始化
-      if (from.name !== "home") {
-        // vm.event_init();
-      }
-      let match_total = vm.matchCtr && vm.matchCtr.list.length;
-
-      if ( match_total && ["match_result", "virtual_sports"].includes(from.name) ) {
-        // 详情， 赛果，虚拟体育返回到列表也的时候不更新数据，保持上次的数据r
-        if (["virtual_sports"].includes(from.name)) {
-          // vm.set_current_esport_csid(vm.prev_export_csid);
-
-          //新手版或专业版在其他页面被改变,需要重新计算列表赛事dom 赛事列表是专业版，跳到虚拟体育被手动改新手版rn 重新计算dom r
-          if (vm.standard_edition_type != vm.newer_standard_edition.value) {
-            MatchListCard.run_process_when_need_recompute_container_list_when_first_load_list();
-            vm.standard_edition_type = vm.newer_standard_edition.value;
-          }
-        }
-        //赛果精选赛事列表与赛事列表是同一个组件,所以滚动逻辑有影响
-        if (["category", "match_result"].includes(from.name)) {
-          MatchListCard.run_process_when_need_recompute_container_list_when_first_load_list();
-        }
-        // vm.set_global_is_back_match_list(Math.random())
-        return;
-      }
-      //详情页更改过赛事收藏 列表需重置到0
-      // vm.set_details_changing_favorite(0);
-      //当前列表也重置到联赛折叠状态r
-      store.dispatch({
-        type: "matchReducer/set_collapse_map_match",
-        payload: {},
-      });
-
-      //次要玩法折叠状态置空
-      store.dispatch({
-        type: "matchReducer/set_secondary_unfold_map",
-        payload: {},
-      });
-      let timer_super7 = null;
-      clearTimeout(vm.timer_super7);
-      timer_super7 = setTimeout(() => {
-        next({ query: {} }); // 去掉其他传过来的当前路由参数 还在当前页刷新一下r
-        timer_super7 = null;
-        clearTimeout(timer_super7);
-      }, 200);
-    });
-  },
-  beforeRouteLeave(to, from, next) {
-    if (!["category", "match_result", "virtual_sports"].includes(to.name)) {
-      // destroy_handle();
-      //TODO:
-    }
-    next();
-  },
-});
-</script>
 <script setup>
 import { computed, onBeforeMount, onUnmounted, onMounted, watch, onDeactivated, onActivated, ref, nextTick } from "vue";
 import { useRoute } from "vue-router";
@@ -219,11 +155,6 @@ onMounted(() => {
   event_init();
 });
 
-// 监听元数据加载完成
-watch(() => BaseData.base_data_version.value, () => {
-  MatchMeta.set_origin_match_data()
-})
-
 // 详情若无热门推荐赛事，则隐藏相应内容
 watch(() => match_is_empty.value, () => {
   if (props.invok_source === "detail_match_list" && is_empty) {
@@ -232,8 +163,8 @@ watch(() => match_is_empty.value, () => {
 });
 
 // 早盘时，并且是 足球时，执行下边操作
-watch(() => MenuData.current_menu, () => {
-  if (MenuData.current_menu == 4 && val == "40303") {
+watch(() => MenuData.menu_type, () => {
+  if (MenuData.menu_type == 4 && val == "40303") {
     clearTimeout(subscription_timer1.value);
     subscription_timer1.value = setTimeout(() => {
       // 订阅新赛事列表
@@ -273,7 +204,7 @@ watch(() => props.wrapper_scroll_top, () => {
 // })
 
 // 菜单类型变化时，如果是收藏则以动画方式显示或隐藏页面
-watch(() => MenuData.current_menu, () => {
+watch(() => MenuData.menu_type, () => {
   // 切换一级菜单时记录最新时间戳
   enter_time.value = Date.now();
   // 切换一级菜单时 goto_detail_matchid置为空
@@ -297,7 +228,7 @@ watch(() => MenuData.footer_sub_menu_id, () => {
 // 新手版标准版切换
 watch(() => newer_standard_edition.value, () => {
   //虚拟体育
-  if (MenuData.current_menu == 900) {
+  if (MenuData.menu_type == 900) {
     return;
   }
   // 如果是简版
@@ -406,7 +337,7 @@ watch( () => matchCtr.value, (match_list) => {
 
 const calc_show = computed(() => {
   return (
-    MenuData.current_menu == 1 &&
+    MenuData.menu_type == 1 &&
     !show_favorite_list &&
     !match_is_empty.value &&
     route.name != "home" &&
@@ -459,6 +390,14 @@ const event_init = () => {
 };
 
 /**
+ * @description 初始化赛事加载
+ */
+const init_match_callback = () => {
+  if (route.name !== 'matchList') return
+  MatchMeta.set_origin_match_data()
+}
+
+/**
  * @Description 次要玩法展开加载数据
  * @param {Object} match 赛事
  * @param {String} key 指定的hps
@@ -478,7 +417,7 @@ const match_detail_m_list_init = () => {
   // if(['detail_match_list'].includes(props.invok_source)){
   //   // 列表页全局获取 请求参数
   //   MatchPage.get_match_data_list();
-  // } else if([1,3,30,100].includes(MenuData.current_menu)){
+  // } else if([1,3,30,100].includes(MenuData.menu_type)){
   //   MatchPage.get_match_data_list()
   // }
   // MatchPage.get_match_data_list();
@@ -492,6 +431,7 @@ const upd_match_is_empty = (obj) => {
     match_is_empty.value = true;
   }
 }
+
 const destroy_handle = () => {
   // websocket_store.sendSocketCloseCmd();
   MatchPage.del();
@@ -531,15 +471,14 @@ const on_listeners = () => {
   emitters.value = {
     emitter_1: useMittOn(MITT_TYPES.EMIT_MENU_CHANGE_FOOTER_CMD, () => MatchPage.footer_event).off,
     emitter_2: useMittOn(MITT_TYPES.EMIT_MAIN_MENU_CHANGE, () => MatchPage.main_menu_change()).off,
-    emitter_3: useMittOn(MITT_TYPES.EMIT_BEFORE_LOAD_THIRD_MENU_HANDLE, () => MatchPage.before_load_third_menu_handle).off,
     emitter_4: useMittOn(MITT_TYPES.EMIT_SPECIAL_HPS_LOADED, special_hps_load_handle).off,
-    emitter_5: useMittOn(MITT_TYPES.EMIT_COUNTING_DOWN_START_ENDED, () => MatchPage.counting_down_start_ended_on).off,
-    emitter_6: useMittOn(MITT_TYPES.EMIT_BET_ODD_SYNCHRONIZE, () => MatchPage.bet_odd_synchronize_handle).off,
-    emitter_7: useMittOn(MITT_TYPES.EMIT_MATCH_LIST_SCROLLING, () => MatchListCard.match_list_scroll_handle).off,
-    emitter_8: useMittOn(MITT_TYPES.EMIT_SECONDARY_PLAY_UNFOLD_CHANGE, MatchListCard.secondary_play_unfold_change_handle).off,
-    emitter_9: useMittOn(MITT_TYPES.EMIT_TAB_HOT_CHANGING, () => MatchListCard.tab_changing_handle).off,
+    emitter_5: useMittOn(MITT_TYPES.EMIT_COUNTING_DOWN_START_ENDED, () => MatchPage.counting_down_start_ended_on()).off,
+    emitter_6: useMittOn(MITT_TYPES.EMIT_BET_ODD_SYNCHRONIZE, () => MatchPage.bet_odd_synchronize_handle()).off,
+    emitter_7: useMittOn(MITT_TYPES.EMIT_MATCH_LIST_SCROLLING, () => MatchListCard.match_list_scroll_handle()).off,
+    emitter_8: useMittOn(MITT_TYPES.EMIT_SECONDARY_PLAY_UNFOLD_CHANGE, MatchListCard.secondary_play_unfold_change_handle()).off,
+    emitter_9: useMittOn(MITT_TYPES.EMIT_TAB_HOT_CHANGING, () => MatchListCard.tab_changing_handle()).off,
     emitter_10: useMittOn(MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, () => upd_match_is_empty).off,
-
+    emitter_11: useMittOn(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA, init_match_callback).off,
   };
 };
 // 移除相关事件监听

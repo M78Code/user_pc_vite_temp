@@ -233,7 +233,6 @@ const result_api_handle = (result, params) => {
  * @returns Function 接口调用方法 api_handle  要调用的 接口
  */
 const get_matchs_api_func = () => {
-
   // 接口请求前置处理，接口参数处理
   let params = get_match_list_params_all();
 
@@ -282,10 +281,10 @@ const get_matchs_api_func = () => {
         result.api_axios_flg = 'post_match_full_list';
       }
     }
-    //如果是 精选赛事
-    else if (lodash.get(MenuData.hot_tab_menu, 'index') == 0) {
-      result.api_handle = get_match_home_page_handpick;
-    }
+    // 如果是 精选赛事 已拆分到热门文件内
+    // else if (lodash.get(MenuData.hot_tab_menu, 'index') == 0) {
+    //   result.api_handle = get_match_home_page_handpick;
+    // }
   }
   //滚球今日早盘串关等获取赛事列表
   else {
@@ -310,6 +309,7 @@ const get_matchs_api_func = () => {
 
 export default {
   last_gcuuid,
+  get_base_params,
   get_matchs_api_func,
   get_match_list_params_all
 }

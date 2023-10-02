@@ -84,6 +84,17 @@ class MenuData {
     this.update()
   }
   /**
+   * @description 设置热门tab
+   * @param {*} 热门下的菜单信息 
+   */
+  /**
+   * @description 设置热门tab
+   * @param {*} 热门下的菜单信息 
+   */
+  set_hot_tab_menu (menu) {
+    this.hot_tab_menu = menu
+  }
+  /**
    * 设置值 并且缓存
    * obj [Object] 需要设置的缓存  key要和本类系统哦
    * is_cache是否缓存
@@ -651,7 +662,6 @@ class MenuData {
     const euid = this.get_euid(item.mi)
     if ([3, 6, 7].includes(menu_type) && euid) {
       // 三级菜单先显示骨架屏，接口回来后，再隐藏骨架屏
-      useMittEmit(MITT_TYPES.EMIT_BEFORE_LOAD_THIRD_MENU_HANDLE);
       let api_func = null,
         params = { euid: euid };
       if (7 == menu_type) {

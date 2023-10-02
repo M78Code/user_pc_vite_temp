@@ -55,6 +55,7 @@ import SResult from "project_path/src/components/skeleton/match-result.vue"
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import { useRouter, useRoute } from "vue-router";
 import lodash from "lodash";
+import UserCtr from "src/core/user-config/user-ctr.js";
 import { computed, onMounted, onUnmounted, watch, ref } from "vue";
 
 let route = useRoute()
@@ -202,18 +203,20 @@ let route = useRoute()
       let params = {
         mid: mid,
         type: 1,
-        cuid: get_uid, // userId或者uuid
+        cuid: UserCtr.uid, // userId或者uuid
         isESport: (get_menu_type == 28 && [3001,3002,3003,3004].includes(+get_curr_sub_menu_type)) ? 1 : null
       }
       api_common.get_matchResultDetail_MatchInfo( params ).then(({ data,code }) => {
+        
         // 当状态码为0400500, data:null,data:{} 去到列表中的早盘
         if( code == '0400500' || !data || Object.keys(data).length===0 ){
           router.push({name: 'matchList'})
-        }else if(code === 200){
+        }else if(code == 200){
           skeleton.header = true
           loading.value = true
           if(!data) return false
           result_detail_data.value = data;
+          console.error(data, code);
           // 61-比赛延迟,80-比赛中断,90-比赛放弃
           if(!(['90','80','61'].includes(data.mmp+''))){
             data.mmp = '999'
@@ -303,7 +306,7 @@ let route = useRoute()
     useMittOn(MITT_TYPES.EMIT_ANA_SHOW,ana_show).off
     useMittOn(MITT_TYPES.EMIT_RESULT_LIST_LOADING).off
     useMittOn(MITT_TYPES.EMIT_CHANGE_TAB).off
-    set_event_list([])
+    // set_event_list([])
   }) 
 </script>
 
@@ -326,5 +329,8 @@ let route = useRoute()
 
 .baseball-play-pad {
   padding-top: 1.8rem;
+}
+:deep(.skeleton-wrap) {
+  z-index: 10 !important;
 }
 </style>

@@ -40,7 +40,7 @@
 // mixins: [match_item_mixin],
 import lodash from 'lodash';
 import { t } from "src/core/index.js";
-;
+
 </script>
 
 <style lang="scss" scoped>

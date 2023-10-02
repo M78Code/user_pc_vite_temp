@@ -23,6 +23,8 @@ import lodash from "lodash";
 // import msc from "project_path/src/mixins/common/msc.js";  // 国际化比赛阶段比分转换工具
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { format_total_score } from "src/core/format/index.js"
+import { i18n_t } from "src/boot/i18n.js"
+
 export default defineComponent({
   // #TODO vuex
   // mixins: [msc],
@@ -62,10 +64,10 @@ export default defineComponent({
       }
 
       // 赛事中断 单独判断
-      if (ms === 10) {
-        return t('ms.10')
+      if (ms == 10) {
+        return i18n_t('ms.10')
       } else if (detail_data_mmp_map[mmp]) {
-        return t(detail_data_mmp_map[mmp])
+        return i18n_t(detail_data_mmp_map[mmp])
       } else {
         return ''
       }

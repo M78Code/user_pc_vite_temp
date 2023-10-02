@@ -54,16 +54,17 @@ import {
   defineAsyncComponent,
   nextTick,
 } from "vue";
-import { useMittOn, MITT_TYPES, i18n_t, UserCtr, ServerTime, GlobalAccessConfig } from "src/core/";
+import { useMittOn, MITT_TYPES, i18n_t, UserCtr } from "src/core/";
 import { FooterWapper } from "src/components/footer/index.js";
 import { MenuWapper } from "src/components/menu";
 import activityIcon from "project_path/src/components/common/activity-icon.vue"; // 设置
 import setMenu from "project_path/src/components/common/set-menu.vue"; // 设置
 import selectDia from "../pages/match-list/components/select-dia.vue"
 import { useRoute } from "vue-router";
-import BaseData from "src/core/base-data/base-data.js";
 
 import store from "src/store-redux/index.js";
+import { api_common } from "src/api/index.js";
+import PageSourceData from "src/core/page-source/page-source.js";
 // 活动弹出框
 const activityLayer = defineAsyncComponent(() => import("../components/common/activity-layer.vue"))
 const settleDialog = defineAsyncComponent(() =>
@@ -172,12 +173,26 @@ const change_settle_status = (val) => {
     }, 300);
   }
 };
+/**
+ * @description 获取服务器当前时间
+ */
+const init_local_server_time = () => {
+  api_common.get_time_server().then(res => {
+    let server_time = res.data;
+    let local_time = new Date().getTime();
+    PageSourceData.set_init_time({
+      server_time,
+      local_time,
+    });
+  });
+}
 onMounted(() => {
   // 阻止双击放大
   document.addEventListener("touchstart", touchstart_event_fun, false);
   document.addEventListener("touchend", touchend_event_fun, false);
   // 阻止双指放大
   document.addEventListener("gesturestart", gesturestart_event_fun);
+  init_local_server_time()
   // 开启注单历史弹窗
   useMittOn(MITT_TYPES.EMIT_CHANGE_RECORD_SHOW, (val) => {
     // record_show.value = val
@@ -229,12 +244,7 @@ onUnmounted(() => {
   mitt_list.map(i => i())
 });
 
-//初始化菜单
-BaseData.init()
-//服务器时间
-ServerTime.get_server_time()
-// 客户端-获取紧急开关配置
-GlobalAccessConfig.init()
+
 
 
 if (UserCtr.get_user_token()) {

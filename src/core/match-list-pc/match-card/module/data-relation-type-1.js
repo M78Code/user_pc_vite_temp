@@ -13,7 +13,6 @@
      * 处理  13
      */
     import { MatchDataWarehouse_PC_List_Common as MatchListData } from 'src/core/index.js'
-    import match_list_card from "src/core/match-list-pc/match-card/match-list-card-class.js";
     import MatchListCardData from "./match-list-card-data-class.js";
     import lodash from "lodash";
 
@@ -30,7 +29,6 @@
     import MenuData from "src/core/menu-pc/menu-data-class.js";
     import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
     import { compute_sport_id  } from 'src/core/constant/index.js'
-import { nextTick } from 'vue';
 
   /**
    * @Description 更新所有未折叠 但是赛事没数据的 赛事
@@ -188,7 +186,6 @@ import { nextTick } from 'vue';
           // 可能未来要加上他自己下面的所有赛事的内容高度
         }
         temp_card_obj = all_card_obj[card_key]
-        console.log('1111');
         if(!is_ws_call){
           // 非ws调用 设置折叠数据
           Object.assign(temp_card_obj,fold_template)
@@ -236,7 +233,6 @@ import { nextTick } from 'vue';
           Object.assign(all_card_obj[card_key],fold_template)
           all_card_obj[card_key].is_league_fold = is_league_fold
           all_card_obj[card_key].is_show_card = !is_league_fold
-
           // 设置赛事数据加载状态
           all_card_obj[card_key].load_data_status = is_league_fold ?'loading' : 'loaded'
         }else{
@@ -252,16 +248,16 @@ import { nextTick } from 'vue';
     })
     // MatchListCardData.set_all_card_obj(all_card_obj)
     // 合并所有卡片样式对象
-    lodash.merge(MatchListCardData.all_card_obj,   all_card_obj) 
-    console.log(MatchListCardData.all_card_obj);
+    lodash.merge(MatchListCardData.all_card_obj, all_card_obj) 
     // 已开赛 到卡片key的 映射对象
+    
     MatchListCardData.play_to_card_key_arr = play_to_card_key_arr
     // 未开赛 到卡片key的 映射对象
     MatchListCardData.no_start_to_card_key_arr = no_start_to_card_key_arr
     // 所有卡片列表
     MatchListCardData.match_list_card_key_arr =  match_list_card_key_arr 
     MatchListCardData.set_list_version()
-    // 遍历所有联赛容器卡片
+    // // 遍历所有联赛容器卡片
     all_league_container_keys_arr.forEach( card_key => {
       // 设置联赛容器卡片
       let league_container_card_obj = MatchListCardData.all_card_obj[card_key]
@@ -273,6 +269,7 @@ import { nextTick } from 'vue';
         Object.assign(league_title_card_obj,fold_template)
         league_container_card_obj.load_data_status = 'loading'
       }
+      
       if(league_container_card_obj.is_show_card){
         // 卡片显示  还原卡片总高度
         league_container_card_obj.card_total_height = league_container_card_obj.card_total_height_back
@@ -284,7 +281,7 @@ import { nextTick } from 'vue';
       if(league_title_card_obj.is_league_fold){
         // 联赛折叠 设置高度为折叠的高度
         league_title_card_obj.card_total_height_back = league_title_card_template.league_fold_height
-        league_title_card_obj.mid = 0
+        // league_title_card_obj.mid = 0
       }else{
         // 联赛未折叠 设置高度为未折叠的高度
         league_title_card_obj.card_total_height_back = league_nofold_height

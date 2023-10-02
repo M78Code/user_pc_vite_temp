@@ -24,6 +24,7 @@ export const category_info = (category_arr=[]) => {
   const route = useRoute();
   const store_state = store.getState()
   const category = ref(null)
+  const detail_match_list = ref(null)
   let component_data = reactive({
     // 测试数据
     match_info_list: [],
@@ -171,9 +172,10 @@ export const category_info = (category_arr=[]) => {
       let val = [1, 2].includes(+get_detail_data.value.csid) ? 1.24 : 0.84;
 
       // 横屏 或 赛事盘口全部关闭 且无推荐赛事 时 不设置最小高度
+      
       if (
         get_is_hengping ||
-        (show_recommend.value && !$refs.detail_match_list)
+        (show_recommend.value && !detail_match_list.value)
       ) {
         category.value.style.minHeight = "unset";
       } else {
