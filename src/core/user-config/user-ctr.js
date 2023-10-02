@@ -104,18 +104,18 @@ class UserCtr {
     }
     this.callbackUrl = ''
     //电竞图片地址 
-    this.e_sports_img_domain=  '' 
- 
+    this.e_sports_img_domain = ''
+
 
     // 常规体育的 图片地址 
-    this.common_img_domain =  '' 
-   
+    this.common_img_domain = ''
+
   }
 
 
 
 
- 
+
 
 
 
@@ -1013,11 +1013,20 @@ class UserCtr {
     infoUpload.upload_data(lodash.get(res, "data.data", {}));
   }
   /**
+   *  常规体育的 图片地址 
+  */
+  set_common_img_domain(url) {
+    //设置一次
+
+    this.common_img_domain = url
+
+  }
+  /**
      * @description: 设置电竞图片资源域名
      */
   async set_e_sports_domain_img() {
-       //电竞图片地址 
-       this.e_sports_img_domain= LocalStorage.get('e_sports_domain_img', '');
+    //电竞图片地址 
+    this.e_sports_img_domain = LocalStorage.get('e_sports_domain_img', '');
     try {
       var send_gcuuid = uid();
       const res = await api_common.get_games_imgDomain({
@@ -1034,7 +1043,7 @@ class UserCtr {
         // 持久化电竞图片域名
         LocalStorage.set('e_sports_domain_img', temp);
         // 设置全局电竞图片域名信息
-        this.e_sports_img_domain= temp;
+        this.e_sports_img_domain = temp;
       }
     } catch (error) {
       console.error(error);
@@ -1298,7 +1307,7 @@ class UserCtr {
     return this.resources_obj
   }
   /**
-   * TODO 暂时放这里 后续可以挪动
+   * TODO 暂时放这里 后续可以挪动 mainLayout里
    * 获取资源配置(商户后台配置的图片、跳转链接)  延迟触发以优化首屏加载速度
    */
   async fetch_resourcesimg() {
@@ -1329,6 +1338,80 @@ class UserCtr {
 
       } catch (e) {
         console.error(e)
+      }
+    }, 1000)
+  }
+  /** TODO  如果不合适 后续可挪移到 mainLayout里
+    * @description 获取运营位活动相关的配置图片, 延迟触发以优化首屏加载速度
+    * @return {Undefined} undefined
+    */
+  async fetch_actimg() {
+    lodash.delay(async () => {
+      try {
+        let param = {
+          token: this.get_user_token()
+        }
+        this.send_gcuuid4 = uid();
+        param.gcuuid = this.send_gcuuid4;
+        const res = await api_home.get_bannerList(param)
+        if (this.send_gcuuid4 != res.gcuuid) return;
+        if (res && lodash.get(res, 'code') == 200 && lodash.get(res, 'data')) {
+          let arr = lodash.cloneDeep(lodash.get(res, 'data')), arr1 = [], arr2 = [], obj3 = '', obj4 = '';
+          let showActivity = false;
+          arr.forEach(item => {
+            if (item.tType == 3 && !obj3) {
+              obj3 = item
+            } else if (item.tType == 4 && !obj4) {
+              obj4 = item
+              // 去掉一个自然日展示一次的判断，有值就展示
+              if (SessionStorage.get('showActivityTime')) {
+                // 判断日期如果不在同一天就展示弹窗
+                if (new Date(+SessionStorage.get('showActivityTime')).getDate() != new Date().getDate()) {
+                  showActivity = true
+                }
+              } else {
+                showActivity = true
+                SessionStorage.set('showActivityTime', new Date().getTime())
+              }
+            } else if (item.tType == 1) {
+              arr1.push(item)
+              LocalStorage.set('home_banner_default', get_file_path(item.imgUrl))
+            } else if (item.tType == 2) {
+              arr2.push(item)
+            }
+          })
+          if (showActivity && obj4) {
+            //首页活动弹框 
+            useMittEmit(MITT_TYPES.EMIT_INDEX_ACTIVITY_STATUS, obj4.imgUrl)
+          }
+          // 左下角浮层图标
+          // this.float_btnobj = obj3
+          // if (obj4) {
+          //     // 首页中间弹窗
+          //     this.activity_layerimg = obj4.imgUrl
+          // }
+          // 类型：1-首页banner  2-列表banner  3-左下角浮层图标   4-首页中间弹窗
+          let obj = {
+            "type1": arr1,
+            "type2": arr2,
+            "type3": obj3,
+            "type4": obj4,
+          }
+          //TODO
+          // get_banner_obj.value = obj
+          // 首页banner没有数据，则展示默认banner
+          if (!arr1.length) {
+            useMittEmit(MITT_TYPES.EMIT_SHOW_DEFAULT_BANNER_EVENT, true)
+          }
+        }
+      } catch (error) {
+        // 接口错误 则首页轮播展示默认banner
+        useMittEmit(MITT_TYPES.EMIT_SHOW_DEFAULT_BANNER_EVENT)
+      } finally {
+        // // 热门、视频直播页需关闭语言切换状态
+        // if (this.get_home_tab_item.index !== 0) {
+        //     this.set_is_language_changing(false)
+        // }
       }
     }, 1000)
   }

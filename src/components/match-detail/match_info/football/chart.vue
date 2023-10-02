@@ -7,10 +7,10 @@
   <!-- 比分图表 -->
   <div class="wrap-score">
     <div class="char-round">
-      <div class="wrap-chart" :class="{'num_zero': _.get(match_info, 'msc.S104.home') == 0 && _.get(match_info, 'msc.S104.away') == 0}">
+      <div class="wrap-chart" :class="{'num_zero': lodash.get(match_info, 'msc.S104.home') == 0 && lodash.get(match_info, 'msc.S104.away') == 0}">
         <div class="chart-round">
           <!-- S104 进攻次数 -->
-          <span class="text-orange">{{_.get(match_info, 'msc.S104.home')}}</span>
+          <span class="text-orange">{{lodash.get(match_info, 'msc.S104.home')}}</span>
           <q-knob
             readonly
             v-model="match_info.msc.S104.percentage"
@@ -19,17 +19,17 @@
             track-color="orange"
             :class="{'knob': get_right_zoom, 'knob2': !get_right_zoom}"
           />
-          <span class="text-blue">{{_.get(match_info, 'msc.S104.away')}}</span>
+          <span class="text-blue">{{lodash.get(match_info, 'msc.S104.away')}}</span>
         </div>
         <div class="text-c">
           {{ $t('common.assault')}}
           <!-- 进攻 -->
         </div>
       </div>
-      <div class="wrap-chart" :class="{'num_zero': _.get(match_info, 'msc.S8.home') == 0 && _.get(match_info, 'msc.S8.away') == 0}">
+      <div class="wrap-chart" :class="{'num_zero': lodash.get(match_info, 'msc.S8.home') == 0 && lodash.get(match_info, 'msc.S8.away') == 0}">
         <div class="chart-round">
           <!-- S8 危险进攻次数 -->
-          <span class="text-orange">{{_.get(match_info, 'msc.S8.home')}}</span>
+          <span class="text-orange">{{lodash.get(match_info, 'msc.S8.home')}}</span>
           <q-knob
             readonly
             v-model="match_info.msc.S8.percentage"
@@ -38,17 +38,17 @@
             track-color="orange"
             :class="{'knob': get_right_zoom, 'knob2': !get_right_zoom}"
           />
-          <span class="text-blue">{{_.get(match_info, 'msc.S8.away')}}</span>
+          <span class="text-blue">{{lodash.get(match_info, 'msc.S8.away')}}</span>
         </div>
         <div class="text-c">
           {{ $t('common.dangerous_assault')}}
           <!-- 危险进攻 -->
         </div>
       </div>
-      <div class="wrap-chart" :class="{'num_zero': _.get(match_info, 'msc.S105.home') == 0 && _.get(match_info, 'msc.S105.away') == 0}">
+      <div class="wrap-chart" :class="{'num_zero': lodash.get(match_info, 'msc.S105.home') == 0 && lodash.get(match_info, 'msc.S105.away') == 0}">
         <div class="chart-round">
           <!-- S105 球权 -->
-          <span class="text-orange">{{_.get(match_info, 'msc.S105.home')}}</span>
+          <span class="text-orange">{{lodash.get(match_info, 'msc.S105.home')}}</span>
           <q-knob
             readonly
             v-model="match_info.msc.S105.percentage"
@@ -57,7 +57,7 @@
             track-color="orange"
             :class="{'knob': get_right_zoom, 'knob2': !get_right_zoom}"
           />
-          <span class="text-blue">{{_.get(match_info, 'msc.S105.away')}}</span>
+          <span class="text-blue">{{lodash.get(match_info, 'msc.S105.away')}}</span>
         </div>
         <div class="text-c">
           {{ $t('common.possession_ball')}}
@@ -67,38 +67,38 @@
     </div>
     <div class="wrap-chart">
       <div class="goal">
-        <div class="on_goal" :class="{'line_num_zero': _.get(match_info, 'msc.S18.home') == 0 && _.get(match_info, 'msc.S18.away') == 0}">
+        <div class="on_goal" :class="{'line_num_zero': lodash.get(match_info, 'msc.S18.home') == 0 && lodash.get(match_info, 'msc.S18.away') == 0}">
           <div class="text-c">
             {{ $t('common.shots_on_goal')}}
             <!-- 射正球门 -->
           </div>
           <div class="chart-bar">
             <!-- S18 射正次数比分 -->
-            <span class="text-orange">{{_.get(match_info, 'msc.S18.home')}}</span>
+            <span class="text-orange">{{lodash.get(match_info, 'msc.S18.home')}}</span>
             <div class="bar-progress relative-position">
               <div
                 class="progress-content"
-                :style="{'width': `${_.get(match_info, 'msc.S18.percentage')}%`}"
+                :style="{'width': `${lodash.get(match_info, 'msc.S18.percentage')}%`}"
               ></div>
             </div>
-            <span class="text-blue">{{_.get(match_info, 'msc.S18.away')}}</span>
+            <span class="text-blue">{{lodash.get(match_info, 'msc.S18.away')}}</span>
           </div>
         </div>
-        <div class="wide_goal" :class="{'line_num_zero': _.get(match_info, 'msc.S17.home') == 0 && _.get(match_info, 'msc.S17.away') == 0}">
+        <div class="wide_goal" :class="{'line_num_zero': lodash.get(match_info, 'msc.S17.home') == 0 && lodash.get(match_info, 'msc.S17.away') == 0}">
           <div class="text-c">
             {{ $t('common.shot_wide_goal')}}
             <!-- 射偏球门 -->
           </div>
           <div class="chart-bar">
             <!-- S17 射偏次数比分 -->
-            <span class="text-orange">{{_.get(match_info, 'msc.S17.home')}}</span>
+            <span class="text-orange">{{lodash.get(match_info, 'msc.S17.home')}}</span>
             <div class="bar-progress relative-position">
               <div
                 class="progress-content"
-                :style="{'width': `${_.get(match_info, 'msc.S17.percentage')}%`}"
+                :style="{'width': `${lodash.get(match_info, 'msc.S17.percentage')}%`}"
               ></div>
             </div>
-            <span class="text-blue">{{_.get(match_info, 'msc.S17.away')}}</span>
+            <span class="text-blue">{{lodash.get(match_info, 'msc.S17.away')}}</span>
           </div>
         </div>
       </div>
@@ -130,15 +130,15 @@ export default {
         // 射偏 射正 进攻 危险进攻 球权
         let arr = ["S17", "S18", "S104", "S8", "S105"];
         arr.map((item) => {
-          if (!_.get(res.msc, `${[item]}`)) {
+          if (!lodash.get(res.msc, `${[item]}`)) {
             res.msc[item] = default_score;
           }
         });
 
         let msc = res.msc;
         for (var k in msc) {
-          let _home = _.get(res.msc, `${[k]}.home`);
-          let _away = _.get(res.msc, `${[k]}.away`);
+          let _home = lodash.get(res.msc, `${[k]}.home`);
+          let _away = lodash.get(res.msc, `${[k]}.away`);
           if (["S17", "S18"].includes(k)) {
             //射正球门、射骗球门
             if (_home == "0" && _away == "0") {

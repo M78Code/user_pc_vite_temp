@@ -23,6 +23,20 @@
       {{ $t('bet.bet_cancel') }}
     </div>
 
+    <div class="bet-footer-check">
+      <span class="check-box" >
+        <span class="check-wrap relative-position" :class="{ 'active': BetData.is_bet_merge }" />
+        <span>{{$t('bet.bet_auto_msg_1')}}</span>
+      </span>
+    </div>
+
+    <div>
+      <span class="check-box" >
+        <span class="check-wrap relative-position" :class="{ 'active': BetData.is_bet_merge }" />
+        <span>{{ $t('bet.common_amount') }}</span>
+      </span>
+    </div>
+
 
     <div style="display:none">{{ BetViewDataClass.bet_view_version }}</div>
 
@@ -36,7 +50,7 @@ import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import BetData from "src/core/bet/class/bet-view-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import { submit_handle } from "src/core/bet/class/bet-box-submit.js"
-import { MenuData } from "src/core/index.js";
+import { LayOutMain_pc } from "src/core/index.js";
 
 //是否失效
 const lock_btn = ref(false)
@@ -54,14 +68,19 @@ const set_lock_btn = value => {
 }
 // 取消投注 返回菜单
 const cancel_handle = () => {
-  MenuData.set_layout_left_show('menu')
+  LayOutMain_pc.set_layout_left_show('menu')
 }
 
 </script>
 
 <style scoped lang="scss">
 .bet-menu-wrap {
-  padding: 10px 10px 0;
+  padding: 10px 10px 20px;
+  background: var(--q-gb-bg-c-11);
+  border-right: 1px solid var(--q-gb-bd-c-6);
+  .bet-footer-check{
+    margin-top: 20px;
+  }
 
   .bet-submit {
     height: 40px;
@@ -94,4 +113,47 @@ const cancel_handle = () => {
     font-size: 12px;
   }
 }
+.check-box {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  padding-left: 5px;
+  padding-right: 5px;
+  cursor: pointer;
+
+  .check-wrap {
+    padding: 0;
+    margin-right: 5px;
+  }
+}
+/** 选择框样式 -S*/
+.check-wrap {
+  width: 14px;
+  min-width: 14px;
+  height: 14px;
+  border-radius: 2px;
+  border: 1px solid var(--q-gb-bd-c-7);
+  margin-right: 10px;
+  position: relative;
+
+  &.active {
+    border: none;
+    background: var(--q-gb-bg-c-16);
+
+    &::before {
+      position: absolute;
+      content: "";
+      left: 4px;
+      width: 6px;
+      height: 4px;
+      top: 4px;
+      border-top: 2px solid transparent;
+      border-right: 2px solid transparent;
+      transform: rotate(135deg);
+      border-color: var(--q-gb-bd-c-13);
+    }
+  }
+}
+
+/** 选择框样式 -E*/
 </style>

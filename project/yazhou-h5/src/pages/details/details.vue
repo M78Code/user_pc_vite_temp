@@ -208,6 +208,7 @@ export default defineComponent({
       matchid,
       curr_active_tab,
       icon_replay,
+      matchDetailCtr,
       is_show_detail_header_data,
       details_click,
       change_go_back,
@@ -241,7 +242,6 @@ export default defineComponent({
       off_listeners,
       clear_timer,
       new_match_detail_ctr,
-      MatchDataWarehouseInstance,
     } = details_main();
     watch(
       () => state_data.data_list,
@@ -252,7 +252,7 @@ export default defineComponent({
         // 只有一个玩法集时，及时更新当前玩法集id
         if (lodash.get(data,'length') == 1) {
           // set_details_item(data[0].id)
-          state_data.matchDetailCtr.current_category_id = data[0].id
+          matchDetailCtr.current_category_id = data[0].id
         }
         // 玩法个数不及3个时，提前退出
         if (lodash.get(state_data.data_list, 'length', 0) < 3) {
@@ -580,8 +580,8 @@ export default defineComponent({
       on_listeners,
       off_listeners,
       clear_timer,
+      matchDetailCtr,
       new_match_detail_ctr,
-      MatchDataWarehouseInstance,
     }
   }
 })

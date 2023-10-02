@@ -345,6 +345,7 @@ export default defineComponent({
       return "";
     });
     // ==============================================
+    console.error(props.item_data);
     const judage_hshow = computed(() => {
       const hshow = props.item_data.hshow
       const vuex_hshow = get_hshow_map.value[`${props.item_data.mid}_${props.item_data.hpid}`]

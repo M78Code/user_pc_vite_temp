@@ -7,13 +7,13 @@ import {
   onMounted,
   watch,
 } from "vue";
-import { is_eports_csid } from 'src/core/index.js'
 // api文件
 import { api_details } from "src/api/index";
 import { useMittEmit, useMittOn, MITT_TYPES ,useMittEmitterGenerator} from "src/core/mitt/";
 import { useGetGlobal } from "./global_mixin";
 import lodash from "lodash";
 import details from "src/core/match-detail/match-detail-pc/match-detail";
+import  { computed_background } from  "src/core/constant/config/csid.js"
 // console.log(details,);
 // 搜索操作相关控制类
 import search from "src/core/search-class/search.js";
@@ -26,7 +26,7 @@ import menu_config from "src/core/menu-pc/menu-data-class.js";
 import { pre_load_video } from "src/core/pre-load/index";
 // import { format_plays, format_sort_data } from "src/core/format/index";
 import { formatTime } from "src/core/format/index.js"
-import {MatchDataWarehouse_PC_Detail_Common,format_plays, format_sort_data} from "src/core/index"; 
+import {MatchDataWarehouse_PC_Detail_Common,format_plays, format_sort_data ,is_eports_csid,MatchDetailCalss} from "src/core/index"; 
 import uid from "src/core/uuid/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import BetCommonHelper from "src/core/bet/common-helper/index.js";
@@ -71,7 +71,7 @@ export const useGetConfig = () => {
     details_loading_time_record: [],
     last_tab_data: {},
   });
-  const handicap_this =ref({category_list:''})// 传给玩法集 tabs 的数据
+  const handicap_this =ref({category_list:[]})// 传给玩法集 tabs 的数据
   const detail_header = ref(null); // 头部组件实例
 
   const details_params = ref(store_state.matchesReducer.params);
@@ -125,7 +125,7 @@ export const useGetConfig = () => {
     () => state.sportId,
     (res) => {
       
-      let img = details.computed_background(String(res));
+      let img = computed_background(String(res));
       if (img) state.background_img = img;
     }
   );
@@ -271,7 +271,6 @@ export const useGetConfig = () => {
           state.is_request = false;
           // 通知列表右侧详情，获取近期关注数据
           // useMittEmit(MITT_TYPES.EMIT_GET_HISTORY);
-          // useMittEmit("get_history");
           const code = lodash.get(res, "code");
           const data = lodash.cloneDeep(lodash.get(res, "data"));
           console.log(res,'data');
@@ -485,10 +484,9 @@ export const useGetConfig = () => {
       //mhs赛事盘口状态 0:开, 封, 2:关, 11:锁
       let obj = [];
       // 设置玩法个数
-      store.dispatch({
-        type: "SET_MATCH_DETAIL_COUNT",
-        data: data.length,
-      });
+      MatchDetailCalss.match_detail_count = data.length
+      console.log(MatchDetailCalss.match_detail_count,'match_detail_count');
+
       // 置顶数据排序
       let arr = []; //暂存本地置顶的数据
       for (var i = 0; i < data.length; i++) {
@@ -561,11 +559,10 @@ export const useGetConfig = () => {
     }
   
     // 将当前玩法盘口信息记为上次玩法数据
-    const last_tab_data_index =
-      detail_header.value["handicap_tabs_bar"].currentIndex || 0;
+    const last_tab_data_index =lodash.get( detail_header.value,"handicap_tabs_bar.currentInde",0)
     state.last_tab_data = {
       index: last_tab_data_index,
-      item: state.category_list[last_tab_data_index],
+      item:lodash.get(state.category_list,last_tab_data_index),
     };
   };
 
@@ -661,7 +658,6 @@ export const useGetConfig = () => {
       error_codes: ["0401038"],
       params: params,
       fun_then: (res) => {
-        
         console.log(res,'get_category_list');
         if (!MatchDataWarehouseInstance) {
           return;
@@ -673,12 +669,11 @@ export const useGetConfig = () => {
         // }
         // const data = lodash.get(res, "data");
         // if (code === 200 && data.length) {
-        if (res.length) {
+        if ( res?.length) {
           state.category_list = res;
           console.log( handicap_this.value,' state.handicap_this');
           handicap_this.value['category_list'] = res
           // 初始化玩法列表
-          // MatchDataWarehouseInstance.set_quick_query_list_from_match_details(res);
           if (callback) {
             callback();
           }

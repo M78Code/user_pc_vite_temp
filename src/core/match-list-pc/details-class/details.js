@@ -42,12 +42,12 @@ export default {
     //   tid,
     //   csid
     // });
-
-    // MatchDetailCalss.set_score_button({
-    //   mid,
-    //   tid,
-    //   csid
-    // })
+    //跳转设置calss mid
+    MatchDetailCalss.set_score_button({
+      mid,
+      tid,
+      csid
+    })
 
     router.push({
       name: route_name,
@@ -165,7 +165,7 @@ export default {
     // lockie
     // if(!GlobalAccessConfig.get_statisticsSwitch()) return window.vue.useMittEmit(window.vue.MITT_TYPES.EMIT_SHOW_TOAST_CMD, window.vue.i18n_t("msg.msg_09")); 
     // if([1,2].includes(match.csid*1)){
-      full_url = `/#/analysis_header/${match.csid}/${match.mid}` // seid,match.srid
+      full_url = `index.html#/analysis_header/${match.csid}/${match.mid}` // seid,match.srid
     //   store.dispatch("set_active_detail", match)
     // }
     

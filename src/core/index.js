@@ -11,6 +11,7 @@ import lodash from "lodash";
 // const router = useRouter();
 // const route = useRoute();
 
+// src\core\utils\module\match-list-utils.js与src\core\format\module\format-date.js 存在get_remote_time的冲突导出
 export * from "src/core/format/index.js";
 export * from "src/core/constant/index.js";
 export * from "src/core/utils/index.js";
