@@ -1,7 +1,7 @@
 <template>
   <div class="media-col-wrap">
     <!-- 无直播源 -->
-    <div v-tooltip="{ content: t('common.score_board') }" class="icon-wrap after_tpl0 relative-position"
+    <div v-tooltip="{ content: i18n_t('common.score_board') }" class="icon-wrap after_tpl0 relative-position"
       :class="vx_detail_params.mid == match.mid && vx_play_media.media_type == 'info' && 'active'"
       @click="on_switch_match('auto')" v-if="!menu_config.is_esports() || route.name == 'search'">
       <div class="v-icon switch-icon"
@@ -25,7 +25,7 @@
 
     <!-- 动画 -->
     <div v-if="match.mvs > -1" class="icon-wrap relative-position" @click="on_switch_match('animation')"
-      v-tooltip="{ content: t('common.animate') }">
+      v-tooltip="{ content: i18n_t('common.animate') }">
       <div class="v-icon animation-icon"
         :class="vx_detail_params.mid == match.mid && vx_play_media.media_type == 'animation' && 'active'"></div>
     </div>
@@ -53,7 +53,7 @@ import details from 'src/core/match-list-pc/details-class/details.js'
 import { other_play_name_to_playid } from 'src/core/constant/config/data-class-ctr/index.js';
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 import store from 'src/store-redux/index.js'
-import { t } from "src/core/index.js";
+import { i18n_t ,MatchDetailCalss} from "src/core/index.js";
 let state = store.getState();
 
 // 左侧详情参数
@@ -74,7 +74,7 @@ const handicap_num = computed(() => {
   if (GlobalAccessConfig.get_handicapNum()) {
     return `+${props.match.mc || 0}`
   } else {
-    return t('match_info.more')
+    return i18n_t('match_info.more')
   }
 })
 
@@ -99,26 +99,26 @@ const cur_video_icon = computed(() => {
     if (lss === 1) {
       cur_video_icon = {
         type: "studio",
-        text: t('common.studio'),
+        text: i18n_t('common.studio'),
       }
       //专题
     } else if (lss === 0 && !is_play) {
       cur_video_icon = {
         type: "topic",
-        text: t('common.topic'),
+        text: i18n_t('common.topic'),
       }
     }
     //主播
   } else if (tvs == 2 && status) {
     cur_video_icon = {
       type: "anchor",
-      text: t('common.anchor'),
+      text: i18n_t('common.anchor'),
     }
     //源视频                       非电竞 或者电竞有url
   } else if (mms == 2 && (varl || vurl || !is_esports) && is_play) {
     cur_video_icon = {
       type: "video",
-      text: t('common.o_video'),
+      text: i18n_t('common.o_video'),
     }
   }
   return cur_video_icon
@@ -130,15 +130,9 @@ const cur_video_icon = computed(() => {
  * @param {undefined} undefined
 */
 const on_switch_match = (media_type) => {
-  //展开右侧详情
-  store.dispatch({
-    type: 'SET_UNFOLD_MULTI_COLUMN',
-    data: false
-  })
-  store.dispatch({
-    type: 'SET_IS_PAUSE_VIDEO',
-    data: false
-  })
+  //展开右侧详情  暂时不知道需要变更版本号  todo
+  MatchDetailCalss.is_pause_video = false
+  MatchDetailCalss.is_unfold_multi_column = false
   if ((route.name == 'details' || route.name == 'search') && media_type == 'auto') {
     media_type = 'info'
   }
