@@ -167,7 +167,6 @@ export const category_info = (category_arr=[]) => {
    *@description 设置外层容器的最小高
    */
   const change_minheight = () => {
-    debugger
     if (category.value) {
       // 0.44 + 0.4 + 0.4 = 1.24
       let val = [1, 2].includes(+get_detail_data.value.csid) ? 1.24 : 0.84;
