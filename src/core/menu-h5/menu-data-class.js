@@ -509,63 +509,63 @@ class MenuData {
    * 没有传递对比当前菜单
   */
   is_vr(mi) {
-    return _is_cur_mi(8, mi)
+    return this._is_cur_mi(8, mi)
   }
   /**
    * 是否选中了赛果
    *  mi [number|string] 要比对的值
   */
   is_results(mi) {
-    return _is_cur_mi(28, mi)
+    return this._is_cur_mi(28, mi)
   }
   /**
    * 是否选中了早盘
    *  mi [number|string] 要比对的值
   */
   is_zaopan(mi) {
-    return _is_cur_mi(3, mi)
+    return this._is_cur_mi(3, mi)
   }
   /**
    * 是否选中了今日
    *  mi [number|string] 要比对的值
   */
   is_today(mi) {
-    return _is_cur_mi(2, mi)
+    return this._is_cur_mi(2, mi)
   }
   /**
    * 是否选中了滚球
    *  mi [number|string] 要比对的值
   */
   is_scroll_ball(mi) {
-    return _is_cur_mi(1, mi)
+    return this._is_cur_mi(1, mi)
   }
   /**
    * 是否选中了冠军
    *  mi [number|string] 要比对的值
   */
   is_kemp(mi) {
-    return _is_cur_mi(4, mi)
+    return this._is_cur_mi(4, mi)
   }
   /**
    * 是否选中了电竞
    *  mi [number|string] 要比对的值
   */
   is_export(mi) {
-    return _is_cur_mi(7, mi)
+    return this._is_cur_mi(7, mi)
   }
   /**
    * 是否选中了串关
    *  mi [number|string] 要比对的值 没有传递对比当前菜单
   */
   is_mix(mi) {
-    return _is_cur_mi(6, mi)
+    return this._is_cur_mi(6, mi)
   }
   /**
    * 是否选中了竞足
    *  mi [number|string] 要比对的值
   */
   is_jinzu(mi) {
-    return _is_cur_mi(30, mi)
+    return this._is_cur_mi(30, mi)
   }
   // 电竞菜单csid
   menu_csid(mi) {
