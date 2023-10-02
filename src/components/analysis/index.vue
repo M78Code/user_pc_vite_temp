@@ -1,4 +1,12 @@
 <!--
+ * @Author: 'jacques' 'jacques@itcom888.com'
+ * @Date: 2023-10-02 16:12:29
+ * @LastEditors: 'jacques' 'jacques@itcom888.com'
+ * @LastEditTime: 2023-10-02 21:31:59
+ * @FilePath: \user-pc-vite\src\components\analysis\index.vue
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+-->
+<!--
  * @Author:
  * @Date:
  * @Description: 足篮赛事分析页
@@ -18,7 +26,7 @@
         <div style="color:#83838A;margin-bottom: 6px;">{{formatTime(matchDetail.mgt,'yyyy/mm/dd hh:MM:ss')}}</div>
         <div>{{matchDetail.tn}}</div>
         <!-- 未开始 -->
-        <span v-if="[0,110].includes(matchDetail.ms)">{{ $t("analysis.not_start")}}</span>
+        <span v-if="[0,110].includes(matchDetail.ms)">{{ i18n_t("analysis.not_start")}}</span>
         <match-date v-else :match="matchDetail" style="justify-content:center;"></match-date>
       </div>
       <div class="both away">
@@ -41,31 +49,37 @@
     </div>
 
     <q-scroll-area class="rule-scroll-area" :visible="true" :style="{height:'100%',margin: hasNews && activeTab == 0 ? '0' : '0 20px'}">
-      <!-- 文章资讯 -->
-      <news :mid="active_detail.mid" v-if="hasNews && activeTab == 0" />
+      <!-- 文章资讯  -->
+      <tabResults v-if="hasNews && activeTab == 0"></tabResults>
+      <!-- <news :mid="match_info.mid" v-if="hasNews && activeTab == 0" /> -->
+
       <!-- 赛况 -->
-      <tab-results :match="matchDetail" v-if="(hasNews ? activeTab - 1 : activeTab) == 0"/>
+      <!-- <tab-results :match="matchDetail" v-if="(hasNews ? activeTab - 1 : activeTab) == 0"/> -->
       <!-- 数据 -->
-      <tab-data :match="matchDetail" v-if="(hasNews ? activeTab - 1 : activeTab) == 1"/>
+      <tab-data :match="matchDetail" v-if="(hasNews ? activeTab - 1 : activeTab) == 1 ||1"/>
       <!-- 阵容 -->
-      <tab-lineup :match="matchDetail" v-if="(hasNews ? activeTab - 1 : activeTab) == 2"/>
+      <!-- <tab-lineup :match="matchDetail" v-if="(hasNews ? activeTab - 1 : activeTab) == 2"/> -->
       <!-- 情报 -->
-      <tab-information :match="matchDetail" v-if="(hasNews ? activeTab - 1 : activeTab) == 3"/>
+      <!-- <tab-information :match="matchDetail" v-if="(hasNews ? activeTab - 1 : activeTab) == 3"/> -->
       <!-- 赔率 -->
-      <tab-odds :match="matchDetail" v-if="(hasNews ? activeTab - 1 : activeTab) == 4"/>
+      <!-- <tab-odds :match="matchDetail" v-if="(hasNews ? activeTab - 1 : activeTab) == 4"/> -->
     </q-scroll-area>
   </div>
 </template>
 
+
+
 <script>
-import { computed, ref, defineProps } from 'vue';
+import { computed, ref } from 'vue';
 import { useRoute } from 'vue-router';
-// import { TabResultsFullVersionWapper as tabResults} from 'src/components/analysis/template/table-results/index.js'
-// import { TabDataFullVersionWapper as tabData} from 'src/components/analysis/template/table-data/index.js'
-// import { TabLineupFullVersionWapper as tabLineup} from 'src/components/analysis/template/table-lineup/index.js'
-// import { TabInformationFullVersionWapper as tabInformation} from 'src/components/analysis/template/table-infomation/index.js'
-// import { TabOddsFullVersionWapper as tabOdds} from 'src/components/analysis/template/table-odds/index.js'
-// import { TabNewssFullVersionWapper as news} from 'src/components/analysis/template/table-news/index.js'
+//tabResults内容是 资讯模块
+import { TabResultsFullVersionWapper as tabResults} from 'src/components/analysis/template/tab-results/index.js'
+
+import { TableDataFullVersionWapper as tabData} from 'src/components/analysis/template/tab-data/index.js'
+// import { TabLineupFullVersionWapper as tabLineup} from 'src/components/analysis/template/tab-lineup/index.js'
+// import { TabInformationFullVersionWapper as tabInformation} from 'src/components/analysis/template/tab-infomation/index.js'
+// import { TabOddsFullVersionWapper as tabOdds} from 'src/components/analysis/template/tab-odds/index.js'
+import { TabNewsFullVersionWapper as news} from 'src/components/analysis/template/tab-news/index.js'
 // import { MatchProcessFullVersionWapper as matchDate } from "src/components/match-process/index.js";
 import {api_analysis} from 'src/api/index.js' 
 import { compute_css_variables } from "src/core/css-var/index.js"
@@ -77,6 +91,12 @@ import lodash from 'lodash'
 let state = store.getState();
 
 export default {
+  components:{
+    tabResults,
+    tabData,
+    //tabLineup,tabInformation,tabOdds,matchDate
+    news
+  },
   setup() {
     const route = useRoute();
     
@@ -90,7 +110,7 @@ export default {
       allScore:['S1','S11','S12','S5','S8','S105','S104','S1101',"S17", "S18",'S106','S109','S12345','S12346','S111','S108','S107','S110'],
       line: ['S1101',"S17", "S18",'S108','S107','S110']
     })
-    const hasNews = ref(false)                                                                                                                                                                                                                                                                                                                                                                                                       
+    const hasNews = ref(false)
     const articleDetail = ref({})
     const newsTabName = ref(null)
     // let mid = lodash.get(route, 'params.mid');
@@ -188,10 +208,6 @@ export default {
       match_info,
       i18n_t
     }
-  },
-  // mixins:[time_format],
-  components:{
-    // tabResults,tabData,tabLineup,tabInformation,tabOdds,matchDate,news
   },
   methods: {
     switchTabs(index) {

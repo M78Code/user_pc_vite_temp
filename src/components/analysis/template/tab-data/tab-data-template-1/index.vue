@@ -2,11 +2,11 @@
   <div class="datum">
     <div class="tab" v-if="match.csid == '1'">
       <!-- 基本面 -->
-      <span :class="{ 'active': tabIndex == 1 }" @click="tabClick(1)">{{ $t('analysis.Fundamentals') }}</span>
+      <span :class="{ 'active': tabIndex == 1 }" @click="tabClick(1)">{{ i18n_t('analysis.Fundamentals') }}</span>
       <!-- 盘面 -->
-      <span :class="{ 'active': tabIndex == 2 }" @click="tabClick(2)">{{ $t('analysis.Disk') }}</span>
+      <span :class="{ 'active': tabIndex == 2 }" @click="tabClick(2)">{{ i18n_t('analysis.Disk') }}</span>
       <!-- 技术面 -->
-      <span :class="{ 'active': tabIndex == 3 }" @click="tabClick(3)">{{ $t('analysis.Technical_side') }}</span>
+      <span :class="{ 'active': tabIndex == 3 }" @click="tabClick(3)">{{ i18n_t('analysis.Technical_side') }}</span>
     </div>
     <!-- 基本面 -->
     <template v-if="tabIndex == 1">
@@ -20,11 +20,11 @@
     <template v-if="tabIndex == 2 && match.csid == '1'">
       <div class="panel disk analysis_disk">
         <!-- 盘路走势 -->
-        <div class="panel-title">{{ $t('analysis.Turning_trend') }}</div>
+        <div class="panel-title">{{ i18n_t('analysis.Turning_trend') }}</div>
         <div>
           <div class="match-info">
             <div class="team">
-              <img v-img="([_.get(match, 'mhlu[0]'), _.get(match, 'frmhn[0]')])" class="logo" alt />
+              <img v-img="([lodash.get(match, 'mhlu[0]'), lodash.get(match, 'frmhn[0]')])" class="logo" alt />
               <span>{{ match.mhn }}</span>
             </div>
           </div>
@@ -32,26 +32,26 @@
             <!-- 总 -->
             <div class="d-td border_r">
               <div class="match_total">&nbsp;</div>
-              <div class="match_total">{{ $t('vsport.gtab2') }}</div>
+              <div class="match_total">{{ i18n_t('vsport.gtab2') }}</div>
             </div>
             <!-- 赢盘 -->
-            <div class="d-td">{{ $t('analysis.win_plate') }}</div>
+            <div class="d-td">{{ i18n_t('analysis.win_plate') }}</div>
             <!-- 走盘 -->
-            <div class="d-td">{{ $t('analysis.Move_plate') }}</div>
+            <div class="d-td">{{ i18n_t('analysis.Move_plate') }}</div>
             <!-- 输盘 -->
-            <div class="d-td">{{ $t('analysis.Lose_plate') }}</div>
+            <div class="d-td">{{ i18n_t('analysis.Lose_plate') }}</div>
             <!-- 赢盘率 -->
-            <div class="d-td border_r">{{ $t('analysis.Win_rate') }}</div>
+            <div class="d-td border_r">{{ i18n_t('analysis.Win_rate') }}</div>
             <!-- 大球 -->
-            <div class="d-td">{{ $t('analysis.big_ball') }}</div>
+            <div class="d-td">{{ i18n_t('analysis.big_ball') }}</div>
             <!-- 大球率 -->
-            <div class="d-td">{{ $t('analysis.Big_ball_rate') }}</div>
+            <div class="d-td">{{ i18n_t('analysis.Big_ball_rate') }}</div>
             <!-- 小球 -->
-            <div class="d-td">{{ $t('analysis.small_ball') }}</div>
+            <div class="d-td">{{ i18n_t('analysis.small_ball') }}</div>
             <!-- 小球率 -->
-            <div class="d-td">{{ $t('analysis.small_ball_rate') }}</div>
+            <div class="d-td">{{ i18n_t('analysis.small_ball_rate') }}</div>
           </div>
-          <div class="d-body d-tr" v-for="(item, index) in _.get(baseData, '1.matchHistoryBattleDetailDTOList')"
+          <div class="d-body d-tr" v-for="(item, index) in lodash.get(baseData, '1.matchHistoryBattleDetailDTOList')"
             :key="index">
             <!-- 总   主   客 -->
             <div class="d-td">
@@ -72,16 +72,16 @@
             <div class="d-td">{{ (item.overunderResultLoseRate * 100).toFixed(2) }}%</div>
           </div>
           <div class="d-body d-tr">
-            <div class="d-td color_83838a">{{ $t("analysis.last10games") }}</div>
+            <div class="d-td color_83838a">{{ i18n_t("analysis.last10games") }}</div>
             <div class="d-td match_status">
               <span class="result-item" :class="result_filter('cls', item)"
-                v-for="(item, index) in _.get(baseData, '1.handicapResultList')"
-                :key="index">{{ result_filter('resultLabel', item) }}</span>
+                v-for="(item, index) in lodash.get(baseData, '1.handicapResultList')" :key="index">{{
+                  result_filter('resultLabel', item) }}</span>
             </div>
             <div class="d-td match_status">
               <span class="result-item" :class="result_filter('cls', item)"
-                v-for="(item, index) in _.get(baseData, '1.overunderResultList')"
-                :key="index">{{ result_filter('overunderLabel', item) }}</span>
+                v-for="(item, index) in lodash.get(baseData, '1.overunderResultList')" :key="index">{{
+                  result_filter('overunderLabel', item) }}</span>
             </div>
           </div>
         </div>
@@ -89,7 +89,7 @@
         <div class="away">
           <div class="match-info">
             <div class="team">
-              <img v-img="([_.get(match, 'malu[0]'), _.get(match, 'frman[0]')])" class="logo" alt />
+              <img v-img="([lodash.get(match, 'malu[0]'), lodash.get(match, 'frman[0]')])" class="logo" alt />
               <span>{{ match.man }}</span>
             </div>
           </div>
@@ -97,26 +97,26 @@
             <!-- 总 -->
             <div class="d-td border_r">
               <div class="match_total">&nbsp;</div>
-              <div class="match_total">{{ $t('vsport.gtab2') }}</div>
+              <div class="match_total">{{ i18n_t('vsport.gtab2') }}</div>
             </div>
             <!-- 赢盘 -->
-            <div class="d-td">{{ $t('analysis.win_plate') }}</div>
+            <div class="d-td">{{ i18n_t('analysis.win_plate') }}</div>
             <!-- 走盘 -->
-            <div class="d-td">{{ $t('analysis.Move_plate') }}</div>
+            <div class="d-td">{{ i18n_t('analysis.Move_plate') }}</div>
             <!-- 输盘 -->
-            <div class="d-td">{{ $t('analysis.Lose_plate') }}</div>
+            <div class="d-td">{{ i18n_t('analysis.Lose_plate') }}</div>
             <!-- 赢盘率 -->
-            <div class="d-td border_r">{{ $t('analysis.Win_rate') }}</div>
+            <div class="d-td border_r">{{ i18n_t('analysis.Win_rate') }}</div>
             <!-- 大球 -->
-            <div class="d-td">{{ $t('analysis.big_ball') }}</div>
+            <div class="d-td">{{ i18n_t('analysis.big_ball') }}</div>
             <!-- 大球率 -->
-            <div class="d-td">{{ $t('analysis.Big_ball_rate') }}</div>
+            <div class="d-td">{{ i18n_t('analysis.Big_ball_rate') }}</div>
             <!-- 小球 -->
-            <div class="d-td">{{ $t('analysis.small_ball') }}</div>
+            <div class="d-td">{{ i18n_t('analysis.small_ball') }}</div>
             <!-- 小球率 -->
-            <div class="d-td">{{ $t('analysis.small_ball_rate') }}</div>
+            <div class="d-td">{{ i18n_t('analysis.small_ball_rate') }}</div>
           </div>
-          <div class="d-body d-tr" v-for="(item, index) in _.get(baseData, '2.matchHistoryBattleDetailDTOList')"
+          <div class="d-body d-tr" v-for="(item, index) in lodash.get(baseData, '2.matchHistoryBattleDetailDTOList')"
             :key="index">
             <!-- 总   主   客 -->
             <div class="d-td">
@@ -138,18 +138,18 @@
           </div>
           <!-- 近10场 -->
           <div class="d-body d-tr">
-            <div class="d-td color_83838a">{{ $t("analysis.last10games") }}</div>
+            <div class="d-td color_83838a">{{ i18n_t("analysis.last10games") }}</div>
             <div class="d-td match_status">
               <!-- 输赢 -->
               <span class="result-item" :class="result_filter('cls', item)"
-                v-for="(item, index) in _.get(baseData, '2.handicapResultList')"
-                :key="index">{{ result_filter('resultLabel', item) }}</span>
+                v-for="(item, index) in lodash.get(baseData, '2.handicapResultList')" :key="index">{{
+                  result_filter('resultLabel', item) }}</span>
             </div>
             <div class="d-td match_status">
               <!-- 大小 -->
               <span class="result-item" :class="result_filter('cls', item)"
-                v-for="(item, index) in _.get(baseData, '2.overunderResultList')"
-                :key="index">{{ result_filter('overunderLabel', item) }}</span>
+                v-for="(item, index) in lodash.get(baseData, '2.overunderResultList')" :key="index">{{
+                  result_filter('overunderLabel', item) }}</span>
             </div>
           </div>
         </div>
@@ -159,24 +159,24 @@
     <template v-if="tabIndex == 3 && match.csid == '1'">
       <div class="panel disk technical">
         <!-- 教练数据 -->
-        <div class="panel-title">{{ $t('analysis.Coach_data') }}</div>
-        <div class="home" v-for="(item, index) in _.get(baseData, 'sThirdMatchCoachDTOMap.1')"
+        <div class="panel-title">{{ i18n_t('analysis.Coach_data') }}</div>
+        <div class="home" v-for="(item, index) in lodash.get(baseData, 'sThirdMatchCoachDTOMap.1')"
           :key="`sThirdMatchCoachDTOMap${index}`">
           <div class="match-info">
             <div class="team">
-              <img v-img="([_.get(match, 'mhlu[0]'), _.get(match, 'frmhn[0]')])" class="logo" alt />
+              <img v-img="([lodash.get(match, 'mhlu[0]'), lodash.get(match, 'frmhn[0]')])" class="logo" alt />
               <span>{{ item.coachName }}</span>
             </div>
           </div>
           <div class="d-header d-tr">
             <!-- 年龄 -->
-            <div class="d-td">{{ $t('analysis.age') }}</div>
+            <div class="d-td">{{ i18n_t('analysis.age') }}</div>
             <!-- 战术分格 -->
-            <div class="d-td">{{ $t('analysis.Tactical_division') }}</div>
+            <div class="d-td">{{ i18n_t('analysis.Tactical_division') }}</div>
             <!-- 场均得分 -->
-            <div class="d-td">{{ $t('analysis.Points_per_game') }}</div>
+            <div class="d-td">{{ i18n_t('analysis.Points_per_game') }}</div>
             <!-- 出站 -->
-            <div class="d-td">{{ $t('analysis.Go_to_war') }}</div>
+            <div class="d-td">{{ i18n_t('analysis.Go_to_war') }}</div>
           </div>
           <div class="d-body d-tr">
             <div class="d-td">{{ getAge(item.coachBirthdate) }}</div>
@@ -186,23 +186,23 @@
           </div>
         </div>
 
-        <div class="away" v-for="(item, index) in _.get(baseData, 'sThirdMatchCoachDTOMap.2')"
+        <div class="away" v-for="(item, index) in lodash.get(baseData, 'sThirdMatchCoachDTOMap.2')"
           :key="`sThirdMatchCoachDTOMap-2${index}`">
           <div class="match-info">
             <div class="team">
-              <img v-img="([_.get(match, 'malu[0]'), _.get(match, 'frman[0]')])" class="logo" alt />
+              <img v-img="([lodash.get(match, 'malu[0]'), lodash.get(match, 'frman[0]')])" class="logo" alt />
               <span>{{ item.coachName }}</span>
             </div>
           </div>
           <div class="d-header d-tr">
             <!-- 年龄 -->
-            <div class="d-td">{{ $t('analysis.age') }}</div>
+            <div class="d-td">{{ i18n_t('analysis.age') }}</div>
             <!-- 战术分格 -->
-            <div class="d-td">{{ $t('analysis.Tactical_division') }}</div>
+            <div class="d-td">{{ i18n_t('analysis.Tactical_division') }}</div>
             <!-- 场均得分 -->
-            <div class="d-td">{{ $t('analysis.Points_per_game') }}</div>
+            <div class="d-td">{{ i18n_t('analysis.Points_per_game') }}</div>
             <!-- 出站 -->
-            <div class="d-td">{{ $t('analysis.Go_to_war') }}</div>
+            <div class="d-td">{{ i18n_t('analysis.Go_to_war') }}</div>
           </div>
           <div class="d-body d-tr">
             <div class="d-td">{{ getAge(item.coachBirthdate) }}</div>
@@ -219,7 +219,7 @@
 
 <script setup>
 
-import { ref, onUnmounted } from 'vue';
+import { ref, onUnmounted, defineProps } from 'vue';
 import { useRoute } from 'vue-router';
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
@@ -229,6 +229,9 @@ import { format_result } from 'src/core/format/index.js'
 
 import { MSelectFullVersionWapper as basePanel } from 'src/components/analysis/template/m-select/index.js'
 import { api_analysis } from 'src/api/index'
+
+import { i18n_t } from "src/core/index.js";
+import lodash from 'lodash'
 
 const tabIndex = ref(1); // 当前 tab 所在下标
 const baseData = ref({}); //基本面数据
@@ -241,8 +244,10 @@ const team_vs_history_result = ref({}); //历史战阵主客胜平负次数
 const tournamentTypeFinish = ref(false); //联赛数据加载完成//联赛数据加载完成
 // mixins: [analysisData],
 
+const props = defineProps(['match'])
+
 //flag	1=同联赛, 2= 同主客,3=同主客+同联赛
-params.value = { mid: this.match.mid, cps: 5, flag: 0 }
+params.value = { mid: props.match.mid, cps: 5, flag: 0 }
 getData() // 拉取数据
 get_vs_info()//杯赛积分
 get_team_vs_history()//历史交战
@@ -254,7 +259,7 @@ tournamentTypeFinish.value = false
   * @param {}
   * @return {}
 */
-const tabClick = (index) => {
+function tabClick(index) {
   tabIndex.value = index;
   getData()
   if (index == 1) {
@@ -263,16 +268,18 @@ const tabClick = (index) => {
     get_team_vs_other_team()//近期战绩
   } else {
     //切换时还原数据
-    params.value = { mid: this.match.mid, cps: 5, flag: 0 }
+    params.value = { mid: props.match.mid, cps: 5, flag: 0 }
   }
 }
 
 /**
     * @description: 数据 tab
     */
-const getData = () => {
-  let params = { parentMenuId: 2, sonMenuId: tabIndex.value, standardMatchId: this.match.mid }//
-  get_analysiseData(params, (res) => {
+function getData() {
+  let params = { parentMenuId: 2, sonMenuId: tabIndex.value, standardMatchId: props.match.mid }//
+  api_analysis.get_match_analysise_data(params).then((res) => {
+    res = res.data
+    console.log("get_match_analysise_dataget_match_analysise_data",res);
     // 基本面
     if (tabIndex.value == 1) {
       if (Object.keys(res.basicInfoMap).length) {
@@ -282,9 +289,9 @@ const getData = () => {
         if (Object.keys(res.basicInfoMap).some(item => _future.includes(item))) {
           _future.forEach(key => {
             // 主队
-            let _h = _.get(res.basicInfoMap, `${key}.1`) || [];
+            let _h = lodash.get(res.basicInfoMap, `${key}.1`) || [];
             // 客队
-            let _a = _.get(res.basicInfoMap, `${key}.2`) || [];
+            let _a = lodash.get(res.basicInfoMap, `${key}.2`) || [];
             if (_h.length != _a.length && _h.length > _a.length) {
               let _count = _h.length - _a.length;
               for (let i = 0; i < _count; i++) {
@@ -314,8 +321,8 @@ const getData = () => {
 /**
 * @description: 杯赛积分
 */
-const get_vs_info = (flag) => {
-  api_analysis.get_vs_info({ mid: this.match.mid, flag: flag }).then(({ data }) => {
+function get_vs_info(flag) {
+  api_analysis.get_vs_info({ mid: props.match.mid, flag: flag }).then(({ data }) => {
     if (data.code == 200) {
       tournamentTypeFinish.value = true
       vs_info.value = data.data
@@ -326,7 +333,7 @@ const get_vs_info = (flag) => {
 /**
 * @description: 历史交战
 */
-const get_team_vs_history = () => {
+function get_team_vs_history() {
   api_analysis.get_team_vs_history(params.value).then(({ data }) => {
     if (data.code == 200 && data.data) {
       team_vs_history.value = data.data
@@ -346,10 +353,10 @@ const get_team_vs_history = () => {
 /**
 * @description: 近期战绩
 */
-const get_team_vs_other_team = () => {
+function get_team_vs_other_team() {
   api_analysis.get_team_vs_other_team(params.value).then(({ data }) => {
     if (data.code == 200 && data.data) {
-      let results = _.get(data, "data");
+      let results = lodash.get(data, "data");
       if (!results || !results.length) { return; }
       let findId = results[0].teamGroup
       let obj = { home: [], away: [] }
@@ -372,7 +379,7 @@ const get_team_vs_other_team = () => {
 /**
 * @description: 切换下拉菜单
 */
-const selectedFn = (data) => {
+function selectedFn(data) {
   let { name, cps, flag } = data[0]
   params.value.cps = cps
   params.value.flag = flag
@@ -386,14 +393,14 @@ const selectedFn = (data) => {
 /**
 * @description: 联赛积分全量数据
 */
-const get_all_vsInfo = (flag) => {
+function get_all_vsInfo(flag) {
   get_vs_info(flag ? 0 : '')
 }
 
 /**
 * @description: 通过出生日计算年龄
 */
-const getAge = (birthdate) => {
+function getAge(birthdate) {
   if (!birthdate) return ''
   let date = new Date(birthdate).getFullYear()
   return new Date().getFullYear() - date

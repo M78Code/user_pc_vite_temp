@@ -44,6 +44,7 @@ import { useRoute } from 'vue-router';
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
+import { i18n_t } from "src/core/index.js";
 useRegistPropsHelper(component_symbol, need_register_props)
 
 const time = ref(false);
