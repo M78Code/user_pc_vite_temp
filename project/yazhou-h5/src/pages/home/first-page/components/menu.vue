@@ -92,7 +92,7 @@ const menu_data_config = (data) => {
   }
 };
 const cancel_watch = watch(menu_type, (i) => {
-  list_area.value.setScrollPosition("vertical", 0);
+  list_area.value && list_area.value.setScrollPosition("vertical", 0);
 });
 //用戶信息變化
 watch(UserCtr.user_version, () => {
