@@ -21,7 +21,7 @@
 
     <skeleton class="hot-featured-title" :width="1.4" :height="0.1" :radius="6"/>
     <!-- 标准版 -->
-    <div class="version_biaozhun" v-if="get_newer_standard_edition == 2">
+    <div class="version_biaozhun" v-if="PageSourceData.newer_standard_edition == 2">
       <div v-for="(item, index) in 3" :key="index" class="item">
         <skeleton class="title-url" :width="3.45" :height="0.4" :radius="20"/>
         <div class="info">
@@ -57,7 +57,7 @@
     </div>
 
     <!-- 简版 -->
-    <div class="version_jian" v-if="get_newer_standard_edition == 1">
+    <div class="version_jian" v-if="PageSourceData.newer_standard_edition == 1">
       <div v-for="(item, index) in 3" :key="index" class="item">
         <skeleton class="title-url" :width="3.45" :height="0.4" :radius="20"/>
         <div class="info">
@@ -87,6 +87,7 @@
 
 <script setup>
 import skeleton from '../index.vue'
+import PageSourceData from "src/core/page-source/page-source.js";
 
 const props = defineProps({
   first: Boolean,

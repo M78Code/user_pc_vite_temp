@@ -98,7 +98,6 @@
   &.is_division_league {
     // margin-top: 0.06rem;  遗留代码,暂时注释掉
     // padding: 0.03rem 0;
-    padding-top: 0.06rem;
 
     &.started_un_started_next {
       .match-odds-container {
@@ -217,20 +216,20 @@
       .ball_img {
         width: 100%;
         text-align: center;
-        height: 0.58rem;
-        position: relative;
+        height: 0.5rem;
+        overflow: hidden;
+        margin-top: -0.06rem;
 
-        >img {
+        > img {
           width: 100%;
           object-fit: cover;
-          height: 0.58rem;
+          height: 100%;
           background-color: var(--q-gb-bg-c-17);
         }
 
         >span {
-          height: 0.58rem;
           position: absolute;
-          top: 50%;
+          top: 56%;
           left: 50%;
           transform: translate(-50%, -50%);
 
@@ -244,8 +243,7 @@
             margin-right: 0.05rem;
             width: 0.18rem;
             height: 0.18rem;
-            background: var(--q-color-com-img-bg-13) no-repeat 0 0 / 0.18rem 2.3rem;
-            --per: -0.23rem;
+            background-size:  0.18rem 2.3rem;
           }
 
           @each $bg,

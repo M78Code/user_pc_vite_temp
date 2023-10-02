@@ -6,8 +6,9 @@
 
 
 import {http} from "src/core/http/index.js";
+
 const { API_PREFIX = {}} = window.BUILDIN_CONFIG;
-const { API_PREFIX_USER:prefix,API_PREFIX_BAT:prefix_yewu13,API_PREFIX_JOB:prefix_job} = API_PREFIX;
+const { API_PREFIX_JOB: prefix,API_PREFIX_USER:prefix_, API_PREFIX_JOB:prefix_job} = API_PREFIX;
 
 // 全url   获取  一般用于 视频动画域名检测
 export const get_full_url = (url='') => {

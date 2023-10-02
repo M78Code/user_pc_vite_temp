@@ -6,8 +6,6 @@ import { nextTick } from 'vue';
 import { useRoute } from 'vue-router'
 import MatchPage from '../match-class/match-page'
 import store from "src/store-redux/index.js";
-import { get_template_config } from "./template/template-config.js";
-import { get_match_dom_show_property } from "./module/match-show-property.js";
 import { useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import UserCtr from 'src/core/user-config/user-ctr.js'
 import MenuData from "src/core/menu-h5/menu-data-class.js";

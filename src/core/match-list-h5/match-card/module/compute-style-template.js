@@ -43,6 +43,7 @@ import { LocalStorage, utils } from "src/core/index.js";
  * @param {string | Number } mid  赛事id
 */
 const get_tab_play_height = (mid, csid) => {
+  if (![1,2].includes(+csid)) return
   const lang =  LocalStorage.get("__LANG")
   let { play_current_key, other_handicap_list = [] } = MatchListData.list_to_obj.mid_obj[`${mid}_`] || {}
   let { tab_play_total_height: handicap_height } = lodash.get(MATCH_LIST_TEMPLATE_CONFIG, `template_${csid}_config.match_template_config`)
@@ -270,7 +271,7 @@ export const compute_style_template_by_match_info1 = (match, template_id) => {
  * @returns 
  */
 export const compute_style_template_by_match_height = (match) => {
-  
+  if (!match) return
   const { csid, mid, is_show_league } = match
 
   // 对应模板默认配置

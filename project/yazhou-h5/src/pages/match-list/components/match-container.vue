@@ -13,20 +13,14 @@
   }'>
     <div style="display: none;">{{ MatchDataBaseH5.data_version.version }}</div>
     <!--体育类别 -- 标题  menuType 1:滚球 2:即将开赛 3:今日 4:早盘 11:串关 -->
-    <div class="sport-title match-indent" v-if="get_sport_show"
-      :class="{ home_hot_page: is_it_popular, is_gunqiu: [1].includes(+MenuData.get_menu_type()), first: i == 0, }"
+    <div v-if="get_sport_show" class="sport-title match-indent"
+      :class="['sport-title match-indent', { home_hot_page: is_it_popular, is_gunqiu: [1].includes(+MenuData.get_menu_type()), first: i == 0, }]"
       @click="ball_folding_click(match_of_list.csid)">
       <!-- 首页热门 -->
       <template v-if="is_it_popular">
-        <div v-if="main_source == 'home_hot_page_schedule' && lodash.get(get_hot_tab_item, 'index') == 0" class="ball_img">
-          <img
-            :src="global_theme.includes('day') ? polular_spirite : polular_spirite_theme02"
-            alt="" :style="{ objectPosition: `0 ${calculate_ball_type_picture()}rem` }">
-
-          <span>
-            <i :class="'s' + match_of_list.csid"></i>
-            <p>{{ match_of_list.csna }}</p>
-          </span>
+        <div v-if="main_source == 'home_hot_page_schedule' && lodash.get(MenuData.hot_tab_menu, 'index') == 0" class="ball_img">
+          <img :src="global_theme.includes('day') ? polular_spirite : polular_spirite_theme02" alt="" :style="{ objectPosition: `0 ${calculate_ball_type_picture()}rem` }">
+          <span> <i :style="sprite_img['h5-hot-jinxuan']({ position: `item_${match_of_list.csid}` })"></i>  <span>{{ match_of_list.csna }}</span> </span>
         </div>
       </template>
       <span class="score-inner-span" v-else>
@@ -49,12 +43,12 @@
     </div>
     <!-- 首页热门才有的样式  -->
     <div
-      v-if="main_source == 'home_hot_page_schedule' && match_of_list.time_title && lodash.get(get_hot_tab_item, 'index') != 0"
+      v-if="main_source == 'home_hot_page_schedule' && match_of_list.time_title && lodash.get(MenuData.hot_tab_menu, 'index') != 0"
       class="hot_time_change">
       <span>{{ time_change }}</span>
-      <!-- 热门模块的 榜单页 和 赛程列表页面 的切换    menuId == "30101"是 竞彩足球的 唯一字段  ['1','2'].includes(get_hot_tab_item.field1) 表示只在篮球足球下显示时间-->
+      <!-- 热门模块的 榜单页 和 赛程列表页面 的切换    menuId == "30101"是 竞彩足球的 唯一字段  ['1','2'].includes(MenuData.hot_tab_menu.field1) 表示只在篮球足球下显示时间-->
       <span @click="leaderboard_switch"
-        v-show="i == 0 && !get_hot_tab_item.chinaBetting && ['1', '2'].includes(get_hot_tab_item.field1)">{{
+        v-show="i == 0 && !MenuData.hot_tab_menu.chinaBetting && ['1', '2'].includes(MenuData.hot_tab_menu.field1)">{{
           i18n_t('home_popular.ranking') }}</span>
     </div>
 
@@ -470,6 +464,8 @@ import matchOvertimePen from './match-overtime-pen.vue'
 import ImageCacheLoad from "./public-cache-image.vue";
 import { i18n_t } from 'src/core/index.js'
 import UserCtr from 'src/core/user-config/user-ctr.js'
+import PageSourceData from "src/core/page-source/page-source.js";
+import sprite_img from "src/core/server-img/sprite-img/index.js"
 import { MenuData, score_switch_handle, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/index.js"
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import matchListClass from 'src/core/match-list-h5/match-class/match-list.js'
@@ -539,10 +535,8 @@ const is_on_go_detail = ref(false)
 
 const global_theme = UserCtr.theme
 
-const get_hot_tab_item = ref(store_state.get_hot_tab_item)
 const get_footer_sub_changing = ref(store_state.get_footer_sub_changing)
 const get_lang = ref(store_state.get_lang)
-const get_local_server_time = ref(store_state.get_local_server_time)
 const get_collapse_map_match = ref(store_state.get_collapse_map_match)
 const get_newer_standard_edition = ref(store_state.get_newer_standard_edition)
 const get_show_favorite_list = ref(store_state.get_show_favorite_list)
@@ -616,8 +610,8 @@ const get_sport_show = computed(() => {
         return p.csid !== c.csid;
       }
     } else {
-      if (lodash.get(get_hot_tab_item.value, 'index') != 0) { return false }
-      return true;
+      if (lodash.get(MenuData.hot_tab_menu, 'index') == 0) { return true }
+      return false;
     }
   } else if ([1, 2, 3, 4, 11, 12, 28, 30, 3000].includes(+MenuData.get_menu_type())) {
     if (props.match_of_list.show_sport_type) {
@@ -735,6 +729,7 @@ const eports_scoring = computed(() => {
   }
   return scoring
 })
+
 /**
  *启动 组件新初始化后 ，判定组件是否是刚刚新初始化的 定时器
 *主要用于 进球动画 显示 的第一层时间段 屏蔽开关
@@ -1009,7 +1004,7 @@ const need_scroll_height_handle = (tid) => {
       if (match_height_map_list[i].sport_type_space) {
         sport_type_space = match_height_map_list[i].sport_type_space
       }
-      started_match_height += get_match_dom_height_by_matchdata(match_height_map_list[i])
+      started_match_height += get_match_dom_height_by_match_data(match_height_map_list[i])
     }
 
     if (started_match_height && !started_index_arr.includes(i)) {
@@ -1026,9 +1021,9 @@ const need_scroll_height_handle = (tid) => {
  * 通过赛事数据获取赛事所占容器高度
  * @param {Object} match_height_map
  */
-const get_match_dom_height_by_matchdata = (match_height_map) => {
+const get_match_dom_height_by_match_data = (match_height_map) => {
   let r = 0;
-  Object.keys(match_height_map).forEach(p_key => {
+  match_height_map && Object.keys(match_height_map).forEach(p_key => {
     if (p_key != "" && p_key != "mid") {
       r += match_height_map[p_key];
     }
@@ -1201,8 +1196,8 @@ const show_start_counting_down = (item) => {
     return r;
   }
   let start_time = item.mgt * 1;
-  let init_server = get_local_server_time.value.server_time * 1;
-  let init_local = get_local_server_time.value.local_time_init;
+  let init_server = PageSourceData.init_time.server_time * 1;
+  let init_local = PageSourceData.init_time.local_time;
   let now_local = new Date().getTime();
   let sub_local_time = now_local - init_local;
   let now_server_time = init_server + sub_local_time;
@@ -1582,10 +1577,8 @@ watch(() => MenuData.footer_sub_menu_id, (curr) => {
 
 const unsubscribe = store.subscribe(() => {
   const new_state = store.getState()
-  get_hot_tab_item.value = new_state.get_hot_tab_item
   get_footer_sub_changing.value = new_state.get_footer_sub_changing
   get_lang.value = new_state.get_lang
-  get_local_server_time.value = new_state.get_local_server_time
   get_collapse_map_match.value = new_state.get_collapse_map_match
   get_newer_standard_edition.value = new_state.get_newer_standard_edition
   get_show_favorite_list.value = new_state.get_show_favorite_list

@@ -228,6 +228,7 @@ const is_static_item = computed(() => {
   ) {
     flag = true;
   }
+  if (MenuData.hot_tab_menu.menuName) flag = false;
   return !flag;
 })
 /**

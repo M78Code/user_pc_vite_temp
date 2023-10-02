@@ -7,7 +7,7 @@ import { get_esports_match_by_mids, get_match_base_info_by_mids } from "src/api/
 import PageSourceData from "src/core/page-source/page-source.js";
 import { ws_c8_obj_format } from 'src/core/data-warehouse/util/index.js'
 import MatchListCardClass from '../match-card/match-list-card-class'
-import matchListParams from '../composables/match-list-params'
+import MatchListParams from '../composables/match-list-params'
 import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, i18n_t, UserCtr, MenuData, useMittEmit, MITT_TYPES, utils } from 'src/core'
 import { nextTick } from "vue";
 import MatchMeta from './match-meta'
@@ -465,12 +465,6 @@ class MatchPage {
     return [1, 2, 7, 10, 110].includes(ms * 1);
   }
   /**
-   * 发起三级菜单请求之前
-   */
-  before_load_third_menu_handle(type) {
-    this.is_data_requesting = true;
-  }
-  /**
    * @description: 获取数据 赛事列表数据
    * @param {Object} params 获取赛事列表参数
    * @param {Function} cb 请求回调
@@ -478,11 +472,11 @@ class MatchPage {
    */
   get_match_data_list(cb) {
     // 接口请求前置处理，接口参数处理
-    const params = matchListParams.get_match_list_params_all();
+    const params = MatchListParams.get_match_list_params_all();
     // 赛事接口调用前置条件处理  1.次要玩法折叠   2 重置到联赛折叠状态； 3. 骨架屏 显示
     MatchListCardClass.match_list_api_prev_handle();
     // 调用列表接口   如  "/v1/m/matchesPB"
-    let api_handle_result = matchListParams.get_matchs_api_func(params);
+    let api_handle_result = MatchListParams.get_matchs_api_func(params);
     // 新参数直接在此处进行生成新的params
     this.current_invoke_api_func = api_handle_result.api_handle;
     if (this.current_invoke_api_func) {
@@ -580,8 +574,8 @@ class MatchPage {
    * @param {Object} params 接口参数
    */
   footer_refresh_match_list() {
-    const params = matchListParams.get_match_list_params_all();
-    let api_handle_result = matchListParams.get_matchs_api_func(params);
+    const params = MatchListParams.get_match_list_params_all();
+    let api_handle_result = MatchListParams.get_matchs_api_func(params);
     this.current_invoke_api_func = api_handle_result.api_handle;
     delete params.hpsFlag;
     //接口调用
@@ -690,9 +684,9 @@ class MatchPage {
     if (!mid || MenuData.menu_type == 900 || (!['home', 'matchList'].includes(PageSourceData.route_name))) {
       return;
     }
-    let params = matchListParams.get_match_list_params_all();
+    let params = MatchListParams.get_match_list_params_all();
     // params = lodash.cloneDeep(params);
-    let api_handle_result = matchListParams.get_matchs_api_func(params);
+    let api_handle_result = MatchListParams.get_matchs_api_func(params);
 
     this.current_invoke_api_func = api_handle_result.api_handle;
     //

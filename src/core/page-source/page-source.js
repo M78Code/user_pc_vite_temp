@@ -44,6 +44,11 @@ const PAGE_SOURCE_POOL_PC =  [
 
 class PageSourceData {
   constructor() {
+    // 服务器时间
+    this.init_time = {
+      local_time: '',
+      server_time: '',
+    }
     // 页面来源标识  当前 页面标识
     this.page_source = "";
     // 页面来源标识  当前 页面标识
@@ -63,7 +68,6 @@ class PageSourceData {
       // batchNo  ： 虚拟体育期号，
       // search_txt ：搜索传参 字符串 
       // filter_list ： 筛选 ： all  或者 [tid]
-      
     }
   }
 
@@ -75,6 +79,11 @@ class PageSourceData {
     // 列表页强力推荐
     this.is_show_hot = false;
 
+  }
+
+  // 设置服务器时间
+  set_init_time (time) {
+    this.init_time = time
   }
 
   /**
