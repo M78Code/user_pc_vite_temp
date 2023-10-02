@@ -20,7 +20,8 @@ export default class MatchDetailCtr {
    * @return {undefined} undefined
    */
   init() {
-   
+    this.is_pause_video = true; // 电竞视频是否暂停
+    this.is_unfold_multi_column = false; //是否展开多列玩法
     //赛事ID
     this.mid=  '';
     //玩法集 数组  原始玩法集数组 
@@ -59,7 +60,7 @@ export default class MatchDetailCtr {
     }
     this.isTop= true;//视频置顶
     this.topId = [];//置顶的玩法id
-    this.play_media= {
+    this.play_media= {  //播放视频信息类型
       mid: 0,
       media_type: "",
       is_auto: true,
@@ -84,16 +85,18 @@ export default class MatchDetailCtr {
     this.is_show_full_bet =false
     this.active_detail = {}; //详情比分面板，接口报错时的备用数据
     this.details_data_cache = {} // 玩法集对应玩法缓存数据
-    this.details_data_version = ref('1223')
+    this.details_data_version = reactive({
+      version:'111'
+    })
   }
 /**
  * 玩法集和tab 点击 
  * @param {*} obj  玩法集对象 
  */
   category_tab_click(obj={}){
-    // 如果本地缓存有玩法ID则取本地缓存，没有就取传入的ID
-    let category_id = obj.id
-    this.current_category_id= category_id
+    // 玩法tab的ID
+    this.current_category_id= obj.id
+    // 玩法tab的玩法集
     this.current_category_plays = obj.plays
     this.set_details_data_version() 
   }
@@ -196,9 +199,15 @@ export default class MatchDetailCtr {
 
   // 设置详情版本变更
   set_details_data_version(){
-    this.details_data_version = Date.now()
+    this.details_data_version.version = Date.now()
+    console.error(this.details_data_version.version,'this.details_data_version.value');
   }
 
+  /**
+   * @description: 设置mid参数
+   * @param {*} val
+   * @return {*}
+   */
   set_score_button(val){
     const {mid,tid,sportId,media_type} = val
     this.params = {
@@ -208,6 +217,26 @@ export default class MatchDetailCtr {
       media_type, // 直播类型
       time: Date.now()
     }
+    this.mid = mid
     this.set_details_data_version()
+  }
+
+
+  /**
+   * @description: 播放视频信息类型
+   * @param {*} play_media_val  
+   * @return {*}
+   */
+  set_play_media(play_media_val){
+    this.play_media =play_media_val
+    this.set_details_data_version()
+  }
+  /**
+   * @description: 设置是否展开多列玩法
+   * @param {boolean} val 
+   * @return {*}
+   */
+  set_unfold_multi_column(val){
+    this.is_unfold_multi_column = val
   }
 }

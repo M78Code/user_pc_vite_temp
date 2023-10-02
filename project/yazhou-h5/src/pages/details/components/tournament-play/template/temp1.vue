@@ -318,6 +318,7 @@ import odds_new from "project_path/src/pages/details/components/tournament-play/
 import {utils, MenuData } from 'src/core/index.js';
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { useRoute } from "vue-router"
+import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 
 export default defineComponent({
   // #TODO mixins
@@ -346,8 +347,7 @@ export default defineComponent({
       return ['result_details', 'match_result'].includes(route.name)
     });
     const go_to_bet = (ol_item) => {
-      // #TODO emit 
-      // this.$emit("bet_click_", {ol_item});
+      useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX,true);
     };
     return {
       utils,

@@ -1,53 +1,57 @@
 <template>
   <!--当前投注-->
-  <div>
-    <!-- 投注头部 -->
-    <bet-scroll-header />
+  <div class="relative-position bet-list-info">
+    <!-- 投注栏 1 -->
+    <v-scroll-area ref="ref_bet_scroll_area_bet_list" position="bet_list" :observer_area="3" :observer_middle="true"
+      class="bet-list">
+      <!-- 滚动：头部 --------------------------------->
+      <template v-slot:header>
+        <div class="left-bg-box"></div>
+        <bet-scroll-header />
+      </template>
+      <div>
+        <!-- 滚动：内容 --------------------------------->
+        <div style="display: none;"> {{ BetData.bet_data_class_version }} </div>
 
-    <div style="display: none;"> {{ BetData.bet_data_class_version }} </div>
+        <div class="bet-mode-zone" v-if="BetData.is_bet_single">
+          <div class="left">
+            <span>{{ $t("bet.bet_one_") }}</span>
+            <span class="bet-single-count">
+              {{ BetData.bet_single_list.length }}
+            </span>
+          </div>
+          <div class="right">
+            <!-- 单关 合并 -->
+            <span class="check-box" @click="toggle_merge">
+              <span class="check-wrap relative-position" :class="{ 'active': BetData.is_bet_merge }" />
+              <span>{{ $t('bet.merge') }}</span>
+            </span>
 
-    <div class="bet-mode-zone" v-if="BetData.is_bet_single">
-      <div class="left">
-        <span>{{ $t("bet.bet_one_") }}</span>
-        <span class="bet-single-count">
-          {{ BetData.bet_single_list.length }}
-        </span>
+            <span @mouseover="show_merge_info = true" @mouseout="show_merge_info = false">
+              <icon-wapper id="merge-info" name="icon-tips" class="bet-info" size="14px" />
+            </span>
+          </div>
+        </div>
+
+        <div class="bet-view">
+          <!-- 正常入口的单关 -->
+          <bet-single v-show="BetData.is_bet_single" @set_scroll_this="set_scroll_this" />
+          <!-- 正常入口的串关 -->
+          <bet-mix v-show="!BetData.is_bet_single" class="full-height" @set_scroll_this="set_scroll_this" />
+        </div>
       </div>
-      <div class="right">
-        <!-- 单关 合并 -->
-        <span class="check-box" @click="toggle_merge">
-          <span class="check-wrap relative-position" :class="{ 'active': BetData.is_bet_merge }" />
-          <span>{{ $t('bet.merge') }}</span>
-        </span>
+      <template v-slot:footer>
+        <bet-scroll-footer />
+      </template>
+    </v-scroll-area>
 
-        <span @mouseover="show_merge_info = true" @mouseout="show_merge_info = false">
-          <icon-wapper id="merge-info" name="icon-tips" class="bet-info" size="14px" />
-        </span>
+    <!--提示区域-->
+    <q-tooltip content-class="bet-bg-tooltip" anchor="bottom left" self="top left" :offset="[181, 10]" target="#merge-info"
+      v-if="show_merge_info">
+      <div style="width:170px;min-height:60px;padding-top:5px;padding-bottom:10px;padding-left:5px;word-break:break-all;">
+        {{ $t('bet.merge_info') }}
       </div>
-    </div>
-    
-    <div class="bet-view">
-      <!-- 正常入口的单关 -->
-      <bet-single v-show="BetData.is_bet_single" @set_scroll_this="set_scroll_this" />
-      <!-- 正常入口的串关 -->
-      <bet-mix v-show="!BetData.is_bet_single" class="full-height" @set_scroll_this="set_scroll_this" />
-    </div>
-
-    <bet-scroll-footer />
-
-     <!--提示区域-->
-     <q-tooltip
-     content-class="bet-bg-tooltip"
-     anchor="bottom left"
-     self="top left"
-     :offset="[181,10]"
-     target="#merge-info"
-     v-if="show_merge_info"
-   >
-     <div style="width:170px;min-height:60px;padding-top:5px;padding-bottom:10px;padding-left:5px;word-break:break-all;">
-       {{$t('bet.merge_info')}}
-     </div>
-   </q-tooltip>
+    </q-tooltip>
 
   </div>
 </template>
@@ -56,6 +60,9 @@
 import { ref } from "vue"
 
 import BetData from "src/core/bet/class/bet-data-class.js";
+
+// // 通屏垂直滚动
+import vScrollArea from "./v-scroll-area.vue";
 
 import BetScrollHeader from './bet-single/bet-scroll-header.vue'
 import BetScrollFooter from './bet-single/bet-scroll-footer.vue'
@@ -84,6 +91,14 @@ const toggle_merge = () => {
 </style>
 
 <style scoped lang="scss">
+.left-bg-box{
+  width: 100%;
+  height: 80px;
+}
+.bet-list-info{
+  width: 100%;
+  height: 100%;
+}
 .bet-mode-zone {
   display: flex;
   flex-wrap: nowrap;
@@ -121,6 +136,7 @@ const toggle_merge = () => {
       padding-left: 5px;
       padding-right: 5px;
       cursor: pointer;
+
       .check-wrap {
         padding: 0;
         margin-right: 5px;
@@ -138,9 +154,11 @@ const toggle_merge = () => {
   border: 1px solid var(--q-gb-bd-c-7);
   margin-right: 10px;
   position: relative;
+
   &.active {
     border: none;
     background: var(--q-gb-bg-c-16);
+
     &::before {
       position: absolute;
       content: "";
@@ -155,5 +173,6 @@ const toggle_merge = () => {
     }
   }
 }
+
 /** 选择框样式 -E*/
 </style>

@@ -38,15 +38,22 @@ const menu_to_match_templte = {
 
   105301: { label: "网球-早盘-让球&大小", value: "9" },
   105302: { label: "网球-早盘-准确盘数", value: "10" },
+
+  102201: { label: "篮球-今日-让球&大小", value: "7" },
+  102202: { label: "篮球-今日-净胜分", value: "8" },
+
+  102301: { label: "篮球-早盘-让球&大小", value: "7" },
+  102302: { label: "篮球-早盘-净胜分", value: "8" },
+
 };
 
 /**
- * 
- * @param {String | Number} data_tpl_id 
+ *
+ * @param {String | Number} data_tpl_id
  * @description 这里接收的是原始id 然后 去模板中拿对应的赛事模板
  * @returns 返回出去对应的模板id
  */
 export const computed_menu_to_match_templte = (data_tpl_id) => {
   let default_template_value = 1;
-    return menu_to_match_templte[data_tpl_id]?.value || default_template_value
-}
+  return menu_to_match_templte[data_tpl_id]?.value || default_template_value;
+};

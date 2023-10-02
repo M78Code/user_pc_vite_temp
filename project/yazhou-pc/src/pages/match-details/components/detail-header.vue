@@ -69,7 +69,7 @@
       ref="handicap_tabs_bar"
       :handicap_this="handicap_this"
       :match_info="match_infoData"
-      @get_mattch_details="get_mattch_details"
+      @get_mattch_details="get_mattch_details_func"
       @on_go_top="on_go_top"
       @change-loading-state="change_loading_state"
       :class="{
@@ -134,7 +134,7 @@ const back_to = (is_back = true) => {
  * @param round 电竞赛事需要的动态玩法集局数 id
  * 获取具体的玩法集数据
  */
-const get_mattch_details = (arg) => {
+const get_mattch_details_func = (arg) => {
   
   emit("get_mattch_details", arg);
 };

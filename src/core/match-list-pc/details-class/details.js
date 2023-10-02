@@ -8,10 +8,12 @@ import store from "src/store-redux/index.js";
 import { api_details } from "src/api/index";
 import { UserCtr, MITT_TYPES,useMittEmit } from "src/core/index.js"; 
 import { update_match_time } from "src/core/bet/common-helper/module/common-sport.js"
-import {utils,is_virtual_csid,is_eports_csid,MatchDetailCalss } from 'src/core/index.js'
+import {utils,is_virtual_csid,is_eports_csid,MatchDetailCalss,MatchDataWarehouse_PC_Detail_Common as MatchDetailsData, } from 'src/core/index.js'
 import GlobalAccessConfig from "src/core/access-config/access-config.js"
 import router from "project_path/src/router/index.js"
 import lodash from 'lodash';
+//引入列表跳详情中间件 
+import  MatchListDetailMiddlewareClass  from "src/core/match-detail/match-detail-pc/match-list-detail-pc/index.js"
 export default {
   //统计分析URL
   signal_url:'https://s5.sir.swiftscore.com',
@@ -23,6 +25,7 @@ export default {
   */
   on_go_detail(match,keyword) {
     let { mid, tid= -1, csid, go_detail_type, varl, vurl, mms, ms, mvs } = match;
+    console.log(match,'match');
     if((+mid === 0) ||!csid){
       return
     }
@@ -36,19 +39,21 @@ export default {
         keyword
       }
     }
-    //触发右侧详情更新
-    // useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, {
-    //   mid,
-    //   tid,
-    //   csid
-    // });
-
-    // MatchDetailCalss.set_score_button({
-    //   mid,
-    //   tid,
-    //   csid
-    // })
-
+    // 设置中间键参数
+    MatchListDetailMiddlewareClass.set_back_to_source_params({
+      mid,
+      tid,
+      csid,
+      MatchDataWarehouse_source:MatchDetailsData,
+      MatchDataWarehouse_target:MatchDetailsData,
+      match
+    })
+     //跳转设置calss mid
+    MatchDetailCalss.set_score_button({
+      mid,
+      tid,
+      csid
+    })
     router.push({
       name: route_name,
       params: {
@@ -97,23 +102,22 @@ export default {
    * @return {undefined} undefined
    */
   on_switch_match(media_type,match,play_id) {
-    return false //todo
     this.auto_swich_match = false
     let { mid, tid, csid: sportId } = match;
-    let old_mid = store.getters.get_match_details_params.mid
-    let old_media_type = store.getters.get_play_media.media_type
- 
-    store.dispatch('set_match_details_params',{
+    let old_mid = MatchDetailCalss.mid
+    let old_media_type = MatchDetailCalss.params.media_type
+    MatchDetailCalss.set_score_button({
       mid,
       tid,
       sportId,
       media_type: media_type || "",
       play_id
     })
+
     //如果是同场赛事切换 播放类型
     if((old_mid == mid && old_media_type != media_type) || media_type == 'auto'){
       setTimeout(() => {
-        store.dispatch('set_play_media',{ media_type, mid, time: Date.now()});
+        MatchDetailCalss.set_play_media({ media_type, mid, time: Date.now()})
       })
     }
   },
@@ -128,8 +132,8 @@ export default {
     }
     let match = lodash.get(match_list,'[0]') || {}
     if(!match.mid){
-      let play_id = store.getters.get_match_details_params.play_id;
-      store.dispatch('set_match_details_params',{
+      let play_id =MatchDetailCalss.current_category_id;
+      MatchDetailCalss.set_score_button({
         mid:0,
         tid:0,
         sportId:0,
@@ -162,10 +166,12 @@ export default {
   */
   sr_click_handle(match) {
     let full_url = this.get_full_sr_url(match) // seid,match.srid
+
+    localStorage.setItem('test_match_info', JSON.stringify(match))
     // lockie
     // if(!GlobalAccessConfig.get_statisticsSwitch()) return window.vue.useMittEmit(window.vue.MITT_TYPES.EMIT_SHOW_TOAST_CMD, window.vue.i18n_t("msg.msg_09")); 
     // if([1,2].includes(match.csid*1)){
-      full_url = `/#/analysis_header/${match.csid}/${match.mid}` // seid,match.srid
+      full_url = `index.html#/analysis_header/${match.csid}/${match.mid}` // seid,match.srid
     //   store.dispatch("set_active_detail", match)
     // }
     

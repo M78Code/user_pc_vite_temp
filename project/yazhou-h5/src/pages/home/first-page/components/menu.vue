@@ -92,7 +92,7 @@ const menu_data_config = (data) => {
   }
 };
 const cancel_watch = watch(menu_type, (i) => {
-  list_area.value.setScrollPosition("vertical", 0);
+  list_area.value && list_area.value.setScrollPosition("vertical", 0);
 });
 //用戶信息變化
 watch(UserCtr.user_version, () => {
@@ -116,7 +116,7 @@ watch(MenuData.update_time, () => {
 */
 const chang_index = (data) => {
   //如果不是 早盘 滚球 冠军 今日 是不会有二级菜单的 所以重新设定为第一个
-  if (![1, 2, 3, 4].includes(menu_type.value)) {
+  if (data && data.length && ![1, 2, 3, 4].includes(menu_type.value)) {
     change_menu(data[0], 0);
   }
 };

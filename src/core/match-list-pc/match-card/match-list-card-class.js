@@ -95,7 +95,7 @@ class MatchListCardInfo {
       let league_container =
         MatchListCardData.all_card_obj[
           league_title_card_obj.league_container_card_key
-        ] || {};
+        ];
       league_container.load_data_status = load_data_status;
     }
   }
@@ -111,7 +111,7 @@ class MatchListCardInfo {
     // 拉取http请求
     useMittEmit(MITT_TYPES.EMIT_API_BYMIDS, params, (status) => {
       let league_title_card_obj =
-        MatchListCardData.all_card_obj[card_obj.league_title_card_key] || {};
+        MatchListCardData.all_card_obj[card_obj.league_title_card_key];
       this.set_league_card_load_data_status(league_title_card_obj, status);
     });
   }

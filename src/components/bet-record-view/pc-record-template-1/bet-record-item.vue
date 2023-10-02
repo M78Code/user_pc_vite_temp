@@ -226,7 +226,10 @@ const props = defineProps({
     },
     order: {},
     order_status:{},
-    selected:{}
+    selected:{},
+    appoint_order_status:{},
+    preOrder:{},
+    ac_code:{},
 
 })
 

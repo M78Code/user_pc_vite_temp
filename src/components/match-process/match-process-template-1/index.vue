@@ -3,6 +3,7 @@
     class="c-match-process text-center"
     :class="rows == 1 ? 'row a-row' : 'column'"
   >
+  <template v-if="match">
     <div
       v-show="lodash.get(match, 'mcid') && show_page == 'match-list'"
       class="jingcai"
@@ -45,10 +46,11 @@
       />
       
     <!-- </template> -->
+  </template>
   </div>
 </template>
 <script setup>
-import { computed, ref, watch, onUnmounted } from "vue";
+import { computed, ref, watch,onMounted, onUnmounted } from "vue";
 import matchDate from "src/components/match-detail/match-date/match_date.vue";
 // import { format_second_ms } from "src/core/format/index.js";
 import {
@@ -131,7 +133,7 @@ const cur_fill_second = ref(0); // 补充的分钟
  */
  const init_fill_time = (skt_mid) => {
   let { mid, mmp, csid } = props.match || {};
-  if ((skt_mid && skt_mid != mid) || !show_fill_time.value) {
+  if (!mid || (skt_mid && skt_mid != mid) || !show_fill_time.value) {
     return;
   }
   // 补充时间(倒计时部分)
@@ -147,6 +149,9 @@ init_fill_time();
 // 获取阶段名称
 const computed_process_name = computed(() => {
   let { match } = props || {};
+  if(!match){
+    return '';
+  }
   let csid = lodash.get(props, 'match.csid')
   let mmp = lodash.get(props, 'match.mmp')
   let mle = lodash.get(props, 'match.mle')
@@ -337,6 +342,9 @@ const count_down_change = (obj) => {
   }
 };
 
+onMounted(() => {
+  init_fill_time();
+});
 
 
 onUnmounted(() => {

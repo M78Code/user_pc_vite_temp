@@ -5,36 +5,40 @@
 -->
 <template>
 <div class="choose-carefully-wrapper" :style="{height:container_height=='auto'?'auto':`${container_height}px`}">
-  <!-- <match-main :class="invoke?invoke:''" invok_source="detail_match_list" /> -->
+  <match-main :class="invoke?invoke:''" invok_source="detail_match_list" />
 </div>
 </template>
 
 <script>
 // import common from "src/project/mixins/constant/module/common.js"
-// import match_main from "src/project/pages/match-list/match_main.vue"
+import match_main from "project_path/src/pages/match-list/index.vue"
+import { defineComponent, onMounted, ref } from "vue";
+import { utils } from "src/core/utils/index.js"
 
-export default {
+export default defineComponent({
   // mixins:[common],
   props:{
     invoke:String
   },
-  data(){
-    return {
-      container_height:0
-    }
+  components:{
+    "match-main":match_main,
   },
-  mounted(){
-    if(invoke == 'category'){
-      container_height = 'auto';
+  setup(props, even) {
+    const container_height = ref(0)
+    onMounted(() => {
+      if(props.invoke == 'category'){
+      container_height.value = 'auto';
     }
     else{
-      container_height = innerHeight - rem(1.68);
+      container_height.value = innerHeight - utils.rem(1.68);
     }
-  },
-  components:{
-    // "match-main":match_main,
+    })
+    return {
+      container_height,
+    }
   }
-}
+  
+})
 </script>
 <style lang="scss" scoped>
 .choose-carefully-wrapper {

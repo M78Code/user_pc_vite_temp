@@ -52,4 +52,16 @@ export default {
   "pc-img-match-info-animation0": {
     default: "pc-img-match-info-animation0",
   },
+  // 赛事列表 直播源icon
+  "pc-img-match-list-video": {
+    default: "pc-img-match-list-video"
+  },
+  // 赛事列表 动画icon
+  "pc-img-match-list-animation": {
+    default: "pc-img-match-list-animation"
+  },
+  // 赛事列表 比分板icon
+  "pc-img-match-list-switch": {
+    default: "pc-img-match-list-switch"
+  },
 };

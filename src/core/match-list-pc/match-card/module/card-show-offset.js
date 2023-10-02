@@ -153,7 +153,7 @@ export const set_card_show_level = (scroll_top = 0) => {
         let mids_arr = card_obj.mids.split(',')
         // 遍历所有赛事卡片
         mids_arr.forEach( mid => {
-          let match_card_obj = MatchListCardData.all_card_obj[mid+'_'] || {}
+          let match_card_obj = MatchListCardData.all_card_obj[mid+'_']
           // 设置卡片偏移量  顶部偏移量等于上一个卡片 的底部偏移量， 底部偏移量等于自定顶部偏移量加自身高度
           match_card_obj.offset_top = pre_match_card_obj.offset_bottom
           match_card_obj.offset_bottom = match_card_obj.offset_top + match_card_obj.total_height

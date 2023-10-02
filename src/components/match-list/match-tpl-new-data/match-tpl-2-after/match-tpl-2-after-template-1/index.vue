@@ -50,7 +50,7 @@ import { MatchProcessFullVersionWapper as MatchProcess } from 'src/components/ma
 import { MatchBasisInfo1FullVersionWapper as BasisInfo1 } from 'src/components/match-list/match-basis-info/template-1/index.js'
 import { MatchBasisInfo2FullVersionWapper as BasisInfo2 } from 'src/components/match-list/match-basis-info/template-2/index.js'
 import { MatchHandicapFullVersionWapper as MatchHandicap } from 'src/components/match-list/match-handicap/index.js'
-import { MatchMediaFullVersionWapper as MatchMedia } from 'src/components/match-list/match-media/index.js'
+import MatchMedia from 'src/components/match-list/match-media/index.vue'
 
 
 useRegistPropsHelper(component_symbol, need_register_props)

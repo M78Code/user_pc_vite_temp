@@ -5,7 +5,7 @@
 -->
 <template>
   <div :class="['c-match-handicap', { 'unfold_multi_column': match_style_obj.data_tpl_id == 13 }, get_5min_classname()]">
-    <div v-show="false">{{ MatchListData.data_version }}</div>
+    <div v-show="false">{{ MatchListData.data_version.version }}</div>
     <div v-show="false">{{ MatchListCardDataClass.list_version }}</div>
     <div class="row no-wrap">
       <!-- 玩法列表 -->
@@ -29,7 +29,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed, nextTick } from 'vue';
+import { ref, onMounted, computed, nextTick, watch } from 'vue';
 import lodash from 'lodash';
 
 import { utils_info } from 'src/core/utils/module/match-list-utils.js';
@@ -74,7 +74,11 @@ const props = defineProps({
 let match_style_obj = MatchListCardDataClass.all_card_obj[props.match.mid+'_']
 // 赛事模板宽度
 const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`].width_config
+let MatchListDataInfo = MatchListData
 
+watch(() => MatchListData.data_version.version, () => {
+  MatchListDataInfo = MatchListData
+})
 // 组件是否已挂载
 const is_mounted = ref(true);
 const cur_esports_mode = ref(BetData.cur_esports_mode);
@@ -99,7 +103,7 @@ const deal_width_handicap_ols = (payload) => {
     // 投注项数据拼接
     let hn_obj_config = `list_to_obj.hn_obj.${mid}_${mid}_${item._hpid}_${handicap_type}_${item.ot}`
     // 获取投注项内容 
-      item = lodash.get(MatchListData, hn_obj_config,{})
+      item = lodash.get(MatchListDataInfo, hn_obj_config,{})
     return item;
   })
   return new_ols

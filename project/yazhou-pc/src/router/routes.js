@@ -58,7 +58,7 @@ const routes = [
     path: "/analysis_header/:csid/:mid",
     name: "analysis_header",
 
-    component: () => import('project_path/src/pages/test/index.vue'),
+    component: () => import('project_path/src/pages/analysis-header/analysis-header.vue'),
   },
   // //投注记录
   {

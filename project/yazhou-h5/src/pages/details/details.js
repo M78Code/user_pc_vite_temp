@@ -14,12 +14,14 @@ import { SessionStorage } from "src/core/utils/index.js"
 export const details_main = () => {
 const router = useRouter();
 const route = useRoute();
+  // 详情初始化接口数据处理
+  const MatchDataWarehouseInstance = reactive(MatchDataWarehouse_H5_Detail_Common)
+// 获取详情仓库matchDetail接口数据
 const get_detail_data = ref(MatchDataWarehouse_H5_Detail_Common.list_to_obj.mid_obj)
   // console.log("Store", store)
   // const state = store.getState()
   const matchDetailCtr = ref(MatchDetailCalss)
   let state_data = reactive({
-    matchDetailCtr: MatchDetailCalss,
     // 切换赛事时，重置玩法集请求次数计数
     get_category_list_req_count: 0,
     // refs['fixedHeight']
@@ -147,8 +149,7 @@ const get_detail_data = ref(MatchDataWarehouse_H5_Detail_Common.list_to_obj.mid_
     get_curr_tab_info: "get_curr_tab_info",
   });
 
-  // 详情初始化接口数据处理
-  const MatchDataWarehouseInstance = reactive(MatchDataWarehouse_H5_Detail_Common)
+
   const is_highlights = computed(() => {
     return lodash.get(state_data.get_curr_tab_info, "component") === "highlights";
   });
@@ -199,6 +200,11 @@ const get_detail_data = ref(MatchDataWarehouse_H5_Detail_Common.list_to_obj.mid_
     if (configValue != 1 || eventSwitch != 1 || !state_data.get_event_list.length) {
       return "";
     }
+
+    // 监听数据仓库版本号变更后更新数据get_detail_data
+    watch(() => MatchDataWarehouseInstance.value.data_version.version, () => {
+      get_detail_data.value = MatchDataWarehouse_H5_Detail_Common.list_to_obj.mid_obj
+    })
     // 主题后缀
     const suffix_theme = UserCtr.theme.includes("night") ? "2" : "";
     // y0后缀
@@ -736,10 +742,10 @@ const get_detail_data = ref(MatchDataWarehouse_H5_Detail_Common.list_to_obj.mid_
     // 克隆解决问题
     let cloneData = lodash.cloneDeep(state_data.detail_data);
     // set_detail_data(cloneData);
-    store.dispatch({
-      type: 'SET_DETAIL_DATA',
-      data: cloneData
-    });
+    // store.dispatch({
+    //   type: 'SET_DETAIL_DATA',
+    //   data: cloneData
+    // });
   };
   const set_native_detail_data = (str) => {
     // 判断是否有相对应的赛事
@@ -920,6 +926,7 @@ const get_detail_data = ref(MatchDataWarehouse_H5_Detail_Common.list_to_obj.mid_
     curr_active_tab,
     icon_replay,
     get_detail_data,
+    matchDetailCtr,
     details_click,
     change_go_back,
     details_refresh,
@@ -951,7 +958,6 @@ const get_detail_data = ref(MatchDataWarehouse_H5_Detail_Common.list_to_obj.mid_
     on_listeners,
     off_listeners,
     clear_timer,
-    MatchDataWarehouseInstance,
   };
 };
 

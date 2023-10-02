@@ -115,8 +115,7 @@
   </q-card>
 </template>
 <script setup>
-import { ref, toRefs, defineComponent, reactive, onMounted, onUnmounted, computed } from "vue"
-import lodash from 'lodash'
+import { reactive, computed } from "vue"
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import { format_odds, format_currency, formatTime } from "src/core/format/index.js"
 import { odds_type_name } from "src/core/constant/index.js"
@@ -163,8 +162,9 @@ const ref_data = reactive({
   odds_change_down: false, // 赔率下降
 })
 
+// 删除当前投注项
 const del_bet_item = () => {
-
+  BetData.bet_list_remove(props.item.playOptionsId)
 }
 </script>
 

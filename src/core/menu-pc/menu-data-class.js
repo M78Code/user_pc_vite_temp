@@ -98,17 +98,11 @@ class MenuData {
     this.hot_500_sport_1 = false;
     //是否可以多列玩法的菜单
     this.is_multi_column = false;
-    // 左侧菜单显示 menu bet history
-    this.layout_left_show = 'menu'
+    
     // 菜单版本变更
     this.menu_data_version = ref('12')
   }
 
-  // 设置左侧显示内容
-  set_layout_left_show(val){
-    this.layout_left_show = val
-    this.set_menu_data_version()
-  }
   // 设置 菜单的版本变化
   set_menu_data_version(){
     useMittEmit(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA)

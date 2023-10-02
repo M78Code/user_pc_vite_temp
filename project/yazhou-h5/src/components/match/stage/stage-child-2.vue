@@ -61,7 +61,7 @@ export default {
          *@param {String} 赛事阶段
          *@return {Undefined}
          */
-        if( mmp_arr.includes(n.mmp) ){
+        if(this.mmp_arr.includes(n.mmp) ){
           // 暂停  在篮球暂停时 ws推送的C102或者接口返回的cmec的值是事件编码 会出现很多种情况 不能作为附加的判断条件 只用判断mess的值即可
           if(n.mess == '0'){
             let num = 0;

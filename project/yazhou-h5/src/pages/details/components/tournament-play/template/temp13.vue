@@ -218,6 +218,7 @@ import odds_new from "project_path/src/pages/details/components/tournament-play/
 import {utils } from 'src/core/index.js';
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, ref } from "vue";
 import { useRoute } from "vue-router";
+import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 
 export default defineComponent({
   name: "temp13",
@@ -373,7 +374,7 @@ export default defineComponent({
       }
     }, 500);
     const go_to_bet = (ol_item) => {
-      $emit("bet_click_", { ol_item });
+      useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX,true);
     };
     onMounted(() => {
       // 原created

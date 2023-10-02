@@ -22,12 +22,13 @@
 <script setup>
 // import { mapGetters,mapMutations } from "vuex"
 import {api_betting, api_analysis} from 'src/api/index.js'
-import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
+import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/index.js"
 import { useRouter, useRoute } from "vue-router"
 import lodash from "lodash"
 import { i18n_t } from "src/boot/i18n.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { onMounted, onUnmounted, ref, watch } from "vue"
+import { MenuData } from "src/core/index.js";
 //国际化
 
 const router = useRouter()
@@ -36,7 +37,7 @@ const route = useRoute()
 const props = defineProps({
     // 详情Details接口的数据
     result_detail_data: Object,
-    tab_index: Number | String,
+    tab_index: [Number, String],
   }) 
   // 默认高亮显示第一个
 const item_index = ref(0)
@@ -47,8 +48,10 @@ const tab_item_list = ref([
     {id:2, text: i18n_t('match_info.select_event')}
   ])
 const list_data = ref([])
+const get_fewer = ref(1)
+const no_data = ref(false)
   // 监听csid的变化
- watch(() => 'result_detail_data.csid', (n,o) =>{
+ watch(() => props.result_detail_data.csid, (n,o) =>{
       // 切换顶部菜单，csid变化，触发tab事件
       result_tab(0, tab_item_list.value[0])
       get_list()
@@ -79,7 +82,7 @@ const tab_data_init = () => {
       // 精选赛事
       {id:2, text: i18n_t('match_info.select_event')}
     ];
-    if(get_menu_type == 28 && [100,101,102,103,104].includes(+result_detail_data.csid))  {
+    if(MenuData.menu_type == 28 && [100,101,102,103,104].includes(+props.result_detail_data.csid))  {
       tab_item_list.value =[
         // 所有赛果
         {id:1, text: i18n_t('match_info.all_result')}
@@ -88,19 +91,21 @@ const tab_data_init = () => {
   }
   // 点击高亮显示tab
 const result_tab = (index,tab_item) => {
+  console.error(index, tab_item);
     let search_term =route.query.search_term
     useMittEmit(MITT_TYPES.EMIT_CHANGE_TAB, true)
+    console.error(index, tab_item);
     if(item_index.value != index){
       item_index.value = tab_item.id === 4 ? 3 : index
     }
-    if(tab_item && tab_item.id == 3 && [100,101,102,103,104].includes(+result_detail_data.csid)){
+    if(tab_item && tab_item.id == 3 && [100,101,102,103,104].includes(+props.result_detail_data.csid)){
       index = 2
       item_index.value = 1
     }
-    if(result_detail_data && result_detail_data.mid){
-      let mid = result_detail_data.mid;
+    if(props.result_detail_data && props.result_detail_data.mid){
+      let mid = props.result_detail_data.mid;
       // todo 考虑优化此处代码
-      $router.replace({
+      router.replace({
         name:'match_result',
         params:{mid, index: item_index.value},
         query: {search_term: search_term}
@@ -111,7 +116,7 @@ const result_tab = (index,tab_item) => {
  const get_list = async() => {
     try {
       let params = {
-        matchId: matchid,
+        matchId: route.params.mid,
         timeType: 3,
         orderStatus: '1',
         orderBy: 2,
@@ -137,13 +142,13 @@ const result_tab = (index,tab_item) => {
         }
       }
     } catch (error) {
-      no_data = false;
+      no_data.value = false;
       console.error(error)
       useMittEmit(MITT_TYPES.EMIT_RESULT_LIST_LOADING, false)
       tab_data_init()
     } finally {
       const { configValue, eventSwitch } = lodash.get(UserCtr, 'user_info.merchantEventSwitchVO', {})
-      if (configValue == 1 && eventSwitch == 1 && lodash.get(result_detail_data, 'csid') == 1) {
+      if (configValue == 1 && eventSwitch == 1 && lodash.get(props.result_detail_data, 'csid') == 1) {
         get_football_replay(0)
       }
     }
@@ -154,7 +159,7 @@ const result_tab = (index,tab_item) => {
    */
 const get_football_replay = (event_code) => {
     const params = {
-      mid: lodash.get(result_detail_data, 'mid'),
+      mid: lodash.get(props.result_detail_data, 'mid'),
       device: 'H5',
       eventCode: event_code
     }
@@ -180,21 +185,21 @@ const get_football_replay = (event_code) => {
 const change_btn = () => {
     // 设置vuex变量值,当选中"所有赛果"时才可以点击
     if (item_index.value != 0) return;
-    if(get_fewer == 1 || get_fewer == 3){
-      set_fewer(2)
+    if(get_fewer.value == 1 || get_fewer.value == 3){
+      get_fewer.value = 2
     }else{
-      set_fewer(1)
+      get_fewer.value = 1
     }
   }
   // 刷新 注单记录----请求
 const update_order_list = () => {
-    if (tab_index === 2) {
+    if (props.tab_index === 2) {
       get_list()
     }
   }
   
 onUnmounted(() => {
-    set_fewer(1);
+  get_fewer.value = 1;
     off_()
   }) 
 </script>
@@ -204,6 +209,7 @@ onUnmounted(() => {
   height: 0.4rem;
   width: 100vw;
   max-width:3.78rem;
+  border-bottom: 1px solid #edeef1; //var(--q-gb-bg-c-13);
 }
 
 .menu-s {
@@ -293,7 +299,7 @@ onUnmounted(() => {
   letter-spacing: 0;
   text-align: center;
   font-weight: bold;
-
+  color: var(--q-gb-t-c-12);
   &:after {
     content: ' ';
     display: block;
@@ -304,6 +310,7 @@ onUnmounted(() => {
     transform: translateX(-50%);
     bottom: 0;
     border-radius: 1.5px;
+    background-color: var(--q-gb-bg-c-13);
   }
 }
 </style>

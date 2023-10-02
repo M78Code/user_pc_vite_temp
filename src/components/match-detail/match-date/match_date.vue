@@ -62,7 +62,6 @@
 import timer from "src/components/timer/timer.vue";
 import {utils,get_match_status,i18n_t,format_second_ms ,t,useMittEmit, useMittOn, MITT_TYPES,format_time_zone_millisecond} from 'src/core/index.js';
 import {is_eports_csid}  from "src/core/constant/util/csid-util";
-console.log(is_eports_csid,'is_eports_csid');
 import lodash from "lodash";
 
 // import { format_second_ms } from "src/core/format/index.js";

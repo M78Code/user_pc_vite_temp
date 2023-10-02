@@ -42,6 +42,7 @@ import headerSelect from 'project_path/src/components/site-header/header-select.
 // import timer from "project_path/src/components/site-header/timer.vue"
 import gift_package from '/yazhou-pc/image/common/activity_banner/gift_package.png'
 import { compute_css_variables } from "src/core/css-var/index.js"
+import BaseData from "src/core/base-data/base-data.js";
 
 const page_style = ref('')
 page_style.value = compute_css_variables({ category: 'component', module: 'site-header' })
@@ -158,12 +159,12 @@ function getActivityLists({ id = 1, type }) {
   }
 }
 /** 活动入口状态提示更新定时器 */
-const activityUpdateTimer = ref(null)
+let activityUpdateTimer = null
 /** 活动入口小红点定时拉取 */
 function activityTimer() {
-  clearInterval(activityUpdateTimer.value);
+  clearInterval(activityUpdateTimer);
   // 每隔15分钟拉取一次接口更新活动入口状态
-  activityUpdateTimer.value = setInterval(() => {
+  activityUpdateTimer = setInterval(() => {
     getActivityLists({ id: 1, type: "setInterval" });
   }, 900000);
 }
@@ -269,24 +270,36 @@ onUnmounted(menu_init_done_off)
  * @param {undefined} undefined
  */
 function menu_init_done() {
+  let nav_list = [...site_header_data.nav_list]
   // 如果有电竞
-  // TODO: 菜单
-  if (menu_obj.value.esports.menuId) {
-    if (site_header_data.nav_list.findIndex(i => i.id == 5) == -1) {
-      site_header_data.nav_list.splice(1, 0, { id: 5, tab_name: i18n_t("common.e_sports"), path: "/e_sport" });
+  const { is_mi_2000_open, is_mi_300_open } = BaseData
+  if (is_mi_2000_open) {
+    if (nav_list.findIndex(i => i.id == 5) == -1) {
+      nav_list.splice(1, 0, { id: 5, tab_name: i18n_t("common.e_sports"), path: "/e_sport" });
     }
   }
   // 如果有虚拟体育
-  if (menu_obj.value.virtual_sport.menuId) {
-    if (site_header_data.nav_list.findIndex(i => i.id == 3) == -1) {
-      let e_index = site_header_data.nav_list.findIndex(i => i.id == 5)
+  if (is_mi_300_open) {
+    if (nav_list.findIndex(i => i.id == 3) == -1) {
+      let e_index = nav_list.findIndex(i => i.id == 5)
       if (e_index == -1) {
         e_index = 1
       } else {
         e_index++
       }
-      site_header_data.nav_list.splice(e_index, 0, { id: 3, tab_name: i18n_t("common.virtuals"), path: "", class: 'tab_virtaul_sport' });
+      nav_list.splice(e_index, 0, { id: 3, tab_name: i18n_t("common.virtuals"), path: "", class: 'tab_virtaul_sport' });
     }
+  } else {
+    let index = nav_list.findIndex(i => i.id == 3)
+    if (index > -1) {
+      nav_list.splice(index,1)
+    }
+  }
+  let old_nav = JSON.stringify(site_header_data.nav_list)
+  let new_nav = JSON.stringify(nav_list)
+  // 对比菜单
+  if(old_nav != new_nav){
+    site_header_data.nav_list = [...nav_list]
   }
 }
 
@@ -346,11 +359,44 @@ function init_site_header(type = null) {
       timeOutIds.timer2 = setTimeout(activity_dialog, 5000);
     }
   }
-  // site_header_data.nav_list = nav_list;
+  site_header_data.nav_list = nav_list;
   emit('close_home_loading', false);
-  // menu_init_done()
+  // 菜单初始化 因为菜单是去轮询的 so
+  // 因为设置菜单是500s
+  set_menu_init_time(600)
+
+  init_reset_time = setTimeout(()=>{
+    // 本身商户的设置有缓存 所以频率太快
+    set_menu_init_time(5000)
+    clear_init_reset_time()
+  },2000)
 }
 onMounted(init_site_header)
+let init_reset_time = null
+function clear_init_reset_time () {
+  if (init_reset_time) {
+    clearTimeout(init_reset_time)
+    init_reset_time = null
+  }
+}
+onUnmounted(clear_init_reset_time)
+
+let menu_init_time = null
+function clear_menu_init_time () {
+  if (menu_init_time) {
+    clearTimeout(menu_init_time)
+    menu_init_time = null
+  }
+}
+onUnmounted(clear_menu_init_time)
+/**
+ * 定时请求菜单
+ */
+function set_menu_init_time(number){
+  clear_menu_init_time()
+  // 菜单初始化 因为菜单是去轮询的
+  menu_init_time = setInterval(menu_init_done,number)
+}
 
 /**
  * @description 导航路由跳转

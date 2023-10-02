@@ -6,7 +6,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";
 // 引入skt_data_info
 // import websocket_data from "project_path/src/mixins/websocket/data/skt_data_info.js";
 // 引入投注逻辑mixin
-// import betting from "project_path/src/mixins/betting/betting.js";MatchDataWarehouseInstance.set_quick_query_list_from_match_details(match_details_odds_info)
+// import betting from "project_path/src/mixins/betting/betting.js";
 import {MatchDataWarehouse_H5_Detail_Common,format_plays, MatchDetailCalss} from "src/core/index"; 
 // 引入redux
 import store from "src/store-redux/index.js";
@@ -24,6 +24,7 @@ export const category_info = (category_arr=[]) => {
   const route = useRoute();
   const store_state = store.getState()
   const category = ref(null)
+  const detail_match_list = ref(null)
   let component_data = reactive({
     // 测试数据
     match_info_list: [],
@@ -55,7 +56,9 @@ export const category_info = (category_arr=[]) => {
   // 赛事id
   const match_id = ref(component_data.matchInfoCtr.mid || route.params.mid);
     // 详情初始化接口数据处理
-  const MatchDataWarehouseInstance =reactive(MatchDataWarehouse_H5_Detail_Common)
+  const MatchDataWarehouseInstance =ref(MatchDataWarehouse_H5_Detail_Common)
+  const match_list_new_data = ref([])
+  const match_list_normal_data = ref([])
   // #TODO vuex
   // computed:{
   // ...mapGetters([
@@ -108,7 +111,11 @@ export const category_info = (category_arr=[]) => {
     return "gt_chpid_obj";
   });
   // ==================================
-  
+  // 监听详情数据仓库版本号更新odds_info数据
+  watch(() => MatchDataWarehouseInstance.value.data_version.version, () => {
+    match_list_normal()
+  })
+
   // 监听tab的ID变动时重新赋值
   watch(() => component_data.matchInfoCtr.current_category_id, () => {
     get_details_item.value = component_data.matchInfoCtr.current_category_id;
@@ -131,17 +138,23 @@ export const category_info = (category_arr=[]) => {
     return flag;
   });
   // 置顶列表
-  const match_list_new = computed(() => {
-    return component_data.match_info_list;
-  });
+  const match_list_new = () => {
+    // TODO: 还未调试待修改
+    match_list_new_data.value = component_data.match_info_list;
+  };
   // 非置顶列表
-  const match_list_normal = computed(() => {
+  const match_list_normal = () => {
     // return component_data.matchInfoCtr.listSortNormal();
-    return lodash.get(MatchDataWarehouseInstance, `list_to_obj.mid_obj[${route.params.mid}_].odds_info`);
-  });
+    match_list_normal_data.value = lodash.get(MatchDataWarehouseInstance.value, `list_to_obj.mid_obj[${route.params.mid}_].odds_info`);
+  };
 
   onMounted(() => {
     initEvent()
+    // 获取置顶列表数据
+    match_list_new()
+    // 获取非置顶列表数据
+    match_list_normal()
+    
   })
   // #TODO VUEX
   // methods: {
@@ -154,14 +167,16 @@ export const category_info = (category_arr=[]) => {
    *@description 设置外层容器的最小高
    */
   const change_minheight = () => {
+    debugger
     if (category.value) {
       // 0.44 + 0.4 + 0.4 = 1.24
       let val = [1, 2].includes(+get_detail_data.value.csid) ? 1.24 : 0.84;
 
       // 横屏 或 赛事盘口全部关闭 且无推荐赛事 时 不设置最小高度
+      
       if (
         get_is_hengping ||
-        (show_recommend.value && !$refs.detail_match_list)
+        (show_recommend.value && !detail_match_list.value)
       ) {
         category.value.style.minHeight = "unset";
       } else {
@@ -187,11 +202,11 @@ export const category_info = (category_arr=[]) => {
         obj_ = {};
       });
       if (flag1) {
-        set_fewer(1);
+        // set_fewer(1);
       } else if (flag2) {
-        set_fewer(2);
+        // set_fewer(2);
       } else {
-        set_fewer(3);
+        // set_fewer(3);
       }
     }
   };
@@ -210,7 +225,7 @@ export const category_info = (category_arr=[]) => {
     if (item && item.hl && item.hl.length) {
       item.hl.forEach((item2) => {
         if (item2.hid) {
-          MatchDataWarehouseInstance.list_to_obj.hl_obj[item2.hid] = item2;
+          MatchDataWarehouseInstance.value.list_to_obj.hl_obj[item2.hid] = item2;
           
         }
         if (item2 && item2.ol && item2.ol.length) {
@@ -367,7 +382,7 @@ export const category_info = (category_arr=[]) => {
         /************** 响应成功则继续往下走，失败则执行fun_catch **************/
         const res = await axios_api_loop(_obj);
         // 数据存入数据仓库
-        MatchDataWarehouseInstance.set_match_details(MatchDataWarehouseInstance.get_quick_mid_obj(params.mid) ,res.data)
+        MatchDataWarehouseInstance.value.set_match_details(MatchDataWarehouseInstance.value.get_quick_mid_obj(params.mid) ,res.data)
         // if (component_data.send_gcuuid != res.gcuuid) {
         //   return;
         // }
@@ -443,7 +458,7 @@ export const category_info = (category_arr=[]) => {
       details_data_cache[`${match_id.value}-${get_details_item.value}`] = temp;
       SessionStorage.set("DETAILS_DATA_CACHE", details_data_cache)
       // 切换tab时变更mid_obj里面的odds_info对象数据
-      MatchDataWarehouseInstance.set_match_details(MatchDataWarehouseInstance.get_quick_mid_obj(params.mid) ,temp)
+      MatchDataWarehouseInstance.value.set_match_details(MatchDataWarehouseInstance.value.get_quick_mid_obj(params.mid) ,temp)
       // set_details_data_cache(details_data_cache);
       
     } catch (err) {
@@ -718,7 +733,7 @@ export const category_info = (category_arr=[]) => {
         SessionStorage.set("DETAILS_DATA_CACHE", details_data_cache)
         
         // 切换tab时变更mid_obj里面的odds_info对象数据
-      MatchDataWarehouseInstance.set_match_details(MatchDataWarehouseInstance.get_quick_mid_obj(params.mid) ,temp)
+      MatchDataWarehouseInstance.value.set_match_details(MatchDataWarehouseInstance.value.get_quick_mid_obj(params.mid) ,temp)
         if (callback) callback();
       })
       .catch((err) => console.error(err))
@@ -848,8 +863,8 @@ const { emitters_off } = useMittEmitterGenerator([
   return {
     component_data,
     show_recommend,
-    match_list_new,
-    match_list_normal,
+    match_list_new_data,
+    match_list_normal_data,
     match_id,
     get_detail_data,
     get_details_item,

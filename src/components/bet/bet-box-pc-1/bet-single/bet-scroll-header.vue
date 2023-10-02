@@ -29,7 +29,7 @@
       </div>
 
        <!--右边的单关或者复式串关按钮-->
-      <template v-if="!BetData.is_virtual_bet && (MenuData.layout_left_show != 'bet_history')">
+      <template v-if="!BetData.is_virtual_bet && (LayOutMain_pc.layout_left_show != 'bet_history')">
         <div class="bet-series-box" @click="set_change_bet_single">
           <span class="bet-series-text" :class="!BetData.is_bet_single ? 'actions':'' ">{{$t('bet.bet_series')}}</span>
             <!--复式串关已改为串关-->
@@ -38,7 +38,6 @@
           </div>
         </div>
       </template>
-
     </div>
 
 
@@ -75,7 +74,7 @@ const bet_count = computed(() => {
 
 // 返回菜单列表
 const set_menu_back = val => {
-  MenuData.set_layout_left_show(val)
+  LayOutMain_pc.set_layout_left_show(val)
 }
 
 // 切换单关/串关
@@ -107,6 +106,7 @@ const set_change_bet_single = () => {
   cursor: pointer;
   background: var(--q-gb-bg-c-14);
   border-bottom: 1px solid var(--q-gb-bd-c-8);
+  border-right: 1px solid var(--q-gb-bd-c-6);
 
   /**返回菜单文字样式*/
   .back-text {

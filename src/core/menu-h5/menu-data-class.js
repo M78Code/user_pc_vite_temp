@@ -27,10 +27,6 @@ class MenuData {
     this.update = lodash.debounce(() => {
       that.update_time.value = Date.now();
     }, 16);
-
-
-
-
     this.menu_type = ref(0); //一级菜单 menu_type 很常用所以设定为ref
     //所有的菜单数据
     this.menu_list = SessionStorage.get("menu_list", []);
@@ -38,7 +34,6 @@ class MenuData {
     this.menu_lv3 = []; //3级菜单列表
     this.menu_lv4 = []; //4级菜单列表
     this.pop_list = []; //pop级菜单列表
-
     //================主列表用的  开始==================
     //当前的菜单
     this.current_menu = {};
@@ -65,13 +60,11 @@ class MenuData {
     //================主列表用的  结束==================
     //热门的
     this.hot_tab_menu = {};
-
     // 页脚菜单
     this.footer_sub_menu_id = ""; //页脚子菜单id
     this.footer_sub_changing = false //页脚子菜单变化 
     // 上一次选择的页脚菜单
     this.prev_footer_sub_menu_id = "";
-    this.init();
   }
   init() {
     //菜单数据有变化
@@ -83,9 +76,6 @@ class MenuData {
         this.update();
       }, 10)
     );
-    // setTimeout(() => {
-    BaseData.init(); //初始化菜单数据
-    // }, 0)
     //设置从缓存拿到的数据 到class
     this.set_cache_class(
       SessionStorage.get(Cache_key.CACHE_CRRENT_MEN_KEY, {}),
@@ -498,7 +488,7 @@ class MenuData {
    */
   is_virtual_sport() {
     return (
-      this.current_lv_1_menu?.mi == 8 ||
+      this.get_menu_type() == 8 ||
       (this.match_list_api_config || {}).sports == "vr"
     );
   }
@@ -514,7 +504,79 @@ class MenuData {
     }
     return false;
   }
-
+  // "1": "滚球",  "2": "今日", "3": "早盘",  "4": "冠军","5": "即将开赛", "6": "串关","7": "电竞",
+  // "8": "VR",// "28": "赛果", "30": "竞足",//
+  //内部方法
+  _is_cur_mi(mi, param) {
+    if (param) {
+      return mi == param
+    }
+    return this.get_menu_type() == mi
+  }
+  /**
+   * 是否选中了VR 
+   * mi [number|string] 要比对的值
+   * 没有传递对比当前菜单
+  */
+  is_vr(mi) {
+    return this._is_cur_mi(8, mi)
+  }
+  /**
+   * 是否选中了赛果
+   *  mi [number|string] 要比对的值
+  */
+  is_results(mi) {
+    return this._is_cur_mi(28, mi)
+  }
+  /**
+   * 是否选中了早盘
+   *  mi [number|string] 要比对的值
+  */
+  is_zaopan(mi) {
+    return this._is_cur_mi(3, mi)
+  }
+  /**
+   * 是否选中了今日
+   *  mi [number|string] 要比对的值
+  */
+  is_today(mi) {
+    return this._is_cur_mi(2, mi)
+  }
+  /**
+   * 是否选中了滚球
+   *  mi [number|string] 要比对的值
+  */
+  is_scroll_ball(mi) {
+    return this._is_cur_mi(1, mi)
+  }
+  /**
+   * 是否选中了冠军
+   *  mi [number|string] 要比对的值
+  */
+  is_kemp(mi) {
+    return this._is_cur_mi(4, mi)
+  }
+  /**
+   * 是否选中了电竞
+   *  mi [number|string] 要比对的值
+  */
+  is_export(mi) {
+    return this._is_cur_mi(7, mi)
+  }
+  /**
+   * 是否选中了串关
+   *  mi [number|string] 要比对的值 没有传递对比当前菜单
+  */
+  is_mix(mi) {
+    return this._is_cur_mi(6, mi)
+  }
+  /**
+   * 是否选中了竞足
+   *  mi [number|string] 要比对的值
+  */
+  is_jinzu(mi) {
+    return this._is_cur_mi(30, mi)
+  }
   // 电竞菜单csid
   menu_csid(mi) {
     if (mi) {
@@ -737,10 +799,10 @@ class MenuData {
     this.set_cache_class({
       current_lv_1_menu,
       current_lv_1_menu_i,
-      menu_type: current_lv_1_menu.mi, //设置一级菜单menutype
+      menu_type: current_lv_1_menu?.mi, //设置一级菜单menutype
     });
     //设置二级菜单 赛果和电竞是不需要設置二級菜單的
-    switch (current_lv_1_menu.mi) {
+    switch (current_lv_1_menu?.mi) {
       case 28:
         await this.get_results_menu();
         break;
