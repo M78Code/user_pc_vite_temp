@@ -142,7 +142,7 @@ const compute_style_template_by_matchinfo_template0_zuqiu = (
  * @param {String|Number} mid 赛事id
  */
 export const update_match_cur_card_style = (mid) => {
-	let card_obj = MatchListCardData.all_card_obj[mid+'_'] || {};
+	let card_obj = MatchListCardData.all_card_obj[mid+'_'];
 	if (!card_obj.is_fold_tab_play) {
 		card_obj.tab_play_total_height =
 			card_obj.tab_play_title_height + get_tab_play_height(-1);
@@ -213,7 +213,7 @@ const compute_style_template_by_matchinfo_template18 = (match) => {
  * @param {number} mid 折叠的赛事ID
  */
 export const fold_tab_play = (mid) => {
-	let card_obj = MatchListCardData.all_card_obj[mid+'_'] || {};
+	let card_obj = MatchListCardData.all_card_obj[mid+'_'];
 	card_obj.is_fold_tab_play = !card_obj.is_fold_tab_play;
 	if (card_obj.is_fold_tab_play) {
 		// 角球已折叠  角球区域总高度 等于角球标题高度

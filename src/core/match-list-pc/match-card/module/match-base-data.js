@@ -1,5 +1,6 @@
 import { MatchDataWarehouse_PC_List_Common as MatchListData } from 'src/core/index.js'
 import MatchListCardData from "./match-list-card-data-class.js";
+import matchListCardDataClass from '../match-list-card-class.js';
 
 
   /**
@@ -88,9 +89,9 @@ import MatchListCardData from "./match-list-card-data-class.js";
       })
       if(match_list.length > 0){
         // 设置列表数据仓库
-        MatchListData.match_list_data.compute_match_list_all_data(match_list,true)
+        MatchListData.set_list(match_list,true)
         // 重新计算赛事样式
-        this.recompute_match_list_style_obj_and_match_list_mapping_relation_obj_by_matchs(mids)
+        matchListCardDataClass.recompute_match_list_style_obj_and_match_list_mapping_relation_obj_by_matchs(mids)
       }
     }
   }

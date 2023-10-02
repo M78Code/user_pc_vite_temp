@@ -7,6 +7,7 @@
       <!---串关投注项部分-->
       <bet-mix-item
         :item="item"
+        :index="index"
         :key="`${item}-${index}`"
         v-for="(item, index) in BetData.bet_s_list"
       ></bet-mix-item>

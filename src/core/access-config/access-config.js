@@ -41,7 +41,6 @@ class GlobalAccessConfig {
     this.set_access_config()
     // 代码内构建打入的  以及 进入参数 计算出来的一些开关
     this.set_enter_params_switch()
-    this.init()
   }
   /**
    * 客户端-获取紧急开关配置

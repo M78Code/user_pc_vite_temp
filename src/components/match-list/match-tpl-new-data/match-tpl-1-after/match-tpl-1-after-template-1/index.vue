@@ -119,7 +119,7 @@ import { MatchProcessFullVersionWapper as MatchProcess } from 'src/components/ma
 import { MatchBasisInfo1FullVersionWapper as BasisInfo1 } from 'src/components/match-list/match-basis-info/template-1/index.js'
 import { MatchBasisInfo4FullVersionWapper as BasisInfo4 } from 'src/components/match-list/match-basis-info/template-4/index.js'
 import { MatchHandicapFullVersionWapper as MatchHandicap } from 'src/components/match-list/match-handicap/index.js'
-import { MatchMediaFullVersionWapper as MatchMedia } from 'src/components/match-list/match-media/index.js'
+import MatchMedia from 'src/components/match-list/match-media/index.vue'
 import { CommonTabFullVersionWapper as Tab } from "src/components/tab/common-tab/index.js";
 
 const props = defineProps({

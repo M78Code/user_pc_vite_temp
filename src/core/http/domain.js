@@ -74,6 +74,7 @@ import {
   SessionStorage,
   LocalStorage,
   format_api_to_obj,
+  UserCtr,
 } from "src/core/index.js";
 // import {  } from "src/core/format/index.js"
 import STANDARD_KEY from "src/core/standard-key";
@@ -108,7 +109,7 @@ const DOMAIN_API_STORAGE_KEY = STANDARD_KEY.get("domain_api_01");
 
 const BUILDIN_CONFIG = window.BUILDIN_CONFIG;
 //当前目标环境
-const { CURRENT_ENV, NODE_ENV, OSS_FILE_ARR, OSS_FILE_NAME, TARGET_PROJECT_NAME} = BUILDIN_CONFIG;
+const { CURRENT_ENV, NODE_ENV, OSS_FILE_ARR, OSS_FILE_NAME, TARGET_PROJECT_NAME } = BUILDIN_CONFIG;
 // 判断是否PC项目
 const IS_PC = TARGET_PROJECT_NAME.includes('pc')
 
@@ -146,9 +147,9 @@ class AllDomain {
     this.force_reload_to_use_oss_file_api = false;
     //  H5,PC 差异点
     //oss 文件内 视频播放地址
-    this.live_domains_oss_path_file = `live_domains.${IS_PC?'pc':'h5'}`;
+    this.live_domains_oss_path_file = `live_domains.${IS_PC ? 'pc' : 'h5'}`;
     //api  内 视频播放地址
-    this.live_domains_oss_path_api = `live_${IS_PC?'pc':'h5'}`;
+    this.live_domains_oss_path_api = `live_${IS_PC ? 'pc' : 'h5'}`;
   }
   /**
    * @description: 构造函数
@@ -1133,11 +1134,11 @@ class AllDomain {
       img.onload = function () {
         // 加载图片
         if (this.complete == true) {
+          UserCtr.set_common_img_domain(domain) //设置用户图片
           BUILDIN_CONFIG.DOMAIN_RESULT.img_domains = lodash.uniq([
             domain,
             ...BUILDIN_CONFIG.DOMAIN_RESULT.img_domains,
           ]);
-
           resolve(true);
           img = null;
         }

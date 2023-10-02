@@ -42,12 +42,12 @@ export default {
     //   tid,
     //   csid
     // });
-
-    // MatchDetailCalss.set_score_button({
-    //   mid,
-    //   tid,
-    //   csid
-    // })
+    //跳转设置calss mid
+    MatchDetailCalss.set_score_button({
+      mid,
+      tid,
+      csid
+    })
 
     router.push({
       name: route_name,

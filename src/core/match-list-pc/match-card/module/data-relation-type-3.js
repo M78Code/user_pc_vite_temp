@@ -179,7 +179,7 @@
       all_card_obj['mid_'+match.mid] = match_style_obj
 
     })
-
+    console.log('进来了 几次');
     // 合并所有卡片样式对象
     lodash.merge(MatchListCardData.all_card_obj,all_card_obj)
     // 赛种ID 到卡片key的 映射对象

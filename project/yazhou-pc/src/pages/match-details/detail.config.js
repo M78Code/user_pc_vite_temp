@@ -13,6 +13,7 @@ import { useMittEmit, useMittOn, MITT_TYPES ,useMittEmitterGenerator} from "src/
 import { useGetGlobal } from "./global_mixin";
 import lodash from "lodash";
 import details from "src/core/match-detail/match-detail-pc/match-detail";
+import  { computed_background } from  "src/core/constant/config/csid.js"
 // console.log(details,);
 // 搜索操作相关控制类
 import search from "src/core/search-class/search.js";
@@ -124,7 +125,7 @@ export const useGetConfig = () => {
     () => state.sportId,
     (res) => {
       
-      let img = details.computed_background(String(res));
+      let img = computed_background(String(res));
       if (img) state.background_img = img;
     }
   );
@@ -270,7 +271,6 @@ export const useGetConfig = () => {
           state.is_request = false;
           // 通知列表右侧详情，获取近期关注数据
           // useMittEmit(MITT_TYPES.EMIT_GET_HISTORY);
-          // useMittEmit("get_history");
           const code = lodash.get(res, "code");
           const data = lodash.cloneDeep(lodash.get(res, "data"));
           console.log(res,'data');

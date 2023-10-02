@@ -30,6 +30,7 @@
     import MenuData from "src/core/menu-pc/menu-data-class.js";
     import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
     import { compute_sport_id  } from 'src/core/constant/index.js'
+import { nextTick } from 'vue';
 
   /**
    * @Description 更新所有未折叠 但是赛事没数据的 赛事
@@ -39,7 +40,7 @@
     // 需要更的赛事ID列表
     let update_mids_arr = []
     all_league_container_keys_arr.forEach( card_key => {
-      let card_obj = MatchListCardData.all_card_obj[card_key] || {}
+      let card_obj = MatchListCardData.all_card_obj[card_key];
       // 判断联赛是否显示
       if(card_obj.is_show_card){
         let mids_arr = card_obj.mids.split(',')
@@ -187,7 +188,7 @@
           // 可能未来要加上他自己下面的所有赛事的内容高度
         }
         temp_card_obj = all_card_obj[card_key]
-
+        console.log('1111');
         if(!is_ws_call){
           // 非ws调用 设置折叠数据
           Object.assign(temp_card_obj,fold_template)
@@ -215,7 +216,6 @@
           let match = MatchListData.list_to_obj.mid_obj[mid+'_']
           let match_style_obj = compute_style_template_by_matchinfo(match, template_id, mid)
           all_card_obj[mid+'_'] = match_style_obj
-
           league_card_total_height += match_style_obj.total_height
           // 设置父级卡片key
           match_style_obj.parent_card_key = card_key
@@ -250,16 +250,16 @@
         temp_match_status_title_card_obj.match_count = match_status_type_match_count
       }
     })
-
+    // MatchListCardData.set_all_card_obj(all_card_obj)
     // 合并所有卡片样式对象
-    lodash.merge(MatchListCardData.all_card_obj,all_card_obj)
+    lodash.merge(MatchListCardData.all_card_obj,   all_card_obj) 
+    console.log(MatchListCardData.all_card_obj);
     // 已开赛 到卡片key的 映射对象
     MatchListCardData.play_to_card_key_arr = play_to_card_key_arr
     // 未开赛 到卡片key的 映射对象
     MatchListCardData.no_start_to_card_key_arr = no_start_to_card_key_arr
     // 所有卡片列表
     MatchListCardData.match_list_card_key_arr =  match_list_card_key_arr 
-
     MatchListCardData.set_list_version()
     // 遍历所有联赛容器卡片
     all_league_container_keys_arr.forEach( card_key => {
@@ -280,7 +280,6 @@
         // 卡片不显示 设置总高度为0
         league_container_card_obj.card_total_height = 0
       }
-
       // 设置联赛标题卡片
       if(league_title_card_obj.is_league_fold){
         // 联赛折叠 设置高度为折叠的高度
@@ -298,7 +297,6 @@
         league_title_card_obj.card_total_height = 0
       }
     })
-
     // 如果是ws调用
     if(is_ws_call){
       // 设置新增球种标题卡片折叠数据

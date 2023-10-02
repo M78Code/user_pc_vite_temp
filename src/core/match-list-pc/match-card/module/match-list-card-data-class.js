@@ -71,6 +71,11 @@ class MatchListCardDataClass {
     this.match_list_style_info.value = payload;
   }
 
+  set_all_card_obj(payload) {
+    this.all_card_obj = payload
+    console.log(this.all_card_obj, payload);
+  }
+
   set_list_version() {
     this.list_version.value =   Date.now() ;
   }

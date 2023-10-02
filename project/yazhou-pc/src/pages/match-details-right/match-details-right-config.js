@@ -3,7 +3,7 @@ import { api_details } from "src/api";
 import lodash from "lodash";
 import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache.js";
 import { update_match_time } from "src/core/bet/common-helper/module/common-sport.js";
-
+import  { computed_background } from  "src/core/constant/config/csid.js"
 import {
   loadLanguageAsync,
   compute_css,
@@ -17,7 +17,8 @@ import {
   utils,
   format_sort_data,
   useMittEmitterGenerator,
-  useMittEmit
+  useMittEmit,
+  MatchDetailCalss
 } from "src/core/index.js";
 //moni
 // import MenuData from "./menuData"
@@ -114,6 +115,9 @@ export const useRightDetails = (props) => {
    * 调用后通过传参判断是否是 ws 调用
    */
   const m_init = (param = { is_ws: false }) => {
+    //给仓库类设置id
+    MatchDetailCalss.set_score_button(param)
+    allData.details_params = param
     clearTimeout(allData.get_match_details_timer);
     let { mid, is_ws } = param;
     // 如果有传参，并且不是 ws 调用
@@ -239,11 +243,11 @@ export const useRightDetails = (props) => {
     set_match_detail_count: null, //暂时不知道数据是从哪里定义的  todo
     details_params: {
       //赛事参数
-      media_type: "info",
-      mid: "2771987",
-      sportId: "1",
-      tid: "1188757",
-      time: 1695546310766,
+      media_type: "",
+      mid: "",
+      sportId: "",
+      tid: "",
+      time: "",
     },
     match_sort: 1,
     cur_menu_type: { pre_name: "", type_name: "today" }, //todo
@@ -538,7 +542,7 @@ export const useRightDetails = (props) => {
           });
       }
       ["new_empty", "all_empty"].includes(allData.handicap_state) &&
-        useMittEmit("get_history");
+      useMittEmit(MITT_TYPES.EMIT_GET_HISTORY);
     };
     let api_axios_flg = "match_odds_Info2";
     if (
@@ -805,7 +809,7 @@ export const useRightDetails = (props) => {
             // 请求成功就清零错误次数
             allData.countMatchDetailErr = 0;
             // 设置当前赛种的背景图
-            allData.background_img = detailUtils.computed_background(data.csid);
+            allData.background_img = computed_background(data.csid);
             // mmp状态修正
             if (
               [
@@ -1147,9 +1151,9 @@ export const useRightDetails = (props) => {
     // off todo
     // off("check_plays_show", this.check_plays_show);
     // off("close_tips", this.close_tips);
-    utils.del(this.ol_obj);
-    utils.del(this.hl_obj);
-    this.debounce_throttle_cancel(refresh());
+    // utils.del(this.ol_obj);
+    // utils.del(this.hl_obj);
+    // this.debounce_throttle_cancel(refresh());
     allData.refresh_loading_timer &&
       clearTimeout(allData.refresh_loading_timer);
     // 站点 tab 休眠状态转激活

@@ -127,7 +127,7 @@ const on_footer_change = ({ height }) => {
 const set_footer_position = () => {
   // 监听滚动变化触发逻辑
   if (props.observer_middle) {
-    let left_height = LayOutMain_pc.layout_content_height + 'px';
+    let left_height = LayOutMain_pc.layout_content_height;
     //mac上面
     let dis = 5;
     if (/macintosh|mac os x/i.test(navigator.userAgent)) {
@@ -221,7 +221,7 @@ onUnmounted(() => {
   .q-scrollarea__content {
     width: 100%;
     border-right: 1px solid var(--q-gb-bd-c-6);
-    //border-radius: 0 6px 0 0;
+    border-radius: 0 6px 0 0;
     background: var(--q-gb-bg-c-11);
   }
 }

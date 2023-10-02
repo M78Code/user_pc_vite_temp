@@ -1,11 +1,12 @@
 <template>
   <!--当前投注-->
   <div class="relative-position bet-list-info">
-    <!-- 投注栏 -->
+    <!-- 投注栏 1 -->
     <v-scroll-area ref="ref_bet_scroll_area_bet_list" position="bet_list" :observer_area="3" :observer_middle="true"
       class="bet-list">
       <!-- 滚动：头部 --------------------------------->
       <template v-slot:header>
+        <div class="left-bg-box"></div>
         <bet-scroll-header />
       </template>
       <div>
@@ -90,6 +91,14 @@ const toggle_merge = () => {
 </style>
 
 <style scoped lang="scss">
+.left-bg-box{
+  width: 100%;
+  height: 80px;
+}
+.bet-list-info{
+  width: 100%;
+  height: 100%;
+}
 .bet-mode-zone {
   display: flex;
   flex-wrap: nowrap;
