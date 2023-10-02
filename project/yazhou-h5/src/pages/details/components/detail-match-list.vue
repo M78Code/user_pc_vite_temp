@@ -5,13 +5,13 @@
 -->
 <template>
 <div class="choose-carefully-wrapper" :style="{height:container_height=='auto'?'auto':`${container_height}px`}">
-  <!-- <match-main :class="invoke?invoke:''" invok_source="detail_match_list" /> -->
+  <match-main :class="invoke?invoke:''" invok_source="detail_match_list" />
 </div>
 </template>
 
 <script>
 // import common from "src/project/mixins/constant/module/common.js"
-// import match_main from "src/project/pages/match-list/match_main.vue"
+import match_main from "project_path/src/pages/match-list/index.vue"
 
 export default {
   // mixins:[common],
@@ -32,7 +32,7 @@ export default {
     }
   },
   components:{
-    // "match-main":match_main,
+    "match-main":match_main,
   }
 }
 </script>

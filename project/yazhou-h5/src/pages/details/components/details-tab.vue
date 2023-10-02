@@ -76,8 +76,8 @@ export default defineComponent({
       return route.params.mid || get_detail_data.mid
     });
     
-    watch(() => matchDetailCtr.value.details_data_version, (val, old) => {
-      console.error(MatchDetailCalss.current_category_id);
+    watch(() => MatchDetailCalss.details_data_version.version, (val, old) => {
+      console.error(MatchDetailCalss.details_data_version.version ,'sss');
       current_category_id.value = lodash.get(MatchDetailCalss, "current_category_id", SessionStorage.get("DETAIL_TAB_ID"))
     })
    
