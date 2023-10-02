@@ -475,9 +475,9 @@ const get_match_detail_base = (
             err_tips(err);
           }
         });
-    }
+    }MITT_TYPES.EMIT_GET_HISTORY
     ["new_empty", "all_empty"].includes(handicap_state.value) &&
-      useMittEmit("get_history");
+    useMittEmit(MITT_TYPES.EMIT_GET_HISTORY);
   };
   let api_axios_flg = "match_odds_Info2";
   if (
