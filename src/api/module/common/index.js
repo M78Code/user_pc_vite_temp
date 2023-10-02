@@ -150,7 +150,7 @@ export const get_matchDetail_getMatchDetailByTournamentId = (params, config, url
 // 赛事详情页面接口（christion）
 export const get_matchDetail_MatchInfo = (params, config, url = "/v1/m/matchDetail/getMatchDetail") => http.get(`${prefix_job}${url}`, params, config)
 // 赛果详情页面接口（christion）
-export const get_matchResultDetail_MatchInfo = (params, config, url = "/v1/m/matchDetail/getResultMatchDetailPB") => http.get(`${prefix}${url}`, params, config)
+export const get_matchResultDetail_MatchInfo = (params, config, url = "/v1/m/matchDetail/getResultMatchDetail") => http.get(`${prefix_job}${url}`, params, config)
 
 // 电竞赛事详情页面接口（start）
 export const get_DJ_matchDetail_MatchInfo = (params, config, url = "/v1/m/matchDetail/getESMatchDetail") => http.get(`${prefix}${url}`, params, config)

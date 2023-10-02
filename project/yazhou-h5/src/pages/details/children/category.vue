@@ -98,7 +98,7 @@ import { useRouter, useRoute } from "vue-router";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 // import { Level_one_detail_odd_info } from "../category-list.js";
 import { category_info } from "./category.js"
-import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
+import { reactive, nextTick, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 export default defineComponent({
   name: "category",
   // #TODO mixins
@@ -244,9 +244,9 @@ export default defineComponent({
       }
 
       // 原mounted
-      // $nextTick(() => {
-      //   change_minheight()
-      // })
+      nextTick(() => {
+        change_minheight()
+      })
     })
 
     /**

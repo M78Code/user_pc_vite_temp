@@ -155,7 +155,6 @@ export default defineComponent({
   },
   setup(props, evnet) {
     const store_state = store.getState()
-    console.error(props.item_data);
     // #TODO vuex
     // computed: {
     //   ...mapGetters(["get_bet_list","get_detail_data", 'get_is_hengping'])
