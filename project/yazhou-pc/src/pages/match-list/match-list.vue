@@ -8,7 +8,7 @@
   :data-version="MatchListCardDataClass.list_version"
     >
     <div class="test-info-wrap" v-if="GlobalAccessConfig.other.wsl">
-   {{ MatchListCardDataClass.list_version }}--   {{ load_data_state }}-- length--- {{ MatchListCardDataClass.list_version }}  {{ match_list_card_key_arr.length }}
+   {{ MatchListCardDataClass.list_version }}--   {{ load_data_state }}-- length---  {{ match_list_card_key_arr.length }}
     </div>
     <!-- <div class="test-info-wrap" v-if="GlobalAccessConfig.other.wsl">
       <div>{{ menu_config.mid_menu_result.match_tpl_number }}</div>
