@@ -133,7 +133,7 @@ let match_style_obj = MatchListCardDataClass.all_card_obj[lodash.get(props, 'car
 const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`].width_config
 // 获取菜单类型
 if (!lodash.get(props, 'card_style_obj.league_obj.csid') && ['1', '500'].includes(menu_config.menu_root)) {
-  useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST, true)
+  useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST)
 }
 
 const is_HDP = computed(() => {
@@ -266,15 +266,13 @@ const set_fold = () => {
   if (props.card_style_obj.is_league_fold && ([2, 3].includes(menu_config.menu_root) || menu_config.is_esports())) {
     // 设置赛事基础数据
     MatchListCardData.set_match_basic_data(props.card_style_obj)
+    console.log('props.card_style_obj', props.card_style_obj);
     let params = {
-      mids: props.card_style_obj.league_obj.mids.split(','),
+      mids: props.card_style_obj.league_obj.mids_info,
       inner_param: 1
     };
-    console.log('paramsparams', params);
     // 拉取http请求
-    useMittEmit(MITT_TYPES.EMIT_API_BYMIDS, params, status => {
-      MatchListCardData.set_league_card_load_data_status(props.card_style_obj, status)
-    })
+    useMittEmit(MITT_TYPES.EMIT_API_BYMIDS, params)
   }
   console.log('11111111');
   MatchListCardData.recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_tid_zhedie(props.card_style_obj)
@@ -399,9 +397,9 @@ const set_fold = () => {
       }
     }
 
-    .play-name div {
-      display: none;
-    }
+    // .play-name div {
+    //   display: none;
+    // }
 
     .league-match-count {
       display: block;

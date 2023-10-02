@@ -46,7 +46,7 @@ class MenuData {
     this.previous_lv_2_menu_i = 0;
     // 二级菜单 滚球下边的一个按钮   "全部"按钮
     this.get_sport_all_selected = computed(() => {
-      return this.menu_type.value == 1 && lodash.isArray(this.current_lv_2_menu);
+      return this.menu_type.value == 1 && lodash.isArray(this.current_lv_2_menu) && this.update_time;
     });
     //当前的菜单 lv2  注意 滚球 二级菜单 有一个【全部】选项 get_sport_all_selected
     this.current_lv_2_menu = undefined;
@@ -76,6 +76,8 @@ class MenuData {
         this.update();
       }, 10)
     );
+    //初始化菜单数据
+    BaseData.init()
     //设置从缓存拿到的数据 到class
     this.set_cache_class(
       SessionStorage.get(Cache_key.CACHE_CRRENT_MEN_KEY, {}),
@@ -91,7 +93,7 @@ class MenuData {
    * @description 设置热门tab
    * @param {*} 热门下的菜单信息 
    */
-  set_hot_tab_menu (menu) {
+  set_hot_tab_menu(menu) {
     this.hot_tab_menu = menu
   }
   /**
@@ -933,7 +935,7 @@ class MenuData {
   //获取二级菜单 menuid
   get_current_sub_menuid() {
     //二级菜单可能有个选中 全部 此刻 当前菜单应该是数组
-    if (this.get_sport_all_selected.value) {
+    if (this.get_sport_all_selected.value && lodash.isArray(this.current_lv_2_menu)) {
       return this.current_lv_2_menu.map((item) => {
         return item.mi || item.menuId;
       }).join(',');

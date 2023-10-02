@@ -17,7 +17,7 @@
     </div>
 
     <!-- 顶部切换 下边的内容组件  @hook:mounted="get_hot_tab_item_handle" -->
-    <component :is="currentContent"></component>
+    <component :is="currentContent" :key="currentContent"></component>
     <!-- <hot /> -->
   </div>
 </template>
@@ -97,11 +97,6 @@ export default defineComponent({
       //地址栏带有菜单和赛事id参数的话，跳转到对应的列表或者赛事详情页
       // to_corresponding_route()
       // 从列表页或者详情页返回首页时, 下划线判断是否要动画
-      tab_click({
-        index: 1,
-        name: i18n_t("home.hot"),
-        component: "hot",
-      }, false, false);
       if (Object.keys(lodash.get(homeReducer, "home_tab_item")).length > 0) {
         nextTick(() => {
           // 如果本地有记录，则跳转到本地记录的原来的位置
@@ -217,7 +212,6 @@ export default defineComponent({
      */
     const tab_click = (tab, need_animation, hand) => {
       if (tab.index == tabIndex.value || utils.is_time_limit(800)) {
-        console.error("ssss", tab);
         // 切换多语言需处理选中效果 样式
         if (tab.index == 0) {
           calc_tab_select(tab);

@@ -126,7 +126,7 @@ const emit = defineEmits(["sort_index", "click"]);
  * @return {undefined} undefined
  */
 const set_top = (type) => {
-  emit("sort_index", type, this.index, this.isplus);
+  emit("sort_index", type, props.index, props.isplus);
 };
 
 /**

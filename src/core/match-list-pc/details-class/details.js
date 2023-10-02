@@ -48,12 +48,6 @@ export default {
       MatchDataWarehouse_target:MatchDetailsData,
       match
     })
-     //跳转设置calss mid
-    MatchDetailCalss.set_score_button({
-      mid,
-      tid,
-      csid
-    })
     router.push({
       name: route_name,
       params: {

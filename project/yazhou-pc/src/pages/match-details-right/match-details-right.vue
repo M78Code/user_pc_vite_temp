@@ -26,7 +26,7 @@
       <!-- 滚动区域 -->
       <v-scroll-area
         :observer_area="1"
-        @on_scroll="useMittOn(MITT_TYPES.RIGHT_DETAILS_ON_SCROLL, $event)"
+        @on_scroll="useMittOn(MITT_TYPES.EMIT_RIGHT_DETAILS_ON_SCROLL, $event)"
         ref="v_scroll"
         page_type="right_details"
         class="right_details_wrap"

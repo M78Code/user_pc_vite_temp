@@ -127,17 +127,17 @@
           <div class="name">{{ $t("setting_menu.chan_lan") }}</div>
 
           <div class="option option3" @click="is_show_lang = !is_show_lang">
-            <i class="lang-icon yb_mr4" :style="compute_css('menu-lang')" :class="`lang-${get_lang}`"></i>
+            <i class="lang-icon yb_mr4" :style="compute_css('menu-lang')" :class="`lang-${lang}`"></i>
             <div class="op-icon op-icon2" :style="compute_css('menu-set-sort')"></div>
             <div class="op-item active" style="font-size: 0.14rem">
               <!-- {{ $t("setting_menu.lang") }} -->
-              {{ lang_obj[get_lang] }}
+              {{ lang_obj[lang] }}
             </div>
           </div>
         </div>
         <div class="lang-wrap" :class="{ active: is_show_lang }">
           <template v-for="(   item, index   ) in    lang_obj   " :key="index">
-            <div class="lang-item" :class="{ active: get_lang == index }" @click="setting_language_handle(index)">
+            <div class="lang-item" :class="{ active: lang == index }" @click="setting_language_handle(index)">
               <i class="lang-icon yb_mr4" :style="compute_css('menu-lang')" :class="`lang-${index}`"></i>
               <div class="col">{{ item }}</div>
               <div class="icon"></div>
@@ -158,7 +158,7 @@
         <div class="set-item">
           <div class="icon set-icon-7" :style="compute_css('menu-left-menu-image', 7)"></div>
           <div class="name">{{ $t("setting_menu.skin") }}</div>
-          {{ get_theme }}
+          {{ theme }}
           <div class="skin-wrap">
             <div class="skin-icon skin-icon1" :style="compute_css('menu-theme-skin1')" @click="UserCtr.set_theme('day')">
             </div>
@@ -181,12 +181,12 @@ import { debounce } from "lodash";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { loadLanguageAsync, compute_css, useMittOn, MITT_TYPES, MenuData, UserCtr } from "src/core/index.js";
 import { useRoute, useRouter } from "vue-router";
-
+import { lang, sort_type, theme, standard_edition, user_info } from "project_path/src/mixin/userctr";
 
 let route = useRoute();
 let router = useRouter();
 
-const user_info = ref(UserCtr.user_info)
+
 
 // 是否显示设置菜单
 let is_show_menu = ref(false);
@@ -198,27 +198,19 @@ let is_loading_balance = ref(false);
 //弹出菜单宽度
 let calc_width = ref(260);
 let wrapper_effect = ref(true);
-const get_lang = ref(UserCtr.lang)// 语言
-const get_theme = ref(UserCtr.theme)// 语言
-const standard_edition = ref(UserCtr.standard_edition)//标准版本2  简易版1
+
+
 const bet_is_accept = ref(BetData.bet_is_accept)// 赔率
 const cur_odd = ref(BetData.cur_odd)// 盘口
 const lang_obj = ref(get_lang_list())//语言列表
 const { menu_type } = MenuData; //菜单选中项
 const is_champion = ref(BetData.get_is_champion())//是否冠军玩法
-const sort_type = ref(UserCtr.sort_type)// 2时间排序 1热门排序
-
 
 /**
  * 监听用户信息改变
 */
 watch(UserCtr.user_version, () => {
-  get_lang.value = UserCtr.lang//用户语言
-  user_info.value = UserCtr.user_info;
-  get_theme.value = UserCtr.theme;
-  standard_edition.value = UserCtr.standard_edition//标准版本2  简易版1
   lang_obj.value = get_lang_list() //获取语言列联表
-  sort_type.value = UserCtr.sort_type// 2时间排序 1热门排序
 })
 /**
  * 监听投注信息改变
@@ -247,7 +239,7 @@ function get_lang_list() {
   };
   let obj2 = {};
   try {
-    let lang_str = UserCtr.user_info.languageList;
+    let lang_str = user_info.languageList;
     if (lang_str) {
       let lang_arr = lang_str.split(",");
       Object.keys(obj).forEach((item) => {
@@ -397,6 +389,7 @@ const get_balance = () => {
 
 <style lang="scss" scoped>
 @import url(project_path/src/css/pages/set-menu.scss);
+
 .set-menu {
   .filter-icon-wrapper {
     width: 0.18rem;
