@@ -206,7 +206,7 @@ const dj_back_type = ref("lol")
 const { menu_type, update_time, } =
   MenuData;
 const esport = computed(() => {
-  return menu_type.value == 7;
+  return MenuData.is_export();
 });
 //是否显示三级菜单
 const is_show_three_menu = computed(() => {
@@ -222,11 +222,12 @@ const is_show_four_menu = computed(() => {
     * @param {Number} sub  赛种item
     */
 const two_menu_show = (sub) => {
-  if (menu_type.value == 28) {
+  if (MenuData.is_results()) {
     return false
   }
   // 滚球下足球处理 1011足球
-  let mi_list = menu_type.value == 1 ? [1001, 1002, 1004, 1010] : [1001, 1002, 1004, 1011, 1010]
+  let mi_list = MenuData.is_scroll_ball() ? [1001, 1002, 1004, 1010] : [1001, 1002, 1004, 1011, 1010]
+
   return ![7, 8, 28].includes(menu_type.value) && !mi_list.includes(+sub.mi)
 }
 // 获取主菜单列表  main_select_items 弹出的一级 菜单数据   main_menu_list_items 一级菜单数据
@@ -283,7 +284,7 @@ function set_menu_lv1(item, index, type = "click") {
  */
 const all_sport_count_calc = computed(() => {
   //找到滚球
-  if (menu_type.value == 1 && update_time.value) {
+  if (MenuData.is_scroll_ball() && update_time.value) {
     let data_list = menu_list.value.find((item) => lodash.get(item, 'mi') == 1);
     //滚球下所有是数量总和
     return MenuData.count_menu(data_list)
@@ -348,8 +349,8 @@ function set_menu_lv4(item, index, type = "click") {
 }
 //判断后台是否展示 VR / 电竞
 const show_dianjing = (item, index) => {
-  if (item?.mi == 7) return base_data.is_mi_2000_open; // 电竞tob后台关闭隐藏
-  if (item?.mi == 8) return base_data.is_mi_300_open; // VRtob后台关闭隐藏
+  if (MenuData.is_export(item.mi)) return base_data.is_mi_2000_open; // 电竞tob后台关闭隐藏
+  if (MenuData.is_vr(item.mi)) return base_data.is_mi_300_open; // VRtob后台关闭隐藏
   return ![2, 3, 6, 7].includes(index);
 };
 /**
@@ -358,7 +359,7 @@ const show_dianjing = (item, index) => {
      * @return {}
      */
 const format_type = (id) => {
-  if (menu_type.value == 28) {
+  if (MenuData.is_results()) {
     let type = +id?.menuId
     // 赛果电竞图标
     if ([100, 101, 103, 102].includes(type)) {

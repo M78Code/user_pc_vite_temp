@@ -496,47 +496,76 @@ class MenuData {
   }
   // "1": "滚球",  "2": "今日", "3": "早盘",  "4": "冠军","5": "即将开赛", "6": "串关","7": "电竞",
   // "8": "VR",// "28": "赛果", "30": "竞足",//
+  //内部方法
+  _is_cur_mi(mi, param) {
+    if (param) {
+      return mi == param
+    }
+    return this.get_menu_type() == mi
+  }
+  /**
+   * 是否选中了VR 
+   * mi [number|string] 要比对的值
+   * 没有传递对比当前菜单
+  */
+  is_vr(mi) {
+    return _is_cur_mi(8, mi)
+  }
+  /**
+   * 是否选中了赛果
+   *  mi [number|string] 要比对的值
+  */
+  is_results(mi) {
+    return _is_cur_mi(28, mi)
+  }
   /**
    * 是否选中了早盘
+   *  mi [number|string] 要比对的值
   */
-  is_zaopan() {
-    return this.get_menu_type() == 3
+  is_zaopan(mi) {
+    return _is_cur_mi(3, mi)
   }
   /**
    * 是否选中了今日
+   *  mi [number|string] 要比对的值
   */
-  is_today() {
-    return this.get_menu_type() == 2
+  is_today(mi) {
+    return _is_cur_mi(2, mi)
   }
   /**
    * 是否选中了滚球
+   *  mi [number|string] 要比对的值
   */
-  is_scroll_ball() {
-    return this.get_menu_type() == 1
+  is_scroll_ball(mi) {
+    return _is_cur_mi(1, mi)
   }
   /**
    * 是否选中了冠军
+   *  mi [number|string] 要比对的值
   */
-  is_kemp() {
-    return this.get_menu_type() == 4
+  is_kemp(mi) {
+    return _is_cur_mi(4, mi)
   }
   /**
    * 是否选中了电竞
+   *  mi [number|string] 要比对的值
   */
-  is_export() {
-    return this.get_menu_type() == 7
+  is_export(mi) {
+    return _is_cur_mi(7, mi)
   }
   /**
    * 是否选中了串关
+   *  mi [number|string] 要比对的值 没有传递对比当前菜单
   */
-  is_mix() {
-    return this.get_menu_type() == 6
+  is_mix(mi) {
+    return _is_cur_mi(6, mi)
   }
   /**
    * 是否选中了竞足
+   *  mi [number|string] 要比对的值
   */
-  is_jinzu() {
-    return this.get_menu_type() == 30
+  is_jinzu(mi) {
+    return _is_cur_mi(30, mi)
   }
   // 电竞菜单csid
   menu_csid(mi) {
