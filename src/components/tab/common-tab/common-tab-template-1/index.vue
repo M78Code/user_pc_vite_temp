@@ -86,6 +86,7 @@ import store from "src/store-redux/index.js";
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js";
 import { component_symbol, need_register_props } from "../config/index.js";
 // const computed_props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
+import { MatchDetailCalss } from "src/core/index"; 
 const props = defineProps({
   //tab列表
   list: {
@@ -226,12 +227,9 @@ const right_btn_show = computed(() => {
  * @return {undefined} undefined
  */
 const onclick = (index, item) => {
-    //展开右侧详情
   try {
-    store.dispatch({
-      type: 'SET_UNFOLD_MULTI_COLUMN',
-      data: false
-    })
+     //展开右侧详情
+    MatchDetailCalss.set_unfold_multi_column(false)
   } catch (error) {
     console.error(error);
   }

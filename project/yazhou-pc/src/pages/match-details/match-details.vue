@@ -124,11 +124,9 @@ const {
   change_loading_state,
   MatchDataWarehouseInstance
 } = useGetConfig();
-console.log(MatchDataWarehouseInstance,'MatchDataWarehouseInstance');
-const  MatchDetailsDataRef = reactive(MatchDetailsData)
 const  match_infoData = ref({})
 const  match_details = ref([])
-watch(()=>MatchDetailsDataRef.data_version,(val,oldval)=>{
+watch(()=>MatchDetailsData.data_version,(val,oldval)=>{
   if(val.version ){
     console.log(222222);
     match_infoData.value =  MatchDetailsData.get_quick_mid_obj(mid.value)  

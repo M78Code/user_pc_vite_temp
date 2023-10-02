@@ -107,6 +107,7 @@ import { IconWapper } from 'src/components/icon/index.js'
 import lodash from 'lodash'
 import {i18n_t} from 'src/core/index'
 const tooltip_style = 'background:rgba(0,0,0,0.8);padding:4px 5px;border-radius:0px;color:#fff'
+import { MatchDetailCalss } from "src/core/index"; 
 export default defineComponent({
   name: "HandicapTab",
   components: {
@@ -118,6 +119,14 @@ export default defineComponent({
     match_info: Object,
     whitchDetail: String,
   },
+  data(){
+    return{
+      tabs_active_index:MatchDetailCalss.tabs_active_index
+    }
+  },
+  mounted(){
+    console.log(this.tabs_active_index,'tabs_active_index');
+    },
   setup(props, {emit}) {
     const store_state = store.getState();
     //当前选中
@@ -131,17 +140,10 @@ export default defineComponent({
     // });
 
     // 当前所选的玩法集子项id
-    const tabs_active_index = ref(store_state.matchesReducer.tabs_active_index);
+    const tabs_active_index = ref(MatchDetailCalss.tabs_active_index);
     // 当前布局状态  一栏布局/两栏布局
-    const get_layout_statu = ref(store_state.matchesReducer.layout_statu);
-    // 监听状态变化
-    let un_subscribe = store.subscribe(() => {
-     const state = store.getState();
-      tabs_active_index.value = state.matchesReducer.tabs_active_index;
-      get_layout_statu.value = state.matchesReducer.layout_statu;
-    });
+    const get_layout_statu = ref(MatchDetailCalss.layout_statu);
     const route = useRoute();
-    console.log(emit,'emit');
     const is_details = computed(() => {
       return ["details", "virtual_details"].includes(route.name);
     });
@@ -181,23 +183,12 @@ export default defineComponent({
      */
     const toggle_play = ({ index, item }) => {
       let { id, round, plays } = item;
-      // this.reset_toggle = Math.random();
       currentIndex.value = index;
       //   this.$emit('change-loading-state', 'loading'); // 切换玩法时展示 loading 状态
-      // 设置玩法集中当前选中的子项
-      // 保存当前选中的玩法集子项id
-      store.dispatch({
-        type: "SET_TABS_ACTIVE_ID",
-        data: id,
-      });
-      // 保存当前选中的玩法集子项对应的盘口玩法
-      store.dispatch({
-        type: "SET_TABS_ACTIVE_PLAYS",
-        data: plays,
-      });
+      // 保存当前选中的玩法集子项id  保存当前选中的玩法集子项对应的盘口玩法
+      MatchDetailCalss.category_tab_click({id,plays})
       // 发送当前玩法集 id ， round 字段为电竞动态玩法集标记
       emit("get_mattch_details", { id, round, plays });
-
       // 玩法列表回到顶部
       emit("on_go_top");
 
@@ -216,7 +207,6 @@ export default defineComponent({
     };
 
     onUnmounted(() => {
-      un_subscribe();
     });
 
     return {

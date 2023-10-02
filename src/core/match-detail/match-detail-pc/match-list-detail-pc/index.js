@@ -116,6 +116,7 @@ class MatchListDetailMiddleware {
    */
   set_common_params(param) {
     this.common_params = param;
+    init_detail_form_list(param)
   }
 
   /**
@@ -138,7 +139,7 @@ class MatchListDetailMiddleware {
   }
 
   /**
-   * 列表 数据  初始化详情数据
+   * 列表 数据  初始化详情数据  
    * @param {*} params
    */
   init_detail_form_list(params) {
@@ -168,7 +169,9 @@ class MatchListDetailMiddleware {
    * @param {*} params
    */
   set_back_to_source_params(params) {
+    //解构是从来哪里来的跳转参数
     this.back_to_source_params = params;
+    this.set_params(params)
   }
 
   /**
