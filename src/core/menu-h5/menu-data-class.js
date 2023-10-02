@@ -790,10 +790,10 @@ class MenuData {
     this.set_cache_class({
       current_lv_1_menu,
       current_lv_1_menu_i,
-      menu_type: current_lv_1_menu.mi, //设置一级菜单menutype
+      menu_type: current_lv_1_menu?.mi, //设置一级菜单menutype
     });
     //设置二级菜单 赛果和电竞是不需要設置二級菜單的
-    switch (current_lv_1_menu.mi) {
+    switch (current_lv_1_menu?.mi) {
       case 28:
         await this.get_results_menu();
         break;
