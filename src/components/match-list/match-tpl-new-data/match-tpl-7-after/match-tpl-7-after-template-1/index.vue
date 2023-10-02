@@ -1,13 +1,14 @@
 <template>
-  <div class="c-match-item " :class="{ 'more-handicap': match.has_add1 || match.has_add2 || match.is_show_cur_handicap }">
+  <div class="c-match-item " :class="{ 'more-handicap': lodash.get(match, 'has_add1') || lodash.get(match, 'has_add2') }">
     <!-- 比赛进程 -->
+    <div v-show="false">{{ MatchListData.data_version.version }}</div>
     <div class="process-col process-col yb-flex-center">
       <!--热门赛事显示hot标识-->
-      <img class="match-hot" src="~public/image/common/svg/hot.svg" v-if="match.is_hot" />
+      <img class="match-hot" src="~public/image/common/svg/hot.svg" v-show="lodash.get(match, 'is_hot')" />
       <!-- 比赛进程 -->
       <!-- :style="`height:105px;margin-top:${process_margin}px`" -->
       <!-- <div class="yb-flex-center full-width" > -->
-      <match-process v-if="is_mounted && match.api_update_time != 0" :match="match" source='match_list'
+      <match-process v-if="is_mounted && match && match.api_update_time != 0" :match="match" source='match_list'
         show_page="match-list" :rows="2" />
       <!-- </div> -->
     </div>
@@ -18,54 +19,54 @@
       <div class="match-handicap-item">
         <!-- 赛事基础信息 -->
         <div class="basic-col" :style="`width:${match_list_tpl_size.team_width}px !important;`">
-          <basis-info2 v-if="is_mounted" :match="match" :is_show_more="score_column_position === 'main'" />
+          <basis-info2 v-if="is_mounted && match" :match="match" :is_show_more="score_column_position === 'main'" />
         </div>
 
         <!-- 赛事盘口投注项 -->
-        <match-handicap :handicap_list="match.main_handicap_list" :match="match"
+        <match-handicap v-if="match" :handicap_list="match_tpl_info[`template_${match_style_obj.data_tpl_id}`].main_handicap_list" :match="match"
           :is_show_score="score_column_position === 'main'" />
 
         <!-- 视频按钮 -->
         <div class="media-col">
-          <match-media :match="match" />
+          <match-media v-if="match" :match="match" />
         </div>
       </div>
 
       <!-- 附加盘1 -->
-      <div class="match-handicap-item" v-if="match.has_add1">
+      <div class="match-handicap-item" v-if=" lodash.get(match, 'has_add1')">
         <!-- 赛事基础信息 -->
         <div class="basic-col" :style="`width:${match_list_tpl_size.team_width}px !important;`">
-          <basis-info3 :is_suffix="false" v-if="is_mounted && score_column_position === 'add1'" :match="match" />
+          <basis-info3 :is_suffix="false" v-if="is_mounted && score_column_position === 'add1' && match" :match="match" />
         </div>
         <!-- 赛事盘口投注项 -->
-        <match-handicap :handicap_list="match.add1_handicap_list" :match="match"
+        <match-handicap v-if="match" :handicap_list="match_tpl_info[`template_${match_style_obj.data_tpl_id}`].add_handicap_list" :match="match"
           :is_show_score="score_column_position === 'add1'" />
         <!-- 视频按钮 -->
         <div class="media-col"></div>
       </div>
 
       <!-- 附加盘2 -->
-      <div class="match-handicap-item" v-if="match.has_add2">
+      <div class="match-handicap-item" v-if="lodash.get(match, 'has_add2')">
         <!-- 赛事基础信息 -->
         <div class="basic-col" :style="`width:${match_list_tpl_size.team_width}px !important;`">
-          <basis-info3 :is_suffix="false" v-if="is_mounted && score_column_position === 'add2'" :match="match" />
+          <basis-info3 :is_suffix="false" v-if="is_mounted && score_column_position === 'add2' && match" :match="match" />
         </div>
         <!-- 赛事盘口投注项 -->
-        <match-handicap :handicap_list="match.add2_handicap_list" :match="match"
+        <match-handicap v-if="match" :handicap_list="match_tpl_info[`template_${match_style_obj.data_tpl_id}`].add_handicap_list" :match="match"
           :is_show_score="score_column_position === 'add2'" />
         <!-- 视频按钮 -->
         <div class="media-col"></div>
       </div>
 
       <!-- 当前局盘 -->
-      <div class="match-handicap-item" v-if="match.is_show_cur_handicap">
+      <div class="match-handicap-item" v-if="lodash.get(match_tpl_info, 'is_show_cur_handicap')">
         <!-- 赛事基础信息 -->
         <div class="basic-col" :style="`width:${match_list_tpl_size.team_width}px !important;height:105px !important;`">
           <basis-info3 v-if="is_mounted" :match="match" />
         </div>
 
         <!-- 赛事盘口投注项 -->
-        <match-handicap :handicap_list="match.cur_handicap_list" :match="match" is_show_score />
+        <match-handicap v-if="match" :handicap_list="get_cur_handicap_list(match, )" :match="match" is_show_score />
 
         <!-- 视频按钮 -->
         <div class="media-col"></div>
@@ -77,13 +78,38 @@
 <script setup>
 // import match_item_mixin from "src/project/yabo/mixins/match_list/match_item_mixin_new_data.js";
 // mixins: [match_item_mixin],
-import { computed } from 'vue';
-import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
-import { component_symbol, need_register_props } from "../config/index.js"
-useRegistPropsHelper(component_symbol, need_register_props)
+import { computed, ref, watch } from 'vue';
+import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/core/index.js";
+import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
+import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
+import { MatchProcessFullVersionWapper as MatchProcess } from 'src/components/match-process/index.js';
+import { MatchBasisInfo2FullVersionWapper as BasisInfo2 } from 'src/components/match-list/match-basis-info/template-2/index.js'
+import { MatchBasisInfo3FullVersionWapper as BasisInfo3 } from 'src/components/match-list/match-basis-info/template-3/index.js'
+import { MatchHandicapFullVersionWapper as MatchHandicap } from 'src/components/match-list/match-handicap/index.js'
+import MatchMedia from 'src/components/match-list/match-media/index.vue'
+import { CommonTabFullVersionWapper as Tab } from "src/components/tab/common-tab/index.js";
+
+const props = defineProps({
+  mid: {
+    type: [String, Number],
+    default: null,
+  },
+})
+
+let match_style_obj = MatchListCardDataClass.all_card_obj[props.mid+'_']
+const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`].width_config
+const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`]
+let match = MatchListData.list_to_obj.mid_obj[props.mid+'_'];
+const is_mounted = ref(true);
+
+watch(() => MatchListData.data_version.version, (new_value, old_value) => {
+  match = MatchListData.list_to_obj.mid_obj[props.mid+'_'];
+})
 
 const score_column_position = computed(() => {
-  let { is_show_cur_handicap, has_add2, has_add1 } = this.match
+  let has_add1 = lodash.get(match, 'has_add1')
+  let has_add2 = lodash.get(match, 'has_add2')
+  let { is_show_cur_handicap } = match_tpl_info
   if (is_show_cur_handicap) {
     return 'cur'
   } else if (has_add2) {
@@ -94,6 +120,61 @@ const score_column_position = computed(() => {
     return 'main'
   }
 })
+
+/**
+	 * @Description 获取当前局盘口列表模板
+	 * @param {undefined} undefined
+	 */
+  const get_cur_handicap_list = (match) => {
+		// 当前局盘口列表
+		let cur_handicap_list = [];
+    let play_config = match_tpl_info[`template_${match_style_obj.data_tpl_id}`]
+		// 篮球根据赛事阶段获取当前局盘口列表
+		if (match_style_obj.data_tpl_id == 7) {
+			switch (+match.mmp) {
+				case 1: //上半场
+					cur_handicap_list = play_config.cur_handicap_list_up;
+					break;
+				case 31: //中场休息
+				case 2: //下半场
+					cur_handicap_list = play_config.cur_handicap_list_down;
+					break;
+				case 13: //第一节
+					cur_handicap_list = play_config.cur_handicap_list_1;
+					break;
+				case 301: //第一节休息
+					cur_handicap_list = play_config.cur_handicap_list_1_rest;
+					break;
+				case 14: //第二节
+					cur_handicap_list = play_config.cur_handicap_list_2;
+					break;
+				case 302: //第二节休息
+				case 15: //第三节
+					cur_handicap_list = play_config.cur_handicap_list_3;
+					break;
+				case 303: //第三节休息
+				case 16: //第四节
+					cur_handicap_list = play_config.cur_handicap_list_4;
+					break;
+				default:
+					cur_handicap_list = play_config.cur_handicap_list;
+					break;
+			}
+		}
+		// 斯诺克让球与大小当前局盘口列表
+		else if (match_style_obj.data_tpl_id == 11 && match.csid == 7) {
+			cur_handicap_list = play_config.cur_handicap_list_7;
+		}
+		// 排球让球与大小当前局盘口列表
+		else if (match_style_obj.data_tpl_id == 11 && match.csid == 9) {
+			cur_handicap_list = play_config.cur_handicap_list_9;
+		}
+		// 判断模板是否有当前局玩法
+		else if ([7, 9, 11, 16].includes(+match_style_obj.data_tpl_id)) {
+			cur_handicap_list = play_config.cur_handicap_list;
+		}
+		return cur_handicap_list;
+	}
 
 </script>
 

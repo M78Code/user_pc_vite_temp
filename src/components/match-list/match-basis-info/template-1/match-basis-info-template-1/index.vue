@@ -124,6 +124,10 @@ const props = defineProps({
   is_15min:{
     type:Boolean,
     default:false
+  },
+  is_show_more: {
+    type:Boolean,
+    default:false
   }
 })
 
