@@ -26,6 +26,10 @@ const mitt_list = [
     }).off,
     useMittOn(MITT_TYPES.EMIT_STANDARD_EDITION_CHANGE, (v) => {
         standard_edition.value = v
+    }).off,
+    //通知收藏变化了
+    useMittOn(MITT_TYPES.EMIT_FAVORITE_CHANGE_CMD, (v) => {
+        show_favorite_list.value = v
     }).off
 ]
 onBeforeUnmount(() => {

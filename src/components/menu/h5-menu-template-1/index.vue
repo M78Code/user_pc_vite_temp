@@ -162,34 +162,31 @@ import base_data from "src/core/base-data/base-data.js";
 import { useRoute, useRouter } from "vue-router";
 import lodash from "lodash"
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
-import { lang, show_favorite_list, theme, user_info, resources_obj } from "project_path/src/mixin/userctr";
-
-import {
-  //是否 滚球
-  is_scroll_ball,
-  //是否 电竞
-  is_export,
-  //是否 vr
-  is_vr,
-  //是否 赛果
-  is_results,
-  //是否 串关
-  is_mix,
-  //是否 冠军
-  is_kemp,
-  //是否 禁足
-  is_jinzu,
-} from "project_path/src/mixin/menu"
-// "1": "滚球",
-//   "2": "今日",
-//   "3": "早盘",
-//   "4": "冠军",
-//   "5": "即将开赛",
-//   "6": "串关",
-//   "7": "电竞",
-//   "8": "VR",
-//   "30": "竞足",
-//   "28": "赛果",
+//是否 滚球
+const is_scroll_ball = computed(() => {
+  return MenuData.is_scroll_ball() && menu_type.value;
+});
+//是否 电竞
+const is_export = computed(() => {
+  return MenuData.is_export() && menu_type.value;
+});
+//是否 赛果
+const is_results = computed(() => {
+  return MenuData.is_results() && menu_type.value;
+});
+//是否 串关
+const is_mix = computed(() => {
+  return MenuData.is_results() && menu_type.value;
+});
+//是否 冠军
+const is_kemp = computed(() => {
+  return MenuData.is_kemp() && menu_type.value;
+});
+//是否 禁足
+const is_jinzu = computed(() => {
+  return MenuData.is_jinzu() && menu_type.value;
+});
+const show_favorite_list = ref(UserCtr.show_favorite_list)//是否收藏
 const route = useRoute();
 const router = useRouter();
 const props = defineProps({
@@ -461,8 +458,14 @@ function is_menu_show(item) {
   }
   return reslut;
 }
-
+const mitt_list = [
+  //通知收藏变化了
+  useMittOn(MITT_TYPES.EMIT_FAVORITE_CHANGE_CMD, (v) => {
+    show_favorite_list.value = v
+  }).off
+]
 onBeforeUnmount(() => {
+  mitt_list.forEach(i => i())
 })
 //初始化菜单
 
