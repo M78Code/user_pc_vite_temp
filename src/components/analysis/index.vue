@@ -104,7 +104,7 @@ export default {
       page_style
     }
   },
-  mixins:[time_format],
+  // mixins:[time_format],
   components:{
     tabResults,tabData,tabLineup,tabInformation,tabOdds,matchDate,news
   },
