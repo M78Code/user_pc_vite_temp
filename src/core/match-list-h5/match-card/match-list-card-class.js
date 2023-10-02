@@ -312,7 +312,7 @@ class MatchListCard {
    */
   get_match_dom_height_by_matchdata(match_height_map) {
     let r = 0;
-    Object.keys(match_height_map).forEach((p_key) => {
+    match_height_map && Object.keys(match_height_map).forEach((p_key) => {
       if (p_key != "" && p_key != "mid") {
         r += match_height_map[p_key];
       }

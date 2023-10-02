@@ -7,7 +7,7 @@
           <div class="item" v-for="(item, index) in menu_list" :key="`menu-${index}`"
             :class="{ active: menu_type == item.mi }" :style="compute_css('home-item-' + (menu_type == item.mi ? 'active' : 'unchecked'))
               " @click="change_menu(item, index)" v-show="calc_show2(item)">
-            <span class="label" :class="{ is_chinise: ['zh', 'tw'].includes(get_lang) }">{{ $t(`new_menu.${item.mi}`)
+            <span class="label" :class="{ is_chinise: ['zh', 'tw'].includes(lang) }">{{ $t(`new_menu.${item.mi}`)
             }}</span>
             <span class="num" v-if="![407, 408, 410].includes(item.mi * 1)">{{
               MenuData.count_menu(item) || ""
@@ -23,7 +23,7 @@
             v-for="(item, index) in menu_lv2_list" :key="index" @click="to_list(item, index)" v-show="!loading_done || item.ct >= 0 || [5, 7].includes(+item.menuType)
               ">
             <div class="item-bg" :style="compute_css('home-item-all')" :class="MenuData.recombine_menu_bg(item)"></div>
-            <div class="item-info" :class="{ 'is-english': get_lang == 'en' }">
+            <div class="item-info" :class="{ 'is-english': lang == 'en' }">
               <div class="column items-center">
                 <!-- <span class="match-type">{{t(`menu_list.${filter_meunu_desc(item.mi)}`) }}</span> -->
                 <span class="match-type">{{ item.name || MenuData.get_menus_i18n_map(item.mi) }}</span>
@@ -50,6 +50,7 @@ import { MenuData, UserCtr, compute_css } from "src/core/";
 import lodash from "lodash";
 import { useRouter } from "vue-router";
 import { DateForMat } from "src/core/format/index.js";
+import { lang } from "project_path/src/mixin/userctr";
 //初始化数据
 const router = useRouter();
 const menu_list = ref(MenuData.menu_list || []); //菜单列表
@@ -61,7 +62,6 @@ let noData = ref(false);
 let no_data_txt = ref("moMatch");
 let noMenu = ref(false);
 let no_menu_txt = ref("moMatch");
-const get_lang = ref(UserCtr.lang);
 const thumbStyle = {
   background: "transparent"
 }
@@ -94,10 +94,6 @@ const menu_data_config = (data) => {
 const cancel_watch = watch(menu_type, (i) => {
   list_area.value && list_area.value.setScrollPosition("vertical", 0);
 });
-//用戶信息變化
-watch(UserCtr.user_version, () => {
-  get_lang.value = UserCtr.lang;
-});
 watch(MenuData.update_time, () => {
   const { menu_list: res, menu_lv2 } = MenuData; //获取主数据
   menu_data_config(MenuData.recombine_menu(res));
@@ -128,7 +124,8 @@ let timer_1;
 const window_resize_on = () => {
   clearTimeout(timer_1);
   timer_1 = setTimeout(() => {
-    el_height = window.innerHeight - content.value.getBoundingClientRect().top;
+    if (content.value)
+      el_height = window.innerHeight - content.value.getBoundingClientRect().top;
   }, 1000);
 };
 /**

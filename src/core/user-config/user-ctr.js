@@ -165,7 +165,6 @@ class UserCtr {
     this.lang = data;
     this.user_info.languageName = data;
     useMittEmit(MITT_TYPES.EMIT_LANG_CHANGE, data);
-    this.update()
   }
   /**
   * 设置主题变化
@@ -173,7 +172,6 @@ class UserCtr {
   set_theme(theme) {
     this.theme = theme;
     useMittEmit(MITT_TYPES.EMIT_THEME_CHANGE, theme);
-    this.update()
     // 替换body上className
     const old_theme = LocalStorage.get("theme") || sessionStorage.getItem("theme") || theme == 'day' ? 'theme02' : 'theme01';
     document.getElementById('ty-body').classList.replace(old_theme, theme == 'day' ? 'theme01' : 'theme02')

@@ -85,7 +85,7 @@ onMounted(() => {
 })
 // 监听 数据仓库版本号改变
 watch(() => MatchDataBaseH5.data_version.version, () => {
-  match_mids.value = MatchMeta.match_mids
+  // match_mids.value = MatchMeta.match_mids
 })
 
 const get_match_item = (mid) => {

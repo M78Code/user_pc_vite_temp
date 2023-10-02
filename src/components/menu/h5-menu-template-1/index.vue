@@ -162,7 +162,6 @@ import base_data from "src/core/base-data/base-data.js";
 import { useRoute, useRouter } from "vue-router";
 import lodash from "lodash"
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
-// import 'project_path/src/css/pages/menu.scss'
 // "1": "滚球",
 //   "2": "今日",
 //   "3": "早盘",
