@@ -538,7 +538,7 @@ export const useRightDetails = (props) => {
           });
       }
       ["new_empty", "all_empty"].includes(allData.handicap_state) &&
-        useMittEmit("get_history");
+      useMittEmit(MITT_TYPES.EMIT_GET_HISTORY);
     };
     let api_axios_flg = "match_odds_Info2";
     if (
@@ -1147,9 +1147,9 @@ export const useRightDetails = (props) => {
     // off todo
     // off("check_plays_show", this.check_plays_show);
     // off("close_tips", this.close_tips);
-    utils.del(this.ol_obj);
-    utils.del(this.hl_obj);
-    this.debounce_throttle_cancel(refresh());
+    // utils.del(this.ol_obj);
+    // utils.del(this.hl_obj);
+    // this.debounce_throttle_cancel(refresh());
     allData.refresh_loading_timer &&
       clearTimeout(allData.refresh_loading_timer);
     // 站点 tab 休眠状态转激活
