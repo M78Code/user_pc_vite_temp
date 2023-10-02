@@ -34,7 +34,7 @@
               </span>
             </div>
           </div>
-          <div v-show="is_expend">
+          <div class="bet-single-mix-input" v-show="is_expend">
             <template v-if="BetData.bet_s_list.length > 2">
               <!--金额输入框-->
               <template v-for="(item, index) in BetData.bet_s_list" :key="item.custom_id">
@@ -140,4 +140,5 @@ const mix_toggle_handle = () => {
     }
   }
 }
+
 </style>

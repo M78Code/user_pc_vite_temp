@@ -1,7 +1,7 @@
 <template>
     <!--金额输入区域包括键盘 -->
     <div class="row bet-single-input" :data-check-money="BetViewDataClass.input_money_state">
-        <div class="" v-if="!BetData.is_bet_single">
+        <div class="bet-single-serve" v-if="!BetData.is_bet_single">
             <span>{{ special_series.name }}</span>
             <span>{{ ref_data.seriesOdds  }}</span>
         </div>
@@ -262,4 +262,14 @@ input[type="number"] {
 
 .bet-input-failure {
     position: relative;
-}</style>
+    width: 100%;
+}
+.bet-single-serve{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+</style>
