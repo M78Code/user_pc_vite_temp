@@ -457,6 +457,7 @@ this.bet_appoint_ball_head= null */
     this.single_list_copy = []
     this.bet_single_list = []
     this.bet_read_write_refer_obj = {}
+    this.set_bet_data_class_version()
   }
 
   /**
@@ -506,17 +507,49 @@ this.bet_appoint_ball_head= null */
    * @param {*} key 需要删除对象的键值
    */
   bet_obj_remove_attr(key) {
-    delete this.bet_obj[key];
+    delete this.bet_read_write_refer_obj[key];
+    this.set_bet_data_class_version()
   }
   /**
-   * @description: 删除串关列表
+   * @description: 删除单关串关列表
    * @param {*}BetData.
    * @param {*} i 需要删除的id索引
    */
-  bet_list_remove(i) {
-    let temp = Object.assign([], this.bet_list);
-    temp.splice(i, 1);
-    this.bet_list = temp;
+  bet_list_remove(custom_id) {
+    let index = 0
+    let query = []
+    // 单关 
+    if(this.is_bet_single){
+      // 合并
+      if(this.is_bet_merge){
+        query = this.bet_single_list
+      }else{
+        this.bet_single_list = []
+      }
+    }else{
+      // 串关
+      query = this.bet_s_list
+    }
+
+    // 指定删除的数据
+    index = lodash_.findIndex(this.bet_single_list, (item) => { return item.custom_id == custom_id });
+
+    let temp = Object.assign([], query);
+    // 指定删除
+    temp.splice(index, 1);
+
+    // 单串关赋值
+    if(this.is_bet_single){
+      this.bet_single_list = temp
+    }else{
+      this.bet_s_list = temp
+    }
+    // 数量为 0 切换到菜单页面
+    if(!temp.length){
+      LayOutMain_pc.set_layout_left_show('menu')
+    }
+    // 删除投注项内容
+    this.bet_obj_remove_attr(custom_id)
   }
   /**
    * @description: 添加投注串关输入对象

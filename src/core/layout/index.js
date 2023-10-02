@@ -51,6 +51,8 @@ class LayOutMain {
     this.layout_current_path = ''
     // 左侧菜单显示 menu bet history
     this.layout_left_show = 'menu'
+    // 左侧菜单顶部距离 内嵌为 0 
+    this.layout_left_top = '80px'
   }
 
   // 初始化
@@ -116,6 +118,15 @@ class LayOutMain {
   // 设置左侧显示内容
   set_layout_left_show(val){
     this.layout_left_show = val
+    this.set_layout_version()
+  }
+  // 左侧菜单顶部距离 内嵌为 0 
+  set_layout_left_top(val){
+    if(this.is_iframe){
+      this.layout_left_top = 0
+    }else{
+      this.layout_left_top = val
+    }
     this.set_layout_version()
   }
 
