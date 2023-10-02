@@ -7,17 +7,20 @@
 <template>
   <div class="analysis">
     <!-- 赛事分析 -->
-    <simple-header><span>{{ $root.$t('common.analysis') }}</span></simple-header>
+    <simple-header><span>{{ i18n_t('common.analysis') }}</span></simple-header>
     <!-- <analysis-page /> -->
   </div>
 </template>
 
-<script>
+<script setup>
 import simpleHeader from "project_path/src/components/site-header/simple-header.vue";
+import { i18n_t } from "src/core/index.js";
+</script>
+
+<script>
 // import analysisPage from "src/components/analysis/index.vue"; // 暂时注释 处理simple-header
 export default {
   components: {
-    simpleHeader,
     // analysisPage
   },
 };

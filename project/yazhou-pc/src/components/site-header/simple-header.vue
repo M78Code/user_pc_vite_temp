@@ -34,7 +34,6 @@ import refresh from "src/components/refresh/refresh.vue"
 
 export default {
   name: "rule",
-  // mixins: [time_format_mixin], //jacques: 先注释，跑通页面 
   data() {
     return {
       date_time: "",//当前系统时间
