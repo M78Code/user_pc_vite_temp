@@ -106,6 +106,7 @@ const set_change_bet_single = () => {
   cursor: pointer;
   background: var(--q-gb-bg-c-14);
   border-bottom: 1px solid var(--q-gb-bd-c-8);
+  border-right: 1px solid var(--q-gb-bd-c-6);
 
   /**返回菜单文字样式*/
   .back-text {
