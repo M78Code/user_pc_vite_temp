@@ -93,9 +93,9 @@ export default class MatchDetailCtr {
  * @param {*} obj  玩法集对象 
  */
   category_tab_click(obj={}){
-    // 如果本地缓存有玩法ID则取本地缓存，没有就取传入的ID
-    let category_id = obj.id
-    this.current_category_id= category_id
+    // 玩法tab的ID
+    this.current_category_id= obj.id
+    // 玩法tab的玩法集
     this.current_category_plays = obj.plays
     this.set_details_data_version() 
   }

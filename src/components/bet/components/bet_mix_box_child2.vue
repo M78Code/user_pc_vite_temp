@@ -302,7 +302,8 @@ const is_bet_check_rc = () => {
 
 // 投注事件
 const pack_up = (val) => {
-
+  // TODO: 临时调试用
+  useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX,false);
 }
 
 const submit_order = (type) => {

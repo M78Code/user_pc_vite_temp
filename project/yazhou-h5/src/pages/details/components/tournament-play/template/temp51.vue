@@ -82,6 +82,8 @@ import oddsNew from "project_path/src/pages/details/components/tournament-play/u
 import {utils } from 'src/core/index.js';
 import store from "src/store-redux/index.js";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
+import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
+
 export default defineComponent({
   name: "temp51",
   props: ["item_data"],
@@ -109,7 +111,7 @@ export default defineComponent({
       // }
     });
     const go_to_bet = (ol_item) => {
-      $emit("bet_click_", { ol_item });
+      useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX,true);
     }
     return {
       ...toRefs(data),

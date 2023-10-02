@@ -191,6 +191,7 @@ import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineCompon
 import { useRoute } from "vue-router"
 import { i18n_t } from "src/boot/i18n.js";
 import BetData from "src/core/bet/class/bet-data-class.js"
+import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 //国际化
 
 
@@ -281,9 +282,8 @@ export default defineComponent({
       const reg = new RegExp(/^[0-9]/);
       return reg.test(val)
     };
-    const go_to_bet = (ol_item) => {
-      // #TODO emit
-      // $emit("bet_click_", {ol_item});
+    const go_to_bet = () => {
+      useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX,true);
     };
     /**
      *@description 0号模板点击收起的时候，要调整滚动距离
