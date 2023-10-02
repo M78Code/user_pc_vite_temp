@@ -131,7 +131,7 @@ const get_first_unfold_mids = () => {
  */
 const api_bymids = (
   {
-    is_first_load = true,
+    is_first_load,
     is_show_mids_change,
     is_league_first,
     mids,
@@ -245,8 +245,7 @@ const api_bymids = (
         set_home_loading_time_record("ok");
         
         // 组件和路由不匹配
-        if (page_source == "details" && page_source != "details")
-          return;
+        // if (page_source == "details" && page_source != "details") return;
         //更新电竞右侧视频
         if (
           MenuData.is_esports() &&
