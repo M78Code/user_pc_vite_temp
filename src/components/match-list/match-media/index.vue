@@ -5,6 +5,7 @@
       :class="vx_detail_params.mid == match.mid && vx_play_media.media_type == 'info' && 'active'"
       @click="on_switch_match('auto')" v-if="!menu_config.is_esports() || route.name == 'search'">
       <div class="v-icon switch-icon"
+        :style="compute_css('pc-img-match-list-switch')"
         :class="vx_detail_params.mid == match.mid && vx_play_media.media_type == 'info' && 'active'"></div>
     </div>
     <div class="yb-flex-center" :class="{ 'flex-center': menu_config.is_esports() }">
@@ -16,6 +17,7 @@
       </div>
       <!-- 视频 -->
       <div v-if="cur_video_icon.type" @click="on_switch_match(cur_video_icon.type)"
+        :style="compute_css('pc-img-match-list-video')"
         v-tooltip="{ content: cur_video_icon.text }" class="icon-wrap relative-position">
         <div
           :class="['v-icon', `${cur_video_icon.type}-icon`, { 'active': vx_detail_params.mid == match.mid && (vx_play_media.media_type == cur_video_icon.type || (menu_config.is_esports() && route.name != 'search')) }]">
@@ -27,6 +29,7 @@
     <div v-if="match.mvs > -1" class="icon-wrap relative-position" @click="on_switch_match('animation')"
       v-tooltip="{ content: t('common.animate') }">
       <div class="v-icon animation-icon"
+        :style="compute_css('pc-img-match-list-animation')"
         :class="vx_detail_params.mid == match.mid && vx_play_media.media_type == 'animation' && 'active'"></div>
     </div>
     <!-- 盘口数量 -->
@@ -45,15 +48,13 @@ import { computed, reactive, ref } from 'vue';
 import { useRoute } from 'vue-router';
 
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
-import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
-import {component_symbol ,need_register_props} from "../config/index.js"
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import {is_eports_csid}  from "src/core/constant/util/csid-util";
 import { get_match_status } from 'src/core/index'
 import details from 'src/core/match-list-pc/details-class/details.js'
 import { other_play_name_to_playid } from 'src/core/constant/config/data-class-ctr/index.js';
 import store from 'src/store-redux/index.js';
-import { t } from "src/core/index.js";
+import { t, compute_css } from "src/core/index.js";
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 
 
@@ -128,6 +129,7 @@ const cur_video_icon = computed(() => {
       text: t('common.o_video'),
     }
   }
+  console.log('cur_video_iconcur_video_icon', cur_video_icon);
   return cur_video_icon
 })
 
