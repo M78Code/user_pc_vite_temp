@@ -1,36 +1,15 @@
 <template>
   <!-- GlobalAccessConfig.get_hotMatchNum()&&  -->
-  <div
-    class="home home-page"
-    :class="[
-      home_class && `${home_class} white-font`,
-      tabIndex == 1 && 'white-background hot-bg',
-      tabIndex == 2 && 'live-bg',
-    ]"
-    v-if="!tianzhuan"
-  >
+  <div v-if="!tianzhuan"
+       :class="[ 'home home-page', home_class && `${home_class} white-font`, tabIndex == 1 && 'white-background hot-bg', tabIndex == 2 && 'live-bg', ]">
     <!-- 头部tab 选项卡 -->
     <div class="flex justify-between align_items home-tab">
       <ul>
-        <li
-          v-for="(item, i) in tabList"
-          :key="i"
-          :class="[tabIndex == i ? 'is-active' : '']"
-        >
-          <div
-            class="tabs-label"
-            ref="label"
-            @click="tab_click(item, true, true)"
-          >
-            {{ item.name }}
-          </div>
+        <li v-for="(item, i) in tabList" :key="i" :class="[tabIndex == i ? 'is-active' : '']" >
+          <div class="tabs-label" ref="label" @click="tab_click(item, true, true)" > {{ item.name }} </div>
         </li>
         <!-- 下划线 -->
-        <div
-          class="tabs-active-bar"
-          ref="tabs_active_bar"
-          :class="{ 'add-animation': add_animation }"
-        ></div>
+        <div class="tabs-active-bar" ref="tabs_active_bar" :class="{ 'add-animation': add_animation }" ></div>
       </ul>
 
       <!-- 右边设置菜单 -->
@@ -66,6 +45,7 @@ import UserCtr from "src/core/user-config/user-ctr.js"; // mixins: [router_mixin
 import lodash from "lodash";
 import { i18n_t } from "src/boot/i18n.js";
 import store from "src/store-redux/index.js";
+import '../../css/pages/hot-modal.scss'
 
 const { homeReducer } = store.getState();
 
@@ -117,6 +97,11 @@ export default defineComponent({
       //地址栏带有菜单和赛事id参数的话，跳转到对应的列表或者赛事详情页
       // to_corresponding_route()
       // 从列表页或者详情页返回首页时, 下划线判断是否要动画
+      tab_click({
+        index: 1,
+        name: i18n_t("home.hot"),
+        component: "hot",
+      }, false, false);
       if (Object.keys(lodash.get(homeReducer, "home_tab_item")).length > 0) {
         nextTick(() => {
           // 如果本地有记录，则跳转到本地记录的原来的位置
@@ -128,18 +113,13 @@ export default defineComponent({
     onUnmounted(() => {
       useMittOn(MITT_TYPES.EMIT_HOME_TAB, home_tab_change).off;
     });
-    watch(
-      () => tabIndex.value,
-      (n) => {
-        // 首页、视频直播以及热门下精选不显示背景
-        if (
-          lodash.get(homeReducer, "home_tab_item.index") === 0 ||
-          lodash.get(homeReducer, "home_tab_item.index") !== 1
-        ) {
-          home_class.value = "";
-        }
+    watch( () => tabIndex.value, () => {
+      // 首页、视频直播以及热门下精选不显示背景
+      const index = lodash.get(homeReducer, "home_tab_item.index")
+      if ( index === 0 || index !== 1 ) {
+        home_class.value = "";
       }
-    );
+    });
 
     const tabList = computed(() => {
       let res = [];
@@ -161,20 +141,20 @@ export default defineComponent({
         },
       ];
       // 如果在后台系统 关闭 热门赛事，则前端手动 删掉 热门赛事
-      if (GlobalAccessConfig.get_hotMatchNum()) {
-        tabList_ = [
-          {
-            index: 0,
-            name: i18n_t("home.home"),
-            component: "home",
-          },
-          {
-            index: 1,
-            name: i18n_t("home.live_video"),
-            component: "live_video",
-          },
-        ];
-      }
+      // if (GlobalAccessConfig.get_hotMatchNum()) {
+      //   tabList_ = [
+      //     {
+      //       index: 0,
+      //       name: i18n_t("home.home"),
+      //       component: "home",
+      //     },
+      //     {
+      //       index: 1,
+      //       name: i18n_t("home.live_video"),
+      //       component: "live_video",
+      //     },
+      //   ];
+      // }
       res = tabList_;
       return res;
     });
@@ -228,46 +208,6 @@ export default defineComponent({
         // todo...
       }
 
-      // for(let i=0,len = calculation_category.length; i<len; i++) {
-      //   // 加个jz_666 是用作首页 竞彩足球 背景墙用的
-      //   if(newVal.chinaBetting && newVal.jz_666){
-      //     return home_class.value = `home_page_jz_${UserCtr.theme}`
-      //   }
-      //   // 对应calculation_category 映射 关系，赋值给 home_class 名称作背景图显示用
-      //   if(newVal.field2 == calculation_category[i].filed2){
-      //     return home_class.value = calculation_category[i].value
-      //   }
-      // }
-
-      // if(newVal.index != 0) {
-      //   // 如果是电子
-      //   if(['100','101','102','103'].includes(newVal.field1)){
-      //     home_class.value = 'home_page_esport_'+newVal.field1;
-      //     return ;
-      //   }
-
-      // if (!home_page_random) {
-      //   home_page_random = 1
-      // } else {
-      //   home_page_random++
-
-      //   if (home_page_random > 4) {
-      //     home_page_random = 1
-      //   }
-      // }
-
-      // home_page_random_obj为需要匹配背景图的映射对象
-      // if (!home_page_random_obj) {
-      //   home_page_random_obj = {}
-      // }
-
-      // 按赛种菜单顺序循环分配背景图
-      // if (!home_page_random_obj[newVal.index]) {
-      //   home_page_random_obj[newVal.index] = 'home_page_random_0' + home_page_random
-      // }
-
-      // home_class.value = home_page_random_obj[newVal.index]
-      // }
     };
     /**
      *@description 点击一级tab 菜单切换
@@ -291,8 +231,7 @@ export default defineComponent({
       tabIndex.value = tab.index;
 
       // 更新last_home_tab_item
-      store.dispatch({
-        type: "SET_LAST_HOME_TAB_ITEM",
+      store.dispatch({ type: "SET_LAST_HOME_TAB_ITEM", 
         data: {
           component: tab.component,
           index: tab.index,
@@ -302,19 +241,14 @@ export default defineComponent({
       // set_last_home_tab_item(get_home_tab_item)
 
       // set_home_tab_item(tab)
-      store.dispatch({
-        type: "SET_HOME_TAB_ITEM",
-        data: tab,
+      store.dispatch({ type: "SET_HOME_TAB_ITEM", data: tab, });
+      hand && store.dispatch({ type: "SET_HOME_TAB_ITEM",
+        data: {
+          component: tab.component,
+          index: 0,
+          name: tab.name,
+        },
       });
-      hand &&
-        store.dispatch({
-          type: "SET_HOME_TAB_ITEM",
-          data: {
-            component: tab.component,
-            index: 0,
-            name: tab.name,
-          },
-        });
       currentContent.value = tab.component;
 
       calc_tab_select(tab);

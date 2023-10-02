@@ -12,8 +12,7 @@
 import { ref, onMounted, onBeforeUnmount, watch } from 'vue'
 import { useMittEmit, MITT_TYPES } from "src/core/mitt"
 import { i18n_t } from "src/boot/i18n.js";
-//国际化
-
+import PageSourceData from "src/core/page-source/page-source.js";
 
 const props = defineProps({
   /** 赛事对象 */
@@ -36,16 +35,8 @@ const start_minutes = ref(1)
 /** 开赛时间大于当前时间则显示本组件 */
 const show = ref(false)
 
-// TODO: 改为真实的store替换
-/**
- * get_current_menu -> 当前选中的菜单
- * get_local_server_time -> 当前时间
- * get_lang -> 当前语言
- */
-
 const get_lang = ref('')
 const get_current_menu = ref('')
-const get_local_server_time = ref('')
 
 const timeout = ref(null)
 onBeforeUnmount(() => {
@@ -63,8 +54,8 @@ function counting_down() {
   if (props.mgt_time) {
     let start_time = props.mgt_time * 1;
 
-    let init_server = get_local_server_time.value.server_time * 1;
-    let init_local = get_local_server_time.value.local_time_init;
+    let init_server = PageSourceData.init_time.server_time * 1;
+    let init_local = PageSourceData.init_time.local_time;
     let now_local = new Date().getTime();
     let sub_local_time = now_local - init_local;
     let now_server_time = init_server + sub_local_time;

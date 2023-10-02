@@ -30,6 +30,8 @@
 import store from "src/store-redux/index.js";
 // import odd_convert from "project_path/src/mixins/odds_conversion/odds_conversion.js";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
+import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
+
 export default defineComponent({
   name: "temp9",
   props:{
@@ -70,17 +72,17 @@ export default defineComponent({
      */
     const is_select = computed(() => {
       return function(oid){
-        return this.get_bet_list.includes(oid)
+        return get_bet_list.value.includes(oid)
       }
     })
     const get_odds = (item) =>{
-      let val = item.ov / 100000, hsw = this.item_data.hsw;
-      let ov = this.compute_value_by_cur_odd_type(val, null, hsw);
+      let val = item.ov / 100000, hsw = props.item_data.hsw;
+      let ov = props.compute_value_by_cur_odd_type(val, null, hsw);
       return ov ? ov : '';
     };
     const init = () =>{
-      this.champion_list =  this.item_data.hl[0].ol
-      this.hsw_obj = this.item_data.hsw
+      data.champion_list =  props.item_data.hl[0].ol
+      data.hsw_obj = props.item_data.hsw
     };
     /**
      *@description 虚拟体育(赛马)点击详细页小方块投注
@@ -88,12 +90,12 @@ export default defineComponent({
      *@return {Undefined} undefined
      */
     const go_to_bet = (index) =>{
-      let ol_item = this.champion_list[index]
+      let ol_item = data.champion_list[index]
       ol_item.num = index + 1
-      this.$emit("bet_click_", {ol_item, hl_data:this.item_data});
+      useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX,true);
     };
     onMounted(() => {
-      this.init()
+      init()
     })
     return {
       ...toRefs(data),

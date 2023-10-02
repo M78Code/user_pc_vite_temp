@@ -102,23 +102,22 @@ export default {
    * @return {undefined} undefined
    */
   on_switch_match(media_type,match,play_id) {
-    return false //todo
     this.auto_swich_match = false
     let { mid, tid, csid: sportId } = match;
-    let old_mid = store.getters.get_match_details_params.mid
-    let old_media_type = store.getters.get_play_media.media_type
- 
-    store.dispatch('set_match_details_params',{
+    let old_mid = MatchDetailCalss.mid
+    let old_media_type = MatchDetailCalss.params.media_type
+    MatchDetailCalss.set_score_button({
       mid,
       tid,
       sportId,
       media_type: media_type || "",
       play_id
     })
+
     //如果是同场赛事切换 播放类型
     if((old_mid == mid && old_media_type != media_type) || media_type == 'auto'){
       setTimeout(() => {
-        store.dispatch('set_play_media',{ media_type, mid, time: Date.now()});
+        MatchDetailCalss.set_play_media({ media_type, mid, time: Date.now()})
       })
     }
   },
@@ -133,8 +132,8 @@ export default {
     }
     let match = lodash.get(match_list,'[0]') || {}
     if(!match.mid){
-      let play_id = store.getters.get_match_details_params.play_id;
-      store.dispatch('set_match_details_params',{
+      let play_id =MatchDetailCalss.current_category_id;
+      MatchDetailCalss.set_score_button({
         mid:0,
         tid:0,
         sportId:0,

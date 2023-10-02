@@ -10,7 +10,7 @@
       <skeleton :width="0.72" :height="0.1" :radius="6"/>
     </div>
     <!-- 标准版 -->
-    <div class="version_biaozhun" v-if="get_newer_standard_edition == 2">
+    <div class="version_biaozhun" v-if="PageSourceData.newer_standard_edition == 2">
       <div v-for="(item, index) in 3" :key="index" class="item">
         <div class="title">
           <skeleton :width="0.2" :height="0.2" :radius="50"/>
@@ -49,7 +49,7 @@
     </div>
 
     <!-- 简版 -->
-    <div class="version_jian" v-if="get_newer_standard_edition == 1">
+    <div class="version_jian" v-if="PageSourceData.newer_standard_edition == 1">
       <div v-for="(item, index) in 3" :key="index" class="item">
         <div class="title">
           <skeleton :width="0.2" :height="0.2" :radius="50"/>
@@ -83,7 +83,7 @@
 
 <script setup>
 import skeleton from '../index.vue'
-
+import PageSourceData from "src/core/page-source/page-source.js";
 
 </script>
 

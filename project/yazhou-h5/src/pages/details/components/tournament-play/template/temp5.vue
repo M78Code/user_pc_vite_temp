@@ -190,6 +190,8 @@ import lodash from "lodash";
 import store from "src/store-redux/index.js";
 import BetData from "src/core/bet/class/bet-data-class.js"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, ref } from "vue";
+import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
+
 export default defineComponent({
   name: "temp5",
   props: ["item_data"],
@@ -207,8 +209,7 @@ export default defineComponent({
       return lodash.get(item_data,'hl[0].ol[0].os')
     });
     const go_to_bet = (ol_item) => {
-      // #TODO emit 
-      // $emit("bet_click_", {ol_item});
+      useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX,true);
     };
     return {
       utils,

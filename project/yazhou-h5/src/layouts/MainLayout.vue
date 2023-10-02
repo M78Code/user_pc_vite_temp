@@ -63,6 +63,8 @@ import selectDia from "../pages/match-list/components/select-dia.vue"
 import { useRoute } from "vue-router";
 
 import store from "src/store-redux/index.js";
+import { api_common } from "src/api/index.js";
+import PageSourceData from "src/core/page-source/page-source.js";
 // 活动弹出框
 const activityLayer = defineAsyncComponent(() => import("../components/common/activity-layer.vue"))
 const settleDialog = defineAsyncComponent(() =>
@@ -171,12 +173,26 @@ const change_settle_status = (val) => {
     }, 300);
   }
 };
+/**
+ * @description 获取服务器当前时间
+ */
+const init_local_server_time = () => {
+  api_common.get_time_server().then(res => {
+    let server_time = res.data;
+    let local_time = new Date().getTime();
+    PageSourceData.set_init_time({
+      server_time,
+      local_time,
+    });
+  });
+}
 onMounted(() => {
   // 阻止双击放大
   document.addEventListener("touchstart", touchstart_event_fun, false);
   document.addEventListener("touchend", touchend_event_fun, false);
   // 阻止双指放大
   document.addEventListener("gesturestart", gesturestart_event_fun);
+  init_local_server_time()
   // 开启注单历史弹窗
   useMittOn(MITT_TYPES.EMIT_CHANGE_RECORD_SHOW, (val) => {
     // record_show.value = val

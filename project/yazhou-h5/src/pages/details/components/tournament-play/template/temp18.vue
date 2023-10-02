@@ -191,6 +191,8 @@ import {utils } from 'src/core/index.js';
 import lodash from "lodash";
 import store from "src/store-redux/index.js";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
+import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
+
 export default defineComponent({
   name: "temp16",
   props: ["item_data"],
@@ -223,7 +225,7 @@ export default defineComponent({
       // }
     });
     const go_to_bet = (ol_item) => {
-      $emit("bet_click_", { ol_item });
+      useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX,true);
     }
     return {
       ...toRefs(data),
