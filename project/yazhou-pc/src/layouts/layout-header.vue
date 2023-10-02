@@ -159,7 +159,7 @@ function getActivityLists({ id = 1, type }) {
   }
 }
 /** 活动入口状态提示更新定时器 */
-const activityUpdateTimer = null
+let activityUpdateTimer = null
 /** 活动入口小红点定时拉取 */
 function activityTimer() {
   clearInterval(activityUpdateTimer);
