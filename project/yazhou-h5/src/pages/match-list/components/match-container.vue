@@ -37,13 +37,13 @@
       <!-- v-if="(!['detail_match_list', 'home_hot_page_schedule'].includes(main_source)) && collapsed" -->
       <!-- 折叠收起不用消失 -->
       <div v-if="main_source!='home_hot_page_schedule'">
-        <img class="league-collapse-dir" :class="{ 'collapsed': collapsed }" v-if="global_theme.includes('day')" src='public/image/list/league-collapse-icon.svg' />
-        <img class="league-collapse-dir" :class="{ 'collapsed': collapsed }" v-if="global_theme.includes('night')" src='public/image/list/league-collapse-icon-black.svg' />
+        <img class="league-collapse-dir" :class="{ 'collapsed': collapsed }" v-if="global_theme.includes('day')" src='/yazhou-h5/image/list/league-collapse-icon.svg' />
+        <img class="league-collapse-dir" :class="{ 'collapsed': collapsed }" v-if="global_theme.includes('night')" src='/yazhou-h5/image/list/league-collapse-icon-black.svg' />
       </div>
     </div>
     <!-- 未开赛标题  -->
     <div class="match-status-fixed flex items-center" v-if="match.is_show_no_play">
-      <img src='public/image/list/list-red.svg' />
+      <img src='image/list/list-red.svg' />
       <span class="din-regular">
         {{ $t('list.match_no_start') }}&nbsp;&nbsp;<span v-show="no_start_total">({{ no_start_total }})</span>
       </span>
@@ -167,7 +167,7 @@
               <!-- mng 是否中立场   1:是中立场，0:非中立场-->
               <div class="live-i-b-wrap v-mode-span row items-center"
                 v-if="![5, 10, 7, 8, 13].includes(Number(match.csid)) && match.mng * 1">
-                <img class="neutral-icon-btn l-bottom" src='public/image/list/m-list-neutral.svg' />
+                <img class="neutral-icon-btn l-bottom" src='/yazhou-h5/image/list/m-list-neutral.svg' />
               </div>
 
               <!-- 电竞串关标识 -->
@@ -345,7 +345,7 @@
                         {{ $t('list.go_to_details') }}
                       </div>
                       <div>
-                        <img class="go-to-d-icon" src="public/image/list/m-list-way-more.svg" />
+                        <img class="go-to-d-icon" src="/yazhou-h5//image/list/m-list-way-more.svg" />
                       </div>
                     </div>
                   </div>
@@ -421,7 +421,7 @@
               </div>
               <!--中立场图标-->
               <div class="live-i-b-wrap newer" v-show="match.mng * 1 && ![5, 10, 7, 8].includes(Number(match.csid))">
-                <img class="neutral-icon-btn" src='public/image/list/m-list-neutral.svg' />
+                <img class="neutral-icon-btn" src='/yazhou-h5/image/list/m-list-neutral.svg' />
               </div>
               <!--玩法数量-->
               <div class="go-container-w mcount flex">
