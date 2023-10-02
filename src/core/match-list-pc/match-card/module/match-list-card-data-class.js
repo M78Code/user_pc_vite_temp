@@ -1,4 +1,5 @@
-import { reactive, ref } from "vue";
+import { ref } from "vue";
+import lodash from 'lodash';
 
 /**
  * 列表表征数据存放实例
@@ -77,7 +78,9 @@ class MatchListCardDataClass {
   }
 
   set_list_version() {
-    this.list_version.value =   Date.now() ;
+    lodash.debounce(() => {
+      this.list_version.value = Date.now() ;    
+    }, 200)
   }
 }
 export default new MatchListCardDataClass();
