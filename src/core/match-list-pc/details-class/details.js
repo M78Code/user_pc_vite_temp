@@ -162,6 +162,8 @@ export default {
   */
   sr_click_handle(match) {
     let full_url = this.get_full_sr_url(match) // seid,match.srid
+
+    localStorage.setItem('test_match_info', JSON.stringify(match))
     // lockie
     // if(!GlobalAccessConfig.get_statisticsSwitch()) return window.vue.useMittEmit(window.vue.MITT_TYPES.EMIT_SHOW_TOAST_CMD, window.vue.i18n_t("msg.msg_09")); 
     // if([1,2].includes(match.csid*1)){
