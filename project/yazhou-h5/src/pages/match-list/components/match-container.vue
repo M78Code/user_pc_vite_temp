@@ -108,7 +108,7 @@
           <div class="date-container match-indent" :class="{ 'n-s-edition': !show_newer_edition }"
             v-if="!show_newer_edition && !is_show_result()">
             <div class='l standard'>
-              <!--竞彩足球 星期与编号-->
+              <!--竞彩足球 星期与编号-->match
               <div class="week-mcid row items-center" v-if="MenuData.get_menu_type() == 30">
                 <span class="din-regular">
                   {{ lodash.get(match,'mcid')}}

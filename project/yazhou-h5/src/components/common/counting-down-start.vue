@@ -89,8 +89,7 @@ function counting_down() {
         }, 1000);
       }
       else {
-        const { emit } = useMittEmit(MITT_TYPES.EMIT_COUNTING_DOWN_START_ENDED)
-        emit(props.match.mid);
+        useMittEmit(MITT_TYPES.EMIT_COUNTING_DOWN_START_ENDED, props.match.mid)
       }
     }
   }

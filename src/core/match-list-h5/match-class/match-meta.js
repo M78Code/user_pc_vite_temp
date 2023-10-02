@@ -170,6 +170,16 @@ class MatchMeta {
   }
 
   /**
+   * @description 筛选对应热门赛事
+   * @param { tid } 联赛 ID 
+   */
+  filter_hot_match_by_tid (tid = '') {
+    const list = BaseData.base_data_res.matchsList
+    const result = list.filter(t => t.tid === tid)
+    this.set_match_default_properties(result)
+  }
+
+  /**
    * @description 更新对应赛事
    * @param { list } 赛事数据 
    */

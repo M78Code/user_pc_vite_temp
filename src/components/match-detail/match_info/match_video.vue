@@ -4,7 +4,7 @@
  * @Description: 右侧视频播放组件
 -->
 <template>
-  <div ref="video" class="c-match-video relative-position" @mousemove="onMousemove">
+  <div ref="video" class="c-match-video relative-position" @mousemove="onMousemove">{{ play_media.media_type }}
     <!-- 精彩回播 header -->{{ current_replay }}
     <div v-if="current_replay" class="video-replay-header">
       <div class="btn-back-live"></div>
@@ -60,7 +60,7 @@
         scrolling="no"
         allowfullscreen='true' allow="autoplay"
       ></iframe>
-      <template v-if="show_video_replay && vx_play_media.media_type === 'video' && (vx_layout_cur_page.cur !== 'details' && !is_esports)">
+      <template v-if="show_video_replay && play_media.media_type === 'video' && (vx_layout_cur_page.cur !== 'details' && !is_esports)">
         <!--（精彩/收起）回放 -->
         <div
           v-if="!(events_list.length === 0 && current_events_type === 0)"
@@ -100,7 +100,7 @@
       </template>
       <video-type-ctr
         @mouseenter="video_enter"
-        v-show="is_video_hover && !current_replay && ((['video','studio','anchor','topic'].includes(vx_play_media.media_type) && is_video_load_done) || is_esports)"
+        v-show="is_video_hover && !current_replay && ((['video','studio','anchor','topic'].includes(play_media.media_type) && is_video_load_done) || is_esports)"
         :ctr_data="ctr_data"
         :is_video_hover="is_video_hover"
         :video_fullscreen_disabled="video_fullscreen_disabled"

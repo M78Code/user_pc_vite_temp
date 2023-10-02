@@ -62,7 +62,6 @@ import SList from "project_path/src/components/skeleton/skeleton-list.vue"   // 
 import scrollTop from "project_path/src/components/common/record-scroll/scroll-top.vue";
 import { compute_css_variables } from "src/core/css-var/index.js"
 import { MenuData, score_switch_handle, utils } from "src/core/index.js";
-import MatchCtrClass from "src/core/match-list-h5/match-class/match-ctr.js";
 import BaseData from 'src/core/base-data/base-data.js'
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import MatchPage from "src/core/match-list-h5/match-class/match-page.js";
@@ -475,7 +474,7 @@ const on_listeners = () => {
     emitter_5: useMittOn(MITT_TYPES.EMIT_COUNTING_DOWN_START_ENDED, () => MatchPage.counting_down_start_ended_on()).off,
     emitter_6: useMittOn(MITT_TYPES.EMIT_BET_ODD_SYNCHRONIZE, () => MatchPage.bet_odd_synchronize_handle()).off,
     emitter_7: useMittOn(MITT_TYPES.EMIT_MATCH_LIST_SCROLLING, () => MatchListCard.match_list_scroll_handle()).off,
-    emitter_8: useMittOn(MITT_TYPES.EMIT_SECONDARY_PLAY_UNFOLD_CHANGE, MatchListCard.secondary_play_unfold_change_handle()).off,
+    emitter_8: useMittOn(MITT_TYPES.EMIT_SECONDARY_PLAY_UNFOLD_CHANGE, MatchListCard.secondary_play_unfold_change_handle).off,
     emitter_9: useMittOn(MITT_TYPES.EMIT_TAB_HOT_CHANGING, () => MatchListCard.tab_changing_handle()).off,
     emitter_10: useMittOn(MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, () => upd_match_is_empty).off,
     emitter_11: useMittOn(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA, init_match_callback).off,

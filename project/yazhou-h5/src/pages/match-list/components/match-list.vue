@@ -3,7 +3,7 @@
 -->
 
 <template>
-  <div class="refresh-container">
+  <div class="refresh-container" :style="{paddingTop: source === 'home_hot_page_schedule' ? '0' : '65px'}">
     <!--列表页 -->
     <scroll-wrapper ref="scroll_wrapper" :data_source="matchCtr.list" :main_source="source"
       :is_goto_top_random="is_goto_top_random" :match_list_wrapper_height="match_list_wrapper_height"
@@ -385,7 +385,7 @@ const unfold_changed_handle = ($event) => {
 }
 
 onDeactivated(() => {
-  utils.del(msc_map);
+  // utils.del(msc_map);
   clearTimeout(timer_super12.value)
   timer_super12.value = null
 

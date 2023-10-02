@@ -218,6 +218,7 @@ export default class MatchDetailCtr {
       time: Date.now()
     }
     this.mid = mid
+    this.play_media.media_type = media_type
     this.set_details_data_version()
   }
 
