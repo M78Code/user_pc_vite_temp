@@ -37,7 +37,7 @@
 // import msc from "src/public/mixins/common/msc.js";
 import { format_mgt_time } from "src/core/format/index.js"
 import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/index.js";
-
+import { i18n_t } from "src/boot/i18n.js";
 export default {
   // mixins: [msc],
   name: "stage_child_2",
@@ -66,15 +66,15 @@ export default {
           if(n.mess == '0'){
             let num = 0;
             if(n.c_time){ num = (new Date().getTime() - n.c_time) / 1000 }
-            clearTimeObj();
+            this.clearTimeObj();
           // 开始
           }else if(n.mess == '1'){
             let num = 0;
             if(n.c_time){ num = (new Date().getTime() - n.c_time) / 1000 }
-            initRestTime(num);
+            this.initRestTime(num);
           }
         }else{
-          initRestTime(0);
+          this.initRestTime(0);
         }
       },
       deep: true,
@@ -84,14 +84,14 @@ export default {
   components: {},
   created() {
     // 延时器
-    showTimeInterval = 0;
+    this.showTimeInterval = 0;
     // mess 1:开始 0:暂停
-    initEvent();
+    this.initEvent();
     // let {off: off_} = useMittOn(MITT_TYPES.EMIT_UPDATE_GAME_TIME, initEvent);
   },
   destroyed() {
-    clearTimeObj();
-  //  off_()
+    this.clearTimeObj();
+ 	//  off_()
   },
   methods: {
     /**
@@ -100,11 +100,11 @@ export default {
      *@return {Undefined}
      */
     initEvent(){
-      if(detail_data.mess == 0 && detail_data.cmec == "time_start" && !mmp_arr1.includes(detail_data.mmp)){
-        showTime = Number(detail_data.mst);
-        savePageTime();
+      if(this.detail_data.mess == 0 && this.detail_data.cmec == "time_start" && !this.mmp_arr1.includes(this.detail_data.mmp)){
+        this.showTime = Number(this.detail_data.mst);
+        this.savePageTime();
       }else{
-        initRestTime(0);
+        this.initRestTime(0);
       }
     },
     /**
@@ -114,15 +114,15 @@ export default {
      */
     initRestTime(num){
       // 清除相关倒计时;
-      if(showTimeInterval){ clearInterval(showTimeInterval) }
+      if(this.showTimeInterval){ clearInterval(this.showTimeInterval) }
       // 比赛休息时间,显示下一节比赛时间初始化比赛休息时间
-      if(detail_data.mmp == '301' || detail_data.mmp == '302' || detail_data.mmp == '303' || detail_data.mmp == '31'){
+      if(this.detail_data.mmp == '301' || this.detail_data.mmp == '302' || this.detail_data.mmp == '303' || this.detail_data.mmp == '31'){
         // 根据mle 的值，来显示默认值的值；
-        showTime = (detail_data.mlet == '0' || detail_data.mle == '0') ? 600 : (detail_data.mlet == '7' || detail_data.mle == '7') ? 720 : (detail_data.mlet == '17' || detail_data.mle == '17') ? 1200 : (detail_data.mlet == '64' || detail_data.mle == '64') ? 360 : (detail_data.mlet == '68' || detail_data.mle == '68') ? 300 : (detail_data.mlet == '70' || detail_data.mle == '70') ? 240 :'';
-        savePageTime();
-      }else if(detail_data.mmp == '1' || detail_data.mmp == '2' || detail_data.mmp == '13' || detail_data.mmp == '14' || detail_data.mmp == '15' || detail_data.mmp == '16' || detail_data.mmp == '40'||detail_data.mmp == '21'){
+        this.showTime = (this.detail_data.mlet == '0' || this.detail_data.mle == '0') ? 600 : (this.detail_data.mlet == '7' || this.detail_data.mle == '7') ? 720 : (this.detail_data.mlet == '17' || this.detail_data.mle == '17') ? 1200 : (this.detail_data.mlet == '64' || this.detail_data.mle == '64') ? 360 : (this.detail_data.mlet == '68' || this.detail_data.mle == '68') ? 300 : (this.detail_data.mlet == '70' || this.detail_data.mle == '70') ? 240 :'';
+        this.savePageTime();
+      }else if(this.detail_data.mmp == '1' || this.detail_data.mmp == '2' || this.detail_data.mmp == '13' || this.detail_data.mmp == '14' || this.detail_data.mmp == '15' || this.detail_data.mmp == '16' || this.detail_data.mmp == '40'||this.detail_data.mmp == '21'){
         // 进入比赛时;
-        calculagraph(num);
+        this.calculagraph(num);
       }
     },
     /**
@@ -131,19 +131,19 @@ export default {
      *@return {Undefined}
      */
     calculagraph(num){
-      showTime = Number(detail_data.mst) - Number(num);
-      savePageTime();
-      showTimeInterval = setInterval(() => {
-        if(showTime <= 0){
-          showTime = 0;
+      this.showTime = Number(this.detail_data.mst) - Number(num);
+      this.savePageTime();
+      this.showTimeInterval = setInterval(() => {
+        if(this.showTime <= 0){
+          this.showTime = 0;
         }else{
-          if(detail_data.mess == 0){
-            clearInterval(showTimeInterval);
-            showTime++;
+          if(this.detail_data.mess == 0){
+            clearInterval(this.showTimeInterval);
+            this.showTime++;
           }
-          showTime -= 1;
+          this.showTime -= 1;
         }
-        savePageTime();
+        this.savePageTime();
       }, 1000);
     },
     /**
@@ -152,8 +152,8 @@ export default {
      *@return {Undefined}
      */
     savePageTime(){
-      if(dialog) return;
-      useMittEmit(MITT_TYPES.EMIT_SET_MATCH_TIME, Number(showTime));
+      if(this.dialog) return;
+      useMittEmit(MITT_TYPES.EMIT_SET_MATCH_TIME, Number(this.showTime));
     },
     /**
      *@description 清除时间倒计时
@@ -161,9 +161,9 @@ export default {
      *@return {Undefined}
      */
     clearTimeObj(){
-      if(!!showTimeInterval){
-        clearInterval(showTimeInterval)
-        showTimeInterval = null
+      if(!!this.showTimeInterval){
+        clearInterval(this.showTimeInterval)
+        this.showTimeInterval = null
       }
     }
   },

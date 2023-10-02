@@ -9,7 +9,7 @@
     if(match_any){
       if(Array.isArray(match_any)){
         match_any.map(match => {
-          if(match.mid){
+          if(match && match.mid){
             ret[match.mid] = {mid:match.mid, ms:match.ms, csid:match.csid, mess:match.mess, mmp:match.mmp, hpids:[]};
           }
         })

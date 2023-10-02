@@ -50,7 +50,7 @@ const get_detail_data = ref({
         csid: '1',
         mid: '1',
     })
-let ballTypeBackground = computed(() => detail_csid_config['CSID_' + get_detail_data.value.csid].detail.B)
+let ballTypeBackground = computed(() => lodash.get(detail_csid_config,`[CSID_${props.detail_data.csid}].detail.B`))
 let data = reactive({
   // 此处空对象请勿删除;
   URL: detail_csid_config,

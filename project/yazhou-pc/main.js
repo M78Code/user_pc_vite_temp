@@ -31,9 +31,12 @@ import "../../public/yazhou-pc/image/com/com.css"
 import useDirective from "src/directives/index.js"
 import App from "./App.vue";
 import lodash from "lodash";
+import { i18n_t } from "src/boot/i18n.js";
 const myApp = createApp(App);
 myApp.config.globalProperties.lodash = lodash;
+app.config.globalProperties.i18n_t = i18n_t;
 window.lodash = lodash;
+window.i18n_t = i18n_t;
 // 使用自定义指令
 useDirective(myApp)
 console.log(myApp,'myApp');

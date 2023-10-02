@@ -158,7 +158,7 @@
         v-if="[1, 2, 3, 4].includes(+detail_data.ms)"
       >
         <!-- 引入相对应的formatUtil,使用其中的方法; -->
-        {{ detail_data | format_total_score(0) }} - {{ detail_data | format_total_score(1) }}
+        {{ format_total_score(detail_data,0) }} - {{ format_total_score(detail_data,1) }}
       </span>
       <span
         v-if="detail_data.csid == '3' && detail_data.mat"
