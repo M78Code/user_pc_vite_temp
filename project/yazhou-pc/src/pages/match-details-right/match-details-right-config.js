@@ -176,7 +176,7 @@ export const useRightDetails = (props) => {
         get_match_detail(is_ws);
       }, is_ws);
     } else {
-      // this.vx_set_match_details_params({ category: 0 });
+      MatchDetailCalss.current_category_id =0
     }
   };
   /** 批量注册mitt */
@@ -730,7 +730,7 @@ export const useRightDetails = (props) => {
    * @return {Undefined} Undefined
    */
   const on_go_top = () => {
-    useMittEmit(MITT_TYPES.EMIT_SET_SCROLL_POSITION, [0, 0])
+    useMittEmit(MITT_TYPES.EMIT_SET_SCROLL_POSITION, ["vertical", 0])
   };
   /**
    * @description: 检查玩法关盘
@@ -1025,7 +1025,7 @@ export const useRightDetails = (props) => {
     allData.mcid = lodash.get(obj, "id");
     allData.round = lodash.get(obj, "round");
     allData.plays_list = lodash.get(obj, "plays", []);
-       get_match_detail_base();
+    // get_match_detail_base();
   };
   /**
    * 切换玩法集时增加 loading 效果
@@ -1181,7 +1181,8 @@ export const useRightDetails = (props) => {
     on_go_top,
     change_loading_state,
     set_handicap_this,
-    setfoldStatus
+    setfoldStatus,
+    get_mattch_details
   };
 };
 //  mixins: [global_mixin,   details_mixins,],
@@ -1203,21 +1204,6 @@ export const useRightDetails = (props) => {
 //   //  refresh
 //  },
 
-//  filters: {
-//    // 格式化用户余额保留2位小数
-//    format_balance(num) {
-//         if(num) {
-//            let _split = num.toString().match(/^(-?\d+)(?:\.(\d{0,2}))?/)
-
-//            // 保留两位小数
-//            let decimal = _split[2] ? _split[2].padEnd(2, "0") : "00"
-
-//            let _num = _split[1] + '.' + decimal
-//            return _num.replace(/(\d)(?=(\d{3})+\.)/g, '$1,')
-//         }
-//         return '0.00';
-//    },
-//  },
 //  computed: {
 //   //  ...mapGetters({
 //   //    // 当前语言

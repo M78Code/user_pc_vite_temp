@@ -444,13 +444,7 @@ export const useMethods = ({ props,emit }) => {
     }
   };
 
-  /**
-   * @Description:返回顶部
-   * @return {Undefined} Undefined
-   */
-  const on_go_top = () => {
-    emit("on_go_top");
-  };
+
 
   /**
    * @Description 获取当前选中详情玩法集
@@ -567,7 +561,6 @@ const rang = ref([])
     sort_index,
     route,
     lodash,
-    on_go_top,
     check_half
   };
 };

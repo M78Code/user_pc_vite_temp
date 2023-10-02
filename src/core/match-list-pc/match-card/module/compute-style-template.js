@@ -70,7 +70,6 @@ const compute_view_tpl_id = (data_tpl_id) => {
 	  // return matchtpl1after
 	  view_tpl_id = 1
 	}
-
 	return view_tpl_id
   }
 

@@ -1,6 +1,7 @@
 <template>
   <!-- 赛事比分 -->
   <div :class="['score-more', { 'items-center': match_style_obj.data_tpl_id == 17 }]" :style="`width:${score_wrap_width}px`">
+    <div v-show="false">{{ MatchListData.data_version.version }}</div>
     <!-- 棒球 -->
     <template v-if="match_style_obj.data_tpl_id == 17 && match_status">
       <!-- 上垒图标 icon-on_base0~3 -->
@@ -66,18 +67,27 @@ import { t } from "src/core/index.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
 import {component_symbol ,need_register_props} from "../config/index.js"
-import store from 'src/store-redux/index.js'
 import { get_match_status } from 'src/core/index.js'
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
+import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/core/index.js";
 import lodash from 'lodash';
-let state = store.getState();
 // const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
 
 const props = defineProps({
   match: {
     type: Object,
     default: () => {},
-  }
+  },
+  // 是否显示比分内容
+  is_show_score_content: {
+    type: Boolean,
+    default: () => true,
+  },
+  //比分容器宽度
+  score_wrap_width: {
+    type: Number,
+    default: () => 0,
+  },
 })
 
 let match_style_obj = MatchListCardDataClass.all_card_obj[props.match.mid+'_']
@@ -104,7 +114,7 @@ onMounted(() => {
  */
 const compute_is_show_more = () => {
   if (!stage_score.value) return;
-  let length = lodash.get(this.match, "score_list.length", 0);
+  let length = lodash.get(props.match, "score_list.length", 0);
   if (length < 5) {
     more_right_icon.value = false;
     more_right_icon.value = false;
@@ -136,7 +146,7 @@ const compute_is_show_more = () => {
  * 比分溢出时滚动方法
  */
 const scorll = (type) => {
-  let length = lodash.get(this.match, "score_list.length", 0);
+  let length = lodash.get(props.match, "score_list.length", 0);
   if (!stage_score.value || length < 5) return;
   let stageScore = stage_score.value;
   switch (type) {
@@ -151,7 +161,7 @@ const scorll = (type) => {
       stageScore.scrollLeft += 100;
       break;
   }
-  this.compute_is_show_more();
+  compute_is_show_more();
 }
 
 

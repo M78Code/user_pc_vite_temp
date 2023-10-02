@@ -17,7 +17,7 @@
        <!-- 提前结算 -->
        <div @click.stop="">
          <div
-          v-if="lodash.get(match, 'mearlys', 0) && match_style_obj.data_tpl_id != 12 && vx_cur_menu_type.type_name!='bet'"
+          v-if="lodash.get(match, 'mearlys', 0) && match_style_obj.data_tpl_id != 12"
           class="icon-wrap settlement-pre relative-position"
           v-tooltip="{content: t('bet_record.settlement_pre')}"
         >
@@ -54,21 +54,25 @@
 // import match_basis_info_mixin from "src/project/yabo/components/match_list/match_basis_info/match_basis_info_mixin.js"
 // mixins:[match_basis_info_mixin],
 
-import { computed } from 'vue';
+import { computed, defineProps } from 'vue';
 import lodash from 'lodash';
 import { t } from "src/core/index.js";
 import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
-import {component_symbol ,need_register_props} from "../config/index.js"
-// const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
-const props = {
+import { utils } from 'src/core/utils/module/utils.js'
+import details  from "src/core/match-list-pc/details-class/details.js"
+const props = defineProps({
   match: {
     type: Object,
     default: () => {}
+  },
+  is_show_more: {
+    type: Boolean,
+    default: () => false
   }
-}
+})  
 
 let match_style_obj = MatchListCardDataClass.all_card_obj[props.match.mid+'_']
 // 赛事模板宽度
@@ -77,7 +81,7 @@ const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_o
 
 
 const team_names = computed(() => {
-  let { mhn = '', man = '', up_half_text = '' } = this.match
+  let { mhn = '', man = '', up_half_text = '' } = props.match
   let team_names = {
     away:"",
     home:"",

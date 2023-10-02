@@ -33,7 +33,6 @@
           <!-- <basis-info4 v-if="is_mounted" :match="match" /> -->
         </div>
         <!-- 赛事盘口投注项 -->
-        {{ match.add1_handicap_list }}
         <match-handicap :handicap_list="match_tpl_info[`template_${match_style_obj.data_tpl_id}`].add_handicap_list" :match="match" />
         <!-- 视频按钮 -->
         <div class="media-col"></div>
@@ -127,6 +126,10 @@ const props = defineProps({
     type: [String, Number],
     default: null,
   },
+  is_show_more: {
+    type: Boolean,
+    default: () => false
+  }
 })
 
 const play_name_list = ref([]);

@@ -1,6 +1,6 @@
 <template>
   <div class="container-menu-w" :class="{
-    black2: get_theme.includes('night'),
+    black2: theme.includes('night'),
     'scrolling-up': scroll_dir > 0,
     'scrolling-down': scroll_dir < 0,
   }">
@@ -12,7 +12,7 @@
     <div class="floating-menu">
       <div class="footer-menu-item" @click="menu_item_click(item, k)" v-for="(item, k) of footer_menulist" :key="k"
         v-show="bottom_option_show(item)" :class="{
-          'f-disabled-m': k == 0 && menu_type == 100,
+          'f-disabled-m': k == 0 && is_kemp,
           'sub-menu-first': k == 0,
           'is-hidden': get_is_hidden(item, k),
           'effect-show': is_sub_first_effect && k == 0,
@@ -27,13 +27,13 @@
             <span class="menu-item-img" :class="[
               item.icon.slice(0, -4),
               menu_item_img(item),
-              lodash.get(get_user, 'favoriteButton') ? 'favoriteButton' : '',
+              lodash.get(user_info.value, 'favoriteButton') ? 'favoriteButton' : '',
             ]" :style="compute_css('foot-menu-icon', 0)"></span>
           </div>
           <div class="menu-item-title" :class="{
             'theme02-focus':
               show_favorite_list &&
-              get_theme.includes('night') &&
+              theme.includes('night') &&
               item.id == 1,
           }" v-show="item.id != 5">
             <span class="title-p1" :class="{ 'title-p2': item.title1 }">
@@ -56,7 +56,7 @@
         <div v-for="(sub_m, sub_i) of footer_sub_m_list" :key="sub_i"
           @touchstart.prevent.stop="sub_menu_changed(sub_m, sub_i)" class="wrapper column justify-center items-center"
           v-show="(MenuData.get_current_sub_menuid() == 5 || sub_m.id != 114) &&
-            !([8, 7].includes(menu_type) && sub_m.id == 114) &&
+            !(is_vr_export && sub_m.id == 114) &&
             !(get_sport_all_selected && sub_m.id == 114)
             " :data-sid="sub_m.id" :data-mtype="MenuData.get_current_sub_menuid()" :data-cmtype="menu_type" :class="{
     current_sub_menu: sub_i == sub_footer_menu_i,
@@ -85,13 +85,12 @@ import lodash from "lodash";
 import { useRoute, useRouter } from "vue-router";
 import store from "src/store-redux/index.js";
 import { UserCtr, i18n_t, compute_css, useMittOn, useMittEmit, MITT_TYPES, MenuData } from "src/core/index.js";
-
+import { lang, show_favorite_list, theme, user_info, resources_obj } from "project_path/src/mixin/userctr";
 const { matchReducer } = store.getState();
 const { menu_type, update_time, get_sport_all_selected } = MenuData;
 // 路由
 const route = useRoute();
 const router = useRouter();
-
 const is_effecting_ref = ref(true);
 const is_refreshing = ref(false);
 // 子菜单是否显示
@@ -113,22 +112,8 @@ const is_sub_first_hidden = ref(false);
 
 //小于0显示页脚,大于0隐藏页脚
 const scroll_dir = ref(0);
-//关注、收藏 模式
-const show_favorite_list = ref(UserCtr.show_favorite_list)
-const get_lang = ref(UserCtr.lang);
-const get_theme = ref(UserCtr.theme);
-const get_user = ref(UserCtr.user_info);//用户信息
-//商户配置的广告信息
-const get_resources_obj = ref(UserCtr.get_resources_obj() || {})
-//用户信息更新 同步状态
-watch(UserCtr.user_version, () => {
-  const { theme, lang } = UserCtr;
-  get_theme.value = theme;
-  get_lang.value = lang;
-  show_favorite_list.value = UserCtr.show_favorite_list;
-  get_user.value = UserCtr.user_info
-  get_resources_obj.value = UserCtr.get_resources_obj()
-})
+
+
 let timer1_,
   timer2_,
   timer3_,
@@ -139,12 +124,12 @@ let timer1_,
 let timer_super9;
 //简版足球角球图标分割线相关
 let timer_super10;
-const isshow_bottom_banner = ref(get_resources_obj.value.is_show && get_resources_obj.value.img_src);
+const isshow_bottom_banner = ref(resources_obj.value.is_show && resources_obj.value.img_src);
 const calc_resources_obj = computed(() => {
-  if (get_theme.value.includes("day")) {
-    return get_resources_obj.value.day;
+  if (theme.value.includes("day")) {
+    return resources_obj.value.day;
   } else {
-    return get_resources_obj.value.night;
+    return resources_obj.value.night;
   }
 });
 /**
@@ -166,7 +151,7 @@ function get_is_hidden(item, k) {
 //   "get_current_main_menu",
 //   "get_filter_list",
 //   "get_current_menu",
-//   "get_lang.value",
+//   "lang.value",
 
 //   'get_list_scroll_direction',
 
@@ -313,7 +298,7 @@ const update_first_menu = () => {
   footer_menulist.value[0].title = sub_menu.title;
   footer_menulist.value[0].title1 = sub_menu.title1;
   footer_menulist.value[0].icon = sub_menu.icon;
-  footer_menulist.value[0].icon_black = get_theme.value.includes("day")
+  footer_menulist.value[0].icon_black = theme.value.includes("day")
     ? sub_menu.icon
     : sub_menu.icon1;
 
@@ -335,7 +320,7 @@ const update_first_menu = () => {
  */
 const menu_item_click = (item, i) => {
   if (item.is_disabled) return;
-  if (menu_type.value == 100 && i == 0) return;
+  if (MenuData.is_kemp() && i == 0) return;
   MenuData.set_footer_sub_menu_id(item.id)
   //独赢
   if (item.id === 0) {
@@ -412,7 +397,7 @@ const menu_item_click = (item, i) => {
  */
 const virtual_disable_follow_filter = () => {
   // 赛果禁用筛选
-  if (28 == menu_type.value) {
+  if (MenuData.is_results()) {
     footer_menulist.value.forEach((f_m) => {
       // 赛果 二级菜单 10000也不知道是什么
       if (f_m.id == 3 && MenuData.get_current_sub_menuid() == 10000) {
@@ -445,8 +430,7 @@ const virtual_disable_follow_filter = () => {
     footer_menulist.value.forEach((f_m) => {
       // 电竞下冠军不可点击关注
       if (
-        f_m.id === 1 &&
-        menu_type.value === 7 &&
+        f_m.id === 1 && MenuData.is_export() &&
         lodash.get(MenuData.current_lv_3_menu, "menuType") == 100
       ) {
         f_m.is_disabled = true;
@@ -457,7 +441,7 @@ const virtual_disable_follow_filter = () => {
         }
       }
       // 电竞放开 筛选
-      if (f_m.id === 3 && menu_type.value === 7) {
+      if (f_m.id === 3 && MenuData.is_export()) {
         f_m.is_disabled = true;
       }
       if (f_m.id == 1 && !GlobalAccessConfig.get_collectSwitch()) {
@@ -474,16 +458,15 @@ const set_footer_menulist = (init_footer_menulist_data = true) => {
   let is_virtual = MenuData.is_virtual_sport(); //虚拟体育
   // 赛果虚拟体育
   let is_result_virtual = MenuData.is_results_virtual_sports();
-  let is_saiguo_gz =
-    menu_type.value == 28 &&
+  let is_saiguo_gz = MenuData.is_results() &&
     [100].includes(MenuData.get_current_sub_menuid());
-  let is_electronicSports = menu_type.value == 7; // 电竞
+  let is_electronicSports = MenuData.is_export(); // 电竞
   if (init_footer_menulist_data) {
     footer_menulist.value = [
       // 玩法菜单(独赢|大小|让球|角球等)
       {
         title: i18n_t("footer_menu.win_alone"),
-        title1: get_lang.value == "en" ? "" : i18n_t("footer_menu.play_way_f"),
+        title1: lang.value == "en" ? "" : i18n_t("footer_menu.play_way_f"),
         icon: "f-icon-sub-duying.svg",
         icon_black: "f-icon-sub-duying-black.svg",
         id: 0,
@@ -501,7 +484,7 @@ const set_footer_menulist = (init_footer_menulist_data = true) => {
         icon_black_fav: "f-icon-follow1-black.svg",
         icon2: "f-icon-follow-black.svg",
         id: 1,
-        is_disabled: is_virtual || is_result_virtual || menu_type.value == 28,
+        is_disabled: is_virtual || is_result_virtual || MenuData.is_results(),
       },
       // 注单
       {
@@ -541,8 +524,7 @@ const set_footer_menulist = (init_footer_menulist_data = true) => {
 // 是否展示 底部菜单 选项
 const bottom_option_show = computed(() => {
   return function (item) {
-    return !(
-      menu_type.value == 7 &&
+    return !(MenuData.is_export() &&
       lodash.get(MenuData.current_lv_3_menu, "menuType") == 100 &&
       item.id == 0
     );
@@ -556,7 +538,7 @@ const menu_item_img = computed(() => {
       typeof get_filter_list == "object" &&
       Object.keys(get_filter_list).length &&
       "fillter-high-light";
-    if (get_theme.value.includes("y0"))
+    if (theme.value.includes("y0"))
       obj =
         item.id == 3 &&
         typeof get_filter_list == "object" &&
@@ -568,7 +550,7 @@ const menu_item_img = computed(() => {
 const footer_sub_m_list = computed(() => {
   return [
     {
-      title: ["en", "th", "ms", "ad"].includes(get_lang.value)
+      title: ["en", "th", "ms", "ad"].includes(lang.value)
         ? ""
         : i18n_t("footer_menu.full_time"),
       title1: i18n_t("footer_menu.win_alone"),
@@ -579,7 +561,7 @@ const footer_sub_m_list = computed(() => {
       id: 1,
     },
     {
-      title: ["en", "th", "ms", "ad"].includes(get_lang.value)
+      title: ["en", "th", "ms", "ad"].includes(lang.value)
         ? ""
         : i18n_t("footer_menu.full_time"),
       title1: i18n_t("footer_menu.rangqiu"),
@@ -590,7 +572,7 @@ const footer_sub_m_list = computed(() => {
       id: 4,
     },
     {
-      title: ["en", "th", "ms", "ad"].includes(get_lang.value)
+      title: ["en", "th", "ms", "ad"].includes(lang.value)
         ? ""
         : i18n_t("footer_menu.full_time"),
       title1: i18n_t("footer_menu.daxiao"),
@@ -601,7 +583,7 @@ const footer_sub_m_list = computed(() => {
       id: 2,
     },
     {
-      title: ["en", "th", "ms", "ad"].includes(get_lang.value)
+      title: ["en", "th", "ms", "ad"].includes(lang.value)
         ? ""
         : i18n_t("footer_menu.corner_kick"),
       title1: i18n_t("footer_menu.corner"),
@@ -645,9 +627,9 @@ watch(show_favorite_list,
       item.icon = item.icon1;
       item.icon_black = item.icon1;
     } else {
-      if (get_theme.value.includes("day")) {
+      if (theme.value.includes("day")) {
         item.icon = item.icon0;
-      } else if (get_theme.value.includes("night")) {
+      } else if (theme.value.includes("night")) {
         item.icon_black = item.icon2;
       }
     }
@@ -655,7 +637,8 @@ watch(show_favorite_list,
     set_footer_menulist();
   }
 );
-
+const is_kemp = ref(MenuData.is_kemp()) //是否冠军
+const is_vr_export = ref(MenuData.is_export() || MenuData.is_vr())
 watch(
   [
     menu_type, //一级菜单变化
@@ -664,6 +647,8 @@ watch(
     // topMenuReducer.curr_third_menu_id //三级菜单变化
   ],
   () => {
+    is_kemp.value = MenuData.is_kemp()
+    is_vr_export.value = MenuData.is_export() || MenuData.is_vr()
     if (get_sport_all_selected.value) {
       /**
        * 滚球菜单是否选中全部菜单变化

@@ -45,7 +45,10 @@
           <div>
             <div
               class="col wrap-scroll"
-              v-show="['data', 'loading'].includes(load_detail_statu) && match_infoData"
+              v-show="
+                ['data', 'loading'].includes(load_detail_statu) &&
+                match_infoData
+              "
             >
               <div class="column fit">
                 <!-- 盘口模板start -->
@@ -93,11 +96,14 @@ import matchHandicap from "src/components/match-detail/match-handicap/match-hand
 import matchListHot from "project_path/src/pages/match-list/match-list-hot.vue";
 import { useGetConfig } from "./detail.config";
 //引入组件样式
-import { compute_css_variables } from "src/core/css-var/index.js"
+import { compute_css_variables } from "src/core/css-var/index.js";
 import { reactive, ref, watch } from "vue";
-import { MatchDataWarehouse_PC_Detail_Common as MatchDetailsData } from "src/core/index";  
-const page_style = ref(null)
-page_style.value = compute_css_variables({ category: 'component', module: 'match-details' })
+import { MatchDataWarehouse_PC_Detail_Common as MatchDetailsData } from "src/core/index";
+const page_style = ref(null);
+page_style.value = compute_css_variables({
+  category: "component",
+  module: "match-details",
+});
 const {
   mid,
   load_detail_statu,
@@ -118,22 +124,31 @@ const {
   init,
   back_to,
   set_handicap_this,
-  on_go_top,
   set_handicap_state,
   get_mattch_details,
   change_loading_state,
-  MatchDataWarehouseInstance
+  MatchDataWarehouseInstance,
 } = useGetConfig();
-const  match_infoData = ref({})
-const  match_details = ref([])
-watch(()=>MatchDetailsData.data_version,(val,oldval)=>{
-  if(val.version ){
-    console.log(222222);
-    match_infoData.value =  MatchDetailsData.get_quick_mid_obj(mid.value)  
-    match_details.value =  [MatchDetailsData.get_quick_mid_obj(mid.value)]
-    
-  }
-},{deep:true})
+// /**
+//  * @Description:返回顶部
+//  * @return {Undefined} Undefined
+//  */
+// const on_go_top = () => {
+//   emit("on_go_top");
+// };
+const match_infoData = ref({});
+const match_details = ref([]);
+watch(
+  () => MatchDetailsData.data_version,
+  (val, oldval) => {
+    if (val.version) {
+      console.log(222222);
+      match_infoData.value = MatchDetailsData.get_quick_mid_obj(mid.value);
+      match_details.value = [MatchDetailsData.get_quick_mid_obj(mid.value)];
+    }
+  },
+  { deep: true }
+);
 </script>
 
 <style lang="scss" scoped>
@@ -174,7 +189,7 @@ watch(()=>MatchDetailsData.data_version,(val,oldval)=>{
     }
   }
   /* ************** 顶部标题 *************** -S */
- 
+
   /* ************** 顶部标题 *************** -E */
   /* ************** 比分扳 *************** -S */
   .head-info {

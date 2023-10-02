@@ -283,7 +283,6 @@ class UserCtr {
   set_standard_edition(v) {
     let edition = this.standard_edition == 2 ? 1 : 2;
     this.standard_edition = edition;
-    this.update()
     useMittEmit(MITT_TYPES.EMIT_STANDARD_EDITION_CHANGE, edition)
     // set_newer_standard_edition(edition);
     // set_secondary_unfold_map({}); // 清空次要玩法折叠的记录，收起来
@@ -1332,6 +1331,7 @@ class UserCtr {
           } else {
             this.resources_obj = ({ is_show: false, theme02: {}, theme01: {} })
           }
+          this.update()
         }
 
       } catch (e) {
