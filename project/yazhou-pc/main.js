@@ -32,18 +32,21 @@ import useDirective from "src/directives/index.js"
 import App from "./App.vue";
 import lodash from "lodash";
 import { i18n_t } from "src/boot/i18n.js";
-const myApp = createApp(App);
-myApp.config.globalProperties.lodash = lodash;
+const app = createApp(App);
+app.config.globalProperties.lodash = lodash;
 app.config.globalProperties.i18n_t = i18n_t;
 window.lodash = lodash;
 window.i18n_t = i18n_t;
+import filters from 'src/core/filters/global_filters.js'
+//vue3配置全局过滤器
+app.config.globalProperties.$filters = filters;
 // 使用自定义指令
-useDirective(myApp)
-console.log(myApp,'myApp');
-myApp.use(i18n);
-myApp.use(router);
-myApp.use(Quasar, {
+useDirective(app)
+console.log(app,'app');
+app.use(i18n);
+app.use(router);
+app.use(Quasar, {
   plugins: {}, // import Quasar plugins and add here
 });
 // 引入 当前 计算出的植入配置
-myApp.mount("#ty-app");
+app.mount("#ty-app");

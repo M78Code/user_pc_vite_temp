@@ -27,6 +27,10 @@ app.config.globalProperties.lodash = lodash;
 app.config.globalProperties.i18n_t = i18n_t;
 window.lodash = lodash;
 window.i18n_t = i18n_t;
+import filters from 'src/core/filters/global_filters.js'
+//vue3配置全局过滤器
+app.config.globalProperties.$filters = filters;
+
 app.use(Quasar, {
   plugins: {}, // import Quasar plugins and add here
 });
