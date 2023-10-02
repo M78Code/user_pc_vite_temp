@@ -11,8 +11,8 @@
         <span class="team-name">
           <div class="yb-absolute ellipsis">{{matchDetail.mhn}}</div>
         </span>
-        <img v-img="([_.get(matchDetail,'mhlu[0]'),_.get(matchDetail,'frmhn[0]')])" class="team_logo" alt/>
-        <span class="score">{{[0,110].includes(matchDetail.ms)?"—":_.get(matchDetail, 'msc.S1.home')}}</span>
+        <img v-img="([lodash.get(matchDetail,'mhlu[0]'),lodash.get(matchDetail,'frmhn[0]')])" class="team_logo" alt/>
+        <span class="score">{{[0,110].includes(matchDetail.ms)?"—":lodash.get(matchDetail, 'msc.S1.home')}}</span>
       </div>
       <div class="both-time">
         <div style="color:#83838A;margin-bottom: 6px;">{{formatTime(matchDetail.mgt,'yyyy/mm/dd hh:MM:ss')}}</div>
@@ -22,8 +22,8 @@
         <match-date v-else :match="matchDetail" style="justify-content:center;"></match-date>
       </div>
       <div class="both away">
-        <span class="score">{{[0,110].includes(matchDetail.ms)?"—":_.get(matchDetail, 'msc.S1.away')}}</span>
-        <img v-img="([_.get(matchDetail,'malu[0]'),_.get(matchDetail,'frman[0]')])" class="team_logo" alt/>
+        <span class="score">{{[0,110].includes(matchDetail.ms)?"—":lodash.get(matchDetail, 'msc.S1.away')}}</span>
+        <img v-img="([lodash.get(matchDetail,'malu[0]'),lodash.get(matchDetail,'frman[0]')])" class="team_logo" alt/>
         <span class="team-name">
           <div class="yb-absolute ellipsis">{{matchDetail.man}}</div>
         </span>
@@ -58,28 +58,28 @@
 </template>
 
 <script>
-import { ref } from 'vue';
+import { computed, ref, defineProps } from 'vue';
 import { useRoute } from 'vue-router';
-import { TabResultsFullVersionWapper as tabResults} from 'src/components/analysis/template/table-results/index.js'
-import { TabDataFullVersionWapper as tabData} from 'src/components/analysis/template/table-data/index.js'
-import { TabLineupFullVersionWapper as tabLineup} from 'src/components/analysis/template/table-lineup/index.js'
-import { TabInformationFullVersionWapper as tabInformation} from 'src/components/analysis/template/table-infomation/index.js'
-import { TabOddsFullVersionWapper as tabOdds} from 'src/components/analysis/template/table-odds/index.js'
-import { TabNewssFullVersionWapper as news} from 'src/components/analysis/template/table-news/index.js'
-import { MatchProcessFullVersionWapper as matchDate } from "src/components/match-process/index.js";
+// import { TabResultsFullVersionWapper as tabResults} from 'src/components/analysis/template/table-results/index.js'
+// import { TabDataFullVersionWapper as tabData} from 'src/components/analysis/template/table-data/index.js'
+// import { TabLineupFullVersionWapper as tabLineup} from 'src/components/analysis/template/table-lineup/index.js'
+// import { TabInformationFullVersionWapper as tabInformation} from 'src/components/analysis/template/table-infomation/index.js'
+// import { TabOddsFullVersionWapper as tabOdds} from 'src/components/analysis/template/table-odds/index.js'
+// import { TabNewssFullVersionWapper as news} from 'src/components/analysis/template/table-news/index.js'
+// import { MatchProcessFullVersionWapper as matchDate } from "src/components/match-process/index.js";
 import {api_analysis} from 'src/api/index.js' 
 import { compute_css_variables } from "src/core/css-var/index.js"
 import { formatTime } from 'src/core/format/index.js'
+import { i18n_t } from 'src/core/index.js'
 import store from 'src/store-redux/index.js'
+import lodash from 'lodash'
 
-const route = useRoute();
 let state = store.getState();
-
-
-
 
 export default {
   setup() {
+    const route = useRoute();
+    
     //赛况，数据，阵容，情报，赔率
     const tab = ref(['result','data','lineup','information','odds'])
     // 赛事分析页面  css变量
@@ -93,22 +93,8 @@ export default {
     const hasNews = ref(false)                                                                                                                                                                                                                                                                                                                                                                                                       
     const articleDetail = ref({})
     const newsTabName = ref(null)
-    const active_detail = ref(state.matchesReducer.active_detail)
-    return {
-      tab,
-      activeTab,
-      sportDict,
-      hasNews,
-      articleDetail,
-      newsTabName,
-      page_style
-    }
-  },
-  // mixins:[time_format],
-  components:{
-    tabResults,tabData,tabLineup,tabInformation,tabOdds,matchDate,news
-  },
-  created() {
+    // let mid = lodash.get(route, 'params.mid');
+    let match_info = JSON.parse(localStorage.getItem('test_match_info'));
     if (Object.keys(route.params).length) {
       let { csid } = route.params
       // 篮球只展示赛况、数据和阵容
@@ -125,14 +111,13 @@ export default {
       }
       tab.value.unshift('news');
       hasNews.value = true;
-      activeTab.value = active_detail.value.ms==1?1:2
+      activeTab.value = match_info.ms==1?1:2
     } else {
-      activeTab.value = active_detail.value.ms==1?0:1
+      activeTab.value = match_info.ms==1?0:1
     }
-  },
-  computed:{
-    matchDetail(){
-      let match = _.cloneDeep(active_detail.value)
+
+    const matchDetail = computed(() => {
+      let match = lodash.cloneDeep(match_info) || {}
       let obj = {}
       if(match.msc_obj){
          sportDict.value.allScore.map(k=>{
@@ -144,8 +129,8 @@ export default {
             }
           } else {
             // 获取主客队得分数据
-            let home = parseInt(_.get(match, `msc_obj[${k}][1]`)),
-                away = parseInt(_.get(match, `msc_obj[${k}][2]`));
+            let home = parseInt(lodash.get(match, `msc_obj[${k}][1]`)),
+                away = parseInt(lodash.get(match, `msc_obj[${k}][2]`));
             if(sportDict.value.line.includes(k)){
               //'S108'三分球得分，'S107'两分球得分
               if(k == 'S107'){
@@ -186,7 +171,27 @@ export default {
       }
       match.msc = obj
       return match
+    })
+
+    return {
+      tab,
+      activeTab,
+      sportDict,
+      hasNews,
+      articleDetail,
+      newsTabName,
+      page_style,
+      route,
+      matchDetail,
+      formatTime,
+      // MatchListData,
+      match_info,
+      i18n_t
     }
+  },
+  // mixins:[time_format],
+  components:{
+    // tabResults,tabData,tabLineup,tabInformation,tabOdds,matchDate,news
   },
   methods: {
     switchTabs(index) {
@@ -219,7 +224,7 @@ export default {
      */
     atrticleReadCount(id) {
       api_analysis.get_article_count({id: id}).then(res => {
-        let count = _.get(res, 'data.data');
+        let count = lodash.get(res, 'data.data');
       })
     },
   }

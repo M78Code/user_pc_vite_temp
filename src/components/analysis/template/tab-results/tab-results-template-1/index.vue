@@ -109,18 +109,16 @@
 
 
 <script setup>
-// import analysisData  from 'src/public/mixins/analysis/analysis'
-// mixins: [analysisData],
 
-import { ref, onUnmounted } from 'vue';
-import { useRoute } from 'vue-router';
-import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
-import { component_symbol, need_register_props } from "../config/index.js"
-useRegistPropsHelper(component_symbol, need_register_props)
-import { api_analysis } from 'src/api/index'
+// import { ref, onUnmounted } from 'vue';
+// import { useRoute } from 'vue-router';
+// import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
+// import { component_symbol, need_register_props } from "../config/index.js"
+// useRegistPropsHelper(component_symbol, need_register_props)
+// import { api_analysis } from 'src/api/index'
 
-import { ChatFullVersionWapper as chat } from 'src/components/analysis/template/chat/index.js'
-import { TraceVersionWapper as trace } from 'src/components/analysis/template/trace/index.js'
+// import { ChatFullVersionWapper as chat } from 'src/components/analysis/template/chat/index.js'
+// import { TraceVersionWapper as trace } from 'src/components/analysis/template/trace/index.js'
 
 const route = useRoute();
 const activeStage = ref(0);
