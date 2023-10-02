@@ -115,8 +115,7 @@
   </q-card>
 </template>
 <script setup>
-import { ref, toRefs, defineComponent, reactive, onMounted, onUnmounted, computed } from "vue"
-import lodash from 'lodash'
+import { reactive, computed } from "vue"
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import { format_odds, format_currency, formatTime } from "src/core/format/index.js"
 import { odds_type_name } from "src/core/constant/index.js"

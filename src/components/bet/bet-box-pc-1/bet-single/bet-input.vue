@@ -1,6 +1,10 @@
 <template>
     <!--金额输入区域包括键盘 -->
     <div class="row bet-single-input" :data-check-money="BetViewDataClass.input_money_state">
+        <div class="" v-if="!BetData.is_bet_single">
+            <span>{{ special_series.name }}</span>
+            <span>{{ ref_data.seriesOdds  }}</span>
+        </div>
         <!--金额输入区-->
         <div class="bet-input-failure">
             <!--投注金额输入框-->
@@ -12,7 +16,7 @@
             </div>
         </div>
 
-        <!-- <div> {{ special_series }} </div> -->
+        
 
         <div v-show="ref_data.keyborard" class="bet-win-key">
             <div class="row bet-win yb-fontsize12">
