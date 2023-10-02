@@ -163,8 +163,9 @@ const ref_data = reactive({
   odds_change_down: false, // 赔率下降
 })
 
+// 删除当前投注项
 const del_bet_item = () => {
-
+  BetData.bet_list_remove(props.item.playOptionsId)
 }
 </script>
 

@@ -74,7 +74,7 @@ const bet_count = computed(() => {
 
 // 返回菜单列表
 const set_menu_back = val => {
-  MenuData.set_layout_left_show(val)
+  LayOutMain_pc.set_layout_left_show(val)
 }
 
 // 切换单关/串关

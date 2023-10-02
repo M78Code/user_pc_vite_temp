@@ -3,9 +3,10 @@
 -->
 <template>
   <div class="c-main-menu column" :class="{ 'bet-menu-upd': LayOutMain_pc.layout_left_show == 'bet_history' }">
- 
 
-    <div style="display:none;"> {{ MenuData.menu_data_version }} --- {{ BetData.bet_data_class_version }} </div>
+
+    <div style="display:none;"> {{ MenuData.menu_data_version }} --- {{ BetData.bet_data_class_version }} -- {{
+      LayOutMain_pc.layout_version }} </div>
 
     <div class="menu-wrap scroll-fixed-bg relative-position border-bottom">
       <div class="left-header-all">
@@ -13,7 +14,8 @@
         <main-header />
         <!-- 投注记录 入口 -->
         <div v-show="LayOutMain_pc.layout_left_show != 'bet_history'" @click="change_left_menu('bet_history')"
-          class="menu-item menu-top menu-border item bet_history" :class="[bet_count > 0 ? 'justify-end' : 'justify-start']">
+          class="menu-item menu-top menu-border item bet_history"
+          :class="[bet_count > 0 ? 'justify-end' : 'justify-start']">
 
           <span class="record-icon" :style="compute_css('pc-img-bet-record')" alt=""></span>
 
@@ -23,9 +25,10 @@
           <span class="bet-count" v-show="bet_record_count > 0">{{ bet_record_count }}</span>
         </div>
         <!-- 单/串关投注栏 入口 -->
-        <template v-if="bet_count && ['menu'].includes(LayOutMain_pc.layout_left_show)">
-          <div @click="change_left_menu('bet_list')" class="menu-item menu-top item-bet menu-border">
-            <span class="text">
+        <template v-if="bet_count && LayOutMain_pc.layout_left_show == 'menu'">
+          <div @click="change_left_menu('bet_list')" class="menu-item menu-top menu-border item bet_history bet-record-count">
+
+            <span class="col">
               {{ $t("bet.bet_my_count") }}
             </span>
             <span class="bet-count">{{ bet_count }}</span>
@@ -36,27 +39,27 @@
 
       <div class="left-scroll-area">
         <!-- 菜单项 -->
-        <v-scroll-area ref="ref_bet_scroll_area" position="menu" :observer_area="3" v-if="LayOutMain_pc.layout_left_show == 'menu'"
-          :observer_middle="LayOutMain_pc.layout_left_show == 'menu'"
-         >
+        <v-scroll-area ref="ref_bet_scroll_area" position="menu" :observer_area="3"
+          v-if="LayOutMain_pc.layout_left_show == 'menu'" :observer_middle="LayOutMain_pc.layout_left_show == 'menu'">
           <!-- 滚动：头部 --------------------------------->
           <template v-slot:header>
-            <div class="left-bg-box"></div>
+            <div class="left-bg-box" :style="'height:'+LayOutMain_pc.layout_left_top"></div>
           </template>
           <div>
             <!-- 滚动：内容 --------------------------------->
             <left-main-menu />
           </div>
         </v-scroll-area>
-        
+
         <!-- 投注栏 -->
         <div class="bet-box-pc-1">
-        <bet-box-wapper use_component_key="bet_box_pc_1" v-if="LayOutMain_pc.layout_left_show == 'bet_list'"/>
+          <bet-box-wapper use_component_key="bet_box_pc_1" v-if="LayOutMain_pc.layout_left_show == 'bet_list'" />
         </div>
 
         <!-- 投注记录 -->
-        <v-scroll-area ref="ref_bet_scroll_area_history" position="bet_history" :observer_area="3" v-if="LayOutMain_pc.layout_left_show == 'bet_history'"
-          :observer_middle="LayOutMain_pc.layout_left_show == 'bet_history'" >
+        <v-scroll-area ref="ref_bet_scroll_area_history" position="bet_history" :observer_area="3"
+          v-if="LayOutMain_pc.layout_left_show == 'bet_history'"
+          :observer_middle="LayOutMain_pc.layout_left_show == 'bet_history'">
           <!-- 滚动：头部 --------------------------------->
           <template v-slot:header>
             <div class="left-bg-box"></div>
@@ -87,7 +90,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, computed } from "vue";
+import { ref, onMounted, onUnmounted, computed, watch } from "vue";
 import lodash_ from "lodash";
 
 import MainHeader from "./main-header.vue";
@@ -97,7 +100,7 @@ import { BetRecordViewWapper } from "src/components/bet-record-view";
 // // 通屏垂直滚动
 import vScrollArea from "../../components/v-scroll-area/v-scroll-area.vue";
 import BetData from "src/core/bet/class/bet-data-class.js";
-import { MenuData,LayOutMain_pc } from "src/core/index.js";
+import { MenuData, LayOutMain_pc } from "src/core/index.js";
 import { api_betting } from "src/api/index.js";
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
 
@@ -114,20 +117,31 @@ onUnmounted(() => {
   useMittOn(MITT_TYPES.EMIT_TICKRTS_COUNT_CONFIG, get_unsettle_tickets_count_config).off
 })
 
-const bet_record_count = ref(0)
+let bet_record_count = ref(0)
 
 // 投注数量
-const bet_count = computed(() => {
+let bet_count = ref(0)
+
+watch( LayOutMain_pc.layout_version, (val) => {
+  let number = 0
   // 是否虚拟体育投注
   if (BetData.is_virtual_bet) {
-    return BetData.virtual_bet_list.length;
+    number = BetData.virtual_bet_list.length;
   }
   // 是否单关投注
   if (BetData.is_bet_single) {
-    return BetData.bet_single_list.length;
+    number = BetData.bet_single_list.length;
+  }else{
+    number = BetData.bet_s_list.length;
   }
-  return BetData.bet_s_list.length;
-})
+  bet_count.value = number
+  // 只有作用于菜单
+  if(number && LayOutMain_pc.layout_left_show == 'menu'){
+    LayOutMain_pc.set_layout_left_top('120px')
+  }else{
+    LayOutMain_pc.set_layout_left_top('80px')
+  }
+});
 
 
 /**
@@ -137,7 +151,7 @@ const bet_count = computed(() => {
  */
 const change_left_menu = page => {
   // 设置左侧显示
-  MenuData.set_layout_left_show(page)
+  LayOutMain_pc.set_layout_left_show(page)
 };
 
 //诸葛埋点事件
@@ -202,7 +216,7 @@ const get_unsettle_tickets_count_config = () => {
 </script>
 
 <style lang="scss" scoped>
-.left-scroll-area{
+.left-scroll-area {
   position: absolute;
   top: 0;
   left: 0;
@@ -210,28 +224,53 @@ const get_unsettle_tickets_count_config = () => {
   width: 100%;
   height: 100%;
 }
-.left-bg-box{
+
+.left-bg-box {
   width: 100%;
-  height: 80px;
 }
-.bet-box-pc-1{
+
+.bet-box-pc-1 {
   width: 100%;
   height: 100%;
-  > div{
+
+  >div {
     width: 100%;
     height: 100%;
   }
 }
-.left-header-all{
+ /*  投注栏入口 */
+ .item.bet_history.bet-record-count {
+  color: var(--q-gb-t-c-18);
+  background: var(--q-gb-bg-lg-1);
+  margin-left: 0;
+  width: 100%;
+  height: 40px;
+  border-radius: 0;
+  &::before{
+    content: '';
+    background-image: url('/yazhou-pc/image/svg/add.svg');
+    width: 14px;
+    height: 14px;
+    margin-right: 10px;
+  }
+  .text{
+    flex: 1;
+    margin-left: 10px;
+  }
+}
+
+.left-header-all {
   width: 220px;
   position: relative;
   z-index: 10;
-  .bet_history{
+
+  .bet_history {
     background: var(--q-gb-bg-c-11);
     border-bottom: 1px solid var(--q-gb-bd-c-8) !important;
     border-right: 1px solid var(--q-gb-bd-c-6) !important;
   }
 }
+
 .c-main-menu {
   font-size: 13px;
   /* *** 头部 ************ -S */
@@ -285,7 +324,8 @@ const get_unsettle_tickets_count_config = () => {
   /* *** 公共 ************ -S */
   .menu-wrap {
     cursor: pointer;
-    &.scroll-fixed-bg{
+
+    &.scroll-fixed-bg {
       width: 100%;
       height: 100%;
     }
