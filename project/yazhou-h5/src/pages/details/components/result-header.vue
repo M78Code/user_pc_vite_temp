@@ -6,7 +6,7 @@
 <template>
   <div
     class="result-header"
-    :style="(get_menu_type == 28 && [100,101,102,103,104].includes(+result_detail_data.csid)) ? URL.gaming_type[result_detail_data.csid] : lodash.get(URL.sporting_type,`${ballType}.B`)"
+    :style="(menu_type == 28 && [100,101,102,103,104].includes(+result_detail_data.csid)) ? URL[`CSID_${result_detail_data.csid}`].detail.B : lodash.get(URL,`[CSID_${result_detail_data.csid}].detail.B`)"
     :class="{baseball: result_detail_data.csid == '3'}"
   >
     <!-- 头部联赛名返回区域 -->
@@ -14,7 +14,7 @@
     <!-- 头部联赛名返回区域 -->
     <match-results-header-top  :detail_data="result_detail_data"/>
     <header-bottom
-      v-if="!(get_menu_type == 28 && [100,101,102,103,104].includes(+result_detail_data.csid))"
+      v-if="!(menu_type == 28 && [100,101,102,103,104].includes(+result_detail_data.csid))"
       :detail_data="result_detail_data"
       class="results_header_bottom"
       :class="{ baseball: result_detail_data.csid == '3',margin_left_bottom: result_detail_data.mng != 1 }"
@@ -31,9 +31,11 @@ import matchResultsHeaderTop from "project_path/src/pages/details/components/det
 import { detail_csid_config } from "src/core/match-detail/match-detail-h5/config/details-bg.js";
 import { ref } from "vue"
 import lodash from "lodash"
+import { MenuData } from "src/core/index.js"
   
   // 背景图
   const URL = ref(detail_csid_config)
+  const menu_type = ref(MenuData.menu_type)
 const props = defineProps({
     // 详情Details接口的数据
     result_detail_data: {
@@ -41,9 +43,10 @@ const props = defineProps({
     } 
   })
     // ...mapGetters([
-    //   "get_menu_type",
+    //   "menu_type",
     //   "get_current_menu",
     // ]),
+    console.error(URL.value, props.result_detail_data);
   const ballType = () => {
       if(props.result_detail_data.csid){
         return props.result_detail_data.csid - 1;
@@ -65,7 +68,7 @@ const props = defineProps({
   }
 }
 
-:deep(.results_header_botto)m {
+:deep(.results_header_bottom) {
   &.header-bottom {
     height: unset;
   }

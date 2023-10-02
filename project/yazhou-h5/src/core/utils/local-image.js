@@ -47,8 +47,8 @@ const league_collapse_icon = '/yazhou-h5/image/list/league-collapse-icon.svg'
 const league_icon = '/yazhou-h5/image/list/league-collapse-icon.svg'
 const league_icon_back = '/yazhou-h5/image/list/league-collapse-icon-black.svg'
 
-const polular_spirite =  `/yazhou-h5/image/bw3/png/home_page/polular_spirite.png`
-const polular_spirite_theme02 =  `/yazhou-h5/image/bw3/png/home_page/polular_spirite_theme02.png`
+const polular_spirite =  `/yazhou-h5/image/png/home_page/polular_spirite.png`
+const polular_spirite_theme02 =  `/yazhou-h5/image/png/home_page/polular_spirite_theme02.png`
 
 //弹出框菜单图片
 const popup_menu = {

@@ -4,31 +4,27 @@
 <template>
   <div class="popular-hot-pages">
     <!-- 第一个tab 精选 骨架屏 -->
-    <hot-featured v-if="featured_loading && tab_Index === 0" :first="first_loading"></hot-featured>
+    <!-- <hot-featured v-if="featured_loading && tab_Index === 0" :first="first_loading"></hot-featured> -->
     <!-- 热门赛程 骨架屏-->
-    <hot-schedule v-if="featured_loading && tab_Index === 1"></hot-schedule>
+    <!-- <hot-schedule v-if="featured_loading && tab_Index === 1"></hot-schedule> -->
     <!-- 热门下边的 tab球类 选项卡-->
     <div class="hot-pages-tabs">
       <div class="tabs-bar">
         <div class="tabs-bar-nav" ref="scrollBox" :class="[change_background]">
           <div class="tabs-tab" v-for="(tab, index) in tabList" :key="index"
-            :class="[tab_Index == index ? 'tabs-active' : '']" @click="changeTab(tab, index, true)">
+            :class="[tab_Index == index ? 'tabs-active' : '']" @click="change_tab(tab, index, true)">
             <!-- 竞足 tab图标 -->
             <template v-if='tab.menuId == "30101"'>
               <img src="/yazhou-h5/image/home/chinaBet.png" alt="">
             </template>
             <template v-else>
               <!-- 精选的tab图标 -->
-              <!-- <img v-if='tab.index == 0' :src="(`/image/wwwassets/bw3/home/hot_jx_black${UserCtr.theme.includes('y0') ? '_y0' : ''}.svg`)" alt=""> -->
-              <img v-if='tab.index == 0'
-                :src="(`/image/wwwassets/bw3/home/hot_jx_black2${UserCtr.theme.includes('y0') ? '_y0' : ''}.svg`)"
-                alt="">
+              <!-- <img v-if='tab.index == 0' :src="(`/yazhou-h5/image/home/hot_jx_black${UserCtr.theme.includes('y0') ? '_y0' : ''}.svg`)" alt=""> -->
+              <img v-if='tab.index == 0' :src="(`/yazhou-h5/image/home/hot_jx_black2${UserCtr.theme.includes('y0') ? '_y0' : ''}.svg`)" alt="">
               <!-- 电竞类的tab图标 -->
-              <img v-else-if="[100, 101, 102, 103].includes(+tab.field1)"
-                :src="(`/image/wwwassets/bw3/home/hot_jx_esport_${tab.field1}.svg`)" alt="" />
+              <img v-else-if="[100, 101, 102, 103].includes(+tab.field1)" :src="(`/yazhou-h5/image/home/hot_jx_esport_${tab.field1}.svg`)" alt="" />
               <!-- 体育类的图标 -->
-              <!-- <img v-else :src="tab.field3 && get_file_path(tab.field3)" @error="league_icon_error" alt=""> -->
-              <!-- <img v-else  src="/yazhou-h5/image/home/chinaBet.png" @error="league_icon_error" alt=""> -->
+              <img v-else :src=" tab.field3 && get_file_path(tab.field3)" alt="">
              
             </template>
             <span class="menu-name">{{ tab.menuName }}</span>
@@ -43,9 +39,7 @@
         <!-- <may-also-like :from_where="101" v-if="tab_Index == 0 && GlobalAccessConfig.get_hotRecommend()" /> -->
         <!-- 精选赛事  标题-->
         <div class="may_also_like">
-          <div class="title" v-if="tab_Index == 0">
-            {{ $t('home_popular.featured_events') }}
-          </div>
+          <div class="title" v-if="tab_Index == 0"> {{ $t('home_popular.featured_events') }} </div>
         </div>
         <!-- 精选赛事  标题-->
         <sportsBallsTab ref="sports_balls_tab" :tab_Index="tab_Index"></sportsBallsTab>
@@ -55,25 +49,21 @@
 </template>
 
 <script setup>
-import { api_home } from "src/api/index.js";
+import { api_home, api_analysis } from "src/api/index.js";
 import { ref, onMounted,watch,computed,onUnmounted } from 'vue';
 import hotFeatured from "project_path/src/components/skeleton/home-hot/hot-featured.vue"    // 热门精选 骨架屏
-
 import hotSchedule from "project_path/src/components/skeleton/home-hot/hot-schedule.vue"     // 热门赛程 骨架屏
-
-
-// import may_also_like from "project_path/src/pages/match-list/components/may-also-like.vue"   // 列表页猜你喜欢
-
+import mayAlsoLike from "project_path/src/pages/match-list/components/may-also-like.vue"   // 列表页猜你喜欢
 import sportsBallsTab from "./components/sports-balls-tab.vue"
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
-
 import UserCtr from "src/core/user-config/user-ctr.js";;
 import BetData from "src/core/bet/class/bet-data-class.js";
-
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import { get_file_path } from "src/core/file-path/file-path.js";
 import lodash from 'lodash'
-import {utils } from 'src/core/index.js';
+import { utils, MenuData } from 'src/core/index.js';
+import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
+import MatchListParams from 'src/core/match-list-h5/composables/match-list-params.js'
 
 let tabList = ref()  // tab选项卡内容
 let tab_Index = ref(0) //  tab 选项卡的下标位置
@@ -105,24 +95,6 @@ const change_background = computed(() => {
   }
 })
 
-// mapGetters({
-//   UserCtr.theme:"UserCtr.theme",
-//   get_hot_tab_item:"get_hot_tab_item",
-//   get_access_config,
-// })
-
-
-// ...mapActions({
-//       set_hot_tab_item: "set_hot_tab_item",
-//       set_hot_list_item: "set_hot_list_item",
-//     }),
-// ...mapMutations([
-//   'set_collapse_map_match',
-//   "set_menu_type",    // 设置当前主菜单menu_type值
-//   "set_bet_obj",
-//   "set_bet_list"
-// ])
-
 // 监听div滚动 事件，传到列表页
 const wrapper_scrolling = ($event) => {
   //当列表滚动时隐藏罚牌说明
@@ -145,9 +117,9 @@ const wrapper_scrolling = ($event) => {
   */
 const league_icon_error = ($event) => {
   if (UserCtr.theme.includes('night')) {
-    $event.target.src = "image/bw3/svg/match_cup_black.svg";
+    $event.target.src = "/yazhou-h5/image/svg/match_cup_black.svg";
   } else {
-    $event.target.src = "image/bw3/svg/match_cup.svg";
+    $event.target.src = "/yazhou-h5/image/svg/match_cup.svg";
   }
   $event.target.onerror = null
 }
@@ -170,13 +142,13 @@ const get_list = (first) => {
     disabled: 1, // 是否移除三级菜单  默认：(null)空=展开 ,1=移除
     lang: 'JC'  // 名称简称传：JC  ，默认为空
   }
-
+  MenuData.set_hot_tab_menu({ menuName:'精选', field3: "", index: 0 })
   api_home.get_hot_list(parameter).then((res) => {
-    const data = lodash.get(res, "data.data")
-    const code = lodash.get(res, "data.code")
-    console.error('data', data)
-    console.error('code', code)
+    const data = lodash.get(res, "data")
+    const code = lodash.get(res, "code")
     if (code == 200 && data.length > 0) {
+      // 获取精选赛事
+      get_selected_match()
       // 过滤掉赛事场数为0的二级联赛菜单
       data[0].subList = data[0].subList.filter(item => item.count !== 0)
 
@@ -185,8 +157,7 @@ const get_list = (first) => {
       // 加个jz_666 是用作首页 竞彩足球 背景墙用的
       data[0].subList.forEach(item => { if (item.chinaBetting) { item.jz_666 = 'jz_666' } })
       // 手动添加一个 精选tab 选项卡  i18n_t('home_popular.featured')
-      tabList.value = [{ menuName:'精选', field3: "" }]
-
+      tabList.value = [{ menuName:'精选', field3: "", index: 0 }]
       tabList.value = tabList.value.concat(data[0].subList)
       const get_hot_tab_item = {
         menuId: "30101",
@@ -200,7 +171,7 @@ const get_list = (first) => {
           clearTimeout(timer2.value)
           timer2.value = setTimeout(() => {
             scrollBox.value && utils.tab_move2(index, scrollBox.value, true)
-            changeTab(tabList.value[index], index)
+            change_tab(tabList.value[index], index)
           }, 80);
         }
       })
@@ -213,8 +184,18 @@ const get_list = (first) => {
   })
 }
 
+/**
+ * @description 获取精选赛事
+ */
+const get_selected_match = () => {
+  const parameter = MatchListParams.get_base_params()
+  api_analysis.get_match_home_page_handpick(parameter).then((res) => {
+    MatchMeta.set_match_default_properties(res.data)
+  })
+}
+
 //判断是否要清空投注项
-const checkClearBet = (obj) => {
+const check_clear_bet = (obj) => {
   let flag = false
   const dj_csid_list = [100, 101, 102, 103]
   lodash.forIn(BetData.bet_obj, function (item, key) {
@@ -229,31 +210,28 @@ const checkClearBet = (obj) => {
       }
     }
   })
-  if (flag) {
-    set_bet_obj({})
-    set_bet_list([])
-  }
 }
 // 菜单切换 is_self 是否手动触发
-const changeTab = (item, index, is_self) => {
+const change_tab = (item, index, is_self) => {
+  MenuData.set_hot_tab_menu(item)
   // 如果是电竞赛事，需要设置菜单类型
-  // if ([100, 101, 102, 103].includes(+item.field1)) {
-  //   set_menu_type(3000)
-  // } else {
-  //   set_menu_type('')
-  // }
+  if ([100, 101, 102, 103].includes(+item.field1)) {
+    MenuData.set_menu_type(3000)
+  } else {
+    MenuData.set_menu_type('')
+  }
   // 是否可以点击tab 选项卡
   if (is_self) {
     if (tab_Index.value == index) return
   }
-  checkClearBet(item)
+  check_clear_bet(item)
   // set_hot_tab_item(item)
   // 滑动tab动画操作
   utils.tab_move2(index, scrollBox.value)
   // 当前index 赋值
   tab_Index.value = index;
   //  调用列表页接口
-  useMittEmit(MITT_TYPES.EMIT_TAB_HOT_CHANGING);
+  // useMittEmit(MITT_TYPES.EMIT_TAB_HOT_CHANGING);
   // 如果不是第一个选项卡，则调用 下边方法，初始化数据
   useMittEmit(MITT_TYPES.EMIT_SET_SPORTS_BALLS_TAB)
 }
@@ -280,9 +258,6 @@ onUnmounted(() => {
     clearTimeout(timer2.value)
     timer2.value = null
   }
-  // for (const key in $data) {
-  //   $data[key] = null
-  // }
 })
 
 </script>

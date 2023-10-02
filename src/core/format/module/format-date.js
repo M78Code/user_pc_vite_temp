@@ -125,7 +125,7 @@ export const format_min_time = function (num) {
 export function DateForMat(str, fmt = "yyyy-MM-dd") {
   const _date = isDate(str) ? str : new Date(str);
   if (!isDate(_date)) return undefined;
-  var o = {
+  let o = {
     "M+": _date.getMonth() + 1, // 月份
     "d+": _date.getDate(), // 日
     "h+": _date.getHours(), // 小时
@@ -139,7 +139,7 @@ export function DateForMat(str, fmt = "yyyy-MM-dd") {
       RegExp.$1,
       (_date.getFullYear() + "").substr(4 - RegExp.$1.length)
     );
-  for (var k in o) {
+  for (let k in o) {
     if (new RegExp("(" + k + ")").test(fmt)) {
       fmt = fmt.replace(
         RegExp.$1,
@@ -156,11 +156,11 @@ export function DateForMat(str, fmt = "yyyy-MM-dd") {
  * @return {Date} 转换后的时区Date对象
  */
 export const format_time_zone = (time, offset = 8) => {
-  var d = new Date(time); //创建一个Date对象 time时间 offset 时区 中国为 8
-  var localTime = d.getTime(); //获取的是毫秒级
-  var localOffset = d.getTimezoneOffset() * 60000; //获得当地时间偏移的毫秒数,时区是以分钟为单位的
-  var utc = localTime + localOffset; //utc即GMT时间,世界时,格林威治时间
-  var wishTime = utc + 3600000 * offset;
+  let d = new Date(time); //创建一个Date对象 time时间 offset 时区 中国为 8
+  let localTime = d.getTime(); //获取的是毫秒级
+  let localOffset = d.getTimezoneOffset() * 60000; //获得当地时间偏移的毫秒数,时区是以分钟为单位的
+  let utc = localTime + localOffset; //utc即GMT时间,世界时,格林威治时间
+  let wishTime = utc + 3600000 * offset;
   return new Date(wishTime);
 };
 /**
@@ -170,11 +170,11 @@ export const format_time_zone = (time, offset = 8) => {
  * @return {Date} 转换后的时区时间缀
  */
 export const format_time_zone_millisecond = (time, offset = 8) => {
-  var d = new Date(time); //创建一个Date对象 time时间 offset 时区 中国为 8
-  var localTime = d.getTime(); //获取的是毫秒级
-  var localOffset = d.getTimezoneOffset() * 60000; //获得当地时间偏移的毫秒数,时区是以分钟为单位的
-  var utc = localTime + localOffset; //utc即GMT时间,世界时,格林威治时间
-  var wishTime = utc + 3600000 * offset;
+  let d = new Date(time); //创建一个Date对象 time时间 offset 时区 中国为 8
+  let localTime = d.getTime(); //获取的是毫秒级
+  let localOffset = d.getTimezoneOffset() * 60000; //获得当地时间偏移的毫秒数,时区是以分钟为单位的
+  let utc = localTime + localOffset; //utc即GMT时间,世界时,格林威治时间
+  let wishTime = utc + 3600000 * offset;
   return wishTime;
 };
 /**
@@ -199,12 +199,11 @@ export const format_date_base_obj = (value) => {
  * @return {int} 转换后的时区的时间戳
  */
 export const format_time_zone_time = (time, offset = 8) => {
-
-  var d = new Date(time); //创建一个Date对象 time时间 offset 时区 中国为 8
-  var localTime = d.getTime(); //获取的是毫秒级
-  var localOffset = d.getTimezoneOffset() * 60000; //获得当地时间偏移的毫秒数,时区是以分钟为单位的
-  var utc = localTime + localOffset; //utc即GMT时间,世界时,格林威治时间
-  var wishTime = utc + 3600000 * offset;
+  let d = new Date(time); //创建一个Date对象 time时间 offset 时区 中国为 8
+  let localTime = d.getTime(); //获取的是毫秒级
+  let localOffset = d.getTimezoneOffset() * 60000; //获得当地时间偏移的毫秒数,时区是以分钟为单位的
+  let utc = localTime + localOffset; //utc即GMT时间,世界时,格林威治时间
+  let wishTime = utc + 3600000 * offset;
   return wishTime;
 };
 /**
