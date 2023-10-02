@@ -76,6 +76,7 @@ class MenuData {
         this.update();
       }, 10)
     );
+    BaseData.init(); //初始化菜单数据
     //设置从缓存拿到的数据 到class
     this.set_cache_class(
       SessionStorage.get(Cache_key.CACHE_CRRENT_MEN_KEY, {}),
