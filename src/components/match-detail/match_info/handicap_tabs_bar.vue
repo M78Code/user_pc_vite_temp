@@ -107,6 +107,7 @@ import { IconWapper } from 'src/components/icon/index.js'
 import lodash from 'lodash'
 import {i18n_t} from 'src/core/index'
 const tooltip_style = 'background:rgba(0,0,0,0.8);padding:4px 5px;border-radius:0px;color:#fff'
+import { MatchDetailCalss } from "src/core/index"; 
 export default defineComponent({
   name: "HandicapTab",
   components: {
@@ -186,15 +187,17 @@ export default defineComponent({
       //   this.$emit('change-loading-state', 'loading'); // 切换玩法时展示 loading 状态
       // 设置玩法集中当前选中的子项
       // 保存当前选中的玩法集子项id
-      store.dispatch({
-        type: "SET_TABS_ACTIVE_ID",
-        data: id,
-      });
-      // 保存当前选中的玩法集子项对应的盘口玩法
-      store.dispatch({
-        type: "SET_TABS_ACTIVE_PLAYS",
-        data: plays,
-      });
+      // debugger
+      MatchDetailCalss.category_tab_click({id})
+      // store.dispatch({
+      //   type: "SET_TABS_ACTIVE_ID",
+      //   data: id,
+      // });
+      // // 保存当前选中的玩法集子项对应的盘口玩法
+      // store.dispatch({
+      //   type: "SET_TABS_ACTIVE_PLAYS",
+      //   data: plays,
+      // });
       // 发送当前玩法集 id ， round 字段为电竞动态玩法集标记
       emit("get_mattch_details", { id, round, plays });
 
