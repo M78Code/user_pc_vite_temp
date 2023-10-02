@@ -1,5 +1,4 @@
 import football from "/yazhou-pc/image/png/football.png"; //足球
-// import football from "/yazhou-pc/image/png/football.png"); //足球
 import basketball from "/yazhou-pc/image/png/basketball.png"; //篮球
 import baseball from "/yazhou-pc/image/png/baseball.png"; //棒球
 import ice_hockey from "/yazhou-pc/image/jpg/ice_hockey.jpg"; //冰球

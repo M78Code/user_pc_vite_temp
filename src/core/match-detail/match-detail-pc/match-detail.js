@@ -8,7 +8,7 @@ import lodash from "lodash";
 import GlobalAccessConfig from "src/core/access-config/access-config.js"
 //统计分析URL
 const signal_url = "https://s5.sir.swiftscore.com";
-import  { computed_background } from  "src/core/constant/config/csid.js"
+
 /**
  * 初始化数据
  */
@@ -423,5 +423,4 @@ export default {
   show_wrap_total,
   sr_click_handle,
   set_waterfall,
-  computed_background
 };

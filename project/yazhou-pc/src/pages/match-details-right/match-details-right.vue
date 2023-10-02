@@ -265,6 +265,7 @@ import {
   MITT_TYPES,
   useMittOn,
   MatchDataWarehouse_PC_Detail_Common as MatchDetailsData,
+  MatchDetailCalss
 } from "src/core/index";
 import matchHandicap from "src/components/match-detail/match-handicap/match-handicap.vue";
 import { TabWapper as Tab } from "src/components/common/tab";
@@ -286,7 +287,6 @@ let state = store.getState();
 const cur_expand_layout = ref(state.layoutReducer.cur_expand_layout);
 // 获取当前页路由信息
 const layout_cur_page = ref(state.layoutReducer.layout_cur_page);
-
 const {
   handicap_this,
   show_load_status,
@@ -307,7 +307,7 @@ const {
   close_all_handicap,
   refresh_loading,
   MatchDataWarehouseInstance,
-  mid,
+  // mid,
   /* func */
   get_mattch_details,
   on_go_top,
@@ -358,7 +358,7 @@ const show_more = computed(() => {
     return true;
   } else {
     // 如果不在详情页，就在关盘的时候展示
-    return ["new_empty", "all_empty"].includes(handicap_state) && mid;
+    return ["new_empty", "all_empty"].includes(handicap_state) && mid.value;
   }
 });
 // 聊天室高度
@@ -368,20 +368,44 @@ const chatroom_height = () => {
     return vx_get_layout_size.content_height - headerHeight - 7;
   }
 };
+
+/**
+ * @description: 通过mid获取从仓库获取最新的数据
+ * @param {*} val  mid参数
+ * @return {*}  
+ */
+const update_data = (val)=>{
+  match_infoData.value =  MatchDetailsData.get_quick_mid_obj(val)  
+  match_details.value =  [MatchDetailsData.get_quick_mid_obj(val)]
+}
+
 /* 
-**监听数据仓库版本号
+**监听数据仓库版本号  
 */
+
+
 const  MatchDetailsDataRef = reactive(MatchDetailsData)
 const  match_infoData = ref({})
 const  match_details = ref([])
 watch(()=>MatchDetailsDataRef.data_version,(val,oldval)=>{
   if(val.version ){
-    console.log(222222);
-    match_infoData.value =  MatchDetailsData.get_quick_mid_obj(mid.value)  
-    match_details.value =  [MatchDetailsData.get_quick_mid_obj(mid.value)]
-    
+    update_data(mid.value)
   }
 },{deep:true})
+
+
+/* 
+** 监听MatchDetailCalss的版本号  获取最新的mid 
+*/
+const mid  = ref(null)
+ const MatchDetailCalssRef = reactive(MatchDetailCalss)
+ watch(()=>MatchDetailCalssRef.details_data_version,(val)=>{
+  if(val){
+    mid.value =  MatchDetailCalssRef.mid
+    update_data(MatchDetailCalssRef.mid)
+  }
+ },{deep:true})
+
 // 是否展示右侧热门推荐处的margin
 const is_show_margin = computed(() => {
   return (

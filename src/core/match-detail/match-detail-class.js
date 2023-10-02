@@ -196,10 +196,12 @@ export default class MatchDetailCtr {
 
   // 设置详情版本变更
   set_details_data_version(){
-    this.details_data_version = Date.now()
+    this.details_data_version.value = Date.now()
+    console.log(this.details_data_version.value,'this.details_data_version.value');
   }
 
   set_score_button(val){
+    debugger
     const {mid,tid,sportId,media_type} = val
     this.params = {
       mid,
@@ -208,6 +210,7 @@ export default class MatchDetailCtr {
       media_type, // 直播类型
       time: Date.now()
     }
+    this.mid = mid
     this.set_details_data_version()
   }
 }

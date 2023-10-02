@@ -4,6 +4,7 @@
 import { ref, computed, onUnmounted, getCurrentInstance } from "vue";
 // import { useRoute } from "vue-router";
 import lodash from "lodash";
+import  { computed_background } from  "src/core/constant/config/csid.js"
 //  // api详情
 import { api_details } from "src/api";
 import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache.js";
@@ -123,7 +124,7 @@ const get_matchInfo_fun = (loop_count, mid) => {
           // 请求成功就清零错误次数
           countMatchDetailErr.value = 0;
           // 设置当前赛种的背景图
-          background_img.value = detailUtils.computed_background(data.csid);
+          background_img.value = computed_background(data.csid);
           // mmp状态修正
           if (
             [
