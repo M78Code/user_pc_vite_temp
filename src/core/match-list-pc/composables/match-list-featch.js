@@ -139,6 +139,10 @@ const api_bymids = (
   },
   callback
 ) => {
+  console.log({
+    mids,
+    inner_param,
+  });
   let panduan_1 = MenuData.is_virtual_sport();
   let panduan_2 = ["details", "video"].includes(page_source);
   let first_load_time;

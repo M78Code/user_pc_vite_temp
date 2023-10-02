@@ -129,7 +129,6 @@ const cur_video_icon = computed(() => {
       text: t('common.o_video'),
     }
   }
-  console.log('cur_video_iconcur_video_icon', cur_video_icon);
   return cur_video_icon
 })
 
@@ -139,6 +138,10 @@ const cur_video_icon = computed(() => {
  * @param {undefined} undefined
 */
 const on_switch_match = (media_type) => {
+  if ((route.name == 'details' || route.name == 'search') && media_type == 'auto') {
+    media_type = 'info'
+  }
+
   //展开右侧详情
   //展开右侧详情
   store.dispatch({

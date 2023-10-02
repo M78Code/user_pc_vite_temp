@@ -168,6 +168,7 @@ const scroll_height_change = () => {
 const setScrollPosition = (top) => {
   set_scrollTop(top);
 };
+
 </script>
 <style lang="scss" scoped>
 .v-scroll-list {

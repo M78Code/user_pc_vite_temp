@@ -165,6 +165,7 @@ import MenuData from "src/core/menu-pc/menu-data-class.js";
     else {
      compute_match_list_style_obj_and_match_list_mapping_relation_obj_type5(match_list,is_ws_call)
     }
+    
     // 设置列表总高度
     conpute_match_list_card_offset()
   }

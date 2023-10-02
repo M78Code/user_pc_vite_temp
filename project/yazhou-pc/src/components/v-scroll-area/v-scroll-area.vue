@@ -60,7 +60,7 @@ const props = defineProps({
 // 是否内嵌
 const is_iframe = ref(utils.is_iframe)
 
-const ref_v_scroll_area = ref(null);
+const ref_v_scroll_area = ref('ref_v_scroll_area');
 const header_height = ref(0);
 const middle_height = ref(0);
 // 底部区域位置样式
@@ -168,6 +168,7 @@ const on_scroll = (position) => {
 }
 // 设置滚动位置
 const set_scroll_position = (position) => {
+  console.log('ref_v_scroll_area.value', position);
  ref_v_scroll_area.value.setScrollPosition(position[0], position[1])
 }
 
