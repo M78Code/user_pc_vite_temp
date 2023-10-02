@@ -11,7 +11,7 @@ import video_replay from "src/components/match-detail/match_info/match_info_mixi
 import LoadData from 'src/components/load_data/load_data.vue';
 import MenuData from "src/core/menu-pc/menu-data-class.js";
 import { useMittEmit, MITT_TYPES } from  "src/core/mitt"
-import {is_eports_csid} from "src/core/index"
+import {is_eports_csid,MatchDetailCalss } from "src/core/index"
 import lodash from "lodash"
 export default {
   components: {
@@ -51,13 +51,15 @@ export default {
       // 鼠标移动
       move_replay:false,
       // 视频全屏功能是否可用
-      video_fullscreen_disabled: false
+      video_fullscreen_disabled: false,
+      details_data_version:MatchDetailCalss.details_data_version,  //仓库版本号
+      play_media:MatchDetailCalss.play_media,//视屏播放类型
+      vx_get_is_fold_status:MatchDetailCalss.is_unfold_multi_column,//视屏播放类型
+   
     }
   },
   computed: {
     // ...mapGetters({
-    //   //视屏播放类型
-    //   vx_play_media: "get_play_media",
     //   //登录是否失效
     //   vx_is_invalid: "get_is_invalid",
     //   //页面大小
@@ -74,8 +76,8 @@ export default {
     //   get_is_user_no_handle: "get_is_user_no_handle",
     //   // 获取用户信息
     //   vx_get_user: "get_user",
-    //   //视频是否展开状态
-    //   vx_get_is_fold_status:'get_is_fold_status',
+    //   
+
     // }),
     // 是否为电竞
     is_esports() {
@@ -93,9 +95,17 @@ export default {
   },
 
   watch: {
+        //监听详情类的版本号
+    "details_data_version.version": {
+      handler(res) {
+        //如果推送关闭动画  并且正在播放动画
+        console.log( MatchDetailCalss.play_media,'play_media',MatchDetailCalss);
+        this.play_media = MatchDetailCalss.play_media
+      }
+    },
     // 监听用户是否长时间未操作
     get_is_user_no_handle(res){
-      if(res && this.show_type == 'play-video' && this.vx_play_media.media_type == 'video'){
+      if(res && this.show_type == 'play-video' && this.play_media.media_type == 'video'){
         this.show_type = 'no-handle'
         video.send_message({cmd: 'destroy_video'})
       }
@@ -113,7 +123,7 @@ export default {
         if(res && !this.is_open_pip){
           
           // 专题视频保留播放进度
-          if (this.vx_play_media.media_type === 'topic') {
+          if (this.play_media.media_type === 'topic') {
             video.send_message({
               cmd: 'record_play_info',
               val: {
@@ -138,7 +148,7 @@ export default {
     //切换主题时 重新加载动画
     get_theme(res){
       //如果当前播放动画 就切换
-      if(this.show_type == 'play-video' && this.vx_play_media.media_type == 'animation'){
+      if(this.show_type == 'play-video' && this.play_media.media_type == 'animation'){
         video.get_animation_url(this.match_info, (show_type,media_src) => {
           this.show_type = show_type
           this.media_src = media_src
@@ -162,7 +172,7 @@ export default {
     },
     //监听登录是否失效
     vx_is_invalid(res) {
-      if (res && this.show_type == 'play-video' && this.vx_play_media.media_type == 'video') {
+      if (res && this.show_type == 'play-video' && this.play_media.media_type == 'video') {
         this.show_type = 'no-login'
       }
     },
@@ -170,7 +180,7 @@ export default {
     "match_info.mvs": {
       handler(res) {
         //如果推送关闭动画  并且正在播放动画
-        if (res == -1 && this.show_type == 'play-video' && this.vx_play_media.media_type == 'animation') {
+        if (res == -1 && this.show_type == 'play-video' && this.play_media.media_type == 'animation') {
           this.auto_play()
         }
       }
@@ -179,7 +189,7 @@ export default {
     "match_info.mms": {
       handler(res) {
         //如果推送关闭视频 并且正在播放视频
-        if (res != 2 && this.show_type == 'play-video' && this.vx_play_media.media_type == 'video') {
+        if (res != 2 && this.show_type == 'play-video' && this.play_media.media_type == 'video') {
           this.auto_play()
         }
       }
@@ -188,7 +198,7 @@ export default {
     "match_info.lvs": {
       handler(res) {
         //如果推送关闭视频 并且正在播放视频
-        if (res != 2 && this.show_type == 'play-video' && this.vx_play_media.media_type == 'studio') {
+        if (res != 2 && this.show_type == 'play-video' && this.play_media.media_type == 'studio') {
           this.auto_play()
         }
       }
@@ -204,8 +214,9 @@ export default {
     },
 
     // 设置直播类型 && 获取直播地址
-    "vx_play_media.time": {
+    "play_media.time": {
       handler(cur) {
+        debugger
         if (!cur) return
         this.show_loading = true
         // 10秒后隐藏loading图片
@@ -216,7 +227,7 @@ export default {
         
         this.callback_id++
         let callback_id = this.callback_id
-        let { media_type } = this.vx_play_media
+        let { media_type } = this.play_media
         let { mid, mms, mvs, varl, vurl, csid,lvs } = this.match_info
         const {mid: last_mid, media_type: last_media_type} = this.last_media_info || {}
         
@@ -230,13 +241,10 @@ export default {
         }
         
         // 非首次加载视频
-        if(this.match_info.mid == -1 && this.$utils.is_no_first_load_video){
-          this.$utils.is_no_first_load_video = true
+        if(this.match_info.mid == -1 ){
           this.show_type = 'no-video'
           return
         }
-        this.$utils.is_no_first_load_video = true
-        
         // 电竞只有视频
         if(this.is_esports){
           let url = varl || vurl
@@ -312,7 +320,7 @@ export default {
             
             video.set_play_media(this.match_info.mid,media_type)
             // 记录切换前 媒体相关信息
-            this.last_media_info = _.cloneDeep(this.vx_play_media)
+            this.last_media_info = _.cloneDeep(this.play_media)
             // 记录媒体切换时间
             this.meida_update_time = Date.now()
             
@@ -381,7 +389,7 @@ export default {
       }
     },
     refresh_time() {
-      const { mid, media_type } = this.vx_play_media
+      const { mid, media_type } = this.play_media
       const time = Date.now()
       store.dispatch({
         type: 'SET_PLAY_MEDIA',
@@ -507,7 +515,7 @@ export default {
      * @return {undefined} undefined
      */
     auto_play() {
-      let { mid } = this.vx_play_media
+      let { mid } = this.play_media
       let time = Date.now()
       store.dispatch({
         type: 'SET_PLAY_MEDIA',

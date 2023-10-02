@@ -119,14 +119,6 @@ export default defineComponent({
     match_info: Object,
     whitchDetail: String,
   },
-  data(){
-    return{
-      tabs_active_index:MatchDetailCalss.tabs_active_index
-    }
-  },
-  mounted(){
-    console.log(this.tabs_active_index,'tabs_active_index');
-    },
   setup(props, {emit}) {
     const store_state = store.getState();
     //当前选中
@@ -143,6 +135,16 @@ export default defineComponent({
     const tabs_active_index = ref(MatchDetailCalss.tabs_active_index);
     // 当前布局状态  一栏布局/两栏布局
     const get_layout_statu = ref(MatchDetailCalss.layout_statu);
+
+  watch(
+  () => MatchDetailCalss.details_data_version.version,
+  (val) => {
+    if (val) {
+      tabs_active_index.value = MatchDetailCalss.mid;
+      get_layout_statu.value = MatchDetailCalss.mid;
+    }
+  }
+);
     const route = useRoute();
     const is_details = computed(() => {
       return ["details", "virtual_details"].includes(route.name);
