@@ -22,7 +22,7 @@
       ></bet-mix-result> -->
     </template>
     <template v-else>
-      <div id="bet_input_defaut_one" v-if="BetData.bet_s_list.length > 0">
+      <div id="bet_input_defaut_one" class="bet_input_defaut_one" v-if="BetData.bet_s_list.length > 0">
         <!--第一个输入框的-->
         <bet-input
           ref="bet-mix-input-0"
