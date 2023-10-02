@@ -4,7 +4,6 @@
 <template>
   <div class="c-main-menu column" :class="{ 'bet-menu-upd': LayOutMain_pc.layout_left_show == 'bet_history' }">
 
-
     <div style="display:none;"> {{ MenuData.menu_data_version }} --- {{ BetData.bet_data_class_version }} -- {{
       LayOutMain_pc.layout_version }} </div>
 
@@ -52,23 +51,12 @@
         </v-scroll-area>
 
         <!-- 投注栏 -->
-        <div class="bet-box-pc-1">
-          <bet-box-wapper use_component_key="bet_box_pc_1" v-if="LayOutMain_pc.layout_left_show == 'bet_list'" />
+        <div class="bet-box-pc-1" v-if="LayOutMain_pc.layout_left_show == 'bet_list'">
+          <bet-box-wapper use_component_key="bet_box_pc_1"  />
         </div>
 
         <!-- 投注记录 -->
-        <v-scroll-area ref="ref_bet_scroll_area_history" position="bet_history" :observer_area="3"
-          v-if="LayOutMain_pc.layout_left_show == 'bet_history'"
-          :observer_middle="LayOutMain_pc.layout_left_show == 'bet_history'">
-          <!-- 滚动：头部 --------------------------------->
-          <template v-slot:header>
-            <div class="left-bg-box"></div>
-          </template>
-          <div>
-            <!-- 滚动：内容 --------------------------------->
-            <bet-record-view-wapper />
-          </div>
-        </v-scroll-area>
+        <bet-record-view-wapper use_component_key="PcRecordTemplate1" v-if="LayOutMain_pc.layout_left_show == 'bet_history'" />
 
       </div>
     </div>
