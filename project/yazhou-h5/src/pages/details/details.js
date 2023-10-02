@@ -202,7 +202,7 @@ const get_detail_data = ref(MatchDataWarehouse_H5_Detail_Common.list_to_obj.mid_
     }
 
     // 监听数据仓库版本号变更后更新数据get_detail_data
-    watch(() => MatchDataWarehouseInstance.value.data_version.version, () => {
+    watch(() => MatchDataWarehouseInstance.data_version.version, () => {
       get_detail_data.value = MatchDataWarehouse_H5_Detail_Common.list_to_obj.mid_obj
     })
     // 主题后缀

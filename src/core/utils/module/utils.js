@@ -243,6 +243,7 @@ export const utils = {
         if(this.send_gcuuid != res.gcuuid) return;
         if (res.code == 200) {
           // 获取视频动画域名
+          return
           let referUrls = window.BUILDIN_CONFIG.live_domains[0] || lodash.get(res,'data.referUrl');
           referUrls = referUrls.replace(/https?:/, "");
           let animation_src = lodash.get(res,'data.aniUrl');
@@ -258,6 +259,7 @@ export const utils = {
       })
     }, 10000 )
   },
+
   /**
    * @Description 加载视频播放器js
    * @param {undefined} undefined
