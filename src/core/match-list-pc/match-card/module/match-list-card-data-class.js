@@ -78,9 +78,7 @@ class MatchListCardDataClass {
   }
 
   set_list_version() {
-    lodash.debounce(() => {
-      this.list_version.value = Date.now() ;    
-    }, 200)
+    this.list_version.value = Date.now() ;    
   }
 }
 export default new MatchListCardDataClass();
