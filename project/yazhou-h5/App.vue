@@ -5,7 +5,7 @@
 -->
 
 <template>
-  <div id="q-app" class="theme0" >
+  <div id="q-app" class="theme0">
     <appload v-if="init_load"></appload>
   </div>
 </template>
@@ -16,13 +16,13 @@
 import _ from "lodash";
 import appload from "./app-load.vue";
 import apiDomain from "./apiDomain.js";
-import STANDARD_KEY from "src/core/standard-key"; 
+import STANDARD_KEY from "src/core/standard-key";
 
 import { enter_params, compute_css_variables } from "src/core/index.js";
 import BetDataCtr from "src/core/bet/class/bet-data-class-h5.js";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
-import MenuData from  "src/core/menu-h5/menu-data-class.js";
+import MenuData from "src/core/menu-h5/menu-data-class.js";
 import { http, AllDomain } from "src/core/http/";
 import { loadLanguageAsync } from "src/core/index.js";
 import { Quasar } from "quasar";
@@ -40,11 +40,11 @@ const init_load = ref(false); //用于加载是否完成
   try {
     // // 检测目前的系统类型ios,android,h5
     // window.platform_type = (Quasar.$q.platform.is.ios ? 'ios' : '') || (Quasar.$q.platform.is.android ? 'android' : '') || 'h5';
-    
+
     let languageName = "zh";
     await loadLanguageAsync(languageName);
   } catch (error) {
-    console.error('init',error);
+    console.error('init', error);
   } finally {
     console.log(" init_domain --  开始执行:");
     // 实例化域名检测类对象
@@ -53,6 +53,7 @@ const init_load = ref(false); //用于加载是否完成
       // http初始化方法 会调用 setApiDomain
       // ws和http域名切换逻辑
       http.setApiDomain();
+   
       MenuData.init();
       BetData.init_core()
       BetViewDataClass.init()
