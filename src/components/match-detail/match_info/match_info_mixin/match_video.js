@@ -216,7 +216,6 @@ export default {
     // 设置直播类型 && 获取直播地址
     "play_media.time": {
       handler(cur) {
-        debugger
         if (!cur) return
         this.show_loading = true
         // 10秒后隐藏loading图片
