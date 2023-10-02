@@ -935,7 +935,7 @@ class MenuData {
   //获取二级菜单 menuid
   get_current_sub_menuid() {
     //二级菜单可能有个选中 全部 此刻 当前菜单应该是数组
-    if (this.get_sport_all_selected.value) {
+    if (this.get_sport_all_selected.value && this.is_scroll_ball()) {
       return this.current_lv_2_menu.map((item) => {
         return item.mi || item.menuId;
       }).join(',');

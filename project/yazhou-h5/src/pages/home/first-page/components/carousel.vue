@@ -141,6 +141,8 @@ import ListMap from 'src/core/match-list-h5/match-class/list-map.js';
 import { ref, watch, onUnmounted } from "vue";
 import { SessionStorage, LocalStorage, useMittOn, useMittEmit, ServerTime, MITT_TYPES, get_file_path, UserCtr, format_total_score, uid } from 'src/core/'
 import { useRoute, useRouter } from "vue-router";
+import { lang } from "project_path/src/mixin/userctr";
+
 // 路由
 const route = useRoute();
 const router = useRouter();
@@ -155,7 +157,6 @@ let banner_bg = ref(//轮播背景图片,
 const show_banner_loading = ref(true)
 const defaultBannerShow = ref(false)
 const slide = ref(0)
-const get_lang = ref(UserCtr.lang)
 const get_banner_obj = ref({});
 
 // 刷新时banner左上角有短暂破碎小图（加载失败）显现，监听图片load事件做显示处理
@@ -165,7 +166,7 @@ const showDefaultBanner = (e) => {
 // 若线上图片加载错误，则使用本地默认banner
 const handleBannerError = (e) => {
     banner_bg.value = `/yazhou-h5/image/png/home_carousel_bg_${UserCtr.theme.includes("y0") ? "y0_" : ""
-        }${get_lang.value}.png`;
+        }${lang.value}.png`;
 };
 /**
  * @description: 图标出错时
@@ -327,7 +328,7 @@ const get_banner_url = () => {
         banner_bg.value = get_file_path(url);
     } else {
         banner_bg.value = `/yazhou-h5/image/png/home_carousel_bg_${UserCtr.theme.includes("y0") ? "y0_" : ""
-            }${get_lang.value}.png`;
+            }${lang.value}.png`;
     }
     SessionStorage.get("banner_bg", banner_bg.value);
 };
@@ -346,10 +347,6 @@ watch(get_banner_obj, () => {
         // 关闭banner loading展示
         show_banner_loading.value = false;
     });
-});
-//用戶信息變化
-watch(UserCtr.user_version, () => {
-    get_lang.value = UserCtr.lang;
 });
 
 /**
