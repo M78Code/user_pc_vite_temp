@@ -153,7 +153,7 @@ class BaseData {
     this.init_mew_menu_list();
 
     // 定时请求菜单接口
-    // this.set_menu_init_time(1500);
+    this.set_menu_init_time(1500);
 
     this.reset_menu_init_time = setTimeout(() => {
       this.clear_menu_init_time();
@@ -219,6 +219,7 @@ class BaseData {
     // let user_info = lodash_.get(res,'data.data',{})
     // let user_info = lodash_.get(res,'data.data',{})
     let user_info = userCtr.get_user_info_data()
+    console.error('user_info', user_info);
     if (user_info && Object.keys(user_info).length) {
       // let old_user = JSON.stringify(store.getters.get_user)
       // let new_user = JSON.stringify(user_info)
