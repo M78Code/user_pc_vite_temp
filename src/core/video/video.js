@@ -14,7 +14,7 @@ import { i18n_t} from "src/boot/i18n.js"
 // import BetCommonHelper from "src/core/bet/common-helper/index.js"
 import BetCommonHelper from "../bet/common-helper/index"
 // import {utils } from 'src/core/index.js'
-// import { UserCtr } from "src/core/index.js";
+import { UserCtr,MatchDetailCalss } from "src/core/index.js";
 
 export default {
 
@@ -43,7 +43,7 @@ export default {
   api_get_match_info(mid,callback){
     let params = {
       mid,
-      cuid: store.getters.get_uid
+      cuid: UserCtr.get_cuid()
     };
     let api_ = null;
     // 判断是电竞还是其他赛种，区分接口
@@ -769,12 +769,12 @@ export default {
       // 媒体类型标识转换（数字转字母标识）
       const media_type = utils.get_media_icon_index(play_type)
       const media_info = {
-        ...store.getters.get_play_media,
+        ...MatchDetailCalss.play_media,
         media_type
       }
-      store.dispatch('set_play_media', media_info)
-      store.dispatch('set_match_details_params', {media_type})
-      
+      set_score_button
+      MatchDetailCalss.set_play_media(media_info)
+      MatchDetailCalss.set_score_button({media_type})      
       clearTimeout(this.route_jump_timer)
       this.route_jump_timer = null
     }, 50)
@@ -867,9 +867,9 @@ export default {
     let url = ''
     // if (window.env.NODE_ENV == "development" && (refer_url.indexOf('//prolivepc') == 0)) {
     //   // 生产环境使用代理进行播放视频连接操作
-    //   url = `/video/?mid=${mid}&domain=${request_domain}&style=${store.getters.get_theme}`
+    //   url = `/video/?mid=${mid}&domain=${request_domain}&style=${UserCtr.theme}`
     // } else {
-      url = `${refer_url}?mid=${mid}&domain=${request_domain}&style=${store.getters.get_theme}`
+      url = `${refer_url}?mid=${mid}&domain=${request_domain}&style=${UserCtr.theme}`
     // }
     url += `&load_error=${i18n_t('video.load_error')}&refresh=${i18n_t('common.refresh')}&pause=${i18n_t('video.pause')}&play=${i18n_t('video.play')}&mute=${i18n_t('video.mute')}&cancel_mute=${i18n_t('video.cancel_mute')}&refresh-icon=0&controls=1&is_client=1&open_pip=${i18n_t('video.open_pip')}&token=${UserCtr.user_token}&rdm=${new Date().getTime()}`
     url = encodeURI(url)
@@ -921,7 +921,7 @@ export default {
       let animationUrl = ''
       //足篮棒网使用3.0动画  其他使用2.0
       if([1,2,3,5].includes(match.csid*1)){
-        let style = store.getters.get_theme.includes('day') ? 'theme01' : 'theme02'
+        let style = UserCtr.theme.includes('day') ? 'theme01' : 'theme02'
         let animation3Url = _.get(res, "data.data.animation3Url") || []
         animation3Url.forEach( item =>{
           if(item.styleName.indexOf(style) >= 0){
@@ -955,7 +955,7 @@ export default {
    * @return {undefined} undefined
    */
   set_play_media(mid,media_type){
-    store.dispatch('set_play_media',{
+    MatchDetailCalss.set_play_media({
       mid,
       media_type
     })

@@ -46,7 +46,7 @@ class MenuData {
     this.previous_lv_2_menu_i = 0;
     // 二级菜单 滚球下边的一个按钮   "全部"按钮
     this.get_sport_all_selected = computed(() => {
-      return this.menu_type.value == 1 && lodash.isArray(this.current_lv_2_menu);
+      return this.menu_type.value == 1 && lodash.isArray(this.current_lv_2_menu) && this.update_time;
     });
     //当前的菜单 lv2  注意 滚球 二级菜单 有一个【全部】选项 get_sport_all_selected
     this.current_lv_2_menu = undefined;
@@ -936,7 +936,7 @@ class MenuData {
   get_current_sub_menuid() {
     //二级菜单可能有个选中 全部 此刻 当前菜单应该是数组
     if (this.get_sport_all_selected.value) {
-      return this.current_lv_2_menu.map((item) => {
+      return this.current_lv_2_menu && lodash.castArray(this.current_lv_2_menu).map((item) => {
         return item.mi || item.menuId;
       }).join(',');
     } else {

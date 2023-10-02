@@ -27,12 +27,54 @@ class MatchMeta {
    * @param { mi } 菜单类型 目前只处理了足球
    */
   set_origin_match_data () {
-    const mi = lodash.get(MenuData.current_lv_2_menu, 'mi')
-    if (typeof mi !== 'string') return
-    // 菜单 ID 对应的 赛事 mids
+    // 菜单 ID 对应的 元数据赛事 mids
+    const menu_lv_v1 = lodash.get(MenuData.current_lv_1_menu, 'mi')
+    const menu_lv_v2 = lodash.get(MenuData.current_lv_2_menu, 'mi')
+    // 滚球全部
+    if (+menu_lv_v1 === 1 && !menu_lv_v2) return this.get_origin_match_mids_by_mis()
+    if (typeof menu_lv_v2 !== 'string') return
+    // 对应 球种 mi 
+    this.get_origin_match_mids_by_mi(menu_lv_v2)
+  }
+
+  /**
+   * @description 获取 滚球下全部赛事 mids
+   */
+  get_origin_match_mids_by_mis () {
+    const menu_lv_sl = lodash.get(MenuData.current_lv_1_menu, 'sl')
+    const length = lodash.get(menu_lv_sl, 'length')
+    if (length < 1) return
+    const match_by_mids = []
+    menu_lv_sl.forEach(t => {
+      const mids = this.get_match_mids_by_mi(t.mi)
+      mids && match_by_mids.push(...mids)
+    })
+    // TODO: 需要去除 .slice(0, 30)
+    this.match_mids = [...new Set(match_by_mids.slice(0, 30))]
+    this.get_origin_match_by_mids(this.match_mids)
+  }
+
+  /**
+   * @description 根据 mi 获取对应的 mids
+   * @param { mi } 二级菜单
+   */
+  get_origin_match_mids_by_mi (mi) {
+    // 当前菜单下的 mids 集合
+    const match_by_mids = this.get_match_mids_by_mi(mi)
+    const length = lodash.get(match_by_mids, 'length')
+    if (length < 1) return
+    // TODO: 需要去除 .slice(0, 15)
+    this.match_mids = [...new Set(match_by_mids.slice(0, 15))]
+    this.get_origin_match_by_mids( this.match_mids)
+  }
+
+  /**
+   * @description 根据 mi 获取元数据 mids
+   * @param {*} mi 
+   */
+  get_match_mids_by_mi (mi) {
     const mi_tid_mids_res = lodash.get(BaseData, 'mi_tid_mids_res')
-    if (mi_tid_mids_res.length < 1) return
-    // 当前菜单的 mid 详情
+    if (mi_tid_mids_res.length < 1) return []
     const mid_obj = mi_tid_mids_res[mi]
     if (!mid_obj) return
     const arr = []
@@ -40,23 +82,21 @@ class MatchMeta {
       arr.push(...t)
     })
     if (arr.length < 1) return
-    // 当前菜单下的 mids 集合
     const match_by_mids = []
-    arr.forEach(t => {
+    arr.forEach((t, i) => {
       match_by_mids.push(...t.mids)
     })
-    this.handle_origin_match_data(match_by_mids)
+    return match_by_mids
   }
 
   /**
-   * @description 根据 mid 获取对应的赛事数据
-   * @param { mids } 赛事id集合
+   * @description 根据 mids 获取对应的赛事数据
+   * @param { mid } 二级菜单
    */
-  handle_origin_match_data (mids) {
+  get_origin_match_by_mids (mids) {
     // 赛事全量数据
     const mids_arr = lodash.get(BaseData, 'mids_arr', [])
     if (mids_arr.length < 1) return
-    if (mids.length < 1) return
     const match_list = mids.map(t => {
       return lodash.find(mids_arr, (l) => l.mid === t)
     })
@@ -144,7 +184,6 @@ class MatchMeta {
   set_match_default_properties (list = []) {
     const length = lodash.get(list, 'length')
     if (length < 1) return
-    const result = []
     // 是否展示联赛标题
     let is_show_league = false
     // 是否显示次要玩法
@@ -158,14 +197,12 @@ class MatchMeta {
       } else {
         is_show_league = list[i].tid !== list[i - 1].tid
       }
-      i < 20 && result.push(t.mid)
       Object.assign(t, {
         is_show_tab_play,
         is_fold_tab_play,
         is_show_league,
       })
     })
-    this.match_mids = [...new Set(result)]
     this.handle_submit_warehouse(list)
   }
 

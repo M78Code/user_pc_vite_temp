@@ -19,6 +19,7 @@
 import { ref, onUnmounted } from 'vue';
 import { useRoute } from 'vue-router'
 import { api_analysis } from 'src/api/index'
+import lodash from 'lodash'
 
 const route = useRoute();
 const articleDetail = ref({});
@@ -30,7 +31,7 @@ window.addEventListener('beforeunload', close_win)
 /**
  * @Description 加载文章,优先读缓存
 */
-const loadArticle = () => {
+function loadArticle() {
   let articleCache = localStorage.getItem('_article_obj');
   if (articleCache) {
     let article = JSON.parse(articleCache)
@@ -54,7 +55,7 @@ const setReadCounts = () => {
     articleDetail.value.readCounts = route.params.count;
   }
 }
-const close_win = () => {
+function close_win() {
   if (articleDetail.value.id) {
     let end_tiem = new Date().getTime()
     let info = {
@@ -67,18 +68,18 @@ const close_win = () => {
 /**
  * @Description 获取文章详情
 */
-const get_article = () => {
+function get_article() {
   // matchId文章id type2猜你喜欢详情
   const params = {
     matchId: route.params.id,//Number(
     type: 2,
   }
   api_analysis.getArticlePB(params).then(res => {
-    const _data = _.get(res, 'data.data');
-    const _code = _.get(res, 'data.code');
+    const _data = lodash.get(res, 'data.data');
+    const _code = lodash.get(res, 'data.code');
 
-    if (_code == 200 && !_.isEmpty(_data)) {
-      let _item = typeof (_data) == 'string' ? JSON.parse(_data) : _.cloneDeep(_data);
+    if (_code == 200 && !lodash.isEmpty(_data)) {
+      let _item = typeof (_data) == 'string' ? JSON.parse(_data) : lodash.cloneDeep(_data);
       // 替换图片域名
       let domain = this.get_file_path('getArticle').replace('getArticle', '')
       if (_item.articleContent) {
@@ -182,4 +183,5 @@ onUnmounted(() => {
 /*  内容区 */
 .rule-scroll-area {
   flex: 1;
-}</style>
+}
+</style>

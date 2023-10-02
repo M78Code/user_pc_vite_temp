@@ -62,7 +62,7 @@ export const get_category_playTop = (params, config, url = "/v1/m/category/playT
 
 //获取直播url
 export const post_video_url = (params, config = {}, url = "/v1/w/videoAnimationUrlPB") => {
-  let imgDm = _.get(window,'env.config.oss_img_domains[0]');
+  let imgDm = lodash.get(window,'env.config.oss_img_domains[0]');
   if(imgDm){
     params.imgDm = imgDm;
   }

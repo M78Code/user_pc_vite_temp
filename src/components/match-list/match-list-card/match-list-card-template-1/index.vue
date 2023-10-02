@@ -65,7 +65,7 @@
   </div>
 </template>
 <script setup>
-import { computed, onMounted, onUnmounted, reactive, ref } from "vue";
+import { computed, onMounted, onUnmounted, reactive, ref, watch } from "vue";
 import { PlayMatchTypeFullVersionWapper as PlayMatchType } from "src/components/match-list/play-match-type/index.js";
 import { PlayMatchLeagueFullVersionWapper as PlayMatchLeague } from "src/components/match-list/play-match-league/index.js";
 import { MatchTypeChampionFullVersionWapper as MatchTypeChampion } from "src/components/match-list/match-type-champion/index.js";
@@ -87,6 +87,9 @@ const props = defineProps({
 });
 // 卡片样式对象
 let card_style_obj = MatchListCardDataClass.all_card_obj[props.card_key];
+watch(() => MatchListCardDataClass.list_version.value, () => {
+  card_style_obj = MatchListCardDataClass.all_card_obj[props.card_key];
+})
 let sticky_top = ref(null);
 // 组件是否加载完成
 const is_mounted = ref(true);
