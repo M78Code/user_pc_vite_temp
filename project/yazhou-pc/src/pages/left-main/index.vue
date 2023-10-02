@@ -50,7 +50,9 @@
         </v-scroll-area>
         
         <!-- 投注栏 -->
+        <div class="bet-box-pc-1">
         <bet-box-wapper use_component_key="bet_box_pc_1" v-if="LayOutMain_pc.layout_left_show == 'bet_list'"/>
+        </div>
 
         <!-- 投注记录 -->
         <v-scroll-area ref="ref_bet_scroll_area_history" position="bet_history" :observer_area="3" v-if="LayOutMain_pc.layout_left_show == 'bet_history'"
@@ -211,6 +213,14 @@ const get_unsettle_tickets_count_config = () => {
 .left-bg-box{
   width: 100%;
   height: 80px;
+}
+.bet-box-pc-1{
+  width: 100%;
+  height: 100%;
+  > div{
+    width: 100%;
+    height: 100%;
+  }
 }
 .left-header-all{
   width: 220px;
