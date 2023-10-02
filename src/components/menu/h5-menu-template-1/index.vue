@@ -162,6 +162,24 @@ import base_data from "src/core/base-data/base-data.js";
 import { useRoute, useRouter } from "vue-router";
 import lodash from "lodash"
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
+import { lang, show_favorite_list, theme, user_info, resources_obj } from "project_path/src/mixin/userctr";
+
+import {
+  //是否 滚球
+  is_scroll_ball,
+  //是否 电竞
+  is_export,
+  //是否 vr
+  is_vr,
+  //是否 赛果
+  is_results,
+  //是否 串关
+  is_mix,
+  //是否 冠军
+  is_kemp,
+  //是否 禁足
+  is_jinzu,
+} from "project_path/src/mixin/menu"
 // "1": "滚球",
 //   "2": "今日",
 //   "3": "早盘",
@@ -198,44 +216,14 @@ const current_lv2 = ref(MenuData.current_lv_2_menu || {})//二级菜单选中
 const date_menu_curr_i = ref(0);
 const pop_main_items = ref([]); //弹出框数据
 const show_selector_sub = ref(false); //展示弹出框
-const show_favorite_list = ref(UserCtr.show_favorite_list); //是否显示收藏列表
 // 切换到电竞时 的菜单 背景图片
 const dj_back_type = ref("lol")
 // 一级菜单mi ref
 const { menu_type, update_time } =
   MenuData;
-//是否 滚球
-const is_scroll_ball = computed(() => {
-  return MenuData.is_scroll_ball() && menu_type.value;
-});
-//是否 电竞
-const is_export = computed(() => {
-  return MenuData.is_export() && menu_type.value;
-});
-//是否 vr
-const is_vr = computed(() => {
-  return MenuData.is_export() && menu_type.value;
-});
-//是否 赛果
-const is_results = computed(() => {
-  return MenuData.is_results() && menu_type.value;
-});
-//是否 串关
-const is_mix = computed(() => {
-  return MenuData.is_results() && menu_type.value;
-});
-//是否 冠军
-const is_kemp = computed(() => {
-  return MenuData.is_kemp() && menu_type.value;
-});
-//是否 禁足
-const is_jinzu = computed(() => {
-  return MenuData.is_jinzu() && menu_type.value;
-});
 //是否显示三级菜单
 const is_show_three_menu = computed(() => {
   return date_menu_list.value.length > 0 && MenuData.get_is_show_three_menu()
-
 });
 //是否显示四级菜单
 const is_show_four_menu = computed(() => {
@@ -261,7 +249,7 @@ watch(update_time, (v) => {
   current_menu.value = MenuData.menu_lv2; //2级
   date_menu_list.value = MenuData.menu_lv3; //三级
   virtual_sports_results_tab.value = MenuData.menu_lv4; //4级
-  current_lv2.value = MenuData.current_lv_2_menu;//二级index
+  current_lv2.value = MenuData.current_lv_2_menu;//二级
   date_menu_curr_i.value = MenuData.current_lv_3_menu_i; //三级index
 });
 
@@ -473,13 +461,8 @@ function is_menu_show(item) {
   }
   return reslut;
 }
-const mitt_list = [
-  useMittOn(MITT_TYPES.EMIT_FAVORITE_CHANGE_CMD, (v, old) => {
-    show_favorite_list.value = v
-  }).off
-]
+
 onBeforeUnmount(() => {
-  mitt_list.forEach(i => i())
 })
 //初始化菜单
 
