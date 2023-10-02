@@ -2,7 +2,7 @@
 <template>
    <!-- active 1 开盘 4 锁盘-->
   <q-card flat class="relative-position bet-mix-item-card"
-    :class="{ 'bet-no-effect': !(ref_data.active == 1 || ref_data.active == 4) || !(ref_data.is_serial && ref_data.serial_type) || ref_data.match_update }">
+    :class="{ 'bet-mix-item-first': index == 0, 'bet-no-effect': !(ref_data.active == 1 || ref_data.active == 4) || !(ref_data.is_serial && ref_data.serial_type) || ref_data.match_update }">
     <div style="display: none;">{{ BetData.bet_data_class_version }} </div>
     <!--玩法,提示及删除区域-->
     <q-card-section>
@@ -14,7 +14,7 @@
         </div>
         <div class="col-auto">
           <!--删除按钮-->
-          <icon-wapper size="12px" name="icon-del" class="bet-del" @click="del_bet_item" v-if="is_close" />
+          <icon-wapper size="12px" name="icon-del" class="bet-del" @click="del_bet_item" />
         </div>
       </div>
       <div class="row">
@@ -146,10 +146,10 @@ const ref_data = reactive({
   }
 })
 
+// 删除当前投注项
 const del_bet_item = () => {
-  
+  BetData.bet_list_remove(props.item.playOptionsId)
 }
-
 
 </script>
 <style lang="scss" scoped>
