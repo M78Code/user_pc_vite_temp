@@ -228,7 +228,6 @@
           card_total_height_back:league_card_total_height,
           mids:league_obj.mids
         }
-        console.log('进来了几次 111');
         // 如果不是ws调用  设置折叠数据
         if(!is_ws_call){
           Object.assign(all_card_obj[card_key],fold_template)

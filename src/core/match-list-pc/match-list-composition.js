@@ -344,7 +344,6 @@ const fetch_match_list = (is_socket = false, cut) => {
 				// 组件和路由不匹配 菜单id不匹配aa
 				if ((page_source != "details") || _params.euid != match_api.params.euid) return;
 				api_error_count.value = 0;
-				console.log('进来了几次', res);
 
 				if (res.code == 200) {
 					//处理服务器返回的 列表 数据   fetch_match_list
