@@ -22,6 +22,7 @@ import { enter_params, compute_css_variables } from "src/core/index.js";
 import BetDataCtr from "src/core/bet/class/bet-data-class-h5.js";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
+import MenuData from  "src/core/menu-h5/menu-data-class.js";
 import { http, AllDomain } from "src/core/http/";
 import { loadLanguageAsync } from "src/core/index.js";
 import { Quasar } from "quasar";
@@ -52,6 +53,7 @@ const init_load = ref(false); //用于加载是否完成
       // http初始化方法 会调用 setApiDomain
       // ws和http域名切换逻辑
       http.setApiDomain();
+      MenuData.init();
       BetData.init_core()
       BetViewDataClass.init()
       BetDataCtr.init()

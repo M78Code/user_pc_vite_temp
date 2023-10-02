@@ -71,7 +71,6 @@ class MenuData {
     this.footer_sub_changing = false //页脚子菜单变化 
     // 上一次选择的页脚菜单
     this.prev_footer_sub_menu_id = "";
-    this.init();
   }
   init() {
     //菜单数据有变化
