@@ -7,7 +7,6 @@ class ServerTime {
     // 用户本机 时间戳
     this.local_time = Date.now();
     this.init_load = false;// 是否获取过时间
-    this.get_server_time() // 默认获取一次服务器时间
   }
   /**
    * 获取服务器时间

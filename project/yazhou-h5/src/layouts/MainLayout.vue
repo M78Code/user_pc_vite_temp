@@ -54,13 +54,15 @@ import {
   defineAsyncComponent,
   nextTick,
 } from "vue";
-import { useMittOn, MITT_TYPES, i18n_t } from "src/core/";
+import { useMittOn, MITT_TYPES, i18n_t ,UserCtr,ServerTime,GlobalAccessConfig} from "src/core/";
 import { FooterWapper } from "src/components/footer/index.js";
 import { MenuWapper } from "src/components/menu";
 import activityIcon from "project_path/src/components/common/activity-icon.vue"; // 设置
 import setMenu from "project_path/src/components/common/set-menu.vue"; // 设置
 import selectDia from "../pages/match-list/components/select-dia.vue"
 import { useRoute } from "vue-router";
+import BaseData from "src/core/base-data/base-data.js";
+
 import store from "src/store-redux/index.js";
 // 活动弹出框
 const activityLayer = defineAsyncComponent(() => import("../components/common/activity-layer.vue"))
@@ -222,6 +224,16 @@ onUnmounted(() => {
   unsubscribe();
   mitt_list.map(i => i())
 });
+//初始化菜单
+BaseData.init()
+//服务器时间
+ServerTime.get_server_time()
+// 客户端-获取紧急开关配置
+GlobalAccessConfig.init()
+//获取资源配置(商户后台配置的图片、跳转链接)  延迟触发以优化首屏加载速度
+UserCtr.fetch_resourcesimg()
+    // 电竞图片域名 获取
+UserCtr.set_e_sports_domain_img()
 </script>
 <style lang="scss" scoped>
 .select-mask {

@@ -104,18 +104,18 @@ class UserCtr {
     }
     this.callbackUrl = ''
     //电竞图片地址 
-    this.e_sports_img_domain=  '' 
- 
+    this.e_sports_img_domain = ''
+
 
     // 常规体育的 图片地址 
-    this.common_img_domain =  '' 
-   
+    this.common_img_domain = ''
+
   }
 
 
 
 
- 
+
 
 
 
@@ -1013,11 +1013,20 @@ class UserCtr {
     infoUpload.upload_data(lodash.get(res, "data.data", {}));
   }
   /**
+   *  常规体育的 图片地址 
+  */
+  set_common_img_domain(url) {
+    //设置一次
+
+    this.common_img_domain = url
+
+  }
+  /**
      * @description: 设置电竞图片资源域名
      */
   async set_e_sports_domain_img() {
-       //电竞图片地址 
-       this.e_sports_img_domain= LocalStorage.get('e_sports_domain_img', '');
+    //电竞图片地址 
+    this.e_sports_img_domain = LocalStorage.get('e_sports_domain_img', '');
     try {
       var send_gcuuid = uid();
       const res = await api_common.get_games_imgDomain({
@@ -1034,7 +1043,7 @@ class UserCtr {
         // 持久化电竞图片域名
         LocalStorage.set('e_sports_domain_img', temp);
         // 设置全局电竞图片域名信息
-        this.e_sports_img_domain= temp;
+        this.e_sports_img_domain = temp;
       }
     } catch (error) {
       console.error(error);

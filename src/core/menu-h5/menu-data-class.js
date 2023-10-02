@@ -83,9 +83,6 @@ class MenuData {
         this.update();
       }, 10)
     );
-    // setTimeout(() => {
-    BaseData.init(); //初始化菜单数据
-    // }, 0)
     //设置从缓存拿到的数据 到class
     this.set_cache_class(
       SessionStorage.get(Cache_key.CACHE_CRRENT_MEN_KEY, {}),
