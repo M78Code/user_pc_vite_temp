@@ -46,6 +46,8 @@ import store from "src/store-redux/index.js";
 import odds_new from "project_path/src/pages/details/components/tournament-play/unit/odds-new.vue";
 // import odd_convert from "project_path/src/mixins/odds_conversion/odds_conversion.js";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
+import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
+
 export default defineComponent({
   // #TODO mixins
   // mixins: [odd_convert],
@@ -117,10 +119,7 @@ export default defineComponent({
     const go_to_bet = (ol_item,index) => {
       ol_item = play_obj[ol_item]
       ol_item.num = index + 1
-      // console.log('qwe',JSON.stringify(ol_item,null,'--'))
-      // console.log('qwe',JSON.stringify(play_obj2[ol_item.hpid],null,'--'))
-
-      // $emit("bet_click_", {ol_item, hl_data:play_obj2[ol_item.hpid]});
+      useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX,true);
     };
     return {
       utils,

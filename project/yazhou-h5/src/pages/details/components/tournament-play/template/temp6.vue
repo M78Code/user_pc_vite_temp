@@ -284,7 +284,8 @@ import lodash from "lodash";
 import store from "src/store-redux/index.js";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, ref } from "vue";
 import { useRoute } from "vue-router"
-import { i18n_t } from "src/boot/i18n.js";;
+import { i18n_t } from "src/boot/i18n.js";
+import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 //国际化
 
 
@@ -429,8 +430,7 @@ export default defineComponent({
       return reg.test(val) ? "highlight" :""
     };
     const go_to_bet = (ol_item) => {
-      // #TODO emit
-      // $emit("bet_click_", {ol_item});
+      useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX,true);
     };
     return {
       ...toRefs(state_data),

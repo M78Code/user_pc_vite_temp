@@ -262,6 +262,8 @@ import {utils } from 'src/core/index.js';
 import BetData from "src/core/bet/class/bet-data-class.js"
 import lodash from "lodash";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, ref } from "vue";
+import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
+
 export default defineComponent({
   name: "temp7",
   // #TODO mixins
@@ -273,8 +275,7 @@ export default defineComponent({
   setup(props, evnet) {
     const get_bet_list = ref(BetData.bet_list)
     const go_to_bet = (ol_item) => {
-      // #TODO emit
-      // $emit("bet_click_", {ol_item});
+      useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX,true);
     };
     return {
       utils,
