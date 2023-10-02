@@ -1,7 +1,6 @@
 <template>
   <div class="category relative-position" ref="category">
     <!-- loading效果 -->
-    <div style="display: none;">{{MatchDataWarehouseInstance.data_version}}</div>
     <loading
         v-if="is_loading"
         :top="get_is_hengping ? '50%' : '58%'"

@@ -43,6 +43,7 @@ import { onMounted, onUnmounted, watch, ref } from "vue";
 import { useRoute } from 'vue-router'
 import lodash from 'lodash'
 import UserCtr from "src/core/user-config/user-ctr.js";
+import { get_file_path } from "src/core/file-path/file-path.js"
 
   // 弹框是否显示
   let is_show_dialog = ref(false)

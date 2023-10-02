@@ -11,6 +11,7 @@
     </div>
     <!-- 赛果tab区域 -->
     <div class="menu-s row" ref="reset_scroll_dom">
+      {{tab_item_list}}
       <div v-for="(tab_item, i) of tab_item_list" :key="i" class="common-style" @click="result_tab(i, tab_item)"
         :class="{ 't_color': item_index == i || i == tab_item_list.length - 1 && item_index == 3 }">
         {{ tab_item.text }}
@@ -91,7 +92,6 @@ const tab_data_init = () => {
   }
   // 点击高亮显示tab
 const result_tab = (index,tab_item) => {
-  console.error(index, tab_item);
     let search_term =route.query.search_term
     useMittEmit(MITT_TYPES.EMIT_CHANGE_TAB, true)
     console.error(index, tab_item);
@@ -148,7 +148,7 @@ const result_tab = (index,tab_item) => {
       tab_data_init()
     } finally {
       const { configValue, eventSwitch } = lodash.get(UserCtr, 'user_info.merchantEventSwitchVO', {})
-      if (configValue == 1 && eventSwitch == 1 && lodash.get(props.result_detail_data, 'csid') == 1) {
+      if (configValue == 1 && eventSwitch == 0 && lodash.get(props.result_detail_data, 'csid') == 1) {
         get_football_replay(0)
       }
     }
@@ -165,6 +165,7 @@ const get_football_replay = (event_code) => {
     }
     api_analysis.post_playback_video_url(params)
         .then(res => {
+          
           if (res.code == 200 && lodash.get(res.data, 'eventList.length')) {
             // 足球类型赛果需添加精彩回放菜单
             tab_item_list.value.push({
@@ -243,7 +244,7 @@ onUnmounted(() => {
   position: relative;
   width: 0.4rem;
   height: 0.4rem;
-  background-image: url("public/yazhou-h5/image/svg/tab_up_btn.svg");
+  background-image: url("public/image/svg/tab_up_btn.svg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: 0.12rem 0.12rem;
