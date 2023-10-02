@@ -54,7 +54,7 @@ import {
   defineAsyncComponent,
   nextTick,
 } from "vue";
-import { useMittOn, MITT_TYPES, i18n_t ,UserCtr,ServerTime,GlobalAccessConfig} from "src/core/";
+import { useMittOn, MITT_TYPES, i18n_t, UserCtr, ServerTime, GlobalAccessConfig } from "src/core/";
 import { FooterWapper } from "src/components/footer/index.js";
 import { MenuWapper } from "src/components/menu";
 import activityIcon from "project_path/src/components/common/activity-icon.vue"; // 设置
@@ -212,7 +212,11 @@ const mitt_list = [
       }, 1000)
     }
   }).off,
-
+  // 监听当前国际化语言
+  useMittOn(MITT_TYPES.EMIT_LANG_CHANGE, () => {
+    UserCtr.fetch_actimg()
+    UserCtr.set_e_sports_domain_img()
+  }).off
 ]
 // 监听搜索弹框是否展示
 
@@ -224,16 +228,21 @@ onUnmounted(() => {
   unsubscribe();
   mitt_list.map(i => i())
 });
+
 //初始化菜单
 BaseData.init()
 //服务器时间
 ServerTime.get_server_time()
 // 客户端-获取紧急开关配置
 GlobalAccessConfig.init()
-//获取资源配置(商户后台配置的图片、跳转链接)  延迟触发以优化首屏加载速度
-UserCtr.fetch_resourcesimg()
-    // 电竞图片域名 获取
-UserCtr.set_e_sports_domain_img()
+
+
+if (UserCtr.get_user_token()) {
+  //获取资源配置(商户后台配置的图片、跳转链接)  延迟触发以优化首屏加载速度
+  UserCtr.fetch_resourcesimg()
+  // 电竞图片域名 获取
+  UserCtr.set_e_sports_domain_img()
+}
 </script>
 <style lang="scss" scoped>
 .select-mask {

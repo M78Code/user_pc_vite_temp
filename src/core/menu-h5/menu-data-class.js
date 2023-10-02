@@ -27,10 +27,6 @@ class MenuData {
     this.update = lodash.debounce(() => {
       that.update_time.value = Date.now();
     }, 16);
-
-
-
-
     this.menu_type = ref(0); //一级菜单 menu_type 很常用所以设定为ref
     //所有的菜单数据
     this.menu_list = SessionStorage.get("menu_list", []);
@@ -38,7 +34,6 @@ class MenuData {
     this.menu_lv3 = []; //3级菜单列表
     this.menu_lv4 = []; //4级菜单列表
     this.pop_list = []; //pop级菜单列表
-
     //================主列表用的  开始==================
     //当前的菜单
     this.current_menu = {};
@@ -65,7 +60,6 @@ class MenuData {
     //================主列表用的  结束==================
     //热门的
     this.hot_tab_menu = {};
-
     // 页脚菜单
     this.footer_sub_menu_id = ""; //页脚子菜单id
     this.footer_sub_changing = false //页脚子菜单变化 
@@ -484,7 +478,7 @@ class MenuData {
    */
   is_virtual_sport() {
     return (
-      this.current_lv_1_menu?.mi == 8 ||
+      this.get_menu_type() == 8 ||
       (this.match_list_api_config || {}).sports == "vr"
     );
   }
@@ -500,7 +494,50 @@ class MenuData {
     }
     return false;
   }
-
+  // "1": "滚球",  "2": "今日", "3": "早盘",  "4": "冠军","5": "即将开赛", "6": "串关","7": "电竞",
+  // "8": "VR",// "28": "赛果", "30": "竞足",//
+  /**
+   * 是否选中了早盘
+  */
+  is_zaopan() {
+    return this.get_menu_type() == 3
+  }
+  /**
+   * 是否选中了今日
+  */
+  is_today() {
+    return this.get_menu_type() == 2
+  }
+  /**
+   * 是否选中了滚球
+  */
+  is_scroll_ball() {
+    return this.get_menu_type() == 1
+  }
+  /**
+   * 是否选中了冠军
+  */
+  is_kemp() {
+    return this.get_menu_type() == 4
+  }
+  /**
+   * 是否选中了电竞
+  */
+  is_export() {
+    return this.get_menu_type() == 7
+  }
+  /**
+   * 是否选中了串关
+  */
+  is_mix() {
+    return this.get_menu_type() == 6
+  }
+  /**
+   * 是否选中了竞足
+  */
+  is_jinzu() {
+    return this.get_menu_type() == 30
+  }
   // 电竞菜单csid
   menu_csid(mi) {
     if (mi) {
