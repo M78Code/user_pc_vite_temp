@@ -126,7 +126,7 @@
               <label class="sport-name">[{{order.sportName}}]</label>{{match_type(order.matchType,lang_code)}}{{order.playName}}
               <template v-if="is_display_score()">
                 <!--基本分-->
-                {{order.scoreBenchmark | socre_format}}
+                {{ socre_format(order.scoreBenchmark )}}
               </template>
               <template v-if="!['1','2','4','8','16'].includes(ac_code)">
                 <!--盘口名称-->

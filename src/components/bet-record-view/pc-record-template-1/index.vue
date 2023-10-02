@@ -2,49 +2,57 @@
  * @Description: 投注记录菜单 未结算 已结算 预约
 -->
 <template>
-  <!--投注记录内容-->
-  <div class="bet-record-container" data-container="bet-record-container">
-    <!--投注记录卡片-->
-    <q-card flat class="bet-record-card full-width">
-      <template v-for="(item, index) in ref_data.record_data" :key="index">
-        <!--单关start (0:未结算,1:已结算,2:注单取消,3:确认中,4:投注失败)-->
-        <div class="border-shq-card-actionsadow">
-          <!--卡片标题-->
-          <q-card-actions :class="{ 'bet-separator': !item.is_expand }" :key="'actions-' + index"
-            @click="change_handle(item)">
-            <!--单关还是串关-->
-            <div class="bet-record-title">{{ item.seriesValue }}</div>
-            <div class="bet-record-title">
-              <!--输赢结算状态2是走水，3-输，4-赢，5-半赢，6-半输，7赛事取消，8赛事延期 -->
-              <!--订单状态(0:未结算,1:已结算,2:注单取消,3:确认中,4:投注失败)-->
-              <span :class="order_class(item.orderStatus)">{{ order_status(item.orderStatus) }}</span>
-            </div>
-          </q-card-actions>
-          <!--结算内容-->
-          <template v-if="item.is_expand">
-            <!-- 0:未结算 1:已结算 2: 预约 -->
-            <template v-if="[0, 1].includes(ref_data.selected)">
-              <div v-for="(order, order_index) in item.orderVOS" :key="'bet-item-' + index + '-' + order_index"
-                class="bet-item  relative-position" :class="{ 'cursor-pointer': show_arrow(item, order) }"
-                @click="go_match(item, order)">
-                <!--卡片内容-->
-                <q-card-section>
-                  <!--投注记录中投注项 selected是否被选择 appoint_order_status预约状态 order_status订单状态pre_bet_amount提前结算金额-->
-                  <bet-record-item :selected="ref_data.selected" :appoint_order_status="ref_data.appoint_order_status" :item="item"
-                    :index="index" :order="order"></bet-record-item>
-                </q-card-section>
+  <!-- 投注记录 -->
+  <v-scroll-area ref="ref_bet_scroll_area_history" position="bet_history" :observer_area="3" :observer_middle="true">
+    <!-- 滚动：头部 --------------------------------->
+    <template v-slot:header>
+      <div class="left-bg-box"></div>
+      <bet-record-header />
+    </template>
+    <!-- 滚动：内容 --------------------------------->
+    <!--投注记录内容-->
+    <div class="bet-record-container" data-container="bet-record-container">
+      <!--投注记录卡片-->
+      <q-card flat class="bet-record-card full-width">
+        <template v-for="(item, index) in ref_data.record_data" :key="index">
+          <!--单关start (0:未结算,1:已结算,2:注单取消,3:确认中,4:投注失败)-->
+          <div class="border-shq-card-actionsadow">
+            <!--卡片标题-->
+            <q-card-actions :class="{ 'bet-separator': !item.is_expand }" :key="'actions-' + index"
+              @click="change_handle(item)">
+              <!--单关还是串关-->
+              <div class="bet-record-title">{{ item.seriesValue }}</div>
+              <div class="bet-record-title">
+                <!--输赢结算状态2是走水，3-输，4-赢，5-半赢，6-半输，7赛事取消，8赛事延期 -->
+                <!--订单状态(0:未结算,1:已结算,2:注单取消,3:确认中,4:投注失败)-->
+                <span :class="order_class(item.orderStatus)">{{ order_status(item.orderStatus) }}</span>
               </div>
+            </q-card-actions>
+            <!--结算内容-->
+            <template v-if="item.is_expand">
+              <!-- 0:未结算 1:已结算 2: 预约 -->
+              <template v-if="[0, 1].includes(BetRecord.selected)">
+                <div v-for="(order, order_index) in item.orderVOS" :key="'bet-item-' + index + '-' + order_index"
+                  class="bet-item  relative-position" :class="{ 'cursor-pointer': show_arrow(item, order) }"
+                  @click="go_match(item, order)">
+                  <!--卡片内容-->
+                  <q-card-section>
+                    <!--投注记录中投注项 selected是否被选择 appoint_order_status预约状态 order_status订单状态pre_bet_amount提前结算金额-->
+                    <bet-record-item :item="item" :index="index" :order="order"></bet-record-item>
+                  </q-card-section>
+                </div>
+              </template>
+
+
             </template>
-
-
-          </template>
-          <q-card-section class="bet-item-separator"
-            :class="{ 'bet-item-separator-last': (index == (ref_data.record_data.length - 1)) }"
-            :key="index"></q-card-section>
-        </div>
-      </template>
-    </q-card>
-  </div>
+            <q-card-section class="bet-item-separator"
+              :class="{ 'bet-item-separator-last': (index == (ref_data.record_data.length - 1)) }"
+              :key="index"></q-card-section>
+          </div>
+        </template>
+      </q-card>
+    </div>
+  </v-scroll-area>
 </template>
 
 <script setup>
@@ -53,9 +61,13 @@ import { onMounted, reactive } from "vue";
 import BetRecordItem from "./bet-record-item.vue";
 // import BetBookItem from "./bet-book-item.vue";
 // import BetRecordResult from "./bet-record-result.vue";
+// // 通屏垂直滚动
+import vScrollArea from "./v-scroll-area.vue";
+import BetRecordHeader from './bet-record-header.vue'
 
 import { api_betting } from "src/api/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js"
+import BetRecord from "src/core/bet-record/bet-record.js"
 import lodash_ from "lodash"
 
 onMounted(() => {
@@ -68,8 +80,8 @@ const ref_data = reactive({
   // 0:未结算 1:已结算 2: 预约
   selected: 1,
   load_data_state: 'loading',
- // 预约订单状态当appoint_status为投注预约时取值为 0: 进行中 2: 已失效
- appoint_order_status: 0,
+  // 预约订单状态当appoint_status为投注预约时取值为 0: 进行中 2: 已失效
+  appoint_order_status: 0,
   get_cashout_num: 0,
   is_more_show: false,
   total_page: 20,
@@ -89,7 +101,7 @@ const get_record_list = (cur_page = 1) => {
   let params = {
     page: cur_page,
     size: ref_data.page_size,
-    orderStatus: ref_data.selected,
+    orderStatus: BetRecord.selected,
     timeType: 5  // 一个账务日
     // beginTime: this.begin_time,
     // endTime: this.end_time
@@ -98,7 +110,7 @@ const get_record_list = (cur_page = 1) => {
   ref_data.load_data_state = "loading";
 
   api_betting.post_getOrderList(params).then(res => {
-    
+
     let code = lodash_.get(res, 'code')
     let data = lodash_.get(res, 'data')
     if (code == 200) {
@@ -146,7 +158,7 @@ const get_record_list = (cur_page = 1) => {
           ref_data.total_page = parseInt(record_data.total / ref_data.page_size);
           ref_data.total_page = ((record_data.total % ref_data.page_size) == 0) ? ref_data.total_page : (ref_data.total_page + 1);
         }
-       
+
         if (!records) {
           // 投注记录不存在设置加载状态为empty
           ref_data.load_data_state = "empty";
@@ -163,7 +175,7 @@ const get_record_list = (cur_page = 1) => {
         })
         // 如果是已结算
         // 提前结算开关打开时订阅提前结算注单
-        if (ref_data.selected == 0 && this.vx_get_user.settleSwitch) {
+        if (BetRecord.selected == 0 && UserCtr.settleSwitch) {
           // 订阅C21
           this.SCMD_C21();
         }
@@ -180,13 +192,13 @@ const get_record_list = (cur_page = 1) => {
   }).catch(err => { console.error(err) });
 }
 
-const change_handle = ()=>{}
-const order_status = ()=>{}
-const show_arrow = ()=>{}
+const change_handle = () => { }
+const order_status = () => { }
+const show_arrow = () => { }
 
-const go_match = () =>{}
+const go_match = () => { }
 
-const order_class = () =>{}
+const order_class = () => { }
 </script>
 <style lang="scss" scoped>
 /**投注记录内容样式*/
@@ -269,5 +281,8 @@ const order_class = () =>{}
       width: 100px !important;
     }
   }
+}
+.left-bg-box{
+  height: 40px;
 }
 </style>
