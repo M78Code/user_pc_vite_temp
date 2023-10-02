@@ -201,7 +201,6 @@ export default class MatchDetailCtr {
   }
 
   set_score_button(val){
-    debugger
     const {mid,tid,sportId,media_type} = val
     this.params = {
       mid,
