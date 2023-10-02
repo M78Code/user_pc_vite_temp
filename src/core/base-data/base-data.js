@@ -152,9 +152,6 @@ class BaseData {
     // 获取 菜单数量统计
     this.init_mew_menu_list();
 
-    // 定时请求菜单接口
-    this.set_menu_init_time(1500);
-
     this.reset_menu_init_time = setTimeout(() => {
       this.clear_menu_init_time();
       // 5分钟一次
