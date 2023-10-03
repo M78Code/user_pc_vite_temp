@@ -696,10 +696,10 @@ class MenuData {
           ) {
             this.set_current_lv3_menu(
               this.current_lv_3_menu,
-              this.current_lv_3_menu_i
+              this.current_lv_3_menu_i, 'init'
             );
           } else {
-            this.set_current_lv3_menu(this.menu_lv3[0], 0);
+            this.set_current_lv3_menu(this.menu_lv3[0], 0, 'init');
           }
         }
       } catch (error) {
@@ -715,10 +715,10 @@ class MenuData {
       if (type == "init" && this.menu_lv3.length && this.current_lv_3_menu) {
         this.set_current_lv3_menu(
           this.current_lv_3_menu,
-          this.current_lv_3_menu_i
+          this.current_lv_3_menu_i, type
         );
       } else {
-        this.set_current_lv3_menu(this.menu_lv3[0], 0);
+        this.set_current_lv3_menu(this.menu_lv3[0], 0, type);
       }
     } else {
       //  设置三级日期 菜单
@@ -874,8 +874,11 @@ class MenuData {
     } else {
       this.set_current_lv4_menu();
     }
-    /*保持日期的选中 例如选中了 9.24号 下一次切换二级菜单如果还有9.24号就选中 9.24号 */
-    if (this.current_lv_3_menu && this.menu_lv3?.length) {
+    /**
+     * 在初始化时
+     * 保持日期的选中 例如选中了 9.24号 下一次切换二级菜单如果还有9.24号就选中 9.24号 
+     */
+    if (type == 'init' && this.current_lv_3_menu && this.menu_lv3?.length) {
       const idx = this.menu_lv3.findIndex((item) => this.current_lv_3_menu.menuId == item.menuId);
       if (idx && idx > -1) {
         current_lv_3_menu = this.menu_lv3[idx]
