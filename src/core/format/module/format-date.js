@@ -489,3 +489,27 @@ export const format_time = (seconds) => {
   return `${m}'${s}"`
 }
 
+/**
+	 * @Description 时间戳转中文时间
+	 * @param {number} timestap 时间戳
+	 */
+export const time_conversion = (timestap) => {
+  if (timestap) {
+    // 获取时间年月日
+    let time = new Date(parseInt(timestap));
+    let y = time.getFullYear();
+    let m = String(time.getMonth() + 1).padStart(2, 0);
+    let d = String(time.getDate()).padStart(2, 0);
+    let h = String(time.getHours()).padStart(2, 0);
+    let mm = String(time.getMinutes()).padStart(2, 0);
+    // 根据国际化转换时间
+    return i18n_t("time.time_date_4")
+      .replace("yy", y)
+      .replace("mm", m)
+      .replace("dd", d)
+      .replace("hh", h)
+      .replace("ii", mm);
+  } else {
+    return "";
+  }
+}

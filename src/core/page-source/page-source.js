@@ -36,9 +36,11 @@ const PAGE_SOURCE_POOL_PC =  [
   'match-play-common' ,
   'match-play-fliter' ,
   'match-play-collect' ,
+  'match-play-champion',
   'match-early-common' ,
   'match-early-fliter' ,
   'match-early-collect' ,
+  'match-early-champion',
   "virtual_details"
 ]
 
