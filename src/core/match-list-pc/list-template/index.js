@@ -1,3 +1,14 @@
+/**
+ * 
+ * 这里是所有球种的数据模板统一抛出的地方
+ * 具体的模板配置在 ./module下
+ * 这里注意的是  从菜单中拿的对应球种的 对应玩法的id
+ * 以id来映射 数据模板
+ * 然后  根据数据模板  走 视图模板
+ * 中间的链接点是 pc-menu-match-template.js
+ * 主要是两个字段   data_tpl_id     view_tpl_id   数据模板id    视图模板id
+ */
+
 import  * as template_1_config from "./module/template-1.js"
 import  * as template_2_config from "./module/template-2.js"
 import  * as template_3_config from "./module/template-3.js"
@@ -16,11 +27,15 @@ import  * as template_17_config from "./module/template-17.js"
 import  * as template_19_config from "./module/template-19.js"
 import  * as template_20_config from "./module/template-20.js"
 import  * as template_21_config from "./module/template-21.js"
+import  * as template_22_config from "./module/template-22.js"
 import  * as template_23_config from "./module/template-23.js"
 import  * as template_24_config from "./module/template-24.js"
 import  * as template_25_config from "./module/template-25.js"
 import  * as template_26_config from "./module/template-26.js"
 import  * as template_27_config from "./module/template-27.js"
+import  * as template_28_config from "./module/template-28.js"
+import  * as template_29_config from "./module/template-29.js"
+import  * as template_30_config from "./module/template-30.js"
 
 
 /**
@@ -55,13 +70,15 @@ export const  MATCH_LIST_TEMPLATE_CONFIG={
     template_19_config,
     template_20_config,
     template_21_config,
+    template_22_config,
     template_23_config,
     template_24_config,
     template_25_config,
     template_26_config,
     template_27_config,
-    
-    
+    template_28_config,
+    template_29_config,
+    template_30_config,
 }
 
  
