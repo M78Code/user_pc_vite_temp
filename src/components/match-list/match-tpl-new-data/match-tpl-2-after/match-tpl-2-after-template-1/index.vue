@@ -7,7 +7,6 @@
       <!-- 比赛进程 -->
       <match-process v-if="match" :match="match" source='match_list' show_page="match-list" :rows="2" />
     </div>
-
     <!-- 盘口 -->
     <div class="match-handicap-item-wrap">
       <!-- 主盘 -->

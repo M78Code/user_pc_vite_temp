@@ -5,7 +5,7 @@
 -->
 <template>
   <!-- 比分图表 -->
-  <div class="wrap-score">
+  <div class="wrap-score" :style="page_style">
     <div class="char-round">
       <div class="wrap-chart" :class="{'num_zero': lodash.get(match_info, 'msc.S104.home') == 0 && lodash.get(match_info, 'msc.S104.away') == 0}">
         <div class="chart-round">
@@ -17,7 +17,7 @@
             :thickness="0.3"
             color="blue"
             track-color="orange"
-            :class="{'knob': get_right_zoom, 'knob2': !get_right_zoom}"
+            :class="{'knob': LayOutMain_pc.zoom, 'knob2': !LayOutMain_pc.zoom}"
           />
           <span class="text-blue">{{lodash.get(match_info, 'msc.S104.away')}}</span>
         </div>
@@ -36,7 +36,7 @@
             :thickness="0.3"
             color="blue"
             track-color="orange"
-            :class="{'knob': get_right_zoom, 'knob2': !get_right_zoom}"
+            :class="{'knob': LayOutMain_pc.zoom, 'knob2': !LayOutMain_pc.zoom}"
           />
           <span class="text-blue">{{lodash.get(match_info, 'msc.S8.away')}}</span>
         </div>
@@ -55,7 +55,7 @@
             :thickness="0.3"
             color="blue"
             track-color="orange"
-            :class="{'knob': get_right_zoom, 'knob2': !get_right_zoom}"
+            :class="{'knob': LayOutMain_pc.zoom, 'knob2': !LayOutMain_pc.zoom}"
           />
           <span class="text-blue">{{lodash.get(match_info, 'msc.S105.away')}}</span>
         </div>
@@ -107,17 +107,30 @@
 </template>
 
 <script>
-// import { mapGetters } from "vuex";
+import { LayOutMain_pc } from "src/core/index";
+//引入组件样式
+import { compute_css_variables } from "src/core/css-var/index.js";
 export default {
   props: {
     // 赛事比分数据
     match_info: Object,
+    
   },
   // computed: {
   //   ...mapGetters({
-  //     get_right_zoom: "get_right_zoom",
+  //     LayOutMain_pc.zoom: "LayOutMain_pc.zoom",
   //   }),
   // },
+  data(){
+    return{
+       page_style :compute_css_variables({
+        category: "component",
+        module: "chatroom",
+      }),
+      LayOutMain_pc,
+      value:20
+    }
+  },
   watch: {
     match_info: {
       handler(res, old) {
@@ -206,14 +219,14 @@ export default {
         margin: 0 6px;
         width: 100%;
         height: 6px;
-        background: var(--qq--chat-bg-blue-1);
+        background: var(--q-chatroom-bg-blue-1);
         border-radius: 5px;
         .progress-content {
           position: absolute;
           top: 0;
           left: 0;
           height: 6px;
-          background: var(--qq--chat-bg-orange-1);
+          background: var(--q-chatroom-bg-orange-1);
           border-radius: 5px 0 0 5px;
         }
       }
@@ -224,10 +237,10 @@ export default {
   }
 
   :deep(.text-orange) {
-    color: var(--qq--chat-text-orange-1) !important;
+    color: var(--q-chatroom-text-orange-1) !important;
   }
   :deep(.text-blue) {
-    color: var(--qq--chat-text-blue-1) !important;
+    color: var(--q-chatroom-text-blue-1) !important;
   }
 }
 .char-round {
@@ -253,12 +266,12 @@ export default {
   .num_zero {
     span.text-blue,
     span.text-orange {
-      color: var(--qq--num-zero-text-color) !important;
+      color: var(--q-chatroom-text-color-3) !important;
     }
     :deep() {
       .text-blue,
       .text-orange {
-        color: var(--qq--analysis-bg-color-10) !important;
+        color: var(--q-gb-bg-c-11) !important;
       }
     }
   }
@@ -266,11 +279,11 @@ export default {
     .line_num_zero {
       .text-orange,
       .text-blue {
-        color: var(--qq--num-zero-text-color) !important;
+        color: var(--q-chatroom-text-color-3) !important;
       }
       .bar-progress,
       .progress-content {
-        background: var(--qq--analysis-bg-color-10) !important;
+        background: var(--q-gb-bg-c-11) !important;
       }
     }
   }

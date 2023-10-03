@@ -14,7 +14,7 @@ import {
 import { api_details } from "src/api/index";
 import store from "src/store-redux/index.js";
 import details from "src/core/match-detail/match-detail-pc/match-detail.js";
-import {utils,is_eports_csid } from 'src/core/index.js';
+import {utils,is_eports_csid,LayOutMain_pc } from 'src/core/index.js';
 import { useMittEmit, useMittOn, MITT_TYPES,useMittEmitterGenerator } from "src/core/mitt/";
 import { useRoute, useRouter } from "vue-router";
 import lodash from "lodash";
@@ -55,7 +55,7 @@ export const useMethods = ({ props,emit }) => {
   // 获取指定的玩法id
   const get_top_id = ref(store_state.matchesReducer.topId);
   // 获取指定的玩法id
-  const get_right_zoom = ref(store_state.matchesReducer.zoom);
+  const get_right_zoom = ref(LayOutMain_pc.zoom);
     //  ============================computed===================
     const current_list = computed(() => {
       let list = [];

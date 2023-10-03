@@ -154,7 +154,7 @@ import category from "project_path/src/pages/details/children/category.vue";
 // import chatroom from "project_path/src/pages/details/components/chatroom/chatroom.vue"
 import { useRouter, useRoute } from "vue-router";
 import store from "src/store-redux/index.js";
-// import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
+import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { details_main } from "./details.js";
 import { ref, defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch, provide } from "vue";
 import UserCtr from "src/core/user-config/user-ctr.js";
@@ -350,7 +350,7 @@ export default defineComponent({
           // ms变更时才调用
           if (_old) {
             // 重新调用 赛事详情页面接口(/v1/m/matchDetail/getMatchDetailPB)
-            get_match_details({ mid: matchid.value, cuid: data.get_uid });
+            get_match_details({ mid: matchid.value, cuid: UserCtr.uid });
             get_odds_list()
           }
         }

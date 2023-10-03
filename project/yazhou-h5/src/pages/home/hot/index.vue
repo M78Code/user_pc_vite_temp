@@ -190,6 +190,7 @@ const get_list = (first) => {
 const get_selected_match = () => {
   const parameter = MatchListParams.get_base_params()
   api_analysis.get_match_home_page_handpick(parameter).then((res) => {
+    MatchMeta.get_match_mids(res.data)
     MatchMeta.set_match_default_properties(res.data)
   })
 }

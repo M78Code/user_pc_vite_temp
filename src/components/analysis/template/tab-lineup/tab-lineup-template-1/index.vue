@@ -4,7 +4,7 @@
       <img :src="`/yazhou-pc/image/png/analysis-lineup-${match.csid}.png`" alt="" class="lineup-img" />
       <div class="lineup-bg-wrap" :class="{ 'basketball': match.csid == '2' }">
         <!-- 主队 -->
-        <div class="home" :class="`lineup-${_.get(lineupData, 'home.homeFormation')}`">
+        <div class="home" :class="`lineup-${lodash.get(lineupData, 'home.homeFormation')}`">
           <div class="lineup-item">
             <div class="lineup-col" v-for="(item, index) in first_home_lineup" :key="index">
               <div class="player" v-for="(list, i) in item" :key="i">
@@ -15,7 +15,7 @@
           </div>
         </div>
         <!-- 客队 -->
-        <div class="away" :class="`lineup-${_.get(lineupData, 'away.awayFormation')}`">
+        <div class="away" :class="`lineup-${lodash.get(lineupData, 'away.awayFormation')}`">
           <div class="lineup-item">
             <div class="lineup-col" v-for="(item, index) in first_away_lineup" :key="index">
               <div class="player" v-for="(list, i) in item" :key="i">
@@ -33,7 +33,7 @@
       <div class="lineup-item home">
         <div class="panel">
           <!-- 首发阵容 -->
-          <div class="panel-title">{{ $t('analysis.starting_lineup') }} {{ match.csid == '1' ? _.get(lineupData,
+          <div class="panel-title">{{ $t('analysis.starting_lineup') }} {{ match.csid == '1' ? lodash.get(lineupData,
             'home.homeFormation') : '' }}</div>
           <div class="d-table">
             <div class="d-table-h">
@@ -44,9 +44,9 @@
               <!-- 号码 -->
               <div class="d-table-td">{{ $t('analysis.number') }}</div>
             </div>
-            <div class="d-tabel-tr" v-for="(item, index) in _.get(lineupData, 'home.up')" :key="index">
+            <div class="d-tabel-tr" v-for="(item, index) in lodash.get(lineupData, 'home.up')" :key="index">
               <div class="d-table-td"
-                :class="{ 'multiple-pos': _.get(lineupData, 'home.up').filter(item => item.positionName.length > 4).length }">
+                :class="{ 'multiple-pos': lodash.get(lineupData, 'home.up').filter(item => item.positionName.length > 4).length }">
                 <img v-img="([item.thirdPlayerPicUrl])" alt="" class="logo">
                 <span class="player-name ellipsis">{{ item.positionName }}</span>
               </div>
@@ -61,7 +61,7 @@
         </div>
         <div class="panel">
           <!-- 替补阵容 -->
-          <div class="panel-title">{{ $t('analysis.bench_lineup') }} {{ match.csid == '1' ? _.get(lineupData,
+          <div class="panel-title">{{ $t('analysis.bench_lineup') }} {{ match.csid == '1' ? lodash.get(lineupData,
             'home.homeFormation') : '' }}</div>
           <div class="d-table">
             <div class="d-table-h">
@@ -72,9 +72,9 @@
               <!-- 号码 -->
               <div class="d-table-td">{{ $t('analysis.number') }}</div>
             </div>
-            <div class="d-tabel-tr" v-for="(item, index) in _.get(lineupData, 'home.down')" :key="index">
+            <div class="d-tabel-tr" v-for="(item, index) in lodash.get(lineupData, 'home.down')" :key="index">
               <div class="d-table-td"
-                :class="{ 'multiple-pos': _.get(lineupData, 'home.down').filter(item => item.positionName.length > 4).length }">
+                :class="{ 'multiple-pos': lodash.get(lineupData, 'home.down').filter(item => item.positionName.length > 4).length }">
                 <img v-img="([item.thirdPlayerPicUrl])" alt="" class="logo">
                 <span class="player-name ellipsis">{{ item.positionName }}</span>
               </div>
@@ -95,7 +95,7 @@
         <div class="panel">
           <!-- 首发阵容 -->
           <div class="panel-title">{{ $t('analysis.starting_lineup') }}
-            {{ match.csid == '1' ? _.get(lineupData, 'away.awayFormation') : '' }}</div>
+            {{ match.csid == '1' ? lodash.get(lineupData, 'away.awayFormation') : '' }}</div>
           <div class="d-table">
             <div class="d-table-h">
               <!-- 位置 -->
@@ -105,9 +105,9 @@
               <!-- 号码 -->
               <div class="d-table-td">{{ $t('analysis.number') }}</div>
             </div>
-            <div class="d-tabel-tr" v-for="(item, index) in _.get(lineupData, 'away.up')" :key="index">
+            <div class="d-tabel-tr" v-for="(item, index) in lodash.get(lineupData, 'away.up')" :key="index">
               <div class="d-table-td"
-                :class="{ 'multiple-pos': _.get(lineupData, 'away.up').filter(item => item.positionName.length > 4).length }">
+                :class="{ 'multiple-pos': lodash.get(lineupData, 'away.up').filter(item => item.positionName.length > 4).length }">
                 <img v-img="([item.thirdPlayerPicUrl])" alt="" class="logo">
                 <span class="player-name ellipsis">{{ item.positionName }}</span>
               </div>
@@ -123,7 +123,7 @@
         <div class="panel">
           <!-- 替补阵容 -->
           <div class="panel-title">{{ $t('analysis.bench_lineup') }}
-            {{ match.csid == '1' ? _.get(lineupData, 'away.awayFormation') : '' }}</div>
+            {{ match.csid == '1' ? lodash.get(lineupData, 'away.awayFormation') : '' }}</div>
           <div class="d-table">
             <div class="d-table-h">
               <!-- 位置 -->
@@ -133,9 +133,9 @@
               <!-- 号码 -->
               <div class="d-table-td">{{ $t('analysis.number') }}</div>
             </div>
-            <div class="d-tabel-tr" v-for="(item, index) in _.get(lineupData, 'away.down')" :key="index">
+            <div class="d-tabel-tr" v-for="(item, index) in lodash.get(lineupData, 'away.down')" :key="index">
               <div class="d-table-td"
-                :class="{ 'multiple-pos': _.get(lineupData, 'away.down').filter(item => item.positionName.length > 4).length }">
+                :class="{ 'multiple-pos': lodash.get(lineupData, 'away.down').filter(item => item.positionName.length > 4).length }">
                 <img v-img="([item.thirdPlayerPicUrl])" alt="" class="logo">
                 <span class="player-name ellipsis">{{ item.positionName }}</span>
               </div>
@@ -156,44 +156,45 @@
 
 <script setup>
 
-import { ref } from 'vue';
+import { ref,defineProps, computed } from 'vue';
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
 useRegistPropsHelper(component_symbol, need_register_props)
 import { api_analysis } from 'src/api/index'
+import lodash from 'lodash'
 
 const lineupData = ref({});
 const first_home_lineup = ref([]); //主队首发阵容
 const first_away_lineup = ref([]); //客队首发阵容
-
+const props = defineProps(['match'])
 get_lineup()
 
 /**
 * @description: 阵容数据
 */
-const get_lineup = () => {
-  api_analysis.get_lineupList({ matchInfoId: this.match.mid }).then(({ data }) => {
+function get_lineup() {
+  api_analysis.get_lineupList({ matchInfoId: props.match.mid }).then(({ data }) => {
     if (data.code == 200) {
       let lineupInfo = data.data
       let lineup_formation = {
-        home: _.get(data, 'data.home.homeFormation'),
-        away: _.get(data, 'data.away.awayFormation'),
+        home: lodash.get(data, 'data.home.homeFormation'),
+        away: lodash.get(data, 'data.away.awayFormation'),
       }
-      if (this.match.csid == '2') {
+      if (props.match.csid == '2') {
         lineup_formation.home = '2-2'
         lineup_formation.away = '2-2'
       }
 
-      let home_up = _.get(data, 'data.home.up', [])
-      let away_up = _.get(data, 'data.away.up', [])
+      let home_up = lodash.get(data, 'data.home.up', [])
+      let away_up = lodash.get(data, 'data.away.up', [])
       // 过滤掉教练位置
       home_up = home_up.filter(item => !item.positionEnName.toLowerCase().includes('coach'))
       away_up = away_up.filter(item => !item.positionEnName.toLowerCase().includes('coach'))
 
-      if (_.get(lineupInfo, 'home.up')) {
+      if (lodash.get(lineupInfo, 'home.up')) {
         lineupInfo.home.up = home_up
       }
-      if (_.get(lineupInfo, 'away.up')) {
+      if (lodash.get(lineupInfo, 'away.up')) {
         lineupInfo.away.up = away_up
       }
 
@@ -209,7 +210,7 @@ const get_lineup = () => {
 * @description: 格式化首发阵容
 */
 
-const get_first_lineup = (data, lineup, type) => {
+function get_first_lineup(data, lineup, type) {
   if (!data.length || !lineup) return []
 
   let linup_num = lineup.split("-")
@@ -425,4 +426,5 @@ const get_first_lineup = (data, lineup, type) => {
   .panel-title:before {
     background: var(--qq--analysis-bg-color-13) !important;
   }
-}</style>
+}
+</style>
