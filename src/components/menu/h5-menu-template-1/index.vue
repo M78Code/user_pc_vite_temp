@@ -259,6 +259,7 @@ watch(update_time, (v) => {
  * type [string] click | init
  */
 function set_menu_lv1(item, index, type = "click") {
+  console.log(item, index)
   show_selector_sub.value = false;
   current_menu.value = []; //二级菜单先滞空
   MenuData.set_current_lv1_menu(item, index);
@@ -293,12 +294,9 @@ function set_menu_lv1(item, index, type = "click") {
  */
 const all_sport_count_calc = computed(() => {
   //找到滚球
-  if (MenuData.is_scroll_ball() && update_time.value) {
-    let data_list = menu_list.value.find((item) => lodash.get(item, 'mi') == 1);
-    //滚球下所有是数量总和
-    return MenuData.count_menu(data_list)
-  }
-  return 0;
+  let data_list = menu_list.value.find((item) => item.mi == 1);
+  //滚球下所有是数量总和 updateime是时间作为计算属性变化
+  return MenuData.count_menu(data_list, update_time.value)
 });
 // 切换到电竞时 的菜单 背景图片
 function dj_back_img(item) {
@@ -323,6 +321,7 @@ function select_all_sub_menu_handle() {
  * 二级菜单事件
  */
 async function set_menu_lv2(item, index, type = "click") {
+  console.log(item, index)
   const mi = lodash.get(MenuData.current_lv_2_menu, 'mi')
   if (mi === item.mi) return
   MenuData.set_current_lv2_menu(item, index, type);
@@ -339,6 +338,7 @@ async function set_menu_lv2(item, index, type = "click") {
  * 三级菜单事件
  */
 function set_menu_lv3(item, index, type = "click") {
+  console.log(item.field1)
   //点击当前 就不做什么
   if (
     MenuData.current_lv_3_menu &&
@@ -349,6 +349,7 @@ function set_menu_lv3(item, index, type = "click") {
   date_menu_curr_i.value = index;
   //设置三级菜单
   MenuData.set_current_lv3_menu(item, index, type);
+  MatchMeta.filter_match_by_time(item?.field1)
 }
 /**
  * 四级菜单事件

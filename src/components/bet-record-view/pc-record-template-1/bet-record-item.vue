@@ -184,7 +184,7 @@
       <div class="row">
         <div class="col">
           <!--赔率-->
-          <label class="bet-odds-value"><span>@</span>{{ odds_value }}</label>
+          <label class="bet-odds-value"><span>@</span>{{ order.oddFinally }}</label>
         </div>
         <!--结算是显示投注结果: 输,赢,半输,半赢,比赛异常的各种显示(比赛取消,比赛延期等等)--->
         <div class="col-auto bet-result">

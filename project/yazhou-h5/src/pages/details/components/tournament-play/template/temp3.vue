@@ -119,7 +119,6 @@ export default defineComponent({
     oddsNew,
   },
   setup(props, evnet) {
-    console.error(props.item_data);
     const store_state = store.getState()
     // #TODO vuex
     // computed: {

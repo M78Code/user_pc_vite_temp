@@ -77,7 +77,6 @@ export default defineComponent({
     });
     
     watch(() => MatchDetailCalss.details_data_version.version, (val, old) => {
-      console.error(MatchDetailCalss.details_data_version.version ,'sss');
       current_category_id.value = lodash.get(MatchDetailCalss, "current_category_id", SessionStorage.get("DETAIL_TAB_ID"))
     })
    
@@ -156,7 +155,7 @@ export default defineComponent({
     ])
     // 移除相应监听事件
     onUnmounted(emitters_off)
-    console.error(current_category_id.value);
+    console.error(props.data_list);
     return {
       ...toRefs(data),
       match_id,

@@ -12,12 +12,12 @@
           v-if="!lodash.isEmpty(detail_data)"
           :type="0"
           :csid="detail_data.csid"
-          :url="detail_data.mhlu[0]"
-          :fr="MenuData.get_menu_type() != 3000 ? detail_data.frmhn[0] : detail_data.frmhn"
+          :url="lodash.get(detail_data,'mhlu[0]')"
+          :fr="MenuData.get_menu_type() != 3000 ? lodash.get(detail_data,'frmhn[0]') : detail_data.frmhn"
           :size="44"
         ></team-img>
         <team-img
-          v-if="detail_data.mhlu.length > 1 && MenuData.get_menu_type() != 3000 && !lodash.isEmpty(detail_data)"
+          v-if="lodash.get(detail_data,'mhlu.length') > 1 && MenuData.get_menu_type() != 3000 && !lodash.isEmpty(detail_data)"
           :type="0"
           :csid="detail_data.csid"
           :url="detail_data.mhlu[1]"
@@ -39,12 +39,12 @@
         <team-img
           :type="0"
           :csid="detail_data.csid"
-          :url="detail_data.malu[0]"
-          :fr="MenuData.get_menu_type() != 3000 ? detail_data.frman[0] : detail_data.frman"
+          :url="lodash.get(detail_data,'malu[0]')"
+          :fr="MenuData.get_menu_type() != 3000 ? lodash.get(detail_data,'frman[0]') : detail_data.frman"
           :size="44"
         ></team-img>
         <team-img
-          v-if="detail_data.malu.length > 1 && MenuData.get_menu_type() != 3000"
+          v-if="lodash.get(detail_data,'malu.length') > 1 && MenuData.get_menu_type() != 3000"
           :type="1"
           :csid="detail_data.csid"
           :url="detail_data.malu[1]"
@@ -260,7 +260,7 @@ const props = defineProps({
     default: () => { }
   }
 })
-
+console.error(props.detail_data);
 /** 赛事开始倒计时时间(赛事开始时间-当前时间) */
 const longTime = ref('')
 const show_someone = reactive({

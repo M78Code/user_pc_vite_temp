@@ -200,6 +200,12 @@ const go_match = () => { }
 
 const order_class = () => { }
 </script>
+
+
+<style lang="scss">
+@import "./css/bet_record.scss";
+</style>
+
 <style lang="scss" scoped>
 /**投注记录内容样式*/
 .bet-record-container {
@@ -212,7 +218,6 @@ const order_class = () => { }
 
 /**注记录卡片样式*/
 .bet-record-card {
-
   /*  取消边框     */
   .bet-separator {
     margin-bottom: 1px;
@@ -229,7 +234,6 @@ const order_class = () => { }
       top: 8px;
     }
   }
-
   .q-card__section {
     margin: 0;
     padding: 0;
@@ -237,7 +241,6 @@ const order_class = () => { }
     width: 100%;
     padding: 0px 10px 15px;
     width: 100%;
-
     /**投注项结果*/
     &.bet-item-result {
       margin: 0;
@@ -248,13 +251,11 @@ const order_class = () => { }
     &.bet-item-separator {
       padding: 0;
     }
-
     /**最后一个*/
     &.bet-item-separator-last {
       padding: 0;
     }
   }
-
   /**整体样式*/
   .q-card__actions {
     display: flex;
@@ -273,16 +274,16 @@ const order_class = () => { }
     position: absolute;
     margin-left: 190px;
   }
-
   ::v-deep .empty-wrap {
     margin-top: -200px;
-
     img {
       width: 100px !important;
     }
   }
 }
+
 .left-bg-box{
   height: 40px;
 }
 </style>
+

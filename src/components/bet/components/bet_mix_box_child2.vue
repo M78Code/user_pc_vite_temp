@@ -15,16 +15,20 @@
       <bet-bar @click.native="pack_up"></bet-bar>
       <div class="dele-wrap yb_px12 yb_py10 row" v-if="!BetData.is_bet_success_status" @touchmove.prevent>
         <!-- 左 删除全部 -->
-        <span style="margin-right:auto" @click="pack_up(3)"><img src="image/wwwassets/bw3/svg/close3.svg"
-            class="yb_mr4 img1" />{{ $t('bet.delete_all') }}</span>
+        <span style="margin-right:auto" @click="pack_up(3)">
+          <!-- <img src="image/wwwassets/bw3/svg/close3.svg" class="yb_mr4 img1" /> -->
+          <img src="/public/yazhou-h5/image/bet/close3.svg" class="yb_mr4 img1" />
+          {{ $t('bet.delete_all') }}
+        </span>
         <!-- 右 自动接受跟好赔率 -->
         <span>
           <i class="img2" :class="{ 'img3': BetData.bet_is_accept != 2 }" @click="toggle_accept"></i>
           <span :class="{ 'auto-text': BetData.bet_is_accept == 2 }" class="yb_mx4 err-msg2" style="max-width:2.1rem"
             @click="toggle_accept">{{ $t("ac_rules.auto") }}</span>
-          <img src="image/wwwassets/bw3/svg/rules2.svg" @click="change_accept" class="img1"
+          <!-- <img src="image/wwwassets/bw3/svg/rules2.svg" @click="change_accept" class="img1" -->
+          <img src="/public/yazhou-h5/image/bet/rules2.svg" @click="change_accept" class="img1"
             v-if="UserCtr.theme.includes('day')" />
-          <img src="image/wwwassets/bw3/svg/rules3.svg" @click="change_accept" class="img1" v-else />
+          <img src="/public/yazhou-h5/image/bet/rules3.svg" @click="change_accept" class="img1" v-else />
         </span>
       </div>
 
@@ -303,7 +307,7 @@ const is_bet_check_rc = () => {
 // 投注事件
 const pack_up = (val) => {
   // TODO: 临时调试用
-  useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX,false);
+  useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX, false);
 }
 
 const submit_order = (type) => {
@@ -344,7 +348,7 @@ const calc_class = computed(() => {
   return flag
 })
 // 投注金额赋值
-const change_money_handle = (val)=>{
+const change_money_handle = (val) => {
   bet_amount.value = format_money2(val)
 }
 onMounted(() => {

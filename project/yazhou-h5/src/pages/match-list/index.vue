@@ -3,20 +3,20 @@
 -->
 <template>
   <div class="match-main no-padding-bottom" :style="page_style" ref="match_main">
+    <div style="display: none;">{{ MatchDataBaseH5.data_version.version }}</div>
     <!--赛事列表-->
     <div class="match-list-container"
       ref="match_list_container" 
       @scroll="wrapper_scroll_handler" :class="{
-      zaopan: [3, 11, 28, 3000].includes(+MenuData.menu_type) && invok_source != 'home_hot_page_schedule',
-      guanjun: [100].includes(+MenuData.menu_type),
-      level_four_menu: MenuData.menu_type == 28 && [1001, 1002, 1004, 1011, 1010, 1009].includes(get_curr_sub_menu_type),
+      zaopan: [3, 11, 28, 3000].includes(+MenuData.menu_type.value) && invok_source !== 'home_hot_page_schedule',
+      guanjun: [100].includes(+MenuData.menu_type.value),
+      level_four_menu: MenuData.menu_type.value == 28 && [1001, 1002, 1004, 1011, 1010, 1009].includes(get_curr_sub_menu_type),
       detail_match_list: ['detail_match_list', 'home_hot_page_schedule', ].includes(invok_source),
-      jingzu: MenuData.menu_type == 30,
-      jinri: MenuData.menu_type == 2,
-      esport: 3000 == MenuData.menu_type,
+      jingzu: MenuData.menu_type.value == 30,
+      esport: 3000 == MenuData.menu_type.value,
     }" >
       <!--缝隙 不通层级 遮罩 存在渲染偏差， 边界 双线 或者 侵蚀问题-->
-      <div class="gap" v-if="on_match && MenuData.menu_type != 3000" :class="{ zaopan: [4, 11, 28, 3000].includes(+MenuData.menu_type) }" />
+      <div class="gap" v-if="on_match && MenuData.menu_type.value != 3000" :class="{ zaopan: [4, 11, 28, 3000].includes(+MenuData.menu_type.value) }" />
       <!-- 跳转到其他场馆的banner图 和猜你喜欢-->
       <tiaozhuan-panel v-if="calc_show"></tiaozhuan-panel>
       <!-- 列表骨架屏 -->
@@ -25,7 +25,7 @@
       <match-list
         ref="match_list" 
         :matchCtr="matchCtr" 
-        :menu_type="MenuData.menu_type"
+        :menu_type="MenuData.menu_type.value"
         :data_get_empty="match_is_empty" 
         :source="invok_source ? invok_source : 'match_main'"
         :window_scrolly="window_scrolly" 
@@ -162,8 +162,8 @@ watch(() => match_is_empty.value, () => {
 });
 
 // 早盘时，并且是 足球时，执行下边操作
-watch(() => MenuData.menu_type, () => {
-  if (MenuData.menu_type == 4 && val == "40303") {
+watch(() => MenuData.menu_type.value, () => {
+  if (MenuData.menu_type.value == 4 && val == "40303") {
     clearTimeout(subscription_timer1.value);
     subscription_timer1.value = setTimeout(() => {
       // 订阅新赛事列表
@@ -203,7 +203,7 @@ watch(() => props.wrapper_scroll_top, () => {
 // })
 
 // 菜单类型变化时，如果是收藏则以动画方式显示或隐藏页面
-watch(() => MenuData.menu_type, () => {
+watch(() => MenuData.menu_type.value, () => {
   // 切换一级菜单时记录最新时间戳
   enter_time.value = Date.now();
   // 切换一级菜单时 goto_detail_matchid置为空
@@ -227,7 +227,7 @@ watch(() => MenuData.footer_sub_menu_id, () => {
 // 新手版标准版切换
 watch(() => newer_standard_edition.value, () => {
   //虚拟体育
-  if (MenuData.menu_type == 900) {
+  if (MenuData.menu_type.value == 900) {
     return;
   }
   // 如果是简版
@@ -336,7 +336,7 @@ watch( () => matchCtr.value, (match_list) => {
 
 const calc_show = computed(() => {
   return (
-    MenuData.menu_type == 1 &&
+    MenuData.menu_type.value == 1 &&
     !show_favorite_list &&
     !match_is_empty.value &&
     route.name != "home" &&
@@ -416,7 +416,7 @@ const match_detail_m_list_init = () => {
   // if(['detail_match_list'].includes(props.invok_source)){
   //   // 列表页全局获取 请求参数
   //   MatchPage.get_match_data_list();
-  // } else if([1,3,30,100].includes(MenuData.menu_type)){
+  // } else if([1,3,30,100].includes(MenuData.menu_type.value)){
   //   MatchPage.get_match_data_list()
   // }
   // MatchPage.get_match_data_list();
