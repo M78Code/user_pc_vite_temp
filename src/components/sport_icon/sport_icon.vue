@@ -4,12 +4,14 @@
  * @Description: 球种对应的 icon
 -->
 <template>
-  <span v-if="icon_styles != -1" class="q-icon icon c-icon sport-img" :class="{img36:size == '18px' && !is_esports,'sport-img-new': isVideoIcon}" :style="`width:${size};height:${size};background-position:0 -${icon_styles}px`">
+  <span v-if="icon_styles != -1" class="q-icon icon c-icon sport-img"
+  :style="[sprite_img['pc-left-menu-bg-image']({ position: `item_${icon_styles}`}),`width:${size};height:${size}`]"
+  :class="{img36:size == '18px' && !is_esports,'sport-img-new': isVideoIcon}" >
   </span>
 </template>
 
 <script>
-
+import sprite_img from "src/core/server-img/sprite-img/index.js"
 // 球种雪碧图序号
 const sport_number = {
   0:0,
@@ -129,7 +131,11 @@ const union_match_number = {
 
 export default {
   name: "SportIcon",
-
+  data() {
+    return {
+      sprite_img,
+    };
+  },
   props: {
     // 球种 ID
     sport_id: [Number, String],
@@ -176,8 +182,7 @@ export default {
           return 57
         }
       }
-      let size = this.size.replace('px','') / 48
-      return parseInt(number * 68 * size * 100) / 100
+      return number
     }
   },
 };
