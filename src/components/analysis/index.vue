@@ -2,7 +2,15 @@
  * @Author: 'jacques' 'jacques@itcom888.com'
  * @Date: 2023-10-02 16:12:29
  * @LastEditors: 'jacques' 'jacques@itcom888.com'
- * @LastEditTime: 2023-10-03 15:51:30
+ * @LastEditTime: 2023-10-03 16:47:52
+ * @FilePath: \user-pc-vite\src\components\analysis\index.vue
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+-->
+<!--
+ * @Author: 'jacques' 'jacques@itcom888.com'
+ * @Date: 2023-10-02 16:12:29
+ * @LastEditors: 'jacques' 'jacques@itcom888.com'
+ * @LastEditTime: 2023-10-03 16:43:17
  * @FilePath: \user-pc-vite\src\components\analysis\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -60,7 +68,7 @@
       <!-- 阵容 -->
       <tab-lineup :match="matchDetail" v-if="(hasNews ? activeTab - 1 : activeTab) == 2"/>
       <!-- 情报 -->
-      <!-- <tab-information :match="matchDetail" v-if="(hasNews ? activeTab - 1 : activeTab) == 3"/> -->
+      <tab-information :match="matchDetail" v-if="(hasNews ? activeTab - 1 : activeTab) == 3"/>
       <!-- 赔率 -->
       <!-- <tab-odds :match="matchDetail" v-if="(hasNews ? activeTab - 1 : activeTab) == 4"/> -->
     </q-scroll-area>
@@ -77,7 +85,7 @@ import { TabResultsFullVersionWapper as tabResults} from 'src/components/analysi
 
 import { TableDataFullVersionWapper as tabData} from 'src/components/analysis/template/tab-data/index.js'
 import { TabLineupFullVersionWapper as tabLineup} from 'src/components/analysis/template/tab-lineup/index.js'
-// import { TabInformationFullVersionWapper as tabInformation} from 'src/components/analysis/template/tab-infomation/index.js'
+import { TabInformationFullVersionWapper as tabInformation} from 'src/components/analysis/template/tab-information/index.js'
 // import { TabOddsFullVersionWapper as tabOdds} from 'src/components/analysis/template/tab-odds/index.js'
 import { TabNewsFullVersionWapper as news} from 'src/components/analysis/template/tab-news/index.js'
 import { MatchProcessFullVersionWapper as matchDate } from "src/components/match-process/index.js";
@@ -96,7 +104,7 @@ export default {
     tabResults,
     tabData,
     tabLineup,
-    //tabInformation,
+    tabInformation,
     //tabOdds,
     matchDate,
     news

@@ -2,48 +2,51 @@
   <div class="information">
     <div class="tab">
       <!-- 主队 -->
-      <span :class="{'active':tabIndex==1}" @click="tabClick(1)">{{match.mhn}}</span>
+      <span :class="{ 'active': tabIndex == 1 }" @click="tabClick(1)">{{ match.mhn }}</span>
       <!-- 客队 -->
-      <span :class="{'active':tabIndex==2}" @click="tabClick(2)">{{match.man}}</span>
+      <span :class="{ 'active': tabIndex == 2 }" @click="tabClick(2)">{{ match.man }}</span>
     </div>
 
     <div class="panel">
       <!-- 有利情报 -->
-      <div class="panel-title">{{ $t('analysis.Favorable_information')}}</div>
-      <div class="item" v-for="(item,index) in lineupData[0]" :key="index">{{item.content}}</div>
+      <div class="panel-title">{{ $t('analysis.Favorable_information') }}</div>
+      <div class="item" v-for="(item, index) in lineupData[0]" :key="index">{{ item.content }}</div>
     </div>
 
     <div class="panel">
       <!-- 不利情报 -->
-      <div class="panel-title FF7373">{{ $t('analysis.Unfavorable_information')}}</div>
-      <div class="item" v-for="(item,index) in lineupData[1]" :key="index">{{item.content}}</div>
+      <div class="panel-title FF7373">{{ $t('analysis.Unfavorable_information') }}</div>
+      <div class="item" v-for="(item, index) in lineupData[1]" :key="index">{{ item.content }}</div>
     </div>
 
     <div class="panel">
       <!-- 中立情报 -->
-      <div class="panel-title">{{ $t('analysis.Neutral_Information')}}</div>
-      <div class="item" v-for="(item,index) in lineupData[2]" :key="index">{{item.content}}</div>
+      <div class="panel-title">{{ $t('analysis.Neutral_Information') }}</div>
+      <div class="item" v-for="(item, index) in lineupData[2]" :key="index">{{ item.content }}</div>
     </div>
   </div>
 </template>
 
-<script>
+<script setup>
 // import analysisData  from 'src/public/mixins/analysis/analysis'
 // mixins: [analysisData],
 
-import { ref, onUnmounted } from 'vue';
+import { ref, onUnmounted,defineProps } from 'vue';
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
+import { api_analysis } from 'src/api/index'
 useRegistPropsHelper(component_symbol, need_register_props)
 
+const props = defineProps(['match'])
 const tabIndex = ref(1);
-const params = ref({}); // 接口请求参数
+const params = ref({}); // 接口请求参数 ??接口参数也要ref响应式?? 
+//api_analysis.get_match_analysise_data(params) 发起请求携带一个响应式参数???
 const lineupData = ref([]); // 情报数据
 
-params.value = {parentMenuId: 4, sonMenuId: 1, standardMatchId: this.match.mid}
+params.value = { parentMenuId: 4, sonMenuId: 1, standardMatchId: props.match.mid }
 get_data()
 
-const tabClick = (index) => {
+function tabClick(index) {
   tabIndex.value = index
   params.value.sonMenuId = index
   get_data()
@@ -53,26 +56,27 @@ const tabClick = (index) => {
 * @description: 情报数据
 */
 
-const get_data = () => {
-  this.get_analysiseData(this.params, (res)=>{
+function get_data() {
+  api_analysis.get_match_analysise_data(params.value).then((res) => {
+    res = res.data
     let data = res.sThirdMatchInformationDTOList
-    let lineupInfo = [[],[],[]] 
+    let lineupInfo = [[], [], []]
     // 0主队中立,1客队中立，2 主队有利，3客队有利,  4主队不利,   5客队不利,  6无用
-    data.map(item =>{
-      if(this.tabIndex == 1){//主队
-        if(item.benefit == 2){
+    data.map(item => {
+      if (tabIndex.value == 1) {//主队
+        if (item.benefit == 2) {
           lineupInfo[0].push(item)
-        } else if(item.benefit == 4){
+        } else if (item.benefit == 4) {
           lineupInfo[1].push(item)
-        } else if(item.benefit == 0){
+        } else if (item.benefit == 0) {
           lineupInfo[2].push(item)
         }
       } else {
-        if(item.benefit == 3){
+        if (item.benefit == 3) {
           lineupInfo[0].push(item)
-        } else if(item.benefit == 5){
+        } else if (item.benefit == 5) {
           lineupInfo[1].push(item)
-        } else if(item.benefit == 1){
+        } else if (item.benefit == 1) {
           lineupInfo[2].push(item)
         }
       }
@@ -97,6 +101,7 @@ onUnmounted(() => {
     color: var(--qq--analysis-text-color-5);
     margin-bottom: 10px;
     border-radius: 8px;
+
     span {
       width: 150px;
       height: 28px;
@@ -105,25 +110,31 @@ onUnmounted(() => {
       text-align: center;
       border: 1px solid var(--qq--analysis-bd-color-2);
       overflow: hidden;
+
       &:first-child {
         border-radius: 8px 0 0 8px;
         border-right: 0 none;
       }
+
       &:last-child {
         border-radius: 0 8px 8px 0;
         border-left: 0 none;
       }
+
       &.active {
         background-image: var(--qq--analysis-bg-gradient-2);
         color: var(--qq--analysis-text-color-13);
       }
     }
   }
+
   .panel {
     margin-bottom: 20px;
+
     .panel-title.FF7373:before {
       background: var(--qq--analysis-text-color-6);
     }
+
     .item {
       padding: 14px 30px;
       border: 1px solid var(--qq--analysis-bd-color-2);
@@ -131,5 +142,4 @@ onUnmounted(() => {
       border-radius: 0 0 8px 8px;
     }
   }
-}
-</style>
+}</style>
