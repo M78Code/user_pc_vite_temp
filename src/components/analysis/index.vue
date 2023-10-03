@@ -58,7 +58,7 @@
       <!-- 数据 -->
       <tab-data :match="matchDetail" v-if="(hasNews ? activeTab - 1 : activeTab) == 1"/>
       <!-- 阵容 -->
-      <!-- <tab-lineup :match="matchDetail" v-if="(hasNews ? activeTab - 1 : activeTab) == 2"/> -->
+      <tab-lineup :match="matchDetail" v-if="(hasNews ? activeTab - 1 : activeTab) == 2"/>
       <!-- 情报 -->
       <!-- <tab-information :match="matchDetail" v-if="(hasNews ? activeTab - 1 : activeTab) == 3"/> -->
       <!-- 赔率 -->
@@ -76,11 +76,11 @@ import { useRoute } from 'vue-router';
 import { TabResultsFullVersionWapper as tabResults} from 'src/components/analysis/template/tab-results/index.js'
 
 import { TableDataFullVersionWapper as tabData} from 'src/components/analysis/template/tab-data/index.js'
-// import { TabLineupFullVersionWapper as tabLineup} from 'src/components/analysis/template/tab-lineup/index.js'
+import { TabLineupFullVersionWapper as tabLineup} from 'src/components/analysis/template/tab-lineup/index.js'
 // import { TabInformationFullVersionWapper as tabInformation} from 'src/components/analysis/template/tab-infomation/index.js'
 // import { TabOddsFullVersionWapper as tabOdds} from 'src/components/analysis/template/tab-odds/index.js'
 import { TabNewsFullVersionWapper as news} from 'src/components/analysis/template/tab-news/index.js'
-// import { MatchProcessFullVersionWapper as matchDate } from "src/components/match-process/index.js";
+import { MatchProcessFullVersionWapper as matchDate } from "src/components/match-process/index.js";
 import {api_analysis} from 'src/api/index.js' 
 import { compute_css_variables } from "src/core/css-var/index.js"
 import { formatTime } from 'src/core/format/index.js'
@@ -98,7 +98,7 @@ export default {
     tabLineup,
     //tabInformation,
     //tabOdds,
-    // matchDate,
+    matchDate,
     news
   },
   setup() {
