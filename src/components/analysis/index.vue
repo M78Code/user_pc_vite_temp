@@ -140,9 +140,9 @@ export default {
             }
           } else {
             // 获取主客队得分数据
-            let home = parseInt(lodash.get(match, `msc_obj[${k}][1]`)),
-              away = parseInt(lodash.get(match, `msc_obj[${k}][2]`));
-            if (sportDict.value.line.includes(k)) {
+            let home = parseInt(lodash.get(match, `msc_obj[${k}].home`)),
+                away = parseInt(lodash.get(match, `msc_obj[${k}].away`));
+            if(sportDict.value.line.includes(k)){
               //'S108'三分球得分，'S107'两分球得分
               if (k == 'S107') {
                 home *= 2
@@ -183,6 +183,8 @@ export default {
       match.msc = obj
       return match
     })
+
+    console.log('matchDetail', matchDetail);
 
     return {
       tab,
@@ -240,7 +242,7 @@ export default {
 
 <style lang="scss" scoped>
 .analysis-page {
-  background: var(--qq--analysis-bg-color-1);
+  background: var(--q-analysis-color-16);
   flex: 1;
   // padding: 0 20px 20px;
   display: flex;

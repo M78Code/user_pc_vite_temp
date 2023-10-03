@@ -52,7 +52,7 @@
           @click="set_unfold_multi_column(true)"
           v-if="
             menu_data.is_multi_column &&
-            get_global_switch.multi_column &&
+            GlobalSwitchClass.global_switch.multi_column &&
             !get_unfold_multi_column &&
             ['search', 'home'].includes($route.name) &&
             !vx_show_filter_popup
@@ -170,7 +170,7 @@ import { computed, onMounted, onUnmounted, ref, watch } from "vue";
 import MenuData from "src/core/menu-pc/menu-data-class.js";
 import { IconWapper } from "src/components/icon";
 import refresh from "src/components/refresh/refresh.vue";
-import { i18n_t, get_match_status,UserCtr } from "src/core/index";
+import { i18n_t, get_match_status,UserCtr ,GlobalSwitchClass} from "src/core/index";
 import { compute_css } from "src/core/server-img/index.js";
 import { debounce_throttle_cancel } from "src/core/utils/module/other.js";
 import lodash from "lodash";
@@ -281,8 +281,6 @@ const refreshFunc = lodash.throttle(
 //   //   get_unfold_multi_column:"get_unfold_multi_column",
 //   //   // 是否显示联赛筛选框
 //   //   vx_show_filter_popup: "get_show_filter_popup",
-//   //   //全局开关
-//   //   get_global_switch:'get_global_switch',
 //   //   //多语言
 //   //   lang: "get_lang",
 //   //   //视频是否展开状态

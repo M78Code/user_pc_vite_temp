@@ -1241,8 +1241,6 @@ export const useRightDetails = (props) => {
 //   //    vx_get_user: "get_user",
 //   //    vx_get_virtual_bet_list: "get_virtual_bet_list",
 //   //    vx_get_theme: "get_theme",
-//   //   //全局开关
-//   //    get_global_switch:'get_global_switch',
 //   //    vx_get_chatroom_available: "get_chatroom_available",
 //   //    get_chatroom_id: "get_chatroom_id",
 //   //    vx_get_layout_size: "get_layout_size",
