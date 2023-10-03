@@ -2,7 +2,7 @@
  * @Author: 'jacques' 'jacques@itcom888.com'
  * @Date: 2023-10-02 16:12:29
  * @LastEditors: 'jacques' 'jacques@itcom888.com'
- * @LastEditTime: 2023-10-03 17:19:59
+ * @LastEditTime: 2023-10-03 17:42:51
  * @FilePath: \user-pc-vite\src\components\analysis\index.vue
  * @Description: 足篮赛事分析页
 -->
@@ -50,9 +50,7 @@
 
     <q-scroll-area class="rule-scroll-area" :visible="true" :style="{height:'100%',margin: hasNews && activeTab == 0 ? '0' : '0 20px'}">
       <!-- 文章资讯  -->
-      <tabResults v-if="hasNews && activeTab == 0"></tabResults>
-      <!-- <news :mid="match_info.mid" v-if="hasNews && activeTab == 0" /> -->
-
+      <news :mid="match_info.mid" v-if="hasNews && activeTab == 0" />
       <!-- 赛况 -->
       <tab-results :match="matchDetail" v-if="(hasNews ? activeTab - 1 : activeTab) == 0"/>
       <!-- 数据 -->
@@ -72,7 +70,6 @@
 <script>
 import { computed, ref } from 'vue';
 import { useRoute } from 'vue-router';
-//tabResults内容是 资讯模块
 import { TabResultsFullVersionWapper as tabResults} from 'src/components/analysis/template/tab-results/index.js'
 
 import { TableDataFullVersionWapper as tabData} from 'src/components/analysis/template/tab-data/index.js'

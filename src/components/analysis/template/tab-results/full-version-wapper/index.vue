@@ -11,6 +11,7 @@
         <div class="article" v-html="articleDetail.articleContent"></div>
       </div>
     </q-scroll-area>
+    <component :is="use_component_key" v-bind="$attrs" />
   </div>
 </template>
 
