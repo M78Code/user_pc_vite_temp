@@ -196,9 +196,9 @@
           ></div>
           
           <!-- 热门推荐 -->
-          <!-- <hot  v-if="get_global_switch.hot_recommend"/> -->
+          <hot  v-if="GlobalSwitchClass.global_switch.hot_recommend"/>
           <!-- 近期关注 -->
-          <!-- <recents v-if="!is_esports && get_global_switch.recent_switch" /> -->
+          <!-- <recents v-if="!is_esports && GlobalSwitchClass.global_switch.recent_switch" /> -->
         </div>
         <!--晒单列表-->
         <!-- <saidan-list
@@ -262,13 +262,15 @@
 </template>
 <script setup>
 import vScrollArea from "project_path/src/components/v-scroll-area/v-scroll-area.vue";
+// import recents from "src/components/match-detail/panel/recents.vue";
 import {
   i18n_t,
   MITT_TYPES,
   useMittOn,
   MatchDataWarehouse_PC_Detail_Common as MatchDetailsData,
   MatchDetailCalss,
-  LayOutMain_pc
+  LayOutMain_pc,
+  GlobalSwitchClass
 } from "src/core/index";
 import matchHandicap from "src/components/match-detail/match-handicap/match-handicap.vue";
 import { TabWapper as Tab } from "src/components/common/tab";
@@ -278,7 +280,7 @@ import videoCtrl from "src/components/match-detail/match_info/video_ctrl.vue";
 import matchInfo from "src/components/match-detail/match_info/match_info.vue";
 import handicapTabsBar from "src/components/match-detail/match_info/handicap_tabs_bar.vue";
 import chart from "src/components/match-detail/match_info/chart.vue";
-// import hot from "src/components/match-detail/panel/hot.vue"
+import hot from "src/components/match-detail/panel/hot.vue"
 import { useRoute } from "vue-router";
 import { computed, reactive, ref, watch } from "vue";
 const route = useRoute();
@@ -324,7 +326,7 @@ const show_wrap_total = computed(() => {
     [1, 2, 3, 4, 6, 5, 7, 9, 10].includes(
       +lodash.get(match_infoData.value, "csid")
     ) &&
-    get_global_switch.statistics_switch &&
+    GlobalSwitchClass.global_switch.statistics_switch &&
     match_infoData.value.cds !== "C01"
   );
 });
@@ -353,13 +355,13 @@ const show_video_replay = computed(() => {
 const show_more = computed(() => {
   // 当前在详情页或者电竞页的时候展示
   if (
-    (route.name == "details" || (is_esports && route.name != "video")) &&
+    (route.name == "details" || (is_esports.value && route.name != "video")) &&
     route.name !== "search"
   ) {
     return true;
   } else {
     // 如果不在详情页，就在关盘的时候展示
-    return ["new_empty", "all_empty"].includes(handicap_state) && mid.value;
+    return ["new_empty", "all_empty"].includes(handicap_state.value) && mid.value;
   }
 });
 // 聊天室高度

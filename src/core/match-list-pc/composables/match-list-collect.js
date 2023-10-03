@@ -71,7 +71,7 @@ const mx_collect_match = (match) => {
         count: 1,
       });
       //通知热门推荐收藏状态变化
-      useMittEmit(MITT_TYPES.MATCH_TO_HOT_COLLECT, {
+      useMittEmit(MITT_TYPES.EMIT_MATCH_TO_HOT_COLLECT, {
         mid: _params.mid,
         mf: cur_collect_state,
       });

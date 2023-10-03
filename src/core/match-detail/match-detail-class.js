@@ -10,9 +10,6 @@ import { SessionStorage } from "src/core/utils/index.js"
 export default class MatchDetailCtr {
  
   constructor( ) {
-
-    // 初始化数据
-    this.init();
   }
   /**
    * @description: 数据初始化
