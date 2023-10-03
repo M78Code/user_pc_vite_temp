@@ -116,7 +116,7 @@ export const useRightDetails = (props) => {
    */
   const m_init = (param = { is_ws: false }) => {
     //给仓库类设置id
-    MatchDetailCalss.set_score_button(param)
+    MatchDetailCalss.set_match_details_params(param)
     allData.details_params = param
     clearTimeout(allData.get_match_details_timer);
     let { mid, is_ws } = param;

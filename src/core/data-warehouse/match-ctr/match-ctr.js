@@ -826,6 +826,7 @@ init(){
                             _hn,
                             _hsw:item2.hsw,
                             _hipo:item3.hipo,
+                            os:Object.hasOwnProperty.call(item4,'os')?item4.os:1,
                           });
                           // 快速查询对象ol_obj增加数据
                           many_obj.ol_obj[this.get_list_to_obj_key(item.mid,item4.oid,'ol')] = item4;
@@ -884,6 +885,7 @@ init(){
                             _hn,
                             _hsw:item2.hsw,
                             _hipo:item3.hipo,
+                            os:Object.hasOwnProperty.call(item4,'os')?item4.os:1,
                           });
                           // 快速查询对象ol_obj增加数据
                           many_obj.ol_obj[this.get_list_to_obj_key(item.mid,item4.oid,'ol')] = item4;

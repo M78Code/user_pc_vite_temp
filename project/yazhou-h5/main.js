@@ -21,9 +21,16 @@ import useDirective from "src/directives/index.js"
 import App from "./App.vue";
 import router from './src/router/index'
 import lodash from "lodash";
+import { i18n_t } from "src/boot/i18n.js";
 const app = createApp(App);
 app.config.globalProperties.lodash = lodash;
+app.config.globalProperties.i18n_t = i18n_t;
 window.lodash = lodash;
+window.i18n_t = i18n_t;
+import filters from 'src/core/filters/global_filters.js'
+//vue3配置全局过滤器
+app.config.globalProperties.$filters = filters;
+
 app.use(Quasar, {
   plugins: {}, // import Quasar plugins and add here
 });

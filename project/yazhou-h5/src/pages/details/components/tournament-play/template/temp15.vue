@@ -144,7 +144,7 @@ export default defineComponent({
       init_data.len = val.filter(item => {
         return item.os != 3
       }).length;
-      switch (len) {
+      switch (init_data.len) {
         case 0: name = ''; break;
         case 1: name = 'every1'; break;
         case 2: name = 'every2'; break;

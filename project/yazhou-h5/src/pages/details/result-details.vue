@@ -36,7 +36,7 @@
       <router-view v-if="loading"/>
     </div>
     <!--赛果详情骨架屏-->
-    <SResult v-if="skeleton_loading" :loading_body="skeleton.changeTab"/>
+    <!-- <SResult v-if="skeleton_loading" :loading_body="skeleton.changeTab"/> -->
   </div>
 </template>
 
@@ -56,9 +56,12 @@ import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import { useRouter, useRoute } from "vue-router";
 import lodash from "lodash";
 import UserCtr from "src/core/user-config/user-ctr.js";
-import { computed, onMounted, onUnmounted, watch, ref } from "vue";
+import { computed, onMounted, onUnmounted, watch, ref, reactive } from "vue";
+import { MatchDataWarehouse_H5_Detail_Common, format_plays, format_sort_data, MatchDetailCalss } from "src/core/index";
 
 let route = useRoute()
+// 赛果详情初始化数据仓库数据
+const MatchDataWarehouseInstance = reactive(MatchDataWarehouse_H5_Detail_Common)
   // 详情接口所有数据
   const result_detail_data = ref({}) 
   // 是否显示下拉联赛列表
@@ -229,7 +232,10 @@ let route = useRoute()
           }
           // 克隆一份;
           let cloneData = lodash.cloneDeep(data);
-          set_detail_data(cloneData);
+          // set_detail_data(cloneData);
+          cloneData['mhs'] = 0
+          cloneData['os'] = 1
+          MatchDataWarehouseInstance.set_match_details(cloneData)
         }
       }).catch((err) =>{
         loading.value = true

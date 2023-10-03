@@ -208,7 +208,7 @@ export default class MatchDetailCtr {
    * @param {*} val
    * @return {*}
    */
-  set_score_button(val){
+  set_match_details_params(val){
     const {mid,tid,sportId,media_type} = val
     this.params = {
       mid,

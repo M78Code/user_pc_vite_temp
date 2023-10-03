@@ -4,8 +4,8 @@
  * @Description: 右侧视频播放组件
 -->
 <template>
-  <div ref="video" class="c-match-video relative-position" @mousemove="onMousemove">{{ play_media.media_type }}
-    <!-- 精彩回播 header -->{{ current_replay }}
+  <div ref="video" class="c-match-video relative-position" @mousemove="onMousemove">
+    <!-- 精彩回播 header -->
     <div v-if="current_replay" class="video-replay-header">
       <div class="btn-back-live"></div>
       <div class="replay-info">{{current_replay.titleInfo}}</div>
