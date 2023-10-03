@@ -216,7 +216,7 @@ export default {
     // 设置直播类型 && 获取直播地址
     "play_media.time": {
       handler(cur) {
-        if (!cur) return
+        if (!cur && !this.match_info) return
         this.show_loading = true
         // 10秒后隐藏loading图片
         clearTimeout(this.timer_id_1)
@@ -227,6 +227,7 @@ export default {
         this.callback_id++
         let callback_id = this.callback_id
         let { media_type } = this.play_media
+
         let { mid, mms, mvs, varl, vurl, csid,lvs } = this.match_info
         const {mid: last_mid, media_type: last_media_type} = this.last_media_info || {}
         

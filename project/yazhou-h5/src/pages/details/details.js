@@ -204,7 +204,7 @@ const route = useRoute();
 
     // 监听数据仓库版本号变更后更新数据
     watch(() => MatchDataWarehouseInstance.data_version.version, () => {
-      state_data.detail_data = MatchDataWarehouse_H5_Detail_Common.list_to_obj.mid_obj
+      state_data.detail_data = MatchDataWarehouseInstance.get_quick_mid_obj(matchid.value);
     })
     // 主题后缀
     const suffix_theme = UserCtr.theme.includes("night") ? "2" : "";
