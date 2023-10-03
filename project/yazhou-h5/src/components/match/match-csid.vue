@@ -10,7 +10,7 @@
       {{get_mmp_name(detail_data.csid,detail_data.mmp)}}
       <span
         v-if="mmp_arr.includes(detail_data.mmp) && showTime"
-      >&nbsp;&nbsp;{{ showTime | format_mgt_time }}</span>
+      >&nbsp;&nbsp;{{ $filters.format_mgt_time(showTime) }}</span>
       <span v-if="show_bsk_time">
         &nbsp;&nbsp;<span>10:00</span>
       </span>
@@ -20,7 +20,7 @@
       {{get_mmp_name(get_detail_data.csid,get_detail_data.mmp)}}
       <span
         v-if="mmp_arr.includes(detail_data.mmp) && showTime"
-      >&nbsp;&nbsp;{{ showTime | format_mgt_time }}</span>
+      >&nbsp;&nbsp;{{ $filters.format_mgt_time(showTime) }}</span>
       <span v-if="show_bsk_time">
         &nbsp;&nbsp;<span>10:00</span>
       </span>
@@ -47,7 +47,7 @@ export default {
     // ...mapGetters(["get_detail_data"]),
     show_bsk_time(){
       let array = [ '301', '302', '303' ];
-      if(get_detail_data.csid == 2 && array.includes(get_detail_data.mmp) ){
+      if(this.get_detail_data.csid == 2 && array.includes(this.get_detail_data.mmp) ){
         return true
       }else{
         return false

@@ -11,7 +11,7 @@
     <!-- mlet的值控制是否显示倒计时 为空不显示 -->
     <template v-if="detail_data.mlet != ''">
       <!-- 赛事计时器 -->
-      <span  v-if="mmp_arr.includes(detail_data.mmp) && showTime > 0" >&nbsp;&nbsp;{{ showTime | format_mgt_time }}</span>
+      <span  v-if="mmp_arr.includes(detail_data.mmp) && showTime > 0" >&nbsp;&nbsp;{{ $filters.format_mgt_time(showTime) }}</span>
       <!-- 前端做兼容处理 赛事阶段未开赛+赛事状态进行中 默认显示每节赛事的时间 -->
       <span  v-if="detail_data.mmp == '0' && detail_data.ms == 1 ">&nbsp;{{detail_data.mlet}}</span>  
     </template>
@@ -20,7 +20,7 @@
 
 <script>
 // import msc from "src/public/mixins/common/msc.js";
-import { format_mgt_time } from "src/core/format/index.js"
+// import { format_mgt_time } from "src/core/format/index.js"
 import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/index.js";
 
 export default {
@@ -41,13 +41,13 @@ export default {
     detail_data:{
       // 比赛的时候，更新mst时间
       handler(n, o){
-        if( mmp_arr.includes(n.mmp) ){ 
+        if( this.mmp_arr.includes(n.mmp) ){ 
           let num = 0;
           if(n.c_time){ num = (new Date().getTime() - n.c_time) / 1000 }
           // 重置时间
-          init_rest_time(num);
+          this.init_rest_time(num);
         }else{
-          init_rest_time(0);
+          this.init_rest_time(0);
         }
       },
       deep: true,
@@ -62,22 +62,22 @@ export default {
      */
     detail_data_mmp(){
       // 前端做兼容处理 赛事阶段未开赛+赛事状态进行中 默认显示第一节
-      if(detail_data.mmp == '0' && detail_data.ms == 1){
+      if(this.detail_data.mmp == '0' && this.detail_data.ms == 1){
         // mmp=13 代表第一节
         return '13';
       }else{
-        return detail_data.mmp
+        return this.detail_data.mmp
       }
     }
   },
   created(){
     // 时间延时器
-    showTimeInterval = 0;
-    init_event();
+    this.showTimeInterval = 0;
+    this.init_event();
     // let { off: off_ } = useMittOn(MITT_TYPES.EMIT_UPDATE_GAME_TIME, init_event);
   },
   destroyed(){
-    clear_time_obj();
+    this.clear_time_obj();
     // off_()
   },
   methods: {
@@ -88,13 +88,13 @@ export default {
      */
     init_event(){
       // 赛事暂停且不是休息的状态 mess:开始和暂停状态 1-start  0-stop
-      if(detail_data.mess == 0 && !mmp_arr1.includes(detail_data.mmp)){
+      if(this.detail_data.mess == 0 && !this.mmp_arr1.includes(this.detail_data.mmp)){
         // 赛事时间
-        showTime = Number(detail_data.mst);
+        this.showTime = Number(this.detail_data.mst);
         // 保存当前比赛时间
-        save_page_time();
+        this.save_page_time();
       }else{
-        init_rest_time(0);
+        this.init_rest_time(0);
       }
     },
     /**
@@ -104,14 +104,14 @@ export default {
      */
     init_rest_time(num){
       // 清除相关倒计时;
-      if(showTimeInterval){ clearInterval(showTimeInterval) }
+      if(this.showTimeInterval){ clearInterval(this.showTimeInterval) }
       // 显示比赛时间的阶段且时间静止不动 因为是在赛事休息阶段
-      if(mmp_arr1.includes(detail_data.mmp)){
-        showTime = 900;
-        save_page_time();
-      }else if(mmp_arr.slice(0,5).includes(detail_data.mmp)){
+      if(this.mmp_arr1.includes(this.detail_data.mmp)){
+        this.showTime = 900;
+        this.save_page_time();
+      }else if(this.mmp_arr.slice(0,5).includes(this.detail_data.mmp)){
         // 比赛进行阶段
-        calculagraph(num);
+        this.calculagraph(num);
       }
     },
     /**
@@ -120,23 +120,23 @@ export default {
      *@return {Undefined}
      */
     calculagraph(num){
-      if(Number(detail_data.mst) - Number(num) <= 0 ){
-        clearInterval(showTimeInterval);
-        showTime = 0;
+      if(Number(this.detail_data.mst) - Number(num) <= 0 ){
+        clearInterval(this.showTimeInterval);
+        this.showTime = 0;
       }else{
-        showTime = Number(detail_data.mst) - Number(num);
+        this.showTime = Number(this.detail_data.mst) - Number(num);
       }
       // 保存当前比赛时间
-      save_page_time();
+      this.save_page_time();
       // 赛事时间自减1S
-      showTimeInterval = setInterval(() => {
-        if(showTime <= 0){
-          clearInterval(showTimeInterval);
-          showTime = 0;
-        }else if(detail_data.mess == 1){
-          showTime -= 1;
+      this.showTimeInterval = setInterval(() => {
+        if(this.showTime <= 0){
+          clearInterval(this.showTimeInterval);
+          this.showTime = 0;
+        }else if(this.detail_data.mess == 1){
+          this.showTime -= 1;
         }
-        save_page_time();
+        this.save_page_time();
       }, 1000);
     },
     /**
@@ -145,8 +145,8 @@ export default {
      *@return {Undefined}
      */
     save_page_time(){
-      if(dialog) return;
-      useMittEmit(MITT_TYPES.EMIT_SET_MATCH_TIME, Number(showTime));
+      if(this.dialog) return;
+      useMittEmit(MITT_TYPES.EMIT_SET_MATCH_TIME, Number(this.showTime));
     },
     /**
      *@description 组件销毁时清除时间自增方法
@@ -154,9 +154,9 @@ export default {
      *@return {Undefined}
      */
     clear_time_obj(){
-      if(!!showTimeInterval){
-        clearInterval(showTimeInterval)
-        showTimeInterval = null
+      if(!!this.showTimeInterval){
+        clearInterval(this.showTimeInterval)
+        this.showTimeInterval = null
       }
     }
   },

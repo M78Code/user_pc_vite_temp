@@ -61,17 +61,17 @@ export default {
     //   "get_menu_type",
     // ]),
     componentId() {
-      if(get_menu_type == 3000){
+      if(this.get_menu_type == 3000){
         return `stage-child-101`;
       }else{
-        return `stage-child-${detail_data.csid}`;
+        return `stage-child-${this.detail_data.csid}`;
       }
     }
   },
   watch: {
     detail_data:{
       handler(n, o){
-        initEvent();
+        this.initEvent();
       },
       deep: true
     }
@@ -97,39 +97,39 @@ export default {
     'stage-child-101': stage_child_101,
   },
   created() {
-    timerInterval_other=0;
-    initEvent()
-    // let {off: off_} = useMittOn(MITT_TYPES.EMIT_SET_MATCH_TIME, set_match_time); // 储存时间，保证时间同步;
+    this.timerInterval_other=0;
+    this.initEvent()
+    // let {off: off_} = useMittOn(MITT_TYPES.EMIT_SET_MATCH_TIME, this.set_match_time); // 储存时间，保证时间同步;
  },
   methods: {
     initEvent(){
       let now = new Date().getTime();
-      let bool = Number(detail_data.mgt) - now < 3600 * 1000;
-      let longTime_other = Math.floor( (+detail_data.mgt -now ) / 1000 / 60 );
+      let bool = Number(this.detail_data.mgt) - now < 3600 * 1000;
+      let longTime_other = Math.floor( (+this.detail_data.mgt -now ) / 1000 / 60 );
       if(longTime_other == 0){ longTime_other += 1;}
-      start_time_other = bool;
-      longTime_other = longTime_other;
-      clearInterval(timerInterval_other);
-      timerInterval_other = setInterval(()=>{
+      this.start_time_other = bool;
+      this.longTime_other = longTime_other;
+      clearInterval(this.timerInterval_other);
+      this.timerInterval_other = setInterval(()=>{
         let now = new Date().getTime();
-        if(+detail_data.mgt - now < 0 ){
-          clearInterval(timerInterval_other);
-          start_time_other = false;
+        if(+this.detail_data.mgt - now < 0 ){
+          clearInterval(this.timerInterval_other);
+          this.start_time_other = false;
         }
-        let longTime_other = Math.floor( (+detail_data.mgt - now )/ 1000 / 60);
+        let longTime_other = Math.floor( (+this.detail_data.mgt - now )/ 1000 / 60);
         if(longTime_other == 0){ longTime_other += 1; }
-        longTime_other = longTime_other;
+        this.longTime_other = longTime_other;
       }, 1000 * 1)
     },
     // 监听set_match_time事件，储存赛事时间
     set_match_time(time) {
       // time为需要储存的赛事时间
-      match_time_dt = time;
+      this.match_time_dt = time;
     },
   },
   destroyed () {
-    clearInterval(timerInterval_other);
-    timerInterval_other = null;
+    clearInterval(this.timerInterval_other);
+    this.timerInterval_other = null;
 
     // off_() // 清除储存时间
   },

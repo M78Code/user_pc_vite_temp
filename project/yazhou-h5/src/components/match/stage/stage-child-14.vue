@@ -12,7 +12,7 @@
     <span v-else>
       {{i18n_t('mmp')[14][detail_data.mmp]}}
       <!-- 计时器 -->
-      <span  v-if="mmp_arr.includes(detail_data.mmp) && showTime != 0">&nbsp;{{ showTime | format_mgt_time }}</span>
+      <span  v-if="mmp_arr.includes(detail_data.mmp) && showTime != 0">&nbsp;{{ $filters.format_mgt_time(showTime) }}</span>
       <span  v-if="detail_data.mmp == '0'">&nbsp;&nbsp;00:00</span>
     </span>
   </span>
@@ -21,7 +21,7 @@
 <script>
 // import { mapGetters } from "vuex"
 // import msc from "src/public/mixins/common/msc.js";
-import { format_mgt_time } from "src/core/format/index.js"
+// import { format_mgt_time } from "src/core/format/index.js"
 import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/index.js";
 
 export default {
@@ -41,12 +41,12 @@ export default {
   watch: {
     detail_data:{
       handler(n, o){
-        if( mmp_arr.includes(n.mmp) ){ // 比赛的时候，更新mst时间;
+        if( this.mmp_arr.includes(n.mmp) ){ // 比赛的时候，更新mst时间;
           let num = 0;
           if(n.c_time){ num = (new Date().getTime() - n.c_time) / 1000 }
-          initRestTime(num);
+          this.initRestTime(num);
         }else{
-          initRestTime(0);
+          this.initRestTime(0);
         }
       },
       deep: true,
@@ -55,19 +55,19 @@ export default {
   computed: {
     // ...mapGetters(['get_menu_type']),
     match_result_state(){
-      return detail_data.ms == 3 || detail_data.ms == 4 || detail_data.mo == 1
+      return this.detail_data.ms == 3 || this.detail_data.ms == 4 || this.detail_data.mo == 1
     }
   },
   props: ['detail_data',"dialog"],
 
   created(){
     // 时间延时器
-    showTimeInterval = 0;
-    initEvent();
+    this.showTimeInterval = 0;
+    this.initEvent();
     // let { off: off_ } = useMittOn(MITT_TYPES.EMIT_UPDATE_GAME_TIME, initEvent);
   },
   destroyed(){
-    clearTimeObj();
+    this.clearTimeObj();
     // off_()
   },
   methods: {
@@ -78,11 +78,11 @@ export default {
      */
     initEvent(){
       // mess 0:暂停 1:开始
-      if(detail_data.mess == 0 && !mmp_arr1.includes(detail_data.mmp)){
-        showTime = Number(detail_data.mst);
-        savePageTime();
+      if(this.detail_data.mess == 0 && !this.mmp_arr1.includes(this.detail_data.mmp)){
+        this.showTime = Number(this.detail_data.mst);
+        this.savePageTime();
       }else{
-        initRestTime(0);
+        this.initRestTime(0);
       }
     },
     /**
@@ -92,14 +92,14 @@ export default {
      */
     initRestTime(num){
       // 清除相关倒计时;
-      if(showTimeInterval){ clearInterval(showTimeInterval) }
+      if(this.showTimeInterval){ clearInterval(this.showTimeInterval) }
       // 比赛进行时; 6, 上半场， 7，下半场, 41 加时赛上半场， 42 加时下半场；
-      if(detail_data.mmp == '6' || detail_data.mmp == '7' || detail_data.mmp == '41' || detail_data.mmp == '42'){
+      if(this.detail_data.mmp == '6' || this.detail_data.mmp == '7' || this.detail_data.mmp == '41' || this.detail_data.mmp == '42'){
         // 根据mle字段 0、2 代表正计时  1 代表倒计时
-        if(detail_data.mle == '0' || detail_data.mle == '2'){
-          calculagraph_forward(num);
+        if(this.detail_data.mle == '0' || this.detail_data.mle == '2'){
+          this.calculagraph_forward(num);
         }else{
-          calculagraph_inversion(num);
+          this.calculagraph_inversion(num);
         }
       }
     },
@@ -109,12 +109,12 @@ export default {
      *@return {Undefined}
      */
     calculagraph_forward(num){
-      showTime = Number(detail_data.mst) + Number(num);
-      savePageTime();
-      clearInterval(showTimeInterval)
-      showTimeInterval = setInterval(() => {
-        showTime += 1;
-        savePageTime();
+      this.showTime = Number(this.detail_data.mst) + Number(num);
+      this.savePageTime();
+      clearInterval(this.showTimeInterval)
+      this.showTimeInterval = setInterval(() => {
+        this.showTime += 1;
+        this.savePageTime();
       }, 1000);
     },
     /**
@@ -123,17 +123,17 @@ export default {
      *@return {Undefined}
      */
     calculagraph_inversion(num){
-      showTime = Number(detail_data.mst) - Number(num);
-      savePageTime();
-      clearInterval(showTimeInterval)
-      showTimeInterval = setInterval(() => {
-        if(showTime <= 0){
-          clearInterval(showTimeInterval);
-          showTime = 0;
+      this.showTime = Number(this.detail_data.mst) - Number(num);
+      this.savePageTime();
+      clearInterval(this.showTimeInterval)
+      this.showTimeInterval = setInterval(() => {
+        if(this.showTime <= 0){
+          clearInterval(this.showTimeInterval);
+          this.showTime = 0;
         }else{
-          showTime -= 1;
+          this.showTime -= 1;
         }
-        savePageTime();
+        this.savePageTime();
       }, 1000);
     },
     /**
@@ -142,8 +142,8 @@ export default {
      *@return {Undefined}
      */
     savePageTime(){
-      if(dialog) return;
-      useMittEmit(MITT_TYPES.EMIT_SET_MATCH_TIME, Number(showTime));
+      if(this.dialog) return;
+      useMittEmit(MITT_TYPES.EMIT_SET_MATCH_TIME, Number(this.showTime));
     },
     /**
      *@description 清除计时器
@@ -151,9 +151,9 @@ export default {
      *@return {Undefined}
      */
     clearTimeObj(){
-      if(!!showTimeInterval){
-        clearInterval(showTimeInterval)
-        showTimeInterval = null
+      if(!!this.showTimeInterval){
+        clearInterval(this.showTimeInterval)
+        this.showTimeInterval = null
       }
     }
   },

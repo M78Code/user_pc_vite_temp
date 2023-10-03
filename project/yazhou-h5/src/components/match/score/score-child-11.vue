@@ -12,11 +12,11 @@
       <span v-if="score_array[0] && collection_b.includes(detail_data.mmp)">/{{i18n_t('match_info.full')}}</span>
       <span v-if="add_score && collection_c.includes(detail_data.mmp)">/{{i18n_t('match_info.add')}}</span>
       <span v-if="shoot_score && collection_c.includes(detail_data.mmp)">/{{i18n_t('match_info.shoot_out')}}</span>
-<!-- TODO:  | score_format 过滤后续修改 -->
-      <span v-if="score_array[1] && collection_a.includes(detail_data.mmp)"> : {{score_array[1]}}</span>
-      <span v-if="score_array[0] && collection_b.includes(detail_data.mmp)"> / {{score_array[0]}}</span>
-      <span v-if="add_score && collection_c.includes(detail_data.mmp)"> / {{add_score}}</span>
-      <span v-if="shoot_score && collection_c.includes(detail_data.mmp)"> / {{shoot_score}}</span>
+
+      <span v-if="score_array[1] && collection_a.includes(detail_data.mmp)"> : {{ $filters.score_format(score_array[1])}}</span>
+      <span v-if="score_array[0] && collection_b.includes(detail_data.mmp)"> / {{ $filters.score_format(score_array[0])}}</span>
+      <span v-if="add_score && collection_c.includes(detail_data.mmp)"> / {{ $filters.score_format(add_score)}}</span>
+      <span v-if="shoot_score && collection_c.includes(detail_data.mmp)"> / {{ $filters.score_format(shoot_score)}}</span>
     </div>
   </div>
 </template>
@@ -42,7 +42,7 @@ export default {
   computed: {
     // 比分集合
     score_array(){
-      return initEvent();
+      return this.initEvent();
     },
     // ...mapGetters([
     //   // 赛果标识
@@ -57,26 +57,26 @@ export default {
      *@return {Array} 手球比分
      */
     initEvent(){
-      let msc = detail_data.msc;
+      let msc = this.detail_data.msc;
       // sortBy方法  比分升序排列 取出比分阶段后面的数字作为判断条件 返回是数组
-      msc = _.sortBy( msc, (item) => {
+      msc = lodash.sortBy( msc, (item) => {
         return +(item.split("|")[0]).substring(1)
       })
 
       let score_arr = [];
       // 循环只取出接口返回的比分里面符合手球阶段的比分
-      _.forEach(msc, (item, index)=>{
+      lodash.forEach(msc, (item, index)=>{
         // S1 S2 S3 S19 S20 ...
         let num_index = item.split("|")[0];
         // 加时赛
         if(num_index == 'S7'){
-          add_score = item.split("|")[1];
+          this.add_score = item.split("|")[1];
         }
         // 点球
         if(num_index == 'S170'){
-          shoot_score = item.split("|")[1];
+          this.shoot_score = item.split("|")[1];
         }
-        if(msc_array.includes(num_index)){
+        if(this.msc_array.includes(num_index)){
           score_arr.push(item.split("|")[1]);
         }
       })

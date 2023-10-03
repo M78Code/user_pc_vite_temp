@@ -24,7 +24,7 @@
             <div class="item-content real-time-contv-ifent hairline-border">
 
               <span class="time" v-if="get_detail_data.mmp==31">{{ t('mmp.1.31') }}</span>
-              <span class="time" v-else>{{ format_mgt_time(lodash.get(get_detail_data, 'mststr'))}}</span>
+              <span class="time" v-else>{{ $filters.format_mgt_time(lodash.get(get_detail_data, 'mststr'))}}</span>
               <span class="score">[{{ format_total_score(get_detail_data, 0) }}-{{ format_total_score(get_detail_data, 1) }}]</span>
               <span class="text">{{ t('match_info.match_over') }}</span>
             </div>
@@ -52,7 +52,7 @@
           <div class="time-line-ball"></div>
           <div :class="['item-flag', flag_icon(event.eventCode)]"></div>
           <div class="item-content hairline-border"  @click="handle_click_event(i, event)">
-            <span class="time">{{ format_mgt_time(+event.secondsFromStart) }}</span>
+            <span class="time">{{ $filters.format_mgt_time(+event.secondsFromStart) }}</span>
             <span class="score">[{{ event.t1 }}-{{ event.t2 }}]</span>
             <div class="text-wrapper">
               <!-- 点球大战 -->
@@ -139,7 +139,7 @@
                   <div class="score"><span>{{ slotProps.item.t1 }}</span><span class="colon">:</span><span>{{ slotProps.item.t2 }}</span></div>
                   <div class="event-team ellipsis">{{ slotProps.item.homeAway }}</div>
                   <div class="event-name">{{ event_name(slotProps.item.eventCode) }}: {{ slotProps.item.firstNum }}</div>
-                  <div class="event-time">{{ format_mgt_time(+slotProps.item.secondsFromStart) }}</div>
+                  <div class="event-time">{{ $filters.format_mgt_time(+slotProps.item.secondsFromStart) }}</div>
                 </template>
               </slider-x>
 
@@ -216,7 +216,7 @@ import store from "src/store-redux/index.js"
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { pre_load_video } from "src/core/pre-load/index.js"
 import {utils } from 'src/core/index.js'
-import { format_mgt_time, format_total_score } from "src/core/format/index.js"
+import { format_total_score } from "src/core/format/index.js"
 import { t } from "src/boot/i18n.js";;
 //国际化
 
