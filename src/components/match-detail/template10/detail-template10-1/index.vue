@@ -39,7 +39,7 @@
             >
               <div class="bet-item rank_nos">
                 <div
-                  v-if="['1002', '1011', '1010'].includes(match_info.csid)"
+                  v-if="['1002', '1011', '1010'].includes(match_info?.csid)"
                   class="ranking-nos"
                 >
                   <div
@@ -71,7 +71,7 @@
             >
               <div class="bet-item">
                 <div
-                  v-if="['1002', '1011', '1010'].includes(match_info.csid)"
+                  v-if="['1002', '1011', '1010'].includes(match_info?.csid)"
                   class="ranking-nos"
                 >
                   <div
@@ -103,7 +103,7 @@
             >
               <div class="bet-item">
                 <div
-                  v-if="['1002', '1011', '1010'].includes(match_info.csid)"
+                  v-if="['1002', '1011', '1010'].includes(match_info?.csid)"
                   class="ranking-nos"
                 >
                   <div
@@ -138,7 +138,7 @@
             >
               <div class="bet-item">
                 <div
-                  v-if="['1002', '1011', '1010'].includes(match_info.csid)"
+                  v-if="['1002', '1011', '1010'].includes(match_info?.csid)"
                   class="ranking-nos"
                 >
                   <div
@@ -179,7 +179,7 @@
           >
             <div class="bet-item">
               <div
-                v-if="['1002', '1011', '1010'].includes(match_info.csid)"
+                v-if="['1002', '1011', '1010'].includes(match_info?.csid)"
                 class="ranking-nos"
               >
                 <div
@@ -265,7 +265,7 @@ const handicap_data = ref([]);
 watch(
   () => props.item_details,
   (res) => {
-    if (props.match_info.csid == "1001") {
+    if (props.match_info?.csid == "1001") {
       let ol = lodash.get(res, "hl[0].ol");
       if (ol && ol.length % 3) {
         for (var i = 0; i < Math.ceil(ol.length / 3) * 3 - ol.length + 1; i++) {

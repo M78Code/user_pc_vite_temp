@@ -83,7 +83,6 @@ const item = {
  * @returns
  */
 function compute_position(position) {
-  console.log(position,'position');
   const top = 0; // 雪碧图 距离顶部的 空白距离
   const left = 0; //左侧
   const width = 0; //表示是 横 向
