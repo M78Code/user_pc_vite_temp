@@ -1,5 +1,5 @@
 import { ref } from "vue";
-import { useRoute } from "vue-router";
+// import route from "project_path/src/router/index.js"
 // 浏览器高度
 let client_height = Math.max(
   document.body.clientHeight,
@@ -48,11 +48,13 @@ class LayOutMain {
     /** 搜索框宽度 */
     this.layout_search_width = 0
     // 来源 当前路由
-    this.layout_current_path = ''
+    this.layout_current_path = 'home'
     // 左侧菜单显示 menu bet history
     this.layout_left_show = 'menu'
     // 左侧菜单顶部距离 内嵌为 0 
     this.layout_left_top = '80px'
+    //老项目废弃的字段  zoom
+    this.zoom = true
   }
 
   // 初始化
@@ -109,9 +111,8 @@ class LayOutMain {
     }
   }
   /** 设置当前路由页面 */
-  set_layout_current_path() {
-    const route = useRoute();
-    this.layout_current_path = route.name
+  set_layout_current_path(route) {
+    this.layout_current_path = route
     this.set_layout_version()
   }
 

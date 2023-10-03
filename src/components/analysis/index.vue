@@ -2,7 +2,7 @@
  * @Author: 'jacques' 'jacques@itcom888.com'
  * @Date: 2023-10-02 16:12:29
  * @LastEditors: 'jacques' 'jacques@itcom888.com'
- * @LastEditTime: 2023-10-02 21:31:59
+ * @LastEditTime: 2023-10-03 15:51:30
  * @FilePath: \user-pc-vite\src\components\analysis\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -54,9 +54,9 @@
       <!-- <news :mid="match_info.mid" v-if="hasNews && activeTab == 0" /> -->
 
       <!-- 赛况 -->
-      <!-- <tab-results :match="matchDetail" v-if="(hasNews ? activeTab - 1 : activeTab) == 0"/> -->
+      <tab-results :match="matchDetail" v-if="(hasNews ? activeTab - 1 : activeTab) == 0"/>
       <!-- 数据 -->
-      <tab-data :match="matchDetail" v-if="(hasNews ? activeTab - 1 : activeTab) == 1 ||1"/>
+      <tab-data :match="matchDetail" v-if="(hasNews ? activeTab - 1 : activeTab) == 1"/>
       <!-- 阵容 -->
       <!-- <tab-lineup :match="matchDetail" v-if="(hasNews ? activeTab - 1 : activeTab) == 2"/> -->
       <!-- 情报 -->
@@ -85,6 +85,7 @@ import {api_analysis} from 'src/api/index.js'
 import { compute_css_variables } from "src/core/css-var/index.js"
 import { formatTime } from 'src/core/format/index.js'
 import { i18n_t } from 'src/core/index.js'
+import zhugeTag from "src/core/http/zhuge-tag.js"
 import store from 'src/store-redux/index.js'
 import lodash from 'lodash'
 
@@ -94,7 +95,10 @@ export default {
   components:{
     tabResults,
     tabData,
-    //tabLineup,tabInformation,tabOdds,matchDate
+    tabLineup,
+    //tabInformation,
+    //tabOdds,
+    // matchDate,
     news
   },
   setup() {
@@ -211,7 +215,7 @@ export default {
   },
   methods: {
     switchTabs(index) {
-      activeTab.value = index;
+      this.activeTab = index;
       let eventLabel = '';
       switch (index) {
         case 0:
@@ -233,7 +237,7 @@ export default {
           eventLabel = 'PC_情报分析_赔率'
       }
       // 发送埋点事件
-      this.$utils.send_zhuge_event(eventLabel);
+      zhugeTag.send_zhuge_event(eventLabel);
     },
     /**
      * 文章阅读数
@@ -340,7 +344,8 @@ export default {
       align-items: center;
       justify-content: center;
       margin-right: 5px;
-      background: var(--qq--analysis-bg-color-3);
+      // background: var(--qq--analysis-bg-color-3);
+      background-color: var(--q-analysis-color-3);
       border: 1px solid var(--qq--analysis-bd-color-1);
       border-bottom-color: var(--qq--analysis-bd-color-2);
       color: var(--qq--analysis-text-color-3);

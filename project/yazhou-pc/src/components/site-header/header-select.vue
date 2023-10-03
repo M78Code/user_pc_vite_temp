@@ -252,54 +252,54 @@ function getFestivalBanner() {
         let stime = get_remote_time();
         let _time = data.startTime && data.endTime;
         // 当前时间处于开始时间和结束时间中间时才展示图片
-        if (Object.keys(data).length && _time && (data.startTime <= stime && stime <= data.endTime)) {
-            pcDaytimeLink.value = get_file_path(data.img1); //PC日间 左边图片链接
-            pcNightLink.value = get_file_path(data.img2); //PC夜间 左边图片链接
-            nightClickType.typeL = parseInt(data.img2Type); // 夜间版跳转类型  左边
-            dayClickType.typeL = parseInt(data.img1Type); // 日间版跳转类型   左边
-            nightClickType.urlL = data.img2Url; // 夜间版跳转链接  左边
-            dayClickType.urlL = data.img1Url; // 日间版跳转链接  左边
-            // 图片地址，点击类型，跳转链接
-            let { img5, img5Type, img5Url, img6, img6Type, img6Url, img7, img7Type, img7Url, img8, img8Type, img8Url, img9, img9Type, img9Url, img10, img10Type, img10Url } = { ...data }
-            // 轮播图日间版
-            if (img5) {
-                daySwipper.push({ img: get_file_path(img5), imgType: img5Type, imgUrl: img5Url, isClick: img5Type != 0 && img5Url })
-            }
-            if (img6) {
-                daySwipper.push({ img: get_file_path(img6), imgType: img6Type, imgUrl: img6Url, isClick: img6Type != 0 && img6Url })
-            }
-            if (img7) {
-                daySwipper.push({ img: get_file_path(img7), imgType: img7Type, imgUrl: img7Url, isClick: img7Type != 0 && img7Url })
-            }
+        // if (Object.keys(data).length && _time && (data.startTime <= stime && stime <= data.endTime)) {
+        //     pcDaytimeLink.value = get_file_path(data.img1); //PC日间 左边图片链接
+        //     pcNightLink.value = get_file_path(data.img2); //PC夜间 左边图片链接
+        //     nightClickType.typeL = parseInt(data.img2Type); // 夜间版跳转类型  左边
+        //     dayClickType.typeL = parseInt(data.img1Type); // 日间版跳转类型   左边
+        //     nightClickType.urlL = data.img2Url; // 夜间版跳转链接  左边
+        //     dayClickType.urlL = data.img1Url; // 日间版跳转链接  左边
+        //     // 图片地址，点击类型，跳转链接
+        //     let { img5, img5Type, img5Url, img6, img6Type, img6Url, img7, img7Type, img7Url, img8, img8Type, img8Url, img9, img9Type, img9Url, img10, img10Type, img10Url } = { ...data }
+        //     // 轮播图日间版
+        //     if (img5) {
+        //         daySwipper.push({ img: get_file_path(img5), imgType: img5Type, imgUrl: img5Url, isClick: img5Type != 0 && img5Url })
+        //     }
+        //     if (img6) {
+        //         daySwipper.push({ img: get_file_path(img6), imgType: img6Type, imgUrl: img6Url, isClick: img6Type != 0 && img6Url })
+        //     }
+        //     if (img7) {
+        //         daySwipper.push({ img: get_file_path(img7), imgType: img7Type, imgUrl: img7Url, isClick: img7Type != 0 && img7Url })
+        //     }
 
-            // 轮播图夜间版
-            if (img8) {
-                nightSwipper.push({ img: get_file_path(img8), imgType: img8Type, imgUrl: img8Url, isClick: img8Type != 0 && img8Url })
-            }
-            if (img9) {
-                nightSwipper.push({ img: get_file_path(img9), imgType: img9Type, imgUrl: img9Url, isClick: img9Type != 0 && img9Url })
-            }
-            if (img10) {
-                nightSwipper.push({ img: get_file_path(img10), imgType: img10Type, imgUrl: img10Url, isClick: img10Type != 0 && img10Url })
-            }
-            // 根据日间或者夜间来判断用哪个数据
-            if (UserCtr.theme.includes('day') && daySwipper.length > 0) {
-                currentSwipperArr = daySwipper;
-            }
-            if (UserCtr.theme.includes('night') && nightSwipper.length > 0) {
-                currentSwipperArr = nightSwipper;
-            }
-            // 图片大于一张的时候触发轮播
-            if (currentSwipperArr.length > 1) {
-                clearTimeout(showBannerSwipperTimer.value)
-                //在DOM加载完成后，下个tick中开始轮播
-                nextTick(() => {
-                    showBannerSwipperTimer.value = setInterval(() => {
-                        autoPlay()
-                    }, 7000)
-                })
-            }
-        }
+        //     // 轮播图夜间版
+        //     if (img8) {
+        //         nightSwipper.push({ img: get_file_path(img8), imgType: img8Type, imgUrl: img8Url, isClick: img8Type != 0 && img8Url })
+        //     }
+        //     if (img9) {
+        //         nightSwipper.push({ img: get_file_path(img9), imgType: img9Type, imgUrl: img9Url, isClick: img9Type != 0 && img9Url })
+        //     }
+        //     if (img10) {
+        //         nightSwipper.push({ img: get_file_path(img10), imgType: img10Type, imgUrl: img10Url, isClick: img10Type != 0 && img10Url })
+        //     }
+        //     // 根据日间或者夜间来判断用哪个数据
+        //     if (UserCtr.theme.includes('day') && daySwipper.length > 0) {
+        //         currentSwipperArr = daySwipper;
+        //     }
+        //     if (UserCtr.theme.includes('night') && nightSwipper.length > 0) {
+        //         currentSwipperArr = nightSwipper;
+        //     }
+        //     // 图片大于一张的时候触发轮播
+        //     if (currentSwipperArr.length > 1) {
+        //         clearTimeout(showBannerSwipperTimer.value)
+        //         //在DOM加载完成后，下个tick中开始轮播
+        //         nextTick(() => {
+        //             showBannerSwipperTimer.value = setInterval(() => {
+        //                 autoPlay()
+        //             }, 7000)
+        //         })
+        //     }
+        // }
     })
 }
 /* 钩子触发 */
