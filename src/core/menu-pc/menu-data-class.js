@@ -1,6 +1,7 @@
 import base_data_instance from "src/core/base-data/base-data.js";
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import { computed_menu_to_match_templte } from 'src/core/match-list-pc/list-template/pc-menu-match-template.js'
+import PageSource from 'src/core/page-source/page-source.js'
 import {
   useMittOn,
   useMittEmit,
@@ -81,10 +82,7 @@ class MenuData {
     };
     // 中间 菜单的 点击之后的 列表请求 参数 配置
     this.match_list_api_config = {
-      match_list: {
-        //lockie
-        params: {"apiType":1,"cuid":"508173877382400101","euid":"3020101","orpt":"1","pids":"","sort":1,"tid":"","selectionHour":null}
-      },
+      match_list: {},
       bymids: {},
     };
 
@@ -213,6 +211,28 @@ class MenuData {
     ) {
       val = "match_list";
     }
+    console.error('set_match_list_api_type',obj)
+
+    const { jinri_zaopan,guanjun } = obj
+    let text = 'match-today-common'
+    // 今日
+    if(jinri_zaopan == 2){
+      text = 'match-today-common'
+    }
+    // 早盘
+    if(jinri_zaopan == 3){
+      text = 'match-early-common'
+    }
+    // 常规赛种下的冠军
+    if(guanjun == 'common-guanjun'){
+      text = 'match-common-champion'
+    }
+    // 冠军下面的常规赛事
+    if(guanjun == 'guanjun-common'){
+      text = 'match-champion'
+    }
+    PageSource.set_page_source(text)
+
     // console.warn('ssss',val);
     this.match_list_api_type = val;
   }
