@@ -133,23 +133,23 @@ export const result_filter = (type, value) =>{
     }
   } else if(type == 'resultLabel'){
     switch(value){
-      case 2: return this.$root.$t("analysis.level");
-      case 3: return this.$root.$t("analysis.lose");
-      case 4: return this.$root.$t("analysis.win");
+      case 2: return i18n_t("analysis.level");
+      case 3: return i18n_t("analysis.lose");
+      case 4: return i18n_t("analysis.win");
     }
   } else if(type == 'resultwinlose'){
     switch(value){
-      case 2: return this.$root.$t("analysis.flat");
-      case 3: return this.$root.$t("analysis.negative");
-      case 4: return this.$root.$t("analysis.victory");
-      default: return this.$root.$t("analysis.no_data")
+      case 2: return i18n_t("analysis.flat");
+      case 3: return i18n_t("analysis.negative");
+      case 4: return i18n_t("analysis.victory");
+      default: return i18n_t("analysis.no_data")
     }
   } else if(type == 'overunderLabel'){
     switch(value){
-      case 2: return this.$root.$t("analysis.level");
-      case 3: return this.$root.$t("analysis.small");
-      case 4: return this.$root.$t("analysis.big");
-      default: return this.$root.$t("analysis.no_data")
+      case 2: return i18n_t("analysis.level");
+      case 3: return i18n_t("analysis.small");
+      case 4: return i18n_t("analysis.big");
+      default: return i18n_t("analysis.no_data")
     }
   }
 }
