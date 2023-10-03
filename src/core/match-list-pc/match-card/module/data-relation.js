@@ -72,7 +72,7 @@ import MenuData from "src/core/menu-pc/menu-data-class.js";
         }else{
           type = 1
         }
-        MatchListCardData.match_list_mapping_relation_obj_type = 6
+        MatchListCardData.match_list_mapping_relation_obj_type = 1
       }
     
 

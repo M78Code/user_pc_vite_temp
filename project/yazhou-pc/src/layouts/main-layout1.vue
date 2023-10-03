@@ -28,9 +28,9 @@
         </router-view>
       </div>
       <!-- 右侧 视频  动画 比分板 详情 -->
-      <!-- <div :style="{ height: LayOutMain_pc.layout_content_height + 'px' , width:LayOutMain_pc.layout_right_width +'px' }" class="layout_main_right">
+      <div :style="{ height: LayOutMain_pc.layout_content_height + 'px' , width:LayOutMain_pc.layout_right_width +'px' }" class="layout_main_right">
         <layout-right />
-      </div> -->
+      </div>
     </div>
     <!-- toast 消息提示 -->
     <toast-components />

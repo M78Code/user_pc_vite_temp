@@ -82,10 +82,7 @@ class MenuData {
     };
     // 中间 菜单的 点击之后的 列表请求 参数 配置
     this.match_list_api_config = {
-      match_list: {
-        //lockie
-        params: {"apiType":1,"cuid":"508173877382400101","euid":"3020101","orpt":"1","pids":"","sort":1,"tid":"","selectionHour":null}
-      },
+      match_list: {},
       bymids: {},
     };
 
