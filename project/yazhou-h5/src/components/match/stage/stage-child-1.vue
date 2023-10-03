@@ -111,7 +111,7 @@ onUnmounted(() => {
     showTime.value = Number(props.detail_data.mst) + Number(num);
     savePageTime();
     showTimeInterval.value = setInterval(() => {
-      showTime.value += step;
+      showTime.value += step.value;
       savePageTime();
       // set_match_real_time(format_mgt_time(showTime))
     }, 1000);
