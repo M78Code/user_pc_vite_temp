@@ -8,8 +8,6 @@
 import details from "src/core/match-detail/match-detail-pc/match-detail.js";
 import User from "src/core/user-config/user-ctr.js"
 import { api_details } from "src/api/index"
-import  store  from "src/store-redux/index.js"
-
 import { i18n_t} from "src/boot/i18n.js"
 // import BetCommonHelper from "src/core/bet/common-helper/index.js"
 import BetCommonHelper from "../bet/common-helper/index"
@@ -61,7 +59,7 @@ export default {
       }
     }).catch( err => {
       console.error(err);
-      if (_.get(err,'response.status') == 404) {
+      if (lodash.get(err,'response.status') == 404) {
         callback({},'404')
       } else {
         callback({},'refresh')
@@ -75,8 +73,8 @@ export default {
   * @return {object} 组装好的详情数据
   */
   get_match_info(res){
-    let data = _.get(res,'data.data') || {}
-    let match = _.cloneDeep(data)
+    let data = lodash.get(res,'data.data') || {}
+    let match = lodash.cloneDeep(data)
     match.goal_info = {
       is_show:false,
       homeAway: 'home',  //主客进球  home主  away客
@@ -342,7 +340,7 @@ export default {
         }, //中场休息
       };
       let score_key = []
-      _.each(match.dict, item => {
+      lodash.each(match.dict, item => {
         score_key.push(item.foul)
         score_key.push(item.stop)
       })
@@ -397,9 +395,9 @@ export default {
    */
   set_mmp_score(match){
     let socre_dict = this.get_socre_dict(match.csid)
-    let key = _.get(socre_dict,match.mmp)
+    let key = lodash.get(socre_dict,match.mmp)
     if(!key) return
-    if(_.get(match.msc,key+'.home') === ''){
+    if(lodash.get(match.msc,key+'.home') === ''){
       match.msc[key] = {home:0,away:0}
     }
   },
@@ -733,7 +731,7 @@ export default {
     }
 
     // 专题视频切换其他媒体类型前 通知子iframe记录当前播放时间
-    if (_.get(window, 'vue.$route.params.play_type') == 5) {
+    if (lodash.get(window, 'vue.$route.params.play_type') == 5) {
       this.send_message({
         cmd: 'record_play_info',
         val: {
@@ -772,9 +770,8 @@ export default {
         ...MatchDetailCalss.play_media,
         media_type
       }
-      set_score_button
       MatchDetailCalss.set_play_media(media_info)
-      MatchDetailCalss.set_score_button({media_type})      
+      MatchDetailCalss.set_match_details_params({media_type})      
       clearTimeout(this.route_jump_timer)
       this.route_jump_timer = null
     }, 50)
@@ -788,7 +785,7 @@ export default {
   */
   get_video_url(match,callback){
     let { lvs = -1, mms = -1, tvs = -1,  zvs = -1,ms } = match
-    let type = _.get(window,"vue.$route.params.play_type") || utils.get_media_icon_index(_.get(store,"getters.get_play_media.media_type"))
+    let type = lodash.get(window,"vue.$route.params.play_type") || utils.get_media_icon_index(MatchDetailCalss.play_media.media_type)
     // 是否滚球  并且视频状态等于2
     if(
       //源视频且滚球
@@ -844,7 +841,7 @@ export default {
       return
     }
     api_details.post_video_refer().then( res => {
-      refer_url = _.get(res, "data.data.referUrl")
+      refer_url = lodash.get(res, "data.data.referUrl")
       if (!refer_url) {
         callback('')
         return
@@ -922,14 +919,14 @@ export default {
       //足篮棒网使用3.0动画  其他使用2.0
       if([1,2,3,5].includes(match.csid*1)){
         let style = UserCtr.theme.includes('day') ? 'theme01' : 'theme02'
-        let animation3Url = _.get(res, "data.data.animation3Url") || []
+        let animation3Url = lodash.get(res, "data.data.animation3Url") || []
         animation3Url.forEach( item =>{
           if(item.styleName.indexOf(style) >= 0){
             animationUrl = item.path
           }
         })
       }
-      animationUrl = animationUrl || _.get(res, "data.data.animationUrl")
+      animationUrl = animationUrl || lodash.get(res, "data.data.animationUrl")
       if (animationUrl) {
         // 移除 http(s)
         animationUrl = animationUrl.replace(/https?:/, "")
@@ -960,9 +957,9 @@ export default {
       media_type
     })
     //同步播放类型到详情
-    let data =  _.cloneDeep(store.getters.get_match_details_params)
+    let data =  lodash.cloneDeep(MatchDetailCalss.params)
     data.media_type = media_type
-    store.dispatch('set_match_details_params',data)
+    MatchDetailCalss.set_match_details_params(data)    
   },
   /**
   * @Description:获取滚球视频列表
@@ -972,7 +969,7 @@ export default {
   get_videos(callback) {
     let sm = ''
     let isAnimation = ""
-    let media_type = store.getters.get_play_media.media_type
+    let media_type = MatchDetailCalss.play_media.media_type
     switch (media_type) {
       case 'studio':
         isAnimation = 3
@@ -991,16 +988,13 @@ export default {
     // isAnimation:赛事是否有动画和视频 1 有 0 没有 2只有视频 3 只有直播 4 赛前节目 5 视频/直播/赛前节目
     // if(vue.$route.name === 'video'){
     //     isAnimation = 5
-    //     // if( _.get(vue,'$route.params.play_type') === '2' ){
+    //     // if( lodash.get(vue,'$route.params.play_type') === '2' ){
     //     //   sm ='888'
     //     // }
     // }
     api_common.get_videos({sm,isAnimation}).then( res => {
-      let data = _.get(res,'data.data') || []
+      let data = lodash.get(res,'data.data') || []
       // 根据商户过滤篮球赛事
-      // if(store.getters.get_user.mId == '1443742662615240704'){
-      //   _.remove(data, match => match.csid == 2)
-      // }
       data.forEach( match => {
         match.msc = BetCommonHelper.msc_array_obj(match.msc)
         details.init_score(match.msc,['S1'],true)

@@ -100,7 +100,7 @@ export default {
     let { mid, tid, csid: sportId } = match;
     let old_mid = MatchDetailCalss.mid
     let old_media_type = MatchDetailCalss.params.media_type
-    MatchDetailCalss.set_score_button({
+    MatchDetailCalss.set_match_details_params({
       mid,
       tid,
       sportId,
@@ -127,7 +127,7 @@ export default {
     let match = lodash.get(match_list,'[0]') || {}
     if(!match.mid){
       let play_id =MatchDetailCalss.current_category_id;
-      MatchDetailCalss.set_score_button({
+      MatchDetailCalss.set_match_details_params({
         mid:0,
         tid:0,
         sportId:0,
