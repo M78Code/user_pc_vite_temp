@@ -170,8 +170,6 @@ const on_scroll = (position) => {
 }
 // 设置滚动位置
 const set_scroll_position = (position) => {
-  console.assert(1111)
-  console.log('ref_v_scroll_area.value', position);
  ref_v_scroll_area.value.setScrollPosition("vertical",position[0], position[1])
 }
 

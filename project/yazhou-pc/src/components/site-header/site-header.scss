@@ -260,7 +260,7 @@
                     margin-left: -25px;
 
                     .activity_center {
-                        img {
+                        .img {
                             width: 44px;
                             margin-right: 4px;
                         }
@@ -285,7 +285,7 @@
                         position: relative;
                         padding-left: 65px !important;
 
-                        img {
+                        .img {
                             position: absolute;
                             left: 15px;
                         }
@@ -800,7 +800,7 @@
     }
 }
 
-.animate-activity-entry img {
+.animate-activity-entry .img {
     animation-name: upAnimation;
     transform-origin: center bottom;
     animation-duration: 2s;

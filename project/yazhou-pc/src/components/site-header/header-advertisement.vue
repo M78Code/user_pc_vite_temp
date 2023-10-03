@@ -60,7 +60,7 @@ const theme = ref(themeReducer.theme)
 watch(
     () => theme.value,
     (o) => {
-        clearInterval(showBannerSwipperTimer.value);
+        clearInterval(showBannerSwipperTimer);
         currentSwipperArr = []
         if (o && o.includes('day')) {
             if (daySwipper.length > 0) {
@@ -73,7 +73,7 @@ watch(
         }
         // 图片大于一张开启轮播
         if (currentSwipperArr.length > 1) {
-            showBannerSwipperTimer.value = setInterval(() => {
+            showBannerSwipperTimer = setInterval(() => {
                 autoPlay()
             }, 7000)
         }
@@ -94,21 +94,24 @@ let currentSwipperArr = reactive([])
 
 /** 展示右侧图片资源上的左右箭头 */
 const showArrow = ref(false)
+
+const showBannerSwipperTimer_timeout = null
+const showBannerSwipperTimer = null
 /**
  * 鼠标移出--3s后重新开始轮播
  */
 function go() {
     showArrow.value = false;
-    clearTimeout(showBannerSwipperTimer_timeout.value)
-    clearInterval(showBannerSwipperTimer.value)
+    clearTimeout(showBannerSwipperTimer_timeout)
+    clearInterval(showBannerSwipperTimer)
     // 图片不止一张的时候才触发轮播
     if (currentSwipperArr.length > 1) {
         // 3秒之后立即切换一次图片
-        showBannerSwipperTimer_timeout.value = setTimeout(() => {
+        showBannerSwipperTimer_timeout = setTimeout(() => {
             autoPlay()
             nextTick(() => {
                 // 然后恢复每7秒一次的轮播
-                showBannerSwipperTimer.value = setInterval(() => {
+                showBannerSwipperTimer = setInterval(() => {
                     // autoPlay()
                 }, 7000)
             })
@@ -120,9 +123,9 @@ function go() {
  * 鼠标移入--暂停轮播
  */
 function stop() {
-    clearInterval(showBannerSwipperTimer.value);
-    clearTimeout(showBannerSwipperTimer_timeout.value);
-    showBannerSwipperTimer.value = null;
+    clearInterval(showBannerSwipperTimer);
+    clearTimeout(showBannerSwipperTimer_timeout);
+    showBannerSwipperTimer = null;
     showArrow.value = true;
 }
 
