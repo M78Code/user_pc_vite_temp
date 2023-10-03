@@ -885,7 +885,7 @@ class MenuData {
         current_lv_3_menu_i = idx;
       }
     }
-    //置空4级菜单
+    //选中3级菜单
     this.set_cache_class({
       current_lv_3_menu,
       current_lv_3_menu_i,
@@ -907,7 +907,7 @@ class MenuData {
   }
   //获取4级菜单 menu
   get_level_four_menu() {
-    return "";
+    return this.current_lv_4_menu;
   }
   //获取二级菜单ID　以前有　menuType这个东西
   get_current_lv_2_menu_type() {
@@ -955,7 +955,7 @@ class MenuData {
     if (this.get_sub_is_all()) {
       return this.current_lv_2_menu && lodash.castArray(this.current_lv_2_menu).map((item) => {
         return item.mi || item.menuId;
-      });
+      }).join(',');
     } else {
       // 竟足处理 50101
       if (this.is_jinzu()) {
