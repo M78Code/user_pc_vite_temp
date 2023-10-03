@@ -50,7 +50,7 @@
                 :bet_data="item"
                 :bet_path="{ hl_index: j, ol_index: i }"
                 :team_name="
-                 is_eports_csid(match_info.csid)
+                 is_eports_csid(match_info?.csid)
                     ? lodash.get(item_details, `title[${i}].osn`)
                     : ''
                 "
@@ -60,10 +60,10 @@
                   <!-- csid 球类id 虚拟赛狗1002 虚拟赛马1011 虚拟摩托1010 泥地摩托车1009-->
                   <div
                     v-if="
-                      ['1002', '1011', '1010', '1009'].includes(match_info.csid)
+                      ['1002', '1011', '1010', '1009'].includes(match_info?.csid)
                     "
                     class="rank-no"
-                    :class="`ranking-bg-style1-${item?.ot} csid-${match_info.csid}`"
+                    :class="`ranking-bg-style1-${item?.ot} csid-${match_info?.csid}`"
                   ></div>
                   <div class="item-label bet-ellipsis ellipsis">
                     <!-- ott 展示用的和title一样 -->
