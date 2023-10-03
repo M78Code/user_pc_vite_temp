@@ -45,7 +45,7 @@
     }
 
     &.zaopan {
-      padding-top: 0.96rem;
+      padding-top: 0.35rem;
 
       &.esport {
         padding-top: 1.37rem;
@@ -71,6 +71,9 @@
     &.detail_match_list {
       padding-top: 0;
       padding-bottom: 0;
+      .refresh-container{
+        padding-top: 0;
+      }
     }
     .cover-loading {
       width: 0.4rem;

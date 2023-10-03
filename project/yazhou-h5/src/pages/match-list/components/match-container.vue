@@ -1246,7 +1246,7 @@ const get_m_status_show = (i) => {
       if ([1, 110].includes(+item.ms)) {
         result = false;
       }
-      else if (![1, 110].includes(+item.ms) && [1, 110].includes(+prev_props.match_of_list.ms)) {
+      else if (![1, 110].includes(+item.ms) && [1, 110].includes(+props.match_of_list.ms)) {
         result = true;
       }
     } else if (i == 0 && ![1, 110].includes(+item.ms)) {
@@ -1527,7 +1527,7 @@ watch(() => away_score.value, (new_,old_) => {
   }
 })
 // 监听主队红牌比分变化
-watch(() => home_red_score.value, () => {
+watch(() => home_red_score.value, (new_, old_) => {
   if (props.match_of_list.csid != 1) return
   if (home_red_first_change.value) {
     home_red_first_change.value = false;
