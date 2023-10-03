@@ -44,12 +44,12 @@ export default {
   },
   props: ['detail_data'],
   created(){
-    examine_mmp(); // 检查mmp是否是局间休息，如果是，则不显示局间比分;
+    this.examine_mmp(); // 检查mmp是否是局间休息，如果是，则不显示局间比分;
   },
   methods: {
     current_score(str) {
       let content = "";
-      _.forEach(detail_data.msc, (v, k) => {
+      lodash.forEach(this.detail_data.msc, (v, k) => {
         if (v.split("|")[0] == str) {
           content = v.split("|")[1];
         }
@@ -58,7 +58,7 @@ export default {
     },
     current_score_common() {
       let num = 0;
-      _.forEach(detail_data.msc, (v, k) => {
+      lodash.forEach(this.detail_data.msc, (v, k) => {
         let current = Number(v.split("|")[0].substring(1));
         if (current > num && (current >= 120 && current <= 159)) {
           num = Number(v.split("|")[0].substring(1));
@@ -69,8 +69,8 @@ export default {
       }
     },
     examine_mmp(){ // 将休息状态的发球方置空显示，不显示绿色小点;
-      if(mmp_arr.includes(detail_data.mmp)){
-        detail_data.mat = '';      
+      if(this.mmp_arr.includes(this.detail_data.mmp)){
+        this.detail_data.mat = '';      
       }
     }
   }

@@ -8,7 +8,7 @@ import store from "src/store-redux/index.js";
 import { api_details } from "src/api/index";
 import { UserCtr, MITT_TYPES,useMittEmit } from "src/core/index.js"; 
 import { update_match_time } from "src/core/bet/common-helper/module/common-sport.js"
-import {utils,is_virtual_csid,is_eports_csid,MatchDetailCalss,MatchDataWarehouse_PC_Detail_Common as MatchDetailsData, } from 'src/core/index.js'
+import {utils,is_virtual_csid,is_eports_csid,MatchDetailCalss,MatchDataWarehouse_PC_Detail_Common as MatchDetailsData,LayOutMain_pc } from 'src/core/index.js'
 import GlobalAccessConfig from "src/core/access-config/access-config.js"
 import router from "project_path/src/router/index.js"
 import lodash from 'lodash';
@@ -57,6 +57,8 @@ export default {
       },
       query: route_query
     });
+
+    LayOutMain_pc.set_layout_current_path("details")
     if(go_detail_type != 'no_switch' || ((varl || vurl) && mms == 2 && utils.get_match_status(ms) == 1)){
       // 供右侧数据加载使用
       let media_type = mvs > -1 ? 'animation' : 'auto'
@@ -100,7 +102,7 @@ export default {
     let { mid, tid, csid: sportId } = match;
     let old_mid = MatchDetailCalss.mid
     let old_media_type = MatchDetailCalss.params.media_type
-    MatchDetailCalss.set_score_button({
+    MatchDetailCalss.set_match_details_params({
       mid,
       tid,
       sportId,
@@ -127,7 +129,7 @@ export default {
     let match = lodash.get(match_list,'[0]') || {}
     if(!match.mid){
       let play_id =MatchDetailCalss.current_category_id;
-      MatchDetailCalss.set_score_button({
+      MatchDetailCalss.set_match_details_params({
         mid:0,
         tid:0,
         sportId:0,

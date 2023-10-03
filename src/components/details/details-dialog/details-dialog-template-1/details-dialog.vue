@@ -239,7 +239,9 @@ function change_active(item) {
   useMittEmit(MITT_TYPES.EMIT_CATEGORY_SKT); // 底部信息skt连接
   useMittEmit(MITT_TYPES.EMIT_DETAILS_SKT); // 头部信息skt连接
   timer1_.value = setInterval(() => {
+    // 触发详情页页面初始化
     useMittEmit(MITT_TYPES.EMIT_MATCH_TIME_SHOW_INIT);
+    // 详情页更新 正/倒 计时时间
     useMittEmit(MITT_TYPES.EMIT_UPDATE_GAME_TIME)
     clearInterval(timer1_.value)
     clearInterval(timer2_.value)

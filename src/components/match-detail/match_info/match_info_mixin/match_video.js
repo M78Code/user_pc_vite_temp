@@ -205,7 +205,7 @@ export default {
     },
     // 赛事ID改变
     "match_info.mid"() {
-      if(this.match_info.mid == -1 || !this.match_info.mid){
+      if(this.match_info?.mid == -1 || !this.match_info?.mid){
         this.show_type = 'no-video'
       }
       this.media_src = ''

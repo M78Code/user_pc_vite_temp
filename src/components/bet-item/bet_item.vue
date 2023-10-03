@@ -16,7 +16,7 @@
       bet_tpl,
       odds_lift,
       version_name,
-      `csid${match.csid}`,
+      `csid${match?.csid}`,
       ![367, 368, 369, 7, 20, 74, 103, 241, 341, 342, 343, 236, 344].includes(
         lodash.get(play_data, 'hpid') * 1
       ) ||

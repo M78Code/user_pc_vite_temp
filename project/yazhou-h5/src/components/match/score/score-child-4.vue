@@ -8,11 +8,10 @@
 <!-- 可能会产生滚动，故用class  menu-s -->
   <div class='score_child_4 mx-12 font-style menu-s'>
     <!-- 常规三节赛事 -->
-    <!-- TODO:  | score_format 过滤后续修改 -->
     <template v-if="mmp_arr.includes(detail_data.mmp) && !is_match_result">
       <span v-for="(item, key) of score_array" :key="key">
         <span>&ensp;</span>
-        <span :class="{'active-text':(score_array.length == key + 1 && detail_data.mo != 1)}">{{item}}</span>
+        <span :class="{'active-text':(score_array.length == key + 1 && detail_data.mo != 1)}">{{ $filters.score_format(item)}}</span>
         <span>&ensp;</span>
       </span>
     </template>
@@ -21,19 +20,19 @@
       <!-- 解决key重复 -->
       <span v-for="(item, key) of score_array" :key="key">
         <span>&ensp;</span>
-        <span>{{item}}</span>
+        <span>{{ $filters.score_format(item)}}</span>
         <span>&ensp;</span>
       </span>
       <!-- 加时赛比分展示 -->
       <span v-if="extraTime">
         <span>&ensp;</span>
-        <span class="activeText">{{i18n_t('match_info.ice_add')}}:{{extraTime}}</span>
+        <span class="activeText">{{i18n_t('match_info.ice_add')}}:{{ $filters.score_format(extraTime)}}</span>
         <span>&ensp;</span>
       </span>
       <!-- 点球比分展示 -->
       <span v-if="penaltyScore">
         <span>&ensp;</span>
-        <span class="activeText">{{i18n_t('match_info.shoot_out')}}:{{penaltyScore}}</span>
+        <span class="activeText">{{i18n_t('match_info.shoot_out')}}:{{ $filters.score_format(penaltyScore)}}</span>
       </span>
     </template>
   </div>
@@ -64,23 +63,23 @@ export default {
     // ]),
     // 获取冰球赛事各个阶段的比分
     score_array(){
-      return init_event();
+      return this.init_event();
     },
     // msc S7 表示公共加时赛比分  冰球
     extraTime(){
-      return get_extra_time();
+      return this.get_extra_time();
     },
     // msc S170	点球大战比分  冰球
     penaltyScore(){
-      return get_penalty_score();
+      return this.get_penalty_score();
     },
     is_match_result(){
-      return ['result_details', 'match_result'].includes($route.name)
+      return ['result_details', 'match_result'].includes(this.$route.name)
     }
   },
   watch: {
     get_detail_msc_changed(curr){
-      init_event();
+      this.init_event();
     },
     detail_data:{
       handler(n, o){
@@ -107,7 +106,7 @@ export default {
   },
   props: ['detail_data'],
   created(){
-    validate_stage();
+    this.validate_stage();
   },
   methods: {
     /**
@@ -116,17 +115,17 @@ export default {
      *@return {Array} 比分集合
      */
      init_event(){
-      let msc = detail_data.msc;
+      let msc = this.detail_data.msc;
       // sortBy方法  比分升序排列 取出比分阶段后面的数字作为判断条件 返回是数组
-      msc = _.sortBy( msc, (item) => {
+      msc = lodash.sortBy( msc, (item) => {
         return +(item.split("|")[0]).substring(1)
       })
       let score_arr = [];
       // 循环只取出接口返回的比分里面符合冰球阶段的比分
-      _.forEach(msc, (item, index)=>{
+      lodash.forEach(msc, (item, index)=>{
          // S120 S121 S122 ...
         let num_index = item.split("|")[0];
-        if(msc_array.includes(num_index)){
+        if(this.msc_array.includes(num_index)){
           score_arr.push(item.split("|")[1]);
         }
       })
@@ -138,9 +137,9 @@ export default {
      *@return {String} 加时赛比分
      */
     get_extra_time(){
-      let msc = detail_data.msc;
+      let msc = this.detail_data.msc;
       let extra = "";
-      _.forEach(msc,(item,index)=>{
+      lodash.forEach(msc,(item,index)=>{
         let num_index = item.split("|")[0];
         if(num_index == "S7"){
           extra = item.split("|")[1];
@@ -154,9 +153,9 @@ export default {
     *@return {String}} 点球大战比分
     */
     get_penalty_score(){
-      let msc = detail_data.msc;
+      let msc = this.detail_data.msc;
       let penalty = "";
-      _.forEach(msc,(item,index)=>{
+      lodash.forEach(msc,(item,index)=>{
         let num_index = item.split("|")[0];
         if(num_index == "S170"){
           penalty = item.split("|")[1];
@@ -170,7 +169,7 @@ export default {
      *@return {Undefined}
      */
     validate_stage(){
-      switch(detail_data.mmp){
+      switch(this.detail_data.mmp){
         case '301':  // 第一节结束  S121是第二节比分 0:0
           useMittEmit(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, 'S121|0:0')
           break;

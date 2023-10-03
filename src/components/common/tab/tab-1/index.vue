@@ -7,7 +7,7 @@
         @mouseleave="tabs_leave(index)" :id="BUILDIN_CONFIG.DOM_ID_SHOW && `top-menu-ids-${val.id}`">
         <!-- BUILDIN_CONFIG.DOM_ID_SHOW 显示部分dom ID -->
         <!-- <img v-if="val.img_src" v-check-img="{ src: val.img_src, default: `/image/common/activity_banner/gift_package.png` }" /> -->
-        <!-- <div :class="val.class" :style="compute_css('gift-package')"></div> -->
+        <div :class="val.class" class="img" :style="compute_css('gift-package')"></div>
         {{ val[tab_name_key] }}
         <!-- 早盘||串关 主列表顶部日期后显示赛事数量 -->
         <span v-if="is_list_top_menu" class="match-count">({{ val.count }})</span>

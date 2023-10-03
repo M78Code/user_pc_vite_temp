@@ -12,7 +12,7 @@
     <span v-else>
       {{i18n_t('mmp')[2][detail_data.mmp]}}
       <!-- 计时器 -->
-      <span v-if="mmp_arr_base.includes(detail_data.mmp) && match_time_dt > 0" >&nbsp;&nbsp;<span>{{ match_time_dt | format_mgt_time }}</span></span>
+      <span v-if="mmp_arr_base.includes(detail_data.mmp) && match_time_dt > 0" >&nbsp;&nbsp;<span>{{ $filters.format_mgt_time(match_time_dt) }}</span></span>
     </span>    
   </span>
 </template>

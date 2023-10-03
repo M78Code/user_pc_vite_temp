@@ -28,7 +28,7 @@ export default {
      *@return {Srting} 赛事阶段 mmp的详细描述请参考国际化文件:/user-h5/src/i18n/zh-cn/index.js
      */
     match_period_map(){      
-      let {mmp,ms,mct} = detail_data;
+      let {mmp,ms,mct} = this.detail_data;
       let r = '';
       try{
         // ms: 0:未开始 1:进行中 2:暂停 3:结束 4:关闭
@@ -36,7 +36,7 @@ export default {
         // csid: 1:足球 2:篮球 5:网球 7:斯诺克 8:兵乓球 10:羽毛球
         
         // 前端做兼容处理 在赛事阶段:未开赛 赛事状态:进行中 的时候默认显示第一局
-        if(detail_data.mmp == 0 && detail_data.ms == 1){
+        if(this.detail_data.mmp == 0 && this.detail_data.ms == 1){
           mct = 1;
         }
         let new_num = mct;        
@@ -47,7 +47,7 @@ export default {
         r = game_count.replace('%s',new_num);
 
         // 前端做兼容处理 在赛事阶段:未开赛 赛事状态:进行中 的时候默认显示第一局
-        // if(detail_data.mmp == 0 && detail_data.ms == 1){
+        // if(this.detail_data.mmp == 0 && this.detail_data.ms == 1){
         //   const first_mct = 1;
         //   let n_mct = first_mct;
         //   if(UserCtr.lang == 'zh'){

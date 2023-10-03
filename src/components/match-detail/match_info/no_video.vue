@@ -55,7 +55,7 @@ export default {
 .c-no-video {
   width: 100%;
   height: 100%;
-  background-image: url("~public/image/yabo/png/novideobg.jpg");
+  background-image: url("/yazhou-pc/image/png/novideobg.jpg");
   background-size: 100% 100%;
   text-align: center;
 }
@@ -100,19 +100,19 @@ export default {
     height: 79px;
     margin: auto;
     margin-bottom: 6px;
-    background-image: url("~public/image/yabo/png/novideo1.png");
+    background-image: url("/yazhou-pc/image/png/novideo1.png");
   }
   .img2 {
-    background-image: url("~public/image/yabo/png/novideo2.png");
+    background-image: url("/yazhou-pc/image/png/novideo2.png");
   }
   .img3 {
-    background-image: url("~public/image/yabo/png/novideo3.png");
+    background-image: url("/yazhou-pc/image/png/novideo3.png");
   }
   .img4 {
-    background-image: url("~public/image/yabo/png/novideo4.png");
+    background-image: url("/yazhou-pc/image/png/novideo4.png");
   }
   .img5 {
-    background-image: url("~public/image/yabo/png/novideo5.png");
+    background-image: url("/yazhou-pc/image/png/novideo5.png");
   }
 }
 </style>

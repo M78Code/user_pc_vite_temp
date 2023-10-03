@@ -11,8 +11,7 @@
     <template v-if="model_a.includes(detail_data.mmp) && detail_data.mo != 1">
       <span v-for="(item, key) of score_array" :key="key">
         <span>&nbsp;&nbsp;</span>
-        <!-- TODO:  | score_format 过滤后续修改 -->
-        <span :class="score_array.length == key + 1 ? 'active-text': '' "><span style="letter-spacing: 0.01rem">{{item}}</span></span>
+        <span :class="score_array.length == key + 1 ? 'active-text': '' "><span style="letter-spacing: 0.01rem">{{ $filters.score_format(item)}}</span></span>
       </span>
     </template>
     <!-- 水球点球比分展示 -->
@@ -20,12 +19,12 @@
       <!-- 常规4节比分 -->
       <span v-for="(item, key) of score_array" :key="key">
         <span>&ensp;</span>
-        <span>{{item}}</span>
+        <span>{{ $filters.score_format(item)}}</span>
         <span>&ensp;</span>
       </span>
       <span v-if="penaltyScore">
         <span>&ensp;</span>
-        <span>{{i18n_t('match_info.shoot_out')}}:&nbsp;<span class="active-text">{{penaltyScore}}</span></span>
+        <span>{{i18n_t('match_info.shoot_out')}}:&nbsp;<span class="active-text">{{ $filters.score_format(penaltyScore)}}</span></span>
       </span>
     </template>
   </div>
@@ -52,11 +51,11 @@ export default {
     // ...mapGetters(['get_menu_type']),
     // 比分集合
     score_array(){
-      return initEvent();
+      return this.initEvent();
     },
     // msc S170	点球大战比分  水球
     penaltyScore(){
-      return get_penalty_score();
+      return this.get_penalty_score();
     },
   },
   watch: {
@@ -82,7 +81,7 @@ export default {
   },
   props: ['detail_data'],
   created(){
-    validateStage();
+    this.validateStage();
   },
   methods: {
     /**
@@ -91,16 +90,16 @@ export default {
      *@return {Array} 水球比分
      */
     initEvent(){
-      let msc = detail_data.msc;
+      let msc = this.detail_data.msc;
       // sortBy方法  比分升序排列 取出比分阶段后面的数字作为判断条件 返回是数组
-      msc = _.sortBy( msc, (item) => {
+      msc = lodash.sortBy( msc, (item) => {
         return +(item.split("|")[0]).substring(1)
       })
       let score_arr = [];
       // 循环只取出接口返回的比分里面符合水球球阶段的比分
-      _.forEach(msc, (item, index)=>{
+      lodash.forEach(msc, (item, index)=>{
         let num_index = item.split("|")[0];
-        if(msc_array.includes(num_index)){
+        if(this.msc_array.includes(num_index)){
           score_arr.push(item.split("|")[1]);
         }
       })
@@ -112,9 +111,9 @@ export default {
      *@return {Undefined} 点球大战比分
      */
     get_penalty_score(){
-      let msc = detail_data.msc;
+      let msc = this.detail_data.msc;
       let penalty = "";
-      _.forEach(msc,(item)=>{
+      lodash.forEach(msc,(item)=>{
         let num_index = item.split("|")[0];
         if(num_index == "S170"){
           penalty = item.split("|")[1];
@@ -128,7 +127,7 @@ export default {
      *@return {Undefined}
      */
     validateStage(){
-      switch( detail_data.mmp ){
+      switch( this.detail_data.mmp ){
         case "301": //301 第一节结束   S20 第二节比分(水球)
           useMittEmit(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, 'S20|0:0')
           break;

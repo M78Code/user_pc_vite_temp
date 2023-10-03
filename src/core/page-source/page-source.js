@@ -33,13 +33,18 @@ const PAGE_SOURCE_POOL_H5 =  [
 
 const PAGE_SOURCE_POOL_PC =  [
   "details",
-  'match-play-common' ,
-  'match-play-fliter' ,
-  'match-play-collect' ,
-  'match-early-common' ,
-  'match-early-fliter' ,
-  'match-early-collect' ,
-  "virtual_details"
+  'match-play-common' , // 滚球 常规
+  'match-play-esports' ,// 滚球 电竞
+  'match-play-vr' ,// 滚球 vr
+  'match-common-champion', //常规 冠军 联赛结构
+  'match-champion', //冠军 球种结构
+  'match-today-common' , //今日 常规
+  'match-early-common' , //早盘 常规
+  'match-fliter' ,//筛选
+  'match-collect' ,//收藏
+  'match-esports' ,//电竞
+  'match-vr' ,// vr
+  "virtual_details"// vr 详情
 ]
 
 class PageSourceData {

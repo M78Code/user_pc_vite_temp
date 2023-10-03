@@ -25,7 +25,7 @@ export default {
      *@return {Srting} 赛事阶段 mmp的详细描述请参考国际化文件:/user-h5/src/i18n/zh-cn/index.js
      */
     match_period_map(){      
-      let {mmp,ms} = detail_data;
+      let {mmp,ms} = this.detail_data;
       let r = '';
       try{
         // ms: 0:未开始 1:进行中 2:暂停 3:结束 4:关闭
@@ -34,7 +34,7 @@ export default {
         
         // 从语言包里取数据文本
         r = i18n_t('mmp')[3][mmp];
-        if(detail_data.mmp == 0 && detail_data.ms == 1){
+        if(this.detail_data.mmp == 0 && this.detail_data.ms == 1){
           r = i18n_t('mmp')[3][401];
         }
       }catch(e){console.error(e)}

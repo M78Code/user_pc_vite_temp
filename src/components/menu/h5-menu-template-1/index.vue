@@ -162,7 +162,9 @@ import base_data from "src/core/base-data/base-data.js";
 import { useRoute, useRouter } from "vue-router";
 import lodash from "lodash"
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
-import { copy } from "clipboard";
+// 一级菜单mi ref
+const { menu_type, update_time } =
+  MenuData;
 //是否 滚球
 const is_scroll_ball = computed(() => {
   return MenuData.is_scroll_ball() && menu_type.value;
@@ -216,9 +218,7 @@ const pop_main_items = ref([]); //弹出框数据
 const show_selector_sub = ref(false); //展示弹出框
 // 切换到电竞时 的菜单 背景图片
 const dj_back_type = ref("lol")
-// 一级菜单mi ref
-const { menu_type, update_time } =
-  MenuData;
+
 //是否显示三级菜单
 const is_show_three_menu = computed(() => {
   return date_menu_list.value.length > 0 && MenuData.get_is_show_three_menu()
@@ -317,7 +317,7 @@ function dj_back_img(item) {
 function select_all_sub_menu_handle() {
   let data_list = menu_list.value.find((item) => lodash.get(item, 'mi') == 1);
   if (data_list) {
-    set_menu_lv1(data_list, -1, "click");
+    set_menu_lv2(data_list.sl, -1, "click");
   }
 }
 /**
@@ -341,7 +341,7 @@ async function set_menu_lv2(item, index, type = "click") {
  * 三级菜单事件
  */
 function set_menu_lv3(item, index, type = "click") {
-  console.log(item)
+  console.log(item.field1)
   //点击当前 就不做什么
   if (
     MenuData.current_lv_3_menu &&

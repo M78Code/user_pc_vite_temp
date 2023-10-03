@@ -27,7 +27,7 @@ class MatchMeta {
    * @description 设置 赛事 元数据
    * @param { mi } 菜单类型
    */
-  set_origin_match_data () {
+  set_origin_match_data() {
     // 菜单 ID 对应的 元数据赛事 mids
     const menu_lv_v1 = lodash.get(MenuData.current_lv_1_menu, 'mi')
     const menu_lv_v2 = lodash.get(MenuData.current_lv_2_menu, 'mi')
@@ -43,7 +43,6 @@ class MatchMeta {
     if (typeof menu_lv_v2 !== 'string') return
     this.get_origin_match_mids_by_mi(menu_lv_v2)
   }
-
   /**
    * @description 获取 对应 全部赛事 mids
    * @remarks 滚球全部、今日对应球种（滚球 + 早盘）
@@ -62,9 +61,9 @@ class MatchMeta {
     this.get_origin_match_by_mids(this.match_mids)
   }
 
-  /**
+  /** 暂时没有用这个方法了 因为一个方法足以
    * @description 根据 mi 获取对应的 mids
-   * @param { mi } 二级菜单
+   * @param { mi } 二级菜单  
    */
   get_origin_match_mids_by_mi (mi) {
     // 当前菜单下的 mids 集合
@@ -80,7 +79,7 @@ class MatchMeta {
    * @description 根据 mi 获取元数据 mids
    * @param {*} mi 
    */
-  get_match_mids_by_mi (mi) {
+  get_match_mids_by_mi(mi) {
     const mi_tid_mids_res = lodash.get(BaseData, 'mi_tid_mids_res')
     if (mi_tid_mids_res.length < 1) return []
     const mid_obj = mi_tid_mids_res[mi]
@@ -101,7 +100,7 @@ class MatchMeta {
    * @description 根据 mids 获取对应的赛事数据
    * @param { mid } 二级菜单
    */
-  get_origin_match_by_mids (mids) {
+  get_origin_match_by_mids(mids) {
     // 赛事全量数据
     const list = lodash.get(BaseData.base_data_res, 'matchsList', [])
     if (list.length < 1) return
@@ -115,7 +114,7 @@ class MatchMeta {
    * @description 设置赛事默认模板 输出最终赛事完整数据 更新仓库  目前只处理了 1-足球; 2-篮球
    * @param { list } 赛事集合
    */
-  set_match_default_template (list) {
+  set_match_default_template(list) {
     const data_list = list.map(t => {
       const csid = lodash.get(t, 'csid')
       const template_config = this.get_match_default_template_config(csid)
@@ -142,7 +141,7 @@ class MatchMeta {
    * @param { list } 赛事集合
    * @param { template } 赛事默认模板
    */
-  get_match_default_template (t, template) {
+  get_match_default_template(t, template) {
     const csid = lodash.get(t, 'csid')
     return {
       ...template[`template_${csid}`]
@@ -159,7 +158,7 @@ class MatchMeta {
    *       "15": "第三节",
    *       "16": "第四节",
    */
-  get_basketball_default_template (t, template) {
+  get_basketball_default_template(t, template) {
     const mmp = lodash.get(t, 'mmp')
     const hpsAdd = template[`template_2`][`cur_handicap_list_${mmp}`]
     return { hpsAdd }
@@ -170,7 +169,7 @@ class MatchMeta {
    * @param { csid } 球种id
    * @returns Object 球种默认模板配置
    */
-  get_match_default_template_config (csid) {
+  get_match_default_template_config(csid) {
     return lodash.get(MATCH_LIST_TEMPLATE_CONFIG, `template_${csid}_config`, {})
   }
 
@@ -178,8 +177,8 @@ class MatchMeta {
    * @description 设置赛事默认属性
    * @param { list } 赛事数据 
    */
-  set_match_default_properties (list = []) {
-    const length = lodash.get(list, 'length', 0)
+  set_match_default_properties(list = []) {
+    const length = lodash.get(list, 'length')
     if (length < 1) return
     // 是否展示联赛标题
     let is_show_league = false
@@ -187,7 +186,7 @@ class MatchMeta {
     let is_show_tab_play = false
     // 是否折叠
     let is_fold_tab_play = false
-    
+
     list.forEach((t, i) => {
       is_show_league = i === 0 ? true : list[i].tid !== list[i - 1].tid
       Object.assign(t, {
@@ -232,7 +231,7 @@ class MatchMeta {
        // TODO: 需要去除 .slice(0, 10)
       this.match_mids = [...new Set((arr_mids).slice(0, 8))]
     }
-    this.get_origin_match_by_mids( this.match_mids)
+    this.get_origin_match_by_mids(this.match_mids)
   }
 
 
@@ -251,7 +250,7 @@ class MatchMeta {
    * @description 更新对应赛事
    * @param { list } 赛事数据 
    */
-  handle_update_match_info (list) {
+  handle_update_match_info(list) {
     list = lodash.map(list, t => {
       const match = MatchDataBaseH5.get_quick_mid_obj(t.mid)
       return Object.assign({}, match, t)
@@ -267,7 +266,7 @@ class MatchMeta {
    * @param { list } 赛事数据
    * @param { type } 是否获取赔率
    */
-  handle_submit_warehouse (list, type = 'mids') {
+  handle_submit_warehouse(list, type = 'mids') {
     // 设置仓库渲染数据
     MatchDataBaseH5.set_list(list)
     // 计算卡片高度, 需要在赔率接口之前调用， 避免卡片抖动

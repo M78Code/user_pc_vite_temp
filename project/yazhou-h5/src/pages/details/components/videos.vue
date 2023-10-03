@@ -150,7 +150,7 @@
               <div class="score"><span>{{ slotProps.item.t1 }}</span><span class="colon">:</span><span>{{ slotProps.item.t2 }}</span></div>
               <div class="event-team ellipsis">{{ slotProps.item.homeAway }}</div>
               <div class="event-name">{{ event_name(slotProps.item.eventCode) }}: {{ slotProps.item.firstNum }}</div>
-              <div class="event-time">{{ format_mgt_time(+slotProps.item.secondsFromStart) }}</div>
+              <div class="event-time">{{ $filters.format_mgt_time(+slotProps.item.secondsFromStart) }}</div>
             </template>
           </slider-x>
 
@@ -285,7 +285,7 @@ import lodash from "lodash";
 
 import { useRouter, useRoute } from "vue-router";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
-import { format_mgt_time, format_total_score } from "src/core/format/index.js"
+import { format_total_score } from "src/core/format/index.js"
 import { video_info } from "./videos.js";
 import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch,ref } from "vue";
 import { i18n_t } from "src/boot/i18n.js";

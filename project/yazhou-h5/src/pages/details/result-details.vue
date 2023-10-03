@@ -275,7 +275,8 @@ const MatchDataWarehouseInstance = reactive(MatchDataWarehouse_H5_Detail_Common)
 
           sessionStorage.setItem('match_list_ofdetails','');
           math_list_data.value = [];
-          set_sanjiao_is_bool(false);
+          // // 设置详情下拉三角是否显示
+          // set_sanjiao_is_bool(false);
         }else{
           let store_data = {
             tId:params.tId,
@@ -286,7 +287,8 @@ const MatchDataWarehouseInstance = reactive(MatchDataWarehouse_H5_Detail_Common)
           // 将sessiong_store的值存在sessionStorage里面
           sessionStorage.setItem('match_list_ofdetails',sessiong_store);
           math_list_data.value = data;
-          set_sanjiao_is_bool(true);
+          // // 设置详情下拉三角是否显示
+          // set_sanjiao_is_bool(true);
         }
       });
     }
