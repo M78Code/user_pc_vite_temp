@@ -251,7 +251,7 @@ onUnmounted(() => {
   }
   .article_detail {
     background: var(--q-analysis-color-16);
-    border: 1px solid var(--qq--analysis-bd-color-4);
+    border: 1px solid var(--q-analysis-bd-color-4);
     border-radius: 8px;
     height: 100%;
     padding: 15px 38px 38px;
@@ -329,7 +329,7 @@ onUnmounted(() => {
         width: 100%;
         display: flex;
         justify-content: space-between;
-        border-bottom: 1px solid var(--qq--analysis-bd-color-4);
+        border-bottom: 1px solid var(--q-analysis-bd-color-4);
         padding: 20px 0;
         cursor: pointer;
       }

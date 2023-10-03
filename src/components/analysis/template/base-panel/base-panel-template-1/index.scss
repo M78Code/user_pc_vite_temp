@@ -19,12 +19,12 @@
   .d-body {
     color: var(--qq--y0-text-color9);
     .d-td:not(:last-child) {
-      border-right: 1px solid var(--qq--analysis-bd-color-4);
+      border-right: 1px solid var(--q-analysis-bd-color-4);
     }
   }
   .d-tr {
     display: flex;
-    border-bottom: 1px solid var(--qq--analysis-bd-color-4);
+    border-bottom: 1px solid var(--q-analysis-bd-color-4);
     .d-td {
       display: flex;
       align-items: center;
@@ -155,7 +155,7 @@
         &.away {
           align-items: flex-end;
           .d-title {
-            border-right: 1px solid var(--qq--analysis-bd-color-4);
+            border-right: 1px solid var(--q-analysis-bd-color-4);
           }
           .team-name {
             .logo {
@@ -177,7 +177,7 @@
       color: var(--qq--analysis-text-color-12);
       padding: 0 20px;
       &:last-child {
-        border-bottom: 1px solid var(--qq--analysis-bd-color-4);
+        border-bottom: 1px solid var(--q-analysis-bd-color-4);
         border-radius: 0 0 8px 8px;
       }
       span {
@@ -193,7 +193,7 @@
       display: flex;
       justify-content: space-between;
       padding: 0 20px;
-      border-bottom: 1px solid var(--qq--analysis-bd-color-4);
+      border-bottom: 1px solid var(--q-analysis-bd-color-4);
       .score {
         display: flex;
         justify-content: center;
@@ -217,8 +217,8 @@
           &:nth-child(2) {
             text-align: center;
             line-height: 39px;
-            border-left: 1px solid var(--qq--analysis-bd-color-4);
-            border-right: 1px solid var(--qq--analysis-bd-color-4);
+            border-left: 1px solid var(--q-analysis-bd-color-4);
+            border-right: 1px solid var(--q-analysis-bd-color-4);
           }
         }
       }
@@ -268,8 +268,8 @@
 .before {
   .content {
     .d-title {
-      border-left: 1px solid var(--qq--analysis-bd-color-4);
-      border-right: 1px solid var(--qq--analysis-bd-color-4);
+      border-left: 1px solid var(--q-analysis-bd-color-4);
+      border-right: 1px solid var(--q-analysis-bd-color-4);
       padding: 0;
       div {
         width: 22.15%;
@@ -303,7 +303,7 @@
       div:first-child {
         width: 200px;
         text-align: center;
-        border-right: 1px solid var(--qq--analysis-bd-color-4);
+        border-right: 1px solid var(--q-analysis-bd-color-4);
         height: 100%;
         line-height: 39px;
       }
@@ -314,14 +314,14 @@
     }
     .score {
       width: 110px;
-      border-right: 1px solid var(--qq--analysis-bd-color-4);
+      border-right: 1px solid var(--q-analysis-bd-color-4);
     }
   }
 }
 /*  近期战绩 */
 .near {
   .both:first-child {
-    border-right: 1px solid var(--qq--analysis-bd-color-4);
+    border-right: 1px solid var(--q-analysis-bd-color-4);
   }
   .t-body {
     border-top: none;
@@ -332,9 +332,9 @@
       overflow: hidden;
     }
     .home {
-      border-right: 1px solid var(--qq--analysis-bd-color-4);
+      border-right: 1px solid var(--q-analysis-bd-color-4);
       .d-title {
-        border-left: 1px solid var(--qq--analysis-bd-color-4);
+        border-left: 1px solid var(--q-analysis-bd-color-4);
         padding: 0;
         &:last-child {
           border-radius: 0 0 0 8px;
@@ -350,7 +350,7 @@
       }
       .d-tr {
         border-right: none !important;
-        border-left: 1px solid var(--qq--analysis-bd-color-4);
+        border-left: 1px solid var(--q-analysis-bd-color-4);
         &:last-child {
           border-radius: 0 0 0 8px;
         }
@@ -373,7 +373,7 @@
       }
       .d-title,
       .d-tr {
-        border-right: 1px solid var(--qq--analysis-bd-color-4);
+        border-right: 1px solid var(--q-analysis-bd-color-4);
         border-left: none !important;
       }
       .d-tr:last-child {
@@ -383,9 +383,9 @@
     .d-tr {
       padding: 0 !important;
       height: 56px;
-      border-right: 1px solid var(--qq--analysis-bd-color-4);
+      border-right: 1px solid var(--q-analysis-bd-color-4);
       &:last-child {
-        border-bottom: 1px solid var(--qq--analysis-bd-color-4);
+        border-bottom: 1px solid var(--q-analysis-bd-color-4);
       }
       .result {
         width: 168px;
@@ -401,7 +401,7 @@
         overflow: hidden;
         .match-time {
           display: unset;
-          border-right: 1px solid var(--qq--analysis-bd-color-4);
+          border-right: 1px solid var(--q-analysis-bd-color-4);
 
           padding: 10px 0 0 10px;
           flex: 1;
@@ -410,7 +410,7 @@
           display: flex;
           align-items: center;
           justify-content: space-between;
-          border-right: 1px solid var(--qq--analysis-bd-color-4);
+          border-right: 1px solid var(--q-analysis-bd-color-4);
 
           width: 70%;
           & > span {
@@ -421,8 +421,8 @@
           .score {
             width: 33%;
             height: 100%;
-            border-left: 1px solid var(--qq--analysis-bd-color-4);
-            border-right: 1px solid var(--qq--analysis-bd-color-4);
+            border-left: 1px solid var(--q-analysis-bd-color-4);
+            border-right: 1px solid var(--q-analysis-bd-color-4);
           }
         }
       }
@@ -435,7 +435,7 @@
     display: flex;
     padding: 0 20px;
     color: var(--qq--analysis-text-color-2);
-    border-bottom: 1px solid var(--qq--analysis-bd-color-4);
+    border-bottom: 1px solid var(--q-analysis-bd-color-4);
     .home {
       .logo {
         margin-right: 10px;
@@ -461,11 +461,11 @@
     flex: 1;
   }
   .home {
-    border-right: 1px solid var(--qq--analysis-bd-color-4);
+    border-right: 1px solid var(--q-analysis-bd-color-4);
   }
   .d-tr {
     display: flex;
-    border-bottom: 1px solid var(--qq--analysis-bd-color-4);
+    border-bottom: 1px solid var(--q-analysis-bd-color-4);
     &:last-child {
       border-bottom: transparent;
     }
@@ -477,10 +477,10 @@
   .content {
     display: flex;
     .wrap-home {
-      border-right: 1px solid var(--qq--analysis-bd-color-4);
+      border-right: 1px solid var(--q-analysis-bd-color-4);
     }
     .future-item {
-      border-bottom: 1px solid var(--qq--analysis-bd-color-4);
+      border-bottom: 1px solid var(--q-analysis-bd-color-4);
       padding: 0 10px 0 20px;
     }
     .wrap-home,
@@ -556,35 +556,35 @@
     border-bottom: 0;
   }
   .simple-team {
-    border-bottom: 1px solid var(--qq--analysis-bd-color-4) !important;
+    border-bottom: 1px solid var(--q-analysis-bd-color-4) !important;
     .home {
       border-bottom: 0;
     }
   }
   .content {
     .item:not(:last-child) {
-      border-bottom: 1px solid var(--qq--analysis-bd-color-4);
+      border-bottom: 1px solid var(--q-analysis-bd-color-4);
     }
     .wrap-home {
-      border-left: 1px solid var(--qq--analysis-bd-color-4);
-      border-bottom: 1px solid var(--qq--analysis-bd-color-4);
+      border-left: 1px solid var(--q-analysis-bd-color-4);
+      border-bottom: 1px solid var(--q-analysis-bd-color-4);
       border-radius: 0 0 0 8px;
     }
     .wrap-away {
-      border-bottom: 1px solid var(--qq--analysis-bd-color-4);
-      border-right: 1px solid var(--qq--analysis-bd-color-4);
+      border-bottom: 1px solid var(--q-analysis-bd-color-4);
+      border-right: 1px solid var(--q-analysis-bd-color-4);
       border-radius: 0 0 8px 0;
     }
   }
   .content.no_data {
     display: flex;
-    border-top: 1px solid var(--qq--analysis-bd-color-4);
+    border-top: 1px solid var(--q-analysis-bd-color-4);
 
     text-align: center;
     height: 40px;
     line-height: 40px;
     .wrap-away {
-      border-right: 1px solid var(--qq--analysis-bd-color-4);
+      border-right: 1px solid var(--q-analysis-bd-color-4);
     }
     .wrap-home {
       border-radius: 0 0 0 8px;
@@ -620,8 +620,8 @@
       }
       .vs {
         height: 100%;
-        border-left: 1px solid var(--qq--analysis-bd-color-4);
-        border-right: 1px solid var(--qq--analysis-bd-color-4);
+        border-left: 1px solid var(--q-analysis-bd-color-4);
+        border-right: 1px solid var(--q-analysis-bd-color-4);
         line-height: 39px;
       }
     }
@@ -629,7 +629,7 @@
       width: 23%;
       flex: none !important;
       height: 100%;
-      border-right: 1px solid var(--qq--analysis-bd-color-4);
+      border-right: 1px solid var(--q-analysis-bd-color-4);
       padding-top: 2px;
     }
     .wrap-home {

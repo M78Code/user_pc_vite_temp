@@ -419,7 +419,7 @@ function getAge(birthdate) {
 
 .article_detail {
   background: var(--q-analysis-color-16);
-  border: 1px solid var(--qq--analysis-bd-color-4);
+  border: 1px solid var(--q-analysis-bd-color-4);
   border-radius: 8px;
   height: 100%;
   padding: 15px 38px;

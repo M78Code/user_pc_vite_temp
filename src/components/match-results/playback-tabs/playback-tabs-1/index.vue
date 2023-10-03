@@ -43,7 +43,7 @@ export default {
   display: flex;
   align-items: center;
   border-radius: 30px;
-  color: var(--qq--analysis-text-color-5);
+  color: var(--q-analysis-text-color-5);
   border: 0.5px solid var(--qq--yb-border-color9);
   background: #ffffff;
   overflow: hidden;

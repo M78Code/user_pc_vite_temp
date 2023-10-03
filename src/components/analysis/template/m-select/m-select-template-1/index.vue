@@ -190,7 +190,7 @@ onUnmounted(() => {
       margin-right: 10px;
       border-radius: 2px;
       font-family: PingFangSC-Regular;
-      color: var(--qq--analysis-text-color-5);
+      color: var(--q-analysis-text-color-5);
 
       &.active {
         background-image: var(--qq--analysis-bg-gradient-2);
