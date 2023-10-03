@@ -8,7 +8,7 @@ import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-c
 // import { Level_one_category_list, Level_one_detail_data } from "./category-list.js";
 import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch, nextTick, ref, onBeforeMount } from "vue";
 import UserCtr from "src/core/user-config/user-ctr.js";
-import { MatchDataWarehouse_H5_Detail_Common, format_plays, format_sort_data, MatchDetailCalss } from "src/core/index";
+import { MatchDataWarehouse_H5_Detail_Common, MatchDetailCalss } from "src/core/index";
 import { SessionStorage } from "src/core/utils/index.js"
 
 export const details_main = () => {
@@ -16,12 +16,13 @@ const router = useRouter();
 const route = useRoute();
   // 详情初始化接口数据处理
   const MatchDataWarehouseInstance = reactive(MatchDataWarehouse_H5_Detail_Common)
-// 获取详情仓库matchDetail接口数据
-const get_detail_data = ref(MatchDataWarehouse_H5_Detail_Common.list_to_obj.mid_obj)
   // console.log("Store", store)
   // const state = store.getState()
+  // 球类id
+  const sport_id = ref(route.params.mcid)
   const matchDetailCtr = ref(MatchDetailCalss)
   let state_data = reactive({
+    
     // 切换赛事时，重置玩法集请求次数计数
     get_category_list_req_count: 0,
     // refs['fixedHeight']
@@ -110,53 +111,53 @@ const get_detail_data = ref(MatchDataWarehouse_H5_Detail_Common.list_to_obj.mid_
     // 登录用户Id
     get_uid: "505915677417900030",
     // 早盘或者串关日期参数
-    get_md: "get_md",
+    get_md: "get_md", // TODO: 待处理
     // 菜单
-    get_current_sub_menuid: "get_current_sub_menuid",
+    get_current_sub_menuid: "get_current_sub_menuid",// TODO: 待处理
     // 排序
-    get_sort_type: "get_sort_type",
+    get_sort_type: "get_sort_type",// TODO: 待处理
     // 搜素关键字
-    get_search_txt: "get_search_txt",
+    get_search_txt: "get_search_txt",// TODO: 待处理
     // 是否显示info说明
-    get_info_show: "get_info_show",
+    get_info_show: "get_info_show",// TODO: 待处理
     // 设置玩法集固定
-    get_tab_fix: "get_tab_fix",
+    get_tab_fix: "get_tab_fix",// TODO: 待处理
     // 赛果标识
     get_menu_type: "",
     // 获取列表页当前选中时间
-    get_current_menu: "get_current_menu",
+    get_current_menu: "get_current_menu",// TODO: 待处理
     // 是否从直播进入详情
-    get_play_video: "get_play_video",
-    // get_detail_data: {},
+    get_play_video: "get_play_video",// TODO: 待处理
     // 视频是否全屏
-    get_is_full_screen: "get_is_full_screen",
+    get_is_full_screen: "get_is_full_screen",// TODO: 待处理
     // 商户是否需要直接跳到列表页（url地址有label参数）
-    get_golistpage: "get_golistpage",
-    get_godetailpage: "get_godetailpage",
+    get_golistpage: "get_golistpage",// TODO: 待处理
+    get_godetailpage: "get_godetailpage",// TODO: 待处理
     get_betbar_show: true,
 
     get_is_hengping: false,
-    get_is_dp_video_full_screen: "get_is_dp_video_full_screen",
-    get_match_base_info_obj: "get_match_base_info_obj",
+    get_is_dp_video_full_screen: "get_is_dp_video_full_screen",// TODO: 待处理
+    get_match_base_info_obj: "get_match_base_info_obj",// TODO: 待处理
     // 'get_analyze_show',
     // 'get_goto_detail_matchid',
     get_access_config: GlobalAccessConfig.config,
     // 聊天室ID
     // 'get_chatroom_id',
     // 获取语言
-    get_lang: "get_lang",
-    get_event_list: "get_event_list",
-    get_curr_tab_info: "get_curr_tab_info",
+    get_lang: UserCtr.lang,
+    get_event_list: "get_event_list",// TODO: 待处理
+    get_curr_tab_info: "get_curr_tab_info",// TODO: 待处理
   });
 
 
   const is_highlights = computed(() => {
     return lodash.get(state_data.get_curr_tab_info, "component") === "highlights";
   });
+  console.error("GlobalAccessConfig.get_statisticsSwitch()",api_common);
   // 足篮赛种和后台开关开了才显示显示赛事分析tab
   const show_match_analysis_tab = computed(() => {
     return (
-      [1, 2].includes(+get_detail_data.value.csid) && GlobalAccessConfig.get_statisticsSwitch()
+      [1, 2].includes(+sport_id.value) && GlobalAccessConfig.get_statisticsSwitch()
     );
   });
   // 是否显示聊天室tab
@@ -183,7 +184,7 @@ const get_detail_data = ref(MatchDataWarehouse_H5_Detail_Common.list_to_obj.mid_
   });
   // mid 
   const matchid = computed(() => {
-    return route.params.mid || get_detail_data.value.mid;
+    return route.params.mid || state_data.detail_data.mid;
   });
   // 当前tab
   const curr_active_tab = computed(() => {
@@ -201,9 +202,9 @@ const get_detail_data = ref(MatchDataWarehouse_H5_Detail_Common.list_to_obj.mid_
       return "";
     }
 
-    // 监听数据仓库版本号变更后更新数据get_detail_data
+    // 监听数据仓库版本号变更后更新数据
     watch(() => MatchDataWarehouseInstance.data_version.version, () => {
-      get_detail_data.value = MatchDataWarehouse_H5_Detail_Common.list_to_obj.mid_obj
+      state_data.detail_data = MatchDataWarehouse_H5_Detail_Common.list_to_obj.mid_obj
     })
     // 主题后缀
     const suffix_theme = UserCtr.theme.includes("night") ? "2" : "";
@@ -333,7 +334,7 @@ const get_detail_data = ref(MatchDataWarehouse_H5_Detail_Common.list_to_obj.mid_
         dom_box.scrollTop = rem(1.67);
       }
       // 当点开视频或者动画时,设置玩法区域的高度
-      if (get_tab_fix) {
+      if (state_data.get_tab_fix) {
         dom_box.scrollTop = rem(0);
       }
     });
@@ -458,7 +459,7 @@ const get_detail_data = ref(MatchDataWarehouse_H5_Detail_Common.list_to_obj.mid_
    * @param {String} event_code 事件code
    */
   const get_football_replay = (event_code) => {
-    //   if ([route.params.csid, lodash.get(get_detail_data.value, 'csid')].includes('1')) {
+    //   if ([sport_id.value, lodash.get(state_data.detail_data, 'csid')].includes('1')) {
     //     const params = {
     //       mid: route.params.mid,
     //       device: 'H5',
@@ -499,6 +500,8 @@ const get_detail_data = ref(MatchDataWarehouse_H5_Detail_Common.list_to_obj.mid_
             match_detail_data_handle(res_data)
             // 数据传入数据仓库
             MatchDataWarehouseInstance.set_match_details(res_data)
+            // 球种ID
+            sport_id.value = res_data.csid
           } else {
             // 赛事下发999后, 显示空空如也
             state_data.skeleton.details = true
@@ -554,13 +557,9 @@ const get_detail_data = ref(MatchDataWarehouse_H5_Detail_Common.list_to_obj.mid_
       // 克隆一份;
       let cloneData = lodash.cloneDeep(res_data);
       // set_detail_data(cloneData);
-      store.dispatch({
-        type: 'SET_DETAIL_DATA',
-        data: cloneData
-      });
       // store.dispatch({ type: 'detailsReducer/set_detail_data',  payload: cloneData })
 
-      get_detail_data.value = cloneData;
+      state_data.detail_data = cloneData;
       // 设置赛事盘口状态 赛事关盘状态  0:active 开, 1:suspended 封, 2:deactivated 关, 11:锁
       // let params1 = { sportId: res_data.csid, mid: matchid.value };
       // params1 = params1; // get_odds_list
@@ -623,7 +622,7 @@ const get_detail_data = ref(MatchDataWarehouse_H5_Detail_Common.list_to_obj.mid_
    *@return {obj} init_req 是否是初次进入详情
    */
   const get_odds_list = async (
-    params = { sportId: get_detail_data.value.csid, mid: matchid.value },
+    params = { sportId: sport_id.value, mid: matchid.value },
     init_req
   ) => {
     // state_data.data_list = Level_one_category_list();
@@ -715,7 +714,7 @@ const get_detail_data = ref(MatchDataWarehouse_H5_Detail_Common.list_to_obj.mid_
       let obj = {},
         obj_payload = {},
         trans_msc = [];
-      lodash.forEach(lodash.get(detail_data, "msc"), (item) => {
+      lodash.forEach(lodash.get(state_data.detail_data, "msc"), (item) => {
         let _key = item.split("|")[0],
           _val = item.split("|")[1];
         obj[_key] = _val;
@@ -781,30 +780,30 @@ const get_detail_data = ref(MatchDataWarehouse_H5_Detail_Common.list_to_obj.mid_
       // 查找参数 1:赛事列表(非滚球:今日 早盘...) 2:赛事详情(滚球) 3:赛事筛选 4:赛事搜索(int) 如果不传默认 1:赛事列表
       sm: 2,
       // 菜单ID 多个用逗号分割(字符串)
-      euid: get_current_sub_menuid,
+      euid: state_data.get_current_sub_menuid,
       // 早盘日期的参数 早盘 和 串关都要加 (字符串)
-      md: get_md != -1 ? get_md : "",
+      md: state_data.get_md != -1 ? state_data.get_md : "",
       // 赛事种类id
       csid: state_data.detail_data.csid,
       // 联赛id
       tid: state_data.detail_data.tid,
       // 排序 int 类型 1按热门排序 2按时间排序(整型)
-      sort: get_sort_type,
+      sort: state_data.get_sort_type,
       // 搜索关键词 赛事搜索(字符串)
-      keyword: get_search_txt || "",
+      keyword: state_data.get_search_txt || "",
       // 用户id或者uuid
       // cuid: state_data.get_uid,
       // 赛事id
       mid: matchid.value,
     };
 
-    api_details.get_detail_video(params).then((res) => {
+    api_common.get_detail_video(params).then((res) => {
       let event_data = lodash.get(res, "data", {});
       if (event_data && event_data.mid) {
         // 普通赛事跳电竞赛事，或者电竞赛事跳普通赛事，就需要重置菜单类型
         let flag1 = [100, 101, 103].includes(+event_data.csid);
         let flag2 = [100, 101, 103].includes(+params.csid);
-        if (!get_godetailpage) {
+        if (!state_data.get_godetailpage) {
           // 如果是从app直接进详情页
           if (flag1) {
             set_menu_type(3000);
@@ -830,7 +829,7 @@ const get_detail_data = ref(MatchDataWarehouse_H5_Detail_Common.list_to_obj.mid_
         set_goto_detail_matchid(event_data.mid);
       } else {
         // 如果不是演播厅的，才有退出回到 列表
-        if (lodash.get(get_video_url, "active") != "lvs") {
+        if (lodash.get(state_data.get_video_url, "active") != "lvs") {
           // 没有返回赛事数据就跳转到列表页
           // router.push({ name: "matchList" });
         }
@@ -929,7 +928,6 @@ const get_detail_data = ref(MatchDataWarehouse_H5_Detail_Common.list_to_obj.mid_
     matchid,
     curr_active_tab,
     icon_replay,
-    get_detail_data,
     matchDetailCtr,
     details_click,
     change_go_back,
