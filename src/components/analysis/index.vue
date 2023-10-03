@@ -1,66 +1,56 @@
 <!--
  * @Author: 'jacques' 'jacques@itcom888.com'
  * @Date: 2023-10-02 16:12:29
- * @LastEditors: 'jacques' 'jacques@itcom888.com'
- * @LastEditTime: 2023-10-03 17:42:51
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2023-10-03 18:36:17
  * @FilePath: \user-pc-vite\src\components\analysis\index.vue
  * @Description: 足篮赛事分析页
--->
-<!--
- * @Author:
- * @Date:
- * @Description: 足篮赛事分析页
- * @Path:
 -->
 <template>
   <div class="analysis-page relative-position" :style="page_style">
     <div class="match-header">
       <div class="both home">
         <span class="team-name">
-          <div class="yb-absolute ellipsis">{{matchDetail.mhn}}</div>
+          <div class="yb-absolute ellipsis">{{ matchDetail.mhn }}</div>
         </span>
-        <img v-img="([lodash.get(matchDetail,'mhlu[0]'),lodash.get(matchDetail,'frmhn[0]')])" class="team_logo" alt/>
-        <span class="score">{{[0,110].includes(matchDetail.ms)?"—":lodash.get(matchDetail, 'msc.S1.home')}}</span>
+        <img v-img="([lodash.get(matchDetail, 'mhlu[0]'), lodash.get(matchDetail, 'frmhn[0]')])" class="team_logo" alt />
+        <span class="score">{{ [0, 110].includes(matchDetail.ms) ? "—" : lodash.get(matchDetail, 'msc.S1.home') }}</span>
       </div>
       <div class="both-time">
-        <div style="color:#83838A;margin-bottom: 6px;">{{formatTime(matchDetail.mgt,'yyyy/mm/dd hh:MM:ss')}}</div>
-        <div>{{matchDetail.tn}}</div>
+        <div style="color:#83838A;margin-bottom: 6px;">{{ formatTime(matchDetail.mgt, 'yyyy/mm/dd hh:MM:ss') }}</div>
+        <div>{{ matchDetail.tn }}</div>
         <!-- 未开始 -->
-        <span v-if="[0,110].includes(matchDetail.ms)">{{ i18n_t("analysis.not_start")}}</span>
+        <span v-if="[0, 110].includes(matchDetail.ms)">{{ i18n_t("analysis.not_start") }}</span>
         <match-date v-else :match="matchDetail" style="justify-content:center;"></match-date>
       </div>
       <div class="both away">
-        <span class="score">{{[0,110].includes(matchDetail.ms)?"—":lodash.get(matchDetail, 'msc.S1.away')}}</span>
-        <img v-img="([lodash.get(matchDetail,'malu[0]'),lodash.get(matchDetail,'frman[0]')])" class="team_logo" alt/>
+        <span class="score">{{ [0, 110].includes(matchDetail.ms) ? "—" : lodash.get(matchDetail, 'msc.S1.away') }}</span>
+        <img v-img="([lodash.get(matchDetail, 'malu[0]'), lodash.get(matchDetail, 'frman[0]')])" class="team_logo" alt />
         <span class="team-name">
-          <div class="yb-absolute ellipsis">{{matchDetail.man}}</div>
+          <div class="yb-absolute ellipsis">{{ matchDetail.man }}</div>
         </span>
       </div>
     </div>
 
     <div class="tab relative-position">
-      <span
-      v-for="(item,index) in tab"
-      :key="index"
-      class="item"
-      :class="{'active':index == activeTab}"
-      @click="switchTabs(index)"
-      >{{item == 'news' ? newsTabName : i18n_t(`analysis.${item}`)}}</span>
+      <span v-for="(item, index) in tab" :key="index" class="item" :class="{ 'active': index == activeTab }"
+        @click="switchTabs(index)">{{ item == 'news' ? newsTabName : i18n_t(`analysis.${item}`) }}</span>
     </div>
 
-    <q-scroll-area class="rule-scroll-area" :visible="true" :style="{height:'100%',margin: hasNews && activeTab == 0 ? '0' : '0 20px'}">
+    <q-scroll-area class="rule-scroll-area" :visible="true"
+      :style="{ height: '100%', margin: hasNews && activeTab == 0 ? '0' : '0 20px' }">
       <!-- 文章资讯  -->
       <news :mid="match_info.mid" v-if="hasNews && activeTab == 0" />
       <!-- 赛况 -->
-      <tab-results :match="matchDetail" v-if="(hasNews ? activeTab - 1 : activeTab) == 0"/>
+      <tab-results :match="matchDetail" v-if="(hasNews ? activeTab - 1 : activeTab) == 0" />
       <!-- 数据 -->
-      <tab-data :match="matchDetail" v-if="(hasNews ? activeTab - 1 : activeTab) == 1"/>
+      <tab-data :match="matchDetail" v-if="(hasNews ? activeTab - 1 : activeTab) == 1" />
       <!-- 阵容 -->
-      <tab-lineup :match="matchDetail" v-if="(hasNews ? activeTab - 1 : activeTab) == 2"/>
+      <tab-lineup :match="matchDetail" v-if="(hasNews ? activeTab - 1 : activeTab) == 2" />
       <!-- 情报 -->
-      <tab-information :match="matchDetail" v-if="(hasNews ? activeTab - 1 : activeTab) == 3"/>
+      <tab-information :match="matchDetail" v-if="(hasNews ? activeTab - 1 : activeTab) == 3" />
       <!-- 赔率 -->
-      <tab-odds :match="matchDetail" v-if="(hasNews ? activeTab - 1 : activeTab) == 4"/>
+      <tab-odds :match="matchDetail" v-if="(hasNews ? activeTab - 1 : activeTab) == 4" />
     </q-scroll-area>
   </div>
 </template>
@@ -70,15 +60,15 @@
 <script>
 import { computed, ref } from 'vue';
 import { useRoute } from 'vue-router';
-import { TabResultsFullVersionWapper as tabResults} from 'src/components/analysis/template/tab-results/index.js'
+import { TabResultsFullVersionWapper as tabResults } from 'src/components/analysis/template/tab-results/index.js'
 
-import { TableDataFullVersionWapper as tabData} from 'src/components/analysis/template/tab-data/index.js'
-import { TabLineupFullVersionWapper as tabLineup} from 'src/components/analysis/template/tab-lineup/index.js'
-import { TabInformationFullVersionWapper as tabInformation} from 'src/components/analysis/template/tab-information/index.js'
-import { TabOddsFullVersionWapper as tabOdds} from 'src/components/analysis/template/tab-odds/index.js'
-import { TabNewsFullVersionWapper as news} from 'src/components/analysis/template/tab-news/index.js'
+import { TableDataFullVersionWapper as tabData } from 'src/components/analysis/template/tab-data/index.js'
+import { TabLineupFullVersionWapper as tabLineup } from 'src/components/analysis/template/tab-lineup/index.js'
+import { TabInformationFullVersionWapper as tabInformation } from 'src/components/analysis/template/tab-information/index.js'
+import { TabOddsFullVersionWapper as tabOdds } from 'src/components/analysis/template/tab-odds/index.js'
+import { TabNewsFullVersionWapper as news } from 'src/components/analysis/template/tab-news/index.js'
 import { MatchProcessFullVersionWapper as matchDate } from "src/components/match-process/index.js";
-import {api_analysis} from 'src/api/index.js' 
+import { api_analysis } from 'src/api/index.js'
 import { compute_css_variables } from "src/core/css-var/index.js"
 import { formatTime } from 'src/core/format/index.js'
 import { i18n_t } from 'src/core/index.js'
@@ -89,7 +79,7 @@ import lodash from 'lodash'
 let state = store.getState();
 
 export default {
-  components:{
+  components: {
     tabResults,
     tabData,
     tabLineup,
@@ -100,16 +90,16 @@ export default {
   },
   setup() {
     const route = useRoute();
-    
+
     //赛况，数据，阵容，情报，赔率
-    const tab = ref(['result','data','lineup','information','odds'])
+    const tab = ref(['result', 'data', 'lineup', 'information', 'odds'])
     // 赛事分析页面  css变量
     const page_style = ref('')
     page_style.value = compute_css_variables({ category: 'component', module: 'analysis' })
     const activeTab = ref(null)
     const sportDict = ref({
-      allScore:['S1','S11','S12','S5','S8','S105','S104','S1101',"S17", "S18",'S106','S109','S12345','S12346','S111','S108','S107','S110'],
-      line: ['S1101',"S17", "S18",'S108','S107','S110']
+      allScore: ['S1', 'S11', 'S12', 'S5', 'S8', 'S105', 'S104', 'S1101', "S17", "S18", 'S106', 'S109', 'S12345', 'S12346', 'S111', 'S108', 'S107', 'S110'],
+      line: ['S1101', "S17", "S18", 'S108', 'S107', 'S110']
     })
     const hasNews = ref(false)
     const articleDetail = ref({})
@@ -119,8 +109,8 @@ export default {
     if (Object.keys(route.params).length) {
       let { csid } = route.params
       // 篮球只展示赛况、数据和阵容
-      if(csid == '2'){
-        tab.value = ['result','data','lineup']
+      if (csid == '2') {
+        tab.value = ['result', 'data', 'lineup']
       }
     }
     // 只在简中和繁中的时候有赛事文章
@@ -132,17 +122,17 @@ export default {
       }
       tab.value.unshift('news');
       hasNews.value = true;
-      activeTab.value = match_info.ms==1?1:2
+      activeTab.value = match_info.ms == 1 ? 1 : 2
     } else {
-      activeTab.value = match_info.ms==1?0:1
+      activeTab.value = match_info.ms == 1 ? 0 : 1
     }
 
     const matchDetail = computed(() => {
       let match = lodash.cloneDeep(match_info) || {}
       let obj = {}
-      if(match.msc_obj){
-         sportDict.value.allScore.map(k=>{
-          if(!match.msc_obj[k]){
+      if (match.msc_obj) {
+        sportDict.value.allScore.map(k => {
+          if (!match.msc_obj[k]) {
             obj[k] = {
               home: 0,
               away: 0,
@@ -151,27 +141,27 @@ export default {
           } else {
             // 获取主客队得分数据
             let home = parseInt(lodash.get(match, `msc_obj[${k}][1]`)),
-                away = parseInt(lodash.get(match, `msc_obj[${k}][2]`));
-            if(sportDict.value.line.includes(k)){
+              away = parseInt(lodash.get(match, `msc_obj[${k}][2]`));
+            if (sportDict.value.line.includes(k)) {
               //'S108'三分球得分，'S107'两分球得分
-              if(k == 'S107'){
-                home*= 2
-                away*= 2
+              if (k == 'S107') {
+                home *= 2
+                away *= 2
               }
-              if(k == 'S108'){
-                home*= 3
-                away*= 3
+              if (k == 'S108') {
+                home *= 3
+                away *= 3
               }
               obj[k] = {
                 home: home,
                 away: away,
-                percentage: isNaN(home / (home+away))? 50: home / (home+away)*100
+                percentage: isNaN(home / (home + away)) ? 50 : home / (home + away) * 100
               }
-            } else{
+            } else {
               obj[k] = {
                 home: home,
                 away: away,
-                percentage: isNaN(away / (home+away))? 50: away / (home+away)*100
+                percentage: isNaN(away / (home + away)) ? 50 : away / (home + away) * 100
               }
             }
           }
@@ -179,8 +169,8 @@ export default {
       } else {
         let msc = match.msc
 
-        sportDict.value.allScore.map(k=>{
-          if(!msc[k]){
+        sportDict.value.allScore.map(k => {
+          if (!msc[k]) {
             obj[k] = {
               home: 0,
               away: 0,
@@ -240,7 +230,7 @@ export default {
      * 文章阅读数
      */
     atrticleReadCount(id) {
-      api_analysis.get_article_count({id: id}).then(res => {
+      api_analysis.get_article_count({ id: id }).then(res => {
         let count = lodash.get(res, 'data.data');
       })
     },
@@ -256,9 +246,11 @@ export default {
   display: flex;
   flex-direction: column;
   min-width: 1000px;
-  & > * {
+
+  &>* {
     margin: 0 20px;
   }
+
   /*  height calc(100vh - 20px) */
   /*  头部比分展示区域 */
   .match-header {
@@ -266,51 +258,63 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+
     .both-time {
       width: 285px;
       line-height: 17px;
       text-align: center;
+
       :deep(.c-match-process) {
         .process-name {
           padding: 0 5px 0 0;
         }
+
         .c-match-date {
           padding: 0 0 0 5px;
         }
       }
     }
+
     .both {
       display: flex;
       flex: 1;
       align-items: center;
+
       &.home {
         justify-content: flex-end;
         text-align: right;
+
         .score {
           text-align: right;
         }
+
         .team_logo {
           margin-left: 15px;
         }
       }
+
       &.away {
         .team_logo {
           margin-right: 15px;
         }
       }
+
       .score {
         width: 60px;
         font-size: 30px;
         color: var(--qq--analysis-text-color-1);
         line-height: 30px;
       }
+
       .team_logo {
         max-height: 40px;
         min-width: 40px;
       }
+
       img[class*="team-logo-"] {
         width: 40px;
       }
+
       .team-name {
         flex: 1;
         font-size: 16px;
@@ -321,10 +325,12 @@ export default {
       }
     }
   }
+
   /*  tab 区 */
   .tab {
     display: flex;
     margin-bottom: 10px;
+
     &:after {
       content: "";
       position: absolute;
@@ -334,6 +340,7 @@ export default {
       background: var(--qq--analysis-bg-color-2);
       z-index: 1;
     }
+
     .item {
       width: 100px;
       height: 30px;
@@ -351,6 +358,7 @@ export default {
       font-family: PingFangSC-Regular;
 
       font-size: 14px;
+
       &.active {
         background: transparent;
         border-bottom-color: var(--qq--analysis-bd-color-3);
@@ -359,13 +367,16 @@ export default {
       }
     }
   }
+
   /*  内容区 */
   .rule-scroll-area {
     flex: 1;
   }
-  :deep{
+
+  :deep {
     .panel {
       border-top: transparent;
+
       .panel-title {
         position: relative;
         height: 32px;
@@ -377,10 +388,12 @@ export default {
         border: 1px solid var(--qq--analysis-bd-color-4);
         border-bottom: 0;
         border-radius: 8px 8px 0 0;
+
         &:last-child {
           border-radius: 8px;
           border-bottom: 1px solid var(--qq--analysis-bd-color-4);
         }
+
         &:before {
           content: "";
           position: absolute;
@@ -392,33 +405,42 @@ export default {
           background: var(--qq--analysis-bg-color-4);
         }
       }
+
       .d-header {
         border-left: 1px solid var(--qq--analysis-bd-color-4);
         border-right: 1px solid var(--qq--analysis-bd-color-4);
         border-bottom: 1px solid var(--qq--analysis-bd-color-4);
+
         &:last-child {
           border-radius: 0 0 8px 8px;
         }
       }
+
       .win {
         color: var(--qq--analysis-text-color-6);
       }
+
       .lose {
         color: var(--qq--analysis-text-color-7);
       }
+
       .dogfall {
         color: var(--qq--analysis-text-color-8);
       }
+
       .default {
         color: var(--qq--analysis-text-color-9);
       }
+
       .simple-title {
         border-left: 1px solid var(--qq--analysis-bd-color-4);
         border-right: 1px solid var(--qq--analysis-bd-color-4);
+
         &:last-child {
           border-radius: 0 0 8px 8px;
         }
       }
+
       .title,
       .simple-title,
       .d-tr,
@@ -426,11 +448,13 @@ export default {
         border-left: 1px solid var(--qq--analysis-bd-color-4);
         border-right: 1px solid var(--qq--analysis-bd-color-4);
       }
+
       .wrap-home {
         .future-item {
           border-left: 1px solid var(--qq--analysis-bd-color-4);
         }
       }
+
       .wrap-away {
         .future-item {
           border-right: 1px solid var(--qq--analysis-bd-color-4);
@@ -438,6 +462,4 @@ export default {
       }
     }
   }
-}
-
-</style>
+}</style>

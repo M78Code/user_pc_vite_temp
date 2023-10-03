@@ -82,9 +82,12 @@
 
 <script setup>
 import { ref, computed, onUnmounted } from 'vue';
-import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
-import {component_symbol ,need_register_props} from "../config/index.js"
-const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
+import { i18n_t } from "src/core/index.js";
+import lodash from 'lodash' 
+// import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
+// import {component_symbol ,need_register_props} from "../config/index.js"
+// const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
+const props = defineProps(['match'])
 
 const dict = ref({
   //全场比分，红牌，黄牌，角球，危险进攻，球权，进攻，射门，射正球门，射骗球门
@@ -98,40 +101,40 @@ const chatLabel = ref({});
 const score = computed(() => {
   let scoreData = {}
   // 足球
-  if (this.match.csid == "1") {
+  if (props.match.csid == "1") {
     scoreData = {
-      round1: this.match.msc.S8,
-      round2: this.match.msc.S105,
-      round3: this.match.msc.S104,
-      line1: this.match.msc.S1101,
-      line2: this.match.msc.S18,
-      line3: this.match.msc.S17,
+      round1: props.match.msc.S8,
+      round2: props.match.msc.S105,
+      round3: props.match.msc.S104,
+      line1: props.match.msc.S1101,
+      line2: props.match.msc.S18,
+      line3: props.match.msc.S17,
     }
-    this.chatLabel = {
-      round1: this.$t("analysis.dangerous_attack"), // 危险进攻
-      round2: this.$t("analysis.possession_percentage"), // 控球率
-      round3: this.$t("analysis.offense"), // 进攻
-      line1: this.$t("analysis.shot"), // 射门
-      line2: this.$t("analysis.shot_on"), // 射正
-      line3: this.$t("analysis.shot_aside"), // 射偏
+    chatLabel.value = {
+      round1: i18n_t("analysis.dangerous_attack"), // 危险进攻
+      round2: i18n_t("analysis.possession_percentage"), // 控球率
+      round3: i18n_t("analysis.offense"), // 进攻
+      line1: i18n_t("analysis.shot"), // 射门
+      line2: i18n_t("analysis.shot_on"), // 射正
+      line3: i18n_t("analysis.shot_aside"), // 射偏
     }
   } else {
     // 篮球
     scoreData = {
-      round1: this.match.msc.S12345,
-      round2: this.match.msc.S12346,
-      round3: this.match.msc.S111,
-      line1: this.match.msc.S108,
-      line2: this.match.msc.S107,
-      line3: this.match.msc.S110,
+      round1: props.match.msc.S12345,
+      round2: props.match.msc.S12346,
+      round3: props.match.msc.S111,
+      line1: props.match.msc.S108,
+      line2: props.match.msc.S107,
+      line3: props.match.msc.S110,
     }
-    this.chatLabel = {
-      round1: this.$t("analysis.three_point_percentage"), // 三分球命中率
-      round2: this.$t("analysis.field_goal_percentage"), // 投篮命中率
-      round3: this.$t("analysis.free_throw_percentage"), // 罚球命中率
-      line1: this.$t("analysis.three_point"), // 三分球得分
-      line2: this.$t("analysis.two_point"), //两分球得分
-      line3: this.$t("analysis.free_throw"), // 罚球得分
+    chatLabel.value = {
+      round1: i18n_t("analysis.three_point_percentage"), // 三分球命中率
+      round2: i18n_t("analysis.field_goal_percentage"), // 投篮命中率
+      round3: i18n_t("analysis.free_throw_percentage"), // 罚球命中率
+      line1: i18n_t("analysis.three_point"), // 三分球得分
+      line2: i18n_t("analysis.two_point"), //两分球得分
+      line3: i18n_t("analysis.free_throw"), // 罚球得分
     }
   }
   // 修复---在详情页停留一段时间直至比分有变化，然后进入赛事分析，图表颜色的百分比与实际比分不符
