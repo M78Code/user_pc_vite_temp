@@ -243,7 +243,7 @@ onUnmounted(() => {
 .news {
   .author {
     font-size: 12px;
-    color: var(--qq--analysis-text-color-11);
+    color: var(--q-analysis-text-color-11);
     font-weight: 400;
     .time {
       margin: 0 50px 0 20px;
@@ -261,7 +261,7 @@ onUnmounted(() => {
     }
     .article_title {
       font-size: 16px;
-      color: var(--qq--analysis-text-color-10);
+      color: var(--q-analysis-text-color-10);
       font-weight: 600;
     }
     .article {
@@ -302,7 +302,7 @@ onUnmounted(() => {
     line-height: 48px;
     padding-left: 30px;
     font-size: 16px;
-    color: var(--qq--analysis-text-color-1);
+    color: var(--q-analysis-text-color-1);
     font-weight: 500;
     position: relative;
     margin: 20px 20px 30px;
@@ -350,13 +350,13 @@ onUnmounted(() => {
         }
         .title {
           font-size: 20px;
-          color: var(--qq--analysis-text-color-10);
+          color: var(--q-analysis-text-color-10);
           font-weight: 600;
           width: 100%;
           .tag {
             border-radius: 3px;
             font-size: 14px;
-            color: var(--qq--analysis-text-color-13);
+            color: var(--q-analysis-text-color-13);
             letter-spacing: 0;
             text-align: center;
             // line-height: 12px;
@@ -386,7 +386,7 @@ onUnmounted(() => {
   :deep(.load-data-wrap) {
     .empty-wrap {
       .text-center {
-        color: var(--qq--analysis-text-color-10);
+        color: var(--q-analysis-text-color-10);
       }
     }
     &.empty_data_padding_b {

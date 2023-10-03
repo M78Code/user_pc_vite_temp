@@ -121,7 +121,7 @@ onUnmounted(() => {
 
       &.active {
         background-image: var(--qq--analysis-bg-gradient-2);
-        color: var(--qq--analysis-text-color-13);
+        color: var(--q-analysis-text-color-13);
       }
     }
   }

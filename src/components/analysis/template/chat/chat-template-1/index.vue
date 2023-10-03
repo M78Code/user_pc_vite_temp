@@ -215,7 +215,7 @@ onUnmounted(() => {
         }
       }
       .chat-label {
-        color: var(--qq--analysis-text-color-1);
+        color: var(--q-analysis-text-color-1);
       }
     }
   }
@@ -241,7 +241,7 @@ onUnmounted(() => {
 .num_zero {
   span.text-blue,
   span.text-orange {
-    color: var(--qq--analysis-text-color-1) !important;
+    color: var(--q-analysis-text-color-1) !important;
   }
   ::v-deep {
     .text-blue {

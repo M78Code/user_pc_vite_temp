@@ -256,7 +256,7 @@ function get_first_lineup(data, lineup, type) {
     left: 0;
     width: 100%;
     height: 100%;
-    color: var(--qq--analysis-text-color-13);
+    color: var(--q-analysis-text-color-13);
     padding: 20px 0;
 
     .home,
@@ -357,7 +357,7 @@ function get_first_lineup(data, lineup, type) {
           align-items: center;
           height: 28px;
           background: var(--qq--analysis-bg-color-14);
-          color: var(--qq--analysis-text-color-12);
+          color: var(--q-analysis-text-color-12);
 
           &:last-child {
             border-radius: 0 0 8px 8px;
