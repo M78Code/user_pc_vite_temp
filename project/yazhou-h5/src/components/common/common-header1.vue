@@ -38,7 +38,7 @@ import { api_common } from "src/api/index.js";
 import { utils } from 'src/core/index.js'
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import { i18n_t } from "src/boot/i18n.js";
-import { MenuData } from "src/core/index.js";
+import { MatchDataWarehouse_H5_Detail_Common as matchDetailData, MenuData } from "src/core/index.js";
 import uid from "src/core/uuid/index.js";
 import store from "src/store-redux/index.js";
 
@@ -57,7 +57,8 @@ const props = defineProps({
 
 const route = useRoute()
 const router = useRouter()
-
+// 获取详情数据
+const get_detail_data = ref(matchDetailData.list_to_obj.mid_obj[`${route.params.mid}_`])
 /** 默认不刷新 */
 const refreshing = ref(false)
 const position = ref('top')
@@ -71,7 +72,7 @@ const clear_timer1_ = () => {
     timer1_.value = null
   }
 }
-
+console.error(route);
 const cancel_ref = lodash.debounce(() => {
   refreshing.value = false;
 }, 200)
@@ -159,7 +160,7 @@ const details_collect = (match_obj) => {
   api_common.add_or_cancel_match(params).then(res => {
     favorite_loading.value = false;
     if (res.code == 200) {
-      let cloneData = lodash.clone(get_detail_data)
+      let cloneData = lodash.clone(get_detail_data.value)
       cloneData.mf = params.cf
       store.dispatch({
         type: 'SET_DETAIL_DATA',
@@ -194,7 +195,7 @@ const open = (position) => {
 }
 
 // 是否是电竞
-const is_DJ_show = computed(() => MenuData.get_menu_type() == 3000 || (MenuData.get_menu_type() == 28 && [100, 101, 102, 103, 104].includes(+get_detail_data.csid)))
+const is_DJ_show = computed(() => MenuData.get_menu_type() == 3000 || (MenuData.get_menu_type() == 28 && [100, 101, 102, 103, 104].includes(+get_detail_data.value.csid)))
 
 </script>
 
@@ -212,7 +213,6 @@ export default {
     //   // 详情下拉三角是否显示
     //   "get_sanjiao_is_bool",
     //   // 详情页的数据
-    //   "get_detail_data",
     //   // 视频是否关闭
     //   "get_is_close_video",
     //   // 初始化状态值

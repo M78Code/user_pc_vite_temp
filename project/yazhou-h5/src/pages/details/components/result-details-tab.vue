@@ -11,7 +11,6 @@
     </div>
     <!-- 赛果tab区域 -->
     <div class="menu-s row" ref="reset_scroll_dom">
-      {{tab_item_list}}
       <div v-for="(tab_item, i) of tab_item_list" :key="i" class="common-style" @click="result_tab(i, tab_item)"
         :class="{ 't_color': item_index == i || i == tab_item_list.length - 1 && item_index == 3 }">
         {{ tab_item.text }}
@@ -148,7 +147,7 @@ const result_tab = (index,tab_item) => {
       tab_data_init()
     } finally {
       const { configValue, eventSwitch } = lodash.get(UserCtr, 'user_info.merchantEventSwitchVO', {})
-      if (configValue == 1 && eventSwitch == 0 && lodash.get(props.result_detail_data, 'csid') == 1) {
+      if (configValue == 1 && eventSwitch == 1 && lodash.get(props.result_detail_data, 'csid') == 1) {
         get_football_replay(0)
       }
     }
