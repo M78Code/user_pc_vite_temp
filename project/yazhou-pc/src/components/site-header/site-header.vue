@@ -208,22 +208,12 @@ const route = useRoute()
 const router = useRouter()
 
 /** 定时器 */
-const showBannerSwipperTimer = ref(null)
-const show_activity_page_timer = ref(null)
-const showBannerSwipperTimer_timeout = ref(null)
+const show_activity_page_timer = null
 /** 清除全部定时器 */
 function clear_timer() {
-    if (showBannerSwipperTimer.value) {
-        clearTimeout(showBannerSwipperTimer.value)
-        showBannerSwipperTimer.value = null
-    }
-    if (show_activity_page_timer.value) {
-        clearTimeout(show_activity_page_timer.value)
-        show_activity_page_timer.value = null
-    }
-    if (showBannerSwipperTimer_timeout.value) {
-        clearTimeout(showBannerSwipperTimer_timeout.value)
-        showBannerSwipperTimer_timeout.value = null
+    if (show_activity_page_timer) {
+        clearTimeout(show_activity_page_timer)
+        show_activity_page_timer = null
     }
 }
 /** 钩子触发 */
@@ -243,9 +233,9 @@ function show_activity_page(n, urlType) { // 首页弹窗跳转判断
         tab_click({ index })
     } else {
         //清除定时器
-        clearTimeout(show_activity_page_timer.value);
-        show_activity_page_timer.value = null
-        show_activity_page_timer.value = setTimeout(() => {
+        clearTimeout(show_activity_page_timer);
+        show_activity_page_timer = null
+        show_activity_page_timer = setTimeout(() => {
             // 0：无连接，1：内部导航，2：弹窗连接
             openPage(n, urlType)
         }, 300);

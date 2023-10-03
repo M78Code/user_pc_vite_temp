@@ -322,7 +322,7 @@ function init_site_header(type = null) {
     { id: 7, tab_name: i18n_t("common.sports_betting_rules"), path: "/rule", _blank: true }, //体育竞猜规则
   ];
   // 判断是否有活动
-  let activityList = lodash.get(UserCtr.get_user(), 'activityList');
+  let activityList = lodash.get(UserCtr.get_user(), 'activityList') || [];
   // 多语言屏蔽活动入口
   if (activityList && activityList.length > 0 && UserCtr.lang == 'zh' && globalAccessConfig.get_activitySwitch()) {
     site_header_data.hasActivity = true;
