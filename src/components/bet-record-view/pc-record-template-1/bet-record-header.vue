@@ -1,7 +1,19 @@
 <template>
     <!-- 投注记录 未结算&已结算$ 预约 tab bar -->
     <div class="full-width bet-type" style="margin-top:0">
-      <div >{{ BetRecord.bet_record_version }}</div>
+
+      <div class="row bet-back-btn yb-flex-between" @click="set_menu_back('menu')">
+        <!--bet-zone-head-width虚拟体育投注框宽度-->
+        <div class="bet-zone-head justify-between align-items center cursor-pointer">
+          <!--箭头图标-->
+          <icon-wapper name="icon-back" size="14px" />
+          <!--返回菜单-->
+          <div class="back-text ellipsis">{{ $t('common.return_sports') }}</div>
+        </div>
+      </div>
+
+      <div style="display: none;">{{ BetRecord.bet_record_version }}</div>
+      
       <div class="row bet-record-item cursor-pointer">
         <!--点选未结算0-->
         <div class="col text-center" :class="{'active': BetRecord.selected==0}" @click.stop="set_record_selected(0)">
@@ -54,6 +66,9 @@
 
 <script setup>
 import BetRecord from "src/core/bet-record/bet-record.js"
+import LayOutMain_pc from "src/core/layout/index.js";
+
+import { IconWapper } from 'src/components/icon'
 
 // tab切换 未结算 已结算 预约
 const set_record_selected = number => {
@@ -63,10 +78,85 @@ const set_record_selected = number => {
 const set_record_appoint_order_status = number => {
   BetRecord.set_appoint_order_status(number)
 }
+
+// 返回菜单列表
+const set_menu_back = val => {
+  LayOutMain_pc.set_layout_left_show(val)
+}
+
 </script>
 
 <style scoped lang="scss">
   .active{
     color:#ff0000;
   }
+  /* 返回体育项目 */
+.bet-back-btn {
+  padding-left: 15px;
+  height: 34px;
+  cursor: pointer;
+  background: var(--q-gb-bg-c-14);
+  border-bottom: 1px solid var(--q-gb-bd-c-8);
+  border-right: 1px solid var(--q-gb-bd-c-6);
+
+  /**返回菜单文字样式*/
+  .back-text {
+    width: 100px;
+    padding-left: 10px;
+  }
+
+  /**返回菜单文字样式2*/
+  .back-text2 {
+    width: 65px;
+    padding-left: 10px;
+  }
+
+  .bet-zone-head {
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+  }
+
+  /**虚拟体育投注框宽度*/
+  .bet-zone-head-width {
+    width: 300px;
+  }
+
+  /** 右边的单关或者复式串关按钮*/
+  .bet-series {
+    display: flex;
+    padding: 8px;
+    margin-right: 5px;
+    min-width: 86px;
+    height: 28px;
+    font-size: 12px;
+
+    /**单关按钮*/
+    .bet-single-btn {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      /**单关数量*/
+      .bet-single-count {
+        font-size: 14px;
+        text-align: center;
+        width: 24px;
+        height: 24px;
+        line-height: 24px;
+        border-radius: 50%;
+        transform: scale(0.7);
+      }
+    }
+
+    /** 串关按钮不可用*/
+    &.bet-series-disabled {
+      background: #f0f5fc;
+      color: rgba(45, 45, 45, 0.3);
+      border: 1px solid #e4ebf1;
+      border-radius: 4px;
+    }
+  }
+}
+
 </style>

@@ -23,30 +23,34 @@ import { ref } from "vue"
 // 接口出错时，uid的 字符串
 const last_gcuuid = ref('')
 
+// 老逻辑：：TODO 一级 主菜单 main, 二级菜单 sub， 三级菜单 date_menu
 // 处于列表页时分流计算
 const get_match_params_detail = (params, main_menu_type) => {
   //竞彩足球
-  if (main_menu_type == 30) {
-    params.euid = _.get(MenuData.current_menu, 'main.menuId');
+  if (MenuData.is_jinzu(main_menu_type)) {
+    params.euid = MenuData.get_current_sub_menuid()
+    //TODO lodash.get(MenuData.current_menu, 'main.menuId');
   }
+
+
   //赛果请求数据接口如果是赛果-->我的,投注type为29否则为28
-  if (main_menu_type == 28) {
-    if (_.get(MenuData.current_menu, 'sub')) {
-      if (_.get(MenuData.current_menu, 'sub') == 0) {
+  if (MenuData.is_results(main_menu_type)) {
+    if (lodash.get(MenuData.current_menu, 'sub')) {
+      if (lodash.get(MenuData.current_menu, 'sub') == 0) {
         params.type = 29;
       }
-      params.euid = MenuData.get_current_sub_menuid() || _.get(MenuData.current_menu, 'sub');
+      params.euid = MenuData.get_current_sub_menuid() || lodash.get(MenuData.current_menu, 'sub');
     }
   }
   // menuType == 100 电竞的冠军
-  if (typeof _.get(MenuData.current_menu, 'date_menu.field1') != 'undefined') {
-    if (_.get(MenuData.current_menu, 'date_menu.menuType') == 100) {
+  if (typeof lodash.get(MenuData.current_lv_3_menu, 'field1') != 'undefined') {
+    if (lodash.get(MenuData.current_lv_3_menu, 'menuType') == 100) {
       params.category = 2;
       params.md = '';
     }
     else {
       params.category = 1;
-      params.md = _.get(MenuData.current_menu, 'date_menu.field1');
+      params.md = lodash.get(MenuData.current_lv_3_menu, 'field1');
     }
   }
   //主菜单不为早盘,赛果,串关,电竞则移除参数的日期
@@ -70,8 +74,8 @@ const get_match_params_detail = (params, main_menu_type) => {
       }
     };
     // 如果是在 赛果页面的 虚拟体育相关的 页面，则添加 tournamentId  参数
-    if (MenuData.menu_type == 28) {
-      params.tournamentId = _.get(MenuData.get_level_four_menu(), 'menuId');
+    if (MenuData.is_results()) {
+      params.tournamentId = lodash.get(MenuData.get_level_four_menu(), 'menuId');
       //虚拟体育期号
       params.batchNo = PageSourceData.list_query_other_params.batchNo;
     }

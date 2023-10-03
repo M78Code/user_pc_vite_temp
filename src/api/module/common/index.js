@@ -132,6 +132,8 @@ export const get_Video_MaxTime = (params, config, url = "/v1/w/virtual/getVideoM
 export const get_category_list = (params, config, url = "/v1/m/category/getCategoryList") => {
   return http.get(`${prefix_job}${url}`, params,{axios_debounce_cache_key: 'get_category_list'});
 }
+// 详情页赛事结束自动切换赛事接口(业务:yk)
+export const get_detail_video = (params, config, url = "/v1/w/getDetailVideo") => http.get(`${prefix}${url}`, params, config)
 // 获取虚拟体育赛果页面接口
 export const get_virtual_matchResult = (params,config, url = "/v1/m/matchDetail/getVirtualMatchResult") => {
   return new Promise((resolve) => {

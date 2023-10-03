@@ -72,7 +72,6 @@
           <div style="height:15px"></div>
         </template>
       </scroll-list>
-      <div v-show="false"> {{ MatchListCardDataClass.list_version }}</div>
       <!-- <div> {{match_list_card_key_arr }}</div> -->
       <!-- 滚球其他列表 -->
       <scroll-list  v-if="menu_config.menu_root_show_shoucang != 300">

@@ -2,7 +2,7 @@
   <div class="q-pb-md">
     <div class="panel">
       <!-- 统计 -->
-      <div class="panel-title">{{ $t("analysis.statistics") }}</div>
+      <div class="panel-title">{{ i18n_t("analysis.statistics") }}</div>
       <div class="total">
         <div class="list">
           <div class="">
@@ -14,29 +14,29 @@
               <template v-if="match.csid == '1'">
                 <div>
                   <div class="rs_jiao_quan icon"></div>
-                  <div>{{ _.get(match, 'msc.S5.home') }}</div>
+                  <div>{{ lodash.get(match, 'msc.S5.home') }}</div>
                 </div>
                 <div>
                   <div class="yellow_card icon"></div>
-                  <div>{{ _.get(match, 'msc.S12.home') }}</div>
+                  <div>{{ lodash.get(match, 'msc.S12.home') }}</div>
                 </div>
                 <div>
                   <div class="red_card icon"></div>
-                  <div>{{ _.get(match, 'msc.S11.home') }}</div>
+                  <div>{{ lodash.get(match, 'msc.S11.home') }}</div>
                 </div>
                 <div>
                   <div class="rs_jin_quan icon"></div>
-                  <div>{{ _.get(match, 'msc.S1.home') }}</div>
+                  <div>{{ lodash.get(match, 'msc.S1.home') }}</div>
                 </div>
               </template>
               <template v-else>
                 <div>
                   <img src="~public/image/yabo/svg/analysis-foul.svg" alt="" width="14">
-                  <div>{{ _.get(match, 'msc.S106.home') }}</div>
+                  <div>{{ lodash.get(match, 'msc.S106.home') }}</div>
                 </div>
                 <div>
                   <img src="~public/image/yabo/svg/analysis-pause.svg" alt="" width="14">
-                  <div>{{ _.get(match, 'msc.S109.home') }}</div>
+                  <div>{{ lodash.get(match, 'msc.S109.home') }}</div>
                 </div>
               </template>
             </div>
@@ -52,30 +52,30 @@
               <template v-if="match.csid == '1'">
                 <div>
                   <div class="rs_jin_quan icon"></div>
-                  <div>{{ _.get(match, 'msc.S1.away') }}</div>
+                  <div>{{ lodash.get(match, 'msc.S1.away') }}</div>
                 </div>
                 <div>
                   <div class="red_card icon"></div>
-                  <div>{{ _.get(match, 'msc.S11.away') }}</div>
+                  <div>{{ lodash.get(match, 'msc.S11.away') }}</div>
                 </div>
                 <div>
                   <div class="yellow_card icon"></div>
-                  <div>{{ _.get(match, 'msc.S12.away') }}</div>
+                  <div>{{ lodash.get(match, 'msc.S12.away') }}</div>
                 </div>
                 <div>
                   <div class="rs_jiao_quan icon"></div>
-                  <div>{{ _.get(match, 'msc.S5.away') }}</div>
+                  <div>{{ lodash.get(match, 'msc.S5.away') }}</div>
                 </div>
               </template>
               <!-- 篮球 -->
               <template v-else>
                 <div>
                   <img src="~public/image/yabo/svg/analysis-pause.svg" alt="" width="14">
-                  <div>{{ _.get(match, 'msc.S109.away') }}</div>
+                  <div>{{ lodash.get(match, 'msc.S109.away') }}</div>
                 </div>
                 <div>
                   <img src="~public/image/yabo/svg/analysis-foul.svg" alt="" width="14">
-                  <div>{{ _.get(match, 'msc.S106.away') }}</div>
+                  <div>{{ lodash.get(match, 'msc.S106.away') }}</div>
                 </div>
               </template>
             </div>
@@ -89,13 +89,13 @@
     <div class="panel match-event">
       <div class="panel-title">
         <!-- 事件 -->
-        <span>{{ $t('analysis.event') }}</span>
+        <span>{{ i18n_t('analysis.event') }}</span>
         <div class="stage-tab" v-if="match.csid == '2'">
           <span class="item" :class="{ 'active': activeStage == index }" @click="stage_choose(index)"
             v-for="(item, index) in event_all_data" :key="index">{{ item.key }}</span>
         </div>
       </div>
-      <trace :match="match" :event_data="event_data" v-if="_.get('event_data.length')" />
+      <trace :match="match" :event_data="event_data" v-if="lodash.get('event_data.length')" />
     </div>
 
     <div class="foot-icon" v-if="match.csid == '1' && event_data.length">
@@ -110,48 +110,50 @@
 
 <script setup>
 
-// import { ref, onUnmounted } from 'vue';
-// import { useRoute } from 'vue-router';
+import { ref, onUnmounted } from 'vue';
+import { useRoute } from 'vue-router';
 // import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 // import { component_symbol, need_register_props } from "../config/index.js"
 // useRegistPropsHelper(component_symbol, need_register_props)
-// import { api_analysis } from 'src/api/index'
+import { api_analysis } from 'src/api/index'
+import lodash from 'lodash'
 
-// import { ChatFullVersionWapper as chat } from 'src/components/analysis/template/chat/index.js'
-// import { TraceVersionWapper as trace } from 'src/components/analysis/template/trace/index.js'
+import { ChatFullVersionWapper as chat } from 'src/components/analysis/template/chat/index.js'
+import { TraceFullVersionWapper as trace } from 'src/components/analysis/template/trace/index.js'
 
+const props = defineProps(['match'])
 const route = useRoute();
 const activeStage = ref(0);
 const event_data = ref([]); // 足球事件
 const event_all_data = ref([]); // 篮球事件
 const icons = ref([
   // 黄牌
-  { name: require('public/image/yabo/svg/analysis-yellow_card.svg'), label: i18n_t("icon_tips.yellow_card") },
+  { name: 'public/image/yabo/svg/analysis-yellow_card.svg', label: i18n_t("icon_tips.yellow_card") },
   // 红牌
-  { name: require('public/image/yabo/svg/analysis-red_card.svg'), label: i18n_t("icon_tips.red_card") },
+  { name: 'public/image/yabo/svg/analysis-red_card.svg', label: i18n_t("icon_tips.red_card") },
   // 角球
-  { name: require('public/image/yabo/svg/analysis-corner.svg'), label: i18n_t("list.corner") },
+  { name: 'public/image/yabo/svg/analysis-corner.svg', label: i18n_t("list.corner") },
   // 换人
-  { name: require('public/image/yabo/svg/analysis-substitution.svg'), label: i18n_t("analysis.substitution") },
+  { name: 'public/image/yabo/svg/analysis-substitution.svg', label: i18n_t("analysis.substitution") },
   // 进球
-  { name: require('public/image/yabo/svg/analysis-goal.svg'), label: i18n_t("icon_tips.goal") },
+  { name: 'public/image/yabo/svg/analysis-goal.svg', label: i18n_t("icon_tips.goal") },
   // 点球
-  { name: require('public/image/yabo/svg/analysis-goal_penalty.svg'), label: i18n_t("icon_tips.penalty_kick") },
+  { name: 'public/image/yabo/svg/analysis-goal_penalty.svg', label: i18n_t("icon_tips.penalty_kick") },
   // 点球未进
-  { name: require('public/image/yabo/svg/analysis-penalty_missed.svg'), label: i18n_t("analysis.penalty_missed") },
+  { name: 'public/image/yabo/svg/analysis-penalty_missed.svg', label: i18n_t("analysis.penalty_missed") },
   // 乌龙球
-  { name: require('public/image/yabo/svg/analysis-goal_own.svg'), label: i18n_t("analysis.own_goals") },
+  { name: 'public/image/yabo/svg/analysis-goal_own.svg', label: i18n_t("analysis.own_goals") },
 ])
 
 // 足球
-if (this.match.csid == '1') {
-  this.get_result()
+if (props.match.csid == '1') {
+  get_result()
   // 篮球
 } else {
-  this.basketball_event()
+  basketball_event()
 }
 
-const stage_choose = (index) => {
+function stage_choose(index) {
   activeStage.value = index
   event_data.value = event_all_data.value[index].value
 }
@@ -162,17 +164,17 @@ const stage_choose = (index) => {
 * @return {}
 */
 
-const get_result = () => {
-  api_analysis.get_getEventResult({ mid: this.match.mid }).then(({ data }) => {
+function get_result () {
+  api_analysis.get_getEventResult({ mid: props.match.mid }).then(({ data }) => {
     if (data.code == 200) {
       let arr = [];
-      let _data = _.get(data, 'data') || [];
+      let _data = lodash.get(data, 'data') || [];
       _data.map(item => {
         let obj = {}
         if (item.mid) {
           obj.team = 3
-          obj.secondsFromStart = _.get(item, 'mid.secondsFromStart')
-          switch (_.get(item, 'mid.matchPeriodId')) {
+          obj.secondsFromStart = lodash.get(item, 'mid.secondsFromStart')
+          switch (lodash.get(item, 'mid.matchPeriodId')) {
             // 开始
             case '0': obj.cnText = i18n_t("analysis.start"); break;
             // 中场
@@ -188,11 +190,11 @@ const get_result = () => {
           }
         } else {
           let k = 'home',
-            teamName = this.match.mhn;
+            teamName = props.match.mhn;
           obj.team = 1
           if (item.away) {
             k = 'away'
-            teamName = this.match.man
+            teamName = props.match.man
             obj.team = 2
           }
 
@@ -228,14 +230,14 @@ const get_result = () => {
 * @description: 篮球事件
 */
 
-const basketball_event = () => {
-  api_analysis.get_live_event({ mid: this.match.mid }).then((res) => {
-    let data = _.get(res, 'data');
+function basketball_event () {
+  api_analysis.get_live_event({ mid: props.match.mid }).then((res) => {
+    let data = lodash.get(res, 'data');
     if (data && data.code == 200) {
       if (data.data) {
         event_all_data.value = data.data;
       }
-      event_data.value = _.get(data, 'data[0].value') || []
+      event_data.value = lodash.get(data, 'data[0].value') || []
     }
   })
 }
@@ -350,7 +352,7 @@ onUnmounted(() => {
         width: 60px;
         height: 24px;
         margin-right: 6px;
-        background: var(--qq--analysis-bg-color-1);
+        background: var(--q-analysis-color-16);
         border-radius: 2px;
         cursor: pointer;
         display: flex;

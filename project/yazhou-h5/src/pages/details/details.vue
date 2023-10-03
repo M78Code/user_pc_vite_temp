@@ -199,7 +199,6 @@ export default defineComponent({
     const get_bet_show = ref(false)
     const {
       state_data,
-      get_detail_data,
       is_highlights,
       show_match_analysis_tab,
       show_chatroom_tab,
@@ -293,7 +292,7 @@ export default defineComponent({
     );
     // 顶部切换赛事后，默认展示投注视图
     // watch(
-    //   () => get_detail_data.mid,
+    //   () => state_data.detail_data.mid,
     //   () => {
     //     state_data.viewTab = 'bet';
     //     get_chatroom_info();
@@ -359,7 +358,7 @@ export default defineComponent({
     );
     // 解决点击收藏状态闪动:vuex的值被初始化接口里面的值覆盖的问题 当修改了vuex里面get_detail_data.mf值同步修改data变量里面detail_data.mf的值才可以解决此问题
     // watch(
-    //   () => get_detail_data.mf,
+    //   () => state_data.detail_data.mf,
     //   (_new) => {
     //     data.detail_data.mf = new_
     //   }
@@ -532,7 +531,6 @@ export default defineComponent({
     //   'set_last_route_info',
     //   'set_event_list',
     // ]),
-    provide('get_detail_data', get_detail_data)
     return {
       ...toRefs(state_data),
       i18n_t,

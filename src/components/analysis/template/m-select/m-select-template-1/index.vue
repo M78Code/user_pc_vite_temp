@@ -124,7 +124,7 @@ onUnmounted(() => {
   .selct-menu {
     width: 160px;
     height: 24px;
-    background: var(--qq--analysis-bg-color-1);
+    background: var(--q-analysis-color-16);
     border: 1px solid var(--qq--yb-border-color9);
     cursor: pointer;
 
@@ -149,7 +149,7 @@ onUnmounted(() => {
       display: none;
       width: 160px;
       border: 1px solid var(--qq--yb-border-color9);
-      background: var(--qq--analysis-bg-color-1);
+      background: var(--q-analysis-color-16);
       padding: 5px 0;
       position: absolute;
       z-index: 1;
@@ -185,7 +185,7 @@ onUnmounted(() => {
       text-align: center;
       padding: 0 7px;
       border: var(--qq--yb-border-color9);
-      background: var(--qq--analysis-bg-color-1);
+      background: var(--q-analysis-color-16);
       cursor: pointer;
       margin-right: 10px;
       border-radius: 2px;
