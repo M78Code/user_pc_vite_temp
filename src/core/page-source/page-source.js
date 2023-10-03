@@ -34,19 +34,16 @@ const PAGE_SOURCE_POOL_H5 =  [
 const PAGE_SOURCE_POOL_PC =  [
   "details",
   'match-play-common' , // 滚球 常规
-  'match-play-fliter' , // 滚球 筛选
-  'match-play-collect' ,// 滚球 收藏
   'match-play-esports' ,// 滚球 电竞
   'match-play-vr' ,// 滚球 vr
-  'match-play-common-champion', //滚球 常规 冠军 联赛结构
-  'match-play-champion', //滚球 冠军 球种结构
+  'match-common-champion', //常规 冠军 联赛结构
+  'match-champion', //冠军 球种结构
+  'match-today-common' , //今日 常规
   'match-early-common' , //早盘 常规
-  'match-early-fliter' ,//早盘 筛选
-  'match-early-collect' ,//早盘 收藏
-  'match-early-esports' ,//早盘 电竞
-  'match-early-vr' ,//早盘 vr
-  'match-early-common-champion',//早盘 常规 冠军 联赛结构
-  'match-early-champion',//早盘 冠军 球种结构
+  'match-fliter' ,//筛选
+  'match-collect' ,//收藏
+  'match-esports' ,//电竞
+  'match-vr' ,// vr
   "virtual_details"// vr 详情
 ]
 
