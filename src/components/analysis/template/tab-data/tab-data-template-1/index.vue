@@ -230,7 +230,7 @@ import { format_result } from 'src/core/format/index.js'
 import { MSelectFullVersionWapper as basePanel } from 'src/components/analysis/template/m-select/index.js'
 import { api_analysis } from 'src/api/index'
 
-import { i18n_t } from "src/core/index.js";
+import { i18n_t,result_filter } from "src/core/index.js";
 import lodash from 'lodash'
 
 const tabIndex = ref(1); // 当前 tab 所在下标
@@ -279,7 +279,7 @@ function getData() {
   let params = { parentMenuId: 2, sonMenuId: tabIndex.value, standardMatchId: props.match.mid }//
   api_analysis.get_match_analysise_data(params).then((res) => {
     res = res.data
-    console.log("get_match_analysise_dataget_match_analysise_data",res);
+    // console.log("get_match_analysise_dataget_match_analysise_data",res);
     // 基本面
     if (tabIndex.value == 1) {
       if (Object.keys(res.basicInfoMap).length) {
@@ -315,17 +315,17 @@ function getData() {
     } else {
       baseData.value = res.homeAwayGoalAndCoachMap
     }
-  })
+  }).catch(err=> console.log(err))
 }
 
 /**
 * @description: 杯赛积分
 */
 function get_vs_info(flag) {
-  api_analysis.get_vs_info({ mid: props.match.mid, flag: flag }).then(({ data }) => {
-    if (data.code == 200) {
+  api_analysis.get_vs_info({ mid: props.match.mid, flag: flag }).then((res) => {
+    if (res.code == 200) {
       tournamentTypeFinish.value = true
-      vs_info.value = data.data
+      vs_info.value = res.data
     }
   })
 }
@@ -334,10 +334,10 @@ function get_vs_info(flag) {
 * @description: 历史交战
 */
 function get_team_vs_history() {
-  api_analysis.get_team_vs_history(params.value).then(({ data }) => {
-    if (data.code == 200 && data.data) {
-      team_vs_history.value = data.data
-      let result = format_result(data.data)
+  api_analysis.get_team_vs_history(params.value).then((res) => {
+    if (res.code == 200 && res.data) {
+      team_vs_history.value = res.data
+      let result = format_result(res.data)
       team_vs_history_result.value = {
         home: result,
         away: {
@@ -354,9 +354,9 @@ function get_team_vs_history() {
 * @description: 近期战绩
 */
 function get_team_vs_other_team() {
-  api_analysis.get_team_vs_other_team(params.value).then(({ data }) => {
-    if (data.code == 200 && data.data) {
-      let results = lodash.get(data, "data");
+  api_analysis.get_team_vs_other_team(params.value).then((res) => {
+    if (res.code == 200 && res.data) {
+      let results = lodash.get(res, "data");
       if (!results || !results.length) { return; }
       let findId = results[0].teamGroup
       let obj = { home: [], away: [] }

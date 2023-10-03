@@ -7,17 +7,16 @@
   <div class='score_child_1 row mx-12 font-style'>
     <div>
       <!-- 上半场，全场，加时赛，点球大战-->
-      <!-- TODO:  | score_format 过滤后续修改 -->
       <span>&nbsp;&nbsp;</span>
       <span v-if="score_array[1] && collection_a.includes(detail_data.mmp)"> {{i18n_t('match_info.half')}}</span>
       <span v-if="score_array[0] && collection_b.includes(detail_data.mmp)">/{{i18n_t('match_info.full')}}</span>
       <span v-if="add_score && collection_c.includes(detail_data.mmp)">/{{i18n_t('match_info.add')}}</span>
       <span v-if="shoot_score && collection_c.includes(detail_data.mmp) && ['result_details', 'match_result'].includes($route.name)">/{{i18n_t('match_info.shoot_out')}}</span>
 
-      <span v-if="score_array[1] && collection_a.includes(detail_data.mmp)"> : {{score_array[1]}}</span>
-      <span v-if="score_array[0] && collection_b.includes(detail_data.mmp)"> / {{score_array[0]}}</span>
-      <span v-if="add_score && collection_c.includes(detail_data.mmp)"> / {{add_score}}</span>
-      <span v-if="shoot_score && collection_c.includes(detail_data.mmp) && ['result_details', 'match_result'].includes($route.name)"> / {{shoot_score}}</span>
+      <span v-if="score_array[1] && collection_a.includes(detail_data.mmp)"> : {{ $filters.score_format(score_array[1])}}</span>
+      <span v-if="score_array[0] && collection_b.includes(detail_data.mmp)"> / {{ $filters.score_format(score_array[0])}}</span>
+      <span v-if="add_score && collection_c.includes(detail_data.mmp)"> / {{ $filters.score_format(add_score)}}</span>
+      <span v-if="shoot_score && collection_c.includes(detail_data.mmp) && ['result_details', 'match_result'].includes($route.name)"> / {{ $filters.score_format(shoot_score)}}</span>
     </div>
     <div>
       <!-- 角球,黄牌,红牌 -->
@@ -25,23 +24,23 @@
       <!-- 角球数 -->
       <span v-if="red_flag">
         <span>&nbsp;&nbsp;</span>
-        <span><q-img style="width: 0.12rem;margin-top:-3px;"  src="/yazhou-h5/image/svg/corner_kick.svg"></q-img></span>
+        <span><q-img style="width: 0.16rem;height: 0.16rem;margin-top:-5px;"  src="/yazhou-h5/image/svg/corner_kick.svg"></q-img></span>
         <span>&nbsp;&nbsp;</span>
-        <span>{{score_array_status[0]}}</span>
+        <span>{{ $filters.score_format(score_array_status[0])}}</span>
       </span>
       <!-- 黄牌数 -->
       <span v-if="yellow_card">
         <span>&nbsp;&nbsp;</span>
-        <span><q-img style="width: 0.12rem;margin-top:-3px;"  src="/yazhou-h5/image/svg/details_yellow.svg"></q-img></span>
+        <span><q-img style="width: 0.16rem;height: 0.16rem;margin-top:-5px;"  src="/yazhou-h5/image/svg/details_yellow.svg"></q-img></span>
         <span>&nbsp;&nbsp;</span>
-        <span>{{score_array_status[2]}}</span>
+        <span>{{ $filters.score_format(score_array_status[2])}}</span>
       </span>
       <!-- 红牌数 -->
       <span v-if="red_card">
         <span>&nbsp;&nbsp;</span>
-        <span><q-img style="width: 0.12rem;margin-top:-3px;"  src="/yazhou-h5/image/svg/details_red_card.svg"></q-img></span>
+        <span><q-img style="width: 0.16rem;height: 0.16rem;margin-top:-5px;"  src="/yazhou-h5/image/svg/details_red_card.svg"></q-img></span>
         <span>&nbsp;&nbsp;</span>
-        <span>{{score_array_status[1]}}</span>
+        <span>{{ $filters.score_format(score_array_status[1])}}</span>
       </span>
 
     </div>

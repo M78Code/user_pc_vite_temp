@@ -17,7 +17,7 @@
             :thickness="0.3"
             color="blue"
             track-color="orange"
-            :class="{'knob': get_right_zoom, 'knob2': !get_right_zoom}"
+            :class="{'knob': LayOutMain_pc.zoom, 'knob2': !LayOutMain_pc.zoom}"
           />
           <span class="text-blue">{{lodash.get(match_info, 'msc.S104.away')}}</span>
         </div>
@@ -36,7 +36,7 @@
             :thickness="0.3"
             color="blue"
             track-color="orange"
-            :class="{'knob': get_right_zoom, 'knob2': !get_right_zoom}"
+            :class="{'knob': LayOutMain_pc.zoom, 'knob2': !LayOutMain_pc.zoom}"
           />
           <span class="text-blue">{{lodash.get(match_info, 'msc.S8.away')}}</span>
         </div>
@@ -55,7 +55,7 @@
             :thickness="0.3"
             color="blue"
             track-color="orange"
-            :class="{'knob': get_right_zoom, 'knob2': !get_right_zoom}"
+            :class="{'knob': LayOutMain_pc.zoom, 'knob2': !LayOutMain_pc.zoom}"
           />
           <span class="text-blue">{{lodash.get(match_info, 'msc.S105.away')}}</span>
         </div>
@@ -107,7 +107,7 @@
 </template>
 
 <script>
-// import { mapGetters } from "vuex";
+import { LayOutMain_pc } from "src/core/index";
 export default {
   props: {
     // 赛事比分数据
@@ -115,9 +115,14 @@ export default {
   },
   // computed: {
   //   ...mapGetters({
-  //     get_right_zoom: "get_right_zoom",
+  //     LayOutMain_pc.zoom: "LayOutMain_pc.zoom",
   //   }),
   // },
+  data(){
+    return{
+      LayOutMain_pc,
+    }
+  },
   watch: {
     match_info: {
       handler(res, old) {

@@ -133,9 +133,9 @@ const {
 //  * @Description:返回顶部
 //  * @return {Undefined} Undefined
 //  */
-// const on_go_top = () => {
-//   emit("on_go_top");
-// };
+const on_go_top = () => {
+  emit("on_go_top");
+};
 const match_infoData = ref({});
 const match_details = ref([]);
 watch(

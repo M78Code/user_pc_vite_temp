@@ -101,7 +101,7 @@
         {{last_list_score}}
       </div>
       <div class="score last score-important" v-if="![1,2,3,4,6,7,8,9,10,13,11,12].includes(+match.csid)">
-        {{all_s1 || score_format(all_s1)}}
+        {{all_s1 || $filters.score_format(all_s1)}}
       </div>
     </div>
   </div>

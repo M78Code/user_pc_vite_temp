@@ -12,8 +12,7 @@ import { i18n_t} from "src/boot/i18n.js"
 // import BetCommonHelper from "src/core/bet/common-helper/index.js"
 import BetCommonHelper from "../bet/common-helper/index"
 // import {utils } from 'src/core/index.js'
-import { UserCtr,MatchDetailCalss } from "src/core/index.js";
-
+import { UserCtr,MatchDetailCalss,is_eports_csid } from "src/core/index.js";
 export default {
 
   /**
@@ -45,7 +44,7 @@ export default {
     };
     let api_ = null;
     // 判断是电竞还是其他赛种，区分接口
-    if(utils.is_eports_csid(window.vue.$route.params.csid)){
+    if(is_eports_csid(window.vue.$route.params.csid)){
       api_ = api_details.get_match_detail_ESMatchInfo;
     } else {
       api_ = api_details.get_match_detail_MatchInfo;
@@ -747,7 +746,7 @@ export default {
     const { mid, tid, csid } = match
     let video_size = '0'
     
-    if((window.vue.$route.params.size == 1 || size == 'xl') && !utils.is_eports_csid(match.csid)){
+    if((window.vue.$route.params.size == 1 || size == 'xl') && !is_eports_csid(match.csid)){
       video_size= '1'
     }
 

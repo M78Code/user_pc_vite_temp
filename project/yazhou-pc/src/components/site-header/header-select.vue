@@ -86,11 +86,12 @@ import popupLanguage from "project_path/src/components/popup-select/popup-langua
 /* api */
 import { api_account, api_common } from "src/api/index.js";
 
-import {LayOutMain_pc } from 'src/core/index.js'
+import {LayOutMain_pc, get_file_path } from 'src/core/index.js'
 import store from "src/store-redux/index.js";
 import { format_money2 } from "src/core/format/index.js"
 // import userCtr from 'src/core/index.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
+import { get_remote_time } from "src/core/format/module/format-date.js"
 
 const day_left = '/yazhou-pc/image/svg/day_left.svg'
 const day_right = '/yazhou-pc/image/svg/day_right.svg'
@@ -205,14 +206,55 @@ let currentSwipperArr = reactive([])
 /** 节庆资源接口 */
 function getFestivalBanner() {
     api_common.queryFestivalBanner().then(res => {
-        const data = lodash.get(res, 'data.data') || {}
+        // const data = lodash.get(res, 'data.data') || {}
+    const data  ={
+        "img4Type": "0",
+        "img9Type": "1",
+        "img10Type": "1",
+        "img10Url": "hot/180",
+        "img9Url": "hot/239",
+        "img3Url": "",
+        "img8Type": "1",
+        "img5Url": "hot/6408",
+        "img7Url": "hot/180",
+        "img2Url": "",
+        "img5Type": "1",
+        "img10": "group1/M00/1B/6D/CgURtWUXydqAEVuqAABp3s1zrvk227.png",
+        "img11": "group1/M00/1B/6D/CgURtWUXybOASRgeAACFMXWsA0k730.png",
+        "startTime": "1696123860000",
+        "id": "1160",
+        "img12Url": "hot/6408",
+        "img12": "group1/M00/1B/6C/CgURtmUXybeAcukfAACFMXWsA0k437.png",
+        "img4": "",
+        "img3": "",
+        "img6": "group1/M00/1B/6D/CgURt2UXycWAXcUzAAHD5Bp7pDw798.png",
+        "img5": "group1/M00/1B/6C/CgURtmUXyamANPfYAACFMXWsA0k354.png",
+        "img11Url": "hot/6408",
+        "img8": "group1/M00/1B/6D/CgURt2UXya6AK8hUAACFMXWsA0k519.png",
+        "img7": "group1/M00/1B/6D/CgURt2UXydWAe1_SAABp3s1zrvk246.png",
+        "img2Type": "0",
+        "img9": "group1/M00/1B/6D/CgURtWUXycqASzqsAAHD5Bp7pDw564.png",
+        "img12Type": "1",
+        "img1Type": "0",
+        "img6Type": "1",
+        "img4Url": "",
+        "img8Url": "hot/6408",
+        "img6Url": "hot/239",
+        "img1Url": "",
+        "img3Type": "0",
+        "img11Type": "1",
+        "img7Type": "1",
+        "endTime": "1696366800000",
+        "img2": "",
+        "img1": ""
+    }
         // 服务器时间
-        // let stime = proxy.get_remote_time();
+        let stime = get_remote_time();
         let _time = data.startTime && data.endTime;
         // 当前时间处于开始时间和结束时间中间时才展示图片
         // if (Object.keys(data).length && _time && (data.startTime <= stime && stime <= data.endTime)) {
-        //     pcDaytimeLink.value = proxy.get_file_path(data.img1); //PC日间 左边图片链接
-        //     pcNightLink.value = proxy.get_file_path(data.img2); //PC夜间 左边图片链接
+        //     pcDaytimeLink.value = get_file_path(data.img1); //PC日间 左边图片链接
+        //     pcNightLink.value = get_file_path(data.img2); //PC夜间 左边图片链接
         //     nightClickType.typeL = parseInt(data.img2Type); // 夜间版跳转类型  左边
         //     dayClickType.typeL = parseInt(data.img1Type); // 日间版跳转类型   左边
         //     nightClickType.urlL = data.img2Url; // 夜间版跳转链接  左边
@@ -221,24 +263,24 @@ function getFestivalBanner() {
         //     let { img5, img5Type, img5Url, img6, img6Type, img6Url, img7, img7Type, img7Url, img8, img8Type, img8Url, img9, img9Type, img9Url, img10, img10Type, img10Url } = { ...data }
         //     // 轮播图日间版
         //     if (img5) {
-        //         daySwipper.push({ img: proxy.get_file_path(img5), imgType: img5Type, imgUrl: img5Url, isClick: img5Type != 0 && img5Url })
+        //         daySwipper.push({ img: get_file_path(img5), imgType: img5Type, imgUrl: img5Url, isClick: img5Type != 0 && img5Url })
         //     }
         //     if (img6) {
-        //         daySwipper.push({ img: proxy.get_file_path(img6), imgType: img6Type, imgUrl: img6Url, isClick: img6Type != 0 && img6Url })
+        //         daySwipper.push({ img: get_file_path(img6), imgType: img6Type, imgUrl: img6Url, isClick: img6Type != 0 && img6Url })
         //     }
         //     if (img7) {
-        //         daySwipper.push({ img: proxy.get_file_path(img7), imgType: img7Type, imgUrl: img7Url, isClick: img7Type != 0 && img7Url })
+        //         daySwipper.push({ img: get_file_path(img7), imgType: img7Type, imgUrl: img7Url, isClick: img7Type != 0 && img7Url })
         //     }
 
         //     // 轮播图夜间版
         //     if (img8) {
-        //         nightSwipper.push({ img: proxy.get_file_path(img8), imgType: img8Type, imgUrl: img8Url, isClick: img8Type != 0 && img8Url })
+        //         nightSwipper.push({ img: get_file_path(img8), imgType: img8Type, imgUrl: img8Url, isClick: img8Type != 0 && img8Url })
         //     }
         //     if (img9) {
-        //         nightSwipper.push({ img: proxy.get_file_path(img9), imgType: img9Type, imgUrl: img9Url, isClick: img9Type != 0 && img9Url })
+        //         nightSwipper.push({ img: get_file_path(img9), imgType: img9Type, imgUrl: img9Url, isClick: img9Type != 0 && img9Url })
         //     }
         //     if (img10) {
-        //         nightSwipper.push({ img: proxy.get_file_path(img10), imgType: img10Type, imgUrl: img10Url, isClick: img10Type != 0 && img10Url })
+        //         nightSwipper.push({ img: get_file_path(img10), imgType: img10Type, imgUrl: img10Url, isClick: img10Type != 0 && img10Url })
         //     }
         //     // 根据日间或者夜间来判断用哪个数据
         //     if (UserCtr.theme.includes('day') && daySwipper.length > 0) {

@@ -33,7 +33,6 @@
       >
         <template v-slot:header>
           <!-- 全屏模式玩法集tab -->
-
           <div
             class="full-video-tab"
             v-if="
@@ -117,6 +116,8 @@
             <!-- 玩法tab -->
 
             <handicap-tabs-bar
+              v-if="
+              (LayOutMain_pc.layout_current_path !== 'details' && !is_esports) ||route.name == 'video'"
               :handicap_this="handicap_this"
               :match_info="match_infoData"
               @get_mattch_details="get_mattch_details"
@@ -132,12 +133,7 @@
    
         > -->
         <!-- 盘口模板start -->
-        <template
-          v-if="
-            (layout_cur_page.cur !== 'details' && !is_esports) ||
-            route.name == 'video'
-          "
-        >
+        <template v-if="(LayOutMain_pc.layout_current_path !== 'details' && !is_esports) || route.name == 'video'">
           <match-handicap
             :match_info="match_infoData"
             :category_list="category_list"
@@ -178,7 +174,7 @@
                 <!-- 统计 -->
                 <span>{{ i18n_t("common.panel_total") }}</span>
               </div>
-              <!-- <chart class="total_chart" :match_info="match_infoData" /> -->
+              <chart class="total_chart" :match_info="match_infoData" />
             </div>
           </div>
           <!-- 撑起盘口关闭高度的 -->
@@ -193,11 +189,12 @@
                     )
                   )) &&
                 !is_esports &&
-                layout_cur_page.cur !== 'details'
+                LayOutMain_pc.layout_current_path !== 'details'
                   ? '200px'
                   : 'auto',
             }"
           ></div>
+          
           <!-- 热门推荐 -->
           <!-- <hot  v-if="get_global_switch.hot_recommend"/> -->
           <!-- 近期关注 -->
@@ -271,6 +268,7 @@ import {
   useMittOn,
   MatchDataWarehouse_PC_Detail_Common as MatchDetailsData,
   MatchDetailCalss,
+  LayOutMain_pc
 } from "src/core/index";
 import matchHandicap from "src/components/match-detail/match-handicap/match-handicap.vue";
 import { TabWapper as Tab } from "src/components/common/tab";
@@ -290,8 +288,6 @@ import lodash from "lodash";
 let state = store.getState();
 // 获取右侧布局类型
 const cur_expand_layout = ref(state.layoutReducer.cur_expand_layout);
-// 获取当前页路由信息
-const layout_cur_page = ref(state.layoutReducer.layout_cur_page);
 const {
   handicap_this,
   show_load_status,

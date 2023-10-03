@@ -10,8 +10,7 @@
     <template>
       <span v-for="(item, key) of score_array" :key="key">
         <span>&nbsp;&nbsp;</span>
-        <!-- TODO:  | score_format 过滤后续修改 -->
-        <span :class="{'activeText':(score_array.length == key + 1 && detail_data.mo != 1)}" style="letter-spacing: 0.015rem">{{item}}</span>
+        <span :class="{'activeText':(score_array.length == key + 1 && detail_data.mo != 1)}" style="letter-spacing: 0.015rem">{{ $filters.score_format(item)}}</span>
         <span>&nbsp;&nbsp;</span>
       </span>
     </template>
@@ -38,12 +37,12 @@ export default {
     // ]),
     // 网球比分集合
     score_array(){
-      return initEvent();
+      return this.initEvent();
     }
   },
   watch: {
     get_detail_msc_changed(curr){
-      initEvent();
+      this.initEvent();
     },
     detail_data:{
       handler(n){
@@ -75,7 +74,7 @@ export default {
   },
   props: ['detail_data'],
   created(){
-    validateStage();
+    this.validateStage();
   },
   methods: {
     /**
@@ -84,17 +83,17 @@ export default {
      *@return {Array} 比分集合
      */
     initEvent(){
-      let msc = detail_data.msc;
+      let msc = this.detail_data.msc;
       // sortBy方法  比分升序排列 取出比分阶段后面的数字作为判断条件 返回是数组
-      msc = _.sortBy( msc, (item) => {
+      msc = lodash.sortBy( msc, (item) => {
         return +(item.split("|")[0]).substring(1)
       })
       let score_arr = [];
       // 循环只取出接口返回的比分里面符合网球阶段的比分
-      _.forEach(msc, (item)=>{
+      lodash.forEach(msc, (item)=>{
         // S1 S2 S3 S19 S20 ...
         let num_index = item.split("|")[0];
-        if(msc_array.includes(num_index)){
+        if(this.msc_array.includes(num_index)){
           score_arr.push(item.split("|")[1]);
         }
       })
@@ -107,7 +106,7 @@ export default {
      */
     findStage(str){
       let tens_stage_col = [];
-      _.forEach(detail_data.msc, (item)=>{
+      lodash.forEach(this.detail_data.msc, (item)=>{
         tens_stage_col.push( item.split("|")[0] )
       })
       return tens_stage_col.indexOf(str);
@@ -118,7 +117,7 @@ export default {
      *@return {Undefined}
      */
     validateStage(){
-      switch(detail_data.mmp){
+      switch(this.detail_data.mmp){
         case '8': //8 第一盘  S23 第1盘比分（网球）
           useMittEmit(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, 'S23|0:0')
           useMittEmit(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, 'S103|0:0')

@@ -24,18 +24,18 @@
         {{i18n_t('mmp')[2][detail_data.mmp]}}
       </span>
       <!-- 计时器 -->
-      <span  v-if="mmp_arr_base.includes(detail_data.mmp) && showTime >= 0" >&nbsp;&nbsp;<span v-if="showTime >=0">{{ showTime | format_mgt_time }}</span></span>
+      <span  v-if="mmp_arr_base.includes(detail_data.mmp) && showTime >= 0" >&nbsp;&nbsp;<span v-if="showTime >=0">{{ $filters.format_mgt_time(showTime) }}</span></span>
     </template>
     <template v-else>
       <span>{{detail_data.ms==1?i18n_t('mmp.2.21'):i18n_t('mmp.2'+detail_data.mmp)}}</span>
-      <span v-if="showTime > 0" >&nbsp;&nbsp;<span v-if="showTime > 0">{{ showTime | format_mgt_time }}</span></span>
+      <span v-if="showTime > 0" >&nbsp;&nbsp;<span v-if="showTime > 0">{{ $filters.format_mgt_time(showTime) }}</span></span>
     </template>
   </div>
 </template>
 
 <script>
 // import msc from "src/public/mixins/common/msc.js";
-import { format_mgt_time } from "src/core/format/index.js"
+// import { format_mgt_time } from "src/core/format/index.js"
 import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/index.js";
 import { i18n_t } from "src/boot/i18n.js";
 export default {

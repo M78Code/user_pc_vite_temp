@@ -12,7 +12,7 @@
     <span v-else>
       {{i18n_t('mmp')[1][detail_data.mmp]}}
       <!-- 计时器 -->
-      <span  v-if="mmp_arr.includes(detail_data.mmp) && showTime != 0">&nbsp;{{ utils.counting_time_ctr_show_format(detail_data, format_mgt_time(showTime)) }}</span>
+      <span  v-if="mmp_arr.includes(detail_data.mmp) && showTime != 0">&nbsp;{{ utils.counting_time_ctr_show_format(detail_data, $filters.format_mgt_time(showTime)) }}</span>
       <span  v-if="detail_data.mmp == '0'">&nbsp;&nbsp;{{ utils.counting_time_ctr_show_format(detail_data, '00:00')}}</span>
     </span>
   </span>
@@ -22,7 +22,7 @@
   import lodash from 'lodash';
   import { computed, onMounted, onUnmounted, ref, watch } from "vue"
   // import msc from "src/public/mixins/common/msc.js";  // 国际化比赛阶段比分转换工具
-  import { format_mgt_time } from "src/core/format/index.js"
+  // import { format_mgt_time } from "src/core/format/index.js"
   import { utils } from 'src/core/utils/index.js';
   import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/index.js";
   import { i18n_t } from "src/boot/i18n.js"
@@ -111,7 +111,7 @@ onUnmounted(() => {
     showTime.value = Number(props.detail_data.mst) + Number(num);
     savePageTime();
     showTimeInterval.value = setInterval(() => {
-      showTime.value += step;
+      showTime.value += step.value;
       savePageTime();
       // set_match_real_time(format_mgt_time(showTime))
     }, 1000);

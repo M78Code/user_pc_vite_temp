@@ -29,11 +29,11 @@
               :play_data="item_details"
               :bet_data="item"
               :bet_path="{hl_index: j, ol_index: i}"
-              :team_name="is_eports_csid(match_info.csid) ? lodash.get(item_details, `title[${i}].osn`) : ''"
+              :team_name="is_eports_csid(match_info?.csid) ? lodash.get(item_details, `title[${i}].osn`) : ''"
               bet_source="match_details"
             >
               <div class="bet-item">
-                <div v-if="match_info.csid == '1011'">{{item.on}}</div>
+                <div v-if="match_info?.csid == '1011'">{{item.on}}</div>
                 <template v-else>
                   <div class="item-label bet-ellipsis ellipsis">
                     <span :class="['ellipsis-wrap',{'yb-family-odds':[361, 362].includes(+lodash.get(item_details, 'hpid',-1))}]">{{item.ott}}</span>

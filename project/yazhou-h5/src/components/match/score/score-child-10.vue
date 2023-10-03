@@ -9,8 +9,7 @@
     <template v-if="detail_data.ms != 111">
       <span v-for="(item, key) of score_array" :key="key">
         <span>&nbsp;&nbsp;</span>
-        <!-- TODO:  | score_format 过滤后续修改 -->
-        <span :class="(score_array.length == key + 1&&detail_data.mo != 1) ? 'activeText': '' ">{{item}}</span>
+        <span :class="(score_array.length == key + 1&&detail_data.mo != 1) ? 'activeText': '' ">{{ $filters.score_format(item)}}</span>
         <span>&nbsp;&nbsp;</span>
       </span>
     </template>
@@ -37,7 +36,7 @@ export default {
   computed: {
     // 比分集合
     score_array(){
-      return initEvent();
+      return this.initEvent();
     }
   },
   watch: {
@@ -75,7 +74,7 @@ export default {
   },
   props: ['detail_data'],
   created(){
-    validateStage();
+    this.validateStage();
   },
   methods: {
     /**
@@ -85,19 +84,19 @@ export default {
      */
     initEvent(){
       for(let i = 120; i<= 159; i ++){
-        msc_array.push(`S${i}`);
+        this.msc_array.push(`S${i}`);
       }
-      let msc = detail_data.msc;
+      let msc = this.detail_data.msc;
       // sortBy方法  比分升序排列 取出比分阶段后面的数字作为判断条件 返回是数组
-      msc = _.sortBy( msc, (item) => {
+      msc = lodash.sortBy( msc, (item) => {
         return +(item.split("|")[0]).substring(1)
       })
       let score_arr = [];
       // 循环只取出接口返回的比分里面符合羽毛球阶段的比分
-      _.forEach(msc, (item, index)=>{
+      lodash.forEach(msc, (item, index)=>{
         // S1 S2 S3 S19 S20 ...
         let num_index = item.split("|")[0];
-        if(msc_array.includes(num_index)){
+        if(this.msc_array.includes(num_index)){
           score_arr.push(item.split("|")[1]);
         }
       })
@@ -109,7 +108,7 @@ export default {
      *@return {Undefined}
      */
     validateStage(){
-      switch(detail_data.mmp){
+      switch(this.detail_data.mmp){
         case '301':  //301   第一局结束
           useMittEmit(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, 'S121|0:0')
           break;

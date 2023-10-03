@@ -7,14 +7,13 @@
   <div class='score_child_14 row mx-12 font-style'>
     <!-- 半场 -->
     <span>&nbsp;&nbsp;</span>
-    <!-- TODO:  | score_format 过滤后续修改 -->
-    <span v-if="score_array[1] && collection_a.includes(detail_data.mmp)">{{i18n_t('match_info.half')}}: <span class="active-text">{{score_array[1]}}</span></span>
+    <span v-if="score_array[1] && collection_a.includes(detail_data.mmp)">{{i18n_t('match_info.half')}}: <span class="active-text">{{ $filters.score_format(score_array[1])}}</span></span>
     <!-- 加时赛 -->
-    <span v-if="add_score && collection_c.includes(detail_data.mmp)">&nbsp;&nbsp;{{i18n_t('match_info.add')}}: <span class="active-text">{{add_score}}</span></span>
+    <span v-if="add_score && collection_c.includes(detail_data.mmp)">&nbsp;&nbsp;{{i18n_t('match_info.add')}}: <span class="active-text">{{ $filters.score_format(add_score)}}</span></span>
     <!-- 点球大战 -->
-    <span v-if="shoot_score && collection_d.includes(detail_data.mmp)">&nbsp;&nbsp;{{i18n_t('match_info.shoot_out')}}: <span class="active-text">{{shoot_score}}</span></span>
+    <span v-if="shoot_score && collection_d.includes(detail_data.mmp)">&nbsp;&nbsp;{{i18n_t('match_info.shoot_out')}}: <span class="active-text">{{ $filters.score_format(shoot_score)}}</span></span>
     <!-- 全场 -->
-    <span v-if="score_array[0] && collection_b.includes(detail_data.mmp)">&nbsp;&nbsp;{{i18n_t('match_info.full')}}: <span class="active-text">{{score_array[0]}}</span></span>
+    <span v-if="score_array[0] && collection_b.includes(detail_data.mmp)">&nbsp;&nbsp;{{i18n_t('match_info.full')}}: <span class="active-text">{{ $filters.score_format(score_array[0])}}</span></span>
   </div>
 </template>
 
@@ -44,7 +43,7 @@ export default {
   computed: {
     // 比分集合
     score_array(){
-      return initEvent();
+      return this.initEvent();
     },
     // ...mapGetters([
     //   // 赛果标识
@@ -65,7 +64,7 @@ export default {
   },
   props: ['detail_data'],
   created(){
-    validateStage();
+    this.validateStage();
   },
   methods: {
     /**
@@ -74,27 +73,27 @@ export default {
      *@return {Array} 橄榄球比分
      */
     initEvent(){
-      let msc = detail_data.msc;
+      let msc = this.detail_data.msc;
       // sortBy方法  比分升序排列 取出比分阶段后面的数字作为判断条件 返回是数组
-      msc = _.sortBy( msc, (item) => {
+      msc = lodash.sortBy( msc, (item) => {
         return +(item.split("|")[0]).substring(1)
       })
 
       let score_arr = [];
       // 循环只取出接口返回的比分里面符合橄榄球阶段的比分
-      _.forEach(msc, (item)=>{
+      lodash.forEach(msc, (item)=>{
         // S1 S2 S3 S19 S20 ...
         let num_index = item.split("|")[0];
         // 加时赛
         if(num_index == 'S7'){
-          add_score = item.split("|")[1];
+          this.add_score = item.split("|")[1];
         }
         // 点球
         if(num_index == 'S170'){
-          shoot_score = item.split("|")[1];
+          this.shoot_score = item.split("|")[1];
         }
         // 1全场  2上半场  7加时赛  170点球大战
-        if(msc_array.includes(num_index)){
+        if(this.msc_array.includes(num_index)){
           score_arr.push(item.split("|")[1]);
         }
       })
@@ -106,7 +105,7 @@ export default {
      *@return {Undefined}
      */
     validateStage(){
-      switch( detail_data.mmp ){
+      switch( this.detail_data.mmp ){
         case "34":  //34  等待点球大战阶段 前端显示点球大战 S170是点球大战比分
           useMittEmit(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, 'S170|0:0')
           break;

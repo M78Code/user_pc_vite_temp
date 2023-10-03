@@ -9,8 +9,7 @@
     <template>
       <span v-for="(item, key) of score_array" :key="key">
         <span>&nbsp;&nbsp;</span>
-        <!-- TODO:  | score_format 过滤后续修改 -->
-        <span :class="(score_array.length == key + 1&&detail_data.mo != 1)? 'activeText': '' ">{{item}}</span>
+        <span :class="(score_array.length == key + 1&&detail_data.mo != 1)? 'activeText': '' ">{{ $filters.score_format(item)}}</span>
         <span>&nbsp;&nbsp;</span>
       </span>
     </template>
@@ -32,14 +31,14 @@ export default {
     // ...mapGetters(['get_detail_msc_changed']),
     // 比分集合
     score_array(){
-      return initEvent();
+      return this.initEvent();
     }
   },
   watch: {
     get_detail_msc_changed(){
-      let msc = detail_data.msc;
+      let msc = this.detail_data.msc;
       // sortBy方法  比分升序排列 取出比分阶段后面的数字作为判断条件 返回是数组
-      msc = _.sortBy( msc, (item) => {
+      msc = lodash.sortBy( msc, (item) => {
         return +(item.split("|")[0]).substring(1)
       })
       try {
@@ -55,9 +54,9 @@ export default {
     detail_data:{
       handler(n, o){
         if(n.mmp == '445'){
-          let msc = detail_data.msc;
+          let msc = this.detail_data.msc;
           // sortBy方法  比分升序排列 取出比分阶段后面的数字作为判断条件 返回是数组
-          msc = _.sortBy( msc, (item) => {
+          msc = lodash.sortBy( msc, (item) => {
             return +(item.split("|")[0]).substring(1)
           })
           try {
@@ -76,7 +75,7 @@ export default {
   },
   props: ['detail_data'],
   created(){
-    validateStage();
+    this.validateStage();
   },
   methods: {
     /**
@@ -86,17 +85,17 @@ export default {
      */
     initEvent(){
       for(let i = 120; i<= 159; i ++){
-        msc_array.push(`S${i}`);
+        this.msc_array.push(`S${i}`);
       }
-      let msc = detail_data.msc;
+      let msc = this.detail_data.msc;
       // sortBy方法  比分升序排列 取出比分阶段后面的数字作为判断条件 返回是数组
-      msc = _.sortBy( msc, (item) => {
+      msc = lodash.sortBy( msc, (item) => {
         return +(item.split("|")[0]).substring(1)
       })
       let score_arr = [];
-      _.forEach(msc, (item, index)=>{
+      lodash.forEach(msc, (item, index)=>{
         let num_index = item.split("|")[0];
-        if(msc_array.includes(num_index)){
+        if(this.msc_array.includes(num_index)){
           score_arr.push(item.split("|")[1]);
         }
       })
@@ -108,10 +107,10 @@ export default {
      *@return {Undefined}
      */
     validateStage(){
-      if(detail_data.mmp == '445'){
-        let msc = detail_data.msc;
+      if(this.detail_data.mmp == '445'){
+        let msc = this.detail_data.msc;
         // sortBy方法  比分升序排列 取出比分阶段后面的数字作为判断条件 返回是数组
-        msc = _.sortBy( msc, (item) => {
+        msc = lodash.sortBy( msc, (item) => {
           return +(item.split("|")[0]).substring(1)
         })
         try {
