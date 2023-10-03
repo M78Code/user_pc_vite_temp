@@ -2,7 +2,7 @@
  * @Author: 'jacques' 'jacques@itcom888.com'
  * @Date: 2023-10-02 16:12:29
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2023-10-03 18:36:17
+ * @LastEditTime: 2023-10-03 22:10:24
  * @FilePath: \user-pc-vite\src\components\analysis\index.vue
  * @Description: 足篮赛事分析页
 -->
@@ -384,7 +384,7 @@ export default {
         height: 32px;
         line-height: 32px;
         padding-left: 29px;
-        background-image: var(--qq--analysis-bg-gradient-1) !important;
+        background-image: var(--q-analysis-bg-gradient-1) !important;
         color: var(--qq--analysis-text-color-5);
 
         border: 1px solid var(--qq--analysis-bd-color-4);
