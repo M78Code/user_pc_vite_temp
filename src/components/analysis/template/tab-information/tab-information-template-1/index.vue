@@ -31,7 +31,7 @@
 // import analysisData  from 'src/public/mixins/analysis/analysis'
 // mixins: [analysisData],
 
-import { ref, onUnmounted,defineProps } from 'vue';
+import { ref, onUnmounted } from 'vue';
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
 import { api_analysis } from 'src/api/index'

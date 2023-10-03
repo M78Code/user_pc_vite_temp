@@ -2,17 +2,9 @@
  * @Author: 'jacques' 'jacques@itcom888.com'
  * @Date: 2023-10-02 16:12:29
  * @LastEditors: 'jacques' 'jacques@itcom888.com'
- * @LastEditTime: 2023-10-03 16:47:52
+ * @LastEditTime: 2023-10-03 17:19:59
  * @FilePath: \user-pc-vite\src\components\analysis\index.vue
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
--->
-<!--
- * @Author: 'jacques' 'jacques@itcom888.com'
- * @Date: 2023-10-02 16:12:29
- * @LastEditors: 'jacques' 'jacques@itcom888.com'
- * @LastEditTime: 2023-10-03 16:43:17
- * @FilePath: \user-pc-vite\src\components\analysis\index.vue
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ * @Description: 足篮赛事分析页
 -->
 <!--
  * @Author:
@@ -70,7 +62,7 @@
       <!-- 情报 -->
       <tab-information :match="matchDetail" v-if="(hasNews ? activeTab - 1 : activeTab) == 3"/>
       <!-- 赔率 -->
-      <!-- <tab-odds :match="matchDetail" v-if="(hasNews ? activeTab - 1 : activeTab) == 4"/> -->
+      <tab-odds :match="matchDetail" v-if="(hasNews ? activeTab - 1 : activeTab) == 4"/>
     </q-scroll-area>
   </div>
 </template>
@@ -86,7 +78,7 @@ import { TabResultsFullVersionWapper as tabResults} from 'src/components/analysi
 import { TableDataFullVersionWapper as tabData} from 'src/components/analysis/template/tab-data/index.js'
 import { TabLineupFullVersionWapper as tabLineup} from 'src/components/analysis/template/tab-lineup/index.js'
 import { TabInformationFullVersionWapper as tabInformation} from 'src/components/analysis/template/tab-information/index.js'
-// import { TabOddsFullVersionWapper as tabOdds} from 'src/components/analysis/template/tab-odds/index.js'
+import { TabOddsFullVersionWapper as tabOdds} from 'src/components/analysis/template/tab-odds/index.js'
 import { TabNewsFullVersionWapper as news} from 'src/components/analysis/template/tab-news/index.js'
 import { MatchProcessFullVersionWapper as matchDate } from "src/components/match-process/index.js";
 import {api_analysis} from 'src/api/index.js' 
@@ -105,7 +97,7 @@ export default {
     tabData,
     tabLineup,
     tabInformation,
-    //tabOdds,
+    tabOdds,
     matchDate,
     news
   },
