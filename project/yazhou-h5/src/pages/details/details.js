@@ -419,7 +419,7 @@ const get_detail_data = ref(MatchDataWarehouse_H5_Detail_Common.list_to_obj.mid_
   //  赛事详情页面接口(/v1/m/matchDetail/getMatchDetail)
   const initEvent = () => {
     // get_uid为空时循环检测进行拉取逻辑处理
-    if (state_data.get_uid || state_data.init_event_timer_count > 30) {
+    if (UserCtr.uid || state_data.init_event_timer_count > 30) {
       get_football_replay(0);
       // 请求接口数据
       get_match_details({
@@ -599,7 +599,8 @@ const get_detail_data = ref(MatchDataWarehouse_H5_Detail_Common.list_to_obj.mid_
 
           sessionStorage.setItem("match_list_ofdetails", "");
           data.math_list_data = [];
-          set_sanjiao_is_bool(false);
+          // // 设置详情下拉三角是否显示
+          // set_sanjiao_is_bool(false);
         } else {
           let store_data = {
             // tid:联赛id
@@ -611,7 +612,8 @@ const get_detail_data = ref(MatchDataWarehouse_H5_Detail_Common.list_to_obj.mid_
           // 将sessiong_store的值存在sessionStorage里面
           sessionStorage.setItem("match_list_ofdetails", sessiong_store);
           state_data.math_list_data = data;
-          set_sanjiao_is_bool(true);
+          // // 设置详情下拉三角是否显示
+          // set_sanjiao_is_bool(true);
         }
       });
   };
@@ -868,7 +870,8 @@ const get_detail_data = ref(MatchDataWarehouse_H5_Detail_Common.list_to_obj.mid_
     // #TODO: IMIT
     state_data.emitters = [
       // useMittOn(MITT_TYPES.EMIT_RESET_SET_HTON, info_icon_click_h),
-      // useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS, info_icon_click_h),
+      // 刷新详情页头部信息;
+      useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS, initEvent),
       // // 拳击赛事级别关盘+当前时间(服务器时间)>=赛事开赛时间(mgt) 此时详情页拳击赛事切换下一场
       // useMittOn(MITT_TYPES.EMIT_CHANGE_DETAILS_MATCH, info_icon_click_h),
       // useMittOn(MITT_TYPES.EMIT_DETAILS_SKT, info_icon_click_h),
@@ -881,6 +884,7 @@ const get_detail_data = ref(MatchDataWarehouse_H5_Detail_Common.list_to_obj.mid_
       // useMittOn(MITT_TYPES.EMIT_TABS_LIST_UPDATE_HANDLE, info_icon_click_h),
       // // 监听页面高度的变化 及时动态更新最新的页面高度
       // useMittOn(MITT_TYPES.EMIT_WINDOW_RESIZE, info_icon_click_h),
+
     ];
   };
   const off_listeners = () => {

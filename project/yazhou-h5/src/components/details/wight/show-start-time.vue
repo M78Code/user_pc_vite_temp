@@ -7,7 +7,7 @@
   <span class='show-start-time'>
     <span v-if="start_time" class="fz_12" style="font-weight:400">
       <!-- "after_time_start": "分钟后开赛", -->
-      {{t("list.after_time_start",[longTime])}}
+      {{i18n_t("list.after_time_start",[longTime])}}
     </span>
     <span v-else>
       {{ format_H_M(format_time_zone_time(+detail_data.mgt)) }}
@@ -18,7 +18,6 @@
 <script>
 import {utils } from 'src/core/index.js';
 import { format_time_zone_time, format_H_M } from "src/core/format/index.js"
-import { t } from "src/boot/i18n.js";;
 //国际化
 
 
@@ -30,44 +29,46 @@ export default {
       longTime: '',
       // 是否显示开赛时间
       start_time: false,
-      utils
+      utils,
+      format_time_zone_time,
+      format_H_M
     }
   },
   props: ["detail_data"],
   created(){
     // 时间延时器
-    timerInterval = '';
-    initEvent(); },
+    this.timerInterval = '';
+    this.initEvent(); },
   beforeUnmount(){
-    clearInterval(timerInterval);
-    timerInterval = null
+    clearInterval(this.timerInterval);
+    this.timerInterval = null
   },
   methods: {
     initEvent(){
       let now = new Date().getTime();
-      let bool = Number(detail_data.mgt) - now < 3600 * 1000;
-      let longTime = Math.floor( (+detail_data.mgt -now ) / 1000 / 60 );
+      let bool = Number(this.detail_data.mgt) - now < 3600 * 1000;
+      let longTime = Math.floor( (+this.detail_data.mgt -now ) / 1000 / 60 );
       if( longTime == 0 ){
         longTime += 1;
       }
       // 判断开始时间小于本地时间 则不显示具体时间
-      if( detail_data.mgt - now < 0 ){
-        clearInterval(timerInterval);
-        start_time = false;
+      if( this.detail_data.mgt - now < 0 ){
+        clearInterval(this.timerInterval);
+        this.start_time = false;
       } else {
-        start_time = bool;
+        this.start_time = bool;
       }
-      longTime = longTime;
+      this.longTime = longTime;
 
-      timerInterval = setInterval(()=>{
+      this.timerInterval = setInterval(()=>{
         let now = new Date().getTime();
-        if(+detail_data.mgt - now < 0 ){
-          clearInterval(timerInterval);
-          start_time = false;
+        if(+this.detail_data.mgt - now < 0 ){
+          clearInterval(this.timerInterval);
+          this.start_time = false;
         }
-        let longTime = Math.floor( (+detail_data.mgt - now )/ 1000 / 60);
+        let longTime = Math.floor( (+this.detail_data.mgt - now )/ 1000 / 60);
         if(longTime == 0){ longTime += 1; }
-        longTime = longTime;
+        this.longTime = longTime;
       }, 1000 * 1)
     }
   },

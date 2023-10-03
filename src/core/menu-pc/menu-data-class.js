@@ -1,6 +1,7 @@
 import base_data_instance from "src/core/base-data/base-data.js";
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import { computed_menu_to_match_templte } from 'src/core/match-list-pc/list-template/pc-menu-match-template.js'
+import PageSource from 'src/core/page-source/page-source.js'
 import {
   useMittOn,
   useMittEmit,
@@ -210,6 +211,28 @@ class MenuData {
     ) {
       val = "match_list";
     }
+    console.error('set_match_list_api_type',obj)
+
+    const { jinri_zaopan,guanjun } = obj
+    let text = 'match-today-common'
+    // 今日
+    if(jinri_zaopan == 2){
+      text = 'match-today-common'
+    }
+    // 早盘
+    if(jinri_zaopan == 3){
+      text = 'match-early-common'
+    }
+    // 常规赛种下的冠军
+    if(guanjun == 'common-guanjun'){
+      text = 'match-common-champion'
+    }
+    // 冠军下面的常规赛事
+    if(guanjun == 'guanjun-common'){
+      text = 'match-champion'
+    }
+    PageSource.set_page_source(text)
+
     // console.warn('ssss',val);
     this.match_list_api_type = val;
   }

@@ -110,8 +110,8 @@
 
 <script setup>
 
-// import { ref, onUnmounted } from 'vue';
-// import { useRoute } from 'vue-router';
+import { ref, onUnmounted } from 'vue';
+import { useRoute } from 'vue-router';
 // import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 // import { component_symbol, need_register_props } from "../config/index.js"
 // useRegistPropsHelper(component_symbol, need_register_props)
@@ -126,21 +126,21 @@ const event_data = ref([]); // 足球事件
 const event_all_data = ref([]); // 篮球事件
 const icons = ref([
   // 黄牌
-  { name: require('public/image/yabo/svg/analysis-yellow_card.svg'), label: i18n_t("icon_tips.yellow_card") },
+  { name: 'public/image/yabo/svg/analysis-yellow_card.svg', label: i18n_t("icon_tips.yellow_card") },
   // 红牌
-  { name: require('public/image/yabo/svg/analysis-red_card.svg'), label: i18n_t("icon_tips.red_card") },
+  { name: 'public/image/yabo/svg/analysis-red_card.svg', label: i18n_t("icon_tips.red_card") },
   // 角球
-  { name: require('public/image/yabo/svg/analysis-corner.svg'), label: i18n_t("list.corner") },
+  { name: 'public/image/yabo/svg/analysis-corner.svg', label: i18n_t("list.corner") },
   // 换人
-  { name: require('public/image/yabo/svg/analysis-substitution.svg'), label: i18n_t("analysis.substitution") },
+  { name: 'public/image/yabo/svg/analysis-substitution.svg', label: i18n_t("analysis.substitution") },
   // 进球
-  { name: require('public/image/yabo/svg/analysis-goal.svg'), label: i18n_t("icon_tips.goal") },
+  { name: 'public/image/yabo/svg/analysis-goal.svg', label: i18n_t("icon_tips.goal") },
   // 点球
-  { name: require('public/image/yabo/svg/analysis-goal_penalty.svg'), label: i18n_t("icon_tips.penalty_kick") },
+  { name: 'public/image/yabo/svg/analysis-goal_penalty.svg', label: i18n_t("icon_tips.penalty_kick") },
   // 点球未进
-  { name: require('public/image/yabo/svg/analysis-penalty_missed.svg'), label: i18n_t("analysis.penalty_missed") },
+  { name: 'public/image/yabo/svg/analysis-penalty_missed.svg', label: i18n_t("analysis.penalty_missed") },
   // 乌龙球
-  { name: require('public/image/yabo/svg/analysis-goal_own.svg'), label: i18n_t("analysis.own_goals") },
+  { name: 'public/image/yabo/svg/analysis-goal_own.svg', label: i18n_t("analysis.own_goals") },
 ])
 
 // 足球
@@ -350,7 +350,7 @@ onUnmounted(() => {
         width: 60px;
         height: 24px;
         margin-right: 6px;
-        background: var(--qq--analysis-bg-color-1);
+        background: var(--q-analysis-color-16);
         border-radius: 2px;
         cursor: pointer;
         display: flex;

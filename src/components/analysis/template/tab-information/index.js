@@ -1,4 +1,4 @@
 
-import TabInfomationFullVersionWapper from "./full-version-wapper/index.vue";
+import TabInformationFullVersionWapper from "./full-version-wapper/index.vue";
 
-export { TabInfomationFullVersionWapper };
+export { TabInformationFullVersionWapper };
