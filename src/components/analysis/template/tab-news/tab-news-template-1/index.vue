@@ -311,7 +311,7 @@ onUnmounted(() => {
       display: block;
       width: 3px;
       height: 16px;
-      background: var(--qq--analysis-bg-color-15);
+      background: var(--q-analysis-color-14);
       border-radius: 1.5px;
       position: absolute;
       top: 16px;
