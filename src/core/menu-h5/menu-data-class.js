@@ -163,7 +163,7 @@ class MenuData {
         mi_list.push(...item.sl);
       }
       //电竞
-      if ([2100, 2101, 2103, 2102].includes(+item.mi)) {
+      if (BaseData.sports_mi.includes(+item.mi)) {
         menu_dianjing.sl.push(item);
       }
       //竟足
@@ -587,18 +587,6 @@ class MenuData {
   is_jinzu(mi) {
     return this._is_cur_mi(30, mi)
   }
-  // 电竞菜单csid
-  menu_csid(mi) {
-    if (mi) {
-      let menu_dianjing = {
-        2100: 100,
-        2101: 101,
-        2102: 102,
-        2103: 103,
-      };
-      return menu_dianjing[mi];
-    }
-  }
   //- 三级菜单 日期 (只有 串关，早盘，赛果，电竞，才有) -->
   get_is_show_three_menu(mi) {
     return [3, 6, 7, 28].includes(mi || this.current_lv_1_menu?.mi);
@@ -755,50 +743,6 @@ class MenuData {
     }
   }
   /**
-   * VR总类的菜单 这是固定的
-  */
-  vr_menu() {
-    const vr_list = [
-      {
-        field1: "1001",
-        menuId: "1001",
-        name: "足球",
-        subList: [],
-      },
-      {
-        field1: "1004",
-        menuId: "1004",
-        name: "篮球",
-        subList: [],
-      },
-      {
-        field1: "1011",
-        menuId: "1011",
-        name: "赛马",
-        subList: [],
-      },
-      {
-        field1: "1002",
-        menuId: "1002",
-        name: "赛狗",
-        subList: [],
-      },
-      {
-        field1: "1010",
-        menuId: "1010",
-        name: "摩托车",
-        subList: [],
-      },
-      {
-        field1: "1009",
-        menuId: "1009",
-        name: "泥地摩托车",
-        subList: [],
-      },
-    ];
-    return vr_list;
-  }
-  /**
    * 选中1级menu
    * item [object]当前点击对象
    * index [number]
@@ -925,8 +869,10 @@ class MenuData {
   /**
    * 电竞菜单要保留 电竞菜单 的 csid
    */
-  get_current_esport_csid(mi, item) {
-    if (mi) {
+  get_current_esport_csid() {
+    if (this.is_export()) {
+      var mi = this.current_lv_2_menu.mi
+      // 电竞菜单csid
       let menu_dianjing = {
         2100: 100,
         2101: 101,
@@ -935,11 +881,11 @@ class MenuData {
       };
       return menu_dianjing[mi] || "";
     }
-    if (BaseData.base_data_res.spList
-    ) {
-      this.previous_lv_1_menu = item;
-      return BaseData.base_data_res.spList.find((i) => i.csid == item.csid);
-    }
+    // if (BaseData.csids_map
+    // ) {
+    //   this.previous_lv_1_menu = item;
+    //   return BaseData.csids_map['csid_' + item.csid];
+    // }
     return "";
   }
   /**
