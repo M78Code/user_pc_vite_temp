@@ -341,7 +341,6 @@ async function set_menu_lv2(item, index, type = "click") {
  * 三级菜单事件
  */
 function set_menu_lv3(item, index, type = "click") {
-  console.log(item.field1)
   //点击当前 就不做什么
   if (
     MenuData.current_lv_3_menu &&

@@ -55,8 +55,8 @@ class MatchMeta {
       const mids = this.get_match_mids_by_mi(t.mi)
       mids && match_mids_list.push(...mids)
     })
-    // TODO: 需要去除 .slice(0, 15)
-    this.match_mids = [...new Set(match_mids_list.slice(0, 15))]
+    // TODO: 需要去除 .slice(0, 10)
+    this.match_mids = [...new Set(match_mids_list.slice(0, 10))]
     this.zaopan_mids = [...new Set(match_mids_list)]
     this.get_origin_match_by_mids(this.match_mids)
   }
@@ -81,7 +81,7 @@ class MatchMeta {
    */
   get_match_mids_by_mi(mi) {
     const mi_tid_mids_res = lodash.get(BaseData, 'mi_tid_mids_res')
-    if (mi_tid_mids_res.length < 1) return []
+    if (!mi_tid_mids_res) return []
     const mid_obj = mi_tid_mids_res[mi]
     if (!mid_obj) return
     const arr = []
@@ -103,7 +103,8 @@ class MatchMeta {
   get_origin_match_by_mids(mids) {
     // 赛事全量数据
     const list = lodash.get(BaseData.base_data_res, 'matchsList', [])
-    if (list.length < 1) return
+    const length = lodash.get(list, 'length', 0)
+    if (length < 1) return
     const match_list = mids.map(t => {
       return lodash.find(list, (l) => l.mid === t)
     })
@@ -178,7 +179,7 @@ class MatchMeta {
    * @param { list } 赛事数据 
    */
   set_match_default_properties(list = []) {
-    const length = lodash.get(list, 'length')
+    const length = lodash.get(list, 'length', 0)
     if (length < 1) return
     // 是否展示联赛标题
     let is_show_league = false
@@ -217,6 +218,7 @@ class MatchMeta {
   filter_match_by_time (time) {
     // 所有日期
     if (!time) {
+      // TODO: 需要去除 .slice(0, 10)
       this.match_mids = [...new Set((this.zaopan_mids).slice(0, 10))]
     } else {
       const list = lodash.get(BaseData.base_data_res, 'matchsList', [])
@@ -228,7 +230,7 @@ class MatchMeta {
         const match = lodash.find(list, (l) => l.mid === t)
         match && (Number(match.mgt) > Number(time) - hour_12) && (Number(match.mgt) < Number(time) + hour_12) && arr_mids.push(t)
       })
-       // TODO: 需要去除 .slice(0, 10)
+      // TODO: 需要去除 .slice(0, 10)
       this.match_mids = [...new Set((arr_mids).slice(0, 8))]
     }
     this.get_origin_match_by_mids(this.match_mids)
@@ -241,7 +243,8 @@ class MatchMeta {
    */
   filter_hot_match_by_tid (tid = '') {
     const list = lodash.get(BaseData.base_data_res, 'matchsList', [])
-    if (list.length < 1) return
+    const length = lodash.get(list, 'length', 0)
+    if (length < 1) return
     const result = list.filter(t => t.tid === tid)
     this.set_match_default_properties(result)
   }
