@@ -346,8 +346,7 @@ export default {
       align-items: center;
       justify-content: center;
       margin-right: 5px;
-      // background: var(--qq--analysis-bg-color-3);
-      background-color: var(--q-analysis-color-3);
+      background: var(--q-analysis-color-12);
       border: 1px solid var(--qq--analysis-bd-color-1);
       border-bottom-color: var(--qq--analysis-bd-color-2);
       color: var(--qq--analysis-text-color-3);
