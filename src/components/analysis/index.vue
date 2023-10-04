@@ -399,7 +399,7 @@ export default {
           transform: translate(0, -50%);
           width: 3px;
           height: 14px;
-          background: var(--qq--analysis-bg-color-4);
+          background: var(--q-analysis-color-12);
         }
       }
 
