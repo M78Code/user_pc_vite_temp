@@ -11,6 +11,9 @@ import MatchListCardClass from '../match-card/match-list-card-class'
 import { MATCH_LIST_TEMPLATE_CONFIG } from "src/core/match-list-h5/match-card/template"
 import mi_euid_mapping_default from "src/core/base-data/config/mi-euid-mapping.json"
 import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from 'src/core'
+import { api_common } from "src/api/index.js";
+import MatchListParams from 'src/core/match-list-h5/composables/match-list-params.js'
+
 class MatchMeta {
 
   constructor() {
@@ -259,6 +262,31 @@ class MatchMeta {
     const tid_mids = this.tid_map_mids[`tid_${tid}`].mids
     if (tid_mids.length < 1) return 
     this.set_match_mids(tid_mids)
+  }
+
+  /**
+   * @description 获取冠军赛事 元数据接口暂时未提供所以走老逻辑， 后续会提供
+   */
+  async get_champion_match() {
+    console.log(BaseData)
+    const main_menu_type = MenuData.get_menu_type()
+    const params = MatchListParams.get_base_params(40602)
+    const res = await api_common.post_match_full_list({
+      "cuid":"240640629535469568",
+      "euid":"40602",
+      "type":100,
+      "sort":2,
+      "device":"v2_h5_st"
+    })
+    const list = lodash.get(res, 'data', [])
+    const length = lodash.get(list, 'length', 0)
+    if (length < 1) return
+    const champion_mids = list.map(t => {
+      return t.mid
+    })
+    // 冠军不需要走 模版计算
+    this.match_mids = [...new Set(champion_mids.slice(0, 10))]
+    MatchDataBaseH5.set_list(list)
   }
 
   /**

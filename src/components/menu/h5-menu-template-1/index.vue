@@ -162,6 +162,7 @@ import base_data from "src/core/base-data/base-data.js";
 import { useRoute, useRouter } from "vue-router";
 import lodash from "lodash"
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
+
 // 一级菜单mi ref
 const { menu_type, update_time } =
   MenuData;
@@ -321,10 +322,12 @@ function select_all_sub_menu_handle() {
  * 二级菜单事件
  */
 async function set_menu_lv2(item, index, type = "click") {
-  console.log(item, index)
-  const mi = lodash.get(MenuData.current_lv_2_menu, 'mi')
-  if (mi === item.mi) return
+  console.log(item)
+  // const mi = lodash.get(MenuData.current_lv_2_menu, 'mi')
+  // if (mi === item.mi) return
   MenuData.set_current_lv2_menu(item, index, type);
+  // 冠军拉取旧接口； 待 元数据提供 冠军赛事后 再删除
+  if (MenuData.is_kemp()) return MatchMeta.get_champion_match()
   // 拉取菜单对应源数据
   MatchMeta.set_origin_match_data()
   switch (menu_type.value) {
