@@ -97,7 +97,7 @@ import { formatTime } from 'src/core/format/index.js'
     }
 
     .status-default {
-      color: var(--qq--analysis-text-color-4);
+      color: var(--q-analysis-color-0);
     }
   }
 
