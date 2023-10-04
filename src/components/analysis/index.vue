@@ -418,7 +418,7 @@ export default {
       }
 
       .lose {
-        color: var(--qq--analysis-text-color-7);
+        color: var(--q-analysis-color-6);
       }
 
       .dogfall {
