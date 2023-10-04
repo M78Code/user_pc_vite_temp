@@ -414,7 +414,7 @@ export default {
       }
 
       .win {
-        color: var(--qq--analysis-text-color-6);
+        color: var(--q-analysis-color-14);
       }
 
       .lose {

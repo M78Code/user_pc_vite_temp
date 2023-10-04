@@ -130,7 +130,7 @@ onUnmounted(() => {
     margin-bottom: 20px;
 
     .panel-title.FF7373:before {
-      background: var(--qq--analysis-text-color-6);
+      background: var(--q-analysis-color-14);
     }
 
     .item {
