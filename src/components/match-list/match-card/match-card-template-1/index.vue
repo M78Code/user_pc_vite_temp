@@ -12,6 +12,7 @@
       :is="`MatchTpl${match_style_obj.view_tpl_id}After`"
       :mid="mid"
     />
+    {{ `MatchTpl${match_style_obj.view_tpl_id}After` }}
   </div>
 </template>
 

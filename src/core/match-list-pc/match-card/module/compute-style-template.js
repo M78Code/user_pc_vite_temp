@@ -353,6 +353,5 @@ export const compute_style_template_by_matchinfo = (match, template_id, mid) => 
 		style_obj.add_handicap_height +
 		style_obj.tab_play_total_height +
 		6;
-	console.log('style_obj', style_obj);
 	return style_obj;
 };

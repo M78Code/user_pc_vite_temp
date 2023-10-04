@@ -268,13 +268,12 @@ const set_fold = () => {
     MatchListCardData.set_match_basic_data(props.card_style_obj)
     console.log('props.card_style_obj', props.card_style_obj);
     let params = {
-      mids: props.card_style_obj.league_obj.mids_info,
+      mids: props.card_style_obj.league_obj.mids.split(','),
       inner_param: 1
     };
     // 拉取http请求
     useMittEmit(MITT_TYPES.EMIT_API_BYMIDS, params)
   }
-  console.log('11111111');
   MatchListCardData.recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_tid_zhedie(props.card_style_obj)
 }
 
