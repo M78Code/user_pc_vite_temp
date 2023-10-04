@@ -88,9 +88,7 @@
 import { ref, computed, onActivated, onDeactivated, onMounted, onUnmounted, watch, nextTick } from "vue";
 import store from "src/store-redux/index.js";
 import lodash from 'lodash'
-import { i18n_t } from 'src/core/index.js'
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt"
-import { utils } from 'src/core/index.js'
 import { add_or_cancel_tournament, add_or_cancel_match } from 'src/api/module/common/index.js';
 import GlobalAccessConfig from "src/core/access-config/access-config.js"
 import matchContainer from "./match-container.vue";  // 赛事组件，用于赛事列表展示赛事信息
@@ -100,10 +98,8 @@ import matchContainerResult from "./match-container-result.vue" // 赛果冠军
 import scrollWrapper from 'project_path/src/components/scroll-wraper/scroll-wrapper.vue';    // 滚动操作处理
 import noData from "project_path/src/components/common/no-data.vue"; // 无网络展示组件
 import UserCtr from 'src/core/user-config/user-ctr.js'
-import PageSourceData from "src/core/page-source/page-source.js";
-import { MenuData } from "src/core/index.js"
-import BaseData from 'src/core/base-data/base-data.js'
-import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
+import { MenuData, i18n_t, utils } from "src/core/index.js"
+import { standard_edition } from 'project_path/src/mixin/userctr.js'
 
 // import { change_favorite_state } from 'src/core/match-list-h5/composables/match-list-collect.js'
 // import matchListCardFold from 'src/core/match-list-h5/match-card/match-list-card-fold.js'
@@ -146,9 +142,6 @@ const curr_play_info = ref({
   menu_id: '',
   show_15min_data: false // 15分钟玩法数据
 })
-//新手版标准版 1 2
-const newer_standard_edition = ref(PageSourceData.newer_standard_edition);
-
 // 投注成功的赛事id
 const get_match_id_bet_success = ref(store_state.get_match_id_bet_success)
 // 当前主题
@@ -218,7 +211,7 @@ watch(() => get_goto_list_top.value, () => {
   is_goto_top_random.value = Math.random();
 })
 
-watch(() => newer_standard_edition.value, (newValue) => {
+watch(() => standard_edition.valuee, (newValue) => {
   if (newValue == 1) {
     other_way_info_show.value = false
   }

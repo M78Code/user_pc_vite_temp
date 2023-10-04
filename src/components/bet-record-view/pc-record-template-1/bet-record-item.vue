@@ -7,7 +7,7 @@
     <template v-if="order.sportId == 1 || order.sportId == 2">
       <div class="row appoint-status" v-if="preOrder">
         <!--预约-->
-        <div class="col">{{ in8n_t('bet.bet_book_confirm') }}</div>
+        <div class="col">{{ i18n_t('bet.bet_book_confirm') }}</div>
       </div>
     </template>
     <!--如果是虚拟体育-->
@@ -73,7 +73,7 @@
                 v-if="show_score_info == true">
                 <!--投注时的实时比分(提示)-->
                 <div style="padding-top:5px;padding-bottom:5px;padding-left:5px;word-break:break-all;">
-                  {{ in8n_t('bet.score_info') }}
+                  {{ i18n_t('bet.score_info') }}
                 </div>
               </q-tooltip>
             </span>
@@ -151,7 +151,7 @@
         <div class="row">
           <div class="col bet-against">
             <!--赛果 比分-->
-            {{ in8n_t('bet.bet_result') }} {{ order.settleScore }}
+            {{ i18n_t('bet.bet_result') }} {{ order.settleScore }}
           </div>
         </div>
       </template>
@@ -200,8 +200,8 @@
       </div>
     </div>
     <!-- 截止投注 -->
-    <div class="row justify-between deadline" v-if="order.matchType === 3">
-      <span>{{ in8n_t('list.bet_close') }}</span>
+    <div class="row justify-between deadline" v-if="order.matchType == 3">
+      <span>{{ i18n_t('list.bet_close') }}</span>
       <span>{{
         formatTime(
           order.closingTime,
