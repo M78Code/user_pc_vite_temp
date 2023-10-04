@@ -54,7 +54,7 @@ import { formatTime } from 'src/core/format/index.js'
     width: 7px;
     height: 7px;
     border-radius: 7px;
-    background: var(--qq--analysis-bg-color-16);
+    background: var(--q-analysis-color-12);
 
     &.team-1 {
       background: var(--q-analysis-color-2);
@@ -71,7 +71,7 @@ import { formatTime } from 'src/core/format/index.js'
       left: 3px;
       height: 17px;
       width: 1px;
-      background: var(--qq--analysis-bg-color-16);
+      background: var(--q-analysis-color-12);
     }
 
     &:after {
@@ -81,7 +81,7 @@ import { formatTime } from 'src/core/format/index.js'
       left: 3px;
       height: 17px;
       width: 1px;
-      background: var(--qq--analysis-bg-color-16);
+      background: var(--q-analysis-color-12);
     }
   }
 
