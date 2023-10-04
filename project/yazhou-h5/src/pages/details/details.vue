@@ -19,7 +19,7 @@
       <div>
         <div  class="header-fix">
           <div ref="scroll_video_height" class="relative-position scroll_video_h">
-            <!-- <videos v-if="get_show_video" :detail_data="detail_data" :tips.sync="tips" :is_show_text="is_show_text"  :show_go_back="show_go_back" @change_go_back="change_go_back"></videos> -->
+            <videos v-if="get_show_video" :detail_data="detail_data" :tips.sync="tips" :is_show_text="is_show_text"  :show_go_back="show_go_back" @change_go_back="change_go_back"></videos>
             <details-header  @click.stop :detail_data="detail_data" :view_tab="viewTab" :style="{display:get_show_video?'none':'block'}"></details-header>
           </div>
         </div>
@@ -143,7 +143,7 @@ import detailsHeader from "project_path/src/pages/details/components/details-hea
 import detailsTab from "project_path/src/pages/details/components/details-tab.vue";         // 详情页中部玩法集tab
 import detailsDialog from "src/components/details/details-dialog/details-dialog-template-1/details-dialog.vue";   // 详情赛事下拉,赛事列表组件
 // // import no_data from "src/project/components/common/no-data.vue";   // 无网络展示组件
-// import videos from "project_path/src/pages/details/components/videos.vue";   // 详情页视频+动画直播区域
+import videos from "project_path/src/pages/details/components/videos2.vue";   // 详情页视频+动画直播区域
 // import change_header from "project_path/src/pages/details/components/header/change-header.vue";  // 详情页下拉置顶title
 // // import analysis_football_matches from "project_path/src/pages/details/analysis-matches/football-match-analysis/analysis-football-matches.vue"; // 详情页  足球赛事分析
 // // import basketball_match_analysis from "project_path/src/pages/details/analysis-matches/basketball-match-analysis/basketball-match-analysis";  // 详情页 或者 赛果  篮球赛事分析
@@ -172,7 +172,7 @@ export default defineComponent({
     detailsTab,
 //     // "no-data": no_data,
 //     "info-rules": info_rules,
-//     // videos: videos,
+    videos: videos,
 //     // "analysis-football-matches": analysis_football_matches,
 //     // "basketball-match-analysis": basketball_match_analysis,
 //     // SDetails,
