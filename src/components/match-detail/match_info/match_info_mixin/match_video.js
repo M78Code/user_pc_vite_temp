@@ -227,7 +227,7 @@ export default {
         this.callback_id++
         let callback_id = this.callback_id
         let { media_type } = this.play_media
-
+        if(!lodash.get(this.match_info,'mid')) return
         let { mid="", mms="", mvs="", varl="", vurl="", csid="",lvs="" } = this.match_info
         const {mid: last_mid, media_type: last_media_type} = this.last_media_info || {}
         

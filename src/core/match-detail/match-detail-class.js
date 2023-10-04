@@ -74,7 +74,7 @@ export default class MatchDetailCtr {
     // 赛事详情数量
     this.match_detail_count = 0;
     this.history_random=1;
-            // 当前选中玩法对应的盘口玩法
+    // 当前选中玩法对应的盘口玩法
     this.tabs_active_plays = [];
     this.detail_show_type =''//详情页 显示类型 play:滚球   today：今日  early：早盘
     // 是否显示全屏投注
