@@ -193,8 +193,8 @@ export default {
     }
     .match-away {
       padding: 6px 0;
-      color: var(--qq--right-match-away-score-color);
-      border-bottom: 6px solid var(--qq--right-match-away-score-color);
+      color: var(--q-analysis-color-2);
+      border-bottom: 6px solid var(--q-analysis-color-2);
     }
   }
   .common-item {

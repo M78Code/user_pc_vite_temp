@@ -248,7 +248,7 @@ onUnmounted(() => {
       color: var(--q-gb-t-c-17) !important;
     }
     .text-orange {
-      color: var(--qq--right-match-away-score-color) !important;
+      color: var(--q-analysis-color-2) !important;
     }
   }
 }
