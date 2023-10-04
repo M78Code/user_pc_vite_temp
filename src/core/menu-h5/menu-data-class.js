@@ -289,23 +289,18 @@ class MenuData {
   get_euid(arg_mi) {
     let mi = arg_mi || this.current_lv_2_menu?.mi;
     if (!mi) return "";
-    if (this.is_kemp()) {
-      //冠军特殊处理
-      mi = 400 + (mi?.substr(0, 3) - 100);
-    }
     // 赛果
-    if (this.is_results()) return arg_mi;
+    if (this.is_results()) return mi;
     if (BaseData.mi_euid_map_res && BaseData.mi_euid_map_res[mi]) {
       return BaseData.mi_euid_map_res[mi].h;
     } else {
       // 电竞无旧菜单id处理
-      let menu_dianjing = {
+      return {
         2100: 41002,
         2101: 41001,
         2102: 41004,
         2103: 41003,
-      };
-      return menu_dianjing[mi];
+      }[mi];
     }
   }
 
@@ -348,6 +343,9 @@ class MenuData {
     }
     let bg_mi = parseInt(this.recombine_menu_desc(item?.mi));
     let id = parseInt(bg_mi - 100);
+    if (this.is_kemp()) {
+      id = parseInt(bg_mi - 400);
+    }
     if (get_ball_id) return id;
     let type = "";
     switch (String(id)) {
@@ -530,7 +528,7 @@ class MenuData {
    * 没有传递对比当前菜单
   */
   is_hot(mi) {
-    return this._is_cur_mi(8, mi)
+    return this._is_cur_mi(500, mi)
   }
   /**
    * 是否选中了VR 

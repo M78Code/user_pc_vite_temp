@@ -553,7 +553,7 @@ class BaseData {
       useMittEmit(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA)
       this.base_data_version.value = Date.now();
     } catch (error) {
-      console.log("获取 元数据接口 error", error);
+      console.error("获取 元数据接口 error", error);
     }
   }
 

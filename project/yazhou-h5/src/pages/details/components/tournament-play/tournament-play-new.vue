@@ -767,3 +767,6 @@ export default defineComponent({
 <style scoped lang="scss">
   @import "../../styles/tournament-play-new.scss";
 </style>
+<style scoped lang="scss">
+  @import "../../styles/details-theme/temp.scss";
+</style>

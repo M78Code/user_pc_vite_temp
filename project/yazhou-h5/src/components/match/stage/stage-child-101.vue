@@ -34,10 +34,6 @@ export default {
     "counting-down": counting_down,
   },
   props: ["detail_data"],
-  setup(props, event) {
-    const route = useRoute()
-    console.error(props.detail_data, route);
-  }
   
 };
 </script>

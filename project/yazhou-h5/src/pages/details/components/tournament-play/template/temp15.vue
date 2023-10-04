@@ -13,6 +13,7 @@
         <!-- 按ol循环，不考虑按tittle循环-->
         <template v-for="(ol_item,index2) in item.ol">
           <!-- 开盘or锁盘 正常显示 -->
+          
           <template v-if="ol_item._mhs == 0 || ol_item._mhs == 11">
             <template v-if="ol_item._hs == 0 || ol_item._hs == 11">
               <template v-if="ol_item.os == 1">
@@ -25,6 +26,7 @@
                   </div>
                 </div>
               </template>
+              
               <template v-if="ol_item.os == 2">
                 <!-- 锁状态 -->
                 <div class="play-box" :class="[name_, get_detail_data.csid == 1? 'play-box-lock' : '', {'border-top': index2 > 2}]" :key="index2" >
@@ -80,7 +82,7 @@ export default defineComponent({
   // mixins:[odd_convert],
   setup(props, evnet) {
     const store_state = store.getState()
-    let init_data = reactive({
+    const init_data = reactive({
       utils,
       name_: '',  //计算类名
       len: 0,  //有效的ol的个数
@@ -108,14 +110,7 @@ export default defineComponent({
       //   $data[key] = null
       // }
     });
-    watch(
-      () => props.item_data,
-      (data) => {
-        if (data.hl && data.hl[0] && data.hl[0].ol) {
-          calc_classname(data.hl[0].ol)
-        }
-      }
-    );
+    
     const go_to_bet = (ol_item) => {
       useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX,true);
     };
@@ -129,7 +124,7 @@ export default defineComponent({
       })
       if (flag) return 0
       if (init_data.len % 3 && init_data.len >= 5) {
-        return 3 - linit_data.en % 3
+        return 3 - init_data.len % 3
       } else {
         return 0
       }
@@ -152,8 +147,18 @@ export default defineComponent({
         case 4: name = 'every4'; break;
         default: name = 'every5'; break;
       }
-      name_ = name
+      init_data.name_ = name
     };
+    watch(
+      () => props.item_data,
+      (data) => {
+        console.error(data);
+        if (data.hl && data.hl[0] && data.hl[0].ol) {
+          calc_classname(data.hl[0].ol)
+        }
+      }, {immediate: true}
+    );
+    console.error(init_data.name_);
     return {
       ...toRefs(init_data),
       get_bet_list,
@@ -191,9 +196,9 @@ export default defineComponent({
 
   .every4 {
     flex-basis: 25%;
-
+    color: var(--q-gb-t-c-11);
     // &:nth-child(n+5){
-    //   border-bottom: 1px solid var(--q-gb-bd-c-36);
+    //   border-bottom: 1px solid var(--q-gb-bd-c-7);
     // }
 
     &:nth-child(2), &:nth-child(3) {
@@ -205,7 +210,7 @@ export default defineComponent({
 
   .every5 {
     flex-basis: 33.333%;
-
+    color: var(--q-gb-t-c-11);
     &:nth-child(3n-1) {
       div {
         border-radius: 0;
@@ -220,7 +225,7 @@ export default defineComponent({
   .play-box {
     // margin-bottom: 0.01rem;
     padding: 0.06rem 0.05rem 0;
-    // border-bottom:1px solid  var(--q-gb-bd-c-36);
+    // border-bottom:1px solid  var(--q-gb-bd-c-7);
 
     height: 0.52rem;
 

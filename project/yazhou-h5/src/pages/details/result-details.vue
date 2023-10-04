@@ -151,7 +151,6 @@ const MatchDataWarehouseInstance = reactive(MatchDataWarehouse_H5_Detail_Common)
   onMounted(() => {
     // 默认加载赛事详情页面接口getMatchDetail
     get_match_detail_info()
-   console.error('初始化数据');
     // 监听调用赛事详情页面接口
     useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS, get_match_detail_info);
     useMittOn(MITT_TYPES.EMIT_ANA_SHOW,ana_show);

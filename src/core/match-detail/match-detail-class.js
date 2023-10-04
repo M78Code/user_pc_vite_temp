@@ -18,7 +18,6 @@ export default class MatchDetailCtr {
    * @return {undefined} undefined
    */
   init() {
-    this.is_pause_video = true; // 电竞视频是否暂停
     this.is_unfold_multi_column = false; //是否展开多列玩法
     //赛事ID
     this.mid=  '';
@@ -74,7 +73,7 @@ export default class MatchDetailCtr {
     // 赛事详情数量
     this.match_detail_count = 0;
     this.history_random=1;
-            // 当前选中玩法对应的盘口玩法
+    // 当前选中玩法对应的盘口玩法
     this.tabs_active_plays = [];
     this.detail_show_type =''//详情页 显示类型 play:滚球   today：今日  early：早盘
     // 是否显示全屏投注
@@ -244,5 +243,14 @@ export default class MatchDetailCtr {
    */
   set_active_detail(val){
     this.active_detail = val
+  }
+  /**
+   * @description: 设置电竞视频是否暂停
+   * @param {boolean} flag  
+   * @return {*}
+   */
+  set_is_pause_video(flag){
+    this.is_pause_video = flag
+    this.set_details_data_version()
   }
 }

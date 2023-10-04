@@ -56,7 +56,7 @@
 </template>
 
 <script setup>
-import { onMounted, reactive } from "vue";
+import { onMounted, onUnmounted, reactive } from "vue";
 
 import BetRecordItem from "./bet-record-item.vue";
 // import BetBookItem from "./bet-book-item.vue";
@@ -68,10 +68,17 @@ import BetRecordHeader from './bet-record-header.vue'
 import { api_betting } from "src/api/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js"
 import BetRecord from "src/core/bet-record/bet-record.js"
+import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
+import { i18n_t, i18n_tc } from "src/boot/i18n.js"
 import lodash_ from "lodash"
 
 onMounted(() => {
   get_record_list()
+  useMittOn(MITT_TYPES.EMIT_GET_RECORD_LIST, get_record_list).on
+})
+
+onUnmounted(() => {
+  useMittOn(MITT_TYPES.EMIT_GET_RECORD_LIST, get_record_list).off
 })
 
 const ref_data = reactive({
@@ -164,6 +171,10 @@ const get_record_list = (cur_page = 1) => {
           ref_data.load_data_state = "empty";
           return;
         }
+        // 切换后需要置空
+        if(cur_page == 1){
+          ref_data.record_data = []
+        }
         // 最新数据替换，不同数据拼接在一起
         let orderNo_list_ = lodash_.map(ref_data.record_data, 'orderNo')
         lodash_.forEach(records, item => {
@@ -177,7 +188,7 @@ const get_record_list = (cur_page = 1) => {
         // 提前结算开关打开时订阅提前结算注单
         if (BetRecord.selected == 0 && UserCtr.settleSwitch) {
           // 订阅C21
-          this.SCMD_C21();
+          // this.SCMD_C21();
         }
       }
     } else {
@@ -190,6 +201,10 @@ const get_record_list = (cur_page = 1) => {
       clear_timer_get_cashout()
     }
   }).catch(err => { console.error(err) });
+}
+
+const clear_timer_get_cashout = () =>{
+
 }
 
 const change_handle = () => { }

@@ -72,7 +72,6 @@ const clear_timer1_ = () => {
     timer1_.value = null
   }
 }
-console.error(route);
 const cancel_ref = lodash.debounce(() => {
   refreshing.value = false;
 }, 200)

@@ -37,7 +37,6 @@
    * @param {undefined} undefined
   */
   export const compute_match_list_style_obj_and_match_list_mapping_relation_obj_type5=(match_list,is_ws_call)=>{
-    let template_id = MenuData.get_match_tpl_number()
     // 赛种ID 到卡片key的 映射对象
     let csid_to_card_key_obj = {}
     // 所有卡片列表
@@ -65,8 +64,8 @@
     let league_repeat_count_obj = {}
     // 自定义联赛ID
     let cus_tid = ''
-    console.log('match_list_card_key_arr', match_list);
     // 遍历所有赛事列表
+    console.log('match_list_card_key_arr', match_list);
     match_list && match_list.length && match_list.forEach( (match,match_index) => {
       league_repeat_count_obj[match.tid] = league_repeat_count_obj[match.tid] || 0
       // 冠军首次加载只显示前3场赛事
@@ -175,11 +174,10 @@
       league_card_mids_arr[card_key].push(match.mid)
 
       // 赛事表征数据
-      let match_style_obj =  compute_style_template_by_matchinfo(match,18)
-      all_card_obj['mid_'+match.mid] = match_style_obj
+      let match_style_obj =  compute_style_template_by_matchinfo(match, 18)
+      all_card_obj[match.mid+'_'] = match_style_obj
 
     })
-    console.log('进来了 几次');
     // 合并所有卡片样式对象
     lodash.merge(MatchListCardData.all_card_obj,all_card_obj)
     // 赛种ID 到卡片key的 映射对象

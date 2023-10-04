@@ -1,7 +1,7 @@
 /*
  * @Description: 详情页模板集合
  */
-[class*=theme0] {
+// [class*=theme0] {
   .night-style {
     color: var(--q-color-fs-color-123);
   }
@@ -61,12 +61,12 @@
   }
 
   /*************** temp0开始 *************** -S*/
-  .temp0 {
+  :deep(.temp0) {
     .play-box-style {
       background:var(--q-color-page-bg-color-2);
     }
     .bor-btm {
-      border-bottom: 1px solid var(--q-gb-bd-c-36);
+      border-bottom: 1px solid var(--q-gb-bd-c-7);
     }
     .remark {
       color:  var(--q-match-fs-color-13);
@@ -96,7 +96,7 @@
       color:var(--q-gb-t-c-13) !important;
     }
     .odds-on {
-      color:var(--q-gb-t-c-13);
+      color:var(--q-gb-t-c-11);
     }
   }
   .tournament-play-outer {
@@ -185,29 +185,29 @@
   .temp51 {
     .row {
       &:not(:first-child) {
-        border-top: 1px solid var(--q-gb-bd-c-36);
+        border-top: 1px solid var(--q-gb-bd-c-7);
       }
       .col:first-child {
-        border-right: 1px solid var(--q-gb-bd-c-36);
+        border-right: 1px solid var(--q-gb-bd-c-7);
       }
     }
   }
   .result-details {
     .temp2 {
       .row:not(:first-child) {
-        border-top: 1px solid var(--q-gb-bd-c-36);
+        border-top: 1px solid var(--q-gb-bd-c-7);
       }
     }
   }
   /*************** temp2结束 *************** -E*/
 
   /*************** temp3开始 *************** -S*/
-  .temp3 {
+  :deep(.temp3) {
     .title-style {
       color:  var(--q-color-fs-color-26);
     }
     .bor-style {
-      border-bottom: 1px solid var(--q-gb-bd-c-36);
+      border-bottom: 1px solid var(--q-gb-bd-c-7);
     }
     .play-box-style {
       background:var(--q-color-page-bg-color-2);
@@ -228,7 +228,7 @@
     //   background:var(--q-color-page-bg-color-2);
     // }
     .details_t_color6 {
-      color: var(--q-gb-t-c-13);
+      color: var(--q-gb-t-c-11);
     }
     .warp {
       &:after {
@@ -251,8 +251,8 @@
     .item-wrap {
       > .item2 {
         margin-right: 0;
-        border-right: 1px solid var(--q-gb-bd-c-36);
-        border-top: 1px solid var(--q-gb-bd-c-36);
+        border-right: 1px solid var(--q-gb-bd-c-7);
+        border-top: 1px solid var(--q-gb-bd-c-7);
         &:first-child {
           border-top: 0;
         }
@@ -266,7 +266,7 @@
   /*************** temp3结束 *************** -E*/
 
   /*************** temp4开始 *************** -S*/
-  .temp4 {
+  :deep(.temp4) {
     .title-style {
       color:  var(--q-color-fs-color-26);
     }
@@ -275,11 +275,11 @@
     }
     .margin-other {
       .details_t_color6 {
-        color:  var(--q-gb-t-c-13) !important;
+        color:  var(--q-gb-t-c-11) !important;
       }
     }
     .bor-style {
-      border-bottom: 1px solid var(--q-gb-bd-c-36);
+      border-bottom: 1px solid var(--q-gb-bd-c-7);
     }
     .active {
       background: var(--q-color-com-bg-color-3);
@@ -310,7 +310,7 @@
       color: var(--q-color-com-fs-color-44) !important;
     }
     .size-color {
-      color:var(--q-gb-t-c-13);
+      color:var(--q-gb-t-c-11);
     }
     .size-color-imp {
       color:var(--q-gb-t-c-13) !important;
@@ -320,12 +320,13 @@
   /*************** temp4结束 *************** -E*/
 
   /*************** temp5开始 *************** -S*/
-  .temp5 {
+  :deep(.temp5) {
     .head {
       color: var(--q-match-fs-color-13);
     }
     .play-box-style {
       background: var(--q-color-page-bg-color-8);
+      color: var(--q-gb-t-c-11) !important;
     }
     .font_color {
       color:var(--q-gb-t-c-13);
@@ -366,7 +367,7 @@
       background:var(--q-color-page-bg-color-2);
     }
     .bor-style {
-      border-bottom: 1px solid var(--q-gb-bd-c-36) !important;
+      border-bottom: 1px solid #999999; // var(--q-detials-color-7) !important;
     }
     .remark {
       color: var(--q-color-fs-color-26)
@@ -403,7 +404,7 @@
       color:var(--q-gb-t-c-13);
     }
     .item-col:first-child {
-      border-right: 1px solid var(--q-gb-bd-c-36);
+      border-right: 1px solid var(--q-gb-bd-c-7);
     }
   }
   .tournament-play-outer {
@@ -421,7 +422,7 @@
   /*************** temp6结束 *************** -E*/
 
   /*************** temp7开始 *************** -S*/
-  .temp7 {
+  :deep(.temp7) {
     .title-style {
       color: var(--q-color-fs-color-26);
     }
@@ -435,7 +436,7 @@
       background:var(--q-color-page-bg-color-2);
     }
     .bor-style {
-      border-bottom: 1px solid var(--q-gb-bd-c-36);
+      border-bottom: 1px solid var(--q-gb-bd-c-7);
     }
     .remark {
       color: var(--q-color-fs-color-26);
@@ -469,7 +470,7 @@
       color: var(--q-color-com-fs-color-44) !important;
     }
     .size-color {
-      color:var(--q-gb-t-c-13);
+      color:var(--q-gb-t-c-11);
     }
     .size-color-imp {
       color:var(--q-gb-t-c-13) !important;
@@ -514,8 +515,8 @@
   .temp9 {
     .champion-item {
       background: var(--q-color-page-bg-color-119);
-      border-top: 1px solid  var(--q-gb-bd-c-36);
-      border-right: 1px solid  var(--q-gb-bd-c-36);
+      border-top: 1px solid  var(--q-gb-bd-c-7);
+      border-right: 1px solid  var(--q-gb-bd-c-7);
       &:nth-child(2n) {
         border-right: 0px solid  var(--q-color-border-color-38);
       }
@@ -563,7 +564,7 @@
     }
     /*************** 赔率结束 *************** -E*/
     .item-height {
-      border-right: 1px solid  var(--q-gb-bd-c-36);
+      border-right: 1px solid  var(--q-gb-bd-c-7);
     }
     .blue-color {
       background: var(--q-gb-bg-c-17);
@@ -604,7 +605,7 @@
 
     /*************** 赔率结束 *************** -E*/
     .item-style2 {
-      border-right: 1px solid  var(--q-gb-bd-c-36);
+      border-right: 1px solid  var(--q-gb-bd-c-7);
     }
     .blue-color {
       background: var(--q-gb-bg-c-17);
@@ -618,7 +619,7 @@
   /*************** temp12开始 *************** -S*/
   .temp12 {
     .bor-style {
-      border-top: 1px solid var(--q-gb-bd-c-36);
+      border-top: 1px solid var(--q-gb-bd-c-7);
       // border-top: 1px solid var(--q-color-border-color-46);
     }
     .bgm-color {
@@ -729,20 +730,20 @@
   }
   /*************** temp13结束 *************** -E*/
   /*************** temp14开始 *************** -S*/
-  .temp14, .temp16 {
+  :deep(.temp14), :deep(.temp16) {
     .content:not(:last-child) {
-      // border-bottom: 1px solid var(--q-gb-bd-c-36);
+      // border-bottom: 1px solid var(--q-gb-bd-c-7);
       padding-bottom: 0.09rem;
       margin-bottom: 0.2rem;
     }
     .tittle {
-      color: var(--q-match-fs-color-13) ;
+      color: #999999; //var(--q-detials-color-7) ;
     }
     .play-box {
       background:var(--q-color-page-bg-color-2);
     }
     .item-son {
-      color: var(--q-color-fs-color-50);
+      color: var(--q-gb-t-c-11);
     }
     .active {
       background: var(--q-match-page-bg-color-10) !important;
@@ -760,10 +761,10 @@
         background-color: var(--q-match-page-bg-color-104);
         .col {
           // .bet-box-bg:not(:first-child) {
-          //   border-top: 1px solid var(--q-gb-bd-c-36);
+          //   border-top: 1px solid var(--q-gb-bd-c-7);
           // }
           .play-box{
-            border-bottom: 1px solid var(--q-gb-bd-c-36);
+            border-bottom: 1px solid var(--q-gb-bd-c-7);
           }
         }
       }
@@ -781,7 +782,7 @@
     .play-box {
       background:var(--q-color-page-bg-color-2);
       // 修复：42811 【日常】【生产】【H5】【兼容】小米8赛事详情界面准确进球数的分隔线过粗，与其他分割线不一致，建议优化
-      border-bottom: 1px solid var(--q-gb-bd-c-36);
+      border-bottom: 1px solid var(--q-gb-bd-c-7);
     }
     .active-play {
       color:var(--q-gb-bd-c-2);
@@ -792,17 +793,17 @@
     }
     .play-box.every5.border-top {
       // 修复：42811 【日常】【生产】【H5】【兼容】小米8赛事详情界面准确进球数的分隔线过粗，与其他分割线不一致，建议优化
-      // border-top: 1px solid var(--q-gb-bd-c-36);
+      // border-top: 1px solid var(--q-gb-bd-c-7);
       & ~ i.border-top {
         // 修复：42811 【日常】【生产】【H5】【兼容】小米8赛事详情界面准确进球数的分隔线过粗，与其他分割线不一致，建议优化
-        // border-top: 1px solid var(--q-gb-bd-c-36);
+        // border-top: 1px solid var(--q-gb-bd-c-7);
       }
     }
   }
-}
+// }
 
 /*************** temp15结束 *************** -E*/
-[class*=theme0] {
+// [class*=theme0] {
   .virtual-sport {
     .tournament-play-outer {
     }
@@ -853,4 +854,4 @@
       }
     }
   }
-}
+// }

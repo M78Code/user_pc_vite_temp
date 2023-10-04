@@ -12,16 +12,16 @@
     <template v-if="order.sportId==1 || order.sportId==2">
       <div class="row appoint-status" v-if="appoint_status==0 && appoint_order_status==0">
         <!--预约中-->
-        <div class="col">{{$root.$t('bet.bet_booking')}}</div>
-        <div class="cursor-pointer col right" @click.stop="cancel_appoint">{{$root.$t('select.cancel')}}</div>
+        <div class="col">{{in8n_t('bet.bet_booking')}}</div>
+        <div class="cursor-pointer col right" @click.stop="cancel_appoint">{{in8n_t('select.cancel')}}</div>
       </div>
       <div class="row appoint-status" v-if="[2, 3].includes(appoint_status) && appoint_order_status==2">
         <!--预约失败-->
-        <div class="col">{{$root.$t('bet.bet_book_failed')}}</div>
+        <div class="col">{{in8n_t('bet.bet_book_failed')}}</div>
       </div>
       <div class="row appoint-status" v-if="appoint_status==4 && appoint_order_status==2">
         <!--已取消-->
-        <div class="col">{{$root.$t('bet.bet_book_canceled')}}</div>
+        <div class="col">{{in8n_t('bet.bet_book_canceled')}}</div>
       </div>
     </template>
     
@@ -147,7 +147,7 @@
         <div class="row">
           <div class="col bet-against">
             <!--赛果 比分-->
-            {{$root.$t('bet.bet_result')}} {{order.settleScore}}
+            {{in8n_t('bet.bet_result')}} {{order.settleScore}}
           </div>
         </div>
       </template>    
@@ -194,17 +194,17 @@
         <q-card class="book-dialog">
           <q-card-section class="row items-center">
             <!--确认取消 [x] 预约吗?-->
-            <div class="book-msg">{{ cancel_book_msg(order.matchInfo, $root.$t('bet.bet_book_cancel_msg')) }}</div>
+            <div class="book-msg">{{ cancel_book_msg(order.matchInfo, in8n_t('bet.bet_book_cancel_msg')) }}</div>
           </q-card-section>
 
           <q-card-actions align="center">
             <div class="cursor-pointer book-record book-record-cancel" :disabled="book_loading" @click="close_book_dialog">
               <!--确认中-->
-              {{$root.$t('select.cancel')}}
+              {{in8n_t('select.cancel')}}
             </div>
             <div class="cursor-pointer book-record book-record-submit" :disabled="book_loading" @click="cancel_book_handle">
               <!--确认中-->
-              {{$root.$t('select.confirm')}}
+              {{in8n_t('select.confirm')}}
             </div>
           </q-card-actions>
         </q-card>
@@ -214,7 +214,8 @@
   </div>
 </template>
 <script>
-import bet_book_item from "src/public/mixins/bet_record_view/bet_book_item.js";
+// import bet_book_item from "src/public/mixins/bet_record_view/bet_book_item.js";
+import { i18n_t, i18n_tc } from "src/boot/i18n.js"
 export default {
   mixins: [bet_book_item]
 };
