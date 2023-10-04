@@ -12,7 +12,7 @@
 </template>
 <script setup>
 import "./src/core/globel-mitt";
-import { PageSourceData } from "src/core/index.js";
+import { PageSourceData ,GlobalSwitchClass} from "src/core/index.js";
 import { useMittOn, MITT_TYPES } from "src/core/mitt/";
 import { wslog, httplog } from "src/core/log/";
 import {get_query_string as urlparams } from "src/core/";
@@ -125,9 +125,8 @@ watch(
 // }
 //设置点击全局事件+1
 function set_global_click() {
-  store.dispatch({
-    type: "SET_GLOBAL_CLICK",
-  });
+    //设置全局点击事件
+    GlobalSwitchClass.set_global_click()
 }
 function copyToken(is_key_down) {
   // if (this.get_user && this.get_user.token) {

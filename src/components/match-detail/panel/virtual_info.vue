@@ -126,7 +126,7 @@ export default {
           .progress {
             width: 80px;
             margin-right: 10px;
-            ::v-deep {
+            :deep() {
               .q-linear-progress {
                 color: #ff9124;
               }

@@ -556,7 +556,7 @@ const lv_2_click_wapper_2 = (detail = {}) => {
   // console.log(lv1_mi,jinri_zaopan)
 
   // console.warn("lv_2_click_wapper_2-------- 常规赛种   （含娱乐）  的 冠军玩法     点击-----------",BaseData)
-
+console.log(BaseData)
   let lv2_mi = "";
   // 获取 二级菜单id
   if (Object.keys(BaseData.commn_sport_guanjun_obj).length) {

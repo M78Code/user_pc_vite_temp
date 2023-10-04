@@ -202,7 +202,7 @@ watch(
     .info-upd {
       z-index: 90;
       justify-content: center;
-      :v-deep(.match_time) {
+      :deep(.match_time) {
         .timer-layout2 {
           width: 100%;
           min-width: 42px;

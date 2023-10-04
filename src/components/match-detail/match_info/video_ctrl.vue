@@ -54,7 +54,7 @@
             menu_data.is_multi_column &&
             GlobalSwitchClass.global_switch.multi_column &&
             !get_unfold_multi_column &&
-            ['search', 'home'].includes($route.name) &&
+            ['search', 'home'].includes(route.name) &&
             !vx_show_filter_popup
           "
         >
@@ -164,7 +164,7 @@
 <script setup>
 import { tooltip_style } from "src/core/config/global-component-style.js";
 import sportIcon from "src/components/sport_icon/sport_icon.vue";
-// import video from "src/core/video/video.js"
+import video from "src/core/video/video.js"
 import details from "src/core/match-list-pc/details-class/details.js";
 import { computed, onMounted, onUnmounted, ref, watch } from "vue";
 import MenuData from "src/core/menu-pc/menu-data-class.js";
@@ -173,6 +173,9 @@ import refresh from "src/components/refresh/refresh.vue";
 import { i18n_t, get_match_status,UserCtr ,GlobalSwitchClass,MatchDetailCalss} from "src/core/index";
 import { compute_css } from "src/core/server-img/index.js";
 import { debounce_throttle_cancel } from "src/core/utils/module/other.js";
+import { useRoute, useRouter } from "vue-router";
+const  route = useRoute()
+const  router= useRouter()
 import lodash from "lodash";
 const props = defineProps({
   refresh_loading: {
@@ -182,6 +185,7 @@ const props = defineProps({
   match_info: Object, //赛事详情
   icons_right: Number,
 });
+const match_scroll_area=ref(null)
 const emit = defineEmits(["refresh"]);
 const thumb_style2 = ref({}); //赛事列表滚动条样式
 const height0 = ref("100%"); //战队信息盒子高度初始高度
@@ -230,23 +234,13 @@ const media_icons = [
   },
 ];
 const  isTop  = ref(MatchDetailCalss.isTop) //视频置顶
-const  play_media = ref(MatchDetailCalss.play_media) // 视频播放信息
+const  vx_play_media = ref(MatchDetailCalss.play_media) // 视频播放信息
 const  details_params = ref(MatchDetailCalss.params) // 赛事详细参数（赛事/联赛/球类/直播类型）
-//todo
-//  
-//   vx_set_match_details_params: "set_match_details_params",
-//   //收起右侧详情 展开多列玩法
-//   set_unfold_multi_column:"set_unfold_multi_column",
+const  is_unfold_multi_column = ref(GlobalSwitchClass.is_unfold_multi_column)  //是否展开多列玩法 收起右侧详情
+const  get_global_click = ref(GlobalSwitchClass.global_click)   //全局点击事件数
 //   // 设置获取视频是否展开状态
-//   vx_set_is_fold_status: "set_is_fold_status"
-
-const vx_play_media = {
-  mid: "2771471",
-  media_type: "info",
-  is_auto: true,
-};
-const vx_get_is_fold_status = ref(true);
-const set_play_media_timer = ref(null);
+const vx_get_is_fold_status = ref(GlobalSwitchClass.is_fold_status);
+let set_play_media_timer = null;
 /**
  * @Description:获取图标是否显示
  * @returns
@@ -278,21 +272,44 @@ const refreshFunc = lodash.throttle(
     trailing: false,
   }
 );
-
+/*
+ ** 监听MatchDetailCalss的版本号  获取最新的详情参数
+ */
+watch(
+  () => MatchDetailCalss.details_data_version.version,
+  (val) => {
+    if (val) {
+      vx_play_media.value = MatchDetailCalss.play_media;
+      details_params.value = MatchDetailCalss.params;
+    }
+  },
+  { deep: true }
+);
+/*
+ ** 监听GlobalSwitchClass的版本号  获取最新的全局状态
+ */
+ watch(
+  () => GlobalSwitchClass.global_switch_version.version,
+  (val) => {
+    if (val) {
+      is_unfold_multi_column.value = GlobalSwitchClass.is_unfold_multi_column;
+      get_global_click.value = GlobalSwitchClass.global_click;
+      vx_get_is_fold_status.value = GlobalSwitchClass.global_click;
+    }
+  },
+  { deep: true }
+);
 //     computed: {
+  //   //   lang: "get_lang",  
 //   // ...mapGetters({
-//   //   //视频播放类型
-//   //   vx_play_media: "get_play_media",
 //   //   //全局点击事件
 //   //   get_global_click: 'get_global_click',
-//   //   // 左侧详情参数
-//   //   vx_details_params: "get_match_details_params",
 //   //    //是否展开多列玩法
 //   //   get_unfold_multi_column:"get_unfold_multi_column",
 //   //   // 是否显示联赛筛选框
 //   //   vx_show_filter_popup: "get_show_filter_popup",
 //   //   //多语言
-//   //   lang: "get_lang",
+
 //   //   //视频是否展开状态
 //   //   vx_get_is_fold_status:'get_is_fold_status'
 //   // }),
@@ -345,36 +362,34 @@ watch(
   }
 );
 //全局点击事件
-// watch(
-//   () => get_global_click,
-//   () => {
-//     this.team_height = this.height0;
-//     this.is_show_content = false;
-//   }
-// );
+watch(
+  () => get_global_click,
+  () => {
+    team_height.value = height0.value;
+    // is_show_content = false;  暂时没有看见用
+  }
+);
 
-// ...mapActions({
 
-// }),
 /**
  * @Description:切换视频
  * @param {string} match 赛事信息
  */
 const switch_video = (match) => {
-  this.team_height = this.height0;
+  team_height.value = height0.value;
   if (match.mid == props.match_info.mid) return;
   let { mid, tid, csid: sportId } = match;
-  let play_id = this.vx_details_params.play_id;
+  let play_id = details_params.play_id;
   MatchDetailCalss.set_match_details_params({
     mid,
     tid,
     sportId,
     play_id,
-    media_type: this.vx_play_media.media_type,
-    category: this.$route.name == "details" ? 1 : 0,
+    media_type: vx_play_media.value.media_type,
+    category: route.name == "details" ? 1 : 0,
   })
-  if (this.$route.name == "details") {
-    this.$router.push({
+  if (route.name == "details") {
+    router.push({
       name: "details",
       params: {
         mid,
@@ -391,19 +406,19 @@ const switch_video = (match) => {
 const toggle_item = () => {
   // 如果右侧视频区是折叠，则会展开
   if (!vx_get_is_fold_status.value) {
-    this.vx_set_is_fold_status(!vx_get_is_fold_status.value);
+      GlobalSwitchClass.set_is_fold_status(!vx_get_is_fold_status.value);
   }
   if (
     !["video", "animation", "studio", "anchor", "topic"].includes(
-      this.vx_play_media.media_type
+      vx_play_media.value.media_type
     ) ||
     !vx_get_is_fold_status.value
   ) {
-    this.team_height = this.height0;
+    team_height.value = height0.value;
     return;
   }
-  this.team_height =
-    this.team_height == this.height1 ? this.height0 : this.height1;
+  team_height.value =
+    team_height.value == height1.value ? height0.value : height1.value;
 };
 /**
  * @Description:获取有视频的赛事列表
@@ -411,14 +426,14 @@ const toggle_item = () => {
  */
 const get_videos = () => {
   video.get_videos((res) => {
-    this.videos = res;
+    videos.value = res;
     let index = details.get_match_index(props.match_info.mid, res);
     //当前选择赛事不在可见区域时 滚动到可见区域
     if (index > 4) {
       nextTick(() => {
         let top = (index - 3) * 36;
-        this.$refs.match_scroll_area &&
-          this.$refs.match_scroll_area.setScrollPosition(top, 0);
+       match_scroll_area.value &&
+          match_scroll_area.value.setScrollPosition("vertical",top, 0);
       });
     }
   });
@@ -430,10 +445,10 @@ const get_videos = () => {
 const toggle_play_media = (media_type) => {
   // 如果右侧视频区是折叠，则会展开
   if (!vx_get_is_fold_status.value) {
-    this.vx_set_is_fold_status(!vx_get_is_fold_status.value);
+    GlobalSwitchClass.set_is_fold_status(!vx_get_is_fold_status.value);
   }
   let { mms, mvs, mid, lvs = -1, lss = -1 } = props.match_info;
-  let { mid: play_mid, media_type: play_media_type } = this.vx_play_media;
+  let { mid: play_mid, media_type: play_media_type } = vx_play_media.value;
 
   // 当前已在播放了 则不在重新加载
   if (mid != play_mid || (mid == play_mid && media_type != play_media_type)) {
@@ -458,11 +473,8 @@ const toggle_play_media = (media_type) => {
         });
       }
 
-      clearTimeout(this.set_play_media_timer);
-      this.set_play_media_timer = setTimeout(() => {
-        {
-          mid, media_type, time;
-        }
+      clearTimeout(set_play_media_timer);
+      set_play_media_timer = setTimeout(() => {
         MatchDetailCalss.set_play_media( { media_type, mid, time: Date.now() })
       }, 50);
     }
@@ -473,8 +485,8 @@ const toggle_play_media = (media_type) => {
  */
 const full_screen = () => {
   // 根据icon获取数据源类型
-  let play_type = this.$utils.get_media_icon_index(
-    this.vx_play_media.media_type
+  let play_type = utils.get_media_icon_index(
+    vx_play_media.value.media_type
   );
   video.full_screen(props.match_info, play_type);
 };
@@ -482,9 +494,9 @@ const full_screen = () => {
 onMounted(() => {
   let autoPlay = sessionStorage.getItem("auto_play_media");
   if (autoPlay) {
-    this.toggle_play_media("video");
+    toggle_play_media("video");
     sessionStorage.removeItem("auto_play_media");
-    Object.assign(this.thumb_style2, {
+    Object.assign(thumb_style2.value, {
       width: "8px",
       right: "4px",
     });
@@ -495,7 +507,7 @@ onMounted(() => {
 onUnmounted(() => {
   debounce_throttle_cancel(refresh);
   clearTimeout(set_play_media_timer);
-  set_play_media_timer.value = null;
+  set_play_media_timer = null;
 });
 </script>
 
