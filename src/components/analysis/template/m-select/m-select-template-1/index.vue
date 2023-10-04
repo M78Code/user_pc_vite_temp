@@ -125,7 +125,7 @@ onUnmounted(() => {
     width: 160px;
     height: 24px;
     background: var(--q-analysis-color-16);
-    border: 1px solid var(--qq--yb-border-color9);
+    border: 1px solid var(--q-analysis-color-10);
     cursor: pointer;
 
     &:first-child {
@@ -148,7 +148,7 @@ onUnmounted(() => {
     .select-page {
       display: none;
       width: 160px;
-      border: 1px solid var(--qq--yb-border-color9);
+      border: 1px solid var(--q-analysis-color-10);
       background: var(--q-analysis-color-16);
       padding: 5px 0;
       position: absolute;
@@ -184,7 +184,7 @@ onUnmounted(() => {
       min-width: 64px;
       text-align: center;
       padding: 0 7px;
-      border: var(--qq--yb-border-color9);
+      border: var(--q-analysis-color-10);
       background: var(--q-analysis-color-16);
       cursor: pointer;
       margin-right: 10px;
