@@ -386,7 +386,7 @@ const format_type = (id) => {
     return type
   }
   //电竞背景处理
-  if ([2100, 2101, 2103, 2102].includes(+id?.mi)) return +id?.mi
+  if (base_data.sports_mi.includes(+id?.mi)) return +id?.mi
   return MenuData.recombine_menu_bg(id, true)
 }
 /**
@@ -423,14 +423,17 @@ function get_sport_icon(is_focus) {
 }
 //获取match菜单
 function get_sport_menu(all_menu) {
-  let menu_list = [];
+  let top_menu = [];
   let pop_main_items = [];
   all_menu.forEach((m_m) => {
     // 滚球 虚拟体育 電競 放入一级菜单
-    if ([1, 7, 8].includes(m_m.mi)) {
-      menu_list.push(lodash.cloneDeep(m_m));
+    if (MenuData.is_scroll_ball(m_m.mi) || MenuData.is_vr(m_m.mi) || MenuData.is_export(m_m.mi)) {
+      top_menu.push(lodash.cloneDeep(m_m));
     } else {
-      pop_main_items.push(lodash.cloneDeep(m_m));
+      //热门 不放进来
+      if (!MenuData.is_hot(m_m.mi)) {
+        pop_main_items.push(lodash.cloneDeep(m_m));
+      }
     } // 中间的 一级菜单
   });
   //插入中间项 第二项是  弹出框的
@@ -438,13 +441,20 @@ function get_sport_menu(all_menu) {
     const mid_item = pop_main_items.find((item) => {
       return menu_type.value == item.mi;
     });
-    menu_list.splice(1, 0, mid_item || pop_main_items[0]);
+    if (mid_item) {
+      top_menu.splice(1, 0, mid_item);
+    } else if (menu_list.value.length <= 3) {
+      //没有初始化 所以只有3个
+      top_menu.splice(1, 0, pop_main_items[0]);
+    } else {
+      top_menu.splice(1, 0, menu_list.value[1]);
+    }
   } else {
-    menu_list.splice(1, 0, pop_main_items[0]);
+    top_menu.splice(1, 0, pop_main_items[0]);
     //如果没有设定过1级菜单
-    set_menu_lv1(menu_list[0], 0, 'init')
+    set_menu_lv1(top_menu[0], 0, 'init')
   }
-  return [menu_list, pop_main_items]
+  return [top_menu, pop_main_items]
 }
 //弹出框 是否展示
 function is_menu_show(item) {
@@ -469,23 +479,28 @@ onBeforeUnmount(() => {
   mitt_list.forEach(i => i())
 })
 //初始化菜单
-
-//一级菜单
-if (MenuData.current_lv_1_menu) {
-  MenuData.set_current_lv1_menu(MenuData.current_lv_1_menu, MenuData.current_lv_2_menu_i, 'init')
-}
-if (MenuData.current_lv_2_menu) {
-  //如果二级菜单有数据缓存
-  if (MenuData.current_lv_2_menu_i == -1) {
-    select_all_sub_menu_handle()
-  } else {
-    set_menu_lv2(
-      MenuData.current_lv_2_menu,
-      MenuData.current_lv_2_menu_i,
-      "init"
-    );
+//热门不在这里 在首页
+if (MenuData.is_hot()) {
+  set_menu_lv1(menu_list.value[0], 0, 'init')
+} else {
+  //一级菜单
+  if (MenuData.current_lv_1_menu) {
+    MenuData.set_current_lv1_menu(MenuData.current_lv_1_menu, MenuData.current_lv_2_menu_i, 'init')
+  }
+  if (MenuData.current_lv_2_menu) {
+    //如果二级菜单有数据缓存
+    if (MenuData.current_lv_2_menu_i == -1) {
+      select_all_sub_menu_handle()
+    } else {
+      set_menu_lv2(
+        MenuData.current_lv_2_menu,
+        MenuData.current_lv_2_menu_i,
+        "init"
+      );
+    }
   }
 }
+
 
 </script>
 
