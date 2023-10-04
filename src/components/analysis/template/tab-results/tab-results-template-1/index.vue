@@ -283,7 +283,7 @@ onUnmounted(() => {
         }
 
         &.away-round {
-          background: var(--qq--analysis-bg-color-13);
+          background: var(--q-analysis-color-2);
           margin-left: 5px;
         }
       }

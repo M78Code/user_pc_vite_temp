@@ -305,7 +305,7 @@ function get_first_lineup(data, lineup, type) {
 
     .away {
       .player-num {
-        background: var(--qq--analysis-bg-color-13);
+        background: var(--q-analysis-color-2);
       }
     }
 
@@ -424,7 +424,7 @@ function get_first_lineup(data, lineup, type) {
 
 .away {
   .panel-title:before {
-    background: var(--qq--analysis-bg-color-13) !important;
+    background: var(--q-analysis-color-2) !important;
   }
 }
 </style>
