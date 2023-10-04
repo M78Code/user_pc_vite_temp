@@ -203,7 +203,7 @@ onUnmounted(() => {
         margin: 0 6px;
         width: 100%;
         height: 6px;
-        background: var(--qq--yb-bg-color19);
+        background: var(--q-analysis-color-2);
         border-radius: 5px;
         .progress-content {
           position: absolute;
@@ -231,7 +231,7 @@ onUnmounted(() => {
 }
 ::v-deep {
   .text-orange {
-    color: var(--qq--yb-bg-color19) !important;
+    color: var(--q-analysis-color-2) !important;
   }
   .text-blue {
     color: var(--q-gb-t-c-17) !important;
