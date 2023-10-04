@@ -299,7 +299,7 @@ function get_first_lineup(data, lineup, type) {
 
     .home {
       .player-num {
-        background: var(--qq--analysis-bg-color-12);
+        background: var(--q-analysis-color-14);
       }
     }
 
@@ -418,7 +418,7 @@ function get_first_lineup(data, lineup, type) {
 
 .home {
   .panel-title:before {
-    background: var(--qq--analysis-bg-color-12) !important;
+    background: var(--q-analysis-color-14) !important;
   }
 }
 

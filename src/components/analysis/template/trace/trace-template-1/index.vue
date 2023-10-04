@@ -61,7 +61,7 @@ import { formatTime } from 'src/core/format/index.js'
     }
 
     &.team-2 {
-      background: var(--qq--analysis-bg-color-12);
+      background: var(--q-analysis-color-14);
     }
 
     &:before {

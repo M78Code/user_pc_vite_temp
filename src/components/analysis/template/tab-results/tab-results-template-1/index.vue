@@ -278,7 +278,7 @@ onUnmounted(() => {
         border-radius: 6px;
 
         &.home-round {
-          background: var(--qq--analysis-bg-color-12);
+          background: var(--q-analysis-color-14);
           margin-right: 5px;
         }
 
