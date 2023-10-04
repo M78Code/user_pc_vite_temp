@@ -9,19 +9,19 @@
       <div class="col bet-money">
         <template v-if="[0,1].includes(selected)">
           <!--投注额-->
-          {{$root.$t('common.bets_val')}}
+          {{in8n_t('common.bets_val')}}
         </template>
         <template v-else-if="selected==2">
           <!-- 预约投注额 -->
-          {{$root.$t("bet.bet_book_stake")}}
+          {{in8n_t("bet.bet_book_stake")}}
         </template>
         <!-- 投注额 -->
       </div>
       <div class="col-auto bet-money">
         <!--最高可赢-->
-        <template v-if="[0,2].includes(selected)">{{$root.$t('common.maxn_amount_val')}}</template>
+        <template v-if="[0,2].includes(selected)">{{in8n_t('common.maxn_amount_val')}}</template>
         <!--返还金额-->
-        <template v-if="selected==1">{{$root.$t('common.donate_win')}}</template>
+        <template v-if="selected==1">{{in8n_t('common.donate_win')}}</template>
         <!-- 可赢额 -->
       </div>
     </div>
@@ -67,21 +67,21 @@
                     <span style="color:red">
                       <template v-if="bet_pre_code=='0400527'">
                         <!--功能暂停中，请稍后再试-->
-                        {{$root.$t('bet_record.pre_suspend')}}
+                        {{in8n_t('bet_record.pre_suspend')}}
                       </template>
                       <template v-else-if="bet_pre_code=='0400537'">
                         <!--提前结算金额调整中，请再试一次-->
-                        {{$root.$t('bet_record.pre_amount_change')}}
+                        {{in8n_t('bet_record.pre_amount_change')}}
                       </template>
                       <template v-else>
                         <!--提前结算申请未通过-->
-                        {{$root.$t('bet_record.pre_not_approved')}}
+                        {{in8n_t('bet_record.pre_not_approved')}}
                       </template>
                     </span>
                   </template>
                   <template v-else>
                     <!--提前结算金额已包含本金-->
-                    <span>{{$root.$t('bet_record.pre_bet_include_money')}}</span>
+                    <span>{{in8n_t('bet_record.pre_bet_include_money')}}</span>
                   </template>
                 </div>
               </div>
@@ -94,7 +94,7 @@
                   <!-- 提前结算按钮-->
                   <div class="bet-pre-btn" @click.stop="start_bet_pre()">
                     <!-- 提前结算-->
-                    <div class="bet-row-1">{{$root.$t("bet_record.settlement_pre")}} </div>
+                    <div class="bet-row-1">{{in8n_t("bet_record.settlement_pre")}} </div>
                     <div class="bet-row-2">{{amount | format_balance}}
                     </div>
                   </div>
@@ -112,7 +112,7 @@
                 <div class="col bet-pre-confirming-btn" @click="bet_handle(item_obj.orderNo)">
                   <div class="bet-pre-left">
                     <!-- 确认中...|确认提前结算 -->
-                    <div class="bet-row-1">{{item_obj.bet_confirm?$root.$t("bet_record.confirm"):$root.$t("bet_record.confirm_bet_pre")}}</div>
+                    <div class="bet-row-1">{{item_obj.bet_confirm?in8n_t("bet_record.confirm"):in8n_t("bet_record.confirm_bet_pre")}}</div>
                     <div class="bet-row-2">{{amount | format_balance}}</div>
                   </div>
                   <div class="bet-pre-right" v-if="item_obj.bet_confirm">
@@ -131,7 +131,7 @@
               <div class="bet-pre-complete-btn" :class="{'mt0': item_obj.settleType==1}">
                 <div class="bet-pre-left">
                   <!-- 已提前结算 成功 item_obj.probabilities-->
-                  <div class="bet-row-1">{{$root.$t("bet_record.finish_bet_pre")}}</div>
+                  <div class="bet-row-1">{{in8n_t("bet_record.finish_bet_pre")}}</div>
                   <div class="bet-row-2">{{amount | format_balance}}</div>
                 </div>
                 <div class="bet-pre-right">
@@ -146,7 +146,7 @@
                 <div class="row">
                   <!-- 结算投注额 -->
                   <div class="col bet-pre-money">
-                    {{$root.$t('bet_record.pre_bet_money')}}:<span class="bet-money">{{money_obj.money|format_currency}}</span>
+                    {{in8n_t('bet_record.pre_bet_money')}}:<span class="bet-money">{{money_obj.money|format_currency}}</span>
                   </div>
                 </div>
                 <div class="row">
@@ -176,11 +176,11 @@
               <template>
                 <div class="col-12 bet-pre-Remaining">
                       <!-- 注单剩余本金 -->
-                      {{$root.$t("bet_record.settlement_bet_remaining")}}: {{ _.get(item_obj,'preSettleBetAmount')|format_currency }}
+                      {{in8n_t("bet_record.settlement_bet_remaining")}}: {{ _.get(item_obj,'preSettleBetAmount')|format_currency }}
                     </div>
                     <div class="col-12 bet-pre-count">
                       <!-- 提前结算可用次数 -->
-                      {{$root.$t("bet_record.settlement_bet_count")}}: {{ betPreCount }}
+                      {{in8n_t("bet_record.settlement_bet_count")}}: {{ betPreCount }}
                     </div>
                 <div v-if="!show_count_operate" class="row">
                   <icon
@@ -193,7 +193,7 @@
                     <span>
                       <template>
                          <!--仅支持全额结算-->
-                        {{$root.$t('bet_record.settlement_only_full')}}
+                        {{in8n_t('bet_record.settlement_only_full')}}
                       </template>
                     </span>
                   </div>
@@ -204,12 +204,12 @@
           <!--暂停提前结算-->
           <template v-else-if="amount<1 || _.get(item_obj,'orderVOS.0.hs')!=0 || item_obj.cash_out_status==-1">
             <!--当点击提前结算的时候遇到封关盘 给个提示提前结算申请未通过-->
-            <div class="bet-pre-stop-tip" v-if="is_cancel"> {{$root.$t('bet_record.pre_not_approved')}}</div>
+            <div class="bet-pre-stop-tip" v-if="is_cancel"> {{in8n_t('bet_record.pre_not_approved')}}</div>
             <div class="row">
               <!--暂停提前结算-->
               <div class="col bet-pre-wrap bet-pre-stop">
                 <div class="bet-pre-btn">
-                  {{$root.$t('bet_record.pre_bet_stop')}}
+                  {{in8n_t('bet_record.pre_bet_stop')}}
                 </div>
                 <div class="bet-pre-handle" v-if="vx_get_user.pcs=='1'">
                   <icon name="icon-bet_pre" class="bet-pre-info" size="14px" color="#99A3B1"/>
@@ -224,7 +224,7 @@
         <template v-if="[3,4,5].includes(item_obj.settleType)">
           <div class="row" @click="show_bet_pre_info(item_obj.orderNo)">
             <div class="col yb-fontsize12 yb-flex-between cursor-pointer" >
-              <span>{{$root.$t('bet_record.settlement_pre_info')}}</span>
+              <span>{{in8n_t('bet_record.settlement_pre_info')}}</span>
               <span>
                 <icon
                   name="icon-triangle"
@@ -242,7 +242,7 @@
               <div class="col yb-fontsize12 yb-flex-between cursor-pointer">
                 <template v-if="obj.type==3">
                   <!--剩余本金结算显示-->
-                  <span class="orange">{{$root.$t('bet_record.settlement_pre_surplus')}}</span>
+                  <span class="orange">{{in8n_t('bet_record.settlement_pre_surplus')}}</span>
                 </template>
                 <template v-else>
                   <!--点击拷贝订单号图标-->
@@ -263,7 +263,7 @@
             <template v-if="obj.orderStatus==2">
               <div :key="'tip-'+order_index" class="row">
                 <div class="col">
-                  <span class="red-bg">{{$root.$t("common.cancel")}}</span>
+                  <span class="red-bg">{{in8n_t("common.cancel")}}</span>
                 </div>
               </div>
             </template>
@@ -271,21 +271,21 @@
               <div class="row">
                 <!--结算本金-->
                 <div class="col yb-fontsize12 yb-flex-between">
-                  <span>{{$root.$t('bet_record.settlement_money')}}<template v-if="obj.type==1">({{$root.$t('bet_record.part')}})</template></span>
+                  <span>{{in8n_t('bet_record.settlement_money')}}<template v-if="obj.type==1">({{in8n_t('bet_record.part')}})</template></span>
                   <span>{{(obj.orderStatus==2?0.00:obj.preBetAmount)|format_currency}}</span>
                 </div>
               </div>
               <div class="row">
                 <!--返还金额-->
                 <div class="col yb-fontsize12 yb-flex-between">
-                  <span>{{$root.$t('common.donate_win')}}</span>
+                  <span>{{in8n_t('common.donate_win')}}</span>
                   <span>{{(obj.orderStatus==2?0.00:obj.settleAmount)|format_currency}}</span>
                 </div>
               </div>
               <div class="row">
                 <!--输/赢-->
                 <div class="col yb-fontsize12 yb-flex-between">
-                  <span>{{$root.$t('bet_record.lose_win')}}</span>
+                  <span>{{in8n_t('bet_record.lose_win')}}</span>
                   <span>{{(obj.orderStatus==2?0.00:obj.profit)|format_currency}}</span>
                 </div>
               </div>
@@ -293,7 +293,7 @@
                 <!--剩余本金-->
                 <div class="row">
                   <div class="col yb-fontsize12 yb-flex-between">
-                    <span>{{$root.$t('bet_record.surplus')}}</span>
+                    <span>{{in8n_t('bet_record.surplus')}}</span>
                     <span>{{obj.remainingBetAmount|format_currency}}</span>
                   </div>
                 </div>
@@ -303,7 +303,7 @@
         </template>
       </div>
       <!--已复制弹出框-->
-      <div class="toast" v-if="toast">{{$root.$t("bet_record.copyed")}}</div>
+      <div class="toast" v-if="toast">{{in8n_t("bet_record.copyed")}}</div>
     </template>
   </div>
 </template>
@@ -311,6 +311,7 @@
 import bet_record_result from "src/public/mixins/bet_record_view/bet_record_result.js";
 import VueSlider from "vue-slider-component";
 import "vue-slider-component/theme/default.css";
+import { i18n_t, i18n_tc } from "src/boot/i18n.js"
 import Template0 from 'src/project/yabo/components/match_details/list/template0.vue';
 export default {
   mixins: [bet_record_result],

@@ -67,12 +67,16 @@
 <script setup>
 import BetRecord from "src/core/bet-record/bet-record.js"
 import LayOutMain_pc from "src/core/layout/index.js";
-
+import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
+import { i18n_t, i18n_tc } from "src/boot/i18n.js"
 import { IconWapper } from 'src/components/icon'
 
 // tab切换 未结算 已结算 预约
 const set_record_selected = number => {
+  console.error('sssss')
   BetRecord.set_selected(number)
+  // 切换后请求接口
+  useMittEmit(MITT_TYPES.EMIT_GET_RECORD_LIST)
 }
 // tab切换 预约-》 进行中 已失效
 const set_record_appoint_order_status = number => {
