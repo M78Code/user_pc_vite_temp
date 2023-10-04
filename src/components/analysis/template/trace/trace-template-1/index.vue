@@ -36,12 +36,12 @@ import { formatTime } from 'src/core/format/index.js'
   display: flex;
   align-items: center;
   height: 40px;
-  border-bottom: 1px solid var(--qq--analysis-bd-color-2);
-  border-left: 1px solid var(--qq--analysis-bd-color-2);
-  border-right: 1px solid var(--qq--analysis-bd-color-2);
+  border-bottom: 1px solid var(--q-analysis-color-10);
+  border-left: 1px solid var(--q-analysis-color-10);
+  border-right: 1px solid var(--q-analysis-color-10);
 
   &:last-child {
-    border-bottom: 1px solid var(--qq--analysis-bd-color-2);
+    border-bottom: 1px solid var(--q-analysis-color-10);
     border-radius: 0 0 8px 8px;
   }
 

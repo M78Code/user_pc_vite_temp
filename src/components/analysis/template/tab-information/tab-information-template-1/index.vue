@@ -106,7 +106,7 @@ onUnmounted(() => {
       line-height: 28px;
       cursor: pointer;
       text-align: center;
-      border: 1px solid var(--qq--analysis-bd-color-2);
+      border: 1px solid var(--q-analysis-color-10);
       overflow: hidden;
 
       &:first-child {
@@ -135,7 +135,7 @@ onUnmounted(() => {
 
     .item {
       padding: 14px 30px;
-      border: 1px solid var(--qq--analysis-bd-color-2);
+      border: 1px solid var(--q-analysis-color-10);
       border-top: 0 none;
       border-radius: 0 0 8px 8px;
     }

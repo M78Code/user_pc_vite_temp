@@ -347,7 +347,7 @@ function get_first_lineup(data, lineup, type) {
       }
 
       .d-table {
-        border: 1px solid var(--qq--analysis-bd-color-2);
+        border: 1px solid var(--q-analysis-color-10);
         border-top: 0;
         border-radius: 0 0 8px 8px;
         overflow: hidden;
@@ -368,7 +368,7 @@ function get_first_lineup(data, lineup, type) {
           display: flex;
           align-items: center;
           height: 40px;
-          border-bottom: 1px solid var(--qq--analysis-bd-color-2);
+          border-bottom: 1px solid var(--q-analysis-color-10);
 
           &:last-child {
             border-bottom: transparent;
@@ -380,7 +380,7 @@ function get_first_lineup(data, lineup, type) {
           display: flex;
           align-items: center;
           justify-content: center;
-          border-right: 1px solid var(--qq--analysis-bd-color-2);
+          border-right: 1px solid var(--q-analysis-color-10);
 
           &:first-child {
             width: 100px;

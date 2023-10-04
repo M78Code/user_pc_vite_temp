@@ -252,7 +252,7 @@ onUnmounted(() => {
 /*  统计图表 */
 .total {
   padding: 20px 30px 30px;
-  border: 1px solid var(--qq--analysis-bd-color-2);
+  border: 1px solid var(--q-analysis-color-10);
   border-top: 0;
   border-radius: 0 0 8px 8px;
 

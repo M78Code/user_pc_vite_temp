@@ -348,7 +348,7 @@ export default {
       margin-right: 5px;
       background: var(--q-analysis-color-12);
       border: 1px solid var(--q-analysis-color-12);
-      border-bottom-color: var(--qq--analysis-bd-color-2);
+      border-bottom-color: var(--q-analysis-color-10);
       color: var(--qq--analysis-text-color-3);
       z-index: 2;
       cursor: pointer;
