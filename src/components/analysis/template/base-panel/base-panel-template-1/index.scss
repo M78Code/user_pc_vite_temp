@@ -52,7 +52,7 @@
   }
   .d-header {
     height: 30px;
-    color: var(--q-analysis-text-color-12);
+    color: var(--q-analysis-color-12);
     background: var(--qq--analysis-bg-color-5);
   }
   .d-body {
@@ -65,7 +65,7 @@
       height: 20px;
       border-radius: 10px;
       background: var(--qq--analysis-bg-color-6);
-      color: var(--q-analysis-text-color-13);
+      color: var(--q-analysis-color-13);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -98,7 +98,7 @@
       align-items: center;
       height: 74px;
       padding: 0 20px;
-      color: var(--q-analysis-text-color-1);
+      color: var(--q-analysis-color-1);
       .vs {
         font-size: 16px;
         font-weight: 600;
@@ -133,7 +133,7 @@
               display: flex;
               align-items: center;
               justify-content: center;
-              color: var(--q-analysis-text-color-13);
+              color: var(--q-analysis-color-13);
               border-radius: 2px;
               margin-right: 5px;
               &:last-child {
@@ -174,7 +174,7 @@
       align-items: center;
       background: var(--qq--analysis-bg-color-5);
       height: 28px;
-      color: var(--q-analysis-text-color-12);
+      color: var(--q-analysis-color-12);
       padding: 0 20px;
       &:last-child {
         border-bottom: 1px solid var(--q-analysis-color-10);
@@ -198,7 +198,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        color: var(--q-analysis-text-color-1);
+        color: var(--q-analysis-color-1);
         font-size: 16px;
         font-weight: 600;
         .line {
@@ -229,7 +229,7 @@
         flex: 1;
       }
       .match-time {
-        color: var(--q-analysis-text-color-12);
+        color: var(--q-analysis-color-12);
         display: flex;
         align-items: center;
         span {
@@ -262,7 +262,7 @@
   font-family: PingFangSC-Medium;
 }
 .font999 {
-  color: var(--q-analysis-text-color-14);
+  color: var(--q-analysis-color-14);
   font-family: PingFangSC-Regular;
 }
 .before {
@@ -471,7 +471,7 @@
     }
     .home,
     .away {
-      color: var(--q-analysis-text-color-12);
+      color: var(--q-analysis-color-12);
     }
   }
   .content {
@@ -485,7 +485,7 @@
     }
     .wrap-home,
     .wrap-away {
-      color: var(--q-analysis-text-color-12);
+      color: var(--q-analysis-color-12);
       flex: 1;
       .logo {
         width: 14px;
@@ -495,7 +495,7 @@
         display: flex;
         align-items: center;
         width: 267px;
-        color: var(--q-analysis-text-color-1);
+        color: var(--q-analysis-color-1);
         .home-name,
         .away-name {
           display: flex;
@@ -542,7 +542,7 @@
       }
     }
     .player-name {
-      color: var(--q-analysis-text-color-1);
+      color: var(--q-analysis-color-1);
       span:first-child {
         margin-right: 6px;
       }

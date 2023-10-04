@@ -194,7 +194,7 @@ onUnmounted(() => {
 
       &.active {
         background-image: var(--qq--analysis-bg-gradient-2);
-        color: var(--q-analysis-text-color-13);
+        color: var(--q-analysis-color-13);
       }
     }
   }
@@ -211,7 +211,7 @@ onUnmounted(() => {
     .d-td {
       flex: 1;
       text-align: center;
-      color: var(--q-analysis-text-color-12);
+      color: var(--q-analysis-color-12);
 
       &:first-child {
         flex: unset;

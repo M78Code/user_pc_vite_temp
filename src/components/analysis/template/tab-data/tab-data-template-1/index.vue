@@ -431,12 +431,12 @@ function getAge(birthdate) {
 
   .article_title {
     font-size: 16px;
-    color: var(--q-analysis-text-color-10);
+    color: var(--q-analysis-color-10);
     font-weight: 600;
   }
 
   .author {
-    color: var(--q-analysis-text-color-11);
+    color: var(--q-analysis-color-11);
 
     .author_name {
       font-weight: 500;
@@ -451,7 +451,7 @@ function getAge(birthdate) {
     :deep {
       * {
         max-width: 100%;
-        color: var(--q-analysis-text-color-10);
+        color: var(--q-analysis-color-10);
       }
 
       p {

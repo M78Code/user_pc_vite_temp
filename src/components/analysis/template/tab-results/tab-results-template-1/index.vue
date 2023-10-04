@@ -267,7 +267,7 @@ onUnmounted(() => {
     }
 
     .name {
-      color: var(--q-analysis-text-color-1);
+      color: var(--q-analysis-color-1);
       display: flex;
       align-items: center;
       margin-bottom: 18px;
@@ -291,7 +291,7 @@ onUnmounted(() => {
 
     .result {
       display: flex;
-      color: var(--q-analysis-text-color-1);
+      color: var(--q-analysis-color-1);
 
       .icon {
         width: 14px;
@@ -360,7 +360,7 @@ onUnmounted(() => {
         color: var(--qq--analysis-text-color-5);
 
         &.active {
-          color: var(--q-analysis-text-color-13);
+          color: var(--q-analysis-color-13);
           background-image: var(--qq--analysis-bg-gradient-2);
         }
 

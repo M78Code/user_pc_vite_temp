@@ -300,7 +300,7 @@ export default {
       .score {
         width: 60px;
         font-size: 30px;
-        color: var(--q-analysis-text-color-1);
+        color: var(--q-analysis-color-1);
         line-height: 30px;
       }
 
