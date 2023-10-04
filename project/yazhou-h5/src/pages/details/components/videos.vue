@@ -274,12 +274,12 @@
 // #TODO vuex
 // import {mapGetters, mapMutations} from "vuex";
 // import global_filters from 'src/boot/global-filters.js'
-import {api_common, api_analysis} from 'src/project/api/index.js';
-import video from "project_path/src/utils/video/video.js"   // 视频相关公共方法
-import matchScore from 'src/project/components/match/match_score.vue' // 比分组件
-import footballEvents from "project_path/src/pages/details/football_events.vue";
-import analysis_football_matches from "project_path/src/pages/details/analysis-matches/football_match_analysis/analysis_football_matches.vue"; // 详情页  足球赛事分析
-import basketball_match_analysis from "project_path/src/pages/details/analysis-matches/basketball_match_analysis/basketball_match_analysis";  // 详情页 或者 赛果  篮球赛事分析
+import {api_common, api_analysis} from 'src/api/index.js';
+import video from "src/core/video/video.js"   // 视频相关公共方法
+import matchScore from 'project_path/src/components/match/match-score.vue' // 比分组件
+import footballEvents from "project_path/src/pages/details/football-events.vue";
+import analysis_football_matches from "project_path/src/pages/details/analysis-matches/football-match-analysis/analysis-football-matches.vue"; // 详情页  足球赛事分析
+import basketball_match_analysis from "project_path/src/pages/details/analysis-matches/basketball-match-analysis/basketball-match-analysis.vue";  // 详情页 或者 赛果  篮球赛事分析
 import uid from "src/core/uuid/index.js"
 import lodash from "lodash";
 

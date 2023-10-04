@@ -234,7 +234,7 @@ const get_detail_data = ref({
 
   .table-score {
     position: relative;
-    background-color: var(--q-analysis-text-color-1);
+    background-color: var(--q-analysis-bg-color-1);
     // 头部
     &.backball-table {
       .header {
@@ -412,7 +412,7 @@ const get_detail_data = ref({
       line-height: 0.18rem;
       font-size: 0.1rem;
       padding: 0 0.08rem;
-      background: var(--q-analysis-text-color-1);
+      background: var(--q-analysis-bg-color-1);
       border: 1px solid  var(--q-analysis-text-color-23);
       box-shadow: 0 1px 2px 0  var(--q-analysis-bd-color-6);
 

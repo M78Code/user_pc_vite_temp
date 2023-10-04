@@ -79,7 +79,7 @@ const { detailsReducer } = store.getState()
 const hd_sd = ref(detailsReducer.hd_sd)
 const is_in_play = ref(detailsReducer.is_in_play)
 
-
+let send_gcuuid = ''
 // 正在直播的
 const lvs_icon_ing = "/yazhou-h5/image/common/zhibo-l.png"
 // 赛前直播的
@@ -165,9 +165,9 @@ const check_url = (url, which) => {
 const icon_click = (e) => {
   console.log(e, "whichwhichwhichwhich");
   e.stopPropagation()
-  switch (which) {
+  switch (props.which) {
     case 'lvs':
-      icon_click_lvs(which)
+      icon_click_lvs(props.which)
       break;
     case 'muUrl':
       icon_click_muUrl()
@@ -318,7 +318,7 @@ const icon_click_animationUrl = () => {
 // watch(
 //   () => get_play_video,
 //   (new_) => {
-//     if (new_ && (which == 'muUrl' || is_in_play.value == 'muUrl')) {
+//     if (new_ && (props.which == 'muUrl' || is_in_play.value == 'muUrl')) {
 //           icon_click_muUrl()
 //         } else if (is_in_play.value == 'animationUrl') {
 //           icon_click_animationUrl()

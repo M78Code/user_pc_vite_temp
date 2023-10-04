@@ -73,6 +73,8 @@ export const EMIT_REF_API = "EMIT_REF_API";
 export const EMIT_UPDATE_ORDER_LIST = "EMIT_UPDATE_ORDER_LIST";
 // 刷新详情页头部信息
 export const EMIT_REFRESH_DETAILS = "EMIT_REFRESH_DETAILS";
+// 详情玩法集
+export const EMIT_GET_ODDS_LIST = "EMIT_GET_ODDS_LIST";
 // 赛事分析刷新事件
 export const EMIT_REFRESH_MATCH_ANALYSIS = "EMIT_REFRESH_MATCH_ANALYSIS";
 // 重载注单页面

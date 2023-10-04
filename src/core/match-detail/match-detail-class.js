@@ -29,6 +29,13 @@ export default class MatchDetailCtr {
     this.current_category_id = SessionStorage.get('DETAIL_TAB_ID') ? SessionStorage.get('DETAIL_TAB_ID') : '0';
     //当前显示 玩法 数组 
     this.current_category_plays=[]
+    // ===========H5页面需要存储的数据===============
+    // 精彩回放接口返回数据
+    this.playback_video_list = []
+
+
+
+    // ==================结束=======================
     // hpid 玩法ID 
     // topKey ： 玩法ID 拼接变量 x   "topKey":"357-3", "hpn":"先进3球的一方",
     //           带变量玩法的 同一个玩法ID  hpon 是一样的   357-1 会在 357-2 前面
@@ -84,6 +91,21 @@ export default class MatchDetailCtr {
       version:'111'
     })
   }
+
+  // =============H5获取/设置数据==============
+  /**
+   * 获取精彩回放数据
+   */
+  get_playback_video_list() {
+    return this.playback_video_list
+  }
+  /**
+   * 设置精彩回放数据
+   */
+  set_playback_video_list(params) {
+    this.playback_video_list = params
+  }
+  // =================结束====================
 /**
  * 玩法集和tab 点击 
  * @param {*} obj  玩法集对象 

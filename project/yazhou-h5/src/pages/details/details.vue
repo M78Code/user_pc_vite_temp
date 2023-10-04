@@ -143,7 +143,7 @@ import detailsHeader from "project_path/src/pages/details/components/details-hea
 import detailsTab from "project_path/src/pages/details/components/details-tab.vue";         // 详情页中部玩法集tab
 import detailsDialog from "src/components/details/details-dialog/details-dialog-template-1/details-dialog.vue";   // 详情赛事下拉,赛事列表组件
 // // import no_data from "src/project/components/common/no-data.vue";   // 无网络展示组件
-// // import videos from "project_path/src/pages/details/components/videos.vue";   // 详情页视频+动画直播区域
+// import videos from "project_path/src/pages/details/components/videos.vue";   // 详情页视频+动画直播区域
 // import change_header from "project_path/src/pages/details/components/header/change-header.vue";  // 详情页下拉置顶title
 // // import analysis_football_matches from "project_path/src/pages/details/analysis-matches/football-match-analysis/analysis-football-matches.vue"; // 详情页  足球赛事分析
 // // import basketball_match_analysis from "project_path/src/pages/details/analysis-matches/basketball-match-analysis/basketball-match-analysis";  // 详情页 或者 赛果  篮球赛事分析
@@ -390,9 +390,6 @@ export default defineComponent({
     onMounted(() => {
       // 原created
       state_data.init_event_timer_count = 0;
-      // 延时器
-      state_data.timer1_ = null;
-      state_data.timer2_ = null;
     //   cancel_ref = debounce(cancel_ref,200)
     //   set_is_full_screen(false)
       // 设置info说明弹窗不显示
@@ -427,7 +424,7 @@ export default defineComponent({
       state_data.timer1_ = setTimeout(() => {
         state_data.is_creating = false;
       },500);
-
+      console.error('details.vue');
       // 原mounted
       get_chatroom_info()
     //   utils.load_video_resources(data.get_uid, 'is_details_page')

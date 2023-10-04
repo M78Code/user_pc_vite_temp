@@ -6,6 +6,7 @@
 
 
 import {http} from "src/core/http/index.js";
+import lodash from "lodash"
 
 const { API_PREFIX = {}} = window.BUILDIN_CONFIG;
 const { API_PREFIX_JOB: prefix,API_PREFIX_USER:prefix_, API_PREFIX_JOB:prefix_job} = API_PREFIX;
@@ -191,8 +192,8 @@ export const collectH5ListBottom = (params, config, url="/v1/m/collectH5ListBott
   return http.post(`${prefix}${url}`, params, config);
 };
 // 获取赛事动画或视频url值
-export const videoAnimationUrl = (params, config, url="/v1/w/videoAnimationUrlPB") => {
-  let imgDm = _.get(window,'env.config.oss_img_domains[0]');
+export const videoAnimationUrl = (params, config, url="/v1/w/videoAnimationUrl") => {
+  let imgDm = lodash.get(window,'env.config.oss_img_domains[0]');
   if(imgDm){
     params.imgDm = imgDm;
   }
