@@ -295,7 +295,7 @@ onUnmounted(() => {
     }
   }
   .favorite_list_title {
-    background-image: var(--qq--analysis-bg-gradient-4);
+    background-image: var(--q-analysis-bg-gradient-4);
     box-shadow: 0 2px 8px 0 rgba(0,0,0,0.20);
     border-radius: 8px;
     height: 48px;
