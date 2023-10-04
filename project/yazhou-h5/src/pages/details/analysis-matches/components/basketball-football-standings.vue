@@ -282,7 +282,7 @@ const get_detail_data = ref({
 
     .group-item {
       .team-item {
-        border-bottom: 1px solid var(--q-gb-bd-c-36);
+        border-bottom: 1px solid var(--q-gb-bd-c-7);
 
         &:last-child {
           border-bottom: 0;

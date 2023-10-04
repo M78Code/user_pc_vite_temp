@@ -48,7 +48,6 @@ import store from "src/store-redux/index.js";
      *@param {Object} evt 事件对象
      */
   const copy = (evt) => {
-    console.error(evt.target);
       let orderno = props.data_o.orderNo
       const clipboard = new ClipboardJS(".text-left", {
         text: () => orderno

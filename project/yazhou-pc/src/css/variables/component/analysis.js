@@ -19,6 +19,7 @@ export default {
   'analysis-color-15': '#ff9323',
   'analysis-color-16': '#ffffff',
   "analysis-bg-gradient-1": "linear-gradient(180deg, #fff 21%, #f0f3f7 100%)",
+  "analysis-bg-gradient-2": "linear-gradient(270deg, #FF7000 0%, #ff7000 100%)",
   "analysis-bg-gradient-4": "linear-gradient(180deg, #FFFFFF 21%, #F0F3F7 100%), linear-gradient(180deg, #FFFFFF 21%, #F0F3F7 100%)",
 
 }

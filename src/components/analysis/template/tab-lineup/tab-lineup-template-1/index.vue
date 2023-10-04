@@ -256,7 +256,7 @@ function get_first_lineup(data, lineup, type) {
     left: 0;
     width: 100%;
     height: 100%;
-    color: var(--qq--analysis-text-color-13);
+    color: var(--q-analysis-color-13);
     padding: 20px 0;
 
     .home,
@@ -299,13 +299,13 @@ function get_first_lineup(data, lineup, type) {
 
     .home {
       .player-num {
-        background: var(--qq--analysis-bg-color-12);
+        background: var(--q-analysis-color-14);
       }
     }
 
     .away {
       .player-num {
-        background: var(--qq--analysis-bg-color-13);
+        background: var(--q-analysis-color-2);
       }
     }
 
@@ -347,7 +347,7 @@ function get_first_lineup(data, lineup, type) {
       }
 
       .d-table {
-        border: 1px solid var(--qq--analysis-bd-color-2);
+        border: 1px solid var(--q-analysis-color-10);
         border-top: 0;
         border-radius: 0 0 8px 8px;
         overflow: hidden;
@@ -356,8 +356,8 @@ function get_first_lineup(data, lineup, type) {
           display: flex;
           align-items: center;
           height: 28px;
-          background: var(--qq--analysis-bg-color-14);
-          color: var(--qq--analysis-text-color-12);
+          background: var(--q-analysis-bg-color-17);
+          color: var(--q-analysis-color-12);
 
           &:last-child {
             border-radius: 0 0 8px 8px;
@@ -368,7 +368,7 @@ function get_first_lineup(data, lineup, type) {
           display: flex;
           align-items: center;
           height: 40px;
-          border-bottom: 1px solid var(--qq--analysis-bd-color-2);
+          border-bottom: 1px solid var(--q-analysis-color-10);
 
           &:last-child {
             border-bottom: transparent;
@@ -380,7 +380,7 @@ function get_first_lineup(data, lineup, type) {
           display: flex;
           align-items: center;
           justify-content: center;
-          border-right: 1px solid var(--qq--analysis-bd-color-2);
+          border-right: 1px solid var(--q-analysis-color-10);
 
           &:first-child {
             width: 100px;
@@ -418,13 +418,13 @@ function get_first_lineup(data, lineup, type) {
 
 .home {
   .panel-title:before {
-    background: var(--qq--analysis-bg-color-12) !important;
+    background: var(--q-analysis-color-14) !important;
   }
 }
 
 .away {
   .panel-title:before {
-    background: var(--qq--analysis-bg-color-13) !important;
+    background: var(--q-analysis-color-2) !important;
   }
 }
 </style>

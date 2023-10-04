@@ -413,7 +413,7 @@ export default defineComponent({
 }
 
 .details_color {
-
+  background-color: var(--q-gb-bg-c-15);
 }
 
 .fat-warp {
@@ -422,7 +422,7 @@ export default defineComponent({
 
 .led {
 
-
+  color: #999999; //var(--q-detials-color-7);
   padding-bottom: 0.02rem;
   font-size: 0.13rem;
 

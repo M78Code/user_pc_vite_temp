@@ -134,7 +134,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 .odds_new {
   width: 100%;
-
+  color: #414655; // var(--q-detials-color-6);
   font-size: 0.16rem;
 
   letter-spacing: 0;

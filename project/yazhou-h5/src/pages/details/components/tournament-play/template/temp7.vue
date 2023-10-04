@@ -12,7 +12,6 @@
         <div class="col text-center ellipsis fam" v-if="item_data.title.length > 2">{{item_data.title[2].osn}}</div>
       </div>
       <div class="item-wrap">
-        <template>
           <div v-for="(item,index) in item_data.hl" :key="index" :class="{'bor-style':item_data.hl.length > 1 && index != item_data.hl.length-1}">
             <div class="row" v-if="(index>0||index==0) && (item._hs!=2)">
               <div class="col">
@@ -248,7 +247,6 @@
               </div>
             </div>
           </div>
-        </template>
       </div>
     </div>
   </div>

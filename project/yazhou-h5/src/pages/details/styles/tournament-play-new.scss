@@ -61,7 +61,7 @@
   position: relative;
   min-width: 3.75rem;
   height: auto;
-  background: transparent;
+  background-color: #f5f5f5;//var(--q-gb-bg-c-15);
   transition: transform 0.6s, opacity 0.1s;
 }
 
@@ -352,10 +352,12 @@
     .play-name-outer-wrapper {
       padding: 0 0.1rem 0.04rem 0.1rem;
     }
-
+    :deep(.hairline-border,), :deep(.item-wrap) {
+      background-color: #ffffff;
+    }
     .play-name {
       position: relative;
-      width: 3.55rem;
+      min-width: 3.55rem;
 
       padding: 0 0.12rem 0 0.18rem;
       background-image: linear-gradient(180deg, #ffffff 22.04%, #f7f8ff 100%);// var(--q-color-linear-gradient-bg-20);
@@ -446,17 +448,17 @@
       }
 
       .bor-style {
-        border-bottom: 1px solid var(--q-gb-bd-c-36);
+        border-bottom: 1px solid var(--q-gb-bd-c-7);
       }
 
       .margin-other {
         .play-box-style {
-          border-top: 1px solid var(--q-gb-bd-c-36);
+          border-top: 1px solid var(--q-gb-bd-c-7);
           justify-content: center;
 
           .details_t_color6 {
             margin-right: 0.1rem;
-            color: var(--q-color-com-fs-color-11);
+            color: var(--q-gb-t-c-11);
           }
         }
       }
@@ -615,7 +617,7 @@
       .col {
         .play-box-style {
           // margin-bottom: 1px;
-          border-bottom: 1px solid var(--q-gb-bd-c-36);
+          border-bottom: 1px solid var(--q-gb-bd-c-7);
         }
       }
     }
@@ -669,7 +671,7 @@
       .rad-style {
         border-radius: 0.08rem;
         overflow: hidden;
-
+        background-color: var(--q-gb-bg-c-15);
         ::after {
           border: 0;
         }
@@ -718,7 +720,7 @@
           border-radius: 0.08rem;
         }
         .many-item-border {
-          // border-top:1px solid  var(--q-gb-bd-c-36);
+          // border-top:1px solid  var(--q-gb-bd-c-7);
           background: var(--q-match-page-bg-color-104);
           &:first-child{
             border-radius: 0.08rem 0.08rem 0 0;

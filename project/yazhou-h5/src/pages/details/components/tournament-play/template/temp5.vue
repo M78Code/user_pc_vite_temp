@@ -244,7 +244,7 @@ export default defineComponent({
   .other {
     width: 100%;
     // margin-bottom: 1px;
-    // border-bottom: 1px solid var(--q-gb-bd-c-36);
+    // border-bottom: 1px solid var(--q-gb-bd-c-7);
 
     .play-box-style {
       margin-bottom: 0;
@@ -254,7 +254,7 @@ export default defineComponent({
 
   .bw_mr1 {
     // margin-right: 0.01rem;
-    // border-right: 1px solid var(--q-gb-bd-c-36);
+    // border-right: 1px solid var(--q-gb-bd-c-7);
     min-width: 1px;
   }
 

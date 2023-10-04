@@ -212,7 +212,7 @@ const get_detail_data = ref({
         align-items: center;
 
 
-        border-bottom: 1px solid var(--q-gb-bd-c-36);
+        border-bottom: 1px solid var(--q-gb-bd-c-7);
         padding: 0 0.1rem;
 
         > span {
@@ -247,7 +247,7 @@ const get_detail_data = ref({
         font-size: 0.12rem;
         height: 0.48rem;
         text-align: center;
-        border-bottom: 1px solid var(--q-gb-bd-c-36);
+        border-bottom: 1px solid var(--q-gb-bd-c-7);
 
         div {
           display: flex;
@@ -299,8 +299,8 @@ const get_detail_data = ref({
     }
 
     .item-2nd {
-      border-left: 1px solid var(--q-gb-bd-c-36);
-      border-right: 1px solid var(--q-gb-bd-c-36);
+      border-left: 1px solid var(--q-gb-bd-c-7);
+      border-right: 1px solid var(--q-gb-bd-c-7);
       padding: 0 0.05rem;
     }
 

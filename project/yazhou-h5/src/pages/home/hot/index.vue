@@ -221,6 +221,7 @@ const check_clear_bet = (obj) => {
 const change_tab = (item, index, is_self) => {
   MenuData.set_hot_tab_menu(item)
   if (item.index === 0) return get_selected_match()
+  // 筛选对应联赛赛事
   MatchMeta.filter_hot_match_by_tid(item.field2)
   // 如果是电竞赛事，需要设置菜单类型
   if ([100, 101, 102, 103].includes(+item.field1)) {

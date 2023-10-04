@@ -403,7 +403,6 @@ function fetch_filter_match() {
     m_id = get_current_menu.value.mi;
   }
   let params = {}, api_match_filter;
-  console.error("11111111")
   // 如果是赛果，并且是 虚拟体育
   if (MenuData.is_results_virtual_sports()) {
     params = {
