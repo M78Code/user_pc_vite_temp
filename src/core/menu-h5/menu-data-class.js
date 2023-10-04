@@ -2,7 +2,8 @@
  * 菜单 需要实现 保留 各级菜单 以及最终输出结果的   两个版本 ，
  */
 // "1": "滚球",  "2": "今日", "3": "早盘",  "4": "冠军","5": "即将开赛", "6": "串关","7": "电竞",
-// "8": "VR",// "28": "赛果", "30": "竞足",//
+// "8": "VR",// "28": "赛果", "30": "竞足",// 500热门
+
 
 /*以下是老的菜单对应ID*/
 // menu_type // 100（冠军）  3000（电竞） 赛果28 
@@ -157,6 +158,8 @@ class MenuData {
     // 电竞 2100 = 英雄联盟
     let menu_dianjing = { mi: 7, sl: [] };
     let menu_jingzu = { mi: 30, sl: [] };
+    let menu_guancun = { mi: 4, sl: [] };
+    let menu_hot = { mi: 500, sl: [] }
     lodash.each(data, (item) => {
       //这里是放入全部的数据
       if (item && item.sl && item.sl.length > 0) {
@@ -166,14 +169,18 @@ class MenuData {
       if (BaseData.sports_mi.includes(+item.mi)) {
         menu_dianjing.sl.push(item);
       }
-      //竟足
+      //冠军
+      if ([400].includes(+item.mi)) {
+        menu_guancun.sl = item.sl || [];
+      }
+      //热门
       if ([500].includes(+item.mi)) {
-        menu_jingzu.sl.push(item);
+        menu_hot.sl = item.sl || [];
       }
     });
     let new_menu = [];
-    //处理普通数据 1=滚球,2=今日,3=早盘,4=冠军
-    lodash.each([1, 2, 3, 4], (menu_item, index) => {
+    //处理普通数据 1=滚球,2=今日,3=早盘
+    lodash.each([1, 2, 3], (menu_item, index) => {
       new_menu[index] = { mi: menu_item, sl: [] };
       lodash.each(mi_list, (item) => {
         //常规赛总的mi是 赛种id+主菜单mi
@@ -189,10 +196,12 @@ class MenuData {
     this.set_cache_class({
       menu_list: [
         ...new_menu,
+        menu_guancun,
         menu_dianjing,
         { mi: 8 },
         menu_jingzu,
         this.init_amidithion(data),  // 赛果数据处理
+        menu_hot,
       ],
 
     });
