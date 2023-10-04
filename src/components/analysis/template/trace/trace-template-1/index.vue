@@ -32,7 +32,7 @@ import { formatTime } from 'src/core/format/index.js'
 
 <style lang="scss" scoped>
 .event-item {
-  color: var(--qq--analysis-text-color-2);
+  color: var(--q-analysis-color-5);
   display: flex;
   align-items: center;
   height: 40px;

@@ -221,7 +221,7 @@ onUnmounted(() => {
   }
   .knob-label {
     font-size: 12px;
-    color: var(--qq--analysis-text-color-2);
+    color: var(--q-analysis-color-5);
     padding: 0 10%;
     text-align: center;
   }

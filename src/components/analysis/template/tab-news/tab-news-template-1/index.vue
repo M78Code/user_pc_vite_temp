@@ -282,7 +282,7 @@ onUnmounted(() => {
         p {
           font-family: PingFangSC-Regular;
           font-size: 12px;
-          color: var(--qq--analysis-text-color-2);
+          color: var(--q-analysis-color-5);
           letter-spacing: 0;
           text-align: justify;
           line-height: 24px;
@@ -366,7 +366,7 @@ onUnmounted(() => {
         }
         .detail {
           font-size: 16px;
-          color: var(--qq--analysis-text-color-2);
+          color: var(--q-analysis-color-5);
           line-height: 16px;
           font-weight: 400;
         }

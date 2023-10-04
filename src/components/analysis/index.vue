@@ -316,7 +316,7 @@ export default {
       .team-name {
         flex: 1;
         font-size: 16px;
-        color: var(--qq--analysis-text-color-2);
+        color: var(--q-analysis-color-5);
         line-height: 25px;
         position: relative;
         height: 25px;

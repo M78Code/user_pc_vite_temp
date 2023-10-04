@@ -6,7 +6,7 @@
     justify-content: space-between;
     padding-right: 20px;
     .ranking-more {
-      color: var(--qq--analysis-text-color-2);
+      color: var(--q-analysis-color-5);
       cursor: pointer;
     }
   }
@@ -258,7 +258,7 @@
 }
 .fontBold {
   font-weight: 700;
-  color: var(--qq--analysis-text-color-2);
+  color: var(--q-analysis-color-5);
   font-family: PingFangSC-Medium;
 }
 .font999 {
@@ -434,7 +434,7 @@
   .simple-title {
     display: flex;
     padding: 0 20px;
-    color: var(--qq--analysis-text-color-2);
+    color: var(--q-analysis-color-5);
     border-bottom: 1px solid var(--q-analysis-color-10);
     .home {
       .logo {
