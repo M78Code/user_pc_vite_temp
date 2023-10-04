@@ -223,7 +223,7 @@ export const useGetItem = ({ props }) => {
    * @param {undefined} undefined
    */
   const set_match = () => {
-    if (props.bet_info.mid_obj.mid) {
+    if (lodash.get(props.bet_info,"mid_obj.mid")) {
       state.match = props.bet_info.mid_obj;
     } else {
       state.match = props.match_info;

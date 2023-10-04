@@ -1,6 +1,6 @@
 import { ref } from "vue";
 import router from "@/router"
-import { PageSourceData  } from "src/core/index.js";
+import { PageSourceData,MatchDetailCalss  } from "src/core/index.js";
 import ZhuGe from 'src/core/http/zhuge-tag.js'
 import NewMenu from "src/core/menu-pc/menu-data-class.js";
 import details from "src/core/match-list-pc/details-class/details.js";
@@ -76,12 +76,12 @@ const mx_autoset_active_match = (params = { mid: 0 }) => {
 			tid = _tid;
 			csid = _csid;
 		} else {
-			tid = this.vx_details_params.tid;
-			csid = this.vx_details_params.csid;
+			tid = MatchDetailCalss.params.tid;
+			csid = MatchDetailCalss.params.csid;
 		}
 	} else {
-		tid = mx_filter_select_ids() || this.vx_details_params.tid;
-		csid = this.vx_details_params.csid;
+		tid = mx_filter_select_ids() || MatchDetailCalss.params.tid;
+		csid = MatchDetailCalss.params.csid;
 	}
 	let params_1 =
 		_.get(NewMenu, "match_list_api_config.match_list.params") || {};
@@ -153,8 +153,8 @@ const mx_autoset_active_match = (params = { mid: 0 }) => {
 				return;
 			}
 			// 切换右侧赛事
-			let playId = this.vx_details_params.play_id;
-			this.vx_set_match_details_params({
+			let playId = MatchDetailCalss.params.play_id;
+			  MatchDetailCalss.set_match_details_params({
 				mid,
 				tid,
 				sportId,
