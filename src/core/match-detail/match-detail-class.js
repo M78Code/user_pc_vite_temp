@@ -10,10 +10,11 @@ import { SessionStorage } from "src/core/utils/index.js"
 export default class MatchDetailCtr {
  
   constructor( ) {
+    this.init();
   }
   /**
    * @description: 数据初始化
-   * @param {undefined} undefined
+   * @param {undefined} undefinedwatch(() => MatchDetailCalss.details_data_version.version, (val, old) =>
    * @return {undefined} undefined
    */
   init() {
@@ -234,5 +235,14 @@ export default class MatchDetailCtr {
    */
   set_unfold_multi_column(val){
     this.is_unfold_multi_column = val
+  }
+
+  /**
+   * @description: 设置详情比分面板，接口报错时的备用数据
+   * @param {*} val  match——info  赛事详情
+   * @return {*}
+   */
+  set_active_detail(val){
+    this.active_detail = val
   }
 }
