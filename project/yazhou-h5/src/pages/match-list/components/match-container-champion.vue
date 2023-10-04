@@ -84,7 +84,7 @@
 </template>
  
 <script setup>
-import { computed } from "vue";
+import { computed, ref, onUnmounted } from "vue";
 import lodash from 'lodash'
 import { i18n_t} from 'src/core/index.js'
 import store from "src/store-redux/index.js";
@@ -150,7 +150,7 @@ const is_show = computed(() => {
 const calc_bgcolor = computed(() => {
   return function(ol){
     if(!ol) return;
-    if(get_bet_list.includes(ol.oid)){
+    if(get_bet_list.value?.includes(ol.oid)){
       if(get_theme.includes('y0')){
         return {'background-color':'#569FFD'}
       }
@@ -169,7 +169,7 @@ const calc_bgcolor = computed(() => {
 const is_show_league = (i) => {
   let flag = false;
   // 当前赛事
-  let curr = props.matchCtr.match_list_data_sources[i];
+  let curr =  props.matchCtr && props.matchCtr.match_list_data_sources && props.matchCtr.match_list_data_sources[i] ;
   if (!curr) {
     return false;
   }
@@ -249,7 +249,7 @@ const gen_collapse_key = (match) => {
  * @param {Undefined} Undefined
  * @return {Undefined}
  */
-consttoggle_collapse_state = () => {
+const toggle_collapse_state = () => {
   let map_collapse = lodash.cloneDeep(get_collapse_map_match);
   if(map_collapse){
     // 翻转折叠时始终将 赛事列表请求状态设为false

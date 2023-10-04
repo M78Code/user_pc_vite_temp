@@ -100,7 +100,7 @@ import noData from "project_path/src/components/common/no-data.vue"; // 无网�
 import UserCtr from 'src/core/user-config/user-ctr.js'
 import { MenuData, i18n_t, utils } from "src/core/index.js"
 import { standard_edition } from 'project_path/src/mixin/userctr.js'
-
+import { is_kemp, menu_lv2 } from 'project_path/src/mixin/menu.js'
 // import { change_favorite_state } from 'src/core/match-list-h5/composables/match-list-collect.js'
 // import matchListCardFold from 'src/core/match-list-h5/match-card/match-list-card-fold.js'
 
@@ -219,7 +219,8 @@ watch(() => standard_edition.valuee, (newValue) => {
 
 // 当前为冠军或电竞冠军
 const is_champion = computed(() => {
-  let flag = 100 == props.menu_type || (3000 == props.menu_type && lodash.get(MenuData.current_menu, 'date_menu.menuType') == 100); //电竞冠军
+  //let flag = 100 == props.menu_type || (3000 == props.menu_type && lodash.get(MenuData.current_menu, 'date_menu.menuType') == 100); //电竞冠军
+  let flag =  is_kemp || (3000 == props.menu_type && lodash.get(MenuData.current_menu, 'date_menu.menuType') == 100); //电竞冠军
   return flag;
 })
 // 是否显示无第 {X} 个进球 title----次要玩法tips(5分钟次要玩法)

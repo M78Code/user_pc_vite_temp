@@ -29,9 +29,10 @@
 </template>
 
 <script setup>
-import { computed, onMounted, onUnmounted } from "vue";
+import { computed, onMounted, onUnmounted, ref, watch} from "vue";
 import store from "src/store-redux/index.js"
 import lodash from 'lodash'
+import { compute_value_by_cur_odd_type } from "src/core/format/module/format-odds-conversion-mixin.js"
 // import odd_convert from "/mixins/odds_conversion/odds_conversion.js";
 
 const props = defineProps({
@@ -60,7 +61,7 @@ onMounted(() => {
   DOM_ID_SHOW.value =  window.BUILDIN_CONFIG.LOCAL_FUNCTION_SWITCH.DOM_ID_SHOW;
 })
 
-watch(() => ol_item.ov, () => {
+watch(() => props.ol_item.ov, () => {
   let curr = Number(v1);
   let old = Number(v0);
 
@@ -76,13 +77,14 @@ watch(() => ol_item.ov, () => {
 })
 
 const odd_status = computed(() => {
-  if(!ol_item) return 3;
-  return $common.odds.get_odds_active(ol_item.ms,hs,ol_item.os);
+  if(!props.ol_item) return 3;
+  //return $common.odds.get_odds_active(ol_item.ms,hs,ol_item.os);
+  return props.ol_item;
 })
 
 const get_odds_value = (ol_item,hsw) => {
   let ov = ol_item.ov;hsw='1';  //冠军玩法只支持欧赔
-  let csid = csid;
+  let csid = props.csid;
   let r1 = compute_value_by_cur_odd_type(ov / 100000,null, hsw,null,csid);
   return r1 || 0;
 }
