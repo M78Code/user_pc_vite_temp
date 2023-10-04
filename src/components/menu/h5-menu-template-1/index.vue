@@ -203,7 +203,8 @@ const props = defineProps({
 const menu_wrap_simple = ref(false);
 //菜单容器二级菜单是否收起
 const sport_container_simple = ref(false);
-
+// 是否初次渲染
+const is_first = ref(true)
 //一级菜单
 let menu_list = ref([]);
 //二级 菜单 当前菜单
@@ -322,12 +323,13 @@ function select_all_sub_menu_handle() {
  */
 async function set_menu_lv2(item, index, type = "click") {
   console.log(item)
-  // const mi = lodash.get(MenuData.current_lv_2_menu, 'mi')
-  // if (mi === item.mi) return
+  const mi = lodash.get(MenuData.current_lv_2_menu, 'mi')
+  if (mi === item.mi && !is_first.value) return
   MenuData.set_current_lv2_menu(item, index, type);
   // 冠军拉取旧接口； 待 元数据提供 冠军赛事后 再删除
   if (MenuData.is_kemp()) return MatchMeta.get_champion_match()
   // 拉取菜单对应源数据
+  is_first.value = false
   MatchMeta.set_origin_match_data()
   switch (menu_type.value) {
     case 7://电竞需要改变背景图片
@@ -341,7 +343,6 @@ async function set_menu_lv2(item, index, type = "click") {
  * 三级菜单事件
  */
 function set_menu_lv3(item, index, type = "click") {
-  console.log(item.field1)
   //点击当前 就不做什么
   if (
     MenuData.current_lv_3_menu &&

@@ -49,5 +49,5 @@ watch(update_time, () => {
     menu_lv4.value = MenuData.current_lv_4_menu;//4级
 });
 export {
-    is_jinzu, is_kemp, is_mix, is_vr, is_zaopan, is_export, is_scroll_ball, is_today, is_results, menu_type
+    is_jinzu, is_kemp, is_mix, is_vr, is_zaopan, is_export, is_scroll_ball, is_today, is_results, menu_type, menu_lv1, menu_lv2
 }

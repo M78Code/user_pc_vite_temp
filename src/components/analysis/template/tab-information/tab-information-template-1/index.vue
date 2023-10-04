@@ -96,7 +96,7 @@ onUnmounted(() => {
     display: flex;
     align-items: center;
     height: 30px;
-    color: var(--qq--analysis-text-color-5);
+    color: var(--q-analysis-color-3);
     margin-bottom: 10px;
     border-radius: 8px;
 
@@ -106,7 +106,7 @@ onUnmounted(() => {
       line-height: 28px;
       cursor: pointer;
       text-align: center;
-      border: 1px solid var(--qq--analysis-bd-color-2);
+      border: 1px solid var(--q-analysis-color-10);
       overflow: hidden;
 
       &:first-child {
@@ -120,8 +120,8 @@ onUnmounted(() => {
       }
 
       &.active {
-        background-image: var(--qq--analysis-bg-gradient-2);
-        color: var(--qq--analysis-text-color-13);
+        background-image: var(--q-analysis-bg-gradient-2);
+        color: var(--q-analysis-color-13);
       }
     }
   }
@@ -130,12 +130,12 @@ onUnmounted(() => {
     margin-bottom: 20px;
 
     .panel-title.FF7373:before {
-      background: var(--qq--analysis-text-color-6);
+      background: var(--q-analysis-color-14);
     }
 
     .item {
       padding: 14px 30px;
-      border: 1px solid var(--qq--analysis-bd-color-2);
+      border: 1px solid var(--q-analysis-color-10);
       border-top: 0 none;
       border-radius: 0 0 8px 8px;
     }

@@ -243,7 +243,7 @@ onUnmounted(() => {
 .news {
   .author {
     font-size: 12px;
-    color: var(--qq--analysis-text-color-11);
+    color: var(--q-analysis-color-11);
     font-weight: 400;
     .time {
       margin: 0 50px 0 20px;
@@ -251,7 +251,7 @@ onUnmounted(() => {
   }
   .article_detail {
     background: var(--q-analysis-color-16);
-    border: 1px solid var(--qq--analysis-bd-color-4);
+    border: 1px solid var(--q-analysis-color-10);
     border-radius: 8px;
     height: 100%;
     padding: 15px 38px 38px;
@@ -261,7 +261,7 @@ onUnmounted(() => {
     }
     .article_title {
       font-size: 16px;
-      color: var(--qq--analysis-text-color-10);
+      color: var(--q-analysis-color-10);
       font-weight: 600;
     }
     .article {
@@ -282,7 +282,7 @@ onUnmounted(() => {
         p {
           font-family: PingFangSC-Regular;
           font-size: 12px;
-          color: var(--qq--analysis-text-color-2);
+          color: var(--q-analysis-color-5);
           letter-spacing: 0;
           text-align: justify;
           line-height: 24px;
@@ -295,14 +295,14 @@ onUnmounted(() => {
     }
   }
   .favorite_list_title {
-    background-image: var(--qq--analysis-bg-gradient-4);
+    background-image: var(--q-analysis-bg-gradient-4);
     box-shadow: 0 2px 8px 0 rgba(0,0,0,0.20);
     border-radius: 8px;
     height: 48px;
     line-height: 48px;
     padding-left: 30px;
     font-size: 16px;
-    color: var(--qq--analysis-text-color-1);
+    color: var(--q-analysis-color-1);
     font-weight: 500;
     position: relative;
     margin: 20px 20px 30px;
@@ -311,7 +311,7 @@ onUnmounted(() => {
       display: block;
       width: 3px;
       height: 16px;
-      background: var(--qq--analysis-bg-color-15);
+      background: var(--q-analysis-color-14);
       border-radius: 1.5px;
       position: absolute;
       top: 16px;
@@ -329,7 +329,7 @@ onUnmounted(() => {
         width: 100%;
         display: flex;
         justify-content: space-between;
-        border-bottom: 1px solid var(--qq--analysis-bd-color-4);
+        border-bottom: 1px solid var(--q-analysis-color-10);
         padding: 20px 0;
         cursor: pointer;
       }
@@ -350,13 +350,13 @@ onUnmounted(() => {
         }
         .title {
           font-size: 20px;
-          color: var(--qq--analysis-text-color-10);
+          color: var(--q-analysis-color-10);
           font-weight: 600;
           width: 100%;
           .tag {
             border-radius: 3px;
             font-size: 14px;
-            color: var(--qq--analysis-text-color-13);
+            color: var(--q-analysis-color-13);
             letter-spacing: 0;
             text-align: center;
             // line-height: 12px;
@@ -366,7 +366,7 @@ onUnmounted(() => {
         }
         .detail {
           font-size: 16px;
-          color: var(--qq--analysis-text-color-2);
+          color: var(--q-analysis-color-5);
           line-height: 16px;
           font-weight: 400;
         }
@@ -386,7 +386,7 @@ onUnmounted(() => {
   :deep(.load-data-wrap) {
     .empty-wrap {
       .text-center {
-        color: var(--qq--analysis-text-color-10);
+        color: var(--q-analysis-color-10);
       }
     }
     &.empty_data_padding_b {

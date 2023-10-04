@@ -32,16 +32,16 @@ import { formatTime } from 'src/core/format/index.js'
 
 <style lang="scss" scoped>
 .event-item {
-  color: var(--qq--analysis-text-color-2);
+  color: var(--q-analysis-color-5);
   display: flex;
   align-items: center;
   height: 40px;
-  border-bottom: 1px solid var(--qq--analysis-bd-color-2);
-  border-left: 1px solid var(--qq--analysis-bd-color-2);
-  border-right: 1px solid var(--qq--analysis-bd-color-2);
+  border-bottom: 1px solid var(--q-analysis-color-10);
+  border-left: 1px solid var(--q-analysis-color-10);
+  border-right: 1px solid var(--q-analysis-color-10);
 
   &:last-child {
-    border-bottom: 1px solid var(--qq--analysis-bd-color-2);
+    border-bottom: 1px solid var(--q-analysis-color-10);
     border-radius: 0 0 8px 8px;
   }
 
@@ -54,14 +54,14 @@ import { formatTime } from 'src/core/format/index.js'
     width: 7px;
     height: 7px;
     border-radius: 7px;
-    background: var(--qq--analysis-bg-color-16);
+    background: var(--q-analysis-color-12);
 
     &.team-1 {
-      background: var(--qq--analysis-bg-color-13);
+      background: var(--q-analysis-color-2);
     }
 
     &.team-2 {
-      background: var(--qq--analysis-bg-color-12);
+      background: var(--q-analysis-color-14);
     }
 
     &:before {
@@ -71,7 +71,7 @@ import { formatTime } from 'src/core/format/index.js'
       left: 3px;
       height: 17px;
       width: 1px;
-      background: var(--qq--analysis-bg-color-16);
+      background: var(--q-analysis-color-12);
     }
 
     &:after {
@@ -81,7 +81,7 @@ import { formatTime } from 'src/core/format/index.js'
       left: 3px;
       height: 17px;
       width: 1px;
-      background: var(--qq--analysis-bg-color-16);
+      background: var(--q-analysis-color-12);
     }
   }
 
@@ -97,7 +97,7 @@ import { formatTime } from 'src/core/format/index.js'
     }
 
     .status-default {
-      color: var(--qq--analysis-text-color-4);
+      color: var(--q-analysis-color-0);
     }
   }
 

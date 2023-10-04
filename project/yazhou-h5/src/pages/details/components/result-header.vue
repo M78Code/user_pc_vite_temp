@@ -46,7 +46,6 @@ const props = defineProps({
     //   "menu_type",
     //   "get_current_menu",
     // ]),
-    console.error(URL.value, props.result_detail_data);
   const ballType = () => {
       if(props.result_detail_data.csid){
         return props.result_detail_data.csid - 1;

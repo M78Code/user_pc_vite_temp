@@ -294,7 +294,6 @@ class MatchMeta {
    * @param { mids } 赛事 mids 
    */
   set_match_mids (mids = [], num = 10) {
-    console.log(new Set(mids))
     this.match_mids = [...new Set(mids.slice(0, num))]
     this.get_origin_match_by_mids(this.match_mids)
   }

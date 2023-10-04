@@ -203,25 +203,25 @@ onUnmounted(() => {
         margin: 0 6px;
         width: 100%;
         height: 6px;
-        background: var(--qq--yb-bg-color19);
+        background: var(--q-analysis-color-2);
         border-radius: 5px;
         .progress-content {
           position: absolute;
           top: 0;
           left: 0;
           height: 6px;
-          background: var(--qq--right-match-home-score-color);
+          background: var(--q-gb-t-c-17);
           border-radius: 5px 0 0 5px;
         }
       }
       .chat-label {
-        color: var(--qq--analysis-text-color-1);
+        color: var(--q-analysis-color-1);
       }
     }
   }
   .knob-label {
     font-size: 12px;
-    color: var(--qq--analysis-text-color-2);
+    color: var(--q-analysis-color-5);
     padding: 0 10%;
     text-align: center;
   }
@@ -231,24 +231,24 @@ onUnmounted(() => {
 }
 :deep() {
   .text-orange {
-    color: var(--qq--yb-bg-color19) !important;
+    color: var(--q-analysis-color-2) !important;
   }
   .text-blue {
-    color: var(--qq--right-match-home-score-color) !important;
+    color: var(--q-gb-t-c-17) !important;
   }
 }
 
 .num_zero{
   span.text-blue,
   span.text-orange {
-    color: var(--qq--analysis-text-color-1) !important;
+    color: var(--q-analysis-color-1) !important;
   }
   :deep() {
     .text-blue {
-      color: var(--qq--right-match-home-score-color) !important;
+      color: var(--q-gb-t-c-17) !important;
     }
     .text-orange {
-      color: var(--qq--right-match-away-score-color) !important;
+      color: var(--q-analysis-color-2) !important;
     }
   }
 }
@@ -256,7 +256,7 @@ onUnmounted(() => {
   .line_num_zero {
     .bar-progress,
     .progress-content {
-      background: var(--qq--analysis-bg-color-10) !important;
+      background: var(--q-analysis-color-12) !important;
     }
   }
 }

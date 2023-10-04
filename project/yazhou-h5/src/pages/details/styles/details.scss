@@ -5,7 +5,7 @@
   overflow-y: auto;
   overflow-x: hidden;
   .details-f {
-    background-color: #f7f9fe;
+    background-color: #f5f5f5; // var(--q-detials-color-8)
     :deep(.transition-zhiding) {
       .play-name-outer-wrapper {
         .play-name {

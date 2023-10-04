@@ -116,7 +116,6 @@ import { useRoute } from 'vue-router';
 // import { component_symbol, need_register_props } from "../config/index.js"
 // useRegistPropsHelper(component_symbol, need_register_props)
 import { api_analysis } from 'src/api/index'
-import lodash from 'lodash'
 
 import { ChatFullVersionWapper as chat } from 'src/components/analysis/template/chat/index.js'
 import { TraceFullVersionWapper as trace } from 'src/components/analysis/template/trace/index.js'
@@ -165,7 +164,7 @@ function stage_choose(index) {
 */
 
 function get_result () {
-  api_analysis.get_getEventResult({ mid: props.match.mid }).then(({ data }) => {
+  api_analysis.get_getEventResult({ mid: props.match.mid }).then((data) => {
     if (data.code == 200) {
       let arr = [];
       let _data = lodash.get(data, 'data') || [];
@@ -253,7 +252,7 @@ onUnmounted(() => {
 /*  统计图表 */
 .total {
   padding: 20px 30px 30px;
-  border: 1px solid var(--qq--analysis-bd-color-2);
+  border: 1px solid var(--q-analysis-color-10);
   border-top: 0;
   border-radius: 0 0 8px 8px;
 
@@ -268,7 +267,7 @@ onUnmounted(() => {
     }
 
     .name {
-      color: var(--qq--analysis-text-color-1);
+      color: var(--q-analysis-color-1);
       display: flex;
       align-items: center;
       margin-bottom: 18px;
@@ -279,12 +278,12 @@ onUnmounted(() => {
         border-radius: 6px;
 
         &.home-round {
-          background: var(--qq--analysis-bg-color-12);
+          background: var(--q-analysis-color-14);
           margin-right: 5px;
         }
 
         &.away-round {
-          background: var(--qq--analysis-bg-color-13);
+          background: var(--q-analysis-color-2);
           margin-left: 5px;
         }
       }
@@ -292,7 +291,7 @@ onUnmounted(() => {
 
     .result {
       display: flex;
-      color: var(--qq--analysis-text-color-1);
+      color: var(--q-analysis-color-1);
 
       .icon {
         width: 14px;
@@ -341,7 +340,7 @@ onUnmounted(() => {
 
     &:last-child {
       border-radius: 8px;
-      border-bottom: 1px solid var(--qq--analysis-bd-color-4);
+      border-bottom: 1px solid var(--q-analysis-color-10);
     }
 
     .stage-tab {
@@ -358,11 +357,11 @@ onUnmounted(() => {
         display: flex;
         align-items: center;
         justify-content: center;
-        color: var(--qq--analysis-text-color-5);
+        color: var(--q-analysis-color-3);
 
         &.active {
-          color: var(--qq--analysis-text-color-13);
-          background-image: var(--qq--analysis-bg-gradient-2);
+          color: var(--q-analysis-color-13);
+          background-image: var(--q-analysis-bg-gradient-2);
         }
 
         &:last-child {

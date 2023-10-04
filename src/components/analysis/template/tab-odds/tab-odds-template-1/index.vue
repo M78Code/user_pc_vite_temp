@@ -161,7 +161,7 @@ onUnmounted(() => {
     display: flex;
     align-items: center;
     height: 30px;
-    color: var(--qq--analysis-text-color-5);
+    color: var(--q-analysis-color-3);
     margin-bottom: 10px;
     width: 300px;
     border-radius: 8px;
@@ -173,7 +173,7 @@ onUnmounted(() => {
       line-height: 28px;
       cursor: pointer;
       text-align: center;
-      border: 1px solid var(--qq--analysis-bd-color-4);
+      border: 1px solid var(--q-analysis-color-10);
 
       &:last-child {
         border-left: none;
@@ -193,8 +193,8 @@ onUnmounted(() => {
       }
 
       &.active {
-        background-image: var(--qq--analysis-bg-gradient-2);
-        color: var(--qq--analysis-text-color-13);
+        background-image: var(--q-analysis-bg-gradient-2);
+        color: var(--q-analysis-color-13);
       }
     }
   }
@@ -206,12 +206,12 @@ onUnmounted(() => {
 
   .d-header {
     height: 28px;
-    background: var(--qq--analysis-bg-color-5);
+    background: var(--q-analysis-bg-color-17);
 
     .d-td {
       flex: 1;
       text-align: center;
-      color: var(--qq--analysis-text-color-12);
+      color: var(--q-analysis-color-12);
 
       &:first-child {
         flex: unset;
@@ -222,17 +222,17 @@ onUnmounted(() => {
   }
 
   .d-body {
-    border-bottom: 1px solid var(--qq--analysis-bd-color-2);
+    border-bottom: 1px solid var(--q-analysis-color-10);
 
     &:last-child {
-      border-bottom: 1px solid var(--qq--analysis-bd-color-2);
+      border-bottom: 1px solid var(--q-analysis-color-10);
       border-radius: 0 0 8px 8px;
     }
 
     .company {
       height: 80px;
       width: 160px;
-      border-right: 1px solid var(--qq--analysis-bd-color-2);
+      border-right: 1px solid var(--q-analysis-color-10);
       display: flex;
       align-items: center;
       padding-left: 30px;
@@ -250,7 +250,7 @@ onUnmounted(() => {
           align-items: center;
           justify-content: center;
           height: 40px;
-          border-right: 1px solid var(--qq--analysis-bd-color-2);
+          border-right: 1px solid var(--q-analysis-color-10);
           flex: 1;
           position: relative;
           margin-bottom: 0;
@@ -304,7 +304,7 @@ onUnmounted(() => {
       }
 
       .handicap-before {
-        border-bottom: 1px solid var(--qq--analysis-bd-color-2);
+        border-bottom: 1px solid var(--q-analysis-color-10);
       }
 
       .timer {

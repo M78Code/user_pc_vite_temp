@@ -55,7 +55,7 @@
           <i aria-hidden="true" class="icon-star q-icon c-icon" :class="(match.mf==1 || match.mf==true) && 'active'"></i>
         </span>
         <!-- 统计分析 -->
-        <div class="sr-link-icon-w" v-tooltip="{content:t('common.analysis')}" v-if="utils.is_show_sr_flg(match)" @click.stop='sr_click_handle(match)'>
+        <div class="sr-link-icon-w" v-tooltip="{content:t('common.analysis')}" v-if="utils.is_show_sr_flg(match)" @click.stop='details.sr_click_handle(match)'>
           <i aria-hidden="true" class="icon-signal q-icon c-icon"></i>
         </div>
         <!-- 玩法数量 -->
@@ -80,6 +80,7 @@ import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 // useRegistPropsHelper(component_symbol, need_register_props)
 import lodash from 'lodash';
+import details  from "src/core/match-list-pc/details-class/details.js"
 
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 

@@ -474,7 +474,7 @@ export default defineComponent({
     }
   }
   .slide-wrap-width-100{
-    width: 200%;
+    width: 100%;
   }
   .slide-wrap-width-50{
     width: 100%;
@@ -488,7 +488,7 @@ export default defineComponent({
 
   .bor-style {
     // margin-bottom: 1px;
-    border-bottom: 1px solid  var(--q-gb-bd-c-36);
+    border-bottom: 1px solid  var(--q-gb-bd-c-7);
   }
   .bor-style2 {
     border-bottom: none !important;
@@ -581,8 +581,8 @@ export default defineComponent({
     line-height: 0.52rem;
     padding: 0 0.075rem;
     // margin-right: 1px;
-    border-right: 1px solid  var(--q-gb-bd-c-36);
-
+    border-right: 1px solid  var(--q-gb-bd-c-7);
+    color: #999999;// var(--q-detials-color-7);
 
     text-align: center;
     font-size: 0.14rem;
@@ -604,7 +604,17 @@ export default defineComponent({
     height: 0.14rem;
     vertical-align: middle;
   }
+  .odd-color {
+    color: var(--q-gb-t-c-11);
+  }
 
+  .size-color {
+    color: var(--q-gb-t-c-11);
+  }
+
+  .size-color-wit {
+    color: var(--q-gb-t-c-14);
+  }
   .ver-ali-top {
     vertical-align: top;
   }
