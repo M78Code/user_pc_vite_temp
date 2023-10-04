@@ -51,9 +51,6 @@ import { useRoute } from "vue-router";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt";
 import lodash from "lodash";
 import store from "src/store-redux/index.js";
-
-// import use_router_scroll from 'src/core/match-list-h5/use-hooks/router-scroll.js'
-// import use_websocket_store from 'src/core/match-list-h5/websocket/skt_data_list.js'
 import tiaozhuanPanel from "./components/tiaozhuan-panel.vue";    //  跳转banner图和猜你喜欢
 import MatchListCard from "src/core/match-list-h5/match-card/match-list-card-class";
 import matchList from "./components/match-list.vue";
@@ -491,13 +488,13 @@ onActivated(() => {
 
 onDeactivated(() => {
   destroy_handle();
-  matchCtr.value.destroy();
+  MatchDataBaseH5.clear()
 });
 
 onUnmounted(() => {
   destroy_handle();
   unsubscribe();
-  matchCtr.value.destroy();
+  MatchDataBaseH5.clear()
 });
 
 defineExpose({

@@ -261,9 +261,9 @@ class MatchPage {
       if (!MatchDataBaseH5) { return; }
       let now = new Date().getTime();
       // 当前时间，减去 上一次的 时间，小于1s，则return 掉，否则，调用订阅赛事推送
-      if (now - this.prev_invoke_match_details_time < 1000) {
-        return;
-      }
+      // if (now - this.prev_invoke_match_details_time < 1000) {
+      //   return;
+      // }
       this.prev_invoke_match_details_time = now;
       let sliced = MatchMeta.match_mids;
       //数组转对象
