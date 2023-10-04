@@ -112,7 +112,7 @@
                   {
                     item_border: !(
                       lodash.get(item, 'hps.0.hl') &&
-                      $utils.mx_get_bet_simple(item, index, 'oid')
+                      utils.mx_get_bet_simple(item, index, 'oid')
                     ),
                   },
                 ]"
@@ -120,14 +120,14 @@
                 <bet-item
                   v-if="
                     lodash.get(item, 'hps.0.hl') &&
-                    $utils.mx_get_bet_simple(item, index, 'oid')
+                    utils.mx_get_bet_simple(item, index, 'oid')
                   "
                   :key="`item_0_${index}`"
                   class="item_border"
                   :match_info="item"
-                  :play_data="$utils.mx_get_bet_simple(item, index, 'play')"
-                  :bet_data="$utils.mx_get_bet_simple(item, index, 'bet_data')"
-                  :bet_ids="$utils.mx_get_bet_simple(item, index, 'bet_id')"
+                  :play_data="utils.mx_get_bet_simple(item, index, 'play')"
+                  :bet_data="utils.mx_get_bet_simple(item, index, 'bet_data')"
+                  :bet_ids="utils.mx_get_bet_simple(item, index, 'bet_id')"
                   style="padding: 0 10px"
                   bet_source="recent"
                   :bet_info="{
@@ -170,7 +170,7 @@
               @mouseenter="collect_enter(i)"
               @mouseleave="collect_leave(i)"
             >
-              <icon name="icon-star" :class="{ active: item.mf }" size="14px" />
+              <icon-wapper name="icon-star" :class="{ active: item.mf }" size="14px" />
             </div>
             <div
               class="view-more wrap-icon"
@@ -178,14 +178,14 @@
               @click="go_detail(item)"
             >
               <span>{{ handicap_num(item.mc) }}</span>
-              <icon name="icon-triangle3" color="#99A3B1" size="14px" />
+              <icon-wapper name="icon-triangle3" color="#99A3B1" size="14px" />
             </div>
             <div
               class="wrap-icon hot"
               v-show="utils.is_show_sr_flg(item)"
               @click="sr_click_handle(item, 1)"
             >
-              <icon name="icon-signal" size="14px" color="#5A6074" />
+              <icon-wapper name="icon-signal" size="14px" color="#5A6074" />
               <q-tooltip
                 anchor="top middle"
                 self="center middle"
@@ -224,6 +224,7 @@
 const tooltip_style = 'background:rgba(0,0,0,0.8);padding:4px 5px;border-radius:0px;color:#fff'
 import { api_details, api_match } from "src/api/index";
 import { MatchProcessFullVersionWapper } from "src/components/match-process/index.js";
+import { IconWapper } from 'src/components/icon/index.js'
 import bet_item from "src/components/bet-item/bet_item.vue";
 // import skt_data_list_hot from "src/public/mixins/websocket/data/skt_data_list_hot.js";  todo  ws更新
 import detailUtils from "src/core/match-detail/match-detail-pc/match-detail.js";
@@ -243,10 +244,11 @@ import BetData from "src/core/bet/class/bet-data-class.js";
 import { onMounted, onUnmounted } from "vue";
 import { utils } from "src/core/utils/module/utils.js";
 export default {
-  // mixins: [skt_data_list_hot, details_mixins],
+  // mixins: [skt_data_list_hot],
   components: {
     "match-date": MatchProcessFullVersionWapper,
     "bet-item": bet_item,
+    IconWapper
   },
   data() {
     return {
@@ -272,7 +274,11 @@ export default {
       is_single_handle: BetData.is_single_handle, // 单关 是否正在处理投注
       off_mitt:null, //批量关闭mitt
       cur_menu_type: MenuData.menu_type,// 获取当前菜单类型
-      cur_menu_type: LayOutMain_pc.layout_current_path,// 获取当前路由      
+      cur_menu_type: LayOutMain_pc.layout_current_path,// 获取当前路由 
+       // 投注模式 -1.还不知道使用哪种模式 0.足球PA滚球 1.非足球PA滚球
+       bet_mode : BetData.bet_mode,
+      // 是否锁住投注项不让点，默认为不锁住(针对新的投注流程)
+      bet_item_lock : BetData.bet_item_lock,     
     };
   },
   watch: {
@@ -305,11 +311,6 @@ export default {
     this.off_mitt()
   },
   computed: {
-    // ...mapGetters({
-    //   vx_get_bet_mode: "get_bet_mode", // 投注模式
-    //   vx_get_bet_item_lock: "get_bet_item_lock", // 投注项是否要锁
-    // }),
-
     // 前端控制是否禁用收藏功能
     enable_collect_api() {
       return window.env.config.ENABLE_COLLECT_API;
@@ -348,7 +349,7 @@ export default {
       } else {
         this.slide = type;
       }
-      this.$utils.send_zhuge_event("PC_热门推荐_切换控件点击");
+      this.utils.send_zhuge_event("PC_热门推荐_切换控件点击");
     },
     /**
      * 接收列表收藏状态变化
@@ -530,7 +531,7 @@ export default {
       });
       let info = {};
       info["点击状态"] = mf ? "取消收藏" : "收藏";
-      this.$utils.send_zhuge_event("PC_热门推荐_收藏点击", info);
+      this.utils.send_zhuge_event("PC_热门推荐_收藏点击", info);
     },
 
     /**
@@ -559,7 +560,7 @@ export default {
      * @return {undefined} undefined
      */
     go_detail(item) {
-      this.$utils.send_zhuge_event("PC_热门推荐_详情页入口点击");
+      this.utils.send_zhuge_event("PC_热门推荐_详情页入口点击");
       this.$router.push({
         name: "details",
         params: {
@@ -720,7 +721,7 @@ export default {
       
       :deep(.c-bet-item.active ){
           .play-name {
-            color: var(--qq--yb-text-hover-color13) !important;
+            color: var(--q-gb-t-c-18) !important;
           }
         }
         :deep(.handicap-wrap){
@@ -756,14 +757,14 @@ export default {
       margin-right: 10px;
       width: 40px;
       height: 40px;
-      border: 1px solid var(--qq--carousel-handicap-item-border-color);
+      border: 1px solid var(--q-gb-bd-c-8);
       border-radius: 6px;
       &.hot {
         margin-right: auto;
         margin-left: 10px;
       }
       &:hover {
-        border: 1px solid var(--qq--wrap-icon-border-hover);
+        border: 1px solid var(--q-gb-bd-c-8);
         &.hot {
           i {
             color: #abbac8 !important;
@@ -779,7 +780,7 @@ export default {
         width: 423px;
       }
       &:hover {
-        border: 1px solid var(--qq--more-handle-border-color);
+        border: 1px solid var(--q-gb-bd-c-8);
       }
     }
   }

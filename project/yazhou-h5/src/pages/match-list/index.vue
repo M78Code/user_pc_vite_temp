@@ -162,7 +162,7 @@ watch(() => match_is_empty.value, () => {
 });
 
 // 早盘时，并且是 足球时，执行下边操作
-watch(() => MenuData.menu_type.value, () => {
+watch(() => MenuData.menu_type.value, (val) => {
   if (MenuData.menu_type.value == 4 && val == "40303") {
     clearTimeout(subscription_timer1.value);
     subscription_timer1.value = setTimeout(() => {

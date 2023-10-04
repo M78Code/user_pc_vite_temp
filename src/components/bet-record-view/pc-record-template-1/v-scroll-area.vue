@@ -12,7 +12,7 @@
         <q-resize-observer v-if="observer_area == 1 || observer_area == 3" @resize="on_header_change" :debounce="0" />
       </div>
       <!-- 中 ------------------->
-      <q-scroll-area :visible="true" ref="ref_v_scroll_area"
+      <q-scroll-area :visible="true" ref="ref_bet_scroll_area_history"
         :thumb-style="{ right: is_iframe ? '-8px' : '-10.5px' }" class="fit v-scrollarea">
         <q-scroll-observer @scroll="on_scroll" />
         <div class="middle-content" :style="{
@@ -60,7 +60,7 @@ const props = defineProps({
 // 是否内嵌
 const is_iframe = ref(utils.is_iframe)
 
-const ref_v_scroll_area = ref(null);
+const ref_bet_scroll_area_history = ref(null);
 const header_height = ref(0);
 const middle_height = ref(0);
 // 底部区域位置样式
@@ -168,7 +168,7 @@ const on_scroll = (position) => {
 }
 // 设置滚动位置
 const set_scroll_position = (position) => {
- ref_v_scroll_area.value.setScrollPosition(position[0], position[1])
+ ref_bet_scroll_area_history.value.setScrollPosition(position[0], position[1])
 }
 
 onMounted(() => {

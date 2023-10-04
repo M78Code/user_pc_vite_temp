@@ -1,5 +1,5 @@
 import PageSourceData from "src/core/page-source/page-source.js";
-
+import { MatchDetailCalss } from "src/core";
 /**
  * PC   列表 和 详情  之间的 数据中间件 
  * 
@@ -319,13 +319,13 @@ class MatchListDetailMiddleware {
 
         // 切换右侧赛事
         let playId = this.vx_details_params.play_id;
-        this.vx_set_match_details_params({
+        MatchDetailCalss.set_match_details_params({
           mid,
           tid,
           sportId,
           playId,
           media_type: "auto",
-        });
+        })
       });
     }
   }

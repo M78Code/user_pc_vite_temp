@@ -1,14 +1,11 @@
   import SliderX from "src/components/match-detail/match_info/slider_x.vue"
   import { TabWapper as Tabs } from "src/components/common/tab"
-  // import time_format_mixin from "src/public/mixins/common/time_format"; //todo
-  // import { mapGetters } from "vuex"
   import { api_details } from "src/api/index";
   export default {
       components: {
           SliderX,
           Tabs
       },
-      // mixins: [time_format_mixin],
       data() {
           // 精彩回放数据请求定时器
           this.replayDataTimer = null
@@ -76,38 +73,38 @@
           }
         },
         // 精彩回播配置信息
-        // 'vx_get_user.merchantEventSwitchVO':{
-        //   handler(res) {
-        //     // 开启关闭
-        //     if(res.eventSwitch) {
-        //       this.get_video_replay()
-        //       this.replayDataTimer && clearInterval(this.replayDataTimer)
-        //       this.replayDataTimer = setInterval(() => this.get_video_replay(), 60 * 1000)
-        //       this.show_video_replay = true
-        //     } else {
-        //       this.replayDataTimer && clearInterval(this.replayDataTimer)
-        //       this.show_video_replay = false
-        //     }
+        'vx_get_user.merchantEventSwitchVO':{
+          handler(res) {
+            // 开启关闭
+            if(res.eventSwitch) {
+              this.get_video_replay()
+              this.replayDataTimer && clearInterval(this.replayDataTimer)
+              this.replayDataTimer = setInterval(() => this.get_video_replay(), 60 * 1000)
+              this.show_video_replay = true
+            } else {
+              this.replayDataTimer && clearInterval(this.replayDataTimer)
+              this.show_video_replay = false
+            }
 
-        //     // tab按钮开关
-        //     let _tab_list = [
-        //       {title: this.$root.$t('replay_video.all'), code: 0},
-        //       {title:this.$root.$t('replay_video.goal'), code: 1},
-        //     ]
-        //     if (res.cornerEvent) {
-        //       _tab_list.push({title:this.$root.$t('replay_video.corner_kick'), code: 2})
-        //     }
-        //     if (res.penaltyEvent) {
-        //       _tab_list.push({title:this.$root.$t('replay_video.punish'), code: 3})
-        //     }
-        //     // 当角球和罚牌都没有时不显示tab
-        //     // if (!res.cornerEvent && !res.penaltyEvent) {
-        //     //   _tab_list = []
-        //     // }
-        //     this.tab_list = _tab_list
-        //   },
-        //   immediate: true,
-        // },
+            // tab按钮开关
+            let _tab_list = [
+              {title: i18n_t('replay_video.all'), code: 0},
+              {title:i18n_t('replay_video.goal'), code: 1},
+            ]
+            if (res.cornerEvent) {
+              _tab_list.push({title:i18n_t('replay_video.corner_kick'), code: 2})
+            }
+            if (res.penaltyEvent) {
+              _tab_list.push({title:i18n_t('replay_video.punish'), code: 3})
+            }
+            // 当角球和罚牌都没有时不显示tab
+            // if (!res.cornerEvent && !res.penaltyEvent) {
+            //   _tab_list = []
+            // }
+            this.tab_list = _tab_list
+          },
+          immediate: true,
+        },
         //视屏播放类型
         'vx_play_media.media_type': {
           handler(res) {
@@ -153,7 +150,7 @@
           const hide_full_screen = this.$route.params.video_size ==1 ? 1 : 0;
           const lang = window.reset_lang || window.vue.lang || "zh";
           this.media_src = `${live_domains}/videoReplay.html?lang=${lang}&c_f_s=1&title=${`${item.homeAway} ${this.event_name(item.eventCode)}: ${item.firstNum}`}&back_but=${back_but}&hide_full_screen=${hide_full_screen}&src=${item.fragmentVideo}`
-          let lang_obj={full_screen:this.$root.$t('video.full_screen_mode'), back:this.$root.$t('common.back'), back_live:this.$root.$t('video.back_live')}
+          let lang_obj={full_screen:i18n_t('video.full_screen_mode'), back:i18n_t('common.back'), back_live:i18n_t('video.back_live')}
           if(this.$route.name == "home"){
             lang_obj.full_screen = '';
             lang_obj.back = '';
@@ -206,7 +203,7 @@
             eventCode: this.current_events_type
           }
           api_details.get_live_video_playback_info(params)
-              .then(({ data }) => {
+              .then(( data ) => {
                 if (data.code == 200 && data.data.eventList) {
                   this.events_list = data.data.eventList
                   // 全部tab下是否有数据
@@ -271,11 +268,11 @@
         event_name(type) {
           let event_name
           switch (type) {
-            case 'goal': event_name = this.$root.$t('replay_video.goal'); break;  // 进球
-            case 'corner': event_name = this.$root.$t('replay_video.corner_kick'); break;  // 角球
-            case "red_card": event_name = this.$root.$t('icon_tips.red_card'); break;  // 红牌
-            case "yellow_card": event_name = this.$root.$t('icon_tips.yellow_card'); break;  // 黄牌
-            case "yellow_red_card": event_name = this.$root.$t('icon_tips.red_card'); break;  // 黄红牌
+            case 'goal': event_name = i18n_t('replay_video.goal'); break;  // 进球
+            case 'corner': event_name = i18n_t('replay_video.corner_kick'); break;  // 角球
+            case "red_card": event_name = i18n_t('icon_tips.red_card'); break;  // 红牌
+            case "yellow_card": event_name = i18n_t('icon_tips.yellow_card'); break;  // 黄牌
+            case "yellow_red_card": event_name = i18n_t('icon_tips.red_card'); break;  // 黄红牌
             default: event_name = ''; break;
           }
           return event_name;

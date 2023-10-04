@@ -1,4 +1,4 @@
-import { ref } from "vue";
+import { reactive, ref } from "vue";
 import lodash_ from "lodash";
 
 class UseGlobal {
@@ -55,8 +55,29 @@ class UseGlobal {
     //视频是否展开状态
     this.is_fold_status = true;
     this.champion_fold_obj = {};
-    // 投注记录版本变更
-    this.bet_record_version = ref("1111");
+    // 全局开关变更
+    this.global_switch_version = reactive({ version:'111'})
+  }
+  /**
+   * @description: 设置获取视频是否展开状态
+   * @param {boolean} val
+   * @return {*}
+   */
+  set_is_fold_status(val){
+    this.is_fold_status = val
+    set_global_data_version()
+  }
+  /**
+   * @description: 设置全局点击事件
+   * @param {} 
+   * @return {*}
+   */
+  set_global_click(){
+    this.global_click++
+  }
+   // 设置全局开关版本变更
+   set_global_data_version(){
+    this.global_switch_version.version = Date.now()
   }
 }
 

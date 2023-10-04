@@ -1,7 +1,6 @@
 <template>
   <div class="highlights analysis-odds">
     <!-- tab菜单 -->
-    {{menu_type}}
     <div class="heade-wrapper" :class="[{'is-result-details': menu_type == 28}, {'is-hidden': is_full_screen}]" v-if="lodash.get(get_detail_data, 'csid') == 1">
       <div class="heade">
         <span v-for="(item,i) in tab_list" :key="i"
@@ -62,10 +61,11 @@
               </div>
               <!-- 加时赛 -->
               <div class="text-scroller" v-else-if="event.matchPeriodId==41||event.matchPeriodId==42">
-                <span class="text" v-scroll-text>{{i18n_t('mmp')[2][40]}} {{event.homeAway}} {{t(`highlights.event_type.${event.eventCode}`, {X: trans_num(event.firstNum)})}}</span>
+                <span class="text" v-scroll-text>{{i18n_t('mmp')[2][40]}} {{event.homeAway}} {{i18n_tc(`highlights.event_type.${event.eventCode}`, {X: trans_num(event.firstNum)})}}</span>
               </div>
               <div class="text-scroller" v-else>
-                <span class="text" v-scroll-text>{{event.homeAway}} {{i18n_t(`highlights.event_type.${event.eventCode}`, {X: trans_num(event.firstNum)})}}</span>
+                {{event.eventCode}}
+                <span class="text" v-scroll-text>{{event.homeAway}} {{  i18n_tc(`highlights.event_type.${event.eventCode}`, {X: trans_num(event.firstNum)})}}</span>
               </div>
             </div>
             <i class="icon icon-replay-red"></i>
@@ -77,8 +77,8 @@
               :class="[
                 i == event_index && is_expand ? 'expand' : 'expand pack-up',
                 {
-                  'full-screen-replay-wrapper': get_is_hengping,
-                  'full-screen-portrait': is_full_screen && !get_is_hengping,
+                  'full-screen-replay-wrapper': is_hengping,
+                  'full-screen-portrait': is_full_screen && !is_hengping,
                 }
               ]">
             <div class="load-error-mask" v-show="is_expand && is_replay_load_error">
@@ -102,7 +102,7 @@
             <template v-if="i == event_index && is_expand">
               <div v-show="is_controller_show" class="event-title-wrapper" :class="{'is-full-screen': is_full_screen}">
                 <!-- 事件title -->
-                <div class="event-title">{{event.homeAway}} {{t(`highlights.event_type.${event.eventCode}`, {X: event.firstNum})}}</div>
+                <div class="event-title">{{event.homeAway}} {{i18n_tc(`highlights.event_type.${event.eventCode}`, {X: event.firstNum})}}</div>
                 <!-- 主客队比分 -->
                 <div class="home-away-score-wrapper">
                   <team-img :type="0" :csid="lodash.get(get_detail_data, 'csid')" :url="lodash.get(get_detail_data, 'mhlu[0]')" :fr="menu_type != 3000 ? lodash.get(get_detail_data, 'frmhn[0]'): lodash.get(get_detail_data, 'frmhn')" :size="13"></team-img>
@@ -117,14 +117,14 @@
 
 
               <!-- 顶部title、比分 -->
-              <title-x v-if="get_is_hengping && is_controller_show" @handle_callback="close_video"></title-x>
+              <title-x v-if="is_hengping && is_controller_show" @handle_callback="close_video"></title-x>
 
               <!-- 精彩回放事件类型切换 -->
               <tab v-show="is_expand_video_list" :tabs="tab_list" @click="get_video_list" ref="tabs" :isChange="true"></tab>
 
               <!-- 精彩回放视频滚动列表 -->
               <slider-x
-                v-if="get_is_hengping"
+                v-if="is_hengping"
                 v-show="slider_events_list[0].eventId"
                 :slider_list="slider_events_list"
                 image_key="fragmentPic"
@@ -137,6 +137,7 @@
                 ref="slider_video"
               >
                 <template v-slot:default="slotProps">
+                  {{slotProps}}
                   <div class="score"><span>{{ slotProps.item.t1 }}</span><span class="colon">:</span><span>{{ slotProps.item.t2 }}</span></div>
                   <div class="event-team ellipsis">{{ slotProps.item.homeAway }}</div>
                   <div class="event-name">{{ event_name(slotProps.item.eventCode) }}: {{ slotProps.item.firstNum }}</div>
@@ -149,7 +150,7 @@
                 <img src="image/bw3/svg/details/replay_logo.svg" />
               </div>
 
-              <template v-if="get_is_hengping">
+              <template v-if="is_hengping">
                 <!--（精彩/收起）回放 -->
                 <div class="toggle-replay-video-wrap hairline-border" :class="{'move-up': is_expand_video_list}" @click="toggle_slider_btn">
                   <img src="image/bw3/svg/details/replay_toggle.svg" />
@@ -169,13 +170,13 @@
                   <svg v-else xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 21 32"><path d="M13.728 6.272v19.456q0 0.448-0.352 0.8t-0.8 0.32-0.8-0.32l-5.952-5.952h-4.672q-0.48 0-0.8-0.352t-0.352-0.8v-6.848q0-0.48 0.352-0.8t0.8-0.352h4.672l5.952-5.952q0.32-0.32 0.8-0.32t0.8 0.32 0.352 0.8zM20.576 16q0 1.344-0.768 2.528t-2.016 1.664q-0.16 0.096-0.448 0.096-0.448 0-0.8-0.32t-0.32-0.832q0-0.384 0.192-0.64t0.544-0.448 0.608-0.384 0.512-0.64 0.192-1.024-0.192-1.024-0.512-0.64-0.608-0.384-0.544-0.448-0.192-0.64q0-0.48 0.32-0.832t0.8-0.32q0.288 0 0.448 0.096 1.248 0.48 2.016 1.664t0.768 2.528zM25.152 16q0 2.72-1.536 5.056t-4 3.36q-0.256 0.096-0.448 0.096-0.48 0-0.832-0.352t-0.32-0.8q0-0.704 0.672-1.056 1.024-0.512 1.376-0.8 1.312-0.96 2.048-2.4t0.736-3.104-0.736-3.104-2.048-2.4q-0.352-0.288-1.376-0.8-0.672-0.352-0.672-1.056 0-0.448 0.32-0.8t0.8-0.352q0.224 0 0.48 0.096 2.496 1.056 4 3.36t1.536 5.056z"></path></svg>
                 </div>
                 <!-- 视频info说明弹窗 -->
-                <!--<div v-show="!get_is_hengping" class="tips-wrap" @click="change_info">-->
+                <!--<div v-show="!is_hengping" class="tips-wrap" @click="change_info">-->
                 <!--  <img src="image/bw3/svg/details/tips.svg" />-->
                 <!--</div>-->
                 <!-- 全屏按钮 -->
                 <div class="full-screen-btn" @click="set_full_screen">
-                  <img v-if="is_full_screen"  src="image/bw3/svg/pack_up.svg">
-                  <img v-else  src="image/bw3/svg/full_screen.svg">
+                  <img v-if="is_full_screen"  src="/yazhou-h5/image/svg/pack_up.svg">
+                  <img v-else  src="/yazhou-h5/image/svg/full_screen.svg">
                 </div>
               </div>
             </template>
@@ -218,7 +219,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";
 import { pre_load_video } from "src/core/pre-load/index.js"
 import { utils } from 'src/core/index.js'
 import { format_total_score } from "src/core/format/index.js"
-import { i18n_t } from "src/boot/i18n.js";;
+import { i18n_t, i18n_tc } from "src/boot/i18n.js";;
 import { useRoute } from "vue-router"
 import { MatchDataWarehouse_H5_Detail_Common as matchDetailData, MenuData } from "src/core/index";
 
@@ -306,7 +307,10 @@ setup(props, context){
   const iframe_rdm = ref('')
   const menu_type = ref(MenuData.menu_type); //菜单选中项
   // 是否横屏
-  const get_is_hengping = ref(false)
+  const is_hengping = ref(false)
+  // 是否是dplayer视频全屏
+  const is_dp_video_full_screen = ref(false)
+  // 赛果详情数据
   const get_detail_data = ref(matchDetailData.list_to_obj.mid_obj[`${route.params.mid}_`])
 console.error(matchDetailData);
   onMounted(() => {
@@ -452,7 +456,7 @@ console.error(matchDetailData);
   // iframe加载成功后，通知子iframe
   const handle_replay_video_loaded = (e) => {
     // TODO:  get_is_hengping 后续修改调整
-    if (get_is_hengping.value) {
+    if (is_hengping.value) {
       const data = {
         cmd: 'full_screen_landscape',
         full_screen_landscape: 1
@@ -473,7 +477,7 @@ console.error(matchDetailData);
       iframe_rdm.value = Date.now()
       is_user_voice.value = current_event_video.value.voice
       replay_url.value = slider_events_list[index].fragmentVideo
-      check_replay_url(replay_video_src)
+      check_replay_url(replay_video_src.value)
       // 静音当前播放媒体
       useMittEmit(MITT_TYPES.IFRAME_VIDEO_VOLUME, { volume: 0 })
     }
@@ -516,13 +520,13 @@ console.error(matchDetailData);
   }
   // 点击播放目标回放视频（竖屏非全屏）
   const handle_click_event = (index, event) => {
-    const selected_item_index = events_list_vertical.findIndex(item => item.eventId == event.eventId)
+    const selected_item_index = events_list_vertical.value.findIndex(item => item.eventId == event.eventId)
 
     // 记录当前slider信息
     curr_active_event.value = {
       video_url: event.fragmentVideo,
       event_id: event.eventId,
-      slider_index: events_list_vertical.length - 1 - selected_item_index
+      slider_index: events_list_vertical.value.length - 1 - selected_item_index
     }
 
     is_replay_load_error.value = false
@@ -530,7 +534,7 @@ console.error(matchDetailData);
     replay_url.value = event.fragmentVideo
 
     if (event_index.value == index && !is_expand.value || event_index.value !== index) {
-      check_replay_url(replay_video_src)
+      check_replay_url(replay_video_src.value)
     }
 
     // 收起、展开列表
@@ -564,11 +568,11 @@ console.error(matchDetailData);
   const set_full_screen = () => {
     let data = {}
     if (is_full_screen.value) {
-      // TODO: 后续修改调整  set_event_list  set_event_list set_is_hengping
-      set_is_full_screen(false)
-      set_is_dp_video_full_screen(false)
+      // TODO: 后续修改调整  set_event_list  set_event_list 
+      is_full_screen.value = false
+      is_dp_video_full_screen.value = false
 
-      set_is_hengping(false)
+      is_hengping.value = false
       exit_browser_full_screen()
       screen.orientation && screen.orientation.unlock()
 
@@ -579,10 +583,10 @@ console.error(matchDetailData);
         full_screen_portrait: 0
       }
     } else {
-      set_is_full_screen(true)
-      set_is_dp_video_full_screen(true)
+      is_full_screen.value = true
+      is_dp_video_full_screen.value = true
 
-      set_is_hengping(true)
+      is_hengping.value = true
       browser_full_screen()
       screen.orientation && screen.orientation.lock('landscape')
 
@@ -630,8 +634,7 @@ console.error(matchDetailData);
   }
   // 退出精彩回放视频
   const close_video = () => {
-    // set_is_full_screen(false)
-    // set_is_dp_video_full_screen(false)
+    is_dp_video_full_screen.value = false
     is_full_screen.value = !is_full_screen.value
     is_expand_video_list.value = false
     is_replay_load_error.value = false
@@ -692,7 +695,7 @@ console.error(matchDetailData);
     }
   })
   // 横屏、竖屏切换时通知子iframe
-  watch(() => get_is_hengping.value, (is_hengping) => {
+  watch(() => is_hengping.value, (is_hengping) => {
     if (is_hengping) {
       const data = {
         cmd: 'full_screen_landscape',
@@ -735,27 +738,26 @@ console.error(matchDetailData);
     })
 
     // 无相应类型事件时返回
-    // TODO:  get_is_hengping 后续修改调整
-    if (get_is_hengping.value && !new_events_list.length) {
+    if (is_hengping.value && !new_events_list.length) {
       return [{}]
     }
     return new_events_list.reverse()
   })
   // 事件列表（全屏）
   const slider_events_list = computed(() => {
-    return lodash.cloneDeep(events_list_vertical).reverse()
+    return lodash.cloneDeep(events_list_vertical.value).reverse()
   })
   // 鉴权域名 + 回放视频url（拼接后的最终url）
   const replay_video_src = computed(() => {
-    // TODO:    get_lang 后续修改调整
-    const host_url = window.BUILDIN_CONFIG.live_domains[0] || lodash.get(UserCtr, 'user_info.oss.live_h5')
-    return `${host_url}/videoReplay.html?src=${replay_url.value}&lang=${get_lang}&volume=${is_user_voice ? 1 : 0}`
+    console.error(window.BUILDIN_CONFIG);
+    const host_url = lodash.get(window, 'BUILDIN_CONFIG.live_domains[0]') || lodash.get(UserCtr, 'user_info.oss.live_h5')
+    return `${host_url}/videoReplay.html?src=${replay_url.value}&lang=${UserCtr.lang}&volume=${is_user_voice ? 1 : 0}`
   })
+  console.error(replay_video_src.value);
   // slider列表长度是否小于屏幕横屏宽度
   const is_slider_in_screen = computed(() => {
-    // TODO:  get_is_hengping 后续修改调整
-    const full_screen_width = get_is_hengping.value ? innerWidth : innerHeight
-    const font_size = (get_is_hengping.value ? innerHeight : innerWidth) * 100 / 375
+    const full_screen_width = is_hengping.value ? innerWidth : innerHeight
+    const font_size = (is_hengping.value ? innerHeight : innerWidth) * 100 / 375
 
     return slider_events_list.length * Math.ceil(1.44 * font_size) < full_screen_width
   })
@@ -769,8 +771,7 @@ console.error(matchDetailData);
       is_controller_show_timer.value = null
       clearTimeout(is_replay_load_error_timer.value)
       is_replay_load_error_timer.value = null
-      // TODO: set_is_dp_video_full_screen 后续修改调整
-      // set_is_dp_video_full_screen(false)
+      is_dp_video_full_screen.value = false
       window.removeEventListener("message", handleMessage);
   })
   console.error(get_detail_data.value.csid);
@@ -818,7 +819,7 @@ console.error(matchDetailData);
     is_replay_load_error,
     // 精彩回放视频增加随机数
     iframe_rdm,
-    get_is_hengping,
+    is_hengping,
     get_detail_data,
     menu_type,
     //=============
@@ -827,6 +828,7 @@ console.error(matchDetailData);
     slider_events_list,
     events_list_vertical,
     i18n_t,
+    i18n_tc,
     //================
     exit_browser_full_screen,
     change_info,
@@ -859,9 +861,7 @@ console.error(matchDetailData);
   //   ...mapGetters([
   //     'get_detail_data',
   //     'get_menu_type',
-  //     'get_is_hengping',
   //     'get_is_full_screen',
-  //     'get_is_dp_video_full_screen',
   //     'get_match_real_time',
   //     'get_lang',
   //   ]),

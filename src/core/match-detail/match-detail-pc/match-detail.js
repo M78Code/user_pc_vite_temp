@@ -5,7 +5,7 @@
  * @Description:
  */
 import lodash from "lodash";
-import { GlobalSwitchClass }  from "src/core"
+import { GlobalSwitchClass,MatchDetailCalss }  from "src/core"
 import GlobalAccessConfig from "src/core/access-config/access-config.js"
 //统计分析URL
 const signal_url = "https://s5.sir.swiftscore.com";
@@ -248,7 +248,8 @@ const sr_click_handle = (match) => {
     );
   if ([1, 2].includes(match.csid * 1)) {
     full_url = `/#/analysis_header/${match.csid}/${match.mid}`; // seid,match.srid
-    store.dispatch("set_active_detail", match);
+     // 保存数据,用于接口报错时填充
+     MatchDetailCalss.set_active_detail((match))
   }
 
   let _window_width = 1000;

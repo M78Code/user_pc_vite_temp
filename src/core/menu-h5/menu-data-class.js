@@ -2,7 +2,8 @@
  * 菜单 需要实现 保留 各级菜单 以及最终输出结果的   两个版本 ，
  */
 // "1": "滚球",  "2": "今日", "3": "早盘",  "4": "冠军","5": "即将开赛", "6": "串关","7": "电竞",
-// "8": "VR",// "28": "赛果", "30": "竞足",//
+// "8": "VR",// "28": "赛果", "30": "竞足",// 500热门
+
 
 /*以下是老的菜单对应ID*/
 // menu_type // 100（冠军）  3000（电竞） 赛果28 
@@ -157,23 +158,29 @@ class MenuData {
     // 电竞 2100 = 英雄联盟
     let menu_dianjing = { mi: 7, sl: [] };
     let menu_jingzu = { mi: 30, sl: [] };
+    let menu_guancun = { mi: 4, sl: [] };
+    let menu_hot = { mi: 500, sl: [] }
     lodash.each(data, (item) => {
       //这里是放入全部的数据
       if (item && item.sl && item.sl.length > 0) {
         mi_list.push(...item.sl);
       }
       //电竞
-      if ([2100, 2101, 2103, 2102].includes(+item.mi)) {
+      if (BaseData.sports_mi.includes(+item.mi)) {
         menu_dianjing.sl.push(item);
       }
-      //竟足
+      //冠军
+      if ([400].includes(+item.mi)) {
+        menu_guancun.sl = item.sl || [];
+      }
+      //热门
       if ([500].includes(+item.mi)) {
-        menu_jingzu.sl.push(item);
+        menu_hot.sl = item.sl || [];
       }
     });
     let new_menu = [];
-    //处理普通数据 1=滚球,2=今日,3=早盘,4=冠军
-    lodash.each([1, 2, 3, 4], (menu_item, index) => {
+    //处理普通数据 1=滚球,2=今日,3=早盘
+    lodash.each([1, 2, 3], (menu_item, index) => {
       new_menu[index] = { mi: menu_item, sl: [] };
       lodash.each(mi_list, (item) => {
         //常规赛总的mi是 赛种id+主菜单mi
@@ -189,10 +196,12 @@ class MenuData {
     this.set_cache_class({
       menu_list: [
         ...new_menu,
+        menu_guancun,
         menu_dianjing,
         { mi: 8 },
         menu_jingzu,
         this.init_amidithion(data),  // 赛果数据处理
+        menu_hot,
       ],
 
     });
@@ -280,23 +289,18 @@ class MenuData {
   get_euid(arg_mi) {
     let mi = arg_mi || this.current_lv_2_menu?.mi;
     if (!mi) return "";
-    if (this.is_kemp()) {
-      //冠军特殊处理
-      mi = 400 + (mi?.substr(0, 3) - 100);
-    }
     // 赛果
-    if (this.is_results()) return arg_mi;
+    if (this.is_results()) return mi;
     if (BaseData.mi_euid_map_res && BaseData.mi_euid_map_res[mi]) {
       return BaseData.mi_euid_map_res[mi].h;
     } else {
       // 电竞无旧菜单id处理
-      let menu_dianjing = {
+      return {
         2100: 41002,
         2101: 41001,
         2102: 41004,
         2103: 41003,
-      };
-      return menu_dianjing[mi];
+      }[mi];
     }
   }
 
@@ -339,6 +343,9 @@ class MenuData {
     }
     let bg_mi = parseInt(this.recombine_menu_desc(item?.mi));
     let id = parseInt(bg_mi - 100);
+    if (this.is_kemp()) {
+      id = parseInt(bg_mi - 400);
+    }
     if (get_ball_id) return id;
     let type = "";
     switch (String(id)) {
@@ -521,7 +528,7 @@ class MenuData {
    * 没有传递对比当前菜单
   */
   is_hot(mi) {
-    return this._is_cur_mi(8, mi)
+    return this._is_cur_mi(500, mi)
   }
   /**
    * 是否选中了VR 
@@ -586,18 +593,6 @@ class MenuData {
   */
   is_jinzu(mi) {
     return this._is_cur_mi(30, mi)
-  }
-  // 电竞菜单csid
-  menu_csid(mi) {
-    if (mi) {
-      let menu_dianjing = {
-        2100: 100,
-        2101: 101,
-        2102: 102,
-        2103: 103,
-      };
-      return menu_dianjing[mi];
-    }
   }
   //- 三级菜单 日期 (只有 串关，早盘，赛果，电竞，才有) -->
   get_is_show_three_menu(mi) {
@@ -755,50 +750,6 @@ class MenuData {
     }
   }
   /**
-   * VR总类的菜单 这是固定的
-  */
-  vr_menu() {
-    const vr_list = [
-      {
-        field1: "1001",
-        menuId: "1001",
-        name: "足球",
-        subList: [],
-      },
-      {
-        field1: "1004",
-        menuId: "1004",
-        name: "篮球",
-        subList: [],
-      },
-      {
-        field1: "1011",
-        menuId: "1011",
-        name: "赛马",
-        subList: [],
-      },
-      {
-        field1: "1002",
-        menuId: "1002",
-        name: "赛狗",
-        subList: [],
-      },
-      {
-        field1: "1010",
-        menuId: "1010",
-        name: "摩托车",
-        subList: [],
-      },
-      {
-        field1: "1009",
-        menuId: "1009",
-        name: "泥地摩托车",
-        subList: [],
-      },
-    ];
-    return vr_list;
-  }
-  /**
    * 选中1级menu
    * item [object]当前点击对象
    * index [number]
@@ -925,8 +876,10 @@ class MenuData {
   /**
    * 电竞菜单要保留 电竞菜单 的 csid
    */
-  get_current_esport_csid(mi, item) {
-    if (mi) {
+  get_current_esport_csid() {
+    if (this.is_export()) {
+      var mi = this.current_lv_2_menu.mi
+      // 电竞菜单csid
       let menu_dianjing = {
         2100: 100,
         2101: 101,
@@ -935,11 +888,11 @@ class MenuData {
       };
       return menu_dianjing[mi] || "";
     }
-    if (BaseData.base_data_res.spList
-    ) {
-      this.previous_lv_1_menu = item;
-      return BaseData.base_data_res.spList.find((i) => i.csid == item.csid);
-    }
+    // if (BaseData.csids_map
+    // ) {
+    //   this.previous_lv_1_menu = item;
+    //   return BaseData.csids_map['csid_' + item.csid];
+    // }
     return "";
   }
   /**

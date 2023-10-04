@@ -888,7 +888,7 @@ const route = useRoute();
   };
   const off_listeners = () => {
     // #TODO IMIT
-    state_data.emitters.map((x) => x());
+    state_data.emitters.map((x) => x && x.off());
   };
   // 清除当前组件所有定时器
   const clear_timer = () => {

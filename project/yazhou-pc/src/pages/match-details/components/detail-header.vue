@@ -233,7 +233,7 @@ onUnmounted(() => {
       display: flex;
       justify-content: center;
       align-items: center;
-      :v-deep(.icon-wrap)  {
+      :deep(.icon-wrap)  {
         // height: 15px;
         .icon-refresh {
           position: relative;

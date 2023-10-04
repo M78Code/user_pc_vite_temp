@@ -11,6 +11,9 @@ import MatchListCardClass from '../match-card/match-list-card-class'
 import { MATCH_LIST_TEMPLATE_CONFIG } from "src/core/match-list-h5/match-card/template"
 import mi_euid_mapping_default from "src/core/base-data/config/mi-euid-mapping.json"
 import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from 'src/core'
+import { api_common } from "src/api/index.js";
+import MatchListParams from 'src/core/match-list-h5/composables/match-list-params.js'
+
 class MatchMeta {
 
   constructor() {
@@ -18,6 +21,8 @@ class MatchMeta {
     this.match_mids = [],
     // 早盘下的 mids
     this.zaopan_mids = []
+    // 联赛 id 对应的 mids
+    this.tid_map_mids = {}
     // 新的菜单到旧的菜单的映射关系  接口返回值
     this.origin_menu = mi_euid_mapping_default.data
     // ms 1： 滚球 2： 今日； 3： 早盘;  
@@ -55,10 +60,9 @@ class MatchMeta {
       const mids = this.get_match_mids_by_mi(t.mi)
       mids && match_mids_list.push(...mids)
     })
-    // TODO: 需要去除 .slice(0, 15)
-    this.match_mids = [...new Set(match_mids_list.slice(0, 15))]
+    // TODO: 需要去除 .slice(0, 10)
     this.zaopan_mids = [...new Set(match_mids_list)]
-    this.get_origin_match_by_mids(this.match_mids)
+    this.set_match_mids(match_mids_list, 10)
   }
 
   /** 暂时没有用这个方法了 因为一个方法足以
@@ -70,9 +74,7 @@ class MatchMeta {
     const match_mids_list = this.get_match_mids_by_mi(mi)
     const length = lodash.get(match_mids_list, 'length', 0)
     if (length < 1) return
-    // TODO: 需要去除 .slice(0, 8)
-    this.match_mids = [...new Set(match_mids_list.slice(0, 8))]
-    this.get_origin_match_by_mids( this.match_mids)
+    this.set_match_mids(match_mids_list, 8)
   }
 
   /**
@@ -81,7 +83,7 @@ class MatchMeta {
    */
   get_match_mids_by_mi(mi) {
     const mi_tid_mids_res = lodash.get(BaseData, 'mi_tid_mids_res')
-    if (mi_tid_mids_res.length < 1) return []
+    if (!mi_tid_mids_res) return []
     const mid_obj = mi_tid_mids_res[mi]
     if (!mid_obj) return
     const arr = []
@@ -102,10 +104,8 @@ class MatchMeta {
    */
   get_origin_match_by_mids(mids) {
     // 赛事全量数据
-    const list = lodash.get(BaseData.base_data_res, 'matchsList', [])
-    if (list.length < 1) return
     const match_list = mids.map(t => {
-      return lodash.find(list, (l) => l.mid === t)
+      return BaseData.resolve_base_info_by_mid(t)
     })
     this.set_match_default_template(match_list)
   }
@@ -142,9 +142,9 @@ class MatchMeta {
    * @param { template } 赛事默认模板
    */
   get_match_default_template(t, template) {
-    const csid = lodash.get(t, 'csid')
+    const id = [1,2].includes(+t.csid) ? t.csid : 1
     return {
-      ...template[`template_${csid}`]
+      ...template[`template_${id}`]
     }
   }
 
@@ -170,7 +170,8 @@ class MatchMeta {
    * @returns Object 球种默认模板配置
    */
   get_match_default_template_config(csid) {
-    return lodash.get(MATCH_LIST_TEMPLATE_CONFIG, `template_${csid}_config`, {})
+    const id = [1,2].includes(+csid) ? csid : 1
+    return lodash.get(MATCH_LIST_TEMPLATE_CONFIG, `template_${id}_config`, {})
   }
 
   /**
@@ -178,7 +179,7 @@ class MatchMeta {
    * @param { list } 赛事数据 
    */
   set_match_default_properties(list = []) {
-    const length = lodash.get(list, 'length')
+    const length = lodash.get(list, 'length', 0)
     if (length < 1) return
     // 是否展示联赛标题
     let is_show_league = false
@@ -216,34 +217,86 @@ class MatchMeta {
    */
   filter_match_by_time (time) {
     // 所有日期
+    let target_mids = []
     if (!time) {
-      this.match_mids = [...new Set((this.zaopan_mids).slice(0, 10))]
+      target_mids = [...new Set((this.zaopan_mids).slice(0, 10))]
     } else {
-      const list = lodash.get(BaseData.base_data_res, 'matchsList', [])
-      if (list.length < 1) return
       if (time === 0) return
       const hour_12 = 12 * 60 * 60 * 1000
       const arr_mids = []
       this.zaopan_mids.forEach(t => {
-        const match = lodash.find(list, (l) => l.mid === t)
+        const match = BaseData.resolve_base_info_by_mid(t)
         match && (Number(match.mgt) > Number(time) - hour_12) && (Number(match.mgt) < Number(time) + hour_12) && arr_mids.push(t)
       })
-       // TODO: 需要去除 .slice(0, 10)
-      this.match_mids = [...new Set((arr_mids).slice(0, 8))]
+      target_mids = [...new Set((arr_mids).slice(0, 8))]
     }
-    this.get_origin_match_by_mids(this.match_mids)
+    this.set_match_mids(target_mids)
   }
 
+  /**
+   * @description 设置 tid 映射 mids;  避免初始渲染慢， 所以放在 有需要的时候在设置； 比如 热门页面
+   * @param {*} list 
+   */
+  set_tid_map_mids () {
+    const list = lodash.get(BaseData.base_data_res, 'matchsList', [])
+    list.forEach(t => {
+      const tid_info = this.tid_map_mids[`tid_${t.tid}`]
+      if (tid_info) {
+        tid_info.mids.push(t.mid)
+      } else {
+        this.tid_map_mids[`tid_${t.tid}`] = {
+          tid: t.tid,
+          mids: [ t.mid ]
+        }
+      }
+    })
+  }
 
   /**
    * @description 筛选对应热门赛事
    * @param { tid } 联赛 ID 
    */
   filter_hot_match_by_tid (tid = '') {
-    const list = lodash.get(BaseData.base_data_res, 'matchsList', [])
-    if (list.length < 1) return
-    const result = list.filter(t => t.tid === tid)
-    this.set_match_default_properties(result)
+    const tid_info = this.tid_map_mids[`tid_${tid}`]
+    if (!tid_info) return
+    const tid_mids = this.tid_map_mids[`tid_${tid}`].mids
+    if (tid_mids.length < 1) return 
+    this.set_match_mids(tid_mids)
+  }
+
+  /**
+   * @description 获取冠军赛事 元数据接口暂时未提供所以走老逻辑， 后续会提供
+   */
+  async get_champion_match() {
+    console.log(BaseData)
+    const main_menu_type = MenuData.get_menu_type()
+    const params = MatchListParams.get_base_params(40602)
+    const res = await api_common.post_match_full_list({
+      "cuid":"240640629535469568",
+      "euid":"40602",
+      "type":100,
+      "sort":2,
+      "device":"v2_h5_st"
+    })
+    const list = lodash.get(res, 'data', [])
+    const length = lodash.get(list, 'length', 0)
+    if (length < 1) return
+    const champion_mids = list.map(t => {
+      return t.mid
+    })
+    // 冠军不需要走 模版计算
+    this.match_mids = [...new Set(champion_mids.slice(0, 10))]
+    MatchDataBaseH5.set_list(list)
+  }
+
+  /**
+   * @description 设置 match_mids
+   * @param { mids } 赛事 mids 
+   */
+  set_match_mids (mids = [], num = 10) {
+    console.log(new Set(mids))
+    this.match_mids = [...new Set(mids.slice(0, num))]
+    this.get_origin_match_by_mids(this.match_mids)
   }
 
   /**

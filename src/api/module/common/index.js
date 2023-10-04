@@ -32,7 +32,7 @@ export const post_match_full_list = (params) => {
     url += params.query;
   }
   // const queryParams = {"cuid":"508169450736300035","euid":"40003,40004,40006,40007,40008,40009,40012,40010,40015,40016,40017,40020,40021,40022,40011,40013","type":1,"sort":2,"device":"v2_h5_st","hpsFlag":0}
-  return http.post(`${prefix_job}${url}`, { ...params, "euid":"40003"}, {axios_debounce_cache_key:'post_match_full_list',type:2});
+  return http.post(`${prefix_job}${url}`, { ...params }, {axios_debounce_cache_key:'post_match_full_list',type:2});
 };
 
 
@@ -207,7 +207,7 @@ export const getliveVideoUrl = (params, config, url="/v1/w/liveVideoUrl") => htt
 export const getMatchUserIsLogin = (params, config, url="/v1/w/isLogin") => http.post(`${prefix}${url}`,params, config);
 
 // 获取视频链接
-export const getVideoReferurl = (params, config, url="/v1/w/videoReferUrlPB") => http.post(`${prefix}${url}?device=H5`,{  device:'H5', ...params}, config);
+export const getVideoReferurl = (params, config, url="/v1/w/videoReferUrl") => http.post(`${prefix}${url}?device=H5`,{  device:'H5', ...params}, config);
 
 // 获取服务器当前时间
 export const get_time_server = (params, config, url="/v1/getSystemTime/currentTimeMillis") => http.get(`${prefix}${url}`,params, config);

@@ -7,14 +7,14 @@
     <template v-if="order.sportId == 1 || order.sportId == 2">
       <div class="row appoint-status" v-if="preOrder">
         <!--预约-->
-        <div class="col">{{ $root.$t('bet.bet_book_confirm') }}</div>
+        <div class="col">{{ in8n_t('bet.bet_book_confirm') }}</div>
       </div>
     </template>
     <!--如果是虚拟体育-->
     <template v-if="VIRTUAL_SPORT_ID.includes(`${order.sportId}`)">
       <div class="row">
         <div class="col bet-name-info">
-          <template v-if="order_status == 1">
+          <template v-if="orderStatus == 1">
             <!--球种名称-->
             <span class="bet-play-name">[{{ order.sportName }}]</span>
           </template>
@@ -55,7 +55,7 @@
       <div class="row">
         <div class="col bet-league-name" :class="{ 'champion': order.matchType == 3 }">
           <!--联赛名称-->
-          <span>{{ order.matchName }}</span>
+          <span>{{ order.matchName }}</span>  --- {{ item.orderStatus }}
         </div>
       </div>
       <!--不是冠军-->
@@ -66,14 +66,14 @@
             <span class="home-vs-away">
               {{ order.matchInfo.indexOf('(') ? (order.matchInfo.split('(')[0]) : order.matchInfo }}
               <!--有括号就是有比分信息 当鼠标移上去显示，移出去就消失-->
-              <span v-if="order.matchInfo" @mouseover="show_score_info = true"
-                @mouseout="show_score_info = false">{{ '(' + order.matchInfo.split('(')[1] }}</span>
+              <span v-if="order.matchInfo" @mouseover="show_score_info = true" @mouseout="show_score_info = false">{{ '('
+                + order.matchInfo.split('(')[1] }}</span>
               <!--对阵信息后面加的那个提示-->
               <q-tooltip content-class="bet-bg-tooltip" anchor="bottom left" self="top left" :offset="[-100, 5]"
                 v-if="show_score_info == true">
                 <!--投注时的实时比分(提示)-->
                 <div style="padding-top:5px;padding-bottom:5px;padding-left:5px;word-break:break-all;">
-                  {{ $root.$t('bet.score_info') }}
+                  {{ in8n_t('bet.score_info') }}
                 </div>
               </q-tooltip>
             </span>
@@ -147,11 +147,11 @@
         VIURTUAL_SPORT.mudland_motorcycle,
         VIURTUAL_SPORT.motorcycle
       ].includes(`${order.sportId}`)
-        && item.order_status == 1">
+        && item.orderStatus == 1">
         <div class="row">
           <div class="col bet-against">
             <!--赛果 比分-->
-            {{ $root.$t('bet.bet_result') }} {{ order.settleScore }}
+            {{ in8n_t('bet.bet_result') }} {{ order.settleScore }}
           </div>
         </div>
       </template>
@@ -201,7 +201,7 @@
     </div>
     <!-- 截止投注 -->
     <div class="row justify-between deadline" v-if="order.matchType === 3">
-      <span>{{ $root.$t('list.bet_close') }}</span>
+      <span>{{ in8n_t('list.bet_close') }}</span>
       <span>{{
         formatTime(
           order.closingTime,
@@ -210,10 +210,13 @@
   </div>
 </template>
 <script setup>
-import { VIURTUAL_SPORT, VIRTUAL_PLAY_NOT_NUMBER2, VIRTUAL_SPORT_ID } from "src/core/constant/config/play-mapping.js";
+import { ref } from "vue"
+import { VIURTUAL_SPORT, VIRTUAL_PLAY_NOT_NUMBER2, VIRTUAL_SPORT_ID,CANCEL_TYPE } from "src/core/constant/config/play-mapping.js";
 import { format_odds, format_currency, formatTime } from "src/core/format/index.js"
-import { i18n_t } from "src/boot/i18n.js"
+import { i18n_t, i18n_tc } from "src/boot/i18n.js"
 import UserCtr from "src/core/user-config/user-ctr.js"
+import BetRecord from "src/core/bet-record/bet-record.js"
+
 import lodash_ from "lodash"
 const props = defineProps({
   index: {
@@ -224,18 +227,288 @@ const props = defineProps({
   order: {},
 
 })
-
-const socre_format = () => {
-
+/**
+  * @description: 比分格式
+  * @param {String} value 比分
+  * @return {String} 转换后的比分格式
+  */
+const socre_format = (value) => {
+  return `(${value.replace(':', '-')})`
 }
+const show_score_info = ref(false)
 
-const show_score_info = () => {
+
+/**
+   * @description: 输赢结算状态
+   * @param {Number} bet_status 投注项状态
+   * @param {Number} bet_result 投注结果
+   * @param {Number} cancel_type 取消类型
+   * @return {String} 需要显示的html 
+   */
+const bet_result = (bet_status, bet_result, cancel_type) => {
+  let html = "";
+  if (BetRecord.selected == 0) {
+    // 未结算
+    if (props.item.orderStatus == 0) {
+      //串关
+      if (props.item.seriesType != 1) {
+        if (bet_status == 1) {
+          switch (bet_result) {
+            case 2:
+              html = "<span class='lose'>" + i18n_t("bet_record.effective_water_") + "</span>"; //"走水";
+              break;
+            case 3:
+              html = "<span class='lose'>" + i18n_t("bet_record.lose") + "</span>"; // "输"      
+              break;
+            case 4:
+              html = "<span class='win'>" + i18n_t("bet_record.win") + "</span>"; // "赢"
+              break;
+            case 5:
+              html = "<span class='win'>" + i18n_t("bet_record.win_half") + "</span>"; //"赢半";
+              break;
+            case 6:
+              html = "<span class='lose'>" + i18n_t("bet_record.lose_half") + "</span>"; //"输半";
+              break;
+            case 7:
+              html = "<span class='lose'>" + i18n_t("bet_record.match_cancel2") + "</span>"; //"赛事取消";
+              break;
+            case 8:
+              html = "<span class='lose'>" + i18n_t("bet_record.match_delay") + "</span>";//"赛事延期";
+              break;
+            case 11:
+              html = "<span class='lose'>" + i18n_t("bet_record.match_delay2") + "</span>"; //"比赛延迟";
+              break;
+            case 12:
+              html = "<span class='lose'>" + i18n_t("bet_record.match_interrupt") + "</span>"; //"比赛中断";
+              break;
+            case 13:
+              html = "<span class='lose'>" + i18n_t("bet.invalid") + "</span>"; //"未知" 显示无效; 
+              break;
+            case 15:
+              html = "<span class='lose'>" + i18n_t("bet_record.match_give_up") + "</span>"; //"比赛放弃";
+              break;
+            case 16:
+              html = "<span class='lose'>" + i18n_t("bet.invalid") + "</span>"; //"盘口异常" 显示无效;
+              break;
+          }
+        } else if (bet_status == 3 || bet_status == 4) {
+          if (CANCEL_TYPE.includes(cancel_type)) {
+            //比赛类型
+            html = cancel_type_msg(cancel_type);
+          } else {
+            html = "<span class='lose'>" + i18n_t("bet.invalid") + "</span>";
+          }
+        }
+      }
+    }
+  } else if (BetRecord.selected == 1) { // 已结算
+    if (props.item.orderStatus == 1) { // 投注成功
+      switch (bet_result) {
+        case 2:
+          html = "<span class='lose'>" + i18n_t("bet_record.effective_water_") + "</span>"; //"走水";
+          break;
+        case 3:
+          html = "<span class='lose'>" + i18n_t("bet_record.lose") + "</span>"; // "输"      
+          break;
+        case 4:
+          html = "<span class='win'>" + i18n_t("bet_record.win") + "</span>"; // "赢"
+          break;
+        case 5:
+          html = "<span class='win'>" + i18n_t("bet_record.win_half") + "</span>"; //"赢半";
+          break;
+        case 6:
+          html = "<span class='lose'>" + i18n_t("bet_record.lose_half") + "</span>"; //"输半";
+          break;
+        case 7:
+          html = "<span class='lose'>" + i18n_t("bet_record.match_cancel2") + "</span>"; //"赛事取消";
+          break;
+        case 8:
+          html = "<span class='lose'>" + i18n_t("bet_record.match_delay") + "</span>";//"赛事延期";
+          break;
+        case 11:
+          html = "<span class='lose'>" + i18n_t("bet_record.match_delay2") + "</span>"; //"比赛延迟";
+          break;
+        case 12:
+          html = "<span class='lose'>" + i18n_t("bet_record.match_interrupt") + "</span>"; //"比赛中断";
+          break;
+        case 13:
+          html = "<span class='lose'>" + i18n_t("bet.invalid") + "</span>"; //"未知" 显示无效; 
+          break;
+        case 15:
+          html = "<span class='lose'>" + i18n_t("bet_record.match_give_up") + "</span>"; //"比赛放弃";
+          break;
+        case 16:
+          html = "<span class='lose'>" + i18n_t("bet.invalid") + "</span>"; //"盘口异常" 显示无效;
+          break;
+      }
+      if (props.item.seriesType != 1 && (bet_status == 3 || bet_status == 4)) {
+        if (CANCEL_TYPE.includes(cancel_type)) {
+          //比赛类型
+          html = cancel_type_msg(cancel_type);
+        } else {
+          // 无效
+          html = "<span class='lose'>" + i18n_t("bet.invalid") + "</span>";
+        }
+      }
+    } else if (props.item.orderStatus == 2) { // 注单无效
+      if (props.item.seriesType == 1) {
+        if (bet_status == 1) {
+          switch (bet_result) {
+            case 7:
+              html = "<span class='lose'>" + i18n_t("bet_record.match_cancel2") + "</span>"; //"赛事取消";
+              break;
+            case 8:
+              html = "<span class='lose'>" + i18n_t("bet_record.match_delay") + "</span>";//"赛事延期";
+              break;
+            case 11:
+              html = "<span class='lose'>" + i18n_t("bet_record.match_delay2") + "</span>"; //"比赛延迟";
+              break;
+            case 12:
+              html = "<span class='lose'>" + i18n_t("bet_record.match_interrupt") + "</span>"; //"比赛中断";
+              break;
+            case 15:
+              html = "<span class='lose'>" + i18n_t("bet_record.match_give_up") + "</span>"; //"比赛放弃";
+              break;
+          }
+        }
+      } else {
+        if (bet_status == 1) {
+          switch (bet_result) {
+            case 7:
+              html = "<span class='lose'>" + i18n_t("bet_record.match_cancel2") + "</span>"; //"赛事取消";
+              break;
+            case 8:
+              html = "<span class='lose'>" + i18n_t("bet_record.match_delay") + "</span>";//"赛事延期";
+              break;
+            case 11:
+              html = "<span class='lose'>" + i18n_t("bet_record.match_delay2") + "</span>"; //"比赛延迟";
+              break;
+            case 12:
+              html = "<span class='lose'>" + i18n_t("bet_record.match_interrupt") + "</span>"; //"比赛中断";
+              break;
+            case 15:
+              html = "<span class='lose'>" + i18n_t("bet_record.match_give_up") + "</span>"; //"比赛放弃";
+              break;
+            default:
+              html = "<span class='lose'>" + i18n_t("bet.invalid") + "</span>";  // 无效
+              break;
+          }
+        }
+      }
+      if (bet_status == 3 || bet_status == 4) {
+        if (CANCEL_TYPE.includes(cancel_type)) {
+          //比赛类型
+          html = cancel_type_msg(cancel_type);
+        } else if (props.item.seriesType != 1) {
+          html = "<span class='lose'>" + i18n_t("bet.invalid") + "</span>";
+        }
+      }
+    }
+  }
+  return html;
 }
-const handicap_name = () => { }
-
-
-const bet_result = () => { }
-
+/**
+ * 输赢状态calss
+ * @param betResult: records.orderVOS.betResult
+ */
+const item_class = (betResult) => {
+  switch (parseInt(betResult)) {
+    case 2:
+      return "lose"; //"走水";
+    case 3:
+      return "lose"; //输
+    case 4:
+      return "win"; //赢
+    case 5:
+      return "win"; //"赢半";
+    case 6:
+      return "lose"; //"输半";
+    case 7:
+      return "lose"; //"赛事取消";
+    case 8:
+      return "lose"; //"赛事延期";
+    case 11:
+      return "lose"; //"比赛延迟";
+    case 12:
+      return "lose"; //"比赛中断";
+    case 13:
+      return "lose"; //"无效";
+    case 16:
+      return "lose"; //"无效";
+    case 15:
+      return "lose"; //"比赛放弃";
+  }
+  return "";
+}
+/**
+ * 输赢状态
+ * @param type: records.orderVOS.betResult
+ */
+const item_status = (type) => {
+  switch (parseInt(type)) {
+    case 2:
+      return i18n_t("bet_record.effective_water_"); //"走水";
+    case 3:
+      return i18n_t("bet_record.lose"); //输
+    case 4:
+      return i18n_t("bet_record.win"); //赢
+    case 5:
+      return i18n_t("bet_record.win_half"); //"赢半";
+    case 6:
+      return i18n_t("bet_record.lose_half"); //"输半";
+    case 7:
+      return i18n_t("bet_record.match_cancel2"); //"赛事取消";
+    case 8:
+      return i18n_t("bet_record.match_delay"); //"赛事延期";
+    case 11:
+      return i18n_t("bet_record.match_delay2"); //"比赛延迟";
+    case 12:
+      return i18n_t("bet_record.match_interrupt"); //"比赛中断";
+    case 13:
+      return i18n_t("bet.invalid"); //"无效";
+    case 16:
+      return i18n_t("bet.invalid"); //"无效";
+    case 15:
+      return i18n_t("bet_record.match_give_up"); //"比赛放弃";
+    default:
+      return '';
+  }
+}
+/**
+ * @description:  比赛类型
+ * @param {*} cancel_type
+ * @return {*}
+ */
+const cancel_type_msg = (cancel_type) => {
+  let html = '';
+  switch (cancel_type) {
+    case 1:
+      html = "<span class='lose'>" + i18n_t("bet_record.match_cancel2") + "</span>"; //"比赛取消";
+      break;
+    case 2:
+      html = "<span class='lose'>" + i18n_t("bet_record.match_delay3") + "</span>"; //"比赛延期";
+      break;
+    case 3:
+      html = "<span class='lose'>" + i18n_t("bet_record.match_interrupt") + "</span>"; // "比赛中断	"      
+      break;
+    case 4:
+      html = "<span class='lose'>" + i18n_t("bet_record.match_rematch") + "</span>"; // "比赛重赛"
+      break;
+    case 5:
+      html = "<span class='lose'>" + i18n_t("bet_record.match_waist") + "</span>"; //"比赛腰斩";
+      break;
+    case 6:
+      html = "<span class='lose'>" + i18n_t("bet_record.match_give_up") + "</span>"; //"比赛放弃";
+      break;
+    case 17:
+      html = "<span class='lose'>" + i18n_t("bet_record.match_advance") + "</span>"; //"赛事提前";
+      break;
+    case 20:
+      html = "<span class='lose'>" + i18n_t("bet_record.match_delay2") + "</span>"; //"比赛延迟";
+      break;
+  }
+  return html;
+}
 /**
  * @description: 赛事类型
  * @param {String} type 类型
@@ -246,13 +519,13 @@ const match_type = (type, langCode = UserCtr.lang) => {
   let text = '';
   switch (parseInt(type)) {
     case 1:
-      text = i18n_t(`common_lang.zh.bet.morning_session`); //"早盘赛事";
+      text = `common_lang.${langCode}.bet.morning_session`; //"早盘赛事";
       break;
     case 2:
-      text = i18n_t(`common_lang.zh.bet.bowls`); //"滚球盘赛事";
+      text = `common_lang.${langCode}.bet.bowls`; //"滚球盘赛事";
       break;
   }
-  return text;
+  return i18n_t(text);
 }
 /**
   * @description: 获取编码序号

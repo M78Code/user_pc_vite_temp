@@ -385,7 +385,7 @@ get_carousel((data) => {
         margin: .55rem auto;
     }
 
-    ::v-deep .q-carousel {
+    :deep(.q-carousel) {
         height: 100%;
         background: transparent;
 
@@ -548,7 +548,7 @@ get_carousel((data) => {
                 flex-direction: column;
                 justify-content: center;
 
-                ::v-deep.counting-down-wrap {
+                :deep(.counting-down-wrap) {
                     left: 50%;
                     transform: translate3d(-50%, 0, 0);
                     max-width: 1rem;
@@ -573,7 +573,7 @@ get_carousel((data) => {
                     }
                 }
 
-                ::v-deep.counting-down-start {
+                :deep(.counting-down-start) {
                     color: var(--q-color-com-fs-color-8);
                 }
             }

@@ -1319,7 +1319,7 @@ export default {
     height: 350px;
     padding: 2px 16px 0 16px;
     overflow: auto;
-    ::v-deep {
+    :deep() {
       .q-message {
         margin-bottom: 10px;
       }
@@ -1452,7 +1452,7 @@ export default {
       justify-content: space-between;
       height: 100%;
 
-      ::v-deep {
+      :deep() {
         .emoji-mart {
           position: absolute;
           bottom: 32px;
@@ -1466,7 +1466,7 @@ export default {
         border: 1px solid rgba(220,224,229,1);
         border-radius: 6px;
         position: relative;
-        ::v-deep {
+        :deep() {
           .q-field__control, .q-field__marginal {
             height: 32px;
           }
