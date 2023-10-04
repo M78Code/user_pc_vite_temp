@@ -386,18 +386,18 @@ const send_money_to_keyboard = () => {
 // 限额赋值
 const set_ref_data_bet_money = () => {
   console.error('出发了')
-  // // 串关获取 复试连串
-  // if (!BetData.is_bet_single) {
+  // 串关获取 复试连串
+  if (!BetData.is_bet_single) {
 
-  //   // 复式连串关投注
-  //   const { id, name, count } = BetViewDataClass.bet_special_series[props.index]
-  //   special_series.id = id
-  //   special_series.name = name
-  //   special_series.count = count
-  //   // 串关 type
-  //   value = id
-  // }
-  // const { min_money = 10, max_money = 8888, seriesOdds } = lodash.get(BetViewDataClass.bet_min_max_money, `${value}`, {})
+    // 复式连串关投注
+    const { id, name, count } = BetViewDataClass.bet_special_series[props.index]
+    special_series.id = id
+    special_series.name = name
+    special_series.count = count
+    // 串关 type
+    value = id
+  }
+  const { min_money = 10, max_money = 8888, seriesOdds } = lodash.get(BetViewDataClass.bet_min_max_money, `${value}`, {})
   // 最小限额
   ref_data.min_money = min_money
   // 最大限额
