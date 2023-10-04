@@ -160,7 +160,7 @@ onUnmounted(() => {
 
         &:hover,
         &.selected {
-          background: var(--qq--analysis-bg-color-11);
+          background: var(--q-analysis-color-15);
         }
       }
     }
