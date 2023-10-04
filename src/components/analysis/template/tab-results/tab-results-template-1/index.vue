@@ -361,7 +361,7 @@ onUnmounted(() => {
 
         &.active {
           color: var(--q-analysis-color-13);
-          background-image: var(--qq--analysis-bg-gradient-2);
+          background-image: var(--q-analysis-bg-gradient-2);
         }
 
         &:last-child {
