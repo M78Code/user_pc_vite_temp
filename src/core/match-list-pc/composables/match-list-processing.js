@@ -75,9 +75,12 @@ const deal_with_list_data = (data) => {
       }
       delete mid_info.mids;
       mid_arr.push(mid_info)
-    })
-  })
-//   MatchListData.set_list(mid_arr)
+		})
+	})
+
+	// if (MenuData.is_guanjun()) {
+  //   MatchListData.set_list(mid_arr)
+	// }
 }
 /**
  * @description 专业处理服务器返回的 列表 数据---联赛结构
@@ -97,6 +100,10 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 	let all_league_list = [];
 	all_league_list.push(...lodash.get(res_data, "livedata", []));
 	all_league_list.push(...lodash.get(res_data, "nolivedata", []));
+  if (MenuData.is_guanjun()) {
+    all_league_list.push(...lodash.get(res_data, "data", []));
+  }
+  console.log('deal_with_list_data', deal_with_list_data);
       deal_with_list_data(all_league_list);
 	if (code == 200 && all_league_list.length > 0) {
 		is_show_hot.value = false;
@@ -245,8 +252,8 @@ const mx_list_res = (data, backend_run, cut, collect) => {
  */
 const mx_use_list_res_when_code_200_and_list_length_gt_0 = ({match_list, collect, backend_run}) => {
 	is_show_hot.value = false;
-	console.log('lockie-3');
-
+	console.log('lockie-3', match_list);
+  MatchListData.set_list(match_list)
 	// 计算赛事卡片
 	MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
 		match_list,
@@ -288,7 +295,7 @@ const mx_use_list_res_when_code_200_and_list_length_gt_0 = ({match_list, collect
 		!backend_run
 	) {
 		// 调用bymids接口
-		// api_bymids({ is_first_load: true, inner_param: true });
+		api_bymids({ is_first_load: true, inner_param: true });
 	}
 	load_data_state.value = "data";
 };
@@ -377,6 +384,7 @@ const mx_use_list_res = (data, backend_run, cut, collect) => {
 		// 格式化
 		match_list = virtual_sport_format(match_list);
 	}
+  console.log('datadatadata', data);
 	if (code == 200 && match_list) {
 		mx_use_list_res_when_code_200_and_list_length_gt_0({match_list, collect, backend_run});
 	} else {

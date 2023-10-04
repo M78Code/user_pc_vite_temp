@@ -27,21 +27,22 @@
 import { MatchDataWarehouse_PC_List_Common as MatchListData } from 'src/core/index.js'
 import MatchListCardData from "./match-list-card-data-class.js";
 import lodash from "lodash";
-
+import MenuData from "src/core/menu-pc/menu-data-class.js";
 import { update_match_parent_card_style } from "./utils.js";
 
 import { league_title_card_template } from "../config/card-template-config.js";
 import { MATCH_LIST_TEMPLATE_CONFIG } from "../../list-template/index.js";
-
 /**
  * @Description 获取其他玩法盘口高度
  * @param {string | Number } mid  赛事id
  */
 const get_tab_play_height = (mid) => {
+	let template_id = MenuData.get_match_tpl_number()
+
 	let { play_current_key, other_handicap_list = [] } =
 		MatchListData.list_to_obj.mid_obj[mid+'_'] || {};
 	let { tab_play_handicap_height: handicap_height } =
-		MATCH_LIST_TEMPLATE_CONFIG[`template_1_config`]["match_template_config"] ||
+		MATCH_LIST_TEMPLATE_CONFIG[`template_${template_id}_config`]["match_template_config"] ||
 		{};
 	let length = lodash.get(other_handicap_list, "0.ols.length", 3);
 	//5分钟      波胆
@@ -182,28 +183,34 @@ const compute_style_template_by_matchinfo_template7_lanqiu = (
  * @param {object} match 赛事
  **/
 const compute_style_template_by_matchinfo_template18 = (match) => {
-	let cur_match = MatchListData.quick_query_obj.mid_obj[`${match.mid}_`] || {
-		main_handicap_list: [],
-	};
+	let template_id = MenuData.get_match_tpl_number()
+	// let cur_match = MatchListData.list_to_obj.hl_obj[`${match.mid}_${}`] || {
+	// 	main_handicap_list: [],
+	// };
+	// console.log('cur_match', MatchListData.list_to_obj);
+
 	// 附加盘口高度
 	let add_handicap_height = 0;
+	// 当前赛事赛事模板
+	let current_match_tpl = MATCH_LIST_TEMPLATE_CONFIG[`template_${template_id}_config`][`template_${template_id}`]
 	// 投注项数量
 	let ol_count = 0;
-	cur_match.main_handicap_list.forEach((hl_data) => {
-		if (hl_data.hid && hl_data.hs != 2) {
+	current_match_tpl.main_handicap_list.forEach((hl_data) => {
+		// if (hl_data._hpid ) {
 			// 盘口标题高度
 			add_handicap_height += 32;
 			// 计算投注项数量
 			ol_count = 0;
-			hl_data.ol.forEach((ol) => {
-				if (ol.os != 3 && ol.oid) {
+			hl_data.ols.forEach((ol) => {
+				// if (ol.os != 3 && ol.oid) {
 					ol_count++;
-				}
+				// }
 			});
 			// 累加投注项高度
 			add_handicap_height = add_handicap_height + Math.ceil(ol_count / 2) * 35;
-		}
+		// }
 	});
+	console.log('add_handicap_height', add_handicap_height);
 	return { add_handicap_height };
 };
 
@@ -238,7 +245,6 @@ export const fold_tab_play = (mid) => {
  * @param {undefined} undefined
  */
 export const get_league_title_card_height = (template_id) => {
-	console.log('template_id', template_id);
 	let height;
 	// 个别模板有两行玩法标题
 	if ([3, 5, 21, 22].includes(+template_id)) {
@@ -347,6 +353,6 @@ export const compute_style_template_by_matchinfo = (match, template_id, mid) => 
 		style_obj.add_handicap_height +
 		style_obj.tab_play_total_height +
 		6;
-
+	console.log('style_obj', style_obj);
 	return style_obj;
 };

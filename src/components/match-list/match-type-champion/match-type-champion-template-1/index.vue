@@ -11,14 +11,14 @@
     <div class="tr-match-head">
       <div
         class="leagues-wrap"
-        @click.stop="match_list_card.recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_tid_zhedie(card_style_obj)"
+        @click.stop="MatchListCardDataClass.recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_tid_zhedie(card_style_obj)"
       >
        <!-- 箭头 -->
       <i class="icon-arrow q-icon c-icon" size="14px" ></i>
         <!-- 联赛图标 -->
         <div class="league-icon-wrap">
-          <sport-icon v-if="menu_config.is_esports()" :sport_id="card_style_obj.league_obj.csid" status="2" size="18px" is_esports />
-          <img v-else v-img="[lodash.get(card_style_obj.league_obj,'lurl')]" />
+          <!-- <sport-icon v-if="menu_config.is_esports()" :sport_id="card_style_obj.league_obj.csid" status="2" size="18px" is_esports /> -->
+          <!-- <img v-else v-img="[lodash.get(card_style_obj.league_obj,'lurl')]" /> -->
         </div>
         <!-- 联赛名称 -->
         <div class="ellipsis-wrap">
@@ -31,7 +31,7 @@
           class="icon-wrap"
           :class="card_style_obj.league_obj.tf && 'active'"
           v-if="!menu_config.is_esports() && GlobalAccessConfig.get_collectSwitch()"
-          @click.stop="match_list_card.view.mx_collect({type: menu_config.is_esports() ? 'leagues' : 'champion', match: card_style_obj.league_obj})"
+          @click.stop="mx_collect({type: menu_config.is_esports() ? 'leagues' : 'champion', match: card_style_obj.league_obj})"
         >
           <i class="icon-star q-icon c-icon" :class="card_style_obj.league_obj.tf && 'active'"></i>
         </div>
@@ -43,11 +43,18 @@
 import { ref, reactive } from 'vue'
 import lodash from 'lodash';
 // import sportIcon from "src/public/components/sport_icon/sport_icon.vue"
-import store from 'src/store-redux/index.js'
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
-//   inject:['match_list_card'],
-let state = store.getState();
+import MatchListCardDataClass from 'src/core/match-list-pc/match-card/match-list-card-class.js';
+import useMatchListMx from "src/core/match-list-pc/match-list-composition.js";
+
+const { mx_collect } = useMatchListMx();
+const props = defineProps({
+  card_style_obj: {
+    type: Object,
+    default: () => {},
+  },
+})
 
 
 </script>

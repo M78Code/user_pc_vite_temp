@@ -45,7 +45,7 @@
 </template>
 <script setup>
 import lodash from "lodash";
-import { defineProps } from "vue";
+import { defineProps, ref } from "vue";
 import betItem from "src/components/bet-item/bet-item-list-new-data.vue";
 import {
   i18n_t,
@@ -68,6 +68,7 @@ const match_list_tpl_size =
 const match_tpl_info =
   MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`];
 const match = MatchListData.list_to_obj.mid_obj[props.mid + "_"];
+const is_mounted = ref(true)
 /**
  * @Description 计算赛事所有盘口数据--冠军玩法
  * @param {undefined} undefined
@@ -81,11 +82,13 @@ function compute_match_all_handicap_data_champion(match) {
       let hl_obj = lodash.get(item, "hl", {});
       if (hl_obj.hid) {
         hl_obj.end_time = time_conversion(hl_obj.hmed);
-        hl_obj.hpn = lodash.get(match, `${hl_obj.hid}.hpn`, "");
+        hl_obj.hpn = match.hpsPns.find(option => option.hid == hl_obj.hid).hpn
+        console.log(match, 'qweqweqweqweqweqweqweqwe');
         main_handicap_list.push(hl_obj);
       }
     });
   });
+  console.log('main_handicap_list', main_handicap_list);
   return main_handicap_list;
 }
 </script>

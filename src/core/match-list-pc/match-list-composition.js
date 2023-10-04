@@ -96,20 +96,11 @@ const get_match_list_by_mid_for_base_data_res = (mid, csid, type) => {
 			mids_info: item.mids,
 		})) || [];
 	// 常规赛种 联赛 滚球 下面的赛事信息
-	console.log('MenuData.is_guanjun()111', base_data_res.matchsList);
-
 	livedata.filter((item) => {
-		let match_list =
-			(base_data_res.matchsList || []).find((page) =>
-				item.mids_info.includes(page.mid)
-			) || {};
-
+		let match_list = (base_data_res.matchsList || []).find((page) => item.mids_info.includes(page.mid) ) || {};
 		// 空的不要
-		if (match_list.mid) {
-			matchs_list.push(match_list);
-		}
+		if (match_list.mid) { matchs_list.push(match_list); }
 	}) || [];
-	console.log('MenuData.is_guanjun()', mi_tid_mids_res);
 	return matchs_list;
 };
 // 使用元数据默认显示 后面替换
@@ -217,6 +208,8 @@ const set_base_data_init = () => {
 				});
 			} else {
 				let mid_1 = midf + '4';
+				console.log('mew_menu_list_res', mew_menu_list_res);
+
 				matchs_list = get_match_list_by_mid_for_base_data_res( mid_1, csid, "ld" );
 
 			}
@@ -276,9 +269,9 @@ const set_base_data_init = () => {
 	if (menu_root == 3) return;
 	// 赛事列表 卡片数据
 	// 设置列表数据仓库
-		MatchListData.set_list(
-			matchs_list,
-		);
+	MatchListData.set_list(
+		matchs_list,
+	);
 	handle_match_list_request_when_ok(data, false, true, true);
 	let ts1 = Date.now();
 	let mids_arr = [];
@@ -286,7 +279,6 @@ const set_base_data_init = () => {
 		mids_arr.push(String(match.mid));
 		match.api_update_time = ts1;
 	});
-	console.log('mids_arrmids_arr', matchs_list);
 	// 联赛数据
 	// set_match_base_info_by_mids_info(matchs_list, mids_arr, ts1);
 };
@@ -353,9 +345,8 @@ const fetch_match_list = (is_socket = false, cut) => {
 		api && api(_params)
 			.then((res) => {
 				// 组件和路由不匹配 菜单id不匹配aa
-				if ((page_source != "details") || _params.euid != match_api.params.euid) return;
+				// if ((page_source != "details") || _params.euid != match_api.params.euid) return;
 				api_error_count.value = 0;
-
 				if (res.code == 200) {
 					//处理服务器返回的 列表 数据   fetch_match_list
 					handle_match_list_request_when_ok(
