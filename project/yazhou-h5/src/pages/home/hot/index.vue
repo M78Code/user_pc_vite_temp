@@ -192,6 +192,11 @@ const get_selected_match = () => {
   api_analysis.get_match_home_page_handpick(parameter).then((res) => {
     MatchMeta.get_match_mids(res.data)
     MatchMeta.set_match_default_properties(res.data)
+    let timer = setTimeout(() => {
+      MatchMeta.set_tid_map_mids()
+      clearTimeout(timer)
+      timer = null
+    }, 300)
   })
 }
 

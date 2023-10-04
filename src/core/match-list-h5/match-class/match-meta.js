@@ -18,6 +18,8 @@ class MatchMeta {
     this.match_mids = [],
     // 早盘下的 mids
     this.zaopan_mids = []
+    // 联赛 id 对应的 mids
+    this.tid_map_mids = {}
     // 新的菜单到旧的菜单的映射关系  接口返回值
     this.origin_menu = mi_euid_mapping_default.data
     // ms 1： 滚球 2： 今日； 3： 早盘;  
@@ -56,9 +58,8 @@ class MatchMeta {
       mids && match_mids_list.push(...mids)
     })
     // TODO: 需要去除 .slice(0, 10)
-    this.match_mids = [...new Set(match_mids_list.slice(0, 10))]
     this.zaopan_mids = [...new Set(match_mids_list)]
-    this.get_origin_match_by_mids(this.match_mids)
+    this.set_match_mids(match_mids_list, 10)
   }
 
   /** 暂时没有用这个方法了 因为一个方法足以
@@ -70,9 +71,7 @@ class MatchMeta {
     const match_mids_list = this.get_match_mids_by_mi(mi)
     const length = lodash.get(match_mids_list, 'length', 0)
     if (length < 1) return
-    // TODO: 需要去除 .slice(0, 8)
-    this.match_mids = [...new Set(match_mids_list.slice(0, 8))]
-    this.get_origin_match_by_mids( this.match_mids)
+    this.set_match_mids(match_mids_list, 8)
   }
 
   /**
@@ -102,11 +101,8 @@ class MatchMeta {
    */
   get_origin_match_by_mids(mids) {
     // 赛事全量数据
-    const list = lodash.get(BaseData.base_data_res, 'matchsList', [])
-    const length = lodash.get(list, 'length', 0)
-    if (length < 1) return
     const match_list = mids.map(t => {
-      return lodash.find(list, (l) => l.mid === t)
+      return BaseData.resolve_base_info_by_mid(t)
     })
     this.set_match_default_template(match_list)
   }
@@ -143,9 +139,9 @@ class MatchMeta {
    * @param { template } 赛事默认模板
    */
   get_match_default_template(t, template) {
-    const csid = lodash.get(t, 'csid')
+    const id = [1,2].includes(+t.csid) ? t.csid : 1
     return {
-      ...template[`template_${csid}`]
+      ...template[`template_${id}`]
     }
   }
 
@@ -171,7 +167,8 @@ class MatchMeta {
    * @returns Object 球种默认模板配置
    */
   get_match_default_template_config(csid) {
-    return lodash.get(MATCH_LIST_TEMPLATE_CONFIG, `template_${csid}_config`, {})
+    const id = [1,2].includes(+csid) ? csid : 1
+    return lodash.get(MATCH_LIST_TEMPLATE_CONFIG, `template_${id}_config`, {})
   }
 
   /**
@@ -217,36 +214,61 @@ class MatchMeta {
    */
   filter_match_by_time (time) {
     // 所有日期
+    let target_mids = []
     if (!time) {
-      // TODO: 需要去除 .slice(0, 10)
-      this.match_mids = [...new Set((this.zaopan_mids).slice(0, 10))]
+      target_mids = [...new Set((this.zaopan_mids).slice(0, 10))]
     } else {
-      const list = lodash.get(BaseData.base_data_res, 'matchsList', [])
-      if (list.length < 1) return
       if (time === 0) return
       const hour_12 = 12 * 60 * 60 * 1000
       const arr_mids = []
       this.zaopan_mids.forEach(t => {
-        const match = lodash.find(list, (l) => l.mid === t)
+        const match = BaseData.resolve_base_info_by_mid(t)
         match && (Number(match.mgt) > Number(time) - hour_12) && (Number(match.mgt) < Number(time) + hour_12) && arr_mids.push(t)
       })
-      // TODO: 需要去除 .slice(0, 10)
-      this.match_mids = [...new Set((arr_mids).slice(0, 8))]
+      target_mids = [...new Set((arr_mids).slice(0, 8))]
     }
-    this.get_origin_match_by_mids(this.match_mids)
+    this.set_match_mids(target_mids)
   }
 
+  /**
+   * @description 设置 tid 映射 mids;  避免初始渲染慢， 所以放在 有需要的时候在设置； 比如 热门页面
+   * @param {*} list 
+   */
+  set_tid_map_mids () {
+    const list = lodash.get(BaseData.base_data_res, 'matchsList', [])
+    list.forEach(t => {
+      const tid_info = this.tid_map_mids[`tid_${t.tid}`]
+      if (tid_info) {
+        tid_info.mids.push(t.mid)
+      } else {
+        this.tid_map_mids[`tid_${t.tid}`] = {
+          tid: t.tid,
+          mids: [ t.mid ]
+        }
+      }
+    })
+  }
 
   /**
    * @description 筛选对应热门赛事
    * @param { tid } 联赛 ID 
    */
   filter_hot_match_by_tid (tid = '') {
-    const list = lodash.get(BaseData.base_data_res, 'matchsList', [])
-    const length = lodash.get(list, 'length', 0)
-    if (length < 1) return
-    const result = list.filter(t => t.tid === tid)
-    this.set_match_default_properties(result)
+    const tid_info = this.tid_map_mids[`tid_${tid}`]
+    if (!tid_info) return
+    const tid_mids = this.tid_map_mids[`tid_${tid}`].mids
+    if (tid_mids.length < 1) return 
+    this.set_match_mids(tid_mids)
+  }
+
+  /**
+   * @description 设置 match_mids
+   * @param { mids } 赛事 mids 
+   */
+  set_match_mids (mids = [], num = 10) {
+    console.log(new Set(mids))
+    this.match_mids = [...new Set(mids.slice(0, num))]
+    this.get_origin_match_by_mids(this.match_mids)
   }
 
   /**
