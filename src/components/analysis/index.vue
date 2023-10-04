@@ -2,7 +2,6 @@
  * @Author: 'jacques' 'jacques@itcom888.com'
  * @Date: 2023-10-02 16:12:29
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2023-10-03 18:36:17
  * @FilePath: \user-pc-vite\src\components\analysis\index.vue
  * @Description: 足篮赛事分析页
 -->
@@ -71,11 +70,8 @@ import { MatchProcessFullVersionWapper as matchDate } from "src/components/match
 import { api_analysis } from 'src/api/index.js'
 import { compute_css_variables } from "src/core/css-var/index.js"
 import { formatTime } from 'src/core/format/index.js'
-import { i18n_t } from 'src/core/index.js'
 import zhugeTag from "src/core/http/zhuge-tag.js"
 import store from 'src/store-redux/index.js'
-import lodash from 'lodash'
-
 let state = store.getState();
 
 export default {
@@ -304,7 +300,7 @@ export default {
       .score {
         width: 60px;
         font-size: 30px;
-        color: var(--qq--analysis-text-color-1);
+        color: var(--q-analysis-color-1);
         line-height: 30px;
       }
 
@@ -320,7 +316,7 @@ export default {
       .team-name {
         flex: 1;
         font-size: 16px;
-        color: var(--qq--analysis-text-color-2);
+        color: var(--q-analysis-color-5);
         line-height: 25px;
         position: relative;
         height: 25px;
@@ -339,7 +335,7 @@ export default {
       bottom: 0px;
       height: 1px;
       width: 100%;
-      background: var(--qq--analysis-bg-color-2);
+      background: var(--q-analysis-color-10);
       z-index: 1;
     }
 
@@ -350,11 +346,10 @@ export default {
       align-items: center;
       justify-content: center;
       margin-right: 5px;
-      // background: var(--qq--analysis-bg-color-3);
-      background-color: var(--q-analysis-color-3);
-      border: 1px solid var(--qq--analysis-bd-color-1);
-      border-bottom-color: var(--qq--analysis-bd-color-2);
-      color: var(--qq--analysis-text-color-3);
+      background: var(--q-analysis-color-12);
+      border: 1px solid var(--q-analysis-color-12);
+      border-bottom-color: var(--q-analysis-color-10);
+      color: var(--q-analysis-color-3);
       z-index: 2;
       cursor: pointer;
       font-family: PingFangSC-Regular;
@@ -363,8 +358,8 @@ export default {
 
       &.active {
         background: transparent;
-        border-bottom-color: var(--qq--analysis-bd-color-3);
-        color: var(--qq--analysis-text-color-4);
+        border-bottom-color: var(--q-analysis-color-16);
+        color: var(--q-analysis-color-0);
         font-family: PingFangSC-Medium;
       }
     }
@@ -384,16 +379,16 @@ export default {
         height: 32px;
         line-height: 32px;
         padding-left: 29px;
-        background-image: var(--qq--analysis-bg-gradient-1) !important;
-        color: var(--qq--analysis-text-color-5);
+        background-image: var(--q-analysis-bg-gradient-1) !important;
+        color: var(--q-analysis-color-3);
 
-        border: 1px solid var(--qq--analysis-bd-color-4);
+        border: 1px solid var(--q-analysis-color-10);
         border-bottom: 0;
         border-radius: 8px 8px 0 0;
 
         &:last-child {
           border-radius: 8px;
-          border-bottom: 1px solid var(--qq--analysis-bd-color-4);
+          border-bottom: 1px solid var(--q-analysis-color-10);
         }
 
         &:before {
@@ -404,14 +399,14 @@ export default {
           transform: translate(0, -50%);
           width: 3px;
           height: 14px;
-          background: var(--qq--analysis-bg-color-4);
+          background: var(--q-analysis-color-12);
         }
       }
 
       .d-header {
-        border-left: 1px solid var(--qq--analysis-bd-color-4);
-        border-right: 1px solid var(--qq--analysis-bd-color-4);
-        border-bottom: 1px solid var(--qq--analysis-bd-color-4);
+        border-left: 1px solid var(--q-analysis-color-10);
+        border-right: 1px solid var(--q-analysis-color-10);
+        border-bottom: 1px solid var(--q-analysis-color-10);
 
         &:last-child {
           border-radius: 0 0 8px 8px;
@@ -419,24 +414,24 @@ export default {
       }
 
       .win {
-        color: var(--qq--analysis-text-color-6);
+        color: var(--q-analysis-color-14);
       }
 
       .lose {
-        color: var(--qq--analysis-text-color-7);
+        color: var(--q-analysis-color-6);
       }
 
       .dogfall {
-        color: var(--qq--analysis-text-color-8);
+        color: var(--q-analysis-color-4);
       }
 
       .default {
-        color: var(--qq--analysis-text-color-9);
+        color: var(--q-analysis-color-9);
       }
 
       .simple-title {
-        border-left: 1px solid var(--qq--analysis-bd-color-4);
-        border-right: 1px solid var(--qq--analysis-bd-color-4);
+        border-left: 1px solid var(--q-analysis-color-10);
+        border-right: 1px solid var(--q-analysis-color-10);
 
         &:last-child {
           border-radius: 0 0 8px 8px;
@@ -447,19 +442,19 @@ export default {
       .simple-title,
       .d-tr,
       .match-info {
-        border-left: 1px solid var(--qq--analysis-bd-color-4);
-        border-right: 1px solid var(--qq--analysis-bd-color-4);
+        border-left: 1px solid var(--q-analysis-color-10);
+        border-right: 1px solid var(--q-analysis-color-10);
       }
 
       .wrap-home {
         .future-item {
-          border-left: 1px solid var(--qq--analysis-bd-color-4);
+          border-left: 1px solid var(--q-analysis-color-10);
         }
       }
 
       .wrap-away {
         .future-item {
-          border-right: 1px solid var(--qq--analysis-bd-color-4);
+          border-right: 1px solid var(--q-analysis-color-10);
         }
       }
     }

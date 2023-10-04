@@ -419,7 +419,7 @@ function getAge(birthdate) {
 
 .article_detail {
   background: var(--q-analysis-color-16);
-  border: 1px solid var(--qq--analysis-bd-color-4);
+  border: 1px solid var(--q-analysis-color-10);
   border-radius: 8px;
   height: 100%;
   padding: 15px 38px;
@@ -431,12 +431,12 @@ function getAge(birthdate) {
 
   .article_title {
     font-size: 16px;
-    color: var(--qq--analysis-text-color-10);
+    color: var(--q-analysis-color-10);
     font-weight: 600;
   }
 
   .author {
-    color: var(--qq--analysis-text-color-11);
+    color: var(--q-analysis-color-11);
 
     .author_name {
       font-weight: 500;
@@ -451,13 +451,13 @@ function getAge(birthdate) {
     :deep {
       * {
         max-width: 100%;
-        color: var(--qq--analysis-text-color-10);
+        color: var(--q-analysis-color-10);
       }
 
       p {
         font-family: PingFangSC-Regular;
         font-size: 12px;
-        color: var(--qq--analysis-text-color-2);
+        color: var(--q-analysis-color-5);
         letter-spacing: 0;
         text-align: justify;
         line-height: 24px;
