@@ -256,7 +256,7 @@ onUnmounted(() => {
   .line_num_zero {
     .bar-progress,
     .progress-content {
-      background: var(--qq--analysis-bg-color-10) !important;
+      background: var(--q-analysis-color-12) !important;
     }
   }
 }
