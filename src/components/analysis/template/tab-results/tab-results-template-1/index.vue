@@ -357,7 +357,7 @@ onUnmounted(() => {
         display: flex;
         align-items: center;
         justify-content: center;
-        color: var(--qq--analysis-text-color-5);
+        color: var(--q-analysis-color-3);
 
         &.active {
           color: var(--q-analysis-color-13);

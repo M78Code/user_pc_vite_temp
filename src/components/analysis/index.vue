@@ -380,7 +380,7 @@ export default {
         line-height: 32px;
         padding-left: 29px;
         background-image: var(--q-analysis-bg-gradient-1) !important;
-        color: var(--qq--analysis-text-color-5);
+        color: var(--q-analysis-color-3);
 
         border: 1px solid var(--q-analysis-color-10);
         border-bottom: 0;
