@@ -32,7 +32,7 @@ export const utils = {
     // 竞彩足球
      let domain = window.BUILDIN_CONFIG.domain[window.BUILDIN_CONFIG.current_env][0]
     let prefix_job = window.BUILDIN_CONFIG.api.API_PREFIX_JOB
-    let is_jing_cai = _.get(menu,'chinaBetting')==1
+    let is_jing_cai = lodash.get(menu,'chinaBetting')==1
     if(is_jing_cai){
       url = `${domain}/${prefix_job}/${menu.field3}`
     }else{
@@ -67,7 +67,7 @@ export const utils = {
   },
   // 删除数据,释放内存
   del: function (any) {
-    if (any && _.isObject(any)) {
+    if (any && lodash.isObject(any)) {
       if (any instanceof Array) {
         any.splice(0, any.length);
       } else {
@@ -103,19 +103,19 @@ export const utils = {
         value = play;
         break;
       case "oid":
-        value = _.get(play, `ol.${ol_index}.${field}`);
+        value = lodash.get(play, `ol.${ol_index}.${field}`);
         break;
       case "bet_data":
-        value = _.get(play, `ol.${ol_index}`);
+        value = lodash.get(play, `ol.${ol_index}`);
         break;
       case "ol_data":
-        value = _.get(play, `ol.${ol_index}`);
+        value = lodash.get(play, `ol.${ol_index}`);
         break;
       case "bet_id":
         value = {
           mid: match.mid,
-          hid: _.get(play, `hid`),
-          oid: _.get(play, `ol.${ol_index}.oid`)
+          hid: lodash.get(play, `hid`),
+          oid: lodash.get(play, `ol.${ol_index}.oid`)
         };
         break;
     }
@@ -180,7 +180,7 @@ export const utils = {
   set_page_aria_hidden(){
     let nodes = document.querySelectorAll(".q-pagination [aria-hidden=true]")
     if(nodes.length < 1) return
-    _.each(nodes, e => {
+    lodash.each(nodes, e => {
       e.style.display='none'
     })
   },
@@ -268,17 +268,17 @@ export const utils = {
     if(this.is_load_player_js) return
     this.is_load_player_js = true
     let dom_ = document
-    let dplayer_el = dom_.createElement('script');
+    let dplayer_el = domlodash.createElement('script');
     let  BUILD_VERSION=  window.BUILDIN_CONFIG.BUILD_VERSION
 
 
     dplayer_el.src = `${BUILD_VERSION?'/'+BUILD_VERSION:''}/lib/video/DPlayer.min.js`
     // if (!/(iPhone|iPad|iPod|iOS|Mac OS)/i.test(navigator.userAgent)) {
-      let hls_el = dom_.createElement('script');
+      let hls_el = domlodash.createElement('script');
       hls_el.src = `${BUILD_VERSION?'/'+BUILD_VERSION:''}/lib/video/hls.js`
-      dom_.head.appendChild(hls_el)
+      domlodash.head.appendChild(hls_el)
     // }
-    dom_.head.appendChild(dplayer_el)
+    domlodash.head.appendChild(dplayer_el)
   },
   /**
    * 点击自定义的tab 选项滑动到中间动画
@@ -1060,9 +1060,9 @@ export const utils = {
       let counting_time_ = counting_time;
       // 红猫赛事只显示分钟不显示秒
       if(lodash.get(match,'cds')=='1500' && lodash.get(match,'csid')==1 && counting_time){
-        counting_time_ = lodash.get(counting_time_.split(':'),'[0]');
+        counting_time_ = lodash.get(counting_timelodash.split(':'),'[0]');
       } else if(lodash.get(match,'ctt')==1 && [1,2].includes(lodash.get(match,'csid')*1) && counting_time){
-        counting_time_ = lodash.get(counting_time_.split(':'),'[0]');
+        counting_time_ = lodash.get(counting_timelodash.split(':'),'[0]');
       }
       return counting_time_;
     },

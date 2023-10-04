@@ -24,6 +24,7 @@ import detailUtils from "src/core/match-detail/match-detail-pc/match-detail.js";
 import { reactive, toRefs, ref, onMounted, onUnmounted, computed } from "vue";
 import store from "src/store-redux/index.js";
 import MenuData from "src/core/menu-pc/menu-data-class.js";
+
 let state = store.getState();
 export const useRightDetails = (props) => {
   //视频是否展开状态
@@ -1221,7 +1222,6 @@ export const useRightDetails = (props) => {
 //   //    // 获取当前菜单类型
 //   //    vx_cur_menu_type: "get_cur_menu_type",
 //   //    vx_get_bet_mode: "get_bet_mode", // 投注模式
-//   //    vx_get_bet_item_lock: "get_bet_item_lock", // 投注项是否要锁
 //   //    // 获取多语言是否变化
 //   //    vx_get_lang_change: "get_lang_change",
 //   //    // 赛事列表排序 1:按联赛排序 2:按时间排序

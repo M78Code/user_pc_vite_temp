@@ -112,7 +112,7 @@
                   {
                     item_border: !(
                       lodash.get(item, 'hps.0.hl') &&
-                      $utils.mx_get_bet_simple(item, index, 'oid')
+                      utils.mx_get_bet_simple(item, index, 'oid')
                     ),
                   },
                 ]"
@@ -120,14 +120,14 @@
                 <bet-item
                   v-if="
                     lodash.get(item, 'hps.0.hl') &&
-                    $utils.mx_get_bet_simple(item, index, 'oid')
+                    utils.mx_get_bet_simple(item, index, 'oid')
                   "
                   :key="`item_0_${index}`"
                   class="item_border"
                   :match_info="item"
-                  :play_data="$utils.mx_get_bet_simple(item, index, 'play')"
-                  :bet_data="$utils.mx_get_bet_simple(item, index, 'bet_data')"
-                  :bet_ids="$utils.mx_get_bet_simple(item, index, 'bet_id')"
+                  :play_data="utils.mx_get_bet_simple(item, index, 'play')"
+                  :bet_data="utils.mx_get_bet_simple(item, index, 'bet_data')"
+                  :bet_ids="utils.mx_get_bet_simple(item, index, 'bet_id')"
                   style="padding: 0 10px"
                   bet_source="recent"
                   :bet_info="{
@@ -274,7 +274,11 @@ export default {
       is_single_handle: BetData.is_single_handle, // 单关 是否正在处理投注
       off_mitt:null, //批量关闭mitt
       cur_menu_type: MenuData.menu_type,// 获取当前菜单类型
-      cur_menu_type: LayOutMain_pc.layout_current_path,// 获取当前路由      
+      cur_menu_type: LayOutMain_pc.layout_current_path,// 获取当前路由 
+       // 投注模式 -1.还不知道使用哪种模式 0.足球PA滚球 1.非足球PA滚球
+       bet_mode : BetData.bet_mode,
+      // 是否锁住投注项不让点，默认为不锁住(针对新的投注流程)
+      bet_item_lock : BetData.bet_item_lock,     
     };
   },
   watch: {
@@ -307,11 +311,6 @@ export default {
     this.off_mitt()
   },
   computed: {
-    // ...mapGetters({
-    //   vx_get_bet_mode: "get_bet_mode", // 投注模式
-    //   vx_get_bet_item_lock: "get_bet_item_lock", // 投注项是否要锁
-    // }),
-
     // 前端控制是否禁用收藏功能
     enable_collect_api() {
       return window.env.config.ENABLE_COLLECT_API;
@@ -350,7 +349,7 @@ export default {
       } else {
         this.slide = type;
       }
-      this.$utils.send_zhuge_event("PC_热门推荐_切换控件点击");
+      this.utils.send_zhuge_event("PC_热门推荐_切换控件点击");
     },
     /**
      * 接收列表收藏状态变化
@@ -532,7 +531,7 @@ export default {
       });
       let info = {};
       info["点击状态"] = mf ? "取消收藏" : "收藏";
-      this.$utils.send_zhuge_event("PC_热门推荐_收藏点击", info);
+      this.utils.send_zhuge_event("PC_热门推荐_收藏点击", info);
     },
 
     /**
@@ -561,7 +560,7 @@ export default {
      * @return {undefined} undefined
      */
     go_detail(item) {
-      this.$utils.send_zhuge_event("PC_热门推荐_详情页入口点击");
+      this.utils.send_zhuge_event("PC_热门推荐_详情页入口点击");
       this.$router.push({
         name: "details",
         params: {
