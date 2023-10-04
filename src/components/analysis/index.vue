@@ -335,7 +335,7 @@ export default {
       bottom: 0px;
       height: 1px;
       width: 100%;
-      background: var(--qq--analysis-bg-color-2);
+      background: var(--q-analysis-color-10);
       z-index: 1;
     }
 
