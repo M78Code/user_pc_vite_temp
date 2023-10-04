@@ -426,7 +426,7 @@ export default {
       }
 
       .default {
-        color: var(--qq--analysis-text-color-9);
+        color: var(--q-analysis-color-9);
       }
 
       .simple-title {
