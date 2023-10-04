@@ -356,8 +356,7 @@ function get_first_lineup(data, lineup, type) {
           display: flex;
           align-items: center;
           height: 28px;
-          // background: var(--qq--analysis-bg-color-14);
-          background-color: #f7f8f9;
+          background: var(--q-analysis-bg-color-17);
           color: var(--q-analysis-color-12);
 
           &:last-child {
