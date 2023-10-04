@@ -11,7 +11,8 @@ import video_replay from "src/components/match-detail/match_info/match_info_mixi
 import LoadData from 'src/components/load_data/load_data.vue';
 import MenuData from "src/core/menu-pc/menu-data-class.js";
 import { useMittEmit, MITT_TYPES } from  "src/core/mitt"
-import {is_eports_csid,MatchDetailCalss } from "src/core/index"
+import {is_eports_csid,MatchDetailCalss,get_media_icon_index,GlobalSwitchClass,UserCtr } from "src/core/index"
+import url_add_param  from "src/core/enter-params/util/index.js"
 import lodash from "lodash"
 export default {
   components: {
@@ -30,6 +31,8 @@ export default {
   data() {
     this.moveTimerReplay = null // 移动定时器
     return {
+      // 获取当前菜单类型  
+      vx_cur_menu_type:MenuData.menu_type,
       // 菜单数据
       menu_data: MenuData,
       video_height: "190px",//视频高度
@@ -52,32 +55,35 @@ export default {
       move_replay:false,
       // 视频全屏功能是否可用
       video_fullscreen_disabled: false,
-      details_data_version:MatchDetailCalss.details_data_version,  //仓库版本号
-      play_media:MatchDetailCalss.play_media,//视屏播放类型
-      vx_get_is_fold_status:MatchDetailCalss.is_unfold_multi_column,//视屏播放类型
-   
+      //仓库版本号
+      details_data_version:MatchDetailCalss.details_data_version,  
+      //视屏播放类型
+      play_media:MatchDetailCalss.play_media,
+      // 获取电竞视频 是否暂停  
+      vx_is_pause_video:MatchDetailCalss.is_pause_video,  
+      // 当前网站是否处于后台运行中
+      get_vue_hidden_run:GlobalSwitchClass.vue_hidden_run,   
+      //视频是否展开
+      is_fold_status:GlobalSwitchClass.is_fold_status,
+      //global版本号
+      global_switch_version:GlobalSwitchClass.global_switch_version,
+      // 获取用户信息
+      vx_get_user:UserCtr.get_user(),
+      // 获取模板主题
+      get_theme:UserCtr.theme,
+      //登录是否失效
+      vx_is_invalid:UserCtr.is_invalid, 
+      //用户类版本号
+      user_version:UserCtr.user_version, 
+       // 用户是否长时间未操作
+      get_is_user_no_handle:UserCtr.get_is_user_no_handle,
     }
   },
   computed: {
     // ...mapGetters({
-    //   //登录是否失效
-    //   vx_is_invalid: "get_is_invalid",
     //   //页面大小
     //   vx_get_layout_list_size: "get_layout_list_size",
-    //   //模板主题
-    //   get_theme: "get_theme",
-    //   // 获取当前菜单类型
-    //   vx_cur_menu_type: "get_cur_menu_type",
-    //   // 获取电竞视频 是否暂停
-    //   vx_is_pause_video: "get_is_pause_video",
-    //   // 当前网站是否处于后台运行中
-    //   get_vue_hidden_run: "get_vue_hidden_run",
-    //   // 用户是否长时间未操作
-    //   get_is_user_no_handle: "get_is_user_no_handle",
-    //   // 获取用户信息
-    //   vx_get_user: "get_user",
-    //   
-
+    //  
     // }),
     // 是否为电竞
     is_esports() {
@@ -95,14 +101,30 @@ export default {
   },
 
   watch: {
-        //监听详情类的版本号
+    //监听详情类的版本号
     "details_data_version.version": {
       handler(res) {
         //如果推送关闭动画  并且正在播放动画
         console.log( MatchDetailCalss.play_media,'play_media',MatchDetailCalss);
         this.play_media = MatchDetailCalss.play_media
+        this.vx_is_pause_video = MatchDetailCalss.vx_is_pause_video
       }
     },
+    //监听global开关的版本号
+    "global_switch_version.version": {
+      handler(res) {
+        this.get_vue_hidden_run = GlobalSwitchClass.vue_hidden_run
+        this.is_fold_status = GlobalSwitchClass.is_fold_status
+      }
+    },
+      //监听global开关的版本号
+    "user_version.version": {
+      handler(res) {
+        this.vx_get_user = UserCtr.get_user()
+        this.get_theme = UserCtr.themer
+        this.vx_is_invalid = UserCtr.is_invalid
+        }
+      },
     // 监听用户是否长时间未操作
     get_is_user_no_handle(res){
       if(res && this.show_type == 'play-video' && this.play_media.media_type == 'video'){
@@ -113,11 +135,11 @@ export default {
     // 当前网站是否处于后台运行中
     get_vue_hidden_run(res){
       // 切换页签不可背景播放  0关、1开
-      let is_video_background = _.get(this.vx_get_user, "videoManageVo.noBackgroundPlay", 0);
+      let is_video_background = lodash.get(this.vx_get_user, "videoManageVo.noBackgroundPlay", 0);
       // 视频流量管控开关 1开启、0关闭
-      let config_video_switch = _.get(this.vx_get_user, "videoManageVo.videoSwitch", 0);
+      let config_video_switch = lodash.get(this.vx_get_user, "videoManageVo.videoSwitch", 0);
       // 系统级别视频流量管控总开关   '1'开启、'0'关闭
-      let config_video_time = _.get(this.vx_get_user, 'videoManageVo.configValue', "0");
+      let config_video_time = lodash.get(this.vx_get_user, 'videoManageVo.configValue', "0");
       if (config_video_time != '0' && config_video_switch != 0 && is_video_background != 0) {
         // 如果处于后台运行且不是画中画
         if(res && !this.is_open_pip){
@@ -320,7 +342,7 @@ export default {
             
             video.set_play_media(this.match_info.mid,media_type)
             // 记录切换前 媒体相关信息
-            this.last_media_info = _.cloneDeep(this.play_media)
+            this.last_media_info = lodash.cloneDeep(this.play_media)
             // 记录媒体切换时间
             this.meida_update_time = Date.now()
             
@@ -328,9 +350,9 @@ export default {
               show_type = 'no-handle'
             }
             this.show_type = show_type
-            let live_type = this.$utils.get_media_icon_index(media_type)
+            let live_type = get_media_icon_index(media_type)
             // 此处为最终处理后的视频url
-            this.media_src = this.$utils.url_add_param(media_src,'video_type',window.video_type?window.video_type:1) + `&live_type=${live_type}&csid=${this.match_info.csid}&icons_right=163&pip_right=80`
+            this.media_src = url_add_param(media_src,'video_type',window.video_type?window.video_type:1) + `&live_type=${live_type}&csid=${this.match_info.csid}&icons_right=163&pip_right=80`
             this.media_src_temp = this.media_src
             // 如果是在回放状态下，切换回播视频
             if (this.current_replay) {
@@ -407,15 +429,14 @@ export default {
     // ...mapMutations({
     //   // 设置视频播放类型 此方法必须为同步
     //   vx_set_play_media: "set_play_media",
-    //   // 设置电竞视频是否暂停
-    //   set_is_pause_video:"set_is_pause_video",
     // }),
     /**
      * @Description 点击视频播放按钮
      * @param {undefined} undefined
     */
     on_play_video(){
-      this.set_is_pause_video(false)
+      // 设置电竞视频是否暂停
+      MatchDetailCalss.set_is_pause_video(false)
       this.show_type = 'play-video'
     },
     /**
@@ -456,7 +477,7 @@ export default {
     * @return {undefined} undefined
     */
     video_volume(obj){
-      video.send_message({cmd:'volume_video',src:_.get(obj,'src',''),volume:_.get(obj,'volume',0)});
+      video.send_message({cmd:'volume_video',src:lodash.get(obj,'src',''),volume:lodash.get(obj,'volume',0)});
     },
     /**
     * @Description:发送iframe消息
@@ -495,7 +516,7 @@ export default {
       }
       if(e.data.cmd == 'video_replay_full_srceen_event'){
         // 设置偏移量
-        if(_.get(e.data,'val.type') == 1 && this.current_replay){
+        if(lodash.get(e.data,'val.type') == 1 && this.current_replay){
           this.$router.push({
             name: 'video',
             params: {
@@ -504,7 +525,7 @@ export default {
               csid:this.match_info.csid,
               play_type:1,
               video_size:'1',
-              replay_id:_.get(this.current_replay,'eventId')
+              replay_id:lodash.get(this.current_replay,'eventId')
             }
           })
         }
@@ -554,7 +575,7 @@ export default {
     },
     // 更改video的配置改变时更改配置
     video_status_change(data) {
-      if (_.isBoolean(data.fullscreen_disabled)) {
+      if (lodash.isBoolean(data.fullscreen_disabled)) {
         this.video_fullscreen_disabled = data.fullscreen_disabled
       }
     },

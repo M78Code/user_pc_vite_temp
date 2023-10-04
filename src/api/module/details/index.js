@@ -73,7 +73,7 @@ export const post_video_url = (params, config = {}, url = "/v1/w/videoAnimationU
 export const post_check_login = (params, config = {}, url = "/v1/w/isLogin") => http.post(`${prefix}${url}`, params);
 
 //获取视频直播 iframe 域名
-export const post_video_refer = (params, config = {}, url = "/v1/w/videoReferUrlPB") => http.post(`${prefix}${url}??device=PC`, params);
+export const post_video_refer = (params, config = {}, url = "/v1/w/videoReferUrl") => http.post(`${prefix}${url}??device=PC`, params);
 
  
 

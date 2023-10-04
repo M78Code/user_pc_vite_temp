@@ -207,7 +207,7 @@ export const getliveVideoUrl = (params, config, url="/v1/w/liveVideoUrl") => htt
 export const getMatchUserIsLogin = (params, config, url="/v1/w/isLogin") => http.post(`${prefix}${url}`,params, config);
 
 // 获取视频链接
-export const getVideoReferurl = (params, config, url="/v1/w/videoReferUrlPB") => http.post(`${prefix}${url}?device=H5`,{  device:'H5', ...params}, config);
+export const getVideoReferurl = (params, config, url="/v1/w/videoReferUrl") => http.post(`${prefix}${url}?device=H5`,{  device:'H5', ...params}, config);
 
 // 获取服务器当前时间
 export const get_time_server = (params, config, url="/v1/getSystemTime/currentTimeMillis") => http.get(`${prefix}${url}`,params, config);

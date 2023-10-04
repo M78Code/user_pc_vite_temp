@@ -18,7 +18,6 @@ export default class MatchDetailCtr {
    * @return {undefined} undefined
    */
   init() {
-    this.is_pause_video = true; // 电竞视频是否暂停
     this.is_unfold_multi_column = false; //是否展开多列玩法
     //赛事ID
     this.mid=  '';
@@ -244,5 +243,14 @@ export default class MatchDetailCtr {
    */
   set_active_detail(val){
     this.active_detail = val
+  }
+  /**
+   * @description: 设置电竞视频是否暂停
+   * @param {boolean} flag  
+   * @return {*}
+   */
+  set_is_pause_video(flag){
+    this.is_pause_video = flag
+    this.set_details_data_version()
   }
 }

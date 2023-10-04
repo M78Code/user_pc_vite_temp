@@ -414,10 +414,11 @@ class UserCtr {
       // #TODO 接口
       let res = await api_details.post_check_login();
       callback(
-        lodash.get(res, "data.data.isLogin", false),
-        lodash.get(res, "data.code") == "0401038"
+        lodash.get(res, "data.isLogin", false),
+        lodash.get(res, "code") == "0401038"
       );
     } catch (error) {
+      console.log(error,'1111');
       callback(false, true);
     }
   }

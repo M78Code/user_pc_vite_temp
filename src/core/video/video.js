@@ -783,7 +783,6 @@ export default {
   * @param {function} callback  回调函数
   */
   get_video_url(match,callback){
-    debugger
     let { lvs = -1, mms = -1, tvs = -1,  zvs = -1,ms } = match
     let type = lodash.get(window,"vue.$route.params.play_type") || get_media_icon_index(MatchDetailCalss.play_media.media_type)
     // 是否滚球  并且视频状态等于2
@@ -818,7 +817,7 @@ export default {
         }
         //校验url是否可以打开
         this.check_url(url, res => {
-          if(res || window.env.NODE_ENV == "development"){
+          if(res || window.BUILDIN_CONFIG.NODE_ENV == "development"){
             callback('play-video',url)
           } else {
             // 本地开发时不进行视频地址检测
@@ -835,13 +834,13 @@ export default {
   * @param {function} callback  回调函数
   */
   get_video_refer(mid,callback){
-    let refer_url = window.BUILDIN_CONFIG.live_domains[0]
+    let refer_url = lodash.get(window.BUILDIN_CONFIG,"live_domains[0]")
     if(refer_url){
       callback(this.join_video_url(mid,refer_url))
       return
     }
     api_details.post_video_refer().then( res => {
-      refer_url = lodash.get(res, "data.data.referUrl")
+      refer_url = lodash.get(res, "data.referUrl")
       if (!refer_url) {
         callback('')
         return
@@ -860,7 +859,9 @@ export default {
   join_video_url(mid,refer_url){
     // 移除 http(s)
     refer_url = refer_url.replace(/https?:/, "")
-    let request_domain = window.BUILDIN_CONFIG.domain[window.BUILDIN_CONFIG.current_env][0];
+    // let request_domain = window.BUILDIN_CONFIG.domain[window.BUILDIN_CONFIG.current_env][0]; todo
+    let request_domain =lodash.get(window.BUILDIN_CONFIG, 'DOMAIN_RESULT.first_one')
+
     let url = ''
     // if (window.env.NODE_ENV == "development" && (refer_url.indexOf('//prolivepc') == 0)) {
     //   // 生产环境使用代理进行播放视频连接操作
@@ -882,10 +883,7 @@ export default {
   */
   check_url(url,callback){
 
-    api_details .get_full_url(url).then( res => {
-
-
-
+    api_details.get_full_url(url).then( res => {
       if (res.data) {
         callback(true)
       } else {
