@@ -777,6 +777,33 @@ export default {
 
   },
   /**
+   * @Description 拼接视频播放地址
+   * @param {object} res 接口返回数据
+   * @param {number} mid 赛事ID
+   * @param {number} live_type 1 视频源 3 演播厅lvs 4 主播  5 专题
+   * @param {number} hd_sd  0标清, 1 高清
+   * @param {string} 视频地址
+  */
+  get_video_url_h5(res,mid,live_type=1,hd_sd ){
+    let media_src = ''
+    let refer_url = lodash.get(res,'data.referUrl')
+    if(refer_url){
+      // refer_url = refer_url.replace(/https?:/, "");
+      // refer_url = 'http://localhost:16677' ;
+      let request_domain = lodash.get(window.BUILDIN_CONFIG,"DOMAIN_RESULT.first_one");
+      let random = Math.random()
+      let _token = User.get_user_token();
+      media_src = `${refer_url}?live_type=${live_type}&hd_sd=${hd_sd}&random=${random}&mid=${mid}&domain=${request_domain}&is_client=1&load_error=${i18n_t('video.sorry')}&refresh=${i18n_t('footer_menu.refresh')}&token=${_token}`;
+      // 本地代码解开，就能调试视频项目
+      // media_src = `http://devliveh5.sportxxx13ky.com:4000?live_type=${live_type}&hd_sd=${hd_sd}&random=${random}&mid=${mid}&domain=${request_domain}&is_client=1&load_error=${i18n_t('video.sorry')}&refresh=${i18n_t('footer_menu.refresh')}&token=${_token}`;
+      // 本地代码连生产环境时解开就可以播视频，不要推送到远端
+      // media_src = 'https:' + media_src
+      media_src = encodeURI(media_src)
+    }
+    return media_src
+  },
+
+  /**
   * @Description:获取视频播放地址，带判断是否登录，url是否可以打开
   * @Author Cable
   * @param {object} match  赛事信息

@@ -165,9 +165,9 @@ const check_url = (url, which) => {
 const icon_click = (e) => {
   console.log(e, "whichwhichwhichwhich");
   e.stopPropagation()
-  switch (which) {
+  switch (props.which) {
     case 'lvs':
-      icon_click_lvs(which)
+      icon_click_lvs(props.which)
       break;
     case 'muUrl':
       icon_click_muUrl()
@@ -200,7 +200,7 @@ const icon_click_lvs = (which) => {
       // referUrl : "http://testliveh5.sportxxx13ky.com"//域名
       // sdUrl : "rtmp://test-pull-live.wafqa2.com/live/654321"  //直播视频标清地址
       // serverTime : "1663733773446"
-      let media_src = video.get_video_url(res, params.mid, 3, hd_sd.value);
+      let media_src = video.get_video_url_h5(res, params.mid, 3, hd_sd.value);
       check_url(media_src, which);
     }
   })
@@ -221,11 +221,10 @@ const icon_click_muUrl = () => {
   api_common.getMatchUserIsLogin().then(res => {
     // 判断用户是否登录
     if (res && res.code == 200 && res.data.isLogin) {
-      let referUrl = window.BUILDIN_CONFIG.live_domains[0];
+      let referUrl = lodash.get(window.BUILDIN_CONFIG,"DOMAIN_RESULT.live_domains[0]");
       let media_src
-
       if (referUrl) {
-        media_src = video.get_video_url({ data: { referUrl } }, params.mid, 1);
+        media_src = video.get_video_url_h5({ data: { referUrl } }, params.mid, 1);
         check_url(media_src);
       } else {
         let param = {}
@@ -233,7 +232,7 @@ const icon_click_muUrl = () => {
         param.gcuuid = send_gcuuid;
         api_common.getVideoReferurl(param).then(res => {
           if (send_gcuuid != res.gcuuid) return;
-          media_src = video.get_video_url(res, params.mid, 1);
+          media_src = video.get_video_url_h5(res, params.mid, 1);
           check_url(media_src);
         });
       }
@@ -318,7 +317,7 @@ const icon_click_animationUrl = () => {
 // watch(
 //   () => get_play_video,
 //   (new_) => {
-//     if (new_ && (which == 'muUrl' || is_in_play.value == 'muUrl')) {
+//     if (new_ && (props.which == 'muUrl' || is_in_play.value == 'muUrl')) {
 //           icon_click_muUrl()
 //         } else if (is_in_play.value == 'animationUrl') {
 //           icon_click_animationUrl()
