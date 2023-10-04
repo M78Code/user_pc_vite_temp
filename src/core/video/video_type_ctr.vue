@@ -15,12 +15,12 @@
 
     <div class="type-list-bg" v-show="is_show_type_list">
       <!-- 线路列表 -->
-      <diV class="type-list">
+      <div class="type-list">
         <!-- 高清 -->
         <div class="video-type-but" :class="{'video-type-but-action':ctr_data.video_type==1}" @click="send_video_type_click(1)">{{get_video_clarity_name2(1)}}</div>
         <!-- 流畅 -->
         <div class="video-type-but" :class="{'video-type-but-action':ctr_data.video_type==2}" @click="send_video_type_click(2)">{{get_video_clarity_name2(2)}}</div>
-      </diV>
+      </div>
       <img class="close-btn" @click="is_show_type_list = false" src="~public/image/common/png/close_white.png">
     </div>
     <!-- 画中画提示框 -->
@@ -28,7 +28,7 @@
     <!-- 大屏 -->
     <div class="full-screen-wrap" :class="{esports:is_esports}" v-if="$route.params.video_size !=1 && !is_esports">
       <!-- 退出中屏 -->
-      <icon-wappers v-if="$route.name == 'video'" size="14px" src="" color="#FFFFFF" name="icon-small"  @click="exit_full_screen" />
+      <icon-wapper v-if="$route.name == 'video'" size="14px" src="" color="#FFFFFF" name="icon-small"  @click="exit_full_screen" />
       <!-- 进入中屏 -->
       <icon-wapper v-else size="14px" color="#FFFFFF" :name="`img:${img_big_screen}`" @click="full_screen()" />
       <q-tooltip
@@ -56,7 +56,9 @@
 // import { mapGetters, mapActions } from "vuex"
 import video from "src/core/video/video.js"
 import { IconWapper } from 'src/components/icon'
-
+import  img_big_screen from "/yazhou-pc/image/common/svg/big_screen.svg"
+import { get_media_icon_index,MatchDetailCalss,debounce_throttle_cancel} from "src/core";
+const tooltip_style = 'background:rgba(0,0,0,0.8);padding:4px 5px;border-radius:0px;color:#fff'
 export default {
   components: {
     IconWapper,
@@ -84,11 +86,14 @@ export default {
   },
   data(){
     return {
-      img_big_screen :require('public/image/common/svg/big_screen.svg'),
+      img_big_screen,
+      tooltip_style,
       // video_type:1,//1:高清flv, 2:流畅m3u8
       is_rotate:false,  // 刷新按钮是否旋转
       is_show_type_list:false,  // 是否显示切换列表
       pip_mouseover:false,
+       //视屏播放类型
+      vx_play_media:MatchDetailCalss.play_media,
     }
   },
   computed:{
@@ -97,7 +102,7 @@ export default {
     // }),
     //是否专题
     is_topic(){
-      let index  = _.get('$route.params.play_type')  ||  this.$utils.get_media_icon_index(this.vx_play_media.media_type)
+      let index  = lodash.get('$route.params.play_type')  ||  get_media_icon_index(this.vx_play_media.media_type)
         return index == 5
     },
   },
@@ -115,7 +120,7 @@ export default {
     //   set_is_back_btn_click: "set_is_back_btn_click"//设置获取是否从详情页返回
     // }),
      get_video_clarity_name(){
-      let  type  = _.get('$route.params.play_type')  || this.$utils.get_media_icon_index(this.vx_play_media.media_type)
+      let  type  = lodash.get('$route.params.play_type')  || get_media_icon_index(this.vx_play_media.media_type)
       let text = ""
         if(type == 1){
           if(this.ctr_data.video_type == 1){
@@ -134,7 +139,7 @@ export default {
         return text
     },
     get_video_clarity_name2(num){
-      let  type  = _.get('$route.params.play_type')  || this.$utils.get_media_icon_index(this.vx_play_media.media_type)
+      let  type  = lodash.get('$route.params.play_type')  || get_media_icon_index(this.vx_play_media.media_type)
       let text = ""
         if(type == 1){
           if(num == 1){
@@ -161,7 +166,7 @@ export default {
       if(this.video_fullscreen_disabled && size === 'xl') {
         return false
       }
-      let play_type = this.$utils.get_media_icon_index(this.vx_play_media.media_type)
+      let play_type = get_media_icon_index(this.vx_play_media.media_type)
       if(this.$route.name == 'video'){
         play_type = this.$route.params.play_type
       }
@@ -284,7 +289,7 @@ export default {
   // watch:{
   // },
   created() {
-    this.stop_rotate = this.debounce(this.stop_rotate,300)
+    this.stop_rotate = lodash.debounce(this.stop_rotate,300)
     if(!window.video_type){
       window.video_type = this.ctr_data.video_type;
     } else {
@@ -296,7 +301,7 @@ export default {
   beforeUnmount() {
     clearTimeout(this.handle_screen_timer)
     this.handle_screen_timer = null
-    this.debounce_throttle_cancel(this.stop_rotate);
+    debounce_throttle_cancel(this.stop_rotate);
     // 移除监听message
     window.removeEventListener("message", this.handleMessage);
   },
