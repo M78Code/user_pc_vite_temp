@@ -340,7 +340,7 @@ onUnmounted(() => {
 
     &:last-child {
       border-radius: 8px;
-      border-bottom: 1px solid var(--q-analysis-bd-color-4);
+      border-bottom: 1px solid var(--q-analysis-color-10);
     }
 
     .stage-tab {
@@ -357,7 +357,7 @@ onUnmounted(() => {
         display: flex;
         align-items: center;
         justify-content: center;
-        color: var(--q-analysis-text-color-5);
+        color: var(--qq--analysis-text-color-5);
 
         &.active {
           color: var(--q-analysis-text-color-13);

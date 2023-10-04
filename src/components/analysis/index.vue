@@ -2,7 +2,6 @@
  * @Author: 'jacques' 'jacques@itcom888.com'
  * @Date: 2023-10-02 16:12:29
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2023-10-04 14:18:11
  * @FilePath: \user-pc-vite\src\components\analysis\index.vue
  * @Description: 足篮赛事分析页
 -->
@@ -382,15 +381,15 @@ export default {
         line-height: 32px;
         padding-left: 29px;
         background-image: var(--q-analysis-bg-gradient-1) !important;
-        color: var(--q-analysis-text-color-5);
+        color: var(--qq--analysis-text-color-5);
 
-        border: 1px solid var(--q-analysis-bd-color-4);
+        border: 1px solid var(--q-analysis-color-10);
         border-bottom: 0;
         border-radius: 8px 8px 0 0;
 
         &:last-child {
           border-radius: 8px;
-          border-bottom: 1px solid var(--q-analysis-bd-color-4);
+          border-bottom: 1px solid var(--q-analysis-color-10);
         }
 
         &:before {
@@ -406,9 +405,9 @@ export default {
       }
 
       .d-header {
-        border-left: 1px solid var(--q-analysis-bd-color-4);
-        border-right: 1px solid var(--q-analysis-bd-color-4);
-        border-bottom: 1px solid var(--q-analysis-bd-color-4);
+        border-left: 1px solid var(--q-analysis-color-10);
+        border-right: 1px solid var(--q-analysis-color-10);
+        border-bottom: 1px solid var(--q-analysis-color-10);
 
         &:last-child {
           border-radius: 0 0 8px 8px;
@@ -432,8 +431,8 @@ export default {
       }
 
       .simple-title {
-        border-left: 1px solid var(--q-analysis-bd-color-4);
-        border-right: 1px solid var(--q-analysis-bd-color-4);
+        border-left: 1px solid var(--q-analysis-color-10);
+        border-right: 1px solid var(--q-analysis-color-10);
 
         &:last-child {
           border-radius: 0 0 8px 8px;
@@ -444,19 +443,19 @@ export default {
       .simple-title,
       .d-tr,
       .match-info {
-        border-left: 1px solid var(--q-analysis-bd-color-4);
-        border-right: 1px solid var(--q-analysis-bd-color-4);
+        border-left: 1px solid var(--q-analysis-color-10);
+        border-right: 1px solid var(--q-analysis-color-10);
       }
 
       .wrap-home {
         .future-item {
-          border-left: 1px solid var(--q-analysis-bd-color-4);
+          border-left: 1px solid var(--q-analysis-color-10);
         }
       }
 
       .wrap-away {
         .future-item {
-          border-right: 1px solid var(--q-analysis-bd-color-4);
+          border-right: 1px solid var(--q-analysis-color-10);
         }
       }
     }
