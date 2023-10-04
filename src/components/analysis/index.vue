@@ -2,7 +2,7 @@
  * @Author: 'jacques' 'jacques@itcom888.com'
  * @Date: 2023-10-02 16:12:29
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2023-10-03 22:36:03
+ * @LastEditTime: 2023-10-04 14:18:11
  * @FilePath: \user-pc-vite\src\components\analysis\index.vue
  * @Description: 足篮赛事分析页
 -->
@@ -71,11 +71,8 @@ import { MatchProcessFullVersionWapper as matchDate } from "src/components/match
 import { api_analysis } from 'src/api/index.js'
 import { compute_css_variables } from "src/core/css-var/index.js"
 import { formatTime } from 'src/core/format/index.js'
-import { i18n_t } from 'src/core/index.js'
 import zhugeTag from "src/core/http/zhuge-tag.js"
 import store from 'src/store-redux/index.js'
-import lodash from 'lodash'
-
 let state = store.getState();
 
 export default {

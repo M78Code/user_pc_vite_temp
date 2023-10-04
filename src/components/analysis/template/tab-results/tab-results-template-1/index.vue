@@ -116,7 +116,6 @@ import { useRoute } from 'vue-router';
 // import { component_symbol, need_register_props } from "../config/index.js"
 // useRegistPropsHelper(component_symbol, need_register_props)
 import { api_analysis } from 'src/api/index'
-import lodash from 'lodash'
 
 import { ChatFullVersionWapper as chat } from 'src/components/analysis/template/chat/index.js'
 import { TraceFullVersionWapper as trace } from 'src/components/analysis/template/trace/index.js'
@@ -165,7 +164,7 @@ function stage_choose(index) {
 */
 
 function get_result () {
-  api_analysis.get_getEventResult({ mid: props.match.mid }).then(({ data }) => {
+  api_analysis.get_getEventResult({ mid: props.match.mid }).then((data) => {
     if (data.code == 200) {
       let arr = [];
       let _data = lodash.get(data, 'data') || [];
