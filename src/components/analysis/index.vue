@@ -347,7 +347,7 @@ export default {
       justify-content: center;
       margin-right: 5px;
       background: var(--q-analysis-color-12);
-      border: 1px solid var(--qq--analysis-bd-color-1);
+      border: 1px solid var(--q-analysis-color-12);
       border-bottom-color: var(--qq--analysis-bd-color-2);
       color: var(--qq--analysis-text-color-3);
       z-index: 2;
