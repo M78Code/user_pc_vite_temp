@@ -185,13 +185,8 @@ this.bet_appoint_ball_head= null */
   /**
    * 设置 是否接受更好赔率
   */
-  set_bet_is_accept(value) {
-    value = Number(value)
-    if (isNaN(value)) {
-      this.bet_is_accept = !this.bet_is_accept
-    } else {
-      this.bet_is_accept = value;
-    }
+  set_bet_is_accept() {
+    this.bet_is_accept = !this.bet_is_accept
     this.set_bet_data_class_version()
   }
 

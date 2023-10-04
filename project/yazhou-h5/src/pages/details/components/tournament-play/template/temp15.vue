@@ -152,13 +152,11 @@ export default defineComponent({
     watch(
       () => props.item_data,
       (data) => {
-        console.error(data);
         if (data.hl && data.hl[0] && data.hl[0].ol) {
           calc_classname(data.hl[0].ol)
         }
       }, {immediate: true}
     );
-    console.error(init_data.name_);
     return {
       ...toRefs(init_data),
       get_bet_list,

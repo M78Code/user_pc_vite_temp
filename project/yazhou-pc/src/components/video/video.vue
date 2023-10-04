@@ -245,7 +245,7 @@ const exit_full_screen = (size) => {
     this.$utils.redirect_router('/home')
   }
   let time = Date.now()
-  this.set_play_media({
+  MatchDetailCalss.set_play_media({
     mid: this.match_info.mid,
     media_type: this.vx_play_media.media_type,
     time

@@ -79,7 +79,7 @@ const { detailsReducer } = store.getState()
 const hd_sd = ref(detailsReducer.hd_sd)
 const is_in_play = ref(detailsReducer.is_in_play)
 
-
+let send_gcuuid = ''
 // 正在直播的
 const lvs_icon_ing = "/yazhou-h5/image/common/zhibo-l.png"
 // 赛前直播的

@@ -11,7 +11,7 @@ import video_replay from "src/components/match-detail/match_info/match_info_mixi
 import LoadData from 'src/components/load_data/load_data.vue';
 import MenuData from "src/core/menu-pc/menu-data-class.js";
 import { useMittEmit, MITT_TYPES } from  "src/core/mitt"
-import {is_eports_csid,MatchDetailCalss,get_media_icon_index,GlobalSwitchClass,UserCtr } from "src/core/index"
+import {is_eports_csid,MatchDetailCalss,get_media_icon_index,GlobalSwitchClass,UserCtr, MatchDataWarehouse_PC_Detail_Common as MatchDetailsData,LayOutMain_pc } from "src/core/index"
 import url_add_param  from "src/core/enter-params/util/index.js"
 import lodash from "lodash"
 export default {
@@ -20,7 +20,7 @@ export default {
     LoadData
   },
   props: {
-    match_info: Object, //赛事详情
+    // match_info: Object, //赛事详情
     background_img: String,//比分板背景图片
     refresh_time: {
       type: Number,
@@ -31,12 +31,13 @@ export default {
   data() {
     this.moveTimerReplay = null // 移动定时器
     return {
+      vx_layout_cur_page:LayOutMain_pc.layout_current_path,
       // 获取当前菜单类型  
       vx_cur_menu_type:MenuData.menu_type,
       // 菜单数据
       menu_data: MenuData,
       video_height: "190px",//视频高度
-      show_type: 'info',//显示类型 todo  默认info
+      show_type: '',//显示类型   默认info
       media_src: "",//视频url地址
       callback_id:0,//回调ID 解决短时间内连续切换视频 回调错误
       show_loading:true, // 是否显示视频loading图片
@@ -77,6 +78,8 @@ export default {
       user_version:UserCtr.user_version, 
        // 用户是否长时间未操作
       get_is_user_no_handle:UserCtr.get_is_user_no_handle,
+      //赛事详情对象
+      match_info:{}
     }
   },
   computed: {
@@ -108,6 +111,9 @@ export default {
         console.log( MatchDetailCalss.play_media,'play_media',MatchDetailCalss);
         this.play_media = MatchDetailCalss.play_media
         this.vx_is_pause_video = MatchDetailCalss.vx_is_pause_video
+        this.show_type =MatchDetailCalss.params.media_type
+        console.log(this.show_type,'this.media_type');
+        this.match_info = MatchDetailsData.get_quick_mid_obj(MatchDetailCalss.play_media.mid)
       }
     },
     //监听global开关的版本号
@@ -187,7 +193,7 @@ export default {
       this.set_height()
     },
     /**监听折叠状态 展开时重设高度 */
-    vx_get_is_fold_status(status){
+    is_fold_status(status){
         if(status){
           this.set_height()
         }
@@ -227,6 +233,7 @@ export default {
     },
     // 赛事ID改变
     "match_info.mid"() {
+      
       if(this.match_info?.mid == -1 || !this.match_info?.mid){
         this.show_type = 'no-video'
       }
@@ -238,7 +245,7 @@ export default {
     // 设置直播类型 && 获取直播地址
     "play_media.time": {
       handler(cur) {
-        if (!cur && !this.match_info) return
+        if (!cur) return
         this.show_loading = true
         // 10秒后隐藏loading图片
         clearTimeout(this.timer_id_1)
@@ -249,7 +256,7 @@ export default {
         this.callback_id++
         let callback_id = this.callback_id
         let { media_type } = this.play_media
-        if(!lodash.get(this.match_info,'mid')) return
+
         let { mid="", mms="", mvs="", varl="", vurl="", csid="",lvs="" } = this.match_info
         const {mid: last_mid, media_type: last_media_type} = this.last_media_info || {}
         
@@ -264,6 +271,7 @@ export default {
         
         // 非首次加载视频
         if(this.match_info.mid == -1 ){
+          
           this.show_type = 'no-video'
           return
         }
@@ -275,6 +283,7 @@ export default {
             this.show_type = this.vx_is_pause_video ? 'pause' : 'play-video'
           }else{
             if(is_eports_csid(csid) || csid == -1){
+              
               this.show_type = 'no-video'
             }else{
               this.show_type = ''
@@ -323,6 +332,7 @@ export default {
           this.show_type = 'play-video'
           // 目标赛事视频url相关信息获取
           video.get_video_url(this.match_info, (show_type,media_src) => {
+            
             // 未登录
             if(media_src === true && show_type === 'no-login'){
               this.is_limited = true
@@ -349,6 +359,7 @@ export default {
             if(show_type == 'play-video' && this.get_is_user_no_handle){
               show_type = 'no-handle'
             }
+            
             this.show_type = show_type
             let live_type = get_media_icon_index(media_type)
             // 此处为最终处理后的视频url
@@ -379,6 +390,7 @@ export default {
             if(callback_id != this.callback_id){
               return
             }
+            
             video.set_play_media(this.match_info.mid,'animation')
             this.show_type = show_type
             // 此处为最终的动画url

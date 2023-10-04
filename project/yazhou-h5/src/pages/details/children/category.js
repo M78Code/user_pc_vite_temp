@@ -22,6 +22,7 @@ import { SessionStorage } from "src/core/utils/index.js"
 export const category_info = (category_arr=[]) => {
   const router = useRouter();
   const route = useRoute();
+  let emitters = []
   const store_state = store.getState()
   const category = ref(null)
   const detail_match_list = ref(null)
@@ -149,6 +150,8 @@ export const category_info = (category_arr=[]) => {
   };
 
   onMounted(() => {
+    console.error('初始化进来 category');
+    on_listeners()
     initEvent()
     // 获取置顶列表数据
     match_list_new()
@@ -298,6 +301,7 @@ export const category_info = (category_arr=[]) => {
    * @returns {Promise<void>}
    */
   const initEvent = async (to_refresh, init_req) => {
+    console.error('初始化进来 category');
     if (to_refresh) {
       to_refresh = to_refresh;
     } else {
@@ -856,8 +860,14 @@ const { emitters_off } = useMittEmitterGenerator([
   { type: MITT_TYPES.EMIT_REF_API, initEvent },
   { type: MITT_TYPES.EMIT_HIDE_DETAIL_MATCH_LIST, hide_detail_match_list },
 ])
+const on_listeners = () => {
+  emitters = [
+    useMittEmit(MITT_TYPES.EMIT_REF_API, initEvent),
+    useMittEmit(MITT_TYPES.EMIT_HIDE_DETAIL_MATCH_LIST, hide_detail_match_list)
+  ]
+}
   onUnmounted(() => {
-    emitters_off()
+    emitters.map((x) => x && x.off());
   })
   return {
     component_data,

@@ -38,7 +38,7 @@
     </div>
 
     <!-- 有直播可放 3-->
-    <div class="load-data-wrap fit video-loading loading-wrap yb-flex-center relative-position" v-if="show_type == 'play-video'&&(vx_get_is_fold_status || is_esports) && !is_video_pause"
+    <div class="load-data-wrap fit video-loading loading-wrap yb-flex-center relative-position" v-if="show_type == 'play-video'&&(is_fold_status || is_esports) && !is_video_pause"
       @mouseenter="video_enter"
       @mouseleave="video_leave"
     >
@@ -47,7 +47,6 @@
         {{ i18n_t('common.loading')}}
         <!-- 数据加载中... 请稍后 -->
       </div>
-
       <iframe
         id="video-iframe"
         class="video-iframe fit"
@@ -60,7 +59,7 @@
         scrolling="no"
         allowfullscreen='true' allow="autoplay"
       ></iframe>
-      <template v-if="show_video_replay && play_media.media_type === 'video' && (vx_layout_cur_page.cur !== 'details' && !is_esports)">
+      <template v-if="show_video_replay && play_media.media_type === 'video' && (vx_layout_cur_page !== 'details' && !is_esports)">
         <!--（精彩/收起）回放 -->
         <div
           v-if="!(events_list.length === 0 && current_events_type === 0)"
@@ -134,7 +133,7 @@ import noVideo from "src/components/match-detail/match_info/no_video.vue"
 import videoReplayError from "src/components/match-detail/match_info/video_replay_error.vue"
 import { IconWapper } from 'src/components/icon'
 import info from "src/components/match-detail/match_info/info.vue";
-import { i18n_t} from "src/core/index"
+import { i18n_t,format_second_ms} from "src/core/index"
 export default {
   mixins: [match_video],
   components: {
@@ -146,8 +145,8 @@ export default {
   },
   data(){
     return {
+      format_second_ms,
       i18n_t,
-      show_type:"info", //todo默认
       ctr_data:{ // 高清flv, 2:流畅m3u8 切换配置参数
       video_type:1 //1:高清flv, 2:流畅m3u8
       },
@@ -324,7 +323,7 @@ export default {
          width: 16px;
          height: 16px;
          background-size: 100%;
-         background-image: url('~public/image/common/svg/video_history_play.svg');
+         background-image: url('/yanzhou-pc/image/common/svg/video_history_play.svg');
          margin-right: 8px;
     }
     span{

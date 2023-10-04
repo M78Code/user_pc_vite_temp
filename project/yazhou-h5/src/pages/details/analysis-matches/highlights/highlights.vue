@@ -509,8 +509,6 @@ console.error(matchDetailData);
       .then(res => {
         if (res.code == 200 && lodash.get(res.data, 'eventList.length')) {
           events_list.value = res.data.eventList
-          // TODO: 后续修改调整 set_event_list
-          // set_event_list(res.data.eventList)
         }
       })
       .catch(err => {

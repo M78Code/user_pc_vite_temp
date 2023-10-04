@@ -9,6 +9,8 @@
     <!-- 投注中的蒙层，所有不能点击 -->
     <div v-if="get_bet_status == 2" class="fixed full-shadow2" @touchmove.prevent></div>
 
+    <div style="display: none;">{{ BetData.bet_data_class_version }} </div>
+
     <div class="content-box">
 
       <!-- 头部 -->
@@ -22,8 +24,8 @@
         </span>
         <!-- 右 自动接受跟好赔率 -->
         <span>
-          <i class="img2" :class="{ 'img3': BetData.bet_is_accept != 2 }" @click="toggle_accept"></i>
-          <span :class="{ 'auto-text': BetData.bet_is_accept == 2 }" class="yb_mx4 err-msg2" style="max-width:2.1rem"
+          <i class="img2" :class="{ 'img3': BetData.bet_is_accept }" @click="toggle_accept"></i>
+          <span :class="{ 'auto-text': BetData.bet_is_accept }" class="yb_mx4 err-msg2" style="max-width:2.1rem"
             @click="toggle_accept">{{ $t("ac_rules.auto") }}</span>
           <!-- <img src="image/wwwassets/bw3/svg/rules2.svg" @click="change_accept" class="img1" -->
           <img src="/public/yazhou-h5/image/bet/rules2.svg" @click="change_accept" class="img1"
@@ -315,6 +317,16 @@ const submit_order = (type) => {
   submit_handle()
 }
 
+//切换是否接受更好赔率
+const toggle_accept = () => {
+  BetData.set_bet_is_accept()
+}
+
+//更好赔率规则
+const change_accept=()=>{
+  
+}
+
 //是否有重复的球员id或者球队id，有的话要禁止串关
 const is_conflict = computed(() => {
   return false
@@ -500,7 +512,8 @@ onUnmounted(() => {
 /* ************** 接收更好赔率图标 ************** -S */
 .img2 {
   display: inline-block;
-  background: var(--q-color-com-img-bg-69) no-repeat center / contain;
+  background: url(/public\yazhou-h5\image\bet\select_b.svg) no-repeat center / contain;
+  // background: var(--q-color-com-img-bg-69) no-repeat center / contain;
   vertical-align: text-bottom;
   width: 0.14rem;
   height: 0.14rem;
@@ -508,7 +521,8 @@ onUnmounted(() => {
 
 /* ************** 选中状态 **************  */
 .img3 {
-  background-image: var(--q-color-com-img-bg-68);
+  background-image: url(/public\yazhou-h5\image\bet\select_a.svg);
+  // background-image: var(--q-color-com-img-bg-68);
 }
 
 /* ************** 接收更好赔率按钮 ************** -E */

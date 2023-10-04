@@ -769,6 +769,7 @@ export default {
         ...MatchDetailCalss.play_media,
         media_type
       }
+      
       MatchDetailCalss.set_play_media(media_info)
       MatchDetailCalss.set_match_details_params({media_type})      
       clearTimeout(this.route_jump_timer)
@@ -861,7 +862,8 @@ export default {
   * @param {function} callback  回调函数
   */
   get_video_refer(mid,callback){
-    let refer_url = lodash.get(window.BUILDIN_CONFIG,"live_domains[0]")
+    // let refer_url = lodash.get(window.BUILDIN_CONFIG,"live_domains[0]")
+    let refer_url = "https://prolivepc.sportxxx13ky.com"
     if(refer_url){
       callback(this.join_video_url(mid,refer_url))
       return
@@ -900,6 +902,7 @@ export default {
     url = encodeURI(url)
     //本地代码连生产时放开可播放大视频
     //url = 'https:' + url
+    console.log(url,'url');
     return url
   },
   /**
@@ -977,6 +980,7 @@ export default {
    * @return {undefined} undefined
    */
   set_play_media(mid,media_type){
+    
     MatchDetailCalss.set_play_media({
       mid,
       media_type

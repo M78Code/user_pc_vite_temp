@@ -15,6 +15,7 @@ export const details_main = () => {
 const router = useRouter();
 const route = useRoute();
   // 详情初始化接口数据处理
+
   const MatchDataWarehouseInstance = reactive(MatchDataWarehouse_H5_Detail_Common)
   // console.log("Store", store)
   // const state = store.getState()
@@ -86,6 +87,7 @@ const route = useRoute();
     show_go_back: false,
     init_event_timer_count: 0,
     timer1_: null,
+    timer2_: null,
     get_match_detail_timer: null,
     back_main_list_timer: null,
     axios_debounce_timer: null,
@@ -243,8 +245,7 @@ const route = useRoute();
    *@return {Undefined} undefined
    */
   const details_refresh = () => {
-    if (refreshing) return;
-
+    if (state_data.refreshing) return;
     const curr_tab = state_data.viewTab;
     if (curr_tab === "bet") {
       // 刷新 盘口赔率信息
@@ -257,7 +258,7 @@ const route = useRoute();
     } else {
     }
 
-    refreshing = true;
+    state_data.refreshing = true;
     if (timer2_) {
       clearTimeout(timer2_);
     }
@@ -276,7 +277,7 @@ const route = useRoute();
   };
   const api_interface = () => {
     // #TODO IMIT
-    //   useMittEmit(MITT_TYPES.EMIT_REF_API, 'details_refresh');
+      // useMittEmit(MITT_TYPES.EMIT_REF_API);
     // useMittEmit(MITT_TYPES.EMIT_REF_API, 'details_refresh')
   };
   /**
@@ -459,24 +460,25 @@ const route = useRoute();
    * @param {String} event_code 事件code
    */
   const get_football_replay = (event_code) => {
-    //   if ([sport_id.value, lodash.get(state_data.detail_data, 'csid')].includes('1')) {
-    //     const params = {
-    //       mid: route.params.mid,
-    //       device: 'H5',
-    //       eventCode: event_code
-    //     }
-    //     api_analysis.post_playback_video_url(params)
-    //         .then(res => {
-    //           if (res.code == 200 && lodash.get(res.data, 'eventList.length')) {
-    //             set_event_list(res.data.eventList)
-    //           }
-    //         })
-    //         .catch(err => {
-    //           console.error(err)
-    //         })
-    //         .finally(() => {
-    //         })
-    //   }
+      if ([sport_id.value, lodash.get(state_data.detail_data, 'csid')].includes('1')) {
+        const params = {
+          mid: route.params.mid,
+          device: 'H5',
+          eventCode: event_code
+        }
+        api_analysis.post_playback_video_url(params)
+            .then(res => {
+              if (res.code == 200 && lodash.get(res.data, 'eventList.length')) {
+                // 场景1: 头部刷新按钮触发时调接口返回数据存操作类
+                matchDetailCtr.value.set_playback_video_list(res.data.eventList)
+              }
+            })
+            .catch(err => {
+              console.error(err)
+            })
+            .finally(() => {
+            })
+      }
   };
   /**
    * 赛事详情页面接口(/v1/m/matchDetail/getMatchDetailPB)
@@ -868,14 +870,16 @@ const route = useRoute();
   const on_listeners = () => {
     // #TODO: IMIT
     state_data.emitters = [
-      // useMittOn(MITT_TYPES.EMIT_RESET_SET_HTON, info_icon_click_h),
+      useMittOn(MITT_TYPES.EMIT_RESET_SET_HTON, scrollMethod),
       // 刷新详情页头部信息;
       useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS, initEvent),
+      useMittOn(MITT_TYPES.EMIT_GET_ODDS_LIST, get_odds_list),
+      // useMittOn(MITT_TYPES.EMIT_REF_API, details_refresh),
       // // 拳击赛事级别关盘+当前时间(服务器时间)>=赛事开赛时间(mgt) 此时详情页拳击赛事切换下一场
       // useMittOn(MITT_TYPES.EMIT_CHANGE_DETAILS_MATCH, info_icon_click_h),
       // useMittOn(MITT_TYPES.EMIT_DETAILS_SKT, info_icon_click_h),
       // useMittOn(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, info_icon_click_h),
-      // useMittOn(MITT_TYPES.EMIT_ANA_SHOW, info_icon_click_h),
+      useMittOn(MITT_TYPES.EMIT_ANA_SHOW, ana_show),
       // // 0号模板点击收起的时候，要调整滚动距离
       // useMittOn(MITT_TYPES.EMIT_SET_DETAILDS_SCROLL, info_icon_click_h),
       // useMittOn(MITT_TYPES.EMIT_MATCHINFO_LOADING, info_icon_click_h),

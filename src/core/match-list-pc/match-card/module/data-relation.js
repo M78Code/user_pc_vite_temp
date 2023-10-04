@@ -150,7 +150,7 @@ export const compute_match_list_style_obj_and_match_list_mapping_relation_obj =
       //  let template_id = MenuData.match_tpl_number
       let reset_template_config_fn =
         MATCH_LIST_TEMPLATE_CONFIG[
-          "template_" + compute_sport_id(current_csid) + "_config"
+          "template_1_config"
         ]["reset_match_template_config"];
       if (reset_template_config_fn) {
         reset_template_config_fn();
