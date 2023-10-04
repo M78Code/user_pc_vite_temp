@@ -209,7 +209,7 @@ const order_class = () => { }
 <style lang="scss" scoped>
 /**投注记录内容样式*/
 .bet-record-container {
-  ::v-deep .empty-wrap .img {
+  :deep(.empty-wrap) .img {
     margin-top: 90px;
     margin-bottom: 0px;
     width: 110px !important;
@@ -267,14 +267,11 @@ const order_class = () => { }
     cursor: pointer;
   }
 
-  /* ::v-deep .load-data-wrap
-    &.not-list
-      // margin-top: 80% */
   .right-arrow {
     position: absolute;
     margin-left: 190px;
   }
-  ::v-deep .empty-wrap {
+  :deep(.empty-wrap) {
     margin-top: -200px;
     img {
       width: 100px !important;
