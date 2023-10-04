@@ -195,7 +195,7 @@ const open = (position) => {
 }
 
 // 是否是电竞
-const is_DJ_show = computed(() => MenuData.get_menu_type() == 3000 || (MenuData.get_menu_type() == 28 && [100, 101, 102, 103, 104].includes(+get_detail_data.value.csid)))
+const is_DJ_show = computed(() => MenuData.get_menu_type() == 3000 || (MenuData.get_menu_type() == 28 && [100, 101, 102, 103, 104].includes(+lodash.get(get_detail_data.value, 'csid'))))
 
 </script>
 

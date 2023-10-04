@@ -22,6 +22,7 @@
 
 <script>
 import counting_down from 'project_path/src/components/common/counting-down.vue'
+import { useRoute } from "vue-router"
 export default {
   name: "stage_child_101",
   data() {
@@ -33,8 +34,11 @@ export default {
     "counting-down": counting_down,
   },
   props: ["detail_data"],
-  methods: {
-  },
+  setup(props, event) {
+    const route = useRoute()
+    console.error(props.detail_data, route);
+  }
+  
 };
 </script>
 

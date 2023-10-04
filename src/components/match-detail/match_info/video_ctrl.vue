@@ -170,7 +170,7 @@ import { computed, onMounted, onUnmounted, ref, watch } from "vue";
 import MenuData from "src/core/menu-pc/menu-data-class.js";
 import { IconWapper } from "src/components/icon";
 import refresh from "src/components/refresh/refresh.vue";
-import { i18n_t, get_match_status,UserCtr ,GlobalSwitchClass} from "src/core/index";
+import { i18n_t, get_match_status,UserCtr ,GlobalSwitchClass,MatchDetailCalss} from "src/core/index";
 import { compute_css } from "src/core/server-img/index.js";
 import { debounce_throttle_cancel } from "src/core/utils/module/other.js";
 import lodash from "lodash";
@@ -229,7 +229,17 @@ const media_icons = [
     icon: "pc-img-match-info-animation0",
   },
 ];
+const  isTop  = ref(MatchDetailCalss.isTop) //视频置顶
+const  play_media = ref(MatchDetailCalss.play_media) // 视频播放信息
+const  details_params = ref(MatchDetailCalss.params) // 赛事详细参数（赛事/联赛/球类/直播类型）
 //todo
+//  
+//   vx_set_match_details_params: "set_match_details_params",
+//   //收起右侧详情 展开多列玩法
+//   set_unfold_multi_column:"set_unfold_multi_column",
+//   // 设置获取视频是否展开状态
+//   vx_set_is_fold_status: "set_is_fold_status"
+
 const vx_play_media = {
   mid: "2771471",
   media_type: "info",
@@ -344,20 +354,7 @@ watch(
 // );
 
 // ...mapActions({
-//   // 视频置顶开关
-//   set_isTop: "set_isTop",
-//   // 视频播放信息
-//   vx_set_play_media: "set_play_media",
-//   // ---未使用
-//   vx_set_video_init: "set_video_init",
-//   // ---未使用
-//   set_right_zoom: "set_right_zoom",
-//   // 赛事详细参数（赛事/联赛/球类/直播类型）
-//   vx_set_match_details_params: "set_match_details_params",
-//   //收起右侧详情 展开多列玩法
-//   set_unfold_multi_column:"set_unfold_multi_column",
-//   // 设置获取视频是否展开状态
-//   vx_set_is_fold_status: "set_is_fold_status"
+
 // }),
 /**
  * @Description:切换视频
@@ -366,17 +363,16 @@ watch(
 const switch_video = (match) => {
   this.team_height = this.height0;
   if (match.mid == props.match_info.mid) return;
-
   let { mid, tid, csid: sportId } = match;
   let play_id = this.vx_details_params.play_id;
-  this.vx_set_match_details_params({
+  MatchDetailCalss.set_match_details_params({
     mid,
     tid,
     sportId,
     play_id,
     media_type: this.vx_play_media.media_type,
     category: this.$route.name == "details" ? 1 : 0,
-  });
+  })
   if (this.$route.name == "details") {
     this.$router.push({
       name: "details",

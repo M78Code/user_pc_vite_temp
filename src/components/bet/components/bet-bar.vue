@@ -12,9 +12,9 @@
       <span class="bet-num">{{ BetData.bet_single_list.length}}</span>
       <!-- 投注单 -->
       <span class="yb_fontsize16 yb_ml8">
-        <template v-if="get_bet_status != 0"><span>{{}}</span></template>
+        <template v-if="get_bet_status != 0"><span>{{$t('bet.bet_record')}}</span></template>
         <template v-else>
-          <span class="odds-wrapper">{{}}
+          <span class="odds-wrapper">{{$t("footer_menu.bet_record")}}
             <span class='odds'>{{ mix_sum_odds }}</span>
           </span>
         </template>
@@ -24,7 +24,7 @@
     <div class="row items-center" v-else>
       <div class="account-wrap yb_pr16 text-right relative-position" @click.stop="get_balance">
         <!-- 账户余额 -->
-        <p class="text-right account-p">{{}}</p>
+        <p class="text-right account-p">{{$t("bet.account_balance")}}</p>
         <p class="yb_fontsize16">{{ format_money2(BetData.balance) }}</p>
       </div>
       <!-- 金额刷新按钮 -->
@@ -163,4 +163,90 @@ onUnmounted(() => {
 </script>
 
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.bet-bar {
+  width: 100%;
+  height: 0.5rem;
+  padding: 0 0.2rem 0 0.12rem;
+  border-radius: 0.16rem 0.16rem 0 0;
+  border-width: 1px 1px 0 1px;
+  border-style: solid;
+  position: relative;
+
+  &::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 0.48rem;
+    transform: translateY(-50%);
+    width: 1px;
+    height: 0.2rem;
+    border-radius: 0.5px;
+    background: rgba(0, 0, 0, 0.1);
+  }
+
+  .odds-wrapper {
+    display: inline-flex;
+    align-items: center;
+
+    .odds {
+      margin-left: 0.04rem;
+    }
+  }
+
+  img {
+    width: 0.12rem;
+    height: 0.12rem;
+    opacity: 0.7;
+  }
+}
+
+.fixed-bottom {
+  position: fixed;
+  z-index: 400;
+  bottom: -2px;
+}
+
+.bet-num {
+  width: 0.2rem;
+  line-height: 0.2rem;
+  height: 0.2rem;
+  line-height: 0.2rem;
+  padding-top: 1px;
+  text-align: center;
+  font-size: 0.14rem;
+  border-radius: 100%;
+  display: inline-block;
+}
+
+.account-p {
+  font-size: 0.11rem;
+  margin-bottom: -0.04rem;
+}
+
+// 刷新按钮
+@keyframes loading-ring-animate {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.refesh {
+  width: 0.12rem;
+  height: 0.12rem;
+  background: url(/public\yazhou-h5\image\bet\shuaxin.svg) no-repeat center / 100% 100%;
+  // background: var(--q-color-com-img-bg-58) no-repeat center / 100% 100%;
+}
+
+.refesh2 {
+  animation: loading-ring-animate 0.5s linear;
+}
+
+.arrow {
+  transform: scale(-1);
+}</style>

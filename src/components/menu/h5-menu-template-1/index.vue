@@ -76,7 +76,6 @@
                     <!-- :class="[get_sport_icon(selected_sub_menu_i_list.includes(sub_i)), `${'s' + format_type(sub)}`]" -->
 
                     <div class="sport-match-count" v-show="two_menu_show(item)">
-
                       {{ show_favorite_list ? '' : item.ct ? item.ct : 0 }}
                     </div>
                   </div>
@@ -156,7 +155,7 @@
 </template>
 <script setup>
 import subMenuSpecially from "./sub-menu-specially.vue";
-import { ref, watch, computed, onBeforeUnmount, } from "vue";
+import { ref, watch, nextTick, computed, onBeforeUnmount, } from "vue";
 import { i18n_t, compute_css, GlobalAccessConfig, useMittOn, MITT_TYPES, UserCtr, MenuData } from "src/core/index.js";
 import base_data from "src/core/base-data/base-data.js";
 import { useRoute, useRouter } from "vue-router";
@@ -168,27 +167,27 @@ const { menu_type, update_time } =
   MenuData;
 //是否 滚球
 const is_scroll_ball = computed(() => {
-  return MenuData.is_scroll_ball() && menu_type.value;
+  return MenuData.is_scroll_ball(menu_type.value);
 });
 //是否 电竞
 const is_export = computed(() => {
-  return MenuData.is_export() && menu_type.value;
+  return MenuData.is_export(menu_type.value)
 });
 //是否 赛果
 const is_results = computed(() => {
-  return MenuData.is_results() && menu_type.value;
+  return MenuData.is_results(menu_type.value);
 });
 //是否 串关
 const is_mix = computed(() => {
-  return MenuData.is_results() && menu_type.value;
+  return MenuData.is_mix(menu_type.value)
 });
 //是否 冠军
 const is_kemp = computed(() => {
-  return MenuData.is_kemp() && menu_type.value;
+  return MenuData.is_kemp(menu_type.value);
 });
 //是否 禁足
 const is_jinzu = computed(() => {
-  return MenuData.is_jinzu() && menu_type.value;
+  return MenuData.is_jinzu(menu_type.value);
 });
 const show_favorite_list = ref(UserCtr.show_favorite_list)//是否收藏
 const route = useRoute();
@@ -335,12 +334,14 @@ async function set_menu_lv2(item, index, type = "click") {
       dj_back_img(item.mi)
       break
   }
+
 }
 /**
 /**
  * 三级菜单事件
  */
 function set_menu_lv3(item, index, type = "click") {
+  console.log(item.field1)
   //点击当前 就不做什么
   if (
     MenuData.current_lv_3_menu &&
@@ -391,7 +392,6 @@ const format_type = (id) => {
   if ([2100, 2101, 2103, 2102].includes(+id?.mi)) return +id?.mi
   return MenuData.recombine_menu_bg(id, true)
 }
-
 /**
   * 根据 球类型 获取图标
   * @param {boolean} is_focus 是否选中
