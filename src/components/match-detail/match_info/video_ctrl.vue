@@ -467,10 +467,7 @@ const toggle_play_media = (media_type) => {
         {
           mid, media_type, time;
         }
-        store.dispatch({
-          type: "SET_PLAY_MEDIA",
-          data: { media_type, mid, time: Date.now() },
-        });
+        MatchDetailCalss.set_play_media( { media_type, mid, time: Date.now() })
       }, 50);
     }
   }

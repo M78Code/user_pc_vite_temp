@@ -5,8 +5,6 @@ import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-c
 import { update_match_time } from "src/core/bet/common-helper/module/common-sport.js";
 import  { computed_background } from  "src/core/constant/config/csid.js"
 import {
-  loadLanguageAsync,
-  compute_css,
   useMittOn,
   MITT_TYPES,
   // MenuData,
@@ -26,6 +24,7 @@ import detailUtils from "src/core/match-detail/match-detail-pc/match-detail.js";
 import { reactive, toRefs, ref, onMounted, onUnmounted, computed } from "vue";
 import store from "src/store-redux/index.js";
 import MenuData from "src/core/menu-pc/menu-data-class.js";
+
 let state = store.getState();
 export const useRightDetails = (props) => {
   //视频是否展开状态
@@ -701,15 +700,13 @@ export const useRightDetails = (props) => {
     //      play_id,
     //      time:new Date()*1,
     //    });
-    store.dispatch({
-      type: "SET_PLAY_MEDIA",
-      data: {
-        mid,
-        media_type,
-        play_id,
-        time: new Date() * 1,
-      },
-    });
+    MatchDetailCalss.set_play_media({
+      mid,
+      media_type,
+      play_id,
+      time: new Date() * 1,
+    })
+
     //  }
   };
   /**
@@ -852,22 +849,15 @@ export const useRightDetails = (props) => {
             //同步赛事时间
             update_match_time({ mid, mst, mstst, mststs });
             let { media_type, play_id } = allData.details_params;
-            store.dispatch({
-              type: "SET_PLAY_MEDIA",
-              data: {
-                mid: data.mid,
-                media_type,
-                play_id,
-                time: new Date() * 1,
-              },
-            });
-
+            // MatchDetailCalss.set_play_media( {
+            //   mid: data.mid,
+            //   media_type,
+            //   play_id,
+            //   time: new Date() * 1,
+            // })
             allData.load_data_state = "data";
             // 保存数据,用于接口报错时填充
-            store.dispatch({
-              type: "SET_ACTIVE_DETAIL",
-              data: lodash.cloneDeep(allData.match_infoData),
-            });
+            MatchDetailCalss.set_active_detail(lodash.cloneDeep(allData.match_infoData) )
           } else {
             countMatchDetail();
           }
@@ -1232,7 +1222,6 @@ export const useRightDetails = (props) => {
 //   //    // 获取当前菜单类型
 //   //    vx_cur_menu_type: "get_cur_menu_type",
 //   //    vx_get_bet_mode: "get_bet_mode", // 投注模式
-//   //    vx_get_bet_item_lock: "get_bet_item_lock", // 投注项是否要锁
 //   //    // 获取多语言是否变化
 //   //    vx_get_lang_change: "get_lang_change",
 //   //    // 赛事列表排序 1:按联赛排序 2:按时间排序

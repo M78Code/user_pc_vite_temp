@@ -198,7 +198,7 @@
           <!-- 热门推荐 -->
           <hot  v-if="GlobalSwitchClass.global_switch.hot_recommend"/>
           <!-- 近期关注 -->
-          <!-- <recents v-if="!is_esports && GlobalSwitchClass.global_switch.recent_switch" /> -->
+          <recents v-if="!is_esports && GlobalSwitchClass.global_switch.recent_switch" />
         </div>
         <!--晒单列表-->
         <!-- <saidan-list
@@ -262,7 +262,7 @@
 </template>
 <script setup>
 import vScrollArea from "project_path/src/components/v-scroll-area/v-scroll-area.vue";
-// import recents from "src/components/match-detail/panel/recents.vue";
+import recents from "src/components/match-detail/panel/recents.vue";
 import {
   i18n_t,
   MITT_TYPES,
@@ -287,9 +287,11 @@ const route = useRoute();
 import LoadData from "project_path/src/components/load-data/load-data.vue";
 import store from "src/store-redux/index.js";
 import lodash from "lodash";
+import BetData from "src/core/bet/class/bet-data-class.js";
 let state = store.getState();
 // 获取右侧布局类型
 const cur_expand_layout = ref(state.layoutReducer.cur_expand_layout);
+const bet_item_lock  = ref(BetData.bet_item_lock) 
 const {
   handicap_this,
   show_load_status,

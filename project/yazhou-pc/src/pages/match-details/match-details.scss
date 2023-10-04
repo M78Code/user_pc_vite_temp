@@ -22,7 +22,7 @@
     .league-rank {
       .title {
         background-image: var(--q-gb-bg-lg-17);
-        color: var(--q-match-resluts-t-c-1);
+        color: var(--q-gb-t-c-4);
       }
     }
     /**列表头部 */
@@ -648,7 +648,7 @@
             }
           }
           span {
-            color: var(--q-match-resluts-t-c-1);
+            color: var(--q-gb-t-c-4);
           }
         }
         .status-tips,
@@ -670,7 +670,7 @@
         .item-title {
           background: var(--q-gb-bg-lg-17);
           border-bottom: 1px solid var(--q-gb-bd-c-8);
-          color: var(--q-match-resluts-t-c-1);
+          color: var(--q-gb-t-c-4);
           i {
             &::before {
               color: var(--q-gb-t-c-16);
@@ -746,7 +746,7 @@
           background: var(--q-gb-bg-c-11);
           .wrap-img {
             span {
-              color: var(--q-match-resluts-t-c-1);
+              color: var(--q-gb-t-c-4);
               font-weight: 600;
             }
           }
@@ -767,7 +767,7 @@
         .item-title {
           background: var(--q-gb-bg-lg-17);
           border-bottom: 1px solid var(--q-gb-bd-c-8);
-          color: var(--q-match-resluts-t-c-1);
+          color: var(--q-gb-t-c-4);
           i {
             &::before {
               color: var(--q-gb-t-c-16);
@@ -1018,22 +1018,22 @@
       opacity: 0.96;
       background-image: var(--q-gb-bg-lg-19);
       .panel-title {
-        color: var(--q-match-resluts-t-c-1);
+        color: var(--q-gb-t-c-4);
       }
     }
     .wrap-chatroom {
       background: var(--q-gb-bg-c-11);
-      color: var(--q-match-resluts-t-c-1);
+      color: var(--q-gb-t-c-4);
       border: 1px solid var(--q-gb-bd-c-8);
       .chat-scroll-area {
         opacity: 0.96;
         background-image: var(--q-gb-bg-lg-7);
         border-top: 1px solid var(--q-gb-bd-c-8);
         .q-message-name {
-          color: var(--q-match-resluts-t-c-1);
+          color: var(--q-gb-t-c-4);
         }
         .q-message-text-content {
-          color: var(--q-match-resluts-t-c-1);
+          color: var(--q-gb-t-c-4);
         }
         .q-message-text-content--sent {
           color: #fff;
@@ -1119,16 +1119,16 @@
           box-shadow: 0px 2px 4px 0px rgb(61 114 250 / 50%) !important;
         }
         .item-bet-handicap {
-          color: var(--q-match-resluts-t-c-1);
+          color: var(--q-gb-t-c-4);
         }
         .item-bet-name {
           color: var(--q-gb-t-c-16);
           .part2 {
-            color: var(--q-match-resluts-t-c-1);
+            color: var(--q-gb-t-c-4);
           }
         }
         .item-bet-odds {
-          color: var(--q-match-resluts-t-c-1);
+          color: var(--q-gb-t-c-4);
         }
         .follow-heart {
           background-image: var(--qq--chatroom-icon-12); //todo `url(${preffix}/image/yabo/svg/like_order_day.svg)`,
@@ -1215,17 +1215,17 @@
       }
       .item-top {
         //   color: #FFFFFF;
-        color: var(--q-match-resluts-t-c-1);
+        color: var(--q-gb-t-c-4);
   
         .home-vs-away {
           // color: #FFFFFF;
-          color: var(--q-match-resluts-t-c-1) !important;
+          color: var(--q-gb-t-c-4) !important;
           &::before {
             background: #4276fb !important;
           }
         }
         .middle-span {
-          color: var(--q-match-resluts-t-c-1) !important;
+          color: var(--q-gb-t-c-4) !important;
         }
       }
       .show-bet-wrapper {
@@ -1339,7 +1339,7 @@
           border-top-color: var(--q-match-resluts-bg-c-4) !important;
         }
         .tips-text {
-          color: var(--q-match-resluts-t-c-1);
+          color: var(--q-gb-t-c-4);
         }
         .btn-cancel-tips {
           background-image: linear-gradient(
@@ -1356,7 +1356,7 @@
       .chat-conditions-tips {
         background: var(--q-match-resluts-bg-c-4);
         border: 1px solid var(--q-match-resluts-bd-c-4);
-        color: var(--q-match-resluts-t-c-1);
+        color: var(--q-gb-t-c-4);
         &::before {
           border-top-color: var(--q-match-resluts-bd-c-4) !important;
         }

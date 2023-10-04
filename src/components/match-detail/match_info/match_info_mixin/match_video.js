@@ -228,7 +228,7 @@ export default {
         let callback_id = this.callback_id
         let { media_type } = this.play_media
 
-        let { mid, mms, mvs, varl, vurl, csid,lvs } = this.match_info
+        let { mid="", mms="", mvs="", varl="", vurl="", csid="",lvs="" } = this.match_info
         const {mid: last_mid, media_type: last_media_type} = this.last_media_info || {}
         
         // 非专题视频时需重置专题视频播放状态

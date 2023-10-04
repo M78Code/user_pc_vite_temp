@@ -270,7 +270,7 @@ export const useGetConfig = () => {
         .then((res) => {
           state.is_request = false;
           // 通知列表右侧详情，获取近期关注数据
-          // useMittEmit(MITT_TYPES.EMIT_GET_HISTORY);
+          useMittEmit(MITT_TYPES.EMIT_GET_HISTORY);
           const code = lodash.get(res, "code");
           const data = lodash.cloneDeep(lodash.get(res, "data"));
           console.log(res,'data');
