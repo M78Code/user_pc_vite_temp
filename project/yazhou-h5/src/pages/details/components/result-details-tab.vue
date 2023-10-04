@@ -93,7 +93,6 @@ const tab_data_init = () => {
 const result_tab = (index,tab_item) => {
     let search_term =route.query.search_term
     useMittEmit(MITT_TYPES.EMIT_CHANGE_TAB, true)
-    console.error(index, tab_item);
     if(item_index.value != index){
       item_index.value = tab_item.id === 4 ? 3 : index
     }

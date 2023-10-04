@@ -53,8 +53,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";
 import { i18n_t } from "src/boot/i18n.js";
 import compute_css from "src/core/server-img/other-img/index.js"
 import { compute_css_variables } from "src/core/css-var/index.js"
-//国际化
-console.error(compute_css({key: "h5-img-bet-record-close", theme: "local_dev"}));
+
 let { cathecticReducer, userInfoReducer, themeReducer } = store.getState()
 const store_cathectic = ref(cathecticReducer)
 

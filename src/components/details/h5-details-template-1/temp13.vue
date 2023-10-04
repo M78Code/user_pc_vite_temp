@@ -454,7 +454,7 @@ export default defineComponent({
     }
   }
   .slide-wrap-width-100{
-    width: 200%;
+    width: 100%;
   }
   .slide-wrap-width-50{
     width: 100%;
@@ -587,18 +587,19 @@ export default defineComponent({
 
   .ver-ali-top {
     vertical-align: top;
+    color: var(--q-gb-t-c-4);
   }
 
   .odd-color {
-
+    color: var(--q-gb-t-c-11);
   }
 
   .size-color {
-
+    color: var(--q-gb-t-c-11);
   }
 
   .size-color-wit {
-
+    color: var(--q-gb-t-c-14);
   }
 
   .details-bg5 {

@@ -147,7 +147,7 @@
 
               <!-- 回放视频标识logo -->
               <div class="replay-logo-wrap" v-if="is_full_screen">
-                <img src="image/bw3/svg/details/replay_logo.svg" />
+                <img src="/yazhou-h5/image/svg/details/replay_logo.svg" />
               </div>
 
               <template v-if="is_hengping">
@@ -209,6 +209,7 @@ import {
   onUnmounted,
   nextTick,
   watch,
+  defineAsyncComponent,
 } from 'vue'
 import lodash from 'lodash'
 // TODO: 后续修改调整
@@ -222,7 +223,7 @@ import { format_total_score } from "src/core/format/index.js"
 import { i18n_t, i18n_tc } from "src/boot/i18n.js";;
 import { useRoute } from "vue-router"
 import { MatchDataWarehouse_H5_Detail_Common as matchDetailData, MenuData } from "src/core/index";
-
+import sliderX from "project_path/src/pages/details/analysis-matches/components/slider-x.vue"
 // 队标视图
 // let teamImg = defineAsyncComponent(() => import("project_path/src/pages/details/team-img.vue"))
 // 全屏播放时，顶部title
@@ -230,7 +231,6 @@ import { MatchDataWarehouse_H5_Detail_Common as matchDetailData, MenuData } from
 // 事件类型菜单
 // let tab = defineAsyncComponent(() => import("project_path/src/pages/analysis-matches/components/tabs.vue"))
 // 精彩回放视频滚动列表
-// let sliderX = defineAsyncComponent(() => import("project_path/src/pages/analysis-matches/components/slider-x.vue"))
 export default {
   name: "highlights",
   directives: {
@@ -250,6 +250,9 @@ export default {
         }
       }
     }
+  },
+  components: {
+    sliderX,
   },
 setup(props, context){
   let route = useRoute()
@@ -504,7 +507,6 @@ console.error(matchDetailData);
     }
     api_analysis.post_playback_video_url(params)
       .then(res => {
-        console.error(res);
         if (res.code == 200 && lodash.get(res.data, 'eventList.length')) {
           events_list.value = res.data.eventList
           // TODO: 后续修改调整 set_event_list
@@ -568,7 +570,6 @@ console.error(matchDetailData);
   const set_full_screen = () => {
     let data = {}
     if (is_full_screen.value) {
-      // TODO: 后续修改调整  set_event_list  set_event_list 
       is_full_screen.value = false
       is_dp_video_full_screen.value = false
 
@@ -586,7 +587,7 @@ console.error(matchDetailData);
       is_full_screen.value = true
       is_dp_video_full_screen.value = true
 
-      is_hengping.value = true
+      // is_hengping.value = true
       browser_full_screen()
       screen.orientation && screen.orientation.lock('landscape')
 
@@ -595,9 +596,6 @@ console.error(matchDetailData);
         full_screen_portrait: 1
       }
     }
-    is_full_screen.value = !is_full_screen.value
-
-
     document.getElementById('replayIframe').contentWindow.postMessage(data, '*')
   }
   // 更新slider信息
@@ -668,7 +666,6 @@ console.error(matchDetailData);
   }
   // 精彩回播配置信息
   watch(() => UserCtr.user_info.merchantEventSwitchVO, (res) => {
-    console.error(res);
     // handler = (res) => {
     // tab按钮开关
     // TODO:  国际化后续修改调整
@@ -676,10 +673,10 @@ console.error(matchDetailData);
       { title: i18n_t('footer_menu.all'), code: '0' },
       { title: i18n_t('match_result.goal'), code: '1' },
     ]
-    if (res.cornerEvent) {
+    if (res && res.cornerEvent) {
       new_tab_list.push({ title: i18n_t('match_result.corner_kick'), code: '2' })
     }
-    if (res.penaltyEvent) {
+    if (res && res.penaltyEvent) {
       new_tab_list.push({ title: i18n_t('football_playing_way.penalty_cards'), code: '3' })
     }
     tab_list.value = new_tab_list
@@ -774,7 +771,6 @@ console.error(matchDetailData);
       is_dp_video_full_screen.value = false
       window.removeEventListener("message", handleMessage);
   })
-  console.error(get_detail_data.value.csid);
   return {
     get_football_replay_timer,
     update_slider_index_timer,

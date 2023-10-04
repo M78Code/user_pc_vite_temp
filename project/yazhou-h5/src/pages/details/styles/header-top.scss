@@ -96,7 +96,7 @@
 
 .score-style {
   font-size: 0.26rem;
-  // color: $details-header-team-name;
+  color: var(--q-gb-t-c-14);
   letter-spacing: 0;
   text-align: center;
   font-weight: 500;
@@ -113,6 +113,7 @@
   padding: 0 0.2rem;
   justify-content: space-between;
   padding-top: 0.13rem;
+  color: var(--q-gb-t-c-14);
 }
 
 .name-wrap {

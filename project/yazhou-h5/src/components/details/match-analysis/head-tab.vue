@@ -38,7 +38,6 @@ let get_detail_data = inject("get_detail_data", {})
       default: () => [],
     }
   })
-  console.error(props);
   const emit = defineEmits(['tab_click'])
   const tabIndex = ref(0)
   const show_tab = ref(true)

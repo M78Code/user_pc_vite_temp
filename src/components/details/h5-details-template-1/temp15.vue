@@ -181,7 +181,7 @@ export default defineComponent({
 
   .every4 {
     flex-basis: 25%;
-
+    color: var(--q-gb-t-c-11);
     // &:nth-child(n+5){
     //   border-bottom: 1px solid var(--q-color-border-color-56);
     // }
