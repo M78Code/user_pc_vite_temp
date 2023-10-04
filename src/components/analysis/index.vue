@@ -358,7 +358,7 @@ export default {
 
       &.active {
         background: transparent;
-        border-bottom-color: var(--qq--analysis-bd-color-3);
+        border-bottom-color: var(--q-analysis-color-16);
         color: var(--qq--analysis-text-color-4);
         font-family: PingFangSC-Medium;
       }
