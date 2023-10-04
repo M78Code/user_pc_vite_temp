@@ -19,7 +19,7 @@
 // import { mapGetters } from "vuex";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import store from "src/store-redux/index.js";
-import { reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
+import { reactive,defineComponent, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
 export default defineComponent({
   name: "football_events",
 
@@ -41,8 +41,8 @@ export default defineComponent({
 
       // 原 mounted
       // #TODO $root
-      emitters = [
-        useMittOn(MITT_TYPES.EMIT_FOOTBALL_EVENTS, info_icon_click_h).off,
+      data.emitters = [
+        useMittOn(MITT_TYPES.EMIT_FOOTBALL_EVENTS, football_events_handle).off,
       ]
       // useMittOn(MITT_TYPES.EMIT_FOOTBALL_EVENTS, football_events_handle);
     },);
@@ -60,26 +60,28 @@ export default defineComponent({
     });
     const calc_name = computed(() => {
       let { man, mhn } = get_detail_data
-      return obj.homeAway == 'home' ? man : mhn
+      return data.obj.homeAway == 'home' ? man : mhn
     });
     const calc_time = computed(() => {
-      let a = Math.floor(obj.secondsFromStart / 60), b = ('' + obj.secondsFromStart % 60).padStart(2, 0)
+      let a = Math.floor(data.obj.secondsFromStart / 60), b = ('' + data.obj.secondsFromStart % 60).padStart(2, 0)
       return `${a}'${b}'`
     });
+
+    let timer = null;
     /**
      *@description ws处理函数
      *@param {Object} obj ws数据对象
      */
     const football_events_handle = (obj) => {
-      obj = obj
-      is_shoe = true
+      data.obj = obj
+      data.is_shoe = true
       timer = setTimeout(() => {
-        is_shoe = false
+        data.is_shoe = false
       }, 6000);
     };
     onUnmounted(() => {
       // #TODO $root
-      emitters.map((x) => x())
+      data.emitters.map((x) => x())
       useMittOn(MITT_TYPES.EMIT_FOOTBALL_EVENTS, football_events_handle).off;
       clearTimeout(timer)
       timer = null
