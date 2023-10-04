@@ -62,8 +62,10 @@ const MenuData = IS_PC ? MenuData_PC : MenuData_H5;
 const MatchListCard = IS_PC ? MatchListCard_PC : MatchListCard_H5;
 const MatchListCardData = IS_PC ? MatchListCardData_PC : MatchListCardData_H5;
 
-//=================================     数据仓库=================================
+//=================================     pc全局开关类 =================================
+import  GlobalSwitchClass  from "src/core/global/global.js";
 
+//=================================     数据仓库=================================
 import MatchDataBase from "src/core/data-warehouse/match-ctr/match-ctr.js";
 
 /**
@@ -119,6 +121,7 @@ const MatchDataWarehouse_PC_List_Common = new MatchDataBase({
 const MatchDataWarehouse_PC_Detail_Common = new MatchDataBase({
   name_code: "MatchDataWarehouse_PC_Detail_Common",
 });
+
 
 //============================================ H5 ,PC 分割线  ====================================================
 
@@ -241,5 +244,6 @@ export {
   MatchDataWarehouse_H5_Detail_Jingxuan,
   LayOutMain_pc,
   compute_css_variables,
-  compute_css
+  compute_css,
+  GlobalSwitchClass
 };

@@ -173,3 +173,91 @@ onUnmounted(() => {
 })
 
 </script>
+
+<style lang="scss" scoped>
+.chat-wrap {
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+  .round {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 30px 0;
+    .knob {
+      margin: 0 10px;
+    }
+  }
+  .line {
+    display: flex;
+    .item-line {
+      text-align: center;
+      width: 258px;
+      flex: 1;
+      .line-wrap {
+        display: flex;
+        align-items: center;
+      }
+      .bar-progress {
+        position: relative;
+        margin: 0 6px;
+        width: 100%;
+        height: 6px;
+        background: var(--qq--yb-bg-color19);
+        border-radius: 5px;
+        .progress-content {
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 6px;
+          background: var(--qq--right-match-home-score-color);
+          border-radius: 5px 0 0 5px;
+        }
+      }
+      .chat-label {
+        color: var(--qq--analysis-text-color-1);
+      }
+    }
+  }
+  .knob-label {
+    font-size: 12px;
+    color: var(--qq--analysis-text-color-2);
+    padding: 0 10%;
+    text-align: center;
+  }
+  .chat-label {
+    font-size: 16px;
+  }
+}
+::v-deep {
+  .text-orange {
+    color: var(--qq--yb-bg-color19) !important;
+  }
+  .text-blue {
+    color: var(--qq--right-match-home-score-color) !important;
+  }
+}
+
+.num_zero {
+  span.text-blue,
+  span.text-orange {
+    color: var(--qq--analysis-text-color-1) !important;
+  }
+  ::v-deep {
+    .text-blue {
+      color: var(--qq--right-match-home-score-color) !important;
+    }
+    .text-orange {
+      color: var(--qq--right-match-away-score-color) !important;
+    }
+  }
+}
+.line {
+  .line_num_zero {
+    .bar-progress,
+    .progress-content {
+      background: var(--qq--analysis-bg-color-10) !important;
+    }
+  }
+}
+</style>

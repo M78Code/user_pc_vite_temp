@@ -352,7 +352,7 @@ onUnmounted(() => {
         width: 60px;
         height: 24px;
         margin-right: 6px;
-        background: var(--qq--analysis-bg-color-1);
+        background: var(--q-analysis-color-16);
         border-radius: 2px;
         cursor: pointer;
         display: flex;

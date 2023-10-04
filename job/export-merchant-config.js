@@ -34,7 +34,7 @@ const PROJECT_MAP = {
 
 
 //提取项目名称对应是数字
-const PROJECT_NUM = PROJECT.split("-")[1];
+const PROJECT_NUM = PROJECT.split("_")[1];
 
 
 

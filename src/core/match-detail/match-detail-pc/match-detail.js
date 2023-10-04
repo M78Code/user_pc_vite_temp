@@ -5,6 +5,7 @@
  * @Description:
  */
 import lodash from "lodash";
+import { GlobalSwitchClass }  from "src/core"
 import GlobalAccessConfig from "src/core/access-config/access-config.js"
 //统计分析URL
 const signal_url = "https://s5.sir.swiftscore.com";
@@ -219,7 +220,7 @@ const format_mst_data = (mst) => {
  * @是否显示赛事分析统计版块
  * @param {Object} match_infoData 赛事详情数据
  * @return {boolean} 筛选后的玩法数据
- * @Description:get_global_switch 全局开关，到时候修改为状态管理引入
+ * @Description:global_switch 全局开关，到时候修改为状态管理引入
  */
 const show_wrap_total = (match_infoData) => {
   return (
@@ -227,7 +228,7 @@ const show_wrap_total = (match_infoData) => {
     [1, 2, 3, 4, 6, 5, 7, 9, 10].includes(
       +lodash.get(match_infoData, "csid")
     ) &&
-    get_global_switch.statistics_switch &&
+    GlobalSwitchClass.global_switch.statistics_switch &&
     match_infoData.cds !== "RC"
   );
 };

@@ -10,13 +10,11 @@ import { SessionStorage } from "src/core/utils/index.js"
 export default class MatchDetailCtr {
  
   constructor( ) {
-
-    // 初始化数据
     this.init();
   }
   /**
    * @description: 数据初始化
-   * @param {undefined} undefined
+   * @param {undefined} undefinedwatch(() => MatchDetailCalss.details_data_version.version, (val, old) =>
    * @return {undefined} undefined
    */
   init() {
@@ -76,8 +74,6 @@ export default class MatchDetailCtr {
     // 赛事详情数量
     this.match_detail_count = 0;
     this.history_random=1;
-    // 当前选中玩法id
-    this.tabs_active_index = 0;
             // 当前选中玩法对应的盘口玩法
     this.tabs_active_plays = [];
     this.detail_show_type =''//详情页 显示类型 play:滚球   today：今日  early：早盘
@@ -200,7 +196,7 @@ export default class MatchDetailCtr {
   // 设置详情版本变更
   set_details_data_version(){
     this.details_data_version.version = Date.now()
-    console.error(this.details_data_version.version,'this.details_data_version.value');
+    // console.error(this.details_data_version.version,'this.details_data_version.value');
   }
 
   /**

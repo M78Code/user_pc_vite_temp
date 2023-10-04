@@ -39,16 +39,14 @@ useRegistPropsHelper(component_symbol, need_register_props)
 
 const props = defineProps(['match'])
 const tabIndex = ref(1);
-const params = ref({}); // 接口请求参数 ??接口参数也要ref响应式?? 
-//api_analysis.get_match_analysise_data(params) 发起请求携带一个响应式参数???
 const lineupData = ref([]); // 情报数据
-
-params.value = { parentMenuId: 4, sonMenuId: 1, standardMatchId: props.match.mid }
+let params = {}
+params = { parentMenuId: 4, sonMenuId: 1, standardMatchId: props.match.mid }
 get_data()
 
 function tabClick(index) {
   tabIndex.value = index
-  params.value.sonMenuId = index
+  params.sonMenuId = index
   get_data()
 }
 
@@ -57,7 +55,7 @@ function tabClick(index) {
 */
 
 function get_data() {
-  api_analysis.get_match_analysise_data(params.value).then((res) => {
+  api_analysis.get_match_analysise_data(params).then((res) => {
     res = res.data
     let data = res.sThirdMatchInformationDTOList
     let lineupInfo = [[], [], []]
@@ -86,7 +84,7 @@ function get_data() {
 }
 
 onUnmounted(() => {
-  params.value = null;
+  params = null;
   lineupData.value = null;
 })
 

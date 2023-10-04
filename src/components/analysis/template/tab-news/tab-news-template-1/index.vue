@@ -250,7 +250,7 @@ onUnmounted(() => {
     }
   }
   .article_detail {
-    background: var(--qq--analysis-bg-color-1);
+    background: var(--q-analysis-color-16);
     border: 1px solid var(--qq--analysis-bd-color-4);
     border-radius: 8px;
     height: 100%;

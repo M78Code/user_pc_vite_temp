@@ -83,25 +83,33 @@ const get_match_list_by_mid_for_base_data_res = (mid, csid, type) => {
 	// 元数据
 	const { mi_tid_mids_res = {}, base_data_res = {} } = BaseData;
 	let matchs_list = [];
+
+	let current_type = type
+	if (MenuData.is_guanjun()) {
+		current_type = csid;
+	}
 	// 常规赛种/联赛  滚球 ld  未开赛 nd
-	let livedata =
-		((mi_tid_mids_res[mid] || {})[type] || []).map((item) => ({
+	let livedata = ((mi_tid_mids_res[mid] || {})[current_type] || []).map((item) => ({
 			tid: item.tid,
 			csid,
 			mids: item.mids.join(","),
 			mids_info: item.mids,
 		})) || [];
 	// 常规赛种 联赛 滚球 下面的赛事信息
+	console.log('MenuData.is_guanjun()111', base_data_res.matchsList);
+
 	livedata.filter((item) => {
 		let match_list =
 			(base_data_res.matchsList || []).find((page) =>
 				item.mids_info.includes(page.mid)
 			) || {};
+
 		// 空的不要
 		if (match_list.mid) {
 			matchs_list.push(match_list);
 		}
 	}) || [];
+	console.log('MenuData.is_guanjun()', mi_tid_mids_res);
 	return matchs_list;
 };
 // 使用元数据默认显示 后面替换
@@ -110,7 +118,7 @@ const set_base_data_init = () => {
 	// 当前的分类 左侧菜单数据 中间件数据
 	const {
 		menu_root,
-		left_menu_result: { lv2_mi, lv1_mi, has_mid_menu, guanjun },
+		left_menu_result: { lv2_mi, lv1_mi, has_mid_menu, guanjun, jinri_zaopan},
 		mid_menu_result: { mi, mif, root },
     menu_data_version,
 	} = MenuData;
@@ -181,7 +189,7 @@ const set_base_data_init = () => {
 				let mi_100_arr = [];
 				// 常规赛种/联赛  滚球
 				mew_menu_list_res.forEach((x) => {
-					if (x.mi * 1 < 300) { mi_100_arr.push("101" + "2" + x.mi.substring(1)); }
+					if (x.mi * 1 < 300) { mi_100_arr.push(midf + jinri_zaopan + x.mi.substring(1)); }
 				});
 				//常规赛事下 所以的滚球数据
 				mi_100_arr.forEach((item) => {
@@ -189,26 +197,28 @@ const set_base_data_init = () => {
 					matchs_list = [...matchs_list, ...livedata];
 				});
 			} else {
-				let mid_1 = "101" + "2" + ("" + midf).substring(1);
+				let mid_1 = midf + jinri_zaopan + ("" + midf).substring(1);
 				matchs_list = get_match_list_by_mid_for_base_data_res( mid_1, csid, "ld" );
 			}
 		} else if (MenuData.is_guanjun()) {
+
 			if (mi == 400) {
 				let mi_400_arr = [];
 				// 常规赛种/联赛  滚球
 				mew_menu_list_res.forEach((x) => {
 					if (x.mi * 1 < 300) {
-						mi_400_arr.push("101" + "2" + x.mi.substring(1));
+						mi_400_arr.push(midf + jinri_zaopan + x.mi.substring(1));
 					}
 				});
-				//常规赛事下 所以的滚球数据
+				//常规赛事下 所有的滚球数据
 				mi_400_arr.forEach((item) => {
 					let livedata = get_match_list_by_mid_for_base_data_res( item, csid, "ld" );
 					matchs_list = [...matchs_list, ...livedata];
 				});
 			} else {
-				let mid_1 = "101" + "2" + ("" + midf).substring(1);
+				let mid_1 = midf + '4';
 				matchs_list = get_match_list_by_mid_for_base_data_res( mid_1, csid, "ld" );
+
 			}
 		} else if (menu_root == 500) {
 			// 热门赛事
@@ -276,6 +286,7 @@ const set_base_data_init = () => {
 		mids_arr.push(String(match.mid));
 		match.api_update_time = ts1;
 	});
+	console.log('mids_arrmids_arr', matchs_list);
 	// 联赛数据
 	// set_match_base_info_by_mids_info(matchs_list, mids_arr, ts1);
 };

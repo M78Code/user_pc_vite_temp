@@ -75,10 +75,8 @@ export default defineComponent({
     const match_id = computed(() => {
       return route.params.mid || get_detail_data.mid
     });
-    
-    watch(() => MatchDetailCalss.details_data_version.version, (val, old) => {
-      console.error(MatchDetailCalss.details_data_version.version ,'sss');
-      current_category_id.value = lodash.get(MatchDetailCalss, "current_category_id", SessionStorage.get("DETAIL_TAB_ID"))
+    watch(() => matchDetailCtr.value.details_data_version.version, (val, old) => {
+      current_category_id.value = lodash.get(matchDetailCtr.value, "current_category_id", SessionStorage.get("DETAIL_TAB_ID"))
     })
    
     onMounted(() => {
@@ -156,7 +154,7 @@ export default defineComponent({
     ])
     // 移除相应监听事件
     onUnmounted(emitters_off)
-    console.error(current_category_id.value);
+    console.error(props.data_list);
     return {
       ...toRefs(data),
       match_id,
