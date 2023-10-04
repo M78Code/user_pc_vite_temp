@@ -85,14 +85,12 @@ const MatchDataWarehouseInstance = reactive(MatchDataWarehouse_H5_Detail_Common)
     //   // 获取列表页当前选中二级菜单时间
     //   "get_current_menu",
     //   "get_menu_type",
-    //   "get_uid",
     //   "get_detail_data",
     //   "get_goto_detail_matchid",
     //   "get_curr_sub_menu_type"
     // ]),
     //   "get_current_menu",
     //   "get_menu_type",
-    //   "get_uid",
     //   "get_detail_data",
     //   "get_goto_detail_matchid",
     //   "get_curr_sub_menu_type"
@@ -100,9 +98,6 @@ const MatchDataWarehouseInstance = reactive(MatchDataWarehouse_H5_Detail_Common)
       return ""
     })
    const get_menu_type = computed(() =>{
-      return ""
-    })
-   const get_uid = computed(() =>{
       return ""
     })
    const get_detail_data = computed(() =>{
@@ -156,7 +151,7 @@ const MatchDataWarehouseInstance = reactive(MatchDataWarehouse_H5_Detail_Common)
   onMounted(() => {
     // 默认加载赛事详情页面接口getMatchDetail
     get_match_detail_info()
-   
+   console.error('初始化数据');
     // 监听调用赛事详情页面接口
     useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS, get_match_detail_info);
     useMittOn(MITT_TYPES.EMIT_ANA_SHOW,ana_show);

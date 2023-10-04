@@ -210,6 +210,7 @@ onUnmounted(() => {
   width: 100vw;
   max-width:3.78rem;
   border-bottom: 1px solid #edeef1; //var(--q-gb-bg-c-13);
+  background-color: var(--q-gb-bg-c-15);
 }
 
 .menu-s {

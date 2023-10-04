@@ -4,6 +4,7 @@ export default {
   "detials-color-3": "#cfcfcf",
   "detials-color-4": "#4987fb",
   "detials-color-5": "#edeef1",
+  "detials-color-6": "#414655",
   // 详情页玩法集背景颜色
   "details-tab-bg-color": "#ffffff",
   // 详情页玩法模板背景颜色

@@ -1,6 +1,6 @@
 .highlights{
     position: relative;
-    z-index: 100;
+    z-index: 0;
   }
   .heade-wrapper {
     width: 100%;
@@ -148,7 +148,7 @@
         transition: height .3s ease-in-out;
         &.expand {
           height: 1.85rem;
-          border-left: 1px solid var(--q-gb-bd-c-13);
+          border-left: 1px solid var(--q-gb-bd-c-10);
   
           .video-wrapper {
             width: 100%;
@@ -516,6 +516,12 @@
       span {
         margin-right: .04rem;
       }
+      .time, .text {
+        color: #414655;//var(--q-detials-color-6);
+      }
+      .score {
+        color: var(--q-gb-t-c-11);
+      }
       .text-wrapper {
         max-width: 2.2rem;
         overflow: hidden;
@@ -546,6 +552,7 @@
         background-repeat: no-repeat;
         background-size: 100% 100%;
         vertical-align: sub;
+        background-image: url("public/image/svg/details/replay-red.svg");
       }
     }
     [class*=icon-flag-] {
