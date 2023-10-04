@@ -75,9 +75,8 @@ export default defineComponent({
     const match_id = computed(() => {
       return route.params.mid || get_detail_data.mid
     });
-    
-    watch(() => MatchDetailCalss.details_data_version.version, (val, old) => {
-      current_category_id.value = lodash.get(MatchDetailCalss, "current_category_id", SessionStorage.get("DETAIL_TAB_ID"))
+    watch(() => matchDetailCtr.value.details_data_version.version, (val, old) => {
+      current_category_id.value = lodash.get(matchDetailCtr.value, "current_category_id", SessionStorage.get("DETAIL_TAB_ID"))
     })
    
     onMounted(() => {

@@ -10,10 +10,11 @@ import { SessionStorage } from "src/core/utils/index.js"
 export default class MatchDetailCtr {
  
   constructor( ) {
+    this.init();
   }
   /**
    * @description: 数据初始化
-   * @param {undefined} undefined
+   * @param {undefined} undefinedwatch(() => MatchDetailCalss.details_data_version.version, (val, old) =>
    * @return {undefined} undefined
    */
   init() {
