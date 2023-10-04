@@ -170,7 +170,7 @@
               @mouseenter="collect_enter(i)"
               @mouseleave="collect_leave(i)"
             >
-              <icon name="icon-star" :class="{ active: item.mf }" size="14px" />
+              <icon-wapper name="icon-star" :class="{ active: item.mf }" size="14px" />
             </div>
             <div
               class="view-more wrap-icon"
@@ -178,14 +178,14 @@
               @click="go_detail(item)"
             >
               <span>{{ handicap_num(item.mc) }}</span>
-              <icon name="icon-triangle3" color="#99A3B1" size="14px" />
+              <icon-wapper name="icon-triangle3" color="#99A3B1" size="14px" />
             </div>
             <div
               class="wrap-icon hot"
               v-show="utils.is_show_sr_flg(item)"
               @click="sr_click_handle(item, 1)"
             >
-              <icon name="icon-signal" size="14px" color="#5A6074" />
+              <icon-wapper name="icon-signal" size="14px" color="#5A6074" />
               <q-tooltip
                 anchor="top middle"
                 self="center middle"
@@ -224,6 +224,7 @@
 const tooltip_style = 'background:rgba(0,0,0,0.8);padding:4px 5px;border-radius:0px;color:#fff'
 import { api_details, api_match } from "src/api/index";
 import { MatchProcessFullVersionWapper } from "src/components/match-process/index.js";
+import { IconWapper } from 'src/components/icon/index.js'
 import bet_item from "src/components/bet-item/bet_item.vue";
 // import skt_data_list_hot from "src/public/mixins/websocket/data/skt_data_list_hot.js";  todo  ws更新
 import detailUtils from "src/core/match-detail/match-detail-pc/match-detail.js";
@@ -243,10 +244,11 @@ import BetData from "src/core/bet/class/bet-data-class.js";
 import { onMounted, onUnmounted } from "vue";
 import { utils } from "src/core/utils/module/utils.js";
 export default {
-  // mixins: [skt_data_list_hot, details_mixins],
+  // mixins: [skt_data_list_hot],
   components: {
     "match-date": MatchProcessFullVersionWapper,
     "bet-item": bet_item,
+    IconWapper
   },
   data() {
     return {
@@ -720,7 +722,7 @@ export default {
       
       :deep(.c-bet-item.active ){
           .play-name {
-            color: var(--qq--yb-text-hover-color13) !important;
+            color: var(--q-gb-t-c-18) !important;
           }
         }
         :deep(.handicap-wrap){
@@ -756,14 +758,14 @@ export default {
       margin-right: 10px;
       width: 40px;
       height: 40px;
-      border: 1px solid var(--qq--carousel-handicap-item-border-color);
+      border: 1px solid var(--q-gb-bd-c-8);
       border-radius: 6px;
       &.hot {
         margin-right: auto;
         margin-left: 10px;
       }
       &:hover {
-        border: 1px solid var(--qq--wrap-icon-border-hover);
+        border: 1px solid var(--q-gb-bd-c-8);
         &.hot {
           i {
             color: #abbac8 !important;
@@ -779,7 +781,7 @@ export default {
         width: 423px;
       }
       &:hover {
-        border: 1px solid var(--qq--more-handle-border-color);
+        border: 1px solid var(--q-gb-bd-c-8);
       }
     }
   }

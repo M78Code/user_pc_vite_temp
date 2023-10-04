@@ -184,7 +184,9 @@ import { onMounted,computed,ref,onUnmounted, watch } from 'vue'
 import store from "src/store-redux/index.js";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/";
 import UserCtr from "src/core/user-config/user-ctr.js";
-import { i18n_t } from "src/boot/i18n.js"
+import { i18n_t,is_eports_csid } from "src/core"
+import { useRoute } from "vue-router";
+const {route} = useRoute()
 const filter_store = store.getState().filterReducer
 const noData = NoDataWapper
 const props = defineProps({
@@ -254,7 +256,11 @@ onUnmounted(()=>{
 const cur_state = computed(()=>{
   return props.state
 })
-
+//是否电子竞技
+const is_eports = computed(()=>{
+    return is_eports_csid(+route.params.csid)
+  }) 
+   
 /**
     * @description: 用户失效时,loading页面显示no data页面
     */

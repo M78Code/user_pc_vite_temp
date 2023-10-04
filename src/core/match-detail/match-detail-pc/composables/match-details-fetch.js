@@ -165,24 +165,17 @@ const get_matchInfo_fun = (loop_count, mid) => {
           //同步赛事时间
           update_match_time({ mid, mst, mstst, mststs });
           let { media_type, play_id } = details_params.value;
-          store.dispatch({
-            type: "SET_PLAY_MEDIA",
-            data: {
+          MatchDetailCalss.set_play_media({
               mid: data.mid,
               media_type,
               play_id,
               time: new Date() * 1,
-            },
+            
           });
-
           load_data_state.value = "data";
+  
           // 保存数据,用于接口报错时填充
-          store.dispatch({
-            type: "SET_ACTIVE_DETAIL",
-            data: lodash.cloneDeep(
-              lodash.get(MatchDetailsData.list_to_obj.mid_obj, str)
-            ),
-          });
+        MatchDetailCalss.set_active_detail((MatchDetailsData.list_to_obj.mid_obj, str))
         } else {
           // countMatchDetail();
         }
