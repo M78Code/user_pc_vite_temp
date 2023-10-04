@@ -54,8 +54,8 @@ export default {
     }
   },
   created() {
-    this.throttleSwipLeft = this.throttle(this.swipLeft, 500);
-    this.throttleSwipRight = this.throttle(this.swipRight, 500);
+    this.throttleSwipLeft = lodash.throttle(this.swipLeft, 500);
+    this.throttleSwipRight = lodash.throttle(this.swipRight, 500);
   },
   mounted() {
   },

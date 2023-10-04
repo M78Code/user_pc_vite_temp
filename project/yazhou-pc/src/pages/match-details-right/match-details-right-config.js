@@ -700,6 +700,7 @@ export const useRightDetails = (props) => {
     //      play_id,
     //      time:new Date()*1,
     //    });
+    
     MatchDetailCalss.set_play_media({
       mid,
       media_type,
@@ -849,12 +850,12 @@ export const useRightDetails = (props) => {
             //同步赛事时间
             update_match_time({ mid, mst, mstst, mststs });
             let { media_type, play_id } = allData.details_params;
-            // MatchDetailCalss.set_play_media( {
-            //   mid: data.mid,
-            //   media_type,
-            //   play_id,
-            //   time: new Date() * 1,
-            // })
+            MatchDetailCalss.set_play_media( {
+              mid: data.mid,
+              media_type,
+              play_id,
+              time: new Date() * 1,
+            })
             allData.load_data_state = "data";
             // 保存数据,用于接口报错时填充
             MatchDetailCalss.set_active_detail(lodash.cloneDeep(allData.match_infoData) )
