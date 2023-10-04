@@ -184,7 +184,7 @@ export default {
       margin: 0 22px;
       display: flex;
       font-size: 12px;
-      ::v-deep .date-wrap {
+      :deep(.date-wrap) {
         display: flex;
         flex-direction: column;
       }

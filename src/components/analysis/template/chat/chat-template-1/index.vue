@@ -229,7 +229,7 @@ onUnmounted(() => {
     font-size: 16px;
   }
 }
-::v-deep {
+:deep() {
   .text-orange {
     color: var(--qq--yb-bg-color19) !important;
   }
@@ -238,12 +238,12 @@ onUnmounted(() => {
   }
 }
 
-.num_zero {
+.num_zero{
   span.text-blue,
   span.text-orange {
     color: var(--qq--analysis-text-color-1) !important;
   }
-  ::v-deep {
+  :deep() {
     .text-blue {
       color: var(--qq--right-match-home-score-color) !important;
     }

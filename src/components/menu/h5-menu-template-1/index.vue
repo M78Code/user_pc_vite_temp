@@ -76,7 +76,6 @@
                     <!-- :class="[get_sport_icon(selected_sub_menu_i_list.includes(sub_i)), `${'s' + format_type(sub)}`]" -->
 
                     <div class="sport-match-count" v-show="two_menu_show(item)">
-
                       {{ show_favorite_list ? '' : item.ct ? item.ct : 0 }}
                     </div>
                   </div>
@@ -156,38 +155,39 @@
 </template>
 <script setup>
 import subMenuSpecially from "./sub-menu-specially.vue";
-import { ref, watch, computed, onBeforeUnmount, } from "vue";
+import { ref, watch, nextTick, computed, onBeforeUnmount, } from "vue";
 import { i18n_t, compute_css, GlobalAccessConfig, useMittOn, MITT_TYPES, UserCtr, MenuData } from "src/core/index.js";
 import base_data from "src/core/base-data/base-data.js";
 import { useRoute, useRouter } from "vue-router";
 import lodash from "lodash"
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
+
 // 一级菜单mi ref
 const { menu_type, update_time } =
   MenuData;
 //是否 滚球
 const is_scroll_ball = computed(() => {
-  return MenuData.is_scroll_ball() && menu_type.value;
+  return MenuData.is_scroll_ball(menu_type.value);
 });
 //是否 电竞
 const is_export = computed(() => {
-  return MenuData.is_export() && menu_type.value;
+  return MenuData.is_export(menu_type.value)
 });
 //是否 赛果
 const is_results = computed(() => {
-  return MenuData.is_results() && menu_type.value;
+  return MenuData.is_results(menu_type.value);
 });
 //是否 串关
 const is_mix = computed(() => {
-  return MenuData.is_results() && menu_type.value;
+  return MenuData.is_mix(menu_type.value)
 });
 //是否 冠军
 const is_kemp = computed(() => {
-  return MenuData.is_kemp() && menu_type.value;
+  return MenuData.is_kemp(menu_type.value);
 });
 //是否 禁足
 const is_jinzu = computed(() => {
-  return MenuData.is_jinzu() && menu_type.value;
+  return MenuData.is_jinzu(menu_type.value);
 });
 const show_favorite_list = ref(UserCtr.show_favorite_list)//是否收藏
 const route = useRoute();
@@ -321,10 +321,12 @@ function select_all_sub_menu_handle() {
  * 二级菜单事件
  */
 async function set_menu_lv2(item, index, type = "click") {
-  console.log(item, index)
-  const mi = lodash.get(MenuData.current_lv_2_menu, 'mi')
-  if (mi === item.mi) return
+  console.log(item)
+  // const mi = lodash.get(MenuData.current_lv_2_menu, 'mi')
+  // if (mi === item.mi) return
   MenuData.set_current_lv2_menu(item, index, type);
+  // 冠军拉取旧接口； 待 元数据提供 冠军赛事后 再删除
+  if (MenuData.is_kemp()) return MatchMeta.get_champion_match()
   // 拉取菜单对应源数据
   MatchMeta.set_origin_match_data()
   switch (menu_type.value) {
@@ -332,12 +334,14 @@ async function set_menu_lv2(item, index, type = "click") {
       dj_back_img(item.mi)
       break
   }
+
 }
 /**
 /**
  * 三级菜单事件
  */
 function set_menu_lv3(item, index, type = "click") {
+  console.log(item.field1)
   //点击当前 就不做什么
   if (
     MenuData.current_lv_3_menu &&
@@ -385,10 +389,9 @@ const format_type = (id) => {
     return type
   }
   //电竞背景处理
-  if ([2100, 2101, 2103, 2102].includes(+id?.mi)) return +id?.mi
+  if (base_data.sports_mi.includes(+id?.mi)) return +id?.mi
   return MenuData.recombine_menu_bg(id, true)
 }
-
 /**
   * 根据 球类型 获取图标
   * @param {boolean} is_focus 是否选中
@@ -423,14 +426,17 @@ function get_sport_icon(is_focus) {
 }
 //获取match菜单
 function get_sport_menu(all_menu) {
-  let menu_list = [];
+  let top_menu = [];
   let pop_main_items = [];
   all_menu.forEach((m_m) => {
     // 滚球 虚拟体育 電競 放入一级菜单
-    if ([1, 7, 8].includes(m_m.mi)) {
-      menu_list.push(lodash.cloneDeep(m_m));
+    if (MenuData.is_scroll_ball(m_m.mi) || MenuData.is_vr(m_m.mi) || MenuData.is_export(m_m.mi)) {
+      top_menu.push(lodash.cloneDeep(m_m));
     } else {
-      pop_main_items.push(lodash.cloneDeep(m_m));
+      //热门 不放进来
+      if (!MenuData.is_hot(m_m.mi)) {
+        pop_main_items.push(lodash.cloneDeep(m_m));
+      }
     } // 中间的 一级菜单
   });
   //插入中间项 第二项是  弹出框的
@@ -438,13 +444,20 @@ function get_sport_menu(all_menu) {
     const mid_item = pop_main_items.find((item) => {
       return menu_type.value == item.mi;
     });
-    menu_list.splice(1, 0, mid_item || pop_main_items[0]);
+    if (mid_item) {
+      top_menu.splice(1, 0, mid_item);
+    } else if (menu_list.value.length <= 3) {
+      //没有初始化 所以只有3个
+      top_menu.splice(1, 0, pop_main_items[0]);
+    } else {
+      top_menu.splice(1, 0, menu_list.value[1]);
+    }
   } else {
-    menu_list.splice(1, 0, pop_main_items[0]);
+    top_menu.splice(1, 0, pop_main_items[0]);
     //如果没有设定过1级菜单
-    set_menu_lv1(menu_list[0], 0, 'init')
+    set_menu_lv1(top_menu[0], 0, 'init')
   }
-  return [menu_list, pop_main_items]
+  return [top_menu, pop_main_items]
 }
 //弹出框 是否展示
 function is_menu_show(item) {
@@ -469,23 +482,28 @@ onBeforeUnmount(() => {
   mitt_list.forEach(i => i())
 })
 //初始化菜单
-
-//一级菜单
-if (MenuData.current_lv_1_menu) {
-  MenuData.set_current_lv1_menu(MenuData.current_lv_1_menu, MenuData.current_lv_2_menu_i, 'init')
-}
-if (MenuData.current_lv_2_menu) {
-  //如果二级菜单有数据缓存
-  if (MenuData.current_lv_2_menu_i == -1) {
-    select_all_sub_menu_handle()
-  } else {
-    set_menu_lv2(
-      MenuData.current_lv_2_menu,
-      MenuData.current_lv_2_menu_i,
-      "init"
-    );
+//热门不在这里 在首页
+if (MenuData.is_hot()) {
+  set_menu_lv1(menu_list.value[0], 0, 'init')
+} else {
+  //一级菜单
+  if (MenuData.current_lv_1_menu) {
+    MenuData.set_current_lv1_menu(MenuData.current_lv_1_menu, MenuData.current_lv_2_menu_i, 'init')
+  }
+  if (MenuData.current_lv_2_menu) {
+    //如果二级菜单有数据缓存
+    if (MenuData.current_lv_2_menu_i == -1) {
+      select_all_sub_menu_handle()
+    } else {
+      set_menu_lv2(
+        MenuData.current_lv_2_menu,
+        MenuData.current_lv_2_menu_i,
+        "init"
+      );
+    }
   }
 }
+
 
 </script>
 

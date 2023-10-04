@@ -11,7 +11,7 @@ import { api_details } from "src/api/index"
 import { i18n_t} from "src/boot/i18n.js"
 // import BetCommonHelper from "src/core/bet/common-helper/index.js"
 import BetCommonHelper from "../bet/common-helper/index"
-// import {utils } from 'src/core/index.js'
+import { get_media_icon_index,get_match_status } from 'src/core/index.js'
 import { UserCtr,MatchDetailCalss,is_eports_csid } from "src/core/index.js";
 export default {
 
@@ -764,7 +764,7 @@ export default {
       })
 
       // 媒体类型标识转换（数字转字母标识）
-      const media_type = utils.get_media_icon_index(play_type)
+      const media_type = get_media_icon_index(play_type)
       const media_info = {
         ...MatchDetailCalss.play_media,
         media_type
@@ -783,12 +783,13 @@ export default {
   * @param {function} callback  回调函数
   */
   get_video_url(match,callback){
+    debugger
     let { lvs = -1, mms = -1, tvs = -1,  zvs = -1,ms } = match
-    let type = lodash.get(window,"vue.$route.params.play_type") || utils.get_media_icon_index(MatchDetailCalss.play_media.media_type)
+    let type = lodash.get(window,"vue.$route.params.play_type") || get_media_icon_index(MatchDetailCalss.play_media.media_type)
     // 是否滚球  并且视频状态等于2
     if(
       //源视频且滚球
-    ((type == 1 && mms != 2) || type == 1 && (utils.get_match_status(ms) != 1)) ||
+    ((type == 1 && mms != 2) || type == 1 && (get_match_status(ms) != 1)) ||
     //演播厅
     ( type == 3 && lvs != 2) ||
     //主播
