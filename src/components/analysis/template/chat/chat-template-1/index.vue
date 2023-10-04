@@ -210,7 +210,7 @@ onUnmounted(() => {
           top: 0;
           left: 0;
           height: 6px;
-          background: var(--qq--right-match-home-score-color);
+          background: var(--q-gb-t-c-17);
           border-radius: 5px 0 0 5px;
         }
       }
@@ -234,7 +234,7 @@ onUnmounted(() => {
     color: var(--qq--yb-bg-color19) !important;
   }
   .text-blue {
-    color: var(--qq--right-match-home-score-color) !important;
+    color: var(--q-gb-t-c-17) !important;
   }
 }
 
@@ -245,7 +245,7 @@ onUnmounted(() => {
   }
   ::v-deep {
     .text-blue {
-      color: var(--qq--right-match-home-score-color) !important;
+      color: var(--q-gb-t-c-17) !important;
     }
     .text-orange {
       color: var(--qq--right-match-away-score-color) !important;

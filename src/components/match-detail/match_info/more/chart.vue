@@ -188,8 +188,8 @@ export default {
     }
     .match-home {
       padding: 6px 0;
-      color: var(--qq--right-match-home-score-color);
-      border-bottom: 6px solid var(--qq--right-match-home-score-color);
+      color: var(--q-gb-t-c-17);
+      border-bottom: 6px solid var(--q-gb-t-c-17);
     }
     .match-away {
       padding: 6px 0;
