@@ -422,7 +422,7 @@ export default {
       }
 
       .dogfall {
-        color: var(--qq--analysis-text-color-8);
+        color: var(--q-analysis-color-4);
       }
 
       .default {
