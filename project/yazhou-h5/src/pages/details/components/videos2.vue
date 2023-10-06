@@ -1301,7 +1301,6 @@ export default {
     icon_click_animationUrl(){
       // let check =   this.get_detail_data.mms >=2 || this.get_detail_data.mvs > -1
       // if(!check){return false }
-      debugger
        let params = {
          mid: this.match_id,
          type: 'Animation'
