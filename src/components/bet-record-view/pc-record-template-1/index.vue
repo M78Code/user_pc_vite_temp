@@ -42,9 +42,14 @@
                   </q-card-section>
                 </div>
               </template>
-
+              <q-card-section class="bet-item-result" :key="'bet-result-' + index">
+                <!--结算结果-->
+                <bet-record-result :index="index" :item="item" :orderNo_data_list="orderNo_data_list"
+                  :orderNo_data_obj="orderNo_data_obj" ></bet-record-result>
+              </q-card-section>
 
             </template>
+
             <q-card-section class="bet-item-separator"
               :class="{ 'bet-item-separator-last': (index == (ref_data.record_data.length - 1)) }"
               :key="index"></q-card-section>
@@ -60,7 +65,7 @@ import { onMounted, onUnmounted, reactive } from "vue";
 
 import BetRecordItem from "./bet-record-item.vue";
 // import BetBookItem from "./bet-book-item.vue";
-// import BetRecordResult from "./bet-record-result.vue";
+import BetRecordResult from "./bet-record-result.vue";
 // // 通屏垂直滚动
 import vScrollArea from "./v-scroll-area.vue";
 import BetRecordHeader from './bet-record-header.vue'
@@ -93,17 +98,18 @@ const ref_data = reactive({
   is_more_show: false,
   total_page: 20,
   record_data: [],
-  orderNo_list: []
+  orderNo_list: [],
+  orderNo_data_obj:[],
+  orderNo_data_list:[],
+  send_cashout:null,
 
 })
 
-const send_cashout = null
-
 /**
-   * @description: 获取记录列表
-   * @param {Number} cur_page 当前页 默认为第一页
-   * @return {undefined} undefined
-   */
+ * @description: 获取记录列表
+ * @param {Number} cur_page 当前页 默认为第一页
+ * @return {undefined} undefined
+ */
 const get_record_list = (cur_page = 1) => {
   let params = {
     page: cur_page,
@@ -121,6 +127,13 @@ const get_record_list = (cur_page = 1) => {
     let code = lodash_.get(res, 'code')
     let data = lodash_.get(res, 'data')
     if (code == 200) {
+
+      // 过滤订单未结算状态
+      ref_data.orderNo_data_obj = lodash_.filter(data, {'orderStatus': 0});
+      ref_data.orderNo_data_list = lodash_.map(ref_data.orderNo_data_obj, 'orderNo');
+      // 判断每5秒实时拉取新的投注额maxout是否为null，是则重新拉取列表数据
+      count_cashout(ref_data.orderNo_data_obj)
+
       // 投注记录
       let record_data = data;
       let records = data && data.records;
@@ -172,7 +185,7 @@ const get_record_list = (cur_page = 1) => {
           return;
         }
         // 切换后需要置空
-        if(cur_page == 1){
+        if (cur_page == 1) {
           ref_data.record_data = []
         }
         // 最新数据替换，不同数据拼接在一起
@@ -203,8 +216,28 @@ const get_record_list = (cur_page = 1) => {
   }).catch(err => { console.error(err) });
 }
 
-const clear_timer_get_cashout = () =>{
-
+/**
+ * @description: 判断没5秒拉取新的投注额maxout是否为null，是则重新拉取列表数据
+ */
+const count_cashout = (orderNo_data_obj) => {
+  // 当返回preSettleMaxWin为null时，定时1秒重新拉次数据
+  let maxcashout_list =lodash_.map(orderNo_data_obj, 'preSettleMaxWin')
+  // 判断提前结算实时查询返回集合数据的投注额maxout有null
+  if (lodash_.includes(maxcashout_list, null)) {
+    // 清除重新拉取投注记录定时器
+  clear_send_cashout()
+    ref_data.send_cashout = setTimeout(() => {
+      // 重新拉取列表数据
+      get_record_list(ref_data.cur_page);
+    }, 1000)
+  }
+}
+// 清除重新拉取投注记录定时器
+const clear_timer_get_cashout = () => {
+  if (ref_data.send_cashout) {
+    clearTimeout(ref_data.send_cashout);
+    ref_data.send_cashout = undefined
+  }
 }
 
 const change_handle = () => { }
@@ -233,6 +266,7 @@ const order_class = () => { }
 
 /**注记录卡片样式*/
 .bet-record-card {
+
   /*  取消边框     */
   .bet-separator {
     margin-bottom: 1px;
@@ -249,6 +283,7 @@ const order_class = () => { }
       top: 8px;
     }
   }
+
   .q-card__section {
     margin: 0;
     padding: 0;
@@ -256,6 +291,7 @@ const order_class = () => { }
     width: 100%;
     padding: 0px 10px 15px;
     width: 100%;
+
     /**投注项结果*/
     &.bet-item-result {
       margin: 0;
@@ -266,11 +302,13 @@ const order_class = () => { }
     &.bet-item-separator {
       padding: 0;
     }
+
     /**最后一个*/
     &.bet-item-separator-last {
       padding: 0;
     }
   }
+
   /**整体样式*/
   .q-card__actions {
     display: flex;
@@ -286,15 +324,17 @@ const order_class = () => { }
     position: absolute;
     margin-left: 190px;
   }
+
   :deep(.empty-wrap) {
     margin-top: -200px;
+
     img {
       width: 100px !important;
     }
   }
 }
 
-.left-bg-box{
+.left-bg-box {
   height: 40px;
 }
 </style>

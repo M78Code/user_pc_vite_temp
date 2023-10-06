@@ -3,12 +3,12 @@
     <!-- 主队信息 --> 
     <div class="row-item team-item">
       <div class="team-logo">
-        <img v-if="show_type == 'all'" style="width: 22px; max-height: 24px;" v-img="[((match.match_logo || {}) || {}).home_1_logo,(match.match_logo || {}).home_1_letter]" />
+        <img v-if="show_type == 'all'" style="width: 22px; max-height: 24px;" v-img="[((lodash.get(match, 'match_logo') || {}) || {}).home_1_logo,(lodash.get(match, 'match_logo') || {}).home_1_letter]" />
       </div>
       <div class="ellipsis-wrap">
         <div class="row no-wrap absolute-full">
-          <div class="team-name home ellipsis allow-user-select" :class="{'bold':match.team_let_ball=='T1'}" v-tooltip="{content:match.mhn+play_name_obj.suffix_name,overflow:1}">
-            {{match.mhn}}{{play_name_obj.suffix_name}}
+          <div class="team-name home ellipsis allow-user-select" :class="{'bold':lodash.get(match, 'team_let_ball')=='T1'}" v-tooltip="{content:lodash.get(match, 'mhn')+play_name_obj.suffix_name,overflow:1}">
+            {{lodash.get(match, 'mhn')}}{{play_name_obj.suffix_name}}
           </div>
           <!-- 进球动画 -->
           <div class="yb-flex-center" v-if="is_show_home_goal">
@@ -29,11 +29,15 @@
     <!-- 客队信息 -->
     <div class="row-item team-item">
       <div class="team-logo">
-        <img v-if="show_type == 'all'" style="width: 22px; max-height: 24px;" v-img="[(match.match_logo || {}).away_1_logo,(match.match_logo || {}).away_1_letter]" />
+        <img v-if="show_type == 'all'" style="width: 22px; max-height: 24px;" v-img="[(lodash.get(match, 'match_logo') || {}).away_1_logo,(lodash.get(match, 'match_logo') || {}).away_1_letter]" />
       </div>
       <div class="ellipsis-wrap">
         <div class="row no-wrap absolute-full">
-          <div class="team-name away ellipsis allow-user-select" :class="{'bold':match.team_let_ball=='T2'}" v-tooltip="{content:lodash.get(match,'man')+play_name_obj.suffix_name,overflow:1}">{{match.man}}{{play_name_obj.suffix_name}}</div>
+          <div 
+            class="team-name away ellipsis allow-user-select" 
+            :class="{'bold':lodash.get(match, 'team_let_ball')=='T2'}" 
+            v-tooltip="{content:lodash.get(match,'man')+play_name_obj.suffix_name,overflow:1}"
+          >{{lodash.get(match, 'man')}}{{play_name_obj.suffix_name}}</div>
           <!-- 进球动画 -->
           <div class="yb-flex-center" v-if="is_show_away_goal">
             <div class="yb-goal-gif"></div>
@@ -50,7 +54,7 @@
       <!-- 主比分 -->
       <div 
         class="score" 
-        :key="match.mid" 
+        :key="lodash.get(match, 'mid')" 
         v-if="show_type == 'all'" 
         v-tooltip="{content: is_15min ? i18n_t('list.15min_stage'):'' ,overflow:1}"
       >
@@ -72,7 +76,7 @@
        <div class="more-info flex">
           <!-- 中立场 -->
           <div class="neutral-wrap">
-            <span v-if="match.mng"   class="icon-neutral q-icon c-icon"><span class="path1"></span><span class="path2"></span></span>
+            <span v-if="lodash.get(match, 'mng')"   class="icon-neutral q-icon c-icon"><span class="path1"></span><span class="path2"></span></span>
           </div>
           <!-- 是否收藏 -->
          
@@ -138,12 +142,12 @@ const is_show_home_red = ref(false) // 是否显示主队红牌动画
 const is_show_away_red = ref(false) // 是否显示客队红牌动画
 const is_collect = ref(false) //赛事是否收藏
 
-let match_style_obj = MatchListCardDataClass.all_card_obj[props.match.mid+'_']
+let match_style_obj = MatchListCardDataClass.all_card_obj[lodash.get(props, 'match.mid')+'_']
 
 
 const handicap_num = computed(() => {
   if(GlobalAccessConfig.get_handicapNum()){
-    return `+${ props.match.mc || 0}`
+    return `+${ lodash.get(props, 'match.mc') || 0}`
   }else{
     return i18n_t('match_info.more')
   }
@@ -184,7 +188,7 @@ const play_name_obj = computed(() => {
   return play_name_obj
 })
 
-is_collect.value = Boolean (props.match.mf)
+is_collect.value = Boolean (lodash.get(props, 'match.mf'))
 //进球特效防抖
 // hide_home_goal = this.debounce(hide_home_goal,5000);
 // hide_away_goal = this.debounce(hide_away_goal,5000);

@@ -209,7 +209,7 @@ watch(() => get_goto_list_top.value, () => {
   is_goto_top_random.value = Math.random();
 })
 
-watch(() => standard_edition.valuee, (newValue) => {
+watch(() => standard_edition.value, (newValue) => {
   if (newValue == 1) {
     other_way_info_show.value = false
   }

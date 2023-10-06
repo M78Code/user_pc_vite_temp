@@ -64,7 +64,6 @@ import {utils,get_match_status,i18n_t,format_second_ms ,t,useMittEmit, useMittOn
 import {is_eports_csid}  from "src/core/constant/util/csid-util";
 import lodash from "lodash";
 
-// import { format_second_ms } from "src/core/format/index.js";
 // import { t } from "src/core/index.js";;
 // import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/";
 import { get_remote_time,format_date_base_obj } from "src/core/format/index.js"

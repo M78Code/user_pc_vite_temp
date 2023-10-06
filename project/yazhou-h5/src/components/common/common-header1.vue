@@ -105,7 +105,7 @@ const details_refresh = () => {
   else if (curr_tab === 'bet') {
     // 刷新 盘口赔率信息
     useMittEmit(MITT_TYPES.EMIT_REFRESH_DETAILS)
-    // useMittEmit(MITT_TYPES.EMIT_REF_API, 'details_refresh')
+    useMittEmit(MITT_TYPES.EMIT_REF_API)
   }
   else if (curr_tab === 'match_analysis') {
     // 刷新 赛事分析信息
