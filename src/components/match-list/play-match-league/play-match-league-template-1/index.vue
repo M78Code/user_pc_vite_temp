@@ -266,7 +266,6 @@ const set_fold = () => {
   if (props.card_style_obj.is_league_fold && ([2, 3].includes(menu_config.menu_root) || menu_config.is_esports())) {
     // 设置赛事基础数据
     MatchListCardData.set_match_basic_data(props.card_style_obj)
-    console.log('props.card_style_obj', props.card_style_obj);
     let params = {
       mids: props.card_style_obj.league_obj.mids.split(','),
       inner_param: 1
