@@ -51,6 +51,7 @@ import { i18n_t } from "src/boot/i18n.js";
 import { useDetailsDataFromDataWarehouse } from "project_path/src/pages/details/details.js";
 import store from "src/store-redux/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
+import { MatchDetailCalss, useMittEmit, MITT_TYPES } from "src/core/index.js"
 
 const props = defineProps({
   // 按钮：视频/动画 get_mvs：动画 get_mms:视频
@@ -122,21 +123,17 @@ const route = useRoute()
 // 赛事id
 const match_id = computed(() => route.params.mid || get_detail_data.mid)
 
-const set_video_url = (data) => store.dispatch({ type: 'videoReducer.set_video_url', data })
-const set_show_video = (data) => store.dispatch({ type: 'videoReducer.set_show_video', data })
-const set_iframe_onload = (data) => store.dispatch({ type: 'videoReducer.set_iframe_onload', data })
-
 const check_url = (url, which) => {
   // 本地代码连接 调试 时，打开此注释即可播放视频------勿删除此注释
   // let data = {
   //   media_src:url,
   //   active:'muUrl',
   // };
-  //   set_video_url(data);
-  //   set_show_video(true);
-  //   set_iframe_onload(false);
+  //   MatchDetailCalss.set_video_url(data);
+  //   useMittEmit(MITT_TYPES.EMIT_SET_SHOW_VIDEO, true);
+  //   MatchDetailCalss.set_iframe_onload(false);
   //   setTimeout(()=>{
-  //   set_iframe_onload(true);
+  //   MatchDetailCalss.set_iframe_onload(true);
   // },2000)
   // return
   api_common.get_full_url(url).then((v) => {
@@ -145,11 +142,15 @@ const check_url = (url, which) => {
         media_src: url,
         active: which ? which : 'muUrl',
       };
-      set_video_url(data);
-      set_show_video(true);
-      set_iframe_onload(false);
+      console.error(data);
+      MatchDetailCalss.set_video_url(data);
+      // 开启视频
+      useMittEmit(MITT_TYPES.EMIT_SET_SHOW_VIDEO, true),
+      // iframe标签
+      useMittEmit(MITT_TYPES.EMIT_SET_IFRAME_ONLOAD, false),
       timer1_.value = setTimeout(() => {
-        set_iframe_onload(true);
+        // iframe 标签
+        useMittEmit(MITT_TYPES.EMIT_SET_IFRAME_ONLOAD, true);
       }, 2000)
     } else {
       //   set_toast({
@@ -246,8 +247,9 @@ const icon_click_muUrl = () => {
       }
       let data = {};
       data.active = 'muUrl';
-      set_video_url(data);
-      set_show_video(true);
+      MatchDetailCalss.set_video_url(data);
+       // 开启视频
+      useMittEmit(MITT_TYPES.EMIT_SET_SHOW_VIDEO, true)
       let video_sorry_temp = "";
       if (UserCtr.lang == 'zh') {
         video_sorry_temp = "!";
@@ -294,6 +296,7 @@ const icon_click_animationUrl = () => {
     if (send_gcuuid != res.gcuuid) return;
     let animationUrl = ''
     //足篮棒网使用3.0动画  其他使用2.0
+    console.error(res);
     if ([1, 2, 3, 5].includes(lodash.get(get_detail_data, 'csid') * 1)) {
       let animation3Url = data.animation3Url || []
       animation3Url.forEach(item => {
@@ -309,8 +312,9 @@ const icon_click_animationUrl = () => {
     data.referUrl = `${location.protocol}${data.referUrl}`;
     let CTime = get_detail_data.mgt;
     let STime = data.serverTime;
-    set_video_url(data);
-    set_show_video(true);
+    MatchDetailCalss.set_video_url(data);
+     // 开启视频
+    useMittEmit(MITT_TYPES.EMIT_SET_SHOW_VIDEO, true);
   })
 }
 // 监听点击直播事件,触发详情页视频直接播放

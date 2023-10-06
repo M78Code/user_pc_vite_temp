@@ -355,7 +355,6 @@ export const useRightDetails = (props) => {
             // 获取详情下所有玩法集数据
             let data = lodash.get(res, "data.data", []);
             //mhs赛事盘口状态 0:开, 封, 2:关, 11:锁
-            console.log(allData.match_infoData, "allData.match_infoData");
             if (
               code === 200 &&
               data.length &&
@@ -840,7 +839,6 @@ export const useRightDetails = (props) => {
             // MatchDataWarehouseInstance.set_match_details(MatchDataWarehouseInstance.get_quick_mid_obj(allData.mid),data);
             MatchDataWarehouseInstance.set_match_details(data,[]);
             allData.match_infoData = MatchDataWarehouseInstance.get_quick_mid_obj(allData.mid);
-            console.log(allData.match_infoData, "allData.match_infoData");
             let mid = lodash.get(data, "mid");
             let mst = lodash.get(data, "mst");
             let mstst = lodash.get(data, "mstst");

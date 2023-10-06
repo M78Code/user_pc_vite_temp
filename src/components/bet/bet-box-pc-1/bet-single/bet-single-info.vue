@@ -84,8 +84,17 @@
 
           </label>
           <!--+/1.5-->
+           <!--【预约】-->
+           <label class="appoint" v-if="ref_data.show_appoint">
+            +{{ `${$t('bet.bet_book2')}` }}
+          </label>
         </div>
-        <div class="bet-team-handicap-odd">
+        <!-- 预约投注组件 -->
+        <div v-if="ref_data.show_appoint">
+          <bet-pro-appoint :item="item" />
+        </div>
+        <!-- 赔率 -->
+        <div class="bet-team-handicap-odd" v-else>
           <div class="col bet-odds-value" :class="{
             'up-red': ref_data.odds_change_up,
             'down-green': ref_data.odds_change_down
@@ -96,10 +105,11 @@
             </span>
           </div>
           <!--【预约】-->
-          <label class="appoint" v-if="pending_order_status(item.playOptionsId)">
+          <label class="appoint" v-if="pending_order_status(item.playOptionsId)" @click="set_show_appoint">
             +{{ `${$t('bet.bet_book2')}` }}
           </label>
         </div>
+       
       </div>
       <!--金额输入区域 'pr32': is_show_keyboard, 'input-focus':is_show_keyboard,-->
       <div class="row">
@@ -107,20 +117,16 @@
       </div>
     </q-card-section>
 
-
-
-    <!-- <div class="mask-appointment" v-if="is_forward != index && is_forward != -1"></div> -->
-
-    <!-- <tips v-if='is_show_tip' type="hps15Minutes" :tipstatus="true" :offset="getArr()" /> -->
   </q-card>
 </template>
 <script setup>
-import { reactive, computed } from "vue"
+import { reactive, computed, ref } from "vue"
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import { format_odds, format_currency, formatTime } from "src/core/format/index.js"
 import { odds_type_name } from "src/core/constant/index.js"
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { i18n_t } from "src/boot/i18n.js"
+import { get_query_bet_amount_pre } from "src/core/bet/class/bet-box-submit.js"
 import BetInput from "./bet-input.vue"
 import { IconWapper } from 'src/components/icon'
 // import { del_bet_item } from "./config/bet_single_info.js"
@@ -160,12 +166,24 @@ const ref_data = reactive({
   basic_score: "",    /// 赛事比分 返回比分格式为: (主队得分-客队得分)
   odds_change_up: false,  // 赔率上升
   odds_change_down: false, // 赔率下降
+  show_appoint:false, // 是否显示预约 点击预约后其他地方需要显示
 })
 
 // 删除当前投注项
 const del_bet_item = () => {
   BetData.bet_list_remove(props.item.playOptionsId)
 }
+// 预约投注
+const set_show_appoint = () =>{
+  // 预约投注点击后展示后 需要请求预约限额接口
+  if(!ref_data.show_appoint){
+    get_query_bet_amount_pre()
+  }
+  // 显示预约投注内容
+  ref_data.show_appoint = !ref_data.show_appoint
+ 
+}
+
 </script>
 
 
@@ -404,5 +422,7 @@ const del_bet_item = () => {
   height: 20px;
   align-items: center;
 }
-
+.appoint{
+  cursor: pointer;
+}
 </style>

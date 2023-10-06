@@ -67,7 +67,6 @@
             :new_match_detail_ctr="new_match_detail_ctr"
             ></details-tab>
           </div>
-
           <!-- tab 激活投注展示内容 -->
           <!-- 投注展示内容 -->
           <div
@@ -158,6 +157,7 @@ import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { details_main } from "./details.js";
 import { ref, defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch, provide } from "vue";
 import UserCtr from "src/core/user-config/user-ctr.js";
+import { MatchDetailCalss } from "src/core/index.js"
 
 //国际化
 
@@ -188,7 +188,6 @@ export default defineComponent({
 //       }
 //     });
 //   },
-
   setup(props, evnet) {
     const router = useRouter();
     const route = useRoute();
@@ -209,6 +208,7 @@ export default defineComponent({
       icon_replay,
       matchDetailCtr,
       is_show_detail_header_data,
+      get_show_video,
       details_click,
       change_go_back,
       details_refresh,
@@ -386,7 +386,6 @@ export default defineComponent({
     //     }
     //   }
     // );
-
     onMounted(() => {
       // 原created
       state_data.init_event_timer_count = 0;

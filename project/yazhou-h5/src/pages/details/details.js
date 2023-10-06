@@ -856,7 +856,10 @@ const route = useRoute();
     /** 详情赛事下拉三角形, dialog展示 */
     { type: MITT_TYPES.EMIT_IS_BOOL_DIALOG_DETAILS, callback: change_bool },
   ])
-
+  // 是否开启视频video组件
+  const set_show_video = (params) => {
+    state_data.get_show_video = params
+  }
   /**
    * TODO: 下面的mitt根据业务场景移到上面来 批量注册 销毁
    * ! on_listeners 不需要再onMounted调用，setup = vue2的created()
@@ -874,6 +877,7 @@ const route = useRoute();
       // 刷新详情页头部信息;
       useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS, initEvent),
       useMittOn(MITT_TYPES.EMIT_GET_ODDS_LIST, get_odds_list),
+      useMittOn(MITT_TYPES.EMIT_SET_SHOW_VIDEO, set_show_video),
       // useMittOn(MITT_TYPES.EMIT_REF_API, details_refresh),
       // // 拳击赛事级别关盘+当前时间(服务器时间)>=赛事开赛时间(mgt) 此时详情页拳击赛事切换下一场
       // useMittOn(MITT_TYPES.EMIT_CHANGE_DETAILS_MATCH, info_icon_click_h),
