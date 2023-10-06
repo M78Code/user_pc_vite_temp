@@ -84,6 +84,7 @@
         card_index,
       }
     }
+    console.log('matchmatchmatch', match_list);
 
     // 遍历所有赛事列表
     lodash.each(match_list, _match => {
