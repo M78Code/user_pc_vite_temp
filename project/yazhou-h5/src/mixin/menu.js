@@ -18,7 +18,7 @@ const is_vr = computed(() => {
 const is_results = computed(() => {
     return MenuData.is_results(menu_type.value);
 });
-//是否 赛果
+//是否 早盘
 const is_zaopan = computed(() => {
     return MenuData.is_zaopan(menu_type.value);
 });

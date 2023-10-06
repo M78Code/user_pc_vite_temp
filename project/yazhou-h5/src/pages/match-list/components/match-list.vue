@@ -16,20 +16,19 @@
         </v-match-container>
         <div class="data_mid" v-else> <!--此data-mid用于分频订阅赛事,请勿修改-->
           <!--真实体育赛果 -->
-          <match-container-result v-if="match_item && menu_type == 28 && 100 == get_curr_sub_menu_type"
+          <match-container-result v-if="match_item && is_results "
             :match_of_list="match_item" :matchCtr="matchCtr" :i="index" :menu_type="menu_type" :main_source="source"
             @unfold_changed="unfold_changed_handle" @toggle_collect_league="toggle_collect"
             @toggle_collect_match="toggle_collect" />
           <!--真实体育玩法 -->
-          <match-container v-if="match_item && (lodash.get(MenuData.current_menu, 'main.menuType') == 28 ||
-            !is_champion && match_item?.ms != 3) && !(menu_type == 28 && 100 == get_curr_sub_menu_type)"
+          <match-container v-if="match_item && (!is_kemp && match_item?.ms != 3) && !(menu_type == 28 && 100 == menu_lv2)"
             :match_of_list="match_item" :i="index" :menu_type="menu_type" :main_source="source"
             @unfold_changed="unfold_changed_handle" @toggle_collect_league="toggle_collect"
             @toggle_collect_match="toggle_collect">
           </match-container>
           <!--冠军玩法-->
           <match-container-champion :match_of_list="match_item" :matchCtr="matchCtr" :i="index" :menu_type="menu_type"
-            @toggle_collect_league="toggle_collect" v-if="match_item && is_champion">
+            @toggle_collect_league="toggle_collect" v-if="match_item && is_kemp">
           </match-container-champion>
         </div>
       </template>
@@ -100,7 +99,12 @@ import noData from "project_path/src/components/common/no-data.vue"; // 无网�
 import UserCtr from 'src/core/user-config/user-ctr.js'
 import { MenuData, i18n_t, utils } from "src/core/index.js"
 import { standard_edition } from 'project_path/src/mixin/userctr.js'
+<<<<<<< HEAD
 import { is_kemp, menu_lv2 } from 'project_path/src/mixin/menu.js'
+=======
+import { is_kemp, menu_lv2, is_results } from 'project_path/src/mixin/menu.js'
+
+>>>>>>> 66058d3db5fed5e20e0665ea9d2c3f9a27bd37a3
 // import { change_favorite_state } from 'src/core/match-list-h5/composables/match-list-collect.js'
 // import matchListCardFold from 'src/core/match-list-h5/match-card/match-list-card-fold.js'
 
@@ -150,8 +154,6 @@ const get_theme = ref(store_state.get_theme)
 const get_goto_list_top = ref(store_state.get_goto_list_top)
 // 显示收藏列表
 const get_show_favorite_list = ref(store_state.get_show_favorite_list)
-//二级菜单type
-const get_curr_sub_menu_type = ref(store_state.get_curr_sub_menu_type)
 
 onMounted(() => {
   timer_super12.value = null;
@@ -182,7 +184,7 @@ watch(() => get_match_id_bet_success.value, (curr) => {
             match.mf = true;
           }
           //如果是冠军玩法,投注成功后收藏赛事同也收藏联赛
-          if (is_champion) {
+          if (is_kemp.value) {
             if (favorite == 1 || favorite == 0) {
               match.tf = favorite == 1;
             }
@@ -217,6 +219,7 @@ watch(() => standard_edition.value, (newValue) => {
   }
 })
 
+<<<<<<< HEAD
 // 当前为冠军或电竞冠军
 const is_champion = computed(() => {
   //let flag = 100 == props.menu_type || (3000 == props.menu_type && lodash.get(MenuData.current_menu, 'date_menu.menuType') == 100); //电竞冠军
@@ -224,6 +227,8 @@ const is_champion = computed(() => {
   console.log(is_kemp)
   return flag;
 })
+=======
+>>>>>>> 66058d3db5fed5e20e0665ea9d2c3f9a27bd37a3
 // 是否显示无第 {X} 个进球 title----次要玩法tips(5分钟次要玩法)
 const show_Xth_title = computed(() => {
   return [1, 2, 7, 10].includes(+curr_play_info.value.ms) && curr_play_info.value.menu_id === 19
@@ -400,7 +405,6 @@ const unsubscribe = store.subscribe(() => {
   get_match_id_bet_success.value = new_state.get_match_id_bet_success
   get_theme.value = new_state.get_theme
   get_goto_list_top.value = new_state.get_goto_list_top
-  get_curr_sub_menu_type.value = new_state.get_curr_sub_menu_type
   get_show_favorite_list.value = new_state.get_show_favorite_list
 })
 

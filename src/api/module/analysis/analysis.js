@@ -63,7 +63,7 @@ export const get_match_result = (params, config = {}, url = "/v1/m/matchDetail/g
 };
 
 // 获取赛果二级菜单
-export const get_result_menu = (params, config = {}, url = "/v2/m/menu/resultMenuPB") => {
+export const get_result_menu = (params, config = {}, url = "/v2/m/menu/resultMenu") => {
   return http.get(`${prefix}${url}`, params, config);
 };
 
