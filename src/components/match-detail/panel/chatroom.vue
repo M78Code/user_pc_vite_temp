@@ -9,7 +9,7 @@
     <panel-header
       v-if="show_header"
       ref="panel_header"
-      :title="$root.$t('common.chatroom')"
+      :title="i18n_t('common.chatroom')"
       icon="chatroom"
       @set_fold="is_fold = !is_fold"
     >
@@ -52,7 +52,7 @@
     <div v-show="can_show_more_msg && show_more_msg && !is_fold" class="more-msg" @click="scroll_to_bottom">
       <div class="inner-content">
         <i class="icon-arrow-down"></i>
-        <div class="more-msg-text">{{ $root.$t('chatroom.more_msg') }}</div>
+        <div class="more-msg-text">{{ i18n_t('chatroom.more_msg') }}</div>
       </div>
     </div>
 
@@ -94,9 +94,9 @@
                 <q-icon @click="toggle_chat_conditions_tips" name="" size="20px" class="icon-cd-tips">
                   <div v-if="show_chat_conditions_tips" class="chat-conditions-tips">
                     <div class="tips-flex">
-                      <span class="tips-title">{{ $root.$t('chatroom.send_limit_title') }}</span>
-                      <span>{{ $root.$t('chatroom.send_limit_condition.0', [500]) }}</span>
-                      <span>{{ $root.$t('chatroom.send_limit_condition.1', [1500]) }}</span>
+                      <span class="tips-title">{{ i18n_t('chatroom.send_limit_title') }}</span>
+                      <span>{{ i18n_t('chatroom.send_limit_condition.0', [500]) }}</span>
+                      <span>{{ i18n_t('chatroom.send_limit_condition.1', [1500]) }}</span>
                     </div>
                   </div>
                 </q-icon>
@@ -110,7 +110,7 @@
                   anchor="top middle"
                   self="center middle"
                   :content-style="{background: 'rgba(0, 0, 0, .85)', borderRadius: '24px'}"
-              >{{$root.$t('chatroom.contain_bad_word')}}</q-tooltip>
+              >{{i18n_t('chatroom.contain_bad_word')}}</q-tooltip>
             </template>
 
             <!-- 发言过快提示 -->
@@ -120,7 +120,7 @@
                   anchor="top middle"
                   self="center middle"
                   :content-style="{background: 'rgba(0, 0, 0, .85)', borderRadius: '24px'}"
-              >{{$root.$t('chatroom.send_fast')}}</q-tooltip>
+              >{{i18n_t('chatroom.send_fast')}}</q-tooltip>
             </template>
 
             <!-- 发言限制提示 -->
@@ -130,14 +130,14 @@
                   anchor="top middle"
                   self="center middle"
                   :content-style="{background: 'rgba(0, 0, 0, .85)', borderRadius: '24px'}"
-              >{{$root.$t('chatroom.limit_send')}}</q-tooltip>
+              >{{i18n_t('chatroom.limit_send')}}</q-tooltip>
             </template>
           </q-input>
           <div class="muted" v-if="is_all_mute || is_muted"   @mouseenter="muted_tips_status = true"  @mouseleave="muted_tips_status = false"></div>
           <div v-if="muted_tips_status" class="muted_tips">
             <div class="prohibited_text">{{ curr_chat_input_placeholder }}</div>
-            <div>{{ $root.$t('chatroom.send_rules') }}</div>
-            <div>{{ $root.$t('chatroom.muted_tips') }}</div>
+            <div>{{ i18n_t('chatroom.send_rules') }}</div>
+            <div>{{ i18n_t('chatroom.muted_tips') }}</div>
           </div>
         </div>
         <div class="other-btn">
@@ -150,8 +150,8 @@
           >
             <div v-if="show_mute_text_msg_tips" class="tips">
               <div class="tips-flex">
-                <div class="tips-text">{{ $root.$t('chatroom.mute_text_info') }}</div>
-                <div class="btn-cancel-tips" @click="btn_cancel_tips(true)">{{ $root.$t('chatroom.cancel_tips', [countdown]) }}</div>
+                <div class="tips-text">{{ i18n_t('chatroom.mute_text_info') }}</div>
+                <div class="btn-cancel-tips" @click="btn_cancel_tips(true)">{{ i18n_t('chatroom.cancel_tips', [countdown]) }}</div>
               </div>
             </div>
           </div>
@@ -162,7 +162,7 @@
         <div class="show-order" @click='send_saidn_change_handler'>
           <!--<i :class="chatroom_info.ban_share ? 'icon-ban-show-order' : 'icon-show-order'"></i>-->
           <i class="icon-show-order"></i>
-          <div class="show-order-txt">{{ $root.$t('chatroom.show_order')}}</div>
+          <div class="show-order-txt">{{ i18n_t('chatroom.show_order')}}</div>
         </div>
 
       </div>
@@ -176,7 +176,7 @@
     <q-dialog v-model="alert" >
       <q-card class="dialog-wrap" >
         <div  class="card-header">
-          <div class="text-center">{{$root.$t('chatroom.bulletin')}}</div>
+          <div class="text-center">{{i18n_t('chatroom.bulletin')}}</div>
         </div>
         <q-card-section class="card-body">
           <div class="dialog-scroll">
@@ -186,7 +186,7 @@
         </q-card-section>
 
         <div class="card-footer">
-          <div class="btn"  @click.stop="alert = false">{{ $root.$t('chatroom.close') }}</div>
+          <div class="btn"  @click.stop="alert = false">{{ i18n_t('chatroom.close') }}</div>
         </div>
       </q-card>
     </q-dialog>
@@ -200,6 +200,7 @@ import emoji_picker from "src/project/yabo/components/match_details/panel/compon
 import {mapGetters, mapMutations} from "vuex";
 import ChatroomMsgType from 'src/public/utils/ws/chatroom/chatroom_msgtype.js';
 import { api_chatroom } from "src/public/api/index.js";
+import {utils} from "src/core"
 import axios from 'axios'
 
 export default {
@@ -316,7 +317,7 @@ export default {
     },
     // 当前发言输入框placeholder
     curr_chat_input_placeholder() {
-      return this.is_all_mute ? this.$root.$t('chatroom.all_mute') : this.chat_input_placeholder
+      return this.is_all_mute ? i18n_t('chatroom.all_mute') : this.chat_input_placeholder
     },
     // 消息列表
     messages() {
@@ -359,7 +360,7 @@ export default {
       this.$refs['chat_scroll_area'].style.height = chatroom_height - panel_header_height - chat_handle_bar_height + 'px'
     }
     // 内嵌右侧
-    else if (this.$utils.is_iframe) {
+    else if (utils.is_iframe) {
       this.$refs['chat_scroll_area'].style.height = this.chatroom_height - panel_header_height - chat_handle_bar_height + 'px'
     }
     
@@ -389,11 +390,11 @@ export default {
         2: 1,
         3: 2
       }
-      return this.$root.$t(
+      return i18n_t(
             'chatroom.mute_hint4', 
             {
-              time: this.$root.$t('chatroom.mute_hint.time')[time_map[banTime]], 
-              type:this.$root.$t('chatroom.mute_hint.type')[type_map[banType]]
+              time: i18n_t('chatroom.mute_hint.time')[time_map[banTime]], 
+              type:i18n_t('chatroom.mute_hint.type')[type_map[banType]]
             }
           )
     },
@@ -527,7 +528,7 @@ export default {
       // return;
       // if (this.chatroom_info.ban_share) {
       //   // 聊天室禁晒单提示
-      //   this.$root.$emit(this.emit_cmd.EMIT_SHOW_TOAST_CMD, this.$root.$t('chatroom.ban_share'))
+      //   this.$root.$emit(this.emit_cmd.EMIT_SHOW_TOAST_CMD, i18n_t('chatroom.ban_share'))
       // }
       this.$root.$emit('saidan_page_change', true);
     },
@@ -762,7 +763,7 @@ export default {
         case ChatroomMsgType.UNBAN_SEND_MESSAGE:
           if (data.userId === this.get_user.userId) {
             this.is_muted = false;
-            this.chat_input_placeholder = this.$root.$t('chatroom.send_chat_content')
+            this.chat_input_placeholder = i18n_t('chatroom.send_chat_content')
           }
           break;
         // 聊天室禁言
@@ -926,7 +927,7 @@ export default {
         ban_time -= 1000
         if (ban_time <= 0) {
           this.is_muted = false;
-          this.chat_input_placeholder = this.$root.$t('chatroom.send_chat_content')
+          this.chat_input_placeholder = i18n_t('chatroom.send_chat_content')
           clearInterval(this.ban_user_timer)
         }
       }, 1000)
@@ -1017,9 +1018,9 @@ export default {
         this.send_count--
         if (this.send_count > 0) {
           const _send_interval = Math.ceil(this.origin_send_interval / 60 / 1000)
-          this.chat_input_placeholder = this.$root.$t('chatroom.remain_send', [this.send_count, _send_interval])
+          this.chat_input_placeholder = i18n_t('chatroom.remain_send', [this.send_count, _send_interval])
         } else {
-          this.chat_input_placeholder = this.$root.$t('chatroom.send_used_up')
+          this.chat_input_placeholder = i18n_t('chatroom.send_used_up')
         }
 
         // 发言倒计时
@@ -1059,7 +1060,7 @@ export default {
 
       // 已达标用户 vip super
       if (isVip === 'true' || isSuper === 'true') {
-        this.chat_input_placeholder = this.$root.$t('chatroom.send_chat_content')
+        this.chat_input_placeholder = i18n_t('chatroom.send_chat_content')
       }
      // 未达标用户 则显示 相关发言限制提示
       else {
@@ -1080,7 +1081,7 @@ export default {
               // 发言cd（分钟）
               const _send_interval = Math.ceil(this.origin_send_interval / 60 / 1000)
               // 输入框发言cd placeholder
-              this.chat_input_placeholder = this.$root.$t('chatroom.remain_send', [this.send_count, _send_interval])
+              this.chat_input_placeholder = i18n_t('chatroom.remain_send', [this.send_count, _send_interval])
               // 显示发言cd 提示
               this.is_cd = true
 
@@ -1088,11 +1089,11 @@ export default {
               this.run_send_message_interval()
             } else {
               this.is_cd = false
-              this.chat_input_placeholder = this.$root.$t('chatroom.send_chat_content')
+              this.chat_input_placeholder = i18n_t('chatroom.send_chat_content')
             }
           } else {
             this.is_cd = true
-            this.chat_input_placeholder = this.$root.$t('chatroom.send_used_up')
+            this.chat_input_placeholder = i18n_t('chatroom.send_used_up')
           }
 
         } else {
@@ -1113,7 +1114,7 @@ export default {
         if (this.send_interval <= 0) {
           this.is_cd = false
           this.send_interval = this.origin_send_interval
-          this.chat_input_placeholder = this.$root.$t('chatroom.send_chat_content')
+          this.chat_input_placeholder = i18n_t('chatroom.send_chat_content')
 
           clearInterval(this.can_send_message_timer)
         } else {
@@ -1123,10 +1124,10 @@ export default {
           this.is_cd = true
           if (this.send_count > 0) {
             const _send_interval = Math.ceil(this.origin_send_interval / 60 / 1000)
-            this.chat_input_placeholder = this.$root.$t('chatroom.remain_send', [this.send_count, _send_interval])
+            this.chat_input_placeholder = i18n_t('chatroom.remain_send', [this.send_count, _send_interval])
           } else {
             // 显示 发言次数用完
-            this.chat_input_placeholder = this.$root.$t('chatroom.send_used_up')
+            this.chat_input_placeholder = i18n_t('chatroom.send_used_up')
             clearInterval(this.can_send_message_timer)
           }
         }

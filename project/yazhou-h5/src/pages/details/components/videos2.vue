@@ -282,6 +282,7 @@ import basketball_match_analysis from "project_path/src/pages/details/analysis-m
 // import uid from "src/core/uuid/index.js"
 import { uid } from "quasar"
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
+import { MenuData } from "src/core/index.js"
 
 export default {
   name: "videos",
@@ -291,7 +292,7 @@ export default {
     "analysis-football-matches": analysis_football_matches,  //足球分析
     "basketball-match-analysis": basketball_match_analysis,  //篮球分析
     "tabs": () => import("project_path/src/pages/details/analysis-matches/components/tabs.vue"),
-    "slider-x": () => import("src/components/match-detail/match_info/slider_x.vue"),
+    "slider-x": () => import("project_path/src/components/match-detail/match-info/slider-x.vue"),
   },
   data() {
     return {
@@ -372,7 +373,7 @@ export default {
   },
   computed: {
       // 收藏菜单为6
-      get_menu_type(){return '';},
+      get_menu_type(){return MenuData.get_menu_type();},
       get_change_count(){return '';},
       get_is_user_no_handle(){return '';},
       // 视频url信息
@@ -380,7 +381,9 @@ export default {
       // 视频显示状态
       get_show_video(){return '';},
       // 详情页的数据
-      get_detail_data(){return '';},
+      get_detail_data(){
+        return this.detail_data;
+      },
       // 用户令牌信息
       get_user_token(){return '';},
       //视频单页是否已加载     作用：防止白屏
@@ -519,6 +522,7 @@ export default {
     },
     //监听屏幕改变
     get_is_hengping(is_hengping) {
+      console.error("监听屏幕改变");
       if (!is_hengping) {
         this.set_bet_show(false)
         this.set_analyze_show(false);
@@ -876,6 +880,7 @@ export default {
       this.is_need_timer = true;
     },
     change_analyze() {
+      console.error("change_analyze");
       if(![1,2].includes(this.get_detail_data.csid*1)) return;
       this.clear_timer();
       if(this.select_item == 3) {
@@ -998,7 +1003,7 @@ export default {
     // 接受iframe消息
     handleMessage(e) {
       let status_text = ['loading','success','error']
-
+      console.error("接受iframe消息");
       var data = e.data;
       switch (data.cmd) {
         case 'icon':
@@ -1116,6 +1121,7 @@ export default {
     },
     // 全屏手势滑动
     bg_touchmove({ direction,isFinal }) {
+      console.error("全屏手势滑动");
       this.sendMessage2({cmd: 'show_icon'})
       if(!isFinal && [1,2].includes(this.get_detail_data.csid*1) && this.get_is_full_screen && this.get_video_url.active == 'muUrl' && this.get_is_hengping) {
         if('left' == direction) {
@@ -1153,6 +1159,7 @@ export default {
       this.set_is_in_play('');
     },
     fade_icons(){
+      console.error("fade_icons");
       if (this.is_letian) return;  //乐天商户不需要6秒消失
       this.clear_timer()
         if(this.is_need_timer) {
@@ -1167,6 +1174,7 @@ export default {
     },
     // 如果是电竞，点击显示返回按钮
     show_DJ_back() {
+      console.error("如果是电竞，点击显示返回按钮");
       if(this.get_menu_type == 3000) {
         this.show_icons = true;
         this.fade_icons();
@@ -1291,6 +1299,7 @@ export default {
     icon_click_animationUrl(){
       // let check =   this.get_detail_data.mms >=2 || this.get_detail_data.mvs > -1
       // if(!check){return false }
+      debugger
        let params = {
          mid: this.match_id,
          type: 'Animation'
@@ -1748,6 +1757,7 @@ export default {
     },
   },
   mounted() {
+    console.error(this.detail_data);
     this.set_zhiding_info( false )
     this.set_video_zhiding( false )
     this.mitt_obj[MITT_TYPES.EMIT_VIDEO_SWITCHING] = useMittOn(MITT_TYPES.EMIT_VIDEO_SWITCHING,this.icon_click_lvs);

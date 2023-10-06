@@ -17,6 +17,8 @@ class BetData {
     // this.bet_list = [];
     //是否接受更好赔率
     this.bet_is_accept = false;
+    // 接受更好赔率规则
+    this.better_rules_show = false
     // 押注信息列表
     this.bet_list = [];
     // 押注扁平化对象扁平
@@ -191,6 +193,14 @@ this.bet_appoint_ball_head= null */
   }
 
   /**
+   * 是否接受更好赔率规则
+  */
+  set_accept_show(data) {
+    this.better_rules_show = data
+    this.set_bet_data_class_version()
+  }
+
+  /**
    *
    * 管道负责 读写 衔接  使用对象引用类型的 原理
    * 平坦化读写 ， 让逻辑层不关心挂载点
@@ -336,9 +346,9 @@ this.bet_appoint_ball_head= null */
         this.bet_s_list.push(bet_refer_obj)
       }
     }
-    
+
     // 显示 投注信息窗口
-    if(LayOutMain_pc.layout_left_show != 'bet_list'){
+    if (LayOutMain_pc.layout_left_show != 'bet_list') {
       LayOutMain_pc.set_layout_left_show('bet_list')
     }
 
@@ -406,7 +416,7 @@ this.bet_appoint_ball_head= null */
   set_bet_flag() {
     if (this.bet_mode == 0) {
       this.bet_flag = false;
-    }else{
+    } else {
       this.bet_flag = this.bet_mode == -1 || (this.bet_mode == 1 && BetViewDataClass.order_confirm_complete != 2);
     }
     this.set_bet_data_class_version()
@@ -495,6 +505,7 @@ this.bet_appoint_ball_head= null */
   http_upd_data() { }
   set_bet_amount(val) {
     this.bet_amount = val;
+    console.log(999, val)
   }
   /**
    * @description: 删除投注对象
@@ -514,14 +525,14 @@ this.bet_appoint_ball_head= null */
     let index = 0
     let query = []
     // 单关 
-    if(this.is_bet_single){
+    if (this.is_bet_single) {
       // 合并
-      if(this.is_bet_merge){
+      if (this.is_bet_merge) {
         query = this.bet_single_list
-      }else{
+      } else {
         this.bet_single_list = []
       }
-    }else{
+    } else {
       // 串关
       query = this.bet_s_list
     }
@@ -534,13 +545,13 @@ this.bet_appoint_ball_head= null */
     temp.splice(index, 1);
 
     // 单串关赋值
-    if(this.is_bet_single){
+    if (this.is_bet_single) {
       this.bet_single_list = temp
-    }else{
+    } else {
       this.bet_s_list = temp
     }
     // 数量为 0 切换到菜单页面
-    if(!temp.length){
+    if (!temp.length) {
       LayOutMain_pc.set_layout_left_show('menu')
     }
     // 删除投注项内容
@@ -636,7 +647,6 @@ this.bet_appoint_ball_head= null */
     this.orderNo_bet_obj = array
     this.set_bet_data_class_version()
   }
-
 
 }
 export default new BetData();

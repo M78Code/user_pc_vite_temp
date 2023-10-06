@@ -9,7 +9,7 @@ import {http} from "src/core/http/index.js";
 import lodash from "lodash"
 
 const { API_PREFIX = {}} = window.BUILDIN_CONFIG;
-const { API_PREFIX_JOB: prefix,API_PREFIX_USER:prefix_, API_PREFIX_JOB:prefix_job} = API_PREFIX;
+const { API_PREFIX_JOB: prefix,API_PREFIX_USER:prefix_, API_PREFIX_JOB:prefix_job, API_PREFIX_BAT: prefix_bat} = API_PREFIX;
 
 // 全url   获取  一般用于 视频动画域名检测
 export const get_full_url = (url='') => {
@@ -213,7 +213,7 @@ export const getVideoReferurl = (params, config, url="/v1/w/videoReferUrl") => h
 // 获取服务器当前时间
 export const get_time_server = (params, config, url="/v1/getSystemTime/currentTimeMillis") => http.get(`${prefix}${url}`,params, config);
 //投注记录页用于获取赛事是否有赛果页存在
-export const existMatchResult = (params, config, url="/order/betRecord/existMatchResult") => http.get(`${prefix_yewu13}${url}`, params, config);
+export const existMatchResult = (params, config, url="/order/betRecord/existMatchResult") => http.get(`${prefix_bat}${url}`, params, config);
 //获取虚拟体育赛果
 export const get_virtual_result = (params, config, url="/v1/orderScoreResult/queryTournamentScoreResult") =>
 http.post(`${prefix}${url}`,params,config);

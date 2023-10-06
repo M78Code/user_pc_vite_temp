@@ -184,7 +184,7 @@ watch(() => MatchDataBaseH5.data_version.version, () => {
 
 // 滚动列表时,组件赛事变化异步还原赛事次要玩法的显示状态
 const get_new_match_info = () => {
-  match_info.value = MatchDataBaseH5.get_quick_mid_obj(props.mid)
+  match_info.value = MatchDataBaseH5.get_quick_mid_obj(props.mid)||{}
   if (match_info.value) {
     init_tab_async_show();
     if (current_hps_key.value) {
@@ -251,7 +251,7 @@ watch(() => get_c303_data_change.value, (curr) => {
           playId: item.play_id,
           device: 'v2_h5_st',
           sort: 1,//排序	 int 类型 1 按热门排序 2 按时间排序
-          inner_param: 'is_by_mids'
+          inner_param: 'is_by_mids'/match-overtime-pen.vue
         };
         params.is_user = 'ws-user';
         let fun_temp = () => {
@@ -359,7 +359,7 @@ watch(() => get_standard_odd_status.value, () => {
   apply_15min_title();
 })
 // 一级菜单切换，次要玩法，默认折叠
-watch(() => MenuData.get_menu_type(), () => {
+watch(MenuData.menu_type, () => {
   tab_list.value.forEach(t => {
     t.unfold = 0;
   });

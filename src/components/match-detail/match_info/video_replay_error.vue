@@ -10,9 +10,9 @@
       <div class="flex1"></div>
       <div class="box">
         <div>
-          <img src="public/image/svg/replay_video_no_line.svg" />
+          <img src="/yazhou-pc/image/svg/replay_video_no_line.svg" />
         </div>
-        <div class="txt">{{ $root.$t('replay_video.iframe_err') }}</div>
+        <div class="txt">{{ i18n_t('replay_video.iframe_err') }}</div>
       </div>
       <div class="flex1"></div>
     </div>

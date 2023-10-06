@@ -10,11 +10,11 @@
       <div class="vtr">
         <div class="vtd" ></div>
         <!-- 历史赛果 -->
-        <div class="vtd">{{$root.$t("match_info.match_history")}}</div>
+        <div class="vtd">{{i18n_t("match_info.match_history")}}</div>
         <!-- 活力表现 -->
-        <div class="vtd">{{$root.$t("match_info.power")}}</div>
+        <div class="vtd">{{i18n_t("match_info.power")}}</div>
         <!-- 综合评级 -->
-        <div class="vtd">{{$root.$t("match_info.composite")}}</div>
+        <div class="vtd">{{i18n_t("match_info.composite")}}</div>
       </div>
     </div>
 

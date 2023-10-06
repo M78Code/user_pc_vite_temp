@@ -96,7 +96,7 @@ class MenuData {
     this.hot_500_sport_1 = false;
     //是否可以多列玩法的菜单
     this.is_multi_column = false;
-    
+    this.match_list_version = ref('23')
     // 菜单版本变更
     this.menu_data_version = ref('12')
   }
@@ -104,7 +104,6 @@ class MenuData {
   // 设置 菜单的版本变化
   set_menu_data_version(){
     useMittEmit(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA)
-    useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST);
     this.menu_data_version.value = Date.now()
   }
   /**
@@ -230,6 +229,9 @@ class MenuData {
     // 冠军下面的常规赛事
     if(guanjun == 'guanjun-common'){
       text = 'match-champion'
+    }
+    if(this.menu_root == 1) {
+      text = 'match-play-common'
     }
     PageSource.set_page_source(text)
 
@@ -673,14 +675,13 @@ class MenuData {
     if (this.match_list_api_config.match_list.params) {
       this.match_list_api_config.match_list.params.tid = arr.join(",");
     }
-    this.match_list_api_config.version = Date.now();
+    this.match_list_version.value = Date.now();
   }
   /**
    * 定义  设置 请求  列表结构  API 参数的   值
    */
   set_match_list_api_config(config) {
     let match_list_api_config = JSON.parse(JSON.stringify(config));
-    match_list_api_config.version = Date.now();
 
     //  //菜单切换是筛选数据置空
     // store.dispatch("set_filter_select_obj", []);
@@ -692,7 +693,7 @@ class MenuData {
     //当前 列表的  体育标签
     this.match_list_sports_label = match_list_api_config.sports;
  
-
+    this.match_list_version.value = Date.now();
     // 设置投注类别
     this.set_bet_category();
 

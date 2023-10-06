@@ -36,7 +36,7 @@ export const set_sticky_top = () => {
     };
   }
   // 冠军 并且不是早盘
-  else if (MenuData.is_guanjun() && page_source != "early") {
+  else if (MenuData.is_guanjun() && page_source != "match-early-common") {
     obj = {
       type: 40,
       league: 40,
@@ -50,17 +50,17 @@ export const set_sticky_top = () => {
     };
   }
   // 滚球
-  else if (page_source == "play") {
+  else if (page_source == "match-play-common") {
     obj = {
       type: 84,
       league: 122,
     };
-    if (this.is_show_hot) {
-      obj = {
-        type: 36,
-        league: 74,
-      };
-    }
+    // if (this.is_show_hot) {
+    //   obj = {
+    //     type: 36,
+    //     league: 74,
+    //   };
+    // }
     //虚拟体育
     if (MenuData.is_virtual_sport()) {
       // 虚拟足球
@@ -78,17 +78,17 @@ export const set_sticky_top = () => {
     }
   }
   // 早盘
-  else if (page_source == "early") {
+  else if (page_source == "match-early-common") {
     obj = {
       type: 90,
       league: 90,
     };
-    if (this.is_show_hot) {
-      obj = {
-        type: 36,
-        league: 74,
-      };
-    }
+    // if (this.is_show_hot) {
+    //   obj = {
+    //     type: 36,
+    //     league: 74,
+    //   };
+    // }
   }
   // 串关
   else if (page_source == "bet") {
@@ -96,12 +96,12 @@ export const set_sticky_top = () => {
       type: 86,
       league: 124,
     };
-    if (this.is_show_hot) {
-      obj = {
-        type: 36,
-        league: 74,
-      };
-    }
+    // if (this.is_show_hot) {
+    //   obj = {
+    //     type: 36,
+    //     league: 74,
+    //   };
+    // }
   }
   // 热门赛事
   else if (page_source == "hot") {
@@ -111,7 +111,7 @@ export const set_sticky_top = () => {
     };
   }
   // 收藏页面
-  if (page_source == "collect") {
+  if (page_source == "match-collect") {
     obj = {
       type: 36,
       league: 74,
@@ -131,6 +131,7 @@ export const set_sticky_top = () => {
       };
     }
   }
+  console.log('page_source', PageSourceData);
   obj.fixed_header_height = obj.type + "px";
 
   Object.assign(MatchListCardData.sticky_top, obj);

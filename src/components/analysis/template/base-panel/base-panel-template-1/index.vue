@@ -1,13 +1,13 @@
-<template>
+<template>7
   <div class="base_panel">
     <!-- 杯赛积分 -->
     <div class="panel integrate" :class="{ 'show_all_rank': flag }">
       <div class="panel-title">
         <!-- 联赛积分(无数字) 杯赛积分(有数字) -->
         <span
-          v-if="tournamentTypeFinish">{{ t(`analysis.cup_points${_.get(vs_info, '[0].tournamentType') == 2 ? '1' : ''}`) }}</span>
+          v-if="tournamentTypeFinish">{{ t(`analysis.cup_points${lodash.get(vs_info, '[0].tournamentType') == 2 ? '1' : ''}`) }}</span>
         <!-- 查看更多 -->
-        <span class="ranking-more" v-if="_.get(vs_info, '[0].tournamentType') == 1"
+        <span class="ranking-more" v-if="lodash.get(vs_info, '[0].tournamentType') == 1"
           @click="show_more">{{ t('analysis.show_more') }}</span>
       </div>
       <div class="d-header d-tr">
@@ -82,18 +82,18 @@
         <div class="title">
           <div class="both home">
             <div class="team-name">
-              <img v-img="([_.get(match, 'mhlu[0]'), _.get(match, 'frmhn[0]')])" class="logo" alt />
+              <img v-img="([lodash.get(match, 'mhlu[0]'), lodash.get(match, 'frmhn[0]')])" class="logo" alt />
               <span>{{ match.mhn }}</span>
             </div>
             <div class="socre">
               <span class="label">
-                {{ _.get(team_vs_history_result, 'home.win') }}
+                {{ lodash.get(team_vs_history_result, 'home.win') }}
                 <!-- 胜 -->
                 {{ t('analysis.victory') }}
-                {{ _.get(team_vs_history_result, 'home.dogfall') }}
+                {{ lodash.get(team_vs_history_result, 'home.dogfall') }}
                 <!-- 平 -->
                 {{ t('analysis.flat') }}
-                {{ _.get(team_vs_history_result, 'home.lose') }}
+                {{ lodash.get(team_vs_history_result, 'home.lose') }}
                 <!-- 负 -->
                 {{ t('analysis.negative') }}
               </span>
@@ -103,17 +103,17 @@
           <div class="both away">
             <div class="team-name">
               <span>{{ match.man }}</span>
-              <img v-img="([_.get(match, 'malu[0]'), _.get(match, 'frman[0]')])" class="logo" alt />
+              <img v-img="([lodash.get(match, 'malu[0]'), lodash.get(match, 'frman[0]')])" class="logo" alt />
             </div>
             <div class="socre">
               <span class="label">
-                {{ _.get(team_vs_history_result, 'away.win') }}
+                {{ lodash.get(team_vs_history_result, 'away.win') }}
                 <!-- 胜 -->
                 {{ t('analysis.victory') }}
-                {{ _.get(team_vs_history_result, 'away.dogfall') }}
+                {{ lodash.get(team_vs_history_result, 'away.dogfall') }}
                 <!-- 平 -->
                 {{ t('analysis.flat') }}
-                {{ _.get(team_vs_history_result, 'away.lose') }}
+                {{ lodash.get(team_vs_history_result, 'away.lose') }}
                 <!-- 负 -->
                 {{ t('analysis.negative') }}
               </span>
@@ -170,18 +170,18 @@
         <div class="title">
           <div class="both home">
             <div class="team-name">
-              <img v-img="([_.get(match, 'mhlu[0]'), _.get(match, 'frmhn[0]')])" class="logo" alt />
+              <img v-img="([lodash.get(match, 'mhlu[0]'), lodash.get(match, 'frmhn[0]')])" class="logo" alt />
               <span>{{ match.mhn }}</span>
             </div>
             <div class="socre">
               <span class="label">
-                {{ _.get(team_vs_other_team_result, 'home.win') }}
+                {{ lodash.get(team_vs_other_team_result, 'home.win') }}
                 <!-- 胜 -->
                 {{ t('analysis.victory') }}
-                {{ _.get(team_vs_other_team_result, 'home.dogfall') }}
+                {{ lodash.get(team_vs_other_team_result, 'home.dogfall') }}
                 <!-- 平 -->
                 {{ t('analysis.flat') }}
-                {{ _.get(team_vs_other_team_result, 'home.lose') }}
+                {{ lodash.get(team_vs_other_team_result, 'home.lose') }}
                 <!-- 负 -->
                 {{ t('analysis.negative') }}
               </span>
@@ -190,17 +190,17 @@
           <div class="both away">
             <div class="team-name">
               <span>{{ match.man }}</span>
-              <img v-img="([_.get(match, 'malu[0]'), _.get(match, 'frman[0]')])" class="logo" alt />
+              <img v-img="([lodash.get(match, 'malu[0]'), lodash.get(match, 'frman[0]')])" class="logo" alt />
             </div>
             <div class="socre">
               <span class="label">
-                {{ _.get(team_vs_other_team_result, 'away.win') }}
+                {{ lodash.get(team_vs_other_team_result, 'away.win') }}
                 <!-- 胜 -->
                 {{ t('analysis.victory') }}
-                {{ _.get(team_vs_other_team_result, 'away.dogfall') }}
+                {{ lodash.get(team_vs_other_team_result, 'away.dogfall') }}
                 <!-- 平 -->
                 {{ t('analysis.flat') }}
-                {{ _.get(team_vs_other_team_result, 'away.lose') }}
+                {{ lodash.get(team_vs_other_team_result, 'away.lose') }}
                 <!-- 负 -->
                 {{ t('analysis.negative') }}
               </span>
@@ -302,19 +302,19 @@
       <div class="panel-title">{{ t('analysis.Future_schedule') }}</div>
       <div class="simple-title">
         <div class="home">
-          <img v-img="([_.get(match, 'mhlu[0]'), _.get(match, 'frmhn[0]')])" class="logo" alt />
+          <img v-img="([lodash.get(match, 'mhlu[0]'), lodash.get(match, 'frmhn[0]')])" class="logo" alt />
           <span>{{ match.mhn }}</span>
         </div>
         <div class="away">
           <span>{{ match.man }}</span>
-          <img v-img="([_.get(match, 'malu[0]'), _.get(match, 'frman[0]')])" class="logo" alt />
+          <img v-img="([lodash.get(match, 'malu[0]'), lodash.get(match, 'frman[0]')])" class="logo" alt />
         </div>
       </div>
       <!-- 有内容的情况才渲染，方便调整样式 -->
       <div class="content"
-        v-if="(_.get(baseData, 'sThirdMatchFutureStatisticsDTOMap.1') && _.get(baseData, 'sThirdMatchFutureStatisticsDTOMap.1').length) && (_.get(baseData, 'sThirdMatchFutureStatisticsDTOMap.2') && _.get(baseData, 'sThirdMatchFutureStatisticsDTOMap.2').length)">
+        v-if="(lodash.get(baseData, 'sThirdMatchFutureStatisticsDTOMap.1') && lodash.get(baseData, 'sThirdMatchFutureStatisticsDTOMap.1').length) && (lodash.get(baseData, 'sThirdMatchFutureStatisticsDTOMap.2') && lodash.get(baseData, 'sThirdMatchFutureStatisticsDTOMap.2').length)">
         <div class="wrap-home">
-          <div class="future-item" v-for="(item, index) in _.get(baseData, 'sThirdMatchFutureStatisticsDTOMap.1')"
+          <div class="future-item" v-for="(item, index) in lodash.get(baseData, 'sThirdMatchFutureStatisticsDTOMap.1')"
             :key="index">
             <div class="match-time ellipsis">
               <span>{{ item.beginTime ? formatTime(item.beginTime, 'yy-mm-dd') : '-' }}</span>
@@ -345,7 +345,7 @@
         </div>
 
         <div class="wrap-away">
-          <div class="future-item" v-for="(item, index) in _.get(baseData, 'sThirdMatchFutureStatisticsDTOMap.2')"
+          <div class="future-item" v-for="(item, index) in lodash.get(baseData, 'sThirdMatchFutureStatisticsDTOMap.2')"
             :key="index">
             <div class="match-time ellipsis">
               <span>{{ item.beginTime ? formatTime(item.beginTime, 'yy-mm-dd') : '-' }}</span>
@@ -382,21 +382,21 @@
       <!-- 伤停情况 -->
       <div class="panel-title">{{ t('analysis.injury') }}</div>
       <div class="simple-title "
-        :class="{ 'simple-team': (_.get(baseData, 'sThirdMatchSidelinedDTOMap.1') && _.get(baseData, 'sThirdMatchSidelinedDTOMap.1').length) && (_.get(baseData, 'sThirdMatchSidelinedDTOMap.2') && _.get(baseData, 'sThirdMatchSidelinedDTOMap.2').length) }">
+        :class="{ 'simple-team': (lodash.get(baseData, 'sThirdMatchSidelinedDTOMap.1') && lodash.get(baseData, 'sThirdMatchSidelinedDTOMap.1').length) && (lodash.get(baseData, 'sThirdMatchSidelinedDTOMap.2') && lodash.get(baseData, 'sThirdMatchSidelinedDTOMap.2').length) }">
         <div class="home">
-          <img v-img="([_.get(match, 'mhlu[0]'), _.get(match, 'frmhn[0]')])" class="logo" alt />
+          <img v-img="([lodash.get(match, 'mhlu[0]'), lodash.get(match, 'frmhn[0]')])" class="logo" alt />
           <span>{{ match.mhn }}</span>
         </div>
         <div class="away">
           <span>{{ match.man }}</span>
-          <img v-img="([_.get(match, 'malu[0]'), _.get(match, 'frman[0]')])" class="logo" alt />
+          <img v-img="([lodash.get(match, 'malu[0]'), lodash.get(match, 'frman[0]')])" class="logo" alt />
         </div>
       </div>
       <!-- 有内容的情况才渲染，方便调整样式 -->
       <div class="content"
-        v-if="(_.get(baseData, 'sThirdMatchSidelinedDTOMap.1') && _.get(baseData, 'sThirdMatchSidelinedDTOMap.1').length) && (_.get(baseData, 'sThirdMatchSidelinedDTOMap.2') && _.get(baseData, 'sThirdMatchSidelinedDTOMap.2').length)">
+        v-if="(lodash.get(baseData, 'sThirdMatchSidelinedDTOMap.1') && lodash.get(baseData, 'sThirdMatchSidelinedDTOMap.1').length) && (lodash.get(baseData, 'sThirdMatchSidelinedDTOMap.2') && lodash.get(baseData, 'sThirdMatchSidelinedDTOMap.2').length)">
         <div class="wrap-home">
-          <div class="item" v-for="(item, index) in _.get(baseData, 'sThirdMatchSidelinedDTOMap.1')" :key="index">
+          <div class="item" v-for="(item, index) in lodash.get(baseData, 'sThirdMatchSidelinedDTOMap.1')" :key="index">
             <div class="player-name">
               <span>{{ item.positionName }}</span>
               <span>{{ item.playerName }}</span>
@@ -406,7 +406,7 @@
         </div>
 
         <div class="wrap-away">
-          <div class="item" v-for="(item, index) in _.get(baseData, 'sThirdMatchSidelinedDTOMap.2')" :key="index">
+          <div class="item" v-for="(item, index) in lodash.get(baseData, 'sThirdMatchSidelinedDTOMap.2')" :key="index">
             <div class="player-name">
               <span>{{ item.positionName }}</span>
               <span>{{ item.playerName }}</span>
@@ -425,14 +425,14 @@
 
 <script setup>
 
-import { ref, onUnmounted, defineEmits } from 'vue';
+import { ref, onUnmounted } from 'vue';
 import { t } from "src/core/index.js";
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
-useRegistPropsHelper(component_symbol, need_register_props)
+// const { match,tournamentTypeFinish,vs_info } = useRegistPropsHelper(component_symbol, defineProps(need_register_props))
 import { formatTime, result_filter } from 'src/core/format/index.js'
 import { MSelectFullVersionWapper as MSelect } from 'src/components/analysis/template/m-select/index.js'
-
+const props = defineProps(need_register_props)
 //杯赛数据
 const vs_info_data = ref([]);
 //默认：空，  flag= 0  排名榜全量展示 

@@ -363,6 +363,7 @@ function compute_quanbu_euid() {
   //全部 csid
   let csids = [];
   // 常规的计算
+
   mi_100_arr.value.map((x) => {
     let obj = BaseData.mi_info_map[`mi_${x.mi}`] || {};
     euids.push(obj.euid);
@@ -394,9 +395,10 @@ function handle_click_menu_mi_1(detail = {}) {
     menu,
     guanjun,
   } = detail;
+  resolve_mew_menu_res_mi_100_2000();
   // 滚球全部关闭的情况下 顺移到下一个
   if (mi == 1 && !GlobalAccessConfig.get_playAllShow()) {
-    resolve_mew_menu_res_mi_100_2000();
+    // resolve_mew_menu_res_mi_100_2000();
     mi = (mi_100_arr.value[0] || {}).mi;
     sports = "common";
   }
@@ -524,7 +526,8 @@ function handle_click_menu_mi_1(detail = {}) {
   // 设置      中间 菜单输出
   menu_config.set_mid_menu_result(params);
   // 设置   请求  列表结构  API 参数的  值
-  // menu_config.set_match_list_api_config(config);
+  console.log('config', config);
+  menu_config.set_match_list_api_config(config);
 }
 /**
  * 单个菜单按钮点击  冠军的

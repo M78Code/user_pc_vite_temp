@@ -41,6 +41,11 @@ const routes = [
         name: "details",
         component: () => import('project_path/src/pages/match-details/details-main.vue')
       },
+      {
+        path: "/video/:mid/:tid/:csid/:play_type/:video_size",
+        name: "video",
+        component: () =>import("project_path/src/components/video/video.vue")   
+      },
       //       {
       //         path: "/virtual_details/:mid/:tid/:csid",
       //         name: "virtual_details",
@@ -55,7 +60,7 @@ const routes = [
   },
   //赛事分析
   {
-    path: "/analysis_header/:csid/:mid",
+    path: "/analysis_header/:csid/:mid/:euid",
     name: "analysis_header",
 
     component: () => import('project_path/src/pages/analysis-header/analysis-header.vue'),

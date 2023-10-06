@@ -350,7 +350,6 @@ export default {
           this.show_type = 'play-video'
           // 目标赛事视频url相关信息获取
           video.get_video_url(this.match_info, (show_type,media_src) => {
-            debugger
             // 未登录
             if(media_src === true && show_type === 'no-login'){
               this.is_limited = true
@@ -399,7 +398,7 @@ export default {
           this.topic_is_playing = false
           this.meida_update_time = 0
         }
-        if(media_type == 'animation' && this.match_info.mid){
+        if(media_type == 'animation' && this.match_info?.mid){
           // 目标赛事动画url相关信息获取
           video.get_animation_url(this.match_info, (show_type,media_src) => {
             //回调函数过期
@@ -440,13 +439,10 @@ export default {
     refresh_time() {
       const { mid, media_type } = this.play_media
       const time = Date.now()
-      store.dispatch({
-        type: 'SET_PLAY_MEDIA',
-        data: {
-          mid,
-          media_type,
-          time
-        }
+      MatchDetailCalss.set_play_media( {
+        mid,
+        media_type,
+        time
       });
     }
   },
@@ -565,14 +561,11 @@ export default {
     auto_play() {
       let { mid } = this.play_media
       let time = Date.now()
-      store.dispatch({
-        type: 'SET_PLAY_MEDIA',
-        data: {
-          mid,
-          media_type: 'auto',
-          time
-        }
-      });
+      MatchDetailCalss.set_play_media({
+        mid,
+        media_type: 'auto',
+        time
+      })
     },
     /**
      * @Description:设置视频高度

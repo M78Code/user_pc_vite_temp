@@ -5,7 +5,8 @@
 <template>
   <div class="bet-mix-box-child2">
     <!-- 多注顶部蒙层 -->
-    <div v-if="false" class="full-shadow" @click.self="pack_up" @touchmove.prevent></div>
+    <!-- <div v-if="false" class="full-shadow" @click.self="pack_up" @touchmove.prevent></div> -->
+    <div class="full-shadow" @click.self="pack_up" @touchmove.prevent></div>
     <!-- 投注中的蒙层，所有不能点击 -->
     <div v-if="get_bet_status == 2" class="fixed full-shadow2" @touchmove.prevent></div>
 
@@ -32,6 +33,9 @@
             v-if="UserCtr.theme.includes('day')" />
           <img src="/public/yazhou-h5/image/bet/rules3.svg" @click="change_accept" class="img1" v-else />
         </span>
+
+        <!-- 接受更好赔率的规则弹窗 -->
+        <acceptRules v-if="BetData.better_rules_show"></acceptRules>
       </div>
 
       <!-- 中间可滚动区域 -->
@@ -207,6 +211,7 @@
         </div>
       </div>
 
+
     </div>
   </div>
 </template>
@@ -236,9 +241,7 @@ import lodash from 'lodash'
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import { format_money3, format_money2 } from 'src/core/format/index.js'
 import { submit_handle } from "src/core/bet/class/bet-box-submit.js"
-
-
-
+import acceptRules from "src/components/bet/components/accept-rules.vue"
 
 const bet_keyboard_show = ref(true)
 const scroll_box = ref()
@@ -323,8 +326,8 @@ const toggle_accept = () => {
 }
 
 //更好赔率规则
-const change_accept=()=>{
-  
+const change_accept = () => {
+  BetData.set_accept_show(true)
 }
 
 //是否有重复的球员id或者球队id，有的话要禁止串关
