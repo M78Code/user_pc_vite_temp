@@ -47,7 +47,7 @@
           </div>
           <div class="t2 column justify-center">
             <span>{{item.handicapOddsDTOList[0].value0}}</span>
-            <span :class="{'red':item.handicapOddsDTOList[1].directions0 == 1,'green':item.handicapOddsDTOList[1].directions0 == -1}">
+            <span :class="{'red':item.handicapOddsDTOList[1].directions.value0 == 1,'green':item.handicapOddsDTOList[1].directions.value0 == -1}">
               {{item.handicapOddsDTOList[1].value0}}
               <i class="odd yb_ml4"></i>
             </span>
@@ -308,9 +308,8 @@ const route = useRoute()
 
     .detail {
       height: 0.52rem;
-
-      //padding-left: 0.2rem;
       padding: 0 0.05rem 0 0.2rem;
+      background-color: var(--q-analysis-text-color-27);
 
       span {
         display: block;
@@ -351,18 +350,18 @@ const route = useRoute()
   }
 
   .red {
-
+    color: var(--q-analysis-bg-color-20);
     i {
-
+      background-color: var(--q-analysis-bg-color-20);
       -webkit-clip-path: polygon(50% 0, 100% 100%, 51% 64%, 0% 100%);
       clip-path: polygon(50% 0, 100% 100%, 51% 64%, 0% 100%);
     }
   }
 
   .green {
-
+    color: var(--q-analysis-bg-color-19);
     i {
-
+      background-color: var(--q-analysis-bg-color-19);
       -webkit-clip-path: polygon(50% 29%, 100% 0, 46% 100%, 0 0);
       clip-path: polygon(50% 29%, 100% 0, 46% 100%, 0 0);
     }

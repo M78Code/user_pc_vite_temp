@@ -17,7 +17,7 @@ export const post_search_match = (params, config = {}, url = "/v1/hotSearch/sear
 };
 
 // 列表滚球
-export const post_fetch_match_list = (params, config = {},url="/v1/w/structureLiveMatchesPB") => {
+export const post_fetch_match_list = (params, config = {},url="/v1/w/structureLiveMatches") => {
   return http.post(`${prefix}${url}`, params, {axios_debounce_cache_key:'get_match_list'});
 };
 

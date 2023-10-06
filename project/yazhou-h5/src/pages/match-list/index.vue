@@ -10,7 +10,7 @@
       @scroll="wrapper_scroll_handler" :class="{
       zaopan: [3, 11, 28, 3000].includes(menu_type) && invok_source !== 'home_hot_page_schedule',
       guanjun: [100].includes(menu_type),
-      level_four_menu: menu_type == 28 && [1001, 1002, 1004, 1011, 1010, 1009].includes(get_curr_sub_menu_type),
+      level_four_menu: menu_type == 28 && [1001, 1002, 1004, 1011, 1010, 1009].includes(menu_lv2.mi),
       detail_match_list: ['detail_match_list', 'home_hot_page_schedule', ].includes(invok_source),
       jingzu: menu_type == 30,
       esport: 3000 == menu_type,
@@ -63,7 +63,7 @@ import BaseData from 'src/core/base-data/base-data.js'
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import MatchPage from "src/core/match-list-h5/match-class/match-page.js";
 import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from 'src/core'
-import { menu_type } from 'project_path/src/mixin/menu.js'
+import { menu_type, menu_lv2 } from 'project_path/src/mixin/menu.js'
 import { standard_edition } from 'project_path/src/mixin/userctr.js'
 
 // import matchListCardFold from 'src/core/match-list-h5/match-card/match-list-card-fold.js'

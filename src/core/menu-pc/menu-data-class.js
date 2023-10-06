@@ -96,7 +96,7 @@ class MenuData {
     this.hot_500_sport_1 = false;
     //是否可以多列玩法的菜单
     this.is_multi_column = false;
-    
+    this.match_list_version = ref('23')
     // 菜单版本变更
     this.menu_data_version = ref('12')
   }
@@ -104,7 +104,6 @@ class MenuData {
   // 设置 菜单的版本变化
   set_menu_data_version(){
     useMittEmit(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA)
-    useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST);
     this.menu_data_version.value = Date.now()
   }
   /**
@@ -231,6 +230,9 @@ class MenuData {
     if(guanjun == 'guanjun-common'){
       text = 'match-champion'
     }
+    if(this.menu_root == 1) {
+      text = 'match-play-common'
+    }
     PageSource.set_page_source(text)
 
     // console.warn('ssss',val);
@@ -285,12 +287,13 @@ class MenuData {
     this.menu_root = obj.root;
     this.menu_root_show_shoucang = obj.root;
     // 设置 列表接口类型
-    this.set_match_list_api_type(obj);
+    // this.set_match_list_api_type(obj);
 
     // 是否有中间菜单 ，
     // 有则 需要显示中间菜单组件,需要 走中间菜单渲染 ，中间菜单负责输出 列表请求参数
     // 如果没有 需要逻辑分流计算 列表请求参数
 
+    console.log('has_mid_menu', obj);
     if (obj.has_mid_menu) {
       this.left_menu_result = {
         ...obj,
@@ -312,8 +315,8 @@ class MenuData {
         version: Date.now(),
       };
     }
-    console.log(MATCH_LIST_TEMPLATE_CONFIG[`template_${this.get_match_tpl_number()}_config`], this.get_match_tpl_number());
     MATCH_LIST_TEMPLATE_CONFIG[`template_${this.get_match_tpl_number()}_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'))
+    console.log('objobj', obj);
     if ([2, 3].includes(Number(obj.root))) {
       // 角球
       if ([101210, 101310].includes(+obj.lv2_mi)) {
@@ -373,10 +376,10 @@ class MenuData {
       version: Date.now(),
     };
     this.menu_root_show_shoucang = obj.root;
-    // console.error(
-    //   "set_mid_menu_result-------",
-    //   JSON.stringify(this.mid_menu_result)
-    // );
+    console.error(
+      "set_mid_menu_result-------",
+      JSON.stringify(this.mid_menu_result)
+    );
     // 设置全屏
     this.set_multi_column();
   }
@@ -585,7 +588,7 @@ class MenuData {
     if ([400, 300].includes(Number(this.menu_root))) {
       is_multi_column = false;
     } else {
-      const { lv2_mi } = this.left_menu_result;
+      const { lv2_mi } = this.left_menu_result || {};
       // 只有“让球和大小”菜单 展示【 收起 】按钮。其他二级菜单不展示
       if (
         [2, 3].includes(Number(this.menu_root)) &&
@@ -672,14 +675,13 @@ class MenuData {
     if (this.match_list_api_config.match_list.params) {
       this.match_list_api_config.match_list.params.tid = arr.join(",");
     }
-    this.match_list_api_config.version = Date.now();
+    this.match_list_version.value = Date.now();
   }
   /**
    * 定义  设置 请求  列表结构  API 参数的   值
    */
   set_match_list_api_config(config) {
     let match_list_api_config = JSON.parse(JSON.stringify(config));
-    match_list_api_config.version = Date.now();
 
     //  //菜单切换是筛选数据置空
     // store.dispatch("set_filter_select_obj", []);
@@ -691,7 +693,7 @@ class MenuData {
     //当前 列表的  体育标签
     this.match_list_sports_label = match_list_api_config.sports;
  
-
+    this.match_list_version.value = Date.now();
     // 设置投注类别
     this.set_bet_category();
 

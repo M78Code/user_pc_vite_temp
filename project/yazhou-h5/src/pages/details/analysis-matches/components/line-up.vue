@@ -16,7 +16,7 @@
       </div>
     </div>
     <!--  足球背景图片 -->
-    <div class="football_field" v-if="get_detail_data.csid == 1" >
+    <div class="football_field" v-if="detail_data.csid == 1" >
       <!-- 加载第一项 和 最后一项 -->
       <template v-for="(item, i) in line_up_data.up" :key="i+'f_l'">
         <div class="first_and_last"          
@@ -73,7 +73,7 @@
       </template>
     </div>
     <!--  篮球背景图片 -->
-    <div class="basket-ball-field" v-if="get_detail_data.csid == 2">
+    <div class="basket-ball-field" v-if="detail_data.csid == 2">
       <div class="basket-ball-item"
            v-for="(item, index) in basketball_data" :key="index+'s'"
            :class="[
@@ -91,7 +91,7 @@
       <!-- 首发阵容-->
       <div class="title" >
         {{i18n_t('analysis_football_matches.starting_lineup') }}
-        <template v-if="get_detail_data.csid == 1">
+        <template v-if="detail_data.csid == 1">
           {{radio_button_index == 0 ? line_up_data.homeFormation : line_up_data.awayFormation}}
         </template>
       </div>
@@ -175,9 +175,15 @@ import lodash from "lodash"
 
 // TODO: 后续修改调整
 // import {mapGetters} from "vuex";
-const get_detail_data = ref({
+const detail_data = ref({
         csid: '1',
         mid: '1',
+    })
+    const props = defineProps({
+      detail_data: {
+        type: Object,
+        default: () => {}
+      }
     })
   const radio_button_index = ref(0)
   const tab_radio_button = ref(['曼联', '德联'])
@@ -189,7 +195,7 @@ const get_detail_data = ref({
   // 最后一位数
   const number = ref('')
   // 代表多少列 并且里边的数字
-  const number_columns = ref('')
+  const number_columns = ref([])
   const football_filtered_data = ref([
     {data:[]},
     // {data:[]},
@@ -199,18 +205,18 @@ const get_detail_data = ref({
   // 页面主题色
   const route = useRoute()
   onMounted(() => {
-    //  添加监听 赛事分析刷新事件 TODO: $root get_detail_data 后续修改调整
+    //  添加监听 赛事分析刷新事件 
   useMittOn(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis)
   get_list()
-  tab_radio_button.value = [get_detail_data.value.mhn, get_detail_data.value.man]
+  tab_radio_button.value = [props.detail_data.mhn, props.detail_data.man]
   })
 
   const match_id = computed(() => {
     // 赛事id
-    return route.params.mid || get_detail_data.value.mid
+    return route.params.mid || props.detail_data.mid
   })
   // computed: {
-  //   ...mapGetters(["get_goto_detail_matchid", 'get_detail_data.value','get_lang']),
+  //   ...mapGetters(["get_goto_detail_matchid",]),
   // },
   // 当首发阵容 有数值是5列的时候，
   const calculation_radian = (index) => {
@@ -254,14 +260,14 @@ const get_detail_data = ref({
       if(code == 200 && Object.keys(data).length > 0) {
         // 如果是足球赛事
         line_up_data.value = data
-        if(get_detail_data.value.csid == 1){
+        if(props.detail_data.csid == 1){
           if(radio_button_index.value == 0){
-            filter_numbers(line_up_data.value.homeFormation)
+            filter_numbers(data.homeFormation)
             // filter_numbers('4-2-3-1')
           }else{
-            filter_numbers(line_up_data.value.awayFormation)
+            filter_numbers(data.awayFormation)
           }
-        }else if(get_detail_data.value.csid == 2){
+        }else if(props.detail_data.csid == 2){
           //  如果是 篮球赛事
           basketball_data.value = data.up
         }
@@ -279,17 +285,19 @@ const get_detail_data = ref({
     if(!data ) return
     number.value = data.slice(-1)
     number_columns.value = data.split('-').join('').slice(0,-1)
-    let [number1, number2] = [+number_columns[0], +number_columns[1]]
+    let [number1, number2] = [+number_columns.value[0], +number_columns.value[1]]
     if(number_columns.length == 2){
       football_filtered_data.value = [{},{}]
       football_filtered_data.value[0].data = line_up_data.value.up.slice(1, number1 + 1)
       football_filtered_data.value[1].data = line_up_data.value.up.slice(number1 + 1, number1 + number2 + 1)
     }else if(number_columns.value.length == 3){
+
       football_filtered_data.value = [{},{},{}]
       let [number3] = [+number_columns.value[2]]
       football_filtered_data.value[0].data = line_up_data.value.up.slice(1, number1+1)
       football_filtered_data.value[1].data = line_up_data.value.up.slice(number1 + 1, number1 + number2 + 1)
       football_filtered_data.value[2].data = line_up_data.value.up.slice(number1 + number2 + 1, number1 + number2 + number3 + 1)
+      console.error(number1, number2, line_up_data.value,number_columns.value, football_filtered_data.value);
     }
   }
   // 刷新 当前赛事分析信息

@@ -26,6 +26,7 @@ export default {
       type: Number,
       default: 0
     }, //刷新次数
+    mid:String || Number
   },
   mixins: [video_replay],
   data() {
@@ -109,163 +110,13 @@ export default {
     //监听详情类的版本号
     "details_data_version.version": {
       handler(res) {
+        
         this.play_media = MatchDetailCalss.play_media
         this.vx_is_pause_video = MatchDetailCalss.is_pause_video
         // this.show_type =MatchDetailCalss.params.media_type
         let cur = MatchDetailCalss.play_media.time
         this.match_info = MatchDetailsData.get_quick_mid_obj(MatchDetailCalss.params.mid)
-          if (!cur || !this.match_info || JSON.stringify(this.match_info) == "{}" ) return
-          console.log(this.match_info,'this.match_info');
-          this.show_loading = true
-          // 10秒后隐藏loading图片
-          clearTimeout(this.timer_id_1)
-          this.timer_id_1 = setTimeout(()=>{
-            this.show_loading = false
-          },10000)
-          
-          this.callback_id++
-          let callback_id = this.callback_id
-          let { media_type } = this.play_media
-          let { mid="", mms="", mvs="", varl="", vurl="", csid="",lvs="" } = this.match_info
-          const {mid: last_mid, media_type: last_media_type} = this.last_media_info || {}
-          
-          // 非专题视频时需重置专题视频播放状态
-          if (media_type !== 'topic') {
-            this.topic_is_playing = false
-          }
-          // 由视频切换到其他媒体时，重置meida_update_time
-          if (!['video','studio','anchor','topic'].includes(media_type)) {
-            this.meida_update_time = 0
-          }
-          
-          // 非首次加载视频
-          if(this.match_info.mid == -1 ){
-            
-            this.show_type = 'no-video'
-            return
-          }
-          // 电竞只有视频
-          if(this.is_esports){
-            let url = varl || vurl
-            if(mms == 2 && url){
-              this.media_src = url
-              this.show_type = this.vx_is_pause_video ? 'pause' : 'play-video'
-            }else{
-              if(is_eports_csid(csid) || csid == -1){
-                
-                this.show_type = 'no-video'
-              }else{
-                this.show_type = ''
-              }
-            }
-            return
-          }
-          
-          // 比分板信息
-          if((media_type == 'auto' && this.$route.name == 'home') || media_type == 'info'){
-            this.show_type = 'info'
-            this.media_src = ''
-            video.set_play_media(this.match_info.mid,'info')
-            return
-          }
-  
-          // 媒体类型auto进一步判断
-          if (media_type == "auto") {
-            if (mvs > -1) {
-              media_type = "animation"
-            }else{
-              this.show_type = 'info'
-              this.media_src = ''
-              video.set_play_media(this.match_info.mid,'info')
-              return
-            }
-          }
-          
-          // 视频、演播室、主播、专题等视频媒体相关状态处理
-          if(['video','studio','anchor','topic'].includes(media_type) && this.match_info.mid){
-            // isLogin接口触发时差调整（10s内触发的切断)
-            if (
-                last_mid === mid &&
-                last_media_type === media_type &&
-                this.meida_update_time && (cur - this.meida_update_time < 10000)
-            ) {
-              return
-            }
-          
-            this.is_video_load_done = false
-            if (media_type === 'topic' && this.topic_is_playing) {
-              // 专题视频is_video_load_done状态更新
-              this.is_video_load_done = true
-            }
-            
-            this.show_type = 'play-video'
-            // 目标赛事视频url相关信息获取
-            video.get_video_url(this.match_info, (show_type,media_src) => {
-              
-              // 未登录
-              if(media_src === true && show_type === 'no-login'){
-                this.is_limited = true
-                this.show_type = show_type
-                return
-              }
-              this.is_video_error = false
-              //回调函数过期
-              if(callback_id != this.callback_id){
-                return
-              }
-  
-              // 专题视频(mp4)正在播放中
-              if (media_type === 'topic' && this.topic_is_playing) {
-                return
-              }
-              video.set_play_media(this.match_info.mid,media_type)
-              // 记录切换前 媒体相关信息
-              this.last_media_info = lodash.cloneDeep(this.play_media)
-              // 记录媒体切换时间
-              this.meida_update_time = Date.now()
-              
-              if(show_type == 'play-video' && this.get_is_user_no_handle){
-                show_type = 'no-handle'
-              }
-              
-              this.show_type = show_type
-              let live_type = get_media_icon_index(media_type)
-              // 此处为最终处理后的视频url
-              this.media_src = url_add_param(media_src,'video_type',window.video_type?window.video_type:1) + `&live_type=${live_type}&csid=${this.match_info.csid}&icons_right=163&pip_right=80`
-              this.media_src_temp = this.media_src
-              // 如果是在回放状态下，切换回播视频
-              if (this.current_replay) {
-                this.change_event_video(this.current_replay)
-              }
-              // 专题视频是否正在播放
-              if (media_type === 'topic') {
-                this.is_video_load_done = true
-                this.topic_is_playing = true
-              } else {
-                this.topic_is_playing = false
-              }
-            })
-            return
-          } else {
-            this.topic_is_playing = false
-            this.meida_update_time = 0
-          }
-          if(media_type == 'animation' && this.match_info.mid){
-            // 目标赛事动画url相关信息获取
-            video.get_animation_url(this.match_info, (show_type,media_src) => {
-              //回调函数过期
-              if(callback_id != this.callback_id){
-                return
-              }
-              video.set_play_media(this.match_info.mid,'animation')
-              this.show_type = show_type
-              // 此处为最终的动画url
-              this.media_src = media_src
-            })
-            this.set_height()
-            return
-          }
-        
+       
       },deep:true
     },
     //监听详情数据仓库类的版本号
@@ -390,9 +241,8 @@ export default {
       }
     },
     // 赛事ID改变
-    "match_info.mid"() {
-      
-      if(this.match_info?.mid == -1 || !this.match_info?.mid){
+    "mid"() {
+      if(this.mid == -1 || !this.mid){
         this.show_type = 'no-video'
       }
       this.media_src = ''
@@ -403,8 +253,12 @@ export default {
     // 设置直播类型 && 获取直播地址
     "play_media.time": {
       handler(cur) {
-        if (!cur || !this.match_info || JSON.stringify(this.match_info) == "{}" ) return
-        console.log(this.match_info,'this.match_info');
+        // this.match_info =MatchDetailsData.get_quick_mid_obj(this.mid)
+        console.log(cur,'cur',this.mid,'ini_info');
+        if (!cur  ) return
+        console.log(MatchDetailsData.get_quick_mid_obj(this.mid),'MatchDetailsData.get_quick_mid_obj(this.mid)');
+        let ini_info = MatchDetailsData.get_quick_mid_obj(this.mid)
+        console.log(ini_info,'ini_info');
         this.show_loading = true
         // 10秒后隐藏loading图片
         clearTimeout(this.timer_id_1)
@@ -415,7 +269,16 @@ export default {
         this.callback_id++
         let callback_id = this.callback_id
         let { media_type } = this.play_media
-        let { mid="", mms="", mvs="", varl="", vurl="", csid="",lvs="" } = this.match_info
+        let  mid="" ; let mms="" ;let mvs=""; let varl="" ;let vurl=""; let  csid=""; let lvs=""
+        if( this.match_info && JSON.stringify(this.match_info) == "{}" ) {
+          mid= this.match_info.mid
+          mms=this.match_info.mid
+          mvs = this.match_info.mid
+          varl = this.match_info.mid
+          csid= this.match_info.mid
+          lvs= this.match_info.mid
+         }
+        
         const {mid: last_mid, media_type: last_media_type} = this.last_media_info || {}
         
         // 非专题视频时需重置专题视频播放状态
@@ -428,8 +291,7 @@ export default {
         }
         
         // 非首次加载视频
-        if(this.match_info.mid == -1 ){
-          
+        if(this.mid == -1 ){
           this.show_type = 'no-video'
           return
         }
@@ -440,8 +302,7 @@ export default {
             this.media_src = url
             this.show_type = this.vx_is_pause_video ? 'pause' : 'play-video'
           }else{
-            if(is_eports_csid(csid) || csid == -1){
-              
+            if(is_eports_csid(csid) || csid == -1){              
               this.show_type = 'no-video'
             }else{
               this.show_type = ''
@@ -449,12 +310,11 @@ export default {
           }
           return
         }
-        
         // 比分板信息
         if((media_type == 'auto' && this.$route.name == 'home') || media_type == 'info'){
           this.show_type = 'info'
           this.media_src = ''
-          video.set_play_media(this.match_info.mid,'info')
+          video.set_play_media(this.mid,'info')
           return
         }
 
@@ -465,7 +325,7 @@ export default {
           }else{
             this.show_type = 'info'
             this.media_src = ''
-            video.set_play_media(this.match_info.mid,'info')
+            video.set_play_media(this.mid,'info')
             return
           }
         }
@@ -490,7 +350,7 @@ export default {
           this.show_type = 'play-video'
           // 目标赛事视频url相关信息获取
           video.get_video_url(this.match_info, (show_type,media_src) => {
-            
+            debugger
             // 未登录
             if(media_src === true && show_type === 'no-login'){
               this.is_limited = true

@@ -30,6 +30,7 @@ const default_value = {
   searchSwitch: true, // 搜索
   sortCut: true,  // 排序方式切换
   statisticsSwitch: true,  // 统计/赛事分析
+  is_roll_show_banner: false, // pc 滚动是否显示banner
 };
 class GlobalAccessConfig {
   config = {
@@ -147,6 +148,9 @@ class GlobalAccessConfig {
   }
   get_statisticsSwitch() {
     return this.config?.statisticsSwitch;
+  }
+  get_show_banner() {
+    return this.config?.is_roll_show_banner
   }
 }
 export default new GlobalAccessConfig();

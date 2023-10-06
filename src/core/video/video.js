@@ -862,8 +862,8 @@ export default {
   * @param {function} callback  回调函数
   */
   get_video_refer(mid,callback){
-    // let refer_url = lodash.get(window.BUILDIN_CONFIG,"live_domains[0]")
-    let refer_url = "https://prolivepc.sportxxx13ky.com"
+    let refer_url = lodash.get(window.BUILDIN_CONFIG.DOMAIN_RESULT,"live_domains[0]")
+    // let refer_url = "https://prolivepc.sportxxx13ky.com"
     if(refer_url){
       callback(this.join_video_url(mid,refer_url))
       return
@@ -979,7 +979,6 @@ export default {
    * @return {undefined} undefined
    */
   set_play_media(mid,media_type){
-    
     MatchDetailCalss.set_play_media({
       mid,
       media_type

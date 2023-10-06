@@ -90,7 +90,7 @@
           </div>
           <!-- 赛事分析展示内容 -->
           <template v-if="viewTab == 'match_analysis' && (!get_is_hengping || get_is_dp_video_full_screen)">
-            <analysis-matches :get_detail_data_csid="detail_data.csid"></analysis-matches>
+            <analysis-matches :detail_data="detail_data"></analysis-matches>
           </template>
           <!-- 聊天室 -->
           <template v-if="viewTab === 'chatroom'">

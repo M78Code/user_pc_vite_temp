@@ -14,6 +14,8 @@ export default {
   "analysis-bg-color-16": "#e4ebf1",
   "analysis-bg-color-17": "#006eff",
   "analysis-bg-color-18": "#eff0f4",
+  "analysis-bg-color-19": "#009915", // 未上传
+  "analysis-bg-color-20": "#ff2a2a", // 未上传
   "analysis-text-color-1": "#2d2d2d", 
   "analysis-text-color-2": "#666666",
   "analysis-text-color-3": "#5b6175",

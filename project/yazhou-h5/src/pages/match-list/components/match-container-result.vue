@@ -15,12 +15,9 @@
       }'
     >
      <!--体育类别  menuType 1:滚球 2:即将开赛 3:今日 4:早盘 11:串关 -->
-     <div class="sport-title match-indent football_text"
-     v-if="get_sport_show(i)"
-     @click="ball_folding_click(match_of_list.csid)"
-     >
+     <div class="sport-title match-indent football_text" v-if="get_sport_show(i)" @click="ball_folding_click(match_of_list.csid)">
        <span class="score-inner-span">
-         {{match_of_list.csna || MenuData.current_menu.sub.name}}
+         {{match_of_list.csna || menu_lv2.name}}
        </span>
      </div>
     <div class="match-inner-container">
@@ -28,21 +25,16 @@
       <div class="league match-indent" v-if='get_league_show(i)' @click="league_l_clicked()">
         <div class="league-t-wrap">
            <!--图标 -->
-          <div
-              class="league-icon-mini league-icon-mini2"
-              :style="{'--num': get_num_to_csid(match.sportId)}">
-          </div>
+          <div class="league-icon-mini league-icon-mini2" :style="{'--num': get_num_to_csid(match_of_list.sportId)}"></div>
            <!--球种名字 -->
           <span class="league-title-text row justify-between">
             <span class="flex items-center league-t-wrapper">
-              <span class="match-league">
-                {{match.sportName}}
-              </span>
+              <span class="match-league"> {{match_of_list.tn}} </span>
             </span>
           </span>
           <!--箭头 -->
           <template v-if="!['detail_match_list','home_hot_page_schedule'].includes(main_source)">
-            <img class="league-collapse-dir" :class="{'collapsed':collapsed}" v-if="theme.includes('day')" :src='league_icon' />
+            <img class="league-collapse-dir" :class="{'collapsed':collapsed}" v-if="theme.includes('day')" :src='league_collapse_icon' />
             <img class="league-collapse-dir" :class="{'collapsed':collapsed}" v-if="theme.includes('night')" :src='league_icon_back' />
           </template>
         </div>
@@ -52,66 +44,35 @@
       <div :class="{'collapsed':collapsed}"
           class="match-odds-container study_height_s" v-show="!collapsed">
         <!-- 盘口 -->
-        <div class="odd-list match-indent"
-          :class="{'simple':show_newer_edition,result:is_show_result()}">
-          <div class="odd-item-wrap-borer-top">
-          </div>
-          <div class="odd-list-inner odd" :class="{
-              'n-s-edition':!show_newer_edition,
-              result:is_show_result()
-            }">
-            <div class="team-wrapper"
-                :class="{
-                  simple:standard_edition == 1,
-                  team_title:is_show_result()}">
-              <div class='team-title-container'
-                :class="{
-                  simple:show_newer_edition,
-                  standard:!show_newer_edition && !is_show_result(),
-                  result:is_show_result()
-                  }">
+        <div class="odd-list match-indent" :class="{'simple':show_newer_edition,result:is_show_result()}">
+          <div class="odd-item-wrap-borer-top"> </div>
+          <div class="odd-list-inner odd" :class="{ 'n-s-edition':!show_newer_edition, result:is_show_result() }">
+            <div class="team-wrapper" :class="{ simple:standard_edition == 1, team_title:is_show_result()}">
+              <div :class="['team-title-container', { simple:show_newer_edition, standard:!show_newer_edition && !is_show_result(), result:is_show_result() }]">
                 <div class="team-title-inner-con">
-                  <!-- 1-足球 2-篮球 3-棒球 4-冰球 5-网球 6-美式足球 7-斯诺克 8-乒乓球 9-排球  10-羽毛球 -->
                   <div class="team-icon row no-wrap icon-style">
-                     <image-cache-load
-                      :csid="+match.sportId"
-                      :path="match.picUrl"
-                      type="home"
-                    ></image-cache-load>
+                     <image-cache-load :csid="+match_of_list.csid" :path="match_of_list.mhlu" type="home" ></image-cache-load>
                   </div>
-                  <div class='team-t-title-w ellipsis-2-lines name' :class="{
-                      'is-handicap': match.handicap_index == 1,
-                      'is-handicap-1': match.handicap_index == 2,
-                      }">
-                    {{ match.tournamentName }}
-                  </div>
+                  <div class='team-t-title-w ellipsis-2-lines name'> {{ match_of_list.mhn }} </div>
                 </div>
               </div>
-              <div class='team-title-container'
-                :class="{
-                  simple: show_newer_edition,
-                  standard: !show_newer_edition && !is_show_result(),
-                  result:is_show_result()
-                }"
-                >
+              <div :class="['team-title-container', { simple:show_newer_edition, standard:!show_newer_edition && !is_show_result(), result:is_show_result() }]">
                 <div class="team-title-inner-con">
-                  <div class='team-t-title-w result_style' :class="{
-                      'is-handicap': match.handicap_index == 2,
-                      'is-handicap-1': match.handicap_index == 1,
-                      }">
-                    {{ getMatchResult(match.scoreResult) }}
+                  <div class="team-icon row no-wrap icon-style">
+                     <image-cache-load :csid="+match_of_list.csid" :path="match_of_list.malu" type="home" ></image-cache-load>
                   </div>
+                  <div class='team-t-title-w result_style'> {{ match_of_list.man }} </div>
                 </div>
               </div>
               <div class="row" v-if="is_show_result()">
                 <!--赛果开赛时间-->
                 <div class="m-result-time date-time">
                   <!-- .Format(i18n_t("time4")) -->
-                    {{ format_time_zone(+match.matchTime) }}
+                    {{ format_time_zone(+match_of_list.matchTime) }}
                 </div>
               </div>
             </div>
-            <div class="play_name">{{match.playName}}</div>
+            <div class="play_name">{{match_of_list.playName}}</div>
           </div>
         </div>
       </div>
@@ -124,22 +85,18 @@ import store from "src/store-redux/index.js"
 import lodash from 'lodash'
 import { i18n_t } from 'src/core/index.js'
 import ImageCacheLoad from "./public-cache-image.vue";
-import { MenuData } from "src/core/index.js"
-import { theme } from 'project_path/src/mixin/userctr.js'
-import { standard_edition } from 'project_path/src/mixin/userctr.js'
-import { league_icon, league_icon_back } from 'project_path/src/core/utils/local-image.js'
+import { league_collapse_icon, league_icon_back } from 'project_path/src/core/utils/local-image.js'
 // import { SPORT_ID_TO_NUMBER_MAPPING } from "src/core/constant/config/play-mapping.js";
-
+import { format_time_zone, MenuData, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/index.js"
+import { menu_type, menu_lv2 } from 'project_path/src/mixin/menu.js'
+import { theme, standard_edition } from 'project_path/src/mixin/userctr.js'
+import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 
 const props = defineProps({
   match_of_list: Object,
   // 赛事处于列表中的下标
   i: Number,
-  // 值为6当前为收藏页
-  menu_type: Number | String,
-  // 赛事列表相关操作的类型封装对象
-  matchCtr: Object,
-  //
+  // 页面来源
   main_source:String,
 })
 
@@ -162,10 +119,8 @@ const update_state = () => {
   get_collapse_all_ball.value = new_state.get_collapse_all_ball
 }
 
-// TODO: 其他模块得 store  待添加
-// mixins: [formatmixin, odd_convert, bettings, match_list_mixin,msc, common],
-
 onMounted(() => {
+  console.log(props.match_of_list)
   is_first_coming.value = true;
   //防止赛事列表初始显示时大面积红升绿降
   timer_super11.value = setTimeout(() => {
@@ -173,23 +128,24 @@ onMounted(() => {
   },1000);
 })
 
-// 当前显示的赛事数据
-const match = computed(() => props.match_of_list)
+const prve_match = computed(() => {
+  props.i > 0 ? MatchDataBaseH5.get_quick_mid_obj(MatchMeta.match_mids[props.i - 1]) : undefined
+})
 const collapsed = computed(() => get_collapse_map_match[props.match_of_list.tid])
 const show_newer_edition = computed(() => standard_edition.value == 1 || props.main_source == 'detail_match_list')
 
 const get_sport_show = (i) => {
-  if (!get_current_main_menu.menuType) {
+  if (!menu_type.value) {
     if (i > 0) {
-      let p = props.matchCtr.list[i - 1], c = props.matchCtr.list[i];
-      if (p && c) {
-        return p.csid !== c.csid;
+      if (props.match_of_list && prve_match.value) {
+        return props.match_of_list.csid !== prve_match.value.csid;
       }
     } else {
       return true;
     }
   }
 }
+
 const get_num_to_csid = (csid) => {
 // 从映射中获取球种id与精灵图中图片的位置
   // return SPORT_ID_TO_NUMBER_MAPPING[csid];
@@ -212,10 +168,9 @@ const getMatchResult = (value) => {
   return str;
 }
 const is_show_result = () => {
-  const main_menu_type = MenuData.current_menu.main.menuType
   let r = false;
-  if(main_menu_type){
-    r = main_menu_type == 28 && props.main_source != 'detail_match_list' && props.main_source != 'home_hot_page_schedule';
+  if(menu_type.value){
+    r = menu_type.value == 28 && props.main_source != 'detail_match_list' && props.main_source != 'home_hot_page_schedule';
   }
   return r;
 }
@@ -259,26 +214,25 @@ const league_l_clicked = () => {
     return false
   }
   //非今日串关不显示
-  if(![3,11].includes(+props.menu_type)){
+  if(![3,11].includes(+menu_type.value)){
     return result;
-  }else if(props.menu_type == 11){
+  }else if(+menu_type.value === 11){
     let third_m_id = lodash.get(MenuData.current_menu,'date_menu.field1');
     //串关今日id为0或'0'
     if(third_m_id !== 0 && third_m_id !== '0'){
       return result;
     }
   }
-  let match = props.matchCtr.list[i];
+  const match = MatchDataBaseH5.get_quick_mid_obj(MatchMeta.match_mids[i])
   if(match){
     if(i > 0){
-      let prev_match = props.matchCtr.list[i - 1];
-      if([1,110].includes(+match.ms)){
+      if([1,110].includes(+props.match_of_list?.ms)){
         result = false;
       }
-      else if([1,110].includes(+prev_match.ms)){
+      else if([1,110].includes(+prve_match.value?.ms)){
         result = true;
       }
-    }else if(i == 0 && ![1,110].includes(+match.ms)){
+    }else if(i == 0 && ![1,110].includes(+props.match_of_list?.ms)){
       result = true;
     }
   }
@@ -291,12 +245,9 @@ const league_l_clicked = () => {
  */
  const get_league_show = (i) => {
   let flag = true;
-  let c = null,p = null;
   if (i) {
-    p = props.matchCtr.list[i - 1];
-    c = props.matchCtr.list[i];
-    if (p && c) {
-      if(p.sportId != c.sportId){
+    if (props.match_of_list && prve_match.value) {
+      if(props.match_of_list.sportId != prve_match.value.sportId){
         flag = true;
       }else{
         flag = false;

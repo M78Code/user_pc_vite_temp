@@ -3,11 +3,10 @@
  * @Date: 2020-08-04 17:13:55
  * @Description: 公共的动画模板
  */
-import {utils,formatTime,is_eports_csid,i18n_t } from 'src/core/index.js';
+import {utils,formatTime,is_eports_csid,i18n_t, format_string } from 'src/core/index.js';
 import lodash from 'lodash'
 // import {MatchProcessFullVersionWapper} from "src/components/match-process/index.js";
 // const licia_format = require('licia/format');
-import licia_format from 'licia/format'
 export default {
   components: {
     // "match-date": MatchProcessFullVersionWapper
@@ -37,7 +36,7 @@ export default {
         // 格式化时间
         formatTime(
           this.match_info.mgt,
-          licia_format(this.t("time.time_date_1"), "mm", "dd")
+          format_string(this.t("time.time_date_1"), "mm", "dd")
         ), //"mm月dd日"
         formatTime(this.match_info.mgt, "hh:MM")
       ];

@@ -72,6 +72,7 @@ import { compute_css_variables } from "src/core/css-var/index.js"
 import { formatTime } from 'src/core/format/index.js'
 import zhugeTag from "src/core/http/zhuge-tag.js"
 import store from 'src/store-redux/index.js'
+import { UserCtr } from "src/core/index.js";
 let state = store.getState();
 
 export default {
@@ -110,8 +111,10 @@ export default {
       }
     }
     // 只在简中和繁中的时候有赛事文章
-    if (['zh', 'tw'].includes(localStorage.getItem('lang'))) {
-      if (localStorage.getItem('lang') == 'zh') {
+    // if (['zh', 'tw'].includes(localStorage.getItem('lang'))) {
+      // if (localStorage.getItem('lang') == 'zh') {
+    if(['zh', 'tw'].includes(UserCtr.lang)){
+      if(UserCtr.lang == 'zh'){
         newsTabName.value = '资讯'
       } else {
         newsTabName.value = '資訊'

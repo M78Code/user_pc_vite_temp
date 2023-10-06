@@ -15,7 +15,7 @@ import MatchListCardClass from "src/core/match-list-pc/match-card/match-list-car
 
 let state = store.getState();
 const { mx_collect_count, set_collect_count } = collect_composable_fn();
-const { virtual_list_timeout_id } = virtual_composable_fn();
+const { virtual_list_timeout_id, is_vr_numer } = virtual_composable_fn();
 const { show_mids_change } = ws_composable_fn();
 const { api_bymids, set_league_list_obj } = use_featch_fn();
 
@@ -189,8 +189,6 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 				tid: first_league.tid,
 				sportId: first_league.csid,
 			};
-			//触发右侧详情更新
-			useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, params);
 		} else {
 			if (MenuData.is_guanjun()) {
 				// 冠军玩法 调用接口切换右侧
@@ -205,6 +203,7 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 					tid: first_league.tid,
 					sportId: first_league.csid,
 				};
+				console.log('进来了几次');
 				//触发右侧详情更新
 				useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, params);
 				callback_func = () => {
@@ -304,19 +303,19 @@ const mx_use_list_res_when_code_200_and_list_length_gt_0 = ({match_list, collect
 const mx_use_list_res_when_code_error_or_list_length_0 = (match_list) => {
 	if (is_virtual && !is_search) {
 		// 右侧切换
-		MatchListDetailMiddleware.set_vsport_params({
-			csid: 0,
-			tid: 0,
-		});
+		// MatchListDetailMiddleware.set_vsport_params({
+		// 	csid: 0,
+		// 	tid: 0,
+		// });
 		// 用来计算拉取接口的次数
-		is_vr_numer.value++;
-		// 重复拉列表的次数小于5   3秒后再次拉接口
-		if (is_vr_numer.value < 5) {
-			virtual_list_timeout_id.value = setTimeout(
-				() => fetch_match_list(true),
-				3000
-			);
-		}
+		// is_vr_numer.value =  is_vr_numer.value + 1;
+		// // 重复拉列表的次数小于5   3秒后再次拉接口
+		// if (is_vr_numer.value < 5) {
+		// 	virtual_list_timeout_id.value = setTimeout(
+		// 		() => fetch_match_list(true),
+		// 		3000
+		// 	);
+		// }
 		load_data_state.value = "empty";
 	}
 	// 非静默拉取时

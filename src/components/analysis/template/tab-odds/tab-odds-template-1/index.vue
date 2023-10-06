@@ -206,7 +206,7 @@ onUnmounted(() => {
 
   .d-header {
     height: 28px;
-    background: var(--q-analysis-bg-color-17);
+    background: var(-q-analysis-color-17);
 
     .d-td {
       flex: 1;

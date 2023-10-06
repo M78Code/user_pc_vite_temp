@@ -7,9 +7,9 @@
       </div>
       <div class="standings-technical-home" v-for="(item, index) in 2" :key="index+'title'">
         <div class="technical-home">
-          <team-img :type="0" :csid="get_detail_data.csid" :url="get_detail_data.mhlu[0]" :fr="get_detail_data.frmhn[0]" :size="22"></team-img>
-          <team-img v-if="get_detail_data.mhlu.length > 1" :type="0" :csid="get_detail_data.csid" :url="get_detail_data.mhlu[1]" :fr="get_detail_data.frmhn[1]" :size="22" style="margin-top: 0.11rem; margin-left:-0.08rem;"></team-img>
-          <span class="team-name">{{ get_detail_data.mhn }}</span>
+          <team-img :type="0" :csid="detail_data.csid" :url="detail_data.mhlu[0]" :fr="detail_data.frmhn[0]" :size="22"></team-img>
+          <team-img v-if="detail_data.mhlu.length > 1" :type="0" :csid="detail_data.csid" :url="detail_data.mhlu[1]" :fr="detail_data.frmhn[1]" :size="22" style="margin-top: 0.11rem; margin-left:-0.08rem;"></team-img>
+          <span class="team-name">{{ detail_data.mhn }}</span>
         </div>
         <div>
           <div class="table-score">
@@ -45,13 +45,13 @@
       <div class="technical-home team-recent">
         <template v-if="index == 1">
           <!-- 左侧双打图标 type 0 表示主队,mhlu 主队的url -->
-          <team-img :type="0"  :csid="get_detail_data.csid" :url="get_detail_data.mhlu[0]" :fr="get_detail_data.frmhn[0]" :size="22"></team-img>
-          <team-img v-if="get_detail_data.mhlu.length > 1" :type="0" :csid="get_detail_data.csid" :url="get_detail_data.mhlu[1]" :fr="get_detail_data.frmhn[1]" :size="22" style="margin-top: 0.11rem; margin-left:-0.08rem;"></team-img>
+          <team-img :type="0"  :csid="detail_data.csid" :url="detail_data.mhlu[0]" :fr="detail_data.frmhn[0]" :size="22"></team-img>
+          <team-img v-if="detail_data.mhlu.length > 1" :type="0" :csid="detail_data.csid" :url="detail_data.mhlu[1]" :fr="detail_data.frmhn[1]" :size="22" style="margin-top: 0.11rem; margin-left:-0.08rem;"></team-img>
         </template>
         <template v-if="index == 2">
           <!-- 右侧双打图标 type 1 表示客队,malu 客队的url  -->
-          <team-img :type="1" :csid="get_detail_data.csid" :url="get_detail_data.malu[0]" :fr="get_detail_data.frman[0]" :size="22"></team-img>
-          <team-img v-if="get_detail_data.malu.length > 1" :type="1" :csid="get_detail_data.csid" :url="get_detail_data.malu[1]" :fr="get_detail_data.frman[1]" :size="22" style="margin-top: 0.11rem; margin-left:-0.08rem;"></team-img>
+          <team-img :type="1" :csid="detail_data.csid" :url="detail_data.malu[0]" :fr="detail_data.frman[0]" :size="22"></team-img>
+          <team-img v-if="detail_data.malu.length > 1" :type="1" :csid="detail_data.csid" :url="detail_data.malu[1]" :fr="detail_data.frman[1]" :size="22" style="margin-top: 0.11rem; margin-left:-0.08rem;"></team-img>
         </template>
         <span class="team-name">{{ item && item[0] && item[0].coachName }}</span>
       </div>
@@ -89,6 +89,10 @@ import { i18n_t } from "src/boot/i18n.js";;
   const props = defineProps({
     homeAwayGoal_and_coach_map: {
       type: Object,
+    },
+    detail_data: {
+      type: Object,
+      default: () => {}
     }
   })
   // components: {
@@ -104,7 +108,7 @@ import { i18n_t } from "src/boot/i18n.js";;
 
   // TODO: 后续修改调整
   // computed: {
-  //   ...mapGetters(['get_goto_detail_matchid', 'get_detail_data'])
+  //   ...mapGetters(['get_goto_detail_matchid', ])
   // },
   // methods:{
 
@@ -138,11 +142,10 @@ import { i18n_t } from "src/boot/i18n.js";;
     }
   }
 
-  .standings_technical {
     .standings-technical-home {
       .technical-home {
         height: 0.4rem;
-        background-color: var(--q-analysis-text-color-1)!important;
+        background-color: var(--q-gb-bg-c-15)!important;
         display: flex;
         align-items: center;
         padding-left: 0.1rem;
@@ -171,14 +174,14 @@ import { i18n_t } from "src/boot/i18n.js";;
 
     .table-score {
       position: relative;
-      background-color: var(--q-analysis-text-color-1);
+      background-color: var(--q-gb-bg-c-15);
       .standings_technical_header {
         height: 0.32rem;
         display: flex;
         text-align: center;
         line-height: 0.32rem;
         padding: 0 0.1rem;
-        background-color: var(--q-analysis-text-color-1);
+        background-color: var(--q-gb-bg-c-15);
         color: var(--q-analysis-text-color-32);
         border-bottom: 1px solid var(--q-analysis-text-color-24);
         border-top: 1px solid var(--q-analysis-text-color-24);
@@ -241,7 +244,6 @@ import { i18n_t } from "src/boot/i18n.js";;
 
       font-size: 12px;
     }
-  }
   .no-list {
     height: 0.6rem;
     line-height: 0.6rem;

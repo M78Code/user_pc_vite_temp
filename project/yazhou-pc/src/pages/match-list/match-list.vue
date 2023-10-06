@@ -19,7 +19,7 @@
     </div> -->
     <div class="scroll-fixed-header" :class="{ 'no-data': load_data_state != 'data' }">
       <!-- banner -->
-      <!-- <div class="banner-box" :style="{height: get_is_roll_show_banner ? '120px' : '0px'}" v-if="get_is_show_banner"></div> -->
+      <div class="banner-box" :style="{height: GlobalAccessConfig.get_show_banner() ? '120px' : '0px'}" v-if="GlobalAccessConfig.get_show_banner()"></div>
       <!-- 列表头 -->
       <list-header :collect_count="collect_count" :is_show_hot="is_show_hot" :load_data_state="load_data_state">
         <template v-slot:refresh_icon>
@@ -79,22 +79,13 @@
         <template v-slot:before>
           <div :style="{ height: MatchListCardDataClass.sticky_top.fixed_header_height }"></div>
         </template>
-        <!-- <div class="today-champion-bg" v-if="menu_config.menu_root == '2' || menu_config.menu_root == 400 || menu_config.menu_root != 2000"></div> -->
-        <!-- ssssssssssssssssss66666666666666666 -->
-        <!-- <div
-          v-for="card_key in match_list_card_key_arr"
-          :key="card_key" 
-          :card_key="card_key" 
-        >
-        <div>     {{  card_key }}  </div>
-      </div>   -->
-    <div
-          v-for="card_key in match_list_card_key_arr"
-          :key="card_key" 
-          :card_key="card_key" 
-          :data-card-key="card_key"
-          :class="`card_key   ${card_key}`"
-        >
+      <div
+        v-for="card_key in match_list_card_key_arr"
+        :key="card_key" 
+        :card_key="card_key" 
+        :data-card-key="card_key"
+        :class="`card_key   ${card_key}`"
+      >
         <match-list-card 
           :card_key="card_key" 
         />
@@ -123,7 +114,7 @@
 import { onMounted, onUnmounted } from "vue";
 import LoadData from 'src/components/load_data/load_data.vue';
 import { LeagueTabFullVersionWapper as LeagueTab } from "src/components/tab/league-tab/index.js"; //联赛菜单
-import { ListFilterFullVersionWapper as listFilter } from "src/components/match-list/list-filter/index.js"; //赛事列表筛选：滚球-球种、早盘-日期
+import listFilter from "src/components/match-list/list-filter/index.vue"; //赛事列表筛选：滚球-球种、早盘-日期
 import { ListFilterDateFullVersionWapper as listFilterDate } from "src/components/match-list/list-filter-date/index.js"; //热门赛事列表  早盘-日期
 import { MatchListCardFullVersionWapper as MatchListCard } from "src/components/match-list/match-list-card/index.js"; //赛事列表
 import { ListFilterHotFullVersionWapper as ListFilterHot } from "src/components/match-list/list-filter-hot/index.js"; //热门赛事列表
@@ -131,6 +122,7 @@ import { ListHeaderFullVersionWapper as ListHeader } from "src/components/match-
 import { IconWapper } from 'src/components/icon'
 import ScrollList from 'src/components/cus-scroll/scroll_list.vue';
 import refresh from "src/components/refresh/refresh.vue"
+
 // import { EsportsHeaderFullVersionWapper as EsportsHeader } from "src/components/match-list/esports-header/index.js";//电竞赛事列表筛选
 // import { VirtualMatchTypeFullVersionWapper as VirtualMatchType } from "src/components/match-list/match-list-card/index.js";//虚拟体育 赛事列表 赛事头
 import { PlayVirtualMatchTypeFullVersionWapper as PlayVirtualMatchType } from "src/components/match-list/play-virtual-match-type/index.js";//赛事列表头部——滚球——赛事类型
@@ -140,6 +132,7 @@ import { PlayVirtualMatchTypeFullVersionWapper as PlayVirtualMatchType } from "s
 // import match_list_card from "src/core/match-list-pc/match-card/match-list-card-class.js";
 // import match_list_version_mixin from "src/project/yabo/mixins/match_list/match_list_version_mixin.js";//模板引入及主要业务逻辑
 // import skt_data_list from "src/public/mixins/websocket/data/skt_data_list_new_data.js";// 发送websocket命令时使用
+
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 import useMatchListMx from "src/core/match-list-pc/match-list-composition.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
@@ -177,7 +170,7 @@ export default {
       collect_count,
       is_show_hot,
       page_source,
-      GlobalAccessConfig
+      GlobalAccessConfig,
     };
   },
   data() {

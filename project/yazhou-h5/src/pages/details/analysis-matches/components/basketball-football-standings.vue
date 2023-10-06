@@ -12,20 +12,20 @@
     <div class="title" v-if="ranking_data.length <= 0">{{i18n_t('analysis_football_matches.league_points') }}</div>
     <!-- 杯赛积分 联赛积分  二选一 -->
     <div class="table-score" v-if="ranking_data.length>0"
-    :class="{'backball-table': get_detail_data.csid == 2}">
+    :class="{'backball-table': detail_data.csid == 2}">
       <!-- 头部 -->
       <div class="header">
         <div class="col1">{{i18n_t('analysis_football_matches.rank') }}</div>
         <div class="col2">{{i18n_t('analysis_football_matches.team') }}</div>
-        <div class="league tournamentName" v-if="ranking_data.length>0 && (ranking_data ? ranking_data[0].tournamentName : false) && get_detail_data.csid == 1">{{i18n_t('analysis_football_matches.league') }}</div>
-        <div class="col3" v-show="get_detail_data.csid == 1">{{i18n_t('analysis_football_matches.game') }}</div>
+        <div class="league tournamentName" v-if="ranking_data.length>0 && (ranking_data ? ranking_data[0].tournamentName : false) && detail_data.csid == 1">{{i18n_t('analysis_football_matches.league') }}</div>
+        <div class="col3" v-show="detail_data.csid == 1">{{i18n_t('analysis_football_matches.game') }}</div>
         <div class="col3">{{i18n_t('analysis_football_matches.victory') }}</div>
         <div class="col3">{{i18n_t('analysis_football_matches.negative') }}</div>
-        <div class="col3" v-show="get_detail_data.csid == 1">{{i18n_t('analysis_football_matches.flat') }}</div>
-        <div class="col4" v-show="get_detail_data.csid == 1">{{i18n_t('analysis_football_matches.gain_loss') }}</div>
-        <div class="col4" v-show="get_detail_data.csid == 1">{{i18n_t('analysis_football_matches.net_win') }}</div>
-        <div class="col5" v-show="get_detail_data.csid == 1">{{i18n_t('analysis_football_matches.integral') }}</div>
-        <div class="col5" v-show="get_detail_data.csid == 2">{{i18n_t('home_popular.win_rate') }}</div>
+        <div class="col3" v-show="detail_data.csid == 1">{{i18n_t('analysis_football_matches.flat') }}</div>
+        <div class="col4" v-show="detail_data.csid == 1">{{i18n_t('analysis_football_matches.gain_loss') }}</div>
+        <div class="col4" v-show="detail_data.csid == 1">{{i18n_t('analysis_football_matches.net_win') }}</div>
+        <div class="col5" v-show="detail_data.csid == 1">{{i18n_t('analysis_football_matches.integral') }}</div>
+        <div class="col5" v-show="detail_data.csid == 2">{{i18n_t('home_popular.win_rate') }}</div>
       </div>
       <!-- 主内容 -->
       <div class="group-item">
@@ -36,17 +36,17 @@
           <!-- 球队 -->
           <div class="col2 ellipsis" :class="{col2_home: item.teamFlag == 't1', col2_away: item.teamFlag == 't2' }">{{ item.teamName }}</div>
           <!-- 联赛 -->
-          <div class="league tournamentName" v-if="item.tournamentName  && get_detail_data.csid == 1">{{ item.tournamentName }}</div>
-          <div class="col3" v-show="get_detail_data.csid == 1">{{ item.matchCount }}</div>
+          <div class="league tournamentName" v-if="item.tournamentName  && detail_data.csid == 1">{{ item.tournamentName }}</div>
+          <div class="col3" v-show="detail_data.csid == 1">{{ item.matchCount }}</div>
           <div class="col3">{{ item.winTotal }}</div><!-- 胜 -->
           <div class="col3">{{ item.lossTotal }}</div>
-          <div class="col3" v-show="get_detail_data.csid == 1">{{ item.drawTotal }}</div>
+          <div class="col3" v-show="detail_data.csid == 1">{{ item.drawTotal }}</div>
           <!-- 进/失 -->
-          <div class="col4" v-show="get_detail_data.csid == 1">{{ item.goalsForTotal }}/{{ item.goalsAgainstTotal }}</div>
-          <div class="col4" v-show="get_detail_data.csid == 1">{{ item.goalDiffTotal }}</div>
+          <div class="col4" v-show="detail_data.csid == 1">{{ item.goalsForTotal }}/{{ item.goalsAgainstTotal }}</div>
+          <div class="col4" v-show="detail_data.csid == 1">{{ item.goalDiffTotal }}</div>
           <!-- 积分 -->
-          <div class="col5" v-show="get_detail_data.csid == 1">{{ item.pointsTotal }}</div>
-          <div class="col5" v-show="get_detail_data.csid == 2">{{percentage(item)}}</div>
+          <div class="col5" v-show="detail_data.csid == 1">{{ item.pointsTotal }}</div>
+          <div class="col5" v-show="detail_data.csid == 2">{{percentage(item)}}</div>
         </div>
       </div>
       <!-- 大于2条时,显示 展开收起按钮-->
@@ -66,15 +66,18 @@ import { computed, onMounted, onUnmounted, ref } from "vue";
 import lodash from 'lodash'
 import { useRoute } from 'vue-router'
 import { i18n_t } from "src/boot/i18n.js";
-const get_detail_data = ref({
-        csid: '1',
-        mid: '1',
-    })
 
+
+const props = defineProps({
+    detail_data: {
+        type: Object,
+        default: () => {}
+    }
+})
 // TODO: 后续修改调整
 // import {mapGetters} from "vuex";
 
-
+console.error(props.detail_data);
   let ranking_data = ref([])
   //按钮名字
   let btn_text =ref('')
@@ -99,12 +102,8 @@ const get_detail_data = ref({
   })
   const match_id = computed( () => {
     // 赛事id
-    return route.params.mid || get_detail_data.value.mid
+    return route.params.mid || props.detail_data.mid
   })
-  // computed: {
-    // TODO: 后续修改调整
-  //   ...mapGetters(["get_goto_detail_matchid", 'get_detail_data']),
-  // },
   const percentage = (item) => {
     return ((item.winTotal / item.matchCount) * 100).toFixed(1) +'%'
   }
@@ -342,8 +341,8 @@ const get_detail_data = ref({
         }
 
         &.calculation_color2 {
-          background: var(--q-color-com-bg-color-30);
-          color: var(--q-analysis-text-color-1) !important;
+          background: var(--q-gb-bg-c-13);
+          color: var(--q-gb-t-c-14) !important;
         }
 
         &.calculation_color3 {
