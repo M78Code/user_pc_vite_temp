@@ -67,7 +67,7 @@ import { TabInformationFullVersionWapper as tabInformation } from 'src/component
 import { TabOddsFullVersionWapper as tabOdds } from 'src/components/analysis/template/tab-odds/index.js'
 import { TabNewsFullVersionWapper as news } from 'src/components/analysis/template/tab-news/index.js'
 import { MatchProcessFullVersionWapper as matchDate } from "src/components/match-process/index.js";
-import { api_analysis } from 'src/api/index.js'
+import { api_analysis, socket_api } from 'src/api/index.js'
 import { compute_css_variables } from "src/core/css-var/index.js"
 import { formatTime } from 'src/core/format/index.js'
 import zhugeTag from "src/core/http/zhuge-tag.js"
@@ -103,6 +103,13 @@ export default {
     const newsTabName = ref(null)
     // let mid = lodash.get(route, 'params.mid');
     let match_info = JSON.parse(localStorage.getItem('test_match_info'));
+    console.log("--------------------------------------------------match_info", match_info); //用于比对接口请求后的数据
+    const euid = route.params.euid
+    let params = { mids: route.params.mid, "cuid": UserCtr.get_uid(), euid, "orpt": "0", "sort": false, "pids": "", "cos": 0 }
+    socket_api.get_match_base_info_by_mids(params).then(res => {
+      console.log("--------------------------------------------------match_info", res); //单个mids无法请求到结果集
+    })
+
     if (Object.keys(route.params).length) {
       let { csid } = route.params
       // 篮球只展示赛况、数据和阵容
@@ -112,9 +119,9 @@ export default {
     }
     // 只在简中和繁中的时候有赛事文章
     // if (['zh', 'tw'].includes(localStorage.getItem('lang'))) {
-      // if (localStorage.getItem('lang') == 'zh') {
-    if(['zh', 'tw'].includes(UserCtr.lang)){
-      if(UserCtr.lang == 'zh'){
+    // if (localStorage.getItem('lang') == 'zh') {
+    if (['zh', 'tw'].includes(UserCtr.lang)) {
+      if (UserCtr.lang == 'zh') {
         newsTabName.value = '资讯'
       } else {
         newsTabName.value = '資訊'
@@ -140,8 +147,8 @@ export default {
           } else {
             // 获取主客队得分数据
             let home = parseInt(lodash.get(match, `msc_obj[${k}].home`)),
-                away = parseInt(lodash.get(match, `msc_obj[${k}].away`));
-            if(sportDict.value.line.includes(k)){
+              away = parseInt(lodash.get(match, `msc_obj[${k}].away`));
+            if (sportDict.value.line.includes(k)) {
               //'S108'三分球得分，'S107'两分球得分
               if (k == 'S107') {
                 home *= 2
@@ -462,4 +469,5 @@ export default {
       }
     }
   }
-}</style>
+}
+</style>

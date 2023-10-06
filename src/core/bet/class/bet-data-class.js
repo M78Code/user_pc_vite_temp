@@ -126,8 +126,10 @@ class BetData {
     this.mix_min_count = 2;
     // 最大串关数
     this.mix_max_count = 10;
-    // 被预约的投注项id
-    this.bet_appoint_obj = [];
+    // 当前预约投注项数据 
+    this.bet_appoint_obj = {};
+    // 预约投注项id 投注项中可以预约的
+    this.bet_pre_list = []
     //需要预约的盘口
     /* this bet_appoint_odds_value= null;
 this.bet_appoint_ball_head= null */
@@ -162,6 +164,8 @@ this.bet_appoint_ball_head= null */
     this.show_merge_info = false
     // 投注状态 是否 在投注
     this.bet_flag = true
+    // 预约投注最小值
+    this.bet_pre_min_odd_value = 0
   }
 
   // 通过  mount_point_key 计算 取值字段映射
@@ -407,11 +411,18 @@ this.bet_appoint_ball_head= null */
     this.is_single_handle = val
   }
 
-  // 设置预约投注项id
+  // 设置预约投注盘口信息
   set_bet_appoint_obj(val) {
     this.bet_appoint_obj = val
     this.set_bet_data_class_version()
   }
+
+  // 设置预约投注项
+  set_bet_pre_list(val) {
+    this.bet_pre_list = val
+    this.set_bet_data_class_version()
+  }
+  
   // 设置 是否已投注
   set_bet_flag() {
     if (this.bet_mode == 0) {
@@ -645,6 +656,11 @@ this.bet_appoint_ball_head= null */
   // 投注后的数据
   set_orderNo_bet_obj(array) {
     this.orderNo_bet_obj = array
+    this.set_bet_data_class_version()
+  }
+   //设置输入框最小值
+  set_pre_min_odd_value(val){
+    this.bet_pre_min_odd_value = val
     this.set_bet_data_class_version()
   }
 

@@ -22,6 +22,9 @@ const route = useRoute();
   // 球类id
   const sport_id = ref(route.params.mcid)
   const matchDetailCtr = ref(MatchDetailCalss)
+  // 控制视频说明弹窗
+  const get_bet_show = ref(false)
+  const get_info_show = ref(false)
   let state_data = reactive({
     
     // 切换赛事时，重置玩法集请求次数计数
@@ -120,8 +123,7 @@ const route = useRoute();
     get_sort_type: "get_sort_type",// TODO: 待处理
     // 搜素关键字
     get_search_txt: "get_search_txt",// TODO: 待处理
-    // 是否显示info说明
-    get_info_show: "get_info_show",// TODO: 待处理
+
     // 设置玩法集固定
     get_tab_fix: "get_tab_fix",// TODO: 待处理
     // 赛果标识
@@ -237,7 +239,7 @@ const route = useRoute();
    */
   const change_go_back = (state) => {
     console.log(state, "子组件触发父组件方法");
-    show_go_back = state;
+    state_data.show_go_back = state;
   };
   /**
    *@description: 详情页刷新
@@ -860,6 +862,10 @@ const route = useRoute();
   const set_show_video = (params) => {
     state_data.get_show_video = params
   }
+  // 控制视频说明弹窗
+  const video_description_show = (is_show) => {
+    get_info_show.value = is_show
+  }
   /**
    * TODO: 下面的mitt根据业务场景移到上面来 批量注册 销毁
    * ! on_listeners 不需要再onMounted调用，setup = vue2的created()
@@ -878,6 +884,7 @@ const route = useRoute();
       useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS, initEvent),
       useMittOn(MITT_TYPES.EMIT_GET_ODDS_LIST, get_odds_list),
       useMittOn(MITT_TYPES.EMIT_SET_SHOW_VIDEO, set_show_video),
+      useMittOn(MITT_TYPES.EMIT_VIDEO_DESCRIPTION_SHOW, video_description_show),
       // useMittOn(MITT_TYPES.EMIT_REF_API, details_refresh),
       // // 拳击赛事级别关盘+当前时间(服务器时间)>=赛事开赛时间(mgt) 此时详情页拳击赛事切换下一场
       // useMittOn(MITT_TYPES.EMIT_CHANGE_DETAILS_MATCH, info_icon_click_h),
@@ -937,6 +944,8 @@ const route = useRoute();
     curr_active_tab,
     icon_replay,
     matchDetailCtr,
+    get_info_show,
+    get_bet_show,
     details_click,
     change_go_back,
     details_refresh,

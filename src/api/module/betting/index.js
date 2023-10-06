@@ -41,7 +41,7 @@ export const query_last_market_info = (params, config={}, url = "/v1/betOrder/qu
 export const query_bet_amount = (params, config={}, url = "/v1/betOrder/queryBetAmount") => http.post(`${prefix3}${url}`, params, config);
 
 //获取预约额度接口合并
-export const query_pre_bet_amount = (params, config={}, url = "/v1/betOrder/queryPreBetAmountPB") => http.post(`${prefix3}${url}`, params, config);
+export const query_pre_bet_amount = (params, config={}, url = "/v1/betOrder/queryPreBetAmount") => http.post(`${prefix3}${url}`, params, config);
 
 
 // 用户偏好设置
