@@ -59,7 +59,7 @@ export const match_result_collect = (params, config, url = "/v1/m/matcheCollectR
 };
 
 //赛果
-export const get_match_result_api = (params, config, url = "/v1/m/matcheResultPB") => {
+export const get_match_result_api = (params, config, url = "/v1/m/matcheResult") => {
   if(params.query){
     url += params.query;
   }

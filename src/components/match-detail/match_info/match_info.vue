@@ -7,7 +7,7 @@
   <div ref="wrap_info">
     <div class="wrap-info relative-position">
       <!-- 右侧 窄版start ----------->
-      <match-video :match_info="match_info" :background_img="background_img" :refresh_time="refresh_time" />
+      <match-video  :background_img="background_img" :refresh_time="refresh_time" />
       <!-- 右侧 窄版 end   ----------->
     </div>
   </div>

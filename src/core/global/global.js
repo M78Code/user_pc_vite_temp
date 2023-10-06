@@ -79,6 +79,16 @@ class UseGlobal {
    set_global_data_version(){
     this.global_switch_version.version = Date.now()
   }
+
+  // 获取当前排序
+  get_match_sort() {
+    return this.match_sort
+  }
+
+  //获取 滚球 全部
+  get_play_all_show() {
+    return this.play_all_show
+  }
 }
 
 export default new UseGlobal();

@@ -4,7 +4,6 @@ import {
 	nextTick
 } from "vue";
 import lodash from "lodash";
-// import router from "@/router/index"
 import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache.js";
 import { PageSourceData, MatchDataWarehouse_PC_List_Common as MatchListData } from "src/core/index.js";
 import { api_match } from "src/api/index.js";
@@ -45,8 +44,6 @@ const is_loading = ref(true);
 const vx_match_sort = ref(state.filterReducer?.show_filter_popup);
 // 筛选是否全选
 const vx_filter_checked_all = ref(state.filterReducer?.show_filter_popup);
-// 左侧详情参数
-const vx_detail_params = ref(state.filterReducer.show_filter_popup);
 // 获取联赛筛选框显示状态
 const vx_show_filter_popup = ref(state.filterReducer.show_filter_popup);
 let show_refresh_mask = ref(false);
@@ -182,7 +179,7 @@ const set_base_data_init = () => {
 				mew_menu_list_res.forEach((x) => {
 					if (x.mi * 1 < 300) { mi_100_arr.push(midf + jinri_zaopan + x.mi.substring(1)); }
 				});
-				//常规赛事下 所以的滚球数据
+				//常规赛事下 所有的滚球数据
 				mi_100_arr.forEach((item) => {
 					let livedata = get_match_list_by_mid_for_base_data_res( item, csid, "ld" );
 					matchs_list = [...matchs_list, ...livedata];
@@ -272,7 +269,7 @@ const set_base_data_init = () => {
 	MatchListData.set_list(
 		matchs_list,
 	);
-	handle_match_list_request_when_ok(data, false, true, true);
+	handle_match_list_request_when_ok(matchs_list, false, true, true);
 	let ts1 = Date.now();
 	let mids_arr = [];
 	(matchs_list || []).forEach((match) => {
@@ -328,6 +325,7 @@ const fetch_match_list = (is_socket = false, cut) => {
 	// 设置列表接口 和 参数
 	let api = api_match[match_api.api_name];
 	let _params = lodash.clone(match_api.params) || {};
+	console.log('match_api', match_api);
 	// 切换是 排序后 设置当前的排序
 	_params.sort = vx_match_sort.value;
 	delete _params.index;
@@ -505,6 +503,7 @@ const handle_match_list_request_when_ok = (data, is_socket, cut, collect) => {
 		match_list_api_type,
 		left_menu_result,
 	} = MenuData;
+	console.log('dadsasdasdasdad', data);
 	let current_menu = ([2, 3].includes(Number(menu_root)) && left_menu_result.guanjun != "common-guanjun")
 	if ((menu_root == 2000 || current_menu) && !match_list_api_config.is_collect) {
 		//       mx_list_res

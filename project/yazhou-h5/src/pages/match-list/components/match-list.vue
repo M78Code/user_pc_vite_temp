@@ -10,27 +10,46 @@
       :class="{ 'data-get-empty': data_get_empty }">
       <template v-slot="{ match_item, index }">
         <!-- 1111 -- {{ match_item?.csid }} -- {{ mid }} -->
-        <!--虚拟体育(赛果)-->
-        <v-match-container :match="match_item" :i_list="index" :match_list="matchCtr.list" :sport_id="match_item.sportId"
-          v-if="match_item && [1001, 1002, 1004, 1011, 1010, 1009].includes(+match_item?.sportId)">
-        </v-match-container>
-        <div class="data_mid" v-else> <!--此data-mid用于分频订阅赛事,请勿修改-->
-          <!--真实体育赛果 -->
-          <match-container-result v-if="match_item && is_results "
-            :match_of_list="match_item" :matchCtr="matchCtr" :i="index" :menu_type="menu_type" :main_source="source"
-            @unfold_changed="unfold_changed_handle" @toggle_collect_league="toggle_collect"
-            @toggle_collect_match="toggle_collect" />
-          <!--真实体育玩法 -->
-          <match-container v-if="match_item && (!is_kemp && match_item?.ms != 3) && !(menu_type == 28 && 100 == menu_lv2)"
-            :match_of_list="match_item" :i="index" :menu_type="menu_type" :main_source="source"
-            @unfold_changed="unfold_changed_handle" @toggle_collect_league="toggle_collect"
-            @toggle_collect_match="toggle_collect">
-          </match-container>
-          <!--冠军玩法-->
-          <match-container-champion :match_of_list="match_item" :matchCtr="matchCtr" :i="index" :menu_type="menu_type"
-            @toggle_collect_league="toggle_collect" v-if="match_item && is_kemp">
-          </match-container-champion>
-        </div>
+       
+        <template v-if="match_item">
+           <!--虚拟体育(赛果)-->
+          <v-match-container 
+            v-if="[1001, 1002, 1004, 1011, 1010, 1009].includes(+match_item?.sportId)"
+            :match="match_item" :i_list="index" :match_list="matchCtr.list" :sport_id="match_item.sportId">
+          </v-match-container>
+          <div class="data_mid" v-else> <!--此data-mid用于分频订阅赛事,请勿修改-->
+            <!--真实体育赛果 -->
+            <!-- <match-container-result 
+              v-if="is_results"
+              :i="index" 
+              :match_of_list="match_item"
+              :menu_type="menu_type"
+              :main_source="source"
+              @unfold_changed="unfold_changed_handle"
+              @toggle_collect_league="toggle_collect"
+              @toggle_collect_match="toggle_collect" /> -->
+            <!--冠军玩法-->
+            <match-container-champion 
+              v-if="is_kemp"
+              :i="index" 
+              :match_of_list="match_item" 
+              :matchCtr="matchCtr"
+              :menu_type="menu_type"
+              @toggle_collect_league="toggle_collect">
+            </match-container-champion>
+            <!--真实体育玩法 -->
+            <match-container 
+              v-else
+              :match_of_list="match_item" 
+              :i="index" 
+              :menu_type="menu_type" 
+              :main_source="source"
+              @unfold_changed="unfold_changed_handle" 
+              @toggle_collect_league="toggle_collect"
+              @toggle_collect_match="toggle_collect">
+            </match-container>
+          </div>
+        </template>
       </template>
     </scroll-wrapper>
 
@@ -213,13 +232,7 @@ watch(() => standard_edition.value, (newValue) => {
     other_way_info_show.value = false
   }
 })
-// 当前为冠军或电竞冠军
-const is_champion = computed(() => {
-  //let flag = 100 == props.menu_type || (3000 == props.menu_type && lodash.get(MenuData.current_menu, 'date_menu.menuType') == 100); //电竞冠军
-  let flag =  is_kemp || (3000 == props.menu_type && lodash.get(MenuData.current_menu, 'date_menu.menuType') == 100); //电竞冠军
-  console.log(is_kemp)
-  return flag;
-})
+
 // 是否显示无第 {X} 个进球 title----次要玩法tips(5分钟次要玩法)
 const show_Xth_title = computed(() => {
   return [1, 2, 7, 10].includes(+curr_play_info.value.ms) && curr_play_info.value.menu_id === 19

@@ -1,11 +1,9 @@
 import { ref } from "vue";
-import router from "@/router"
 import { PageSourceData,MatchDetailCalss  } from "src/core/index.js";
 import ZhuGe from 'src/core/http/zhuge-tag.js'
 import NewMenu from "src/core/menu-pc/menu-data-class.js";
 import details from "src/core/match-list-pc/details-class/details.js";
 import UserCtr from 'src/core/user-config/user-ctr.js'
-const route = router.currentRoute.value
 const page_source = PageSourceData;
 
 function get_full_sr_url(match) {

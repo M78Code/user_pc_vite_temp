@@ -285,12 +285,13 @@ class MenuData {
     this.menu_root = obj.root;
     this.menu_root_show_shoucang = obj.root;
     // 设置 列表接口类型
-    this.set_match_list_api_type(obj);
+    // this.set_match_list_api_type(obj);
 
     // 是否有中间菜单 ，
     // 有则 需要显示中间菜单组件,需要 走中间菜单渲染 ，中间菜单负责输出 列表请求参数
     // 如果没有 需要逻辑分流计算 列表请求参数
 
+    console.log('has_mid_menu', obj);
     if (obj.has_mid_menu) {
       this.left_menu_result = {
         ...obj,
@@ -312,8 +313,8 @@ class MenuData {
         version: Date.now(),
       };
     }
-    console.log(MATCH_LIST_TEMPLATE_CONFIG[`template_${this.get_match_tpl_number()}_config`], this.get_match_tpl_number());
     MATCH_LIST_TEMPLATE_CONFIG[`template_${this.get_match_tpl_number()}_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'))
+    console.log('objobj', obj);
     if ([2, 3].includes(Number(obj.root))) {
       // 角球
       if ([101210, 101310].includes(+obj.lv2_mi)) {
@@ -373,10 +374,10 @@ class MenuData {
       version: Date.now(),
     };
     this.menu_root_show_shoucang = obj.root;
-    // console.error(
-    //   "set_mid_menu_result-------",
-    //   JSON.stringify(this.mid_menu_result)
-    // );
+    console.error(
+      "set_mid_menu_result-------",
+      JSON.stringify(this.mid_menu_result)
+    );
     // 设置全屏
     this.set_multi_column();
   }
@@ -585,7 +586,7 @@ class MenuData {
     if ([400, 300].includes(Number(this.menu_root))) {
       is_multi_column = false;
     } else {
-      const { lv2_mi } = this.left_menu_result;
+      const { lv2_mi } = this.left_menu_result || {};
       // 只有“让球和大小”菜单 展示【 收起 】按钮。其他二级菜单不展示
       if (
         [2, 3].includes(Number(this.menu_root)) &&
