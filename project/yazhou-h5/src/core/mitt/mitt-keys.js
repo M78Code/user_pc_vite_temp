@@ -77,6 +77,8 @@ export const EMIT_REFRESH_DETAILS = "EMIT_REFRESH_DETAILS";
 export const EMIT_GET_ODDS_LIST = "EMIT_GET_ODDS_LIST";
 // 详情视频开启
 export const EMIT_SET_SHOW_VIDEO = "EMIT_SET_SHOW_VIDEO";
+// 控制视频说明弹窗
+export const EMIT_VIDEO_DESCRIPTION_SHOW = "EMIT_VIDEO_DESCRIPTION_SHOW";
 // 详情iframe标签
 export const EMIT_SET_IFRAME_ONLOAD = "EMIT_SET_IFRAME_ONLOAD";
 // 赛事分析刷新事件

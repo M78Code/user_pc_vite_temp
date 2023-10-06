@@ -64,7 +64,7 @@
             <!-- bet 体育竞猜 -->
             <div class="sports-guessing" v-if="route.name == 'video'">
               <div>
-                <template v-if="$utils.is_iframe">
+                <template v-if="utils.is_iframe">
                   <!-- <sport-icon :sport_id="route.params.csid" :is_esports="is_esports" size="18px" class="icon sport-img-new" status="2" />  todo 雪碧图组件 -->
                   <span class="home-vs-away">
                     <span>{{ match_infoData.mhn }}</span>
@@ -273,7 +273,7 @@ import {
   LayOutMain_pc,
   GlobalSwitchClass,
   useMittEmit,
-  
+  utils
 } from "src/core/index";
 import matchHandicap from "src/components/match-detail/match-handicap/match-handicap.vue";
 import { TabWapper as Tab } from "src/components/common/tab";
@@ -423,7 +423,13 @@ watch(
   (val,old) => {
     // 初始化加载的时候为了不触发两次右侧更新   老mid(old)为null的时候说明是第一次加载 点击列表的时候 右侧已经通过列表mitt触发加载了一次  
     if (val!=old && old) {
-      //触发右侧详情更新
+     
+      // MatchDetailCalss.set_play_media( {
+      //         mid: MatchDetailCalss.params.mid,
+      //         media_type:MatchDetailCalss.params.media_type,
+      //         play_id:MatchDetailCalss.params.play_id,
+      //         time: new Date() * 1,
+      //       })
 				useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, MatchDetailCalss.params);
     }
   },

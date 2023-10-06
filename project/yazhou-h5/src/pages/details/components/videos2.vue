@@ -240,8 +240,8 @@
         </div> -->
         <!-- 全屏按钮 -->
         <div v-show="show_icons && ['muUrl', 'lvs'].includes(get_video_url.active)&& !load_error && !is_playing_replay" class="full-screen-btn" @click="set_full_screen">
-          <img v-if="get_is_full_screen"  src="image/bw3/svg/pack_up.svg">
-          <img v-else  src="image/bw3/svg/full_screen.svg">
+          <img v-if="get_is_full_screen"  src="/yazhou-h5/image/svg/pack_up.svg">
+          <img v-else  src="/yazhou-h5/image/svg/full_screen.svg">
         </div>
         <!-- 视频info说明弹窗 -->
         <div
@@ -282,7 +282,7 @@ import basketball_match_analysis from "project_path/src/pages/details/analysis-m
 // import uid from "src/core/uuid/index.js"
 import { uid } from "quasar"
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
-import { MenuData } from "src/core/index.js"
+import { MenuData, MatchDetailCalss } from "src/core/index.js"
 
 export default {
   name: "videos",
@@ -369,6 +369,8 @@ export default {
       replay_url: '',
       // 精彩回放视频是否加载失败
       is_replay_load_error: false,
+      //视频单页是否已加载     作用：防止白屏
+      get_iframe_onload: false,
     }
   },
   computed: {
@@ -377,7 +379,7 @@ export default {
       get_change_count(){return '';},
       get_is_user_no_handle(){return '';},
       // 视频url信息
-      get_video_url(){return {};},
+      get_video_url(){return MatchDetailCalss.video_url},
       // 视频显示状态
       get_show_video(){return '';},
       // 详情页的数据
@@ -410,7 +412,7 @@ export default {
       get_is_dp_video_full_screen(){return '';},
 
     replay_video_src() {
-      const host_url = window.env.config.live_domains[0] || lodash.get(this.get_user,'oss.live_h5')
+      const host_url = window.BUILDIN_CONFIG.DOMAIN_RESULT.live_domains[0] || lodash.get(this.get_user,'oss.live_h5')
       return `${host_url}/videoReplay.html?src=${this.replay_url}&lang=${this.get_lang}&volume=${this.is_user_voice ? 1 : 0}`
 
       // const host_url = 'http://localhost:4000/videoReplay.html?'
@@ -522,7 +524,6 @@ export default {
     },
     //监听屏幕改变
     get_is_hengping(is_hengping) {
-      console.error("监听屏幕改变");
       if (!is_hengping) {
         this.set_bet_show(false)
         this.set_analyze_show(false);
@@ -700,6 +701,7 @@ export default {
     // iframe视频参数时间戳
     this.iframe_rdm = new Date().getTime()
     this.mitt_obj[MITT_TYPES.IFRAME_VIDEO_VOLUME] = useMittOn(MITT_TYPES.IFRAME_VIDEO_VOLUME, this.video_volume);
+    this.mitt_obj[MITT_TYPES.EMIT_SET_IFRAME_ONLOAD] = useMittOn(MITT_TYPES.EMIT_SET_IFRAME_ONLOAD, this.set_iframe_onload);
     // 监听精彩回放iframe传来的消息
     window.addEventListener("message", this.handle_replay_message);
 
@@ -735,7 +737,6 @@ export default {
       set_video_zhiding(){},
       set_toast(){},
       set_zhiding_info(){},
-      set_iframe_onload(){},
       set_is_close_video(){},
       set_tab_fix(){},
       set_info_show(){},
@@ -750,6 +751,11 @@ export default {
       set_is_hengping(){},
       set_event_list(){},
       set_is_dp_video_full_screen(){},
+
+      // 设置iframe标签是否开启
+    set_iframe_onload(param) {
+      this.get_iframe_onload = param
+    },
     /**
      * 电竞赛事url加参数前缀检测函数
     */
@@ -769,7 +775,7 @@ export default {
      * 点击遮罩层，做取反操作，显示或隐藏遮罩层
     */
    click_mask(){
-    console.log('点击遮罩层，做取反操作');
+    console.log('点击遮罩层，做取反操作', this.show_icons);
     this.show_icons = !this.show_icons
     this.$emit('change_go_back',this.show_icons)
     if(this.show_icons){
@@ -867,6 +873,7 @@ export default {
       this.set_analyze_show(false);
       this.select_item = 1;
       this.is_need_timer = true;
+      useMittEmit(MITT_TYPES.EMIT_VIDEO_DESCRIPTION_SHOW, true)
     },
     // 弹出高清和标清的页面
     show_HD_SD() {
@@ -880,7 +887,6 @@ export default {
       this.is_need_timer = true;
     },
     change_analyze() {
-      console.error("change_analyze");
       if(![1,2].includes(this.get_detail_data.csid*1)) return;
       this.clear_timer();
       if(this.select_item == 3) {
@@ -1003,7 +1009,6 @@ export default {
     // 接受iframe消息
     handleMessage(e) {
       let status_text = ['loading','success','error']
-      console.error("接受iframe消息");
       var data = e.data;
       switch (data.cmd) {
         case 'icon':
@@ -1043,7 +1048,7 @@ export default {
           this.set_iframe_onload(true);
           break;
         case 'error_message':
-          console.log(data);
+          console.error(data);
           break;
       }
 
@@ -1121,7 +1126,6 @@ export default {
     },
     // 全屏手势滑动
     bg_touchmove({ direction,isFinal }) {
-      console.error("全屏手势滑动");
       this.sendMessage2({cmd: 'show_icon'})
       if(!isFinal && [1,2].includes(this.get_detail_data.csid*1) && this.get_is_full_screen && this.get_video_url.active == 'muUrl' && this.get_is_hengping) {
         if('left' == direction) {
@@ -1154,12 +1158,11 @@ export default {
       }
       this.set_tab_fix(false);
       this.set_is_close_video(Math.random());
-      this.set_show_video(false);
+      useMittEmit(MITT_TYPES.EMIT_SET_SHOW_VIDEO, false)
       this.set_zhiding_info(false);
       this.set_is_in_play('');
     },
     fade_icons(){
-      console.error("fade_icons");
       if (this.is_letian) return;  //乐天商户不需要6秒消失
       this.clear_timer()
         if(this.is_need_timer) {
@@ -1174,7 +1177,6 @@ export default {
     },
     // 如果是电竞，点击显示返回按钮
     show_DJ_back() {
-      console.error("如果是电竞，点击显示返回按钮");
       if(this.get_menu_type == 3000) {
         this.show_icons = true;
         this.fade_icons();
@@ -1252,7 +1254,7 @@ export default {
       this.is_show_no_handle = false
       api_common.getMatchUserIsLogin().then(res => {
         if(res && res.code == 200 && res.data.isLogin){
-          let referUrl = window.env.config.live_domains[0];
+          let referUrl = window.BUILDIN_CONFIG.DOMAIN_RESULT.live_domains[0];
           let media_src
           if(referUrl) {
             media_src = video.get_video_url_h5({data:{referUrl}},params.mid,1);
@@ -1299,7 +1301,6 @@ export default {
     icon_click_animationUrl(){
       // let check =   this.get_detail_data.mms >=2 || this.get_detail_data.mvs > -1
       // if(!check){return false }
-      debugger
        let params = {
          mid: this.match_id,
          type: 'Animation'
@@ -1757,7 +1758,6 @@ export default {
     },
   },
   mounted() {
-    console.error(this.detail_data);
     this.set_zhiding_info( false )
     this.set_video_zhiding( false )
     this.mitt_obj[MITT_TYPES.EMIT_VIDEO_SWITCHING] = useMittOn(MITT_TYPES.EMIT_VIDEO_SWITCHING,this.icon_click_lvs);
@@ -1797,9 +1797,9 @@ export default {
     top: 0px;
     width: 100%;
     height: 0.44rem;
-    color: var(--q-color-com-fs-color-8);
+    color: var(--q-gb-t-c-14);
     z-index: 200;
-    box-shadow: var(--q-color-com-box-shadow-11);
+    box-shadow: var(--q-gb-b-s-18);
 
     .go-back-btn-wrap {
       line-height: 0.44rem;
@@ -1821,7 +1821,7 @@ export default {
       display: inline-block;
       width: 0.12rem;
       height: 0.2rem;
-      background-image: var(--q-color-com-img-bg-3);
+      background-image: url("public/image/common/go_back.svg");
       background-size: 100% 100%;
     }
 

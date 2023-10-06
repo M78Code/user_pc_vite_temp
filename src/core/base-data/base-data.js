@@ -416,7 +416,7 @@ class BaseData {
           esport_menu.push(obj);
         }
       });
-
+      console.error(' this.esport_menu', esport_menu)
       // 重置默认数据
       this.left_menu_base_mi_arr = left_menu;
 
@@ -443,6 +443,8 @@ class BaseData {
       } else {
         this.is_mi_2000_open = false;
       }
+
+      console.error(' this.dianjing_sublis', this.dianjing_sublis)
 
       // 判断有没有 vr数据
       // vr数据菜单（紧急开关） vr商户开关

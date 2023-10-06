@@ -13,7 +13,7 @@
       level_four_menu: menu_type == 28 && [1001, 1002, 1004, 1011, 1010, 1009].includes(menu_lv2.mi),
       detail_match_list: ['detail_match_list', 'home_hot_page_schedule', ].includes(invok_source),
       jingzu: menu_type == 30,
-      esport: 3000 == menu_type,
+      esport: menu_type == 7,
     }" >
       <!--缝隙 不通层级 遮罩 存在渲染偏差， 边界 双线 或者 侵蚀问题-->
       <div class="gap" v-if="on_match && menu_type != 3000" :class="{ zaopan: [4, 11, 28, 3000].includes(menu_type) }" />

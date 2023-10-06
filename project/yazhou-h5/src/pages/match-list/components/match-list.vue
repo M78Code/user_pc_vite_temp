@@ -10,7 +10,6 @@
       :class="{ 'data-get-empty': data_get_empty }">
       <template v-slot="{ match_item, index }">
         <!-- 1111 -- {{ match_item?.csid }} -- {{ mid }} -->
-       
         <template v-if="match_item">
            <!--虚拟体育(赛果)-->
           <v-match-container 
@@ -33,7 +32,6 @@
               v-if="is_kemp"
               :i="index" 
               :match_of_list="match_item" 
-              :matchCtr="matchCtr"
               :menu_type="menu_type"
               @toggle_collect_league="toggle_collect">
             </match-container-champion>
