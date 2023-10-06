@@ -1,7 +1,7 @@
 <template>
   <!-- 滚球盘 标题-->
   <div :class="['match-type text-left yb-flex-between', { 'match-type-even': card_style_obj.is_even_type }]"
-    @click="match_list_card[cur_title_info.func_name](card_style_obj)">
+    @click="MatchListCardData[cur_title_info.func_name](card_style_obj)">
     <div class="col-left">
       <!-- 滚球盘 -->
       {{ cur_title_info.name }}
@@ -22,14 +22,7 @@ import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
 import { t } from "src/core/index.js";
-import store from 'src/store-redux/index.js'
 
-let state = store.getState();
-let match_list_data = ref(null);
-
-setTimeout(() => {
-  match_list_data.value = MatchListCardData
-}, 1000)
 const route = useRoute()
 // const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
 const props = defineProps({
@@ -45,7 +38,7 @@ const cur_title_info = computed(() => {
     //球种标题
     sport_title: {
       name: csna,
-      match_count: lodash.get(match_list_data, `sport_match_count.csid_${props.card_style_obj.csid}.count`),
+      match_count: lodash.get(MatchListCardData, `sport_match_count.csid_${props.card_style_obj.csid}.count`),
       show_num: MenuData.menu_root != 400 && route.name != "search",
       func_name: 'recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_sportid_zhedie'
     },

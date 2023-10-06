@@ -58,6 +58,7 @@ import {
   utils,
   i18n_t,
   score_switch_handle,
+  format_string,
   is_eports_csid
 } from "src/core/index"
 import { get_mmp_name } from "src/core/format/module/format-msc.js"
@@ -325,8 +326,7 @@ const covert_mct = ({ mct, mmp, ms }) => {
   if (lang == "zh") {
     new_num = utils.numberToChinese(mct);
   }
-  const licia_format = require("licia/format");
-  let rs = licia_format(i18n_t("mmp.7.x"), new_num);
+  let rs = format_string(i18n_t("mmp.7.x"), new_num);
   return rs;
 };
 

@@ -238,7 +238,7 @@
 
       // 赛事表征数据
       let match_style_obj =  compute_style_template_by_matchinfo(match,template_id)
-      all_card_obj['mid_'+match.mid] = match_style_obj
+      all_card_obj[match.mid+'_'] = match_style_obj
 
     })
 

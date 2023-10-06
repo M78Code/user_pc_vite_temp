@@ -6,7 +6,7 @@
 
 import store from "src/store-redux/index.js";
 import { api_details } from "src/api/index";
-import { UserCtr, MITT_TYPES,useMittEmit } from "src/core/index.js"; 
+import { UserCtr, MITT_TYPES,useMittEmit, MenuData } from "src/core/index.js"; 
 import { update_match_time } from "src/core/bet/common-helper/module/common-sport.js"
 import {utils,is_virtual_csid,is_eports_csid,MatchDetailCalss,MatchDataWarehouse_PC_Detail_Common as MatchDetailsData,LayOutMain_pc } from 'src/core/index.js'
 import GlobalAccessConfig from "src/core/access-config/access-config.js"
@@ -162,12 +162,12 @@ export default {
   */
   sr_click_handle(match) {
     let full_url = this.get_full_sr_url(match) // seid,match.srid
-
+    let euid = lodash.get(MenuData, 'match_list_api_config.match_list.params.euid')
     localStorage.setItem('test_match_info', JSON.stringify(match))
     // lockie
     // if(!GlobalAccessConfig.get_statisticsSwitch()) return window.vue.useMittEmit(window.vue.MITT_TYPES.EMIT_SHOW_TOAST_CMD, window.vue.i18n_t("msg.msg_09")); 
     // if([1,2].includes(match.csid*1)){
-      full_url = `index.html#/analysis_header/${match.csid}/${match.mid}` // seid,match.srid
+      full_url = `index.html#/analysis_header/${match.csid}/${match.mid}/${euid}` // seid,match.srid
     //   store.dispatch("set_active_detail", match)
     // }
     
