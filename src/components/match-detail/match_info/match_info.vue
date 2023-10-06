@@ -7,7 +7,7 @@
   <div ref="wrap_info">
     <div class="wrap-info relative-position">
       <!-- 右侧 窄版start ----------->
-      <match-video  :background_img="background_img" :refresh_time="refresh_time" />
+      <match-video  :background_img="background_img" :mid="mid" :refresh_time="refresh_time" />
       <!-- 右侧 窄版 end   ----------->
     </div>
   </div>
@@ -27,7 +27,8 @@ export default {
     screen: String,
     match_info: Object,
     background_img: String,
-    refresh_time: Number
+    refresh_time: Number,
+    mid:String || Number
   },
   computed: {
     // ...mapGetters({
