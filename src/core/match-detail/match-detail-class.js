@@ -246,7 +246,6 @@ export default class MatchDetailCtr {
    * @return {*}
    */
   set_play_media(play_media_val){
-    console.log(play_media_val,'play_media_val');
     this.play_media =play_media_val
     this.set_details_data_version()
   }
