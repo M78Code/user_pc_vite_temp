@@ -142,7 +142,7 @@ import { DateForMat } from "src/core/format/index.js"
     text-align: center;
     align-items: center;
     padding: 0 0.1rem;
-    background:var(--q-analysis-text-color-1);
+    background:var(--q-gb-bg-c-15);
     color: var(--q-analysis-text-color-32);
     border-top: 1px solid var(--q-analysis-text-color-26);
     border-bottom: 1px solid var(--q-analysis-text-color-26);

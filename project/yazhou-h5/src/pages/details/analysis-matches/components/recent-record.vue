@@ -225,7 +225,7 @@ onMounted(() => {
     display: flex;
     align-items: center;
     flex-wrap: nowrap;
-    background-color: var(--q-analysis-text-color-1) !important;
+    background-color: var(--q-gb-bg-c-15) !important;
 
     .title {
 
@@ -243,7 +243,7 @@ onMounted(() => {
         position: absolute;
         left: 0.16rem;
         top: 0.14rem;
-        background-color: var(--q-analysis-text-color-31);
+        background-color: var(--q-gb-bg-c-13);
         border-radius: 1.5px;
       }
     }
@@ -255,9 +255,9 @@ onMounted(() => {
       display: flex;
       justify-content: center;
       align-items: center;
-      background: var(--q-analysis-text-color-1);
+      background: var(--q-gb-bg-c-15);
       border: 1px solid var(--q-analysis-bd-color-5);
-      color: var(--q-analysis-text-color-32);
+      color: var(--q-analysis-text-color-14);
 
       border-radius: 0.04rem;
 
@@ -287,12 +287,12 @@ onMounted(() => {
 
       letter-spacing: 0;
       text-align: center;
-      background: var(--q-analysis-text-color-1);
+      background: var(--q-gb-bg-c-15);
       color: var(--q-analysis-text-color-14);
       border: 1px solid var(--q-analysis-bd-color-5)!important;
       &.active {
-        background: var(--q-analysis-text-color-31);
-        color: var(--q-analysis-text-color-1);
+        background: var(--q-gb-bg-c-13);
+        color: var(--q-gb-t-c-14);
         border: 1px solid var(--q-analysis-bd-color-7)!important;
       }
 
@@ -362,7 +362,7 @@ onMounted(() => {
     }
     .team-item {
       border-bottom: 1px solid var(--q-analysis-text-color-24);
-      background-color: var(--q-analysis-text-color-1);
+      background-color: var(--q-gb-bg-c-15);
       div {
         color: var(--q-analysis-text-color-20);
       }

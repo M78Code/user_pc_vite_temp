@@ -29,17 +29,15 @@
 import { api_analysis } from "src/api/index.js";
 import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/index.js"
 import { useRoute } from 'vue-router'
-
-// TODO: 后续修改调整
-// import { mapGetters } from "vuex";
 import { ref, nextTick, onMounted, onUnmounted, computed } from 'vue'
 import { i18n_t } from "src/boot/i18n.js";
 //国际化
 
-
-const get_detail_data = ref({
-        csid: '1',
-        mid: '1',
+    const props = defineProps({
+      detail_data: {
+        type: Object,
+        default: () => {}
+      }
     })
     //按钮下标
     const radio_button_index = ref(0)
@@ -52,21 +50,20 @@ const get_detail_data = ref({
     // 路由
     const route = useRoute()
     onMounted(() => {
-        // 添加监听 赛事分析刷新事件 TODO: get_detail_data   后续修改调整
+        // 添加监听 赛事分析刷新事件 
       useMittEmit(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis)
 
-      tab_radio_button.value = [get_detail_data.value.mhn, get_detail_data.value.man]
+      tab_radio_button.value = [props.detail_data.mhn, props.detail_data.man]
       get_list()
     })
 
 
     const match_id = computed(() => {
       // 赛事id
-      // TODO: get_detail_data.value.mid 后续修改调整
-      return route.params.mid || get_detail_data.value.mid
+      return route.params.mid || props.detail_data.mid
     })
     onUnmounted(() => {
-      // 移除监听 赛事分析刷新事件 TODO: get_detail_data  后续修改调整
+      // 移除监听 赛事分析刷新事件 
       useMittOn(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis).off
     })
 

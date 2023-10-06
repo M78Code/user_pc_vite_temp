@@ -1,9 +1,9 @@
 <template>
     <div :style="page_style">
         <!-- 足球赛事分析 页面-->
-        <analysis-football-matches v-if="get_detail_data.csid == '1'"></analysis-football-matches>
+        <analysis-football-matches :detail_data="detail_data" v-if="detail_data.csid == '1'"></analysis-football-matches>
         <!-- 篮球赛事分析 页面-->
-        <basketball-match-analysis v-if="get_detail_data.csid == '2'"></basketball-match-analysis>
+        <basketball-match-analysis  :detail_data="detail_data" v-if="detail_data.csid == '2'"></basketball-match-analysis>
     </div>
 </template>
 <script setup>
@@ -14,8 +14,12 @@
     const page_style = ref('')
 
     page_style.value = compute_css_variables({ category: 'component', module: 'analysis' })
-    const get_detail_data = reactive({
-        csid: 1
+    
+    const props = defineProps({
+        detail_data: {
+            type: Object,
+            default: () => {}
+        }
     })
 </script>
 

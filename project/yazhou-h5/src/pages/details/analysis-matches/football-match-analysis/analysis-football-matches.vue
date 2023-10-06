@@ -13,7 +13,7 @@
       class="football-tab-header"
     ></head-tab>
     <!-- 顶部切换 下边的内容组件 -->
-    <component :is="currentContent" />
+    <component :is="currentContent" :detail_data="detail_data" />
   </div>
 </template>
 
@@ -56,12 +56,9 @@ export default defineComponent({
     highlights,
     headTab,
   },
-  setup() {
+  props: ['detail_data'],
+  setup(props, event) {
      // 详情数据
-     const get_detail_data = ref({
-      csid: '1',
-      mid: '1',
-  })
     // 锚点
     const analysis_football_matches = ref(null)
     // tab 数据
@@ -104,7 +101,7 @@ export default defineComponent({
     })
     createTabds();
     })
-    watch(() => get_detail_data.value.mid, () => {
+    watch(() => props.detail_data.mid, () => {
       // 详情顶部切换赛事后 更新相应赛事数据
       const currentCont = currentContent.value
       currentContent.value = ''
@@ -155,8 +152,8 @@ export default defineComponent({
           component: 'analysis-odds'
         },
       ]
-      // 红猫tab特殊处理  TODO: get_detail_data  get_lang 后续修改调整
-      if (get_detail_data.value.cds === '1500') {
+      // 红猫tab特殊处理  
+      if (props.detail_data.cds === '1500') {
         tabs = [
           {
             name: i18n_t('analysis_football_matches.analysis_data'),
@@ -172,7 +169,7 @@ export default defineComponent({
           }
         )
       }
-      // 精彩回放开关开启后，显示精彩回放视图 TODO: get_event_list UserCtr 后续修改调整
+      // 精彩回放开关开启后，显示精彩回放视图 TODO: get_event_list  后续修改调整
       const highlights_component = tabs.find(item => item.component === 'highlights')
       const { configValue, eventSwitch } = lodash.get(UserCtr, 'user_info.merchantEventSwitchVO', {})
       if (configValue == 1 && eventSwitch == 1 && get_event_list.value.length && !highlights_component) {
@@ -236,7 +233,6 @@ export default defineComponent({
       }
     }
     return {
-      get_detail_data,
       analysis_football_matches,
       tabList,
       currentContent,
