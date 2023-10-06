@@ -75,6 +75,10 @@ export const EMIT_UPDATE_ORDER_LIST = "EMIT_UPDATE_ORDER_LIST";
 export const EMIT_REFRESH_DETAILS = "EMIT_REFRESH_DETAILS";
 // 详情玩法集
 export const EMIT_GET_ODDS_LIST = "EMIT_GET_ODDS_LIST";
+// 详情视频开启
+export const EMIT_SET_SHOW_VIDEO = "EMIT_SET_SHOW_VIDEO";
+// 详情iframe标签
+export const EMIT_SET_IFRAME_ONLOAD = "EMIT_SET_IFRAME_ONLOAD";
 // 赛事分析刷新事件
 export const EMIT_REFRESH_MATCH_ANALYSIS = "EMIT_REFRESH_MATCH_ANALYSIS";
 // 重载注单页面
