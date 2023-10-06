@@ -65,6 +65,7 @@ export default class MatchListDetailMiddleware {
       mid,
       back_to_source_params = {},
     } = params;
+    console.error(MatchDataWarehouse_source);
     // 读取 来源数据仓库 赛事基础信息
     let mid_data = MatchDataWarehouse_source.mid_obj[`${mid}_`];
     // 写入 目标数据仓库 赛事基础信息

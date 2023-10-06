@@ -136,7 +136,7 @@
         </span>
         <span v-else>
           <!--  | format_H_M -->
-          {{ format_time_zone_time(+detail_data.mgt) }}
+          {{ formatTime(+detail_data.mgt, 'HH:MM') }}
         </span>
       </span>
       <!-- 赛前切滚球 ms=110时:显示即将开赛 -->
@@ -251,7 +251,7 @@ import { utils } from 'src/core/utils/index.js';
 import { MenuData, UserCtr } from "src/core/index.js";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import store from "src/store-redux/index.js";
-import { format_total_score, format_time_zone_time, format_time_zone } from "src/core/format/index.js"
+import { format_total_score, format_time_zone_time, format_time_zone, formatTime } from "src/core/format/index.js"
 import { i18n_t } from "src/boot/i18n.js"
 
 const props = defineProps({

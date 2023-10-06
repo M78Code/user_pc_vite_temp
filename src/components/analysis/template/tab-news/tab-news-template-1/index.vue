@@ -120,7 +120,7 @@ function getArticle() {
     let _data = lodash.get(res, 'data');
     let _code = lodash.get(res, 'code');
 
-    if (_data) {
+    if (_data&&_code == 200) {
       let _item = typeof (_data) == 'string' ? JSON.parse(_data) : lodash.cloneDeep(_data);
       // 替换图片域名
       let domain = get_file_path('getArticle').replace('getArticle', '')

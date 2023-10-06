@@ -227,7 +227,7 @@ useRegistPropsHelper(component_symbol, need_register_props)
 
 import { format_result } from 'src/core/format/index.js'
 
-import { MSelectFullVersionWapper as basePanel } from 'src/components/analysis/template/m-select/index.js'
+import { BasePanelFullVersionWapper as basePanel } from 'src/components/analysis/template/base-panel/index.js'
 import { api_analysis } from 'src/api/index'
 
 import { i18n_t,result_filter } from "src/core/index.js";
@@ -279,7 +279,6 @@ function getData() {
   let params = { parentMenuId: 2, sonMenuId: tabIndex.value, standardMatchId: props.match.mid }//
   api_analysis.get_match_analysise_data(params).then((res) => {
     res = res.data
-    console.log("get_match_analysise_dataget_match_analysise_data",res);
     // 基本面
     if (tabIndex.value == 1) {
       if (Object.keys(res.basicInfoMap).length) {
@@ -515,7 +514,7 @@ function getAge(birthdate) {
       }
     }
     .d-header {
-      background: var(--q-analysis-bg-color-17);
+      background: var(-q-analysis-color-17);
       color:  var(--q-analysis-color-7);
       border-bottom: none !important;
       .d-td {

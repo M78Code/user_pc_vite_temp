@@ -10,7 +10,7 @@
             <span class="label" :class="{ is_chinise: ['zh', 'tw'].includes(lang) }">{{ $t(`new_menu.${item.mi}`)
             }}</span>
             <span class="num" v-if="![407, 408, 410].includes(item.mi * 1)">{{
-              MenuData.count_menu(item) || ""
+              MenuData.count_menu(item)
             }}</span>
           </div>
         </q-scroll-area>
@@ -51,6 +51,8 @@ import lodash from "lodash";
 import { useRouter } from "vue-router";
 import { DateForMat } from "src/core/format/index.js";
 import { lang } from "project_path/src/mixin/userctr";
+import base_data from "src/core/base-data/base-data.js";
+
 //初始化数据
 const router = useRouter();
 const menu_list = ref(MenuData.menu_list || []); //菜单列表
@@ -74,8 +76,14 @@ let home_timer1_;
 let el_height = ref(window.innerHeight - 2.7 * (window.innerWidth / 3.75));
 //处理menu
 const menu_data_config = (data) => {
-  remove_crosstalk(data);// 如果是串关去除串关
-  menu_list.value = data;
+  // 如果是串关去除串关 热门 赛果
+
+  const filter = data.filter(i => {
+    if (MenuData.is_export(i.mi)) return base_data.is_mi_2000_open; // 电竞tob后台关闭隐藏
+    if (MenuData.is_vr(i.mi)) return base_data.is_mi_300_open; // VRtob后台关闭隐藏
+    return !MenuData.is_mix(i.mi) && !MenuData.is_hot(i.mi) && !MenuData.is_results(i.mi)
+  })
+  menu_list.value = filter;
   chang_index(data)
   // 处理无数据的情况
   if (!menu_list.value.length) {
@@ -96,7 +104,7 @@ const cancel_watch = watch(menu_type, (i) => {
 });
 watch(MenuData.update_time, () => {
   const { menu_list: res, menu_lv2 } = MenuData; //获取主数据
-  menu_data_config(MenuData.recombine_menu(res));
+  menu_data_config((res));
   menu_lv2_list.value = menu_lv2
 });
 //TODO  应该是菜单变化？
@@ -188,7 +196,7 @@ const change_menu = (item, index) => {
     },
   };
   list_area.value?.setScrollPosition("vertical", 0);
-  MenuData.set_current_lv1_menu(item)
+  MenuData.set_current_lv1_menu(item, index)
   if (newMeuRouter[mi]) {
     cancel_watch()
     router.push(newMeuRouter[mi]);
@@ -225,12 +233,6 @@ const calc_show2 = (item) => {
     if (item.mi == 8) return lodash.get(UserCtr, "user_info.openVrSport"); // VRtob后台关闭隐藏
     return true;
   }
-};
-// 去除串关
-const remove_crosstalk = (data = []) => {
-  // 如果是串关去除串关
-  const idx = data.findIndex(i => i.mi == 6)
-  idx > -1 && data.splice(idx, 1);
 };
 // 浏览器窗口变化事件监听
 useMittOn(MITT_TYPES.EMIT_WINDOW_RESIZE, window_resize_on);

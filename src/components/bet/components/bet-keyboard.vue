@@ -4,7 +4,7 @@
 -->
 
 <template>
-  <div class="keyboard" @click.stop="_handleKeyPress($event)" style="opacity: 1;" @touchmove.prevent>
+  <div class="keyboard yb_mx10 yb_pb6" @click.stop="_handleKeyPress($event)" style="opacity: 1;" @touchmove.prevent>
     <div class="key-row row">
       <div class="key-cell" data-num="qon" :class="{ 'shadow-show': prevent_click(addnum.qon) }">
         <span>+</span>{{ addnum.qon }}
