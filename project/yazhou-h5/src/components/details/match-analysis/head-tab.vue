@@ -12,7 +12,7 @@
             v-for="(item,i) in tabList" :key="i" :class="{
             'is-active' : tabIndex == i,
             'remove-margins': +tabList.length - 1 == i,
-            'small-right': (UserCtr.lang == 'en' || UserCtr.lang == 'vi') && get_detail_data.csid == 1,
+            'small-right': (UserCtr.lang == 'en' || UserCtr.lang == 'vi') && detail_data.csid == 1,
           }"
             v-show="handle_show_tab(item, i)"
         >
@@ -29,13 +29,17 @@ import { ref, nextTick, computed, onUnmounted, onMounted, inject } from "vue"
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import {utils } from 'src/core/utils/index.js';
 import UserCtr from "src/core/user-config/user-ctr.js";
-let get_detail_data = inject("get_detail_data", {})
+import lodash from "lodash"
 
 
   const props = defineProps({
     tabList: {
       type: Array,
       default: () => [],
+    },
+    detail_data: {
+      type: Object,
+      default: () => {},
     }
   })
   const emit = defineEmits(['tab_click'])
@@ -52,7 +56,7 @@ let get_detail_data = inject("get_detail_data", {})
       if (['zh', 'tw'].includes(UserCtr.lang)) {
         i++
       }
-      if (get_detail_data.value.ms != 1) {
+      if (props.detail_data.ms != 1) {
         i++
       }
       child_tab_click(props.tabList[0], 0)
@@ -73,7 +77,7 @@ let get_detail_data = inject("get_detail_data", {})
     }
   const handle_show_tab = (item, index) => {
       let nedw_show_tab = true
-      if (get_detail_data.csid === '1' && _.get(item, 'component') === 'highlights' && !show_tab.value) {
+      if (props.detail_data.csid === '1' && lodash.get(item, 'component') === 'highlights' && !show_tab.value) {
         nedw_show_tab = false
       }
       return nedw_show_tab

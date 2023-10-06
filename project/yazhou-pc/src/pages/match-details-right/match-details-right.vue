@@ -105,6 +105,7 @@
               :match_info="match_infoData"
               :refresh_time="refresh_time"
               :background_img="background_img"
+              :mid="mid"
             />
             <!-- 精彩回放 -->
             <!-- <video-history-line
@@ -270,7 +271,9 @@ import {
   MatchDataWarehouse_PC_Detail_Common as MatchDetailsData,
   MatchDetailCalss,
   LayOutMain_pc,
-  GlobalSwitchClass
+  GlobalSwitchClass,
+  useMittEmit,
+  
 } from "src/core/index";
 import matchHandicap from "src/components/match-detail/match-handicap/match-handicap.vue";
 import { TabWapper as Tab } from "src/components/common/tab";
@@ -412,7 +415,20 @@ watch(
   },
   { deep: true }
 );
-
+/*
+ ** 监听mid 触发右侧更新  
+ */
+watch(
+  () => mid.value,
+  (val,old) => {
+    // 初始化加载的时候为了不触发两次右侧更新   老mid(old)为null的时候说明是第一次加载 点击列表的时候 右侧已经通过列表mitt触发加载了一次  
+    if (val!=old && old) {
+      //触发右侧详情更新
+				useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, MatchDetailCalss.params);
+    }
+  },
+  { deep: true }
+);
 // 是否展示右侧热门推荐处的margin
 const is_show_margin = computed(() => {
   return (
