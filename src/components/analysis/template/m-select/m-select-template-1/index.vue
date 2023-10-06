@@ -7,7 +7,7 @@
       </span>
     </div>
 
-    <div class="selct-menu  relative-position" :class="{ 'open_select': time }">
+    <div class="selct-menu relative-position" :class="{ 'open_select': time }">
       <div class="select-lable" @click="show_select('time')">
         <span class="label">{{ timeData[timeSelected] }}</span>
         <span class="yb-icon-arrow"></span>
@@ -42,6 +42,7 @@ import { component_symbol, need_register_props } from "../config/index.js"
 import { i18n_t } from "src/core/index.js";
 import lodash from 'lodash'
 useRegistPropsHelper(component_symbol, need_register_props)
+const props = defineProps(need_register_props)
 
 const time = ref(false);
 const type = ref(false);
@@ -68,14 +69,14 @@ const _this = {
  * @param {'time'|'type'} _type
  */
 function show_select(_type) {
-  if (_this[_type].value) {
+  if (!_this[_type].value) {
     /**清除定时器 */
     if (timer.value) {
       clearTimeout(timer.value)
       timer.value = null
     }
     timer.value = setTimeout(() => {
-      _this[_type] = !_this[_type]
+      _this[_type].value = !_this[_type].value
     }, 20)
   }
 }

@@ -32,6 +32,7 @@ import SearchData from "src/core/search-class/search-data-class.js";
 import VrSportCtr from "src/core/vr-sport/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import MatchDetailCtr from "src/core/match-detail/match-detail-class.js";
+import MatchListDetailMiddleware from "src/core/match-detail/match-detail-h5/match-list-detail-h5/index.js";
 import {
   http,
   axios_loop,
@@ -179,6 +180,10 @@ const MatchDataWarehouse_H5_Detail_Jingxuan = new MatchDataBase({
  * 详情操作类
  */
 const MatchDetailCalss = new MatchDetailCtr()
+/***
+ * H5详情中间件
+ */
+const MatchListH5DetailMiddleware = new MatchListDetailMiddleware()
 /**
  * PC  布局
  */
@@ -235,6 +240,7 @@ export {
   MatchListCardData,
   PageSourceData,
   GlobalAccessConfig,
+  MatchListH5DetailMiddleware,
   MatchDataWarehouse_PC_List_Common,
   MatchDataWarehouse_PC_Detail_Common,
   MatchDataWarehouse_H5_List_Common,

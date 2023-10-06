@@ -96,8 +96,9 @@
         // 精彩回播配置信息
         'vx_get_user.merchantEventSwitchVO':{
           handler(res) {
+            if(!res) return
             // 开启关闭
-            if(res.eventSwitch) {
+            if(res?.eventSwitch) {
               this.get_video_replay()
               this.replayDataTimer && clearInterval(this.replayDataTimer)
               this.replayDataTimer = setInterval(() => this.get_video_replay(), 60 * 1000)
@@ -215,7 +216,7 @@
          * 获取精彩回放事件
          */
         get_video_replay() {
-          if (!this.match_info.mid) {
+          if (!this.match_info?.mid) {
             return false
           }
           const params = {

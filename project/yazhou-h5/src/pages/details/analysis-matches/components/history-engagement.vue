@@ -213,7 +213,7 @@ const get_detail_data = ref({
         position: absolute;
         left: 0.16rem;
         top: 0.14rem;
-        background-color: var(--q-analysis-text-color-31);
+        background-color: var(--q-analysis-text-color-16);
         border-radius: 1.5px;
       }
     }
@@ -255,7 +255,7 @@ const get_detail_data = ref({
       color: var(--q-analysis-text-color-14);
       border: 1px solid var(--q-analysis-bd-color-5)!important;
       &.active {
-        background: var(--q-analysis-text-color-31);
+        background: var(--q-analysis-text-color-16);
         color: var(--q-analysis-bg-color-1);
         border: 1px solid var(--q-analysis-bd-color-7)!important;
       }
