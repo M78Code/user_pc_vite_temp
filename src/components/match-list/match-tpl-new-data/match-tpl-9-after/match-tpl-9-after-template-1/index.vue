@@ -116,7 +116,7 @@ const process_margin = computed(() => {
 	 * @Description 获取当前局盘口列表模板
 	 * @param {undefined} undefined
 	 */
-   const get_cur_handicap_list = (match) => {
+   function get_cur_handicap_list (match) {
 		// 当前局盘口列表
 		let cur_handicap_list = [];
     let play_config = match_tpl_info[`template_${match_style_obj.data_tpl_id}`]

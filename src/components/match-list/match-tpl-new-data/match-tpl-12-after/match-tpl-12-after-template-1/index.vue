@@ -135,7 +135,7 @@ watch(hv_ol.value._hid, () => {
  * @Description 设置让球数量 
  * @param {undefined} undefined
 */
-const set_hv = () => {
+function set_hv () {
   let hl_obj = this.match_list_data.hl_obj['hid_'+hv_ol.value._hid] || {}
   hv.value = hl_obj.hv || -1
 }
@@ -144,7 +144,7 @@ const set_hv = () => {
  * @Description 赛事收藏 
  * @param {undefined} undefined
 */
-const collect = () => {
+function collect () {
   useMittEmit(MITT_TYPES.EMIT_MX_COLLECT_MATCH, this.match)
 }
 
@@ -152,7 +152,7 @@ const collect = () => {
  * 跳转至详情
  * @return {undefined} undefined
  */
-const on_go_detail = () => {
+function on_go_detail () {
   if(is_eports_csid(this.match.csid)){
     this.match.go_detail_type = 'no_switch'
   }
@@ -163,7 +163,7 @@ const on_go_detail = () => {
  * @Description 点击tab玩法
  * @param {undefined} undefined
 */
-const play_tab_click = (obj) => {
+function play_tab_click (obj){
   // 当前已选中
   if(this.match.play_current_index == obj.index){
     return
@@ -185,7 +185,7 @@ const play_tab_click = (obj) => {
  * @Description 角球折叠
  * @param {undefined} undefined
 */
-const fold_tab_play = () => {
+function fold_tab_play () {
   this.match_list_card && this.match_list_card.fold_tab_play(this.match.mid)
 }
 </script>

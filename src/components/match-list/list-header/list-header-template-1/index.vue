@@ -127,14 +127,11 @@ const vx_layout_cur_page = ref(state.layoutReducer.layout_cur_page);
 const vx_show_filter_popup = ref(state.filterReducer.show_filter_popup);
 // 获取联赛筛选是否全选
 const vx_filter_checked_all = ref(state.filterReducer.filter_checked_all);
-// 获取当前菜单类型
-const vx_cur_menu_type = ref(null);
 // 收起右侧详情 展开多列玩法
 const get_unfold_multi_column = ref(state.globalReducer.is_unfold_multi_column);
 // 获取选中的赛事数量(列表右上角赛选功能)
 const vx_get_checked_count = ref(state.filterReducer.checked_count);
 const vx_match_sort = ref(state.globalReducer.match_sort)
-// mixins: [global_mixin],
 const match_sort_show = ref(false) //切换排序是否显示
 const leagueName = ref("") //模糊搜索联赛条件
 const time_list = ref(null) //即将开赛筛选数据
@@ -229,7 +226,7 @@ store.dispatch({
   type: 'SETCUREXPANDLAYOUT',
   data: "match-list"
 })
-const set_unfold_multi_column = () => {
+function set_unfold_multi_column() {
   store.dispatch({
     type: 'SET_UNFOLD_MULTI_COLUMN',
     data: false
@@ -238,7 +235,7 @@ const set_unfold_multi_column = () => {
 /**
  * 计算 全部 按钮样式
  */
-const compute_quanbu_btn_class = () => {
+function compute_quanbu_btn_class () {
   let str = ''
   if (vx_layout_list_type.value == 'match') {
     str += 'active'
@@ -253,7 +250,7 @@ const compute_quanbu_btn_class = () => {
 /**
  * 即将开赛筛选
  */
-const select_time_change = () => {
+function select_time_change () {
   //设置session
   sessionStorage.setItem('is_select_time', '1')
   useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST);
@@ -261,7 +258,7 @@ const select_time_change = () => {
 /**
  * 重置条件
  */
-const reset_filter = () => {
+function reset_filter () {
   store.dispatch({
     type: 'set_open_select_time',
     data: null
@@ -272,7 +269,7 @@ const reset_filter = () => {
  * @param {object} row 切换的排序
  * @return {undefined} undefined
  */
-const on_click_sort = (row) => {
+function on_click_sort(row) {
   if (!GlobalAccessConfig.get_sortCut()) return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, t("msg.msg_09"))
   match_sort_show.value = false
   store.dispatch({
@@ -284,7 +281,7 @@ const on_click_sort = (row) => {
  * @Description:切换联赛筛选
  * @return {undefined} undefined
  */
-const toggle_filter_popup = () => {
+function toggle_filter_popup() {
   if (!GlobalAccessConfig.get_filterSwitch()) return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, t("msg.msg_09"));
   if ((props.load_data_state != 'data' && !vx_show_filter_popup.value)) {
     return
@@ -305,7 +302,7 @@ const toggle_filter_popup = () => {
  * @param  {string} type
  * @return {undefined} undefined
  */
-const on_change_list_type = (type) => {
+function on_change_list_type (type) {
   if (type == vx_layout_list_type.value) {
     return
   }

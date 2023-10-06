@@ -250,7 +250,7 @@ const bet_col = computed(() => {
  * @Description 设置次要玩法 tab
  * @param {string} tab_play_keys  所有次要玩法
 */
-const set_play_name_list = (tab_play_keys = '') => {
+function set_play_name_list(tab_play_keys = '') {
   let play_name_list_info = []
   if (typeof tab_play_keys !== 'string') return
   let play_name_obj = {
@@ -285,7 +285,7 @@ const set_play_name_list = (tab_play_keys = '') => {
  * @param {Number} index  当前标题索引
  * @param {Number} length 整行标题个数
 */
-const set_secondary_bg = (index, length) => {
+function set_secondary_bg(index, length) {
   let bg_status = false
   if ([2, 5].includes(length) && index == 1 && lodash.get( 'match.play_current_key') !== 'hps5Minutes') {
     bg_status = true
@@ -301,7 +301,7 @@ const set_secondary_bg = (index, length) => {
  * @param {Number} length 整行标题个数
  * @return {Number} bet_width 标题长度
 */
-const get_bet_width = (index, length) => {
+function get_bet_width (index, length) {
   //是否多列
   let multi_column = lodash.get( 'match_style_obj.data_tpl_id') == 13
   let bet_width = match_list_tpl_size.bet_width
@@ -341,7 +341,7 @@ const get_bet_width = (index, length) => {
  * @Description 点击tab玩法
  * @param {undefined} undefined
 */
-const play_tab_click = (obj) => {
+function play_tab_click (obj) {
   // 当前已选中
   if(match.play_current_index == obj.index){
     return
@@ -363,7 +363,7 @@ const play_tab_click = (obj) => {
  * @Description 角球折叠
  * @param {undefined} undefined
 */
-const fold_tab_play = () => {
+function fold_tab_play () {
   MatchListCardData && MatchListCardData.fold_tab_play(match.mid)
 }
 

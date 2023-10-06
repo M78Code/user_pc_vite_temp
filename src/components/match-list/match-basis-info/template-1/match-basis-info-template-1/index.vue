@@ -225,7 +225,7 @@ is_collect.value = Boolean (lodash.get(props, 'match.mf'))
  * @Description 隐藏主队进球动画
  * @param {undefined} undefined
 */
-const hide_home_goal = () => {
+function hide_home_goal () {
   is_show_home_goal.value = false;
 }
 
@@ -233,7 +233,7 @@ const hide_home_goal = () => {
  * @Description 隐藏客队进球动画
  * @param {undefined} undefined
 */
-const hide_away_goal = () => {
+function hide_away_goal () {
   is_show_away_goal.value = false;
 }
 

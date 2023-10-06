@@ -112,7 +112,7 @@ onMounted(() => {
  * @param {string|number} id  联赛id
  * @return {undefined} undefined
  */
-const icon_styles = (mi) => {
+function icon_styles (mi) {
   let mi1 = mi
   if (('' + mi).startsWith('502')) {
     mi1 = mi.substring(3)
@@ -129,7 +129,7 @@ const icon_styles = (mi) => {
 /**
  * 计算是否有本地图标
  */
-const compute_if_has_local_icon = (mi) => {
+function compute_if_has_local_icon (mi) {
   // 热门除了50199-30199  赛事、50101-30101 竞足外，
   // 常规联赛原菜单ID：301+联赛ID、新菜单：502+菜单ID；
   //电竞联赛原菜单：30+联赛ID、新菜单ID：联赛ID
