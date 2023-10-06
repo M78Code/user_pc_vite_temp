@@ -71,7 +71,7 @@
 // 引入国际化
 import { t } from "src/boot/i18n.js";;
 import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs } from "vue";
-
+import{api_common} from 'src/api/'
 // #TODO vuex更改
 // import { mapGetters, mapMutations } from "vuex";
 
@@ -316,10 +316,10 @@ export default defineComponent({
      */
     const get_virtual_menus = () => {
       // set_virtual_data_loading(1)
-      component_data.sub_menu_list =lodash.cloneDeep(base_data.vr_menu())
+      component_data.sub_menu_list =lodash.cloneDeep(base_data.vr_mi_config)
       let obj_ = {
         // axios api对象
-        axios_api:api_common. get_virtual_menu,
+        axios_api:api_common.get_virtual_menu,
         // axios api对象参数
         params:{},
         // axios中then回调方法
