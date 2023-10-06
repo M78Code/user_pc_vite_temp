@@ -328,6 +328,8 @@ async function set_menu_lv2(item, index, type = "click") {
   MenuData.set_current_lv2_menu(item, index, type);
   // 冠军拉取旧接口； 待 元数据提供 冠军赛事后 再删除
   if (MenuData.is_kemp()) return MatchMeta.get_champion_match()
+  // 赛果不走元数据， 直接拉取接口
+  if (MenuData.is_results()) return MatchMeta.get_results_match()
   // 拉取菜单对应源数据
   is_first.value = false
   MatchMeta.set_origin_match_data()
@@ -343,6 +345,7 @@ async function set_menu_lv2(item, index, type = "click") {
  * 三级菜单事件
  */
 function set_menu_lv3(item, index, type = "click") {
+  console.log(item)
   //点击当前 就不做什么
   if (
     MenuData.current_lv_3_menu &&
@@ -353,7 +356,8 @@ function set_menu_lv3(item, index, type = "click") {
   date_menu_curr_i.value = index;
   //设置三级菜单
   MenuData.set_current_lv3_menu(item, index, type);
-  MatchMeta.filter_match_by_time(item?.field1)
+  if (MenuData.is_kemp()) return MatchMeta.filter_match_by_time(item?.field1)
+  if (MenuData.is_results()) return MatchMeta.get_results_match()
 }
 /**
  * 四级菜单事件

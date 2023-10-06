@@ -110,9 +110,7 @@
             <div class='l standard'>
               <!--竞彩足球 星期与编号-->
               <div class="week-mcid row items-center" v-if="menu_type == 30">
-                <span class="din-regular">
-                  {{ lodash.get(match,'mcid')}}
-                </span>
+                <span class="din-regular"> {{ lodash.get(match,'mcid')}} </span>
               </div>
               <!--赛事列表收藏-->
               <div v-if="GlobalAccessConfig.get_collectSwitch()" class="favorite-icon-top match list-m"
@@ -138,8 +136,7 @@
 
                 <!--开赛日期 ms != 110 (不为即将开赛)  subMenuType = 13网球(进行中不显示，赛前需要显示)-->
                 <div class="date-time" v-show="match.ms != 110 && !show_start_counting_down(match) && !show_counting_down(match)">
-                  <!-- .Format(i18n_t('time4')) -->
-                  {{ format_time_zone(+match.mgt) }}
+                  {{ format_time_zone(+match.mgt).Format(i18n_t('time4')) }}
                 </div>
                 <!--一小时内开赛 -->
                 <div class="start-counting-down" v-show="match.ms != 110 && show_start_counting_down(match)">
@@ -176,16 +173,10 @@
           </div>
           <!-- 下边的模块，左方是  队名和 队比分,  右面是  盘口  模块 -->
           <div class="odd-list match-indent" :class="{ 'simple': show_newer_edition, result: is_show_result() }">
-            <div class="odd-list-inner odd" :class="{
-              'n-s-edition': !show_newer_edition,
-              result: is_show_result()
-            }">
+            <div class="odd-list-inner odd" :class="{ 'n-s-edition': !show_newer_edition, result: is_show_result() }">
               <!--赛果-->
-              <div v-if="is_show_result() && match.tonum && get_curr_sub_menu_type == 29"
-                class="triangle-wrapper flex items-center justify-center">
-                <div class="t-w-inner">
-                  {{ match.tonum }}
-                </div>
+              <div v-if="is_show_result() && match.tonum && menu_lv2.mi == 29" class="triangle-wrapper flex items-center justify-center">
+                <div class="t-w-inner"> {{ match.tonum }} </div>
               </div>
               <!--  左边 图片和名称  和 比分 和 视频图标 -->
               <div class="team-wrapper" @click='goto_details(match)' :class="{
@@ -272,15 +263,14 @@
                 <!--赛果收藏-->
                 <div class="row" v-if="is_show_result()">
                   <!--赛果收藏-->
-                  <div class="result fav-i-wrap-match row items-center">
-                  </div>
+                  <div class="result fav-i-wrap-match row items-center"> </div>
                   <!--赛果开赛时间-->
                   <div class="m-result-time date-time">
-                    <!-- .Format(i18n_t('time4')) -->
-                    {{ format_time_zone(+match.mgt) }}
+                    {{ format_time_zone(+match.mgt).Format(i18n_t('time4')) }}
                   </div>
-                  <div class="flex play-icon" v-if="match_of_list.playBack&&is_replay_switch">
-                    <!-- <img src="image/bw3/svg/details/replay_y0.svg" /> -->
+                  <!-- v-if="match_of_list.playBack && is_replay_switch" -->
+                  <div class="flex play-icon" >
+                    <img src="/yazhou-h5/image/common/replay_y0.svg" />
                   </div>
                 </div>
                 <!--  左边收藏  视频动画 图标 玩法数量  赛事分析图标 提前结算图标  -->
@@ -384,11 +374,8 @@
                   {{ $t(`ms[${match.ms}]`) }}
                 </div>
                 <!--开赛日期 ms != 110 (不为即将开赛)  subMenuType = 13网球(进行中不显示，赛前需要显示)-->
-                <div class="date-time" v-show="match.ms != 110 &&
-                  !show_start_counting_down(match) &&
-                  !show_counting_down(match)">
-                  <!-- .Format(i18n_t('time4')) -->
-                  {{ format_time_zone(+match.mgt) }}
+                <div class="date-time" v-show="match.ms != 110 && !show_start_counting_down(match) && !show_counting_down(match)">
+                  {{ format_time_zone(+match.mgt).Format(i18n_t('time4')) }}
                 </div>
                 <!--一小时内开赛 -->
                 <div class="start-counting-down" v-show="match.ms != 110 && show_start_counting_down(match)">
@@ -441,8 +428,8 @@
           </div>
           <!--角球，罚牌，晋级，加时赛，点球大战玩法-->
           <!-- cisd:1 足球， 2 篮球， 5 网球， 7 斯诺克， 8 乒乓球 -->
-          <match-overtime-pen v-if="!['detail_match_list', 'home_hot_page_schedule'].includes(main_source) &&
-            [1, 2, 5, 7, 8].includes(+match.csid) && standard_edition != 1" 
+          <match-overtime-pen 
+            v-if="!['detail_match_list', 'home_hot_page_schedule'].includes(main_source) && !is_show_result() && [1, 2, 5, 7, 8].includes(+match.csid) && standard_edition != 1"
             :main_source="main_source" 
             :mid="match_of_list.mid" />
         </div>
@@ -479,7 +466,7 @@ import { normal_img_not_favorite_white, normal_img_not_favorite_black, normal_im
 
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import { lang, standard_edition } from 'project_path/src/mixin/userctr.js'
-import { is_hot, menu_type } from 'project_path/src/mixin/menu.js'
+import { is_hot, menu_type, menu_lv2 } from 'project_path/src/mixin/menu.js'
 
 // TODO: 其他模块得 store  待添加
 // mixins: [formatmixin, odd_convert, bettings, match_list_mixin, msc_bw3, common],
@@ -558,7 +545,7 @@ onMounted(() => {
   },1000);
   clear_timer();
   run_new_init_timer();
- 
+  score_value();
   media_button_button_type_check()
   emitters.value = {
     emitter_1: useMittOn(MITT_TYPES.EMIT_SET_SCROLL_TOP, set_scroll_top).off,
