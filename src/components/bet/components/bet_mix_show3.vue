@@ -14,9 +14,10 @@
       :class="[get_bet_success ? 'yb_px14' : 'yb_pl12 yb_pr18', { 'bet-mix-show2': is_conflict }]
       ">
       <!-- 左边 -->
-      <!-- <div class="yb_mr12 dele-left" v-if="!get_bet_success">
-       <img  src="image/wwwassets/bw3/svg/bet_xuanx.svg" @click.stop="remove_(value_show.id_)">
-     </div> -->
+      <div class="yb_mr12 dele-left" v-if="get_bet_success">
+       <img  src="/public/yazhou-h5/image/svg/bet_xuanx.svg" @click.stop="remove_(value_show.id_)">
+       <!-- <img  src="image/wwwassets/bw3/svg/bet_xuanx.svg" @click.stop="remove_(value_show.id_)"> -->
+     </div>
       <div>
       </div>
       <!-- 右边 -->

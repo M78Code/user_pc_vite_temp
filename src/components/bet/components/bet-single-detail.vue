@@ -22,7 +22,7 @@
       <span v-if="money" class="yb_fontsize20 money-number">{{ format_money3(money) }}</span>
       <span class="money-span" ref="money_span"
         :style="{ opacity: BetData.active_index === bet_index && [1, 7].includes(+get_bet_status) ? '1' : '0' }"></span>
-      <span class="yb_fontsize14 limit-txt">{{ get_money_format() }}</span>
+      <span class="yb_fontsize14 limit-txt" v-show="!money">{{ get_money_format() }}</span>
       <span @click.stop="clear_money" class="money-close" :style="{ opacity: money > 0 ? '1' : '0' }">x</span>
     </div>
   </div>
@@ -270,6 +270,7 @@ watch(() => BetData.bet_money_total, (new_) => {
  */
 const clear_money = () => {
   money.value = 0
+  // change_money_handle('0')
 }
 /**
  *@description 格式化后的金额
@@ -278,7 +279,7 @@ const clear_money = () => {
 const get_money_format = () => {
   let mi = format_money3(ref_data.min_money)
   let ma = format_money3(ref_data.max_money)
-  console.error('ref_data', ref_data)
+  // console.error('ref_data', ref_data)
   return `限额 ${mi}~${ma}`
   // return licia_format(i18n_t('bet.money_limit2'), mi, ma);
 }
@@ -300,7 +301,8 @@ const change_money_handle = (new_money) => {
   // if (bet_index != BetData.active_index) { return };
   console.error('ssss', new_money)
   money.value = new_money
-  BetData.bet_amount = new_money
+  // BetData.bet_amount = new_money
+  BetData.set_bet_amount(new_money)
   return
   if (max_money.value < 0.01 && max_money_back.value) {
     if (new_money) {
