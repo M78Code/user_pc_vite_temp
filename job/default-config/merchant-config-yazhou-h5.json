@@ -102,5 +102,63 @@
     "menu-bg-csgo": {
       "day": "http://test-user-h5-bw3.sportxxxifbdxm2.com/2023-09-23-14-55-28/image/bw3/menu/menu-top-background-csgo.jpg"
     }
-  }
+  },
+  "assets1": {
+    "version": "",
+    "detail": {
+      "key1": "1"
+    }
+  },
+  "i18n": {
+    "version": "i18n-version",
+    "detail": [
+      {
+        "key": "sxsxsx.xsx.x.xxsxsx",
+        "value": {
+          "en": "en-gb",
+          "zh": "zh-cn",
+          "tw": "zh-tw",
+          "vi": "vi-vn",
+          "th": "th-th",
+          "ms": "ms-my",
+          "ad": "id-id",
+          "mya": "my-my",
+          "pt": "pt-br",
+          "ry": "ja-jp",
+          "ko": "ko-kr",
+          "es": "es-es"
+        }
+      }
+    ]
+  },
+  "theme": [
+    {
+      "version": "商户版本号",
+      "i18n": {
+        "zh": "xx"
+      },
+      "is_default": 1,
+      "is_standard": 1,
+      "desc":"is_default 1 设置为默认主题,is_standard 1代表是系统内置的成套的主题 0代表用户自己创建的,base_theme 也可以是空 ，空代表不和默认主题色合并",
+      "base_theme": "基础主题版本号",
+      "key": "theme_01",
+      "detail": {
+        "test": "#000000"
+      }
+    },
+    {
+      "version": "商户版本号",
+      "i18n": {
+        "zh": "生成CSS 主题的名字"
+      },
+      "is_default": 0,
+      "is_standard": 1,
+      "order": 1,
+      "base_theme": "基础主题版本号",
+      "key": "theme_02",
+      "detail": {
+        "test": "#fffffff33"
+      }
+    }
+  ]
 }
