@@ -222,7 +222,7 @@ const dj_back_type = ref("lol")
 
 //是否显示三级菜单
 const is_show_three_menu = computed(() => {
-  return date_menu_list.value.length > 0 && MenuData.get_is_show_three_menu()
+  return date_menu_list.value?.length > 0 && MenuData.get_is_show_three_menu()
 });
 //是否显示四级菜单
 const is_show_four_menu = computed(() => {
@@ -264,30 +264,28 @@ function set_menu_lv1(item, index, type = "click") {
   show_selector_sub.value = false;
   current_menu.value = []; //二级菜单先滞空
   MenuData.set_current_lv1_menu(item, index);
-  switch (lodash.get(item, 'mi')) {
-    case 1: //滚球第一个是全部
-      if (type == "click") {
-        //表示点击的是全部
-        set_menu_lv2(item.sl, -1, type);
-      } else {
-        current_menu.value = item.sl;
-        set_menu_lv2(item.sl[0], 0, type);
-      }
-      break;
-    case 28: //赛果
-      break;
-    //VR是直接跳 url
-    case 8:  // "8": "VR",
-      router.push({
-        name: "virtual",
-        query: {
-          from: route.name,
-        },
-      });
-      break;
-    default:
+  if (MenuData.is_scroll_ball(item.mi)) {
+    //滚球第一个是全部
+    if (type == "click") {
+      //表示点击的是全部
+      set_menu_lv2(item.sl, -1, type);
+    } else {
       current_menu.value = item.sl;
       set_menu_lv2(item.sl[0], 0, type);
+    }
+  } else if (MenuData.is_results(item.mi)) {// "赛果",
+  } else if (MenuData.is_vr(item.mi)) {// "VR",
+    router.push({
+      name: "virtual",
+      query: {
+        from: route.name,
+      },
+    });
+  } else {
+    if (item.sl && item.sl[0]) {
+      current_menu.value = item.sl;
+      set_menu_lv2(item.sl[0], 0, type);
+    }
   }
 }
 /**
@@ -333,12 +331,11 @@ async function set_menu_lv2(item, index, type = "click") {
   // 拉取菜单对应源数据
   is_first.value = false
   MatchMeta.set_origin_match_data()
-  switch (menu_type.value) {
-    case 7://电竞需要改变背景图片
-      dj_back_img(item.mi)
-      break
+  //电竞需要改变背景图片
+  if (MenuData.is_export(menu_type.value)) {
+    console.error('电竞需要改变背景图片')
+    dj_back_img(item.mi)
   }
-
 }
 /**
 /**

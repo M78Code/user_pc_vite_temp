@@ -67,7 +67,7 @@ const set_match_play_current_index = (match,play_key) => {
     // 设置选中的玩法key
     match.play_current_key = play_key
     // 保存当前选中的玩法
-    this.other_play_current_play['mid_'+match.mid] = play_key
+    this.other_play_current_play[match.mid+'_'] = play_key
   }
 
 /**
@@ -92,7 +92,7 @@ const set_tab_play_keys = (match) => {
     // 是否有其他玩法
     match.has_other_play = tab_play_keys.length > 0
     // 当前选中的其他的玩法
-    let cur_other_play = this.other_play_current_play['mid_'+match.mid] || tab_play_keys[0]
+    let cur_other_play = this.other_play_current_play[match.mid+'_'] || tab_play_keys[0]
     //玩法关闭时选择第一个
     if(!tab_play_keys.includes(cur_other_play)){
       cur_other_play = tab_play_keys[0]
@@ -105,7 +105,7 @@ const set_tab_play_keys = (match) => {
    * @param {string} mid 赛事id
   */
   const switch_other_play = (mid,play_key) => {
-    let match = this.mid_obj['mid_'+mid] || {}
+    let match = this.mid_obj[mid+'_'] || {}
     set_match_play_current_index(match,play_key)
     let {tpl_id} =  match
     let template_name = `template_${tpl_id}`
@@ -131,13 +131,13 @@ const set_tab_play_keys = (match) => {
   const get_tab_param_build = (mids) =>{
     let tabs = []
     mids.forEach( mid => {
-      let match = this.mid_obj['mid_'+mid] || {}
+      let match = this.mid_obj[mid+'_'] || {}
       // 有其他玩法
       if(match.has_other_play){
         // 添加玩法ID
         tabs.push({
           mid,
-          playId:other_play_name_to_playid[this.other_play_current_play['mid_'+mid]]
+          playId:other_play_name_to_playid[this.other_play_current_play[mid+'_']]
         })
       }
     })

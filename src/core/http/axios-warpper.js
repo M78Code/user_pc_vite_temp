@@ -256,7 +256,6 @@ class AxiosHttp {
       ts:data.ts,
       ...result
     };
-
     return result;
   }
 

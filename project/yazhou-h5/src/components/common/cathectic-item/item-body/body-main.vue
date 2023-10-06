@@ -104,20 +104,30 @@
 <script setup>
 // import { mapGetters, mapMutations } from "vuex";
 import { api_common } from "src/api/index.js";
-import {utils } from 'src/core/index.js'
+import {
+  utils, 
+  useMittEmit, 
+  MITT_TYPES, 
+  MenuData, 
+  MatchListH5DetailMiddleware, 
+  MatchDataWarehouse_H5_Detail_Common as MatchDetailDataWarehouse, 
+  MatchDataWarehouse_H5_List_Common as MatchListDataWarehouse
+} from 'src/core/index.js'
 import { format_time_zone_time, format_odds, format_score, formatTime } from 'src/core/format'
 import { onUnmounted, ref, computed, onMounted  } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import { i18n_t } from "src/boot/i18n.js";
 import UserCtr from "src/core/user-config/user-ctr.js";;
 //国际化
-
 
 const props =defineProps({
     main: {
       type: Object
     },
     marketType: {
+      type: String
+    },
+    playOptionsId: {
       type: String
     },
     type_: {
@@ -192,6 +202,7 @@ const props =defineProps({
   })
 
   // 路由
+  const router = useRouter()
   const route = useRoute()
 
     // ...mapGetters(["get_main_item",  "get_menu_type", "get_lang"]),
@@ -317,7 +328,7 @@ const props =defineProps({
   const goto_details = () => {
       if (!show_arrow) return;
       let mid_ = props.main.matchId;
-      api_common.existMatchResult({ matchId: mid_, playOptionsId: props.playOptionsId }).then(res => {
+      api_common.existMatchResult({ matchId: mid_, playOptionsId: props.main.playOptionsId }).then(res => {
         if (!(res && res.code == 200 && res.data)) return
         const _result = res.data.marketResult, _matchEnd = res.data.matchEnd;
         if (_result) {   //有赛果页去到赛果详情页
@@ -329,10 +340,19 @@ const props =defineProps({
           if (_matchEnd) return; // 赛事结束但是没有赛果不跳转
           useMittEmit(MITT_TYPES.EMIT_CHANGE_RECORD_SHOW, false)
           if ([100,101,102,103].includes(+props.main.sportId)) {  // 如果是电竞赛事，需要设置菜单类型
-            set_menu_type(3000)
+            MenuData.set_menu_type(3000)
           }
-          set_goto_detail_matchid(mid_);
-          set_details_item(0);
+          // set_goto_detail_matchid(mid_);
+          // set_details_item(0);
+          // 详情中间件
+          console.error(MatchListDataWarehouse);
+          // TODO: 暂时注释--列表数据仓库只存储当前展示区域的赛事数据，注单记录的赛事有可能不在可视区域内
+          // MatchListH5DetailMiddleware.before_enter_detail_form_list({
+          //   MatchDataWarehouse_source: MatchListDataWarehouse,
+          //   MatchDataWarehouse_target: MatchDetailDataWarehouse,
+          //   mid: mid_,
+          //   back_to_source_params: {},
+          // })
           router.push({ name: 'category', params: {mid: mid_, csid: props.main.sportId} });
         }
       })

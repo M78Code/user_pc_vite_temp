@@ -144,7 +144,6 @@ const is_collect = ref(false) //赛事是否收藏
 
 let match_style_obj = MatchListCardDataClass.all_card_obj[lodash.get(props, 'match.mid')+'_']
 
-
 const handicap_num = computed(() => {
   if(GlobalAccessConfig.get_handicapNum()){
     return `+${ lodash.get(props, 'match.mc') || 0}`

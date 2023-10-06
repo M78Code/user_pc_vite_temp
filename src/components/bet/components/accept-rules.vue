@@ -18,13 +18,14 @@
 
 <script setup>
 import { ref } from 'vue'
+import BetData from "src/core/bet/class/bet-data-class.js";
 
 
 const get_is_hengping = ref()
 const get_chat_bet = ref()
 const change_show = () =>{
   //vuex
-  set_accept_show(false)
+  BetData.set_accept_show(false)
 }
 
 /**

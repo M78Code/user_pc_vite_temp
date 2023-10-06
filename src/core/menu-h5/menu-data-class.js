@@ -92,7 +92,7 @@ class MenuData {
    * @param {*} 热门下的菜单信息 
    */
   set_hot_tab_menu(menu) {
-    this.hot_tab_menu= menu
+    this.hot_tab_menu = menu
   }
   /**
    * 设置值 并且缓存
@@ -154,7 +154,7 @@ class MenuData {
     // 电竞 2100 = 英雄联盟
     let menu_dianjing = { mi: 7, sl: [] };
     let menu_jingzu = { mi: 30, sl: [] };
-    let menu_guancun = { mi: 4, sl: [] };
+    let menu_guanjun = { mi: 4, sl: [] };
     let menu_hot = { mi: 500, sl: [] }
     lodash.each(data, (item) => {
       //这里是放入全部的数据
@@ -167,7 +167,7 @@ class MenuData {
       }
       //冠军
       if ([400].includes(+item.mi)) {
-        menu_guancun.sl = item.sl || [];
+        menu_guanjun.sl = item.sl || [];
       }
       //热门
       if ([500].includes(+item.mi)) {
@@ -192,7 +192,7 @@ class MenuData {
     this.set_cache_class({
       menu_list: [
         ...new_menu,
-        menu_guancun,
+        menu_guanjun,
         menu_dianjing,
         { mi: 8 },
         menu_jingzu,
@@ -242,11 +242,11 @@ class MenuData {
    * @param {*} list 
    * @returns 
    */
-  count_menu(menu_list = {}, list) {
+  count_menu(menu_list = {}) {
     //计算数量
     const { sl, mi } = menu_list;
     //VR默认295
-    if (this.is_vr(mi)) return 295
+    if (this.is_vr(mi)) return '';
     if (this.is_jinzu(mi)) {
       const data = lodash.find(sl, (item) => {
         //竞足特殊处理
@@ -598,7 +598,7 @@ class MenuData {
   async get_results_menu() {
     console.error('赛果菜单 get')
     // 如果有缓存，则使用缓存
-    let cache_data = SessionStorage.get(Cache_key.RESULT_SUB_MENU_CACHE);
+    let cache_data = SessionStorage.get(Cache_key.RESULT_SUB_MENU_CACHE, []);
     try {
       // 如果当前主菜单是赛果, 获取赛果二级菜单
       let { code, data } = await api_analysis.get_result_menu({});
@@ -617,25 +617,19 @@ class MenuData {
           }
         }
         SessionStorage.set(Cache_key.RESULT_SUB_MENU_CACHE, data);
+        cache_data = data;
+      }
+    } finally {
+      // 出错时使用缓存数据
+      if (cache_data && cache_data.length) {
         // 赛果二级菜单数据处理
-        this.result_sub_menu_api_handle(data, "init");
+        this.result_sub_menu_api_handle(cache_data, "init");
       } else {
-        // 出错时使用缓存数据
-        if (cache_data) {
-          // 赛果二级菜单数据处理
-          this.result_sub_menu_api_handle(cache_data, "init");
-        }
         useMittEmit(MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, {
           type: "result",
           event: { cmd: "list_empty" },
         });
       }
-    } catch (error) {
-      // // 接口异常时逻辑处理
-      useMittEmit(MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, {
-        type: "result",
-        event: { cmd: "list_empty" },
-      });
     }
     this.update();
   }
@@ -654,7 +648,7 @@ class MenuData {
       menu_lv2: res_data,
     });
     //设置第二级菜单
-    this.set_current_lv2_menu(res_data[0], 0);
+    res_data&&res_data.length&& this.set_current_lv2_menu(res_data[0], 0);
   }
   // 早盘,串关,电竞拉取接口更新日期菜单 3,6,7
   async get_date_menu_api_when_subchange(item, type) {
@@ -703,13 +697,15 @@ class MenuData {
       this.set_cache_class({
         menu_lv3: this.current_lv_2_menu.subList,
       });
-      if (type == "init" && this.menu_lv3.length && this.current_lv_3_menu) {
-        this.set_current_lv3_menu(
-          this.current_lv_3_menu,
-          this.current_lv_3_menu_i, type
-        );
-      } else {
-        this.set_current_lv3_menu(this.menu_lv3[0], 0, type);
+      if (this.menu_lv3) {
+        if (type == "init" && this.menu_lv3.length && this.current_lv_3_menu) {
+          this.set_current_lv3_menu(
+            this.current_lv_3_menu,
+            this.current_lv_3_menu_i, type
+          );
+        } else {
+          this.set_current_lv3_menu(this.menu_lv3[0], 0, type);
+        }
       }
     } else {
       //  设置三级日期 菜单

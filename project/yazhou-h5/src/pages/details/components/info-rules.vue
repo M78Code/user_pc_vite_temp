@@ -4,15 +4,15 @@
     <div class="content-box" :class="{'content-box2':get_is_hengping,'is_hd_sd':get_hd_sd_show}">
       <template v-if="!get_hd_sd_show">
         <!-- 文字头 -->
-        <header>{{t("info_rules.auto")}}</header>
+        <header>{{i18n_t("info_rules.auto")}}</header>
         <!-- 2条说明规则，有换行，文字颜色，多语言区分 -->
           <div v-for="(value,key) in rules" :key="key" v-html="value"></div>
         <!-- 按钮-我知道了 -->
-        <footer @click="change_show">{{t("info_rules.i_know")}}</footer>
+        <footer @click="change_show">{{i18n_t("info_rules.i_know")}}</footer>
       </template>
       <div v-if="get_hd_sd_show" class="hd-sd-css">
         <!-- 文字头 -->
-        <header>{{t("match_info.video") +'  '+ t("footer_menu.change_simple01")}}</header>
+        <header>{{i18n_t("match_info.video") +'  '+ i18n_t("footer_menu.change_simple01")}}</header>
         <span @click="video_switching(0)" :class="[get_hd_sd == 0 && 'gaoliang']">{{t("common.SD")}}</span>
         <span @click="video_switching(1)" :class="[get_hd_sd == 1 && 'gaoliang']">{{t("common.HD")}}</span>
       </div>
@@ -23,8 +23,9 @@
 <script>
 // #TODO vuex
 // import { mapGetters, mapMutations } from "vuex";
-import { reactive, computed, onMounted, onUnmounted, toRefs, defineComponent } from "vue";
-import { t } from "src/boot/i18n.js";;
+import { reactive, computed, onMounted, onUnmounted, toRefs, defineComponent, ref } from "vue";
+import { i18n_t } from "src/boot/i18n.js";;
+import { useMittEmit, MITT_TYPES } from "src/core/index.js"
 //国际化
 
 
@@ -33,6 +34,8 @@ export default defineComponent({
 
   setup(props, evnet) {
     const data = reactive();
+     //视频info说明
+     const rules = ref(i18n_t("info_rules.rules"))
     // #TODO vuex
     // computed: {
     //   // 是否显示info说明
@@ -52,8 +55,7 @@ export default defineComponent({
      *@return {Undefined} undefined
      */
     const change_show = () => {
-      set_info_show(false);
-      set_hd_sd_show(false);
+      useMittEmit(MITT_TYPES.EMIT_VIDEO_DESCRIPTION_SHOW, false)
     };
     // 视频切换
     const video_switching = (n) => {
@@ -67,6 +69,8 @@ export default defineComponent({
       change_show()
     };
     return {
+      rules,
+      i18n_t,
       change_show,
       video_switching
     }
@@ -86,8 +90,8 @@ export default defineComponent({
 
 /*************** 内容父盒子开始 *************** -S*/
 .content-box {
-  background-color: var(--q-gb-bd-c-15);
-  color:var(--q-color-fs-color-38);
+  background-color: var(--q-gb-bg-c-15);
+  color: #414655;//var(--q-detials-color-6);
   border-radius: 0.16rem;
   width: 3.2rem;
   padding: 0.2rem 0;
@@ -100,7 +104,7 @@ export default defineComponent({
 .content-box  header {
   font-size: 0.16rem;
   // color:var(--q-color-com-fs-color-1);
-  color: var(--q-color-fs-color-35);
+  color: #000000;// var(--q-color-fs-color-35);
   letter-spacing: 0;
   margin: 0 0.2rem 0.1rem 0.2rem;
   font-weight: 700;
@@ -111,7 +115,7 @@ export default defineComponent({
 /*************** 规则说明开始 *************** -S*/
 .content-box > div {
   margin: 0.12rem 0.2rem;
-  color: var(--q-color-com-fs-color-29);
+  color: #5a6074;// var(--q-detials-color-9);
   font-size: 0.14rem;
   text-align: left;
 }
@@ -121,7 +125,7 @@ export default defineComponent({
 /*************** 我知道了 开始 *************** -S*/
 .content-box > footer {
   font-size: 0.16rem;
-  color: var(--q-color-fs-color-50);
+  color: var(--q-gb-t-c-12);
   margin-bottom: -0.06rem;
   padding: 0.12rem 0.2rem 0;
   font-weight: 700;
@@ -132,13 +136,13 @@ export default defineComponent({
 <style lang="scss">
 /*************** 矩形叶开始 *************** -S*/
 .rules-wet {
-  color: var(--q-gb-bd-c-2);
+  color: var(--q-gb-t-c-14);
   text-align: center;
   display: inline-block;
   width: 0.16rem;
   height: 0.16rem;
   line-height: 0.18rem;
-  background-color: var(--q-gb-bd-c-13);
+  background-color: var(--q-gb-bg-c-13);
   border-radius: 8px 0 8px 0;
 }
 
