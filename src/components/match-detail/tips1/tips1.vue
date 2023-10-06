@@ -75,40 +75,40 @@ export default {
         if(['125','230'].includes(this.playId)){
           // 角球
           return {
-            title:this.$root.$t('list.corner'),
-            content:this.$root.$t('list.corner_tips'),
+            title:i18n_t('list.corner'),
+            content:i18n_t('list.corner_tips'),
           }
         } else {
           // 罚牌
           return {
-            title:this.$root.$t('list.punish'),
-            content:this.$root.$t('list.punish_details'),
+            title:i18n_t('list.punish'),
+            content:i18n_t('list.punish_details'),
           }
         }
       } else if (this.type === '15minutes') {
         // 15分钟
         return {
-          title: this.$root.$t('list.15minutes'),
-          content: this.$root.$t('list.15minutes_details')
+          title: i18n_t('list.15minutes'),
+          content: i18n_t('list.15minutes_details')
         }
       }else if(this.type === '5minutes'){
         // 5分钟
         // 滚球时  绝杀球（补时） 不展示  且标题展示 “下一个进球” 排除110-即将开赛的状态，即将开赛展示原文案
         if (this.$utils.get_match_status(_.get(this, 'ms'), [110]) == 1) {
           return {
-            title:this.$root.$t('list.5minutes_roll'),
-            content:_.dropRight(this.$root.$t('list.5minutes_details')),
+            title:i18n_t('list.5minutes_roll'),
+            content:_.dropRight(i18n_t('list.5minutes_details')),
           }
         }
        return   {
-          title:this.$root.$t('list.5minutes'),
-          content:this.$root.$t('list.5minutes_details'),
+          title:i18n_t('list.5minutes'),
+          content:i18n_t('list.5minutes_details'),
         }
       } else{
         // 点球大战
         return {
-          title:this.$root.$t('list.penalty'),
-          content:this.$root.$t('list.penalty_details'),
+          title:i18n_t('list.penalty'),
+          content:i18n_t('list.penalty_details'),
         }
       }
     }

@@ -15,7 +15,7 @@
       <!-- 提示消息 -->
       <icon-wapper class="icon" v-if="!is_esports" :class="is_show_content && 'active'" size="14px" name="icon-tips3" :color="is_show_content ? 'rgba(255,255,255,.7)' : '#fff'"/>
           <!-- 提示内容 -->
-      <div :class="['tip-content',{'is-iframe':$utils.is_iframe}]" v-if="is_show_content" @click.stop>
+      <div :class="['tip-content',{'is-iframe':utils.is_iframe}]" v-if="is_show_content" @click.stop>
         <div class="content-wrap relative-position">
           <div class="yb-icon-triangle"></div>
           <!-- 此版面现实的所有直播内容仅供参考........ -->
@@ -70,6 +70,7 @@
           <span>{{ !is_expand_video_list ? i18n_t('video.video_event_history') : i18n_t('video.video_event_history_close') }}</span>
         </div>
         <!-- 精彩回放事件类型切换 -->
+        {{  }}111
         <tabs
           v-show="is_expand_video_list  && tab_list.length"
           :value="current_events_type"
@@ -127,13 +128,14 @@
 </template>
 
 <script>
+import tabs from "src/components/match-detail/match_info/tabs.vue";
 import match_video from "src/components/match-detail/match_info/match_info_mixin/match_video.js";
 import video_type_ctr from "src/core/video/video_type_ctr.vue";
 import noVideo from "src/components/match-detail/match_info/no_video.vue"
 import videoReplayError from "src/components/match-detail/match_info/video_replay_error.vue"
 import { IconWapper } from 'src/components/icon'
 import info from "src/components/match-detail/match_info/info.vue";
-import { i18n_t,format_second_ms} from "src/core/index"
+import { i18n_t,format_second_ms,utils} from "src/core/index"
 export default {
   mixins: [match_video],
   components: {
@@ -141,16 +143,20 @@ export default {
     noVideo,
     videoReplayError,
     IconWapper,
-    info
+    info,
+    tabs
   },
   data(){
     return {
+      utils,
+      route:this.$route,
       format_second_ms,
       i18n_t,
       ctr_data:{ // 高清flv, 2:流畅m3u8 切换配置参数
       video_type:1 //1:高清flv, 2:流畅m3u8
       },
     }
+  
   },
 };
 </script>
@@ -292,7 +298,7 @@ export default {
     .replay-icon {
       width: 65px;
       height: 18px;
-      background: url('~public/image/yabo/svg/replay_icon2.svg');
+      background: url('/yazhou-pc/image/svg/replay_icon2.svg');
       background-size: 100% 100%;
     }
   }

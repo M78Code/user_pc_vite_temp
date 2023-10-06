@@ -2,6 +2,7 @@
   import { UserCtr ,MatchDetailCalss} from "src/core/index";
   import { TabWapper as Tabs } from "src/components/common/tab"
   import { api_details } from "src/api/index";
+  // import { route } from "project_path/src/router/index.js";
   export default {
       components: {
           SliderX,
@@ -165,12 +166,12 @@
 
           // mp4 拼接格式
           // http://lsprelivepc.sportxxx13ky.com/videoReplay.html?src=http://test-playback.d965r6f.com/video/8045e066c41cdb269e126a892c648ffe.mp4
-          let live_domains = window.env.config.live_domains[0] || _.get(this.vx_get_user,'oss.live_pc');
+          let live_domains = lodash.get(window.BUILDIN_CONFIG.DOMAIN_RESULT,"live_domains[0]") || lodash.get(this.vx_get_user,'oss.live_pc');
           // 显示返回按钮
           const back_but = this.$route.params.video_size !=1 ? 1 : 0
           // 隐藏全屏按钮
           const hide_full_screen = this.$route.params.video_size ==1 ? 1 : 0;
-          const lang = window.reset_lang || window.vue.lang || "zh";
+          const lang = window.reset_lang || UserCtr.lang || "zh";
           this.media_src = `${live_domains}/videoReplay.html?lang=${lang}&c_f_s=1&title=${`${item.homeAway} ${this.event_name(item.eventCode)}: ${item.firstNum}`}&back_but=${back_but}&hide_full_screen=${hide_full_screen}&src=${item.fragmentVideo}`
           let lang_obj={full_screen:i18n_t('video.full_screen_mode'), back:i18n_t('common.back'), back_live:i18n_t('video.back_live')}
           if(this.$route.name == "home"){

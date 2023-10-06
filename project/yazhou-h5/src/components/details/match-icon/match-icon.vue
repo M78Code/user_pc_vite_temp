@@ -164,7 +164,7 @@ const check_url = (url, which) => {
   })
 }
 const icon_click = (e) => {
-  console.log(e, "whichwhichwhichwhich");
+  console.log(e, "whichwhichwhichwhich", props.which);
   e.stopPropagation()
   switch (props.which) {
     case 'lvs':
@@ -220,6 +220,7 @@ const icon_click_muUrl = () => {
     type: 'Video'
   };
   api_common.getMatchUserIsLogin().then(res => {
+    console.error(res);
     // 判断用户是否登录
     if (res && res.code == 200 && res.data.isLogin) {
       let referUrl = lodash.get(window.BUILDIN_CONFIG,"DOMAIN_RESULT.live_domains[0]");
@@ -237,6 +238,7 @@ const icon_click_muUrl = () => {
           check_url(media_src);
         });
       }
+      debugger
       ;
     } else {
       if (lodash.get(res, 'code') == '0401038') {

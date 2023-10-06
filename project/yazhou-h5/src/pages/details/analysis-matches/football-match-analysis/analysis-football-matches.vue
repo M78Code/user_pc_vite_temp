@@ -8,6 +8,7 @@
     <head-tab
       v-if="!get_analyze_show"
       :tabList="tabList"
+      :detail_data="detail_data"
       @tab_click="tab_click"
       ref="head-tab"
       class="football-tab-header"

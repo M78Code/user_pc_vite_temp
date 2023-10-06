@@ -19,6 +19,7 @@
   }
 }
 .play-wrapper {
+  padding-top: 0.05rem;
   :deep(.q-tab) {
     min-height: 0.4rem;
     height: 0.4rem;
@@ -26,16 +27,18 @@
     &.text-active-tab {
       .q-tab__label {
         font-weight: bolder;
+        color: var(--q-detials-color-6);
       }
     }
 
     .q-tab__label {
       font-size: 0.14rem;
+      color: #999999; // var(--q-detials-color-7)
     }
   }
 
   :deep(.q-tab__indicator) {
-    color: var(--q-gb-bd-c-13);
+    color: var(--q-gb-bg-c-13);
     border-radius: 1.5px;
     z-index: 1;
   }

@@ -109,7 +109,7 @@
         </div>
       </div>
       <!-- 视频info说明弹窗,和切换高清和标清的 弹框 -->
-      <!-- <info-rules v-if="get_info_show"></info-rules> -->
+      <info-rules v-if="get_info_show"></info-rules>
       <div v-show="scroll_visible && !get_bet_show && !get_is_full_screen && !get_is_hengping && !is_highlights" class="details-ref" @click="details_refresh">
         <div :class="{'refreshing':refreshing}"></div>
       </div>
@@ -146,7 +146,7 @@ import videos from "project_path/src/pages/details/components/videos2.vue";   //
 // import change_header from "project_path/src/pages/details/components/header/change-header.vue";  // 详情页下拉置顶title
 // // import analysis_football_matches from "project_path/src/pages/details/analysis-matches/football-match-analysis/analysis-football-matches.vue"; // 详情页  足球赛事分析
 // // import basketball_match_analysis from "project_path/src/pages/details/analysis-matches/basketball-match-analysis/basketball-match-analysis";  // 详情页 或者 赛果  篮球赛事分析
-// import info_rules from "project_path/src/pages/details/components/info-rules.vue"  // 视频info说明弹框
+import info_rules from "project_path/src/pages/details/components/info-rules.vue"  // 视频info说明弹框
 // // import SDetails from "src/project/components/skeleton/skeleton-details.vue"  // 详情骨架屏
 import analysisMatches from './analysis-matches/index.vue';
 import category from "project_path/src/pages/details/children/category.vue";
@@ -171,7 +171,7 @@ export default defineComponent({
     // "change-header": change_header,
     detailsTab,
 //     // "no-data": no_data,
-//     "info-rules": info_rules,
+    "info-rules": info_rules,
     videos: videos,
 //     // "analysis-football-matches": analysis_football_matches,
 //     // "basketball-match-analysis": basketball_match_analysis,
@@ -195,7 +195,8 @@ export default defineComponent({
     const content_box = ref(null)
     const fixedHeight = ref(null)
     const scroll_visible_1 = ref(true)
-    const get_bet_show = ref(false)
+    
+    
     const {
       state_data,
       is_highlights,
@@ -209,6 +210,8 @@ export default defineComponent({
       matchDetailCtr,
       is_show_detail_header_data,
       get_show_video,
+      get_info_show,
+      get_bet_show,
       details_click,
       change_go_back,
       details_refresh,
@@ -483,6 +486,8 @@ export default defineComponent({
       //   $data[key] = null
       // }
     })
+
+    
     // #TODO VUEX
     //   ...mapActions([
     //   // 设置玩法tab列表 所有投注 - 进球 - 上半场 - 球队 - 让球&大小
@@ -543,6 +548,7 @@ export default defineComponent({
       fixedHeight,
       scroll_visible_1,
       get_bet_show,
+      get_info_show,
       details_click,
       change_go_back,
       details_refresh,

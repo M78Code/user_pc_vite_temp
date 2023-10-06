@@ -28,7 +28,7 @@
         <more :match_info="match_info" :right="right" />
       </template>
       <!-- 电竞赛种 -->
-      <template v-else-if="[1, 2, 3, 4].includes(lodash.get(match_info,'ms')*1) && $utils.is_eports_csid(match_info.csid)">
+      <template v-else-if="[1, 2, 3, 4].includes(lodash.get(match_info,'ms')*1) && is_eports_csid(match_info.csid)">
         <dota2 :match_info="match_info"></dota2>
       </template>
     </template>
@@ -42,7 +42,7 @@ import basketball from "src/components/match-detail/match_info/basketball/after.
 import more from "src/components/match-detail/match_info/more/after.vue";
 import baseball from "src/components/match-detail/match_info/more/baseball_after.vue";
 import before from "src/components/match-detail/match_info/animation_template/common_before.vue";
-
+import { is_eports_csid} from "src/core"
 import dota2_started from "src/components/match-detail/match_info/dota2/dota2-started.vue"
 import lodash from 'lodash'
 export default {
