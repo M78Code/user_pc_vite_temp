@@ -137,7 +137,7 @@ const cur_video_icon = computed(() => {
  * @param {string} media_type 播放类型
  * @param {undefined} undefined
 */
-const on_switch_match = (media_type) => {
+function on_switch_match (media_type){
   if ((route.name == 'details' || route.name == 'search') && media_type == 'auto') {
     media_type = 'info'
   }
@@ -172,7 +172,7 @@ const on_switch_match = (media_type) => {
  * 跳转至详情
  * @return {undefined} undefined
  */
-const on_go_detail = () => {
+function on_go_detail(){
   if (is_eports_csid(props.match.csid)) {
     props.match.go_detail_type = 'no_switch'
   }
@@ -182,7 +182,7 @@ const on_go_detail = () => {
  * @Description 赛事收藏
  * @param {undefined} undefined
 */
-const collect = () => {
+function collect (){
   useMittEmit(MITT_TYPES.EMIT_MX_COLLECT_MATCH, props.match)
 }
 

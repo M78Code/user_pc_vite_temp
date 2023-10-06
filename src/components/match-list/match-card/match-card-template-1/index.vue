@@ -3,11 +3,9 @@
   <div
     class="c-match-card relative-position"
     :id="`list-mid-${mid}`"
-    :style="`height:${match_style_obj.total_height}px !important;width:${LayOutMain_pc.layout_content_width - 15}px  !important;`"
+    :style="`height:${MatchListCardDataClass.all_card_obj[mid+'_'].total_height}px !important;width:${LayOutMain_pc.layout_content_width - 15}px  !important;`"
   >
   <div v-show="false">{{ MatchListCardDataClass.list_version }}</div>
-  <!-- {{ match_style_obj.show_level }} -->
-  <!-- && [1,2].includes(match_style_obj.show_level) -->
     <component
       :is="`MatchTpl${match_style_obj.view_tpl_id}After`"
       :mid="mid"
@@ -16,7 +14,7 @@
 </template>
 
 <script>
-import { computed, ref, onMounted, onUnmounted } from 'vue';
+import { watch, ref, onMounted, onUnmounted } from 'vue';
 import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card-class.js'
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import { LayOutMain_pc } from "src/core/index.js";

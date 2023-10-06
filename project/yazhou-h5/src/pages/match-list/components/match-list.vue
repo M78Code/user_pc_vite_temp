@@ -100,7 +100,6 @@ import UserCtr from 'src/core/user-config/user-ctr.js'
 import { MenuData, i18n_t, utils } from "src/core/index.js"
 import { standard_edition } from 'project_path/src/mixin/userctr.js'
 import { is_kemp, menu_lv2, is_results } from 'project_path/src/mixin/menu.js'
-
 // import { change_favorite_state } from 'src/core/match-list-h5/composables/match-list-collect.js'
 // import matchListCardFold from 'src/core/match-list-h5/match-card/match-list-card-fold.js'
 
@@ -214,7 +213,13 @@ watch(() => standard_edition.value, (newValue) => {
     other_way_info_show.value = false
   }
 })
-
+// 当前为冠军或电竞冠军
+const is_champion = computed(() => {
+  //let flag = 100 == props.menu_type || (3000 == props.menu_type && lodash.get(MenuData.current_menu, 'date_menu.menuType') == 100); //电竞冠军
+  let flag =  is_kemp || (3000 == props.menu_type && lodash.get(MenuData.current_menu, 'date_menu.menuType') == 100); //电竞冠军
+  console.log(is_kemp)
+  return flag;
+})
 // 是否显示无第 {X} 个进球 title----次要玩法tips(5分钟次要玩法)
 const show_Xth_title = computed(() => {
   return [1, 2, 7, 10].includes(+curr_play_info.value.ms) && curr_play_info.value.menu_id === 19

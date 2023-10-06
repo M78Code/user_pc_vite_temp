@@ -345,7 +345,6 @@ export const compute_style_template_by_matchinfo = (match, template_id, mid) => 
 	if (style_obj.is_show_cur_handicap) {
 		style_obj.cur_handicap_height = template_config.cur_handicap_height;
 	}
-
 	// 设置卡片总高度 等于主盘口高度 + 当前局盘扣高度 + 附加盘高度 + 角球区域高度 + 赛事间距和边框6px
 	style_obj.total_height =
 		style_obj.main_handicap_height +
