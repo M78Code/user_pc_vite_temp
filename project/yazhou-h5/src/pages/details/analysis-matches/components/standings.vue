@@ -5,7 +5,7 @@
 -->
 <template>
   <div class="standings analysis-odds">
-    <div class="heade-wrapper" v-if="get_detail_data.csid == 1">
+    <div class="heade-wrapper" v-if="detail_data.csid == 1">
       <div class="heade">
         <span v-for="(item,i) in tab_list" :key="i"
               :class="['ellipsis', {'is-active' : tabIndex == i}]"
@@ -18,29 +18,31 @@
     <!-- 基本面 -->
     <div v-if="tabIndex == 0">
       <!-- 杯赛积分 或者 联赛积分 -->
-      <football-standings/>
+      <football-standings :detail_data="detail_data"/>
       <!-- 历史交战 -->
-      <history-engagement/>
+      <history-engagement :detail_data="detail_data"/>
       <!-- 近期战绩 -->
-      <recent-record/>
+      <recent-record :detail_data="detail_data"/>
       <!-- 未来赛程  只有 足球才有 -->
-      <future-schedule :future_schedule_data="future_schedule_data" v-if="get_detail_data.csid == 1"/>
+      <future-schedule :future_schedule_data="future_schedule_data" v-if="detail_data.csid == 1"/>
       <!-- 伤停情况 只有 足球才有 -->
-      <injury-situation :injury_situation_data="injury_situation_data" v-if="get_detail_data.csid == 1"/>
+      <injury-situation :injury_situation_data="injury_situation_data" :detail_data="detail_data" v-if="detail_data.csid == 1"/>
     </div>
     <!-- 盘面 -->
     <standings-disk
       v-if="tabIndex == 1"
+      :detail_data="detail_data"
       :matchHistory_battle_dto_map="matchHistory_battle_dto_map"
     />
     <!-- 技术面 -->
     <standings-technical
       v-if="tabIndex == 2"
+      :detail_data="detail_data"
       :homeAwayGoal_and_coach_map="homeAwayGoal_and_coach_map"
     />
 
     <!-- 加载中icon -->
-    <loading-page v-if="loading && get_detail_data.csid == 1" top="58%" @touchmove.prevent></loading-page>
+    <loading-page v-if="loading && detail_data.csid == 1" top="58%" @touchmove.prevent></loading-page>
   </div>
 </template>
 
@@ -71,10 +73,12 @@ import { useRoute } from 'vue-router'
 import { i18n_t } from "src/boot/i18n.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 
-const get_detail_data = ref({
-        csid: '1',
-        mid: '1',
-    })
+const props = defineProps({
+    detail_data: {
+        type: Object,
+        default: () => {}
+    }
+})
   // components: {
   //   "football-standings": football_standings,
   //   "history-engagement": history_engagement,
@@ -109,14 +113,13 @@ const get_detail_data = ref({
   onMounted(() => {
     let { off } = useMittOn(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis)
     off_ = off
-    if(get_detail_data.value.csid == 1) {
+    if(props.detail_data.csid == 1) {
       get_data_list()
     }
   })
 
   const match_id =  computed(() => {
-    // TODO: 后续修改调整 'get_detail_data'
-        return route.params.mid || get_detail_data.value.mid
+        return route.params.mid || props.detail_data.mid
   })
   onUnmounted(() => {
     // 移除监听 赛事分析刷新事件
@@ -158,7 +161,7 @@ const get_detail_data = ref({
         matchHistory_battle_dto_map.value = {init: null}
         homeAwayGoal_and_coach_map.value = {init: null}
         // TODO: 后续修改调整 'get_detail_data'
-        if(get_detail_data.value.csid == 1) {
+        if(props.detail_data.csid == 1) {
           get_data_list()
         }
     }

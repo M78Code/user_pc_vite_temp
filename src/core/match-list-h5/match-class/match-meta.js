@@ -209,7 +209,8 @@ class MatchMeta {
     const match_mids_list = list.map(t => {
       return t.mid
     })
-    this.set_match_mids(match_mids_list)
+    this.match_mids = [...new Set(match_mids_list.slice(0, 10))]
+    this.handle_submit_warehouse(list)
   }
 
   /**
@@ -266,10 +267,9 @@ class MatchMeta {
   }
 
   /**
-   * @description 获取冠军赛事 元数据接口暂时未提供所以走老逻辑， 后续会提供
+   * @description 获取冠军赛事； 元数据接口暂时未提供所以走老逻辑， 后续会提供
    */
   async get_champion_match() {
-    console.log(BaseData)
     const main_menu_type = MenuData.get_menu_type()
     const params = MatchListParams.get_base_params(40602)
     const res = await api_common.post_match_full_list({
@@ -279,15 +279,46 @@ class MatchMeta {
       "sort":2,
       "device":"v2_h5_st"
     })
+    this.handle_custom_matchs(res)
+  }
+
+  /**
+   * @description 赛果不走元数据， 直接掉接口 不需要走模板计算以及获取赔率
+   * @param { md } 三级菜单 事件
+   */
+  async get_results_match () {
+    const md = lodash.get(MenuData.current_lv_3_menu, 'field1')
+    const params = MatchListParams.get_base_params()
+    const res = await api_common.get_match_result_api({
+      ...params,
+      "device":"v2_h5_st",
+      "type":28,
+      "category":1,
+      "md": md
+    })
+    this.handle_custom_matchs(res)
+  }
+
+  /**
+   * @description 处理非元数据赛事, 不需要走 模版计算以及获取赔率
+   * @param { res } 接口返回对象
+   */
+  handle_custom_matchs (res) {
+    if (+res.code !== 200) return
     const list = lodash.get(res, 'data', [])
     const length = lodash.get(list, 'length', 0)
     if (length < 1) return
-    const champion_mids = list.map(t => {
+    const result_list = list.slice(0, 10)
+    const custom_match_mids = result_list.map(t => {
       return t.mid
     })
-    // 冠军不需要走 模版计算
-    this.match_mids = [...new Set(champion_mids.slice(0, 10))]
-    MatchDataBaseH5.set_list(list)
+    this.match_mids = [...new Set(custom_match_mids.slice(0, 10))]
+    result_list.forEach((t, i) => {
+      Object.assign(t, {
+        is_show_league: i === 0 ? true : result_list[i].tid !== result_list[i - 1].tid
+      })
+    })
+    MatchDataBaseH5.set_list(result_list)
   }
 
   /**

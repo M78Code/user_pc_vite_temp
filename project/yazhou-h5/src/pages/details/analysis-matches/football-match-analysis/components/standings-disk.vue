@@ -1,7 +1,7 @@
 <!--
  * @Author:
  * @Date: 2021-05-15 21:00:29
- * @Description:
+ * @Description: 盘面
 -->
 <template>
   <div class="standings_technical football_standings recent_record" v-if="matchHistory_battle_dto_map">
@@ -13,19 +13,18 @@
       <div class="technical-home team-recent">
         <template v-if="index == 1">
           <!-- 左侧双打图标 type 0 表示主队,mhlu 主队的url -->
-          <team-img :type="0" :csid="get_detail_data.csid" :url="get_detail_data.mhlu[0]" :fr="get_detail_data.frmhn[0]" :size="22"></team-img>
-          <team-img v-if="get_detail_data.mhlu.length > 1" :type="0" :csid="get_detail_data.csid" :url="get_detail_data.mhlu[1]" :fr="get_detail_data.frmhn[1]" :size="22" style="margin-top: 0.11rem; margin-left:-0.08rem;"></team-img>
-          <span class="team-name">{{ get_detail_data.mhn }}</span>
+          <team-img :type="0" :csid="detail_data.csid" :url="detail_data.mhlu[0]" :fr="detail_data.frmhn[0]" :size="22"></team-img>
+          <team-img v-if="detail_data.mhlu.length > 1" :type="0" :csid="detail_data.csid" :url="detail_data.mhlu[1]" :fr="detail_data.frmhn[1]" :size="22" style="margin-top: 0.11rem; margin-left:-0.08rem;"></team-img>
+          <span class="team-name">{{ detail_data.mhn }}</span>
         </template>
         <template v-if="index == 2">
           <!-- 右侧双打图标 type 1 表示客队,malu 客队的url  -->
-          <team-img :type="1" :csid="get_detail_data.csid" :url="get_detail_data.malu[0]" :fr="get_detail_data.frman[0]" :size="22"></team-img>
-          <team-img v-if="get_detail_data.malu.length > 1" :type="1" :csid="get_detail_data.csid" :url="get_detail_data.malu[1]" :fr="get_detail_data.frman[1]" :size="22" style="margin-top: 0.11rem; margin-left:-0.08rem;"></team-img>
-          <span class="team-name">{{ get_detail_data.man }}</span>
+          <team-img :type="1" :csid="detail_data.csid" :url="detail_data.malu[0]" :fr="detail_data.frman[0]" :size="22"></team-img>
+          <team-img v-if="detail_data.malu.length > 1" :type="1" :csid="detail_data.csid" :url="detail_data.malu[1]" :fr="detail_data.frman[1]" :size="22" style="margin-top: 0.11rem; margin-left:-0.08rem;"></team-img>
+          <span class="team-name">{{ detail_data.man }}</span>
         </template>
       </div>
 
-      <div>
         <div class="table-score" v-if="lodash.get(main, 'matchHistoryBattleDetailDTOList')">
           <div class="header">
             <div class="item-1st">
@@ -66,9 +65,8 @@
             </div>
           </div>
         </div>
-      </div>
       <div class="recent-games" v-if="main && main.handicapResultList">
-        <span class="item-1st text-center" style="white-space: nowrap;">{{ i18n_t('analysis_football_matches.field', [main.handicapResultList.length])}}</span>
+        <span class="item-1st text-center" style="white-space: nowrap;">{{ i18n_tc('analysis_football_matches.field', [main.handicapResultList.length])}}</span>
         <div class="item-2nd">
           <span v-html="results" v-for="(results, i) in title_calculation(main, 'handicapResultList')" :key="i+'title'"></span>
         </div>
@@ -82,25 +80,22 @@
 </template>
 
 <script setup>
-// TODO: 后续修改调整
-// import {mapGetters} from "vuex";
 import { defineComponent, ref } from 'vue'
 // 详情页蓝色背景上的大型字母图标
 import teamImg from "project_path/src/components/details/team-img.vue";
-import { i18n_t } from "src/boot/i18n.js";
+import { i18n_t, i18n_tc } from "src/boot/i18n.js";
 import lodash from "lodash"
 
-
-//详情页面数据
-const get_detail_data = ref({
-        csid: '1',
-        mid: '1',
-    })
 
   const props = defineProps({
     // 盘面的数据
     matchHistory_battle_dto_map: {
       type: Object
+    },
+    // 详情页的数据
+    detail_data: {
+      type: Object,
+      default: () => {},
     }
   })
   // components: {
@@ -108,7 +103,7 @@ const get_detail_data = ref({
   // },
   // TODO: 后续修改调整
   // computed: {
-  //   ...mapGetters(['get_goto_detail_matchid', 'get_detail_data'])
+  //   ...mapGetters(['get_goto_detail_matchid'])
   // },
     // TODO: 国际化后续修改调整
     // 赛事标题说明
@@ -175,7 +170,6 @@ const get_detail_data = ref({
     }
   }
 
-  .standings_technical {
     .standings-technical-home {
       .technical-home {
         height: 0.4rem;
@@ -204,32 +198,7 @@ const get_detail_data = ref({
           line-height: 0.12rem;
         }
       }
-
-      .recent-games {
-        height: 0.3rem;
-        line-height: 0.3rem;
-        display: flex;
-        align-items: center;
-
-
-        border-bottom: 1px solid var(--q-gb-bd-c-7);
-        padding: 0 0.1rem;
-
-        > span {
-          font-size: 0.12rem;
-        }
-
-        > div {
-          font-size: 0.12rem;
-
-          &.margin-95 {
-            margin-right: 0.95rem;
-          }
-        }
-      }
-    }
-
-    .table-score {
+     .table-score {
       position: relative;
 
       .header {
@@ -276,6 +245,31 @@ const get_detail_data = ref({
         flex: 1;
       }
     }
+      .recent-games {
+        height: 0.3rem;
+        line-height: 0.3rem;
+        display: flex;
+        align-items: center;
+
+
+        border-bottom: 1px solid var(--q-gb-bd-c-7);
+        padding: 0 0.1rem;
+
+        > span {
+          font-size: 0.12rem;
+        }
+
+        > div {
+          font-size: 0.12rem;
+
+          &.margin-95 {
+            margin-right: 0.95rem;
+          }
+        }
+      }
+    }
+
+    
 
     .no-list {
       height: 0.6rem;
@@ -320,7 +314,6 @@ const get_detail_data = ref({
     .pad-r5 {
       padding-right: 0.05rem;
     }
-  }
   .no-list {
     height: 0.6rem;
     line-height: 0.6rem;

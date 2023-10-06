@@ -664,6 +664,7 @@ init(){
    * @param {Boolean} is_merge 是否进行合并数据同步(保证地址不变)
    */
   set_list(list, param={}){
+    console.log('set_list', list)
     if(list){
       this.type = param.type || 'list';
       // 格式化列表赛事(部分数组转对象)
