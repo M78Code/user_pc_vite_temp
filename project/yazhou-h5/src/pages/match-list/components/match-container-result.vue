@@ -42,8 +42,8 @@
           </span>
           <!--箭头 -->
           <template v-if="!['detail_match_list','home_hot_page_schedule'].includes(main_source)">
-            <img class="league-collapse-dir" :class="{'collapsed':collapsed}" v-if="get_theme.includes('day')" :src='league_icon' />
-            <img class="league-collapse-dir" :class="{'collapsed':collapsed}" v-if="get_theme.includes('night')" :src='league_icon_back' />
+            <img class="league-collapse-dir" :class="{'collapsed':collapsed}" v-if="theme.includes('day')" :src='league_icon' />
+            <img class="league-collapse-dir" :class="{'collapsed':collapsed}" v-if="theme.includes('night')" :src='league_icon_back' />
           </template>
         </div>
       </div>
@@ -62,7 +62,7 @@
             }">
             <div class="team-wrapper"
                 :class="{
-                  simple:get_newer_standard_edition == 1,
+                  simple:standard_edition == 1,
                   team_title:is_show_result()}">
               <div class='team-title-container'
                 :class="{
@@ -119,13 +119,14 @@
   </div>
 </template>
 <script setup>
-import { computed, onUnmounted, onMounted } from "vue"
+import { computed, onUnmounted, onMounted, ref } from "vue"
 import store from "src/store-redux/index.js"
 import lodash from 'lodash'
-import { i18n_t} from 'src/core/index.js'
+import { i18n_t } from 'src/core/index.js'
 import ImageCacheLoad from "./public-cache-image.vue";
-import { format_time_zone_time } from "src/core/format/index.js"
-import {MenuData } from "src/core/index.js"
+import { MenuData } from "src/core/index.js"
+import { theme } from 'project_path/src/mixin/userctr.js'
+import { standard_edition } from 'project_path/src/mixin/userctr.js'
 import { league_icon, league_icon_back } from 'project_path/src/core/utils/local-image.js'
 // import { SPORT_ID_TO_NUMBER_MAPPING } from "src/core/constant/config/play-mapping.js";
 
@@ -149,8 +150,6 @@ const is_first_coming = ref(false)
 const get_collapse_map_match = ref(store_state.get_collapse_map_match)
 const get_collapse_csid_map = ref(store_state.get_collapse_csid_map)
 const get_collapse_all_ball = ref(store_state.get_collapse_all_ball)
-const get_newer_standard_edition = ref(store_state.get_newer_standard_edition)
-const get_theme = ref(store_state.get_theme)
 
 const unsubscribe = store.subscribe(() => {
   update_state()
@@ -161,8 +160,6 @@ const update_state = () => {
   get_collapse_map_match.value = new_state.get_collapse_map_match
   get_collapse_csid_map.value = new_state.get_collapse_csid_map
   get_collapse_all_ball.value = new_state.get_collapse_all_ball
-  get_newer_standard_edition.value = new_state.get_newer_standard_edition
-  get_theme.value = new_state.get_theme
 }
 
 // TODO: 其他模块得 store  待添加
@@ -179,7 +176,7 @@ onMounted(() => {
 // 当前显示的赛事数据
 const match = computed(() => props.match_of_list)
 const collapsed = computed(() => get_collapse_map_match[props.match_of_list.tid])
-const show_newer_edition = computed(() => get_newer_standard_edition == 1 || props.main_source == 'detail_match_list')
+const show_newer_edition = computed(() => standard_edition.value == 1 || props.main_source == 'detail_match_list')
 
 const get_sport_show = (i) => {
   if (!get_current_main_menu.menuType) {
