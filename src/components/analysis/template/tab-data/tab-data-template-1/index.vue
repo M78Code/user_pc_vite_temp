@@ -279,7 +279,7 @@ function getData() {
   let params = { parentMenuId: 2, sonMenuId: tabIndex.value, standardMatchId: props.match.mid }//
   api_analysis.get_match_analysise_data(params).then((res) => {
     res = res.data
-    // console.log("get_match_analysise_dataget_match_analysise_data",res);
+    console.log("get_match_analysise_dataget_match_analysise_data",res);
     // 基本面
     if (tabIndex.value == 1) {
       if (Object.keys(res.basicInfoMap).length) {

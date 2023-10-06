@@ -15,7 +15,6 @@
 <script setup>
 import simpleHeader from "project_path/src/components/site-header/simple-header.vue";
 import analysisPage from "/src/components/analysis/index.vue";
-import { i18n_t } from "src/core/index.js";
 </script>
 
 <style lang="scss" scoped>
