@@ -212,7 +212,7 @@ const bet_title = computed(() => {
    * @param {Number} key 标题第几个
    * @param {NUmber}  i(0|1)  双行标题第几个
   */
-const get_highlight_title = (is_double, key, i) => {
+function get_highlight_title(is_double, key, i) {
   let highlight = [3, 4, 5].includes(key) && [0, 13, 25].includes(+match_style_obj.data_tpl_id)
   if (is_double) {
     highlight = (highlight && i === 1)
@@ -223,14 +223,14 @@ const get_highlight_title = (is_double, key, i) => {
  * @Description 获取22模板标题宽度
  * @param {undefined} undefined
 */
-const get_title_style = () => {
+function get_title_style() {
   return `width: ${(match_list_tpl_size.bet_width + 5) * 3}px !important; flex:auto`
 }
 /**
   * @Description 获取模板标题宽度
   * @param {Number} index 第几个标题索引
  */
-const get_bet_width = (index) => {
+function get_bet_width(index) {
   let bet_width = match_list_tpl_size.bet_width
   let flex = 'none'
   if (is_HDP && match_style_obj.data_tpl_id != 13 && index == 5) {
@@ -251,7 +251,7 @@ const get_bet_width = (index) => {
  * @Description 是否高亮标题
  * @param {String} csid 球种id
 */
-const is_highlighted = (csid) => {
+function is_highlighted (csid){
   if (is_HDP || menu_config.is_eports_csid(csid)) {
     return true
   } else {
@@ -261,12 +261,11 @@ const is_highlighted = (csid) => {
 /**
  * @Description 设置联赛折叠
 */
-const set_fold = () => {
+function set_fold() {
   // 如果当前联赛是折叠的 并且是今日、早盘  调用bymids接口拉数据
   if (props.card_style_obj.is_league_fold && ([2, 3].includes(menu_config.menu_root) || menu_config.is_esports())) {
     // 设置赛事基础数据
     MatchListCardData.set_match_basic_data(props.card_style_obj)
-    console.log('props.card_style_obj', props.card_style_obj);
     let params = {
       mids: props.card_style_obj.league_obj.mids.split(','),
       inner_param: 1

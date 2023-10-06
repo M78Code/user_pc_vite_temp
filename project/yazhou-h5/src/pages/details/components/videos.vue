@@ -74,7 +74,17 @@
         </div>
 
         <!-- 视频单页项目-->
-        <iframe v-if="iframe_show && !is_show_no_handle && iframe_src" v-show="!is_playing_replay" ref="iframe" id="bdIframe" style="width:100%;height:100%;" allow="autoplay" frameborder="0" scrolling="no" :src="iframe_src+'&rdm='+iframe_rdm"></iframe>
+        <iframe 
+        v-if="(get_video_url.active == 'animationUrl' || get_iframe_onload) && !is_show_no_handle && iframe_src" 
+        v-show="!is_playing_replay" 
+        ref="iframe" 
+        id="bdIframe" 
+        style="width:100%;height:100%;" 
+        allow="autoplay" 
+        frameborder="0" 
+        scrolling="no" 
+        :src="iframe_src+'&rdm='+iframe_rdm"
+        ></iframe>
         <!-- 视频单页项目精彩回放页面-->
         <iframe
             v-if="is_playing_replay"
@@ -284,16 +294,13 @@ import uid from "src/core/uuid/index.js"
 import lodash from "lodash";
 
 import { useRouter, useRoute } from "vue-router";
-import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
+import { useMittOn, useMittEmit, MITT_TYPES, MenuData, MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouse, MatchDetailCalss } from  "src/core/index.js"
 import { format_total_score } from "src/core/format/index.js"
 import { video_info } from "./videos.js";
 import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch,ref } from "vue";
 import { i18n_t } from "src/boot/i18n.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
-const get_detail_data = ref({
-        csid: '1',
-        mid: '1',
-    })
+
 
 //国际化
 
@@ -319,6 +326,8 @@ export default defineComponent({
   ],
 
   setup(props, evnet) {
+    // 详情页的数据
+    const get_detail_data = ref(lodash.get(MatchDataWarehouse, 'list_to_obj.mid_obj[`${route.params.mid}_`]'))
     let component_data = reactive({
       tips_def: "/yazhou-h5/image/svg/video_b.svg",
       tips_act: "/yazhou-h5/image/svg/video_a.svg",
@@ -393,10 +402,12 @@ export default defineComponent({
       replay_url: '',
       // 精彩回放视频是否加载失败
       is_replay_load_error: false,
+      // 视频单页是否已加载 
+      get_iframe_onload: false,
     });
     // 收藏菜单为6
     const get_menu_type = computed(() => {
-      return ""
+      return MenuData.menu_type
     });
     const get_change_count = computed(() => {
       return ""
@@ -406,24 +417,17 @@ export default defineComponent({
     });
     // 视频url信息
     const get_video_url = computed(() => {
-      return ""
+      console.error(MatchDetailCalss);
+      return MatchDetailCalss.video_url
     });
     // 视频显示状态
     const get_show_video = computed(() => {
       return ""
     });
-    // 详情页的数据
-    const get_detail_data = computed(() => {
-      return ""
-    })
     // // 用户令牌信息
     // const get_user_token = computed(() => {
     //   return ""
     // });
-    // 视频单页是否已加载     作用：防止白屏
-    const get_iframe_onload = computed(() => {
-      return ""
-    });
     // 置顶按钮是否高亮
     const get_zhiding = computed(() => {
       return ""
@@ -460,23 +464,20 @@ export default defineComponent({
     const get_hd_sd = computed(() => {
       return ""
     });
-    const get_lang = computed(() => {
-      return ""
-    });
     const get_is_dp_video_full_screen = computed(() => {
       return ""
     });
     // 鉴权域名 + 回放视频url（拼接后的最终url）
     const replay_video_src = computed(() => {
       const host_url = window.BUILDIN_CONFIG.live_domains[0] || _.get(UserCtr,'user_info.oss.live_h5')
-      return `${host_url}/videoReplay.html?src=${replay_url}&lang=${get_lang}&volume=${is_user_voice ? 1 : 0}`
+      return `${host_url}/videoReplay.html?src=${replay_url}&lang=${UserCtr.lang}&volume=${is_user_voice ? 1 : 0}`
 
       // const host_url = 'http://localhost:4000/videoReplay.html?'
       // return `${host_url}src=${replay_url}&volume=${is_user_voice ? 1 : 0}`
     });
     // 展示lvs 图标
     const show_lvs = computed(() => {
-      return get_detail_data.value.lvs != -1 && get_video_url.active != 'lvs' && ['string', 'number'].includes(typeof _.get(get_detail_data.value,'lss')) && ['zh','tw'].includes(get_lang)
+      return get_detail_data.value.lvs != -1 && get_video_url.active != 'lvs' && ['string', 'number'].includes(typeof lodash.get(get_detail_data.value,'lss')) && ['zh','tw'].includes(UserCtr.lang)
     });
     // 判断此商户是否属于乐天
     const is_letian = computed(() => {
@@ -485,12 +486,13 @@ export default defineComponent({
         return UserCtr.user_info.merchantCode == 'letian'
       }
     });
-    const iframe_show = computed(() => {
-      if(get_video_url.active == 'animationUrl' || get_iframe_onload){
-        return true
-      }
-      return false
-    });
+    // const iframe_show = computed(() => {
+    //   console.error("计算属性");
+    //   if(get_video_url.active == 'animationUrl' || component_data.get_iframe_onload){
+    //     return true
+    //   }
+    //   return false
+    // });
     // 动画下显示tips icon
     const show_animation = computed(() => {
       return get_detail_data.value.mvs > -1 && get_video_url.active == 'animationUrl'
@@ -658,9 +660,9 @@ export default defineComponent({
       (new_value, old_value) => {
         if(new_value.active == 'muUrl'){
           if ([100,101,102,103].includes(+get_detail_data.value.csid)){
-            iframe_src = new_value.media_src + dj_http_fix(new_value.media_src) +'controls=1'
+            component_data.iframe_src = new_value.media_src + dj_http_fix(new_value.media_src) +'controls=1'
           } else {
-            iframe_src = new_value.media_src + '&controls=1'
+            component_data.iframe_src = new_value.media_src + '&controls=1'
           }
           //用戶第一次登录 显示 视频指引层
           let is_login_one = localStorage.getItem("is_first_login");
@@ -676,9 +678,9 @@ export default defineComponent({
         else{
           if (new_value.referUrl && new_value[new_value.active]) {
             if ([100,101,102,103].includes(+get_detail_data.value.csid)){
-              iframe_src = new_value[new_value.active] + dj_http_fix(new_value[new_value.active]) +'controls=1'
+              component_data.iframe_src = new_value[new_value.active] + dj_http_fix(new_value[new_value.active]) +'controls=1'
             } else {
-              iframe_src = new_value[new_value.active] + '&controls=1'
+              component_data.iframe_src = new_value[new_value.active] + '&controls=1'
             }
 
           }
@@ -758,14 +760,18 @@ export default defineComponent({
           clearTimeout(reload_iframe_timer)
           reload_iframe_timer = setTimeout(() => {
             // 部分iPhone safari退出全屏后，视频高度不正确，重载iframe更新
-            set_iframe_onload(false)
+            component_data.get_iframe_onload = false
             $nextTick(() => {
-              set_iframe_onload(true)
+              component_data.get_iframe_onload = true
             })
           }, 300)
         }
       }
     );
+    // 设置iframe标签是否开启
+    const set_iframe_onload = (param) => {
+      component_data.get_iframe_onload = param
+    }
     onMounted(() => {
       // 延时器
       timer1_ = null;
@@ -778,6 +784,8 @@ export default defineComponent({
       // iframe视频参数时间戳
       iframe_rdm = new Date().getTime()
       useMittOn(MITT_TYPES.IFRAME_VIDEO_VOLUME, video_volume);
+      // iframe标签
+      useMittOn(MITT_TYPES.EMIT_SET_IFRAME_ONLOAD, set_iframe_onload);
 
       // 监听精彩回放iframe传来的消息
       window.addEventListener("message", handle_replay_message);

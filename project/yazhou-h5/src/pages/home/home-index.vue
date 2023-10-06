@@ -46,6 +46,7 @@ import lodash from "lodash";
 import { i18n_t } from "src/boot/i18n.js";
 import store from "src/store-redux/index.js";
 import '../../css/pages/hot-modal.scss'
+import { MenuData } from "src/core/index.js"
 
 const { homeReducer } = store.getState();
 
@@ -211,6 +212,9 @@ export default defineComponent({
      *@param {Boolean} hand 是否手动点击触发
      */
     const tab_click = (tab, need_animation, hand) => {
+      const sl = lodash.get(tab, 'sl', [])
+      // 热门 先写死 index: 5
+      MenuData.set_current_lv1_menu({ mi: 500, sl: sl }, 5);
       if (tab.index == tabIndex.value || utils.is_time_limit(800)) {
         // 切换多语言需处理选中效果 样式
         if (tab.index == 0) {

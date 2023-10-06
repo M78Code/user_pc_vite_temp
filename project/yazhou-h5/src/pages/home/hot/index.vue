@@ -65,7 +65,7 @@ import { utils, MenuData } from 'src/core/index.js';
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import MatchListParams from 'src/core/match-list-h5/composables/match-list-params.js'
 
-let tabList = ref()  // tab选项卡内容
+let tabList = ref([])  // tab选项卡内容
 let tab_Index = ref(0) //  tab 选项卡的下标位置
 let featured_loading = ref(true) // 精选骨架屏
 let first_loading = ref(true) // 精选是否第一次加载骨架屏
@@ -136,13 +136,14 @@ const host = (item) => {
 }
 // tab 初始化数据
 const get_list = (first) => {
+  const jing_xuan = { menuName:'精选', field3: "", index: 0 }
   first ? first_loading.value = true : first_loading.value = false
   let parameter = {
     menuType: 12, // 菜单类型  12热门赛事
     disabled: 1, // 是否移除三级菜单  默认：(null)空=展开 ,1=移除
     lang: 'JC'  // 名称简称传：JC  ，默认为空
   }
-  MenuData.set_hot_tab_menu({ menuName:'精选', field3: "", index: 0 })
+  MenuData.set_hot_tab_menu(jing_xuan)
   api_home.get_hot_list(parameter).then((res) => {
     const data = lodash.get(res, "data")
     const code = lodash.get(res, "code")
@@ -157,7 +158,7 @@ const get_list = (first) => {
       // 加个jz_666 是用作首页 竞彩足球 背景墙用的
       data[0].subList.forEach(item => { if (item.chinaBetting) { item.jz_666 = 'jz_666' } })
       // 手动添加一个 精选tab 选项卡  i18n_t('home_popular.featured')
-      tabList.value = [{ menuName:'精选', field3: "", index: 0 }]
+      tabList.value.unshift(jing_xuan)
       tabList.value = tabList.value.concat(data[0].subList)
       const get_hot_tab_item = {
         menuId: "30101",
@@ -166,12 +167,12 @@ const get_list = (first) => {
       tabList.value.forEach((item, index) => {
         item.index = index
         if (get_hot_tab_item && (get_hot_tab_item.menuId == item.menuId || get_hot_tab_item.field2 == item.field2)) {
-          tab_Index.value = index
+          // tab_Index.value = index
           // 滑动tab动画操作
           clearTimeout(timer2.value)
           timer2.value = setTimeout(() => {
             scrollBox.value && utils.tab_move2(index, scrollBox.value, true)
-            change_tab(tabList.value[index], index)
+            // change_tab(tabList.value[index], index)
           }, 80);
         }
       })
@@ -191,7 +192,8 @@ const get_selected_match = () => {
   const parameter = MatchListParams.get_base_params()
   api_analysis.get_match_home_page_handpick(parameter).then((res) => {
     MatchMeta.get_match_mids(res.data)
-    MatchMeta.set_match_default_properties(res.data)
+    // MatchMeta.set_match_default_properties(res.data)
+    // 设置联赛赛事
     let timer = setTimeout(() => {
       MatchMeta.set_tid_map_mids()
       clearTimeout(timer)
@@ -218,6 +220,7 @@ const check_clear_bet = (obj) => {
   })
 }
 // 菜单切换 is_self 是否手动触发
+// TODO: 竞足还没有
 const change_tab = (item, index, is_self) => {
   MenuData.set_hot_tab_menu(item)
   if (item.index === 0) return get_selected_match()

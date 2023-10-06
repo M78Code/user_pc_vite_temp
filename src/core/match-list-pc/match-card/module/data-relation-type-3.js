@@ -65,7 +65,6 @@
     // 自定义联赛ID
     let cus_tid = ''
     // 遍历所有赛事列表
-    console.log('match_list_card_key_arr', match_list);
     match_list && match_list.length && match_list.forEach( (match,match_index) => {
       league_repeat_count_obj[match.tid] = league_repeat_count_obj[match.tid] || 0
       // 冠军首次加载只显示前3场赛事
@@ -184,7 +183,6 @@
     MatchListCardData.csid_to_card_key_obj = csid_to_card_key_obj
     // 卡片key列表
     MatchListCardData.match_list_card_key_arr =  match_list_card_key_arr 
-    console.log('match_list_card_key_arr', match_list_card_key_arr);
     MatchListCardData.set_list_version()
     // 遍历所有联赛容器卡片
     all_league_container_keys_arr.forEach( card_key => {

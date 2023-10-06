@@ -203,8 +203,8 @@ const get_to_bottom_space = computed(() => {
 // || ["detail_match_list", "home_hot_page_schedule"].includes(props.main_source) 
 const is_static_item = computed(() => {
   let flag = false;
-  if (menu_type == 100 ||  menu_lv2.value.mi == 100 ||
-    (menu_type == 28 && [1001, 1002, 1004, 1011, 1010, 1009].includes(menu_lv2.value.mi))
+  if (menu_type == 100 ||  menu_lv2.value?.mi == 100 ||
+    (menu_type == 28 && [1001, 1002, 1004, 1011, 1010, 1009].includes(menu_lv2.value?.mi))
   ) {
     flag = true;
   }

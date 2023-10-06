@@ -32,8 +32,10 @@ export default class MatchDetailCtr {
     // ===========H5页面需要存储的数据===============
     // 精彩回放接口返回数据
     this.playback_video_list = []
-
-
+    // 详情头部动画相关
+    this.video_url = {},
+    this.show_video = false,
+    this.iframe_onload = false,
 
     // ==================结束=======================
     // hpid 玩法ID 
@@ -104,6 +106,27 @@ export default class MatchDetailCtr {
    */
   set_playback_video_list(params) {
     this.playback_video_list = params
+  }
+  /**
+   * 详情头部动画数据
+   * @params 对象Object
+   */
+  set_video_url(params) {
+    this.video_url = params
+  }
+  /**
+   * 详情头部动画是否开启video
+   * @param 布尔值 Boolean
+   */
+  set_show_video(params) {
+    this.show_video = params
+  }
+  /**
+   * 详情头部动画是否开启iframe
+   * @param 布尔值 Boolean
+   */
+  set_iframe_onload(params) {
+    this.iframe_onload = params
   }
   // =================结束====================
 /**
@@ -235,7 +258,7 @@ export default class MatchDetailCtr {
       time: Date.now()
     }
     this.mid = mid
-    this.play_media.media_type = media_type
+    // this.play_media.media_type = media_type
     this.set_details_data_version()
   }
 

@@ -1,6 +1,6 @@
 <template>
-  <div class="c-match-item  match-tpl1-bg" :class="{ 'more-handicap': lodash.get(match, 'has_add1') || lodash.get(match, 'has_add2') }" v-if="match">
-    <div v-show="false">{{ MatchListData.data_version }}</div>
+  <div class="c-match-item  match-tpl1-bg" :class="{ 'more-handicap': lodash.get(match, 'has_add1') || lodash.get(match, 'has_add2') }">
+    <div v-show="false">{{ MatchListData.data_version.version }}</div>
     <!-- 比赛进程 -->
     <div class="process-col yb-flex-center">
       <!--热门赛事显示hot标识-->
@@ -10,7 +10,7 @@
         show_page="match-list" :rows="2" />
         <!-- 比赛进程 -->
       <div class="yb-flex-center full-width" :style="`height:105px;margin-top:${process_margin}px`">
-          <match-process v-if="is_mounted && match.api_update_time !=0" :match_props="{match, source: 'match_list'}" show_page="match-list" :rows="2" />
+          <match-process v-if="is_mounted && match && match.api_update_time !=0" :match_props="{match, source: 'match_list'}" show_page="match-list" :rows="2" />
       </div>
     </div>
     <div v-show="false">{{ MatchListCardData.list_version }}</div>
@@ -24,6 +24,7 @@
         </div>
         <!-- 赛事盘口投注项 -->
         <match-handicap
+          v-if="match"
           :handicap_list="match_tpl_info[`template_${match_style_obj.data_tpl_id}`].main_handicap_list"
           :match="match"
           :is_show_score="!match_tpl_info.is_show_cur_handicap && match.csid != 4"
@@ -31,7 +32,7 @@
 
         <!-- 视频按钮 -->
         <div class="media-col" >
-          <match-media :match="match" />
+          <match-media v-if="match" :match="match" />
         </div>
       </div>
 
@@ -44,6 +45,7 @@
 
         <!-- 赛事盘口投注项 -->
         <match-handicap
+          v-if="match"
           :handicap_list="get_cur_handicap_list(match)"
           :match="match"
           :is_show_score="true"
@@ -85,8 +87,11 @@ const props = defineProps({
 let match_style_obj = MatchListCardDataClass.all_card_obj[props.mid+'_']
 const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`].width_config
 const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`]
-const match = MatchListData.list_to_obj.mid_obj[props.mid+'_'];
+let match = MatchListData.list_to_obj.mid_obj[props.mid+'_'];
 const is_mounted = ref(true)
+watch(() => MatchListData.data_version.version, () => {
+  match = MatchListData.list_to_obj.mid_obj[props.mid+'_']
+})
 const process_margin = computed(() => {
   let { is_show_cur_handicap } = match_tpl_info
   let process_margin = 0
@@ -105,11 +110,13 @@ const process_margin = computed(() => {
   return process_margin
 })
 
+
+
 /**
 	 * @Description 获取当前局盘口列表模板
 	 * @param {undefined} undefined
 	 */
-   const get_cur_handicap_list = (match) => {
+   function get_cur_handicap_list (match) {
 		// 当前局盘口列表
 		let cur_handicap_list = [];
     let play_config = match_tpl_info[`template_${match_style_obj.data_tpl_id}`]

@@ -45,7 +45,7 @@ onMounted(() => {
 * @Description 球种点击
 * @param {undefined} undefined
 */
-const sport_click = (item) => {
+function sport_click(item) {
   // console.error("sport_click------",item)
   current_menu.value = { ...item };
   // 是否收藏
@@ -91,7 +91,7 @@ const sport_click = (item) => {
  * @Description 日期菜单点击
  * @param {undefined} undefined
  */
-const tab_click = (obj) => {
+function tab_click(obj) {
   // 如果列表数据在加载中
   if (props.load_data_state == "loading") {
     return;

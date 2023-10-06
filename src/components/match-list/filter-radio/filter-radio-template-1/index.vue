@@ -36,7 +36,7 @@ const props = defineProps({
 const check_value = ref('');
 check_value.value = props.default_value || '';
 // console.error(check_list);
-const check_change = (value) => {
+function check_change (value) {
   check_value.value = value
   useMittEmit(MITT_TYPES.EMIT_CHANGE_CHECK, check_value.value)
 }

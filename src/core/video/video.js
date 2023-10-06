@@ -901,9 +901,8 @@ export default {
     url += `&load_error=${i18n_t('video.load_error')}&refresh=${i18n_t('common.refresh')}&pause=${i18n_t('video.pause')}&play=${i18n_t('video.play')}&mute=${i18n_t('video.mute')}&cancel_mute=${i18n_t('video.cancel_mute')}&refresh-icon=0&controls=1&is_client=1&open_pip=${i18n_t('video.open_pip')}&token=${UserCtr.user_token}&rdm=${new Date().getTime()}`
     url = encodeURI(url)
     //本地代码连生产时放开可播放大视频
-    //url = 'https:' + url
-    console.log(url,'url');
-    return url
+    // url = 'https:' + url
+    return  url
   },
   /**
   * @Description:校验url是否可以打开
@@ -947,14 +946,14 @@ export default {
       //足篮棒网使用3.0动画  其他使用2.0
       if([1,2,3,5].includes(match.csid*1)){
         let style = UserCtr.theme.includes('day') ? 'theme01' : 'theme02'
-        let animation3Url = lodash.get(res, "data.data.animation3Url") || []
+        let animation3Url = lodash.get(res, "data.animation3Url") || []
         animation3Url.forEach( item =>{
           if(item.styleName.indexOf(style) >= 0){
             animationUrl = item.path
           }
         })
       }
-      animationUrl = animationUrl || lodash.get(res, "data.data.animationUrl")
+      animationUrl = animationUrl || lodash.get(res, "data.animationUrl")
       if (animationUrl) {
         // 移除 http(s)
         animationUrl = animationUrl.replace(/https?:/, "")
