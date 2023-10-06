@@ -5,9 +5,9 @@
 -->
 <template>
   <div class="analysis-football-matches" :class="[get_analyze_show? 'clear-bg':'']" ref="analysis_basketball_matches">
-    <head-tab :tabList="tabList" @tab_click="tab_click" v-if="!(get_is_hengping && get_analyze_show)"></head-tab>
+    <head-tab :tabList="tabList" @tab_click="tab_click" :detail_data="detail_data" v-if="!(get_is_hengping && get_analyze_show)"></head-tab>
     <!-- 顶部切换 下边的内容组件 -->
-    <component :is="currentContent" />
+    <component :is="currentContent" :detail_data="detail_data" />
   </div>
 </template>
 
@@ -32,14 +32,12 @@ import headTab from  "project_path/src/components/details/match-analysis/head-ta
 
 
 // 获取详情数据
-const get_detail_data = ref({
-        csid: '1',
-        mid: '1',
-    })
-
-//国际化
-
-
+const props = defineProps({
+  detail_data: {
+    type: Object,
+    default: () => {}
+  }
+})
   // components: {
   //   match: match_result,
   //   standings: standings,
@@ -73,7 +71,6 @@ const get_detail_data = ref({
   // computed: {
   //   ...mapGetters([
   //     // 详情页的数据
-  //     'get_detail_data',
   //     // 主题
   //     'get_is_hengping',
   //     'get_analyze_show',
@@ -81,7 +78,7 @@ const get_detail_data = ref({
   //   ])
   // },
   // 详情顶部切换赛事后 更新相应赛事数据
-  watch(() => get_detail_data.value.mid, () => {
+  watch(() => props.detail_data.mid, () => {
     const clone_currentCont = currentContent.value
       currentContent.value = ''
       nextTick(() => {
