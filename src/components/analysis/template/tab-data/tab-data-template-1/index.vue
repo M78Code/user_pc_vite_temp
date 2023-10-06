@@ -409,70 +409,190 @@ function getAge(birthdate) {
 </script>
 
 <style lang="scss" scoped>
-.wrap {
-  margin: 20px;
-  display: flex;
-  justify-content: center;
-  height: 100vh;
-  padding-bottom: 20px;
-}
-
-.article_detail {
-  background: var(--q-analysis-color-16);
-  border: 1px solid var(--q-analysis-color-10);
-  border-radius: 8px;
-  height: 100%;
-  padding: 15px 38px;
-  margin-bottom: 20px;
-
-  p {
-    margin-bottom: 16px;
+.datum {
+  .tab {
+    display: flex;
+    align-items: center;
+    height: 30px;
+    color: var(--q-analysis-color-3);
+    margin-bottom: 10px;
+    width: 309px;
+    border-radius: 8px;
+    span {
+      width: 103px;
+      height: 28px;
+      line-height: 28px;
+      cursor: pointer;
+      text-align: center;
+      border: 1px solid var(--q-analysis-color-10);
+      &:first-child {
+        border-radius: 8px 0 0 8px;
+      }
+      &:last-child {
+        border-left: none;
+        border-radius: 0 8px 8px 0;
+      }
+      &:nth-child(2) {
+        border-left: none;
+      }
+      &:not(:last-child) {
+        border-right: none;
+      }
+      &.active {
+        background-image: var(--q-analysis-bg-gradient-2);
+        color: var(--q-analysis-color-16);
+      }
+    }
+  }
+  ::v-deep .panel {
+    min-width: 950px;
+  }
+  .panel {
+    margin-bottom: 20px;
+    min-width: 950px;
+    .panel-title {
+      display: flex;
+      justify-content: space-between;
+      padding-right: 20px;
+    }
   }
 
-  .article_title {
-    font-size: 16px;
-    color: var(--q-analysis-color-10);
-    font-weight: 600;
-  }
-
-  .author {
-    color: var(--q-analysis-color-11);
-
-    .author_name {
+  /*  盘面 */
+  .disk {
+    .match-info {
+      padding: 20px 20px 10px;
+      .team {
+        display: flex;
+        align-items: center;
+        color: var(--q-analysis-color-1);
+        margin-bottom: 10px;
+        .logo {
+          width: 20px;
+          height: 20px;
+          margin-right: 10px;
+        }
+      }
+      .result-wrap {
+        display: flex;
+        align-items: center;
+        .info {
+          display: flex;
+          align-items: center;
+          margin-right: 80px;
+          .label {
+            color: var(--q-analysis-color-0);
+            font-size: 16px;
+            margin-right: 10px;
+          }
+        }
+        .result {
+          display: flex;
+          .result-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 20px;
+            height: 20px;
+            border-radius: 2px;
+            color: var(--q-analysis-color-16);
+            margin-right: 6px;
+          }
+        }
+      }
+    }
+    .d-tr {
+      display: flex;
+      .d-td {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        &:first-child {
+          width: 84px;
+          flex: unset;
+          font-weight: 400;
+        }
+      }
+    }
+    .d-header {
+      background: var(--q-analysis-bg-color-17);
+      color:  var(--q-analysis-color-7);
+      border-bottom: none !important;
+      .d-td {
+        height: 28px;
+      }
+      .border_r {
+        border-right: 1px solid var(--q-analysis-color-10);
+        &:first-child {
+          display: flex;
+          justify-content: center;
+          .match_total {
+            width: 50%;
+          }
+        }
+      }
+    }
+    .d-body {
+      border-bottom: 1px solid var(--q-analysis-color-10);
       font-weight: 500;
-    }
+      .color_83838a {
+        color: var(--q-analysis-color-7);
+      }
+      .d-td {
+        height: 40px;
+        border-right: 1px solid var(--q-analysis-color-10);
+        &:last-child {
+          border-right: transparent;
+        }
+        .match_num_total {
+          width: 50%;
+          display: flex;
+          justify-content: center;
+          &:first-child {
+            color: var(--q-analysis-color-7);
+          }
+        }
+      }
+      .match_status {
+        .result-item {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 20px;
+          height: 20px;
 
-    .time {
-      margin: 0 30px 0 10px;
+          margin-right: 6px;
+        }
+      }
+    }
+    &.analysis_disk {
+      .away {
+        .d-body:last-child {
+          border-radius: 0 0 8px 8px;
+        }
+      }
     }
   }
-
-  .article {
-    :deep {
-      * {
-        max-width: 100%;
-        color: var(--q-analysis-color-10);
-      }
-
-      p {
-        font-family: PingFangSC-Regular;
-        font-size: 12px;
-        color: var(--q-analysis-color-5);
-        letter-spacing: 0;
-        text-align: justify;
-        line-height: 24px;
-      }
-
-      img {
-        max-width: 100%;
+  /*  技术面 */
+  .technical {
+    .panel-title:last-child {
+      border-radius: 8px;
+      border-bottom: 1px solid var(--q-analysis-color-10);
+    }
+    .match-info {
+      padding: 10px 20px;
+      .team {
+        margin-bottom: 0;
       }
     }
-
+    .d-header {
+      border-bottom: 0 !important;
+    }
+    .away {
+      .d-body:last-child {
+        border-radius: 0 0 8px 8px;
+      }
+    }
   }
-}
-
-/*  内容区 */
-.rule-scroll-area {
-  flex: 1;
 }
 </style>
