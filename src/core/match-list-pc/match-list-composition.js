@@ -1,7 +1,7 @@
 import {
 	ref,
 	computed,
-	nextTick
+	watch
 } from "vue";
 import lodash from "lodash";
 import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache.js";
@@ -57,6 +57,12 @@ let axios_debounce_timer;
 let axios_debounce_timer2;
 let virtual_list_timeout_id;
 let switch_timer_id
+
+watch(() => MenuData.match_list_version.value, () => {
+	console.log('123123123123123123');
+	fetch_match_list()
+})
+
 const match_tpl_component = computed(() => {
 	let match_tpl;
 	let lv2_mi;
@@ -76,7 +82,7 @@ const match_tpl_component = computed(() => {
 	return match_tpl;
 });
 // 根据 mid 获取 联赛列表数据
-const get_match_list_by_mid_for_base_data_res = (mid, csid, type) => {
+function get_match_list_by_mid_for_base_data_res (mid, csid, type) {
 	// 元数据
 	const { mi_tid_mids_res = {}, base_data_res = {} } = BaseData;
 	let matchs_list = [];
@@ -101,7 +107,7 @@ const get_match_list_by_mid_for_base_data_res = (mid, csid, type) => {
 	return matchs_list;
 };
 // 使用元数据默认显示 后面替换
-const set_base_data_init = () => {
+function set_base_data_init () {
 	// return
 	// 当前的分类 左侧菜单数据 中间件数据
 	const {
@@ -285,7 +291,7 @@ const set_base_data_init = () => {
  * @param  {boolean} cut   是否 切换右侧详情  true 不切换
  * @param {Object} params 其他参数
  */
-const fetch_match_list = (is_socket = false, cut) => {
+function fetch_match_list(is_socket = false, cut) {
 	// 设置当前为赛事列表
 	// 如果有拉列表定时器 清除定时器
 	if (!is_socket && get_match_list_timeid) {
@@ -321,6 +327,7 @@ const fetch_match_list = (is_socket = false, cut) => {
 		// 设置列表滚动条scrollTop
 		MatchListScrollClass.set_scroll_top(0);
 	}
+	console.log('config1', MenuData.match_list_api_config.match_list);
 	let match_api = MenuData.match_list_api_config.match_list || {};
 	// 设置列表接口 和 参数
 	let api = api_match[match_api.api_name];
@@ -444,7 +451,7 @@ const init_page_when_base_data_first_loaded=()=>{
   );
 }
 const mounted_fn = () => {
-	fetch_match_list();
+	// fetch_match_list();
 // 开启自动化测试功能
 	 // this.DOM_ID_SHOW = window.BUILDIN_CONFIG.DOM_ID_SHOW;
 	 // 列表数据仓库
