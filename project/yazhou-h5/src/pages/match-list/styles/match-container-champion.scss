@@ -148,8 +148,9 @@
     .match-title {
       height: 0.34rem;
       padding-left: 0.11rem;
-      padding-top: 0.12rem;
+      // padding-top: 0.12rem;
       position: relative;
+     
 
       &:before {
         width: 0.03rem;
@@ -158,6 +159,7 @@
         content: ' ';
         display: block;
         border-radius: 0.015rem;
+        background-color: yellow;
       }
 
       .hpn-wrap {

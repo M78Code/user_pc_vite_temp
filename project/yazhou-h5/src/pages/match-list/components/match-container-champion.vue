@@ -13,13 +13,13 @@
         <img class="icon-down-arrow" src="public/image/list/league-collapse-icon.svg" :class="{collapsed:collapsed}" alt="" v-else>
       </div>
     </div>
+    <!-- <div v-if="is_show_league(i)" -->
     <div
-      v-if="is_show_league(i)"
       class="league-container flex items-center justify-between hairline-border"
-      @click="toggle_collapse_state(match_of_list);">
+      @click="toggle_collapse_state(match_of_list, $event);">
       <div class="league-wrapper champion flex items-center">
         <div
-           v-if="menu_type === 100 && GlobalAccessConfig.get_collectSwitch()"
+           v-if="menu_type === 4 && GlobalAccessConfig.get_collectSwitch()"
           class="favorite" :class="[{favorited:match_of_list.tf},get_theme]"
           @click.self.stop="toggle_collect(match_of_list)"></div>
             <div class="league-title">
@@ -35,14 +35,24 @@
         </div>
 
       <div class="collapse-dire">
-        <img class="icon-down-arrow" src="public/image/list/league-collapse-icon.svg" :class="{collapsed:collapsed}" alt="" v-if="get_theme.includes('day')">
-        <img class="icon-down-arrow" src="public/image/list/league-collapse-icon-black.svg" :class="{collapsed:collapsed}" alt="" v-else>
+        <!-- <img class="icon-down-arrow" src="public/image/list/league-collapse-icon.svg" :class="{collapsed:collapsed}" alt="" v-if="get_theme.includes('day')">
+        <img class="icon-down-arrow" src="public/image/list/league-collapse-icon-black.svg" :class="{collapsed:collapsed}" alt="" v-else> -->
       </div>
     </div>
 
-    <template v-for="(hp,index) of match_of_list.hps">
-      <div class="hps-wrap hairline-border" v-if="hp.hs != 2 && !collapsed" :key="index">
-        <div v-if="!collapsed && hp.hmed" class="limit-time flex items-center justify-center"
+    <template v-for="(hp,index) of match_of_list.hps" >
+      <div :ref="setWarp" class="hps-wrap hairline-border"  v-if="hp.hs != 2 && !collapsed" :key="index" >
+        <div class="match-title flex items-center"
+        @click = "handle_game_collapse(hp)"
+          :class="{'is-favorite':get_show_favorite_list}">
+          <div class="debug-head" style="color:red;position:absolute;right:0;">
+            {{get_key_by_obg(hp)}}
+          </div>
+          <div class="hpn-wrap ellipsis">
+            {{hp.hps}}
+          </div>
+        </div>
+        <div v-if="!collapsed && hp.hmed" v-show="!hp_collapsed" :data="hp.hid" class="limit-time flex items-center justify-center"
           :class="{'first-t':index == 0}">
           <div class="limit-t-i row justify-center items-center">
             <template v-if="!['zh', 'tw'].includes(get_lang)">
@@ -54,16 +64,8 @@
           </div>
         </div>
 
-        <div class="match-title flex items-center"
-          :class="{'is-favorite':get_show_favorite_list}">
-          <div class="debug-head" style="color:red;position:absolute;right:0;">
-            {{get_key_by_obg(hp)}}
-          </div>
-          <div class="hpn-wrap ellipsis">
-            {{hp.hps}}
-          </div>
-        </div>
-        <div class="ol-list-wrap flex justify-start" :data-ol="hp.ol.length" v-if="hp.ol">
+       
+        <div class="ol-list-wrap flex justify-start" v-show="!hp_collapsed" :data-ol="hp.ol.length" v-if="hp.ol"  :class="{'game_collapse':hp_collapsed}">
 
           <odd-item-champion 
             v-for="(ol_item,i) of hp.ol"
@@ -84,7 +86,7 @@
 </template>
  
 <script setup>
-import { computed, ref, onUnmounted } from "vue";
+import { computed, ref, onUnmounted, watch } from "vue";
 import lodash from 'lodash'
 import { i18n_t} from 'src/core/index.js'
 import store from "src/store-redux/index.js";
@@ -92,6 +94,8 @@ import { MenuData } from "src/core/index.js"
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt";
 import oddItemChampion from "./odd-item-champion.vue";
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
+
+const { matchReducer } = store.getState();
 const props = defineProps({
   // 当前组件的赛事数据对应列表的赛事
   match_of_list: Object,
@@ -103,8 +107,22 @@ const props = defineProps({
   matchCtr: Object,
 })
 
-const store_state = store.getState()
+let hp_collapsed = ref(false)
+let hp = ''
 
+
+const clickArr = ref([])
+//是否全部折疊
+let allFolding = false
+//列表折疊
+const foldingFlag = ref(true)
+
+const hpsWrap = ref([])
+const setWarp = (item) => {
+  hpsWrap.value.push(item)
+}
+const store_state = store.getState()
+const collapsed_state = store.getState();
 const get_bet_list = ref(store_state.get_bet_list)
 const get_show_favorite_list = ref(store_state.get_show_favorite_list)
 const get_collapse_map_match = ref(store_state.get_collapse_map_match)
@@ -117,6 +135,42 @@ const unsubscribe = store.subscribe(() => {
   update_state()
 })
 
+const folding_content = (hp) => {
+  // if (foldingFlag.value ){
+  //   let findIndex = clickArr.value && clickArr.value.findIndex( item => item === hp.hid)
+  //   if (findIndex > -1) {
+  //     clickArr.value.splice(findIndex, 1)
+  //   } else {
+  //     clickArr.value.push(hp.hid )
+  //   }
+  // } else {
+
+  // }
+  let findIndex = clickArr.value && clickArr.value.findIndex( item => item === hp.hid)
+  if (findIndex > -1)  {
+    clickArr.value.splice(findIndex, 1)
+  } else {
+    clickArr.value.push(hp.hid)
+  }
+
+
+}
+const ball_folding_click = (csid) => {
+  for (let i = 0; i < hpsWrap.value.length; i ++) { 
+    hpsWrap.value[i].style.display = !allFolding ? 'none': 'block' 
+  }
+  if(allFolding) {
+    clickArr.value = []
+    foldingFlag.value = true
+
+  }
+  allFolding = !allFolding
+
+  
+
+  
+
+}
 const update_state = () => {
   const new_state = store.getState()
   get_bet_list.value = new_state.get_bet_list
@@ -167,9 +221,10 @@ const calc_bgcolor = computed(() => {
  * @returns {Boolean}
  */
 const is_show_league = (i) => {
-  let flag = false;
+  let flag = true;
   // 当前赛事
   let curr =  props.matchCtr && props.matchCtr.match_list_data_sources && props.matchCtr.match_list_data_sources[i] ;
+  console.log(curr)
   if (!curr) {
     return false;
   }
@@ -190,7 +245,7 @@ const is_show_league = (i) => {
     }
   }
   
-  return flag;
+  return true;
 }
 /**
  * 判断是否显示体育类型
@@ -249,7 +304,17 @@ const gen_collapse_key = (match) => {
  * @param {Undefined} Undefined
  * @return {Undefined}
  */
-const toggle_collapse_state = () => {
+const toggle_collapse_state = (match_of_list, e) => {
+  for(let i = 0; i < hpsWrap.value.length; i++) {
+    console.log(hpsWrap.value[i].previousElementSibling == e.target.documentElement)
+    if (hpsWrap.value[i].previousElementSibling) {
+      
+    }
+  }
+  clickArr.value = []
+  foldingFlag.value = !foldingFlag.value;
+ 
+
   let map_collapse = lodash.cloneDeep(get_collapse_map_match);
   if(map_collapse){
     // 翻转折叠时始终将 赛事列表请求状态设为false
@@ -311,6 +376,53 @@ const toggle_collect = (match) => {
   };
   useMittEmit(MITT_TYPES.TOGGLE_COLLECT_LEAGUE,param);
 }
+ /**
+     * 计算当前组件的 折叠展开状态
+     */
+  const compute_hp_collapsed = () => {
+      // 获取当前玩法
+      let { tid,csid } = props.match_of_list
+      let { hid } = hp
+        hp_collapsed.value= ( matchReducer.collapse_champion_map[tid]||{})[hid]==1
+        console.log(hp_collapsed.value)
+    }
+
+    // 冠军赛事下玩法折叠
+   const handle_game_collapse = (hp) => {
+      console.log('dianjia le ')
+      let { tid,csid } = props.match_of_list
+      let { hid } = hp
+      console.log(props.match_of_list)
+      // 拷贝玩法集合对象
+      let map_collapse =  matchReducer.collapse_champion_map[tid] ||{};
+      console.log(map_collapse)
+
+      let new_state =0
+
+      if(map_collapse[hid]==1){
+        // 折叠 需要展开
+
+        new_state =2
+      }else{
+        new_state =1
+      }
+     //  1 折叠    2/null 展开
+      // 修改当前玩法展示/隐藏状态
+      matchReducer.set_collapse_champion_map({
+        tid,
+        payload:{[hid]: new_state},
+        type:1,
+        source:`champion-hid-${tid}`
+      })
+      this.$forceUpdate()
+    }
+
+watch(() =>matchReducer.collapse_champion_map_change , () => {
+  compute_hp_collapsed()
+})
+watch(() =>matchReducer.collapse_champion_map_change , () => {
+  compute_hp_collapsed()
+})
 
 onUnmounted(() => {
   unsubscribe()
@@ -320,4 +432,7 @@ onUnmounted(() => {
  
 <style scoped lang="scss">
   @import "../styles/match-container-champion.scss";
+  .game_collapse{
+    display: none
+  }
 </style>

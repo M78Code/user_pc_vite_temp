@@ -221,6 +221,7 @@ watch(() => standard_edition.value, (newValue) => {
 const is_champion = computed(() => {
   //let flag = 100 == props.menu_type || (3000 == props.menu_type && lodash.get(MenuData.current_menu, 'date_menu.menuType') == 100); //电竞冠军
   let flag =  is_kemp || (3000 == props.menu_type && lodash.get(MenuData.current_menu, 'date_menu.menuType') == 100); //电竞冠军
+  console.log(is_kemp)
   return flag;
 })
 // 是否显示无第 {X} 个进球 title----次要玩法tips(5分钟次要玩法)
