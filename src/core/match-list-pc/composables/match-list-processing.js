@@ -103,7 +103,6 @@ const mx_list_res = (data, backend_run, cut, collect) => {
   if (MenuData.is_guanjun()) {
     all_league_list.push(...lodash.get(res_data, "data", []));
   }
-  console.log('deal_with_list_data', deal_with_list_data);
       deal_with_list_data(all_league_list);
 	if (code == 200 && all_league_list.length > 0) {
 		is_show_hot.value = false;

@@ -88,7 +88,7 @@ onMounted(() => {
   // })
 })
 
-const deal_width_handicap_ols = (payload) => {
+function deal_width_handicap_ols (payload) {
   const { match } = props;
   let handicap_type = 1
   let { hn, mid } =  match
@@ -111,7 +111,7 @@ const deal_width_handicap_ols = (payload) => {
 /**
  * @description 获取5分钟玩法时的类名，滚球时不需要背景色，早盘时需要背景色
  */
-const get_5min_classname = () => {
+function get_5min_classname () {
   let className = ''
   if (
     props.other_play && ['hps5Minutes'].includes(props.match.play_current_key) // 5分钟玩法
@@ -133,7 +133,7 @@ const get_5min_classname = () => {
  * @param {string} other_class 样式类名
  * @return {Number}  bet_width 投注项宽度 
  */
-const get_bet_width = (index, other_class = '') => {
+function get_bet_width(index, other_class = '') {
   let { bet_width } = match_list_tpl_size
   // let bet_width = 110;
   let { data_tpl_id } = match_style_obj
@@ -166,7 +166,7 @@ const get_bet_width = (index, other_class = '') => {
  * @param { Object} ol_data 投注项
  * * @return {height} 投注项高度
  */
-const get_bet_height = (length) => {
+function get_bet_height(length) {
   let height = 35
   let { data_tpl_id } = match_style_obj
   if (length == 1) {
@@ -183,7 +183,7 @@ const get_bet_height = (length) => {
 * @param { Object} ol_data 投注项信息
 * * @return {String} 投注项样式
 */
-const get_bet_style = (col_index, length, ol_data) => {
+function get_bet_style(col_index, length, ol_data) {
   let other_class = lodash.get(ol_data, 'other_class', '')
   let style = `width:${get_bet_width(col_index, other_class)}px !important;height:${get_bet_height(length)}px !important;`
   if (other_class.includes('displacement')) {
@@ -202,7 +202,7 @@ const get_bet_style = (col_index, length, ol_data) => {
  * @param {hipo} 盘口是否支持 0不支持 1支持  
  * @return {undefined} undefined
  */
-const getCurState = (hipo) => {
+function getCurState (hipo) {
   if (cur_esports_mode.value) {
     //判断盘口是否支持
     return hipo == 1

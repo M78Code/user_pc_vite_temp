@@ -30,7 +30,18 @@ const initialState = {
   // 短距离滚动标识
   allow_short_scroll: true,
   // 当前基本玩法集展示 0 在左 1 在右  
-  standard_odd_status: 12313
+  standard_odd_status: 12313,
+
+   //赛种折叠对象
+   collapse_csid_tid_map: {},
+   //赛种折叠对象 改变 事件
+   collapse_csid_tid_map_change:1,
+   //冠军玩法折叠对象
+     collapse_champion_map: {},
+   //冠军玩法折叠对象 改变 事件
+   collapse_champion_map_change:1,
+   //冠军玩法折叠对象 改变 事件 来源
+   collapse_champion_map_change_source:'',
 }
 
 const matchSlice = createSlice({
@@ -72,7 +83,87 @@ const matchSlice = createSlice({
     },
     set_standard_odd_status(state, { payload }) {
       state.standard_odd_status = payload
-    }
+    },
+
+    // 冠军玩法折叠相关
+    set_collapse_champion_map(state, value) {
+      if(!value){
+        state.collapse_champion_map={}
+  
+        state.collapse_champion_map_change_source =  ''
+        state.collapse_champion_map_change = Date.now()
+        return false
+      }
+    //  console.error( 'set_collapse_champion_map-----',  value[0], state.collapse_champion_map);
+      let {tid ,payload ,type ,source} = value
+      // type  1 合并配置   2 覆写赋值
+      if(!state.collapse_champion_map[tid]){ state.collapse_champion_map[tid]={}}
+      let old = state.collapse_champion_map[tid]
+      let new_obj={}
+      if (type==1 ) {
+        new_obj=  Object.assign(new_obj,old, payload)
+      }else if(type==2){
+        new_obj =payload
+      }
+      state.collapse_champion_map[tid] = new_obj
+  
+      state.collapse_champion_map_change_source = source ||''
+      state.collapse_champion_map_change = Date.now()
+  
+      // console.error(' state.collapse_champion_map----', state.collapse_champion_map);
+      // console.error(' state.collapse_champion_map_change_source----', state.collapse_champion_map_change_source);
+    },
+  
+  
+  
+     /**
+      * 设置 球类折叠   状态对象
+      * @param {*} state
+      * @param {*} value
+      */
+      set_collapse_csid_tid_map(state,value) {
+  
+        if(!value){
+          // console.error('set_collapse_csid_tid_map---------11111');
+          state.collapse_csid_tid_map={}
+          state.collapse_champion_map={}
+          state.collapse_champion_map_change_source=''
+          state.collapse_champion_map_change = Date.now()
+          state.collapse_csid_tid_map_change = Date.now()
+          return false
+        }
+      //  console.error( 'set_collapse_csid_tid_map-----',  value[0], state.collapse_csid_tid_map);
+        let {csid ,payload ,type,  source=''} = value
+        // type  1 合并配置   2 覆写赋值
+        if(!state.collapse_csid_tid_map[csid]){ state.collapse_csid_tid_map[csid]={}}
+        let old = state.collapse_csid_tid_map[csid]
+        let new_obj={}
+        if (type==1 ) {
+          new_obj=  Object.assign(new_obj,old, payload)
+        }else if(type==2){
+          new_obj =payload
+        }
+  
+        //当 冠军 页面 球种展开的时候 需要展开 下面的所有联赛 ，以及联赛下的所有玩法
+  
+  
+        if(source.includes('champion-csid') ){
+          state.collapse_champion_map={}
+  
+          state.collapse_champion_map_change_source = source
+          state.collapse_champion_map_change = Date.now()
+        }else if(source.includes('champion-tid')){
+          state.collapse_champion_map_change_source =  source
+          state.collapse_champion_map_change = Date.now()
+        }else{
+          state.collapse_champion_map_change_source =''
+        }
+  
+  
+        state.collapse_csid_tid_map[csid] = new_obj
+        state.collapse_csid_tid_map_change = Date.now()
+        // console.error( 'collapse_csid_tid_map_change-----', Date.now() )
+      }
   }
 })
 

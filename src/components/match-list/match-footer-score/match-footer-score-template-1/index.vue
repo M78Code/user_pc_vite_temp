@@ -112,7 +112,7 @@ onMounted(() => {
 /**
  * 计算是否显示比分滚动箭头
  */
-const compute_is_show_more = () => {
+function compute_is_show_more () {
   if (!stage_score.value) return;
   let length = lodash.get(props.match, "score_list.length", 0);
   if (length < 5) {
@@ -145,7 +145,7 @@ const compute_is_show_more = () => {
 /**
  * 比分溢出时滚动方法
  */
-const scorll = (type) => {
+function scorll (type) {
   let length = lodash.get(props.match, "score_list.length", 0);
   if (!stage_score.value || length < 5) return;
   let stageScore = stage_score.value;

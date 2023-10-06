@@ -5,7 +5,7 @@
 -->
 <template>
   <div ref="video" class="c-match-video relative-position" @mousemove="onMousemove">
-    <!-- 精彩回播 header -->
+    <!-- 精彩回播 header -->{{ current_replay }}
     <div v-if="current_replay" class="video-replay-header">
       <div class="btn-back-live"></div>
       <div class="replay-info">{{current_replay.titleInfo}}</div>
@@ -13,16 +13,16 @@
     </div>
     <div class="right-icon"  @click.stop="is_show_content = !is_show_content">
       <!-- 提示消息 -->
-    <icon-wapper class="icon" v-if="!is_esports" :class="is_show_content && 'active'" size="14px" name="icon-tips3" :color="is_show_content ? 'rgba(255,255,255,.7)' : '#fff'"/>
-         <!-- 提示内容 -->
-    <div :class="['tip-content',{'is-iframe':$utils.is_iframe}]" v-if="is_show_content" @click.stop>
-      <div class="content-wrap relative-position">
-        <div class="yb-icon-triangle"></div>
-        <!-- 此版面现实的所有直播内容仅供参考........ -->
-        <div class="content">{{ i18n_t('common.live_notice')}}</div>
+      <icon-wapper class="icon" v-if="!is_esports" :class="is_show_content && 'active'" size="14px" name="icon-tips3" :color="is_show_content ? 'rgba(255,255,255,.7)' : '#fff'"/>
+          <!-- 提示内容 -->
+      <div :class="['tip-content',{'is-iframe':$utils.is_iframe}]" v-if="is_show_content" @click.stop>
+        <div class="content-wrap relative-position">
+          <div class="yb-icon-triangle"></div>
+          <!-- 此版面现实的所有直播内容仅供参考........ -->
+          <div class="content">{{ i18n_t('common.live_notice')}}</div>
+        </div>
       </div>
     </div>
-      </div>
     <!-- 普通面板 1 -->
     <template v-if="show_type == 'info' && !is_esports" >
       <div :style="{'background-image': `url('${background_img}')`}" class="head-info">

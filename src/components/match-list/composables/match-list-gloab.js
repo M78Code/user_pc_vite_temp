@@ -8,7 +8,7 @@ import UserCtr from 'src/core/user-config/user-ctr.js'
 const route = router.currentRoute.value
 const page_source = PageSourceData;
 
-const get_full_sr_url = (match) => {
+function get_full_sr_url(match) {
 	return details.get_full_sr_url(match);
 };
 // sr 分析数据点击跳转
