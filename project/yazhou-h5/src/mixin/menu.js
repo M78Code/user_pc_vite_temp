@@ -34,10 +34,15 @@ const is_mix = computed(() => {
 const is_kemp = computed(() => {
     return MenuData.is_kemp(menu_type.value);
 });
-//是否 禁足
+//是否 竞足
 const is_jinzu = computed(() => {
     return MenuData.is_jinzu(menu_type.value);
 });
+// 是否 热门
+const is_hot = computed(() => {
+    return MenuData.is_hot(menu_type.value);
+});
+
 const menu_lv1 = ref(MenuData.current_lv_1_menu)//1级 大类
 const menu_lv2 = ref(MenuData.current_lv_1_menu)//2级 球种
 const menu_lv3 = ref(MenuData.current_lv_1_menu)//3级 日期
@@ -49,5 +54,5 @@ watch(update_time, () => {
     menu_lv4.value = MenuData.current_lv_4_menu;//4级
 });
 export {
-    is_jinzu, is_kemp, is_mix, is_vr, is_zaopan, is_export, is_scroll_ball, is_today, is_results, menu_type, menu_lv1, menu_lv2
+    is_jinzu, is_kemp, is_mix, is_vr, is_zaopan, is_export, is_scroll_ball, is_today, is_results, menu_type, menu_lv1, menu_lv2, is_hot
 }

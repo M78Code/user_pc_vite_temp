@@ -479,7 +479,7 @@ import { normal_img_not_favorite_white, normal_img_not_favorite_black, normal_im
 
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import { lang, standard_edition } from 'project_path/src/mixin/userctr.js'
-import { menu_type } from 'project_path/src/mixin/menu.js'
+import { is_hot, menu_type } from 'project_path/src/mixin/menu.js'
 
 // TODO: 其他模块得 store  待添加
 // mixins: [formatmixin, odd_convert, bettings, match_list_mixin, msc_bw3, common],
@@ -604,17 +604,16 @@ const muUrl_icon = computed(() => {
 // TODO: 判断是否显示体育类型
 const get_sport_show = computed(() => {
   if (['detail_match_list'].includes(props.main_source)) { return false }
-  // 代表是首页模块
-  if (!lodash.get(MenuData.current_menu, 'main')) {
+  if (is_hot.value) {
+    // 热门
+    if (lodash.get(MenuData.hot_tab_menu, 'index') !== 0) { return false }
+    if (props.i === 0) { return true }
     if (props.i > 0) {
-      let p = MatchDataBaseH5.get_quick_mid_obj(MatchMeta.match_mids[props.i - 1])
-      let c = MatchDataBaseH5.get_quick_mid_obj(match.value.mid)
+      const p = MatchDataBaseH5.get_quick_mid_obj(MatchMeta.match_mids[props.i - 1])
+      const c = MatchDataBaseH5.get_quick_mid_obj(match.value.mid)
       if (p && c) {
         return p.csid !== c.csid;
       }
-    } else {
-      if (lodash.get(MenuData.hot_tab_menu, 'index') == 0) { return true }
-      return false;
     }
   } else if ([1, 2, 3, 4, 11, 12, 28, 30, 3000].includes(+menu_type.value)) {
     if (props.match_of_list.show_sport_type) {

@@ -91,12 +91,8 @@ class MenuData {
    * @description 设置热门tab
    * @param {*} 热门下的菜单信息 
    */
-  /**
-   * @description 设置热门tab
-   * @param {*} 热门下的菜单信息 
-   */
   set_hot_tab_menu(menu) {
-    this.hot_tab_menu = menu
+    this.hot_tab_menu= menu
   }
   /**
    * 设置值 并且缓存

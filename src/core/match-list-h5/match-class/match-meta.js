@@ -206,9 +206,10 @@ class MatchMeta {
   get_match_mids (list) {
     const length = lodash.get(list, 'length', 0)
     if (length < 1) return []
-    this.match_mids = list.map(t => {
+    const match_mids_list = list.map(t => {
       return t.mid
     })
+    this.set_match_mids(match_mids_list)
   }
 
   /**
