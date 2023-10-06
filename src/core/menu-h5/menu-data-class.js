@@ -152,7 +152,7 @@ class MenuData {
     // // 竟足
     // let lottery = this.init_lottery(data);
     // 电竞 2100 = 英雄联盟
-    let menu_dianjing = { mi: 7, sl: [] };
+    let menu_dianjing = { mi: 7, sl: BaseData.dianjing_sublist };
     let menu_jingzu = { mi: 30, sl: [] };
     let menu_guanjun = { mi: 4, sl: [] };
     let menu_hot = { mi: 500, sl: [] }
@@ -161,10 +161,10 @@ class MenuData {
       if (item && item.sl && item.sl.length > 0) {
         mi_list.push(...item.sl);
       }
-      //电竞
-      if (BaseData.sports_mi.includes(+item.mi)) {
-        menu_dianjing.sl.push(item);
-      }
+      // //电竞
+      // if (BaseData.sports_mi.includes(+item.mi)) {
+      //   menu_dianjing.sl.push(item);
+      // }
       //冠军
       if ([400].includes(+item.mi)) {
         menu_guanjun.sl = item.sl || [];
