@@ -258,7 +258,7 @@ const cur_state = computed(()=>{
 })
 //是否电子竞技
 const is_eports = computed(()=>{
-    return is_eports_csid(+route.params.csid)
+    return is_eports_csid(+route?.params.csid)
   }) 
    
 /**

@@ -10,16 +10,16 @@
           <div class="left"></div>
           <tab :list="tabs" is_show_line :currentIndex="currentIndex" @onclick="on_switch"></tab>
           <div class="right-span" @click="clear_handler">
-            <span>{{ $root.$t('sandan.btn') }}</span>
+            <span>{{ i18n_t('sandan.btn') }}</span>
             <i class="icon-arrow q-icon c-icon" size="14px"></i>
           </div>
       </div>
-      <span class="span flex justify-center">{{ $root.$t('sandan.title') }}</span>
+      <span class="span flex justify-center">{{ i18n_t('sandan.title') }}</span>
        <!--确认中转圈圈-->
        <div class="loading-wrap" v-if="show_loading">
                 <div class="img-loading"></div>
                 <div class="text-center loading-text flex items-end justify-center">
-                  {{$root.$t('common.loading') + '...'}}
+                  {{i18n_t('common.loading') + '...'}}
                   <!-- 内容加载中... -->
                 </div>
         </div>
@@ -86,12 +86,12 @@
                     <div class="flex">
                       <div class="item-row-left">
                         <template v-if="item.orderStatus == 1 || item.orderStatus == 2 || item.orderStatus == 4 || item.orderStatus == 0">
-                          <span>{{ $root.$t('common.bets_val') }}:</span>
+                          <span>{{ i18n_t('common.bets_val') }}:</span>
                           <span v-if=" _.get(item, 'detailList[0].backAmount')">{{ _.get(item, 'detailList[0].backAmount') | format_currency }}</span>
                           <span v-else>{{_.get(item, 'orderAmountTotal')}}</span>
                         </template>
                         <template v-else>
-                          <span>{{ $root.$t('common.bets_val') }}:</span>
+                          <span>{{ i18n_t('common.bets_val') }}:</span>
                           <!-- 留空处理 -->
                           <span v-if="item.acCode">- -</span>
                           <!-- 最高金额 -->
@@ -100,7 +100,7 @@
                       </div>
                       <!-- 最高可赢||返还金额 -->
                       <div class="item-row-rght">
-                        <span>{{item.orderStatus == 1 ?$root.$t('common.donate_win') :$root.$t('common.maxn_amount_val') }}:</span>
+                        <span>{{item.orderStatus == 1 ?i18n_t('common.donate_win') :i18n_t('common.maxn_amount_val') }}:</span>
                         <span v-if="item.orderStatus != 1">{{ item.maxWinAmount | format_currency }}</span>
                         <span v-else>{{ item.backAmount | format_currency }}</span>
                       </div>   
@@ -119,7 +119,7 @@
                     </div>
                     <div class="bottom-right">
                       <span>投注时间:</span> 
-                      <!-- <span>{{(new Date(utils.format_time_zone_time(+data.betTime))).Format($root.$t('time4'))}}</span>MM/dd hh:mm -->
+                      <!-- <span>{{(new Date(utils.format_time_zone_time(+data.betTime))).Format(i18n_t('time4'))}}</span>MM/dd hh:mm -->
                       <span>{{(new Date(utils.format_time_zone_time( +_.get(item, 'betTime') ))).Format('MM/dd hh:mm')}}</span>
                       <!-- <span>08/20</span><span>17:28</span> -->
                     </div>
@@ -129,7 +129,7 @@
         </div>
       <div v-else class="load-data-wrap row justify-center">
         <no-data
-        :msg="$root.$t('common.empty_data')"
+        :msg="i18n_t('common.empty_data')"
         :marginBottom="'0px'"
         class="empty-wrap"
         width="280px"
@@ -146,16 +146,16 @@
           <span 
           class="text" 
           :class="{'is-clear-unclick':is_clear_unclick}"
-          >{{ $root.$t('sandan.clean') }}</span>
+          >{{ i18n_t('sandan.clean') }}</span>
         </div>
         <div 
         class="saidan-btn"
         :class="{'is-saidan-unclick':is_saidan_unclick}"
         @click="saidan_handler()"
-        >{{ $root.$t('sandan.saidan') }}</div>
+        >{{ i18n_t('sandan.saidan') }}</div>
       </div> 
        <!--复制样式 已复制-->
-    <div class="toast fit-center" v-if="toast">{{$root.$t("bet_record.copyed")}}</div>
+    <div class="toast fit-center" v-if="toast">{{i18n_t("bet_record.copyed")}}</div>
   </div>
 </template>
 <script>

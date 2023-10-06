@@ -8,11 +8,11 @@
     <!-- 统计数据 标题 -->
     <panel-header 
         v-if="show_header"
-        :title="$root.$t('common.panel_total')" icon="stats">
+        :title="i18n_t('common.panel_total')" icon="stats">
       <template v-slot:append>
         <div class="square-wrapper flex flex-center" v-if="$utils.is_show_sr_flg(match_info)" @click="sr_click_handle">
           <icon size="12px" name="icon-signal" />
-          <q-tooltip anchor="top middle" self="center middle" :content-style="tooltip_style">{{$root.$t('common.analysis')}}</q-tooltip>
+          <q-tooltip anchor="top middle" self="center middle" :content-style="tooltip_style">{{i18n_t('common.analysis')}}</q-tooltip>
         </div>
       </template>
     </panel-header>
