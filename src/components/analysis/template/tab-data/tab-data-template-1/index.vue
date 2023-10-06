@@ -514,7 +514,7 @@ function getAge(birthdate) {
       }
     }
     .d-header {
-      background: var(--q-analysis-bg-color-17);
+      background: var(-q-analysis-color-17);
       color:  var(--q-analysis-color-7);
       border-bottom: none !important;
       .d-td {

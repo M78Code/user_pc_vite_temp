@@ -173,7 +173,7 @@ get_lineup()
 * @description: 阵容数据
 */
 function get_lineup() {
-  api_analysis.get_lineupList({ matchInfoId: props.match.mid }).then(({ data }) => {
+  api_analysis.get_lineupList({ matchInfoId: props.match.mid }).then(data => {
     if (data.code == 200) {
       let lineupInfo = data.data
       let lineup_formation = {
@@ -356,7 +356,7 @@ function get_first_lineup(data, lineup, type) {
           display: flex;
           align-items: center;
           height: 28px;
-          background: var(--q-analysis-bg-color-17);
+          background: var(-q-analysis-color-17);
           color: var(--q-analysis-color-12);
 
           &:last-child {
