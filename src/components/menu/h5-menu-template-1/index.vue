@@ -326,19 +326,20 @@ async function set_menu_lv2(item, index, type = "click") {
   const mi = lodash.get(MenuData.current_lv_2_menu, 'mi')
   if (mi === item.mi && !is_first.value) return
   MenuData.set_current_lv2_menu(item, index, type);
-  // 冠军拉取旧接口； 待 元数据提供 冠军赛事后 再删除
-  if (MenuData.is_kemp()) return MatchMeta.get_champion_match()
-  // 赛果不走元数据， 直接拉取接口
-  if (MenuData.is_results()) return MatchMeta.get_results_match()
-  // 拉取菜单对应源数据
-  is_first.value = false
-  MatchMeta.set_origin_match_data()
   switch (menu_type.value) {
     case 7://电竞需要改变背景图片
       dj_back_img(item.mi)
       break
   }
-
+  is_first.value = false
+  // 冠军拉取旧接口； 待 元数据提供 冠军赛事后 再删除
+  if (MenuData.is_kemp()) return MatchMeta.get_champion_match()
+  // 赛果不走元数据， 直接拉取接口
+  if (MenuData.is_results()) return MatchMeta.get_results_match()
+  // 赛果不走元数据， 直接拉取接口
+  if (MenuData.is_export()) return MatchMeta.get_esports_match(item)
+  // 设置菜单对应源数据
+  MatchMeta.set_origin_match_data()
 }
 /**
 /**
@@ -356,8 +357,9 @@ function set_menu_lv3(item, index, type = "click") {
   date_menu_curr_i.value = index;
   //设置三级菜单
   MenuData.set_current_lv3_menu(item, index, type);
-  if (MenuData.is_kemp()) return MatchMeta.filter_match_by_time(item?.field1)
   if (MenuData.is_results()) return MatchMeta.get_results_match()
+  // 早盘三级菜单选择
+  if (MenuData.is_zaopan()) MatchMeta.filter_match_by_time(item?.field1)
 }
 /**
  * 四级菜单事件
@@ -367,6 +369,7 @@ function set_menu_lv4(item, index, type = "click") {
 }
 //判断后台是否展示 VR / 电竞
 const show_dianjing = (item, index) => {
+  return true
   if (MenuData.is_export(item.mi)) return base_data.is_mi_2000_open; // 电竞tob后台关闭隐藏
   if (MenuData.is_vr(item.mi)) return base_data.is_mi_300_open; // VRtob后台关闭隐藏
   return ![2, 3, 6, 7].includes(index);
@@ -562,7 +565,7 @@ if (MenuData.is_hot()) {
     left: 0;
     z-index: 2;
 
-    &.esport {
+    &.esport, &.is_export {
       background-color: transparent;
     }
 
@@ -593,7 +596,7 @@ if (MenuData.is_hot()) {
       padding-right: 0.04rem;
       margin-left: 0.15rem;
 
-      &.esport {
+      &.esport,&.is_export {
         background-color: transparent;
       }
 

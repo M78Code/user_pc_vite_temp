@@ -62,10 +62,10 @@
         @click="league_l_clicked()">
         <div class="league-t-wrap">
           <!-- 电竞图标 写死 -->
-          <div v-if="match_of_list.csid == 101" class="league-icon-mini league-icon-mini2" style="--num:39"></div>
-          <div v-else-if="match_of_list.csid == 103" class="league-icon-mini league-icon-mini2" style="--num:40"></div>
-          <div v-else-if="match_of_list.csid == 102" class="league-icon-mini league-icon-mini2" style="--num:41"></div>
-          <div v-else-if="match_of_list.csid == 100" class="league-icon-mini league-icon-mini2" style="--num:42"></div>
+          <div class="esport" v-if="match_of_list.csid == 101" :style="compute_css('menu-sport-active-image', 2101)"></div>
+          <div class="esport" v-else-if="match_of_list.csid == 103" :style="compute_css('menu-sport-active-image', 2103)"></div>
+          <div class="esport" v-else-if="match_of_list.csid == 102" :style="compute_css('menu-sport-active-image', 2102)"></div>
+          <div class="esport" v-else-if="match_of_list.csid == 100" :style="compute_css('menu-sport-active-image', 2100)"></div>
           <div class="league-icon-mini" v-else>
             <image-cache-load :csid="match_of_list.csid" :path="match_of_list.lurl" type="league"></image-cache-load>
           </div>
@@ -455,7 +455,7 @@ import { i18n_t } from 'src/core/index.js'
 import UserCtr from 'src/core/user-config/user-ctr.js'
 import PageSourceData from "src/core/page-source/page-source.js";
 import sprite_img from "src/core/server-img/sprite-img/index.js"
-import { MenuData, score_switch_handle, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/index.js"
+import { MenuData, score_switch_handle, compute_css, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/index.js"
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import matchListClass from 'src/core/match-list-h5/match-class/match-list.js'
 import { format_time_zone, format_time_zone_time, format_how_many_days, format_week } from "src/core/format/index.js"

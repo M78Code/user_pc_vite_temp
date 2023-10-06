@@ -335,7 +335,6 @@
       display: flex;
       align-items: center;
       flex-wrap: nowrap;
-
       .league-collapse-dir {
         width: 0.12rem;
         height: 0.06rem;
@@ -429,17 +428,16 @@
     align-items: center;
   }
 
-  .league-icon-mini {
-    width: 0.22rem;
-    height: 0.22rem;
+  .esport {
     margin: 0.01rem 0.07rem 0 0.09rem;
     position: relative;
-
-    &.league-icon-mini2 {
-      --per: -0.32rem;
-      background: var(--q-color-com-img-bg-11) no-repeat center / 0.2rem 18.88rem;
-      background-position-y: calc(var(--per) * var(--num));
-    }
+    --per: -0.32rem;
+    display: block;
+    width: auto;
+    height: 0.22rem;
+    width: 0.22rem;
+    background-position: 0 0;
+    background-size: 0.22rem 18.88rem;
 
     img {
       width: 0.22rem;
