@@ -1,4 +1,5 @@
   import SliderX from "src/components/match-detail/match_info/slider_x.vue"
+  import { UserCtr ,MatchDetailCalss} from "src/core/index";
   import { TabWapper as Tabs } from "src/components/common/tab"
   import { api_details } from "src/api/index";
   export default {
@@ -31,7 +32,14 @@
               // 回播赛事event_id
               replay_event_id: 0,
               // 回播是否有数据
-              has_replay_data: false
+              has_replay_data: false,
+              //播放类型
+              vx_play_media:MatchDetailCalss.play_media,
+              vx_get_user:UserCtr.get_user(),
+              //用户类版本号
+              user_version:UserCtr.user_version, 
+              //仓库版本号
+              details_data_version:MatchDetailCalss.details_data_version,  
             }
       },
       // computed: {
@@ -72,6 +80,19 @@
             }, 600);
           }
         },
+        //监听详情类的版本号
+        "details_data_version.version": {
+          handler(res) {
+            this.vx_play_media = MatchDetailCalss.play_media
+          }
+        },
+          //监听user类的版本号
+        "user_version.version": {
+          handler(res) {
+            this.vx_get_user = UserCtr.get_user()
+       
+            }
+          },
         // 精彩回播配置信息
         'vx_get_user.merchantEventSwitchVO':{
           handler(res) {

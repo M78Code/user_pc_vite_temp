@@ -77,7 +77,7 @@ export default {
       //用户类版本号
       user_version:UserCtr.user_version, 
        // 用户是否长时间未操作
-      get_is_user_no_handle:UserCtr.get_is_user_no_handle,
+      get_is_user_no_handle:UserCtr.get_is_user_no_handle(),
       //赛事详情对象
       match_info:{}
     }
@@ -111,8 +111,7 @@ export default {
         console.log( MatchDetailCalss.play_media,'play_media',MatchDetailCalss);
         this.play_media = MatchDetailCalss.play_media
         this.vx_is_pause_video = MatchDetailCalss.vx_is_pause_video
-        this.show_type =MatchDetailCalss.params.media_type
-        console.log(this.show_type,'this.media_type');
+        // this.show_type =MatchDetailCalss.params.media_type
         this.match_info = MatchDetailsData.get_quick_mid_obj(MatchDetailCalss.play_media.mid)
       }
     },
@@ -123,7 +122,7 @@ export default {
         this.is_fold_status = GlobalSwitchClass.is_fold_status
       }
     },
-      //监听global开关的版本号
+      //监听user类的版本号
     "user_version.version": {
       handler(res) {
         this.vx_get_user = UserCtr.get_user()
@@ -349,7 +348,6 @@ export default {
             if (media_type === 'topic' && this.topic_is_playing) {
               return
             }
-            
             video.set_play_media(this.match_info.mid,media_type)
             // 记录切换前 媒体相关信息
             this.last_media_info = lodash.cloneDeep(this.play_media)
@@ -382,7 +380,6 @@ export default {
           this.topic_is_playing = false
           this.meida_update_time = 0
         }
-        
         if(media_type == 'animation' && this.match_info.mid){
           // 目标赛事动画url相关信息获取
           video.get_animation_url(this.match_info, (show_type,media_src) => {
@@ -390,7 +387,6 @@ export default {
             if(callback_id != this.callback_id){
               return
             }
-            
             video.set_play_media(this.match_info.mid,'animation')
             this.show_type = show_type
             // 此处为最终的动画url

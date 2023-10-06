@@ -61,7 +61,7 @@ export const get_match_detail_m = (params, config = {}, url = "/v1/m/matchDetail
 export const get_category_playTop = (params, config, url = "/v1/m/category/playTop") => http.get(`${prefix}${url}`, params, config)
 
 //获取直播url
-export const post_video_url = (params, config = {}, url = "/v1/w/videoAnimationUrlPB") => {
+export const post_video_url = (params, config = {}, url = "/v1/w/videoAnimationUrl") => {
   let imgDm = lodash.get(window,'env.config.oss_img_domains[0]');
   if(imgDm){
     params.imgDm = imgDm;
