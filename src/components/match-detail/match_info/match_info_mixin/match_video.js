@@ -292,7 +292,6 @@ export default {
         
         // 非首次加载视频
         if(this.mid == -1 ){
-          debugger
           this.show_type = 'no-video'
           return
         }
@@ -303,8 +302,7 @@ export default {
             this.media_src = url
             this.show_type = this.vx_is_pause_video ? 'pause' : 'play-video'
           }else{
-            if(is_eports_csid(csid) || csid == -1){
-              debugger
+            if(is_eports_csid(csid) || csid == -1){              
               this.show_type = 'no-video'
             }else{
               this.show_type = ''
@@ -352,7 +350,7 @@ export default {
           this.show_type = 'play-video'
           // 目标赛事视频url相关信息获取
           video.get_video_url(this.match_info, (show_type,media_src) => {
-            
+            debugger
             // 未登录
             if(media_src === true && show_type === 'no-login'){
               this.is_limited = true
