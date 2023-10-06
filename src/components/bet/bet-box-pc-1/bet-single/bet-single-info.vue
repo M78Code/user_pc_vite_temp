@@ -85,13 +85,13 @@
           </label>
           <!--+/1.5-->
            <!--【预约】-->
-           <label class="appoint" v-if="ref_data.show_appoint">
+           <label class="appoint" style="margin-left:10px" v-if="ref_data.show_appoint">
             +{{ `${$t('bet.bet_book2')}` }}
           </label>
         </div>
         <!-- 预约投注组件 -->
         <div v-if="ref_data.show_appoint">
-          <bet-pro-appoint :item="item" />
+          <bet-pro-appoint :item="item" @cancel_operate="cancel_operate" />
         </div>
         <!-- 赔率 -->
         <div class="bet-team-handicap-odd" v-else>
@@ -105,7 +105,7 @@
             </span>
           </div>
           <!--【预约】-->
-          <label class="appoint" v-if="pending_order_status(item.playOptionsId)" @click="set_show_appoint">
+          <label class="appoint appoint_cursor" v-if="pending_order_status(item.playOptionsId)" @click="set_show_appoint">
             +{{ `${$t('bet.bet_book2')}` }}
           </label>
         </div>
@@ -129,6 +129,7 @@ import { i18n_t } from "src/boot/i18n.js"
 import { get_query_bet_amount_pre } from "src/core/bet/class/bet-box-submit.js"
 import BetInput from "./bet-input.vue"
 import { IconWapper } from 'src/components/icon'
+import BetProAppoint from "./bet-pre-appoint.vue"
 // import { del_bet_item } from "./config/bet_single_info.js"
 
 const props = defineProps({
@@ -149,7 +150,8 @@ const props = defineProps({
 * @returns {number}
 */
 const pending_order_status = computed(() => options_id => {
-  let bet_obj = BetData.bet_appoint_obj.find(item => item == options_id) || '';
+  // 判断投注项列表中 那些是可以预约的
+  let bet_obj = BetData.bet_pre_list.find(item => item == options_id) || '';
   if (bet_obj && ref_data.active == 1 && [1, 2].includes(Number(props.item.sportId))) {
     return 1
   }
@@ -182,6 +184,10 @@ const set_show_appoint = () =>{
   // 显示预约投注内容
   ref_data.show_appoint = !ref_data.show_appoint
  
+}
+
+const cancel_operate = () =>{
+  ref_data.show_appoint = !ref_data.show_appoint
 }
 
 </script>
@@ -422,7 +428,7 @@ const set_show_appoint = () =>{
   height: 20px;
   align-items: center;
 }
-.appoint{
+.appoint_cursor{
   cursor: pointer;
 }
 </style>
