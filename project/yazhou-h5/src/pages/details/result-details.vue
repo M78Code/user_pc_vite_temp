@@ -213,7 +213,6 @@ const MatchDataWarehouseInstance = reactive(MatchDataWarehouse_H5_Detail_Common)
           loading.value = true
           if(!data) return false
           result_detail_data.value = data;
-          console.error(data, code);
           // 61-比赛延迟,80-比赛中断,90-比赛放弃
           if(!(['90','80','61'].includes(data.mmp+''))){
             data.mmp = '999'

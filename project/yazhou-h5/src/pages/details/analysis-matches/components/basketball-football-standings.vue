@@ -77,7 +77,6 @@ const props = defineProps({
 // TODO: 后续修改调整
 // import {mapGetters} from "vuex";
 
-console.error(props.detail_data);
   let ranking_data = ref([])
   //按钮名字
   let btn_text =ref('')

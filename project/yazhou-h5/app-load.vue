@@ -69,7 +69,6 @@ onBeforeMount(() => {
   Object.assign(page_style, global_color_obj());
   // 初始化启动日志系统--开发模式时日志打开
   // window.wslog = new WsLog(window.env.NODE_ENV === 'development');
-
   if (window.wslog.wsRun) {
     timer = setInterval(() => {
       time_str.value = new Date().Format("yyyy-MM-dd hh:mm:ss.S");

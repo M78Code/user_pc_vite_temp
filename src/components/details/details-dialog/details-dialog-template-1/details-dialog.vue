@@ -2,7 +2,7 @@
  * @Description: 详情赛事下拉,赛事列表组件(包括引入的dialog-header子组件)
 -->
 <template>
-  <div class="details-dialog">
+  <div class="details-dialog" :style="page_style">
     <div class="detail-d-container">
       <!-- 引入的赛事顶部组件 -->
       <dialog-header
@@ -144,7 +144,7 @@
 </template>
 
 <script setup>
-import { ref, computed, defineComponent, getCurrentInstance, onMounted, onUnmounted } from 'vue';
+import { ref, reactive, computed, defineComponent, getCurrentInstance, onMounted, onUnmounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import lodash from 'lodash';
 // 组件
@@ -157,7 +157,7 @@ import showStartTime from 'project_path/src/components/details/wight/show-start-
 import { format_total_score } from 'src/core/format/module/format-score.js'
 import { UserCtr, MenuData } from "src/core/index.js";
 import { useMittEmit, MITT_TYPES } from  "src/core/mitt"
-
+import { compute_css_variables } from "src/core/css-var/index.js"
 import icon_video from 'project_path/image/common/icon_video.png'
 import icon_video_black from 'project_path/image/common/icon_video_black.png'
 
@@ -166,7 +166,8 @@ const props = defineProps(['detail_data', 'math_list_data'])
 const route = useRoute()
 const router = useRouter()
 const is_match_result = computed(() => ['result_details', 'match_result'].includes(route.name))
-
+// 公共主题色
+const page_style = reactive({});
 // 定时器变量
 const timer1_ = ref(null)
 const clear_timer1_ = () => {
@@ -186,6 +187,18 @@ const clear_timer2_ = () => {
 onUnmounted(clear_timer2_)
 
 const { menu_type, current_menu } = MenuData; //菜单选中项
+// 公共全局主题色
+function global_color_obj() {
+  // 背景色
+  let bg = compute_css_variables({ category: 'global', module: 'background' })
+  // 边框色
+  let bd = compute_css_variables({ category: 'global', module: 'border' })
+  // 字体色
+  let tc = compute_css_variables({ category: 'global', module: 'color' })
+  // 渐变色
+  let lg = compute_css_variables({ category: 'global', module: 'linear-gradient' })
+  return { ...bg, ...bd, ...tc, ...lg }
+}
 
 // 展示lvs 图标
 function show_lvs(item) {
@@ -251,6 +264,7 @@ function change_active(item) {
 const { ctx } = getCurrentInstance()
 // 解决三星手机图片不出来问题
 onMounted(() => ctx.$forceUpdate())
+onMounted(() => Object.assign(page_style, global_color_obj()))
 timer2_.value = setInterval(ctx.$forceUpdate, 2000);
 </script>
 
