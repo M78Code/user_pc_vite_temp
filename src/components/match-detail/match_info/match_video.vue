@@ -47,7 +47,7 @@
       <div class="loading-text">
         {{ i18n_t('common.loading')}}
         <!-- 数据加载中... 请稍后 -->
-      </div>{{media_src}}
+      </div>
       <iframe
         id="video-iframe"
         class="video-iframe fit"
@@ -60,7 +60,7 @@
         scrolling="no"
         allowfullscreen='true' allow="autoplay"
       ></iframe>
-      <template v-if="show_video_replay && play_media.media_type === 'video' && (vx_layout_cur_page.cur !== 'details' && !is_esports)">
+      <template v-if="show_video_replay && play_media.media_type === 'video' && (LayOutMain_pc.layout_current_path.cur !== 'details' && !is_esports)">
         <!--（精彩/收起）回放 -->
         <div
           v-if="!(events_list.length === 0 && current_events_type === 0)"

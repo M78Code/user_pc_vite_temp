@@ -10,7 +10,7 @@ import info from "src/components/match-detail/match_info/info.vue";
 import video_replay from "src/components/match-detail/match_info/match_info_mixin/video_replay.js";
 import LoadData from 'src/components/load_data/load_data.vue';
 import MenuData from "src/core/menu-pc/menu-data-class.js";
-import { useMittEmit, MITT_TYPES } from  "src/core/mitt"
+import { useMittEmit, MITT_TYPES,useMittEmitterGenerator,useMittOn } from  "src/core/mitt"
 import {is_eports_csid,MatchDetailCalss,get_media_icon_index,GlobalSwitchClass,UserCtr, MatchDataWarehouse_PC_Detail_Common as MatchDetailsData,LayOutMain_pc } from "src/core/index"
 import url_add_param  from "src/core/enter-params/util/index.js"
 import lodash from "lodash"
@@ -32,6 +32,8 @@ export default {
   data() {
     this.moveTimerReplay = null // 移动定时器
     return {
+      //批量关闭mitt
+      offMitt:null,
       //当前路由信息
       vx_layout_cur_page:LayOutMain_pc.layout_current_path,
       //布局视口类的版本号
@@ -110,14 +112,13 @@ export default {
   },
 
   watch: {
-    //监听详情类的版本号
-    "layout_version.value": {
-      handler(res) {
-        debugger        
-
+    // //监听详情类的版本号
+    // "layout_version.value": {
+    //   handler(res) {
+              
        
-      },
-    },
+    //   },
+    // },
     //监听详情类的版本号
     "details_data_version.version": {
       handler(res) {
@@ -607,6 +608,7 @@ export default {
     },
     // 回播视频关闭播放
     video_end(data) {
+      debugger
       if (data.cmd === 'play_end') {
         this.video_fullscreen_disabled = false
         video.send_message({
@@ -624,21 +626,30 @@ export default {
     this.is_video_error = false
     this.auto_play = lodash.debounce(this.auto_play, 100)
     window.addEventListener("message", this.handleMessage);
+    useMittOn(MITT_TYPES.EMIT_VIDEO_ZONE_EVENT_CMD_END,()=>{
+      debugger
+    })
     //todo
-  //  useMittEmit('IFRAME_VIDEO_VOLUME', this.video_volume);
-  //  useMittEmit('IFRAME_VIDEO_STATUS_CHANGE', this.video_status_change);
-  //  useMittEmit('VIDEO_ZONE_EVENT_CMD_END', this.video_end);
-  //  useMittEmit('IFRAME_VIDEO_MSG_EVENT', this.iframe_video_msg_event);
+      /** 批量注册mitt */
+  const { emitters_off } = useMittEmitterGenerator([
+  
+    // { type: MITT_TYPES.EMIT_IFRAME_VIDEO_VOLUME, callback:  this.video_volume },
+  
+    // { type: MITT_TYPES.EMIT_IFRAME_VIDEO_STATUS_CHANGE, callback: this.video_status_change },
+
+
+    // { type: MITT_TYPES.EMIT_VIDEO_ZONE_EVENT_CMD_END, callback:  this.video_end },
+
+    // { type: MITT_TYPES.EMIT_IFRAME_VIDEO_MSG_EVENT, callback: this.iframe_video_msg_event },
+  ]);
+  this.offMitt = emitters_off
+
   },
   destroyed() {
     this.debounce_throttle_cancel(this.auto_play);
     window.removeEventListener("message", this.handleMessage);
     clearTimeout(this.timer_id_1)
     clearTimeout(this.is_video_pause_change_timer)
-    // ('IFRAME_VIDEO_VOLUME', this.video_volume); todo
-    // ('IFRAME_VIDEO_STATUS_CHANGE', this.video_status_change);
-    // ('VIDEO_ZONE_EVENT_CMD_END', this.video_end);
-    // this.moveTimerReplay && clearTimeout(this.moveTimerReplay)
-    // ('IFRAME_VIDEO_MSG_EVENT', this.iframe_video_msg_event);
+    this.offMitt()
   },
 }
