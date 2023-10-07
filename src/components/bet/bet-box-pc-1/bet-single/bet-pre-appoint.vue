@@ -216,7 +216,6 @@ const appoint_odds_value_handle = (event) => {
  * @return {undefined} undefined
  */
 const add_handle = (type, index = 1) => {
-  debugger
   //赔率加
   if (type == 'odds_value') {
     let aov = ref_data.appoint_odds_value;

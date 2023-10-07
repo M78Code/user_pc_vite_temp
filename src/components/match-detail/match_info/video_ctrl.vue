@@ -165,7 +165,7 @@ import { tooltip_style } from "src/core/config/global-component-style.js";
 import sportIcon from "src/components/sport_icon/sport_icon.vue";
 import video from "src/core/video/video.js"
 import details from "src/core/match-list-pc/details-class/details.js";
-import { computed, onMounted, onUnmounted, ref, watch } from "vue";
+import { computed, onMounted, onUnmounted, ref, watch,nextTick } from "vue";
 import MenuData from "src/core/menu-pc/menu-data-class.js";
 import { IconWapper } from "src/components/icon";
 import refresh from "src/components/refresh/refresh.vue";

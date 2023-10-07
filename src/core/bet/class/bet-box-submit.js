@@ -255,13 +255,13 @@ const get_query_ber_amount_parmas = () =>{
 
 // 设置预约投注显示状态
 const set_bet_pre_list = bet_appoint => {
-    const appoint_list = []
+    const pre_list = []
     bet_appoint.forEach(item => {
         // 判断是否可以预约
         if (item.pendingOrderStatus) {
             // 获取预约投注项id
             let oid = lodash_.get(item.currentMarket, 'marketOddsList[0].id')
-            appoint_list.push(oid)
+            pre_list.push(oid)
         }
     })
     // 设置可预约的投注项
