@@ -1,3 +1,4 @@
+import lodash from 'lodash'
 /**
  * @description: 比分合并
  * @param {Array} msc  原来的msc字段比分
@@ -14,7 +15,7 @@ export const merge_msc_array = (msc, skt_data) => {
       let mcs_item_arr = msc[i].split('|');
       // 将比分转换成 score_obj={"S1": "0:0"} 的格式(可以进行去重)
       score_obj[mcs_item_arr[0]] = mcs_item_arr[1];
-      if (_.isArray(skt_data.msc)) {
+      if (lodash.isArray(skt_data.msc)) {
         skt_data.msc.forEach(skt_item => {
           if (skt_item && skt_item.includes('|')) {
             let skt_item_arr = skt_item.split('|');
@@ -45,7 +46,7 @@ export const merge_msc_array = (msc, skt_data) => {
  * @return {Array} msc 合并后的新比分对象
  */
 export const msc_obj_arry = (msc) => {
-  if (_.isArray(msc)) return msc;
+  if (lodash.isArray(msc)) return msc;
   let arr = [],is_s1 = false;
   if(msc) {
     for (let [key, value] of Object.entries(msc)) {
@@ -75,7 +76,7 @@ export const msc_array_obj = (msc,score_type="S1") => {
       let check_msc_item =  msc_item && msc_item.includes('|') && msc_item.includes(':');
       if(check_msc_item) {
         let msc_arr = msc_item.split('|');
-        if(!_.isEmpty(msc_arr[0])&&!_.isEmpty(msc_arr[1])) {
+        if(!lodash.isEmpty(msc_arr[0])&&!lodash.isEmpty(msc_arr[1])) {
           score_type = msc_arr[0];
           let team = msc_arr[1];
           let home = team.split(':')[0] ||'0';
@@ -221,7 +222,7 @@ export const serialized_score = (msc = [], is_init = false) => {
     };
   }
   // 遍历接口比分数据 转成比分对象
-  _.each(msc, (score_str) => {
+  lodash.each(msc, (score_str) => {
     let [key, value] = score_str.split("|");
     if (value) {
       let [home, away] = value.split(":");
