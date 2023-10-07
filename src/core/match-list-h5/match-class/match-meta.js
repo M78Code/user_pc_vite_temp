@@ -274,7 +274,7 @@ class MatchMeta {
    */
   get_base_params () {
     // match中 hpsFlag 都为0 除开冠军或电竞冠军; 赛事列表冠军或者电竞冠军/赛果不需要hpsFlag
-    const hpsflag = MenuData.is_champion() || MenuData.get_menu_type() == 28 ? null : 0
+    const hpsflag = MenuData.is_kemp() || MenuData.get_menu_type() == 28 ? null : 0
     return {
       cuid: UserCtr.get_cuid(),
       euid: lodash.get(MenuData, 'current_lv_2_menu.mi'),
