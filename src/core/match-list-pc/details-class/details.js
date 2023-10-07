@@ -57,8 +57,6 @@ export default {
       },
       query: route_query
     });
-
-    LayOutMain_pc.set_layout_current_path("details")
     if(go_detail_type != 'no_switch' || ((varl || vurl) && mms == 2 && utils.get_match_status(ms) == 1)){
       // 供右侧数据加载使用
       let media_type = mvs > -1 ? 'animation' : 'auto'

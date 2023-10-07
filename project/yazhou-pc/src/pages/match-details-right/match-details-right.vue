@@ -109,16 +109,16 @@
             />
             <!-- 精彩回放 -->
             <!-- <video-history-line
-               v-if="show_video_replay && _.get(match_infoData,'cds')!='C01'"
+               v-if="show_video_replay && lodash.get(match_infoData,'cds')!='C01'"
                :match_info="match_infoData"
                :mid="mid"
-               :mmp="+_.get(match_infoData,'mmp')"
-               :matchTime="+_.get(match_infoData,'mst')" /> -->
+               :mmp="+lodash.get(match_infoData,'mmp')"
+               :matchTime="+lodash.get(match_infoData,'mst')" /> -->
             <!-- 玩法tab -->
 
             <handicap-tabs-bar
               v-if="
-              (LayOutMain_pc.layout_current_path !== 'details' && !is_esports) ||route.name == 'video'"
+              (LayOutMain_pc.layout_current_path.cur !== 'details' && !is_esports) ||route.name == 'video'"
               :handicap_this="handicap_this"
               :match_info="match_infoData"
               @get_mattch_details="get_mattch_details"
@@ -134,7 +134,7 @@
    
         > -->
         <!-- 盘口模板start -->
-        <template v-if="(LayOutMain_pc.layout_current_path !== 'details' && !is_esports) || route.name == 'video'">
+        <template v-if="(LayOutMain_pc.layout_current_path.cur !== 'details' && !is_esports) || route.name == 'video'">
           <match-handicap
             :match_info="match_infoData"
             :category_list="category_list"
@@ -186,11 +186,11 @@
                   !(
                     match_infoData.mcg == 1 &&
                     [1, 2, 3, 4, 6, 5, 7, 9, 10].includes(
-                      +_.get(match_infoData, 'csid')
+                      +lodash.get(match_infoData, 'csid')
                     )
                   )) &&
                 !is_esports &&
-                LayOutMain_pc.layout_current_path !== 'details'
+                LayOutMain_pc.layout_current_path.cur !== 'details'
                   ? '200px'
                   : 'auto',
             }"
@@ -273,7 +273,8 @@ import {
   LayOutMain_pc,
   GlobalSwitchClass,
   useMittEmit,
-  utils
+  utils,
+  UserCtr
 } from "src/core/index";
 import matchHandicap from "src/components/match-detail/match-handicap/match-handicap.vue";
 import { TabWapper as Tab } from "src/components/common/tab";
@@ -295,6 +296,8 @@ let state = store.getState();
 // 获取右侧布局类型
 const cur_expand_layout = ref(state.layoutReducer.cur_expand_layout);
 const bet_item_lock  = ref(BetData.bet_item_lock) 
+//获取用户信息
+const vx_get_user =  UserCtr.get_user()
 const {
   handicap_this,
   show_load_status,

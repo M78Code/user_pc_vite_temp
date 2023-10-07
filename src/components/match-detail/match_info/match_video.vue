@@ -5,7 +5,8 @@
 -->
 <template>
   <div ref="video" class="c-match-video relative-position" @mousemove="onMousemove">
-    <!-- 精彩回播 header -->{{ current_replay }}
+    <!-- 精彩回播 header -->
+    <div style="display: none;"> {{ LayOutMain_pc.layout_version }}</div>
     <div v-if="current_replay" class="video-replay-header">
       <div class="btn-back-live"></div>
       <div class="replay-info">{{current_replay.titleInfo}}</div>
@@ -46,7 +47,7 @@
       <div class="loading-text">
         {{ i18n_t('common.loading')}}
         <!-- 数据加载中... 请稍后 -->
-      </div>
+      </div>{{media_src}}
       <iframe
         id="video-iframe"
         class="video-iframe fit"
@@ -59,7 +60,7 @@
         scrolling="no"
         allowfullscreen='true' allow="autoplay"
       ></iframe>
-      <template v-if="show_video_replay && play_media.media_type === 'video' && (vx_layout_cur_page !== 'details' && !is_esports)">
+      <template v-if="show_video_replay && play_media.media_type === 'video' && (vx_layout_cur_page.cur !== 'details' && !is_esports)">
         <!--（精彩/收起）回放 -->
         <div
           v-if="!(events_list.length === 0 && current_events_type === 0)"
@@ -70,7 +71,6 @@
           <span>{{ !is_expand_video_list ? i18n_t('video.video_event_history') : i18n_t('video.video_event_history_close') }}</span>
         </div>
         <!-- 精彩回放事件类型切换 -->
-        {{  }}111
         <tabs
           v-show="is_expand_video_list  && tab_list.length"
           :value="current_events_type"
@@ -135,7 +135,7 @@ import noVideo from "src/components/match-detail/match_info/no_video.vue"
 import videoReplayError from "src/components/match-detail/match_info/video_replay_error.vue"
 import { IconWapper } from 'src/components/icon'
 import info from "src/components/match-detail/match_info/info.vue";
-import { i18n_t,format_second_ms,utils} from "src/core/index"
+import { i18n_t,format_second_ms,utils,LayOutMain_pc} from "src/core/index"
 export default {
   mixins: [match_video],
   components: {
@@ -148,6 +148,7 @@ export default {
   },
   data(){
     return {
+      LayOutMain_pc,
       utils,
       route:this.$route,
       format_second_ms,

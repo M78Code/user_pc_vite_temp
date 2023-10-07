@@ -32,7 +32,10 @@ export default {
   data() {
     this.moveTimerReplay = null // 移动定时器
     return {
+      //当前路由信息
       vx_layout_cur_page:LayOutMain_pc.layout_current_path,
+      //布局视口类的版本号
+      layout_version:LayOutMain_pc.layout_version,
       // 获取当前菜单类型  
       vx_cur_menu_type:MenuData.menu_type,
       // 菜单数据
@@ -107,6 +110,14 @@ export default {
   },
 
   watch: {
+    //监听详情类的版本号
+    "layout_version.value": {
+      handler(res) {
+        debugger        
+
+       
+      },
+    },
     //监听详情类的版本号
     "details_data_version.version": {
       handler(res) {
@@ -448,11 +459,6 @@ export default {
   },
 
   methods: {
-    //todo
-    // ...mapMutations({
-    //   // 设置视频播放类型 此方法必须为同步
-    //   vx_set_play_media: "set_play_media",
-    // }),
     /**
      * @Description 点击视频播放按钮
      * @param {undefined} undefined
