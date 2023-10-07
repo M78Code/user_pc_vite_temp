@@ -76,7 +76,6 @@ const show_move_video = computed(()=>{
   /* Í监听user版本号 */
  watch(()=>UserCtr.user_version,(val)=>{
   if(val){
-    debugger
     get_user.value =UserCtr.get_user()
   }
  }) 

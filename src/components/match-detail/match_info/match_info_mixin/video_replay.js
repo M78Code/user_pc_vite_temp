@@ -347,7 +347,6 @@ import { useMittEmit } from "../../../../core/mitt";
         },
         // 视频关闭通知
         video_event(data) {
-          debugger
           // console.log('data', data)
           if (data && data.cmd == 'video_replay_back_but_event') {
             this.changeVideo2Live()

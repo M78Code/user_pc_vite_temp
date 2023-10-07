@@ -608,7 +608,6 @@ export default {
     },
     // 回播视频关闭播放
     video_end(data) {
-      debugger
       if (data.cmd === 'play_end') {
         this.video_fullscreen_disabled = false
         video.send_message({
@@ -627,7 +626,7 @@ export default {
     this.auto_play = lodash.debounce(this.auto_play, 100)
     window.addEventListener("message", this.handleMessage);
     useMittOn(MITT_TYPES.EMIT_VIDEO_ZONE_EVENT_CMD_END,()=>{
-      debugger
+      
     })
     //todo
       /** 批量注册mitt */
