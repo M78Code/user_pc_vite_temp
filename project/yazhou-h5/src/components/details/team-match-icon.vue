@@ -71,7 +71,7 @@ export default defineComponent({
     const show_lvs = computed(() => {
       return get_detail_data.lvs && get_detail_data.lvs != -1 && ['string', 'number'].includes(typeof lodash.get(get_detail_data,'lss')) && ['zh','tw'].includes(UserCtr.lang)
     });
-    // 监听是否投注成功，或者列表页是否点击收藏，同步更新 收藏按钮
+    // 监听是否投注成功，或者列表页是否点击收藏，同步更新 收藏按钮 TODO: 待列表做好收藏后再确认需要监听的字段
     // watch(
     //   () => get_match_id_bet_success,
     //   (bet_curr) => {

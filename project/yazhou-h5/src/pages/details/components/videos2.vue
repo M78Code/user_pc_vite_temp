@@ -384,6 +384,8 @@ export default {
       get_show_video: false,
       // 视频url信息
       get_video_url: MatchDetailCalss.video_url,
+      // 是否全屏
+      get_is_full_screen: false,
     }
   },
   computed: {
@@ -405,8 +407,7 @@ export default {
       get_tab_fix(){return '';},
       // 用户信息,用户金额,userId 需要监听变化
       get_user(){return '';},
-      // 是否全屏
-      get_is_full_screen(){return '';},
+      
       // 是否横屏
       get_is_hengping(){return '';},
       // 是否显示横屏全屏下投注弹窗
@@ -540,7 +541,7 @@ export default {
       this.set_analyze_show(false);
       // 播放视频的时候横屏，自动触发全屏
       if (is_hengping && this.get_show_video && this.get_video_url.active == 'muUrl') {
-        this.set_is_full_screen(true)
+        this.get_is_full_screen = true
         this.show_icons = true;
         this.clear_timer()
         if(this.is_need_timer) {
@@ -749,7 +750,6 @@ export default {
       set_info_show(){},
       set_hd_sd_show(){},
       set_hd_sd(){},
-      set_is_full_screen(){},
       set_is_in_play(){},
       set_bet_show(){},
       set_analyze_show(){},
@@ -946,7 +946,7 @@ export default {
         this.browser_full_screen()
         screen.orientation && screen.orientation.lock('landscape')
       }
-      this.set_is_full_screen(!this.get_is_full_screen)
+      this.get_is_full_screen = !this.get_is_full_screen
     },
     // （精彩/收起）回放按钮点击处理
     toggle_slider_btn() {
