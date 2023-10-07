@@ -1,6 +1,6 @@
 <template>
   <div class="slider-x" ref="slider_x">
-    <div v-if="isShowArrow" class="arrow-left" :class="{ disabled: currentScrollLength === 0}" @click="swipLeft"><img src="~public/image/yabo/svg/video-swipe-arrow.svg" /></div>
+    <div v-if="isShowArrow" class="arrow-left" :class="{ disabled: currentScrollLength === 0}" @click="swipLeft"><img src="/yazhou-pc/image/common/svg/video-swipe-arrow.svg" /></div>
     <div
         class="slider-content"
         @mousemove="onMousemove"
@@ -18,7 +18,7 @@
         <slot v-bind:item="item"></slot>
         </div>
     </div>
-    <div v-if="isShowArrow" class="arrow-right" :class="{ disabled: currentScrollLength === contentWidth }"  @click="swipRight"><img src="~public/image/yabo/svg/video-swipe-arrow.svg" /></div>
+    <div v-if="isShowArrow" class="arrow-right" :class="{ disabled: currentScrollLength === contentWidth }"  @click="swipRight"><img src="/yazhou-pc/image/theme01/img/svg/arrow.svg" /></div>
   </div>
 </template>
 

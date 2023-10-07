@@ -10,7 +10,7 @@
     v-if="load_data_state == 'data'"
   >
     <div class="detais-hot-head">
-      <img src="~public/image/yabo/svg/hot.svg" />
+      <img src="/yazhou-pc/image/svg/hot.svg" />
       <div>{{ $t('list.hot_match')}}</div>
     </div>
      <!-- 列表容器 -->

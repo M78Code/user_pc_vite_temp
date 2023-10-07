@@ -330,7 +330,7 @@ export default {
          width: 16px;
          height: 16px;
          background-size: 100%;
-         background-image: url('/yanzhou-pc/image/common/svg/video_history_play.svg');
+         background-image: url('/yazhou-pc/image/common/svg/video_history_play.svg');
          margin-right: 8px;
     }
     span{

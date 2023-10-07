@@ -5,7 +5,7 @@
       <!-- 比赛进程 -->
       <div class="process-col yb-flex-center tpl-esports">
         <!--热门赛事显示hot标识-->
-        <img class="match-hot" src="~public/image/common/svg/hot.svg" v-if="match.is_hot"/>
+        <img class="match-hot" src="/yazhou-pc/image/common/svg/hot.svg" v-if="match.is_hot"/>
         <!-- 串 ：可串关文字提示 ispo：0否 1普通串关 2局内串关 -->
         <div class="match-parlay">
           <template v-if="lodash.get(match,'ispo', 0) != 0">
