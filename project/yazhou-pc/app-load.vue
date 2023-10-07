@@ -12,7 +12,7 @@
 </template>
 <script setup>
 import "./src/core/globel-mitt";
-import { PageSourceData ,GlobalSwitchClass} from "src/core/index.js";
+import { PageSourceData ,GlobalSwitchClass,LayOutMain_pc} from "src/core/index.js";
 import { useMittOn, MITT_TYPES } from "src/core/mitt/";
 import { wslog, httplog } from "src/core/log/";
 import {get_query_string as urlparams } from "src/core/";
@@ -21,12 +21,13 @@ import { reactive, onBeforeMount, onMounted, onUnmounted, ref, watch } from "vue
 import store from "src/store-redux/index.js";
 // import { set_remote_server_time } from "./src/store/module/global";
 import { t } from "src/core/index.js";
-import { useRouter } from "vue-router";
+import { useRouter,useRoute } from "vue-router";
 import WsMan from "src/core/data-warehouse/ws/ws-ctr/ws-man.js"
 import { compute_css_variables } from "src/core/css-var/index.js"
 import ws from "src/core/data-warehouse/ws/ws-ctr/ws.vue"
 const { NODE_ENV, CURRENT_ENV, DEFAULT_VERSION_NAME } = window.BUILDIN_CONFIG;
 const router = useRouter();
+const route= useRoute();
 const _data = reactive({
   is_ws_run: wslog.ws_run, //// 初始化启动日志系统--开发模式时日志打开
   // config:window.BUILDIN_CONFIG,
@@ -208,6 +209,29 @@ onBeforeMount(() => {
 });
 onUnmounted(() => {
 });
+</script>
+<script>
+import { PageSourceData ,GlobalSwitchClass,LayOutMain_pc} from "src/core/index.js";
+export default {
+  watch: {
+  // 监听路由变化 并记录到layout类中
+    $route: {
+      handler(_to, _from) {
+        let cur = lodash.get(_to, "name");
+        let from = lodash.get(_from, "name");
+        let from_path = lodash.get(_from, "path");
+        if (cur != from) {
+          LayOutMain_pc.set_layout_current_path({
+          cur,
+          from,
+          from_path
+        })
+        }
+      },
+      immediate: true,
+    },
+  }
+}
 </script>
 <style scoped>
 .timeShow {

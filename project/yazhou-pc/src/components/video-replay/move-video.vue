@@ -29,28 +29,30 @@
 
 <script setup>
 
-import videoReplayError from "./video-replay-error.vue"
-import VueDraggableResizable from 'vue-draggable-resizable'
+// import videoReplayError from "./video-replay-error.vue"
+// import VueDraggableResizable from 'vue-draggable-resizable'
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
-import { IconWapper } from 'src/components/icon/index.js'
-// VueDraggableResizable组件api: https://gitcode.net/mirrors/mauricius/vue-draggable-resizable?utm_source=csdn_github_accelerator
-import 'vue-draggable-resizable/dist/VueDraggableResizable.css'
+// import { IconWapper } from 'src/components/icon/index.js'
+// // VueDraggableResizable组件api: https://gitcode.net/mirrors/mauricius/vue-draggable-resizable?utm_source=csdn_github_accelerator
+// import 'vue-draggable-resizable/dist/VueDraggableResizable.css'
 import { onMounted, ref, computed, reactive, onUnmounted, toRefs } from 'vue'
 import store from "src/store-redux/index.js";
-
+import { useRoute } from "vue-router";
+import {  utils } from "src/core/utils/module/utils.js";
+const route =useRoute()
 // 是否pc项目
 const IS_PC = window.BUILDIN_CONFIG.TARGET_PROJECT_NAME.includes('pc')
 /** stroe仓库 */
 /** stroe仓库 */
 const { layoutReducer, menuReducer, betInfoReducer, userReducer, themeReducer } = store.getState()
-const unsubscribe = store.subscribe(() => {
-  layout_size.value = layoutReducer.layout_size
-  main_menu_toggle.value = menuReducer.main_menu_toggle
-  menu_collapse_status.value = menuReducer.menu_collapse_status
-  left_menu_toggle.value = betInfoReducer.left_menu_toggle
-  show_balance.value = userReducer.show_balance
-  theme.value = themeReducer.theme
-})
+// const unsubscribe = store.subscribe(() => {
+//   layout_size.value = layoutReducer.layout_size
+//   main_menu_toggle.value = menuReducer.main_menu_toggle
+//   menu_collapse_status.value = menuReducer.menu_collapse_status
+//   left_menu_toggle.value = betInfoReducer.left_menu_toggle
+//   show_balance.value = userReducer.show_balance
+//   theme.value = themeReducer.theme
+// })
 /** 
  * 浏览器 宽高等数据 default: object
  * 路径: project_path\src\store\module\layout.js
@@ -95,7 +97,7 @@ props: {
   const move_mr_ml =ref(false)
   const play_data =ref(null)
   const route_name_old =ref(null)
-
+  const iframe =ref(null)
 
 
 // 拖拽区域的样式  计算属性用于计算拖拽位置
@@ -114,9 +116,9 @@ onMounted(() => {
   // 设置视频宽高和位置
   set_video_x_y_w_h();
   // 加载所需js文件
-  $utils.load_player_js()
+  utils.load_player_js()
   // 监听命令逻辑函数
-  useMittOn('VIDEO_ZONE_EVENT_CMD', video_zone_event).on;
+
   // 监听message
   window.addEventListener("message", handleMessage);
   try {
@@ -147,7 +149,7 @@ onUnmounted(() => {
   clearTimeout(open_full_video_timer);
   clearTimeout(close_video_timer);
   // 移出命令逻辑函数
-  useMittOn('VIDEO_ZONE_EVENT_CMD', video_zone_event).off;
+  off()
    video_url.value= '';
   // 移除监听message
   window.removeEventListener("message", handleMessage);
@@ -200,13 +202,13 @@ const handleMessage = (e) => {
     y.value = y.value + e.data.val.y;
   } else if (e.data.cmd == 'video_replay_back_but_event') {
     // 设置偏移量
-    useMittEmit('VIDEO_ZONE_EVENT_CMD_END', e.data);
+    useMittEmit(MITT_TYPES.EMIT_VIDEO_ZONE_EVENT_CMD_END, e.data);
   } else if (e.data.cmd == 'video_replay_full_srceen_event') {
     // 设置偏移量
-    useMittEmit('IFRAME_VIDEO_VOLUME', { volume: 0, src: 'localStorage' });
+    useMittEmit(MITT_TYPES.EMIT_IFRAME_VIDEO_VOLUME, { volume: 0, src: 'localStorage' });
     clearTimeout(open_full_video_timer);
     open_full_video_timer.value = setTimeout(() => {
-      if (_.get(e.data, 'val.type') == 1 && play_data) {
+      if (lodash.get(e.data, 'val.type') == 1 && play_data) {
         $router.push({
           name: 'video',
           params: {
@@ -215,7 +217,7 @@ const handleMessage = (e) => {
             csid: play_data.value.match.csid,
             play_type: 1,
             video_size: '1',
-            replay_id: _.get(play_data.value, 'video_info.eventId')
+            replay_id: lodash.get(play_data.value, 'video_info.eventId')
           }
         })
         clearTimeout(close_video_timer);
@@ -226,7 +228,7 @@ const handleMessage = (e) => {
     }, 500);
 
   } else if (e.data.cmd == 'replay_video_get_status_cmd') {
-    useMittEmit('IFRAME_VIDEO_MSG_EVENT', { cmd: 'replay_video_status_cmd', val: { show: show.value } });
+    useMittEmit(MITT_TYPES.EMIT_IFRAME_VIDEO_MSG_EVENT, { cmd: 'replay_video_status_cmd', val: { show: show.value } });
     // send_message({cmd:'replay_video_status_cmd',val:{show:show}})
   }
 };
@@ -254,16 +256,16 @@ const video_zone_event = (obj) => {
   rdm = new Date().getTime();
   const lang = window.reset_lang || window.vue.lang || "zh";
   // 获取命令
-  let cmd = _.get(obj, 'cmd');
-  let live_domains = window.BUILDIN_CONFIG.live_domains[0] || _.get(UserCtr.user_info, `'oss.live_${IS_PC?'pc':'h5'}`);
+  let cmd = lodash.get(obj, 'cmd');
+  let live_domains = window.BUILDIN_CONFIG.live_domains[0] || lodash.get(UserCtr.user_info, `'oss.live_${IS_PC?'pc':'h5'}`);
   let lang_obj = { full_screen: i18n_t('video.full_screen_mode'), back: i18n_t('common.back'), back_live: i18n_t('video.back_live') };
   switch (cmd) {
     case 'play': // 播放
       // window.BUILDIN_CONFIG.live_domains[0]='http://127.0.0.1:5500/video/pc/final'
-      let url = `${live_domains}/videoReplay.html?lang=${lang}&c_f_s=1&src=${_.get(obj, 'url')}`;
+      let url = `${live_domains}/videoReplay.html?lang=${lang}&c_f_s=1&src=${lodash.get(obj, 'url')}`;
       // url = 'http://127.0.0.1:5500/video/pc/final/videoReplay.html?src=https://www.runoob.com/try/demo_source/movie.mp4&c_f_s=1'
       url = `${url}&txt=${JSON.stringify(lang_obj)}`;
-      if (!_.get(obj, 'no_init_window_xy')) {
+      if (!lodash.get(obj, 'no_init_window_xy')) {
         if (video_url.value == url && show.value) {
           send_message({
             cmd: 'replay_video_jq_cmd',
@@ -292,8 +294,8 @@ const video_zone_event = (obj) => {
       // 设置当前视频窗口居中位置
       x.value = body_w / 2 - width.value / 2;
       y.value = body_h / 2 - height.value / 2;
-      video_url.value = `${live_domains}/videoReplay.html?lang=${lang}&head=2&src=${_.get(obj, 'url')}&title=${_.get(obj, 'title', '')}`;
-      //video_url = `http://127.0.0.1:5500/video/pc/final/videoReplay.html?src=https://www.runoob.com/try/demo_source/movie.mp4&head=1&title=${_.get(obj, 'title','')}`
+      video_url.value = `${live_domains}/videoReplay.html?lang=${lang}&head=2&src=${lodash.get(obj, 'url')}&title=${lodash.get(obj, 'title', '')}`;
+      //video_url = `http://127.0.0.1:5500/video/pc/final/videoReplay.html?src=https://www.runoob.com/try/demo_source/movie.mp4&head=1&title=${lodash.get(obj, 'title','')}`
       video_url.value = `${video_url.value}&txt=${JSON.stringify(lang_obj)}`;
       show.value = true;
       // 清除自动编辑组件
@@ -311,6 +313,7 @@ const video_zone_event = (obj) => {
       break;
   }
 };
+const {off} = useMittOn(MITT_TYPES.EMIT_VIDEO_ZONE_EVENT_CMD, video_zone_event);
 /**
  * @Description 设置视频宽高和位置
 */
@@ -342,8 +345,8 @@ const set_video_x_y_w_h = (obj) => {
 
   let x_move = 0;
   let y_move = 0;
-  let rect = _.get(obj, 'rect');
-  switch ($route.name) {
+  let rect = lodash.get(obj, 'rect');
+  switch (route.name) {
     case 'video': // 大视频页面
       x_move = vx_get_layout_size.right_width;
       // 设置当前视频窗口右下角位置
@@ -376,7 +379,7 @@ const set_video_x_y_w_h = (obj) => {
   x.value = x_val;
   y.value = y_val;
 
-  route_name_old.value = $route.name;
+  route_name_old.value = route.name;
   send_message_xywh();
 };
 /**
@@ -387,8 +390,8 @@ const close_video = () => {
   // 销毁视频
   destroy_video();
   video_url.value = '';
-  useMittEmit('VIDEO_ZONE_EVENT_CMD_END', { cmd: "play_end", val: play_data.value });
-  useMittEmit('IFRAME_VIDEO_VOLUME', { volume: 0, src: 'localStorage' });
+  useMittEmit(MITT_TYPES.EMIT_VIDEO_ZONE_EVENT_CMD_END, { cmd: "play_end", val: play_data.value });
+  useMittEmit(MITT_TYPES,EMIT_IFRAME_VIDEO_VOLUME, { volume: 0, src: 'localStorage' });
 };
 /**
  * @Description 鼠标移入

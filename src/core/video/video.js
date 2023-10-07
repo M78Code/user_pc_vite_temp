@@ -724,7 +724,6 @@ export default {
   * @param {number} play_type  数据源类型 1 ：源视频 2：动画 3 ：演播室 4 ：主播 5：专题
   */
   full_screen(match,play_type,size){
-    debugger
     play_type = play_type || 1
     if(play_type == 2){
       this.send_message({

@@ -29,7 +29,7 @@ import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
 import { i18n_t } from "src/boot/i18n.js";
 import store from "src/store-redux/index.js"
 import zhuge from "src/core/http/zhuge-tag.js"
-import {utils } from 'src/core/index.js'
+import {utils, MatchDetailCalss } from 'src/core/index.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
 // 资讯页
 import articleMain from "project_path/src/pages/details/analysis-matches/article/article-main.vue"
@@ -90,7 +90,7 @@ export default defineComponent({
     // 仓库数据
     let {  userInfoReducer } = store.getState()
     // TODO: 临时用
-    const get_event_list = ref([])
+    const get_event_list = ref(MatchDetailCalss.playback_video_list)
     const get_analyze_show = ref(false)
 
     onMounted(() => {
@@ -171,7 +171,7 @@ export default defineComponent({
         )
       }
       // 精彩回放开关开启后，显示精彩回放视图 TODO: get_event_list  后续修改调整
-      const highlights_component = tabs.find(item => item.component === 'highlights')
+      const highlights_component = tabs.find(item => item.component == 'highlights')
       const { configValue, eventSwitch } = lodash.get(UserCtr, 'user_info.merchantEventSwitchVO', {})
       if (configValue == 1 && eventSwitch == 1 && get_event_list.value.length && !highlights_component) {
         tabs.unshift(
@@ -186,30 +186,9 @@ export default defineComponent({
     const close_analysis = () => {
       useMittEmit(MITT_TYPES.EMIT_ANA_SHOW, false)
     }
-    // 点击一级tab 菜单切换 // TODO: $utils UserCtr 后续修改调整
+    // 点击一级tab 菜单切换 
     const tab_click = ([tab, type]) => {
-      console.error(tab);
-      switch(tab.component) {
-        case "article-main":
         currentContent.value = tab.component
-        break
-        case "match-result":
-        currentContent.value = tab.component
-        break
-        case "standings":
-        currentContent.value = tab.component
-        break
-        case "line-up":
-        currentContent.value = tab.component
-        break
-        case "intelligence":
-        currentContent.value = tab.component
-        break
-        case "analysis-odds":
-        currentContent.value = tab.component
-        break
-
-      }
       if (type == 'is_click') {
         let eventLabel = '';
         if (tab.component == 'match-result') {
@@ -274,6 +253,7 @@ export default defineComponent({
 .analysis-football-matches {
   position: relative;
   z-index: 80;
+  background-color: var(--q-gb-bg-c-15);
 }
 
 .clear-bg {

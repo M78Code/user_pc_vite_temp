@@ -42,7 +42,7 @@ const { MERCHANT_CONFIG_VERSION } = final_merchant_config;
 // 常规随环境的   jenkins  部署  参数
 const FRONT_WEB_ENV = (process.env.FRONT_WEB_ENV || "").trim();
 // 模块化打包  构建 zip 版本参数
-const MODULE_SDK_VERSION = (process.env.SHIWAN_MODULE_SDK_VERSION || "").trim();
+const MODULE_SDK_VERSION = (process.env.MODULE_SDK_VERSION || "").trim();
 
 /**
  * 重新计算  current_env 当   模块化打包  构建 zip

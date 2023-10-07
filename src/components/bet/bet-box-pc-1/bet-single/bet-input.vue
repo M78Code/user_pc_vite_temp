@@ -47,7 +47,7 @@ import { format_odds, format_currency, format_currency2 } from "src/core/format/
 import { IconWapper } from 'src/components/icon'
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
-import mathJs from './config/mathjs.js'
+import mathJs from 'src/core/bet/common/mathjs.js'
 
 const ref_data = reactive({
     DOM_ID_SHOW: false,

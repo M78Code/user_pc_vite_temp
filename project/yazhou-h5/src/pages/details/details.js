@@ -42,7 +42,7 @@ const route = useRoute();
     // 固定的状态
     fixed_status: false,
     // 默认接口数据
-    detail_data: {},
+    detail_data: lodash.get(MatchDataWarehouse_H5_Detail_Common,`list_to_obj.mid_obj[${route.params.mid}_]`, {}),
     // 固定高度
     fixedHeight: "",
     // 赛事列表数据
@@ -133,7 +133,7 @@ const route = useRoute();
     // 是否从直播进入详情
     get_play_video: "get_play_video",// TODO: 待处理
     // 视频是否全屏
-    get_is_full_screen: "get_is_full_screen",// TODO: 待处理
+    get_is_full_screen: false,// TODO: 待处理
     // 商户是否需要直接跳到列表页（url地址有label参数）
     get_golistpage: "get_golistpage",// TODO: 待处理
     get_godetailpage: "get_godetailpage",// TODO: 待处理
@@ -149,7 +149,7 @@ const route = useRoute();
     // 'get_chatroom_id',
     // 获取语言
     get_lang: UserCtr.lang,
-    get_event_list: "get_event_list",// TODO: 待处理
+    get_event_list: [],
     get_curr_tab_info: "get_curr_tab_info",// TODO: 待处理
   });
 
@@ -157,7 +157,6 @@ const route = useRoute();
   const is_highlights = computed(() => {
     return lodash.get(state_data.get_curr_tab_info, "component") === "highlights";
   });
-  console.error("GlobalAccessConfig.get_statisticsSwitch()",api_common);
   // 足篮赛种和后台开关开了才显示显示赛事分析tab
   const show_match_analysis_tab = computed(() => {
     return (
@@ -205,20 +204,20 @@ const route = useRoute();
     if (configValue != 1 || eventSwitch != 1 || !state_data.get_event_list.length) {
       return "";
     }
+    
 
-    // 监听数据仓库版本号变更后更新数据
-    watch(() => MatchDataWarehouseInstance.data_version.version, () => {
-      state_data.detail_data = MatchDataWarehouseInstance.get_quick_mid_obj(matchid.value);
-    })
     // 主题后缀
     const suffix_theme = UserCtr.theme.includes("night") ? "2" : "";
     // y0后缀
     const suffix_y0 = UserCtr.theme.includes("_y0") ? "_y0" : "";
-    // img:/image/bw3/svg/details/replay${suffix_theme}${suffix_y0}.svg
-    return ``;
+    // img:/image/bw3/svg/details/replay${suffix_theme}${suffix_y0}.svg public/yazhou-h5/image/svg/details/replay2.svg
+    return `img:/yazhou-h5/image/svg/details/replay${suffix_theme}.svg`;
   });
-
-
+  
+// 监听数据仓库版本号变更后更新数据
+watch(() => MatchDataWarehouseInstance.data_version.version, () => {
+  state_data.detail_data = MatchDataWarehouseInstance.get_quick_mid_obj(matchid.value);
+})
   // // 刷新页面时获取当前玩法集ID
   // onMounted(() => {
   //   console.error(route);
@@ -424,7 +423,7 @@ const route = useRoute();
   const initEvent = () => {
     // get_uid为空时循环检测进行拉取逻辑处理
     if (UserCtr.uid || state_data.init_event_timer_count > 30) {
-      get_football_replay(0);
+      
       // 请求接口数据
       get_match_details({
         // 赛事id
@@ -432,6 +431,7 @@ const route = useRoute();
         mid: matchid.value,
         // 用户id
         cuid: UserCtr.uid,
+        init: 'init'
       });
       state_data.init_event_timer_count = 0;
     } else {
@@ -471,6 +471,7 @@ const route = useRoute();
         api_analysis.post_playback_video_url(params)
             .then(res => {
               if (res.code == 200 && lodash.get(res.data, 'eventList.length')) {
+                state_data.get_event_list = res.data.eventList
                 // 场景1: 头部刷新按钮触发时调接口返回数据存操作类
                 matchDetailCtr.value.set_playback_video_list(res.data.eventList)
               }
@@ -506,6 +507,7 @@ const route = useRoute();
             MatchDataWarehouseInstance.set_match_details(res_data)
             // 球种ID
             sport_id.value = res_data.csid
+            if (params.init) {get_football_replay(0)}
           } else {
             // 赛事下发999后, 显示空空如也
             state_data.skeleton.details = true

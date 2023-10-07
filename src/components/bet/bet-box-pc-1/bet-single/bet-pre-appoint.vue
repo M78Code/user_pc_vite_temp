@@ -41,7 +41,7 @@ import {ref, computed, reactive,nextTick } from "vue";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { i18n_t } from "src/boot/i18n.js"
 import { FOOTBALL_PLAY_LET_BALL, MARKET_BIG_SMALL_PLAY_LIST, MARKET_RANG_FLAG_LIST, MARKET_HOME_PLAY_LIST, MARKET_AWAY_PLAY_LIST, BASKETBALL_BY_APPOINTMENT_let, BASKETBALL_BY_APPOINTMENT_total } from "src/core/constant/config/play-mapping.js";
-import mathJs from './config/mathjs.js'
+import mathJs from 'src/core/bet/common/mathjs.js'
 import UserCtr from 'src/core/user-config/user-ctr.js'
 import lodash_ from 'lodash'
 import BetInput from "./bet-input.vue"

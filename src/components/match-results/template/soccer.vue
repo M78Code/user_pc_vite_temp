@@ -629,7 +629,7 @@ export default {
     handle_item_click(item) {
       // 弹出新视频
       let title = item.homeAway+' '+this.format_second_ms(item.secondsFromStart)+' '+this.show_code_name(item.eventCode)+': '+item.firstNum;
-      useMittEmit("VIDEO_ZONE_EVENT_CMD", {
+      useMittEmit(MITT_TYPES.EMIT_VIDEO_ZONE_EVENT_CMD, {
         cmd: "resultPlay",
         url: item.fragmentVideo,
         video_info:item,

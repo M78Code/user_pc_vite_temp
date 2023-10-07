@@ -334,8 +334,8 @@ async function set_menu_lv2(item, index, type = "click") {
   if (MenuData.is_kemp()) return MatchMeta.get_champion_match()
   // 赛果不走元数据， 直接拉取接口
   if (MenuData.is_results()) return MatchMeta.get_results_match()
-  // 赛果不走元数据， 直接拉取接口
-  if (MenuData.is_export()) return MatchMeta.get_esports_match(item)
+  // 电竞不走元数据， 直接拉取接口
+  if (MenuData.is_export()) return MatchMeta.get_esports_match()
   // 设置菜单对应源数据
   MatchMeta.set_origin_match_data()
 }
@@ -346,18 +346,18 @@ async function set_menu_lv2(item, index, type = "click") {
 function set_menu_lv3(item, index, type = "click") {
   console.log(item)
   //点击当前 就不做什么
-  if (
-    MenuData.current_lv_3_menu &&
-    MenuData.current_lv_3_menu.menuId == item.menuId
-  ) {
+  if ( MenuData.current_lv_3_menu && MenuData.current_lv_3_menu.menuId == item.menuId ) {
     return;
   }
   date_menu_curr_i.value = index;
   //设置三级菜单
   MenuData.set_current_lv3_menu(item, index, type);
-  if (MenuData.is_results()) return MatchMeta.get_results_match()
-  // 早盘三级菜单选择
+  // 早盘 不走接口 自己筛选数据
   if (MenuData.is_zaopan()) MatchMeta.filter_match_by_time(item?.field1)
+  // 赛果 三级菜单 请求接口
+  if (MenuData.is_results()) return MatchMeta.get_results_match()
+  // 电竞 三级菜单 请求接口
+  if (MenuData.is_export()) MatchMeta.get_esports_match()
 }
 /**
  * 四级菜单事件

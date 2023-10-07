@@ -260,7 +260,6 @@ const props = defineProps({
     default: () => { }
   }
 })
-console.error(props.detail_data);
 /** 赛事开始倒计时时间(赛事开始时间-当前时间) */
 const longTime = ref('')
 const show_someone = reactive({

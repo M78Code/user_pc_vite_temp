@@ -32,6 +32,8 @@
         <layout-right />
       </div>
     </div>
+      <!-- 视频画中画组件 -->
+      <!-- <moveVideo v-if="show_move_video"></moveVideo> -->
     <!-- toast 消息提示 -->
     <toast-components />
     <confirm-components />
@@ -39,9 +41,9 @@
   </div>
 </template>
 <script setup>
-import { ref, computed,onBeforeUnmount } from "vue";
+import { ref, computed,onBeforeUnmount,watch } from "vue";
 import { useRoute } from "vue-router";
-import { LayOutMain_pc } from "src/core/index.js";
+import { LayOutMain_pc,UserCtr } from "src/core/index.js";
 import "./main-layout.js"; //初始化数据
 // import { debounce } from "lodash";
 /**组件*/
@@ -53,7 +55,7 @@ import toastComponents from "project_path/src/components/toast/toast.vue";
 import alertComponents from "project_path/src/components/toast/alert.vue";
 import confirmComponents from "project_path/src/components/toast/confirm.vue";
 import "./match-list.scss";
-
+import moveVideo from 'project_path/src/components/video-replay/move-video.vue'
 import { compute_css_variables } from "src/core/css-var/index.js"
 
 const page_style = ref('')
@@ -66,7 +68,17 @@ const mitt_offs = [
   // useMittOn(MITT_TYPES.EMIT_LAYOUT_RESIZE, debounce(resize, 150)).off,
 ];
 // resize();
-
+ // 屏蔽视频移动组件(视频回播功能)
+ const  get_user = ref(UserCtr.get_user())
+const show_move_video = computed(()=>{
+    return  lodash.get(get_user.value,"merchantEventSwitchVO.eventSwitch") 
+  } )
+  /* Í监听user版本号 */
+ watch(()=>UserCtr.user_version,(val)=>{
+  if(val){
+    get_user.value =UserCtr.get_user()
+  }
+ }) 
 </script>
 <style lang="scss" scoped>
 @import url(./main-layout.scss);

@@ -274,7 +274,7 @@ class MatchMeta {
    */
   get_base_params () {
     // match中 hpsFlag 都为0 除开冠军或电竞冠军; 赛事列表冠军或者电竞冠军/赛果不需要hpsFlag
-    const hpsflag = MenuData.is_champion() || MenuData.get_menu_type() == 28 ? null : 0
+    const hpsflag = MenuData.is_kemp() || MenuData.get_menu_type() == 28 ? null : 0
     return {
       cuid: UserCtr.get_cuid(),
       euid: lodash.get(MenuData, 'current_lv_2_menu.mi'),
@@ -325,17 +325,18 @@ class MatchMeta {
   /**
    * @description 获取电竞赛事； 元数据接口暂时未提供所以走老逻辑， 后续会提供
    */
-  async get_esports_match(item) {
-    console.log(MenuData)
+  async get_esports_match() {
+    // 电竞的冠军
+    const category = MenuData.get_menu_type() === 100 ? 2 : 1
+    const csid = lodash.get(MenuData.current_lv_2_menu, 'csid')
+    const md = lodash.get(MenuData.current_lv_3_menu, 'field1', "")
+    const params = this.get_base_params()
     const res = await api_common.post_esports_match({
-      "cuid":"508895784655200024",
+      ...params,
+      md,
+      csid,
+      category,
       "type":3000,
-      "sort":2,
-      "device":"v2_h5_st",
-      "category":1,
-      "md":"",
-      "csid":"100",
-      "hpsFlag":0
     })
     this.handle_custom_matchs(res)
   }

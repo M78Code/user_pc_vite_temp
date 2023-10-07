@@ -274,7 +274,7 @@ export default {
       is_single_handle: BetData.is_single_handle, // 单关 是否正在处理投注
       off_mitt:null, //批量关闭mitt
       cur_menu_type: MenuData.menu_type,// 获取当前菜单类型
-      cur_menu_type: LayOutMain_pc.layout_current_path,// 获取当前路由   todo
+      cur_route: LayOutMain_pc.layout_current_path,// 获取当前路由   todo
        // 投注模式 -1.还不知道使用哪种模式 0.足球PA滚球 1.非足球PA滚球
        bet_mode : BetData.bet_mode,
       // 是否锁住投注项不让点，默认为不锁住(针对新的投注流程)

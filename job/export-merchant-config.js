@@ -14,7 +14,7 @@ console.log("export-merchant-config----------合并输出商户配置-");
 
 // jenkins env 变量  配置的   构建 zip 版本参数   , 一般是运维那边 配置打包使用的    模块化打包  构建 zip 版本参数
 
-const MODULE_SDK_VERSION = (process.env.SHIWAN_MODULE_SDK_VERSION || "").trim();
+const MODULE_SDK_VERSION = (process.env.MODULE_SDK_VERSION || "").trim();
 
 //最终计算的 版本号 
 let final_version = MODULE_SDK_VERSION || DEV_TARGET_VERSION

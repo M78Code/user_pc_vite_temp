@@ -45,7 +45,7 @@
 </template>
 <script setup>
 import lodash from "lodash";
-import { defineProps, ref } from "vue";
+import { ref } from "vue";
 import betItem from "src/components/bet-item/bet-item-list-new-data.vue";
 import {
   i18n_t,

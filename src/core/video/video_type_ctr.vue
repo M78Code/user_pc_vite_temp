@@ -393,7 +393,7 @@ export default {
     cursor: pointer;
     width: 16px;
     height: 16px;
-    background-image: url("~public/image/yabo/svg/virtual-ref.svg");
+    background-image: url("/yazhou-pc/image/svg/virtual-ref.svg");
     background-size: cover;
     &.is_rotate {
       animation: video-reload-btn 5s linear 0s infinite normal;

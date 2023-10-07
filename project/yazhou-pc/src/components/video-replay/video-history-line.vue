@@ -1,7 +1,7 @@
 <template>
-    <div ref="video_history_line" class="video-history-line" :class="[mode]">
+    <div v-if="show" ref="video_history_line" class="video-history-line" :class="[mode]">
         <div class="block-header">
-            <div class="block-title">{{ $t('video.video_event_history') }}</div>
+            <div class="block-title">{{ i18n_t('video.video_event_history') }}</div>
         </div>
         <div class="video-history-main">
             <div class="progress-container">
@@ -23,19 +23,20 @@
                     </div>
                 </template>
             </div>
-        </div>
+        </div>    
     </div>
 </template>
 <script>
-import { api_details } from "src/api/index.js";
-import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
-import { format_second_ms } from "src/core/format/index.js"
-// TODO hanmar后续处理--S
-// import time_format_mixin from "src/public/mixins/common/time_format";
-// import video from "src/public/utils/video/video.js"
-// TODO hanmar后续处理--E
+import { api_details } from "src/api/index";
+import video from "src/core/video/video.js"
+const tooltip_style = 'background:rgba(0,0,0,0.8);padding:4px 5px;border-radius:0px;color:#fff'
+import {
+  MITT_TYPES,
+  useMittOn,
+  useMittEmit,
+  format_second_ms
+} from "src/core/index";
 export default {
-    mixins: [time_format_mixin],
     props: {
         mid: {
             type: [String, Number],
@@ -57,7 +58,7 @@ export default {
         }
     },
     data() {
-        eventNameMap = {
+        this.eventNameMap = {
             corner: i18n_t('replay_video.corner_kick'), // 角球
             goal: i18n_t('replay_video.goal'), // 进球
             yellow_card: i18n_t('icon_tips.yellow_card'), // 黄牌
@@ -65,12 +66,14 @@ export default {
             // 红黄牌，就是一个球员当收到第二张黄牌的时候变成红牌，其实就是红牌
             yellow_red_card: i18n_t('icon_tips.red_card') // 黄红牌
         }
-        historyPlayTimer = null // 历史数据轮询定时器
+        this.historyPlayTimer = null // 历史数据轮询定时器
         return {
+            tooltip_style,
             baseTime: 90 * 60, // 进度条标准时间
             pecent: 0,
             matchEvents: [], // 事件合集
             timer_tmp: 0, // 零时时间
+            show:false, // 是否显示组件信息
         }
     },
     watch: {
@@ -78,122 +81,121 @@ export default {
         matchTime(n) {
             console.log('matchTime', n)
             if (n) {
-                start();
+                this.start();
             }
             // 加时
             if (n > 90 * 60) {
-                baseTime = 120 * 60
+                this.baseTime = 120 * 60
                 // 重新获取数据格式化
-                getVideoPlayHistory()
+                this.getVideoPlayHistory()
             }
         },
         // 赛事ID改变
         mid() {
             //定时计算
-            start();
+            this.start();
             // 获取精彩回放信息
-            getVideoPlayHistory()
+            this.getVideoPlayHistory()
         },
         timer_tmp() {
-            calcProgressLine(matchTime)
+            this.calcProgressLine(this.matchTime)
         },
         mmp(n) {
             console.log('mmp', n)
             // "31": "中场休息",
             if (n == 31) {
-                calcProgressLine(45 * 60)
+                this.calcProgressLine(45 * 60)
             }
         }
     },
     created() {
         // 设置时间进度百分比
-        if (matchTime) {
+        if (this.matchTime) {   
             // 加时
-            if (matchTime > 90 * 60) {
-                baseTime = 120 * 60
+            if (this.matchTime > 90 * 60) {
+                this.baseTime = 120 * 60
             }
-            start();
-            calcProgressLine(matchTime)
+            this.start();
+            this.calcProgressLine(this.matchTime)
         }
         // 获取精彩回放信息
-        getVideoPlayHistory()
-        historyPlayTimer && clearInterval(historyPlayTimer)
-        historyPlayTimer = setInterval(() => getVideoPlayHistory(), 60 * 1000)
+        this.getVideoPlayHistory()
+        this.historyPlayTimer && clearInterval(this.historyPlayTimer)
+        this.historyPlayTimer = setInterval(() => this.getVideoPlayHistory(), 60 * 1000)
     },
     mounted() {
     },
     beforeDestroy() {
         // 关闭弹窗iframe
-        closePopIframe()
-        historyPlayTimer && clearInterval(historyPlayTimer)
-        // useMittOn(MITT_TYPES.EMIT_UPD_TIME_REFRESH_CMD, set_date_time).off;
-        clear();
+        this.closePopIframe()
+        this.historyPlayTimer && clearInterval(this.historyPlayTimer)
+        // this.$root.$off(this.emit_cmd.EMIT_UPD_TIME_REFRESH_CMD, this.set_date_time);
+        this.clear();
     },
     methods: {
         // 关闭弹窗iframe
         closePopIframe() {
-            useMittEmit('VIDEO_ZONE_EVENT_CMD', {
+            useMittEmit(MITT_TYPES.EMIT_VIDEO_ZONE_EVENT_CMD, {
                 cmd: 'colse',
                 val: {
-                    mid: mid
+                    mid: this.mid
                 }
             });
         },
         // 启动计时器
         start() {
-            timer_tmp = matchTime
-            if (timer) {
-                clear()
+            this.timer_tmp = this.matchTime
+            if (this.timer) {
+                this.clear()
             }
-            timer = setInterval(() => {
-                timer_tmp += 1
+            this.timer = setInterval(() => {
+                this.timer_tmp += 1 
             }, 1000)
         },
         //销毁计时器
         clear() {
-            timer && clearInterval(timer)
-            timer = false;
+            this.timer && clearInterval(this.timer)
+            this.timer = false;
         },
         // 播放回放视频
         showVideoHistory(item) {
             // 静音原视频
-            useMittEmit('IFRAME_VIDEO_VOLUME', {volume: 0, src:'muted'});
+            useMittEmit(MITT_TYPES.EMIT_IFRAME_VIDEO_VOLUME, {volume: 0, src:'muted'});
             // 禁止原视频全屏
-            useMittEmit('IFRAME_VIDEO_STATUS_CHANGE', {
+            useMittEmit(MITT_TYPES.EMIT_IFRAME_VIDEO_STATUS_CHANGE,  {
                 fullscreen_disabled: true
             });
-            // TODO hanmar后续处理--S
-            // // 禁止画中画
-            // video.send_message({
-            //     cmd: 'replay_video_jq_cmd',
-            //     val: "$('.dplayer .pip-icon').css({'opacity':'0.5'});index.pip_click_no_run=1;"
-            // });
-            // TODO hanmar后续处理--E
+            // 禁止画中画
+            video.send_message({
+                cmd: 'replay_video_jq_cmd',
+                val: "$('.dplayer .pip-icon').css({'opacity':'0.5'});index.pip_click_no_run=1;"
+            });
             let ret_obj = {};
-            let rect = $refs['video_history_line'].getBoundingClientRect();
+            let rect = this.$refs['video_history_line'].getBoundingClientRect();
             if(rect){
                 ret_obj = {x:rect.x,y:rect.y,w:rect.width,h:rect.height}
             }
             // 弹出新视频
-            useMittEmit('VIDEO_ZONE_EVENT_CMD', {
+            useMittEmit(MITT_TYPES.EMIT_VIDEO_ZONE_EVENT_CMD,{  
                 cmd: 'play',
                 url: item.fragmentVideo,
                 rect:ret_obj,
                 video_info: item,
-                match:match_info,
+                match:this.match_info,
             });
+    
         },
         // 获取精彩回放信息
         getVideoPlayHistory() {
-            if (!mid) {
+            if (!this.mid) {
                 return false
             }
             const params = {
-                mid: mid,
+                mid: this.mid,
                 device: 'PC',
                 eventCode: 0, // 0全部 1进球 2角球 3罚牌
             }
-            api_details.get_live_video_playback_info(params).then(({ data }) => {
+            api_details.get_live_video_playback_info(params).then((data ) => {
                 // eventList
                 // let data = [
                 //     {
@@ -208,37 +210,39 @@ export default {
                 //         "t2": 1　//客队比分
                 //     }
                 // ]
-                if (data && data.code === 200 && data.data) {
+                if (data && data.code == 200 && data.data) {   
                     // 格式化历史事件数据
-                    formatHistoryMatchEventData(data.data.eventList)
+                    this.formatHistoryMatchEventData(data.data.eventList)
+                    if(lodash.get(data,'data.eventList.length')){
+                        this.show=true;
+                    }
                 }
             }).catch(err => console.error(err))
         },
-      
         // 格式化历史事件数据
         formatHistoryMatchEventData(data) {
             const _eventsHistory = [] // 零时事件数据
             let maxEventTime = 0 // 离当前直播时间最近的一个事件的时间
             data.map(v => {
-                const desc = `${v.homeAway} ${eventNameMap[v.eventCode]}${v.firstNum} ${format_second_ms(v.secondsFromStart)}`
+                const desc = `${v.homeAway} ${this.eventNameMap[v.eventCode]}${v.firstNum} ${format_second_ms(v.secondsFromStart)}`
                 _eventsHistory.push({
                     eventCode: v.eventCode,
                     eventId: v.eventId,
                     fragmentId: v.fragmentId,
                     fragmentVideo: v.fragmentVideo,
-                    pecent: parseInt(v.secondsFromStart * 100 / baseTime),
+                    pecent: parseInt(v.secondsFromStart * 100 / this.baseTime),
                     desc
                 })
                 if (v.secondsFromStart > maxEventTime) {
                     maxEventTime = v.secondsFromStart
                 }
             })
-            calcIconPosition(_eventsHistory)
+            this.calcIconPosition(_eventsHistory)
         },
         // 计算icon偏移位置
         calcIconPosition(items) {
-            if (items.length < 2 || !pecent) {
-                matchEvents = items
+            if (items.length < 2 || !this.pecent) {
+                this.matchEvents = items
                 return false
             }
             let _tempItems = [...items]
@@ -250,7 +254,7 @@ export default {
                 }
             }
             // 当最后一个大于当前百分比时，整体向前偏移差量
-            const diffX = _tempItems[_tempItems.length - 1].pecent - (pecent ? pecent: 100)
+            const diffX = _tempItems[_tempItems.length - 1].pecent - (this.pecent ? this.pecent: 100)
             if (diffX > 0) {
                 _tempItems = _tempItems.map(v => {
                     let _newPecent = v.pecent - diffX
@@ -263,15 +267,15 @@ export default {
                     }
                 })
             }
-            matchEvents = _tempItems
+            this.matchEvents = _tempItems
         },
         // 计算进度条bg的范围
         calcProgressLine(value) {
-            let pecent = parseInt(value * 100 / baseTime)
+            let pecent = parseInt(value * 100 / this.baseTime)
             pecent = pecent > 100 ? 100 : pecent
-            pecent = pecent
-            if (pecent) {
-                calcIconPosition(matchEvents)
+            this.pecent = pecent
+            if (this.pecent) {
+                this.calcIconPosition(this.matchEvents)
             }
         }
     }
