@@ -793,7 +793,7 @@ class MatchPage {
         const sub_menu_list = lodash.cloneDeep(MenuData.current_lv_2_menu)
         
         // 滚球下对同一赛种csid归类，避免ws更新时，赛种csid间隔重复
-        if (MenuData.is_scrolll_ball()&& MenuData.get_sub_is_all()) {
+        if (MenuData.is_scroll_ball()&& MenuData.get_sub_is_all()) {
           started = this.csid_same_sort(started, sub_menu_list)
         }
 
@@ -807,7 +807,7 @@ class MatchPage {
       if (this.invok_source == 'home_hot_page_schedule') {
         // home页面热门菜单时的逻辑操作
         match_source_data_ = started.concat(no_started);
-      } else if (MenuData.is_scrolll_ball()) { // 滚球(menuType=1)只显示进行中的比赛
+      } else if (MenuData.is_scroll_ball()) { // 滚球(menuType=1)只显示进行中的比赛
         match_source_data_ = started;
       } else {
         match_source_data_ = started.concat(no_started);
@@ -948,7 +948,7 @@ class MatchPage {
     }
 
     // 滚球：删除ms不为1的赛事
-    if (MenuData.is_scrolll_ball()) {
+    if (MenuData.is_scroll_ball()) {
       if (state_changed.ms != null && typeof state_changed.ms != 'undefined' && ![1, 110].includes(+state_changed.ms)) {
         delete_ended_match();
       }

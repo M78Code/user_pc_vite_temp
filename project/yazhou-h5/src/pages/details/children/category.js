@@ -150,7 +150,6 @@ export const category_info = (category_arr=[]) => {
   };
 
   onMounted(() => {
-    console.error('初始化进来 category');
     on_listeners()
     initEvent()
     // 获取置顶列表数据
@@ -301,7 +300,6 @@ export const category_info = (category_arr=[]) => {
    * @returns {Promise<void>}
    */
   const initEvent = async (to_refresh, init_req) => {
-    console.error('初始化进来 category');
     if (to_refresh) {
       to_refresh = to_refresh;
     } else {

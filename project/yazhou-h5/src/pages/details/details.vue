@@ -426,7 +426,6 @@ export default defineComponent({
       state_data.timer1_ = setTimeout(() => {
         state_data.is_creating = false;
       },500);
-      console.error('details.vue');
       // 原mounted
       get_chatroom_info()
     //   utils.load_video_resources(data.get_uid, 'is_details_page')

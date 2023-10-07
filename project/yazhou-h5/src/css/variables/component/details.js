@@ -9,4 +9,5 @@ export default {
   "detials-color-7": "#999999",
   "detials-color-8": "#f5f5f5",
   "detials-color-9": "#5a6074",
+  "detials-color-10": "#f7f7f7",
 }
