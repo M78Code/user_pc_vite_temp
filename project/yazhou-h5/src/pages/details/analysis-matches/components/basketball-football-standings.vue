@@ -332,7 +332,7 @@ const props = defineProps({
         align-items: center;
         justify-content: center;
         background: var(--q-analysis-text-color-28);
-        color:  var(--q-analysis-text-color-1) !important;
+        color:  var(--q-analysis-text-color-13) !important;
 
         &.calculation_color1 {
           background: var(--q-analysis-text-color-33);

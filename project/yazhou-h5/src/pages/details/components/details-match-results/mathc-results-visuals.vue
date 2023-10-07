@@ -454,11 +454,11 @@ import { onMounted, onUnmounted, ref, watch } from "vue";
   }
 
   :deep(.text-orange) {
-    color: var(--q-analysis-text-color-18) !important;
+    color: var(--q-analysis-text-color-16) !important;
   }
 
   :deep(.text-blue) {
-    color: var(--q-analysis-text-color-18) !important;
+    color: var(--q-analysis-bg-color-17) !important;
   }
 
   :deep(.q-linear-progress) {
@@ -476,7 +476,7 @@ import { onMounted, onUnmounted, ref, watch } from "vue";
         }
     }
   }
-  .ring-zero-css {
+  :deep(.ring-zero-css) {
       .text-orange,
       .text-blue {
         color:  var(--q-analysis-text-color-18) !important;
