@@ -315,9 +315,7 @@ setup(props, context){
   const is_dp_video_full_screen = ref(false)
   // 赛果详情数据
   const get_detail_data = ref(matchDetailData.list_to_obj.mid_obj[`${route.params.mid}_`])
-console.error(matchDetailData);
   onMounted(() => {
-    // TODO: $utils.load_player_js() 后续修改调整
     pre_load_video.load_player_js()
     store.dispatch({
       type: 'SET_EVENT_LIST',
@@ -744,11 +742,9 @@ console.error(matchDetailData);
   })
   // 鉴权域名 + 回放视频url（拼接后的最终url）
   const replay_video_src = computed(() => {
-    console.error(window.BUILDIN_CONFIG);
     const host_url = lodash.get(window, 'BUILDIN_CONFIG.live_domains[0]') || lodash.get(UserCtr, 'user_info.oss.live_h5')
     return `${host_url}/videoReplay.html?src=${replay_url.value}&lang=${UserCtr.lang}&volume=${is_user_voice ? 1 : 0}`
   })
-  console.error(replay_video_src.value);
   // slider列表长度是否小于屏幕横屏宽度
   const is_slider_in_screen = computed(() => {
     const full_screen_width = is_hengping.value ? innerWidth : innerHeight

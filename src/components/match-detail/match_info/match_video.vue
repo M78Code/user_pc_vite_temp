@@ -47,7 +47,7 @@
       <div class="loading-text">
         {{ i18n_t('common.loading')}}
         <!-- 数据加载中... 请稍后 -->
-      </div>{{media_src}}
+      </div>
       <iframe
         id="video-iframe"
         class="video-iframe fit"
@@ -60,7 +60,7 @@
         scrolling="no"
         allowfullscreen='true' allow="autoplay"
       ></iframe>
-      <template v-if="show_video_replay && play_media.media_type === 'video' && (vx_layout_cur_page.cur !== 'details' && !is_esports)">
+      <template v-if="show_video_replay && play_media.media_type === 'video' && (LayOutMain_pc.layout_current_path.cur !== 'details' && !is_esports)">
         <!--（精彩/收起）回放 -->
         <div
           v-if="!(events_list.length === 0 && current_events_type === 0)"
@@ -132,7 +132,7 @@ import tabs from "src/components/match-detail/match_info/tabs.vue";
 import match_video from "src/components/match-detail/match_info/match_info_mixin/match_video.js";
 import video_type_ctr from "src/core/video/video_type_ctr.vue";
 import noVideo from "src/components/match-detail/match_info/no_video.vue"
-import videoReplayError from "src/components/match-detail/match_info/video_replay_error.vue"
+import videoReplayError from "project_path/src/components/video-replay/video-replay-error.vue"
 import { IconWapper } from 'src/components/icon'
 import info from "src/components/match-detail/match_info/info.vue";
 import { i18n_t,format_second_ms,utils,LayOutMain_pc} from "src/core/index"
@@ -330,7 +330,7 @@ export default {
          width: 16px;
          height: 16px;
          background-size: 100%;
-         background-image: url('/yanzhou-pc/image/common/svg/video_history_play.svg');
+         background-image: url('/yazhou-pc/image/common/svg/video_history_play.svg');
          margin-right: 8px;
     }
     span{

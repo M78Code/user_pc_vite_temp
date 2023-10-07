@@ -7,7 +7,7 @@
 -->
 <template>
   <div class="analysis-page relative-position" :style="page_style">
-    <div class="match-header">
+    <div class="match-header" v-if="matchLoaded">
       <div class="both home">
         <span class="team-name">
           <div class="yb-absolute ellipsis">{{ matchDetail.mhn }}</div>
@@ -36,10 +36,10 @@
         @click="switchTabs(index)">{{ item == 'news' ? newsTabName : i18n_t(`analysis.${item}`) }}</span>
     </div>
 
-    <q-scroll-area class="rule-scroll-area" :visible="true"
+    <q-scroll-area class="rule-scroll-area" :visible="true" v-if="matchLoaded"
       :style="{ height: '100%', margin: hasNews && activeTab == 0 ? '0' : '0 20px' }">
       <!-- 文章资讯  -->
-      <news :mid="match_info.mid" v-if="hasNews && activeTab == 0" />
+      <news :mid="mid" v-if="hasNews && activeTab == 0" />
       <!-- 赛况 -->
       <tab-results :match="matchDetail" v-if="(hasNews ? activeTab - 1 : activeTab) == 0" />
       <!-- 数据 -->
@@ -67,9 +67,9 @@ import { TabInformationFullVersionWapper as tabInformation } from 'src/component
 import { TabOddsFullVersionWapper as tabOdds } from 'src/components/analysis/template/tab-odds/index.js'
 import { TabNewsFullVersionWapper as news } from 'src/components/analysis/template/tab-news/index.js'
 import { MatchProcessFullVersionWapper as matchDate } from "src/components/match-process/index.js";
-import { api_analysis, socket_api } from 'src/api/index.js'
+import { api_analysis, api_details } from 'src/api/index.js'
 import { compute_css_variables } from "src/core/css-var/index.js"
-import { formatTime } from 'src/core/format/index.js'
+import { formatTime,msc_array_obj } from 'src/core/format/index.js'
 import zhugeTag from "src/core/http/zhuge-tag.js"
 import store from 'src/store-redux/index.js'
 import { UserCtr } from "src/core/index.js";
@@ -102,12 +102,87 @@ export default {
     const articleDetail = ref({})
     const newsTabName = ref(null)
     // let mid = lodash.get(route, 'params.mid');
-    let match_info = JSON.parse(localStorage.getItem('test_match_info'));
-    console.log("--------------------------------------------------match_info", match_info); //用于比对接口请求后的数据
+    const mid = ref(0);
+    // (function(){
+    //   let match_info = JSON.parse(localStorage.getItem('test_match_info'));
+    //   console.log('--------------------------------',match_info)
+    // })()
     const euid = route.params.euid
-    let params = { mids: route.params.mid, "cuid": UserCtr.get_uid(), euid, "orpt": "0", "sort": false, "pids": "", "cos": 0 }
-    socket_api.get_match_base_info_by_mids(params).then(res => {
-      console.log("--------------------------------------------------match_info", res); //单个mids无法请求到结果集
+    // let params = { mids: route.params.mid, "cuid": UserCtr.get_uid(), euid, "orpt": "0", "sort": false, "pids": "", "cos": 0 }
+    const matchDetail = ref({})
+    const matchLoaded = ref(false) //match 数据接口是否就绪
+    let params = { mid: route.params.mid, cuid: UserCtr.get_uid() }
+    api_details.get_match_detail_MatchInfo(params).then(res => {
+      let match = res.data
+      mid.value = match.mid //设置news 需要的mid
+      // 设置页面激活的tab
+      if (['zh', 'tw'].includes(UserCtr.lang)) {
+        activeTab.value = match.ms == 1 ? 1 : 2
+      }else {
+        activeTab.value = match.ms == 1 ? 0 : 1
+      }
+      match.msc = msc_array_obj(match.msc)
+      return match
+    }).then(match_info => {
+      // computed(() => {
+        let match = lodash.cloneDeep(match_info) || {}
+        let obj = {}
+        if (match.msc_obj) {
+          sportDict.value.allScore.map(k => {
+            if (!match.msc_obj[k]) {
+              obj[k] = {
+                home: 0,
+                away: 0,
+                percentage: 50
+              }
+            } else {
+              // 获取主客队得分数据
+              let home = parseInt(lodash.get(match, `msc_obj[${k}].home`)),
+                away = parseInt(lodash.get(match, `msc_obj[${k}].away`));
+              if (sportDict.value.line.includes(k)) {
+                //'S108'三分球得分，'S107'两分球得分
+                if (k == 'S107') {
+                  home *= 2
+                  away *= 2
+                }
+                if (k == 'S108') {
+                  home *= 3
+                  away *= 3
+                }
+                obj[k] = {
+                  home: home,
+                  away: away,
+                  percentage: isNaN(home / (home + away)) ? 50 : home / (home + away) * 100
+                }
+              } else {
+                obj[k] = {
+                  home: home,
+                  away: away,
+                  percentage: isNaN(away / (home + away)) ? 50 : away / (home + away) * 100
+                }
+              }
+            }
+          })
+        } else {
+          let msc = match.msc
+
+          sportDict.value.allScore.map(k => {
+            if (!msc[k]) {
+              obj[k] = {
+                home: 0,
+                away: 0,
+                percentage: 50
+              }
+            }
+          })
+          Object.assign(obj, msc)
+        }
+        match.msc = obj
+        return match
+      // })
+    }).then(match => {
+      matchDetail.value = match
+      matchLoaded.value = true
     })
 
     if (Object.keys(route.params).length) {
@@ -128,69 +203,12 @@ export default {
       }
       tab.value.unshift('news');
       hasNews.value = true;
-      activeTab.value = match_info.ms == 1 ? 1 : 2
+      // activeTab.value = match_info.ms == 1 ? 1 : 2
     } else {
-      activeTab.value = match_info.ms == 1 ? 0 : 1
+      // activeTab.value = match_info.ms == 1 ? 0 : 1
     }
 
-    const matchDetail = computed(() => {
-      let match = lodash.cloneDeep(match_info) || {}
-      let obj = {}
-      if (match.msc_obj) {
-        sportDict.value.allScore.map(k => {
-          if (!match.msc_obj[k]) {
-            obj[k] = {
-              home: 0,
-              away: 0,
-              percentage: 50
-            }
-          } else {
-            // 获取主客队得分数据
-            let home = parseInt(lodash.get(match, `msc_obj[${k}].home`)),
-              away = parseInt(lodash.get(match, `msc_obj[${k}].away`));
-            if (sportDict.value.line.includes(k)) {
-              //'S108'三分球得分，'S107'两分球得分
-              if (k == 'S107') {
-                home *= 2
-                away *= 2
-              }
-              if (k == 'S108') {
-                home *= 3
-                away *= 3
-              }
-              obj[k] = {
-                home: home,
-                away: away,
-                percentage: isNaN(home / (home + away)) ? 50 : home / (home + away) * 100
-              }
-            } else {
-              obj[k] = {
-                home: home,
-                away: away,
-                percentage: isNaN(away / (home + away)) ? 50 : away / (home + away) * 100
-              }
-            }
-          }
-        })
-      } else {
-        let msc = match.msc
 
-        sportDict.value.allScore.map(k => {
-          if (!msc[k]) {
-            obj[k] = {
-              home: 0,
-              away: 0,
-              percentage: 50
-            }
-          }
-        })
-        Object.assign(obj, msc)
-      }
-      match.msc = obj
-      return match
-    })
-
-    console.log('matchDetail', matchDetail);
 
     return {
       tab,
@@ -202,9 +220,11 @@ export default {
       page_style,
       route,
       matchDetail,
+      matchLoaded,
       formatTime,
       // MatchListData,
-      match_info,
+      // match_info,
+      mid,
       i18n_t
     }
   },

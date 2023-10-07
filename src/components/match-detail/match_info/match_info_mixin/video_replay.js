@@ -1,7 +1,9 @@
   import SliderX from "src/components/match-detail/match_info/slider_x.vue"
-  import { UserCtr ,MatchDetailCalss} from "src/core/index";
+  import { UserCtr ,MatchDetailCalss,MITT_TYPES,useMittOn} from "src/core/index";
   import { TabWapper as Tabs } from "src/components/common/tab"
   import { api_details } from "src/api/index";
+import { useMittEmit } from "../../../../core/mitt";
+
   // import { route } from "project_path/src/router/index.js";
   export default {
       components: {
@@ -13,6 +15,7 @@
           this.replayDataTimer = null
           this.hide_replay_fullscreen_btn_timer = null
           return {
+              off_mitt:null,
               media_src_temp:'',//播放地址零时url
               // 是否展示精彩回放列表
               is_expand_video_list: false,
@@ -145,13 +148,17 @@
       },
       created() {
         this.get_video_replay();
-        // useMittEmit('VIDEO_ZONE_EVENT_CMD_END', this.video_event); //todo
+       let {off} =  useMittOn(MITT_TYPES.EMIT_VIDEO_ZONE_EVENT_CMD_END, this.video_event); 
+      //  this.$once('hook:beforeDestroy', () => {
+      //   alert
+      //  });
+       this.off_mitt = off
       },
       mounted(){
       },
  
       beforeDestroy() {
-      // ('VIDEO_ZONE_EVENT_CMD_END', this.video_event); //todo
+       this.off_mitt()
         this.replayDataTimer && clearInterval(this.replayDataTimer)
         this.hide_replay_fullscreen_btn_timer && clearTimeout(this.hide_replay_fullscreen_btn_timer)
         clearTimeout(this.get_video_replay_timer);
@@ -312,7 +319,7 @@
             this.$root.$emit(`exit_full_screen`,'xl');
             // 弹出新视频
             if(this.$route.name != 'home'){
-              this.$root.$emit('VIDEO_ZONE_EVENT_CMD', {
+              useMittEmit(MITT_TYPES.EMIT_VIDEO_ZONE_EVENT_CMD, {
                 cmd: 'play',
                 url: this.current_replay.fragmentVideo,
                 video_info: this.current_replay,

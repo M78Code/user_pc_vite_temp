@@ -11,6 +11,7 @@ import {
   } from "src/public/api/index";
 import utils from 'src/public/utils/utils.js'
 import { mapGetters, mapActions } from "vuex";
+import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 export default {
     name: "saidan_list",
     data() {
@@ -486,7 +487,7 @@ export default {
 
         // 每次发布晒单需间隔3秒，当3秒内连续晒单会触发轻提示
         if (Date.now() - this.share_order_time < 3000) {
-          this.$root.$emit(this.emit_cmd.EMIT_SHOW_TOAST_CMD, i18n_t('chatroom.fast_share'))
+          useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t('chatroom.fast_share'))
           return
         }
         
@@ -542,7 +543,7 @@ export default {
             this.$emit('qingkong')
             this.$emit('update:share_order_time', Date.now())
           }else{
-            this.$root.$emit(this.emit_cmd.EMIT_SHOW_TOAST_CMD, res.data.msg);
+            useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, res.data.msg);
           }
         })
       }

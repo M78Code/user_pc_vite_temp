@@ -41,10 +41,9 @@
 </template>
   
 <script setup>
-import { ref, reactive,onMounted,watch,computed,onUnmounted } from 'vue';
+import { ref, reactive, onMounted, watch, computed, onUnmounted } from 'vue';
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
-// import BetData from "src/core/bet/class/bet-data-class-h5.js";
 import { UserCtr } from "src/core/index.js";
 import lodash from 'lodash'
 
@@ -113,7 +112,7 @@ watch(() => pre_odds_value, (new_) => {
   }
 })
 watch(() => money.value, (new_) => {
-  useMittEmit(MITT_TYPES.EMIT_INPUT_BET_MONEY,money.value)
+  useMittEmit(MITT_TYPES.EMIT_INPUT_BET_MONEY, money.value)
 })
 watch(() => active_index, (new_) => {
   if (money.value) delete_all.value = true;
@@ -147,7 +146,7 @@ const _handleKeyPress = (e) => {
       _handleNumberKey(num);
       break;
   }
-  useMittEmit(MITT_TYPES.EMIT_INPUT_BET_MONEY,money.value)
+  useMittEmit(MITT_TYPES.EMIT_INPUT_BET_MONEY, money.value)
 }
 
 // 小数点 .
@@ -171,7 +170,7 @@ const _handleDecimalPoint = () => {
 //       if(this.has_pre_market){
 //         //如果包含小数点，直接返回
 //         if (this.pre_odds_value.indexOf(".") > -1) {return false};
-        
+
 //         //如果小数点是第一位，补0
 //         if (!this.pre_odds_value.length) this.pre_odds_value = "0.";
 //         //如果不是，添加一个小数点
@@ -182,10 +181,10 @@ const _handleDecimalPoint = () => {
 //       if (this.money > this.max_money) {
 //         return
 //       }
-      
+
 //       //如果包含小数点，直接返回
 //       if (this.money.indexOf(".") > -1) {return false};
-      
+
 //       //如果小数点是第一位，补0
 //       if (!this.money.length) this.money = "0.";
 //       //如果不是，添加一个小数点
@@ -234,7 +233,7 @@ const _handleNumberKey = (num) => {
 
   //超过最大金额  显示最大金额
   if (money.value && +money.value >= +ref_data.max_money) {
-    money.value =ref_data.max_money
+    money.value = ref_data.max_money
   }
 
 }
@@ -257,12 +256,13 @@ const addnum = computed(() => {
     return lodash.get(UserCtr, 'cvo.single', { qon: 100, qtw: 200, qth: 1000 })
   }
 })
+
 // 预约投注赔率值可通过键盘输入 max，左侧三个按钮置灰，输入金额时放开
 const has_pre_market = computed(() => {
-  return active_index.toString().indexOf('pre') > -1 ||  active_index.toString().indexOf('market') > -1
+  return active_index.toString().indexOf('pre') > -1 || active_index.toString().indexOf('market') > -1
 })
 
-onUnmounted(()=>{
+onUnmounted(() => {
 })
 
 </script>
@@ -278,34 +278,39 @@ onUnmounted(()=>{
   color: #1A1A1A;
 
 }
+
 .key-cell {
   flex: 1;
   box-sizing: border-box;
   line-height: 54px;
   text-align: center;
   border: 1px solid #E9E9E9;
-  background:  #ffffff0D;
+  background: #ffffff0D;
 }
+
 .key-cell {
-  &:first-child { // 左侧第一排MAX的样式
+  &:first-child {
+    // 左侧第一排MAX的样式
     background: #F5F5F5;
   }
+
   &:last-child {
     margin-right: 0;
   }
+
   &.del-key {
     background: cadetblue #ffffff0D no-repeat center center;
     opacity: 0.9;
     color: #B8B8B8;
   }
+
   &.shadow-show {
-    color: #595959!important;
+    color: #595959 !important;
   }
 }
-.del-key{
+
+.del-key {
   // background: url('../../../assets/images/bet/bet_key_delect.png') no-repeat 50%;
   background-size: 23px 14px;
 }
-
-
 </style>

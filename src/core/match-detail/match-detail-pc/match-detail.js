@@ -10,6 +10,20 @@ import GlobalAccessConfig from "src/core/access-config/access-config.js"
 //统计分析URL
 const signal_url = "https://s5.sir.swiftscore.com";
 
+  /**
+  * @Description:给比分设置初始值
+  * @param {Object} score 比分数据
+  * @param {array} key  比分key
+  * @param {boolean} is_zero 比分无数据是否设置为0
+  */
+ const init_score=(score,key,is_zero)=>{
+    let zero = is_zero ? {home:0,away:0} : {home:'',away:''}
+    key.forEach( item => {
+      if(!score[item]){
+        score[item] = zero
+      }
+    })
+  }
 /**
  * 初始化数据
  */
@@ -425,4 +439,5 @@ export default {
   show_wrap_total,
   sr_click_handle,
   set_waterfall,
+  init_score
 };

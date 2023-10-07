@@ -202,6 +202,7 @@ import ChatroomMsgType from 'src/public/utils/ws/chatroom/chatroom_msgtype.js';
 import { api_chatroom } from "src/public/api/index.js";
 import {utils} from "src/core"
 import axios from 'axios'
+import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 
 export default {
   name: "chatroom",
@@ -528,7 +529,7 @@ export default {
       // return;
       // if (this.chatroom_info.ban_share) {
       //   // 聊天室禁晒单提示
-      //   this.$root.$emit(this.emit_cmd.EMIT_SHOW_TOAST_CMD, i18n_t('chatroom.ban_share'))
+      //   useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t('chatroom.ban_share'));
       // }
       this.$root.$emit('saidan_page_change', true);
     },

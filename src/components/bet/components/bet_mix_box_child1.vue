@@ -141,7 +141,7 @@
 // import {utils } from 'src/core/index.js';
 // import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 // import BetData from "src/core/bet/class/bet-data-class.js";
-import BetData_H5 from "src/core/bet/class/bet-data-class-h5.js";
+// import BetData_H5 from "src/core/bet/class/bet-data-class-h5.js";
 import { format_money2 } from "src/core/format/index.js"
 import { ref, onMounted,watch,computed,onUnmounted,nextTick } from 'vue';
 import lodash from 'lodash'
@@ -243,11 +243,11 @@ const part_bet = computed(() => {
 
 /** --------------------------watch开始 ---------------*/
 
-watch(() => BetData_H5.money_notok_list2.value.length, (new_) => {
-  if (!new_ && !get_money_notok_list.value.length && BetData.bet_list.length > 2) {
-    tips_msg = ''
-  }
-})
+// watch(() => BetData_H5.money_notok_list2.value.length, (new_) => {
+//   if (!new_ && !get_money_notok_list.value.length && BetData.bet_list.length > 2) {
+//     tips_msg = ''
+//   }
+// })
 
 /**
    *@description 监听确认中的订单号数量

@@ -135,7 +135,6 @@
             "
           ></div>
         </div>
-
         <!--视频切换-->
         <q-scroll-area
           class="scroll-area rule-scroll-area"
@@ -496,13 +495,14 @@ onMounted(() => {
   if (autoPlay) {
     toggle_play_media("video");
     sessionStorage.removeItem("auto_play_media");
-    Object.assign(thumb_style2.value, {
+
+  }
+  Object.assign(thumb_style2.value, {
       width: "8px",
       right: "4px",
     });
     get_videos();
     refreshFunc();
-  }
 });
 onUnmounted(() => {
   debounce_throttle_cancel(refresh);

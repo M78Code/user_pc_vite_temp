@@ -78,7 +78,7 @@ import { post_chat_likemessage } from "src/public/api/module/chatroom/index.js";
 import bet_item_mixin  from "src/public/components/bet_item/bet_item_mixin";
 import { api_details } from "src/public/api/index";
 import { mapGetters, mapActions } from "vuex";
-
+import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 export default {
   name: "bet_record_info",
   mixins:[bet_item_mixin],
@@ -230,7 +230,7 @@ export default {
       let play_arr = play_info.filter(item => item.hpid == play_id);
       // console.log('play_arr====', play_arr);
       if(play_arr.length == 0){
-        this.$root.$emit(this.emit_cmd.EMIT_SHOW_TOAST_CMD, i18n_t("bet_record.follow_tip_play"));
+        useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t("bet_record.follow_tip_play"));
         return;
       }
 
@@ -261,7 +261,7 @@ export default {
       //      }
       //     }
       //     if(num_arr.length == 0){
-      //       this.$root.$emit(this.emit_cmd.EMIT_SHOW_TOAST_CMD, '对应坑位不存在，跟单失败');
+      //       useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, '对应坑位不存在，跟单失败');
       //       return;
       //     }
       // }else {//不存在
@@ -329,7 +329,7 @@ export default {
            }
         // }
         if(num_arr.length == 0){
-            this.$root.$emit(this.emit_cmd.EMIT_SHOW_TOAST_CMD, i18n_t("bet_record.follow_tip_item"));
+            useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t("bet_record.follow_tip_item"));
             return [];
           }
       }

@@ -19,7 +19,6 @@ import apiDomain from "./apiDomain.js";
 import STANDARD_KEY from "src/core/standard-key";
 
 import { enter_params, compute_css_variables } from "src/core/index.js";
-import BetDataCtr from "src/core/bet/class/bet-data-class-h5.js";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import MenuData from "src/core/menu-h5/menu-data-class.js";
@@ -57,7 +56,7 @@ const init_load = ref(false); //用于加载是否完成
       MenuData.init();
       BetData.init_core()
       BetViewDataClass.init()
-      BetDataCtr.init()
+      BetViewDataClass.init()
       enter_params()
       init_load.value = true;
     });

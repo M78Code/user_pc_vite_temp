@@ -4,13 +4,12 @@
  * @Description: 视频相关操作
  */
 
-
+import { api_common } from "src/api/index.js";
 import details from "src/core/match-detail/match-detail-pc/match-detail.js";
 import User from "src/core/user-config/user-ctr.js"
 import { api_details } from "src/api/index"
 import { i18n_t} from "src/boot/i18n.js"
-// import BetCommonHelper from "src/core/bet/common-helper/index.js"
-import BetCommonHelper from "../bet/common-helper/index"
+import BetCommonHelper from "src/core/bet/common-helper/index.js";
 import { get_media_icon_index,get_match_status } from 'src/core/index.js'
 import { UserCtr,MatchDetailCalss,is_eports_csid } from "src/core/index.js";
 import route  from "project_path/src/router/index.js"
@@ -724,7 +723,6 @@ export default {
   * @param {number} play_type  数据源类型 1 ：源视频 2：动画 3 ：演播室 4 ：主播 5：专题
   */
   full_screen(match,play_type,size){
-    debugger
     play_type = play_type || 1
     if(play_type == 2){
       this.send_message({
@@ -1024,7 +1022,7 @@ export default {
     //     // }
     // }
     api_common.get_videos({sm,isAnimation}).then( res => {
-      let data = lodash.get(res,'data.data') || []
+      let data = lodash.get(res,'data') || []
       // 根据商户过滤篮球赛事
       data.forEach( match => {
         match.msc = BetCommonHelper.msc_array_obj(match.msc)

@@ -21,10 +21,10 @@
         <!-- 流畅 -->
         <div class="video-type-but" :class="{'video-type-but-action':ctr_data.video_type==2}" @click="send_video_type_click(2)">{{get_video_clarity_name2(2)}}</div>
       </div>
-      <img class="close-btn" @click="is_show_type_list = false" src="~public/image/common/png/close_white.png">
+      <img class="close-btn" @click="is_show_type_list = false" src="/yazhou-pc/image/common/png/close_white.png">
     </div>
     <!-- 画中画提示框 -->
-      <div v-show="pip_mouseover&&$route.name == 'home'" class="pip_mouseover">{{ $t('video.open_pip')}}</div>
+      <div v-show="pip_mouseover&&$route.name == 'home'" class="pip_mouseover">{{ i18n_t('video.open_pip')}}</div>
     <!-- 大屏 -->
     <div class="full-screen-wrap" :class="{esports:is_esports}" v-if="$route.params.video_size !=1 && !is_esports">
       <!-- 退出中屏 -->
@@ -35,7 +35,7 @@
         anchor="top middle"
         self="center middle"
         :content-style="tooltip_style + ';white-space: nowrap;'"
-      >{{ $t($route.name == 'video' ? 'common.back' : 'video.big_screen_mode')}}</q-tooltip>
+      >{{ i18n_t($route.name == 'video' ? 'common.back' : 'video.big_screen_mode')}}</q-tooltip>
     </div>
     <!-- 全屏 -->
     <div class="xl-screen-wrap" v-if="$route.params.play_type != 2" :class="{esports:is_esports, disabled: video_fullscreen_disabled}">
@@ -47,7 +47,7 @@
         anchor="top middle"
         self="center middle"
         :content-style="tooltip_style + ';white-space: nowrap;'"
-      >{{ $t(($route.name == 'video') && ($route.params.video_size == 1 || is_esports) ? 'common.back' : 'video.full_screen_mode')}}</q-tooltip>
+      >{{ i18n_t(($route.name == 'video') && ($route.params.video_size == 1 || is_esports) ? 'common.back' : 'video.full_screen_mode')}}</q-tooltip>
     </div>
   </div>
 </template>
@@ -393,7 +393,7 @@ export default {
     cursor: pointer;
     width: 16px;
     height: 16px;
-    background-image: url("~public/image/yabo/svg/virtual-ref.svg");
+    background-image: url("/yazhou-pc/image/svg/virtual-ref.svg");
     background-size: cover;
     &.is_rotate {
       animation: video-reload-btn 5s linear 0s infinite normal;

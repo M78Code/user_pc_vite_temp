@@ -25,7 +25,7 @@
       <div class="account-wrap yb_pr16 text-right relative-position" @click.stop="get_balance">
         <!-- 账户余额 -->
         <p class="text-right account-p">{{$t("bet.account_balance")}}</p>
-        <p class="yb_fontsize16">{{ format_money2(BetData.balance) }}</p>
+        <p class="yb_fontsize16">{{ format_money2(userData.balance) }}</p>
       </div>
       <!-- 金额刷新按钮 -->
       <div class="refesh yb_mr8" :class="{ 'refesh2': is_loading_balance }" @click.stop="get_balance"></div>
@@ -42,6 +42,7 @@ import lodash from "lodash"
 import { format_money2 } from 'src/core/format/module/format-money.js'
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { ref,computed,onUnmounted } from 'vue';
+import userData from "src/core/user-config/user-ctr.js"
 
 
 
@@ -125,7 +126,7 @@ const get_balance = () => {
     is_loading_balance.value = false;
   }, 800);
 
-  get_balance()
+  userData.get_balance()
 }
 
 const mix_sum_odds = computed(() => {
