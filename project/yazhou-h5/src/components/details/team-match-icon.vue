@@ -27,7 +27,7 @@
       <!-- 收藏按钮 -->
       <div v-if="GlobalAccessConfig.get_collectSwitch()" class="match-icon match-icon-single" @click="details_collect(get_detail_data)">
         <div class="collect-icon" :class="{active:get_detail_data.mf}"></div>
-        <div class="text">{{ $t('footer_menu.collect')}}</div>
+        <div class="text">{{ i18n_t('footer_menu.collect')}}</div>
       </div>
     </div>
   </div>
@@ -45,24 +45,22 @@ import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import { api_common } from "src/api/index.js";
 import {utils } from 'src/core/index.js'
 import { i18n_t } from "src/boot/i18n.js";
-import { useDetailsDataFromDataWarehouse } from "project_path/src/pages/details/details.js";
 
 export default defineComponent({
   name: "team_match_icon",
   components: {
     'match-icon': match_icon,
   },
+  props: ['detail_data'],
   setup(props, evnet) {
-    const data = reactive({
+    const state_data = reactive({
       // 收藏|取消收藏是否请求中
       favorite_loading: false,
     });
-    const { details_data } = useDetailsDataFromDataWarehouse()
-    const get_detail_data = reactive(details_data)
+    const get_detail_data = reactive(props.detail_data)
     // #TODO vuex
     // computed:{
     // ...mapGetters([
-    //   'get_detail_data',
     //   'get_uid',
     //   // 投注成功的赛事id
     //   'get_match_id_bet_success',
@@ -91,7 +89,6 @@ export default defineComponent({
     // #TODO vuex
     // methods: {
     // ...mapMutations([
-    //   "set_detail_data",
     //   "set_match_id_bet_success",
     //   // 修改收藏状态
     //   'set_details_changing_favorite',
@@ -106,7 +103,7 @@ export default defineComponent({
       if( !utils.judge_collectSwitch( GlobalAccessConfig.get_collectSwitch(),this ) ) return
 
       // 如果还在请求中则return
-      if ( favorite_loading ) return;
+      if ( state_data.favorite_loading ) return;
       let txt = 0;
       let params = {
         // 赛事ID
@@ -114,7 +111,7 @@ export default defineComponent({
         // 1收藏||0取消收藏
         cf: Number(!match_obj.mf),
         // 用户id
-        cuid: get_uid,
+        cuid: UserCtr.uid,
       };
       // 收藏赛事或取消收藏
       if (match_obj.mf) {
@@ -122,28 +119,28 @@ export default defineComponent({
       } else {
         txt = i18n_t('collect.betted_title');//'收藏';
       }
-      favorite_loading = true;
+      state_data.favorite_loading = true;
       // 更新收藏状态
-      set_details_changing_favorite(1)
+      // set_details_changing_favorite(1)
 
       api_common.add_or_cancel_match( params ).then( res => {
-        favorite_loading = false;
+        state_data.favorite_loading = false;
         if (res.code == 200) {
           let cloneData = lodash.clone(get_detail_data)
-          cloneData.mf = params.cf
-          set_detail_data(cloneData);
+          get_detail_data.mf = params.cf
+          // set_detail_data(cloneData);
           //同步列表页收藏状态
-          set_match_id_bet_success(`${match_obj.mid}-${cloneData.mf}-${Math.random()}`);
+          // set_match_id_bet_success(`${match_obj.mid}-${cloneData.mf}-${Math.random()}`);
         } else if (res.msg) {
           set_toast({ 'txt': res.msg });
         }
       }).catch((e) => {
         console.error(e)
-        favorite_loading = false;
+        state_data.favorite_loading = false;
       });
     };
     return {
-      ...toRefs(data),
+      ...toRefs(state_data),
       show_lvs,
       details_collect,
       get_detail_data,
@@ -207,7 +204,7 @@ export default defineComponent({
     margin-left: 0.08rem;
 
     &.active {
-      background-image: var(--q-color-com-img-bg-74);
+      background-image: url("/yazhou-h5/image/common/m-list-favorite-s.svg");
     }
   }
 }

@@ -176,9 +176,9 @@ export const get_matchDetail_getVirtualMatchOddsInfo = (params, config, url = "/
 
 
 // 收藏--------赛事收藏或取消
-export const add_or_cancel_match = (params, config, url ="/v1/userCollection/addOrCancelMatch") => http.post(`${prefix_yewu13}${url}`, params, config);
+export const add_or_cancel_match = (params, config, url ="/v1/userCollection/addOrCancelMatch") => http.post(`${prefix_bat}${url}`, params, config);
 // 收藏--------联赛收藏或者取消
-export const add_or_cancel_tournament = (params, config, url="/v1/userCollection/addOrCancelTournament") => http.post(`${prefix_yewu13}${url}`, params, config);
+export const add_or_cancel_tournament = (params, config, url="/v1/userCollection/addOrCancelTournament") => http.post(`${prefix_bat}${url}`, params, config);
 // 收藏--------收藏列表-----参数和赛事赛程一样
 export const countCollectH5 = (params, config, url="/v1/m/menu/countCollectH5") => http.get(`${prefix}${url}`,  params, config);
 
