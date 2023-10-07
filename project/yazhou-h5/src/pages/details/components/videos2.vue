@@ -72,9 +72,17 @@
             <p>{{i18n_t("video.full_screen_play")}}</p>
           </div>
         </div>
-        
         <!-- 视频单页项目-->
-        <iframe v-if="iframe_show && !is_show_no_handle && iframe_src" v-show="!is_playing_replay" ref="iframe" id="bdIframe" style="width:100%;height:100%;" allow="autoplay" frameborder="0" scrolling="no" :src="iframe_src+'&rdm='+this.iframe_rdm"></iframe>
+        <iframe 
+        v-if="iframe_show && !is_show_no_handle && iframe_src" 
+        v-show="!is_playing_replay" 
+        ref="iframe" id="bdIframe" 
+        style="width:100%;height:100%;" 
+        allow="autoplay" 
+        frameborder="0" 
+        scrolling="no" 
+        :src="iframe_src+'&rdm='+iframe_rdm"
+        ></iframe>
         <!-- 视频单页项目精彩回放页面-->
         <iframe
             v-if="is_playing_replay"
@@ -371,6 +379,11 @@ export default {
       is_replay_load_error: false,
       //视频单页是否已加载     作用：防止白屏
       get_iframe_onload: false,
+      iframe_rdm: new Date().getTime(),
+      // 视频显示状态
+      get_show_video: false,
+      // 视频url信息
+      get_video_url: MatchDetailCalss.video_url,
     }
   },
   computed: {
@@ -378,10 +391,6 @@ export default {
       get_menu_type(){return MenuData.get_menu_type();},
       get_change_count(){return '';},
       get_is_user_no_handle(){return '';},
-      // 视频url信息
-      get_video_url(){return MatchDetailCalss.video_url},
-      // 视频显示状态
-      get_show_video(){return '';},
       // 详情页的数据
       get_detail_data(){
         return this.detail_data;
@@ -708,7 +717,7 @@ export default {
     this.replay_url = 'http://localhost:3000/replay.mp4'
   },
   unmounted() {
-    this.set_video_url({media_src:'',referUrl:''})
+    this.get_video_url = {media_src:'',referUrl:''}
     window.removeEventListener("message", this.handleMessage);
     window.removeEventListener("message", this.handle_replay_message);
     this.set_tab_fix(false);
@@ -732,8 +741,6 @@ export default {
   },
   methods: {
       set_change_count(){},
-      set_video_url(){},
-      set_show_video(){},
       set_video_zhiding(){},
       set_toast(){},
       set_zhiding_info(){},
@@ -749,7 +756,6 @@ export default {
       set_bet_obj(){},
       set_bet_list(){},
       set_is_hengping(){},
-      set_event_list(){},
       set_is_dp_video_full_screen(){},
 
       // 设置iframe标签是否开启
@@ -1053,7 +1059,7 @@ export default {
       }
 
       // 视频加载错误，则隐藏相应交互按钮
-      if (data.cmd === 'error_message' || (data.testmsg && data.data.includes('404'))) {
+      if (data.cmd == 'error_message' || (data.testmsg && data.data.includes('404'))) {
         this.load_error = true
       } else if (data.testmsg && data.data === '可以播放') {
         this.load_error = false
@@ -1096,7 +1102,7 @@ export default {
         this.sendMessage2({cmd: 'voice', val: this.voice})
       }
       if (num == 4) {
-        if (this.get_video_url.active === 'lvs') {
+        if (this.get_video_url.active == 'lvs') {
           this.sendMessage2({
             cmd: 'record_play_info',
             val: {
@@ -1235,12 +1241,12 @@ export default {
             media_src,
             active: 'lvs',
           };
-          this.set_video_url(data);
+          this.get_video_url = data;
           this.timer4_ = setTimeout(() => {
             this.clear_timer(); // 清除相关计时器操作;
             this.reload_create_fun();
           }, 500)
-          this.set_show_video(true);
+          this.get_show_video = true;
         }
       })
     },
@@ -1252,7 +1258,7 @@ export default {
         type:   'Video'
       };
       this.is_show_no_handle = false
-      api_common.getMatchUserIsLogin().then(res => {
+      api_common.getMatchUserIsLogin().then(res => { 
         if(res && res.code == 200 && res.data.isLogin){
           let referUrl = window.BUILDIN_CONFIG.DOMAIN_RESULT.live_domains[0];
           let media_src
@@ -1262,12 +1268,13 @@ export default {
               media_src,
               active:'muUrl',
             };
-            this.set_video_url(data);
+            MatchDetailCalss.set_video_url(data);
+            this.get_video_url = data
             this.timer3_ = setTimeout(()=>{
               this.clear_timer(); // 清除相关计时器操作;
               this.reload_create_fun();
             }, 500)
-            this.set_show_video(true);
+            this.get_show_video = true;
           } else {
             let param = {}
             this.send_gcuuid = uid();
@@ -1280,20 +1287,20 @@ export default {
                   media_src,
                   active:'muUrl',
                 };
-                this.set_video_url(data);
+                this.get_video_url = data;
                 this.timer4_ = setTimeout(()=>{
                   this.clear_timer(); // 清除相关计时器操作;
                   this.reload_create_fun();
                 }, 500)
-                this.set_show_video(true);
+                this.get_show_video = true;
               }
             });
           };
         }else{
           let data = {};
           data.active = 'muUrl';
-          this.set_video_url(data);
-          this.set_show_video(true);
+          this.get_video_url = data;
+          this.get_show_video = true;
           this.set_change_count(this.get_change_count - 1);
         }
       });
@@ -1334,7 +1341,8 @@ export default {
           data.referUrl = `${location.protocol}${data.referUrl}`;
           let CTime = this.get_detail_data.mgt;
           let STime = data.serverTime;
-          this.set_video_url(data);
+          MatchDetailCalss.set_playback_video_list(data);
+          this.get_video_url = data
           this.timer6_ = setTimeout(()=>{
             this.clear_timer(); // 清除相关计时器操作;
             this.reload_create_fun()
@@ -1452,7 +1460,7 @@ export default {
           .then(res => {
             if (res.code == 200 && lodash.get(res.data, 'eventList.length')) {
               this.events_list = res.data.eventList
-              this.set_event_list(res.data.eventList)
+              MatchDetailCalss.set_playback_video_list(res.data.eventList)
             }
           })
           .catch(err => {
@@ -1921,7 +1929,7 @@ export default {
   }
 
   .iframe-wrap {
-    background-color: var(--q-color-com-bg-color-37);
+    background-color: var(--q-gb-bg-c-2);
 
     &.full-screen {
       position: fixed;
