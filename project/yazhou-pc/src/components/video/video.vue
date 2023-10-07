@@ -58,10 +58,11 @@
 
 <script setup>
 
-import LoadData from "project_path/src/components/load_data/load_data.vue"
+import { onMounted } from "vue";
+import LoadData from "project_path/src/components/load-data/load-data.vue"
 // 视屏头部
-// import VideoHeader from "project_path/src/components/video/video_header.vue"
-// 视频组件
+import VideoHeader from "project_path/src/components/video/video-header.vue"
+// 视频组件dn
 // import VideoIframe from "src/project/yabo/components/video/video_iframe.vue"
 // 比分板足球模板
 // import DataTemplate1 from "src/project/yabo/components/video/data_template/template1.vue"
@@ -174,9 +175,9 @@ import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 // },
 // beforeUnmount() {
 //   // 站点 tab 休眠状态转激活
-useMittOn(MITT_TYPES.EMIT_SITE_TAB_ACTIVE, this.emit_site_tab_active).off;
-useMittOn(`exit_full_screen`, this.exit_full_screen).off;
-useMittOn(`exit_browser_full_screen`, this.exit_browser_full_screen).off;
+useMittOn(MITT_TYPES.EMIT_SITE_TAB_ACTIVE, emit_site_tab_active).off;
+useMittOn(MITT_TYPES.EMIT_EXIT_FULL_SCREEN, exit_full_screen).off;
+useMittOn(MITT_TYPES.EMIT_EXIT_BROWSER_FULL_SCREEN, exit_browser_full_screen).off;
 //   this.refresh_loading_timer && clearTimeout(this.refresh_loading_timer)
 //   window.removeEventListener('keydown',this.cur_keydown);
 // }
