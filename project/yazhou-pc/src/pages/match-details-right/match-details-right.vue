@@ -78,11 +78,11 @@
               </div>
               <!-- 刷新按钮 -->
               <div class="refresh">
-                <refresh
+                <refresh-component
                   :other_icon="true"
                   icon_name="icon-balance_refresh"
                   :loaded="refresh_loading"
-                  @click="refresh()"
+                  @click="refresh"
                 />
               </div>
             </div>
@@ -90,7 +90,7 @@
             <video-ctrl
               :match_info="match_infoData"
               :refresh_loading="refresh_loading"
-              @refresh="refresh()"
+              @refresh="refresh"
               @setfoldStatus="setfoldStatus"
               v-if="route.name != 'video' && !is_esports && match_infoData"
             />
@@ -280,7 +280,7 @@ import  videoHistoryLine  from "project_path/src/components/video-replay/video-h
 import matchHandicap from "src/components/match-detail/match-handicap/match-handicap.vue";
 import { TabWapper as Tab } from "src/components/common/tab";
 import { useRightDetails } from "./match-details-right-config";
-import refresh from "src/components/refresh/refresh.vue";
+import refreshComponent from "src/components/refresh/refresh.vue";
 import videoCtrl from "src/components/match-detail/match_info/video_ctrl.vue";
 import matchInfo from "src/components/match-detail/match_info/match_info.vue";
 import handicapTabsBar from "src/components/match-detail/match_info/handicap_tabs_bar.vue";
@@ -327,6 +327,7 @@ const {
   change_loading_state,
   set_handicap_this,
   setfoldStatus,
+  refresh
   /* func */
 } = useRightDetails({ route });
 // 是否显示 统计版块

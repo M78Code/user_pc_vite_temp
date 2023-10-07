@@ -5,20 +5,23 @@
 -->
 <template>
   <div class="video-zone-layout-err " v-if="show">
-    <!-- <img src="/yazhou-pc/image/common/png/replay_icon.png" class="video-replay-icon" /> -->
+    <!-- <img src="~/public/image/common/png/replay_icon.png" class="video-replay-icon" /> -->
     <div class="content">
       <div class="flex1"></div>
       <div class="box">
-        <div><img src="/yazhou-pc/image/svg/replay_video_no_line.svg"/></div>
-        <div class="txt">{{ $t('replay_video.iframe_err') }}</div>
+        <div>
+          <img src="/yazhou-pc/image/svg/replay_video_no_line.svg" />
+        </div>
+        <div class="txt">{{ i18n_t('replay_video.iframe_err') }}</div>
       </div>
       <div class="flex1"></div>
     </div>
   </div>
 </template>
-<script>
 
-import http from "src/core/http/axios-warpper.js";
+<script>
+import http from "src/core/http/axios-warpper.js";  
+import axios from "axios";
 export default {
   props:{
     url: String
@@ -27,6 +30,12 @@ export default {
     return {
       show:false,
     }
+  },
+  computed: {
+    // ...mapGetters({
+    //   vx_get_layout_size: "get_layout_size",
+    //   vx_get_user: "get_user",
+    // }),
   },
   created() {
     // let url = 'http://127.0.0.1:5500/video/pc/final/videoReplay.html?src=https://www.runoob.com/try/demo_source/movie.mp4';
@@ -51,7 +60,7 @@ export default {
   * @param {function} callback  回调函数
   */
   check_url(url,callback){
-    http.get(`${url}`).then( res => {
+    axios.get(url).then( res => {
         if (res.data) {
           callback(true)
         } else {
