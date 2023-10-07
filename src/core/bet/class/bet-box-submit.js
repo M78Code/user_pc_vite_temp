@@ -64,6 +64,7 @@ const set_bet_order_list = (bet_list, is_single) => {
     if (!is_single) {
         order_list = single_bet.map(obj => {
             let bet_s_list = []
+            console.error("串关投注信息",bet_list)
             bet_list.forEach(item => {
                 let bet_s_obj = {
                     "sportId": item.sportId,   // 赛种id
@@ -131,6 +132,8 @@ const set_bet_order_list = (bet_list, is_single) => {
                     }
                 ]
             }
+
+            console.error("投注信息",obj)
             return obj
 
         }) || []
@@ -138,6 +141,7 @@ const set_bet_order_list = (bet_list, is_single) => {
 
     return order_list
 }
+
 
 // 获取限额 常规 / 冠军
 // obj 投注数据
@@ -147,7 +151,7 @@ const get_query_bet_amount_common = (obj) => {
         orderMaxBetMoney: []
     }
     // 获取限额请求参数数据
-    params.orderMaxBetMoney = get_query_bet_amount_parmas()
+    params.orderMaxBetMoney = get_query_ber_amount_parmas()
 
     // 获取额度接口合并
     api_betting.query_bet_amount(params).then((res = {}) => {
@@ -159,8 +163,7 @@ const get_query_bet_amount_common = (obj) => {
             // 获取盘口值 
             const latestMarketInfo = lodash_.get(res, 'data.latestMarketInfo')
             // 获取预约投注项
-            set_bet_pre_list(latestMarketInfo)
-
+            set_pre_bet_appoint(latestMarketInfo)
         } else {
             // 获取限额失败的信息
             BetViewDataClass.set_bet_error_code({
@@ -171,6 +174,12 @@ const get_query_bet_amount_common = (obj) => {
     })
 }
 
+// 获取限额 预约投注
+// obj 投注数据
+const get_query_bet_amount_pre = () => {
+
+}
+
 // 获取限额 电竞/电竞冠军/VR体育
 // obj 投注数据
 const get_query_bet_amount_esports_or_vr = () => {
@@ -179,7 +188,7 @@ const get_query_bet_amount_esports_or_vr = () => {
         orderMaxBetMoney: []
     }
     // 获取限额请求参数数据
-    params.orderMaxBetMoney = get_query_bet_amount_parmas()
+    params.orderMaxBetMoney = get_query_ber_amount_parmas()
 
     // 获取最大值和最小值接口
     api_betting.post_getBetMinAndMaxMoney(params).then((res = {}) => {
@@ -198,39 +207,8 @@ const get_query_bet_amount_esports_or_vr = () => {
     })
 }
 
-// 获取限额 预约投注
-// obj 投注数据
-const get_query_bet_amount_pre = () => {
-
-    let params = {
-        orderMaxBetMoney: []
-    }
-    // 获取限额请求参数数据
-    params.orderMaxBetMoney = get_query_bet_amount_parmas()
-
-    // 获取额度接口合并
-    api_betting.query_pre_bet_amount(params).then((res = {}) => {
-        if (res.code == 200) {
-            BetViewDataClass.set_bet_min_max_money(res.data)
-            // 通知页面更新 
-            useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY)
-            // 获取盘口值 
-            const latestMarketInfo = lodash_.get(res, 'data.latestMarketInfo')
-            // 获取预约投注项
-            set_bet_pre_appoint(latestMarketInfo)
-
-        } else {
-            // 获取限额失败的信息
-            BetViewDataClass.set_bet_error_code({
-                code: res.code,
-                message: res.message
-            })
-        }
-    })
-}
-
 //设置获取限额参数 
-const get_query_bet_amount_parmas = () =>{
+const get_query_ber_amount_parmas = () =>{
     let order_min_max_money = []
     // 单关 
     if (BetData.is_bet_single) {
@@ -250,30 +228,19 @@ const get_query_bet_amount_parmas = () =>{
     return order_min_max_money
 }
 
-// 设置 可预约的投注项
-const set_bet_pre_list = bet_pre => {
-    const pre_list = []
-    bet_pre.forEach(item => {
+// 设置预约投注显示状态
+const set_pre_bet_appoint = bet_appoint => {
+    const appoint_list = []
+    bet_appoint.forEach(item => {
         // 判断是否可以预约
         if (item.pendingOrderStatus) {
             // 获取预约投注项id
             let oid = lodash_.get(item.currentMarket, 'marketOddsList[0].id')
-            pre_list.push(oid)
+            appoint_list.push(oid)
         }
     })
-    // 设置可预约的投注项
-    BetData.set_bet_pre_list(pre_list)
-}
-
-// 设置预约投注 盘口信息
-const set_bet_pre_appoint = bet_appoint => {
-    const appoint_obj = {} 
-    bet_appoint.forEach(item => {
-        // 使用盘口id作为 key值 进行查询
-        appoint_obj[item.id] = item
-    })
-    // 设置预约投注 盘口数据
-    BetData.set_bet_appoint_obj(appoint_obj)
+    // 设置预约投注项id
+    BetData.set_bet_appoint_obj(appoint_list)
 }
 
 // 提交投注信息 
