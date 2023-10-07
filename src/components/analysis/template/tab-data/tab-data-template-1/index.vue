@@ -443,7 +443,7 @@ function getAge(birthdate) {
       }
     }
   }
-  ::v-deep .panel {
+  :deep(.panel) {
     min-width: 950px;
   }
   .panel {

@@ -1769,6 +1769,7 @@ export default {
 <style lang="scss" scoped>
 .player {
   background: var(--q-color-com-img-bg-130) no-repeat center content-box content-box;
+  padding-bottom: 0.02rem;
   &.across-height {
     height: 3.75rem;
   }
@@ -2032,7 +2033,7 @@ export default {
     transition: all 1s;
   }
 
-  ::v-deep {
+  :deep {
     .tabs-wrapper {
       position: absolute;
       bottom: 1.18rem;
@@ -2202,7 +2203,7 @@ export default {
   top: 0;
   width: 100%;
   height: 100%;
-  ::v-deep {
+  :deep {
     .dplayer-icons-right {
       display: none !important;
     }

@@ -154,7 +154,6 @@ export default defineComponent({
     ])
     // 移除相应监听事件
     onUnmounted(emitters_off)
-    console.error(props.data_list);
     return {
       ...toRefs(data),
       match_id,

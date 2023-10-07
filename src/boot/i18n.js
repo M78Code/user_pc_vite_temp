@@ -1,7 +1,7 @@
 
 //  import { LocalStorage, SessionStorage  } from "src/core/utils/index.js";
 import { LocalStorage, SessionStorage } from "src/core/utils/module/web-storage.js";
-import server_map from "app/job/output/i18n/index.js";
+// import server_map from "app/job/output/i18n/index.js";
 
 
 import { createI18n } from "vue-i18n";
@@ -61,7 +61,7 @@ function loadLanguageAsync(lang) {
     i18n.locale = lang;
 
     //加载服务器语言设置
-    load_server_i18n(lang)
+    // load_server_i18n(lang)
     return lang;
   }).catch(error => {
     console.error('lockie_test_consolee', error);
@@ -69,15 +69,15 @@ function loadLanguageAsync(lang) {
 
 }
 // 动态加载 服务器 对应的语言包
-function load_server_i18n(lang) {
-  return import(
-    /* webpackChunkName: "lang-[request]" */ `../../job/output/i18n/${server_map[lang]}.json`
-  ).then((langfile) => {
-    i18n.global.mergeLocaleMessage(lang, langfile);
-  }).catch(error => {
-    console.error('lockie_test_consolee', error);
-  });
-}
+// function load_server_i18n(lang) {
+//   return import(
+//     /* webpackChunkName: "lang-[request]" */ `../../job/output/i18n/${server_map[lang]}.json`
+//   ).then((langfile) => {
+//     i18n.global.mergeLocaleMessage(lang, langfile);
+//   }).catch(error => {
+//     console.error('lockie_test_consolee', error);
+//   });
+// }
 // 新增
 function t(key, args, options) {
   if (!i18n) return key;

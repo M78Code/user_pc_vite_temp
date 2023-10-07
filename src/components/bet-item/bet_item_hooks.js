@@ -18,7 +18,7 @@ import lodash from "lodash";
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/";
 import { i18n_t, is_eports_csid,compute_value_by_cur_odd_type } from "src/core/index.js";
-import math  from "src/core/utils/module/mathjs.js"
+import math  from "src/core/bet/common/mathjs.js"
 
 import ZhuGe from "src/core/http/zhuge-tag";
 // import { useGetStore } from "src/core/match-detail-pc/use_get_store.js";
