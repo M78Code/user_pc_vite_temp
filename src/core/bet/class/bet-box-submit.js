@@ -270,7 +270,7 @@ const set_bet_pre_appoint = bet_appoint => {
     const appoint_obj = {} 
     bet_appoint.forEach(item => {
         // 使用盘口id作为 key值 进行查询
-        appoint_obj[item.id] = item
+        appoint_obj[item.currentMarket.id] = item.currentMarket
     })
     // 设置预约投注 盘口数据
     BetData.set_bet_appoint_obj(appoint_obj)
