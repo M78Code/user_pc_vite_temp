@@ -234,6 +234,7 @@ import {
   MenuData,
   MatchDataWarehouse_PC_Detail_Common as MatchDetailsData,
   useMittOn,
+  useMittEmit,
   MITT_TYPES,
   useMittEmitterGenerator,
   i18n_t,
@@ -501,10 +502,8 @@ export default {
       // 前端关    后台开       >关
       // 前端关    后台关       >关
       if (!this.enable_collect_api || !this.global_switch.collect_switch) {
-        return this.$root.$emit(
-          this.emit_cmd.EMIT_SHOW_TOAST_CMD,
-          i18n_t("msg.msg_09")
-        );
+        useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t("msg.msg_09"));
+        return;
       }
       let mf = match.mf;
       let params = {
