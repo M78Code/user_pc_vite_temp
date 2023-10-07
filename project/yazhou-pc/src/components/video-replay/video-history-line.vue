@@ -283,10 +283,10 @@ export default {
 </script>
 <style lang="scss" scoped>
 .video-history-line {
-    background: var(--qq--y0-bg-color12);
+    background: var(--q-gb-bg-c-11);
     &.Block {
         .block-header {
-            background: var(--qq--y0-bg-color12);
+            background: var(--q-gb-bg-c-11);
             border-bottom: none;
             padding: 9px 15px 0;
         }
@@ -297,13 +297,13 @@ export default {
     }
     .block-header {
         padding: 9px 15px;
-        background: var(--qq--background-gradient-5);
+        background: var(--q-gb-bg-lg-19);
         // border-bottom: 1px solid var(--qq--match-border-color2);
         .block-title {
             font-weight: 500;
             font-size: 13px;
             line-height: 14px;
-            color: var(--qq--league-rank-title-text-color);
+            color: var(--q-gb-t-c-4);
             font-family: 'PingFang SC';
             padding-left: 13px;
             position: relative;
@@ -316,7 +316,7 @@ export default {
                 content: '';
                 height: 14px;
                 border-radius: 1.5px;
-                background: var(--qq--theme-bg-play-name-before);
+                background: var(--q-gb-bg-c-13);
             }
         }
     }
@@ -331,12 +331,12 @@ export default {
     .progress-container {
         width: 100%;
         height: 4px;
-        background: var(--qq--theme-bg-video-history-progress-container);
+        background: var(--q-gb-bg-c-9);
         border-radius: 15px;
         position: relative;
         .progress {
             height: 100%;
-            background: var(--qq--theme-bg-video-history-progress);
+            background: var(--q-gb-bg-c-13);
             border-radius: 15px;
         }
         .event-item {
@@ -346,7 +346,7 @@ export default {
             height: 17px;
             top: -6px;
             transform: translateX(-50%);
-            border: 1px solid var(--qq--theme-border-video-history-icon);
+            border: 1px solid var(--q-gb-bg-c-13);
             background: #fff;
             border-radius: 50%;
             display: flex;
@@ -359,7 +359,7 @@ export default {
                 height: 24px;
                 top: -10px;
                 .event-icon {
-                    background: var(--qq--bg-image-url44);
+                    background: var(--qq--bg-image-url44); ///image/common/png/video_history_play.png todo
                     background-repeat: no-repeat;
                     width: 14px;
                     height: 14px;
