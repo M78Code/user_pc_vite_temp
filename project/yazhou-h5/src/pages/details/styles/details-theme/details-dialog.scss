@@ -1,7 +1,7 @@
 /*
  * @Description: 详情页
  */
-[class*=theme0] {
+// [class*=theme0] {
   .dialog-header {
     // background:var(--q-color-page-bg-color-2);
     background:var(--q-match-page-bg-color-103);
@@ -20,7 +20,7 @@
 
   /*************** 返回图标icon *************** -E*/
   .details-dialog {
-     background:var(--q-match-page-bg-color-103);
+     background: var(--q-gb-bg-c-15);;
     .details-dialog-bg {
       background: var(--q-match-page-bg-color-107) !important;
     }
@@ -40,4 +40,4 @@
       color:  var(--q-color-fs-color-40)
     }
   }
-}
+// }

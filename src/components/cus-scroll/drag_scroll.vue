@@ -181,7 +181,7 @@ export default {
     display: flex;
     flex-wrap: nowrap;
     height: 100%;
-    ::v-deep img {
+    :deep(img) {
       pointer-events: none;
     }
   }

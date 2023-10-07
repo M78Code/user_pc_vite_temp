@@ -259,8 +259,9 @@ export default defineComponent({
   name: "details-dialog",
 })
 </script>
+
 <style lang="scss" scoped>
-@import 'project_path/src/pages/details/styles/details-theme/details_dialog.scss';
+@import 'project_path/src/pages/details/styles/details-theme/details-dialog.scss';//project/yazhou-h5/src/pages/details/styles/details-theme/details-dialog.scss
 .details-dialog {
   max-width: 100%;
   width: 100%;

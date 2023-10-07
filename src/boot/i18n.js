@@ -1,7 +1,7 @@
 
 //  import { LocalStorage, SessionStorage  } from "src/core/utils/index.js";
 import { LocalStorage, SessionStorage } from "src/core/utils/module/web-storage.js";
-import server_map from "app/job/output/i18n/index.js";
+// import server_map from "app/job/output/i18n/index.js";
 
 
 import { createI18n } from "vue-i18n";
