@@ -152,7 +152,7 @@ class MenuData {
     // // 竟足
     // let lottery = this.init_lottery(data);
     // 电竞 2100 = 英雄联盟
-    let menu_dianjing = { mi: 7, sl: [] };
+    let menu_dianjing = { mi: 7, sl: BaseData.dianjing_sublist };
     let menu_jingzu = { mi: 30, sl: [] };
     let menu_guanjun = { mi: 4, sl: [] };
     let menu_hot = { mi: 500, sl: [] }
@@ -161,10 +161,10 @@ class MenuData {
       if (item && item.sl && item.sl.length > 0) {
         mi_list.push(...item.sl);
       }
-      //电竞
-      if (BaseData.sports_mi.includes(+item.mi)) {
-        menu_dianjing.sl.push(item);
-      }
+      // //电竞
+      // if (BaseData.sports_mi.includes(+item.mi)) {
+      //   menu_dianjing.sl.push(item);
+      // }
       //冠军
       if ([400].includes(+item.mi)) {
         menu_guanjun.sl = item.sl || [];
@@ -648,7 +648,7 @@ class MenuData {
       menu_lv2: res_data,
     });
     //设置第二级菜单
-    res_data&&res_data.length&& this.set_current_lv2_menu(res_data[0], 0);
+    res_data && res_data.length && this.set_current_lv2_menu(res_data[0], 0);
   }
   // 早盘,串关,电竞拉取接口更新日期菜单 3,6,7
   async get_date_menu_api_when_subchange(item, type) {
@@ -868,17 +868,9 @@ class MenuData {
   /**
    * 电竞菜单要保留 电竞菜单 的 csid
    */
-  get_current_esport_csid() {
+  get_csid() {
     if (this.is_export()) {
-      var mi = this.current_lv_2_menu.mi
-      // 电竞菜单csid
-      let menu_dianjing = {
-        2100: 100,
-        2101: 101,
-        2102: 102,
-        2103: 103,
-      };
-      return menu_dianjing[mi] || "";
+      return this.current_lv_2_menu?.csid
     }
     // if (BaseData.csids_map
     // ) {

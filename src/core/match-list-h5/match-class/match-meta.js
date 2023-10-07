@@ -7,12 +7,13 @@ import lodash from 'lodash'
 import BaseData from 'src/core/base-data/base-data.js'
 import MatchPage from 'src/core/match-list-h5/match-class/match-page'
 import MenuData from "src/core/menu-h5/menu-data-class.js"
+import UserCtr from 'src/core/user-config/user-ctr.js'
+import PageSourceData from "src/core/page-source/page-source.js";
 import MatchListCardClass from '../match-card/match-list-card-class'
 import { MATCH_LIST_TEMPLATE_CONFIG } from "src/core/match-list-h5/match-card/template"
 import mi_euid_mapping_default from "src/core/base-data/config/mi-euid-mapping.json"
 import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from 'src/core'
 import { api_common } from "src/api/index.js";
-import MatchListParams from 'src/core/match-list-h5/composables/match-list-params.js'
 
 class MatchMeta {
 
@@ -267,11 +268,32 @@ class MatchMeta {
   }
 
   /**
+   * 
+   * @description 获取赛事请求参数
+   * @returns { Object }
+   */
+  get_base_params () {
+    // match中 hpsFlag 都为0 除开冠军或电竞冠军; 赛事列表冠军或者电竞冠军/赛果不需要hpsFlag
+    const hpsflag = MenuData.is_champion() || MenuData.get_menu_type() == 28 ? null : 0
+    return {
+      cuid: UserCtr.get_cuid(),
+      euid: lodash.get(MenuData, 'current_lv_2_menu.mi'),
+      // 一级菜单筛选类型 1滚球 2 即将开赛 3今日赛事 4早盘 11串关
+      type: lodash.get(MenuData, 'current_lv_1_menu.mi'),
+      //排序	 int 类型 1 按热门排序 2 按时间排序
+      sort: PageSourceData.sort_type,
+      //标准版和简版 1为新手版  2为标准版
+      device: ['', 'v2_h5', 'v2_h5_st'][UserCtr.standard_edition],
+      hpsflag
+    };
+  }
+
+  /**
    * @description 获取冠军赛事； 元数据接口暂时未提供所以走老逻辑， 后续会提供
    */
   async get_champion_match() {
     const main_menu_type = MenuData.get_menu_type()
-    const params = MatchListParams.get_base_params(40602)
+    const params = this.get_base_params(40602)
     const res = await api_common.post_match_full_list({
       "cuid":"240640629535469568",
       "euid":"40602",
@@ -288,13 +310,32 @@ class MatchMeta {
    */
   async get_results_match () {
     const md = lodash.get(MenuData.current_lv_3_menu, 'field1')
-    const params = MatchListParams.get_base_params()
+    // 电竞的冠军
+    const category = MenuData.get_menu_type() === 100 ? 2 : 1
+    if (!md) return
+    const params = this.get_base_params()
     const res = await api_common.get_match_result_api({
       ...params,
-      "device":"v2_h5_st",
-      "type":28,
-      "category":1,
+      category,
       "md": md
+    })
+    this.handle_custom_matchs(res)
+  }
+
+  /**
+   * @description 获取电竞赛事； 元数据接口暂时未提供所以走老逻辑， 后续会提供
+   */
+  async get_esports_match(item) {
+    console.log(MenuData)
+    const res = await api_common.post_esports_match({
+      "cuid":"508895784655200024",
+      "type":3000,
+      "sort":2,
+      "device":"v2_h5_st",
+      "category":1,
+      "md":"",
+      "csid":"100",
+      "hpsFlag":0
     })
     this.handle_custom_matchs(res)
   }

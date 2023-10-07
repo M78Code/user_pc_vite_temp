@@ -362,11 +362,11 @@ class MatchPage {
     //竞足409 不需要euid
     let params = {
       mids: Array.isArray(mid) ? mid.join(',') : mid,
-      cuid: this.get_uid,
-      euid: this.get_current_sub_menuid == '409' ? "" : this.get_current_sub_menuid,
+      cuid: UserCtr.get_uid(),
+      euid:  MenuData.get_euid() == '409' ? "" : MenuData.get_euid(),
       device: UserCtr.standard_edition == 2 ? 'v2_h5_st' : 'v2_h5',
       //排序	 int 类型 1 按热门排序 2 按时间排序
-      sort: this.sort_type
+      sort: UserCtr.sort_type
     };
     if (this.invok_source == 'detail_match_list') {
       // 赛果菜单下赛事详情-精选赛事时逻辑处理
@@ -376,7 +376,9 @@ class MatchPage {
     if (!params.mids) return;
     let api_axios_flg = 'get_match_base_info_by_mids'
     let api_func = get_match_base_info_by_mids;
-    if (MenuData.menu_type == 3000) {
+    // if (MenuData.menu_type == 3000) {
+      //判断电竞
+    if (MenuData.is_export()) {
       api_func = get_esports_match_by_mids;
       api_axios_flg = 'get_esports_match_by_mids';
       if (lodash.get(this.get_current_menu, 'date_menu.menuType') == 100) {
@@ -770,9 +772,9 @@ class MatchPage {
         // 赛事比分排序
         this.msc_sort(item.msc);
         // 如果是电竞
-        if (MenuData.menu_type == 3000) {
+        if (MenuData.is_export()) {
           other_status_match.push(item);
-        } else if (MenuData.menu_type == 28) { // 如果是赛果
+        } else if (MenuData.is_results()) { // 如果是赛果
           started.push(item);
         } else {  // 如果是正常的体育赛事
           if (item.ms == 1 || item.ms == 110) {
@@ -786,11 +788,12 @@ class MatchPage {
       });
       // 如果是今日，则在今日下边，每次ws 更新，从新排序
       if ([1, 3].includes(+MenuData.menu_type)) {
-        // 获取当前二级赛种子菜单列表
-        const sub_menu_list = lodash.cloneDeep(this.get_sub_menu_list)
-
+        // 获取当前二级赛种子菜单列表 
+        // const sub_menu_list = lodash.cloneDeep(this.get_sub_menu_list)
+        const sub_menu_list = lodash.cloneDeep(MenuData.current_lv_2_menu)
+        
         // 滚球下对同一赛种csid归类，避免ws更新时，赛种csid间隔重复
-        if (MenuData.menu_type == 1 && this.get_sport_all_selected) {
+        if (MenuData.is_scrolll_ball()&& MenuData.get_sub_is_all()) {
           started = this.csid_same_sort(started, sub_menu_list)
         }
 
@@ -804,7 +807,7 @@ class MatchPage {
       if (this.invok_source == 'home_hot_page_schedule') {
         // home页面热门菜单时的逻辑操作
         match_source_data_ = started.concat(no_started);
-      } else if (MenuData.menu_type == 1) { // 滚球(menuType=1)只显示进行中的比赛
+      } else if (MenuData.is_scrolll_ball()) { // 滚球(menuType=1)只显示进行中的比赛
         match_source_data_ = started;
       } else {
         match_source_data_ = started.concat(no_started);
@@ -812,7 +815,7 @@ class MatchPage {
       if ([100, 3000].includes(+MenuData.menu_type)) {// 100（冠军）  3000（电竞）
         match_source_data_ = other_status_match;
       }
-      if (MenuData.menu_type == 28) { // 如果是 赛果
+      if (MenuData.is_results()) { // 如果是 赛果
         match_source_data_ = started.concat(no_started).concat(other_status_match);
       }
 
@@ -945,14 +948,14 @@ class MatchPage {
     }
 
     // 滚球：删除ms不为1的赛事
-    if (MenuData.menu_type == 1) {
+    if (MenuData.is_scrolll_ball()) {
       if (state_changed.ms != null && typeof state_changed.ms != 'undefined' && ![1, 110].includes(+state_changed.ms)) {
         delete_ended_match();
       }
     }// 今日,早盘
-    else if ([3, 4].includes(+MenuData.menu_type)) {
+    else if (MenuData.is_zaopan()||MenuData.is_today()) {
       if (state_changed.mmp > 0 || state_changed.ms == 1 || state_changed.ms == 110) {
-        if (MenuData.menu_type == 4) { // 早盘: 将已开赛的赛事移除早盘
+        if (MenuData.is_zaopan()) { // 早盘: 将已开赛的赛事移除早盘
           delete_ended_match();
         } else {  // ‘今日’  将未开赛的赛事转移至进行中
           convert_to_playing();

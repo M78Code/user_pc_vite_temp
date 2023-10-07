@@ -67,3 +67,6 @@ const download_file_to_local = async (srcs = {}) => {
 // 获取 服务器上 当前商户的 版本配置
 download_file_to_local(final_merchant_config.assets);
 
+export {
+  download_file_to_local
+}
