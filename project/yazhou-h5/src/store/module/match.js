@@ -46,8 +46,6 @@ const initialState = {
    //冠军  全部折叠
    collapse_champion_all: {}
 
-
-
 }
 
 const matchSlice = createSlice({
@@ -91,6 +89,8 @@ const matchSlice = createSlice({
       state.standard_odd_status = payload
     },
 
+  
+
     // 冠军玩法折叠相关
     set_collapse_champion_map(state, {value}) {
     
@@ -127,11 +127,9 @@ const matchSlice = createSlice({
       if (!value) {
         state.collapse_champion_all = {}
       }
-      state.collapse_champion_all = value
-
+      const { c_value,tid } = value
+      state.collapse_champion_all[tid] = c_value
     },
-  
-  
   
      /**
       * 设置 球类折叠   状态对象
@@ -160,10 +158,7 @@ const matchSlice = createSlice({
         }else if(type==2){
           new_obj =payload
         }
-  
         //当 冠军 页面 球种展开的时候 需要展开 下面的所有联赛 ，以及联赛下的所有玩法
-  
-  
         if(source.includes('champion-csid') ){
           state.collapse_champion_map={}
   
