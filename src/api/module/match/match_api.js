@@ -27,7 +27,7 @@ export const post_league_list = (params, config = {},url="/v1/w/structureTournam
 };
 
 // 冠军聚合页
-export const post_champion_list = (params, config = {},url="/v1/w/outrightmatchesPB") => {
+export const post_champion_list = (params, config = {},url="/v1/w/outrightmatches") => {
   return http.post(`${prefix}${url}`, params, {axios_debounce_cache_key:'get_match_list'});
 };
 

@@ -233,6 +233,7 @@ class MenuData {
     if(this.menu_root == 1) {
       text = 'match-play-common'
     }
+    console.log('texttext', obj);
     PageSource.set_page_source(text)
 
     // console.warn('ssss',val);
