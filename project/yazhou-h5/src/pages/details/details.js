@@ -133,7 +133,7 @@ const route = useRoute();
     // 是否从直播进入详情
     get_play_video: "get_play_video",// TODO: 待处理
     // 视频是否全屏
-    get_is_full_screen: "get_is_full_screen",// TODO: 待处理
+    get_is_full_screen: false,// TODO: 待处理
     // 商户是否需要直接跳到列表页（url地址有label参数）
     get_golistpage: "get_golistpage",// TODO: 待处理
     get_godetailpage: "get_godetailpage",// TODO: 待处理
@@ -157,7 +157,6 @@ const route = useRoute();
   const is_highlights = computed(() => {
     return lodash.get(state_data.get_curr_tab_info, "component") === "highlights";
   });
-  console.error("GlobalAccessConfig.get_statisticsSwitch()",api_common);
   // 足篮赛种和后台开关开了才显示显示赛事分析tab
   const show_match_analysis_tab = computed(() => {
     return (

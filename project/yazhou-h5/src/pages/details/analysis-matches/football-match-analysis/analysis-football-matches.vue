@@ -188,7 +188,6 @@ export default defineComponent({
     }
     // 点击一级tab 菜单切换 // TODO: $utils UserCtr 后续修改调整
     const tab_click = ([tab, type]) => {
-      console.error(tab);
       switch(tab.component) {
         case "article-main":
         currentContent.value = tab.component
@@ -274,6 +273,7 @@ export default defineComponent({
 .analysis-football-matches {
   position: relative;
   z-index: 80;
+  background-color: var(--q-gb-bg-c-15);
 }
 
 .clear-bg {

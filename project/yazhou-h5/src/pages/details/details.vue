@@ -144,8 +144,6 @@ import detailsDialog from "src/components/details/details-dialog/details-dialog-
 // // import no_data from "src/project/components/common/no-data.vue";   // 无网络展示组件
 import videos from "project_path/src/pages/details/components/videos2.vue";   // 详情页视频+动画直播区域
 // import change_header from "project_path/src/pages/details/components/header/change-header.vue";  // 详情页下拉置顶title
-// // import analysis_football_matches from "project_path/src/pages/details/analysis-matches/football-match-analysis/analysis-football-matches.vue"; // 详情页  足球赛事分析
-// // import basketball_match_analysis from "project_path/src/pages/details/analysis-matches/basketball-match-analysis/basketball-match-analysis";  // 详情页 或者 赛果  篮球赛事分析
 import info_rules from "project_path/src/pages/details/components/info-rules.vue"  // 视频info说明弹框
 // // import SDetails from "src/project/components/skeleton/skeleton-details.vue"  // 详情骨架屏
 import analysisMatches from './analysis-matches/index.vue';
@@ -173,8 +171,6 @@ export default defineComponent({
 //     // "no-data": no_data,
     "info-rules": info_rules,
     videos: videos,
-//     // "analysis-football-matches": analysis_football_matches,
-//     // "basketball-match-analysis": basketball_match_analysis,
 //     // SDetails,
     category,
 //     // chatroom
@@ -596,6 +592,7 @@ export default defineComponent({
 <style scoped lang="scss">
 @import "./styles/details.scss";
 .details-fat {
+  background-color: var(--q-gb-bg-c-17);
 .details-f9 {
   // background: var(--q-color-page-bg-color-9);
 }

@@ -23,11 +23,18 @@
 
 <script setup>
   import { formete_date  } from "src/core/index.js";
+  import { get_file_path } from "src/core/file-path/file-path.js";
+
   const props = defineProps({
     // 接口响应数据
     favorite_article_data: {
       type: Array,
       default: () => []
+    },
+    // 接口响应数据
+    maylike_click: {
+      type: Function,
+      default: () => {}
     },
     // 弹框里面展示的文章的文章id
     dialog_article_id: {
@@ -37,7 +44,7 @@
   }) 
   const show_details= (index) => {
     // TODO: emit 后续修改调整
-    $emit('maylike_click', index)
+    emit('maylike_click', index)
   }
   /**
    * 获取图片地址
@@ -58,20 +65,27 @@
   width: min-content;
   line-height: 0.44rem;
   white-space: nowrap;
+  border-bottom: 2px solid var(--q-gb-bd-c-10);
 }
 hr {
   margin: 0;
   border: 0;
   transform: translateY(-1px);
+  border: 1px solid var(--q-gb-bd-c-6);
 }
 .content {
   height: 0.98rem;
+  border-bottom: 1px solid var(--q-gb-bd-c-6);
+  .detail2 {
+    color: var(--q-gb-t-c-4);
+  }
 }
 .detail {
   line-height: 1.3;
 }
 .label {
   border-radius: 3px;
+  color: var(--q-gb-t-c-14);
 }
 img {
   width: 1.1rem;

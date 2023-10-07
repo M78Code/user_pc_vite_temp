@@ -238,7 +238,7 @@ const props = defineProps({
       .header {
         color:  var(--q-analysis-text-color-22);
         border-bottom: 1px solid var(--q-analysis-text-color-25);
-        background: var(--q-analysis-text-color-1);
+        background: var(--q-analysis-text-color-13);
         > div {
           color: var(--q-analysis-text-color-32);
         }
@@ -260,7 +260,7 @@ const props = defineProps({
         color: var(--q-analysis-text-color-2);
       }
       .btn_style {
-        background: var(--q-analysis-text-color-1);
+        background: var(--q-analysis-text-color-13);
         border: 1px solid var(--q-analysis-text-color-23);
       }
     }
@@ -336,7 +336,7 @@ const props = defineProps({
 
         &.calculation_color1 {
           background: var(--q-analysis-text-color-33);
-          color: var(--q-analysis-text-color-1) !important;
+          color: var(--q-analysis-text-color-13) !important;
         }
 
         &.calculation_color2 {

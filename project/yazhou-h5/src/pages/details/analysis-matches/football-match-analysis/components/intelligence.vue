@@ -176,6 +176,7 @@ import { i18n_t } from "src/boot/i18n.js";
   }
 
   .content {
+    background-color: var(--q-analysis-text-color-13);
     .tittle {
       line-height: 0.4rem;
       padding: 0 0.2rem;
@@ -184,14 +185,20 @@ import { i18n_t } from "src/boot/i18n.js";
         display: inline-block;
         width: 0.08rem;
         height: 0.08rem;
-
+        background-color: var(--q-analysis-text-color-7);
         border-radius: 50%;
+      }
+      .color1 {
+        background-color: var(--q-analysis-text-color-7);
+      }
+      .color2 {
+        background-color: var(--q-analysis-text-color-6);
       }
     }
 
     .item {
       padding: 0.1rem 0.2rem;
-
+      color: var(--q-analysis-text-color-14);
       &:last-child {
         border-bottom: none;
       }

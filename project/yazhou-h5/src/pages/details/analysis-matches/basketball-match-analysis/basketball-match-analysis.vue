@@ -132,6 +132,7 @@ const tab_click = ([tab, type]) => {
 .analysis-football-matches {
   position: relative;
   z-index: 80;
+  background-color: var(--q-gb-bd-c-15);
 }
 
 .clear-bg {
