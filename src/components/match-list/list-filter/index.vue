@@ -29,7 +29,9 @@
         class="item yb-flex-center"
       >
         <div class="icon-wrap list-filter menu-inline">
-          <sport-icon :sport_id="0" size="20px" class="icon" />
+          <!-- <sport-icon :sport_id="0" size="20px" class="icon" /> -->
+          <span class="soprts_id_icon"
+            :style="sprite_img['pc-left-menu-bg-image']({ position: `item_0` })"></span>
           <!-- 是否新上玩法 -->
           <!-- <img  class="menu-new-icon" v-if="menu.coppertone == 1" src="~public/image/yabo/svg/virtual/menu_new.svg"/> -->
         </div>
@@ -64,11 +66,9 @@
           class="item yb-flex-center"
         >
           <div class="icon-wrap list-filter menu-inline">
-            <sport-icon
-              :sport_id="BaseData.compute_sport_id(item.mif)"
-              size="20px"
-              class="icon"
-            />
+            <span class="soprts_id_icon"
+            v-if="menu_config.is_esports()"
+            :style="sprite_img['pc-left-menu-bg-image']({ position: `item_${BaseData.compute_sport_id(item.mif)}` })"></span>
             <!-- 是否新上玩法 -->
             <!-- <img  class="menu-new-icon" v-if="menu.coppertone == 1" src="~public/image/yabo/svg/virtual/menu_new.svg"/> -->
           </div>
@@ -102,11 +102,13 @@
           class="item yb-flex-center"
         >
           <div class="icon-wrap list-filter menu-inline">
-            <sport-icon
+            <!-- <sport-icon
               :sport_id="Number(item.mif) - 2000"
               size="20px"
               class="icon"
-            />
+            /> -->
+            <span class="soprts_id_icon"
+            :style="sprite_img['pc-left-menu-bg-image']({ position: `item_${Number(item.mif) - 2000}` })"></span>
             <!-- 是否新上玩法 -->
             <!-- <img  class="menu-new-icon" v-if="menu.coppertone == 1" src="~public/image/yabo/svg/virtual/menu_new.svg"/> -->
           </div>
@@ -141,7 +143,9 @@
         >
           <!-- {{ item.mi }} -->
           <div class="icon-wrap list-filter menu-inline">
-            <sport-icon :sport_id="item.menuId" size="20px" class="icon" />
+            <!-- <sport-icon :sport_id="item.menuId" size="20px" class="icon" /> -->
+            <span class="soprts_id_icon"
+            :style="sprite_img['pc-left-menu-bg-image']({ position: `item_${item.menuId}` })"></span>
             <!-- 是否新上玩法 -->
             <!-- <img  class="menu-new-icon" v-if="menu.coppertone == 1" src="~public/image/yabo/svg/virtual/menu_new.svg"/> -->
           </div>
@@ -178,7 +182,9 @@
         :class="current_menu == '400' ? 'active' : 'no-active'"
       >
         <div class="icon-wrap list-filter menu-inline">
-          <sport-icon :sport_id="0" size="20px" class="icon" />
+          <!-- <sport-icon :sport_id="0" size="20px" class="icon" /> -->
+          <span class="soprts_id_icon"
+            :style="sprite_img['pc-left-menu-bg-image']({ position: `item_0` })"></span>
         </div>
         <div
           class="name menu-inline name-margin-left"
@@ -209,12 +215,15 @@
           :class="current_menu == item.mi ? 'active' : 'no-active'"
         >
           <div class="icon-wrap list-filter menu-inline">
-            <sport-icon
+            <span class="soprts_id_icon"
+            v-if="menu_config.is_esports()"
+            :style="sprite_img['pc-left-menu-bg-image']({ position: `item_${compute_mi_400_sl_mi_csid(item.mi)}` })"></span>
+            <!-- <sport-icon
               :sport_id="compute_mi_400_sl_mi_csid(item.mi)"
               size="20px"
               class="icon"
               :is_esports="true"
-            />
+            /> -->
             <!-- 是否新上玩法 -->
             <!-- <img  class="menu-new-icon" v-if="menu.coppertone == 1" src="~public/image/yabo/svg/virtual/menu_new.svg"/> -->
           </div>
@@ -234,9 +243,9 @@
   </div>
 </template>
 <script setup>
-import { computed, ref, reactive } from "vue";
+import { ref, watch } from "vue";
 import { useRoute } from "vue-router";
-import GlobalAccessConfig from "src/core/access-config/access-config.js"
+import GlobalAccessConfig from "src/core/access-config/access-config.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import { get_match_status } from "src/core/utils/index";
 import details from "src/core/match-list-pc/details-class/details.js";
@@ -246,8 +255,8 @@ import menu_config from "src/core/menu-pc/menu-data-class.js";
 import store from "src/store-redux/index.js";
 import BaseData from "src/core/base-data/base-data.js";
 import { i18n_t, MatchDetailCalss, PageSourceData } from "src/core/index.js";
-
-import DragScroll from 'src/components/cus-scroll/drag_scroll.vue';
+import  sprite_img  from   "src/core/server-img/sprite-img/index.js"
+import DragScroll from "src/components/cus-scroll/drag_scroll.vue";
 
 let state = store.getState();
 // 当前页面来源信息
@@ -257,10 +266,17 @@ const mi_100_arr = ref([]);
 const menu_mi = ref(1);
 const drag_scroll = ref();
 const mi_2000_arr = ref([]);
+const mi_400_obj = ref([]);
+const mi_500_obj = ref([]);
 const vr_menu_obj = ref([]);
 const route = useRoute();
 
-set_init()
+set_init();
+resolve_mew_menu_res();
+
+watch(() => menu_config.menu_root, () => {
+  resolve_mew_menu_res();
+})
 
 function set_init() {
   let mif = "",
@@ -278,38 +294,38 @@ function set_init() {
     return handle_click_menu_mi_400({ ...obj, guanjun: "guanjun" });
   } else if (menu_config.menu_root == 1) {
     let sports = menu_mi.value == 1 ? "quanbu-gunqiu" : "common";
-  console.log('menu_config.menu_root', obj, menu_mi);
+    console.log("menu_config.menu_root", obj, menu_mi);
 
     handle_click_menu_mi_1({ ...obj, sports });
   }
 }
 /**
-     *全部 数量计算 滚球
-     */
-    function compute_quanbu_num_mi_1() {
-      // 常规的计算
-      let num = 0;
-      mi_100_arr.value.map((x) => {
-        if(x.ct){
-          num += x.ct;
-        }
-      });
-      //这个全部数量，应该只统计常规赛事的数量，不包含电子竞技和虚拟体育，
-      //电竞
-      // this.mi_2000_arr.map((x) => {
-      //   num += x.ct;
-      // });
-
-      // vr 的计算
-      // vr 数量是固定的 
-      // num += 19
-      // let vr_sl = this.vr_menu_obj || [];
-      // let vr_num = 0;
-      // vr_sl.map((x) => {
-      //   num += x.ct;
-      // });
-      return num;
+ *全部 数量计算 滚球
+ */
+function compute_quanbu_num_mi_1() {
+  // 常规的计算
+  let num = 0;
+  mi_100_arr.value.map((x) => {
+    if (x.ct) {
+      num += x.ct;
     }
+  });
+  //这个全部数量，应该只统计常规赛事的数量，不包含电子竞技和虚拟体育，
+  //电竞
+  // this.mi_2000_arr.map((x) => {
+  //   num += x.ct;
+  // });
+
+  // vr 的计算
+  // vr 数量是固定的
+  // num += 19
+  // let vr_sl = this.vr_menu_obj || [];
+  // let vr_num = 0;
+  // vr_sl.map((x) => {
+  //   num += x.ct;
+  // });
+  return num;
+}
 
 /**
  * @Description:球种菜单切换  前置检查进程
@@ -318,6 +334,24 @@ function handle_click_menu_mi_pre_process() {
   // if (drag_scroll && drag_scroll.is_move()) {
   //   return;
   // }
+}
+
+/**
+ * 解析菜单数据
+ */
+  function resolve_mew_menu_res() {
+  
+  if (menu_config.menu_root == 500) {
+    //热门
+    resolve_mew_menu_res_mi_500();
+  } else if (menu_config.menu_root == 1) {
+    //滚球  常规 +电竞
+    resolve_mew_menu_res_mi_100_2000();
+  } else if (menu_config.menu_root == 400) {
+    // 冠军
+    resolve_mew_menu_res_mi_400();
+  }
+
 }
 /**
  * 解析 新接口返回值     常规 +电竞
@@ -352,6 +386,15 @@ function resolve_mew_menu_res_mi_100_2000() {
   //  VR  体育的
   vr_menu_obj.value = BaseData.vr_mi_config || [];
 }
+
+/**
+ * 解析 新接口返回值  热门
+ */
+function resolve_mew_menu_res_mi_500() {
+  mi_500_obj.value = BaseData.mew_menu_list_res.find((x) => x.mi == 500) || {
+    sl: [],
+  };
+}
 /**
  * 滚球 全部 euid 计算
  */
@@ -380,6 +423,31 @@ function compute_quanbu_euid() {
     euids: euids,
     euid: euids.join(","),
   };
+}
+/**
+ * 解析 新接口返回值  冠军页面
+ */
+function resolve_mew_menu_res_mi_400() {
+  mi_400_obj.value = BaseData.mew_menu_list_res.find((x) => x.mi == 400) || {
+    sl: [],
+  };
+}
+/**
+ *全部 数量计算 冠军
+  */
+function compute_quanbu_num_mi_400() {
+  return mi_400_obj.value["ct"];
+  //  赛种过滤
+  //  return vr_num + changgui_num;
+}
+/**
+ * 冠军赛事的 CSID 计算  ，这里理论上是常规体育冠军
+ * 电竞的冠军 和娱乐 目前都是分离的
+ *
+ * 确保一下冠军 有没有其他球类 例如 电竞等
+ */
+function compute_mi_400_sl_mi_csid(mi) {
+  return parseInt(mi) - 400;
 }
 /**
  * 单个菜单按钮点击   滚球 的
@@ -526,7 +594,7 @@ function handle_click_menu_mi_1(detail = {}) {
   // 设置      中间 菜单输出
   menu_config.set_mid_menu_result(params);
   // 设置   请求  列表结构  API 参数的  值
-  console.log('config', config);
+  console.log("config", config);
   menu_config.set_match_list_api_config(config);
 }
 /**

@@ -22,7 +22,7 @@ export const set_sticky_top = () => {
     };
   }
   // 冠军聚合页
-  else if (page_source == "winner_top") {
+  else if (page_source == "match-champion") {
     obj = {
       type: 84,
       league: 122,
