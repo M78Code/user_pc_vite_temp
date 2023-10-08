@@ -316,7 +316,8 @@ import { useMittEmit } from "../../../../core/mitt";
         // 重播
         changeVideo2Live() {
           if (this.replay_event_id) {
-            this.$root.$emit(`exit_full_screen`,'xl');
+            useMittEmit(MITT_TYPES.EMIT_EXIT_FULL_SCREEN_MSG_EVENT, 'xl');
+
             // 弹出新视频
             if(this.$route.name != 'home'){
               useMittEmit(MITT_TYPES.EMIT_VIDEO_ZONE_EVENT_CMD, {

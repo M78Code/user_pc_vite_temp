@@ -531,7 +531,7 @@ export default {
       //   // 聊天室禁晒单提示
       //   useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t('chatroom.ban_share'));
       // }
-      this.$root.$emit('saidan_page_change', true);
+      useMittOn(MITT_TYPES.EMIT_SAIDAN_PAGE_CHANGE_MSG_EVENT, true);
     },
     // 登录聊天室成功后，执行相应流程请求
     chatroom_process_start() {

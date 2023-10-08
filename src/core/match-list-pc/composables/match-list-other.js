@@ -9,6 +9,7 @@ const play_current_key = ref('');
 const tab_play_keys_info = ref('');
 
 import { other_play_name_to_playid } from 'src/core/constant/config/data-class-ctr/index.js';
+import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 
 /**
 	 * @Description 克隆数组
@@ -121,7 +122,7 @@ const set_tab_play_keys = (match) => {
     let type = play_key == 'hps15Minutes' ? 4 : 1
     other_handicap_list = this.merge_template_data({match,handicap_list:other_handicap_list,type,play_key})
     this.coverage_match_data({other_handicap_list}, mid)
-    window.vue.$root.$emit(window.vue.emit_cmd.EMIT_API_BYMIDS, {mids:[mid]});
+    useMittOn(MITT_TYPES.EMIT_API_BYMIDS, {mids:[mid]});
   }
   
   /**

@@ -521,7 +521,7 @@ export default {
             this.hot_data[i].mf = true;
           }
           //通知列表更新收藏状态
-          this.$root.$emit(this.emit_cmd.EMIT_MX_COLLECT_COUNT_CMD, {
+          useMittEmit(MITT_TYPES.EMIT_MX_COLLECT_COUNT_CMD, {
             mid: params.mid,
             mf: this.hot_data[i].mf,
             type: "set_status",

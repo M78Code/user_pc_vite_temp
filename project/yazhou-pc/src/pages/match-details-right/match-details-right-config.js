@@ -636,7 +636,7 @@ export const useRightDetails = (props) => {
     //   "match_details_header_height_right_details",
     //   this.getHeaderHeight
     // );
-    // useMittOn("saidan_page_change", this.change_saidan);
+    // useMittOn(MITT_TYPES.EMIT_SAIDAN_PAGE_CHANGE_MSG_EVENT, this.change_saidan);
     /*  mitt todo*/
 
     // 刷新按钮节流

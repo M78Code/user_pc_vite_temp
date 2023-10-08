@@ -58,6 +58,7 @@ import video from "src/core/video/video.js"
 import { IconWapper } from 'src/components/icon'
 import  img_big_screen from "/yazhou-pc/image/common/svg/big_screen.svg"
 import { get_media_icon_index,MatchDetailCalss,debounce_throttle_cancel} from "src/core";
+import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 const tooltip_style = 'background:rgba(0,0,0,0.8);padding:4px 5px;border-radius:0px;color:#fff'
 export default {
   components: {
@@ -218,7 +219,7 @@ export default {
 
       clearTimeout(this.handle_screen_timer)
       this.handle_screen_timer = setTimeout(() => {
-        useMittEmit(`exit_full_screen`,size);
+        useMittEmit(MITT_TYPES.EMIT_EXIT_FULL_SCREEN_MSG_EVENT, size);
       }, 100)
     },
     show_click(){
