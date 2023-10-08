@@ -64,6 +64,7 @@ const set_bet_order_list = (bet_list, is_single) => {
     if (!is_single) {
         order_list = single_bet.map(obj => {
             let bet_s_list = []
+            console.error("串关投注信息",bet_list)
             bet_list.forEach(item => {
                 let bet_s_obj = {
                     "sportId": item.sportId,   // 赛种id
@@ -131,6 +132,8 @@ const set_bet_order_list = (bet_list, is_single) => {
                     }
                 ]
             }
+
+            console.error("投注信息",obj)
             return obj
 
         }) || []
@@ -138,6 +141,7 @@ const set_bet_order_list = (bet_list, is_single) => {
 
     return order_list
 }
+
 
 // 获取限额 常规 / 冠军
 // obj 投注数据
@@ -160,7 +164,6 @@ const get_query_bet_amount_common = (obj) => {
             const latestMarketInfo = lodash_.get(res, 'data.latestMarketInfo')
             // 获取预约投注项
             set_bet_pre_list(latestMarketInfo)
-
         } else {
             // 获取限额失败的信息
             BetViewDataClass.set_bet_error_code({
@@ -250,10 +253,10 @@ const get_query_bet_amount_parmas = () =>{
     return order_min_max_money
 }
 
-// 设置 可预约的投注项
-const set_bet_pre_list = bet_pre => {
+// 设置预约投注显示状态
+const set_bet_pre_list = bet_appoint => {
     const pre_list = []
-    bet_pre.forEach(item => {
+    bet_appoint.forEach(item => {
         // 判断是否可以预约
         if (item.pendingOrderStatus) {
             // 获取预约投注项id
@@ -270,7 +273,7 @@ const set_bet_pre_appoint = bet_appoint => {
     const appoint_obj = {} 
     bet_appoint.forEach(item => {
         // 使用盘口id作为 key值 进行查询
-        appoint_obj[item.id] = item
+        appoint_obj[item.currentMarket.id] = item.currentMarket
     })
     // 设置预约投注 盘口数据
     BetData.set_bet_appoint_obj(appoint_obj)

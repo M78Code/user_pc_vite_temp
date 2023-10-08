@@ -353,11 +353,11 @@ function set_menu_lv3(item, index, type = "click") {
   //设置三级菜单
   MenuData.set_current_lv3_menu(item, index, type);
   // 早盘 不走接口 自己筛选数据
-  if (MenuData.is_zaopan()) MatchMeta.filter_match_by_time(item?.field1)
+  if (MenuData.is_zaopan()) return MatchMeta.filter_match_by_time(item?.field1)
   // 赛果 三级菜单 请求接口
   if (MenuData.is_results()) return MatchMeta.get_results_match()
   // 电竞 三级菜单 请求接口
-  if (MenuData.is_export()) MatchMeta.get_esports_match()
+  if (MenuData.is_export()) return MatchMeta.get_esports_match()
 }
 /**
  * 四级菜单事件

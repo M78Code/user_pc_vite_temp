@@ -4,78 +4,77 @@
 -->
 
 <template>
-  <div class="bet-mix-show" @click="handleonmousedown" >
+  <div class="bet-mix-show" @click="handleonmousedown">
     <!-- 失效蒙层 -->
     <!-- 左边 -->
-    <div 
-      class="row justify-start items-center"
-      v-if="value_show.length > 0"
-      v-for="(item,index) in value_show"
-      :class="[get_bet_success ? 'yb_px14' : 'yb_pl12 yb_pr18', { 'bet-mix-show2': is_conflict }]
-      ">
-      <!-- 左边 -->
-      <div class="yb_mr12 dele-left" v-if="get_bet_success">
-       <img  src="/public/yazhou-h5/image/svg/bet_xuanx.svg" @click.stop="remove_(value_show.id_)">
-       <!-- <img  src="image/wwwassets/bw3/svg/bet_xuanx.svg" @click.stop="remove_(value_show.id_)"> -->
-     </div>
-      <div>
-      </div>
-      <!-- 右边 -->
-      <div style="flex:1;">
-        <!-- 上 -->
-        <div class="row justify-between items-center yb_fontsize16 content-t yb_mb6 yb_mt8">
-          <div class="col-9 row">
-            <span class="fw_600">
-              <!-- 投注成功后的展示值用接口返回的 -->
-              <!-- <template v-if="bet_success_obj.playOptionName && [3, 6].includes(+get_bet_status)">{{bet_success_obj.playOptionName}} </template> -->
-              <template>
-                <span class="yb_mr4">{{ item.home }}</span>
-                <span :class="pankou_change == 1 ? 'pankou-change' : null">{{ item.away }}</span>
-              </template>
-              [{{ item.marketTypeFinally }}]
-            </span>
+    <div v-if="value_show.length > 0">
+
+      <div class="row justify-start items-center" v-for="(item, index) in value_show" :key="index" :class="[get_bet_success ? 'yb_px14' : 'yb_pl12 yb_pr18', { 'bet-mix-show2': is_conflict }]
+        ">
+        <!-- 左边 -->
+        <div class="yb_mr12 dele-left" v-if="get_bet_success">
+          <img src="/public/yazhou-h5/image/svg/bet_xuanx.svg" @click.stop="remove_(value_show.id_)">
+          <!-- <img  src="image/wwwassets/bw3/svg/bet_xuanx.svg" @click.stop="remove_(value_show.id_)"> -->
+        </div>
+        <div>
+        </div>
+        <!-- 右边 -->
+        <div style="flex:1;">
+          <!-- 上 -->
+          <div class="row justify-between items-center yb_fontsize16 content-t yb_mb6 yb_mt8">
+            <div class="col-9 row">
+              <span class="fw_600">
+                <!-- 投注成功后的展示值用接口返回的 -->
+                <!-- <template v-if="bet_success_obj.playOptionName && [3, 6].includes(+get_bet_status)">{{bet_success_obj.playOptionName}} </template> -->
+                <template>
+                  <span class="yb_mr4">{{ item.home }}</span>
+                  <span :class="pankou_change == 1 ? 'pankou-change' : null">{{ item.away }}</span>
+                </template>
+                [{{ item.marketTypeFinally }}]
+              </span>
+            </div>
+
+            <div class="col-3 row justify-end items-center">
+              <span class="yb_fontsize22" :class="{ 'red': odds_change == 1, 'green': odds_change == 2 }">
+                <template>{{ item.oddFinally }}</template>
+                <!-- <template v-else>{{odds_value()}}</template> -->
+              </span>
+              <!-- 红升绿降 -->
+              <span :class="{ 'red-up': odds_change == 1, 'green-down': odds_change == 2 }"
+                class="odd-change yb_ml4"></span>
+            </div>
           </div>
 
-          <div class="col-3 row justify-end items-center">
-            <span class="yb_fontsize22" :class="{ 'red': odds_change == 1, 'green': odds_change == 2 }">
-              <template>{{ item.oddFinally }}</template>
-              <!-- <template v-else>{{odds_value()}}</template> -->
+          <div class="row justify-between yb_my4 yb_fontsize14">
+            <span :class="get_lang == 'vi' && get_bet_success ? 'col-6' : 'col-7'">
+              <span>{{ item.playId }}&thinsp;</span>
+              <span>{{ item.playName }}&thinsp;</span>
+              <span>{{ item.playOptions }}&thinsp;</span>
+
             </span>
-            <!-- 红升绿降 -->
-            <span :class="{ 'red-up': odds_change == 1, 'green-down': odds_change == 2 }"
-              class="odd-change yb_ml4"></span>
           </div>
-        </div>
+          <!-- 联赛名称 -->
+          <div class="xia" v-if="item.tn_name">{{ item.tid_name }}</div>
 
-        <div class="row justify-between yb_my4 yb_fontsize14">
-          <span :class="get_lang == 'vi' && get_bet_success ? 'col-6' : 'col-7'">
-            <span>{{ item.playId }}&thinsp;</span>
-            <span>{{ item.playName }}&thinsp;</span>
-            <span>{{ item.playOptions }}&thinsp;</span>
-
-          </span>
-        </div>
-        <!-- 联赛名称 -->
-        <div class="xia" v-if="item.tn_name">{{ item.tid_name }}</div>
-
-        <!-- 下 -->
-        <div class="xia row justify-between flex-end yb_my4" style="min-height: 0.22rem">
-          <div class="col-9 row">
-          <span>
-            {{ item.home}}
-            <span>v</span>
-            {{ item.away }}
-          </span>
+          <!-- 下 -->
+          <div class="xia row justify-between flex-end yb_my4" style="min-height: 0.22rem">
+            <div class="col-9 row">
+              <span>
+                {{ item.home }}
+                <span>v</span>
+                {{ item.away }}
+              </span>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
-     <!-- 对应单关多个注单样式 -->
-     <div>
-       <!-- 单关金额输入框 v-bind="$attrs"-->
-      <bet-single-detail ref="bet_single_detail" ></bet-single-detail>
-     </div>
+    <!-- 对应单关多个注单样式 -->
+    <div>
+      <!-- 单关金额输入框 v-bind="$attrs"-->
+      <bet-single-detail ref="bet_single_detail"></bet-single-detail>
+    </div>
   </div>
 </template>
 
@@ -112,20 +111,20 @@ const props = defineProps({
 onMounted(() => {
   // 监听 变化
   useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_bet_info)
-  console.error('BetData',BetData.bet_single_list)
+  console.error('BetData', BetData.bet_single_list)
   value_show.value = BetData.bet_single_list
 })
 onUnmounted(() => {
   useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_bet_info).off
 })
 
-const set_bet_info = ()=>{
-  console.error('BetData',BetData.bet_single_list)
+const set_bet_info = () => {
+  console.error('BetData', BetData.bet_single_list)
   value_show.value = BetData.bet_single_list
-  console.error(11111,value_show.value)
+  console.error(11111, value_show.value)
 }
 
-const handleonmousedown = () =>{
+const handleonmousedown = () => {
   console.error(11111)
   value_show.value = BetData.bet_single_list
 }

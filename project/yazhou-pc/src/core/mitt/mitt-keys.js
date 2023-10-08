@@ -391,12 +391,14 @@ export const EMIT_IFRAME_VIDEO_VOLUME= 'EMIT_IFRAME_VIDEO_VOLUME'
 /**   原视频全屏  */
 export const EMIT_IFRAME_VIDEO_STATUS_CHANGE= 'EMIT_IFRAME_VIDEO_STATUS_CHANGE'
 
+/** 视频退出浏览器全屏 components.video.vue $exit_browser_full_screen */
+export const EMIT_EXIT_BROWSER_FULL_SCREEN = 'EMIT_EXIT_BROWSER_FULL_SCREEN'
 
 export const EMIT_VIDEO_ZONE_EVENT_CMD_END= 'EMIT_VIDEO_ZONE_EVENT_CMD_END'
 
 export const EMIT_IFRAME_VIDEO_MSG_EVENT= 'EMIT_IFRAME_VIDEO_MSG_EVENT'
 
-// 退出全屏
+/** 视频退出全屏 components.video.vue $exit_full_screen */
 export const EMIT_EXIT_FULL_SCREEN_MSG_EVENT= 'EMIT_EXIT_FULL_SCREEN_MSG_EVENT'
 // 晒单页面变更
 export const EMIT_SAIDAN_PAGE_CHANGE_MSG_EVENT= 'EMIT_SAIDAN_PAGE_CHANGE_MSG_EVENT'

@@ -421,7 +421,7 @@ import { onMounted, onUnmounted, ref, watch } from "vue";
         }
 
         :deep(.q-linear-progress__track--light) {
-          background: var(--q-analysis-text-color-31);
+          background: var(--q-analysis-text-color-16);
 
           &.q-linear-progress__track {
             opacity: 1;
@@ -462,7 +462,7 @@ import { onMounted, onUnmounted, ref, watch } from "vue";
   }
 
   :deep(.q-linear-progress) {
-    color: var(--q-color-com-fs-color-12) !important;
+    color: var(--q-analysis-bg-color-17) !important;
     &.progress-blue {
       color: var(--q-analysis-bg-color-17);
         .q-linear-progress__track--light {

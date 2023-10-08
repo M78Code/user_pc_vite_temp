@@ -188,16 +188,18 @@
                 .inner-w {
                     .s-w-i-title {
                         color: var(--q-gb-t-c-3);
-
-                        &.esport {
-                            color: -var(--q-gb-t-c-5);
-                        }
                     }
 
                     .sport-w-icon {
                         .sport-match-count {
                             color: var(--q-gb-t-c-3);
-                            // font-weight: 700;
+                        }
+                    }
+                    &.current{
+                        .s-w-i-title {
+                            &.esport {
+                                color: var(--q-gb-t-c-14);
+                            }
                         }
                     }
                 }
