@@ -136,9 +136,9 @@ export const get_bet_amount = async obj => {
 }
 
 export const bet_click = (item,obj_hp,obj_hl) =>{
-  console.error(item,'item')
-  console.error(obj_hp,'obj_hp')
-  console.error(obj_hl,'obj_hl')
+  // console.error(item,'item')
+  // console.error(obj_hp,'obj_hp')
+  // console.error(obj_hl,'obj_hl')
    // 1 ：早盘赛事 ，2： 滚球盘赛事，3：冠军，4：虚拟赛事，5：电竞赛事")
    let matchType = 2 
    if( [1,2].includes(Number(item.ms)) ){

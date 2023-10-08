@@ -236,6 +236,7 @@ const _handleNumberKey = (num) => {
     money.value = ref_data.max_money
   }
 
+  BetData.set_bet_amount(money.value)
 }
 
 

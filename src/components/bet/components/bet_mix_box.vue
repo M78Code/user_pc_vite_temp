@@ -27,7 +27,7 @@ const bet_show = ref(false)
 
 
 const set_bet_show = (ref)=>{
-  console.error(888888,ref);
+  // console.error(888888,ref);
   bet_show.value = ref
 }
 

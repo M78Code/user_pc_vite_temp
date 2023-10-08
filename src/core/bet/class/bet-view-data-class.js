@@ -131,8 +131,9 @@ class BetViewData {
         seriesOdds: item.seriesOdds, // 赔率  // 串关使用 3串1
       }
     })
-
     this.bet_min_max_money = bet_amount
+
+    // console.error("最大最小值",this.bet_min_max_money)
     this.set_bet_view_version()
   }
   // 显示投注框
