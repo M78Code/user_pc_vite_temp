@@ -151,7 +151,7 @@ const get_query_bet_amount_common = (obj) => {
         orderMaxBetMoney: []
     }
     // 获取限额请求参数数据
-    params.orderMaxBetMoney = get_query_ber_amount_parmas()
+    params.orderMaxBetMoney = get_query_bet_amount_parmas()
 
     // 获取额度接口合并
     api_betting.query_bet_amount(params).then((res = {}) => {
@@ -182,7 +182,7 @@ const get_query_bet_amount_esports_or_vr = () => {
         orderMaxBetMoney: []
     }
     // 获取限额请求参数数据
-    params.orderMaxBetMoney = get_query_ber_amount_parmas()
+    params.orderMaxBetMoney = get_query_bet_amount_parmas()
 
     // 获取最大值和最小值接口
     api_betting.post_getBetMinAndMaxMoney(params).then((res = {}) => {
@@ -233,7 +233,7 @@ const get_query_bet_amount_pre = () => {
 }
 
 //设置获取限额参数 
-const get_query_ber_amount_parmas = () =>{
+const get_query_bet_amount_parmas = () =>{
     let order_min_max_money = []
     // 单关 
     if (BetData.is_bet_single) {
