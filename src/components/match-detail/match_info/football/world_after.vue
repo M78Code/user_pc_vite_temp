@@ -74,7 +74,7 @@
           <div class="result-icon rs_jin_quan"></div>
         </div>
         <!-- 加时赛进球 -->
-        <div class="result-icon-wrap" v-show="_.get(match_info, 'score_obj.S7')">
+        <div class="result-icon-wrap" v-show="lodash.get(match_info, 'score_obj.S7')">
           <q-tooltip
             anchor="top middle"
             self="center middle"
@@ -83,7 +83,7 @@
           <!-- 加时赛进球 -->
           <div class="result-icon add_time"></div>
         </div>
-        <div class="result-icon-wrap" v-show="_.get(match_info, 'score_obj.S170')">
+        <div class="result-icon-wrap" v-show="lodash.get(match_info, 'score_obj.S170')">
           <q-tooltip
             anchor="top middle"
             self="center middle"
@@ -100,10 +100,10 @@
         <div class="wrap-logo">
           <img
             src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-            v-img="([_.get(match_info,'mhlu[0]'),_.get(match_info,'frmhn[0]')])"
+            v-img="([lodash.get(match_info,'mhlu[0]'),lodash.get(match_info,'frmhn[0]')])"
             class="both-logo"
           />
-          <span class="ellipsis allow-user-select" style="font-weight:400;" v-tooltip="{content:_.get(match_info,'mhn'),overflow:1}">{{_.get(match_info,'mhn')}}</span>
+          <span class="ellipsis allow-user-select" style="font-weight:400;" v-tooltip="{content:lodash.get(match_info,'mhn'),overflow:1}">{{lodash.get(match_info,'mhn')}}</span>
           <!-- 进球动画 -->
           <div class="yb-flex-center" v-if="is_show_home_goal">
             <div class="yb-goal-gif"></div>
@@ -115,39 +115,39 @@
         </div>
         <div class="info-data">
           <!-- 角球总比分 -->
-          <span>{{_.get(match_info, 'score_obj.S5.home')}}</span>
+          <span>{{lodash.get(match_info, 'score_obj.S5.home')}}</span>
           <!-- 黄牌比分 -->
-          <span>{{_.get(match_info, 'score_obj.S12.home')}}</span>
+          <span>{{lodash.get(match_info, 'score_obj.S12.home')}}</span>
           <!-- 红牌比分 -->
-          <span>{{_.get(match_info, 'score_obj.S11.home')}}</span>
+          <span>{{lodash.get(match_info, 'score_obj.S11.home')}}</span>
           <!-- 点球比分 -->
-          <span>{{_.get(match_info, 'score_obj.S10.home')}}</span>
+          <span>{{lodash.get(match_info, 'score_obj.S10.home')}}</span>
           <!-- 上半场比分 -->
-          <span>{{_.get(match_info, 'score_obj.S2.home')}}</span>
+          <span>{{lodash.get(match_info, 'score_obj.S2.home')}}</span>
           <!-- 全场比分 -->
           <span
-            :class="{'mmp-active': !['32','41','33','42','34','50','120'].includes(_.get(match_info,'mmp'))}"
-          >{{_.get(match_info, 'score_obj.S1.home')}}</span>
+            :class="{'mmp-active': !['32','41','33','42','34','50','120'].includes(lodash.get(match_info,'mmp'))}"
+          >{{lodash.get(match_info, 'score_obj.S1.home')}}</span>
           <!-- 加时赛比分 -->
           <span
-            v-show="_.get(match_info, 'score_obj.S7.home')"
-            :class="{'mmp-active': ['32','41','33','42'].includes(_.get(match_info,'mmp'))}"
-          >{{_.get(match_info, 'score_obj.S7.home')}}</span>
+            v-show="lodash.get(match_info, 'score_obj.S7.home')"
+            :class="{'mmp-active': ['32','41','33','42'].includes(lodash.get(match_info,'mmp'))}"
+          >{{lodash.get(match_info, 'score_obj.S7.home')}}</span>
           <!-- 点球大战比分 -->
           <span
-            v-show="_.get(match_info, 'score_obj.S170.home')"
-            :class="{'mmp-active': ['34','50','120'].includes(_.get(match_info,'mmp'))}"
-          >{{_.get(match_info, 'score_obj.S170.home')}}</span>
+            v-show="lodash.get(match_info, 'score_obj.S170.home')"
+            :class="{'mmp-active': ['34','50','120'].includes(lodash.get(match_info,'mmp'))}"
+          >{{lodash.get(match_info, 'score_obj.S170.home')}}</span>
         </div>
       </div>
       <div class="both-away">
         <div class="wrap-logo">
           <img
             src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-            v-img="([_.get(match_info,'malu[0]'),_.get(match_info,'frman[0]')])"
+            v-img="([lodash.get(match_info,'malu[0]'),lodash.get(match_info,'frman[0]')])"
             class="both-logo"
           />
-          <span class="ellipsis allow-user-select" style="font-weight:400;" v-tooltip="{content:_.get(match_info,'man'),overflow:1}">{{_.get(match_info,'man')}}</span>
+          <span class="ellipsis allow-user-select" style="font-weight:400;" v-tooltip="{content:lodash.get(match_info,'man'),overflow:1}">{{lodash.get(match_info,'man')}}</span>
           <!-- 进球动画 -->
           <div class="yb-flex-center" v-if="is_show_away_goal">
             <div class="yb-goal-gif"></div>
@@ -159,29 +159,29 @@
         </div>
         <div class="info-data">
           <!-- 角球总比分 -->
-          <span>{{_.get(match_info, 'score_obj.S5.away')}}</span>
+          <span>{{lodash.get(match_info, 'score_obj.S5.away')}}</span>
           <!-- 黄牌 -->
-          <span>{{_.get(match_info, 'score_obj.S12.away')}}</span>
+          <span>{{lodash.get(match_info, 'score_obj.S12.away')}}</span>
           <!-- 红牌 -->
-          <span>{{_.get(match_info, 'score_obj.S11.away')}}</span>
+          <span>{{lodash.get(match_info, 'score_obj.S11.away')}}</span>
           <!-- 点球 -->
-          <span>{{_.get(match_info, 'score_obj.S10.away')}}</span>
+          <span>{{lodash.get(match_info, 'score_obj.S10.away')}}</span>
           <!-- 上半场 -->
-          <span>{{_.get(match_info, 'score_obj.S2.away')}}</span>
+          <span>{{lodash.get(match_info, 'score_obj.S2.away')}}</span>
           <!-- 全场比分 -->
           <span
-            :class="{'mmp-active': !['32','41','33','42','34','50','120'].includes(_.get(match_info,'mmp'))}"
-          >{{_.get(match_info, 'score_obj.S1.away')}}</span>
+            :class="{'mmp-active': !['32','41','33','42','34','50','120'].includes(lodash.get(match_info,'mmp'))}"
+          >{{lodash.get(match_info, 'score_obj.S1.away')}}</span>
           <!-- 加时赛比分 -->
           <span
-            v-show="_.get(match_info, 'score_obj.S7.away')"
-            :class="{'mmp-active': ['32','41','33','42'].includes(_.get(match_info,'mmp'))}"
-          >{{_.get(match_info, 'score_obj.S7.away')}}</span>
+            v-show="lodash.get(match_info, 'score_obj.S7.away')"
+            :class="{'mmp-active': ['32','41','33','42'].includes(lodash.get(match_info,'mmp'))}"
+          >{{lodash.get(match_info, 'score_obj.S7.away')}}</span>
           <!-- 点球大战 -->
           <span
-            v-show="_.get(match_info, 'score_obj.S170.away')"
-            :class="{'mmp-active': ['34','50','120'].includes(_.get(match_info,'mmp'))}"
-          >{{_.get(match_info, 'score_obj.S170.away')}}</span>
+            v-show="lodash.get(match_info, 'score_obj.S170.away')"
+            :class="{'mmp-active': ['34','50','120'].includes(lodash.get(match_info,'mmp'))}"
+          >{{lodash.get(match_info, 'score_obj.S170.away')}}</span>
         </div>
       </div>
     </div>
@@ -296,21 +296,21 @@ export default {
         this.match_change_time = new Date().getTime()
         this.reload_data();
         this.timestamp = 0;
-        !_.get(res, 'score_obj.S1') && (res.score_obj.S1 = this.default);
-        !_.get(res, 'score_obj.S5') && (res.score_obj.S5 = this.default);
+        !lodash.get(res, 'score_obj.S1') && (res.score_obj.S1 = this.default);
+        !lodash.get(res, 'score_obj.S5') && (res.score_obj.S5 = this.default);
         // 不确定是不是有地方要显示默认比分0:0，先只针对 S10(点球)做处理
-        !_.get(res, 'score_obj.S10') && (res.score_obj.S10 = {
+        !lodash.get(res, 'score_obj.S10') && (res.score_obj.S10 = {
           home: '',
           away: ''
         });
-        !_.get(res, 'score_obj.S11') && (res.score_obj.S11 = this.default);
-        !_.get(res, 'score_obj.S12') && (res.score_obj.S12 = this.default);
+        !lodash.get(res, 'score_obj.S11') && (res.score_obj.S11 = this.default);
+        !lodash.get(res, 'score_obj.S12') && (res.score_obj.S12 = this.default);
         //加时赛
-        if (["32", "41", "33", "42", "110"].includes(res.mmp) && !_.get(res, 'score_obj.S7')) {
+        if (["32", "41", "33", "42", "110"].includes(res.mmp) && !lodash.get(res, 'score_obj.S7')) {
           res.score_obj.S7 = this.default;
         }
         //点球大战
-        if (["34", "50", "120"].includes(res.mmp) && !_.get(res, 'score_obj.S170')) {
+        if (["34", "50", "120"].includes(res.mmp) && !lodash.get(res, 'score_obj.S170')) {
           res.score_obj.S170 = this.default;
         }
         if (this.$utils.get_match_status(res.ms) && ["6", "7"].includes(res.mmp)) {
@@ -326,14 +326,14 @@ export default {
     */
     'match_info.score_obj.S1'(new_,old_){
       let _time = new Date().getTime() - this.match_change_time
-      if(_time < 100 || (!_.get(new_))){
+      if(_time < 100 || (!lodash.get(new_))){
         return
       }
-      if(_.get(new_, 'home') > 0 && _.get(new_, 'home') != _.get(old_, 'home')){
+      if(lodash.get(new_, 'home') > 0 && lodash.get(new_, 'home') != lodash.get(old_, 'home')){
         this.is_show_home_goal = true
         this.hide_home_goal()
       }
-      if(_.get(new_, 'away') > 0 && _.get(new_, 'away') != _.get(old_, 'away')){
+      if(lodash.get(new_, 'away') > 0 && lodash.get(new_, 'away') != lodash.get(old_, 'away')){
         this.is_show_away_goal = true
         this.hide_away_goal()
       }
@@ -344,14 +344,14 @@ export default {
     */
     'match_info.score_obj.S11'(new_,old_){
       let _time = new Date().getTime() - this.match_change_time
-      if(_time < 100 || (!_.get(new_))){
+      if(_time < 100 || (!lodash.get(new_))){
         return
       }
-      if(_.get(new_, 'home') > 0 && _.get(new_, 'home') != _.get(old_, 'home')){
+      if(lodash.get(new_, 'home') > 0 && lodash.get(new_, 'home') != lodash.get(old_, 'home')){
         this.is_show_home_red = true
         this.hide_home_red()
       }
-      if(_.get(new_, 'away') > 0 && _.get(new_, 'away') != _.get(old_, 'away')){
+      if(lodash.get(new_, 'away') > 0 && lodash.get(new_, 'away') != lodash.get(old_, 'away')){
         this.is_show_away_red = true
         this.hide_away_red()
       }

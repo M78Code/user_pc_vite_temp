@@ -9,7 +9,7 @@
         class="show-bet-wrapper">
       <div class="item-top">
         <div class="home-vs-away">
-          {{ _.get(bet_records, 'content.matchInfo') }}
+          {{ lodash.get(bet_records, 'content.matchInfo') }}
         </div>
         <div class="send-time">
           {{ stamp }}
@@ -180,10 +180,10 @@ export default {
       let play_fun = {};
       await api_details
         .get_match_detail_MatchInfo({mid:mid, cuid:this.get_uid}).then(({ data }) => {
-          let code = _.get(data, "code");
+          let code = lodash.get(data, "code");
           if (code == 200) {
 
-            match_inf = _.get(data, "data") || {};
+            match_inf = lodash.get(data, "data") || {};
           }
       })
       let params = {
@@ -195,9 +195,9 @@ export default {
       }
       await api_details
         .get_match_odds_info(params).then(({ data }) => {
-          let code = _.get(data, "code");
+          let code = lodash.get(data, "code");
           if (code == 200) {
-            play_fun = _.get(data, "data") || {};
+            play_fun = lodash.get(data, "data") || {};
           }
       })
       // console.log('match_inf===', match_inf);
@@ -236,7 +236,7 @@ export default {
 
       let num_arr = [];
       //如果坑位存在
-      // if(!_.isNull(play_num)) {
+      // if(!lodash.isNull(play_num)) {
       //   for(let i = 0; i < play_arr.length; i++) {
       //      let item = play_arr[i];
       //      for(let j=0;j<item.hl.length;j++){
@@ -354,7 +354,7 @@ export default {
           arr_sort.push(   Math.max( parseFloat(x.on), parseFloat(x.hv)) )
 
         })
-        let find_ndex = _.sortedIndex(arr_sort,parseFloat(marketValue))
+        let find_ndex = lodash.sortedIndex(arr_sort,parseFloat(marketValue))
 
 
        //和当前 盘口一样的

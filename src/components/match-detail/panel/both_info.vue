@@ -9,14 +9,14 @@
     <div class="content">
         <!-- 主队 开始-->
         <div class="home">
-            <div class="team_name home-name allow-user-select" v-if="is_virtual">{{_.get(match_info,'teams[0]')}}</div>
-            <div class="team_name home-name allow-user-select" v-else>{{_.get(match_info,'mhn')}}</div>
+            <div class="team_name home-name allow-user-select" v-if="is_virtual">{{lodash.get(match_info,'teams[0]')}}</div>
+            <div class="team_name home-name allow-user-select" v-else>{{lodash.get(match_info,'mhn')}}</div>
             <div class="img-wrap">
               <!-- 主队 虚拟足球 虚拟篮球 -->
               <template v-if="[1001,1004].includes(match_info.csid*1)">
                 <img
                   src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-                  v-img="([_.get(match_info,'mhlu'),_.get(match_info,'frmhn')])"
+                  v-img="([lodash.get(match_info,'mhlu'),lodash.get(match_info,'frmhn')])"
                   class="team_logo"
                   alt
                 />
@@ -24,14 +24,14 @@
               <template v-else>
                 <img
                   src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-                  v-img="([_.get(match_info,'mhlu[0]'),_.get(match_info,'frmhn[0]')])"
+                  v-img="([lodash.get(match_info,'mhlu[0]'),lodash.get(match_info,'frmhn[0]')])"
                   class="team_logo"
                   alt
                 />
                 <img
                   src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-                  v-if="Array.isArray(match_info.mhlu) && _.get(match_info,'mhlu').length >1"
-                  v-img="([_.get(match_info,'mhlu[1]'),_.get(match_info,'frmhn[1]')])"
+                  v-if="Array.isArray(match_info.mhlu) && lodash.get(match_info,'mhlu').length >1"
+                  v-img="([lodash.get(match_info,'mhlu[1]'),lodash.get(match_info,'frmhn[1]')])"
                   class="team_logo logo-double"
                   alt
                 />
@@ -50,12 +50,12 @@
           <!-- 虚拟体育 -->
 
           <template v-else>
-            <div v-if="_.get(match_info,'ms') == 1" class="roll_ball">
+            <div v-if="lodash.get(match_info,'ms') == 1" class="roll_ball">
               <span>{{panel_score.home}}</span>
               <img src="~public/image/yabo/svg/details_vs.svg" width="28" style="margin: 0 22px" alt="">
               <span>{{panel_score.away}}</span>
             </div>
-            <match-date v-if="_.get(match_info,'ms')!=1" class="match_time-text" :match_props="{match:match_info}"></match-date>
+            <match-date v-if="lodash.get(match_info,'ms')!=1" class="match_time-text" :match_props="{match:match_info}"></match-date>
           </template>
         </div>
 
@@ -66,7 +66,7 @@
               <template v-if="[1001,1004].includes(match_info.csid*1)">
                 <img
                   src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-                  v-img="([_.get(match_info,'malu'),_.get(match_info,'frman')])"
+                  v-img="([lodash.get(match_info,'malu'),lodash.get(match_info,'frman')])"
                   class="team_logo"
                   alt
                 />
@@ -74,21 +74,21 @@
               <template v-else>
                 <img
                   src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-                  v-img="([_.get(match_info,'malu[0]'),_.get(match_info,'frman[0]')])"
+                  v-img="([lodash.get(match_info,'malu[0]'),lodash.get(match_info,'frman[0]')])"
                   class="team_logo"
                   alt
                 />
                 <img
                   src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-                  v-if="Array.isArray(match_info.malu) && _.get(match_info,'malu').length >1"
-                  v-img="([_.get(match_info,'malu[1]'),_.get(match_info,'frman[1]')])"
+                  v-if="Array.isArray(match_info.malu) && lodash.get(match_info,'malu').length >1"
+                  v-img="([lodash.get(match_info,'malu[1]'),lodash.get(match_info,'frman[1]')])"
                   class="team_logo logo-double"
                   alt
                 />
               </template>
             </div>
-            <div class="team_name away-name allow-user-select" v-if="is_virtual">{{_.get(match_info,'teams[1]')}}</div>
-            <div class="team_name away-name allow-user-select" v-else>{{_.get(match_info,'man')}}</div>
+            <div class="team_name away-name allow-user-select" v-if="is_virtual">{{lodash.get(match_info,'teams[1]')}}</div>
+            <div class="team_name away-name allow-user-select" v-else>{{lodash.get(match_info,'man')}}</div>
         </div>
         <!-- 客队 E -->
     </div>
@@ -134,14 +134,14 @@ export default {
           //足球特殊处理顶部比分，显示为各阶段的比分，不是总分
           if(res.csid == '1'){
             if([32,41,42,33,110].includes(Number(res.mmp))){//加时赛状态
-              this.panel_score = _.get(res,"msc.S7") || this.default_score
+              this.panel_score = lodash.get(res,"msc.S7") || this.default_score
             }else if([34,50,120].includes(Number(res.mmp))){//点球状态
-              this.panel_score = _.get(res,"msc.70") || this.default_score
+              this.panel_score = lodash.get(res,"msc.70") || this.default_score
             } else {//常规状态 S1
-              this.panel_score = _.get(res,"msc.S1") || this.default_score
+              this.panel_score = lodash.get(res,"msc.S1") || this.default_score
             }
           } else {
-            this.panel_score = _.get(res,"msc.S1") || this.default_score
+            this.panel_score = lodash.get(res,"msc.S1") || this.default_score
           }
         }
         this.reload_data();

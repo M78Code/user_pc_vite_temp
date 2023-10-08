@@ -10,37 +10,37 @@
       <div class="wrap-up">
 				<div class="chart-round">
 					<div class="item-warp">
-						<div class="round-item" :class="{'is_get':_.get(match_info,'mbkn')>=1}"></div>
-						<div class="round-item" :class="{'is_get':_.get(match_info,'mbkn')>=2}"></div>
-						<div class="round-item" :class="{'is_get':_.get(match_info,'mbkn')>=3}"></div>
-						<div class="round-item" :class="{'is_get':_.get(match_info,'mbkn')>=4}"></div>
+						<div class="round-item" :class="{'is_get':lodash.get(match_info,'mbkn')>=1}"></div>
+						<div class="round-item" :class="{'is_get':lodash.get(match_info,'mbkn')>=2}"></div>
+						<div class="round-item" :class="{'is_get':lodash.get(match_info,'mbkn')>=3}"></div>
+						<div class="round-item" :class="{'is_get':lodash.get(match_info,'mbkn')>=4}"></div>
 					</div>
 					<!-- 坏球 S3012-->
-					<div class="desc">{{ $t('common.worse')}} {{_.get(match_info,"mbkn")}}</div>
+					<div class="desc">{{ i18n_t('common.worse')}} {{lodash.get(match_info,"mbkn")}}</div>
 				</div>
 
 				<!-- 菱形 -->
 				<div class="chart-rhombus">
 					<div class="wrap-rhombus">
 						<!-- 二垒 -->
-						<div class="rhombus-item" :class="{'is_get':_.get(match_info,'mbtlp')*1}"></div>
+						<div class="rhombus-item" :class="{'is_get':lodash.get(match_info,'mbtlp')*1}"></div>
 						<!-- 一垒 -->
-						<div class="rhombus-item" :class="{'is_get':_.get(match_info,'mbolp')*1}"></div>
+						<div class="rhombus-item" :class="{'is_get':lodash.get(match_info,'mbolp')*1}"></div>
 						<!-- 三垒 -->
-						<div class="rhombus-item" :class="{'is_get':_.get(match_info,'mbthlp')*1}"></div>
+						<div class="rhombus-item" :class="{'is_get':lodash.get(match_info,'mbthlp')*1}"></div>
 					</div>
 					<!-- 上垒 S3013-->
-					<div class="desc">{{ $t('common.on_base')}}</div>
+					<div class="desc">{{ i18n_t('common.on_base')}}</div>
 				</div>
 
 				<div class="chart-round">
 					<div class="item-warp">
-						<div class="round-item" :class="{'is_get':_.get(match_info,'mbhn')>=1}"></div>
-						<div class="round-item" :class="{'is_get':_.get(match_info,'mbhn')>=2}"></div>
-						<div class="round-item" :class="{'is_get':_.get(match_info,'mbhn')>=3}"></div>
+						<div class="round-item" :class="{'is_get':lodash.get(match_info,'mbhn')>=1}"></div>
+						<div class="round-item" :class="{'is_get':lodash.get(match_info,'mbhn')>=2}"></div>
+						<div class="round-item" :class="{'is_get':lodash.get(match_info,'mbhn')>=3}"></div>
 					</div>
 					<!-- 好球 S3011-->
-					<div class="desc">{{ $t('common.good_shot')}} {{_.get(match_info,"mbhn")}}</div>
+					<div class="desc">{{ i18n_t('common.good_shot')}} {{lodash.get(match_info,"mbhn")}}</div>
 				</div>
 			</div>
 			<!-- 上部分 E-->
@@ -48,12 +48,12 @@
 			<!-- 下部分 S-->
 			<div class="wrap-down">
 				<div class="wrap-line">
-					<div class="line-item" :class="{'is_get':_.get(match_info,'mbcn')>=1}"></div>
-					<div class="line-item" :class="{'is_get':_.get(match_info,'mbcn')>=2}"></div>
-					<div class="line-item" :class="{'is_get':_.get(match_info,'mbcn')>=3}"></div>
+					<div class="line-item" :class="{'is_get':lodash.get(match_info,'mbcn')>=1}"></div>
+					<div class="line-item" :class="{'is_get':lodash.get(match_info,'mbcn')>=2}"></div>
+					<div class="line-item" :class="{'is_get':lodash.get(match_info,'mbcn')>=3}"></div>
 				</div>
 				<!-- 出局 S3014-->
-				<div class="desc">{{ $t('common.out')}} {{_.get(match_info,"mbcn")}}</div>
+				<div class="desc">{{ i18n_t('common.out')}} {{lodash.get(match_info,"mbcn")}}</div>
 			</div>
 			<!-- 下部分 E-->
     </div>

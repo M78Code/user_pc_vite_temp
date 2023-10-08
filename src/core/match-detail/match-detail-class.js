@@ -298,4 +298,13 @@ export default class MatchDetailCtr {
     this.is_pause_video = flag
     this.set_details_data_version()
   }
+  /**
+   * @description: 设置是否是从详情返回
+   * @param {boolean} flag  
+   * @return {*}
+   */
+  set_is_back_btn_click(flag){
+    this.is_back_btn_click = flag
+    this.set_details_data_version()
+  }
 }

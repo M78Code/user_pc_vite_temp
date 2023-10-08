@@ -61,23 +61,23 @@
       <!-- 客队 -->
       <div class="both-item relative-position">
         <div class="wrap-round">
-          <span class="round" v-if="_.get(match_info, 'mat') == 'away' && !isStop"></span>
+          <span class="round" v-if="lodash.get(match_info, 'mat') == 'away' && !isStop"></span>
         </div>
 
         <img
           src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-          v-img="([_.get(match_info,'malu[0]'),_.get(match_info,'frman[0]')])"
+          v-img="([lodash.get(match_info,'malu[0]'),lodash.get(match_info,'frman[0]')])"
           class="both-logo"
         />
         <img
           src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-          v-if="_.get(match_info,'malu').length>1"
-          v-img="([_.get(match_info,'malu[1]'),_.get(match_info,'frman[1]')])"
+          v-if="lodash.get(match_info,'malu').length>1"
+          v-img="([lodash.get(match_info,'malu[1]'),lodash.get(match_info,'frman[1]')])"
           class="both-logo logo-double"
         />
 
         <div class="both-name ellipsis">
-          <span class="ellipsis" v-tooltip="{content:_.get(match_info,'man'),overflow:1}">{{_.get(match_info, 'man')}}</span>
+          <span class="ellipsis" v-tooltip="{content:lodash.get(match_info,'man'),overflow:1}">{{lodash.get(match_info, 'man')}}</span>
         </div>
         <div class="scorll-handel">
           <div
@@ -92,30 +92,30 @@
               :class="{'current_color':index == active_away}"
             >{{active_home == index ? (!Number(item.away) ? "" : item.away) : item.away}}</span>
           </div>
-					<div class="score add-stage">{{_.get(match_info,'msc.S1.away')}}</div>
+					<div class="score add-stage">{{lodash.get(match_info,'msc.S1.away')}}</div>
 					<!-- 棒球 安打数之比-->
-					<div class="other-score">{{_.get(match_info,'msc.S3015.away') || 0}}</div>
+					<div class="other-score">{{lodash.get(match_info,'msc.S3015.away') || 0}}</div>
         </div>
       </div>
       
       <!-- 主队 -->
       <div class="both-item relative-position">
         <div class="wrap-round">
-          <span class="round" v-if="_.get(match_info, 'mat') == 'home' && !isStop"></span>
+          <span class="round" v-if="lodash.get(match_info, 'mat') == 'home' && !isStop"></span>
         </div>
         <img
           src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-          v-img="([_.get(match_info,'mhlu[0]'),_.get(match_info,'frmhn[0]')])"
+          v-img="([lodash.get(match_info,'mhlu[0]'),lodash.get(match_info,'frmhn[0]')])"
           class="both-logo"
         />
         <img
           src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-          v-if="_.get(match_info,'mhlu').length>1"
-          v-img="([_.get(match_info,'mhlu[1]'),_.get(match_info,'frmhn[1]')])"
+          v-if="lodash.get(match_info,'mhlu').length>1"
+          v-img="([lodash.get(match_info,'mhlu[1]'),lodash.get(match_info,'frmhn[1]')])"
           class="both-logo logo-double"
         />
         <div class="both-name ellipsis">
-          <span class="ellipsis" v-tooltip="{content:_.get(match_info,'mhn'),overflow:1}">{{_.get(match_info, 'mhn')}}</span>
+          <span class="ellipsis" v-tooltip="{content:lodash.get(match_info,'mhn'),overflow:1}">{{lodash.get(match_info, 'mhn')}}</span>
         </div>
         <div class="scorll-handel">
           <div
@@ -130,9 +130,9 @@
               :class="{'current_color':index == active_home}"
             >{{active_away == index ? (!Number(item.home) ? "" : item.home) : item.home}}</span>
           </div>
-					<div class="score add-stage">{{_.get(match_info,'msc.S1.home')}}</div>
+					<div class="score add-stage">{{lodash.get(match_info,'msc.S1.home')}}</div>
 					<!-- 棒球 安打数之比-->
-					<div class="other-score">{{_.get(match_info,'msc.S3015.home') || 0}}</div>
+					<div class="other-score">{{lodash.get(match_info,'msc.S3015.home') || 0}}</div>
         </div>
       </div>
     </div>
@@ -140,14 +140,13 @@
 </template>
 
 <script>
-// import { mapGetters } from "vuex"
 // import format_desc from "src/project/yabo/mixins/match_details/index";
 import {MatchProcessFullVersionWapper} from "src/components/match-process/index.js";
 import store from "src/store-redux/index.js";
 import BetCommonHelper from "src/core/bet/common-helper/index.js";
-import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/index.js";
 import { IconWapper } from 'src/components/icon'
 import { nextTick } from "vue";
+import { socre_dict,useMittOn, MITT_TYPES, useMittEmit} from "src/core";
 // 两局之间的局间休息--根据赛事阶段比对文档[http://lan-confluence.sportxxxr1pub.com/pages/viewpage.action?pageId=24127556]，特殊处理为 mct +1 和不显示发球方
 const _mmp = [422, 424, 426, 428, 430, 432, 434, 436, 43810, 43811, 43812, 43813, 43814, 43815, 43816, 43817, 43818, 43819];
 // 一局的上下半局间休息--不需要处理
@@ -281,7 +280,7 @@ export default {
         _mct = mct;
       }
       this.curMct = _mct;
-      let dict = this.socre_dict(3);
+      let dict = socre_dict(3);
       for (var k in dict) {
         if(!msc[dict[k]]){
            if( k < mmp ){

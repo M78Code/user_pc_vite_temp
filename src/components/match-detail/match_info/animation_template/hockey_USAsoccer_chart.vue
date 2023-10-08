@@ -66,14 +66,14 @@
         <!-- 达阵 -->
         <div class="text-c"> {{ $t('common.touchdown')}}</div>
         <div class="chart-bar">
-          <span class="text-orange">{{_.get(match_info, 'msc.S6014.home')||0}}</span>
+          <span class="text-orange">{{lodash.get(match_info, 'msc.S6014.home')||0}}</span>
           <div class="bar-progress relative-position">
             <div
               class="progress-content"
-              :style="{'width': `${_.get(match_info, 'msc.S6014.percentage')||50}%`}"
+              :style="{'width': `${lodash.get(match_info, 'msc.S6014.percentage')||50}%`}"
             ></div>
           </div>
-          <span class="text-blue">{{_.get(match_info, 'msc.S6014.away')||0}}</span>
+          <span class="text-blue">{{lodash.get(match_info, 'msc.S6014.away')||0}}</span>
         </div>
       </div>
     </div>
@@ -128,11 +128,11 @@
                   (home_score / (home_score + away_score)).toFixed(2) * 100;
               }
             } else {
-              if (_.get(res.msc, `${[k]}.home`) == "0" && _.get(res.msc, `${[k]}.away`) == "0") {
+              if (lodash.get(res.msc, `${[k]}.home`) == "0" && lodash.get(res.msc, `${[k]}.away`) == "0") {
                 res.msc[k].percentage = 50;
               } else {
-                let home_score = parseInt(_.get(res.msc, `${[k]}.home`));
-                let away_score = parseInt(_.get(res.msc, `${[k]}.away`));
+                let home_score = parseInt(lodash.get(res.msc, `${[k]}.home`));
+                let away_score = parseInt(lodash.get(res.msc, `${[k]}.away`));
                 res.msc[k].percentage =
                   (away_score / (home_score + away_score)).toFixed(2) * 100;
               }
@@ -141,14 +141,14 @@
 
           if(res.csid == '4'){//冰球
             this.is_hockey = true
-            _.get(res, 'msc.S4011') && (this.chart_left = res.msc.S4011)//大罚比分
-            _.get(res, 'msc.S4013') && (this.chart_center = res.msc.S4013)//射门比分
-            _.get(res, 'msc.S4012') && (this.chart_right = res.msc.S4012)//小罚比分
+            lodash.get(res, 'msc.S4011') && (this.chart_left = res.msc.S4011)//大罚比分
+            lodash.get(res, 'msc.S4013') && (this.chart_center = res.msc.S4013)//射门比分
+            lodash.get(res, 'msc.S4012') && (this.chart_right = res.msc.S4012)//小罚比分
           }else{//美足
             this.is_hockey = false
-            _.get(res, 'msc.S6011') && (this.chart_left = res.msc.S6011)//冲球数比分
-            _.get(res, 'msc.S6012') && (this.chart_center = res.msc.S6012)//射门比分
-            _.get(res, 'msc.S104') && (this.chart_right = res.msc.S104)//进攻比分
+            lodash.get(res, 'msc.S6011') && (this.chart_left = res.msc.S6011)//冲球数比分
+            lodash.get(res, 'msc.S6012') && (this.chart_center = res.msc.S6012)//射门比分
+            lodash.get(res, 'msc.S104') && (this.chart_right = res.msc.S104)//进攻比分
           }
         },
         immediate: true,

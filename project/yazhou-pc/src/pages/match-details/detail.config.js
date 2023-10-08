@@ -224,6 +224,7 @@ export const useGetConfig = () => {
           keyword: route.query.keyword,
           csid: route.params.csid,
         });
+        
         store.dispatch({
           type: "SET_SEARCH_STATUS",
           data: true,
@@ -235,16 +236,10 @@ export const useGetConfig = () => {
         from_path = "/home";
       }
       // 告知列表是详情返回：用于是否重新自动拉右侧内容
-      store.dispatch({
-        type: "SET_IS_BACK_BTN_CLICK",
-        data: is_back,
-      });
+      MatchDetailCalss.set_is_back_btn_click(is_back)
       router.push(from_path);
       if (from_path.includes("search")) {
-        store.dispatch({
-          type: "set_unfold_multi_column",
-          data: false,
-        });
+        MatchDetailCalss.set_unfold_multi_column(false)
       }
     }, 50);
   };

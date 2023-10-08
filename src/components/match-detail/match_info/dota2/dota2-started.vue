@@ -9,12 +9,12 @@
     <div class="content">
         <!-- 主队 开始-->
         <div class="home">
-            <div class="team_name home-name allow-user-select">{{_.get(match_info,'mhn')}}</div>
+            <div class="team_name home-name allow-user-select">{{lodash.get(match_info,'mhn')}}</div>
             <div class="img-wrap">
               <template v-if="$utils.is_eports_csid(match_info.csid)">
                 <img
                   src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-                  v-img="([_.get(match_info,'mhlu'),_.get(match_info,'frmhn'),_.get(match_info,'csid')])"
+                  v-img="([lodash.get(match_info,'mhlu'),lodash.get(match_info,'frmhn'),lodash.get(match_info,'csid')])"
                   class="team_logo"
                   alt
                 />
@@ -22,14 +22,14 @@
               <template v-else>
                 <img
                   src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-                  v-img="([_.get(match_info,'mhlu[0]'),_.get(match_info,'frmhn[0]'),_.get(match_info,'csid')])"
+                  v-img="([lodash.get(match_info,'mhlu[0]'),lodash.get(match_info,'frmhn[0]'),lodash.get(match_info,'csid')])"
                   class="team_logo"
                   alt
                 />
                 <img
                   src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-                  v-if="Array.isArray(match_info.mhlu) && _.get(match_info,'mhlu').length >1"
-                  v-img="([_.get(match_info,'mhlu[1]'),_.get(match_info,'frmhn[1]'),_.get(match_info,'csid')])"
+                  v-if="Array.isArray(match_info.mhlu) && lodash.get(match_info,'mhlu').length >1"
+                  v-img="([lodash.get(match_info,'mhlu[1]'),lodash.get(match_info,'frmhn[1]'),lodash.get(match_info,'csid')])"
                   class="team_logo logo-double"
                   alt
                 />
@@ -40,14 +40,14 @@
         <!-- 开赛时间 S-->
         <div class="match_time">
           <template>
-            <div v-if="[1, 2, 3, 4].includes(_.get(match_info,'ms')*1)" class="started">
+            <div v-if="[1, 2, 3, 4].includes(lodash.get(match_info,'ms')*1)" class="started">
               <template v-if="scoring">
                 <span class="text-judging">{{ $t('mmp.100.scoring') }}</span>
               </template>
               <template v-else>
-                <span class="text-big">{{_.get(match_info,'msc[S1].home')}}</span>
+                <span class="text-big">{{lodash.get(match_info,'msc[S1].home')}}</span>
                 <span class="text-big space">-</span>
-                <span class="text-big">{{_.get(match_info,'msc[S1].away')}}</span>
+                <span class="text-big">{{lodash.get(match_info,'msc[S1].away')}}</span>
               </template>
             </div>
             <match-date class="match_time-text" :match="match"></match-date>
@@ -60,7 +60,7 @@
               <template v-if="$utils.is_eports_csid(match_info.csid)">
                 <img
                   src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-                  v-img="([_.get(match_info,'malu'),_.get(match_info,'frman'),_.get(match_info,'csid')])"
+                  v-img="([lodash.get(match_info,'malu'),lodash.get(match_info,'frman'),lodash.get(match_info,'csid')])"
                   class="team_logo"
                   alt
                 />
@@ -68,20 +68,20 @@
               <template v-else>
                 <img
                   src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-                  v-img="([_.get(match_info,'malu[0]'),_.get(match_info,'frman[0]'),_.get(match_info,'csid')])"
+                  v-img="([lodash.get(match_info,'malu[0]'),lodash.get(match_info,'frman[0]'),lodash.get(match_info,'csid')])"
                   class="team_logo"
                   alt
                 />
                 <img
                   src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-                  v-if="Array.isArray(match_info.malu) && _.get(match_info,'malu').length >1"
-                  v-img="([_.get(match_info,'malu[1]'),_.get(match_info,'frman[1]'),_.get(match_info,'csid')])"
+                  v-if="Array.isArray(match_info.malu) && lodash.get(match_info,'malu').length >1"
+                  v-img="([lodash.get(match_info,'malu[1]'),lodash.get(match_info,'frman[1]'),lodash.get(match_info,'csid')])"
                   class="team_logo logo-double"
                   alt
                 />
               </template>
             </div>
-            <div class="team_name away-name allow-user-select">{{_.get(match_info,'man')}}</div>
+            <div class="team_name away-name allow-user-select">{{lodash.get(match_info,'man')}}</div>
         </div>
         <!-- 客队 E -->
     </div>
@@ -105,8 +105,8 @@ export default {
     // 是否展示为比分判定中 
     scoring() {
       const { mmp } = this.match_info
-      const home_score = _.get(this.match_info,'msc[S1].home')
-      const away_score = _.get(this.match_info,'msc[S1].away')
+      const home_score = lodash.get(this.match_info,'msc[S1].home')
+      const away_score = lodash.get(this.match_info,'msc[S1].away')
       let scoring = false
       // 电竞未开赛 展示为 第一局
       const mmp_state = mmp || 1

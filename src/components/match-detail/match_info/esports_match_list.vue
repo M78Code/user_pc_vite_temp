@@ -12,11 +12,11 @@
       v-show="index < 5"
       @click="match_switch(match)"
     >
-      <img class="team-logo home" :key="match.mid" v-img="[_.get(match,'mhlu'),_.get(match,'frmhn'),_.get(match,'csid')]" />
+      <img class="team-logo home" :key="match.mid" v-img="[lodash.get(match,'mhlu'),lodash.get(match,'frmhn'),lodash.get(match,'csid')]" />
       <div class="team-name ellipsis home">{{match.mhn}}</div>
       <div class="score din-medium" >{{get_score_text(match)}}</div>
       <div class="team-name ellipsis away">{{match.man}}</div>
-      <img class="team-logo away"  v-img="[_.get(match,'malu'),_.get(match,'frman'),_.get(match,'csid')]" />
+      <img class="team-logo away"  v-img="[lodash.get(match,'malu'),lodash.get(match,'frman'),lodash.get(match,'csid')]" />
     </div>
   </div>
 </template>
@@ -95,8 +95,8 @@ export default {
     // 是否展示为比分判定中
     get_score_text(match_info) {
       const { mmp } = match_info
-      const home_score = _.get(match_info,'msc[S1].home')
-      const away_score = _.get(match_info,'msc[S1].away')
+      const home_score = lodash.get(match_info,'msc[S1].home')
+      const away_score = lodash.get(match_info,'msc[S1].away')
       let score_text = `${home_score} - ${away_score}`
       // 电竞未开赛 展示为 第一局
       const mmp_state = mmp || 1
@@ -115,9 +115,9 @@ export default {
         csid: $menu.get_match_list_api_params().csid || this.$route.params.csid
       }
       api_match.get_esports_match(params).then( res => {
-        let code = _.get(res, "data.code");
-        let data = _.get(res, "data.data") || []
-        let timestap = _.get(res, "data.ts");
+        let code = lodash.get(res, "data.code");
+        let data = lodash.get(res, "data.data") || []
+        let timestap = lodash.get(res, "data.ts");
         if(code == 200 && data.length > 0){
           // 格式化比分
           data.forEach((item) => {
@@ -155,17 +155,17 @@ export default {
         // 检测正在播放的视频是否在最新的列表中
         let find = false;
         // 获取返回的赛事列表信息
-        let list_data = _.get(res, "data.data",[])
+        let list_data = lodash.get(res, "data.data",[])
         for (let i = 0; i < list_data.length; i++) {
           // 匹配是否是正在播放的赛事
-          if(this.vx_detail_params.mid && (this.vx_detail_params.mid == _.get(list_data,`[${i}].mid`))){
+          if(this.vx_detail_params.mid && (this.vx_detail_params.mid == lodash.get(list_data,`[${i}].mid`))){
             find = true;
             break;
           }
         }
         // 当正在播放的视频不在最新的赛事列表时,自动切换赛事
         if(!find){
-          let first_match = _.get(res, "data.data[0]",{mid:-1});
+          let first_match = lodash.get(res, "data.data[0]",{mid:-1});
           details.on_switch_match('auto', first_match)
         }
       }).catch( err => {

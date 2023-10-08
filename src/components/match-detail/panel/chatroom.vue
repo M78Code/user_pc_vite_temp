@@ -28,9 +28,9 @@
           class="message-item"
         >
           <q-chat-message
-            :name="msg.userId !== _.get(get_user, 'userId') ? msg.nickName : ''"
+            :name="msg.userId !== lodash.get(get_user, 'userId') ? msg.nickName : ''"
             :text="msg.type === '1' ? msg.content : []"
-            :sent="_.get(get_user, 'userId') === msg.userId"
+            :sent="lodash.get(get_user, 'userId') === msg.userId"
             :class="{'message-show-order': msg.type === '2', 'message-show-time': +msg.type === 1}"
             size="9"
             :stamp="+msg.type === 1 ? get_deta_format(msg.sendTime) : ''"
@@ -401,7 +401,7 @@ export default {
     },
     get_stitching_bulletin(){
       let str = ""
-       _.each(this.bulletin_list,(item,index)=>{
+       lodash.each(this.bulletin_list,(item,index)=>{
         str+= `${index+1}.${item.content}&ensp;&ensp;&ensp;&ensp;`
        })
        return  str
@@ -416,7 +416,7 @@ export default {
     async get_chat_bulletin(){
       try {
         let bulletin =  await api_chatroom.post_chat_bulletin({})
-        this.bulletin_list = _.get(bulletin,'data.data',[])
+        this.bulletin_list = lodash.get(bulletin,'data.data',[])
       } catch (error) {
           console.log('object :>> ', error);
       }
@@ -448,11 +448,11 @@ export default {
      */
     chatroom_api_change_process() {
       // 聊天室域名池
-      const url_apis = _.get(this.get_user, 'oss.chatroomHttpUrl', [''])
+      const url_apis = lodash.get(this.get_user, 'oss.chatroomHttpUrl', [''])
       console.log('----聊天室域名池----', url_apis)
       const axios_instance = axios.create()
       // 登录token
-      const token = _.get(this.get_user, 'token', sessionStorage.getItem('pc_token'))
+      const token = lodash.get(this.get_user, 'token', sessionStorage.getItem('pc_token'))
       // 并发请求队列
       let reqs = []
       url_apis.map((item) =>
@@ -489,7 +489,7 @@ export default {
             this.set_chatroom_curr_url_info(obj)
           }
 
-          if (_.get(res, 'data.data')) {
+          if (lodash.get(res, 'data.data')) {
             // 获取vip信息 后续操作
             this.after_get_vip_info_process(res.data.data)
           }
@@ -564,9 +564,9 @@ export default {
       // mqtt Topic数组
       const { mqtttopic } = this.get_chatroom_connect_info
       // 当前mqtt 下标
-      const mqtt_index = _.get(this.get_chatroom_curr_url_info, 'mqtt_index', 0)
+      const mqtt_index = lodash.get(this.get_chatroom_curr_url_info, 'mqtt_index', 0)
       // 当前mqtt url
-      const mqtturl = _.get(this.get_user, `oss.chatroomUrl[${mqtt_index}]`, '')
+      const mqtturl = lodash.get(this.get_user, `oss.chatroomUrl[${mqtt_index}]`, '')
       // mqtt连接参数配置
       const options = {
         // Clean session
@@ -620,7 +620,7 @@ export default {
       // 连接关闭
       this.chatroomWs.on('close', () => {
         // 若mqtt域名池数量大于1，则切换下一个mqtt链接
-        if (_.get(this.get_user, 'oss.chatroomUrl.length', 1) > 1) {
+        if (lodash.get(this.get_user, 'oss.chatroomUrl.length', 1) > 1) {
           // 先关闭本次连接
           this.chatroomWs.end()
 
@@ -662,7 +662,7 @@ export default {
 
             const message_list = this.message_list.concat(data)
             // 消息去重
-            this.message_list = _.uniqBy(message_list, 'messageId')
+            this.message_list = lodash.uniqBy(message_list, 'messageId')
 
             // 只显示300条
             if (this.message_list.length > 300) {
@@ -686,7 +686,7 @@ export default {
 
               const message_list = this.message_list.concat(...data)
               // 消息去重
-              this.message_list = _.uniqBy(message_list, 'messageId')
+              this.message_list = lodash.uniqBy(message_list, 'messageId')
 
               // 只显示300条
               if (this.message_list.length > 300) {
@@ -701,8 +701,8 @@ export default {
           // 显示更多消息 或 滚动至底部
           if (this.can_show_more_msg) {
             if (
-                Array.isArray(data) && data[0].userId === _.get(this.get_user, 'userId') ||
-                !Array.isArray(data) && data.userId === _.get(this.get_user, 'userId')
+                Array.isArray(data) && data[0].userId === lodash.get(this.get_user, 'userId') ||
+                !Array.isArray(data) && data.userId === lodash.get(this.get_user, 'userId')
             ) {
               this.scroll_to_bottom()
             }
@@ -743,7 +743,7 @@ export default {
           break;
         //用户清屏消息
         case ChatroomMsgType.CLEAR_USER_MESSAGE:
-            this.message_list = _.filter(this.message_list,message => message.userId !== data);
+            this.message_list = lodash.filter(this.message_list,message => message.userId !== data);
           break;
         // 用户禁言
         case ChatroomMsgType.BAN_SEND_MESSAGE:
@@ -806,8 +806,8 @@ export default {
         messageId: this.pull_last_messsage_id || '',
       }
       return api_chatroom.get_chat_history_message(params).then((res) => {
-        let data = _.get(res,'data');
-        if (_.get(data,'code') === 0) {
+        let data = lodash.get(res,'data');
+        if (lodash.get(data,'code') === 0) {
           // q-chat-message 传入的text必须为数组，此处content字段转数组
           const message_data = data.data.filter((item, index) => {
             if (!Array.isArray(item.content)) {
@@ -841,7 +841,7 @@ export default {
             if (message_data.length) {
               let message_list = this.message_list.concat(message_data)
               // 消息去重
-              this.message_list = _.uniqBy(message_list, 'messageId')
+              this.message_list = lodash.uniqBy(message_list, 'messageId')
 
               // 只显示300条
               if (this.message_list.length > 300) {
@@ -892,7 +892,7 @@ export default {
     // 获取点赞信息
     get_bet_like_info() {
       api_chatroom.get_bet_like_info().then(({data}) => {
-        if (data.code === 0 && _.get(data, 'data.length')) {
+        if (data.code === 0 && lodash.get(data, 'data.length')) {
           this.message_list.forEach((item, index) => {
             // 更新点赞状态
             if (data.data.includes(item.messageId)) {

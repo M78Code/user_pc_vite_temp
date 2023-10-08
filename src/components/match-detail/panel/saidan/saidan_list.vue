@@ -36,38 +36,38 @@
                 <!-- 'is-saidan': item.isSaidan -->
                 <div 
                 class="head_name">
-                  <img class="img-style" v-img="([_.get(item, 'detailList[0].tournamentPic')])"  alt />
-                  <div>{{ _.get(item, 'detailList[0].matchName') }}</div>
+                  <img class="img-style" v-img="([lodash.get(item, 'detailList[0].tournamentPic')])"  alt />
+                  <div>{{ lodash.get(item, 'detailList[0].matchName') }}</div>
                 </div>
                 <div class="content-middle"
                     :class="{'content-middle-is-saidan':item.isSaidan}"
                 >
                   <div class="item-top flex">
                     <div class="home-vs-away">
-                        {{ _.get(item, 'detailList[0].matchInfo') }}
+                        {{ lodash.get(item, 'detailList[0].matchInfo') }}
                     </div>
                     <div>
                       <!-- <span class="middle-span">08/23</span>
                       <span>03:00</span> -->
-                      <span v-if="!item.acCode" class="middle-span">{{(new Date(utils.format_time_zone_time(+ _.get(item, 'detailList[0].beginTime')))).Format('MM/dd hh:mm')}}</span>
+                      <span v-if="!item.acCode" class="middle-span">{{(new Date(utils.format_time_zone_time(+ lodash.get(item, 'detailList[0].beginTime')))).Format('MM/dd hh:mm')}}</span>
                     </div>
                   </div>
                   <div class="item-middle">
                             <div class="item-row">
                               <div class="item-row-left item-bet-handicap">
                                 
-                                {{match_type(_.get(item, 'detailList[0].matchType'), lang)}}{{ _.get(item, 'detailList[0].playName') }}
-                                [{{ handicap_name(_.get(item, 'detailList[0].marketType'), lang) }}]
+                                {{match_type(lodash.get(item, 'detailList[0].matchType'), lang)}}{{ lodash.get(item, 'detailList[0].playName') }}
+                                [{{ handicap_name(lodash.get(item, 'detailList[0].marketType'), lang) }}]
                               </div>
                             </div>
                             <div class="item-row">
                               <div class="item-row-left item-bet-name">
-                                <template v-if="_.get(item, 'detailList[0].playOptionName','  ').includes('  ')">
-                                  <span class="part1">{{ _.get(item, 'detailList[0].playOptionName').split('  ')[0] }}</span>
-                                  <span class="part2">{{ _.get(item, 'detailList[0].playOptionName').split('  ')[1] }}</span>
+                                <template v-if="lodash.get(item, 'detailList[0].playOptionName','  ').includes('  ')">
+                                  <span class="part1">{{ lodash.get(item, 'detailList[0].playOptionName').split('  ')[0] }}</span>
+                                  <span class="part2">{{ lodash.get(item, 'detailList[0].playOptionName').split('  ')[1] }}</span>
                                 </template>
                                 <template v-else>
-                                  {{ _.get(item, 'detailList[0].playOptionName') }}
+                                  {{ lodash.get(item, 'detailList[0].playOptionName') }}
                                 </template>
                               </div>
                                <!-- 已结算状态，赢|输 -->
@@ -75,7 +75,7 @@
                             </div>
                             <div class="item-row">
                               <div class="item-row-left item-bet-odds">
-                                @ {{ _.get(item, 'detailList[0].oddFinally') | format_odds}}
+                                @ {{ lodash.get(item, 'detailList[0].oddFinally') | format_odds}}
                               </div>
                           
                             </div>
@@ -87,8 +87,8 @@
                       <div class="item-row-left">
                         <template v-if="item.orderStatus == 1 || item.orderStatus == 2 || item.orderStatus == 4 || item.orderStatus == 0">
                           <span>{{ i18n_t('common.bets_val') }}:</span>
-                          <span v-if=" _.get(item, 'detailList[0].backAmount')">{{ _.get(item, 'detailList[0].backAmount') | format_currency }}</span>
-                          <span v-else>{{_.get(item, 'orderAmountTotal')}}</span>
+                          <span v-if=" lodash.get(item, 'detailList[0].backAmount')">{{ lodash.get(item, 'detailList[0].backAmount') | format_currency }}</span>
+                          <span v-else>{{lodash.get(item, 'orderAmountTotal')}}</span>
                         </template>
                         <template v-else>
                           <span>{{ i18n_t('common.bets_val') }}:</span>
@@ -109,10 +109,10 @@
                 </div>
                 <div class="content-bottom flex">
                     <div class="bottom-left">
-                      <span>注单号:</span><span> {{ _.get(item, 'orderNo') }}</span>
+                      <span>注单号:</span><span> {{ lodash.get(item, 'orderNo') }}</span>
                       <span
                           class="follow-heart"
-                          @click="copy(_.get(item, 'orderNo'))"
+                          @click="copy(lodash.get(item, 'orderNo'))"
                         >
                           <icon name="icon-icon_copy"/>
                         </span>
@@ -120,7 +120,7 @@
                     <div class="bottom-right">
                       <span>投注时间:</span> 
                       <!-- <span>{{(new Date(utils.format_time_zone_time(+data.betTime))).Format(i18n_t('time4'))}}</span>MM/dd hh:mm -->
-                      <span>{{(new Date(utils.format_time_zone_time( +_.get(item, 'betTime') ))).Format('MM/dd hh:mm')}}</span>
+                      <span>{{(new Date(utils.format_time_zone_time( +lodash.get(item, 'betTime') ))).Format('MM/dd hh:mm')}}</span>
                       <!-- <span>08/20</span><span>17:28</span> -->
                     </div>
                 </div>

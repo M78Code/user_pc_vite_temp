@@ -5,7 +5,7 @@
  * @Author:
 -->
 <template>
-  <div class="virtual_info vtable" v-if="_.get(match_info, 'rank[length]')">
+  <div class="virtual_info vtable" v-if="lodash.get(match_info, 'rank[length]')">
     <div class="vhead">
       <div class="vtr">
         <div class="vtd" ></div>

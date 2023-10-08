@@ -94,10 +94,10 @@ export default {
       }else if(this.type === '5minutes'){
         // 5分钟
         // 滚球时  绝杀球（补时） 不展示  且标题展示 “下一个进球” 排除110-即将开赛的状态，即将开赛展示原文案
-        if (this.$utils.get_match_status(_.get(this, 'ms'), [110]) == 1) {
+        if (this.$utils.get_match_status(lodash.get(this, 'ms'), [110]) == 1) {
           return {
             title:i18n_t('list.5minutes_roll'),
-            content:_.dropRight(i18n_t('list.5minutes_details')),
+            content:lodash.dropRight(i18n_t('list.5minutes_details')),
           }
         }
        return   {
@@ -116,7 +116,7 @@ export default {
   methods:{
     // 获取提示的标题  滚球时文案不同  排除110-即将开赛的状态，即将开赛展示原文案
     get_tip_title(item){
-      return this.$utils.get_match_status(_.get(this, 'ms'), [110]) == 1 ? (item.title_roll || item.title) : item.title
+      return this.$utils.get_match_status(lodash.get(this, 'ms'), [110]) == 1 ? (item.title_roll || item.title) : item.title
     },
       //展开角球罚牌说明
     click_popup(e){

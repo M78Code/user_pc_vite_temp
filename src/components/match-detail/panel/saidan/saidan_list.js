@@ -217,7 +217,7 @@ export default {
         this.show_loading = false
         await api_details.roomBetRecord({orderStatus: this.currentIndex, page:1,size:10, matchId:this.get_match_details_params.mid}).then((res)=>{
           console.log(res)
-            let records = _.get(res,'data.data.records')
+            let records = lodash.get(res,'data.data.records')
             if(res.data.code == 200){
               this.bet_records = records || []
              // 假如请求被限频了，则再次发起请求
@@ -242,15 +242,15 @@ export default {
       ele.setState(4);  //加载中
       api_details.roomBetRecord({ page: this.current + 1, size: this.pageSize, matchId: this.get_match_details_params.mid }).then((res) => {
         ele.setState(5);  //加载完成
-        let records = _.get(res,'data.data.records')
+        let records = lodash.get(res,'data.data.records')
         if(res.data.code == 200){
           if (records.length < this.pageSize) {
             this.is_hasnext = false
           }
           this.current += 1
           // 合并数据
-          let list = _.cloneDeep(this.bet_records);
-          this.bet_records = _.concat(list, records)
+          let list = lodash.cloneDeep(this.bet_records);
+          this.bet_records = lodash.concat(list, records)
         } else {
           ele.setState(7);  //没有更多
         }
