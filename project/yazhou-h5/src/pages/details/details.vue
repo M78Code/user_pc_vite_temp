@@ -9,7 +9,7 @@
       'show-replay-video': get_is_dp_video_full_screen && !get_is_hengping,
       'video-full-screen': get_is_hengping,
       'details-bet': viewTab === 'bet' && get_menu_type !== 3000,}"
-      :style="{height:`${scroller_height}px`}"
+      :style="[{height:`${scroller_height}px`, ...page_style}]"
       v-cloak ref="details_box"
       @touchstart.passive="start"
       @scroll="detail_scrolling"
@@ -156,6 +156,7 @@ import { details_main } from "./details.js";
 import { ref, defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch, provide } from "vue";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { MatchDetailCalss } from "src/core/index.js"
+import { compute_css_variables } from "src/core/css-var/index.js"
 
 //国际化
 
@@ -191,6 +192,7 @@ export default defineComponent({
     const content_box = ref(null)
     const fixedHeight = ref(null)
     const scroll_visible_1 = ref(true)
+    const page_style = ref('')
     
     
     const {
@@ -395,7 +397,7 @@ export default defineComponent({
     //   set_tab_fix(false);
     //   set_is_hengping(false)
     //   detailsTableHeight = innerHeight - rem(2.4);
-
+    page_style.value = compute_css_variables({ category: 'component', module: 'analysis' })
       // 记录路由信息
       const {fullPath, hash, name, params, path, query} = route
     //   set_last_route_info({fullPath, hash, name, params, path, query})
@@ -577,6 +579,7 @@ export default defineComponent({
       clear_timer,
       matchDetailCtr,
       new_match_detail_ctr,
+      page_style,
     }
   }
 })

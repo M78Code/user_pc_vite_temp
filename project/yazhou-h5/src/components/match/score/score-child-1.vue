@@ -144,7 +144,7 @@ export default {
       let msc = this.detail_data.msc;
       // sortBy方法  比分升序排列 取出比分阶段后面的数字作为判断条件 返回是数组
       msc = lodash.sortBy( msc, (item) => {
-        return +(item.split("|")[0]).substring(1)
+        return item && +(item.split("|")[0]).substring(1)
       })
       let score_arr = ['0:0','0:0','0:0'];
       lodash.forEach(msc, (item, index)=>{

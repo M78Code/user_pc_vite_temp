@@ -1154,7 +1154,7 @@ export default {
       this.sendMessage2({cmd: 'switch', val:index})
     },
     close_video() {
-      this.set_is_full_screen(false)
+      this.get_is_full_screen = false
       this.exit_browser_full_screen();
 
       // iPhone Safari 不兼容screen.orientation

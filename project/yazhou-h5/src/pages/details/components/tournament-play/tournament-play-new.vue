@@ -349,7 +349,7 @@ export default defineComponent({
       const hshow = props.item_data.hshow
       const vuex_hshow = get_hshow_map.value[`${props.item_data.mid}_${props.item_data.hpid}`]
       // 以vuex中优先级为准，没有就用接口的
-      return vuex_hshow === 'No' ? 'No' : hshow
+      return vuex_hshow == 'No' ? 'No' : hshow
     });
     // 角球换行显示
     const corner_ball_show = computed(() => {

@@ -50,7 +50,7 @@ export default defineComponent({
     const route = useRoute()
     const router = useRouter()
     // 一键收起状态: 1.全展开 2.全收起 3.部分展开 1和3箭头向上
-    const get_fewer = ref(1)
+    const get_fewer = ref(lodash.get(SessionStorage.get("SET_FEWER")) || 1)
     const matchDetailCtr = ref(MatchDetailCalss)
     const current_category_id = ref(SessionStorage.get("DETAIL_TAB_ID"))
     const data = reactive({
@@ -93,8 +93,10 @@ export default defineComponent({
       if (props.data_list && props.data_list.length == 1 && matchDetailCtr.value.current_category_id == '0') return;
       if(get_fewer.value == 1 || get_fewer.value == 3){
         get_fewer.value = 2
+        SessionStorage.set("SET_FEWER", 2)
       }else{
         get_fewer.value = 1
+        SessionStorage.set("SET_FEWER", 2)
       }
     };
     // 单击玩法集--玩法集和tab 点击 

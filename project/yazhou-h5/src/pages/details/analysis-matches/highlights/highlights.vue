@@ -117,10 +117,10 @@
 
 
               <!-- 顶部title、比分 -->
-              <title-x v-if="is_hengping && is_controller_show" @handle_callback="close_video"></title-x>
+              <title-x v-if="is_hengping && is_controller_show" @handle_callback="close_video" :get_detail_data="get_detail_data"></title-x>
 
               <!-- 精彩回放事件类型切换 -->
-              <tab v-show="is_expand_video_list" :tabs="tab_list" @click="get_video_list" ref="tabs" :isChange="true"></tab>
+              <tabs v-show="is_expand_video_list" :tabs="tab_list" @click="get_video_list" ref="tabs" :isChange="true"></tabs>
 
               <!-- 精彩回放视频滚动列表 -->
               <slider-x
@@ -137,7 +137,6 @@
                 ref="slider_video"
               >
                 <template v-slot:default="slotProps">
-                  {{slotProps}}
                   <div class="score"><span>{{ slotProps.item.t1 }}</span><span class="colon">:</span><span>{{ slotProps.item.t2 }}</span></div>
                   <div class="event-team ellipsis">{{ slotProps.item.homeAway }}</div>
                   <div class="event-name">{{ event_name(slotProps.item.eventCode) }}: {{ slotProps.item.firstNum }}</div>
@@ -201,7 +200,6 @@
 </template>
 
 <script>
-// import {mapGetters, mapMutations} from "vuex";
 import {
   ref,
   onMounted,
@@ -212,7 +210,6 @@ import {
   defineAsyncComponent,
 } from 'vue'
 import lodash from 'lodash'
-// TODO: 后续修改调整
 import {api_common, api_analysis} from "src/api/index.js";
 import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
 import store from "src/store-redux/index.js"
@@ -225,11 +222,11 @@ import { useRoute } from "vue-router"
 import { MatchDataWarehouse_H5_Detail_Common as matchDetailData, MenuData } from "src/core/index";
 import sliderX from "project_path/src/pages/details/analysis-matches/components/slider-x.vue"
 // 队标视图
-// let teamImg = defineAsyncComponent(() => import("project_path/src/pages/details/team-img.vue"))
+import teamImg from "project_path/src/components/details/team-img.vue"
 // 全屏播放时，顶部title
-// let titleX = defineAsyncComponent(() => import("project_path/src/pages/analysis-matches/components/title-x.vue"))
+import titleX from "project_path/src/pages/details/analysis-matches/components/title-x.vue" 
 // 事件类型菜单
-// let tab = defineAsyncComponent(() => import("project_path/src/pages/analysis-matches/components/tabs.vue"))
+import tabs from "project_path/src/pages/details/analysis-matches/components/tabs.vue" 
 // 精彩回放视频滚动列表
 export default {
   name: "highlights",
@@ -253,7 +250,16 @@ export default {
   },
   components: {
     sliderX,
+    teamImg,
+    titleX,
+    tabs,
   },
+props: {
+  detail_data: {
+    type: Object,
+    default: {}
+  }
+},
 setup(props, context){
   let route = useRoute()
     // 定时器
@@ -314,7 +320,7 @@ setup(props, context){
   // 是否是dplayer视频全屏
   const is_dp_video_full_screen = ref(false)
   // 赛果详情数据
-  const get_detail_data = ref(matchDetailData.list_to_obj.mid_obj[`${route.params.mid}_`])
+  const get_detail_data = ref(props.detail_data)
   onMounted(() => {
     pre_load_video.load_player_js()
     store.dispatch({

@@ -3,8 +3,8 @@
     <div
       class="item hairline-border"
       :class="{
-        'active': i === tab_index,
-        'no-border-r': i === tab_index - 1,
+        'active': i == tab_index,
+        'no-border-r': i == tab_index - 1,
       }"
       v-for="(tab, i) in tabs"
       :key="i"
@@ -33,7 +33,7 @@ import { ref } from "vue"
       if(!isChange){
         tab_index.value = index
       }
-      $emit('click', {tab, index})
+      emit('click', {tab, index})
     }
     // TODO: 暂时注释
   const changeTabIndex = (index) => {

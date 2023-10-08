@@ -15,7 +15,7 @@
           {{void (line1=0,line2=0)}}
           <div v-for="(item,index) in item_data.hl" :key="index">
             <div class="item" v-if="index > 0 || index == 0">
-
+              
               <!-- 左 -->
               <div class="item-col">
                 <template v-for="(ol_index0,ol_index) in max_count_ol">
@@ -29,6 +29,7 @@
                           <template v-if="ol_list_0[ol_index0 - 1]._hs == 0 || ol_list_0[ol_index0 - 1]._hs == 11">
                             <!-- os: 1、开盘 2、封盘 3、隐藏不显示，不占地方-->
                             <template v-if="ol_list_0[ol_index0 - 1].os == 1">
+                              
                               <!-- 主程序 start -->
                               <div
                                   class="play-box-style details_color warp bor-style"
@@ -181,12 +182,11 @@
                 </template>
               </div>
             </div>
-
             <!--横向一列+底部横排一列-->
             <div class="row" v-if="index>0||index==0">
               <div class="col col-super-vip1">
                 <template v-for="(ol_item,ol_index) in item.ol" >
-                  <template v-if="('-1' == ol_item.otd) ">
+                  <template v-if="('-1' == lodash.get(ol_item, 'otd')) ">
                     {{void (line2++)}}
                     <div :key="ol_index"  v-if="((hide_show_more_layout || (!hide_show_more_layout && (show_more || (!show_more && (line1+line2)<5)))))">
                       <!--  0开 2关 1封 11锁 -->
@@ -305,10 +305,10 @@ export default defineComponent({
     })
   const element = ref(null)
   const other_item_list = ref([])
-    const ol_list_0 = ref([])
-    const ol_list_1 = ref([])
-    const ol_list_2 = ref([])
-    const max_count_ol = ref([])
+  const ol_list_0 = ref([])
+  const ol_list_1 = ref([])
+  const ol_list_2 = ref([])
+  const max_count_ol = ref([])
     // #TODO vuex
     // computed: {
     // ...mapGetters([
@@ -336,6 +336,7 @@ export default defineComponent({
       if(!len){
         len = 0;
       }
+      
       if(len>10){
         ret = false;
       } else{
@@ -356,6 +357,7 @@ export default defineComponent({
       if(temp && temp>10){
         state_data.show_more = false;
       }
+      max_count_ol.value = get_ol_list();
     })
     const get_ol_list = () =>{
       let max = 0,
@@ -376,7 +378,6 @@ export default defineComponent({
           other_item_list.value = uniq_arr
         }
         //os等于3需要隐藏投注项
-        
         let filtered = ol_list.filter(ol_item => ol_item.otd == tit.otd && ol_item.ot != 'Other' && ol_item.os != 3 );
         if(i == 0){
           ol_list_0.value = filtered;
@@ -439,6 +440,9 @@ export default defineComponent({
       get_bet_list,
       get_cur_odd,
       max_count_ol,
+      ol_list_0,
+      ol_list_1,
+      ol_list_2,
       get_detail_data,
       // 收到C105推送赔率,生成一个浮点, 伪随机数在范围从0到小于1
       get_flag_get_ol_list,
@@ -455,7 +459,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 .title-style {
   height: 0.18rem;
-
+  color: var(--q-analysis-text-color-14);
   line-height: 0.18rem;
 }
 
@@ -514,7 +518,7 @@ export default defineComponent({
 
   letter-spacing: 0;
   font-size: 0.14rem;
-  color: var(--q-color-fs-color-11)!important;
+  color: var(--q-analysis-text-color-14)!important;
   &.highlight {
     font-size: 16px;
     color: var(--q-color-fs-color-51);

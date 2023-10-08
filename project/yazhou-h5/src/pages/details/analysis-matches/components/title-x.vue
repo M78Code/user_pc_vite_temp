@@ -20,22 +20,23 @@
 import { computed, ref, toRefs } from 'vue'
 import loadsh from 'lodash'
 import matchScore from 'project_path/src/components/match/match-score.vue' // 比分组件
-const get_detail_data = ref({
-        csid: '1',
-        mid: '1',
-    })
   // name: "title_x",
   // components: {
   //   matchScore,
   // },
+  const props = defineProps({
+    get_detail_data: {
+      type: Object,
+      default: {}
+    }
+  })
   const handle_callback = () => {
     // TODO: 后续修改调整 $emit
-      $emit('handle_callback')
+      emit('handle_callback')
     }
   const match_score = computed(() =>{
-    // TODO: 后续修改调整 get_detail_data
       let msc = '0 v 0'
-      !loadsh.isEmpty(get_detail_data.value) && get_detail_data.value.msc.map(item => {
+      !loadsh.isEmpty(props.get_detail_data) && props.get_detail_data.msc.map(item => {
         if (item.indexOf('S1|') > -1) {
           msc = item.split('|')[1].split(':').join(' v ')
         }
@@ -43,9 +44,6 @@ const get_detail_data = ref({
       return msc
     })
   // computed: {
-  //   ...mapGetters([
-  //     'get_detail_data'
-  //   ]),
   //   match_score() ,
   // },
   // methods: {
