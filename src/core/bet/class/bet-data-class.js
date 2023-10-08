@@ -516,7 +516,7 @@ this.bet_appoint_ball_head= null */
   http_upd_data() { }
   set_bet_amount(val) {
     this.bet_amount = val;
-    console.log(999, val)
+    // console.error("投注金额", val)
   }
   /**
    * @description: 删除投注对象

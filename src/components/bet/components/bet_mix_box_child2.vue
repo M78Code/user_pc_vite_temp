@@ -316,7 +316,6 @@ const pack_up = (val) => {
 }
 
 const submit_order = (type) => {
-  console.error('fhuasss')
   submit_handle()
 }
 
@@ -365,6 +364,7 @@ const calc_class = computed(() => {
 // 投注金额赋值
 const change_money_handle = (val) => {
   bet_amount.value = format_money2(val)
+  // console.log("投注金额",bet_amount.value)
 }
 onMounted(() => {
   useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money)

@@ -7,7 +7,7 @@
   <div class="bet-mix-show" @click="handleonmousedown">
     <!-- 失效蒙层 -->
     <div class="locked-shadow" v-if="(pankou_change == 2 || hids || has_pre.own_)"></div>
-    <div class="row justify-start items-center"
+   <div class="row justify-start items-center"
       :class="[BetViewDataClass.bet_order_status ? 'yb_px14' : 'yb_pl12 yb_pr18', { 'bet-mix-show2': is_conflict }]">
       <!-- <div class="yb_mr12 dele-left" v-if="!BetData_H5.is_bet_success_status">
         <img src="image/wwwassets/bw3/svg/bet_xuanx.svg" @click.stop="remove_(value_show.id_)">

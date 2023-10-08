@@ -36,8 +36,9 @@ import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import UserCtr from 'src/core/user-config/user-ctr.js'
 import { ref, reactive, onMounted, watch, computed, onUnmounted } from 'vue';
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
-
+import mathJs from 'src/core/bet/common/mathjs.js'
 import { format_money3, format_money2 } from 'src/core/format/index.js'
+import { format_currency } from "src/core/format/module/format-currency.js"
 
 const money = ref('10')  //输入框金额
 const money_ok = ref(true)   //金额是否合适
@@ -133,9 +134,10 @@ const item_ = computed(() => {
 })
 // 计算单关最高可赢
 const max_win_money = computed(() => {
-  return 300
+  // return 300
+  let oddFinally = lodash.get(props, 'item.oddFinally')
   // 串关使用 限额赔率 = 每一个赛事赔率相乘
-  let money = BetData.is_bet_single ? props.item.oddFinally : ref_data.seriesOdds
+  let money = BetData.is_bet_single ? oddFinally : ref_data.seriesOdds
   // 常量 精度值（赔率为+万位）
   let number = 100000
   // 最高可赢金额 = 赔率 * 投注金额 - 投注金额 
@@ -230,6 +232,7 @@ watch(() => get_money_notok_list2.length, (new_) => {
             }
           })
       money.value = lodash.maxBy(tempNew, (item) => { return item.minBet }).minBet * 1
+      
     } else {
       money.value = min_money.value.toString()
     }
@@ -270,13 +273,18 @@ watch(() => BetData.bet_money_total, (new_) => {
  */
 const clear_money = () => {
   money.value = 0
-  // change_money_handle('0')
+  BetData.set_bet_amount("0")
 }
 /**
  *@description 格式化后的金额
  *@return {Undefined} undefined
  */
 const get_money_format = () => {
+  //min_money
+  //max_money
+
+  console.error("最小值1111",BetViewDataClass)
+  console.error("最小值2222",BetViewDataClass.bet_min_max_money)
   let mi = format_money3(ref_data.min_money)
   let ma = format_money3(ref_data.max_money)
   // console.error('ref_data', ref_data)
@@ -299,10 +307,8 @@ const cursor_flashing = () => {
  */
 const change_money_handle = (new_money) => {
   // if (bet_index != BetData.active_index) { return };
-  console.error('ssss', new_money)
+  console.error('ssssaaaa', new_money)
   money.value = new_money
-  // BetData.bet_amount = new_money
-  BetData.set_bet_amount(new_money)
   return
   if (max_money.value < 0.01 && max_money_back.value) {
     if (new_money) {
@@ -366,6 +372,7 @@ const check_moneyok = (val) => {
  *@return {Undefined} undefined
  */
 const input_click = (evnet) => {
+  console.log(99999999)
   event.preventDefault()
   set_keyboard_show(true)
 
@@ -387,7 +394,7 @@ const send_money_to_keyboard = () => {
 
 // 限额赋值
 const set_ref_data_bet_money = () => {
-  console.error('出发了')
+  console.error('限额赋值')
   // 串关获取 复试连串
   if (!BetData.is_bet_single) {
 
