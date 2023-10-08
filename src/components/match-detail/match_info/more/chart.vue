@@ -6,20 +6,20 @@
 -->
 
 <template>
-  <!-- v-if="_.get(match_info, 'csid') != '8'" -->
+  <!-- v-if="lodash.get(match_info, 'csid') != '8'" -->
   <div class="more-stage">
-    <div class="score-item" :class="{'num_zero': (_.get(stage_data,'num_one.home') || 0) == 0}">
+    <div class="score-item" :class="{'num_zero': (lodash.get(stage_data,'num_one.home') || 0) == 0}">
       <div class="score-num match-home">{{stage_data.num_one.home || 0}}</div>
       <div class="score-tips">{{stage_txt.chart_one}}</div>
     </div>
 
-    <div class="score-item" :class="{'num_zero': (_.get(stage_data,'num_two.home') || 0) == 0}">
+    <div class="score-item" :class="{'num_zero': (lodash.get(stage_data,'num_two.home') || 0) == 0}">
       <div class="score-num match-home">
         <!-- 斯诺克 -->
-        <span v-if="_.get(match_info, 'csid') == '7'">{{snk_S1190.home}}/</span>
+        <span v-if="lodash.get(match_info, 'csid') == '7'">{{snk_S1190.home}}/</span>
         <span>{{stage_data.num_two.home || 0}}</span>
         <!-- 羽毛球 -->
-        <span v-if="_.get(match_info, 'csid') == '10'">%</span>
+        <span v-if="lodash.get(match_info, 'csid') == '10'">%</span>
       </div>
       <div class="score-tips">
         {{stage_txt.chart_two}}
@@ -28,22 +28,22 @@
       </div>
     </div>
     <!-- 网球 羽毛球 -->
-    <div class="score-item common-item" v-if="['5','10'].includes(_.get(match_info, 'csid'))"
-      :class="{'two_num_zero': (_.get(stage_data,'num_center.home') || 0) == 0 || (_.get(stage_data,'num_center.away') || 0) == 0}">
+    <div class="score-item common-item" v-if="['5','10'].includes(lodash.get(match_info, 'csid'))"
+      :class="{'two_num_zero': (lodash.get(stage_data,'num_center.home') || 0) == 0 || (lodash.get(stage_data,'num_center.away') || 0) == 0}">
       <div class="common">
-        <div class="score-num match-home" :class="{'get_gray': (_.get(stage_data,'num_center.home') || 0) == 0}">{{stage_data.num_center.home || 0}}%</div>
-        <div class="score-num match-away" :class="{'get_gray': (_.get(stage_data,'num_center.away') || 0) == 0}">{{stage_data.num_center.away || 0}}%</div>
+        <div class="score-num match-home" :class="{'get_gray': (lodash.get(stage_data,'num_center.home') || 0) == 0}">{{stage_data.num_center.home || 0}}%</div>
+        <div class="score-num match-away" :class="{'get_gray': (lodash.get(stage_data,'num_center.away') || 0) == 0}">{{stage_data.num_center.away || 0}}%</div>
       </div>
       <div class="score-tips">{{stage_txt.chart_center}}</div>
     </div>
 
-    <div class="score-item" :class="{'num_zero': (_.get(stage_data,'num_two.away') || 0) == 0}">
+    <div class="score-item" :class="{'num_zero': (lodash.get(stage_data,'num_two.away') || 0) == 0}">
       <div class="score-num match-away">
         <!-- 乒乓球 -->
-        <span v-if="_.get(match_info, 'csid') == '7'">{{snk_S1190.away}}/</span>
+        <span v-if="lodash.get(match_info, 'csid') == '7'">{{snk_S1190.away}}/</span>
         <span>{{stage_data.num_two.away || 0}}</span>
         <!-- 羽毛球 -->
-        <span v-if="_.get(match_info, 'csid') == '10'">%</span>
+        <span v-if="lodash.get(match_info, 'csid') == '10'">%</span>
       </div>
       <div class="score-tips">
         {{stage_txt.chart_two}}
@@ -52,7 +52,7 @@
       </div>
     </div>
 
-    <div class="score-item" :class="{'num_zero': (_.get(stage_data,'num_one.away') || 0) == 0}">
+    <div class="score-item" :class="{'num_zero': (lodash.get(stage_data,'num_one.away') || 0) == 0}">
       <div class="score-num match-away">{{stage_data.num_one.away || 0}}</div>
       <div class="score-tips">{{stage_txt.chart_one}}</div>
     </div>
