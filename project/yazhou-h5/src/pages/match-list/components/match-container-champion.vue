@@ -4,6 +4,7 @@
 <template>
   <div class="champion-wrap" v-if="is_show">
     <!--体育类别  menuType 1:滚球 2:即将开赛 3:今日 4:早盘 11:串关 -->
+
     <div class="sport-title match-indent" v-if="get_sport_show(i)" @click="ball_folding_click(match_of_list.csid)">
       <span class="score-inner-span">
         {{match_of_list.csna}}
@@ -39,9 +40,8 @@
         <img class="icon-down-arrow" src="public/image/list/league-collapse-icon-black.svg" :class="{collapsed:collapsed}" alt="" v-else> -->
       </div>
     </div>
-
     <template v-for="(hp,index) of match_of_list.hps" >
-      <div :ref="setWarp" class="hps-wrap hairline-border"  v-if="hp.hs != 2 && !collapsed" :key="index" >
+      <div class="hps-wrap hairline-border" v-show="is_show_all()"  v-if="hp.hs != 2 && !collapsed" :key="index" >
         <div class="match-title flex items-center"
         @click = "handle_game_collapse(hp)"
           :class="{'is-favorite':get_show_favorite_list}">
@@ -52,7 +52,7 @@
             {{hp.hps}}
           </div>
         </div>
-        <div v-if="!collapsed && hp.hmed" v-show="!hp_collapsed" :data="hp.hid" class="limit-time flex items-center justify-center"
+        <div v-if="!collapsed && hp.hmed" v-show="computerShow(hp)" :data="hp.hid" class="limit-time flex items-center justify-center"
           :class="{'first-t':index == 0}">
           <div class="limit-t-i row justify-center items-center">
             <template v-if="!['zh', 'tw'].includes(get_lang)">
@@ -65,8 +65,7 @@
         </div>
 
        
-        <div class="ol-list-wrap flex justify-start" v-show="!hp_collapsed" :data-ol="hp.ol.length" v-if="hp.ol"  :class="{'game_collapse':hp_collapsed}">
-
+        <div class="ol-list-wrap flex justify-start" v-show="computerShow(hp)" :data-ol="hp.ol.length" v-if="hp.ol"  :class="{'game_collapse':hp_collapsed}">
           <odd-item-champion 
             v-for="(ol_item,i) of hp.ol"
             :key="i"
@@ -86,7 +85,8 @@
 </template>
  
 <script setup>
-import { computed, ref, onUnmounted, watch } from "vue";
+import { computed, ref, onUnmounted, watch, getCurrentInstance, reactive } from "vue";
+const update = getCurrentInstance()
 import lodash from 'lodash'
 import { i18n_t} from 'src/core/index.js'
 import store from "src/store-redux/index.js";
@@ -94,8 +94,8 @@ import { MenuData } from "src/core/index.js"
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt";
 import oddItemChampion from "./odd-item-champion.vue";
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
-
-const { matchReducer } = store.getState();
+import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
+// const { matchReducer } = store.getState();
 const props = defineProps({
   // 当前组件的赛事数据对应列表的赛事
   match_of_list: Object,
@@ -107,21 +107,20 @@ const props = defineProps({
   matchCtr: Object,
 })
 
+let{ tid } = props.match_of_list 
+
 let hp_collapsed = ref(false)
 let hp = ''
 
 
-const clickArr = ref([])
-//是否全部折疊
-let allFolding = false
-//列表折疊
-const foldingFlag = ref(true)
-
-const hpsWrap = ref([])
-const setWarp = (item) => {
-  hpsWrap.value.push(item)
-}
 const store_state = store.getState()
+//冠军四级折叠数组
+let collapse_champion_map = reactive(store_state.matchReducer.collapse_champion_map)
+let collapse_champion_map_change = ref()
+//冠军四级是否全部折叠
+let collapse_champion_all = reactive({})
+
+
 const collapsed_state = store.getState();
 const get_bet_list = ref(store_state.get_bet_list)
 const get_show_favorite_list = ref(store_state.get_show_favorite_list)
@@ -131,46 +130,11 @@ const get_collapse_all_ball = ref(store_state.get_collapse_all_ball)
 const get_lang = ref(store_state.get_lang)
 const get_theme = ref(store_state.get_theme)
 
+
 const unsubscribe = store.subscribe(() => {
   update_state()
 })
 
-const folding_content = (hp) => {
-  // if (foldingFlag.value ){
-  //   let findIndex = clickArr.value && clickArr.value.findIndex( item => item === hp.hid)
-  //   if (findIndex > -1) {
-  //     clickArr.value.splice(findIndex, 1)
-  //   } else {
-  //     clickArr.value.push(hp.hid )
-  //   }
-  // } else {
-
-  // }
-  let findIndex = clickArr.value && clickArr.value.findIndex( item => item === hp.hid)
-  if (findIndex > -1)  {
-    clickArr.value.splice(findIndex, 1)
-  } else {
-    clickArr.value.push(hp.hid)
-  }
-
-
-}
-const ball_folding_click = (csid) => {
-  for (let i = 0; i < hpsWrap.value.length; i ++) { 
-    hpsWrap.value[i].style.display = !allFolding ? 'none': 'block' 
-  }
-  if(allFolding) {
-    clickArr.value = []
-    foldingFlag.value = true
-
-  }
-  allFolding = !allFolding
-
-  
-
-  
-
-}
 const update_state = () => {
   const new_state = store.getState()
   get_bet_list.value = new_state.get_bet_list
@@ -180,7 +144,54 @@ const update_state = () => {
   get_collapse_all_ball.value = new_state.get_collapse_all_ball
   get_lang.value = new_state.get_lang
   get_theme.value = new_state.get_theme
+  collapse_champion_map = new_state.matchReducer.collapse_champion_map
+  collapse_champion_map_change.value = new_state.matchReducer.collapse_champion_map_change
+  collapse_champion_all = new_state.matchReducer.collapse_champion_all
+
 }
+
+
+//点击二级标题  折叠所有四级
+const ball_folding_click = () => {
+  const { tid, hps }  = props.match_of_list
+  let c_value = JSON.stringify(collapse_champion_all) == '{}' ? false : !collapse_champion_all[tid]
+  
+  //当点击全部展开时，确保所有的四级都展开
+  let countHidden = Object.values(collapse_champion_map[tid])
+  let result = countHidden.some( item => {return  item != 2})
+  if(c_value && result) {
+    let payload = {}
+    hps.map(x=>{ payload[x.hid] = 2  })
+        let value = {
+          tid,
+          payload,
+          type:2,
+          source: `champion-tid-${tid}`
+      }
+        store.dispatch({ type: 'matchReducer/set_collapse_champion_map', value
+      })
+  }
+
+
+  let value =  { c_value, tid}
+  // let countHidden = Object.values(collapse_champion_map[tid])
+  // let result = cocuntHidden.some( item => {return  item != 2})
+  // console.log(countHidden)
+  // if(c_value && countHidden.some( item => (return item==1))) {
+      
+  // }
+  store.dispatch({ type: 'matchReducer/set_collapes_champion_all', value})
+  //toggle_collapse_state()
+  update.proxy.$forceUpdate()
+}
+const is_show_all = () => {
+  const { tid }  = props.match_of_list
+  return JSON.stringify(collapse_champion_all) == '{}' ? true : collapse_champion_all[tid]
+}
+
+watch(() => collapse_champion_all[tid], () => {
+  console.log('tttttttttttttttt')
+}, {deep: true})
 
 // TODO: 其他模块得 store  待添加
 // mixins: [formatmixin, odd_convert, bettings, match_list_mixin,msc, common],
@@ -304,48 +315,98 @@ const gen_collapse_key = (match) => {
  * @param {Undefined} Undefined
  * @return {Undefined}
  */
-const toggle_collapse_state = (match_of_list, e) => {
-  for(let i = 0; i < hpsWrap.value.length; i++) {
-    console.log(hpsWrap.value[i].previousElementSibling == e.target.documentElement)
-    if (hpsWrap.value[i].previousElementSibling) {
-      
-    }
-  }
-  clickArr.value = []
-  foldingFlag.value = !foldingFlag.value;
+const toggle_collapse_state = (match_of_list) => {
+  
+
  
 
-  let map_collapse = lodash.cloneDeep(get_collapse_map_match);
-  if(map_collapse){
-    // 翻转折叠时始终将 赛事列表请求状态设为false
-    store.dispatch({ type: 'matchReducer/set_match_list_loading',  payload: false })
+  // let map_collapse = lodash.cloneDeep(get_collapse_map_match);
+  // if(map_collapse){
+  //   // 翻转折叠时始终将 赛事列表请求状态设为false
+  //   store.dispatch({ type: 'matchReducer/set_match_list_loading',  payload: false })
 
-    let tmid_list = [],tid = null,mid = null,max_l = props.matchCtr.list.length;
-    for(let i = 0; i < max_l;i++){
-      let match = props.matchCtr.list[i];
-      let match_c_key = gen_collapse_key(match);
-      if(match.mid == match_of_list.mid){
-        tid = match.tid;
-        mid = match.mid;
-        tmid_list.push(match_c_key);
+  //   let tmid_list = [],tid = null,mid = null,max_l = props.matchCtr.list.length;
+  //   for(let i = 0; i < max_l;i++){
+  //     let match = props.matchCtr.list[i];
+  //     let match_c_key = gen_collapse_key(match);
+  //     if(match.mid == match_of_list.mid){
+  //       tid = match.tid;
+  //       mid = match.mid;
+  //       tmid_list.push(match_c_key);
+  //     }
+  //     if(tid){
+  //       if(tid == match.tid){
+  //         if(mid != match.mid){
+  //           tmid_list.push(match_c_key);
+  //         }
+  //       }
+  //       else{
+  //         break;
+  //       }
+  //     }
+  //   }
+  //   let tmid = gen_collapse_key(match_of_list);
+  //   let f = map_collapse[tmid] ? 0 : 1;
+  //   tmid_list.forEach(tmid => map_collapse[tmid] = f);
+  //   store.dispatch({ type: 'matchReducer/set_collapse_map_match',  payload: map_collapse })
+  //}
+   // this.league_collapsed
+      // 展开
+      let { tid,csid,hps,mid } = props.match_of_list
+      // 玩法折叠状态// 2展开  1折叠
+      let new_state = ''
+      let payload ={}   
+      if (collapse_champion_map[tid]) {
+        // 首次除外对玩法状态进行改变
+        // 玩法个数集合
+       
+        let champion_map_arr = Object.values(collapse_champion_map[tid])
+        // 当前折叠玩法数量
+        let mid_state = champion_map_arr.filter(item => item == 2)
+        // 多个玩法,只折叠部分玩法时
+        if (hps.length !== champion_map_arr.length) {        
+          new_state = mid_state.length > 0  ? 2 : 1
+        } else {
+          new_state = mid_state.length > 0  ? 1 : 2
+        }  
+           
+      } else {
+        new_state = 1
+        // if (collapse_csid_tid_map[csid] && collapse_csid_tid_map[csid][csid][tid] == 1) {
+        //   // 点击球种时再点击赛事标题处理逻辑
+        //   //this.compute_league_collapse_state()
+        //   new_state = 2
+        // } else {
+        //   // 首次进入 对玩法状态进行改变
+        //   new_state =  1
+        // }
+       
+      }  
+      
+      
+             
+      hps.map(x=>{ payload[x.hid] = new_state  })
+        let value = {
+          tid,
+          payload,
+          type:2,
+          source: `champion-tid-${tid}`
       }
-      if(tid){
-        if(tid == match.tid){
-          if(mid != match.mid){
-            tmid_list.push(match_c_key);
-          }
-        }
-        else{
-          break;
-        }
+      if (new_state == 2 && !collapse_champion_all[tid]) {
+        let value =  { c_value:true, tid}
+      store.dispatch({ type: 'matchReducer/set_collapes_champion_all', value})
       }
-    }
-    let tmid = gen_collapse_key(match_of_list);
-    let f = map_collapse[tmid] ? 0 : 1;
-    tmid_list.forEach(tmid => map_collapse[tmid] = f);
-    store.dispatch({ type: 'matchReducer/set_collapse_map_match',  payload: map_collapse })
-  }
+      store.dispatch({ type: 'matchReducer/set_collapse_champion_map', value
+      })
+      update.proxy.$forceUpdate()
+
+        
+        
 }
+
+watch(()=> collapse_champion_map_change.value, () => {
+  //computerShow()
+})
 /**
  * @description: 冠军投注,内嵌版走这里逻辑
  * @param {Object} match 赛事对象
@@ -383,46 +444,57 @@ const toggle_collect = (match) => {
       // 获取当前玩法
       let { tid,csid } = props.match_of_list
       let { hid } = hp
-        hp_collapsed.value= ( matchReducer.collapse_champion_map[tid]||{})[hid]==1
-        console.log(hp_collapsed.value)
+        hp_collapsed.value= ( store_state.collapse_champion_map[tid]||{})[hid]==1
+      
     }
+ 
 
     // 冠军赛事下玩法折叠
    const handle_game_collapse = (hp) => {
-      console.log('dianjia le ')
+   
       let { tid,csid } = props.match_of_list
       let { hid } = hp
-      console.log(props.match_of_list)
+    
       // 拷贝玩法集合对象
-      let map_collapse =  matchReducer.collapse_champion_map[tid] ||{};
-      console.log(map_collapse)
-
-      let new_state =0
-
-      if(map_collapse[hid]==1){
+      let map_collapse =  collapse_champion_map[tid] ||{};
+      let new_state =0 
+      if(map_collapse[hid] ==1){
         // 折叠 需要展开
-
         new_state =2
       }else{
         new_state =1
       }
      //  1 折叠    2/null 展开
       // 修改当前玩法展示/隐藏状态
-      matchReducer.set_collapse_champion_map({
+      let value = {
         tid,
         payload:{[hid]: new_state},
         type:1,
         source:`champion-hid-${tid}`
+      }
+      store.dispatch({ type: 'matchReducer/set_collapse_champion_map', value
       })
-      this.$forceUpdate()
+      update.proxy.$forceUpdate()
     }
 
-watch(() =>matchReducer.collapse_champion_map_change , () => {
+    /**
+     *计算四级当前页是否影藏 
+     *
+    */
+  const computerShow = (hp) => {
+    const { hid } = hp
+  
+    const { tid } = props.match_of_list
+    let isShow = collapse_champion_map[tid] ? collapse_champion_map[tid][hid] : 2
+    return !(isShow == 1)
+  }
+
+watch(() => store_state.matchReducer.collapse_champion_map_change , () => {
+  console.log(store_state.matchReducer.collapse_champion_map)
   compute_hp_collapsed()
+ 
 })
-watch(() =>matchReducer.collapse_champion_map_change , () => {
-  compute_hp_collapsed()
-})
+
 
 onUnmounted(() => {
   unsubscribe()

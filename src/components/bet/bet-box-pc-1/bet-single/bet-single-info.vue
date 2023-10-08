@@ -178,9 +178,9 @@ const del_bet_item = () => {
 // 预约投注
 const set_show_appoint = () =>{
   // 预约投注点击后展示后 需要请求预约限额接口
-  if(!ref_data.show_appoint){
-    get_query_bet_amount_pre()
-  }
+  // if(!ref_data.show_appoint){
+  //   get_query_bet_amount_pre()
+  // }
   // 显示预约投注内容
   ref_data.show_appoint = !ref_data.show_appoint
  

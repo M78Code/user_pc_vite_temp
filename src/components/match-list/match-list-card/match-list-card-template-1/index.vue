@@ -45,8 +45,8 @@
         <load-data style="max-height: 260px" state="empty" />
         <!-- 强力推荐 -->
         <div class="row">
-          <img class="list-hot-icon" src="~public/image/yabo/svg/hot.svg" />
-          <div class="list-hot-text">{{ $root.$t("list.hot_match") }}</div>
+          <img class="list-hot-icon" src="/yazhou-pc/image/svg/hot.svg" />
+          <div class="list-hot-text">{{ i18n_t("list.hot_match") }}</div>
         </div>
       </div>
       <!-- 赛事卡片 -->

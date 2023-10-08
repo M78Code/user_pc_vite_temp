@@ -4,7 +4,7 @@
     <div v-show="false">{{ MatchListData.data_version.version }}</div>
     <div class="process-col process-col yb-flex-center">
       <!--热门赛事显示hot标识-->
-      <img class="match-hot" src="~public/image/common/svg/hot.svg" v-show="lodash.get(match, 'is_hot')" />
+      <img class="match-hot" src="/yazhou-pc/image/common/svg/hot.svg" v-show="lodash.get(match, 'is_hot')" />
       <!-- 比赛进程 -->
       <!-- :style="`height:105px;margin-top:${process_margin}px`" -->
       <!-- <div class="yb-flex-center full-width" > -->

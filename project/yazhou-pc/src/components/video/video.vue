@@ -58,27 +58,28 @@
 
 <script setup>
 
-import LoadData from "project_path/src/components/load_data/load_data.vue"
+import { onMounted } from "vue";
+import LoadData from "project_path/src/components/load-data/load-data.vue"
 // 视屏头部
-import VideoHeader from "project_path/src/components/video/video_header.vue"
-// 视频组件
-import VideoIframe from "src/project/yabo/components/video/video_iframe.vue"
+import VideoHeader from "project_path/src/components/video/video-header.vue"
+// 视频组件dn
+// import VideoIframe from "src/project/yabo/components/video/video_iframe.vue"
 // 比分板足球模板
-import DataTemplate1 from "src/project/yabo/components/video/data_template/template1.vue"
+// import DataTemplate1 from "src/project/yabo/components/video/data_template/template1.vue"
 // 比分板篮球模板
-import DataTemplate2 from "src/project/yabo/components/video/data_template/template2.vue"
+// import DataTemplate2 from "src/project/yabo/components/video/data_template/template2.vue"
 // 比分板棒球模板
-import DataTemplate3 from "src/project/yabo/components/video/data_template/template3.vue"
+// import DataTemplate3 from "src/project/yabo/components/video/data_template/template3.vue"
 // 比分板模板 冰球4  网球5  美足6  斯诺克7  排球9  羽毛球10 沙滩排球13  曲棍球15  水球16
-import DataTemplate4 from "src/project/yabo/components/video/data_template/template4.vue"
+// import DataTemplate4 from "src/project/yabo/components/video/data_template/template4.vue"
 // 比分板模板 兵乓球8 手球11 橄榄球14
-import DataTemplate8 from "src/project/yabo/components/video/data_template/template8.vue"
+// import DataTemplate8 from "src/project/yabo/components/video/data_template/template8.vue"
 // 聊天室组件
-import Chatroom from "src/project/yabo/components/match_details/panel/chatroom.vue"
+// import Chatroom from "src/project/yabo/components/match_details/panel/chatroom.vue"
 // 统计组件
-import Stats from "src/project/yabo/components/match_details/panel/stats.vue"
+// import Stats from "src/project/yabo/components/match_details/panel/stats.vue"
 // 精彩回放组件
-import VideoHistoryLine from "src/project/yabo/components/video/video_history_line.vue";
+// import VideoHistoryLine from "src/project/yabo/components/video/video_history_line.vue";
 // 视频操作相关工具库
 // import video from "project_path/src/utils/video/video.js"
 // websocket数据页面数据接入
@@ -86,7 +87,7 @@ import VideoHistoryLine from "src/project/yabo/components/video/video_history_li
 // 赛事详情页面信息操作类
 // import MatchInfoCtr from "project_path/src/utils/dataClassCtr/match_info_ctr.js"
 //  直播聊天室相关
-import live_chatroom from "src/project/yabo/mixins/live_chatroom/live_chatroom";
+// import live_chatroom from "src/project/yabo/mixins/live_chatroom/live_chatroom";
 // import { mapGetters, mapActions } from "vuex"
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 
@@ -174,9 +175,9 @@ import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 // },
 // beforeUnmount() {
 //   // 站点 tab 休眠状态转激活
-  useMittOn(MITT_TYPES.EMIT_SITE_TAB_ACTIVE, this.emit_site_tab_active).off;
-  useMittOn(`exit_full_screen`, this.exit_full_screen).off;
-  useMittOn(`exit_browser_full_screen`, this.exit_browser_full_screen).off;
+useMittOn(MITT_TYPES.EMIT_SITE_TAB_ACTIVE, emit_site_tab_active).off;
+useMittOn(MITT_TYPES.EMIT_EXIT_FULL_SCREEN, exit_full_screen).off;
+useMittOn(MITT_TYPES.EMIT_EXIT_BROWSER_FULL_SCREEN, exit_browser_full_screen).off;
 //   this.refresh_loading_timer && clearTimeout(this.refresh_loading_timer)
 //   window.removeEventListener('keydown',this.cur_keydown);
 // }
@@ -187,14 +188,14 @@ import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 //     "set_is_back_btn_click",
 //   ]),
 
-const emit_site_tab_active = () => {
+function emit_site_tab_active() {
   this.get_match_info(false)
 }
 /**
  * @Description 浏览器全屏
  * @param {undefined} undefined
  */
-const browser_full_screen = () => {
+function browser_full_screen() {
   let video_dm = document.documentElement;
   let rfs = video_dm.requestFullScreen || video_dm.webkitRequestFullScreen || video_dm.mozRequestFullScreen || video_dm.msRequestFullScreen;
   if (rfs) {
@@ -206,7 +207,7 @@ const browser_full_screen = () => {
  * @param {object} e 事件详情
  * @return {undefined} undefined
  */
-const cur_keydown = (e) => {
+function cur_keydown(e) {
   if (e.keyCode == 27) {
     //video_type ==1 从大屏退出
     this.exit_full_screen(this.$route.params.video_size == 1 ? 'xl' : '')
@@ -216,7 +217,7 @@ const cur_keydown = (e) => {
  * @Description:退出全屏  返回上一个页面
  * @return {undefined} undefined
  */
-const exit_full_screen = (size) => {
+function exit_full_screen(size) {
   const { mid, tid, csid } = this.match_info
   // 如果是从详情页进入大屏返回详情页
   if (this.from == 'details') {
@@ -258,7 +259,7 @@ const exit_full_screen = (size) => {
  * @Description 退出浏览器全屏
  * @param {undefined} undefined
  */
-const exit_browser_full_screen = () => {
+function exit_browser_full_screen() {
   let video_dm = document;
   let cfs = video_dm.cancelFullScreen || video_dm.webkitCancelFullScreen || video_dm.mozCancelFullScreen || video_dm.exitFullScreen;
   if (cfs) {
@@ -269,7 +270,7 @@ const exit_browser_full_screen = () => {
  * @Description:获取赛事详情
  * @return {undefined} undefined
  */
-const get_match_info = (show_loading = true) => {
+function get_match_info(show_loading = true) {
   show_loading && (this.load_data_state = 'loading')
 
   video.api_get_match_info(this.mid, (match_info, load_data_state) => {
@@ -279,7 +280,7 @@ const get_match_info = (show_loading = true) => {
   })
 }
 //设置全屏状态
-const set_full_screen_status = () => {
+function set_full_screen_status() {
   if (this.$route.params.video_size == 1) {
     this.browser_full_screen()
   } else {
@@ -287,7 +288,7 @@ const set_full_screen_status = () => {
   }
 }
 // 刷新数据
-const refresh_data = () => {
+function refresh_data() {
   // if (this.refresh_loading) {
   //   return false
   // }
@@ -306,202 +307,224 @@ const refresh_data = () => {
   this.refresh_loading_timer = setTimeout(() => this.refresh_loading = false, 2500)
 }
 
-    // watch:{
-    //   //监听mid改变
-    //   '$route.params.mid':{
-    //     handler(res) {
-    //       let { mid, csid: sportId, tid } = this.$route.params;
-    //       this.mid = mid
-    //       // 获取赛事详情
-    //       this.get_match_info();
-    //       let play_id = this.vx_details_params.play_id;
-    //       // 保存详情右侧参数
-    //       this.set_match_details_params({ mid, sportId, tid, play_id });
-    //     },
-    //     immediate: true,
-    //   },
-    //   /**
-    //    * @Description:匹配语言跳转路由
-    //    * @returns
-    //    */
-    //   get_lang(_new){
-    //     let langs =  ['zh','tw']
-    //     let status = langs.includes(_new)
-    //     if(!status){
-    //       let {mid,tid,csid,play_type,video_size} =this.$route.params
-    //       if([3,4].includes(+play_type)){
-    //         this.$router.push({
-    //           name: 'video',
-    //           params: {
-    //             mid,
-    //             tid,
-    //             csid,
-    //             play_type: '1',
-    //             video_size
-    //           }
-    //         })
-    //       }else if(play_type === '5'){
-    //         this.$router.push({
-    //           name: 'details',
-    //           params: {
-    //             mid,
-    //             tid,
-    //             csid
-    //           }
-    //         })
-    //       }
-    //     }
-    //   },
-    //   //赛事关闭
-    //   'match_info.ms'(new_) {
-    //     // 如果赛事不是滚球  并且不是未开赛
-    //     if(this.$utils.get_match_status(new_) != 1 && this.match_info.ms != 0 && ![3,4,5].includes(+this.$route.params.play_type)) {
-    //       video.match_close(this.mid);
-    //     }
-    //   },
-    //   //监听赛事阶段改变
-    //   'match_info.mmp':{
-    //     handler(res) {
-    //       // 赛事关闭
-    //       if(res == 999) {
-    //         if(![3,4,5].includes(+this.$route.params.play_type)){
-    //           video.match_close(this.mid);
-    //         }
-    //       }
-    //       video.set_mmp_score(this.match_info)
-    //     },
-    //     immediate: true,
-    //   },
-    //   // 视频关闭
-    //   'match_info.mms'(new_) {
-    //     // 如果视频关闭 并且当前播放的是视频
-    //     if(new_ != 2 && this.$route.params.play_type == 1) {
-    //       video.match_close(this.mid);
-    //     }
-    //   },
-    //   // 演播厅关闭
-    //   'match_info.lvs'(new_) {
-    //     // 如果视频关闭 并且当前播放的是视频
-    //     if(new_ != 2 && this.$route.params.play_type == 3) {
-    //       video.match_close(this.mid);
-    //     }
-    //   },
-    //   // 监听比赛局数改变
-    //   'match_info.mct'(res) {
-    //     res = parseInt(res)
-    //     if(this.match_info.csid != 3 || res < 8) return
-    //     let index = res - 1
-    //     let score_key = 120 + index
-    //     if(!this.match_info.score_list[index]){
-    //       this.match_info.score_list.push({
-    //         name:res,
-    //         score:'S'+score_key,
-    //       })
-    //     }
-    //   },
-    // }
+// watch:{
+//   //监听mid改变
+//   '$route.params.mid':{
+//     handler(res) {
+//       let { mid, csid: sportId, tid } = this.$route.params;
+//       this.mid = mid
+//       // 获取赛事详情
+//       this.get_match_info();
+//       let play_id = this.vx_details_params.play_id;
+//       // 保存详情右侧参数
+//       this.set_match_details_params({ mid, sportId, tid, play_id });
+//     },
+//     immediate: true,
+//   },
+//   /**
+//    * @Description:匹配语言跳转路由
+//    * @returns
+//    */
+//   get_lang(_new){
+//     let langs =  ['zh','tw']
+//     let status = langs.includes(_new)
+//     if(!status){
+//       let {mid,tid,csid,play_type,video_size} =this.$route.params
+//       if([3,4].includes(+play_type)){
+//         this.$router.push({
+//           name: 'video',
+//           params: {
+//             mid,
+//             tid,
+//             csid,
+//             play_type: '1',
+//             video_size
+//           }
+//         })
+//       }else if(play_type === '5'){
+//         this.$router.push({
+//           name: 'details',
+//           params: {
+//             mid,
+//             tid,
+//             csid
+//           }
+//         })
+//       }
+//     }
+//   },
+//   //赛事关闭
+//   'match_info.ms'(new_) {
+//     // 如果赛事不是滚球  并且不是未开赛
+//     if(this.$utils.get_match_status(new_) != 1 && this.match_info.ms != 0 && ![3,4,5].includes(+this.$route.params.play_type)) {
+//       video.match_close(this.mid);
+//     }
+//   },
+//   //监听赛事阶段改变
+//   'match_info.mmp':{
+//     handler(res) {
+//       // 赛事关闭
+//       if(res == 999) {
+//         if(![3,4,5].includes(+this.$route.params.play_type)){
+//           video.match_close(this.mid);
+//         }
+//       }
+//       video.set_mmp_score(this.match_info)
+//     },
+//     immediate: true,
+//   },
+//   // 视频关闭
+//   'match_info.mms'(new_) {
+//     // 如果视频关闭 并且当前播放的是视频
+//     if(new_ != 2 && this.$route.params.play_type == 1) {
+//       video.match_close(this.mid);
+//     }
+//   },
+//   // 演播厅关闭
+//   'match_info.lvs'(new_) {
+//     // 如果视频关闭 并且当前播放的是视频
+//     if(new_ != 2 && this.$route.params.play_type == 3) {
+//       video.match_close(this.mid);
+//     }
+//   },
+//   // 监听比赛局数改变
+//   'match_info.mct'(res) {
+//     res = parseInt(res)
+//     if(this.match_info.csid != 3 || res < 8) return
+//     let index = res - 1
+//     let score_key = 120 + index
+//     if(!this.match_info.score_list[index]){
+//       this.match_info.score_list.push({
+//         name:res,
+//         score:'S'+score_key,
+//       })
+//     }
+//   },
+// }
 //   }
 </script>
 
-  <style lang="scss" scoped>
-  .video-wrap {
-    padding-right: 14px;
-    &.big-video-right {
-      padding-right:0;
-      &::after{
-        width: 0;
-        background: none;
-        border:none;
-      }
-    }
-    .data-title {
-      height: 40px;
-      margin-bottom: 15px;
-      .img {
-        width: 16px;
-        height: 16px;
-        margin-right: 9px;
-        background-repeat: no-repeat;
-      }
-    }
+<style lang="scss" scoped>
+.video-wrap {
+  padding-right: 14px;
 
-    /* 比分数据 */
-    .data-template {
+  &.big-video-right {
+    padding-right: 0;
+
+    &::after {
+      width: 0;
+      background: none;
+      border: none;
+    }
+  }
+
+  .data-title {
+    height: 40px;
+    margin-bottom: 15px;
+
+    .img {
+      width: 16px;
+      height: 16px;
+      margin-right: 9px;
+      background-repeat: no-repeat;
+    }
+  }
+
+  /* 比分数据 */
+  .data-template {
+    display: flex;
+    justify-content: center;
+
+    :deep(.column-between) {
       display: flex;
-      justify-content: center;
-      :deep(.column-between)  {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-      }
+      flex-direction: column;
+      justify-content: space-between;
     }
+  }
 
-    .video-bottom-panel {
-      margin-top: 4px;
-      margin-bottom: 1px;
-      &.iframe-video-bottom-panel {
-        .panel-wrapper {
-          :deep {
-            .chatroom {
-              margin-top: 0;
-              .chat-scroll-area {
-                height: 171px;
-              }
-              .emoji-picker {
-                height: 145px;
-              }
-            }
-            .total_chart {
-              .wrap-score {
-                padding: 29px 40px 33px 40px;
-              }
-            }
-          }
-        }
-      }
+  .video-bottom-panel {
+    margin-top: 4px;
+    margin-bottom: 1px;
+
+    &.iframe-video-bottom-panel {
       .panel-wrapper {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 0 8px;
-        &.no-chatroom {
-          display: block;
-        }
-        > div {
-          border: none;
-          // border: 1px solid var(--qq--match-border-color2);
-        }
         :deep {
-          .video-history-line {
-            margin-bottom: 4px;
-          }
-          .stats-wrapper, .chatroom, .video-history-line {
-            border: 1px solid var(--qq--match-border-color2);
-          }
           .chatroom {
             margin-top: 0;
+
             .chat-scroll-area {
-              //height: 230px;
               height: 171px;
             }
+
             .emoji-picker {
-              //height: 238px;
               height: 145px;
             }
           }
+
           .total_chart {
             .wrap-score {
-              //padding: 57px 40px 70px 40px;
               padding: 29px 40px 33px 40px;
-              &.basketball-score {
-                padding: 0;
-              }
             }
-            .q-knob {
-              font-size: 54px;
+          }
+        }
+      }
+    }
+
+    .panel-wrapper {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0 8px;
+
+      &.no-chatroom {
+        display: block;
+      }
+
+      >div {
+        border: none;
+        // border: 1px solid var(--qq--match-border-color2);
+      }
+
+      :deep {
+        .video-history-line {
+          margin-bottom: 4px;
+        }
+
+        .stats-wrapper,
+        .chatroom,
+        .video-history-line {
+          border: 1px solid var(--qq--match-border-color2);
+        }
+
+        .chatroom {
+          margin-top: 0;
+
+          .chat-scroll-area {
+            //height: 230px;
+            height: 171px;
+          }
+
+          .emoji-picker {
+            //height: 238px;
+            height: 145px;
+          }
+        }
+
+        .total_chart {
+          .wrap-score {
+            //padding: 57px 40px 70px 40px;
+            padding: 29px 40px 33px 40px;
+
+            &.basketball-score {
+              padding: 0;
             }
+          }
+
+          .q-knob {
+            font-size: 54px;
           }
         }
       }
     }
   }
-  </style>
+}
+</style>

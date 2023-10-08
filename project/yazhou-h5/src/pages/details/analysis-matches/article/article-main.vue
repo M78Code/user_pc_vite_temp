@@ -44,6 +44,7 @@ import { useRoute } from 'vue-router'
 import lodash from 'lodash'
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { get_file_path } from "src/core/file-path/file-path.js"
+import { utils } from "src/core/index.js"
 
   // 弹框是否显示
   let is_show_dialog = ref(false)
@@ -85,7 +86,7 @@ const calc_height = () => {
     ele.scrollTop = 0
     if (!ele.style.height) {
       // TODO: 后续修改调整  $utils
-      ele.style.height = window.innerHeight - $utils.rem(0.92) + 'px'
+      ele.style.height = window.innerHeight - utils.rem(0.92) + 'px'
       ele.style.maxHeight = 'unset'
     }
   }
@@ -104,6 +105,7 @@ const get_favorite_article = () => {
         res = reslut
       }
       if (res.code == 200 && res.data) {
+
         favorite_article_data.value = res.data.filter(item => {
           return item.id != article_detail.value.id
         }).slice(0, 3)
@@ -237,7 +239,7 @@ const handle_stay_duration = (article_id) => {
       return
     }
     // TODO: $utils 后续修改调整
-    $utils.zhuge_event_send(EVENT_NAME, UserCtr, zhuge_obj)
+    utils.zhuge_event_send(EVENT_NAME, UserCtr, zhuge_obj)
     enter_article_time.value = Date.now()
   }
   /**

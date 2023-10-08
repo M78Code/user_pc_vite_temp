@@ -77,7 +77,6 @@ const props = defineProps({
 // TODO: 后续修改调整
 // import {mapGetters} from "vuex";
 
-console.error(props.detail_data);
   let ranking_data = ref([])
   //按钮名字
   let btn_text =ref('')
@@ -239,7 +238,7 @@ console.error(props.detail_data);
       .header {
         color:  var(--q-analysis-text-color-22);
         border-bottom: 1px solid var(--q-analysis-text-color-25);
-        background: var(--q-analysis-text-color-1);
+        background: var(--q-analysis-text-color-13);
         > div {
           color: var(--q-analysis-text-color-32);
         }
@@ -261,7 +260,7 @@ console.error(props.detail_data);
         color: var(--q-analysis-text-color-2);
       }
       .btn_style {
-        background: var(--q-analysis-text-color-1);
+        background: var(--q-analysis-text-color-13);
         border: 1px solid var(--q-analysis-text-color-23);
       }
     }
@@ -333,11 +332,11 @@ console.error(props.detail_data);
         align-items: center;
         justify-content: center;
         background: var(--q-analysis-text-color-28);
-        color:  var(--q-analysis-text-color-1) !important;
+        color:  var(--q-analysis-text-color-13) !important;
 
         &.calculation_color1 {
           background: var(--q-analysis-text-color-33);
-          color: var(--q-analysis-text-color-1) !important;
+          color: var(--q-analysis-text-color-13) !important;
         }
 
         &.calculation_color2 {

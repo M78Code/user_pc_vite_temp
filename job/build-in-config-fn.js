@@ -12,7 +12,7 @@ import final_merchant_config from "./output/merchant/config.json" assert { type:
 const { MERCHANT_CONFIG_VERSION    } = final_merchant_config;
 
 // 模块化打包 构建 zip 版本参数
-let MODULE_SDK_VERSION =   ( process.env.SHIWAN_MODULE_SDK_VERSION|| "").trim()   ;
+let MODULE_SDK_VERSION =   ( process.env.MODULE_SDK_VERSION|| "").trim()   ;
 
 import { compute_build_in_oss_by_current_env  } from "./build-in-oss.js";
 import { htmlVariables } from "./html-variables.js";

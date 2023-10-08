@@ -47,8 +47,8 @@ class LayOutMain {
     this.layout_main_width = 1440
     /** 搜索框宽度 */
     this.layout_search_width = 0
-    // 来源 当前路由
-    this.layout_current_path = 'home'
+    // 当前页面 home：赛事列表  details：详情
+    this.layout_current_path = { cur: "", from: "" }
     // 左侧菜单显示 menu bet history
     this.layout_left_show = 'menu'
     // 左侧菜单顶部距离 内嵌为 0 

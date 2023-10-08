@@ -35,7 +35,7 @@
 // mixins:[match_basis_info_mixin],
 // import match_basis_info_mixin from "src/project/yabo/components/match_list/match_basis_info/match_basis_info_mixin.js"
 
-import { computed, defineProps} from 'vue';
+import { computed} from 'vue';
 import lodash from 'lodash';
 import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
 import {component_symbol ,need_register_props} from "../config/index.js"

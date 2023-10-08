@@ -154,7 +154,6 @@ export default defineComponent({
     ])
     // 移除相应监听事件
     onUnmounted(emitters_off)
-    console.error(props.data_list);
     return {
       ...toRefs(data),
       match_id,
@@ -176,6 +175,8 @@ export default defineComponent({
 <style lang="scss" scoped>
 .details-tab {
   height: 0.4rem;
+  background-color: var(--q-gb-bg-c-15);
+  border-bottom: 0.01rem solid var(--q-gb-bd-c-5);
 }
 
 .menu-s {

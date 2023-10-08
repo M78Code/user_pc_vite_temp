@@ -78,11 +78,11 @@
               </div>
               <!-- 刷新按钮 -->
               <div class="refresh">
-                <refresh
+                <refresh-component
                   :other_icon="true"
                   icon_name="icon-balance_refresh"
                   :loaded="refresh_loading"
-                  @click="refresh()"
+                  @click="refresh"
                 />
               </div>
             </div>
@@ -90,7 +90,7 @@
             <video-ctrl
               :match_info="match_infoData"
               :refresh_loading="refresh_loading"
-              @refresh="refresh()"
+              @refresh="refresh"
               @setfoldStatus="setfoldStatus"
               v-if="route.name != 'video' && !is_esports && match_infoData"
             />
@@ -108,17 +108,17 @@
               :mid="mid"
             />
             <!-- 精彩回放 -->
-            <!-- <video-history-line
-               v-if="show_video_replay && _.get(match_infoData,'cds')!='C01'"
+            <video-history-line
+               v-if="show_video_replay && lodash.get(match_infoData,'cds')!='C01'"
                :match_info="match_infoData"
                :mid="mid"
-               :mmp="+_.get(match_infoData,'mmp')"
-               :matchTime="+_.get(match_infoData,'mst')" /> -->
+               :mmp="+lodash.get(match_infoData,'mmp')"
+               :matchTime="+lodash.get(match_infoData,'mst')" />
             <!-- 玩法tab -->
 
             <handicap-tabs-bar
               v-if="
-              (LayOutMain_pc.layout_current_path !== 'details' && !is_esports) ||route.name == 'video'"
+              (LayOutMain_pc.layout_current_path.cur !== 'details' && !is_esports) ||route.name == 'video'"
               :handicap_this="handicap_this"
               :match_info="match_infoData"
               @get_mattch_details="get_mattch_details"
@@ -134,7 +134,7 @@
    
         > -->
         <!-- 盘口模板start -->
-        <template v-if="(LayOutMain_pc.layout_current_path !== 'details' && !is_esports) || route.name == 'video'">
+        <template v-if="(LayOutMain_pc.layout_current_path.cur !== 'details' && !is_esports) || route.name == 'video'">
           <match-handicap
             :match_info="match_infoData"
             :category_list="category_list"
@@ -186,11 +186,11 @@
                   !(
                     match_infoData.mcg == 1 &&
                     [1, 2, 3, 4, 6, 5, 7, 9, 10].includes(
-                      +_.get(match_infoData, 'csid')
+                      +lodash.get(match_infoData, 'csid')
                     )
                   )) &&
                 !is_esports &&
-                LayOutMain_pc.layout_current_path !== 'details'
+                LayOutMain_pc.layout_current_path.cur !== 'details'
                   ? '200px'
                   : 'auto',
             }"
@@ -273,12 +273,14 @@ import {
   LayOutMain_pc,
   GlobalSwitchClass,
   useMittEmit,
-  utils
+  utils,
+  UserCtr
 } from "src/core/index";
+import  videoHistoryLine  from "project_path/src/components/video-replay/video-history-line.vue";
 import matchHandicap from "src/components/match-detail/match-handicap/match-handicap.vue";
 import { TabWapper as Tab } from "src/components/common/tab";
 import { useRightDetails } from "./match-details-right-config";
-import refresh from "src/components/refresh/refresh.vue";
+import refreshComponent from "src/components/refresh/refresh.vue";
 import videoCtrl from "src/components/match-detail/match_info/video_ctrl.vue";
 import matchInfo from "src/components/match-detail/match_info/match_info.vue";
 import handicapTabsBar from "src/components/match-detail/match_info/handicap_tabs_bar.vue";
@@ -295,6 +297,10 @@ let state = store.getState();
 // 获取右侧布局类型
 const cur_expand_layout = ref(state.layoutReducer.cur_expand_layout);
 const bet_item_lock  = ref(BetData.bet_item_lock) 
+//获取用户信息
+const vx_get_user = ref(UserCtr.get_user())
+//获取参数信息
+const details_params =ref(MatchDetailCalss.params)  
 const {
   handicap_this,
   show_load_status,
@@ -308,7 +314,6 @@ const {
   refresh_time,
   background_img,
   handicap_state,
-  details_params,
   category_list,
   plays_list,
   round,
@@ -322,6 +327,7 @@ const {
   change_loading_state,
   set_handicap_this,
   setfoldStatus,
+  refresh
   /* func */
 } = useRightDetails({ route });
 // 是否显示 统计版块
@@ -346,14 +352,14 @@ const show_chatroom = computed(() => {
 // 是否显示精彩回播
 const show_video_replay = computed(() => {
   // 配置信息
-  const replayInfo = vx_get_user.merchantEventSwitchVO;
+  const replayInfo = vx_get_user.value.merchantEventSwitchVO;
   return (
     replayInfo &&
     replayInfo.eventSwitch &&
     route.name === "details" &&
     get_is_fold_status &&
-    details_params.media_type === "video" &&
-    Number(match_infoData.csid) === 1
+    details_params.value.media_type === "video" &&
+    Number(match_infoData.value.csid) === 1
   );
 });
 // 展示热门推荐、近期关注等
@@ -409,12 +415,25 @@ watch(
   () => MatchDetailCalss.details_data_version.version,
   (val) => {
     if (val) {
+      details_params.value =  MatchDetailCalss.params
       mid.value = MatchDetailCalss.mid;
       update_data(MatchDetailCalss.mid);
     }
   },
   { deep: true }
 );
+/*
+ ** 监听UserCtr的版本号  获取最新的mid
+ */
+// watch(
+//   () => UserCtr.user_version.version,
+//   (val) => {
+//     if (val) {
+     
+//     }
+//   },
+//   { deep: true }
+// );
 /*
  ** 监听mid 触发右侧更新  
  */

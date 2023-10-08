@@ -13,7 +13,7 @@
     <!-- 比赛进程 -->
     <div class="process-col yb-flex-center">
       <!--热门赛事显示hot标识-->
-      <img class="match-hot" src="~public/image/common/svg/hot.svg" v-if="match.is_hot"/>
+      <img class="match-hot" src="/yazhou-pc/image/common/svg/hot.svg" v-if="match.is_hot"/>
       <!-- 比赛进程 -->
       <match-process v-if="is_mounted && match.api_update_time !=0" :match="match" source="match_list"  show_page="match-list" :rows="2" />
     </div>
@@ -45,7 +45,7 @@
 <script setup>
 // import match_item_mixin from "src/project/yabo/mixins/match_list/match_item_mixin_new_data.js";
 // mixins: [match_item_mixin],
-import { computed, defineProps } from 'vue';
+import { computed } from 'vue';
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"

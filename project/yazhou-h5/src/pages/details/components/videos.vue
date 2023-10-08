@@ -417,7 +417,6 @@ export default defineComponent({
     });
     // 视频url信息
     const get_video_url = computed(() => {
-      console.error(MatchDetailCalss);
       return MatchDetailCalss.video_url
     });
     // 视频显示状态

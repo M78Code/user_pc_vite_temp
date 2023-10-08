@@ -91,7 +91,7 @@
 import { api_search } from 'src/api/'
 const { get_insert_history } = api_search || {}
 import NoData from 'project_path/src/components/common/no-data.vue'// 无数据组件
-import { computed, onBeforeUnmount, ref, defineProps } from 'vue'
+import { computed, onBeforeUnmount, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { UserCtr, MenuData, SearchData } from 'src/core/'
 import lodash from 'lodash'

@@ -175,16 +175,12 @@ import lodash from "lodash"
 
 // TODO: 后续修改调整
 // import {mapGetters} from "vuex";
-const detail_data = ref({
-        csid: '1',
-        mid: '1',
-    })
-    const props = defineProps({
-      detail_data: {
-        type: Object,
-        default: () => {}
-      }
-    })
+  const props = defineProps({
+    detail_data: {
+      type: Object,
+      default: () => {}
+    }
+  })
   const radio_button_index = ref(0)
   const tab_radio_button = ref(['曼联', '德联'])
   // 列表数据
@@ -286,7 +282,7 @@ const detail_data = ref({
     number.value = data.slice(-1)
     number_columns.value = data.split('-').join('').slice(0,-1)
     let [number1, number2] = [+number_columns.value[0], +number_columns.value[1]]
-    if(number_columns.length == 2){
+    if(number_columns.value.length == 2){
       football_filtered_data.value = [{},{}]
       football_filtered_data.value[0].data = line_up_data.value.up.slice(1, number1 + 1)
       football_filtered_data.value[1].data = line_up_data.value.up.slice(number1 + 1, number1 + number2 + 1)
@@ -297,7 +293,6 @@ const detail_data = ref({
       football_filtered_data.value[0].data = line_up_data.value.up.slice(1, number1+1)
       football_filtered_data.value[1].data = line_up_data.value.up.slice(number1 + 1, number1 + number2 + 1)
       football_filtered_data.value[2].data = line_up_data.value.up.slice(number1 + number2 + 1, number1 + number2 + number3 + 1)
-      console.error(number1, number2, line_up_data.value,number_columns.value, football_filtered_data.value);
     }
   }
   // 刷新 当前赛事分析信息

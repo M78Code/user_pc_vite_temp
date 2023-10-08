@@ -8,7 +8,7 @@
     <!-- 失效蒙层 -->
     <div class="locked-shadow" v-if="(pankou_change == 2 || hids || has_pre.own_)"></div>
     <div class="row justify-start items-center"
-      :class="[BetData_H5.is_bet_success_status ? 'yb_px14' : 'yb_pl12 yb_pr18', { 'bet-mix-show2': is_conflict }]">
+      :class="[BetViewDataClass.bet_order_status ? 'yb_px14' : 'yb_pl12 yb_pr18', { 'bet-mix-show2': is_conflict }]">
       <!-- <div class="yb_mr12 dele-left" v-if="!BetData_H5.is_bet_success_status">
         <img src="image/wwwassets/bw3/svg/bet_xuanx.svg" @click.stop="remove_(value_show.id_)">
       </div> -->
@@ -39,13 +39,13 @@
             </span>
             <!-- 红升绿降 -->
             <span :class="{ 'red-up': odds_change == 1, 'green-down': odds_change == 2 }" class="odd-change yb_ml4"
-              v-if="!BetData_H5.is_bet_success_status"></span>
+              v-if="!BetViewDataClass.bet_order_status"></span>
           </div>
         </div>
 
         <!-- 中 -->
         <div class="row justify-between yb_my4 yb_fontsize14">
-          <span :class="UserCtr.lang == 'vi' && BetData_H5.is_bet_success_status ? 'col-6' : 'col-7'">
+          <span :class="UserCtr.lang == 'vi' && BetViewDataClass.bet_order_status ? 'col-6' : 'col-7'">
             <template v-if="lodash.get(value_show, 'hps[0].hl[0].hmt') == 0">{{ $t('bet_record.ing')
             }}&thinsp;</template>
             <template v-if="get_is_champion">{{ lodash.get(value_show, 'hps[0].hl[0].hps') }}</template>
@@ -62,7 +62,7 @@
               </div>
             </template>
           </span>
-          <template v-if="BetData_H5.is_bet_success_status && !(BetData_H5.bet_is_mix && BetData_H5.bet_list.length > 1)">
+          <template v-if="BetViewDataClass.bet_order_status && !(BetData.is_bet_single && BetData.bet_list.length > 1)">
             <template v-if="(pre_or_bet === 0 || pre_or_bet) && pre_order_status">
               <!-- 预约成功 -->
               <span class="color1"><img src="image/wwwassets/bw3/svg/bet_chengg.svg" class="img0">{{
@@ -96,7 +96,7 @@
         <div class="xia row justify-between flex-end yb_my4" style="min-height: 0.22rem">
           <div class="col-9 row" :class="{ 'col-12': !(authorityOptionFlag || show_pre) }">
             <template v-if="get_is_champion">{{ value_show.onTn || value_show.tn }}</template>
-            <template v-else-if="BetData_H5.is_bet_success_status && bet_success_obj.matchInfo">{{
+            <template v-else-if="BetViewDataClass.bet_order_status && bet_success_obj.matchInfo">{{
               bet_success_obj.matchInfo }}</template>
             <template v-else>{{ value_show.mhn }}<span class="q-mx-xs">v</span>{{ value_show.man }}{{ score }}</template>
           </div>
@@ -118,7 +118,7 @@
     </p>
 
     <!-- 预约投注相关 -->
-    <div class="subscribe-wrap" v-if="!BetData_H5.bet_is_mix && show_pre && pre_switch">
+    <div class="subscribe-wrap" v-if="!BetData.is_bet_single && show_pre && pre_switch">
       <div class="operation-line" v-if="is_show_market"></div>
       <!-- 调整盘口 -->
       <div class="subscribe-operation" v-if="is_show_market">
@@ -132,7 +132,7 @@
           <div class="odd" @click.stop="focus_market">
             <div class="odd_text">{{ pre_market_value || 0 }}</div>
             <span class="money-span" ref="money_span_market"
-              :class="{ 'money-span2': !(BetData_H5.active_index == 'market' + index_) }"></span>
+              :class="{ 'money-span2': !(BetData.active_index == 'market' + index_) }"></span>
           </div>
           <span class="add" v-touch-repeat:0:300:200.mouse.enter.space.72.104="gtouchstart(4)"
             :class="show_market_shadow_max ? 'shadow-show' : null">
@@ -156,7 +156,7 @@
             <!-- <div class="odd_text">{{ (pre_odds ? pre_odds : (pre_odds === 0 || pre_odds === '0' ? '0' : '')) ||
               odds_value(true) }}</div> -->
             <span class="money-span" ref="money_span"
-              :class="{ 'money-span2': !(BetData_H5.active_index == 'pre' + index_) }"></span>
+              :class="{ 'money-span2': !(BetData.active_index == 'pre' + index_) }"></span>
           </div>
           <span class="add" v-touch-repeat:0:300:200.mouse.enter.space.72.104="gtouchstart(2)"
             :class="pre_shadow_max_flag ? 'shadow-show' : null">
@@ -172,9 +172,9 @@
     <!-- 对应单关多个注单样式 -->
     <template v-if="![11, 100, 900, 3000].includes(900)">
       <!-- 单关金额输入框 -->
-      <bet-single-detail ref="bet_single_detail" v-if="!(BetData_H5.is_bet_success_status || BetData_H5.bet_is_mix)"
+      <bet-single-detail ref="bet_single_detail" v-if="!(BetViewDataClass.bet_order_status || BetData.is_bet_single)"
         v-bind="$attrs" :name_="name_" :index_="index_"></bet-single-detail>
-      <template v-if="BetData_H5.is_bet_success_status && !BetData_H5.bet_is_mix && bet_success_obj">
+      <template v-if="BetViewDataClass.bet_order_status && !BetData.is_bet_single && bet_success_obj">
         <!-- 单关投注完成后底部的显示（包括投注失败8，投注成功3，提交成功6） -->
         <div class="bottom-bar row justify-between yb_px14 yb_fontsize14 yb_mb8 ">
           <!--左边， 最高可赢 -->
@@ -196,7 +196,7 @@
 // import {FOOTBALL_PLAY_LET_BALL,BASKETBALL_PLAY_LET_BALL,market_flag_list,market_flag_basketball_list} from "src/core/constant/config/bet-config-data.js";
 import betSingleDetail from './bet_single_detail.vue';
 import BetData from "src/core/bet/class/bet-data-class.js";
-import BetData_H5 from "src/core/bet/class/bet-data-class-h5.js";
+// import BetData_H5 from "src/core/bet/class/bet-data-class-h5.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 // import { UserCtr } from "src/core/index.js";
 import { calc_bifen, format_odds } from "src/core/format/index.js";
@@ -619,7 +619,7 @@ const show_market_shadow_max = computed(() => {
 })
 //预约投注开关
 const authorityOptionFlag = computed(() => {
-  return (!BetData.bet_is_mix) && pre_switch.value && (!BetData.is_bet_success_status) && authorityFlag && (!show_pre.value)
+  return (!BetData.bet_is_mix) && pre_switch.value && (!BetViewDataClass.bet_order_status) && authorityFlag && (!show_pre.value)
 })
 //判断该商户是否有权限预约投注
 const authorityFlag = computed(() => {
@@ -652,7 +652,7 @@ const value_show = computed(() => {
 //判断当前投注项里面是否是预约单
 const has_pre = computed(() => {
   return 'false'
-  const item_name = lodash.findKey(view_ctr_obj, function (o) { return o.show_pre.value.value})
+  const item_name = lodash.findKey(view_ctr_obj, function (o) { return o.show_pre.value.value })
   if (item_name) {
     if (item_name == props.name_) {
       return {
@@ -675,9 +675,9 @@ const has_pre = computed(() => {
 // 满足下面条件（单关没有输入金额）的投注项在投注成功后不展示,单关多注接口只返回提交成功的注单，所以只展示提交成功的订单
 const is_show_successed_item = computed(() => {
   let flag = BetData.bet_list.length == 1
-    || !BetData.is_bet_success_status
+    || !BetViewDataClass.bet_order_status
     || BetData.bet_is_mix
-    || BetData.is_bet_success_status && !BetData.bet_is_mix && BetData.bet_list.length > 1 && bet_obj_item.money >= 0.01 && bet_success_obj
+    || BetViewDataClass.bet_order_status && !BetData.bet_is_mix && BetData.bet_list.length > 1 && bet_obj_item.money >= 0.01 && bet_success_obj
   return true
 })
 //将赔率映射为计算属性
@@ -900,10 +900,10 @@ const remove_ = (id_) => {
  */
 const handlePre = (del) => {
   //将预约状态更新至投注项缓存
-  if (show_pre.value.value&& del) { return }
+  if (show_pre.value.value && del) { return }
   let bet_obj = lodash.cloneDeep(view_ctr_obj)
   pre_odds.value = ''
-  bet_obj[props.name_].show_pre.value.value= del
+  bet_obj[props.name_].show_pre.value.value = del
   if (del) {
     fetch_pre_limit_money_and_odd_info()
     pre_ov.value = Number(bet_obj_ov)

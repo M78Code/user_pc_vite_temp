@@ -234,6 +234,7 @@ import {
   MenuData,
   MatchDataWarehouse_PC_Detail_Common as MatchDetailsData,
   useMittOn,
+  useMittEmit,
   MITT_TYPES,
   useMittEmitterGenerator,
   i18n_t,
@@ -274,7 +275,7 @@ export default {
       is_single_handle: BetData.is_single_handle, // 单关 是否正在处理投注
       off_mitt:null, //批量关闭mitt
       cur_menu_type: MenuData.menu_type,// 获取当前菜单类型
-      cur_menu_type: LayOutMain_pc.layout_current_path,// 获取当前路由   todo
+      cur_route: LayOutMain_pc.layout_current_path,// 获取当前路由   todo
        // 投注模式 -1.还不知道使用哪种模式 0.足球PA滚球 1.非足球PA滚球
        bet_mode : BetData.bet_mode,
       // 是否锁住投注项不让点，默认为不锁住(针对新的投注流程)
@@ -501,10 +502,8 @@ export default {
       // 前端关    后台开       >关
       // 前端关    后台关       >关
       if (!this.enable_collect_api || !this.global_switch.collect_switch) {
-        return this.$root.$emit(
-          this.emit_cmd.EMIT_SHOW_TOAST_CMD,
-          i18n_t("msg.msg_09")
-        );
+        useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t("msg.msg_09"));
+        return;
       }
       let mf = match.mf;
       let params = {

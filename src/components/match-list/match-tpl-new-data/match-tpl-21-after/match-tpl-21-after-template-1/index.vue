@@ -3,7 +3,7 @@
     <!-- 比赛进程 -->
     <div class="process-col">
       <!--热门赛事显示hot标识-->
-      <img class="match-hot" src="~public/image/common/svg/hot.svg" v-if="match.is_hot"/>
+      <img class="match-hot" src="/yazhou-pc/image/common/svg/hot.svg" v-if="match.is_hot"/>
         <!-- 比赛进程 -->
       <div class="yb-flex-center full-width" :style="`height:105px;`">
         <match-process v-if="is_mounted && match" :match="match" source='match_list' show_page="match-list" :rows="2" />

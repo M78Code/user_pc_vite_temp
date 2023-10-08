@@ -11,8 +11,8 @@
     <span v-else-if="detail_data.ms == 0">
       <!-- 未开赛显示赛事开赛时间 eg:12月12日 -->
       <span v-if="!one_hour">
-        <!-- 显示示例：02/01 -->
-        {{ utils.format_time_zone(+detail_data.mgt).Format(i18n_t('time3')) }}
+        <!-- 显示示例：02/01 .Format(i18n_t('time3')-->
+        {{ format_time_zone(+detail_data.mgt, "mm/DD") }}
       </span>
     </span>
     <span v-else>
@@ -27,11 +27,11 @@
 
 <script setup>
 import { computed, onMounted, onUnmounted, ref, defineComponent } from 'vue';
-import { utils } from 'src/core/index.js';
+import { format_time_zone } from 'src/core/format/index.js';
 import dialogStageFootball from "project_path//src/components/match/dialogStage/dialogStage-1.vue";  // 详情点击下拉-足球联赛-显示当前赛事的时间
 import stageChildBasketball from "project_path/src/components/match/dialogStage/dialogStage-2.vue";  // 详情点击下拉-篮球联赛-显示当前赛事的时间
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
-import { UserCtr, MenuData } from "src/core/index.js";
+import { UserCtr, MenuData, utils } from "src/core/index.js";
 
 const props = defineProps(['detail_data'])
 const one_hour = ref(false)

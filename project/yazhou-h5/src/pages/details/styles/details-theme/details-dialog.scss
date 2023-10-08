@@ -1,12 +1,13 @@
 /*
  * @Description: 详情页
  */
-[class*=theme0] {
+// [class*=theme0] {
   .dialog-header {
     // background:var(--q-color-page-bg-color-2);
     background:var(--q-match-page-bg-color-103);
-    .triangle-down {
-      border-color: transparent transparent  var(--q-color-border-color-21) transparent;
+    :deep(.triangle-down) {
+      //detials-color-6
+      border-color: transparent transparent  #414655 transparent;
     }
   }
   .dialog-header-icon {
@@ -20,9 +21,10 @@
 
   /*************** 返回图标icon *************** -E*/
   .details-dialog {
-     background:var(--q-match-page-bg-color-103);
+     background: var(--q-gb-bg-c-15);
     .details-dialog-bg {
-      background: var(--q-match-page-bg-color-107) !important;
+      // var(--q-detials-color-10)
+      background: #f7f7f7 !important;
     }
     .new-dialog-item {
       color:  var(--q-color-fs-color-14);
@@ -40,4 +42,4 @@
       color:  var(--q-color-fs-color-40)
     }
   }
-}
+// }

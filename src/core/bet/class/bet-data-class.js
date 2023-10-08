@@ -197,7 +197,7 @@ this.bet_appoint_ball_head= null */
   }
 
   /**
-   * 是否接受更好赔率规则
+   * 更好赔率规则
   */
   set_accept_show(data) {
     this.better_rules_show = data

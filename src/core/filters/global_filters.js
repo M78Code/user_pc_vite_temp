@@ -92,8 +92,8 @@ const format_M_D = function (payload, that) {
     let time = new Date(parseInt(payload));
     let m = time.getMonth();
     let d = (time.getDate() + "");
-    let monthes = that.$root.$t('time.monthes');
-    let format = that.$root.$t('time.time_date_1');
+    let monthes = i18n_t('time.monthes');
+    let format = i18n_t('time.time_date_1');
     format = format.replace('%date', d);
     format = format.replace('%month', monthes[m]);
     return format;

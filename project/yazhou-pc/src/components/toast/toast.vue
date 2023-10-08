@@ -20,20 +20,24 @@
 
 
 <script setup>
-import { onUnmounted, ref } from 'vue';
+import { onMounted,onUnmounted, ref } from 'vue';
 import { useMittOn, MITT_TYPES } from 'src/core/mitt/index.js'
 
 /* 是否展示 */
 const is_show = ref(false)
 /* 文本内容 */
 const text = ref('')
-/* 监听打开弹窗mitt */
-const { off } = useMittOn(MITT_TYPES.EMIT_SHOW_TOAST_CMD, show_toast)
-/* 销毁mitt */
+
 /* 定时器相关 */
 let timer;
-onUnmounted(() => {
-  off()
+onMounted(() => {
+  /* 监听打开弹窗mitt */
+  useMittOn(MITT_TYPES.EMIT_SHOW_TOAST_CMD, show_toast).on
+})
+
+onUnmounted(()=>{
+  /* 销毁mitt */
+  useMittOn(MITT_TYPES.EMIT_SHOW_TOAST_CMD, show_toast).off
   clearTimeout(timer)
 })
 /**
@@ -43,7 +47,7 @@ onUnmounted(() => {
 * @param:delay:延迟关闭时间 单位毫秒
 * @return:
 */
-function show_toast(msg, delay = 2000) {
+const show_toast = (msg, delay = 2000) => {
   text.value = msg || "";
   if (text.value == "" || is_show.value) return;
   is_show.value = true;

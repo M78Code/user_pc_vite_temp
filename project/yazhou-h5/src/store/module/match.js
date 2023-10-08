@@ -42,6 +42,10 @@ const initialState = {
    collapse_champion_map_change:1,
    //冠军玩法折叠对象 改变 事件 来源
    collapse_champion_map_change_source:'',
+
+   //冠军  全部折叠
+   collapse_champion_all: {}
+
 }
 
 const matchSlice = createSlice({
@@ -85,36 +89,47 @@ const matchSlice = createSlice({
       state.standard_odd_status = payload
     },
 
+  
+
     // 冠军玩法折叠相关
-    set_collapse_champion_map(state, value) {
+    set_collapse_champion_map(state, {value}) {
+    
       if(!value){
         state.collapse_champion_map={}
-  
         state.collapse_champion_map_change_source =  ''
         state.collapse_champion_map_change = Date.now()
         return false
       }
     //  console.error( 'set_collapse_champion_map-----',  value[0], state.collapse_champion_map);
       let {tid ,payload ,type ,source} = value
+  
       // type  1 合并配置   2 覆写赋值
       if(!state.collapse_champion_map[tid]){ state.collapse_champion_map[tid]={}}
       let old = state.collapse_champion_map[tid]
       let new_obj={}
       if (type==1 ) {
-        new_obj=  Object.assign(new_obj,old, payload)
+        new_obj=  Object.assign(new_obj, old, payload)
+       
       }else if(type==2){
-        new_obj =payload
-      }
+        new_obj = payload
+      }    
       state.collapse_champion_map[tid] = new_obj
-  
+
       state.collapse_champion_map_change_source = source ||''
       state.collapse_champion_map_change = Date.now()
   
       // console.error(' state.collapse_champion_map----', state.collapse_champion_map);
       // console.error(' state.collapse_champion_map_change_source----', state.collapse_champion_map_change_source);
     },
-  
-  
+
+    //冠军全部折叠
+    set_collapes_champion_all(state, {value}) {
+      if (!value) {
+        state.collapse_champion_all = {}
+      }
+      const { c_value,tid } = value
+      state.collapse_champion_all[tid] = c_value
+    },
   
      /**
       * 设置 球类折叠   状态对象
@@ -143,10 +158,7 @@ const matchSlice = createSlice({
         }else if(type==2){
           new_obj =payload
         }
-  
         //当 冠军 页面 球种展开的时候 需要展开 下面的所有联赛 ，以及联赛下的所有玩法
-  
-  
         if(source.includes('champion-csid') ){
           state.collapse_champion_map={}
   

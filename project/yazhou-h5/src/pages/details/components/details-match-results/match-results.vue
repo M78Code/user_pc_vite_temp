@@ -6,9 +6,10 @@
 <template>
   <div class="match-details" :class="{'get_is_hengping':get_is_hengping && get_analyze_show}" ref="analysis_detail">
     <!-- 足球赛事-->
-    <template v-if="get_detail_data.csid == 1">
+    <template v-if="detail_data.csid == 1">
       <!-- 足球的环形及进度条统计图 -->
       <mathc-results-visuals
+        :detail_data="detail_data"
         :ring_statistics="football_ring_statistics"
         :card_corner_list="football_card_corner_list"
         :progress_graph="football_progress_graph"
@@ -17,9 +18,10 @@
       <time-line v-if="!get_analyze_show"/>
     </template>
     <!-- 篮球赛事-->
-    <template v-if="get_detail_data.csid == 2">
+    <template v-if="detail_data.csid == 2">
       <!-- 篮球的环形及进度条统计图 -->
       <mathc-results-visuals
+        :detail_data="detail_data"
         :ring_statistics="basketball_ring_statistics"
         :card_corner_list="basketball_card_corner_list"
         :progress_graph="basketball_progress_graph"
@@ -40,12 +42,15 @@ import basketballIncident from "project_path/src/pages/details/analysis-matches/
 import timeLine from 'project_path/src/pages/details/components/details-match-results/time-line.vue';
 import { i18n_t } from "src/boot/i18n.js";
 import {utils } from 'src/core/index.js'
+import { ref, onMounted } from "vue";
 
-  import { ref, onMounted } from "vue";
-  const get_detail_data = ref({
-        csid: '1',
-        mid: '1',
-    })
+
+const props = defineProps({
+  detail_data: {
+    type: Object,
+    default: {}
+  }
+})
   // TODO: ；临时调试用
   const get_is_hengping = ref(true)
   const get_analyze_show = ref(false)
@@ -104,7 +109,6 @@ import {utils } from 'src/core/index.js'
 
   // computed: {
   //   ...mapGetters([
-  //     'get_detail_data',
   //     'get_analyze_show',
   //     'get_is_hengping'
   //     ])
