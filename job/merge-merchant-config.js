@@ -26,6 +26,9 @@ const merge_merchant_config_inner = (scg, add_obj) => {
   let config = {};
   let { project } = add_obj;
   if (project == "yazhou-h5") {
+   
+
+
     lodash.merge(config, default_merchant_config_yazhou_h5, scg, add_obj);
 
   } else if (project == "yazhou-pc") {

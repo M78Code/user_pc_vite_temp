@@ -1,9 +1,9 @@
-import merchant_config from "../output/merchant/config.json";
+import merchant_component_config from "../output/component/index.json";
 
 import full_version_config from "../output/version/full-version-config.js"
 // 是否是全量版本 
 const { is_full_version = false } = full_version_config
-const { component = {} } = merchant_config;
+const { component = {} } = merchant_component_config;
 /**
  * 获取使用的 组件
  * @param {*} params
@@ -21,7 +21,7 @@ export const get_use_component_key = (params = {}) => {
   //最终使用的组件名字
   let use_component_key = default_component_key;
   //配置文件包裹了一层 component {menu:{}}
-  let config = component[registered_component_key] || merchant_config[registered_component_key] || {};
+  let config = component[registered_component_key] || merchant_component_config[registered_component_key] || {};
   if (config["use_component"]) {
     use_component_key = config["use_component"];
   }
@@ -37,7 +37,7 @@ export const get_use_component_key = (params = {}) => {
  */
 export const get_input_config = (registered_component_key) => {
   //配置文件包裹了一层 component {menu:{}}
-  let config = component[registered_component_key] || merchant_config[registered_component_key] || {};
+  let config = component[registered_component_key] || merchant_component_config[registered_component_key] || {};
   let { params = {} } = config;
   return params;
 };
@@ -68,7 +68,7 @@ export const compute_component_wapper_config = (component_config) => {
 
 export const compute_server_resource = () => {
 
-  return merchant_config.server_resource || {}
+  return merchant_component_config.server_resource || {}
 }
 
 
