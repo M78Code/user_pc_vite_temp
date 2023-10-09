@@ -24,11 +24,23 @@ const i18n = createI18n({
   // 去除控制台i18n警告信息
   silentTranslationWarn: true,
 });
+//服务器语言打包key对应本地语言key
 const server_key_map = {
-  "zh-cn": 'zh',
-  "zh-tw": 'tw',
-  "en-gb": "en"
+  "en-gb": "en",
+  "zh-cn": "zh",
+  "zh-tw": "tw",
+  "vi-vn": "vi",
+  "th-th": "th",
+  "ms-my": "ms",
+  "id-id": "ad",
+  "my-my": "mya",
+  "pt-br": "pt",
+  "ja-jp": "ry",
+  "ko-kr": "ko",
+  "es-es": "es",
 }
+
+//语言key对应的本地 文件夹
 const map_lang = {
   en: "en-gb",
   zh: "zh-cn",
@@ -96,4 +108,4 @@ function i18n_tc(key, args, options) {
   if (!i18n) return key;
   return i18n.global.tc(key, args, options);
 }
-export { i18n, loadLanguageAsync, map_lang, t, i18n_t, i18n_tc,server_key_map };
+export { i18n, loadLanguageAsync, map_lang, t, i18n_t, i18n_tc, server_key_map };

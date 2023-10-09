@@ -9,17 +9,39 @@
  *
  */
 
-import theme_list from "app/job/output/theme/index.json";
-import all_css_keys from "app/job/output/css/index";
-import { ref, computed } from "vue";
-import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
-useMittOn(MITT_TYPES.EMIT_THEME_CHANGE, (_v) => {
-  current_theme.value = _v;
-});
+import server_theme_list from "app/job/output/theme/index.json";
+import { server_key_map } from "src/boot/i18n.js";
 
-function get_theme_list() {
-  return theme_list
+
+//查找默认的主题
+
+const theme_map = {}
+for (let key in server_theme_list) {
+  const val = server_theme_list[key]
+  const _i18n = lodash.get(val, "i18n", {})
+  const local_i18n = {}
+  for (let key in _i18n) {
+    local_i18n[server_key_map[key]] = _i18n[key]
+  }
+  theme_map[key] = {
+    ...val,
+    i18n: local_i18n,
+    _i18n: _i18n
+  }
 }
+
+
+const theme_list = Object.values(theme_map).sort((a, b) => a.order - b.order)
+let default_theme_key;
+let default_theme = theme_list.find(i => i.is_default == 1);
+if (default_theme) {
+  default_theme_key = default_theme.key
+} else {
+  default_theme_key = theme_list[0].key
+}
+
 export {
-  get_theme_list
+  theme_list,
+  theme_map,
+  default_theme_key
 }
