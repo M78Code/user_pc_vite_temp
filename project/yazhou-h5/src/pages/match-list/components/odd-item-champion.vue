@@ -111,6 +111,7 @@ onUnmounted(() => {
   }
 
   .on {
+    color: #999999;
     max-width: 1.06rem;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -126,6 +127,7 @@ onUnmounted(() => {
   }
 
   .odds {
+    color: #414655;
     position: relative;
     font-weight: 600;
 
