@@ -39,12 +39,11 @@ function compute_position(position) {
  */
 function compute_css({ position, theme }) {
   const server_resource = all_assets[theme]
-
   //从打包的 环境拿 图片地址
-  let url = get(server_resource, `${config[CURRENT_ENV] || config['default']}.${theme}`);
+  let url = get(server_resource, `${config[CURRENT_ENV] || config.default}`);
   if (!url) {
     //从本地拿
-    url = get(config, theme);
+    url = get(config, CURRENT_ENV);
   }
   return {
     "background-image": `url(${url})`,

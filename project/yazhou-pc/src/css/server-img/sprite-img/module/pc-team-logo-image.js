@@ -55,12 +55,11 @@ function compute_position(position) {
  */
 function compute_css({ position, theme }) {
   const server_resource = all_assets[theme]
- 
   //从打包的 环境拿 图片地址
-  let url = lodash.get(server_resource, `${config[CURRENT_ENV] || config['default']}.${theme}`);
+  let url = get(server_resource, `${config[CURRENT_ENV] || config.default}`);
   if (!url) {
     //从本地拿
-      url = lodash.get(config, 'locationUrl');
+    url = get(config, CURRENT_ENV);
   }
    //如果有服务器图片，使用cdn图片
   if(position[0]){

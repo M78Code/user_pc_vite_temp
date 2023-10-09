@@ -96,4 +96,4 @@ function i18n_tc(key, args, options) {
   if (!i18n) return key;
   return i18n.global.tc(key, args, options);
 }
-export { i18n, loadLanguageAsync, map_lang, t, i18n_t, i18n_tc };
+export { i18n, loadLanguageAsync, map_lang, t, i18n_t, i18n_tc,server_key_map };

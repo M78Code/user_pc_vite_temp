@@ -7,7 +7,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";
 import { get } from "lodash";
 const { CURRENT_ENV } = window.BUILDIN_CONFIG;
 const config = {
-  default:"pc-left-menu-bg-image",
+  default: "pc-left-menu-bg-image",
   // local_dev: "pc-left-menu-bg-image",
   // local_test: "pc-left-menu-bg-image",
   // local_ylcs: "pc-left-menu-bg-image",
@@ -15,7 +15,7 @@ const config = {
   // idc_sandbox: "pc-left-menu-bg-image",
   // idc_lspre: "pc-left-menu-bg-image",
   // idc_online: "pc-left-menu-bg-image",
- 
+
 };
 // x y 
 const item = {
@@ -104,12 +104,11 @@ function compute_position(position) {
  */
 function compute_css({ position, theme }) {
   const server_resource = all_assets[theme]
-
   //从打包的 环境拿 图片地址
-  let url = get(server_resource, `${config[CURRENT_ENV] || config['default']}.${UserCtr.theme}`);
+  let url = get(server_resource, `${config[CURRENT_ENV] || config.default}`);
   if (!url) {
     //从本地拿
-    url = get(config, UserCtr.theme);
+    url = get(config, CURRENT_ENV);
   }
   return {
     "background-image": `url(/public/${url})`,
