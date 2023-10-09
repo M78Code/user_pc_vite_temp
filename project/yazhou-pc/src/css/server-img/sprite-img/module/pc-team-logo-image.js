@@ -1,7 +1,7 @@
 // label/key 对应后台 id/name名字
 // img-bg-menu-live 对应输出的css名称
 // 
-import server_resource from "app/job/output/assets/index.json";
+import all_assets from "app/job/output/assets/index.json";
 import { get_file_path } from "src/core/file-path/file-path.js";
 import lodash from "lodash";
 const { CURRENT_ENV } = window.BUILDIN_CONFIG;
@@ -54,6 +54,7 @@ function compute_position(position) {
  * @returns
  */
 function compute_css({ position, theme }) {
+  const server_resource = all_assets[theme]
  
   //从打包的 环境拿 图片地址
   let url = lodash.get(server_resource, `${config[CURRENT_ENV] || config['default']}.${theme}`);

@@ -63,7 +63,7 @@ class UserCtr {
     // 用户语言
     this.lang = 'zh';
     // 用户主题  日间版本 ，夜间版本
-    this.theme = 'day';
+    this.theme = 'theme-1';
 
     // 当前 选择的 赔率 ，有些赛种只有港赔理论上和这里无关
     this.odds = {
