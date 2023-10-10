@@ -6,7 +6,7 @@
     <div class="popup-wrap" :class="{ active: is_active }">
         <div class="text-wrap" @click="on_popup">
             <div class="popup-text" :class="{ active: is_active }">{{
-                theme_map[theme] ? theme_map[theme].key : '-'
+                lodash.get(theme_map[theme], `i18n.${lang}`, '-')
             }}</div>
             <div class="yb-icon-arrow"></div>
         </div>
@@ -16,12 +16,8 @@
                 <div class="item ellipsis" v-for="item in theme_list" :class="{ active: theme == item.key }"
                     @click="handle_set_theme(item.key)">
                     {{ item.i18n[lang] || item.key }}
-                    <!-- 日间版 -->
+                    <!-- 拿后台配置的名称 -->
                 </div>
-                <!-- <div class="item ellipsis" :class="{ active: theme == 'night' }"
-                    @click="handle_set_theme('night')">
-                    {{ i18n_t('set.night_') }}
-                </div> -->
             </div>
         </div>
     </div>
@@ -30,7 +26,6 @@
 <script setup>
 
 import { ref, watch, onUnmounted, computed } from 'vue'
-import { i18n_t, server_key_map } from "src/boot/i18n.js"
 import { theme_list, theme_map } from "src/core/theme/"
 
 import store from "src/store-redux/index.js";
