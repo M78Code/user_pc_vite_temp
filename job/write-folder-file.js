@@ -2,6 +2,7 @@
  * 文件 操作 封装
  */
 import * as fs from "node:fs";
+import colors from "colors"
 // 输出目录
 // let write_folder = "./job/output/env";
 /**
@@ -10,12 +11,12 @@ import * as fs from "node:fs";
 export const ensure_write_folder_exist = (write_folder) => {
   let is_exist = fs.existsSync(write_folder);
   if (is_exist) {
-    console.log(`${write_folder}-----文件夹已存在----  `);
+    console.log( colors.red(`${write_folder}-----文件夹已存在----  `) );
   } else {
     try {
       // 创建文件夹
       fs.mkdirSync(write_folder, { recursive: true });
-      console.log(`创建文件夹   ${write_folder} 完成`);
+      console.log(colors.green(`创建文件夹   ${write_folder} 完成`));
     } catch (err) {
       console.log(`创建文件夹   ${write_folder}  出错`, err);
     }
@@ -30,7 +31,7 @@ export const write_file = (file_path, str) => {
   try {
     // 创建文件
     fs.writeFileSync(file_path, str);
-    console.log(`写入文件   ${file_path}  完成`);
+    console.log(colors.green(`写入文件   ${file_path}  完成`));
   } catch (err) {
     console.log(`写入文件   ${file_path}  出错`, err);
   }

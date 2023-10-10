@@ -39,6 +39,22 @@
     // padding-top: 0.67rem; // 减去0.4 因为顶部加了div
     padding-bottom: 1.02rem;
     /*border-top: 0.01rem solid transparent;*/
+    &.animation{
+      animation: mymove 0.5s;
+    }
+    @keyframes mymove {
+      0% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+      50% {
+        transform: translateX(300px);
+      }
+      100%{
+        opacity: 0;
+        transform: translateX(0);
+      }
+    }
 
     &.show-status {
       padding-top:.94rem;

@@ -14,6 +14,7 @@
       detail_match_list: ['detail_match_list', 'home_hot_page_schedule', ].includes(invok_source),
       jingzu: menu_type == 30,
       esport: menu_type == 7,
+      animation: animation
     }" >
       <!--缝隙 不通层级 遮罩 存在渲染偏差， 边界 双线 或者 侵蚀问题-->
       <div class="gap" v-if="on_match && menu_type != 3000" :class="{ zaopan: [4, 11, 28, 3000].includes(menu_type) }" />
@@ -40,8 +41,7 @@
       </div>
 
       <!-- 回到顶部按钮组件 -->
-      <scroll-top v-show="!get_is_show_menu && list_scroll_top > 0" ref="scroll_top" :list_scroll_top="list_scroll_top"
-        @back-top="back_top" />
+      <scroll-top v-show="!get_is_show_menu && list_scroll_top > 0" ref="scroll_top" :list_scroll_top="list_scroll_top" @back-top="back_top" />
     </div>
   </div>
 </template>
@@ -79,6 +79,7 @@ const route = useRoute();
 const store_state = store.getState();
 // const websocket_store = use_websocket_store()
 
+const animation = ref(false);
 const match_main = ref(null);
 const match_list = ref(null);
 const scroll_top = ref(null);
@@ -118,6 +119,7 @@ const get_is_show_menu = ref(store_state.get_is_show_menu);
 const get_preload_animation_url = ref(store_state.get_preload_animation_url);
 
 onMounted(() => {
+  // 页面css变量植入
   page_style.value = compute_css_variables({ category: 'component', module: 'match' })
   if (props.invok_source) {
     ws_invoke_key.value = props.invok_source;
@@ -387,11 +389,9 @@ const match_detail_m_list_init = () => {
 /**
  * @description: 赛事列表为空通知事件函数
  */
-const upd_match_is_empty = (obj) => {
+const upd_match_is_empty = (result) => {
   // 当是赛果菜单,三级菜单数据没有时,发送列表赛事数据为空消息,收到消息后页面显示为空页面
-  if(lodash.get(obj,'type') == 'result' && lodash.get(obj,'event.cmd') == 'list_empty'){
-    match_is_empty.value = true;
-  }
+  match_is_empty.value = result;
 }
 
 const destroy_handle = () => {
@@ -431,7 +431,7 @@ const clear_timer = () => {
 // 绑定相关事件监听
 const on_listeners = () => {
   emitters.value = {
-    emitter_1: useMittOn(MITT_TYPES.EMIT_MENU_CHANGE_FOOTER_CMD, () => MatchPage.footer_event).off,
+    emitter_1: useMittOn(MITT_TYPES.EMIT_MENU_CHANGE_FOOTER_CMD, () => MatchPage.footer_event()).off,
     emitter_2: useMittOn(MITT_TYPES.EMIT_MAIN_MENU_CHANGE, () => MatchPage.main_menu_change()).off,
     emitter_4: useMittOn(MITT_TYPES.EMIT_SPECIAL_HPS_LOADED, special_hps_load_handle).off,
     emitter_5: useMittOn(MITT_TYPES.EMIT_COUNTING_DOWN_START_ENDED, () => MatchPage.counting_down_start_ended_on()).off,
@@ -439,7 +439,7 @@ const on_listeners = () => {
     emitter_7: useMittOn(MITT_TYPES.EMIT_MATCH_LIST_SCROLLING, () => MatchListCard.match_list_scroll_handle()).off,
     emitter_8: useMittOn(MITT_TYPES.EMIT_SECONDARY_PLAY_UNFOLD_CHANGE, MatchListCard.secondary_play_unfold_change_handle).off,
     emitter_9: useMittOn(MITT_TYPES.EMIT_TAB_HOT_CHANGING, () => MatchListCard.tab_changing_handle()).off,
-    emitter_10: useMittOn(MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, () => upd_match_is_empty).off,
+    emitter_10: useMittOn(MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, upd_match_is_empty).off,
     emitter_11: useMittOn(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA, init_match_callback).off,
   };
 };

@@ -4,6 +4,7 @@
 import axios from "axios";
 import fs from "node:fs";
 import lodash from "lodash";
+import colors from "colors"
 import {
   ensure_write_folder_exist,
   write_file,
@@ -13,7 +14,7 @@ import {
 import final_merchant_config from "./output/merchant/config.json" assert { type: "json" };
 import final_assets_config from "./output/assets/config.json" assert { type: "json" };
 const PROJECT_NAME = final_merchant_config.project
-console.log("export-assets-config.js----------resolve_merchant_config_assets  ----");
+console.log(colors.bgRed("export-assets-config.js----------resolve_merchant_config_assets  ----"));
 // 商户配置 输出目录
 let write_folder = "./job/output/assets/";
 // 图片输出到项目的 目录

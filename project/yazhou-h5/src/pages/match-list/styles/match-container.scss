@@ -107,8 +107,6 @@
       }
     }
 
-    .league {}
-
     .no-radius {
       border-radius: unset;
     }
@@ -180,15 +178,12 @@
     height: 0.26rem;
     line-height: 0.26rem;
     font-size: 0.11rem;
-    background-image: var(--q-color-linear-gradient-bg-19);
+    // gb-bg-lg-28 还未配置
+    background-image: var(--q-match-page-bg-color-96);
     margin-top: 0.11rem;
-    transform: translateY(-5px);
     border-radius: 0.06rem;
 
     &.first {
-      margin-top: 0rem;
-      transform: translateY(-0.065rem);
-      // transform: translateY(-11px);
     }
 
     &.is_gunqiu {
@@ -320,6 +315,7 @@
     height: 0.4rem;
     background: var(--q-match-page-bg-color-96);
     border-color: var(--q-gb-bd-c-3);
+    margin-top: 0.04rem;
 
     &.show-sport {
       border-radius: 0.12rem 0.12rem 0 0;
