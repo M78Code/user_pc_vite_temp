@@ -5,6 +5,7 @@
 import * as path from "node:path";
 import fs from "node:fs";
 import lodash from "lodash";
+import colors from "colors"
 import {
   ensure_write_folder_exist,
   write_file,
@@ -17,16 +18,18 @@ import final_css_config from "./output/css/config.json" assert { type: "json" };
 import final_server_keys from "./output/css/keys-server.json" assert { type: "json" };
 const PROJECT_NAME = final_merchant_config.project;
 
-console.log("export-css-config.js----------  ----");
+console.log(colors.bgRed("export-css-config.js----------  ----"));
  
 
 // 商户配置 输出目录
 let write_folder = "./job/output/css/";
  
+let is_pc = PROJECT_NAME.includes('pc')
 
 //本地scss目录
-let scss_folder = `./project/${PROJECT_NAME}/src/css/variables/`;
-// let scss_folder = `./project/${PROJECT_NAME}/src/css/`;
+let base_scss_folder = is_pc? "./src/css-variables/base-pc/" :  "./src/css-variables/base-h5/"
+let special_scss_folder = `./project/${PROJECT_NAME}/src/css/variables/`;
+ 
 
 //确保配置 输出目录存在
 ensure_write_folder_exist(write_folder);
@@ -52,8 +55,10 @@ const getAllFile = function (dir) {
   traverse(dir);
   return res;
 };
-const all_global_scss = getAllFile(scss_folder + "global");
-const all_component_scss = getAllFile(scss_folder + "component");
+const all_base_global_scss = getAllFile(base_scss_folder + "global");
+const all_base_component_scss = getAllFile(base_scss_folder + "component");
+const all_special_global_scss = getAllFile(special_scss_folder + "global");
+const all_special_component_scss = getAllFile(special_scss_folder + "component");
 
  /**
   * 计算本地 配置
@@ -70,17 +75,26 @@ const compute_local_css_keys = async ( ) => {
       const file_name = file_path.split(/[\\/]/).pop().replace(".js", "");
       if (res.default) {
         let keys = Object.keys(res.default)
-        css_keys_obj[key][file_name] =keys
+        if(css_keys_obj[key][file_name]){
+          css_keys_obj[key][file_name] =  css_keys_obj[key][file_name].concat(keys)
+        }else{
+          css_keys_obj[key][file_name] =keys
+        }
+   
 
         css_keys= css_keys.concat(keys)
       }
     });
   }
   //globals
-  const globals = all_global_scss.map(v => read_path_keys(v, "global"));
+  const special_globals = all_special_global_scss.map(v => read_path_keys(v, "global"));
+  const base_globals = all_base_global_scss.map(v => read_path_keys(v, "global"));
   //component
-  const components = all_component_scss.map(v => read_path_keys(v, "component"));
-  await Promise.all(globals.concat(components));
+  const special_components = all_special_component_scss.map(v => read_path_keys(v, "component"));
+  const base_components = all_base_component_scss.map(v => read_path_keys(v, "component"));
+
+  const all_promise = [].concat(base_globals, special_globals,base_components,special_components)
+  await Promise.all(all_promise);
   return  {
     css_keys,
     css_keys_obj,
