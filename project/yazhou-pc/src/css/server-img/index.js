@@ -1,32 +1,44 @@
 import sprite_compute from "./sprite-img/index";
 import other_compute from "./other-img/index";
-import UserCtr from "src/core/user-config/user-ctr.js";
+import { computed, ref } from "vue";
+import { UserCtr, useMittOn, MITT_TYPES } from "src/core/";
 import { isNull, isObject, isUndefined } from 'lodash'
 
+const theme = ref(UserCtr.theme);
+useMittOn(MITT_TYPES.EMIT_THEME_CHANGE, function (v) {
+  theme.value = v;
+})
 // import
 const compute_css = (_key, _position) => {
   if (isObject(_key)) {
     _position = _key.position
     _key = _key.key;
   }
-  //没有位置就是单图
-  if (isNull(_position) || isUndefined(_position)) {
-    return other_compute({ key: _key, theme: UserCtr.theme })
-  } else {
-    //没有位置就是单图
-
-    if (sprite_compute[_key]) {
-      return sprite_compute[_key]({ position: _position, theme: UserCtr.theme })
+  return computed(() => {
+    if (theme.value) {
+      //用于触发computed不然好像不触发
     }
-  }
+    //没有位置就是单图
+    if (isNull(_position) || isUndefined(_position)) {
+      return other_compute({ key: _key, theme: theme.value })
+    } else {
+      //没有位置就是单图
+
+      if (sprite_compute[_key]) {
+        return sprite_compute[_key]({ position: _position, theme: theme.value })
+      }
+      return {}
+    }
+  }).value
 };
+
 /**
  * 只要图片 有时候 使用img加载 错误时候才显示 所以只要图片地址
 */
 function compute_img(_key, _position) {
   const background = compute_css(_key, _position);
-  const img = background['background-image']
-  return String(img).replace(')','').split("(")[1]
+  const img = background['background-image'] || ""
+  return String(img).replace(')', '').split("(")[1]
 }
 export { compute_css, compute_img };
 /**
