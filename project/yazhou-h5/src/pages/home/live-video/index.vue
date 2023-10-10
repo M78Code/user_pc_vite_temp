@@ -50,9 +50,11 @@
                   <img src="image/bw3/svg/home/play.svg" alt="">
                   <span>{{ money_filter(item.plnum) }}</span>
                 </div>
-                <img v-if="GlobalAccessConfig.get_collectSwitch()"
-                  :src="item.mf ? (!_.get(UserCtr, 'favoriteButton') && UserCtr.theme.includes('y0') ? y0_img_favorite_black : `/image/bw3/svg/home/pentagram_s.svg`) : `/image/bw3/svg/home/pentagram.svg`"
-                  @click.stop="on_collection(item)">
+
+                  
+                <span class="img" v-if="GlobalAccessConfig.get_collectSwitch()"
+                  :style="item.mf ? (!_.get(UserCtr, 'favoriteButton') ? y0_img_favorite_black : compute_css('icon-favorite')) : compute_css('icon-favorited')"
+                  @click.stop="on_collection(item)"></span>
               </div>
               <div class="video-list-right">
                 <div class="video-describe">
@@ -104,8 +106,7 @@ import scroll_top from 'project_path/src/components/record-scroll/scroll-top'
 import counting_down from 'project_path/src/components/common/counting-down'
 import { format_total_score } from "src/core/format/index.js"
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
-import {money_filter} from "src/core/index.js"
-import UserCtr from "src/core/user-config/user-ctr.js";;
+import {money_filter,compute_css,UserCtr} from "src/core/index.js"
   //右侧菜单内容
   let carousel_data = ref({list:[],obj:{}})
   // 头部选项卡下标

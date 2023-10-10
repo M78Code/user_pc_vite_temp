@@ -13,13 +13,16 @@
     <!--新手版-->
     <div class="odd-list-container flex" v-if="show_newer_edition">
       <!--角球选中标志2白色版4黑色版-->
-      <img class="icon-jiaoqiu"
+      <span class="icon-jiaoqiu"
         :class="{'selected show':show_lock_selected}"
-        :src="calculate_color" />
+        :style="compute_css('icon-jiaoqiu-s')" ></span>
         <!--角球未选中标志1白色版3黑色版-->
       <img class="icon-jiaoqiu"
-        :style="{display:match.csid == 1 && MenuData.footer_sub_menu_id == 114 ? 'block':'none'}"
-        :src="UserCtr.theme.includes('day')?img1:img3" />
+        :style="{
+          display:match.csid == 1 && MenuData.footer_sub_menu_id == 114 ? 'block':'none',
+          ...compute_css('icon-jiaoqiu')
+      }"
+        />
       <odd-column-item
         v-for="(ol_item,i) of ol_list"
         :key="i"
@@ -139,9 +142,9 @@
       </div>
       <!--  5分钟 图标  -->
       <div class="team-t-title-w" v-if="[1,3,5,7,8,9].includes(+match.csid) && lodash.size(lodash.get(five_minutes_all_list, 'hl[0].ol'))">
-        <img @click="info_icon_click($event,match.mid)"
-             :src="show_tips ? (UserCtr.theme.includes('y0') ? `/image/bw3/svg/match-list/information-icon_y0.svg` : `/image/bw3/svg/match-list/information-icon.svg`):
-                  (UserCtr.theme.includes('02') ? `/image/bw3/svg/match-list/information-icon-gray2.svg` : `/image/bw3/svg/match-list/information-icon-gray.svg`)" alt="">
+        <span @click="info_icon_click($event,match.mid)"
+        class="img" :style="compute_css(show_tips?'icon-tips':'icon-tips-u')"
+             ></span>
         <span class="ellipsis">
           {{[1,2,7,10].includes(+match['ms']) ? i18n_t('football_playing_way.minutes_of_the_Xth_goal', {goalnr: minutes_of_the_Xth_goal}) : i18n_t('football_playing_way.any_goal')}}
         </span>
@@ -160,8 +163,7 @@ import { i18n_t} from 'src/core/index.js'
 import oddColumnItem from "./odd-column-item.vue";
 import { img1, img2, img3, img4, Y0_img_white } from 'project_path/src/core/utils/local-image'
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
-import { MenuData } from "src/core/index.js"
-import UserCtr from 'src/core/user-config/user-ctr.js'
+import { MenuData,compute_css,UserCtr} from "src/core/index.js"
 import PageSourceData  from  "src/core/page-source/page-source.js";
 
 const props = defineProps({
@@ -274,18 +276,7 @@ const show_newer_edition = computed(() => {
   return get_newer_standard_edition.value == 1 || props.main_source == "detail_match_list"
 });
 
-// 黑白色版，商户，图片显示判断
-const calculate_color = computed(() => {
-  let flag = null;
-  if (UserCtr.theme.includes("y0")) {
-    flag = Y0_img_white;
-  } else {
-    UserCtr.theme.includes("day")
-      ? (flag = img2)
-      : (flag = img4);
-  }
-  return flag;
-});
+
 
 // 新手版赔率
 const ol_list = computed(() => {

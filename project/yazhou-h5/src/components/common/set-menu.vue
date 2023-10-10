@@ -19,7 +19,7 @@
       <div class="menu-inner" @click.stop="" :style="{ width: `${calc_width}px`, }">
         <!-- 关闭按钮 -->
         <div class="close-wrap">
-          <div :style="compute_css('menu-close-icon')" class="img" @click="is_show_menu = false"></div>
+          <div :style="compute_css('icon-close')" class="img" @click="is_show_menu = false"></div>
         </div>
         <!-- 用户信息 -->
         <div class="user-info border-bottom">

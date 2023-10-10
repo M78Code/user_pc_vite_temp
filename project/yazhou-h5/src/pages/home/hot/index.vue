@@ -20,7 +20,7 @@
             <template v-else>
               <!-- 精选的tab图标 -->
               <!-- <img v-if='tab.index == 0' :src="(`/yazhou-h5/image/home/hot_jx_black${UserCtr.theme.includes('y0') ? '_y0' : ''}.svg`)" alt=""> -->
-              <img v-if='tab.index == 0' :src="(`/yazhou-h5/image/home/hot_jx_black2${UserCtr.theme.includes('y0') ? '_y0' : ''}.svg`)" alt="">
+               <span v-if='tab.index == 0'  class="img" :style="compute_css('hot-tab')"></span>
               <!-- 电竞类的tab图标 -->
               <img v-else-if="[100, 101, 102, 103].includes(+tab.field1)" :src="(`/yazhou-h5/image/home/hot_jx_esport_${tab.field1}.svg`)" alt="" />
               <!-- 体育类的图标 -->
@@ -61,7 +61,7 @@ import BetData from "src/core/bet/class/bet-data-class.js";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import { get_file_path } from "src/core/file-path/file-path.js";
 import lodash from 'lodash'
-import { utils, MenuData } from 'src/core/index.js';
+import { utils, MenuData ,compute_css} from 'src/core/index.js';
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import MatchListParams from 'src/core/match-list-h5/composables/match-list-params.js'
 

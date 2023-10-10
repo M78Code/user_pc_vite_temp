@@ -1,8 +1,9 @@
 <template>
     <div id="box" ref="box">
       <div class="marquee-box" ref="marquee" @mouseover="menter" @mouseleave="mleave">
-        <img :src="(`/image/wwwassets/bw3/svg/icon-notice${UserCtr.theme.includes('y0') ? '-y0' : ''}.svg`)" alt="">
 
+        <div class="img" :style="compute_css('icon-bell')" ></div>
+    
         <p ref="notice_list" id="pWidth">
           <span ref="notice_content">{{text}}</span>
         </p>
@@ -13,6 +14,7 @@
 <script>
 // #TODO vuex
 // import {mapGetters} from "vuex";
+import {compute_css} from 'src/core/'
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, nextTick } from "vue";
 export default defineComponent({
   name: 'notice_bar',

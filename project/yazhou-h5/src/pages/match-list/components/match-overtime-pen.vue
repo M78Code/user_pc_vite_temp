@@ -13,10 +13,15 @@
         class="tab-item-h row items-center" :class="{ 'collapsed': t_item.unfold == 1 }"
         @click="overtime_tab_handle(t_item, undefined, 'is-user', i)">
         <div> {{ t_item.title }} </div>
-        <!--折叠得箭头图标-->
-        <img class="league-collapse-dir" :class="{ 'collapsed': t_item.unfold == 1 }"
-          :src="(`/yazhou-h5/image/list/league-collapse-icon${UserCtr.theme.includes('night') ? '-black' : ''}${t_item.unfold == 1 ? (UserCtr.theme.includes('y0') ? '-collapse-y0' : '-collapse') : ''}.svg`)" />
-      </div>
+         <!--折叠得箭头图标-->
+        <span class="league-collapse-dir" :class="{ 'collapsed': t_item.unfold == 1 }"
+          :style="compute_css('icon-collapse')" ></span>
+
+          
+        <!-- <img class="league-collapse-dir" :class="{ 'collapsed': t_item.unfold == 1 }"
+          :src="(`/yazhou-h5/image/list/league-collapse-icon${UserCtr.theme.includes('night') ? '-black' : ''}${t_item.unfold == 1 ? (UserCtr.theme.includes('y0') ? '-collapse-y0' : '-collapse') : ''}.svg`)" /> -->
+      
+        </div>
     </div>
     <!-- 次要玩法   1. 左边队伍名标题   2. 右边 盘口组件  模块 -->
     <div class="transition-w-odd" :mid="match_info.mid" v-if="current_tab_item.hps" :class="{
@@ -79,17 +84,13 @@ import { useRoute } from 'vue-router'
 import { play_title } from 'src/core/utils/module/play-title.js'
 import store from "src/store-redux/index.js";
 import lodash from 'lodash'
-import { i18n_t } from 'src/core/index.js'
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt"
 import { format_msc } from "src/core/format/index.js"
-import UserCtr from 'src/core/user-config/user-ctr.js'
-import { utils } from 'src/core/index.js'
-import { MenuData } from "src/core/index.js"
+import { MenuData,compute_css,utils,UserCtr,i18n_t,MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/index.js"
 import matchListClass from 'src/core/match-list-h5/match-class/match-list.js'
 import { api_common } from "src/api/index.js";
 import oddListWrap from './odd-list-wrap.vue';
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
-import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from 'src/core'
 
 // TODO: 其他模块得 store  待添加
 // mixins:[match_list_mixin],
