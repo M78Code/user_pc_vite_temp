@@ -844,7 +844,7 @@ export default defineComponent({
     //   'set_is_dp_video_full_screen',
     // ]),
 
-    return {
+    return {compute_css,
       ...toRefs(data)
     }
 

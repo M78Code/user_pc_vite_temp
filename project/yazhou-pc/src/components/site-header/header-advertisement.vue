@@ -35,7 +35,7 @@
 import { ref, reactive, watch, onUnmounted } from 'vue'
 import lodash from 'lodash'
 import store from "src/store-redux/index.js";
-import { i18n_t } from "src/boot/i18n.js"
+import { i18n_t ,compute_css} from "src/core/"
 
 /** api */
 import { api_account } from "src/api/index.js";

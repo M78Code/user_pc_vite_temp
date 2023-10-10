@@ -741,7 +741,7 @@ export default {
     }
     this.player && this.player.destroy()
   },
-  methods: {
+  methods: {compute_css,
       set_change_count(){},
       set_video_zhiding(){},
       set_toast(){},

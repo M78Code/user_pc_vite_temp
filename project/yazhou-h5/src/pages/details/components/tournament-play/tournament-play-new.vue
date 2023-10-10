@@ -724,7 +724,7 @@ export default defineComponent({
     })
     return {
       ...toRefs(component_data),
-      get_uid,
+      get_uid,compute_css,
       get_detail_data,
       get_fewer,
       get_is_close_info,

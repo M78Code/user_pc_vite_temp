@@ -41,12 +41,11 @@
 <script setup>
 import { api_betting } from "src/api/index.js";
 import { ref, onUnmounted  } from 'vue'
-import {useMittOn, MITT_TYPES} from  "src/core/mitt/"
+import {useMittOn, MITT_TYPES,compute_css,UserCtr} from  "src/core/"
 import { get_file_path } from "src/core/file-path/file-path.js";
 // import { mapGetters } from "vuex";
 import store from 'src/store-redux'
 import { i18n_t } from "src/boot/i18n.js";;
-import UserCtr from "src/core/user-config/user-ctr.js";
 //国际化
 
 

@@ -297,7 +297,7 @@ export default defineComponent({
       hasShared,
       calc_text,
       calc_settle_score,
-      detailList
+      detailList,compute_css
     }
   }
 })

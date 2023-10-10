@@ -75,7 +75,7 @@ export default defineComponent({
       ...toRefs(data),
       clickCommend,
       menter,
-      mleave
+      mleave,compute_css
     }
   }
 })

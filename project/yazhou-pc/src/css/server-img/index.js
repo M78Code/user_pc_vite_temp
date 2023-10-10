@@ -26,7 +26,7 @@ const compute_css = (_key, _position) => {
 function compute_img(_key, _position) {
   const background = compute_css(_key, _position);
   const img = background['background-image']
-  return String(img).replace(')').split("(")[1]
+  return String(img).replace(')','').split("(")[1]
 }
 export { compute_css, compute_img };
 /**
