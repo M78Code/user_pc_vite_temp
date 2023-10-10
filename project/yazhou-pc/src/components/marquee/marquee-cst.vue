@@ -44,10 +44,11 @@
                 <q-tooltip anchor="top middle" self="center middle"
                     :content-style="tooltip_style + ';transform:translateY(34px)'">{{ i18n_t('common.set') }}</q-tooltip>
                 <!-- hover显示gif -->
+                
                 <img v-show="right_tabs[2].is_show" :ref="theme.includes('y0') ? 'settings_y0' : 'settings'"
-                    :src="`/yazhou-pc/image/gif/${theme.includes('y0') ? 'settings_y0' : 'settings'}.gif`"
+                    :src="compute_img('gif-setting')"
                     class="tab-icon-img">
-
+                    // `/yazhou-pc/image/gif/${theme.includes('y0') ? 'settings_y0' : 'settings'}.gif`
             </div>
 
         </div>

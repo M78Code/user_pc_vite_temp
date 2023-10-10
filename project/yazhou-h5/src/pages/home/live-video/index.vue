@@ -53,7 +53,7 @@
 
                   
                 <span class="img" v-if="GlobalAccessConfig.get_collectSwitch()"
-                  :style="item.mf ? (!_.get(UserCtr, 'favoriteButton') ? y0_img_favorite_black : compute_css('icon-favorite')) : compute_css('icon-favorited')"
+                  :style="item.mf ? compute_css('icon-favorite') : compute_css('icon-favorite-s')"
                   @click.stop="on_collection(item)"></span>
               </div>
               <div class="video-list-right">

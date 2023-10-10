@@ -6,8 +6,9 @@
 <template>
   <div class="set-menu yb_fontsize12" @click.stop="change_show_status">
     <div class="filter-icon-wrapper yb-flex-center">
-      <div class="img" :style="compute_css('menu-icon')" v-if="8 != menu_type"></div>
-      <div class="img esports" v-if="8 == menu_type"></div>
+      <div class="img" :style="compute_css('menu-icon')"></div>
+      <!-- v-if="8 != menu_type"
+      <div class="img esports" v-if="8 == menu_type"></div> -->
     </div>
     <!--
       移除原有quasar侧边栏组件,因为quasar会强制将body改为绝对定位,影响赛事列表滚动数据

@@ -14,14 +14,20 @@
         <div v-if="currentSwipperArr.length > 0" class="adv-box-r" :class="{ mini: main_menu_toggle == 'mini' }"
             @mouseenter="stop" @mouseleave="go" @click="menu_change('R')" ref="adv_box"
             :style="{ 'cursor': lodash.get(currentSwipperArr, `[${currentSwipperIndex}].isClick`) ? 'pointer' : 'unset' }">
-            <p v-if="theme.includes('day') && currentSwipperArr.length > 1 && showArrow" class="day_arrow">
+           
+            <p v-show="currentSwipperArr.length > 1 && showArrow" class="day_arrow">
+                <span class="img" :style="compute_css('icon-left')" alt="" @click.stop="boxMouseup('pre')"></span>
+                 <span class="img" :style="compute_css('icon-rigth')" alt="" @click.stop="boxMouseup('next')"></span>
+             </p>
+            
+            <!-- <p v-if="('day') && currentSwipperArr.length > 1 && showArrow" class="day_arrow">
                 <img :src="day_left" alt="" @click.stop="boxMouseup('pre')">
                 <img :src="day_right" alt="" @click.stop="boxMouseup('next')">
             </p>
-            <p v-if="theme.includes('night') && currentSwipperArr.length > 1 && showArrow" class="night_arrow">
+            <p v-if="('night') && currentSwipperArr.length > 1 && showArrow" class="night_arrow">
                 <img :src="night_left" alt="" @click.stop="boxMouseup('pre')">
                 <img :src="night_right" alt="" @click.stop="boxMouseup('next')">
-            </p>
+            </p> -->
         </div>
     </div>
 </template>

@@ -17,7 +17,6 @@ import themes from "app/job/output/css/index";
  */
 export function compute_css_variables({ category, module }) {
   const _theme_key = themes[UserCtr.theme]
-  console.error("compute_css_variables",category, module)
   let final_obj = {}
   if (_theme_key) {
     let css_obj =lodash.get(_theme_key[category],module,{})

@@ -534,7 +534,7 @@ export default defineComponent({
     // ]),
     return {
       ...toRefs(state_data),
-      i18n_t,
+      i18n_t,compute_css,
       is_highlights,
       show_match_analysis_tab,
       show_chatroom_tab,

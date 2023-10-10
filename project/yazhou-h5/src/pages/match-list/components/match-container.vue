@@ -21,7 +21,7 @@
       <template v-if="is_it_popular">
         <div v-if="main_source == 'home_hot_page_schedule' && lodash.get(MenuData.hot_tab_menu, 'index') == 0" class="ball_img">
           <img :src="global_theme.includes('day') ? polular_spirite : polular_spirite_theme02" alt="" :style="{ objectPosition: `0 ${calculate_ball_type_picture()}rem` }">
-          <span> <i :style="sprite_img['h5-hot-jinxuan']({ position: `item_${match_of_list.csid}` })"></i>  <span>{{ match_of_list.csna }}</span> </span>
+          <span> <i :style="compute_css({key:'h5-hot-jinxuan', position: `item_${match_of_list.csid}` })"></i>  <span>{{ match_of_list.csna }}</span> </span>
         </div>
       </template>
       <span class="score-inner-span" v-else>
@@ -116,9 +116,9 @@
               <div v-if="GlobalAccessConfig.get_collectSwitch()" class="favorite-icon-top match list-m"
                 @click.stop="toggle_collect(match, i, 'mf')">
                 <!-- 未收藏图标 -->
-                <img v-if="!match_of_list.mf && !get_show_favorite_list" :src="not_favorited_computing_icon" alt="">
+                <img v-if="!match_of_list.mf && !get_show_favorite_list" :src="compute_img('icon-favorite')" alt="">
                 <!-- 收藏图标 -->
-                <img v-if='match_of_list.mf || get_show_favorite_list' :src="favorited_computing_icon" />
+                <img v-if='match_of_list.mf || get_show_favorite_list'  :src="compute_img('icon-favorite-d')">
               </div>
               <!-- 赛事日期标准版 -->
               <div class="timer-wrapper-c flex items-center"
@@ -354,9 +354,9 @@
                 <div class="fav-i-wrap-match row items-center" @click.stop="toggle_collect(match, i, 'mf')">
                   <div class="favorite-icon match">
                     <!-- 未收藏图标 -->
-                    <img v-if="!match_of_list.mf" :src="not_favorited_computing_icon" alt="">
+                    <img v-if="!match_of_list.mf" :src="compute_img('icon-favorite')" alt="">
                     <!-- 收藏图标 -->
-                    <img :src="(!lodash.get(UserCtr, 'favoriteButton') && global_theme.includes('y0')) ? y0_img_favorite_black : normal_img_is_favorite"
+                    <img :src="compute_img('icon-favorite-s')"
                       v-if='match_of_list.mf' />
                   </div>
                 </div>
@@ -444,18 +444,15 @@ import { ref, computed, onMounted, onUnmounted, watch, nextTick } from 'vue'
 import lodash from 'lodash'
 import store from "src/store-redux/index.js";
 import { useRouter, useRoute } from 'vue-router'
-import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
+import { useMittOn, useMittEmit, MITT_TYPES,UserCtr } from  "src/core"
 import countingDownSecond from 'project_path/src/components/common/counting-down.vue';
 import countingDownStart from 'project_path/src/components/common/counting-down-start.vue';
 import scoreList from './score-list.vue';
 import oddListWrap from './odd-list-wrap.vue';
 import matchOvertimePen from './match-overtime-pen.vue'
 import ImageCacheLoad from "./public-cache-image.vue";
-import { i18n_t } from 'src/core/index.js'
-import UserCtr from 'src/core/user-config/user-ctr.js'
 import PageSourceData from "src/core/page-source/page-source.js";
-import sprite_img from "src/core/server-img/sprite-img/index.js"
-import { MenuData, score_switch_handle, compute_css, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/index.js"
+import { i18n_t,MenuData, score_switch_handle,compute_img, compute_css, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/index.js"
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import matchListClass from 'src/core/match-list-h5/match-class/match-list.js'
 import { format_time_zone, format_time_zone_time, format_how_many_days, format_week } from "src/core/format/index.js"
