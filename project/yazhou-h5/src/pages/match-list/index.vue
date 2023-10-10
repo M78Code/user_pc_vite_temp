@@ -14,7 +14,6 @@
       detail_match_list: ['detail_match_list', 'home_hot_page_schedule', ].includes(invok_source),
       jingzu: menu_type == 30,
       esport: menu_type == 7,
-      animation: animation
     }" >
       <!--缝隙 不通层级 遮罩 存在渲染偏差， 边界 双线 或者 侵蚀问题-->
       <div class="gap" v-if="on_match && menu_type != 3000" :class="{ zaopan: [4, 11, 28, 3000].includes(menu_type) }" />
@@ -79,7 +78,6 @@ const route = useRoute();
 const store_state = store.getState();
 // const websocket_store = use_websocket_store()
 
-const animation = ref(false);
 const match_main = ref(null);
 const match_list = ref(null);
 const scroll_top = ref(null);
@@ -254,52 +252,50 @@ watch(() => get_show_match_filter, () => {
 
 // 筛选过滤弹层消失
 watch( () => matchCtr.value, (match_list) => {
-    // 进入列表后，若preload_animation_url为未缓存状态，则执行动画资源预加载逻辑
-    if (!get_preload_animation_url.value && match_list.length) {
-      // 通过遍历列表，查找动画状态mvs > 0（可播放）的赛事mid，然后获取相应动画加载资源
-      for (let i = 0, len = match_list.length; i < len; i++) {
-        if (match_list[i].mvs > 0) {
-          const params = {
-            mid: match_list[i].mid,
-            type: "Animation",
-          };
-          send_gcuuid = uid();
-          params.gcuuid = send_gcuuid;
-          // 预加载动画所需资源文件
-          api_common.videoAnimationUrl(params).then((res) => {
-            const { data } = res || {};
-            if (res && send_gcuuid != res.gcuuid) return;
-            if (!lodash.get(data, "animationUrl")) {
-              return;
-            }
-            let animationUrl = "";
-            //足篮棒网使用3.0动画  其他使用2.0
-            if ([1, 2, 3, 5].includes(+match_list[i].csid)) {
-              let animation3Url = data.animation3Url || [];
-              animation3Url.forEach((item) => {
-                if (item.styleName.indexOf("day") >= 0) {
-                  animationUrl = item.path;
-                }
-              });
-            }
-            animationUrl = animationUrl || data.animationUrl;
-            data.animation_src = animationUrl.replace(/https?:/, ""); // 动画
-            data.video_src = "";
-            data.referUrl =
-              data.referUrl && data.referUrl.replace(/http:|https:/, ""); // 视频
-            data.referUrl = `${location.protocol}${data.referUrl}`;
+  // 进入列表后，若preload_animation_url为未缓存状态，则执行动画资源预加载逻辑
+  if (!get_preload_animation_url.value && match_list.length) {
+    // 通过遍历列表，查找动画状态mvs > 0（可播放）的赛事mid，然后获取相应动画加载资源
+    for (let i = 0, len = match_list.length; i < len; i++) {
+      if (match_list[i].mvs > 0) {
+        const params = {
+          mid: match_list[i].mid,
+          type: "Animation",
+        };
+        send_gcuuid = uid();
+        params.gcuuid = send_gcuuid;
+        // 预加载动画所需资源文件
+        api_common.videoAnimationUrl(params).then((res) => {
+          const { data } = res || {};
+          if (res && send_gcuuid != res.gcuuid) return;
+          if (!lodash.get(data, "animationUrl")) {
+            return;
+          }
+          let animationUrl = "";
+          //足篮棒网使用3.0动画  其他使用2.0
+          if ([1, 2, 3, 5].includes(+match_list[i].csid)) {
+            let animation3Url = data.animation3Url || [];
+            animation3Url.forEach((item) => {
+              if (item.styleName.indexOf("day") >= 0) {
+                animationUrl = item.path;
+              }
+            });
+          }
+          animationUrl = animationUrl || data.animationUrl;
+          data.animation_src = animationUrl.replace(/https?:/, ""); // 动画
+          data.video_src = "";
+          data.referUrl =
+            data.referUrl && data.referUrl.replace(/http:|https:/, ""); // 视频
+          data.referUrl = `${location.protocol}${data.referUrl}`;
 
-            useMittEmit(MITT_TYPES.EMIT_SET_PRE_VIDEO_SRC, data);
-            store.dispatch({ type: 'videoReducer/set_preload_animation_url', payload: true })
-          });
-          // 获取相应动画加载资源后跳出循环
-          break;
-        }
+          useMittEmit(MITT_TYPES.EMIT_SET_PRE_VIDEO_SRC, data);
+          store.dispatch({ type: 'videoReducer/set_preload_animation_url', payload: true })
+        });
+        // 获取相应动画加载资源后跳出循环
+        break;
       }
     }
-  },
-  { deep: true }
-);
+  }
+}, { deep: true });
 
 // TODO: 其他模块得 store  待添加
 // 待处理： window.vue.scroll_list_wrapper_by
