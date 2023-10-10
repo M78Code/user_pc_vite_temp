@@ -4,6 +4,7 @@
 import * as path from "node:path";
 import fs from "node:fs";
 import lodash from "lodash";
+import colors from "colors"
 import {
   ensure_write_folder_exist,
   write_file,
@@ -11,7 +12,7 @@ import {
 } from "./write-folder-file.js";
 // 商户版本 最终配置
 import final_merchant_config from "./output/merchant/config.json" assert { type: "json" };
-console.log("export-i18n-config.js----------resolve_merchant_config_i18n  ----");
+console.log(colors.bgRed("export-i18n-config.js----------resolve_merchant_config_i18n  ----"));
 // 商户配置 输出目录
 let write_folder = "./job/output/i18n/";
 remove_file(write_folder) //del  old file

@@ -5,6 +5,7 @@
 import * as path from "node:path";
 import fs from "node:fs";
 import lodash from "lodash";
+import colors from "colors"
 import {
   ensure_write_folder_exist,
   write_file,
@@ -17,7 +18,7 @@ import final_css_config from "./output/css/config.json" assert { type: "json" };
 import final_server_keys from "./output/css/keys-server.json" assert { type: "json" };
 const PROJECT_NAME = final_merchant_config.project;
 
-console.log("export-css-config.js----------  ----");
+console.log(colors.bgRed("export-css-config.js----------  ----"));
  
 
 // 商户配置 输出目录
