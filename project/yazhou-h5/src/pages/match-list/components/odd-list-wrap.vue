@@ -142,9 +142,9 @@
       </div>
       <!--  5分钟 图标  -->
       <div class="team-t-title-w" v-if="[1,3,5,7,8,9].includes(+match.csid) && lodash.size(lodash.get(five_minutes_all_list, 'hl[0].ol'))">
-        <span @click="info_icon_click($event,match.mid)"
-        class="img" :style="compute_css(show_tips?'icon-tips':'icon-tips-u')"
-             ></span>
+        <img @click="info_icon_click($event,match.mid)"
+        class="img" :src="compute_img(show_tips?'icon-tips':'icon-tips-u')"
+             >
         <span class="ellipsis">
           {{[1,2,7,10].includes(+match['ms']) ? i18n_t('football_playing_way.minutes_of_the_Xth_goal', {goalnr: minutes_of_the_Xth_goal}) : i18n_t('football_playing_way.any_goal')}}
         </span>
@@ -163,7 +163,8 @@ import { i18n_t} from 'src/core/index.js'
 import oddColumnItem from "./odd-column-item.vue";
 import { img1, img2, img3, img4, Y0_img_white } from 'project_path/src/core/utils/local-image'
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
-import { MenuData,compute_css,UserCtr} from "src/core/index.js"
+import { MenuData,compute_img
+  ,UserCtr} from "src/core/index.js"
 import PageSourceData  from  "src/core/page-source/page-source.js";
 
 const props = defineProps({

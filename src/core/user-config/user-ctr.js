@@ -12,6 +12,8 @@ import pako_pb from "src/core/pb-decode/custom_pb_pako.js";
 import { infoUpload } from "src/core/http/";
 import { LocalStorage, ServerTime } from "src/core/";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
+import { default_theme_key } from "src/core/theme/"
+
 // #TODO 接口统一管理的文件，后续替换
 import { api_details, api_account, api_common } from "src/api/";
 // #TODO 还有使用到的loadash,如果全局配置则无需引入，或者按需引入，等正是开发组件决定,  _  (lodash)
@@ -19,7 +21,7 @@ import lodash from "lodash";
 // #TODO 使用axios，等正式开发组件时候 npm install axios
 import axios from "axios";
 import { uid } from 'quasar';
-import { i18n_t } from "..";
+import { i18n_t, i18n } from "..";
 
 const axios_instance = axios.create();
 const { htmlVariables = {} } = window.BUILDIN_CONFIG;
@@ -61,9 +63,9 @@ class UserCtr {
     this.user_info_data = "";
 
     // 用户语言
-    this.lang = 'zh';
-    // 用户主题  日间版本 ，夜间版本
-    this.theme = 'theme-1';
+    this.lang = LocalStorage.get("lang", i18n.global.locale);
+    // 用户主题  日间版本 ，夜间版本 可能有多版本哦 不止二个
+    this.theme = LocalStorage.get("theme", default_theme_key);
 
     // 当前 选择的 赔率 ，有些赛种只有港赔理论上和这里无关
     this.odds = {
@@ -172,9 +174,11 @@ class UserCtr {
   set_theme(theme) {
     this.theme = theme;
     useMittEmit(MITT_TYPES.EMIT_THEME_CHANGE, theme);
+
     // 替换body上className
     const old_theme = LocalStorage.get("theme") || sessionStorage.getItem("theme") || theme == 'day' ? 'theme02' : 'theme01';
     document.getElementById('ty-app').classList.replace(old_theme, theme)
+    LocalStorage.set("theme", theme.value || theme)
     // store.dispatch({ type: "SET_THEME", data });
     // loadLanguageAsync(lang);//加载语言
   }
@@ -418,7 +422,7 @@ class UserCtr {
         lodash.get(res, "code") == "0401038"
       );
     } catch (error) {
-      console.log(error,'1111');
+      console.log(error, '1111');
       callback(false, true);
     }
   }

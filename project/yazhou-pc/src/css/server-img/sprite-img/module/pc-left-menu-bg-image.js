@@ -5,6 +5,7 @@
 import all_assets from "app/job/output/assets/index.json";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { get } from "lodash";
+import { key } from "licia/memStorage";
 const { CURRENT_ENV } = window.BUILDIN_CONFIG;
 const config = {
   default: "pc-left-menu-bg-image",
@@ -111,7 +112,7 @@ function compute_css({ position, theme }) {
     url = get(config, CURRENT_ENV);
   }
   return {
-    "background-image": `url(/public/${url})`,
+    "background-image": `url(${url})`,
     "background-position": compute_position(position),
   };
 }

@@ -1,9 +1,7 @@
 <template>
     <div id="box" ref="box">
       <div class="marquee-box" ref="marquee" @mouseover="menter" @mouseleave="mleave">
-
-        <div class="img" :style="compute_css('icon-bell')" ></div>
-    
+        <img :src="compute_img('icon-bell')" alt="">
         <p ref="notice_list" id="pWidth">
           <span ref="notice_content">{{text}}</span>
         </p>
@@ -14,7 +12,7 @@
 <script>
 // #TODO vuex
 // import {mapGetters} from "vuex";
-import {compute_css} from 'src/core/'
+import {compute_img} from 'src/core/'
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, nextTick } from "vue";
 export default defineComponent({
   name: 'notice_bar',
