@@ -83,7 +83,7 @@ function loadLanguageAsync(lang) {
         lodash.set(msg, v, message[v])
       }
     }
-    i18n.global.setLocaleMessage(lang, langfile);
+    i18n.global.setLocaleMessage(lang, { ...langfile, ...msg });
     i18n.global.locale = lang;
     // 设置语种
     i18n.locale = lang;

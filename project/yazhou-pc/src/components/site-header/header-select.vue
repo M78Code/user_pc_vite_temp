@@ -23,11 +23,11 @@
                         <span class="img" :style="compute_css('icon-left')" alt="" @click.stop="boxMouseup('pre')"></span>
                         <span class="img" :style="compute_css('icon-rigth')" alt="" @click.stop="boxMouseup('next')"></span>
                     </p>
-                    <!-- <p v-show="UserCtr.theme.includes('day') && currentSwipperArr.length > 1 && showArrow" class="day_arrow">
+                    <!-- <p v-show="('day') && currentSwipperArr.length > 1 && showArrow" class="day_arrow">
                         <img :src="day_left" alt="" @click.stop="boxMouseup('pre')">
                         <img :src="day_right" alt="" @click.stop="boxMouseup('next')">
                     </p>
-                    <p v-show="UserCtr.theme.includes('night') && currentSwipperArr.length > 1 && showArrow" class="night_arrow">
+                    <p v-show="('night') && currentSwipperArr.length > 1 && showArrow" class="night_arrow">
                         <img :src="night_left" alt="" @click.stop="boxMouseup('pre')">
                         <img :src="night_right" alt="" @click.stop="boxMouseup('next')">
                     </p> -->

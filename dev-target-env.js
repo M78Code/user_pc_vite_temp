@@ -28,8 +28,8 @@ DEV_TARGET_ENV = 'idc_online'
 
  
 //本地开发 目标项目
-let DEV_PROJECT_NAME = "yazhou-pc";
-// let DEV_PROJECT_NAME = "yazhou-h5";
+// let DEV_PROJECT_NAME = "yazhou-pc";
+let DEV_PROJECT_NAME = "yazhou-h5";
 
 
 
@@ -43,7 +43,7 @@ let  DEV_TARGET_VERSION = ''
 // 打包 亚洲版 PC（新版)   测试环境  
 // DEV_TARGET_VERSION = "project_4-36304ea0499e11ee8848ada2b8a1d739-1695005815463-test";
 // 打包 亚洲版 PC（新版)   试玩环境  
-DEV_TARGET_VERSION = "project_4-65215aaba4ace9f7eb778b32-1696824185338-shiwan";
+DEV_TARGET_VERSION = "project_4-65250df5484f90d889b50562-1696927230685-shiwan";
 
 // 打包 亚洲版 PC（新版)   生产环境
 // DEV_TARGET_VERSION = "project_4-3134f63040ca11ee8848ada2b8a1d739-1696409496175-online";
@@ -51,7 +51,7 @@ DEV_TARGET_VERSION = "project_4-65215aaba4ace9f7eb778b32-1696824185338-shiwan";
 // 打包 亚洲版 H5（新版)   测试环境
 // DEV_TARGET_VERSION = "project_3-36304ea0499e11ee8848ada2b8a1d739-1695005829428-test";
 // 打包 亚洲版 H5（新版)   试玩环境     
-// DEV_TARGET_VERSION = "project_3-65239c403fa555d887413fa7-1696835862438-shiwan";
+DEV_TARGET_VERSION = "project_3-65250d06484f90d889b50524-1696927022943-shiwan";
 // 打包 亚洲版 H5（新版)   生产环境    
 // DEV_TARGET_VERSION = "project_3-36304ea0499e11ee8848ada2b8a1d739-1696237374723-online";
 

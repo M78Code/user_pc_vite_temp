@@ -76,9 +76,9 @@
               <span v-if="order_status == 0" class="color3"><img src="image/wwwassets/bw3/svg/bet_shib.svg"
                   class="img0">{{ $t('bet.bet_err') }}</span>
               <!-- 提交成功 -->
-              <span v-if="order_status == 2" class="color2"><img
-                  :src="(`/image/wwwassets/bw3/svg/bet_tijiao${UserCtr.theme.includes('y0') ? '2' : ''}.svg`)"
-                  class="img0 img1">{{ $t('bet.submitted_successfully') }}</span>
+              <span v-if="order_status == 2" class="color2">
+                <i class="img0 img1" :style="compute_css('icon-tijiao')"></i>
+                {{ $t('bet.submitted_successfully') }}</span>
             </template>
           </template>
           <template v-else>
@@ -126,8 +126,7 @@
         <div class="operation">
           <span class="reduce" v-touch-repeat:0:300:200.mouse.enter.space.72.104="gtouchstart(3)"
             :class="show_market_shadow ? 'shadow-show' : null">
-            <img v-if="UserCtr.theme.includes('day')" src="image/wwwassets/bw3/common/reduce_black.png" />
-            <img v-else src="image/wwwassets/bw3/common/reduce_white.png" />
+            <div class="img" :style="compute_css('bet-reduce')"></div>
           </span>
           <div class="odd" @click.stop="focus_market">
             <div class="odd_text">{{ pre_market_value || 0 }}</div>
@@ -136,8 +135,8 @@
           </div>
           <span class="add" v-touch-repeat:0:300:200.mouse.enter.space.72.104="gtouchstart(4)"
             :class="show_market_shadow_max ? 'shadow-show' : null">
-            <img v-if="UserCtr.theme.includes('day')" src="image/wwwassets/bw3/common/add_black.png" />
-            <img v-else src="image/wwwassets/bw3/common/add_white.png" />
+            <span class="img" :style="compute_css('icon-add')"></span>
+            <i class="img" :style="compute_css('icon-add')"></i>
           </span>
         </div>
         <span class="delete"><img src="image/wwwassets/bw3/common/delete.png" @click.stop="handlePre(false)" /></span>
@@ -149,8 +148,7 @@
         <div class="operation">
           <span class="reduce" v-touch-repeat:0:300:200.mouse.enter.space.72.104="gtouchstart(1)"
             :class="pre_shadow_flag ? 'shadow-show' : null">
-            <img v-if="UserCtr.theme.includes('day')" src="image/wwwassets/bw3/common/reduce_black.png" />
-            <img v-else src="image/wwwassets/bw3/common/reduce_white.png" />
+            <div class="img" :style="compute_css('bet-reduce')"></div>
           </span>
           <div class="odd" @click.stop="focus_odds">
             <!-- <div class="odd_text">{{ (pre_odds ? pre_odds : (pre_odds === 0 || pre_odds === '0' ? '0' : '')) ||
@@ -160,8 +158,8 @@
           </div>
           <span class="add" v-touch-repeat:0:300:200.mouse.enter.space.72.104="gtouchstart(2)"
             :class="pre_shadow_max_flag ? 'shadow-show' : null">
-            <img v-if="UserCtr.theme.includes('day')" src="image/wwwassets/bw3/common/add_black.png" />
-            <img v-else src="image/wwwassets/bw3/common/add_white.png" />
+            <i class="img" :style="compute_css('icon-add')"></i>
+  
           </span>
         </div>
         <span class="delete"><img src="image/wwwassets/bw3/common/delete.png" v-if="!is_show_market"
@@ -198,12 +196,11 @@ import betSingleDetail from './bet_single_detail.vue';
 import BetData from "src/core/bet/class/bet-data-class.js";
 // import BetData_H5 from "src/core/bet/class/bet-data-class-h5.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
-// import { UserCtr } from "src/core/index.js";
+
 import { calc_bifen, format_odds } from "src/core/format/index.js";
 import { ref, onMounted, watch, computed, onUnmounted } from 'vue';
 import { compute_value_by_cur_odd_type } from "src/core/format/module/format-odds-conversion-mixin.js"
-import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
-import UserCtr from 'src/core/user-config/user-ctr.js'
+import { useMittOn,compute_css,UserCtr, useMittEmit, MITT_TYPES } from "src/core/"
 
 import lodash from 'lodash'
 

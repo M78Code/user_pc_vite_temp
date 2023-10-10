@@ -51,12 +51,12 @@
           :style="{ opacity: status == 5 || status == 6 ? 0.3 : 1 }">
           <template v-if="slider_show">
              <img :style="compute_css('log-set')"  alt="">
-            <!-- <img :style="" src="/yazhou-h5/image/record/set4.svg" alt="" v-if="UserCtr.theme.includes('y0')">
+            <!-- <img :style="" src="/yazhou-h5/image/record/set4.svg" alt="" v-if="('y0')">
             <img src="/yazhou-h5/image/record/set.svg" alt="" v-else> -->
           </template>
           <template v-else>
             <img :style="compute_css('log-set')"  alt="">
-            <!-- <img src="/yazhou-h5/image/record/set2.svg" v-if="UserCtr.theme.includes('day')" alt="">
+            <!-- <img src="/yazhou-h5/image/record/set2.svg" v-if="('day')" alt="">
             <img src="/yazhou-h5/image/record/set3.svg" v-else alt=""> -->
           </template>
 

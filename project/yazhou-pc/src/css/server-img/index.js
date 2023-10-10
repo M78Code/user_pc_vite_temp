@@ -20,7 +20,15 @@ const compute_css = (_key, _position) => {
     }
   }
 };
-export { compute_css };
+/**
+ * 只要图片 有时候 使用img加载 错误时候才显示 所以只要图片地址
+*/
+function compute_img(_key, _position) {
+  const background = compute_css(_key, _position);
+  const img = background['background-image']
+  return String(img).replace(')').split("(")[1]
+}
+export { compute_css, compute_img };
 /**
  * 对于 精灵图  key 是文件名字也是 单个素材资源的 标识键   ， position 是 精灵图内 item 单个元素的 位置 标识键
  * 调用示例： compute_css(key,position) || compute_css({key,position}) 

@@ -19,7 +19,7 @@
             </template>
             <template v-else>
               <!-- 精选的tab图标 -->
-              <!-- <img v-if='tab.index == 0' :src="(`/yazhou-h5/image/home/hot_jx_black${UserCtr.theme.includes('y0') ? '_y0' : ''}.svg`)" alt=""> -->
+              <!-- <img v-if='tab.index == 0' :src="(`/yazhou-h5/image/home/hot_jx_black${('y0') ? '_y0' : ''}.svg`)" alt=""> -->
                <span v-if='tab.index == 0'  class="img" :style="compute_css('hot-tab')"></span>
               <!-- 电竞类的tab图标 -->
               <img v-else-if="[100, 101, 102, 103].includes(+tab.field1)" :src="(`/yazhou-h5/image/home/hot_jx_esport_${tab.field1}.svg`)" alt="" />

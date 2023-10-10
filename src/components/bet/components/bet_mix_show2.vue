@@ -73,9 +73,10 @@
           <span v-if="get_bet_status == 8" class="color3"><img src="image/wwwassets/bw3/svg/bet_shib.svg" class="img0">{{
             i18n_t('bet.bet_err') }}</span>
           <!-- 提交成功 -->
-          <span v-if="get_bet_status == 6" class="color2"><img
-              :src="(`/image/wwwassets/bw3/svg/bet_tijiao${UserCtr.theme.includes('y0') ? '2' : ''}.svg`)"
-              class="img0">{{ $t('bet.submitted_successfully') }}</span>
+          <span v-if="get_bet_status == 6" class="color2">
+              <i class="img0" :style="compute_css('icon-tojiao')"></i>
+              {{ $t('bet.submitted_successfully') }}
+            </span>
         </template>
         <template v-else>
           <!-- 失效 -->
@@ -103,7 +104,7 @@
 import odd_convert from "src/core/odds_conversion/compute_max_win_money.js";
 import timer from "src/components/bet/components/timer.vue";
 import {FOOTBALL_PLAY_LET_BALL,BASKETBALL_PLAY_LET_BALL,market_flag_list,market_flag_basketball_list} from "src/core/constant/config/bet-config-data.js";
-import { format_odds,UserCtr } from 'src/core/index.js'
+import { format_odds,UserCtr ,compute_css} from 'src/core/index.js'
 import { ref, onMounted,watch,computed,onUnmounted ,nextTick} from 'vue';
 import lodash from 'lodash'
 

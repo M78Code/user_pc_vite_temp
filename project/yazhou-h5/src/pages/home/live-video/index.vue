@@ -106,7 +106,7 @@ import scroll_top from 'project_path/src/components/record-scroll/scroll-top'
 import counting_down from 'project_path/src/components/common/counting-down'
 import { format_total_score } from "src/core/format/index.js"
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
-import {money_filter,compute_css,UserCtr} from "src/core/index.js"
+import {money_filter,compute_img,compute_css,UserCtr} from "src/core/index.js"
   //右侧菜单内容
   let carousel_data = ref({list:[],obj:{}})
   // 头部选项卡下标
@@ -183,11 +183,12 @@ import {money_filter,compute_css,UserCtr} from "src/core/index.js"
      * @param {Object} $event 错误事件对象
      */
     const league_icon_error = ($event) =>{
-      if(UserCtr.theme.includes('night')){
-        $event.target.src = 'image/bw3/svg/match_cup_black.svg'
-      } else {
-        $event.target.src = 'image/bw3/svg/match_cup.svg'
-      }
+      // if(UserCtr.theme.includes('night')){
+      //   $event.target.src ='image/bw3/svg/match_cup_black.svg'
+      // } else {
+      //   $event.target.src = 'image/bw3/svg/match_cup.svg'
+      // }
+      $event.target.src =compute_img("match-up")
       $event.target.onerror = null
     }
     // 点击视频界面跳转到详情播放视频

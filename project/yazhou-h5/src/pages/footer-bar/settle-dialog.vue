@@ -14,8 +14,9 @@
       </div>
       <div class="col-2 close">
         <span class="close-click-padding" @click="close_show">
-          <template v-if="lodash.get(store_data, `get_theme.includes('day')`)"><img  src="/yazhou-h5/image/svg/bet_close2.svg"></template>
-          <template v-else><img  src="/yazhou-h5/image/svg/bet_close3.svg"></template>
+          <i class="img" :style="compute_css('icon-close')"></i>
+          <!-- <template v-if="lodash.get(store_data, `get_theme.includes('day')`)"><img  src="/yazhou-h5/image/svg/bet_close2.svg"></template>
+          <template v-else><img  src="/yazhou-h5/image/svg/bet_close3.svg"></template> -->
         </span>
       </div>
     </div>
@@ -43,6 +44,7 @@ import store  from "src/store-redux"
 //   import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
 // import { useRoute } from 'vue-router'
 import { t } from "src/boot/i18n.js";
+import {compute_css} from 'src/core/'
 //国际化
 
   // provide(){
