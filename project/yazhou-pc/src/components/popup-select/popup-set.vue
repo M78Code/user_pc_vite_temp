@@ -5,31 +5,34 @@
 <template>
     <div class="popup-wrap" :class="{ active: is_active }">
         <div class="text-wrap" @click="on_popup">
-            <div class="popup-text" :class="{ active: is_active }">{{ i18n_t(`set.${theme == 'day' ?
-                'day_' : 'night_'}`) }}</div>
+            <div class="popup-text" :class="{ active: is_active }">{{
+                theme_map[theme] ? theme_map[theme].key : '-'
+            }}</div>
             <div class="yb-icon-arrow"></div>
         </div>
         <div class="relative-position">
             <div class="item-wrap">
                 <div class="triangle"></div>
-                <div class="item ellipsis" :class="{ active: theme == 'day' }"
-                    @click="handle_set_theme('day')">
-                    {{ i18n_t('set.day_') }}
+                <div class="item ellipsis" v-for="item in theme_list" :class="{ active: theme == item.key }"
+                    @click="handle_set_theme(item.key)">
+                    {{ item.i18n[lang] || item.key }}
                     <!-- 日间版 -->
                 </div>
-                <div class="item ellipsis" :class="{ active: theme == 'night' }"
+                <!-- <div class="item ellipsis" :class="{ active: theme == 'night' }"
                     @click="handle_set_theme('night')">
                     {{ i18n_t('set.night_') }}
-                    <!-- 夜间版 -->
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
 </template>
 
 <script setup>
+
 import { ref, watch, onUnmounted, computed } from 'vue'
-import { i18n_t } from "src/boot/i18n.js"
+import { i18n_t, server_key_map } from "src/boot/i18n.js"
+import { theme_list, theme_map } from "src/core/theme/"
+
 import store from "src/store-redux/index.js";
 import { api_account } from 'src/api/index'
 // import userCtr from 'src/core/index.js'
@@ -54,6 +57,8 @@ const global_click = ref(globalReducer.global_click)
 * 用户余额是否展示状态 default: day
 */
 const theme = ref(UserCtr.theme)
+const lang = ref(UserCtr.lang)
+
 const unsubscribe = store.subscribe(() => {
     const { globalReducer: new_globalReducer } = store.getState()
     global_click.value = new_globalReducer.global_click
