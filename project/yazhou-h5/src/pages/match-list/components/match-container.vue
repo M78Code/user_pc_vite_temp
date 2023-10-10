@@ -20,26 +20,25 @@
       <!-- 首页热门 -->
       <template v-if="is_it_popular">
         <div v-if="main_source == 'home_hot_page_schedule' && lodash.get(MenuData.hot_tab_menu, 'index') == 0" class="ball_img">
-          <img :src="global_theme.includes('day') ? polular_spirite : polular_spirite_theme02" alt="" :style="{ objectPosition: `0 ${calculate_ball_type_picture()}rem` }">
+          <img :src="theme.includes('theme-0') ? polular_spirite : polular_spirite_theme02" alt="" :style="{ objectPosition: `0 ${calculate_ball_type_picture()}rem` }">
           <span> <i :style="compute_css({key:'h5-hot-jinxuan', position: `item_${match_of_list.csid}` })"></i>  <span>{{ match_of_list.csna }}</span> </span>
         </div>
       </template>
       <span class="score-inner-span" v-else>
-        {{ match_of_list.csna || '-' }}
+        {{ match_of_list.csna }}
         <!-- {{match_of_list.csna || get_current_menu.sub.menuName}} -->
       </span>
-      <!-- v-if="(!['detail_match_list', 'home_hot_page_schedule'].includes(main_source)) && collapsed" -->
       <!-- 折叠收起不用消失 -->
       <div v-if="main_source!='home_hot_page_schedule'">
-        <img class="league-collapse-dir" :class="{ 'collapsed': collapsed }" v-if="global_theme.includes('day')" src='/yazhou-h5/image/list/league-collapse-icon.svg' />
-        <img class="league-collapse-dir" :class="{ 'collapsed': collapsed }" v-if="global_theme.includes('night')" src='/yazhou-h5/image/list/league-collapse-icon-black.svg' />
+        <img class="league-collapse-dir" :class="{ 'collapsed': collapsed }" v-if="theme.includes('theme-0')" src='/yazhou-h5/image/list/league-collapse-icon.svg' />
+        <img class="league-collapse-dir" :class="{ 'collapsed': collapsed }" v-if="theme.includes('theme-1')" src='/yazhou-h5/image/list/league-collapse-icon-black.svg' />
       </div>
     </div>
     <!-- 未开赛标题  -->
     <div class="match-status-fixed flex items-center" v-if="match.is_show_no_play">
       <img src='image/list/list-red.svg' />
       <span class="din-regular">
-        {{ $t('list.match_no_start') }}&nbsp;&nbsp;<span v-show="no_start_total">({{ no_start_total }})</span>
+        {{ $t('list.match_no_start') }}&nbsp;&nbsp;<span v-show="no_start_total">(0)</span>
       </span>
     </div>
     <!-- 首页热门才有的样式  -->
@@ -92,9 +91,9 @@
             </div>
           </span>
           <template v-if="(!['detail_match_list', 'home_hot_page_schedule'].includes(main_source)) && collapsed">
-            <img class="league-collapse-dir" :class="{ 'collapsed': collapsed }" v-if="global_theme.includes('day')"
+            <img class="league-collapse-dir" :class="{ 'collapsed': collapsed }" v-if="theme.includes('theme-0')"
               src='public/image/list/league-collapse-icon.svg' />
-            <img class="league-collapse-dir" :class="{ 'collapsed': collapsed }" v-if="global_theme.includes('night')"
+            <img class="league-collapse-dir" :class="{ 'collapsed': collapsed }" v-if="theme.includes('theme-1')"
               src='public/image/list/league-collapse-icon-black.svg' />
           </template>
         </div>
@@ -113,12 +112,12 @@
                 <span class="din-regular"> {{ lodash.get(match,'mcid')}} </span>
               </div>
               <!--赛事列表收藏-->
-              <div v-if="GlobalAccessConfig.get_collectSwitch()" class="favorite-icon-top match list-m"
+              <div class="favorite-icon-top match list-m"
                 @click.stop="toggle_collect(match, i, 'mf')">
                 <!-- 未收藏图标 -->
-                <img v-if="!match_of_list.mf && !get_show_favorite_list" :src="compute_img('icon-favorite')" alt="">
+                <img v-if="!match_of_list.mf" :src="compute_img('icon-favorite')" alt="">
                 <!-- 收藏图标 -->
-                <img v-if='match_of_list.mf || get_show_favorite_list'  :src="compute_img('icon-favorite-d')">
+                <img v-if='match_of_list.mf' :src="compute_img('icon-favorite-d')">
               </div>
               <!-- 赛事日期标准版 -->
               <div class="timer-wrapper-c flex items-center"
@@ -143,11 +142,9 @@
                   <counting-down-start :match="match" :index="i" :mgt_time="match.mgt"></counting-down-start>
                 </div>
                 <!--倒计时或正计时-->
-                <div class="counting-down-up-container relative-position"
-                  :class="{ 'special-match-container': match.mfo || [0, 31].includes(+match.mmp) }" :style="{
-                    width: counting_down_up_wrapper_width === 'auto' ? 'auto' :
-                      match.mfo ? 'auto' : counting_down_up_wrapper_width + 'rem'
-                  }" v-if="match.ms != 110 && show_counting_down(match)">
+                <div v-if="match.ms != 110 && show_counting_down(match)" 
+                  :class="['counting-down-up-container relative-position', { 'special-match-container': match.mfo || [0, 31].includes(+match.mmp) }]"
+                  :style="{ width: counting_down_up_wrapper_width === 'auto' ? 'auto' :  match.mfo ? 'auto' : counting_down_up_wrapper_width + 'rem' }">
                   <!--足球csid:1 冰球csid:4 橄榄球csid:14 DotaCsid:101 累加 排球csid:9 倒计时-->
                   <counting-down-second ref="counting-down-second" :title="mmp_map_title" :mmp="match.mmp"
                     :is_add="[1, 4, 11, 14, 100, 101, 102, 103].includes(+match.csid)" :m_id="match.mid"
@@ -202,7 +199,7 @@
                     </div>
                     <!-- 进球动画 -->
                     <div class="yb-flex-center" v-if="is_show_home_goal && is_new_init2 && (!is_show_away_goal)">
-                      <div class="yb-goal-gif" :class="{ 'yb-goal-yo': global_theme.includes('y0') }"></div>
+                      <div class="yb-goal-gif" :class="{ 'yb-goal-yo': theme.includes('y0') }"></div>
                       <div class="gif-text">{{ $t('match_result.goal') }}</div>
                     </div>
                     <span class='score-punish' v-show="home_red_score"
@@ -241,7 +238,7 @@
                     <!-- 进球动画 -->
                     <div class="yb-flex-center" v-if="is_show_away_goal && is_new_init2 && (!is_show_home_goal)">
 
-                      <div class="yb-goal-gif" :class="{ 'yb-goal-yo': global_theme.includes('y0') }"></div>
+                      <div class="yb-goal-gif" :class="{ 'yb-goal-yo': theme.includes('y0') }"></div>
                       <div class="gif-text">{{ $t('match_result.goal') }}</div>
                     </div>
                     <!--进行中的赛事显示比分-->
@@ -269,7 +266,7 @@
                     {{ format_time_zone(+match.mgt).Format(i18n_t('time4')) }}
                   </div>
                   <!-- v-if="match_of_list.playBack && is_replay_switch" -->
-                  <div class="flex play-icon" >
+                  <div class="flex play-icon">
                     <img src="/yazhou-h5/image/common/replay_y0.svg" />
                   </div>
                 </div>
@@ -290,7 +287,7 @@
                       v-if="[1, 2].includes(+match.csid) && GlobalAccessConfig.get_statisticsSwitch()"
                         @click='goto_details(match, 1)'>
                         <img :src="match_analysis" alt="" style="width:0.12rem"
-                          v-if="global_theme.includes('day')">
+                          v-if="theme.includes('theme-0')">
                         <img :src="match_analysis2" alt="" style="width:0.12rem" v-else>
                       </div>
                       <!-- 此赛事支持提前结算 -->
@@ -462,7 +459,7 @@ import { normal_img_not_favorite_white, normal_img_not_favorite_black, normal_im
   polular_spirite,  mearlys_icon } from 'project_path/src/core/utils/local-image.js'
 
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
-import { lang, standard_edition } from 'project_path/src/mixin/userctr.js'
+import { lang, standard_edition, theme } from 'project_path/src/mixin/userctr.js'
 import { is_hot, menu_type, menu_lv2 } from 'project_path/src/mixin/menu.js'
 
 // TODO: 其他模块得 store  待添加
@@ -522,8 +519,6 @@ const is_new_init2 = ref(false)
 // 防抖 防止急速状态下点击两次
 const is_on_go_detail = ref(false)
 
-const global_theme = UserCtr.theme
-
 const get_footer_sub_changing = ref(store_state.get_footer_sub_changing)
 const get_collapse_map_match = ref(store_state.get_collapse_map_match)
 const get_show_favorite_list = ref(store_state.get_show_favorite_list)
@@ -554,6 +549,10 @@ const match = computed(() => {
   return props.match_of_list;
 })
 
+const prev_match = computed(() => {
+  return props.i > 0 ? MatchDataBaseH5.get_quick_mid_obj(MatchMeta.match_mids[props.i - 1]) : undefined
+})
+
 // 精彩回放视频开关是否开启
 const is_replay_switch = computed(() => {
   const { configValue, eventSwitch } = lodash.get(UserCtr, 'merchantEventSwitchVO', {})
@@ -561,22 +560,15 @@ const is_replay_switch = computed(() => {
 })
 //  动画按钮
 const animationUrl_icon = computed(() => {
-  let is_theme01 = global_theme.includes('day')
-  // let is_theme02 = global_theme.includes('night')
-  // let is_y0 = global_theme.includes('y0')
-
+  let is_theme01 = theme.value.includes('theme-0')
   let animationUrl_icon = is_theme01 ? animationUrl_icon_theme01 : animationUrl_icon_theme02
-
   return animationUrl_icon
 })
 //  视频按钮
 const muUrl_icon = computed(() => {
-  let is_theme01 = global_theme.includes('day')
-  // let is_theme02 = global_theme.includes('night')
-  let is_y0 = global_theme.includes('y0')
-
+  let is_theme01 = theme.value.includes('theme-0')
+  let is_y0 = theme.value.includes('y0')
   let muUrl_icon = ''
-
   if (is_y0) {
     muUrl_icon = is_theme01 ? muUrl_theme01_y0 : muUrl_theme02_y0
   } else {
@@ -592,15 +584,11 @@ const get_sport_show = computed(() => {
     // 热门
     if (lodash.get(MenuData.hot_tab_menu, 'index') !== 0) { return false }
     if (props.i === 0) { return true }
-    if (props.i > 0) {
-      const p = MatchDataBaseH5.get_quick_mid_obj(MatchMeta.match_mids[props.i - 1])
-      const c = MatchDataBaseH5.get_quick_mid_obj(match.value.mid)
-      if (p && c) {
-        return p.csid !== c.csid;
-      }
+    if (prev_match.value && match.value) {
+      return prev_match.value.csid !== match.value.csid;
     }
   } else if ([1, 2, 3, 4, 11, 12, 28, 30, 3000].includes(+menu_type.value)) {
-    if (props.match_of_list.show_sport_type) {
+    if (props.i === 0) {
       return true
     } else {
       return false
@@ -608,28 +596,6 @@ const get_sport_show = computed(() => {
   } else {
     return false;
   }
-})
-
-// 显示收藏 图标
-const favorited_computing_icon = computed(() => {
-  let flag = null
-  if (!lodash.get(UserCtr, 'favoriteButton') && global_theme.includes('y0')) {
-    flag = y0_img_favorite_black
-  } else {
-    flag = normal_img_is_favorite
-  }
-  return flag
-})
-
- // 显示未收藏 图标
-const not_favorited_computing_icon = computed(() => {
-  let flag = null
-  if (global_theme.includes('day')) {
-    flag = normal_img_not_favorite_white
-  } else {
-    flag = normal_img_not_favorite_black
-  }
-  return flag
 })
 
 // 是否显示视频图标, 点击跳转 去到详情页视频直播
@@ -654,23 +620,6 @@ const is_show_video_icon = computed(() => {
       return r;
 })
 
-// 未开赛赛事数量
-const no_start_total = computed(() => {
-  let r = [];
-  if (props.match_of_list.is_show_no_play) {
-    r = lodash.filter(MatchMeta.match_mids, mid => {
-      const match = MatchDataBaseH5.get_quick_mid_obj(mid)
-      return !match.ms
-    })
-  }
-  return r.length;
-})
-
-// 默认联赛图标
-const default_league_icon = computed(() => {
-  return global_theme.includes('night') ? none_league_icon_black : none_league_icon
-})
-
 const show_newer_edition = computed(() => {
   return standard_edition.value == 1 || props.main_source == 'detail_match_list';
 })
@@ -692,8 +641,8 @@ const is_it_popular = computed(() => {
 // 热门模块 球类tab 下边的赛程列表 的 时间转换 = () => {
 const time_change = computed(() => {
   if (props.match_of_list) {
-        let time_stamp = +props.match_of_list.mgt
-        return (format_how_many_days(time_stamp) ? `${format_how_many_days(time_stamp)}   ` : '') + (new Date(time_stamp)).Format(i18n_t('time2')) + '  ' + format_week(time_stamp)
+    let time_stamp = +props.match_of_list.mgt
+    return (format_how_many_days(time_stamp) ? `${format_how_many_days(time_stamp)}   ` : '') + (new Date(time_stamp)).Format(i18n_t('time2')) + '  ' + format_week(time_stamp)
   }
 })
 
@@ -1207,7 +1156,6 @@ const show_counting_down = (item) => {
  * @returns {Boolean}
  */
 const get_m_status_show = (i) => {
-  let item = MatchDataBaseH5.get_quick_mid_obj(MatchMeta.match_mids[i])
   let result = false;
   if (props.main_source == 'detail_match_list') {
     return false
@@ -1223,16 +1171,15 @@ const get_m_status_show = (i) => {
     }
   }
   
-  if (item) {
+  if (match.value) {
     if (i > 0) {
-      let prev_match = MatchDataBaseH5.get_quick_mid_obj(MatchMeta.match_mids[i - 1])
-      if ([1, 110].includes(+item.ms)) {
+      if ([1, 110].includes(+match.value.ms)) {
         result = false;
       }
-      else if (![1, 110].includes(+item.ms) && [1, 110].includes(+props.match_of_list.ms)) {
+      else if (![1, 110].includes(+match.value.ms) && [1, 110].includes(+props.match_of_list.ms)) {
         result = true;
       }
-    } else if (i == 0 && ![1, 110].includes(+item.ms)) {
+    } else if (i == 0 && ![1, 110].includes(+match.value.ms)) {
       result = true;
     }
   }
@@ -1247,10 +1194,8 @@ const get_league_show = (i) => {
   let flag = true;
   let c = null, p = null;
   if (i) {
-    p = MatchDataBaseH5.get_quick_mid_obj(MatchMeta.match_mids[i - 1])
-    c = MatchDataBaseH5.get_quick_mid_obj(match.value.mid)
-    if (p && c) {
-      if (p.tid != c.tid) {
+    if (match.value && prev_match.value) {
+      if (match.value.tid != prev_match.value.tid) {
         flag = true;
       }
       else {
@@ -1340,9 +1285,6 @@ const score_value = () => {
     home_score.value = '';
     away_score.value = '';
   }
-}
-const gen_collapse_key = (item) => {
-  return item.tid;
 }
 /**
  * @description 设置scrollTop最终滚动距离, 保证详情返回的赛事出现在视图窗口内
