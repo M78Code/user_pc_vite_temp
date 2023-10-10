@@ -116,6 +116,9 @@
     </div>
     <template v-if="!is_show_detail_header_data">
       <!-- 活动返回按钮 及 标题 -->
+     <div 
+            :style="compute_css('go-back-icon')"
+        ></div>
       <!-- <div class="head yb_px14 yb_fontsize14"> -->
         <!-- <img
             :src="UserCtr.theme.includes('day') ? `/image/wwwassets/bw3/svg/go-back-icon-theme02.svg` : `/image/wwwassets/bw3/svg/go-back-icon.svg`"
@@ -154,7 +157,7 @@ import store from "src/store-redux/index.js";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { details_main } from "./details.js";
 import { ref, defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch, provide } from "vue";
-import UserCtr from "src/core/user-config/user-ctr.js";
+import {UserCtr,compute_css} from "src/core/";
 import { MatchDetailCalss } from "src/core/index.js"
 import { compute_css_variables } from "src/core/css-var/index.js"
 

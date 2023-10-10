@@ -239,7 +239,8 @@
           </div>
           <div class="img-wrap" v-if="[1,2].includes(+get_detail_data.csid) && get_is_full_screen && get_video_url.active == 'muUrl' && get_is_hengping">
             <!-- 分析弹窗 -->
-            <img :src="select_item == 3 ? (!UserCtr.theme.includes('y0')?analyze2:analyze2_y0) : (!UserCtr.theme.includes('y0')?analyze:analyze_yo)" @click.stop="change_analyze"/>
+            <!-- <img :src="select_item == 3 ? (!UserCtr.theme.includes('y0')?analyze2:analyze2_y0) : (!UserCtr.theme.includes('y0')?analyze:analyze_yo)" @click.stop="change_analyze"/> -->
+            <div :style="compute_css('video-analyze')"></div>
           </div>
         </div>
         <!-- 声音按钮 -->
@@ -299,7 +300,7 @@ import { format_total_score } from "src/core/format/index.js"
 import { video_info } from "./videos.js";
 import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch,ref } from "vue";
 import { i18n_t } from "src/boot/i18n.js";
-import UserCtr from "src/core/user-config/user-ctr.js";
+import {UserCtr,compute_css} from "src/core/";
 
 
 //国际化

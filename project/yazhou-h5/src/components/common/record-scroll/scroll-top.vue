@@ -5,11 +5,14 @@
 -->
 
 <template>
-  <img v-show="is_show_back_top_btn" class="list-scroll-to-top" :src="scroll_img" @click="back_top" />
+  <!-- <img v-show="is_show_back_top_btn" class="list-scroll-to-top" :src="scroll_img" @click="back_top" /> -->
+
+  <div v-show="is_show_back_top_btn" class="list-scroll-to-top" :style="compute_css('scroll-to-top')" :src="scroll_img"
+    @click="back_top"></div>
 </template>
 
 <script setup>
-import { utils } from 'src/core/index.js'
+import { utils ,compute_css } from 'src/core/index.js'
 import UserCtr from "src/core/user-config/user-ctr.js";;
 // import { mapGetters } from "vuex";
 import { defineComponent, ref, watch, computed, onDeactivated, onUnmounted } from 'vue'
