@@ -9,7 +9,6 @@
       :is_goto_top_random="is_goto_top_random" :match_list_wrapper_height="match_list_wrapper_height"
       :class="{ 'data-get-empty': data_get_empty }">
       <template v-slot="{ match_item, index }">
-        <!-- 1111 -- {{ match_item?.csid }} -- {{ mid }} -->
         <template v-if="match_item">
            <!--虚拟体育(赛果)-->
           <v-match-container 
