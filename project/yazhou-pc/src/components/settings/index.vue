@@ -16,9 +16,7 @@
                         <template v-slot:header>
                             <!-- 设置项 图标 -->
                             <q-item-section avatar>
-                                <i class="icon settings-icon"
-                                :style="compute_css('icon-setting')"
-                                   ></i>
+                                <i class="icon settings-icon" :style="compute_css('icon-setting')"></i>
                             </q-item-section>
 
                             <!-- 设置项 名称 -->
@@ -66,9 +64,13 @@
                                     <template v-for="(language, index) in settings.value_arr">
                                         <div v-if="languageList.includes(language)" :key="index"
                                             class="child-item ellipsis relative-position"
-                                            :class="[{ active: UserCtr.lang == language }]" @click="on_click_lang(language)">
-                                            <span :class="['flag', language]" :style="compute_css({key:'pc-popup-language-icon-image',position: language, theme: 'local'})"></span>{{ i18n_langs[language] }}
-                                            <i v-if="UserCtr.lang == language" class="icon-triangle3 q-icon c-icon arrow-show"></i>
+                                            :class="[{ active: UserCtr.lang == language }]"
+                                            @click="on_click_lang(language)">
+                                            <span :class="['flag', language]"
+                                                :style="compute_css({ key: 'pc-popup-language-icon-image', position: language, theme: 'local' })"></span>{{
+                                                    i18n_langs[language] }}
+                                            <i v-if="UserCtr.lang == language"
+                                                class="icon-triangle3 q-icon c-icon arrow-show"></i>
                                         </div>
                                     </template>
                                 </template>
@@ -93,8 +95,10 @@ import store from "src/store-redux/index.js";
 import { api_account, api_betting, api_details } from "src/api";
 import i18n_langs from "src/i18n/pc/langs/index.mjs";
 import { loadLanguageAsync } from "src/core/index.js";
-import { useMittEmit, MITT_TYPES,compute_css ,UserCtr} from 'src/core/'
+import { useMittEmit, MITT_TYPES, compute_css, UserCtr } from 'src/core/'
 import BetData from "src/core/bet/class/bet-data-class.js";
+import { theme_map } from "src/core/theme/"
+
 // import  sprite_img  from   "src/core/server-img/sprite-img/index.js"
 
 
@@ -281,23 +285,18 @@ function on_click_lang(lang_) {
  * @return {undefined} undefined
  */
 function change_theme() {
-    if (UserCtr.theme.includes('day')) {
-        handle_set_theme('night')
+    const theme = UserCtr.theme
+    const ary = Object.keys(theme_map);
+    let idx = ary.findIndex(i => i == theme)
+    if (idx == -1) { //没有找到当前主题 切回第一个
+        idx = 0;
     } else {
-        handle_set_theme('day')
+        // 取下一个主题  3+1 % 5 =4
+        idx = (idx + 1) % ary.length
     }
-
+    /** 设置主题 */
+    UserCtr.set_theme(ary[idx])
     emit('auto_close')
-}
-/** 设置主题 */
-function handle_set_theme(theme) {
-    const curr_theme = theme.value
-
-    if (curr_theme.includes('y0')) {
-        UserCtr.set_theme(theme + '_y0')
-    } else {
-        UserCtr.set_theme(theme)
-    }
 }
 </script>
   

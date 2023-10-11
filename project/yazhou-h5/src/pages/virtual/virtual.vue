@@ -24,7 +24,7 @@
                      :class="[sub_menu_i == i ? 'tabs-active' : '']"
                      @click="virtual_menu_changed(i)"
                 >
-                  <!-- <div class="icon" :class="['icon'+tab.field1, get_theme.includes('y0')?'icon_y0':'']">
+                  <!-- <div class="icon" :class="['icon'+tab.field1, ('y0')?'icon_y0':'']">
                     <img v-if="false" class="menu-new-icon" src="image/bw3/svg/virtual-sports/new.svg" />
                   </div> -->
                   <span>{{ tab.name }}</span>

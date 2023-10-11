@@ -21,19 +21,21 @@
         </div>
         <!-- 内嵌收起菜单 右侧 体育竞猜规则/任务中心/设置 -->
         <div class="iframe-tab-wrapper yb-ml20" v-show="is_iframe && menu_collapse_status">
-            <div :class="theme.includes('y0') ? `tab-icon-item-y0-${tab.icon_name}` : `tab-icon-item-${tab.icon_name}`"
+            <!--  `tab-icon-item-y0-${tab.icon_name}` :  -->
+            <div :class="`tab-icon-item-${tab.icon_name}`"
                 v-for="(tab, index) in (UserCtr.lang === 'zh' ? right_tabs.slice(0, 2) : right_tabs.slice(0, 1))" :key="index"
                 @click="menu_change(tab)" @mouseenter="show_gif($event, tab, index)"
                 @mouseleave="hide_gif($event, tab, index)">
                 <!--  v-if="show_menu_icon(tab.id)"  -->
-                <img v-show="tab.is_show" :ref="theme.includes('y0') ? tab.icon_name + '_y0' : tab.icon_name"
-                    :src="`/yazhou-pc/image/gif/${tab.icon_name}${theme.includes('y0') ? '_y0' : ''}.gif`"
+                <img v-show="tab.is_show" :ref="tab.icon_name"
+                    :src="`/yazhou-pc/image/gif/${tab.icon_name}.gif`"
                     class="tab-icon-img">
+                    <!--${tab.icon_name}${('y0') ? '_y0' : ''}.gif`" -->
                 <q-tooltip anchor="top middle" self="center middle"
                     :content-style="tooltip_style + ';transform:translateY(34px)'">{{ i18n_t(tab.tab_name) }}</q-tooltip>
             </div>
-            <div class="iframe-settings"
-                :class="theme.includes('y0') ? `tab-icon-item-y0-settings` : `tab-icon-item-settings`"
+            <!-- tab-icon-item-y0-settings -->
+            <div class="iframe-settings  tab-icon-item-settings"
                 @click="handle_settings_click" @mouseenter="show_gif($event, { icon_name: 'settings' }, 2)"
                 @mouseleave="hide_gif($event, { icon_name: 'settings' }, 2)">
 
@@ -45,10 +47,11 @@
                     :content-style="tooltip_style + ';transform:translateY(34px)'">{{ i18n_t('common.set') }}</q-tooltip>
                 <!-- hover显示gif -->
                 
-                <img v-show="right_tabs[2].is_show" :ref="theme.includes('y0') ? 'settings_y0' : 'settings'"
+                 <!-- :ref="('y0') ? 'settings_y0' : 'settings'" -->
+                <img v-show="right_tabs[2].is_show" ref="settings"
                     :src="compute_img('gif-setting')"
                     class="tab-icon-img">
-                    // `/yazhou-pc/image/gif/${theme.includes('y0') ? 'settings_y0' : 'settings'}.gif`
+                    // `/yazhou-pc/image/gif/${('y0') ? 'settings_y0' : 'settings'}.gif`
             </div>
 
         </div>

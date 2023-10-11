@@ -150,9 +150,9 @@ const stage_result = computed(() => {
   let result = "";
   // teamGroup 阶段 GROUPS 小组赛  Q16 32强 Q8 16强 Q4 8强 SEMIFINAL 半决赛  FINAL 决赛
   let color_1 = 'var(--qq-gb-t-c-3)';
-  // if(get_theme.value.includes('theme01_y0')){
+  // if(('theme01_y0')){
   //   color_1 = '#569FFD'
-  // }else if(get_theme.includes('theme02_y0')){
+  // }else if(('theme02_y0')){
   //   color_1 ='#569FFD'
   // }
   if(match.teamGroup && !match.sportId == '1004'){

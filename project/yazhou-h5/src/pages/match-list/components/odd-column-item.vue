@@ -324,14 +324,15 @@ const transfer_on = (odd_item) => {
       on = '其他'
     }
   }
-  let color = 'var(--qq-gb-t-c-3)';
+  let color = '';
   if(is_fengpan(odd_s) || get_obv_is_lock(odd_item)){
-    if(UserCtr.theme.includes('day')){
-      // color = '#d1d1d1';
-    }
-    else{
-      // color = '#414141';
-    }
+    color='var(--qq-gb-t-c-3)'
+    // if(.includes('day')){
+    //   // color = '#d1d1d1';
+    // }
+    // else{
+    //   // color = '#414141';
+    // }
   }
   let replaced = on
   if(![18].includes(+lodash.get(props.current_tab_item, 'id'))){
