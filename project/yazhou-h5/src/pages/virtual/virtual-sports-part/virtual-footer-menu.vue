@@ -1,5 +1,5 @@
 <template>
-  <div class="virtual-footer-menu" v-if="get_newer_standard_edition == 1" :class="{black2:get_theme.includes('night')}">
+  <div class="virtual-footer-menu black2" v-if="get_newer_standard_edition == 1">
     <!-- 刷新按钮 -->
     <!-- <div class="refesh-wrap yb-flex-center" @click="set_loading">
       <img :class="{rotate:is_refresh}" src="image/bw3/svg/virtual-sports/refresh.svg">

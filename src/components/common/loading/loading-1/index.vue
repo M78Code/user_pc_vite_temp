@@ -1,7 +1,7 @@
 <!-- @Description: 加载中 -->
 <template>
   <div class="loading" :style="`top:${top}`">
-    <div class="la-line-scale" :class="{ 'y0_bg': UserCtr.theme.includes('y0') }">
+    <div class="la-line-scale y0_bg">
       <div></div>
       <div></div>
       <div></div>

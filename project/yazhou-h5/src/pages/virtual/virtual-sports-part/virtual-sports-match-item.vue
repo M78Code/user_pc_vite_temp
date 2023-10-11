@@ -94,8 +94,8 @@
         <!--专业版-->
         <div class="profession" v-if="get_newer_standard_edition == 2">
           <template v-if="get_hp_list(1).length">
-            <img class="slide_icon" :class="{'animate-effect':standard_odd_status == 0,'animate-effect-r':standard_odd_status == 1}" v-if="standard_odd_status == 0" :src="get_theme.includes('y0')?arrows:arrows_default">
-            <img class="slide_icon" :class="{'animate-effect':standard_odd_status == 0,'animate-effect-r':standard_odd_status == 1}" :src="get_theme.includes('y0')?arrows_reverse:arrows_default_balck" v-else>
+            <img class="slide_icon" :class="{'animate-effect':standard_odd_status == 0,'animate-effect-r':standard_odd_status == 1}" v-if="standard_odd_status == 0" :src="compute_img('icoin-slide-l')">
+            <img class="slide_icon" :class="{'animate-effect':standard_odd_status == 0,'animate-effect-r':standard_odd_status == 1}" :src="compute_img('icoin-slide-r')" v-else>
           </template>
           <!--标准版赔率容器-->
           <div class="standard-odd-l-w" v-touch-pan.horizontal.prevent.mouse="odd_wrapper_pan"
@@ -165,7 +165,7 @@ import odd_column_item from "project_path/pages/match-list/components/odd_column
 // import betting from 'project_path/mixins/betting/betting.js';
 // import virtual_sports_m_item_mixin from 'project_path/mixins/virtual_sports/virtual_sports_m_item_mixin.js'
 import {  PageSourceData  } from "src/core/index.js";
-import {MenuData } from "src/core/index.js";
+import {MenuData,compute_img } from "src/core/index.js";
 import lodash from "lodash";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
@@ -197,10 +197,6 @@ export default defineComponent({
       vsports:null,
       standard_odd_status:0,
       is_basketball_score:false,
-      arrows: "/yazhou-h5/image/common/slide_icon_y0.svg",
-      arrows_default: "/yazhou-h5/image/common/slide_icon.svg",
-      arrows_reverse: "/yazhou-h5/image/common/slide_icon_reverse_y0.svg",
-      arrows_default_balck:"/yazhou-h5/image/common/slide_icon_r.svg"
     })
     // #TODO EMIT
       // created(){
@@ -621,7 +617,8 @@ export default defineComponent({
       xu_ni_ty_standard_odd_status,
       item_click4,
       show_debugger_line,
-      show_basketball_score
+      show_basketball_score,
+      compute_img
     }
   }
 })

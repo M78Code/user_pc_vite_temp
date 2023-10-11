@@ -403,32 +403,7 @@ const format_type = (id) => {
   * @param {boolean} is_focus 是否选中
   */
 function get_sport_icon(is_focus) {
-  let favorite = "";
-  if (is_focus) {
-    if (UserCtr.show_favorite_list) {
-      favorite = "f";
-    }
-  }
-  if (UserCtr.show_favorite_list) {
-    favorite = "f";
-  }
-  // 赛果 408  sport-match-count
-  if (this.main_menu_id_c == 408) {
-    favorite = "";
-  }
-  //赛果我的投注
-  if (is_focus) {
-    //选中情况下的 关注 和 非关注
-    return favorite
-      ? UserCtr.theme.includes("y0")
-        ? "focus-e"
-        : "focus-c"
-      : UserCtr.theme.includes("y0")
-        ? "focus-b"
-        : "focus-a";
-  }
-  // //默认黑色版还是白色版
-  return UserCtr.theme.includes("night") ? "focus-d" : "";
+  //TODO 用到了主题判断 暂时没理解 没拿过来
 }
 //获取match菜单
 function get_sport_menu(all_menu) {

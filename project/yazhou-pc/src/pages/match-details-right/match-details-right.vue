@@ -222,11 +222,7 @@
             <div class="shade-fixed">
               <div class="loading-wrap">
                 <div
-                  :class="[
-                    vx_get_theme.includes('y0')
-                      ? 'img-loading-y0'
-                      : 'img-loading',
-                  ]"
+                  class="img-loading-y0 img-loading"
                 ></div>
                 <div
                   class="text-center loading-text flex items-end justify-center"

@@ -1,6 +1,5 @@
 <template>
-  <div class="container-menu-w" :class="{
-    black2: theme.includes('night'),
+  <div class="container-menu-w black2" :class="{
     'scrolling-up': scroll_dir > 0,
     'scrolling-down': scroll_dir < 0,
   }">
@@ -33,7 +32,6 @@
           <div class="menu-item-title" :class="{
             'theme02-focus':
               show_favorite_list &&
-              theme.includes('night') &&
               item.id == 1,
           }" v-show="item.id != 5">
             <span class="title-p1" :class="{ 'title-p2': item.title1 }">

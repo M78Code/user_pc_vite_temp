@@ -41,12 +41,9 @@ const get_h5_rule_url = () => {
     let lang = lang_obj[UserCtr.lang] || 'zh-cn'
     const current_env = window.BUILDIN_CONFIG.current_env
     // Y0商户  或者  正常的白色  黑色版
-    let merchant_or_black_and_white_version = null
-    if (UserCtr.theme.includes('y0')) {
-        merchant_or_black_and_white_version = `${UserCtr.theme.slice(0, -3)}&sty=${UserCtr.theme.slice(-2)}`
-    } else {
-        merchant_or_black_and_white_version = UserCtr.theme
-    }
+    //这里没有 Y0 和黑白色了 只有后配配置的颜色
+    let merchant_or_black_and_white_version =  UserCtr.theme;
+    
     let domain = lodash.get(window, `env.config.static_serve[0]`)
     if (current_env == 'idc_online' || current_env == 'idc_ylcs') {
         //生产 和压测
