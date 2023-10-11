@@ -134,6 +134,7 @@ export default {
   watch: {
     match_info: {
       handler(res, old) {
+       if(JSON.stringify(res) == '{}')  return
         // 默认比分
         let default_score = {
           home: "0",
