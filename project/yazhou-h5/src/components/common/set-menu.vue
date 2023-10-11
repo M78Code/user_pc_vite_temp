@@ -6,9 +6,9 @@
 <template>
   <div class="set-menu yb_fontsize12" @click.stop="change_show_status">
     <div class="filter-icon-wrapper yb-flex-center">
-      <div class="img" :style="compute_css('menu-icon')"></div>
-      <!-- v-if="8 != menu_type"
-      <div class="img esports" v-if="8 == menu_type"></div> -->
+      <div class="img" v-if="!is_export" :style="compute_css('menu-icon')"></div>
+      <div class="img esports" v-else></div>
+      <!-- //电竞的时候 底色黑色 所以图标换了 -->
     </div>
     <!--
       移除原有quasar侧边栏组件,因为quasar会强制将body改为绝对定位,影响赛事列表滚动数据
@@ -188,6 +188,8 @@ import BetData from "src/core/bet/class/bet-data-class.js";
 import { loadLanguageAsync, compute_css, useMittOn, MITT_TYPES, MenuData, UserCtr } from "src/core/index.js";
 import { useRoute, useRouter } from "vue-router";
 import { lang, sort_type, theme, standard_edition, user_info } from "project_path/src/mixin/userctr";
+import {is_export } from "project_path/src/mixin/menu";
+
 
 let route = useRoute();
 let router = useRouter();

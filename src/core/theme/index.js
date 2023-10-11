@@ -11,7 +11,7 @@
 
 import server_theme_list from "app/job/output/theme/index.json";
 import { server_key_map } from "src/boot/i18n.js";
-
+import lodash from 'lodash'
 
 //查找默认的主题
 

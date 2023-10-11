@@ -6,7 +6,7 @@ import { isNull, isObject, isUndefined } from 'lodash'
 
 const theme = ref(UserCtr.theme);
 useMittOn(MITT_TYPES.EMIT_THEME_CHANGE, function (v) {
-  theme.value = v;
+  theme.value = UserCtr.theme;
 })
 // import
 const compute_css = (_key, _position) => {

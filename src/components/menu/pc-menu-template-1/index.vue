@@ -20,7 +20,6 @@
     </div>
 
     <div style="display: none;">{{ BaseData.BaseData_version }}</div>
-
     <div v-for="item1 in BaseData.left_menu_base_mi_arr" :key="`${jinri_zaopan_}_${item1}`"
       :class="set_vr_or_guanjun_border(item1)">
       <!--   赛种-->

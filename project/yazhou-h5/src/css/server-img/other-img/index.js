@@ -10,7 +10,7 @@ import all_assets from "app/job/output/assets/index";
 function compute_css({ key, theme }) {
   const server_resource = all_assets[theme]
   //先从商户配置拿 再从本地拿 
-  let url = server_resource[key]
+  let url = get(server_resource, key)
   if (!url) {
     //从本地拿
     url = get(all_other_image, CURRENT_ENV);

@@ -16,8 +16,8 @@
             :style="{ 'cursor': lodash.get(currentSwipperArr, `[${currentSwipperIndex}].isClick`) ? 'pointer' : 'unset' }">
            
             <p v-show="currentSwipperArr.length > 1 && showArrow" class="day_arrow">
-                <span class="img" :style="compute_css('icon-left')" alt="" @click.stop="boxMouseup('pre')"></span>
-                 <span class="img" :style="compute_css('icon-rigth')" alt="" @click.stop="boxMouseup('next')"></span>
+                <img class="img" :src="compute_img('icon-left')" alt="" @click.stop="boxMouseup('pre')">
+                <img class="img" :csrc="compute_img('icon-rigth')" alt="" @click.stop="boxMouseup('next')">
              </p>
             
             <!-- <p v-if="('day') && currentSwipperArr.length > 1 && showArrow" class="day_arrow">
@@ -35,7 +35,7 @@
 import { ref, reactive, watch, onUnmounted } from 'vue'
 import lodash from 'lodash'
 import store from "src/store-redux/index.js";
-import { i18n_t ,compute_css} from "src/core/"
+import { i18n_t ,compute_img} from "src/core/"
 
 /** api */
 import { api_account } from "src/api/index.js";

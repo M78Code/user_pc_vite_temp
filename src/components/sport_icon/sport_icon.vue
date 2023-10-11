@@ -5,13 +5,13 @@
 -->
 <template>
   <span v-if="icon_styles != -1" class="q-icon icon c-icon sport-img"
-  :style="[sprite_img['pc-left-menu-bg-image']({ position: `item_${icon_styles}`}),`width:${size};height:${size}`]"
+  :style="[compute_css({key:'pc-left-menu-bg-image', position: `item_${icon_styles}`}),`width:${size};height:${size}`]"
   :class="{img36:size == '18px' && !is_esports,'sport-img-new': isVideoIcon}" >
   </span>
 </template>
 
 <script>
-import sprite_img from "src/core/server-img/sprite-img/index.js"
+import {compute_css} from "src/core/"
 // 球种雪碧图序号
 const sport_number = {
   0:0,
@@ -133,7 +133,7 @@ export default {
   name: "SportIcon",
   data() {
     return {
-      sprite_img,
+      compute_css 
     };
   },
   props: {

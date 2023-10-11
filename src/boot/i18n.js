@@ -5,7 +5,7 @@ import server_i18n_map from "app/job/output/i18n/index.json";
 
 
 import { createI18n } from "vue-i18n";
-
+import lodash from 'lodash'
 import BUILDIN_CONFIG from "app/job/output/env/final.js";
 
 

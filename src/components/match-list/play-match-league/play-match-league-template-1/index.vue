@@ -14,7 +14,7 @@
         <div class="league-icon-wrap">
             <span class="soprts_id_icon"
             v-if="menu_config.is_esports()"
-            :style="sprite_img['pc-left-menu-bg-image']({ position: `item_${BaseData.compute_sport_id(card_style_obj.league_obj.csid)}` })"></span>
+            :style="compute_css({key:'pc-left-menu-bg-image', position: `item_${BaseData.compute_sport_id(card_style_obj.league_obj.csid)}` })"></span>
           <img v-else v-img="[lodash.get(card_style_obj, 'league_obj.lurl')]" />
         </div>
         <!-- 联赛名称 -->
