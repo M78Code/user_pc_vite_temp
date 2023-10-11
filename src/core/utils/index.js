@@ -14,6 +14,7 @@ export  *  from './module/utils.js'
 export  *  from './module/web-storage.js'
 export  *  from './module/mmp.js'
 export  *  from './module/play-title.js'
+export  *  from './module/go-where.js'
 
 export * from "./module/web-storage.js"
 
