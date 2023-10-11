@@ -285,5 +285,7 @@ export const EMIT_REF_DATA_BET_MONEY = "EMIT_REF_DATA_BET_MONEY"
 export const EMIT_REF_SHOW_BET_BOX = "EMIT_REF_SHOW_BET_BOX"
 // 
 export const EMIT_INPUT_BET_MONEY = "EMIT_INPUT_BET_MONEY"
+// 菜单切换
+export const EMIT_MENU_ANIMATION = "EMIT_MENU_ANIMATION"
 
 //------------------------------------------------------------------命令定义-E-------------------------------------------------------------------------------------

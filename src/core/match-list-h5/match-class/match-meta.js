@@ -270,12 +270,12 @@ class MatchMeta {
    * @description 获取赛事请求参数
    * @returns { Object }
    */
-  get_base_params () {
+  get_base_params (euid) {
     // match中 hpsFlag 都为0 除开冠军或电竞冠军; 赛事列表冠军或者电竞冠军/赛果不需要hpsFlag
-    const hpsflag = MenuData.is_kemp() || MenuData.get_menu_type() == 28 ? null : 0
+    const hpsflag = MenuData.is_kemp() || MenuData.get_menu_type() == 28 ? "" : 0
     return {
       cuid: UserCtr.get_cuid(),
-      euid: lodash.get(MenuData, 'current_lv_2_menu.mi'),
+      euid: euid ? euid : lodash.get(MenuData, 'current_lv_2_menu.mi'),
       // 一级菜单筛选类型 1滚球 2 即将开赛 3今日赛事 4早盘 11串关
       type: lodash.get(MenuData, 'current_lv_1_menu.mi'),
       //排序	 int 类型 1 按热门排序 2 按时间排序
@@ -290,14 +290,14 @@ class MatchMeta {
    * @description 获取冠军赛事； 元数据接口暂时未提供所以走老逻辑， 后续会提供
    */
   async get_champion_match() {
-    const main_menu_type = MenuData.get_menu_type()
-    const params = this.get_base_params(40602)
+    const menu_lv_v2 = lodash.get(MenuData.current_lv_2_menu, 'mi')
+    const euid = lodash.get(BaseData.mi_info_map, `mi_${menu_lv_v2}.h5_euid`, '40602')
     const res = await api_common.post_match_full_list({
-      "cuid":"240640629535469568",
-      "euid":"40602",
-      "type":100,
-      "sort":2,
-      "device":"v2_h5_st"
+      "cuid": UserCtr.get_cuid(),
+      euid,
+      "type": 100,
+      "sort": PageSourceData.sort_type,
+      "device": ['', 'v2_h5', 'v2_h5_st'][UserCtr.standard_edition]
     })
     this.handle_custom_matchs(res)
   }
@@ -369,7 +369,9 @@ class MatchMeta {
     // 显示空数据页面
     if (mids.length < 1) return useMittEmit(MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, true);
     this.match_mids = [...new Set(mids.slice(0, num))]
+    // useMittEmit(MITT_TYPES.EMIT_MENU_ANIMATION);
     this.get_origin_match_by_mids(this.match_mids)
+    // 空数据页面重置
     useMittEmit(MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, false);
   }
 

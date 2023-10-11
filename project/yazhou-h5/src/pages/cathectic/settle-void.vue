@@ -6,7 +6,7 @@
 <template>
   <div class="settle-void" @touchmove.prevent>
     <div class="main">
-      <div class="img-s" :class="{ 'img-s2': UserCtr.theme.includes('night') }"></div>
+      <div class="img-s" :style="compute_css('no-record')"></div>
       <div class="text-s">
         <p style="line-height: 0.18rem">{{ calc_text }}</p>
         <p @click="go_bet" class="go-bet">
@@ -20,8 +20,7 @@
 <script setup>
 import { computed, ref } from 'vue'
 import store from 'src/store-redux/index.js'
-import { i18n_t } from "src/boot/i18n.js";;
-import { MITT_TYPES, useMittEmit } from "src/core/mitt/"
+import { MITT_TYPES,compute_css,i18n_t, useMittEmit } from "src/core/"
 import UserCtr from "src/core/user-config/user-ctr.js";
 let { themeReducer, cathecticReducer } = store.getState()
 let store_cathectic = cathecticReducer
@@ -78,11 +77,9 @@ const go_bet = () => {
 .img-s {
   width: 1.65rem;
   height: 1.65rem;
-  background: url("/yazhou-h5/image/png/no_record.png") no-repeat center / contain;
-}
-
-.img-s2 {
-  background: url("/yazhou-h5/image/svg/no_record2.svg") no-repeat center / contain;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .text-s {

@@ -5,6 +5,9 @@
   position: relative;
   opacity: 1;
   transition: transform 0.2s;
+  .animation{
+    animation: my-animation 0.3s ease-in
+  }
   &.no-padding-bottom {
     padding-bottom: 0;
   }
@@ -39,22 +42,6 @@
     // padding-top: 0.67rem; // 减去0.4 因为顶部加了div
     padding-bottom: 1.02rem;
     /*border-top: 0.01rem solid transparent;*/
-    &.animation{
-      animation: mymove 0.5s;
-    }
-    @keyframes mymove {
-      0% {
-        opacity: 1;
-        transform: translateX(0);
-      }
-      50% {
-        transform: translateX(300px);
-      }
-      100%{
-        opacity: 0;
-        transform: translateX(0);
-      }
-    }
 
     &.show-status {
       padding-top:.94rem;
@@ -139,5 +126,20 @@
     top: 0;
     left: 50%;
     transform: translateX(-50%);
+  }
+}
+
+@keyframes my-animation {
+  0% {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+  50% {
+    transform: translate3d(50%, 0, 0);
+    opacity: 0.5;
+  }
+  100% {
+    transform: translate3d(100%, 0, 0);
+    opacity: 0;
   }
 }

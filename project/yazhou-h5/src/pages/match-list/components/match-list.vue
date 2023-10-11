@@ -3,7 +3,7 @@
 -->
 
 <template>
-  <div class="refresh-container">
+ <div class="refresh-container">
     <!--列表页 -->
     <scroll-wrapper ref="scroll_wrapper" :data_source="matchCtr.list" :main_source="source"
       :is_goto_top_random="is_goto_top_random" :match_list_wrapper_height="match_list_wrapper_height"
@@ -95,8 +95,8 @@
     <no-data class="data-get-empty1" v-if='data_get_empty && !get_show_favorite_list' which='noMatch' height='400'></no-data>
     <!-- 收藏页 -->
     <no-data class="data-get-empty2" v-if='data_get_empty && get_show_favorite_list' :which='menu_type === 28 ? "noMatch" : "collect"' height='400'></no-data>
-
   </div>
+  
 </template>
  
 <script setup>
@@ -417,4 +417,14 @@ onUnmounted(() => {
  
 <style scoped lang="scss">
 @import "../styles//match-list";
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 0.5s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  transform: translateX(-200px);
+  opacity: 0;
+}
 </style>
