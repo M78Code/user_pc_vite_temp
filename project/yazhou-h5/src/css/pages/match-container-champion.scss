@@ -20,28 +20,19 @@
     .hps-wrap {
       background:var(--q-gb-bg-c-15);
       .match-title {
+        background: var(--q-match-page-bg-color-10);
         &:before {
-          background:var(--q-gb-bd-c-13);
+          background:var(--q-gb-bd-c-10);
         }
         &.is-favorite {
           &:before {
             background-color: var(--q-gb-bd-c-13)
           }
         }
-        .hpn-wrap {
-          color: var(--q-gb-t-c-3);
-        }
       }
       .ol-list-wrap {
         .ol-li-item {
-          background-color: var(--q-color-page-bg-color-9);
-          .on {
-            color:var(--q-match-fs-color-154);
-
-          }
-          .odds {
-            color: var(--q-gb-t-c-3);
-          }
+          background-color: var(--q-match-page-bg-color-10);
         }
       }
     }

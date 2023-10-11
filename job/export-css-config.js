@@ -5,6 +5,7 @@
 import * as path from "node:path";
 import fs from "node:fs";
 import lodash from "lodash";
+import colors from "colors"
 import {
   ensure_write_folder_exist,
   write_file,
@@ -13,22 +14,22 @@ import {
 
 // 商户版本 最终配置
 import final_merchant_config from "./output/merchant/config.json" assert { type: "json" };
+import final_css_config from "./output/css/config.json" assert { type: "json" };
+import final_server_keys from "./output/css/keys-server.json" assert { type: "json" };
 const PROJECT_NAME = final_merchant_config.project;
 
-console.log("export-css-config.js----------server-resource ----");
-console.log("process.argv----------------------0---");
-console.log("process.argv----------------------1---");
-// console.log('MERCHANT-CONFIG-VERSION  2:  ', process.env);
-console.log("process.argv----------------------3---");
+console.log(colors.bgRed("export-css-config.js----------  ----"));
+ 
 
 // 商户配置 输出目录
 let write_folder = "./job/output/css/";
-let file_path = write_folder + `index.json`;
-let project_path = write_folder + `keys.json`;
+ 
+let is_pc = PROJECT_NAME.includes('pc')
 
 //本地scss目录
-let scss_folder = `./project/${PROJECT_NAME}/src/css/variables/`;
-// let scss_folder = `./project/${PROJECT_NAME}/src/css/`;
+let base_scss_folder = is_pc? "./src/css-variables/base-pc/" :  "./src/css-variables/base-h5/"
+let special_scss_folder = `./project/${PROJECT_NAME}/src/css/variables/`;
+ 
 
 //确保配置 输出目录存在
 ensure_write_folder_exist(write_folder);
@@ -54,59 +55,163 @@ const getAllFile = function (dir) {
   traverse(dir);
   return res;
 };
-/**
- * 计算并写入 最终配置到文件 ，这里可能需要合并一些默认配置或者一些配置重写覆盖
- */
-const get_css_config = async (css_params = {}) => {
-  try {
-    const [obj, keys] = await diff_css_local(css_params);
-    write_file(
-      file_path,
-      JSON.stringify(obj)
-    );
-    write_file(
-      project_path,
-      JSON.stringify(keys)
-    );
-  } catch (error) {
-    console.log("css文件错误", error);
-  }
-};
-/**对比文档如果和服务器的配置不一样就结束进程*/
-const diff_css_local = async (css_params) => {
-  const all_global_scss = getAllFile(scss_folder + "global");
-  const all_component_scss = getAllFile(scss_folder + "component");
-  const obj = {
+const all_base_global_scss = getAllFile(base_scss_folder + "global");
+const all_base_component_scss = getAllFile(base_scss_folder + "component");
+const all_special_global_scss = getAllFile(special_scss_folder + "global");
+const all_special_component_scss = getAllFile(special_scss_folder + "component");
+
+ /**
+  * 计算本地 配置
+  * @returns
+  */
+const compute_local_css_keys = async ( ) => {
+  let css_keys=[]
+  let css_keys_obj = {
     global: {},
     component: {},
   };
-  const obj_keys = {
-    global: {},
-    component: {},
-  };
-  function red_path_keys(file_path, key) {
+  function read_path_keys(file_path, key) {
     return import("../" + file_path.replace(/\\/g, "/")).then((res) => {
       const file_name = file_path.split(/[\\/]/).pop().replace(".js", "");
       if (res.default) {
-        obj_keys[key][file_name] = Object.keys(res.default);
-        obj[key][file_name] = Object.keys(res.default).reduce((sum, cur) => {
-          sum[cur] = css_params[cur] || { day: '', night: '' }
-          return sum;
-        }, {});
+        let keys = Object.keys(res.default)
+        if(css_keys_obj[key][file_name]){
+          css_keys_obj[key][file_name] =  css_keys_obj[key][file_name].concat(keys)
+        }else{
+          css_keys_obj[key][file_name] =keys
+        }
+   
+
+        css_keys= css_keys.concat(keys)
       }
-      // if (!lodash.hasIn(merchant_css_config.global, Object.keys(res.default))) {
-      //   process.emit(1);
-      // }
     });
   }
   //globals
-  const globals = all_global_scss.map(v => red_path_keys(v, "global"));
+  const special_globals = all_special_global_scss.map(v => read_path_keys(v, "global"));
+  const base_globals = all_base_global_scss.map(v => read_path_keys(v, "global"));
   //component
-  const components = all_component_scss.map(v => red_path_keys(v, "component"));
-  await Promise.all(globals.concat(components));
-  return [obj, obj_keys];
+  const special_components = all_special_component_scss.map(v => read_path_keys(v, "component"));
+  const base_components = all_base_component_scss.map(v => read_path_keys(v, "component"));
+
+  const all_promise = [].concat(base_globals, special_globals,base_components,special_components)
+  await Promise.all(all_promise);
+  return  {
+    css_keys,
+    css_keys_obj,
+  };
 };
 
+/**
+ * 生成每种主题 的CSS配置
+ */
 
-// 获取 服务器上 当前商户的 版本配置
-get_css_config(final_merchant_config.css);
+const compute_theme_css_config=(css_keys_obj)=>{
+
+let themes= Object.keys(final_css_config)
+
+let final_obj={}
+let empty_css_obj={}
+
+themes.map(theme=>{
+ 
+
+  for(let level in css_keys_obj){
+    // global component
+
+    for(let module in css_keys_obj[level]){
+      let module_obj =css_keys_obj[level][module]||{}
+
+       for(let module_key of module_obj){
+        let value=   final_css_config[theme][module_key] ||''
+        if(!value){
+         
+          lodash.set(empty_css_obj,`${theme}.${level}.${module}.${module_key}`,value)
+        }
+        lodash.set(final_obj,`${theme}.${level}.${module}.${module_key}`,value)
+
+
+
+       }
+
+
+    }
+
+  }
+
+})
+
+write_file(
+    
+  write_folder+"index.json",
+  JSON.stringify(final_obj)
+);
+write_file(
+    
+  write_folder+"keys-empty-obj.json",
+  JSON.stringify(empty_css_obj)
+);
+
+}
+
+/**
+ * 生成 差量文件
+ */
+
+const compute_diff_keys=(css_keys)=>{
+
+  let server_single = lodash.pullAll(final_server_keys ,css_keys)
+  let local_single = lodash.pullAll(css_keys,final_server_keys )
+
+  let data={
+    server_keys_length:final_server_keys.length,
+    local_keys_length:css_keys.length,
+    server_single,
+    server_single_length:server_single.length,
+    local_single,
+    local_single_length: local_single.length
+  }
+  write_file(
+    
+      write_folder+"keys-diff.json",
+      JSON.stringify(data)
+    );
+}
+
+
+
+
+/**
+ * 计算并写入 最终配置到文件 ，这里可能需要合并一些默认配置或者一些配置重写覆盖
+ */
+const resolve_merchant_config_css = async () => {
+
+
+
+    const   {
+      css_keys,
+      css_keys_obj,
+    }= await compute_local_css_keys();
+
+    write_file(
+    
+      write_folder+"keys-local.json",
+      JSON.stringify(css_keys)
+    );
+    write_file(
+    
+      write_folder+"keys-local-obj.json",
+      JSON.stringify(css_keys_obj)
+    );
+  //生成每种主题 的CSS配置
+    compute_theme_css_config(css_keys_obj)
+  // 生成 差量文件
+    compute_diff_keys(css_keys)
+
+
+ 
+
+ 
+};
+
+ 
+resolve_merchant_config_css()

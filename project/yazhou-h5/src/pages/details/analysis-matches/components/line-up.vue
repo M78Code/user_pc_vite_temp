@@ -187,7 +187,7 @@ import lodash from "lodash"
   const line_up_data = ref([])
   const no_data = ref(true)
   //默认图片地址
-  const default_url = ref("/yazhou-h5/image/png/my.png")
+  const default_url = ("/yazhou-h5/image/png/my.png")
   // 最后一位数
   const number = ref('')
   // 代表多少列 并且里边的数字
@@ -234,7 +234,7 @@ import lodash from "lodash"
    * @param {Object} $event 错误事件对象
    */
   const league_icon_error = ($event) => {
-    $event.target.src = default_url.value;
+    $event.target.src = default_url;
     $event.target.onerror = null
   }
   const radioButton = (item, index) => {

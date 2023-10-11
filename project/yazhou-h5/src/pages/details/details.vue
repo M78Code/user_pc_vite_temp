@@ -116,9 +116,10 @@
     </div>
     <template v-if="!is_show_detail_header_data">
       <!-- 活动返回按钮 及 标题 -->
+        <img :src="compute_img('go-back-icon')"  >
       <!-- <div class="head yb_px14 yb_fontsize14"> -->
         <!-- <img
-            :src="UserCtr.theme.includes('day') ? `/image/wwwassets/bw3/svg/go-back-icon-theme02.svg` : `/image/wwwassets/bw3/svg/go-back-icon.svg`"
+            :src="('day') ? `/image/wwwassets/bw3/svg/go-back-icon-theme02.svg` : `/image/wwwassets/bw3/svg/go-back-icon.svg`"
             @click="$common.go_where({back_to: 'go_to_back'})"
         /> -->
       <!-- </div> -->
@@ -154,7 +155,7 @@ import store from "src/store-redux/index.js";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { details_main } from "./details.js";
 import { ref, defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch, provide } from "vue";
-import UserCtr from "src/core/user-config/user-ctr.js";
+import {UserCtr,compute_css,compute_img} from "src/core/";
 import { MatchDetailCalss } from "src/core/index.js"
 import { compute_css_variables } from "src/core/css-var/index.js"
 
@@ -531,7 +532,7 @@ export default defineComponent({
     // ]),
     return {
       ...toRefs(state_data),
-      i18n_t,
+      i18n_t,compute_css,compute_img,
       is_highlights,
       show_match_analysis_tab,
       show_chatroom_tab,

@@ -14,8 +14,8 @@
         <span v-else-if="main.sportId == 103" style="--num:40"></span>
         <span v-else-if="main.sportId == 102" style="--num:41"></span>
         <img :src="get_file_path(main.tournamentPic,main.sportId)" @error="handle_img_load_error" v-else>
-        <img v-if="UserCtr.theme.includes('day')"  src="/yazhou-h5/image/common/match_cup.svg" class="beif_src">
-        <img v-else  src="/yazhou-h5/image/common/match_cup2.svg" class="beif_src">
+        <div class="beif_src" :style="compute_css('match-cup')"  alt=""></div>
+      
       </p>
       <p class="col-9" :style="{'font-weight':$q.platform.is.ios ? '500':'bold'}">
         <!-- 冠军趣味玩法特殊对应 -->
@@ -103,6 +103,7 @@
 
 <script setup>
 // import { mapGetters, mapMutations } from "vuex";
+import {compute_css} from 'src/core/'
 import { api_common } from "src/api/index.js";
 import {
   utils, 

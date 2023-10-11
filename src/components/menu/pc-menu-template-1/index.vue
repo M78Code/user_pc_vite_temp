@@ -20,7 +20,6 @@
     </div>
 
     <div style="display: none;">{{ BaseData.BaseData_version }}</div>
-
     <div v-for="item1 in BaseData.left_menu_base_mi_arr" :key="`${jinri_zaopan_}_${item1}`"
       :class="set_vr_or_guanjun_border(item1)">
       <!--   赛种-->
@@ -30,7 +29,7 @@
         <!-- icon -->
         <div class="row items-center">
           <span class="soprts_id_icon"
-            :style="sprite_img['pc-left-menu-bg-image']({ position: `item_${BaseData.compute_sport_id(item1)}` })"
+            :style="compute_css({key:'pc-left-menu-bg-image', position: `item_${BaseData.compute_sport_id(item1)}` })"
             :alt="BaseData.menus_i18n_map[item1]"></span>
 
         </div>
@@ -125,7 +124,6 @@ import { useRoute, useRouter } from 'vue-router'
 // 菜单配置
 import { MenuData, UserCtr } from "src/core/index.js"
 import BaseData from "src/core/base-data/base-data.js"
-import sprite_img from "src/core/server-img/sprite-img/index.js"
 import { compute_css_variables } from "src/core/css-var/index.js"
 import { compute_css } from 'src/core/server-img/index.js'
 import lodash_ from "lodash"

@@ -17,7 +17,8 @@
                             <!-- 设置项 图标 -->
                             <q-item-section avatar>
                                 <i class="icon settings-icon"
-                                    :style="`background: url('${UserCtr.theme.includes('day') ? settings.icon.day : settings.icon.night}') no-repeat center`"></i>
+                                :style="compute_css('icon-setting')"
+                                   ></i>
                             </q-item-section>
 
                             <!-- 设置项 名称 -->
@@ -66,7 +67,7 @@
                                         <div v-if="languageList.includes(language)" :key="index"
                                             class="child-item ellipsis relative-position"
                                             :class="[{ active: UserCtr.lang == language }]" @click="on_click_lang(language)">
-                                            <span :class="['flag', language]" :style="sprite_img['pc-popup-language-icon-image']({position: language, theme: 'local'})"></span>{{ i18n_langs[language] }}
+                                            <span :class="['flag', language]" :style="compute_css({key:'pc-popup-language-icon-image',position: language, theme: 'local'})"></span>{{ i18n_langs[language] }}
                                             <i v-if="UserCtr.lang == language" class="icon-triangle3 q-icon c-icon arrow-show"></i>
                                         </div>
                                     </template>
@@ -92,10 +93,9 @@ import store from "src/store-redux/index.js";
 import { api_account, api_betting, api_details } from "src/api";
 import i18n_langs from "src/i18n/pc/langs/index.mjs";
 import { loadLanguageAsync } from "src/core/index.js";
-import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
-import UserCtr from "src/core/user-config/user-ctr.js";
+import { useMittEmit, MITT_TYPES,compute_css ,UserCtr} from 'src/core/'
 import BetData from "src/core/bet/class/bet-data-class.js";
-import  sprite_img  from   "src/core/server-img/sprite-img/index.js"
+// import  sprite_img  from   "src/core/server-img/sprite-img/index.js"
 
 
 // import { update_bet_item_info as virtual_common_update_bet_item_info } from 'src/core/common-helper/virtual_common.js'

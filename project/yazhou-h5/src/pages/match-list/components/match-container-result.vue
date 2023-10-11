@@ -1,5 +1,5 @@
 <!--
- * @Description: 赛事组件，目前只用于赛果冠军
+ * @Description: 废弃 改文件目前未使用   赛事组件，目前只用于赛果冠军
 -->
 <template>
    <div class="match-container"

@@ -50,12 +50,14 @@
           v-if="(status == 1 || status == 5 || status == 6) && lodash.get(UserCtr, 'pcs')"
           :style="{ opacity: status == 5 || status == 6 ? 0.3 : 1 }">
           <template v-if="slider_show">
-            <img src="/yazhou-h5/image/record/set4.svg" alt="" v-if="UserCtr.theme.includes('y0')">
-            <img src="/yazhou-h5/image/record/set.svg" alt="" v-else>
+             <img :style="compute_css('log-set')"  alt="">
+            <!-- <img :style="" src="/yazhou-h5/image/record/set4.svg" alt="" v-if="('y0')">
+            <img src="/yazhou-h5/image/record/set.svg" alt="" v-else> -->
           </template>
           <template v-else>
-            <img src="/yazhou-h5/image/record/set2.svg" v-if="UserCtr.theme.includes('day')" alt="">
-            <img src="/yazhou-h5/image/record/set3.svg" v-else alt="">
+            <img :style="compute_css('log-set')"  alt="">
+            <!-- <img src="/yazhou-h5/image/record/set2.svg" v-if="('day')" alt="">
+            <img src="/yazhou-h5/image/record/set3.svg" v-else alt=""> -->
           </template>
 
         </div>
@@ -148,7 +150,7 @@ import ClipboardJS from "clipboard";
 import { api_betting } from "src/api/index.js"
 // import { mapGetters, mapMutations } from "vuex";
 import { format_time_zone_time } from "src/core/format/index.js"
-import { utils } from 'src/core/index.js'
+import { utils,compute_css } from 'src/core/index.js'
 import { Platform } from "quasar";
 import { inject, ref, computed, onMounted, onUnmounted, watch, nextTick } from 'vue'
 import lodash from 'lodash'

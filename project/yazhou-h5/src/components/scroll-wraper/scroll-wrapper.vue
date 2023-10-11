@@ -7,21 +7,17 @@
 <template>
   <div class="scroll-wrapper">
     <div style="display: none;">{{ MatchDataBaseH5.data_version.version }}</div>
-    <div class="scroll-i-con" 
-      :class="{high_scrolling: set_ishigh_scrolling && menu_type !== 100 &&
+    <div :class="['scroll-i-con', {high_scrolling: set_ishigh_scrolling && menu_type !== 100 &&
        !(menu_type == 28 && [1001, 1002, 1004, 1011, 1010, 1009].includes(menu_lv2.mi)) && menu_type != 100,
         detail_list: main_source == 'detail_match_list',
         simple: PageSourceData.newer_standard_edition == 1,
-        theme02: UserCtr.theme.includes('night'),
-      }" 
+      }]"
       :style="{ 'min-height': `${menu_type == 100 ? list_wrap_height : match_list_wrapper_height}rem` }">
-      <!-- 循环内部有多个dom时,为了减少最终dom数,可以循环template 当要v-for与v-if同时使用在一个dom上时,可以使用template -->
       <template v-for="(match_mid, index) in MatchMeta.match_mids">
-        <div v-if="match_mid" class="s-w-item" :key="match_mid" :index="index"
-          :class="{ static: is_static_item, last: index == match_mids.length - 1 }" :style="{
-            transform: `translateY(${is_static_item ? 0 : get_match_top_by_mid(match_mid)}rem)`,
-            zIndex: `${200 - index}`
-          }">
+        <div v-if="match_mid" :index="index" :key="match_mid" 
+          :class="['s-w-item', { static: is_static_item, last: index == match_mids.length - 1 }]" 
+          :style="{ transform: `translateY(${is_static_item ? 0 : get_match_top_by_mid(match_mid)}rem)`, zIndex: `${200 - index}` }">
+          <!-- 调试用 -->
           <div v-if="test" class="debug-head data_mid" :data-mid="match_mid" :class="{ first: index === 0 }">
             <span> {{ get_index_f_data_source(match_mid) + '-' + index }} </span>
             <span> key={{match_mid }}-----{{ match_mid }}-{{ 'mid: ' + match_mid }}
@@ -29,6 +25,7 @@
               <span>ms: {{ match_item?.ms }}</span>
             </span>
           </div>
+          <!-- 真是渲染信息 -->
           <div class="s-w-i-inner">
             <slot :match_item="get_match_item(match_mid)" :mid="match_mid" :index="index"></slot>
           </div>
@@ -240,12 +237,6 @@ onUnmounted(() => {
       background-image: var(--q-color-com-img-bg-126);
       &.simple {
         background-image: var(--q-color-com-img-bg-127);
-      }
-      &.theme02 {
-        background-image: var(--q-color-com-img-bg-128);
-        &.simple {
-          background-image: var(--q-color-com-img-bg-129);
-        }
       }
     }
     &.detail_list {

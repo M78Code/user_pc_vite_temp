@@ -5,12 +5,11 @@
 -->
 
 <template>
-  <img v-show="is_show_back_top_btn" class="list-scroll-to-top" :src="scroll_img" @click="back_top" />
+  <img v-show="is_show_back_top_btn" class="list-scroll-to-top" :src="compute_img('scroll-to-top')" @click="back_top">
 </template>
 
 <script setup>
-import { utils } from 'src/core/index.js'
-import UserCtr from "src/core/user-config/user-ctr.js";;
+import { utils,UserCtr, compute_img } from 'src/core/index.js'
 // import { mapGetters } from "vuex";
 import { defineComponent, ref, watch, computed, onDeactivated, onUnmounted } from 'vue'
 
@@ -38,22 +37,6 @@ watch(() => props.list_scroll_top, (curr_top, prev_top) => {
     is_show_back_top_btn.value = false
   }, 5000)
 })
-const scroll_img = computed(() => {
-  // 获取图片主题图标
-  // 没获取到的情况
-  let suffix = "01";
-  // TODO: 待调整
-  //  if(UserCtr.theme.includes('day')){
-  //     suffix='01'
-  //  }
-  //  if(UserCtr.theme.includes('night')){
-  //     suffix='02'
-  //  }
-  //  if(UserCtr.theme.includes('y0')){
-  //     suffix+='_y0';
-  //  }
-  return `/yazhou-h5/image/list/scroll_top_${suffix}.svg`
-})
 /**
    * 回到顶部功能实现过程：
    * 1. 获取页面当前距离顶部的滚动距离（虽然IE不常用了，但还是需要考虑一下兼容性的）
@@ -75,26 +58,6 @@ onUnmounted(() => {
   clearTimeout(scroll_timer)
   scroll_timer.value = null
 })
-// computed:{
-//   ...mapGetters({
-//     get_list_scroll_direction:'get_list_scroll_direction',
-//   }),
-//   // 获取图片主题图标
-//   scroll_img(){
-//     let suffix="__"; // 没获取到的情况
-//        if(UserCtr.theme.includes('day')){
-//           suffix='01'
-//        }
-//        if(UserCtr.theme.includes('night')){
-//           suffix='02'
-//        }
-//        if(UserCtr.theme.includes('y0')){
-//           suffix+='_y0';
-//        }
-//       return  `image/wwwassets/bw3/list/scroll_top_${suffix}.svg`
-//   },
-// },
-
 </script>
 <style lang="scss" scoped>
 .list-scroll-to-top {

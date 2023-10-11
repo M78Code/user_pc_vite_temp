@@ -42,7 +42,7 @@
                     <div class="row items-center">
                       <!-- 联赛icon -->
                       <img
-                        :src="item2.picUrlthumb ? get_file_path(item2.picUrlthumb) : get_theme.includes('theme02') ? none_league_icon_black : default_url"
+                        :src="item2.picUrlthumb ? get_file_path(item2.picUrlthumb) : compute_img('match-cup')"
                         @error="league_icon_error" class="match_logo" />
                       <div class="name-overhide">{{ item2.nameText }}</div>
                       <div class="nums"
@@ -108,7 +108,7 @@ import { api_filter } from "src/api/index.js";
 // 无网络展示组件
 import noData from "project_path/src/components/common/no-data.vue";
 import SFilter from "project_path/src/components/skeleton/filter.vue"
-import { UserCtr, MenuData, i18n_t, get_file_path, useMittEmit, MITT_TYPES } from 'src/core/'
+import { UserCtr, compute_img,MenuData, i18n_t, get_file_path, useMittEmit, MITT_TYPES } from 'src/core/'
 import { ref, watch, computed, nextTick, onMounted, onBeforeUnmount } from 'vue'
 import lodash from 'lodash'
 
@@ -204,11 +204,12 @@ watch(select_num, (new_) => {
  * @param {Object} $event 错误事件对象
  */
 function league_icon_error($event) {
-  if (get_theme.includes('night')) {
-    $event.target.src = none_league_icon_black;
-  } else {
-    $event.target.src = default_url;
-  }
+  // if (get_theme.includes('night')) {
+  //   $event.target.src = none_league_icon_black;
+  // } else {
+  //   $event.target.src =compute_img('match-cup') default_url;
+  // }
+  $event.target.src =compute_img('match-cup')
   $event.target.onerror = null
 }
 

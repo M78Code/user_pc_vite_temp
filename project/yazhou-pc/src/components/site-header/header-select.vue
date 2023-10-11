@@ -18,14 +18,19 @@
                     :class="{ mini: main_menu_toggle == 'mini' }" @mouseenter="stop" @mouseleave="go"
                     @click="menu_change('R')" ref="adv_box"
                     :style="{ 'cursor': lodash.get(currentSwipperArr, `[${currentSwipperIndex}].isClick`) ? 'pointer' : 'unset' }">
-                    <p v-show="UserCtr.theme.includes('day') && currentSwipperArr.length > 1 && showArrow" class="day_arrow">
+
+                    <p v-show="currentSwipperArr.length > 1 && showArrow" class="day_arrow">
+                        <img class="img" :src="compute_img('icon-left')" alt="" @click.stop="boxMouseup('pre')">
+                        <img class="img" :src="compute_img('icon-rigth')" alt="" @click.stop="boxMouseup('next')">
+                    </p>
+                    <!-- <p v-show="('day') && currentSwipperArr.length > 1 && showArrow" class="day_arrow">
                         <img :src="day_left" alt="" @click.stop="boxMouseup('pre')">
                         <img :src="day_right" alt="" @click.stop="boxMouseup('next')">
                     </p>
-                    <p v-show="UserCtr.theme.includes('night') && currentSwipperArr.length > 1 && showArrow" class="night_arrow">
+                    <p v-show="('night') && currentSwipperArr.length > 1 && showArrow" class="night_arrow">
                         <img :src="night_left" alt="" @click.stop="boxMouseup('pre')">
                         <img :src="night_right" alt="" @click.stop="boxMouseup('next')">
-                    </p>
+                    </p> -->
                 </div>
             </div>
 
@@ -86,7 +91,7 @@ import popupLanguage from "project_path/src/components/popup-select/popup-langua
 /* api */
 import { api_account, api_common } from "src/api/index.js";
 
-import {LayOutMain_pc, get_file_path } from 'src/core/index.js'
+import {LayOutMain_pc, get_file_path,compute_img } from 'src/core/index.js'
 import store from "src/store-redux/index.js";
 import { format_money2 } from "src/core/format/index.js"
 // import userCtr from 'src/core/index.js'

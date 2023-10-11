@@ -4,7 +4,7 @@
 -->
 <template>
   <q-layout view="lHh Lpr lFf" class="layout_container">
-    <q-page-container class="page_container">
+    <q-page-container class="page_container" :style="`height:${+inner_height / 100}rem`">
       <!-- <layout-header /> -->
       <!-- <layout-conent /> -->
       <MenuWapper v-if="['sport_menu', 'matchList'].includes(route.name)">

@@ -10,9 +10,7 @@
       <div class="item-body" :key="index" v-for="(item,index) in detailList">
         <div class="row items-center body-top yb_fontsize12 mx-12 body_top">
           <p class="p1 yb_mr4">
-            <img v-if="UserCtr.theme.includes('day')"  :src="$utils.compute_img_tag_src('/image/wwwassets/bw3/common/match_cup.svg')"
-              class="beif_src">
-            <img v-else  src="/yazhou-h5/image/common/match_cup2.svg" class="beif_src">
+            <div :style="compute_css('match-cup')"  class="beif_src"></div>
           </p>
           <template v-if="item.sportName">{{item.matchName}}</template>
           <template
@@ -125,7 +123,7 @@ import {utils } from 'src/core/index.js'
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { format_time_zone_time, format_money2,format_odds, format_score } from "src/core/format/index.js"
 import { t } from "src/boot/i18n.js";;
-import UserCtr from "src/core/user-config/user-ctr.js";;
+import {UserCtr,compute_css} from "src/core/";
 
 //国际化
 
@@ -299,7 +297,7 @@ export default defineComponent({
       hasShared,
       calc_text,
       calc_settle_score,
-      detailList
+      detailList,compute_css
     }
   }
 })

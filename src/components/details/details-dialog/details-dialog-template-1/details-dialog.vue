@@ -129,13 +129,13 @@
               class="new-dialog-item-line details-border1-bottom"
             ></div>
 
-            <img
+            <span
               v-if="show_lvs(item)"
-              :src="UserCtr.theme.includes('day') ? icon_video :
-                icon_video_black"
+              :style="compute_css('icon-video')"
+            
               alt=""
               class="icon-style"
-            >
+            ></span>
           </div>
         </div>
       </div>
@@ -155,8 +155,7 @@ import matchDialogStage from 'project_path/src/components/match/match-dialog-sta
 import showStartTime from 'project_path/src/components/details/wight/show-start-time.vue'   // 详情页同联赛的赛事即将开赛显示时间
 // 工具
 import { format_total_score } from 'src/core/format/module/format-score.js'
-import { UserCtr, MenuData } from "src/core/index.js";
-import { useMittEmit, MITT_TYPES } from  "src/core/mitt"
+import { UserCtr, MenuData,compute_css,useMittEmit, MITT_TYPES } from "src/core/index.js";
 import { compute_css_variables } from "src/core/css-var/index.js"
 import icon_video from 'project_path/image/common/icon_video.png'
 import icon_video_black from 'project_path/image/common/icon_video_black.png'

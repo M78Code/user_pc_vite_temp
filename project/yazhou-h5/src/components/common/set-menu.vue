@@ -6,8 +6,9 @@
 <template>
   <div class="set-menu yb_fontsize12" @click.stop="change_show_status">
     <div class="filter-icon-wrapper yb-flex-center">
-      <div class="img" :style="compute_css('menu-icon')" v-if="8 != menu_type"></div>
-      <div class="img esports" v-if="8 == menu_type"></div>
+      <div class="img" v-if="!is_export" :style="compute_css('menu-icon')"></div>
+      <div class="img esports" v-else></div>
+      <!-- //电竞的时候 底色黑色 所以图标换了 -->
     </div>
     <!--
       移除原有quasar侧边栏组件,因为quasar会强制将body改为绝对定位,影响赛事列表滚动数据
@@ -19,7 +20,7 @@
       <div class="menu-inner" @click.stop="" :style="{ width: `${calc_width}px`, }">
         <!-- 关闭按钮 -->
         <div class="close-wrap">
-          <div :style="compute_css('menu-close-icon')" class="img" @click="is_show_menu = false"></div>
+          <div :style="compute_css('icon-close')" class="img" @click="is_show_menu = false"></div>
         </div>
         <!-- 用户信息 -->
         <div class="user-info border-bottom">
@@ -158,14 +159,17 @@
         <div class="set-item">
           <div class="icon set-icon-7" :style="compute_css('menu-left-menu-image', 7)"></div>
           <div class="name">{{ $t("setting_menu.skin") }}</div>
-          {{ theme }}
+          {{
+            lodash.get(theme_map[theme], `i18n.${lang}`, '-')
+          }}
           <div class="skin-wrap">
-            <div class="skin-icon skin-icon1" :style="compute_css('menu-theme-skin1')" @click="UserCtr.set_theme('day')">
+            <div class="skin-icon skin-icon1" v-for="(item, i) in theme_list" @click="UserCtr.set_theme(item.key)"
+              :style="compute_css(i == 0 ? 'menu-theme-night' : 'menu-theme-day')">
+              <!-- {{ item.i18n[lang] || item.key }} -->
             </div>
-            <div class="skin-icon skin-icon2" :style="compute_css('menu-theme-skin2')"
-              @click="UserCtr.set_theme('night')">
-            </div>
+
           </div>
+
         </div>
       </div>
     </div>
@@ -174,6 +178,8 @@
 
 <script setup>
 import { ref, computed, onUnmounted, watch } from "vue";
+import { theme_list, theme_map } from "src/core/theme/"
+
 import GlobalAccessConfig from "src/core/access-config/access-config.js";
 import { api_betting } from "src/api/index";
 import { format_money2 } from "src/core/format/index.js";
@@ -182,6 +188,8 @@ import BetData from "src/core/bet/class/bet-data-class.js";
 import { loadLanguageAsync, compute_css, useMittOn, MITT_TYPES, MenuData, UserCtr } from "src/core/index.js";
 import { useRoute, useRouter } from "vue-router";
 import { lang, sort_type, theme, standard_edition, user_info } from "project_path/src/mixin/userctr";
+import {is_export } from "project_path/src/mixin/menu";
+
 
 let route = useRoute();
 let router = useRouter();

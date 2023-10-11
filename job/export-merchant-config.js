@@ -2,10 +2,11 @@
  * 合并输出商户配置
  */
 import axios from "axios";
+import colors from "colors"
 import { merge_merchant_config } from "./merge-merchant-config.js";
 import { ensure_write_folder_exist, write_file } from "./write-folder-file.js";
 import { DEV_TARGET_VERSION, DEV_PROJECT_NAME } from "../dev-target-env.js";
-console.log("export-merchant-config----------合并输出商户配置-");
+console.log(colors.bgRed("export-merchant-config----------合并输出商户配置-"));
 
 
 

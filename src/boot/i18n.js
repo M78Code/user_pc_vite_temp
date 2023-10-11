@@ -1,11 +1,11 @@
 
 //  import { LocalStorage, SessionStorage  } from "src/core/utils/index.js";
 import { LocalStorage, SessionStorage } from "src/core/utils/module/web-storage.js";
-// import server_map from "app/job/output/i18n/index.js";
+import server_i18n_map from "app/job/output/i18n/index.json";
 
 
 import { createI18n } from "vue-i18n";
-
+import lodash from 'lodash'
 import BUILDIN_CONFIG from "app/job/output/env/final.js";
 
 
@@ -24,7 +24,23 @@ const i18n = createI18n({
   // 去除控制台i18n警告信息
   silentTranslationWarn: true,
 });
+//服务器语言打包key对应本地语言key
+const server_key_map = {
+  "en-gb": "en",
+  "zh-cn": "zh",
+  "zh-tw": "tw",
+  "vi-vn": "vi",
+  "th-th": "th",
+  "ms-my": "ms",
+  "id-id": "ad",
+  "my-my": "mya",
+  "pt-br": "pt",
+  "ja-jp": "ry",
+  "ko-kr": "ko",
+  "es-es": "es",
+}
 
+//语言key对应的本地 文件夹
 const map_lang = {
   en: "en-gb",
   zh: "zh-cn",
@@ -39,6 +55,9 @@ const map_lang = {
   ko: "ko-kr",
   es: "es-es",
 };
+
+
+
 /**
  * @description: 异步获取国际化数据,并设置
  * @param {*} lang 如果沒有穿入就是用緩存的
@@ -55,29 +74,25 @@ function loadLanguageAsync(lang) {
       // let langFile = langfile.default || langfile;
       // 设置语言信息
       console.error(langfile)
-      i18n.global.setLocaleMessage(lang, langfile);
+    //加载服务器语言设置
+    let msg = {}
+    const server_val = server_key_map[lang];
+    if (server_val) {
+      const message = server_i18n_map[server_val]
+      for (let v in message) {
+        lodash.set(msg, v, message[v])
+      }
+    }
+    i18n.global.setLocaleMessage(lang, { ...langfile, ...msg });
     i18n.global.locale = lang;
     // 设置语种
     i18n.locale = lang;
-
-    //加载服务器语言设置
-    // load_server_i18n(lang)
     return lang;
   }).catch(error => {
     console.error('lockie_test_consolee', error);
   });
 
 }
-// 动态加载 服务器 对应的语言包
-// function load_server_i18n(lang) {
-//   return import(
-//     /* webpackChunkName: "lang-[request]" */ `../../job/output/i18n/${server_map[lang]}.json`
-//   ).then((langfile) => {
-//     i18n.global.mergeLocaleMessage(lang, langfile);
-//   }).catch(error => {
-//     console.error('lockie_test_consolee', error);
-//   });
-// }
 // 新增
 function t(key, args, options) {
   if (!i18n) return key;
@@ -93,4 +108,4 @@ function i18n_tc(key, args, options) {
   if (!i18n) return key;
   return i18n.global.tc(key, args, options);
 }
-export { i18n, loadLanguageAsync, map_lang, t, i18n_t, i18n_tc };
+export { i18n, loadLanguageAsync, map_lang, t, i18n_t, i18n_tc, server_key_map };

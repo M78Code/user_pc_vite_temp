@@ -12,7 +12,7 @@ import PageSourceData from "src/core/page-source/page-source.js";
 import MatchListCardClass from '../match-card/match-list-card-class'
 import { MATCH_LIST_TEMPLATE_CONFIG } from "src/core/match-list-h5/match-card/template"
 import mi_euid_mapping_default from "src/core/base-data/config/mi-euid-mapping.json"
-import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from 'src/core'
+import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, useMittEmit, MITT_TYPES } from 'src/core'
 import { api_common } from "src/api/index.js";
 
 class MatchMeta {
@@ -73,8 +73,6 @@ class MatchMeta {
   get_origin_match_mids_by_mi (mi) {
     // 当前菜单下的 mids 集合
     const match_mids_list = this.get_match_mids_by_mi(mi)
-    const length = lodash.get(match_mids_list, 'length', 0)
-    if (length < 1) return
     this.set_match_mids(match_mids_list, 8)
   }
 
@@ -368,8 +366,11 @@ class MatchMeta {
    * @param { mids } 赛事 mids 
    */
   set_match_mids (mids = [], num = 10) {
+    // 显示空数据页面
+    if (mids.length < 1) return useMittEmit(MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, true);
     this.match_mids = [...new Set(mids.slice(0, num))]
     this.get_origin_match_by_mids(this.match_mids)
+    useMittEmit(MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, false);
   }
 
   /**

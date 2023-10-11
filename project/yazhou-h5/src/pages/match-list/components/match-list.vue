@@ -9,7 +9,6 @@
       :is_goto_top_random="is_goto_top_random" :match_list_wrapper_height="match_list_wrapper_height"
       :class="{ 'data-get-empty': data_get_empty }">
       <template v-slot="{ match_item, index }">
-        <!-- 1111 -- {{ match_item?.csid }} -- {{ mid }} -->
         <template v-if="match_item">
            <!--虚拟体育(赛果)-->
           <v-match-container 
@@ -92,10 +91,10 @@
       </div>
     </div>
 
-    <no-data class="data-get-empty1" v-if='data_get_empty && !get_show_favorite_list' which='noMatch'
-      height='400'></no-data>
-    <no-data class="data-get-empty2" v-if='data_get_empty && get_show_favorite_list'
-      :which='menu_type === 28 ? "noMatch" : "collect"' height='400'></no-data>
+    <!-- 非收藏页 -->
+    <no-data class="data-get-empty1" v-if='data_get_empty && !get_show_favorite_list' which='noMatch' height='400'></no-data>
+    <!-- 收藏页 -->
+    <no-data class="data-get-empty2" v-if='data_get_empty && get_show_favorite_list' :which='menu_type === 28 ? "noMatch" : "collect"' height='400'></no-data>
 
   </div>
 </template>

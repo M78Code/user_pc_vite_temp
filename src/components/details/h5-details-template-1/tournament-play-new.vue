@@ -64,11 +64,9 @@
                         {{ $t('football_playing_way.penalty_cards')}}
                       </div>
                       <!-- 关闭按钮 -->
-                      <img
-                          @click="info_icon_close"
-                          style="margin-top:-0.04rem"
-                          :src="`/image/wwwassets/bw3/menu/set_close${UserCtr.theme.includes('02') ? '_2' : ''}.svg`"
-                      >
+                      <i   @click="info_icon_close"
+                          style="margin-top:-0.04rem" :style="compute_css('icon-close')"></i>
+                      
                     </div>
                     <!-- 角球说明文本 -->
                     <div v-if="['125','230'].includes(item_data.hpid)" class="info-content">{{ $t('play_way_info.6')}}</div>
@@ -134,9 +132,8 @@ import { api_common } from "src/api/index.js";
 // #TODO mixins
 // import betting from "src/project/mixins/betting/betting.js";
 import lodash from "lodash";
-import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, nextTick } from "vue";
-import { UserCtr } from "src/core/index.js";
+import { UserCtr,compute_css,useMittOn, useMittEmit, MITT_TYPES  } from "src/core/index.js";
 
 export default defineComponent({
   name: "tournament_play_new",
@@ -702,7 +699,7 @@ export default defineComponent({
     })
     return {
       ...toRefs(component_data),
-      get_uid,
+      get_uid,compute_css,
       get_detail_data,
       get_fewer,
       get_is_close_info,

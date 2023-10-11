@@ -14,14 +14,20 @@
         <div v-if="currentSwipperArr.length > 0" class="adv-box-r" :class="{ mini: main_menu_toggle == 'mini' }"
             @mouseenter="stop" @mouseleave="go" @click="menu_change('R')" ref="adv_box"
             :style="{ 'cursor': lodash.get(currentSwipperArr, `[${currentSwipperIndex}].isClick`) ? 'pointer' : 'unset' }">
-            <p v-if="theme.includes('day') && currentSwipperArr.length > 1 && showArrow" class="day_arrow">
+           
+            <p v-show="currentSwipperArr.length > 1 && showArrow" class="day_arrow">
+                <img class="img" :src="compute_img('icon-left')" alt="" @click.stop="boxMouseup('pre')">
+                <img class="img" :csrc="compute_img('icon-rigth')" alt="" @click.stop="boxMouseup('next')">
+             </p>
+            
+            <!-- <p v-if="('day') && currentSwipperArr.length > 1 && showArrow" class="day_arrow">
                 <img :src="day_left" alt="" @click.stop="boxMouseup('pre')">
                 <img :src="day_right" alt="" @click.stop="boxMouseup('next')">
             </p>
-            <p v-if="theme.includes('night') && currentSwipperArr.length > 1 && showArrow" class="night_arrow">
+            <p v-if="('night') && currentSwipperArr.length > 1 && showArrow" class="night_arrow">
                 <img :src="night_left" alt="" @click.stop="boxMouseup('pre')">
                 <img :src="night_right" alt="" @click.stop="boxMouseup('next')">
-            </p>
+            </p> -->
         </div>
     </div>
 </template>
@@ -29,7 +35,7 @@
 import { ref, reactive, watch, onUnmounted } from 'vue'
 import lodash from 'lodash'
 import store from "src/store-redux/index.js";
-import { i18n_t } from "src/boot/i18n.js"
+import { i18n_t ,compute_img} from "src/core/"
 
 /** api */
 import { api_account } from "src/api/index.js";

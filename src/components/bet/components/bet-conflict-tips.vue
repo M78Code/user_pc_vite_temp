@@ -32,10 +32,8 @@
                     <i class="img2" :class="{ 'img3': BetData.bet_is_accept != 2 }" @click="toggle_accept"></i>
                     <span :class="{ 'auto-text': BetData.bet_is_accept == 2, 'ac-rules': BetData.bet_list.length > 1 }" class="yb_mx4"
                         style="max-width:1.6rem" @click="toggle_accept">{{ $t("ac_rules.auto") }}</span>
-                    <img src="image/wwwassets/bw3/svg/rules2.svg" @click="change_accept" class="img1"
-                        v-if="UserCtr.theme.includes('day')" />
-                    <img src="image/wwwassets/bw3/svg/rules3.svg" @click="change_accept" class="img1" v-else />
-                    <!-- 右 -->
+                        <i class="img1" @click="change_accept" :style="compute_css('icon-issue')"></i>
+                     <!-- 右 -->
                     <span v-if="BetData.bet_list.length == 1">
                         <i class="img2" :class="{ 'img3': get_used_money != 0 }" @click="change_used_money"></i>
                         <span class="yb_ml4" :class="get_used_money == 0 && 'auto-text'"
@@ -58,8 +56,7 @@
 import { ref, onMounted,watch,computed,onUnmounted } from 'vue';
 import lodash from 'lodash'
 
-import {useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt/"
-import { UserCtr } from "src/core/index.js";
+import { UserCtr,compute_css,useMittOn, useMittEmit, MITT_TYPES  } from "src/core/index.js";
 
 const props = defineProps({
     is_show_conflict: {

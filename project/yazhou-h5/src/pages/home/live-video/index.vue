@@ -50,8 +50,10 @@
                   <img src="image/bw3/svg/home/play.svg" alt="">
                   <span>{{ money_filter(item.plnum) }}</span>
                 </div>
-                <img v-if="GlobalAccessConfig.get_collectSwitch()"
-                  :src="item.mf ? (!_.get(UserCtr, 'favoriteButton') && UserCtr.theme.includes('y0') ? y0_img_favorite_black : `/image/bw3/svg/home/pentagram_s.svg`) : `/image/bw3/svg/home/pentagram.svg`"
+
+                  
+                <img class="img" v-if="GlobalAccessConfig.get_collectSwitch()"
+                  :src="item.mf ? compute_img('icon-favorite') : compute_img('icon-favorite-s')"
                   @click.stop="on_collection(item)">
               </div>
               <div class="video-list-right">
@@ -104,8 +106,7 @@ import scroll_top from 'project_path/src/components/record-scroll/scroll-top'
 import counting_down from 'project_path/src/components/common/counting-down'
 import { format_total_score } from "src/core/format/index.js"
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
-import {money_filter} from "src/core/index.js"
-import UserCtr from "src/core/user-config/user-ctr.js";;
+import {money_filter,compute_img,compute_img,UserCtr} from "src/core/index.js"
   //右侧菜单内容
   let carousel_data = ref({list:[],obj:{}})
   // 头部选项卡下标
@@ -182,11 +183,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";;
      * @param {Object} $event 错误事件对象
      */
     const league_icon_error = ($event) =>{
-      if(UserCtr.theme.includes('night')){
-        $event.target.src = 'image/bw3/svg/match_cup_black.svg'
-      } else {
-        $event.target.src = 'image/bw3/svg/match_cup.svg'
-      }
+      $event.target.src =compute_img("match-up")
       $event.target.onerror = null
     }
     // 点击视频界面跳转到详情播放视频

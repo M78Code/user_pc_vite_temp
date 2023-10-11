@@ -30,7 +30,7 @@
           <div class="group-item">
             <div class="team-item" :class="{'font-bold': i < 3}" v-for="(item, i) in liat_data" :key="i" >
               <div class="col1">
-                <img v-if="i<3" class="img-Avatar" :src=" item.teamLogo ? get_file_path(item.teamLogo) : UserCtr.theme.includes('night') ? none_league_icon_black: default_url" @error="league_icon_error" alt="">
+                <img v-if="i<3" class="img-Avatar" :src=" item.teamLogo ? get_file_path(item.teamLogo) : compute_img('league-avatar-dedault')" @error="league_icon_error" alt="">
                 <span v-else class="number" :class="`calculation_color${+i+ 1}`">{{ +i+ 1 }}</span>
               </div>
               <!-- 球队 -->
@@ -60,7 +60,7 @@
           <div class="group-item">
             <div class="team-item" v-for="(item, i) in liat_data" :key="i" :class="{ 'black-font':  i<3}">
               <div class="col1">
-                <img v-if="i<3" class="img-Avatar" :src=" item.playerLogo ? get_file_path(item.playerLogo) : UserCtr.theme.includes('night') ? none_league_icon_black: default_url" @error="league_icon_error" alt="">
+                <img v-if="i<3" class="img-Avatar" :src=" item.playerLogo ? get_file_path(item.playerLogo) : compute_img('league-avatar-dedault')" @error="league_icon_error" alt="">
                 <span v-else class="number" :class="`calculation_color${+i+ 1}`">{{ +i+ 1 }}</span>
               </div>
               <!-- 球队 -->
@@ -92,7 +92,7 @@
           <div class="group-item">
             <div class="team-item" v-for="(item, i) in liat_data" :key="i" :class="{ 'black-font':  i<3}">
               <div class="col1">
-                <img v-if="i<3" class="img-Avatar" :src=" item.teamLogo ? get_file_path(item.teamLogo) : UserCtr.theme.includes('night') ? none_league_icon_black: default_url"  @error="league_icon_error" alt="">
+                <img v-if="i<3" class="img-Avatar" :src=" item.teamLogo ? get_file_path(item.teamLogo) : compute_img('league-avatar-dedault')"  @error="league_icon_error" alt="">
                 <span v-else class="number" :class="`calculation_color${+i+ 1}`">{{ +i+ 1 }}</span>
               </div>
               <!-- 球队 -->
@@ -116,7 +116,7 @@
 
 <script setup>
 import no_data from "project_path/src/components/common/no-data.vue";    // 无网络展示组件
-import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
+import { useMittEmit, useMittOn, MITT_TYPES,compute_img } from "src/core/index.js"
 import { ref} from 'vue';
 
 
@@ -155,9 +155,9 @@ const props = defineProps({
 })
 
 let default_index = ref(0)
-let default_url =  ref("image/bw3/png/home_page/Avatar.png") //默认图片地址
+let default_url =  ("image/bw3/png/home_page/Avatar.png") //默认图片地址
 // 无联赛logo图标黑色版
-let none_league_icon_black =  ref("image/bw3/png/home_page/Avatar_black.png")
+let none_league_icon_black =  ("image/bw3/png/home_page/Avatar_black.png")
 
 
 
@@ -170,11 +170,9 @@ let none_league_icon_black =  ref("image/bw3/png/home_page/Avatar_black.png")
      * @param {Object} $event 错误事件对象
      */
     const league_icon_error = ($event) => {
-      if(UserCtr.theme.includes('night')){
-        $event.target.src = none_league_icon_black.value;
-      } else {
-        $event.target.src = default_url.value;
-      }
+      
+        $event.target.src=compute_img('league-avatar-dedault');
+     
       $event.target.onerror = null
     }
 

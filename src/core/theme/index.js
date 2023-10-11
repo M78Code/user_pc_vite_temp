@@ -4,46 +4,44 @@
  *
  *
  * 需要实现：
- * 1.读取最终商户配置内的 CSS key   {activity-bg-color：{day:"",night:""}}
+ * 1.读取最终商户配置内的 CSS key  
  * job\output\merchant\config.json
  *
  */
 
-import merchant_config from "app/job/output/merchant/config.json";
-import all_css_keys from "app/job/output/css/index";
-import { ref, computed } from "vue";
-import store from "src/store-redux/index.js"
+import server_theme_list from "app/job/output/theme/index.json";
+import { server_key_map } from "src/boot/i18n.js";
+import lodash from 'lodash'
 
-import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
-const { langReducer } = store.getState();
-const current_theme = ref(langReducer.theme);
-useMittOn(MITT_TYPES.EMIT_THEME_CHANGE, (_v) => {
-  current_theme.value = _v;
-});
+//查找默认的主题
 
-//前缀名称
-const css_prefix = "--qq--";
-/**
- * 获取当前节点的 CSS 变量值  style 对象
- * @param {*} css_module
- */
-export const compute_css_var_style = (css_module) => {
-  //要看看最后css的解构是如何的
-  return computed(() => {
-    if(!all_css_keys[css_module])return {}
-    return all_css_keys[css_module].reduce((obj, key) => {
-      css_prefix;
-      obj[`${css_prefix}${key}`] =
-        merchant_config.css[key][current_theme.value];
-      return obj;
-    }, {});
-  });
-};
-let all_var_obj = {
-  global: {
-    "activity-bg-color": { day: "", night: "" },
-  },
-  activity: {
-    "activity-bg-color": { day: "", night: "" },
-  },
-};
+const theme_map = {}
+for (let key in server_theme_list) {
+  const val = server_theme_list[key]
+  const _i18n = lodash.get(val, "i18n", {})
+  const local_i18n = {}
+  for (let key in _i18n) {
+    local_i18n[server_key_map[key]] = _i18n[key]
+  }
+  theme_map[key] = {
+    ...val,
+    i18n: local_i18n,
+    _i18n: _i18n
+  }
+}
+
+
+const theme_list = Object.values(theme_map).sort((a, b) => a.order - b.order)
+let default_theme_key;
+let default_theme = theme_list.find(i => i.is_default == 1);
+if (default_theme) {
+  default_theme_key = default_theme.key
+} else {
+  default_theme_key = theme_list[0].key
+}
+
+export {
+  theme_list,
+  theme_map,
+  default_theme_key
+}
