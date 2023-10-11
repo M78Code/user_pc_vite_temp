@@ -24,12 +24,12 @@
         </div>
     </div>
     <!-- 次要玩法   1. 左边队伍名标题   2. 右边 盘口组件  模块 -->
-    <div class="transition-w-odd" :mid="match_info.mid" v-if="current_tab_item.hps" :class="{
-      expanded: any_unfold && any_unfold != '0',
-      bodan_wanfa: [18].includes(+ lodash.get(current_tab_item, 'id')) && bold_gaodu_css > 3,
-      bodan_wanfa_small: any_unfold && [18].includes(+ lodash.get(current_tab_item, 'id')) && bold_gaodu_css <= 3,
-      five_minutes_wanfa: any_unfold && any_unfold != '0' && [19].includes(+ lodash.get(current_tab_item, 'id')),
-    }">
+    <div v-if="current_tab_item.hps" :mid="match_info.mid"  :class="['transition-w-odd', {
+        expanded: any_unfold && any_unfold != '0',
+        bodan_wanfa: [18].includes(+ lodash.get(current_tab_item, 'id')) && bold_gaodu_css > 3,
+        bodan_wanfa_small: any_unfold && [18].includes(+ lodash.get(current_tab_item, 'id')) && bold_gaodu_css <= 3,
+        five_minutes_wanfa: any_unfold && any_unfold != '0' && [19].includes(+ lodash.get(current_tab_item, 'id')),
+      }]">
       <!--次要玩法标 队名 和 比分 和 盘口-->
       <div class="row justify-between" v-if="any_unfold">
         <!--次要玩法标 队名 和 比分  次要玩法 左边的 区域    波胆，5分钟玩法  不显示-->
@@ -65,7 +65,7 @@
             <!--csid 1足球-->
             <span v-if="[2, 5, 17].includes(+current_tab_item.id)" @click="info_icon_click($event, match_info.mid)"
               :src="compute_css(show_tips?'icon-tips':'icon-tips-d')"></span>
-             {{ match_info.csid == 1 ? current_tab_item.title : mmp_map_title }}
+            {{ match_info.csid == 1 ? current_tab_item.title : mmp_map_title }}
           </div>
         </div>
         <!--次要玩法 盘口 右边的 区域-->
@@ -73,7 +73,6 @@
           :current_tab_item="current_tab_item" :invoke_source="'attached'" :bold_all_list="bold_all_list" :five_minutes_all_list="five_minutes_all_list" />
       </div>
     </div>
-
   </div>
 </template>
 

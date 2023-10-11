@@ -33,7 +33,7 @@
       </span>
       <!-- 折叠收起不用消失 -->
       <div v-if="main_source!='home_hot_page_schedule'">
-        <img class="league-collapse-dir" :class="{ 'collapsed': collapsed }" :src='compute_img("icon-collapse")' />
+        <img class="league-collapse-dir" :class="{ 'collapsed': league_collapsed }" :src='compute_img("icon-collapse")' />
       </div>
     </div>
     <!-- 未开赛标题  -->
@@ -77,8 +77,7 @@
               </span>
             </span>
             <!--标准版 赔率标题栏-->
-            <div class="odd-title-wraper row " v-if="get_league_show(i)"
-              v-show="!show_newer_edition && !is_show_result() && !collapsed">
+            <div class="odd-title-wraper row " :style="{width: !collapsed ? '100%' : 0}">
               <div class="odd-title-i-w flex">
                 <div class="odd-t-i-wrapper flex items-center"
                   :class="{ 'status2': get_standard_odd_status == 1 && match_of_list_ascertain.length > 3 }">
@@ -93,14 +92,13 @@
             </div>
           </span>
           <template v-if="(!['detail_match_list', 'home_hot_page_schedule'].includes(main_source)) && collapsed">
-            <img class="league-collapse-dir" :class="{ 'collapsed': collapsed }" 
-            :src='compute_img("icon-collapse")'  />
+            <img class="league-collapse-dir" :class="{ 'collapsed': collapsed }"  :src='compute_img("icon-collapse")'  />
           </template>
         </div>
       </div>
-      <!--  间隔,因为要求不能用 marginTop,因此加上此元素  -->
-      
+      <!-- 卡片主内容 -->
       <q-slide-transition>
+        <!--  间隔,因为要求不能用 marginTop,因此加上此元素  -->
         <div style="width: 100%" v-show="!collapsed">
           <div style="height: 0.06rem " />
           <!--  一整块赛事的 div 内容 ： 1. 左边 【时间，队名，比分】   2. 右边 【赔率 模块】  -->
@@ -663,6 +661,11 @@ const handle_league_fold = () => {
   if (['detail_match_list', 'home_hot_page_schedule'].includes(props.main_source)) return;
   MatchFold.set_league_fold(props.match_of_list.tid)
 }
+const league_collapsed = computed(() => {
+  if (['home_hot_page_schedule'].includes(props.main_source)) return false
+  const falg = lodash.get(MatchFold.h5_csid_map_info.value, `csid_${props.match_of_list.csid}`, true)
+  return !falg
+})
 /**
  * @description 赛事显示/隐藏
  */
@@ -1215,7 +1218,6 @@ const get_m_status_show = (i) => {
  */
 const get_league_show = (i) => {
   let flag = true;
-  let c = null, p = null;
   if (i) {
     if (match.value && prev_match.value) {
       if (match.value.tid != prev_match.value.tid) {
