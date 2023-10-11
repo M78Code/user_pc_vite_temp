@@ -23,7 +23,7 @@
                     <div class="row items-center">
                       <!-- 联赛icon -->
                       <img
-                        :src="item1.picUrlthumb ? get_file_path(item1.picUrlthumb) : get_theme.includes('night') ? none_league_icon_black : default_url"
+                        :src="item1.picUrlthumb ? get_file_path(item1.picUrlthumb) :compute_img('match-cup')"
                         @error="league_icon_error" class="match_logo" />
                       <div class="name-overhide">{{ item1.nameText }}</div>
                       <div class="nums"
@@ -31,11 +31,9 @@
                         {{ item1.num }}</div>
                     </div>
                   </div>
-                  <img v-if="item1.select" class="icon-search"
-                    :src="`/image/svg/check_circle_outline-24px${on_suffix}.svg`" />
-                  <img v-else
-                    :src="`/yazhou-h5/image/svg/selected-no${get_theme.includes('02') ? '-2' : get_theme.includes('y0') ? '_y0' : ''}.svg`"
-                    alt="" class="icon-search">
+                  <img  class="icon-search"
+                  :src="compute_img(item1.select?'checkbox-box-s':'checkbox-box')"
+                     />
                 </div>
               </div>
             </div>
@@ -68,11 +66,8 @@
       <div class="row items-center"
         :style="{ lineHeight: ['vi', 'en', 'th', 'ms', 'ad'].includes(get_lang) ? '1' : 'unset' }">
         <!-- <template> -->
-        <img v-if="all_checked" class="icon-search" @click="all_checked_click"
-          :src="`/image/svg/check_circle_outline-24px${on_suffix}.svg`" />
-        <img
-          :src="`/yazhou-h5/image//svg/selected-no${get_theme.includes('02') ? '-2' : get_theme.includes('y0') ? '_y0' : ''}.svg`"
-          alt="" class="icon-search" @click="all_checked_click" v-else>
+        <img  class="icon-search" @click="all_checked_click"
+        :src="compute_img(all_checked?'checkbox-box-s':'heckbox-box')" />
         <span class="txt ellipsis-2-lines" @click="all_checked_click">{{ $t('common.all_select') }}</span>
         <!-- </template> -->
         <span class="txt ellipsis-3-lines" @click="select_btn_click">{{ $t('filter.reverse_election') }}</span>
@@ -96,7 +91,7 @@ import { api_filter } from "src/api/index.js";
 import NoData from "project_path/src/components/common/no-data.vue";
 import SFilter from "project_path/src/components/skeleton/filter.vue";
 import lodash from 'lodash';
-import { i18n_t, MITT_TYPES, useMittEmit, MenuData, UserCtr, get_file_path } from 'src/core/'
+import { i18n_t, MITT_TYPES, useMittEmit, MenuData,compute_img, UserCtr, get_file_path } from 'src/core/'
 import { ref, watch, computed, nextTick, onBeforeUnmount } from 'vue';
 const default_url = "/yazhou-h5/image/svg/match_cup.svg"  //默认图片地址
 // 无联赛logo图标黑色版
@@ -178,11 +173,7 @@ watch(select_num, (new_) => {
  * @param {Object} $event 错误事件对象
  */
 function league_icon_error($event) {
-  if (get_theme.value.includes('night')) {
-    $event.target.src = none_league_icon_black.value;
-  } else {
-    $event.target.src = default_url;
-  }
+  $event.target.src =compute_img('match-cup')
   $event.target.onerror = null
 }
 

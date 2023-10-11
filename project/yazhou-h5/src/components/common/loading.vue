@@ -5,7 +5,7 @@
 -->
 <template>
   <div class="loading" :style="`top:${top}`">
-    <div class="la-line-scale" :class="{'y0_bg': UserCtr.theme.includes('y0')}">
+    <div class="la-line-scale" >
       <div></div>
       <div></div>
       <div></div>
@@ -45,10 +45,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";;
 .la-line-scale {
   display: block;
   font-size: 0;
-  color: #ffb001;
-  &.y0_bg {
-    color: #569ffd;
-  }
+  color:  var(--q-gb-t-c-1);
 }
 .la-line-scale > div {
   display: inline-block;

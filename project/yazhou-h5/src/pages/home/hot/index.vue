@@ -113,19 +113,6 @@ const wrapper_scrolling = ($event) => {
     }
   });
 }
-
-/**
-  * @description: 联赛联赛图标出错
-  * @param {Object} $event 错误事件对象
-  */
-const league_icon_error = ($event) => {
-  if (UserCtr.theme.includes('night')) {
-    $event.target.src = "/yazhou-h5/image/svg/match_cup_black.svg";
-  } else {
-    $event.target.src = "/yazhou-h5/image/svg/match_cup.svg";
-  }
-  $event.target.onerror = null
-}
 // 竞彩足球图片 处理
 const host = (item) => {
   let url = ''

@@ -15,8 +15,6 @@
       <div class="col-2 close">
         <span class="close-click-padding" @click="close_show">
           <img class="img" :src="compute_img('icon-close')" >
-          <!-- <template v-if="lodash.get(store_data, `get_theme.includes('day')`)"><img  src="/yazhou-h5/image/svg/bet_close2.svg"></template>
-          <template v-else><img  src="/yazhou-h5/image/svg/bet_close3.svg"></template> -->
         </span>
       </div>
     </div>

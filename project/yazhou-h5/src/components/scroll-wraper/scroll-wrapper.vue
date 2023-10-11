@@ -11,7 +11,6 @@
        !(menu_type == 28 && [1001, 1002, 1004, 1011, 1010, 1009].includes(menu_lv2.mi)) && menu_type != 100,
         detail_list: main_source == 'detail_match_list',
         simple: PageSourceData.newer_standard_edition == 1,
-        theme02: UserCtr.theme.includes('night'),
       }]"
       :style="{ 'min-height': `${menu_type == 100 ? list_wrap_height : match_list_wrapper_height}rem` }">
       <template v-for="(match_mid, index) in MatchMeta.match_mids">
@@ -238,12 +237,6 @@ onUnmounted(() => {
       background-image: var(--q-color-com-img-bg-126);
       &.simple {
         background-image: var(--q-color-com-img-bg-127);
-      }
-      &.theme02 {
-        background-image: var(--q-color-com-img-bg-128);
-        &.simple {
-          background-image: var(--q-color-com-img-bg-129);
-        }
       }
     }
     &.detail_list {
