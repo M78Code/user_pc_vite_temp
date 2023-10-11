@@ -8,6 +8,7 @@ import BaseData from 'src/core/base-data/base-data.js'
 import MatchPage from 'src/core/match-list-h5/match-class/match-page'
 import MenuData from "src/core/menu-h5/menu-data-class.js"
 import UserCtr from 'src/core/user-config/user-ctr.js'
+import MatchFold from 'src/core/match-fold'
 import PageSourceData from "src/core/page-source/page-source.js";
 import MatchListCardClass from '../match-card/match-list-card-class'
 import { MATCH_LIST_TEMPLATE_CONFIG } from "src/core/match-list-h5/match-card/template"
@@ -194,6 +195,12 @@ class MatchMeta {
         is_fold_tab_play,
         is_show_league,
       })
+      // 初始化赛事折叠
+      MatchFold.set_h5_tid_map_info(t)
+      // 初始化球种折叠状态
+      if (`csid_${t.csid}` in MatchFold.h5_csid_map_info.value) return
+      MatchFold.set_h5_csid_map_info(t.csid)
+      
     })
     this.handle_submit_warehouse(list)
   }
@@ -382,6 +389,8 @@ class MatchMeta {
   handle_update_match_info(list) {
     list = lodash.map(list, t => {
       const match = MatchDataBaseH5.get_quick_mid_obj(t.mid)
+      // 覆写赛事折叠参数
+      MatchFold.set_h5_tid_map_info(t)
       return Object.assign({}, match, t)
     })
     // 设置仓库渲染数据

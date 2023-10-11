@@ -11,6 +11,7 @@ import MatchListParams from '../composables/match-list-params'
 import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, i18n_t, UserCtr, MenuData, useMittEmit, MITT_TYPES, utils } from 'src/core'
 import { nextTick } from "vue";
 import MatchMeta from './match-meta'
+
 // import MatchDataBase from "src/core/data-warehouse/match-ctr/match-ctr.js"
 /** TODO临时放置
  * @description: 获取赛事的让球方
@@ -188,7 +189,7 @@ class MatchPage {
       });
     }
     // 页脚刷新事件
-    else if (obj.text == "footer-refresh") {
+    else if (obj && obj.text == "footer-refresh") {
       if (MenuData.menu_type == 28) {
         // 赛果时
         this.get_match_data_list();
@@ -200,11 +201,11 @@ class MatchPage {
       }
     }
     // 单纯刷新一个mid,例如十五分钟  或者  5分钟  临界点只刷新对应mid
-    else if (obj.text == "mid-refresh") {
+    else if (obj && obj.text == "mid-refresh") {
       this.get_match_info_upd([obj.mid], false, lodash.get(obj, 'other'));
     }
 
-    else if (obj.text == "footer-follow") {
+    else if (obj && obj.text == "footer-follow") {
       //即将改为收藏模式清除赛事列表数据
       if (!obj.before_status) {
         MatchDataBaseH5.clear();
