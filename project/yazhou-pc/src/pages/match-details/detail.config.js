@@ -30,9 +30,10 @@ import {MatchDataWarehouse_PC_Detail_Common,format_plays, format_sort_data ,is_e
 import uid from "src/core/uuid/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import BetCommonHelper from "src/core/bet/common-helper/index.js";
-export const useGetConfig = () => {
+export const useGetConfig = (router) => {
+  console.log(router,'router');
   const route = useRoute();
-  const router = useRouter();
+  // const router = useRouter();
 
   const store_state = store.getState();
   const MatchDataWarehouseInstance =reactive(MatchDataWarehouse_PC_Detail_Common)
@@ -237,7 +238,8 @@ export const useGetConfig = () => {
       }
       // 告知列表是详情返回：用于是否重新自动拉右侧内容
       MatchDetailCalss.set_is_back_btn_click(is_back)
-      router.push(from_path);
+      // debugger
+      router.push({path:from_path});
       if (from_path.includes("search")) {
         MatchDetailCalss.set_unfold_multi_column(false)
       }
