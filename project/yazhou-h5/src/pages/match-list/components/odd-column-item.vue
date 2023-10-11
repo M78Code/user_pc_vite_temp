@@ -324,7 +324,7 @@ const transfer_on = (odd_item) => {
       on = '其他'
     }
   }
-  let color = ''
+  let color = 'var(--qq-gb-t-c-3)';
   if(is_fengpan(odd_s) || get_obv_is_lock(odd_item)){
     if(UserCtr.theme.includes('day')){
       // color = '#d1d1d1';
@@ -332,8 +332,6 @@ const transfer_on = (odd_item) => {
     else{
       // color = '#414141';
     }
-  } else{
-    color = 'var(--qq-match-fs-color-13)';
   }
   let replaced = on
   if(![18].includes(+lodash.get(props.current_tab_item, 'id'))){

@@ -20,7 +20,10 @@
       <!-- 首页热门 -->
       <template v-if="is_it_popular">
         <div v-if="main_source == 'home_hot_page_schedule' && lodash.get(MenuData.hot_tab_menu, 'index') == 0" class="ball_img">
-          <img :src="theme.includes('theme-0') ? polular_spirite_theme02 : polular_spirite" alt="" :style="{ objectPosition: `0 ${calculate_ball_type_picture()}rem` }">
+          
+          <div class='img' :style="compute_css({key:'polular-spirite',position:match_of_list.csid})"  
+          style="--per:-0.60754rem;background-size: 100%;">
+          </div>
           <span> <i :style="compute_css({key:'h5-hot-jinxuan', position: `item_${match_of_list.csid}` })"></i>  <span>{{ match_of_list.csna }}</span> </span>
         </div>
       </template>
@@ -30,8 +33,7 @@
       </span>
       <!-- 折叠收起不用消失 -->
       <div v-if="main_source!='home_hot_page_schedule'">
-        <img class="league-collapse-dir" :class="{ 'collapsed': collapsed }" v-if="theme.includes('theme-0')" src='/yazhou-h5/image/list/league-collapse-icon.svg' />
-        <img class="league-collapse-dir" :class="{ 'collapsed': collapsed }" v-if="theme.includes('theme-1')" src='/yazhou-h5/image/list/league-collapse-icon-black.svg' />
+        <img class="league-collapse-dir" :class="{ 'collapsed': collapsed }" :src='compute_img("icon-collapse")' />
       </div>
     </div>
     <!-- 未开赛标题  -->
@@ -91,10 +93,8 @@
             </div>
           </span>
           <template v-if="(!['detail_match_list', 'home_hot_page_schedule'].includes(main_source)) && collapsed">
-            <img class="league-collapse-dir" :class="{ 'collapsed': collapsed }" v-if="theme.includes('theme-0')"
-              src='public/image/list/league-collapse-icon.svg' />
-            <img class="league-collapse-dir" :class="{ 'collapsed': collapsed }" v-if="theme.includes('theme-1')"
-              src='public/image/list/league-collapse-icon-black.svg' />
+            <img class="league-collapse-dir" :class="{ 'collapsed': collapsed }" 
+            :src='compute_img("icon-collapse")'  />
           </template>
         </div>
       </div>
@@ -241,62 +241,60 @@
                         <!-- 进球动画 -->
                         <div class="yb-flex-center" v-if="is_show_away_goal && is_new_init2 && (!is_show_home_goal)">
 
-                          <div class="yb-goal-gif" :class="{ 'yb-goal-yo': theme.includes('y0') }"></div>
-                          <div class="gif-text">{{ $t('match_result.goal') }}</div>
-                        </div>
-                        <!--进行中的赛事显示比分-->
-                        <span class='score-punish' v-show="away_red_score"
-                          :class="{ flash: is_show_away_red && !is_show_result() }">
-                          {{ away_red_score }}
-                        </span>
-                      </div>
-                      <!--进行中的赛事显示比分 ,如果是比分判定中，则不显示比分-->
-                      <div class="score full-score" v-show="match_of_list.ms > 0 && !is_show_result() && !eports_scoring"
-                        :class="{ 'visibility-hidden': match_of_list.ms == 110 }">
-                        {{ away_score }}
-                      </div>
-                      <!--发球方绿点-->
-                      <span class="serving-party" :class="{ 'simple': standard_edition == 1 }"
-                        v-show="set_serving_side(match_of_list, 'away')">
-                      </span>
+                      <div class="yb-goal-gif yb-goal-yo"></div>
+                      <div class="gif-text">{{ $t('match_result.goal') }}</div>
                     </div>
-                    <!--赛果收藏-->
-                    <div class="row" v-if="is_show_result()">
-                      <!--赛果收藏-->
-                      <div class="result fav-i-wrap-match row items-center"> </div>
-                      <!--赛果开赛时间-->
-                      <div class="m-result-time date-time">
-                        {{ format_time_zone(+match.mgt).Format(i18n_t('time4')) }}
+                    <!--进行中的赛事显示比分-->
+                    <span class='score-punish' v-show="away_red_score"
+                      :class="{ flash: is_show_away_red && !is_show_result() }">
+                      {{ away_red_score }}
+                    </span>
+                  </div>
+                  <!--进行中的赛事显示比分 ,如果是比分判定中，则不显示比分-->
+                  <div class="score full-score" v-show="match_of_list.ms > 0 && !is_show_result() && !eports_scoring"
+                    :class="{ 'visibility-hidden': match_of_list.ms == 110 }">
+                    {{ away_score }}
+                  </div>
+                  <!--发球方绿点-->
+                  <span class="serving-party" :class="{ 'simple': standard_edition == 1 }"
+                    v-show="set_serving_side(match_of_list, 'away')">
+                  </span>
+                </div>
+                <!--赛果收藏-->
+                <div class="row" v-if="is_show_result()">
+                  <!--赛果收藏-->
+                  <div class="result fav-i-wrap-match row items-center"> </div>
+                  <!--赛果开赛时间-->
+                  <div class="m-result-time date-time">
+                    {{ format_time_zone(+match.mgt).Format(i18n_t('time4')) }}
+                  </div>
+                  <!-- v-if="match_of_list.playBack && is_replay_switch" -->
+                  <div class="flex play-icon">
+                    <img src="/yazhou-h5/image/common/replay_y0.svg" />
+                  </div>
+                </div>
+                <!--  左边收藏  视频动画 图标 玩法数量  赛事分析图标 提前结算图标  -->
+                <div class="score-wrapper flex items-center" v-if="!show_newer_edition && !is_show_result()"
+                  v-show="MenuData.footer_sub_menu_id != 114">
+                  <div class="r row no-wrap">
+                    <div class="go-container-w flex no-wrap new-standard">
+                      <!-- 直播 主播 视频 动画  icon 栏目   -->
+                      <!-- 正常的 优先级 ： lvs 直播   muUrl 视频  animationUrl 动画 -->
+                      <div class="live-i-b-wrap v-mode-span row items-center"
+                        v-if="media_button_state_obj.icon_path" @click="media_button_handle()">
+                        <slot></slot>
+                        <img class="live-icon-btn" :src='media_button_state_obj.icon_path' />
                       </div>
-                      <!-- v-if="match_of_list.playBack && is_replay_switch" -->
-                      <div class="flex play-icon">
-                        <img src="/yazhou-h5/image/common/replay_y0.svg" />
+                      <!-- 足篮球展示赛事分析图标 -->
+                      <div class="column justify-center yb_px4"
+                      v-if="[1, 2].includes(+match.csid) && GlobalAccessConfig.get_statisticsSwitch()"
+                        @click='goto_details(match, 1)'>
+                        <img :src="compute_img('data-analysis')" alt="" style="width:0.12rem">
                       </div>
-                    </div>
-                    <!--  左边收藏  视频动画 图标 玩法数量  赛事分析图标 提前结算图标  -->
-                    <div class="score-wrapper flex items-center" v-if="!show_newer_edition && !is_show_result()"
-                      v-show="MenuData.footer_sub_menu_id != 114">
-                      <div class="r row no-wrap">
-                        <div class="go-container-w flex no-wrap new-standard">
-                          <!-- 直播 主播 视频 动画  icon 栏目   -->
-                          <!-- 正常的 优先级 ： lvs 直播   muUrl 视频  animationUrl 动画 -->
-                          <div class="live-i-b-wrap v-mode-span row items-center"
-                            v-if="media_button_state_obj.icon_path" @click="media_button_handle()">
-                            <slot></slot>
-                            <img class="live-icon-btn" :src='media_button_state_obj.icon_path' />
-                          </div>
-                          <!-- 足篮球展示赛事分析图标 -->
-                          <div class="column justify-center yb_px4"
-                          v-if="[1, 2].includes(+match.csid) && GlobalAccessConfig.get_statisticsSwitch()"
-                            @click='goto_details(match, 1)'>
-                            <img :src="match_analysis" alt="" style="width:0.12rem"
-                              v-if="theme.includes('theme-0')">
-                            <img :src="match_analysis2" alt="" style="width:0.12rem" v-else>
-                          </div>
-                          <!-- 此赛事支持提前结算 -->
-                          <div class="column justify-center yb_px2" v-if="match_of_list.mearlys == 1">
-                            <img :src="mearlys_icon" alt="" style="width:0.2rem">
-                          </div>
+                      <!-- 此赛事支持提前结算 -->
+                      <div class="column justify-center yb_px2" v-if="match_of_list.mearlys == 1">
+                        <img :src="mearlys_icon" alt="" style="width:0.2rem">
+                      </div>
 
                           <!--玩法数量-->
                           <div class="goto-detail" @click='goto_details(match)'>

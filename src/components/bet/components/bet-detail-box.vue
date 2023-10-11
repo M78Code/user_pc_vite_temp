@@ -76,7 +76,7 @@
                 $t('bet.bet_err') }}</span>
               <!-- 提交成功 -->
               <span v-if="get_bet_status == 6" class="color2">
-                <i class="img" :style="compute_css('icon-tojiao')"></i>{{
+                <img class="img" :src="compute_img('icon-tojiao')">{{
                     $t('bet.submitted_successfully') }}</span>
             </template>
             <template v-else-if="pankou_change == 2">
@@ -200,7 +200,7 @@
 
 <script setup>
 import ballSpin from './ball_spin.vue';
-import { useMittOn, useMittEmit, MITT_TYPES,compute_css,UserCtr } from "src/core/"
+import { useMittOn, useMittEmit, MITT_TYPES,compute_img,UserCtr } from "src/core/"
 import store from "src/store-redux/index.js";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { format_odds, calc_bifen } from 'src/core/index.js'

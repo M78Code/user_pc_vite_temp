@@ -187,7 +187,7 @@ const route = useRoute();
   });
   // mid 
   const matchid = computed(() => {
-    return route.params.mid || state_data.detail_data.mid;
+    return state_data.detail_data.mid || route.params.mid;
   });
   // 当前tab
   const curr_active_tab = computed(() => {
@@ -260,10 +260,10 @@ watch(() => MatchDataWarehouseInstance.data_version.version, () => {
     }
 
     state_data.refreshing = true;
-    if (timer2_) {
-      clearTimeout(timer2_);
+    if (state_data.timer2_) {
+      clearTimeout(state_data.timer2_);
     }
-    timer2_ = setTimeout(() => {
+    state_data.timer2_ = setTimeout(() => {
       // 取消刷新 已做节流
       cancel_ref();
     }, 700);
@@ -274,12 +274,10 @@ watch(() => MatchDataWarehouseInstance.data_version.version, () => {
    * @returns {undefined} undefined
    */
   const cancel_ref = () => {
-    refreshing = false;
+    state_data.refreshing = false;
   };
   const api_interface = () => {
-    // #TODO IMIT
-      // useMittEmit(MITT_TYPES.EMIT_REF_API);
-    // useMittEmit(MITT_TYPES.EMIT_REF_API, 'details_refresh')
+    // useMittEmit(MITT_TYPES.EMIT_REF_API)
   };
   /**
    *@description 0号模板点击收起的时候，要调整滚动距离
@@ -428,7 +426,7 @@ watch(() => MatchDataWarehouseInstance.data_version.version, () => {
       get_match_details({
         // 赛事id
         // mid: '33522226000129832', // matchid,
-        mid: matchid.value,
+        mid: matchDetailCtr.value.mid || matchid.value,
         // 用户id
         cuid: UserCtr.uid,
         init: 'init'
@@ -553,7 +551,6 @@ watch(() => MatchDataWarehouseInstance.data_version.version, () => {
 
       state_data.requestCount = 0;
       state_data.is_show_detail_header_data = true;
-      state_data.detail_data = res_data;
 
       // #TODO 暂时使用假数据
       // state_data.detail_data = Level_one_detail_data();
@@ -631,6 +628,7 @@ watch(() => MatchDataWarehouseInstance.data_version.version, () => {
     params = { sportId: sport_id.value, mid: matchid.value },
     init_req
   ) => {
+    
     // state_data.data_list = Level_one_category_list();
     const get_details_category_list = () => {
       api_common
@@ -689,7 +687,7 @@ watch(() => MatchDataWarehouseInstance.data_version.version, () => {
           }
         });
     };
-
+    
     const get_category_list_debounce = axios_debounce_cache.get_category_list
     if (get_category_list_debounce && get_category_list_debounce['ENABLED']) {
       let info = get_category_list_debounce.can_send_request(params);
@@ -697,6 +695,7 @@ watch(() => MatchDataWarehouseInstance.data_version.version, () => {
         //直接发请求    单次数 请求的方法
         get_details_category_list();
       } else {
+
         // 记录timer
         clearTimeout(state_data.axios_debounce_timer)
         state_data.axios_debounce_timer = setTimeout(() => {
@@ -877,6 +876,8 @@ watch(() => MatchDataWarehouseInstance.data_version.version, () => {
     emitters_off()
     SessionStorage.remove('DETAIL_TAB_ID')
     SessionStorage.remove('DETAILS_DATA_CACHE')
+    // 清空操作类的mid
+    MatchDetailCalss.set_match_details_params({})
   })
   const on_listeners = () => {
     // #TODO: IMIT
@@ -884,22 +885,24 @@ watch(() => MatchDataWarehouseInstance.data_version.version, () => {
       useMittOn(MITT_TYPES.EMIT_RESET_SET_HTON, scrollMethod),
       // 刷新详情页头部信息;
       useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS, initEvent),
+      // 调odds_info接口
       useMittOn(MITT_TYPES.EMIT_GET_ODDS_LIST, get_odds_list),
       useMittOn(MITT_TYPES.EMIT_SET_SHOW_VIDEO, set_show_video),
       useMittOn(MITT_TYPES.EMIT_VIDEO_DESCRIPTION_SHOW, video_description_show),
-      // useMittOn(MITT_TYPES.EMIT_REF_API, details_refresh),
+      useMittOn(MITT_TYPES.EMIT_REF_API, details_refresh),
       // // 拳击赛事级别关盘+当前时间(服务器时间)>=赛事开赛时间(mgt) 此时详情页拳击赛事切换下一场
-      // useMittOn(MITT_TYPES.EMIT_CHANGE_DETAILS_MATCH, info_icon_click_h),
+      useMittOn(MITT_TYPES.EMIT_CHANGE_DETAILS_MATCH, event_switch),
+      // TODO: ws相关
       // useMittOn(MITT_TYPES.EMIT_DETAILS_SKT, info_icon_click_h),
-      // useMittOn(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, info_icon_click_h),
+      useMittOn(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, set_native_detail_data),
       useMittOn(MITT_TYPES.EMIT_ANA_SHOW, ana_show),
       // // 0号模板点击收起的时候，要调整滚动距离
-      // useMittOn(MITT_TYPES.EMIT_SET_DETAILDS_SCROLL, info_icon_click_h),
-      // useMittOn(MITT_TYPES.EMIT_MATCHINFO_LOADING, info_icon_click_h),
-      // useMittOn(MITT_TYPES.EMIT_DETAILILS_TAB_CHANGED, info_icon_click_h),
-      // useMittOn(MITT_TYPES.EMIT_TABS_LIST_UPDATE_HANDLE, info_icon_click_h),
+      useMittOn(MITT_TYPES.EMIT_SET_DETAILDS_SCROLL, set_details_scroll), 
+      useMittOn(MITT_TYPES.EMIT_MATCHINFO_LOADING, loading_list),
+      useMittOn(MITT_TYPES.EMIT_DETAILILS_TAB_CHANGED, tab_changed_handle),
+      useMittOn(MITT_TYPES.EMIT_TABS_LIST_UPDATE_HANDLE, get_odds_list),
       // // 监听页面高度的变化 及时动态更新最新的页面高度
-      // useMittOn(MITT_TYPES.EMIT_WINDOW_RESIZE, info_icon_click_h),
+      useMittOn(MITT_TYPES.EMIT_WINDOW_RESIZE, detail_scroller_height),
 
     ];
   };

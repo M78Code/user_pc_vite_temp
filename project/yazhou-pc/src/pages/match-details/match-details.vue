@@ -95,17 +95,19 @@ import detailHeader from "./components/detail-header.vue";
 import matchHandicap from "src/components/match-detail/match-handicap/match-handicap.vue";
 import matchListHot from "project_path/src/pages/match-list/match-list-hot.vue";
 import { useGetConfig } from "./detail.config";
+import { useRoute, useRouter } from "vue-router";
+const router = useRouter();
+const route = useRoute();
 //引入组件样式
 import { compute_css_variables } from "src/core/css-var/index.js";
 import { reactive, ref, watch } from "vue";
-import { MatchDataWarehouse_PC_Detail_Common as MatchDetailsData } from "src/core/index";
+import { MatchDataWarehouse_PC_Detail_Common as MatchDetailsData, MatchDetailCalss,LayOutMain_pc } from "src/core/index";
 const page_style = ref(null);
 page_style.value = compute_css_variables({
   category: "component",
   module: "match-details",
 });
 const {
-  mid,
   load_detail_statu,
   // match_infoData,
   category_list,
@@ -122,13 +124,12 @@ const {
   cur_expand_layout,
   headerHeight,
   init,
-  back_to,
   set_handicap_this,
   set_handicap_state,
   get_mattch_details,
   change_loading_state,
   MatchDataWarehouseInstance,
-} = useGetConfig();
+} = useGetConfig(router);
 // /**
 //  * @Description:返回顶部
 //  * @return {Undefined} Undefined
@@ -136,19 +137,88 @@ const {
 const on_go_top = () => {
   emit("on_go_top");
 };
+import search from "src/core/search-class/search.js";
 const match_infoData = ref({});
 const match_details = ref([]);
+/**
+ * @description: 通过mid获取从仓库获取最新的数据
+ * @param {*} val  mid参数
+ * @return {*}
+ */
+ const update_data = (val) => {
+  match_infoData.value = MatchDetailsData.get_quick_mid_obj(val);
+  match_details.value = [MatchDetailsData.get_quick_mid_obj(val)];
+};
+/*
+ ** 监听MatchDetailCalss的版本号  获取最新的mid
+ */
+ const mid = ref(null);
+ const details_params = ref(MatchDetailCalss.params );
 watch(
-  () => MatchDetailsData.data_version,
-  (val, oldval) => {
-    if (val.version) {
-      console.log(222222);
-      match_infoData.value = MatchDetailsData.get_quick_mid_obj(mid.value);
-      match_details.value = [MatchDetailsData.get_quick_mid_obj(mid.value)];
+  () => MatchDetailCalss.details_data_version.version,
+  (val) => {
+    if (val) {
+      details_params.value =  MatchDetailCalss.params 
+      mid.value = MatchDetailCalss.mid;
+      update_data(MatchDetailCalss.mid);
     }
   },
   { deep: true }
 );
+watch(
+  () => MatchDetailsData.data_version,
+  (val, oldval) => {
+    if (val.version) {
+      update_data(mid.value)
+    }
+  },
+  { deep: true }
+);
+let back_to_timer =null
+  /**
+   * @description 返回上一页
+   */
+ const cur_menu_type = ref(LayOutMain_pc.layout_current_path )
+ const play_media = ref(MatchDetailCalss.play_media )
+ const back_to = (is_back = true) => {
+  // 重新请求相应接口
+  if (play_media.value.media_type === "topic") {
+    video.send_message({
+      cmd: "record_play_info",
+      val: {
+        record_play_time: true,
+      },
+    });
+  }
+   clearTimeout(back_to_timer);
+   back_to_timer = setTimeout(() => {
+     // 退出页面时清空用户操作状态
+     window.sessionStorage.setItem("handle_state", JSON.stringify([]));
+     // 如果是从搜索结果进来的
+     if (route.query.keyword) {
+       search.set_back_keyword({
+         keyword: route.query.keyword,
+         csid: route.params.csid,
+       });
+       
+       store.dispatch({
+         type: "SET_SEARCH_STATUS",
+         data: true,
+       });
+     }
+     let { from_path, from } = cur_menu_type.value;
+     from_path = from_path || "/home";
+     if (from == "video") {
+       from_path = "/home";
+     }
+     // 告知列表是详情返回：用于是否重新自动拉右侧内容
+     MatchDetailCalss.set_is_back_btn_click(is_back)
+     router.push({path:from_path});
+     if (from_path.includes("search")) {
+       MatchDetailCalss.set_unfold_multi_column(false)
+     }
+   }, 50);
+  };
 </script>
 
 <style lang="scss" scoped>

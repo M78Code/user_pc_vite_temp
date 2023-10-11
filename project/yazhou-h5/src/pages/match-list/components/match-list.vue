@@ -59,7 +59,7 @@
             {{ current_way_name }}
           </div>
           <img class='close-o-info-icon' @click="close_other_w_info"
-            :src="(`/yazhou-h5/image/menu/set_close_${get_theme && get_theme.includes('day') ? 'theme01' : 'theme02'}.svg`)" />
+            :src="compute_img('icon-close')" />
         </div>
         <!-- 次要玩法如果是数组 例如15分钟展开 -->
         <div v-if="Array.isArray(play_way_info)">
@@ -113,7 +113,7 @@ import matchContainerResult from "./match-container-result.vue" // 赛果冠军
 import scrollWrapper from 'project_path/src/components/scroll-wraper/scroll-wrapper.vue';    // 滚动操作处理
 import noData from "project_path/src/components/common/no-data.vue"; // 无网络展示组件
 import UserCtr from 'src/core/user-config/user-ctr.js'
-import { MenuData, i18n_t, utils } from "src/core/index.js"
+import { MenuData, i18n_t, utils,compute_img } from "src/core/index.js"
 import { standard_edition } from 'project_path/src/mixin/userctr.js'
 import { is_kemp, menu_lv2, is_results } from 'project_path/src/mixin/menu.js'
 // import { change_favorite_state } from 'src/core/match-list-h5/composables/match-list-collect.js'

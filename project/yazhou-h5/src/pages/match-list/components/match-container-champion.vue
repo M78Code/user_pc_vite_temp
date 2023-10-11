@@ -25,8 +25,7 @@
         </div>
 
       <div class="collapse-dire">
-        <img class="icon-down-arrow" src="/yazhou-h5/image/list/league-collapse-icon.svg" :class="{collapsed:collapsed}" alt="" v-if="theme.includes('day')">
-        <img class="icon-down-arrow" src="/yazhou-h5/image/list/league-collapse-icon-black.svg" :class="{collapsed:collapsed}" alt="" v-else>
+        <img class="icon-down-arrow" :class="{collapsed:collapsed}" alt="" :src="compute_img('icon-collapse')">
       </div>
     </div>
 
@@ -80,7 +79,7 @@ import { ref, computed, onUnmounted } from "vue";
 import lodash from 'lodash'
 import { i18n_t} from 'src/core/index.js'
 import store from "src/store-redux/index.js";
-import { MenuData, compute_css, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/index.js"
+import { MenuData, compute_img, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/index.js"
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt";
 import oddItemChampion from "./odd-item-champion.vue";
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"

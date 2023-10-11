@@ -28,8 +28,9 @@
           <div class="right">
             <span>{{ $t('virtual_sports.comprehensive_rating') }}</span>
             <q-rating style="min-width:.85rem" :value="Number(item.star)" size="3.5em"
-              :icon="`img:/image/bw3/svg/match-list/m-list-favorite.svg`" :icon-selected="get_theme.includes('y0') ? `img:/image/bw3/svg/match-list/m-list-favorite-s_y0.svg` :
-                `img:/image/bw3/svg/match-list/m-list-favorite-s.svg`" readonly />
+              :icon="`img:${compute_img('icon-favorite')}`" 
+              :icon-selected="`img:${compute_img('icon-favorite-s')}`"
+                readonly />
           </div>
         </div>
       </div>
@@ -46,6 +47,7 @@ import { api_v_sports } from "project_path/api";
 
 import no_data from "project_path/components/common/no_data"
 import { onUnmounted, reactive, toRefs } from "vue";
+import{ compute_img} from 'src/core/'
 export default defineComponent({
   name: "ranking_list_start",
 
@@ -140,7 +142,7 @@ export default defineComponent({
     })
     return {
       ...toRefs(data),
-      get_current_mid,
+      get_current_mid,compute_img,
       get_curr_sub_menu_type,
       get_theme,
       get_rank_background,
