@@ -24,11 +24,15 @@
                 get_curr_sub_menu_type == 29)) ? item1.nameText : item1.introduction }}</span>
             </span>
             <!-- 右边选择icon -->
+            
             <img class="icon-search" @click.stop.prevent="select_sport_ctr(item1, index)"
               v-if="(item1.select || (((type != 1 && get_curr_sub_menu_type != 29) || (type == 1 && get_sport_all_selected == false)) && item1.sportVOs[0].select))"
-              :src="`/image/svg/check_circle_outline-24px${on_suffix}.svg`" />
+              :src="compute_img('checkbox-box-s')"
+              />
             <img src="/yazhou-h5/image/svg/selected-no.svg" alt="" class="icon-search"
-              @click.stop.prevent="select_sport_ctr(item1, index)" v-else>
+              @click.stop.prevent="select_sport_ctr(item1, index)"
+              :src="compute_img('checkbox-box')"
+              v-else>
           </div>
           <!-- 联赛名称部分 -->
           <q-slide-transition>
@@ -50,9 +54,9 @@
                         {{ item2.num }}</div>
                     </div>
                   </div>
+                  
                   <img v-if="item2.select" class="icon-search"
-                    :src="`/image/svg/check_circle_outline-24px${on_suffix}.svg`" />
-                  <img src="/yazhou-h5/image/svg/selected-no.svg" alt="" class="icon-search" v-else>
+                  :src="compute_img(item2.select?'checkbox-box-s':'checkbox-box')" />
                 </div>
               </div>
             </div>
@@ -67,7 +71,7 @@
         v-for="(item, index) in anchor_arr" :key="index + 'letter'">
         <template v-if="item == $t('search.hot')">
           <img style="width: 28px;"
-            :src="`/image/svg/match-list/match_filter${active_index == item ? '_select' : ''}${on_suffix}.svg`"
+          :src="compute_img(active_index == item?'match-filter-s':'match-filter')"
             alt="">
         </template>
         <div class="t-wrap" v-else>{{ item }}</div>
@@ -84,9 +88,8 @@
       <div class="row items-center"
         :style="{ lineHeight: ['vi', 'en', 'th', 'ms', 'ad'].includes(get_lang) ? '1' : 'unset' }">
         <!-- <template> -->
-        <img v-if="all_checked" class="icon-search" @click="all_checked_click"
-          :src="`/image/svg/check_circle_outline-24px${on_suffix}.svg`" />
-        <img src="/yazhou-h5/image/svg/selected-no.svg" alt="" class="icon-search" @click="all_checked_click" v-else>
+        <img class="icon-search" @click="all_checked_click"
+        :src="compute_img(all_checked?'checkbox-box-s':'checkbox-box')"  />
         <span class="txt ellipsis-2-lines" @click="all_checked_click">{{ $t('common.all_select') }}</span>
         <!-- </template> -->
         <span class="txt ellipsis-3-lines" @click="select_btn_click">{{ $t('filter.reverse_election') }}</span>
@@ -161,16 +164,6 @@ const get_sport_all_selected = MenuData.get_sport_all_selected
 const get_md = ref(MenuData.current_lv_3_menu)    //TODO三级日期菜单时间戳
 
 // ]),
-var on_suffix = computed(() => {
-  let suffix = '';
-  if (get_theme.includes('_y0')) {
-    suffix += '_y0';
-  }
-  if (get_theme.includes('night')) {
-    suffix += '_dark';
-  }
-  return suffix;
-})
 
 
 // 活动的下标监听
@@ -204,11 +197,6 @@ watch(select_num, (new_) => {
  * @param {Object} $event 错误事件对象
  */
 function league_icon_error($event) {
-  // if (get_theme.includes('night')) {
-  //   $event.target.src = none_league_icon_black;
-  // } else {
-  //   $event.target.src =compute_img('match-cup') default_url;
-  // }
   $event.target.src =compute_img('match-cup')
   $event.target.onerror = null
 }

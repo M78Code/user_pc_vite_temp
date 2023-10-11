@@ -20,7 +20,9 @@
       <!-- 首页热门 -->
       <template v-if="is_it_popular">
         <div v-if="main_source == 'home_hot_page_schedule' && lodash.get(MenuData.hot_tab_menu, 'index') == 0" class="ball_img">
-          <img :src="theme.includes('theme-0') ? polular_spirite_theme02 : polular_spirite" alt="" :style="{ objectPosition: `0 ${calculate_ball_type_picture()}rem` }">
+          <div class='img' :style="compute_css({key:'polular-spirite',position:match_of_list.csid})"  
+          style1="--per:-0.60754rem">
+          </div>
           <span> <i :style="compute_css({key:'h5-hot-jinxuan', position: `item_${match_of_list.csid}` })"></i>  <span>{{ match_of_list.csna }}</span> </span>
         </div>
       </template>
@@ -30,8 +32,7 @@
       </span>
       <!-- 折叠收起不用消失 -->
       <div v-if="main_source!='home_hot_page_schedule'">
-        <img class="league-collapse-dir" :class="{ 'collapsed': collapsed }" v-if="theme.includes('theme-0')" src='/yazhou-h5/image/list/league-collapse-icon.svg' />
-        <img class="league-collapse-dir" :class="{ 'collapsed': collapsed }" v-if="theme.includes('theme-1')" src='/yazhou-h5/image/list/league-collapse-icon-black.svg' />
+        <img class="league-collapse-dir" :class="{ 'collapsed': collapsed }" :src='compute_img("icon-collapse")' />
       </div>
     </div>
     <!-- 未开赛标题  -->
@@ -91,10 +92,8 @@
             </div>
           </span>
           <template v-if="(!['detail_match_list', 'home_hot_page_schedule'].includes(main_source)) && collapsed">
-            <img class="league-collapse-dir" :class="{ 'collapsed': collapsed }" v-if="theme.includes('theme-0')"
-              src='public/image/list/league-collapse-icon.svg' />
-            <img class="league-collapse-dir" :class="{ 'collapsed': collapsed }" v-if="theme.includes('theme-1')"
-              src='public/image/list/league-collapse-icon-black.svg' />
+            <img class="league-collapse-dir" :class="{ 'collapsed': collapsed }" 
+            :src='compute_img("icon-collapse")'  />
           </template>
         </div>
       </div>

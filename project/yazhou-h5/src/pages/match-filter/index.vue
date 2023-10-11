@@ -48,7 +48,7 @@
         v-for="(item, index) in anchor_arr" :key="index + 'letter'">
         <template v-if="item == $t('search.hot')">
           <img style="width: 28px;"
-            :src="`/image/bw3/svg/match-list/match_filter${active_index == item ? '_select' : ''}${on_suffix}.svg`"
+            :src="compute_img(active_index == item?'match-filter-s':'match-filter')"
             alt="">
         </template>
         <div class="t-wrap" v-else>{{ item }}</div>
@@ -67,7 +67,7 @@
         :style="{ lineHeight: ['vi', 'en', 'th', 'ms', 'ad'].includes(get_lang) ? '1' : 'unset' }">
         <!-- <template> -->
         <img  class="icon-search" @click="all_checked_click"
-        :src="compute_img(all_checked?'checkbox-box-s':'heckbox-box')" />
+        :src="compute_img(all_checked?'checkbox-box-s':'checkbox-box')" />
         <span class="txt ellipsis-2-lines" @click="all_checked_click">{{ $t('common.all_select') }}</span>
         <!-- </template> -->
         <span class="txt ellipsis-3-lines" @click="select_btn_click">{{ $t('filter.reverse_election') }}</span>
@@ -131,16 +131,6 @@ const get_current_menu = ref(MenuData.current_lv_1_menu)
 const get_md = ref(MenuData.current_lv_3_menu)    //三级日期菜单时间戳
 const get_theme = ref(UserCtr.theme)
 // ]),
-const on_suffix = computed(() => {
-  let suffix = '';
-  if (get_theme.value.includes('_y0')) {
-    suffix += '_y0';
-  }
-  if (get_theme.value.includes('night')) {
-    suffix += '_dark';
-  }
-  return suffix;
-})
 const all_checked = computed(() => {
   return list.value.every(({ select }) => select); // 选中所有
 })
