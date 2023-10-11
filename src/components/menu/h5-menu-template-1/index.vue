@@ -160,6 +160,7 @@ import { i18n_t, compute_css, GlobalAccessConfig, useMittOn, MITT_TYPES, UserCtr
 import base_data from "src/core/base-data/base-data.js";
 import { useRoute, useRouter } from "vue-router";
 import lodash from "lodash"
+import MatchFold from 'src/core/match-fold'
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 
 // 一级菜单mi ref
@@ -320,7 +321,6 @@ function select_all_sub_menu_handle() {
  * 二级菜单事件
  */
 async function set_menu_lv2(item, index, type = "click") {
-  console.log(item)
   const mi = lodash.get(MenuData.current_lv_2_menu, 'mi')
   if (mi === item.mi && !is_first.value) return
   MenuData.set_current_lv2_menu(item, index, type);
@@ -330,6 +330,8 @@ async function set_menu_lv2(item, index, type = "click") {
       break
   }
   is_first.value = false
+  // 清除赛事折叠信息
+  MatchFold.clear_fold_info()
   // 冠军拉取旧接口； 待 元数据提供 冠军赛事后 再删除
   if (MenuData.is_kemp()) return MatchMeta.get_champion_match()
   // 赛果不走元数据， 直接拉取接口
@@ -338,6 +340,7 @@ async function set_menu_lv2(item, index, type = "click") {
   if (MenuData.is_export()) return MatchMeta.get_esports_match()
   // 设置菜单对应源数据
   MatchMeta.set_origin_match_data()
+  
 }
 /**
 /**

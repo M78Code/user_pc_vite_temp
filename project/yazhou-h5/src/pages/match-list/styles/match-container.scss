@@ -360,11 +360,11 @@
   }
 
   .odd-title-wraper {
-    width: 117%;
     height: 0.23rem;
     position: relative;
     flex-wrap: nowrap;
     margin-left: 0.1rem;
+    // transition: width 0.2s ease-in;
 
     .odd-title-i-w {
 
@@ -481,7 +481,7 @@
 
   .match-type {
     margin-right: 0.04rem;
-    transition: opacity 0.3s;
+    transition: opacity 0.2s;
     opacity: 1;
   }
 }
@@ -491,6 +491,7 @@
   height: 0.06rem;
   position: relative;
   right: 0.1rem;
+  transition: all 0.3s ease-in;
 
   &.collapsed {
     transform: rotateZ(180deg);
