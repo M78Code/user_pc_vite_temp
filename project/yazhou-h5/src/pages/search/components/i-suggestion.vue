@@ -50,7 +50,7 @@
       <div class="title">
         <!-- 联赛icon -->
         <img class="match_logo"
-          :src="big_item.matchList[0] ? get_file_path(big_item.matchList[0].lurl) : get_theme.includes('theme02') ? none_league_icon_black : default_url"
+          :src="big_item.matchList[0] ? get_file_path(big_item.matchList[0].lurl) : compute_img('match-cup')"
           @error="league_icon_error" />
         <!-- 搜索时，对应到的 文字 要高亮 -->
         <span v-html="red_color(big_item.leagueName)"></span>
@@ -81,8 +81,7 @@
     </div>
 
     <!-- 没有数据 组件 -->
-    <no-data v-if="there_any_data" which='noMatch' height='500' class="no-list"
-      :class="{ 'black_no_data': get_theme.includes('theme02') }"></no-data>
+    <no-data v-if="there_any_data" which='noMatch' height='500' class="no-list"></no-data>
 
   </div>
 </template>
@@ -93,7 +92,7 @@ const { get_insert_history } = api_search || {}
 import NoData from 'project_path/src/components/common/no-data.vue'// 无数据组件
 import { computed, onBeforeUnmount, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { UserCtr, MenuData, SearchData } from 'src/core/'
+import { UserCtr, MenuData, SearchData,compute_img } from 'src/core/'
 import lodash from 'lodash'
 const router = useRouter()
 // 模糊搜索的数据源
@@ -125,13 +124,7 @@ let go_detail_or_result_timer;
 //  文字特殊处理，颜色操作
 function red_color(item) {
   const reg = new RegExp(get_search_txt, "ig");
-  let i_color = '#FF9124';
-  if (get_theme.includes('theme02')) {
-    i_color = '#FFB001';
-  }
-  if (get_theme.includes('theme02_y0') || get_theme.includes('theme01_y0')) {
-    i_color = '#4987fb';
-  }
+  let i_color = 'var(--qq-gb-t-c-1)';
   return item.replace(reg, `<span style="color:${i_color}">${get_search_txt.toUpperCase()}</span>`)
 }
 //TODO ...mapMutations([
@@ -143,14 +136,7 @@ function red_color(item) {
 
 // 图标出错时
 function league_icon_error($event) {
-  // 黑色版 图片
-  if (get_theme.includes('theme02')) {
-    $event.target.src = none_league_icon_black;
-  }
-  // 白色版 图片
-  else {
-    $event.target.src = default_url;
-  }
+  $event.target.src =compute_img('match-cup')
   $event.target.onerror = null
 }
 // 滚球跳转
