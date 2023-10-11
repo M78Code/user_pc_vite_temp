@@ -20,7 +20,7 @@
       <!-- 首页热门 -->
       <template v-if="is_it_popular">
         <div v-if="main_source == 'home_hot_page_schedule' && lodash.get(MenuData.hot_tab_menu, 'index') == 0" class="ball_img">
-          <img :src="theme.includes('theme-0') ? polular_spirite : polular_spirite_theme02" alt="" :style="{ objectPosition: `0 ${calculate_ball_type_picture()}rem` }">
+          <img :src="theme.includes('theme-0') ? polular_spirite_theme02 : polular_spirite" alt="" :style="{ objectPosition: `0 ${calculate_ball_type_picture()}rem` }">
           <span> <i :style="compute_css({key:'h5-hot-jinxuan', position: `item_${match_of_list.csid}` })"></i>  <span>{{ match_of_list.csna }}</span> </span>
         </div>
       </template>

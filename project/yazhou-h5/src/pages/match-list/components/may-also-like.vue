@@ -23,10 +23,9 @@
                 :second="item.mst"
                 :match="item"
                 :is_add="[1,4,11,14,100,101,102,103].includes(+item.csid)"
-                u_like
               />
               <!-- 视频直播图标 -->
-              <img v-if="item.mms == 2"  src="public/image/common/video.svg"/>
+              <img v-if="item.mms == 2"  src="/yazhou-h5/image/common/video.svg" alt="" />
             </div>
           </div>
           <div class="card-content">
@@ -48,7 +47,7 @@
                   <span v-html="handicap_ov(item, 0)"></span>
                 </template>
                 <template v-else>
-                  <img src="public/image/common/match-icon-lock.svg">
+                  <img src="/yazhou-h5/image/common/match-icon-lock.svg" alt="" />
                 </template>
               </div>
             </div>
@@ -71,7 +70,7 @@
                 </template>
                 <template v-else>
                   <!-- 封盘图标 -->
-                  <img src="public/image/common/match-icon-lock.svg">
+                  <img src="/yazhou-h5/image/common/match-icon-lock.svg" alt="" />
                 </template>
               </div>
             </div>
@@ -89,39 +88,30 @@ import { api_home } from "src/api/index.js";
 import store from "src/store-redux/index.js";
 import lodash from 'lodash'
 import { useRouter } from 'vue-router'
-import { i18n_t} from 'src/core/index.js'
+import { i18n_t} from "src/core/index.js"
 import { useMittEmit, MITT_TYPES } from  "src/core/mitt"
+import teamImg from "project_path/src/components/details/team-img.vue";   // 详情页蓝色背景上的大型字母图标
+import countingDown from "project_path/src/components/common/counting-down.vue";  // 赛事进行中每秒变化的计时器
 import matchListClass from 'src/core/match-list-h5/match-class/match-list.js'
 
 // import skt_may_like from "/mixins/websocket/data/skt_may_like";   // 猜你喜欢模块ws相关逻辑处理
 // import odd_convert from "/mixins/odds_conversion/odds_conversion.js";   // 此文件 主要是应对 赔率转换(在转换为其他赔率时候，必须做欧洲赔率的配分)
 
-const { from_where, show_ } = defineProps({
-  from_where: {
-    type: Number | String,
-    default: null,
-  },
-  show_:{
-    type:Boolean,
-    default:true
-  }
+const props = defineProps({
+  from_where:  Number | String,
+  show_: Boolean
 })
 
 const router = useRouter()
-const store_state = store.getState()
 const slide_list = ref([])
-const get_bet_list = ref(store_state.get_bet_list)
-
-const unsubscribe = store.subscribe(() => {
-  const new_state = store.getState()
-  get_bet_list.value = new_state.get_bet_list
-})
+const get_bet_list = ref([])
 
 onMounted(() => {
+  slide_list.value = []
   get_list()
 })
 
-watch(() => show_, () => {
+watch(() => props.show_, () => {
   //没有轮播图和没有赛事时触发事件
   if (!newVal && !slide_list.value.length) {
     useMittEmit(MITT_TYPES.EMIT_MAY_ALSO_LIKE_CHANGE)
@@ -167,7 +157,7 @@ const normal_ = computed(() => {
   }
   const  get_list = async() => {
     try {
-      let res = await api_home.hot_ulike_recommendation({isHot: from_where})
+      let res = await api_home.hot_ulike_recommendation({isHot: props.from_where})
       if (lodash.get(res,'code') == 200 && lodash.get(res,'data.length') > 0) {
         slide_list.value = lodash.get(res,'data');
         store.dispatch({ type: 'matchReducer/updateHotReqTime',  payload: Date.now() });
@@ -221,241 +211,8 @@ const normal_ = computed(() => {
     //应对猜你喜欢模块的赔率盘口跟新不及时
     get_list()
   }
-
-  onBeforeMount(() => {
-    slide_list.value = []
-  })
-
-  onUnmounted(() => {
-    unsubscribe()
-  })
-
 </script>
 
 <style scoped lang="scss">
- .may_also_like {
-  padding-bottom: 0.06rem;
-  > .title {
-    height: 0.4rem;
-    line-height: 0.4rem;
-    padding-left: 0.24rem;
-    font-family: PingFangSC-Medium;
-    font-size: 0.14rem;
-
-    letter-spacing: 0;
-    font-weight: 700;
-    position: relative;
-
-    &:before {
-      content: "";
-      width: 0.03rem;
-      height: 0.12rem;
-      position: absolute;
-      left: 0.16rem;
-      top: 0.14rem;
-
-      border-radius: 1.5px;
-    }
-  }
-
-  & :deep(.q-card) {
-    background: initial;
-    box-shadow: initial;
-    border-radius: initial;
-  }
-}
-
-.scroll-list {
-  display: flex;
-  overflow-x: auto;
-  overflow-y: hidden;
-  flex-wrap: nowrap;
-
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-}
-
-.card2 {
-  padding-left: 0.06rem;
-  scroll-snap-align: start;
-
-  &:last-child {
-    padding-right: 0.06rem;
-  }
-
-  &:nth-child(3n-1) {
-    .card {
-      background: var(--q-color-com-img-bg-15) no-repeat center / 100% 100%;
-    }
-  }
-
-  &:nth-child(3n) {
-    .card {
-      background: var(--q-color-com-img-bg-16) no-repeat center / 100% 100%;
-    }
-  }
-
-  &:nth-child(3n+1) {
-    .card {
-      background: var(--q-color-com-img-bg-17) no-repeat center / 100% 100%;
-    }
-  }
-}
-
-.card {
-  min-width: 2.96rem !important;
-  max-width: 2.96rem !important;
-  height: 1.08rem;
-
-  border-radius: 0.04rem;
-  padding: 0.1rem 0.08rem 0 0.08rem;
-
-  .card-title {
-    opacity: 0.8;
-    font-family: PingFangSC-Regular;
-    font-size: 0.1rem;
-
-    line-height: 0.12rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-bottom: 0.1rem;
-
-    .right-time {
-      height: .12rem;
-    }
-
-    img {
-      width: 0.18rem;
-      margin-left: 0.08rem;
-    }
-
-    > .ellipsis {
-      width: 1.2rem;
-    }
-
-    > div {
-      position: relative;
-      display: flex;
-
-      > div:nth-child(1) {
-        margin-right: 0.05rem;
-      }
-    }
-
-    :deep(.counting-down-wrap) {
-      width: 0.8rem;
-      right: 100%;
-      left: unset;
-      font-size: 0.1rem;
-
-      .counting {
-        // color: var(--q-color-com-fs-color-38);
-        color: var(--q-gb-bd-c-2);
-        margin-left: 0.05rem;
-      }
-
-      .title-space-1 {
-        padding: unset;
-        margin: unset;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        overflow: hidden;
-      }
-    }
-
-    .no-timer-card {
-      .counting-down-wrap {
-        position: unset;
-      }
-    }
-
-    :deep(.special) {
-      color: var(--q-gb-bd-c-2);
-      padding-top: 1px;
-    }
-  }
-
-  .card-content {
-    margin-top: 0.1rem;
-
-    .card-team-time {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-
-      &:nth-child(1) {
-        min-height: 0.26rem;
-        margin-bottom: 0.06rem;
-      }
-
-      > div {
-        font-weight: 500;
-        font-size: 0.12rem;
-        display: flex;
-        align-items: center;
-
-        .ellipsis {
-          width: 1.36rem;
-        }
-
-        &.Handicap {
-          width: 0.88rem;
-          height: 0.26rem;
-          background: var(--q-color-com-bg-color-12);
-          border-radius: 0.03rem;
-          display: flex;
-          align-items: center;
-          justify-content: space-around;
-          padding: 0 0.05rem;
-
-          > span {
-            &:nth-child(1) {
-              width: 0.28rem;
-              opacity: 0.75;
-              font-family: dinMedium;
-              font-size: 0.1rem;
-              color: var(--q-color-com-fs-color-39);
-              margin-right: 0.04rem;
-            }
-
-            &:nth-child(2) {
-              font-family: dinMedium;
-              font-size: 0.12rem;
-              color: var(--q-color-com-fs-color-1);
-              text-align: center;
-            }
-          }
-
-          img {
-            width: 12px;
-            height: 13px;
-          }
-        }
-
-        :deep(.team-img-s) {
-          width: unset;
-          height: unset;
-          margin: 0 auto;
-          display: unset;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-
-          img {
-            width: 0.14rem;
-            height: 0.14rem;
-            margin-right: 0.03rem;
-            position: relative;
-          }
-        }
-      }
-
-      > span {
-        font-size: 0.1rem;
-        line-height: 1;
-      }
-    }
-  }
-}
+ @import "../styles/may-also-like.scss";
 </style>

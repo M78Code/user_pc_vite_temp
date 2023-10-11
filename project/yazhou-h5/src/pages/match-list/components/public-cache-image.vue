@@ -3,7 +3,7 @@
 -->
 <template v-if="show_image">
   <!-- 有缓存图片优先使用缓存图片 @error="league_icon_error" -->
-  <img class="team-icon row no-wrap" loading="lazy" decoding="async" :src="image_src"  />
+  <img class="team-icon row no-wrap" loading="lazy" decoding="async" :src="image_src" @error="league_icon_error" />
 </template>
  
 <script setup>
@@ -74,7 +74,8 @@ const check_image_load = () => {
   full_path.value = get_file_path(path, props.csid);
   // -1   加载过但是已确认 出错
   //0  未加载
-  image_src.value = default_url.value;
+  // image_src.value = default_url.value;
+  image_src.value = full_path.value;
   show_image.value = true;
   // return
   // 第一次加载   0

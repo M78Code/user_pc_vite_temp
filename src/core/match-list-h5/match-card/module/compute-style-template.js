@@ -311,13 +311,13 @@ export const compute_style_template_by_match_height = (match) => {
   }
   // 7号模板 篮球 让球与大小
   else if (csid == 7) {
-    let obj = compute_style_template_by_match_info_template7_lanqiu(match, template_config)
-    Object.assign(match_style_obj, obj)
+    // let obj = compute_style_template_by_match_info_template7_lanqiu(match, template_config)
+    // Object.assign(match_style_obj, obj)
   }
   // 18号模板 冠军
   else if (csid == 18) {
-    let obj = compute_style_template_by_match_info_template18(match)
-    Object.assign(match_style_obj, obj)
+    // let obj = compute_style_template_by_match_info_template18(match)
+    // Object.assign(match_style_obj, obj)
   }
 
   return {

@@ -14,6 +14,7 @@
       detail_match_list: ['detail_match_list', 'home_hot_page_schedule', ].includes(invok_source),
       jingzu: menu_type == 30,
       esport: menu_type == 7,
+      animation: animation
     }" >
       <!--缝隙 不通层级 遮罩 存在渲染偏差， 边界 双线 或者 侵蚀问题-->
       <div class="gap" v-if="on_match && menu_type != 3000" :class="{ zaopan: [4, 11, 28, 3000].includes(menu_type) }" />
@@ -88,6 +89,7 @@ const match_list_wrapper_height = 0
 const ws_invoke_key = ref("match_main");
 // 赛事列表无数据
 const match_is_empty = ref(false);
+const animation = ref(false);
 // 赛事操作工具类
 const matchCtr = ref(MatchDataBaseH5);
 // 赛事列表接口请求中提示
@@ -389,6 +391,18 @@ const upd_match_is_empty = (result) => {
   // 当是赛果菜单,三级菜单数据没有时,发送列表赛事数据为空消息,收到消息后页面显示为空页面
   match_is_empty.value = result;
 }
+/**
+ * @description 综合菜单切换页面卡顿效果
+ */
+const handle_menu_change = () => {
+  animation.value = true
+  let timer = setTimeout(() => {
+    animation.value = false
+    clearTimeout(timer)
+    timer = null
+  }, 500)
+}
+
 
 const destroy_handle = () => {
   // websocket_store.sendSocketCloseCmd();
@@ -437,6 +451,7 @@ const on_listeners = () => {
     emitter_9: useMittOn(MITT_TYPES.EMIT_TAB_HOT_CHANGING, () => MatchListCard.tab_changing_handle()).off,
     emitter_10: useMittOn(MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, upd_match_is_empty).off,
     emitter_11: useMittOn(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA, init_match_callback).off,
+    emitter_11: useMittOn(MITT_TYPES.EMIT_MENU_ANIMATION, handle_menu_change).off,
   };
 };
 // 移除相关事件监听
@@ -461,5 +476,5 @@ defineExpose({
 });
 </script>
 <style scoped lang="scss">
-@import "./styles//index.scss";
+@import "./styles/index.scss";
 </style>

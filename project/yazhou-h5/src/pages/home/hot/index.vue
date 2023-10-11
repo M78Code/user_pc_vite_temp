@@ -19,8 +19,8 @@
             </template>
             <template v-else>
               <!-- 精选的tab图标 -->
-              <!-- <img v-if='tab.index == 0' :src="(`/yazhou-h5/image/home/hot_jx_black${('y0') ? '_y0' : ''}.svg`)" alt=""> -->
-               <img v-if='tab.index == 0'  :style="compute_img('hot-tab')">
+              <!-- <img v-if='tab.index == 0'  :style="compute_img('hot-tab')"> -->
+              <img v-if='tab.index == 0' :src="(`/yazhou-h5/image/home/hot_jx_black2${theme.includes('theme-1') ? '_y0' : ''}.svg`)" alt="">
               <!-- 电竞类的tab图标 -->
               <img v-else-if="[100, 101, 102, 103].includes(+tab.field1)" :src="(`/yazhou-h5/image/home/hot_jx_esport_${tab.field1}.svg`)" alt="" />
               <!-- 体育类的图标 -->
@@ -36,7 +36,7 @@
     <div :class="[tab_Index == 0 && 'quiz']">
       <div>
         <!--猜你喜欢  模块-->
-        <!-- <may-also-like :from_where="101" v-if="tab_Index == 0 && GlobalAccessConfig.get_hotRecommend()" /> -->
+        <may-also-like :from_where="101" v-if="tab_Index == 0 && GlobalAccessConfig.get_hotRecommend()" />
         <!-- 精选赛事  标题-->
         <div class="may_also_like">
           <div class="title" v-if="tab_Index == 0"> {{ $t('home_popular.featured_events') }} </div>
@@ -64,6 +64,8 @@ import lodash from 'lodash'
 import { utils, MenuData ,compute_css} from 'src/core/index.js';
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import MatchListParams from 'src/core/match-list-h5/composables/match-list-params.js'
+import {compute_img} from 'src/core/'
+import { theme } from 'project_path/src/mixin/userctr.js'
 
 let tabList = ref([])  // tab选项卡内容
 let tab_Index = ref(0) //  tab 选项卡的下标位置
@@ -77,6 +79,7 @@ let scrollBox = ref()  // scrollBox DOM
 let timer2 = ref()
 
 onMounted(() => {
+  console.log(theme.value)
   timer2.value = null;
   get_list('first_loading')
   // emit 后补充
@@ -172,6 +175,7 @@ const get_list = (first) => {
           clearTimeout(timer2.value)
           timer2.value = setTimeout(() => {
             scrollBox.value && utils.tab_move2(index, scrollBox.value, true)
+            // 初始选择竞足
             // change_tab(tabList.value[index], index)
           }, 80);
         }
@@ -222,6 +226,8 @@ const check_clear_bet = (obj) => {
 // 菜单切换 is_self 是否手动触发
 // TODO: 竞足还没有
 const change_tab = (item, index, is_self) => {
+  // 当前index 赋值
+  tab_Index.value = index;
   MenuData.set_hot_tab_menu(item)
   if (item.index === 0) return get_selected_match()
   // 筛选对应联赛赛事
@@ -240,8 +246,7 @@ const change_tab = (item, index, is_self) => {
   // set_hot_tab_item(item)
   // 滑动tab动画操作
   utils.tab_move2(index, scrollBox.value)
-  // 当前index 赋值
-  tab_Index.value = index;
+
   //  调用列表页接口
   // useMittEmit(MITT_TYPES.EMIT_TAB_HOT_CHANGING);
   // 如果不是第一个选项卡，则调用 下边方法，初始化数据
