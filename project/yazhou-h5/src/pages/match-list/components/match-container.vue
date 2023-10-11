@@ -20,8 +20,9 @@
       <!-- 首页热门 -->
       <template v-if="is_it_popular">
         <div v-if="main_source == 'home_hot_page_schedule' && lodash.get(MenuData.hot_tab_menu, 'index') == 0" class="ball_img">
+          
           <div class='img' :style="compute_css({key:'polular-spirite',position:match_of_list.csid})"  
-          style1="--per:-0.60754rem">
+          style="--per:-0.60754rem;background-size: 100%;">
           </div>
           <span> <i :style="compute_css({key:'h5-hot-jinxuan', position: `item_${match_of_list.csid}` })"></i>  <span>{{ match_of_list.csna }}</span> </span>
         </div>
@@ -116,7 +117,7 @@
                 <!-- 未收藏图标 -->
                 <img v-if="!match_of_list.mf" :src="compute_img('icon-favorite')" alt="">
                 <!-- 收藏图标 -->
-                <img v-if='match_of_list.mf' :src="compute_img('icon-favorite-d')">
+                <img v-if='match_of_list.mf' :src="compute_img('icon-favorite-s')">
               </div>
               <!-- 赛事日期标准版 -->
               <div class="timer-wrapper-c flex items-center"
@@ -198,7 +199,7 @@
                     </div>
                     <!-- 进球动画 -->
                     <div class="yb-flex-center" v-if="is_show_home_goal && is_new_init2 && (!is_show_away_goal)">
-                      <div class="yb-goal-gif" :class="{ 'yb-goal-yo': theme.includes('y0') }"></div>
+                      <div class="yb-goal-gif yb-goal-yo"></div>
                       <div class="gif-text">{{ $t('match_result.goal') }}</div>
                     </div>
                     <span class='score-punish' v-show="home_red_score"
@@ -237,7 +238,7 @@
                     <!-- 进球动画 -->
                     <div class="yb-flex-center" v-if="is_show_away_goal && is_new_init2 && (!is_show_home_goal)">
 
-                      <div class="yb-goal-gif" :class="{ 'yb-goal-yo': theme.includes('y0') }"></div>
+                      <div class="yb-goal-gif yb-goal-yo"></div>
                       <div class="gif-text">{{ $t('match_result.goal') }}</div>
                     </div>
                     <!--进行中的赛事显示比分-->
@@ -285,9 +286,7 @@
                       <div class="column justify-center yb_px4"
                       v-if="[1, 2].includes(+match.csid) && GlobalAccessConfig.get_statisticsSwitch()"
                         @click='goto_details(match, 1)'>
-                        <img :src="match_analysis" alt="" style="width:0.12rem"
-                          v-if="theme.includes('theme-0')">
-                        <img :src="match_analysis2" alt="" style="width:0.12rem" v-else>
+                        <img :src="compute_img('data-analysis')" alt="" style="width:0.12rem">
                       </div>
                       <!-- 此赛事支持提前结算 -->
                       <div class="column justify-center yb_px2" v-if="match_of_list.mearlys == 1">

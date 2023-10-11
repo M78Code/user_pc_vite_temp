@@ -11,11 +11,7 @@
 
     <!--封盘-->
     <div class="icon-lock-wrapper" v-if="odd_status === 2">
-      <img class="icon-lock" v-if="get_theme.includes('day')"
-         src="public/image/common/match-icon-lock.svg" />
-      <img class="icon-lock" v-if="get_theme.includes('night')"
-         src="public/image/common/match-icon-lock-theme02.svg" />
-
+      <img class="icon-lock" :src="compute_img('icon-lock')" />
     </div>
     <!--开盘|锁盘-->
     <div v-else class="odds" :class="{red:red_green_status === 1,green:red_green_status === -1,}">

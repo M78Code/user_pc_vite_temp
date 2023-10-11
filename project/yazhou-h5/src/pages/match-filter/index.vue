@@ -56,7 +56,7 @@
     </ul>
 
     <!-- 字母悬浮图标 -->
-    <div v-if="is_show" class="active-point" :style="{ top: fixed_top + 150 + 'px' }">
+    <div v-if="is_show" class="active-point"  :style="[{ top: fixed_top + 150 + 'px' },compute_css('work-s')]">
       <span>{{ active_index }}</span>
     </div>
 
@@ -91,7 +91,7 @@ import { api_filter } from "src/api/index.js";
 import NoData from "project_path/src/components/common/no-data.vue";
 import SFilter from "project_path/src/components/skeleton/filter.vue";
 import lodash from 'lodash';
-import { i18n_t, MITT_TYPES, useMittEmit, MenuData,compute_img, UserCtr, get_file_path } from 'src/core/'
+import { i18n_t, MITT_TYPES,compute_css, useMittEmit, MenuData,compute_img, UserCtr, get_file_path } from 'src/core/'
 import { ref, watch, computed, nextTick, onBeforeUnmount } from 'vue';
 const default_url = "/yazhou-h5/image/svg/match_cup.svg"  //默认图片地址
 // 无联赛logo图标黑色版

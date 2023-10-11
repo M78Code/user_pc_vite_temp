@@ -78,8 +78,8 @@
       </li>
     </ul>
     <!-- 字母悬浮图标 -->
-    <div class="active-point" v-if="is_show" :style="{ top: fixed_top + 150 + 'px' }"
-      :class="{ 'is-black': get_theme.includes('theme02'), 'y0-bg-img-zimu': get_theme.includes('y0') }">
+    <div class="active-point" v-if="is_show" :style="[{ top: fixed_top + 150 + 'px' },compute_css('work-s')]"
+     >
       <span>{{ active_index }}</span>
     </div>
     <!-- 底部固定部分 -->
