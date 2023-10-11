@@ -189,8 +189,7 @@
         >
           <div class="inner yb-flex-center left">
             <div
-              class="yb-goal-gif"
-              :class="{ 'yb-goal-yo': UserCtr.theme.includes('y0') }"
+              class="yb-goal-gif yb-goal-yo"
             ></div>
             <div class="gif-text">{{ i18n_t('match_result.goal') }}</div>
           </div>
@@ -216,8 +215,7 @@
         >
           <div class="inner yb-flex-center right">
             <div
-              class="yb-goal-gif"
-              :class="{ 'yb-goal-yo': UserCtr.theme.includes('y0') }"
+              class="yb-goal-gif yb-goal-yo"
             ></div>
             <div class="gif-text">{{ i18n_t('match_result.goal') }}</div>
           </div>
