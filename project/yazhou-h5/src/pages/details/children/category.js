@@ -150,7 +150,6 @@ export const category_info = (category_arr=[]) => {
   };
 
   onMounted(() => {
-    on_listeners()
     initEvent()
     // 获取置顶列表数据
     match_list_new()
@@ -300,6 +299,7 @@ export const category_info = (category_arr=[]) => {
    * @returns {Promise<void>}
    */
   const initEvent = async (to_refresh, init_req) => {
+    // console.error("初始化方法");
     if (to_refresh) {
       to_refresh = to_refresh;
     } else {
@@ -858,14 +858,9 @@ const { emitters_off } = useMittEmitterGenerator([
   { type: MITT_TYPES.EMIT_REF_API, initEvent },
   { type: MITT_TYPES.EMIT_HIDE_DETAIL_MATCH_LIST, hide_detail_match_list },
 ])
-const on_listeners = () => {
-  emitters = [
-    useMittEmit(MITT_TYPES.EMIT_REF_API, initEvent),
-    useMittEmit(MITT_TYPES.EMIT_HIDE_DETAIL_MATCH_LIST, hide_detail_match_list)
-  ]
-}
+
   onUnmounted(() => {
-    emitters.map((x) => x && x.off());
+    emitters_off()
   })
   return {
     component_data,

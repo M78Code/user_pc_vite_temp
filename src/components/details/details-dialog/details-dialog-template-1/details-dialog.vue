@@ -155,7 +155,7 @@ import matchDialogStage from 'project_path/src/components/match/match-dialog-sta
 import showStartTime from 'project_path/src/components/details/wight/show-start-time.vue'   // 详情页同联赛的赛事即将开赛显示时间
 // 工具
 import { format_total_score } from 'src/core/format/module/format-score.js'
-import { UserCtr, MenuData,compute_css,useMittEmit, MITT_TYPES } from "src/core/index.js";
+import { UserCtr, MenuData,compute_css,useMittEmit, MITT_TYPES, MatchDetailCalss } from "src/core/index.js";
 import { compute_css_variables } from "src/core/css-var/index.js"
 import icon_video from 'project_path/image/common/icon_video.png'
 import icon_video_black from 'project_path/image/common/icon_video_black.png'
@@ -237,19 +237,21 @@ function calc_score(val) {
 function change_active(item) {
   useMittEmit(MITT_TYPES.EMIT_IS_BOOL_DIALOG_DETAILS, false);
   if (props.detail_data.mid == item.mid) return; // 如果选择当前页的比赛,则不给予跳转;
-  // TODO:  
-  // set_goto_detail_matchid(item.mid); //设置mid;
-  // set_event_list([])
-
+  MatchDetailCalss.set_match_details_params(item); //设置mid;
+  MatchDetailCalss.set_playback_video_list([])
   if (!(lodash.get(current_menu, 'sub.menuType') == '5' && ['result_details', 'match_result'].includes(route.name))) {
     // TODO:  
     // set_details_item(get_details_tabs_list[0].id); // 选中的tab的item项;
   }
-  router.replace({ name: "category", params: { mid: item.mid, index: 0 } }); // todo 优化此处
+  
   useMittEmit(MITT_TYPES.EMIT_REFRESH_DETAILS); // 刷新详情页头部信息;
   useMittEmit(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB); // 将tab的滚动距离回复到初始点;
   useMittEmit(MITT_TYPES.EMIT_CATEGORY_SKT); // 底部信息skt连接
   useMittEmit(MITT_TYPES.EMIT_DETAILS_SKT); // 头部信息skt连接
+  // 触发category_list接口
+  useMittEmit(MITT_TYPES.EMIT_TABS_LIST_UPDATE_HANDLE);
+  // 触发odds_info接口
+  useMittEmit(MITT_TYPES.EMIT_REF_API);
   timer1_.value = setInterval(() => {
     // 触发详情页页面初始化
     useMittEmit(MITT_TYPES.EMIT_MATCH_TIME_SHOW_INIT);
@@ -258,6 +260,7 @@ function change_active(item) {
     clearInterval(timer1_.value)
     clearInterval(timer2_.value)
   }, 100)
+  router.replace({ name: "category", params: { mid: item.mid } }); // todo 优化此处
 }
 
 const { ctx } = getCurrentInstance()

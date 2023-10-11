@@ -36,6 +36,7 @@ export default class MatchDetailCtr {
     this.video_url = {},
     this.show_video = false,
     this.iframe_onload = false,
+    this.goto_detail_matchid = '',
 
     // ==================结束=======================
     // hpid 玩法ID 
@@ -248,8 +249,8 @@ export default class MatchDetailCtr {
    * @param {*} val
    * @return {*}
    */
-  set_match_details_params(val){
-    const {mid,tid,sportId,media_type} = val
+  set_match_details_params({mid = '',tid = '',sportId = '',media_type = ''}){
+    // const {mid = '',tid = '',sportId = '',media_type = ''} = val
     this.params = {
       mid,
       tid, // 联赛 id
