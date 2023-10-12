@@ -2,59 +2,27 @@
 <template>
   <div class="no-data"
     :style="{ 'min-height': top_height + 'px', paddingTop: is_detail && top_height < 500 ? '.6rem' : '80px' }">
-
-    <template v-if="['暂无,此处逻辑产品暂时说放弃'].includes(which)">
-      <div class="empty-favorite-bg"
-        :style="{ backgroundImage: UserCtr.theme.includes('day') ? `url(${arr.noMatchNew.url})` : `url(${arr.noMatchNew.url2})` }">
-      </div>
-      <p class="title" :style="{ color: UserCtr.theme.includes('day') ? '#666666' : ' #B9B9B9' }">{{
-        arr.noMatchNew.txt[0]
-      }}</p>
-      <p class="title-tint" :style="{ color: UserCtr.theme.includes('day') ? '#999999' : ' #999999' }">{{
-        arr.noMatchNew.txt[1] }}</p>
-      <p>
-        <span class="btn" @click="refresh_data"
-          :style="{ color: UserCtr.theme.includes('y0') ? '#4987FB' : '#FF9124', borderColor: UserCtr.theme.includes('y0') ? '#569FFD' : '#FF9124' }">
-          {{ arr.noMatchNew.txt[2] }}</span>
-      </p>
-    </template>
-
-    <template v-if="['noMatch', 'noWifi', 'noMessage'].includes(which)">
-      <div class="empty-favorite-bg"
-        :style="{ backgroundImage: UserCtr.theme.includes('day') ? `url(${arr.noMatch.url})` : `url(${arr.noMatch.url2})` }">
-      </div>
-      {{arr.noMatch}}
-      <p style="color:#A5A9B3;">{{ which === 'noMessage' ? arr.noMessage.txt || msg : arr.noMatch.txt || msg}}</p>
-    </template>
-
-    <template v-if="which === 'nolive'">
-      <div class="empty-favorite-bg"
-        :style="{ backgroundImage: UserCtr.theme.includes('day') ? `url(${arr.nolive.url})` : `url(${arr.nolive.url2})` }">
-      </div>
-      <p style="color:#A5A9B3;"> {{ arr.nolive.txt }} </p>
-    </template>
-
-    <template v-if="which === 'collect'">
-      <div class="empty-favorite-bg"
-        :style="{ backgroundImage: UserCtr.theme.includes('day') ? `url(${arr.collect.url})` : `url(${arr.collect.url2})` }">
-      </div>
-      <p style="color:#A5A9B3;">{{ arr.collect.txt }}</p>
-    </template>
+    <div class="empty-favorite-bg" 
+    :style="compute_css(lodash.get(arr[which], 'key'))">
+    </div>
+    <p>
+            <!-- 有消息用消息 没有信息 用默认信息 -->
+      {{ msg ? $t(msg) : lodash.get(arr[which], 'txt') }}
+    </p>
   </div>
 </template>
   
 <script setup>
 import { ref, onMounted, onUnmounted, watch } from 'vue'
 import { useMittEmit, MITT_TYPES } from "src/core/mitt"
-import { i18n_t } from "src/core/index.js";
+import { i18n_t, compute_css } from "src/core/index.js";
 import { useRoute } from "vue-router"
-import UserCtr from 'src/core/user-config/user-ctr.js'
 
 //-------------------- 对接参数 prop 注册  开始  -------------------- 
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
 
-console.error('nodata++++',props);
+console.error('nodata++++', props);
 useRegistPropsHelper(component_symbol, need_register_props)
 const props = defineProps({
   which: {
@@ -93,32 +61,33 @@ const props = defineProps({
 
 const arr_const = {
   collect: {
-    url: "image/bw3/svg/no_shouc.svg",
-    url2: "image/bw3/svg/no_shouc2.svg",
+    key: "no-collect",
+    // url2: "image/bw3/svg/no_shouc2.svg",
     txt: i18n_t('msg.msg_nodata_08'),// '暂无关注的赛事哦',
   },
   noWifi: {
-    url: "image/bw3/svg/nowifi.svg",
+    // url: "image/bw3/svg/nowifi.svg",
+    key: "no-wifi",
     txt: i18n_t('msg.msg_nodata_09'),//'网络不给力',
   },
   noMatch: {
-    url: "public/image/bw3/svg/noMatch.svg",
-    url2: "image/bw3/png/noMatch2.png",
+    keykey: "no-match",
+    // url2: "image/bw3/png/noMatch2.png",
     txt: i18n_t('msg.msg_nodata_02'),//'空空如也~',
   },
   noMatchNew: {
-    url: "image/bw3/png/noMatch_new.png",
-    url2: "image/bw3/png/noMatch2_new.png",
+    key: "no-match",
+    // url2: "image/bw3/png/noMatch2_new.png",
     txt: i18n_t('msg.msg_nodata_02_new'),//'数组 对应 标题 提示文字 刷新',
   },
   noMessage: {
-    url: "image/bw3/svg/noMatch.svg",
-    url2: "image/bw3/png/noMatch2.png",
+    key: "no-match",
+    // url2: "image/bw3/png/noMatch2.png",
     txt: i18n_t('msg.msg_nodata_17'),//'暂无消息记录~',
   },
   nolive: {
-    url: "image/bw3/svg/no_livedata.svg",
-    url2: "image/bw3/svg/no_livedata2.svg",
+    key: "no-live",
+    // url2: "image/bw3/svg/no_livedata2.svg",
     txt: i18n_t('msg.msg_nodata_14'),//'暂无直播的赛事哦',
   }
 }
@@ -201,6 +170,7 @@ function refresh_data() {
   p {
     margin: 0.14rem;
     font-size: 0.14rem;
+    color: var(--q-gb-t-c-5);
 
     span {
       display: inline-block;
