@@ -11,7 +11,7 @@
   </div>
 </template>
 <script setup>
-import "./src/core/globel-mitt";
+import "src/core/globel-mitt";
 import { PageSourceData ,GlobalSwitchClass,LayOutMain_pc} from "src/core/index.js";
 import { useMittOn, MITT_TYPES } from "src/core/mitt/";
 import { wslog, httplog } from "src/core/log/";
