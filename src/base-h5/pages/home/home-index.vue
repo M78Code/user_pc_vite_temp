@@ -24,7 +24,7 @@
 
 <script>
 import home from "./first-page/index.vue"; // 包网3首页下边（轮播 + 跑马灯 + 赛事框）  榴莲千层盒子（小）300p
-import setMenu from "../../components/common/set-menu.vue"; // 设置
+import setMenu from "src/base-h5/components/common/set-menu.vue"; // 设置
 import hot from "./hot/index.vue"; // 热门页入口主页面
 // import live_video from "src/base-h5/pages/home/live-video/index.vue";
 import { loadLanguageAsync } from "src/boot/i18n.js";
