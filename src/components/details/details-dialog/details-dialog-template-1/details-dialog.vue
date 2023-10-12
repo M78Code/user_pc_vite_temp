@@ -148,17 +148,16 @@ import { ref, reactive, computed, defineComponent, getCurrentInstance, onMounted
 import { useRoute, useRouter } from 'vue-router';
 import lodash from 'lodash';
 // 组件
-import dialogHeader from 'project_path/src/components/details/dialog/dialog-header.vue'   // 赛事详情头部点击下拉后显示  "↑ 收起" + "< 返回按钮"
-import teamImg from 'project_path/src/components/details/team-img.vue'    // 详情页蓝色背景上的大型字母图标
-import matchStage from 'project_path/src/components/match/match-stage.vue';   // 下拉列表赛事时间展示
-import matchDialogStage from 'project_path/src/components/match/match-dialog-stage.vue';   // 详情点击下拉显示当前赛事的时间
-import showStartTime from 'project_path/src/components/details/wight/show-start-time.vue'   // 详情页同联赛的赛事即将开赛显示时间
+import dialogHeader from 'src/base-pc/components/details/dialog/dialog-header.vue'   // 赛事详情头部点击下拉后显示  "↑ 收起" + "< 返回按钮"
+import teamImg from 'src/base-pc/components/details/team-img.vue'    // 详情页蓝色背景上的大型字母图标
+import matchStage from 'src/base-pc/components/match/match-stage.vue';   // 下拉列表赛事时间展示
+import matchDialogStage from 'src/base-pc/components/match/match-dialog-stage.vue';   // 详情点击下拉显示当前赛事的时间
+import showStartTime from 'src/base-pc/components/details/wight/show-start-time.vue'   // 详情页同联赛的赛事即将开赛显示时间
 // 工具
 import { format_total_score } from 'src/core/format/module/format-score.js'
 import { UserCtr, MenuData,compute_css,useMittEmit, MITT_TYPES, MatchDetailCalss } from "src/core/index.js";
 import { compute_css_variables } from "src/core/css-var/index.js"
-import icon_video from 'project_path/image/common/icon_video.png'
-import icon_video_black from 'project_path/image/common/icon_video_black.png'
+ 
 
 const props = defineProps(['detail_data', 'math_list_data'])
 
@@ -277,7 +276,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import 'project_path/src/pages/details/styles/details-theme/details-dialog.scss';//project/yazhou-h5/src/pages/details/styles/details-theme/details-dialog.scss
+@import 'src/base-pc/pages/details/styles/details-theme/details-dialog.scss';//project/yazhou-h5/src/pages/details/styles/details-theme/details-dialog.scss
 .details-dialog {
   max-width: 100%;
   width: 100%;

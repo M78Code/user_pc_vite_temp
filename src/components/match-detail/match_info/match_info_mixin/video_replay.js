@@ -4,7 +4,7 @@
   import { api_details } from "src/api/index";
 import { useMittEmit } from "../../../../core/mitt";
 
-  // import { route } from "project_path/src/router/index.js";
+ 
   export default {
       components: {
           SliderX,

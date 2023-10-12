@@ -433,7 +433,7 @@ onUnmounted(() => {
 
 </script>
 <style lang="scss" scoped>
-@import "project/yazhou-h5/src/css/bet/bet_single_detail.scss";
+@import url("src/base-h5/css/bet/bet_single_detail.scss");
 
 .bet-single-detail {
   height: 0.56rem;
