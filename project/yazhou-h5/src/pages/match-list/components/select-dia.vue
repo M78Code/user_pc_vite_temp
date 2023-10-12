@@ -85,7 +85,6 @@ const is_search_hide = (i) => {
 </script>
  
 <style scoped lang="scss">
-// @import url("src/base-h5/css/pages/select-dia.scss");
 
 .select-dia {
   width: 100%;

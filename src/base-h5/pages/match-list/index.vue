@@ -68,7 +68,7 @@ import { standard_edition } from 'src/base-h5/mixin/userctr.js'
 
 // import matchListCardFold from 'src/core/match-list-h5/match-card/match-list-card-fold.js'
 
-import 'src/base-h5/css/pages/match-main.scss'
+// import 'src/base-h5/css/pages/match-main.scss'
 
 const props = defineProps({
   invok_source: String,

@@ -67,7 +67,7 @@ onUnmounted(() => {
 get_lang_v3();
 </script>
 <style lang="scss">
-/* @import "src/base-h5/css/pages/first-page.scss"; */
+/* @import "project_path/src/css/pages/first-page.scss"; */
 
 .home-wrap {
   padding: 0 0.1rem;

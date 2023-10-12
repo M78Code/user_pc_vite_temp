@@ -396,7 +396,7 @@ const get_balance = () => {
 </script>
 
 <style lang="scss" scoped>
-@import url(src/base-h5/css/pages/set-menu.scss);
+@import url(project_path/src/css/pages/set-menu.scss);
 
 .set-menu {
   .filter-icon-wrapper {
