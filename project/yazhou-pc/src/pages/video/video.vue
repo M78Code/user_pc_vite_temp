@@ -59,9 +59,9 @@
 <script setup>
 
 import { onMounted } from "vue";
-import LoadData from "project_path/src/components/load-data/load-data.vue"
+import LoadData from "src/base-pc/components/load-data/load-data.vue"
 // 视屏头部
-import VideoHeader from "project_path/src/components/video/video-header.vue"
+import VideoHeader from "src/base-pc/components/video/video-header.vue"
 // 视频组件dn
 // import VideoIframe from "src/project/yabo/components/video/video_iframe.vue"
 // 比分板足球模板

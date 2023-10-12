@@ -8,7 +8,7 @@ console.log("-------------__dirname---------", __dirname);
 
 import FINAL_MERCHANT_CONFIG from "../../job/output/merchant/config.json";
 
-let { project } = FINAL_MERCHANT_CONFIG;
+let { project,is_pc } = FINAL_MERCHANT_CONFIG;
 
 if (!project) {
   console.error("目标项目必须设定 ----------");
@@ -70,6 +70,7 @@ export default defineConfig({
       node_modules: path.resolve(process.cwd(), "./node_modules"),
       public: path.resolve(process.cwd(), `./public/${project}`),
       project_path: path.resolve(process.cwd(), `./project/${project}`),
+      base_path: path.resolve(process.cwd(), `./src/base-${is_pc?'pc':'h5'}`),
     },
   },
   server: {

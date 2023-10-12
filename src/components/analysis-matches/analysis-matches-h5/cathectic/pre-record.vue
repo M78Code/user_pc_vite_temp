@@ -51,13 +51,13 @@
 <script setup>
 import { ref, getCurrentInstance, watch, onUnmounted, onMounted } from 'vue'
 import { api_betting } from "src/api/index.js";
-import commonCathecticItem from "project_path/src/components/common/common-cathectic-item.vue";
+import commonCathecticItem from "src/base-h5/components/common/common-cathectic-item.vue";
 import { format_M_D } from 'src/core/format/index.js'
 // 合并投注项提示弹框
-import cancleConfirmPop from 'project_path/src/pages/cathectic/cancle-confirm-pop.vue';
-import settleVoid from "project_path/src/pages/cathectic/settle-void.vue";
-import scroll from "project_path/src/components/common/record-scroll/scroll.vue";
-import SRecord from "project_path/src/components/skeleton/record.vue";
+import cancleConfirmPop from 'src/base-h5/pages/cathectic/cancle-confirm-pop.vue';
+import settleVoid from "src/base-h5/pages/cathectic/settle-void.vue";
+import scroll from "src/base-h5/components/common/record-scroll/scroll.vue";
+import SRecord from "src/base-h5/components/skeleton/record.vue";
 import store from 'src/store-redux/index.js';
 import lodash from "lodash";
 import { useMittOn, MITT_TYPES } from "src/core/mitt/"

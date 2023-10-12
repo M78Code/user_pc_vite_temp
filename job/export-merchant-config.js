@@ -113,6 +113,7 @@ const merge_and_output_final_config = (scg) => {
   let add_obj = {
     MERCHANT_CONFIG_VERSION,
     project: PROJECT_NAME,
+    is_pc: PROJECT_NAME.includes('pc'),
     write_file_date: Date.now(),
   };
   MERCHANT_CONFIG_INFO = merge_merchant_config(scg, add_obj);

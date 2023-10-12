@@ -55,7 +55,7 @@
 
 // import analysisData  from 'src/public/mixins/analysis/analysis'
 // mixins: [analysisData],
-import loadData from "project_path/src/components/load-data/load-data.vue";
+import loadData from "src/base-pc/components/load-data/load-data.vue";
 import { ref, onUnmounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
