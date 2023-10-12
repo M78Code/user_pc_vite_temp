@@ -3,42 +3,27 @@
     <div class="no-data"
         :style="{ 'min-height': top_height + 'px', paddingTop: is_detail && top_height < 500 ? '.6rem' : '80px' }">
 
-        <template v-if="['暂无,此处逻辑产品暂时说放弃'].includes(which)">
+        <!-- <template v-if="['暂无,此处逻辑产品暂时说放弃'].includes(which)">
             <div class="empty-favorite-bg"
-                :style="{ backgroundImage: UserCtr.theme.includes('day') ? `url(${arr.noMatchNew.url})` : `url(${arr.noMatchNew.url2})` }">
+                :style="{ backgroundImage: ('day') ? `url(${arr.noMatchNew.url})` : `url(${arr.noMatchNew.url2})` }">
             </div>
-            <p class="title" :style="{ color: UserCtr.theme.includes('day') ? '#666666' : ' #B9B9B9' }">{{
+            <p class="title" :style="{ color: ('day') ? '#666666' : ' #B9B9B9' }">{{
                 arr.noMatchNew.txt[0]
             }}</p>
-            <p class="title-tint" :style="{ color: UserCtr.theme.includes('day') ? '#999999' : ' #999999' }">{{
+            <p class="title-tint" :style="{ color: ('day') ? '#999999' : ' #999999' }">{{
                 arr.noMatchNew.txt[1] }}</p>
             <p>
                 <span class="btn" @click="refresh_data"
-                    :style="{ color: UserCtr.theme.includes('y0') ? '#4987FB' : '#FF9124', borderColor: UserCtr.theme.includes('y0') ? '#569FFD' : '#FF9124' }">
+                    :style="{ color: ('y0') ? '#4987FB' : '#FF9124', borderColor: ('y0') ? '#569FFD' : '#FF9124' }">
                     {{ arr.noMatchNew.txt[2] }}</span>
             </p>
-        </template>
-
-        <template v-if="['noMatch', 'noWifi', 'noMessage'].includes(which)">
-            <div class="empty-favorite-bg"
-                :style="{ backgroundImage: UserCtr.theme.includes('day') ? `url(${arr.noMatch.url2})` : `url(${arr.noMatch.url})` }">
-            </div>
-            <p style="color:#A5A9B3;">{{ which === 'noMessage' ? arr.noMessage.txt : arr.noMatch.txt }}</p>
-        </template>
-
-        <template v-if="which === 'nolive'">
-            <div class="empty-favorite-bg"
-                :style="{ backgroundImage: UserCtr.theme.includes('day') ? `url(${arr.nolive.url})` : `url(${arr.nolive.url2})` }">
-            </div>
-            <p style="color:#A5A9B3;"> {{ arr.nolive.txt }} </p>
-        </template>
-
-        <template v-if="which === 'collect'">
-            <div class="empty-favorite-bg"
-                :style="{ backgroundImage: UserCtr.theme.includes('day') ? `url(${arr.collect.url})` : `url(${arr.collect.url2})` }">
-            </div>
-            <p style="color:#A5A9B3;">{{ arr.collect.txt }}</p>
-        </template>
+        </template> -->
+        <div class="empty-favorite-bg" :style="compute_css(lodash.get(arr_const[which], 'key'))">
+        </div>
+        <p>
+            <!-- 有消息用消息 没有信息 用默认信息 -->
+            {{ msg ? $t(msg) : lodash.get(arr_const[which], 'txt') }}
+        </p>
     </div>
 </template>
 
@@ -46,21 +31,21 @@
 import { watch, ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 
-import { i18n_t } from "src/boot/i18n.js";
+import { i18n_t ,compute_css} from "src/boot/i18n.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import UserCtr from "src/core/user-config/user-ctr.js";
 // const noMatch2 = () => import("/yazhou-h5/image/png/noMatch2.png")
 
 // ==========图片===============
-const noMatchSvg = '/yazhou-h5/image/svg/noMatch.svg'
-const noMatch2Png = '/yazhou-h5/image/png/noMatch2.png'
-const noShoucSvg = '/yazhou-h5/image/svg/no_shouc.svg'
-const noShouc2Svg = '/yazhou-h5/image/svg/no_shouc2.svg'
-const noMatchNewPng = '/yazhou-h5/image/png/noMatch_new.png'
-const noMatch2NewPng = '/yazhou-h5/image/png/noMatch2_new.png'
-const noLivedataSvg = '/yazhou-h5/image/svg/no_livedata.svg'
-const no_livedata2Svg = '/yazhou-h5/image/svg/no_livedata2.svg'
-const nowifiSvg = '/yazhou-h5/image/svg/nowifi.svg'
+// const noMatchSvg = '/yazhou-h5/image/svg/noMatch.svg'
+// const noMatch2Png = '/yazhou-h5/image/png/noMatch2.png'
+// const noShoucSvg = '/yazhou-h5/image/svg/no_shouc.svg'
+// const noShouc2Svg = '/yazhou-h5/image/svg/no_shouc2.svg'
+// const noMatchNewPng = '/yazhou-h5/image/png/noMatch_new.png'
+// const noMatch2NewPng = '/yazhou-h5/image/png/noMatch2_new.png'
+// const noLivedataSvg = '/yazhou-h5/image/svg/no_livedata.svg'
+// const no_livedata2Svg = '/yazhou-h5/image/svg/no_livedata2.svg'
+// const nowifiSvg = '/yazhou-h5/image/svg/nowifi.svg'
 // TODO:
 
 
@@ -68,82 +53,77 @@ const nowifiSvg = '/yazhou-h5/image/svg/nowifi.svg'
 
 const arr_const = {
     collect: {
-        url: noShoucSvg,
-        url2: noShouc2Svg,
+        key:'no-collect',
         // '暂无关注的赛事哦',
         txt: i18n_t('msg.msg_nodata_08'),
     },
-    noWifi: {
-        url: nowifiSvg,
+    noWifi: { 
+        key:'no-wifi',
         //'网络不给力',
         txt: i18n_t('msg.msg_nodata_09'),
     },
     noMatch: {
-        url: noMatchSvg,
-        url2: noMatch2Png,
+        key:'no-match',
         //'空空如也~',
         txt: i18n_t('msg.msg_nodata_02'),
     },
     noMatchNew: {
-        url: noMatchNewPng,
-        url2: noMatch2NewPng,
+        key:'no-match',
         //'数组 对应 标题 提示文字 刷新',
         txt: i18n_t('msg.msg_nodata_02_new'),
     },
     noMessage: {
-        url: noMatchSvg,
-        url2: noMatch2Png,
+        key:'no-match',
         //'暂无消息记录~',
         txt: i18n_t('msg.msg_nodata_17'),
     },
     nolive: {
-        url: noLivedataSvg,
-        url2: no_livedata2Svg,
+        key:'no-live',
         //'暂无直播的赛事哦',
         txt: i18n_t('msg.msg_nodata_14'),
     }
 }
 
- const props = defineProps({
-        which: {
-            type: String,
-            required: true
-        },
-        height: {
-            required: true
-        },
-    })
-    const arr = ref(arr_const)
-    const top_height = ref(0)
-    const is_detail = ref(false)
+const props = defineProps({
+    which: {
+        type: String,
+        required: true
+    },
+    height: {
+        required: true
+    },
+})
+const arr = ref(arr_const)
+const top_height = ref(0)
+const is_detail = ref(false)
 
-    const route = useRoute()
-    function init() {
-        top_height.value = window.innerHeight - props.height;
-        is_detail.value = route.name === 'category';
-    }
-    onMounted(init)
+const route = useRoute()
+function init() {
+    top_height.value = window.innerHeight - props.height;
+    is_detail.value = route.name === 'category';
+}
+onMounted(init)
 
-    // 监听国际化语种变化,一旦变化修正国际化字符串
-    // watch(
-    //     // () => $i18n.locale,
-    //     () => arr.value = arr_const
-    // )
+// 监听国际化语种变化,一旦变化修正国际化字符串
+// watch(
+//     // () => $i18n.locale,
+//     () => arr.value = arr_const
+// )
 
-    function refresh_data() {
-        // TODO: mitt?
-        useMittEmit(MITT_TYPES.EMIT_MENU_CHANGE_FOOTER_CMD, {
-            text: "footer-refresh"
-        });
-    }
+function refresh_data() {
+    // TODO: mitt?
+    useMittEmit(MITT_TYPES.EMIT_MENU_CHANGE_FOOTER_CMD, {
+        text: "footer-refresh"
+    });
+}
 
 
-    // beforeUnmount() {
-    //     // TODO: 暂不清楚$data用途
-    //     for (const key in this.$data) {
-    //         this.$data[key] = null
-    //     }
-    // },
+// beforeUnmount() {
+//     // TODO: 暂不清楚$data用途
+//     for (const key in this.$data) {
+//         this.$data[key] = null
+//     }
+// },
 
 </script>
 
@@ -193,7 +173,7 @@ const arr_const = {
     p {
         margin: 0.14rem;
         font-size: 0.14rem;
-
+        color: var(--q-gb-t-c-5);
         span {
             display: inline-block;
             width: 1.4rem;
