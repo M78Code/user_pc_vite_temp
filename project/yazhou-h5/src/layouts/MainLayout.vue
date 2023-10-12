@@ -59,22 +59,22 @@ import { FooterWapper } from "src/components/footer/index.js";
 import { MenuWapper } from "src/components/menu";
 import activityIcon from "src/base-h5/components/common/activity-icon.vue"; // 设置
 import setMenu from "src/base-h5/components/common/set-menu.vue"; // 设置
-import selectDia from "../pages/match-list/components/select-dia.vue"
+import selectDia from "src/base-h5/pages/match-list/components/select-dia.vue"
 import { useRoute } from "vue-router";
 
 import store from "src/store-redux/index.js";
 import { api_common } from "src/api/index.js";
 import PageSourceData from "src/core/page-source/page-source.js";
 // 活动弹出框
-const activityLayer = defineAsyncComponent(() => import("../components/common/activity-layer.vue"))
+const activityLayer = defineAsyncComponent(() => import("src/base-h5/components/common/activity-layer.vue"))
 const settleDialog = defineAsyncComponent(() =>
-  import("../pages/cathectic/index.vue")
+  import("src/base-h5/pages/cathectic/index.vue")
 );
 const betMixBox = defineAsyncComponent(() =>
   import("src/components/bet/components/bet_mix_box.vue")
 );
 const toast = defineAsyncComponent(() =>
-  import("../components/common/toast.vue")
+  import("src/base-h5/components/common/toast.vue")
 );
 // const selectDia = defineAsyncComponent(() =>
 //   import("../pages/match-list/components/select-dia.vue")
