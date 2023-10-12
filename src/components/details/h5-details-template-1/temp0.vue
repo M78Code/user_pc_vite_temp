@@ -247,9 +247,9 @@ export default defineComponent({
           }
         }
         if(len && len>10){
-          show_more = false;
+          data.show_more = false;
         }
-        len = len
+        data.len = len
       };
     })
     /**
@@ -279,7 +279,7 @@ export default defineComponent({
           // useMittEmit(MITT_TYPES.EMIT_SET_DETAILDS_SCROLL,distance)
         }
       }
-      show_more = !show_more
+      data.show_more = !data.show_more
     };
     return {
       ...toRefs(data),
