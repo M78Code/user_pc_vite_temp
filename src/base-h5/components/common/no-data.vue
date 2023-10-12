@@ -31,8 +31,8 @@
 import { watch, ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 
-import { i18n_t ,compute_css} from "src/boot/i18n.js";
-import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
+import { i18n_t ,} from "src/boot/i18n.js";
+import { useMittEmit,compute_css, MITT_TYPES } from "src/core/index.js"
 import UserCtr from "src/core/user-config/user-ctr.js";
 // const noMatch2 = () => import("/yazhou-h5/image/png/noMatch2.png")
 

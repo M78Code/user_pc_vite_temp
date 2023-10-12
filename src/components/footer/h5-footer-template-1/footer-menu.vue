@@ -83,7 +83,7 @@ import lodash from "lodash";
 import { useRoute, useRouter } from "vue-router";
 import store from "src/store-redux/index.js";
 import { UserCtr, i18n_t, compute_css, useMittOn, useMittEmit, MITT_TYPES, MenuData } from "src/core/index.js";
-import { lang, show_favorite_list, theme, user_info, resources_obj } from "project_path/src/mixin/userctr";
+import { lang, show_favorite_list, theme, user_info, resources_obj } from "src/base-h5/mixin/userctr";
 const { matchReducer } = store.getState();
 const { menu_type, update_time, get_sport_all_selected } = MenuData;
 // 路由

@@ -87,7 +87,7 @@ import { lang, theme } from 'src/base-h5/mixin/userctr.js'
 import { menu_type } from 'src/base-h5/mixin/menu.js'
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import { normal_img_not_favorite_white } from 'src/base-h5/core/utils/local-image.js'
-import 'src/base-h5/css/pages/match-container-champion.scss'
+// import 'src/base-h5/css/pages/match-container-champion.scss'
 
 const props = defineProps({
   // 当前组件的赛事数据对应列表的赛事
