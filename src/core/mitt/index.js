@@ -1,6 +1,10 @@
 import mitt from "mitt";
-import * as MITT_TYPES_PROJECT from "project_path/src/core/mitt/mitt-keys.js";
+import * as MITT_TYPES_PROJECT_PC from "src/base-pc/core/mitt/mitt-keys.js";
+import * as MITT_TYPES_PROJECT_H5 from "src/base-h5/core/mitt/mitt-keys.js";
 import * as MITT_TYPES_DEFAULT from "./mitt-keys";
+import  PUCK_UP_BASE_INFO  from "app/job/output/base-info/index.json"
+
+const MITT_TYPES_PROJECT = PUCK_UP_BASE_INFO.project.includes('pc')? MITT_TYPES_PROJECT_PC :MITT_TYPES_PROJECT_H5
 const MITT_TYPES = Object.assign({}, MITT_TYPES_DEFAULT, MITT_TYPES_PROJECT);
 const emitter = new mitt();
 /**

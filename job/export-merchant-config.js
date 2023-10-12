@@ -97,6 +97,7 @@ console.log(SERVER_CONFIG_FILE_PATH, 'SERVER_CONFIG_FILE_PATH');
 let MERCHANT_CONFIG_INFO = {};
 // 商户配置 输出目录
 let write_folder = "./job/output/merchant";
+let base_info_write_folder = "./job/output/base-info";
 let file_path = `${write_folder}/config.json`;
 //本地商户配置
 let local_file_path = `./job/default-config/merchant-config-${DEV_PROJECT_NAME}.json`;
@@ -104,6 +105,7 @@ let local_file_path = `./job/default-config/merchant-config-${DEV_PROJECT_NAME}.
 
 //确保配置 输出目录存在
 ensure_write_folder_exist(write_folder);
+ensure_write_folder_exist(base_info_write_folder);
 /**
  * 计算并写入 最终配置到文件 ，这里可能需要合并一些默认配置或者一些配置重写覆盖
  */
@@ -114,9 +116,19 @@ const merge_and_output_final_config = (scg) => {
     write_file_date: Date.now(),
   };
   MERCHANT_CONFIG_INFO = merge_merchant_config(scg, add_obj);
+
   write_file(file_path, JSON.stringify(MERCHANT_CONFIG_INFO));
+
   // // 写入本地对应的商户配置
-  // write_file(local_file_path, JSON.stringify(MERCHANT_CONFIG_INFO));
+  //  write_file(local_file_path, JSON.stringify(MERCHANT_CONFIG_INFO));
+
+ 
+  const BASE_INFO={
+    pack_up_info:MERCHANT_CONFIG_INFO.pack_up_info,
+    ...add_obj
+  }
+
+   write_file( `${base_info_write_folder}/index.json`, JSON.stringify(BASE_INFO));
 };
 /**
  * 获取 服务器上 当前商户的 版本配置
