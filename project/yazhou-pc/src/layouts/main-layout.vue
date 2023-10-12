@@ -327,7 +327,7 @@ import { IconWapper } from 'src/components/icon'
 
 /**组件*/
 import LayoutLeft from "./layout-left.vue";
-import layoutHeader from "project_path/src/layouts/layout-header.vue"; //报错
+import layoutHeader from "src/base-pc/layouts/layout-header.vue"; //报错
 
 // import moveVideo from '../components/video/video.vue'//报错
 // const search=defineAsyncComponent(() => import( "../pages/search/search.vue")),

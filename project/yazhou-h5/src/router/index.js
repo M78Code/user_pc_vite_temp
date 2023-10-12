@@ -8,12 +8,12 @@ const router = createRouter({
         name: 'home'
       },
       name: "main",
-      component: () => import("project_path/src/layouts/MainLayout.vue"),
+      component: () => import("../layouts/MainLayout.vue"),
       children: [
           {
             path: "/match",
             name: "matchList",
-            component: () => import("project_path/src/pages/match-list/index.vue"),
+            component: () => import("../pages/match-list/index.vue"),
             meta: {
               keepAlive: true // 需要缓存
             },
@@ -21,46 +21,46 @@ const router = createRouter({
           {
             path: "/home",
             name: "home",
-            component: () => import("project_path/src/pages/home/home-index.vue")
+            component: () => import("../pages/home/home-index.vue")
           },
           // {
           //   path: "/activity_task",
           //   name: "activity_task",
-          //   component: () => import("project_path/src/activity-page/activity-task/index.vue")
+          //   component: () => import("../activity-page/activity-task/index.vue")
           // },
         {
           path: "/virtual",
           name: "virtual_sports",
-          component: () => import("project_path/src/pages/virtual/virtual.vue"),
+          component: () => import("../pages/virtual/virtual.vue"),
         },
         {
           path: "/menu",
           name: "menu",
-          component: () => import("project_path/src/pages/menu/index.vue"),
+          component: () => import("../pages/menu/index.vue"),
         },
         {
           path: "/notice",
           name: "notice",
-          component: () => import("project_path/src/pages/notice/index.vue"),
+          component: () => import("../pages/notice/index.vue"),
         },
         // 注单历史---临时
         {
           path: "/cathectic",
           name: "cathectic",
-          component: () => import("project_path/src/pages/cathectic/index.vue"),
+          component: () => import("../pages/cathectic/index.vue"),
         },
         // 赛事分析---临时
         {
           path: "/match_analysis",
           name: "match_analysis",
-          component: () => import("project_path/src/pages/details/analysis-matches/index.vue"),
+          component: () => import("../pages/details/analysis-matches/index.vue"),
         },
         {
           path: "/rule_description/:name",
           name: "rule_description",
           component: () =>
             import(
-              "project_path/src/pages/rule-description/description-main.vue"
+              "../pages/rule-description/description-main.vue"
             ),
         },
         //   {
@@ -72,13 +72,13 @@ const router = createRouter({
         {
           path: "/details/:mid/:mcid?/:csid?",
           name: "category",
-          component: () => import("project_path/src/pages/details/details.vue"),
+          component: () => import("../pages/details/details.vue"),
           children: [
             {
               path: "category/:mid?/:id?",
               name: "category",
               component: () =>
-                import("project_path/src/pages/details/children/category.vue"),
+                import("../pages/details/children/category.vue"),
             },
           ],
         },
@@ -86,12 +86,12 @@ const router = createRouter({
           {
             path: "/result_details/:mid",
             name: "result_details",
-            component: () => import("project_path/src/pages/details/result-details.vue"),
+            component: () => import("../pages/details/result-details.vue"),
             children: [
               {
                 path: "/result_details/:mid/:index",
                 name: "match_result",
-                component: () => import("project_path/src/pages/details/components/result-fat-tab.vue")
+                component: () => import("../pages/details/components/result-fat-tab.vue")
               }
             ]
           },
@@ -113,7 +113,7 @@ const router = createRouter({
     // {
     //   path: "/router",
     //   name: "router_url",
-    //   component: () => import("project_path/src/layouts/router.vue"),
+    //   component: () => import("../layouts/router.vue"),
     // }
   ],
 });

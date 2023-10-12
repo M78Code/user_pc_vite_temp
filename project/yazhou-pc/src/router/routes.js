@@ -7,13 +7,13 @@ const routes = [
     redirect: {
       name: "home",
     },
-    component: () => import('project_path/src/layouts/main-layout1.vue'),
+    component: () => import('../layouts/main-layout1.vue'),
     children: [
       //       // 首页
       {
         path: "/home",
         name: "home",
-        component: () => import('project_path/src/pages/match-list/match-list.vue'),
+        component: () => import('../pages/match-list/match-list.vue'),
         meta: {
           keepAlive: true, // 需要缓存
         },
@@ -22,7 +22,7 @@ const routes = [
       {
         path: "/bet",
         name: "bet",
-        component: () => import('project_path/src/pages/test/index.vue'),
+        component: () => import('../pages/test/index.vue'),
         meta: {
           keepAlive: true, // 需要缓存
         },
@@ -39,12 +39,12 @@ const routes = [
       {
         path: "/details/:mid/:tid/:csid",
         name: "details",
-        component: () => import('project_path/src/pages/match-details/details-main.vue')
+        component: () => import('../pages/match-details/details-main.vue')
       },
       {
         path: "/video/:mid/:tid/:csid/:play_type/:video_size",
         name: "video",
-        component: () =>import("project_path/src/components/video/video.vue")   
+        component: () =>import("../pages/video/video.vue")   
       },
       //       {
       //         path: "/virtual_details/:mid/:tid/:csid",
@@ -63,31 +63,31 @@ const routes = [
     path: "/analysis_header/:csid/:mid/:euid",
     name: "analysis_header",
 
-    component: () => import('project_path/src/pages/analysis-header/analysis-header.vue'),
+    component: () => import('../pages/analysis-header/analysis-header.vue'),
   },
   // //投注记录
   {
     path: "/bet_record",
     name: "bet_record",
-    component: () => import('project_path/src/pages/bet-record/index.vue'), // project/yazhou-pc/src/pages/bet-record/index.vue
+    component: () => import('../pages/bet-record/index.vue'), // project/yazhou-pc/src/pages/bet-record/index.vue
   },
   // 赛果
   {
     path: "/match_results",
     name: "match_results",
-    component: () => import('project_path/src/pages/match-results/match-results.vue'),
+    component: () => import('../pages/match-results/match-results.vue'),
   },
   // 公告
   {
     path: "/announce",
     name: "announce",
-    component: () => import("project_path/src/pages/announce/index.vue"),
+    component: () => import("../pages/announce/index.vue"),
   },
   // 体育规则
   {
     path: "/rule",
     name: "rule",
-    component: () => import("project_path/src/pages/rule/index.vue"),
+    component: () => import("../pages/rule/index.vue"),
   },
   // // 每日成长任务
   // {

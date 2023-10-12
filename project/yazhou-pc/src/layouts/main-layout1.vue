@@ -51,11 +51,11 @@ import { SearchWapper } from 'src/components/search'
 import layoutHeader from "./layout-header.vue";
 import layoutLeft from "./layout-left.vue";
 import layoutRight from "./layout-right.vue";
-import toastComponents from "project_path/src/components/toast/toast.vue";
-import alertComponents from "project_path/src/components/toast/alert.vue";
-import confirmComponents from "project_path/src/components/toast/confirm.vue";
+import toastComponents from "src/base-pc/components/toast/toast.vue";
+import alertComponents from "src/base-pc/components/toast/alert.vue";
+import confirmComponents from "src/base-pc/components/toast/confirm.vue";
 import "./match-list.scss";
-// import moveVideo from 'project_path/src/components/video-replay/move-video.vue'
+// import moveVideo from 'src/base-pc/components/video-replay/move-video.vue'
 import { compute_css_variables } from "src/core/css-var/index.js"
 
 const page_style = ref('')

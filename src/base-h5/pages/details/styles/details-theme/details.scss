@@ -1,0 +1,156 @@
+/*
+ * @Description: 详情页
+ */
+[class*=theme0] {
+  .details_t_color7 {
+    // color:  var(--q-color-fs-color-124) !important;
+    color:  var(--q-match-fs-color-13) !important;
+  }
+  .win {
+    background-color: var(--q-color-page-bg-color-11) !important;
+    .odds-new2 {
+      color:var(--q-color-com-fs-color-44) !important;
+    }
+  }
+  .details-bg5 {
+    background:var(--q-color-page-bg-color-51) !important;
+  }
+  .details-fat {
+    .details-f9 {
+      background: var(--q-color-page-bg-color-9);
+    }
+    .details-f {
+      background: var(--q-gb-bg-c-17);
+    }
+  }
+  .details {
+    background:var(--q-color-page-bg-color-2);
+  }
+  .details-tab {
+    // margin-top: -1px;
+    background:var(--q-match-page-bg-color-103);
+    border-bottom: 0.01rem solid  var(--q-gb-bd-c-31);
+  }
+  .menu-item {
+    color: var(--q-match-fs-color-139);
+  }
+  .t_color {
+    color:var(--q-color-fs-color-37) !important;
+    &:after {
+      background: var(--q-gb-bd-c-13);
+    }
+  }
+
+  .baseball-poi-w {
+    .poi {
+      &.p {
+        background: var(--q-gb-bd-c-13) !important;
+      }
+    }
+  }
+  .score-l {
+    color: var(--q-color-fs-color-56) !important;
+  }
+
+  .s-active-dot {
+    background: var(--q-color-page-bg-color-59) !important;
+  }
+
+  .information-icon {
+    background: var(--q-color-img-bg-77) no-repeat  center / cover;
+  }
+  .collect-icon {
+    &.active {
+      background-image: var(--q-color-img-bg-78) !important;
+    }
+  }
+  .DJ-score-information {
+    .information-score {
+      .collect-icon {
+        background-image:var(--q-color-img-bg-79);
+      }
+    }
+  }
+  .video-full-screen {
+    .icon_zd_select {
+      background: none !important;
+      &::after {
+        background: var(--q-color-img-bg-80) no-repeat  right / 96% 96%;
+      }
+    }
+  }
+
+  .activeText,
+  .active-text {
+    color: var(--q-gb-t-c-13) !important;
+  }
+
+  // .rules-wet {
+  //   background: #569ffd !important;
+  // }
+  // .content-box {
+  //   > footer {
+  //     color: #569ffd !important;
+  //   }
+  // }
+  // .details-ref {
+  //   background: #569ffd !important;
+  // }
+  // .q-tab__indicator {
+  //   color: #569ffd !important;
+  // }
+
+  .menu-third {
+    &:after {
+      background: var(--q-color-page-bg-color-33) !important;
+    }
+  }
+  .handicap {
+     background-color:var(--q-color-page-bg-color-2);
+  }
+  .bg-tabs {
+    background: var(--q-match-page-bg-color-106);
+  }
+  .q-tab {
+    .q-tab__label {
+      color: var(--q-match-fs-color-13);
+
+    }
+  }
+  .text-active-tab {
+    .q-tab__label {
+      color:  var(--q-color-fs-color-24);
+    }
+  }
+  .bg-active-tab {
+     background-color:var(--q-match-page-bg-color-105);
+  }
+  .q-tab--inactive {
+    border-bottom: 1px solid  var(--q-color-border-color-23);
+
+  }
+  .tab-bet-wrapper .q-tab--inactive {
+    border-left: 1px solid  var(--q-color-border-color-23);
+
+  }
+  .tab-match-analysis-wrapper .q-tab--active {
+    border-left: 1px solid  var(--q-color-border-color-23);
+    border-right: 1px solid  var(--q-color-border-color-23);
+
+  }
+  .tab-chatroom-wrapper .q-tab--inactive {
+    border-right: 1px solid  var(--q-color-border-color-23);
+  }
+  .player {
+    .score-title {
+      color:var(--q-color-fs-color-50);
+    }
+  }
+  .tabs-wrapper {
+    .item {
+      &.active {
+        color: var(--q-match-fs-color-152);
+      }
+    }
+  }
+}

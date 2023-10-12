@@ -1,0 +1,1124 @@
+/* ********赛事容器相关********** -S*/
+
+.play-icon {
+  background-image: var(--q-color-img-bg-103);
+  background-repeat: no-repeat;
+  width: 0.14rem;
+  height: 0.14rem;
+  margin-top: 0.07rem;
+}
+
+.auto-full-width-100 {
+  width: 100%;
+}
+
+.match-container {
+  width: 100%;
+  height: auto;
+  position: relative;
+
+  .match-status-fixed {
+    width: 3.75rem;
+    height: 0.17rem;
+    line-height: 1;
+    font-size: 0.11rem;
+    margin-left: -0.07rem;
+    color: var(--q-color-com-fs-color-38);
+    padding: 0.03rem 0.03rem 0.03rem 0.15rem;
+
+    img {
+      margin-right: .06rem;
+      width: .13rem;
+      height: .13rem;
+    }
+  }
+
+  .v-mode-span {
+    margin-right: 0.1rem;
+  }
+
+  .match-inner-container {
+    margin: 0 auto;
+    margin: 0 .069rem;
+    /* 兼容iPhone11边框显示不全 */
+    //width: 100%;
+    background: var(--q-color-com-bg-color-40);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    // padding-top: 0.05779rem;  /* 兼容iPhone11边框显示不全 */
+    &.show-sport {
+      border-top-left-radius: 0.08rem;
+      border-top-right-radius: 0.08rem;
+    }
+  }
+
+  &.started_and_un_started {
+    display: block;
+
+    &.match_status_bar {
+      /*margin-top: 0.07rem;*/
+    }
+  }
+
+  &.show_un_started {
+    display: block;
+
+    .match-indent {
+      display: flex;
+    }
+  }
+
+  .match-odds-container {
+    width: 100%;
+    display: block;
+    position: relative;
+    transition: max-height 0.3s;
+
+    .match-odds-container-border-radius {
+      border-radius: .08rem;
+      overflow: hidden;
+    }
+
+    .eports_scoring_tip {
+      color: var(--q-gb-t-c-13);
+    }
+  }
+
+  &.is_league_tail {
+    .match-inner-container {
+      box-shadow: var(--q-color-box-shadow-color-4);
+      border-bottom-left-radius: 0.08rem;
+      border-bottom-right-radius: 0.08rem;
+      //overflow: hidden;
+    }
+  }
+
+  &.is_division_league {
+    // margin-top: 0.06rem;  遗留代码,暂时注释掉
+    // padding: 0.03rem 0;
+
+    &.started_un_started_next {
+      .match-odds-container {
+        &:after {
+          display: inline;
+        }
+      }
+    }
+
+    .no-radius {
+      border-radius: unset;
+    }
+
+    .odd-list-inner.odd {
+      border-bottom: none !important;
+    }
+  }
+
+  &.is_division_sport {
+    margin-bottom: 0;
+
+    .match-odds-container {
+      &:after {
+        display: none;
+      }
+    }
+  }
+
+
+  &.favorite_un_start_title {
+    margin-top: 0 !important;
+  }
+
+  &.match_status_bar {
+    .league {
+
+      //overflow: hidden;
+      margin-top: 0.08rem;
+    }
+  }
+
+  .match-indent {
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  /* **************体育展示********************** -S*/
+  .hot_time_change {
+    font-weight: bold;
+    width: 100%;
+    font-size: 0.14rem;
+    padding: 0.1rem 0 0.1rem 0.08rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    >span {
+      &:nth-child(2) {
+        padding: 0 0.09rem;
+        height: 0.24rem;
+        line-height: 0.24rem;
+        border-radius: 0.115rem;
+        box-sizing: border-box;
+        font-size: 0.12rem;
+        font-weight: 400;
+        z-index: 110;
+        position: relative;
+        left: -0.08rem;
+      }
+    }
+  }
+
+  .sport-title {
+    width: 96%;
+    display: flex;
+    align-items: center;
+    padding-left: 0.1rem;
+    height: 0.26rem;
+    line-height: 0.26rem;
+    font-size: 0.11rem;
+    // gb-bg-lg-28 还未配置
+    background-image: var(--q-match-page-bg-color-96);
+    margin-top: 0.11rem;
+    border-radius: 0.06rem;
+
+    &.first {
+    }
+
+    &.is_gunqiu {
+      transform: translateY(-6px);
+    }
+
+    .score-inner-span {
+      width: 100%;
+      //transform: translateY(-3px);
+    }
+
+    &.home_hot_page {
+      width: 100%;
+      // height: unset;
+      padding-left: unset;
+      // display: unset !important;
+      height: 0.5rem !important;
+      margin-top: .03rem;
+      transform: translateY(0);
+
+      &.first {
+        margin-top: 0;
+      }
+
+      .ball_img {
+        width: 100%;
+        text-align: center;
+        height: 0.5rem;
+        overflow: hidden;
+        margin-top: -0.06rem;
+
+        > img,.img {
+          width: 100%;
+          object-fit: cover;
+          height: 100%;
+          background-color: var(--q-gb-bg-c-17);
+        }
+
+        >span {
+          position: absolute;
+          top: 56%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+
+          font-size: 0.16rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          >i {
+            display: inline-block;
+            margin-right: 0.05rem;
+            width: 0.18rem;
+            height: 0.18rem;
+            background-size:  0.18rem 2.3rem;
+          }
+
+          @each $bg,
+          $y in (s2: 1, s5: 2, s7: 3, s10: 4, s8: 5, s9: 6, s4: 7, s3: 8, s6: 9) {
+            .#{$bg} {
+              background-position-y: calc(var(--per) * #{$y});
+            }
+          }
+
+          >p {
+            position: relative;
+            top: 0.02rem;
+          }
+        }
+      }
+    }
+
+    &.hidden_sport {
+      display: none !important;
+    }
+
+    .icon_match_cup,
+    .icon_notstarted {
+      margin-right: 0.1rem;
+      font-size: 0.12rem;
+
+      &:before {
+        color: var(--q-color-com-fs-color-35);
+      }
+    }
+
+    .icon_notstarted {
+      &:before {
+        color: var(--q-color-com-fs-color-36);
+      }
+    }
+
+    &.menu-type-3 {
+      height: 0.25rem;
+      border-top: 1px solid var(--q-color-com-border-color-19);
+      background-color: var(--q-color-com-bg-color-12);
+      font-weight: bold;
+      box-shadow: var(--q-color-box-shadow-color-3);
+      position: relative;
+      z-index: 2;
+      padding-left: 0;
+
+      &.not-playing {
+        &:before {
+          background: var(--q-color-com-bg-color-38);
+        }
+      }
+
+      &:before {
+        margin-right: 0.1rem;
+        display: block;
+        content: ' ';
+        width: 0.04rem;
+        height: 100%;
+        background: var(--q-color-com-bg-color-39);
+      }
+    }
+  }
+
+  /* **************体育展示********************** -E*/
+
+  /* **************联赛展示********************** -S*/
+  .league {
+    border-radius: 0.08rem;
+    color: var(--q-color-com-fs-color-28) !important;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 0.4rem;
+    background: var(--q-match-page-bg-color-96);
+    border-color: var(--q-gb-bd-c-3);
+    margin-top: 0.04rem;
+
+    &.show-sport {
+      border-radius: 0.12rem 0.12rem 0 0;
+    }
+
+    &.home-hot {
+      margin-top: .05rem;
+    }
+
+    .league-t-wrap {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      flex-wrap: nowrap;
+      padding: 0 0.1rem;
+      .league-collapse-dir {
+        width: 0.12rem;
+        height: 0.06rem;
+        position: relative;
+        right: 0.1rem;
+
+        &.collapsed {
+          transform: rotateZ(180deg);
+        }
+      }
+    }
+
+    .dir {
+      margin-right: 0.09rem;
+
+      i {
+        display: block;
+        font-size: 0.1rem;
+        transition: transform 0.3s;
+
+        &.collapse {
+          transform: rotateZ(180deg);
+        }
+      }
+    }
+  }
+
+  .odd-title-wraper {
+    height: 0.23rem;
+    position: relative;
+    flex-wrap: nowrap;
+    margin-left: 0.1rem;
+    // transition: width 0.2s ease-in;
+
+    .odd-title-i-w {
+
+      margin-right: 2%;
+      overflow: hidden;
+
+      .odd-t-i-wrapper {
+        padding-top: 0.01rem;
+
+        flex-shrink: 0;
+        transition: transform 0.2s;
+
+        &.status2 {
+          transform: translateX(-1.84rem);
+        }
+      }
+    }
+
+    .row {
+      height: 100%;
+    }
+
+    .hpl-title {
+      width: 0.6rem;
+      height: auto;
+      line-height: 1;
+      margin-left: 0.01rem;
+      font-size: 0.1rem;
+      color: var(--q-color-com-fs-color-1);
+      flex-shrink: 0;
+
+      &.boxing {
+        width: 0.95rem;
+      }
+
+      .hpl-t-inner {
+        width: auto;
+        max-height: 0.23rem;
+        text-align: center;
+        font-weight: 400;
+      }
+
+      &:first-child {
+        margin-left: 0;
+      }
+    }
+  }
+
+  /* **************联赛展示********************** -E*/
+
+  /* **************收藏********************** -S*/
+  .fav-icon-wrap {
+    width: 0.26rem;
+    margin-right: 0.04rem;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .esport {
+    margin: 0.01rem 0.07rem 0 0.09rem;
+    position: relative;
+    --per: -0.32rem;
+    display: block;
+    width: auto;
+    height: 0.22rem;
+    width: 0.22rem;
+    background-position: 0 0;
+    background-size: 0.22rem 18.88rem;
+
+    img {
+      width: 0.22rem;
+      height: 0.22rem;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+  }
+
+  .league-title-text {
+    font-size: 0.13rem;
+    height: 100%;
+
+    // transform: calc(0, 0.01rem);
+    transform: translateY(1px);
+    text-overflow: ellipsis;
+    width: 3.18rem;
+    flex-wrap: nowrap;
+    align-items: center;
+    overflow: hidden;
+
+    .league-t-wrapper {
+      line-height: 1;
+      min-width: 1.22rem;
+      display: flex;
+      font-size: .12rem;
+    }
+     // 添加 line-height: 0.14rem 解决42682 生产BUG--malick
+    .match-league {
+      max-width: 2.8rem;
+      padding-top: 0.02rem;
+      line-height: 0.14rem;
+      &.match-main-league {
+        //max-width: 1.4rem;
+      }
+    }
+
+
+    color: var(--q-color-com-fs-color-26);
+
+    font-weight: 600;
+  }
+
+  .match-type {
+    margin-right: 0.04rem;
+    transition: opacity 0.2s;
+    opacity: 1;
+  }
+}
+
+.league-collapse-dir {
+  width: 0.12rem;
+  height: 0.06rem;
+  position: relative;
+  right: 0.1rem;
+  transition: all 0.3s ease-in;
+
+  &.collapsed {
+    transform: rotateZ(180deg);
+  }
+}
+
+.odd-list {
+  line-height: 1;
+  background-color: var(--q-color-com-bg-color-12);
+  height: auto;
+  position: relative;
+  min-height: 1.11rem;
+
+  &.simple,
+  &.result {
+    min-height: auto;
+  }
+
+  .w-score-result {
+    position: absolute;
+    right: 0.11rem;
+    bottom: 0.13rem;
+  }
+
+  .odd-list-inner {
+    height: 0.2rem;
+    width: 100%;
+    padding: 0.1rem 2% 0 2%;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+
+    .triangle-wrapper {
+      width: 0.24rem;
+      height: 0.18rem;
+      border-radius: 0.1rem 0 0 0.1rem;
+      position: absolute;
+      right: 0;
+      top: 0.12rem;
+
+      .t-w-inner {
+        font-size: 0.11rem;
+      }
+    }
+
+    &.n-s-edition {
+      padding-top: 0;
+      padding-bottom: 0.05rem;
+
+      &:before {
+        display: none;
+      }
+    }
+
+    &.odd {
+      &:after {
+        width: 100%;
+        left: 0;
+      }
+
+      &.result {
+        padding-top: 0.1rem;
+        padding-bottom: 0.1rem;
+      }
+    }
+
+    .w-score-result {
+      padding-top: 0.17rem;
+    }
+
+    .team-wrapper2 {
+      margin-left: -2%;
+      padding-left: 0.3rem;
+      display: flex;
+      align-items: center;
+      font-size: 0.1rem;
+    }
+
+    .team-wrapper {
+      min-height: 100%;
+      height: auto;
+      width: 1.61rem;
+      position: relative;
+      z-index: 1;
+
+      &.simple {
+        transform: translateY(-1px);
+      }
+
+      &.team_title {
+        .team-title-inner-con {
+          width: 1.8rem !important;
+        }
+      }
+
+      .score-wrapper {
+        margin-top: 0.04rem;
+        height: 0.3rem;
+        padding-left: 0.05rem;
+
+        .score-section {
+          padding-left: 0;
+          transform: translateX(-0.02rem);
+        }
+
+        .go-container-w {
+          .goto-detail {
+            display: flex;
+            height: auto;
+            align-items: center;
+
+            .count_span {
+              height: 0.11rem;
+              display: flex;
+              align-items: flex-end;
+              margin-right: 0.04rem;
+              line-height: 1;
+              top: 2px;
+              position: relative;
+            }
+
+            .icon_arrow_down {
+              width: 0.04rem;
+              height: 0.07rem;
+              display: block;
+            }
+          }
+
+          &.new-standard {
+            .live-i-b-wrap {
+              width: 0.18rem;
+              margin-right: 0.05rem;
+
+              img {
+                height: 0.14rem;
+                width: 0.18rem;
+              }
+
+              .live-icon-btn {
+                width: 100%;
+              }
+
+              .live-icon-play-btn {
+                width: 100%;
+                height: 0.14rem;
+              }
+            }
+          }
+
+          .favorite-icon {
+            width: 0.14rem;
+            height: 0.14rem;
+            margin-right: 0.05rem;
+
+            img {
+              width: 100%;
+              height: 100%;
+            }
+
+            .f-icon {
+              display: none;
+            }
+          }
+        }
+
+        .week-mcid {
+          margin: 0 0 0 0.09rem;
+
+          span {
+            height: 0.12rem;
+            line-height: 1;
+          }
+        }
+      }
+
+      .team-title-container {
+        height: 0.31rem;
+        display: flex;
+        justify-content: space-between;
+        position: relative;
+
+        &.simple {
+          width: 1.72rem;
+
+          &:first-child {
+            margin-bottom: -0.04rem !important;
+          }
+        }
+
+        .visibility-hidden {
+          visibility: hidden;
+        }
+
+        &:first-child {
+          &.standard {
+            margin-bottom: 0.02rem;
+          }
+        }
+
+        .team-title-inner-con {
+          width: 1.31rem;
+          position: relative;
+          line-height: 0.14rem;
+          display: flex;
+          align-items: center;
+
+          /*图标*/
+          .team-icon {
+            width: 0.18rem;
+            height: 0.18rem;
+            margin-right: 0.06rem;
+            flex-shrink: 0;
+            justify-content: center;
+
+            &.logo-is-double {
+              width: 0.28rem;
+            }
+
+            img,
+            .sprite-div {
+              display: block;
+              width: 0.18rem;
+              flex-shrink: 0;
+              height: 0.18rem;
+              margin-left: .06rem;
+
+              &.is-double-first {
+                width: 0.18rem;
+                transform: translateX(0.04rem);
+              }
+
+              &.is-double-second {
+                width: 0.18rem;
+                transform: translateX(-0.04rem);
+              }
+            }
+          }
+
+          .gif-text {
+            white-space: nowrap;
+            margin-left: 3px;
+            color: var(--q-color-com-fs-color-31);
+            animation: 1s text-flash linear infinite normal;
+          }
+
+          .team-t-title-w {
+
+            font-size: 0.14rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            line-height: 0.2rem;
+            height: 0.2rem;
+
+            &.is-handicap {
+              font-weight: bold;
+            }
+          }
+        }
+
+        .score-punish {
+          width: 0.12rem;
+          height: 0.14rem;
+          color: var(--q-gb-bd-c-2);
+          flex-shrink: 0;
+          background: var(--q-color-com-bg-color-43);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-size: 0.1rem;
+          border-radius: 0.02rem;
+          margin-left: 0.04rem;
+
+          &.yellow {
+            background: var(--q-color-com-bg-color-23);
+          }
+
+          &.flash {
+            animation: 1s text-flash linear infinite normal;
+          }
+        }
+
+        .serving-party {
+          display: block;
+          width: 4px;
+          height: 4px;
+          border-radius: 50%;
+          background: var(--q-color-page-bg-color-59);
+          flex-shrink: 0;
+          margin: 0.13rem 0.05rem 0;
+
+          &.simple {
+            margin-right: 0.03rem;
+          }
+        }
+
+        .score {
+          height: 0.3rem;
+          font-size: 0.14rem;
+          display: flex;
+          align-items: center;
+          position: absolute;
+          right: 0.12rem;
+          top: 0;
+
+          &.simple {
+            right: 0.08rem;
+          }
+        }
+      }
+
+      .result.fav-i-wrap-match {
+        width: 0.2rem;
+        height: 0.2rem;
+        flex-shrink: 0;
+        margin: 0.05rem 0 0 0.02rem;
+
+        .favorite-icon {
+          width: 0.14rem;
+          height: 0.14rem;
+
+          img {
+            width: 100%;
+            height: 100%;
+          }
+
+          .f-icon {
+            display: none;
+          }
+        }
+      }
+
+      .m-result-time {
+        min-width: 0.75rem;
+        margin-top: 0.08rem;
+        padding-left: 0.03rem;
+      }
+    }
+
+    &.odd {
+      height: auto;
+    }
+
+    .match-result-score-wrap {
+      padding-top: 0.07rem;
+    }
+
+    .score-result-wrapper {
+      font-size: 0.16rem;
+
+      .score-row {
+        height: 0.16rem;
+
+        &:first-child {
+          margin-bottom: 0.15rem;
+        }
+      }
+    }
+
+    .go-to-d-detail-w {
+      font-size: 0.14rem;
+      margin-left: 0.16rem;
+
+      .go-to-i-detail-i {
+        width: 0.68rem;
+        height: 0.47rem;
+        border-left: 1px solid #f5f5f5;
+
+        .word {
+          margin-right: 0.08rem;
+          font-size: 0.12rem;
+        }
+
+        .go-to-d-icon {
+          width: 0.05rem;
+          height: 0.08rem;
+          display: block;
+          color: var(--q-color-com-fs-color-29);
+        }
+      }
+    }
+  }
+}
+
+/* **************收藏********************** -E*/
+
+/* **************日期********************** -S*/
+.date-container {
+  background-color: var(--q-color-com-bg-color-12);
+  width: 100%;
+  padding: 0 0.08rem;
+  height: 0.34rem;
+  display: flex;
+  align-items: center;
+  margin: 0 auto;
+  font-size: 0.12rem;
+  justify-content: space-between;
+
+  &.simple {
+    height: 0.34rem;
+
+    .live-icon-play-btn {
+      margin-left: 0.08rem;
+      margin-top: -0.01rem;
+    }
+
+    .counting-down-up-container {
+      height: 0.14rem !important;
+    }
+  }
+
+  &.n-s-edition {
+    padding-top: 0.03rem;
+    height: 0.3rem;
+    position: relative;
+
+    &:before {
+      top: 0;
+      left: 0;
+      position: absolute;
+      content: ' ';
+      display: block;
+      width: 100%;
+      height: 0.01rem;
+      background-color: var(--q-color-com-bg-color-41);
+      transform: scaleY(0.5);
+    }
+  }
+
+  .score-wrapper {
+    width: auto;
+    font-size: 0.12rem;
+    color: var(--q-color-com-fs-color-11);
+    line-height: 1;
+    white-space: nowrap;
+    height: 100%;
+    flex-wrap: nowrap;
+  }
+
+  .go-container-w {
+    width: auto;
+    margin-left: 0.06rem;
+    height: 100%;
+    justify-content: flex-end;
+    align-items: center;
+
+    &.favorite {
+      height: 0.24rem;
+      justify-content: center;
+      align-items: center;
+      margin-left: 0;
+      margin-right: .05rem;
+    }
+
+    &.no-margin {
+      margin-left: 0;
+    }
+
+    &.mcount {
+      margin-left: 0.08rem;
+    }
+
+    .fav-i-wrap-match {
+      height: 0.16rem;
+
+      .favorite-icon {
+        height: 100%;
+
+        img {
+          width: 0.14rem;
+          height: 0.14rem;
+        }
+      }
+    }
+
+    .goto-detail {
+      .count_span {
+        .mc-n {
+          width: 0.14rem;
+        }
+      }
+    }
+  }
+
+  &.match-indent {
+    padding-left: 0.1rem;
+    position: relative;
+  }
+
+  .timer-wrapper-c {
+    height: 100%;
+
+    &.newer {
+      margin-left: 0;
+    }
+
+    &>div {
+      height: auto;
+    }
+  }
+
+  .favorite-icon-top {
+    width: 0.14rem;
+    height: 100%;
+    margin-right: .07rem;
+
+    img {
+      width: 100%;
+      height: auto;
+      vertical-align: middle;
+      margin-top: -2px;
+    }
+
+    .f-icon {
+      display: none;
+    }
+  }
+
+  &.no-running-timer-wrapper {
+    .live-i-b-wrap {
+      margin-left: 0.08rem;
+    }
+  }
+
+  .live-i-b-wrap {
+    height: 0.14rem;
+    width: auto;
+    display: flex;
+    margin-left: 0.08rem;
+
+    .live-icon-btn,
+    .live-icon-play-btn {
+      width: 0.18rem;
+      height: 0.14rem;
+    }
+
+    .neutral-icon-btn {
+      width: 0.18rem;
+      height: 0.14rem;
+      /*margin-left: 0.08rem;*/
+    }
+  }
+
+  .l {
+    display: flex;
+    line-height: 1.2;
+    align-items: center;
+    flex-shrink: 0;
+
+    .favorite-icon {
+      position: relative;
+      top: -.01rem;
+    }
+
+    .date-time {
+      white-space: nowrap;
+      color: var(--q-color-com-fs-color-37);
+    }
+
+    .counting-down-up-container {
+      width: 0.8rem;
+      height: .14rem;
+
+      &.intermission {
+        width: 0.57rem;
+      }
+
+      &.long-time {
+        width: 0.86rem;
+      }
+
+      .match-type {
+        margin-right: 0.14rem;
+      }
+    }
+
+    .special-match-container {
+      .counting-down-wrap {
+        position: unset;
+        display: inline-flex;
+      }
+    }
+
+    .week-mcid {
+      margin: 0 0 0 0.09rem;
+
+      span {
+        height: 0.12rem;
+        line-height: 1;
+      }
+    }
+
+    &.test-match-mf {
+      .week-mcid {
+        margin: 0 0.06rem 0 0;
+      }
+    }
+  }
+
+  .add_text {
+    font-size: 0.12rem;
+  }
+
+  .mfo-title {
+    margin-right: .05rem;
+  }
+
+  .flag-chuan {
+    margin-left: .1rem;
+    padding: 0 .01rem;
+    height: 0.16rem;
+    line-height: .16rem;
+    border-radius: .03rem;
+
+    &.special-lang {
+      margin-left: .06rem;
+    }
+  }
+}
+.match-list-container.jingzu {
+  .date-container {
+    .l .week-mcid {
+      margin: 0 0.06rem 0 0 !important;
+    }
+  }
+}
+/* **************日期********************** -E*/
+
+/* ********赛事容器相关********** -E*/

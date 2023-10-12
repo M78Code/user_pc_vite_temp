@@ -57,8 +57,8 @@ import {
 import { useMittOn, MITT_TYPES, i18n_t, UserCtr } from "src/core/";
 import { FooterWapper } from "src/components/footer/index.js";
 import { MenuWapper } from "src/components/menu";
-import activityIcon from "project_path/src/components/common/activity-icon.vue"; // 设置
-import setMenu from "project_path/src/components/common/set-menu.vue"; // 设置
+import activityIcon from "src/base-h5/components/common/activity-icon.vue"; // 设置
+import setMenu from "src/base-h5/components/common/set-menu.vue"; // 设置
 import selectDia from "../pages/match-list/components/select-dia.vue"
 import { useRoute } from "vue-router";
 

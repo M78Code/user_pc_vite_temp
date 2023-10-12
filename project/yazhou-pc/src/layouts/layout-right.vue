@@ -28,7 +28,7 @@
 import { ref,onBeforeUnmount } from "vue";
 import store from "src/store-redux/index.js";
 import { useMittOn, MITT_TYPES } from "src/core/mitt";
-import matchDetailsRight  from "project_path/src/pages/match-details-right/match-details-right.vue"
+import matchDetailsRight  from "src/base-pc/pages/match-details-right/match-details-right.vue"
 import { LayOutMain_pc } from "src/core/index.js";
 import { useRoute, useRouter } from "vue-router"
 

@@ -35,11 +35,11 @@ import { api_activity, api_account } from "src/api/index";
 import { useMittOn, MITT_TYPES } from "src/core/mitt/"
 
 /** 组件 */
-import siteHeader from 'project_path/src/components/site-header/site-header.vue'
-import headerSearch from 'project_path/src/components/site-header/header-search.vue'
-import marqueeCst from "project_path/src/components/marquee/marquee-cst.vue";
-import headerSelect from 'project_path/src/components/site-header/header-select.vue'
-// import timer from "project_path/src/components/site-header/timer.vue"
+import siteHeader from 'src/base-pc/components/site-header/site-header.vue'
+import headerSearch from 'src/base-pc/components/site-header/header-search.vue'
+import marqueeCst from "src/base-pc/components/marquee/marquee-cst.vue";
+import headerSelect from 'src/base-pc/components/site-header/header-select.vue'
+// import timer from "src/base-pc/components/site-header/timer.vue"
 import gift_package from '/yazhou-pc/image/common/activity_banner/gift_package.png'
 import { compute_css_variables } from "src/core/css-var/index.js"
 import BaseData from "src/core/base-data/base-data.js";
@@ -531,5 +531,5 @@ const set_show_login_popup = (data) => store.dispatch({
 </script>
 
 <!-- <style lang="scss" scoped>
-@import 'project_path/src/components/site-header/site-header.scss';
+@import 'src/base-pc/components/site-header/site-header.scss';
 </style> -->

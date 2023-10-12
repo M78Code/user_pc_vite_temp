@@ -1,0 +1,46 @@
+/*
+ * @Description: 详情页赛果tab
+ */
+[class*=theme0] {
+  .result-details-tab {
+    background:var(--q-color-page-bg-color-2);
+    border-bottom: 0.01rem solid  var(--q-color-border-color-27);
+
+    .tab-fat {
+      &:after {
+        background: var(--q-color-page-bg-color-33) !important;
+      }
+    }
+    .menu-third {
+      &:after {
+        background: var(--q-color-page-bg-color-33) !important;
+      }
+    }
+    .common-style {
+      color: var(--q-gb-t-c-3);
+    }
+    .t_color {
+      color:var(--q-color-fs-color-37) !important;
+      &:after {
+        background: var(--q-gb-bd-c-13);
+      }
+    }
+  }
+  .result-details-dialog {
+     background-color:var(--q-color-page-bg-color-2);
+     // 其他主题没有这个class
+    .details-dialog-bg {
+      background: #fdf6ee;
+    }
+    .result-details-dialog-bg {
+      background: var(--q-color-page-bg-color-74);
+    }
+    .new-dialog-item {
+      color:  var(--q-color-fs-color-14);
+    }
+    .active {
+      background: var(--q-color-com-bg-color-2);
+      color:  var(--q-color-fs-color-14) !important;
+    }
+  }
+}
