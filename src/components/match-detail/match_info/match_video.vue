@@ -132,7 +132,7 @@ import tabs from "src/components/match-detail/match_info/tabs.vue";
 import match_video from "src/components/match-detail/match_info/match_info_mixin/match_video.js";
 import video_type_ctr from "src/core/video/video_type_ctr.vue";
 import noVideo from "src/components/match-detail/match_info/no_video.vue"
-import videoReplayError from "project_path/src/components/video-replay/video-replay-error.vue"
+import videoReplayError from "src/base-pc/components/video-replay/video-replay-error.vue"
 import { IconWapper } from 'src/components/icon'
 import info from "src/components/match-detail/match_info/info.vue";
 import { i18n_t,format_second_ms,utils,LayOutMain_pc} from "src/core/index"

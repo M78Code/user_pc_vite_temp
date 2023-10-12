@@ -44,11 +44,11 @@
 <script setup>
 import lodash from 'lodash';
 import { api_betting } from "src/api/index.js";
-import commonCathecticItem from "project_path/src/components/common/common-cathectic-item.vue";
+import commonCathecticItem from "src/base-h5/components/common/common-cathectic-item.vue";
 import settleVoid from "./settle-void.vue";
-import scroll from "project_path/src/components/common/record-scroll/scroll.vue";
-// import skt_order from "project_path/src/mixins/websocket/data/skt-data-order.js"
-import SRecord from "project_path/src/components/skeleton/record.vue";
+import scroll from "src/base-h5/components/common/record-scroll/scroll.vue";
+// import skt_order from "src/base-h5/mixins/websocket/data/skt-data-order.js"
+import SRecord from "src/base-h5/components/skeleton/record.vue";
 // import { mapGetters, mapMutations } from 'vuex';
 import { ref, watch, onMounted, onUnmounted } from 'vue'
 import {useMittOn, MITT_TYPES} from  "src/core/mitt/index.js"

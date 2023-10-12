@@ -76,10 +76,10 @@
 
 import { watch, onUnmounted, ref, onMounted } from 'vue';
 import { api_betting } from "src/api/index.js";
-import commonCathecticItem from "project_path/src/components/common/common-cathectic-item.vue";
+import commonCathecticItem from "src/base-h5/components/common/common-cathectic-item.vue";
 import settleVoid from "./settle-void.vue";
-import scroll from "project_path/src/components/common/record-scroll/scroll.vue";
-import SRecord from "project_path/src/components/skeleton/record.vue";
+import scroll from "src/base-h5/components/common/record-scroll/scroll.vue";
+import SRecord from "src/base-h5/components/skeleton/record.vue";
 import lodash from "lodash"
 import store from 'src/store-redux/index.js'
 import { format_M_D } from 'src/core/format/index.js'
