@@ -148,11 +148,11 @@ import { ref, reactive, computed, defineComponent, getCurrentInstance, onMounted
 import { useRoute, useRouter } from 'vue-router';
 import lodash from 'lodash';
 // 组件
-import dialogHeader from 'src/base-pc/components/details/dialog/dialog-header.vue'   // 赛事详情头部点击下拉后显示  "↑ 收起" + "< 返回按钮"
-import teamImg from 'src/base-pc/components/details/team-img.vue'    // 详情页蓝色背景上的大型字母图标
-import matchStage from 'src/base-pc/components/match/match-stage.vue';   // 下拉列表赛事时间展示
-import matchDialogStage from 'src/base-pc/components/match/match-dialog-stage.vue';   // 详情点击下拉显示当前赛事的时间
-import showStartTime from 'src/base-pc/components/details/wight/show-start-time.vue'   // 详情页同联赛的赛事即将开赛显示时间
+import dialogHeader from 'src/base-h5/components/details/dialog/dialog-header.vue'   // 赛事详情头部点击下拉后显示  "↑ 收起" + "< 返回按钮"
+import teamImg from 'src/base-h5/components/details/team-img.vue'    // 详情页蓝色背景上的大型字母图标
+import matchStage from 'src/base-h5/components/match/match-stage.vue';   // 下拉列表赛事时间展示
+import matchDialogStage from 'src/base-h5/components/match/match-dialog-stage.vue';   // 详情点击下拉显示当前赛事的时间
+import showStartTime from 'src/base-h5/components/details/wight/show-start-time.vue'   // 详情页同联赛的赛事即将开赛显示时间
 // 工具
 import { format_total_score } from 'src/core/format/module/format-score.js'
 import { UserCtr, MenuData,compute_css,useMittEmit, MITT_TYPES, MatchDetailCalss } from "src/core/index.js";
@@ -276,7 +276,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import 'src/base-pc/pages/details/styles/details-theme/details-dialog.scss';//project/yazhou-h5/src/pages/details/styles/details-theme/details-dialog.scss
+@import 'src/base-h5/pages/details/styles/details-theme/details-dialog.scss';
+//project/yazhou-h5/src/pages/details/styles/details-theme/details-dialog.scss
 .details-dialog {
   max-width: 100%;
   width: 100%;
