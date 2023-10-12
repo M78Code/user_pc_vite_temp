@@ -1,0 +1,34 @@
+{
+    "TestComponent": {
+        "use_component": "TestComponent_2",
+        "params": {
+            "tableClass": "bg-deep-purple-14"
+        }
+    },
+    "server_resource": {},
+    "pack_up_info": {
+        "version": "36304ea0499e11ee8848ada2b8a1d739",
+        "full_version": "36304ea0499e11ee8848ada2b8a1d739-1693720827442-shiwan",
+        "day": "20230903",
+        "module_sdk_version": "20230903_36304ea0499e11ee8848ada2b8a1d739-1693720827442-shiwan",
+        "client_version": "yazhou"
+    },
+    "css": {},
+    "assets": {
+        "image01": {
+            "day": "http://api-doc-server-new.sportxxxw1box.com/public/upload/image/20230807/0d3576a034fa11ee9787bf07d9315309.png",
+            "night": "http://api-doc-server-new.sportxxxw1box.com/public/upload/image/20230807/09adaf7034fa11ee8ca5438c8f0192b1.png"
+        },
+        "bet-menu-icon": {
+            "day": "http://api-doc-server-new.sportxxxw1box.com/public/upload/image/20230812/633a3cc038d311ee88d349760ccc2e11.png"
+        },
+        "pc-left-menu-bg-image": {
+            "day": "http://api-doc-server-new.sportxxxw1box.com/public/upload/image/20230902/6e399f60499c11ee9961c306de38a6ae.png",
+            "night": "http://api-doc-server-new.sportxxxw1box.com/public/upload/image/20230902/69eb7af0499c11ee8848ada2b8a1d739.png"
+        }
+    },
+    "js": {},
+    "MERCHANT_CONFIG_VERSION": "36304ea0499e11ee8848ada2b8a1d739",
+    "project": "new-pc",
+    "write_file_date": 1693732014603
+}

@@ -1,0 +1,164 @@
+{
+  "component": {
+    "TestComponent": {
+      "use_component": "TestComponent_2",
+      "params": {
+        "tableClass": "bg-deep-purple-14"
+      }
+    },
+    "Menu": {
+      "use_component": "H5MenuTemplate1",
+      "params": {
+        "tableClass": "bg-deep-purple-14"
+      }
+    }
+  },
+  "server_resource": {},
+  "css": {
+    "cathectic-text-color-4": {
+      "day": "",
+      "night": ""
+    },
+    "chatroom-bd-color-3": {
+      "day": "",
+      "night": ""
+    }
+  },
+  "assets": {
+    "h5-left-menu-bg-image": {
+      "day": "日间版素材地址",
+      "night": "夜间版素材地址"
+    },
+    "h5-img-bet-record-close": {
+      "day": " ",
+      "night": "夜间版素材地址"
+    },
+    "menu-go-back-icon": {
+      "day": "https://user-h5-bw3.sportxxx278gwf4.com/2023-09-09-17-11-50/image/wwwassets/bw3/svg/go-back-icon-theme02.svg"
+    },
+    "menu-activity-entrance": {
+      "day": "https://user-h5-bw3.sportxxx278gwf4.com/2023-09-09-17-11-50/image/wwwassets/activity/activity_entrance.png"
+    },
+    "menu-icon": {
+      "day": "https://user-h5-bw3.sportxxx278gwf4.com/2023-09-09-17-11-50/image/wwwassets/bw3/menu/setting-menu-icon-theme02.svg"
+    },
+    "menu-close-icon": {
+      "day": "https://user-h5-bw3.sportxxx278gwf4.com/2023-09-09-17-11-50/image/wwwassets/bw3/menu/set_close.svg"
+    },
+    "menu-set-switch": {
+      "day": "https://user-h5-bw3.sportxxx278gwf4.com/2023-09-09-17-11-50/image/wwwassets/bw3/menu/set_switch.svg"
+    },
+    "menu-sport-icon-image": {
+      "day": "https://user-h5-bw3.sportxxx278gwf4.com/2023-09-09-17-11-50/image/wwwassets/bw3/menu/sport_menu_02.png"
+    },
+    "menu-sport-active-image": {
+      "day": "https://user-h5-bw3.sportxxx278gwf4.com/2023-09-09-17-11-50/image/wwwassets/bw3/menu/sport_menu_01.png"
+    },
+    "menu-set-sort": {
+      "day": "https://user-h5-bw3.sportxxx278gwf4.com/2023-09-09-17-11-50/image/wwwassets/bw3/menu/set_sort.svg"
+    },
+    "menu-refesh": {
+      "day": "https://user-h5-bw3.sportxxx278gwf4.com/2023-09-09-17-11-50/image/wwwassets/bw3/menu/refesh.svg"
+    },
+    "menu-left-menu-image": {
+      "day": "https://user-h5-bw3.sportxxx278gwf4.com/2023-09-09-17-11-50/image/bw3/menu/left_menubj.png"
+    },
+    "menu-theme-skin1": {
+      "day": "https://user-h5-bw3.sportxxx278gwf4.com/2023-09-09-17-11-50/image/wwwassets/bw3/menu/skin1.svg"
+    },
+    "menu-theme-skin2": {
+      "day": "https://user-h5-bw3.sportxxx278gwf4.com/2023-09-09-17-11-50/image/wwwassets/bw3/menu/skin2.svg"
+    },
+    "menu-lang": {
+      "day": "https://user-h5-bw3.sportxxx278gwf4.com/2023-09-09-17-11-50/image/wwwassets/bw3/menu/lang.png"
+    },
+    "home-item-all": {
+      "day": "https://user-h5-bw3.sportxxx278gwf4.com/2023-09-09-17-11-50/image/bw3/png/v1/home_item_all2.png"
+    },
+    "home-item-active": {
+      "day": "https://user-h5-bw3.sportxxx278gwf4.com/2023-09-09-17-11-50/image/wwwassets/bw3/home/home_checked.svg"
+    },
+    "home-item-unchecked": {
+      "day": "https://user-h5-bw3.sportxxx278gwf4.com/2023-09-09-17-11-50/image/wwwassets/bw3/home/home_unchecked.png"
+    },
+    "icon-balance": {
+      "day": "https://user-h5-bw3.sportxxx278gwf4.com/2023-09-09-17-11-50/image/bw3/svg/home/money.svg"
+    },
+    "icon-notice": {
+      "day": "https://user-h5-bw3.sportxxx278gwf4.com/2023-09-09-17-11-50/image/wwwassets/bw3/home/notice.svg"
+    },
+    "foot-menu-icon": {
+      "day": "http://test-user-h5-bw3.sportxxxifbdxm2.com/2023-09-18-17-26-10/image/bw3/menu/foot_menubj_y0.png"
+    },
+    "menu-bg-dota": {
+      "day": "http://test-user-h5-bw3.sportxxxifbdxm2.com/2023-09-23-14-55-28/image/bw3/menu/menu-top-background-dota.jpg"
+    },
+    "menu-bg-lol": {
+      "day": "http://test-user-h5-bw3.sportxxxifbdxm2.com/2023-09-23-14-55-28/image/bw3/menu/menu-top-background-lol.jpg"
+    },
+    "menu-bg-wangzhe": {
+      "day": "http://test-user-h5-bw3.sportxxxifbdxm2.com/2023-09-23-14-55-28/image/bw3/menu/menu-top-background-wangzhe.jpg"
+    },
+    "menu-bg-csgo": {
+      "day": "http://test-user-h5-bw3.sportxxxifbdxm2.com/2023-09-23-14-55-28/image/bw3/menu/menu-top-background-csgo.jpg"
+    }
+  },
+  "assets1": {
+    "version": "",
+    "detail": {
+      "key1": "1"
+    }
+  },
+  "i18n": {
+    "version": "i18n-version",
+    "detail": [
+      {
+        "key": "sxsxsx.xsx.x.xxsxsx",
+        "value": {
+          "en": "en-gb",
+          "zh": "zh-cn",
+          "tw": "zh-tw",
+          "vi": "vi-vn",
+          "th": "th-th",
+          "ms": "ms-my",
+          "ad": "id-id",
+          "mya": "my-my",
+          "pt": "pt-br",
+          "ry": "ja-jp",
+          "ko": "ko-kr",
+          "es": "es-es"
+        }
+      }
+    ]
+  },
+  "theme": [
+    {
+      "version": "商户版本号",
+      "i18n": {
+        "zh": "xx"
+      },
+      "is_default": 1,
+      "is_standard": 1,
+      "desc":"is_default 1 设置为默认主题,is_standard 1代表是系统内置的成套的主题 0代表用户自己创建的,base_theme 也可以是空 ，空代表不和默认主题色合并",
+      "base_theme": "基础主题版本号",
+      "key": "theme_01",
+      "detail": {
+        "test": "#000000"
+      }
+    },
+    {
+      "version": "商户版本号",
+      "i18n": {
+        "zh": "生成CSS 主题的名字"
+      },
+      "is_default": 0,
+      "is_standard": 1,
+      "order": 1,
+      "base_theme": "基础主题版本号",
+      "key": "theme_02",
+      "detail": {
+        "test": "#fffffff33"
+      }
+    }
+  ]
+}

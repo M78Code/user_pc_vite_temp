@@ -10,6 +10,8 @@ import default_merchant_config_ouzhou_h5 from "./default-config/merchant-config-
 import default_merchant_config_ouzhou_pc from "./default-config/merchant-config-ouzhou-pc.json"  assert { type: "json" };
 import default_merchant_config_yazhou_h5 from "./default-config/merchant-config-yazhou-h5.json"  assert { type: "json" };
 import default_merchant_config_yazhou_pc from "./default-config/merchant-config-yazhou-pc.json"  assert { type: "json" };
+import default_merchant_config_new_pc from "./default-config/merchant-config-new-pc.json"  assert { type: "json" };
+import default_merchant_config_app_h5 from "./default-config/merchant-config-app-h5.json"  assert { type: "json" };
 import lodash from 'lodash'
 //商户配置的详细信息
 
@@ -33,7 +35,14 @@ const merge_merchant_config_inner = (scg, add_obj) => {
 
   } else if (project == "yazhou-pc") {
     lodash.merge(config, default_merchant_config_yazhou_pc, scg, add_obj);
+  }else if (project == "new-pc") {
+    lodash.merge(config, default_merchant_config_new_pc, scg, add_obj);
+  }else if (project == "app-h5") {
+    lodash.merge(config, default_merchant_config_app_h5, scg, add_obj);
   }
+
+
+
 
   if (!project) {
     console.error('当前未设置目标项目名字 ，必须设置 。');

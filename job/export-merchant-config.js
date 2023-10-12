@@ -31,6 +31,8 @@ const PROJECT_MAP = {
   2: "-", //亚洲版 PC（旧版）
   3: "yazhou-h5", //亚洲版 H5（新版)
   4: "yazhou-pc", //亚洲版 PC（新版)
+  5: "app-h5",// 复刻版 H5 - KYAPP
+  6: "new-pc" // 亚洲版 pc 202310 新平坦化版本 
 };
 
 
@@ -54,6 +56,10 @@ const compute_PROJECT_NAME_when_DEV_TARGET_VERSION = () => {
 
     } else if (DEV_TARGET_VERSION.includes("project_4")) {
       project_name = "yazhou-pc";
+    }else if (DEV_TARGET_VERSION.includes("project_5")) {
+      project_name = "app-h5";
+    }else if (DEV_TARGET_VERSION.includes("project_6")) {
+      project_name = "new-pc";
     }
   }
 
