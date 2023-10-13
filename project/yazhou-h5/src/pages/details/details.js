@@ -326,7 +326,7 @@ watch(() => MatchDataWarehouseInstance.data_version.version, () => {
     nextTick(() => {
       let dom_box = state_data.details_box;
       // 视频和动画播放的时候，点击玩法集要重置滚动距离
-      if (get_show_video && state_data.scroller_scroll_top > 0) {
+      if (state_data.get_show_video && state_data.scroller_scroll_top > 0) {
         dom_box.scrollTop = 0;
       }
       // 切换玩法集后滚动至首个玩法名称处
