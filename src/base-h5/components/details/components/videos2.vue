@@ -1831,7 +1831,7 @@ export default {
       display: inline-block;
       width: 0.12rem;
       height: 0.2rem;
-      background-image: url("public/image/common/go_back.svg");
+      background-image: url("/yazhou-h5/image/common/go_back.svg");
       background-size: 100% 100%;
     }
 

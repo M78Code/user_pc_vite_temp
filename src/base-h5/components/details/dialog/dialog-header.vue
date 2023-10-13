@@ -64,7 +64,7 @@ export default {
 <style lang="scss" scoped>
 .dialog-header {
   width: 3.75rem;
-  background: url("public/image/svg/go-back-icon.svg") no-repeat 50%/96% 96%;
+  background: url("~public/image/svg/go-back-icon.svg") no-repeat 50%/96% 96%;
   height: 0.44rem;
   line-height: 0.44rem;
 
@@ -125,7 +125,7 @@ export default {
   display: inline-block;
   width: 0.12rem;
   height: 0.2rem;
-  background: url("public/image/svg/go-back-icon.svg") no-repeat center / 96% 96%;
+  background: url("~public/image/svg/go-back-icon.svg") no-repeat center / 96% 96%;
   background-size: 100% 100%;
 }
 

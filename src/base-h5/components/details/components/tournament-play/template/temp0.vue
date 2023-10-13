@@ -268,7 +268,7 @@ export default defineComponent({
           }
         }
         if(len && len>10){
-          show_more = false;
+          data.show_more = false;
         }
         len = len
       };
