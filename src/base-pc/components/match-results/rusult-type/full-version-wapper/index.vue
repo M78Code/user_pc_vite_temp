@@ -1,19 +1,4 @@
 <template>
-    <div v-show="is_full_version">
-      <div>is_full_version {{ is_full_version }}</div>
-      <q-tabs
-        v-model="use_component_key"
-        inline-label
-        class="bg-purple text-white shadow-2"
-      >
-        <q-tab
-          v-for="item in components_keys"
-          :key="item"
-          :name="item"
-          :label="item"
-        />
-      </q-tabs>
-    </div>
     <component :is="use_component_key" v-bind="$attrs" />
 </template>
 <script>
