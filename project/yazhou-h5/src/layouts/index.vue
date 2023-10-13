@@ -253,6 +253,9 @@ if (UserCtr.get_user_token()) {
 }
 </script>
 <style lang="scss" scoped>
+
+@import "./index.scss";
+
 .select-mask {
   position: fixed;
   width: 100vw;
