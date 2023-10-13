@@ -43,13 +43,13 @@
 <script setup>
 // import { mapGetters, mapMutations } from "vuex";
 import { api_common } from "src/api/index.js";
-import resultHeader from "src/base-h5/pages/details/components/result-header.vue";
-import resultDetailsTab from "src/base-h5/pages/details/components/result-details-tab.vue";
+// import resultHeader from "src/base-h5/pages/details/components/result-header.vue";
+import resultDetailsTab from "src/base-h5/components/details/components/result-details-tab.vue";
 // TODO: src/components有相同的组件
 import resultDetailsDialog from "src/base-h5/components/details/result-details-dialog.vue";
 import noData from "src/base-h5/components/common/no-data.vue";
-import analysisFootballMatches from "src/base-h5/pages/details/analysis-matches/football-match-analysis/analysis-football-matches.vue";
-import basketballMatchAnalysis from "src/base-h5/pages/details/analysis-matches/basketball-match-analysis/basketball-match-analysis.vue";
+import analysisFootballMatches from "src/base-h5/components/details/analysis-matches/football-match-analysis/analysis-football-matches.vue";
+import basketballMatchAnalysis from "src/base-h5/components/details/analysis-matches/basketball-match-analysis/basketball-match-analysis.vue";
 // 赛果详情骨架屏
 import SResult from "src/base-h5/components/skeleton/match-result.vue" 
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
