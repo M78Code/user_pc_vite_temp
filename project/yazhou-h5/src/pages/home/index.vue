@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import home from "src/base-h5/pages/home/first-page/index.vue"; // 包网3首页下边（轮播 + 跑马灯 + 赛事框）  榴莲千层盒子（小）300p
+import home from "./components/first-page.vue"; // 包网3首页下边（轮播 + 跑马灯 + 赛事框）  榴莲千层盒子（小）300p
 import setMenu from "src/base-h5/components/common/set-menu.vue"; // 设置
 import hot from "src/base-h5/pages/home/hot/index.vue"; // 热门页入口主页面
 import { utils } from "src/core/utils/index.js";
@@ -518,6 +518,7 @@ export default defineComponent({
       height: 0.03rem;
       box-sizing: border-box;
       z-index: 1;
+      background-color: var(--q-gb-bd-c-1);
 
       &.add-animation {
         transition: all 0.3s;
@@ -528,10 +529,10 @@ export default defineComponent({
 </style>
 <style lang="scss">
 .home-page {
-  background: var(--q-gb-bd-c-12);
+  background: var(--q-gb-bd-c-15);
 
   &.white-background {
-    background: var(--q-match-page-bg-color-105);
+    background: var(--q-gb-bd-c-15);
   }
 
   &.white-font {
@@ -551,58 +552,25 @@ export default defineComponent({
   }
 
   &.live-bg {
-    background: var(--q-color-page-bg-color-116);
+    background: var(--q-gb-bg-c-10);
   }
 
   .slide {
-    box-shadow: var(--q-color-box-shadow-color-1) !important;
+    box-shadow: var(--q-gb-b-s-1) !important;
   }
 
   ul {
     li {
       &.is-active {
         .tabs-label {
-          color: var(--q-color-fs-color-41);
+          color: var(--q-gb-t-c-1);
         }
       }
 
       .tabs-label {
-        color: var(--q-color-fs-color-3);
+        color: var(--q-gb-t-c-3);
       }
     }
 
-    .tabs-active-bar {
-      background-color: var(--q-color-page-bg-color-50);
-    }
-  }
-
-  .icon-lang-day {
-    ul {
-      background-color: var(--q-color-page-bg-color-2);
-      color: var(--q-color-fs-color-3);
-
-      &::before {
-        border-bottom: 0.08rem solid var(--q-color-com-border-color-13);
-      }
-    }
-
-    .curr-lang {
-      color: var(--q-color-fs-color-50);
-    }
-  }
-
-  .icon-lang-dark {
-    ul {
-      background: var(--q-match-page-bg-color-10);
-      color: var(--q-color-fs-color-45);
-
-      &::before {
-        border-bottom: 0.08rem solid var(--q-color-com-border-color-3);
-      }
-    }
-
-    .curr-lang {
-      color: var(--q-color-fs-color-50);
-    }
   }
 }</style>
