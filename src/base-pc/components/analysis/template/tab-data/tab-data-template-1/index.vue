@@ -227,7 +227,7 @@ useRegistPropsHelper(component_symbol, need_register_props)
 
 import { format_result } from 'src/core/format/index.js'
 
-import { BasePanelFullVersionWapper as basePanel } from 'src/components/analysis/template/base-panel/index.js'
+import { BasePanelFullVersionWapper as basePanel } from 'src/base-pc/components/analysis/template/base-panel/index.js'
 import { api_analysis } from 'src/api/index'
 
 import { i18n_t,result_filter } from "src/core/index.js";

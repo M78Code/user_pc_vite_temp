@@ -59,14 +59,14 @@
 <script>
 import { computed, ref } from 'vue';
 import { useRoute } from 'vue-router';
-import { TabResultsFullVersionWapper as tabResults } from 'src/components/analysis/template/tab-results/index.js'
+import { TabResultsFullVersionWapper as tabResults } from 'src/base-pc/components/analysis/template/tab-results/index.js'
 
-import { TableDataFullVersionWapper as tabData } from 'src/components/analysis/template/tab-data/index.js'
-import { TabLineupFullVersionWapper as tabLineup } from 'src/components/analysis/template/tab-lineup/index.js'
-import { TabInformationFullVersionWapper as tabInformation } from 'src/components/analysis/template/tab-information/index.js'
-import { TabOddsFullVersionWapper as tabOdds } from 'src/components/analysis/template/tab-odds/index.js'
-import { TabNewsFullVersionWapper as news } from 'src/components/analysis/template/tab-news/index.js'
-import { MatchProcessFullVersionWapper as matchDate } from "src/base-pc/components/match-process/index.js";
+import { TableDataFullVersionWapper as tabData } from 'src/base-pc/components/analysis/template/tab-data/index.js'
+import { TabLineupFullVersionWapper as tabLineup } from 'src/base-pc/components/analysis/template/tab-lineup/index.js'
+import { TabInformationFullVersionWapper as tabInformation } from 'src/base-pc/components/analysis/template/tab-information/index.js'
+import { TabOddsFullVersionWapper as tabOdds } from 'src/base-pc/components/analysis/template/tab-odds/index.js'
+import { TabNewsFullVersionWapper as news } from 'src/base-pc/components/analysis/template/tab-news/index.js'
+import { MatchProcessFullVersionWapper as matchDate } from "src/components/match-process/index.js";
 import { api_analysis, api_details } from 'src/api/index.js'
 import { compute_css_variables } from "src/core/css-var/index.js"
 import { formatTime,msc_array_obj } from 'src/core/format/index.js'
