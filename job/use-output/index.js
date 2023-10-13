@@ -1,6 +1,6 @@
 import merchant_component_config from "../output/component/index.json";
 
-import full_version_config from "../output/version/build-version.js"
+import full_version_config from "../output/version/full-version-config.js"
 // 是否是全量版本 
 const { is_full_version = false } = full_version_config
 const { component = {} } = merchant_component_config;

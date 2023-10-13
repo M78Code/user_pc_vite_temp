@@ -12,11 +12,14 @@ import axios from "axios";
 // 本次打包的 客户端版本
 import BUILD_VERSION_CONFIG from "./output/version/build-version.js";
 let BUILD_VERSION = BUILD_VERSION_CONFIG.BUILD_VERSION;
+// 本次打包的 目录
+import BUILD_DIR_CONFIG from "./output/dir/index.js";
+let BUILD_DIR_NAME = BUILD_DIR_CONFIG.BUILD_DIR_NAME;
 // is_dist  是 true 则 则 目录在 dist/spa 下生成oss 目录
 const is_dist = ("" + process.argv[2]).trim() == "dist";
 if (is_dist) {
 
-  remove_file(`./dist/self-use-version/${BUILD_VERSION}/oss`)
+  remove_file(`./dist/${BUILD_DIR_NAME}/${BUILD_VERSION}/oss`)
  
 }
 // return  false
@@ -84,7 +87,7 @@ function compute_file_name(str = "") {
   return arr[arr.length - 1].trim();
 }
 // 创建文件夹
-let check_dir = is_dist ? "./dist/self-use-version/oss" : "./job/output/oss";
+let check_dir = is_dist ? `./dist/${BUILD_DIR_NAME}/oss` : "./job/output/oss";
 //确保  输出目录存在
 ensure_write_folder_exist(check_dir);
 let oss_data_obj = {};

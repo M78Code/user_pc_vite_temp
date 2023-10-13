@@ -5,7 +5,10 @@ import colors from "colors"
 import { remove_file } from "./write-folder-file.js";
 console.log("----process.argv---", process.argv);
 // 代码内 配置的          ，一般是  本地测试 打包指定版本用
-let folder_name = "self-use-version";
+// 本次打包的 目录
+import BUILD_DIR_CONFIG from "./output/dir/index.js";
+let BUILD_DIR_NAME = BUILD_DIR_CONFIG.BUILD_DIR_NAME;
+let folder_name = BUILD_DIR_NAME;
 //命令行参数 配置的       ，一般是 本地测试 打包指定版本用 ，也可以支持 打包流程
 let argv_version = (process.argv[2] || "").trim();
 //最终计算出的 用于执行脚本的

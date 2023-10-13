@@ -78,8 +78,8 @@ export const compute_build_in_config = (current_env) => {
     GA_TRACKING_ID,
     // 当前环境
     current_env,
-    BUILD_VERSION:  NODE_ENV === "development" ? '' :   BUILD_VERSION ,
-    BUILD_VERSION_HTML:  NODE_ENV === "development" ? '' :   BUILD_VERSION ,
+    BUILD_VERSION   ,
+ 
     NODE_ENV ,
     current_env_build_in_oss: encodeURIComponent(
       JSON.stringify(current_env_build_in_oss.data)
