@@ -36,7 +36,6 @@
   </div>
 </template>
 <script setup>
-import bet_mix_info from "./config/bet_mix_info.js";
 import BetMixItem from "./bet-mix-item.vue";
 import BetInput from "./bet-input.vue";
 import BetMixResult from "./bet-mix-result.vue";

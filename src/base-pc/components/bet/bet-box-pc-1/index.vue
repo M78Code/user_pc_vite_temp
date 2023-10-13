@@ -64,10 +64,10 @@ import BetData from "src/core/bet/class/bet-data-class.js";
 // // 通屏垂直滚动
 import vScrollArea from "./v-scroll-area.vue";
 
-import BetScrollHeader from './bet-single/bet-scroll-header.vue'
-import BetScrollFooter from './bet-single/bet-scroll-footer.vue'
-import BetSingle from "./bet-single/bet-single.vue"
-import BetMix from "./bet-single/bet-mix.vue"
+import BetScrollHeader from './components/bet-scroll-header.vue'
+import BetScrollFooter from './components/bet-scroll-footer.vue'
+import BetSingle from "./components/bet-single.vue"
+import BetMix from "./components/bet-mix.vue"
 
 import { IconWapper } from 'src/components/icon'
 
