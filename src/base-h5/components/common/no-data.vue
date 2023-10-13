@@ -46,7 +46,6 @@ import UserCtr from "src/core/user-config/user-ctr.js";
 // const noLivedataSvg = '/yazhou-h5/image/svg/no_livedata.svg'
 // const no_livedata2Svg = '/yazhou-h5/image/svg/no_livedata2.svg'
 // const nowifiSvg = '/yazhou-h5/image/svg/nowifi.svg'
-// TODO:
 
 
 // TODO: 临时用
@@ -91,6 +90,10 @@ const props = defineProps({
     },
     height: {
         required: true
+    },
+    msg: {
+        type: String,
+        default: ''
     },
 })
 const arr = ref(arr_const)

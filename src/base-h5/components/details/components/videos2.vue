@@ -286,11 +286,11 @@ import {api_common} from "src/api/index.js";
 import video from "src/core/video/video.js"   // 视频相关公共方法
 import matchScore from 'src/base-h5/components/match/match-score.vue' // 比分组件
 import footballEvents from "src/base-h5/pages/details/football-events.vue";
-import analysis_football_matches from "src/base-h5/pages/details/analysis-matches/football-match-analysis/analysis-football-matches.vue"; // 详情页  足球赛事分析
-import basketball_match_analysis from "src/base-h5/pages/details/analysis-matches/basketball-match-analysis/basketball-match-analysis.vue";  // 详情页 或者 赛果  篮球赛事分析
+import analysis_football_matches from "src/base-h5/components/details/analysis-matches/football-match-analysis/analysis-football-matches.vue"; // 详情页  足球赛事分析
+import basketball_match_analysis from "src/base-h5/components/details/analysis-matches/basketball-match-analysis/basketball-match-analysis.vue";  // 详情页 或者 赛果  篮球赛事分析
 // import uid from "src/core/uuid/index.js"
 import { uid } from "quasar"
-import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
+import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt/index.js"
 import { MenuData, MatchDetailCalss,compute_img } from "src/core/index.js"
 
 export default {
@@ -299,9 +299,9 @@ export default {
     matchScore,
     footballEvents,
     "analysis-football-matches": analysis_football_matches,  //足球分析
-    "basketball-match-analysis": basketball_match_analysis,  //篮球分析
-    "tabs": () => import("src/base-h5/pages/details/analysis-matches/components/tabs.vue"),
-    "slider-x": () => import("src/base-h5/components/match-detail/match-info/slider-x.vue"),
+    // "basketball-match-analysis": basketball_match_analysis,  //篮球分析
+    "tabs": () => import("src/base-pc/components/match-detail/match_info/tabs.vue"),
+    "slider-x": () => import("src/base-h5/components/details/analysis-matches/components/slider-x.vue"),
   },
   data() {
     return {

@@ -90,7 +90,12 @@
           </div>
           <!-- 赛事分析展示内容 -->
           <template v-if="viewTab == 'match_analysis' && (!get_is_hengping || get_is_dp_video_full_screen)">
-            <analysis-matches :detail_data="detail_data"></analysis-matches>
+            <div>
+                <!-- 足球赛事分析 页面-->
+                <analysis-football-matches :detail_data="detail_data" v-if="detail_data.csid == '1'"></analysis-football-matches>
+                <!-- 篮球赛事分析 页面-->
+                <basketball-match-analysis  :detail_data="detail_data" v-if="detail_data.csid == '2'"></basketball-match-analysis>
+            </div>
           </template>
           <!-- 聊天室 -->
           <template v-if="viewTab === 'chatroom'">
@@ -129,43 +134,40 @@
 </template>
 <script>
 import {utils } from 'src/core/index.js';  // 公共方法
-
-// #TODO vuex
-// import { mapGetters, mapActions, mapMutations } from "vuex";
-
 // #TODO mixins
 // import websocket_data from "src/base-h5/mixins/websocket/data/skt_data_info_header.js";  // websocket数据页面数据接入----赛事详情头详细推送处理
 // import common from 'src/project/mixins/constant/module/common.js';    // 公共的常用工具方法
 // 引入国际化
 import { i18n_t } from "src/boot/i18n.js";;
 import lodash from "lodash";
-import detailsHeader from "src/base-h5/pages/details/components/details-header.vue";   // 整个详情页的上部视频区域
-import detailsTab from "src/base-h5/pages/details/components/details-tab.vue";         // 详情页中部玩法集tab
-import detailsDialog from "src/components/details/details-dialog/details-dialog-template-1/details-dialog.vue";   // 详情赛事下拉,赛事列表组件
+import detailsHeader from "src/base-h5/components/details/components/details-header.vue";   // 整个详情页的上部视频区域
+import detailsTab from "src/base-h5/components/details/components/details-tab.vue";         // 详情页中部玩法集tab
+import detailsDialog from "src/base-h5/components/details/details-dialog.vue";   // 详情赛事下拉,赛事列表组件
 // // import no_data from "src/project/components/common/no-data.vue";   // 无网络展示组件
-import videos from "src/base-h5/pages/details/components/videos2.vue";   // 详情页视频+动画直播区域
+import videos from "src/base-h5/components/details/components/videos2.vue";   // 详情页视频+动画直播区域
 // import change_header from "src/base-h5/pages/details/components/header/change-header.vue";  // 详情页下拉置顶title
-import info_rules from "src/base-h5/pages/details/components/info-rules.vue"  // 视频info说明弹框
-// // import SDetails from "src/project/components/skeleton/skeleton-details.vue"  // 详情骨架屏
-import analysisMatches from 'src/base-h5/components/details/analysis-matches/index.vue';
-import category from "src/base-h5/pages/details/children/category.vue";
+import info_rules from "src/base-h5/components/details/components/info-rules.vue"  // 视频info说明弹框
+// import SDetails from "src/project/components/skeleton/skeleton-details.vue"  // 详情骨架屏
+import category from "./children/category.vue";
 // import chatroom from "src/base-h5/pages/details/components/chatroom/chatroom.vue"
+import analysisFootballMatches from "src/base-h5/components/details/analysis-matches/football-match-analysis/analysis-football-matches.vue"
+import basketballMatchAnalysis from "src/base-h5/components/details/analysis-matches/basketball-match-analysis/basketball-match-analysis.vue"
 import { useRouter, useRoute } from "vue-router";
 import store from "src/store-redux/index.js";
-import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
+import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt/index.js"
 import { details_main } from "./details.js";
 import { ref, defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch, provide } from "vue";
 import {UserCtr,compute_css,compute_img} from "src/core/";
 import { MatchDetailCalss } from "src/core/index.js"
 import { compute_css_variables } from "src/core/css-var/index.js"
-
 //国际化
 
 export default defineComponent({
   name: "details",
   // mixins: [websocket_data,common],
   components: {
-    analysisMatches,
+    analysisFootballMatches,
+    basketballMatchAnalysis,
     "details-header": detailsHeader,
     "details-dialog": detailsDialog,
     // "change-header": change_header,

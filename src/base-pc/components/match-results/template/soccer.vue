@@ -579,7 +579,7 @@
 <script>
 import results from "src/core/match-results/match-results-mixin/index";
 import UserCtr from "src/core/user-config/user-ctr.js";
-import loadData from "src/base-pc/components/load_data/load_data.vue"
+import loadData from "src/components/load_data/load_data.vue"
 import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/index.js";
 import { IconWapper } from 'src/components/icon'
 // import Tabs from "../components/playback_tabs.vue";

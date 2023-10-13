@@ -48,7 +48,6 @@ import { api_common } from 'src/api/index.js';
 import video from "src/core/video/video.js"   // 视频相关公共方法
 import uid from "src/core/uuid/index.js"
 import { i18n_t } from "src/boot/i18n.js";
-import { useDetailsDataFromDataWarehouse } from "src/base-h5/pages/details/details.js";
 import store from "src/store-redux/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { MatchDetailCalss, useMittEmit, MITT_TYPES } from "src/core/index.js"
@@ -74,6 +73,11 @@ const props = defineProps({
     type: String,
     default: ''
   },
+  // 详情数据
+  detail_data: {
+    type: Object,
+    default: {},
+  },
 })
 
 const { detailsReducer } = store.getState()
@@ -87,8 +91,7 @@ const lvs_icon_ing = "/yazhou-h5/image/common/zhibo-l.png"
 const lvs_icon_pre = "/yazhou-h5/image/common/zhibo-before.svg"
 // 演播厅的图标
 const lvs_state_obj = reactive({ lvs: '', icon_path: '' })
-const { details_data } = useDetailsDataFromDataWarehouse()
-const get_detail_data = reactive(details_data)
+const get_detail_data = reactive(props.detail_data)
 const timer1_ = ref(null)
 const clear_timer1_ = () => {
   if (timer1_.value) {

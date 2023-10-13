@@ -96,8 +96,6 @@
   }
 
   &.is_division_league {
-    // margin-top: 0.06rem;  遗留代码,暂时注释掉
-    // padding: 0.03rem 0;
 
     &.started_un_started_next {
       .match-odds-container {
@@ -179,7 +177,7 @@
     line-height: 0.26rem;
     font-size: 0.11rem;
     // gb-bg-lg-28 还未配置
-    background-image: var(--q-match-page-bg-color-96);
+    background-image: var(--q-gb-bg-lg-28);
     margin-top: 0.11rem;
     border-radius: 0.06rem;
 
@@ -308,13 +306,10 @@
   /* **************联赛展示********************** -S*/
   .league {
     border-radius: 0.08rem;
-    color: var(--q-color-com-fs-color-28) !important;
     display: flex;
     justify-content: space-between;
     align-items: center;
     height: 0.4rem;
-    background: var(--q-match-page-bg-color-96);
-    border-color: var(--q-gb-bd-c-3);
     margin-top: 0.04rem;
 
     &.show-sport {

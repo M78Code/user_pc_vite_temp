@@ -44,7 +44,7 @@ import teamImg from "src/base-h5/components/details/team-img.vue";
 // TODO: 后续修改调整
 // import {mapGetters} from "vuex";
 // 详情页  足球赛事分析 战绩 模块里边的 公共列表
-import publicForm from "src/base-h5/pages/details/analysis-matches/components/public-form.vue";
+import publicForm from "src/base-h5/components/details/analysis-matches/components/public-form.vue";
 import { i18n_t } from "src/boot/i18n.js"
 const get_detail_data = ref({
         csid: '1',

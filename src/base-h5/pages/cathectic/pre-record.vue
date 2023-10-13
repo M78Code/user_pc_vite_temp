@@ -30,7 +30,7 @@
                         <q-slide-transition>
                             <div v-show="value.open">
                                 <!-- 投注记录的页每一条注单（矩形框） -->
-                                <common-cathectic-item :is_pre="true" :item_data="item2" v-for="(item2, key) in value.data"
+                                <common-cathectic-item :main_item="main_item" :is_pre="true" :item_data="item2" v-for="(item2, key) in value.data"
                                     :key="key" class="my-4" :key2="key" :len="value.data.length"
                                     :is_show_pre="expired_flag(item2)" />
                             </div>
