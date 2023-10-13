@@ -17,7 +17,6 @@
         <!-- 中间区域 -->
         <router-view
             class="col"
-            :style="{ height: '100%' }"
             :class="{
               video_page: route.params.video_size == 1,
             }"
