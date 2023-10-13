@@ -14,7 +14,7 @@
         </template>
       </MenuWapper>
       <router-view />
-      <BetBoxWapper />
+      <betMixBox />
       <!--页脚-->
       <FooterWapper class="m-layout" v-if="['sport_menu', 'matchList'].includes(route.name)">
       </FooterWapper>
@@ -61,19 +61,18 @@ import activityIcon from "src/base-h5/components/common/activity-icon.vue"; // �
 import setMenu from "src/base-h5/components/common/set-menu.vue"; // 设置
 import selectDia from "src/base-h5/pages/match-list/components/select-dia.vue"
 import { useRoute } from "vue-router";
-import { BetBoxWapper } from "src/base-h5/components/bet";
+
 import store from "src/store-redux/index.js";
 import { api_common } from "src/api/index.js";
 import PageSourceData from "src/core/page-source/page-source.js";
-
-
-
 // 活动弹出框
 const activityLayer = defineAsyncComponent(() => import("src/base-h5/components/common/activity-layer.vue"))
 const settleDialog = defineAsyncComponent(() =>
   import("src/base-h5/pages/cathectic/index.vue")
 );
-
+const betMixBox = defineAsyncComponent(() =>
+  import("src/components/bet/components/bet_mix_box.vue")
+);
 const toast = defineAsyncComponent(() =>
   import("src/base-h5/components/common/toast.vue")
 );
@@ -84,6 +83,9 @@ const toast = defineAsyncComponent(() =>
 import BetData from "src/core/bet/class/bet-data-class.js";// project/yazhou-h5/src/components/common/toast.vue
 // import layoutHeader from "./layout-header.vue";
 // import layoutConent from "./layout-content.vue";
+
+import "./index.scss"
+
 const inner_height = window.innerHeight;  // 视口高度
 const { footerMenuReducer } = store.getState();
 const route = useRoute();
@@ -256,9 +258,6 @@ if (UserCtr.get_user_token()) {
 }
 </script>
 <style lang="scss" scoped>
-
-@import "./index.scss";
-
 .select-mask {
   position: fixed;
   width: 100vw;

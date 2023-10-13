@@ -27,6 +27,9 @@ import { loadLanguageAsync } from "src/core/index.js";
 import { Quasar } from "quasar";
 import { ref } from "vue";
 
+import './src/css/variables/common/app.scss'
+import './src/css/variables/common/public.scss'
+
 const token_key = STANDARD_KEY.get("token"); //token键
 
 
@@ -62,5 +65,4 @@ const init_load = ref(false); //用于加载是否完成
   }
 })();
 </script>
-
 <style lang="scss"></style>

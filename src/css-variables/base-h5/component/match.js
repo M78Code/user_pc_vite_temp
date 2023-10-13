@@ -1,5 +1,4 @@
 export default {
-  "gb-bd-c-15": "#ffffff",
   "match-bg-color-54": "#fcfdfe",
   "match-page-bg-color-96": "linear-gradient(180deg, #FFFFFF 22.04%, #F7F8FF 100%)",
   "match-page-bg-color-10": "#f9fbff",
