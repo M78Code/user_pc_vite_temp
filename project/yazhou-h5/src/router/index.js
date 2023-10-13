@@ -8,7 +8,7 @@ const router = createRouter({
         name: 'home'
       },
       name: "main",
-      component: () => import("../layouts/MainLayout.vue"),
+      component: () => import("../layouts/index.vue"),
       children: [
           {
             path: "/match",

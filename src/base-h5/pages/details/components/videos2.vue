@@ -301,7 +301,7 @@ export default {
     "analysis-football-matches": analysis_football_matches,  //足球分析
     "basketball-match-analysis": basketball_match_analysis,  //篮球分析
     "tabs": () => import("src/base-h5/pages/details/analysis-matches/components/tabs.vue"),
-    "slider-x": () => import("src/base-h5/components/match-detail/match-info/slider-x.vue"),
+    "slider-x": () => import("src/base-h5/components/match-detail/match-info/slider_x.vue"),
   },
   data() {
     return {
