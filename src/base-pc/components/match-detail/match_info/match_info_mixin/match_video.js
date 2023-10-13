@@ -8,7 +8,7 @@
 import info from "src/base-pc/components/match-detail/match_info/info.vue";
  import video  from "src/core/video/video.js"
 import video_replay from "src/base-pc/components/match-detail/match_info/match_info_mixin/video_replay.js";
-import LoadData from 'src/components/load_data/load_data.vue';
+import LoadData from 'src/base-pc/components/load_data/load_data.vue';
 import MenuData from "src/core/menu-pc/menu-data-class.js";
 import { useMittEmit, MITT_TYPES,useMittEmitterGenerator,useMittOn } from  "src/core/mitt"
 import {is_eports_csid,MatchDetailCalss,get_media_icon_index,GlobalSwitchClass,UserCtr, MatchDataWarehouse_PC_Detail_Common as MatchDetailsData,LayOutMain_pc } from "src/core/index"

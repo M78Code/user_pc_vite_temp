@@ -127,7 +127,7 @@
 
 <script>
 import results from "src/core/match-results/match-results-mixin/index";
-import loadData from "src/components/load_data/load_data.vue"
+import loadData from "src/base-pc/components/load_data/load_data.vue"
 export default {
   mixins: [results],
   components: {

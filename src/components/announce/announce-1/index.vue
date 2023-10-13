@@ -30,7 +30,7 @@ import lodash from 'lodash'
 import { i18n_t } from "src/boot/i18n.js"
 import { SimpleHeaderWapper as simpleHeader} from "src/components/common/simple-header/index.js";
 import leftMenu from "./left-menu.vue";
-import loadData from "src/components/load_data/load_data.vue"
+import loadData from "src/base-pc/components/load_data/load_data.vue"
 import { api_home } from "src/api/index.js"
 import { format_str } from "src/core/format/index.js";
 import UserCtr from 'src/core/user-config/user-ctr.js'
