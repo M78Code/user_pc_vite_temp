@@ -60,7 +60,7 @@ import loadData from "src/components/load_data/load_data.vue"
 import { i18n_t } from "src/boot/i18n.js"
 import { useRouter } from 'vue-router'
 
-import { MatchProcessFullVersionWapper as matchProcess } from "src/components/match-process/index.js"
+import { MatchProcessFullVersionWapper as matchProcess } from "src/base-pc/components/match-process/index.js"
 import store from "src/store-redux/index.js";
 import details from "src/core/match-list-pc/details-class/details.js"
 import search from "src/core/search-class/search.js"

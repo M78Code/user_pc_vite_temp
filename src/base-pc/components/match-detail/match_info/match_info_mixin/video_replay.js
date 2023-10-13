@@ -2,7 +2,7 @@
   import { UserCtr ,MatchDetailCalss,MITT_TYPES,useMittOn} from "src/core/index";
   import { TabWapper as Tabs } from "src/components/common/tab"
   import { api_details } from "src/api/index";
-import { useMittEmit } from "../../../../core/mitt";
+import { useMittEmit } from "src/core";
 
  
   export default {
