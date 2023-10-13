@@ -259,7 +259,7 @@
 </template>
 <script setup>
 import vScrollArea from "src/base-pc/components/v-scroll-area/v-scroll-area.vue";
-import recents from "src/components/match-detail/panel/recents.vue";
+import recents from "src/base-pc/components/match-detail/panel/recents.vue";
 import {
   i18n_t,
   MITT_TYPES,
@@ -273,15 +273,15 @@ import {
   UserCtr
 } from "src/core/index";
 import  videoHistoryLine  from "src/base-pc/components/video-replay/video-history-line.vue";
-import matchHandicap from "src/components/match-detail/match-handicap/match-handicap.vue";
+import matchHandicap from "src/base-pc/components/match-detail/match-handicap/match-handicap.vue";
 import { TabWapper as Tab } from "src/components/common/tab";
 import { useRightDetails } from "./match-details-right-config";
 import refreshComponent from "src/components/refresh/refresh.vue";
-import videoCtrl from "src/components/match-detail/match_info/video_ctrl.vue";
-import matchInfo from "src/components/match-detail/match_info/match_info.vue";
-import handicapTabsBar from "src/components/match-detail/match_info/handicap_tabs_bar.vue";
-import chart from "src/components/match-detail/match_info/chart.vue";
-import hot from "src/components/match-detail/panel/hot.vue"
+import videoCtrl from "src/base-pc/components/match-detail/match_info/video_ctrl.vue";
+import matchInfo from "src/base-pc/components/match-detail/match_info/match_info.vue";
+import handicapTabsBar from "src/base-pc/components/match-detail/match_info/handicap_tabs_bar.vue";
+import chart from "src/base-pc/components/match-detail/match_info/chart.vue";
+import hot from "src/base-pc/components/match-detail/panel/hot.vue"
 import { useRoute } from "vue-router";
 import { computed, reactive, ref, watch } from "vue";
 const route = useRoute();

@@ -46,7 +46,7 @@
 <script setup>
 import lodash from "lodash";
 import { ref } from "vue";
-import betItem from "src/components/bet-item/bet-item-list-new-data.vue";
+import betItem from "src/base-pc/components/bet-item/bet-item-list-new-data.vue";
 import {
   i18n_t,
   MatchDataWarehouse_PC_List_Common as MatchListData,

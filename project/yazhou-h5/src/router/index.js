@@ -50,11 +50,11 @@ const router = createRouter({
           component: () => import("../pages/cathectic/index.vue"),
         },
         // 赛事分析---临时
-        {
-          path: "/match_analysis",
-          name: "match_analysis",
-          component: () => import("../pages/details/analysis-matches/index.vue"),
-        },
+        // {
+        //   path: "/match_analysis",
+        //   name: "match_analysis",
+        //   component: () => import("../pages/details/analysis-matches/index.vue"),
+        // },
         {
           path: "/rule_description/:name",
           name: "rule_description",
@@ -69,32 +69,32 @@ const router = createRouter({
         //     component: () => import("project_path/pages/details/category-loading.vue")
         //   },
         //   // 常规赛事和电竞赛事详情页,赛事id必传，玩法集id可选
-        {
-          path: "/details/:mid/:mcid?/:csid?",
-          name: "category",
-          component: () => import("../pages/details/details.vue"),
-          children: [
-            {
-              path: "category/:mid?/:id?",
-              name: "category",
-              component: () =>
-                import("../pages/details/children/category.vue"),
-            },
-          ],
-        },
+        // {
+        //   path: "/details/:mid/:mcid?/:csid?",
+        //   name: "category",
+        //   component: () => import("../pages/details/details.vue"),
+        //   children: [
+        //     {
+        //       path: "category/:mid?/:id?",
+        //       name: "category",
+        //       component: () =>
+        //         import("../pages/details/children/category.vue"),
+        //     },
+        //   ],
+        // },
           // 赛果详情页
-          {
-            path: "/result_details/:mid",
-            name: "result_details",
-            component: () => import("../pages/details/result-details.vue"),
-            children: [
-              {
-                path: "/result_details/:mid/:index",
-                name: "match_result",
-                component: () => import("../pages/details/components/result-fat-tab.vue")
-              }
-            ]
-          },
+          // {
+          //   path: "/result_details/:mid",
+          //   name: "result_details",
+          //   component: () => import("../pages/details/result-details.vue"),
+          //   children: [
+          //     {
+          //       path: "/result_details/:mid/:index",
+          //       name: "match_result",
+          //       component: () => import("../pages/details/components/result-fat-tab.vue")
+          //     }
+          //   ]
+          // },
         //   // 虚拟赛事详情页
         //   {
         //     path: "/virtual_sports_details",

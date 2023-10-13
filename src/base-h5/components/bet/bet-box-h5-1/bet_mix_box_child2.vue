@@ -213,16 +213,16 @@
 </template>
 
 <script setup>
-// import betMixShow from 'src/components/bet/components/bet_mix_show.vue';
-import betMixShow from 'src/components/bet/components/bet_mix_show3.vue';
-// import betMixShow2 from 'src/components/bet/components/bet_mix_show2.vue';
-// import betMixDetail from 'src/components/bet/components/bet-mix-detail.vue';
-// import betMixSingleDetail from 'src/components/bet/components/bet-mix-single-detail.vue';
-// import betSuccessBar from 'src/components/bet/components/bet-success-bar.vue';
+// import betMixShow from './/bet_mix_show.vue';
+import betMixShow from './bet_mix_show3.vue';
+// import betMixShow2 from './/bet_mix_show2.vue';
+// import betMixDetail from './/bet-mix-detail.vue';
+// import betMixSingleDetail from './/bet-mix-single-detail.vue';
+// import betSuccessBar from './/bet-success-bar.vue';
 // import betting from 'src/mixins/betting/betting.js';
-import keyBoard from 'src/components/bet/components/bet-keyboard.vue';
-import ballSpin from 'src/components/bet/components/ball-spin.vue';
-import betBar from "src/components/bet/components/bet-bar.vue";
+import keyBoard from './/bet-keyboard.vue';
+import ballSpin from './/ball-spin.vue';
+import betBar from ".//bet-bar.vue";
 
 // import {utils } from 'src/core/index.js';
 // import { api_betting } from "src/api/index.js";
@@ -236,7 +236,7 @@ import { get_query_bet_amount_common } from "src/core/bet/class/bet-box-submit.j
 import lodash from 'lodash'
 import { format_money3, format_money2 } from 'src/core/format/index.js'
 import { submit_handle } from "src/core/bet/class/bet-box-submit.js"
-import acceptRules from "src/components/bet/components/accept-rules.vue"
+import acceptRules from ".//accept-rules.vue"
 
 const bet_keyboard_show = ref(true)
 const scroll_box = ref()

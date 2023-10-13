@@ -24,27 +24,27 @@ import store from 'src/store-redux/index.js'
 // inject:['match_list_card'],
 
 // 玩法模板 0   足球-让球&大小  、 足球-角球 、 美足-让球&大小 、 手球-让球&大小
-import { MatchTpl1AfterFullVersionWapper as MatchTpl1After } from "src/components/match-list/match-tpl-new-data/match-tpl-1-after/index.js";
+import { MatchTpl1AfterFullVersionWapper as MatchTpl1After } from "src/base-pc/components/match-list/match-tpl-new-data/match-tpl-1-after/index.js";
 // // 玩法模板 2   足球-半/全
-import { MatchTpl2AfterFullVersionWapper as MatchTpl2After } from "src/components/match-list/match-tpl-new-data/match-tpl-2-after/index.js";
+import { MatchTpl2AfterFullVersionWapper as MatchTpl2After } from "src/base-pc/components/match-list/match-tpl-new-data/match-tpl-2-after/index.js";
 // // // 玩法模板 7   篮球-让球&大
-import { MatchTpl7AfterFullVersionWapper as MatchTpl7After } from "src/components/match-list/match-tpl-new-data/match-tpl-7-after/index.js";
+import { MatchTpl7AfterFullVersionWapper as MatchTpl7After } from "src/base-pc/components/match-list/match-tpl-new-data/match-tpl-7-after/index.js";
 // // // 玩法模板 9   网球-让球&大
-import { MatchTpl9AfterFullVersionWapper as MatchTpl9After } from "src/components/match-list/match-tpl-new-data/match-tpl-9-after/index.js";
+import { MatchTpl9AfterFullVersionWapper as MatchTpl9After } from "src/base-pc/components/match-list/match-tpl-new-data/match-tpl-9-after/index.js";
 // // // 玩法模板 10  网球-准确盘
-import { MatchTpl10AfterFullVersionWapper as MatchTpl10After } from "src/components/match-list/match-tpl-new-data/match-tpl-10-after/index.js";
+import { MatchTpl10AfterFullVersionWapper as MatchTpl10After } from "src/base-pc/components/match-list/match-tpl-new-data/match-tpl-10-after/index.js";
 // // // 玩法模板 12  热门赛事-竟足-让球/胜平
-// import { MatchTpl12AfterFullVersionWapper as MatchTpl12After } from "src/components/match-list/match-tpl-new-data/match-tpl-12-after/index.js";
+// import { MatchTpl12AfterFullVersionWapper as MatchTpl12After } from "src/base-pc/components/match-list/match-tpl-new-data/match-tpl-12-after/index.js";
 // // // 玩法模板 17  棒球-让球&大
-// import { MatchTpl17AfterFullVersionWapper as MatchTpl17After } from "src/components/match-list/match-tpl-new-data/match-tpl-17-after/index.js";
+// import { MatchTpl17AfterFullVersionWapper as MatchTpl17After } from "src/base-pc/components/match-list/match-tpl-new-data/match-tpl-17-after/index.js";
 // // // 玩法模板 18  所有冠军玩法 政治娱
-import { MatchTpl18AfterFullVersionWapper as MatchTpl18After } from "src/components/match-list/match-tpl-new-data/match-tpl-18-after/index.js";
+import { MatchTpl18AfterFullVersionWapper as MatchTpl18After } from "src/base-pc/components/match-list/match-tpl-new-data/match-tpl-18-after/index.js";
 // // // 玩法模板 21  足球-比分
-// import { MatchTpl21AfterFullVersionWapper as MatchTpl21After } from "src/components/match-list/match-tpl-new-data/match-tpl-21-after/index.js";
+// import { MatchTpl21AfterFullVersionWapper as MatchTpl21After } from "src/base-pc/components/match-list/match-tpl-new-data/match-tpl-21-after/index.js";
 // // // 玩法模板 24  足球-15分钟
-// import { MatchTpl24AfterFullVersionWapper as MatchTpl24After } from "src/components/match-list/match-tpl-new-data/match-tpl-24-after/index.js";
+// import { MatchTpl24AfterFullVersionWapper as MatchTpl24After } from "src/base-pc/components/match-list/match-tpl-new-data/match-tpl-24-after/index.js";
 // // 电竞玩法模板
-// import { MatchTplEsportsAfterFullVersionWapper as MatchTplesportsAfter } from "src/components/match-list/match-tpl-new-data/match-tpl-esports-after/index.js";
+// import { MatchTplEsportsAfterFullVersionWapper as MatchTplesportsAfter } from "src/base-pc/components/match-list/match-tpl-new-data/match-tpl-esports-after/index.js";
 // const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
 export default {
   props: {

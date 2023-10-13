@@ -13,7 +13,7 @@ const routes = [
       {
         path: "/home",
         name: "home",
-        component: () => import('../pages/match-list/match-list.vue'),
+        component: () => import('../pages/match-list/index.vue'),
         meta: {
           keepAlive: true, // 需要缓存
         },
@@ -39,7 +39,7 @@ const routes = [
       {
         path: "/details/:mid/:tid/:csid",
         name: "details",
-        component: () => import('../pages/match-details/details-main.vue')
+        component: () => import('../pages/match-details/match-details.vue')
       },
       {
         path: "/video/:mid/:tid/:csid/:play_type/:video_size",

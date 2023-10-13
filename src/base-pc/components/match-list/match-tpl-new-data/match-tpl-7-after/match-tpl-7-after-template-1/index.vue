@@ -82,12 +82,12 @@ import { computed, ref, watch } from 'vue';
 import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/core/index.js";
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
-import { MatchProcessFullVersionWapper as MatchProcess } from 'src/components/match-process/index.js';
-import { MatchBasisInfo2FullVersionWapper as BasisInfo2 } from 'src/components/match-list/match-basis-info/template-2/index.js'
-import { MatchBasisInfo3FullVersionWapper as BasisInfo3 } from 'src/components/match-list/match-basis-info/template-3/index.js'
-import { MatchHandicapFullVersionWapper as MatchHandicap } from 'src/components/match-list/match-handicap/index.js'
-import MatchMedia from 'src/components/match-list/match-media/index.vue'
-import { CommonTabFullVersionWapper as Tab } from "src/components/tab/common-tab/index.js";
+import { MatchProcessFullVersionWapper as MatchProcess } from 'src/base-pc/components/match-process/index.js';
+import { MatchBasisInfo2FullVersionWapper as BasisInfo2 } from 'src/base-pc/components/match-list/match-basis-info/template-2/index.js'
+import { MatchBasisInfo3FullVersionWapper as BasisInfo3 } from 'src/base-pc/components/match-list/match-basis-info/template-3/index.js'
+import { MatchHandicapFullVersionWapper as MatchHandicap } from 'src/base-pc/components/match-list/match-handicap/index.js'
+import MatchMedia from 'src/base-pc/components/match-list/match-media/index.vue'
+import { CommonTabFullVersionWapper as Tab } from "src/base-pc/components/tab/common-tab/index.js";
 
 const props = defineProps({
   mid: {

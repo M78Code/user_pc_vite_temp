@@ -73,7 +73,7 @@
 <script setup>
 // tips1 组件待引入
 
-import tips1 from "src/components/match-detail/tips1/tips1.vue"
+import tips1 from "src/base-pc/components/match-detail/tips1/tips1.vue"
 import lodash from "lodash";
 import { computed,ref } from "vue";
 import { IconWapper } from 'src/components/icon'

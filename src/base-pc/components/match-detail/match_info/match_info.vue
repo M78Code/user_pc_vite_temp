@@ -15,8 +15,8 @@
 
 <script>
 // import { mapGetters } from "vuex";
-import match_video from "src/components/match-detail/match_info/match_video.vue";
-import info from "src/components/match-detail/match_info/info.vue";
+import match_video from "src/base-pc/components/match-detail/match_info/match_video.vue";
+import info from "src/base-pc/components/match-detail/match_info/info.vue";
 
 export default {
   components: {

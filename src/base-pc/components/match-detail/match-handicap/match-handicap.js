@@ -3,21 +3,21 @@
  * @Date: 2023-08-15 17:13:55
  * @Description: 赛事盘口的mixins
  */
-import { DetailTemp0 } from "src/components/match-detail/template0/index.js";
-import { DetailTemp1 } from "src/components/match-detail/template1/index.js";
-import { DetailTemp2 } from "src/components/match-detail/template2/index.js";
-import { DetailTemp3 } from "src/components/match-detail/template3/index.js";
-import { DetailTemp4 } from "src/components/match-detail/template4/index.js";
-import { DetailTemp5 } from "src/components/match-detail/template5/index.js";
-import { DetailTemp6 } from "src/components/match-detail/template6/index.js";
-import { DetailTemp7 } from "src/components/match-detail/template7/index.js";
-import { DetailTemp8 } from "src/components/match-detail/template8/index.js";
-import { DetailTemp9 } from "src/components/match-detail/template9/index.js";
-import { DetailTemp10 } from "src/components/match-detail/template10/index.js";
-import { DetailTemp11 } from "src/components/match-detail/template11/index.js";
-import { DetailTemp12 } from "src/components/match-detail/template12/index.js";
-import { DetailTemp18 } from "src/components/match-detail/template18/index.js";
-import { DetailTemp51 } from "src/components/match-detail/template51/index.js";
+import { DetailTemp0 } from "src/base-pc/components/match-detail/template0/index.js";
+import { DetailTemp1 } from "src/base-pc/components/match-detail/template1/index.js";
+import { DetailTemp2 } from "src/base-pc/components/match-detail/template2/index.js";
+import { DetailTemp3 } from "src/base-pc/components/match-detail/template3/index.js";
+import { DetailTemp4 } from "src/base-pc/components/match-detail/template4/index.js";
+import { DetailTemp5 } from "src/base-pc/components/match-detail/template5/index.js";
+import { DetailTemp6 } from "src/base-pc/components/match-detail/template6/index.js";
+import { DetailTemp7 } from "src/base-pc/components/match-detail/template7/index.js";
+import { DetailTemp8 } from "src/base-pc/components/match-detail/template8/index.js";
+import { DetailTemp9 } from "src/base-pc/components/match-detail/template9/index.js";
+import { DetailTemp10 } from "src/base-pc/components/match-detail/template10/index.js";
+import { DetailTemp11 } from "src/base-pc/components/match-detail/template11/index.js";
+import { DetailTemp12 } from "src/base-pc/components/match-detail/template12/index.js";
+import { DetailTemp18 } from "src/base-pc/components/match-detail/template18/index.js";
+import { DetailTemp51 } from "src/base-pc/components/match-detail/template51/index.js";
 import goTop from "src/components/go-top/go-top.vue";
 
 // 电竞玩法模板

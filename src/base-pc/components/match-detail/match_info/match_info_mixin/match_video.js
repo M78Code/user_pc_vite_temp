@@ -5,9 +5,9 @@
  */
 
 // import { mapGetters, mapMutations } from "vuex"
-import info from "src/components/match-detail/match_info/info.vue";
+import info from "src/base-pc/components/match-detail/match_info/info.vue";
  import video  from "src/core/video/video.js"
-import video_replay from "src/components/match-detail/match_info/match_info_mixin/video_replay.js";
+import video_replay from "src/base-pc/components/match-detail/match_info/match_info_mixin/video_replay.js";
 import LoadData from 'src/components/load_data/load_data.vue';
 import MenuData from "src/core/menu-pc/menu-data-class.js";
 import { useMittEmit, MITT_TYPES,useMittEmitterGenerator,useMittOn } from  "src/core/mitt"

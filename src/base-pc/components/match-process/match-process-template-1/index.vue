@@ -51,7 +51,7 @@
 </template>
 <script setup>
 import { computed, ref, watch,onMounted, onUnmounted } from "vue";
-import matchDate from "src/components/match-detail/match-date/match_date.vue";
+import matchDate from "src/base-pc/components/match-detail/match-date/match_date.vue";
 // import { format_second_ms } from "src/core/format/index.js";
 import {
   get_match_status,
