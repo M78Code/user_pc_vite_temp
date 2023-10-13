@@ -27,6 +27,7 @@ const compute_css = (_key, _position) => {
     }
     const _style = {
       backgroundImage: `url(${url})`,
+      backgroundRepeat: "no-repeat",
       url: url
     };
     if (theme.value) {

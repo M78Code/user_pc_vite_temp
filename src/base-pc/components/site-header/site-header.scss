@@ -1002,11 +1002,11 @@
         }
         .icon-balance_refresh {
             // TODO: 
-          background-image: url(public/yazhou-pc/image/theme01/balance_refresh.svg);
+          background-image: url('yazhou-pc/image/theme01/balance_refresh.svg');
           background-position: center;
           &:hover {
              // TODO: 
-            background-image: url(public/yazhou-pc/image/theme01/balance_refresh_hover.svg);
+            background-image: url('yazhou-pc/image/theme01/balance_refresh_hover.svg');
           }
         }
       }

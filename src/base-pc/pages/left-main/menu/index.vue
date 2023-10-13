@@ -51,7 +51,7 @@ import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import { MenuData,LayOutMain_pc } from "src/core/index.js";
 import { compute_css } from 'src/core/server-img/index.js'
 
-import { MenuWapper } from "src/components/menu/index.js";
+import { MenuWapper } from "src/base-pc/components/menu/index.js";
 
 const router = useRouter();
 

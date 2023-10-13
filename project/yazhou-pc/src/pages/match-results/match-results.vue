@@ -83,12 +83,12 @@
 
 <script setup>
 import { i18n_t } from "src/boot/i18n.js";
-import { useGetResultConfig } from "src/components/match-results/results-config.js";
-import { RusultType } from "src/components/match-results/rusult-type/index";
+import { useGetResultConfig } from "src/base-pc/components/match-results/results-config.js";
+import { RusultType } from "src/base-pc/components/match-results/rusult-type/index.js";
 import { SimpleHeaderWapper as simpleHeader } from "src/components/common/simple-header/index.js";
-import { PaginationWrapper } from "src/components/pagination/index";
+import { PaginationWrapper } from "src/components/pagination/index.js";
 import moveVideo from "src/base-pc/components/video-replay/move-video.vue";
-import { ResultHeader } from "src/components/match-results/result-header/index.js";
+import { ResultHeader } from "src/base-pc/components/match-results/result-header/index.js";
 import { onMounted,ref } from "vue";
 //引入组件样式
 import { compute_css_variables } from "src/core/css-var/index.js"

@@ -71,6 +71,7 @@ get_lang_v3();
 
 .home-wrap {
   padding: 0 0.1rem;
+
   /* ************** 轮播icon *************** -E */
   /* 跑马灯、余额 */
   .wrap-notice {
@@ -151,9 +152,11 @@ get_lang_v3();
       }
     }
   }
+
   :deep(.q-scrollarea__thumb) {
     opacity: 0 !important;
   }
+
   .wrap-loading {
     position: fixed;
     top: 0;
@@ -165,3 +168,46 @@ get_lang_v3();
   }
 }
 </style>
+
+<style lang="scss">
+.wrap-notice {
+
+  .money-wrap {
+    .balance-wrap {
+      .icon-balance {
+        background: var(--q-color-img-bg-5) no-repeat center / cover;
+      }
+
+      .balance {
+        color: var(--q-color-fs-color-4);
+      }
+    }
+
+    .money {
+      color: var(--q-color-fs-color-5);
+    }
+  }
+
+  .wrap-marquee {
+    background: var(--q-gb-bd-c-15);
+
+    .marquee-icon {
+      background: var(--q-color-page-bg-color-120);
+
+      .icon-notice {
+        background: var(--q-color-img-bg-6) no-repeat center / cover;
+      }
+    }
+
+    .marquee {
+      color: var(--q-color-fs-color-5);
+    }
+
+    .user-list {
+      li {
+
+        color: var(--q-color-fs-color-7);
+      }
+    }
+  }
+}</style>
