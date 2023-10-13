@@ -35,14 +35,18 @@
 
 <script setup>
 
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, defineProps } from 'vue';
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 import { t } from "src/core/index.js";
 import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
 import {component_symbol ,need_register_props} from "../config/index.js"
 
-const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
-;
+// const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
+
+const props = defineProps({
+
+})
+
 const current_menu = ref('')
 const name = ref('list_filter_hot')
 const top_logos = ref([
