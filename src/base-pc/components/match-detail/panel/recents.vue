@@ -107,7 +107,7 @@
 
 <script>
 import { api_details, api_match } from "src/api/index";
-import { MatchProcessFullVersionWapper } from "src/components/match-process/index.js";
+import { MatchProcessFullVersionWapper } from "src/base-pc/components/match-process/index.js";
 import { IconWapper } from 'src/components/icon/index.js'
 import bet_item from "src/base-pc/components/bet-item/bet_item.vue";
 // import skt_data_list_hot from "src/public/mixins/websocket/data/skt_data_list_hot.js";  todo  ws更新

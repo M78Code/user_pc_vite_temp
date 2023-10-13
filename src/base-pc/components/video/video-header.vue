@@ -75,7 +75,7 @@
 </template>
 
 <script>
-import {MatchProcessFullVersionWapper as MatchProgress} from "src/components/match-process/index.js"
+import {MatchProcessFullVersionWapper as MatchProgress} from "src/base-pc/components/match-process/index.js"
 
 import details from "src/core/match-list-pc/details-class/details.js"
 import video from "src/core/video/video.js"

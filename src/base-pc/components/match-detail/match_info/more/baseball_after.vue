@@ -141,7 +141,7 @@
 
 <script>
 // import format_desc from "src/project/yabo/mixins/match_details/index";
-import {MatchProcessFullVersionWapper} from "src/components/match-process/index.js";
+import {MatchProcessFullVersionWapper} from "src/base-pc/components/match-process/index.js";
 import store from "src/store-redux/index.js";
 import BetCommonHelper from "src/core/bet/common-helper/index.js";
 import { IconWapper } from 'src/components/icon'

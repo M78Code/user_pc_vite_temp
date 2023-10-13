@@ -231,7 +231,7 @@
 <script>
 // import { mapGetters } from "vuex"
 // import format from "src/project/yabo/mixins/match_details/index";
-import { MatchProcessFullVersionWapper } from "src/components/match-process/index.js";
+import { MatchProcessFullVersionWapper } from "src/base-pc/components/match-process/index.js";
 import BetCommonHelper from "src/core/bet/common-helper/index.js";
 import lodash from "lodash";
 import store from "src/store-redux/index.js";

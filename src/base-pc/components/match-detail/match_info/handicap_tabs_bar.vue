@@ -102,7 +102,7 @@ import {
 import { useRoute } from "vue-router";
 import store from "src/store-redux/index.js";
 import ZhuGe from "src/core/http/zhuge-tag";
-import { CommonTabFullVersionWapper } from "src/components/tab/common-tab/index.js";
+import { CommonTabFullVersionWapper } from "src/base-pc/components/tab/common-tab/index.js";
 import { IconWapper } from 'src/components/icon/index.js'
 import lodash from 'lodash'
 import {i18n_t} from 'src/core/index'
