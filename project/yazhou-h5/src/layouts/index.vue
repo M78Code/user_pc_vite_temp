@@ -14,7 +14,7 @@
         </template>
       </MenuWapper>
       <router-view />
-      <betMixBox />
+      <BetBoxWapper />
       <!--页脚-->
       <FooterWapper class="m-layout" v-if="['sport_menu', 'matchList'].includes(route.name)">
       </FooterWapper>
@@ -56,12 +56,12 @@ import {
 } from "vue";
 import { useMittOn, MITT_TYPES, i18n_t, UserCtr } from "src/core/";
 import { FooterWapper } from "src/components/footer/index.js";
-import { MenuWapper } from "src/components/menu";
+import { MenuWapper } from "src/base-h5/components/menu";
 import activityIcon from "src/base-h5/components/common/activity-icon.vue"; // 设置
 import setMenu from "src/base-h5/components/common/set-menu.vue"; // 设置
 import selectDia from "src/base-h5/pages/match-list/components/select-dia.vue"
 import { useRoute } from "vue-router";
-
+import { BetBoxWapper } from "src/base-h5/components/bet";
 import store from "src/store-redux/index.js";
 import { api_common } from "src/api/index.js";
 import PageSourceData from "src/core/page-source/page-source.js";
@@ -70,9 +70,7 @@ const activityLayer = defineAsyncComponent(() => import("src/base-h5/components/
 const settleDialog = defineAsyncComponent(() =>
   import("src/base-h5/pages/cathectic/index.vue")
 );
-const betMixBox = defineAsyncComponent(() =>
-  import("src/components/bet/components/bet_mix_box.vue")
-);
+
 const toast = defineAsyncComponent(() =>
   import("src/base-h5/components/common/toast.vue")
 );
@@ -255,6 +253,9 @@ if (UserCtr.get_user_token()) {
 }
 </script>
 <style lang="scss" scoped>
+
+@import "./index.scss";
+
 .select-mask {
   position: fixed;
   width: 100vw;

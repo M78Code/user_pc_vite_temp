@@ -83,10 +83,10 @@ import lodash_ from "lodash";
 
 import MainHeader from "./main-header.vue";
 import LeftMainMenu from "./menu/index.vue";
-import { BetBoxWapper } from "src/components/bet";
-import { BetRecordViewWapper } from "src/components/bet-record-view";
+import { BetBoxWapper } from "src/base-pc/components/bet";
+import { BetRecordViewWapper } from "src/base-pc/components/bet-record-view";
 // // 通屏垂直滚动
-import vScrollArea from "../../components/v-scroll-area/v-scroll-area.vue";
+import vScrollArea from "src/base-pc/components/v-scroll-area/v-scroll-area.vue";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { MenuData, LayOutMain_pc } from "src/core/index.js";
 import { api_betting } from "src/api/index.js";
