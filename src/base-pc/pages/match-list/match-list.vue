@@ -112,20 +112,23 @@
 </template>
 <script>
 import { onMounted, onUnmounted } from "vue";
+
+import { IconWapper } from 'src/components/icon'
+
+
 import LoadData from 'src/base-pc/components/load_data/load_data.vue';
 import { LeagueTabFullVersionWapper as LeagueTab } from "src/base-pc/components/tab/league-tab/index.js"; //联赛菜单
 import listFilter from "src/base-pc/components/match-list/list-filter/index.vue"; //赛事列表筛选：滚球-球种、早盘-日期
 import { ListFilterDateFullVersionWapper as listFilterDate } from "src/base-pc/components/match-list/list-filter-date/index.js"; //热门赛事列表  早盘-日期
 import { MatchListCardFullVersionWapper as MatchListCard } from "src/base-pc/components/match-list/match-list-card/index.js"; //赛事列表
 import { ListFilterHotFullVersionWapper as ListFilterHot } from "src/base-pc/components/match-list/list-filter-hot/index.js"; //热门赛事列表
+import { PlayVirtualMatchTypeFullVersionWapper as PlayVirtualMatchType } from "src/base-pc/components/match-list/play-virtual-match-type/index.js";//赛事列表头部——滚球——赛事类型
 import { ListHeaderFullVersionWapper as ListHeader } from "src/base-pc/components/match-list/list-header/index.js"; //头部
-import { IconWapper } from 'src/components/icon'
 import ScrollList from 'src/base-pc/components/cus-scroll/scroll_list.vue';
 import refresh from "src/base-pc/components/refresh/refresh.vue"
 
 // import { EsportsHeaderFullVersionWapper as EsportsHeader } from "src/base-pc/components/match-list/esports-header/index.js";//电竞赛事列表筛选
 // import { VirtualMatchTypeFullVersionWapper as VirtualMatchType } from "src/base-pc/components/match-list/match-list-card/index.js";//虚拟体育 赛事列表 赛事头
-import { PlayVirtualMatchTypeFullVersionWapper as PlayVirtualMatchType } from "src/base-pc/components/match-list/play-virtual-match-type/index.js";//赛事列表头部——滚球——赛事类型
 // import { LeaguesFilterFullVersionWapper as LeaguesFilter } from "src/base-pc/components/match-list/match-list-card/index.js";//联赛筛选页面
 // import { VirtualMatchTpl1FullVersionWapper as VirtualMatchTpl1 } from "src/base-pc/components/match-list/match-list-card/index.js"; //拟足球 、 虚拟篮球
 // import { VirtualMatchTpl2FullVersionWapper as VirtualMatchTpl2 } from "src/base-pc/components/match-list/match-list-card/index.js"; //拟赛马 、 虚拟赛狗
@@ -138,6 +141,7 @@ import useMatchListMx from "src/core/match-list-pc/match-list-composition.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import { PageSourceData } from 'src/core/index.js';
 import {MatchDataWarehouse_PC_List_Common as MatchListData ,GlobalAccessConfig} from "src/core/index.js";
+
 const { mounted_fn, load_data_state, show_refresh_mask, collect_count, is_show_hot } = useMatchListMx();
 const { page_source } = PageSourceData;
 export default {
