@@ -14,7 +14,7 @@
         </template>
       </MenuWapper>
       <router-view />
-      <betMixBox />
+      <BetBoxWapper />
       <!--页脚-->
       <FooterWapper class="m-layout" v-if="['sport_menu', 'matchList'].includes(route.name)">
       </FooterWapper>
@@ -61,7 +61,7 @@ import activityIcon from "src/base-h5/components/common/activity-icon.vue"; // �
 import setMenu from "src/base-h5/components/common/set-menu.vue"; // 设置
 import selectDia from "src/base-h5/pages/match-list/components/select-dia.vue"
 import { useRoute } from "vue-router";
-
+import { BetBoxWapper } from "src/base-h5/components/bet";
 import store from "src/store-redux/index.js";
 import { api_common } from "src/api/index.js";
 import PageSourceData from "src/core/page-source/page-source.js";
@@ -70,9 +70,7 @@ const activityLayer = defineAsyncComponent(() => import("src/base-h5/components/
 const settleDialog = defineAsyncComponent(() =>
   import("project_path/src/pages/cathectic/index.vue") // project/yazhou-h5/src/pages/cathectic/index.vue
 );
-const betMixBox = defineAsyncComponent(() =>
-  import("src/components/bet/components/bet_mix_box.vue")
-);
+
 const toast = defineAsyncComponent(() =>
   import("src/base-h5/components/common/toast.vue")
 );
