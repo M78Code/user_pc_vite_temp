@@ -37,13 +37,13 @@
 </template>
 
 <script>
-import football from "src/components/match-detail/match_info/football/after.vue";
-import basketball from "src/components/match-detail/match_info/basketball/after.vue";
-import more from "src/components/match-detail/match_info/more/after.vue";
-import baseball from "src/components/match-detail/match_info/more/baseball_after.vue";
-import before from "src/components/match-detail/match_info/animation_template/common_before.vue";
+import football from "src/base-pc/components/match-detail/match_info/football/after.vue";
+import basketball from "src/base-pc/components/match-detail/match_info/basketball/after.vue";
+import more from "src/base-pc/components/match-detail/match_info/more/after.vue";
+import baseball from "src/base-pc/components/match-detail/match_info/more/baseball_after.vue";
+import before from "src/base-pc/components/match-detail/match_info/animation_template/common_before.vue";
 import { is_eports_csid} from "src/core"
-import dota2_started from "src/components/match-detail/match_info/dota2/dota2-started.vue"
+import dota2_started from "src/base-pc/components/match-detail/match_info/dota2/dota2-started.vue"
 import lodash from 'lodash'
 export default {
   props: {
