@@ -79,7 +79,7 @@ import {MatchProcessFullVersionWapper as MatchProgress} from "src/components/mat
 
 import details from "src/core/match-list-pc/details-class/details.js"
 import video from "src/core/video/video.js"
-import refresh from "src/components/refresh/refresh.vue"
+import refresh from "src/base-pc/components/refresh/refresh.vue"
 export default {
   name: "VideoHeader",
   components:{
