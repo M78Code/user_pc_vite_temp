@@ -147,7 +147,7 @@ import videos from "src/base-h5/pages/details/components/videos2.vue";   // 详�
 // import change_header from "src/base-h5/pages/details/components/header/change-header.vue";  // 详情页下拉置顶title
 import info_rules from "src/base-h5/pages/details/components/info-rules.vue"  // 视频info说明弹框
 // // import SDetails from "src/project/components/skeleton/skeleton-details.vue"  // 详情骨架屏
-import analysisMatches from './analysis-matches/index.vue';
+import analysisMatches from 'src/base-h5/components/details/analysis-matches/index.vue';
 import category from "src/base-h5/pages/details/children/category.vue";
 // import chatroom from "src/base-h5/pages/details/components/chatroom/chatroom.vue"
 import { useRouter, useRoute } from "vue-router";
