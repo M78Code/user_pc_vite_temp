@@ -13,7 +13,7 @@
 
     <!-- 中 -->
     <!-- 未结算页面 -->
-    <div v-if="get_main_item == 0 || get_main_item == 2">
+    <div v-if="main_item == 0 || main_item == 2">
       <!-- 订单状态orderStatus(0:未结算,1:已结算,2:注单无效,3:确认中,4:投注失败) -->
       <template v-if="data_f.orderStatus == 1 || data_f.orderStatus == 2 || data_f.orderStatus == 4">
         <p class="top-p">{{i18n_t('bet_record.go_back')}}</p>
@@ -70,6 +70,10 @@ import { i18n_t } from "src/boot/i18n.js";
     },
     is_pre: {
       type: Boolean
+    },
+    main_item: {
+      type: String,
+      defalut: '0'
     }
   })
 //订单状态的颜色类名
@@ -136,7 +140,6 @@ import { i18n_t } from "src/boot/i18n.js";
     // }
   })
 
-    // ...mapGetters(["get_main_item"]),
     //单关已结算投注成功状态（orderStatus == 1）此位置需要返回结算比分
     //单关注单无效状态（orderStatus == 2）此位置需要返回无效原因
   const calc_settle_score = computed(() => {

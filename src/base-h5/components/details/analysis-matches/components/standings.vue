@@ -48,19 +48,19 @@
 
 <script setup>
 // 详情页 或者 赛果  篮球足球公共组件，杯赛 联赛表格
-import footballStandings from "src/base-h5/pages/details/analysis-matches/components/basketball-football-standings.vue"
+import footballStandings from "src/base-h5/components/details/analysis-matches/components/basketball-football-standings.vue"
 // 详情页  足球赛事分析 战绩 模块里边的 历史交战
-import historyEngagement from "src/base-h5/pages/details/analysis-matches/components/history-engagement.vue"
+import historyEngagement from "src/base-h5/components/details/analysis-matches/components/history-engagement.vue"
 // 详情页  足球赛事分析 战绩 模块里边的 历史交战
-import recentRecord from "src/base-h5/pages/details/analysis-matches/components/recent-record.vue"
+import recentRecord from "src/base-h5/components/details/analysis-matches/components/recent-record.vue"
 // 详情页 或者 赛果  足球
-import futureSchedule from "src/base-h5/pages/details/analysis-matches/football-match-analysis/components/future-schedule.vue"
+import futureSchedule from "src/base-h5/components/details/analysis-matches/football-match-analysis/components/future-schedule.vue"
 // 伤停情况
-import injurySituation from "src/base-h5/pages/details/analysis-matches/football-match-analysis/components/injury-situation.vue"
+import injurySituation from "src/base-h5/components/details/analysis-matches/football-match-analysis/components/injury-situation.vue"
 // 技术面
-import standingsTechnical from "src/base-h5/pages/details/analysis-matches/football-match-analysis/components/standings-technical.vue"
+import standingsTechnical from "src/base-h5/components/details/analysis-matches/football-match-analysis/components/standings-technical.vue"
 // 盘面
-import standingsDisk from "src/base-h5/pages/details/analysis-matches/football-match-analysis/components/standings-disk.vue"
+import standingsDisk from "src/base-h5/components/details/analysis-matches/football-match-analysis/components/standings-disk.vue"
 // TODO: 后续修改调整
 // import {mapGetters} from "vuex";
 import {api_analysis} from "src/api/index.js";
@@ -79,16 +79,6 @@ const props = defineProps({
         default: () => {}
     }
 })
-  // components: {
-  //   "football-standings": football_standings,
-  //   "history-engagement": history_engagement,
-  //   "recent-record": recent_record,
-  //   "future-schedule": future_schedule,
-  //   "standings-technical": standings_technical,
-  //   "standings-disk": standings_disk,
-  //   "injury-situation": injury_situation,
-  //   loading,
-  // },
   // 国际化
 
   const tab_list = ref([

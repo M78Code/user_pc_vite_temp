@@ -58,9 +58,9 @@
 import { api_analysis } from "src/api/index.js";
 // import { mapGetters } from "vuex";
   // 赛果详情 事件 组件
-import matchResultsStage from 'src/base-h5/pages/details/components/details-match-results/match-results-stage.vue'
+import matchResultsStage from 'src/base-h5/components/details/components/details-match-results/match-results-stage.vue'
  // 赛果详情 底部图标说明
-import resultsFooter from 'src/base-h5/pages/details/components/details-match-results/results-footer.vue' // project\yazhou-h5\src\pages\details\components\details-match-results\results-footer.vue
+import resultsFooter from 'src/base-h5/components/details/components/details-match-results/results-footer.vue' 
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import { useRoute } from "vue-router"
 import { computed, onUnmounted, ref, onMounted } from "vue";

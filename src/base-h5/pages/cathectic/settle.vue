@@ -59,7 +59,7 @@
                 <q-slide-transition>
                   <div v-show="value.open">
                     <!-- 投注记录的每一个卡片 -->
-                    <common-cathectic-item :item_data="item2" v-for="(item2, key) in value.data" :key="key" class="yb_my12"
+                    <common-cathectic-item :main_item="main_item" :item_data="item2" v-for="(item2, key) in value.data" :key="key" class="yb_my12"
                       :key2="key" :len="value.data.length" :is_early="is_early"></common-cathectic-item>
                   </div>
               </q-slide-transition>
@@ -95,7 +95,6 @@ import { i18n_t } from "src/boot/i18n.js";
 const props = defineProps({
   main_item: {
     type: [String, Number],
-    default: ''
   }
 })
 // 仓库数据

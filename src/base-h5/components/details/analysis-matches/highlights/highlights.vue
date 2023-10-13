@@ -220,13 +220,13 @@ import { format_total_score } from "src/core/format/index.js"
 import { i18n_t, i18n_tc } from "src/boot/i18n.js";;
 import { useRoute } from "vue-router"
 import { MatchDataWarehouse_H5_Detail_Common as matchDetailData, MenuData } from "src/core/index";
-import sliderX from "src/base-h5/pages/details/analysis-matches/components/slider-x.vue"
+import sliderX from "src/base-h5/components/details/analysis-matches/components/slider-x.vue"
 // 队标视图
 import teamImg from "src/base-h5/components/details/team-img.vue"
 // 全屏播放时，顶部title
-import titleX from "src/base-h5/pages/details/analysis-matches/components/title-x.vue" 
+import titleX from "src/base-h5/components/details/analysis-matches/components/title-x.vue" 
 // 事件类型菜单
-import tabs from "src/base-h5/pages/details/analysis-matches/components/tabs.vue" 
+import tabs from "src/base-h5/components/details/analysis-matches/components/tabs.vue" 
 // 精彩回放视频滚动列表
 export default {
   name: "highlights",

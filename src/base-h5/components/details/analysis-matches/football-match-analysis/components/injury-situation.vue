@@ -31,7 +31,7 @@ import { defineComponent, ref } from 'vue'
 // 详情页蓝色背景上的大型字母图标
 import teamImg from "src/base-h5/components/details/team-img.vue";
  // 伤停情况列表
-import injuryForm from "src/base-h5/pages/details/analysis-matches/components/injury-form.vue";
+import injuryForm from "src/base-h5/components/details/analysis-matches/components/injury-form.vue";
 import lodash from "lodash"
 import { i18n_t } from "src/boot/i18n.js";
  

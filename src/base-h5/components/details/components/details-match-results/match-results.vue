@@ -35,11 +35,11 @@
 
 <script setup>
 // 赛果详情 统计图形表
-import mathcResultsVisuals from "src/base-h5/pages/details/components/details-match-results/mathc-results-visuals.vue";
+import mathcResultsVisuals from "src/base-h5/components/details/components/details-match-results/mathc-results-visuals.vue";
 // 详情页 或者 赛果  篮球赛事事件
-import basketballIncident from "src/base-h5/pages/details/analysis-matches/basketball-match-analysis/basketball-incident.vue";
+import basketballIncident from "src/base-h5/components/details/analysis-matches/basketball-match-analysis/basketball-incident.vue";
  // 赛果详情 事件 组件
-import timeLine from 'src/base-h5/pages/details/components/details-match-results/time-line.vue';
+import timeLine from 'src/base-h5/components/details/components/details-match-results/time-line.vue';
 import { i18n_t } from "src/boot/i18n.js";
 import {utils } from 'src/core/index.js'
 import { ref, onMounted } from "vue";

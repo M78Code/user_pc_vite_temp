@@ -34,8 +34,8 @@
 <script setup>
 // import {mapGetters} from "vuex";
 import {api_analysis} from "src/api/index.js";
- // 详情页  足球赛事分析 战绩 模块里边的 公共列表
-import publicForm from "src/base-h5/pages/details/analysis-matches/components/public-form.vue";
+ // 详情页  足球赛事分析 战绩 模块里边的 公共列表 --- 跟hot的compoenet组件名称重复
+import publicForm from "src/base-h5/components/details/analysis-matches/components/public-form.vue";
  // 无网络展示组件
 // import noData from "src/base-h5/components/common/no-data.vue";
 import { ref, computed, onUnmounted, onMounted } from "vue";

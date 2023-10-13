@@ -32,7 +32,7 @@ export default {
       default: ''
     },
     csid: { // 赛种
-      type: String,
+      type: [String, Number],
       default: ''
     }
   },

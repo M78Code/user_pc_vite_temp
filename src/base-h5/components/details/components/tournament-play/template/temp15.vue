@@ -66,7 +66,7 @@
 // import { mapGetters} from "vuex";
 import { colors } from 'quasar';
 // import odd_convert from "src/base-h5/mixins/odds_conversion/odds_conversion.js";
-import odds_new from "src/base-h5/pages/details/components/tournament-play/unit/odds-new.vue";
+import odds_new from "src/base-h5/components/details/components/tournament-play/unit/odds-new.vue";
 import store from "src/store-redux/index.js";
 import {utils } from 'src/core/index.js';
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
