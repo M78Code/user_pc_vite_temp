@@ -255,7 +255,7 @@ import menu_config from "src/core/menu-pc/menu-data-class.js";
 import store from "src/store-redux/index.js";
 import BaseData from "src/core/base-data/base-data.js";
 import { i18n_t, MatchDetailCalss, PageSourceData,compute_css } from "src/core/index.js";
-import DragScroll from "src/components/cus-scroll/drag_scroll.vue";
+import DragScroll from "src/base-pc/components/cus-scroll/drag_scroll.vue";
 
 let state = store.getState();
 // 当前页面来源信息
