@@ -13,5 +13,5 @@ import MatchContainer from 'src/base-h5/pages/match-list/index.vue';
 
 
 <style scoped>
- 
+
 </style>
