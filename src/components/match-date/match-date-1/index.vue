@@ -62,7 +62,7 @@
 // import msc_mixin from "/mixins/common/msc.js";
 // import time_format_mixin from "/mixins/common/time_format";
 // import timer from "src/components/timer/timer.vue";
-import {MatchTimer} from "src/base-pc/components/match-detail/match-timer/index"
+import {MatchTimer} from "src/components/match-timer/index"
 import {utils,get_match_status,i18n_t,format_second_ms ,t,useMittEmit, useMittOn, MITT_TYPES,format_time_zone_millisecond} from 'src/core/index.js';
 import {is_eports_csid}  from "src/core/constant/util/csid-util";
 console.log(is_eports_csid,'is_eports_csid');
