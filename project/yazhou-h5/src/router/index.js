@@ -43,18 +43,6 @@ const router = createRouter({
           name: "notice",
           component: () => import("../pages/notice/index.vue"),
         },
-        // 注单历史---临时
-        {
-          path: "/cathectic",
-          name: "cathectic",
-          component: () => import("../pages/cathectic/index.vue"),
-        },
-        // 赛事分析---临时
-        {
-          path: "/match_analysis",
-          name: "match_analysis",
-          component: () => import("../pages/details/analysis-matches/index.vue"),
-        },
         {
           path: "/rule_description/:name",
           name: "rule_description",
