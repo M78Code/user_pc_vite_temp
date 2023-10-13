@@ -89,10 +89,10 @@
 <script setup>
 import loadData from "src/base-pc/components/load-data/load-data.vue";
 import vScrollArea from "src/base-pc/components/v-scroll-area/v-scroll-area.vue";
-import detailHeader from "./components/detail-header.vue";
+import detailHeader from "src/base-pc/components/match-detail/detail-header/detail-header.vue";
 // 组件
 // 盘口模板
-import matchHandicap from "src/components/match-detail/match-handicap/match-handicap.vue";
+import matchHandicap from "src/base-pc/components/match-detail/match-handicap/match-handicap.vue";
 import matchListHot from "src/base-pc/pages/match-list/match-list-hot.vue";
 import { useGetConfig } from "./detail.config";
 import { useRoute, useRouter } from "vue-router";

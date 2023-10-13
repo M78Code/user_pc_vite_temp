@@ -5,7 +5,7 @@
  */
 import {utils,formatTime,is_eports_csid,i18n_t, format_string } from 'src/core/index.js';
 import lodash from 'lodash'
-// import {MatchProcessFullVersionWapper} from "src/components/match-process/index.js";
+// import {MatchProcessFullVersionWapper} from "src/base-pc/components/match-process/index.js";
 // const licia_format = require('licia/format');
 export default {
   components: {

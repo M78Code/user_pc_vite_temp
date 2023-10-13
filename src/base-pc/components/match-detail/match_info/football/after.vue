@@ -200,7 +200,7 @@
 
 <script>
 import  sprite_img  from   "src/core/server-img/sprite-img/index.js"
-import {MatchProcessFullVersionWapper} from "src/components/match-process/index.js";
+import {MatchProcessFullVersionWapper} from "src/base-pc/components/match-process/index.js";
 import lodash from 'lodash'
 import { get_match_status,i18n_t,formatSeconds,debounce_throttle_cancel } from 'src/core/index'
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/";

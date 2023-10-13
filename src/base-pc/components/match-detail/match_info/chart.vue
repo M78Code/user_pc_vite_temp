@@ -27,11 +27,11 @@
 </template>
 
 <script>
-import football from "src/components/match-detail/match_info/football/chart.vue";
-import basketball from "src/components/match-detail/match_info/basketball/chart.vue";
-import more from "src/components/match-detail/match_info/more/chart.vue";
-import baseball from "src/components/match-detail/match_info/animation_template/baseball_chart.vue";
-import hockey_USAsoccer from "src/components/match-detail/match_info/animation_template/hockey_USAsoccer_chart.vue";
+import football from "src/base-pc/components/match-detail/match_info/football/chart.vue";
+import basketball from "src/base-pc/components/match-detail/match_info/basketball/chart.vue";
+import more from "src/base-pc/components/match-detail/match_info/more/chart.vue";
+import baseball from "src/base-pc/components/match-detail/match_info/animation_template/baseball_chart.vue";
+import hockey_USAsoccer from "src/base-pc/components/match-detail/match_info/animation_template/hockey_USAsoccer_chart.vue";
 export default {
   props: {
     match_info: Object

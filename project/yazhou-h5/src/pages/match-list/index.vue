@@ -51,24 +51,22 @@ import { useRoute } from "vue-router";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt";
 import lodash from "lodash";
 import store from "src/store-redux/index.js";
-import tiaozhuanPanel from "./components/tiaozhuan-panel.vue";    //  跳转banner图和猜你喜欢
-import MatchListCard from "src/core/match-list-h5/match-card/match-list-card-class";
-import matchList from "./components/match-list.vue";
-import PageSourceData from "src/core/page-source/page-source.js";
+import tiaozhuanPanel from "src/base-h5/pages/match-list/components/tiaozhuan-panel.vue";    //  跳转banner图和猜你喜欢
+import matchList from "src/base-h5/pages/match-list/components/match-list.vue";
 import SList from "src/base-h5/components/skeleton/skeleton-list.vue"   // 赛事列表骨架屏
 import scrollTop from "src/base-h5/components/common/record-scroll/scroll-top.vue";
 import { compute_css_variables } from "src/core/css-var/index.js"
-import { MenuData, score_switch_handle, utils } from "src/core/index.js";
 import BaseData from 'src/core/base-data/base-data.js'
+import PageSourceData from "src/core/page-source/page-source.js";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import MatchPage from "src/core/match-list-h5/match-class/match-page.js";
+import { MenuData, score_switch_handle, utils } from "src/core/index.js";
 import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from 'src/core'
+import MatchListCard from "src/core/match-list-h5/match-card/match-list-card-class";
 import { menu_type, menu_lv2 } from 'src/base-h5/mixin/menu.js'
 import { standard_edition } from 'src/base-h5/mixin/userctr.js'
-
 // import matchListCardFold from 'src/core/match-list-h5/match-card/match-list-card-fold.js'
-
-import 'project_path/src/css/pages/match-main.scss'
+import './index.variables.scss'
 
 const props = defineProps({
   invok_source: String,
@@ -476,5 +474,5 @@ defineExpose({
 });
 </script>
 <style scoped lang="scss">
-  @import "./styles/index.scss";
+  @import "./index.scss";
 </style>
