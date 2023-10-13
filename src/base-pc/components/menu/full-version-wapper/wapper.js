@@ -1,8 +1,8 @@
-import H5MenuTemplate1 from "../h5-menu-template-1/index.vue";
+import PcMenuTemplate1 from "../pc-menu-template-1/index.vue";
 import { compute_component_wapper_config } from "app/job/use-output/index.js";
 
 const all_components_obj = {
-  H5MenuTemplate1,
+  PcMenuTemplate1,
 };
 const component_config = {
   registered_component_key: "Menu",
