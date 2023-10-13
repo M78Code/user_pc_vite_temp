@@ -1,4 +1,4 @@
-import bet_box_h5_1 from "../bet_box_h5_1/index.vue";
+import bet_box_h5_1 from "../bet-box-h5-1/bet_mix_box.vue";
 import { compute_component_wapper_config } from "app/job/use-output/index.js";
 const all_components_obj = {
   bet_box_h5_1,
