@@ -1,8 +1,6 @@
 <!-- 主列表页 -->
 <template>
-    <div>
         <MatchList />
-    </div>
 </template>
 
 

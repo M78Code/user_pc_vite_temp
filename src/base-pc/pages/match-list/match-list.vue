@@ -114,8 +114,6 @@
 import { onMounted, onUnmounted } from "vue";
 
 import { IconWapper } from 'src/components/icon'
-
-
 import LoadData from 'src/base-pc/components/load_data/load_data.vue';
 import { LeagueTabFullVersionWapper as LeagueTab } from "src/base-pc/components/tab/league-tab/index.js"; //联赛菜单
 import listFilter from "src/base-pc/components/match-list/list-filter/index.vue"; //赛事列表筛选：滚球-球种、早盘-日期
