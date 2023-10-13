@@ -39,7 +39,7 @@
 </template>
 
 <script setup>
-import matchMain from "src/base-h5/pages/match-list/index.vue";   // 赛事列表页用于展示滚球、今日、早盘、串关、冠军等赛事
+// import matchMain from "src/base-h5/pages/match-list/index.vue";   // 赛事列表页用于展示滚球、今日、早盘、串关、冠军等赛事
 import { api_home } from "src/api/index.js";
 import hotList from "src/base-h5/components/skeleton/home-hot/hot-list.vue";   // 热门榜单 骨架屏
 import hotSchedule from "src/base-h5/components/skeleton/home-hot/hot-schedule.vue"     // 热门赛程 骨架屏
