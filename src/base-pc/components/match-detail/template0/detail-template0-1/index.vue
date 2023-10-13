@@ -126,7 +126,7 @@
 import { useCommon } from "../../use-common";
 import {is_eports_csid} from 'src/core/index.js';
 const emit = defineEmits(["sort_index", "set_panel_status"]);
-import betItem from "src/components/bet-item/bet_item.vue";
+import betItem from "src/base-pc/components/bet-item/bet_item.vue";
 const props = defineProps({
   match_info: Object, //赛事详情
   screen: String, //match-detail详情页，match-list列表右侧
