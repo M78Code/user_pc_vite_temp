@@ -114,7 +114,7 @@ import { utils_info } from 'src/core/utils/module/match-list-utils.js';
 import { UserCtr } from 'src/core/index.js';
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 
-import { MatchProcessFullVersionWapper as MatchProcess } from 'src/base-pc/components/match-process/index.js';
+import { MatchProcessFullVersionWapper as MatchProcess } from 'src/components/match-process/index.js';
 import { MatchBasisInfo1FullVersionWapper as BasisInfo1 } from 'src/base-pc/components/match-list/match-basis-info/template-1/index.js'
 import { MatchBasisInfo4FullVersionWapper as BasisInfo4 } from 'src/base-pc/components/match-list/match-basis-info/template-4/index.js'
 import { MatchHandicapFullVersionWapper as MatchHandicap } from 'src/base-pc/components/match-list/match-handicap/index.js'

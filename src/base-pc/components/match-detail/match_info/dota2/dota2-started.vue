@@ -88,7 +88,7 @@
   </div>
 </template>
 <script>
-import {MatchProcessFullVersionWapper} from "src/base-pc/components/match-process/index.js";
+import {MatchProcessFullVersionWapper} from "src/components/match-process/index.js";
 export default {
   data() {
     return {
