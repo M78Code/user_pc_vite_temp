@@ -18,7 +18,6 @@ export default {
     'gb-bg-lg-17': 'unset',
     'gb-bg-lg-18':'linear-gradient(-34deg,  #F7B500 0%, #FF9124 88%)',
     'gb-bg-lg-19': 'linear-gradient(87deg,rgba(169,174,190,0.2),rgba(169,174,190,0.4) 98%)',
-    'gb-bg-lg-20':'linear-gradient(0deg,#e8ecf1 1%,#fff)',
     'gb-bg-lg-21':'linear-gradient(235deg, #F7B500 1%, #FF9124 100%)',
     'gb-bg-lg-22':'linear-gradient(#ffb001, #ffb001)',
     'gb-bg-lg-23':'linear-gradient(#ffb001, #ffb001)',

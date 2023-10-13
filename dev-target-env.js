@@ -23,8 +23,8 @@ DEV_TARGET_ENV = "idc_sandbox";
 
 
 
-
-
+// 运维自动化 读取地址
+// http://api-doc-server-new.sportxxxw1box.com/public/upload/yunwei/need_packup.json
 
  
 //本地开发 目标项目

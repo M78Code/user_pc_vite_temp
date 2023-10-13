@@ -15,5 +15,6 @@ export default {
   'gb-t-c-14': '#ffffff',
   'gb-t-c-17': '#6c7ba8',
   'gb-t-c-15': 'tranparent',
-  'gb-t-c-16': 'unset'
+  'gb-t-c-16': 'unset',
+  'gb-t-c-18': '#414655',
 }

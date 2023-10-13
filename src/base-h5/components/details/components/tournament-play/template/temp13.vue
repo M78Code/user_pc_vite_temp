@@ -214,7 +214,7 @@
 // 引入redux
 import store from "src/store-redux/index.js";
 import lodash from "lodash";
-import odds_new from "src/base-h5/pages/details/components/tournament-play/unit/odds-new.vue";
+import odds_new from "src/base-h5/components/details/components/tournament-play/unit/odds-new.vue";
 import {utils } from 'src/core/index.js';
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, ref } from "vue";
 import { useRoute } from "vue-router";
