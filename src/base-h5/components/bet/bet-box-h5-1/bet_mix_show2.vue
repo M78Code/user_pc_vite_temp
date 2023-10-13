@@ -102,7 +102,7 @@
 <script setup>
 
 import odd_convert from "src/core/odds_conversion/compute_max_win_money.js";
-import timer from "src/components/bet/components/timer.vue";
+import timer from "./timer.vue";
 import {FOOTBALL_PLAY_LET_BALL,BASKETBALL_PLAY_LET_BALL,market_flag_list,market_flag_basketball_list} from "src/core/constant/config/bet-config-data.js";
 import { format_odds,UserCtr ,compute_css} from 'src/core/index.js'
 import { ref, onMounted,watch,computed,onUnmounted ,nextTick} from 'vue';
