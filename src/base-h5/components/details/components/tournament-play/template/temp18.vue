@@ -186,7 +186,7 @@
 <script>
 // #TODO vuex
 // import { mapGetters } from "vuex";
-import odds_new from "src/base-h5/pages/details/components/tournament-play/unit/odds-new.vue";
+import odds_new from "src/base-h5/components/details/components/tournament-play/unit/odds-new.vue";
 import {utils } from 'src/core/index.js';
 import lodash from "lodash";
 import store from "src/store-redux/index.js";

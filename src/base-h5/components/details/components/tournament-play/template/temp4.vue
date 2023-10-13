@@ -352,7 +352,7 @@
 <script>
 // #TODO vuex
 // import { mapGetters, mapMutations } from "vuex";
-import oddsNew from "src/base-h5/pages/details/components/tournament-play/unit/odds-new.vue";
+import oddsNew from "src/base-h5/components/details/components/tournament-play/unit/odds-new.vue";
 // import odd_convert from "src/base-h5/mixins/odds_conversion/odds_conversion.js";
 import {utils } from 'src/core/index.js';
 import lodash from "lodash";

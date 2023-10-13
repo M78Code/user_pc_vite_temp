@@ -28,7 +28,7 @@
               <q-slide-transition>
                 <div v-show="value.open">
                   <!--投注记录的页每一条注单-->
-                  <common-cathectic-item :item_data="item2" v-for="(item2,key) in value.data" :key="key" class="my-4" :key2="key" :len="value.data.length" :is_early="is_early"></common-cathectic-item>
+                  <common-cathectic-item :main_item="main_item" :item_data="item2" v-for="(item2,key) in value.data" :key="key" class="my-4" :key2="key" :len="value.data.length" :is_early="is_early"></common-cathectic-item>
                 </div>
               </q-slide-transition>
             </template>
@@ -90,7 +90,11 @@ import store from 'src/store-redux/index.js'
   // computed: {
   //   ...mapGetters(['UserCtr', 'get_main_item'])
   // },
-
+const props = defineProps({
+  main_item: {
+    type: [String, Number],
+  }
+})
   /**
      * @description 判断所有订单是否有结算注单
      * @param {undefined} undefined
