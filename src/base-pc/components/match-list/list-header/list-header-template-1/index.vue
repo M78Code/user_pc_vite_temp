@@ -85,7 +85,7 @@
   </div>
 </template>
 <script setup>
-import comSelect from "src/components/match-results/select/select/index.vue";
+import comSelect from "src/base-pc/components/match-results/select/select/index.vue";
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import { t } from "src/core/index.js";

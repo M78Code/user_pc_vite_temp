@@ -9,7 +9,7 @@
 </template>
 
 <script setup>
-import { DateTabFullVersionWapper as DateTab} from "src/components/tab/date-tab/index.js";
+import { DateTabFullVersionWapper as DateTab} from "src/base-pc/components/tab/date-tab/index.js";
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 </script>
 

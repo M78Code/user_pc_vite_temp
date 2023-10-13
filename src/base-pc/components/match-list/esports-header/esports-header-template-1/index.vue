@@ -22,7 +22,7 @@
 </template>
 <script setup>
 import { onMounted } from 'vue';
-import { DateTabFullVersionWapper as DateTab} from "src/components/tab/date-tab/index.js";
+import { DateTabFullVersionWapper as DateTab} from "src/base-pc/components/tab/date-tab/index.js";
 // import sportIcon from "src/public/components/sport_icon/sport_icon.vue";
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
