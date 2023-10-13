@@ -65,6 +65,9 @@ import { useRoute } from "vue-router";
 import store from "src/store-redux/index.js";
 import { api_common } from "src/api/index.js";
 import PageSourceData from "src/core/page-source/page-source.js";
+
+
+
 // 活动弹出框
 const activityLayer = defineAsyncComponent(() => import("src/base-h5/components/common/activity-layer.vue"))
 const settleDialog = defineAsyncComponent(() =>
