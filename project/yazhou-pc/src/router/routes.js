@@ -39,7 +39,7 @@ const routes = [
       {
         path: "/details/:mid/:tid/:csid",
         name: "details",
-        component: () => import('../pages/match-details/match-details.vue')
+        component: () => import('../pages/match-details/details-main.vue')
       },
       {
         path: "/video/:mid/:tid/:csid/:play_type/:video_size",
