@@ -89,7 +89,7 @@
 <script setup>
 import loadData from "src/base-pc/components/load-data/load-data.vue";
 import vScrollArea from "src/base-pc/components/v-scroll-area/v-scroll-area.vue";
-import detailHeader from "src/base-pc/pages/match-detail/detail-header.vue";
+import detailHeader from "src/base-pc/pages/match-details/detail-header.vue";
 // 组件
 // 盘口模板
 import matchHandicap from "src/base-pc/components/match-detail/match-handicap/match-handicap.vue";

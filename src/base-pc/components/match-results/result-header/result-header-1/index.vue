@@ -132,9 +132,10 @@
 </template>
 <script setup>
 import {  ref,computed } from 'vue';
-import {SelectWrapper} from "src/components/match-results/select";
-import {FliterCheckbox} from "src/components/fliter-checkbox";
-import selectY from "src/components/match-results/select/components/select-y.vue"
+import {SelectWrapper} from "src/base-pc/components/match-results/select";
+import {FliterCheckbox} from "src/base-pc/components/fliter-checkbox";
+import selectY from "src/base-pc/components/match-results/select/components/select-y.vue"
+
 import UserCtr from "src/core/user-config/user-ctr.js";
 import {
   i18n_t,
