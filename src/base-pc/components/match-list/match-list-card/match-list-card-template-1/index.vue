@@ -71,6 +71,7 @@ import { PlayMatchLeagueFullVersionWapper as PlayMatchLeague } from "src/base-pc
 import { MatchTypeChampionFullVersionWapper as MatchTypeChampion } from "src/base-pc/components/match-list/match-type-champion/index.js";
 import { MatchCardFullVersionWapper as MatchCard } from "src/base-pc/components/match-list/match-card/index.js";
 import LoadData from "src/base-pc/components/load-data/load-data.vue";
+
 import MatchListCardData from "src/core/match-list-pc/match-card/match-list-card-class.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import { LayOutMain_pc } from "src/core/index.js";
