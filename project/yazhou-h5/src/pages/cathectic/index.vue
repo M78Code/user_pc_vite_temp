@@ -42,7 +42,7 @@
   <script setup>
   import { api_betting } from "src/api/index.js";
   //   import { mapGetters, mapMutations } from "vuex"
-  import unsettle from "src/base-h5/components/cathectic/unsettle.vue",
+  import unsettle from "src/base-h5/components/cathectic/unsettle.vue"
   import settle from "src/base-h5/components/cathectic/settle.vue"
   import preRecord from "src/base-h5/components/cathectic/pre-record.vue"
   import { onMounted, onUnmounted, ref, computed, provide, watch, nextTick } from 'vue'
