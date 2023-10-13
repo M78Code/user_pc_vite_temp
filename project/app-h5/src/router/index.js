@@ -67,7 +67,7 @@ const router = createRouter({
         {
           path: "/details/:mid/:mcid?/:csid?",
           name: "category",
-          component: () => import("../pages/details/details.vue"),
+          component: () => import("../pages/details/index.vue"),
           children: [
             {
               path: "category/:mid?/:id?",
