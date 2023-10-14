@@ -101,8 +101,8 @@ let currentSwipperArr = reactive([])
 /** 展示右侧图片资源上的左右箭头 */
 const showArrow = ref(false)
 
-const showBannerSwipperTimer_timeout = null
-const showBannerSwipperTimer = null
+let showBannerSwipperTimer_timeout = null
+let showBannerSwipperTimer = null
 /**
  * 鼠标移出--3s后重新开始轮播
  */
