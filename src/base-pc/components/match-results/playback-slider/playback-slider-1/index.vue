@@ -227,18 +227,17 @@ export default {
     position: absolute;
     height: 100%;
     top: 0;
-    // background-image: url("~public/image/yabo/svg/list_filter_arrow_right.svg");
     background-repeat: no-repeat;
     background-position: center center;
     cursor: pointer;
     &.left {
       left: -36px;
       // transform: rotate(180deg);
-      background-image: url("~public/image/yabo/svg/video-swipe-arrow-left.svg");
+      background-image: url("/yazhou-pc/image/svg/video-swipe-arrow-left.svg");
     }
     &.right {
       right: -36px;
-      background-image: url("~public/image/yabo/svg/video-swipe-arrow-right.svg");
+      background-image: url("/yazhou-pc/image/svg/video-swipe-arrow-right.svg");
     }
   }
 }

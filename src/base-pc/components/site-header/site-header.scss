@@ -641,10 +641,10 @@
           color: var(--q-site-header-color-3);
         }
         .icon-balance_refresh {
-          background-image: url('yazhou-pc/image/theme02/balance_refresh.svg');
+          background-image: url('/yazhou-pc/image/theme02/balance_refresh.svg');
           background-position: center;
           &:hover {
-            background-image: url('yazhou-pc/image/theme02/balance_refresh_hover.svg');
+            background-image: url('/yazhou-pc/image/theme02/balance_refresh_hover.svg');
           }
         }
       }
