@@ -1491,7 +1491,7 @@ export default {
               margin-bottom: 2px;
             }
             &.icon-cd-tips {
-              background-image: url('/wwwassets/yabo/svg/chat-conditions.svg');
+              background-image: url('/yazhou-pc/image/svg/chat-conditions.svg');
             }
           }
           .btn-send {
@@ -1568,7 +1568,7 @@ export default {
           right: 7px;
           width: 15px;
           height: 15px;
-          background: url("/image/yabo/svg/ask-icon.svg") center center no-repeat;
+          background: url("/yazhou-pc/image/svg/ask-icon.svg") center center no-repeat;
           background-size: 100%;
           cursor: pointer;
         }
