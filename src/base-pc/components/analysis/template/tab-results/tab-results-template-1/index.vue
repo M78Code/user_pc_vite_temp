@@ -297,7 +297,7 @@ onUnmounted(() => {
         width: 14px;
         height: 14px;
         background-repeat: no-repeat;
-        background-image: url("~public/image/common/png/sports_play_icon.png");
+        background-image: url("/image/common/png/sports_play_icon.png");
         background-size: 100%;
 
         &.rs_jiao_quan {

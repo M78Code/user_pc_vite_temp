@@ -147,7 +147,7 @@ export default defineComponent({
     font-size: 14px;
     color: #000;
     font-weight: bold;
-    background: url("~public/image/common/virtual/timebg.png") no-repeat;
+    background: url("/image/common/virtual/timebg.png") no-repeat;
     background-size: 100% 100%;
   }
 

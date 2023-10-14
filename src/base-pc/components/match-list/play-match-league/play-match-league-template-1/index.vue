@@ -280,13 +280,13 @@ function set_fold() {
 <style lang="scss" scoped>
 .match-tplesports {
   .sport-img {
-    background-image: url("~public/image/common/png/sport_old_icon.png");
+    background-image: url("/image/common/png/sport_old_icon.png");
   }
 }
 
 .league-icon-wrap {
   .sport-img {
-    background-image: url("~public/image/common/png/sport_old_icon.png");
+    background-image: url("/image/common/png/sport_old_icon.png");
   }
 }
 

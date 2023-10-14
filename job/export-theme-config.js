@@ -34,7 +34,7 @@ ensure_write_folder_exist(write_folder_theme);
 ensure_write_folder_exist(write_folder_css);
 ensure_write_folder_exist(write_folder_assets);
 function resolve_merchant_config_theme() {
-  const { theme, clientLanguage = [] } = final_merchant_config;
+  const { theme=[], clientLanguage = [] } = final_merchant_config;
 
   let theme_obj = {};
   let assets_obj = {};

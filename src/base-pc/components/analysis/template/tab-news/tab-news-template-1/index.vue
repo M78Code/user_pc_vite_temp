@@ -21,7 +21,7 @@
             <div class="wrap" v-if="i < 3">
               <!-- 封面图片 -->
               <p class="img"
-                :style="{ background: `url('${get_file_path(item.thumbnails.split(';')[0]) || '~public/image/yabo/png/article_list_img.png'}') no-repeat left center` }">
+                :style="{ background: `url('${get_file_path(item.thumbnails.split(';')[0]) || '/image/yabo/png/article_list_img.png'}') no-repeat left center` }">
               </p>
 
 

@@ -278,7 +278,7 @@ onUnmounted(() => {
               content: "";
               width: 6px;
               height: 10px;
-              background: url("~public/image/common/svg/red_up.svg") no-repeat center;
+              background: url("/image/common/svg/red_up.svg") no-repeat center;
             }
           }
         }
@@ -297,7 +297,7 @@ onUnmounted(() => {
               content: "";
               width: 6px;
               height: 10px;
-              background: url("~public/image/common/svg/green_down.svg") no-repeat center;
+              background: url("/image/common/svg/green_down.svg") no-repeat center;
             }
           }
         }

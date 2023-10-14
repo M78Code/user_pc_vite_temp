@@ -89,7 +89,7 @@
             data_ref.bet_loadding ? 'disable-toggle' : '',
           ]"
         >
-          <!-- <img src="~public/image/yabo/svg/left_menu_toggle.svg" alt="" /> -->
+          <!-- <img src="/image/yabo/svg/left_menu_toggle.svg" alt="" /> -->
         </div>
 
         <!-- toast 消息提示 -->

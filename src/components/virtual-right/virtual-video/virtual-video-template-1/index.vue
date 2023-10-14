@@ -214,22 +214,22 @@ export default defineComponent({
   top: 0;
   background-size: cover;
   &.csid1001 {
-    background-image: url("~public/image/common/virtual/bg1001.png");
+    background-image: url("/image/common/virtual/bg1001.png");
   }
   &.csid1011 {
-    background-image: url("~public/image/common/virtual/bg1011.png");
+    background-image: url("/image/common/virtual/bg1011.png");
   }
   &.csid1002 {
-    background-image: url("~public/image/common/virtual/bg1002.png");
+    background-image: url("/image/common/virtual/bg1002.png");
   }
   &.csid1004 {
-    background-image: url("~public/image/common/virtual/bg1004.png");
+    background-image: url("/image/common/virtual/bg1004.png");
   }
   &.csid1010 {
-    background-image: url("~public/image/common/virtual/bg1010.png");
+    background-image: url("/image/common/virtual/bg1010.png");
   }
   &.csid1009 {
-    background-image: url("~public/image/common/virtual/bg1009.png");
+    background-image: url("/image/common/virtual/bg1009.png");
   }
   .video-wrap {
     .score-wrap {
@@ -265,7 +265,7 @@ export default defineComponent({
       .live {
         width: 34px;
         height: 100%;
-        background: url("~public/image/common/virtual/live_bai.svg") no-repeat;
+        background: url("/image/common/virtual/live_bai.svg") no-repeat;
         background-position: center center;
         background-color: #FF7000;
         border-radius: 0 4px 4px 0;
