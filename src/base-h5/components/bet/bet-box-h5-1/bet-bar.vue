@@ -240,7 +240,7 @@ onUnmounted(() => {
 .refesh {
   width: 0.12rem;
   height: 0.12rem;
-  background: url(/public\yazhou-h5\image\bet\shuaxin.svg) no-repeat center / 100% 100%;
+  background: url("/public/yazhou-h5/image/bet/shuaxin.svg") no-repeat center / 100% 100%;
   // background: var(--q-color-com-img-bg-58) no-repeat center / 100% 100%;
 }
 
