@@ -7,27 +7,27 @@
 /* ************** 数字字体样式  dinLight 到 dinBlack 由细到粗************** -S */
 @font-face {
   font-family: dinLight;
-  src: url(./font_din/DIN-Light.otf);
+  // src: url(./font_din/DIN-Light.otf);
 }
 
 @font-face {
   font-family: dinRegular;
-  src: url(./font_din/DIN-Regular.otf);
+  // src: url(./font_din/DIN-Regular.otf);
 }
 
 @font-face {
   font-family: dinMedium;
-  src: url(./font_din/DIN-Medium.otf);
+  // src: url(./font_din/DIN-Medium.otf);
 }
 
 @font-face {
   font-family: dinBold;
-  src: url(./font_din/DIN-Bold.otf);
+  // src: url(./font_din/DIN-Bold.otf);
 }
 
 @font-face {
   font-family: dinBlack;
-  src: url(./font_din/DIN-Black.otf);
+  // src: url(./font_din/DIN-Black.otf);
 }
 .din-light {
   font-family: dinLight, sans-serif !important;

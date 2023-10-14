@@ -405,13 +405,13 @@ const props = defineProps({
 /**提前结算默认*/
 .early {
   display: inline-block;
-  background: url("/image/svg/select_b.svg") no-repeat center / contain;
+  background: url("/yazhou-h5/image/svg/select_b.svg") no-repeat center / contain;
   vertical-align: text-bottom;
   width: 0.14rem;
   height: 0.14rem;
 }
 /**提前结算*/
 .early2 {
-  background-image: url("/image/svg/select_a.svg");
+  background-image: url("/yazhou-h5/image/svg/select_a.svg");
 }
 </style>
