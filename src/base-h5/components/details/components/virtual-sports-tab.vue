@@ -278,7 +278,7 @@ export default {
   width: 0.12rem;
   height: 0.12rem;
   display: inline-block;
-  background-image: url("/yazhou-h5/image/svg/tab_up_btn.svg");
+  background-image: url("/public/yazhou-h5/image/svg/tab_up_btn.svg");
   background-size: 100% 100%;
   transform: rotateZ(180deg);
   // @include webkit(transition, transform 0.3s);

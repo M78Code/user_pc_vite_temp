@@ -510,7 +510,7 @@ onUnmounted(() => {
 /* ************** 接收更好赔率图标 ************** -S */
 .img2 {
   display: inline-block;
-  background: url(/public\yazhou-h5\image\bet\select_b.svg) no-repeat center / contain;
+  background: url("/public/yazhou-h5/image/bet/select_b.svg") no-repeat center / contain;
   // background: var(--q-color-com-img-bg-69) no-repeat center / contain;
   vertical-align: text-bottom;
   width: 0.14rem;
@@ -519,7 +519,7 @@ onUnmounted(() => {
 
 /* ************** 选中状态 **************  */
 .img3 {
-  background-image: url(/public\yazhou-h5\image\bet\select_a.svg);
+  background-image: url("/public/yazhou-h5/image/bet/select_a.svg");
   // background-image: var(--q-color-com-img-bg-68);
 }
 
