@@ -71,7 +71,7 @@ export const   htmlVariables = {
     BRANCH: process.env.BRANCH,
     TAG: process.env.TAG,
     BUILD_TAG: process.env.BUILD_TAG  ,
-    NODE_ENV: process.env.NODE_ENV,
+ 
 
     error_upload_url: 'https://information-api.sportxxxwo8.com/error_info', // 错误上报环境地址
 

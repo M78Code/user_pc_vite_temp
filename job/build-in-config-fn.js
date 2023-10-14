@@ -5,7 +5,7 @@
  */
 // 本次打包的 客户端版本
 import BUILD_VERSION_CONFIG from "./output/version/build-version.js";
-let BUILD_VERSION = BUILD_VERSION_CONFIG.BUILD_VERSION;
+ const {BUILD_VERSION ,IS_PROD} = BUILD_VERSION_CONFIG
 // 商户版本 最终配置
 import final_merchant_config from "./output/merchant/config.json" assert { type: "json" };
 // 商户版本号
@@ -38,8 +38,7 @@ export const compute_build_in_config = (current_env) => {
   let current_env_build_in_oss = "";
   console.log("--------------------------开始构建--------------------------");
   // console.log(process.argv );
- //本地直接运行脚本不存在 NODE_ENV ， 正常脚手架启动命令下 都是 development  生产构建全是production
- const NODE_ENV = process.env.NODE_ENV ||'development'
+ 
   // 当前环境代码内内置 写入的兜底 oss
   current_env_build_in_oss = compute_build_in_oss_by_current_env(current_env);
   //  项目名称   yazhou-h5 yazhou-pc
@@ -79,8 +78,10 @@ export const compute_build_in_config = (current_env) => {
     // 当前环境
     current_env,
     BUILD_VERSION   ,
+    IS_PROD  ,
+     
  
-    NODE_ENV ,
+    
     current_env_build_in_oss: encodeURIComponent(
       JSON.stringify(current_env_build_in_oss.data)
     ),
@@ -88,10 +89,10 @@ export const compute_build_in_config = (current_env) => {
   // 合并 所有内容
   final_config = {
     CURRENT_ENV: current_env,
-    NODE_ENV ,
+ 
     LOCAL_FUNCTION_SWITCH,  
     SERVER_GLOBAL_SWITCH:{},
-    GLOBAL_IMAGE_PREFFIX: NODE_ENV === "development" ? '' : '/' + BUILD_VERSION,
+    GLOBAL_IMAGE_PREFFIX:  IS_PROD ? '/' + BUILD_VERSION:''  ,
     API_PREFIX,
     FRONT_WEB_ENV: process.env.FRONT_WEB_ENV,
     API_DOMAIN_PREFIX: "api",
