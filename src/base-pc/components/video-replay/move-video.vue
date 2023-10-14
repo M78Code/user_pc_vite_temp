@@ -17,7 +17,7 @@
     <img class="replay-icon2" src="/yazhou-pc/image/svg/replay_icon2.svg" />
     <div id="dplayer-video-zone" :style="{ width: width + 'px', height: height + 'px' }" @click.stop="" @mouseover="mouseover"
       @mouseout="mouseout">
-      <iframe @load="send_message_xywh" id="dplayer-video-zone-iframe" class="iframe" :width="width" :height="height"
+      <iframe @load="send_message_xywh" ref="video_iframe_ref" class="iframe" :width="width" :height="height"
         :src="video_url" marginwidth="0" marginheight="0" hspace="0" vspace="0" frameborder="0" scrolling="no"
         allowfullscreen="allowfullscreen" mozallowfullscreen="mozallowfullscreen" msallowfullscreen="msallowfullscreen"
         oallowfullscreen="oallowfullscreen" webkitallowfullscreen="webkitallowfullscreen" allow="autoplay"></iframe>
@@ -97,7 +97,7 @@ props: {
   const move_mr_ml =ref(false)
   const play_data =ref(null)
   const route_name_old =ref(null)
-  const iframe =ref(null)
+  const video_iframe_ref =ref(null)
 
 
 // 拖拽区域的样式  计算属性用于计算拖拽位置
@@ -242,11 +242,11 @@ const send_message_xywh = () => {
  * @Description 发送外部消息
 */
 const send_message = (data) => {
-  if (!iframe) {
-    iframe = document.getElementById("dplayer-video-zone-iframe");
+  if (!video_iframe_ref.value) {
+    setTimeout(send_message,10)
   }
-  if (iframe && iframe.contentWindow) {
-    iframe.contentWindow.postMessage(data, "*");
+  else if ( video_iframe_ref.contentWindow) {
+    video_iframe_ref.value.contentWindow.postMessage(data, "*");
   }
 };
 /**
@@ -483,7 +483,7 @@ const dragstop = (x, y) => {
 */
 const destroy_video = () => {
   clearTimeout(player_timeout_id)
-  iframe = null;
+  //   iframe = null;
   if (player) {
     player.destroy();
     playe = null;

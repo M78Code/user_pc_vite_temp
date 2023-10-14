@@ -31,7 +31,7 @@
           </div>
         </div>
         <!-- 热门赛事列表 -->
-        <detailMatchList invoke='category' ref="detail_match_list" />
+        <!-- <detailMatchList invoke='category' ref="detail_match_list" /> -->
       </div>
     </div>
     <!-- 详情玩法投注项有数据 -->
@@ -72,7 +72,7 @@
 <script>
 // #TODO vuex
 // import { mapGetters, mapMutations } from "vuex"
-import tournament_play_new from "src/base-h5/pages/details/components/tournament-play/tournament-play-new.vue"
+import tournament_play_new from "src/base-h5/components/details/components/tournament-play/tournament-play-new.vue"
 // 引入接口封装文件
 import { api_common, api_analysis} from 'src/api/index.js'
 // 引入国际化
@@ -90,7 +90,7 @@ import { MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance } fro
 // 引入加载中的组件
 import loading from "src/base-h5/components/common/loading.vue"
 // 精选赛事
-import detailMatchList from 'src/base-h5/pages/details/components/detail-match-list.vue';
+import detailMatchList from 'src/base-h5/components/details/components/detail-match-list.vue';
 import uid from "src/core/uuid/index.js"
 import lodash from "lodash";
 import { useRouter, useRoute } from "vue-router";
@@ -106,7 +106,6 @@ export default defineComponent({
     'tournament-play-new': tournament_play_new,
     'no-data':no_data,
     loading,
-    detailMatchList
   },
   props: ['category_arr'],
   setup(props, evnet) {

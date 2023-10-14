@@ -1,15 +1,15 @@
 <template>
   <!-- GlobalAccessConfig.get_hotMatchNum()&&  -->
   <div v-if="!tianzhuan"
-       :class="[ 'home home-page', home_class && `${home_class} white-font`, tabIndex == 1 && 'white-background hot-bg', tabIndex == 2 && 'live-bg', ]">
+    :class="['home home-page', home_class && `${home_class} white-font`, tabIndex == 1 && 'white-background hot-bg', tabIndex == 2 && 'live-bg',]">
     <!-- 头部tab 选项卡 -->
     <div class="flex justify-between align_items home-tab">
       <ul>
-        <li v-for="(item, i) in tabList" :key="i" :class="[tabIndex == i ? 'is-active' : '']" >
-          <div class="tabs-label" ref="label" @click="tab_click(item, true, true)" > {{ item.name }} </div>
+        <li v-for="(item, i) in tabList" :key="i" :class="[tabIndex == i ? 'is-active' : '']">
+          <div class="tabs-label" ref="label" @click="tab_click(item, true, true)"> {{ item.name }} </div>
         </li>
         <!-- 下划线 -->
-        <div class="tabs-active-bar" ref="tabs_active_bar" :class="{ 'add-animation': add_animation }" ></div>
+        <div class="tabs-active-bar" ref="tabs_active_bar" :class="{ 'add-animation': add_animation }"></div>
       </ul>
 
       <!-- 右边设置菜单 -->
@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import home from "src/base-h5/pages/home/first-page/index.vue"; // 包网3首页下边（轮播 + 跑马灯 + 赛事框）  榴莲千层盒子（小）300p
+import home from "./components/first-page.vue"; // 包网3首页下边（轮播 + 跑马灯 + 赛事框）  榴莲千层盒子（小）300p
 import setMenu from "src/base-h5/components/common/set-menu.vue"; // 设置
 import hot from "src/base-h5/pages/home/hot/index.vue"; // 热门页入口主页面
 import { utils } from "src/core/utils/index.js";
@@ -101,10 +101,10 @@ export default defineComponent({
     onUnmounted(() => {
       useMittOn(MITT_TYPES.EMIT_HOME_TAB, home_tab_change).off;
     });
-    watch( () => tabIndex.value, () => {
+    watch(() => tabIndex.value, () => {
       // 首页、视频直播以及热门下精选不显示背景
       const index = lodash.get(homeReducer, "home_tab_item.index")
-      if ( index === 0 || index !== 1 ) {
+      if (index === 0 || index !== 1) {
         home_class.value = "";
       }
     });
@@ -221,7 +221,8 @@ export default defineComponent({
       tabIndex.value = tab.index;
 
       // 更新last_home_tab_item
-      store.dispatch({ type: "SET_LAST_HOME_TAB_ITEM", 
+      store.dispatch({
+        type: "SET_LAST_HOME_TAB_ITEM",
         data: {
           component: tab.component,
           index: tab.index,
@@ -232,7 +233,8 @@ export default defineComponent({
 
       // set_home_tab_item(tab)
       store.dispatch({ type: "SET_HOME_TAB_ITEM", data: tab, });
-      hand && store.dispatch({ type: "SET_HOME_TAB_ITEM",
+      hand && store.dispatch({
+        type: "SET_HOME_TAB_ITEM",
         data: {
           component: tab.component,
           index: 0,
@@ -455,6 +457,7 @@ export default defineComponent({
   &.home_page_world_cup {
     background: var(--q-color-com-img-bg-102) no-repeat center / cover;
   }
+
   // 使用css变量统一管理，所以废弃这里代码，转为不遍历
   // @for $random from 1 through 4 {
   //   &.home_page_random_0#{$random} {
@@ -515,6 +518,7 @@ export default defineComponent({
       height: 0.03rem;
       box-sizing: border-box;
       z-index: 1;
+      background-color: var(--q-gb-bd-c-1);
 
       &.add-animation {
         transition: all 0.3s;
@@ -523,3 +527,50 @@ export default defineComponent({
   }
 }
 </style>
+<style lang="scss">
+.home-page {
+  background: var(--q-gb-bd-c-15);
+
+  &.white-background {
+    background: var(--q-gb-bd-c-15);
+  }
+
+  &.white-font {
+    li {
+      &.is-active {
+        color: var(--q-gb-bd-c-2);
+
+        .tabs-label {
+          color: var(--q-gb-bd-c-2);
+        }
+      }
+
+      .tabs-label {
+        color: var(--q-gb-bd-c-2);
+      }
+    }
+  }
+
+  &.live-bg {
+    background: var(--q-gb-bg-c-10);
+  }
+
+  .slide {
+    box-shadow: var(--q-gb-b-s-1) !important;
+  }
+
+  ul {
+    li {
+      &.is-active {
+        .tabs-label {
+          color: var(--q-gb-t-c-1);
+        }
+      }
+
+      .tabs-label {
+        color: var(--q-gb-t-c-3);
+      }
+    }
+
+  }
+}</style>

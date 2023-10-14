@@ -26,9 +26,16 @@ if (!project) {
   console.log('');
 }
 
- 
+const  IS_DEV= process.env.NODE_ENV=='development'
+// 本次打包的 客户端版本
+import BUILD_VERSION_CONFIG from "../../job/output/version/build-version.js";
+let BUILD_VERSION = BUILD_VERSION_CONFIG.BUILD_VERSION;
+
+const outDir= "dist/self-use-version/"+BUILD_VERSION
+const base =  IS_DEV?'/': `/${BUILD_VERSION}/`
 // https://vitejs.dev/config/
 export default defineConfig({
+  base  ,
   plugins: [
     vue({
       template: { 
@@ -45,20 +52,21 @@ export default defineConfig({
   ],
     // root: path.resolve(__dirname, `../../project/${project}/`),
   build: {
-    outDir: "dist/self-use-version",
+    outDir ,
     rollupOptions: {
       // external: ["vue"],
       input: {
 
       index: path.resolve(__dirname, `../../project/${project}/index.html`),
+      // index: path.resolve(__dirname, `index.html`),
      
       },
       output: {
         // Provide global variables to use in the UMD build
         // Add external deps here
-        globals: {
-          // vue: "Vue",
-        },
+        // globals: {
+        //   // vue: "Vue",
+        // },
       },
     },
   },

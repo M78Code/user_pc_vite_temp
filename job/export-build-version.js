@@ -2,6 +2,8 @@
   * 创建 本次打包的 客户端版本
   */
 
+
+
  import {ensure_write_folder_exist ,write_file} from "./write-folder-file.js"
 function format_date(value) {
   let time = new Date(parseInt(value));
@@ -15,7 +17,9 @@ function format_date(value) {
 }
 
 const BUILD_VERSION =   format_date(new Date().getTime())
-let str = `export default {"BUILD_VERSION": '${BUILD_VERSION}'  } `
+const  IS_DEV= process.env.NODE_ENV=='development'
+
+let str = `export default {"BUILD_VERSION": '${IS_DEV?'': BUILD_VERSION}'  } `
 // 输出目录
 let write_folder = "./job/output/version";
   //确保配置 输出目录存在

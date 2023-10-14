@@ -12,7 +12,7 @@
 <script setup>
 import { onMounted,onBeforeMount } from "vue";
 import base_data_instance from "src/core/base-data/base-data.js";
-import { MenuWapper } from "src/components/menu";
+import { MenuWapper } from "src/base-pc/components/menu";
 onBeforeMount(()=>{
   base_data_instance.init()
 })

@@ -8,9 +8,9 @@
     <!-- 所有赛果 -->
     <category v-if="filtration(1)"></category>
     <!-- 精选赛事 -->
-    <detailMatchList v-if="filtration(2)"></detailMatchList>
+    <!-- <detailMatchList v-if="filtration(2)"></detailMatchList> -->
     <!-- 注单 -->
-    <myNoteSheet v-if="filtration(3)"></myNoteSheet>
+    <!-- <myNoteSheet v-if="filtration(3)"></myNoteSheet> -->
     <!-- 精彩回放 -->
     <highlights v-if="filtration(4)"></highlights>
   </div>
@@ -19,13 +19,13 @@
 <script setup>
 // import { mapGetters } from "vuex";
 // 所有赛果
-import category from 'src/base-h5/pages/details/children/category.vue' 
+import category from '../children/category.vue' 
 // 精选赛事
-import detailMatchList from 'src/base-h5/pages/details/components/detail-match-list.vue' 
+import detailMatchList from 'src/base-h5/components/details/components/detail-match-list.vue' 
 // 我的注单
-import myNoteSheet from 'src/base-h5/pages/details/components/details-match-results/my-note-sheet.vue' 
+// import myNoteSheet from 'src/base-h5/pages/details/components/details-match-results/my-note-sheet.vue' 
 // 精彩回放
-import highlights from 'src/base-h5/pages/details/analysis-matches/highlights/highlights.vue';   
+import highlights from 'src/base-h5/components/details/analysis-matches/highlights/highlights.vue';    
 import { useRoute, useRouter } from "vue-router"
 import { onMounted } from 'vue';
 

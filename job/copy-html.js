@@ -2,12 +2,19 @@
  * 复制打包后的 html 文件到外层目录
  */
 
-const fs = require("fs");
-const path =  require("path")
+import * as fs from "node:fs";
+ 
 
-const BUILD_VERSION = require('./version.js').BUILD_VERSION;
+import path from "node:path";
 
+// 本次打包的 客户端版本
+import BUILD_VERSION_CONFIG from "./output/version/build-version.js";
+let BUILD_VERSION = BUILD_VERSION_CONFIG.BUILD_VERSION;
+// 本次打包的 目录
+import BUILD_DIR_CONFIG from "./output/dir/index.js";
+let BUILD_DIR_NAME = BUILD_DIR_CONFIG.BUILD_DIR_NAME;
 
+import final_base_info from "./output/base-info/index.json" assert { type: "json" };
 
 // 递归创建文件夹
 const mkdir = function(dirname) {
@@ -43,23 +50,16 @@ const copyDir = function(src,dist){
     }
   })
 }
+// dist\self-use-version\project\yazhou-h5\index.html
+
+let html_file_path =  `./dist/${BUILD_DIR_NAME}/${BUILD_VERSION}/project/${final_base_info.project}/index.html`
+
+let html_file= fs.readFileSync(html_file_path);
+
+ 
+ 
+fs.writeFileSync( `./dist/${BUILD_DIR_NAME}/index.html`,html_file)
 
 
-let html_file= fs.readFileSync('./dist/spa/'+BUILD_VERSION+'/index.html');
-
-// fs.writeFileSync(file, data[, options])
-  // html_file
-
-  console.log('html_file--',html_file);
-fs.writeFileSync('./dist/spa/index.html',html_file)
-
-
-
-
-
-
-
-// 复制page目录 和idnex.html同级
-// copyDir('./public/page','./dist/spa/page')
-
-// process.exit(1)
+ 
+ 
