@@ -5,7 +5,7 @@
  */
 // 本次打包的 客户端版本
 import BUILD_VERSION_CONFIG from "./output/version/build-version.js";
- const {BUILD_VERSION ,IS_PROD} = BUILD_VERSION_CONFIG
+ const {BUILD_VERSION ,IS_PROD ,NODE_ENV} = BUILD_VERSION_CONFIG
 // 商户版本 最终配置
 import final_merchant_config from "./output/merchant/config.json" assert { type: "json" };
 // 商户版本号
@@ -79,6 +79,7 @@ export const compute_build_in_config = (current_env) => {
     current_env,
     BUILD_VERSION   ,
     IS_PROD  ,
+    NODE_ENV,
      
  
     
