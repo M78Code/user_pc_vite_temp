@@ -14,7 +14,7 @@
   </div>
 </template>
 <script>
-import resizeObserver from "src/components/match-results/resize-observer/resize-observer.vue"
+import resizeObserver from "src/base-pc/components/match-results/resize-observer/resize-observer.vue"
 import { mapGetters} from "vuex";
 export default {
   name: "drag-scroll",
