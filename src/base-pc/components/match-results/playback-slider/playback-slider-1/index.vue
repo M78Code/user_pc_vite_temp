@@ -234,11 +234,11 @@ export default {
     &.left {
       left: -36px;
       // transform: rotate(180deg);
-      background-image: url("~public/image/yabo/svg/video-swipe-arrow-left.svg");
+      background-image: url("/yazhou-pc/image/svg/video-swipe-arrow-left.svg");
     }
     &.right {
       right: -36px;
-      background-image: url("~public/image/yabo/svg/video-swipe-arrow-right.svg");
+      background-image: url("/yazhou-pc/image/svg/video-swipe-arrow-right.svg");
     }
   }
 }
