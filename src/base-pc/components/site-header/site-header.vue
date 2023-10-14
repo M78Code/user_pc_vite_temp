@@ -131,7 +131,7 @@ const props = defineProps({
     }
 })
 /** 定时器 */
-const show_activity_page_timer = null
+let show_activity_page_timer = null
 /** 菜单数据 */
 const menu_data = reactive({})
 /** 地址栏隐藏logo */
