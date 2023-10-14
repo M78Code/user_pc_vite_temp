@@ -345,10 +345,10 @@ export default defineComponent({
   //  使用css变量统一管理，所以废弃这里代码，转为不遍历
   // @each $ball in CBA, dj, hll, jz, NBA, og, xj, yc, yj, fj {
   //   &[class*=home_page_#{$ball}_theme01] {
-  //     background-image:  url("~public/image/bw3/png/home_page/home_page_#{$ball}.png");
+  //     background-image:  url("/image/bw3/png/home_page/home_page_#{$ball}.png");
   //   }
   //   &[class*=home_page_#{$ball}_theme02] {
-  //     background-image:  url("~public/image/bw3/png/home_page/black_img/home_page_#{$ball}_theme02.png");
+  //     background-image:  url("/image/bw3/png/home_page/black_img/home_page_#{$ball}_theme02.png");
   //   }
   // }
   &[class*="home_page_CBA_theme01"] {
@@ -435,7 +435,7 @@ export default defineComponent({
   /*热门页面顶部背景图  电竞*/
   // @each $balles in 100,101,102,103 {
   //   &[class*=home_page_esport_#{$balles}] {
-  //     background-image:  url("~public/image/bw3/png/home_page/home_page_esport_#{$balles}.png");
+  //     background-image:  url("/image/bw3/png/home_page/home_page_esport_#{$balles}.png");
   //   }
   // }
   &[class*="home_page_esport_100"] {
@@ -461,7 +461,7 @@ export default defineComponent({
   // 使用css变量统一管理，所以废弃这里代码，转为不遍历
   // @for $random from 1 through 4 {
   //   &.home_page_random_0#{$random} {
-  //     background:  url("~public/image/bw3/png/home_page/home_page_random_0#{$random}.png") no-repeat center / cover;
+  //     background:  url("/image/bw3/png/home_page/home_page_random_0#{$random}.png") no-repeat center / cover;
   //   }
   // }
   &.home_page_random_01 {

@@ -733,11 +733,11 @@
             }
 
             &.collapse-open-y0 {
-                background: url("/yazhou-pc/image/collapse_up.svg") no-repeat center / cover;
+                background: url("/yazhou-pc/image/svg/collapse_up.svg") no-repeat center / cover;
             }
 
             &.collapse-hide-y0 {
-                background: url("/yazhou-pc/image/yabo/collapse_down_y0.svg") no-repeat center / cover;
+                background: url("/yazhou-pc/image/svg/collapse_down_y0.svg") no-repeat center / cover;
             }
         }
     }
@@ -1002,11 +1002,11 @@
         }
         .icon-balance_refresh {
             // TODO: 
-          background-image: url('yazhou-pc/image/theme01/balance_refresh.svg');
+          background-image: url('/yazhou-pc/image/theme01/balance_refresh.svg');
           background-position: center;
           &:hover {
              // TODO: 
-            background-image: url('yazhou-pc/image/theme01/balance_refresh_hover.svg');
+            background-image: url('/yazhou-pc/image/theme01/balance_refresh_hover.svg');
           }
         }
       }

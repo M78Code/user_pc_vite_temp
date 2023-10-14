@@ -438,7 +438,7 @@ onBeforeUnmount(() => {
           // 由于使用了变量，这个代码无效，对应的js也要优化。
           &._y0 {
             /*  在search_top中设置无效 原因暂不明 因此在此处添加类 */
-            // background-image: url('~public/image/svg/search3_y0.svg');
+            // background-image: url('/image/svg/search3_y0.svg');
 
             &:before {
               color: #569FFD;
