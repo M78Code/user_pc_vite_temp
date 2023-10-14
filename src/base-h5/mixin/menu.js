@@ -1,7 +1,10 @@
 import { watch, computed, ref } from "vue";
 import { MenuData } from 'src/core/'
-const { menu_type, update_time } =
-    MenuData;
+import PageSourceData from "src/core/page-source/page-source.js";
+const page_source = ref(PageSourceData.page_source) // 当前页面来源
+
+const { menu_type, update_time } =  MenuData;
+
 //是否 滚球
 const is_scroll_ball = computed(() => {
     return MenuData.is_scroll_ball(menu_type.value);
@@ -42,6 +45,10 @@ const is_jinzu = computed(() => {
 const is_hot = computed(() => {
     return MenuData.is_hot(menu_type.value);
 });
+//是否 详情页 用途： 赛事列表、热门、详情 引入赛事列表组件
+const is_detail = computed(() => {
+    return page_source.value === 'detail_match_list';
+});
 
 const menu_lv1 = ref(MenuData.current_lv_1_menu)//1级 大类
 const menu_lv2 = ref(MenuData.current_lv_1_menu)//2级 球种
@@ -54,5 +61,5 @@ watch(update_time, () => {
     menu_lv4.value = MenuData.current_lv_4_menu;//4级
 });
 export {
-    is_jinzu, is_kemp, is_mix, is_vr, is_zaopan, is_export, is_scroll_ball, is_today, is_results, menu_type, menu_lv1, menu_lv2, is_hot
+    is_jinzu, is_kemp, is_mix, is_vr, is_zaopan, is_export, is_scroll_ball, is_today, is_results, menu_type, menu_lv1, menu_lv2, is_hot, is_detail
 }

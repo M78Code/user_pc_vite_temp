@@ -25,9 +25,6 @@ class MatchMeta {
     this.zaopan_mids = []
     // 联赛 id 对应的 mids
     this.tid_map_mids = {}
-    // 新的菜单到旧的菜单的映射关系  接口返回值
-    this.origin_menu = mi_euid_mapping_default.data
-    // ms 1： 滚球 2： 今日； 3： 早盘;  
   }
 
   /**

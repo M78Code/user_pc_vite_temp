@@ -3,15 +3,13 @@
 -->
 <template>
   <div :class="tab_Index != 0 ? 'sports_balls_tab' : ''">
-    <div @scroll="wrapper_scrolling">
+    <div @scroll="wrapper_scrolling" style="margin-top: -65px">
       <!-- 第二个tab 榜单 骨架屏 -->
       <hot-list v-if="list_loading"></hot-list>
       <!-- 热门赛程 骨架屏-->
       <hot-schedule v-if="schedule_loading"></hot-schedule>
       <!-- 足球篮球tab的 赛程列表页面，match-main 是整一块列表页组件 -->
-      <match-main v-show="guess_standings && !schedule_loading" invok_source="home_hot_page_schedule"
-        :wrapper_scroll_top="wrapper_scroll_top">
-      </match-main>
+      <match-container v-show="guess_standings && !schedule_loading"  :wrapper_scroll_top="wrapper_scroll_top"> </match-container>
       <!-- 足球篮球tab的 榜单页 -->
       <template v-if="!guess_standings && !loading_standings_data">
         <!-- header 的tab选项卡 -->
@@ -39,7 +37,7 @@
 </template>
 
 <script setup>
-// import matchMain from "src/base-h5/pages/match-list/index.vue";   // 赛事列表页用于展示滚球、今日、早盘、串关、冠军等赛事
+import matchContainer from "src/base-h5/pages/match-list/index.vue";
 import { api_home } from "src/api/index.js";
 import hotList from "src/base-h5/components/skeleton/home-hot/hot-list.vue";   // 热门榜单 骨架屏
 import hotSchedule from "src/base-h5/components/skeleton/home-hot/hot-schedule.vue"     // 热门赛程 骨架屏
