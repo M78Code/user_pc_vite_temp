@@ -406,12 +406,12 @@ const get_balance = () => {
     .img {
       width: 0.18rem;
       height: 0.18rem;
-      // background-image: url('~public/image/wwwassets/bw3/menu/setting-menu-icon.svg');
+      // background-image: url('/image/wwwassets/bw3/menu/setting-menu-icon.svg');
       background-size: 100%;
       background-repeat: no-repeat;
 
       // &.theme2 {
-      //   background-image: url('~public/image/wwwassets/bw3/menu/setting-menu-icon-theme02.svg');
+      //   background-image: url('/image/wwwassets/bw3/menu/setting-menu-icon-theme02.svg');
       // }
 
       &.esports {

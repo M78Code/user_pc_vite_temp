@@ -44,7 +44,7 @@
           <!-- 虚拟体育 -->
           <template v-if="is_virtual">
             <div class="roll_ball">
-              <img src="~public/image/yabo/svg/details_vs.svg" width="28" style="margin: 0 22px" alt="">
+              <img src="/image/yabo/svg/details_vs.svg" width="28" style="margin: 0 22px" alt="">
             </div>
           </template>
           <!-- 虚拟体育 -->
@@ -52,7 +52,7 @@
           <template v-else>
             <div v-if="lodash.get(match_info,'ms') == 1" class="roll_ball">
               <span>{{panel_score.home}}</span>
-              <img src="~public/image/yabo/svg/details_vs.svg" width="28" style="margin: 0 22px" alt="">
+              <img src="/image/yabo/svg/details_vs.svg" width="28" style="margin: 0 22px" alt="">
               <span>{{panel_score.away}}</span>
             </div>
             <match-date v-if="lodash.get(match_info,'ms')!=1" class="match_time-text" :match_props="{match:match_info}"></match-date>
