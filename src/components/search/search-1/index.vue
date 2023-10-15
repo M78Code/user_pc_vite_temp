@@ -202,13 +202,13 @@ function set_sports_tab_index(index) {
 }
 
 const search_width = ref(LayOutMain_pc.layout_search_width)
-let main_width = ref('200px')
+const main_width = ref(LayOutMain_pc.layout_main_width + 'px')
 /** 窗口变化 */
 function on_resize() {
   LayOutMain_pc.set_layout_main_width()
   LayOutMain_pc.set_layout_search_width()
   search_width.value = LayOutMain_pc.layout_search_width
-  main_width.value = '200px'
+  main_width.value = LayOutMain_pc.layout_main_width + 'px'
 }
 onMounted(() => window.addEventListener('resize', on_resize))
 onUnmounted(() => window.removeEventListener('resize', on_resize))
@@ -225,7 +225,7 @@ export default defineComponent({
 .search-position {
   position: fixed;
   left: 0;
-  width: 200px;
+  width: v-bind(main_width);
   // right: 0;
   top: 60px;
   bottom: 0;
