@@ -19,7 +19,7 @@ import MatchListCardClass from "src/core/match-list-pc/match-card/match-list-car
 import MatchListScrollClass from "src/core/match-list-pc/match-scroll.js";
 import MenuData from "src/core/menu-pc/menu-data-class.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
-
+import filterHeader from 'src/core/filter-header/filter-header.js'
 import * as api_websocket from "src/api/module/socket/socket_api.js";
 import route from "project_path/src/router/index.js";
 import store from "src/store-redux/index.js";
@@ -42,10 +42,7 @@ const details_params = ref({
 const cur_menu_type = { pre_name: "", type_name: "today" }; //todo
 const last_by_mids_uuid = ref(null); //暂时不知道数据是从哪里定义的  todo
 const { page_source } = PageSourceData;
-// 赛事列表排序 1:按联赛排序 2:按时间排序
-const vx_match_sort = ref(state.filterReducer?.show_filter_popup);
-// 是否展开多列玩法
-const get_unfold_multi_column = ref(state.filterReducer?.show_filter_popup);
+
 
 // 自动化测试页面加载时间时使用
 const set_home_loading_time_record = (status) => {
