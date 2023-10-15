@@ -276,7 +276,7 @@ onUnmounted(() => {
     letter-spacing: 0;
     font-weight: 700;
     position: relative;
-
+    background-color: var(--q-gb-bg-c-17);
     &:before {
       content: "";
       width: 0.03rem;

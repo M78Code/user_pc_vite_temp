@@ -9,6 +9,7 @@ import colors from "colors"
  * 确保  输出目录存在
  */
 export const ensure_write_folder_exist = (write_folder) => {
+  console.log('write_folder-',write_folder);
   let is_exist = fs.existsSync(write_folder);
   if (is_exist) {
     console.log( colors.red(`${write_folder}-----文件夹已存在----  `) );

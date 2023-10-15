@@ -11,12 +11,19 @@ import {
   write_file,
   remove_file,
 } from "./write-folder-file.js";
+ 
+ 
+ 
+ 
+import {import_json_data} from "./util.js"
 
-// 商户版本 最终配置
-import final_merchant_config from "./output/merchant/config.json" assert { type: "json" };
-import final_css_config from "./output/css/config.json" assert { type: "json" };
-import final_server_keys from "./output/css/keys-server.json" assert { type: "json" };
-const PROJECT_NAME = final_merchant_config.project;
+const  final_css_config  = await import_json_data("./output/css/config.json")
+const  final_server_keys  = await import_json_data( "./output/css/keys-server.json")
+
+
+// 本次打包的 客户端版本
+import BUILD_VERSION_CONFIG from "./output/version/build-version.js";
+const { PROJECT_NAME ,IS_PC} =  BUILD_VERSION_CONFIG
 
 console.log(colors.bgRed("export-css-config.js----------  ----"));
  
@@ -24,10 +31,10 @@ console.log(colors.bgRed("export-css-config.js----------  ----"));
 // 商户配置 输出目录
 let write_folder = "./job/output/css/";
  
-let is_pc = PROJECT_NAME.includes('pc')
+ 
 
 //本地scss目录
-let base_scss_folder = is_pc? "./src/css-variables/base-pc/" :  "./src/css-variables/base-h5/"
+let base_scss_folder = IS_PC? "./src/css-variables/base-pc/" :  "./src/css-variables/base-h5/"
 let special_scss_folder = `./project/${PROJECT_NAME}/src/css/variables/`;
  
 

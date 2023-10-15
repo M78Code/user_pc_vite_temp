@@ -491,7 +491,7 @@ import { onMounted, onUnmounted, ref, watch } from "vue";
     .designation {
       border-bottom: 1px solid rgba(225,225,225, 0.2);
       margin-bottom: 0.02rem;
-      color: var(--q-gb-bd-c-2);
+      color: var(--q-gb-t-c-18);
     }
     .visuals {
       .linellae {
@@ -502,7 +502,7 @@ import { onMounted, onUnmounted, ref, watch } from "vue";
         .circle {
           margin-top: 0.15rem;
           .number {
-            color: var(--q-gb-bd-c-2);
+            color: var(--q-gb-t-c-18);
           }
           .text-span {
             font-size: 0.1rem;
@@ -520,12 +520,12 @@ import { onMounted, onUnmounted, ref, watch } from "vue";
         }
         .progress-left {
           span {
-            color: var(--q-gb-bd-c-2);
+            color: var(--q-gb-t-c-18);
           }
         }
         .progress-right {
           span {
-            color: var(--q-gb-bd-c-2);
+            color: var(--q-gb-t-c-18);
           }
         }
       }
@@ -537,7 +537,7 @@ import { onMounted, onUnmounted, ref, watch } from "vue";
             font-size: 0.1rem;
           }
           .score {
-            color: var(--q-gb-bd-c-2);
+            color: var(--q-gb-t-c-18);
           }
         }
         div:nth-child(2) {

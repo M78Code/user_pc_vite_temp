@@ -2,7 +2,7 @@
  * @Description: 赛事组件，用于赛事列表展示赛事信息
 -->
 <template>
-  <div class="match-container" :style="{ marginTop: main_source == 'home_hot_page_schedule' ? '0' : '' }" :class='{
+  <div class="match-container" :style="{ marginTop: is_hot ? '0' : '' }" :class='{
     first: i == 0,
     match_status_bar: match.is_show_no_play,
     is_league_tail: get_league_show(i + 1),
@@ -15,14 +15,13 @@
     <div style="display: none;">{{ MatchDataBaseH5.data_version.version }}</div>
     <!--体育类别 -- 标题  menuType 1:滚球 2:即将开赛 3:今日 4:早盘 11:串关 -->
     <div v-if="get_sport_show" class="sport-title match-indent"
-      :class="['sport-title match-indent', { home_hot_page: is_it_popular, is_gunqiu: [1].includes(+menu_type), first: i == 0, }]"
+      :class="['sport-title match-indent', { home_hot_page: is_hot, is_gunqiu: [1].includes(+menu_type), first: i == 0, }]"
       @click="handle_ball_seed_fold">
       <!-- 首页热门 -->
-      <template v-if="is_it_popular">
-        <div v-if="main_source == 'home_hot_page_schedule' && lodash.get(MenuData.hot_tab_menu, 'index') == 0" class="ball_img">
+      <template v-if="is_hot">
+        <div v-if="is_hot && lodash.get(MenuData.hot_tab_menu, 'index') == 0" class="ball_img">
           
-          <div class='img' :style="compute_css({key:'polular-spirite',position:match_of_list.csid})"  
-          style="--per:-0.60754rem;background-size: 100%;">
+          <div class='img' :style="compute_css({key:'polular-spirite',position:match_of_list.csid})" style="--per:-0.60754rem;background-size: 100%;">
           </div>
           <span> <i :style="compute_css({key:'h5-hot-jinxuan', position: `item_${match_of_list.csid}` })"></i>  <span>{{ match_of_list.csna }}</span> </span>
         </div>
@@ -32,7 +31,7 @@
         <!-- {{match_of_list.csna || get_current_menu.sub.menuName}} -->
       </span>
       <!-- 折叠收起不用消失 -->
-      <div v-if="main_source!='home_hot_page_schedule'">
+      <div v-if="!is_hot">
         <img class="league-collapse-dir" :class="{ 'collapsed': league_collapsed }" :src='compute_img("icon-collapse")' />
       </div>
     </div>
@@ -45,7 +44,7 @@
     </div>
     <!-- 首页热门才有的样式  -->
     <div
-      v-if="main_source == 'home_hot_page_schedule' && match_of_list.time_title && lodash.get(MenuData.hot_tab_menu, 'index') != 0"
+      v-if="is_hot && match_of_list.time_title && lodash.get(MenuData.hot_tab_menu, 'index') != 0"
       class="hot_time_change">
       <span>{{ time_change }}</span>
       <!-- 热门模块的 榜单页 和 赛程列表页面 的切换    menuId == "30101"是 竞彩足球的 唯一字段  ['1','2'].includes(MenuData.hot_tab_menu.field1) 表示只在篮球足球下显示时间-->
@@ -58,8 +57,8 @@
     <!-- 最核心的div模块     标题 + 倒计时 + 比分 + 赔率盘口模块 -->
     <div class="match-inner-container">
       <!--联赛标题 -->
-      <div v-if="match.is_show_league || (main_source == 'home_hot_page_schedule' && get_league_show(i))"
-        :class="[('league match-indent hairline-border'), { 'no-radius': get_sport_show && is_it_popular && !['home_hot_page_schedule'].includes(main_source), 'home-hot': main_source == 'home_hot_page_schedule' }]"
+      <div v-if="match.is_show_league || (is_hot && get_league_show(i))"
+        :class="[('league match-indent hairline-border'), { 'no-radius': get_sport_show && is_hot, 'home-hot': is_hot }]"
         @click="handle_league_fold">
         <div class="league-t-wrap">
           <!-- 电竞图标 写死 -->
@@ -91,7 +90,7 @@
               </div>
             </div>
           </span>
-          <template v-if="(!['detail_match_list', 'home_hot_page_schedule'].includes(main_source)) && collapsed">
+          <template v-if="!(is_hot || is_detail) && collapsed">
             <img class="league-collapse-dir" :class="{ 'collapsed': collapsed }"  :src='compute_img("icon-collapse")'  />
           </template>
         </div>
@@ -425,7 +424,7 @@
               <!--角球，罚牌，晋级，加时赛，点球大战玩法-->
               <!-- cisd:1 足球， 2 篮球， 5 网球， 7 斯诺克， 8 乒乓球 -->
               <match-overtime-pen 
-                v-if="!['detail_match_list', 'home_hot_page_schedule'].includes(main_source) && !is_show_result() && [1, 2, 5, 7, 8].includes(+match.csid) && standard_edition != 1"
+                v-if="!is_hot && !is_detail && !is_show_result() && [1, 2, 5, 7, 8].includes(+match.csid) && standard_edition != 1"
                 :main_source="main_source" 
                 :mid="match_of_list.mid" />
             </div>
@@ -462,7 +461,7 @@ import { normal_img_not_favorite_white, normal_img_not_favorite_black, normal_im
 
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import { lang, standard_edition, theme } from 'src/base-h5/mixin/userctr.js'
-import { is_hot, menu_type, menu_lv2 } from 'src/base-h5/mixin/menu.js'
+import { is_hot, menu_type, menu_lv2, is_detail } from 'src/base-h5/mixin/menu.js'
 
 // TODO: 其他模块得 store  待添加
 // mixins: [formatmixin, odd_convert, bettings, match_list_mixin, msc_bw3, common],
@@ -633,11 +632,6 @@ const match_of_list_ascertain = computed(() => {
   } else {
     return props.match_of_list.hps
   }
-})
-
-// 是否是热门模块 的 列表页
-const is_it_popular = computed(() => {
-  return props.main_source == 'home_hot_page_schedule'
 })
 
 // 热门模块 球类tab 下边的赛程列表 的 时间转换 = () => {

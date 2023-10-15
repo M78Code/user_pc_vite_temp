@@ -9,8 +9,8 @@
     <div style="display: none;">{{ MatchDataBaseH5.data_version.version }}</div>
     <div :class="['scroll-i-con', {high_scrolling: set_ishigh_scrolling && menu_type !== 100 &&
        !(menu_type == 28 && [1001, 1002, 1004, 1011, 1010, 1009].includes(menu_lv2.mi)) && menu_type != 100,
-        detail_list: main_source == 'detail_match_list',
-        simple: PageSourceData.newer_standard_edition == 1,
+        detail_list: is_detail,
+        simple: standard_edition == 1,
       }]"
       :style="{ 'min-height': `${menu_type == 100 ? list_wrap_height : match_list_wrapper_height}rem` }">
       <template v-for="(match_mid, index) in MatchMeta.match_mids">
@@ -45,13 +45,13 @@ import PageSourceData from "src/core/page-source/page-source.js";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import RouterScroll from "src/core/match-list-h5/match-class/router-scroll.js";
 import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from 'src/core'
-import { menu_type, menu_lv2, is_kemp } from 'src/base-h5/mixin/menu.js'
+import { menu_type, menu_lv2, is_kemp, is_hot, is_detail } from 'src/base-h5/mixin/menu.js'
+import { standard_edition } from 'src/base-h5/mixin/userctr.js'
 
 // 避免定时器每次滚动总是触发
 const props = defineProps({
   match_list_wrapper_height: Number,
   is_goto_top_random: Number,
-  main_source: String,
 })
 
 const store_state = store.getState();
@@ -72,9 +72,7 @@ onMounted(() => {
   // }, 3000)
   test.value = sessionStorage.getItem('wsl') == '9999';
   // 详情页以外的列表才设置最小高度
-  if (props.main_source !== 'detail_match_list') {
-    list_wrap_height.value = 8;
-  }
+  if (is_detail.value) list_wrap_height.value = 8;
 })
 // 监听 数据仓库版本号改变
 watch(() => MatchDataBaseH5.data_version.version, () => {
@@ -172,12 +170,12 @@ watch(() => props.is_goto_top_random, () => {
 const set_ishigh_scrolling = computed(() => {
   // 滚动过程中，是否显示  骨架屏背景图片
   let flag = false;
-  if (["home_hot_page_schedule"].includes(props.main_source) || (MatchMeta.match_mids && MatchMeta.match_mids <= 0)) {
+  if (is_detail.vlaue || (MatchMeta.match_mids && MatchMeta.match_mids <= 0)) {
     flag = false;
   } else {
     flag = get_to_bottom_space > 350 && !is_kemp.value
     // 一般热门推荐赛事长度为4，详情页内需过滤掉
-    if (props.main_source !== 'detail_match_list' && lodash.get(target_scroll_obj.value, 'scroll_height') > 1800) {
+    if (!is_detail.vlaue && lodash.get(target_scroll_obj.value, 'scroll_height') > 1800) {
       flag = true
     }
   }
@@ -197,11 +195,10 @@ const get_to_bottom_space = computed(() => {
   return Math.abs(delta);
 })
 // 是否 走高度计算
-// || ["detail_match_list", "home_hot_page_schedule"].includes(props.main_source) 
 const is_static_item = computed(() => {
   let flag = false;
-  if (menu_type == 100 ||  menu_lv2.value?.mi == 100 ||
-    (menu_type == 28 && [1001, 1002, 1004, 1011, 1010, 1009].includes(menu_lv2.value?.mi))
+  if (menu_type.value == 100 || menu_lv2.value?.mi == 100 || (is_detail.vlaue || is_hot.vlaue) || 
+    (menu_type.value == 28 && [1001, 1002, 1004, 1011, 1010, 1009].includes(menu_lv2.value?.mi))
   ) {
     flag = true;
   }

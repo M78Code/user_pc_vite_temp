@@ -11,7 +11,13 @@ import {
   remove_file,
 } from "./write-folder-file.js";
 // 商户版本 最终配置
-import final_merchant_config from "./output/merchant/config.json" assert { type: "json" };
+ 
+
+import {import_json_data} from "./util.js"
+
+const  final_merchant_config  = await import_json_data( "./output/merchant/config.json")
+
+
 console.log(colors.bgRed("export-i18n-config.js----------resolve_merchant_config_i18n  ----"));
 // 商户配置 输出目录
 let write_folder = "./job/output/i18n/";
@@ -19,8 +25,8 @@ remove_file(write_folder) //del  old file
 //确保配置 输出目录存在
 ensure_write_folder_exist(write_folder);
 function resolve_merchant_config_i18n() {
-  const {i18n,clientLanguage=[]} = final_merchant_config 
-  const { detail, version } = i18n; //获取版本号和 详情
+  const {i18n={},clientLanguage=[]} = final_merchant_config 
+  const { detail={}, version } = i18n; //获取版本号和 详情
   const i18n_obj = {}
   const key_path_obj={}
   clientLanguage.map(language=>{
