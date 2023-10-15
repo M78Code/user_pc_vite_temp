@@ -13,7 +13,7 @@ import { Quasar } from "quasar";
 // Import icon libraries
 import "@quasar/extras/roboto-font/roboto-font.css";
 import "@quasar/extras/material-icons/material-icons.css";
-import BUILDIN_CONFIG from "app/job/output/env/final.js";
+import BUILDIN_CONFIG from "app/job/output/env/index.js";
 console.log("BUILDIN_CONFIG-----------pc---", BUILDIN_CONFIG);
 window.BUILDIN_CONFIG = BUILDIN_CONFIG;
 // Import Quasar css

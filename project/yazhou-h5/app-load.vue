@@ -9,7 +9,7 @@
     <ws />
     <!-- 页面路由开始 页面路由开始 页面路由开始 -->
     <div v-if="time_str" class="time-show">
-      <div>{{ server_env }}-{{ time_str }}</div>
+      <div>{{ CURRENT_ENV }}-{{ time_str }}</div>
     </div>
     <!-- 页面路由开始 -->
     <router-view />
@@ -28,10 +28,10 @@ import { reactive, onBeforeMount, onMounted, onUnmounted, ref, watch } from "vue
 import { useRoute } from "vue-router";
 window.wslog = wslog;
 const BUILDIN_CONFIG = window.BUILDIN_CONFIG;
-const { CURRENT_ENV_NAME } = BUILDIN_CONFIG;
+const { CURRENT_ENV } = BUILDIN_CONFIG;
 
 const time_str = ref('');
-const server_env = ref(CURRENT_ENV_NAME);
+ 
 const right_menu_show = ref(false);
 // 公共主题色
 const page_style = reactive({});

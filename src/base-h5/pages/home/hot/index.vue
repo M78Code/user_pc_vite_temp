@@ -115,7 +115,7 @@ const wrapper_scrolling = ($event) => {
 // 竞彩足球图片 处理
 const host = (item) => {
   let url = ''
-  let domain = window.BUILDIN_CONFIG.domain[window.BUILDIN_CONFIG.current_env][0]
+  let domain = window.BUILDIN_CONFIG.domain[window.BUILDIN_CONFIG.CURRENT_ENV][0]
   let prefix_job = window.BUILDIN_CONFIG.api.API_PREFIX_JOB
   let is_jing_cai = lodash.get(item, 'chinaBetting') == 1
   if (is_jing_cai && item.field3) {
@@ -276,7 +276,7 @@ onUnmounted(() => {
     letter-spacing: 0;
     font-weight: 700;
     position: relative;
-
+    background-color: var(--q-gb-bg-c-17);
     &:before {
       content: "";
       width: 0.03rem;

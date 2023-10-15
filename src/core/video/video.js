@@ -890,7 +890,7 @@ export default {
   join_video_url(mid,refer_url){
     // 移除 http(s)
     refer_url = refer_url.replace(/https?:/, "")
-    // let request_domain = window.BUILDIN_CONFIG.domain[window.BUILDIN_CONFIG.current_env][0]; todo
+    // let request_domain = window.BUILDIN_CONFIG.domain[window.BUILDIN_CONFIG.CURRENT_ENV][0]; todo
     let request_domain =lodash.get(window.BUILDIN_CONFIG, 'DOMAIN_RESULT.first_one')
 
     let url = ''

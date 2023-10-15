@@ -85,10 +85,7 @@ const send_user_pro_info = () => {
     if (!userInfo) userInfo = null;
   }
   let project_name = "";
-  // 获取项目信息
-  if (INAL_TARGET_PROJECT_NAME == "yabo") {
-    project_name = "pc-zhuanye";
-  }
+ 
   // 拼装需要提交的数据
   let data = {
     config: window.BUILDIN_CONFIGg, // 所有配置信息

@@ -8,13 +8,13 @@
 import BUILD_VERSION_CONFIG from "./output/version/build-version.js";
 import lodash from "lodash";
 let default_merchant_config_path = `./default-config/merchant-config-${BUILD_VERSION_CONFIG.PROJECT_NAME}.json`;
-const default_merchant_config_module = await import(
-  default_merchant_config_path,
-  {
-    assert: { type: "json" },
-  }
-);
-const default_merchant_config = default_merchant_config_module.default;
+ 
+
+import {import_json_data} from "./util.js"
+
+const  default_merchant_config  = await import_json_data(default_merchant_config_path)
+
+
 //商户配置的详细信息
 /**
  * 1.合并 ，覆盖 输入进来的配置 ，以及本地配置

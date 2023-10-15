@@ -61,7 +61,7 @@ import matchScore from 'src/base-h5/components/match/match-score.vue' // 比分�
   left: 0;
   width: 100%;
   height: 0.44rem;
-  color: var(--q-gb-bd-c-2);
+  color: var(--q-gb-t-c-18);
   box-shadow: var(--q-color-com-box-shadow-11);
   z-index: 100000;
   .hengping-title {

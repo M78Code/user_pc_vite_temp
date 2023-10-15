@@ -41,7 +41,7 @@ import lodash from 'lodash'
 import store from 'src/store-redux'
 /** utils 工具类 */
 // import { get_refs_info } from 'src/core/bet/common-helper/common-sport.js'
-import BUILDIN_CONFIG from "app/job/output/env/final.js";
+import BUILDIN_CONFIG from "app/job/output/env/index.js";
 import { compute_css } from 'src/core/server-img/index.js'
 
 const props = defineProps({

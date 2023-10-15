@@ -41,7 +41,7 @@ import { useRoute } from "vue-router";
 import {  utils } from "src/core/utils/module/utils.js";
 const route =useRoute()
 // 是否pc项目
-const IS_PC = window.BUILDIN_CONFIG.TARGET_PROJECT_NAME.includes('pc')
+const IS_PC = window.BUILDIN_CONFIG.PROJECT_NAME.includes('pc')
 /** stroe仓库 */
 /** stroe仓库 */
 const { layoutReducer, menuReducer, betInfoReducer, userReducer, themeReducer } = store.getState()

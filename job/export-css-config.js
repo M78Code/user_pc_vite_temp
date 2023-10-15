@@ -11,11 +11,16 @@ import {
   write_file,
   remove_file,
 } from "./write-folder-file.js";
+ 
+ 
+ 
+ 
+import {import_json_data} from "./util.js"
 
-// 商户版本 最终配置
-import final_merchant_config from "./output/merchant/config.json" assert { type: "json" };
-import final_css_config from "./output/css/config.json" assert { type: "json" };
-import final_server_keys from "./output/css/keys-server.json" assert { type: "json" };
+const  final_css_config  = await import_json_data("./output/css/config.json")
+const  final_server_keys  = await import_json_data( "./output/css/keys-server.json")
+
+
 // 本次打包的 客户端版本
 import BUILD_VERSION_CONFIG from "./output/version/build-version.js";
 const { PROJECT_NAME ,IS_PC} =  BUILD_VERSION_CONFIG

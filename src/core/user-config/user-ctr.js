@@ -600,7 +600,7 @@ class UserCtr {
       return Promise.resolve(1);
     }
 
-    //  let api_domains = window.BUILDIN_CONFIG.domain[window.BUILDIN_CONFIG.current_env];
+    //  let api_domains = window.BUILDIN_CONFIG.domain[window.BUILDIN_CONFIG.CURRENT_ENV];
     let api_domains =
       window.BUILDIN_CONFIG.domain[window.BUILDIN_CONFIG.CURRENT_ENV] || [];
     let api_domain = api_domains[0];
@@ -815,7 +815,7 @@ class UserCtr {
 
     // 设置主题色
     // if(!window.vue.$store.getters.get_theme){
-    //   let theme = 'theme0'+config.default_theme[window.BUILDIN_CONFIG.FINAL_TARGET_PROJECT_NAME]
+    //   let theme = 'theme0'+config.default_theme[window.BUILDIN_CONFIG.PROJECT_NAME]
     //   window.vue.$store.dispatch('set_theme',theme)
     // }
     // window.vue.$store.dispatch('init_loading_theme')

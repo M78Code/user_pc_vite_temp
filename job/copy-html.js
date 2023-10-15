@@ -14,8 +14,7 @@ let {BUILD_VERSION ,PROJECT_NAME} = BUILD_VERSION_CONFIG;
 import BUILD_DIR_CONFIG from "./output/dir/index.js";
 let BUILD_DIR_NAME = BUILD_DIR_CONFIG.BUILD_DIR_NAME;
 
-import final_base_info from "./output/base-info/index.json" assert { type: "json" };
-
+ 
 
 // 递归创建文件夹
 const mkdir = function(dirname) {

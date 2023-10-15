@@ -110,9 +110,9 @@ const DOMAIN_API_STORAGE_KEY = STANDARD_KEY.get("domain_api_01");
 
 const BUILDIN_CONFIG = window.BUILDIN_CONFIG;
 //当前目标环境
-const { CURRENT_ENV, NODE_ENV, OSS_FILE_ARR, OSS_FILE_NAME, TARGET_PROJECT_NAME } = BUILDIN_CONFIG;
+const { CURRENT_ENV, NODE_ENV, OSS_FILE_ARR, OSS_FILE_NAME, PROJECT_NAME } = BUILDIN_CONFIG;
 // 判断是否PC项目
-const IS_PC = TARGET_PROJECT_NAME.includes('pc')
+const IS_PC = PROJECT_NAME.includes('pc')
 
 import lodash from "lodash";
 

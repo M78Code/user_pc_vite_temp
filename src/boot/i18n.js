@@ -6,10 +6,10 @@ import { LocalStorage, SessionStorage } from "src/core/utils/module/web-storage.
 
 import { createI18n } from "vue-i18n";
 import lodash from 'lodash'
-import BUILDIN_CONFIG from "app/job/output/env/final.js";
+import BUILDIN_CONFIG from "app/job/output/env/index.js";
 
 
-const PROJECT_NAME = BUILDIN_CONFIG.TARGET_PROJECT_NAME
+const PROJECT_NAME = BUILDIN_CONFIG.PROJECT_NAME
 
 const IS_PC = PROJECT_NAME.includes('pc')
 const locale = LocalStorage.get("lang", "zh"); //緩存的值

@@ -5,7 +5,7 @@
 <template>
  <div class="refresh-container">
     <!--列表页 -->
-    <scroll-wrapper ref="scroll_wrapper" :data_source="matchCtr.list" :main_source="source"
+    <scroll-wrapper ref="scroll_wrapper" :main_source="source"
       :is_goto_top_random="is_goto_top_random" :match_list_wrapper_height="match_list_wrapper_height"
       :class="{ 'data-get-empty': data_get_empty }">
       <template v-slot="{ match_item, index }">
@@ -13,19 +13,9 @@
            <!--虚拟体育(赛果)-->
           <v-match-container 
             v-if="[1001, 1002, 1004, 1011, 1010, 1009].includes(+match_item?.sportId)"
-            :match="match_item" :i_list="index" :match_list="matchCtr.list" :sport_id="match_item.sportId">
+            :match="match_item" :i_list="index" :sport_id="match_item.sportId">
           </v-match-container>
           <div class="data_mid" v-else> <!--此data-mid用于分频订阅赛事,请勿修改-->
-            <!--真实体育赛果 -->
-            <!-- <match-container-result 
-              v-if="is_results"
-              :i="index" 
-              :match_of_list="match_item"
-              :menu_type="menu_type"
-              :main_source="source"
-              @unfold_changed="unfold_changed_handle"
-              @toggle_collect_league="toggle_collect"
-              @toggle_collect_match="toggle_collect" /> -->
             <!--冠军玩法-->
             <match-container-champion 
               v-if="is_kemp"
@@ -113,19 +103,17 @@ import matchContainerResult from "./match-container-result.vue" // 赛果冠军
 import scrollWrapper from 'src/base-h5/components/scroll-wraper/scroll-wrapper.vue';    // 滚动操作处理
 import noData from "src/base-h5/components/common/no-data.vue"; // 无网络展示组件
 import UserCtr from 'src/core/user-config/user-ctr.js'
-import { MenuData, i18n_t, utils,compute_img } from "src/core/index.js"
+import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
+import { MenuData, i18n_t, utils,compute_img, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/index.js"
 import { standard_edition } from 'src/base-h5/mixin/userctr.js'
-import { is_kemp, menu_lv2, is_results } from 'src/base-h5/mixin/menu.js'
+import { is_kemp, menu_lv2, is_results, menu_type, is_hot, is_detail } from 'src/base-h5/mixin/menu.js'
 // import { change_favorite_state } from 'src/core/match-list-h5/composables/match-list-collect.js'
 // import matchListCardFold from 'src/core/match-list-h5/match-card/match-list-card-fold.js'
 
 const props = defineProps({
   // 赛事列表无数据
   data_get_empty: Boolean,
-  // 6 收藏页, 
-  menu_type: Number | String,
   //处理赛事列表数据的类型封装
-  matchCtr: Object,
   source: String,
   window_scrolly: Number | String,
   match_list_wrapper_height: Number,
@@ -167,6 +155,7 @@ const get_goto_list_top = ref(store_state.get_goto_list_top)
 const get_show_favorite_list = ref(store_state.get_show_favorite_list)
 
 onMounted(() => {
+
   timer_super12.value = null;
 })
 
@@ -183,39 +172,31 @@ watch(() => get_match_id_bet_success.value, (curr) => {
     let id_s = curr.split('-')[0];
     let favorite = curr.split('-')[1];
     let match_id_list = id_s.split(',');
-    let found = null;
     match_id_list.forEach(id => {
-      for (let i = 0; i < props.matchCtr.list.length; i++) {
-        let match = props.matchCtr.list[i];
-        if (match.mid == id) {
-          if (favorite == 1 || favorite == 0) {
-            match.mf = favorite == 1;
-          }
-          else {
-            match.mf = true;
-          }
-          //如果是冠军玩法,投注成功后收藏赛事同也收藏联赛
-          if (is_kemp.value) {
-            if (favorite == 1 || favorite == 0) {
-              match.tf = favorite == 1;
-            }
-            else {
-              match.tf = true;
-            }
-          }
-          found = match;
-          break;
-        }
+      const falg = lodash.find(MatchMeta.match_mids, mid => mid === id)
+      if (!falg) return
+      const match = MatchDataBaseH5.get_quick_mid_obj(id)
+      if (favorite == 1 || favorite == 0) {
+        match.mf = favorite == 1;
       }
-      if (props.matchCtr.mid_obj[id]) {
+      else {
+        match.mf = true;
+      }
+      //如果是冠军玩法,投注成功后收藏赛事同也收藏联赛
+      if (is_kemp.value) {
         if (favorite == 1 || favorite == 0) {
-          props.matchCtr.mid_obj[id].mf = favorite == 1;
+          match.tf = favorite == 1;
         }
         else {
-          props.matchCtr.mid_obj[id].mf = true;
+          match.tf = true;
         }
       }
-
+      if (favorite == 1 || favorite == 0) {
+        match.mf = favorite == 1;
+      }
+      else {
+        match.mf = true;
+      }
     });
   }
 }, { deep: true })
@@ -291,7 +272,7 @@ const info_icon_click_h = (e, mid, menu, match) => {
     if (document.body.offsetHeight - e.clientY < rem(arr_top_off_set) + rem(0.1)) {
       // 如果当前点击的位置超过 弹框本身的大小 则变成向上显示
       other_way_style.value.top = e.clientY - rem(.16) - rem(arr_top_off_set);
-      arr_to_down = true;
+      arr_to_down = true;valuemenu_type
     }
   }
   arr_top_down.value = arr_to_down ? 'arr-down' : 'arr-top'; // 箭头向上向下显示 // 赋值给this
@@ -330,13 +311,14 @@ const toggle_collect = ($event) => {
     }
     if (type2) {  //冠军联赛收藏
       //电竞冠军收藏dota2传非空
-      if (props.menu_type == 3000) {
+      if (menu_type.value == 3000) {
         params.dota2 = 1;
         params.tid = match.tid;
       }
       else {
         let mids = []
-        lodash.each(props.matchCtr.match_list_data_sources, cur_match => {
+        lodash.each(MatchMeta.match_mids, mid => {
+          const match = MatchDataBaseH5.get_quick_mid_obj(mid)
           if (cur_match.tid == match.tid) {
             mids.push(cur_match.mid)
           }

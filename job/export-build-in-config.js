@@ -8,9 +8,10 @@ import {
 } from "./write-folder-file.js";
 import { compute_build_in_config } from "./build-in-config-fn.js";
 import { write_env_file } from "./write-env-file.js";
+import { ALL_ENV_ARR } from "./util.js";
+ 
 // 本次打包的 客户端版本
 import BUILD_VERSION_CONFIG from "./output/version/build-version.js";
-const {ALL_ENV_ARR} = BUILD_VERSION_CONFIG
 // --------------------------------
 console.log("----process.argv---", process.argv);
 // 输出所有环境
@@ -25,7 +26,7 @@ if (argv_version) {
 }
 // 输出目录
 let write_folder = "./job/output/env/module";
-let final_file_path = `./job/output/env/final.js`;
+let final_file_path = `./job/output/env/index.js`;
 const export_env_config = (env) => {
   if (!env) {
     console.error("当前未指定目标构建环境 ：  必须指定 ！ 修复后再试！");

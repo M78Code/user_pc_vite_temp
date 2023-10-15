@@ -13,7 +13,14 @@ import {
 } from "./write-folder-file.js";
 
 // 商户版本 最终配置
-import final_merchant_config from "./output/merchant/config.json" assert { type: "json" };
+ 
+
+import {import_json_data} from "./util.js"
+
+const  final_merchant_config  = await import_json_data( "./output/merchant/config.json")
+
+
+
 console.log(colors.bgRed("export-js-config.js----------resolve_merchant_config_js  ----"));
 
 // 商户配置 输出目录

@@ -297,7 +297,7 @@ export default defineComponent({
   background-color: #D4080B;
   border-radius: 8px;
   font-size: 0.1rem;
-  color: var(--q-gb-bd-c-2);
+  color: var(--q-gb-t-c-18);
 
   &.vir-end {
     background-color: #5E88A7;
@@ -319,7 +319,7 @@ export default defineComponent({
   text-align: center;
   font-size: 12px;
   margin-top: 0.52rem;
-  color: var(--q-gb-bd-c-2);
+  color: var(--q-gb-t-c-18);
   font-weight: 600;
 
   background-size: 100% 100%;
@@ -425,7 +425,7 @@ export default defineComponent({
   text-align: center;
   margin-right: 0.1rem;
   font-size: 14px;
-  color: var(--q-gb-bd-c-2);
+  color: var(--q-gb-t-c-18);
   background: var(--q-color-com-bg-color-33);
 }
 
@@ -443,7 +443,7 @@ export default defineComponent({
   line-height: 0.28rem;
   text-align: center;
   font-size: 14px;
-  color: var(--q-gb-bd-c-2);
+  color: var(--q-gb-t-c-18);
   background: var(--q-color-com-bg-color-33);
 }
 
