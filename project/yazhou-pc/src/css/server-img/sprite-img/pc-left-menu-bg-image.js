@@ -2,10 +2,6 @@
 // img-bg-menu-live 对应输出的css名称
 // 
 
-import all_assets from "app/job/output/assets/index.json";
-import UserCtr from "src/core/user-config/user-ctr.js";
-import { get } from "lodash";
-import { key } from "licia/memStorage";
 const { CURRENT_ENV } = window.BUILDIN_CONFIG;
 const config = {
   default: "pc-left-menu-bg-image",
@@ -88,8 +84,8 @@ function compute_position(position) {
   const width = 0; //表示是 横 向
   const x_space = 0; //每张图的间距 x
 
-  const height = 40; //表示是 纵 向
-  const y_space = 10; //每张图的间距 y
+  const height = 25; //表示是 纵 向
+  const y_space = 0.5; //每张图的间距 y
   const _v = item[position];
   if (_v > -1) {
     const x = x_space * _v + _v * width + left;
