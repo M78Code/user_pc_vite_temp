@@ -179,12 +179,12 @@
         }
   
         .balance {
-          color: var(--q-color-fs-color-4);
+          color: var(--q-gb-t-c-18);
         }
       }
   
       .money {
-        color: var(--q-color-fs-color-5);
+        color: var(--q-gb-t-c-18);
       }
     }
   

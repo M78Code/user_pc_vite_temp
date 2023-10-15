@@ -108,7 +108,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 .eports_scoring_tip {
   text-align: center;
-  color: var(--q-gb-bd-c-2);
+  color: var(--q-gb-t-c-18);
 }
 .change-header {
   height: 0.44rem;
@@ -136,7 +136,7 @@ export default defineComponent({
     transform: translateY(-50%) rotateZ(90deg);
 
     &:before {
-      color: var(--q-gb-bd-c-2) !important;
+      color: var(--q-gb-t-c-18) !important;
     }
   }
 
@@ -153,13 +153,13 @@ export default defineComponent({
 .base-header-font {
   position: relative;
   font-size: 0.12rem;
-  color: var(--q-gb-bd-c-2);
+  color: var(--q-gb-t-c-18);
   letter-spacing: 0;
 }
 
 .header-font {
   font-size: 0.16rem;
-  color: var(--q-gb-bd-c-2);
+  color: var(--q-gb-t-c-18);
   letter-spacing: 0;
   font-weight: 600;
 }

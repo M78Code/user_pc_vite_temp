@@ -518,7 +518,7 @@ export default defineComponent({
       height: 0.03rem;
       box-sizing: border-box;
       z-index: 1;
-      background-color: var(--q-gb-bd-c-1);
+      background-color: var(--q-gb-bg-c-13);
 
       &.add-animation {
         transition: all 0.3s;
@@ -529,7 +529,7 @@ export default defineComponent({
 </style>
 <style lang="scss">
 .home-page {
-  background: var(--q-gb-bd-c-15);
+  background: var(--q-gb-bg-c-15);
 
   &.white-background {
     background: var(--q-gb-bd-c-15);
@@ -538,15 +538,15 @@ export default defineComponent({
   &.white-font {
     li {
       &.is-active {
-        color: var(--q-gb-bd-c-2);
+        color: var(--q-gb-t-c-18);
 
         .tabs-label {
-          color: var(--q-gb-bd-c-2);
+          color: var(--q-gb-t-c-18);
         }
       }
 
       .tabs-label {
-        color: var(--q-gb-bd-c-2);
+        color: var(--q-gb-t-c-18);
       }
     }
   }
