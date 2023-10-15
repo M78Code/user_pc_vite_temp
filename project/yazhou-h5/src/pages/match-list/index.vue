@@ -2,32 +2,29 @@
  * @Description: 赛事列表页用于展示滚球、今日、早盘、串关、冠军等赛事
 -->
 <template>
-  <div class="match-main no-padding-bottom" ref="match_main">
-    <div style="display: none;">{{ MatchDataBaseH5.data_version.version }}</div>
-    <!--赛事列表-->
-    <div class="match-list-container"
-      ref="match_list_container" 
-      @scroll="wrapper_scroll_handler" :class="{
-      zaopan: [3, 11, 28, 3000].includes(menu_type) && is_hot,
-      guanjun: [100].includes(menu_type),
-      level_four_menu: menu_type == 28 && [1001, 1002, 1004, 1011, 1010, 1009].includes(menu_lv2.mi),
+  <!--赛事列表-->
+  <div class="match-list-page"
+    ref="match_list_page" 
+    @scroll="wrapper_scroll_handler" 
+    :class="{
+      guanjun: is_kemp,
+      jingzu: is_jinzu,
+      esport: is_export,
+      animation: animation,
       detail_match_list: is_hot || is_detail,
-      jingzu: menu_type == 30,
-      esport: menu_type == 7,
-      animation: animation
+      zaopan: [3, 11, 28, 3000].includes(menu_type) && !is_hot,
+      level_four_menu: menu_type == 28 && [1001, 1002, 1004, 1011, 1010, 1009].includes(menu_lv2.mi),
     }" >
-      <!--缝隙 不通层级 遮罩 存在渲染偏差， 边界 双线 或者 侵蚀问题-->
-      <div class="gap" v-if="on_match && menu_type != 3000" :class="{ zaopan: [4, 11, 28, 3000].includes(menu_type) }" />
-      <!-- 跳转到其他场馆的banner图 和猜你喜欢-->
-      <tiaozhuan-panel v-if="calc_show"></tiaozhuan-panel>
-      <!-- 列表骨架屏 -->
-      <!-- <SList v-if="show_skeleton_screen" :loading_body="true" /> -->
-      <!-- 赛事列表 -->
-      <match-container />
-
-      <!-- 回到顶部按钮组件 -->
-      <scroll-top v-show="!get_is_show_menu && list_scroll_top > 0" ref="scroll_top" :list_scroll_top="list_scroll_top" @back-top="back_top" />
-    </div>
+    <!--缝隙 不通层级 遮罩 存在渲染偏差， 边界 双线 或者 侵蚀问题-->
+    <!-- <div class="gap" v-if="on_match && menu_type != 3000" :class="{ zaopan: [4, 11, 28, 3000].includes(menu_type) }" /> -->
+    <!-- 跳转到其他场馆的banner图 和猜你喜欢-->
+    <tiaozhuan-panel v-if="calc_show"></tiaozhuan-panel>
+    <!-- 列表骨架屏 -->
+    <!-- <SList v-if="show_skeleton_screen" :loading_body="true" /> -->
+    <!-- 赛事列表 -->
+    <match-container />
+    <!-- 回到顶部按钮组件 -->
+    <scroll-top v-show="!get_is_show_menu && list_scroll_top > 0" ref="scroll_top" :list_scroll_top="list_scroll_top" @back-top="back_top" />
   </div>
 </template>
 <script setup>
@@ -45,10 +42,9 @@ import MatchPage from "src/core/match-list-h5/match-class/match-page.js";
 import { MenuData, score_switch_handle, utils } from "src/core/index.js";
 import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from 'src/core'
 import MatchListCard from "src/core/match-list-h5/match-card/match-list-card-class";
-import { menu_type, menu_lv2, is_hot, is_detail } from 'src/base-h5/mixin/menu.js'
+import { menu_type, menu_lv2, is_hot, is_detail, is_zaopan, is_jinzu, is_export, is_kemp } from 'src/base-h5/mixin/menu.js'
 import { standard_edition } from 'src/base-h5/mixin/userctr.js'
 // import matchListCardFold from 'src/core/match-list-h5/match-card/match-list-card-fold.js'
-import './index.variables.scss'
 
 const route = useRoute();
 const store_state = store.getState();
@@ -56,7 +52,7 @@ const store_state = store.getState();
 
 const match_main = ref(null);
 const scroll_top = ref(null);
-const match_list_container = ref(null);
+const match_list_page = ref(null);
 const emitters = ref({});
 const animation = ref(false);
 const match_is_empty = ref(false);
@@ -84,7 +80,7 @@ const get_preload_animation_url = ref(store_state.get_preload_animation_url);
 
 onMounted(() => {
 
-
+  console.log(menu_type.value)
   // 初始化赛事列表操作工具类
   standard_edition_type.value =  standard_edition.value
   if (standard_edition.value == 2) {
@@ -176,7 +172,7 @@ const show_skeleton_screen = computed(() => {
 
 // 回到顶部
 const back_top = () => {
-  match_list_container.value && match_list_container.value.scrollTo(0, 0);
+  match_list_page.value?.scrollTo(0, 0);
 };
 /**
  * @description:  事件初始化

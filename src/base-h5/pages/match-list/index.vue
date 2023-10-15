@@ -2,17 +2,18 @@
  * @Description: 列表页主内容
 -->
 <template>
+  <div class="match-list-container" :style="page_style" >
     <match-list
       :source="invok_source ? invok_source : 'match_main'"
       :data_get_empty="match_is_empty" 
       :window_scrolly="window_scrolly" 
-      :style="page_style" 
       :match_list_wrapper_height="match_list_wrapper_height">
     </match-list>
     <!-- 到底了容器原加载更多容器-->
     <div :class="['loading-more-container', { home_hot: is_hot }]" v-if="!match_is_empty && match_mids.length > 3">
       <div style="color:#AAAEB8;font-size:.12rem;"> {{ $t("scroll_wrapper.is_footer") }} </div>
     </div>
+  </div>
 </template>
  
 <script setup>
@@ -26,6 +27,8 @@ import MatchListCard from "src/core/match-list-h5/match-card/match-list-card-cla
 import { is_hot, menu_type } from 'src/base-h5/mixin/menu.js'
 import { match_mids } from 'src/base-h5/mixin/userctr.js'
 import { compute_css_variables } from "src/core/css-var/index.js"
+
+import './styles/index.variables.scss'
 
 const props = defineProps({
   invok_source: String,
@@ -155,5 +158,4 @@ const clear_timer = () => {
 </script>
  
 <style scoped lang="scss">
- 
 </style>

@@ -161,10 +161,10 @@ class AllDomain {
     this.init();
     // 获取本地配置的oss url地址
     this.oss_urls = this.get_oss_urls();
-    // // 解密使用的key
-    // this.DECRYPT_KEY = CryptoJS.enc.Utf8.parse("panda1234_1234ob");
-    // // 解密url 内 api 字段使用的 key
-    // this.DECRYPT_KEY_URL_API = CryptoJS.enc.Utf8.parse("OBTY20220712OBTY");
+    // 解密使用的key
+    this.DECRYPT_KEY = CryptoJS.enc.Utf8.parse("panda1234_1234ob");
+    // 解密url 内 api 字段使用的 key
+    this.DECRYPT_KEY_URL_API = CryptoJS.enc.Utf8.parse("OBTY20220712OBTY");
     // 回调方法参数: {type:'domain_api',status:0 ,list:[]}
     // status字段:0-初始状态 1-首次进入: 发现最快的api域名并已经设置,  2-切换域名时 :已经切换到最新的可用域名, 3- 切换域名时:切换时发现没有域名可用
     this.callback = callback;

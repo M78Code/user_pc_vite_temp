@@ -21,8 +21,7 @@
       <template v-if="is_hot">
         <div v-if="is_hot && lodash.get(MenuData.hot_tab_menu, 'index') == 0" class="ball_img">
           
-          <div class='img' :style="compute_css({key:'polular-spirite',position:match_of_list.csid})"  
-          style="--per:-0.60754rem;background-size: 100%;">
+          <div class='img' :style="compute_css({key:'polular-spirite',position:match_of_list.csid})" style="--per:-0.60754rem;background-size: 100%;">
           </div>
           <span> <i :style="compute_css({key:'h5-hot-jinxuan', position: `item_${match_of_list.csid}` })"></i>  <span>{{ match_of_list.csna }}</span> </span>
         </div>
@@ -425,7 +424,7 @@
               <!--角球，罚牌，晋级，加时赛，点球大战玩法-->
               <!-- cisd:1 足球， 2 篮球， 5 网球， 7 斯诺克， 8 乒乓球 -->
               <match-overtime-pen 
-                v-if="!['detail_match_list', 'home_hot_page_schedule'].includes(main_source) && !is_show_result() && [1, 2, 5, 7, 8].includes(+match.csid) && standard_edition != 1"
+                v-if="!is_hot && !is_detail && !is_show_result() && [1, 2, 5, 7, 8].includes(+match.csid) && standard_edition != 1"
                 :main_source="main_source" 
                 :mid="match_of_list.mid" />
             </div>

@@ -3,15 +3,13 @@
 -->
 <template>
   <div :class="tab_Index != 0 ? 'sports_balls_tab' : ''">
-    <div @scroll="wrapper_scrolling" style="margin-top: -65px">
+    <div @scroll="wrapper_scrolling" :style="{marginTop: tab_Index !== 0 ? '0' : '3px'}">
       <!-- 第二个tab 榜单 骨架屏 -->
       <hot-list v-if="list_loading"></hot-list>
       <!-- 热门赛程 骨架屏-->
       <hot-schedule v-if="schedule_loading"></hot-schedule>
       <!-- 足球篮球tab的 赛程列表页面，match-main 是整一块列表页组件 -->
-      <div class="">
-        <match-container v-show="guess_standings && !schedule_loading"  :wrapper_scroll_top="wrapper_scroll_top"> </match-container>
-      </div>
+      <match-container v-show="guess_standings && !schedule_loading"  :wrapper_scroll_top="wrapper_scroll_top"> </match-container>
       <!-- 足球篮球tab的 榜单页 -->
       <template v-if="!guess_standings && !loading_standings_data">
         <!-- header 的tab选项卡 -->
