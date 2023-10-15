@@ -34,7 +34,7 @@
           {{ MenuData.menu_root_count.mi_500 }}</span>
       </div>
     </div>
-
+    
     <div style="display: none">{{ base_data_instance.base_data_version }}</div>
     <!-- 体育菜单 -->
     <menu-wapper use_component_key="PcMenuTemplate1" :base_data="base_data_instance"

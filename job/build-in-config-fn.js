@@ -84,11 +84,10 @@ const AUTO_API = process.env.AUTO_API || false;
     GLOBAL_IMAGE_PREFFIX:  IS_PROD ? '/' + BUILD_VERSION:''  ,
     API_PREFIX,
     API_DOMAIN_PREFIX: "api", 
-    MODULE_SDK_VERSION :  BUILD_VERSION_CONFIG.MODULE_SDK_VERSION,
-    TARGET_PROJECT_NAME:  BUILD_VERSION_CONFIG.PROJECT_NAME,
     OSS_FILE_ARR:compute_oss_file_path_arr(current_env),
     OSS_FILE_NAME: current_env_build_in_oss.file,
     CURRENT_ENV_NAME: current_env_build_in_oss.file,
+    ...BUILD_VERSION_CONFIG,
     htmlVariables:  {
       ...htmlVariables,
       ...other_htmlVariables,

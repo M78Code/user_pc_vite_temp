@@ -22,18 +22,9 @@ const PROJECT_MAP = {
 };
 //布局名字
 const PROJECT_NAME = PROJECT_MAP[PROJECT];
-// --------------------------------
-// 所有  目标环境标识
-const ALL_ENV_ARR = [
-  "local_local",
-  "local_dev",
-  "local_test",
-  "idc_lspre",
-  "idc_pre",
-  "idc_sandbox",
-  "idc_ylcs",
-  "idc_online",
-];
+
+
+//参数内环境和代码内环境映射
 const ENVSTR_MAP = {
   dev: "local_dev",
   test: "local_test",
@@ -42,17 +33,17 @@ const ENVSTR_MAP = {
   shiwan: "idc_sandbox",
   online: "idc_online",
 };
+
 //当前环境
 const CURRENT_ENV = ENVSTR_MAP[ENVSTR];
-
-
+// oss
 const OSS_FILE_MAP = {
-  dev: "dev",
-  test: "test",
-  geli: "lspre",
-  mini: "mini",
-  shiwan: "play",
-  online: "prod",
+  dev: "dev.json",
+  test: "test.json",
+  geli: "lspre.json",
+  mini: "mini.json",
+  shiwan: "play.json",
+  online: "prod.json",
 };
 
 const OSS_FILE_NAME = OSS_FILE_MAP[ENVSTR]
@@ -78,11 +69,11 @@ const config = {
   PROJECT_NAME,
   IS_PC: PROJECT_NAME.includes('pc'),
   PUCK_UP_TIME,
-  ALL_ENV_ARR,
+ 
   OSS_FILE_NAME
  
 };
-console.log(config);
+// console.log(config);
 let str = `export default  ${JSON.stringify(config)} `;
 // 输出目录
 let write_folder = "./job/output/version";

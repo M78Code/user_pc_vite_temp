@@ -112,8 +112,6 @@ class BaseData {
 
     // 电子竞技
     this.sports_mi = [2100, 2101, 2103, 2102];
-    // 显示冠军
-    this.is_show_guanjin = true;
 
     // 电竞更新
     this.esport_menu_version = "1111";
@@ -151,6 +149,9 @@ class BaseData {
 
     // 获取 菜单数量统计
     this.init_mew_menu_list();
+
+    // 定时请求菜单接口
+    this.set_menu_init_time(1500);
 
     this.reset_menu_init_time = setTimeout(() => {
       this.clear_menu_init_time();
@@ -416,24 +417,17 @@ class BaseData {
           esport_menu.push(obj);
         }
       });
-      console.error(' this.esport_menu', esport_menu)
+      console.error(' this.esport_menu', left_menu)
       // 重置默认数据
       this.left_menu_base_mi_arr = left_menu;
 
       this.sports_mi = sports_mi;
 
-      // 是否有冠军
-      if (menu_info.findIndex((page) => page.mi == 400) > -1) {
-        this.is_show_guanjin = true;
-      } else {
-        this.is_show_guanjin = false;
-      }
-
       // 有电竞竞技则插入 电竞2000
       // 并且 商户有开启 电子竞技
       if (esport_menu.length && this.is_mi_2000_open_int) {
-        let esports_number = 2000;
-        // left_menu.splice(2, 0, esports_number);
+        // let esports_number = 2000;
+        left_menu.splice(2, 0, 2000);
         // 替换默认数据 使用接口数据
         this.dianjing_sublist = [...esport_menu];
         // 电竞版本 用于页面更新
@@ -443,8 +437,6 @@ class BaseData {
       } else {
         this.is_mi_2000_open = false;
       }
-
-      console.error(' this.dianjing_sublis', this.dianjing_sublis)
 
       // 判断有没有 vr数据
       // vr数据菜单（紧急开关） vr商户开关
@@ -463,13 +455,10 @@ class BaseData {
       // console.warn('left_menu',left_menu)
       // console.warn('菜单数据处理完成-----')
       // 数据对比替换
-      let old_menu = JSON.stringify(this.mew_menu_list_res);
-      let new_menu = JSON.stringify(menu_info);
 
       // if (old_menu != new_menu) {
       this.mew_menu_list_res = menu_info;
-
-      localStorage.setItem("is_session_base_data", JSON.stringify());
+      // localStorage.setItem("is_session_base_data", JSON.stringify());
       // 计算 live
       this.set_mi_gunqiu();
       // }
