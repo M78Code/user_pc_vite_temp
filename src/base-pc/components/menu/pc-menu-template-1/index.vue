@@ -19,7 +19,7 @@
       </div>
     </div>
 
-    <div style="display: none;">{{ BaseData.BaseData_version }}</div>
+    <div style="display: none;">{{ BaseData.base_data_version }}</div>
     <div v-for="item1 in BaseData.left_menu_base_mi_arr" :key="`${jinri_zaopan_}_${item1}`"
       :class="set_vr_or_guanjun_border(item1)">
       <!--   赛种-->
@@ -77,6 +77,7 @@
           </div>
           <!--  常规赛种 （不含娱乐）  下的  玩法 （ 不含冠军 ）        结束    -->
         </template>
+       
         <!-- 常规赛种   （含娱乐）  增补  冠军玩法    开始 -->
         <div :key="`${jinri_zaopan_}_${item1}_guanjun_1`" @click.stop="lv_2_click_wapper_2({ lv1_mi: item1 })"
           v-if="BaseData.commn_sport_guanjun_obj[`mi_${item1}`]"
@@ -146,7 +147,7 @@ const first_change = ref(false);
 
 
 onMounted(() => {
-  console.log('进入了');
+  console.error('进入了',BaseData);
   handle_click_jinri_zaopan(2)
 })
 
