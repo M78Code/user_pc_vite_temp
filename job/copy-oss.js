@@ -11,7 +11,7 @@ import { ensure_write_folder_exist,  write_file, remove_file } from "./write-fol
 import axios from "axios";
 // 本次打包的 客户端版本
 import BUILD_VERSION_CONFIG from "./output/version/build-version.js";
-let BUILD_VERSION = BUILD_VERSION_CONFIG.BUILD_VERSION;
+ const  { BUILD_VERSION , CURRENT_ENV } = BUILD_VERSION_CONFIG;
 // 本次打包的 目录
 import BUILD_DIR_CONFIG from "./output/dir/index.js";
 let BUILD_DIR_NAME = BUILD_DIR_CONFIG.BUILD_DIR_NAME;
@@ -55,7 +55,7 @@ if (is_dist) {
 
 export const  compute_oss_file_path_arr=(current_env)=>{
 
-  return ENV_OSS_OBJ[ENV_OSS_OBJ] ||[]
+  return ENV_OSS_OBJ[current_env] ||[]
 
 }
 
