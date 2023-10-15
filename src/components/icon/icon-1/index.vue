@@ -19,7 +19,7 @@
 import { defineComponent, computed } from "vue";
 //-------------------- 对接参数 prop 注册  开始  -------------------- 
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
-import { component_symbol, need_register_props } from "src/components/search/config/index.js"
+// import { component_symbol, need_register_props } from "src/components/search/config/index.js"
 useRegistPropsHelper(component_symbol, need_register_props)
 const props = defineProps({
   name: String,

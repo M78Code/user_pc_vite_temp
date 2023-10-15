@@ -70,7 +70,7 @@ import { utils, MenuData, LayOutMain_pc } from 'src/core/index.js'
 
 //-------------------- 对接参数 prop 注册  开始  -------------------- 
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
-import { component_symbol, need_register_props } from "src/components/search/config/index.js"
+// import { component_symbol, need_register_props } from "src/components/search/config/index.js"
 useRegistPropsHelper(component_symbol, need_register_props)
 const props = defineProps({})
 // const computed_props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
@@ -113,6 +113,9 @@ const sports_tab_index = ref(0)
 /** 搜索球种 */
 const search_csid = ref(1)
 
+const search_width = ref(LayOutMain_pc.layout_search_width)
+// let main_width = ref(LayOutMain_pc.layout_main_width + 'px')
+
 /* 路由对象 */
 const route = useRoute();
 
@@ -148,6 +151,10 @@ const layout_size = ref(layoutReducer.layout_size)
 * 路径: project_path\src\store\module\global.js
 */
 const is_unfold_multi_column = ref(globalReducer.is_unfold_multi_column)
+
+onMounted(() => window.addEventListener('resize', on_resize))
+
+
 const unsubscribe = store.subscribe(() => {
   const { searchReducer: new_searchReducer, layoutReducer: new_layoutReducer, globalReducer: new_globalReducer } = store.getState()
   search_isShow.value = new_searchReducer.search_isShow
@@ -201,16 +208,14 @@ function set_sports_tab_index(index) {
   search_csid.value = sports_list[index_].id
 }
 
-const search_width = ref(LayOutMain_pc.layout_search_width)
-const main_width = ref(LayOutMain_pc.layout_main_width + 'px')
+
 /** 窗口变化 */
 function on_resize() {
   LayOutMain_pc.set_layout_main_width()
   LayOutMain_pc.set_layout_search_width()
   search_width.value = LayOutMain_pc.layout_search_width
-  main_width.value = LayOutMain_pc.layout_main_width + 'px'
+  // main_width.value = LayOutMain_pc.layout_main_width + 'px'
 }
-onMounted(() => window.addEventListener('resize', on_resize))
 onUnmounted(() => window.removeEventListener('resize', on_resize))
 
 </script>
@@ -225,7 +230,7 @@ export default defineComponent({
 .search-position {
   position: fixed;
   left: 0;
-  width: v-bind(main_width);
+  // width: v-bind(main_width);
   // right: 0;
   top: 60px;
   bottom: 0;
