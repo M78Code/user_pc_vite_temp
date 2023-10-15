@@ -88,7 +88,7 @@
 import comSelect from "src/base-pc/components/match-results/select/select/index.vue";
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
-import { t } from "src/core/index.js";
+import { t, GlobalSwitchClass, PageSourceData } from "src/core/index.js";
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import { ref, computed } from 'vue';
 import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
@@ -98,6 +98,8 @@ import store from 'src/store-redux/index.js';
 import filterHeader from "src/core/filter-header/filter-header.js";
 import { IconWapper } from 'src/components/icon'
 
+const page_source = PageSourceData.page_source;
+const is_search_page = page_source.includes('search');
 let state = store.getState();
 // const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
 const props = defineProps({
@@ -121,15 +123,15 @@ const props = defineProps({
 
 
 // 列表显示内容  match:赛事 collect:收藏 search:搜索
-const vx_layout_list_type = ref(state.layoutReducer.layout_list_type);
+const vx_layout_list_type = ref('match');
 // 获取当前页路由信息
-const vx_layout_cur_page = ref(state.layoutReducer.layout_cur_page);
+const vx_layout_cur_page = ref(null);
 
 
 // 收起右侧详情 展开多列玩法
-const get_unfold_multi_column = ref(state.globalReducer.is_unfold_multi_column);
+const get_unfold_multi_column = ref(GlobalSwitchClass.is_unfold_multi_column);
 
-const vx_match_sort = ref(state.globalReducer.match_sort)
+const vx_match_sort = ref(GlobalSwitchClass.get_match_sort())
 const match_sort_show = ref(false) //切换排序是否显示
 const leagueName = ref("") //模糊搜索联赛条件
 const time_list = ref(null) //即将开赛筛选数据
@@ -154,17 +156,17 @@ const sort_option = computed(() => {
   return option
 })
 // 是否显示刷新 btn
-const computed_show_refresh = computed(() => {
-  // !["hot_all"].includes(vx_cur_menu_type.value.type_name) &&
-  let _show = 
-    filterHeader.vx_show_filter_popup == false &&
-    vx_layout_cur_page.value.cur != "search"
-  return _show
-})
-//是否搜索页
-const is_search_page = computed(() => {
-  return vx_layout_cur_page.value.cur == "search";
-})
+// const computed_show_refresh = computed(() => {
+//   // !["hot_all"].includes(vx_cur_menu_type.value.type_name) &&
+//   let _show = 
+//     filterHeader.vx_show_filter_popup == false &&
+//     vx_layout_cur_page.value.cur != "search"
+//   return _show
+// })
+// //是否搜索页
+// const is_search_page = computed(() => {
+//   return vx_layout_cur_page.value.cur == "search";
+// })
 //当前页面菜单title
 const page_title = computed(() => {
   //当前点击的是今日还是早盘 今日 2 早盘为3

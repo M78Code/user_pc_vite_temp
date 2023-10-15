@@ -30,7 +30,7 @@ let is_virtual = MenuData.is_virtual_sport;
 //
 let is_search = PageSourceData.is_search();
 let is_show_hot = ref(false);
-
+let vx_pre_filter_select_obj = []
 /**
  * @Description 合并连续相同的联赛
  * @param {undefined} undefined
@@ -123,7 +123,7 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 			!backend_run &&
 			[2, 3].includes(MenuData.menu_root) &&
 			[2, 3].includes(MenuData.menu_root) &&
-			vx_pre_filter_select_obj.value.length > 0 &&
+			vx_pre_filter_select_obj.length > 0 &&
 			vx_filter_select_obj.value.length == 0
 		) {
 			let new_data = {
@@ -138,7 +138,7 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 					if (
 						tid &&
 						new_data[key] &&
-						filterHeader.vx_pre_filter_select_obj.includes(tid)
+						vx_pre_filter_select_obj.includes(tid)
 					) {
 						new_data[key].push(league);
 						if (!new_filter.includes(tid)) {

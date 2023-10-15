@@ -47,19 +47,19 @@ const { globalReducer } = store.getState()
 * 全局点击事件数 default: 0
 * 路径: project_path\src\store\module\global.js
 */
-const global_click = ref(globalReducer.global_click)
-/** 
-* 用户余额是否展示状态 default: day
-*/
+// const global_click = ref(globalReducer.global_click)
+// /** 
+// * 用户余额是否展示状态 default: day
+// */
 const theme = ref(UserCtr.theme)
 const lang = ref(UserCtr.lang)
 
-const unsubscribe = store.subscribe(() => {
-    const { globalReducer: new_globalReducer } = store.getState()
-    global_click.value = new_globalReducer.global_click
-})
-/** 销毁监听 */
-onUnmounted(unsubscribe)
+// const unsubscribe = store.subscribe(() => {
+//     const { globalReducer: new_globalReducer } = store.getState()
+//     global_click.value = new_globalReducer.global_click
+// })
+// /** 销毁监听 */
+// onUnmounted(unsubscribe)
 
 /**
  * @Description:显示设置弹层
@@ -77,16 +77,16 @@ function handle_set_theme(new_theme) {
 }
 
 /** 点击任何地方关闭弹窗 */
-watch(
-    () => global_click.value,
-    () => {
-        if (hits.value % 2 == 1) {
-            hits.value++;
-            return;
-        }
-        is_active.value = false
-    }
-)
+// watch(
+//     () => global_click.value,
+//     () => {
+//         if (hits.value % 2 == 1) {
+//             hits.value++;
+//             return;
+//         }
+//         is_active.value = false
+//     }
+// )
 
 </script>
   

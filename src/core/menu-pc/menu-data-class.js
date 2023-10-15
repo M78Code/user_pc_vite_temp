@@ -58,10 +58,10 @@ class MenuData {
     //顶层  标签 ， 早盘  今日  串关  热门 滚球
     // this.top_category_label = "play";
     //左侧菜单的 整体输出
-    // this.left_menu_result = {
-    //   lv1_mi: "", //一级菜单
-    //   lv2_mi: "", // 二级菜单
-    // };
+    this.left_menu_result = {
+      lv1_mi: "", //一级菜单
+      lv2_mi: "", // 二级菜单
+    };
     // 左侧菜单的 root 节点   root ：  1 滚球  2 今日   3  早盘   500 热门赛事  400 冠军   300 VR  电竞 2000
     this.menu_root = 1;
     // 与 menu_root  类似，主要用于收藏按钮的显示隐藏，使用menu_root  由于这个值被监听，会有其他情况发生
@@ -617,14 +617,14 @@ class MenuData {
     }
 
     //页面是否达到最小宽度 true是/false否
-    if (state.layoutReducer.is_min_width) {
-      is_multi_column = false;
-    }
+    // if (state.layoutReducer.is_min_width) {
+    //   is_multi_column = false;
+    // }
     // is_unfold_multi_column: false, //是否展开多列玩法
     this.is_multi_column =
       is_multi_column &&
-      !window.frames.length != parent.frames.length &&
-      state.layoutReducer.is_unfold_multi_column;
+      !window.frames.length != parent.frames.length
+      // && state.layoutReducer.is_unfold_multi_column;
     // store.dispatch("set_unfold_multi_column", this.is_multi_column);
     // console.warn('this.is_multi_column ',this.is_multi_column )
   }

@@ -66,7 +66,7 @@ import { ref, reactive, onMounted, onUnmounted, defineComponent } from "vue";
 import lodash from "lodash";
 import { useRoute } from "vue-router";
 import { useMittOn, MITT_TYPES } from 'src/core/mitt'
-import { utils, MenuData, LayOutMain_pc } from 'src/core/index.js'
+import { utils, MenuData, LayOutMain_pc, GlobalSwitchClass } from 'src/core/index.js'
 
 //-------------------- 对接参数 prop 注册  开始  -------------------- 
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
@@ -125,7 +125,7 @@ const { searchReducer, layoutReducer, globalReducer } = store.getState();
  * 是否显示搜索组件 default: false
  * 路径: project_path\src\store\module\search.js
  */
-const search_isShow = ref(searchReducer.search_isShow)
+const search_isShow = ref(false)
 /** 保存显示搜索组件状态 */
 const set_search_status = (data) => (store.dispatch({
   type: "SET_SEARCH_STATUS",
@@ -150,7 +150,7 @@ const layout_size = ref(layoutReducer.layout_size)
 * 是否展开多列玩法 default: object
 * 路径: project_path\src\store\module\global.js
 */
-const is_unfold_multi_column = ref(globalReducer.is_unfold_multi_column)
+const is_unfold_multi_column = ref(GlobalSwitchClass.is_unfold_multi_column)
 
 onMounted(() => window.addEventListener('resize', on_resize))
 

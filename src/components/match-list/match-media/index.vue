@@ -50,10 +50,11 @@ import { useRoute } from 'vue-router';
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import {is_eports_csid}  from "src/core/constant/util/csid-util";
-import { get_match_status, UserCtr, t, compute_css } from 'src/core/index'
+import { get_match_status, UserCtr } from 'src/core/index'
 import details from 'src/core/match-list-pc/details-class/details.js'
 import { other_play_name_to_playid } from 'src/core/constant/config/data-class-ctr/index.js';
 import store from 'src/store-redux/index.js';
+import { t, compute_css } from "src/core/index.js";
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 
 
@@ -69,7 +70,7 @@ const props = defineProps({
 
 const route = useRoute();
 // 左侧详情参数
-const vx_detail_params = reactive({})
+const vx_detail_params = reactive(null)
 //视屏播放类型
 const vx_play_media = reactive(null)
 let lang = UserCtr.lang;

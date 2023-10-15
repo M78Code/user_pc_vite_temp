@@ -47,26 +47,26 @@ const hits = ref(0)
 const langs = ref(langs_mjs)
 const lang = ref(UserCtr.lang)
 
-/** stroe仓库 */
-const { globalReducer } = store.getState()
-/** 全局点击事件数 */
-const global_click = ref(globalReducer.global_click)
-watch(
-    () => global_click.value,
-    () => {
-        if (hits.value % 2 == 1) {
-            hits.value++;
-            return;
-        }
-        show_popup.value = false;
-    }
-)
-const unsubscribe = store.subscribe(() => {
-    const { globalReducer: new_globalReducer } = store.getState()
-    global_click.value = new_globalReducer.global_click
-})
-/** 销毁监听 */
-onUnmounted(unsubscribe)
+// /** stroe仓库 */
+// const { globalReducer } = store.getState()
+// /** 全局点击事件数 */
+// const global_click = ref(globalReducer.global_click)
+// watch(
+//     () => global_click.value,
+//     () => {
+//         if (hits.value % 2 == 1) {
+//             hits.value++;
+//             return;
+//         }
+//         show_popup.value = false;
+//     }
+// )
+// const unsubscribe = store.subscribe(() => {
+//     const { globalReducer: new_globalReducer } = store.getState()
+//     global_click.value = new_globalReducer.global_click
+// })
+// /** 销毁监听 */
+// onUnmounted(unsubscribe)
 
 /** 语言列表 */
 const languageList = ref([])

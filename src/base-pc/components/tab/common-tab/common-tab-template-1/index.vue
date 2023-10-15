@@ -195,9 +195,7 @@ if (props.is_drag) {
 }
 
 // 获取页面宽高信息 --可以废弃，废弃改动较大
-const get_layout_list_size = ref(
-  store.getState().layoutReducer.layout_list_size
-);
+const get_layout_list_size = ref({});
 const un_subscribe = store.subscribe(() => {
   let state_ = store.getState();
   get_layout_list_size.value = state_.layoutReducer.layout_list_size;

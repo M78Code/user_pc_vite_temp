@@ -181,17 +181,17 @@ const is_invalid = ref(false)
  * 左侧列表显示形式 -- normal：展开 mini：收起 default: 'normal'
  * 路径: project_path\src\store\module\menu.js
  */
-const main_menu_toggle = ref(menuReducer.main_menu_toggle)
+const main_menu_toggle = ref({})
 /** 
  * 获取菜单收起状态 default: false
  * 路径: project_path\src\store\module\menu.js
  */
-const menu_collapse_status = ref(menuReducer.menu_collapse_status)
+const menu_collapse_status = ref({})
 /** 
  * 当前菜单类型 play 滚球  hot热门赛事   virtual_sport虚拟体育   winner_top冠军聚合页 today 今日   early早盘 bet串关 default：Object
  * 路径: project_path\src\store\module\menu.js
  */
-const cur_menu_type = ref(menuReducer.cur_menu_type)
+const cur_menu_type = ref({})
 
 /** 批量注册mitt */
 const { emitters_off } = useMittEmitterGenerator([
