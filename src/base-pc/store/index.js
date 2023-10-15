@@ -9,7 +9,7 @@ import menuReducer from "./module/menu";
 // import detailsReducer from "./module/details";
 import layoutReducer from "./module/layout";
 import globalReducer from "./module/global";
-import filterReducer from "./module/filter_store";
+// import filterReducer from "./module/filter_store";
 import searchReducer from "./module/search";
 
 
@@ -23,6 +23,6 @@ export {
   // detailsReducer,
   layoutReducer,
   globalReducer,
-  filterReducer,
+  // filterReducer,
   searchReducer,
 };

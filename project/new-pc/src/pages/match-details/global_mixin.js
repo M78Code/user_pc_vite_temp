@@ -13,6 +13,7 @@ import video from "src/core/video/video.js";
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 import { useRouter, useRoute } from "vue-router";
 import store from "src/store-redux/index.js";
+import filterHeader from "src/core/filter-header/filter-header.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 export const useGetGlobal = ({ details_params, back_to }) => {
   const route = useRoute();
@@ -27,7 +28,6 @@ export const useGetGlobal = ({ details_params, back_to }) => {
   const get_uid = UserCtr.get_uid();
   // 获取当前页路由信息
   const layout_cur_page = ref(store_state.layoutReducer.layout_cur_page);
-  const filter_select_obj = ref(store_state.filterReducer.filter_select_obj); // 选择的筛选数据
   // 获取当前菜单类型
   const cur_menu_type = ref(store_state.menuReducer.cur_menu_type);
   // 赛事列表排序 1:按联赛排序 2:按时间排序
@@ -42,7 +42,6 @@ export const useGetGlobal = ({ details_params, back_to }) => {
   let un_subscribe = store.subscribe(() => {
     let state_data = store.getState();
     layout_cur_page.value = state_data.layoutReducer.layout_cur_page;
-    filter_select_obj.value = state_data.filterReducer.filter_select_obj;
     cur_menu_type.value = state_data.menuReducer.cur_menu_type;
     match_sort.value = state_data.globalReducer.match_sort;
     play_media.value = state_data.matchesReducer.play_media;
@@ -219,7 +218,7 @@ export const useGetGlobal = ({ details_params, back_to }) => {
   //      * @return {string} 以 , 号分隔的联赛ID
   //      */
   const mx_filter_select_ids = () => {
-    return filter_select_obj.value.join(","); //TODO
+    return filterHeader.filter_select_obj.join(","); //TODO
   };
 
   return {
