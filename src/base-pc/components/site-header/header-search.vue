@@ -58,19 +58,19 @@ const { searchReducer, menuReducer } = store.getState();
  * 是否显示搜索组件 default: false
  * 路径: project_path\src\store\module\search.js
  */
-const search_isShow = ref(searchReducer.search_isShow)
+const search_isShow = ref(false)
 /** 
  * 获取菜单收起状态 default: false
  * 路径: project_path\src\store\module\menu.js
  */
-const menu_collapse_status = ref(menuReducer.menu_collapse_status)
-const unsubscribe = store.subscribe(() => {
-  const { searchReducer: new_searchReducer, menuReducer: new_menuReducer} = store.getState();
-  search_isShow.value = new_searchReducer.search_isShow
-  menu_collapse_status.value = new_menuReducer.menu_collapse_status
-})
+// const menu_collapse_status = ref(menuReducer.menu_collapse_status)
+// const unsubscribe = store.subscribe(() => {
+//   const { searchReducer: new_searchReducer, menuReducer: new_menuReducer} = store.getState();
+//   search_isShow.value = new_searchReducer.search_isShow
+//   menu_collapse_status.value = new_menuReducer.menu_collapse_status
+// })
 /** 销毁监听 */
-onUnmounted(unsubscribe)
+// onUnmounted(unsubscribe)
 
 /** 搜索热推赛事 */
 const search_hot_push = ref(new SearchHotPush());
@@ -118,7 +118,7 @@ const set_is_mini_menu = (data) =>
   });
 /** 内嵌版 菜单状态切换按钮 */
 function handle_menu_collapse() {
-  set_is_mini_menu(!menu_collapse_status.value);
+  // set_is_mini_menu(!menu_collapse_status.value);
 }
 </script>
 

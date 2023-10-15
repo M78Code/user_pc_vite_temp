@@ -52,28 +52,28 @@ const cur_odd = ref(UserCtr.odds.cur_odd || 'EU')
 const pre_odd = ref(UserCtr.odds.pre_odds || 'EU')
 
 /** stroe仓库 */
-const { globalReducer, menuReducer } = store.getState()
-/** 获取当前菜单类型 */
-let cur_menu_type = reactive(menuReducer.cur_menu_type)
+// const { globalReducer, menuReducer } = store.getState()
+// /** 获取当前菜单类型 */
+// let cur_menu_type = reactive(menuReducer.cur_menu_type)
 
-/** 全局点击事件数 */
-const global_click = ref(globalReducer.global_click)
-watch(
-    () => global_click.value,
-    () => {
-        if (hits.value % 2 == 1) {
-            hits.value++;
-            return;
-        }
-        is_active.value = false;
-    }
-)
-const unsubscribe = store.subscribe(() => {
-    const { globalReducer: new_globalReducer } = store.getState()
-    global_click.value = new_globalReducer.global_click
-})
-/** 销毁监听 */
-onUnmounted(unsubscribe)
+// /** 全局点击事件数 */
+// const global_click = ref(globalReducer.global_click)
+// watch(
+//     () => global_click.value,
+//     () => {
+//         if (hits.value % 2 == 1) {
+//             hits.value++;
+//             return;
+//         }
+//         is_active.value = false;
+//     }
+// )
+// const unsubscribe = store.subscribe(() => {
+//     const { globalReducer: new_globalReducer } = store.getState()
+//     global_click.value = new_globalReducer.global_click
+// })
+// /** 销毁监听 */
+// onUnmounted(unsubscribe)
 
 /**
 * @Description:显示切换盘口弹层
@@ -128,15 +128,15 @@ function on_click_handicap(row) {
     });
 }
 
-watch(
-    () => cur_menu_type.type_name,
-    (new_, old_) => {
-        // console.log(`=======type_name========new:${new_}=========old:${old_}`);
-        if (new_ == 'winner_top' && cur_odd.value !== 'EU') {
-            UserCtr.set_cur_odds(cur_odd);
-        }
-    }
-)
+// watch(
+//     () => cur_menu_type.type_name,
+//     (new_, old_) => {
+//         // console.log(`=======type_name========new:${new_}=========old:${old_}`);
+//         if (new_ == 'winner_top' && cur_odd.value !== 'EU') {
+//             UserCtr.set_cur_odds(cur_odd);
+//         }
+//     }
+// )
 
 </script>
 

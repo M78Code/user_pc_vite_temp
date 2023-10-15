@@ -104,6 +104,7 @@ function get_match_list_by_mid_for_base_data_res (mid, csid, type) {
 };
 // 使用元数据默认显示 后面替换
 function set_base_data_init () {
+	console.log('MenuData', MenuData);
 	// return
 	// 当前的分类 左侧菜单数据 中间件数据
 	const {

@@ -67,17 +67,18 @@ const route = useRoute()
 const router = useRouter()
 
 /** stroe仓库 */
-const store_data = store.getState()
-const { searchReducer } = store_data
+// const store_data = store.getState() || {}
+// const { searchReducer: {} } = store_data
 /** 
 * 是否显示搜索组件 default: false
 * 路径: project_path\src\store\module\search.js
 */
-const { search_isShow } = searchReducer
+// const { search_isShow } = searchReducer
 /** 
  * 选择的选项 menu_obj
  * 路径: src\store-redux\module\betInfo.js
  */
+let search_isShow = false;
 const menu_obj = ref({})
 //  const { menu_obj } = betReducer
 

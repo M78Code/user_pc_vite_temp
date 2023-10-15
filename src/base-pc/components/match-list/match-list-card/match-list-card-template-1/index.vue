@@ -94,7 +94,6 @@ watch(() => MatchListCardDataClass.list_version.value, () => {
 let sticky_top = ref(null);
 // 组件是否加载完成
 const is_mounted = ref(true);
-let vx_get_layout_size = ref(state.layoutReducer.layout_size);
 /**
  * @Description 设置卡片样式
  * @param {undefined} undefined

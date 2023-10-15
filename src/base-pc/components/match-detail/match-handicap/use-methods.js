@@ -40,20 +40,19 @@ export const useMethods = ({ props,emit }) => {
   const showDetails = ref(false);
 
   //  ============================store===================
-  const store_state = store.getState();
   // 获取页面宽高信息 --可以废弃，废弃改动较大
-  const get_layout_list_size = ref(store_state.layoutReducer.layout_list_size);
+  const get_layout_list_size = ref({});
   // 详情页玩法列表单双列 0单列， 1双列
-  const get_layout_statu = ref(store_state.matchesReducer.layout_statu);
+  const get_layout_statu = ref({});
   // 获取用户uid
   // const get_uid = UserCtr.get_uid();
   const get_uid = ref(null);
   // 当前所选的玩法集子项id
-  const get_tabs_active_id = ref(store_state.matchesReducer.tabs_active_index);
+  const get_tabs_active_id = ref({});
   // 获取当前页路由信息
-  const vx_layout_cur_page = ref(store_state.layoutReducer.layout_cur_page);
+  const vx_layout_cur_page = ref({});
   // 获取指定的玩法id
-  const get_top_id = ref(store_state.matchesReducer.topId);
+  const get_top_id = ref({});
   // 获取指定的玩法id
   const get_right_zoom = ref(LayOutMain_pc.zoom);
     //  ============================computed===================
