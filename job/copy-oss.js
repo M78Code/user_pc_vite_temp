@@ -59,18 +59,17 @@ export const  compute_oss_file_path_arr=(current_env)=>{
 
 }
 
-let oss_arr = [
-];
+let oss_arr =  compute_oss_file_path_arr(CURRENT_ENV)
 
 
-for(let i in ENV_OSS_OBJ){
+// for(let i in ENV_OSS_OBJ){
 
-  oss_arr=[
-    ...oss_arr,
-    ...ENV_OSS_OBJ[i]
-  ]
+//   oss_arr=[
+//     ...oss_arr,
+//     ...ENV_OSS_OBJ[i]
+//   ]
 
-}
+// }
 
 
 

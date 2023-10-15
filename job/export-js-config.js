@@ -22,8 +22,8 @@ remove_file(write_folder); //del  old file
 //确保配置 输出目录存在
 ensure_write_folder_exist(write_folder);
 function resolve_merchant_config_js() {
-  const { js } = final_merchant_config;
-  const { detail, version } = js; //获取版本号和 详情
+  const { js={} } = final_merchant_config;
+  const { detail={}, version } = js; //获取版本号和 详情
   const js_obj = {}
   for(let key in detail){
     lodash.set( js_obj  , key ,   detail[key] )

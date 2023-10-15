@@ -20,7 +20,7 @@ remove_file(write_folder) //del  old file
 ensure_write_folder_exist(write_folder);
 function resolve_merchant_config_i18n() {
   const {i18n={},clientLanguage=[]} = final_merchant_config 
-  const { detail, version } = i18n; //获取版本号和 详情
+  const { detai={}, version } = i18n; //获取版本号和 详情
   const i18n_obj = {}
   const key_path_obj={}
   clientLanguage.map(language=>{

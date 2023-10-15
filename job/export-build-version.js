@@ -22,8 +22,6 @@ const PROJECT_MAP = {
 };
 //布局名字
 const PROJECT_NAME = PROJECT_MAP[PROJECT];
-//提取项目名称对应是数字
-const PROJECT_NUM = PROJECT.split("_")[1];
 // --------------------------------
 // 所有  目标环境标识
 const ALL_ENV_ARR = [
@@ -47,6 +45,18 @@ const ENVSTR_MAP = {
 //当前环境
 const CURRENT_ENV = ENVSTR_MAP[ENVSTR];
 
+
+const OSS_FILE_MAP = {
+  dev: "dev",
+  test: "test",
+  geli: "lspre",
+  mini: "mini",
+  shiwan: "play",
+  online: "prod",
+};
+
+const OSS_FILE_NAME = OSS_FILE_MAP[ENVSTR]
+
 function format_date(value) {
   let time = new Date(parseInt(value));
   let y = time.getFullYear();
@@ -68,7 +78,8 @@ const config = {
   PROJECT_NAME,
   IS_PC: PROJECT_NAME.includes('pc'),
   PUCK_UP_TIME,
-  ALL_ENV_ARR
+  ALL_ENV_ARR,
+  OSS_FILE_NAME
  
 };
 console.log(config);
