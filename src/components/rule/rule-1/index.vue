@@ -25,7 +25,7 @@ const props = defineProps({})
 //-------------------- 对接参数 prop 注册  结束  -------------------- 
 
 /** 环境变量 */
-const current_env = window.BUILDIN_CONFIG.current_env
+const current_env = window.BUILDIN_CONFIG.CURRENT_ENV
 /** 体育规则地址-PC */
 const rule_url = ref('')
 /** 获取pc体育规则地址 */

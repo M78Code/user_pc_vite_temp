@@ -35,12 +35,7 @@ let default_html_info = {
   body_bg_day: "FFFFFF",
   // body背景颜色 夜间版
   body_bg_night: "191C24",
-  // 主logo日间
-  day_logo: "",
-  // 主logo夜间
-  night_logo: "",
-  // 浏览器兼容页logo
-  compatible_logo: "",
+ 
  
  
 };
@@ -62,14 +57,7 @@ export const   htmlVariables = {
     max_width: `${html_info.max_width}`,
     body_bg_day: `${html_info.body_bg_day}`,
     body_bg_night: `${html_info.body_bg_night}`,
-    day_logo: `${html_info.day_logo}`,
-    night_logo: `${html_info.night_logo}`,
-    compatible_logo: `${html_info.compatible_logo}`,
-    default_theme: `${html_info.default_theme}`,
-
-
-
-
+ 
     BRANCH: process.env.BRANCH,
     TAG: process.env.TAG,
     BUILD_TAG: process.env.BUILD_TAG  ,
