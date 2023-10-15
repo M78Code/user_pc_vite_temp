@@ -8,25 +8,23 @@
     <!-- 今日赛事(mcg:3) 早盘(mcg:4) || 1小时内开赛超时 -->
     <template
       v-if="
-        ([3, 4].includes(Number(match_props.match.mcg)) ||
+        ([3, 4].includes(Number(match.mcg)) ||
           before_timeout ||
-          is_eports_csid(match_props.match.csid)) &&
-        !get_match_status(match_props.match.ms)
+          is_eports_csid(match.csid)) &&
+        !get_match_status(match.ms)
       "
     >
-      <template>
         <span style="min-width: 60px"
           >{{ computed_today_early_date[0] }}<br
         /></span>
         <span>{{ computed_today_early_date[1] }}</span>
-      </template>
     </template>
     <!-- 1小时内开赛(mcg:2) && !1小时内开赛超时-->
-    <template v-if="match_props.match.mcg == 2 && !before_timeout">
-      <MatchTimer
+    <template v-if="match.mcg == 2 && !before_timeout">
+      <timer
         :tconfig="{
-          match: match_props.match,
-          time: Number(match_props.match.mgt),
+          match: match,
+          time: Number(match.mgt),
           step: -1,
           timer_ms: 1000,
           on_time_change: before_start_timer_change,
@@ -35,15 +33,15 @@
     </template>
 
     <!-- 滚球(ms:1) -->
-    <template v-if="get_match_status(match_props.match.ms, [110])">
+    <template v-if="get_match_status(match.ms, [110])">
       <!-- 计时器  -->
-      <MatchTimer
+      <timer
         v-if="inplay_match_type == 1"
         :tconfig="{
-          match: match_props.match,
+          match: match,
           time: cur_timer(),
           time_format: (second) => format_second_ms(second, 'default'),
-          step: match_props.match.mess == 0 ? 0 : get_inplay_timer_step,
+          step: match.mess == 0 ? 0 : get_inplay_timer_step,
           timer_ms: 1000,
           on_time_change: inplay_timer_change,
         }"
@@ -51,7 +49,7 @@
 
       <!-- 显示:00:00 || 节制  -->
       <span v-show="[0, 2].includes(inplay_match_type)">{{
-       utils.counting_time_ctr_show_format(match_props.match, inplay_match_content)
+       utils.counting_time_ctr_show_format(match, inplay_match_content)
       }}</span>
     </template>
   </div>
@@ -61,14 +59,11 @@
 // import global_mixin from "/mixins/global/global_mixin.js";
 // import msc_mixin from "/mixins/common/msc.js";
 // import time_format_mixin from "/mixins/common/time_format";
-// import timer from "src/components/timer/timer.vue";
-import {MatchTimer} from "src/components/match-timer/index"
+import timer from "src/components/timer/timer.vue";
 import {utils,get_match_status,i18n_t,format_second_ms ,t,useMittEmit, useMittOn, MITT_TYPES,format_time_zone_millisecond} from 'src/core/index.js';
 import {is_eports_csid}  from "src/core/constant/util/csid-util";
-console.log(is_eports_csid,'is_eports_csid');
 import lodash from "lodash";
 
-// import { format_second_ms } from "src/core/format/index.js";
 // import { t } from "src/core/index.js";;
 // import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/";
 import { get_remote_time,format_date_base_obj } from "src/core/format/index.js"
@@ -80,11 +75,14 @@ export default {
   // mixins: [global_mixin, msc_mixin, time_format_mixin],
 
   components: {
-    // matchTimer,
+    timer,
   },
   props: {
     // 当前赛事信息
-    match_props: Object,
+    match: {
+      type: Object,
+      default: () => {}
+    },
     // 行数
     rows: {
       type: Number,
@@ -111,16 +109,16 @@ export default {
   },
   created() {
     // C01赛事使用mstrc字段数据赋值mst
-    let mstrc = lodash.get(this.match_props.match, "mstrc");
-    if (lodash.get(this.match_props.match, "cds") == "C01" && mstrc) {
-      this.match_props.match.mst = mstrc;
+    let mstrc = lodash.get(this.match, "mstrc");
+    if (lodash.get(this.match, "cds") == "C01" && mstrc) {
+      this.match.mst = mstrc;
     }
   },
   computed: {
     // 今日&&早盘时间
     computed_today_early_date() {
       let _mgt = format_time_zone_millisecond(
-        Number(this.match_props.match.mgt)
+        Number(this.match.mgt)
       );
       var date_obj = format_date_base_obj(_mgt);
       let rs_date = i18n_t("time.time_date_5")
@@ -133,7 +131,7 @@ export default {
 
     // 滚球 timer-dom 组件 步长
     get_inplay_timer_step() {
-      let { csid, mmp, mle } = this.match_props.match;
+      let { csid, mmp, mle } = this.match;
 
       let timer_step = false;
       csid = parseInt(csid);
@@ -149,10 +147,10 @@ export default {
             timer_step = 1;
             // C01赛事显示倒计时优化(使用每场比赛90分钟进行换算)
             if (
-              lodash.get(this.match_props.match, "cds") == "C01" &&
+              lodash.get(this.match, "cds") == "C01" &&
               csid == 1
             ) {
-              switch (lodash.get(this.match_props.match, "mle") + "") {
+              switch (lodash.get(this.match, "mle") + "") {
                 case "57": // 2 * 4分钟 加中场休息时间4分钟=>按照720秒换算
                   timer_step = 7.5;
                   break;
@@ -245,7 +243,7 @@ export default {
 
   watch: {
     //赛事阶段 对应 code： http://172.18.178.153:8090/pages/viewpage.action?pageId=10165063
-    "match_props.match.mmp": {
+    "match.mmp": {
       handler(cur) {
         this.set_ininplay_match(cur);
       },
@@ -253,19 +251,19 @@ export default {
       immediate: true,
     },
 
-    "match_props.match.ms": {
+    "match.ms": {
       handler(cur) {
-        this.set_ininplay_match(this.match_props.match.mmp);
+        this.set_ininplay_match(this.match.mmp);
       },
     },
 
-    "match_props.match.mess": {
+    "match.mess": {
       handler(cur, pre) {
-        if (cur == "0" && this.match_props.match.csid == 2) {
+        if (cur == "0" && this.match.csid == 2) {
           this.timer_obj && this.timer_obj.clear();
         } else if (cur == 1 && pre != 1) {
           if (this.timer_obj) {
-            this.set_ininplay_match(this.match_props.match.mmp);
+            this.set_ininplay_match(this.match.mmp);
 
             this.timer_obj.replay = true;
             this.timer_obj = this.timer_obj.start();
@@ -277,17 +275,17 @@ export default {
   methods: {
     //热门推荐计算准确时间
     cur_timer() {
-      let timer = Number(this.match_props.match.mst);
+      let timer = Number(this.match.mst);
       // C01赛事使用mstrc字段数据
-      let mstrc = lodash.get(this.match_props.match, "mstrc");
-      if (lodash.get(this.match_props.match, "cds") == "C01" && mstrc) {
+      let mstrc = lodash.get(this.match, "mstrc");
+      if (lodash.get(this.match, "cds") == "C01" && mstrc) {
         timer = Number(mstrc);
       }
-      if (this.match_props.match.cur_timer) {
+      if (this.match.cur_timer) {
         return (
           timer +
           Math.round(
-            (new Date().getTime() - this.match_props.match.cur_timer) / 1000
+            (new Date().getTime() - this.match.cur_timer) / 1000
           )
         );
       } else {
@@ -312,7 +310,7 @@ export default {
         tab_play_keys = "",
         tpl_id,
         mid,
-      } = this.match_props.match || {};
+      } = this.match || {};
       // 水球（16）显示为  < X分钟
       if (csid == 16) {
         let mins = _cur_time / 60;
@@ -324,7 +322,7 @@ export default {
         this.match_list_data
       ) {
         let mst = parseInt(obj.tconfig.time) + obj.timer_tmp;
-        this.match_list_data.set_min15(this.match_props.match, mst, () => {
+        this.match_list_data.set_min15(this.match, mst, () => {
           useMittEmit(MITT_TYPES.EMIT_API_BYMIDS, { mids: [mid] });
         });
       }
@@ -367,7 +365,7 @@ export default {
      */
     set_ininplay_match(mmp) {
       mmp = Number(mmp);
-      let { match } = this.match_props;
+      let { match } = this ;
       let csid = Number(match.csid);
       /** 足球 | 手球 | 橄榄球************************************* */
       if (get_match_status(match.ms)) {

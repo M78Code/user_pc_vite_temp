@@ -6,8 +6,7 @@
 
 // 默认的 需要组合进去的配置  ,
 
-import default_merchant_config_ouzhou_h5 from "./default-config/merchant-config-ouzhou-h5.json"  assert { type: "json" };
-import default_merchant_config_ouzhou_pc from "./default-config/merchant-config-ouzhou-pc.json"  assert { type: "json" };
+ 
 import default_merchant_config_yazhou_h5 from "./default-config/merchant-config-yazhou-h5.json"  assert { type: "json" };
 import default_merchant_config_yazhou_pc from "./default-config/merchant-config-yazhou-pc.json"  assert { type: "json" };
 import default_merchant_config_new_pc from "./default-config/merchant-config-new-pc.json"  assert { type: "json" };

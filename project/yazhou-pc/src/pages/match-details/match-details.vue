@@ -363,5 +363,5 @@ let back_to_timer =null
 }
 </style>
 <style lang="scss">
-@import "./match-details.scss";
+@import "src/base-pc/pages/match-details/match-details.scss";
 </style>
