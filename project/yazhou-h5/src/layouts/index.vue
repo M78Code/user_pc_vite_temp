@@ -62,7 +62,6 @@ import activityIcon from "src/base-h5/components/common/activity-icon.vue"; // �
 import setMenu from "src/base-h5/components/common/set-menu.vue"; // 设置
 import selectDia from "src/base-h5/pages/match-list/components/select-dia.vue"
 import { useRoute } from "vue-router";
-import { BetBoxWapper } from "src/base-h5/components/bet";
 import store from "src/store-redux/index.js";
 import { api_common } from "src/api/index.js";
 import PageSourceData from "src/core/page-source/page-source.js";

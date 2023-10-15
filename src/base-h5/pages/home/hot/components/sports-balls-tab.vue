@@ -9,7 +9,9 @@
       <!-- 热门赛程 骨架屏-->
       <hot-schedule v-if="schedule_loading"></hot-schedule>
       <!-- 足球篮球tab的 赛程列表页面，match-main 是整一块列表页组件 -->
-      <match-container v-show="guess_standings && !schedule_loading"  :wrapper_scroll_top="wrapper_scroll_top"> </match-container>
+      <div class="">
+        <match-container v-show="guess_standings && !schedule_loading"  :wrapper_scroll_top="wrapper_scroll_top"> </match-container>
+      </div>
       <!-- 足球篮球tab的 榜单页 -->
       <template v-if="!guess_standings && !loading_standings_data">
         <!-- header 的tab选项卡 -->
