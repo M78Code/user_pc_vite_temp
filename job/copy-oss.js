@@ -92,7 +92,7 @@ const write_oss_fn = async () => {
     let file_name = compute_file_name(oss_arr[i]);
 
     try {
-      const res = axios.get(oss_arr[i]);
+      const res = await axios.get(oss_arr[i]);
 
       if (res.data) {
         oss_data_obj[file_name] = res.data;
