@@ -19,7 +19,7 @@ remove_file(write_folder) //del  old file
 //确保配置 输出目录存在
 ensure_write_folder_exist(write_folder);
 function resolve_merchant_config_i18n() {
-  const {i18n,clientLanguage=[]} = final_merchant_config 
+  const {i18n={},clientLanguage=[]} = final_merchant_config 
   const { detail, version } = i18n; //获取版本号和 详情
   const i18n_obj = {}
   const key_path_obj={}

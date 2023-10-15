@@ -12,6 +12,8 @@ import default_merchant_config_yazhou_pc from "./default-config/merchant-config-
 import default_merchant_config_new_pc from "./default-config/merchant-config-new-pc.json"  assert { type: "json" };
 import default_merchant_config_app_h5 from "./default-config/merchant-config-app-h5.json"  assert { type: "json" };
 import lodash from 'lodash'
+// 本次打包的 客户端版本
+import BUILD_VERSION_CONFIG from "./output/version/build-version.js";
 //商户配置的详细信息
 
 /**
@@ -56,7 +58,6 @@ const merge_merchant_config_inner = (scg, add_obj) => {
  * @param {*} add_obj  附加信息对象
  */
 export const merge_merchant_config = (scg, add_obj) => {
-  // final_config.version= add_obj.MERCHANT_CONFIG_VERSION
   let final_config = merge_merchant_config_inner(scg, add_obj);
 
   return final_config;

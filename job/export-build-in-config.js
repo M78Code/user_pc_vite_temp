@@ -8,22 +8,10 @@ import {
 } from "./write-folder-file.js";
 import { compute_build_in_config } from "./build-in-config-fn.js";
 import { write_env_file } from "./write-env-file.js";
-import {  DEV_TARGET_VERSION  } from "../dev-target-env.js";
-
-
+// 本次打包的 客户端版本
+import BUILD_VERSION_CONFIG from "./output/version/build-version.js";
+const {ALL_ENV_ARR} = BUILD_VERSION_CONFIG
 // --------------------------------
-// 所有  目标环境标识
-const ALL_ENV_ARR = [
-  "local_local",
-  "local_dev",
-  "local_test",
-  "idc_lspre",
-  "idc_pre",
-  "idc_sandbox",
-  "idc_ylcs",
-  "idc_online",
-];
-
 console.log("----process.argv---", process.argv);
 // 输出所有环境
 let all_env = false;
@@ -35,97 +23,6 @@ if (argv_version) {
     all_env = true;
   }
 }
-// 商户版本 最终配置
-import final_merchant_config from "./output/merchant/config.json" assert { type: "json" };
-// 商户版本号
-const { MERCHANT_CONFIG_VERSION } = final_merchant_config;
-// 常规随环境的   jenkins  部署  参数
-const FRONT_WEB_ENV = (process.env.FRONT_WEB_ENV || "").trim();
-// 模块化打包  构建 zip 版本参数
-const MODULE_SDK_VERSION = (process.env.MODULE_SDK_VERSION || "").trim();
-
-/**
- * 重新计算  current_env 当   模块化打包  构建 zip
- */
-const recompute_current_env_when_MODULE_SDK_VERSION = () => {
-  let current_env = "";
-  //模块化 打包目标环境代码 定向 指定环境
-  console.log(
-    "当前 已指定 试玩环境SDK打包 专用版本号 ， MODULE_SDK_VERSION : " +
-      MODULE_SDK_VERSION
-  );
-  if (MODULE_SDK_VERSION.includes("shiwan")) {
-    current_env = "idc_sandbox";
-  }
-  if (MODULE_SDK_VERSION.includes("online")) {
-    current_env = "idc_online";
-  }
-  console.log(
-    "当前 已指定 试玩环境SDK打包 专用版本号 ， 重定向打包输出的目标环境 :" +
-      current_env
-  );
-  return current_env;
-};
-/**
- * 重新计算  current_env  当   常规随环境的   jenkins  部署
- */
-const recompute_current_env_when_FRONT_WEB_ENV = () => {
-  let current_env = "";
-  //模块化 打包目标环境代码 定向 指定环境
-  console.log(`当前环境已设置 FRONT_WEB_ENV ：  ${FRONT_WEB_ENV}`);
-  console.log(
-    "process.env.FRONT_WEB_ENV：    " +
-      (process.env.FRONT_WEB_ENV || "当前环境未设置 FRONT_WEB_ENV")
-  );
-  current_env = FRONT_WEB_ENV;
-  return current_env;
-};
-
-
-
-
-/**
- * 重新计算  current_env  当    DEV_TARGET_VERSION   构建 zip
- * 本地指定 打包指定版本  重置 本地指定环境
- */
-const recompute_current_env_when_DEV_TARGET_VERSION = () => {
- 
-  let current_env =  '';
-  //模块化 打包目标环境代码 定向 指定环境
-  console.log(
-    "当前 已指定 试玩环境SDK打包 专用版本号 ， DEV_TARGET_VERSION : " +
-    DEV_TARGET_VERSION
-  );
-  if (DEV_TARGET_VERSION.includes("dev")) {
-    current_env = "local_dev";
-  }
-  if (DEV_TARGET_VERSION.includes("test")) {
-    current_env = "local_test";
-  }
-  if (DEV_TARGET_VERSION.includes("geli")) {
-    current_env = "idc_lspre";
-  }
-  if (DEV_TARGET_VERSION.includes("mini")) {
-    current_env = "idc_ylcs";
-  }
-  else if (DEV_TARGET_VERSION.includes("shiwan")) {
-    current_env = "idc_sandbox";
-  }
- else if (DEV_TARGET_VERSION.includes("online")) {
-    current_env = "idc_online";
-  }
-  console.log(
-    "当前 已指定 试玩环境SDK打包 专用版本号 ， 重定向打包输出的目标环境 :" +
-      current_env
-  );
-  return current_env;
-
-};
-
-
-
-
-
 // 输出目录
 let write_folder = "./job/output/env/module";
 let final_file_path = `./job/output/env/final.js`;
@@ -154,8 +51,8 @@ const export_env_config = (env) => {
     let { htmlVariables = {} } = final_config;
     // 写入文件
     write_env_file(htmlVariables);
-    let str = `export default   window.BUILDIN_CONFIG=` + JSON.stringify(final_config);
-
+    let str =
+      `export default   window.BUILDIN_CONFIG=` + JSON.stringify(final_config);
     write_file(full_path, str);
     if (!all_env) {
       write_file(
@@ -165,15 +62,11 @@ const export_env_config = (env) => {
     }
   });
 };
-
-
-
 console.log(
   "输出 环境相关的最终植入配置 脚本执行，脚本名字 ： export-build-in-config  "
 );
 console.log(`将自动删除 final 配置文件,  文件路径 :${final_file_path}`);
 remove_file(final_file_path);
-
 // 根据当前 相关参数  执行 计算
 if (all_env) {
   export_env_config("all");
@@ -181,17 +74,9 @@ if (all_env) {
   // 命令行参数
   if (ALL_ENV_ARR.includes(argv_version)) {
     export_env_config(argv_version);
-  } else if (MODULE_SDK_VERSION) {
+  } else if (BUILD_VERSION_CONFIG.MODULE_SDK_VERSION) {
     //模块化打包  构建 zip
-    let current_env = recompute_current_env_when_MODULE_SDK_VERSION();
-    export_env_config(current_env);
-  } else if (FRONT_WEB_ENV) {
-    //jenkins 参数
-    let current_env = recompute_current_env_when_FRONT_WEB_ENV();
-    export_env_config(current_env);
-  } else {
-    let current_env = recompute_current_env_when_DEV_TARGET_VERSION()  ;
-    //  开发人员本地开发
+    let current_env = BUILD_VERSION_CONFIG.CURRENT_ENV;
     export_env_config(current_env);
   }
 }

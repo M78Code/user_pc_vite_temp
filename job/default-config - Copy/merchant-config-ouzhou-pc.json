@@ -1,8 +1,0 @@
-{
-  "TestComponent": {
-    "use_component": "TestComponent_2",
-     "params":{
-      "tableClass":"bg-deep-purple-14"
-     }
-  }
-}
