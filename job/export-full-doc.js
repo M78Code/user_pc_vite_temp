@@ -5,11 +5,13 @@ import * as fs from "node:fs";
 import * as path from "node:path";
 import randomstring from "randomstring";
 import {ensure_write_folder_exist} from "./write-folder-file.js"
-import scripts_doc from "../scripts.doc.json" assert { type: "json" };
-import job_doc from "./job.doc.json" assert { type: "json" };
-import entries_doc from "../entries/entries.doc.json" assert { type: "json" };
-// import pkg from 'randomstring';
-// const { randomstring} = pkg;
+import {import_json_data} from "./util.js"
+
+const  scripts_doc  = await import_json_data("../scripts.doc.json")
+const  job_doc  = await import_json_data("./job.doc.json")
+const  entries_doc  = await import_json_data("../entries/entries.doc.json")
+
+ 
 /**
  * 遍历指定目录下的所有 .doc.json文件
  * @param {*} dir
