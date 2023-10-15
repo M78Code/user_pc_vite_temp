@@ -4,7 +4,7 @@
  * 防止 源站OSS 文件被攻击用户进不来
  */
 import BUILD_VERSION_CONFIG from "./output/version/build-version.js";
-let default_oss_config_path = `./output/oss/${BUILD_VERSION_CONFIG.OSS_FILE_NAME}.json`;
+let default_oss_config_path = `./output/oss/${BUILD_VERSION_CONFIG.OSS_FILE_NAME}`;
 import {import_json_data} from "./util.js"
 const  default_oss_config  = await import_json_data(default_oss_config_path)
 const ENV_OSS_OBJ = {

@@ -54,7 +54,7 @@ const get_h5_rule_url = () => {
         //  其他环境，测试和开发 等
         domain = "http://sports-rules-new-test.sportxxx3pk.com"
     }
-    more_lang.value = domain + '/#/' + lang + `?rdm=${new Date().getTime()}&v=h5_${window.BUILDIN_CONFIG.FINAL_TARGET_PROJECT_NAME}&themeColors=` + merchant_or_black_and_white_version
+    more_lang.value = domain + '/#/' + lang + `?rdm=${new Date().getTime()}&v=h5_${window.BUILDIN_CONFIG.PROJECT_NAME}&themeColors=` + merchant_or_black_and_white_version
 
     const { ctx } = getCurrentInstance()
     ctx.$forceUpdate()

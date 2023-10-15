@@ -80,7 +80,7 @@ const route = useRoute();
 
 import { i18n_t } from "src/core/index";
 // import { mapGetters } from "vuex";
-import BUILDIN_CONFIG from "app/job/output/env/final.js";
+import BUILDIN_CONFIG from "app/job/output/env/index.js";
 import {
   useMittOn,
   useMittEmitterGenerator,

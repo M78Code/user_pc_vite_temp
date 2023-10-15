@@ -9,7 +9,7 @@
  * 
  *
  */
-import BUILDIN_CONFIG from "app/job/output/env/final.js";
+import BUILDIN_CONFIG from "app/job/output/env/index.js";
 const { LOCAL_FUNCTION_SWITCH = {
   "LOG": false,
   "ENABLE_COLLECT_API": false,
