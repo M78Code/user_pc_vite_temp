@@ -26,7 +26,7 @@
   </div>
 </template>
 <script setup>
-// import resizeObserver from "src/components/match-results/resize-observer/resize-observer.vue"
+// import resizeObserver from "src/base-pc/components/match-results/resize-observer/resize-observer.vue"
 // import {mapGetters,mapActions} from 'vuex'
 // import { store } from "src/store/index.js"
 import { onMounted, onUnmounted, ref } from "vue";

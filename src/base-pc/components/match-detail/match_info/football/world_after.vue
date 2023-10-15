@@ -111,7 +111,7 @@
             <div class="gif-text">{{ $t('common.goal')}}</div>
           </div>
           <!-- 红牌动画 -->
-          <img class="red-flash" :class="{active:is_show_home_red}" style="margin-left:5px" src="~public/image/yabo/svg/rs_hong.svg">
+          <img class="red-flash" :class="{active:is_show_home_red}" style="margin-left:5px" src="/image/yabo/svg/rs_hong.svg">
         </div>
         <div class="info-data">
           <!-- 角球总比分 -->
@@ -155,7 +155,7 @@
             <div class="gif-text">{{ $t('common.goal')}}</div>
           </div>
           <!-- 红牌动画 -->
-          <img class="red-flash" :class="{active:is_show_away_red}" style="margin-left:5px" src="~public/image/yabo/svg/rs_hong.svg">
+          <img class="red-flash" :class="{active:is_show_away_red}" style="margin-left:5px" src="/image/yabo/svg/rs_hong.svg">
         </div>
         <div class="info-data">
           <!-- 角球总比分 -->
@@ -461,7 +461,7 @@ export default {
       }
       .result-icon {
         // 这里改成用精灵图
-        background-image: url('~public/image/common/png/sports_play_icon.png');
+        background-image: url('/yazhou-pc/image/common/png/sports_play_icon.png');
         background-repeat: no-repeat;
         width: 14px;
         height: 14px;

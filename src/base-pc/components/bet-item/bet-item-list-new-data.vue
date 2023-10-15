@@ -298,10 +298,10 @@ onUnmounted(() => {
   display: none;
 }
 .odds-up {
-  background: url("~public/image/wwwassets/yabo/svg/up.svg") no-repeat 100%;
+  background: url("/yazhou-pc/image/svg/up.svg") no-repeat 100%;
 }
 .odds-down {
-  background: url("~public/image/wwwassets/yabo/svg/down.svg") no-repeat 100%;
+  background: url("/yazhou-pc/image/svg/down.svg") no-repeat 100%;
 }
 .lock {
   width: 12px;

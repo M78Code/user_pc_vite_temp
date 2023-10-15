@@ -60,6 +60,9 @@ let html_file= fs.readFileSync(html_file_path);
  
 fs.writeFileSync( `./dist/${BUILD_DIR_NAME}/index.html`,html_file)
 
+console.log('拷贝入口html 完成');
+
+ 
 
  
  

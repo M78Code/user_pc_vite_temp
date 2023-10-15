@@ -130,7 +130,8 @@ const props = defineProps({
         default: false,
     }
 })
-
+/** 定时器 */
+let show_activity_page_timer = null
 /** 菜单数据 */
 const menu_data = reactive({})
 /** 地址栏隐藏logo */
@@ -207,8 +208,7 @@ const route = useRoute()
 /** 路由实例 */
 const router = useRouter()
 
-/** 定时器 */
-const show_activity_page_timer = null
+
 /** 清除全部定时器 */
 function clear_timer() {
     if (show_activity_page_timer) {

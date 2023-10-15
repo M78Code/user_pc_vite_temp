@@ -444,18 +444,18 @@ onUnmounted(() => {
 
   .early {
     display: inline-block;
-    background: url("~public/image/svg/select_b.svg") no-repeat center / contain;
+    background: url("/public/yazhou-h5/image/svg/select_b.svg") no-repeat center / contain;
     vertical-align: text-bottom;
     width: 0.14rem;
     height: 0.14rem;
   }
 
   .early2 {
-    background-image: url("~public/image/svg/select_a.svg");
+    background-image: url("/public/yazhou-h5/image/svg/select_a.svg");
   }
 
   .calendar {
-    background-image: url("~public/image/record/calendar2.svg");  
+    background-image: url("/public/yazhou-h5/image/record/calendar2.svg");  
   }
   /* ************** 排序按钮图标 ************** -S */
 
@@ -472,7 +472,7 @@ onUnmounted(() => {
   }
 
   .sort-2 {
-    background-image: url("~public/image/record/sort_settled_time2.svg");
+    background-image: url("/public/yazhou-h5/image/record/sort_settled_time2.svg");
   }
 
   .sort-1 {

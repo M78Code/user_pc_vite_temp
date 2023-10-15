@@ -231,7 +231,7 @@ export default {
       background-size: 100%;
       line-height: 14px;
       text-align: center;
-      ::v-deep * {
+      :deep(*) {
         width: 100%;
       }
     }
@@ -334,7 +334,7 @@ export default {
     height: 24px;
     border-radius: 13px;
     padding: 0;
-    ::v-deep .icon-wrap {
+    :deep(.icon-wrap)  {
       width: 24px;
       height: 24px;
       display: flex;
