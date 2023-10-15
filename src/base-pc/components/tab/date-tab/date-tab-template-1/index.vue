@@ -204,7 +204,7 @@ const compute_get_date_menu_list_params = () => {
       ...mi_info,
       euid: mi_euid.euid || euid, // lv2_mi 找到 euid
       md: final_date_menu.value.field1,
-      selectionHour: this.$store.state.filter.open_select_time,
+      selectionHour: null,
       sort: this.vx_match_sort,
       tid,
     };
@@ -251,7 +251,7 @@ const handle_click_menu_mi_3_date = (detail = {}) => {
 
   let base_params = {
     cuid: UserCtr.get_uid(),
-    selectionHour: this.$store.state.filter.open_select_time,
+    selectionHour: null,
     sort: this.vx_match_sort,
   }
 

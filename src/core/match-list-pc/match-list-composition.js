@@ -42,8 +42,6 @@ const is_show_hot = ref(false);
 // 是否继续请求
 const is_loading = ref(true);
 
-// 获取联赛筛选框显示状态
-const vx_show_filter_popup = ref(filterHeader.show_filter_popup);
 let show_refresh_mask = ref(false);
 const timer_obj = ref({});
 const api_error_count = ref(0);
