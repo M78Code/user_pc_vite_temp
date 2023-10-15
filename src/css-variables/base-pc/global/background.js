@@ -1,26 +1,26 @@
 export default {
-    'gb-bg-c-1': '#0b0b0b',
-    'gb-bg-c-2': '#414655',
-    'gb-bg-c-3': '#4276fb',
-    'gb-bg-c-4': '#569ffd',
-    'gb-bg-c-5': '#5a6074',
-    'gb-bg-c-6': '#76c06d',
-    'gb-bg-c-7': '#a8b2c2',
-    'gb-bg-c-8': '#b1b1b1',
-    'gb-bg-c-9': '#bfcedd',
-    'gb-bg-c-10': '#dedede',
-    'gb-bg-c-11': '#ffffff',
-    'gb-bg-c-12': '#f25151',
-    'gb-bg-c-13': '#f77000',
-    'gb-bg-c-14': '#f8f9fb',
-    'gb-bg-c-15': '#fec59e',
-    'gb-bg-c-16': '#ff4040',
-    'gb-bg-c-17': '#ff7000',
-    'gb-bg-c-18': '#ffb633',
-    'gb-bg-c-19': '#ffe9c7',
-    'gb-bg-c-20': 'none',
-    'gb-bg-c-21': 'transparent',
-    'gb-bg-c-22': '#f0f6ff',
+    'gb-bg-c-1': '#0b0b0b', //蓝色版已录入 y0-bg-color1
+    'gb-bg-c-2': '#414655', //蓝色版已录入 theme-bg-common
+    'gb-bg-c-3': '#4276fb', //蓝色版已录入 linear-progress-bg-color-2
+    'gb-bg-c-4': '#569ffd', //暂未使用
+    'gb-bg-c-5': '#5a6074', //蓝色版已录入  theme-bg-lose
+    'gb-bg-c-6': '#76c06d', //暂未使用
+    'gb-bg-c-7': '#a8b2c2', //暂未使用
+    'gb-bg-c-8': '#b1b1b1', //蓝色版已录入  icon-star-bg-color
+    'gb-bg-c-9': '#bfcedd', //蓝色版已录入 theme-bg-menu-match-type-solid
+    'gb-bg-c-10': '#dedede', //蓝色版已录入  chatroom-bg-color-4
+    'gb-bg-c-11': '#ffffff', //蓝色版已录入  y0-bg-color12  用到的地方很多不确定
+    'gb-bg-c-12': '#f25151', //暂未使用
+    'gb-bg-c-13': '#f77000', //蓝色版已录入 theme-bg-play-name-before
+    'gb-bg-c-14': '#f8f9fb', //蓝色版已录入   vr-handicap-sub-title-bg-color
+    'gb-bg-c-15': '#fec59e', //蓝色版已录入 activity-bg-color-3
+    'gb-bg-c-16': '#ff4040', //蓝色版已录入 theme-bg-win
+    'gb-bg-c-17': '#ff7000', //蓝色版已录入 theme-bg-play-name-before
+    'gb-bg-c-18': '#ffb633', //系统未录入
+    'gb-bg-c-19': '#ffe9c7', //系统未录入
+    'gb-bg-c-20': 'none',     //系统未录入
+    'gb-bg-c-21': 'transparent', //系统未录入
+    'gb-bg-c-22': '#f0f6ff',   //系统未录入
     
   }
 
