@@ -64,8 +64,6 @@ const is_data_requesting = ref(true);
 const newer_standard_changing = ref(false);
 //投注栏弹层显示非0否则0
 const local_bet_status = ref(0);
-//新手版1专业版2,本地组件存储
-const standard_edition_type = ref(0);
 // 赛事列表滑动高度
 const list_scroll_top = ref(0);
 const timer_super6 = ref(null);
@@ -79,10 +77,7 @@ const get_is_show_menu = ref(store_state.get_is_show_menu);
 const get_preload_animation_url = ref(store_state.get_preload_animation_url);
 
 onMounted(() => {
-
-  console.log(menu_type.value)
   // 初始化赛事列表操作工具类
-  standard_edition_type.value =  standard_edition.value
   if (standard_edition.value == 2) {
     newer_standard_changing.value = true;
   } else {
@@ -152,7 +147,6 @@ watch(() => standard_edition.value, () => {
   if (n == 1) {
     MatchListCard.sliding_can_trigger_process_distance = 500;
   }
-  standard_edition_type.value = standard_edition.value;
   run_process_when_need_recompute_container_list_when_scroll(false, { update_type: "standard_simple_change", });
 }
 );

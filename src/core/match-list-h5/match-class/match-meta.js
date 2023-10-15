@@ -104,6 +104,7 @@ class MatchMeta {
     const match_list = mids.map(t => {
       return BaseData.resolve_base_info_by_mid(t)
     })
+    // 过滤赛事
     const match_result = match_list.filter((t) => t.mid)
     this.set_match_default_template(match_result)
   }

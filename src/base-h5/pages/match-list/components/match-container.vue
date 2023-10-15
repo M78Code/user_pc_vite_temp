@@ -166,7 +166,7 @@
                 <!-- 标准版 比分组件 -->
                 <!-- 电竞中，如果是比分判定中，则不显示该比分 -->
                 <div class="eports_scoring_tip" v-if="eports_scoring">{{ $t('mmp.eports_scoring') }}</div>
-                <score-list v-else-if="main_source != 'home_hot_page_schedule'" :match="match"></score-list>
+                <score-list v-else-if="!is_hot" :match="match"></score-list>
               </div>
               <!-- 下边的模块，左方是  队名和 队比分,  右面是  盘口  模块 -->
               <div class="odd-list match-indent" :class="{ 'simple': show_newer_edition, result: is_show_result() }">
@@ -580,7 +580,7 @@ const muUrl_icon = computed(() => {
 
 // TODO: 判断是否显示体育类型
 const get_sport_show = computed(() => {
-  if (['detail_match_list'].includes(props.main_source)) { return false }
+  if (is_detail.value) { return false }
   if (is_hot.value) {
     // 热门
     if (lodash.get(MenuData.hot_tab_menu, 'index') !== 0) { return false }
@@ -652,11 +652,11 @@ const handle_ball_seed_fold = () => {
  */
 const handle_league_fold = () => {
   // 首页热门，详情页，不需要用到折叠
-  if (['detail_match_list', 'home_hot_page_schedule'].includes(props.main_source)) return;
+  if (is_hot.value || is_detail.value) return;
   MatchFold.set_league_fold(props.match_of_list.tid)
 }
 const league_collapsed = computed(() => {
-  if (['home_hot_page_schedule'].includes(props.main_source)) return false
+  if (is_hot.value) return false
   const falg = lodash.get(MatchFold.h5_csid_map_info.value, `csid_${props.match_of_list.csid}`, true)
   return !falg
 })
@@ -664,7 +664,7 @@ const league_collapsed = computed(() => {
  * @description 赛事显示/隐藏
  */
 const collapsed = computed(() => {
-  if (['home_hot_page_schedule'].includes(props.main_source)) return false
+  if (is_hot.value) return false
   const key = MatchFold.get_match_fold_key(props.match_of_list)
   const show_card = lodash.get(MatchFold.h5_tid_map_info.value, `${key}.show_card`)
   return !show_card
@@ -840,7 +840,7 @@ const leaderboard_switch = () => {
 const is_show_result = () => {
   let r = false;
   if(menu_type.value == 28){
-    r = !['detail_match_list', 'home_hot_page_schedule'].includes(props.main_source)
+    r = !(is_hot.value || is_detail.value)
   }
   return r;
 }
@@ -879,7 +879,7 @@ const hide_away_red = () => {
  */
 const league_l_clicked = () => {
   // 首页热门，详情页，不需要用到折叠
-  if (['detail_match_list', 'home_hot_page_schedule'].includes(props.main_source)) return;
+  if (is_hot.value || is_detail.value) return;
   // get_secondary_unfold_map  次要玩法 折叠状态
   let map_collapse = lodash.cloneDeep(get_collapse_map_match.value);
   let { tid, ms } = props.match_of_list;
@@ -991,7 +991,7 @@ const get_match_dom_height_by_match_data = (match_height_map) => {
  * @return {Boolean} 是否显示发球方
  */
 const set_serving_side = (item, side) => {
-  if (menu_type.value == 28 && !["detail_match_list"].includes(props.main_source)) { //赛果不显示发球方绿点
+  if (menu_type.value == 28 && !is_detail.value) { //赛果不显示发球方绿点
     return false
   }
   return item.ms == 1 && item.mat == side;
@@ -1177,7 +1177,7 @@ const show_counting_down = (item) => {
  */
 const get_m_status_show = (i) => {
   let result = false;
-  if (props.main_source == 'detail_match_list') {
+  if (is_detail.value) {
     return false
   }
   //非今日串关不显示
