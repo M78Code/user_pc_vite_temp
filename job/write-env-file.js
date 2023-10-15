@@ -3,11 +3,10 @@
  
 
 // 本次打包的 客户端版本
-import BUILD_VERSION_CONFIG from "./output/version/build-version.js";
  
  
 
-import { write_file } from "./write-folder-file.js";
+import { remove_file, write_file } from "./write-folder-file.js";
 const compute_str = (params = {}) => {
   let str = "";
   for (let i in params) {
@@ -34,7 +33,8 @@ const compute_str = (params = {}) => {
 };
 
 export const write_env_file = (params = {}) => {
+
   
- 
+  remove_file(`./.env`)
   write_file(`./.env`, compute_str(params));
 };

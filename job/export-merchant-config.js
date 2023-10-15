@@ -5,7 +5,7 @@ import axios from "axios";
 import colors from "colors"
 import { merge_merchant_config } from "./merge-merchant-config.js";
 import { ensure_write_folder_exist, write_file } from "./write-folder-file.js";
-import { DEV_TARGET_VERSION, DEV_PROJECT_NAME } from "../dev-target-env.js";
+import { DEV_TARGET_VERSION } from "../dev-target-env.js";
 console.log(colors.bgRed("export-merchant-config----------合并输出商户配置-"));
 
 
@@ -48,7 +48,7 @@ const PROJECT_NUM = PROJECT.split("_")[1];
  */
 const compute_PROJECT_NAME_when_DEV_TARGET_VERSION = () => {
 
-  let project_name = DEV_PROJECT_NAME
+  let project_name = ''
   // 本地指定 打包指定版本  重置 本地指定项目
   if (DEV_TARGET_VERSION) {
     if (DEV_TARGET_VERSION.includes("project_3")) {
@@ -99,10 +99,7 @@ let MERCHANT_CONFIG_INFO = {};
 let write_folder = "./job/output/merchant";
 let base_info_write_folder = "./job/output/base-info";
 let file_path = `${write_folder}/config.json`;
-//本地商户配置
-let local_file_path = `./job/default-config/merchant-config-${DEV_PROJECT_NAME}.json`;
-
-
+ 
 //确保配置 输出目录存在
 ensure_write_folder_exist(write_folder);
 ensure_write_folder_exist(base_info_write_folder);
