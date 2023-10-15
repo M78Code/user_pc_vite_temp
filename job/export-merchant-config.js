@@ -5,75 +5,14 @@ import axios from "axios";
 import colors from "colors"
 import { merge_merchant_config } from "./merge-merchant-config.js";
 import { ensure_write_folder_exist, write_file } from "./write-folder-file.js";
-import { DEV_TARGET_VERSION } from "../dev-target-env.js";
+// 本次打包的 客户端版本
+import BUILD_VERSION_CONFIG from "./output/version/build-version.js";
 console.log(colors.bgRed("export-merchant-config----------合并输出商户配置-"));
 
 
-
-
-
-
-// jenkins env 变量  配置的   构建 zip 版本参数   , 一般是运维那边 配置打包使用的    模块化打包  构建 zip 版本参数
-
-const MODULE_SDK_VERSION = (process.env.MODULE_SDK_VERSION || "").trim();
-
-//最终计算的 版本号 
-let final_version = MODULE_SDK_VERSION || DEV_TARGET_VERSION
-
-
-//分割字符串先 第一个项目  版本号 时间戳 环境 1全量/2差量
-const [PROJECT, MERCHANT_CONFIG_VERSION, TIMESTAMP] = final_version.split("-");
-
-
-//数字对应的项目
-const PROJECT_MAP = {
-  1: "-", //亚洲版 H5（旧版）
-  2: "-", //亚洲版 PC（旧版）
-  3: "yazhou-h5", //亚洲版 H5（新版)
-  4: "yazhou-pc", //亚洲版 PC（新版)
-  5: "app-h5",// 复刻版 H5 - KYAPP
-  6: "new-pc" // 亚洲版 pc 202310 新平坦化版本 
-};
-
-
-//提取项目名称对应是数字
-const PROJECT_NUM = PROJECT.split("_")[1];
-
-
-
-
-/**
- * 重新计算  PROJECT_NAME  当    DEV_TARGET_VERSION   构建 zip
- * 本地指定 打包指定版本  计算  本地指定项目
- */
-const compute_PROJECT_NAME_when_DEV_TARGET_VERSION = () => {
-
-  let project_name = ''
-  // 本地指定 打包指定版本  重置 本地指定项目
-  if (DEV_TARGET_VERSION) {
-    if (DEV_TARGET_VERSION.includes("project_3")) {
-      project_name = "yazhou-h5";
-
-    } else if (DEV_TARGET_VERSION.includes("project_4")) {
-      project_name = "yazhou-pc";
-    }else if (DEV_TARGET_VERSION.includes("project_5")) {
-      project_name = "app-h5";
-    }else if (DEV_TARGET_VERSION.includes("project_6")) {
-      project_name = "new-pc";
-    }
-  }
-
-  return project_name
-};
-
-
-
-//  最终项目布局模板名字
-let PROJECT_NAME = MODULE_SDK_VERSION ? PROJECT_MAP[PROJECT_NUM] : compute_PROJECT_NAME_when_DEV_TARGET_VERSION()
-
 //时间格式化 计算 配置文件在服务器上的所在日期目录
 function get_date_format() {
-  const _date = new Date(Number(TIMESTAMP));
+  const _date = new Date(Number(BUILD_VERSION_CONFIG.PUCK_UP_TIME));
   const _y = _date.getFullYear();
   const _m = _date.getMonth() + 1;
   const _d = _date.getDate();
@@ -82,9 +21,8 @@ function get_date_format() {
 //服务器端 配置文件 路径 
 //暂时取全量-1.json  差量的 -2.json
 // const SERVER_CONFIG_FILE_PATH = `http://api-doc-server-new.sportxxxw1box.com/public/upload/json/20230903/project_4-36304ea0499e11ee8848ada2b8a1d739-1693720827442-shiwan-1.json`;
-const SERVER_CONFIG_FILE_PATH = `http://api-doc-server-new.sportxxxw1box.com/public/upload/json/${get_date_format()}/${final_version}-1.json`;
-// console.log(get_date_format(),'get_date_formatget_date_format');
-// console.log(final_version,'final_versionfinal_version');
+const SERVER_CONFIG_FILE_PATH = `http://api-doc-server-new.sportxxxw1box.com/public/upload/json/${get_date_format()}/${BUILD_VERSION_CONFIG.MODULE_SDK_VERSION}-1.json`;
+ 
 console.log(SERVER_CONFIG_FILE_PATH, 'SERVER_CONFIG_FILE_PATH');
 
 
@@ -108,9 +46,9 @@ ensure_write_folder_exist(base_info_write_folder);
  */
 const merge_and_output_final_config = (scg) => {
   let add_obj = {
-    MERCHANT_CONFIG_VERSION,
-    project: PROJECT_NAME,
-    is_pc: PROJECT_NAME.includes('pc'),
+   
+    project: BUILD_VERSION_CONFIG.PROJECT_NAME,
+    IS_PC:  BUILD_VERSION_CONFIG.IS_PC,
     write_file_date: Date.now(),
   };
   MERCHANT_CONFIG_INFO = merge_merchant_config(scg, add_obj);
@@ -145,11 +83,8 @@ const get_config_info = async () => {
 };
 // 暂时都获取服务器上 当前商户的 版本配置 写入本地
 // get_config_info();
-if (final_version) {
+ 
   // 获取 服务器上 当前商户的 版本配置
   get_config_info();
 
-} else {
-
-  merge_and_output_final_config({});
-}
+ 

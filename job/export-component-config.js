@@ -11,9 +11,12 @@ import {
   remove_file,
 } from "./write-folder-file.js";
 // 商户版本 最终配置
-import final_merchant_config from "./output/merchant/config.json" assert { type: "json" };
+ 
 console.log(colors.bgRed("export-component-config.js----------resolve_merchant_config_component  ----"));
  
+import {import_json_data} from "./util.js"
+
+const  final_merchant_config  = await import_json_data("./output/merchant/config.json")
 
 // 商户配置 输出目录
 let write_folder = "./job/output/component/";

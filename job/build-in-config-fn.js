@@ -6,17 +6,8 @@
 // 本次打包的 客户端版本
 import BUILD_VERSION_CONFIG from "./output/version/build-version.js";
  const {BUILD_VERSION ,IS_PROD ,NODE_ENV} = BUILD_VERSION_CONFIG
-// 商户版本 最终配置
-import final_merchant_config from "./output/merchant/config.json" assert { type: "json" };
-// 商户版本号
-const { MERCHANT_CONFIG_VERSION    } = final_merchant_config;
-
-// 模块化打包 构建 zip 版本参数
-let MODULE_SDK_VERSION =   ( process.env.MODULE_SDK_VERSION|| "").trim()   ;
-
 import { compute_build_in_oss_by_current_env  } from "./build-in-oss.js";
 import { htmlVariables } from "./html-variables.js";
-
 import {compute_oss_file_path_arr} from "./copy-oss.js"
 // 代理映射设置key
 const API_PREFIX = {
@@ -38,15 +29,16 @@ export const compute_build_in_config = (current_env) => {
   let current_env_build_in_oss = "";
   console.log("--------------------------开始构建--------------------------");
   // console.log(process.argv );
- 
   // 当前环境代码内内置 写入的兜底 oss
   current_env_build_in_oss = compute_build_in_oss_by_current_env(current_env);
-  //  项目名称   yazhou-h5 yazhou-pc
-  let TARGET_PROJECT_NAME =   final_merchant_config.project ;
   // 埋点Google Analytics GA_TRACKING_ID
   let GA_TRACKING_ID = "G-3SFG732R1J"; // 生产环境
   // 最终项目配置信息
   let final_config = {};
+  // 自动化测试 标签id开关
+const DOM_ID_SHOW = process.env.FRONT_WEB_ENV_AUTO_TEST == "1";
+// 是否自动设置域名相关的地址
+const AUTO_API = process.env.AUTO_API || false;
   //功能启用   禁用开关  顶层
   const LOCAL_FUNCTION_SWITCH = {
     // 日志服务开关
@@ -54,9 +46,9 @@ export const compute_build_in_config = (current_env) => {
     // 前端控制是否禁用收藏功能
     ENABLE_COLLECT_API: true,
     // 自动化测试 标签id开关
-    DOM_ID_SHOW: process.env.FRONT_WEB_ENV_AUTO_TEST == "1",
+    DOM_ID_SHOW ,
     // 是否自动设置域名相关的地址
-    AUTO_API: process.env.AUTO_API || false,
+    AUTO_API   ,
   };
   let hidApi =
     current_env == "idc_online"
@@ -80,9 +72,6 @@ export const compute_build_in_config = (current_env) => {
     BUILD_VERSION   ,
     IS_PROD  ,
     NODE_ENV,
-     
- 
-    
     current_env_build_in_oss: encodeURIComponent(
       JSON.stringify(current_env_build_in_oss.data)
     ),
@@ -90,16 +79,13 @@ export const compute_build_in_config = (current_env) => {
   // 合并 所有内容
   final_config = {
     CURRENT_ENV: current_env,
- 
     LOCAL_FUNCTION_SWITCH,  
     SERVER_GLOBAL_SWITCH:{},
     GLOBAL_IMAGE_PREFFIX:  IS_PROD ? '/' + BUILD_VERSION:''  ,
     API_PREFIX,
-    FRONT_WEB_ENV: process.env.FRONT_WEB_ENV,
-    API_DOMAIN_PREFIX: "api",
-    MERCHANT_CONFIG_VERSION,
-    MODULE_SDK_VERSION,
-    TARGET_PROJECT_NAME,
+    API_DOMAIN_PREFIX: "api", 
+    MODULE_SDK_VERSION :  BUILD_VERSION_CONFIG.MODULE_SDK_VERSION,
+    TARGET_PROJECT_NAME:  BUILD_VERSION_CONFIG.PROJECT_NAME,
     OSS_FILE_ARR:compute_oss_file_path_arr(current_env),
     OSS_FILE_NAME: current_env_build_in_oss.file,
     CURRENT_ENV_NAME: current_env_build_in_oss.file,
