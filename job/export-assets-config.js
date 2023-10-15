@@ -11,9 +11,17 @@ import {
   remove_file,
 } from "./write-folder-file.js";
 // 商户版本 最终配置
-import final_merchant_config from "./output/merchant/config.json" assert { type: "json" };
-import final_assets_config from "./output/assets/config.json" assert { type: "json" };
-const PROJECT_NAME = final_merchant_config.project
+ 
+ 
+
+import {import_json_data} from "./util.js"
+
+const  final_assets_config  = await import_json_data("./output/assets/config.json")
+
+// 本次打包的 客户端版本
+import BUILD_VERSION_CONFIG from "./output/version/build-version.js";
+const {BUILD_VERSION ,PROJECT_NAME} = BUILD_VERSION_CONFIG;
+ 
 console.log(colors.bgRed("export-assets-config.js----------resolve_merchant_config_assets  ----"));
 // 商户配置 输出目录
 let write_folder = "./job/output/assets/";

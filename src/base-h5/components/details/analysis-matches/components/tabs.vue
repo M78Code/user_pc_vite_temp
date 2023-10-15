@@ -46,7 +46,7 @@ import { ref } from "vue"
   display: flex;
   align-items: center;
   height: .2rem;
-  color: var(--q-gb-bd-c-2);
+  color: var(--q-gb-t-c-18);
   background: var(--q-color-com-bg-color-32);
   backdrop-filter: blur(2px);
   &.hairline-border {
