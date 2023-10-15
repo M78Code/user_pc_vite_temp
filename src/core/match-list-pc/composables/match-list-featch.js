@@ -10,17 +10,15 @@ import MatchListScrollClass from 'src/core/match-list-pc/match-scroll.js'
 import MenuData from "src/core/menu-pc/menu-data-class.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import * as api_websocket from "src/api/module/socket/socket_api.js";
-
+import filterHeader from 'src/core/filter-header/filter-header.js'
 import store from "src/store-redux/index.js";
 
 let state = store.getState();
 
 const league_list_obj = ref([]);
 const { page_source } = PageSourceData;
-// 赛事列表排序 1:按联赛排序 2:按时间排序
-const vx_match_sort = ref(state.filterReducer?.show_filter_popup);
-// 是否展开多列玩法
-const get_unfold_multi_column = ref(state.filterReducer?.show_filter_popup);
+
+
 
 // const route = useRoute() || {};
 
@@ -200,7 +198,7 @@ const api_bymids = (
     cuid: UserCtr.get_uid(),
     euid: _params.euid,
     orpt: _params.orpt,
-    sort: vx_match_sort.value,
+    sort: filterHeader.vx_match_sort,
   };
   // if (tabs.length > 0) {
   // 	params.tabs = tabs;
@@ -233,7 +231,7 @@ const api_bymids = (
   //添加内部参数
   if (inner_param) params.inner_param = inner_param;
   //当点击足球 赛种,并收起右侧详情面版orpt参数为13
-  if (get_unfold_multi_column.value && MenuData.is_multi_column) {
+  if (filterHeader.get_unfold_multi_column && MenuData.is_multi_column) {
     params.orpt = 13;
   }
   // return
