@@ -47,6 +47,6 @@ export const read_file = (file_path) => {
   return obj;
 };
 
-// let final_result = read_file("./.env.development");
+// let final_result = read_file("./.env");
 
 

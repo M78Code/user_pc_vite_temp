@@ -36,5 +36,7 @@ export const write_env_file = (params = {}) => {
 
   
   remove_file(`./.env`)
+  remove_file("./.env.development")
+  remove_file("./.env.production") 
   write_file(`./.env`, compute_str(params));
 };
