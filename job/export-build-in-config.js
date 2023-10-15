@@ -8,7 +8,7 @@ import {
 } from "./write-folder-file.js";
 import { compute_build_in_config } from "./build-in-config-fn.js";
 import { write_env_file } from "./write-env-file.js";
-import {  DEV_TARGET_VERSION ,DEV_TARGET_ENV } from "../dev-target-env.js";
+import {  DEV_TARGET_VERSION  } from "../dev-target-env.js";
 
 
 // --------------------------------
@@ -90,16 +90,28 @@ const recompute_current_env_when_FRONT_WEB_ENV = () => {
  */
 const recompute_current_env_when_DEV_TARGET_VERSION = () => {
  
-  let current_env = DEV_TARGET_ENV;
+  let current_env =  '';
   //模块化 打包目标环境代码 定向 指定环境
   console.log(
     "当前 已指定 试玩环境SDK打包 专用版本号 ， DEV_TARGET_VERSION : " +
     DEV_TARGET_VERSION
   );
-  if (DEV_TARGET_VERSION.includes("shiwan")) {
+  if (DEV_TARGET_VERSION.includes("dev")) {
+    current_env = "local_dev";
+  }
+  if (DEV_TARGET_VERSION.includes("test")) {
+    current_env = "local_test";
+  }
+  if (DEV_TARGET_VERSION.includes("geli")) {
+    current_env = "idc_lspre";
+  }
+  if (DEV_TARGET_VERSION.includes("mini")) {
+    current_env = "idc_ylcs";
+  }
+  else if (DEV_TARGET_VERSION.includes("shiwan")) {
     current_env = "idc_sandbox";
   }
-  if (DEV_TARGET_VERSION.includes("online")) {
+ else if (DEV_TARGET_VERSION.includes("online")) {
     current_env = "idc_online";
   }
   console.log(
