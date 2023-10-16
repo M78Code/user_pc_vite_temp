@@ -173,13 +173,13 @@ class MatchPage {
   footer_event(obj) {
     // 排序
     if (obj && obj.text == "sortRules") {
-      //TODO DOM滚动到顶部的方法应该在这里
+      //TODO DOM滚动到顶部的方法不应该在这里
       // this.scroll_list_wrapper_by(0) 
       this.get_match_data_list();
     }
     // 筛选
     else if (obj && obj.text == "filter") {
-      //TODO DOM滚动到顶部的方法应该在这里
+      //TODO DOM滚动到顶部的方法不应该在这里
       // this.scroll_list_wrapper_by(0)
       this.get_match_data_list(() => {
         clearTimeout(this.filter_timer)
