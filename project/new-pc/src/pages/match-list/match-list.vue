@@ -123,7 +123,7 @@ import { ListFilterHotFullVersionWapper as ListFilterHot } from "src/base-pc/com
 import { PlayVirtualMatchTypeFullVersionWapper as PlayVirtualMatchType } from "src/base-pc/components/match-list/play-virtual-match-type/index.js";//赛事列表头部——滚球——赛事类型
 import { ListHeaderFullVersionWapper as ListHeader } from "src/base-pc/components/match-list/list-header/index.js"; //头部
 import ScrollList from 'src/base-pc/components/cus-scroll/scroll_list.vue';
-import refresh from "src/base-pc/components/refresh/refresh.vue"
+import refresh from "src/components/refresh/refresh.vue"
 
 // import { EsportsHeaderFullVersionWapper as EsportsHeader } from "src/base-pc/components/match-list/esports-header/index.js";//电竞赛事列表筛选
 // import { VirtualMatchTypeFullVersionWapper as VirtualMatchType } from "src/base-pc/components/match-list/match-list-card/index.js";//虚拟体育 赛事列表 赛事头

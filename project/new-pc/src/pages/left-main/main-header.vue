@@ -37,7 +37,7 @@ import { get } from "lodash";
 import { UserCtr,format_balance  } from "src/core/index.js";
 import { useMittOn, MITT_TYPES } from "src/core/mitt";
 import { IconWapper } from 'src/components/icon'
-import RefrechBlance from "./refrech.vue"
+import RefrechBlance from "src/components/refresh/refresh.vue"
 
 
 // 是否已加载
@@ -51,7 +51,6 @@ const { off, emit: set_balance_refresh } = useMittOn(
 );
 //默认进来获取一次用户余额
 set_balance_refresh();
-
 
 // 销毁事件
 onBeforeUnmount(() => {

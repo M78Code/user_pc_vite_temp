@@ -15,11 +15,11 @@
           {{ format_balance(UserCtr.balance) }}
         </div>
         <!-- 余额是否隐藏图标 -->
-        <icon-wapper class="icon balance-btn-eye cursor-pointer" name="icon-eye_show" size="14px" />
+        <icon-wapper class="icon balance-btn-eye cursor-pointer" name="icon-eye_show" size="14px" @click="set_show_balance" />
       </div>
       <!-- 刷新余额按钮 -->
       <refrech-blance
-        v-show="UserCtr.show_balance"
+        v-show="!UserCtr.show_balance"
         class="refresh-btn"
         :other_icon="true"
         icon_name="icon-balance_refresh"
@@ -37,7 +37,7 @@ import { get } from "lodash";
 import { UserCtr,format_balance  } from "src/core/index.js";
 import { useMittOn, MITT_TYPES } from "src/core/mitt";
 import { IconWapper } from 'src/components/icon'
-import RefrechBlance from "./refrech.vue"
+import RefrechBlance from "src/components/refresh/refresh.vue"
 
 
 // 是否已加载
@@ -52,7 +52,10 @@ const { off, emit: set_balance_refresh } = useMittOn(
 //默认进来获取一次用户余额
 set_balance_refresh();
 
-
+//隐藏显示用户余额
+const set_show_balance = () => {
+  UserCtr.set_show_balance(!UserCtr.show_balance)
+}
 // 销毁事件
 onBeforeUnmount(() => {
   off();

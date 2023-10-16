@@ -276,7 +276,7 @@ import  videoHistoryLine  from "src/base-pc/components/video-replay/video-histor
 import matchHandicap from "src/base-pc/components/match-detail/match-handicap/match-handicap.vue";
 import { TabWapper as Tab } from "src/components/common/tab";
 import { useRightDetails } from "./match-details-right-config";
-import refreshComponent from "src/base-pc/components/refresh/refresh.vue";
+import refreshComponent from "src/components/refresh/refresh.vue";
 import videoCtrl from "src/base-pc/components/match-detail/match_info/video_ctrl.vue";
 import matchInfo from "src/base-pc/components/match-detail/match_info/match_info.vue";
 import handicapTabsBar from "src/base-pc/components/match-detail/match_info/handicap_tabs_bar.vue";
