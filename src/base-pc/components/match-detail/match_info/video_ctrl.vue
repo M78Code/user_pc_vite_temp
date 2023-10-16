@@ -26,7 +26,6 @@
           }"
           @click="toggle_play_media(item.type)"
           @mouseenter="is_hover = true"
-          @mouseleave="is_hover = false"
           v-show="get_media_icon_show(item.type)"
         >
           <q-tooltip
@@ -299,20 +298,10 @@ watch(
   },
   { deep: true }
 );
-//     computed: {
-  //   //   lang: "get_lang",  
+//     computed: { 
 //   // ...mapGetters({
 //   //   //全局点击事件
 //   //   get_global_click: 'get_global_click',
-//   //    //是否展开多列玩法
-//   //   get_unfold_multi_column:"get_unfold_multi_column",
-//   //   // 是否显示联赛筛选框
-//   //   vx_show_filter_popup: "get_show_filter_popup",
-//   //   //多语言
-
-//   //   //视频是否展开状态
-//   //   vx_get_is_fold_status:'get_is_fold_status'
-//   // }),
 /**
  * @Description:视频按钮是否显示
  * @return {boolean}
