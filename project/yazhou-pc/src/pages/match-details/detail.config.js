@@ -77,7 +77,7 @@ export const useGetConfig = (router,cur_menu_type,details_params,play_media) => 
 
 
   // 当前所选的玩法集子项id
-  const tabs_active_index = ref(MatchDetailCalss.tabs_active_plays);
+  const tabs_active_index = ref(MatchDetailCalss.current_category_id);
   // 当前所选的玩法集子项id
   const uuid = ref(uid);
   /** 语言变化 */
@@ -470,14 +470,11 @@ export const useGetConfig = (router,cur_menu_type,details_params,play_media) => 
       let arr = []; //暂存本地置顶的数据
       for (var i = 0; i < data.length; i++) {
         if (data[i].hton != "0") {
-          // 保存置顶玩法的 id
-          store.dispatch({
-            type: "SET_TOP_ID",
-            data: {
-              id: data[i].topKey,
-              type: true,
-            },
-          });
+        // 保存置顶玩法的 id
+        MatchDetailCalss.set_top_id({
+          id: data[i].topKey,
+          type: true,
+        })
         } else {
           if (get_top_id.value.includes(data[i].topKey)) {
             data[i].hton = new Date().getTime() + "";
@@ -510,20 +507,12 @@ export const useGetConfig = (router,cur_menu_type,details_params,play_media) => 
         [`${state.mid}-${state.mcid}`]: data,
       };
       // 清除玩法集下缓存数据
-      store.dispatch({
-        type: "SET_DETAILS_DATA_CACHE",
-        data: details_data_cache,
-      });
-
+      MatchDetailCalss.set_details_data_cache(details_data_cache)
       // 处理当前玩法集数据
   
       handle_match_details_data(data, timestap);
       /** 设置语言变化 */
       UserCtr.set_lang(false);
-      // store.dispatch({
-      //   type: "set_lang_change",
-      //   data: false,
-      // });
     } else {
       const tabs_active_data_cache =
         get_details_data_cache.value[`${state.mid}-${tabs_active_index.value}`];
@@ -711,15 +700,9 @@ export const useGetConfig = (router,cur_menu_type,details_params,play_media) => 
     ) || { plays: [] };
     state.plays_list = plays;
     // 保存当前选中的玩法集子项id
-    store.dispatch({
-      type: "SET_TABS_ACTIVE_ID",
-      data: state.mcid,
-    });
+    MatchDetailCalss.set_current_category_id(state.mcid)
     // 保存当前选中的玩法集子项玩法集合
-    store.dispatch({
-      type: "SET_TABS_ACTIVE_PLAYS",
-      data: state.plays_list,
-    });
+    MatchDetailCalss.set_category_arr(state.plays_list)
     state.change_mid = false;
   };
 
@@ -943,27 +926,10 @@ export const useGetConfig = (router,cur_menu_type,details_params,play_media) => 
     // }
 
     //玩法列表单双列切换为单列
-    store.dispatch({
-      type: "SET_LAYOUT_STATU",
-      data: 0,
-    });
     // 清除玩法集下缓存数据
-    store.dispatch({
-      type: "SET_DETAILS_DATA_CACHE",
-      data: {},
-    });
-
     // 清空选中的玩法集id
-    store.dispatch({
-      type: "SET_TABS_ACTIVE_ID",
-      data: "",
-    });
     // 清空选中的玩法集id对应的盘口玩法
-    store.dispatch({
-      type: "SET_TABS_ACTIVE_PLAYS",
-      data: [],
-    });
-
+    MatchDetailCalss.set_clear_all_play_data()
     // 站点 tab 休眠状态转激活
     useMittOn(MITT_TYPES.EMIT_SITE_TAB_ACTIVE, emit_site_tab_active).off;
 

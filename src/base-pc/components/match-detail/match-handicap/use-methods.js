@@ -48,7 +48,7 @@ export const useMethods = ({ props,emit }) => {
   // const get_uid = UserCtr.get_uid();
   const get_uid = ref(null);
   // 当前所选的玩法集子项id
-  const get_tabs_active_id = ref({});
+  const get_tabs_active_id = ref(MatchDetailCalss.current_category_id);
   // 获取当前页路由信息
   const vx_layout_cur_page = ref({});
   // 获取指定的玩法id
@@ -343,10 +343,8 @@ export const useMethods = ({ props,emit }) => {
       return false;
     }
     //设置玩法列表单双列 0单列， 1双列
-    store.dispatch({
-      type: "SET_LAYOUT_STATU",
-      data: statu,
-    });
+    //玩法列表单双列切换为单列
+    MatchDetailCalss.set_layout_statu(statu)
     state.layout_statu = statu ? true : false;
     if (statu) {
       state.waterfall = set_waterfall(state.details_data);
@@ -413,13 +411,10 @@ export const useMethods = ({ props,emit }) => {
           }
         }
         // 保存置顶玩法的 id
-        store.dispatch({
-          type: "SET_TOP_ID",
-          data: {
-            id: params.topKey,
-            type: !params.status,
-          },
-        });
+        MatchDetailCalss.set_top_id({
+          id: params.topKey,
+          type: !params.status,
+        })
         set_current_index(handicap);
         // 计算单双列玩法
         state.waterfall = set_waterfall(handicap);
