@@ -7,6 +7,7 @@
 <template>
   <div class="details relative-position" :style="page_style">
     <!-- 加载中，无数据等显示模板 -->
+    <div style="display:none">{{LayOutMain_pc.layout_version}}</div>
     <load-data
       v-show="load_detail_statu != 'data'"
       :class="[
@@ -58,7 +59,7 @@
                   :plays_list="plays_list"
                   :currentRound="currentRound"
                   :match_details="match_details"
-                  :screen="cur_expand_layout"
+                  :screen="LayOutMain_pc.cur_expand_layout"
                   @set_handicap_this="set_handicap_this"
                   :close_all_handicap="close_all_handicap"
                   :handicap_state="handicap_state"
@@ -121,7 +122,6 @@ const {
   sportId,
   handicap_this,
   is_request,
-  cur_expand_layout,
   headerHeight,
   init,
   set_handicap_this,

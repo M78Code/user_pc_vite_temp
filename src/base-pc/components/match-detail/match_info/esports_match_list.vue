@@ -86,7 +86,7 @@ export default {
           }
     }
     //更新电竞右侧视频
-    // let { off: off_ } = useMittOn(MITT_TYPES.GET_ESPORTS_VIDEO_LIST, this.get_match_list)
+    // let { off: off_ } = useMittOn(MITT_TYPES.EMIT_GET_ESPORTS_VIDEO_LIST, this.get_match_list)
   },
   methods:{
     ...mapActions({
