@@ -63,7 +63,7 @@
 // }),
 
 
-import { defineComponent, nextTick, ref, computed, defineEmits, watch, onMounted, onBeforeUnmount } from "vue";
+import { defineComponent, nextTick, ref, computed, watch, onMounted, onBeforeUnmount } from "vue";
 import lodash from "lodash";
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 
