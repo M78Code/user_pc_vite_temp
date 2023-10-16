@@ -192,7 +192,7 @@ class MatchPage {
     }
     // 页脚刷新事件
     else if (obj && obj.text == "footer-refresh") {
-      if (MenuData.menu_type == 28) {
+      if (MenuData.is_results()) {
         // 赛果时
         this.get_match_data_list();
       } else {
@@ -255,7 +255,7 @@ class MatchPage {
    */
   subscription() {
     //赛果
-    if (MenuData.menu_type == 28 && !["detail_match_list"].includes(this.invok_source)
+    if (MenuData.is_results() && !["detail_match_list"].includes(this.invok_source)
       || ['category'].includes(PageSourceData.route_name)) {
       return;
     }
@@ -476,6 +476,7 @@ class MatchPage {
    * @return {Undefined} Undefined
    */
   get_match_data_list(cb) {
+    console.error('get_match_data_list')
     // 接口请求前置处理，接口参数处理
     const params = MatchListParams.get_match_list_params_all();
     // 赛事接口调用前置条件处理  1.次要玩法折叠   2 重置到联赛折叠状态； 3. 骨架屏 显示

@@ -75,7 +75,7 @@ class PageSourceData {
       // filter_list ： 筛选 ： all  或者 [tid]
     }
   }
-
+  
   compute_other_property_by_page_source() {}
   /**
    * 初始化 页面根据  page_source 计算出来的 一些参照值
@@ -113,6 +113,7 @@ class PageSourceData {
    * @param {*} page_source
    */
   set_page_source(page_source) {
+    console.error("set_page_source",page_source)
     this.page_source = page_source;
     //初始化 页面根据  page_source 计算出来的 一些参照值
     this.rebase_other_property();
@@ -130,7 +131,11 @@ class PageSourceData {
     }
 
   }
-
+  //设置赛选条件
+  set_query_params(obj={})
+  {
+    this.list_query_other_params=Object.assign({},this.list_query_other_params,obj)
+  }
   // 设置当前路由名称
   set_route_name (value) {
     this.route_name = value

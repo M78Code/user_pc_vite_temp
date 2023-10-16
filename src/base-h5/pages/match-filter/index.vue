@@ -86,6 +86,8 @@ import { api_filter } from "src/api/index.js";
 import NoData from "src/base-h5/components/common/no-data.vue";
 import SFilter from "src/base-h5/components/skeleton/filter.vue";
 import lodash from 'lodash';
+import PageSourceData from "src/core/page-source/page-source.js";
+
 import { i18n_t, MITT_TYPES, compute_css, useMittEmit, MenuData, compute_img, UserCtr, get_file_path } from 'src/core/'
 import { ref, watch, computed, nextTick, onBeforeUnmount, onMounted } from 'vue';
 const default_url = "/yazhou-h5/image/svg/match_cup.svg"  //默认图片地址
@@ -314,6 +316,12 @@ function search_btn() {
   // set_collapse_csid_map({})
   // set_collapse_map_match({});
   //this.set_filter_list(data);
+  
+  PageSourceData.set_page_source("matchList-filter");
+
+  PageSourceData.set_query_params({
+    filter_list: data
+  })
   useMittEmit(MITT_TYPES.EMIT_CHANGE_SELECT_DIALOG, false)
   //触发列表页监听事件，调接口拉取指定赛事
   useMittEmit(MITT_TYPES.EMIT_MENU_CHANGE_FOOTER_CMD, {
