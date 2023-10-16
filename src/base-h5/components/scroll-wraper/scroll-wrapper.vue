@@ -228,7 +228,6 @@ onUnmounted(() => {
     height: auto;
     position: relative;
     background-repeat: repeat-y;
-    margin-top: .03rem;
     &.high_scrolling {
       background-size: contain;
       background-image: var(--q-color-com-img-bg-126);

@@ -57,7 +57,7 @@ const { layoutReducer, menuReducer, betInfoReducer, userReducer, themeReducer } 
  * 浏览器 宽高等数据 default: object
  * 路径: project_path\src\store\module\layout.js
  */
-const layout_size = ref(layoutReducer.layout_size)
+const layout_size = ref({})
 props: {
 
 };

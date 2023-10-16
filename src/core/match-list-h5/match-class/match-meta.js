@@ -9,6 +9,7 @@ import MatchPage from 'src/core/match-list-h5/match-class/match-page'
 import MenuData from "src/core/menu-h5/menu-data-class.js"
 import UserCtr from 'src/core/user-config/user-ctr.js'
 import MatchFold from 'src/core/match-fold'
+import MatchCollect from 'src/core/match-collect'
 import PageSourceData from "src/core/page-source/page-source.js";
 import MatchListCardClass from '../match-card/match-list-card-class'
 import { MATCH_LIST_TEMPLATE_CONFIG } from "src/core/match-list-h5/match-card/template"
@@ -104,6 +105,7 @@ class MatchMeta {
     const match_list = mids.map(t => {
       return BaseData.resolve_base_info_by_mid(t)
     })
+    // 过滤赛事
     const match_result = match_list.filter((t) => t.mid)
     this.set_match_default_template(match_result)
   }
@@ -194,10 +196,16 @@ class MatchMeta {
         is_show_league,
       })
       // 初始化赛事折叠
-      MatchFold.set_h5_tid_map_info(t)
+      MatchFold.set_match_mid_fold_obj(t)
       // 初始化球种折叠状态
-      if (`csid_${t.csid}` in MatchFold.h5_csid_map_info.value) return
-      MatchFold.set_h5_csid_map_info(t.csid)
+      if (`csid_${t.csid}` in MatchFold.ball_seed_csid_fold_obj.value) return
+      MatchFold.set_ball_seed_csid_fold_obj(t.csid)
+
+       // 初始化赛事收藏
+      MatchCollect.set_match_collect_state(t)
+      // 初始化联赛收藏状态
+      if (`collect_tid_${t.tid}` in MatchCollect.league_tid_collect_obj.value) return
+      MatchCollect.set_league_collect_state(t.tid)
       
     })
     this.handle_submit_warehouse(list)
@@ -388,7 +396,7 @@ class MatchMeta {
     list = lodash.map(list, t => {
       const match = MatchDataBaseH5.get_quick_mid_obj(t.mid)
       // 覆写赛事折叠参数
-      MatchFold.set_h5_tid_map_info(t)
+      MatchFold.set_match_mid_fold_obj(t)
       return Object.assign({}, match, t)
     })
     // 设置仓库渲染数据

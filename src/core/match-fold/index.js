@@ -1,3 +1,6 @@
+/**
+ * @description 赛事收藏类
+ */
 
 import lodash from 'lodash'
 import { ref } from 'vue'
@@ -7,20 +10,20 @@ import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from 'src/core'
 class MatchFold {
   constructor () {
     // 球种折叠对象
-    this.h5_csid_map_info = ref({})
-    // h5 赛事折叠对象
-    this.h5_tid_map_info = ref({})
+    this.ball_seed_csid_fold_obj = ref({})
+    // 赛事折叠对象
+    this.match_mid_fold_obj = ref({})
   }
   /**
-   * @description h5 设置折叠映射对象
+   * @description 设置折叠映射对象
    * @param { match } 赛事对象
    */
-  set_h5_tid_map_info (match) {
+  set_match_mid_fold_obj (match) {
     if (!match) return
     const key = this.get_match_fold_key(match)
     // 次要玩法头部是否显示
     const show_tab = this.compute_show_tab_play(match)
-    Object.assign(this.h5_tid_map_info.value, {
+    Object.assign(this.match_mid_fold_obj.value, {
       [key]: {
         show_tab,
         // 赛事区域
@@ -35,11 +38,11 @@ class MatchFold {
    * @param { match } 赛事对象
    * @param { falg } 展开/ 折叠
    */
-  set_h5_csid_map_info (csid, falg = true) {
-    Object.assign(this.h5_csid_map_info.value, {
+  set_ball_seed_csid_fold_obj (csid, falg = true) {
+    Object.assign(this.ball_seed_csid_fold_obj.value, {
       [`csid_${csid}`]: falg
     })
-    console.log(this.h5_csid_map_info.value)
+    console.log(this.ball_seed_csid_fold_obj.value)
   }
   /**
    * @description 联赛折叠
@@ -52,7 +55,7 @@ class MatchFold {
       const match = MatchDataBaseH5.get_quick_mid_obj(mid)
       if (!match || match.tid !== tid) return
       const key = this.get_match_fold_key(match)
-      const show_card = !lodash.get(this.h5_tid_map_info.value, `${key}.show_card`, false)
+      const show_card = !lodash.get(this.match_mid_fold_obj.value, `${key}.show_card`, false)
       this.set_match_fold(key, { show_card })
     })
   }
@@ -62,7 +65,7 @@ class MatchFold {
    */
   set_ball_seed_match_fold (csid) {
     // 赛事 mids
-    const status = this.h5_csid_map_info.value[`csid_${csid}`]
+    const status = this.ball_seed_csid_fold_obj.value[`csid_${csid}`]
     const match_mids = lodash.get(MatchMeta, 'match_mids', [])
     match_mids.forEach(mid => {
       const match = MatchDataBaseH5.get_quick_mid_obj(mid)
@@ -70,7 +73,7 @@ class MatchFold {
       const key = this.get_match_fold_key(match)
       this.set_match_fold(key, { show_card: !status })
     })
-    this.set_h5_csid_map_info(csid, !status)
+    this.set_ball_seed_csid_fold_obj(csid, !status)
   }
   /**
    * @description 设置赛事次要玩法是否展开
@@ -78,7 +81,7 @@ class MatchFold {
    */
   set_match_tab_content (match) {
     const key = this.get_match_fold_key(match)
-    const show_tab_content = !lodash.get(this.h5_tid_map_info.value, `${key}.show_tab_content`, false)
+    const show_tab_content = !lodash.get(this.match_mid_fold_obj.value, `${key}.show_tab_content`, false)
     this.set_match_fold(key, { show_tab_content  })
   }
   /**
@@ -96,23 +99,23 @@ class MatchFold {
    * @param { obj } 折叠参数 
    */
   set_match_fold (key, obj) {
-    const fold_obj = lodash.get(this.h5_tid_map_info.value, `${key}`)
+    const fold_obj = lodash.get(this.match_mid_fold_obj.value, `${key}`)
     if (!fold_obj) return console.error('折叠操作：该赛事未初始化')
     Object.assign(fold_obj, { ...obj })
-    console.log(this.h5_tid_map_info.value)
+    console.log(this.match_mid_fold_obj.value)
   }
   // 清除球种折叠对象
-  clear_h5_csid_map_info () {
-    this.h5_csid_map_info.value = {}
+  clear_ball_seed_csid_fold_obj () {
+    this.ball_seed_csid_fold_obj.value = {}
   }
   // 清除赛事折叠对象
-  clear_h5_tid_map_info () {
-    this.h5_tid_map_info.value = {}
+  clear_match_mid_fold_obj () {
+    this.match_mid_fold_obj.value = {}
   }
   // 清除所有折叠对象
   clear_fold_info () {
-    this.clear_h5_csid_map_info()
-    this.clear_h5_tid_map_info()
+    this.clear_ball_seed_csid_fold_obj()
+    this.clear_match_mid_fold_obj()
   }
   /**
    * 是否显示次要玩法

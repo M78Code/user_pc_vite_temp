@@ -1,4 +1,5 @@
 import { watch, computed, ref } from "vue";
+import { useRoute } from "vue-router";
 import { MenuData } from 'src/core/'
 import PageSourceData from "src/core/page-source/page-source.js";
 const page_source = ref(PageSourceData.page_source) // 当前页面来源
@@ -47,7 +48,8 @@ const is_hot = computed(() => {
 });
 //是否 详情页 用途： 赛事列表、热门、详情 引入赛事列表组件
 const is_detail = computed(() => {
-    return page_source.value === 'detail_match_list';
+    return useRoute().name === 'category'
+    // return page_source.value === 'detail_match_list';
 });
 
 const menu_lv1 = ref(MenuData.current_lv_1_menu)//1级 大类

@@ -61,6 +61,13 @@
         :class="[('league match-indent hairline-border'), { 'no-radius': get_sport_show && is_hot, 'home-hot': is_hot }]"
         @click="handle_league_fold">
         <div class="league-t-wrap">
+          <!-- 联赛收藏 -->
+          <div v-if="![3000, 900].includes(menu_type)" class="favorited-icon" @click.stop="handle_league_collect">
+            <!-- 未收藏 -->
+            <img v-if="!league_collect_state" :src="compute_img('icon-favorite')" alt="">
+            <!-- 收藏图标 -->
+            <img v-if='league_collect_state' :src="compute_img('icon-favorite-s')">
+          </div>
           <!-- 电竞图标 写死 -->
           <div class="esport" v-if="match_of_list.csid == 101" :style="compute_css('menu-sport-active-image', 2101)"></div>
           <div class="esport" v-else-if="match_of_list.csid == 103" :style="compute_css('menu-sport-active-image', 2103)"></div>
@@ -112,16 +119,14 @@
                     <span class="din-regular"> {{ lodash.get(match,'mcid')}} </span>
                   </div>
                   <!--赛事列表收藏-->
-                  <div class="favorite-icon-top match list-m"
-                    @click.stop="toggle_collect(match, i, 'mf')">
+                  <div class="favorite-icon-top match list-m" @click.stop="handle_match_collect">
                     <!-- 未收藏图标 -->
-                    <img v-if="!match_of_list.mf" :src="compute_img('icon-favorite')" alt="">
+                    <img v-if="!match_collect_state" :src="compute_img('icon-favorite')" alt="">
                     <!-- 收藏图标 -->
-                    <img v-if='match_of_list.mf' :src="compute_img('icon-favorite-d')">
+                    <img v-if='match_collect_state' :src="compute_img('icon-favorite-s')">
                   </div>
                   <!-- 赛事日期标准版 -->
-                  <div class="timer-wrapper-c flex items-center"
-                    :class="{ esports: 3000 == menu_type, 'din-regular': 3000 == menu_type }">
+                  <div :class="['timer-wrapper-c flex items-center', { esports: is_export, 'din-regular': is_export }]">
 
                     <!-- 赛事回合数mfo -->
                     <div v-if="match.mfo" class="mfo-title" :class="{ 'is-ms1': match.ms == 1 }">
@@ -166,7 +171,7 @@
                 <!-- 标准版 比分组件 -->
                 <!-- 电竞中，如果是比分判定中，则不显示该比分 -->
                 <div class="eports_scoring_tip" v-if="eports_scoring">{{ $t('mmp.eports_scoring') }}</div>
-                <score-list v-else-if="main_source != 'home_hot_page_schedule'" :match="match"></score-list>
+                <score-list v-else-if="!is_hot" :match="match"></score-list>
               </div>
               <!-- 下边的模块，左方是  队名和 队比分,  右面是  盘口  模块 -->
               <div class="odd-list match-indent" :class="{ 'simple': show_newer_edition, result: is_show_result() }">
@@ -346,13 +351,12 @@
                 <div class='l test-match-mf'>
                   <!--收藏图标-->
                   <div v-if="!GlobalAccessConfig.get_collectSwitch()" class="go-container-w flex no-wrap favorite">
-                    <div class="fav-i-wrap-match row items-center" @click.stop="toggle_collect(match, i, 'mf')">
+                    <div class="fav-i-wrap-match row items-center" @click.stop="handle_match_collect">
                       <div class="favorite-icon match">
                         <!-- 未收藏图标 -->
-                        <img v-if="!match_of_list.mf" :src="compute_img('icon-favorite')" alt="">
+                        <img v-if="!match_collect_state" :src="compute_img('icon-favorite')" alt="">
                         <!-- 收藏图标 -->
-                        <img :src="compute_img('icon-favorite-s')"
-                          v-if='match_of_list.mf' />
+                        <img v-if='match_collect_state' :src="compute_img('icon-favorite-s')">
                       </div>
                     </div>
                   </div>
@@ -447,6 +451,7 @@ import countingDownStart from 'src/base-h5/components/common/counting-down-start
 import scoreList from './score-list.vue';
 import oddListWrap from './odd-list-wrap.vue';
 import MatchFold from 'src/core/match-fold'
+import MatchCollect from 'src/core/match-collect'
 import matchOvertimePen from './match-overtime-pen.vue'
 import ImageCacheLoad from "./public-cache-image.vue";
 import PageSourceData from "src/core/page-source/page-source.js";
@@ -461,11 +466,9 @@ import { normal_img_not_favorite_white, normal_img_not_favorite_black, normal_im
 
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import { lang, standard_edition, theme } from 'src/base-h5/mixin/userctr.js'
-import { is_hot, menu_type, menu_lv2, is_detail } from 'src/base-h5/mixin/menu.js'
+import { is_hot, menu_type, menu_lv2, is_detail, is_export } from 'src/base-h5/mixin/menu.js'
 
 // TODO: 其他模块得 store  待添加
-// mixins: [formatmixin, odd_convert, bettings, match_list_mixin, msc_bw3, common],
-const emits = defineEmits(['unfold_changed', 'toggle_collect_league', 'toggle_collect_match'])
 const props = defineProps({
   // 当前组件的赛事数据对应列表的赛事
   match_of_list: Object,
@@ -580,7 +583,7 @@ const muUrl_icon = computed(() => {
 
 // TODO: 判断是否显示体育类型
 const get_sport_show = computed(() => {
-  if (['detail_match_list'].includes(props.main_source)) { return false }
+  if (is_detail.value) { return false }
   if (is_hot.value) {
     // 热门
     if (lodash.get(MenuData.hot_tab_menu, 'index') !== 0) { return false }
@@ -641,6 +644,37 @@ const time_change = computed(() => {
     return (format_how_many_days(time_stamp) ? `${format_how_many_days(time_stamp)}   ` : '') + (new Date(time_stamp)).Format(i18n_t('time2')) + '  ' + format_week(time_stamp)
   }
 })
+
+/**
+ * @description: 设置 联赛收藏与否
+ */
+const handle_league_collect = () => {
+  MatchCollect.handle_league_collect_state(props.match_of_list.tid)
+}
+
+/**
+ * @deprecated  联赛藏 状态
+ */
+const league_collect_state = computed(() => {
+  return MatchCollect.get_league_collect_state(props.match_of_list.tid)
+})
+
+/**
+ * @description: 设置 赛事收藏与否
+ */
+const handle_match_collect = () => {
+  // 获取当前收藏状态
+  const state = MatchCollect.get_match_collect_state(props.match_of_list)
+  MatchCollect.set_match_collect_state(props.match_of_list, !state)
+}
+
+/**
+ * @deprecated  赛事收藏 状态
+ */
+const match_collect_state = computed(() => {
+  return MatchCollect.get_match_collect_state(props.match_of_list)
+})
+
 /**
  * @description 球种折叠
  */
@@ -652,21 +686,24 @@ const handle_ball_seed_fold = () => {
  */
 const handle_league_fold = () => {
   // 首页热门，详情页，不需要用到折叠
-  if (['detail_match_list', 'home_hot_page_schedule'].includes(props.main_source)) return;
+  if (is_hot.value || is_detail.value) return;
   MatchFold.set_league_fold(props.match_of_list.tid)
 }
+/**
+ * @description 联赛折叠状态
+ */
 const league_collapsed = computed(() => {
-  if (['home_hot_page_schedule'].includes(props.main_source)) return false
-  const falg = lodash.get(MatchFold.h5_csid_map_info.value, `csid_${props.match_of_list.csid}`, true)
+  if (is_hot.value) return false
+  const falg = lodash.get(MatchFold.ball_seed_csid_fold_obj.value, `csid_${props.match_of_list.csid}`, true)
   return !falg
 })
 /**
  * @description 赛事显示/隐藏
  */
 const collapsed = computed(() => {
-  if (['home_hot_page_schedule'].includes(props.main_source)) return false
+  if (is_hot.value) return false
   const key = MatchFold.get_match_fold_key(props.match_of_list)
-  const show_card = lodash.get(MatchFold.h5_tid_map_info.value, `${key}.show_card`)
+  const show_card = lodash.get(MatchFold.match_mid_fold_obj.value, `${key}.show_card`)
   return !show_card
 })
 
@@ -840,7 +877,7 @@ const leaderboard_switch = () => {
 const is_show_result = () => {
   let r = false;
   if(menu_type.value == 28){
-    r = !['detail_match_list', 'home_hot_page_schedule'].includes(props.main_source)
+    r = !(is_hot.value || is_detail.value)
   }
   return r;
 }
@@ -874,124 +911,13 @@ const hide_away_red = () => {
 }
 
 /**
- * @description: 联赛点击事件，折叠或展开联赛赛事
- * @param {Object} item 点击的赛事
- */
-const league_l_clicked = () => {
-  // 首页热门，详情页，不需要用到折叠
-  if (['detail_match_list', 'home_hot_page_schedule'].includes(props.main_source)) return;
-  // get_secondary_unfold_map  次要玩法 折叠状态
-  let map_collapse = lodash.cloneDeep(get_collapse_map_match.value);
-  let { tid, ms } = props.match_of_list;
-
-  // 如果是折叠, 则展开赛事
-  if (map_collapse[tid] == 1) {
-    if (!props.match_of_list) return;
-
-    //展开联赛
-    map_collapse[tid] = 0
-  } else { //  折叠赛事
-    map_collapse[tid] = 1
-  }
-
-  // 今日下目标联赛折叠前（赛事dom未隐藏前计算）
-  if (menu_type.value === 3 && ms === 0 && map_collapse[tid] === 1) {
-    const scroll_height = need_scroll_height_handle(tid)
-
-    // 使用原生dom操作，this.matchCtr.view.$refs有时会获取不到目标dom
-    document.querySelector('.match-list-container').scrollTop -= scroll_height
-  }
-
-  // set_collapse_map_match控制赛事dom显示隐藏
-  store.dispatch({ type: 'matchReducer/set_collapse_map_match',  payload: map_collapse });
-  emits('unfold_changed', props.match_of_list)
-
-  // 今日下目标联赛展开后（赛事dom显示后计算）
-  if (menu_type.value === 3 && ms === 0 && map_collapse[tid] === 0) {
-    const scroll_height = need_scroll_height_handle(tid)
-
-    clearTimeout(need_scroll_height_timer)
-    need_scroll_height_timer = setTimeout(() => {
-      document.querySelector('.match-list-container').scrollTop += scroll_height
-    })
-  }
-}
-/**
- * @description: 今日菜单下，点击未开赛下的联赛卡片，页面内容上移到已开赛，页面需滚动到点击位置
- */
-const need_scroll_height_handle = (tid) => {
-  if (!props.matchCtr.view) {
-    return 0
-  }
-
-  // 进行中的同tid赛事下标
-  const started_index_arr = []
-  // 赛事列表
-  const match_list = lodash.cloneDeep(props.matchCtr.match_list_data_sources)
-  // 赛事dom块高度映射列表
-  const match_height_map_list = lodash.cloneDeep(props.matchCtr.view.match_height_map_list)
-  // 展开折叠 未开赛的联赛后 需滚动的距离
-  let started_match_height = 0
-
-  // 根据联赛id及赛事状态ms筛选出需计算的赛事下标
-  for (let i in match_list) {
-    if (match_list[i].tid === tid && [1, 110].includes(match_list[i].ms)) {
-      started_index_arr.push(i)
-    }
-
-    if (started_index_arr.length && match_list[i].tid !== tid) {
-      break
-    }
-  }
-
-  if (!started_index_arr.length) {
-    return 0
-  }
-
-  // 联赛及相应间隔高度，需在最终计算中减去
-  let league_height_spacing = 0.48,
-    sport_type_space = 0
- b
-  // 计算同联赛进行中的赛事dom高度
-  for (let i in match_height_map_list) {
-    if (started_index_arr.includes(i)) {
-      if (match_height_map_list[i].sport_type_space) {
-        sport_type_space = match_height_map_list[i].sport_type_space
-      }
-      started_match_height += get_match_dom_height_by_match_data(match_height_map_list[i])
-    }
-
-    if (started_match_height && !started_index_arr.includes(i)) {
-      break
-    }
-  }
-
-  // 最终赛事dom高度
-  started_match_height = started_match_height - league_height_spacing - sport_type_space
-
-  return rem_height(started_match_height)
-}
-/**
- * 通过赛事数据获取赛事所占容器高度
- * @param {Object} match_height_map
- */
-const get_match_dom_height_by_match_data = (match_height_map) => {
-  let r = 0;
-  match_height_map && Object.keys(match_height_map).forEach(p_key => {
-    if (p_key != "" && p_key != "mid") {
-      r += match_height_map[p_key];
-    }
-  });
-  return r;
-}
-/**
  * @description: 设置发球方绿点显示
  * @param {Object} item 赛事对象
  * @param {Object} side 'home'主队  'away'客队
  * @return {Boolean} 是否显示发球方
  */
 const set_serving_side = (item, side) => {
-  if (menu_type.value == 28 && !["detail_match_list"].includes(props.main_source)) { //赛果不显示发球方绿点
+  if (menu_type.value == 28 && !is_detail.value) { //赛果不显示发球方绿点
     return false
   }
   return item.ms == 1 && item.mat == side;
@@ -1010,88 +936,7 @@ const get_match_mc = (item) => {
 const get_file_path_local = (path, csid) => {
   return get_file_path(path, csid);
 }
-/**
- * @description: 主队队徽
- * @param {Object} item 赛事对象
- * @return {Number} is_second 0:不是双打  1:双打
- */
-const home_avatar = (item, is_second) => {
-  if (get_img_error_map_mid.value[item.mid] && get_img_error_map_mid.value[item.mid].home) {
-    return get_img_error_map_mid.value[item.mid].home;
-  }
-  // 获取双打第二个头像
-  if (is_second) {
-    if (Array.isArray(item.mhlu) && item.mhlu.length > 1)
-      return get_file_path_local(item.mhlu[1], item.csid);
-    // 如果是字母logo，则返回雪碧图
-    return false
-  }
-  // 获取单打头像或者双打第一个头像
-  else {
-    // 真实logo
-    let match_logo;
-    if (Array.isArray(item.mhlu) &&item.mhlu.length) {
-      match_logo = item.mhlu[0];
-    }
-    else {
-      match_logo = item.mhlu;
-    }
-    if (match_logo)
-      return get_file_path_local(match_logo, item.csid);
-    // 如果是字母logo，则返回雪碧图
-    return false
-  }
-}
-/**
- * @description: 客队队徽
- * @param {Object} item 赛事对象
- * @return {Number} is_second 0:不是双打  1:双打
- */
-const away_avatar = (item, is_second) => {
-  if (get_img_error_map_mid.value[item.mid] && get_img_error_map_mid.value[item.mid].away) {
-    return get_img_error_map_mid.value[item.mid].away;
-  }
-  // 获取双打第二个头像
-  if (is_second) {
-    if (Array.isArray(item.malu) && item.malu.length > 1)
-      return get_file_path_local(item.malu[1], item.csid);
-    // 如果是字母logo，则返回雪碧图
-    return false
-  }
-  // 获取单打头像或者双打第一个头像
-  else {
 
-    // 真实logo
-    let match_logo;
-    if (Array.isArray(item.malu) && item.malu.length) {
-      match_logo = item.malu[0];
-    }
-    else {
-      match_logo = item.malu;
-    }
-    if (match_logo)
-      return get_file_path_local(match_logo, item.csid);
-    // 如果是字母logo，则返回雪碧图
-    return false
-  }
-
-}
-/**
- * @description: 收藏与取消收藏
- * @param {Object} match 赛事
- * @param {Number} index 赛事下标
- * @param {Number} item 收藏类型 'tf'联赛  'mf'赛事
- * @return {String}
- */
-const toggle_collect = (match, index, item) => {
-  if (match == 'tf') {
-    //联赛收藏或取消收藏
-    emits('toggle_collect_league', { match, index, type: 'tf' })
-  } else {
-    //赛事收藏或取消收藏
-    emits('toggle_collect_match', { match, index, type: 'mf' })
-  }
-}
 /**
  * @description: 跳转至详情
  * @param {Object} item 赛事
@@ -1177,7 +1022,7 @@ const show_counting_down = (item) => {
  */
 const get_m_status_show = (i) => {
   let result = false;
-  if (props.main_source == 'detail_match_list') {
+  if (is_detail.value) {
     return false
   }
   //非今日串关不显示

@@ -18,6 +18,7 @@ const item = {
 }
 export default function (position) {
     return {
-        backgroundPosition: item[position] + 'px'
-    }
+        "background-position-x": `0`,
+        "background-position-y": `${item[position]}px`,
+    };
 }
