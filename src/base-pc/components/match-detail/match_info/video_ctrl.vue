@@ -53,9 +53,9 @@
           v-if="
             menu_data.is_multi_column &&
             GlobalSwitchClass.global_switch.multi_column &&
-            !get_unfold_multi_column &&
+            !is_unfold_multi_column &&
             ['search', 'home'].includes(route.name) &&
-            !vx_show_filter_popup
+            !filterHeader.show_filter_popup
           "
         >
           <span class="text">{{i18n_t("icon_tips.fold") }}</span>
@@ -173,6 +173,7 @@ import { i18n_t, get_match_status,UserCtr ,GlobalSwitchClass,MatchDetailCalss} f
 import { compute_css } from "src/core/server-img/index.js";
 import { debounce_throttle_cancel } from "src/core/utils/module/other.js";
 import { useRoute, useRouter } from "vue-router";
+import filterHeader from "src/core/filter-header/filter-header.js";
 const  route = useRoute()
 const  router= useRouter()
 import lodash from "lodash";
@@ -298,20 +299,10 @@ watch(
   },
   { deep: true }
 );
-//     computed: {
-  //   //   lang: "get_lang",  
+//     computed: { 
 //   // ...mapGetters({
 //   //   //全局点击事件
 //   //   get_global_click: 'get_global_click',
-//   //    //是否展开多列玩法
-//   //   get_unfold_multi_column:"get_unfold_multi_column",
-//   //   // 是否显示联赛筛选框
-//   //   vx_show_filter_popup: "get_show_filter_popup",
-//   //   //多语言
-
-//   //   //视频是否展开状态
-//   //   vx_get_is_fold_status:'get_is_fold_status'
-//   // }),
 /**
  * @Description:视频按钮是否显示
  * @return {boolean}
