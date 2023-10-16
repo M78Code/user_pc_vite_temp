@@ -66,7 +66,7 @@
 import base_data from "src/core/base-data/base-data.js";
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 
-import { nextTick, ref, computed, defineEmits, watch, onMounted, onBeforeUnmount } from "vue";
+import { nextTick, ref, computed, watch, onMounted, onBeforeUnmount } from "vue";
 //-------------------- 对接参数 prop 注册  开始  -------------------- 
 import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
 import {component_symbol ,need_register_props} from "../config/index.js"
