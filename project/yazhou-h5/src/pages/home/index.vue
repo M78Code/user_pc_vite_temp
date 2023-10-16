@@ -23,9 +23,9 @@
 </template>
 
 <script>
+import {defineAsyncComponent} from 'vue'
 import home from "./components/first-page.vue"; // 包网3首页下边（轮播 + 跑马灯 + 赛事框）  榴莲千层盒子（小）300p
 import setMenu from "src/base-h5/components/common/set-menu.vue"; // 设置
-import hot from "src/base-h5/pages/home/hot/index.vue"; // 热门页入口主页面
 import { utils } from "src/core/utils/index.js";
 import { onUnmounted, watch, ref, computed, onMounted, defineComponent, nextTick, } from "vue";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
@@ -38,7 +38,9 @@ import { MenuData } from "src/core/index.js"
 
 import 'src/base-h5/css/pages/hot-modal.scss'
 // import router_mixins from "src/base-h5/mixins/router-mixins.js";
-// import live_video from "src/base-h5/pages/home/live-video/index.vue";
+const  live_video =defineAsyncComponent(()=>import("src/base-h5/pages/home/live-video/index.vue"));
+const  hot =defineAsyncComponent(()=>import("src/base-h5/pages/home/hot/index.vue"));
+// 热门页入口主页面
 
 const { homeReducer } = store.getState();
 
@@ -58,7 +60,7 @@ export default defineComponent({
   components: {
     setMenu,
     home,
-    hot,
+    hot,live_video
   },
   setup() {
     // 首页头部 tab 选项卡内容

@@ -28,11 +28,15 @@ export default class ListMap {
    * @param {String} key 主数组列表子元素对象唯一标识key值属性字符串
    * @return {undefined} undefined
    */
-  constructor(key) {
+  constructor(key,list) {
     // 设置对象唯一标识key值
     this.key = key ? key : 'id';
     // 初始化数据
     this.init();
+    if(list){ 
+      //因为导出的是一个class 而不是一个实例可以在初始化做东西
+      this.setList(list)
+    }
   }
 
 
@@ -71,7 +75,7 @@ export default class ListMap {
    */
   push(obj) {
     let ret = false;
-    let key = _.get(obj, this.key);
+    let key = lodash.get(obj, this.key);
     if (obj && key) {
       this.list.push(obj);
       this.obj[key] = obj;
@@ -87,7 +91,7 @@ export default class ListMap {
    */
   unshift(obj) {
     let ret = false;
-    let key = _.get(obj, this.key);
+    let key = lodash.get(obj, this.key);
     if (obj && key) {
       this.list.unshift(obj);
       this.obj[key] = obj;
@@ -107,7 +111,7 @@ export default class ListMap {
     if (this.list) {
       let del_ = this.list.splice(i, count);
       del_.forEach(item => {
-        let key = _.get(item, this.key);
+        let key = lodash.get(item, this.key);
         delete this.obj[key];
       });
       ret = true;
@@ -124,7 +128,7 @@ export default class ListMap {
     let ret = false;
     if (this.list && this.list.length && this.list[0]) {
       let del_ = this.list.shift();
-      let key = _.get(del_, this.key);
+      let key = lodash.get(del_, this.key);
       delete this.obj[key];
       ret = true;
     }
@@ -140,7 +144,7 @@ export default class ListMap {
     let ret = false;
     if (this.list && this.list.length) {
       let del_ = this.list.pop();
-      let key = _.get(del_, this.key);
+      let key = lodash.get(del_, this.key);
       delete this.obj[key];
       ret = true;
     }
@@ -162,10 +166,10 @@ export default class ListMap {
     let ret = false;
     if (obj) {
       if ((typeof obj) == 'object') {
-        let key_ = _.get(obj, this.key);
+        let key_ = lodash.get(obj, this.key);
         if (key_) {
           for (let i = 0; i < this.list.length; i++) {
-            let key = _.get(this.list, `[${i}].${this.key}`);
+            let key = lodash.get(this.list, `[${i}].${this.key}`);
             if (key && key == key_) {
               this.splice(i, 1);
               break;
@@ -176,7 +180,7 @@ export default class ListMap {
         }
       } else {
         for (let i = 0; i < this.list.length; i++) {
-          let key = _.get(this.list, `[${i}].${this.key}`);
+          let key = lodash.get(this.list, `[${i}].${this.key}`);
           if (key && key == obj) {
             this.splice(i, 1);
             break;
@@ -199,7 +203,7 @@ export default class ListMap {
     if (list && (list instanceof Array)) {
       let key = '';
       list.forEach(item => {
-        key = _.get(item, this.key);
+        key = lodash.get(item, this.key);
         if (item && key) {
           obj_[key] = item;
         }
