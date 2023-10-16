@@ -34,7 +34,7 @@
 </template>
 
 <script setup>
-import { ref, onUnmounted, watch, reactive, defineEmits } from 'vue';
+import { ref, onUnmounted, watch, reactive } from 'vue';
 import { useRoute } from 'vue-router';
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"

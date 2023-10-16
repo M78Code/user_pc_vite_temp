@@ -3,7 +3,7 @@
 -->
 <template>
   <div :class="tab_Index != 0 ? 'sports_balls_tab' : ''">
-    <div @scroll="wrapper_scrolling" :style="{marginTop: tab_Index !== 0 ? '0' : '3px'}">
+    <div @scroll="wrapper_scrolling">
       <!-- 第二个tab 榜单 骨架屏 -->
       <hot-list v-if="list_loading"></hot-list>
       <!-- 热门赛程 骨架屏-->

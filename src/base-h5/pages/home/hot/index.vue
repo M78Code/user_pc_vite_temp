@@ -268,8 +268,8 @@ onUnmounted(() => {
 <style lang="scss" scoped>
 .popular-hot-pages {
   .title {
-    height: 0.3rem;
-    line-height: 0.3rem;
+    height: 0.35rem;
+    line-height: 0.35rem;
     padding-left: 0.24rem;
     font-family: PingFangSC-Medium;
     font-size: 0.14rem;

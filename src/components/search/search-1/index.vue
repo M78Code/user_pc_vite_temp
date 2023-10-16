@@ -145,7 +145,7 @@ onUnmounted(() => document.removeEventListener('click', click_fun))
  * 浏览器 宽高等数据 default: object
  * 路径: project_path\src\store\module\layout.js
  */
-const layout_size = ref(layoutReducer.layout_size)
+const layout_size = ref({})
 /** 
 * 是否展开多列玩法 default: object
 * 路径: project_path\src\store\module\global.js

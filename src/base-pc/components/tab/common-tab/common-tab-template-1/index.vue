@@ -65,17 +65,12 @@
 </template>
 
 <script setup>
-// import {mapGetters,mapActions} from 'vuex'
-// ...mapGetters([
-//   'get_layout_list_size',
-// ]),
 
 import {
   defineComponent,
   nextTick,
   ref,
   computed,
-  defineEmits,
   watch,
   onMounted,
   onBeforeUnmount,
@@ -196,10 +191,7 @@ if (props.is_drag) {
 
 // 获取页面宽高信息 --可以废弃，废弃改动较大
 const get_layout_list_size = ref({});
-const un_subscribe = store.subscribe(() => {
-  let state_ = store.getState();
-  get_layout_list_size.value = state_.layoutReducer.layout_list_size;
-});
+
 /**
  * @Description:左边按钮是否显示
  * @return {boolean}
@@ -387,13 +379,7 @@ const mousedown = (e) => {
 
 
 //监听屏幕宽度改变  设置是否显示按钮
-// watch(get_layout_list_size.width, () => {
-  // item_wrap_width.value = BetCommonHelper.get_refs_info(
-  //   "wrap",
-  //   null,
-  //   this
-  // ).clientWidth;
-// });
+// TODO
 
 //监听list长度发生改变
 // watch(props.list.length, () => {

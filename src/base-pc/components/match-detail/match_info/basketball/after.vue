@@ -237,6 +237,7 @@ import lodash from "lodash";
 import store from "src/store-redux/index.js";
 import { IconWapper } from 'src/components/icon'
 import { nextTick } from "vue";
+import LayOutMain from "src/core/layout/index.js"
 
 export default {
   components: {
@@ -268,14 +269,10 @@ export default {
       is_scroll: false, //是否出现比分滚动
       scrollTimer: null, // 定时器
       un_subscribe: null,
-      get_layout_list_size: store.getState().layoutReducer.layout_list_size,
     };
   },
   mounted() {
-    this.un_subscribe = store.subscribe(() => {
-      let state_ = store.getState();
-      this.get_layout_list_size = state_.layoutReducer.layout_list_size;
-    });
+    
   },
   methods: {
     /**
@@ -387,7 +384,7 @@ export default {
         if (
           this.$route.name == "home" &&
           lodash.get(res, "msc.S7") &&
-          this.get_layout_list_size.width < 1430
+          LayOutMain.layout_content_width < 1430
         ) {
           this.is_scroll = true;
         } else {
@@ -406,7 +403,7 @@ export default {
       },
       immediate: true,
     },
-    get_layout_list_size: {
+    LayOutMain: {
       handler(res) {
         if (this.$route.name == "home") {
           if (res.width < 1430 && lodash.get(this.match_info, "msc.S7")) {
