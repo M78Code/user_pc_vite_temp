@@ -55,7 +55,6 @@ let virtual_list_timeout_id;
 let switch_timer_id
 
 watch(() => MenuData.match_list_version.value, () => {
-	console.log('123123123123123123');
 	fetch_match_list()
 })
 
@@ -507,7 +506,6 @@ const handle_match_list_request_when_ok = (data, is_socket, cut, collect) => {
 		match_list_api_type,
 		left_menu_result,
 	} = MenuData;
-	console.log('dadsasdasdasdad', data);
 	let current_menu = ([2, 3].includes(Number(menu_root)) && left_menu_result.guanjun != "common-guanjun")
 	if ((menu_root == 2000 || current_menu) && !match_list_api_config.is_collect) {
 		//       mx_list_res
