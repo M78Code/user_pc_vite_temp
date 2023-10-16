@@ -79,6 +79,9 @@ class UseGlobal {
    set_global_data_version(){
     this.global_switch_version.version = Date.now()
   }
+  get_is_unfold_multi_column() {
+    return this.is_unfold_multi_column
+  }
 
   // 获取当前排序
   get_match_sort() {
