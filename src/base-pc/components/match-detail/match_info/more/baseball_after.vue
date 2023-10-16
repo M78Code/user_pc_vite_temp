@@ -147,6 +147,7 @@ import BetCommonHelper from "src/core/bet/common-helper/index.js";
 import { IconWapper } from 'src/components/icon'
 import { nextTick } from "vue";
 import { socre_dict,useMittOn, MITT_TYPES, useMittEmit} from "src/core";
+import LayOutMain from "src/core/layout/index.js"
 // 两局之间的局间休息--根据赛事阶段比对文档[http://lan-confluence.sportxxxr1pub.com/pages/viewpage.action?pageId=24127556]，特殊处理为 mct +1 和不显示发球方
 const _mmp = [422, 424, 426, 428, 430, 432, 434, 436, 43810, 43811, 43812, 43813, 43814, 43815, 43816, 43817, 43818, 43819];
 // 一局的上下半局间休息--不需要处理
@@ -185,13 +186,13 @@ export default {
       isStop: false, // 当前是否是局间休息，局间休息时不显示当前发球方指示
       curMct: null, // 计算后的当前局
       un_subscribe: null,
-      get_layout_list_size: store.getState().layoutReducer.layout_list_size,
+      // get_layout_list_size: store.getState().layoutReducer.layout_list_size,
     };
   },
   mounted() {
     this.un_subscribe = store.subscribe(() => {
       let state_ = store.getState();
-      this.get_layout_list_size = state_.layoutReducer.layout_list_size;
+      // this.get_layout_list_size = state_.layoutReducer.layout_list_size;
     });
   },
   props: {
@@ -450,7 +451,7 @@ export default {
         this.offset = 9
       } else {
         // 右侧 小屏 
-        if( this.get_layout_list_size.width < 1440 ) {
+        if( LayOutMain.layout_content_width < 1440 ) {
           this.offset = 4
         } else {
           this.screen_class = ""
