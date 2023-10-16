@@ -71,7 +71,7 @@ const route = useRoute();
 // 左侧详情参数
 const vx_detail_params = reactive({})
 //视屏播放类型
-const vx_play_media = reactive(null)
+const vx_play_media = reactive({})
 let lang = UserCtr.lang;
 // 视频是否展开状态
 const vx_get_is_fold_status = ref(null)

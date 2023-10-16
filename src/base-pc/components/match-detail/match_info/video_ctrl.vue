@@ -53,9 +53,9 @@
           v-if="
             menu_data.is_multi_column &&
             GlobalSwitchClass.global_switch.multi_column &&
-            !get_unfold_multi_column &&
+            !GlobalSwitchClass.get_is_unfold_multi_column &&
             ['search', 'home'].includes(route.name) &&
-            !vx_show_filter_popup
+            !filterHeader.show_filter_popup
           "
         >
           <span class="text">{{i18n_t("icon_tips.fold") }}</span>
@@ -171,6 +171,7 @@ import { IconWapper } from "src/components/icon";
 import refresh from "src/base-pc/components/refresh/refresh.vue";
 import { i18n_t, get_match_status,UserCtr ,GlobalSwitchClass,MatchDetailCalss} from "src/core/index";
 import { compute_css } from "src/core/server-img/index.js";
+import filterHeader from "src/core/filter-header/filter-header.js";
 import { debounce_throttle_cancel } from "src/core/utils/module/other.js";
 import { useRoute, useRouter } from "vue-router";
 const  route = useRoute()
