@@ -4,21 +4,22 @@
 <template>
   <div class="champion-wrap" v-if="is_show">
     <!--体育类别  menuType 1:滚球 2:即将开赛 3:今日 4:早盘 11:串关 -->
-    <div class="sport-title match-indent" v-if="get_sport_show(i)" @click="ball_folding_click(match_of_list.csid)">
-      <span class="score-inner-span">
-        {{match_of_list.csna}}
-      </span>
+    <div class="sport-title match-indent" v-if="get_sport_show(i)" @click="handle_ball_seed_fold">
+      <span class="score-inner-span"> {{match_of_list.csna}} </span>
       <div class="collapse-dire">
-        <img class="icon-down-arrow" src="/yazhou-h5/image/list/league-collapse-icon-black.svg" :class="{collapsed:collapsed}" alt="" v-if="get_sport_show(i)">
-        <img class="icon-down-arrow" src="/yazhou-h5/image/list/league-collapse-icon.svg" :class="{collapsed:collapsed}" alt="" v-else>
+        <img class="icon-down-arrow" :class="{ 'collapsed': league_collapsed }" :src='compute_img("icon-collapse")' />
       </div>
     </div>
-    <div v-if="is_show_league(i)" class="league-container flex items-center justify-between hairline-border" @click="toggle_collapse_state(match_of_list);">
+    <div v-if="is_show_league(i)" class="league-container flex items-center justify-between hairline-border" @click="handle_league_fold">
       <div class="league-wrapper champion flex items-center">
-         <!-- 未收藏图标 -->
-        <img style="width: 16px; height: 16px; margin: 0 10px 0 6px" :src="normal_img_not_favorite_white" alt="">
+        <div @click.stop="handle_match_collect" class="collect-img">
+          <!-- 未收藏图标 -->
+          <img v-if="!match_collect_state" :src="compute_img('icon-favorite')" alt="">
+          <!-- 收藏图标 -->
+          <img v-if='match_collect_state' :src="compute_img('icon-favorite-s')">
+        </div>
         <div v-if="menu_type === 100 && GlobalAccessConfig.get_collectSwitch()"  class="favorite" :class="[{favorited:match_of_list.tf},theme]"
-          @click.self.stop="toggle_collect(match_of_list)"></div>
+          @click.stop="handle_league_fold"></div>
             <div class="league-title-text row justify-between" :class="{'without-collect': menu_type !== 100 || (menu_type === 100 && !GlobalAccessConfig.get_collectSwitch())}" >
               {{menu_type == 100 ? match_of_list.onTn : match_of_list.tn}}
             </div>
@@ -88,6 +89,8 @@ import { menu_type } from 'src/base-h5/mixin/menu.js'
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import { normal_img_not_favorite_white } from 'src/base-h5/core/utils/local-image.js'
 import 'src/base-h5/css/pages/match-container-champion.scss'
+import MatchFold from 'src/core/match-fold'
+import MatchCollect from 'src/core/match-collect'
 
 const props = defineProps({
   // 当前组件的赛事数据对应列表的赛事
@@ -99,22 +102,14 @@ const props = defineProps({
 const store_state = store.getState()
 
 const get_bet_list = ref(store_state.get_bet_list)
-const get_collapse_map_match = ref(store_state.get_collapse_map_match)
 const get_show_favorite_list = ref(store_state.get_show_favorite_list)
 
 const unsubscribe = store.subscribe(() => {
   const new_state = store.getState()
   get_bet_list.value = new_state.get_bet_list
-  get_collapse_map_match.value = new_state.get_collapse_map_match
   get_show_favorite_list.value = new_state.get_show_favorite_list
 })
 
-const collapsed = computed(() => {
-  let result = true;
-  let tmid = gen_collapse_key(props.match_of_list);
-  result = get_collapse_map_match.value && get_collapse_map_match.value[tmid];
-  return result;
-})
 
 const is_show = computed(() => {
   let flag = true;
@@ -138,7 +133,49 @@ const calc_bgcolor = computed(() => {
     }
   }
 })
+/**
+ * @description 赛事收藏
+ */
+const handle_match_collect = () => {
+  // 获取当前收藏状态
+  const state = MatchCollect.get_match_collect_state(props.match_of_list)
+  MatchCollect.set_match_collect_state(props.match_of_list, !state)
+}
 
+/**
+ * @deprecated  赛事收藏 状态
+ */
+const match_collect_state = computed(() => {
+  return MatchCollect.get_match_collect_state(props.match_of_list)
+})
+
+/**
+ * @description 球种折叠
+ */
+const handle_ball_seed_fold = () => {
+  MatchFold.set_ball_seed_match_fold(props.match_of_list.csid)
+}
+/**
+ * @description 联赛折叠
+ */
+const handle_league_fold = () => {
+  MatchFold.set_league_fold(props.match_of_list.tid)
+}
+
+/**
+ * @description 联赛折叠状态
+ */
+const league_collapsed = computed(() => {
+  return !lodash.get(MatchFold.ball_seed_csid_fold_obj.value, `csid_${props.match_of_list.csid}`, true)
+})
+/**
+ * @description 赛事显示/隐藏
+ */
+const collapsed = computed(() => {
+  const key = MatchFold.get_match_fold_key(props.match_of_list)
+  const show_card = lodash.get(MatchFold.match_mid_fold_obj.value, `${key}.show_card`)
+  return !show_card
+})
 /**
  * @description 判断是否显示联赛标题
  * @param {Number} i 赛事处于列表中的下标
@@ -218,46 +255,7 @@ const get_odds_value = (ol_item,hsw) => {
   let r1 = compute_value_by_cur_odd_type(ov / 100000,null, hsw );
   return r1 || 0;
 }
-const gen_collapse_key = (match) => {
-    return match.tid;
-}
-/**
- * @description: 翻转折叠状态
- * @param {Undefined} Undefined
- * @return {Undefined}
- */
-const toggle_collapse_state = () => {
-  let map_collapse = lodash.cloneDeep(get_collapse_map_match.value);
-  if(map_collapse){
-    // 翻转折叠时始终将 赛事列表请求状态设为false
-    store.dispatch({ type: 'matchReducer/set_match_list_loading',  payload: false })
 
-    let tmid_list = [],tid = null,mid = null,max_l = MatchMeta.match_mids.length;
-    for(let i = 0; i < max_l;i++){
-      let match = MatchDataBaseH5.get_quick_mid_obj(MatchMeta.match_mids[i])
-      let match_c_key = gen_collapse_key(match);
-      if(match.mid == match_of_list.mid){
-        tid = match.tid;
-        mid = match.mid;
-        tmid_list.push(match_c_key);
-      }
-      if(tid){
-        if(tid == match.tid){
-          if(mid != match.mid){
-            tmid_list.push(match_c_key);
-          }
-        }
-        else{
-          break;
-        }
-      }
-    }
-    let tmid = gen_collapse_key(match_of_list);
-    let f = map_collapse[tmid] ? 0 : 1;
-    tmid_list.forEach(tmid => map_collapse[tmid] = f);
-    store.dispatch({ type: 'matchReducer/set_collapse_map_match',  payload: map_collapse })
-  }
-}
 /**
  * @description: 冠军投注,内嵌版走这里逻辑
  * @param {Object} match 赛事对象

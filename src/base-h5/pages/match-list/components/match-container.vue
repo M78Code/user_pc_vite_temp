@@ -20,7 +20,6 @@
       <!-- 首页热门 -->
       <template v-if="is_hot">
         <div v-if="is_hot && lodash.get(MenuData.hot_tab_menu, 'index') == 0" class="ball_img">
-          
           <div class='img' :style="compute_css({key:'polular-spirite',position:match_of_list.csid})" style="--per:-0.60754rem;background-size: 100%;">
           </div>
           <span> <i :style="compute_css({key:'h5-hot-jinxuan', position: `item_${match_of_list.csid}` })"></i>  <span>{{ match_of_list.csna }}</span> </span>
@@ -77,7 +76,7 @@
             <image-cache-load :csid="match_of_list.csid" :path="match_of_list.lurl" type="league"></image-cache-load>
           </div>
           <span class="league-title-text row justify-between">
-            <span class="league-t-wrapper" :class="{ 'league-t-main-wrapper': menu_type !== 28 }">
+            <span :class="['league-t-wrapper', { 'league-t-main-wrapper': menu_type !== 28, export: is_export }]">
               <span class="match-league ellipsis-2-lines" :class="{ 'match-main-league': menu_type !== 28 }">
                 {{ match.tn }}
               </span>
@@ -106,7 +105,7 @@
       <q-slide-transition>
         <!--  间隔,因为要求不能用 marginTop,因此加上此元素  -->
         <div style="width: 100%" v-show="!collapsed">
-          <div style="height: 0.06rem " />
+          <div style="height: 0.04rem " />
           <!--  一整块赛事的 div 内容 ： 1. 左边 【时间，队名，比分】   2. 右边 【赔率 模块】  -->
           <div class="match-odds-container study_height_s hairline-border" :ref="'mid-' + match.mid">
             <div class="match-odds-container-border-radius">

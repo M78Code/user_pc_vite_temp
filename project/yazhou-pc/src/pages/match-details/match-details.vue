@@ -74,12 +74,12 @@
 
             <!-- <div all_plays_sort_arr>  pankpo</div> -->
             <!-- 强力推荐，关盘状态下展示TODO -->
-            <match-list-hot
+            <!-- <match-list-hot
               class="match_list_hot"
               page_source="details"
               :class="is_esports ? 'esport-list' : ''"
               v-if="['all_empty', 'new_empty'].includes(handicap_state)"
-            />
+            /> -->
           </div>
         </v-scroll-area>
       </div>
@@ -109,13 +109,18 @@ page_style.value = compute_css_variables({
   category: "component",
   module: "match-details",
 });
+//当前菜单类型
+const cur_menu_type = ref(LayOutMain_pc.layout_current_path )
+//获取参数
+const details_params = ref(MatchDetailCalss.params );
+//右侧播放类型
+const play_media = ref(MatchDetailCalss.play_media )
 const {
   load_detail_statu,
   // match_infoData,
   category_list,
   plays_list,
   currentRound,
-  // match_details,
   close_all_handicap,
   handicap_state,
   detail_header,
@@ -130,7 +135,7 @@ const {
   get_mattch_details,
   change_loading_state,
   MatchDataWarehouseInstance,
-} = useGetConfig(router);
+} = useGetConfig(router,cur_menu_type,details_params,play_media);
 // /**
 //  * @Description:返回顶部
 //  * @return {Undefined} Undefined
@@ -154,7 +159,6 @@ const match_details = ref([]);
  ** 监听MatchDetailCalss的版本号  获取最新的mid
  */
  const mid = ref(null);
- const details_params = ref(MatchDetailCalss.params );
 watch(
   () => MatchDetailCalss.details_data_version.version,
   (val) => {
@@ -179,8 +183,8 @@ let back_to_timer =null
   /**
    * @description 返回上一页
    */
- const cur_menu_type = ref(LayOutMain_pc.layout_current_path )
- const play_media = ref(MatchDetailCalss.play_media )
+
+
  const back_to = (is_back = true) => {
   // 重新请求相应接口
   if (play_media.value.media_type === "topic") {

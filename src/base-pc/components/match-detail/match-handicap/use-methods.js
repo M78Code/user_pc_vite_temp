@@ -14,7 +14,7 @@ import {
 import { api_details } from "src/api/index";
 import store from "src/store-redux/index.js";
 import details from "src/core/match-detail/match-detail-pc/match-detail.js";
-import {utils,is_eports_csid,LayOutMain_pc } from 'src/core/index.js';
+import {utils,is_eports_csid,LayOutMain_pc,MatchDetailCalss, } from 'src/core/index.js';
 import { useMittEmit, useMittOn, MITT_TYPES,useMittEmitterGenerator } from "src/core/mitt/";
 import { useRoute, useRouter } from "vue-router";
 import lodash from "lodash";
@@ -43,12 +43,12 @@ export const useMethods = ({ props,emit }) => {
   // 获取页面宽高信息 --可以废弃，废弃改动较大
   const get_layout_list_size = ref({});
   // 详情页玩法列表单双列 0单列， 1双列
-  const get_layout_statu = ref({});
+  const get_layout_statu = ref(MatchDetailCalss.layout_statu);
   // 获取用户uid
   // const get_uid = UserCtr.get_uid();
   const get_uid = ref(null);
   // 当前所选的玩法集子项id
-  const get_tabs_active_id = ref({});
+  const get_tabs_active_id = ref(MatchDetailCalss.current_category_id);
   // 获取当前页路由信息
   const vx_layout_cur_page = ref({});
   // 获取指定的玩法id
@@ -343,10 +343,8 @@ export const useMethods = ({ props,emit }) => {
       return false;
     }
     //设置玩法列表单双列 0单列， 1双列
-    store.dispatch({
-      type: "SET_LAYOUT_STATU",
-      data: statu,
-    });
+    //玩法列表单双列切换为单列
+    MatchDetailCalss.set_layout_statu(statu)
     state.layout_statu = statu ? true : false;
     if (statu) {
       state.waterfall = set_waterfall(state.details_data);
@@ -413,13 +411,10 @@ export const useMethods = ({ props,emit }) => {
           }
         }
         // 保存置顶玩法的 id
-        store.dispatch({
-          type: "SET_TOP_ID",
-          data: {
-            id: params.topKey,
-            type: !params.status,
-          },
-        });
+        MatchDetailCalss.set_top_id({
+          id: params.topKey,
+          type: !params.status,
+        })
         set_current_index(handicap);
         // 计算单双列玩法
         state.waterfall = set_waterfall(handicap);
