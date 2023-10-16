@@ -17,7 +17,6 @@ import  { computed_background } from  "src/core/constant/config/csid.js"
 // console.log(details,);
 // 搜索操作相关控制类
 import search from "src/core/search-class/search.js";
-import store from "src/store-redux/index.js";
 import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache";
 import { useRoute, useRouter } from "vue-router";
 import { axios_loop } from "src/core/http/index.js";
@@ -33,8 +32,6 @@ export const useGetConfig = (router,cur_menu_type,details_params,play_media) => 
   console.log(router,'router',cur_menu_type);
   const route = useRoute();
   // const router = useRouter();
-
-  const store_state = store.getState();
   const MatchDataWarehouseInstance =reactive(MatchDataWarehouse_PC_Detail_Common)
   const state = reactive({
     // 菜单数据
@@ -542,7 +539,6 @@ export const useGetConfig = (router,cur_menu_type,details_params,play_media) => 
    * @return {}
    */
   const err_tips = (err) => {
-    
     state.match_details = [];
     GlobalSwitchClass.set_error_data({
       site: "details--get_match_detail",
@@ -884,7 +880,7 @@ export const useGetConfig = (router,cur_menu_type,details_params,play_media) => 
       // 电竞不用切右侧
       if (!is_eports_csid(sportId)) {
         // 设置赛事详情的请求参数
-        // store.dispatch("SET_MATCH_DETAILS_PARAMS", { mid, sportId, tid });
+        MatchDetailCalss.set_match_details_params({ mid, sportId, tid })
       }
       // 初始化详情页数据
       // this.init = lodash.debounce(this.init, 2000, { leading: true });

@@ -102,7 +102,7 @@ const route = useRoute();
 //引入组件样式
 import { compute_css_variables } from "src/core/css-var/index.js";
 import { reactive, ref, watch ,computed} from "vue";
-import { MatchDataWarehouse_PC_Detail_Common as MatchDetailsData, MatchDetailCalss,LayOutMain_pc,is_eports_csid } from "src/core/index";
+import { MatchDataWarehouse_PC_Detail_Common as MatchDetailsData, MatchDetailCalss,LayOutMain_pc,is_eports_csid,SearchPCClass } from "src/core/index";
 import MenuData from "src/core/menu-pc/menu-data-class.js";
 const page_style = ref(null);
 page_style.value = compute_css_variables({
@@ -205,11 +205,7 @@ let back_to_timer =null
          keyword: route.query.keyword,
          csid: route.params.csid,
        });
-       
-       store.dispatch({
-         type: "SET_SEARCH_STATUS",
-         data: true,
-       });
+       SearchPCClass.set_search_isShow(true)
      }
      let { from_path, from } = cur_menu_type.value;
      from_path = from_path || "/home";

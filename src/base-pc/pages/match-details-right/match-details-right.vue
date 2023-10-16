@@ -286,10 +286,8 @@ import { useRoute } from "vue-router";
 import { computed, reactive, ref, watch } from "vue";
 const route = useRoute();
 import LoadData from "src/base-pc/components/load-data/load-data.vue";
-import store from "src/store-redux/index.js";
 import lodash from "lodash";
 import BetData from "src/core/bet/class/bet-data-class.js";
-let state = store.getState();
 
 const bet_item_lock  = ref(BetData.bet_item_lock) 
 //获取用户信息
