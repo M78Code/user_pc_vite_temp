@@ -30,7 +30,7 @@
 <script>
 // import match_list_version_mixin from "src/project/yabo/mixins/match_list/match_list_version_mixin.js"; //模板引入及主要业务逻辑
 // import skt_data_list from "src/public/mixins/websocket/data/skt_data_list_new_data.js";// 发送websocket命令时使用
-
+import { useMittEmit,MITT_TYPES } from "src/core";
 export default {
   name: "HotMatchList",
   // mixins: [match_list_version_mixin,skt_data_list],

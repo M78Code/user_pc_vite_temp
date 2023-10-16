@@ -44,13 +44,13 @@
 </template>
 
 <script setup>
-import { computed, reactive, ref } from 'vue';
+import { computed, reactive, ref,watch } from 'vue';
 import { useRoute } from 'vue-router';
 
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import {is_eports_csid}  from "src/core/constant/util/csid-util";
-import { get_match_status, UserCtr, t, compute_css } from 'src/core/index'
+import { get_match_status, UserCtr, t, compute_css,MatchDetailCalss } from 'src/core/index'
 import details from 'src/core/match-list-pc/details-class/details.js'
 import { other_play_name_to_playid } from 'src/core/constant/config/data-class-ctr/index.js';
 import store from 'src/store-redux/index.js';
@@ -71,7 +71,19 @@ const route = useRoute();
 // 左侧详情参数
 const vx_detail_params = reactive({})
 //视屏播放类型
-const vx_play_media = reactive({})
+const vx_play_media = ref(MatchDetailCalss.play_media)
+/*
+ ** 监听MatchDetailCalss的版本号  获取视屏播放类型
+ */
+watch(
+  () => MatchDetailCalss.details_data_version.version,
+  (val) => {
+    if (val) {
+      vx_play_media.value = MatchDetailCalss.play_media
+    }
+  },
+  { deep: true }
+);
 let lang = UserCtr.lang;
 // 视频是否展开状态
 const vx_get_is_fold_status = ref(null)
@@ -154,7 +166,7 @@ function on_switch_match (media_type){
   if ((route.name == 'details' || route.name == 'search') && media_type == 'auto') {
     media_type = 'info'
   }
-  if (['auto', 'info'].includes(media_type) && vx_detail_params.mid == props.match.mid && vx_play_media.media_type != 'auto') {
+  if (['auto', 'info'].includes(media_type) && vx_detail_params.mid == props.match.mid && vx_play_media.value.media_type != 'auto') {
     details.sync_mst(props.match.mid, props.match.csid)
   }
   let play_id = other_play_name_to_playid[props.match.play_current_key] || ''

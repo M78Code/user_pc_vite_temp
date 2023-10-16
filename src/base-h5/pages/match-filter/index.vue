@@ -87,7 +87,7 @@ import NoData from "src/base-h5/components/common/no-data.vue";
 import SFilter from "src/base-h5/components/skeleton/filter.vue";
 import lodash from 'lodash';
 import { i18n_t, MITT_TYPES, compute_css, useMittEmit, MenuData, compute_img, UserCtr, get_file_path } from 'src/core/'
-import { ref, watch, computed, nextTick, onBeforeUnmount } from 'vue';
+import { ref, watch, computed, nextTick, onBeforeUnmount, onMounted } from 'vue';
 const default_url = "/yazhou-h5/image/svg/match_cup.svg"  //默认图片地址
 // 无联赛logo图标黑色版
 const none_league_icon_black = "/yazhou-h5/image/svg/match_cup_black.svg"
@@ -121,10 +121,8 @@ const get_lang = ref(UserCtr.lang)
 const get_curr_sub_menu_type = ref(MenuData.get_current_lv_2_menu_type())
 const get_req_match_list_params = ref({})//TODO
 
-const get_uid = ref(UserCtr.get_uid())//userid
 const get_current_menu = ref(MenuData.current_lv_1_menu)
 const get_md = ref(MenuData.current_lv_3_menu)    //三级日期菜单时间戳
-const get_theme = ref(UserCtr.theme)
 // ]),
 const all_checked = computed(() => {
   return list.value.every(({ select }) => select); // 选中所有
@@ -136,7 +134,7 @@ watch(active_index, (newVal) => {
   let dom_scrollArea = scrollArea.value
   if (is_scroll_right.value && scroll_obj2.value.hasOwnProperty(newVal) && dom_scrollArea) {
     active_index_position.value = scroll_obj2.value[newVal]
-    dom_scrollArea.setScrollPosition(scroll_obj2.value[newVal]);
+    dom_scrollArea.setScrollPosition('vertical', active_index_position.value);
   }
 })
 // 监听选中的赛事数量
@@ -295,6 +293,7 @@ function handler(obj) {
  *@return {Undefined} undefined
  */
 function search_btn() {
+  //
   if (list.value.filter(i => i.select).length == 0) {
     $toast(i18n_t('filter.please_select_league'), 2000)
     return
@@ -395,12 +394,12 @@ function fetch_filter_match() {
   } else {
     params = {
       // 29 是代表 赛果里边的 我的投注的选项
-      type: m_type == 28 && get_curr_sub_menu_type.value == 29 ? '29' : type.value,
-      euid: m_type == 30 ? m_id : MenuData.get_current_sub_menuid(), // menuType 30竞足
+      type: MenuData.is_results(m_type) && get_curr_sub_menu_type.value == 29 ? '29' : type.value,
+      euid: MenuData.is_jinzu(m_type) ? m_id : MenuData.get_current_sub_menuid(), // menuType 30竞足
       inputText: '',
-      cuid: get_uid.value,
+      cuid: UserCtr.get_uid(),
       device: 'v2_h5',
-      md: lodash.get(get_current_menu.value, 'date_menu.field1')
+      md: lodash.get(MenuData.current_lv_3_menu, 'field1')
     };
     api_match_filter = api_filter.get_fetch_filter_match
     //三级日期菜单时间戳
@@ -492,7 +491,9 @@ onBeforeUnmount(() => {
   clearTimeout(timer2)
 })
 get_top();
-fetch_filter_match();
+onMounted(() => {
+  fetch_filter_match();
+})
 // 如果是 竟足，则初始化 二级菜单的值为 null，解决赛果我的投注 切换到竞足时的  22690 bug单号
 if (type.value == 30) {
   MenuData.set_current_lv2_menu();
@@ -831,6 +832,7 @@ if (type.value == 30) {
 .right-box {
   // background: var(--q-color-page-bg-color-13);
   background: var(--q-gb-bg-lg-2);
+
   .round-box {
     background-color: var(--q-gb-bg-c-15);
     color: var(--qgb-t-c-1);
@@ -861,4 +863,5 @@ if (type.value == 30) {
 
 .icon_keep:before {
   color: var(--q-color-fs-color-50);
-}</style>
+}
+</style>
