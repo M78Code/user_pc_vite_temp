@@ -54,7 +54,7 @@
 
 
                 <img class="img" v-if="GlobalAccessConfig.get_collectSwitch()"
-                  :src="item.mf ? compute_img('icon-favorite') : compute_img('icon-favorite-s')"
+                  :src="item.mf ? compute_img('icon-favorite-s') : compute_img('icon-favorite')"
                   @click.stop="on_collection(item)">
               </div>
               <div class="video-list-right">
