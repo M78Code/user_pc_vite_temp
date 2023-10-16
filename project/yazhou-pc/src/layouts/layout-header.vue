@@ -6,12 +6,13 @@
     :style="page_style">
     <site-header v-bind="site_header_data" @navigate="navigate" />
     <!-- 第二行 -->
+    <div style="display:none">{{SearchPCClass.update_time}}</div>
     <div :class="['header-item item2 row items-center', { 'search-off': !globalAccessConfig.get_activitySwitch() }]"
-      :style="search_isShow ? 'z-index:900;' : ''">
+      :style="SearchPCClass.search_isShow ? 'z-index:900;' : ''">
       <!-- 搜索 -->
       <header-search />
       <!-- 公告滚动组件 -->
-      <marquee-cst v-if='!search_isShow' @navigate="navigate" />
+      <marquee-cst v-if='!SearchPCClass.search_isShow' @navigate="navigate" />
       <!-- 占位盒子 -->
       <div :style="`width:${is_iframe ? 10 : 14}px`"></div>
       <!-- 广告 & 语言主题等切换 -->
@@ -26,7 +27,7 @@ import lodash from 'lodash'
 import { useRoute, useRouter } from "vue-router";
 
 import store from 'src/store-redux/index.js'
-import { SessionStorage, utils } from 'src/core/index.js'
+import { SessionStorage, utils,SearchPCClass } from 'src/core/index.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
 import globalAccessConfig from "src/core/access-config/access-config.js"
 import { i18n_t } from "src/boot/i18n.js"
@@ -43,7 +44,6 @@ import headerSelect from 'src/base-pc/components/site-header/header-select.vue'
 import gift_package from '/yazhou-pc/image/common/activity_banner/gift_package.png'
 import { compute_css_variables } from "src/core/css-var/index.js"
 import BaseData from "src/core/base-data/base-data.js";
-
 const page_style = ref('')
 page_style.value = compute_css_variables({ category: 'component', module: 'site-header' })
 
@@ -73,12 +73,11 @@ const router = useRouter()
 * 是否显示搜索组件 default: false
 * 路径: project_path\src\store\module\search.js
 */
-// const { search_isShow } = searchReducer
 /** 
  * 选择的选项 menu_obj
  * 路径: src\store-redux\module\betInfo.js
  */
-let search_isShow = false;
+
 const menu_obj = ref({})
 //  const { menu_obj } = betReducer
 
