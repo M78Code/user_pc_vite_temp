@@ -356,7 +356,7 @@ export const match_template_config = {
   // 角球标题高度
   tab_play_title_height: 32,
   // 角球盘口高度
-  tab_play_handicap_height: 40 + 35 * 3,
+  tab_play_handicap_height: 145 -(!["en", "ad", "ms"].includes(UserCtr.lang) ? 16 : 0),
   // 附加盘高度
   add_handicap_height: 70,
   // 是否需要动态计算高度

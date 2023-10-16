@@ -3,7 +3,7 @@ import BetData from "./bet-data-class.js"
 import BetViewDataClass from "./bet-view-data-class.js"
 import { compute_value_by_cur_odd_type } from "src/core/format/module/format-odds-conversion-mixin.js"
 import UserCtr from "src/core/user-config/user-ctr.js"
-import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
+import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import { getSeriesCountJointNumber } from "src/core/bet/common-helper/module/bet-single-config.js"
 import { MatchDataWarehouse_PC_List_Common, MatchDataWarehouse_PC_Detail_Common } from 'src/core/index.js'
 import lodash_ from "lodash"

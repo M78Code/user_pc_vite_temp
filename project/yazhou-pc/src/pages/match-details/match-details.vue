@@ -7,6 +7,7 @@
 <template>
   <div class="details relative-position" :style="page_style">
     <!-- 加载中，无数据等显示模板 -->
+    <div style="display:none">{{LayOutMain_pc.layout_version}}</div>
     <load-data
       v-show="load_detail_statu != 'data'"
       :class="[
@@ -58,7 +59,7 @@
                   :plays_list="plays_list"
                   :currentRound="currentRound"
                   :match_details="match_details"
-                  :screen="cur_expand_layout"
+                  :screen="LayOutMain_pc.cur_expand_layout"
                   @set_handicap_this="set_handicap_this"
                   :close_all_handicap="close_all_handicap"
                   :handicap_state="handicap_state"
@@ -73,12 +74,12 @@
 
             <!-- <div all_plays_sort_arr>  pankpo</div> -->
             <!-- 强力推荐，关盘状态下展示TODO -->
-            <!-- <match-list-hot
+            <match-list-hot
               class="match_list_hot"
               page_source="details"
               :class="is_esports ? 'esport-list' : ''"
               v-if="['all_empty', 'new_empty'].includes(handicap_state)"
-            /> -->
+            />
           </div>
         </v-scroll-area>
       </div>
@@ -100,8 +101,9 @@ const router = useRouter();
 const route = useRoute();
 //引入组件样式
 import { compute_css_variables } from "src/core/css-var/index.js";
-import { reactive, ref, watch } from "vue";
-import { MatchDataWarehouse_PC_Detail_Common as MatchDetailsData, MatchDetailCalss,LayOutMain_pc } from "src/core/index";
+import { reactive, ref, watch ,computed} from "vue";
+import { MatchDataWarehouse_PC_Detail_Common as MatchDetailsData, MatchDetailCalss,LayOutMain_pc,is_eports_csid } from "src/core/index";
+import MenuData from "src/core/menu-pc/menu-data-class.js";
 const page_style = ref(null);
 page_style.value = compute_css_variables({
   category: "component",
@@ -121,7 +123,6 @@ const {
   sportId,
   handicap_this,
   is_request,
-  cur_expand_layout,
   headerHeight,
   init,
   set_handicap_this,
@@ -219,6 +220,21 @@ let back_to_timer =null
      }
    }, 50);
   };
+    //    // 是否为电竞
+  const is_esports = computed(() => {
+    let is_esports_val;
+    // 详情页判断球种ID  其他页面取菜单
+    if (route.name == "details" || route.name == "video") {
+      is_esports_val = is_eports_csid(route.params.csid);
+    } else if (route.name == "search") {
+      is_esports_val = false;
+    } else {
+      is_esports_val = MenuData.is_esports() //todo
+
+    }
+
+    return is_esports_val;
+  });
 </script>
 
 <style lang="scss" scoped>

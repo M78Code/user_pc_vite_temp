@@ -101,7 +101,7 @@
             <match-info
               v-if="route.name != 'video'"
               v-show="get_is_fold_status || is_esports"
-              :screen="cur_expand_layout"
+              :screen="LayOutMain_pc.cur_expand_layout"
               :match_info="match_infoData"
               :refresh_time="refresh_time"
               :background_img="background_img"
@@ -290,8 +290,7 @@ import store from "src/store-redux/index.js";
 import lodash from "lodash";
 import BetData from "src/core/bet/class/bet-data-class.js";
 let state = store.getState();
-// 获取右侧布局类型
-const cur_expand_layout = ref({});
+
 const bet_item_lock  = ref(BetData.bet_item_lock) 
 //获取用户信息
 const vx_get_user = ref(UserCtr.get_user())
