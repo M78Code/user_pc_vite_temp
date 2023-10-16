@@ -74,6 +74,7 @@
     width: 100%;
     display: block;
     position: relative;
+    margin-bottom: 0.03rem;
     transition: max-height 0.3s;
 
     .match-odds-container-border-radius {
@@ -306,7 +307,7 @@
     justify-content: space-between;
     align-items: center;
     height: 0.4rem;
-    margin-top: 0.04rem;
+    margin: 0.03rem;
 
     &.show-sport {
       border-radius: 0.12rem 0.12rem 0 0;
@@ -323,6 +324,25 @@
       align-items: center;
       flex-wrap: nowrap;
       padding-right: 0.1rem;
+      .esport {
+        margin: 0.01rem 0.07rem 0 0rem;
+        position: relative;
+        --per: -0.32rem;
+        display: block;
+        width: auto;
+        height: 0.22rem;
+        width: 0.22rem;
+        background-position: 0 0;
+        background-size: 0.22rem 18.88rem;
+        flex-shrink: 0;
+        img {
+          width: 0.22rem;
+          height: 0.22rem;
+          position: absolute;
+          top: 0;
+          left: 0;
+        }
+      }
       .league-collapse-dir {
         width: 0.12rem;
         height: 0.06rem;
@@ -339,6 +359,7 @@
         padding-left: 10px;
         position: relative;
         top: 1px;
+        flex-shrink: 0;
         > img {
           width: 0.14rem;
           height: 100%;
@@ -426,26 +447,6 @@
     align-items: center;
   }
 
-  .esport {
-    margin: 0.01rem 0.07rem 0 0.09rem;
-    position: relative;
-    --per: -0.32rem;
-    display: block;
-    width: auto;
-    height: 0.22rem;
-    width: 0.22rem;
-    background-position: 0 0;
-    background-size: 0.22rem 18.88rem;
-
-    img {
-      width: 0.22rem;
-      height: 0.22rem;
-      position: absolute;
-      top: 0;
-      left: 0;
-    }
-  }
-
   .league-title-text {
     font-size: 0.13rem;
     height: 100%;
@@ -463,6 +464,9 @@
       min-width: 1.18rem;
       display: flex;
       font-size: .12rem;
+      &.export {
+        min-width: 1.1rem;
+      }
     }
      // 添加 line-height: 0.14rem 解决42682 生产BUG--malick
     .match-league {
@@ -998,11 +1002,13 @@
   .favorite-icon-top {
     width: 0.14rem;
     height: 100%;
+    height: 0.13rem;
+    flex-shrink: 0;
     margin-right: .07rem;
 
     img {
       width: 100%;
-      height: auto;
+      height: 100%;
       vertical-align: middle;
       margin-top: -2px;
     }

@@ -36,6 +36,11 @@ export const post_match_full_list = (params) => {
   return http.post(`${prefix_job}${url}`, { ...params }, {axios_debounce_cache_key:'post_match_full_list',type:2});
 };
 
+// 收藏列表 2739 需求 
+export const get_new_collect_matches = (params,config,url="/v1/w/collectMatchesPB") => {
+  return http.post(`${prefix}${url}`, params, config);
+};
+
 
 //电竞收藏赛事接口
 export const post_esport_collect = (params, config, url="/v1/m/escnh5") => {

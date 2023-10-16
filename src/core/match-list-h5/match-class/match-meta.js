@@ -4,6 +4,7 @@
  */
 
 import lodash from 'lodash'
+import { api_common } from "src/api/index.js";
 import BaseData from 'src/core/base-data/base-data.js'
 import MatchPage from 'src/core/match-list-h5/match-class/match-page'
 import MenuData from "src/core/menu-h5/menu-data-class.js"
@@ -13,9 +14,7 @@ import MatchCollect from 'src/core/match-collect'
 import PageSourceData from "src/core/page-source/page-source.js";
 import MatchListCardClass from '../match-card/match-list-card-class'
 import { MATCH_LIST_TEMPLATE_CONFIG } from "src/core/match-list-h5/match-card/template"
-import mi_euid_mapping_default from "src/core/base-data/config/mi-euid-mapping.json"
 import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, useMittEmit, MITT_TYPES } from 'src/core'
-import { api_common } from "src/api/index.js";
 
 class MatchMeta {
 
@@ -46,6 +45,8 @@ class MatchMeta {
    
     // 对应 球种 mi 
     if (typeof menu_lv_v2 !== 'string') return
+    // 冠军
+    if (MenuData.is_export()) return
     this.get_origin_match_mids_by_mi(menu_lv_v2)
   }
   /**
@@ -178,7 +179,10 @@ class MatchMeta {
    * @description 设置赛事默认属性
    * @param { list } 赛事数据 
    */
-  set_match_default_properties(list = []) {
+  async set_match_default_properties(list = []) {
+    // 获取赛事收藏状态 该接口还没发到试玩
+    // await MatchCollect.get_collect_matche_data()
+
     const length = lodash.get(list, 'length', 0)
     if (length < 1) return
     // 是否展示联赛标题
@@ -195,20 +199,32 @@ class MatchMeta {
         is_fold_tab_play,
         is_show_league,
       })
-      // 初始化赛事折叠
-      MatchFold.set_match_mid_fold_obj(t)
-      // 初始化球种折叠状态
-      if (`csid_${t.csid}` in MatchFold.ball_seed_csid_fold_obj.value) return
-      MatchFold.set_ball_seed_csid_fold_obj(t.csid)
 
-       // 初始化赛事收藏
-      MatchCollect.set_match_collect_state(t)
-      // 初始化联赛收藏状态
-      if (`collect_tid_${t.tid}` in MatchCollect.league_tid_collect_obj.value) return
-      MatchCollect.set_league_collect_state(t.tid)
+      this.match_assistance_perations(t)
       
     })
     this.handle_submit_warehouse(list)
+  }
+
+  /**
+   * @description 赛事辅助操作
+   * @param { match } 赛事对象
+   */
+  match_assistance_perations (match) {
+    const { tid, csid } = match
+    // 初始化赛事折叠
+    MatchFold.set_match_mid_fold_obj(match)
+    // 初始化球种折叠状态
+    if (!`csid_${csid}` in MatchFold.ball_seed_csid_fold_obj.value) MatchFold.set_ball_seed_csid_fold_obj(csid)
+
+    // 赛事收藏处理
+    MatchCollect.handle_collect_state(match)
+
+    // // 初始化赛事收藏
+    // MatchCollect.set_match_collect_state(t)
+    // // 初始化联赛收藏状态
+    // if (`collect_tid_${t.tid}` in MatchCollect.league_tid_collect_obj.value) return
+    // MatchCollect.set_league_collect_state(t.tid)
   }
 
   /**
@@ -370,6 +386,7 @@ class MatchMeta {
       Object.assign(t, {
         is_show_league: i === 0 ? true : result_list[i].tid !== result_list[i - 1].tid
       })
+      this.match_assistance_perations(t)
     })
     MatchDataBaseH5.set_list(result_list)
   }
@@ -380,6 +397,7 @@ class MatchMeta {
    */
   set_match_mids (mids = [], num = 10) {
     // 显示空数据页面
+    console.log(mids.length)
     if (mids.length < 1) return useMittEmit(MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, true);
     this.match_mids = [...new Set(mids.slice(0, num))]
     // useMittEmit(MITT_TYPES.EMIT_MENU_ANIMATION);
