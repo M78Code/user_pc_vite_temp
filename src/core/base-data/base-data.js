@@ -192,8 +192,6 @@ class BaseData {
       // 获取 菜单数量统计
       this.init_mew_menu_list();
 
-      // 获取 元数据接口
-      this.init_base_data();
     }, number);
   }
 
