@@ -59,7 +59,7 @@ export default {
           MatchDetailCalss.init()
           //全局开发类初始化
           GlobalSwitchClass.init()
-          init_load.value = true;
+          this.init_load = true;
         });
         AllDomain.run();
       }

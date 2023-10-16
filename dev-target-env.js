@@ -18,12 +18,12 @@ let  DEV_TARGET_VERSION = ''
 // 打包 亚洲版 H5（新版)   试玩环境     
 // DEV_TARGET_VERSION = "project_3-65250d06484f90d889b50524-1697083383403-shiwan";
 // 打包 亚洲版 H5（新版)   生产环境    
-DEV_TARGET_VERSION = "project_3-652b6fc6feffd80f0fcd8de9-1697379367704-online";
+// DEV_TARGET_VERSION = "project_3-652b6fc6feffd80f0fcd8de9-1697379367704-online";
 //----------------------------------亚洲版-PC-重构版本 	yazhou-pc -4------------------------------------------
 // 打包 亚洲版 PC（新版)   测试环境  
 // DEV_TARGET_VERSION = "project_4-36304ea0499e11ee8848ada2b8a1d739-1695005815463-test";
 // 打包 亚洲版 PC（新版)   试玩环境  
-// DEV_TARGET_VERSION = "project_4-652a4caae09615081502caf2-1697271002308-shiwan";
+DEV_TARGET_VERSION = "project_4-652a4caae09615081502caf2-1697271002308-shiwan";
 // 打包 亚洲版 PC（新版)   生产环境
 // DEV_TARGET_VERSION = "project_4-652b6ee515b0c70f1c2cde34-1697377186945-online";
 
