@@ -152,6 +152,7 @@ export const compute_match_list_style_obj_and_match_list_mapping_relation_obj =
         MATCH_LIST_TEMPLATE_CONFIG[
           "template_1_config"
         ]["reset_match_template_config"];
+        console.log('reset_template_config_fn', reset_template_config_fn);
       if (reset_template_config_fn) {
         reset_template_config_fn();
       }

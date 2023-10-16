@@ -41,9 +41,7 @@ const get_tab_play_height = (mid) => {
 
 	let { play_current_key, other_handicap_list = [] } =
 		MatchListData.list_to_obj.mid_obj[mid+'_'] || {};
-	let { tab_play_handicap_height: handicap_height } =
-		MATCH_LIST_TEMPLATE_CONFIG[`template_${template_id}_config`]["match_template_config"] ||
-		{};
+	let { tab_play_handicap_height: handicap_height } = MATCH_LIST_TEMPLATE_CONFIG[`template_${template_id}_config`]["match_template_config"] || {};
 	let length = lodash.get(other_handicap_list, "0.ols.length", 3);
 	//5分钟      波胆
 	if (["hps5Minutes", "hpsBold"].includes(play_current_key)) {
@@ -111,6 +109,7 @@ const compute_style_template_by_matchinfo_template0_zuqiu = (
 	let tab_play_total_height = 0;
 	if (is_show_tab_play && !is_fold_tab_play) {
 		// 如果有角球玩法并且未折叠  角球区域总高度 等于角球标题高度加角球盘口高度
+		console.log('template_config', template_config);
 		tab_play_total_height =
 			template_config.tab_play_title_height + get_tab_play_height(match.mid);
 	} else if (is_show_tab_play) {
@@ -346,6 +345,7 @@ export const compute_style_template_by_matchinfo = (match, template_id, mid) => 
 		style_obj.cur_handicap_height = template_config.cur_handicap_height;
 	}
 	// 设置卡片总高度 等于主盘口高度 + 当前局盘扣高度 + 附加盘高度 + 角球区域高度 + 赛事间距和边框6px
+	console.log('style_obj', style_obj);
 	style_obj.total_height =
 		style_obj.main_handicap_height +
 		style_obj.cur_handicap_height +
