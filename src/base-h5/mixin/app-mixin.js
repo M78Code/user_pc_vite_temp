@@ -4,12 +4,17 @@
  * @Description: http相关API Domain动态更新逻辑
  */
 
-import { http, AllDomain } from "src/core/http/index.js";
+ 
 import { loadLanguageAsync } from "src/core/index.js";
 import { throttle } from "lodash";
-import STANDARD_KEY from "app/src/core/standard-key";
 const BUILDIN_CONFIG = window.BUILDIN_CONFIG;
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
+import STANDARD_KEY from "src/core/standard-key";
+import { enter_params, compute_css_variables } from "src/core/index.js";
+import BetData from "src/core/bet/class/bet-data-class.js";
+import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
+import MenuData from "src/core/menu-h5/menu-data-class.js";
+import { http, AllDomain } from "src/core/http/";
 export default {
   data() {
     return {
@@ -39,22 +44,36 @@ export default {
       this.set_init_load(true);
     }, 11000);
 
-    // 这里最好是 url 内的 语种 ，不过 兜底语言是中文 因此 这里设置中文
+
+  },
+  async beforeMount () {
+           // 这里最好是 url 内的 语种 ，不过 兜底语言是中文 因此 这里设置中文
     // 后面如果确实有需要就自己处理 。目前这个是兼容某些异常场景下 接口先返回来回
     // 文件后返回回来 的显示异常，不管 前端缓存，资源文件丢失的场景，生产无此场景
-    loadLanguageAsync().finally(() => {
+     await  loadLanguageAsync() 
       // 实例化域名检测类对象
       AllDomain.create( () => {
         // data参数说明: {type:'domain_api',status:0 ,list:[]}
         // 是api域名类型时
 
         this.init_net_set();
-        this.set_init_load(true);
+     // 首次进入,发现最快的域名
+      // http初始化方法 会调用 setApiDomain
+      // ws和http域名切换逻辑
+      http.setApiDomain();
+   
+      MenuData.init();
+      BetData.init_core()
+      BetViewDataClass.init()
+ 
+      enter_params()
+      this.set_init_load(true);
       });
       // 启动域名检测功能
       AllDomain.run();
-    });
+     
   },
+  
   beforeUnmount() {
     this.off_listeners();
     this.unbind_debounce_throttle();

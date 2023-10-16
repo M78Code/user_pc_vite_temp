@@ -69,7 +69,7 @@
             ? no_data_msg
             : 'code_empty' == cur_state
             ?i18n_t('common.code_empty')
-            : filter_store.open_select_time
+            : filterHeader.open_select_time
             ?i18n_t('filter.empty')
             :i18n_t('common.no_data')
         "
@@ -79,7 +79,7 @@
         height="180px"
         :color="color"
         class="empty-wrap"
-        :class="{ filter_img: filter_store.open_select_time }"
+        :class="{ filter_img: filterHeader.open_select_time }"
         which="noMatch"
         url="/yazhou-pc/image/png/no_data_01.png"
       >
@@ -184,10 +184,10 @@ import { onMounted,computed,ref,onUnmounted, watch } from 'vue'
 import store from "src/store-redux/index.js";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/";
 import UserCtr from "src/core/user-config/user-ctr.js";
+import filterHeader from "src/core/filter-header/filter-header.js";
 import { i18n_t,is_eports_csid } from "src/core"
 import { useRoute } from "vue-router";
 const {route} = useRoute()
-const filter_store = store.getState().filterReducer
 const noData = NoDataWapper
 const props = defineProps({
   // 是详情时 loading 与 empty 不居中

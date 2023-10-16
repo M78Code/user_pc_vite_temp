@@ -28,11 +28,11 @@ import MenuData from "src/core/menu-pc/menu-data-class.js";
 let state = store.getState();
 export const useRightDetails = (props) => {
   //视频是否展开状态
-  const get_is_fold_status = ref(state.globalReducer.is_fold_status);
+  const get_is_fold_status = ref({});
   // 获取当前页路由信息
-  const layout_cur_page = ref(state.layoutReducer.layout_cur_page);
+  const layout_cur_page = ref({});
     // 当前所选的玩法集子项id
-  const get_tabs_active_id = ref(state.matchesReducer.tabs_active_index);
+  const get_tabs_active_id = ref({});
 
   const { route } = props;
   //全局混入hooks

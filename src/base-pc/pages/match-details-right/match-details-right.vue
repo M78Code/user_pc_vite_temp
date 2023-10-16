@@ -291,7 +291,7 @@ import lodash from "lodash";
 import BetData from "src/core/bet/class/bet-data-class.js";
 let state = store.getState();
 // 获取右侧布局类型
-const cur_expand_layout = ref(state.layoutReducer.cur_expand_layout);
+const cur_expand_layout = ref({});
 const bet_item_lock  = ref(BetData.bet_item_lock) 
 //获取用户信息
 const vx_get_user = ref(UserCtr.get_user())

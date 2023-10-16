@@ -39,7 +39,7 @@ const get_h5_rule_url = () => {
         'vi': 'en-gb', //越南文暂时对应英文显示
     }
     let lang = lang_obj[UserCtr.lang] || 'zh-cn'
-    const current_env = window.BUILDIN_CONFIG.current_env
+    const current_env = window.BUILDIN_CONFIG.CURRENT_ENV
     // Y0商户  或者  正常的白色  黑色版
     //这里没有 Y0 和黑白色了 只有后配配置的颜色
     let merchant_or_black_and_white_version =  UserCtr.theme;

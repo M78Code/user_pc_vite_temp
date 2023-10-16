@@ -104,7 +104,7 @@ const props = defineProps({
 }
 .half-border-bottom {
   &::after{
-    border-bottom: 1px solid var(--q-cathectic-color-32);
+    border-bottom: 1px solid var(--q-cathectic-color-7);
   }
 }
 .p1 {

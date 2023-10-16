@@ -9,12 +9,12 @@
     <!-- left -->
     <div class="col-left row items-center">
       <!--全部按钮-->
-      <div v-show="!vx_show_filter_popup && !is_search_page" @click="on_change_list_type('match')"
+      <div v-show="!filterHeader.vx_show_filter_popup && !is_search_page" @click="on_change_list_type('match')"
         class="btn-wrap match-btn yb-flex-center cursor-pointer" :class="compute_quanbu_btn_class()">
         {{ t("common.all") }}
       </div>
       <!--收藏按钮-->
-      <div v-show="menu_config.compute_if_can_show_shoucang() && !vx_show_filter_popup && !is_search_page"
+      <div v-show="menu_config.compute_if_can_show_shoucang() && !filterHeader.vx_show_filter_popup && !is_search_page"
         @click="(enable_collect_api ? collect_count : true) && on_change_list_type('collect')"
         class="btn-wrap collect-btn yb-flex-center cursor-pointer"
         :class="{ 'active': vx_layout_list_type == 'collect', }" :title="t('list.my_collect')">
@@ -47,7 +47,7 @@
       <!-- 即将开赛筛选 -->
       <!-- 今日有 收藏没有 冠军没有 -->
       <com-select v-else-if="menu_config.menu_root == 2 && vx_layout_list_type != 'collect' && !menu_config.is_guanjun()"
-        :options="time_list" v-model="open_select_time" showKey="title" @input="select_time_change">
+        :options="time_list" v-model="filterHeader.open_select_time" showKey="title" @input="select_time_change">
         <template #prefix><span class="fg1">{{ $t("common.match_soon_filtr") }}</span></template>
       </com-select>
       <!-- 选择联赛按钮 -->
@@ -55,12 +55,12 @@
       <div v-show="menu_config.compute_if_can_show_league_fliter() && vx_layout_list_type != 'collect'"
         @click.stop="toggle_filter_popup"
         class="select-btn leagues-btn yb-flex-center cursor-pointer filter-handle yb-hover-bg"
-        :class="{ active: vx_show_filter_popup, disable: load_data_state != 'data' && !vx_show_filter_popup }"
+        :class="{ active: filterHeader.vx_show_filter_popup, disable: load_data_state != 'data' && !filterHeader.vx_show_filter_popup }"
         :id="DOM_ID_SHOW && `menu-leagues-filter-leagues-btn`">
         {{ t('filter.select_league') }}
-        <span class="status yb-font-bold" :class="vx_show_filter_popup ? 'filter_full_all' : ''">{{ (vx_filter_checked_all
+        <span class="status yb-font-bold" :class="filterHeader.vx_show_filter_popup ? 'filter_full_all' : ''">{{ (filterHeader.vx_filter_checked_all
           ||
-          vx_get_checked_count == 0) ? t('common.all') : vx_get_checked_count }}</span>
+          filterHeader.vx_get_checked_count == 0) ? t('common.all') : filterHeader.vx_get_checked_count }}</span>
         <i class="icon-arrow q-icon c-icon" size="14px"></i>
       </div>
       <!-- 列表排序按钮 -->
@@ -68,7 +68,7 @@
       <div v-show="menu_config.compute_if_can_show_sort()" show_type="sort" class="flex list-sort select-btn  yb-hover-bg">
         <div v-for="(sort, index) in sort_option" @click="on_click_sort(sort)"
           :class="[sort.id == vx_match_sort ? 'active' : 'yb-hover-bg', 'list-sort-item']"
-          v-show="!vx_show_filter_popup && !is_search_page" :key="index">
+          v-show="!filterHeader.vx_show_filter_popup && !is_search_page" :key="index">
           {{ sort.name }}
         </div>
       </div>
@@ -77,7 +77,7 @@
         <slot name="refresh_icon"></slot>
       </div>
       <div class="unfold-btn" @click="set_unfold_multi_column(false)"
-        v-if="menu_config.is_multi_column && !vx_show_filter_popup && !is_search_page && get_unfold_multi_column">
+        v-if="menu_config.is_multi_column && !filterHeader.vx_show_filter_popup && !is_search_page && get_unfold_multi_column">
         <!-- <span class="text">{{ t('icon_tips.unfold') }}</span> -->
         <icon-wapper class="icon-arrow q-icon c-icon" size="12px"></icon-wapper>
       </div>
@@ -88,15 +88,18 @@
 import comSelect from "src/base-pc/components/match-results/select/select/index.vue";
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
-import { t } from "src/core/index.js";
+import { t, GlobalSwitchClass, PageSourceData } from "src/core/index.js";
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import { ref, computed } from 'vue';
 import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
 import UserCtr from 'src/core/user-config/user-ctr.js'
 import {component_symbol ,need_register_props} from "../config/index.js"
 import store from 'src/store-redux/index.js';
+import filterHeader from "src/core/filter-header/filter-header.js";
 import { IconWapper } from 'src/components/icon'
 
+const page_source = PageSourceData.page_source;
+const is_search_page = page_source.includes('search');
 let state = store.getState();
 // const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
 const props = defineProps({
@@ -120,24 +123,20 @@ const props = defineProps({
 
 
 // 列表显示内容  match:赛事 collect:收藏 search:搜索
-const vx_layout_list_type = ref(state.layoutReducer.layout_list_type);
+const vx_layout_list_type = ref('match');
 // 获取当前页路由信息
-const vx_layout_cur_page = ref(state.layoutReducer.layout_cur_page);
-// 是否显示联赛筛选框
-const vx_show_filter_popup = ref(state.filterReducer.show_filter_popup);
-// 获取联赛筛选是否全选
-const vx_filter_checked_all = ref(state.filterReducer.filter_checked_all);
+const vx_layout_cur_page = ref(null);
+
+
 // 收起右侧详情 展开多列玩法
-const get_unfold_multi_column = ref(state.globalReducer.is_unfold_multi_column);
-// 获取选中的赛事数量(列表右上角赛选功能)
-const vx_get_checked_count = ref(state.filterReducer.checked_count);
-const vx_match_sort = ref(state.globalReducer.match_sort)
+const get_unfold_multi_column = ref(GlobalSwitchClass.is_unfold_multi_column);
+
+const vx_match_sort = ref(GlobalSwitchClass.get_match_sort())
 const match_sort_show = ref(false) //切换排序是否显示
 const leagueName = ref("") //模糊搜索联赛条件
 const time_list = ref(null) //即将开赛筛选数据
 const DOM_ID_SHOW = ref(null)
-//即将开赛筛选时间
-const open_select_time = ref(state.filterReducer.open_select_time)
+
 const sort_option = computed(() => {
   let option = [
     {
@@ -157,17 +156,17 @@ const sort_option = computed(() => {
   return option
 })
 // 是否显示刷新 btn
-const computed_show_refresh = computed(() => {
-  // !["hot_all"].includes(vx_cur_menu_type.value.type_name) &&
-  let _show = 
-    vx_show_filter_popup.value == false &&
-    vx_layout_cur_page.value.cur != "search"
-  return _show
-})
-//是否搜索页
-const is_search_page = computed(() => {
-  return vx_layout_cur_page.value.cur == "search";
-})
+// const computed_show_refresh = computed(() => {
+//   // !["hot_all"].includes(vx_cur_menu_type.value.type_name) &&
+//   let _show = 
+//     filterHeader.vx_show_filter_popup == false &&
+//     vx_layout_cur_page.value.cur != "search"
+//   return _show
+// })
+// //是否搜索页
+// const is_search_page = computed(() => {
+//   return vx_layout_cur_page.value.cur == "search";
+// })
 //当前页面菜单title
 const page_title = computed(() => {
   //当前点击的是今日还是早盘 今日 2 早盘为3
@@ -259,10 +258,7 @@ function select_time_change () {
  * 重置条件
  */
 function reset_filter () {
-  store.dispatch({
-    type: 'set_open_select_time',
-    data: null
-  })
+  filterHeader.set_open_select_time(null)
 }
 /**
  * @ Description:切换联赛排序
@@ -283,15 +279,15 @@ function on_click_sort(row) {
  */
 function toggle_filter_popup() {
   if (!GlobalAccessConfig.get_filterSwitch()) return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, t("msg.msg_09"));
-  if ((props.load_data_state != 'data' && !vx_show_filter_popup.value)) {
+  if ((props.load_data_state != 'data' && !filterHeader.vx_show_filter_popup)) {
     return
   }
   //打开或关闭赛事筛选弹层
   store.dispatch({
     type: 'SET_SHOW_FILTER_POPUP',
-    data: !vx_show_filter_popup.value
+    data: !filterHeader.vx_show_filter_popup
   })
-  if (vx_show_filter_popup.value) {
+  if (filterHeader.vx_show_filter_popup) {
     //设置即将开赛筛选默认值
     reset_filter()
   }
@@ -443,7 +439,7 @@ function on_change_list_type (type) {
       params: {
         "cuid": UserCtr.get_uid || '',
         "sort": vx_match_sort.value,
-        "selectionHour": open_select_time.value,
+        "selectionHour": filterHeader. open_select_time,
         ...lv2_mi_info,
       },
     }

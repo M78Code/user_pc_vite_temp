@@ -24,6 +24,7 @@ import process_composable_fn from './composables/match-list-processing.js'
 // import MatchListDetailMiddleware from "src/core/match-list-detail-pc/index.js";
 import store from "src/store-redux/index.js";
 import ServerTime from 'src/core/server-time/server-time.js';
+import filterHeader from 'src/core/filter-header/filter-header.js'
 // const route = router.currentRoute.value
 let state = store.getState();
 const { page_source } = PageSourceData;
@@ -40,12 +41,7 @@ const match_list = ref([]);
 const is_show_hot = ref(false);
 // 是否继续请求
 const is_loading = ref(true);
-// 赛事列表排序 1:按联赛排序 2:按时间排序
-const vx_match_sort = ref(state.filterReducer?.show_filter_popup);
-// 筛选是否全选
-const vx_filter_checked_all = ref(state.filterReducer?.show_filter_popup);
-// 获取联赛筛选框显示状态
-const vx_show_filter_popup = ref(state.filterReducer?.show_filter_popup);
+
 let show_refresh_mask = ref(false);
 const timer_obj = ref({});
 const api_error_count = ref(0);
@@ -108,6 +104,7 @@ function get_match_list_by_mid_for_base_data_res (mid, csid, type) {
 };
 // 使用元数据默认显示 后面替换
 function set_base_data_init () {
+	console.log('MenuData', MenuData);
 	// return
 	// 当前的分类 左侧菜单数据 中间件数据
 	const {
@@ -334,13 +331,13 @@ function fetch_match_list(is_socket = false, cut) {
 	let _params = lodash.clone(match_api.params) || {};
 	console.log('match_api', match_api);
 	// 切换是 排序后 设置当前的排序
-	_params.sort = vx_match_sort.value;
+	_params.sort = filterHeader.vx_match_sort;
 	delete _params.index;
 	delete _params.lv2_mi;
 	// 近期开赛
 	// console.error('MenuData.menu_root',MenuData.menu_root)
 	if (MenuData.menu_root == 2) {
-		_params.selectionHour = state.filterReducer.open_select_time;
+		_params.selectionHour = filterHeader.open_select_time;
 	} else {
 		_params.selectionHour = null;
 	}
@@ -700,8 +697,6 @@ export  default function(){
 	return {
 		match_list,
 		is_loading,
-		vx_filter_checked_all,
-		vx_show_filter_popup,
 		match_tpl_component,
 		show_refresh_mask,
 		collect_count,

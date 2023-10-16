@@ -600,7 +600,7 @@ class UserCtr {
       return Promise.resolve(1);
     }
 
-    //  let api_domains = window.BUILDIN_CONFIG.domain[window.BUILDIN_CONFIG.current_env];
+    //  let api_domains = window.BUILDIN_CONFIG.domain[window.BUILDIN_CONFIG.CURRENT_ENV];
     let api_domains =
       window.BUILDIN_CONFIG.domain[window.BUILDIN_CONFIG.CURRENT_ENV] || [];
     let api_domain = api_domains[0];

@@ -160,12 +160,12 @@ const show_g_settings = ref(false)
 
 /** stroe仓库 */
 const { globalReducer, menuReducer } = store.getState()
-const unsubscribe = store.subscribe(() => {
-    menu_collapse_status.value = menuReducer.menu_collapse_status
-    global_click.value = globalReducer.global_click
-})
+// const unsubscribe = store.subscribe(() => {
+//     menu_collapse_status.value = menuReducer.menu_collapse_status
+//     global_click.value = globalReducer.global_click
+// })
 /** 销毁监听 */
-onUnmounted(unsubscribe)
+// onUnmounted(unsubscribe)
 /** 
 * 用户余额是否展示状态 default: day
 */
@@ -174,17 +174,17 @@ const theme = ref(UserCtr.theme || 'day')
  * 获取菜单收起状态 default: false
  * 路径: project_path\src\store\module\menu.js
  */
-const menu_collapse_status = ref(menuReducer.menu_collapse_status)
+const menu_collapse_status = ref({})
 /** 
 * 全局点击事件数 default: 0
 * 路径: project_path\src\store\module\global.js
 */
-const global_click = ref(globalReducer.global_click)
+// const global_click = ref(globalReducer.global_click)
 
-watch(
-    () => global_click.value,
-    () => show_g_settings.value = false
-)
+// watch(
+//     () => global_click.value,
+//     () => show_g_settings.value = false
+// )
 
 const is_destroy = ref(false)
 onUnmounted(() => is_destroy.value = true)

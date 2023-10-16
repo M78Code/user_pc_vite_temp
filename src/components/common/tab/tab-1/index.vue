@@ -321,29 +321,29 @@ onBeforeUnmount(() => tabs_hover.cancel())
 /** stroe仓库 */
 const { layoutReducer } = store.getState()
 /** 页面宽高信息 */
-const layout_list_size = ref(layoutReducer.layout_list_size)
+// const layout_list_size = ref(layoutReducer.layout_list_size)
 
 /** 监听屏幕宽度改变  设置是否显示按钮 */
-watch(
-  () => layout_list_size.value,
-  () => wrap.value.clientWidth
-)
+// watch(
+//   () => layout_list_size.value,
+//   () => wrap.value.clientWidth
+// )
 /**
  * list语言变化时
  * 做异步处理防止data数据发生改变，初始化
 */
-watch(
-  () => props.list.value,
-  () => nextTick(init), { deep: true }
-)
+// watch(
+//   () => props.list.value,
+//   () => nextTick(init), { deep: true }
+// )
 
 /** 定时器 */
-const timer = ref(null)
+let timer = null
 /** 清除定时器 */
 function clear_timer() {
-  if (timer.value) {
-    clearTimeout(timer.value)
-    timer.value = null
+  if (timer) {
+    clearTimeout(timer)
+    timer = null
   };
 }
 /** 钩子触发 */
@@ -353,7 +353,7 @@ watch(
   () => props.currentIndex,
   () => {
     clear_timer()
-    timer.value = setTimeout(() => {
+    timer = setTimeout(() => {
 
       if (!sizes.value[props.currentIndex]) return
       left.value = lodash.get(sizes.value, `${props.currentIndex}.left`)

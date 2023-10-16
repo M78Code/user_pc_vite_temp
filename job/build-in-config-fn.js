@@ -78,15 +78,13 @@ const AUTO_API = process.env.AUTO_API || false;
   };
   // 合并 所有内容
   final_config = {
-    CURRENT_ENV: current_env,
+   
     LOCAL_FUNCTION_SWITCH,  
     SERVER_GLOBAL_SWITCH:{},
     GLOBAL_IMAGE_PREFFIX:  IS_PROD ? '/' + BUILD_VERSION:''  ,
     API_PREFIX,
-    API_DOMAIN_PREFIX: "api", 
     OSS_FILE_ARR:compute_oss_file_path_arr(current_env),
     OSS_FILE_NAME: current_env_build_in_oss.file,
-    CURRENT_ENV_NAME: current_env_build_in_oss.file,
     ...BUILD_VERSION_CONFIG,
     htmlVariables:  {
       ...htmlVariables,

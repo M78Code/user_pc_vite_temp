@@ -12,7 +12,7 @@ import ws_composable_fn from "./match-list-ws.js";
 import PageSourceData  from  "src/core/page-source/page-source.js";
 import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/core/index.js";
 import MatchListCardClass from "src/core/match-list-pc/match-card/match-list-card-class.js";
-
+import filterHeader from 'src/core/filter-header/filter-header.js'
 let state = store.getState();
 const { mx_collect_count, set_collect_count } = collect_composable_fn();
 const { virtual_list_timeout_id, is_vr_numer } = virtual_composable_fn();
@@ -20,8 +20,7 @@ const { show_mids_change } = ws_composable_fn();
 const { api_bymids, set_league_list_obj } = use_featch_fn();
 
 const vx_filter_select_obj = ref([])
-// 上次筛选选中的数据
-const vx_pre_filter_select_obj = ref(state.filterReducer?.show_filter_popup);
+
 
 const load_data_state = ref(null);
 let hot_match_list_timeout;
@@ -31,7 +30,7 @@ let is_virtual = MenuData.is_virtual_sport;
 //
 let is_search = PageSourceData.is_search();
 let is_show_hot = ref(false);
-
+let vx_pre_filter_select_obj = []
 /**
  * @Description 合并连续相同的联赛
  * @param {undefined} undefined
@@ -124,7 +123,7 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 			!backend_run &&
 			[2, 3].includes(MenuData.menu_root) &&
 			[2, 3].includes(MenuData.menu_root) &&
-			vx_pre_filter_select_obj.value.length > 0 &&
+			vx_pre_filter_select_obj.length > 0 &&
 			vx_filter_select_obj.value.length == 0
 		) {
 			let new_data = {
@@ -139,7 +138,7 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 					if (
 						tid &&
 						new_data[key] &&
-						vx_pre_filter_select_obj.value.includes(tid)
+						vx_pre_filter_select_obj.includes(tid)
 					) {
 						new_data[key].push(league);
 						if (!new_filter.includes(tid)) {

@@ -160,7 +160,7 @@ export default defineComponent({
 
       // home_class = ''
       let calculation_category = [];
-      const current_env = window.BUILDIN_CONFIG.current_env;
+      const current_env = window.BUILDIN_CONFIG.CURRENT_ENV;
       // 开发环境 'local_dev' 压力测试环境 "local_ylcs"; 测试环境 "local_test"; 预发布 "idc_pre";
       //  试玩环境  "idc_sandbox"; 隔离预发布 "idc_lspre"; 生产环境  'idc_online'
       // 热门菜单背景图类名数组列表

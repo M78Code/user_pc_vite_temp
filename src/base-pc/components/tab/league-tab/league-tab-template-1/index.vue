@@ -166,7 +166,7 @@ let config = {
     api_name: "post_fetch_virtual_matchs",
     params: {
       csid ,
-      selectionHour: this.$store.state.filter.open_select_time,
+      selectionHour: null,
       tid ,
     },
   },
