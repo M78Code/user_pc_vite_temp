@@ -15,6 +15,7 @@ import { useRouter, useRoute } from "vue-router";
 import store from "src/store-redux/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import filterHeader from "src/core/filter-header/filter-header.js";
+import { MatchDetailCalss  } from "src/core";
 export const useGetGlobal = ({ details_params, back_to }) => {
   const route = useRoute();
   const router = useRouter();
@@ -191,25 +192,14 @@ export const useGetGlobal = ({ details_params, back_to }) => {
         }
 
         // 切换右侧赛事
-        // let playId = details_params.play_id;
-        // store.dispatch("matchesReducer/SET_MATCH_DETAILS_PARAMS", {
-        //   mid,
-        //   tid,
-        //   sportId,
-        //   playId,
-        //   media_type: "auto",
-        // });
         let playId = details_params.play_id;
-        store.dispatch(
-          { type: "SET_MATCH_DETAILS_PARAMS" },
-          {
-            mid,
-            tid,
-            sportId,
-            playId,
-            media_type: "auto",
-          }
-        );
+        MatchDetailCalss.set_match_details_params({
+          mid,
+          tid,
+          sportId,
+          playId,
+          media_type: "auto",
+        })
       });
     }
   };

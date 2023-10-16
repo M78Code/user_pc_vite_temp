@@ -17,7 +17,6 @@ import  { computed_background } from  "src/core/constant/config/csid.js"
 // console.log(details,);
 // 搜索操作相关控制类
 import search from "src/core/search-class/search.js";
-console.log(search,'search');
 import store from "src/store-redux/index.js";
 import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache";
 import { useRoute, useRouter } from "vue-router";
@@ -26,7 +25,7 @@ import menu_config from "src/core/menu-pc/menu-data-class.js";
 import { pre_load_video } from "src/core/pre-load/index";
 // import { format_plays, format_sort_data } from "src/core/format/index";
 import { formatTime } from "src/core/format/index.js"
-import {MatchDataWarehouse_PC_Detail_Common,format_plays, format_sort_data ,is_eports_csid,MatchDetailCalss} from "src/core/index"; 
+import {MatchDataWarehouse_PC_Detail_Common,format_plays, format_sort_data ,is_eports_csid,MatchDetailCalss,SearchPCClass,GlobalSwitchClass} from "src/core/index"; 
 import uid from "src/core/uuid/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import BetCommonHelper from "src/core/bet/common-helper/index.js";
@@ -207,11 +206,7 @@ export const useGetConfig = (router,cur_menu_type,details_params,play_media) => 
           keyword: route.query.keyword,
           csid: route.params.csid,
         });
-        
-        store.dispatch({
-          type: "SET_SEARCH_STATUS",
-          data: true,
-        });
+        SearchPCClass.set_search_isShow(true)
       }
       let { from_path, from } = cur_menu_type.value;
       from_path = from_path || "/home";
@@ -314,13 +309,10 @@ export const useGetConfig = (router,cur_menu_type,details_params,play_media) => 
         .catch((err) => {
           state.is_request = false;
           // 设置错误信息
-          store.dispatch({
-            type: "SET_ERROR_DATA",
-            data: {
-              site: "details--get_matchInfo",
-              error: err,
-            },
-          });
+          GlobalSwitchClass.set_error_data({
+            site: "details--get_matchInfo",
+            error: err,
+          })
           countMatchDetail();
         });
     };
@@ -552,13 +544,11 @@ export const useGetConfig = (router,cur_menu_type,details_params,play_media) => 
   const err_tips = (err) => {
     
     state.match_details = [];
-    store.dispatch({
-      type: "SET_ERROR_DATA",
-      data: {
-        site: "details--get_match_detail",
-        error: err,
-      },
-    });
+    GlobalSwitchClass.set_error_data({
+      site: "details--get_match_detail",
+      error: err,
+    })
+
     if (
       lodash.isPlainObject(err) ||
       lodash.get(err, "response.status") == 404

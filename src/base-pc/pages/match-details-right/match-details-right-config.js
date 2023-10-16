@@ -652,8 +652,6 @@ export const useRightDetails = (props) => {
   //    allData.set_match_detail_count: "set_match_detail_count",
   //    // 视频播放信息
   //    vx_set_play_media: "set_play_media",
-  //    // 错误信息
-  //    set_error_data: "set_error_data",
   //    // 当前选中玩法id
   //    set_tabs_active_id: "set_tabs_active_id",
   //    // 当前选中玩法对应的盘口玩法
@@ -864,11 +862,11 @@ export const useRightDetails = (props) => {
         })
         .catch((err) => {
           console.error(err);
-          //todo
-          // this.set_error_data({
-          //   site: "match_details--get_matchInfo",
-          //   error: err,
-          // });
+          //设置错误数据
+          GlobalSwitchClass.set_error_data({
+            site: "match_details--get_matchInfo",
+            error: err,
+          })
           countMatchDetail();
         })
         .finally(() => {
@@ -985,11 +983,11 @@ export const useRightDetails = (props) => {
    */
   const err_tips = (err) => {
     match_details.value = [];
-    //todo
-    // this.set_error_data({
-    //   site: "details--get_match_detail",
-    //   error: err,
-    // });
+        //设置错误数据
+     GlobalSwitchClass.set_error_data({
+      site: "details--get_match_detail",
+      error: err,
+    })
     if (
       lodash.isPlainObject(err) ||
       lodash.get(err, "response.status") == 404

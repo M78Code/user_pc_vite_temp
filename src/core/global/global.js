@@ -1,5 +1,5 @@
 import { reactive, ref } from "vue";
-import lodash_ from "lodash";
+import {debounce} from "lodash";
 
 class UseGlobal {
   constructor() {}
@@ -76,9 +76,9 @@ class UseGlobal {
     this.global_click++
   }
    // 设置全局开关版本变更
-   set_global_data_version(){
+  set_global_data_version=debounce(()=>{
     this.global_switch_version.version = Date.now()
-  }
+  },10)
   get_is_unfold_multi_column() {
     return this.is_unfold_multi_column
   }
@@ -91,6 +91,24 @@ class UseGlobal {
   //获取 滚球 全部
   get_play_all_show() {
     return this.play_all_show
+  }
+  /**
+   * @description: 设置catch错误数据
+   * @param {*} data
+   * @return {*}
+   */
+  set_error_data(data){
+    if (data == "delete") {
+    this.error_data = "";
+    } else {
+      data.error = data.error || "";
+      let error = data.error.toString();
+      if (error == "[object Object]") {
+        error = JSON.stringify(data.error);
+      }
+    this.error_data += "\n" + data.site + "\n" + error;
+    }
+    this.set_global_data_version()
   }
 }
 

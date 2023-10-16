@@ -7,6 +7,7 @@
  
 import { ref ,reactive} from "vue"
 import { SessionStorage } from "src/core/utils/index.js"
+import { debounce } from "lodash";
 export default class MatchDetailCtr {
  
   constructor( ) {
@@ -238,11 +239,10 @@ export default class MatchDetailCtr {
     return play;
   }
 
-  // 设置详情版本变更
-  set_details_data_version(){
+   // 设置详情版本变更
+  set_details_data_version =debounce(() => {
     this.details_data_version.version = Date.now()
-    // console.error(this.details_data_version.version,'this.details_data_version.value');
-  }
+  }, 10);
 
   /**
    * @description: 设置mid参数
