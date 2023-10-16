@@ -169,7 +169,7 @@ import temp18 from "./template/temp18.vue"
 // 模板id=51
 import temp51 from "./template/temp51.vue"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, nextTick, defineAsyncComponent, markRaw } from "vue";
-import { i18n_t } from "src/boot/i18n.js";;
+import { api_details } from "src/api/";
 import UserCtr from "src/core/user-config/user-ctr.js";;
 
 //国际化
@@ -606,16 +606,14 @@ export default defineComponent({
           // #TODO emit
           useMittEmit(MITT_TYPES.EMIT_ANIMATE_RESET_MYSCROLL_TOP, 100);
           useMittEmit(MITT_TYPES.EMIT_RESET_SET_HTON);
-          // useMittEmit(MITT_TYPES.EMIT_ANIMATE_RESET_MYSCROLL_TOP, 100);
-          // useMittEmit(MITT_TYPES.EMIT_RESET_SET_HTON);
           // 获取最大置顶排序值
-          var hton_ = 0;
-          for (let i = 0; i < list.length; i++) {
-            var hton = parseInt(list[i].hton);
-            if (hton > hton_) {
-              hton_ = hton;
-            }
-          }
+          // var hton_ = 0;
+          // for (let i = 0; i < list.length; i++) {
+          //   var hton = parseInt(list[i].hton);
+          //   if (hton > hton_) {
+          //     hton_ = hton;
+          //   }
+          // }
           // 将点击置顶的hton设置为:最大置顶排序值+1
           item_data.hton = Date.now() + '';
         }
