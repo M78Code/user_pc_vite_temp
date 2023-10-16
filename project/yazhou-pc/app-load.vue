@@ -13,9 +13,9 @@
 <script setup>
 import "src/base-pc/core/globel-mitt";
 import { PageSourceData ,GlobalSwitchClass,LayOutMain_pc} from "src/core/index.js";
-import { useMittOn, MITT_TYPES } from "src/core/mitt/";
+import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
 import { wslog, httplog } from "src/core/log/";
-import {get_query_string as urlparams } from "src/core/";
+import {get_query_string as urlparams } from "src/core/index.js";
 import { copyToClipboard } from "quasar";
 import { reactive, onBeforeMount, onMounted, onUnmounted, ref, watch } from "vue";
 import store from "src/store-redux/index.js";
