@@ -148,8 +148,7 @@ export const EMIT_API_DOMAIN_UPD_CMD = "EMIT_API_DOMAIN_UPD_CMD";
 export const EMIT_BET_MIX_CLEAR_HANDLE_CMD = "EMIT_BET_MIX_CLEAR_HANDLE_CMD";
 
 // 发送父窗口中body标签中的滚动条滚动到顶部事件命令
-export const EMIT_PATENT_BODY_SCROLL_TOP_CMD =
-  "EMIT_PATENT_BODY_SCROLL_TOP_CMD";
+export const EMIT_PATENT_BODY_SCROLL_TOP_CMD = "EMIT_PATENT_BODY_SCROLL_TOP_CMD";
 // 获取直播赛事命令定义
 export const EMIT_LIVE_ANIMATE_MATCH = "EMIT_GET_ANIMATE_MATCH";
 // 获取热门联赛命令定义
@@ -249,9 +248,9 @@ export const EMIT_MX_COLLECT_MATCH = "EMIT_MX_COLLECT_MATCH";
 //赛事详细数据接口
 export const EMIT_API_BYMIDS = "EMIT_API_BYMIDS";
 // 历史交战、近期战绩下拉框
-export const SELECT_FN = "SELECT_FN";
+export const EMIT_SELECT_FN = "EMIT_SELECT_FN";
 // 杯赛积分查看更多
-export const GET_ALL_VSINFO = "GET_ALL_VSINFO";
+export const EMIT_GET_ALL_VSINFO = "EMIT_GET_ALL_VSINFO";
 //打开单关投注
 export const EMIT_OPEN_SINGLE_BET = "EMIT_OPEN_SINGLE_BET";
 //单关合并投注
@@ -270,7 +269,7 @@ export const EMIT_ENTER_PRESS_EVENT = "EMIT_ENTER_PRESS_EVENT";
 export const EMIT_CLOSE_BIG_VIDEO_BET = "EMIT_CLOSE_BIG_VIDEO_BET";
 
 //跟新电竞右侧视频
-export const GET_ESPORTS_VIDEO_LIST = "GET_ESPORTS_VIDEO_LIST";
+export const EMIT_GET_ESPORTS_VIDEO_LIST = "EMIT_GET_ESPORTS_VIDEO_LIST";
 
 //网络错误时设置默认最大最小值
 export const EMIT_NET_ERR = "EMIT_NET_ERR";

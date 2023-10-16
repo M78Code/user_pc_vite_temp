@@ -22,7 +22,7 @@
           <div class="absolute-full">
             <!-- 联赛数量 -->
             <span class="ellipsis allow-user-select" v-tooltip="{ content: card_style_obj.league_obj.tn, overflow: 1 }">
-              {{ card_style_obj.league_obj.tid }}
+              {{ card_style_obj.league_obj.tn || card_style_obj.league_obj.tid }}
             </span>
             <span class="league-match-count">{{ card_style_obj.match_count}}</span>
           </div>

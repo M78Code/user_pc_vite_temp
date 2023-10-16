@@ -172,9 +172,8 @@ watch(active_index, (newVal) => {
   let dom_scrollArea = scrollArea.vlaue
   if (is_scroll_right.value && scroll_obj2.value.hasOwnProperty(newVal) && dom_scrollArea) {
     active_index_position.value = scroll_obj2.value[newVal]
-    dom_scrollArea.setScrollPosition(scroll_obj2.value[newVal]);
+    dom_scrollArea.setScrollPosition('vertical',scroll_obj2.value[newVal]);
   }
-
 })
 
 // 监听选中的赛事数量

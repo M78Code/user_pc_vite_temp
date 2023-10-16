@@ -14,7 +14,7 @@ import {
 import { api_details } from "src/api/index";
 import store from "src/store-redux/index.js";
 import details from "src/core/match-detail/match-detail-pc/match-detail.js";
-import {utils,is_eports_csid,LayOutMain_pc } from 'src/core/index.js';
+import {utils,is_eports_csid,LayOutMain_pc,MatchDetailCalss, } from 'src/core/index.js';
 import { useMittEmit, useMittOn, MITT_TYPES,useMittEmitterGenerator } from "src/core/mitt/";
 import { useRoute, useRouter } from "vue-router";
 import lodash from "lodash";
@@ -43,7 +43,7 @@ export const useMethods = ({ props,emit }) => {
   // 获取页面宽高信息 --可以废弃，废弃改动较大
   const get_layout_list_size = ref({});
   // 详情页玩法列表单双列 0单列， 1双列
-  const get_layout_statu = ref({});
+  const get_layout_statu = ref(MatchDetailCalss.layout_statu);
   // 获取用户uid
   // const get_uid = UserCtr.get_uid();
   const get_uid = ref(null);

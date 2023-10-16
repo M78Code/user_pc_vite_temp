@@ -83,12 +83,10 @@ function compute_match_all_handicap_data_champion(match) {
       if (hl_obj.hid) {
         hl_obj.end_time = time_conversion(hl_obj.hmed);
         hl_obj.hpn = match.hpsPns.find(option => option.hid == hl_obj.hid).hpn
-        console.log(match, 'qweqweqweqweqweqweqweqwe');
         main_handicap_list.push(hl_obj);
       }
     });
   });
-  console.log('main_handicap_list', main_handicap_list);
   return main_handicap_list;
 }
 </script>

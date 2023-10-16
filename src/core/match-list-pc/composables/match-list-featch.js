@@ -250,7 +250,7 @@ const api_bymids = (
           page_source !== "search" &&
           !is_first_load
         ) {
-          useMittEmit(MITT_TYPES.GET_ESPORTS_VIDEO_LIST);
+          useMittEmit(MITT_TYPES.EMIT_GET_ESPORTS_VIDEO_LIST);
         }
         let code = res.code
         let match_list = lodash.get(res, "data.data") || [];

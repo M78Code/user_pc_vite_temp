@@ -9,12 +9,12 @@
     <!-- left -->
     <div class="col-left row items-center">
       <!--全部按钮-->
-      <div v-show="!filterHeader.vx_show_filter_popup && !is_search_page" @click="on_change_list_type('match')"
+      <div v-show="!filterHeader.show_filter_popup && !is_search_page" @click="on_change_list_type('match')"
         class="btn-wrap match-btn yb-flex-center cursor-pointer" :class="compute_quanbu_btn_class()">
         {{ t("common.all") }}
       </div>
       <!--收藏按钮-->
-      <div v-show="menu_config.compute_if_can_show_shoucang() && !filterHeader.vx_show_filter_popup && !is_search_page"
+      <div v-show="menu_config.compute_if_can_show_shoucang() && !filterHeader.show_filter_popup && !is_search_page"
         @click="(enable_collect_api ? collect_count : true) && on_change_list_type('collect')"
         class="btn-wrap collect-btn yb-flex-center cursor-pointer"
         :class="{ 'active': vx_layout_list_type == 'collect', }" :title="t('list.my_collect')">
@@ -55,10 +55,10 @@
       <div v-show="menu_config.compute_if_can_show_league_fliter() && vx_layout_list_type != 'collect'"
         @click.stop="toggle_filter_popup"
         class="select-btn leagues-btn yb-flex-center cursor-pointer filter-handle yb-hover-bg"
-        :class="{ active: filterHeader.vx_show_filter_popup, disable: load_data_state != 'data' && !filterHeader.vx_show_filter_popup }"
+        :class="{ active: filterHeader.show_filter_popup, disable: load_data_state != 'data' && !filterHeader.show_filter_popup }"
         :id="DOM_ID_SHOW && `menu-leagues-filter-leagues-btn`">
         {{ t('filter.select_league') }}
-        <span class="status yb-font-bold" :class="filterHeader.vx_show_filter_popup ? 'filter_full_all' : ''">{{ (filterHeader.vx_filter_checked_all
+        <span class="status yb-font-bold" :class="filterHeader.show_filter_popup ? 'filter_full_all' : ''">{{ (filterHeader.vx_filter_checked_all
           ||
           filterHeader.vx_get_checked_count == 0) ? t('common.all') : filterHeader.vx_get_checked_count }}</span>
         <i class="icon-arrow q-icon c-icon" size="14px"></i>
@@ -68,7 +68,7 @@
       <div v-show="menu_config.compute_if_can_show_sort()" show_type="sort" class="flex list-sort select-btn  yb-hover-bg">
         <div v-for="(sort, index) in sort_option" @click="on_click_sort(sort)"
           :class="[sort.id == vx_match_sort ? 'active' : 'yb-hover-bg', 'list-sort-item']"
-          v-show="!filterHeader.vx_show_filter_popup && !is_search_page" :key="index">
+          v-show="!filterHeader.show_filter_popup && !is_search_page" :key="index">
           {{ sort.name }}
         </div>
       </div>
@@ -77,7 +77,7 @@
         <slot name="refresh_icon"></slot>
       </div>
       <div class="unfold-btn" @click="set_unfold_multi_column(false)"
-        v-if="menu_config.is_multi_column && !filterHeader.vx_show_filter_popup && !is_search_page && get_unfold_multi_column">
+        v-if="menu_config.is_multi_column && !filterHeader.show_filter_popup && !is_search_page && get_unfold_multi_column">
         <!-- <span class="text">{{ t('icon_tips.unfold') }}</span> -->
         <icon-wapper class="icon-arrow q-icon c-icon" size="12px"></icon-wapper>
       </div>
@@ -156,13 +156,11 @@ const sort_option = computed(() => {
   return option
 })
 // 是否显示刷新 btn
-// const computed_show_refresh = computed(() => {
-//   // !["hot_all"].includes(vx_cur_menu_type.value.type_name) &&
-//   let _show = 
-//     filterHeader.vx_show_filter_popup == false &&
-//     vx_layout_cur_page.value.cur != "search"
-//   return _show
-// })
+const computed_show_refresh = computed(() => {
+  // !["hot_all"].includes(vx_cur_menu_type.value.type_name) &&
+  let _show =  filterHeader.show_filter_popup == false && !is_search_page
+  return _show
+})
 // //是否搜索页
 // const is_search_page = computed(() => {
 //   return vx_layout_cur_page.value.cur == "search";
@@ -279,15 +277,15 @@ function on_click_sort(row) {
  */
 function toggle_filter_popup() {
   if (!GlobalAccessConfig.get_filterSwitch()) return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, t("msg.msg_09"));
-  if ((props.load_data_state != 'data' && !filterHeader.vx_show_filter_popup)) {
+  if ((props.load_data_state != 'data' && !filterHeader.show_filter_popup)) {
     return
   }
   //打开或关闭赛事筛选弹层
   store.dispatch({
     type: 'SET_SHOW_FILTER_POPUP',
-    data: !filterHeader.vx_show_filter_popup
+    data: !filterHeader.show_filter_popup
   })
-  if (filterHeader.vx_show_filter_popup) {
+  if (filterHeader.show_filter_popup) {
     //设置即将开赛筛选默认值
     reset_filter()
   }

@@ -39,7 +39,6 @@
 import { ref, reactive, onMounted, onUnmounted } from "vue"
 import { useRouter } from "vue-router";
 
-import store from "src/store-redux/index.js";
 import {utils,LayOutMain_pc } from 'src/core/index.js'
 
 import { useMittEmit, useMittOn, MITT_TYPES } from 'src/core/mitt/index.js'
@@ -127,7 +126,7 @@ const on_footer_change = ({ height }) => {
 const set_footer_position = () => {
   // 监听滚动变化触发逻辑
   if (props.observer_middle) {
-    let left_height = LayOutMain_pc.layout_content_height + 'px';
+    let left_height = LayOutMain_pc.layout_content_height ;
     //mac上面
     let dis = 5;
     if (/macintosh|mac os x/i.test(navigator.userAgent)) {
@@ -145,7 +144,7 @@ const set_footer_position = () => {
     } else {
       // 否则设置距离顶部距离
       footer_position.value = {
-        top: scroll_footer_top + "px",
+        top:  scroll_footer_top + "px",
         bottom: "auto",
       };
     }
@@ -170,7 +169,7 @@ const on_scroll = (position) => {
 }
 // 设置滚动位置
 const set_scroll_position = (position) => {
- ref_v_scroll_area.value.setScrollPosition("vertical",position[0], position[1])
+ ref_v_scroll_area.value.setScrollPosition(position[0], position[1])
 }
 
 onMounted(() => {

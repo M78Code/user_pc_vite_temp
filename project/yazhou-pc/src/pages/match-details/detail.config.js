@@ -30,8 +30,8 @@ import {MatchDataWarehouse_PC_Detail_Common,format_plays, format_sort_data ,is_e
 import uid from "src/core/uuid/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import BetCommonHelper from "src/core/bet/common-helper/index.js";
-export const useGetConfig = (router) => {
-  console.log(router,'router');
+export const useGetConfig = (router,cur_menu_type,details_params,play_media) => {
+  console.log(router,'router',cur_menu_type);
   const route = useRoute();
   // const router = useRouter();
 
@@ -75,35 +75,19 @@ export const useGetConfig = (router) => {
   const handicap_this =ref({category_list:[]})// 传给玩法集 tabs 的数据
   const detail_header = ref(null); // 头部组件实例
 
-  const details_params = ref({});
-  // 获取当前菜单类型
-  const cur_menu_type = ref({});
+
   // 当前所选的玩法集子项id
-  const tabs_active_index = ref({});
+  const tabs_active_index = ref(MatchDetailCalss.tabs_active_plays);
   // 当前所选的玩法集子项id
   const uuid = ref(uid);
   /** 语言变化 */
-  const get_lang_change = ref({});
-  // 获取右侧布局类型
-  // const cur_expand_layout = ref(store_state.layoutReducer.cur_expand_layout);
+  const get_lang_change = ref(UserCtr.lang);
   // //播放类型
-  const play_media = ref({});
   // 玩法集对应玩法缓存数据
-  const get_details_data_cache = ref({});
+  const get_details_data_cache = ref(MatchDetailCalss.details_data_cache);
   // 置顶的玩法id
-  const get_top_id = ref({});
+  const get_top_id = ref(MatchDetailCalss.topId);
 
-  // 监听状态变化
-  // let un_subscribe = store.subscribe(() => {
-  //   let state_ = store.getState();
-  //   details_params.value = state_.matchesReducer.params;
-  //   cur_menu_type.value = state_.menuReducer.cur_menu_type;
-  //   tabs_active_index.value = state_.matchesReducer.tabs_active_index;
-  //   get_details_data_cache.value = state_.matchesReducer.details_data_cache;
-  //   get_lang_change.value = state_.langReducer.lang_change;
-  //   cur_expand_layout.value = state_.layoutReducer.cur_expand_layout;
-  //   get_top_id.value = state_.matchesReducer.topId;
-  // });
 
   const category_list_length = computed(() => {
     return lodash.get(state.category_list, "length", 0);

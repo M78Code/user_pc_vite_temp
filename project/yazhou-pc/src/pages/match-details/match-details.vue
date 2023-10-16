@@ -7,6 +7,7 @@
 <template>
   <div class="details relative-position" :style="page_style">
     <!-- 加载中，无数据等显示模板 -->
+    <div style="display:none">{{LayOutMain_pc.layout_version}}</div>
     <load-data
       v-show="load_detail_statu != 'data'"
       :class="[
@@ -58,7 +59,7 @@
                   :plays_list="plays_list"
                   :currentRound="currentRound"
                   :match_details="match_details"
-                  :screen="cur_expand_layout"
+                  :screen="LayOutMain_pc.cur_expand_layout"
                   @set_handicap_this="set_handicap_this"
                   :close_all_handicap="close_all_handicap"
                   :handicap_state="handicap_state"
@@ -100,20 +101,26 @@ const router = useRouter();
 const route = useRoute();
 //引入组件样式
 import { compute_css_variables } from "src/core/css-var/index.js";
-import { reactive, ref, watch } from "vue";
-import { MatchDataWarehouse_PC_Detail_Common as MatchDetailsData, MatchDetailCalss,LayOutMain_pc } from "src/core/index";
+import { reactive, ref, watch ,computed} from "vue";
+import { MatchDataWarehouse_PC_Detail_Common as MatchDetailsData, MatchDetailCalss,LayOutMain_pc,is_eports_csid } from "src/core/index";
+import MenuData from "src/core/menu-pc/menu-data-class.js";
 const page_style = ref(null);
 page_style.value = compute_css_variables({
   category: "component",
   module: "match-details",
 });
+//当前菜单类型
+const cur_menu_type = ref(LayOutMain_pc.layout_current_path )
+//获取参数
+const details_params = ref(MatchDetailCalss.params );
+//右侧播放类型
+const play_media = ref(MatchDetailCalss.play_media )
 const {
   load_detail_statu,
   // match_infoData,
   category_list,
   plays_list,
   currentRound,
-  // match_details,
   close_all_handicap,
   handicap_state,
   detail_header,
@@ -121,7 +128,6 @@ const {
   sportId,
   handicap_this,
   is_request,
-  cur_expand_layout,
   headerHeight,
   init,
   set_handicap_this,
@@ -129,7 +135,7 @@ const {
   get_mattch_details,
   change_loading_state,
   MatchDataWarehouseInstance,
-} = useGetConfig(router);
+} = useGetConfig(router,cur_menu_type,details_params,play_media);
 // /**
 //  * @Description:返回顶部
 //  * @return {Undefined} Undefined
@@ -153,7 +159,6 @@ const match_details = ref([]);
  ** 监听MatchDetailCalss的版本号  获取最新的mid
  */
  const mid = ref(null);
- const details_params = ref(MatchDetailCalss.params );
 watch(
   () => MatchDetailCalss.details_data_version.version,
   (val) => {
@@ -178,8 +183,8 @@ let back_to_timer =null
   /**
    * @description 返回上一页
    */
- const cur_menu_type = ref(LayOutMain_pc.layout_current_path )
- const play_media = ref(MatchDetailCalss.play_media )
+
+
  const back_to = (is_back = true) => {
   // 重新请求相应接口
   if (play_media.value.media_type === "topic") {
@@ -219,6 +224,21 @@ let back_to_timer =null
      }
    }, 50);
   };
+    //    // 是否为电竞
+  const is_esports = computed(() => {
+    let is_esports_val;
+    // 详情页判断球种ID  其他页面取菜单
+    if (route.name == "details" || route.name == "video") {
+      is_esports_val = is_eports_csid(route.params.csid);
+    } else if (route.name == "search") {
+      is_esports_val = false;
+    } else {
+      is_esports_val = MenuData.is_esports() //todo
+
+    }
+
+    return is_esports_val;
+  });
 </script>
 
 <style lang="scss" scoped>
