@@ -30,6 +30,8 @@ import {MatchDataWarehouse_PC_Detail_Common,format_plays, format_sort_data ,is_e
 import uid from "src/core/uuid/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import BetCommonHelper from "src/core/bet/common-helper/index.js";
+import LayOutMain from "src/core/layout/index.js"
+
 export const useGetConfig = (router) => {
   console.log(router,'router');
   const route = useRoute();
@@ -84,8 +86,6 @@ export const useGetConfig = (router) => {
   const uuid = ref(uid);
   /** 语言变化 */
   const get_lang_change = ref(store_state.langReducer.lang_change);
-  // 获取右侧布局类型
-  const cur_expand_layout = ref(store_state.layoutReducer.cur_expand_layout);
   // //播放类型
   const play_media = ref(store_state.matchesReducer.play_media);
   // 玩法集对应玩法缓存数据
@@ -96,16 +96,16 @@ export const useGetConfig = (router) => {
   const get_top_id = ref(store_state.matchesReducer.topId);
 
   // 监听状态变化
-  let un_subscribe = store.subscribe(() => {
-    let state_ = store.getState();
-    details_params.value = state_.matchesReducer.params;
-    cur_menu_type.value = state_.menuReducer.cur_menu_type;
-    tabs_active_index.value = state_.matchesReducer.tabs_active_index;
-    get_details_data_cache.value = state_.matchesReducer.details_data_cache;
-    get_lang_change.value = state_.langReducer.lang_change;
-    cur_expand_layout.value = state_.layoutReducer.cur_expand_layout;
-    get_top_id.value = state_.matchesReducer.topId;
-  });
+  // let un_subscribe = store.subscribe(() => {
+  //   let state_ = store.getState();
+  //   details_params.value = state_.matchesReducer.params;
+  //   cur_menu_type.value = state_.menuReducer.cur_menu_type;
+  //   tabs_active_index.value = state_.matchesReducer.tabs_active_index;
+  //   get_details_data_cache.value = state_.matchesReducer.details_data_cache;
+  //   get_lang_change.value = state_.langReducer.lang_change;
+  //   cur_expand_layout.value = state_.layoutReducer.cur_expand_layout;
+  //   get_top_id.value = state_.matchesReducer.topId;
+  // });
 
   const category_list_length = computed(() => {
     return lodash.get(state.category_list, "length", 0);
@@ -946,7 +946,7 @@ export const useGetConfig = (router) => {
   });
 
   onUnmounted(() => {
-    un_subscribe();
+    // un_subscribe();
     clearTimeout(state.axios_debounce_timer);
     clearTimeout(state.get_match_details_timer);
     clearTimeout(state.back_to_timer);
@@ -996,7 +996,6 @@ export const useGetConfig = (router) => {
     ...toRefs(state),
     handicap_this,
     detail_header,
-    cur_expand_layout,
     init,
     back_to,
     set_handicap_this,

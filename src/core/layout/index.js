@@ -18,12 +18,12 @@ class LayOutMain {
    */
   constructor() {
       // 是否内嵌
-    this.is_iframe = window.frames.length != parent.frames.length,
+    this.is_iframe = window.frames.length != parent.frames.length
     // 主内容最小宽度出现滚动条
     this.layout_min_width = 1440
     // 左侧菜单宽度
     this.layout_left_width = 234
-    // 左侧菜单宽度mini
+    // 左侧菜单宽度 mini
     // this.layout_left_width_mini = 64
     // 右侧区域宽度
     this.layout_right_width = 441
@@ -55,6 +55,8 @@ class LayOutMain {
     this.layout_left_top = '80px'
     //老项目废弃的字段  zoom
     this.zoom = true
+     // 当前展开区块  match-list:赛事列表 match-detail:赛事详情
+    this.cur_expand_layout = "match-list"
   }
 
   // 初始化

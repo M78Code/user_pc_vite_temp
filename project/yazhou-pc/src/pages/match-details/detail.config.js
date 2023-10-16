@@ -75,37 +75,35 @@ export const useGetConfig = (router) => {
   const handicap_this =ref({category_list:[]})// 传给玩法集 tabs 的数据
   const detail_header = ref(null); // 头部组件实例
 
-  const details_params = ref(store_state.matchesReducer.params);
+  const details_params = ref({});
   // 获取当前菜单类型
-  const cur_menu_type = ref(store_state.menuReducer.cur_menu_type);
+  const cur_menu_type = ref({});
   // 当前所选的玩法集子项id
-  const tabs_active_index = ref(store_state.matchesReducer.tabs_active_index);
+  const tabs_active_index = ref({});
   // 当前所选的玩法集子项id
   const uuid = ref(uid);
   /** 语言变化 */
-  const get_lang_change = ref(store_state.langReducer.lang_change);
+  const get_lang_change = ref({});
   // 获取右侧布局类型
-  const cur_expand_layout = ref(store_state.layoutReducer.cur_expand_layout);
+  // const cur_expand_layout = ref(store_state.layoutReducer.cur_expand_layout);
   // //播放类型
-  const play_media = ref(store_state.matchesReducer.play_media);
+  const play_media = ref({});
   // 玩法集对应玩法缓存数据
-  const get_details_data_cache = ref(
-    store_state.matchesReducer.details_data_cache
-  );
+  const get_details_data_cache = ref({});
   // 置顶的玩法id
-  const get_top_id = ref(store_state.matchesReducer.topId);
+  const get_top_id = ref({});
 
   // 监听状态变化
-  let un_subscribe = store.subscribe(() => {
-    let state_ = store.getState();
-    details_params.value = state_.matchesReducer.params;
-    cur_menu_type.value = state_.menuReducer.cur_menu_type;
-    tabs_active_index.value = state_.matchesReducer.tabs_active_index;
-    get_details_data_cache.value = state_.matchesReducer.details_data_cache;
-    get_lang_change.value = state_.langReducer.lang_change;
-    cur_expand_layout.value = state_.layoutReducer.cur_expand_layout;
-    get_top_id.value = state_.matchesReducer.topId;
-  });
+  // let un_subscribe = store.subscribe(() => {
+  //   let state_ = store.getState();
+  //   details_params.value = state_.matchesReducer.params;
+  //   cur_menu_type.value = state_.menuReducer.cur_menu_type;
+  //   tabs_active_index.value = state_.matchesReducer.tabs_active_index;
+  //   get_details_data_cache.value = state_.matchesReducer.details_data_cache;
+  //   get_lang_change.value = state_.langReducer.lang_change;
+  //   cur_expand_layout.value = state_.layoutReducer.cur_expand_layout;
+  //   get_top_id.value = state_.matchesReducer.topId;
+  // });
 
   const category_list_length = computed(() => {
     return lodash.get(state.category_list, "length", 0);
@@ -946,7 +944,7 @@ export const useGetConfig = (router) => {
   });
 
   onUnmounted(() => {
-    un_subscribe();
+    // un_subscribe();
     clearTimeout(state.axios_debounce_timer);
     clearTimeout(state.get_match_details_timer);
     clearTimeout(state.back_to_timer);
@@ -996,7 +994,6 @@ export const useGetConfig = (router) => {
     ...toRefs(state),
     handicap_this,
     detail_header,
-    cur_expand_layout,
     init,
     back_to,
     set_handicap_this,

@@ -27,30 +27,30 @@ export const useGetGlobal = ({ details_params, back_to }) => {
 
   const get_uid = UserCtr.get_uid();
   // 获取当前页路由信息
-  const layout_cur_page = ref(store_state.layoutReducer.layout_cur_page);
+  const layout_cur_page = ref({});
   // 获取当前菜单类型
-  const cur_menu_type = ref(store_state.menuReducer.cur_menu_type);
+  const cur_menu_type = ref({});
   // 赛事列表排序 1:按联赛排序 2:按时间排序
-  const match_sort = ref(store_state.globalReducer.match_sort);
+  const match_sort = ref({});
   // //播放类型
-  const play_media = ref(store_state.matchesReducer.play_media);
+  const play_media = ref({});
 
   // 保存联想搜索关键字
-  const related_keyword = ref(store_state.searchReducer.related_keyword);
+  const related_keyword = ref({});
 
   // 监听状态变化
-  let un_subscribe = store.subscribe(() => {
-    let state_data = store.getState();
-    layout_cur_page.value = state_data.layoutReducer.layout_cur_page;
-    cur_menu_type.value = state_data.menuReducer.cur_menu_type;
-    match_sort.value = state_data.globalReducer.match_sort;
-    play_media.value = state_data.matchesReducer.play_media;
-    related_keyword.value = state_data.searchReducer.related_keyword;
-  });
+  // let un_subscribe = store.subscribe(() => {
+  //   let state_data = store.getState();
+  //   layout_cur_page.value = state_data.layoutReducer.layout_cur_page;
+  //   cur_menu_type.value = state_data.menuReducer.cur_menu_type;
+  //   match_sort.value = state_data.globalReducer.match_sort;
+  //   play_media.value = state_data.matchesReducer.play_media;
+  //   related_keyword.value = state_data.searchReducer.related_keyword;
+  // });
 
-  onUnmounted(() => {
-    un_subscribe();
-  });
+  // onUnmounted(() => {
+  //   un_subscribe();
+  // });
 
   /**
    * 设置赛事列表/详情选中赛事
