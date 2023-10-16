@@ -54,7 +54,7 @@
 
 
                 <img class="img" v-if="GlobalAccessConfig.get_collectSwitch()"
-                  :src="item.mf ? compute_img('icon-favorite') : compute_img('icon-favorite-s')"
+                  :src="item.mf ? compute_img('icon-favorite-s') : compute_img('icon-favorite')"
                   @click.stop="on_collection(item)">
               </div>
               <div class="video-list-right">
@@ -98,9 +98,9 @@ import { ref, onMounted, watch, computed, onUnmounted } from 'vue';
 // import { mapGetters, mapMutations } from "vuex";
 // import match_list_mixin from "src/base-h5/mixins/match-list/match-list-mixin";
 // import skt_live_bw3 from "src/base-h5/mixins/websocket/data/skt-live-bw3.js";
+// import common from "src/base-h5/mixins/constant";
 // import msc from "src/base-h5/mixins/common/msc.js";
 import ListMap from "src/core/match-list-h5/match-class/list-map.js";
-// import common from "src/base-h5/mixins/constant";
 import { utils, get_file_path, UserCtr, compute_img } from 'src/core/index.js';
 import SLive from "src/base-h5/components/skeleton/live.vue"
 import noData from 'src/base-h5/components/common/no-data.vue'
@@ -131,12 +131,10 @@ let is_collect = ref(false)
 let loading = ref(true)
 // 代表的是联赛id  tid
 let field_tid = ref('')
-let y0_img_favorite_black = ref("/yazhou-h5/image/common/m-list-favorite-s-y0.svg")
 // 赛事列表滑动高度
 let list_scroll_top = ref(0)
 // 锚点
 let scrollArea = ref(null)
-
 
 // ws，数据仓库 混入 TODO: 后续修改调整
 // mixins:[ match_list_mixin, skt_live_bw3, common, msc],
@@ -146,16 +144,17 @@ let scrollArea = ref(null)
 //   "counting-down": counting_down,
 //   SLive
 // },
-
-watch(() => tab_Index.value, (index) => {
-  utils.tab_move2(index, scrollBox.value)
-  if (index == 0) {   //收藏时显示暂无收藏,非收藏时显示暂无直播赛事
-    no_menu_txt.value = 'collect'
-  } else {
-    // 显示暂无直播赛事
-    no_menu_txt.value = 'nolive'
-  }
-})
+// computed: {
+//   ...mapGetters({
+//     uid: "get_uid",
+//     UserCtr: "UserCtr",
+//     UserCtr_token:'UserCtr_token',
+//     get_goto_detail_match_info:'get_goto_detail_match_info',
+//     get_home_tab_item:'get_home_tab_item',
+//     get_access_config,
+//     get_is_show_menu:"get_is_show_menu",
+//   })
+// },
 // ...mapMutations([
 //   // 设置去详情的赛事id
 //   'set_goto_detail_matchid',
@@ -169,6 +168,16 @@ watch(() => tab_Index.value, (index) => {
 //   'set_show_video',
 //   'set_toast'
 // ]),
+
+watch(() => tab_Index.value, (index) => {
+  utils.tab_move2(index, scrollBox.value)
+  if (index == 0) {   //收藏时显示暂无收藏,非收藏时显示暂无直播赛事
+    no_menu_txt.value = 'collect'
+  } else {
+    // 显示暂无直播赛事
+    no_menu_txt.value = 'nolive'
+  }
+})
 /**
  * @description: 更新赛事列表滚动高度
  */
@@ -419,28 +428,13 @@ const no_wifi = () => {
   tabList.value = []
   noMenu.value = true
 }
-// computed: {
-//   ...mapGetters({
-//     uid: "get_uid",
-//     UserCtr: "UserCtr",
-//     UserCtr_token:'UserCtr_token',
-//     get_goto_detail_match_info:'get_goto_detail_match_info',
-//     get_home_tab_item:'get_home_tab_item',
-//     get_access_config,
-//     get_is_show_menu:"get_is_show_menu",
-//   })
-// },
+
 // 如果有视频列表数据，则页面销毁时，清除内存
 onUnmounted(() => {
   if (lodash.get(carousel_data.value, 'list.length')) { carousel_data.value.destroy() }
-
-  // 不是跳转到详情则清除赛事信息
-  if (get_home_tab_item.index !== 2) {
-    set_goto_detail_match_info({})
-  }
-
-  // for (const key in $data) {
-  //   $data[key] = null
+  //TODO 不是跳转到详情则清除赛事信息
+  // if (get_home_tab_item.index !== 2) {
+  //   set_goto_detail_match_info({})
   // }
 })
 get_init(1)

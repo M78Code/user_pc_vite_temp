@@ -8,7 +8,7 @@
       'show-video':get_show_video||viewTab === 'chatroom',
       'show-replay-video': get_is_dp_video_full_screen && !get_is_hengping,
       'video-full-screen': get_is_hengping,
-      'details-bet': viewTab === 'bet' && get_menu_type !== 3000,}"
+      'details-bet': viewTab === 'bet' &&is_export}"
       :style="[{height:`${scroller_height}px`, ...page_style}]"
       v-cloak ref="details_box"
       @touchstart.passive="start"
@@ -133,12 +133,10 @@
   </div>
 </template>
 <script>
-import {utils } from 'src/core/index.js';  // 公共方法
 // #TODO mixins
 // import websocket_data from "src/base-h5/mixins/websocket/data/skt_data_info_header.js";  // websocket数据页面数据接入----赛事详情头详细推送处理
 // import common from 'src/project/mixins/constant/module/common.js';    // 公共的常用工具方法
 // 引入国际化
-import { i18n_t } from "src/boot/i18n.js";;
 import lodash from "lodash";
 import detailsHeader from "src/base-h5/components/details/components/details-header.vue";   // 整个详情页的上部视频区域
 import detailsTab from "src/base-h5/components/details/components/details-tab.vue";         // 详情页中部玩法集tab
@@ -157,9 +155,10 @@ import store from "src/store-redux/index.js";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt/index.js"
 import { details_main } from "./details.js";
 import { ref, defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch, provide } from "vue";
-import {UserCtr,compute_css,compute_img} from "src/core/";
-import { MatchDetailCalss } from "src/core/index.js"
+import {UserCtr,compute_css,compute_img,MatchDetailCalss,MenuData,utils} from "src/core/";
 import { compute_css_variables } from "src/core/css-var/index.js"
+import {is_export } from "src/base-h5/mixin/menu";
+
 //国际化
 
 export default defineComponent({
@@ -407,9 +406,9 @@ export default defineComponent({
       let video_details = sessionStorage.getItem('video_details')
       if(video_details){
         if (params?.csid && [100,101,102,103].includes(+params.csid)) {  // 如果是电竞赛事，需要设置菜单类型
-          set_menu_type(3000)
+          MenuData.set_menu_type(7)
         }else{
-          set_menu_type('')
+          MenuData.set_menu_type('')
         }
       }
 
