@@ -215,15 +215,13 @@ class MatchMeta {
     // 初始化赛事折叠
     MatchFold.set_match_mid_fold_obj(match)
     // 初始化球种折叠状态
-    if (!`csid_${csid}` in MatchFold.ball_seed_csid_fold_obj.value) MatchFold.set_ball_seed_csid_fold_obj(csid)
+    if (!(`csid_${csid}` in MatchFold.ball_seed_csid_fold_obj.value)) MatchFold.set_ball_seed_csid_fold_obj(csid)
 
     // 赛事收藏处理
     MatchCollect.handle_collect_state(match)
-
     // // 初始化赛事收藏
     // MatchCollect.set_match_collect_state(t)
     // // 初始化联赛收藏状态
-    // if (`collect_tid_${t.tid}` in MatchCollect.league_tid_collect_obj.value) return
     // MatchCollect.set_league_collect_state(t.tid)
   }
 
@@ -397,7 +395,6 @@ class MatchMeta {
    */
   set_match_mids (mids = [], num = 10) {
     // 显示空数据页面
-    console.log(mids.length)
     if (mids.length < 1) return useMittEmit(MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, true);
     this.match_mids = [...new Set(mids.slice(0, num))]
     // useMittEmit(MITT_TYPES.EMIT_MENU_ANIMATION);
@@ -413,8 +410,8 @@ class MatchMeta {
   handle_update_match_info(list) {
     list = lodash.map(list, t => {
       const match = MatchDataBaseH5.get_quick_mid_obj(t.mid)
-      // 覆写赛事折叠参数
-      MatchFold.set_match_mid_fold_obj(t)
+      // 覆写次要玩法折叠参数
+      // MatchFold.set_match_mid_fold_obj()
       return Object.assign({}, match, t)
     })
     // 设置仓库渲染数据

@@ -134,7 +134,8 @@
    
         > -->
         <!-- 盘口模板start -->
-        <template v-if="(LayOutMain_pc.layout_current_path.cur !== 'details' && !is_esports) || route.name == 'video'">
+    
+        <template v-if="(LayOutMain_pc.layout_current_path.cur !== 'details' && !is_esports) || route.name == 'video'">{{}}
           <match-handicap
             :match_info="match_infoData"
             :category_list="category_list"

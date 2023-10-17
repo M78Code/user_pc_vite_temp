@@ -6,8 +6,7 @@
  <div class="refresh-container">
     <!--列表页 -->
     <scroll-wrapper ref="scroll_wrapper" :main_source="source"
-      :is_goto_top_random="is_goto_top_random" :match_list_wrapper_height="match_list_wrapper_height"
-      :class="{ 'data-get-empty': data_get_empty }">
+      :is_goto_top_random="is_goto_top_random" :match_list_wrapper_height="match_list_wrapper_height">
       <template v-slot="{ match_item, index }">
         <template v-if="match_item">
            <!--虚拟体育(赛果)-->
@@ -80,11 +79,6 @@
         <div v-else v-html="play_way_info" />
       </div>
     </div>
-
-    <!-- 非收藏页 -->
-    <no-data class="data-get-empty1" v-if='data_get_empty && !get_show_favorite_list' which='noMatch' height='400'></no-data>
-    <!-- 收藏页 -->
-    <no-data class="data-get-empty2" v-if='data_get_empty && get_show_favorite_list' :which='menu_type === 28 ? "noMatch" : "collect"' height='400'></no-data>
   </div>
   
 </template>
@@ -101,7 +95,6 @@ import vMatchContainer from "./virtual-match-container.vue";  // 虚拟体育赛
 import matchContainerChampion from "./match-container-champion.vue";    // 冠军赛事组件，用于赛事列表展示赛事信息
 import matchContainerResult from "./match-container-result.vue" // 赛果冠军
 import scrollWrapper from 'src/base-h5/components/scroll-wraper/scroll-wrapper.vue';    // 滚动操作处理
-import noData from "src/base-h5/components/common/no-data.vue"; // 无网络展示组件
 import UserCtr from 'src/core/user-config/user-ctr.js'
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import { MenuData, i18n_t, utils,compute_img, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/index.js"
@@ -151,8 +144,6 @@ const get_match_id_bet_success = ref(store_state.get_match_id_bet_success)
 const get_theme = ref(store_state.get_theme)
 // 滚到顶部
 const get_goto_list_top = ref(store_state.get_goto_list_top)
-// 显示收藏列表
-const get_show_favorite_list = ref(store_state.get_show_favorite_list)
 
 onMounted(() => {
 
@@ -388,7 +379,6 @@ const unsubscribe = store.subscribe(() => {
   get_match_id_bet_success.value = new_state.get_match_id_bet_success
   get_theme.value = new_state.get_theme
   get_goto_list_top.value = new_state.get_goto_list_top
-  get_show_favorite_list.value = new_state.get_show_favorite_list
 })
 
 onUnmounted(() => {

@@ -168,7 +168,7 @@ import { computed, onMounted, onUnmounted, ref, watch,nextTick } from "vue";
 import MenuData from "src/core/menu-pc/menu-data-class.js";
 import { IconWapper } from "src/components/icon";
 import refresh from "src/components/refresh/refresh.vue";
-import { i18n_t, get_match_status,UserCtr ,GlobalSwitchClass,MatchDetailCalss} from "src/core/index";
+import { i18n_t, get_match_status,UserCtr ,GlobalSwitchClass,MatchDetailCalss,get_media_icon_index} from "src/core/index";
 import { compute_css } from "src/core/server-img/index.js";
 import filterHeader from "src/core/filter-header/filter-header.js";
 import { debounce_throttle_cancel } from "src/core/utils/module/other.js";
@@ -474,7 +474,7 @@ const toggle_play_media = (media_type) => {
  */
 const full_screen = () => {
   // 根据icon获取数据源类型
-  let play_type = utils.get_media_icon_index(
+  let play_type = get_media_icon_index(
     vx_play_media.value.media_type
   );
   video.full_screen(props.match_info, play_type);

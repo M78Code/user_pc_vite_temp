@@ -42,9 +42,8 @@
         <!-- 右侧主列表页 -->
         <div class="match-content">
           <div class="right_main_list" ref="scrollArea" @scroll="wrapper_scroll_handler">
-            <div class="video_list" v-for="(item, index) in carousel_data.list" :key="index" 
-            :ref="(el)=>mid_refs[item.mid]=el"
-              @click="goto_detail_video(item,index)">
+            <div class="video_list" v-for="(item, index) in carousel_data.list" :key="index"
+              :ref="(el) => mid_refs[item.mid] = el" @click="goto_detail_video(item, index)">
               <div class="video_list_left"
                 :style="{ backgroundImage: 'url(' + (item.mgif ? item.mgif : `/yazhou-h5/image/png/live_loading.png`) + ')' }">
                 <div class="player">
@@ -101,7 +100,7 @@ import { ref, onMounted, watch, computed, onUnmounted } from 'vue';
 // import common from "src/base-h5/mixins/constant";
 // import msc from "src/base-h5/mixins/common/msc.js";
 import ListMap from "src/core/match-list-h5/match-class/list-map.js";
-import { utils, get_file_path, UserCtr, compute_img } from 'src/core/index.js';
+import { utils, get_file_path, UserCtr, MatchDetailCalss, compute_img } from 'src/core/index.js';
 import SLive from "src/base-h5/components/skeleton/live.vue"
 import noData from 'src/base-h5/components/common/no-data.vue'
 import scrollTop from 'src/base-h5/components/common/record-scroll/scroll-top.vue'
@@ -110,9 +109,9 @@ import { format_total_score } from "src/core/format/index.js"
 import matchListClass from 'src/core/match-list-h5/match-class/match-list.js'
 import GlobalAccessConfig from "src/core/access-config/access-config.js"
 import { useRouter } from "vue-router";
-const router=useRouter()
+const router = useRouter()
 const scrollBox = ref(null) //dom
-let mid_refs= {} //dom map
+let mid_refs = {} //dom map
 //右侧菜单内容
 let carousel_data = ref({ list: [], obj: {} })
 // 头部选项卡下标
@@ -197,18 +196,35 @@ const league_icon_error = ($event) => {
 // 点击视频界面跳转到详情播放视频
 const goto_detail_video = (match) => {
   const match_info = {
-    mid: match.mid,
+    mid: match.mid,//赛事id
     top: mid_refs[match.mid].getBoundingClientRect().top,
-    sport_id: match.csid,
+    tid: match.tid,
+    sportId: match.csid || '',//球类id
+    media_type: "auto", // 直播类型
     is_collect: is_collect.value
   }
+  // mid: "", //赛事id
+  //     tid: "", // 联赛 id
+  //     sportId: "", //球类id
+  //     media_type: "auto", // 直播类型
+  //     time: Date.now()
+  MatchDetailCalss.set_match_details_params(match_info)
+
   // set_goto_detail_matchid(match.mid);
   // 进入详情页前，记录目标赛事信息
   //TODO  set_goto_detail_match_info(match_info);
   // set_details_item(0);
+
   sessionStorage.setItem('video_details', true)
-  router.push({ name: 'category', params: { mid: match.mid, csid: match.csid } });
-  // 播放视频操作
+  router.push({ name: 'category', params: { mid: match.mid, csid: match.csid } })
+  //播放视频信息类型
+  MatchDetailCalss.set_play_media({
+    mid: match.mid,
+    media_type: "auto",// 直播类型
+    is_auto: true,
+    time: Date.now()
+  })
+
   // set_play_video(true)
   // set_show_video(true)
 }
@@ -283,7 +299,6 @@ const video_collect_list = (url, csid, tid) => {
     csid: csid ? csid : '', // 球类ID    传空是所有  1 足球，2 篮球 5 网球，7 斯诺克    8乒乓球  10 羽毛球 4 冰球 3 棒球  9 排球 6 美式足球
     tid: tid ? tid : '',  // 联赛ID
   };
-  console.error('video_collect_list', params)
   return new Promise((resolve, reject) => {
     url(params).then(({ code, data }) => {
       if (code == 200) {
@@ -389,7 +404,7 @@ const get_init = (load_first) => {
  * @param {String} index 选中下标
  */
 const change_menu = (index, field1) => {
-  mid_refs={} //重置dom
+  mid_refs = {} //重置dom
   scroll_top()
   // 如果点击的左侧菜单下标相等，则return 不再执行下边方法
   if (menu_index.value == index) return

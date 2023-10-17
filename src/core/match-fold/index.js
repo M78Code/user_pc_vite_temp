@@ -38,7 +38,7 @@ class MatchFold {
    * @param { match } 赛事对象
    * @param { falg } 展开/ 折叠
    */
-  set_ball_seed_csid_fold_obj (csid, falg = true) {
+  set_ball_seed_csid_fold_obj (csid, falg = false) {
     Object.assign(this.ball_seed_csid_fold_obj.value, {
       [`csid_${csid}`]: falg
     })
@@ -102,7 +102,7 @@ class MatchFold {
     const fold_obj = lodash.get(this.match_mid_fold_obj.value, `${key}`)
     if (!fold_obj) return console.error('折叠操作：该赛事未初始化')
     Object.assign(fold_obj, { ...obj })
-    console.log(this.match_mid_fold_obj.value)
+    // console.log(this.match_mid_fold_obj.value)
   }
   // 清除球种折叠对象
   clear_ball_seed_csid_fold_obj () {

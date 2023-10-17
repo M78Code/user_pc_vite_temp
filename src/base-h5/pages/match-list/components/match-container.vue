@@ -31,7 +31,7 @@
       </span>
       <!-- 折叠收起不用消失 -->
       <div v-if="!is_hot">
-        <img class="league-collapse-dir" :class="{ 'collapsed': league_collapsed }" :src='compute_img("icon-collapse")' />
+        <img class="league-collapse-dir" :class="{ 'collapsed': !league_collapsed }" :src='compute_img("icon-collapse")' />
       </div>
     </div>
     <!-- 未开赛标题  -->
@@ -103,8 +103,8 @@
       </div>
       <!-- 卡片主内容 -->
       <q-slide-transition>
-        <!--  间隔,因为要求不能用 marginTop,因此加上此元素  -->
-        <div style="width: 100%" v-show="!collapsed">
+        <div style="width: 100%" v-if="!collapsed">
+          <!--  间隔,因为要求不能用 marginTop,因此加上此元素  -->
           <div style="height: 0.04rem " />
           <!--  一整块赛事的 div 内容 ： 1. 左边 【时间，队名，比分】   2. 右边 【赔率 模块】  -->
           <div class="match-odds-container study_height_s hairline-border" :ref="'mid-' + match.mid">
@@ -694,7 +694,7 @@ const handle_league_fold = () => {
 const league_collapsed = computed(() => {
   if (is_hot.value) return false
   const falg = lodash.get(MatchFold.ball_seed_csid_fold_obj.value, `csid_${props.match_of_list.csid}`, true)
-  return !falg
+  return falg
 })
 /**
  * @description 赛事显示/隐藏
