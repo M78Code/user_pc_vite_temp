@@ -23,9 +23,9 @@ import {
 //moni
 // import MenuData from "./menuData"
 import detailUtils from "src/core/match-detail/match-detail-pc/match-detail.js";
-import { reactive, toRefs, ref, onMounted, onUnmounted, computed } from "vue";
+import { reactive, toRefs, ref, onMounted, onUnmounted, computed, watch } from "vue";
 import MenuData from "src/core/menu-pc/menu-data-class.js";
-
+import { useRouter } from "vue-router";
 export const useRightDetails = (props) => {
   //视频是否展开状态
   const get_is_fold_status = ref(GlobalSwitchClass.is_fold_status);
@@ -71,7 +71,7 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
     //  mid = mid || allData.details_params.mid todo
     // 如果当前是详情或者视频，就直接初始化
     if (["video"].includes(this.layout_cur_page.cur)) {
-      init.value({ mid, is_ws: true });
+      init({ mid, is_ws: true });
       // 否则就拉取比分面板数据
     } else {
       api_details.get_match_detail_MatchInfo({ mid }).then(({ data }) => {
@@ -90,7 +90,7 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
             // this.mx_autoset_active_match();
           } else {
             // 否则就直接初始化
-            init.value({ mid, is_ws: true });
+            init({ mid, is_ws: true });
           }
         } else {
           // this.mx_autoset_active_match();
@@ -255,8 +255,6 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
     },
     match_sort: 1,
   });
-  const init = ref(null);
-
   //    // 是否为电竞
   const is_esports = computed(() => {
     let is_esports_val;
@@ -601,13 +599,15 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
       trailing: true,
     }
   );
+  const init =lodash.debounce(()=>{
+    m_init()
+  },1000)
   onMounted(() => {
     /**
      * @description: 初始化数据 调取赛事详情、玩法集、玩法列表接口
      * @return {undefined} undefined
      */
-    // init.value = lodash.debounce(m_init, 1000);
-    // init.value();
+    init();
     // get_match_detail_base_throttle();
     // get_matchInfo_fun(1,allData.mid)
     // m_init();
@@ -620,11 +620,6 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
     // // 检查玩法关盘
     // useMittOn("check_plays_show", this.check_plays_show);
 
-    // // 站点 tab 休眠状态转激活
-    // useMittOn(
-    //   useMittOn.EMIT_SITE_TAB_ACTIVE,
-    //   this.emit_site_tab_active
-    // );
     // // 关闭 tips
     // useMittOn("close_tips", this.close_tips);
 
@@ -1147,9 +1142,6 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
     // this.debounce_throttle_cancel(refresh());
     allData.refresh_loading_timer &&
       clearTimeout(allData.refresh_loading_timer);
-    // 站点 tab 休眠状态转激活
-    // off(useMittOn.EMIT_SITE_TAB_ACTIVE, this.emit_site_tab_active);
-
     // off("match_detail_base", this.get_match_detail_base);
 
     // off("change_loading_status_right_details", this.getLoading)
@@ -1160,7 +1152,27 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
     allData.category_list = null;
     match_details.value = null;
   });
-
+  const routeData = useRouter();
+  // 全局路由守卫
+  routeData.beforeEach((to, from, next) => {
+  console.log(to, from,'tofrom')
+       let _to = lodash.get(to, "name") || '';
+       let _from = lodash.get(from, "name") || '';
+       // 在首页刷新时不要重复调用 init
+       if (_from == '' && _to == 'home') {
+       } else if(_to== 'home' && _from=='details') {
+         // 从详情页返回列表页也要初始化右侧详情
+         allData.is_go_match_list = false;
+         init();
+       } else if(_to!='details') {
+          init();
+       } else if (_to === 'details') {
+         clearTimeout(allData.get_match_details_timer2)
+         allData.get_match_details_timer2 = null
+         handle_chatroom_show()
+       }
+  next()
+})
   return {
     ...toRefs(allData),
     get_is_fold_status, //视频开关
@@ -1175,6 +1187,7 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
     setfoldStatus,
     get_mattch_details
   };
+
 };
 //  mixins: [global_mixin,   details_mixins,],
 //  components: {
@@ -1251,30 +1264,6 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
 //      handler(res){
 //        allData.background_img = this.computed_background(res)
 //      }
-//    },
-//    /**
-//    * @description: 切换到视频页重新拉取详情接口
-//    * @return {undefined} undefined
-//    */
-//    $route: {
-//      handler(to, from) {
-//        let _to = lodash.get(to, "name") || '';
-//        let _from = lodash.get(from, "name") || '';
-//        // 在首页刷新时不要重复调用 init
-//        if (_from == '' && _to == 'home') {
-//        } else if(_to== 'home' && _from=='details') {
-//          // 从详情页返回列表页也要初始化右侧详情
-//          allData.is_go_match_list = false;
-//          init.value && init.value();
-//        } else if(_to!='details') {
-//          init.value && init.value();
-//        } else if (_to === 'details') {
-//          clearTimeout(allData.get_match_details_timer2)
-//          allData.get_match_details_timer2 = null
-//          this.handle_chatroom_show()
-//        }
-//      },
-//      immediate: true
 //    },
 //    get_is_show_full_bet() {
 //      if(route.params.video_size==undefined) {

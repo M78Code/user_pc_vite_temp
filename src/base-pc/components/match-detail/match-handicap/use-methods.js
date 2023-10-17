@@ -552,6 +552,7 @@ const rang = ref([])
     sort_index,
     route,
     lodash,
-    check_half
+    check_half,
+    toggle_panel
   };
 };

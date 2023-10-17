@@ -115,7 +115,6 @@
                :mmp="+lodash.get(match_infoData,'mmp')"
                :matchTime="+lodash.get(match_infoData,'mst')" />
             <!-- 玩法tab -->
-
             <handicap-tabs-bar
               v-if="
               (LayOutMain_pc.layout_current_path.cur !== 'details' && !is_esports) ||route.name == 'video'"
