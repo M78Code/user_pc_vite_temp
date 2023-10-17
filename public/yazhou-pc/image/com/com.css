@@ -1,12 +1,12 @@
 /* com1图标 ------------------------------------------------------------------------------------熊猫体育*/
 .custom-format-com1.theme01 .custom-format-img-logo-01{
     /* 主logo日间 day_logo.svg */
-    background-image: url('./com01/day_logo.svg') !important;
+    background-image: url('yazhou-pc/image/com.svg') !important;
 }
 
 .custom-format-com1 .custom-format-img-logo-01-theme01{
     /* 主logo日间 day_logo.svg */
-    background-image: url('./com01/day_logo.svg') !important;
+    background-image: url('yazhou-pc/image/com.svg') !important;
 }
 
 .custom-format-com1.theme02 .custom-format-img-logo-01{

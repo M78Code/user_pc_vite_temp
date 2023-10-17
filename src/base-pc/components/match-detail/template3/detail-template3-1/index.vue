@@ -22,9 +22,9 @@
           <div class="handicap-item"
             v-for="(item,i) in list.ol"
             :class="[`os-${lodash.get(list, `ol[${i}].os`)}`, {'no_border_bottom': lodash.get(list, 'ol.length') > 2 ? (i > lodash.get(list, 'ol.length') - (lodash.get(list, 'ol.length')%2 ? 2 : 3)) : j == lodash.get(item_details, 'hl.length') - 1}]"
-            :key="`bet_oid_${item.oid ? item.oid : 'placeholder_' + i}`">
+            :key="`bet_oid_${item?.oid ? item.oid : 'placeholder_' + i}`">
             <bet-item
-              :key="`bet_oid_${item.oid ? item.oid : 'placeholder_' + i}`"
+              :key="`bet_oid_${item?.oid ? item?.oid : 'placeholder_' + i}`"
               :match_info="match_info"
               :play_data="item_details"
               :bet_data="item"
@@ -33,12 +33,12 @@
               bet_source="match_details"
             >
               <div class="bet-item">
-                <div v-if="match_info?.csid == '1011'">{{item.on}}</div>
+                <div v-if="match_info?.csid == '1011'">{{item?.on}}</div>
                 <template v-else>
                   <div class="item-label bet-ellipsis ellipsis">
-                    <span :class="['ellipsis-wrap',{'yb-family-odds':[361, 362].includes(+lodash.get(item_details, 'hpid',-1))}]">{{item.ott}}</span>
+                    <span :class="['ellipsis-wrap',{'yb-family-odds':[361, 362].includes(+lodash.get(item_details, 'hpid',-1))}]">{{item?.ott}}</span>
                   </div>
-                  <span class="ellipsis">{{item.on}}</span>
+                  <span class="ellipsis">{{item?.on}}</span>
                 </template>
               </div>
             </bet-item>
