@@ -49,12 +49,6 @@ export const useMethods = ({ props,emit }) => {
   const get_uid = ref(null);
   // 当前所选的玩法集子项id
   const get_tabs_active_id = ref(MatchDetailCalss.current_category_id);
-  // 获取当前页路由信息
-  const vx_layout_cur_page = ref({});
-  // 获取指定的玩法id
-  const get_top_id = ref({});
-  // 获取指定的玩法id
-  const get_right_zoom = ref(LayOutMain_pc.zoom);
     //  ============================computed===================
     const current_list = computed(() => {
       let list = [];
@@ -153,8 +147,11 @@ export const useMethods = ({ props,emit }) => {
   watch(
     () => props.match_details,
     (res) => {
+      console.log(props.handicap_state,'props.handicap_state');
+         state.load_detail_statu = props.handicap_state;
       if(!lodash.get(res,'[0].odds_info'))  return false
-      state.load_detail_statu = props.handicap_state;
+      
+   
       if (props.handicap_state != "data") {
         state.details_data = [];
         state.waterfall = [[]];

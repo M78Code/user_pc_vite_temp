@@ -82,7 +82,7 @@ export const useGetConfig = (router,cur_menu_type,details_params,play_media) => 
   // 玩法集对应玩法缓存数据
   const get_details_data_cache = ref(MatchDetailCalss.details_data_cache);
   // 置顶的玩法id
-  const get_top_id = ref(MatchDetailCalss.topId);
+  const get_top_id = ref(MatchDetailCalss.top_id);
 
 
   const category_list_length = computed(() => {
@@ -155,7 +155,6 @@ export const useGetConfig = (router,cur_menu_type,details_params,play_media) => 
    *
    */
   const init = (param = { is_ws: false }) => {
-    
     let { mid, is_ws } = param;
     clearTimeout(state.get_match_details_timer);
     if (mid && mid != -1) {
@@ -212,7 +211,6 @@ export const useGetConfig = (router,cur_menu_type,details_params,play_media) => 
       }
       // 告知列表是详情返回：用于是否重新自动拉右侧内容
       MatchDetailCalss.set_is_back_btn_click(is_back)
-      // debugger
       router.push({path:from_path});
       if (from_path.includes("search")) {
         MatchDetailCalss.set_unfold_multi_column(false)
@@ -422,7 +420,6 @@ export const useGetConfig = (router,cur_menu_type,details_params,play_media) => 
    * @description 玩法列表数据处理--电竞和其他赛事通用
    */
   const get_match_details = (res) => {
-    
     state.err_time = 0;
     state.match_details = [];
     state.data_loaded = true;
@@ -498,7 +495,6 @@ export const useGetConfig = (router,cur_menu_type,details_params,play_media) => 
       // 清除玩法集下缓存数据
       MatchDetailCalss.set_details_data_cache(details_data_cache)
       // 处理当前玩法集数据
-  
       handle_match_details_data(data, timestap);
       /** 设置语言变化 */
       UserCtr.set_lang(false);
