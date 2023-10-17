@@ -28,15 +28,38 @@
 </template>
 
 <script>
-// import match_list_version_mixin from "src/project/yabo/mixins/match_list/match_list_version_mixin.js"; //模板引入及主要业务逻辑
-// import skt_data_list from "src/public/mixins/websocket/data/skt_data_list_new_data.js";// 发送websocket命令时使用
-import { useMittEmit,MITT_TYPES } from "src/core";
+
+import { MatchListCardFullVersionWapper as MatchListCard } from "src/base-pc/components/match-list/match-list-card/index.js"; //赛事列表
+import LoadData from 'src/components/load_data/load_data.vue';
+import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
+
+import { useMittEmit,MITT_TYPES } from "src/core/index.js";
 export default {
   name: "HotMatchList",
-  // mixins: [match_list_version_mixin,skt_data_list],
-  mounted() {
+  component: {
+    LoadData,
+    MatchListCard,
+  },
+  data() {
+    return {
+      match_list_card_key_arr:[]
+    }
+  },
+  mounted () {
     //同步热门接口
     useMittEmit(MITT_TYPES.EMIT_HOT_COLLECT)
+    this.MatchListCardDataClass_match_list_card_key_arr();
+  },
+  watch: {
+    'MatchListCardDataClass.list_version'(newValue, oldValue) {
+      this.MatchListCardDataClass_match_list_card_key_arr()
+       this.$forceUpdate()
+    }
+  },
+  methods: {
+    MatchListCardDataClass_match_list_card_key_arr() {
+      this.match_list_card_key_arr= MatchListCardDataClass.match_list_card_key_arr
+    }
   },
 };
 </script>

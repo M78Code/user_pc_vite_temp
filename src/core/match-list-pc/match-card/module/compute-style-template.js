@@ -109,7 +109,6 @@ const compute_style_template_by_matchinfo_template0_zuqiu = (
 	let tab_play_total_height = 0;
 	if (is_show_tab_play && !is_fold_tab_play) {
 		// 如果有角球玩法并且未折叠  角球区域总高度 等于角球标题高度加角球盘口高度
-		console.log('template_config', template_config);
 		tab_play_total_height =
 			template_config.tab_play_title_height + get_tab_play_height(match.mid);
 	} else if (is_show_tab_play) {
@@ -345,7 +344,6 @@ export const compute_style_template_by_matchinfo = (match, template_id, mid) => 
 		style_obj.cur_handicap_height = template_config.cur_handicap_height;
 	}
 	// 设置卡片总高度 等于主盘口高度 + 当前局盘扣高度 + 附加盘高度 + 角球区域高度 + 赛事间距和边框6px
-	console.log('style_obj', style_obj);
 	style_obj.total_height =
 		style_obj.main_handicap_height +
 		style_obj.cur_handicap_height +

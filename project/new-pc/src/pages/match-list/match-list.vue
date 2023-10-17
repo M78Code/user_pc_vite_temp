@@ -184,7 +184,7 @@ export default {
     }
   },
   mounted () {
-    this.MatchListCardDataClass_match_list_card_key_arr()  ;
+    this.MatchListCardDataClass_match_list_card_key_arr();
   },
   watch: {
     'MatchListCardDataClass.list_version'(newValue, oldValue) {

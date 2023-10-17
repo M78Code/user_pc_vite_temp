@@ -28,9 +28,9 @@
         </router-view>
       </div>
       <!-- 右侧 视频  动画 比分板 详情 -->
-      <div :style="{ height: LayOutMain_pc.layout_content_height + 'px' , width:LayOutMain_pc.layout_right_width +'px' }" class="layout_main_right">
+      <!-- <div :style="{ height: LayOutMain_pc.layout_content_height + 'px' , width:LayOutMain_pc.layout_right_width +'px' }" class="layout_main_right">
         <layout-right />
-      </div>
+      </div> -->
     </div>
       <!-- 视频画中画组件 -->
       <!-- <moveVideo v-if="show_move_video"></moveVideo> -->

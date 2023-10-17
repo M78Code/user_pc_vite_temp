@@ -86,6 +86,18 @@ const menu_to_match_templte = {
 
   400: { label: "冠军", value: "18" },
 
+  502132: { label: "热门-NBA", value: "2" },
+  502180: { label: "热门-英超", value: "1" },
+  502239: { label: "热门-意甲", value: "1" },
+  502244: { label: "热门-欧足锦2024外", value: "1" },
+  502276: { label: "热门-德甲", value: "1" },
+  502295: { label: "热门-MLB美职棒", value: "17" },
+  502320: { label: "热门-西甲", value: "1" },
+  502359: { label: "热门-巴甲", value: "1" },
+  502563: { label: "热门-美职联", value: "1" },
+  5026344: { label: "热门-中超", value: "1" },
+  5026408: { label: "热门-欧冠", value: "1" },
+  50231511: { label: "热门-WNBA - 季后赛", value: "2" },
 };
 
 /**

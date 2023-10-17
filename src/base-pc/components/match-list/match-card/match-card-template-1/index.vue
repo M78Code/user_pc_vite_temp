@@ -36,7 +36,7 @@ import { MatchTpl10AfterFullVersionWapper as MatchTpl10After } from "src/base-pc
 // // // 玩法模板 12  热门赛事-竟足-让球/胜平
 // import { MatchTpl12AfterFullVersionWapper as MatchTpl12After } from "src/base-pc/components/match-list/match-tpl-new-data/match-tpl-12-after/index.js";
 // // // 玩法模板 17  棒球-让球&大
-// import { MatchTpl17AfterFullVersionWapper as MatchTpl17After } from "src/base-pc/components/match-list/match-tpl-new-data/match-tpl-17-after/index.js";
+import { MatchTpl17AfterFullVersionWapper as MatchTpl17After } from "src/base-pc/components/match-list/match-tpl-new-data/match-tpl-17-after/index.js";
 // // // 玩法模板 18  所有冠军玩法 政治娱
 import { MatchTpl18AfterFullVersionWapper as MatchTpl18After } from "src/base-pc/components/match-list/match-tpl-new-data/match-tpl-18-after/index.js";
 // // // 玩法模板 21  足球-比分
@@ -58,6 +58,7 @@ export default {
     MatchTpl2After,
     MatchTpl7After,
     MatchTpl9After,
+    MatchTpl17After,
     MatchTpl10After,
     MatchTpl18After
   },

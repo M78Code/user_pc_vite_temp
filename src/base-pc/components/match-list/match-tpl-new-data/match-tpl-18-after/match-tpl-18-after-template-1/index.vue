@@ -69,6 +69,7 @@ const match_tpl_info =
   MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`];
 const match = MatchListData.list_to_obj.mid_obj[props.mid + "_"];
 const is_mounted = ref(true)
+const vx_main_menu_toggle = ref('')
 /**
  * @Description 计算赛事所有盘口数据--冠军玩法
  * @param {undefined} undefined

@@ -104,14 +104,13 @@
 import { ref, computed, watch, onMounted, nextTick } from 'vue';
 import lodash from 'lodash'
 
-import { t, get_match_status, MatchDataWarehouse_PC_List_Common as MatchListData } from "src/core/index.js";
+import { t, get_match_status, MatchDataWarehouse_PC_List_Common as MatchListData, UserCtr } from "src/core/index.js";
 import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card-class.js'
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
 // useRegistPropsHelper(component_symbol, need_register_props)
 import { utils_info } from 'src/core/utils/module/match-list-utils.js';
-import { UserCtr } from 'src/core/index.js';
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 
 import { MatchProcessFullVersionWapper as MatchProcess } from 'src/components/match-process/index.js';
