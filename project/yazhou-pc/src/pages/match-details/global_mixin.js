@@ -3,7 +3,7 @@
  * @Date: 2020-08-12 17:13:55
  * @Description: 详情全局设置
  */
-import { reactive, ref, toRefs, onUnmounted } from "vue";
+import { reactive, ref, toRefs, onUnmounted, watch } from "vue";
 // import { mapGetters, mapActions, mapMutations } from "vuex";
 // api文件
 import { api_details } from "src/api/index";
@@ -12,9 +12,9 @@ import details from "src/core/match-detail/match-detail-pc/match-detail";
 import video from "src/core/video/video.js";
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 import { useRouter, useRoute } from "vue-router";
-import store from "src/store-redux/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import filterHeader from "src/core/filter-header/filter-header.js";
+import { MatchDetailCalss, LayOutMain_pc } from "src/core"; 
 export const useGetGlobal = ({ details_params, back_to }) => {
   const route = useRoute();
   const router = useRouter();
@@ -23,14 +23,24 @@ export const useGetGlobal = ({ details_params, back_to }) => {
     default_select_all: true,
   });
 
-  const store_state = store.getState();
 
   const get_uid = UserCtr.get_uid();
   // 获取当前页路由信息
-  const layout_cur_page = ref({});
+  const layout_cur_page = ref(LayOutMain_pc.layout_current_path);
 
-  // 获取当前菜单类型
-  const cur_menu_type = ref({});
+  /*
+  **监听布局类的版本号
+  */
+  watch(
+    () => LayOutMain_pc.layout_version,
+    (val) => {
+      if (val) {
+        layout_cur_page.value = LayOutMain_pc.layout_current_path
+      }
+    },
+    { deep: true }
+  );
+
   // 赛事列表排序 1:按联赛排序 2:按时间排序
   const match_sort = ref({});
   // //播放类型
@@ -38,12 +48,11 @@ export const useGetGlobal = ({ details_params, back_to }) => {
 
   // 保存联想搜索关键字
   const related_keyword = ref({});
-
+  //当前菜单类型
+  const cur_menu_type = ref(LayOutMain_pc.layout_current_path )
   // 监听状态变化
   // let un_subscribe = store.subscribe(() => {
   //   let state_data = store.getState();
-  //   layout_cur_page.value = state_data.layoutReducer.layout_cur_page;
-  //   cur_menu_type.value = state_data.menuReducer.cur_menu_type;
   //   match_sort.value = state_data.globalReducer.match_sort;
   //   play_media.value = state_data.matchesReducer.play_media;
   //   related_keyword.value = state_data.searchReducer.related_keyword;
@@ -191,25 +200,14 @@ export const useGetGlobal = ({ details_params, back_to }) => {
         }
 
         // 切换右侧赛事
-        // let playId = details_params.play_id;
-        // store.dispatch("matchesReducer/SET_MATCH_DETAILS_PARAMS", {
-        //   mid,
-        //   tid,
-        //   sportId,
-        //   playId,
-        //   media_type: "auto",
-        // });
         let playId = details_params.play_id;
-        store.dispatch(
-          { type: "SET_MATCH_DETAILS_PARAMS" },
-          {
-            mid,
-            tid,
-            sportId,
-            playId,
-            media_type: "auto",
-          }
-        );
+        MatchDetailCalss.set_match_details_params({
+          mid,
+          tid,
+          sportId,
+          playId,
+          media_type: "auto",
+        })
       });
     }
   };

@@ -1297,6 +1297,7 @@ class UserCtr {
   set_show_balance(state) {
     this.show_balance = state
     this.set_user_version()
+    console.error("ssss",this.show_balance)
   }
   /**
     * 更新用户信息版本 显示

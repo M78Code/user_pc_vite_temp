@@ -28,8 +28,8 @@
         <!-- 左侧侧边栏菜单 -->
         <div class="left-menu">
           <q-scroll-area :thumb-style="{ display: 'none' }">
-            <div class="item" :class="{ 'active': index == menu_index }" v-for="(item, index) in tabList[tab_Index].subList"
-              :key="index" @click="change_menu(index, item.field1)">
+            <div class="item" :class="{ 'active': index == menu_index }"
+              v-for="(item, index) in tabList[tab_Index].subList" :key="index" @click="change_menu(index, item.field1)">
               <!-- 联赛icon -->
               <img class="match_logo" v-if="index != 0" :src="item.field2 && get_file_path(item.field2)"
                 @error="league_icon_error" />
@@ -42,18 +42,19 @@
         <!-- 右侧主列表页 -->
         <div class="match-content">
           <div class="right_main_list" ref="scrollArea" @scroll="wrapper_scroll_handler">
-            <div class="video_list" v-for="(item, index) in carousel_data.list" :key="index" :ref="'mid-' + item.mid"
-              @click="goto_detail_video(item)">
+            <div class="video_list" v-for="(item, index) in carousel_data.list" :key="index" 
+            :ref="(el)=>mid_refs[item.mid]=el"
+              @click="goto_detail_video(item,index)">
               <div class="video_list_left"
-                :style="{ backgroundImage: 'url(' + (item.mgif ? item.mgif : `/image/bw3/png/live_loading.png`) + ')' }">
+                :style="{ backgroundImage: 'url(' + (item.mgif ? item.mgif : `/yazhou-h5/image/png/live_loading.png`) + ')' }">
                 <div class="player">
-                  <img src="image/bw3/svg/home/play.svg" alt="">
-                  <span>{{ money_filter(item.plnum) }}</span>
+                  <img src="/yazhou-h5/image/svg/home/play.svg" alt="">
+                  <span>{{ $filters.money_filter(item.plnum) }}</span>
                 </div>
 
-                  
+
                 <img class="img" v-if="GlobalAccessConfig.get_collectSwitch()"
-                  :src="item.mf ? compute_img('icon-favorite') : compute_img('icon-favorite-s')"
+                  :src="item.mf ? compute_img('icon-favorite-s') : compute_img('icon-favorite')"
                   @click.stop="on_collection(item)">
               </div>
               <div class="video-list-right">
@@ -64,7 +65,8 @@
                 <div class="score-time">
                   <div class="time relative-position">
                     <!-- 倒计时组件 -->
-                    <counting-down :title="item.ms == 0 ? i18n_t('list.match_no_start') : match_period_map(item)"
+                    <counting-down
+                      :title="item.ms == 0 ? i18n_t('list.match_no_start') : matchListClass.match_period_map(item)"
                       :mmp="item.mmp" :m_id="item.mid" :second="item.mst" :match="item"
                       :is_add="[1, 4, 11, 14, 100, 101, 102, 103].includes(+item.csid)" />
                   </div>
@@ -85,364 +87,357 @@
     <no-data v-if="noMenu" :which='no_menu_txt' height='500' class="no-list"></no-data>
 
     <!-- 回到顶部按钮组件 -->
-    <scroll-top v-show="!get_is_show_menu && list_scroll_top > 0" ref="scroll_top" :list_scroll_top="list_scroll_top"
+    <scrollTop v-show="!get_is_show_menu && list_scroll_top > 0" ref="scroll_top" :list_scroll_top="list_scroll_top"
       @back-top="scroll_top" />
   </div>
 </template>
 
 <script setup>
-import { api_common } from "src/core/api/index.js";
-import { ref, onMounted,watch,computed,onUnmounted } from 'vue';
+import { api_common } from "src/api";
+import { ref, onMounted, watch, computed, onUnmounted } from 'vue';
 // import { mapGetters, mapMutations } from "vuex";
 // import match_list_mixin from "src/base-h5/mixins/match-list/match-list-mixin";
 // import skt_live_bw3 from "src/base-h5/mixins/websocket/data/skt-live-bw3.js";
-// import msc from "src/base-h5/mixins/common/msc.js";
-// import ListMap from "src/base-h5/utils/list-map";
 // import common from "src/base-h5/mixins/constant";
-import {utils } from 'src/core/index.js';
-import SLive from "src/base-h5/components/skeleton/live"
-import no_data from 'src/base-h5/components/common/no-data'
-import scroll_top from 'src/base-h5/components/record-scroll/scroll-top'
-import counting_down from 'src/base-h5/components/common/counting-down'
+// import msc from "src/base-h5/mixins/common/msc.js";
+import ListMap from "src/core/match-list-h5/match-class/list-map.js";
+import { utils, get_file_path, UserCtr, compute_img } from 'src/core/index.js';
+import SLive from "src/base-h5/components/skeleton/live.vue"
+import noData from 'src/base-h5/components/common/no-data.vue'
+import scrollTop from 'src/base-h5/components/common/record-scroll/scroll-top.vue'
+import countingDown from 'src/base-h5/components/common/counting-down.vue'
 import { format_total_score } from "src/core/format/index.js"
-import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
-import {money_filter,compute_img,compute_img,UserCtr} from "src/core/index.js"
-  //右侧菜单内容
-  let carousel_data = ref({list:[],obj:{}})
-  // 头部选项卡下标
-  let tab_Index = ref(1)
-  // tab选项卡内容
-  let tabList = ref([])
-  // 左侧菜单选中项
-  let menu_index = ref(0)
-  // 有没有菜单数据
-  let noMenu = ref(false)
-  //没有数据展示
-  let no_menu_txt = ref("nolive")
-  // 代表 是否在收藏菜单下
-  let is_collect = ref(false)
-  // 加载动画
-  let loading = ref(true)
-  // 代表的是联赛id  tid
-  let field_tid = ref('')
-  let y0_img_favorite_black = ref("/yazhou-h5/image/common/m-list-favorite-s-y0.svg")
-  // 赛事列表滑动高度
-  let list_scroll_top = ref(0)
-  // 锚点
-  let scrollArea = ref(null)
+import matchListClass from 'src/core/match-list-h5/match-class/match-list.js'
+import GlobalAccessConfig from "src/core/access-config/access-config.js"
+import { useRouter } from "vue-router";
+const router=useRouter()
+const scrollBox = ref(null) //dom
+let mid_refs= {} //dom map
+//右侧菜单内容
+let carousel_data = ref({ list: [], obj: {} })
+// 头部选项卡下标
+let tab_Index = ref(1)
+// tab选项卡内容
+let tabList = ref([])
+// 左侧菜单选中项
+let menu_index = ref(0)
+// 有没有菜单数据
+let noMenu = ref(false)
+//没有数据展示
+let no_menu_txt = ref("nolive")
+// 代表 是否在收藏菜单下
+let is_collect = ref(false)
+// 加载动画
+let loading = ref(true)
+// 代表的是联赛id  tid
+let field_tid = ref('')
+// 赛事列表滑动高度
+let list_scroll_top = ref(0)
+// 锚点
+let scrollArea = ref(null)
 
+// ws，数据仓库 混入 TODO: 后续修改调整
+// mixins:[ match_list_mixin, skt_live_bw3, common, msc],
+// components: {
+//   "no-data": no_data,
+//   "scroll-top": scroll_top,
+//   "counting-down": counting_down,
+//   SLive
+// },
+// computed: {
+//   ...mapGetters({
+//     uid: "get_uid",
+//     UserCtr: "UserCtr",
+//     UserCtr_token:'UserCtr_token',
+//     get_goto_detail_match_info:'get_goto_detail_match_info',
+//     get_home_tab_item:'get_home_tab_item',
+//     get_access_config,
+//     get_is_show_menu:"get_is_show_menu",
+//   })
+// },
+// ...mapMutations([
+//   // 设置去详情的赛事id
+//   'set_goto_detail_matchid',
+//   // 设置去详情的赛事信息
+//   'set_goto_detail_match_info',
+//   // 设置默认的选中的玩法id:0
+//   'set_details_item',
+//   // 直播进入详情,设置视频播放
+//   'set_play_video',
+//   // 设置视频是否播放
+//   'set_show_video',
+//   'set_toast'
+// ]),
 
-  // ws，数据仓库 混入 TODO: 后续修改调整
-  // mixins:[ match_list_mixin, skt_live_bw3, common, msc],
-  // components: {
-  //   "no-data": no_data,
-  //   "scroll-top": scroll_top,
-  //   "counting-down": counting_down,
-  //   SLive
-  // },
-  get_init(1)
+watch(() => tab_Index.value, (index) => {
+  utils.tab_move2(index, scrollBox.value)
+  if (index == 0) {   //收藏时显示暂无收藏,非收藏时显示暂无直播赛事
+    no_menu_txt.value = 'collect'
+  } else {
+    // 显示暂无直播赛事
+    no_menu_txt.value = 'nolive'
+  }
+})
+/**
+ * @description: 更新赛事列表滚动高度
+ */
+const wrapper_scroll_handler = (e) => {
+  if (e) {
+    list_scroll_top = e.target.scrollTop
+  }
+}
+/**
+ * @description: 图标出错时
+ * @param {Object} $event 错误事件对象
+ */
+const league_icon_error = ($event) => {
+  $event.target.src = compute_img("match-up")
+  $event.target.onerror = null
+}
+// 点击视频界面跳转到详情播放视频
+const goto_detail_video = (match) => {
+  const match_info = {
+    mid: match.mid,
+    top: mid_refs[match.mid].getBoundingClientRect().top,
+    sport_id: match.csid,
+    is_collect: is_collect.value
+  }
+  // set_goto_detail_matchid(match.mid);
+  // 进入详情页前，记录目标赛事信息
+  //TODO  set_goto_detail_match_info(match_info);
+  // set_details_item(0);
+  sessionStorage.setItem('video_details', true)
+  router.push({ name: 'category', params: { mid: match.mid, csid: match.csid } });
+  // 播放视频操作
+  // set_play_video(true)
+  // set_show_video(true)
+}
+// 切换头部菜单选项卡
+const changeTab = (tab, index) => {
+  if (tab.count === 0) {
+    $toast(i18n_t('home.no_favorite_events'), 1000)
+    return
+  }
+  if (tab_Index.value == index) return
+  tab_Index.value = index
+  noMenu.value = false
+  scroll_top()
+  // tab.sportId -6代表是 收藏选项卡
+  if (tab.sportId == -6) {
+    is_collect.value = true // 是在收藏菜单下
+    // 调用 收藏列表接口
+    video_collect_list(api_common.get_collect_live_matchs)
+  } else {
+    is_collect.value = false // 不在收藏菜单下
+    // 调用 直播视频列表接口
+    video_collect_list(api_common.get_videos, tab.field1)
+  }
 
-  watch(() => tab_Index.value, (index) => {
-      utils.tab_move2(index, $refs.scrollBox)
-      if (index == 0) {   //收藏时显示暂无收藏,非收藏时显示暂无直播赛事
-        no_menu_txt.value = 'collect'
-      } else {
-        // 显示暂无直播赛事
-        no_menu_txt.value = 'nolive'
-      }
-    })
-    // ...mapMutations([
-    //   // 设置去详情的赛事id
-    //   'set_goto_detail_matchid',
-    //   // 设置去详情的赛事信息
-    //   'set_goto_detail_match_info',
-    //   // 设置默认的选中的玩法id:0
-    //   'set_details_item',
-    //   // 直播进入详情,设置视频播放
-    //   'set_play_video',
-    //   // 设置视频是否播放
-    //   'set_show_video',
-    //   'set_toast'
-    // ]),
-    /**
-     * @description: 赛事列表回到顶部
-     */
-    const back_top = () => {
-      $refs.scrollArea && $refs.scrollArea.scrollTo(0,0)
-    }
-    /**
-     * @description: 更新赛事列表滚动高度
-     */
-    const wrapper_scroll_handler = (e) => {
-      if (e) {
-        list_scroll_top = e.target.scrollTop
-      }
-    }
-    /**
-     * @description: 图标出错时
-     * @param {Object} $event 错误事件对象
-     */
-    const league_icon_error = ($event) =>{
-      $event.target.src =compute_img("match-up")
-      $event.target.onerror = null
-    }
-    // 点击视频界面跳转到详情播放视频
-    const goto_detail_video = (match) => {
-      const match_info = {
-        mid: match.mid,
-        top: $refs['mid-' + match.mid][0].getBoundingClientRect().top,
-        sport_id: match.csid,
-        is_collect: is_collect.value
-      }
-      set_goto_detail_matchid(match.mid);
-      // 进入详情页前，记录目标赛事信息
-      set_goto_detail_match_info(match_info);
-      set_details_item(0);
-      sessionStorage.setItem('video_details', true)
-      $router.push({name:'category', params: {mid: match.mid, csid: match.csid}});
-      // 播放视频操作
-      set_play_video(true)
-      set_show_video(true)
-    }
-    // 切换头部菜单选项卡
-    const changeTab = (tab, index) => {
-      if(tab.count === 0) {
-        $toast(i18n_t('home.no_favorite_events'), 1000)
-        return
-      }
-      if (tab_Index.value == index) return
-      tab_Index.value = index
-      noMenu.value = false
-      scroll_top()
-      // tab.sportId -6代表是 收藏选项卡
-      if (tab.sportId == -6) {
-        is_collect.value = true // 是在收藏菜单下
-        // 调用 收藏列表接口
-        video_collect_list(api_common.get_collect_live_matchs)
-      } else {
-        is_collect.value = false // 不在收藏菜单下
-        // 调用 直播视频列表接口
-        video_collect_list(api_common.get_videos, tab.field1)
-      }
+  menu_index.value = 0
+}
+// 收藏 接口
+const on_collection = (item) => {
+  if (!utils.judge_collectSwitch(GlobalAccessConfig.get_collectSwitch(), this)) return
 
-      menu_index.value = 0
-    }
-    // 收藏 接口
-    const on_collection = (item) => {
-      if( !utils.judge_collectSwitch(GlobalAccessConfig.get_collectSwitch(),this) ) return
-
-      let params = {
-        cuid: uid, //用户ID/或UUid
-        mid: item.mid,
-        cf: item.mf ? 0 : 1
-      };
-      // 如果是收藏，则取消收藏 , 否则 添加收藏
-      api_common.add_or_cancel_match(params).then(({code,msg})=>{
-        if (code === 200) {
-          item.mf = !item.mf
-          get_menu_videos_list().then(() => {
-            // is_collect 代表是 在收藏菜单栏下, 调用收藏列表接口
-            if (is_collect.value) {
-              // 如果在收藏菜单栏,左侧 不是在全部菜单下, 调用收藏部分列表接口
-              if (menu_index.value != 0){
-                video_collect_list(api_common.get_collect_live_matchs,'', item.tid).then( data => {
-                  //  没有数据的时候，再去调用全部的菜单栏接口
-                  if(!data.list.length ) {
-                    menu_index.value = 0
-                    noMenu.value = false
-                    video_collect_list(api_common.get_collect_live_matchs)
-                  }
-                })
-              }else { // 左侧 是在全部菜单下, 调用全部收藏列表接口
+  let params = {
+    cuid: UserCtr.get_uid(), //用户ID/或UUid
+    mid: item.mid,
+    cf: item.mf ? 0 : 1
+  };
+  // 如果是收藏，则取消收藏 , 否则 添加收藏
+  api_common.add_or_cancel_match(params).then(({ code, msg }) => {
+    if (code == 200) {
+      item.mf = !item.mf
+      get_menu_videos_list().then(() => {
+        // is_collect 代表是 在收藏菜单栏下, 调用收藏列表接口
+        if (is_collect.value) {
+          // 如果在收藏菜单栏,左侧 不是在全部菜单下, 调用收藏部分列表接口
+          if (menu_index.value != 0) {
+            video_collect_list(api_common.get_collect_live_matchs, '', item.tid).then(data => {
+              //  没有数据的时候，再去调用全部的菜单栏接口
+              if (!data.list.length) {
+                menu_index.value = 0
+                noMenu.value = false
                 video_collect_list(api_common.get_collect_live_matchs)
               }
+            })
+          } else { // 左侧 是在全部菜单下, 调用全部收藏列表接口
+            video_collect_list(api_common.get_collect_live_matchs)
+          }
+        }
+      })
+    } else if (msg) {
+      set_toast({ 'txt': msg });
+    }
+  }).catch(err => {
+    console.error(err);
+  });
+}
+/**
+ * @description: 收藏 和 直播列表的接口数据,
+ *  @param {String} (收藏列表接口 url 是 get_collect_live_matchs) (直播列表 url是   get_videos)
+ */
+const video_collect_list = (url, csid, tid) => {
+  let params = {
+    cuid: UserCtr.get_uid(), //用户ID
+    csid: csid ? csid : '', // 球类ID    传空是所有  1 足球，2 篮球 5 网球，7 斯诺克    8乒乓球  10 羽毛球 4 冰球 3 棒球  9 排球 6 美式足球
+    tid: tid ? tid : '',  // 联赛ID
+  };
+  console.error('video_collect_list', params)
+  return new Promise((resolve, reject) => {
+    url(params).then(({ code, data }) => {
+      if (code == 200) {
+        if (!data.length) {
+          noMenu.value = true
+          carousel_data.value = []
+        }
+
+        carousel_data.value = new ListMap("mid")
+        carousel_data.value.setList(data);
+        resolve(carousel_data.value);
+      }
+    }).catch(err => {
+      reject(err)
+      no_wifi()
+    }).finally(() => {
+      loading.value = false
+    });
+  })
+}
+/**
+ * @description: 获取头部 菜单选项卡
+ */
+const get_menu_videos_list = (item) => {
+  return new Promise((resolve, reject) => {
+    if (!UserCtr.get_uid()) return
+    item == 1 ? loading.value = true : loading.value = false
+    api_common.get_menu_videos({ cuid: UserCtr.get_uid() }).then(res => {
+      const code = lodash.get(res, 'code');
+      const data = lodash.get(res, 'data');
+      // loading = false
+      if (code == 200) {
+        if (data.length) {
+          // 手动添加 左侧菜单 第一个 选项卡（全部）
+          data.forEach(item => {
+            if (item.subList.length) {
+              item.subList.unshift({
+                field1: '',
+                name: i18n_t('footer_menu.all'),
+              });
             }
           })
-        }else if (msg) {
-          set_toast({ 'txt': msg });
-        }
-      }).catch(err => {
-        console.error(err);
-      });
-    }
-    /**
-     * @description: 收藏 和 直播列表的接口数据,
-     *  @param {String} (收藏列表接口 url 是 get_collect_live_matchs) (直播列表 url是   get_videos)
-     */
-    const video_collect_list = (url, csid, tid) => {
-      let params = {
-        cuid: uid, //用户ID
-        csid: csid ? csid : '', // 球类ID    传空是所有  1 足球，2 篮球 5 网球，7 斯诺克    8乒乓球  10 羽毛球 4 冰球 3 棒球  9 排球 6 美式足球
-        tid: tid ? tid : '',  // 联赛ID
-      };
-      return new Promise((resolve, reject) => {
-        url(params).then(({code, data}) => {
-          if (code === 200) {
-            if (!data.length) {
-              noMenu.value = true
-              carousel_data.value = []
-            }
-            carousel_data.value = new ListMap("mid", data)
-            resolve(carousel_data.value)
-          }
-        }).catch(err => {
-          reject(err)
-          no_wifi()
-        }).finally(() => {
+          tabList.value = data
+          noMenu.value = false
+          // $forceUpdate()
+          resolve(tabList.value)
+        } else {
+          noMenu.value = true
+          tabList.value = []
           loading.value = false
-        });
-      })
-    }
-    /**
-     * @description: 获取头部 菜单选项卡
-     */
-    const get_menu_videos_list = (item) => {
-      return new Promise((resolve, reject) => {
-        if (!uid) return
-        item == 1 ? loading.value = true : loading.value = false
-        api_common.get_menu_videos({cuid: uid}).then(res => {
-          const code = _.get(res,'code');
-          const data = _.get(res,'data');
-          // loading = false
-          if (code === 200) {
-            if (data.length){
-              // 手动添加 左侧菜单 第一个 选项卡（全部）
-              data.forEach(item => {
-                if(item.subList.length) {
-                  item.subList.unshift({
-                    field1: '',
-                    name: i18n_t('footer_menu.all'),
-                  });
-                }
-              })
-              tabList.value = data
-              noMenu.value = false
-              $forceUpdate()
-              resolve(tabList.value)
-            }else{
-              noMenu.value = true
-              tabList.value = []
-              loading.value = false
-            }
-          }
-        }).catch(err => {
-          no_wifi()
-          loading.value = false
-          reject(err)
-        });
-      })
-    }
-    /**
-     * @description: 页面刚刚进来时执行方法 获得菜单数据后， 再获取视频直播赛事的数据
-     */
-    const get_init = (load_first) => {
-      get_menu_videos_list(load_first).then((data) => {
-        // 如果菜单栏长度>=1,代表有球类，可以调用接口
-        if (data.length >= 1){
-          const {mid, top, sport_id, is_collect} = get_goto_detail_match_info
-
-          // 存在mid时，才更新tab_Index
-          if (mid) {
-            let new_tab_index = tabList.value.findIndex(item => item.field1 === sport_id)
-            tab_Index.value = new_tab_index > -1 ? new_tab_index : 1
-          }
-
-          // 若之前是收藏下的列表，则更新相应状态
-          if (is_collect) {
-            tab_Index.value = 0
-            is_collect.value = true
-          }
-          // is_collect 代表是 在收藏菜单栏下, 调用收藏列表接口
-          if (is_collect.value) {
-            video_collect_list(api_common.get_collect_live_matchs, '', field_tid ? field_tid : '')
-                .then(res => {
-                  set_match_scroll_top(mid, top)
-                  set_goto_detail_match_info({})
-                })
-          } else {
-            // !is_collect 不是在收藏菜单选项卡时，调用 直播视频列表
-            video_collect_list(api_common.get_videos, data[tab_Index.value].field1, field_tid ? field_tid : '')
-                .then(res => {
-                  set_match_scroll_top(mid, top)
-                  set_goto_detail_match_info({})
-                })
-          }
         }
-      }).catch( err => {
-        no_wifi()
-        console.error(err);
-      })
-    }
-    /**
-     * @description: 切换左侧菜单
-     * @param {String} index 选中下标
-     */
-    const change_menu = (index, field1) => {
-      scroll_top()
-      // 如果点击的左侧菜单下标相等，则return 不再执行下边方法
-      if (menu_index.value == index) return
-      field_tid.value = field1 ? field1 : ''
-      menu_index.value = index
-      // 代表是 在收藏菜单栏下
-      if(is_collect.value){
-        video_collect_list(api_common.get_collect_live_matchs, '', field1)
-      } else { // 不是收藏菜单时，调用 直播视频列表
-        video_collect_list(api_common.get_videos, tabList[tab_Index.value].field1, field1)
       }
-    }
-    // 回到顶部
-    const scroll_top = () => {
-      // $refs.scrollArea && ($refs.scrollArea.scrollTop = 0)
-    }
-    // 由详情返回后，列表滚动至之前位置
-    const set_match_scroll_top = (mid, top) => {
-      if (!mid) {
-        return
-      }
-
-      const match_dom = $refs['mid-' + mid][0]
-
-      if (match_dom) {
-        $refs.scrollArea.scrollTop = match_dom.getBoundingClientRect().top - top
-      }
-    }
-    // 没有网络的情况下，初始化页面数据
-    const no_wifi = () => {
-      if(!UserCtr_token){
-        no_menu_txt.value = "noMatch"
-        useMittEmit(MITT_TYPES.EMIT_GO_TO_VENDER);
-      }else{
-        no_menu_txt.value = "noMatch"
-      }
-      carousel_data.value = []
-      tabList.value = []
-      noMenu.value = true
-    }
-  // computed: {
-  //   ...mapGetters({
-  //     uid: "get_uid",
-  //     UserCtr: "UserCtr",
-  //     UserCtr_token:'UserCtr_token',
-  //     get_goto_detail_match_info:'get_goto_detail_match_info',
-  //     get_home_tab_item:'get_home_tab_item',
-  //     get_access_config,
-  //     get_is_show_menu:"get_is_show_menu",
-  //   })
-  // },
-  // 如果有视频列表数据，则页面销毁时，清除内存
-  onUnmounted(() => {
-    if(_.get(carousel_data.value, 'list.length')) {carousel_data.value.destroy()}
-
-    // 不是跳转到详情则清除赛事信息
-    if (get_home_tab_item.index !== 2) {
-      set_goto_detail_match_info({})
-    }
-
-    // for (const key in $data) {
-    //   $data[key] = null
-    // }
+    }).catch(err => {
+      no_wifi()
+      loading.value = false
+      reject(err)
+    });
   })
+}
+/**
+ * @description: 页面刚刚进来时执行方法 获得菜单数据后， 再获取视频直播赛事的数据
+ */
+const get_init = (load_first) => {
+  get_menu_videos_list(load_first).then((data) => {
+    // 如果菜单栏长度>=1,代表有球类，可以调用接口
+    if (data.length >= 1) {
+      const { mid, top, sport_id, is_collect: _collect } = {}//get_goto_detail_match_info
 
+      // 存在mid时，才更新tab_Index
+      if (mid) {
+        let new_tab_index = tabList.value.findIndex(item => item.field1 === sport_id)
+        tab_Index.value = new_tab_index > -1 ? new_tab_index : 1
+      }
+
+      // 若之前是收藏下的列表，则更新相应状态
+      if (_collect) {
+        tab_Index.value = 0
+        is_collect.value = true
+      }
+      // is_collect 代表是 在收藏菜单栏下, 调用收藏列表接口
+      if (is_collect.value) {
+        video_collect_list(api_common.get_collect_live_matchs, '', field_tid.value)
+          .then(res => {
+            set_match_scroll_top(mid, top)
+            // set_goto_detail_match_info({})
+          })
+      } else {
+        // !is_collect 不是在收藏菜单选项卡时，调用 直播视频列表
+        video_collect_list(api_common.get_videos, data[tab_Index.value].field1, field_tid.value)
+          .then(res => {
+            set_match_scroll_top(mid, top)
+            // set_goto_detail_match_info({})
+          })
+      }
+    }
+  }).catch(err => {
+    no_wifi()
+    console.error(err);
+  })
+}
+/**
+ * @description: 切换左侧菜单
+ * @param {String} index 选中下标
+ */
+const change_menu = (index, field1) => {
+  mid_refs={} //重置dom
+  scroll_top()
+  // 如果点击的左侧菜单下标相等，则return 不再执行下边方法
+  if (menu_index.value == index) return
+  field_tid.value = field1 ? field1 : ''
+  menu_index.value = index
+  // 代表是 在收藏菜单栏下
+  if (is_collect.value) {
+    video_collect_list(api_common.get_collect_live_matchs, '', field1)
+  } else { // 不是收藏菜单时，调用 直播视频列表
+    video_collect_list(api_common.get_videos, tabList.value[tab_Index.value].field1, field1)
+  }
+}
+// 回到顶部
+function scroll_top() {
+  scrollArea.value && scrollArea.value.scrollTo(0, 0)
+}
+// 由详情返回后，列表滚动至之前位置
+const set_match_scroll_top = (mid, top) => {
+  if (!mid) {
+    return
+  }
+  const match_dom = mid_refs[mid]
+  if (match_dom) {
+    scrollArea.value.scrollTop = match_dom.getBoundingClientRect().top - top
+  }
+}
+// 没有网络的情况下，初始化页面数据
+const no_wifi = () => {
+  if (!UserCtr.get_user_token()) {
+    no_menu_txt.value = "noMatch"
+    useMittEmit(MITT_TYPES.EMIT_GO_TO_VENDER);
+  } else {
+    no_menu_txt.value = "noMatch"
+  }
+  carousel_data.value = []
+  tabList.value = []
+  noMenu.value = true
+}
+
+// 如果有视频列表数据，则页面销毁时，清除内存
+onUnmounted(() => {
+  if (lodash.get(carousel_data.value, 'list.length')) { carousel_data.value.destroy() }
+  //TODO 不是跳转到详情则清除赛事信息
+  // if (get_home_tab_item.index !== 2) {
+  //   set_goto_detail_match_info({})
+  // }
+})
+get_init(1)
 </script>
 
 <style lang="scss" scoped>
@@ -487,7 +482,7 @@ import {money_filter,compute_img,compute_img,UserCtr} from "src/core/index.js"
           padding-right: 0 !important;
         }
 
-        > span {
+        >span {
           font-size: 0.1rem;
           text-align: center;
           margin-left: 0.02rem;
@@ -505,7 +500,7 @@ import {money_filter,compute_img,compute_img,UserCtr} from "src/core/index.js"
           position: relative;
           left: -0.08rem;
 
-          > div {
+          >div {
             position: relative;
             border-radius: 0.16rem;
             padding: 0 0.07rem;
@@ -541,7 +536,7 @@ import {money_filter,compute_img,compute_img,UserCtr} from "src/core/index.js"
     right: 0;
     bottom: 0;
     padding: 0 0.1rem;
-    max-width:3.78rem;
+    max-width: 3.78rem;
     margin: 0 auto;
 
     :deep(.q-scrollarea) {
@@ -624,9 +619,7 @@ import {money_filter,compute_img,compute_img,UserCtr} from "src/core/index.js"
         background-color: var(--q-color-com-bg-color-28);
         padding: 0 0.07rem 0.05rem;
 
-        &[lazy="loading"] {
-
-        }
+        &[lazy="loading"] {}
 
         .player {
           display: flex;
@@ -645,7 +638,7 @@ import {money_filter,compute_img,compute_img,UserCtr} from "src/core/index.js"
           }
         }
 
-        > img {
+        >img {
           width: 0.16rem;
           height: 0.149rem;
         }
@@ -670,7 +663,7 @@ import {money_filter,compute_img,compute_img,UserCtr} from "src/core/index.js"
           margin-bottom: 0.05rem;
           line-height: 0.2rem;
 
-          > span {
+          >span {
             font-size: 0.14rem;
             letter-spacing: 0;
             line-height: 0.2rem;
@@ -697,7 +690,7 @@ import {money_filter,compute_img,compute_img,UserCtr} from "src/core/index.js"
               }
             }
 
-            > span:nth-child(2) {
+            >span:nth-child(2) {
               margin-left: 0.06rem;
               font-family: DIN-Regular;
               text-align: left;
@@ -718,7 +711,7 @@ import {money_filter,compute_img,compute_img,UserCtr} from "src/core/index.js"
             align-items: center;
             justify-content: center;
 
-            > span {
+            >span {
               //height: 0.16rem !important;
               display: flex;
               align-items: flex-end;

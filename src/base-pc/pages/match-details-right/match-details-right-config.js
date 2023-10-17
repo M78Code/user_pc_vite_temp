@@ -16,23 +16,26 @@ import {
   format_sort_data,
   useMittEmitterGenerator,
   useMittEmit,
-  MatchDetailCalss
+  MatchDetailCalss,
+  LayOutMain_pc,
+  GlobalSwitchClass
 } from "src/core/index.js";
 //moni
 // import MenuData from "./menuData"
 import detailUtils from "src/core/match-detail/match-detail-pc/match-detail.js";
 import { reactive, toRefs, ref, onMounted, onUnmounted, computed } from "vue";
-import store from "src/store-redux/index.js";
 import MenuData from "src/core/menu-pc/menu-data-class.js";
 
-let state = store.getState();
 export const useRightDetails = (props) => {
   //视频是否展开状态
-  const get_is_fold_status = ref({});
+  const get_is_fold_status = ref(GlobalSwitchClass.is_fold_status);
   // 获取当前页路由信息
-  const layout_cur_page = ref({});
+  const layout_cur_page = ref(LayOutMain_pc.layout_current_path);
     // 当前所选的玩法集子项id
-  const get_tabs_active_id = ref({});
+  const get_tabs_active_id = ref(MatchDetailCalss.current_category_id);
+
+// 获取指定的玩法id
+const  get_top_id = ref(MatchDetailCalss.top_id)
 
   const { route } = props;
   //全局混入hooks
@@ -40,6 +43,8 @@ export const useRightDetails = (props) => {
   const MatchDataWarehouseInstance = reactive(
     MatchDataWarehouse_PC_Detail_Common
   );
+  
+  const cur_menu_type = ref(MenuData.cur_menu_type)
 
   /**
    * 把当前页面的数据给到玩法集
@@ -249,7 +254,6 @@ export const useRightDetails = (props) => {
       time: "",
     },
     match_sort: 1,
-    cur_menu_type: { pre_name: "", type_name: "today" }, //todo
   });
   const init = ref(null);
 
@@ -308,7 +312,7 @@ export const useRightDetails = (props) => {
       mid: allData.mid, //赛事id
       cuid: UserCtr.get_uid(), //用户id
     };
-    let type_name = allData.cur_menu_type.type_name;
+    let type_name = cur_menu_type.value.type_name;
     //today：今日  early：早盘
     if (["today", "early"].includes(type_name)) {
       params.baseParam.cos = MenuData.is_corner_menu() || orpt == 25 ? 1 : 0;
@@ -373,9 +377,9 @@ export const useRightDetails = (props) => {
               let arr = []; //暂存本地置顶的数据
               for (var i = 0; i < data.length; i++) {
                 if (data[i].hton != "0") {
-                  // this.set_top_id({ id: data[i].topKey, type: true });
+                  MatchDetailCalss.set_top_id({ id: data[i].topKey, type: true })
                 } else {
-                  if (this.get_top_id.includes(data[i].topKey)) {
+                  if (get_top_id.value.includes(data[i].topKey)) {
                     data[i].hton = new Date().getTime() + "";
                     arr.unshift(data.splice(i, 1)[0]);
                     i--;
@@ -484,11 +488,11 @@ export const useRightDetails = (props) => {
                 if (data[i].hton != "0") {
                   // this.set_top_id({ id: data[i].topKey, type: true });
                 } else {
-                  // if (this.get_top_id.includes(data[i].topKey)) {
+                  if (get_top_id.value.includes(data[i].topKey)) {
                   data[i].hton = new Date().getTime() + "";
                   arr.unshift(data.splice(i, 1)[0]);
                   i--;
-                  // }
+                  }
                 }
               }
               if (arr.length) {
@@ -652,8 +656,6 @@ export const useRightDetails = (props) => {
   //    allData.set_match_detail_count: "set_match_detail_count",
   //    // 视频播放信息
   //    vx_set_play_media: "set_play_media",
-  //    // 错误信息
-  //    set_error_data: "set_error_data",
   //    // 当前选中玩法id
   //    set_tabs_active_id: "set_tabs_active_id",
   //    // 当前选中玩法对应的盘口玩法
@@ -750,7 +752,7 @@ export const useRightDetails = (props) => {
         allData.category_list,
         (item) => item.id === get_tabs_active_id.value
       ) &&
-      !this.change_mid
+      !allData.change_mid
     ) {
       mcid = get_tabs_active_id.value
     }
@@ -864,11 +866,11 @@ export const useRightDetails = (props) => {
         })
         .catch((err) => {
           console.error(err);
-          //todo
-          // this.set_error_data({
-          //   site: "match_details--get_matchInfo",
-          //   error: err,
-          // });
+          //设置错误数据
+          GlobalSwitchClass.set_error_data({
+            site: "match_details--get_matchInfo",
+            error: err,
+          })
           countMatchDetail();
         })
         .finally(() => {
@@ -985,11 +987,11 @@ export const useRightDetails = (props) => {
    */
   const err_tips = (err) => {
     match_details.value = [];
-    //todo
-    // this.set_error_data({
-    //   site: "details--get_match_detail",
-    //   error: err,
-    // });
+        //设置错误数据
+     GlobalSwitchClass.set_error_data({
+      site: "details--get_match_detail",
+      error: err,
+    })
     if (
       lodash.isPlainObject(err) ||
       lodash.get(err, "response.status") == 404
@@ -1195,18 +1197,9 @@ export const useRightDetails = (props) => {
 
 //  computed: {
 //   //  ...mapGetters({
-//   //    // 当前语言
-//   //    get_lang: 'get_lang',
-//   //    // 获取当前页路由信息
-//   //    layout_cur_page: "get_layout_cur_page",
-//   //    // 获取右侧布局类型
-//   //    vx_cur_expand_layout: "get_cur_expand_layout",
+//   //   
 //   //    // 左侧详情参数
 //   //    vx_details_params: "get_match_details_params",
-//   //    // 获取用户uid
-//   //    get_uid: "get_uid",
-//   //    // 获取指定的玩法id
-//   //    get_top_id: "get_top_id",
 //   //    // 获取串关投注项对象
 //   //    vx_get_bet_obj: "get_bet_obj",
 //   //    // 是否是单关投注
@@ -1219,7 +1212,6 @@ export const useRightDetails = (props) => {
 //   //    get_active_detail: "get_active_detail",
 //   //    get_is_show_full_bet: "get_is_show_full_bet",
 //   //    // 获取当前菜单类型
-//   //    vx_cur_menu_type: "get_cur_menu_type",
 //   //    vx_get_bet_mode: "get_bet_mode", // 投注模式
 //   //    // 获取多语言是否变化
 //   //    vx_get_lang_change: "get_lang_change",
