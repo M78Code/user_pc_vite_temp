@@ -39,12 +39,12 @@
       }
 
       .league-collapse-dir {
-        width: 0.08rem;
+        width: 0.1rem;
         height: 0.04rem;
         margin-left: 0.07rem;
         display: block;
         transform: rotateZ(180deg);
-
+        transition: transform 0.2s ease-in;
         &.collapsed {
           transform: rotateZ(0);
         }

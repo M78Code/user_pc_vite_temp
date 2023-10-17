@@ -27,12 +27,12 @@
 <script setup>
 import { ref, watch, onMounted } from "vue";
 import lodash from "lodash";
+import { useRoute } from "vue-router";
 import matchList from "./components/match-list.vue";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt";
 import store from "src/store-redux/index.js";
 import MatchPage from "src/core/match-list-h5/match-class/match-page.js";
 import MatchListCard from "src/core/match-list-h5/match-card/match-list-card-class";
-import { is_hot, menu_type } from 'src/base-h5/mixin/menu.js'
 import { match_mids } from 'src/base-h5/mixin/userctr.js'
 import { compute_css_variables } from "src/core/css-var/index.js"
 import noData from "src/base-h5/components/common/no-data.vue"; // 无网络展示组件
@@ -44,6 +44,7 @@ const props = defineProps({
   wrapper_scroll_top: Number,
 });
 
+const route = useRoute()
 const page_style = ref(null);
 const emitters = ref({});
 let timer_super = null
@@ -67,71 +68,6 @@ onMounted(() => {
   on_listeners();
 })
 
-// 早盘时，并且是 足球时，执行下边操作
-watch(() => menu_type.value, (val) => {
-  if ( menu_type.value == 4 && val == "40303") {
-    clearTimeout(subscription_timer);
-    subscription_timer = setTimeout(() => {
-      // 订阅新赛事列表
-      subscription();
-    }, 3000);
-  }
-}, { deep: true } );
-
-// 详情若无热门推荐赛事，则隐藏相应内容
-watch(() => match_is_empty.value, () => {
-  if (props.invok_source === "detail_match_list" && is_empty) {
-    useMittEmit(MITT_TYPES.EMIT_HIDE_DETAIL_MATCH_LIST, true);
-  }
-});
-
-// 罚牌说明展开后会跟随列表滑动，且切换页面再次进入依旧显示在列表页
-watch(() => props.wrapper_scroll_top, () => {
-  // window_scrolly.value = c;
-});
-
-// 投注栏弹层显示非0否则0
-// watch(() => get_bet_status.value, () => {
-//   if (c_status == 0) {
-//     const has_pre = lodash.findKey(BetData.bet_obj, function (o) {
-//       return o.show_pre;
-//     });
-//     if (has_pre) {
-//       //当投注框收起时，清空预约相关信息
-//       let temp_bet_obj = lodash.cloneDeep(BetData.bet_obj);
-//       temp_bet_obj[has_pre].show_pre = false;
-//       delete temp_bet_obj[has_pre].pre_odds;
-//       delete temp_bet_obj[has_pre].pre_market_value;
-//       delete temp_bet_obj[has_pre].min_odds;
-//       // store.dispatch({ type: 'matchReducer/set_pre_market_data',  payload: [] })
-//       set_bet_obj(temp_bet_obj);
-//     }
-//     clearTimeout(timer_super6.value);
-//     timer_super6.value = setTimeout(() => {
-//       local_bet_status.value = c_status;
-//     }, 400);
-//   } else {
-//     local_bet_status.value = c_status;
-//   }
-// }
-// );
-
-/**
- * @Description 次要玩法展开加载数据
- * @param {Object} match 赛事
- * @param {String} key 指定的hps
- */
-const special_hps_load_handle = (match, key) => {
-  if (["category"].includes(route.name)) {
-    return;
-  }
-  if (matchCtr.value.list_to_obj.mid_obj[`${match.mid}_`] && match[key] && match[key].length) {
-    matchCtr.value.list_to_obj.mid_obj[`${match.mid}_`] = match[key];
-    // matchCtr.value.addMatchInfo(match);
-    // websocket_store.SCMD_SPECIAL_C8(1,'list',key,match);
-  }
-};
-
 /**
  * @description: 赛事列表为空通知事件函数
  */
@@ -143,9 +79,7 @@ const upd_match_is_empty = (result) => {
 // 绑定相关事件监听
 const on_listeners = () => {
   emitters.value = {
-    emitter_4: useMittOn(MITT_TYPES.EMIT_SPECIAL_HPS_LOADED, special_hps_load_handle).off,
     emitter_10: useMittOn(MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, upd_match_is_empty).off,
-    emitter_9: useMittOn(MITT_TYPES.EMIT_TAB_HOT_CHANGING, MatchListCard.tab_changing_handle).off,
     emitter_6: useMittOn(MITT_TYPES.EMIT_BET_ODD_SYNCHRONIZE, MatchPage.bet_odd_synchronize_handle).off,
     emitter_8: useMittOn(MITT_TYPES.EMIT_SECONDARY_PLAY_UNFOLD_CHANGE, MatchListCard.secondary_play_unfold_change_handle).off,
   };

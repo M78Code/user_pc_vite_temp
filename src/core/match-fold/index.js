@@ -102,7 +102,7 @@ class MatchFold {
     const fold_obj = lodash.get(this.match_mid_fold_obj.value, `${key}`)
     if (!fold_obj) return console.error('折叠操作：该赛事未初始化')
     Object.assign(fold_obj, { ...obj })
-    console.log(this.match_mid_fold_obj.value)
+    // console.log(this.match_mid_fold_obj.value)
   }
   // 清除球种折叠对象
   clear_ball_seed_csid_fold_obj () {

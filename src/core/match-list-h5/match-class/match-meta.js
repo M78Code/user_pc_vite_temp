@@ -395,7 +395,6 @@ class MatchMeta {
    */
   set_match_mids (mids = [], num = 10) {
     // 显示空数据页面
-    console.log(mids.length)
     if (mids.length < 1) return useMittEmit(MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, true);
     this.match_mids = [...new Set(mids.slice(0, num))]
     // useMittEmit(MITT_TYPES.EMIT_MENU_ANIMATION);
@@ -411,8 +410,8 @@ class MatchMeta {
   handle_update_match_info(list) {
     list = lodash.map(list, t => {
       const match = MatchDataBaseH5.get_quick_mid_obj(t.mid)
-      // 覆写赛事折叠参数
-      MatchFold.set_match_mid_fold_obj(t)
+      // 覆写次要玩法折叠参数
+      // MatchFold.set_match_mid_fold_obj()
       return Object.assign({}, match, t)
     })
     // 设置仓库渲染数据
