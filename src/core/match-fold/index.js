@@ -38,7 +38,7 @@ class MatchFold {
    * @param { match } 赛事对象
    * @param { falg } 展开/ 折叠
    */
-  set_ball_seed_csid_fold_obj (csid, falg = true) {
+  set_ball_seed_csid_fold_obj (csid, falg = false) {
     Object.assign(this.ball_seed_csid_fold_obj.value, {
       [`csid_${csid}`]: falg
     })

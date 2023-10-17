@@ -2,17 +2,25 @@
  * @Description: 列表页主内容
 -->
 <template>
-  <div class="match-list-container" :style="page_style" >
+  <div :class="['match-list-container', { empty_page: match_is_empty }]" :style="page_style" >
+  <template v-if="!match_is_empty">
     <match-list
       :source="invok_source ? invok_source : 'match_main'"
-      :data_get_empty="match_is_empty" 
       :window_scrolly="window_scrolly" 
       :match_list_wrapper_height="match_list_wrapper_height">
     </match-list>
     <!-- 到底了容器原加载更多容器-->
-    <div :class="['loading-more-container', { home_hot: is_hot }]" v-if="!match_is_empty && match_mids.length > 3">
+    <div :class="['loading-more-container', { home_hot: is_hot }]" v-if="match_mids.length > 3">
       <div style="color:#AAAEB8;font-size:.12rem;"> {{ $t("scroll_wrapper.is_footer") }} </div>
     </div>
+   </template>
+
+  <template v-else>
+    <!-- 非收藏页 -->
+    <no-data class="data-get-empty1" v-if='match_is_empty && !is_collcte_page' which='noMatch' height='400'></no-data>
+    <!-- 收藏页 -->
+    <no-data class="data-get-empty2" v-if='match_is_empty && is_collcte_page' :which='menu_type === 28 ? "noMatch" : "collect"' height='400'></no-data>
+  </template>
   </div>
 </template>
  
@@ -27,6 +35,7 @@ import MatchListCard from "src/core/match-list-h5/match-card/match-list-card-cla
 import { is_hot, menu_type } from 'src/base-h5/mixin/menu.js'
 import { match_mids } from 'src/base-h5/mixin/userctr.js'
 import { compute_css_variables } from "src/core/css-var/index.js"
+import noData from "src/base-h5/components/common/no-data.vue"; // 无网络展示组件
 
 import './styles/index.variables.scss'
 
@@ -40,12 +49,14 @@ const emitters = ref({});
 let timer_super = null
 let subscription_timer = null
 
+
 // TODO: 下面需要替换
 const invok_source = ref('')
 const  ws_invoke_key = ref('match_main')
 const match_is_empty = ref(false)
 const window_scrolly = ref(0)
 const match_list_wrapper_height = ref(0)
+const is_collcte_page = ref(false)
 
 onMounted(() => {
   // 页面css变量植入
@@ -158,4 +169,10 @@ const clear_timer = () => {
 </script>
  
 <style scoped lang="scss">
+.empty_page{
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 </style>

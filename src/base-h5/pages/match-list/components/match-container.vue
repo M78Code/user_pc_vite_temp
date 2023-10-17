@@ -31,7 +31,7 @@
       </span>
       <!-- 折叠收起不用消失 -->
       <div v-if="!is_hot">
-        <img class="league-collapse-dir" :class="{ 'collapsed': league_collapsed }" :src='compute_img("icon-collapse")' />
+        <img class="league-collapse-dir" :class="{ 'collapsed': !league_collapsed }" :src='compute_img("icon-collapse")' />
       </div>
     </div>
     <!-- 未开赛标题  -->
@@ -694,7 +694,8 @@ const handle_league_fold = () => {
 const league_collapsed = computed(() => {
   if (is_hot.value) return false
   const falg = lodash.get(MatchFold.ball_seed_csid_fold_obj.value, `csid_${props.match_of_list.csid}`, true)
-  return !falg
+  console.log(falg)
+  return falg
 })
 /**
  * @description 赛事显示/隐藏

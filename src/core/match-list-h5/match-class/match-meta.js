@@ -215,15 +215,13 @@ class MatchMeta {
     // 初始化赛事折叠
     MatchFold.set_match_mid_fold_obj(match)
     // 初始化球种折叠状态
-    if (!`csid_${csid}` in MatchFold.ball_seed_csid_fold_obj.value) MatchFold.set_ball_seed_csid_fold_obj(csid)
+    if (!(`csid_${csid}` in MatchFold.ball_seed_csid_fold_obj.value)) MatchFold.set_ball_seed_csid_fold_obj(csid)
 
     // 赛事收藏处理
     MatchCollect.handle_collect_state(match)
-
     // // 初始化赛事收藏
     // MatchCollect.set_match_collect_state(t)
     // // 初始化联赛收藏状态
-    // if (`collect_tid_${t.tid}` in MatchCollect.league_tid_collect_obj.value) return
     // MatchCollect.set_league_collect_state(t.tid)
   }
 

@@ -14,7 +14,7 @@ class MatchCollect {
     this.league_tid_collect_obj = ref({})
     // 赛事收藏对象
     this.match_mid_collect_obj = ref({})
-    // 赛事收藏对象
+    // 赛事收藏信息
     this.match_collect_obj = { 1: [], 2: [], 3: [] }
   }
   /**
@@ -44,7 +44,6 @@ class MatchCollect {
   set_league_collect_state (tid, is_collect = false) {
     if (!tid) return
     const league_key = `collect_tid_${tid}`
-    // 联赛 是否 收藏
     Object.assign(this.league_tid_collect_obj.value, {
       [league_key]: { league_collect: is_collect }
     })
