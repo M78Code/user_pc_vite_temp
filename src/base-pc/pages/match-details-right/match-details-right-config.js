@@ -486,7 +486,7 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
               let arr = []; //暂存本地置顶的数据
               for (var i = 0; i < data.length; i++) {
                 if (data[i].hton != "0") {
-                  // this.set_top_id({ id: data[i].topKey, type: true });
+                  MatchDetailCalss.set_top_id({ id: data[i].topKey, type: true });
                 } else {
                   if (get_top_id.value.includes(data[i].topKey)) {
                   data[i].hton = new Date().getTime() + "";

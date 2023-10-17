@@ -67,7 +67,7 @@ export default class MatchDetailCtr {
       time: Date.now()
     }
     this.isTop= true;//视频置顶
-    this.topId = [];//置顶的玩法id
+    this.top_id = [];//置顶的玩法id
     this.play_media= {  //播放视频信息类型
       mid: 0,
       media_type: "",
