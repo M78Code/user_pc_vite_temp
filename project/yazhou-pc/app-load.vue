@@ -6,7 +6,8 @@
     <ws />
     <!-- 页面路由开始 -->
     <router-view />
-    <div class="error-data">{{ get_error_data }}</div>
+    <div class="error-data">{{ GlobalSwitchClass.error_data }}</div>
+    <div style="display:none">{{ GlobalSwitchClass.global_switch_version.version }}</div>
     <div id="v-tooltip"></div>
   </div>
 </template>
@@ -35,15 +36,11 @@ const _data = reactive({
   // 父类窗口句柄
   parent_doc_element: null,
 });
-const get_error_data = ref({});
 const page_style = ref('')
 // 检查内嵌版的逻辑处理动作
 iframe_check();
 //设置错误数据
-store.dispatch({
-  type: "SET_ERROR_DATA",
-  data: "delete",
-});
+GlobalSwitchClass.set_error_data("delete")
 // 初始化版本类型
 store.dispatch({
   type: "INIT_VERSION_NAME",
@@ -211,7 +208,7 @@ onUnmounted(() => {
 });
 </script>
 <script>
-import { PageSourceData ,GlobalSwitchClass,LayOutMain_pc} from "src/core/index.js";
+import { PageSourceData ,LayOutMain_pc} from "src/core/index.js";
 export default {
   watch: {
   // 监听路由变化 并记录到layout类中

@@ -1,7 +1,7 @@
 <!-- @Description: 网络不给力，空空如也这些信息展示 -->
 <template>
     <div class="no-data"
-        :style="{ 'min-height': top_height + 'px', paddingTop: is_detail && top_height < 500 ? '.6rem' : '80px' }">
+        :style="{ 'min-height': top_height + 'px', paddingTop: is_detail && top_height < 500 ? '.6rem' : '0px' }">
 
         <!-- <template v-if="['暂无,此处逻辑产品暂时说放弃'].includes(which)">
             <div class="empty-favorite-bg"

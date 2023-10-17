@@ -23,7 +23,7 @@ const props = defineProps({
 // 通过判断父组件滚动时间间隔控制按钮显示，放在该组件维护
 let is_show_back_top_btn = ref(true)
 let scroll_timer = ref(null)
-
+const get_list_scroll_direction=ref(0)
 watch(() => props.list_scroll_top, (curr_top, prev_top) => {
   // 滑动停止5s后 隐藏回到顶部按钮
   if (!is_show_back_top_btn.value) {

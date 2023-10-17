@@ -67,19 +67,6 @@ class MatchListCard {
     //从新计算容器
     this.run_process_when_need_recompute_container_list_when_first_load_list();
   }
-  /**
-   * 首页热门切换标签 todo param后续直接在get_match_data_list中生成
-   */
-  tab_changing_handle() {
-    // 切换菜单，先清除所有数据仓库的数据
-    MatchDataBaseH5.init();
-    // if (this.scroll_list_wrapper_by) {
-    //   this.scroll_list_wrapper_by(0);
-    // }
-    // this.get_match_data_list();
-    MatchPage.get_match_data_list();
-
-  }
 
   /**
    * 赛事接口调用前置条件处理

@@ -60,7 +60,7 @@
                                     }">
                                 <!--即将开赛 ms = 110-->
                                 <template v-if="item.ms == 110">
-                                    <div>{{ t(`ms[${item.ms}]`) }}</div>
+                                    <div>{{ $t(`ms[${item.ms}]`) }}</div>
                                 </template>
 
                                 <!--一小时内开赛 -->
@@ -74,7 +74,7 @@
                                     !show_start_counting_down(item) &&
                                     !show_counting_down(item)
                                     ">
-                                    <div>{{ t("list.match_no_start") }}</div>
+                                    <div>{{ $t("list.match_no_start") }}</div>
                                     <div>
                                         <!-- .Format(t('time4')) -->
                                         {{ format_time_zone(+item.mgt) }}
@@ -84,8 +84,8 @@
                                 <!--倒计时或正计时-->
                                 <template v-if="item.ms != 110 && show_counting_down(item)">
                                     <counting-down-second :title="item.ms == 0
-                                        ? t('list.match_no_start')
-                                        : match_period_map(item)
+                                        ? $t('list.match_no_start')
+                                        : matchListClass.match_period_map(item)
                                         " :mmp="item.mmp" :m_id="item.mid" :second="item.mst" :match="item" :is_add="[1, 4, 11, 14, 100, 101, 102, 103].includes(+item.csid)
         " home />
                                 </template>
@@ -139,8 +139,9 @@ import CountingDownSecond from 'src/base-h5/components/common/counting-down.vue'
 // 列表数据和对象结合操作类-实现快速检索,修改等功能
 import ListMap from 'src/core/match-list-h5/match-class/list-map.js';
 import { ref, watch, onUnmounted } from "vue";
-import { SessionStorage, LocalStorage, useMittOn, useMittEmit, ServerTime, MITT_TYPES, get_file_path, UserCtr, format_total_score, uid } from 'src/core/'
+import { SessionStorage, LocalStorage, useMittOn, useMittEmit, ServerTime, MITT_TYPES, get_file_path, UserCtr, format_total_score, format_time_zone } from 'src/core/'
 import { useRoute, useRouter } from "vue-router";
+import matchListClass from 'src/core/match-list-h5/match-class/match-list.js'
 import { lang } from "src/base-h5/mixin/userctr";
 
 // 路由
@@ -150,7 +151,7 @@ const router = useRouter();
 //轮播图数据，init是数据加载中的标识
 let carousel_data = ref({ list: [], obj: {} });
 let banner_bg = ref(//轮播背景图片,
-    localStorage.getItem("home_banner_default") ||
+    LocalStorage.get("home_banner_default") ||
     SessionStorage.get("banner_bg") ||
     ""
 );

@@ -99,6 +99,11 @@ class MenuData {
     this.match_list_version = ref('23')
     // 菜单版本变更
     this.menu_data_version = ref('12')
+    // 当前菜单类型 play 滚球  hot热门赛事   virtual_sport虚拟体育   winner_top冠军聚合页 today 今日   early早盘 bet串关
+    this.cur_menu_type = {
+      type_name:'',
+      pre_name:''
+    }
   }
 
   // 设置 菜单的版本变化
@@ -837,7 +842,15 @@ class MenuData {
   //   }
   //   return match_tpl_number;
   // }
-
+  /**
+   * @description: 设置当前菜单类型
+   * @param {*} menu_obj
+   * @return {*}
+   */
+  set_cur_menu_type(menu_obj) {
+    Object.assign(this.cur_menu_type,menu_obj)
+    //暂不确定用哪一个驱动更新
+  }
   static cl_1() {
     // console.error("cl_1");
   }

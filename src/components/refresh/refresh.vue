@@ -5,10 +5,10 @@
 -->
 <template>
   <div class="c-refresh fit yb-flex-center cursor-pointer" @click="on_click">
-    <div :class="['icon-wrap',{'loading-static-animation': cur_active}]">
+    <div :class="['icon-wrap', { 'loading-static-animation': cur_active }]">
       <icon-wapper v-if="!other_icon" :name="icon_name" size="13px" />
       <template v-else>
-        <span  :class="[icon_name]">
+        <span :class="[icon_name]">
           <span class="path1"></span>
           <span class="path2"></span>
           <span class="path3"></span>
@@ -19,35 +19,35 @@
 </template>
 
 <script>
-import { IconWapper } from 'src/components/icon/index.js'
+import { IconWapper } from "src/components/icon/index.js";
 export default {
   name: "Refresh",
   components: {
-    IconWapper
+    IconWapper,
   },
   props: {
     // 是否加载完成
     loaded: true,
     // 是否可用
     disable: {
-      type:Boolean,
-      default:false
+      type: Boolean,
+      default: false,
     },
     icon_name: {
       type: String,
-      default: "icon-refresh"
+      default: "icon-refresh",
     },
-    other_icon:{
-      type:Boolean,
-      default:false
-    }
+    other_icon: {
+      type: Boolean,
+      default: false,
+    },
   },
 
   data() {
     return {
       cur_active: false,
       time_out: false,
-      timer:null //定时器
+      timer: null, //定时器
     };
   },
 
@@ -59,22 +59,21 @@ export default {
           this.time_out = false;
         }
       },
-      immediate: true
-    }
+      immediate: true,
+    },
   },
 
   methods: {
     on_click(e) {
-      this.$emit("click", e);
       if (!this.disable) {
         this.cur_active = true;
 
         // 当请求时间少于1m 时 1m 后停止
-         if (this.timer) {
-          clearTimeout(this.timer)
-          this.timer =null
-          };
-      this.timer =  setTimeout(() => {
+        if (this.timer) {
+          clearTimeout(this.timer);
+          this.timer = null;
+        }
+        this.timer = setTimeout(() => {
           if (this.loaded) {
             this.cur_active = false;
           } else {
@@ -82,15 +81,15 @@ export default {
           }
         }, 300);
       }
+    },
+  },
+  beforeUnmount() {
+    /**清除定时器 */
+    if (this.timer) {
+      clearTimeout(this.timer);
+      this.timer = null;
     }
   },
-   beforeUnmount() {
-      /**清除定时器 */
-        if(this.timer) {
-          clearTimeout(this.timer)
-          this.timer =null
-    }
-  }
 };
 </script>
 

@@ -353,7 +353,6 @@ export default {
   },
 
   beforeUnmount() {
-    this.un_subscribe();
     clearTimeout(this.scrollTimer);
   },
 

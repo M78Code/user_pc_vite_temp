@@ -1,11 +1,12 @@
 <!-- @Description: 搜索弹层 -->
 
 <template>
-  <div
-    v-if="search_isShow"
+   <div style="display:none">{{SearchPCClass.update_time}}</div>
+   <div
+    v-if="SearchPCClass.search_isShow"
     class="search-position"
     :style="page_style"
-  >
+    >
     <div
       v-show="route.params.video_size != 1"
       class="serach-wrap column"
@@ -62,11 +63,11 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, onUnmounted, defineComponent } from "vue";
+import { ref, reactive, onMounted, onUnmounted, defineComponent,watch } from "vue";
 import lodash from "lodash";
 import { useRoute } from "vue-router";
 import { useMittOn, MITT_TYPES } from 'src/core/mitt'
-import { utils, MenuData, LayOutMain_pc, GlobalSwitchClass } from 'src/core/index.js'
+import { utils, MenuData, LayOutMain_pc, GlobalSwitchClass,SearchPCClass } from 'src/core/index.js'
 
 //-------------------- 对接参数 prop 注册  开始  -------------------- 
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
@@ -125,12 +126,23 @@ const { searchReducer, layoutReducer, globalReducer } = store.getState();
  * 是否显示搜索组件 default: false
  * 路径: project_path\src\store\module\search.js
  */
-const search_isShow = ref(false)
+const search_isShow = ref(SearchPCClass.search_isShow)
+/* 
+  * 监听搜索组件变更获取最新的数据
+*/
+watch(
+  () => SearchPCClass.update_time,
+  (val) => {
+    if (val) {
+      search_isShow.value = SearchPCClass.search_isShow
+    }
+  },
+  { deep: true }
+);
 /** 保存显示搜索组件状态 */
-const set_search_status = (data) => (store.dispatch({
-  type: "SET_SEARCH_STATUS",
-  data,
-}))
+const set_search_status = (data) =>{
+  SearchPCClass.set_search_isShow(data)
+}
 const { off } = useMittOn(MITT_TYPES.EMIT_LAYOUT_HEADER_SEARCH_ISSHOW, (bool) => {
   search_isShow.value = bool
 })
@@ -145,7 +157,7 @@ onUnmounted(() => document.removeEventListener('click', click_fun))
  * 浏览器 宽高等数据 default: object
  * 路径: project_path\src\store\module\layout.js
  */
-const layout_size = ref({})
+
 /** 
 * 是否展开多列玩法 default: object
 * 路径: project_path\src\store\module\global.js
@@ -155,13 +167,10 @@ const is_unfold_multi_column = ref(GlobalSwitchClass.is_unfold_multi_column)
 onMounted(() => window.addEventListener('resize', on_resize))
 
 
-const unsubscribe = store.subscribe(() => {
-  const { searchReducer: new_searchReducer, layoutReducer: new_layoutReducer, globalReducer: new_globalReducer } = store.getState()
-  search_isShow.value = new_searchReducer.search_isShow
-  layout_size.value = new_layoutReducer.layout_size
-  is_unfold_multi_column.value = new_globalReducer.is_unfold_multi_column
-})
-onUnmounted(unsubscribe)
+// const unsubscribe = store.subscribe(() => {
+//   const { searchReducer: new_searchReducer, layoutReducer: new_layoutReducer, globalReducer: new_globalReducer } = store.getState()
+// })
+// onUnmounted(unsubscribe)
 
 /**
  * @Description:设置搜索球种列表

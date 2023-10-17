@@ -3,7 +3,7 @@ import BetData from "./bet-data-class.js"
 import BetViewDataClass from "./bet-view-data-class.js"
 import { compute_value_by_cur_odd_type } from "src/core/format/module/format-odds-conversion-mixin.js"
 import UserCtr from "src/core/user-config/user-ctr.js"
-import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
+import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import { getSeriesCountJointNumber } from "src/core/bet/common-helper/module/bet-single-config.js"
 import { MatchDataWarehouse_PC_List_Common, MatchDataWarehouse_PC_Detail_Common } from 'src/core/index.js'
 import lodash_ from "lodash"
@@ -72,7 +72,7 @@ const set_bet_order_list = (bet_list, is_single) => {
                     "tournamentId": item.tournamentId,   // 联赛id
                     "scoreBenchmark": "",    // 基准分
                     "betAmount": obj.bet_amount || 10,  //投注金额         
-                    "placeNum": null, //盘口坑位
+                    "placeNum": item.placeNum, //盘口坑位
                     "marketId": item.marketId,  //盘口id
                     "playOptionsId": item.playOptionsId,   // 投注项id
                     "marketTypeFinally": "EU",     // 欧洲版默认是欧洲盘 HK代表香港盘
@@ -114,7 +114,7 @@ const set_bet_order_list = (bet_list, is_single) => {
                         "tournamentId": item.tournamentId,   // 联赛id
                         "scoreBenchmark": "",    // 基准分
                         "betAmount": BetData.bet_amount,  //投注金额         
-                        "placeNum": null, //盘口坑位
+                        "placeNum": item.placeNum, //盘口坑位
                         "marketId": item.marketId,  //盘口id
                         "playOptionsId": item.playOptionsId,   // 投注项id
                         "marketTypeFinally": "EU",     // 欧洲版默认是欧洲盘 HK代表香港盘
@@ -372,7 +372,7 @@ const set_bet_obj_config = (params = {}, other = {}) => {
     if ([1, 2].includes(Number(mid_obj.ms))) {
         matchType = 2
     }
-    console.error('sssssss',ol_obj)
+    console.error('sssssss',query.list_to_obj)
     // 列表和详情 取值字段不同
     // 投注项 显示
     let handicap = '', handicap_attach = ''
@@ -438,7 +438,7 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         home: mid_obj.mhn, //主队名称
         away: mid_obj.man, //客队名称
         ot: ol_obj.ot, //投注項类型
-        placeNum: null, //盘口坑位
+        placeNum: hl_obj.hn, //盘口坑位
         // 以下为 投注显示或者逻辑计算用到的参数
         bet_type: other.bet_type, // 投注类型
         tid_name: mid_obj.tn,  // 联赛名称

@@ -92,8 +92,7 @@
   import { useRoute, useRouter } from "vue-router";
   // import { useMittEmit, MITT_TYPES } from "src/core/mitt/";
   import { IconWapper } from 'src/components/icon'
-  import store from "src/store-redux/index.js";
-  import refresh from "src/base-pc/components/refresh/refresh.vue"
+  import refresh from "src/components/refresh/refresh.vue"
   const props = defineProps({
     match_infoData: Object,   //赛事状态比分信息
     background_img: String,
@@ -114,11 +113,7 @@
   
   const emit = defineEmits(["init", "back_to",'change_loading_state']);
   
-  // 监听状态变化
-  let un_subscribe = store.subscribe(() => {
-   const state = store.getState();
-    // const {} = state.detailsReducer;
-  });
+
   
   
   /**
@@ -178,7 +173,6 @@
   };
   
   onUnmounted(() => {
-    un_subscribe();
   });
   </script>
   <style lang="scss" scoped>

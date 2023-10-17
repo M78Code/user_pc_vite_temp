@@ -156,11 +156,12 @@
 <script setup>
 import subMenuSpecially from "./sub-menu-specially.vue";
 import { ref, watch, nextTick, computed, onBeforeUnmount, } from "vue";
-import { i18n_t, compute_css, GlobalAccessConfig, useMittOn, MITT_TYPES, UserCtr, MenuData } from "src/core/index.js";
+import { i18n_t, compute_css, GlobalAccessConfig, useMittOn, MITT_TYPES, UserCtr, MenuData, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/index.js";
 import base_data from "src/core/base-data/base-data.js";
 import { useRoute, useRouter } from "vue-router";
 import lodash from "lodash"
 import MatchFold from 'src/core/match-fold'
+import BaseData from 'src/core/base-data/base-data.js'
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 
 // 一级菜单mi ref
@@ -321,7 +322,7 @@ function select_all_sub_menu_handle() {
  * 二级菜单事件
  */
 async function set_menu_lv2(item, index, type = "click") {
-  const mi = lodash.get(MenuData.current_lv_2_menu, 'mi')
+  const mi = lodash.get(MenuData.current_lv_2_menu, 'mi', "")
   if (mi === item.mi && !is_first.value) return
   MenuData.set_current_lv2_menu(item, index, type);
   switch (menu_type.value) {
@@ -329,18 +330,30 @@ async function set_menu_lv2(item, index, type = "click") {
       dj_back_img(item.mi)
       break
   }
+ handle_match_render_data()
+}
+
+/**
+ * @description 处理赛事列表渲染数据
+ */
+const handle_match_render_data = () => {
   is_first.value = false
-  // 清除赛事折叠信息
+    // 清除赛事折叠信息
+  MatchDataBaseH5.init()
   MatchFold.clear_fold_info()
+
   // 冠军拉取旧接口； 待 元数据提供 冠军赛事后 再删除
   if (MenuData.is_kemp()) return MatchMeta.get_champion_match()
   // 赛果不走元数据， 直接拉取接口
   if (MenuData.is_results()) return MatchMeta.get_results_match()
   // 电竞不走元数据， 直接拉取接口
   if (MenuData.is_export()) return MatchMeta.get_esports_match()
+
+  const mi_tid_mids_res = lodash.get(BaseData, 'mi_tid_mids_res')
+  if (lodash.isEmpty(mi_tid_mids_res)) return
+
   // 设置菜单对应源数据
   MatchMeta.set_origin_match_data()
-  
 }
 /**
 /**

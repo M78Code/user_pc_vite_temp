@@ -244,7 +244,6 @@ onUnmounted(() => {
       position: absolute;
       top: 0;
       left: 0;
-      padding-bottom: 0.015rem;
       &.last{
         padding-bottom: 0.01rem;
         .match-container{

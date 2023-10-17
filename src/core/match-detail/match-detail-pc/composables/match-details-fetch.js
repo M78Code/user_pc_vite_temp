@@ -1,5 +1,5 @@
 /*
- *封装赛事详情api接口数据，给赛事详情仓库设置数据
+ *封装赛事详情api接口数据，给赛事详情仓库设置数据   暂未使用 后续维护
  */
 import { ref, computed, onUnmounted, getCurrentInstance } from "vue";
 // import { useRoute } from "vue-router";
@@ -13,6 +13,7 @@ import {
   MatchDataWarehouse_PC_Detail_Common as MatchDetailsData,
   PageSourceData,
   is_eports_csid,
+  GlobalSwitchClass
 } from "src/core/index.js";
 import detailUtils from "src/core/match-detail/match-detail-pc/match-detail.js";
 import MatchListCardClass from "src/core/match-list-pc/match-card/match-list-card-class.js";
@@ -181,10 +182,12 @@ const get_matchInfo_fun = (loop_count, mid) => {
       .catch((err) => {
         console.error(err);
         //todo
-        // this.set_error_data({
-        //   site: "match_details--get_matchInfo_fun",
-        //   error: err,
-        // });
+        
+           //设置错误数据
+        GlobalSwitchClass.set_error_data({
+          site: "details--get_match_detail",
+          error: err,
+        })
         // countMatchDetail();
       })
       .finally(() => {
@@ -503,11 +506,11 @@ const get_match_detail_base = (
    */
  const err_tips = (err) => {
   console.log(err,'err');
-  //todo
-  // this.set_error_data({
-  //   site: "details--get_match_detail",
-  //   error: err,
-  // });
+ //设置错误数据
+  GlobalSwitchClass.set_error_data({
+   site: "details--get_match_detail",
+   error: err,
+ })
   if (
     lodash.isPlainObject(err) ||
     lodash.get(err, "response.status") == 404

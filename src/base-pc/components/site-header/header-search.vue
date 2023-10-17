@@ -1,8 +1,9 @@
 <template>
   <!--  v-if="globalAccessConfig.get_searchSwitch()" -->
+  <div style="display:none">{{SearchPCClass.update_time}}</div>
   <div class="yb-site-left-width" v-if="globalAccessConfig.config.searchSwitch" :class="`${main_menu_toggle || 'normal'}`">
     <!-- TODO: @click.stop="search_hot_push.go_to_details()" -->
-    <div v-show="!search_isShow" class="search-wrap" :class="`${main_menu_toggle || 'normal'}`">
+    <div v-show="!SearchPCClass.search_isShow" class="search-wrap" :class="`${main_menu_toggle || 'normal'}`">
       <div v-show="main_menu_toggle !== 'mini'" class="ellipsis" @click.stop="show_search">
         {{ search_hot_push.hot_push_name || i18n_t("common.search") }}
       </div>
@@ -14,7 +15,7 @@
   </div>
 
   <!-- 内嵌版 菜单状态切换按钮 -->
-  <template v-if="is_iframe && is_mini_menu && !search_isShow">
+  <template v-if="is_iframe && is_mini_menu && !SearchPCClass.search_isShow">
     <div class="menu-collapse-btn" @click="handle_menu_collapse">
       <q-tooltip anchor="top middle" self="center middle"
         :content-style="tooltip_style + ';transform:translateY(34px)'">{{ i18n_t("common.menu_expand") }}</q-tooltip>
@@ -36,7 +37,7 @@ import store from "src/store-redux/index.js";
 import SearchHotPush from "src/core/search-class/search_hot_push.js";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
 import { tooltip_style } from "src/core/config/global-component-style.js";
-import { utils } from 'src/core/index.js';
+import { utils,SearchPCClass } from 'src/core/index.js';
 
 import { IconWapper } from 'src/components/icon/index.js'
 
@@ -58,7 +59,7 @@ const { searchReducer, menuReducer } = store.getState();
  * 是否显示搜索组件 default: false
  * 路径: project_path\src\store\module\search.js
  */
-const search_isShow = ref(false)
+
 /** 
  * 获取菜单收起状态 default: false
  * 路径: project_path\src\store\module\menu.js

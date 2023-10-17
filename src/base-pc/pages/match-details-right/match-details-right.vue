@@ -134,7 +134,8 @@
    
         > -->
         <!-- 盘口模板start -->
-        <template v-if="(LayOutMain_pc.layout_current_path.cur !== 'details' && !is_esports) || route.name == 'video'">
+    
+        <template v-if="(LayOutMain_pc.layout_current_path.cur !== 'details' && !is_esports) || route.name == 'video'">{{}}
           <match-handicap
             :match_info="match_infoData"
             :category_list="category_list"
@@ -276,7 +277,7 @@ import  videoHistoryLine  from "src/base-pc/components/video-replay/video-histor
 import matchHandicap from "src/base-pc/components/match-detail/match-handicap/match-handicap.vue";
 import { TabWapper as Tab } from "src/components/common/tab";
 import { useRightDetails } from "./match-details-right-config";
-import refreshComponent from "src/base-pc/components/refresh/refresh.vue";
+import refreshComponent from "src/components/refresh/refresh.vue";
 import videoCtrl from "src/base-pc/components/match-detail/match_info/video_ctrl.vue";
 import matchInfo from "src/base-pc/components/match-detail/match_info/match_info.vue";
 import handicapTabsBar from "src/base-pc/components/match-detail/match_info/handicap_tabs_bar.vue";
@@ -286,10 +287,8 @@ import { useRoute } from "vue-router";
 import { computed, reactive, ref, watch } from "vue";
 const route = useRoute();
 import LoadData from "src/base-pc/components/load-data/load-data.vue";
-import store from "src/store-redux/index.js";
 import lodash from "lodash";
 import BetData from "src/core/bet/class/bet-data-class.js";
-let state = store.getState();
 
 const bet_item_lock  = ref(BetData.bet_item_lock) 
 //获取用户信息

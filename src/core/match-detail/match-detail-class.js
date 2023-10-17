@@ -7,6 +7,7 @@
  
 import { ref ,reactive} from "vue"
 import { SessionStorage } from "src/core/utils/index.js"
+import { debounce } from "lodash";
 export default class MatchDetailCtr {
  
   constructor( ) {
@@ -66,7 +67,7 @@ export default class MatchDetailCtr {
       time: Date.now()
     }
     this.isTop= true;//视频置顶
-    this.topId = [];//置顶的玩法id
+    this.top_id = [];//置顶的玩法id
     this.play_media= {  //播放视频信息类型
       mid: 0,
       media_type: "",
@@ -238,11 +239,10 @@ export default class MatchDetailCtr {
     return play;
   }
 
-  // 设置详情版本变更
-  set_details_data_version(){
+   // 设置详情版本变更
+  set_details_data_version =debounce(() => {
     this.details_data_version.version = Date.now()
-    // console.error(this.details_data_version.version,'this.details_data_version.value');
-  }
+  }, 10);
 
   /**
    * @description: 设置mid参数
@@ -307,5 +307,62 @@ export default class MatchDetailCtr {
   set_is_back_btn_click(flag){
     this.is_back_btn_click = flag
     this.set_details_data_version()
+  }
+  /**
+   * @description: 设置多列玩法 玩法列表单双列 0单列， 1双列
+   * @param {*} val
+   * @return {*}
+   */
+  set_layout_statu(val){
+    this.ayout_statu = val
+    this.set_details_data_version()  
+  }
+  /**
+   * @description: 设置当前玩法集id 
+   * @param {*} val
+   * @return {*}
+  */
+  set_current_category_id(val){
+    this.current_category_id = val
+    this.set_details_data_version()  
+  }
+  /**
+   * @description:  设置玩法集对应玩法缓存数据  
+   * @param {*} val
+   * @return {*}
+  */
+  set_details_data_cache(val){
+    this.details_data_cache = val
+    this.set_details_data_version()  
+  }
+  /**
+   * @description:  设置玩法集id对应的盘口玩法
+   * @param {*} val
+   * @return {*}
+  */
+  set_category_arr(val){
+    this.category_arr = val
+    this.set_details_data_version()  
+  }
+   /**
+   * @description:  清除所有的 多列玩法  玩法缓存数据   玩法集id对应的盘口玩法
+   * @param {*} val
+   * @return {*}
+  */
+  set_clear_all_play_data(){
+    this.ayout_statu = 0
+    this.current_category_id = ""
+    this.details_data_cache={}
+    this.category_arr = []
+    this.set_details_data_version()  
+  }
+  /**
+   * @description:置顶玩法的 id
+   * @param {*} val
+   * @return {*}
+  */
+  set_top_id(val){
+    this.topId = val
+    this.set_details_data_version()  
   }
 }

@@ -91,42 +91,6 @@ onMounted(() => {
   event_init();
 });
 
-// 早盘时，并且是 足球时，执行下边操作
-watch(() => menu_type.value, (val) => {
-  if ( menu_type.value == 4 && val == "40303") {
-    clearTimeout(subscription_timer1.value);
-    subscription_timer1.value = setTimeout(() => {
-      // 订阅新赛事列表
-      subscription();
-    }, 3000);
-  }
-},
-  { deep: true }
-);
-
-
-// 其他页改变取消收藏, 如果当前为收藏模式则移除该赛事
-// watch(() => get_match_id_bet_success, () => {
-//   if (show_favorite_list) {
-//     return
-//   }
-//   if(value){
-//     let mid = value.split('-')[0];
-//     let is_collect = value.split('-')[1];
-//     let found_index = lodash.findIndex(matchCtr.value.list,{mid});
-
-//     if(found_index > -1){
-//       let param = {
-//         index: found_index,
-//         item: "mf",
-//         bool: is_collect == 1,
-//         number: is_collect == 1 ? 1 : -1
-//       };
-//       change_favorite_state(param);
-//     }
-//   }
-// })
-
 // 页脚子菜单
 watch(() => MenuData.footer_sub_menu_id, () => {
   const prev_footer_sub_menu_id = lodash.get(MenuData, 'prev_footer_sub_menu_id')
@@ -193,7 +157,7 @@ const event_init = () => {
 };
 
 /**
- * @description 初始化赛事加载
+ * @description 元数据请求回来 初始化赛事加载
  */
 const init_match_callback = () => {
   if (route.name !== 'matchList') return
@@ -234,11 +198,11 @@ const update_state = () => {
 // 绑定相关事件监听
 const on_listeners = () => {
   emitters.value = {
-    emitter_1: useMittOn(MITT_TYPES.EMIT_MENU_CHANGE_FOOTER_CMD,()=> MatchPage.footer_event()).off,
-    emitter_2: useMittOn(MITT_TYPES.EMIT_MAIN_MENU_CHANGE, ()=>MatchPage.main_menu_change()).off,
-    emitter_7: useMittOn(MITT_TYPES.EMIT_MATCH_LIST_SCROLLING, ()=> MatchListCard.match_list_scroll_handle()).off,
+    emitter_1: useMittOn(MITT_TYPES.EMIT_MENU_CHANGE_FOOTER_CMD,(v)=> MatchPage.footer_event(v)).off,
+    emitter_2: useMittOn(MITT_TYPES.EMIT_MAIN_MENU_CHANGE, (v)=>MatchPage.main_menu_change(v)).off,
+    emitter_7: useMittOn(MITT_TYPES.EMIT_MATCH_LIST_SCROLLING, (v)=> MatchListCard.match_list_scroll_handle(v)).off,
     emitter_11: useMittOn(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA, init_match_callback).off,
-    emitter_11: useMittOn(MITT_TYPES.EMIT_MENU_ANIMATION, handle_menu_change).off,
+    emitter_12: useMittOn(MITT_TYPES.EMIT_MENU_ANIMATION, handle_menu_change).off,
   };
 };
 // 移除相关事件监听
@@ -257,10 +221,6 @@ onUnmounted(() => {
   MatchDataBaseH5.clear()
 });
 
-defineExpose({
-  event_init,
-  destroy_handle,
-});
 </script>
 <style scoped lang="scss">
   @import "./index.scss";
