@@ -30,12 +30,12 @@
   </div>
 </template>
 <script setup>
-import { onMounted, defineProps } from "vue";
+import { onMounted, defineProps,ref } from "vue";
 import { DateTabFullVersionWapper as DateTab } from "src/base-pc/components/tab/date-tab/index.js";
 import BaseData from "src/core/base-data/base-data.js";
 import { t } from "src/core/index.js";
 import menu_config from "src/core/menu-pc/menu-data-class.js";
-
+import sportIcon from "src/components/sport_icon/sport_icon.vue";
 const current_menu = ref({});
 const dianjing_sublist = ref(BaseData.dianjing_sublist);
 const menus_i18n_map = ref(BaseData.menus_i18n_map);

@@ -89,7 +89,7 @@ import VideoHeader from "src/base-pc/components/video/video-header.vue"
 //  直播聊天室相关
 // import live_chatroom from "src/project/yabo/mixins/live_chatroom/live_chatroom";
 // import { mapGetters, mapActions } from "vuex"
-import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
+import { useMittEmit, useMittOn, MITT_TYPES,MatchDetailCalss } from "src/core/mitt/index.js"
 
 //   export default {
 // name: "Video",
@@ -242,7 +242,7 @@ function exit_full_screen(size) {
       }
     })
   } else {
-    this.set_is_back_btn_click(true);
+    MatchDetailCalss.set_is_back_btn_click(true);
     this.$utils.redirect_router('/home')
   }
   let time = Date.now()
