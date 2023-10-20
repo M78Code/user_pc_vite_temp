@@ -216,7 +216,7 @@ let back_to_timer =null
      MatchDetailCalss.set_is_back_btn_click(is_back)
      router.push({path:from_path});
      if (from_path.includes("search")) {
-       MatchDetailCalss.set_unfold_multi_column(false)
+      LayOutMain_pc.set_unfold_multi_column(false)
      }
    }, 50);
   };

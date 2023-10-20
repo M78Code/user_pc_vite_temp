@@ -266,11 +266,9 @@ export default {
     "play_media.time": {
       handler(cur) {
         // this.match_info =MatchDetailsData.get_quick_mid_obj(this.mid)
-        console.log(cur,'cur',this.mid,'ini_info');
         if (!cur  ) return
         console.log(MatchDetailsData.get_quick_mid_obj(this.mid),'MatchDetailsData.get_quick_mid_obj(this.mid)');
         let ini_info = MatchDetailsData.get_quick_mid_obj(this.mid)
-        console.log(ini_info,'ini_info');
         this.show_loading = true
         // 10秒后隐藏loading图片
         clearTimeout(this.timer_id_1)

@@ -19,7 +19,6 @@ export default class MatchDetailCtr {
    * @return {undefined} undefined
    */
   init() {
-    this.is_unfold_multi_column = false; //是否展开多列玩法
     //赛事ID
     this.mid=  '';
     //玩法集 数组  原始玩法集数组 
@@ -273,15 +272,6 @@ export default class MatchDetailCtr {
     this.play_media =play_media_val
     this.set_details_data_version()
   }
-  /**
-   * @description: 设置是否展开多列玩法
-   * @param {boolean} val 
-   * @return {*}
-   */
-  set_unfold_multi_column(val){
-    this.is_unfold_multi_column = val
-  }
-
   /**
    * @description: 设置详情比分面板，接口报错时的备用数据
    * @param {*} val  match——info  赛事详情
