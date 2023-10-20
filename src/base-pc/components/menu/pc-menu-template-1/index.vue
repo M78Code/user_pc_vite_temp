@@ -104,14 +104,14 @@
       <!--  电竞    子菜单  开始    -->
       <div v-if="item1 == 2000" class="menu-fold2-wrap" :data-id="show_menu"
         :class="current_lv_1_mi == item1 && !show_menu ? 'open' : ''">
-        <MenuItem :menu_list="compute_item1_sublist_mi_2000(item1)" :base_data="BaseData"
+        <MenuItem :menu_list="compute_item1_sublist_mi_2000(item1)" type='2000' @click_wapper_handle="click_wapper_handle" 
           :current_lv_2_mi="current_lv_2_mi" />
       </div>
       <!--  电竞    子菜单   结束     -->
       <!--  VR    子菜单   开始     -->
       <div v-if="item1 == 300" class="menu-fold2-wrap" :data-id="show_menu"
         :class="current_lv_1_mi == item1 && !show_menu ? 'open' : ''">
-        <MenuItem :menu_list="compute_item1_sublist_mi_300(item1)" :base_data="BaseData"
+        <MenuItem :menu_list="compute_item1_sublist_mi_300(item1)" type='300' @click_wapper_handle="click_wapper_handle" 
           :current_lv_2_mi="current_lv_2_mi" />
       </div>
       <!--  VR    子菜单   结束     -->
@@ -316,7 +316,8 @@ const compute_item1_sublist_mi_100 = (item1) => {
  * @return {Array} 列表
  */
 const compute_item1_sublist_mi_300 = () => {
-  return BaseData.vr_mi_config;
+  let obj = BaseData.mew_menu_list_res.find((x) => x.mi == 300) || {};
+  return obj.sl
 };
 /**
  * @description: 计算一级菜单下的 二级菜单    电子竞技
@@ -654,7 +655,8 @@ const lv_2_click_wapper_3 = (detail = {}) => {
 const lv_2_click_wapper_4 = (detail = {}) => {
   let { lv1_mi, lv2_mi } = detail;
   let vr_obj =
-    BaseData.vr_mi_config.find((item) => lv2_mi == item.menuId) || {};
+    BaseData.mew_menu_list_res.find((item) => item.mi == 300 ) || {};
+    let vr_obj_config = vr_obj.sl.find(item => item.mi == lv2_mi) || {}
   // console.log(vr_obj)
   // console.error(vr_obj,'-----------------------------------------------------');
   let config = {
@@ -692,10 +694,10 @@ const lv_2_click_wapper_4 = (detail = {}) => {
     match_list: {
       api_name: "post_fetch_virtual_matchs",
       params: {
-        tid: vr_obj.subList[0].field1,
+        tid: vr_obj_config.sl[0].mi,
         // isLive: 1,
         selectionHour: "", // $store.state.filter.open_select_time,
-        csid: vr_obj.menuId,
+        csid: vr_obj_config.mi,
       },
     },
   };
@@ -886,6 +888,17 @@ const handle_click_jinri_zaopan = (val) => {
   //current_lv_1_mi.value = ''
   lev_1_click(lv1_mi, val);
 };
+
+// 点击事件
+// 2000 电竞  300 vr
+const click_wapper_handle = obj =>{
+  if(obj.type == 2000){
+    lv_2_click_wapper_3(obj.config);
+  }
+  if(obj.type == 300){
+    lv_2_click_wapper_4(obj.config);
+  }
+}
 // 模拟推送
 // const send_menu = () => {
 //   BaseData.set_ws_send_new_menu_init()
