@@ -101,7 +101,7 @@ onMounted(()=>{
   // 最小赔率是它本身
   ref_data.min_odds_value = market_info.oddFinally
   // 获取及时比分 格式: (主队比分-客队比分)
-  ref_data.ball_score = market_info.timerly_basic_score
+  ref_data.timerly_basic_score = market_info.timerly_basic_score
   console.error('sssss')
 })
 
@@ -314,18 +314,18 @@ const sub_handle = (type, index = 1) => {
     ref_data.appoint_ball_head = new_num - step;
     // console.error('market_type===', this.market_type);
     // console.error('basic_score===', ref_data.basic_score);
-    console.error('timerly_basic_score===', ref_data.ball_score);
+    console.error('timerly_basic_score===', ref_data.timerly_basic_score);
     if ('1' == props.item.sportId) { //足球
       // let nnn = '2-3'
       // let ball_score = nnn ? Math.max(nnn.split('-')[0], nnn.split('-')[1]) + 0.5: 0.5;
       //规则又改了，全场是主客队分数相加再加0.5， 非全场是主客队对应得分数加0.5，这里有三种情况，全场， 主队和客队
-      let arr = ref_data.ball_score.split('-');
+      let arr = ref_data.timerly_basic_score.split('-');
       if (MARKET_BIG_SMALL_PLAY_LIST.includes(props.item.playId)) {
-        ref_data.ball_score = ref_data.ball_score ? parseInt(arr[0]) + parseInt(arr[1]) + 0.5 : 0.5;
+        ref_data.ball_score = ref_data.timerly_basic_score ? parseInt(arr[0]) + parseInt(arr[1]) + 0.5 : 0.5;
       } else if (MARKET_HOME_PLAY_LIST.includes(props.item.playId)) {
-        ref_data.ball_score = ref_data.ball_score ? parseInt(arr[0]) + 0.5 : 0.5;
+        ref_data.ball_score = ref_data.timerly_basic_score ? parseInt(arr[0]) + 0.5 : 0.5;
       } else if (MARKET_AWAY_PLAY_LIST.includes(props.item.playId)) {
-        ref_data.ball_score = ref_data.ball_score ? parseInt(arr[1]) + 0.5 : 0.5;
+        ref_data.ball_score = ref_data.timerly_basic_score ? parseInt(arr[1]) + 0.5 : 0.5;
       }
       //下面还有一种获取分数的渠道，那就是直接在betpreamount接口获取
       // let new_score =  lodash_.get(this.vx_get_pre_bet_list, 'currentMarket.preBetBenchmarkScore', '')
