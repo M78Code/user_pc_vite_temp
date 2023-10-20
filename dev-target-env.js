@@ -23,7 +23,7 @@ let  DEV_TARGET_VERSION = ''
 // 打包 亚洲版 PC（新版)   测试环境  
 // DEV_TARGET_VERSION = "project_4-36304ea0499e11ee8848ada2b8a1d739-1695005815463-test";
 // 打包 亚洲版 PC（新版)   试玩环境  
-DEV_TARGET_VERSION = "project_4-652ccfacfeffd80f0fcda107-1697770590787-shiwan";
+// DEV_TARGET_VERSION = "project_4-652ccfacfeffd80f0fcda107-1697770590787-shiwan";
 // 打包 亚洲版 PC（新版)   生产环境
 DEV_TARGET_VERSION = "project_4-652b6ee515b0c70f1c2cde34-1697377186945-online";
 
