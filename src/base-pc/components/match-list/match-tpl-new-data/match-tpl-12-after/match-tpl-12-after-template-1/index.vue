@@ -97,31 +97,43 @@
 </template>
 
 <script setup>
-// import match_item_mixin from "src/project/yabo/mixins/match_list/match_item_mixin_new_data.js";
-// mixins: [match_item_mixin],
-// inject:['match_list_data'],
+import { ref, defineProps } from 'vue';
+
+import { t, get_match_status, MatchDataWarehouse_PC_List_Common as MatchListData, UserCtr } from "src/core/index.js";
+import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
+import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card-class.js'
+import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
+import { utils_info } from 'src/core/utils/module/match-list-utils.js';
+import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
+import details  from "src/core/match-list-pc/details-class/details.js"
+
+import { MatchProcessFullVersionWapper as MatchProcess } from 'src/components/match-process/index.js';
+import { MatchHandicapFullVersionWapper as MatchHandicap } from 'src/base-pc/components/match-list/match-handicap/index.js'
+import MatchMedia from 'src/base-pc/components/match-list/match-media/index.vue'
 
 
-import { ref, computed, watch } from 'vue';
-import { t } from "src/core/index.js";
-import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
-import { component_symbol, need_register_props } from "../config/index.js"
-useRegistPropsHelper(component_symbol, need_register_props)
-import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
-import { useMittEmit, MITT_TYPES } from "src/core/mitt"
-import { is_eports_csid } from 'src/core/utils/module/match-list-utils.js';
-import { get_match_status, is_show_sr_flg } from 'src/core/index.js'
-import store from 'src/store/index.js'
-let state = store.getState()
+const props = defineProps({
+  mid: {
+    type: [String, Number],
+    default: null,
+  },
+})
 
 
 const hv = ref('');
 const hv_ol = ref({_hid: -1});
-hv_ol.value = this.match.main_handicap_list[0].ols[1]
+hv_ol.value = match.main_handicap_list[0].ols[1]
+const play_name_list = ref([]);
+let match_style_obj = MatchListCardDataClass.all_card_obj[props.mid+'_']
+const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`].width_config
+const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`]
+let match = MatchListData.list_to_obj.mid_obj[props.mid+'_'];
+const is_mounted = ref(true);
+
 // 其他玩法标题
 const handicap_num = computed(() => {
   if(GlobalAccessConfig.get_handicapNum()){
-    return `+${ this.match.mc || 0}`
+    return `+${ match.mc || 0}`
   }else{
     return  t('match_info.more')
   }
@@ -145,7 +157,7 @@ function set_hv () {
  * @param {undefined} undefined
 */
 function collect () {
-  useMittEmit(MITT_TYPES.EMIT_MX_COLLECT_MATCH, this.match)
+  useMittEmit(MITT_TYPES.EMIT_MX_COLLECT_MATCH, match)
 }
 
 /**
@@ -153,10 +165,10 @@ function collect () {
  * @return {undefined} undefined
  */
 function on_go_detail () {
-  if(is_eports_csid(this.match.csid)){
-    this.match.go_detail_type = 'no_switch'
+  if(is_eports_csid(match.csid)){
+    match.go_detail_type = 'no_switch'
   }
-  details.on_go_detail(this.match);
+  details.on_go_detail(match);
 }
 
 /**
@@ -165,20 +177,20 @@ function on_go_detail () {
 */
 function play_tab_click (obj){
   // 当前已选中
-  if(this.match.play_current_index == obj.index){
+  if(match.play_current_index == obj.index){
     return
   }
   let play_key = play_name_list.value[obj.index].field
   // 切换玩法
-  this.match_list_data.switch_other_play(this.match.mid,play_key)
-  if (this.match.csid == 1) {
+  this.match_list_data.switch_other_play(match.mid,play_key)
+  if (match.csid == 1) {
     let zhugeObj = {
       "玩法集名称": play_name_list.value[obj.index].play_name,
       "玩法集ID": '',
       "区域位置": "主列表"
     }
   }
-  this.match_list_card && this.match_list_card.update_match_cur_card_style(this.match.mid,play_key)
+  this.match_list_card && this.match_list_card.update_match_cur_card_style(match.mid,play_key)
 }
 
 /**
@@ -186,7 +198,7 @@ function play_tab_click (obj){
  * @param {undefined} undefined
 */
 function fold_tab_play () {
-  this.match_list_card && this.match_list_card.fold_tab_play(this.match.mid)
+  this.match_list_card && this.match_list_card.fold_tab_play(match.mid)
 }
 </script>
 

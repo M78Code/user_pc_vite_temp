@@ -395,9 +395,9 @@ function set_fold() {
       }
     }
 
-    // .play-name div {
-    //   display: none;
-    // }
+     /* .play-name div {
+       display: none;
+     } */
 
     .league-match-count {
       display: block;

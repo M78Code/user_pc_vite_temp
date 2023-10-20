@@ -1,8 +1,9 @@
 <template>
-  <div
+  <div>
+    <div v-show="false">{{ MatchListCardDataClass.list_version }}</div>
+    <div
     class="list-card-wrap v-scroll-item relative-position"
     :class="{
-      
       'matc-type-card': [
         'sport_title',
         'play_title',
@@ -13,7 +14,6 @@
       LayOutMain_pc.layout_content_width - 15
     }px  !important;${card_style}`"
   >
-    <div v-show="false">{{ MatchListCardDataClass.list_version }}</div>
     <div
       v-if="is_mounted"
       :class="{ 'list-card-inner': !MatchListCardData.is_champion }"
@@ -63,6 +63,7 @@
       </template>
     </div>
   </div>
+  </div>
 </template>
 <script setup>
 import { computed, onMounted, onUnmounted, reactive, ref, watch } from "vue";
@@ -90,6 +91,7 @@ const props = defineProps({
 let card_style_obj = MatchListCardDataClass.all_card_obj[props.card_key];
 watch(() => MatchListCardDataClass.list_version.value, () => {
   card_style_obj = MatchListCardDataClass.all_card_obj[props.card_key];
+  console.log('card_style_obj', card_style_obj);
 })
 let sticky_top = ref(null);
 // 组件是否加载完成

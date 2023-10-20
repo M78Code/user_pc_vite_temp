@@ -10,6 +10,7 @@
       :is="`MatchTpl${match_style_obj.view_tpl_id}After`"
       :mid="mid"
     />
+    {{`MatchTpl${match_style_obj.view_tpl_id}After`}}
   </div>
 </template>
 
@@ -34,7 +35,7 @@ import { MatchTpl9AfterFullVersionWapper as MatchTpl9After } from "src/base-pc/c
 // // // 玩法模板 10  网球-准确盘
 import { MatchTpl10AfterFullVersionWapper as MatchTpl10After } from "src/base-pc/components/match-list/match-tpl-new-data/match-tpl-10-after/index.js";
 // // // 玩法模板 12  热门赛事-竟足-让球/胜平
-// import { MatchTpl12AfterFullVersionWapper as MatchTpl12After } from "src/base-pc/components/match-list/match-tpl-new-data/match-tpl-12-after/index.js";
+import { MatchTpl12AfterFullVersionWapper as MatchTpl12After } from "src/base-pc/components/match-list/match-tpl-new-data/match-tpl-12-after/index.js";
 // // // 玩法模板 17  棒球-让球&大
 import { MatchTpl17AfterFullVersionWapper as MatchTpl17After } from "src/base-pc/components/match-list/match-tpl-new-data/match-tpl-17-after/index.js";
 // // // 玩法模板 18  所有冠军玩法 政治娱

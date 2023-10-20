@@ -100,7 +100,6 @@ export default {
     }
   },
   created() {
-      console.error(2122222222);
     // 从链接获取 id
     let { playId } = this.$route.query;
     this.play_id = playId;
