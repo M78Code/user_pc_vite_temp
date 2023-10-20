@@ -60,7 +60,8 @@ export default {
   },
   data(){
     return {
-      lodash
+      lodash,
+      is_eports_csid
     }
   }
 };
