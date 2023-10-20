@@ -106,7 +106,7 @@ const write_oss_fn = async () => {
         oss_data_obj[file_name] = {};
         //写入本地备份文件
         const env_back_up_data = await import_json_data(
-          `./job/backup-oss/${file_name}`
+          `./backup-oss/${file_name}`
         );
         oss_data_obj[file_name] = env_back_up_data;
       }
