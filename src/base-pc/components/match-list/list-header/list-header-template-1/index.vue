@@ -76,7 +76,7 @@
       <div v-show="computed_show_refresh" class="select-btn refresh-btn yb-flex-center yb-hover-bg">
         <slot name="refresh_icon"></slot>
       </div>
-      <div class="unfold-btn" @click="set_unfold_multi_column(false)"
+      <div class="unfold-btn" @click="LayOutMain_pc.set_unfold_multi_column(false)"
         v-if="menu_config.is_multi_column && !filterHeader.show_filter_popup && !is_search_page && get_unfold_multi_column">
         <!-- <span class="text">{{ t('icon_tips.unfold') }}</span> -->
         <icon-wapper class="icon-arrow q-icon c-icon" size="12px"></icon-wapper>
@@ -88,7 +88,7 @@
 import comSelect from "src/base-pc/components/match-results/select/select/index.vue";
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
-import { t, GlobalSwitchClass, PageSourceData } from "src/core/index.js";
+import { t, GlobalSwitchClass, PageSourceData,LayOutMain_pc } from "src/core/index.js";
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import { ref, computed } from 'vue';
 import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
@@ -129,7 +129,7 @@ const vx_layout_cur_page = ref(null);
 
 
 // 收起右侧详情 展开多列玩法
-const get_unfold_multi_column = ref(GlobalSwitchClass.is_unfold_multi_column);
+const get_unfold_multi_column = ref(LayOutMain_pc.is_unfold_multi_column);
 
 const vx_match_sort = ref(GlobalSwitchClass.get_match_sort())
 const match_sort_show = ref(false) //切换排序是否显示

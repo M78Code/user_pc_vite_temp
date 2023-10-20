@@ -48,11 +48,11 @@
       <div class="col-right">
         <div
           class="fold-btn"
-          @click="set_unfold_multi_column(true)"
+          @click="LayOutMain_pc.set_unfold_multi_column(true)"
           v-if="
             menu_data.is_multi_column &&
             GlobalSwitchClass.global_switch.multi_column &&
-            !GlobalSwitchClass.get_is_unfold_multi_column() &&
+            !LayOutMain_pc.get_is_unfold_multi_column() &&
             ['search', 'home'].includes(route.name) &&
             !filterHeader.show_filter_popup
           "
@@ -168,7 +168,7 @@ import { computed, onMounted, onUnmounted, ref, watch,nextTick } from "vue";
 import MenuData from "src/core/menu-pc/menu-data-class.js";
 import { IconWapper } from "src/components/icon";
 import refresh from "src/components/refresh/refresh.vue";
-import { i18n_t, get_match_status,UserCtr ,GlobalSwitchClass,MatchDetailCalss,get_media_icon_index} from "src/core/index";
+import { i18n_t, get_match_status,UserCtr ,GlobalSwitchClass,MatchDetailCalss,get_media_icon_index,LayOutMain_pc} from "src/core/index";
 import { compute_css } from "src/core/server-img/index.js";
 import filterHeader from "src/core/filter-header/filter-header.js";
 import { debounce_throttle_cancel } from "src/core/utils/module/other.js";
@@ -235,7 +235,6 @@ const media_icons = [
 const  isTop  = ref(MatchDetailCalss.isTop) //视频置顶
 const  vx_play_media = ref(MatchDetailCalss.play_media) // 视频播放信息
 const  details_params = ref(MatchDetailCalss.params) // 赛事详细参数（赛事/联赛/球类/直播类型）
-const  is_unfold_multi_column = ref(GlobalSwitchClass.is_unfold_multi_column)  //是否展开多列玩法 收起右侧详情
 const  get_global_click = ref(GlobalSwitchClass.global_click)   //全局点击事件数
 //   // 设置获取视频是否展开状态
 const vx_get_is_fold_status = ref(GlobalSwitchClass.is_fold_status);
@@ -291,7 +290,6 @@ watch(
   () => GlobalSwitchClass.global_switch_version.version,
   (val) => {
     if (val) {
-      is_unfold_multi_column.value = GlobalSwitchClass.is_unfold_multi_column;
       get_global_click.value = GlobalSwitchClass.global_click;
       vx_get_is_fold_status.value = GlobalSwitchClass.global_click;
     }

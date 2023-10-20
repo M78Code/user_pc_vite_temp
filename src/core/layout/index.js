@@ -57,6 +57,8 @@ class LayOutMain {
     this.zoom = true
      // 当前展开区块  match-list:赛事列表 match-detail:赛事详情
     this.cur_expand_layout = "match-list"
+    //是否展开多列玩法
+    this.is_unfold_multi_column = false; 
   }
 
   // 初始化
@@ -132,7 +134,20 @@ class LayOutMain {
     }
     this.set_layout_version()
   }
-
+    /**
+   * @description: 设置是否展开多列玩法
+   * @param {boolean} val 
+   * @return {*}
+   */
+   set_unfold_multi_column(val){
+    debugger
+     this.is_unfold_multi_column = val
+     this.set_layout_version()
+   }
+   get_is_unfold_multi_column() {
+     return this.is_unfold_multi_column
+   }
+  
 }
 
 export default new LayOutMain();
