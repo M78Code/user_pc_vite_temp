@@ -19,7 +19,6 @@ class UseGlobal {
     this.is_show_banner = false; // 是否显示banner
     this.is_roll_show_banner = false; // 滚动时是否显示banner
     this.is_first_introduce_write = false; // 是否完成引导页
-    this.is_unfold_multi_column = false; //是否展开多列玩法
     //列表滚动数据
     this.retain_scroll_obj = {
       status: false,
@@ -79,10 +78,6 @@ class UseGlobal {
   set_global_data_version=debounce(()=>{
     this.global_switch_version.version = Date.now()
   },10)
-  get_is_unfold_multi_column() {
-    return this.is_unfold_multi_column
-  }
-
   // 获取当前排序
   get_match_sort() {
     return this.match_sort

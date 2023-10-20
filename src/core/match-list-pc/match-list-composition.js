@@ -309,6 +309,7 @@ function fetch_match_list(is_socket = false, cut) {
 	// 	return;
 	// }
 	// 强力推荐 静默拉取
+	console.log('is_show_hot', is_show_hot.value);
 	if (is_socket && is_show_hot.value) {
 		get_hot_match_list(true);
 		return;

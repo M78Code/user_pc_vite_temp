@@ -5,7 +5,7 @@ const router = createRouter({
     {
       path: "/",
       redirect: {
-        name: 'home'
+        name: 'matchList'
       },
       name: "main",
       component: () => import("../layouts/index.vue"),

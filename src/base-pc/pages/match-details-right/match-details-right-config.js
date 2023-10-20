@@ -162,11 +162,6 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
     ) {
       return;
     }
-    console.log(
-      "get_category_list 888",
-      allData.details_params.category,
-      allData.details_params
-    );
     // 如果是 右侧动画区切换赛事 并且当前在详情页就不请求玩法集
     if (!allData.details_params.category) {
       // 获取玩法集数据

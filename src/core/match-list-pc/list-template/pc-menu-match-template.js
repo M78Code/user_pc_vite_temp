@@ -4,6 +4,7 @@
  *
  */
 const menu_to_match_templte = {
+  // 常规
   101201: { label: "足球-今日-让球&大小", value: "1" },
   101202: { label: "足球-今日-波胆", value: "1" },
   101203: { label: "足球-今日-15分钟", value: "28" },
@@ -68,7 +69,12 @@ const menu_to_match_templte = {
   106202: { label: "美式足球-今日-总分单/双", value: "总分单/双" },
   106301: { label: "美式足球-早盘-让球&大小", value: "1" },
   106302: { label: "美式足球-早盘-总分单/双", value: "总分单/双" },
+  // 电竞
+  2100: { label: "电竞-英雄联盟", value: "24" },
+  2101: { label: "电竞-Dota2", value: "24" },
+  2103: { label: "电竞-王者荣耀", value: "24" },
 
+  // 冠军
   404: { label: "冰球-冠军-冠军", value: "18" },
   407: { label: "斯诺克-冠军-冠军", value: "18" },
   408: { label: "乒乓球-冠军-冠军", value: "18" },
@@ -83,9 +89,11 @@ const menu_to_match_templte = {
   402: { label: "篮球-冠军-冠军", value: "18" },
   412: { label: "拳击-冠军-冠军", value: "18" },
   403: { label: "棒球-冠军-冠军", value: "18" },
-
   400: { label: "冠军", value: "18" },
 
+  // 热门
+  500: { label: "热门-热门赛事", value: "12" },
+  50101: { label: "热门-竞足", value: "12" },
   502132: { label: "热门-NBA", value: "2" },
   502180: { label: "热门-英超", value: "1" },
   502239: { label: "热门-意甲", value: "1" },
