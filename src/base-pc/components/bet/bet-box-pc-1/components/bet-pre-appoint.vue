@@ -62,7 +62,7 @@ const ref_data = reactive({
   appoint_odds_value: null, // 预约赔率
   appoint_ball_head: null, // 预约球头
   timerly_basic_score: '', // :计时比分 返回比分格式为: (主队得分-客队得分)
-  computed_appoint_ball_head:'', // 球头
+  computed_appoint_ball_head: '', // 球头
   ball_score: '', // 比分 
   basic_score: '', // 赛事比分 返回比分格式为: (主队得分-客队得分)
   min_head_value: 0, //最下盘口值
@@ -101,8 +101,7 @@ onMounted(()=>{
   // 最小赔率是它本身
   ref_data.min_odds_value = market_info.oddFinally
   // 获取及时比分 格式: (主队比分-客队比分)
-  ref_data.timerly_basic_score = market_info.timerly_basic_score
-  console.error('sssss')
+  ref_data.timerly_basic_score = market_info.timerly_basic_score || ''
 })
 
 /**
@@ -234,8 +233,7 @@ const add_handle = (type, index = 1) => {
   //球头加
   if (type == 'ball_head') {
     let step = props.item.sportId == '1' ? 0.25 : 0.5;
-    let new_num = ref_data.appoint_ball_head * 1;
-    ref_data.appoint_ball_head = new_num + step;
+    ref_data.appoint_ball_head = mathJs.add( ref_data.appoint_ball_head,step) ;
     console.error('球头加', ref_data.appoint_ball_head);
     const max_rang = 10;
     const max_big = 30;
@@ -311,7 +309,7 @@ const sub_handle = (type, index = 1) => {
   if (type == 'ball_head') {
     let new_num = ref_data.appoint_ball_head;
     let step = props.item.sportId == 1 ? 0.25 : 0.5;
-    ref_data.appoint_ball_head = new_num - step;
+    ref_data.appoint_ball_head = mathJs.subtract(ref_data.appoint_ball_head,step);
     // console.error('market_type===', this.market_type);
     // console.error('basic_score===', ref_data.basic_score);
     console.error('timerly_basic_score===', ref_data.timerly_basic_score);
@@ -321,11 +319,11 @@ const sub_handle = (type, index = 1) => {
       //规则又改了，全场是主客队分数相加再加0.5， 非全场是主客队对应得分数加0.5，这里有三种情况，全场， 主队和客队
       let arr = ref_data.timerly_basic_score.split('-');
       if (MARKET_BIG_SMALL_PLAY_LIST.includes(props.item.playId)) {
-        ref_data.ball_score = ref_data.timerly_basic_score ? parseInt(arr[0]) + parseInt(arr[1]) + 0.5 : 0.5;
+        ref_data.ball_score = ref_data.timerly_basic_score ? mathJs.add(parseInt(arr[0]),parseInt(arr[1]), 0.5) : 0.5;
       } else if (MARKET_HOME_PLAY_LIST.includes(props.item.playId)) {
-        ref_data.ball_score = ref_data.timerly_basic_score ? parseInt(arr[0]) + 0.5 : 0.5;
+        ref_data.ball_score = ref_data.timerly_basic_score ? mathJs.add(parseInt(arr[0]), 0.5) : 0.5;
       } else if (MARKET_AWAY_PLAY_LIST.includes(props.item.playId)) {
-        ref_data.ball_score = ref_data.timerly_basic_score ? parseInt(arr[1]) + 0.5 : 0.5;
+        ref_data.ball_score = ref_data.timerly_basic_score ? mathJs.add(parseInt(arr[1]), 0.5) : 0.5;
       }
       //下面还有一种获取分数的渠道，那就是直接在betpreamount接口获取
       // let new_score =  lodash_.get(this.vx_get_pre_bet_list, 'currentMarket.preBetBenchmarkScore', '')
@@ -417,8 +415,9 @@ const search_odds_value_by_ball_head = () => {
               console.error('当前最小值等于1', ref_data.min_odds_value);
             }
             ref_data.min_odds_value = vu;
+            ref_data.appoint_ball_head = vu
             //设置输入框最小值
-            BetData.set_pre_min_odd_value(ref_data.min_odds_value)
+            // BetData.set_pre_min_odd_value(ref_data.min_odds_value)
             console.error('当前赔率===', ref_data.appoint_odds_value);
             console.error('当前盘口===', odd_item.playOptions);
             break;
@@ -447,6 +446,7 @@ const search_odds_value_by_ball_head = () => {
         // console.error('当前最小值等于2', ref_data.min_odds_value);
       }
       ref_data.min_odds_value = vu
+      ref_data.appoint_ball_head = vu
       //设置输入框最小值
       // BetData.set_pre_min_odd_value(ref_data.min_odds_value)
       // console.error('当前赔率3333===',  ref_data.appoint_odds_value)
