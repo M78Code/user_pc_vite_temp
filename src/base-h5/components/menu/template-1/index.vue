@@ -356,7 +356,7 @@ function set_menu_lv4(item, index, type = "click") {
 }
 //判断后台是否展示 VR / 电竞
 const show_dianjing = (item, index) => {
-  return MenuData.is_vr(item.mi) ? false : true
+  // return MenuData.is_vr(item.mi) ? false : true
   if (MenuData.is_export(item.mi)) return base_data.is_mi_2000_open; // 电竞tob后台关闭隐藏
   if (MenuData.is_vr(item.mi)) return base_data.is_mi_300_open; // VRtob后台关闭隐藏
   return ![2, 3, 6, 7].includes(index);
