@@ -37,7 +37,7 @@ export const useRightDetails = (props) => {
 // 获取指定的玩法id
 const  get_top_id = ref(MatchDetailCalss.top_id)
 
-  const { route } = props;
+  const { route,details_params } = props;
   //全局混入hooks
   // const {  } = useGetGlobal({ });
   const MatchDataWarehouseInstance = reactive(
@@ -180,7 +180,8 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
         get_match_detail(is_ws);
       }, is_ws);
     } else {
-      MatchDetailCalss.current_category_id =0
+      MatchDetailCalss.set_current_category_id(0)
+      get_tabs_active_id.value =0
     }
   };
   /** 批量注册mitt */
@@ -245,14 +246,15 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
     refresh_loading_timer: null, //暂时不知道数据是从哪里定义的  todo
     // 之前vuex的数据暂时放这里
     set_match_detail_count: null, //暂时不知道数据是从哪里定义的  todo
-    details_params: {
-      //赛事参数
-      media_type: "",
-      mid: "",
-      sportId: "",
-      tid: "",
-      time: "",
-    },
+    // details_params: {
+    //   //赛事参数
+    //   media_type: "",
+    //   mid: "",
+    //   sportId: "",
+    //   tid: "",
+    //   time: "",
+    // },
+    details_params:MatchDetailCalss.params,
     match_sort: 1,
   });
   //    // 是否为电竞
@@ -600,7 +602,7 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
     }
   );
   const init =lodash.debounce(()=>{
-    m_init()
+    m_init(allData.details_params)
   },1000)
   onMounted(() => {
     /**
@@ -1173,6 +1175,15 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
        }
   next()
 })
+watch(
+  () => MatchDetailCalss.details_data_version.version,
+  (val) => {
+    if (val) {
+     allData.details_params =  MatchDetailCalss.params
+    }
+  },
+  { deep: true }
+);
   return {
     ...toRefs(allData),
     get_is_fold_status, //视频开关
