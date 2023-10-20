@@ -79,18 +79,6 @@
         </div>
       </div>
     </div>
-    <!-- 第二行 玩法名称 -->
-    <!-- <div class="tr-col-name" v-if="[1, 3, 5, 21, 22].includes(+match_style_obj.data_tpl_id)">
-      <div :style="`width:${match_list_tpl_size.process_team_width}px !important;`"></div>
-      <div class="play-name row col">
-        <div v-for="(item, key) in bet_col" class="col ellipsis"
-          :style="`width: ${(match_style_obj.data_tpl_id == 22 && key <= 5) ? match_list_tpl_size.bet_width + 5 + 'px !important; flex:auto' : ''}`"
-          v-tooltip="{ content: item, overflow: 1 }" :key="key">
-          {{ item }}
-        </div>
-      </div>
-      <div :style="`width:${match_list_tpl_size.media_width}px !important;`"></div>
-    </div>-->
   </div>
 </template>
 
@@ -98,11 +86,9 @@
 // import sportIcon from "src/public/components/sport_icon/sport_icon.vue"
 import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card-class.js'
 import lodash from 'lodash';
-import { ref, computed, reactive } from 'vue';
+import { ref, computed } from 'vue';
 import sprite_img from "src/core/server-img/sprite-img/index.js"
 import BaseData from "src/core/base-data/base-data.js"
-import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
-import {component_symbol ,need_register_props} from "../config/index.js"
 import { t } from "src/core/index.js";
 import { get_match_tpl_title } from 'src/core/format/index.js'
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
@@ -135,6 +121,8 @@ const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_o
 if (!lodash.get(props, 'card_style_obj.league_obj.csid') && ['1', '500'].includes(menu_config.menu_root)) {
   useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST)
 }
+
+
 
 const is_HDP = computed(() => {
   return [1, 20, 24, 13, 25].includes(+match_style_obj.data_tpl_id)

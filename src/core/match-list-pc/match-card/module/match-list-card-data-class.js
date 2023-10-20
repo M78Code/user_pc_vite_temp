@@ -1,4 +1,4 @@
-import { ref } from "vue";
+import { reactive, ref } from "vue";
 import lodash from 'lodash';
 
 /**
@@ -12,9 +12,7 @@ class MatchListCardDataClass {
     // scroll_top
     this.scroll_top = 0;
     // 所有卡片对象
-    this.all_card_obj = {
-      // 'card_key':{}
-    };
+    this.all_card_obj = {};
     this.list_version =  ref('1') 
     //当前列表的卡片key列表  不包含赛事卡片
     this.match_list_card_key_arr =    [
@@ -70,11 +68,6 @@ class MatchListCardDataClass {
 
   set_match_list_style_info(payload) {
     this.match_list_style_info.value = payload;
-  }
-
-  set_all_card_obj(payload) {
-    this.all_card_obj = payload
-    console.log(this.all_card_obj, payload);
   }
 
   set_list_version() {
