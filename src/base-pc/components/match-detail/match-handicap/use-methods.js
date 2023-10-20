@@ -19,6 +19,7 @@ import { useMittEmit, useMittOn, MITT_TYPES,useMittEmitterGenerator } from "src/
 import { useRoute, useRouter } from "vue-router";
 import lodash from "lodash";
 export const useMethods = ({ props,emit }) => {
+  console.log(emit,'emit');
   //  ============================数据===================
   const state = reactive({
     sportId: null,
@@ -98,6 +99,7 @@ export const useMethods = ({ props,emit }) => {
     () => props.close_all_handicap,
     (res) => {
       if (res) {
+        debugger
         if (props.load_type == "details") {
           emit("set_handicap_state", "empty");
         } else {
@@ -136,6 +138,7 @@ export const useMethods = ({ props,emit }) => {
     (cur) => {
       if (cur == "999") {
         if (props.load_type == "details") {
+          debugger
           emit("set_handicap_state", "empty");
         } else {
           state.load_detail_statu = "empty";
@@ -466,6 +469,7 @@ export const useMethods = ({ props,emit }) => {
     }
 
     if (state.load_type == "details") {
+      debugger
       emit("set_handicap_state", statu);
     } else {
       state.load_detail_statu = statu;

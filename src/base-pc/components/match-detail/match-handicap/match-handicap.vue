@@ -108,7 +108,7 @@ export default defineComponent({
       lodash
     } = useMethods({
       props,
-      // emit:context.emit,
+      emit:context.emit,
     });
     return {
       showDetails,
