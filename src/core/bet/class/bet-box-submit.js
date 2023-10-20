@@ -191,6 +191,15 @@ const get_query_bet_amount_esports_or_vr = () => {
             // 通知页面更新 
             useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY)
 
+            // 设置投注项及时比分
+            let latestMarketInfo  = lodash_.get(res,'data.latestMarketInfo')
+            latestMarketInfo.forEach(item=>{
+                let custom_id = lodash_.get(item,'currentMarket[0].id')
+                //获取及时比分
+                let timerly_basic_score = item.preBetBenchmarkScore
+                BetData.set_custom_id_obj(custom_id,'timerly_basic_score',timerly_basic_score)
+            })
+
         } else {
             // 获取限额失败的信息
             BetViewDataClass.set_bet_error_code({
@@ -218,9 +227,9 @@ const get_query_bet_amount_pre = () => {
             // 通知页面更新 
             useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY)
             // 获取盘口值 
-            const latestMarketInfo = lodash_.get(res, 'data.latestMarketInfo')
+            const latestMarketInfo = lodash_.get(res, 'data.latestMarketInfo[0]')
             // 获取预约投注项
-            set_bet_pre_appoint(latestMarketInfo)
+            BetData.set_bet_appoint_obj(latestMarketInfo)
 
         } else {
             // 获取限额失败的信息
@@ -266,17 +275,6 @@ const set_bet_pre_list = bet_appoint => {
     })
     // 设置可预约的投注项
     BetData.set_bet_pre_list(pre_list)
-}
-
-// 设置预约投注 盘口信息
-const set_bet_pre_appoint = bet_appoint => {
-    const appoint_obj = {} 
-    bet_appoint.forEach(item => {
-        // 使用盘口id作为 key值 进行查询
-        appoint_obj[item.currentMarket.id] = item.currentMarket
-    })
-    // 设置预约投注 盘口数据
-    BetData.set_bet_appoint_obj(appoint_obj)
 }
 
 // 提交投注信息 

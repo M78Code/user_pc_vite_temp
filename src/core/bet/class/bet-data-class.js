@@ -386,6 +386,12 @@ this.bet_appoint_ball_head= null */
   set_dianjing_bet_obj(obj) {
     this.dianjing_bet_obj[obj.custom_id] = obj
   }
+
+  // 设置投注项其他属性
+  set_custom_id_obj(custom_id,key,val){
+    this.bet_read_write_refer_obj[custom_id].key = val
+  }
+
   /*
   设置 是否接受更好赔率
   */
@@ -417,7 +423,7 @@ this.bet_appoint_ball_head= null */
     this.set_bet_data_class_version()
   }
 
-  // 设置预约投注项
+  // 设置可预约的投注项
   set_bet_pre_list(val) {
     this.bet_pre_list = val
     this.set_bet_data_class_version()
