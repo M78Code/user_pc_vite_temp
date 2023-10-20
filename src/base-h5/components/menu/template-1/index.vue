@@ -163,34 +163,7 @@ import lodash from "lodash"
 import MatchFold from 'src/core/match-fold'
 import BaseData from 'src/core/base-data/base-data.js'
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
-
-// 一级菜单mi ref
-const { menu_type, update_time } =
-  MenuData;
-//是否 滚球
-const is_scroll_ball = computed(() => {
-  return MenuData.is_scroll_ball(menu_type.value);
-});
-//是否 电竞
-const is_export = computed(() => {
-  return MenuData.is_export(menu_type.value)
-});
-//是否 赛果
-const is_results = computed(() => {
-  return MenuData.is_results(menu_type.value);
-});
-//是否 串关
-const is_mix = computed(() => {
-  return MenuData.is_mix(menu_type.value)
-});
-//是否 冠军
-const is_kemp = computed(() => {
-  return MenuData.is_kemp(menu_type.value);
-});
-//是否 禁足
-const is_jinzu = computed(() => {
-  return MenuData.is_jinzu(menu_type.value);
-});
+import { is_scroll_ball, update_time, is_export, is_mix, is_kemp, is_jinzu, menu_type } from 'src/base-h5/mixin/menu.js'
 const show_favorite_list = ref(UserCtr.show_favorite_list)//是否收藏
 const route = useRoute();
 const router = useRouter();
@@ -330,7 +303,7 @@ async function set_menu_lv2(item, index, type = "click") {
       dj_back_img(item.mi)
       break
   }
- handle_match_render_data()
+  handle_match_render_data()
 }
 
 /**
@@ -338,7 +311,7 @@ async function set_menu_lv2(item, index, type = "click") {
  */
 const handle_match_render_data = () => {
   is_first.value = false
-    // 清除赛事折叠信息
+  // 清除赛事折叠信息
   MatchDataBaseH5.init()
   MatchFold.clear_fold_info()
 
@@ -362,7 +335,7 @@ const handle_match_render_data = () => {
 function set_menu_lv3(item, index, type = "click") {
   console.log(item)
   //点击当前 就不做什么
-  if ( MenuData.current_lv_3_menu && MenuData.current_lv_3_menu.menuId == item.menuId ) {
+  if (MenuData.current_lv_3_menu && MenuData.current_lv_3_menu.menuId == item.menuId) {
     return;
   }
   date_menu_curr_i.value = index;
@@ -554,7 +527,8 @@ if (MenuData.is_hot()) {
     left: 0;
     z-index: 2;
 
-    &.esport, &.is_export {
+    &.esport,
+    &.is_export {
       background-color: transparent;
     }
 
@@ -585,7 +559,8 @@ if (MenuData.is_hot()) {
       padding-right: 0.04rem;
       margin-left: 0.15rem;
 
-      &.esport,&.is_export {
+      &.esport,
+      &.is_export {
         background-color: transparent;
       }
 
