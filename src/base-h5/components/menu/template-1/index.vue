@@ -163,7 +163,7 @@ import lodash from "lodash"
 import MatchFold from 'src/core/match-fold'
 import BaseData from 'src/core/base-data/base-data.js'
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
-import { is_scroll_ball, update_time, is_export, is_mix, is_kemp, is_jinzu, menu_type } from 'src/base-h5/mixin/menu.js'
+import { is_scroll_ball, update_time, is_export, is_mix,is_results, is_kemp, is_jinzu, menu_type } from 'src/base-h5/mixin/menu.js'
 const show_favorite_list = ref(UserCtr.show_favorite_list)//是否收藏
 const route = useRoute();
 const router = useRouter();
