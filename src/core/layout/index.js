@@ -140,8 +140,14 @@ class LayOutMain {
    * @return {*}
    */
    set_unfold_multi_column(val){
-    debugger
      this.is_unfold_multi_column = val
+     if(!val){
+      this.layout_right_width = 441
+      this.layout_content_width -= 441
+     }else{
+      this.layout_right_width = 0
+      this.layout_content_width += 441
+     }
      this.set_layout_version()
    }
    get_is_unfold_multi_column() {

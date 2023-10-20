@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-show="false">{{ MatchListCardDataClass.list_version }}</div>
+    <div v-show="false">{{ MatchListCardDataClass.list_version }}{{ LayOutMain_pc.layout_version}}</div>
     <div
     class="list-card-wrap v-scroll-item relative-position"
     :class="{

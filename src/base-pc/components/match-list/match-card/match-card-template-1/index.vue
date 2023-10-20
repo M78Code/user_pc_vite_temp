@@ -1,5 +1,6 @@
 <template>
   <!--赛事玩法模板-->
+  <div v-show="false">{{ LayOutMain_pc.layout_version}}</div>
   <div
     class="c-match-card relative-position"
     :id="`list-mid-${mid}`"

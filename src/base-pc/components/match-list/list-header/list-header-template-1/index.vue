@@ -4,6 +4,7 @@
  * @Description: 赛事列表头部
 -->
 <template>
+  <div style="display: none;"> {{ LayOutMain_pc.layout_version }}</div>
   <div class="c-match-list-header yb-flex-between "
     :class="menu_config.menu_root == 2 && menu_config.match_list_api_config.guanjun ? 'today-champion' : ''">
     <!-- left -->
@@ -77,8 +78,8 @@
         <slot name="refresh_icon"></slot>
       </div>
       <div class="unfold-btn" @click="LayOutMain_pc.set_unfold_multi_column(false)"
-        v-if="menu_config.is_multi_column && !filterHeader.show_filter_popup && !is_search_page && get_unfold_multi_column">
-        <!-- <span class="text">{{ t('icon_tips.unfold') }}</span> -->
+        v-if="menu_config.is_multi_column && !filterHeader.show_filter_popup && !is_search_page && LayOutMain_pc.is_unfold_multi_column">
+        <span class="text">{{ t('icon_tips.unfold') }}</span>
         <icon-wapper class="icon-arrow q-icon c-icon" size="12px"></icon-wapper>
       </div>
     </div>
@@ -126,10 +127,6 @@ const props = defineProps({
 const vx_layout_list_type = ref('match');
 // 获取当前页路由信息
 const vx_layout_cur_page = ref(null);
-
-
-// 收起右侧详情 展开多列玩法
-const get_unfold_multi_column = ref(LayOutMain_pc.is_unfold_multi_column);
 
 const vx_match_sort = ref(GlobalSwitchClass.get_match_sort())
 const match_sort_show = ref(false) //切换排序是否显示
