@@ -111,7 +111,7 @@
   const route = useRoute();
   const router = useRouter();
   
-  const emit = defineEmits(["init", "back_to",'change_loading_state']);
+  const emit = defineEmits(["init", "back_to",'change_loading_state','get_mattch_details']);
   
 
   

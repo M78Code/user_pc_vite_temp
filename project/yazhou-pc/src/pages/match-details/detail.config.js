@@ -14,7 +14,6 @@ import { useGetGlobal } from "./global_mixin";
 import lodash from "lodash";
 import details from "src/core/match-detail/match-detail-pc/match-detail";
 import  { computed_background } from  "src/core/constant/config/csid.js"
-// console.log(details,);
 // 搜索操作相关控制类
 import search from "src/core/search-class/search.js";
 import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache";
@@ -29,7 +28,6 @@ import uid from "src/core/uuid/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import BetCommonHelper from "src/core/bet/common-helper/index.js";
 export const useGetConfig = (router,cur_menu_type,details_params,play_media) => {
-  console.log(router,'router',cur_menu_type);
   const route = useRoute();
   // const router = useRouter();
   const MatchDataWarehouseInstance =reactive(MatchDataWarehouse_PC_Detail_Common)
@@ -123,7 +121,6 @@ export const useGetConfig = (router,cur_menu_type,details_params,play_media) => 
   watch(
     () => ms.value,
     (_new, _old) => {
-      console.log(11111111111111)
       let arr_ms = [0, 1, 2, 7, 10, 110];
       // 1.赛事状态为 0:未开赛 1:滚球阶段 2:暂停 7:延迟 10:比赛中断 110:即将开赛 时更新玩法集
       // 2.ms变更时才调用
@@ -138,7 +135,6 @@ export const useGetConfig = (router,cur_menu_type,details_params,play_media) => 
     () => mmp.value,
     (_new, _old) => {
       if (_new !== 999 && _old) {
-        console.log(11111111111111)
         // 更新右侧详情
         // init();
       }
@@ -295,7 +291,6 @@ export const useGetConfig = (router,cur_menu_type,details_params,play_media) => 
             let str =state.mid+'_'
             // state.match_infoData = data;
             state.match_infoData = lodash.get(MatchDataWarehouseInstance.list_to_obj.mid_obj,str);
-            console.log(state.match_infoData,'match_infoData');
           } else {
             // 处理报错，置换替补数据
             countMatchDetail();
@@ -342,8 +337,6 @@ export const useGetConfig = (router,cur_menu_type,details_params,play_media) => 
    * @param {is_init} 是否需要走初始流程，如第一次进入
    */
   const get_match_detail = ({ is_ws = false, is_init = false } = {}) => {
-    console.log(is_init,'is_init',is_ws);
-    
     let params = {
       // mcid: this.mcid, //玩法集id
       mcid: "0", //玩法集id
@@ -450,8 +443,6 @@ export const useGetConfig = (router,cur_menu_type,details_params,play_media) => 
       let obj = [];
       // 设置玩法个数
       MatchDetailCalss.match_detail_count = data.length
-      console.log(MatchDetailCalss.match_detail_count,'match_detail_count');
-
       // 置顶数据排序
       let arr = []; //暂存本地置顶的数据
       for (var i = 0; i < data.length; i++) {
@@ -608,7 +599,6 @@ export const useGetConfig = (router,cur_menu_type,details_params,play_media) => 
       error_codes: ["0401038"],
       params: params,
       fun_then: (res) => {
-        console.log(res,'get_category_list');
         if (!MatchDataWarehouseInstance) {
           return;
         }
@@ -621,7 +611,6 @@ export const useGetConfig = (router,cur_menu_type,details_params,play_media) => 
         // if (code === 200 && data.length) {
         if ( res?.length) {
           state.category_list = res;
-          console.log( handicap_this.value,' state.handicap_this');
           handicap_this.value['category_list'] = res
           // 初始化玩法列表
           if (callback) {
@@ -740,9 +729,7 @@ export const useGetConfig = (router,cur_menu_type,details_params,play_media) => 
    * 传递玩法列表的数据给到玩法集
    */
   const set_handicap_this = (val) => {
-    
     handicap_this.value = val;
-    console.log(handicap_this.value,'state.handicap_this');
   };
 
   /**
@@ -797,7 +784,6 @@ export const useGetConfig = (router,cur_menu_type,details_params,play_media) => 
    * @description 获取loading状态
    */
   const getLoading = (status) => {
-    console.log(11111111111111, status);
     state.load_detail_statu = status;
   };
   /**

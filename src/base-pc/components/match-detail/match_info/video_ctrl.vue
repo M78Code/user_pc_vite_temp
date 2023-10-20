@@ -52,7 +52,7 @@
           v-if="
             menu_data.is_multi_column &&
             GlobalSwitchClass.global_switch.multi_column &&
-            !GlobalSwitchClass.get_is_unfold_multi_column &&
+            !GlobalSwitchClass.get_is_unfold_multi_column() &&
             ['search', 'home'].includes(route.name) &&
             !filterHeader.show_filter_popup
           "
@@ -502,6 +502,7 @@ onUnmounted(() => {
 </script>
 
 <style lang="scss" scoped>
+@import "src/base-pc/components/match-detail/match_info/video.scss";
 .ctrl-wrap {
   padding: 0 16px;
   height: 36px;

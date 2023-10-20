@@ -148,7 +148,6 @@ export const useMethods = ({ props,emit }) => {
   watch(
     () => props.match_details,
     (res) => {
-      console.log(props.handicap_state,'props.handicap_state');
          state.load_detail_statu = props.handicap_state;
       if(!lodash.get(res,'[0].odds_info'))  return false
       
