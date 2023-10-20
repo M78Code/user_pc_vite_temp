@@ -1071,9 +1071,8 @@ class AllDomain {
       // 获取当前的域名地址的/oss/dev.json路径
       let local_domain = `${window.location.origin}/oss/${OSS_FILE_NAME}`;
       // 增加本地的oss url
-      domains.push(local_domain);
+      domains.unshift(local_domain);
     }
-
     // console.error('get_oss_urls----------1--', JSON.stringify(domains));
     return domains;
   }

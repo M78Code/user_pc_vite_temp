@@ -242,7 +242,7 @@ function exit_full_screen(size) {
       }
     })
   } else {
-    this.set_is_back_btn_click(true);
+    MatchDetailCalss.set_is_back_btn_click(true);
     this.$utils.redirect_router('/home')
   }
   let time = Date.now()
