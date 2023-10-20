@@ -31,12 +31,12 @@ export const useMethods = ({ props,emit }) => {
     waterfall: [], // 单双列数据
     // 是否开了滚球盘
     had_play_handicap: true,
-    // 玩法展开状态
-    panel_status: "default",
+    // panel_status: "default",
     has_thumb: false, //是否有滚动条
     handle_: [], // 用户操作过的数据
   });
-
+  // 玩法展开状态
+  const panel_status  = ref("default")
   const route = useRoute();
   const showDetails = ref(false);
 
@@ -99,7 +99,6 @@ export const useMethods = ({ props,emit }) => {
     () => props.close_all_handicap,
     (res) => {
       if (res) {
-        debugger
         if (props.load_type == "details") {
           emit("set_handicap_state", "empty");
         } else {
@@ -121,7 +120,7 @@ export const useMethods = ({ props,emit }) => {
    * @return {undefined} undefined
    */
   watch(
-    () => state.panel_status,
+    () => panel_status.value,
     (res) => {
       switch (res) {
         case "open":
@@ -138,7 +137,6 @@ export const useMethods = ({ props,emit }) => {
     (cur) => {
       if (cur == "999") {
         if (props.load_type == "details") {
-          debugger
           emit("set_handicap_state", "empty");
         } else {
           state.load_detail_statu = "empty";
@@ -237,8 +235,8 @@ export const useMethods = ({ props,emit }) => {
         } else {
           item.has_plus = false;
         }
-        item.is_show = state.panel_status == "hide" ? false : true;
-        item.is_show_plus = state.panel_status == "hide" ? false : true;
+        item.is_show = panel_status.value == "hide" ? false : true;
+        item.is_show_plus = panel_status.value == "hide" ? false : true;
       });
     });
   };
@@ -298,9 +296,9 @@ export const useMethods = ({ props,emit }) => {
     }
     //所有玩法都已收起
     if (!status) {
-      state.panel_status = "hide";
+      panel_status.value = "hide";
     } else {
-      state.panel_status = "default";
+      panel_status.value = "default";
     }
     // 储存用户操作后的玩法状态，静态刷新后需要保持该状态
     window.sessionStorage.setItem(
@@ -329,9 +327,9 @@ export const useMethods = ({ props,emit }) => {
    * @return {undefined} undefined
    */
   const toggle_panel = () => {
-    state.panel_status == "open" || state.panel_status == "default"
-      ? (state.panel_status = "hide")
-      : (state.panel_status = "open");
+    panel_status.value == "open" || panel_status.value == "default"
+      ? (panel_status.value = "hide")
+      : (panel_status.value = "open");
     set_go_top_show();
   };
   /**
@@ -469,7 +467,6 @@ export const useMethods = ({ props,emit }) => {
     }
 
     if (state.load_type == "details") {
-      debugger
       emit("set_handicap_state", statu);
     } else {
       state.load_detail_statu = statu;
@@ -528,6 +525,7 @@ const rang = ref([])
       category_list:props.category_list,
       toggele_layout,
       check_half,
+      toggle_panel
     }
     useMittEmit(MITT_TYPES.EMIT_SET_HANDICAP_THIS, data)
   })
@@ -557,6 +555,7 @@ const rang = ref([])
     route,
     lodash,
     check_half,
-    toggle_panel
+    toggle_panel,
+    panel_status
   };
 };
