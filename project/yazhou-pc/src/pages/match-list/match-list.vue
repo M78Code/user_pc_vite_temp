@@ -39,7 +39,7 @@
       <list-filter-hot v-if="menu_config.menu_root == 500"
         :collect_count="collect_count" :load_data_state="load_data_state" />
       <!-- 电竞顶部菜单 -->
-      <!-- <esports-header v-if="menu_config.menu_root == 2000" :load_data_state="load_data_state" /> -->
+      <esports-header v-if="menu_config.menu_root == 2000" :load_data_state="load_data_state" />
       <!-- 赛事状态 | 赛种类型      -->
       <!-- <play-virtual-match-type class="sticky-wrap" v-if="menu_config.menu_root_show_shoucang == 300" style="top:100px" /> -->
       <!-- 联赛  VR 足球才会有联赛-->
@@ -125,7 +125,7 @@ import { ListHeaderFullVersionWapper as ListHeader } from "src/base-pc/component
 import ScrollList from 'src/base-pc/components/cus-scroll/scroll_list.vue';
 import refresh from "src/components/refresh/refresh.vue"
 
-// import { EsportsHeaderFullVersionWapper as EsportsHeader } from "src/base-pc/components/match-list/esports-header/index.js";//电竞赛事列表筛选
+import EsportsHeader from "src/base-pc/components/match-list/esports-header/index.vue";//电竞赛事列表筛选
 // import { VirtualMatchTypeFullVersionWapper as VirtualMatchType } from "src/base-pc/components/match-list/match-list-card/index.js";//虚拟体育 赛事列表 赛事头
 // import { LeaguesFilterFullVersionWapper as LeaguesFilter } from "src/base-pc/components/match-list/match-list-card/index.js";//联赛筛选页面
 // import { VirtualMatchTpl1FullVersionWapper as VirtualMatchTpl1 } from "src/base-pc/components/match-list/match-list-card/index.js"; //拟足球 、 虚拟篮球
@@ -157,6 +157,7 @@ export default {
     IconWapper,
     LoadData,
     refresh,
+    EsportsHeader,
     ListHeader
   },
   setup() {

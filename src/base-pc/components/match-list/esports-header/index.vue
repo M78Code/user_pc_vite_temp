@@ -1,10 +1,19 @@
 <template>
   <!-- 电竞背景图 sportsbg-csid -->
-  <div class="c-esports-header" :class="`sportsbg-${current_menu.csid}`" v-if="menu_config.menu_root == 2000">
+  <div
+    class="c-esports-header"
+    :class="`sportsbg-${current_menu.csid}`"
+    v-if="menu_config.menu_root == 2000"
+  >
     <!-- 游戏种类列表 -->
     <div class="sport-tab">
-      <div class="sport-item" :class="{ active: current_menu.mi == item.mi }" v-for="item in dianjing_sublist"
-        :key="item.csid" @click="sport_click(item)">
+      <div
+        class="sport-item"
+        :class="{ active: current_menu.mi == item.mi }"
+        v-for="item in dianjing_sublist"
+        :key="item.csid"
+        @click="sport_click(item)"
+      >
         <!-- 游戏logo -->
         <sport-icon :sport_id="item.csid" status="2" size="24px" />
         <!-- 游戏名称-->
@@ -21,35 +30,35 @@
   </div>
 </template>
 <script setup>
-import { onMounted } from 'vue';
-import { DateTabFullVersionWapper as DateTab} from "src/base-pc/components/tab/date-tab/index.js";
-// import sportIcon from "src/public/components/sport_icon/sport_icon.vue";
-import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
-import { component_symbol, need_register_props } from "../config/index.js"
-import BaseData from 'src/core/base-data/base-data.js'
-import NewMenu from "src/core/menu-pc/menu-data-class.js";
+import { onMounted, defineProps } from "vue";
+import { DateTabFullVersionWapper as DateTab } from "src/base-pc/components/tab/date-tab/index.js";
+import BaseData from "src/core/base-data/base-data.js";
 import { t } from "src/core/index.js";
 import menu_config from "src/core/menu-pc/menu-data-class.js";
-;
-const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
+
 const current_menu = ref({});
 const dianjing_sublist = ref(BaseData.dianjing_sublist);
 const menus_i18n_map = ref(BaseData.menus_i18n_map);
+
+const props = defineProps({});
+
 onMounted(() => {
   //解析菜单数据
-  const { left_menu_result } = NewMenu
-  current_menu.value = dianjing_sublist.value.find(item => item.mi == left_menu_result.lv2_mi) || {}
-  sport_click(current_menu.value)
-})
+  const { left_menu_result } = menu_config;
+  current_menu.value =
+    dianjing_sublist.value.find((item) => item.mi == left_menu_result.lv2_mi) ||
+    {};
+  sport_click(current_menu.value);
+});
 /**
-* @Description 球种点击
-* @param {undefined} undefined
-*/
+ * @Description 球种点击
+ * @param {undefined} undefined
+ */
 function sport_click(item) {
   // console.error("sport_click------",item)
   current_menu.value = { ...item };
   // 是否收藏
-  let is_collect = false // this.get_layout_list_type == "collect";
+  let is_collect = false; // this.get_layout_list_type == "collect";
   let mi_info = BaseData.mi_info_map[`mi_${item.mi}`] || {};
   let params = {
     ...mi_info,
@@ -77,14 +86,14 @@ function sport_click(item) {
     },
   };
   // 设置      左侧 菜单输出
-  NewMenu.set_left_menu_result({
-    ...NewMenu.left_menu_result,
-    lv2_mi: item.mi
+  menu_config.set_left_menu_result({
+    ...menu_config.left_menu_result,
+    lv2_mi: item.mi,
   });
   // 设置     中间 菜单输出
-  NewMenu.set_mid_menu_result(params);
+  menu_config.set_mid_menu_result(params);
   // 设置   请求  列表结构  API 参数的  值
-  // NewMenu.set_match_list_api_config(config);
+  // menu_config.set_match_list_api_config(config);
 }
 
 /**
@@ -97,7 +106,6 @@ function tab_click(obj) {
     return;
   }
 }
-
 </script>
 <style lang="scss" scoped>
 .c-esports-header {
@@ -125,7 +133,7 @@ function tab_click(obj) {
         background-image: url("/yazhou-pc/image/common/png/elf_esports.png");
       }
       &.active {
-        .sport-img
+        .sport-img {
           background-image: url("/yazhou-pc/image/common/png/sport_old_icon.png");
         }
       }
