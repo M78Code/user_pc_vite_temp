@@ -84,7 +84,7 @@
   import { ref, defineExpose, onUnmounted } from "vue";
   import {is_eports_csid}  from "src/core/constant/util/csid-util";
   import {utils,i18n_t}  from "src/core/index";
-  // import ZhuGe from "src/core/http/zhuge-tag";
+  import ZhuGe from "src/core/http/zhuge-tag";
   import details from "src/core/match-detail/match-detail-pc/match-detail.js";
   import info from 'src/base-pc/components/match-detail/match_info/info.vue'  
   // // 玩法tab条

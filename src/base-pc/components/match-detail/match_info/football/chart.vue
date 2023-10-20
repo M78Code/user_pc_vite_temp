@@ -272,7 +272,7 @@ export default {
     :deep() {
       .text-blue,
       .text-orange {
-        color: var(--q-gb-bg-c-11) !important;
+        color: var(--q-gb-bg-c-10) !important;
       }
     }
   }

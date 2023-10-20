@@ -152,8 +152,10 @@ const match_details = ref([]);
  * @return {*}
  */
  const update_data = (val) => {
+  console.log(val,'midval');
   match_infoData.value = MatchDetailsData.get_quick_mid_obj(val);
   match_details.value = [MatchDetailsData.get_quick_mid_obj(val)];
+  console.log(MatchDetailsData,'MatchDetailsData');
 };
 /*
  ** 监听MatchDetailCalss的版本号  获取最新的mid

@@ -396,7 +396,7 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
               MatchDataWarehouseInstance.set_match_details(allData.match_infoData,
                 data
               );
-
+              console.log(MatchDataWarehouseInstance,'match_infoData.value','set');
               let str = allData.mid + "_";
               match_details.value = [lodash.get(
                 MatchDataWarehouseInstance.list_to_obj.mid_obj,
@@ -507,7 +507,7 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
               MatchDataWarehouseInstance.set_match_details(allData.match_infoData,
                 data
               );
-      
+              console.log(MatchDataWarehouseInstance,'match_infoData.value','set',data);
               // match_details.value = MatchDataWarehouseInstance.list;
               let str = allData.mid + "_";
               match_details.value = [lodash.get(
@@ -830,8 +830,8 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
              * msc: ["S1|48:52"] => msc: {S1:{home: 48,away: 52}}
              */
             data.msc = detailUtils.build_msc(data);
-            // MatchDataWarehouseInstance.set_match_details(MatchDataWarehouseInstance.get_quick_mid_obj(allData.mid),data);
             MatchDataWarehouseInstance.set_match_details(data,[]);
+            console.log(MatchDataWarehouseInstance,'match_infoData.value','set',data);
             allData.match_infoData = MatchDataWarehouseInstance.get_quick_mid_obj(allData.mid);
             let mid = lodash.get(data, "mid");
             let mst = lodash.get(data, "mst");
@@ -1152,7 +1152,7 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
   const routeData = useRouter();
   // 全局路由守卫
   routeData.beforeEach((to, from, next) => {
-  console.log(to, from,'tofrom')
+      console.log(to, from,'tofrom')
        let _to = lodash.get(to, "name") || '';
        let _from = lodash.get(from, "name") || '';
        // 在首页刷新时不要重复调用 init
@@ -1160,9 +1160,9 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
        } else if(_to== 'home' && _from=='details') {
          // 从详情页返回列表页也要初始化右侧详情
          allData.is_go_match_list = false;
-         init();
+         init(allData.details_params);
        } else if(_to!='details') {
-          init();
+        init(allData.details_params);
        } else if (_to === 'details') {
          clearTimeout(allData.get_match_details_timer2)
          allData.get_match_details_timer2 = null
