@@ -607,7 +607,7 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
      * @description: 初始化数据 调取赛事详情、玩法集、玩法列表接口
      * @return {undefined} undefined
      */
-    init();
+    // init();
     // get_match_detail_base_throttle();
     // get_matchInfo_fun(1,allData.mid)
     // m_init();
