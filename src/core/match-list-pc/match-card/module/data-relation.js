@@ -169,6 +169,7 @@ export const compute_match_list_style_obj_and_match_list_mapping_relation_obj =
      * 6. 冠军赛事列表            只有联赛
      * 7. 列表数据类型为赛事列表   只有联赛
      */
+    console.log('match_list_mapping_relation_obj_type', MatchListCardData.match_list_mapping_relation_obj_type);
     if (
       [1, 3].includes(MatchListCardData.match_list_mapping_relation_obj_type)
     ) {

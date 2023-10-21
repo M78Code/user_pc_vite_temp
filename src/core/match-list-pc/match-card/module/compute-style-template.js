@@ -68,8 +68,11 @@ const compute_view_tpl_id = (data_tpl_id) => {
 	}else if([13].includes(+data_tpl_id)){
 	  // return matchtpl1after
 	  view_tpl_id = 1
+	}else if([24].includes(+data_tpl_id)){
+	// return matchtpl1after
+	  view_tpl_id = 'Esports'
 	}
-	return view_tpl_id
+	  return view_tpl_id
   }
 
 /**

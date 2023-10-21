@@ -64,4 +64,20 @@ export default {
   "pc-img-match-list-switch": {
     default: "pc-img-match-list-switch"
   },
+  // 电竞 英雄联盟banner
+  "pc-img-esports-100-banner": {
+    default: "pc-img-esports-100-banner"
+  },
+  // 电竞 csgo banner
+  "pc-img-esports-102-banner": {
+    default: "pc-img-esports-102-banner"
+  },
+  // 电竞 王者荣耀banner
+  "pc-img-esports-103-banner": {
+    default: "pc-img-esports-103-banner"
+  },
+  // 电竞 DOTA2 banner
+  "pc-img-esports-101-banner": {
+    default: "pc-img-esports-101-banner"
+  },
 };
