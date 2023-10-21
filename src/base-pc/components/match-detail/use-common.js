@@ -60,7 +60,24 @@ export const useCommon = ({ emit, props }) => {
   watch(vx_cur_esports_mode, (val) => {
     updateCurMode(val);
   });
+  /**
+	* @description: 监听玩法列表展开收起（全部）
+	* @param {}
+	* @return {undefined} undefined
+	*/
 
+  watch( () => props.panel_status, (val) => {
+    switch (val) {
+      case "open":
+       isShow.value = true;
+       isShow_plus.value = true;
+        break;
+      case "hide":
+       isShow.value = false;
+       isShow_plus.value = false;
+        break;
+    }
+  });
   //   ( 待改造)
   onMounted(() => {
     updateCurMode(vx_cur_esports_mode.value);
@@ -98,7 +115,7 @@ export const useCommon = ({ emit, props }) => {
       props.item_details.is_show_plus = props.isShow_plus;
     } else {
       // 主盘折叠
-      isShow.valu = !isShow.value;
+      isShow.value = !isShow.value;
       props.item_details.is_show = isShow.value;
     }
     // 用户点击了玩法就发送一次数据(需要改造)

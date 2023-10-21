@@ -26,6 +26,10 @@ import { compute_css_variables } from "src/core/css-var/index.js"
 import { PageSourceData, GlobalAccessConfig, ServerTime } from "src/core/index.js";
 import { reactive, onBeforeMount, onMounted, onUnmounted, ref, watch } from "vue";
 import { useRoute } from "vue-router";
+
+import './src/css/common/app.scss'
+import './src/css/common/public.scss'
+
 window.wslog = wslog;
 const BUILDIN_CONFIG = window.BUILDIN_CONFIG;
 const { CURRENT_ENV } = BUILDIN_CONFIG;
@@ -252,9 +256,7 @@ ServerTime.get_server_time()
   /* 禁止火狐浏览器下显示滚动条 */
   scrollbar-width: none;
 }
-.bw3{
-  background-color: var(--q-gb-bg-c-13);
-}
+
 .time-show {
   position: fixed;
   left: 0.5rem;

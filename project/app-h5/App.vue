@@ -4,7 +4,7 @@
   </div>
 </template>
 <script>
-import _ from "lodash";
+ 
 import appload from "./app-load.vue";
 import app_mixin from "src/base-h5/mixin/app-mixin.js";
 export default {

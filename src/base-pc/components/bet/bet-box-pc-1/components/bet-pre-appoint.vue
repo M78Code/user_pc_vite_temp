@@ -62,8 +62,8 @@ const ref_data = reactive({
   appoint_odds_value: null, // 预约赔率
   appoint_ball_head: null, // 预约球头
   timerly_basic_score: '', // :计时比分 返回比分格式为: (主队得分-客队得分)
-  computed_appoint_ball_head:'', // 球头
-  ball_score: -1, // 球分
+  computed_appoint_ball_head: '', // 球头
+  ball_score: '', // 比分 
   basic_score: '', // 赛事比分 返回比分格式为: (主队得分-客队得分)
   min_head_value: 0, //最下盘口值
   max_head_value: 0, //最大盘口值
@@ -100,6 +100,8 @@ onMounted(()=>{
   ref_data.appoint_odds_value = market_info.oddFinally
   // 最小赔率是它本身
   ref_data.min_odds_value = market_info.oddFinally
+  // 获取及时比分 格式: (主队比分-客队比分)
+  ref_data.timerly_basic_score = market_info.timerly_basic_score || ''
 })
 
 /**
@@ -146,7 +148,7 @@ const head_sub_style = computed(() => {
  */
 const head_add_style = computed(() => {
   let sty = false;
-  if ('1' == props.item.sportId) {
+  if ( 1 == props.item.sportId) {
     if (FOOTBALL_PLAY_LET_BALL.includes(props.item.playId)) {
       if (ref_data.appoint_ball_head >= 10) {
         sty = true;
@@ -157,11 +159,13 @@ const head_add_style = computed(() => {
       }
     }
   } else if ('2' == props.item.sportId) {
-    if (BASKETBALL_BY_APPOINTMENT_let.includes(props.item.playId)) {//让球
+    //让球
+    if (BASKETBALL_BY_APPOINTMENT_let.includes(props.item.playId)) {
       if (ref_data.appoint_ball_head >= 99.5) {
         sty = true;
       }
-    } else if (BASKETBALL_BY_APPOINTMENT_total.includes(props.item.playId)) {//大小
+      //大小
+    } else if (BASKETBALL_BY_APPOINTMENT_total.includes(props.item.playId)) {
       if (ref_data.appoint_ball_head >= 400.5) {
         sty = true;
       }
@@ -182,14 +186,16 @@ const appoint_odds_head_handle = (event) => {
   ref_data.appoint_ball_head = Number(event.target.value) ? Number(event.target.value).toFixed(1) : Number(event.target.value);
   if (new_value > ref_data.max_head_value) {
     ref_data.appoint_ball_head = ref_data.max_head_value
+    //预约赔率可输入最大值
     if (lodash_.isNaN(ref_data.appoint_odds_value)) {
-      ref_data.appoint_odds_value = max_head_value //预约赔率可输入最大值
+      ref_data.appoint_odds_value = max_head_value 
     }
   }
   if (new_value < ref_data.min_head_value) {
     ref_data.appoint_ball_head = ref_data.min_head_value
     if (lodash_.isNaN(ref_data.appoint_odds_value)) {
-      ref_data.appoint_odds_value = min_head_value //预约赔率可输入最大值
+      //预约赔率可输入最大值
+      ref_data.appoint_odds_value = min_head_value 
     }
   }
 }
@@ -219,7 +225,7 @@ const add_handle = (type, index = 1) => {
   //赔率加
   if (type == 'odds_value') {
     let aov = ref_data.appoint_odds_value;
-    ref_data.appoint_odds_value = aov*1 + 0.01;
+    ref_data.appoint_odds_value = mathJs.add(aov,0.01);
     //获取当前需要添加焦点的输入框，如果存在输入框，则获取焦点
     let input = index == 0 ? currency_input : ''
     if (input) input.focus();
@@ -227,20 +233,21 @@ const add_handle = (type, index = 1) => {
   //球头加
   if (type == 'ball_head') {
     let step = props.item.sportId == '1' ? 0.25 : 0.5;
-    let new_num = ref_data.appoint_ball_head * 1;
-    ref_data.appoint_ball_head = new_num + step;
+    ref_data.appoint_ball_head = mathJs.add( ref_data.appoint_ball_head,step) ;
     console.error('球头加', ref_data.appoint_ball_head);
     const max_rang = 10;
     const max_big = 30;
     //足球
     if ('1' == props.item.sportId) {
-      if (MARKET_RANG_FLAG_LIST.includes(props.item.playId)) {//让球
+      //让球
+      if (MARKET_RANG_FLAG_LIST.includes(props.item.playId)) {
         if (ref_data.appoint_ball_head >= max_rang) {
           ref_data.appoint_ball_head = max_rang
           //给出弹框提示（已为最高预约盘口值，请重新调整）
           useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD,`${i18n_t('bet.bet_header_hight_adjust')}`)
         }
-      } else {//大小球
+        //大小球
+      } else {
         if (ref_data.appoint_ball_head >= max_big) {
           ref_data.appoint_ball_head = max_big
           //给出弹框提示（已为最高预约盘口值，请重新调整）
@@ -251,7 +258,8 @@ const add_handle = (type, index = 1) => {
     } else if ('2' == props.item.sportId) {
       let max_let = 99.5;
       let max_small = 400.5;
-      if (BASKETBALL_BY_APPOINTMENT_let.includes(props.item.playId)) {//让球
+      //让球
+      if (BASKETBALL_BY_APPOINTMENT_let.includes(props.item.playId)) {
         if (ref_data.appoint_ball_head >= max_let) {
           ref_data.appoint_ball_head = max_let
           //给出弹框提示（已为最高预约盘口值，请重新调整）
@@ -289,7 +297,7 @@ const sub_handle = (type, index = 1) => {
   if (type == 'odds_value') {
     if (ref_data.appoint_odds_value > ref_data.min_odds_value) {
       let aov = ref_data.appoint_odds_value;
-      ref_data.appoint_odds_value = aov - 0.01;
+      ref_data.appoint_odds_value = mathJs.subtract(aov,0.01);
       let input = index == 0 ? currency_input : ''
       if (input) input.focus();
     } else {
@@ -301,21 +309,21 @@ const sub_handle = (type, index = 1) => {
   if (type == 'ball_head') {
     let new_num = ref_data.appoint_ball_head;
     let step = props.item.sportId == 1 ? 0.25 : 0.5;
-    ref_data.appoint_ball_head = new_num - step;
+    ref_data.appoint_ball_head = mathJs.subtract(ref_data.appoint_ball_head,step);
     // console.error('market_type===', this.market_type);
     // console.error('basic_score===', ref_data.basic_score);
-    console.error('timerly_basic_score===', ref_data.ball_score);
+    console.error('timerly_basic_score===', ref_data.timerly_basic_score);
     if ('1' == props.item.sportId) { //足球
       // let nnn = '2-3'
       // let ball_score = nnn ? Math.max(nnn.split('-')[0], nnn.split('-')[1]) + 0.5: 0.5;
       //规则又改了，全场是主客队分数相加再加0.5， 非全场是主客队对应得分数加0.5，这里有三种情况，全场， 主队和客队
-      let arr = ref_data.ball_score.split('-');
+      let arr = ref_data.timerly_basic_score.split('-');
       if (MARKET_BIG_SMALL_PLAY_LIST.includes(props.item.playId)) {
-        ref_data.ball_score = ref_data.ball_score ? parseInt(arr[0]) + parseInt(arr[1]) + 0.5 : 0.5;
+        ref_data.ball_score = ref_data.timerly_basic_score ? mathJs.add(parseInt(arr[0]),parseInt(arr[1]), 0.5) : 0.5;
       } else if (MARKET_HOME_PLAY_LIST.includes(props.item.playId)) {
-        ref_data.ball_score = ref_data.ball_score ? parseInt(arr[0]) + 0.5 : 0.5;
+        ref_data.ball_score = ref_data.timerly_basic_score ? mathJs.add(parseInt(arr[0]), 0.5) : 0.5;
       } else if (MARKET_AWAY_PLAY_LIST.includes(props.item.playId)) {
-        ref_data.ball_score = ref_data.ball_score ? parseInt(arr[1]) + 0.5 : 0.5;
+        ref_data.ball_score = ref_data.timerly_basic_score ? mathJs.add(parseInt(arr[1]), 0.5) : 0.5;
       }
       //下面还有一种获取分数的渠道，那就是直接在betpreamount接口获取
       // let new_score =  lodash_.get(this.vx_get_pre_bet_list, 'currentMarket.preBetBenchmarkScore', '')
@@ -366,7 +374,7 @@ const sub_handle = (type, index = 1) => {
     }
     set_computed_appoint_ball_head()
     console.error('球头减');
-  nextTick(() => {
+    nextTick(() => {
       search_odds_value_by_ball_head();
     })
   }
@@ -377,9 +385,10 @@ const sub_handle = (type, index = 1) => {
  * @return {undefined} undefined
  */
 const search_odds_value_by_ball_head = () => {
+  
   let head = ref_data.computed_appoint_ball_head;
-  let list = lodash_.get(BetData.bet_pre_list);
-  if (!list || lodash_.isNull(list.marketList)) return;
+  let appoint_ob = lodash_.get(BetData,'bet_appoint_obj');
+  if (!appoint_ob || lodash_.isNull(appoint_ob.marketList)) return;
   let playOptionsId = '';
   let marketId = ''
   // console.error('外围数据vx_get_pre_bet_list===', list);
@@ -387,13 +396,13 @@ const search_odds_value_by_ball_head = () => {
   //让球处理
   if (MARKET_RANG_FLAG_LIST.includes(props.item.playId)) {
     let cur_i = -1;
-    let ml_len = list.marketList.length;
+    let ml_len = appoint_ob.marketList.length;
     for (let i = 0; i < ml_len; i++) {
-      let ml_item = list.marketList[i];
+      let ml_item = appoint_ob.marketList[i];
       let odd_len = ml_item.marketOddsList.length;
       for (let j = 0; j < odd_len; j++) {
         let odd_item = ml_item.marketOddsList[j];
-        if (lodash_.get(list, 'currentMarket.marketOddsList[0].oddsType', -1) == odd_item.oddsType && odd_item.playOptions == head) {
+        if (lodash_.get(appoint_ob, 'currentMarket.marketOddsList[0].oddsType', -1) == odd_item.oddsType && odd_item.playOptions == head) {
           playOptionsId = odd_item.id; //投注项id
           cur_i = i;
           if (odd_item) {
@@ -406,8 +415,9 @@ const search_odds_value_by_ball_head = () => {
               console.error('当前最小值等于1', ref_data.min_odds_value);
             }
             ref_data.min_odds_value = vu;
+            ref_data.appoint_ball_head = vu
             //设置输入框最小值
-            BetData.set_pre_min_odd_value(ref_data.min_odds_value)
+            // BetData.set_pre_min_odd_value(ref_data.min_odds_value)
             console.error('当前赔率===', ref_data.appoint_odds_value);
             console.error('当前盘口===', odd_item.playOptions);
             break;
@@ -417,11 +427,11 @@ const search_odds_value_by_ball_head = () => {
     }
   } else { //非让球处理
     //这里要调整下
-    let dl_fillter = list.marketList.filter(item => item.marketValue == ref_data.computed_appoint_ball_head)[0];
+    let dl_fillter = appoint_ob.marketList.filter(item => item.marketValue == ref_data.computed_appoint_ball_head)[0];
     //盘口id 预约需要筛选
     marketId = lodash_.get(dl_fillter, 'id', '');
     let parr = lodash_.get(dl_fillter, 'marketOddsList', []);
-    let filter_arr = parr.filter(item => item.oddsType == lodash_.get(list, 'currentMarket.marketOddsList[0].oddsType', -1));
+    let filter_arr = parr.filter(item => item.oddsType == lodash_.get(appoint_ob, 'currentMarket.marketOddsList[0].oddsType', -1));
     //投注项id 预约需要筛选
     playOptionsId = filter_arr[0] ? filter_arr[0]['id'] : '';
     if (filter_arr[0]) {
@@ -436,6 +446,7 @@ const search_odds_value_by_ball_head = () => {
         // console.error('当前最小值等于2', ref_data.min_odds_value);
       }
       ref_data.min_odds_value = vu
+      ref_data.appoint_ball_head = vu
       //设置输入框最小值
       // BetData.set_pre_min_odd_value(ref_data.min_odds_value)
       // console.error('当前赔率3333===',  ref_data.appoint_odds_value)

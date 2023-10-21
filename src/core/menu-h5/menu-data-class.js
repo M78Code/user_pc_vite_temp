@@ -596,7 +596,6 @@ class MenuData {
   }
   // 赛果下数据
   async get_results_menu() {
-    console.error('赛果菜单 get')
     // 如果有缓存，则使用缓存
     let cache_data = SessionStorage.get(Cache_key.RESULT_SUB_MENU_CACHE, []);
     try {

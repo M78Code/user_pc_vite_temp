@@ -152,8 +152,10 @@ const match_details = ref([]);
  * @return {*}
  */
  const update_data = (val) => {
+  console.log(val,'midval');
   match_infoData.value = MatchDetailsData.get_quick_mid_obj(val);
   match_details.value = [MatchDetailsData.get_quick_mid_obj(val)];
+  console.log(MatchDetailsData,'MatchDetailsData');
 };
 /*
  ** 监听MatchDetailCalss的版本号  获取最新的mid
@@ -216,7 +218,7 @@ let back_to_timer =null
      MatchDetailCalss.set_is_back_btn_click(is_back)
      router.push({path:from_path});
      if (from_path.includes("search")) {
-       MatchDetailCalss.set_unfold_multi_column(false)
+      LayOutMain_pc.set_unfold_multi_column(false)
      }
    }, 50);
   };

@@ -1,8 +1,9 @@
 <template>
-  <div
+  <div>
+    <div v-show="false">{{ MatchListCardDataClass.list_version }}{{ LayOutMain_pc.layout_version}}</div>
+    <div
     class="list-card-wrap v-scroll-item relative-position"
     :class="{
-      
       'matc-type-card': [
         'sport_title',
         'play_title',
@@ -13,7 +14,7 @@
       LayOutMain_pc.layout_content_width - 15
     }px  !important;${card_style}`"
   >
-    <div v-show="false">{{ MatchListCardDataClass.list_version }}</div>
+
     <div
       v-if="is_mounted"
       :class="{ 'list-card-inner': !MatchListCardData.is_champion }"
@@ -63,11 +64,12 @@
       </template>
     </div>
   </div>
+  </div>
 </template>
 <script setup>
 import { computed, onMounted, onUnmounted, reactive, ref, watch } from "vue";
 import { PlayMatchTypeFullVersionWapper as PlayMatchType } from "src/base-pc/components/match-list/play-match-type/index.js";
-import { PlayMatchLeagueFullVersionWapper as PlayMatchLeague } from "src/base-pc/components/match-list/play-match-league/index.js";
+import PlayMatchLeague from "src/base-pc/components/match-list/play-match-league/index.vue";
 import { MatchTypeChampionFullVersionWapper as MatchTypeChampion } from "src/base-pc/components/match-list/match-type-champion/index.js";
 import { MatchCardFullVersionWapper as MatchCard } from "src/base-pc/components/match-list/match-card/index.js";
 import LoadData from "src/base-pc/components/load-data/load-data.vue";
@@ -77,9 +79,7 @@ import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/mat
 import { LayOutMain_pc } from "src/core/index.js";
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js";
 import { component_symbol, need_register_props } from "../config/index.js";
-import store from "src/store-redux/index.js";
-let state = store.getState();
-// const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
+
 const props = defineProps({
   card_key: {
     type: String,

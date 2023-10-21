@@ -1,0 +1,89 @@
+[class*=theme0] {
+  .-page-container- {
+
+    /* ************** 悬浮按钮 ************** -S */
+    .zh {
+      background-image: var(--q-color-com-img-bg-4);
+    }
+
+    .en {
+      background-image: var(--q-color-com-img-bg-5);
+    }
+
+    .folat-menu::before {
+      border: 1px solid var(--q-color-com-border-color-13);
+      background-color: var(--q-color-com-bg-color-13);
+      color: var(--q-gb-t-c-18);
+    }
+
+    /* ************** 悬浮按钮 ************** -E */
+    /* **********注单记录********************* *-S*/
+    .shadow-box {
+      background-color: var(--q-color-page-bg-color-4);
+      opacity: 0;
+      transition: opacity 0.3s;
+      backdrop-filter: var(--q-color-backdrop-filter-bg-1);
+    }
+
+    .bet-record-box2 {
+      bottom: -2px !important;
+    }
+
+    .shadow-box2 {
+      opacity: 1;
+    }
+
+    .bet-record-box2+.shadow-box {
+      opacity: 1;
+    }
+
+    /* **********注单记录********************* *-E*/
+    .maintenance-tips {
+      background: var(--q-gb-bd-c-13);
+    }
+  }
+
+  /* **********quasar 组件内置样式复写********************* *-S*/
+  .q-dialog--modal {
+    .q-dialog__backdrop {
+      backdrop-filter: var(--q-color-backdrop-filter-bg-1);
+      background-color: var(--q-color-page-bg-color-78) !important;
+    }
+  }
+
+  .q-dialog__backdrop {
+    backdrop-filter: var(--q-color-backdrop-filter-bg-1);
+    background-color: var(--q-color-page-bg-color-78);
+  }
+
+  /* **********quasar 组件内置样式复写********************* *-E*/
+
+  /* 球队logo */
+  img[class*="team-logo-"],
+  div[class*="team-logo-"] {
+    // background:  var(--q-color-com-img-bg-132) no-repeat;
+    background: var(--q-color-img-bg-46) no-repeat;
+  }
+
+  .hairline-border {
+    position: relative;
+    border-radius: 0.08rem;
+
+    &::after {
+      content: "";
+      pointer-events: none;
+      position: absolute;
+      left: 0;
+      top: 0;
+      border: 1px solid var(--q-gb-bd-c-3) !important;
+      // border: 1px solid red !important; 调试
+      border-radius: 0.16rem;
+      width: 200%;
+      height: 200%;
+      -webkit-transform: scale(0.5);
+      transform: scale(0.5);
+      -webkit-transform-origin: left top;
+      transform-origin: left top;
+    }
+  }
+}

@@ -1,5 +1,6 @@
 <template>
   <div class="c-match-item">
+    <div v-show="false">{{MatchListData.data_version.version}}</div>
     <!-- 比赛进程 -->
     <div class="process-col yb-flex-center">
       <!--热门赛事显示hot标识-->
@@ -54,13 +55,17 @@ const props = defineProps({
   }
 })
 
-const play_name_list = ref([]);
+// 赛事模板样式
 let match_style_obj = MatchListCardDataClass.all_card_obj[props.mid+'_']
+// 赛事模板宽度信息
 const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`].width_config
+// 赛事模板投注项信息
 const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`]
+// 赛事信息
 let match = MatchListData.list_to_obj.mid_obj[props.mid+'_'];
 const is_mounted = ref(true);
 
+// 数据仓库version变更时 重新赋值
 watch(() => MatchListData.data_version.version, (new_value, old_value) => {
   match = MatchListData.list_to_obj.mid_obj[props.mid+'_'];
 })

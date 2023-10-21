@@ -25,7 +25,7 @@ import detailMatchList from 'src/base-h5/components/details/components/detail-ma
 // 我的注单
 // import myNoteSheet from 'src/base-h5/pages/details/components/details-match-results/my-note-sheet.vue' 
 // 精彩回放
-import highlights from 'src/base-h5/components/details/analysis-matches/highlights/highlights.vue';   
+import highlights from 'src/base-h5/components/details/analysis-matches/highlights/highlights.vue';    
 import { useRoute, useRouter } from "vue-router"
 import { onMounted } from 'vue';
 

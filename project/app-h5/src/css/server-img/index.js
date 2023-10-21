@@ -1,21 +1,13 @@
 const modules = import.meta.globEager("./sprite-img/*.js");
 const sprite = {};
 Object.keys(modules).forEach((key) => {
-  const _key = key.replace("./sprite-img/", "").replace(".js", "");
-  sprite[_key] = modules[key].default || (() => { });
+    const _key = key.replace("./sprite-img/", "").replace(".js", "");
+    sprite[_key] = modules[key].default || (() => { });
 });
-//本地环境要用的key
 const local_config = {
-  test: {
-      default: "key",
-      // local_dev: "pc-left-menu-bg-image",
-      // local_test: "pc-left-menu-bg-image",
-      // local_ylcs: "pc-left-menu-bg-image",
-      // idc_pre: "pc-left-menu-bg-image",
-      // idc_sandbox: "pc-left-menu-bg-image",
-      // idc_lspre: "pc-left-menu-bg-image",
-      // idc_online: "pc-left-menu-bg-image",
-  }
+    test: {
+        default: "key"
+    }
 }
 export { local_config, sprite };
 /**

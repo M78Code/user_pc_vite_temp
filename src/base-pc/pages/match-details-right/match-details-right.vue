@@ -5,6 +5,7 @@
 -->
 <template>
   <!-- 详情右侧 -->
+
   <div
     class="right_details_wrap relative-position"
     :class="route.params.video_size == 1 && 'full-screen'"
@@ -21,7 +22,7 @@
       :style="{ 'margin-top': headerHeight + 'px' }"
       :is_detail="true"
     />
-
+    <div style="display:none">{{LayOutMain_pc.layout_version}}</div>
     <div class="screen" :class="{ 'video-page': route.name == 'video' }">
       <!-- 滚动区域 -->
       <v-scroll-area
@@ -134,7 +135,7 @@
         > -->
         <!-- 盘口模板start -->
     
-        <template v-if="(LayOutMain_pc.layout_current_path.cur !== 'details' && !is_esports) || route.name == 'video'">{{}}
+        <template v-if="(LayOutMain_pc.layout_current_path.cur !== 'details' && !is_esports) || route.name == 'video'">
           <match-handicap
             :match_info="match_infoData"
             :category_list="category_list"
@@ -384,6 +385,7 @@ const chatroom_height = () => {
 const update_data = (val) => {
   match_infoData.value = MatchDetailsData.get_quick_mid_obj(val);
   match_details.value = [MatchDetailsData.get_quick_mid_obj(val)];
+  console.log(match_infoData.value ,'match_infoData.value ',MatchDetailsData);
 };
 
 /*
@@ -394,6 +396,7 @@ const match_details = ref([]);
 watch(
   () => MatchDetailsData.data_version,
   (val, oldval) => {
+    console.log('data_version',val.version);
     if (val.version) {
       update_data(mid.value);
     }
@@ -408,6 +411,7 @@ watch(
   () => MatchDetailCalss.details_data_version.version,
   (val) => {
     if (val) {
+      console.log('details_data_version data_version',val,MatchDetailCalss.params);
       details_params.value =  MatchDetailCalss.params
       mid.value = MatchDetailCalss.mid;
       update_data(MatchDetailCalss.mid);

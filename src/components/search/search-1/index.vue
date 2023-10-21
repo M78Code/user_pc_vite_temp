@@ -162,7 +162,7 @@ onUnmounted(() => document.removeEventListener('click', click_fun))
 * 是否展开多列玩法 default: object
 * 路径: project_path\src\store\module\global.js
 */
-const is_unfold_multi_column = ref(GlobalSwitchClass.is_unfold_multi_column)
+const is_unfold_multi_column = ref(LayOutMain_pc.is_unfold_multi_column)
 
 onMounted(() => window.addEventListener('resize', on_resize))
 

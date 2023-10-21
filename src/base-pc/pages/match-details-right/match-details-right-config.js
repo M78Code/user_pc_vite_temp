@@ -37,7 +37,7 @@ export const useRightDetails = (props) => {
 // 获取指定的玩法id
 const  get_top_id = ref(MatchDetailCalss.top_id)
 
-  const { route } = props;
+  const { route,details_params } = props;
   //全局混入hooks
   // const {  } = useGetGlobal({ });
   const MatchDataWarehouseInstance = reactive(
@@ -162,11 +162,6 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
     ) {
       return;
     }
-    console.log(
-      "get_category_list 888",
-      allData.details_params.category,
-      allData.details_params
-    );
     // 如果是 右侧动画区切换赛事 并且当前在详情页就不请求玩法集
     if (!allData.details_params.category) {
       // 获取玩法集数据
@@ -180,7 +175,8 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
         get_match_detail(is_ws);
       }, is_ws);
     } else {
-      MatchDetailCalss.current_category_id =0
+      MatchDetailCalss.set_current_category_id(0)
+      get_tabs_active_id.value =0
     }
   };
   /** 批量注册mitt */
@@ -245,14 +241,15 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
     refresh_loading_timer: null, //暂时不知道数据是从哪里定义的  todo
     // 之前vuex的数据暂时放这里
     set_match_detail_count: null, //暂时不知道数据是从哪里定义的  todo
-    details_params: {
-      //赛事参数
-      media_type: "",
-      mid: "",
-      sportId: "",
-      tid: "",
-      time: "",
-    },
+    // details_params: {
+    //   //赛事参数
+    //   media_type: "",
+    //   mid: "",
+    //   sportId: "",
+    //   tid: "",
+    //   time: "",
+    // },
+    details_params:MatchDetailCalss.params,
     match_sort: 1,
   });
   //    // 是否为电竞
@@ -399,7 +396,7 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
               MatchDataWarehouseInstance.set_match_details(allData.match_infoData,
                 data
               );
-
+              console.log(MatchDataWarehouseInstance,'match_infoData.value','set');
               let str = allData.mid + "_";
               match_details.value = [lodash.get(
                 MatchDataWarehouseInstance.list_to_obj.mid_obj,
@@ -510,7 +507,7 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
               MatchDataWarehouseInstance.set_match_details(allData.match_infoData,
                 data
               );
-      
+              console.log(MatchDataWarehouseInstance,'match_infoData.value','set',data);
               // match_details.value = MatchDataWarehouseInstance.list;
               let str = allData.mid + "_";
               match_details.value = [lodash.get(
@@ -600,7 +597,7 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
     }
   );
   const init =lodash.debounce(()=>{
-    m_init()
+    m_init(allData.details_params)
   },1000)
   onMounted(() => {
     /**
@@ -833,8 +830,8 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
              * msc: ["S1|48:52"] => msc: {S1:{home: 48,away: 52}}
              */
             data.msc = detailUtils.build_msc(data);
-            // MatchDataWarehouseInstance.set_match_details(MatchDataWarehouseInstance.get_quick_mid_obj(allData.mid),data);
             MatchDataWarehouseInstance.set_match_details(data,[]);
+            console.log(MatchDataWarehouseInstance,'match_infoData.value','set',data);
             allData.match_infoData = MatchDataWarehouseInstance.get_quick_mid_obj(allData.mid);
             let mid = lodash.get(data, "mid");
             let mst = lodash.get(data, "mst");
@@ -1155,7 +1152,7 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
   const routeData = useRouter();
   // 全局路由守卫
   routeData.beforeEach((to, from, next) => {
-  console.log(to, from,'tofrom')
+      console.log(to, from,'tofrom')
        let _to = lodash.get(to, "name") || '';
        let _from = lodash.get(from, "name") || '';
        // 在首页刷新时不要重复调用 init
@@ -1163,9 +1160,9 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
        } else if(_to== 'home' && _from=='details') {
          // 从详情页返回列表页也要初始化右侧详情
          allData.is_go_match_list = false;
-         init();
+         init(allData.details_params);
        } else if(_to!='details') {
-          init();
+        init(allData.details_params);
        } else if (_to === 'details') {
          clearTimeout(allData.get_match_details_timer2)
          allData.get_match_details_timer2 = null
@@ -1173,6 +1170,15 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
        }
   next()
 })
+watch(
+  () => MatchDetailCalss.details_data_version.version,
+  (val) => {
+    if (val) {
+     allData.details_params =  MatchDetailCalss.params
+    }
+  },
+  { deep: true }
+);
   return {
     ...toRefs(allData),
     get_is_fold_status, //视频开关
