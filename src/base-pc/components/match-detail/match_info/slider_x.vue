@@ -1,6 +1,6 @@
 <template>
   <div class="slider-x" ref="slider_x">
-    <div v-if="isShowArrow" class="arrow-left" :class="{ disabled: currentScrollLength === 0}" @click="swipLeft"><img :src="arrowRightImg" /></div>
+    <div v-if="isShowArrow" class="arrow-left" :class="{ disabled: currentScrollLength === 0}" @click="swipLeft"><img :src="`${project_name}image/common/svg/video-swipe-arrow.svg`" /></div>
     <div
         class="slider-content"
         @mousemove="onMousemove"
@@ -18,12 +18,12 @@
         <slot v-bind:item="item"></slot>
         </div>
     </div>
-    <div v-if="isShowArrow" class="arrow-right" :class="{ disabled: currentScrollLength === contentWidth }"  @click="swipRight"><img :src="arrowRightImg" /></div>
+    <div v-if="isShowArrow" class="arrow-right" :class="{ disabled: currentScrollLength === contentWidth }"  @click="swipRight"><img :src="`${project_name}image/common/svg/video-swipe-arrow.svg`" /></div>
   </div>
 </template>
 
 <script>
-import arrowRightImg from "project_path/image/common/svg/video-swipe-arrow.svg"
+import { project_name } from "src/core";
 export default {
   name: "slider_x",
   props: {
@@ -46,7 +46,7 @@ export default {
   },
   data() {
     return {
-      arrowRightImg,
+      project_name,
       isShowArrow: false, // 是否显示箭头
       boxWidth: 0, // 滑动容器宽度
       contentWidth: 0, // 滑动内容宽度
