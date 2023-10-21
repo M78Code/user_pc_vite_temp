@@ -88,6 +88,7 @@ import { project_name,MenuData,compute_css,utils,UserCtr,i18n_t,MatchDataWarehou
 import matchListClass from 'src/core/match-list-h5/match-class/match-list.js'
 import { api_common } from "src/api/index.js";
 import oddListWrap from './odd-list-wrap.vue';
+import MatchFold from 'src/core/match-fold'
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 
 // TODO: 其他模块得 store  待添加
@@ -105,7 +106,7 @@ const emitters = ref({})
 const sub_play_scroller = ref(null)
 const sub_play_scroll_item = ref(null)
 
-const match_info = ref({})
+// const match_info = ref({})
 const wsl_flag = ref(sessionStorage.getItem('wsl') == 7777)
 // 罚牌玩法描述显示
 const show_tips = ref(false)
@@ -167,6 +168,11 @@ onMounted(() => {
   change_status_by_any_unfold();
 })
 
+// 赛事信息
+const match_info = computed(() => {
+  return MatchDataBaseH5.get_quick_mid_obj(props.mid)||{}
+})
+
 /**
  * 异步初始化次要玩法tab显示1
  */
@@ -183,7 +189,6 @@ watch(() => MatchDataBaseH5.data_version.version, () => {
 
 // 滚动列表时,组件赛事变化异步还原赛事次要玩法的显示状态
 const get_new_match_info = () => {
-  match_info.value = MatchDataBaseH5.get_quick_mid_obj(props.mid)||{}
   if (match_info.value) {
     init_tab_async_show();
     if (current_hps_key.value) {
@@ -374,11 +379,15 @@ watch(() => mmp_map_title.value, (value) => {
   tab_list.value = play_title(value)
 })
 
-// 判断是否显示tab栏
+/**
+ * @description 判断是否显示tab栏
+ */
 const show_tab_by_data = computed(() => {
   let flag = false;
   let { cosCorner, cosOvertime, cosBold, cosPenalty, cosPromotion, cosOutright, cosPunish, hpsAdd, cos15Minutes, cos5Minutes } = match_info.value;
   flag = cos15Minutes || cos5Minutes || cosCorner || cosOvertime || cosBold || cosPenalty || cosPromotion || cosOutright || cosPunish || (hpsAdd && hpsAdd.length > 0)
+  // const key = MatchFold.get_match_fold_key(match_info.value)
+  // const show_tab = lodash.get(MatchFold.match_mid_fold_obj.value, `${key}.show_tab`)
   // 如果没有 玩法时
   if (!flag) {
     let unfold_map = lodash.cloneDeep(get_secondary_unfold_map.value);

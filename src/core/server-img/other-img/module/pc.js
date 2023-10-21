@@ -80,4 +80,7 @@ export default {
   "pc-img-esports-101-banner": {
     default: "pc-img-esports-101-banner"
   },
+  "pc-img-loading": {
+    default: "pc-img-loading"
+  }
 };

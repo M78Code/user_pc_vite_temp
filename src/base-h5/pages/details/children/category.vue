@@ -93,7 +93,7 @@ import loading from "src/base-h5/components/common/loading.vue"
 import detailMatchList from 'src/base-h5/components/details/components/detail-match-list.vue';
 import uid from "src/core/uuid/index.js"
 import lodash from "lodash";
-import { project_name } from "src/core";
+import { project_name } from "src/core/";
 import { useRouter, useRoute } from "vue-router";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 // import { Level_one_detail_odd_info } from "../category-list.js";
@@ -285,6 +285,7 @@ export default defineComponent({
       get_details_data_cache,
       get_chpid_obj,
       MatchDataWarehouseInstance,
+      project_name,
       change_minheight,
       change_show,
       listItemAddCustomAttr,

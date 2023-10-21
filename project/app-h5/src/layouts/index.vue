@@ -7,17 +7,20 @@
     <q-page-container class="page_container" :style="`height:${+inner_height / 100}rem`">
       <!-- <layout-header /> -->
       <!-- <layout-conent /> -->
-      <MenuWapper v-if="['sport_menu', 'matchList'].includes(route.name)">
+      <!-- <MenuWapper v-if="['sport_menu', 'matchList'].includes(route.name)">
         <template #menu-right>
           <activityIcon />
           <setMenu />
         </template>
-      </MenuWapper>
+      </MenuWapper> -->
+      <TopMenu />
+      <ScrollMenu />
+      <Tab />
       <router-view />
       <BetBoxWapper />
       <!--页脚-->
-      <FooterWapper class="m-layout" v-if="['sport_menu', 'matchList'].includes(route.name)">
-      </FooterWapper>
+      <Tabbar class="m-layout" v-if="['sport_menu', 'matchList'].includes(route.name)">
+      </Tabbar>
 
       <!-- 筛选+搜索   已脱离文档流-->
       <div v-if="select_dialog" position="bottom" class="select-mask" :style="`height:${inner_height}px`">
@@ -55,7 +58,8 @@ import {
   nextTick,
 } from "vue";
 import { useMittOn, MITT_TYPES, i18n_t, UserCtr } from "src/core/";
-import { FooterWapper } from "src/components/footer/index.js";
+// import { FooterWapper } from "src/components/footer/index.js";
+import { TopMenu,Tabbar,ScrollMenu,Tab } from 'src/base-h5/components/menu/app-h5-menu/index'
 import { MenuWapper } from "src/base-h5/components/menu";
 import { BetBoxWapper } from "src/base-h5/components/bet";
 import activityIcon from "src/base-h5/components/common/activity-icon.vue"; // 设置
@@ -68,7 +72,7 @@ import PageSourceData from "src/core/page-source/page-source.js";
 // 活动弹出框
 const activityLayer = defineAsyncComponent(() => import("src/base-h5/components/common/activity-layer.vue"))
 const settleDialog = defineAsyncComponent(() =>
-  import("project_path/src/pages/cathectic/index.vue")
+  import("project_path/src/pages/cathectic/index.vue") // project/yazhou-h5/src/pages/cathectic/index.vue
 );
 const toast = defineAsyncComponent(() =>
   import("src/base-h5/components/common/toast.vue")
@@ -77,7 +81,7 @@ const toast = defineAsyncComponent(() =>
 //   import("../pages/match-list/components/select-dia.vue")
 // );
 
-import BetData from "src/core/bet/class/bet-data-class.js";
+import BetData from "src/core/bet/class/bet-data-class.js";// project/yazhou-h5/src/components/common/toast.vue
 // import layoutHeader from "./layout-header.vue";
 // import layoutConent from "./layout-content.vue";
 
@@ -301,7 +305,7 @@ if (UserCtr.get_user_token()) {
   /* ************** 悬浮按钮 ************** -E */
   /* **********注单记录********************* *-S*/
   .shadow-box {
-    background-color: var(--q-gb-bg-c-1); //var(--q-color-page-bg-color-4);
+    background-color: rgba(0, 0, 0, 0.3); //var(--q-color-page-bg-color-4);
     opacity: 0;
     transition: opacity 0.3s;
     backdrop-filter: var(--q-color-backdrop-filter-bg-1);
@@ -328,11 +332,11 @@ if (UserCtr.get_user_token()) {
 
   /* **********注单记录********************* *-S*/
   .bet-record-box {
-    width: 80%;
+    width: 100%;
     max-width: 7.7rem !important;
     transition: bottom 0.3s;
     position: fixed;
-    left: 10%;
+    left: 0;
     z-index: 600;
   }
 

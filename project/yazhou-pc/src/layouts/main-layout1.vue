@@ -54,7 +54,6 @@ import layoutRight from "./layout-right.vue";
 import toastComponents from "src/base-pc/components/toast/toast.vue";
 import alertComponents from "src/base-pc/components/toast/alert.vue";
 import confirmComponents from "src/base-pc/components/toast/confirm.vue";
-import "./match-list.scss";
 // import moveVideo from 'src/base-pc/components/video-replay/move-video.vue'
 import { compute_css_variables } from "src/core/css-var/index.js"
 
@@ -80,11 +79,12 @@ const show_move_video = computed(()=>{
   }
  }) 
 </script>
-<style lang="scss" scoped>
-@import url(./main-layout.scss);
+<style lang="scss">
 @import url(./content-layout.scss);
+@import url(./main-layout.scss);
 @import url(./match-list.scss);
-
+</style>
+<style lang="scss" scoped>
 .page-main {
   width: 100%;
   display: flex;

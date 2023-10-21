@@ -6,7 +6,7 @@
     <!-- 底部菜单资源配置图片 -->
     <div v-if="isshow_bottom_banner" class="bottom-banner">
       <img :src="calc_resources_obj.img_src" alt="" class="banner" @click="jump" />
-      <img :src="`/${project_name} /image/svg/close9.svg`" alt="" class="close" @click.self="isshow_bottom_banner = false" />
+      <img src="/yazhou-h5/image/svg/close9.svg" alt="" class="close" @click.self="isshow_bottom_banner = false" />
     </div>
     <div class="floating-menu">
       <div class="footer-menu-item" @click="menu_item_click(item, k)" v-for="(item, k) of footer_menulist" :key="k"
@@ -470,9 +470,9 @@ const set_footer_menulist = (init_footer_menulist_data = true) => {
         id: 0,
         is_disabled: false,
       },
-      // 关注
+      // 盘口教程
       {
-        title: i18n_t("footer_menu.follow"),
+        title: i18n_t("footer_menu.handicap_tutorial"),
         icon0: "f-icon-follow.svg",
         icon: show_favorite_list.value
           ? "f-icon-follow1.svg"
@@ -484,17 +484,29 @@ const set_footer_menulist = (init_footer_menulist_data = true) => {
         id: 1,
         is_disabled: is_virtual || is_result_virtual || MenuData.is_results(),
       },
-      // 注单
+      // 设置菜单
       {
-        title: i18n_t("footer_menu.bet_order"),
+        title: i18n_t("footer_menu.set_menu"),
         icon: "f-icon-bet-order.svg",
         icon_black: "f-icon-bet-order-black.svg",
         id: 2,
         is_disabled: false,
       },
-      //筛选
+      //未结注单
       {
-        title: i18n_t("footer_menu.filter"),
+        title: i18n_t("footer_menu.open_bets"),
+        icon: "f-icon-filter.svg",
+        icon_black: "f-icon-filter-black.svg",
+        id: 3,
+        is_disabled:
+          is_virtual ||
+          is_saiguo_gz ||
+          show_favorite_list.value ||
+          is_electronicSports,
+      },
+      //已结注单
+      {
+        title: i18n_t("footer_menu.closed_bets"),
         icon: "f-icon-filter.svg",
         icon_black: "f-icon-filter-black.svg",
         id: 3,

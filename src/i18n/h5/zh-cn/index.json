@@ -786,7 +786,10 @@
     "time": "时间",
     "time2": "按时间",
     "time_order": "时间排序",
-    "win_alone": "独赢"
+    "win_alone": "独赢",
+    "handicap_tutorial":"盘口教程",
+    "open_bets":"未结注单",
+    "closed_bets":"已结注单"
   },
   "home": {
     "can_bet": "可投注项",
