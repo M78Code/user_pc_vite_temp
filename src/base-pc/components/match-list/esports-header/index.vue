@@ -130,11 +130,11 @@ function tab_click(obj) {
       .sport-img {
         margin: 6px auto;
         display: block;
-        background-image: url("/yazhou-pc/image/common/png/elf_esports.png");
+        background-image: url($SCSSPROJECTPATH+"/image/common/png/elf_esports.png");
       }
       &.active {
         .sport-img {
-          background-image: url("/yazhou-pc/image/common/png/sport_old_icon.png");
+          background-image: url($SCSSPROJECTPATH+"/image/common/png/sport_old_icon.png");
         }
       }
     }
