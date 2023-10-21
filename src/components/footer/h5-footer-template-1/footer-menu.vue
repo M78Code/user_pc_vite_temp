@@ -6,7 +6,7 @@
     <!-- 底部菜单资源配置图片 -->
     <div v-if="isshow_bottom_banner" class="bottom-banner">
       <img :src="calc_resources_obj.img_src" alt="" class="banner" @click="jump" />
-      <img src="/yazhou-h5/image/svg/close9.svg" alt="" class="close" @click.self="isshow_bottom_banner = false" />
+      <img :src="`/${project_name} /image/svg/close9.svg`" alt="" class="close" @click.self="isshow_bottom_banner = false" />
     </div>
     <div class="floating-menu">
       <div class="footer-menu-item" @click="menu_item_click(item, k)" v-for="(item, k) of footer_menulist" :key="k"

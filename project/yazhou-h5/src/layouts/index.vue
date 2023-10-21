@@ -68,7 +68,7 @@ import PageSourceData from "src/core/page-source/page-source.js";
 // 活动弹出框
 const activityLayer = defineAsyncComponent(() => import("src/base-h5/components/common/activity-layer.vue"))
 const settleDialog = defineAsyncComponent(() =>
-  import("project_path/src/pages/cathectic/index.vue") // project/yazhou-h5/src/pages/cathectic/index.vue
+  import("project_path/src/pages/cathectic/index.vue")
 );
 const toast = defineAsyncComponent(() =>
   import("src/base-h5/components/common/toast.vue")
@@ -77,7 +77,7 @@ const toast = defineAsyncComponent(() =>
 //   import("../pages/match-list/components/select-dia.vue")
 // );
 
-import BetData from "src/core/bet/class/bet-data-class.js";// project/yazhou-h5/src/components/common/toast.vue
+import BetData from "src/core/bet/class/bet-data-class.js";
 // import layoutHeader from "./layout-header.vue";
 // import layoutConent from "./layout-content.vue";
 
