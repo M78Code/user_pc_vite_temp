@@ -1,7 +1,6 @@
 <template>
   <div class="virtual-sports">
-    <!-- <virtual-skeleton v-show="virtual_data_loading">
-    </virtual-skeleton> -->
+    <virtual-skeleton v-show="virtual_data_loading"></virtual-skeleton>
     <!--联赛tab-->
     <div class="tab-wrapper">
       <div class="tab-item" :class="{active:i == tab_item_i}" v-for="(tab_item,i) of tab_items"
@@ -49,25 +48,25 @@
       <div
           v-if="!ranking_list_change"
           class="v-sports-main-list" 
-          :class="{'v-sports-main-list-style': get_newer_standard_edition === 1}" 
+          :class="{'v-sports-main-list-style': standard_edition === 1}" 
           :style="{'padding-bottom': get_betbar_show ? '0.5rem' : '0'}"
       >
         <!-- 虚拟体育足球赛事列表 -->
-        <!-- <v-s-match-list v-if="[1001,1004].includes(sub_menu_type)" :virtual_match_list="match_list_by_no"
-          :match_list_loaded="match_list_loaded" :csid="sub_menu_type" :v_menu_changed="v_menu_changed"
+        <v-s-match-list v-if="[1001,1004].includes(menu_lv2?.mi)" :virtual_match_list="match_list_by_no"
+          :match_list_loaded="match_list_loaded" :csid="menu_lv2?.mi" :v_menu_changed="v_menu_changed"
           @switch_match="switch_match_handle"  @start="match_start_handle">
-        </v-s-match-list> -->
+        </v-s-match-list>
 
         <div v-if="current_match.match_status == 0">
           <!-- 赛马切换玩法集tab组件 -->
           <!-- <virtual-sports-tab
             :batch="current_match_id"
-            v-if="![1001,1004].includes(sub_menu_type)">
+            v-if="![1001,1004].includes(menu_lv2?.mi)">
           </virtual-sports-tab> -->
           <!-- 打印请勿删除 -->
           <!-- <div><span>赛事状态</span>{{current_match.match_status}}</div> -->
           <!-- 赛马投注区域 -->
-          <div v-if="match_list_by_no && match_list_by_no.length && ![1001,1004].includes(sub_menu_type)">
+          <div v-if="match_list_by_no && match_list_by_no.length && ![1001,1004].includes(menu_lv2?.mi)">
             <!-- <virtual-sports-category
                 :top_menu_changed="top_menu_changed"
                 :current_match="match_list_by_no[0]" 
@@ -78,7 +77,7 @@
         </div>
 
         <!-- 注释勿删除 -->
-        <div class="v-sports-ranking" v-if="![1001,1004].includes(sub_menu_type)">
+        <div class="v-sports-ranking" v-if="![1001,1004].includes(menu_lv2?.mi)">
           <!-- 打印请勿删除 -->
           <!-- <div><span>赛事状态</span>{{current_match.match_status}}</div> -->
           <!-- 赛马的动态排名---赛马在比赛过程的时候显示 -->
@@ -91,7 +90,7 @@
       <!-- 排行榜页面,小组赛淘汰赛页面  -->
       <div v-else class="list-wrapper">
         <!--  足球 页面  -->
-        <div v-if="[1001,1004].includes(sub_menu_type)">
+        <div v-if="[1001,1004].includes(menu_lv2?.mi)">
           <!--  足球小组赛,淘汰赛页面  -->
           <!-- <group-knockout
             v-if="tab_items[tab_item_i] ? tab_items[tab_item_i].field3 != '': false"
@@ -135,7 +134,10 @@ import {utils } from 'src/core/index.js';
 import {  PageSourceData  } from "src/core/index.js";
 import lodash from "lodash";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
+import { menu_type, menu_lv2 } from 'src/base-h5/mixin/menu.js'
+import { standard_edition } from 'src/base-h5/mixin/userctr.js'
 import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
+
 export default defineComponent({
   name: "virtual",
   components:{
@@ -221,8 +223,6 @@ export default defineComponent({
   // computed:{
   //   //
   //   ...mapGetters({
-  //     sub_menuid: 'get_current_sub_menuid',
-  //     sub_menu_type: 'get_curr_sub_menu_type',
   //     current_league: 'get_current_league',
   //     current_batch:'get_current_batch',
   //     get_video_process_data:"get_video_process_data",
@@ -231,23 +231,9 @@ export default defineComponent({
   //     is_show_analyse:"get_is_show_details_analyse",
   //     get_bet_list:"get_bet_list",
   //     get_betbar_show:"get_betbar_show",
-  //     get_newer_standard_edition:"get_newer_standard_edition",
   //   }),
-  //   //标签页列表
-  //   tab_items(){
-  //     let r = [];
-  //     if(menu_list && menu_list.length){
-  //       r = menu_list;
-  //     }
-  //     return r;
-  //   }
-  // },
-    const sub_menuid = computed(() => {
-      return ""
-    });
-    const sub_menu_type = computed(() => {
-      return ""
-    });
+      
+    // }
     const current_league = computed(() => {
       return ""
     });
@@ -272,9 +258,7 @@ export default defineComponent({
     const get_betbar_show = computed(() => {
       return ""
     });
-    const get_newer_standard_edition = computed(() => {
-      return PageSourceData.get_newer_standard_edition();
-    });
+    // 标签页列表
     const tab_items = computed(() => {
       let r = [];
       if(menu_list && menu_list.length){
@@ -345,9 +329,7 @@ export default defineComponent({
       }
     );
 
-    watch(
-      () => sub_menu_type,
-      (c,n) => {
+    watch( () => menu_lv2?.mi, (c,n) => {
         //赛马赛狗 摩托车
         if([1011, 1002, 1010, 1009].includes(c)){
           component_data.ranking_list_change = false;
@@ -389,7 +371,6 @@ export default defineComponent({
     //   set_current_mid:'set_current_mid',
     // }),
 
-
     // 顶部菜单切换状态改变
     const handle_top_menu_change = (status) => {
       component_data.top_menu_changed = status
@@ -400,7 +381,7 @@ export default defineComponent({
      *@return {Undefined} undefined
      */
     const send_virtual_result_rank_data = (arr) => {
-      if(sub_menu_type == 1009) {
+      if(menu_lv2.value.mi == 1009) {
         component_data.virtual_result_rank_data = arr
       }
     };
@@ -416,7 +397,7 @@ export default defineComponent({
           }
         });
       }
-      if(sub_menu_type == 1004 && !component_data.singleton_10second){
+      if(menu_lv2.value.mi == 1004 && !component_data.singleton_10second){
         component_data.singleton_10second = true;
         get_score_basket_ball();
       }
@@ -461,7 +442,7 @@ export default defineComponent({
         // useMittEmit(MITT_TYPES.EMIT_IS_ALL_END_NOTICE);
 
         //1011赛马、1002赛狗、1010摩托车、1009泥地摩托车结束时更新下一期
-        if([1011, 1002, 1010, 1009].includes(sub_menu_type)){
+        if([1011, 1002, 1010, 1009].includes(menu_lv2.value.mi)){
           component_data.timer1_ = setTimeout(() => {
             check_is_first_tab_delete();
           },5000);
@@ -476,7 +457,7 @@ export default defineComponent({
      */
     const timer_ended_handle = (flag) => {
       //篮球滚球倒计时结束拉取视频接口
-      if(sub_menu_type == 1004){
+      if(menu_lv2.value.mi == 1004){
         if(flag == 'is_basketball_playing'){
           get_video_process_by_api(() => {
             get_match_video_process(component_data.current_match);
@@ -508,7 +489,7 @@ export default defineComponent({
       if(match){
         let server_now = get_now_server();
         match.start_now_sub = Number(match.mgt) - server_now;
-        if(sub_menu_type == 1004){
+        if(menu_lv2.value.mi == 1004){
           if(match.mmp == 'INGAME'){
             if(match.start_now_sub <= 0){
               get_video_process_by_api(() => {
@@ -638,8 +619,6 @@ export default defineComponent({
       match_start_handle,
       update_n_batch_handle,
       tab_items,
-      sub_menuid,
-      sub_menu_type,
       current_league,
       current_batch,
       get_video_process_data,
@@ -648,7 +627,6 @@ export default defineComponent({
       is_show_analyse,
       get_bet_list,
       get_betbar_show,
-      get_newer_standard_edition,
     }
   }
 });

@@ -18,8 +18,6 @@ import { nextTick } from "vue";
 
 
 
-import sleep from  "licia/sleep"  
-import Queue from  "licia/Queue"  
 export default class VSport {
   /**
    * @Description:构造函数
@@ -47,6 +45,8 @@ export default class VSport {
     this.loop_callback = null;
     // 赛事状态
     this.match_status = 0;
+    // 赛事 loading 状态
+    this.virtual_data_loading = false
     if (sport_data && callback) {
       // 赛事信息对象,消费数据
       this.sport_data = sport_data;
@@ -189,7 +189,11 @@ export default class VSport {
         // 消费一条记录
         this.work();
         await sleep(800);
-        this.current_time += (new Date().getTime() - time);
+        let timer = setTimeout(() => {
+          this.current_time += (new Date().getTime() - time);
+          clearTimeout(timer)
+          timer = null
+        }, 800)
       }
     })();
   }

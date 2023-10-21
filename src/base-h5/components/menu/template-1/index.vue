@@ -278,7 +278,7 @@ function set_menu_lv1(item, index, type = "click") {
   } else if (MenuData.is_results(item.mi)) {// "赛果",
   } else if (MenuData.is_vr(item.mi)) {// "VR",
     router.push({
-      name: "virtual",
+      name: "virtual_sports",
       query: {
         from: route.name,
       },
@@ -383,7 +383,7 @@ function set_menu_lv4(item, index, type = "click") {
 }
 //判断后台是否展示 VR / 电竞
 const show_dianjing = (item, index) => {
-  return MenuData.is_vr(item.mi) ? false : true
+  return true
   if (MenuData.is_export(item.mi)) return base_data.is_mi_2000_open; // 电竞tob后台关闭隐藏
   if (MenuData.is_vr(item.mi)) return base_data.is_mi_300_open; // VRtob后台关闭隐藏
   return ![2, 3, 6, 7].includes(index);
