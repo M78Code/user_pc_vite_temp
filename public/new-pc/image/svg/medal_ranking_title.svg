@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="60px" height="12px" viewBox="0 0 60 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>编组 10</title>
+    <defs>
+        <linearGradient x1="100%" y1="50%" x2="0%" y2="50%" id="linearGradient-1">
+            <stop stop-color="#FFFFFF" offset="0%"></stop>
+            <stop stop-color="#B11E33" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="05-PC-串关" transform="translate(-1440.000000, -713.000000)">
+            <g id="编组-3" transform="translate(1220.000000, 459.000000)">
+                <g id="编组-22备份" transform="translate(0.000000, 235.000000)">
+                    <g id="编组-12" transform="translate(0.000000, 0.000000)">
+                        <g id="编组-11" transform="translate(60.000000, 19.000000)">
+                            <g id="编组-10" transform="translate(160.000000, 0.000000)">
+                                <rect id="矩形" fill="url(#linearGradient-1)" x="14" y="5.5" width="45" height="1"></rect>
+                                <rect id="矩形" stroke="#B11E33" transform="translate(6.000000, 6.000000) rotate(-315.000000) translate(-6.000000, -6.000000) " x="2.5" y="2.5" width="7" height="7"></rect>
+                                <rect id="矩形备份-26" stroke="#B11E33" transform="translate(11.000000, 6.000000) rotate(-315.000000) translate(-11.000000, -6.000000) " x="8.5" y="3.5" width="5" height="5"></rect>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

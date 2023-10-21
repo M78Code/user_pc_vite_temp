@@ -184,7 +184,36 @@ const compute_diff_keys=(css_keys)=>{
     );
 }
 
+/**
+ * 生成顶层注入的 scss 变量
+ */
+const write_top_scss_variables=()=>{
+  const str =`
+  
 
+$primary   : #1976D2;
+$secondary : #26A69A;
+$accent    : #9C27B0;
+
+$dark      : #1D1D1D;
+$dark-page : #121212;
+
+$positive  : #21BA45;
+$negative  : #C10015;
+$info      : #31CCEC;
+$warning   : #F2C037;
+
+
+$project-name   : "/${PROJECT_NAME}";
+  
+  `
+
+  write_file(
+    
+    write_folder+"variables.scss",
+    str
+  ); 
+}
 
 
 /**
@@ -214,6 +243,10 @@ const resolve_merchant_config_css = async () => {
   // 生成 差量文件
     compute_diff_keys(css_keys)
 
+
+   // 生成顶层注入的 scss 变量 
+
+   write_top_scss_variables()
 
  
 

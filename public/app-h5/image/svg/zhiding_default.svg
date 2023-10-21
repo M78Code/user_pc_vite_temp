@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="14px" height="14px" viewBox="0 0 14 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 58 (84663) - https://sketch.com -->
+    <title>icon/zhiding_default</title>
+    <desc>Created with Sketch.</desc>
+    <g id="专业版" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="投注区切图" transform="translate(-350.000000, -385.000000)">
+            <g id="icon/zhiding_default" transform="translate(349.000000, 384.000000)">
+                <rect id="矩形" fill="#D8D8D8" opacity="0" x="0" y="0" width="16" height="16"></rect>
+                <path d="M1,15 L6.54960841,10.5971286 L8.76349406,12.9534649 C8.76349406,12.9534649 9.68764902,13.2054724 9.74454354,12.5055256 L9.68764902,10.1202602 L12.9674001,6.33424229 L14.3960298,6.25121342 C14.3960298,6.25121342 15.5169441,6.02538604 14.7046896,5.04461013 L10.69662,1.00660621 C10.69662,1.00660621 9.60461436,0.866621153 9.6876061,1.87542414 L9.6876061,2.96914596 L5.96115471,6.14017894 L3.66337594,6.27921902 C3.66337594,6.27921902 2.82223417,6.55918912 3.12992814,7.28894551 L5.28876495,9.42039941 L1,15 L1,15 Z" id="Path" fill="#DEE0EF"></path>
+            </g>
+        </g>
+    </g>
+</svg>
