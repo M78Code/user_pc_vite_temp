@@ -31,11 +31,11 @@
               </template>
               <template v-else>
                 <div>
-                  <img src="/yazhou-pc/image/svg/analysis-foul.svg" alt="" width="14">
+                  <img :src="`/${project_name}/image/svg/analysis-foul.svg`" alt="" width="14">
                   <div>{{ lodash.get(match, 'msc.S106.home') }}</div>
                 </div>
                 <div>
-                  <img src="/yazhou-pc/image/svg/analysis-pause.svg" alt="" width="14">
+                  <img :src="`/${project_name}/image/svg/analysis-pause.svg`" alt="" width="14">
                   <div>{{ lodash.get(match, 'msc.S109.home') }}</div>
                 </div>
               </template>
@@ -70,11 +70,11 @@
               <!-- 篮球 -->
               <template v-else>
                 <div>
-                  <img src="/yazhou-pc/image/svg/analysis-pause.svg" alt="" width="14">
+                  <img :src="`/${project_name}/image/svg/analysis-pause.svg`" alt="" width="14">
                   <div>{{ lodash.get(match, 'msc.S109.away') }}</div>
                 </div>
                 <div>
-                  <img src="/yazhou-pc/image/svg/analysis-foul.svg" alt="" width="14">
+                  <img :src="`/${project_name}/image/svg/analysis-foul.svg`" alt="" width="14">
                   <div>{{ lodash.get(match, 'msc.S106.away') }}</div>
                 </div>
               </template>
@@ -119,7 +119,7 @@ import { api_analysis } from 'src/api/index'
 
 import { ChatFullVersionWapper as chat } from 'src/base-pc/components/analysis/template/chat/index.js'
 import { TraceFullVersionWapper as trace } from 'src/base-pc/components/analysis/template/trace/index.js'
-
+import { project_name } from "src/core";
 const props = defineProps(['match'])
 const route = useRoute();
 const activeStage = ref(0);
