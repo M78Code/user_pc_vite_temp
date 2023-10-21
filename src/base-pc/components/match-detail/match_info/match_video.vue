@@ -299,7 +299,7 @@ export default {
     .replay-icon {
       width: 65px;
       height: 18px;
-      background: url('/yazhou-pc/image/svg/replay_icon2.svg');
+      background: url($SCSSPROJECTPATH+'/image/svg/replay_icon2.svg');
       background-size: 100% 100%;
     }
   }
@@ -330,7 +330,7 @@ export default {
          width: 16px;
          height: 16px;
          background-size: 100%;
-         background-image: url('/yazhou-pc/image/common/svg/video_history_play.svg');
+         background-image: url($SCSSPROJECTPATH+'/image/common/svg/video_history_play.svg');
          margin-right: 8px;
     }
     span{

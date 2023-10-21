@@ -18,11 +18,12 @@
         <slot v-bind:item="item"></slot>
         </div>
     </div>
-    <div v-if="isShowArrow" class="arrow-right" :class="{ disabled: currentScrollLength === contentWidth }"  @click="swipRight"><img src="/yazhou-pc/image/theme01/img/svg/arrow.svg" /></div>
+    <div v-if="isShowArrow" class="arrow-right" :class="{ disabled: currentScrollLength === contentWidth }"  @click="swipRight"><img :src="arrowRightImg" /></div>
   </div>
 </template>
 
 <script>
+import arrowRightImg from "project_path/image/common/svg/video-swipe-arrow.svg"
 export default {
   name: "slider_x",
   props: {
@@ -45,6 +46,7 @@ export default {
   },
   data() {
     return {
+      arrowRightImg,
       isShowArrow: false, // 是否显示箭头
       boxWidth: 0, // 滑动容器宽度
       contentWidth: 0, // 滑动内容宽度
