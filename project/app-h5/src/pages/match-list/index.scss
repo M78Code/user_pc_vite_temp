@@ -8,7 +8,7 @@
   overflow-y: auto;
   position: relative;
   transition: transform 0.2s;
-  padding-top: 1rem;
+  // padding-top: 1rem;
   padding-bottom: 0.55rem;
   /*border-top: 0.01rem solid transparent;*/
   background: var(--q-gb-bg-c-17);
@@ -46,9 +46,9 @@
   &.zaopan {
     padding-top:1.3rem;
   }
-  &.esport {
-    padding-top: 1.4rem;
-  }
+  // &.esport {
+  //   padding-top: 1.4rem;
+  // }
 
   &.guanjun {
     padding-top: 1.1rem;
