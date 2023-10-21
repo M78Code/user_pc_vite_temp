@@ -1,9 +1,10 @@
 <template>
   <!-- 电竞背景图 sportsbg-csid -->
+  <!-- :class="`sportsbg-${current_menu.csid}`" -->
   <div
     class="c-esports-header"
-    :class="`sportsbg-${current_menu.csid}`"
-    v-if="menu_config.menu_root == 2000"
+    :style="compute_css(`pc-img-esports-${current_menu.csid}-banner`)"
+    v-show="menu_config.menu_root == 2000"
   >
     <!-- 游戏种类列表 -->
     <div class="sport-tab">
@@ -31,8 +32,9 @@
 </template>
 <script setup>
 import { onMounted, defineProps,ref } from "vue";
-import { DateTabFullVersionWapper as DateTab } from "src/base-pc/components/tab/date-tab/index.js";
+import DateTab from "src/base-pc/components/tab/date-tab/index.vue";
 import BaseData from "src/core/base-data/base-data.js";
+import { compute_css } from "src/core/server-img/index.js";
 import { t } from "src/core/index.js";
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 import sportIcon from "src/components/sport_icon/sport_icon.vue";

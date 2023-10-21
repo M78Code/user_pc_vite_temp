@@ -250,6 +250,45 @@ function set_base_data_init () {
 					nolivedata: nolive_data_500,
 				};
 			}
+		} else if (menu_root == 500) {
+			// 热门赛事
+			if ([50199, 50101].includes(Number(mi))) {
+				// 竞足 和赛事（全部）
+				for (let i = 0; i < 20; i++) {
+					// 常规赛事以外的 不分滚球和未开赛的数据
+					let match_data = get_match_list_by_mid_for_base_data_res( mid, i, i );
+					matchs_list = [...matchs_list, ...match_data];
+				}
+			} else {
+				// 常规赛种/联赛   滚球 ld
+				let live_data_500 =
+					(mi_tid_mids_res[mid].ld || []).map((item) => ({
+						tid: item.tid,
+						csid,
+						mids: item.mids.join(","),
+						mids_info: item.mids,
+					})) || [];
+				// 常规赛种/联赛   未开赛 nd
+				let nolive_data_500 =
+					(mi_tid_mids_res[mid].nd || []).map((item) => ({
+						tid: item.tid,
+						csid,
+						mids: item.mids.join(","),
+						mids_info: item.mids,
+					})) || [];
+				// 常规赛种/联赛  滚球
+				let live_data_match = get_match_list_by_mid_for_base_data_res( mid, csid, "ld" );
+				// 常规赛种、联赛  未开赛
+				let nolive_data_match = get_match_list_by_mid_for_base_data_res( mid, csid, "nd" );
+				matchs_list = [...live_data_match, ...nolive_data_match];
+				// 常规赛种联赛
+				data.data = {
+					collectCount: 0,
+					collectMIds: [],
+					livedata: live_data_500,
+					nolivedata: nolive_data_500,
+				};
+			}
 		} else {
 			// 常规赛事以外的 不分滚球和未开赛的数据
 			matchs_list = get_match_list_by_mid_for_base_data_res( mid, csid, csid );

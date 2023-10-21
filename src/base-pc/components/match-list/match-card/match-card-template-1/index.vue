@@ -7,10 +7,10 @@
     :style="`height:${lodash.get(match_style_obj, `total_height`)}px !important;width:${LayOutMain_pc.layout_content_width - 15}px  !important;`"
   >
   <div v-show="false">{{ MatchListCardDataClass.list_version }}</div>
-    <component
+    <!-- <component
       :is="`MatchTpl${match_style_obj.view_tpl_id}After`"
       :mid="mid"
-    />
+    /> -->
     {{`MatchTpl${match_style_obj.view_tpl_id}After`}}
   </div>
 </template>
@@ -46,7 +46,7 @@ import { MatchTpl18AfterFullVersionWapper as MatchTpl18After } from "src/base-pc
 // // // 玩法模板 24  足球-15分钟
 // import { MatchTpl24AfterFullVersionWapper as MatchTpl24After } from "src/base-pc/components/match-list/match-tpl-new-data/match-tpl-24-after/index.js";
 // // 电竞玩法模板
-// import { MatchTplEsportsAfterFullVersionWapper as MatchTplesportsAfter } from "src/base-pc/components/match-list/match-tpl-new-data/match-tpl-esports-after/index.js";
+import { MatchTplEsportsAfterFullVersionWapper as MatchTplEsportsAfter } from "src/base-pc/components/match-list/match-tpl-new-data/match-tpl-esports-after/index.js";
 // const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
 export default {
   props: {
@@ -62,7 +62,8 @@ export default {
     MatchTpl9After,
     MatchTpl17After,
     MatchTpl10After,
-    MatchTpl18After
+    MatchTpl18After,
+    MatchTplEsportsAfter
   },
   setup(props) {
     // 赛事样式对象
