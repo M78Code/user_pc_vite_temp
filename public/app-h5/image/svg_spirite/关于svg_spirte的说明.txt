@@ -1,0 +1,9 @@
+压缩 首页/热门/列表三个页面的svg图标 并合成雪碧图
+https://www.zhangxinxu.com/sp/svgo/
+
+
+https://svg-sprite-generator.vercel.app/
+
+
+to_do_svg 存放想要转化成svg雪碧图但是当前ui给的图无法转化
+当前ui给的svg无法合并成symbol方式的雪碧图
