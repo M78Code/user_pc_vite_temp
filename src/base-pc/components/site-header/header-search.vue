@@ -44,8 +44,8 @@ import { IconWapper } from 'src/components/icon/index.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
 import globalAccessConfig from "src/core/access-config/access-config.js"
 console.log(globalAccessConfig,'globalAccessConfig');
-const img_search_icon = '/yazhou-pc/image/svg/search-icon.svg'
-const img_search_icon_y0 = '/yazhou-pc/image/svg/y0-search-icon.svg'
+const img_search_icon = 'project_path/image/svg/search-icon.svg'
+const img_search_icon_y0 = 'project_path/image/svg/y0-search-icon.svg'
 
 
 /** 国际化 */
