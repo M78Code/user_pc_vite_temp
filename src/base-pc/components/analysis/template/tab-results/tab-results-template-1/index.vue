@@ -116,7 +116,7 @@ import { useRoute } from 'vue-router';
 // import { component_symbol, need_register_props } from "../config/index.js"
 // useRegistPropsHelper(component_symbol, need_register_props)
 import { api_analysis } from 'src/api/index'
-
+import { project_name } from 'src/core/index.js';
 import { ChatFullVersionWapper as chat } from 'src/base-pc/components/analysis/template/chat/index.js'
 import { TraceFullVersionWapper as trace } from 'src/base-pc/components/analysis/template/trace/index.js'
 import { project_name } from "src/core";

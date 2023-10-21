@@ -45,7 +45,7 @@
                         </div>
                         <!-- 点点点 -->
                         <div class="point-wrap" v-if="league.league_total > 3 && !league.is_active">
-                            <img src="/yazhou-pc/image/svg/point.svg">
+                            <img :src="`/${project_name}/image/svg/point.svg`">
                         </div>
                     </div>
                 </div>
@@ -56,14 +56,15 @@
   
 <script setup>
 import { ref, reactive, watch, onBeforeUnmount ,nextTick} from 'vue'
-import loadData from "src/components/load_data/load_data.vue"
-import { i18n_t } from "src/boot/i18n.js"
 import { useRouter } from 'vue-router'
 
+import { project_name, i18n_t } from 'src/core/index.js';
 import { MatchProcessFullVersionWapper as matchProcess } from "src/components/match-process/index.js"
 import store from "src/store-redux/index.js";
 import details from "src/core/match-list-pc/details-class/details.js"
 import search from "src/core/search-class/search.js"
+
+import loadData from "src/components/load_data/load_data.vue"
 
 const props = defineProps({
     show_type: {

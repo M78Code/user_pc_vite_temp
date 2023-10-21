@@ -20,8 +20,9 @@
 </template>
 
 <script>
-import http from "src/core/http/axios-warpper.js"; 
-import { project_name } from "src/core"; 
+
+import { project_name } from 'src/core/index.js';
+
 import axios from "axios";
 export default {
   props:{
