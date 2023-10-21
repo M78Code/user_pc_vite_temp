@@ -298,7 +298,6 @@ class MenuData {
     // 有则 需要显示中间菜单组件,需要 走中间菜单渲染 ，中间菜单负责输出 列表请求参数
     // 如果没有 需要逻辑分流计算 列表请求参数
 
-    console.log('has_mid_menu', obj);
     if (obj.has_mid_menu) {
       this.left_menu_result = {
         ...obj,
@@ -321,7 +320,6 @@ class MenuData {
       };
     }
     MATCH_LIST_TEMPLATE_CONFIG[`template_${this.get_match_tpl_number()}_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'))
-    console.log('objobj', obj);
     if ([2, 3].includes(Number(obj.root))) {
       // 角球
       if ([101210, 101310].includes(+obj.lv2_mi)) {
