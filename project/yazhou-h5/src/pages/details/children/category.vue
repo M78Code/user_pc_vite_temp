@@ -284,6 +284,7 @@ export default defineComponent({
       get_details_data_cache,
       get_chpid_obj,
       MatchDataWarehouseInstance,
+      project_name,
       change_minheight,
       change_show,
       listItemAddCustomAttr,
