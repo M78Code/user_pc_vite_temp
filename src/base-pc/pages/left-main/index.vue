@@ -236,7 +236,7 @@ const get_unsettle_tickets_count_config = () => {
   border-radius: 0;
   &::before{
     content: '';
-    background-image: url('/yazhou-pc/image/svg/add.svg');
+    background-image: url($SCSSPROJECTPATH +'/image/svg/add.svg');
     width: 14px;
     height: 14px;
     margin-right: 10px;

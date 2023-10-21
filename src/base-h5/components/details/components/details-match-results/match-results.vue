@@ -41,7 +41,7 @@ import basketballIncident from "src/base-h5/components/details/analysis-matches/
  // 赛果详情 事件 组件
 import timeLine from 'src/base-h5/components/details/components/details-match-results/time-line.vue';
 import { i18n_t } from "src/boot/i18n.js";
-import {utils } from 'src/core/index.js'
+import {utils,project_name } from 'src/core/index.js'
 import { ref, onMounted } from "vue";
 
 
@@ -55,12 +55,11 @@ const props = defineProps({
   const get_is_hengping = ref(true)
   const get_analyze_show = ref(false)
 
-  // 图片  public/yazhou-h5/image/svg/match-results/yellow.svg
-  const yellow_img = "/yazhou-h5/image/svg/match-results/yellow.svg"
-  const red_img = "/yazhou-h5/image/svg/match-results/red.svg"
-  const corner_img = "/yazhou-h5/image/svg/match-results/corner.svg"
-  const Whistle_img = "/yazhou-h5/image/svg/match-results/Whistle.svg"
-  const time_out_img = "/yazhou-h5/image/svg/match-results/time_out.svg"
+  const yellow_img = `/${project_name}/image/svg/match-results/yellow.svg`
+  const red_img = `/${project_name}/image/svg/match-results/red.svg`
+  const corner_img = `/${project_name}/image/svg/match-results/corner.svg`
+  const Whistle_img = `/${project_name}/image/svg/match-results/Whistle.svg`
+  const time_out_img = `/${project_name}/image/svg/match-results/time_out.svg`
   // 锚点
   const analysis_detail = ref(null)
   // 国际化

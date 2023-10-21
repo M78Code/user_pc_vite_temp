@@ -5,7 +5,7 @@
 <template>
   <div class="activity-layer fullscreen" @click="emits('activity_hide')">
     <img :src="get_file_path(activity_layerimg)" class="fixed-center img1" @error="handle_img_load_error">
-    <img src="/yazhou-h5/image/activity/colse2.png" class="fixed-center img2" @click.self="emits('activity_hide')">
+    <img :src="`/${project_name}/image/activity/colse2.png`" class="fixed-center img2" @click.self="emits('activity_hide')">
     <div class="cover fixed-center" @click.stop="go_activity"></div>
     <div class="cd_time fixed-center">{{ count_down_time }}</div>
   </div>
@@ -14,7 +14,7 @@
 <script setup>
 // import { mapGetters, mapMutations } from "vuex";
 import lodash from 'lodash'
-import { UserCtr, get_file_path } from "src/core";
+import { UserCtr, get_file_path, project_name } from "src/core";
 const props = defineProps({
   activity_layerimg: {
     type: String,

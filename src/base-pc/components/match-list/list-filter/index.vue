@@ -33,7 +33,7 @@
           <span class="soprts_id_icon"
             :style="compute_css({key:'pc-left-menu-bg-image', position: `item_0` })"></span>
           <!-- 是否新上玩法 -->
-          <!-- <img  class="menu-new-icon" v-if="menu.coppertone == 1" src="/yazhou-h5/img/yabo/svg/virtual/menu_new.svg"/> -->
+          <!-- <img  class="menu-new-icon" v-if="menu.coppertone == 1" :src="`/${project_name}/img/yabo/svg/virtual/menu_new.svg`"/> -->
         </div>
         <div
           class="name menu-inline name-margin-left"
@@ -70,7 +70,7 @@
             v-if="menu_config.is_esports()"
             :style="compute_css({key:'pc-left-menu-bg-image', position: `item_${BaseData.compute_sport_id(item.mif)}` })"></span>
             <!-- 是否新上玩法 -->
-            <!-- <img  class="menu-new-icon" v-if="menu.coppertone == 1" src="/yazhou-h5/img/yabo/svg/virtual/menu_new.svg"/> -->
+            <!-- <img  class="menu-new-icon" v-if="menu.coppertone == 1" :src="`/${project_name}/img/yabo/svg/virtual/menu_new.svg`"/> -->
           </div>
           <div
             class="name menu-inline name-margin-left"
@@ -110,7 +110,7 @@
             <span class="soprts_id_icon"
             :style="compute_css({key:'pc-left-menu-bg-image', position: `item_${Number(item.mif) - 2000}` })"></span>
             <!-- 是否新上玩法 -->
-            <!-- <img  class="menu-new-icon" v-if="menu.coppertone == 1" src="/yazhou-h5/img/yabo/svg/virtual/menu_new.svg"/> -->
+            <!-- <img  class="menu-new-icon" v-if="menu.coppertone == 1" :src="`/${project_name}/img/yabo/svg/virtual/menu_new.svg`"/> -->
           </div>
           <div
             class="name menu-inline name-margin-left"
@@ -147,7 +147,7 @@
             <span class="soprts_id_icon"
             :style="compute_css({key:'pc-left-menu-bg-image', position: `item_${item.menuId}` })"></span>
             <!-- 是否新上玩法 -->
-            <!-- <img  class="menu-new-icon" v-if="menu.coppertone == 1" src="/yazhou-h5/img/yabo/svg/virtual/menu_new.svg"/> -->
+            <!-- <img  class="menu-new-icon" v-if="menu.coppertone == 1" :src="`/${project_name}/img/yabo/svg/virtual/menu_new.svg`"/> -->
           </div>
           <div
             class="name menu-inline name-margin-left"
@@ -225,7 +225,7 @@
               :is_esports="true"
             /> -->
             <!-- 是否新上玩法 -->
-            <!-- <img  class="menu-new-icon" v-if="menu.coppertone == 1" src="/yazhou-h5/img/yabo/svg/virtual/menu_new.svg"/> -->
+            <!-- <img  class="menu-new-icon" v-if="menu.coppertone == 1" :src="`/${project_name}/img/yabo/svg/virtual/menu_new.svg`"/> -->
           </div>
           <div
             class="name menu-inline name-margin-left"

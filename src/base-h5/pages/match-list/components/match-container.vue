@@ -111,7 +111,7 @@
             <div class="match-odds-container-border-radius">
               <!-- 上边的 赛事日期标准版,包含 比分组件 -->
               <div class="date-container match-indent" :class="{ 'n-s-edition': !show_newer_edition }"
-                v-if="!show_newer_edition && !is_show_result()">
+                v-if="!show_newer_edition && !is_results">
                 <div class='l standard'>
                   <!--竞彩足球 星期与编号-->
                   <div class="week-mcid row items-center" v-if="menu_type == 30">
@@ -159,7 +159,7 @@
                   <!-- mng 是否中立场   1:是中立场，0:非中立场-->
                   <div class="live-i-b-wrap v-mode-span row items-center"
                     v-if="![5, 10, 7, 8, 13].includes(Number(match.csid)) && match.mng * 1">
-                    <img class="neutral-icon-btn l-bottom" src='/yazhou-h5/image/list/m-list-neutral.svg' />
+                    <img class="neutral-icon-btn l-bottom" :src="`/${project_name}/image/list/m-list-neutral.svg`" />
                   </div>
 
                   <!-- 电竞串关标识 -->
@@ -173,22 +173,19 @@
                 <score-list v-else-if="!is_hot" :match="match"></score-list>
               </div>
               <!-- 下边的模块，左方是  队名和 队比分,  右面是  盘口  模块 -->
-              <div class="odd-list match-indent" :class="{ 'simple': show_newer_edition, result: is_show_result() }">
-                <div class="odd-list-inner odd" :class="{ 'n-s-edition': !show_newer_edition, result: is_show_result() }">
+              <div class="odd-list match-indent" :class="{ 'simple': show_newer_edition, result: is_results }">
+                <div class="odd-list-inner odd" :class="{ 'n-s-edition': !show_newer_edition, result: is_results }">
                   <!--赛果-->
-                  <div v-if="is_show_result() && match.tonum && menu_lv2.mi == 29" class="triangle-wrapper flex items-center justify-center">
+                  <div v-if="is_results && match.tonum && menu_lv2.mi == 29" class="triangle-wrapper flex items-center justify-center">
                     <div class="t-w-inner"> {{ match.tonum }} </div>
                   </div>
                   <!--  左边 图片和名称  和 比分 和 视频图标 -->
-                  <div class="team-wrapper" @click='goto_details(match)' :class="{
-                    simple: standard_edition == 1,
-                    team_title: is_show_result()
-                  }">
+                  <div @click='goto_details(match)' :class="['team-wrapper', { simple: standard_edition == 1, team_title: is_results }]">
                     <!--主队图片和名称-->
                     <div class='team-title-container' :class="{
-                      simple: show_newer_edition && !is_show_result(),
-                      standard: !show_newer_edition && !is_show_result(),
-                      result: is_show_result()
+                      simple: show_newer_edition && !is_results,
+                      standard: !show_newer_edition && !is_results,
+                      result: is_results
                     }">
                       <div class="team-title-inner-con">
                         <!-- 1-足球 2-篮球 3-棒球 4-冰球 5-网球 6-美式足球 7-斯诺克 8-乒乓球 9-排球  10-羽毛球 -->
@@ -207,12 +204,12 @@
                           <div class="gif-text">{{ $t('match_result.goal') }}</div>
                         </div>
                         <span class='score-punish' v-show="home_red_score"
-                          :class="{ flash: is_show_home_red && !is_show_result() }">
+                          :class="{ flash: is_show_home_red && !is_results }">
                           {{ home_red_score }}
                         </span>
                       </div>
                       <!--进行中的赛事显示比分 ,如果是比分判定中，则不显示比分-->
-                      <div class="score full-score" v-show="match_of_list.ms > 0 && !is_show_result() && !eports_scoring"
+                      <div class="score full-score" v-show="match_of_list.ms > 0 && !is_results && !eports_scoring"
                         :class="{ 'visibility-hidden': match_of_list.ms == 110 }">
                         {{ home_score }}
                       </div>
@@ -224,8 +221,8 @@
                     <!--客队图片和名称-->
                     <div class='team-title-container' :class="{
                       simple: show_newer_edition,
-                      standard: !show_newer_edition && !is_show_result(),
-                      result: is_show_result()
+                      standard: !show_newer_edition && !is_results,
+                      result: is_results
                     }">
                       <div class="team-title-inner-con">
                         <!-- 1-足球 2-篮球 3-棒球 4-冰球 5-网球 6-美式足球 7-斯诺克 8-乒乓球 9-排球  10-羽毛球 -->
@@ -247,12 +244,12 @@
                     </div>
                     <!--进行中的赛事显示比分-->
                     <span class='score-punish' v-show="away_red_score"
-                      :class="{ flash: is_show_away_red && !is_show_result() }">
+                      :class="{ flash: is_show_away_red && !is_results }">
                       {{ away_red_score }}
                     </span>
                   </div>
                   <!--进行中的赛事显示比分 ,如果是比分判定中，则不显示比分-->
-                  <div class="score full-score" v-show="match_of_list.ms > 0 && !is_show_result() && !eports_scoring"
+                  <div class="score full-score" v-show="match_of_list.ms > 0 && !is_results && !eports_scoring"
                     :class="{ 'visibility-hidden': match_of_list.ms == 110 }">
                     {{ away_score }}
                   </div>
@@ -262,7 +259,7 @@
                   </span>
                 </div>
                 <!--赛果收藏-->
-                <div class="row" v-if="is_show_result()">
+                <div class="row" v-if="is_results">
                   <!--赛果收藏-->
                   <div class="result fav-i-wrap-match row items-center"> </div>
                   <!--赛果开赛时间-->
@@ -271,11 +268,11 @@
                   </div>
                   <!-- v-if="match_of_list.playBack && is_replay_switch" -->
                   <div class="flex play-icon">
-                    <img src="/yazhou-h5/image/common/replay_y0.svg" />
+                    <img :src="`/${project_name}/image/common/replay_y0.svg`" />
                   </div>
                 </div>
                 <!--  左边收藏  视频动画 图标 玩法数量  赛事分析图标 提前结算图标  -->
-                <div class="score-wrapper flex items-center" v-if="!show_newer_edition && !is_show_result()"
+                <div class="score-wrapper flex items-center" v-if="!show_newer_edition && !is_results"
                   v-show="MenuData.footer_sub_menu_id != 114">
                   <div class="r row no-wrap">
                     <div class="go-container-w flex no-wrap new-standard">
@@ -312,7 +309,7 @@
                     </div>
                   </div>
                   <!--  赛果 比分和图标 -->
-                  <div class="match-result-w-c column items-end auto-full-width-100" v-if="is_show_result()">
+                  <div class="match-result-w-c column items-end auto-full-width-100" v-if="is_results">
                     <div class="row justify-end auto-full-width-100 match-result-score-wrap" @click="goto_details(match)">
                       <div class="score-result-wrapper">
                         <div class="score-row row items-center justify-end" :class="{ 'win-way': +home_score > +away_score }">
@@ -328,7 +325,7 @@
                             {{ $t('list.go_to_details') }}
                           </div>
                           <div>
-                            <img class="go-to-d-icon" src="/yazhou-h5//image/list/m-list-way-more.svg" />
+                            <img class="go-to-d-icon" :src="`/${project_name}/image/list/m-list-way-more.svg`" />
                           </div>
                         </div>
                       </div>
@@ -339,14 +336,14 @@
                 </div>
                 <!-- 比分组件 -->
                 <div class="w-score-result row justify-end">
-                  <score-list v-if="is_show_result()" :match="match"></score-list>
+                  <score-list v-if="is_results" :match="match"></score-list>
                 </div>
               </div>
 
               <!--  新手版才有的  倒计时  玩法数量  底部比分 组件  -->
               <div class="date-container simple match-indent"
                 :class="{ 'no-running-timer-wrapper': !show_counting_down(match) }"
-                v-if="show_newer_edition && !is_show_result()">
+                v-if="show_newer_edition && !is_results">
                 <div class='l test-match-mf'>
                   <!--收藏图标-->
                   <div v-if="!GlobalAccessConfig.get_collectSwitch()" class="go-container-w flex no-wrap favorite">
@@ -400,7 +397,7 @@
                   </div>
                   <!--中立场图标-->
                   <div class="live-i-b-wrap newer" v-show="match.mng * 1 && ![5, 10, 7, 8].includes(Number(match.csid))">
-                    <img class="neutral-icon-btn" src='/yazhou-h5/image/list/m-list-neutral.svg' />
+                    <img class="neutral-icon-btn" :src="`/${project_name}/image/list/m-list-neutral.svg`" />
                   </div>
                   <!--玩法数量-->
                   <div class="go-container-w mcount flex">
@@ -427,7 +424,7 @@
               <!--角球，罚牌，晋级，加时赛，点球大战玩法-->
               <!-- cisd:1 足球， 2 篮球， 5 网球， 7 斯诺克， 8 乒乓球 -->
               <match-overtime-pen 
-                v-if="!is_hot && !is_detail && !is_show_result() && [1, 2, 5, 7, 8].includes(+match.csid) && standard_edition != 1"
+                v-if="!is_hot && !is_detail && !is_results && [1, 2, 5, 7, 8].includes(+match.csid) && standard_edition != 1"
                 :main_source="main_source" 
                 :mid="match_of_list.mid" />
             </div>
@@ -444,7 +441,7 @@ import { ref, computed, onMounted, onUnmounted, watch, nextTick } from 'vue'
 import lodash from 'lodash'
 import store from "src/store-redux/index.js";
 import { useRouter, useRoute } from 'vue-router'
-import { useMittOn, useMittEmit, MITT_TYPES,UserCtr } from  "src/core"
+import { useMittOn, useMittEmit, MITT_TYPES,UserCtr, project_name } from  "src/core"
 import countingDownSecond from 'src/base-h5/components/common/counting-down.vue';
 import countingDownStart from 'src/base-h5/components/common/counting-down-start.vue';
 import scoreList from './score-list.vue';
@@ -465,7 +462,7 @@ import { normal_img_not_favorite_white, normal_img_not_favorite_black, normal_im
 
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import { lang, standard_edition, theme } from 'src/base-h5/mixin/userctr.js'
-import { is_hot, menu_type, menu_lv2, is_detail, is_export } from 'src/base-h5/mixin/menu.js'
+import { is_hot, menu_type, menu_lv2, is_detail, is_export, is_results } from 'src/base-h5/mixin/menu.js'
 
 // TODO: 其他模块得 store  待添加
 const props = defineProps({
@@ -967,7 +964,7 @@ const goto_details = (item, flag) => {
   // 进入详情前，将当前赛事信息存入仓库
   store.dispatch({ type: 'matchReducer/set_match_base_info_obj',  payload: item });
 
-  if (MenuData.current_menu && MenuData.current_menu.main && is_show_result()) {
+  if (MenuData.current_menu && MenuData.current_menu.main && is_results.value) {
     router.push(`/result_details/${item.mid}/0`);
   }
   else {

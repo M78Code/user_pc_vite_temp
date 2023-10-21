@@ -7,7 +7,7 @@
   <div :class="['odds_new',{'odds-new2':ol_data.result != undefined}]" :id="DOM_ID_SHOW && `list-${lodash.get(ol_data, 'oid')}`">
     <template v-if="ol_data.result == undefined">
       <span v-if="odds_value() < 1.01 && get_cur_odd == 'EU'">
-        <img src="/yazhou-h5/image/common/match-icon-lock.svg" alt="" style=" width: 0.12rem"/>
+        <img :src="`/${project_name}/image/common/match-icon-lock.svg`" alt="" style=" width: 0.12rem"/>
       </span>
       <span v-else class="odds" :class="[{'red_text': status == 10, 'green_text': status == -10,'white_text':get_bet_list.includes(ol_data.id_) }]">
         <span>{{ odds_value() }}</span>
@@ -26,6 +26,7 @@
 // #TODO mixins
 // import odd_convert from "src/base-h5/mixins/odds_conversion/odds_conversion.js";
 import lodash from "lodash";
+import { project_name } from 'src/core'
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { i18n_t } from "src/boot/i18n.js";
 import { compute_value_by_cur_odd_type } from "src/core/format/module/format-odds-conversion-mixin.js"

@@ -11,7 +11,6 @@
     <div class="shadow-box shadow-box2" @click="close_dialog(false)" @touchmove.prevent></div>
     <div class="bet-record" @click.stop :style="{ bottom: -bottom + 'px' }">
       <div class="top flex flex-center">
-        <!--<div class="collapse-icon"><img src="/yazhou-h5/image/svg/arrow-bottom.svg" /></div>-->
         <p class="yb_mr10" @click="change_record(0)" :class="get_main_item == 0 && 'active-p'">{{i18n_t('bet_record.no_account')}}<span></span></p>
         <p class="yb_ml10 yb_mr10" @click="change_record(1)" :class="get_main_item == 1 && 'active-p'">{{i18n_t('bet_record.account')}}<span></span></p>
       </div>

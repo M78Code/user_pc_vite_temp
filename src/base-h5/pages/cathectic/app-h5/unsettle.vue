@@ -18,13 +18,6 @@
         <template v-if="!is_all_early_flag">
           <div v-for="(value,name,index) in list_data" :key="index">
             <template v-if="!is_early|| (is_early && clac_is_early(value.data))">
-              <p class="tittle-p row justify-between yb_px4" :class="index == 0 && 'tittle-p2'" @click="toggle_show(value)">
-                <!-- (new Date(name)).Format(t('time2')) -->
-                <span>{{ format_M_D(new Date(name).getTime())}}</span>
-                <span v-if="!value.open && index != 0"><img class="icon-down-arrow" :src="`/${project_name}/image/list/league-collapse-icon.svg`" /></span>
-              </p>
-              <!--线-->
-              <div class="line" :class="!value.open && (index != Object.keys(list_data).length-1) && 'line2'"></div>
               <q-slide-transition>
                 <div v-show="value.open">
                   <!--投注记录的页每一条注单-->
@@ -44,8 +37,8 @@
 <script setup>
 import lodash from 'lodash';
 import { api_betting } from "src/api/index.js";
-import commonCathecticItem from "src/base-h5/components/common/common-cathectic-item.vue";
-import settleVoid from "./settle-void.vue";
+import commonCathecticItem from "src/base-h5/components/common/app-h5/common-cathectic-item.vue";
+import settleVoid from "../settle-void.vue";
 import scroll from "src/base-h5/components/common/record-scroll/scroll.vue";
 // import skt_order from "src/base-h5/mixins/websocket/data/skt-data-order.js"
 import SRecord from "src/base-h5/components/skeleton/record.vue";
@@ -54,7 +47,6 @@ import { ref, watch, onMounted, onUnmounted } from 'vue'
 import {useMittOn, MITT_TYPES} from  "src/core/mitt/index.js"
 import { format_M_D } from 'src/core/format/index.js'
 import { i18n_t } from "src/boot/i18n.js";
-import { project_name } from "src/core";
 import UserCtr from "src/core/user-config/user-ctr.js";
 //国际化
 import store from 'src/store-redux/index.js'
@@ -318,15 +310,7 @@ const props = defineProps({
       }
     }).catch(err => { console.error(err) });
   }
-  /**
-   *@description 展开与收起切换
-    *@param {Boolean} val 展开-true  收起-false
-    *@return {Undefined} undefined
-    */
-  const toggle_show = (val) => {
-    val.open = !val.open
-    $forceUpdate()
-  }
+
   /**
      * @description 清除当前组件所有定时器
      * @param {Undefined} Undefined

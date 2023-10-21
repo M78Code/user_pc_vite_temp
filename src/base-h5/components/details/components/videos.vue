@@ -48,7 +48,7 @@
         </div>
 
         <div class="text-center" @click="reload_video_methods()">
-          <img  src="image/bw3/svg/video_reload.svg" :class="[rotate ? 'rotate_2': 'rotate_1']">
+          <img  src="image/bw3/svg/video_reload.svg` :class="[rotate ? 'rotate_2': 'rotate_1']">
         </div>
         <div style="padding: 0.1rem;color:#6D7075;">
           {{i18n_t("video.sorry")}}
@@ -62,12 +62,12 @@
         <!-- 第一次显示 用户指导页 -->
         <div class="floating-layer" v-if="first_login" @click.self.stop="first_login = false">
           <div>
-            <img class="animate-bounce-up" src="/yazhou-h5/image/svg/one-click.svg" alt="">
+            <img class="animate-bounce-up" :src="`/${project_name}/image/svg/one-click.svg`" alt="">
             <span>{{i18n_t("video.click_on")}}</span>
             <p>{{i18n_t("video.show_hide")}}</p>
           </div>
           <div>
-            <img class="animate-bounce-up" src="/yazhou-h5/image/svg/double-click.svg" alt="">
+            <img class="animate-bounce-up" :src="`/${project_name}/image/svg/double-click.svg`" alt="">
             <span>{{i18n_t("video.double_click")}}</span>
             <p>{{i18n_t("video.full_screen_play")}}</p>
           </div>
@@ -98,29 +98,29 @@
             @load="handle_replay_video_loaded"
         ></iframe>
         <div class="load-error-mask" v-show="is_replay_load_error">
-          <div><img src="image/bw3/svg/details/reconnect.svg" /></div>
+          <div><img src="image/bw3/svg/details/reconnect.svg` /></div>
           <div>{{ i18n_t('highlights.reconnect') }}</div>
         </div>
 
         <template v-if="is_playing_replay">
           <!-- 回放视频标识logo -->
           <div class="replay-logo-wrap" :class="{'replay-logo-wrap-portrait': !get_is_hengping}">
-            <img src="image/bw3/svg/details/replay_logo.svg" />
+            <img src="image/bw3/svg/details/replay_logo.svg` />
           </div>
 
           <div v-show="is_controller_show" class="highlights-controller" :class="{'bottom-controller-bar': !get_is_hengping}">
             <!-- 视频声音 -->
             <div class="voice-wrap" @click="set_video_voice">
-              <svg v-if="!current_event_video.voice"  xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 21 32"><path d="M13.728 6.272v19.456q0 0.448-0.352 0.8t-0.8 0.32-0.8-0.32l-5.952-5.952h-4.672q-0.48 0-0.8-0.352t-0.352-0.8v-6.848q0-0.48 0.352-0.8t0.8-0.352h4.672l5.952-5.952q0.32-0.32 0.8-0.32t0.8 0.32 0.352 0.8z"></path></svg>
-              <svg v-else xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 21 32"><path d="M13.728 6.272v19.456q0 0.448-0.352 0.8t-0.8 0.32-0.8-0.32l-5.952-5.952h-4.672q-0.48 0-0.8-0.352t-0.352-0.8v-6.848q0-0.48 0.352-0.8t0.8-0.352h4.672l5.952-5.952q0.32-0.32 0.8-0.32t0.8 0.32 0.352 0.8zM20.576 16q0 1.344-0.768 2.528t-2.016 1.664q-0.16 0.096-0.448 0.096-0.448 0-0.8-0.32t-0.32-0.832q0-0.384 0.192-0.64t0.544-0.448 0.608-0.384 0.512-0.64 0.192-1.024-0.192-1.024-0.512-0.64-0.608-0.384-0.544-0.448-0.192-0.64q0-0.48 0.32-0.832t0.8-0.32q0.288 0 0.448 0.096 1.248 0.48 2.016 1.664t0.768 2.528zM25.152 16q0 2.72-1.536 5.056t-4 3.36q-0.256 0.096-0.448 0.096-0.48 0-0.832-0.352t-0.32-0.8q0-0.704 0.672-1.056 1.024-0.512 1.376-0.8 1.312-0.96 2.048-2.4t0.736-3.104-0.736-3.104-2.048-2.4q-0.352-0.288-1.376-0.8-0.672-0.352-0.672-1.056 0-0.448 0.32-0.8t0.8-0.352q0.224 0 0.48 0.096 2.496 1.056 4 3.36t1.536 5.056z"></path></svg>
+              <svg v-if="!current_event_video.voice"  xmlns="http://www.w3.org/2000/svg` version="1.1" viewBox="0 0 21 32"><path d="M13.728 6.272v19.456q0 0.448-0.352 0.8t-0.8 0.32-0.8-0.32l-5.952-5.952h-4.672q-0.48 0-0.8-0.352t-0.352-0.8v-6.848q0-0.48 0.352-0.8t0.8-0.352h4.672l5.952-5.952q0.32-0.32 0.8-0.32t0.8 0.32 0.352 0.8z"></path></svg>
+              <svg v-else xmlns="http://www.w3.org/2000/svg` version="1.1" viewBox="0 0 21 32"><path d="M13.728 6.272v19.456q0 0.448-0.352 0.8t-0.8 0.32-0.8-0.32l-5.952-5.952h-4.672q-0.48 0-0.8-0.352t-0.352-0.8v-6.848q0-0.48 0.352-0.8t0.8-0.352h4.672l5.952-5.952q0.32-0.32 0.8-0.32t0.8 0.32 0.352 0.8zM20.576 16q0 1.344-0.768 2.528t-2.016 1.664q-0.16 0.096-0.448 0.096-0.448 0-0.8-0.32t-0.32-0.832q0-0.384 0.192-0.64t0.544-0.448 0.608-0.384 0.512-0.64 0.192-1.024-0.192-1.024-0.512-0.64-0.608-0.384-0.544-0.448-0.192-0.64q0-0.48 0.32-0.832t0.8-0.32q0.288 0 0.448 0.096 1.248 0.48 2.016 1.664t0.768 2.528zM25.152 16q0 2.72-1.536 5.056t-4 3.36q-0.256 0.096-0.448 0.096-0.48 0-0.832-0.352t-0.32-0.8q0-0.704 0.672-1.056 1.024-0.512 1.376-0.8 1.312-0.96 2.048-2.4t0.736-3.104-0.736-3.104-2.048-2.4q-0.352-0.288-1.376-0.8-0.672-0.352-0.672-1.056 0-0.448 0.32-0.8t0.8-0.352q0.224 0 0.48 0.096 2.496 1.056 4 3.36t1.536 5.056z"></path></svg>
             </div>
             <!--&lt;!&ndash; 视频info说明弹窗 &ndash;&gt;-->
             <!--<div v-show="!get_is_hengping" class="tips-wrap" @click="change_info">-->
-            <!--  <img src="image/bw3/svg/details/tips.svg" />-->
+            <!--  <img src="image/bw3/svg/details/tips.svg` />-->
             <!--</div>-->
             <!-- 全屏按钮 -->
             <div class="full-screen-btn" @click="exit_full_screen">
-              <img src="image/bw3/svg/pack_up.svg">
+              <img src="image/bw3/svg/pack_up.svg`>
             </div>
           </div>
         </template>
@@ -134,13 +134,13 @@
           <template v-if="get_is_hengping">
             <!--（精彩/收起）回放 -->
             <div v-if="events_list.length" class="toggle-replay-video-wrap hairline-border" :class="{'move-up': is_expand_video_list}" @click="toggle_slider_btn">
-              <img src="image/bw3/svg/details/replay_toggle.svg" />
+              <img src="image/bw3/svg/details/replay_toggle.svg` />
               <span>{{ !is_expand_video_list ? i18n_t('highlights.title') : i18n_t('highlights.collapse_replay') }}</span>
             </div>
 
             <!-- 关闭回放视频 -->
             <div v-show="is_playing_replay" class="close-video-wrap" @click="exit_full_screen">
-              <img src="image/bw3/svg/details/close.svg" />
+              <img src="image/bw3/svg/details/close.svg` />
             </div>
           </template>
 
@@ -251,8 +251,8 @@
         </div> -->
         <!-- 全屏按钮 -->
         <div v-show="show_icons && ['muUrl', 'lvs'].includes(get_video_url.active)&& !load_error && !is_playing_replay" class="full-screen-btn" @click="set_full_screen">
-          <img v-if="get_is_full_screen"  src="image/bw3/svg/pack_up.svg">
-          <img v-else  src="image/bw3/svg/full_screen.svg">
+          <img v-if="get_is_full_screen"  src="image/bw3/svg/pack_up.svg`>
+          <img v-else  src="image/bw3/svg/full_screen.svg`>
         </div>
         <!-- 视频info说明弹窗 -->
         <div
@@ -301,7 +301,7 @@ import { format_total_score } from "src/core/format/index.js"
 import { video_info } from "./videos.js";
 import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch,ref } from "vue";
 import { i18n_t } from "src/boot/i18n.js";
-import {UserCtr,compute_img} from "src/core/";
+import {UserCtr,compute_img,project_name} from "src/core/";
 
 
 //国际化
@@ -331,26 +331,26 @@ export default defineComponent({
     // 详情页的数据
     const get_detail_data = ref(lodash.get(MatchDataWarehouse, 'list_to_obj.mid_obj[`${route.params.mid}_`]'))
     let component_data = reactive({
-      tips_def: "/yazhou-h5/image/svg/video_b.svg",
-      tips_act: "/yazhou-h5/image/svg/video_a.svg",
-      voice_def: "/yazhou-h5/image/svg/video_i.svg",
-      voice_act: "/yazhou-h5/image/svg/video_h.svg",
-      // nail_def: "/yazhou-h5/image/svg/video_f.svg",
-      // nail_act: "/yazhou-h5/image/svg/video_e.svg",
-      donghua: "/yazhou-h5/image/svg/v-donghua.svg",
+      tips_def: `/${project_name}/image/svg/video_b.svg`,
+      tips_act: `/${project_name}/image/svg/video_a.svg`,
+      voice_def: `/${project_name}/image/svg/video_i.svg`,
+      voice_act: `/${project_name}/image/svg/video_h.svg`,
+      // nail_def: `/${project_name}/image/svg/video_f.svg`,
+      // nail_act: `/${project_name}/image/svg/video_e.svg`,
+      donghua: `/${project_name}/image/svg/v-donghua.svg`,
       // 直播 切换的图标
-      shipin: "/yazhou-h5/image/svg/v-shipin.svg",
+      shipin: `/${project_name}/image/svg/v-shipin.svg`,
       // 演播厅 切换的图标
-      studio_icon:"/yazhou-h5/image/svg/studio_icon.svg",
+      studio_icon:`/${project_name}/image/svg/studio_icon.svg`,
       // 赛前直播的
-      lvs_icon_pre : "/yazhou-h5/image/common/zhibo-before.svg",
-      // ding1: "/yazhou-h5/image/svg/ding1.svg",
-      // ding2: "/yazhou-h5/image/svg/ding2.svg",
-      bet: "/yazhou-h5/image/svg/bet.svg",
-      analyze: "/yazhou-h5/image/svg/analyse.svg",
-      analyze2: "/yazhou-h5/image/svg/analyse2.svg",
-      analyze_yo: "/yazhou-h5/image/svg/analyse2_y0.svg",
-      analyze2_y0: "/yazhou-h5/image/svg/analyse_y0.svg",
+      lvs_icon_pre : `/${project_name}/image/common/zhibo-before.svg`,
+      // ding1: `/${project_name}/image/svg/ding1.svg`,
+      // ding2: `/${project_name}/image/svg/ding2.svg`,
+      bet: `/${project_name}/image/svg/bet.svg`,
+      analyze: `/${project_name}/image/svg/analyse.svg`,
+      analyze2: `/${project_name}/image/svg/analyse2.svg`,
+      analyze_yo: `/${project_name}/image/svg/analyse2_y0.svg`,
+      analyze2_y0: `/${project_name}/image/svg/analyse_y0.svg`,
       select_item:-1,
       voice: true,
       nail: true,

@@ -17,7 +17,7 @@
           </div>
           <div class="temp9-ov">
             <div v-if="item.os != 2">{{get_odds(item)}}</div>
-            <div v-else><img src="/yazhou-h5/image/common/match-icon-lock.svg" /></div>
+            <div v-else><img :src="`/${project_name}/image/common/match-icon-lock.svg`" /></div>
           </div>
         </div>
       </div>
@@ -31,6 +31,7 @@ import store from "src/store-redux/index.js";
 // import odd_convert from "src/base-h5/mixins/odds_conversion/odds_conversion.js";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
+import { project_name } from 'src/core'
 
 export default defineComponent({
   name: "temp9",

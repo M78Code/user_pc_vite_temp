@@ -5,9 +5,9 @@
 
 <template>
   <div class="popper t-popper">
-    <img src="/yazhou-h5/image/svg/bet_close.svg" class="close_icon" @click.stop="onEmojiSelect('')" />
+    <img :src="`/${project_name}/image/svg/bet_close.svg`" class="close_icon" @click.stop="onEmojiSelect('')" />
     <div class="popper_content">
-      <div v-for="emoji in emojiList" class="emoji-container flex flex-center" @click="onEmojiSelect(emoji)">
+      <div v-for="emoji in emojiList" :key="emoji" class="emoji-container flex flex-center" @click="onEmojiSelect(emoji)">
         {{ emoji }}
       </div>
     </div>
@@ -17,6 +17,7 @@
 
 <script>
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
+import { project_name } from 'src/core'
 export default defineComponent({
   name: 'emoji_selector',
   setup(props, evnet) {

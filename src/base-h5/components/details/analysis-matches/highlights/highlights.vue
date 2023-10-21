@@ -146,7 +146,7 @@
 
               <!-- 回放视频标识logo -->
               <div class="replay-logo-wrap" v-if="is_full_screen">
-                <img src="/yazhou-h5/image/svg/details/replay_logo.svg" />
+                <img :src="`/${project_name}/image/svg/details/replay_logo.svg`" />
               </div>
 
               <template v-if="is_hengping">
@@ -174,8 +174,8 @@
                 <!--</div>-->
                 <!-- 全屏按钮 -->
                 <div class="full-screen-btn" @click="set_full_screen">
-                  <img v-if="is_full_screen"  src="/yazhou-h5/image/svg/pack_up.svg">
-                  <img v-else  src="/yazhou-h5/image/svg/full_screen.svg">
+                  <img v-if="is_full_screen"  :src="`/${project_name}/image/svg/pack_up.svg`">
+                  <img v-else  :src="`/${project_name}/image/svg/full_screen.svg`">
                 </div>
               </div>
             </template>
@@ -215,7 +215,7 @@ import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
 import store from "src/store-redux/index.js"
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { pre_load_video } from "src/core/pre-load/index.js"
-import { utils } from 'src/core/index.js'
+import { utils, project_name } from 'src/core/index.js'
 import { format_total_score } from "src/core/format/index.js"
 import { i18n_t, i18n_tc } from "src/boot/i18n.js";;
 import { useRoute } from "vue-router"
@@ -227,6 +227,7 @@ import teamImg from "src/base-h5/components/details/team-img.vue"
 import titleX from "src/base-h5/components/details/analysis-matches/components/title-x.vue" 
 // 事件类型菜单
 import tabs from "src/base-h5/components/details/analysis-matches/components/tabs.vue" 
+
 // 精彩回放视频滚动列表
 export default {
   name: "highlights",

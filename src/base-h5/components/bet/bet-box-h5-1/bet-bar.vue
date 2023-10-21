@@ -20,7 +20,7 @@
         </template>
       </span>
     </div>
-    <img src="/public/yazhou-h5/image/bet/bet_close.svg" v-if="[3, 6, 8].includes(+get_bet_status)" alt="">
+    <img :src="`/${project_name}/image/bet/bet_close.svg`" v-if="[3, 6, 8].includes(+get_bet_status)" alt="">
     <div class="row items-center" v-else>
       <div class="account-wrap yb_pr16 text-right relative-position" @click.stop="get_balance">
         <!-- 账户余额 -->
@@ -29,7 +29,7 @@
       </div>
       <!-- 金额刷新按钮 -->
       <div class="refesh yb_mr8" :class="{ 'refesh2': is_loading_balance }" @click.stop="get_balance"></div>
-      <div class="yb_pl14 yb_pt4"><img src="/public/yazhou-h5/image/bet/doubleleft2.svg"
+      <div class="yb_pl14 yb_pt4"><img :src="`/${project_name}/image/bet/doubleleft2.svg`"
           :class="{ 'arrow': get_bet_status == 0 }" /></div>
     </div>
   </div>
@@ -43,6 +43,7 @@ import { format_money2 } from 'src/core/format/module/format-money.js'
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { ref,computed,onUnmounted } from 'vue';
 import userData from "src/core/user-config/user-ctr.js"
+import { project_name } from 'src/core'
 
 
 
@@ -240,7 +241,7 @@ onUnmounted(() => {
 .refesh {
   width: 0.12rem;
   height: 0.12rem;
-  background: url("/public/yazhou-h5/image/bet/shuaxin.svg") no-repeat center / 100% 100%;
+  background: url($SCSSPROJECTPATH + "/image/bet/shuaxin.svg") no-repeat center / 100% 100%;
   // background: var(--q-color-com-img-bg-58) no-repeat center / 100% 100%;
 }
 

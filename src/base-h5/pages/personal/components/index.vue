@@ -59,7 +59,7 @@
 </template>
  
 <script setup>
-import collapse from "yazhou-h5/src/components/collapse/index.vue"
+import collapse from `project_path/src/components/collapse/index.vue`
 import { ref } from "vue"
 import { useRouter } from "vue-router"
 const lang = ref('zh')

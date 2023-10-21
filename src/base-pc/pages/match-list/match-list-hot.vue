@@ -17,8 +17,8 @@
     <load-data :state="load_data_state">
       <template >
         <match-list-card
-          v-for="card_key in match_list_card.match_list_card_key_arr"
-          :key="card_key+match_list_card.match_list_render_key"
+          v-for="card_key in match_list_card_key_arr"
+          :key="card_key"
           :card_key="card_key"
         />
       </template>

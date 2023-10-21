@@ -92,7 +92,7 @@ const { get_insert_history } = api_search || {}
 import NoData from 'src/base-h5/components/common/no-data.vue'// 无数据组件
 import { computed, onBeforeUnmount, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { UserCtr, MenuData, SearchData,compute_img,project_name } from 'src/core/'
+import { UserCtr, MenuData, SearchData,compute_img, project_name } from 'src/core/'
 import lodash from 'lodash'
 const router = useRouter()
 // 模糊搜索的数据源
@@ -102,7 +102,6 @@ const props = defineProps({
     default: () => ([])
   },
 })
-
 const there_any_data = computed(() => {
   // 没有数据时，显示 无数据组件
   if (Array.isArray(props.SuggestionList)) {
