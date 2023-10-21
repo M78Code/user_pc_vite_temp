@@ -42,15 +42,15 @@ import UserCtr from "src/core/user-config/user-ctr.js";
 import { utils } from "src/core/index.js";
 
 /* 退出登录通知-中文 */
-const logout_notice = '/yazhou-pc/image/image/logout_notice.png'
+const logout_notice = `/${project_name}/image/image/logout_notice.png`
 /* 退出登录通知-英文 */
-const logout_notice_en = '/yazhou-pc/image/image/logout_notice_en.png'
+const logout_notice_en = `/${project_name}/image/image/logout_notice_en.png`
 /* 退出登录通知-越南语 */
-const logout_notice_vi = '/yazhou-pc/image/image/logout_notice_vi.png'
+const logout_notice_vi = `/${project_name}/image/image/logout_notice_vi.png`
 /* 退出登录通知-泰语 */
-const logout_notice_th = '/yazhou-pc/image/image/logout_notice_th.png'
+const logout_notice_th = `/${project_name}/image/image/logout_notice_th.png`
 /* 退出登录通知-马来语 */
-// const logout_notice_ma = '/yazhou-pc/image/image/logout_notice_ma.png'
+// const logout_notice_ma = `/${project_name}/image/image/logout_notice_ma.png`
 
 /* 是否展示 */
 const is_show = ref(false)
