@@ -6,31 +6,19 @@
 <template>
     <div class="settle-dialog" :style="page_style">
       <div class="row items-center yb_fontsize16 head-top" @touchmove.prevent>
-        <div class="row col items-center justify-center">
-          <p class="yb_mr10" @click="change_record(0)" :class="main_item == 0 && 'active-p'">
-            {{ i18n_t('bet_record.no_account') }}<span></span></p>
-          <p class="yb_ml10 yb_mr10" @click="change_record(1)" :class="main_item == 1 && 'active-p'">
-            {{ i18n_t('bet_record.account') }}<span></span></p>
-          <p class="yb_ml10" v-if="authorityFlag" @click="change_record(2)"
-            :class="main_item == 2 && 'active-p'">{{ i18n_t('pre_record.book') }}<span></span></p>
-        </div>
-        <div class="col-2 close">
-          <span class="close-click-padding" @click="close_show">
-            <template v-if="lodash.get(UserCtr, 'theme').includes('day')">
-              <img :src="compute_css({key: 'h5-img-bet-record-close', theme: 'local_dev', type: 'img'})">
-              <!-- <div :style="compute_css({key: 'h5-img-bet-record-close', theme: 'local_dev'})"></div> -->
-              </template>
-            <template v-else>
-              <img :src="compute_css({key: 'h5-img-bet-record-close', theme: 'local_dev', type: 'img'})">
-              <!-- <div :style="compute_css({key: 'h5-img-bet-record-close', theme: 'local_dev'})"></div> -->
-            </template>
-          </span>
+        <div :class="['row','col','items-center','justify-center', authorityFlag ? 'three-child' : 'two-child']">
+          <p @click="change_record(0)" :class="main_item == 0 && 'active-p'">
+            {{ i18n_t('bet_record.no_account') }}</p>
+          <p @click="change_record(1)" :class="main_item == 1 && 'active-p'">
+            {{ i18n_t('bet_record.account') }}</p>
+          <p v-if="authorityFlag" @click="change_record(2)" :class="main_item == 2 && 'active-p'">
+            {{ i18n_t('pre_record.book') }}</p>
         </div>
       </div>
   
       <div class="content-m" ref="record_box">
         <!--未结算  -->
-          <unsettle ref="unsettle_child" v-show="main_item == '0'" :main_item="main_item"></unsettle>      
+        <unsettle ref="unsettle_child" v-show="main_item == '0'" :main_item="main_item"></unsettle>      
         <!--已结算-->
         <settle v-show="main_item == '1'" :main_item="main_item"></settle>
         <!--预约-->
@@ -42,7 +30,7 @@
   <script setup>
   import { api_betting } from "src/api/index.js";
   //   import { mapGetters, mapMutations } from "vuex"
-  import unsettle from "src/base-h5/pages/cathectic/unsettle.vue"
+  import unsettle from "src/base-h5/pages/cathectic/app-h5/unsettle.vue"
   import settle from "src/base-h5/pages/cathectic/settle.vue"
   import preRecord from "src/base-h5/pages/cathectic/pre-record.vue"
   import { onMounted, onUnmounted, ref, computed, provide, watch, nextTick } from 'vue'
@@ -153,66 +141,40 @@
   
   <style lang="scss" scoped>
   .settle-dialog {
-    border-radius: 16px 16px 0 0;
     position: relative;
-    overflow: hidden;
-    background:var(--q-gb-bg-c-15);
+    overflow: hidden;   
     color: var(--q-cathectic-color-1);
     .content-m {
-        background: var(--q-cathectic-color-7);
+        padding-top: 0.2rem;
       }
   }
   
   .head-top {
-    height: 0.5rem;
-    position: relative;
-    border-bottom: 1px solid var(--q-gb-bd-c-13);
+    height: 0.4rem;
+    background:var(--q-gb-bg-c-15);
+    border-radius: 1rem;
   
-    .close {
-      position: absolute;
-      right: 0;
-      // width: 0.14rem;
-      // height: 0.14rem;
-      padding-right: 0.34rem !important;
-      .close-click-padding {
-        // padding: 0.08rem 0.04rem;
-      }
-  
-      div {
-        width: 0.14rem;
-        height: 0.14rem;
-        background-repeat: no-repeat;
-      }
-    }
-  
-    & div:last-child {
-      text-align: right;
-      padding-right: 0.14rem;
-      font-size: 0.14rem;
+    & > div {
+      justify-content: space-between;
+      padding: 0.03rem;
     }
   
     p {
-      position: relative;
-  
-      span {
-        position: absolute;
-        display: block;
-        width: 36%;
-        height: 0;
-        left: 50%;
-        border: 0.015rem solid transparent;
-        transform: translateX(-50%);
-        border-radius: 0.08rem;
-      }
+      text-align: center;
+      border-radius: 1rem;
+      height: 0.34rem;
+      line-height: 0.34rem;
   
       &.active-p {
-        font-weight: 600;
-        color: inherit;
-        span {
-          border-color: var(--q-gb-bd-c-10);
-          background: var(--q-gb-bd-c-13);
-        }
+        background: var(--q-cathectic-color-6);
+        color: var(--q-gb-t-c-14);
       }
+    }
+    div.three-child p {
+      width: 30%;
+    }
+    div.two-child p {
+      width: 48%;
     }
   }
   </style>
