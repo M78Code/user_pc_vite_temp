@@ -311,7 +311,7 @@ export default {
   width: 0.28rem;
   height: 100%;
   // TODO: 后续上传
-  background: url('/yazhou-h5/image/list/virtual-ref.svg') center no-repeat;
+  background: url($SCSSPROJECTPATH + '/image/list/virtual-ref.svg') center no-repeat;
   background-size: 0.2rem auto;
 
   &.refreshing {
@@ -328,7 +328,7 @@ export default {
   width: 0.12rem;
   height: 0.2rem;
   // TODO: 后续上传
-  background: url('/yazhou-h5/image/common/go_back.svg') no-repeat center / 96% 96%;
+  background: url($SCSSPROJECTPATH + '/image/common/go_back.svg') no-repeat center / 96% 96%;
   background-size: 100% 100%;
 }
 
@@ -336,7 +336,7 @@ export default {
   width: 0.2rem;
   height: 92.5%;
   // TODO: 后续上传
-  background: url('/yazhou-h5/image/svg/analysis_new.svg') center no-repeat;
+  background: url($SCSSPROJECTPATH + '/image/svg/analysis_new.svg') center no-repeat;
   background-size: 0.2rem auto;
 }
 
@@ -344,7 +344,7 @@ export default {
   width: 0.18rem;
   height: 0.18rem;
   // TODO: 后续上传
-  background-image: url('/yazhou-h5/image/common/m-list-favorite.svg');
+  background-image: url($SCSSPROJECTPATH + '/image/common/m-list-favorite.svg');
   background-size: 100% 100%;
   position: absolute;
   left: 0.1rem;

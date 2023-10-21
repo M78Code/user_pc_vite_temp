@@ -198,13 +198,13 @@ export default defineComponent({
     width: 0.16rem;
     height: 0.16rem;
     // TODO:
-    background-image: url('/yazhou-h5/image/common/m-list-favorite.svg');
+    background-image: url($SCSSPROJECTPATH + '/image/common/m-list-favorite.svg');
     background-size: 100% 100%;
     margin-right: 0.05rem;
     margin-left: 0.08rem;
 
     &.active {
-      background-image: url("/yazhou-h5/image/common/m-list-favorite-s.svg");
+      background-image: url($SCSSPROJECTPATH + "/image/common/m-list-favorite-s.svg");
     }
   }
 }

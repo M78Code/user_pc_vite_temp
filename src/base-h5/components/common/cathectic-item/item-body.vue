@@ -20,7 +20,7 @@
       <div class="toggle row justify-center" v-if="data_b.orderVOS.length > 2">
         <span class="btn_style" @click="toggle_box">
           <span class="text_c">{{btn_text}}</span>
-          <img src="/yazhou-h5/image/list/league-collapse-icon.svg" alt="" :class="direction">
+          <img :src="`/${project_name}/image/list/league-collapse-icon.svg`" alt="" :class="direction">
         </span>
       </div>
     </template>
@@ -43,6 +43,7 @@ import bodyMain from "src/base-h5/components/common/cathectic-item/item-body/bod
 import lodash from 'lodash'
 import { ref, onMounted, onUnmounted} from 'vue'
 import { t } from "src/boot/i18n.js";;
+import { project_name } from 'src/core'
 
   //按钮名字
   let btn_text = ref('')

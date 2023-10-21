@@ -21,7 +21,7 @@
           </div>
           <div class="odds-style">
             <div v-if="item.os != 2">{{compute_value_by_cur_odd_type(item.odds,null,hsw_single)}}</div>
-            <div v-else><img src="/yazhou-h5/image/common/match-icon-lock.svg" /></div>
+            <div v-else><img :src="`/${project_name}/image/common/match-icon-lock.svg`" /></div>
           </div>
         </div>
       </div>
@@ -32,6 +32,7 @@
 // #TODO vuex
 // import { mapGetters} from "vuex";
 import lodash from "lodash";
+import { project_name } from 'src/core'
 import store from "src/store-redux/index.js";
 // import odd_convert from "src/base-h5/mixins/odds_conversion/odds_conversion.js";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";

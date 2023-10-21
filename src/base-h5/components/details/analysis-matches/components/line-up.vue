@@ -169,6 +169,7 @@ import { i18n_t } from "src/boot/i18n.js";
 import { get_file_path } from "src/core/file-path/file-path.js"
 import UserCtr from "src/core/user-config/user-ctr.js";
 import lodash from "lodash"
+import { project_name } from 'src/core'
 
 //国际化
 
@@ -187,7 +188,7 @@ import lodash from "lodash"
   const line_up_data = ref([])
   const no_data = ref(true)
   //默认图片地址
-  const default_url = ("/yazhou-h5/image/png/my.png")
+  const default_url = (`/${project_name}/image/png/my.png`)
   // 最后一位数
   const number = ref('')
   // 代表多少列 并且里边的数字

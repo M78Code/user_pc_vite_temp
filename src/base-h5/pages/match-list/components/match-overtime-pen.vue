@@ -19,7 +19,7 @@
 
           
         <!-- <img class="league-collapse-dir" :class="{ 'collapsed': t_item.unfold == 1 }"
-          :src="(`/yazhou-h5/image/list/league-collapse-icon${('night') ? '-black' : ''}${t_item.unfold == 1 ? (('y0') ? '-collapse-y0' : '-collapse') : ''}.svg`)" /> -->
+          :src="(`${project_name}/image/list/league-collapse-icon${('night') ? '-black' : ''}${t_item.unfold == 1 ? (('y0') ? '-collapse-y0' : '-collapse') : ''}.svg`)" /> -->
       
         </div>
     </div>
@@ -84,7 +84,7 @@ import store from "src/store-redux/index.js";
 import lodash from 'lodash'
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt"
 import { format_msc } from "src/core/format/index.js"
-import { MenuData,compute_css,utils,UserCtr,i18n_t,MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/index.js"
+import { project_name,MenuData,compute_css,utils,UserCtr,i18n_t,MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/index.js"
 import matchListClass from 'src/core/match-list-h5/match-class/match-list.js'
 import { api_common } from "src/api/index.js";
 import oddListWrap from './odd-list-wrap.vue';

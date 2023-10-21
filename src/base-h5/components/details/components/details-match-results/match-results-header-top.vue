@@ -12,7 +12,7 @@
     <div class="team-text" :class="{baseball: detail_data.csid == '3' }">
         {{ match_status }}
       <span class="style_icon" v-if="detail_data.mng == 1">
-        <img  src="/yazhou-h5/image/svg/zhonglichang.svg" alt />
+        <img :src="`/${project_name}/image/svg/zhonglichang.svg`" alt />
       </span>
     </div>
   </div>
@@ -24,6 +24,7 @@ import lodash from "lodash";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { format_total_score } from "src/core/format/index.js"
 import { i18n_t } from "src/boot/i18n.js"
+import { project_name } from "src/core"
 
 export default defineComponent({
   // #TODO vuex

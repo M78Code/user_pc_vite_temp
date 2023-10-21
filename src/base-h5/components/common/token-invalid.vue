@@ -112,7 +112,7 @@ export default defineComponent({
   //     left: -7.45%;
   //     width: 3.335rem;
   //     height: 1.4rem;
-  //     background-image:  url("/public/yazhou-h5/image/bw3/png/token_#{$expires}.png");
+  //     background-image:  url($SCSSPROJECTPATH + "/image/bw3/png/token_#{$expires}.png");
   //     background-size: 100% 100%;
   //   }
   // }

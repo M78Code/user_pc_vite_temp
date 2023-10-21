@@ -32,20 +32,20 @@ import { watch, ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 
 import { i18n_t ,} from "src/boot/i18n.js";
-import { useMittEmit,compute_css, MITT_TYPES } from "src/core/index.js"
+import { useMittEmit,compute_css, MITT_TYPES, project_name } from "src/core/index.js"
 import UserCtr from "src/core/user-config/user-ctr.js";
-// const noMatch2 = () => import("/yazhou-h5/image/png/noMatch2.png")
+// const noMatch2 = () => import(`/${project_name}/image/png/noMatch2.png`)
 
 // ==========图片===============
-// const noMatchSvg = '/yazhou-h5/image/svg/noMatch.svg'
-// const noMatch2Png = '/yazhou-h5/image/png/noMatch2.png'
-// const noShoucSvg = '/yazhou-h5/image/svg/no_shouc.svg'
-// const noShouc2Svg = '/yazhou-h5/image/svg/no_shouc2.svg'
-// const noMatchNewPng = '/yazhou-h5/image/png/noMatch_new.png'
-// const noMatch2NewPng = '/yazhou-h5/image/png/noMatch2_new.png'
-// const noLivedataSvg = '/yazhou-h5/image/svg/no_livedata.svg'
-// const no_livedata2Svg = '/yazhou-h5/image/svg/no_livedata2.svg'
-// const nowifiSvg = '/yazhou-h5/image/svg/nowifi.svg'
+// const noMatchSvg = `/${project_name}/image/svg/noMatch.svg`
+// const noMatch2Png = `/${project_name}/image/png/noMatch2.png`
+// const noShoucSvg = `/${project_name}/image/svg/no_shouc.svg`
+// const noShouc2Svg = `/${project_name}/image/svg/no_shouc2.svg`
+// const noMatchNewPng = `/${project_name}/image/png/noMatch_new.png`
+// const noMatch2NewPng = `/${project_name}/image/png/noMatch2_new.png`
+// const noLivedataSvg = `/${project_name}/image/svg/no_livedata.svg`
+// const no_livedata2Svg = `/${project_name}/image/svg/no_livedata2.svg`
+// const nowifiSvg = `/${project_name}/image/svg/nowifi.svg`
 
 
 // TODO: 临时用

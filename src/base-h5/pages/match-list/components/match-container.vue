@@ -159,7 +159,7 @@
                   <!-- mng 是否中立场   1:是中立场，0:非中立场-->
                   <div class="live-i-b-wrap v-mode-span row items-center"
                     v-if="![5, 10, 7, 8, 13].includes(Number(match.csid)) && match.mng * 1">
-                    <img class="neutral-icon-btn l-bottom" src='/yazhou-h5/image/list/m-list-neutral.svg' />
+                    <img class="neutral-icon-btn l-bottom" :src="`/${project_name}/image/list/m-list-neutral.svg`" />
                   </div>
 
                   <!-- 电竞串关标识 -->
@@ -271,7 +271,7 @@
                   </div>
                   <!-- v-if="match_of_list.playBack && is_replay_switch" -->
                   <div class="flex play-icon">
-                    <img src="/yazhou-h5/image/common/replay_y0.svg" />
+                    <img :src="`/${project_name}/image/common/replay_y0.svg`" />
                   </div>
                 </div>
                 <!--  左边收藏  视频动画 图标 玩法数量  赛事分析图标 提前结算图标  -->
@@ -328,7 +328,7 @@
                             {{ $t('list.go_to_details') }}
                           </div>
                           <div>
-                            <img class="go-to-d-icon" src="/yazhou-h5//image/list/m-list-way-more.svg" />
+                            <img class="go-to-d-icon" :src="`/${project_name}/image/list/m-list-way-more.svg`" />
                           </div>
                         </div>
                       </div>
@@ -400,7 +400,7 @@
                   </div>
                   <!--中立场图标-->
                   <div class="live-i-b-wrap newer" v-show="match.mng * 1 && ![5, 10, 7, 8].includes(Number(match.csid))">
-                    <img class="neutral-icon-btn" src='/yazhou-h5/image/list/m-list-neutral.svg' />
+                    <img class="neutral-icon-btn" :src="`/${project_name}/image/list/m-list-neutral.svg`" />
                   </div>
                   <!--玩法数量-->
                   <div class="go-container-w mcount flex">
@@ -444,7 +444,7 @@ import { ref, computed, onMounted, onUnmounted, watch, nextTick } from 'vue'
 import lodash from 'lodash'
 import store from "src/store-redux/index.js";
 import { useRouter, useRoute } from 'vue-router'
-import { useMittOn, useMittEmit, MITT_TYPES,UserCtr } from  "src/core"
+import { useMittOn, useMittEmit, MITT_TYPES,UserCtr, project_name } from  "src/core"
 import countingDownSecond from 'src/base-h5/components/common/counting-down.vue';
 import countingDownStart from 'src/base-h5/components/common/counting-down-start.vue';
 import scoreList from './score-list.vue';

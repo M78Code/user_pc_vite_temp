@@ -59,7 +59,7 @@ import { computed, onMounted, onUnmounted, ref, watch } from "vue";
 import store from "src/store-redux/index.js";
 import lodash from 'lodash'
 import { useMittOn, MITT_TYPES } from  "src/core/mitt"
-import  { MenuData, i18n_t, get_odds_active, compute_value_by_cur_odd_type } from "src/core/index.js"
+import  { MenuData, i18n_t, get_odds_active, compute_value_by_cur_odd_type,project_name } from "src/core/index.js"
 import UserCtr from 'src/core/user-config/user-ctr.js'
 import PageSourceData  from  "src/core/page-source/page-source.js";
 import { bet_click } from "src/core/bet/module/bet_info.js"
@@ -81,7 +81,7 @@ const props = defineProps({
   column_ceil:Number, //列数量
 })
 
-const match_icon_lock = '/yazhou-h5/image/common/match-icon-lock.svg'
+const match_icon_lock = `/${project_name}/image/common/match-icon-lock.svg`
 
 const emits = defineEmits(['select_change'])
 

@@ -62,12 +62,12 @@
         <!-- 第一次显示 用户指导页 -->
         <div class="floating-layer" v-if="first_login" @click.self.stop="first_login = false">
           <div>
-            <img class="animate-bounce-up" src="/yazhou-h5/image/svg/one-click.svg" alt="">
+            <img class="animate-bounce-up" :src="`/${project_name}/image/svg/one-click.svg`" alt="">
             <span>{{i18n_t("video.click_on")}}</span>
             <p>{{i18n_t("video.show_hide")}}</p>
           </div>
           <div>
-            <img class="animate-bounce-up" src="/yazhou-h5/image/svg/double-click.svg" alt="">
+            <img class="animate-bounce-up" :src="`/${project_name}/image/svg/double-click.svg`" alt="">
             <span>{{i18n_t("video.double_click")}}</span>
             <p>{{i18n_t("video.full_screen_play")}}</p>
           </div>
@@ -301,7 +301,7 @@ import { format_total_score } from "src/core/format/index.js"
 import { video_info } from "./videos.js";
 import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch,ref } from "vue";
 import { i18n_t } from "src/boot/i18n.js";
-import {UserCtr,compute_img} from "src/core/";
+import {UserCtr,compute_img,project_name} from "src/core/";
 
 
 //国际化

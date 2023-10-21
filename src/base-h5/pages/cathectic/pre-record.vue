@@ -22,7 +22,7 @@
                         <p class="tittle-p row justify-between yb_px4" :class="index == 0 && 'tittle-p2'" @click="toggle_show(value)">
                             <span>{{ format_M_D(new Date(name).getTime()) }}</span>
                             <span v-if="!value.open && index != 0 && !selected_expired">
-                                <img class="icon-down-arrow" src="/yazhou-h5/image/list/league-collapse-icon.svg" />
+                                <img class="icon-down-arrow" :src="`/${project_name}/image/list/league-collapse-icon.svg`" />
                             </span>
                         </p>
                         <div class="line" :class="!value.open && (index != Object.keys(list_data).length - 1) && 'line2'">
@@ -63,6 +63,7 @@ import lodash from "lodash";
 import { useMittOn, MITT_TYPES } from "src/core/mitt/"
 import { i18n_t } from "src/boot/i18n.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
+import { project_name } from "src/core";
 // TODO vuex 待数据调通后删除
 // import { mapGetters, mapMutations } from 'vuex';
 
@@ -432,13 +433,13 @@ onUnmounted(() => {
 
     .early {
     display: inline-block;
-    background: url("/public/yazhou-h5/image/svg/select_b.svg") no-repeat center / contain;
+    background: url($SCSSPROJECTPATH + "/image/svg/select_b.svg") no-repeat center / contain;
     vertical-align: text-bottom;
     width: 0.14rem;
     height: 0.14rem;
     }
 
     .early2 {
-    background-image: url("/public/yazhou-h5/image/svg/select_a.svg");
+    background-image: url($SCSSPROJECTPATH + "/image/svg/select_a.svg");
     }
 </style>

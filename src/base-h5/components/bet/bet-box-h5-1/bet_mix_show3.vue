@@ -13,7 +13,7 @@
         ">
         <!-- 左边 -->
         <div class="yb_mr12 dele-left" v-if="get_bet_success">
-          <img src="/public/yazhou-h5/image/svg/bet_xuanx.svg" @click.stop="remove_(value_show.id_)">
+          <img :src="`/${project_name}/image/svg/bet_xuanx.svg`" @click.stop="remove_(value_show.id_)">
           <!-- <img  src="image/wwwassets/bw3/svg/bet_xuanx.svg" @click.stop="remove_(value_show.id_)"> -->
         </div>
         <div>
@@ -91,6 +91,7 @@ import { ref, onMounted, watch, computed, onUnmounted, watchEffect } from 'vue';
 import { compute_value_by_cur_odd_type } from "src/core/format/module/format-odds-conversion-mixin.js"
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import UserCtr from 'src/core/user-config/user-ctr.js'
+import { project_name } from 'src/core'
 
 import lodash from 'lodash'
 

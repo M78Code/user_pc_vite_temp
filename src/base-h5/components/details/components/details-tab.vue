@@ -244,7 +244,7 @@ export default defineComponent({
   width: 0.12rem;
   height: 0.12rem;
   margin-top: 0.09rem;
-  background-image: url("/public/yazhou-h5/image/svg/tab_up_btn.svg");
+  background-image: url($SCSSPROJECTPATH + "/image/svg/tab_up_btn.svg");
   background-size: 100% 100%;
   transform: rotateZ(180deg);
   transition: transform 0.3s;

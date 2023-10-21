@@ -52,7 +52,7 @@
       <!-- 大于2条时,显示 展开收起按钮-->
       <span class="btn_style" @click="toggle_box" v-if="show_btn">
         <span class="text_c">{{ btn_text }}</span>
-        <img src="/yazhou-h5/image/list/league-collapse-icon.svg" alt="" :class="direction">
+        <img :src="`/${project_name}/image/list/league-collapse-icon.svg`" alt="" :class="direction">
       </span>
     </div>
     <!-- 没有数据 组件 -->
@@ -66,6 +66,7 @@ import { computed, onMounted, onUnmounted, ref } from "vue";
 import lodash from 'lodash'
 import { useRoute } from 'vue-router'
 import { i18n_t } from "src/boot/i18n.js";
+import { project_name } from 'src/core'
 
 
 const props = defineProps({
