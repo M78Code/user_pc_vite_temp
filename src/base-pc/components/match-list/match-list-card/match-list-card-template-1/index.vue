@@ -46,7 +46,7 @@
         <load-data style="max-height: 260px" state="empty" />
         <!-- 强力推荐 -->
         <div class="row">
-          <img class="list-hot-icon" src="/yazhou-pc/image/svg/hot.svg" />
+          <img class="list-hot-icon" :src="`/${project_name}/image/svg/hot.svg`" />
           <div class="list-hot-text">{{ i18n_t("list.hot_match") }}</div>
         </div>
       </div>
@@ -76,7 +76,7 @@ import LoadData from "src/base-pc/components/load-data/load-data.vue";
 
 import MatchListCardData from "src/core/match-list-pc/match-card/match-list-card-class.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
-import { LayOutMain_pc } from "src/core/index.js";
+import { LayOutMain_pc, project_name } from "src/core/index.js";
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js";
 import { component_symbol, need_register_props } from "../config/index.js";
 

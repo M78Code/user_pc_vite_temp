@@ -10,7 +10,7 @@
       <div class="flex1"></div>
       <div class="box">
         <div>
-          <img src="/yazhou-pc/image/svg/replay_video_no_line.svg" />
+          <img :src="`/${project_name}/image/svg/replay_video_no_line.svg`" />
         </div>
         <div class="txt">{{ i18n_t('replay_video.iframe_err') }}</div>
       </div>
@@ -20,7 +20,9 @@
 </template>
 
 <script>
-import http from "src/core/http/axios-warpper.js";  
+
+import { project_name } from 'src/core/index.js';
+
 import axios from "axios";
 export default {
   props:{
