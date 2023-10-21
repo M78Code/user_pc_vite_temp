@@ -11,7 +11,7 @@ body {
     color: var(--q-gb-t-c-8);
     border-bottom: 1px solid var(--q-gb-bd-c-8);
     .img {
-      background-image: url("/yazhou-pc/image/svg/bet.svg");
+      background-image: url($SCSSPROJECTPATH+"c/image/svg/bet.svg");
     }
   }
   .c-video-ctrl {

@@ -1,6 +1,6 @@
 <template>
   <div class="slider-x" ref="slider_x">
-    <div v-if="isShowArrow" class="arrow-left" :class="{ disabled: currentScrollLength === 0}" @click="swipLeft"><img src="/yazhou-pc/image/common/svg/video-swipe-arrow.svg" /></div>
+    <div v-if="isShowArrow" class="arrow-left" :class="{ disabled: currentScrollLength === 0}" @click="swipLeft"><img :src="arrowRightImg" /></div>
     <div
         class="slider-content"
         @mousemove="onMousemove"
