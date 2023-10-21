@@ -211,7 +211,6 @@ export default defineComponent({
 
       // console.log("match_list_new", match_list_normal.value)
       // 原created
-      console.error('sssasdasdasdasda',project_name)
       // 满足刷新页面保持向上展开的状态
       // set_fewer(1);
       // 只有赛果详情才调用相应接口

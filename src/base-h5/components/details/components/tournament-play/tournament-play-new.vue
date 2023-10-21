@@ -676,12 +676,12 @@ export default defineComponent({
           let hl_data_ = lodash.cloneDeep(hl_data)
           Object.assign(hl_data_.hl[0],{ol:[ol_item]})
           match.hps = [hl_data_];
-          bet_click3(match, hl_data_, ol_item);
+          set_bet_obj_config(match, hl_data_, ol_item);
         }else{
-          bet_click3(match, item_data, ol_item);
+          set_bet_obj_config(match, item_data, ol_item);
         }
       }else{   //普通赛事
-        bet_click(match, item_data, ol_item);
+        set_bet_obj_config(match, item_data, ol_item);
       }
     };
 

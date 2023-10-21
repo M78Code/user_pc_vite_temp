@@ -62,7 +62,7 @@ import { useMittOn, MITT_TYPES } from  "src/core/mitt"
 import  { MenuData, i18n_t, get_odds_active, compute_value_by_cur_odd_type,project_name } from "src/core/index.js"
 import UserCtr from 'src/core/user-config/user-ctr.js'
 import PageSourceData  from  "src/core/page-source/page-source.js";
-import { bet_click } from "src/core/bet/module/bet_info.js"
+import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
 
 // import odd_convert from "/mixins/odds_conversion/odds_conversion.js";
 
@@ -442,9 +442,16 @@ const item_click3 = lodash.debounce(() => {
   if (flag == 1 || flag == 4) {   //开盘和锁盘可以点击弹起来
     if (MenuData.get_menu_type() == 900 && $route.name == 'virtual_sports') { //虚拟体育走这里逻辑
       if (props.match.match_status) return
-      bet_click3(props.match, props.odd_field, odd_item.value);
     } else { //正常赛事走这里逻辑
-      bet_click(props.match, props.odd_field, odd_item.value);
+      console.error('ol_list_item',props.odd_field)
+      const {oid,hids,_hn,mid } = props.odd_field
+      let params = {
+        oid, // 投注项id ol_obj
+        _hid:hids, // hl_obj 
+        _hn,  // hn_obj
+        _mid:mid,  //赛事id mid_obj
+      }
+      set_bet_obj_config(params,{})
     }
   }
 }, 450, {'leading': true, trailing: false})

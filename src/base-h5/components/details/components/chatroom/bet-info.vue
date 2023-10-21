@@ -210,7 +210,7 @@ export default defineComponent({
             set_bet_list([])
             set_bet_obj({})
             set_chat_bet(true)
-            bet_click(data_details, ol_field_data, ol_item)
+            set_bet_obj_config(data_details, ol_field_data, ol_item)
           } else {  // 提示盘口失效
             // #TODO $root
             // set_toast({ 'txt': t('bet.msg12')});

@@ -412,7 +412,7 @@ const set_bet_obj_config = (params = {}, other = {}) => {
             handicap_attach = ol_obj.on
         }
     }
-
+debugger
     const bet_obj = {
         sportId: mid_obj.csid, // 球种id
         matchId: mid_obj.mid,  // 赛事id
@@ -446,13 +446,14 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         handicap_attach, // 盘盘口值
         show_handicap: get_handicap(ol_obj),
         show_mark_score: get_mark_score(ol_obj), // 是否显示基准分
+        mbmty: mid_obj.mbmty, //  2 or 4的  都属于电子类型的赛事
     }
     // 设置投注内容 
     BetData.set_bet_read_write_refer_obj(bet_obj)
 
     // 判断获取限额接口类型
-    if(bet_obj.dataSource == 'C01' || ['esports_bet','vr_bet'].includes(other.bet_type)){
-        // C01 电竞/电竞冠军/VR体育
+    if(["C01","B03","O01"].includes(bet_obj.dataSource) || [2,4].includes(Number(bet_obj.mbmty)) ||  ['esports_bet','vr_bet'].includes(other.bet_type)){
+        // C01/B03/O01  电竞/电竞冠军/VR体育
         get_query_bet_amount_esports_or_vr(bet_obj)
     }else{
         // 获取限额 常规

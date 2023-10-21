@@ -205,7 +205,7 @@ export default {
       let info = this.search_bet_item(match_inf, play_fun);
       console.log("info-----",info);
       if(info.length){
-        this.bet_click(match_inf, info, true)
+        this.set_bet_obj_config(match_inf, info, true)
       }
     },
     /**

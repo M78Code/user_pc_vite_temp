@@ -271,7 +271,7 @@ const bet_item = {
      * @description 投注项点击
      * @return {undefined} undefined  组装投注项的数据
      */
-    bet_click() {
+    set_bet_obj_config() {
       // 新的投注流程确认中时不让点击
       if(!BetData.is_virtual_bet && BetData.bet_mode === 1 && BetData.bet_item_lock) {
         return;
