@@ -337,7 +337,6 @@ if (UserCtr.get_user_token()) {
   }
 
   .match-main-menu {
-    max-width: 3.78rem;
     width: 100%;
     position: fixed;
     top: 0;
