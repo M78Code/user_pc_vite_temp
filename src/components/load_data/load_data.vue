@@ -61,7 +61,7 @@
         </div> -->
       </no-data>
       <div class="list_right_empty" v-else-if="['all_empty','new_empty'].includes(state)">
-        <div class="img"></div>
+        <div class="img" :style="compute_css('pc-lock-img-details')"></div>
         <span>{{ i18n_t(`common.${state}`)}}</span>
       </div>
     </div>
