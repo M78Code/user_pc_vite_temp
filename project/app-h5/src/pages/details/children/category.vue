@@ -31,7 +31,7 @@
           </div>
         </div>
         <!-- 热门赛事列表 -->
-        <!-- <detailMatchList invoke='category' ref="detail_match_list" /> -->
+        <detailMatchList invoke='category' ref="detail_match_list" />
       </div>
     </div>
     <!-- 详情玩法投注项有数据 -->
@@ -106,6 +106,7 @@ export default defineComponent({
     'tournament-play-new': tournament_play_new,
     'no-data':no_data,
     loading,
+    detailMatchList
   },
   props: ['category_arr'],
   setup(props, evnet) {
