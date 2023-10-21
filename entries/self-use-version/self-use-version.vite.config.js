@@ -48,7 +48,7 @@ export default defineConfig({
 
     quasar({
       // sassVariables: `app/project/${project}/src/css/quasar-variables.scss`,
-      sassVariables: `src/css-variables/variables.scss`,
+      sassVariables: `app/job/output/css/variables.scss`,
       
     }),
   ],
