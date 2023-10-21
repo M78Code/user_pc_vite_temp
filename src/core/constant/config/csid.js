@@ -1,23 +1,28 @@
-import football from "/yazhou-pc/image/png/football.png"; //足球
-import basketball from "/yazhou-pc/image/png/basketball.png"; //篮球
-import baseball from "/yazhou-pc/image/png/baseball.png"; //棒球
-import ice_hockey from "/yazhou-pc/image/jpg/ice_hockey.jpg"; //冰球
-import tennis from "/yazhou-pc/image/png/tennis.png"; //网球
-import usa_football from "/yazhou-pc/image/png/usa_football.png"; // 美足
-import snooker from "/yazhou-pc/image/jpg/snooker.jpg"; //斯诺克
-import ping_pong from "/yazhou-pc/image/jpg/ping_pong.jpg"; //乒乓球
-import volleyball from "/yazhou-pc/image/png/volleyball.png"; // 排球
-import badminton from "/yazhou-pc/image/jpg/badminton.jpg"; //羽毛球
-import handball from "/yazhou-pc/image/common/png/handball.png"; //手球
-import boxing from "/yazhou-pc/image/common/png/boxing.png"; //拳击
-import beach_volleyball from "/yazhou-pc/image/common/png/beach_volleyball.png"; //沙滩排球
-import rugby from "/yazhou-pc/image/common/png/rugby.png"; //橄榄球
-import hockey from "/yazhou-pc/image/common/png/hockey.png"; //曲棍球
-import polo from "/yazhou-pc/image/common/png/polo.png"; //水球
-import virtual_dog from "/yazhou-pc/image/png/virtual_dog.png"; //赛狗
-import virtual_racing from "/yazhou-pc/image/png/virtual_racing.png"; //赛马
-import motorcycle from "/yazhou-pc/image/png/motorcycle.png"; // 虚拟摩托车
-import virtual_dirt_bike_details from "/yazhou-pc/image/png/virtual_dirt_bike_details.png"; // 虚拟泥地摩托车
+ const {PROJECT_NAME}  = window.BUILDIN_CONFIG
+ let project_name = PROJECT_NAME
+ let football = `/${project_name}/image/png/football.png`; //足球
+let basketball = `/${project_name}/image/png/basketball.png`; //篮球
+let baseball = `/${project_name}/image/png/baseball.png`; //棒球
+let ice_hockey = `/${project_name}/image/jpg/ice_hockey.jpg`; //冰球
+let tennis = `/${project_name}/image/png/tennis.png`; //网球
+let usa_football = `/${project_name}/image/png/usa_football.png`; // 美足
+let snooker = `/${project_name}/image/jpg/snooker.jpg`; //斯诺克
+let ping_pong = `/${project_name}/image/jpg/ping_pong.jpg`; //乒乓球
+let volleyball = `/${project_name}/image/png/volleyball.png`; // 排球
+let badminton = `/${project_name}/image/jpg/badminton.jpg`; //羽毛球
+let handball = `/${project_name}/image/common/png/handball.png`; //手球
+let boxing = `/${project_name}/image/common/png/boxing.png`; //拳击
+let beach_volleyball = `/${project_name}/image/common/png/beach_volleyball.png`; //沙滩排球
+let rugby = `/${project_name}/image/common/png/rugby.png`; //橄榄球
+let hockey = `/${project_name}/image/common/png/hockey.png`; //曲棍球
+let polo = `/${project_name}/image/common/png/polo.png`; //水球
+let virtual_dog = `/${project_name}/image/png/virtual_dog.png`; //赛狗
+let virtual_racing = `/${project_name}/image/png/virtual_racing.png`; //赛马
+let motorcycle = `/${project_name}/image/png/motorcycle.png`; // 虚拟摩托车
+let virtual_dirt_bike_details = `/${project_name}/image/png/virtual_dirt_bike_details.png`; // 虚拟泥地摩托车
+ 
+
+
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/";
 /**
  * @description: 获取各球种背景图片
