@@ -28,7 +28,7 @@
                 @mouseleave="hide_gif($event, tab, index)">
                 <!--  v-if="show_menu_icon(tab.id)"  -->
                 <img v-show="tab.is_show" :ref="tab.icon_name"
-                    :src="`/yazhou-pc/image/gif/${tab.icon_name}.gif`"
+                    :src="`/${project_name}/image/gif/${tab.icon_name}.gif`"
                     class="tab-icon-img">
                     <!--${tab.icon_name}${('y0') ? '_y0' : ''}.gif`" -->
                 <q-tooltip anchor="top middle" self="center middle"
@@ -68,7 +68,7 @@ import { i18n_t } from "src/boot/i18n.js"
 import { api_home } from "src/api/index";
 import gSettings from 'src/base-pc/components/settings/index.vue';
 import langs from "src/i18n/pc/langs/index.mjs";
-import { utils } from 'src/core/index.js'
+import { utils,project_name } from 'src/core/index.js'
 import zhugeTag from "src/core/http/zhuge-tag.js"
 import gtagTag from 'src/core/http/gtag-tag.js'
 import store from "src/store-redux/index.js";
@@ -120,8 +120,8 @@ const settings_items = [
         id: 1,
         name: i18n_t('common.odds_set'),
         icon: {
-            day: '/yazhou-pc/image/svg/icon-odds.svg',
-            night: '/yazhou-pc/image/svg/icon-odds-night.svg'
+            day: `/${project_name}/image/svg/icon-odds.svg`,
+            night: `/${project_name}/image/svg/icon-odds-night.svg`
         },
         value_arr: [
             { label: i18n_t('odds.EU'), value: "EU", icon: 'panda-icon-contryEU', id: 1 },//欧洲盘
@@ -137,8 +137,8 @@ const settings_items = [
         id: 2,
         name: i18n_t('common.change_lang'),
         icon: {
-            day: '/yazhou-pc/image/svg/icon-lang.svg',
-            night: '/yazhou-pc/image/svg/icon-lang-night.svg'
+            day: `/${project_name}/image/svg/icon-lang.svg`,
+            night: `/${project_name}/image/svg/icon-lang-night.svg`
         },
         value_arr: Object.keys(langs),
         type: 'select'
@@ -147,8 +147,8 @@ const settings_items = [
         id: 3,
         name: i18n_t('common.change_skin'),
         icon: {
-            day: '/yazhou-pc/image/svg/icon-skin.svg',
-            night: '/yazhou-pc/image/svg/icon-skin-night.svg'
+            day: `/${project_name}/image/svg/icon-skin.svg`,
+            night: `/${project_name}/image/svg/icon-skin-night.svg`
         },
         value_arr: [/*i18n_t('odds.HK'), i18n_t('odds.EU')*/],
         type: 'switch'

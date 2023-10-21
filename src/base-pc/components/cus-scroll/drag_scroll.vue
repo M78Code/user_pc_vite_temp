@@ -190,7 +190,7 @@ export default {
     position: absolute;
     height: 100%;
     top: 0;
-    background-image: url("/yazhou-pc/image/svg/list_filter_arrow_right.svg");
+    background-image: url($SCSSPROJECTPATH + "/image/svg/list_filter_arrow_right.svg");
     background-repeat: no-repeat;
     background-position: center center;
     cursor: pointer;

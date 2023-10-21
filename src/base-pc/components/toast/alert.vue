@@ -12,7 +12,7 @@
           <!-- 域名错误弹窗 -->
           <template v-if="is_domain_error">
             <div class="page-lost">
-              <img src="/yazhou-pc/image/common/png/page_lost.png" alt="">
+              <img :src="`/${project_name}/image/common/png/page_lost.png`" alt="">
               <div class="text1">{{ i18n_t('common.user_api_limited1') }}</div>
               <div class="text2">{{ i18n_t('common.user_api_limited2') }}</div>
             </div>
@@ -35,7 +35,7 @@
 
 <script setup>
 import { onMounted, onUnmounted, reactive, ref } from 'vue';
-import { i18n_t } from "src/core/index.js";
+import { i18n_t, project_name } from "src/core/index.js";
 import { useMittEmitterGenerator, useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import store from "src/store-redux/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";

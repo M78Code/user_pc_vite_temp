@@ -3,7 +3,7 @@
     <!-- 比赛进程 -->
     <div class="process-col yb-flex-center">
       <!--热门赛事显示hot标识-->
-      <img class="match-hot" src="/yazhou-pc/image/common/svg/hot.svg" v-show="lodash.get(match, 'is_hot')"/>
+      <img class="match-hot" :src="`/${project_name}/image/common/svg/hot.svg`" v-show="lodash.get(match, 'is_hot')"/>
       <!-- 比赛进程 -->
       <match-process v-if="match" :match="match" source='match_list' show_page="match-list" :rows="2" />
     </div>
@@ -39,7 +39,7 @@
 <script setup>
 import { ref } from 'vue';
 
-import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/core/index.js";
+import { MatchDataWarehouse_PC_List_Common as MatchListData, project_name } from "src/core/index.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
