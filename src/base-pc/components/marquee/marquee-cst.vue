@@ -431,34 +431,34 @@ onUnmounted(clear_timer)
 
         .tab-icon-item {
             &-sports_rules {
-                background-image: url("/yazhou-pc/image/svg/sports_rules.svg");
+                background-image: url($SCSSPROJECTPATH+"/image/svg/sports_rules.svg");
                 background-size: cover;
             }
 
             &-task_center {
-                background-image: url("/yazhou-pc/image/svg/task_center.svg");
+                background-image: url($SCSSPROJECTPATH+"/image/svg/task_center.svg");
                 background-size: cover;
             }
 
             &-settings {
-                background-image: url("/yazhou-pc/image/svg/settings.svg");
+                background-image: url($SCSSPROJECTPATH+"/image/svg/settings.svg");
                 background-size: cover;
             }
         }
 
         .tab-icon-item-y0 {
             &-sports_rules {
-                background-image: url("/yazhou-pc/image/svg/sports_rules_y0.svg");
+                background-image: url($SCSSPROJECTPATH+"/image/svg/sports_rules_y0.svg");
                 background-size: cover;
             }
 
             &-task_center {
-                background-image: url("/yazhou-pc/image/svg/task_center_y0.svg");
+                background-image: url($SCSSPROJECTPATH+"/image/svg/task_center_y0.svg");
                 background-size: cover;
             }
 
             &-settings {
-                background-image: url("/yazhou-pc/image/svg/settings_y0.svg");
+                background-image: url($SCSSPROJECTPATH+"/image/svg/settings_y0.svg");
                 background-size: cover;
             }
         }

@@ -725,19 +725,19 @@
             }
 
             &.collapse-open {
-                background: url("/yazhou-pc/image/svg/collapse_up.svg") no-repeat center / cover;
+                background: url($SCSSPROJECTPATH+"/image/svg/collapse_up.svg") no-repeat center / cover;
             }
 
             &.collapse-hide {
-            background: url("/yazhou-pc/image/svg/collapse_down.svg") no-repeat center / cover;
+            background: url($SCSSPROJECTPATH+"/image/svg/collapse_down.svg") no-repeat center / cover;
             }
 
             &.collapse-open-y0 {
-                background: url("/yazhou-pc/image/svg/collapse_up.svg") no-repeat center / cover;
+                background: url($SCSSPROJECTPATH+"/image/svg/collapse_up.svg") no-repeat center / cover;
             }
 
             &.collapse-hide-y0 {
-                background: url("/yazhou-pc/image/svg/collapse_down_y0.svg") no-repeat center / cover;
+                background: url($SCSSPROJECTPATH+"/image/svg/collapse_down_y0.svg") no-repeat center / cover;
             }
         }
     }

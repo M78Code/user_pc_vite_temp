@@ -4,6 +4,15 @@
  * @Description: 项目默认公共样式
  */
 //  @import url("/yazhou-pc/lib/font/font-roboto.min.css");
+$layout_max_width: 1920px; //内容最大宽度
+$layout_min_width: 1440px; //内容最大宽度
+
+body,
+html {
+  max-width: $layout_max_width;
+  min-width: $layout_min_width;
+  margin: 0 auto;
+}
 
 @font-face {
   font-family: "Number-regular";
