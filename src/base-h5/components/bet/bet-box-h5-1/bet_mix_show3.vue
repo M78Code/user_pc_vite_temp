@@ -13,12 +13,7 @@
         ">
         <!-- 左边 -->
         <div class="yb_mr12 dele-left" v-if="get_bet_success">
-<<<<<<< HEAD
           <img :src="`/${project_name}/image/svg/bet_xuanx.svg`" alt="" @click.stop="remove_(value_show.id_)">
-=======
-          <img :src="`/${project_name}/image/svg/bet_xuanx.svg`" @click.stop="remove_(value_show.id_)">
-          <!-- <img  src="image/wwwassets/bw3/svg/bet_xuanx.svg" @click.stop="remove_(value_show.id_)"> -->
->>>>>>> df27606cb0606bec78d9062fb2ee6a9839e4ef96
         </div>
         <div>
         </div>
