@@ -64,6 +64,7 @@ export const   htmlVariables = {
     TAG: process.env.TAG,
     BUILD_TAG: process.env.BUILD_TAG  ,
     PROJECT_NAME,
+    BUILD_VERSION,
 
     error_upload_url: 'https://information-api.sportxxxwo8.com/error_info', // 错误上报环境地址
 
