@@ -33,7 +33,8 @@ DEV_TARGET_VERSION = "project_4-652ccfacfeffd80f0fcda107-1697892059430-online";
 // 打包 亚洲版 PC（新版)   试玩环境  
 // DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1697889603593-shiwan";
 // 打包 亚洲版 PC（新版)   生产环境
-// DEV_TARGET_VERSION = "project_5-65269e7db8b249ef7a269af3-1697289430789-online";
+ DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1697893182185-online";
+ 
 
 //----------------------------------亚洲版-PC-202310新平坦化版本  new-pc 6-------------------------------------------
 // 打包 亚洲版 PC（新版)   测试环境  
