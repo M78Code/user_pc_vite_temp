@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="12px" height="12px" viewBox="0 0 12 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 61.2 (89653) - https://sketch.com -->
+    <title>矩形备份 23</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="84.5117188%" y1="50%" x2="0.976988303%" y2="50%" id="linearGradient-1">
+            <stop stop-color="#EFDECE" offset="0%"></stop>
+            <stop stop-color="#D2B79C" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="画板" transform="translate(-26.000000, -616.000000)" fill="url(#linearGradient-1)">
+            <path d="M27,616 L32,616 L35.933026,620.719631 C36.5511026,621.461323 36.5511026,622.538677 35.933026,623.280369 L32,628 L32,628 L27,628 L27,616 Z" id="矩形备份-23" transform="translate(32.000000, 622.000000) rotate(-90.000000) translate(-32.000000, -622.000000) "></path>
+        </g>
+    </g>
+</svg>

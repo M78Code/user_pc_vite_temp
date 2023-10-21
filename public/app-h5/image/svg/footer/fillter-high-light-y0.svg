@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>筛选</title>
+    <defs>
+        <linearGradient x1="50%" y1="99.9781469%" x2="50%" y2="2.31370192%" id="linearGradient-1">
+            <stop stop-color="#569FFD" offset="0%"></stop>
+            <stop stop-color="#9AC6FF" offset="100%"></stop>
+        </linearGradient>
+        <path d="M6.51926454,14.4550572 C6.41736128,14.3894759 6.34792686,14.2875218 6.32421705,14.1732017 L6.31521518,14.085518 L6.31366636,7.6522081 L0.365871095,2.33705935 C-0.161175844,1.76468726 -0.108795779,0.919960279 0.458421648,0.405708529 L0.563850027,0.31851146 C0.798523386,0.141528908 1.08325496,0.033936597 1.38137055,0.00680782552 L1.53137388,0 L18.4686969,0 C19.3072093,0 20,0.626974589 20,1.41740368 C20,1.71326718 19.900202,1.99971041 19.696613,2.25858421 L19.6029944,2.36778929 L13.6836502,7.65309397 L13.6848557,20 L6.51926454,14.4550572 Z" id="path-2"></path>
+    </defs>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="筛选" fill-rule="nonzero">
+            <use fill="#FFB001" xlink:href="#path-2"></use>
+            <use fill="url(#linearGradient-1)" xlink:href="#path-2"></use>
+        </g>
+    </g>
+</svg>

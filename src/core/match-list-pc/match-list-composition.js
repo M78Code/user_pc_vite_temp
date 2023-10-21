@@ -103,7 +103,6 @@ function get_match_list_by_mid_for_base_data_res (mid, csid, type) {
 };
 // 使用元数据默认显示 后面替换
 function set_base_data_init () {
-	console.log('MenuData', MenuData);
 	// return
 	// 当前的分类 左侧菜单数据 中间件数据
 	const {
@@ -309,7 +308,6 @@ function fetch_match_list(is_socket = false, cut) {
 	// 	return;
 	// }
 	// 强力推荐 静默拉取
-	console.log('is_show_hot', is_show_hot.value);
 	if (is_socket && is_show_hot.value) {
 		get_hot_match_list(true);
 		return;
@@ -324,7 +322,6 @@ function fetch_match_list(is_socket = false, cut) {
 		// 设置列表滚动条scrollTop
 		MatchListScrollClass.set_scroll_top(0);
 	}
-	console.log('config1', MenuData.match_list_api_config.match_list);
 	let match_api = MenuData.match_list_api_config.match_list || {};
 	// 设置列表接口 和 参数
 	let api = api_match[match_api.api_name];

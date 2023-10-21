@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="14px" height="14px" viewBox="0 0 14 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Fill 1备份</title>
+    <defs>
+        <linearGradient x1="85.8900377%" y1="85.8900377%" x2="15.2913981%" y2="15.2913981%" id="linearGradient-1">
+            <stop stop-color="#FFB001" offset="0%"></stop>
+            <stop stop-color="#FF7000" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M6.25,11 C3.631,11 1.5,8.869 1.5,6.25 C1.5,3.631 3.631,1.5 6.25,1.5 C8.869,1.5 11,3.631 11,6.25 C11,8.869 8.869,11 6.25,11 M6.25,0 C2.7985,0 0,2.7985 0,6.25 C0,9.7015 2.7985,12.5 6.25,12.5 C7.6145,12.5 8.8735,12.0575 9.901,11.3155 L12.294,13.7085 C12.4885,13.903 12.745,14 13.001,14 C13.2575,14 13.514,13.903 13.7085,13.7085 C14.097,13.3195 14.097,12.683 13.7085,12.294 L11.3155,9.901 C12.0575,8.8735 12.5,7.6145 12.5,6.25 C12.5,2.7985 9.7015,0 6.25,0" id="Fill-1备份" fill="url(#linearGradient-1)" fill-rule="nonzero"></path>
+    </g>
+</svg>

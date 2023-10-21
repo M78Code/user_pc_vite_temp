@@ -251,7 +251,7 @@ function set_menu_lv1(item, index, type = "click") {
   } else if (MenuData.is_results(item.mi)) {// "赛果",
   } else if (MenuData.is_vr(item.mi)) {// "VR",
     router.push({
-      name: "virtual",
+      name: "virtual_sports",
       query: {
         from: route.name,
       },

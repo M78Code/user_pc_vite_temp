@@ -121,11 +121,11 @@ import ListFilterHot from "src/base-pc/components/match-list/list-filter-hot/ind
 import { ListFilterDateFullVersionWapper as listFilterDate } from "src/base-pc/components/match-list/list-filter-date/index.js"; //热门赛事列表  早盘-日期
 import { MatchListCardFullVersionWapper as MatchListCard } from "src/base-pc/components/match-list/match-list-card/index.js"; //赛事列表
 import { PlayVirtualMatchTypeFullVersionWapper as PlayVirtualMatchType } from "src/base-pc/components/match-list/play-virtual-match-type/index.js";//赛事列表头部——滚球——赛事类型
-import { ListHeaderFullVersionWapper as ListHeader } from "src/base-pc/components/match-list/list-header/index.js"; //头部
+import ListHeader from "src/base-pc/components/match-list/list-header/index.vue"; //头部
 import ScrollList from 'src/base-pc/components/cus-scroll/scroll_list.vue';
 import refresh from "src/components/refresh/refresh.vue"
-
 import EsportsHeader from "src/base-pc/components/match-list/esports-header/index.vue";//电竞赛事列表筛选
+
 // import { VirtualMatchTypeFullVersionWapper as VirtualMatchType } from "src/base-pc/components/match-list/match-list-card/index.js";//虚拟体育 赛事列表 赛事头
 // import { LeaguesFilterFullVersionWapper as LeaguesFilter } from "src/base-pc/components/match-list/match-list-card/index.js";//联赛筛选页面
 // import { VirtualMatchTpl1FullVersionWapper as VirtualMatchTpl1 } from "src/base-pc/components/match-list/match-list-card/index.js"; //拟足球 、 虚拟篮球
