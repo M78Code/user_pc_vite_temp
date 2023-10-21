@@ -14,7 +14,7 @@
     <div class="col-auto col-delete" @click.stop="close_video">
       <icon-wapper size="12px" name="icon-del" class="bet-del" />
     </div>
-    <img class="replay-icon2" src="/yazhou-pc/image/svg/replay_icon2.svg" />
+    <img class="replay-icon2" :src="`/${project_name}/image/svg/replay_icon2.svg`" />
     <div id="dplayer-video-zone" :style="{ width: width + 'px', height: height + 'px' }" @click.stop="" @mouseover="mouseover"
       @mouseout="mouseout">
       <iframe @load="send_message_xywh" ref="video_iframe_ref" class="iframe" :width="width" :height="height"
@@ -39,6 +39,7 @@ import { onMounted, ref, computed, reactive, onUnmounted, toRefs } from 'vue'
 import store from "src/store-redux/index.js";
 import { useRoute } from "vue-router";
 import {  utils } from "src/core/utils/module/utils.js";
+import { project_name } from "src/core";
 const route =useRoute()
 // 是否pc项目
 const IS_PC = window.BUILDIN_CONFIG.PROJECT_NAME.includes('pc')
