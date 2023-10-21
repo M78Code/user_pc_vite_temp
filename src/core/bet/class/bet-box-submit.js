@@ -412,7 +412,6 @@ const set_bet_obj_config = (params = {}, other = {}) => {
             handicap_attach = ol_obj.on
         }
     }
-debugger
     const bet_obj = {
         sportId: mid_obj.csid, // 球种id
         matchId: mid_obj.mid,  // 赛事id

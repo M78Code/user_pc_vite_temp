@@ -415,7 +415,7 @@ const search_odds_value_by_ball_head = () => {
               console.error('当前最小值等于1', ref_data.min_odds_value);
             }
             ref_data.min_odds_value = vu;
-            ref_data.computed_appoint_ball_head = vu
+            ref_data.appoint_odds_value = vu == 0 ? ref_data.appoint_odds_value : vu
             //设置输入框最小值
             // BetData.set_pre_min_odd_value(ref_data.min_odds_value)
             console.error('当前赔率===', ref_data.appoint_odds_value);
@@ -446,7 +446,7 @@ const search_odds_value_by_ball_head = () => {
         // console.error('当前最小值等于2', ref_data.min_odds_value);
       }
       ref_data.min_odds_value = vu
-      ref_data.computed_appoint_ball_head = vu
+      ref_data.appoint_odds_value = vu == 0 ? ref_data.appoint_odds_value : vu
       //设置输入框最小值
       // BetData.set_pre_min_odd_value(ref_data.min_odds_value)
       // console.error('当前赔率3333===',  ref_data.appoint_odds_value)
