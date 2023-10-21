@@ -105,7 +105,7 @@
         class="list_right_empty"
         v-else-if="['all_empty', 'new_empty'].includes(cur_state)"
       >
-        <div class="img"></div>
+        <div class="img" :style="compute_css('pc-lock-img-details')"></div>
         <span>{{i18n_t(`common.${cur_state}`) }}</span>
       </div>
     </div>

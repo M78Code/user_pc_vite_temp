@@ -68,4 +68,8 @@ export default {
    "pc-img-loading": {
     default: "pc-img-loading"
   },
+   //无盘口图片
+   "pc-lock-img-details": {
+    default: "pc-lock-img-details"
+  },
 };
