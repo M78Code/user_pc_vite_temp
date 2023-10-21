@@ -18,7 +18,7 @@
     <!-- state=='empty' || state=='loading' -->
     <div class="column yb-flex-center empty sdc" v-if=" state=='empty' || state=='loading'"    :class="{'fit': ['empty','notice-empty', 'loading', 'box_opening', 'right_details_loading','code_empty'].includes(state)}" >
       <div v-if="state=='loading' || state == 'box_opening'" class="loading-wrap padding-top" >
-        <div class="img-loading custom-format-img-loading"></div>
+        <div class="img-loading custom-format-img-loading" :style="compute_css('pc-img-loading')"></div>
         <div class="text-center loading-text flex items-end justify-center">
           <span v-if="state == 'box_opening'" style="font-size: 16px">抽盒中......</span>
           <span v-else>{{ i18n_t('common.loading')}}</span>
@@ -27,7 +27,7 @@
       </div>
       <!-- 右侧详情内容加载中... -->
       <div v-if="state=='right_details_loading'" class="loading-wrap right_details_loading" >
-        <div class="img-loading custom-format-img-loading"></div>
+        <div class="img-loading custom-format-img-loading" :style="compute_css('pc-img-loading')"></div>
         <div class="text-center loading-text flex items-end justify-center">
           <span>{{ i18n_t('common.loading')}}</span>
           <!-- 右侧详情内容加载中... -->
@@ -132,7 +132,7 @@
 <script>
 import { NoDataWapper as noData } from "src/components/common/no-data";
 import UserCtr from "src/core/user-config/user-ctr.js";
-import {i18n_t} from "src/core/index"
+import {i18n_t,compute_css} from "src/core/index"
 import { is_eports_csid } from 'src/core/index.js'
 import store from "src/store-redux/index.js";
 import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/index.js";

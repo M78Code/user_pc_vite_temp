@@ -86,6 +86,7 @@ export default {
   },
   data(){
     return {
+      project_name,
       tooltip_style,
       // video_type:1,//1:高清flv, 2:流畅m3u8
       is_rotate:false,  // 刷新按钮是否旋转

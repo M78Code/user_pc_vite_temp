@@ -64,4 +64,8 @@ export default {
   "pc-img-match-list-switch": {
     default: "pc-img-match-list-switch"
   },
+   // loading加载图片
+   "pc-img-loading": {
+    default: "pc-img-loading"
+  },
 };
