@@ -1,6 +1,6 @@
 import lodash from "lodash";
 import GlobalAccessConfig from "src/core/access-config/access-config.js"
-import { api_common, api_analysis } from "src/api/index.js";  // API 公共入口
+import { api_common, api_analysis,project_name } from "src/api/index.js";  // API 公共入口
 import { useMittOn, useMittEmit, useMittEmitterGenerator, MITT_TYPES } from "src/core/mitt"
 import { useRouter, useRoute } from "vue-router";
 import store from "src/store-redux/index.js";
@@ -210,8 +210,8 @@ const route = useRoute();
     const suffix_theme = UserCtr.theme.includes("night") ? "2" : "";
     // y0后缀
     const suffix_y0 = UserCtr.theme.includes("_y0") ? "_y0" : "";
-    // img:/image/bw3/svg/details/replay${suffix_theme}${suffix_y0}.svg public/yazhou-h5/image/svg/details/replay2.svg
-    return `img:/yazhou-h5/image/svg/details/replay${suffix_theme}.svg`;
+ 
+    return `img:/${project_name}/image/svg/details/replay${suffix_theme}.svg`;
   });
   
 // 监听数据仓库版本号变更后更新数据
