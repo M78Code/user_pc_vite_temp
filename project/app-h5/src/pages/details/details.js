@@ -1,6 +1,6 @@
 import lodash from "lodash";
 import GlobalAccessConfig from "src/core/access-config/access-config.js"
-import { api_common, api_analysis,project_name } from "src/api/index.js";  // API 公共入口
+import { api_common, api_analysis } from "src/api/index.js";  // API 公共入口
 import { useMittOn, useMittEmit, useMittEmitterGenerator, MITT_TYPES } from "src/core/mitt"
 import { useRouter, useRoute } from "vue-router";
 import store from "src/store-redux/index.js";
@@ -8,7 +8,7 @@ import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-c
 // import { Level_one_category_list, Level_one_detail_data } from "./category-list.js";
 import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch, nextTick, ref, onBeforeMount } from "vue";
 import UserCtr from "src/core/user-config/user-ctr.js";
-import { MatchDataWarehouse_H5_Detail_Common, MatchDetailCalss } from "src/core/index";
+import { MatchDataWarehouse_H5_Detail_Common, MatchDetailCalss ,project_name} from "src/core/index";
 import { SessionStorage } from "src/core/utils/index.js"
 
 export const details_main = () => {
