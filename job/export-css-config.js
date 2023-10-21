@@ -204,7 +204,7 @@ $info      : #31CCEC;
 $warning   : #F2C037;
 
 
-$project-name   : "/${PROJECT_NAME}";
+$SCSSPROJECTPATH  : "/${PROJECT_NAME}";
   
   `
 
