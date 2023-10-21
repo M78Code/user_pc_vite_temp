@@ -102,9 +102,7 @@ const props = defineProps({
     default: () => ([])
   },
 })
-const default_url = "/yazhou-h5/image/svg/match_cup.svg"  //默认图片地址
-// 无联赛logo图标黑色版
-const none_league_icon_black = "/yazhou-h5/image/svg/match_cup_black.svg"
+
 const there_any_data = computed(() => {
   // 没有数据时，显示 无数据组件
   if (Array.isArray(props.SuggestionList)) {
