@@ -54,7 +54,7 @@
           <span style="flex:1">
             <template v-if="main.settleScore != ''"> {{calc_settle_score}}</template>
           </span>
-         <img :src="`/${project_name}/image/list/league-collapse-icon.svg`" alt="" class="arrow2" v-if="show_arrow">
+         <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/league-collapse-icon.svg`" alt="" class="arrow2" v-if="show_arrow">
         </p>
       <!-- </template> -->
     </div>
@@ -103,7 +103,7 @@
 
 <script setup>
 // import { mapGetters, mapMutations } from "vuex";
-import {compute_css, project_name} from 'src/core/'
+import {compute_css, LOCAL_PROJECT_FILE_PREFIX} from 'src/core/'
 import { api_common } from "src/api/index.js";
 import {
   utils, 

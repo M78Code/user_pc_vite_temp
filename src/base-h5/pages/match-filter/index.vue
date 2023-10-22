@@ -91,9 +91,9 @@ import PageSourceData from "src/core/page-source/page-source.js";
 
 import { i18n_t, MITT_TYPES, compute_css, useMittEmit, MenuData, compute_img, UserCtr, get_server_file_path } from 'src/core/'
 import { ref, watch, computed, nextTick, onBeforeUnmount, onMounted } from 'vue';
-const default_url = `/${project_name}/image/svg/match_cup.svg` //默认图片地址
+const default_url = `${LOCAL_PROJECT_FILE_PREFIX}/image/svg/match_cup.svg` //默认图片地址
 // 无联赛logo图标黑色版
-const none_league_icon_black = `/${project_name}/image/svg/match_cup_black.svg`
+const none_league_icon_black = `${LOCAL_PROJECT_FILE_PREFIX}/image/svg/match_cup_black.svg`
 
 const list_data_loading = ref(false)     //数据加载中
 const list = ref([]) //数据列表整个赛事

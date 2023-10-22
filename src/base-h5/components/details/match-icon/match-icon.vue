@@ -13,14 +13,14 @@
       <!-- 动画或视频icon -->
       <template v-if="icon_class == 'donghua'">
         <img
-          :src="`/${project_name}/image/svg/donghua.svg`"
+          :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/donghua.svg`"
           alt=""
           class="icon-style"
         >
       </template>
       <template v-if="icon_class == 'shipin'">
         <img
-          :src="`/${project_name}/image/svg/shipin.svg`"
+          :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/shipin.svg`"
           alt=""
           class="icon-style"
         >
@@ -87,9 +87,9 @@ const is_in_play = ref(detailsReducer.is_in_play)
 
 let send_gcuuid = ''
 // 正在直播的
-const lvs_icon_ing = `/${project_name}/image/common/zhibo-l.png`
+const lvs_icon_ing = `${LOCAL_PROJECT_FILE_PREFIX}/image/common/zhibo-l.png`
 // 赛前直播的
-const lvs_icon_pre = `/${project_name}/image/common/zhibo-before.svg`
+const lvs_icon_pre = `${LOCAL_PROJECT_FILE_PREFIX}/image/common/zhibo-before.svg`
 // 演播厅的图标
 const lvs_state_obj = reactive({ lvs: '', icon_path: '' })
 const get_detail_data = reactive(props.detail_data)

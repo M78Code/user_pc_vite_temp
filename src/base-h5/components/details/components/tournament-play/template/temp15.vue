@@ -31,7 +31,7 @@
                 <!-- 锁状态 -->
                 <div class="play-box" :class="[name_, get_detail_data.csid == 1? 'play-box-lock' : '', {'border-top': index2 > 2}]" :key="index2" >
                   <div class="remark" v-show="get_detail_data.csid != 1">{{olitem_name(ol_item)}}</div>
-                  <img :src="`/${project_name}/image/common/match-icon-lock.svg`" class="icon-lock">
+                  <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" class="icon-lock">
                 </div>
               </template>
               <template v-if="ol_item.os == 3"></template>
@@ -41,7 +41,7 @@
               <template v-else>
                 <div class="play-box" :class="[name_, get_detail_data.csid == 1? 'play-box-lock' : '', {'border-top': index2 > 2} ]" :key="index2">
                   <div class="remark" v-show="get_detail_data.csid != 1">{{olitem_name(ol_item)}}</div>
-                  <img :src="`/${project_name}/image/common/match-icon-lock.svg`" class="icon-lock">
+                  <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" class="icon-lock">
                 </div>
               </template>
             </template>
@@ -50,7 +50,7 @@
           <template v-if="ol_item._mhs == 1">
             <div class="play-box" :class="[name_ , get_detail_data.csid == 1? 'play-box-lock' : '', {'border-top': index2 > 2} ]" :key="index2">
               <div class="remark" v-show="get_detail_data.csid != 1">{{olitem_name(ol_item)}}</div>
-              <img :src="`/${project_name}/image/common/match-icon-lock.svg`" class="icon-lock">
+              <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" class="icon-lock">
             </div>
           </template>
           <template v-if="ol_item._mhs == 2"></template>
@@ -68,7 +68,7 @@ import { colors } from 'quasar';
 // import odd_convert from "src/base-h5/mixins/odds_conversion/odds_conversion.js";
 import odds_new from "src/base-h5/components/details/components/tournament-play/unit/odds-new.vue";
 import store from "src/store-redux/index.js";
-import {utils,project_name } from 'src/core/index.js';
+import {utils,LOCAL_PROJECT_FILE_PREFIX } from 'src/core/index.js';
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 

@@ -41,7 +41,7 @@
                       <!-- lock 锁状态 start -->
                       <div class="play-box" :class="get_detail_data.csid == 1? 'play-box-lock' : '' ">
                         <div class="ellipsis remark" v-show="get_detail_data.csid != 1">{{ol_item.on}}</div>
-                        <img :src="`/${project_name}/image/common/match-icon-lock.svg`" />
+                        <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                       </div>
                       <!-- lock 锁状态 end -->
                     </template>
@@ -54,7 +54,7 @@
                     <template v-else>
                       <div class="play-box" :class="get_detail_data.csid == 1? 'play-box-lock' : '' ">
                         <div class="ellipsis remark" v-show="get_detail_data.csid != 1">{{ol_item.on}}</div>
-                        <img :src="`/${project_name}/image/common/match-icon-lock.svg`" />
+                        <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                       </div>
                     </template>
                   </template>
@@ -67,7 +67,7 @@
                   <!-- lock 锁状态 start -->
                   <div class="play-box" :class="get_detail_data.csid == 1? 'play-box-lock' : '' ">
                     <div class="ellipsis remark" v-show="get_detail_data.csid != 1">{{ol_item.on}}</div>
-                    <img :src="`/${project_name}/image/common/match-icon-lock.svg`" />
+                    <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                   </div>
                   <!-- lock 锁状态 end -->
                 </template>
@@ -99,7 +99,7 @@
                     <template v-if="ol_item.os == 2">
                       <div class="play-box" :class="get_detail_data.csid == 1? 'play-box-lock' : '' ">
                         <div class="ellipsis remark" v-show="get_detail_data.csid != 1">{{ol_item.on}}</div>
-                        <img :src="`/${project_name}/image/common/match-icon-lock.svg`" />
+                        <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                       </div>
                     </template>
                     <template v-if="ol_item.os == 3"></template>
@@ -109,7 +109,7 @@
                     <template v-else>
                       <div class="play-box" :class="get_detail_data.csid == 1? 'play-box-lock' : '' ">
                         <div class="ellipsis remark" v-show="get_detail_data.csid != 1">{{ol_item.on}}</div>
-                        <img :src="`/${project_name}/image/common/match-icon-lock.svg`" />
+                        <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                       </div>
                     </template>
                   </template>
@@ -120,7 +120,7 @@
                 <template v-if="ol_item._mhs == 1">
                   <div class="play-box" :class="get_detail_data.csid == 1? 'play-box-lock' : '' ">
                     <div class="ellipsis remark" v-show="get_detail_data.csid != 1">{{ol_item.on}}</div>
-                    <img :src="`/${project_name}/image/common/match-icon-lock.svg`" />
+                    <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                   </div>
                 </template>
                 <template v-if="ol_item._mhs == 2"></template>
@@ -150,7 +150,7 @@
                     <template v-if="ol_item.os == 2">
                       <div class="play-box" :class="get_detail_data.csid == 1? 'play-box-lock' : '' ">
                         <div class="ellipsis remark" v-show="get_detail_data.csid != 1">{{ol_item.on}}</div>
-                        <img :src="`/${project_name}/image/common/match-icon-lock.svg`" />
+                        <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                       </div>
                     </template>
                     <template v-if="ol_item.os == 3"></template>
@@ -160,7 +160,7 @@
                     <template v-else>
                       <div class="play-box" :class="get_detail_data.csid == 1? 'play-box-lock' : '' ">
                         <div class="ellipsis remark" v-show="get_detail_data.csid != 1">{{ol_item.on}}</div>
-                        <img :src="`/${project_name}/image/common/match-icon-lock.svg`" />
+                        <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                       </div>
                     </template>
                   </template>
@@ -171,7 +171,7 @@
                 <template v-if="ol_item._mhs == 1">
                   <div class="play-box" :class="get_detail_data.csid == 1? 'play-box-lock' : '' ">
                     <div class="ellipsis remark" v-show="get_detail_data.csid != 1">{{ol_item.on}}</div>
-                    <img :src="`/${project_name}/image/common/match-icon-lock.svg`" />
+                    <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                   </div>
                 </template>
                 <template v-if="ol_item._mhs == 2"></template>
@@ -187,7 +187,7 @@
 // #TODO vuex
 // import { mapGetters } from "vuex";
 import odds_new from "src/base-h5/components/details/components/tournament-play/unit/odds-new.vue";
-import {utils,project_name } from 'src/core/index.js';
+import {utils,LOCAL_PROJECT_FILE_PREFIX } from 'src/core/index.js';
 import lodash from "lodash";
 import store from "src/store-redux/index.js";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";

@@ -10,7 +10,7 @@
           {{ol_item.on}}
         </div>
         <div class="lock" v-if="match.mhs == 1">
-          <img :src="`/${project_name}/image/common/match-icon-lock.svg`" class="icon-lock">
+          <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" class="icon-lock">
         </div>
         <div v-else
           class="odds-value"

@@ -45,7 +45,7 @@
             <div class="video_list" v-for="(item, index) in carousel_data.list" :key="index"
               :ref="(el) => mid_refs[item.mid] = el" @click="goto_detail_video(item, index)">
               <div class="video_list_left"
-                :style="{ backgroundImage: 'url(' + (item.mgif ? item.mgif : `/${project_name}/image/png/live_loading.png`) + ')' }">
+                :style="{ backgroundImage: 'url(' + (item.mgif ? item.mgif : `${LOCAL_PROJECT_FILE_PREFIX}/image/png/live_loading.png`) + ')' }">
                 <div class="player">
                   <img :src="`/${project_name}image/svg/home/play.svg`" alt="">
                   <span>{{ $filters.money_filter(item.plnum) }}</span>

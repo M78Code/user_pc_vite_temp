@@ -20,7 +20,7 @@
         </template>
       </span>
     </div>
-    <img :src="`/${project_name}/image/bet/bet_close.svg`" v-if="[3, 6, 8].includes(+get_bet_status)" alt="">
+    <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/bet/bet_close.svg`" v-if="[3, 6, 8].includes(+get_bet_status)" alt="">
     <div class="row items-center" v-else>
       <div class="account-wrap yb_pr16 text-right relative-position" @click.stop="get_balance">
         <!-- 账户余额 -->
@@ -29,7 +29,7 @@
       </div>
       <!-- 金额刷新按钮 -->
       <div class="refesh yb_mr8" :class="{ 'refesh2': is_loading_balance }" @click.stop="get_balance"></div>
-      <div class="yb_pl14 yb_pt4"><img :src="`/${project_name}/image/bet/doubleleft2.svg`"
+      <div class="yb_pl14 yb_pt4"><img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/bet/doubleleft2.svg`"
           :class="{ 'arrow': get_bet_status == 0 }" /></div>
     </div>
   </div>

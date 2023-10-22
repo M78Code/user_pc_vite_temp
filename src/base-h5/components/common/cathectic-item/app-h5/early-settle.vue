@@ -40,8 +40,8 @@
 
           <!-- 转圈按钮 -->
           <p class="btn-spin" v-if="status != 1 && status != 5">
-            <img :src="`/${project_name}/image/record/loading.svg`" alt="" v-if="status == 3" class="loading2">
-            <img :src="`/${project_name}/image/record/done.svg`" alt="" v-if="status == 4">
+            <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/record/loading.svg`" alt="" v-if="status == 3" class="loading2">
+            <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/record/done.svg`" alt="" v-if="status == 4">
           </p>
         </div>
 
@@ -51,13 +51,13 @@
           :style="{ opacity: status == 5 || status == 6 ? 0.3 : 1 }">
           <template v-if="slider_show">
              <img :style="compute_css('log-set')"  alt="">
-            <!-- <img :style="" :src="`/${project_name}/image/record/set4.svg`" alt="" v-if="('y0')">
-            <img :src="`/${project_name}/image/record/set.svg`" alt="" v-else> -->
+            <!-- <img :style="" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/record/set4.svg`" alt="" v-if="('y0')">
+            <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/record/set.svg`" alt="" v-else> -->
           </template>
           <template v-else>
             <img :style="compute_css('log-set')"  alt="">
-            <!-- <img :src="`/${project_name}/image/record/set2.svg`" v-if="('day')" alt="">
-            <img :src="`/${project_name}/image/record/set3.svg`" v-else alt=""> -->
+            <!-- <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/record/set2.svg`" v-if="('day')" alt="">
+            <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/record/set3.svg`" v-else alt=""> -->
           </template>
 
         </div>
@@ -91,7 +91,7 @@
     <p class="row justify-between yb_pl10 yb_py4" @click="fetch_early_settle_detail" v-if="details_show2">
       <!-- 提前结算详情 -->
       <span>{{ t('early.list1') }}</span>
-      <img :src="`/${project_name}/image/list/league-collapse-icon.svg`" alt="" :class="{ arrow2: details_show }" class="arrow">
+      <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/league-collapse-icon.svg`" alt="" :class="{ arrow2: details_show }" class="arrow">
     </p>
     <q-slide-transition>
       <div v-show="details_show">
@@ -101,7 +101,7 @@
             <!-- 注单号和时间 -->
             <p class="order-title row yb_px10">
               <span class="order-num" v-if="item.preOrderNo">{{ item.preOrderNo }}
-                &ensp;<img :src="`/${project_name}/image/svg/copy.svg`" style="width:0.1rem;vertical-align:-2px" alt=""
+                &ensp;<img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/copy.svg`" style="width:0.1rem;vertical-align:-2px" alt=""
                   @click="copy($event, item.preOrderNo)">
               </span>
               <span class="order-num" v-else>{{ t('early.list6') }}</span>
@@ -150,7 +150,7 @@ import ClipboardJS from "clipboard";
 import { api_betting } from "src/api/index.js"
 // import { mapGetters, mapMutations } from "vuex";
 import { format_time_zone_time } from "src/core/format/index.js"
-import { utils,compute_css, project_name } from 'src/core/index.js'
+import { utils,compute_css, LOCAL_PROJECT_FILE_PREFIX } from 'src/core/index.js'
 import { Platform } from "quasar";
 import { inject, ref, computed, onMounted, onUnmounted, watch, nextTick } from 'vue'
 import lodash from 'lodash'

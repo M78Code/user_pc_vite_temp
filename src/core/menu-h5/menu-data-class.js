@@ -14,7 +14,7 @@
 import { api_common, api_analysis } from "src/api";
 import lodash from "lodash";
 import { computed, ref, watch } from "vue";
-import { SessionStorage, useMittEmit, MITT_TYPES, UserCtr } from "src/core/";
+import { SessionStorage, useMittEmit, MITT_TYPES, UserCtr,sprite_images_postion } from "src/core/";
 import BaseData from "src/core/base-data/base-data.js";
 const Cache_key = {
   CACHE_CRRENT_MEN_KEY: "CACHE_CRRENT_MEN_KEY", //缓存当前菜单的key
@@ -342,7 +342,7 @@ class MenuData {
     if (this.is_kemp()) {
       id = parseInt(bg_mi - 400);
     }
-    if (get_ball_id) return id;
+    if (get_ball_id) return sprite_images_postion[id];
     let type = "";
     switch (String(id)) {
       case "1":

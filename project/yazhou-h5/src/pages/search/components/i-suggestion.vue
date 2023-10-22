@@ -18,7 +18,7 @@
           <span class="score" v-if="item.msc.S1">{{ lodash.get(item, "msc.S1.home", "0") }}-{{ lodash.get(item,
             "msc.S1.away", "0") }}</span>
           <span class="time" v-else>{{ (new Date(+item.mgt)).Format($t('time4')) }}</span>
-          <img :src="`/${project_name}/image/list/league-collapse-icon.svg`" alt="">
+          <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/league-collapse-icon.svg`" alt="">
         </div>
       </li>
     </ul>
@@ -38,7 +38,7 @@
             <span class="score" v-if="item.msc.S1">{{ lodash.get(item, "msc.S1.home", "0") }}-{{ lodash.get(item,
               "msc.S1.away", "0") }}</span>
             <span class="time" v-else>{{ (new Date(+item.mgt)).Format($t('time4')) }}</span>
-            <img :src="`/${project_name}/image/list/league-collapse-icon.svg`" alt="">
+            <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/league-collapse-icon.svg`" alt="">
           </div>
         </li>
       </ul>
@@ -74,7 +74,7 @@
                 "msc.S1.away", "0") }}</span>
               <span class="time" v-else>{{ (new Date(+item.mgt)).Format($t('time4')) }}</span>
             </template>
-            <img :src="`/${project_name}/image/list/league-collapse-icon.svg`" alt="">
+            <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/league-collapse-icon.svg`" alt="">
           </div>
         </li>
       </ul>
@@ -92,7 +92,7 @@ const { get_insert_history } = api_search || {}
 import NoData from 'src/base-h5/components/common/no-data.vue'// 无数据组件
 import { computed, onBeforeUnmount, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { UserCtr, MenuData, SearchData,compute_img, project_name } from 'src/core/'
+import { UserCtr, MenuData, SearchData,compute_img, LOCAL_PROJECT_FILE_PREFIX } from 'src/core/'
 import lodash from 'lodash'
 const router = useRouter()
 // 模糊搜索的数据源

@@ -1,3 +1,4 @@
+
 // label/key 对应后台 id/name名字
 // img-bg-menu-live 对应输出的css名称
 // 
@@ -5,15 +6,7 @@ import server_resource from "app/job/output/assets/index.json";
 import { get } from "lodash";
 const { CURRENT_ENV } = window.BUILDIN_CONFIG;
 const config = {
-    default: "h5-sport-icon-image",
-    // local_dev: "pc-left-menu-bg-image",
-    // local_test: "",
-    // local_ylcs: "pc-left-menu-bg-image",
-    // idc_pre: "pc-left-menu-bg-image",
-    // idc_sandbox: "pc-left-menu-bg-image",
-    // idc_lspre: "pc-left-menu-bg-image",
-    // idc_online: "pc-left-menu-bg-image",
-
+    default: "menu-sport-active-image",
 };
 /**
  * 拿图片地址 和位置

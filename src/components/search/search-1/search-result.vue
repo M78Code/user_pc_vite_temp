@@ -45,7 +45,7 @@
                         </div>
                         <!-- 点点点 -->
                         <div class="point-wrap" v-if="league.league_total > 3 && !league.is_active">
-                            <img :src="`/${project_name}/image/svg/point.svg`">
+                            <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/point.svg`">
                         </div>
                     </div>
                 </div>

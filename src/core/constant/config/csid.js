@@ -1,25 +1,25 @@
  const {PROJECT_NAME}  = window.BUILDIN_CONFIG
  let project_name = PROJECT_NAME
- let football = `/${project_name}/image/png/football.png`; //足球
-let basketball = `/${project_name}/image/png/basketball.png`; //篮球
-let baseball = `/${project_name}/image/png/baseball.png`; //棒球
-let ice_hockey = `/${project_name}/image/jpg/ice_hockey.jpg`; //冰球
-let tennis = `/${project_name}/image/png/tennis.png`; //网球
-let usa_football = `/${project_name}/image/png/usa_football.png`; // 美足
-let snooker = `/${project_name}/image/jpg/snooker.jpg`; //斯诺克
-let ping_pong = `/${project_name}/image/jpg/ping_pong.jpg`; //乒乓球
-let volleyball = `/${project_name}/image/png/volleyball.png`; // 排球
-let badminton = `/${project_name}/image/jpg/badminton.jpg`; //羽毛球
-let handball = `/${project_name}/image/common/png/handball.png`; //手球
-let boxing = `/${project_name}/image/common/png/boxing.png`; //拳击
-let beach_volleyball = `/${project_name}/image/common/png/beach_volleyball.png`; //沙滩排球
-let rugby = `/${project_name}/image/common/png/rugby.png`; //橄榄球
-let hockey = `/${project_name}/image/common/png/hockey.png`; //曲棍球
-let polo = `/${project_name}/image/common/png/polo.png`; //水球
-let virtual_dog = `/${project_name}/image/png/virtual_dog.png`; //赛狗
-let virtual_racing = `/${project_name}/image/png/virtual_racing.png`; //赛马
-let motorcycle = `/${project_name}/image/png/motorcycle.png`; // 虚拟摩托车
-let virtual_dirt_bike_details = `/${project_name}/image/png/virtual_dirt_bike_details.png`; // 虚拟泥地摩托车
+ let football = `${LOCAL_PROJECT_FILE_PREFIX}/image/png/football.png`; //足球
+let basketball = `${LOCAL_PROJECT_FILE_PREFIX}/image/png/basketball.png`; //篮球
+let baseball = `${LOCAL_PROJECT_FILE_PREFIX}/image/png/baseball.png`; //棒球
+let ice_hockey = `${LOCAL_PROJECT_FILE_PREFIX}/image/jpg/ice_hockey.jpg`; //冰球
+let tennis = `${LOCAL_PROJECT_FILE_PREFIX}/image/png/tennis.png`; //网球
+let usa_football = `${LOCAL_PROJECT_FILE_PREFIX}/image/png/usa_football.png`; // 美足
+let snooker = `${LOCAL_PROJECT_FILE_PREFIX}/image/jpg/snooker.jpg`; //斯诺克
+let ping_pong = `${LOCAL_PROJECT_FILE_PREFIX}/image/jpg/ping_pong.jpg`; //乒乓球
+let volleyball = `${LOCAL_PROJECT_FILE_PREFIX}/image/png/volleyball.png`; // 排球
+let badminton = `${LOCAL_PROJECT_FILE_PREFIX}/image/jpg/badminton.jpg`; //羽毛球
+let handball = `${LOCAL_PROJECT_FILE_PREFIX}/image/common/png/handball.png`; //手球
+let boxing = `${LOCAL_PROJECT_FILE_PREFIX}/image/common/png/boxing.png`; //拳击
+let beach_volleyball = `${LOCAL_PROJECT_FILE_PREFIX}/image/common/png/beach_volleyball.png`; //沙滩排球
+let rugby = `${LOCAL_PROJECT_FILE_PREFIX}/image/common/png/rugby.png`; //橄榄球
+let hockey = `${LOCAL_PROJECT_FILE_PREFIX}/image/common/png/hockey.png`; //曲棍球
+let polo = `${LOCAL_PROJECT_FILE_PREFIX}/image/common/png/polo.png`; //水球
+let virtual_dog = `${LOCAL_PROJECT_FILE_PREFIX}/image/png/virtual_dog.png`; //赛狗
+let virtual_racing = `${LOCAL_PROJECT_FILE_PREFIX}/image/png/virtual_racing.png`; //赛马
+let motorcycle = `${LOCAL_PROJECT_FILE_PREFIX}/image/png/motorcycle.png`; // 虚拟摩托车
+let virtual_dirt_bike_details = `${LOCAL_PROJECT_FILE_PREFIX}/image/png/virtual_dirt_bike_details.png`; // 虚拟泥地摩托车
  
 
 
@@ -264,4 +264,63 @@ export const csid_map_concede_points_id = {
   // 14: 45 ,// 橄榄球"
   15: 23,// 曲棍球"
   16: 24,// 水球"
+}
+
+// 精灵图对应的位置
+export const sprite_images_postion = {
+  0: 0, //下标从0开始
+  1: 1,
+  2: 3,
+  3: 28,
+  4: 2,
+  5: 19,
+  6: 4,
+  7: 15,
+  8: 7,
+  9: 6,
+  10: 22,
+  11: 13,
+  12: 10,
+  13: 12,
+  14: 20,
+  15: 8,
+  16: 14,
+  17: 17,
+  18: 26,
+  19: 21,
+  20: 16,
+  21: 18,
+  23: 29,
+  24: 30,
+  25: 31,
+  28: 33,
+  29: 32,
+  40: 35,
+  50: 9,
+  100: 41,
+  101: 38,
+  102: 40,
+  103: 39,
+  10001: 36,
+  10002: 37,
+  10003: 38,
+  30: 42,
+  31: 43,
+  32: 44,
+  26: 45,
+  27: 46,
+  33: 47,
+  34: 48,
+  35: 49,
+  36: 50,
+  37: 51,
+  38: 52,
+  39: 53,
+  22: 55,
+  1010: 56,
+  1002: 11,
+  1001: 36,
+  1004: 37,
+  1011: 23,
+  1009: 24,
 }

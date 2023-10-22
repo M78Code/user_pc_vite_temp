@@ -168,14 +168,14 @@ const showDefaultBanner = (e) => {
 // 若线上图片加载错误，则使用本地默认banner
 const handleBannerError = (e) => {
     // ${("y0") ? "y0_" : "+"{lang.value}.png}
-    banner_bg.value = `/${project_name}/image/png/home_carousel_bg_${lang.value}.png`;
+    banner_bg.value = `${LOCAL_PROJECT_FILE_PREFIX}/image/png/home_carousel_bg_${lang.value}.png`;
 };
 /**
  * @description: 图标出错时
  * @param {Object} $event 错误事件对象
  */
 const league_icon_error = ($event) => {
-    $event.target.src = `/${project_name}/image/png/banner_bg.png`
+    $event.target.src = `${LOCAL_PROJECT_FILE_PREFIX}/image/png/banner_bg.png`
     $event.srcElement.onerror = null;
 };
 /**
@@ -328,7 +328,7 @@ const get_banner_url = () => {
         banner_bg.value = get_server_file_path(url);
     } else {
         // ${("y0") ? "y0_" : ""
-        banner_bg.value = `/${project_name}/image/png/home_carousel_bg_${lang.value}.png`;
+        banner_bg.value = `${LOCAL_PROJECT_FILE_PREFIX}/image/png/home_carousel_bg_${lang.value}.png`;
     }
     SessionStorage.get("banner_bg", banner_bg.value);
 };
