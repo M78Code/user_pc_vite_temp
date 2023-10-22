@@ -39,7 +39,7 @@
     <div class="penalty yb-flex-center" v-if="vsport_ctr.info.csid == 1001 && vsport_ctr.status != 0 && vsport_ctr.info.isc == 1">
         <div class="number"></div>
         <!-- 图标 -->
-      <div class="col icon-wrap"><icon class="icon" :name="`img:/${project_name}/image/svg/grey-point.svg`" size="13px"   v-tooltip="{content:$root.$t('icon_tips.penalty_kick'),overflow:1}" /></div>
+      <div class="col icon-wrap"><icon class="icon" :name="`img:${iconUrl}`" size="13px"   v-tooltip="{content:$root.$t('icon_tips.penalty_kick'),overflow:1}" /></div>
       <!-- 比分 -->
       <div class="score size14" >{{ match.status == 2 && match.penalty_score_home ?  `${match.penalty_score_home} : ${match.penalty_score_away}` :'-'}}</div>
       <div class="col"></div>
@@ -60,12 +60,12 @@
 </template>
 
 <script>
-import { project_name } from "src/core";
+import { compute_local_project_file_path } from "src/core";
 export default {
   name: "footbalReplay",
   data() {
     return {
-      project_name
+      iconUrl:compute_local_project_file_path('/image/svg/grey-point.svg')
     }
   },
   props:{
