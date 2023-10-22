@@ -161,11 +161,11 @@ function select_all_sub_menu_handle() {
   MatchMeta.set_origin_match_data()
 }
 /**
-     * @description: 球类id转化背景
-     * @param {String} id 球类id
-     * @return {}
-     */
-     const format_type = ( item = {} ) => {
+ * @description: 球类id转化背景
+ * @param {String} id 球类id
+ * @return {}
+ */
+const format_type = ( item = {} ) => {
   if (MenuData.is_results()) {
     let type = +item.menuId
     // 赛果电竞图标
