@@ -1,3 +1,7 @@
+
+
+
+
 const modules = import.meta.globEager("./sprite-img/*.js");
 const sprite = {};
 Object.keys(modules).forEach((key) => {
