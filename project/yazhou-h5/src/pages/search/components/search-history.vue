@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { SearchData, project_name } from "src/core/";
+import { SearchData,project_name } from "src/core/";
 export default {
   name: 'searchHistory',
   props: {

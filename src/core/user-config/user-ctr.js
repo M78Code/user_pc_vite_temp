@@ -5,9 +5,9 @@
  *  主题色相关
  *  商户相关
  */
-// #TODO 等后续get_file_path、http、infoUpload和pako_pb公共模块开发后再替换
+// #TODO 等后续get_server_file_path、http、infoUpload和pako_pb公共模块开发后再替换
 import { ref } from "vue";
-import { get_file_path } from "src/core/file-path/file-path.js";
+import { get_server_file_path } from "src/core/file-path/file-path.js";
 import pako_pb from "src/core/pb-decode/custom_pb_pako.js";
 import { infoUpload } from "src/core/http/";
 import { LocalStorage, ServerTime } from "src/core/";
@@ -667,7 +667,7 @@ class UserCtr {
 
       // 浏览器icon
       if (merchant_config.pcLogoUrl) {
-        config.icon = get_file_path(merchant_config.pcLogoUrl);
+        config.icon = get_server_file_path(merchant_config.pcLogoUrl);
       }
       // 最大宽度
       if (merchant_config.inlineWidth) {
@@ -675,28 +675,28 @@ class UserCtr {
       }
       // 主logo白色
       if (lodash.get(merchant_config, "configMap.1")) {
-        config.day_logo = get_file_path(merchant_config.configMap[1]);
+        config.day_logo = get_server_file_path(merchant_config.configMap[1]);
       }
       // 主logo黑色
       if (lodash.get(merchant_config, "configMap.2")) {
-        config.night_logo = get_file_path(merchant_config.configMap[2]);
+        config.night_logo = get_server_file_path(merchant_config.configMap[2]);
       }
       // 兼容页logo
       if (merchant_config.compatLogoUrl) {
-        config.compatible_logo = get_file_path(merchant_config.compatLogoUrl);
+        config.compatible_logo = get_server_file_path(merchant_config.compatLogoUrl);
       }
       // loading图片
       if (merchant_config.loadLogoUrl) {
-        config.loadLogoUrl = get_file_path(merchant_config.loadLogoUrl);
+        config.loadLogoUrl = get_server_file_path(merchant_config.loadLogoUrl);
       }
       // 视频异常
       if (merchant_config.videoLogoUrl) {
-        config.videoLogoUrl = get_file_path(merchant_config.videoLogoUrl);
+        config.videoLogoUrl = get_server_file_path(merchant_config.videoLogoUrl);
       }
       // 默认联赛logo
       if (merchant_config.leagueLogoUrl) {
         this.set_league_logo_url(merchant_config.leagueLogoUrl);
-        // config.leagueLogoUrl = get_file_path(merchant_config.leagueLogoUrl)
+        // config.leagueLogoUrl = get_server_file_path(merchant_config.leagueLogoUrl)
       }
       // 专业版默认主题色
       if (merchant_config.profesTag) {
@@ -714,7 +714,7 @@ class UserCtr {
    * @param {undefined} undefined
    */
   set_league_logo_url(url) {
-    url = get_file_path(url);
+    url = get_server_file_path(url);
     let img = new Image();
     img.onload = function () {
       if (this.complete == true) {
@@ -1210,7 +1210,7 @@ class UserCtr {
       let merchant_config = JSON.parse(json);
       // 浏览器icon
       if (merchant_config.pcLogoUrl) {
-        config.icon = get_file_path(merchant_config.pcLogoUrl);
+        config.icon = get_server_file_path(merchant_config.pcLogoUrl);
       }
       // 最大宽度
       if (merchant_config.inlineWidth) {
@@ -1218,15 +1218,15 @@ class UserCtr {
       }
       // 主logo白色
       if (lodash.get(merchant_config, "configMap.1")) {
-        config.day_logo = get_file_path(merchant_config.configMap[1]);
+        config.day_logo = get_server_file_path(merchant_config.configMap[1]);
       }
       // 主logo黑色
       // if(lodash.get(merchant_config,'configMap.2')){
-      //   config.night_logo = get_file_path(merchant_config.configMap[2])
+      //   config.night_logo = get_server_file_path(merchant_config.configMap[2])
       // }
       // 兼容页logo
       if (merchant_config.compatLogoUrl) {
-        config.compatible_logo = get_file_path(merchant_config.compatLogoUrl);
+        config.compatible_logo = get_server_file_path(merchant_config.compatLogoUrl);
       }
       // // 专业版默认主题色
       // if(merchant_config.profesTag){
@@ -1329,10 +1329,10 @@ class UserCtr {
           const { img11, img11Type, img11Url, img12, img12Type, img12Url, startTime, endTime } = data
           if (stime <= endTime && stime >= startTime) {
             if (img11) {
-              this.resources_obj = ({ is_show: true, theme01: { img_src: get_file_path(img11), type: img11Type, jump_url: img11Url } })
+              this.resources_obj = ({ is_show: true, theme01: { img_src: get_server_file_path(img11), type: img11Type, jump_url: img11Url } })
             }
             if (img12) {
-              this.resources_obj = ({ is_show: true, theme02: { img_src: get_file_path(img12), type: img12Type, jump_url: img12Url } })
+              this.resources_obj = ({ is_show: true, theme02: { img_src: get_server_file_path(img12), type: img12Type, jump_url: img12Url } })
             }
           } else {
             this.resources_obj = ({ is_show: false, theme02: {}, theme01: {} })
@@ -1379,7 +1379,7 @@ class UserCtr {
               }
             } else if (item.tType == 1) {
               arr1.push(item)
-              LocalStorage.set('home_banner_default', get_file_path(item.imgUrl))
+              LocalStorage.set('home_banner_default', get_server_file_path(item.imgUrl))
             } else if (item.tType == 2) {
               arr2.push(item)
             }

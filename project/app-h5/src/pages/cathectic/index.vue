@@ -6,12 +6,12 @@
 <template>
     <div class="settle-dialog" :style="page_style">
       <div class="row items-center yb_fontsize16 head-top" @touchmove.prevent>
-        <div :class="['row','col','items-center','justify-center', authorityFlag ? 'three-child' : 'two-child']">
+        <div class="row col items-center justify-center">
           <p @click="change_record(0)" :class="main_item == 0 && 'active-p'">
             {{ i18n_t('bet_record.no_account') }}</p>
           <p @click="change_record(1)" :class="main_item == 1 && 'active-p'">
             {{ i18n_t('bet_record.account') }}</p>
-          <p v-if="authorityFlag" @click="change_record(2)" :class="main_item == 2 && 'active-p'">
+          <p @click="change_record(2)" :class="main_item == 2 && 'active-p'">
             {{ i18n_t('pre_record.book') }}</p>
         </div>
       </div>
@@ -164,17 +164,11 @@
       border-radius: 1rem;
       height: 0.34rem;
       line-height: 0.34rem;
-  
+      width: 30%;
       &.active-p {
         background: var(--q-cathectic-color-6);
         color: var(--q-gb-t-c-14);
       }
-    }
-    div.three-child p {
-      width: 30%;
-    }
-    div.two-child p {
-      width: 48%;
     }
   }
   </style>

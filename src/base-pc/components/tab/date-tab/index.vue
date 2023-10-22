@@ -1,15 +1,12 @@
 <template>
   <div class="tab-wrap fit relative-position" ref="wrap" @mousedown="mousedown" :data-version="date_menu_version">
     <div class="item-wrap relative-position" ref="item_wrap" :style="{ left: item_wrap_left + 'px' }" :key="key">
-      <!-- {{ list }} -->
       <!-- 所有日期  -->
-
-      <template>
-        <div v-for="(item, index) in list" class="tab-item yb-flex-center" :class="[{ active: final_index == index }]"
-          :key="item.menuName + '_' + index" @click.stop="handle_click_menu_mi_3_date({ ...item, index })"
+      <template v-for="(item, index) in list" class="tab-item yb-flex-center" :key="item.menuName + '_' + index">
+        <div :class="[{ active: final_index == index }]"
+           @click.stop="handle_click_menu_mi_3_date({ ...item, index })"
           @mouseenter="tabs_enter(index)" @mouseleave="tabs_leave(index)">
           <!-- <img v-if="item.img_src" v-check-img="{src: val.img_src, default: `/image/common/activity_banner/gift_package.png`}" /> -->
-
           <!--   电竞 不显示赛事数量  早盘常规体育显示-->
           <span class="match-count">{{
             item.menuName
@@ -44,35 +41,32 @@
 </template>
 
 <script setup>
-// import {mapGetters,mapActions} from 'vuex'
-// ...mapGetters([
-//   'get_layout_list_size',
-// ]),
-// ...mapGetters({
-//   // 赛事列表排序 1:按联赛排序 2:按时间排序
-//   vx_match_sort: "get_match_sort",
-//   // 获取用户 Id
-//   UserCtr.get_uid(): "get_uid",
-//   vx_cur_menu_type: "get_cur_menu_type", //选中菜单类型
-//   get_layout_list_type: "get_layout_list_type",
-//   //获取当前主题
-//   get_theme: "get_theme",
-//   // 列表显示内容  match:赛事 collect:收藏 search:搜索
-//   vx_layout_list_type: "get_layout_list_type",
-//   get_layout_list_size: "get_layout_list_size",
-// }),
-
-
-import { defineComponent, nextTick, ref, computed, watch, onMounted, onBeforeUnmount } from "vue";
+import { defineProps, nextTick, ref, computed, watch, onMounted, onBeforeUnmount } from "vue";
 import lodash from "lodash";
+import { api_common } from "src/api/index.js";
+import BaseData from "src/core/base-data/base-data.js";
+import { UserCtr } from 'src/core/index.js'
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 
-//-------------------- 对接参数 prop 注册  开始  -------------------- 
-import { useRegistPropsHelper} from "src/composables/regist-props/index.js"
-import { component_symbol, need_register_props } from "../config/index.js"
-useRegistPropsHelper(component_symbol, need_register_props)
-const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
-//-------------------- 对接参数 prop 注册  结束  -------------------- 
+const props = defineProps({
+  //item盒子左右padding
+  padding: {
+    type: Number,
+    default: () => 15,
+  },
+  hasActivity: {
+    type: Boolean,
+    default: () => true,
+  },
+  is_drag: {
+    type: Boolean,
+    default: () => true,
+  },
+  line_width: {
+    type: Number,
+    default: () => null,
+  },
+})
 
 const list = ref([]) //tab模板文件key
 const final_index = ref(0) //下划线left
@@ -85,21 +79,25 @@ const sizes = ref([]) //下划线初始大小
 const item_wrap_left = ref(0) //item包裹left
 const item_wrap_width = ref(0) //item包裹宽度
 const item_total_width = ref(0) //所有item的宽度
-const timer = ref(null) //定时器
+const clientX = ref(null);
+const last_left = ref(null)
+let timer = null //定时器
+let init_timer = null
 const quanbu_item = ref({ count: "0", md: "", menuName: "" })
 const wrap = ref(null) //获取组件实例
 const item_wrap = ref(null) //获取组件实例
+const is_mousedown = ref(false) //鼠标是否按下
 const emit = defineEmits(['onclick'])
 //获取 日期 菜单
 get_date_menu_list();
 // 显示部分dom ID
-this.DOM_ID_SHOW = window.BUILDIN_CONFIG.DOM_ID_SHOW;
-// 鼠标是否按下
-this.is_mousedown = false;
+// this.DOM_ID_SHOW = window.BUILDIN_CONFIG.DOM_ID_SHOW;
+// // 鼠标是否按下
+// is_mousedown.value = false;
 // 鼠标事件监听
 if (props.is_drag) {
-  document.addEventListener("mousemove", this.mousemove);
-  document.addEventListener("mouseup", this.mouseup);
+  document.addEventListener("mousemove", mousemove);
+  document.addEventListener("mouseup", mouseup);
 }
 
 /**
@@ -130,7 +128,7 @@ onMounted(() => {
 * 获取 日期 菜单
 * nu/getDateMenuList
 */
-const get_date_menu_list = async () => {
+async function get_date_menu_list() {
   let params = compute_get_date_menu_list_params();
   let api_fn_name = ''
   if (menu_config.menu_root == 2000) {
@@ -141,7 +139,7 @@ const get_date_menu_list = async () => {
     api_fn_name = "post_date_menu"
   }
   let res = await api_common[api_fn_name](params);
-  let { data = [] } = res.data;
+  let data = res.data;
   let arr = [];
   if (Array.isArray(data)) {
     data.map((x) => {
@@ -159,7 +157,7 @@ const get_date_menu_list = async () => {
   const { left_menu_result, match_list_api_config = {} } = menu_config
 
   // 收藏返回还是当前数据
-  if (left_menu_result.root == 3 && this.vx_layout_list_type == 'collect') {
+  if (left_menu_result.root == 3) {
     // 早盘获取选中的时间
     const { match_list = {} } = match_list_api_config
     md_info = (match_list.params || {}).md || ''
@@ -172,7 +170,7 @@ const get_date_menu_list = async () => {
 /**
  * 计算 日期 接口 请求参数
  */
-const compute_get_date_menu_list_params = () => {
+function compute_get_date_menu_list_params() {
   let params = {};
   let left_menu_result = menu_config.left_menu_result;
   let {
@@ -205,7 +203,7 @@ const compute_get_date_menu_list_params = () => {
       euid: mi_euid.euid || euid, // lv2_mi 找到 euid
       md: final_date_menu.value.field1,
       selectionHour: null,
-      sort: this.vx_match_sort,
+      sort: 1,
       tid,
     };
   }
@@ -215,7 +213,7 @@ const compute_get_date_menu_list_params = () => {
 /**
  *  早盘 的 日期 菜单点击
  */
-const handle_click_menu_mi_3_date = (detail = {}) => {
+function handle_click_menu_mi_3_date (detail = {}) {
   let { md, index } = detail;
   final_index.value = index;
   let root = menu_config.menu_root;
@@ -252,7 +250,7 @@ const handle_click_menu_mi_3_date = (detail = {}) => {
   let base_params = {
     cuid: UserCtr.get_uid(),
     selectionHour: null,
-    sort: this.vx_match_sort,
+    sort: 1,
   }
 
   //设置当前的root
@@ -316,7 +314,7 @@ const handle_click_menu_mi_3_date = (detail = {}) => {
  * @param {number} index 切换选项的索引
  * @return {undefined} undefined
  */
-const onclick = (index, item) => {
+function onclick(index, item) {
   let num = index - final_index.value;
   if (!num) return;
   if (final_index.value > index) {
@@ -336,7 +334,7 @@ const onclick = (index, item) => {
 /**
  * 设置 中间菜单的输出
  */
-const set_mid_menu_result = () => {
+function set_mid_menu_result() {
   //     请求  列表结构  API 参数的   模板
   let { config, description } =
     menu_config.get_match_list_api_config_tepmlate_and_description();
@@ -356,7 +354,7 @@ const set_mid_menu_result = () => {
     params = {
       mi: lv2_mi,
       euid: euid, // lv2_mi 找到 euid
-      md: this.final_date_menu.field1,
+      md: final_date_menu.value.field1,
       index: final_index.value, // 当前选中的时间 接口用不上 只是存储下一使用
     };
   }
@@ -366,7 +364,7 @@ const set_mid_menu_result = () => {
   menu_config.get_match_list_api_config_tepmlate_and_description(config);
 }
 
-const hand_cilck_move = (left) => {
+function hand_cilck_move(left) {
   if (!props.is_drag) return;
   let max_left = 0 - (item_total_width.value - item_wrap_width.value + 50);
   if (left >= 0) {
@@ -382,7 +380,7 @@ const hand_cilck_move = (left) => {
  * @param {number} index 移入选项的索引
  * @return {undefined} undefined
  */
-const tabs_enter = (index) => {
+function tabs_enter (index) {
   tabs_hover(index, "in");
 }
 
@@ -391,7 +389,7 @@ const tabs_enter = (index) => {
  * @param {number} index 移出选项的索引
  * @return {undefined} undefined
  */
-const tabs_leave = (index) => {
+function tabs_leave(index) {
   tabs_hover(index, "out");
 }
 /**
@@ -400,7 +398,7 @@ const tabs_leave = (index) => {
  * @param {string} type  类型 in 移入  out 移出
  * @return {undefined} undefined
  */
-const tabs_hover = debounce((index, type) => {
+function tabs_hover(index, type) {
   // 顶部导航栏的任务中心不展示下划线
   let _index;
   let last_tabitem = list.value[index];
@@ -417,48 +415,48 @@ const tabs_hover = debounce((index, type) => {
     _index = index;
   }
   if (type == "in") {
-    if (_.get(sizes.value, `[${_index}]`)) {
-      left.value = _.get(sizes.value, `${_index}.left`);
-      width.value = _.get(sizes.value, `${_index}.width`);
+    if (lodash.get(sizes.value, `[${_index}]`)) {
+      left.value = lodash.get(sizes.value, `${_index}.left`);
+      width.value = lodash.get(sizes.value, `${_index}.width`);
     }
   }
   if (type == "out") {
-    if (_.get(sizes.value, `[${final_index.value}]`)) {
-      left.value = _.get(sizes.value, `${final_index.value}.left`);
-      width.value = _.get(sizes.value, `${final_index.value}.width`);
+    if (lodash.get(sizes.value, `[${final_index.value}]`)) {
+      left.value = lodash.get(sizes.value, `${final_index.value}.left`);
+      width.value = lodash.get(sizes.value, `${final_index.value}.width`);
     }
   }
   // 固定下划线宽度
-  if (this.line_width) {
-    left.value = left.value + (width.value - this.line_width) / 2;
-    width.value = this.line_width;
+  if (props.line_width) {
+    left.value = left.value + (width.value - props.line_width) / 2;
+    width.value = props.line_width;
   }
-})
-const init = () => {
-  if (this.init_timer) {
-    clearTimeout(this.init_timer);
+}
+function init() {
+  if (init_timer) {
+    clearTimeout(init_timer);
   }
-  this.init_timer = setTimeout(this.init_func, 300);
+  init_timer = setTimeout(init_func, 300);
 }
 /**
  * @Description:初始化  设置选项初始宽高
  * @return {undefined} undefined
  */
-const init_func = () => {
-  let _wrap = _wrap.value;
-  let dom = _.get(item_wrap.value, "children", []);
+function init_func() {
+  let _wrap = wrap.value;
+  let dom = lodash.get(item_wrap.value, "children", []);
   sizes.value = [];
   for (let i = 0; i < dom.length; i++) {
     let { offsetLeft = 0, clientWidth = 0 } = dom[i];
     sizes.value.push({
-      left: offsetLeft + this.padding,
-      width: clientWidth - this.padding * 2,
+      left: offsetLeft + props.padding,
+      width: clientWidth - props.padding * 2,
     });
   }
   if (sizes.value.length > 0) {
     let current_index = final_index.value == -1 ? 0 : final_index.value;
-    left.value = _.get(sizes.value, `${current_index}.left`, 0);
-    width.value = _.get(sizes.value, `${current_index}.width`, 0);
+    left.value = lodash.get(sizes.value, `${current_index}.left`, 0);
+    width.value = lodash.get(sizes.value, `${current_index}.width`, 0);
     item_wrap_width.value = _wrap.clientWidth;
     item_total_width.value =
       sizes.value[sizes.value.length - 1].left +
@@ -467,9 +465,9 @@ const init_func = () => {
     width.value = 0;
   }
   // 固定下划线宽度
-  if (this.line_width) {
-    left.value = left.value + (width.value - this.line_width) / 2;
-    width.value = this.line_width;
+  if (props.line_width) {
+    left.value = left.value + (width.value - props.line_width) / 2;
+    width.value = props.line_width;
   }
 }
 
@@ -477,7 +475,7 @@ const init_func = () => {
  * @Description:更新dom数据 解决选项数组改变  dom不更新
  * @return {undefined} undefined
  */
-const update_tab_key = () => {
+function update_tab_key() {
   key.value = key.value++;
   nextTick(() => {
     init();
@@ -488,28 +486,28 @@ const update_tab_key = () => {
  * @param {object} e 鼠标事件
  * @param {undefined} undefined
  */
-const mousedown = (e) => {
-  this.clientX = e.clientX;
-  this.last_left = item_wrap_left.value;
-  this.is_mousedown = true;
+function mousedown(e) {
+  clientX.value = e.clientX;
+  last_left.value = item_wrap_left.value;
+  is_mousedown.value = true;
 }
 /**
  * @Description 鼠标弹起
  * @param {undefined} undefined
  */
-const mouseup = () => {
-  this.is_mousedown = false;
+function mouseup() {
+  is_mousedown.value = false;
 }
 /**
  * @Description 鼠标移动事件
  * @param {object} e 鼠标事件
  * @param {undefined} undefined
  */
-const mousemove = (e) => {
-  if (!this.is_mousedown || item_wrap_width.value > item_total_width.value) {
+function mousemove(e) {
+  if (!is_mousedown.value || item_wrap_width.value > item_total_width.value) {
     return;
   }
-  let left = this.last_left + (e.clientX - this.clientX);
+  let left = last_left.value + (e.clientX - clientX.value);
   if (left > 0) {
     left = 0;
   }
@@ -521,60 +519,60 @@ const mousemove = (e) => {
   item_wrap_left.value = left;
 }
 
-watch(BaseData.left_menu_result.version, () => {
-  init_process(1);
-})
+// watch(BaseData.left_menu_result.version, () => {
+//   init_process(1);
+// })
 
 //监听屏幕宽度改变  设置是否显示按钮
-watch(get_layout_list_size.width, () => {
-  item_wrap_width.value = BetCommonHelper.get_refs_info(
-    "wrap",
-    null,
-    this
-  ).clientWidth;
-})
+// watch(get_layout_list_size.width, () => {
+//   item_wrap_width.value = BetCommonHelper.get_refs_info(
+//     "wrap",
+//     null,
+//     this
+//   ).clientWidth;
+// })
 
 //监听list长度发生改变
-watch(list.length, () => {
-  // 做异步处理防止data数据发生改变
-  nextTick(() => {
-    init()
-  })
-})
+// watch(list.length, () => {
+//   // 做异步处理防止data数据发生改变
+//   nextTick(() => {
+//     init()
+//   })
+// })
 
-//监听list长度发生改变
-watch(list[0], () => {
-  // 做异步处理防止data数据发生改变
-  nextTick(() => {
-    init()
-  })
-})
+// //监听list长度发生改变
+// watch(list[0], () => {
+//   // 做异步处理防止data数据发生改变
+//   nextTick(() => {
+//     init()
+//   })
+// })
 
 //监听选中改变
-watch(currentIndex, () => {
-  if (timer.value) {
-    clearTimeout(timer.value)
-    timer.value = null
+watch(final_index, (new_value) => {
+  if (timer) {
+    clearTimeout(timer)
+    timer = null
   };
-  timer.value = setTimeout(() => {
-    if (!sizes.value[this.currentIndex]) return
-    left.value = _.get(sizes.value, `${this.currentIndex}.left`)
-    width.value = _.get(sizes.value, `${this.currentIndex}.width`)
+  timer = setTimeout(() => {
+    if (!sizes.value[new_value]) return
+    left.value = lodash.get(sizes.value, `${new_value}.left`)
+    width.value = lodash.get(sizes.value, `${new_value}.width`)
     // 固定下划线宽度
-    if (this.line_width) {
-      left.value = left.value + (width.value - this.line_width) / 2
-      width.value = this.line_width
+    if (props.line_width) {
+      left.value = left.value + (width.value - props.line_width) / 2
+      width.value = props.line_width
     }
   })
 }, { immediate: true })
 
 onBeforeUnmount(() => {
-  this.debounce_throttle_cancel(tabs_hover);
-  if (timer.value) {
-    clearTimeout(timer.value);
+  // this.debounce_throttle_cancel(tabs_hover);
+  if (timer) {
+    clearTimeout(timer);
   }
-  if (this.init_timer) {
-    clearTimeout(this.init_timer)
+  if (init_timer) {
+    clearTimeout(init_timer)
   }
   // 鼠标事件取消监听
   if (this.is_drag) {

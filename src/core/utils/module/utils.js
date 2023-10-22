@@ -36,7 +36,7 @@ export const utils = {
     if(is_jing_cai){
       url = `${domain}/${prefix_job}/${menu.field3}`
     }else{
-      url = vue.get_file_path(menu.field3)
+      url = vue.get_server_file_path(menu.field3)
     }
     return url
   },

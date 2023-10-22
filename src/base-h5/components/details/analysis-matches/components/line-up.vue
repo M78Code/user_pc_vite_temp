@@ -108,7 +108,7 @@
           <div class="col1">
             <!-- 联赛icon -->
             <img class="match_logo"
-                 :src=" item.thirdPlayerPicUrl ? get_file_path(item.thirdPlayerPicUrl) : default_url"
+                 :src=" item.thirdPlayerPicUrl ? get_server_file_path(item.thirdPlayerPicUrl) : default_url"
                  @error="league_icon_error"
             />
           </div>
@@ -141,7 +141,7 @@
           <div class="col1">
             <!-- 联赛icon -->
             <img class="match_logo"
-                 :src=" item.thirdPlayerPicUrl ? get_file_path(item.thirdPlayerPicUrl) : default_url"
+                 :src=" item.thirdPlayerPicUrl ? get_server_file_path(item.thirdPlayerPicUrl) : default_url"
                  @error="league_icon_error"
             />
           </div>
@@ -166,7 +166,7 @@ import { ref, computed, nextTick, onUnmounted, onMounted } from "vue";
 import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
 import { useRoute } from 'vue-router'
 import { i18n_t } from "src/boot/i18n.js";
-import { get_file_path } from "src/core/file-path/file-path.js"
+import { get_server_file_path } from "src/core/file-path/file-path.js"
 import UserCtr from "src/core/user-config/user-ctr.js";
 import lodash from "lodash"
 import { project_name } from 'src/core'

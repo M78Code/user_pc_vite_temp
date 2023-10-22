@@ -119,7 +119,6 @@ import { api_analysis } from 'src/api/index'
 import { project_name } from 'src/core/index.js';
 import { ChatFullVersionWapper as chat } from 'src/base-pc/components/analysis/template/chat/index.js'
 import { TraceFullVersionWapper as trace } from 'src/base-pc/components/analysis/template/trace/index.js'
-import { project_name } from "src/core";
 const props = defineProps(['match'])
 const route = useRoute();
 const activeStage = ref(0);

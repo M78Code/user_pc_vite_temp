@@ -18,11 +18,11 @@ const router = createRouter({
               keepAlive: true // 需要缓存
             },
           },
-          {
-            path: "/home",
-            name: "home",
-            component: () => import("../pages/home/index.vue")
-          },
+          // {
+          //   path: "/home",
+          //   name: "home",
+          //   component: () => import("../pages/home/index.vue")
+          // },
           // {
           //   path: "/activity_task",
           //   name: "activity_task",
@@ -99,11 +99,13 @@ const router = createRouter({
         //   },
       ],
     },
-    // {
-    //   path: "/router",
-    //   name: "router_url",
-    //   component: () => import("../layouts/router.vue"),
-    // }
+    {
+      path: '/:catchAll(.*)*',
+      redirect: {
+        name: 'matchList'
+      },
+      
+    }
   ],
 });
 

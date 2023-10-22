@@ -207,7 +207,7 @@ const normal_ = computed(() => {
     if (!(match.hps && match.hps[0].hl[0]&& match.hps[0].hl[0].ol && flag)) return
     let ol_item = match.hps[0].hl[0].ol[index]
     if (ol_item.os == 2 || !ol_item.ov || ol_item.ov < 101000) return
-    bet_click(match, match.hps[0], ol_item);
+    set_bet_obj_config(match, match.hps[0], ol_item);
     //应对猜你喜欢模块的赔率盘口跟新不及时
     get_list()
   }

@@ -4,26 +4,22 @@
  * @Description: bw3新版投注记录的页每一条注单（矩形框）
 -->
 <template>
-  <div
+    <div
       v-if="show_bet_record"
       class="common-cathectic-item hairline-border" :class="{'common-cathectic-item2': key2==0,'common-cathectic-item3': len==key2+1,}" v-show="(!is_early || (is_early && is_show_early_settle)) && !is_show_pre">
-    <div v-if="item_data.seriesType != '1'" class="yb_mx10 item-header yb_fontsize14 yb_py4">
-      {{item_data.seriesValue}}
-      <!-- <template v-if="item_data.seriesType != 3">&nbsp;&nbsp;@&thinsp;{{mix_odds_sum}}</template>  -->
-    </div>
-    <!-- bw3新版矩形框中部 -->
-    <item-body :is_pre="is_pre" :data_b="item_data"></item-body>
+    <!-- 内容显示 -->
+    <item-body :is_pre="is_pre" :item_data="item_data"></item-body>
     <!-- bw3新版矩形框底部 -->
-    <item-footer :is_pre="is_pre" :data_f="item_data"></item-footer>
+    <!-- <item-footer :is_pre="is_pre" :data_f="item_data"></item-footer> -->
     <!-- 投注记录页提前结算的按钮、滑块和提前结算详情 -->
     <early-settle :item_data="item_data"></early-settle>
     <!-- bw3新版投注记录页底部订单号和时间 -->
-    <item-order :data_o="item_data"></item-order>
+    <!-- <item-order :data_o="item_data"></item-order> -->
   </div>
 </template>
 
 <script setup>
-import itemBody from "src/base-h5/components/common/cathectic-item/item-body.vue";
+import itemBody from "src/base-h5/components/common/cathectic-item/app-h5/item-body.vue";
 import itemFooter from "src/base-h5/components/common/cathectic-item/item-footer.vue";
 import itemOrder from "src/base-h5/components/common/cathectic-item/item-order.vue";
 import earlySettle from "src/base-h5/components/common/cathectic-item/early-settle.vue";
@@ -105,9 +101,9 @@ onUnmounted(() => {
 
 <style lang="scss" scoped>
 .common-cathectic-item {
-  width: 3.55rem;
-  margin: 0.04rem auto;
-  border-radius: 0.08rem;
+  width: 100%;
+  padding: 0.12rem;
+  border-radius: 0.1rem;
   background: var(--q-gb-bg-c-15);
 }
 .common-cathectic-item2 {

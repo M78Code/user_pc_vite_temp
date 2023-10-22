@@ -35,7 +35,7 @@ const outDir= "dist/self-use-version/"+BUILD_VERSION
 const base =  IS_DEV?'/': `/${BUILD_VERSION}/`
 // https://vitejs.dev/config/
 export default defineConfig({
-  base  ,
+  // base  ,
   plugins: [
     vue({
       template: { 

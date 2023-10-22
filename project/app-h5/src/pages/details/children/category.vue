@@ -86,7 +86,7 @@ import no_data from "src/base-h5/components/common/no-data.vue"
 // 引入投注逻辑mixin
 // import betting from "src/base-h5/mixins/betting/betting.js";
 
-import { MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance ,project_name} from "src/core/index";
+import { MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance } from "src/core/index";
 // 引入加载中的组件
 import loading from "src/base-h5/components/common/loading.vue"
 // 精选赛事
@@ -94,7 +94,7 @@ import detailMatchList from 'src/base-h5/components/details/components/detail-ma
 import uid from "src/core/uuid/index.js"
 import lodash from "lodash";
 import { useRouter, useRoute } from "vue-router";
-import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
+import { useMittOn, useMittEmit, MITT_TYPES,project_name } from  "src/core/"
 // import { Level_one_detail_odd_info } from "../category-list.js";
 import { category_info } from "./category.js"
 import { reactive, nextTick, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
@@ -114,7 +114,6 @@ export default defineComponent({
     const router = useRouter();
     const route = useRoute();
     // 国际化
-    ;
     const {
       component_data,
       show_recommend,
@@ -212,7 +211,6 @@ export default defineComponent({
 
       // console.log("match_list_new", match_list_normal.value)
       // 原created
-
       // 满足刷新页面保持向上展开的状态
       // set_fewer(1);
       // 只有赛果详情才调用相应接口
@@ -284,6 +282,7 @@ export default defineComponent({
       get_details_data_cache,
       get_chpid_obj,
       MatchDataWarehouseInstance,
+      project_name,
       change_minheight,
       change_show,
       listItemAddCustomAttr,

@@ -46,7 +46,7 @@
                     <div class="row items-center">
                       <!-- 联赛icon -->
                       <img
-                        :src="item2.picUrlthumb ? get_file_path(item2.picUrlthumb) : compute_img('match-cup')"
+                        :src="item2.picUrlthumb ? get_server_file_path(item2.picUrlthumb) : compute_img('match-cup')"
                         @error="league_icon_error" class="match_logo" />
                       <div class="name-overhide">{{ item2.nameText }}</div>
                       <div class="nums"
@@ -111,7 +111,7 @@ import { api_filter } from "src/api/index.js";
 // 无网络展示组件
 import noData from "src/base-h5/components/common/no-data.vue";
 import SFilter from "src/base-h5/components/skeleton/filter.vue"
-import { UserCtr, compute_img,MenuData, i18n_t, get_file_path, useMittEmit, MITT_TYPES } from 'src/core/'
+import { UserCtr, compute_img,MenuData, i18n_t, get_server_file_path, useMittEmit, MITT_TYPES } from 'src/core/'
 import { ref, watch, computed, nextTick, onMounted, onBeforeUnmount } from 'vue'
 import lodash from 'lodash'
 import { project_name } from "src/core";

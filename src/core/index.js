@@ -1,7 +1,9 @@
-const BUILDIN_CONFIG = window.BUILDIN_CONFIG;
+ 
+// 本次打包的 客户端版本
+import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
+const { BUILD_VERSION, CURRENT_ENV ,PROJECT_NAME ,IS_PC} = BUILD_VERSION_CONFIG;
 
-
-const PROJECT_NAME = BUILDIN_CONFIG.PROJECT_NAME;
+ 
 
 //通用
 
@@ -59,7 +61,7 @@ import MenuData_H5 from "src/core/menu-h5/menu-data-class.js";
 import MatchListCard_H5 from "src/core/match-list-h5/match-card/match-list-card-class.js";
 import MatchListCardData_H5 from "src/core/match-list-h5/match-card/module/match-list-card-data-class.js";
 
-const IS_PC = PROJECT_NAME.includes("pc");
+ 
 const MenuData = IS_PC ? MenuData_PC : MenuData_H5;
 const MatchListCard = IS_PC ? MatchListCard_PC : MatchListCard_H5;
 const MatchListCardData = IS_PC ? MatchListCardData_PC : MatchListCardData_H5;
@@ -236,6 +238,7 @@ export {
   MatchDetailCalss,
   UserCtr,
   IS_PC,
+  PROJECT_NAME,
   MenuData,
   MatchListCard,
   MatchListCardData,
