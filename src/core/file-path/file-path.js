@@ -208,10 +208,10 @@ const compute_local_project_file_path=(str='')=>{
   }
   let str2 =''
   if(BUILD_VERSION){
-    str2 =`/${BUILD_VERSION}/${PROJECT_NAME}${str}`
+    str2 =`/${BUILD_VERSION}/${PROJECT_NAME}/${str}`
   
   }else{
-    str2 =`${PROJECT_NAME}${str}`
+    str2 =`${PROJECT_NAME}/${str}`
   }
   if(NODE_ENV == 'development'){
     return '/'+ str2
