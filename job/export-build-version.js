@@ -61,6 +61,9 @@ function format_date(value) {
   return `${y}-${m}-${d}-${h}-${mm}-${s}`;
 }
 const BUILD_VERSION = format_date(new Date().getTime());
+
+ 
+
 const config = {
   BUILD_VERSION: IS_DEV ? "" : BUILD_VERSION,
   IS_DEV,
