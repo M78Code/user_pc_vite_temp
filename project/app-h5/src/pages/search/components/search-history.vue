@@ -11,7 +11,7 @@
           <span class="color-000000">{{ item.keyword }}</span>
         </div>
 
-        <img :src="`/${project_name}/image/svg/delete4.svg`" alt="" style="width:0.12rem" class="float-right"
+        <img :src="compute_local_project_file_path('/image/svg/delete4.svg')" alt="" style="width:0.12rem" class="float-right"
           @click="remove_history_item(item)">
       </div>
       <div class="text-center clear-all remove-history-item" @click="remove_history_item('')">
@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { SearchData,project_name } from "src/core/";
+import { SearchData,compute_local_project_file_path } from "src/core/";
 export default {
   name: 'searchHistory',
   props: {
