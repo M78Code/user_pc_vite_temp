@@ -442,15 +442,23 @@ const item_click3 = lodash.debounce(() => {
     if (MenuData.get_menu_type() == 900 && $route.name == 'virtual_sports') { //虚拟体育走这里逻辑
       if (props.match.match_status) return
     } else { //正常赛事走这里逻辑
-      console.error('ol_list_item',props.odd_field)
-      const {oid,hids,_hn,mid } = props.odd_field
+      console.error('ol_list_item',odd_item.value)
+      const {oid,hids,_hn,mid } = odd_item.value
       let params = {
         oid, // 投注项id ol_obj
         _hid:hids, // hl_obj 
         _hn,  // hn_obj
         _mid:mid,  //赛事id mid_obj
       }
-      set_bet_obj_config(params,{})
+      let other = {
+        is_detail: true,
+        // 投注类型 “vr_bet”， "common_bet", "guanjun_bet", "esports_bet"
+        // 根据赛事纬度判断当前赛事属于 那种投注类型
+        bet_type: 'common_bet',
+        device_type: 1,  // 设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备
+
+    }
+      set_bet_obj_config(params,other)
     }
   }
 }, 450, {'leading': true, trailing: false})

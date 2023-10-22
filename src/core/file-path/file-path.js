@@ -203,8 +203,8 @@ let image_is_exist = function (url, img) {
 
 const compute_local_project_file_path=(str='')=>{
   str =''+str
-  if(str&&!str.startsWith('/')){
-    str='/'+str
+  if(str.startsWith('/')){
+    str= str.substring(1)
   }
   let str2 =''
   if(BUILD_VERSION){
@@ -213,7 +213,13 @@ const compute_local_project_file_path=(str='')=>{
   }else{
     str2 =`${PROJECT_NAME}${str}`
   }
-  return  str2
+  if(NODE_ENV == 'development'){
+    return '/'+ str2
+  }else{
+    //生产环境因为有 base 路径这里不能拼接 / 否则会走到 域名目录 而不是资源目录 
+    return   str2
+  }
+  
 
 }
 /**
@@ -224,17 +230,22 @@ const compute_local_project_file_path=(str='')=>{
  */
 const compute_local_common_file_path=(str='')=>{
   str =''+str
-  if(str&&!str.startsWith('/')){
-    str='/'+str
+  if(str.startsWith('/')){
+    str= str.substring(1)
   }
   let str2 =''
   if(BUILD_VERSION){
-    str2 =`/${BUILD_VERSION}${str}`
+    str2 =`${BUILD_VERSION}${str}`
   
   }else{
     str2 =str
   }
-  return  str2
+  if(NODE_ENV == 'development'){
+    return '/'+ str2
+  }else{
+    //生产环境因为有 base 路径这里不能拼接 / 否则会走到 域名目录 而不是资源目录 
+    return   str2
+  }
 
 }
 
@@ -242,4 +253,9 @@ const compute_local_common_file_path=(str='')=>{
 
 
 
-export { get_server_file_path, load_img_src, load_img_src_common, image_is_exist, project_name };
+export { get_server_file_path, 
+  load_img_src, load_img_src_common,
+   image_is_exist, project_name ,
+   compute_local_project_file_path,
+   compute_local_common_file_path
+   };

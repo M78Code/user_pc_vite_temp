@@ -31,15 +31,15 @@
   import { api_betting } from "src/api/index.js";
   //   import { mapGetters, mapMutations } from "vuex"
   import unsettle from "src/base-h5/pages/cathectic/app-h5/unsettle.vue"
-  import settle from "src/base-h5/pages/cathectic/settle.vue"
-  import preRecord from "src/base-h5/pages/cathectic/pre-record.vue"
+  import settle from "src/base-h5/pages/cathectic/app-h5/settle.vue"
+  import preRecord from "src/base-h5/pages/cathectic/app-h5/pre-record.vue"
   import { onMounted, onUnmounted, ref, computed, provide, watch, nextTick } from 'vue'
   import lodash from 'lodash'
   import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
   import store from 'src/store-redux/index.js'
   import UserCtr from "src/core/user-config/user-ctr.js";
   import { i18n_t } from "src/boot/i18n.js";
-  import compute_css from "src/core/server-img/other-img/index.js"
+  import {compute_css} from "src/core/index.js"
   import { compute_css_variables } from "src/core/css-var/index.js"
   
   let { cathecticReducer, userInfoReducer, themeReducer } = store.getState()

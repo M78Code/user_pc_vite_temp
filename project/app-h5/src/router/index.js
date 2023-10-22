@@ -18,6 +18,14 @@ const router = createRouter({
               keepAlive: true // 需要缓存
             },
           },
+          {
+            path: "/handicap",
+            name: "handicapTutorial",
+            component: () => import("../pages/handicap-tutorial/index.vue"),
+            meta: {
+              keepAlive: true // 需要缓存
+            },
+          },
           // {
           //   path: "/home",
           //   name: "home",

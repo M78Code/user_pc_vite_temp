@@ -49,27 +49,27 @@ let menu_list = ref([]);//一级菜单list
  */
 const set_menu_lv1 = (item, index, type = "click") => {
     MenuData.set_current_lv1_menu(item, index);
-    if (MenuData.is_scroll_ball(item.mi)) {
-    //滚球第一个是全部
-    if (type == "click") {
-      //表示点击的是全部
-      MenuData.set_current_lv2_menu(item.sl, -1, type);
-    } else {
-      MenuData.set_current_lv2_menu(item.sl[0], 0, type);
-    }
-  } else if (MenuData.is_results(item.mi)) {// "赛果",
-  } else if (MenuData.is_vr(item.mi)) {// "VR",
-    router.push({
-      name: "virtual_sports",
-      query: {
-        from: route.name,
-      },
-    });
-  } else {
-    if (item.sl && item.sl[0]) {
-      MenuData.set_current_lv2_menu(item.sl[0], 0, type);
-    }
-  }
+//     if (MenuData.is_scroll_ball(item.mi)) {
+//     //滚球第一个是全部
+//     if (type == "click") {
+//       //表示点击的是全部
+//       MenuData.set_current_lv2_menu(item.sl, -1, type);
+//     } else {
+//       MenuData.set_current_lv2_menu(item.sl[0], 0, type);
+//     }
+//   } else if (MenuData.is_results(item.mi)) {// "赛果",
+//   } else if (MenuData.is_vr(item.mi)) {// "VR",
+//     router.push({
+//       name: "virtual_sports",
+//       query: {
+//         from: route.name,
+//       },
+//     });
+//   } else {
+//     if (item.sl && item.sl[0]) {
+//       MenuData.set_current_lv2_menu(item.sl[0], 0, type);
+//     }
+//   }
 }
 
 /**
@@ -109,12 +109,14 @@ watch(update_time, (v) => {
     }
 
     .goback-icon-wrapper {
-        height: 0.2rem;
+        height: 0.14rem;
         padding-left: 0.15rem;
 
         .img {
-            width: 0.12rem;
-            height: 0.2rem;
+            width: 0.08rem;
+            height: 0.14rem;
+            background-size: cover;
+            opacity: .6;
         }
     }
 

@@ -14,12 +14,10 @@ function compute_css({ key, theme, path }) {
   let theme_config = server_resource[theme] || {};
   //最终资源键 计算
   let final_key = key;
-  if (all_other_image[key]) {
-    if (all_other_image[key][CURRENT_ENV]) {
-      final_key = all_other_image[key][CURRENT_ENV];
-    } else {
-      final_key = all_other_image[key]["default"];
-    }
+  let key_config = all_other_image[key]
+  if (key_config) {
+    final_key =  key_config[CURRENT_ENV] ||key_config["default"];
+   
   }
 
   //从打包的 环境拿 图片地址
