@@ -2,8 +2,8 @@
   <div class="tab-wrap fit relative-position" ref="wrap" @mousedown="mousedown" :data-version="date_menu_version">
     <div class="item-wrap relative-position" ref="item_wrap" :style="{ left: item_wrap_left + 'px' }" :key="key">
       <!-- 所有日期  -->
-      <template v-for="(item, index) in list" class="tab-item yb-flex-center" :key="item.menuName + '_' + index">
-        <div :class="[{ active: final_index == index }]"
+      <template v-for="(item, index) in list" :key="item.menuName + '_' + index">
+        <div class="tab-item yb-flex-center" :class="[{ active: final_index == index }]"
            @click.stop="handle_click_menu_mi_3_date({ ...item, index })"
           @mouseenter="tabs_enter(index)" @mouseleave="tabs_leave(index)">
           <!-- <img v-if="item.img_src" v-check-img="{src: val.img_src, default: `/image/common/activity_banner/gift_package.png`}" /> -->
@@ -165,6 +165,7 @@ async function get_date_menu_list() {
     final_index.value = index_info
   }
   handle_click_menu_mi_3_date({ md: md_info, index: index_info })
+  console.log('match_list_api_config', match_list_api_config);
 }
 
 /**
@@ -575,7 +576,7 @@ onBeforeUnmount(() => {
     clearTimeout(init_timer)
   }
   // 鼠标事件取消监听
-  if (this.is_drag) {
+  if (props.is_drag) {
     document.removeEventListener("mousemove", mousemove);
     document.removeEventListener("mouseup", mouseup);
   }

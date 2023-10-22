@@ -1,9 +1,11 @@
 import { ref } from "vue";
 import { useRoute } from "vue-router";
 import lodash from "lodash";
+import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 
 import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache.js";
 import { PageSourceData } from "src/core/index.js";
+import BetCommonHelper from "src/core/bet/common-helper/index.js";
 import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/core/index.js";
 import MatchListCardClass from "src/core/match-list-pc/match-card/match-list-card-class.js";
 import MatchListScrollClass from 'src/core/match-list-pc/match-scroll.js'
@@ -68,9 +70,9 @@ const set_match_base_info_by_mids_info = (match_list, mids_arr, ts1) => {
 		// bymid数据同步投注项 1508要改的
 		BetCommonHelper.upd_bet_obj(ts1, match.mid);
 		// 同步比分到右侧
-		if (vx_detail_params.value.mid == match.mid) {
-			BetCommonHelper.update_match_score(0, match.mid);
-		}
+		// if (vx_detail_params.value.mid == match.mid) {
+		// 	BetCommonHelper.update_match_score(0, match.mid);
+		// }
 	});
 	//热门赛事 提取足球赛事
 	if (MenuData.menu_root == 500) {
@@ -137,16 +139,13 @@ const api_bymids = (
   },
   callback
 ) => {
-  console.log({
-    mids,
-    inner_param,
-  });
   let panduan_1 = MenuData.is_virtual_sport();
   let panduan_2 = ["details", "video"].includes(page_source);
   let first_load_time;
   if ((panduan_1 && page_source !== "search") || panduan_2) {
     return;
   }
+
   // 联赛结构类型列表 首次加载拉前12场赛事
   if (is_league_first) {
     mids = get_first_unfold_mids();
@@ -298,6 +297,8 @@ const api_bymids = (
         }
       })
       .catch((err) => {
+        console.log('asdasdasdasd', err);
+
         set_home_loading_time_record("err");
         // console.error(err)
         // 如果是第一次加载设置数据加载状态

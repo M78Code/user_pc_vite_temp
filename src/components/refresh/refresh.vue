@@ -34,7 +34,7 @@ export default {
       default: false,
     },
     icon_name: {
-      type: String,
+      type: [ String, Number],
       default: "icon-refresh",
     },
     other_icon: {
