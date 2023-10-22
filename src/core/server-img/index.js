@@ -12,7 +12,7 @@ import { UserCtr, useMittOn, MITT_TYPES } from "src/core/";
  */
 const compute_css = (params = {}) => {
   const theme = UserCtr.theme || "theme-1";
-  let { key, position, path } = params;
+  let { key, position, path=0 } = params;
   if (!key) {
     return {};
   }
