@@ -9,24 +9,43 @@
     <div class="yb_mx10 item-header yb_fontsize14 yb_py4">
       {{data_b.seriesValue}}
     </div>
-    <div class="body-title">
-      <span>罗斯托拉夫U20</span>
-    </div>
-    <div class="body-info">
-      <div>
-        <p>投注项:角球:滚球</p>
-        <p>大/小-上半场</p>
+    <div class="item-main">
+      <div class="items">
+        <div>
+          <h2>普马斯</h2>
+          <h3>1.64</h3>
+        </div>
+        <p>零失球</p>
+        <span>普马斯 vs 电风扇科技</span>
       </div>
-      <span>大3.5 @2.16</span>
+      <div class="items">
+        <div>
+          <h2>中央海岸选手</h2>
+          <h3>1.64</h3>
+        </div>
+        <p>滚球 独赢 第三局</p>
+        <div>
+          <p>滚球 独赢 第三局</p>
+          <h3>赢</h3>
+        </div>
+        <span>普马斯 vs 电风扇科技 vs 辅导时间诶玩过可根据</span>
+      </div>
+      <div class="items">
+        <div>
+          <h2>普马斯</h2>
+          <h3>1.64</h3>
+        </div>
+        <p>零失球</p>
+        <span>普马斯 vs 电风扇科技</span>
+      </div>
     </div>
-    <div class="body-main">
-      <p><label>投注单号：</label> <span>1787238478234454</span></p>
-      <p><label>投注时间：</label> <span>2019-08-25 03:00</span></p>
-      <p><label>[足球]划分为金额水电费</label></p>
-      <p><label>投资额：</label> <span>10.00元</span></p>
-      <p><label>可赢额：</label> <span>5.60元</span></p>
-      <p><label>注单状态：</label> <span>投注成功</span></p>
-    </div>
+     <!-- 串关时大于2条时,显示 展开收起按钮-->
+     <div class="toggle row justify-center" v-if="data_b.orderVOS.length > 2">
+        <span class="btn_style" @click="toggle_box">
+          <span class="text_c">{{btn_text}}</span>
+          <img :src="`/${project_name}/image/list/league-collapse-icon.svg`" alt="" :class="direction">
+        </span>
+      </div>
   </div>
 </template>
 
@@ -129,32 +148,6 @@ import { project_name } from 'src/core'
 
 <style lang="scss" scoped>
 .item-body {
-  .body-title {
-    display: flex;
-    justify-content: space-around;
-    font-weight: bold;
-    font-size: 0.14rem;
-    line-height: 3;
-  }
-  .body-info {
-    text-align: center;
-    background-color: var(--q-cathectic-color-6);
-    padding: 0.1rem;
-    border-radius: 0.1rem;
-    color: var(--q-gb-t-c-14);
-    & > div {
-      display: flex;
-      font-weight: bold;
-      justify-content: space-around;
-    }
-  }
-  .body-main {
-    margin-top: 0.1rem;
-    p {
-      line-height: 2;
-      display: flex;
-      justify-content: space-between;
-    }
-  }
+  
 }
 </style>
