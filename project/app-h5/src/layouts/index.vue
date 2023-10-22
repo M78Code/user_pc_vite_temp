@@ -17,7 +17,7 @@
       <ScrollMenu />
       <Tab />
       <router-view />
-      <BetBoxWapper />
+      <!-- <BetBoxWapper /> -->
       <!--页脚-->
       <Tabbar class="m-layout" v-if="['sport_menu', 'matchList'].includes(route.name)">
       </Tabbar>
@@ -61,7 +61,7 @@ import { useMittOn, MITT_TYPES, i18n_t, UserCtr } from "src/core/";
 // import { FooterWapper } from "src/components/footer/index.js";
 import { TopMenu,Tabbar,ScrollMenu,Tab } from 'src/base-h5/components/menu/app-h5-menu/index'
 import { MenuWapper } from "src/base-h5/components/menu";
-import { BetBoxWapper } from "src/base-h5/app-h5/bet";
+// import { BetBoxWapper } from "src/base-h5/app-h5/bet";
 import activityIcon from "src/base-h5/components/common/activity-icon.vue"; // 设置
 import setMenu from "src/base-h5/components/common/set-menu.vue"; // 设置
 import selectDia from "src/base-h5/pages/match-list/components/select-dia.vue"
