@@ -1,7 +1,7 @@
 <template>
   <div class="q-pb-md">
     <div class="lineup-bg  relative-position">
-      <img :src="`/${project_name}/image/png/analysis-lineup-${match.csid}.png`" alt="" class="lineup-img" />
+      <img :src="compute_local_project_file_path(`/image/png/analysis-lineup-${match.csid}.png`)" alt="" class="lineup-img" />
       <div class="lineup-bg-wrap" :class="{ 'basketball': match.csid == '2' }">
         <!-- 主队 -->
         <div class="home" :class="`lineup-${lodash.get(lineupData, 'home.homeFormation')}`">
@@ -162,7 +162,7 @@ import { component_symbol, need_register_props } from "../config/index.js"
 useRegistPropsHelper(component_symbol, need_register_props)
 import { api_analysis } from 'src/api/index'
 import lodash from 'lodash'
-import { project_name } from "src/core";
+import { compute_local_project_file_path } from "src/core";
 const lineupData = ref({});
 const first_home_lineup = ref([]); //主队首发阵容
 const first_away_lineup = ref([]); //客队首发阵容
