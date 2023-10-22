@@ -23,35 +23,44 @@
 
 <script>
 import { api_match } from "src/api/index.js";
-// import details from "/utils/detailsClass/details.js";
-// import MatchCtr from "/utils/dataClassCtr/match_ctr.js";
+import details from "src/core/match-list-pc/details-class/details.js"
+import {
+  i18n_t,
+  MITT_TYPES,
+  useMittOn,
+  MatchDataWarehouse_PC_Detail_Common as MatchDetailsData,
+  MatchDetailCalss,
+  LayOutMain_pc,
+  GlobalSwitchClass,
+  useMittEmit,
+  utils,
+  UserCtr
+} from "src/core/index";
 // import skt_data_esports_score from "/mixins/websocket/data/skt_data_esports_score.js";
-// import { mapGetters, mapActions } from "vuex"
 import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/index.js";
 import MenuData from "src/core/menu-pc/menu-data-class.js";
 export default {
   name:'esportsMatchList',
-  mixins: [skt_data_esports_score],
+  // mixins: [skt_data_esports_score],
   data() {
     return {
       // 菜单数据
       menu_data: MenuData,
       // 赛事列表
       match_list:[],
-      match_ctr: new MatchCtr( 'esport_match_list'),
+      match_ctr: MatchDetailsData,
       skt_mid: {}, // 需要订阅的赛事id
       skt_hpid: "", // 需要订阅的玩法
-      socket_name: "esports_score_list"
+      socket_name: "esports_score_list",
+      vx_detail_params:MatchDetailCalss.params, //详情参数
+      details_data_version:MatchDetailCalss.details_data_version //详情类版本号
+      //获取当前菜单信息
+      vx_cur_menu_type: MenuData.cur_menu_type,
+      vx_layout_cur_page: LayOutMain_pc.layout_current_path,
     }
   },
   computed: {
-    ...mapGetters({
-      // 左侧详情参数
-      vx_detail_params: "get_match_details_params",
-      //获取当前菜单信息
-      vx_cur_menu_type: "get_cur_menu_type",
-      vx_layout_cur_page: "get_layout_cur_page",
-    }),
+
   },
   watch:{
     // 监听球种变化
@@ -77,7 +86,20 @@ export default {
       },
       immediate: true
     }
-  },
+
+  /*
+  ** 监听MatchDetailCalss的版本号  获取最新的mid
+  */
+  'details_data_version.version':{
+      handler(val){
+        if (val) {
+       this.details_params = MatchDetailCalss.params
+       }
+
+      },
+      immediate: true
+    }
+},
   created(){
     this.set_is_pause_video(this.vx_layout_cur_page.from != 'video')
     if(this.$route.name =='details'){

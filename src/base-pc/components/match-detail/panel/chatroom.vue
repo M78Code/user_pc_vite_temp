@@ -197,7 +197,6 @@
 import panel_header from "src/project/yabo/components/match_details/panel/components/panel_header.vue";
 import charMarquee from "src/project/yabo/components/match_details/panel/components/marquee.vue";
 import emoji_picker from "src/project/yabo/components/match_details/panel/components/emoji_picker";
-import {mapGetters, mapMutations} from "vuex";
 import ChatroomMsgType from 'src/public/utils/ws/chatroom/chatroom_msgtype.js';
 import { api_chatroom } from "src/public/api/index.js";
 import {utils} from "src/core"
@@ -296,14 +295,14 @@ export default {
     }
   },
   computed: {
-    ...mapGetters([
-      'get_user',
-      'get_user_token',
-      'get_global_click',
-      'get_chatroom_id',
-      'get_chatroom_connect_info',
-      'get_chatroom_curr_url_info',
-    ]),
+    // ...mapGetters([
+    //   'get_user',
+    //   'get_user_token',
+    //   'get_global_click',
+    //   'get_chatroom_id',
+    //   'get_chatroom_connect_info',
+    //   'get_chatroom_curr_url_info',
+    // ]),
     // 是否 能发送消息
     can_send_msg() {
       return false
@@ -367,12 +366,12 @@ export default {
     
   },
   methods: {
-    ...mapMutations([
-      'set_chatroom_id',
-      'set_chatroom_available',
-      'set_chatroom_connect_info',
-      'set_chatroom_curr_url_info',
-    ]),
+    // ...mapMutations([
+    //   'set_chatroom_id',
+    //   'set_chatroom_available',
+    //   'set_chatroom_connect_info',
+    //   'set_chatroom_curr_url_info',
+    // ]),
     // 用户禁言阶段placeholder显示文本
     get_ban_placeholder(info) {
       const {banTime = 0, banType = 1} = info
