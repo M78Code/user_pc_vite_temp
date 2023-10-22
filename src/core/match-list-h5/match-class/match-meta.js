@@ -13,6 +13,7 @@ import MatchFold from 'src/core/match-fold'
 import MatchCollect from 'src/core/match-collect'
 import PageSourceData from "src/core/page-source/page-source.js";
 import MatchListCardClass from '../match-card/match-list-card-class'
+import VirtualList from './virtual-list'
 import { MATCH_LIST_TEMPLATE_CONFIG } from "src/core/match-list-h5/match-card/template"
 import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, useMittEmit, MITT_TYPES } from 'src/core'
 
@@ -20,11 +21,15 @@ class MatchMeta {
 
   constructor() {
     // 当前页面数据mids集合
-    this.match_mids = [],
+    this.match_mids = []
     // 早盘下的 mids
     this.zaopan_mids = []
     // 联赛 id 对应的 mids
     this.tid_map_mids = {}
+    // 赛事全量mids
+    this.complete_mids = []
+    // 赛事全量数据
+    this.complete_matchs = []
   }
 
   /**
@@ -46,7 +51,7 @@ class MatchMeta {
     // 对应 球种 mi 
     if (typeof menu_lv_v2 !== 'string') return
     // 冠军
-    if (MenuData.is_export()) return
+    if (MenuData.is_export() || MenuData.is_results()) return
     this.get_origin_match_mids_by_mi(menu_lv_v2)
   }
   /**
@@ -61,19 +66,18 @@ class MatchMeta {
       const mids = this.get_match_mids_by_mi(t.mi)
       mids && match_mids_list.push(...mids)
     })
-    // TODO: 需要去除 .slice(0, 10)
     this.zaopan_mids = [...new Set(match_mids_list)]
-    this.set_match_mids(match_mids_list, 10)
+    this.get_origin_match_by_mids(match_mids_list)
   }
 
-  /** 暂时没有用这个方法了 因为一个方法足以
+  /** 
    * @description 根据 mi 获取对应的 mids
    * @param { mi } 二级菜单  
    */
   get_origin_match_mids_by_mi (mi) {
     // 当前菜单下的 mids 集合
     const match_mids_list = this.get_match_mids_by_mi(mi)
-    this.set_match_mids(match_mids_list, 8)
+    this.get_origin_match_by_mids(match_mids_list)
   }
 
   /**
@@ -102,43 +106,54 @@ class MatchMeta {
    * @param { mid } 二级菜单
    */
   get_origin_match_by_mids(mids) {
+    // 显示空数据页面
+    const length = lodash.get(mids, 'length', 0)
+    if (length < 1) return useMittEmit(MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, true);
     // 赛事全量数据
-    const match_list = mids.map(t => {
-      return BaseData.resolve_base_info_by_mid(t)
+    const match_list = mids.map((t, index) => {
+      // 获取对应赛事数据
+      const match = BaseData.resolve_base_info_by_mid(t)
+      // 获取赛事模板参数
+      const template = this.set_match_default_template(match)
+      // 获取赛事默认参数
+      const params = this.set_match_default_properties(match, index, mids)
+      // 赛事最终数据
+      const target = { ...match, ...params, ...template, }
+      //  赛事操作
+      this.match_assistance_operations(target)
+      return target
     })
-    // 过滤赛事
-    const match_result = match_list.filter((t) => t.mid)
-    this.set_match_default_template(match_result)
+
+    this.set_match_mids(mids, match_list)
+    
+    // 获取赛事收藏状态 该接口还没发到试玩
+    // await MatchCollect.get_collect_matche_data()
   }
 
   /**
-   * @description 设置赛事默认模板 输出最终赛事完整数据 更新仓库  目前只处理了 1-足球; 2-篮球
-   * @param { list } 赛事集合
+   * @description 设置赛事默认模板 输出最终赛事完整数据 更新仓库
+   * @param { match } 赛事对象
    */
-  set_match_default_template(list) {
-    const data_list = list.map(t => {
-      const csid = lodash.get(t, 'csid')
-      const template_config = this.get_match_default_template_config(csid)
-      if (!template_config) return
-      // 主要玩法默认参数
-      const hps = template_config[`template_${csid}_main`]
-      let handicap = ''
-      if (+csid === 2) {
-        handicap = this.get_basketball_default_template(t, template_config)
-      } else {
-        handicap = this.get_match_default_template(t, template_config)
-      }
-      return {
-        ...t,
-        hps,
-        ...handicap
-      }
-    })
-    this.set_match_default_properties(data_list)
+  set_match_default_template(match) {
+    const csid = lodash.get(match, 'csid')
+    const template_config = this.get_match_default_template_config(csid)
+    if (!template_config) return
+    // 主要玩法默认参数
+    const hps = template_config[`template_${csid}_main`]
+    let handicap = ''
+    if (+csid === 2) {
+      handicap = this.get_basketball_default_template(match, template_config)
+    } else {
+      handicap = this.get_match_default_template(match, template_config)
+    }
+    return {
+      hps,
+      ...handicap
+    }
   }
 
   /**
-   * @description 获取 赛事 次要玩法
+   * @description 获取 赛事 默认次要玩法
    * @param { list } 赛事集合
    * @param { template } 赛事默认模板
    */
@@ -177,43 +192,38 @@ class MatchMeta {
 
   /**
    * @description 设置赛事默认属性
-   * @param { list } 赛事数据 
+   * @param { match } 赛事对象
+   * @param { index } 赛事对应下标
    */
-  async set_match_default_properties(list = []) {
-    // 获取赛事收藏状态 该接口还没发到试玩
-    // await MatchCollect.get_collect_matche_data()
-
-    const length = lodash.get(list, 'length', 0)
-    if (length < 1) return
+  set_match_default_properties(match, index, mids) {
     // 是否展示联赛标题
     let is_show_league = false
-    // 是否显示次要玩法
-    let is_show_tab_play = false
-    // 是否折叠
-    let is_fold_tab_play = false
-
-    list.forEach((t, i) => {
-      is_show_league = i === 0 ? true : list[i].tid !== list[i - 1].tid
-      Object.assign(t, {
-        is_show_tab_play,
-        is_fold_tab_play,
-        is_show_league,
-      })
-
-      this.match_assistance_perations(t)
-      
-    })
-    this.handle_submit_warehouse(list)
+    if (index > 0) {
+      const prev_match = BaseData.resolve_base_info_by_mid(mids[index - 1])
+       // 上一个赛事对象
+      is_show_league = index === 0 ? true : match.tid !== prev_match.tid
+    } else {
+      is_show_league = true
+    }
+    return {
+      ...match,
+      source_index: index,
+      is_show_league
+    }
   }
 
   /**
-   * @description 赛事辅助操作
+   * @description 赛事操作
    * @param { match } 赛事对象
    */
-  match_assistance_perations (match) {
-    const { tid, csid } = match
+  match_assistance_operations (match) {
+    const { tid, csid, mid } = match
     // 初始化赛事折叠
     MatchFold.set_match_mid_fold_obj(match)
+
+    // 虚拟列表计算
+    VirtualList.set_match_mid_map_height(mid)
+
     // 初始化球种折叠状态
     if (!(`csid_${csid}` in MatchFold.ball_seed_csid_fold_obj.value)) MatchFold.set_ball_seed_csid_fold_obj(csid)
 
@@ -231,12 +241,11 @@ class MatchMeta {
    */
   get_match_mids (list) {
     const length = lodash.get(list, 'length', 0)
-    if (length < 1) return []
+    if (length < 1) return useMittEmit(MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, true);
     const match_mids_list = list.map(t => {
       return t.mid
     })
-    this.match_mids = [...new Set(match_mids_list.slice(0, 10))]
-    this.handle_submit_warehouse(list)
+    this.set_match_mids(match_mids_list, list)
   }
 
   /**
@@ -258,7 +267,7 @@ class MatchMeta {
       })
       target_mids = [...new Set((arr_mids).slice(0, 8))]
     }
-    this.set_match_mids(target_mids)
+    this.get_origin_match_by_mids(target_mids)
   }
 
   /**
@@ -287,9 +296,9 @@ class MatchMeta {
   filter_hot_match_by_tid (tid = '') {
     const tid_info = this.tid_map_mids[`tid_${tid}`]
     if (!tid_info) return
-    const tid_mids = this.tid_map_mids[`tid_${tid}`].mids
-    if (tid_mids.length < 1) return 
-    this.set_match_mids(tid_mids)
+    const mids = this.tid_map_mids[`tid_${tid}`].mids
+    if (mids.length < 1) return 
+    this.get_origin_match_by_mids(mids)
   }
 
   /**
@@ -320,8 +329,8 @@ class MatchMeta {
     const menu_lv_v2 = lodash.get(MenuData.current_lv_2_menu, 'mi')
     const euid = lodash.get(BaseData.mi_info_map, `mi_${menu_lv_v2}.h5_euid`, '40602')
     const res = await api_common.post_match_full_list({
-      "cuid": UserCtr.get_cuid(),
       euid,
+      "cuid": UserCtr.get_cuid(),
       "type": 100,
       "sort": PageSourceData.sort_type,
       "device": ['', 'v2_h5', 'v2_h5_st'][UserCtr.standard_edition]
@@ -379,28 +388,81 @@ class MatchMeta {
     const custom_match_mids = result_list.map(t => {
       return t.mid
     })
+    // TODO: 待修改
+    this.complete_mids = custom_match_mids
     this.match_mids = [...new Set(custom_match_mids.slice(0, 10))]
+
     result_list.forEach((t, i) => {
       Object.assign(t, {
         is_show_league: i === 0 ? true : result_list[i].tid !== result_list[i - 1].tid
       })
-      this.match_assistance_perations(t)
+      this.match_assistance_operations(t)
     })
+    // 不需要调用赔率接口
     MatchDataBaseH5.set_list(result_list)
+  }
+     
+  /**
+   * @description 设置 match_mids
+   * @param { mids } 全量 赛事 mids 
+   * @param { match_list } 全量 赛事 match
+   */
+  set_match_mids (mids = [], match_list = []) {
+
+    this.complete_mids = mids
+    // 过滤赛事
+    this.complete_matchs = match_list.filter((t) => t.mid)
+    
+    // 计算所需渲染数据
+    this.compute_page_render_list()
+
+    // useMittEmit(MITT_TYPES.EMIT_MENU_ANIMATION);
+    // 空数据页面重置
+    useMittEmit(MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, false);
   }
 
   /**
-   * @description 设置 match_mids
-   * @param { mids } 赛事 mids 
+   * @description 计算所需渲染数据
    */
-  set_match_mids (mids = [], num = 10) {
-    // 显示空数据页面
-    if (mids.length < 1) return useMittEmit(MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, true);
-    this.match_mids = [...new Set(mids.slice(0, num))]
-    // useMittEmit(MITT_TYPES.EMIT_MENU_ANIMATION);
-    this.get_origin_match_by_mids(this.match_mids)
-    // 空数据页面重置
-    useMittEmit(MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, false);
+  compute_page_render_list () {
+  
+    // 计算当前页所需渲染数据
+    const end_index = VirtualList.compute_page_render_list_end_index(this.complete_matchs)
+    const target_index = end_index > 10 ? end_index : this.complete_mids.length
+    const target_list = this.complete_matchs.slice(0, target_index)
+    this.match_mids = this.complete_mids.slice(0, target_index)
+    // 向仓库提交数据
+    this.handle_submit_warehouse(target_list)
+  }
+
+  /**
+   * @description 获取赛事赔率
+   */
+  async get_match_base_hps_by_mids () {
+    const match_mids = this.match_mids.join(',')
+    // 冠军不需要调用
+    if (MenuData.is_export()) return
+    // 竞足409 不需要euid
+    const params = {
+      mids: match_mids,
+      cuid: UserCtr.get_uid(),
+      sort: PageSourceData.sort_type,
+      euid: MenuData.is_jinzu() ? "" : lodash.get(MenuData, 'current_lv_2_menu.mi'),
+      device: ['', 'v2_h5', 'v2_h5_st'][UserCtr.standard_edition],
+    };
+    let res = ''
+    // 赛果
+    if (MenuData.is_export()) {
+      res = await api_common.get_esports_match_by_mids(params)
+    } else {
+      res = await api_common.get_match_base_info_by_mids(params)
+    }
+    if (!res) return
+    const { code, data } = res
+    if (+code !== 200) return
+    const list = MatchPage.get_obj(data)
+    // 设置仓库渲染数据
+    this.handle_update_match_info(list)
   }
 
   /**
@@ -408,6 +470,7 @@ class MatchMeta {
    * @param { list } 赛事数据 
    */
   handle_update_match_info(list) {
+    // 合并前后两次赛事数据
     list = lodash.map(list, t => {
       const match = MatchDataBaseH5.get_quick_mid_obj(t.mid)
       // 覆写次要玩法折叠参数
@@ -417,7 +480,7 @@ class MatchMeta {
     // 设置仓库渲染数据
     MatchDataBaseH5.set_list(list)
     // 计算卡片高度, 需要在赔率接口之前调用， 避免卡片抖动
-    MatchListCardClass.run_process_when_need_recompute_container_list_step_two_match_list_wrapper_height()
+    // MatchListCardClass.run_process_when_need_recompute_container_list_step_two_match_list_wrapper_height()
   }
 
   /**
@@ -429,9 +492,11 @@ class MatchMeta {
     // 设置仓库渲染数据
     MatchDataBaseH5.set_list(list)
     // 计算卡片高度, 需要在赔率接口之前调用， 避免卡片抖动
-    MatchListCardClass.run_process_when_need_recompute_container_list_step_two_match_list_wrapper_height()
+    // MatchListCardClass.run_process_when_need_recompute_container_list_step_two_match_list_wrapper_height()
     // 订阅赛事，获取赛事赔率
-    MatchPage.subscription()
+    // MatchPage.subscription()
+    // 获取赛事赔率
+    this.get_match_base_hps_by_mids()
   }
 }
 

@@ -335,16 +335,16 @@ let back_to_timer =null
 }
 .theme01 {
   .esports-head-info-101 {
-    background-image: url("/yazhou-pc/image/jpg/sports_bg_01_101.jpg") !important;
+    background-image: url($SCSSPROJECTPATH+"/image/jpg/sports_bg_01_101.jpg") !important;
   }
   .esports-head-info-100 {
-    background-image: url("/yazhou-pc/image/jpg/sports_bg_01_100.jpg") !important;
+    background-image: url($SCSSPROJECTPATH+"/image/jpg/sports_bg_01_100.jpg") !important;
   }
   .esports-head-info-103 {
-    background-image: url("/yazhou-pc/image/jpg/sports_bg_01_103.jpg") !important;
+    background-image: url($SCSSPROJECTPATH+"/image/jpg/sports_bg_01_103.jpg") !important;
   }
   .esports-head-info-102 {
-    background-image: url("/yazhou-pc/image/jpg/sports_bg_01_102.jpg") !important;
+    background-image: url($SCSSPROJECTPATH+"/image/jpg/sports_bg_01_102.jpg") !important;
   }
   .details_loading {
     background-color: rgba(255, 255, 255, 0.8);
@@ -357,16 +357,16 @@ let back_to_timer =null
 }
 .theme02 {
   .esports-head-info-101 {
-    background-image: url("/yazhou-pc/image/jpg/sports_bg_02_101.jpg") !important;
+    background-image: url($SCSSPROJECTPATH+"/image/jpg/sports_bg_02_101.jpg") !important;
   }
   .esports-head-info-100 {
-    background-image: url("/yazhou-pc/image/jpg/sports_bg_02_100.jpg") !important;
+    background-image: url($SCSSPROJECTPATH+"/image/jpg/sports_bg_02_100.jpg") !important;
   }
   .esports-head-info-103 {
-    background-image: url("/yazhou-pc/image/jpg/sports_bg_02_103.jpg") !important;
+    background-image: url($SCSSPROJECTPATH+"/image/jpg/sports_bg_02_103.jpg") !important;
   }
   .esports-head-info-102 {
-    background-image: url("/yazhou-pc/image/jpg/sports_bg_02_102.jpg") !important;
+    background-image: url($SCSSPROJECTPATH+"/image/jpg/sports_bg_02_102.jpg") !important;
   }
   .details_loading {
     background-color: rgba(39, 42, 51, 0.5);

@@ -6,7 +6,7 @@
   全局顶层注入变量在   `app/job/output/css/variables.scss`
 ```
     $SCSSPROJECTPATH   : "/app-h5";
-   改变    background-image: url("/yazhou-pc/image/svg/sports_rules.svg");
+   改变    background-image: url($SCSSPROJECTPATH+"/image/svg/sports_rules.svg");
    为：   background-image: url( $SCSSPROJECTPATH +"/image/svg/sports_rules.svg");
 
 ```

@@ -9,7 +9,7 @@
     <!--无盘口数据时,赛事推荐-->
     <div class="match-recommend-wrapper" v-if="show_recommend">
       <!-- 无数据背景图  :src="get_is_hengping ? (`/image/wwwassets/bw3/svg/full_screen_match_odds_closed.svg`) : `/image/wwwassets/bw3/svg/match_odds_closed.svg`"-->
-      <img :src="`/${project_name}/image/svg/match_odds_closed.svg`" />
+      <img :src="compute_local_project_file_path('image/svg/match_odds_closed.svg')" />
       <!-- 背景下面文字说明 -->
       <div class="empty-m-list-w">
         <!-- 当前赛事盘口已全部关闭-->
@@ -94,7 +94,7 @@ import detailMatchList from 'src/base-h5/components/details/components/detail-ma
 import uid from "src/core/uuid/index.js"
 import lodash from "lodash";
 import { useRouter, useRoute } from "vue-router";
-import { useMittOn, useMittEmit, MITT_TYPES,project_name } from  "src/core/"
+import { useMittOn, useMittEmit, MITT_TYPES,compute_local_project_file_path } from  "src/core/"
 // import { Level_one_detail_odd_info } from "../category-list.js";
 import { category_info } from "./category.js"
 import { reactive, nextTick, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
@@ -282,7 +282,7 @@ export default defineComponent({
       get_details_data_cache,
       get_chpid_obj,
       MatchDataWarehouseInstance,
-      project_name,
+      compute_local_project_file_path,
       change_minheight,
       change_show,
       listItemAddCustomAttr,

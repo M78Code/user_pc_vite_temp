@@ -154,10 +154,10 @@ body {
   display: none;
 }
 .custom-format-web-icon-05 {
-  background-image: url("/yazhou-pc/image/com/com03/novideo@2x.png") !important;
+  background-image: url($SCSSPROJECTPATH+"/image/com/com03/novideo@2x.png") !important;
 }
 .custom-format-web-icon-06 {
-  background-image: url("/yazhou-pc/image/com/com03/novideo.png") !important;
+  background-image: url($SCSSPROJECTPATH+"/image/com/com03/novideo.png") !important;
 }
 .match-hot {
   position: absolute;

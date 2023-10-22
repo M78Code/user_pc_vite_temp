@@ -4,7 +4,7 @@
     <!-- 比赛进程 -->
     <div class="process-col yb-flex-center">
       <!--热门赛事显示hot标识-->
-      <img class="match-hot" :src="`/${project_name}/image/common/svg/hot.svg`" v-show="lodash.get(match, 'is_hot')" />
+      <img class="match-hot" :src="compute_local_project_file_path('/image/common/svg/hot.svg')" v-show="lodash.get(match, 'is_hot')" />
       <!-- 比赛进程 -->
       <match-process v-if="match" :match="match" source='match_list'
         show_page="match-list" :rows="2" />
@@ -67,7 +67,7 @@ import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 // useRegistPropsHelper(component_symbol, need_register_props)
 import { utils_info } from 'src/core/utils/module/match-list-utils.js';
-import { UserCtr, project_name } from 'src/core/index.js';
+import { UserCtr, compute_local_project_file_path } from 'src/core/index.js';
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 
 import { MatchProcessFullVersionWapper as MatchProcess } from 'src/components/match-process/index.js';

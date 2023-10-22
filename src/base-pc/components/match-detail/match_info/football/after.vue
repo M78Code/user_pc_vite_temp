@@ -117,7 +117,7 @@
             <div class="gif-text">{{i18n_t('common.goal')}}</div>
           </div>
           <!-- 红牌动画 -->
-          <img class="red-flash" :class="{active:is_show_home_red}" style="margin-left:5px" :src="`/${project_name}/image/svg/rs_hong.svg`">
+          <img class="red-flash" :class="{active:is_show_home_red}" style="margin-left:5px" :src="compute_local_project_file_path('/image/svg/rs_hong.svg')">
         </div>
         <div class="info-data">
         
@@ -164,7 +164,7 @@
             <div class="gif-text">{{i18n_t('common.goal')}}</div>
           </div>
           <!-- 红牌动画 -->
-          <img class="red-flash" :class="{active:is_show_away_red}" style="margin-left:5px" :src="`/${project_name}/image/svg/rs_hong.svg`">
+          <img class="red-flash" :class="{active:is_show_away_red}" style="margin-left:5px" :src=" compute_local_project_file_path('/image/svg/rs_hong.svg')">
         </div>
         <div class="info-data">
           <!-- 角球总比分 -->
@@ -202,7 +202,7 @@
 import  sprite_img  from   "src/core/server-img/sprite-img/index.js"
 import {MatchProcessFullVersionWapper} from "src/components/match-process/index.js";
 import lodash from 'lodash'
-import { get_match_status,i18n_t,formatSeconds,debounce_throttle_cancel,project_name } from 'src/core/index'
+import { get_match_status,i18n_t,formatSeconds,debounce_throttle_cancel,compute_local_project_file_path } from 'src/core/index'
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/";
 import { IconWapper } from 'src/components/icon'
 const tooltip_style = 'background:rgba(0,0,0,0.8);padding:4px 5px;border-radius:0px;color:#fff'
@@ -219,7 +219,7 @@ export default {
   },
   data() {
     return {
-      project_name,
+      compute_local_project_file_path,
       tooltip_style,
       sprite_img,
       i18n_t,

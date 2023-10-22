@@ -21,7 +21,7 @@
           class="icon-wrap settlement-pre relative-position"
           v-tooltip="{content: t('bet_record.settlement_pre')}"
         >
-           <img class="match_pre" :src="`/${project_name}/image/png/match_pre.png`"/>
+           <img class="match_pre" :src="compute_local_project_file_path('/image/png/match_pre.png')"/>
         </div>
        </div>
         <!-- 中立场、盘口数 -->
@@ -56,7 +56,7 @@
 
 import { computed } from 'vue';
 import lodash from 'lodash';
-import { t ,project_name} from "src/core/index.js";
+import { t ,compute_local_project_file_path} from "src/core/index.js";
 import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'

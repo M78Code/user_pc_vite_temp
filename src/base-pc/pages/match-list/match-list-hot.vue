@@ -10,7 +10,7 @@
     v-if="load_data_state == 'data'"
   >
     <div class="detais-hot-head">
-      <img :src="`/${project_name}/image/svg/hot.svg`" />
+      <img :src="compute_local_project_file_path('/image/svg/hot.svg')" />
       <div>{{ $t('list.hot_match')}}</div>
     </div>
      <!-- 列表容器 -->
@@ -31,7 +31,7 @@ import { MatchListCardFullVersionWapper as MatchListCard } from "src/base-pc/com
 import loadData from "src/base-pc/components/load-data/load-data.vue"
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 
-import { useMittEmit,MITT_TYPES, project_name } from "src/core/index.js";
+import { useMittEmit,MITT_TYPES, compute_local_project_file_path } from "src/core/index.js";
 export default {
   name: "HotMatchList",
   components: {
@@ -40,7 +40,7 @@ export default {
   },
   data() {
     return {
-      project_name,
+      compute_local_project_file_path,
       load_data_state:'data',
       match_list_card_key_arr:[]
     }

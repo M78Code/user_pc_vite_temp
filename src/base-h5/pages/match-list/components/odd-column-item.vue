@@ -438,7 +438,6 @@ const is_close = (odd_s) => {
 const item_click3 = lodash.debounce(() => {
   if (!odd_item.value.ov || odd_item.value.ov < 101000) return;   //对应没有赔率值或者欧赔小于101000
   let flag = get_odds_active(props.match.mhs, props.hl_hs, odd_item.value.os);
-  console.error('flag',flag)
   if (flag == 1 || flag == 4) {   //开盘和锁盘可以点击弹起来
     if (MenuData.get_menu_type() == 900 && $route.name == 'virtual_sports') { //虚拟体育走这里逻辑
       if (props.match.match_status) return

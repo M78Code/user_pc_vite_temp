@@ -32,4 +32,18 @@ const compute_css = (params = {}) => {
   return result;
 };
 
-export { compute_css };
+
+/**
+ * 非精灵图返回url 
+ * @param {*} key 
+ * @returns 
+ */              
+const  compute_img =(key)=>{
+
+  let obj = compute_css({key ,path:1})
+  return obj.url
+
+}
+
+
+export { compute_css ,compute_img };
