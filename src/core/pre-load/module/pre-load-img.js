@@ -1,10 +1,9 @@
+import { compute_local_project_file_path } from "src/core";
 const img_key_map = {
   xsxa :''
 };
 
-const arr=[
-  "yazhou-h5/image/list/m_list_jiaoqiu_icon.svg"
-]
+const arr=[ compute_local_project_file_path("/image/list/m_list_jiaoqiu_icon.svg")]
 /**
  * 预加载图片
  * @param []
