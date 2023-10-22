@@ -39,7 +39,6 @@ import { update_time, is_export, menu_type } from 'src/base-h5/mixin/menu.js';
 import { user_info } from "src/base-h5/mixin/userctr";
 import { get_sport_menu } from "./top-list";
 const router = useRouter();
-const route = useRoute();
 let menu_list = ref([]);//一级菜单list
 /**
  * 点击一级菜单
@@ -82,12 +81,15 @@ const show_dianjing = (item, index) => {
     if (MenuData.is_vr(item.mi)) return base_data.is_mi_300_open; // VRtob后台关闭隐藏
     return ![2, 3, 6, 7].includes(index);
 };
-
 watch(update_time, (v) => {
     const [menu_lv1] = get_sport_menu(MenuData.menu_list)
     menu_list.value = menu_lv1; //一级
 });
-
+/**
+ * 初始化数据
+ */
+const [menu_lv1] = get_sport_menu(MenuData.menu_list)
+set_menu_lv1(menu_lv1[0], 0, 'init')
 </script>
 <style scoped lang="scss">
 .main-wrap {
