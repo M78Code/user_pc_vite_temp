@@ -229,7 +229,6 @@
 </template>
 
 <script>
-// import { mapGetters } from "vuex"
 // import format from "src/project/yabo/mixins/match_details/index";
 import { MatchProcessFullVersionWapper } from "src/components/match-process/index.js";
 import BetCommonHelper from "src/core/bet/common-helper/index.js";
