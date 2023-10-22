@@ -87,7 +87,7 @@ const fetch_actimg = () => {
   if (get_banner_obj.value.type2 && Array.isArray(get_banner_obj.value.type2)) {
     let arr = []
     get_banner_obj.value.type2.forEach(item => {
-      arr.push({ ...item, imgUrl: get_file_path(item.imgUrl) })
+      arr.push({ ...item, imgUrl: get_server_file_path(item.imgUrl) })
     });
     carousel_src.value = arr
   }

@@ -30,7 +30,7 @@
           <div class="group-item">
             <div class="team-item" :class="{'font-bold': i < 3}" v-for="(item, i) in liat_data" :key="i" >
               <div class="col1">
-                <img v-if="i<3" class="img-Avatar" :src=" item.teamLogo ? get_file_path(item.teamLogo) : compute_img('league-avatar-dedault')" @error="league_icon_error" alt="">
+                <img v-if="i<3" class="img-Avatar" :src=" item.teamLogo ? get_server_file_path(item.teamLogo) : compute_img('league-avatar-dedault')" @error="league_icon_error" alt="">
                 <span v-else class="number" :class="`calculation_color${+i+ 1}`">{{ +i+ 1 }}</span>
               </div>
               <!-- 球队 -->
@@ -60,7 +60,7 @@
           <div class="group-item">
             <div class="team-item" v-for="(item, i) in liat_data" :key="i" :class="{ 'black-font':  i<3}">
               <div class="col1">
-                <img v-if="i<3" class="img-Avatar" :src=" item.playerLogo ? get_file_path(item.playerLogo) : compute_img('league-avatar-dedault')" @error="league_icon_error" alt="">
+                <img v-if="i<3" class="img-Avatar" :src=" item.playerLogo ? get_server_file_path(item.playerLogo) : compute_img('league-avatar-dedault')" @error="league_icon_error" alt="">
                 <span v-else class="number" :class="`calculation_color${+i+ 1}`">{{ +i+ 1 }}</span>
               </div>
               <!-- 球队 -->
@@ -92,7 +92,7 @@
           <div class="group-item">
             <div class="team-item" v-for="(item, i) in liat_data" :key="i" :class="{ 'black-font':  i<3}">
               <div class="col1">
-                <img v-if="i<3" class="img-Avatar" :src=" item.teamLogo ? get_file_path(item.teamLogo) : compute_img('league-avatar-dedault')"  @error="league_icon_error" alt="">
+                <img v-if="i<3" class="img-Avatar" :src=" item.teamLogo ? get_server_file_path(item.teamLogo) : compute_img('league-avatar-dedault')"  @error="league_icon_error" alt="">
                 <span v-else class="number" :class="`calculation_color${+i+ 1}`">{{ +i+ 1 }}</span>
               </div>
               <!-- 球队 -->

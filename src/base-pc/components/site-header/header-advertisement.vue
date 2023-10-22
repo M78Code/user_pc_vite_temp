@@ -202,7 +202,7 @@ function change(index) {
               sessionStorage.setItem("showActivityTime", new Date().getTime());
             }
             // 获取图片地址
-            data_ref.imgUrl = get_file_path(item.imgUrl);
+            data_ref.imgUrl = get_server_file_path(item.imgUrl);
             data_ref.hostUrl = item.hostUrl;
             data_ref.urlType = item.urlType;
             // 是否允许点击跳转 ayx_act 爱游戏  act1 乐鱼

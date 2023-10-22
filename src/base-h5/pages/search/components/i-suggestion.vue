@@ -50,7 +50,7 @@
       <div class="title">
         <!-- 联赛icon -->
         <img class="match_logo"
-          :src="big_item.matchList[0] ? get_file_path(big_item.matchList[0].lurl) : compute_img('match-cup')"
+          :src="big_item.matchList[0] ? get_server_file_path(big_item.matchList[0].lurl) : compute_img('match-cup')"
           @error="league_icon_error" />
         <!-- 搜索时，对应到的 文字 要高亮 -->
         <span v-html="red_color(big_item.leagueName)"></span>
