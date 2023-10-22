@@ -81,6 +81,7 @@ let menu_list = ref([]);
 let current_menu = ref({});
 // 是否初次渲染
 const is_first = ref(true)
+let show_favorite_list = ref('')
 const current_lv2 = ref(MenuData.current_lv_2_menu || {})//二级菜单选中
 //点击滚球下的全部
 function select_all_sub_menu_handle() {
@@ -185,13 +186,13 @@ function select_all_sub_menu_handle() {
   return MenuData.recombine_menu_bg(id, true)
 }
 // 获取主菜单列表  main_select_items 弹出的一级 菜单数据   main_menu_list_items 一级菜单数据
-watch(update_time, (v) => {
-  const [menu_lv1] = get_sport_menu(MenuData.menu_list)
-  menu_list.value = menu_lv1; //一级
-  current_menu.value = MenuData.menu_lv2; //2级
-  current_lv2.value = MenuData.current_lv_2_menu;//二级
-  set_menu_lv2(MenuData.current_lv_2_menu)
-});
+// watch(update_time, (v) => {
+//   const [menu_lv1] = get_sport_menu(MenuData.menu_list)
+//   menu_list.value = menu_lv1; //一级
+//   current_menu.value = MenuData.menu_lv2; //2级
+//   current_lv2.value = MenuData.current_lv_2_menu;//二级
+//   set_menu_lv2(MenuData.current_lv_2_menu)
+// });
 
 </script>
 <style  scoped lang="scss">
