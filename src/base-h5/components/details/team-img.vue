@@ -6,15 +6,38 @@
 <template>
   <div class="team-img" :class="size == 22? 'team-img-s': ''">
     <!-- 字母图标 -->
+    <!-- {{url}}{{fr}}{{csid}} -->
     <img class="img-style" v-img="([url, fr, csid])" :class="[size == 22 && `img-style-s`]" alt />
+          <!-- <div
+              :style="
+                compute_css({key:'pc-team-logo-image',position:[
+                    fr,
+                    url,
+                    csid,
+                  ]})       
+              "
+              :class="[size == 22 && `img-style-s`]"
+              class="img-style"
+            ></div> -->
+            <!-- []({
+                  position: [
+                    fr,
+                    lodash.get(match_info, 'frmhn[0]'),
+                    csid,
+                  ],
+                  theme: lodash.get(UserCtr,'theme'),
+                }) -->
   </div>
 </template>
 
 <script>
-
 export default {
   name: "team_img",
-
+  data(){
+    return {
+      compute_css
+    }
+  },
   props: {
     type: { // 0 主队  1 客队
       type: Number
