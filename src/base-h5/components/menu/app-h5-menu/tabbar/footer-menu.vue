@@ -317,6 +317,7 @@ const update_first_menu = () => {
  * @return {Undefined} Undefined
  */
 const menu_item_click = (item, i) => {
+  console.log(item, i, item.id)
   if (item.is_disabled) return;
   if (MenuData.is_kemp() && i == 0) return;
   MenuData.set_footer_sub_menu_id(item.id)
@@ -334,7 +335,7 @@ const menu_item_click = (item, i) => {
       sub_menu_l_show_slow.value = true;
     }, 50);
   }
-  //关注
+  //关注 ? 不是盘口教程吗？
   else if (item.id === 1) {
     if (
       !utils.judge_collectSwitch(GlobalAccessConfig.get_collectSwitch(), this)
@@ -357,6 +358,7 @@ const menu_item_click = (item, i) => {
     }
     show_favorite_list.value = is_follow;
     UserCtr.set_show_favorite_list(is_follow)
+    router.push({ name: "handicapTutorial" }); // 此处跳转至盘口教程
   }
   //注单
   else if (item.id === 2) {

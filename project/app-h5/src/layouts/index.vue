@@ -13,8 +13,13 @@
           <setMenu />
         </template>
       </MenuWapper> -->
-      <TopMenu />
-      <ScrollMenu />
+
+      <!-- 当路由为盘口教程时 不展示topMenu 和 scrollMenu -->
+      <template v-if="['matchList', 'sport_menu'].includes(route.name)">
+        <TopMenu />
+        <ScrollMenu />
+      </template>
+      
       <Tab />
       <router-view />
       <!-- <BetBoxWapper /> -->
