@@ -24,7 +24,7 @@
         </div>
       </span>
     </div>
-    <img src="/public/yazhou-h5/image/bet/bet_close.svg" v-if="[3, 6, 8].includes(+get_bet_status)" alt="">
+    <img :src="compute_local_project_file_path('/image/bet/bet_close.svg')" v-if="[3, 6, 8].includes(+get_bet_status)" alt="">
     <div class="row items-center yb-right" v-else>
         <!-- 账户余额 -->
         <p class="yb_fontsize16" @click.stop="get_balance">{{ format_money2(userData.balance) }}</p>
@@ -37,7 +37,7 @@
 <script setup>
 import lodash from "lodash"
 // import store from "src/store-redux/index.js";
-// import { UserCtr } from "src/core/index.js";
+import { compute_local_project_file_path } from "src/core/index.js";
 import { format_money2 } from 'src/core/format/module/format-money.js'
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { ref,computed,onUnmounted } from 'vue';
@@ -269,7 +269,7 @@ onUnmounted(() => {
 .refesh {
   width: 0.12rem;
   height: 0.12rem;
-  background: url("/public/yazhou-h5/image/bet/shuaxin.svg") no-repeat center / 100% 100%;
+  background: url( $SCSSPROJECTPATH+"/image/bet/shuaxin.svg") no-repeat center / 100% 100%;
   // background: var(--q-color-com-img-bg-58) no-repeat center / 100% 100%;
   margin-left: 0.05rem
 }
