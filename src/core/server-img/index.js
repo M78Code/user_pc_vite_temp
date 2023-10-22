@@ -5,7 +5,9 @@ import { UserCtr, useMittOn, MITT_TYPES } from "src/core/";
 
 /**
  * 计算精灵图和 其他主题图 的 css
- * 传对象  key: 键  position : 定位键 ， path : 1 真值代表返回path
+ * 传对象   key: 本地文件的键一般和服务器上一样，但是可以通过配置重定向
+ *         position :精灵图 定位键 ， 
+ *         path : 1 真值代表返回 {url} 
  * 定位键每个精灵图自己原定自己的 返回自己的 ，不建议 用假值 ：0 类似
  * @param {*} params
  * @returns

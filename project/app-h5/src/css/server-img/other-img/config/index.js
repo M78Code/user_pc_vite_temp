@@ -4,12 +4,12 @@
 export default {
   'h5-img-bet-record-close': {
     default: "img-bet-record-close",
-    local_dev: "/src/core/server-img/other-img/image/h5-img-bet-record-close-day.svg",
+ 
 
   },
   'h5-img-bet-record-close': {
     default: "h5-img-bet-record-close",
-    local_dev: "/src/core/server-img/other-img/image/h5-img-bet-record-close-day.svg",
+ 
 
   },
   'h5-go-back-icon': {

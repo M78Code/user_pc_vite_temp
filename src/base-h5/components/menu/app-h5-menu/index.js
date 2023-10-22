@@ -8,9 +8,11 @@ import Tab from "./tab/tab.vue";//普通tab
 import Tabbar from "./tabbar/footer-menu.vue";//普通tab
 import ScrollMenu from "./scroll-menu/scroll-menu.vue";//普通tab
 import TopMenu from "./top-menu/top-menu.vue";//普通tab
+import Swiper from "./swiper/swiper.vue";//普通tab
 export  {
     Tab,
     Tabbar,
     ScrollMenu,
-    TopMenu
+    TopMenu,
+    Swiper
 }
