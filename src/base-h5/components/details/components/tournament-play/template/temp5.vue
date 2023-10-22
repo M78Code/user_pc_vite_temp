@@ -215,6 +215,7 @@ export default defineComponent({
       utils,
       go_to_bet,
       get_bet_list,
+      LOCAL_PROJECT_FILE_PREFIX,
     }
   }
 })

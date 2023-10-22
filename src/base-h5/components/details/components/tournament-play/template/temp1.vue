@@ -357,6 +357,7 @@ export default defineComponent({
       menu_type,
       get_detail_data,
       is_match_result,
+      LOCAL_PROJECT_FILE_PREFIX,
       go_to_bet
     }
   }

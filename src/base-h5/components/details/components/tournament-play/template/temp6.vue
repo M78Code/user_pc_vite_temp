@@ -450,7 +450,8 @@ export default defineComponent({
       go_to_bet,
       change_show,
       check_score,
-      set_highlight_cls
+      set_highlight_cls,
+      LOCAL_PROJECT_FILE_PREFIX,
     }
   }
 })
