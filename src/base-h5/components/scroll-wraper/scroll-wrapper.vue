@@ -13,8 +13,8 @@
         simple: standard_edition == 1,
       }]"
       :style="{ 'min-height': `${menu_type == 100 ? list_wrap_height : match_list_wrapper_height}rem` }">
-      <template v-for="(match_mid, index) in MatchMeta.match_mids">
-        <div v-if="match_mid" :index="index" :key="match_mid" 
+      <template v-if="MatchMeta.match_mids.length > 0" >
+        <div v-for="(match_mid, index) in MatchMeta.match_mids" :index="index" :key="match_mid"
           :class="['s-w-item', { static: is_static_item, last: index == match_mids.length - 1 }]" 
           :style="{ transform: `translateY(${is_static_item ? 0 : get_match_top_by_mid(match_mid)}rem)`, zIndex: `${200 - index}` }">
           <!-- 调试用 -->
@@ -25,7 +25,7 @@
               <span>ms: {{ match_item?.ms }}</span>
             </span>
           </div>
-          <!-- 真是渲染信息 -->
+          <!-- 赛事渲染信息 -->
           <div class="s-w-i-inner">
             <slot :match_item="get_match_item(match_mid)" :mid="match_mid" :index="index"></slot>
           </div>
@@ -67,16 +67,9 @@ let scroll_frame_timer = null
 const match_mids = ref([])
 
 onMounted(() => {
-  // setTimeout(() => {
-  //   match_mids.value = MatchMeta.match_mids
-  // }, 3000)
   test.value = sessionStorage.getItem('wsl') == '9999';
   // 详情页以外的列表才设置最小高度
   if (is_detail.value) list_wrap_height.value = 8;
-})
-// 监听 数据仓库版本号改变
-watch(() => MatchDataBaseH5.data_version.version, () => {
-  // match_mids.value = MatchMeta.match_mids
 })
 
 const get_match_item = (mid) => {

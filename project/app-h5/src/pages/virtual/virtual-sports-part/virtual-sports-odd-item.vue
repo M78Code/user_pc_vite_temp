@@ -10,7 +10,7 @@
           {{ol_item.on}}
         </div>
         <div class="lock" v-if="match.mhs == 1">
-          <img :src="`/${project_name}/image/common/match-icon-lock.svg`" class="icon-lock">
+          <img :src="compute_local_project_file_path('image/common/match-icon-lock.svg')" class="icon-lock">
         </div>
         <div v-else
           class="odds-value"
@@ -30,7 +30,7 @@
 // import { mapGetters } from "vuex";
 // import odds_conversion from "src/base-h5/mixins/odds_conversion/odds_conversion.js"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
-import { project_name } from "src/core/";
+import { compute_local_project_file_path } from "src/core/";
 export default defineComponent({
   name: "virtual_sports_odd_item",
   // #TODO MIXINS

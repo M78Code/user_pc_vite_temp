@@ -1,5 +1,5 @@
 /**
- * @description 赛事收藏类
+ * @description 赛事折叠
  */
 
 import lodash from 'lodash'
@@ -42,7 +42,7 @@ class MatchFold {
     Object.assign(this.ball_seed_csid_fold_obj.value, {
       [`csid_${csid}`]: falg
     })
-    console.log(this.ball_seed_csid_fold_obj.value)
+    // console.log(this.ball_seed_csid_fold_obj.value)
   }
   /**
    * @description 联赛折叠
@@ -50,7 +50,7 @@ class MatchFold {
    */
   set_league_fold (tid) {
     // 赛事 mids
-    const match_mids = lodash.get(MatchMeta, 'match_mids', [])
+    const match_mids = lodash.get(MatchMeta, 'complete_mids', [])
     match_mids.forEach(mid => {
       const match = MatchDataBaseH5.get_quick_mid_obj(mid)
       if (!match || match.tid !== tid) return
@@ -66,7 +66,7 @@ class MatchFold {
   set_ball_seed_match_fold (csid) {
     // 赛事 mids
     const status = this.ball_seed_csid_fold_obj.value[`csid_${csid}`]
-    const match_mids = lodash.get(MatchMeta, 'match_mids', [])
+    const match_mids = lodash.get(MatchMeta, 'complete_mids', [])
     match_mids.forEach(mid => {
       const match = MatchDataBaseH5.get_quick_mid_obj(mid)
       if (!match || match.csid !== csid) return

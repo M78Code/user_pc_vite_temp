@@ -41,12 +41,10 @@
     </div>
     <!--标准版赔率容器  波胆 5分钟  玩法除外-->
     <template v-if="![18,19].includes(+lodash.get(current_tab_item, 'id'))">
-      <div class="standard-odd-l-w" v-touch-swipe.mouse.right.left="odd_wrapper_pan"
-        :class="{'status2':standard_odd_status == 1}"
-        v-if="!show_newer_edition && get_n_s_changed_loaded">
+      <div v-if="!show_newer_edition && get_n_s_changed_loaded" v-touch-swipe.mouse.right.left="odd_wrapper_pan"
+        :class="['standard-odd-l-w',{'status2':standard_odd_status == 1}]" >
         <!--标准版-->
-        <div class="standard-odd-list row" 
-             :class="{'f-child':standard_odd_status == 0,'r-child':standard_odd_status == 1}">
+        <div class="standard-odd-list row"  :class="{'f-child':standard_odd_status == 0,'r-child':standard_odd_status == 1}">
           <div class="odd-column-w" :key="hp_i_i+''+standard_odd_status" :class="{'boxing':match.csid == 12 } "
                v-for="(hp_item_obj,hp_i_i) in odd_hps_data">
             <div class="odd-wrap-min" :class="`hp-${get_ol_length(hp_item_obj,hp_i_i)}`"
@@ -163,9 +161,9 @@ import { i18n_t} from 'src/core/index.js'
 import oddColumnItem from "./odd-column-item.vue";
 import { img1, img2, img3, img4, Y0_img_white } from 'src/base-h5/core/utils/local-image'
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
-import { MenuData,compute_img
-  ,UserCtr} from "src/core/index.js"
+import { MenuData,compute_img ,UserCtr} from "src/core/index.js"
 import PageSourceData  from  "src/core/page-source/page-source.js";
+import { lang } from 'src/base-h5/mixin/userctr.js'
 
 const props = defineProps({
   // 赛事信息
@@ -206,7 +204,6 @@ const index_show_map = ref({});
 const screen_changing_timer = ref(0);
 const get_newer_standard_edition = ref(PageSourceData.get_newer_standard_edition())
 
-const get_lang = ref(store_state.get_lang)
 const get_bet_list = ref(store_state.get_bet_list)
 const get_standard_odd_status = ref(store_state.get_standard_odd_status)
 const get_n_s_changed_loaded = ref(true)
@@ -214,7 +211,6 @@ const get_secondary_unfold_map = ref(store_state.get_secondary_unfold_map)
 
 const unsubscribe = store.subscribe(() => {
   const new_state = store.getState()
-  get_lang.value = new_state.get_lang
   get_bet_list.value = new_state.get_bet_list
   get_standard_odd_status.value = new_state.get_standard_odd_status
   // TODO:
@@ -244,7 +240,7 @@ const minutes_of_the_Xth_goal = computed(() => {
   if (
     !(props.match.msc && Array.isArray(props.match.msc) && props.match.msc.length)
   ) {
-    const suffix = get_lang === "en" ? "st" : "";
+    const suffix = lang.value === "en" ? "st" : "";
     return 1 + suffix;
   }
 
@@ -257,7 +253,7 @@ const minutes_of_the_Xth_goal = computed(() => {
   const [home = 0, away = 0] = mscmap.get("S1");
   const score = +home + +away + 1;
   let suffix = "";
-  if (get_lang === "en") {
+  if (lang.value === "en") {
     if (score === 1) {
       suffix = "st";
     } else if (score === 2) {
