@@ -1,4 +1,4 @@
-import { get_file_path } from "src/core/file-path/file-path.js";
+import { get_server_file_path } from "src/core/file-path/file-path.js";
 const src_rdm = Date.now();
 const installer = (app) => {
   app.directive("img", {
@@ -96,7 +96,7 @@ const installer = (app) => {
     let img_url =
       /^http(s)?/.test(self_img) || /^\/\//.test(self_img)
         ? self_img
-        : get_file_path(self_img, el.getAttribute("data-csid"));
+        : get_server_file_path(self_img, el.getAttribute("data-csid"));
     if (img_url) {
       if (img_url.indexOf("?") == -1) {
         img_url = img_url + "?rdm=" + src_rdm;

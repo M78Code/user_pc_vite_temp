@@ -23,7 +23,7 @@
               <!-- 电竞类的tab图标 -->
               <img v-else-if="[100, 101, 102, 103].includes(+tab.field1)" :src="(`/${project_name}/image/home/hot_jx_esport_${tab.field1}.svg`)" alt="" />
               <!-- 体育类的图标 -->
-              <img v-else :src=" tab.field3 && get_file_path(tab.field3)" alt="">
+              <img v-else :src=" tab.field3 && get_server_file_path(tab.field3)" alt="">
              
             </template>
             <span class="menu-name">{{ tab.menuName }}</span>
@@ -58,7 +58,7 @@ import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import UserCtr from "src/core/user-config/user-ctr.js";;
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
-import { get_file_path } from "src/core/file-path/file-path.js";
+import { get_server_file_path } from "src/core/file-path/file-path.js";
 import lodash from 'lodash'
 import { utils, MenuData ,compute_css, project_name} from 'src/core/index.js';
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";

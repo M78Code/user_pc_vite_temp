@@ -21,7 +21,7 @@
             <div class="wrap" v-if="i < 3">
               <!-- 封面图片 -->
               <p class="img"
-                :style="{ background: `url('${get_file_path(item.thumbnails.split(';')[0]) || '/image/yabo/png/article_list_img.png'}') no-repeat left center` }">
+                :style="{ background: `url('${get_server_file_path(item.thumbnails.split(';')[0]) || '/image/yabo/png/article_list_img.png'}') no-repeat left center` }">
               </p>
 
 
@@ -63,7 +63,7 @@ import { component_symbol, need_register_props } from "../config/index.js"
 useRegistPropsHelper(component_symbol, need_register_props)
 import { api_analysis } from 'src/api/index'
 import { formatDate } from 'src/core/format/index.js'
-import { get_file_path } from 'src/core/file-path/file-path.js'
+import { get_server_file_path } from 'src/core/file-path/file-path.js'
 import { i18n_t } from "src/boot/i18n.js"
 // const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
 const props = defineProps(['mid'])
@@ -123,7 +123,7 @@ function getArticle() {
     if (_data&&_code == 200) {
       let _item = typeof (_data) == 'string' ? JSON.parse(_data) : lodash.cloneDeep(_data);
       // 替换图片域名
-      let domain = get_file_path('getArticle').replace('getArticle', '')
+      let domain = get_server_file_path('getArticle').replace('getArticle', '')
       if (_item.articleContent) {
         _item.articleContent = _item.articleContent.replace(/IMAGE_DOMAIN_YUNYING_PLACEHOLDER\//g, domain)
       }
@@ -229,7 +229,7 @@ function setArticleCache(id) {
     if (_code == 200 && !lodash.isEmpty(_data)) {
       let _item = typeof (_data) == 'string' ? JSON.parse(_data) : lodash.cloneDeep(_data);
       // 替换图片域名
-      let domain = get_file_path('getArticle').replace('getArticle', '')
+      let domain = get_server_file_path('getArticle').replace('getArticle', '')
       if (_item.articleContent) {
         _item.articleContent = _item.articleContent.replace(/IMAGE_DOMAIN_YUNYING_PLACEHOLDER\//g, domain)
       }

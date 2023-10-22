@@ -13,7 +13,7 @@
         <span v-else-if="main.sportId == 100" style="--num:42"></span>
         <span v-else-if="main.sportId == 103" style="--num:40"></span>
         <span v-else-if="main.sportId == 102" style="--num:41"></span>
-        <img :src="get_file_path(main.tournamentPic,main.sportId)" @error="handle_img_load_error" v-else>
+        <img :src="get_server_file_path(main.tournamentPic,main.sportId)" @error="handle_img_load_error" v-else>
         <div class="beif_src" :style="compute_css('match-cup')"  alt=""></div>
       
       </p>

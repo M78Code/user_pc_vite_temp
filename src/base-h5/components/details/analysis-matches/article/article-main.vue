@@ -43,7 +43,7 @@ import { onMounted, onUnmounted, watch, ref } from "vue";
 import { useRoute } from 'vue-router'
 import lodash from 'lodash'
 import UserCtr from "src/core/user-config/user-ctr.js";
-import { get_file_path } from "src/core/file-path/file-path.js"
+import { get_server_file_path } from "src/core/file-path/file-path.js"
 import { utils } from "src/core/index.js"
 
   // 弹框是否显示
@@ -129,7 +129,7 @@ const get_article = (matchId) => {
       }
       if (res.code == 200 && res.data) {
         // 替换图片域名
-        let domain = get_file_path('getArticle').replace('getArticle','')
+        let domain = get_server_file_path('getArticle').replace('getArticle','')
         if(res.data.articleContent){
           res.data.articleContent = res.data.articleContent.replace(/IMAGE_DOMAIN_YUNYING_PLACEHOLDER/g,domain)
         }
@@ -176,7 +176,7 @@ const maylike_click = (index) => {
       }
       if (res.code == 200 && res.data) {
         // 替换图片域名
-        let domain = get_file_path('getArticle').replace('getArticle','')
+        let domain = get_server_file_path('getArticle').replace('getArticle','')
         if(res.data.articleContent){
           res.data.articleContent = res.data.articleContent.replace(/IMAGE_DOMAIN_YUNYING_PLACEHOLDER/g,domain)
         }

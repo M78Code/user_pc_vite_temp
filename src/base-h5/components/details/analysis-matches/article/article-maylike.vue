@@ -23,7 +23,7 @@
 
 <script setup>
   import { formete_date  } from "src/core/index.js";
-  import { get_file_path } from "src/core/file-path/file-path.js";
+  import { get_server_file_path } from "src/core/file-path/file-path.js";
 
   const props = defineProps({
     // 接口响应数据
@@ -52,7 +52,7 @@
    */
   const img_src= (val) => {
     let src = (val || '').split(';')[0]
-    return get_file_path(src)
+    return get_server_file_path(src)
   }
   const handle_img_load_error= (e) => {
     e.target.hidden = true

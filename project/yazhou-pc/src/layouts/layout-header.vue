@@ -31,7 +31,7 @@ import { SessionStorage, utils,SearchPCClass } from 'src/core/index.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
 import globalAccessConfig from "src/core/access-config/access-config.js"
 import { i18n_t } from "src/boot/i18n.js"
-import { get_file_path } from "src/core/file-path/file-path.js"
+import { get_server_file_path } from "src/core/file-path/file-path.js"
 import { api_activity, api_account } from "src/api/index";
 import { useMittOn, MITT_TYPES } from "src/core/mitt/"
 
@@ -183,7 +183,7 @@ function special_page() {
         data.forEach(item => {
           if (item.tType && item.tType == 7) {
             // 获取图片地址
-            site_header_data.img_url = get_file_path(item.imgUrl);
+            site_header_data.img_url = get_server_file_path(item.imgUrl);
             site_header_data.host_url = item.hostUrl;
             site_header_data.url_type = item.urlType;
           }
@@ -235,7 +235,7 @@ function activity_dialog() {
               SessionStorage.set('showActivityTime', new Date().getTime())
             }
             // 获取图片地址
-            site_header_data.img_url = get_file_path(item.imgUrl);
+            site_header_data.img_url = get_server_file_path(item.imgUrl);
             site_header_data.host_url = item.hostUrl;
             site_header_data.url_type = item.urlType;
             // 是否允许点击跳转 ayx_act 爱游戏  act1 乐鱼
@@ -333,7 +333,7 @@ function init_site_header(type = null) {
     if (imgUrl) {
       imgUrl = imgUrl.pcUrl;
     }
-    imgUrl = get_file_path(imgUrl);
+    imgUrl = get_server_file_path(imgUrl);
     // 活动入口的图片，如果接口未返回就用默认图片
     tab.img_src = imgUrl || gift_package;
     nav_list.push(tab);

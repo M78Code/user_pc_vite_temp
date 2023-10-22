@@ -23,10 +23,10 @@ const lvs_icon_theme01 = `/${project_name}/image/common/zhibo-l.png`
 const lvs_icon_theme02 = `/${project_name}/image/common/zhibo-before.svg`
 const animationUrl_icon_theme01 = `/${project_name}/image/common/donghua-zhichi.svg`
 const animationUrl_icon_theme02 = `/${project_name}/image/common/donghua-zhichi.svg`
-const muUrl_theme01 = `/${project_name}/image/list/video_play-button-play.svg`
-const muUrl_theme01_y0 = `/${project_name}/image/list/video_play-button-play_y0.svg`
-const muUrl_theme02 = `/${project_name}/image/list/video_play-button-play-theme02.svg`
-const muUrl_theme02_y0 = `/${project_name}/image/list/video_play-button-play_y0.svg`
+const muUrl_theme01 = `${project_name}/image/list/video_play-button-play.svg`
+const muUrl_theme01_y0 = `${project_name}/image/list/video_play-button-play_y0.svg`
+const muUrl_theme02 = `${project_name}/image/list/video_play-button-play-theme02.svg`
+const muUrl_theme02_y0 = `${project_name}/image/list/video_play-button-play_y0.svg`
 
 const image_panda_placeholder = "/public/panda/image/panda_placeholder.jpg"
 // 无联赛logo图标

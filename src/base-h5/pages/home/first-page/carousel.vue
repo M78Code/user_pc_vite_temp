@@ -139,7 +139,7 @@ import CountingDownSecond from 'src/base-h5/components/common/counting-down.vue'
 // 列表数据和对象结合操作类-实现快速检索,修改等功能
 import ListMap from 'src/core/match-list-h5/match-class/list-map.js';
 import { ref, watch, onUnmounted } from "vue";
-import { SessionStorage, LocalStorage, useMittOn, useMittEmit, ServerTime, MITT_TYPES, get_file_path, UserCtr, format_total_score, format_time_zone } from 'src/core/'
+import { SessionStorage, LocalStorage, useMittOn, useMittEmit, ServerTime, MITT_TYPES, get_server_file_path, UserCtr, format_total_score, format_time_zone } from 'src/core/'
 import { useRoute, useRouter } from "vue-router";
 import matchListClass from 'src/core/match-list-h5/match-class/match-list.js'
 import { lang } from "src/base-h5/mixin/userctr";
@@ -298,7 +298,7 @@ const banner_img_updata = (new_) => {
     if (!new_ || !new_.length) return;
     new_ = lodash.cloneDeep(new_);
     new_.forEach((item) => {
-        item.imgUrl = get_file_path(item.imgUrl);
+        item.imgUrl = get_server_file_path(item.imgUrl);
     });
     if (carousel_data.value) {
         let arr = lodash.cloneDeep(lodash.get(carousel_data.value, "list"));
@@ -325,7 +325,7 @@ const banner_img_updata = (new_) => {
 const get_banner_url = () => {
     let url = UserCtr.get_banner_url_first_page();
     if (url) {
-        banner_bg.value = get_file_path(url);
+        banner_bg.value = get_server_file_path(url);
     } else {
         // ${("y0") ? "y0_" : ""
         banner_bg.value = `/${project_name}/image/png/home_carousel_bg_${lang.value}.png`;

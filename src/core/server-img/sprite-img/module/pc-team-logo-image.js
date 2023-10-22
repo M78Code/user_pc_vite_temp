@@ -3,7 +3,7 @@
 // 
 import server_resource from "app/job/output/assets/index.json";
 // const server_resource = {}
-import { get_file_path } from "src/core/file-path/file-path.js";
+import { get_server_file_path } from "src/core/file-path/file-path.js";
 import lodash from "lodash";
 const { CURRENT_ENV } = window.BUILDIN_CONFIG;
 const config = {
@@ -64,7 +64,7 @@ function compute_css({ position, theme }) {
    //如果有服务器图片，使用cdn图片
   if(position[0]){
     return {
-      "background-image": `url(${get_file_path(position[0])})`,
+      "background-image": `url(${get_server_file_path(position[0])})`,
       "background-position": "0 0",
       "background-size": "100%",
      " background-repeat":"no-repeat"
