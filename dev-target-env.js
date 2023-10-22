@@ -25,11 +25,11 @@ let  DEV_TARGET_VERSION = ''
 // 打包 亚洲版 PC（新版)   试玩环境  
 // DEV_TARGET_VERSION = "project_4-652ccfacfeffd80f0fcda107-1697770590787-shiwan";
 // 打包 亚洲版 PC（新版)   生产环境
-DEV_TARGET_VERSION = "project_4-652ccfacfeffd80f0fcda107-1697972059806-online"
+// DEV_TARGET_VERSION = "project_4-652ccfacfeffd80f0fcda107-1697972059806-online"
 
 //----------------------------------分割线  复刻版-H5-KYAPP  app-h5  5 -------------------------------------------
 // 打包 亚洲版 PC（新版)   测试环境  
-// DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1697977803616-test";
+DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1697985660460-test";
 // 打包 亚洲版 PC（新版)   试玩环境  
 // DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1697889603593-shiwan";
 // 打包 亚洲版 PC（新版)   生产环境

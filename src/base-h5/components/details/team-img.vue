@@ -7,18 +7,12 @@
   <div class="team-img" :class="size == 22? 'team-img-s': ''">
     <!-- 字母图标 -->
     <!-- {{url}}{{fr}}{{csid}} -->
-    <img class="img-style" v-img="([url, fr, csid])" :class="[size == 22 && `img-style-s`]" alt />
-          <!-- <div
-              :style="
-                compute_css({key:'pc-team-logo-image',position:[
-                    fr,
-                    url,
-                    csid,
-                  ]})       
-              "
+    <!-- <img class="img-style" v-img="([url, fr, csid])" :class="[size == 22 && `img-style-s`]" alt /> -->
+          <div
+              :style="compute_css_obj({key:'pc-team-logo-image',position:['',fr, csid, ]})"  
               :class="[size == 22 && `img-style-s`]"
               class="img-style"
-            ></div> -->
+            ></div>
             <!-- []({
                   position: [
                     fr,
@@ -31,11 +25,12 @@
 </template>
 
 <script>
+import { compute_css_obj } from "src/core/index";
 export default {
   name: "team_img",
   data(){
     return {
-      compute_css
+      compute_css_obj
     }
   },
   props: {
