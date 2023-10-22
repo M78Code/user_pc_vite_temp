@@ -27,7 +27,7 @@
               item.icon.slice(0, -4),
               menu_item_img(item),
               lodash.get(user_info.value, 'favoriteButton') ? 'favoriteButton' : '',
-            ]" :style="compute_css('foot-menu-icon', 0)"></span>
+            ]" :style="compute_css({key:'foot-menu-icon'})"></span>
           </div>
           <div class="menu-item-title" :class="{
             'theme02-focus':
@@ -41,7 +41,7 @@
               {{ item.title1 }}
             </span>
           </div>
-          <div v-if="item.id == 0" class="play-w-change-icon" :style="compute_css('menu-set-switch')"></div>
+          <div v-if="item.id == 0" class="play-w-change-icon" :style="compute_css({key:'menu-set-switch'})"></div>
         </div>
       </div>
     </div>

@@ -47,7 +47,7 @@
                 sort_type == 2 ? $t("footer_menu.time2") : $t("footer_menu.hot2")
               }}
             </div>
-            <div class="op-icon" :style="compute_css('menu-set-switch')"></div>
+            <div class="op-icon" :style="compute_css({key:'menu-set-switch'})"></div>
             <div class="op-item">
               {{
                 sort_type == 2 ? $t("footer_menu.hot2") : $t("footer_menu.time2")
@@ -67,7 +67,7 @@
                 : $t("setting_menu.odd_hong_kong2")
               }}
             </div>
-            <div class="op-icon" :style="compute_css('menu-set-switch')"></div>
+            <div class="op-icon" :style="compute_css({key:'menu-set-switch'})"></div>
             <div class="op-item">
               {{
                 cur_odd == "EU"
@@ -89,7 +89,7 @@
                 : $t("setting_menu.odd_optimal2")
               }}
             </div>
-            <div class="op-icon" :style="compute_css('menu-set-switch')"></div>
+            <div class="op-icon" :style="compute_css({key:'menu-set-switch'})"></div>
             <div class="op-item">
               {{
                 bet_is_accept
@@ -112,7 +112,7 @@
                 : $t("setting_menu.concise")
               }}
             </div>
-            <div class="op-icon" :style="compute_css('menu-set-switch')"></div>
+            <div class="op-icon" :style="compute_css({key:'menu-set-switch'})"></div>
             <div class="op-item">
               {{
                 standard_edition == 2
