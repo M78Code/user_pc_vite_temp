@@ -106,7 +106,6 @@ class MatchMeta {
    * @param { mid } 二级菜单
    */
   get_origin_match_by_mids(mids) {
-    console.log(55555555555555)
     // 显示空数据页面
     const length = lodash.get(mids, 'length', 0)
     if (length < 1) return useMittEmit(MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, true);
@@ -129,21 +128,6 @@ class MatchMeta {
     
     // 获取赛事收藏状态 该接口还没发到试玩
     // await MatchCollect.get_collect_matche_data()
-  }
-
-  /**
-   * @description 计算所需渲染数据
-   */
-  compute_page_render_list () {
-    // 计算当前页所需渲染数据
-    const end_index = VirtualList.compute_page_render_list_end_index(this.complete_matchs)
-    const target_index = end_index > 10 ? end_index : this.complete_mids.length
-    const target_list = this.complete_matchs.slice(0, target_index)
-    // 页面渲染的mids
-    this.match_mids = this.complete_mids.slice(0, target_index)
-
-    // 向仓库提交数据
-    this.handle_submit_warehouse(target_list)
   }
 
   /**
@@ -257,7 +241,7 @@ class MatchMeta {
    */
   get_match_mids (list) {
     const length = lodash.get(list, 'length', 0)
-    if (length < 1) return []
+    if (length < 1) return useMittEmit(MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, true);
     const match_mids_list = list.map(t => {
       return t.mid
     })
@@ -345,8 +329,8 @@ class MatchMeta {
     const menu_lv_v2 = lodash.get(MenuData.current_lv_2_menu, 'mi')
     const euid = lodash.get(BaseData.mi_info_map, `mi_${menu_lv_v2}.h5_euid`, '40602')
     const res = await api_common.post_match_full_list({
-      "cuid": UserCtr.get_cuid(),
       euid,
+      "cuid": UserCtr.get_cuid(),
       "type": 100,
       "sort": PageSourceData.sort_type,
       "device": ['', 'v2_h5', 'v2_h5_st'][UserCtr.standard_edition]
@@ -430,7 +414,7 @@ class MatchMeta {
     this.complete_matchs = match_list.filter((t) => t.mid)
     
     // 计算所需渲染数据
-    this.compute_page_render_list(mids)
+    this.compute_page_render_list()
 
     // useMittEmit(MITT_TYPES.EMIT_MENU_ANIMATION);
     // 空数据页面重置
@@ -438,10 +422,55 @@ class MatchMeta {
   }
 
   /**
+   * @description 计算所需渲染数据
+   */
+  compute_page_render_list () {
+  
+    // 计算当前页所需渲染数据
+    const end_index = VirtualList.compute_page_render_list_end_index(this.complete_matchs)
+    const target_index = end_index > 10 ? end_index : this.complete_mids.length
+    const target_list = this.complete_matchs.slice(0, target_index)
+    this.match_mids = this.complete_mids.slice(0, target_index)
+    // 向仓库提交数据
+    this.handle_submit_warehouse(target_list)
+  }
+
+  /**
+   * @description 获取赛事赔率
+   */
+  async get_match_base_hps_by_mids () {
+    const match_mids = this.match_mids.join(',')
+    // 冠军不需要调用
+    if (MenuData.is_export()) return
+    // 竞足409 不需要euid
+    const params = {
+      mids: match_mids,
+      cuid: UserCtr.get_uid(),
+      sort: PageSourceData.sort_type,
+      euid: MenuData.is_jinzu() ? "" : lodash.get(MenuData, 'current_lv_2_menu.mi'),
+      device: ['', 'v2_h5', 'v2_h5_st'][UserCtr.standard_edition],
+    };
+    let res = ''
+    // 赛果
+    if (MenuData.is_export()) {
+      res = await api_common.get_esports_match_by_mids(params)
+    } else {
+      res = await api_common.get_match_base_info_by_mids(params)
+    }
+    if (!res) return
+    const { code, data } = res
+    if (+code !== 200) return
+    const list = MatchPage.get_obj(data)
+    // 设置仓库渲染数据
+    this.handle_update_match_info(list)
+  }
+
+  /**
    * @description 更新对应赛事
    * @param { list } 赛事数据 
    */
   handle_update_match_info(list) {
+    // 合并前后两次赛事数据
     list = lodash.map(list, t => {
       const match = MatchDataBaseH5.get_quick_mid_obj(t.mid)
       // 覆写次要玩法折叠参数
@@ -451,7 +480,7 @@ class MatchMeta {
     // 设置仓库渲染数据
     MatchDataBaseH5.set_list(list)
     // 计算卡片高度, 需要在赔率接口之前调用， 避免卡片抖动
-    MatchListCardClass.run_process_when_need_recompute_container_list_step_two_match_list_wrapper_height()
+    // MatchListCardClass.run_process_when_need_recompute_container_list_step_two_match_list_wrapper_height()
   }
 
   /**
@@ -463,9 +492,11 @@ class MatchMeta {
     // 设置仓库渲染数据
     MatchDataBaseH5.set_list(list)
     // 计算卡片高度, 需要在赔率接口之前调用， 避免卡片抖动
-    MatchListCardClass.run_process_when_need_recompute_container_list_step_two_match_list_wrapper_height()
+    // MatchListCardClass.run_process_when_need_recompute_container_list_step_two_match_list_wrapper_height()
     // 订阅赛事，获取赛事赔率
-    MatchPage.subscription()
+    // MatchPage.subscription()
+    // 获取赛事赔率
+    this.get_match_base_hps_by_mids()
   }
 }
 
