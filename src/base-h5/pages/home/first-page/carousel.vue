@@ -143,7 +143,7 @@ import { SessionStorage, LocalStorage, useMittOn, useMittEmit, ServerTime, MITT_
 import { useRoute, useRouter } from "vue-router";
 import matchListClass from 'src/core/match-list-h5/match-class/match-list.js'
 import { lang } from "src/base-h5/mixin/userctr";
-import { project_name } from "src/core";
+import { LOCAL_PROJECT_FILE_PREFIX } from "src/core";
 
 // 路由
 const route = useRoute();

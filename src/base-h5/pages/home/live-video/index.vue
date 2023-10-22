@@ -33,7 +33,7 @@
               <!-- 联赛icon -->
               <img class="match_logo" v-if="index != 0" :src="item.field2 && get_server_file_path(item.field2)"
                 @error="league_icon_error" />
-              <!--<img class="match_logo" v-else  :src="`/${project_name}image/svg/home/all.svg`" alt="">-->
+              <!--<img class="match_logo" v-else  :src="`${LOCAL_PROJECT_FILE_PREFIX}image/svg/home/all.svg`" alt="">-->
               <i v-else class="match_logo"></i>
               <span class="label">{{ item.name }}</span>
             </div>
@@ -47,7 +47,7 @@
               <div class="video_list_left"
                 :style="{ backgroundImage: 'url(' + (item.mgif ? item.mgif : `${LOCAL_PROJECT_FILE_PREFIX}/image/png/live_loading.png`) + ')' }">
                 <div class="player">
-                  <img :src="`/${project_name}image/svg/home/play.svg`" alt="">
+                  <img :src="`${LOCAL_PROJECT_FILE_PREFIX}image/svg/home/play.svg`" alt="">
                   <span>{{ $filters.money_filter(item.plnum) }}</span>
                 </div>
 
@@ -109,7 +109,7 @@ import { format_total_score } from "src/core/format/index.js"
 import matchListClass from 'src/core/match-list-h5/match-class/match-list.js'
 import GlobalAccessConfig from "src/core/access-config/access-config.js"
 import { useRouter } from "vue-router";
-import { project_name } from "src/core";
+import { project_name ,LOCAL_PROJECT_FILE_PREFIX} from "src/core";
 const router = useRouter()
 const scrollBox = ref(null) //dom
 let mid_refs = {} //dom map

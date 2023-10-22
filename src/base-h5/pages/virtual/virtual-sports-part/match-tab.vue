@@ -50,7 +50,11 @@ export default defineComponent({
     is_basket_ball_next_no:Number,
     before_match_tab_trend:Number,
   },
-
+  data() {
+    return {
+      LOCAL_PROJECT_FILE_PREFIX
+    }
+  },
   setup(props, evnet) {
     const data = reactive({
       // 事件集合
