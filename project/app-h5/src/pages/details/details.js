@@ -982,6 +982,7 @@ watch(() => MatchDataWarehouseInstance.data_version.version, () => {
     on_listeners,
     off_listeners,
     clear_timer,
+    LOCAL_PROJECT_FILE_PREFIX,
   };
 };
 

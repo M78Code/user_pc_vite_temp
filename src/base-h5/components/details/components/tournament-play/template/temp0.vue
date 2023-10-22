@@ -186,7 +186,7 @@ import odds_new from "src/base-h5/components/details/components/tournament-play/
 import lodash from "lodash";
 import store from "src/store-redux/index.js";
 // import odd_convert from "src/base-h5/mixins/odds_conversion/odds_conversion.js";
-import {utils,LOCAL_PROJECT_FILE_PREFIX ,LOCAL_PROJECT_FILE_PREFIX } from 'src/core/index.js';
+import {utils,LOCAL_PROJECT_FILE_PREFIX } from 'src/core/index.js';
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, ref } from "vue";
 import { useRoute } from "vue-router"
 import { i18n_t } from "src/boot/i18n.js";
@@ -311,7 +311,7 @@ export default defineComponent({
       go_to_bet,
       change_show,
       hide_show_more_layout,
-      LOCAL_PROJECT_FILE_PREFIX
+      LOCAL_PROJECT_FILE_PREFIX,
     }
   }
 })

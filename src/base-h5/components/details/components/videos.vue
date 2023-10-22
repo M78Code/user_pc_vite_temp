@@ -296,7 +296,7 @@ import uid from "src/core/uuid/index.js"
 import lodash from "lodash";
 
 import { useRouter, useRoute } from "vue-router";
-import { useMittOn, useMittEmit, MITT_TYPES, MenuData, MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouse, MatchDetailCalss } from  "src/core/index.js"
+import { useMittOn, useMittEmit, MITT_TYPES, MenuData, MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouse, MatchDetailCalss,LOCAL_PROJECT_FILE_PREFIX } from  "src/core/index.js"
 import { format_total_score } from "src/core/format/index.js"
 import { video_info } from "./videos.js";
 import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch,ref } from "vue";
@@ -846,6 +846,7 @@ export default defineComponent({
     // ]),
 
     return {compute_img,
+      LOCAL_PROJECT_FILE_PREFIX,
       ...toRefs(data)
     }
 
