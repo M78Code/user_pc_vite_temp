@@ -314,7 +314,6 @@ const handle_match_render_data = () => {
   // 清除赛事折叠信息
   MatchDataBaseH5.init()
   MatchFold.clear_fold_info()
-
   // 冠军拉取旧接口； 待 元数据提供 冠军赛事后 再删除
   if (MenuData.is_kemp()) return MatchMeta.get_champion_match()
   // 赛果不走元数据， 直接拉取接口

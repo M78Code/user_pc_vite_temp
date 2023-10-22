@@ -12,9 +12,9 @@
     favorite_un_start_title: favorite_un_start_title(i, match_of_list.ms),
   }'>
   <template v-if="match" >
-    <div style="display: none;">{{ MatchDataBaseH5.data_version.version }}</div>
+    <!-- <div style="display: none;">{{ MatchDataBaseH5.data_version.version }}</div> -->
     <!--体育类别 -- 标题  menuType 1:滚球 2:即将开赛 3:今日 4:早盘 11:串关 -->
-    <div v-if="get_sport_show" class="sport-title match-indent"
+    <div v-if="get_sport_show"
       :class="['sport-title match-indent', { home_hot_page: is_hot, is_gunqiu: [1].includes(+menu_type), first: i == 0, }]"
       @click="handle_ball_seed_fold">
       <!-- 首页热门 -->
@@ -676,6 +676,7 @@ const match_collect_state = computed(() => {
  */
 const handle_ball_seed_fold = () => {
   MatchFold.set_ball_seed_match_fold(props.match_of_list.csid)
+  MatchMeta.compute_page_render_list()
 }
 /**
  * @description 联赛折叠

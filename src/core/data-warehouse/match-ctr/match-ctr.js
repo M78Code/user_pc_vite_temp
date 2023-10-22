@@ -671,6 +671,7 @@ init(){
       this.list_serialized_match_obj(list);
       // 列表数据同步到快捷操作对象中
       this._list_to_obj_fun(list,this.list_to_obj)
+      console.log(this.list_to_obj)
       // ws命令赛事订阅
       this.ws_ctr.scmd_c8();
       this.upd_data_version();
