@@ -72,7 +72,7 @@ const merge_and_output_final_config =  async (scg) => {
 const get_config_info = async () => {
   // API 对外文档 的 单个 版本的详情 获取地址
   try {
-    let res = await axios.get(SERVER_CONFIG_FILE_PATH);
+    let res = await axios.get(SERVER_CONFIG_FILE_PATH,{timeout:4000});
     let { data } = res;
     if (data) {
       await  merge_and_output_final_config(data);

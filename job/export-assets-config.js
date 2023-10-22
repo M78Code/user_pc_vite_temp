@@ -46,7 +46,7 @@ for(let theme_key in  final_assets_config){
       try {
         const filename = url.split("/").pop();//文件名称
         const local_file_path = img_folder + filename; //文件下载到本地的路径
-        const response = await axios.get(url, { responseType: "stream" });
+        const response = await axios.get(url, { responseType: "stream",timeout:3000 });
         response.data.pipe(fs.createWriteStream(local_file_path));
      
           
