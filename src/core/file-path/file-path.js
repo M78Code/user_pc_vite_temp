@@ -203,7 +203,7 @@ let image_is_exist = function (url, img) {
 
 const compute_local_project_file_path=(str='')=>{
   str =''+str
-  if(str&&str.startsWith('/')){
+  if(str.startsWith('/')){
     str= str.substring(1)
   }
   let str2 =''
@@ -230,7 +230,7 @@ const compute_local_project_file_path=(str='')=>{
  */
 const compute_local_common_file_path=(str='')=>{
   str =''+str
-  if(str&&str.startsWith('/')){
+  if(str.startsWith('/')){
     str= str.substring(1)
   }
   let str2 =''
