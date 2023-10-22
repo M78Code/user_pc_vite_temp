@@ -101,7 +101,6 @@ import { IconWapper } from 'src/components/icon'
 
 const page_source = PageSourceData.page_source;
 const is_search_page = page_source.includes('search');
-let state = store.getState();
 // const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
 const props = defineProps({
   collect_count: {

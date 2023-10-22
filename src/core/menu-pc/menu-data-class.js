@@ -108,6 +108,7 @@ class MenuData {
 
   // 设置 菜单的版本变化
   set_menu_data_version(){
+    console.log('12312312312312312');
     useMittEmit(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA)
     this.menu_data_version.value = Date.now()
   }

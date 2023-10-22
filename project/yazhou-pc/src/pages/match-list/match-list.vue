@@ -142,7 +142,7 @@ import {MatchDataWarehouse_PC_List_Common as MatchListData ,GlobalAccessConfig} 
 
 import "./match_list.scss";
 
-const { mounted_fn, load_data_state, show_refresh_mask, collect_count, is_show_hot } = useMatchListMx();
+const { mounted_fn, load_data_state, show_refresh_mask, collect_count, is_show_hot, on_refresh } = useMatchListMx();
 const { page_source } = PageSourceData;
 export default {
   components: {
@@ -175,6 +175,7 @@ export default {
       is_show_hot,
       page_source,
       GlobalAccessConfig,
+      on_refresh
     };
   },
   data() {
@@ -197,7 +198,7 @@ export default {
   methods: {
     MatchListCardDataClass_match_list_card_key_arr() {
       this.match_list_card_key_arr= MatchListCardDataClass.match_list_card_key_arr
-    }
+    },
   },
 };
 // 赛事列表筛选：滚球-球种、早盘-日期

@@ -41,8 +41,37 @@
 </template>
 
 <script setup>
-import { compute_local_project_file_path } from 'src/core/index.js'
-import lodash from 'lodash';
+import { ref, watch } from 'vue';
+import lodash from 'lodash'
+
+import { MatchDataWarehouse_PC_List_Common as MatchListData, project_name } from "src/core/index.js";
+import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
+import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
+
+import { MatchBasisInfo2FullVersionWapper as BasisInfo2 } from 'src/base-pc/components/match-list/match-basis-info/template-2/index.js'
+import { MatchProcessFullVersionWapper as MatchProcess } from 'src/components/match-process/index.js';
+import { MatchHandicapFullVersionWapper as MatchHandicap } from 'src/base-pc/components/match-list/match-handicap/index.js'
+import MatchMedia from 'src/base-pc/components/match-list/match-media/index.vue'
+
+const props = defineProps({
+  mid: {
+    type: [String, Number],
+    default: null,
+  },
+  is_show_more: {
+    type: Boolean,
+    default: () => false
+  }
+})
+
+let match_style_obj = MatchListCardDataClass.all_card_obj[props.mid+'_']
+const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`].width_config
+let match = MatchListData.list_to_obj.mid_obj[props.mid+'_'];
+const is_mounted = ref(true);
+
+watch(() => MatchListData.data_version.version, (new_value, old_value) => {
+  match = MatchListData.list_to_obj.mid_obj[props.mid+'_'];
+})
 
 </script>
 

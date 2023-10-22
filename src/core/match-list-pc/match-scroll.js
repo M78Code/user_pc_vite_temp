@@ -33,6 +33,7 @@ class MatchListScrollClass {
   set_show_mids(mids){
     let old_mids = this.show_mids.join(',')
     this.show_mids = mids
+    console.log('mids_arrmids_arr', mids);
     if(old_mids != mids.join(',')){
       show_mids_change()
     }

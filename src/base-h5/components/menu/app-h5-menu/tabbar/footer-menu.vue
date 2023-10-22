@@ -6,7 +6,7 @@
     <!-- 底部菜单资源配置图片 -->
     <div v-if="isshow_bottom_banner" class="bottom-banner">
       <img :src="calc_resources_obj.img_src" alt="" class="banner" @click="jump" />
-      <img src="/yazhou-h5/image/svg/close9.svg" alt="" class="close" @click.self="isshow_bottom_banner = false" />
+      <img :src="compute_local_project_file_path('/image/svg/close9.svg')" alt="" class="close" @click.self="isshow_bottom_banner = false" />
     </div>
     <div class="floating-menu">
       <div class="footer-menu-item" @click="menu_item_click(item, k)" v-for="(item, k) of footer_menulist" :key="k"
@@ -82,7 +82,7 @@ import { ref, computed, onBeforeUnmount, onMounted, watch } from "vue";
 import lodash from "lodash";
 import { useRoute, useRouter } from "vue-router";
 import store from "src/store-redux/index.js";
-import { UserCtr, i18n_t, compute_css, useMittOn, useMittEmit, MITT_TYPES, MenuData } from "src/core/index.js";
+import { UserCtr, i18n_t, compute_css, useMittOn, useMittEmit, MITT_TYPES, MenuData,compute_local_project_file_path } from "src/core/index.js";
 import { lang, show_favorite_list, theme, user_info, resources_obj } from "src/base-h5/mixin/userctr";
 const { matchReducer } = store.getState();
 const { menu_type, update_time, get_sport_all_selected } = MenuData;

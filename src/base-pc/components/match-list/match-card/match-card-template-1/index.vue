@@ -7,11 +7,11 @@
     :style="`height:${lodash.get(match_style_obj, `total_height`)}px !important;width:${LayOutMain_pc.layout_content_width - 15}px  !important;`"
   >
   <div v-show="false">{{ MatchListCardDataClass.list_version }}</div>
-    <!-- <component
+    <component
       :is="`MatchTpl${match_style_obj.view_tpl_id}After`"
       :mid="mid"
-    /> -->
-    {{`MatchTpl${match_style_obj.view_tpl_id}After`}}
+    />
+    <!-- {{`MatchTpl${match_style_obj.view_tpl_id}After`}} -->
   </div>
 </template>
 
