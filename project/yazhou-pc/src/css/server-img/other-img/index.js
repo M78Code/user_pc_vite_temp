@@ -19,7 +19,7 @@ function compute_css({ key, theme, path }) {
     final_key =  key_config[CURRENT_ENV] ||key_config["default"];
    
   }
-
+console.log('theme_config', theme_config[final_key], final_key);
   //从打包的 环境拿 图片地址
   let url = theme_config[final_key] || "";
 
