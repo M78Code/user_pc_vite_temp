@@ -47,7 +47,7 @@
                           <div class="play-box-style details_color warp">
                             <div class="size-color-imp size-color ellipsis remark details_t_color7 fz_16">{{ol_item.on}}</div>
                             <div class="text-left text-right odds-wrap">
-                              <img class="icon-lock" :src="`/${project_name}/image/common/match-icon-lock.svg`" />
+                              <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                             </div>
                           </div>
                           <!-- lock 锁状态 end -->
@@ -63,7 +63,7 @@
                           <div class="play-box-style details_color warp">
                             <div class="size-color-imp ellipsis remark details_t_color6 fz_16">{{ol_item.on}}</div>
                             <div class="text-left text-right odds-wrap">
-                              <img class="icon-lock" :src="`/${project_name}/image/common/match-icon-lock.svg`" />
+                              <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                             </div>
                           </div>
                           <!-- lock 锁状态 end -->
@@ -81,7 +81,7 @@
                       <div class="play-box-style details_color warp">
                         <div class="size-color-imp ellipsis remark details_t_color6 fz_16">{{ol_item.on}}</div>
                         <div class="text-left text-right odds-wrap">
-                          <img class="icon-lock" :src="`/${project_name}/image/common/match-icon-lock.svg`" />
+                          <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                         </div>
                       </div>
                       <!-- lock 锁状态 end -->
@@ -124,7 +124,7 @@
                           <div class="play-box-style details_color warp">
                             <div class="size-color-imp ellipsis remark details_t_color7 fz_16">{{ol_item.on}}</div>
                             <div class="text-left text-right odds-wrap">
-                              <img class="icon-lock" :src="`/${project_name}/image/common/match-icon-lock.svg`" />
+                              <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                             </div>
                           </div>
                           <!-- lock 锁状态 end -->
@@ -140,7 +140,7 @@
                           <div class="play-box-style details_color warp">
                             <div class="size-color-imp ellipsis remark details_t_color7 fz_16">{{ol_item.on}}</div>
                             <div class="text-left text-right odds-wrap">
-                              <img class="icon-lock" :src="`/${project_name}/image/common/match-icon-lock.svg`" />
+                              <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                             </div>
                           </div>
                           <!-- lock 锁状态 end -->
@@ -158,7 +158,7 @@
                       <div class="play-box-style details_color warp">
                         <div class="size-color-imp ellipsis remark details_t_color7 fz_16">{{ol_item.on}}</div>
                         <div class="text-left text-right odds-wrap">
-                          <img class="icon-lock" :src="`/${project_name}/image/common/match-icon-lock.svg`" />
+                          <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                         </div>
                       </div>
                       <!-- lock 锁状态 end -->
@@ -201,7 +201,7 @@
                           <div class="play-box-style details_color">
                             <div class="size-color-imp ellipsis remark details_t_color7 fz_16">{{ol_item.on}}</div>
                             <div class="text-left text-right odds-wrap">
-                              <img class="icon-lock" :src="`/${project_name}/image/common/match-icon-lock.svg`" />
+                              <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                             </div>
                           </div>
                           <!-- lock 锁状态 end -->
@@ -217,7 +217,7 @@
                           <div class="play-box-style details_color">
                             <div class="size-color-imp size-color-imp ellipsis remark details_t_color6 fz_16">{{ol_item.on}}</div>
                             <div class="text-left text-right odds-wrap">
-                              <img class="icon-lock" :src="`/${project_name}/image/common/match-icon-lock.svg`" />
+                              <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                             </div>
                           </div>
                           <!-- lock 锁状态 end -->
@@ -235,7 +235,7 @@
                       <div class="play-box-style details_color">
                         <div class="size-color-imp ellipsis remark details_t_color7 fz_16">{{ol_item.on}}</div>
                         <div class="text-left text-right odds-wrap">
-                          <img class="icon-lock" :src="`/${project_name}/image/common/match-icon-lock.svg`" />
+                          <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                         </div>
                       </div>
                       <!-- lock 锁状态 end -->
@@ -256,7 +256,7 @@
 // import { mapGetters } from "vuex";
 import odds_new from "src/base-h5/components/details/components/tournament-play/unit/odds-new.vue";
 // import odd_convert from "src/base-h5/mixins/odds_conversion/odds_conversion.js";
-import {utils, project_name } from 'src/core/index.js';
+import {utils, LOCAL_PROJECT_FILE_PREFIX } from 'src/core/index.js';
 import BetData from "src/core/bet/class/bet-data-class.js"
 import lodash from "lodash";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, ref } from "vue";

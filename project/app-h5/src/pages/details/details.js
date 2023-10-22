@@ -211,7 +211,7 @@ const route = useRoute();
     // y0后缀
     const suffix_y0 = UserCtr.theme.includes("_y0") ? "_y0" : "";
  
-    return `img:/${project_name}/image/svg/details/replay${suffix_theme}.svg`;
+    return `img:${LOCAL_PROJECT_FILE_PREFIX}/image/svg/details/replay${suffix_theme}.svg`;
   });
   
 // 监听数据仓库版本号变更后更新数据

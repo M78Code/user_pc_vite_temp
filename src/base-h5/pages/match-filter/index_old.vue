@@ -19,7 +19,7 @@
             <!-- 左边联赛箭头及名称  -->
             <span>
               <img class="arrow_up" :class="{ collapse: !item1.hide }"
-                :src="`/${project_name}/image/list/league-collapse-icon-black.svg`" alt="">
+                :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/league-collapse-icon-black.svg`" alt="">
               <span class="name-text">{{ ((type == 1 && get_sport_all_selected == true) || (type == 28 &&
                 get_curr_sub_menu_type == 29)) ? item1.nameText : item1.introduction }}</span>
             </span>

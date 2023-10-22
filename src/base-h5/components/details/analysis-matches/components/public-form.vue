@@ -18,7 +18,7 @@
         <span v-else-if="default_index == 1">{{i18n_t('analysis_football_matches.turn_around')}}</span>
         <span v-else-if="default_index == 2">{{i18n_t('analysis_football_matches.size')}}</span>
         <i class="icon sort-flag"></i>
-        <img :src="`/${project_name}/image/common/f-icon-pay-change-y0.svg`" class="sort-flag">
+        <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/f-icon-pay-change-y0.svg`" class="sort-flag">
       </div>
     </div>
     <!-- 主内容 -->

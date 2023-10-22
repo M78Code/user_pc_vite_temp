@@ -21,7 +21,7 @@
               <p class="tittle-p row justify-between yb_px4" :class="index == 0 && 'tittle-p2'" @click="toggle_show(value)">
                 <!-- (new Date(name)).Format(t('time2')) -->
                 <span>{{ format_M_D(new Date(name).getTime())}}</span>
-                <span v-if="!value.open && index != 0"><img class="icon-down-arrow" :src="`/${project_name}/image/list/league-collapse-icon.svg`" /></span>
+                <span v-if="!value.open && index != 0"><img class="icon-down-arrow" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/league-collapse-icon.svg`" /></span>
               </p>
               <!--线-->
               <div class="line" :class="!value.open && (index != Object.keys(list_data).length-1) && 'line2'"></div>

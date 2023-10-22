@@ -78,7 +78,7 @@
             </div>
           </div>
           <div v-if="sub_menu_type == 1004" class="c-s-timer-w basketball row justify-center items-center">
-            <img :src="`/${project_name}/image/list/basket_ball_video_playing.svg`" alt="">
+            <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/basket_ball_video_playing.svg`" alt="">
           </div>
         </div>
       </div>

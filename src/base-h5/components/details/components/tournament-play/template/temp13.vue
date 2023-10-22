@@ -53,7 +53,7 @@
                               {{append_single.on}}
                             </span>
                             </div>
-                            <img class="icon-lock" :src="`/${project_name}/image/common/match-icon-lock.svg`" />
+                            <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                           </div>
                         </template>
                         <!-- 新增start -->
@@ -73,7 +73,7 @@
                               {{append_single.on}}
                             </span>
                             </div>
-                            <img class="icon-lock" :src="`/${project_name}/image/common/match-icon-lock.svg`" />
+                            <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                           </div>
                         </template>
                       </template>
@@ -96,7 +96,7 @@
                           {{append_single.on}}
                         </span>
                         </div>
-                        <img class="icon-lock" :src="`/${project_name}/image/common/match-icon-lock.svg`" />
+                        <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                       </div>
                     </template>
                     <!-- 关盘ms=2 -->
@@ -149,7 +149,7 @@
                               {{append_single.on}}
                             </span>
                             </div>
-                            <img class="icon-lock" :src="`/${project_name}/image/common/match-icon-lock.svg`" />
+                            <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                           </div>
                         </template>
                         <!-- 新增start -->
@@ -169,7 +169,7 @@
                               {{append_single.on}}
                             </span>
                             </div>
-                            <img class="icon-lock" :src="`/${project_name}/image/common/match-icon-lock.svg`" />
+                            <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                           </div>
                         </template>
                       </template>
@@ -189,7 +189,7 @@
                           {{append_single.on}}
                         </span>
                         </div>
-                        <img class="icon-lock" :src="`/${project_name}/image/common/match-icon-lock.svg`" />
+                        <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                       </div>
                     </template>
                     <!-- 关盘ms=2 -->
@@ -215,7 +215,7 @@
 import store from "src/store-redux/index.js";
 import lodash from "lodash";
 import odds_new from "src/base-h5/components/details/components/tournament-play/unit/odds-new.vue";
-import {utils,project_name } from 'src/core/index.js';
+import {utils,LOCAL_PROJECT_FILE_PREFIX } from 'src/core/index.js';
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, ref } from "vue";
 import { useRoute } from "vue-router";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"

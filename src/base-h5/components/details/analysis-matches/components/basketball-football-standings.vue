@@ -52,7 +52,7 @@
       <!-- 大于2条时,显示 展开收起按钮-->
       <span class="btn_style" @click="toggle_box" v-if="show_btn">
         <span class="text_c">{{ btn_text }}</span>
-        <img :src="`/${project_name}/image/list/league-collapse-icon.svg`" alt="" :class="direction">
+        <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/league-collapse-icon.svg`" alt="" :class="direction">
       </span>
     </div>
     <!-- 没有数据 组件 -->

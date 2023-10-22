@@ -43,7 +43,7 @@
      <div class="toggle row justify-center" v-if="data_b.orderVOS.length > 2">
         <span class="btn_style" @click="toggle_box">
           <span class="text_c">{{btn_text}}</span>
-          <img :src="`/${project_name}/image/list/league-collapse-icon.svg`" alt="" :class="direction">
+          <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/league-collapse-icon.svg`" alt="" :class="direction">
         </span>
       </div>
   </div>

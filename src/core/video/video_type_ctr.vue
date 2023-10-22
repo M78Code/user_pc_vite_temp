@@ -21,7 +21,7 @@
         <!-- 流畅 -->
         <div class="video-type-but" :class="{'video-type-but-action':ctr_data.video_type==2}" @click="send_video_type_click(2)">{{get_video_clarity_name2(2)}}</div>
       </div>
-      <img class="close-btn" @click="is_show_type_list = false" :src="`/${project_name}/image/common/png/close_white.png`">
+      <img class="close-btn" @click="is_show_type_list = false" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/png/close_white.png`">
     </div>
     <!-- 画中画提示框 -->
       <div v-show="pip_mouseover&&$route.name == 'home'" class="pip_mouseover">{{ i18n_t('video.open_pip')}}</div>
@@ -30,7 +30,7 @@
       <!-- 退出中屏 -->
       <icon-wapper v-if="$route.name == 'video'" size="14px" src="" color="#FFFFFF" name="icon-small"  @click="exit_full_screen" />
       <!-- 进入中屏 -->
-      <icon-wapper v-else size="14px" color="#FFFFFF" :name="`img:/${project_name}/image/common/svg/big_screen.svg`" @click="full_screen()" />
+      <icon-wapper v-else size="14px" color="#FFFFFF" :name="`img:${LOCAL_PROJECT_FILE_PREFIX}/image/common/svg/big_screen.svg`" @click="full_screen()" />
       <q-tooltip
         anchor="top middle"
         self="center middle"
@@ -56,7 +56,7 @@
 // import { mapGetters, mapActions } from "vuex"
 import video from "src/core/video/video.js"
 import { IconWapper } from 'src/components/icon'
-import { get_media_icon_index,MatchDetailCalss,debounce_throttle_cancel,project_name} from "src/core";
+import { get_media_icon_index,MatchDetailCalss,debounce_throttle_cancel,LOCAL_PROJECT_FILE_PREFIX} from "src/core";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 const tooltip_style = 'background:rgba(0,0,0,0.8);padding:4px 5px;border-radius:0px;color:#fff'
 export default {

@@ -46,7 +46,7 @@
                           <div class="play-box-style details_color" :class="{'bor-btm':ol_index != item.ol.length-1 || index_ != item_data.hl.length-1}">
                             <div class="ellipsis remark details_t_color7 fz_13" v-show="get_detail_data.csid != 1">{{ol_item.on || ol_item.ott}}</div>
                             <div class="text-left">
-                              <img class="icon-lock" :src="`/${project_name}/image/common/match-icon-lock.svg`" />
+                              <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                             </div>
                           </div>
                           <!-- lock 锁状态 end -->
@@ -60,7 +60,7 @@
                           <div class="play-box-style details_color" :class="{'bor-btm':ol_index != item.ol.length-1 || index_ != item_data.hl.length-1}">
                             <div class="ellipsis remark details_t_color6 fz_14" v-show="get_detail_data.csid != 1">{{ol_item.on || ol_item.ott}}</div>
                             <div class="text-left">
-                              <img class="icon-lock" :src="`/${project_name}/image/common/match-icon-lock.svg`" />
+                              <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                             </div>
                           </div>
                         </template>
@@ -78,7 +78,7 @@
                       <div class="play-box-style details_color" :class="{'bor-btm':ol_index != item.ol.length-1 || index_ != item_data.hl.length-1}">
                         <div class="ellipsis remark details_t_color7 fz_13" v-show="get_detail_data.csid != 1">{{ol_item.on || ol_item.ott}}</div>
                         <div class="text-left">
-                          <img class="icon-lock" :src="`/${project_name}/image/common/match-icon-lock.svg`" />
+                          <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                         </div>
                       </div>
                       <!-- lock 锁状态 end -->
@@ -125,7 +125,7 @@
                     <div class="play-box-style details_color" :class="{'bor-btm':ol_index != item.ol.length-1 || index_ != item_data.hl.length-1}">
                       <div class="ellipsis remark details_t_color7 fz_13" v-show="get_detail_data.csid != 1">{{ol_item.on || ol_item.ott}}</div>
                       <div class="text-left">
-                        <img class="icon-lock" :src="`/${project_name}/image/common/match-icon-lock.svg`" />
+                        <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                       </div>
                     </div>
                     <!-- lock 锁状态 end -->
@@ -139,7 +139,7 @@
                     <div class="play-box-style details_color" :class="{'bor-btm':ol_index != item.ol.length-1 || index_ != item_data.hl.length-1}">
                       <div class="ellipsis remark details_t_color6 fz_14" v-show="get_detail_data.csid != 1">{{ol_item.on || ol_item.ott}}</div>
                       <div class="text-left">
-                        <img class="icon-lock" :src="`/${project_name}/image/common/match-icon-lock.svg`" />
+                        <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                       </div>
                     </div>
                     <!-- lock 锁状态 end -->
@@ -157,7 +157,7 @@
                 <div class="play-box-style details_color" :class="{'bor-btm':ol_index != item.ol.length-1 || index_ != item_data.hl.length-1}">
                   <div class="ellipsis remark details_t_color7 fz_13" v-show="get_detail_data.csid != 1">{{ol_item.on || ol_item.ott}}</div>
                   <div class="text-left">
-                    <img class="icon-lock" :src="`/${project_name}/image/common/match-icon-lock.svg`" />
+                    <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                   </div>
                 </div>
                 <!-- lock 锁状态 end -->
@@ -186,7 +186,7 @@ import odds_new from "src/base-h5/components/details/components/tournament-play/
 import lodash from "lodash";
 import store from "src/store-redux/index.js";
 // import odd_convert from "src/base-h5/mixins/odds_conversion/odds_conversion.js";
-import {utils,project_name } from 'src/core/index.js';
+import {utils,LOCAL_PROJECT_FILE_PREFIX ,LOCAL_PROJECT_FILE_PREFIX } from 'src/core/index.js';
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, ref } from "vue";
 import { useRoute } from "vue-router"
 import { i18n_t } from "src/boot/i18n.js";
@@ -311,6 +311,7 @@ export default defineComponent({
       go_to_bet,
       change_show,
       hide_show_more_layout,
+      LOCAL_PROJECT_FILE_PREFIX
     }
   }
 })
