@@ -396,7 +396,6 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
               MatchDataWarehouseInstance.set_match_details(allData.match_infoData,
                 data
               );
-              console.log(MatchDataWarehouseInstance,'match_infoData.value','set');
               let str = allData.mid + "_";
               match_details.value = [lodash.get(
                 MatchDataWarehouseInstance.list_to_obj.mid_obj,
@@ -467,7 +466,7 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
               allData.is_go_match_list = true;
             }
             //mhs赛事盘口状态 0:开, 封, 2:关, 11:锁
-            if (code == 200 && data.length && allData.match_infoData.mhs != 2) {
+            if (code == 200 && data.length && allData.match_infoData?.mhs != 2) {
               data.forEach((item) => {
                 item = format_plays(item);
                 item.tipstatus = false;
@@ -502,12 +501,10 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
                 item.initIndex = index;
                 item.index = index;
               });
-
               // 初始化控制类中的玩法数据
               MatchDataWarehouseInstance.set_match_details(allData.match_infoData,
                 data
               );
-              console.log(MatchDataWarehouseInstance,'match_infoData.value','set',data);
               // match_details.value = MatchDataWarehouseInstance.list;
               let str = allData.mid + "_";
               match_details.value = [lodash.get(
@@ -532,6 +529,8 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
             }
           })
           .catch((err) => {
+            debugger
+            console.error(err,'err');
             set_home_loading_time_record("err");
             if (!obj.isWs) {
               err_tips(err);
@@ -831,7 +830,6 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
              */
             data.msc = detailUtils.build_msc(data);
             MatchDataWarehouseInstance.set_match_details(data,[]);
-            console.log(MatchDataWarehouseInstance,'match_infoData.value','set',data);
             allData.match_infoData = MatchDataWarehouseInstance.get_quick_mid_obj(allData.mid);
             let mid = lodash.get(data, "mid");
             let mst = lodash.get(data, "mst");
@@ -934,7 +932,6 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
     if (route.params.video_size == 1) {
       params.type = 2;
     }
-    console.log(params, "params");
     const _obj = {
       axios_api: api_details.get_category_list,
       error_codes: ["0401038"],
