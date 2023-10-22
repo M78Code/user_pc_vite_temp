@@ -33,7 +33,11 @@ const compute_css = (params = {}) => {
 };
 
 
-              
+/**
+ * 非精灵图返回url 
+ * @param {*} key 
+ * @returns 
+ */              
 const  compute_img =(key)=>{
 
   let obj = compute_css({key ,path:1})

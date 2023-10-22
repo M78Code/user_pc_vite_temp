@@ -18,7 +18,7 @@ let  DEV_TARGET_VERSION = ''
 // 打包 亚洲版 H5（新版)   试玩环境     
 // DEV_TARGET_VERSION = "project_3-652cce36feffd80f0fcda0f0-1697888720318-shiwan";
 // 打包 亚洲版 H5（新版)   生产环境    
-DEV_TARGET_VERSION = "project_3-652cce36feffd80f0fcda0f0-1697965003241-online";
+// DEV_TARGET_VERSION = "project_3-652cce36feffd80f0fcda0f0-1697965003241-online";
 //----------------------------------亚洲版-PC-重构版本 	yazhou-pc -4------------------------------------------
 // 打包 亚洲版 PC（新版)   测试环境  
 // DEV_TARGET_VERSION = " project_4-652ccfacfeffd80f0fcda107-1697801228987-test";
@@ -29,7 +29,7 @@ DEV_TARGET_VERSION = "project_3-652cce36feffd80f0fcda0f0-1697965003241-online";
 
 //----------------------------------分割线  复刻版-H5-KYAPP  app-h5  5 -------------------------------------------
 // 打包 亚洲版 PC（新版)   测试环境  
-// DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1697886450149-test";
+DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1697886450149-test";
 // 打包 亚洲版 PC（新版)   试玩环境  
 // DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1697889603593-shiwan";
 // 打包 亚洲版 PC（新版)   生产环境

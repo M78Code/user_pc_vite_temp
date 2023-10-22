@@ -249,13 +249,20 @@ const compute_local_common_file_path=(str='')=>{
 
 }
 
+const LOCAL_COMMON_FILE_PREFIX =  BUILD_VERSION ? BUILD_VERSION :''
+const LOCAL_PROJECT_FILE_PREFIX =  BUILD_VERSION ? `${BUILD_VERSION}/${PROJECT_NAME}` :`/${PROJECT_NAME}`
 
 
 
 
-export { get_server_file_path, 
-  load_img_src, load_img_src_common,
-   image_is_exist, project_name ,
+export { 
+  get_server_file_path, 
+  load_img_src, 
+  load_img_src_common,
+   image_is_exist, 
+   project_name ,
+   LOCAL_COMMON_FILE_PREFIX,
+   LOCAL_PROJECT_FILE_PREFIX,
    compute_local_project_file_path,
    compute_local_common_file_path
    };

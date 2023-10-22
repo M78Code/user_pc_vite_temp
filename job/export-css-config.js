@@ -23,7 +23,7 @@ const  final_server_keys  = await import_json_data( "./output/css/keys-server.js
 
 // 本次打包的 客户端版本
 import BUILD_VERSION_CONFIG from "./output/version/build-version.js";
-const { PROJECT_NAME ,IS_PC} =  BUILD_VERSION_CONFIG
+const { BUILD_VERSION, PROJECT_NAME ,IS_PC ,NODE_ENV} =  BUILD_VERSION_CONFIG
 
 console.log(colors.bgRed("export-css-config.js----------  ----"));
  
@@ -184,6 +184,22 @@ const compute_diff_keys=(css_keys)=>{
     );
 }
 
+
+
+let   SCSSPROJECTPATH =  ''
+
+ 
+  //生产打包
+  if(BUILD_VERSION){
+    SCSSPROJECTPATH =`${BUILD_VERSION}/${PROJECT_NAME}`
+  }else{
+    //本地运行
+
+  SCSSPROJECTPATH =`/${PROJECT_NAME}`
+  }
+ 
+
+
 /**
  * 生成顶层注入的 scss 变量
  */
@@ -204,7 +220,7 @@ $info      : #31CCEC;
 $warning   : #F2C037;
 
 
-$SCSSPROJECTPATH  : "/${PROJECT_NAME}";
+$SCSSPROJECTPATH  : "${SCSSPROJECTPATH}";
   
   `
 

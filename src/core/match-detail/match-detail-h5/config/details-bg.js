@@ -1,4 +1,4 @@
-import { project_name } from "src/core/"
+import { LOCAL_PROJECT_FILE_PREFIX } from "src/core/"
 
 const detail_csid_config= {
     CSID_1: {
