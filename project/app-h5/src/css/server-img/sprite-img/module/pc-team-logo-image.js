@@ -54,13 +54,14 @@ function compute_position(position) {
  * @param {*} param0
  * @returns
  */
-function compute_css({ position, theme }) {
-  //从打包的 环境拿 图片地址
-  let url = lodash.get(server_resource, `${config[CURRENT_ENV] || config['default']}.${theme}`);
-  if (!url) {
-    //从本地拿
-      url = lodash.get(config, 'locationUrl');
-  }
+function compute_css({ position, theme  ,path  }) {
+  // 当前主题的 服务端配置
+   let theme_config=   server_resource[theme] ||{}
+    //最终资源键 计算
+    let final_key = ''  
+    final_key =   config[CURRENT_ENV] || config['default']
+   //从打包的 环境拿 图片地址
+   let url =theme_config[final_key] ||'';
    //如果有服务器图片，使用cdn图片
   if(position[0]){
     return {

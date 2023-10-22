@@ -103,14 +103,15 @@ function compute_position(position) {
  * @param {*} param0
  * @returns
  */
-function compute_css({ position, theme }) {
-  //从打包的 环境拿 图片地址
-  let url = get(server_resource, `${config[CURRENT_ENV] || config['default']}.${UserCtr.theme}`);
-  if (!url) {
-    //从本地拿
-    url = get(config, UserCtr.theme);
-  }
-  return {
+function compute_css({ position, theme  ,path  }) {
+  // 当前主题的 服务端配置
+   let theme_config=   server_resource[theme] ||{}
+    //最终资源键 计算
+    let final_key = ''  
+    final_key =   config[CURRENT_ENV] || config['default']
+   //从打包的 环境拿 图片地址
+   let url =theme_config[final_key] ||'';
+   return  path?{url}:{
     "background-image": `url(${url})`,
     "background-position": compute_position(position),
   };
