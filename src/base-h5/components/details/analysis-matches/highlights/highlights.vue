@@ -848,6 +848,7 @@ setup(props, context){
     check_replay_url,
     handleMessage,
     format_total_score,
+    LOCAL_PROJECT_FILE_PREFIX,
   }
 }
 }

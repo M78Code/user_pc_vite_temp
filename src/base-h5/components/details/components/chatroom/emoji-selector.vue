@@ -17,7 +17,7 @@
 
 <script>
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
-import { project_name } from 'src/core'
+import { LOCAL_PROJECT_FILE_PREFIX } from 'src/core'
 export default defineComponent({
   name: 'emoji_selector',
   setup(props, evnet) {
@@ -39,6 +39,7 @@ export default defineComponent({
     }
     return {
       ...toRefs(data),
+      LOCAL_PROJECT_FILE_PREFIX,
       onEmojiSelect
     }
   }
