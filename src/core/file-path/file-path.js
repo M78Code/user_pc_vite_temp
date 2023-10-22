@@ -208,7 +208,7 @@ const compute_local_project_file_path=(str='')=>{
   }
   let str2 =''
   if(BUILD_VERSION){
-    str2 =`${BUILD_VERSION}/${PROJECT_NAME}${str}`
+    str2 =`/${BUILD_VERSION}/${PROJECT_NAME}${str}`
   
   }else{
     str2 =`${PROJECT_NAME}${str}`
@@ -235,7 +235,7 @@ const compute_local_common_file_path=(str='')=>{
   }
   let str2 =''
   if(BUILD_VERSION){
-    str2 =`${BUILD_VERSION}${str}`
+    str2 =`/${BUILD_VERSION}${str}`
   
   }else{
     str2 =str

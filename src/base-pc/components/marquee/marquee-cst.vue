@@ -51,7 +51,7 @@
                 <img v-show="right_tabs[2].is_show" ref="settings"
                     :src="compute_img('gif-setting')"
                     class="tab-icon-img">
-                    // `/yazhou-pc/image/gif/${('y0') ? 'settings_y0' : 'settings'}.gif`
+               
             </div>
 
         </div>

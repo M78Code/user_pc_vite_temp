@@ -44,7 +44,7 @@ ensure_write_folder_exist(base_info_write_folder);
 /**
  * 计算并写入 最终配置到文件 ，这里可能需要合并一些默认配置或者一些配置重写覆盖
  */
-const merge_and_output_final_config = (scg) => {
+const merge_and_output_final_config =  async (scg) => {
   let add_obj = {
    
     project: BUILD_VERSION_CONFIG.PROJECT_NAME,
@@ -75,7 +75,7 @@ const get_config_info = async () => {
     let res = await axios.get(SERVER_CONFIG_FILE_PATH);
     let { data } = res;
     if (data) {
-      merge_and_output_final_config(data);
+      await  merge_and_output_final_config(data);
     }
   } catch (error) {
     console.log("获取 服务器上 当前商户的 版本配置 出错");

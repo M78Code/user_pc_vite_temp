@@ -50,7 +50,7 @@ for(let theme_key in  final_assets_config){
         response.data.pipe(fs.createWriteStream(local_file_path));
      
           
-        let final_path = BUILD_VERSION? `${BUILD_VERSION}/${project_path+filename}`:project_path + filename
+        let final_path = BUILD_VERSION? `/${BUILD_VERSION}${project_path+filename}`:project_path + filename
 
         lodash.set(assets_obj ,`${theme_key}.${assets_key}` ,final_path) 
       } catch (error) {
