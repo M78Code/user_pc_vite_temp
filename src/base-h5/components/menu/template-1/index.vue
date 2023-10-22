@@ -322,7 +322,6 @@ const handle_match_render_data = () => {
   // 清除赛事折叠信息
   MatchDataBaseH5.init()
   MatchFold.clear_fold_info()
-
   // 冠军拉取旧接口； 待 元数据提供 冠军赛事后 再删除
   if (MenuData.is_kemp()) return MatchMeta.get_champion_match()
   // 赛果不走元数据， 直接拉取接口
@@ -500,12 +499,7 @@ if (MenuData.is_hot()) {
     background-repeat: no-repeat;
     background-size: cover;
 
-    // 使用css变量统一管理，所以废弃这里代码，转为不遍历
-    // @each $e-sports in dota, lol, wangzhe, csgo {
-    //   &.#{$e-sports} {
-    //     background-image:  url("/image/bw3/menu/menu-top-background-#{$e-sports}.jpg");
-    //   }
-    // }
+  
     &.dota {
       background-image: var(--q-color-com-img-bg-169);
     }
@@ -795,12 +789,7 @@ if (MenuData.is_hot()) {
                 background-position: 0 0;
                 background-size: 0.22rem 18.88rem;
 
-                // 使用css变量统一管理，所以废弃这里代码，转为不遍历
-                // @each $item, $img in (d: '04', c: '03', a: '01', e: 'y0', b: '05') {
-                //   &.focus-#{$item} {
-                //     background-image: url("/image/wwwassets/bw3/menu/sport_menu_#{$img}.png");
-                //   }
-                // }
+             
                 &.focus-d {
                   background-image: var(--q-color-com-img-bg-205);
                 }

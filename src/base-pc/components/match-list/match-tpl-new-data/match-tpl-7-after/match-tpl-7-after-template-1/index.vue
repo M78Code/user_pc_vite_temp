@@ -4,7 +4,7 @@
     <div v-show="false">{{ MatchListData.data_version.version }}</div>
     <div class="process-col process-col yb-flex-center">
       <!--热门赛事显示hot标识-->
-      <img class="match-hot" :src="`/${project_name}/image/common/svg/hot.svg`" v-show="lodash.get(match, 'is_hot')" />
+      <img class="match-hot" :src="compute_local_project_file_path('/image/common/svg/hot.svg')" v-show="lodash.get(match, 'is_hot')" />
       <!-- 比赛进程 -->
       <!-- :style="`height:105px;margin-top:${process_margin}px`" -->
       <!-- <div class="yb-flex-center full-width" > -->
@@ -79,7 +79,7 @@
 // import match_item_mixin from "src/project/yabo/mixins/match_list/match_item_mixin_new_data.js";
 // mixins: [match_item_mixin],
 import { computed, ref, watch } from 'vue';
-import { MatchDataWarehouse_PC_List_Common as MatchListData, project_name } from "src/core/index.js";
+import { MatchDataWarehouse_PC_List_Common as MatchListData, compute_local_project_file_path } from "src/core/index.js";
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import { MatchProcessFullVersionWapper as MatchProcess } from 'src/components/match-process/index.js';

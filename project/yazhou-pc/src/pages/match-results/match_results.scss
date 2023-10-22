@@ -13,7 +13,7 @@ body {
         border: 1px solid var(--q-gb-bd-c-7); //#dce0e5
         .icon {
           background-repeat: no-repeat;
-          background-image: url("/yazhou-pc/image/common/png/sports_play_icon.png");
+          background-image: url($SCSSPROJECTPATH+"/image/common/png/sports_play_icon.png");
         }
         .sort {
           width: 12px;

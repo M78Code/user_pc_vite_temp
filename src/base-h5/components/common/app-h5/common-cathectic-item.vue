@@ -22,7 +22,7 @@
 import itemBody from "src/base-h5/components/common/cathectic-item/app-h5/item-body.vue";
 import itemFooter from "src/base-h5/components/common/cathectic-item/item-footer.vue";
 import itemOrder from "src/base-h5/components/common/cathectic-item/item-order.vue";
-import earlySettle from "src/base-h5/components/common/cathectic-item/early-settle.vue";
+import earlySettle from "src/base-h5/components/common/cathectic-item/app-h5/early-settle.vue";
 import lodash from 'lodash';
 import { computed, ref, onMounted, onUnmounted, nextTick } from "vue";
 import { useMittOn, MITT_TYPES } from "src/core/mitt/"

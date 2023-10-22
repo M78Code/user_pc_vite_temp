@@ -36,7 +36,7 @@
               <!-- 点球比分 -->
               <div  class="yb-flex-center yb-width" v-if="vsport_ctr.info.csid == 1001 && vsport_ctr.info.isc == 1">
                 <!-- 点球图标 -->
-                <div class="col icon-wrap"><icon class="icon" :name="`img:/${project_name}/image/svg/white-point.svg`" size="13px"/></div>
+                <div class="col icon-wrap"><icon class="icon" :name="`img:${compute_local_project_file_path('/image/svg/white-point.svg')}`" size="13px"/></div>
                 <!-- 点球比分 -->
                 <div class="score din-medium">{{vsport_ctr.replay_list[vsport_ctr.replay_index].penalty_score_home ?  `${vsport_ctr.replay_list[vsport_ctr.replay_index].penalty_score_home}-${vsport_ctr.replay_list[vsport_ctr.replay_index].penalty_score_away}` :'-'}}</div>
                 <div class="col"></div>
@@ -96,7 +96,7 @@ import loadData from "src/components/load_data/load_data.vue"
 import arcProgress from "src/base-pc/pages/virtual-right/arc-progress.vue"
 import basketballResult from "src/base-pc/pages/virtual-right/basketball-result.vue"
 import noVideo from "src/base-pc/components/match-detail/match_info/no_video.vue"
-import { project_name } from "src/core";
+import { compute_local_project_file_path } from "src/core";
 export default {
   name: "virtualVideo",
   components:{

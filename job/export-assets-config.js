@@ -48,7 +48,11 @@ for(let theme_key in  final_assets_config){
         const local_file_path = img_folder + filename; //文件下载到本地的路径
         const response = await axios.get(url, { responseType: "stream" });
         response.data.pipe(fs.createWriteStream(local_file_path));
-        lodash.set(assets_obj ,`${theme_key}.${assets_key}` ,project_path + filename) 
+     
+          
+        let final_path = BUILD_VERSION? `${BUILD_VERSION}/${project_path+filename}`:project_path + filename
+
+        lodash.set(assets_obj ,`${theme_key}.${assets_key}` ,final_path) 
       } catch (error) {
         console.log('获取资源素材出错： ',url);
         lodash.set(empty_assets_obj,`${theme_key}.${assets_key}`,'error')

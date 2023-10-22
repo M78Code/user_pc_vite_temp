@@ -94,7 +94,7 @@ body {
     }
   }
   .skin-icon-day {
-    background: url("/yazhou-pc/image/svg/icon_skin_day-black.svg") no-repeat center;
+    background: url($SCSSPROJECTPATH+"/image/svg/icon_skin_day-black.svg") no-repeat center;
   }
   .skin-icon-night {
     width: 12px !important;

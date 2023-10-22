@@ -81,7 +81,7 @@
         class="empty-wrap"
         :class="{ filter_img: filterHeader.open_select_time }"
         which="noMatch"
-        :url="`/${project_name}/image/png/no_data_01.png`"
+        :url="compute_local_project_file_path('/image/png/no_data_01.png')"
       >
       </no-data-wapper>
       <no-data-wapper
@@ -185,7 +185,7 @@ import store from "src/store-redux/index.js";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import filterHeader from "src/core/filter-header/filter-header.js";
-import { i18n_t,is_eports_csid, project_name ,compute_css} from "src/core"
+import { i18n_t,is_eports_csid, compute_local_project_file_path ,compute_css} from "src/core"
 import { useRoute } from "vue-router";
 const {route} = useRoute()
 const noData = NoDataWapper

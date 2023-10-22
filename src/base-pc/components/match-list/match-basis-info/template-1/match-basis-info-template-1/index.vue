@@ -70,7 +70,7 @@
           class="icon-wrap settlement-pre relative-position"
           v-tooltip="{content: i18n_t('bet_record.settlement_pre')}"
         >
-          <img class="match_pre" :src="`/${project_name}/image/png/match_pre.png`"/>
+          <img class="match_pre" :src="compute_local_project_file_path('/image/png/match_pre.png')"/>
         </div>
        </div>
        <div class="more-info flex">
@@ -113,7 +113,7 @@ import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import { MenuData, MatchDataWarehouse_PC_List_Common } from "src/core/index.js"
 import details  from "src/core/match-list-pc/details-class/details.js"
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
-import { i18n_t,project_name } from "src/core/index.js";
+import { i18n_t,compute_local_project_file_path } from "src/core/index.js";
 
 
 const props = defineProps({
