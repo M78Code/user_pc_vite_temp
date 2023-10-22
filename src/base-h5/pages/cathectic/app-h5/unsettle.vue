@@ -3,20 +3,13 @@
  * @Author: Router
 -->
 <template>
-  <div class="mx-10 unsettle" ref="unsettle">
+  <div class="unsettle" ref="unsettle">
     <!-- 加载中 -->
     <SRecord v-if="is_loading"/>
     <scroll ref="myScroll" :on-pull="onPull" v-else>
-      <template v-if="no_data">
-        <div class="filter-button" v-if="UserCtr.user_info.settleSwitch == 1">
-          <!-- 提前结算筛选按钮 TODO: 主题色背景图 -->
-          <i class="yb_fontsize12" @click.stop="change_early" :class="{'select':is_early}">
-            {{ i18n_t('early.btn2') }}<i class="early yb_ml4" :class="{'early2': is_early}"></i>
-          </i>
-        </div>
+      <template v-if="no_data && !is_all_early_flag">
         <!-- 订单内容 -->
-        <template v-if="!is_all_early_flag">
-          <div v-for="(value,name,index) in list_data" :key="index">
+        <div v-for="(value,name,index) in list_data" :key="index" class="unsettle-list">
             <template v-if="!is_early|| (is_early && clac_is_early(value.data))">
               <q-slide-transition>
                 <div v-show="value.open">
@@ -26,7 +19,6 @@
               </q-slide-transition>
             </template>
           </div>
-        </template>
       </template>
       <!-- 去投注 -->
       <settle-void :is_early="is_all_early_flag" v-if="(!no_data || is_all_early_flag)" :is_limit="is_limit"></settle-void>
@@ -111,14 +103,6 @@ const props = defineProps({
     },10000)
     useMittOn(MITT_TYPES.EMIT_GET_ORDER_LIST, refreshOrderList);
   })
-  /**
-     * @description 筛选所有提前结算注单
-     * @param {undefined} undefined
-     * @returns {null} null
-     */
-  const change_early = () => {
-    is_early.value = !is_early.value
-  }
   /**
      * @description 判断单个订单是否有结算注单
      * @param {value} 金额
@@ -344,6 +328,8 @@ const props = defineProps({
 /**投注记录弹框未结算*/
 .unsettle {
   height: 100%;
+  border-radius: 0.1rem;
+  overflow: hidden;
   /**提前结算筛选按钮*/
   .filter-button{
     display: flex;
@@ -385,6 +371,9 @@ const props = defineProps({
   /**线*/
   .line {
     height: 0.5px;
+  }
+  .unsettle-list {
+    margin-bottom: 0.2rem;
   }
 }
 /**提前结算默认*/
