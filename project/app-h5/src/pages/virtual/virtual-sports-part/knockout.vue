@@ -49,20 +49,20 @@
       </div>
       <div class="main-finals" v-if="list_data.length == 1 && !list_data[0].list">
         <div class="finals-team">
-          <img  src="/yazhou-h5/image/svg/finals.svg" alt="">
+          <img  :src="`/${project_name}/image/svg/finals.svg`" alt="">
           <span>{{ list_data[0].homeName }}</span>
         </div>
         <div class="middle">
-          <img src="/yazhou-h5/image/images/v-s-finals.png" alt="">
+          <img :src="`/${project_name}/image/images/v-s-finals.png`" alt="">
           <span>VS</span>
         </div>
         <div class="finals-team">
-          <img  src="/yazhou-h5/image/svg/finals.svg" alt="">
+          <img  :src="`/${project_name}/image/svg/finals.svg`" alt="">
           <span>{{ list_data[0].awayName }}</span>
         </div>
       </div>
       <q-inner-loading :showing="visible">
-        <img alt class="loading-static-animation" src="/yazhou-h5/image/svg/loading-more.svg"/>
+        <img alt class="loading-static-animation" :src="`/${project_name}/image/svg/loading-more.svg`"/>
       </q-inner-loading>
     </div>
     <!-- 没有数据 组件 -->
@@ -77,6 +77,7 @@
 import { api_v_sports } from "project_path/api";
 import no_data from "project_path/components/common/no_data";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
+import { project_name } from "src/core/";
 export default defineComponent({
   name: "knockout",
   components: {

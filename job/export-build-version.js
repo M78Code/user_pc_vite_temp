@@ -13,8 +13,8 @@ const [PROJECT, MERCHANT_CONFIG_VERSION, PUCK_UP_TIME, ENVSTR] =
 MODULE_SDK_VERSION.split("-");
 //数字对应的项目
 const PROJECT_MAP = {
-  project_1: "-", //亚洲版 H5（旧版）
-  project_2: "-", //亚洲版 PC（旧版）
+  // project_1: "-", //亚洲版 H5（旧版）
+  // project_2: "-", //亚洲版 PC（旧版）
   project_3: "yazhou-h5", //亚洲版 H5（新版)
   project_4: "yazhou-pc", //亚洲版 PC（新版)
   project_5: "app-h5", // 复刻版 H5 - KYAPP
@@ -22,6 +22,8 @@ const PROJECT_MAP = {
 };
 //布局名字
 const PROJECT_NAME = PROJECT_MAP[PROJECT];
+//删除布局资源数组
+const NEED_DELETE_PROJECT = Object.values(PROJECT_MAP).filter(x=>x!=PROJECT_NAME)
 
 
 //参数内环境和代码内环境映射
@@ -67,6 +69,7 @@ const config = {
   MODULE_SDK_VERSION,
   CURRENT_ENV,
   PROJECT_NAME,
+  NEED_DELETE_PROJECT,
   IS_PC: PROJECT_NAME.includes('pc'),
   PUCK_UP_TIME,
  

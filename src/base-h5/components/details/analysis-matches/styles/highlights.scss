@@ -125,7 +125,7 @@
         background-size: 100% 100%;
         z-index: 10;
         background-color: var(--q-gb-bg-c-14);
-        background-image: url("/public/yazhou-h5/image/svg/details/time-line-ball.svg");
+        background-image: url($SCSSPROJECTPATH + "/image/svg/details/time-line-ball.svg");
       }
       &.real-time, &.game-over {
         .time-line {
@@ -487,22 +487,22 @@
       margin: 0 .1rem;
     }
     .item-flag.icon-flag-game-over, .item-flag.icon-flag-game-start {
-      background-image: url("/public/yazhou-h5/image/svg/details/whistle.svg");
+      background-image: url($SCSSPROJECTPATH + "/image/svg/details/whistle.svg");
     }
     .item-flag.icon-flag-corner {
-      background-image: url("/public/yazhou-h5/image/svg/details/corner.svg");
+      background-image: url($SCSSPROJECTPATH + "/image/svg/details/corner.svg");
     }
     .item-flag.icon-flag-card-yellow {
-      background-image: url("/public/yazhou-h5/image/svg/details/card_yellow.svg");
+      background-image: url($SCSSPROJECTPATH + "/image/svg/details/card_yellow.svg");
     }
     .item-flag.icon-flag-card-red {
-      background-image: url("/public/yazhou-h5/image/svg/details/card_red.svg");
+      background-image: url($SCSSPROJECTPATH + "/image/svg/details/card_red.svg");
     }
     .item-flag.icon-flag-goal {
-      background-image: url("/public/yazhou-h5/image/svg/details/goal.svg");
+      background-image: url($SCSSPROJECTPATH + "/image/svg/details/goal.svg");
     }
     .item-flag.time-line-ball {
-      background-image: url("/public/yazhou-h5/image/svg/details/time-line-ball.svg");
+      background-image: url($SCSSPROJECTPATH + "/image/svg/details/time-line-ball.svg");
     }
     .item-flag-real-time {
       min-width: 0.14rem;
@@ -552,7 +552,7 @@
         background-repeat: no-repeat;
         background-size: 100% 100%;
         vertical-align: sub;
-        background-image: url("/public/yazhou-h5/image/svg/details/replay-red.svg");
+        background-image: url($SCSSPROJECTPATH + "/image/svg/details/replay-red.svg");
       }
     }
     [class*=icon-flag-] {

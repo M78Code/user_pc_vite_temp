@@ -5,8 +5,8 @@
       <div class="m-i-background" v-if="is_export" :style="compute_css('menu-bg-' + dj_back_type)"></div>
       <div class="main-wrap flex" :class="{ is_export }">
         <!--  返回按鈕  -->
-        <slot name="menu-left">
-          <div class="goback-icon-wrapper column justify-center" @click="router.back()">
+        <slot name="menu-left" >
+          <div class="goback-icon-wrapper  column justify-center" @click="handle_go_back">
             <div class="img" :style="compute_css('menu-go-back-icon')"></div>
           </div>
         </slot>
@@ -156,7 +156,7 @@
 <script setup>
 import subMenuSpecially from "./sub-menu-specially.vue";
 import { ref, watch, nextTick, computed, onBeforeUnmount, } from "vue";
-import { i18n_t, compute_css, GlobalAccessConfig, useMittOn, MITT_TYPES, UserCtr, MenuData, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/index.js";
+import { i18n_t, compute_css, GlobalAccessConfig, useMittOn, MITT_TYPES, UserCtr, MenuData, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5,PROJECT_NAME } from "src/core/index.js";
 import base_data from "src/core/base-data/base-data.js";
 import { useRoute, useRouter } from "vue-router";
 import lodash from "lodash"
@@ -227,6 +227,14 @@ watch(update_time, (v) => {
   date_menu_curr_i.value = MenuData.current_lv_3_menu_i; //三级index
 });
 
+// 返回按钮 点击 
+const handle_go_back=()=>{
+  if(PROJECT_NAME=='app-h5'){
+   // 通知C 端返回上一次页面 ，退出 体育 场馆
+  }else{
+    router.back()
+  }
+}
 
 /**
  * 一级菜单事件 还要执行二级菜单事件哦 因为一级菜单只是展示 没有数据 靠二级菜单以下来数据的
@@ -251,7 +259,7 @@ function set_menu_lv1(item, index, type = "click") {
   } else if (MenuData.is_results(item.mi)) {// "赛果",
   } else if (MenuData.is_vr(item.mi)) {// "VR",
     router.push({
-      name: "virtual",
+      name: "virtual_sports",
       query: {
         from: route.name,
       },

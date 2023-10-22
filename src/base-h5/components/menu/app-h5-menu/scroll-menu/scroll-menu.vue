@@ -1,0 +1,433 @@
+/*
+ * @Author: ty-rise 
+ * @Date: 2023-10-20 16:12:02 
+ * @Last Modified by: ty-rise
+ * @Last Modified time: 2023-10-Sa 05:38:13
+ */
+<template>
+    <!--二级菜单, 三级菜单，上下滑动 隐藏显示 , 竞彩足球 (get_menu_type:30 不显示二级菜单) -->
+    <div class="sub-menu-date-w" v-if="!is_jinzu" :class="{
+        simple: menu_wrap_simple && !is_export,
+        zaopan: is_mix || is_kemp || is_results || is_export,
+        esport: is_export,
+      }">
+        <!-- 二级菜单, 三级菜单, 四级菜单  -->
+        <div class="sport-m-container" :class="{
+          simple: sport_container_simple && !is_export,
+          'shadow-down': !is_export,
+        }">
+          <div class="s-menu-container flex" ref="sub_menu_scroller">
+            <!--二级菜单 除了‘全部’按钮的其他所有 二级菜单  二级菜单 滚球下边的一个按钮   "全部"按钮  -->
+            <scrollNav v-show="is_scroll_ball" :title="i18n_t('footer_menu.all')"
+              @click="select_all_sub_menu_handle" :count="all_sport_count_calc"
+              v-if="GlobalAccessConfig.get_playAllShow()">
+              <span class="sport-icon-wrap" :style="compute_css(
+                !(current_lv2?.mi) ?
+                  'menu-sport-active-image' : 'menu-sport-icon-image'
+                , 0
+              )
+                "></span>
+            </scrollNav>
+            <template v-for="( item, index ) in  current_menu " :key="lodash.get(item, 'mi')">
+              <div class="sport-menu-item flex justify-center" v-show="!is_export && !is_results ? item.ct > 0 : true"
+                @click="set_menu_lv2(item, index)">
+                <div class="inner-w flex justify-between items-center" :class="{
+                  favorite: show_favorite_list,
+                  current: current_lv2?.mi == item.mi
+                }
+                  ">
+                  <div class="sport-w-icon">
+                    <span class="sport-icon-wrap"
+                      :style="compute_css(current_lv2?.mi == item.mi ? 'menu-sport-active-image' : 'menu-sport-icon-image', format_type(item))"></span>
+                    <!-- :data-type="format_menu_type(sub)" -->
+                    <!-- :class="[get_sport_icon(selected_sub_menu_i_list.includes(sub_i)), `${'s' + format_type(sub)}`]" -->
+
+                    <div class="sport-match-count" v-show="two_menu_show(item)">
+                      {{ show_favorite_list ? '' : item.ct ? item.ct : 0 }}
+                    </div>
+                  </div>
+                  <div class="s-w-i-title" :class="{
+                    esport: is_export,
+                    'din-regular': is_export
+                  }
+                    ">
+                    {{ item.name || MenuData.get_menus_i18n_map(item?.mi) }}
+                  </div>
+                </div>
+
+              </div>
+            </template>
+          </div>
+        </div>
+      </div>
+</template>
+<script setup>
+import scrollNav from "./scroll-nav.vue";
+import lodash from "lodash"
+import MatchFold from 'src/core/match-fold'
+import base_data from "src/core/base-data/base-data.js";
+import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
+import { ref, watch, computed } from "vue";
+import { i18n_t, compute_css, GlobalAccessConfig, MenuData, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/index.js";
+import { is_scroll_ball, update_time, is_export, is_mix,is_results, is_kemp, is_jinzu, menu_type } from 'src/base-h5/mixin/menu.js'
+import { get_sport_menu } from "../top-menu/top-list";
+//菜单容器是否收起
+const menu_wrap_simple = ref(false);
+//菜单容器二级菜单是否收起
+const sport_container_simple = ref(false);
+//一级菜单
+let menu_list = ref([]);
+//二级 菜单 当前菜单
+let current_menu = ref({});
+// 是否初次渲染
+const is_first = ref(true)
+const current_lv2 = ref(MenuData.current_lv_2_menu || {})//二级菜单选中
+//点击滚球下的全部
+function select_all_sub_menu_handle() {
+  let data_list = menu_list.value.find((item) => lodash.get(item, 'mi') == 1);
+  if (data_list) {
+    set_menu_lv2(data_list.sl, -1, "click");
+  }
+}
+// 切换到电竞时 的菜单 背景图片
+// function dj_back_img(item) {
+//   let value = +item || 2100
+//   let type = ''
+//   switch (value) {
+//     case 2100: type = "lol"; break;
+//     case 2101: type = "dota"; break;
+//     case 2102: type = "csgo"; break;
+//     case 2103: type = "wangzhe"; break;
+//   }
+//   dj_back_type.value = type
+// }
+/**
+ * 二级菜单事件
+ */
+ async function set_menu_lv2(item, index, type = "click") {
+  const mi = lodash.get(MenuData.current_lv_2_menu, 'mi', "")
+  if (mi === item.mi && !is_first.value) return
+  MenuData.set_current_lv2_menu(item, index, type);
+  switch (menu_type.value) {
+    case 7://电竞需要改变背景图片
+      dj_back_img(item.mi)
+      break
+  }
+  handle_match_render_data()
+}
+/**
+    * 二级菜单数量 是否展示
+    * @param {Number} sub  赛种item
+    */
+    const two_menu_show = (sub) => {
+  if (MenuData.is_results()) {
+    return false
+  }
+  // 滚球下足球处理 1011足球
+  let mi_list = MenuData.is_scroll_ball() ? [1001, 1002, 1004, 1010] : [1001, 1002, 1004, 1011, 1010]
+  return ![is_export.value, is_results.value, is_export.value].includes(true) && !mi_list.includes(+sub.mi)
+}
+/**
+ * 计算滚球下的全部数量
+ */
+ const all_sport_count_calc = computed(() => {
+  //找到滚球
+  let data_list = menu_list.value.find((item) => item.mi == 1);
+  //滚球下所有是数量总和 updateime是时间作为计算属性变化
+  return MenuData.count_menu(data_list, update_time.value)
+});
+/**
+ * @description 处理赛事列表渲染数据
+ */
+ const handle_match_render_data = () => {
+  is_first.value = false
+  // 清除赛事折叠信息
+  MatchDataBaseH5.init()
+  MatchFold.clear_fold_info()
+
+  // 冠军拉取旧接口； 待 元数据提供 冠军赛事后 再删除
+  if (MenuData.is_kemp()) return MatchMeta.get_champion_match()
+  // 赛果不走元数据， 直接拉取接口
+  if (MenuData.is_results()) return MatchMeta.get_results_match()
+  // 电竞不走元数据， 直接拉取接口
+  if (MenuData.is_export()) return MatchMeta.get_esports_match()
+
+  const mi_tid_mids_res = lodash.get(base_data, 'mi_tid_mids_res')
+  if (lodash.isEmpty(mi_tid_mids_res)) return
+
+  // 设置菜单对应源数据
+  MatchMeta.set_origin_match_data()
+}
+/**
+     * @description: 球类id转化背景
+     * @param {String} id 球类id
+     * @return {}
+     */
+     const format_type = (id) => {
+  if (MenuData.is_results()) {
+    let type = +id?.menuId
+    // 赛果电竞图标
+    if ([100, 101, 103, 102].includes(type)) {
+      type += 2000
+    }
+    // 赛果 我的投注
+    if (id?.menuType && id.menuType == 29) {
+      type = id.menuType
+    }
+    // 赛果冠军
+    if (type == 10000) {
+      type = 100
+    }
+    return type
+  }
+  //电竞背景处理
+  if (base_data.sports_mi.includes(+id?.mi)) return +id?.mi
+  return MenuData.recombine_menu_bg(id, true)
+}
+// 获取主菜单列表  main_select_items 弹出的一级 菜单数据   main_menu_list_items 一级菜单数据
+watch(update_time, (v) => {
+  const [menu_lv1] = get_sport_menu(MenuData.menu_list)
+  menu_list.value = menu_lv1; //一级
+  current_menu.value = MenuData.menu_lv2; //2级
+  current_lv2.value = MenuData.current_lv_2_menu;//二级
+  set_menu_lv2(MenuData.current_lv_2_menu)
+});
+
+</script>
+<style  scoped lang="scss">
+    .sub-menu-date-w {
+      z-index: 501;
+    width: 100%;
+    max-height: 1.35rem;
+    // position: absolute;
+    // left: 0;
+    // top: 0.44rem;
+    padding: 0 0.05rem;
+    transition: transform 0.6s, max-height 0.3s;
+
+    &.esport {
+      transition: unset !important;
+
+      .sport-m-container {
+        background-color: transparent;
+      }
+    }
+
+    &.simple {
+      transform: translate3d(0, -0.6rem, 0);
+
+      &.zaopan {
+        transform: translate3d(0, -0.93rem, 0);
+      }
+    }
+
+    // 二级菜单
+    .sport-m-container {
+      width: 100%;
+      height: auto;
+      max-height: 1.35rem;
+      overflow: hidden;
+      position: relative;
+
+      .s-menu-container {
+        width: 100%;
+        height: 100%;
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding-top: 0.13rem;
+        padding-bottom: 0.05rem;
+        flex-wrap: nowrap;
+        scrollbar-width: none; // 去除滚动条火狐浏览器兼容性问题
+
+        .sport-menu-item {
+          width: 0.5rem;
+          height: 100%;
+          flex-shrink: 0;
+          color: var(--q-gb-t-c-4);
+          &.champion {
+            // width: 0.9rem;
+          }
+
+          .current {
+            color: var(--q-gb-bd-c-2);
+            .inner-w {
+              position: relative;
+              font-size: 0.1rem;
+
+              &.favorite {
+                &:after {
+                  background: rgba(255, 145, 36, 0.08);
+                }
+              }
+            }
+          }
+
+          .inner-w {
+            height: 0.41rem;
+            flex-direction: column;
+            flex-wrap: nowrap;
+            position: relative;
+
+            .sport-w-icon {
+              height: 0.27rem;
+              position: relative;
+
+              .sport-icon-wrap {
+                --per: -0.32rem;
+                display: block;
+                width: auto;
+                height: 0.22rem;
+                width: 0.22rem;
+                background-position: 0 0;
+                background-size: 0.22rem 18.88rem;
+
+                // 使用css变量统一管理，所以废弃这里代码，转为不遍历
+                // @each $item, $img in (d: '04', c: '03', a: '01', e: 'y0', b: '05') {
+                //   &.focus-#{$item} {
+                //     background-image: url("/image/wwwassets/bw3/menu/sport_menu_#{$img}.png");
+                //   }
+                // }
+                &.focus-d {
+                  background-image: var(--q-color-com-img-bg-205);
+                }
+
+                &.focus-c {
+                  background-image: var(--q-color-com-img-bg-206);
+                }
+
+                &.focus-a {
+                  background-image: var(--q-color-com-img-bg-207);
+                }
+
+                &.focus-e {
+                  background-image: var(--q-color-com-img-bg-208);
+                }
+
+                &.focus-b {
+                  background-image: var(--q-color-com-img-bg-209);
+                }
+              }
+
+              .sport-icon-wrap2 {
+                position: absolute;
+                bottom: 0;
+                right: -0.04rem;
+                width: 0.13rem;
+                height: 0.14rem;
+              }
+
+              .sport-match-count {
+                width: 1px;
+                height: 1px;
+                line-height: 1;
+                position: absolute;
+                right: -0.03rem;
+                top: 0;
+                font-size: 0.11rem;
+              }
+            }
+
+            .s-w-i-title {
+              max-width: 0.7rem;
+              font-size: 0.1rem;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+              position: relative;
+              top: -0.01rem;
+            }
+          }
+        }
+      }
+    }
+
+    // 三级菜单
+    .d-c-wrapper {
+      width: 100%;
+      height: 0.33rem;
+      overflow: hidden;
+    }
+
+    .date-container {
+      width: 100%;
+      height: 0.34rem;
+      padding-top: 0.1rem;
+      overflow-x: auto;
+      overflow-y: hidden;
+      display: flex;
+      line-height: 1;
+      padding-left: 0.2rem;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+
+      &.esport {
+        background-color: initial !important;
+      }
+
+      &:after {
+        content: " ";
+        display: block;
+        width: 0.01rem;
+        height: 0.02rem;
+        flex-shrink: 0;
+      }
+
+      /*****   日期菜单  ******* -S*/
+      .date-menu-item {
+        height: 0.2rem;
+        font-size: 0.12rem;
+        line-height: 1;
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        flex-shrink: 0;
+        align-items: center;
+        margin-right: 0.19rem;
+        position: relative;
+
+        &:last-child {
+          width: auto;
+          margin-right: 0.1rem;
+        }
+
+        &.focus {
+          font-size: 0.12rem;
+
+          &:after {
+            content: " ";
+            width: 0.14rem;
+            height: 0.02rem;
+            display: block;
+            border-radius: 0.08rem;
+          }
+        }
+
+        &.hidden-champion {
+          display: none;
+        }
+      }
+    }
+
+    /*  联赛菜单 */
+    .virtual-sports-results {
+      height: 0.42rem;
+      display: flex;
+      flex-wrap: nowrap;
+      overflow: auto;
+      align-items: center;
+      padding-left: 0.15rem;
+
+      .tab-item {
+        height: 0.26rem;
+        line-height: 0.26rem;
+        border-radius: 0.04rem;
+        margin-right: 0.06rem;
+        padding: 0 0.1rem;
+        flex-shrink: 0;
+      }
+    }
+  }
+
+</style>

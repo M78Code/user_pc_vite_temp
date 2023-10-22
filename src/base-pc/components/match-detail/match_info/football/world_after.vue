@@ -461,7 +461,7 @@ export default {
       }
       .result-icon {
         // 这里改成用精灵图
-        background-image: url('/yazhou-pc/image/common/png/sports_play_icon.png');
+        background-image: url($SCSSPROJECTPATH+'/image/common/png/sports_play_icon.png');
         background-repeat: no-repeat;
         width: 14px;
         height: 14px;

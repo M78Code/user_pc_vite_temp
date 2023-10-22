@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="26px" height="12px" viewBox="0 0 26 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 61.1 (89650) - https://sketch.com -->
+    <title>编组 98</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="0%" y1="39.3491124%" x2="100%" y2="60.6508876%" id="linearGradient-1">
+            <stop stop-color="#FF2929" offset="0%"></stop>
+            <stop stop-color="#FF713A" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="菜单&amp;注单" transform="translate(-775.000000, -496.000000)">
+            <g id="编组-108" transform="translate(698.000000, 71.000000)">
+                <g id="编组-105备份">
+                    <g id="编组-16备份" transform="translate(0.000000, 414.000000)">
+                        <g id="编组-98" transform="translate(77.000000, 11.000000)">
+                            <rect id="矩形" fill="url(#linearGradient-1)" x="0" y="0" width="26" height="12" rx="1"></rect>
+                            <path d="M7.96632783,9.5 L7.96632783,8.56730769 L4.67331639,8.56730769 L4.67331639,2.5 L3.5,2.5 L3.5,9.5 L7.96632783,9.5 Z M10.2308767,9.5 L10.2308767,2.5 L9.05756036,2.5 L9.05756036,9.5 L10.2308767,9.5 Z M14.7599746,9.5 L17.2707751,2.5 L16.0202033,2.5 L14.3398983,7.61057692 L14.2191868,8.11057692 L14.190216,8.11057692 L14.064676,7.60096154 L12.3891995,2.5 L11.1386277,2.5 L13.6445997,9.5 L14.7599746,9.5 Z M22.5,9.5 L22.5,8.56730769 L19.2552732,8.56730769 L19.2552732,6.35096154 L22.0074968,6.35096154 L22.0074968,5.41346154 L19.2552732,5.41346154 L19.2552732,3.4375 L22.4662008,3.4375 L22.4662008,2.5 L18.0819568,2.5 L18.0819568,9.5 L22.5,9.5 Z" id="LIVE" fill="#FFFFFF" fill-rule="nonzero"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

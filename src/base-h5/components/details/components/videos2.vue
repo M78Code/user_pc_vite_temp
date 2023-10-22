@@ -249,8 +249,8 @@
         </div> -->
         <!-- 全屏按钮 -->
         <div v-show="show_icons && ['muUrl', 'lvs'].includes(get_video_url.active)&& !load_error && !is_playing_replay" class="full-screen-btn" @click="set_full_screen">
-          <img v-if="get_is_full_screen"  src="/yazhou-h5/image/svg/pack_up.svg">
-          <img v-else  src="/yazhou-h5/image/svg/full_screen.svg">
+          <img v-if="get_is_full_screen"  :src="`/${project_name}/image/svg/pack_up.svg`">
+          <img v-else  :src="`/${project_name}5/image/svg/full_screen.svg`">
         </div>
         <!-- 视频info说明弹窗 -->
         <div
@@ -291,7 +291,7 @@ import basketball_match_analysis from "src/base-h5/components/details/analysis-m
 // import uid from "src/core/uuid/index.js"
 import { uid } from "quasar"
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt/index.js"
-import { MenuData, MatchDetailCalss,compute_img } from "src/core/index.js"
+import { MenuData, MatchDetailCalss,compute_img, project_name } from "src/core/index.js"
 
 export default {
   name: "videos",
@@ -305,26 +305,26 @@ export default {
   },
   data() {
     return {
-      tips_def: "/yazhou-h5/image/svg/video_b.svg",
-      tips_act: "/yazhou-h5/image/svg/video_a.svg",
-      voice_def: "/yazhou-h5/image/svg/video_i.svg",
-      voice_act: "/yazhou-h5/image/svg/video_h.svg",
-      // nail_def: "/yazhou-h5/image/svg/video_f.svg",
-      // nail_act: "/yazhou-h5/image/svg/video_e.svg",
-      donghua: "/yazhou-h5/image/svg/v-donghua.svg",
+      tips_def: `/${project_name}/image/svg/video_b.svg`,
+      tips_act: `/${project_name}/image/svg/video_a.svg`,
+      voice_def: `/${project_name}/image/svg/video_i.svg`,
+      voice_act: `/${project_name}/image/svg/video_h.svg`,
+      // nail_def: `/${project_name}/image/svg/video_f.svg`,
+      // nail_act: `/${project_name}/image/svg/video_e.svg`,
+      donghua: `/${project_name}/image/svg/v-donghua.svg`,
       // 直播 切换的图标
-      shipin: "/yazhou-h5/image/svg/v-shipin.svg",
+      shipin: `/${project_name}/image/svg/v-shipin.svg`,
       // 演播厅 切换的图标
-      studio_icon:"/yazhou-h5/image/svg/studio_icon.svg",
+      studio_icon:`/${project_name}/image/svg/studio_icon.svg`,
       // 赛前直播的
-      lvs_icon_pre : "/yazhou-h5/image/common/zhibo-before.svg",
-      // ding1: "/yazhou-h5/image/svg/ding1.svg",
-      // ding2: "/yazhou-h5/image/svg/ding2.svg",
-      bet: "/yazhou-h5/image/svg/bet.svg",
-      analyze: "/yazhou-h5/image/svg/analyse.svg",
-      analyze2: "/yazhou-h5/image/svg/analyse2.svg",
-      analyze_yo: "/yazhou-h5/image/svg/analyse2_y0.svg",
-      analyze2_y0: "/yazhou-h5/image/svg/analyse_y0.svg",
+      lvs_icon_pre : `/${project_name}/image/common/zhibo-before.svg`,
+      // ding1: `/${project_name}/image/svg/ding1.svg`,
+      // ding2: `/${project_name}/image/svg/ding2.svg`,
+      bet: `/${project_name}/image/svg/bet.svg`,
+      analyze: `/${project_name}/image/svg/analyse.svg`,
+      analyze2: `/${project_name}/image/svg/analyse2.svg`,
+      analyze_yo: `/${project_name}/image/svg/analyse2_y0.svg`,
+      analyze2_y0: `/${project_name}/image/svg/analyse_y0.svg`,
       select_item:-1,
       voice: true,
       nail: true,
@@ -1831,7 +1831,7 @@ export default {
       display: inline-block;
       width: 0.12rem;
       height: 0.2rem;
-      background-image: url("/yazhou-h5/image/common/go_back.svg");
+      background-image: url($SCSSPROJECTPATH + "/image/common/go_back.svg");
       background-size: 100% 100%;
     }
 

@@ -62,7 +62,7 @@
                             <div v-show="get_detail_data.csid != 1">{{ol_item.on}}</div>
                             <!-- 赔率 -->
                             <div>
-                              <img class="icon-lock" src="/yazhou-h5/image/common/match-icon-lock.svg" />
+                              <img class="icon-lock" :src="`/${project_name}/image/common/match-icon-lock.svg`" />
                             </div>
                           </div>
                           <div class="on-color" v-if="ol_item.otd == away_name.otd">
@@ -70,7 +70,7 @@
                             <div v-show="get_detail_data.csid != 1">{{ol_item.on}}</div>
                             <!-- 赔率 -->
                             <div>
-                              <img class="icon-lock" src="/yazhou-h5/image/common/match-icon-lock.svg" />
+                              <img class="icon-lock" :src="`/${project_name}/image/common/match-icon-lock.svg`" />
                             </div>
                           </div>
                         </template>
@@ -87,7 +87,7 @@
                             <div  v-show="get_detail_data.csid != 1">{{ol_item.on}}</div>
                             <!-- 赔率 -->
                             <div>
-                              <img class="icon-lock" src="/yazhou-h5/image/common/match-icon-lock.svg" />
+                              <img class="icon-lock" :src="`/${project_name}/image/common/match-icon-lock.svg`" />
                             </div>
                           </div>
                           <div class="on-color" v-if="ol_item.otd == away_name.otd">
@@ -95,7 +95,7 @@
                             <div  v-show="get_detail_data.csid != 1">{{ol_item.on}}</div>
                             <!-- 赔率 -->
                             <div>
-                              <img class="icon-lock" src="/yazhou-h5/image/common/match-icon-lock.svg" />
+                              <img class="icon-lock" :src="`/${project_name}/image/common/match-icon-lock.svg`" />
                             </div>
                           </div>
                           <!-- lock 锁状态 end -->
@@ -110,7 +110,7 @@
                         <div  v-show="get_detail_data.csid != 1">{{ol_item.on}}</div>
                         <!-- 赔率 -->
                         <div>
-                          <img class="icon-lock" src="/yazhou-h5/image/common/match-icon-lock.svg" />
+                          <img class="icon-lock" :src="`/${project_name}/image/common/match-icon-lock.svg`" />
                         </div>
                       </div>
                       <div class="on-color" v-if="ol_item.otd == away_name.otd">
@@ -118,7 +118,7 @@
                         <div  v-show="get_detail_data.csid != 1">{{ol_item.on}}</div>
                         <!-- 赔率 -->
                         <div>
-                          <img class="icon-lock" src="/yazhou-h5/image/common/match-icon-lock.svg" />
+                          <img class="icon-lock" :src="`/${project_name}/image/common/match-icon-lock.svg`" />
                         </div>
                       </div>
                       <!-- lock 锁状态 end -->
@@ -186,7 +186,7 @@
                             <div  v-show="get_detail_data.csid != 1">{{ol_item.on}}</div>
                             <!-- 锁 -->
                             <div>
-                              <img class="icon-lock" src="/yazhou-h5/image/common/match-icon-lock.svg" />
+                              <img class="icon-lock" :src="`/${project_name}/image/common/match-icon-lock.svg`" />
                             </div>
                           </div>
                           <div class="on-color" v-if="ol_item.otd == away_name.otd">
@@ -194,7 +194,7 @@
                             <div  v-show="get_detail_data.csid != 1">{{ol_item.on}}</div>
                             <!-- 锁 -->
                             <div>
-                              <img class="icon-lock" src="/yazhou-h5/image/common/match-icon-lock.svg" />
+                              <img class="icon-lock" :src="`/${project_name}/image/common/match-icon-lock.svg`" />
                             </div>
                           </div>
                         </template>
@@ -211,7 +211,7 @@
                             <div  v-show="get_detail_data.csid != 1">{{ol_item.on}}</div>
                             <!-- 赔率 -->
                             <div>
-                              <img class="icon-lock" src="/yazhou-h5/image/common/match-icon-lock.svg" />
+                              <img class="icon-lock" :src="`/${project_name}/image/common/match-icon-lock.svg`" />
                             </div>
                           </div>
                           <div class="on-color" v-if="ol_item.otd == away_name.otd">
@@ -219,7 +219,7 @@
                             <div  v-show="get_detail_data.csid != 1">{{ol_item.on}}</div>
                             <!-- 赔率 -->
                             <div>
-                              <img class="icon-lock" src="/yazhou-h5/image/common/match-icon-lock.svg" />
+                              <img class="icon-lock" :src="`/${project_name}/image/common/match-icon-lock.svg`" />
                             </div>
                           </div>
                           <!-- lock 锁状态 end -->
@@ -234,7 +234,7 @@
                         <div v-show="get_detail_data.csid != 1">{{ol_item.on}}</div>
                         <!-- 赔率 -->
                         <div>
-                          <img class="icon-lock" src="/yazhou-h5/image/common/match-icon-lock.svg" />
+                          <img class="icon-lock" :src="`/${project_name}/image/common/match-icon-lock.svg`" />
                         </div>
                       </div>
                       <div class="on-color" v-if="ol_item.otd == away_name.otd">
@@ -242,7 +242,7 @@
                         <div v-show="get_detail_data.csid != 1">{{ol_item.on}}</div>
                         <!-- 赔率 -->
                         <div>
-                          <img class="icon-lock" src="/yazhou-h5/image/common/match-icon-lock.svg" />
+                          <img class="icon-lock" :src="`/${project_name}/image/common/match-icon-lock.svg`" />
                         </div>
                       </div>
                       <!-- lock 锁状态 end -->
@@ -265,7 +265,7 @@
 // import { mapGetters } from "vuex";
 import odds_new from "src/base-h5/components/details/components/tournament-play/unit/odds-new.vue";
 // import odd_convert from "src/base-h5/mixins/odds_conversion/odds_conversion.js";
-import {utils } from 'src/core/index.js';
+import {utils,project_name} from 'src/core/index.js';
 import store from "src/store-redux/index.js";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"

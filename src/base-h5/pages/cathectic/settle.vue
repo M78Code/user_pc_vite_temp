@@ -53,7 +53,7 @@
                         v-if="value.profit > 0">+</template>{{ value.profit }}</span>
                   </span>
                   <span v-show="!value.open"><img class="icon-down-arrow"
-                      src="/yazhou-h5/image/list/league-collapse-icon.svg" /></span>
+                      :src="`/${project_name}/image/list/league-collapse-icon.svg`" /></span>
                 </p>
                 <div class="line" :class="!value.open && (index != Object.keys(list_data).length - 1) && 'line2'"></div>
                 <q-slide-transition>
@@ -87,6 +87,7 @@ import store from 'src/store-redux/index.js'
 import { format_M_D } from 'src/core/format/index.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { i18n_t } from "src/boot/i18n.js";
+import { project_name } from "src/core";
 //国际化
 
 
@@ -444,18 +445,18 @@ onUnmounted(() => {
 
   .early {
     display: inline-block;
-    background: url("/public/yazhou-h5/image/svg/select_b.svg") no-repeat center / contain;
+    background: url($SCSSPROJECTPATH + "/image/svg/select_b.svg") no-repeat center / contain;
     vertical-align: text-bottom;
     width: 0.14rem;
     height: 0.14rem;
   }
 
   .early2 {
-    background-image: url("/public/yazhou-h5/image/svg/select_a.svg");
+    background-image: url($SCSSPROJECTPATH + "/image/svg/select_a.svg");
   }
 
   .calendar {
-    background-image: url("/public/yazhou-h5/image/record/calendar2.svg");  
+    background-image: url($SCSSPROJECTPATH + "/image/record/calendar2.svg");  
   }
   /* ************** 排序按钮图标 ************** -S */
 
@@ -472,7 +473,7 @@ onUnmounted(() => {
   }
 
   .sort-2 {
-    background-image: url("/public/yazhou-h5/image/record/sort_settled_time2.svg");
+    background-image: url($SCSSPROJECTPATH + "/image/record/sort_settled_time2.svg");
   }
 
   .sort-1 {

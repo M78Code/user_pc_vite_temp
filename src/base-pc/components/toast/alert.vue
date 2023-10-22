@@ -12,7 +12,7 @@
           <!-- 域名错误弹窗 -->
           <template v-if="is_domain_error">
             <div class="page-lost">
-              <img src="/yazhou-pc/image/common/png/page_lost.png" alt="">
+              <img :src="`/${project_name}/image/common/png/page_lost.png`" alt="">
               <div class="text1">{{ i18n_t('common.user_api_limited1') }}</div>
               <div class="text2">{{ i18n_t('common.user_api_limited2') }}</div>
             </div>
@@ -35,22 +35,22 @@
 
 <script setup>
 import { onMounted, onUnmounted, reactive, ref } from 'vue';
-import { i18n_t } from "src/core/index.js";
+import { i18n_t, project_name } from "src/core/index.js";
 import { useMittEmitterGenerator, useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import store from "src/store-redux/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { utils } from "src/core/index.js";
 
 /* 退出登录通知-中文 */
-const logout_notice = '/yazhou-pc/image/image/logout_notice.png'
+const logout_notice = `/${project_name}/image/image/logout_notice.png`
 /* 退出登录通知-英文 */
-const logout_notice_en = '/yazhou-pc/image/image/logout_notice_en.png'
+const logout_notice_en = `/${project_name}/image/image/logout_notice_en.png`
 /* 退出登录通知-越南语 */
-const logout_notice_vi = '/yazhou-pc/image/image/logout_notice_vi.png'
+const logout_notice_vi = `/${project_name}/image/image/logout_notice_vi.png`
 /* 退出登录通知-泰语 */
-const logout_notice_th = '/yazhou-pc/image/image/logout_notice_th.png'
+const logout_notice_th = `/${project_name}/image/image/logout_notice_th.png`
 /* 退出登录通知-马来语 */
-// const logout_notice_ma = '/yazhou-pc/image/image/logout_notice_ma.png'
+// const logout_notice_ma = `/${project_name}/image/image/logout_notice_ma.png`
 
 /* 是否展示 */
 const is_show = ref(false)
@@ -264,7 +264,7 @@ function confirm() {
     border-radius: 22px;
     cursor: pointer;
     font-size: 18px;
-    background-image: url("/yazhou-pc/image/image/btn.svg");
+    background-image: url($SCSSPROJECTPATH+"/image/image/btn.svg");
     margin: 0 auto;
     background-size: contain;
     background-color: transparent !important;

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="28px" height="28px" viewBox="0 0 28 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>编组 12@1x</title>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="提示全屏-01" transform="translate(-946.000000, -646.000000)">
+            <g id="编组-12" transform="translate(946.000000, 646.000000)">
+                <circle id="椭圆形" stroke="#FFFFFF" stroke-width="2" fill-opacity="0.2" fill="#000000" cx="14" cy="14" r="13"></circle>
+                <path d="M14,6 C14.5522847,6 15,6.44771525 15,7 L15,13 L21,13 C21.5522847,13 22,13.4477153 22,14 C22,14.5522847 21.5522847,15 21,15 L15,15 L15,21 C15,21.5522847 14.5522847,22 14,22 C13.4477153,22 13,21.5522847 13,21 L13,15 L7,15 C6.44771525,15 6,14.5522847 6,14 C6,13.4477153 6.44771525,13 7,13 L13,13 L13,7 C13,6.44771525 13.4477153,6 14,6 Z" id="形状结合" fill="#FFFFFF" transform="translate(14.000000, 14.000000) rotate(45.000000) translate(-14.000000, -14.000000) "></path>
+            </g>
+        </g>
+    </g>
+</svg>

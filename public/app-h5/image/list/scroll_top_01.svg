@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="30px" height="30px" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>黄色白</title>
+    <defs>
+        <linearGradient x1="42.9509943%" y1="0%" x2="42.9509943%" y2="99.4159405%" id="linearGradient-1">
+            <stop stop-color="#FFB001" stop-opacity="0.02" offset="0%"></stop>
+            <stop stop-color="#FFB001" stop-opacity="0.203471577" offset="100%"></stop>
+        </linearGradient>
+        <circle id="path-2" cx="15" cy="15" r="15"></circle>
+        <linearGradient x1="78.0273438%" y1="64.2628686%" x2="19.1051136%" y2="36.5181765%" id="linearGradient-3">
+            <stop stop-color="#FF9124" offset="0.0218531469%"></stop>
+            <stop stop-color="#F7B500" offset="100%"></stop>
+        </linearGradient>
+        <path d="M16.4958368,14.5549564 L20.6204699,18.6684191 C21.1558555,19.2023548 22.0227117,19.2011794 22.5566474,18.6657938 C22.5727254,18.6496722 22.5883986,18.6331521 22.6036526,18.6162488 C23.1437577,18.0177449 23.1196453,17.1008464 22.5488298,16.5315573 L14.99708,9 L14.99708,9 L7.44456589,16.5312661 C6.87363872,17.1005871 6.8495964,18.0176449 7.38990824,18.616099 C7.89673862,19.1774687 8.76268592,19.2216816 9.32405566,18.7148512 C9.34094529,18.6996025 9.35745223,18.6839351 9.37356109,18.6678638 L13.4960764,14.5549564 L13.4960764,14.5549564 L13.9147458,14.2825256 C14.5917691,13.8419821 15.467331,13.8519301 16.1341701,14.3077422 L16.4958368,14.5549564 L16.4958368,14.5549564 Z" id="path-4"></path>
+    </defs>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="H5-黄色版-白备份" transform="translate(-315.000000, -690.000000)">
+            <g id="黄色白" transform="translate(315.000000, 690.000000)">
+                <g id="椭圆形">
+                    <use fill="#FFFFFF" xlink:href="#path-2"></use>
+                    <circle stroke="#FFB001" stroke-width="1" stroke-linejoin="square" fill="url(#linearGradient-1)" cx="15" cy="15" r="14.5"></circle>
+                </g>
+                <g id="形状" fill-rule="nonzero">
+                    <use fill="#FFB001" xlink:href="#path-4"></use>
+                    <use fill="url(#linearGradient-3)" xlink:href="#path-4"></use>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

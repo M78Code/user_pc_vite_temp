@@ -3,7 +3,7 @@
     <!-- 比赛进程 -->
     <div class="process-col yb-flex-center">
       <!--热门赛事显示hot标识-->
-      <img class="match-hot" src="/yazhou-pc/image/common/svg/hot.svg" v-if="match.is_hot"/>
+      <img class="match-hot" :src="`/${project_name}/image/common/svg/hot.svg`" v-if="match.is_hot"/>
       <!-- 比赛进程 -->
       <match-process v-if="is_mounted && match.api_update_time !=0" :match="match" sourc='match_list' show_page="match-list" :rows="2" />
     </div>
@@ -34,9 +34,7 @@
   </div>
 </template>
 <script setup>
-// import match_item_mixin from "src/project/yabo/mixins/match_list/match_item_mixin_new_data.js";
-// mixins: [match_item_mixin],
-
+import { project_name } from 'src/core/index.js';
 </script>
 
 <style>

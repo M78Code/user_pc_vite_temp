@@ -4,7 +4,9 @@
 import {import_json_data} from "./util.js"
 
 const  final_merchant_config  = await import_json_data( "./output/merchant/config.json")
-
+// 本次打包的 客户端版本
+import BUILD_VERSION_CONFIG from "./output/version/build-version.js";
+const { BUILD_VERSION, PROJECT_NAME } = BUILD_VERSION_CONFIG;
 
 
 let server_html_info = final_merchant_config.html_info  ||{}
@@ -61,7 +63,8 @@ export const   htmlVariables = {
     BRANCH: process.env.BRANCH,
     TAG: process.env.TAG,
     BUILD_TAG: process.env.BUILD_TAG  ,
- 
+    PROJECT_NAME,
+    BUILD_VERSION,
 
     error_upload_url: 'https://information-api.sportxxxwo8.com/error_info', // 错误上报环境地址
 

@@ -8,7 +8,7 @@
         <q-card-section>
           <div class="text-h6">
             <slot name="img">
-              <img src="/yazhou-pc/image/svg/warn.svg" />
+              <img :src="`/${project_name}/image/svg/warn.svg`" />
             </slot>
           </div>
           <slot name="msg">{{ text }}</slot>
@@ -22,6 +22,7 @@
 <script setup>
 import { onMounted,onUnmounted, ref } from 'vue';
 import { useMittOn, MITT_TYPES } from 'src/core/mitt/index.js'
+import { project_name } from 'src/core/index.js'
 
 /* 是否展示 */
 const is_show = ref(false)

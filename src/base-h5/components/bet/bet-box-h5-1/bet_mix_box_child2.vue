@@ -20,7 +20,7 @@
         <!-- 左 删除全部 -->
         <span style="margin-right:auto" @click="pack_up(3)">
           <!-- <img src="image/wwwassets/bw3/svg/close3.svg" class="yb_mr4 img1" /> -->
-          <img src="/public/yazhou-h5/image/bet/close3.svg" class="yb_mr4 img1" />
+          <img :src="`/${project_name}/image/bet/close3.svg`" class="yb_mr4 img1" />
           {{ $t('bet.delete_all') }}
         </span>
         <!-- 右 自动接受跟好赔率 -->
@@ -229,7 +229,7 @@ import betBar from ".//bet-bar.vue";
 // import {useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt/"
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
-import { UserCtr,compute_css,useMittOn, useMittEmit, MITT_TYPES  } from "src/core/index.js";
+import { UserCtr,compute_css,useMittOn, useMittEmit, MITT_TYPES, project_name } from "src/core/index.js";
 // import { hide_bet_series_but } from "src/core/bet/index.js"
 import { ref, onMounted, watch, computed, onUnmounted } from 'vue';
 import { get_query_bet_amount_common } from "src/core/bet/class/bet-box-submit.js"
@@ -510,7 +510,7 @@ onUnmounted(() => {
 /* ************** 接收更好赔率图标 ************** -S */
 .img2 {
   display: inline-block;
-  background: url("/public/yazhou-h5/image/bet/select_b.svg") no-repeat center / contain;
+  background: url($SCSSPROJECTPATH + "/image/bet/select_b.svg") no-repeat center / contain;
   // background: var(--q-color-com-img-bg-69) no-repeat center / contain;
   vertical-align: text-bottom;
   width: 0.14rem;
@@ -519,7 +519,7 @@ onUnmounted(() => {
 
 /* ************** 选中状态 **************  */
 .img3 {
-  background-image: url("/public/yazhou-h5/image/bet/select_a.svg");
+  background-image: url($SCSSPROJECTPATH + "/image/bet/select_a.svg");
   // background-image: var(--q-color-com-img-bg-68);
 }
 

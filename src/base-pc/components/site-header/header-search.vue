@@ -37,15 +37,15 @@ import store from "src/store-redux/index.js";
 import SearchHotPush from "src/core/search-class/search_hot_push.js";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
 import { tooltip_style } from "src/core/config/global-component-style.js";
-import { utils,SearchPCClass } from 'src/core/index.js';
+import { utils,SearchPCClass,project_name } from 'src/core/index.js';
 
 import { IconWapper } from 'src/components/icon/index.js'
 
 import UserCtr from "src/core/user-config/user-ctr.js";
 import globalAccessConfig from "src/core/access-config/access-config.js"
 console.log(globalAccessConfig,'globalAccessConfig');
-const img_search_icon = '/yazhou-pc/image/svg/search-icon.svg'
-const img_search_icon_y0 = '/yazhou-pc/image/svg/y0-search-icon.svg'
+const img_search_icon = `/${project_name}/image/svg/search-icon.svg`
+const img_search_icon_y0 = `/${project_name}//image/svg/y0-search-icon.svg`
 
 
 /** 国际化 */

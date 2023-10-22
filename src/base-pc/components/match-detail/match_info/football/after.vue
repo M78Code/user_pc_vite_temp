@@ -117,7 +117,7 @@
             <div class="gif-text">{{i18n_t('common.goal')}}</div>
           </div>
           <!-- 红牌动画 -->
-          <img class="red-flash" :class="{active:is_show_home_red}" style="margin-left:5px" :src="rs_hong">
+          <img class="red-flash" :class="{active:is_show_home_red}" style="margin-left:5px" :src="`/${project_name}/image/svg/rs_hong.svg`">
         </div>
         <div class="info-data">
         
@@ -164,7 +164,7 @@
             <div class="gif-text">{{i18n_t('common.goal')}}</div>
           </div>
           <!-- 红牌动画 -->
-          <img class="red-flash" :class="{active:is_show_away_red}" style="margin-left:5px" src="/yazhou-pc/image/svg/rs_hong.svg">
+          <img class="red-flash" :class="{active:is_show_away_red}" style="margin-left:5px" :src="`/${project_name}/image/svg/rs_hong.svg`">
         </div>
         <div class="info-data">
           <!-- 角球总比分 -->
@@ -202,9 +202,8 @@
 import  sprite_img  from   "src/core/server-img/sprite-img/index.js"
 import {MatchProcessFullVersionWapper} from "src/components/match-process/index.js";
 import lodash from 'lodash'
-import { get_match_status,i18n_t,formatSeconds,debounce_throttle_cancel } from 'src/core/index'
+import { get_match_status,i18n_t,formatSeconds,debounce_throttle_cancel,project_name } from 'src/core/index'
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/";
-import rs_hong from '/yazhou-pc/image/svg/rs_hong.svg'
 import { IconWapper } from 'src/components/icon'
 const tooltip_style = 'background:rgba(0,0,0,0.8);padding:4px 5px;border-radius:0px;color:#fff'
 export default {
@@ -220,11 +219,11 @@ export default {
   },
   data() {
     return {
+      project_name,
       tooltip_style,
       sprite_img,
       i18n_t,
       lodash,
-      rs_hong,
       timestamp: 0,//当前时间戳
       format_date: "",//倒计时秒数
       percentage: "",//百分比
@@ -476,7 +475,7 @@ export default {
       }
       .result-icon {
         // 这里改成用精灵图
-        background-image: url('/yazhou-pc/image/common/png/sports_play_icon.png');
+        background-image: url($SCSSPROJECTPATH+'/image/common/png/sports_play_icon.png');
         background-repeat: no-repeat;
         width: 14px;
         height: 14px;

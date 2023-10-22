@@ -10,18 +10,16 @@
     v-if="load_data_state == 'data'"
   >
     <div class="detais-hot-head">
-      <img src="/yazhou-pc/image/svg/hot.svg" />
+      <img :src="`/${project_name}/image/svg/hot.svg`" />
       <div>{{ $t('list.hot_match')}}</div>
     </div>
      <!-- 列表容器 -->
     <load-data :state="load_data_state">
-      <template >
         <match-list-card
-          v-for="card_key in match_list_card.match_list_card_key_arr"
-          :key="card_key+match_list_card.match_list_render_key"
+          v-for="card_key in match_list_card_key_arr"
+          :key="card_key"
           :card_key="card_key"
         />
-      </template>
     </load-data>
 
   </div>
@@ -30,18 +28,20 @@
 <script>
 
 import { MatchListCardFullVersionWapper as MatchListCard } from "src/base-pc/components/match-list/match-list-card/index.js"; //赛事列表
-import LoadData from 'src/components/load_data/load_data.vue';
+import loadData from "src/base-pc/components/load-data/load-data.vue"
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 
-import { useMittEmit,MITT_TYPES } from "src/core/index.js";
+import { useMittEmit,MITT_TYPES, project_name } from "src/core/index.js";
 export default {
   name: "HotMatchList",
-  component: {
-    LoadData,
+  components: {
+    loadData,
     MatchListCard,
   },
   data() {
     return {
+      project_name,
+      load_data_state:'data',
       match_list_card_key_arr:[]
     }
   },

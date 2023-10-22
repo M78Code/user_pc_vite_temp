@@ -19,7 +19,7 @@
             <!-- 左边联赛箭头及名称  -->
             <span>
               <img class="arrow_up" :class="{ collapse: !item1.hide }"
-                src="/yazhou-h5/image/list/league-collapse-icon-black.svg" alt="">
+                :src="`/${project_name}/image/list/league-collapse-icon-black.svg`" alt="">
               <span class="name-text">{{ ((type == 1 && get_sport_all_selected == true) || (type == 28 &&
                 get_curr_sub_menu_type == 29)) ? item1.nameText : item1.introduction }}</span>
             </span>
@@ -29,7 +29,7 @@
               v-if="(item1.select || (((type != 1 && get_curr_sub_menu_type != 29) || (type == 1 && get_sport_all_selected == false)) && item1.sportVOs[0].select))"
               :src="compute_img('checkbox-box-s')"
               />
-            <img src="/yazhou-h5/image/svg/selected-no.svg" alt="" class="icon-search"
+            <img alt="" class="icon-search"
               @click.stop.prevent="select_sport_ctr(item1, index)"
               :src="compute_img('checkbox-box')"
               v-else>
@@ -114,12 +114,13 @@ import SFilter from "src/base-h5/components/skeleton/filter.vue"
 import { UserCtr, compute_img,MenuData, i18n_t, get_file_path, useMittEmit, MITT_TYPES } from 'src/core/'
 import { ref, watch, computed, nextTick, onMounted, onBeforeUnmount } from 'vue'
 import lodash from 'lodash'
+import { project_name } from "src/core";
 
 // 构建版本
 // BUILD_VERSION:window.env.config.BUILD_VERSION,
 const list_data_loading = ref(false);    //数据加载中
-const default_url = "/yazhou-h5/image/svg/match_cup.svg"  //默认图片地址 // 无联赛logo图标黑色版
-const none_league_icon_black = "/yazhou-h5/image/svg/match_cup_black.svg"
+const default_url = `/project_name/image/svg/match_cup.svg`  //默认图片地址 // 无联赛logo图标黑色版
+const none_league_icon_black = `/project_name/image/svg/match_cup_black.svg`
 const list = ref([]); //数据列表整个赛事
 const type = MenuData.menu_type;  //筛选类型 1-滚球 3-今日  4-早盘  100-冠军 28 赛果
 const all_checked = ref(false); //是否全选

@@ -72,6 +72,7 @@ const menu_to_match_templte = {
   // 电竞
   2100: { label: "电竞-英雄联盟", value: "24" },
   2101: { label: "电竞-Dota2", value: "24" },
+  2101: { label: "电竞-Dota2", value: "24" },
   2103: { label: "电竞-王者荣耀", value: "24" },
 
   // 冠军

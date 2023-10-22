@@ -8,7 +8,7 @@
     <div class="text-left ellipsis"  @click="copy">
       {{i18n_t('bet.order_no')}}&thinsp;
       <span class="yb_mr4 orderno">{{data_o.orderNo}}</span>
-      <img  src="/yazhou-h5/image/svg/copy.svg" alt=""  style="width:0.1rem" />
+      <img :src="`/${project_name}/image/svg/copy.svg`" alt=""  style="width:0.1rem" />
     </div>
     <!-- 时间 i18n_t('bet_record.bet_time')   .Format(i18n_t('time4'))-->
     <div class="text-right">{{i18n_t('bet_record.bet_time')}}<span class="orderno">&thinsp;{{formatTime(+data_o.betTime, 'mm/DD HH:MM')}}</span></div>
@@ -23,6 +23,7 @@ import { ref, onUnmounted } from 'vue'
 import { formatTime } from 'src/core/format/index.js'
 import { i18n_t } from "src/boot/i18n.js";
 import store from "src/store-redux/index.js";
+import { project_name } from 'src/core'
 //国际化
 
 

@@ -21,7 +21,7 @@
               <p class="tittle-p row justify-between yb_px4" :class="index == 0 && 'tittle-p2'" @click="toggle_show(value)">
                 <!-- (new Date(name)).Format(t('time2')) -->
                 <span>{{ format_M_D(new Date(name).getTime())}}</span>
-                <span v-if="!value.open && index != 0"><img class="icon-down-arrow" src="/yazhou-h5/image/list/league-collapse-icon.svg" /></span>
+                <span v-if="!value.open && index != 0"><img class="icon-down-arrow" :src="`/${project_name}/image/list/league-collapse-icon.svg`" /></span>
               </p>
               <!--线-->
               <div class="line" :class="!value.open && (index != Object.keys(list_data).length-1) && 'line2'"></div>
@@ -54,6 +54,7 @@ import { ref, watch, onMounted, onUnmounted } from 'vue'
 import {useMittOn, MITT_TYPES} from  "src/core/mitt/index.js"
 import { format_M_D } from 'src/core/format/index.js'
 import { i18n_t } from "src/boot/i18n.js";
+import { project_name } from "src/core";
 import UserCtr from "src/core/user-config/user-ctr.js";
 //国际化
 import store from 'src/store-redux/index.js'
@@ -405,13 +406,13 @@ const props = defineProps({
 /**提前结算默认*/
 .early {
   display: inline-block;
-  background: url("/public/yazhou-h5/image/svg/select_b.svg") no-repeat center / contain;
+  background: url($SCSSPROJECTPATH + "/image/svg/select_b.svg") no-repeat center / contain;
   vertical-align: text-bottom;
   width: 0.14rem;
   height: 0.14rem;
 }
 /**提前结算*/
 .early2 {
-  background-image: url("/public/yazhou-h5/image/svg/select_a.svg");
+  background-image: url($SCSSPROJECTPATH + "/image/svg/select_a.svg");
 }
 </style>

@@ -44,7 +44,7 @@ export const write_file = (file_path, str) => {
 export const remove_file = (file_path) => {
   try {
     let stats = fs.existsSync(file_path);
-    console.log("stats---------", stats);
+    // console.log("stats---------", stats);
     if (stats) {
       console.log(`删除文件  ${file_path} 文件已存在 将进行删除-----`);
       fs.rmSync(file_path, { recursive: true, force: true });

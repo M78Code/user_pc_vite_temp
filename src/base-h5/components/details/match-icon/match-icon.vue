@@ -13,14 +13,14 @@
       <!-- 动画或视频icon -->
       <template v-if="icon_class == 'donghua'">
         <img
-          src="/yazhou-h5/image/svg/donghua.svg"
+          :src="`/${project_name}/image/svg/donghua.svg`"
           alt=""
           class="icon-style"
         >
       </template>
       <template v-if="icon_class == 'shipin'">
         <img
-          src="/yazhou-h5/image/svg/shipin.svg"
+          :src="`/${project_name}/image/svg/shipin.svg`"
           alt=""
           class="icon-style"
         >
@@ -44,6 +44,7 @@
 import { computed, defineComponent, onMounted, onUnmounted, reactive, ref, watch } from 'vue';
 import lodash from 'lodash';
 import { useRoute } from 'vue-router';
+import { project_name } from 'src/core';
 import { api_common } from 'src/api/index.js';
 import video from "src/core/video/video.js"   // 视频相关公共方法
 import uid from "src/core/uuid/index.js"
@@ -86,9 +87,9 @@ const is_in_play = ref(detailsReducer.is_in_play)
 
 let send_gcuuid = ''
 // 正在直播的
-const lvs_icon_ing = "/yazhou-h5/image/common/zhibo-l.png"
+const lvs_icon_ing = `/${project_name}/image/common/zhibo-l.png`
 // 赛前直播的
-const lvs_icon_pre = "/yazhou-h5/image/common/zhibo-before.svg"
+const lvs_icon_pre = `/${project_name}/image/common/zhibo-before.svg`
 // 演播厅的图标
 const lvs_state_obj = reactive({ lvs: '', icon_path: '' })
 const get_detail_data = reactive(props.detail_data)

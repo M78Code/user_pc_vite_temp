@@ -18,7 +18,7 @@
         <span v-else-if="default_index == 1">{{i18n_t('analysis_football_matches.turn_around')}}</span>
         <span v-else-if="default_index == 2">{{i18n_t('analysis_football_matches.size')}}</span>
         <i class="icon sort-flag"></i>
-        <img src="/yazhou-h5/image/common/f-icon-pay-change-y0.svg" class="sort-flag">
+        <img :src="`/${project_name}/image/common/f-icon-pay-change-y0.svg`" class="sort-flag">
       </div>
     </div>
     <!-- 主内容 -->
@@ -81,6 +81,7 @@ import { onUnmounted, watch, ref } from 'vue'
 import { i18n_t } from "src/boot/i18n.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { DateForMat } from "src/core/format/index.js"
+import { project_name } from 'src/core'
 
 // TODO: 后续修改调整
 // import {mapGetters} from "vuex";

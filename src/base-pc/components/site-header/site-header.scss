@@ -641,10 +641,10 @@
           color: var(--q-site-header-color-3);
         }
         .icon-balance_refresh {
-          background-image: url('/yazhou-pc/image/theme02/balance_refresh.svg');
+          background-image: url($SCSSPROJECTPATH+'/image/theme02/balance_refresh.svg');
           background-position: center;
           &:hover {
-            background-image: url('/yazhou-pc/image/theme02/balance_refresh_hover.svg');
+            background-image: url($SCSSPROJECTPATH+'/image/theme02/balance_refresh_hover.svg');
           }
         }
       }
@@ -725,19 +725,19 @@
             }
 
             &.collapse-open {
-                background: url("/yazhou-pc/image/svg/collapse_up.svg") no-repeat center / cover;
+                background: url($SCSSPROJECTPATH+"/image/svg/collapse_up.svg") no-repeat center / cover;
             }
 
             &.collapse-hide {
-            background: url("/yazhou-pc/image/svg/collapse_down.svg") no-repeat center / cover;
+            background: url($SCSSPROJECTPATH+"/image/svg/collapse_down.svg") no-repeat center / cover;
             }
 
             &.collapse-open-y0 {
-                background: url("/yazhou-pc/image/svg/collapse_up.svg") no-repeat center / cover;
+                background: url($SCSSPROJECTPATH+"/image/svg/collapse_up.svg") no-repeat center / cover;
             }
 
             &.collapse-hide-y0 {
-                background: url("/yazhou-pc/image/svg/collapse_down_y0.svg") no-repeat center / cover;
+                background: url($SCSSPROJECTPATH+"/image/svg/collapse_down_y0.svg") no-repeat center / cover;
             }
         }
     }
@@ -1002,11 +1002,11 @@
         }
         .icon-balance_refresh {
             // TODO: 
-          background-image: url('/yazhou-pc/image/theme01/balance_refresh.svg');
+          background-image: url($SCSSPROJECTPATH+'/image/theme01/balance_refresh.svg');
           background-position: center;
           &:hover {
              // TODO: 
-            background-image: url('/yazhou-pc/image/theme01/balance_refresh_hover.svg');
+            background-image: url($SCSSPROJECTPATH+'/image/theme01/balance_refresh_hover.svg');
           }
         }
       }

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="14px" height="14px" viewBox="0 0 14 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>换肤-月亮备份 2</title>
+    <defs>
+        <linearGradient x1="50%" y1="99.9781469%" x2="50%" y2="2.31370192%" id="linearGradient-1">
+            <stop stop-color="#569FFD" offset="0%"></stop>
+            <stop stop-color="#9AC6FF" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="设置黑色" transform="translate(-334.000000, -865.000000)" fill="url(#linearGradient-1)">
+            <path d="M338.542269,864.998606 C338.462626,865.423511 338.420974,865.861805 338.420974,866.309828 L338.420974,866.309828 L338.420974,866.63028 C338.420974,870.536898 341.587913,873.703837 345.494531,873.703837 C346.386404,873.703837 347.239726,873.538776 348.025613,873.237536 C347.410776,876.517988 344.532019,879 341.073558,879 C337.16694,879 334,875.83306 334,871.926442 L334,871.605991 C334,868.656096 335.805723,866.12795 338.372127,865.066594 Z" id="换肤-月亮备份-2"></path>
+        </g>
+    </g>
+</svg>

@@ -25,7 +25,7 @@
                 :is_add="[1,4,11,14,100,101,102,103].includes(+item.csid)"
               />
               <!-- 视频直播图标 -->
-              <img v-if="item.mms == 2"  src="/yazhou-h5/image/common/video.svg" alt="" />
+              <img v-if="item.mms == 2"  :src="`/${project_name}/image/common/video.svg`" alt="" />
             </div>
           </div>
           <div class="card-content">
@@ -47,7 +47,7 @@
                   <span v-html="handicap_ov(item, 0)"></span>
                 </template>
                 <template v-else>
-                  <img src="/yazhou-h5/image/common/match-icon-lock.svg" alt="" />
+                  <img :src="`/${project_name}/image/common/match-icon-lock.svg`" alt="" />
                 </template>
               </div>
             </div>
@@ -70,7 +70,7 @@
                 </template>
                 <template v-else>
                   <!-- 封盘图标 -->
-                  <img src="/yazhou-h5/image/common/match-icon-lock.svg" alt="" />
+                  <img :src="`/${project_name}/image/common/match-icon-lock.svg`" alt="" />
                 </template>
               </div>
             </div>
@@ -88,7 +88,7 @@ import { api_home } from "src/api/index.js";
 import store from "src/store-redux/index.js";
 import lodash from 'lodash'
 import { useRouter } from 'vue-router'
-import { i18n_t} from "src/core/index.js"
+import { i18n_t, project_name } from "src/core/index.js"
 import { useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import teamImg from "src/base-h5/components/details/team-img.vue";   // 详情页蓝色背景上的大型字母图标
 import countingDown from "src/base-h5/components/common/counting-down.vue";  // 赛事进行中每秒变化的计时器
@@ -207,7 +207,7 @@ const normal_ = computed(() => {
     if (!(match.hps && match.hps[0].hl[0]&& match.hps[0].hl[0].ol && flag)) return
     let ol_item = match.hps[0].hl[0].ol[index]
     if (ol_item.os == 2 || !ol_item.ov || ol_item.ov < 101000) return
-    bet_click(match, match.hps[0], ol_item);
+    set_bet_obj_config(match, match.hps[0], ol_item);
     //应对猜你喜欢模块的赔率盘口跟新不及时
     get_list()
   }

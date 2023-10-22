@@ -43,7 +43,7 @@
       @mouseenter="video_enter"
       @mouseleave="video_leave"
     >
-      <div class="img-loading custom-format-img-loading" v-show="show_loading"></div>
+      <div class="img-loading custom-format-img-loading" :style="compute_css('pc-img-loading')" v-show="show_loading"></div>
       <div class="loading-text">
         {{ i18n_t('common.loading')}}
         <!-- 数据加载中... 请稍后 -->
@@ -135,7 +135,7 @@ import noVideo from "src/base-pc/components/match-detail/match_info/no_video.vue
 import videoReplayError from "src/base-pc/components/video-replay/video-replay-error.vue"
 import { IconWapper } from 'src/components/icon'
 import info from "src/base-pc/components/match-detail/match_info/info.vue";
-import { i18n_t,format_second_ms,utils,LayOutMain_pc} from "src/core/index"
+import { i18n_t,format_second_ms,utils,LayOutMain_pc,compute_css} from "src/core/index"
 export default {
   mixins: [match_video],
   components: {
@@ -148,6 +148,7 @@ export default {
   },
   data(){
     return {
+      compute_css,
       LayOutMain_pc,
       utils,
       route:this.$route,
@@ -299,7 +300,7 @@ export default {
     .replay-icon {
       width: 65px;
       height: 18px;
-      background: url('/yazhou-pc/image/svg/replay_icon2.svg');
+      background: url($SCSSPROJECTPATH+'/image/svg/replay_icon2.svg');
       background-size: 100% 100%;
     }
   }
@@ -330,7 +331,7 @@ export default {
          width: 16px;
          height: 16px;
          background-size: 100%;
-         background-image: url('/yazhou-pc/image/common/svg/video_history_play.svg');
+         background-image: url($SCSSPROJECTPATH+'/image/common/svg/video_history_play.svg');
          margin-right: 8px;
     }
     span{

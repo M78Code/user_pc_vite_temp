@@ -7,17 +7,20 @@
     <q-page-container class="page_container" :style="`height:${+inner_height / 100}rem`">
       <!-- <layout-header /> -->
       <!-- <layout-conent /> -->
-      <MenuWapper v-if="['sport_menu', 'matchList'].includes(route.name)">
+      <!-- <MenuWapper v-if="['sport_menu', 'matchList'].includes(route.name)">
         <template #menu-right>
           <activityIcon />
           <setMenu />
         </template>
-      </MenuWapper>
+      </MenuWapper> -->
+      <TopMenu />
+      <ScrollMenu />
+      <Tab />
       <router-view />
       <BetBoxWapper />
       <!--页脚-->
-      <FooterWapper class="m-layout" v-if="['sport_menu', 'matchList'].includes(route.name)">
-      </FooterWapper>
+      <Tabbar class="m-layout" v-if="['sport_menu', 'matchList'].includes(route.name)">
+      </Tabbar>
 
       <!-- 筛选+搜索   已脱离文档流-->
       <div v-if="select_dialog" position="bottom" class="select-mask" :style="`height:${inner_height}px`">
@@ -55,7 +58,8 @@ import {
   nextTick,
 } from "vue";
 import { useMittOn, MITT_TYPES, i18n_t, UserCtr } from "src/core/";
-import { FooterWapper } from "src/components/footer/index.js";
+// import { FooterWapper } from "src/components/footer/index.js";
+import { TopMenu,Tabbar,ScrollMenu,Tab } from 'src/base-h5/components/menu/app-h5-menu/index'
 import { MenuWapper } from "src/base-h5/components/menu";
 import { BetBoxWapper } from "src/base-h5/components/bet";
 import activityIcon from "src/base-h5/components/common/activity-icon.vue"; // 设置

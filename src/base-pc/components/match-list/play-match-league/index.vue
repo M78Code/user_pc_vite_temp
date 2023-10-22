@@ -268,13 +268,13 @@ function set_fold() {
 <style lang="scss" scoped>
 .match-tplesports {
   .sport-img {
-    background-image: url("/yazhou-pc/image/common/png/sport_old_icon.png");
+    background-image: url($SCSSPROJECTPATH+"/image/common/png/sport_old_icon.png");
   }
 }
 
 .league-icon-wrap {
   .sport-img {
-    background-image: url("/yazhou-pc/image/common/png/sport_old_icon.png");
+    background-image: url($SCSSPROJECTPATH+"/image/common/png/sport_old_icon.png");
   }
 }
 

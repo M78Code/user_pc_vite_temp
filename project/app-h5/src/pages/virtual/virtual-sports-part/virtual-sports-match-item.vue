@@ -527,7 +527,7 @@ export default defineComponent({
       if (!hl_item) return;
       ol_item.id_ = lodash.get(hl_item,'hl[0].hn') ?
         `${match_item.mid}_${hl_item.chpid || hl_item.hpid}_${ol_item.ot}_${hl_item.hl[0].hn}` : ol_item.oid;
-      bet_click3(match_item, hl_item, ol_item);
+      set_bet_obj_config(match_item, hl_item, ol_item);
     }
 
     // #TODO VUEX GETEERES

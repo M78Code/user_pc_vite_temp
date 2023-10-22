@@ -3,7 +3,8 @@ import lodash from 'lodash'
 const e_sport_csids = [101, 100, 102, 103];
 import { AllDomain, UserCtr } from 'src/core/'
 // 目前环境信息
-const { NODE_ENV, CURRENT_ENV, DOMAIN_RESULT } = window.BUILDIN_CONFIG;
+const { NODE_ENV, CURRENT_ENV, DOMAIN_RESULT, PROJECT_NAME } = window.BUILDIN_CONFIG;
+let project_name = PROJECT_NAME
 const src_rdm = Date.now();
 // 字母顺序
 const letter_num = {
@@ -183,4 +184,4 @@ let image_is_exist = function (url, img) {
   });
 };
 
-export { get_file_path, load_img_src, load_img_src_common, image_is_exist };
+export { get_file_path, load_img_src, load_img_src_common, image_is_exist, project_name };

@@ -106,7 +106,7 @@
     <!-- 点击头部刷新弹出 loading 蒙层 -->
     <div v-show="show_refresh_mask" class="refresh-mask absolute-full yb-flex-center" :style="{ top: '36px' }">
       <!-- <div v-show="show_refresh_mask" class="refresh-mask absolute-full yb-flex-center" :style="{top:get_is_show_banner && get_is_roll_show_banner ? '156px' : '36px'}"> -->
-      <div class="img-loading custom-format-img-loading"></div>
+      <div class="img-loading custom-format-img-loading" :style="compute_css('pc-img-loading')"></div>
     </div>
   </div>
 </template>
@@ -118,7 +118,7 @@ import LoadData from 'src/components/load_data/load_data.vue';
 import { LeagueTabFullVersionWapper as LeagueTab } from "src/base-pc/components/tab/league-tab/index.js"; //联赛菜单
 import listFilter from "src/base-pc/components/match-list/list-filter/index.vue"; //赛事列表筛选：滚球-球种、早盘-日期
 import ListFilterHot from "src/base-pc/components/match-list/list-filter-hot/index.vue"; //热门赛事列表 头部筛选
-import { ListFilterDateFullVersionWapper as listFilterDate } from "src/base-pc/components/match-list/list-filter-date/index.js"; //热门赛事列表  早盘-日期
+import listFilterDate from "src/base-pc/components/match-list/list-filter-date/index.vue"; //热门赛事列表  早盘-日期
 import { MatchListCardFullVersionWapper as MatchListCard } from "src/base-pc/components/match-list/match-list-card/index.js"; //赛事列表
 import { PlayVirtualMatchTypeFullVersionWapper as PlayVirtualMatchType } from "src/base-pc/components/match-list/play-virtual-match-type/index.js";//赛事列表头部——滚球——赛事类型
 import ListHeader from "src/base-pc/components/match-list/list-header/index.vue"; //头部
@@ -137,7 +137,7 @@ import EsportsHeader from "src/base-pc/components/match-list/esports-header/inde
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 import useMatchListMx from "src/core/match-list-pc/match-list-composition.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
-import { PageSourceData } from 'src/core/index.js';
+import { PageSourceData,compute_css } from 'src/core/index.js';
 import {MatchDataWarehouse_PC_List_Common as MatchListData ,GlobalAccessConfig} from "src/core/index.js";
 
 import "./match_list.scss";
@@ -179,6 +179,7 @@ export default {
   },
   data() {
     return {
+      compute_css,
       MatchListCardDataClass   ,
       load_data_state,
       match_list_card_key_arr:[]
