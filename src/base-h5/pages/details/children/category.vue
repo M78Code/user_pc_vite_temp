@@ -93,7 +93,7 @@ import loading from "src/base-h5/components/common/loading.vue"
 import detailMatchList from 'src/base-h5/components/details/components/detail-match-list.vue';
 import uid from "src/core/uuid/index.js"
 import lodash from "lodash";
-import { project_name } from "src/core/";
+import { LOCAL_PROJECT_FILE_PREFIX } from "src/core/";
 import { useRouter, useRoute } from "vue-router";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 // import { Level_one_detail_odd_info } from "../category-list.js";
@@ -110,6 +110,12 @@ export default defineComponent({
     detailMatchList
   },
   props: ['category_arr'],
+  data() {
+    return {
+      LOCAL_PROJECT_FILE_PREFIX
+    }
+  },
+  
   setup(props, evnet) {
     // 路由
     const router = useRouter();

@@ -111,7 +111,7 @@
 import { ref, computed, onMounted, onUnmounted, watch, nextTick } from "vue";
 import store from "src/store-redux/index.js";
 import lodash from 'lodash'
-import { project_name } from 'src/core'
+import { LOCAL_PROJECT_FILE_PREFIX } from 'src/core'
 import { MenuData, score_switch_handle, score_format } from "src/core/index.js"
 
 const props = defineProps({
