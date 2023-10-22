@@ -3,7 +3,7 @@
     <!-- 比赛进程 -->
     <div class="process-col">
       <!--热门赛事显示hot标识-->
-      <img class="match-hot" :src="`/${project_name}/image/common/svg/hot.svg`" v-if="match.is_hot"/>
+      <img class="match-hot" :src="compute_local_project_file_path('/image/common/svg/hot.svg')" v-if="match.is_hot"/>
         <!-- 比赛进程 -->
       <div class="yb-flex-center full-width" :style="`height:105px;`">
         <match-process v-if="is_mounted && match" :match="match" source='match_list' show_page="match-list" :rows="2" />
@@ -33,7 +33,7 @@
   </div>
 </template>
 <script setup>
-import { project_name } from 'src/core/index.js'
+import { compute_local_project_file_path } from 'src/core/index.js'
 </script>
 
 <style lang="scss" scoped>

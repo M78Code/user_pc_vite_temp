@@ -5,7 +5,7 @@
       <!-- 比赛进程 -->
       <div class="process-col yb-flex-center tpl-esports">
         <!--热门赛事显示hot标识-->
-        <img class="match-hot" :src="`/${project_name}/image/common/svg/hot.svg`" v-if="match.is_hot"/>
+        <img class="match-hot" :src="compute_local_project_file_path('/image/common/svg/hot.svg')" v-if="match.is_hot"/>
         <!-- 串 ：可串关文字提示 ispo：0否 1普通串关 2局内串关 -->
         <div class="match-parlay">
           <template v-if="lodash.get(match,'ispo', 0) != 0">
@@ -41,7 +41,7 @@
 </template>
 
 <script setup>
-import { project_name } from 'src/core/index.js'
+import { compute_local_project_file_path } from 'src/core/index.js'
 import lodash from 'lodash';
 
 </script>

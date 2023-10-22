@@ -13,7 +13,7 @@
     <!-- 比赛进程 -->
     <div class="process-col yb-flex-center">
       <!--热门赛事显示hot标识-->
-      <img class="match-hot" :src="`/${project_name}/image/common/svg/hot.svg`" v-if="match.is_hot"/>
+      <img class="match-hot" :src="compute_local_project_file_path('/image/common/svg/hot.svg')" v-if="match.is_hot"/>
       <!-- 比赛进程 -->
       <match-process v-if="is_mounted && match.api_update_time !=0" :match="match" source="match_list"  show_page="match-list" :rows="2" />
     </div>
@@ -49,7 +49,7 @@ import { computed } from 'vue';
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
-import { t, project_name } from "src/core/index.js";
+import { t, compute_local_project_file_path } from "src/core/index.js";
 // useRegistPropsHelper(component_symbol, need_register_props)
 const props = defineProps ({
   match: {
