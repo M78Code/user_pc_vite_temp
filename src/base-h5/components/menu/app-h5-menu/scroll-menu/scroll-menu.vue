@@ -67,7 +67,7 @@ import lodash from "lodash"
 import MatchFold from 'src/core/match-fold'
 import base_data from "src/core/base-data/base-data.js";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
-import { ref, watch, computed } from "vue";
+import { ref, watch, computed,onUpdated } from "vue";
 import { i18n_t, compute_css, GlobalAccessConfig, MenuData, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/index.js";
 import { is_scroll_ball, update_time, is_export, is_mix,is_results, is_kemp, is_jinzu, menu_type } from 'src/base-h5/mixin/menu.js'
 import { get_sport_menu } from "../top-menu/top-list";
@@ -77,6 +77,7 @@ const menu_wrap_simple = ref(false);
 const sport_container_simple = ref(false);
 //一级菜单
 let menu_list = ref([]);
+let current_lv1 = ref({});
 //二级 菜单 当前菜单
 let current_menu = ref({});
 // 是否初次渲染
@@ -109,11 +110,11 @@ function select_all_sub_menu_handle() {
   const mi = lodash.get(MenuData.current_lv_2_menu, 'mi', "")
   if (mi === item.mi && !is_first.value) return
   MenuData.set_current_lv2_menu(item, index, type);
-  switch (menu_type.value) {
-    case 7://电竞需要改变背景图片
-      dj_back_img(item.mi)
-      break
-  }
+  // switch (menu_type.value) {
+  //   case 7://电竞需要改变背景图片
+  //     dj_back_img(item.mi)
+  //     break
+  // }
   handle_match_render_data()
 }
 /**
@@ -189,11 +190,19 @@ function select_all_sub_menu_handle() {
 watch(update_time, (v) => {
   const [menu_lv1] = get_sport_menu(MenuData.menu_list)
   menu_list.value = menu_lv1; //一级
+  current_lv1.value = MenuData.current_lv_1_menu;
   current_menu.value = MenuData.menu_lv2; //2级
   current_lv2.value = MenuData.current_lv_2_menu;//二级
   // set_menu_lv2(MenuData.current_lv_2_menu)
 });
 
+watch(()=>current_lv1.value.mi, (v) => {
+ if(MenuData.is_scroll_ball(current_lv1.value.mi)){
+  select_all_sub_menu_handle()
+ }else{
+  set_menu_lv2(current_lv1.value.sl[0],0,"click")
+ }
+});
 </script>
 <style  scoped lang="scss">
     .sub-menu-date-w {
