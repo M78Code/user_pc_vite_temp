@@ -1,5 +1,5 @@
- const {PROJECT_NAME}  = window.BUILDIN_CONFIG
- let project_name = PROJECT_NAME
+import { LOCAL_PROJECT_FILE_PREFIX }  from 'src/core/index.js'
+ 
  let football = `${LOCAL_PROJECT_FILE_PREFIX}/image/png/football.png`; //足球
 let basketball = `${LOCAL_PROJECT_FILE_PREFIX}/image/png/basketball.png`; //篮球
 let baseball = `${LOCAL_PROJECT_FILE_PREFIX}/image/png/baseball.png`; //棒球
