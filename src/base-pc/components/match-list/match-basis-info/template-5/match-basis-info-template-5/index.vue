@@ -40,7 +40,7 @@
           class="icon-wrap settlement-pre relative-position"
           v-tooltip="{content: t('bet_record.settlement_pre')}"
         >
-           <img class="match_pre" :src="`/${project_name}/image/png/match_pre.png`"/>
+           <img class="match_pre" :src="compute_local_project_file_path('/image/png/match_pre.png')"/>
         </div>
        </div>
       <!-- 中立场、盘口数 -->
@@ -73,7 +73,7 @@
 <script setup>
 // import match_basis_info_mixin from "src/project/yabo/components/match_list/match_basis_info/match_basis_info_mixin.js"
 // mixins:[match_basis_info_mixin],
-import { project_name } from "src/core";
+import { compute_local_project_file_path } from "src/core";
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'

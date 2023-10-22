@@ -4,7 +4,7 @@
     <!-- 比赛进程 -->
     <div class="process-col yb-flex-center">
       <!--热门赛事显示hot标识-->
-      <img class="match-hot" :src="`/${project_name}/image/common/svg/hot.svg`" v-if="lodash.get(match, 'is_hot')"/>
+      <img class="match-hot" :src="compute_local_project_file_path('/image/common/svg/hot.svg')" v-if="lodash.get(match, 'is_hot')"/>
       <!-- 比赛进程 -->
       <match-process v-if="is_mounted && match && match.api_update_time !=0" :match="match" source='match_list' show_page="match-list" :rows="2" />
     </div>
@@ -37,7 +37,7 @@
 
 import { ref, watch, defineProps } from 'vue';
 
-import { t, get_match_status, project_name, MatchDataWarehouse_PC_List_Common as MatchListData, UserCtr } from "src/core/index.js";
+import { t, get_match_status, compute_local_project_file_path, MatchDataWarehouse_PC_List_Common as MatchListData, UserCtr } from "src/core/index.js";
 import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card-class.js'
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import { utils_info } from 'src/core/utils/module/match-list-utils.js';

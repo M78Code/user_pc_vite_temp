@@ -10,7 +10,7 @@
       <div class="flex1"></div>
       <div class="box">
         <div>
-          <img :src="`/${project_name}/image/svg/replay_video_no_line.svg`" />
+          <img :src="compute_local_project_file_path('/image/svg/replay_video_no_line.svg')" />
         </div>
         <div class="txt">{{ i18n_t('replay_video.iframe_err') }}</div>
       </div>
@@ -21,7 +21,7 @@
 
 <script>
 
-import { project_name } from 'src/core/index.js';
+import { compute_local_project_file_path } from 'src/core/index.js';
 
 import axios from "axios";
 export default {
