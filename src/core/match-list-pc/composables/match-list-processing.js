@@ -157,7 +157,7 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 			}
 			MenuData.set_filter_select_obj(new_filter);
 		}
-		if (![2, 3].includes(MenuData.menu_root) && pre_name) {
+		if (![2, 3].includes(MenuData.menu_root) && MenuData.cur_menu_type.pre_name) {
 			store.dispatch({
 				type: 'remove_pre_filter_select_obj',
 				data: {}

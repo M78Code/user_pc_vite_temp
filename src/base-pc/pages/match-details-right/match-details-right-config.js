@@ -529,7 +529,6 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
             }
           })
           .catch((err) => {
-            debugger
             console.error(err,'err');
             set_home_loading_time_record("err");
             if (!obj.isWs) {

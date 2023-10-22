@@ -109,6 +109,9 @@ function tab_click(obj) {
   }
 }
 </script>
+<style lang="scss">
+  @import url('./esports-header.scss');
+</style>
 <style lang="scss" scoped>
 .c-esports-header {
   border-radius: 0 0 6px 6px;

@@ -4,13 +4,9 @@
 export default {
   'h5-img-bet-record-close': {
     default: "img-bet-record-close",
- 
-
   },
   'h5-img-bet-record-close': {
     default: "h5-img-bet-record-close",
- 
-
   },
   'h5-go-back-icon': {
     default: "h5-go-back-icon",

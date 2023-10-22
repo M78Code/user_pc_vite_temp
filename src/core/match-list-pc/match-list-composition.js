@@ -700,6 +700,7 @@ const check_match_last_update_time = () => {
 	let mids = [];
 	let now_time = ServerTime.get_remote_time();
 	// 遍历可视区域赛事ID
+	console.log('MatchListScrollClass', MatchListScrollClass.show_mids);
 	MatchListScrollClass.show_mids.forEach((mid) => {
 		// 更新时间间隔
 		let api_time_dif = 0,

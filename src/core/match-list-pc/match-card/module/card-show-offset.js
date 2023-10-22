@@ -90,7 +90,6 @@ export const set_card_show_level = (scroll_top = 0) => {
 
       league_title_card_obj.show_level = card_obj.show_level;
       let mids_arr = card_obj.mids.split(",");
-
       // 遍历联赛容器下的赛事卡片  设置显示等级
       mids_arr.forEach((mid) => {
         let match_card_obj = MatchListCardData.all_card_obj[mid+'_'];
