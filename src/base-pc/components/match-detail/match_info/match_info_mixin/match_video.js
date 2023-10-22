@@ -4,7 +4,6 @@
  * @Description: 右侧视频播放组件
  */
 
-// import { mapGetters, mapMutations } from "vuex"
 import info from "src/base-pc/components/match-detail/match_info/info.vue";
  import video  from "src/core/video/video.js"
 import video_replay from "src/base-pc/components/match-detail/match_info/match_info_mixin/video_replay.js";
@@ -91,11 +90,6 @@ export default {
     }
   },
   computed: {
-    // ...mapGetters({
-    //   //页面大小
-    //   vx_get_layout_list_size: "get_layout_list_size",
-    //  
-    // }),
     // 是否为电竞
     is_esports() {
       let is_esports_val

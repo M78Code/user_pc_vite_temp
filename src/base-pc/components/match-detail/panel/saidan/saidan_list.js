@@ -8,7 +8,7 @@ import {
     api_betting,
     api_details
     // api_account,
-  } from "src/public/api/index";
+  } from "src/api/index";
 import utils from 'src/public/utils/utils.js'
 import { mapGetters, mapActions } from "vuex";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
@@ -196,11 +196,11 @@ export default {
       }
     },
     computed: {
-      ...mapGetters({
-        lang: "get_lang",
-        get_chatroom_id:'get_chatroom_id',  // 聊天室ID
-        get_match_details_params:'get_match_details_params'
-      }),  
+      // ...mapGetters({
+      //   lang: "get_lang",
+      //   get_chatroom_id:'get_chatroom_id',  // 聊天室ID
+      //   get_match_details_params:'get_match_details_params'
+      // }),  
     },
     methods: {
       on_switch({index}){
