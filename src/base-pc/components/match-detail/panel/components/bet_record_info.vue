@@ -76,9 +76,9 @@
 <script>
 import { post_chat_likemessage } from "src/public/api/module/chatroom/index.js";
 import bet_item_mixin  from "src/public/components/bet_item/bet_item_mixin";
-import { api_details } from "src/public/api/index";
-import { mapGetters, mapActions } from "vuex";
+import { api_details } from "src/api/index";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
+import { UserCtr,MatchDetailCalss } from "src/core/index";
 export default {
   name: "bet_record_info",
   mixins:[bet_item_mixin],
@@ -153,20 +153,33 @@ export default {
     },
   },
   watch: {
-
+  /*
+  ** 监听MatchDetailCalss的版本号  获取最新的mid
+  */
+  'details_data_version.version':{
+      handler(val){
+        if (val) {
+        this.get_match_details_params = MatchDetailCalss.params
+       }
+      },
+      immediate: true
   },
-  computed: {
-    ...mapGetters({
-      // 获取 uid
-      get_uid: "get_uid",
+  },
+  data(){
+    return{
+       // 获取 uid
+       get_uid:UserCtr.get_uid()
       //获取详情参数
-      get_match_details_params:'get_match_details_params'
-    })
-  },
+      get_match_details_params:MatchDetailCalss.params,
+      //详情类版本号 
+      details_data_version:MatchDetailCalss.details_data_version, 
+    }
+  }
+
   methods: {
-    ...mapActions({
-      vx_set_chat_room_type: "set_chat_room_type" //设置聊天室来源跟单盘口状况eu
-    }),
+    // ...mapActions({
+    //   vx_set_chat_room_type: "set_chat_room_type" //设置聊天室来源跟单盘口状况eu
+    // }),
     /**
      * 总的跟单需要数据获取
     */

@@ -43,7 +43,7 @@ const letter_num = {
  * @param {String} path 图片路径
  * @return {String} csid 球种类型
  */
-const get_file_path = (path, csid = 0) => {
+const get_server_file_path = (path, csid = 0) => {
   if (!path || path == 'undefined') {
     return '';
   }
@@ -109,7 +109,7 @@ const load_img_src = function (el) {
   let img_url =
     /^http(s)?/.test(self_img) || /^\/\//.test(self_img)
       ? self_img
-      : get_file_path(self_img, el.getAttribute("data-csid"));
+      : get_server_file_path(self_img, el.getAttribute("data-csid"));
   if (img_url) {
     if (img_url.indexOf("?") == -1) {
       img_url = img_url + "?rdm=" + src_rdm;
@@ -151,7 +151,7 @@ const load_img_src_common = function (el) {
   // 绝对地址时直接使用，否则需要重新获取地址
   let img_url = /^http(s)?/.test(self_img)
     ? self_img
-    : get_file_path(self_img, el.getAttribute("data-csid"));
+    : get_server_file_path(self_img, el.getAttribute("data-csid"));
   image_is_exist(img_url, el).then((res) => {
     el.style.opacity = 1;
     if (res) return;
@@ -203,17 +203,23 @@ let image_is_exist = function (url, img) {
 
 const compute_local_project_file_path=(str='')=>{
   str =''+str
-  if(str&&!str.startsWith('/')){
-    str='/'+str
+  if(str.startsWith('/')){
+    str= str.substring(1)
   }
   let str2 =''
   if(BUILD_VERSION){
-    str2 =`/${BUILD_VERSION}/${PROJECT_NAME}${str}`
+    str2 =`${BUILD_VERSION}/${PROJECT_NAME}${str}`
   
   }else{
-    str2 =`/${PROJECT_NAME}${str}`
+    str2 =`${PROJECT_NAME}${str}`
   }
-  return  str2
+  if(NODE_ENV == 'development'){
+    return '/'+ str2
+  }else{
+    //生产环境因为有 base 路径这里不能拼接 / 否则会走到 域名目录 而不是资源目录 
+    return   str2
+  }
+  
 
 }
 /**
@@ -224,17 +230,22 @@ const compute_local_project_file_path=(str='')=>{
  */
 const compute_local_common_file_path=(str='')=>{
   str =''+str
-  if(str&&!str.startsWith('/')){
-    str='/'+str
+  if(str.startsWith('/')){
+    str= str.substring(1)
   }
   let str2 =''
   if(BUILD_VERSION){
-    str2 =`/${BUILD_VERSION}${str}`
+    str2 =`${BUILD_VERSION}${str}`
   
   }else{
     str2 =str
   }
-  return  str2
+  if(NODE_ENV == 'development'){
+    return '/'+ str2
+  }else{
+    //生产环境因为有 base 路径这里不能拼接 / 否则会走到 域名目录 而不是资源目录 
+    return   str2
+  }
 
 }
 
@@ -242,4 +253,9 @@ const compute_local_common_file_path=(str='')=>{
 
 
 
-export { get_file_path, load_img_src, load_img_src_common, image_is_exist, project_name };
+export { get_server_file_path, 
+  load_img_src, load_img_src_common,
+   image_is_exist, project_name ,
+   compute_local_project_file_path,
+   compute_local_common_file_path
+   };

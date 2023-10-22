@@ -51,7 +51,7 @@ export const rem_height = (value) => {
  * @return {String}
  */
 export const compute_image_src = (str) => {
-  return str ? get_file_path(str) : "";
+  return str ? get_server_file_path(str) : "";
 };
 /**
  * @description: 判断是否为低端机

@@ -98,7 +98,6 @@ import {
   defineExpose,
   defineEmits
 } from "vue";
-// import { mapGetters, mapActions } from "vuex";
 import { useRoute } from "vue-router";
 import store from "src/store-redux/index.js";
 import ZhuGe from "src/core/http/zhuge-tag";

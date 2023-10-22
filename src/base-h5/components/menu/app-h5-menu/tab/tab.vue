@@ -1,10 +1,10 @@
-
-/*
- * @Author: ty-rise 
- * @Date: 2023-10-20 16:16:50 
- * @Last Modified by: ty-rise
- * @Last Modified time: 2023-10-Sa 04:29:16
- */
+<!--
+ * @Author: rise
+ * @Date: 2023-10-20 16:27:18
+ * @LastEditors: rise
+ * @LastEditTime: 2023-10-22 16:34:07
+ * @Description:  
+-->
 <template>
   <div class="d-c-wrapper" :class="{ esport: is_export }" v-if="is_show_three_menu">
     <div class="date-container" ref="date_menu_container" :class="{ esport: is_export }">
@@ -33,8 +33,9 @@
 </template>
 
 <script setup>
-import { ref, watch, nextTick, computed, onBeforeUnmount, } from "vue";
-import { i18n_t, compute_css, GlobalAccessConfig, useMittOn, MITT_TYPES, UserCtr, MenuData, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/index.js";
+import { ref, watch,computed } from "vue";
+import {UserCtr, MenuData, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/index.js";
+import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 //三级菜单 早盘日期菜单项
 let date_menu_list = ref([]);
 const date_menu_curr_i = ref(0);
@@ -48,6 +49,7 @@ const is_export = computed(() => {
   return MenuData.is_export(menu_type.value)
 });
 //是否显示三级菜单
+
 const is_show_three_menu = computed(() => {
   return date_menu_list.value?.length > 0 && MenuData.get_is_show_three_menu()
 });
@@ -133,7 +135,8 @@ watch(update_time, (v) => {
 
     &.focus {
       font-size: 0.12rem;
-
+      border-bottom: 0.02rem solid var(--q-gb-t-c-1);
+      color:var(--q-gb-t-c-1);
       &:after {
         content: " ";
         width: 0.14rem;

@@ -3,7 +3,7 @@
         get_lang == 'zh'" @click="openActivity">
         <!-- 活动图标 -->
         <img v-if="activity_default" class="activity-logo animate-bounce-up"
-            :src="get_file_path(UserCtr.user_info?.activityList[0].h5Url)" @error="activity_icon_error" alt="">
+            :src="get_server_file_path(UserCtr.user_info?.activityList[0].h5Url)" @error="activity_icon_error" alt="">
         <div v-else :style="compute_css('menu-activity-entrance')" class="activity-logo animate-bounce-up"></div>
 
         <!-- 活动图标红点 -->
@@ -14,7 +14,7 @@
     </div>
 </template>
 <script setup>
-import { i18n_t, compute_css, UserCtr, get_file_path } from "src/core/index.js";
+import { i18n_t, compute_css, UserCtr, get_server_file_path } from "src/core/index.js";
 import GlobalAccessConfig from "src/core/access-config/access-config.js"
 import { ref } from 'vue'
 import { api_activity } from "src/api";

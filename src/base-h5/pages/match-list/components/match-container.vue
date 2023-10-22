@@ -929,8 +929,8 @@ const get_match_mc = (item) => {
 /**
  * 包装获取图片路径的方法
  */
-const get_file_path_local = (path, csid) => {
-  return get_file_path(path, csid);
+const get_server_file_path_local = (path, csid) => {
+  return get_server_file_path(path, csid);
 }
 
 /**

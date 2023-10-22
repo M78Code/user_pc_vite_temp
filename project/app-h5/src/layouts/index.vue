@@ -66,7 +66,7 @@ import { useMittOn, MITT_TYPES, i18n_t, UserCtr } from "src/core/";
 // import { FooterWapper } from "src/components/footer/index.js";
 import { TopMenu,Tabbar,ScrollMenu,Tab } from 'src/base-h5/components/menu/app-h5-menu/index'
 import { MenuWapper } from "src/base-h5/components/menu";
-// import { BetBoxWapper } from "src/base-h5/app-h5/bet";
+import { BetBoxWapper } from "src/base-h5/components/bet";
 import activityIcon from "src/base-h5/components/common/activity-icon.vue"; // 设置
 import setMenu from "src/base-h5/components/common/set-menu.vue"; // 设置
 import selectDia from "src/base-h5/pages/match-list/components/select-dia.vue"
@@ -105,12 +105,12 @@ const activity_layerimg = ref("") //首页活动图
 const userBannerTimer = ref(5);
 const timer_3 = ref(null);
 // 开启注单历史弹窗及遮罩
-const settle_dialog_bool = ref(footerMenuReducer.settle_dialog_bool);
+const settle_dialog_bool = ref('');
 
-let unsubscribe = store.subscribe(() => {
-  const { footerMenuReducer: new_footer_menu_reducer } = store.getState();
-  settle_dialog_bool.value = new_footer_menu_reducer.settle_dialog_bool;
-});
+// let unsubscribe = store.subscribe(() => {
+//   const { footerMenuReducer: new_footer_menu_reducer } = store.getState();
+//   settle_dialog_bool.value = new_footer_menu_reducer.settle_dialog_bool;
+// });
 // 是否展示左侧菜单
 const toggleLeftDrawer = () => {
   leftDrawerOpen.value = !leftDrawerOpen.value;
@@ -249,7 +249,7 @@ onUnmounted(() => {
   document.removeEventListener("touchend", touchend_event_fun);
   document.removeEventListener("gesturestart", gesturestart_event_fun);
   timer_3.value = null;
-  unsubscribe();
+  // unsubscribe();
   mitt_list.map(i => i())
 });
 

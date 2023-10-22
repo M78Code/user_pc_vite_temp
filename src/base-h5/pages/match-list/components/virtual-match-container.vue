@@ -294,7 +294,7 @@ const get_team_icon = (is_away) => {
   //主队
   if(!is_away){
     if(match.homeUrl){
-      result = get_file_path(match.homeUrl);
+      result = get_server_file_path(match.homeUrl);
     }
     else{
       home_erroed.value = true;
@@ -308,7 +308,7 @@ const get_team_icon = (is_away) => {
   //客队
   else{
     if(match.awayUrl){
-      result = get_file_path(match.awayUrl);
+      result = get_server_file_path(match.awayUrl);
     }
     else{
       away_erroed.value = true;

@@ -31,7 +31,7 @@
             <div class="item" :class="{ 'active': index == menu_index }"
               v-for="(item, index) in tabList[tab_Index].subList" :key="index" @click="change_menu(index, item.field1)">
               <!-- 联赛icon -->
-              <img class="match_logo" v-if="index != 0" :src="item.field2 && get_file_path(item.field2)"
+              <img class="match_logo" v-if="index != 0" :src="item.field2 && get_server_file_path(item.field2)"
                 @error="league_icon_error" />
               <!--<img class="match_logo" v-else  :src="`/${project_name}image/svg/home/all.svg`" alt="">-->
               <i v-else class="match_logo"></i>
@@ -100,7 +100,7 @@ import { ref, onMounted, watch, computed, onUnmounted } from 'vue';
 // import common from "src/base-h5/mixins/constant";
 // import msc from "src/base-h5/mixins/common/msc.js";
 import ListMap from "src/core/match-list-h5/match-class/list-map.js";
-import { utils, get_file_path, UserCtr, MatchDetailCalss, compute_img } from 'src/core/index.js';
+import { utils, get_server_file_path, UserCtr, MatchDetailCalss, compute_img } from 'src/core/index.js';
 import SLive from "src/base-h5/components/skeleton/live.vue"
 import noData from 'src/base-h5/components/common/no-data.vue'
 import scrollTop from 'src/base-h5/components/common/record-scroll/scroll-top.vue'
