@@ -77,7 +77,7 @@
                   class="img0">{{ $t('bet.bet_err') }}</span>
               <!-- 提交成功 -->
               <span v-if="order_status == 2" class="color2">
-                <i class="img0 img1" :style="compute_css('icon-tijiao')"></i>
+                <i class="img0 img1" :style="compute_css_obj('icon-tijiao')"></i>
                 {{ $t('bet.submitted_successfully') }}</span>
             </template>
           </template>
@@ -126,7 +126,7 @@
         <div class="operation">
           <span class="reduce" v-touch-repeat:0:300:200.mouse.enter.space.72.104="gtouchstart(3)"
             :class="show_market_shadow ? 'shadow-show' : null">
-            <img class="img" :style="compute_img('bet-reduce')">
+            <img class="img" :style="compute_img_url('bet-reduce')">
           </span>
           <div class="odd" @click.stop="focus_market">
             <div class="odd_text">{{ pre_market_value || 0 }}</div>
@@ -135,7 +135,7 @@
           </div>
           <span class="add" v-touch-repeat:0:300:200.mouse.enter.space.72.104="gtouchstart(4)"
             :class="show_market_shadow_max ? 'shadow-show' : null">
-            <img class="img" :style="compute_img('icon-add')">
+            <img class="img" :style="compute_img_url('icon-add')">
           </span>
         </div>
         <span class="delete"><img src="image/wwwassets/bw3/common/delete.png" @click.stop="handlePre(false)" /></span>
@@ -147,7 +147,7 @@
         <div class="operation">
           <span class="reduce" v-touch-repeat:0:300:200.mouse.enter.space.72.104="gtouchstart(1)"
             :class="pre_shadow_flag ? 'shadow-show' : null">
-            <img class="img" :style="compute_img('bet-reduce')">
+            <img class="img" :style="compute_img_url('bet-reduce')">
           </span>
           <div class="odd" @click.stop="focus_odds">
             <!-- <div class="odd_text">{{ (pre_odds ? pre_odds : (pre_odds === 0 || pre_odds === '0' ? '0' : '')) ||
@@ -157,7 +157,7 @@
           </div>
           <span class="add" v-touch-repeat:0:300:200.mouse.enter.space.72.104="gtouchstart(2)"
             :class="pre_shadow_max_flag ? 'shadow-show' : null">
-            <img class="img" :style="compute_img('icon-add')">
+            <img class="img" :style="compute_img_url('icon-add')">
   
           </span>
         </div>
@@ -199,7 +199,7 @@ import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import { calc_bifen, format_odds } from "src/core/format/index.js";
 import { ref, onMounted, watch, computed, onUnmounted } from 'vue';
 import { compute_value_by_cur_odd_type } from "src/core/format/module/format-odds-conversion-mixin.js"
-import { useMittOn,compute_img,UserCtr, useMittEmit, MITT_TYPES } from "src/core/"
+import { useMittOn,compute_img_url,UserCtr, useMittEmit, MITT_TYPES } from "src/core/"
 
 import lodash from 'lodash'
 

@@ -22,7 +22,7 @@ const config = {
  * @param {*} param0
  * @returns
  */
-function compute_css({ position, theme }) {
+function compute_css_obj({ position, theme }) {
     //从打包的 环境拿 图片地址
     let url = get(server_resource, `${config[CURRENT_ENV] || config['default']}.${theme}`);
     if (!url) {
@@ -35,4 +35,4 @@ function compute_css({ position, theme }) {
     };
 }
 
-export { compute_css };
+export { compute_css_obj };

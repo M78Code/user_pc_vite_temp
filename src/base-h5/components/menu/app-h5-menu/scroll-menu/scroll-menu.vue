@@ -21,7 +21,7 @@
             <scrollNav v-show="is_scroll_ball" :title="i18n_t('footer_menu.all')"
               @click="select_all_sub_menu_handle" :count="all_sport_count_calc"
               v-if="GlobalAccessConfig.get_playAllShow()">
-              <span class="sport-icon-wrap" :style="compute_css({ key: !(current_lv2.mi) ? 'menu-sport-active-image' : 'menu-sport-icon-image',position: 0})"></span>
+              <span class="sport-icon-wrap" :style="compute_css_obj({ key: !(current_lv2.mi) ? 'menu-sport-active-image' : 'menu-sport-icon-image',position: 0})"></span>
             </scrollNav>
             <template v-for="( item, index ) in  current_menu " :key="lodash.get(item, 'mi')">
               <div class="sport-menu-item flex justify-center" v-show="!is_export && !is_results ? item.ct > 0 : true"
@@ -33,7 +33,7 @@
                   ">
                   <div class="sport-w-icon">
                     <span class="sport-icon-wrap"
-                      :style="compute_css({key:current_lv2?.mi == item.mi ? 'menu-sport-active-image' : 'menu-sport-icon-image', position:format_type(item)})"></span>
+                      :style="compute_css_obj({key:current_lv2?.mi == item.mi ? 'menu-sport-active-image' : 'menu-sport-icon-image', position:format_type(item)})"></span>
 
                     <div class="sport-match-count" v-show="two_menu_show(item)">
                       {{ show_favorite_list ? '' : item.ct ? item.ct : 0 }}
@@ -61,7 +61,7 @@ import MatchFold from 'src/core/match-fold'
 import base_data from "src/core/base-data/base-data.js";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import { ref, watch, computed,onUpdated } from "vue";
-import { i18n_t, compute_css, GlobalAccessConfig, MenuData, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/index.js";
+import { i18n_t, compute_css_obj, GlobalAccessConfig, MenuData, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/index.js";
 import { is_scroll_ball, update_time, is_export, is_mix,is_results, is_kemp, is_jinzu, menu_type } from 'src/base-h5/mixin/menu.js'
 import { get_sport_menu } from "../top-menu/top-list";
 //菜单容器是否收起

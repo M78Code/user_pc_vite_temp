@@ -29,7 +29,7 @@
           <span :class="{ 'auto-text': BetData.bet_is_accept }" class="yb_mx4 err-msg2" style="max-width:2.1rem"
             @click="toggle_accept">{{ $t("ac_rules.auto") }}</span>
           <!-- <img src="image/wwwassets/bw3/svg/rules2.svg" @click="change_accept" class="img1" -->
-          <span class="img1" :style="compute_css('icon-issue')"></span>
+          <span class="img1" :style="compute_css_obj('icon-issue')"></span>
         </span>
 
         <!-- 接受更好赔率的规则弹窗 -->
@@ -126,7 +126,7 @@
               <i class="img2" :class="{ 'img3': view_ctr_obj.bet_is_combine }" @click="change_is_combine"></i>
               <span class="yb_mx4" :class="{ 'auto-text': !view_ctr_obj.bet_is_combine }" @click="change_is_combine">{{
                 i18n_t("tips.msg1") }}</span>
-                <span class="img1" :style="compute_css('icon-issue')"></span>
+                <span class="img1" :style="compute_css_obj('icon-issue')"></span>
             </span>
             <!-- 右 -->
             <!-- 常用金额 -->
@@ -229,7 +229,7 @@ import betBar from ".//bet-bar.vue";
 // import {useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt/"
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
-import { UserCtr,compute_css,useMittOn, useMittEmit, MITT_TYPES, LOCAL_PROJECT_FILE_PREFIX } from "src/core/index.js";
+import { UserCtr,compute_css_obj,useMittOn, useMittEmit, MITT_TYPES, LOCAL_PROJECT_FILE_PREFIX } from "src/core/index.js";
 // import { hide_bet_series_but } from "src/core/bet/index.js"
 import { ref, onMounted, watch, computed, onUnmounted } from 'vue';
 import { get_query_bet_amount_common } from "src/core/bet/class/bet-box-submit.js"

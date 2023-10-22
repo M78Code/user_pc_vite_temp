@@ -14,7 +14,7 @@
         <span v-else-if="main.sportId == 103" style="--num:40"></span>
         <span v-else-if="main.sportId == 102" style="--num:41"></span>
         <img :src="get_server_file_path(main.tournamentPic,main.sportId)" @error="handle_img_load_error" v-else>
-        <div class="beif_src" :style="compute_css('match-cup')"  alt=""></div>
+        <div class="beif_src" :style="compute_css_obj('match-cup')"  alt=""></div>
       
       </p>
       <p class="col-9" :style="{'font-weight':$q.platform.is.ios ? '500':'bold'}">
@@ -103,7 +103,7 @@
 
 <script setup>
 // import { mapGetters, mapMutations } from "vuex";
-import {compute_css, LOCAL_PROJECT_FILE_PREFIX} from 'src/core/'
+import {compute_css_obj, LOCAL_PROJECT_FILE_PREFIX} from 'src/core/'
 import { api_common } from "src/api/index.js";
 import {
   utils, 

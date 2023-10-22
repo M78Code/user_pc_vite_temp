@@ -53,7 +53,7 @@
 
 
                 <img class="img" v-if="GlobalAccessConfig.get_collectSwitch()"
-                  :src="item.mf ? compute_img('icon-favorite-s') : compute_img('icon-favorite')"
+                  :src="item.mf ? compute_img_url('icon-favorite-s') : compute_img_url('icon-favorite')"
                   @click.stop="on_collection(item)">
               </div>
               <div class="video-list-right">
@@ -100,7 +100,7 @@ import { ref, onMounted, watch, computed, onUnmounted } from 'vue';
 // import common from "src/base-h5/mixins/constant";
 // import msc from "src/base-h5/mixins/common/msc.js";
 import ListMap from "src/core/match-list-h5/match-class/list-map.js";
-import { utils, get_server_file_path, UserCtr, MatchDetailCalss, compute_img } from 'src/core/index.js';
+import { utils, get_server_file_path, UserCtr, MatchDetailCalss, compute_img_url } from 'src/core/index.js';
 import SLive from "src/base-h5/components/skeleton/live.vue"
 import noData from 'src/base-h5/components/common/no-data.vue'
 import scrollTop from 'src/base-h5/components/common/record-scroll/scroll-top.vue'
@@ -191,7 +191,7 @@ const wrapper_scroll_handler = (e) => {
  * @param {Object} $event 错误事件对象
  */
 const league_icon_error = ($event) => {
-  $event.target.src = compute_img("match-up")
+  $event.target.src = compute_img_url("match-up")
   $event.target.onerror = null
 }
 // 点击视频界面跳转到详情播放视频

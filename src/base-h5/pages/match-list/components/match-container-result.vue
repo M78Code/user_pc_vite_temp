@@ -34,7 +34,7 @@
           </span>
           <!--箭头 -->
           <template v-if="!['detail_match_list','home_hot_page_schedule'].includes(main_source)">
-            <img class="league-collapse-dir" :class="{'collapsed':collapsed}"  :src="compute_img('icon-collapse')" />
+            <img class="league-collapse-dir" :class="{'collapsed':collapsed}"  :src="compute_img_url('icon-collapse')" />
           </template>
         </div>
       </div>
@@ -82,7 +82,7 @@
 import { computed, onUnmounted, onMounted, ref } from "vue"
 import store from "src/store-redux/index.js"
 import lodash from 'lodash'
-import { i18n_t,compute_img} from 'src/core/index.js'
+import { i18n_t,compute_img_url} from 'src/core/index.js'
 import ImageCacheLoad from "./public-cache-image.vue";
 import { league_collapse_icon, league_icon_back } from 'src/base-h5/core/utils/local-image.js'
 // import { SPORT_ID_TO_NUMBER_MAPPING } from "src/core/constant/config/play-mapping.js";

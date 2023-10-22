@@ -48,7 +48,7 @@
             {{ current_way_name }}
           </div>
           <img class='close-o-info-icon' @click="close_other_w_info"
-            :src="compute_img('icon-close')" />
+            :src="compute_img_url('icon-close')" />
         </div>
         <!-- 次要玩法如果是数组 例如15分钟展开 -->
         <div v-if="Array.isArray(play_way_info)">
@@ -97,7 +97,7 @@ import matchContainerResult from "./match-container-result.vue" // 赛果冠军
 import scrollWrapper from 'src/base-h5/components/scroll-wraper/scroll-wrapper.vue';    // 滚动操作处理
 import UserCtr from 'src/core/user-config/user-ctr.js'
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
-import { MenuData, i18n_t, utils,compute_img, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/index.js"
+import { MenuData, i18n_t, utils,compute_img_url, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/index.js"
 import { standard_edition } from 'src/base-h5/mixin/userctr.js'
 import { is_kemp, menu_lv2, is_results, menu_type, is_hot, is_detail } from 'src/base-h5/mixin/menu.js'
 // import { change_favorite_state } from 'src/core/match-list-h5/composables/match-list-collect.js'

@@ -10,7 +10,7 @@ useMittOn(MITT_TYPES.EMIT_THEME_CHANGE, function (v) {
   theme.value = UserCtr.theme;
 })
 // import
-const compute_css = (_key, _position) => {
+const compute_css_obj = (_key, _position) => {
   if (isObject(_key)) {
     _position = _key.position
     _key = _key.key;
@@ -45,23 +45,23 @@ const compute_css = (_key, _position) => {
 /**
  * 只要图片 有时候 使用img加载 错误时候才显示 所以只要图片地址
 */
-function compute_img(_key, _position) {
-  return compute_css(_key, _position).url
+function compute_img_url(_key, _position) {
+  return compute_css_obj(_key, _position).url
 }
-export { compute_css, compute_img };
+export { compute_css_obj, compute_img_url };
 /**
  * 对于 精灵图  key 是文件名字也是 单个素材资源的 标识键   ， position 是 精灵图内 item 单个元素的 位置 标识键
- * 调用示例： compute_css(key,position) || compute_css({key,position}) 
+ * 调用示例： compute_css_obj(key,position) || compute_css_obj({key,position}) 
  * 对于 非 精灵图    ， key 是  单个素材资源的 标识键
- * 调用示例：   compute_css(key) || compute_css({key})// 单图
+ * 调用示例：   compute_css_obj(key) || compute_css_obj({key})// 单图
  */
 
 
 /**
  * 对于 精灵图  key 是文件名字也是 单个素材资源的 标识键   ， position 是 精灵图内 item 单个元素的 位置 标识键
- * 调用示例： compute_css(key,position) || compute_css({key,position}) 
+ * 调用示例： compute_css_obj(key,position) || compute_css_obj({key,position}) 
  * 对于 非 精灵图    ， key 是  单个素材资源的 标识键
- * 调用示例：   compute_css(key) || compute_css({key})// 单图
+ * 调用示例：   compute_css_obj(key) || compute_css_obj({key})// 单图
  */
 
 

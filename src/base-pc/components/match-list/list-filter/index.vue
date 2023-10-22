@@ -31,7 +31,7 @@
         <div class="icon-wrap list-filter menu-inline">
           <!-- <sport-icon :sport_id="0" size="20px" class="icon" /> -->
           <span class="soprts_id_icon"
-            :style="compute_css({key:'pc-left-menu-bg-image', position: `item_0` })"></span>
+            :style="compute_css_obj({key:'pc-left-menu-bg-image', position: `item_0` })"></span>
           <!-- 是否新上玩法 -->
           <!-- <img  class="menu-new-icon" v-if="menu.coppertone == 1" :src="`${LOCAL_PROJECT_FILE_PREFIX}/img/yabo/svg/virtual/menu_new.svg`"/> -->
         </div>
@@ -68,7 +68,7 @@
           <div class="icon-wrap list-filter menu-inline">
             <span class="soprts_id_icon"
             v-if="menu_config.is_esports()"
-            :style="compute_css({key:'pc-left-menu-bg-image', position: `item_${BaseData.compute_sport_id(item.mif)}` })"></span>
+            :style="compute_css_obj({key:'pc-left-menu-bg-image', position: `item_${BaseData.compute_sport_id(item.mif)}` })"></span>
             <!-- 是否新上玩法 -->
             <!-- <img  class="menu-new-icon" v-if="menu.coppertone == 1" :src="`${LOCAL_PROJECT_FILE_PREFIX}/img/yabo/svg/virtual/menu_new.svg`"/> -->
           </div>
@@ -108,7 +108,7 @@
               class="icon"
             /> -->
             <span class="soprts_id_icon"
-            :style="compute_css({key:'pc-left-menu-bg-image', position: `item_${Number(item.mif) - 2000}` })"></span>
+            :style="compute_css_obj({key:'pc-left-menu-bg-image', position: `item_${Number(item.mif) - 2000}` })"></span>
             <!-- 是否新上玩法 -->
             <!-- <img  class="menu-new-icon" v-if="menu.coppertone == 1" :src="`${LOCAL_PROJECT_FILE_PREFIX}/img/yabo/svg/virtual/menu_new.svg`"/> -->
           </div>
@@ -145,7 +145,7 @@
           <div class="icon-wrap list-filter menu-inline">
             <!-- <sport-icon :sport_id="item.menuId" size="20px" class="icon" /> -->
             <span class="soprts_id_icon"
-            :style="compute_css({key:'pc-left-menu-bg-image', position: `item_${item.menuId}` })"></span>
+            :style="compute_css_obj({key:'pc-left-menu-bg-image', position: `item_${item.menuId}` })"></span>
             <!-- 是否新上玩法 -->
             <!-- <img  class="menu-new-icon" v-if="menu.coppertone == 1" :src="`${LOCAL_PROJECT_FILE_PREFIX}/img/yabo/svg/virtual/menu_new.svg`"/> -->
           </div>
@@ -184,7 +184,7 @@
         <div class="icon-wrap list-filter menu-inline">
           <!-- <sport-icon :sport_id="0" size="20px" class="icon" /> -->
           <span class="soprts_id_icon"
-            :style="compute_css({key:'pc-left-menu-bg-image', position: `item_0` })"></span>
+            :style="compute_css_obj({key:'pc-left-menu-bg-image', position: `item_0` })"></span>
         </div>
         <div
           class="name menu-inline name-margin-left"
@@ -217,7 +217,7 @@
           <div class="icon-wrap list-filter menu-inline">
             <span class="soprts_id_icon"
             v-if="menu_config.is_esports()"
-            :style="compute_css({key:'pc-left-menu-bg-image', position: `item_${compute_mi_400_sl_mi_csid(item.mi)}` })"></span>
+            :style="compute_css_obj({key:'pc-left-menu-bg-image', position: `item_${compute_mi_400_sl_mi_csid(item.mi)}` })"></span>
             <!-- <sport-icon
               :sport_id="compute_mi_400_sl_mi_csid(item.mi)"
               size="20px"
@@ -254,7 +254,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 import store from "src/store-redux/index.js";
 import BaseData from "src/core/base-data/base-data.js";
-import { i18n_t, MatchDetailCalss, PageSourceData,compute_css } from "src/core/index.js";
+import { i18n_t, MatchDetailCalss, PageSourceData,compute_css_obj } from "src/core/index.js";
 import DragScroll from "src/base-pc/components/cus-scroll/drag_scroll.vue";
 
 let state = store.getState();

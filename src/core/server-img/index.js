@@ -12,7 +12,7 @@ import { UserCtr, useMittOn, MITT_TYPES } from "src/core/";
  * @param {*} params
  * @returns
  */
-const compute_css = (params = {}) => {
+const compute_css_obj = (params = {}) => {
   const theme = UserCtr.theme || "theme-1";
   let { key, position, path=0 } = params;
   if (!key) {
@@ -28,7 +28,6 @@ const compute_css = (params = {}) => {
     //常规单图  other
     result = compute_other_image_css({ key, theme, path });
   }
- 
   return result;
 };
 
@@ -38,12 +37,11 @@ const compute_css = (params = {}) => {
  * @param {*} key 
  * @returns 
  */              
-const  compute_img =(key)=>{
-
-  let obj = compute_css({key ,path:0})
+const  compute_img_url =(key)=>{
+  let obj = compute_css_obj({key ,path:1})
   return obj.url
 
 }
 
 
-export { compute_css ,compute_img };
+export { compute_css_obj ,compute_img_url };

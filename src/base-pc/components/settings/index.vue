@@ -16,7 +16,7 @@
                         <template v-slot:header>
                             <!-- 设置项 图标 -->
                             <q-item-section avatar>
-                                <i class="icon settings-icon" :style="compute_css('icon-setting')"></i>
+                                <i class="icon settings-icon" :style="compute_css_obj('icon-setting')"></i>
                             </q-item-section>
 
                             <!-- 设置项 名称 -->
@@ -67,7 +67,7 @@
                                             :class="[{ active: UserCtr.lang == language }]"
                                             @click="on_click_lang(language)">
                                             <span :class="['flag', language]"
-                                                :style="compute_css({ key: 'pc-popup-language-icon-image', position: language, theme: 'local' })"></span>{{
+                                                :style="compute_css_obj({ key: 'pc-popup-language-icon-image', position: language, theme: 'local' })"></span>{{
                                                     i18n_langs[language] }}
                                             <i v-if="UserCtr.lang == language"
                                                 class="icon-triangle3 q-icon c-icon arrow-show"></i>
@@ -95,7 +95,7 @@ import store from "src/store-redux/index.js";
 import { api_account, api_betting, api_details } from "src/api";
 import i18n_langs from "src/i18n/pc/langs/index.mjs";
 import { loadLanguageAsync } from "src/core/index.js";
-import { useMittEmit, MITT_TYPES, compute_css, UserCtr } from 'src/core/'
+import { useMittEmit, MITT_TYPES, compute_css_obj, UserCtr } from 'src/core/'
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { theme_map } from "src/core/theme/"
 

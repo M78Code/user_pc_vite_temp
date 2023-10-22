@@ -6,7 +6,7 @@
 <template>
   <div class="settle-void" @touchmove.prevent>
     <div class="main">
-      <div class="img-s" :style="compute_css('no-record')"></div>
+      <div class="img-s" :style="compute_css_obj('no-record')"></div>
       <div class="text-s">
         <p style="line-height: 0.18rem">{{ calc_text }}</p>
         <p @click="go_bet" class="go-bet">
@@ -20,7 +20,7 @@
 <script setup>
 import { computed, ref } from 'vue'
 import store from 'src/store-redux/index.js'
-import { MITT_TYPES,compute_css,i18n_t, useMittEmit } from "src/core/"
+import { MITT_TYPES,compute_css_obj,i18n_t, useMittEmit } from "src/core/"
 import UserCtr from "src/core/user-config/user-ctr.js";
 let { themeReducer, cathecticReducer } = store.getState()
 let store_cathectic = cathecticReducer

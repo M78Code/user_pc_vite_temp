@@ -20,8 +20,8 @@
                     :style="{ 'cursor': lodash.get(currentSwipperArr, `[${currentSwipperIndex}].isClick`) ? 'pointer' : 'unset' }">
 
                     <p v-show="currentSwipperArr.length > 1 && showArrow" class="day_arrow">
-                        <img class="img" :src="compute_img('icon-left')" alt="" @click.stop="boxMouseup('pre')">
-                        <img class="img" :src="compute_img('icon-rigth')" alt="" @click.stop="boxMouseup('next')">
+                        <img class="img" :src="compute_img_url('icon-left')" alt="" @click.stop="boxMouseup('pre')">
+                        <img class="img" :src="compute_img_url('icon-rigth')" alt="" @click.stop="boxMouseup('next')">
                     </p>
                     <!-- <p v-show="('day') && currentSwipperArr.length > 1 && showArrow" class="day_arrow">
                         <img :src="day_left" alt="" @click.stop="boxMouseup('pre')">
@@ -91,7 +91,7 @@ import popupLanguage from "src/base-pc/components/popup-select/popup-language.vu
 /* api */
 import { api_account, api_common } from "src/api/index.js";
 
-import {LayOutMain_pc, get_server_file_path,compute_img } from 'src/core/index.js'
+import {LayOutMain_pc, get_server_file_path,compute_img_url } from 'src/core/index.js'
 import store from "src/store-redux/index.js";
 import { format_money2 } from "src/core/format/index.js"
 // import userCtr from 'src/core/index.js'

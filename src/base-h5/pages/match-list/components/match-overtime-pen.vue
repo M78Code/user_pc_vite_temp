@@ -15,7 +15,7 @@
         <div> {{ t_item.title }} </div>
          <!--折叠得箭头图标-->
         <span class="league-collapse-dir" :class="{ 'collapsed': t_item.unfold == 1 }"
-          :style="compute_css('icon-collapse')" ></span>
+          :style="compute_css_obj('icon-collapse')" ></span>
 
           
         <!-- <img class="league-collapse-dir" :class="{ 'collapsed': t_item.unfold == 1 }"
@@ -64,7 +64,7 @@
           <div class="team-t-title-w fight-type" v-if="[1, 3, 5, 7, 8, 9].includes(+match_info.csid)"> <!--csid 7斯诺克-->
             <!--csid 1足球-->
             <span v-if="[2, 5, 17].includes(+current_tab_item.id)" @click="info_icon_click($event, match_info.mid)"
-              :src="compute_css(show_tips?'icon-tips':'icon-tips-d')"></span>
+              :src="compute_css_obj(show_tips?'icon-tips':'icon-tips-d')"></span>
             {{ match_info.csid == 1 ? current_tab_item.title : mmp_map_title }}
           </div>
         </div>
@@ -84,7 +84,7 @@ import store from "src/store-redux/index.js";
 import lodash from 'lodash'
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt"
 import { format_msc } from "src/core/format/index.js"
-import { project_name,MenuData,compute_css,utils,UserCtr,i18n_t,MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/index.js"
+import { project_name,MenuData,compute_css_obj,utils,UserCtr,i18n_t,MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/index.js"
 import matchListClass from 'src/core/match-list-h5/match-class/match-list.js'
 import { api_common } from "src/api/index.js";
 import oddListWrap from './odd-list-wrap.vue';

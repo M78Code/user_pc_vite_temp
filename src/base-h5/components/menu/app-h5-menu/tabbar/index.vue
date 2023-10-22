@@ -27,7 +27,7 @@
                 item.icon.slice(0, -4),
                 menu_item_img(item),
                 lodash.get(user_info.value, 'favoriteButton') ? 'favoriteButton' : '',
-              ]" :style="compute_css({key:'foot-menu-icon'})"></span>
+              ]" :style="compute_css_obj({key:'foot-menu-icon'})"></span>
             </div>
             <div class="menu-item-title" :class="{
               'theme02-focus':
@@ -41,7 +41,7 @@
                 {{ item.title1 }}
               </span>
             </div>
-            <div v-if="item.id == 0" class="play-w-change-icon" :style="compute_css({key:'menu-set-switch'})"></div>
+            <div v-if="item.id == 0" class="play-w-change-icon" :style="compute_css_obj({key:'menu-set-switch'})"></div>
           </div>
         </div>
       </div>
@@ -82,7 +82,7 @@
   import lodash from "lodash";
   import { useRoute, useRouter } from "vue-router";
   import store from "src/store-redux/index.js";
-  import { UserCtr, i18n_t, compute_css, useMittOn, useMittEmit, MITT_TYPES, MenuData,compute_local_project_file_path } from "src/core/index.js";
+  import { UserCtr, i18n_t, compute_css_obj, useMittOn, useMittEmit, MITT_TYPES, MenuData,compute_local_project_file_path } from "src/core/index.js";
   import { lang, show_favorite_list, theme, user_info, resources_obj } from "src/base-h5/mixin/userctr";
   const { matchReducer } = store.getState();
   const { menu_type, update_time, get_sport_all_selected } = MenuData;

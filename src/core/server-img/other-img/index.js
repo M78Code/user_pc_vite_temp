@@ -18,7 +18,7 @@ Object.keys(modules).forEach((key) => {
  * @param {*} param0 
  * @returns 
  */
-function compute_css({ key, theme, type='' }) {
+function compute_css_obj({ key, theme, type='' }) {
 
   let current_theme = UserCtr.theme
   // 当前主题配置 
@@ -40,4 +40,4 @@ function compute_css({ key, theme, type='' }) {
   };
 }
 
-export default compute_css;
+export default compute_css_obj;

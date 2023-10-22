@@ -239,7 +239,7 @@
           <div class="img-wrap" v-if="[1,2].includes(+get_detail_data.csid) && get_is_full_screen && get_video_url.active == 'muUrl' && get_is_hengping">
             <!-- 分析弹窗 -->
             <!-- <img :src="select_item == 3 ? (!('y0')?analyze2:analyze2_y0) : (!('y0')?analyze:analyze_yo)" @click.stop="change_analyze"/> -->
-            <div :style="compute_img(select_item == 3?'video-analyze':'video-analyze-s')"></div>
+            <div :style="compute_img_url(select_item == 3?'video-analyze':'video-analyze-s')"></div>
           </div>
         </div>
         <!-- 声音按钮 -->
@@ -291,7 +291,7 @@ import basketball_match_analysis from "src/base-h5/components/details/analysis-m
 // import uid from "src/core/uuid/index.js"
 import { uid } from "quasar"
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt/index.js"
-import { MenuData, MatchDetailCalss,compute_img, LOCAL_PROJECT_FILE_PREFIX } from "src/core/index.js"
+import { MenuData, MatchDetailCalss,compute_img_url, LOCAL_PROJECT_FILE_PREFIX } from "src/core/index.js"
 
 export default {
   name: "videos",
@@ -741,7 +741,7 @@ export default {
     }
     this.player && this.player.destroy()
   },
-  methods: {compute_img,
+  methods: {compute_img_url,
       set_change_count(){},
       set_video_zhiding(){},
       set_toast(){},

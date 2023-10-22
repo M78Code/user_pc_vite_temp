@@ -40,7 +40,7 @@
         v-if="cur_state == 'loading' || cur_state == 'box_opening'"
         class="loading-wrap padding-top"
       >
-        <div class="img-loading custom-format-img-loading"  :style="compute_css('pc-img-loading')"></div>
+        <div class="img-loading custom-format-img-loading"  :style="compute_css_obj('pc-img-loading')"></div>
         <div class="text-center loading-text flex items-end justify-center">
           <span v-if="cur_state == 'box_opening'" style="font-size: 16px"
             >抽盒中......</span
@@ -54,7 +54,7 @@
         v-if="cur_state == 'right_details_loading'"
         class="loading-wrap right_details_loading"
       >
-        <div class="img-loading custom-format-img-loading" :style="compute_css('pc-img-loading')"></div>
+        <div class="img-loading custom-format-img-loading" :style="compute_css_obj('pc-img-loading')"></div>
         <div class="text-center loading-text flex items-end justify-center">
           <span>{{i18n_t("common.loading") }}</span>
           <!-- 右侧详情内容加载中... -->
@@ -105,7 +105,7 @@
         class="list_right_empty"
         v-else-if="['all_empty', 'new_empty'].includes(cur_state)"
       >
-        <div class="img" :style="compute_css('pc-lock-img-details')"></div>
+        <div class="img" :style="compute_css_obj('pc-lock-img-details')"></div>
         <span>{{i18n_t(`common.${cur_state}`) }}</span>
       </div>
     </div>
@@ -185,7 +185,7 @@ import store from "src/store-redux/index.js";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import filterHeader from "src/core/filter-header/filter-header.js";
-import { i18n_t,is_eports_csid, compute_local_project_file_path ,compute_css} from "src/core"
+import { i18n_t,is_eports_csid, compute_local_project_file_path ,compute_css_obj} from "src/core"
 import { useRoute } from "vue-router";
 const {route} = useRoute()
 const noData = NoDataWapper

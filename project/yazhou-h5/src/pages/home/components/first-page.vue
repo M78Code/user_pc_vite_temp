@@ -10,7 +10,7 @@
       <div class="wrap-notice">
         <div class="money-wrap" @click="get_balance">
           <div class="balance-wrap">
-            <i class="icon-balance" :style="compute_css('icon-balance')"></i>
+            <i class="icon-balance" :style="compute_css_obj('icon-balance')"></i>
             <span class="balance">{{ $t("common.money") }}</span>
           </div>
           <div class="money">
@@ -22,7 +22,7 @@
         <div class="wrap-marquee">
           <div class="marquee-left-wrap">
             <div class="marquee-icon">
-              <i class="icon-notice" :style="compute_css('icon-notice')"></i>
+              <i class="icon-notice" :style="compute_css_obj('icon-notice')"></i>
             </div>
           </div>
           <v-marquee />
@@ -43,7 +43,7 @@
   // import skt_home_bw3 from "src/base-h5/mixins/websocket/data/skt_home_bw3.js";
   // 公告栏跑马灯
   import VMarquee from 'src/base-h5/components/marquee/marquee.vue'
-  import { compute_css } from "src/core/";
+  import { compute_css_obj } from "src/core/";
   // mixins: [skt_home_bw3, match_list_mixin],
   //余额
   let balance_obj = ref({});

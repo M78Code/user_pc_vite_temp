@@ -11,7 +11,7 @@
         class="unfold"
         :class="{ open: vx_get_is_fold_status }"
         @click="$emit('setfoldStatus')"
-        :style="compute_css('pc-img-match-info-unfold-open')"
+        :style="compute_css_obj('pc-img-match-info-unfold-open')"
       ></div>
 
       <div class="col-center row full-height">
@@ -35,7 +35,7 @@
             >{{ item.text }}</q-tooltip
           >
           <div
-            :style="compute_css(item.icon)"
+            :style="compute_css_obj(item.icon)"
             :class="[
               'vicon',
               `${item.icon}-icon`,
@@ -169,7 +169,7 @@ import MenuData from "src/core/menu-pc/menu-data-class.js";
 import { IconWapper } from "src/components/icon";
 import refresh from "src/components/refresh/refresh.vue";
 import { i18n_t, get_match_status,UserCtr ,GlobalSwitchClass,MatchDetailCalss,get_media_icon_index,LayOutMain_pc} from "src/core/index";
-import { compute_css } from "src/core/server-img/index.js";
+import { compute_css_obj } from "src/core/server-img/index.js";
 import filterHeader from "src/core/filter-header/filter-header.js";
 import { debounce_throttle_cancel } from "src/core/utils/module/other.js";
 import { useRoute, useRouter } from "vue-router";

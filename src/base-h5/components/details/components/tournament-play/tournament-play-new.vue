@@ -64,7 +64,7 @@
                         {{i18n_t('football_playing_way.penalty_cards')}}
                       </div>
                       <!-- 关闭按钮 -->
-                      <div @click="info_icon_close" style="margin-top:-0.04rem" class="img" :style="compute_css('icon-close')"></div>
+                      <div @click="info_icon_close" style="margin-top:-0.04rem" class="img" :style="compute_css_obj('icon-close')"></div>
                     </div>
                     <!-- 角球说明文本 -->
                     <div v-if="['125','230'].includes(item_data.hpid)" class="info-content">{{i18n_t('play_way_info.6')}}</div>
@@ -131,7 +131,7 @@ import { api_common } from "src/api/index.js";
 // #TODO mixins
 // import betting from "src/project/mixins/betting/betting.js";
 import lodash from "lodash";
-import { useMittOn, useMittEmit, MITT_TYPES ,compute_css} from  "src/core/"
+import { useMittOn, useMittEmit, MITT_TYPES ,compute_css_obj} from  "src/core/"
 // 模板id=0(默认模板)
 import temp0 from "./template/temp0.vue"
 // 模板id=1
@@ -722,7 +722,7 @@ export default defineComponent({
     })
     return {
       ...toRefs(component_data),
-      get_uid,compute_css,
+      get_uid,compute_css_obj,
       get_detail_data,
       get_fewer,
       get_is_close_info,

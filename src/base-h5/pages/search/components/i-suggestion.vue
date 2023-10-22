@@ -50,7 +50,7 @@
       <div class="title">
         <!-- 联赛icon -->
         <img class="match_logo"
-          :src="big_item.matchList[0] ? get_server_file_path(big_item.matchList[0].lurl) : compute_img('match-cup')"
+          :src="big_item.matchList[0] ? get_server_file_path(big_item.matchList[0].lurl) : compute_img_url('match-cup')"
           @error="league_icon_error" />
         <!-- 搜索时，对应到的 文字 要高亮 -->
         <span v-html="red_color(big_item.leagueName)"></span>
@@ -92,7 +92,7 @@ const { get_insert_history } = api_search || {}
 import NoData from 'src/base-h5/components/common/no-data.vue'// 无数据组件
 import { computed, onBeforeUnmount, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { UserCtr, MenuData, SearchData,compute_img, LOCAL_PROJECT_FILE_PREFIX } from 'src/core/'
+import { UserCtr, MenuData, SearchData,compute_img_url, LOCAL_PROJECT_FILE_PREFIX } from 'src/core/'
 import lodash from 'lodash'
 const router = useRouter()
 // 模糊搜索的数据源
@@ -136,7 +136,7 @@ function red_color(item) {
 
 // 图标出错时
 function league_icon_error($event) {
-  $event.target.src =compute_img('match-cup')
+  $event.target.src =compute_img_url('match-cup')
   $event.target.onerror = null
 }
 // 滚球跳转
