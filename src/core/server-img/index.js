@@ -40,7 +40,7 @@ const compute_css = (params = {}) => {
  */              
 const  compute_img =(key)=>{
 
-  let obj = compute_css({key ,path:1})
+  let obj = compute_css({key ,path:0})
   return obj.url
 
 }
