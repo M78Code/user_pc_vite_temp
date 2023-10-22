@@ -81,6 +81,7 @@ let menu_list = ref([]);
 let current_menu = ref({});
 // 是否初次渲染
 const is_first = ref(true)
+let show_favorite_list = ref('')
 const current_lv2 = ref(MenuData.current_lv_2_menu || {})//二级菜单选中
 //点击滚球下的全部
 function select_all_sub_menu_handle() {
@@ -190,7 +191,7 @@ watch(update_time, (v) => {
   menu_list.value = menu_lv1; //一级
   current_menu.value = MenuData.menu_lv2; //2级
   current_lv2.value = MenuData.current_lv_2_menu;//二级
-  set_menu_lv2(MenuData.current_lv_2_menu)
+  // set_menu_lv2(MenuData.current_lv_2_menu)
 });
 
 </script>

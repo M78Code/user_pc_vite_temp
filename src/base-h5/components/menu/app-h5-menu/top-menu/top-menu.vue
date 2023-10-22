@@ -32,13 +32,14 @@
 import lodash from "lodash";
 import { ref, watch } from "vue";
 import base_data from "src/core/base-data/base-data.js";
-import { useRouter } from "vue-router";
+import { useRouter,useRoute } from "vue-router";
 import { format_money2 } from "src/core/format/index.js";
 import { i18n_t, compute_css, MenuData, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/index.js";
 import { update_time, is_export, menu_type } from 'src/base-h5/mixin/menu.js';
 import { user_info } from "src/base-h5/mixin/userctr";
 import { get_sport_menu } from "./top-list";
 const router = useRouter();
+const route = useRoute();
 let menu_list = ref([]);//一级菜单list
 /**
  * 点击一级菜单
