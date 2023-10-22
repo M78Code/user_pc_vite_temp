@@ -5,7 +5,7 @@
     <div @click="new_menu_click(1)" class="menu-item menu-top menu-roll menu-border border-bottom" style="margin-bottom: 0px"
       :class="MenuData.menu_root == 1 && 'active'">
       <!-- 现场滚球盘 -->
-      <span class="record-icon" :style="compute_css('pc-img-play-match')"></span>
+      <span class="record-icon" :style="compute_img('pc-img-play-match')"></span>
       <div class="col">
         {{ $t("common.in_plays") }}
       </div>
@@ -24,7 +24,7 @@
       :class="MenuData.menu_root == 500 && 'active'"
       :id="DOM_ID_SHOW && `menu-${MenuData.add_mi_introduce.mi_500.label}`">
       <!-- 热门赛事图标 -->
-      <span class="record-icon" :style="compute_css('pc-img-hot-match')"></span>
+      <span class="record-icon" :style="compute_img('pc-img-hot-match')"></span>
       <div class="col">
         {{ $t("menu.match_hot") }}
       </div>
@@ -49,7 +49,7 @@ import { useRouter } from "vue-router";
 import base_data_instance from "src/core/base-data/base-data.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import { MenuData,LayOutMain_pc } from "src/core/index.js";
-import { compute_css } from 'src/core/server-img/index.js'
+import { compute_img } from 'src/core/server-img/index.js'
 
 import { MenuWapper } from "src/base-pc/components/menu/index.js";
 
