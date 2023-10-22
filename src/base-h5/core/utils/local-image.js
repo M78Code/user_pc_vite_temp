@@ -28,7 +28,7 @@ const muUrl_theme01_y0 = compute_local_project_file_path('/image/list/video_play
 const muUrl_theme02 = compute_local_project_file_path('/image/list/video_play-button-play-theme02.svg')
 const muUrl_theme02_y0 = compute_local_project_file_path('/image/list/video_play-button-play_y0.svg')
 
-const image_panda_placeholder = "/public/panda/image/panda_placeholder.jpg"
+const image_panda_placeholder = compute_local_project_file_path("/panda/image/panda_placeholder.jpg")
 // 无联赛logo图标
 const none_league_icon = compute_local_project_file_path('/image/common/match_cup.svg')
 // 无联赛logo图标黑色版
