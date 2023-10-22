@@ -83,7 +83,7 @@ const get_article = () => {
     if (_code == 200 && !_.isEmpty(_data)) {
       let _item = typeof (_data) == 'string' ? JSON.parse(_data) : _.cloneDeep(_data);
       // 替换图片域名
-      let domain = this.get_file_path('getArticle').replace('getArticle', '')
+      let domain = this.get_server_file_path('getArticle').replace('getArticle', '')
       if (_item.articleContent) {
         _item.articleContent = _item.articleContent.replace(/IMAGE_DOMAIN_YUNYING_PLACEHOLDER\//g, domain)
       }

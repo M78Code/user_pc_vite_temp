@@ -22,7 +22,7 @@
                   <div class="row items-center">
                     <div class="row items-center">
                       <!-- 联赛icon -->
-                      <img :src="item1.picUrlthumb ? get_file_path(item1.picUrlthumb) : compute_img('match-cup')"
+                      <img :src="item1.picUrlthumb ? get_server_file_path(item1.picUrlthumb) : compute_img('match-cup')"
                         @error="league_icon_error" class="match_logo" />
                       <div class="name-overhide">{{ item1.nameText }}</div>
                       <div class="nums"
@@ -89,7 +89,7 @@ import lodash from 'lodash';
 import {project_name} from 'src/core';
 import PageSourceData from "src/core/page-source/page-source.js";
 
-import { i18n_t, MITT_TYPES, compute_css, useMittEmit, MenuData, compute_img, UserCtr, get_file_path } from 'src/core/'
+import { i18n_t, MITT_TYPES, compute_css, useMittEmit, MenuData, compute_img, UserCtr, get_server_file_path } from 'src/core/'
 import { ref, watch, computed, nextTick, onBeforeUnmount, onMounted } from 'vue';
 const default_url = `/${project_name}/image/svg/match_cup.svg` //默认图片地址
 // 无联赛logo图标黑色版

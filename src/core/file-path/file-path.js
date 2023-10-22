@@ -43,7 +43,7 @@ const letter_num = {
  * @param {String} path 图片路径
  * @return {String} csid 球种类型
  */
-const get_file_path = (path, csid = 0) => {
+const get_server_file_path = (path, csid = 0) => {
   if (!path || path == 'undefined') {
     return '';
   }
@@ -109,7 +109,7 @@ const load_img_src = function (el) {
   let img_url =
     /^http(s)?/.test(self_img) || /^\/\//.test(self_img)
       ? self_img
-      : get_file_path(self_img, el.getAttribute("data-csid"));
+      : get_server_file_path(self_img, el.getAttribute("data-csid"));
   if (img_url) {
     if (img_url.indexOf("?") == -1) {
       img_url = img_url + "?rdm=" + src_rdm;
@@ -151,7 +151,7 @@ const load_img_src_common = function (el) {
   // 绝对地址时直接使用，否则需要重新获取地址
   let img_url = /^http(s)?/.test(self_img)
     ? self_img
-    : get_file_path(self_img, el.getAttribute("data-csid"));
+    : get_server_file_path(self_img, el.getAttribute("data-csid"));
   image_is_exist(img_url, el).then((res) => {
     el.style.opacity = 1;
     if (res) return;
@@ -242,4 +242,4 @@ const compute_local_common_file_path=(str='')=>{
 
 
 
-export { get_file_path, load_img_src, load_img_src_common, image_is_exist, project_name };
+export { get_server_file_path, load_img_src, load_img_src_common, image_is_exist, project_name };

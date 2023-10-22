@@ -10,7 +10,7 @@
 import lodash from 'lodash'
 import { onMounted, ref, watch, nextTick } from "vue";
 import UserCtr from 'src/core/user-config/user-ctr.js'
-import { get_file_path } from "src/core/file-path/file-path.js";
+import { get_server_file_path } from "src/core/file-path/file-path.js";
 // 默认联赛图标
 import { none_league_icon, none_league_icon_black, default_league_icon, home_default_avatar, away_default_avatar } from 'src/base-h5/core/utils/local-image'
 
@@ -71,7 +71,7 @@ const check_image_load = () => {
   // 返回默认图片
   default_url.value = load_img_default_by_type(props.type);
   // 获取图片完整网络路径
-  full_path.value = get_file_path(path, props.csid);
+  full_path.value = get_server_file_path(path, props.csid);
   // -1   加载过但是已确认 出错
   //0  未加载
   // image_src.value = default_url.value;
