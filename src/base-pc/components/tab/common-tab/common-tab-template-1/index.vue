@@ -219,7 +219,7 @@ const right_btn_show = computed(() => {
 const onclick = (index, item) => {
   try {
      //展开右侧详情
-     LayOutMain_pc.set_unfold_multi_column(false)
+    //  LayOutMain_pc.set_unfold_multi_column(false)
   } catch (error) {
     console.error(error);
   }
