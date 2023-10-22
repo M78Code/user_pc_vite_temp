@@ -166,7 +166,7 @@ import dateMatchList from 'project_path/pages/virtual/virtual_sports_part/date_m
 import virtualBasketball from 'project_path/pages/details/children/virtual_basketball.vue'
 
 import lodash from "lodash";
-import { useMittOn, useMittEmit, MITT_TYPES,project_name } from  "src/core/"
+import { useMittOn, useMittEmit, MITT_TYPES,LOCAL_PROJECT_FILE_PREFIX } from  "src/core/"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
 export default defineComponent({
   name: "virtual_sports_stage",
@@ -201,6 +201,11 @@ export default defineComponent({
         return []
       }
     },
+  },
+  data() {
+    return {
+      LOCAL_PROJECT_FILE_PREFIX
+    }
   },
 
   setup(props, evnet) {
