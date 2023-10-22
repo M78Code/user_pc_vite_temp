@@ -47,7 +47,7 @@ import odds_new from "src/base-h5/components/details/components/tournament-play/
 // import odd_convert from "src/base-h5/mixins/odds_conversion/odds_conversion.js";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
-import { project_name } from 'src/core'
+import { LOCAL_PROJECT_FILE_PREFIX } from 'src/core'
 
 export default defineComponent({
   // #TODO mixins
@@ -129,6 +129,7 @@ export default defineComponent({
       get_cur_odd,
       get_detail_data,
       get_curr_sub_menu_type,
+      LOCAL_PROJECT_FILE_PREFIX,
       is_select,
       get_odds,
       go_to_bet,

@@ -54,7 +54,7 @@ import { ref, watch, onMounted, onUnmounted } from 'vue'
 import {useMittOn, MITT_TYPES} from  "src/core/mitt/index.js"
 import { format_M_D } from 'src/core/format/index.js'
 import { i18n_t } from "src/boot/i18n.js";
-import { project_name } from "src/core";
+import { LOCAL_PROJECT_FILE_PREFIX } from "src/core";
 import UserCtr from "src/core/user-config/user-ctr.js";
 //国际化
 import store from 'src/store-redux/index.js'

@@ -471,6 +471,7 @@ export default defineComponent({
       get_detail_data,
       other_item_list,
       max_count_ol,
+      LOCAL_PROJECT_FILE_PREFIX,
     }
   }
 })

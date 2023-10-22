@@ -24,7 +24,7 @@ import lodash from "lodash";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { format_total_score } from "src/core/format/index.js"
 import { i18n_t } from "src/boot/i18n.js"
-import { project_name } from "src/core"
+import { LOCAL_PROJECT_FILE_PREFIX } from "src/core"
 
 export default defineComponent({
   // #TODO vuex
@@ -78,6 +78,7 @@ export default defineComponent({
       ...toRefs(data),
       match_status,
       format_total_score,
+      LOCAL_PROJECT_FILE_PREFIX,
     }
   }
 })

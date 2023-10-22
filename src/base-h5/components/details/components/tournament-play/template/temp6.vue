@@ -297,6 +297,11 @@ export default defineComponent({
   components: {
     "odds-new": odds_new
   },
+  data() {
+    return {
+      LOCAL_PROJECT_FILE_PREFIX
+    }
+  },
   setup(props, evnet) {
     const route = useRoute()
     const store_state = store.getState()
@@ -450,7 +455,8 @@ export default defineComponent({
       go_to_bet,
       change_show,
       check_score,
-      set_highlight_cls
+      set_highlight_cls,
+      LOCAL_PROJECT_FILE_PREFIX,
     }
   }
 })

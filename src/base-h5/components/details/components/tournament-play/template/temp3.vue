@@ -145,6 +145,7 @@ export default defineComponent({
       get_detail_data,
       get_is_hengping,
       is_match_result,
+      LOCAL_PROJECT_FILE_PREFIX,
       go_to_bet
     }
   }

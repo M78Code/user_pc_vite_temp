@@ -270,6 +270,11 @@ export default defineComponent({
   components: {
     "odds-new": odds_new
   },
+  data() {
+    return {
+      LOCAL_PROJECT_FILE_PREFIX
+    }
+  },
   setup(props, evnet) {
     const get_bet_list = ref(BetData.bet_list)
     const go_to_bet = (ol_item) => {
