@@ -900,9 +900,6 @@ export const useGetConfig = (router,cur_menu_type,details_params,play_media) => 
     MatchDetailCalss.set_clear_all_play_data()
     // 站点 tab 休眠状态转激活
     useMittOn(MITT_TYPES.EMIT_SITE_TAB_ACTIVE, emit_site_tab_active).off;
-
-    // 销毁前清空数据
-    MatchDataWarehouseInstance.destroy();
     state.match_infoData = null;
     state.category_list = null;
     state.match_details = null;
