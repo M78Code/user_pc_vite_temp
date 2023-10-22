@@ -297,6 +297,11 @@ export default defineComponent({
   components: {
     "odds-new": odds_new
   },
+  data() {
+    return {
+      LOCAL_PROJECT_FILE_PREFIX
+    }
+  },
   setup(props, evnet) {
     const route = useRoute()
     const store_state = store.getState()
