@@ -558,12 +558,12 @@ class BaseData {
    * 解析  基础数据
    */
   resolve_base_data_res() {
-    let {
-      spList = [],
-      tids_obj = [],
-      matchsList = [],
-      menus = {},
-    } = this.base_data_res;
+
+    let spList = lodash_.get(this.base_data_res,'spList',[])
+    let tids_obj = lodash_.get(this.base_data_res,'tids_obj',[])
+    let matchsList = lodash_.get(this.base_data_res,'matchsList',[])
+    let menus = lodash_.get(this.base_data_res,'menus',{})
+
     //  console.warn('this.base_data_res',this.base_data_res)
     this.resolve_csids(spList);
     this.resolve_tids(tids_obj);
