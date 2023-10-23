@@ -40,10 +40,10 @@ class MenuData {
     this.menu_lv4 = []; //4级菜单列表
     //================主列表用的  开始==================
     //当前的菜单 lv1
-    this.current_lv_1_menu = undefined;
+    this.current_lv_1_menu = {};
     this.current_lv_1_menu_i = undefined;
     // //上一次的菜单 lv2
-    this.previous_lv_2_menu = undefined;
+    this.previous_lv_2_menu = {};
     this.previous_lv_2_menu_i = 0;
     // 二级菜单的一个按钮  可能是全部  "全部"  此时 current_lv_2_menu为数组
     this.get_sport_all_selected = computed(() => {
@@ -51,10 +51,10 @@ class MenuData {
       return lodash.isArray(this.current_lv_2_menu) && this.update_time.value;
     });
     //当前的菜单 lv2  注意  二级菜单 可能 有一个【全部】选项 get_sport_all_selected
-    this.current_lv_2_menu = undefined;
+    this.current_lv_2_menu = {};
     this.current_lv_2_menu_i = undefined;
     //当前的菜单 lv3
-    this.current_lv_3_menu = null;
+    this.current_lv_3_menu = {};
     this.current_lv_3_menu_i = undefined;
     //当前的菜单 lv4
     this.current_lv_4_menu = {};

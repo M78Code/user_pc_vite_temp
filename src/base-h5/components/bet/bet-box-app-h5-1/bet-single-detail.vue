@@ -424,6 +424,7 @@ onUnmounted(() => {
 <style lang="scss" scoped>
 @import url("src/base-h5/css/bet/bet_single_detail.scss");
 .bet_single_detail{
+  margin-top: 0.1rem;
   background:var(--q-gb-bg-c-9);
   border-radius: 0.01rem;
   display: flex;

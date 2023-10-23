@@ -307,7 +307,7 @@ class MatchListDetailMiddleware {
             }
             // 大视频页面 切换一场有视频的赛事
             else if (page_source == "video") {
-              video.match_close();
+              video.match_close(null, this.$router);
             }
           } else {
             if (_.isFunction(this.back_to)) {
