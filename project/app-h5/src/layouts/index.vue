@@ -105,7 +105,7 @@ const activity_layerimg = ref("") //首页活动图
 const userBannerTimer = ref(5);
 const timer_3 = ref(null);
 // 开启注单历史弹窗及遮罩
-const settle_dialog_bool = ref('');
+const settle_dialog_bool = ref(true);
 
 // let unsubscribe = store.subscribe(() => {
 //   const { footerMenuReducer: new_footer_menu_reducer } = store.getState();
@@ -310,7 +310,7 @@ if (UserCtr.get_user_token()) {
   /* ************** 悬浮按钮 ************** -E */
   /* **********注单记录********************* *-S*/
   .shadow-box {
-    background-color: rgba(0, 0, 0, 0.3); //var(--q-color-page-bg-color-4);
+    background-color: rgba(0, 0, 0, 1); //var(--q-color-page-bg-color-4);
     opacity: 0;
     transition: opacity 0.3s;
     backdrop-filter: var(--q-color-backdrop-filter-bg-1);
@@ -337,11 +337,11 @@ if (UserCtr.get_user_token()) {
 
   /* **********注单记录********************* *-S*/
   .bet-record-box {
-    width: 100%;
+    width: 80%;
     max-width: 7.7rem !important;
     transition: bottom 0.3s;
     position: fixed;
-    left: 0;
+    left: 10%;
     z-index: 600;
   }
 
