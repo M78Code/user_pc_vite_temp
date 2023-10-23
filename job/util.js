@@ -24,28 +24,30 @@ const { BUILD_VERSION, PROJECT_NAME } = BUILD_VERSION_CONFIG;
 
 
 
-
+dynamicImportVueConfig
 
 
 
 /**
  * 
  * 
-config={
+ * 
+ * 
+ import {import_vue_component} from  "src/core/index.js"
+const  dynamicImportVueConfig={
   'app-h5':'src/base-h5/components/bet/bet-box-h5-1/bet_mix_box_child1.vue',
   'yazhou-h5':'src/base-h5/components/bet/bet-box-h5-1/bet_mix_box_child2.vue'
 }
- *   import {import_vue_component} from  "src/core/index.js"
+ 
+     
+const   ComponentName = await  import_vue_component(dynamicImportVueConfig)
  * 
  * @param {*} config 
  */
 
 export const import_vue_component = async ( config )=>{
 
-// config={
-//   'app-h5':'src/base-h5/components/bet/bet-box-h5-1/bet_mix_box_child1.vue',
-//   'yazhou-h5':'src/base-h5/components/bet/bet-box-h5-1/bet_mix_box_child2.vue'
-// }
+ 
 let path = config[PROJECT_NAME] 
 const { default: ComponentObj } = await import(path);
 
