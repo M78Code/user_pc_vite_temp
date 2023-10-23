@@ -594,10 +594,10 @@ watch(() => MatchDataWarehouseInstance.data_version.version, () => {
       .get_matchDetail_getMatchDetailByTournamentId(params)
       .then(({ data }) => {
         if (!data || data.length == 0) {
-          set_toast({
+          // set_toast({
             // #TODO IMIT
             // txt: t("bet_record.bet_match_tishi"),
-          });
+          // });
 
           sessionStorage.setItem("match_list_ofdetails", "");
           data.math_list_data = [];

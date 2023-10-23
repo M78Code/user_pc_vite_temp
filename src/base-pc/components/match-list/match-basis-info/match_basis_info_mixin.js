@@ -13,7 +13,8 @@ import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import store from 'src/store-redux/index.js'
 import { mapGetters} from "vuex"
 let state = store.getState();
-
+import { useRouter } from "vue-router";
+const router = useRouter()
 const handicap_num = computed(() => {
   if(GlobalAccessConfig.get_handicapNum()){
     return `+${ props.match.mc || 0}`
@@ -29,7 +30,7 @@ const on_go_detail = () => {
   if(is_eports_csid(props.match.csid)){
     props.match.go_detail_type = 'no_switch'
   }
-  details.on_go_detail(props.match);
+  details.on_go_detail(props.match,null,router);
 }
 /**
  * @Description 赛事收藏 

@@ -1,13 +1,14 @@
 <template>
     <navigation-bar title="盘口教程"></navigation-bar>
 
+    <!-- '让球', '大小球' -->
     <div class="ht-switch-box">
         <div v-for="(item, index) in switchMenu" :key="'ht-swtich-' + index" @click="switchHandle(index)"
             :class="['switch-item', state.currentSwitchValue === index && 'switch-item-active']"><span>{{ item }}</span>
         </div>
     </div>
-
-    <div class="ht-slide-box">
+    <!-- 球数 -->
+    <div v-if="state.currentSwitchValue !== 1" class="ht-slide-box">
         <div v-for="(item, index) in slideMenu"
         @click="slideHandle(index)"
             :class="['slide-item', state.currentSlideValue === index && 
@@ -15,6 +16,50 @@
             <span>{{ item }}</span>
         </div>
     </div>
+
+    <!-- '让球', '大小球' 内容-->
+    <template v-if="!state.currentSwitchValue">
+        <div class="ht-content">
+            <div class="ht-title">
+                <div class="pattern"></div>
+                <div class="title">0（平手盘）</div>
+                <!-- <div class="hint"></div> -->
+            </div>
+
+            <div class="ht-both-teams">
+                <div class="left">
+                    <div class="teams">
+                        <div>主队</div>
+                        <div class="score">0</div>
+                    </div>
+                    <div class="teams-logo">队标位</div>
+                </div>
+                <div class="center">
+                    <div class="vs">VS</div>
+                    <div class="text">主客实力相当<br/>均不让球即0（平手盘）</div>
+                </div>
+                <div class="right">
+                    <div class="teams-logo">队标位</div>
+                    <div class="teams">
+                        <div>客队</div>
+                        <div class="score">0</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </template>
+
+    <!-- 球数 内容 -->
+    <template v-else>
+        <div class="ht-content">
+            <div class="ht-title">
+                <div class="pattern"></div>
+                <div class="title">大小球</div>
+                <div class="hint">全场90分钟（含伤停补时）两队进球数的总和</div>
+            </div>
+        </div>
+    </template>
 </template>
 <script setup>
 import { onMounted, onBeforeMount, reactive } from "vue";

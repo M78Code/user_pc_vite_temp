@@ -32,12 +32,12 @@
                 @click="set_menu_lv2(item, index)">
                 <div class="inner-w flex justify-between items-center" :class="{
                   favorite: show_favorite_list,
-                  current: current_lv2.mi == item.mi
+                  current: current_lv2?.mi == item.mi
                 }
                   ">
                   <div class="sport-w-icon">
                     <span class="sport-icon-wrap"
-                      :style="compute_css_obj({key:current_lv2.mi == item.mi ? 'menu-sport-active-image' : 'menu-sport-icon-image', position:format_type(item)})"></span>
+                      :style="compute_css_obj({key:current_lv2?.mi == item.mi ? 'menu-sport-active-image' : 'menu-sport-icon-image', position:format_type(item)})"></span>
 
                     <div class="sport-match-count" v-show="two_menu_show(item)">
                       {{ show_favorite_list ? '' : item.ct ? item.ct : 0 }}
