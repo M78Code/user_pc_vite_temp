@@ -39,7 +39,7 @@ import commonCathecticItem from "src/base-h5/components/common/app-h5/common-cat
 import { format_M_D } from 'src/core/format/index.js'
 // 合并投注项提示弹框
 import cancleConfirmPop from 'src/base-h5/components/cathectic/cancle-confirm-pop.vue';
-import settleVoid from "src/base-h5/components/cathectic/settle-void.vue";
+import settleVoid from "src/base-h5/components/cathectic/app-h5/settle-void.vue";
 import scroll from "src/base-h5/components/common/record-scroll/scroll.vue";
 import SRecord from "src/base-h5/components/skeleton/record.vue";
 import store from 'src/store-redux/index.js';

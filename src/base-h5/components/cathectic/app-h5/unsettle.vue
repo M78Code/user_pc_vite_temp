@@ -30,7 +30,7 @@
 import lodash from 'lodash';
 import { api_betting } from "src/api/index.js";
 import commonCathecticItem from "src/base-h5/components/common/app-h5/common-cathectic-item.vue";
-import settleVoid from "../settle-void.vue";
+import settleVoid from "src/base-h5/components/cathectic/app-h5/settle-void.vue";
 import scroll from "src/base-h5/components/common/record-scroll/scroll.vue";
 // import skt_order from "src/base-h5/mixins/websocket/data/skt-data-order.js"
 import SRecord from "src/base-h5/components/skeleton/record.vue";
