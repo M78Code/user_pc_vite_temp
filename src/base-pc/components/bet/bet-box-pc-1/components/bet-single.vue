@@ -26,7 +26,7 @@
         :item="item"
         :index="index"
         :key="`record-${index}`"
-        v-for="(item, index) in BetData.orderNo_bet_obj"
+        v-for="(item, index) in BetViewDataClass.orderNo_bet_obj"
       ></bet-single-record>
     </template>
 
@@ -34,6 +34,7 @@
 </template>
 <script setup>
 import BetData from "src/core/bet/class/bet-data-class.js";
+import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 // 单关投注信息
 import BetSingleInfo from "./bet-single-info.vue";
 // 单关投注后信息

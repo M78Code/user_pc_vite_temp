@@ -527,7 +527,7 @@ const set_orderNo_bet_obj = order_no_list => {
             playId,
         }
     })
-    BetData.set_orderNo_bet_obj(order_list)
+    BetViewDataClass.set_orderNo_bet_obj(order_list)
 }
 // 是否显示基准分 
 const get_mark_score = ol_obj => {

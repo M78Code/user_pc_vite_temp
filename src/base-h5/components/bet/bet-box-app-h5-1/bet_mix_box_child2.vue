@@ -23,27 +23,43 @@
           <bet-mix-box-child3 :item="BetData.bet_single_list[0]" :key='index'></bet-mix-box-child3>
       </div>
 
+      <!-- 投注前 -->
+      <div v-if="BetViewDataClass.bet_order_status == 1">
+        <!-- 单关金额输入框 v-bind="$attrs"-->
+        <!-- 输入框 与键盘 -->
+        <bet-single-detail :item="BetData.bet_single_list[0]" :index="0"/>
 
-      <!-- 单关金额输入框 v-bind="$attrs"-->
-      <!-- 输入框 与键盘 -->
-      <bet-single-detail :item="BetData.bet_single_list[0]" :index="0"/>
+        <!-- 键盘 -->
+        <key-board v-show="BetViewDataClass.bet_keyboard_show" :item="BetData.bet_single_list[0]" :index="0"></key-board>
+     
+        <div class="dele-wrap yb_px12 yb_py10 row"  @touchmove.prevent>
+          <!-- 右 自动接受跟好赔率 -->
+          <span>
+            <i class="img2" :class="{ 'img3': BetData.bet_is_accept }" @click="toggle_accept"></i>
+            <span :class="{ 'auto-text': BetData.bet_is_accept }" class="yb_mx4 err-msg2" style="max-width:2.1rem"
+              @click="toggle_accept">{{ $t("ac_rules.auto") }}</span>
+            <!-- <img src="image/wwwassets/bw3/svg/rules2.svg" @click="change_accept" class="img1" -->
+            <span class="img1" :style="compute_css_obj('icon-issue')"></span>
+          </span>
 
-      <!-- 键盘 -->
-      <key-board v-show="BetViewDataClass.bet_keyboard_show" :item="BetData.bet_single_list[0]" :index="0"></key-board>
+          <!-- 接受更好赔率的规则弹窗 -->
+          <acceptRules v-if="BetData.better_rules_show"></acceptRules>
+        </div>
+      </div>
 
-      
-      <div class="dele-wrap yb_px12 yb_py10 row" v-if="!BetData.is_bet_success_status" @touchmove.prevent>
-        <!-- 右 自动接受跟好赔率 -->
-        <span>
-          <i class="img2" :class="{ 'img3': BetData.bet_is_accept }" @click="toggle_accept"></i>
-          <span :class="{ 'auto-text': BetData.bet_is_accept }" class="yb_mx4 err-msg2" style="max-width:2.1rem"
-            @click="toggle_accept">{{ $t("ac_rules.auto") }}</span>
-          <!-- <img src="image/wwwassets/bw3/svg/rules2.svg" @click="change_accept" class="img1" -->
-          <span class="img1" :style="compute_css_obj('icon-issue')"></span>
-        </span>
-
-        <!-- 接受更好赔率的规则弹窗 -->
-        <acceptRules v-if="BetData.better_rules_show"></acceptRules>
+      <!-- 点击投注后 -->
+      <div class="scroll-box" ref="scroll_box" v-if="BetViewDataClass.bet_order_status != 1">
+        <bet-mix-box-child4></bet-mix-box-child4>
+      </div>
+      <div class="yb_px12" v-if="get_mix_bet_flag">
+        <div class="row justify-between items-center content-t yb_mb6 yb_mt8 yb_fontsize14 fw_600 bet-mix-show">
+          <div>{{ $t('bet.total_income') }}</div>
+          <div>{{ $t('bet.total_bet') }} <span v-if="bet_num > 0">{{ bet_num }}</span></div>
+        </div>
+        <div class="row justify-between items-center content-t yb_mb6 yb_mt8">
+          <div class="yellow-color yb_fontsize16">{{ (award_total) }}</div>
+          <div class="yb_fontsize16 bet-mix-show">{{ BetData.bet_money_total.toFixed(2) }}</div>
+        </div>
       </div>
 
       <!-- 底部按钮 -->

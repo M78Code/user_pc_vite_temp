@@ -5,23 +5,26 @@
 
 <template>
   <div class="bet-mix-show">
-    <div class="nonebox4-result">
+    <div class="nonebox4-result" v-for="item in BetViewDataClass.orderNo_bet_obj" :key="item.playOptionsId">
         <div class="nonebox4-content-result nonebox4-content-top0">
             <div class="nonebox4-content-result-left">投注金额</div>
-            <div class="nonebox4-content-result-right">600,256.00</div>
+            <div class="nonebox4-content-result-right">  {{ format_currency(parseFloat(item.betMoney)/100) }}</div>
         </div>
         <div class="nonebox4-content-result">
             <div class="nonebox4-content-result-left">可盈金额</div>
-            <div class="nonebox4-content-result-right">600,256.00</div>
+            <div class="nonebox4-content-result-right">  {{ format_currency(parseFloat(item.maxWinMoney)/100) }}</div>
         </div>
         <div class="nonebox4-content-result">
             <div class="nonebox4-content-result-left">注单号</div>
-            <div class="nonebox4-content-result-left">LX1234567891</div>
+            <div class="nonebox4-content-result-left">{{item.orderNo}}</div>
         </div>
     </div>
   </div>
 </template>
-<script setup></script>
+<script setup>
+import { format_currency } from 'src/core/index.js'
+import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
+</script>
 
 <style lang="scss" scoped>
 .nonebox4-result{
