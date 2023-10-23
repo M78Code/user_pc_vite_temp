@@ -5,13 +5,12 @@
     </div>
     <span class="menu-third"></span>
     <div class="menu-s" ref="reset_scroll_dom">
-      
       <div class="menu-item" 
-      v-for="(item,index) in data_list" 
-      :key="index" 
-      @click.self="selete_item(item['id'],index,item)" 
-      :class="current_category_id == item['id']?'t_color':''"
-      >
+        v-for="(item,index) in data_list" 
+        :key="index" 
+        @click.self="selete_item(item['id'],index,item)" 
+        :class="current_category_id == item['id']?'t_color':''"
+        >
         {{item.marketName}}
       </div>
     </div>
@@ -186,6 +185,7 @@ export default defineComponent({
   overflow-y: hidden;
   -webkit-overflow-scrolling: auto;
   white-space: nowrap;
+  padding:2px 0;
 
   &::-webkit-scrollbar {
     display: none;
@@ -204,6 +204,7 @@ export default defineComponent({
   line-height: 0.4rem;
   padding: 0 0.12rem;
   display: inline-block;
+ 
 }
 
 /*************** 选中的玩法集 *************** -S*/
@@ -213,28 +214,18 @@ export default defineComponent({
   letter-spacing: 0;
   text-align: center;
   font-weight: bold;
-  color: var(--q-gb-t-c-12);
-
-  &:after {
-    content: ' ';
-    display: block;
-    position: absolute;
-    width: 0.18rem;
-    height: 0.03rem;
-    left: 50%;
-    transform: translateX(-50%);
-    bottom: 0.05rem;
-    border-radius: 0.08rem;
-    background-color: var(--q-gb-bg-c-13);
+  color: var(--q-gb-t-c-14);
+  background:var(--q-gb-bg-c-13);
+  border-radius: 22px;
+  height:30px;
+  line-height:30px;
   }
-}
-
 
 /*************** 选中的玩法集 *************** -E*/
 .fat-btn {
-  float: left;
+  float: right;
   text-align: center;
-  padding-top: 0.03rem;
+  padding-top: 0.05rem;
 
   width: 0.4rem;
 }

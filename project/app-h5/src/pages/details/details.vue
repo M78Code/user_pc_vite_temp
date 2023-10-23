@@ -40,7 +40,8 @@
                 shrink
                 stretch
                 inline-label
-                :indicator-color="scroll_visible && !get_show_video ? 'view-tab-active-top': ''"
+                :breakpoint="0"
+                :narrow-color="scroll_visible && !get_show_video ? 'view-tab-active-top': ''"
                 class="bg-tabs"
                 active-color="active-tab"
                 :content-class="curr_active_tab">
@@ -609,8 +610,7 @@ export default defineComponent({
     .bg-active-tab {
     background: var(--q-gb-bg-c-15);
   }
-  } 
-
+  }
 </style>
 <style lang="scss">
 .detail-top-pop .q-dialog__inner--minimized {
