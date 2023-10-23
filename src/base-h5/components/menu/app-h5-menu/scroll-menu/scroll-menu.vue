@@ -60,7 +60,7 @@
 </template>
 <script setup>
 import scrollNav from "./scroll-nav.vue";
-import lodash from "lodash"
+import lodash from "lodash";
 import MatchFold from 'src/core/match-fold'
 import base_data from "src/core/base-data/base-data.js";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";

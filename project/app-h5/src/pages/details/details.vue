@@ -40,11 +40,9 @@
                 shrink
                 stretch
                 inline-label
-                switch-indicator
                 :indicator-color="scroll_visible && !get_show_video ? 'view-tab-active-top': ''"
                 class="bg-tabs"
                 active-color="active-tab"
-                active-bg-color="active-tab"
                 :content-class="curr_active_tab">
               <q-tab v-if="show_match_analysis_tab || show_chatroom_tab" name="bet" :content-class="viewTab === 'match_analysis' ? 'tab-bet' : ''" :ripple="false" :label="i18n_t('bet.betting')" />
               <q-tab
@@ -58,7 +56,7 @@
               <!-- 根据中文，繁体、聊天室ID不为空以及 chatRoomSwitch 打开 才显示聊天室Tab -->
               <q-tab name="chatroom" :content-class="viewTab === 'chatroom' ? 'tab-chatroom' : ''" v-if="show_chatroom_tab" :ripple="false" :label="i18n_t('bet.chatroom')" />
             </q-tabs>
-            <!-- 玩法集展示内容 -->
+            <!-- 玩法集展示内容 -->{{}}
             <details-tab 
             v-show="viewTab === 'bet' || get_is_hengping" 
             :data_list="data_list" 
@@ -607,11 +605,11 @@ export default defineComponent({
 }
 }
 .bg-tabs {
-    background: var(--q-gb-bg-c-10);
+    background: var(--q-gb-bg-c-15);
     .bg-active-tab {
     background: var(--q-gb-bg-c-15);
   }
-  }
+  } 
 
 </style>
 <style lang="scss">
