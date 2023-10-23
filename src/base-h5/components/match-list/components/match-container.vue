@@ -676,7 +676,7 @@ const match_collect_state = computed(() => {
  */
 const handle_ball_seed_fold = () => {
   MatchFold.set_ball_seed_match_fold(props.match_of_list.csid)
-  // MatchMeta.compute_page_render_list()
+  // MatchMeta.compute_page_render_list() 
 }
 /**
  * @description 联赛折叠
