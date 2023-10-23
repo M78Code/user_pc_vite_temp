@@ -1,5 +1,5 @@
 <!--
- * @FilePath: d:/projects/user-h5/src/base-h5/pages/details/components/chatroom/post_bet.vue
+ * @FilePath: d:/projects/user-h5/src/base-h5/components/details/components/chatroom/post_bet.vue
  * @Description:
 -->
 <!--
@@ -37,10 +37,10 @@
 <script>
 // #TODO vuex
 // import { mapGetters, mapMutations } from "vuex"
-import commonBetItem from "src/base-h5/pages/details/components/chatroom/common_bet_item.vue";
+import commonBetItem from "src/base-h5/components/details/components/chatroom/common_bet_item.vue";
 import scroll from "src/project/components/record_scroll/scroll.vue";
 import { api_chatroom } from "src/project/api/index.js";
-import chatroom_mixin from 'src/base-h5/pages/details/components/chatroom/chatroom_mixin'
+import chatroom_mixin from 'src/base-h5/components/details/components/chatroom/chatroom_mixin'
 import no_data from "src/project/components/common/no_data.vue";   // 无数据展示组件
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { i18n_t } from "src/boot/i18n.js";;

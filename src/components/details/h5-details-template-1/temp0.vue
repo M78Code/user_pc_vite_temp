@@ -176,7 +176,7 @@
 <script>
 // #TODO vuex 
 // import { mapGetters } from "vuex";
-import odds_new from "src/base-h5/pages/details/components/tournament_play/unit/odds_new.vue";
+import odds_new from "src/base-h5/components/details/components/tournament_play/unit/odds_new.vue";
 import { i18n_t } from "src/boot/i18n.js"
 // #TODO mixins 
 // import odd_convert from "/mixins/odds_conversion/odds_conversion.js";

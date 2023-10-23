@@ -1,5 +1,5 @@
 /*
- * @FilePath: d:/projects/user-h5/src/base-h5/pages/details/components/chatroom/check_domain.js
+ * @FilePath: d:/projects/user-h5/src/base-h5/components/details/components/chatroom/check_domain.js
  * @Description:
  */
 import axios from "axios";

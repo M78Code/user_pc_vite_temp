@@ -33,8 +33,8 @@ import { useRoute } from "vue-router";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt";
 import lodash from "lodash";
 import store from "src/store-redux/index.js";
-import tiaozhuanPanel from "src/base-h5/pages/match-list/components/tiaozhuan-panel.vue";    //  跳转banner图和猜你喜欢
-import matchContainer from "src/base-h5/pages/match-list/index.vue";
+import tiaozhuanPanel from "src/base-h5/components/match-list/components/tiaozhuan-panel.vue";    //  跳转banner图和猜你喜欢
+import matchContainer from "src/base-h5/components/match-list/index.vue";
 import SList from "src/base-h5/components/skeleton/skeleton-list.vue"   // 赛事列表骨架屏
 import scrollTop from "src/base-h5/components/common/record-scroll/scroll-top.vue";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";

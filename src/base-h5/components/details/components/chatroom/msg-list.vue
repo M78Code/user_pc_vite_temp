@@ -1,5 +1,5 @@
 <!--
- * @FilePath: d:/projects/user-h5/src/base-h5/pages/details/components/chatroom/msg_list.vue
+ * @FilePath: d:/projects/user-h5/src/base-h5/components/details/components/chatroom/msg_list.vue
  * @Description:
 -->
 <template>
@@ -19,8 +19,8 @@
 <script>
 // #TODO vuex
 // import { mapMutations, mapGetters } from "vuex";
-import chat_msg from 'src/base-h5/pages/details/components/chatroom/chat_msg.vue';
-import { msgType, muteType } from 'src/base-h5/pages/details/components/chatroom/constant.js'
+import chat_msg from 'src/base-h5/components/details/components/chatroom/chat_msg.vue';
+import { msgType, muteType } from 'src/base-h5/components/details/components/chatroom/constant.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, nextTick } from "vue";
 import { t } from "src/boot/i18n.js";;

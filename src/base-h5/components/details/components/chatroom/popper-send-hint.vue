@@ -1,5 +1,5 @@
 <!--
- * @FilePath: d:/projects/user-h5/src/base-h5/pages/details/components/chatroom/popper_send_hint.vue
+ * @FilePath: d:/projects/user-h5/src/base-h5/components/details/components/chatroom/popper_send_hint.vue
  * @Description: 发言条件提示
 -->
 
