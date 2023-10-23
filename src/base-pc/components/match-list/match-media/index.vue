@@ -45,7 +45,7 @@
 
 <script setup>
 import { computed, reactive, ref,watch } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute,useRouter } from 'vue-router';
 
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
@@ -56,7 +56,7 @@ import { other_play_name_to_playid } from 'src/core/constant/config/data-class-c
 import store from 'src/store-redux/index.js';
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 
-
+const router = useRouter()
 let state = store.getState();
 // const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
 
@@ -187,7 +187,7 @@ function on_go_detail(){
   if (is_eports_csid(props.match.csid)) {
     props.match.go_detail_type = 'no_switch'
   }
-  details.on_go_detail(props.match)
+  details.on_go_detail(props.match,null,router)
 }
 /**
  * @Description 赛事收藏

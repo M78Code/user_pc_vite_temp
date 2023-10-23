@@ -56,7 +56,8 @@ import { other_play_name_to_playid } from 'src/core/constant/config/data-class-c
 import store from 'src/store-redux/index.js';
 import { t, compute_css_obj } from "src/core/index.js";
 import menu_config from "src/core/menu-pc/menu-data-class.js";
-
+import { useRouter } from "vue-router";
+const router = useRouter()
 
 let state = store.getState();
 // const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
@@ -176,7 +177,7 @@ function on_go_detail(){
   if (is_eports_csid(props.match.csid)) {
     props.match.go_detail_type = 'no_switch'
   }
-  details.on_go_detail(props.match)
+  details.on_go_detail(props.match,null,router)
 }
 /**
  * @Description 赛事收藏

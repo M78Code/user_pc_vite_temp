@@ -1,5 +1,5 @@
 <template>
-  <div class="basic-wrap relative-position" @click.stop="details.on_go_detail(match)" >
+  <div class="basic-wrap relative-position" @click.stop="details.on_go_detail(match,null,router)" >
     <!-- 棒球发球方 -->
     <div class="serve-ball" :class="match.mat" v-if="match.csid == 3 && get_match_status(match.ms) == 1">
       <div class="point home"></div>
@@ -95,6 +95,8 @@ import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import { utils } from 'src/core/utils/module/utils.js'
 import details  from "src/core/match-list-pc/details-class/details.js"
+import { useRouter } from "vue-router";
+const router = useRouter()
 // const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
 const props = defineProps({
   match: {

@@ -12,9 +12,6 @@ import { i18n_t} from "src/boot/i18n.js"
 import BetCommonHelper from "src/core/bet/common-helper/index.js";
 import { get_media_icon_index,get_match_status } from 'src/core/index.js'
 import { UserCtr,MatchDetailCalss,is_eports_csid } from "src/core/index.js";
-import route  from "project_path/src/router/index.js"
-const routeVal = route.currentRoute.value
-console.log(routeVal,'routeVal');
 export default {
 
   /**
@@ -38,15 +35,16 @@ export default {
   * @Author Cable
   * @param {number} mid 赛事id
   * @param {function} callback 回调函数
+  * @param {object} route 路由参数
   */
-  api_get_match_info(mid,callback){
+  api_get_match_info(mid,route,callback){
     let params = {
       mid,
       cuid: UserCtr.get_cuid()
     };
     let api_ = null;
     // 判断是电竞还是其他赛种，区分接口
-    if(is_eports_csid(routeVal.params.csid)){
+    if(is_eports_csid(route.params.csid)){
       api_ = api_details.get_match_detail_ESMatchInfo;
     } else {
       api_ = api_details.get_match_detail_MatchInfo;
@@ -721,8 +719,10 @@ export default {
   * @Author Cable
   * @param {object} match  赛事信息
   * @param {number} play_type  数据源类型 1 ：源视频 2：动画 3 ：演播室 4 ：主播 5：专题
+  * @param {object} route 路由参数
+  * @param {function} router  路由方法 
   */
-  full_screen(match,play_type,size){
+  full_screen(match,play_type,size,route,router){
     play_type = play_type || 1
     if(play_type == 2){
       this.send_message({
@@ -732,7 +732,7 @@ export default {
     }
 
     // 专题视频切换其他媒体类型前 通知子iframe记录当前播放时间
-    if (lodash.get(routeVal, 'params.play_type') == 5) {
+    if (lodash.get(route, 'params.play_type') == 5) {
       this.send_message({
         cmd: 'record_play_info',
         val: {
@@ -748,13 +748,13 @@ export default {
     const { mid, tid, csid } = match
     let video_size = '0'
     
-    if((routeVal.params.size == 1 || size == 'xl') && !is_eports_csid(match.csid)){
+    if((route.params.size == 1 || size == 'xl') && !is_eports_csid(match.csid)){
       video_size= '1'
     }
 
     clearTimeout(this.route_jump_timer)
     this.route_jump_timer = setTimeout(() => {
-     route.push({
+      router.push({
         name: 'video',
         params: {
           mid,
@@ -812,9 +812,9 @@ export default {
   * @param {object} match  赛事信息
   * @param {function} callback  回调函数
   */
-  get_video_url(match,callback){
+  get_video_url(match,route,callback){
     let { lvs = -1, mms = -1, tvs = -1,  zvs = -1,ms } = match
-    let type = lodash.get(routeVal,"params.play_type") || get_media_icon_index(MatchDetailCalss.play_media.media_type)
+    let type = lodash.get(route,"params.play_type") || get_media_icon_index(MatchDetailCalss.play_media.media_type)
     // 是否滚球  并且视频状态等于2
     if(
       //源视频且滚球
@@ -1039,11 +1039,12 @@ export default {
   * @Description:大屏版赛事关闭，切换下一场有视频赛事，如果没有就返回列表
   * @Author Cable
   * @param {number} mid  关闭的赛事id
+  * @param {number} router  路由方法
   */
-  match_close(mid){
+  match_close(mid,router){
     this.is_video_end = true
     window.vue.useMittEmit('exit_browser_full_screen')
-    route.push('/home')
+    router.push('/home')
     // this.get_videos( match_list => {
     //   for(let i in match_list){
     //     if(match_list[i].mid != mid){
