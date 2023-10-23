@@ -15,39 +15,16 @@
     <div class="content-box">
 
       <!-- 头部 -->
-      <bet-bar @click.native="pack_up"></bet-bar>
+      <bet-bar @click="pack_up"></bet-bar>
 
       <!-- 中间可滚动区域 -->
-      <div class="scroll-box" ref="scroll_box" :style="{ 'max-height': `${max_height1}px` }"
+      <div class="scroll-box scroll-box-center" ref="scroll_box" :style="{ 'max-height': `${max_height1}px` }"
         @touchmove="touchmove_handle($event)" @touchstart="touchstart_handle($event)">
-        <!-- 上部纯展示组件 展示盘口赔率玩法对阵信息-->
-        <!-- <bet-mix-show v-for="(value, name, index1) in view_ctr_obj" :order_detail_resp_list="order_detail_resp_list"
-          :query_order_obj="query_order_obj" :key="name" :index_="index1" :name_="name">
-        </bet-mix-show> -->
-        <bet-mix-show v-if="bet_show_single">
-        </bet-mix-show>
+        <bet-mix-box-child3></bet-mix-box-child3>
+      </div>
 
-        <!-- 串关投注成功组件 单个几串几的信息展示-->
-        <template v-if="btn_show == 1">
-          <div v-show="btn_show == 1">
-            <div v-for="(item, index) in series_order_respList" :key="index"></div>
-          </div>
-        </template>
-        <template v-if="0">
-          <div v-show="btn_show == 1 && series_order_respList.length > 1"
-            class="order-ok row yb_px14 yb_py8 yb_fontsize14">
-            <div class="col-6">
-              <!-- 可赢总金额 -->
-              <span style="font-weight:600">{{ $t('bet_record.total_winable_amount') }}</span>
-              <p class="yb_fontsize18 moey-p">{{ (max_win_money_total / 100).toFixed(2) }}</p>
-            </div>
-            <div class="col-6 text-right">
-              <!-- 投注总金额 -->
-              <span style="font-weight:600">{{ $t('bet_record.total_bet_amount') }}</span>
-              <p class="yb_fontsize18 moey-p2">{{ (bet_money_total / 100).toFixed(2) }}</p>
-            </div>
-          </div>
-        </template>
+      <div class="scroll-box" ref="scroll_box">
+        <bet-mix-box-child4></bet-mix-box-child4>
       </div>
       <div class="yb_px12" v-if="get_mix_bet_flag">
         <div class="row justify-between items-center content-t yb_mb6 yb_mt8 yb_fontsize14 fw_600 bet-mix-show">
@@ -59,59 +36,10 @@
           <div class="yb_fontsize16 bet-mix-show">{{ BetData.bet_money_total.toFixed(2) }}</div>
         </div>
       </div>
-      <!-- 提示信息  分3种情况-->
-      <!-- 求队球员冲突优先处理 -->
-      <template v-if="is_conflict">
-        <div class="yb_px14 row items-center yb_fontsize12 justify-center err-msg" style="min-height:0.3rem"
-          @touchmove.prevent>
-          <span class="text-center yb_py4">错误</span>
-        </div>
-      </template>
 
-
-      <!-- 不支持串关提示 -->
-      <template v-else-if="is_conflict2">
-        <div class="err-msg3 yb_px14 text-center" @touchmove.prevent @click="reomve_invalid">
-          <i class="close yb_mr4"></i>
-          <!-- 移除无效投注 -->
-          {{ $t('bet.msg11') }}
-        </div>
-      </template>
-      <!-- 失效和赔率变化 或者 正常状态 -->
-      <template v-else>
-        <div class="yb_px14 row items-center yb_fontsize12"
-          :class="tips_msg ? 'justify-center err-msg' : 'justify-end err-msg2'"
-          :style="{ 'min-height': BetData.is_bet_success_status ? '0.38rem' : '0.3rem' }" @touchmove.prevent
-          @click="nothing">
-          <template v-if="tips_msg"><span class="text-center yb_py4">{{ (tips_msg) }}</span></template>
-          <template v-else-if="!tips_msg && [1, 2, 7].includes(+get_bet_status)">
-            <!-- 左， 合并投注项 -->
-            <span :style="{ 'opacity': calc_combine_show ? '0' : '1', 'margin-right': 'auto' }">
-              <i class="img2" :class="{ 'img3': view_ctr_obj.bet_is_combine }" @click="change_is_combine"></i>
-              <span class="yb_mx4" :class="{ 'auto-text': !view_ctr_obj.bet_is_combine }" @click="change_is_combine">{{
-                i18n_t("tips.msg1") }}</span>
-                <span class="img1" :style="compute_css_obj('icon-issue')"></span>
-            </span>
-            <!-- 右 -->
-            <!-- 常用金额 -->
-            <span v-if="BetData.bet_list.length == 1">
-              <i class="img2" :class="{ 'img3': get_used_money != 0 }" @click="change_used_money"></i>
-              <span class="yb_ml4" :class="get_used_money == 0 && 'auto-text'" @click="change_used_money">{{
-                i18n_t('bet.used_money2') }}</span>
-            </span>
-            <!-- 更多串关类型 -->
-            <span v-else-if="BetData.bet_is_mix" @click.stop="spread_options"
-              :class="{ 'opacity-m': BetData.bet_list.length == 2 || get_s_count_data.length == 1, 'col-8 text-right': BetData.bet_list.length > 1 }">
-              {{ get_is_spread ? i18n_t('bet.msg04') : i18n_t('bet.msg05') }}
-              <i class="arrow" :class="{ 'arrow2': !get_is_spread }"></i>
-            </span>
-          </template>
-        </div>
-      </template>
-      
-            <!-- 对应单关多个注单样式 -->
-          <!-- 单关金额输入框 v-bind="$attrs"-->
-          <bet-single-detail></bet-single-detail>
+      <!-- 对应单关多个注单样式 -->
+      <!-- 单关金额输入框 v-bind="$attrs"-->
+      <bet-single-detail></bet-single-detail>
 
       <!-- 键盘 -->
       <key-board v-show="bet_keyboard_show" :bet_min_max_money="bet_min_max_money"></key-board>
@@ -196,6 +124,9 @@
 </template>
 
 <script setup>
+import betMixBoxChild3 from './bet_mix_box_child3.vue';
+import betMixBoxChild4 from './bet_mix_box_child4.vue';
+
 // import betMixShow from './/bet_mix_show.vue';
 import betMixShow from './bet_mix_show3.vue';
 // import betMixShow2 from './/bet_mix_show2.vue';
@@ -427,6 +358,9 @@ onUnmounted(() => {
   background-color: var(--q-gb-bg-c-9);
   padding: 12px;
   border-radius: 12px;
+}
+.scroll-box-center{
+  margin: 0.1rem 0;
 }
 
 .full-shadow2 {

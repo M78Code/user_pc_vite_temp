@@ -179,7 +179,7 @@ export const useGetGlobal = ({ details_params, back_to }) => {
             }
             // 大视频页面 切换一场有视频的赛事
             else if (cur_page == "video") {
-              video.match_close();
+              video.match_close(null,router);
             }
           } else {
             if (lodash.isFunction(back_to)) {

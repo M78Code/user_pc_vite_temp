@@ -1,5 +1,5 @@
 <template>
-  <div class="basic-wrap" @click.stop="details.on_go_detail(match)">
+  <div class="basic-wrap" @click.stop="details.on_go_detail(match,null,router)">
     <!-- 主队信息 -->
     <div class="row-item team-item" v-for="(item,index) in ['home','away']" :key="item">
       <div class="team-logo">
@@ -35,6 +35,8 @@
 import { } from 'vue';
 import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
 import {component_symbol ,need_register_props} from "../config/index.js"
+import { useRouter } from "vue-router";
+const router = useRouter()
 const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
 
 </script>

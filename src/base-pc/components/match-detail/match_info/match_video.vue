@@ -152,6 +152,7 @@ export default {
       LayOutMain_pc,
       utils,
       route:this.$route,
+      router:this.$router,
       format_second_ms,
       i18n_t,
       ctr_data:{ // 高清flv, 2:流畅m3u8 切换配置参数
