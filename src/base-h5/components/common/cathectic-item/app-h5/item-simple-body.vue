@@ -7,21 +7,21 @@
 <!-- 矩形框中部 -->
   <div class="item-body yb_fontsize14">
     <div class="body-title">
-      <span>罗斯托拉夫U20</span>
+      <span>{{data_b.matchInfo}}</span>
     </div>
     <div class="body-info">
       <div>
-        <p>投注项:角球:滚球</p>
-        <p>大/小-上半场</p>
+        <p>{{data_b.sportName}}</p>
+        <p>{{data_b.sportName}}</p>
       </div>
-      <span>大3.5 @2.16</span>
+      <span>大3.5 @{{data_b.oddFinally}}</span>
     </div>
     <div class="body-main">
-      <p><label>投注单号：</label> <span>1787238478234454</span></p>
-      <p><label>投注时间：</label> <span>2019-08-25 03:00</span></p>
-      <p><label>[足球]划分为金额水电费</label></p>
-      <p><label>投资额：</label> <span>10.00元</span></p>
-      <p><label>可赢额：</label> <span>5.60元</span></p>
+      <p><label>投注单号：</label> <span>{{data_b.betNo}}</span></p>
+      <p><label>投注时间：</label> <span>{{data_b.beginTime}}</span></p>
+      <p><label>{{data_b.matchName}}</label></p>
+      <p><label>投资额：</label> <span>{{data_b.betAmount}}元</span></p>
+      <p><label>可赢额：</label> <span>{{data_b.oddsValue}}元</span></p>
       <p><label>注单状态：</label> <span>投注成功</span></p>
     </div>
   </div>
@@ -52,6 +52,7 @@ import { project_name } from 'src/core'
     }
   })
   onMounted(() => {
+    console.log(props.data_b);
     rules_normal();
     rules_a();
     rules_b();
