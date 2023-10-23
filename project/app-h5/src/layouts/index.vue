@@ -18,9 +18,12 @@
       <template v-if="['matchList', 'sport_menu'].includes(route.name)">
         <TopMenu />
         <ScrollMenu />
+        <DateTab />
+        <SwiperWap />
+        <SwitchWap />
+        <SearchTab />
       </template>
       
-      <Tab />
       <router-view />
       <BetBoxWapper />
       <!--页脚-->
@@ -64,7 +67,7 @@ import {
 } from "vue";
 import { useMittOn, MITT_TYPES, i18n_t, UserCtr } from "src/core/";
 // import { FooterWapper } from "src/components/footer/index.js";
-import { TopMenu,Tabbar,ScrollMenu,Tab } from 'src/base-h5/components/menu/app-h5-menu/index'
+import { TopMenu,Tabbar,ScrollMenu,DateTab,SearchTab,SwitchWap,SwiperWap } from 'src/base-h5/components/menu/app-h5-menu/index'
 import { MenuWapper } from "src/base-h5/components/menu";
 import { BetBoxWapper } from "src/base-h5/components/bet";
 import activityIcon from "src/base-h5/components/common/activity-icon.vue"; // 设置

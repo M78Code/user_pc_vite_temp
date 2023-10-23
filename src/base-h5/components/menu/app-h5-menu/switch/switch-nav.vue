@@ -1,0 +1,104 @@
+<!--
+ * @Author: rise
+ * @Date: 2023-10-22 17:03:22
+ * @LastEditors: rise
+ * @LastEditTime: 2023-10-23 16:54:52
+ * @Description:  
+-->
+<template>
+    <div class="switch-nav">
+        <ul>
+            <li v-for="(item,index) in list" :key="index" :class="{active:activeOn == item.val}" @click="changeActive(item.val,item.changeFun,item.isSort)">
+                {{  item.name }}
+                <template v-if="item.isSort">
+                    <span>
+                        <i v-for="(n,m) in sortJson" :key="m">
+                            <img :src="`${activeOn}-${sortVal}` === `${index}-${n.val}`?n.activeImg:n.img" />
+                        </i>
+                    </span>
+                </template>
+            </li>
+        </ul>
+    </div>
+</template>
+<script setup>
+    import {ref} from "vue";
+    import asc1 from "./img/asc1.svg";
+    import asc2 from "./img/asc2.svg";
+    import desc1 from "./img/desc1.svg";
+    import desc2 from "./img/desc2.svg";
+    const sortJson = [//排序数据
+        {
+            val:1,
+            enVal:"asc",
+            img:asc1,
+            activeImg:asc2
+        },
+        {
+            val:2,
+            enVal:"desc",
+            img:desc1,
+            activeImg:desc2
+        }
+    ];
+    const props = defineProps({
+        list: {
+            type: Array,
+            default:[]
+        },
+        defaultVal:{
+            type: Number,
+            default:0
+        }
+    });
+    const activeOn = ref(props.defaultVal);//选中值
+    const sortVal = ref(0);//排序code
+    /**
+     * 点击事件
+     * @param {*} val  值0 1
+     * @param {*} callback  执行方法
+     * @param {*} sort  排序值
+     */
+    const changeActive = (val,callback,sort) => {
+        if(sort){
+            if(activeOn.value !== val)sortVal.value=0;
+            sortVal.value = sortVal.value === 0?1:sortVal.value === 1?2:1;
+            activeOn.value = val;
+            const enVal = sortJson.filter((item)=>{return item.val === sortVal.value })?.[0].enVal;
+            return callback(val,enVal);
+        }
+        if(activeOn.value === val)return;
+        activeOn.value = val;
+        callback(val);
+    }
+</script>
+<style scoped lang="scss">
+    .switch-nav{
+        width: 100%;
+        height: 0.24rem;
+        position: relative;
+        font-weight: 500;
+        ul{
+            width: 100%;
+            height: 100%;
+            border-radius: 25px;    
+            // background: var(--q-gb-bg-c-10);
+            background: #f8f9fa;
+            display: flex;
+            font-size: 12px;
+            li{
+                line-height:  0.24rem;
+                flex: 1;
+                text-align: center;
+                color: var(--q-gb-bd-c-4);
+                margin: 0.02rem;
+                &.active{
+                    border-radius: 25px;
+                    background-image: linear-gradient(#ffffff, #f6fafe);
+                    // background:var(--q-gb-bg-c-11); 
+                    color: var(--q-gb-bd-c-2);
+                }
+            }
+        }
+    }
+</style>

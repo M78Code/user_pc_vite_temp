@@ -100,7 +100,7 @@ const money_filter = function (num) {
  * @param {Integer} number 形如123的数字
  * @return {String} 返回转换成的形如 一百二十三 的字符串
  */
-const numberToChinese = (number) => {
+export const numberToChinese = (number) => {
   // // 单位 字符
   let t = { units: "个十百千万@#%亿^&~", chars: "零一二三四五六七八九" };
   let a = (number + "").split(""),

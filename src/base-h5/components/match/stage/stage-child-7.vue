@@ -14,9 +14,8 @@
 <script>
 // import { mapGetters } from "vuex"
 // import msc from "src/public/mixins/common/msc.js";
-import { utils } from 'src/core/index.js';
+import { numberToChinese } from 'src/core/index.js';
 import UserCtr from "src/core/user-config/user-ctr.js";
-
 export default {
   // mixins: [msc],
   name: 'stage_child_7',
@@ -40,8 +39,8 @@ export default {
           mct = 1;
         }
         let new_num = mct;        
-        if(UserCtr.lang == 'zh'){
-          new_num = utils.numberToChinese(mct);
+        if(UserCtr.lang == 'zh'){      
+          new_num = numberToChinese(mct);
         }
         let game_count = i18n_t("mmp.7.x");
         r = game_count.replace('%s',new_num);

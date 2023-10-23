@@ -6,7 +6,7 @@
 import lodash from 'lodash'
 import MatchCtr from './match-ctr'
 import { i18n_t } from "src/boot/i18n.js";
-
+import { numberToChinese } from "src/core";
 class matchListClass {
   /**
   * @description:斯诺克7局显示处理
@@ -23,7 +23,7 @@ class matchListClass {
 
     let new_num = mct;
     if (this.get_lang == 'zh') {
-      new_num = utils.numberToChinese(mct);
+      new_num = numberToChinese(mct);
     }
     let game_count = i18n_t("mmp.7.x")
     let ext = {

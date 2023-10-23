@@ -2,17 +2,16 @@
  * @Author: rise
  * @Date: 2023-10-22 13:33:28
  * @LastEditors: rise
- * @LastEditTime: 2023-10-22 16:45:14
+ * @LastEditTime: 2023-10-23 15:20:24
  * @Description:  
 -->
 <template>
   <q-carousel
-    color="white"
+    class="q-carousel-wap"
     arrows
-    height="100px"
-    width="200px"
+    height="52px"
   >
-    <q-carousel-slide img-src="statics/mountains.jpg">
+    <q-carousel-slide>
       <div class="absolute-bottom custom-caption">
         <div class="q-display-1">First stop</div>
         <div class="q-headline">Mountains</div>
@@ -34,6 +33,10 @@
 </template>
 
 <style>
+.q-carousel-wap{
+  background-color: #dddddd;
+  border-radius: 0.08rem;
+}
 .custom-caption {
   text-align: center;
   padding: 12px;
