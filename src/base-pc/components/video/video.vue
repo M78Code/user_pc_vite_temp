@@ -273,7 +273,7 @@ function exit_browser_full_screen() {
 function get_match_info(show_loading = true) {
   show_loading && (this.load_data_state = 'loading')
 
-  video.api_get_match_info(this.mid, (match_info, load_data_state) => {
+  video.api_get_match_info(this.mid,this.$route, (match_info, load_data_state) => {
     this.load_data_state = load_data_state
     this.match_info_ctr.init_match_obj(match_info); // 初始化赛事控制类
     this.match_info = this.match_info_ctr.match_obj

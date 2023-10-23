@@ -2,7 +2,7 @@
  *封装赛事详情api接口数据，给赛事详情仓库设置数据   暂未使用 后续维护
  */
 import { ref, computed, onUnmounted, getCurrentInstance } from "vue";
-// import { useRoute } from "vue-router";
+import { useRoute } from "vue-router";
 import lodash from "lodash";
 import  { computed_background } from  "src/core/constant/config/csid.js"
 //  // api详情
@@ -22,9 +22,8 @@ import MenuData from "src/core/menu-pc/menu-data-class.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import filterHeader from 'src/core/filter-header/filter-header.js'
 import * as api_websocket from "src/api/module/socket/socket_api.js";
-import route from "project_path/src/router/index.js";
 import store from "src/store-redux/index.js";
-// const route = useRoute();
+const route = useRoute()
 let state = store.getState();
 const background_img = ref(null); //详情背景图片
 const countMatchDetailErr = ref(0); //错误接口次数统计

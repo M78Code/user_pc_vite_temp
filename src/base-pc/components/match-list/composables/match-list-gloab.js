@@ -141,7 +141,7 @@ const mx_autoset_active_match = (params = { mid: 0 }) => {
 					}
 					// 大视频页面 切换一场有视频的赛事
 					else if (cur_page == "video") {
-						video.match_close();
+						video.match_close(null,router);
 					}
 				} else {
 					if (_.isFunction(this.back_to)) {
