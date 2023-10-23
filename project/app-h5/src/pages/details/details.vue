@@ -137,7 +137,6 @@
 // 引入国际化
 import lodash from "lodash";
 import detailsHeader from "src/base-h5/components/details/components/details-header.vue";   // 整个详情页的上部视频区域
-import detailsTab from "src/base-h5/components/details/components/details-tab.vue";         // 详情页中部玩法集tab
 import detailsDialog from "src/base-h5/components/details/details-dialog.vue";   // 详情赛事下拉,赛事列表组件
 // // import no_data from "src/project/components/common/no-data.vue";   // 无网络展示组件
 import videos from "src/base-h5/components/details/components/videos2.vue";   // 详情页视频+动画直播区域
@@ -152,11 +151,12 @@ import { useRouter, useRoute } from "vue-router";
 import store from "src/store-redux/index.js";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt/index.js"
 import { details_main } from "./details.js";
-import { ref, defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch, provide } from "vue";
-import {UserCtr,compute_css_obj,compute_img_url,MatchDetailCalss,MenuData,utils} from "src/core/";
+import { ref, defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch, provide,defineAsyncComponent } from "vue";
+import {UserCtr,compute_css_obj,compute_img_url,MatchDetailCalss,MenuData,utils,import_vue_component} from "src/core/";
 import { compute_css_variables } from "src/core/css-var/index.js"
 import {is_export } from "src/base-h5/mixin/menu";
-
+// 详情页中部玩法集tab
+const detailsTab = defineAsyncComponent(() => import_vue_component('details-tab') )
 //国际化
 
 export default defineComponent({
