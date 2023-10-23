@@ -35,7 +35,7 @@ config={
   'app-h5':'src/base-h5/components/bet/bet-box-h5-1/bet_mix_box_child1.vue',
   'yazhou-h5':'src/base-h5/components/bet/bet-box-h5-1/bet_mix_box_child2.vue'
 }
- * 
+ *   import {import_vue_component} from  "src/core/index.js"
  * 
  * @param {*} config 
  */

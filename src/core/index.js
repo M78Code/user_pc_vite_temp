@@ -212,6 +212,9 @@ export * from "src/core/server-img/";
  *
  */
 import ServerTime from './server-time/server-time'
+
+import {import_vue_component} from  "app/job/utils.js"
+
 export {
   //
   http,
@@ -255,5 +258,6 @@ export {
   LayOutMain_pc,
   compute_css_variables,
   GlobalSwitchClass,
-  SearchPCClass
+  SearchPCClass,
+  import_vue_component
 };
