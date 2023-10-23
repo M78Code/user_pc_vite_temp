@@ -70,9 +70,9 @@ import { theme } from 'src/base-h5/mixin/userctr.js'
 // 设置菜单
 // import setMenu from "src/project/components/common/set_menu.vue"    
 // 虚拟体育
-import virtualSports from "src/base-h5/pages/virtual/virtual-sports-part/virtual-sports.vue";
+import virtualSports from "src/base-h5/components/virtual/virtual-sports-part/virtual-sports.vue";
 // 底部菜单
-// import virtualFooterMenu from 'src/base-h5/pages/virtual/virtual-sports-part/virtual-footer-menu.vue'
+// import virtualFooterMenu from 'src/base-h5/components/virtual/virtual-sports-part/virtual-footer-menu.vue'
 
 
 // 当前选中的虚拟体育菜单(虚拟足球 赛马 赛狗 等)

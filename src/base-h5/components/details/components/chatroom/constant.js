@@ -1,5 +1,5 @@
 /*
- * @FilePath: d:/projects/user-h5/src/base-h5/pages/details/components/chatroom/constant.js
+ * @FilePath: d:/projects/user-h5/src/base-h5/components/details/components/chatroom/constant.js
  * @Description:
  */
 

@@ -38,8 +38,8 @@ import { MenuData } from "src/core/index.js"
 
 import 'src/base-h5/css/pages/hot-modal.scss'
 // import router_mixins from "src/base-h5/mixins/router-mixins.js";
-const  live_video =defineAsyncComponent(()=>import("src/base-h5/pages/home/live-video/index.vue"));
-const  hot =defineAsyncComponent(()=>import("src/base-h5/pages/home/hot/index.vue"));
+const  live_video =defineAsyncComponent(()=>import("src/base-h5/components/home/live-video/index.vue"));
+const  hot =defineAsyncComponent(()=>import("src/base-h5/components/home/hot/index.vue"));
 // 热门页入口主页面
 
 const { homeReducer } = store.getState();

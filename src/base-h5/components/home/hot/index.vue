@@ -52,7 +52,7 @@ import { api_home, api_analysis } from "src/api/index.js";
 import { ref, onMounted,watch,computed,onUnmounted } from 'vue';
 import hotFeatured from "src/base-h5/components/skeleton/home-hot/hot-featured.vue"    // 热门精选 骨架屏
 import hotSchedule from "src/base-h5/components/skeleton/home-hot/hot-schedule.vue"     // 热门赛程 骨架屏
-import mayAlsoLike from "src/base-h5/pages/match-list/components/may-also-like.vue"   // 列表页猜你喜欢
+import mayAlsoLike from "src/base-h5/components/match-list/components/may-also-like.vue"   // 列表页猜你喜欢
 import sportsBallsTab from "./components/sports-balls-tab.vue"
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import UserCtr from "src/core/user-config/user-ctr.js";;

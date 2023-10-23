@@ -1,5 +1,5 @@
 <!--
- * @FilePath: d:/projects/user-h5/src/base-h5/pages/details/components/chatroom/popper_block_hint.vue
+ * @FilePath: d:/projects/user-h5/src/base-h5/components/details/components/chatroom/popper_block_hint.vue
  * @Description: 屏蔽消息提示
 -->
 

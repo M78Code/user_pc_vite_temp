@@ -25,9 +25,9 @@
 <script setup>
 // import { mapGetters } from "vuex";
 import commonHeader from "src/base-h5/components/common/common-header1.vue";
-import headerTop from "src/base-h5/pages/details/components/header/header-top.vue";
-import headerBottom from "src/base-h5/pages/details/components/header/header-bottom.vue";
-import matchResultsHeaderTop from "src/base-h5/pages/details/components/details-match-results/match-results-header-top.vue";
+import headerTop from "src/base-h5/components/details/components/header/header-top.vue";
+import headerBottom from "src/base-h5/components/details/components/header/header-bottom.vue";
+import matchResultsHeaderTop from "src/base-h5/components/details/components/details-match-results/match-results-header-top.vue";
 import { detail_csid_config } from "src/core/match-detail/match-detail-h5/config/details-bg.js";
 import { ref } from "vue"
 import lodash from "lodash"

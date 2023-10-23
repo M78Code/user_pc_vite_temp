@@ -39,7 +39,7 @@
 <script>
 // #TODO vuex
 // import { mapGetters, mapMutations } from "vuex"
-import tournament_play_new from "src/base-h5/pages/details/components/tournament_play/tournament_play_new.vue"
+import tournament_play_new from "src/base-h5/components/details/components/tournament_play/tournament_play_new.vue"
  // 引入接口封装文件
 import { api_common } from 'src/project/api/index.js'
  // 引入投注逻辑mixin

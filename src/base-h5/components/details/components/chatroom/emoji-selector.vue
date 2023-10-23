@@ -1,5 +1,5 @@
 <!--
- * @FilePath: d:/projects/user-h5/src/base-h5/pages/details/components/chatroom/emoji_selector.vue
+ * @FilePath: d:/projects/user-h5/src/base-h5/components/details/components/chatroom/emoji_selector.vue
  * @Description:
 -->
 

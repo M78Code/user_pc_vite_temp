@@ -734,5 +734,5 @@ export default defineComponent({
 })
 </script>
 <style scoped lang="scss">
-  @import "src/base-h5/pages/details/styles/details.scss";
+  @import "src/base-h5/components/details/styles/details.scss";
 </style>

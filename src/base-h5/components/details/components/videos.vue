@@ -289,9 +289,9 @@
 import {api_common, api_analysis} from 'src/project/api/index.js';
 import video from "src/base-h5/utils/video/video.js"   // 视频相关公共方法
 import matchScore from 'src/project/components/match/match_score.vue' // 比分组件
-import footballEvents from "src/base-h5/pages/details/football_events.vue";
-import analysis_football_matches from "src/base-h5/pages/details/analysis-matches/football_match_analysis/analysis_football_matches.vue"; // 详情页  足球赛事分析
-import basketball_match_analysis from "src/base-h5/pages/details/analysis-matches/basketball_match_analysis/basketball_match_analysis";  // 详情页 或者 赛果  篮球赛事分析
+import footballEvents from "src/base-h5/components/details/football_events.vue";
+import analysis_football_matches from "src/base-h5/components/details/analysis-matches/football_match_analysis/analysis_football_matches.vue"; // 详情页  足球赛事分析
+import basketball_match_analysis from "src/base-h5/components/details/analysis-matches/basketball_match_analysis/basketball_match_analysis";  // 详情页 或者 赛果  篮球赛事分析
 import uid from "src/core/uuid/index.js"
 import lodash from "lodash";
 
@@ -314,8 +314,8 @@ export default defineComponent({
     footballEvents,
     "analysis-football-matches": analysis_football_matches,  //足球分析
     "basketball-match-analysis": basketball_match_analysis,  //篮球分析
-    "tabs": () => import("src/base-h5/pages/details/analysis-matches/components/tabs.vue"),
-    "slider-x": () => import("src/base-h5/pages/details/analysis-matches/components/slider_x.vue"),
+    "tabs": () => import("src/base-h5/components/details/analysis-matches/components/tabs.vue"),
+    "slider-x": () => import("src/base-h5/components/details/analysis-matches/components/slider_x.vue"),
   },
   props:[
     //视频说明是否展示

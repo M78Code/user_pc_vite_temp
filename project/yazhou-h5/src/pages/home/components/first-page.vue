@@ -35,8 +35,8 @@
   
   <script setup>
   import { ref, watch, onMounted, computed, onUnmounted, reactive } from "vue";
-  import home_menu from "src/base-h5/pages/home/first-page/menu.vue";
-  import carousel from "src/base-h5/pages/home/first-page/carousel.vue";
+  import home_menu from "src/base-h5/components/home/first-page/menu.vue";
+  import carousel from "src/base-h5/components/home/first-page/carousel.vue";
   // TODO:后续修改调整
   // import { mapGetters, mapActions, mapMutations } from "vuex";
   // bw3版首页websocket逻辑处理

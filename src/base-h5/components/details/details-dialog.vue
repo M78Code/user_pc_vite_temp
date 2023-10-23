@@ -276,7 +276,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import 'src/base-h5/pages/details/styles/details-theme/details-dialog.scss';
+@import 'src/base-h5/components/details/styles/details-theme/details-dialog.scss';
 .details-dialog {
   max-width: 100%;
   width: 100%;
