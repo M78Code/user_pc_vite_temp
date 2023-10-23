@@ -15,13 +15,13 @@
             :class="[tab_Index == index ? 'tabs-active' : '']" @click="change_tab(tab, index, true)">
             <!-- 竞足 tab图标 -->
             <template v-if='tab.menuId == "30101"'>
-              <img :src="`/${project_name}/image/home/chinaBet.png`" alt="">
+              <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/home/chinaBet.png`" alt="">
             </template>
             <template v-else>
               <!-- 精选的tab图标 -->
-              <img v-if='tab.index == 0'  :src="compute_img('hot-tab')">
+              <img v-if='tab.index == 0'  :src="compute_img_url('hot-tab')">
               <!-- 电竞类的tab图标 -->
-              <img v-else-if="[100, 101, 102, 103].includes(+tab.field1)" :src="(`/${project_name}/image/home/hot_jx_esport_${tab.field1}.svg`)" alt="" />
+              <img v-else-if="[100, 101, 102, 103].includes(+tab.field1)" :src="(`${LOCAL_PROJECT_FILE_PREFIX}/image/home/hot_jx_esport_${tab.field1}.svg`)" alt="" />
               <!-- 体育类的图标 -->
               <img v-else :src=" tab.field3 && get_server_file_path(tab.field3)" alt="">
              
@@ -60,10 +60,10 @@ import BetData from "src/core/bet/class/bet-data-class.js";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import { get_server_file_path } from "src/core/file-path/file-path.js";
 import lodash from 'lodash'
-import { utils, MenuData ,compute_css, project_name} from 'src/core/index.js';
+import { utils, MenuData ,compute_css_obj, LOCAL_PROJECT_FILE_PREFIX} from 'src/core/index.js';
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import MatchListParams from 'src/core/match-list-h5/composables/match-list-params.js'
-import {compute_img} from 'src/core/'
+import {compute_img_url} from 'src/core/'
 import { theme } from 'src/base-h5/mixin/userctr.js'
 
 let tabList = ref([])  // tab选项卡内容

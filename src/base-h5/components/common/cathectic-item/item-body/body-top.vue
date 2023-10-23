@@ -13,7 +13,7 @@
         <span v-else-if="top_.sportId == 102" style="--num:41"></span>
         <!-- {{store_data.theme}} -->
         <img :src="get_server_file_path(top_.tournamentPic,top_.sportId)" @error="handle_img_load_error" v-else>
-        <div class="beif_src" :style="compute_css('match-cup')"  alt=""></div>
+        <div class="beif_src" :style="compute_css_obj('match-cup')"  alt=""></div>
       </p>
       <p class="col league-title-w ellipsis">
         <template v-if="top_.sportName">{{top_.matchName}}</template>
@@ -41,7 +41,7 @@
 <script setup>
 import { api_betting } from "src/api/index.js";
 import { ref, onUnmounted  } from 'vue'
-import {useMittOn, MITT_TYPES,compute_css,UserCtr} from  "src/core/"
+import {useMittOn, MITT_TYPES,compute_css_obj,UserCtr} from  "src/core/"
 import { get_server_file_path } from "src/core/file-path/file-path.js";
 // import { mapGetters } from "vuex";
 import store from 'src/store-redux'

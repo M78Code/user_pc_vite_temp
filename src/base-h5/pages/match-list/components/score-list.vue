@@ -26,7 +26,7 @@
                 :class="{ 'basket-ball':match.csid == 2, 'important-color-number':  i == msc_converted.length - 1 &&  match.csid == 2 && get_menu_type != 28}"
                 :key="i" :data-scores="`${i}-${msc_converted.length}-${match.csid}`">
                 <!--角球图标-->
-                <img class="kk-icon" alt="" v-if="match.csid == 1 && score[0] == 'S5' && score[4]" :src="`/${project_name}/image/list/m-list-jiaoqiu.svg`" />
+                <img class="kk-icon" alt="" v-if="match.csid == 1 && score[0] == 'S5' && score[4]" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/m-list-jiaoqiu.svg`" />
                 <!--HT(半场)或FT(全场)或OT-->
                 <span class="f-ht-ot" style="margin-right:.02rem"
                   :score="`${match.csid}-${score[4]}`"
@@ -111,7 +111,7 @@
 import { ref, computed, onMounted, onUnmounted, watch, nextTick } from "vue";
 import store from "src/store-redux/index.js";
 import lodash from 'lodash'
-import { project_name } from 'src/core'
+import { LOCAL_PROJECT_FILE_PREFIX } from 'src/core'
 import { MenuData, score_switch_handle, score_format } from "src/core/index.js"
 
 const props = defineProps({

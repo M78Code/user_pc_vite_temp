@@ -5,7 +5,7 @@
       <div class="left-menu valid" style="width: 80px">
         <q-scroll-area :style="`height:${el_height}px`" :thumb-style="thumbStyle">
           <div class="item" v-for="(item, index) in menu_list" :key="`menu-${index}`"
-            :class="{ active: menu_type == item.mi }" :style="compute_css('home-item-' + (menu_type == item.mi ? 'active' : 'unchecked'))
+            :class="{ active: menu_type == item.mi }" :style="compute_css_obj('home-item-' + (menu_type == item.mi ? 'active' : 'unchecked'))
               " @click="change_menu(item, index)" v-show="calc_show2(item)">
             <span class="label" :class="{ is_chinise: ['zh', 'tw'].includes(lang) }">{{ $t(`new_menu.${item.mi}`)
             }}</span>
@@ -22,7 +22,7 @@
           <div class="item" :style="{ 'z-index': item.field1 * 3, position: 'relative' }"
             v-for="(item, index) in menu_lv2_list" :key="index" @click="to_list(item, index)" v-show="!loading_done || item.ct >= 0 || [5, 7].includes(+item.menuType)
               ">
-            <div class="item-bg" :style="compute_css('home-item-all')" :class="MenuData.recombine_menu_bg(item)"></div>
+            <div class="item-bg" :style="compute_css_obj('home-item-all')" :class="MenuData.recombine_menu_bg(item)"></div>
             <div class="item-info" :class="{ 'is-english': lang == 'en' }">
               <div class="column items-center">
                 <!-- <span class="match-type">{{t(`menu_list.${filter_meunu_desc(item.mi)}`) }}</span> -->
@@ -46,7 +46,7 @@ import { watch, ref, onMounted } from "vue";
 import { useMittOn, MITT_TYPES } from "src/core/";
 // 无网络展示组件
 import no_data from "src/base-h5/components/common/no-data.vue";
-import { MenuData, UserCtr, compute_css } from "src/core/";
+import { MenuData, UserCtr, compute_css_obj } from "src/core/";
 import lodash from "lodash";
 import { useRouter } from "vue-router";
 import { DateForMat } from "src/core/format/index.js";

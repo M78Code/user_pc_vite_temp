@@ -18,7 +18,7 @@
           <span v-if="order_tatus == 0" class="color3"><img  src="image/wwwassets/bw3/svg/bet_shib.svg">{{ $t('bet.bet_err')}}</span>
            <!-- 提交成功 -->
           <!-- <span v-if="order_tatus == 2" class="color2">
-             <img class="img" :style="compute_img('icon-tojiao')">
+             <img class="img" :style="compute_img_url('icon-tojiao')">
            
             {{ $t('bet.submitted_successfully')}}</span> -->
         </p>
@@ -35,7 +35,7 @@
 
 <script setup>
 // import bettinglist from 'src/project/mixins/betting/betting.js';
-import { UserCtr ,compute_img} from "src/core/index.js";
+import { UserCtr ,compute_img_url} from "src/core/index.js";
 import { ref, onMounted,watch,computed,onUnmounted } from 'vue';
 import lodash from 'lodash'
 

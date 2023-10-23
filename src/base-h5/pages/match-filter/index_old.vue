@@ -19,7 +19,7 @@
             <!-- 左边联赛箭头及名称  -->
             <span>
               <img class="arrow_up" :class="{ collapse: !item1.hide }"
-                :src="`/${project_name}/image/list/league-collapse-icon-black.svg`" alt="">
+                :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/league-collapse-icon-black.svg`" alt="">
               <span class="name-text">{{ ((type == 1 && get_sport_all_selected == true) || (type == 28 &&
                 get_curr_sub_menu_type == 29)) ? item1.nameText : item1.introduction }}</span>
             </span>
@@ -27,11 +27,11 @@
             
             <img class="icon-search" @click.stop.prevent="select_sport_ctr(item1, index)"
               v-if="(item1.select || (((type != 1 && get_curr_sub_menu_type != 29) || (type == 1 && get_sport_all_selected == false)) && item1.sportVOs[0].select))"
-              :src="compute_img('checkbox-box-s')"
+              :src="compute_img_url('checkbox-box-s')"
               />
             <img alt="" class="icon-search"
               @click.stop.prevent="select_sport_ctr(item1, index)"
-              :src="compute_img('checkbox-box')"
+              :src="compute_img_url('checkbox-box')"
               v-else>
           </div>
           <!-- 联赛名称部分 -->
@@ -46,7 +46,7 @@
                     <div class="row items-center">
                       <!-- 联赛icon -->
                       <img
-                        :src="item2.picUrlthumb ? get_server_file_path(item2.picUrlthumb) : compute_img('match-cup')"
+                        :src="item2.picUrlthumb ? get_server_file_path(item2.picUrlthumb) : compute_img_url('match-cup')"
                         @error="league_icon_error" class="match_logo" />
                       <div class="name-overhide">{{ item2.nameText }}</div>
                       <div class="nums"
@@ -56,7 +56,7 @@
                   </div>
                   
                   <img v-if="item2.select" class="icon-search"
-                  :src="compute_img(item2.select?'checkbox-box-s':'checkbox-box')" />
+                  :src="compute_img_url(item2.select?'checkbox-box-s':'checkbox-box')" />
                 </div>
               </div>
             </div>
@@ -71,14 +71,14 @@
         v-for="(item, index) in anchor_arr" :key="index + 'letter'">
         <template v-if="item == $t('search.hot')">
           <img style="width: 28px;"
-          :src="compute_img(active_index == item?'match-filter-s':'match-filter')"
+          :src="compute_img_url(active_index == item?'match-filter-s':'match-filter')"
             alt="">
         </template>
         <div class="t-wrap" v-else>{{ item }}</div>
       </li>
     </ul>
     <!-- 字母悬浮图标 -->
-    <div class="active-point" v-if="is_show" :style="[{ top: fixed_top + 150 + 'px' },compute_css('work-s')]"
+    <div class="active-point" v-if="is_show" :style="[{ top: fixed_top + 150 + 'px' },compute_css_obj('work-s')]"
      >
       <span>{{ active_index }}</span>
     </div>
@@ -89,7 +89,7 @@
         :style="{ lineHeight: ['vi', 'en', 'th', 'ms', 'ad'].includes(get_lang) ? '1' : 'unset' }">
         <!-- <template> -->
         <img class="icon-search" @click="all_checked_click"
-        :src="compute_img(all_checked?'checkbox-box-s':'checkbox-box')"  />
+        :src="compute_img_url(all_checked?'checkbox-box-s':'checkbox-box')"  />
         <span class="txt ellipsis-2-lines" @click="all_checked_click">{{ $t('common.all_select') }}</span>
         <!-- </template> -->
         <span class="txt ellipsis-3-lines" @click="select_btn_click">{{ $t('filter.reverse_election') }}</span>
@@ -111,10 +111,10 @@ import { api_filter } from "src/api/index.js";
 // 无网络展示组件
 import noData from "src/base-h5/components/common/no-data.vue";
 import SFilter from "src/base-h5/components/skeleton/filter.vue"
-import { UserCtr, compute_img,MenuData, i18n_t, get_server_file_path, useMittEmit, MITT_TYPES } from 'src/core/'
+import { UserCtr, compute_img_url,MenuData, i18n_t, get_server_file_path, useMittEmit, MITT_TYPES } from 'src/core/'
 import { ref, watch, computed, nextTick, onMounted, onBeforeUnmount } from 'vue'
 import lodash from 'lodash'
-import { project_name } from "src/core";
+import { LOCAL_PROJECT_FILE_PREFIX } from "src/core";
 
 // 构建版本
 // BUILD_VERSION:window.env.config.BUILD_VERSION,
@@ -197,7 +197,7 @@ watch(select_num, (new_) => {
  * @param {Object} $event 错误事件对象
  */
 function league_icon_error($event) {
-  $event.target.src =compute_img('match-cup')
+  $event.target.src =compute_img_url('match-cup')
   $event.target.onerror = null
 }
 

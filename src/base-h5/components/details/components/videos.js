@@ -8,31 +8,31 @@ import { format_total_score } from "src/core/format/index.js"
 import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { nextTick } from "vue";
-import { project_name } from "src/core";
+import { LOCAL_PROJECT_FILE_PREFIX } from "src/core";
 export const video_info = () => {
   const router = useRouter();
   const route = useRoute();
   const component_data = reactive({
-    tips_def: `/${project_name}/image/svg/video_b.svg`,
-    tips_act: `/${project_name}/image/svg/video_a.svg`,
-    voice_def: `/${project_name}/image/svg/video_i.svg`,
-    voice_act: `/${project_name}/image/svg/video_h.svg`,
-    // nail_def: `/${project_name}/image/svg/video_f.svg`,
-    // nail_act: `/${project_name}/image/svg/video_e.svg`,
-    donghua: `/${project_name}/image/svg/v-donghua.svg`,
+    tips_def: `${LOCAL_PROJECT_FILE_PREFIX}/image/svg/video_b.svg`,
+    tips_act: `${LOCAL_PROJECT_FILE_PREFIX}/image/svg/video_a.svg`,
+    voice_def: `${LOCAL_PROJECT_FILE_PREFIX}/image/svg/video_i.svg`,
+    voice_act: `${LOCAL_PROJECT_FILE_PREFIX}/image/svg/video_h.svg`,
+    // nail_def: `${LOCAL_PROJECT_FILE_PREFIX}/image/svg/video_f.svg`,
+    // nail_act: `${LOCAL_PROJECT_FILE_PREFIX}/image/svg/video_e.svg`,
+    donghua: `${LOCAL_PROJECT_FILE_PREFIX}/image/svg/v-donghua.svg`,
     // 直播 切换的图标
-    shipin: `/${project_name}/image/svg/v-shipin.svg`,
+    shipin: `${LOCAL_PROJECT_FILE_PREFIX}/image/svg/v-shipin.svg`,
     // 演播厅 切换的图标
-    studio_icon: `/${project_name}/image/svg/studio_icon.svg`,
+    studio_icon: `${LOCAL_PROJECT_FILE_PREFIX}/image/svg/studio_icon.svg`,
     // 赛前直播的
-    lvs_icon_pre: `/${project_name}/image/common/zhibo-before.svg`,
-    // ding1: `/${project_name}/image/svg/ding1.svg`,
-    // ding2: `/${project_name}/image/svg/ding2.svg`,
-    bet: `/${project_name}/image/svg/bet.svg`,
-    analyze: `/${project_name}/image/svg/analyse.svg`,
-    analyze2: `/${project_name}/image/svg/analyse2.svg`,
-    analyze_yo: `/${project_name}/image/svg/analyse2_y0.svg`,
-    analyze2_y0: `/${project_name}/image/svg/analyse_y0.svg`,
+    lvs_icon_pre: `${LOCAL_PROJECT_FILE_PREFIX}/image/common/zhibo-before.svg`,
+    // ding1: `${LOCAL_PROJECT_FILE_PREFIX}/image/svg/ding1.svg`,
+    // ding2: `${LOCAL_PROJECT_FILE_PREFIX}/image/svg/ding2.svg`,
+    bet: `${LOCAL_PROJECT_FILE_PREFIX}/image/svg/bet.svg`,
+    analyze: `${LOCAL_PROJECT_FILE_PREFIX}/image/svg/analyse.svg`,
+    analyze2: `${LOCAL_PROJECT_FILE_PREFIX}/image/svg/analyse2.svg`,
+    analyze_yo: `${LOCAL_PROJECT_FILE_PREFIX}/image/svg/analyse2_y0.svg`,
+    analyze2_y0: `${LOCAL_PROJECT_FILE_PREFIX}/image/svg/analyse_y0.svg`,
     select_item: -1,
     voice: true,
     nail: true,

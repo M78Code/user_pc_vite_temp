@@ -25,7 +25,7 @@
                 :is_add="[1,4,11,14,100,101,102,103].includes(+item.csid)"
               />
               <!-- 视频直播图标 -->
-              <img v-if="item.mms == 2"  :src="`/${project_name}/image/common/video.svg`" alt="" />
+              <img v-if="item.mms == 2"  :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/video.svg`" alt="" />
             </div>
           </div>
           <div class="card-content">
@@ -47,7 +47,7 @@
                   <span v-html="handicap_ov(item, 0)"></span>
                 </template>
                 <template v-else>
-                  <img :src="`/${project_name}/image/common/match-icon-lock.svg`" alt="" />
+                  <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" alt="" />
                 </template>
               </div>
             </div>
@@ -70,7 +70,7 @@
                 </template>
                 <template v-else>
                   <!-- 封盘图标 -->
-                  <img :src="`/${project_name}/image/common/match-icon-lock.svg`" alt="" />
+                  <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" alt="" />
                 </template>
               </div>
             </div>
@@ -88,7 +88,7 @@ import { api_home } from "src/api/index.js";
 import store from "src/store-redux/index.js";
 import lodash from 'lodash'
 import { useRouter } from 'vue-router'
-import { i18n_t, project_name } from "src/core/index.js"
+import { i18n_t, LOCAL_PROJECT_FILE_PREFIX } from "src/core/index.js"
 import { useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import teamImg from "src/base-h5/components/details/team-img.vue";   // 详情页蓝色背景上的大型字母图标
 import countingDown from "src/base-h5/components/common/counting-down.vue";  // 赛事进行中每秒变化的计时器

@@ -41,7 +41,7 @@
                     </template>
                     <template v-if="ol_item.os == 2">
                       <!-- lock 锁状态 start -->
-                      <div class="play-box-style"><img :src="`/${project_name}/image/common/match-icon-lock.svg`"></div>
+                      <div class="play-box-style"><img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`"></div>
                       <!-- lock 锁状态 end -->
                     </template>
                     <!-- 新增start -->
@@ -52,7 +52,7 @@
                     <template v-if="ol_item.os == 3"></template>
                     <template v-else>
                       <!-- lock 锁状态 start -->
-                      <div class="play-box-style"><img :src="`/${project_name}/image/common/match-icon-lock.svg`"></div>
+                      <div class="play-box-style"><img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`"></div>
                       <!-- lock 锁状态 end -->
                     </template>
                   </template>
@@ -65,7 +65,7 @@
                 <!-- 封盘，一把锁的居中显示 -->
                 <template v-if="ol_item._mhs == 1">
                   <!-- lock 锁状态 start -->
-                  <div class="play-box-style"><img :src="`/${project_name}/image/common/match-icon-lock.svg`"></div>
+                  <div class="play-box-style"><img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`"></div>
                   <!-- lock 锁状态 end -->
                 </template>
                 <!-- 关盘 -->
@@ -91,7 +91,7 @@
                     </template>
                     <template v-if="ol_item.os == 2">
                       <!-- lock 锁状态 start -->
-                      <div class="play-box-style"><img :src="`/${project_name}/image/common/match-icon-lock.svg`"></div>
+                      <div class="play-box-style"><img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`"></div>
                       <!-- lock 锁状态 end -->
                     </template>
                     <!-- 新增start -->
@@ -102,7 +102,7 @@
                     <template v-if="ol_item.os == 3"></template>
                     <template v-else>
                       <!-- lock 锁状态 start -->
-                      <div class="play-box-style"><img :src="`/${project_name}/image/common/match-icon-lock.svg`"></div>
+                      <div class="play-box-style"><img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`"></div>
                       <!-- lock 锁状态 end -->
                     </template>
                   </template>
@@ -115,7 +115,7 @@
                 <!-- 封盘，一把锁的居中显示 -->
                 <template v-if="ol_item._mhs == 1">
                   <!-- lock 锁状态 start -->
-                  <div class="play-box-style"><img :src="`/${project_name}/image/common/match-icon-lock.svg`"></div>
+                  <div class="play-box-style"><img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`"></div>
                   <!-- lock 锁状态 end -->
                 </template>
                 <!-- 关盘 -->
@@ -144,7 +144,7 @@
                   <template v-if="ol_item.os == 2">
                     <!-- lock 锁状态 start -->
                     <div class="ellipsis remark play-box-style bw_mr1">{{ol_item.on}}</div>
-                    <div class="play-box-style col"><img :src="`/${project_name}/image/common/match-icon-lock.svg`"></div>
+                    <div class="play-box-style col"><img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`"></div>
                     <!-- lock 锁状态 end -->
                   </template>
                   <!-- 新增start -->
@@ -156,7 +156,7 @@
                   <template v-else>
                     <!-- lock 锁状态 start -->
                     <div class="ellipsis remark play-box-style bw_mr1">{{ol_item.on}}</div>
-                    <div class="play-box-style col"><img :src="`/${project_name}/image/common/match-icon-lock.svg`"></div>
+                    <div class="play-box-style col"><img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`"></div>
                     <!-- lock 锁状态 end -->
                   </template>
                 </template>
@@ -169,7 +169,7 @@
               <template v-if="ol_item._mhs == 1">
                 <!-- lock 锁状态 start -->
                 <div class="ellipsis remark play-box-style bw_mr1">{{ol_item.on}}</div>
-                <div class="play-box-style col"><img :src="`/${project_name}/image/common/match-icon-lock.svg`"></div>
+                <div class="play-box-style col"><img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`"></div>
                 <!-- lock 锁状态 end -->
               </template>
               <!-- 关盘 -->
@@ -185,7 +185,7 @@
 // #TODO vuex 
 // import { mapGetters } from "vuex";
 import oddsNew from "src/base-h5/components/details/components/tournament-play/unit/odds-new.vue";
-import { utils, project_name } from 'src/core/index.js';
+import { utils, LOCAL_PROJECT_FILE_PREFIX } from 'src/core/index.js';
 import lodash from "lodash";
 import store from "src/store-redux/index.js";
 import BetData from "src/core/bet/class/bet-data-class.js"
@@ -215,6 +215,7 @@ export default defineComponent({
       utils,
       go_to_bet,
       get_bet_list,
+      LOCAL_PROJECT_FILE_PREFIX,
     }
   }
 })

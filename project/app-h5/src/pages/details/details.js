@@ -8,7 +8,7 @@ import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-c
 // import { Level_one_category_list, Level_one_detail_data } from "./category-list.js";
 import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch, nextTick, ref, onBeforeMount } from "vue";
 import UserCtr from "src/core/user-config/user-ctr.js";
-import { MatchDataWarehouse_H5_Detail_Common, MatchDetailCalss ,project_name} from "src/core/index";
+import { MatchDataWarehouse_H5_Detail_Common, MatchDetailCalss ,LOCAL_PROJECT_FILE_PREFIX} from "src/core/index";
 import { SessionStorage } from "src/core/utils/index.js"
 
 export const details_main = () => {
@@ -211,7 +211,7 @@ const route = useRoute();
     // y0后缀
     const suffix_y0 = UserCtr.theme.includes("_y0") ? "_y0" : "";
  
-    return `img:/${project_name}/image/svg/details/replay${suffix_theme}.svg`;
+    return `img:${LOCAL_PROJECT_FILE_PREFIX}/image/svg/details/replay${suffix_theme}.svg`;
   });
   
 // 监听数据仓库版本号变更后更新数据
@@ -982,6 +982,7 @@ watch(() => MatchDataWarehouseInstance.data_version.version, () => {
     on_listeners,
     off_listeners,
     clear_timer,
+    LOCAL_PROJECT_FILE_PREFIX,
   };
 };
 

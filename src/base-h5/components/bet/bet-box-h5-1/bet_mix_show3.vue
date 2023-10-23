@@ -13,7 +13,7 @@
         ">
         <!-- 左边 -->
         <div class="yb_mr12 dele-left" v-if="get_bet_success">
-          <img :src="`/${project_name}/image/svg/bet_xuanx.svg`" alt="" @click.stop="remove_(value_show.id_)">
+          <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/bet_xuanx.svg`" alt="" @click.stop="remove_(value_show.id_)">
         </div>
         <div>
         </div>

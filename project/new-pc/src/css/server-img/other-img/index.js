@@ -9,7 +9,7 @@ import all_other_image from "./config/index.js";
  * @param {*} param0
  * @returns
  */
-function compute_css({ key, theme, path }) {
+function compute_css_obj({ key, theme, path }) {
   // 当前主题的 服务端配置
   let theme_config = server_resource[theme] || {};
   //最终资源键 计算
@@ -31,4 +31,4 @@ function compute_css({ key, theme, path }) {
       };
 }
 
-export default compute_css;
+export default compute_css_obj;

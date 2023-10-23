@@ -32,7 +32,7 @@
                       <div class="play-box-style details_color">
                         <div class="text-center odds-wrap warp ">
                         <div class="col text-center ellipsis led details_t_color7">{{ol_item.ott}}{{ol_item.on}}</div>
-                          <img class="icon-lock" :src="`/${project_name}/image/common/match-icon-lock.svg`" />
+                          <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                         </div>
                       </div>
                       <!-- lock 锁状态 end -->
@@ -48,7 +48,7 @@
                       <div class="play-box-style details_color first-radius">
                         <div class="text-center odds-wrap warp ">
                         <div class="col text-center ellipsis led details_t_color7">{{ol_item.ott}}{{ol_item.on}}</div>
-                          <img class="icon-lock" :src="`/${project_name}/image/common/match-icon-lock.svg`" />
+                          <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                         </div>
                       </div>
                       <!-- lock 锁状态 end -->
@@ -66,7 +66,7 @@
                   <div class="play-box-style details_color">
                     <div class="text-center odds-wrap warp ">
                     <div class="col text-center ellipsis led details_t_color7">{{ol_item.ott}}{{ol_item.on}}</div>
-                      <img class="icon-lock" :src="`/${project_name}/image/common/match-icon-lock.svg`" />
+                      <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                     </div>
                   </div>
                   <!-- lock 锁状态 end -->
@@ -105,7 +105,7 @@
                         <div class="play-box-style details_color" :class="get_detail_data.csid == 1? 'odds-lock' : '' ">
                           <div class="text-center odds-wrap warp flex-center">
                             <div class="col text-center ellipsis led details_t_color7"  v-show="get_detail_data.csid != 1">{{ol_item.ott}}{{ol_item.on}}</div>
-                            <img class="icon-lock" :src="`/${project_name}/image/common/match-icon-lock.svg`" />
+                            <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                           </div>
                         </div>
                         <!-- lock 锁状态 end -->
@@ -121,7 +121,7 @@
                         <div class="play-box-style details_color first-radius">
                           <div class="text-center odds-wrap warp"  :class="get_detail_data.csid == 1? 'odds-lock' : '' ">
                             <div class="col text-center ellipsis led" v-show="get_detail_data.csid != 1">{{ol_item.ott}}{{ol_item.on}}</div>
-                            <img class="icon-lock" :src="`/${project_name}/image/common/match-icon-lock.svg`" />
+                            <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                           </div>
                         </div>
                         <!-- lock 锁状态 end -->
@@ -139,7 +139,7 @@
                     <div class="play-box-style details_color">
                       <div class="text-center odds-wrap warp" :class="get_detail_data.csid == 1? 'odds-lock' : '' ">
                         <div class="col text-center ellipsis led details_t_color7" v-show="get_detail_data.csid != 1">{{ol_item.ott}}{{ol_item.on}}</div>
-                        <img class="icon-lock" :src="`/${project_name}/image/common/match-icon-lock.svg`" />
+                        <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                       </div>
                     </div>
                     <!-- lock 锁状态 end -->
@@ -180,7 +180,7 @@
                         <div class="play-box-style details_color">
                           <div class="text-center odds-wrap warp" :class="get_detail_data.csid == 1? 'odds-lock' : '' ">
                             <div class="col text-center ellipsis led details_t_color7"  v-show="get_detail_data.csid != 1">{{ol_item.ott}}{{ol_item.on}}</div>
-                            <img class="icon-lock" :src="`/${project_name}/image/common/match-icon-lock.svg`" />
+                            <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                           </div>
                         </div>
                         <!-- lock 锁状态 end -->
@@ -196,7 +196,7 @@
                         <div class="play-box-style details_color">
                           <div class="text-center odds-wrap warp" :class="get_detail_data.csid == 1? 'odds-lock' : '' ">
                             <div class="col text-center ellipsis led"  v-show="get_detail_data.csid != 1">{{ol_item.ott}}{{ol_item.on}}</div>
-                            <img class="icon-lock" :src="`/${project_name}/image/common/match-icon-lock.svg`" />
+                            <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                           </div>
                         </div>
                         <!-- lock 锁状态 end -->
@@ -214,7 +214,7 @@
                     <div class="play-box-style details_color">
                       <div class="text-center odds-wrap warp" :class="get_detail_data.csid == 1? 'odds-lock' : '' ">
                         <div class="col text-center ellipsis led details_t_color7" v-show="get_detail_data.csid != 1">{{ol_item.ott}}{{ol_item.on}}</div>
-                        <img class="icon-lock" :src="`/${project_name}/image/common/match-icon-lock.svg`" />
+                        <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                       </div>
                     </div>
                     <!-- lock 锁状态 end -->
@@ -256,7 +256,7 @@
                         <div class="play-box-style details_color">
                           <div class="text-center odds-wrap" :class="get_detail_data.csid == 1? 'odds-lock' : '' ">
                             <div class="col text-center ellipsis led details_t_color7" v-show="get_detail_data.csid != 1">{{ol_item.ott}}{{ol_item.on}}</div>
-                            <img class="icon-lock" :src="`/${project_name}/image/common/match-icon-lock.svg`" />
+                            <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                           </div>
                         </div>
                         <!-- lock 锁状态 end -->
@@ -274,7 +274,7 @@
                         <div class="play-box-style details_color last-radius">
                           <div class="text-center odds-wrap " :class="get_detail_data.csid == 1? 'odds-lock' : '' ">
                             <div class="col text-center ellipsis led" v-show="get_detail_data.csid != 1">{{ol_item.ott}}{{ol_item.on}}</div>
-                            <img class="icon-lock" :src="`/${project_name}/image/common/match-icon-lock.svg`" />
+                            <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                           </div>
                         </div>
                         <!-- lock 锁状态 end -->
@@ -315,7 +315,7 @@
 import lodash from "lodash"
 import odds_new from "src/base-h5/components/details/components/tournament-play/unit/odds-new.vue";
 // import odd_convert from "src/core/odds-conversion/odds_conversion-mixin.js";
-import {utils, MenuData, project_name } from 'src/core/index.js';
+import {utils, MenuData, LOCAL_PROJECT_FILE_PREFIX } from 'src/core/index.js';
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { useRoute } from "vue-router"
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
@@ -357,6 +357,7 @@ export default defineComponent({
       menu_type,
       get_detail_data,
       is_match_result,
+      LOCAL_PROJECT_FILE_PREFIX,
       go_to_bet
     }
   }

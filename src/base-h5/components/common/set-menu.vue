@@ -6,7 +6,7 @@
 <template>
   <div class="set-menu yb_fontsize12" @click.stop="change_show_status">
     <div class="filter-icon-wrapper yb-flex-center">
-      <div class="img" v-if="!is_export" :style="compute_css('menu-icon')"></div>
+      <div class="img" v-if="!is_export" :style="compute_css_obj('menu-icon')"></div>
       <div class="img esports" v-else></div>
       <!-- //电竞的时候 底色黑色 所以图标换了 -->
     </div>
@@ -20,7 +20,7 @@
       <div class="menu-inner" @click.stop="" :style="{ width: `${calc_width}px`, }">
         <!-- 关闭按钮 -->
         <div class="close-wrap">
-          <div :style="compute_css('icon-close')" class="img" @click="is_show_menu = false"></div>
+          <div :style="compute_css_obj('icon-close')" class="img" @click="is_show_menu = false"></div>
         </div>
         <!-- 用户信息 -->
         <div class="user-info border-bottom">
@@ -29,7 +29,7 @@
             <div class="balance yb_mr4" @click="get_balance">
               {{ format_money2(user_info.balance) }}
             </div>
-            <div class="refesh" :style="compute_css('menu-refesh')" :class="{ rotate: is_loading_balance }"
+            <div class="refesh" :style="compute_css_obj('menu-refesh')" :class="{ rotate: is_loading_balance }"
               @click="get_balance"></div>
           </div>
         </div>
@@ -39,7 +39,7 @@
           route.name != 'virtual_sports_details' &&
           menu_type !== 3000
           ">
-          <div class="icon set-icon-1" :style="compute_css('menu-left-menu-image', 1)"></div>
+          <div class="icon set-icon-1" :style="compute_css_obj('menu-left-menu-image', 1)"></div>
           <div class="name">{{ $t("setting_menu.footer_t_sort") }}</div>
           <div class="option" @click="sort_type_changed">
             <div class="op-item active">
@@ -47,7 +47,7 @@
                 sort_type == 2 ? $t("footer_menu.time2") : $t("footer_menu.hot2")
               }}
             </div>
-            <div class="op-icon" :style="compute_css('menu-set-switch')"></div>
+            <div class="op-icon" :style="compute_css_obj({key:'menu-set-switch'})"></div>
             <div class="op-item">
               {{
                 sort_type == 2 ? $t("footer_menu.hot2") : $t("footer_menu.time2")
@@ -57,7 +57,7 @@
         </div>
         <!-- 盘口 -->
         <div class="set-item">
-          <div class="icon set-icon-2" :style="compute_css('menu-left-menu-image', 2)"></div>
+          <div class="icon set-icon-2" :style="compute_css_obj('menu-left-menu-image', 2)"></div>
           <div class="name">{{ $t("setting_menu.handicap") }}</div>
           <div class="option" @click="change_odd">
             <div class="op-item active">
@@ -67,7 +67,7 @@
                 : $t("setting_menu.odd_hong_kong2")
               }}
             </div>
-            <div class="op-icon" :style="compute_css('menu-set-switch')"></div>
+            <div class="op-icon" :style="compute_css_obj({key:'menu-set-switch'})"></div>
             <div class="op-item">
               {{
                 cur_odd == "EU"
@@ -79,7 +79,7 @@
         </div>
         <!-- 赔率 -->
         <div class="set-item no-border">
-          <div class="icon set-icon-4" :style="compute_css('menu-left-menu-image', 4)"></div>
+          <div class="icon set-icon-4" :style="compute_css_obj('menu-left-menu-image', 4)"></div>
           <div class="name">{{ $t("setting_menu.footer_t_odds") }}</div>
           <div class="option" @click="BetData.set_bet_is_accept">
             <div class="op-item active">
@@ -89,7 +89,7 @@
                 : $t("setting_menu.odd_optimal2")
               }}
             </div>
-            <div class="op-icon" :style="compute_css('menu-set-switch')"></div>
+            <div class="op-icon" :style="compute_css_obj({key:'menu-set-switch'})"></div>
             <div class="op-item">
               {{
                 bet_is_accept
@@ -102,7 +102,7 @@
         <div class="line"></div>
         <!-- 版本 -->
         <div class="set-item">
-          <div class="icon set-icon-3" :style="compute_css('menu-left-menu-image', 3)"></div>
+          <div class="icon set-icon-3" :style="compute_css_obj('menu-left-menu-image', 3)"></div>
           <div class="name">{{ $t("setting_menu.version") }}</div>
           <div class="option" @click="UserCtr.set_standard_edition">
             <div class="op-item active">
@@ -112,7 +112,7 @@
                 : $t("setting_menu.concise")
               }}
             </div>
-            <div class="op-icon" :style="compute_css('menu-set-switch')"></div>
+            <div class="op-icon" :style="compute_css_obj({key:'menu-set-switch'})"></div>
             <div class="op-item">
               {{
                 standard_edition == 2
@@ -124,12 +124,12 @@
         </div>
         <!-- 语言 -->
         <div class="set-item no-border">
-          <div class="icon set-icon-5" :style="compute_css('menu-left-menu-image', 5)"></div>
+          <div class="icon set-icon-5" :style="compute_css_obj('menu-left-menu-image', 5)"></div>
           <div class="name">{{ $t("setting_menu.chan_lan") }}</div>
 
           <div class="option option3" @click="is_show_lang = !is_show_lang">
-            <i class="lang-icon yb_mr4" :style="compute_css('menu-lang')" :class="`lang-${lang}`"></i>
-            <div class="op-icon op-icon2" :style="compute_css('menu-set-sort')"></div>
+            <i class="lang-icon yb_mr4" :style="compute_css_obj('menu-lang')" :class="`lang-${lang}`"></i>
+            <div class="op-icon op-icon2" :style="compute_css_obj('menu-set-sort')"></div>
             <div class="op-item active" style="font-size: 0.14rem">
               <!-- {{ $t("setting_menu.lang") }} -->
               {{ lang_obj[lang] }}
@@ -139,7 +139,7 @@
         <div class="lang-wrap" :class="{ active: is_show_lang }">
           <template v-for="(   item, index   ) in    lang_obj   " :key="index">
             <div class="lang-item" :class="{ active: lang == index }" @click="setting_language_handle(index)">
-              <i class="lang-icon yb_mr4" :style="compute_css('menu-lang')" :class="`lang-${index}`"></i>
+              <i class="lang-icon yb_mr4" :style="compute_css_obj('menu-lang')" :class="`lang-${index}`"></i>
               <div class="col">{{ item }}</div>
               <div class="icon"></div>
             </div>
@@ -148,7 +148,7 @@
         <div class="line"></div>
         <!-- 规则说明 -->
         <div class="set-item no-border" @click="go_description">
-          <div class="icon set-icon-6" :style="compute_css('menu-left-menu-image', 6)"></div>
+          <div class="icon set-icon-6" :style="compute_css_obj('menu-left-menu-image', 6)"></div>
           <div class="name">{{ $t("setting_menu.rule_description") }}</div>
           <div class="option option2">
             <div class="yb-icon-arrow right"></div>
@@ -157,14 +157,14 @@
         <div class="line"></div>
         <!-- 换肤 -->
         <div class="set-item">
-          <div class="icon set-icon-7" :style="compute_css('menu-left-menu-image', 7)"></div>
+          <div class="icon set-icon-7" :style="compute_css_obj('menu-left-menu-image', 7)"></div>
           <div class="name">{{ $t("setting_menu.skin") }}</div>
           {{
             lodash.get(theme_map[theme], `i18n.${lang}`, '-')
           }}
           <div class="skin-wrap">
             <div class="skin-icon skin-icon1" v-for="(item, i) in theme_list" @click="UserCtr.set_theme(item.key)"
-              :key="item.key" :style="compute_css(i == 0 ? 'menu-theme-night' : 'menu-theme-day')">
+              :key="item.key" :style="compute_css_obj(i == 0 ? 'menu-theme-night' : 'menu-theme-day')">
               <!-- {{ item.i18n[lang] || item.key }} -->
             </div>
 
@@ -185,7 +185,7 @@ import { api_betting } from "src/api/index";
 import { format_money2 } from "src/core/format/index.js";
 import { debounce } from "lodash";
 import BetData from "src/core/bet/class/bet-data-class.js";
-import { loadLanguageAsync, compute_css, useMittOn, MITT_TYPES, MenuData, UserCtr } from "src/core/index.js";
+import { loadLanguageAsync, compute_css_obj, useMittOn, MITT_TYPES, MenuData, UserCtr } from "src/core/index.js";
 import { useRoute, useRouter } from "vue-router";
 import { lang, sort_type, theme, standard_edition, user_info } from "src/base-h5/mixin/userctr";
 import {is_export } from "src/base-h5/mixin/menu";

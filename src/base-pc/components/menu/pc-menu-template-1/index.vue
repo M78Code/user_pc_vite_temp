@@ -8,11 +8,11 @@
       </div>
       <!--   今日、早盘、 -->
       <div class="menu-item menu-tab disable-hover double">
-        <div class="item yb-flex-center" :style="compute_css(`today_menu_bg_1${jinri_zaopan_ == 2 ? '_active' : ''}`)" :class="jinri_zaopan_ == 2 ? 'active' : ''"
+        <div class="item yb-flex-center" :style="compute_css_obj(`today_menu_bg_1${jinri_zaopan_ == 2 ? '_active' : ''}`)" :class="jinri_zaopan_ == 2 ? 'active' : ''"
           @click="handle_click_jinri_zaopan(2)">
           {{ $t("menu.match_today") }}
         </div>
-        <div class="item yb-flex-center" :style="compute_css(`today_menu_bg_1${jinri_zaopan_ == 3 ? '_active' : ''}`)" :class="jinri_zaopan_ == 3 ? 'active' : ''"
+        <div class="item yb-flex-center" :style="compute_css_obj(`today_menu_bg_1${jinri_zaopan_ == 3 ? '_active' : ''}`)" :class="jinri_zaopan_ == 3 ? 'active' : ''"
           @click="handle_click_jinri_zaopan(3)">
           {{ $t("menu.match_early") }}
         </div>
@@ -29,7 +29,7 @@
         <!-- icon -->
         <div class="row items-center">
           <span class="soprts_id_icon"
-            :style="compute_css({key:'pc-left-menu-bg-image', position: `item_${BaseData.compute_sport_id(item1)}` })"
+            :style="compute_css_obj({key:'pc-left-menu-bg-image', position: `item_${BaseData.compute_sport_id(item1)}` })"
             :alt="BaseData.menus_i18n_map[item1]"></span>
 
         </div>
@@ -43,7 +43,7 @@
           <!-- 数字 显示    有些赛种不显示 -->
           <div class="col-right" style="min-width: 40px" v-if="BaseData.menus_i18n_map[item1]">
             <!-- 有滚球赛事  hl 今日&&存在滚球赛事时  展示live图标 -->
-            <div class="live-text" :style="compute_css('live_text')" v-if="jinri_zaopan_ == 2 && lv_1_num(item1) && BaseData.mi_gunqiu.includes(item1)" />
+            <div class="live-text" :style="compute_css_obj('live_text')" v-if="jinri_zaopan_ == 2 && lv_1_num(item1) && BaseData.mi_gunqiu.includes(item1)" />
             <span class="match-count yb-family-odds" v-if="item1 != 300">{{
               lv_1_num(item1)
             }}</span>
@@ -126,7 +126,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { MenuData, UserCtr } from "src/core/index.js"
 import BaseData from "src/core/base-data/base-data.js"
 import { compute_css_variables } from "src/core/css-var/index.js"
-import { compute_css } from 'src/core/server-img/index.js'
+import { compute_css_obj } from 'src/core/server-img/index.js'
 import lodash_ from "lodash"
 
 import MenuItem from "./menu-item.vue";

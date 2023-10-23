@@ -65,7 +65,7 @@
                       </div>
                       <!-- 关闭按钮 -->
                       <i   @click="info_icon_close"
-                          style="margin-top:-0.04rem" :style="compute_css('icon-close')"></i>
+                          style="margin-top:-0.04rem" :style="compute_css_obj('icon-close')"></i>
                       
                     </div>
                     <!-- 角球说明文本 -->
@@ -133,7 +133,7 @@ import { api_common } from "src/api/index.js";
 // import betting from "src/project/mixins/betting/betting.js";
 import lodash from "lodash";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, nextTick } from "vue";
-import { UserCtr,compute_css,useMittOn, useMittEmit, MITT_TYPES  } from "src/core/index.js";
+import { UserCtr,compute_css_obj,useMittOn, useMittEmit, MITT_TYPES  } from "src/core/index.js";
 
 export default defineComponent({
   name: "tournament_play_new",
@@ -699,7 +699,7 @@ export default defineComponent({
     })
     return {
       ...toRefs(component_data),
-      get_uid,compute_css,
+      get_uid,compute_css_obj,
       get_detail_data,
       get_fewer,
       get_is_close_info,

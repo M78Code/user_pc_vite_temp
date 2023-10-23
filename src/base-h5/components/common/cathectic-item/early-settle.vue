@@ -50,12 +50,12 @@
           v-if="(status == 1 || status == 5 || status == 6) && lodash.get(UserCtr, 'pcs')"
           :style="{ opacity: status == 5 || status == 6 ? 0.3 : 1 }">
           <template v-if="slider_show">
-             <img :style="compute_css('log-set')"  alt="">
+             <img :style="compute_css_obj('log-set')"  alt="">
             <!-- <img :style="" :src="compute_local_project_file_path('/image/record/set4.svg')" alt="" v-if="('y0')">
             <img :src="`/${compute_local_project_file_path}/image/record/set.svg`" alt="" v-else> -->
           </template>
           <template v-else>
-            <img :style="compute_css('log-set')"  alt="">
+            <img :style="compute_css_obj('log-set')"  alt="">
             <!-- <img :src="compute_local_project_file_path('/image/record/set2.svg')" v-if="('day')" alt="">
             <img :src="`/${compute_local_project_file_path}/image/record/set3.svg`" v-else alt=""> -->
           </template>
@@ -150,7 +150,7 @@ import ClipboardJS from "clipboard";
 import { api_betting } from "src/api/index.js"
 // import { mapGetters, mapMutations } from "vuex";
 import { format_time_zone_time } from "src/core/format/index.js"
-import { utils,compute_css, compute_local_project_file_path } from 'src/core/index.js'
+import { utils,compute_css_obj, compute_local_project_file_path } from 'src/core/index.js'
 import { Platform } from "quasar";
 import { inject, ref, computed, onMounted, onUnmounted, watch, nextTick } from 'vue'
 import lodash from 'lodash'

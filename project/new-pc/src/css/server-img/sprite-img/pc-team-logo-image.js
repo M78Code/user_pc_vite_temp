@@ -35,7 +35,7 @@ function compute_position(position) {
  * @param {*} param0
  * @returns
  */
-function compute_css(position) {
+function compute_css_obj(position) {
   //如果有服务器图片，使用cdn图片
   if (position[0]) {
     return {
@@ -52,4 +52,4 @@ function compute_css(position) {
   };
 }
 
-export default compute_css;
+export default compute_css_obj;

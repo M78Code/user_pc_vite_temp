@@ -121,7 +121,7 @@
     </div>
     <template v-if="!is_show_detail_header_data">
       <!-- 活动返回按钮 及 标题 -->
-        <img :src="compute_img('go-back-icon')"  >
+        <img :src="compute_img_url('go-back-icon')"  >
       <!-- <div class="head yb_px14 yb_fontsize14"> -->
         <!-- <img
             :src="('day') ? `/image/wwwassets/bw3/svg/go-back-icon-theme02.svg` : `/image/wwwassets/bw3/svg/go-back-icon.svg`"
@@ -155,7 +155,7 @@ import store from "src/store-redux/index.js";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt/index.js"
 import { details_main } from "./details.js";
 import { ref, defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch, provide } from "vue";
-import {UserCtr,compute_css,compute_img,MatchDetailCalss,MenuData,utils} from "src/core/";
+import {UserCtr,compute_css_obj,compute_img_url,MatchDetailCalss,MenuData,utils} from "src/core/";
 import { compute_css_variables } from "src/core/css-var/index.js"
 import {is_export } from "src/base-h5/mixin/menu";
 
@@ -533,7 +533,7 @@ export default defineComponent({
     // ]),
     return {
       ...toRefs(state_data),
-      i18n_t,compute_css,compute_img,
+      i18n_t,compute_css_obj,compute_img_url,
       is_highlights,
       show_match_analysis_tab,
       show_chatroom_tab,

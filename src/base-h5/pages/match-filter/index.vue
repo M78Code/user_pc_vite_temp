@@ -22,7 +22,7 @@
                   <div class="row items-center">
                     <div class="row items-center">
                       <!-- 联赛icon -->
-                      <img :src="item1.picUrlthumb ? get_server_file_path(item1.picUrlthumb) : compute_img('match-cup')"
+                      <img :src="item1.picUrlthumb ? get_server_file_path(item1.picUrlthumb) : compute_img_url('match-cup')"
                         @error="league_icon_error" class="match_logo" />
                       <div class="name-overhide">{{ item1.nameText }}</div>
                       <div class="nums"
@@ -30,7 +30,7 @@
                         {{ item1.num }}</div>
                     </div>
                   </div>
-                  <img class="icon-search" :src="compute_img(item1.select ? 'checkbox-box-s' : 'checkbox-box')" />
+                  <img class="icon-search" :src="compute_img_url(item1.select ? 'checkbox-box-s' : 'checkbox-box')" />
                 </div>
               </div>
             </div>
@@ -44,14 +44,14 @@
       <li @click.stop.prevent="bar_click(item)" :class="{ actived: active_index == item, hot: item == $t('search.hot') }"
         v-for="(item, index) in anchor_arr" :key="index + 'letter'">
         <template v-if="item == $t('search.hot')">
-          <img style="width: 28px;" :src="compute_img(active_index == item ? 'match-filter-s' : 'match-filter')" alt="">
+          <img style="width: 28px;" :src="compute_img_url(active_index == item ? 'match-filter-s' : 'match-filter')" alt="">
         </template>
         <div class="t-wrap" v-else>{{ item }}</div>
       </li>
     </ul>
 
     <!-- 字母悬浮图标 -->
-    <div v-if="is_show" class="active-point" :style="[{ top: fixed_top + 150 + 'px' }, compute_css('work-s')]">
+    <div v-if="is_show" class="active-point" :style="[{ top: fixed_top + 150 + 'px' }, compute_css_obj('work-s')]">
       <span>{{ active_index }}</span>
     </div>
 
@@ -62,7 +62,7 @@
         :style="{ lineHeight: ['vi', 'en', 'th', 'ms', 'ad'].includes(get_lang) ? '1' : 'unset' }">
         <!-- <template> -->
         <img class="icon-search" @click="all_checked_click"
-          :src="compute_img(all_checked ? 'checkbox-box-s' : 'checkbox-box')" />
+          :src="compute_img_url(all_checked ? 'checkbox-box-s' : 'checkbox-box')" />
         <span class="txt ellipsis-2-lines" @click="all_checked_click">{{ $t('common.all_select') }}</span>
         <!-- </template> -->
         <span class="txt ellipsis-3-lines" @click="select_btn_click">{{ $t('filter.reverse_election') }}</span>
@@ -86,14 +86,14 @@ import { api_filter } from "src/api/index.js";
 import NoData from "src/base-h5/components/common/no-data.vue";
 import SFilter from "src/base-h5/components/skeleton/filter.vue";
 import lodash from 'lodash';
-import {project_name} from 'src/core';
+import {LOCAL_PROJECT_FILE_PREFIX} from 'src/core';
 import PageSourceData from "src/core/page-source/page-source.js";
 
-import { i18n_t, MITT_TYPES, compute_css, useMittEmit, MenuData, compute_img, UserCtr, get_server_file_path } from 'src/core/'
+import { i18n_t, MITT_TYPES, compute_css_obj, useMittEmit, MenuData, compute_img_url, UserCtr, get_server_file_path } from 'src/core/'
 import { ref, watch, computed, nextTick, onBeforeUnmount, onMounted } from 'vue';
-const default_url = `/${project_name}/image/svg/match_cup.svg` //默认图片地址
+const default_url = `${LOCAL_PROJECT_FILE_PREFIX}/image/svg/match_cup.svg` //默认图片地址
 // 无联赛logo图标黑色版
-const none_league_icon_black = `/${project_name}/image/svg/match_cup_black.svg`
+const none_league_icon_black = `${LOCAL_PROJECT_FILE_PREFIX}/image/svg/match_cup_black.svg`
 
 const list_data_loading = ref(false)     //数据加载中
 const list = ref([]) //数据列表整个赛事
@@ -159,7 +159,7 @@ watch(select_num, (new_) => {
  * @param {Object} $event 错误事件对象
  */
 function league_icon_error($event) {
-  $event.target.src = compute_img('match-cup')
+  $event.target.src = compute_img_url('match-cup')
   $event.target.onerror = null
 }
 

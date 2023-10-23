@@ -14,7 +14,7 @@
         <div class="league-icon-wrap">
             <span class="soprts_id_icon"
             v-if="menu_config.is_esports()"
-            :style="compute_css({key:'pc-left-menu-bg-image', position: `item_${BaseData.compute_sport_id(card_style_obj.league_obj.csid)}` })"></span>
+            :style="compute_css_obj({key:'pc-left-menu-bg-image', position: `item_${BaseData.compute_sport_id(card_style_obj.league_obj.csid)}` })"></span>
           <img v-else v-img="[lodash.get(card_style_obj, 'league_obj.lurl')]" />
         </div>
         <!-- 联赛名称 -->
@@ -89,7 +89,7 @@ import lodash from 'lodash';
 import { ref, computed } from 'vue';
 import sprite_img from "src/core/server-img/sprite-img/index.js"
 import BaseData from "src/core/base-data/base-data.js"
-import { t,compute_css } from "src/core/index.js";
+import { t,compute_css_obj } from "src/core/index.js";
 import { get_match_tpl_title } from 'src/core/format/index.js'
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'

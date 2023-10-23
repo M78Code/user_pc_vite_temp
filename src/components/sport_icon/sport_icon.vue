@@ -5,19 +5,19 @@
 -->
 <template>
   <span v-if="sport_id != -1" class="q-icon icon c-icon sport-img"
-  :style="[compute_css({key:'pc-left-menu-bg-image', position: `item_${sport_id}`}),`width:${size};height:${size}`]"
+  :style="[compute_css_obj({key:'pc-left-menu-bg-image', position: `item_${sport_id}`}),`width:${size};height:${size}`]"
   :class="{img36:size == '18px' && !is_esports,'sport-img-new': isVideoIcon}" >
   </span>
 </template>
 
 <script>
-import {compute_css} from "src/core/"
+import {compute_css_obj} from "src/core/"
 
 export default {
   name: "SportIcon",
   data() {
     return {
-      compute_css 
+      compute_css_obj 
     };
   },
   props: {

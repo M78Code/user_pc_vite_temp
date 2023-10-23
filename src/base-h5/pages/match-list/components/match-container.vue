@@ -20,9 +20,9 @@
       <!-- 首页热门 -->
       <template v-if="is_hot">
         <div v-if="is_hot && lodash.get(MenuData.hot_tab_menu, 'index') == 0" class="ball_img">
-          <div class='img' :style="compute_css({key:'polular-spirite',position:match_of_list.csid})" style="--per:-0.60754rem;background-size: 100%;">
+          <div class='img' :style="compute_css_obj({key:'polular-spirite',position:match_of_list.csid})" style="--per:-0.60754rem;background-size: 100%;">
           </div>
-          <span> <i :style="compute_css({key:'h5-hot-jinxuan', position: `item_${match_of_list.csid}` })"></i>  <span>{{ match_of_list.csna }}</span> </span>
+          <span> <i :style="compute_css_obj({key:'h5-hot-jinxuan', position: `item_${match_of_list.csid}` })"></i>  <span>{{ match_of_list.csna }}</span> </span>
         </div>
       </template>
       <span class="score-inner-span" v-else>
@@ -31,7 +31,7 @@
       </span>
       <!-- 折叠收起不用消失 -->
       <div v-if="!is_hot">
-        <img class="league-collapse-dir" :class="{ 'collapsed': !league_collapsed }" :src='compute_img("icon-collapse")' />
+        <img class="league-collapse-dir" :class="{ 'collapsed': !league_collapsed }" :src='compute_img_url("icon-collapse")' />
       </div>
     </div>
     <!-- 未开赛标题  -->
@@ -63,15 +63,15 @@
           <!-- 联赛收藏 -->
           <div v-if="![3000, 900].includes(menu_type)" class="favorited-icon" @click.stop="handle_league_collect">
             <!-- 未收藏 -->
-            <img v-if="!league_collect_state" :src="compute_img('icon-favorite')" alt="">
+            <img v-if="!league_collect_state" :src="compute_img_url('icon-favorite')" alt="">
             <!-- 收藏图标 -->
-            <img v-if='league_collect_state' :src="compute_img('icon-favorite-s')">
+            <img v-if='league_collect_state' :src="compute_img_url('icon-favorite-s')">
           </div>
           <!-- 电竞图标 写死 -->
-          <div class="esport" v-if="match_of_list.csid == 101" :style="compute_css('menu-sport-active-image', 2101)"></div>
-          <div class="esport" v-else-if="match_of_list.csid == 103" :style="compute_css('menu-sport-active-image', 2103)"></div>
-          <div class="esport" v-else-if="match_of_list.csid == 102" :style="compute_css('menu-sport-active-image', 2102)"></div>
-          <div class="esport" v-else-if="match_of_list.csid == 100" :style="compute_css('menu-sport-active-image', 2100)"></div>
+          <div class="esport" v-if="match_of_list.csid == 101" :style="compute_css_obj('menu-sport-active-image', 2101)"></div>
+          <div class="esport" v-else-if="match_of_list.csid == 103" :style="compute_css_obj('menu-sport-active-image', 2103)"></div>
+          <div class="esport" v-else-if="match_of_list.csid == 102" :style="compute_css_obj('menu-sport-active-image', 2102)"></div>
+          <div class="esport" v-else-if="match_of_list.csid == 100" :style="compute_css_obj('menu-sport-active-image', 2100)"></div>
           <div class="league-icon-mini" v-else>
             <image-cache-load :csid="match_of_list.csid" :path="match_of_list.lurl" type="league"></image-cache-load>
           </div>
@@ -97,7 +97,7 @@
             </div>
           </span>
           <template v-if="!(is_hot || is_detail) && collapsed">
-            <img class="league-collapse-dir" :class="{ 'collapsed': collapsed }"  :src='compute_img("icon-collapse")'  />
+            <img class="league-collapse-dir" :class="{ 'collapsed': collapsed }"  :src='compute_img_url("icon-collapse")'  />
           </template>
         </div>
       </div>
@@ -120,9 +120,9 @@
                   <!--赛事列表收藏-->
                   <div class="favorite-icon-top match list-m" @click.stop="handle_match_collect">
                     <!-- 未收藏图标 -->
-                    <img v-if="!match_collect_state" :src="compute_img('icon-favorite')" alt="">
+                    <img v-if="!match_collect_state" :src="compute_img_url('icon-favorite')" alt="">
                     <!-- 收藏图标 -->
-                    <img v-if='match_collect_state' :src="compute_img('icon-favorite-s')">
+                    <img v-if='match_collect_state' :src="compute_img_url('icon-favorite-s')">
                   </div>
                   <!-- 赛事日期标准版 -->
                   <div :class="['timer-wrapper-c flex items-center', { esports: is_export, 'din-regular': is_export }]">
@@ -159,7 +159,7 @@
                   <!-- mng 是否中立场   1:是中立场，0:非中立场-->
                   <div class="live-i-b-wrap v-mode-span row items-center"
                     v-if="![5, 10, 7, 8, 13].includes(Number(match.csid)) && match.mng * 1">
-                    <img class="neutral-icon-btn l-bottom" :src="`/${project_name}/image/list/m-list-neutral.svg`" />
+                    <img class="neutral-icon-btn l-bottom" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/m-list-neutral.svg`" />
                   </div>
 
                   <!-- 电竞串关标识 -->
@@ -268,7 +268,7 @@
                   </div>
                   <!-- v-if="match_of_list.playBack && is_replay_switch" -->
                   <div class="flex play-icon">
-                    <img :src="`/${project_name}/image/common/replay_y0.svg`" />
+                    <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/replay_y0.svg`" />
                   </div>
                 </div>
                 <!--  左边收藏  视频动画 图标 玩法数量  赛事分析图标 提前结算图标  -->
@@ -287,7 +287,7 @@
                       <div class="column justify-center yb_px4"
                       v-if="[1, 2].includes(+match.csid) && GlobalAccessConfig.get_statisticsSwitch()"
                         @click='goto_details(match, 1)'>
-                        <img :src="compute_img('data-analysis')" alt="" style="width:0.12rem">
+                        <img :src="compute_img_url('data-analysis')" alt="" style="width:0.12rem">
                       </div>
                       <!-- 此赛事支持提前结算 -->
                       <div class="column justify-center yb_px2" v-if="match_of_list.mearlys == 1">
@@ -325,7 +325,7 @@
                             {{ $t('list.go_to_details') }}
                           </div>
                           <div>
-                            <img class="go-to-d-icon" :src="`/${project_name}/image/list/m-list-way-more.svg`" />
+                            <img class="go-to-d-icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/m-list-way-more.svg`" />
                           </div>
                         </div>
                       </div>
@@ -350,9 +350,9 @@
                     <div class="fav-i-wrap-match row items-center" @click.stop="handle_match_collect">
                       <div class="favorite-icon match">
                         <!-- 未收藏图标 -->
-                        <img v-if="!match_collect_state" :src="compute_img('icon-favorite')" alt="">
+                        <img v-if="!match_collect_state" :src="compute_img_url('icon-favorite')" alt="">
                         <!-- 收藏图标 -->
-                        <img v-if='match_collect_state' :src="compute_img('icon-favorite-s')">
+                        <img v-if='match_collect_state' :src="compute_img_url('icon-favorite-s')">
                       </div>
                     </div>
                   </div>
@@ -397,7 +397,7 @@
                   </div>
                   <!--中立场图标-->
                   <div class="live-i-b-wrap newer" v-show="match.mng * 1 && ![5, 10, 7, 8].includes(Number(match.csid))">
-                    <img class="neutral-icon-btn" :src="`/${project_name}/image/list/m-list-neutral.svg`" />
+                    <img class="neutral-icon-btn" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/m-list-neutral.svg`" />
                   </div>
                   <!--玩法数量-->
                   <div class="go-container-w mcount flex">
@@ -441,7 +441,7 @@ import { ref, computed, onMounted, onUnmounted, watch, nextTick } from 'vue'
 import lodash from 'lodash'
 import store from "src/store-redux/index.js";
 import { useRouter, useRoute } from 'vue-router'
-import { useMittOn, useMittEmit, MITT_TYPES,UserCtr, project_name } from  "src/core"
+import { useMittOn, useMittEmit, MITT_TYPES,UserCtr, LOCAL_PROJECT_FILE_PREFIX } from  "src/core"
 import countingDownSecond from 'src/base-h5/components/common/counting-down.vue';
 import countingDownStart from 'src/base-h5/components/common/counting-down-start.vue';
 import scoreList from './score-list.vue';
@@ -451,7 +451,7 @@ import MatchCollect from 'src/core/match-collect'
 import matchOvertimePen from './match-overtime-pen.vue'
 import ImageCacheLoad from "./public-cache-image.vue";
 import PageSourceData from "src/core/page-source/page-source.js";
-import { i18n_t,MenuData, score_switch_handle,compute_img, compute_css, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/index.js"
+import { i18n_t,MenuData, score_switch_handle,compute_img_url, compute_css_obj, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/index.js"
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import matchListClass from 'src/core/match-list-h5/match-class/match-list.js'
 import { format_time_zone, format_time_zone_time, format_how_many_days, format_week } from "src/core/format/index.js"

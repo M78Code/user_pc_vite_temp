@@ -15,12 +15,12 @@
       <!--角球选中标志2白色版4黑色版-->
       <span class="icon-jiaoqiu"
         :class="{'selected show':show_lock_selected}"
-        :style="compute_css('icon-jiaoqiu-s')" ></span>
+        :style="compute_css_obj('icon-jiaoqiu-s')" ></span>
         <!--角球未选中标志1白色版3黑色版-->
       <img class="icon-jiaoqiu"
         :style="{
           display:match.csid == 1 && MenuData.footer_sub_menu_id == 114 ? 'block':'none',
-          ...compute_css('icon-jiaoqiu')
+          ...compute_css_obj('icon-jiaoqiu')
       }"
         />
       <odd-column-item
@@ -141,7 +141,7 @@
       <!--  5分钟 图标  -->
       <div class="team-t-title-w" v-if="[1,3,5,7,8,9].includes(+match.csid) && lodash.size(lodash.get(five_minutes_all_list, 'hl[0].ol'))">
         <img @click="info_icon_click($event,match.mid)"
-        class="img" :src="compute_img(show_tips?'icon-tips':'icon-tips-u')"
+        class="img" :src="compute_img_url(show_tips?'icon-tips':'icon-tips-u')"
              >
         <span class="ellipsis">
           {{[1,2,7,10].includes(+match['ms']) ? i18n_t('football_playing_way.minutes_of_the_Xth_goal', {goalnr: minutes_of_the_Xth_goal}) : i18n_t('football_playing_way.any_goal')}}
@@ -161,7 +161,7 @@ import { i18n_t} from 'src/core/index.js'
 import oddColumnItem from "./odd-column-item.vue";
 import { img1, img2, img3, img4, Y0_img_white } from 'src/base-h5/core/utils/local-image'
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
-import { MenuData,compute_img ,UserCtr} from "src/core/index.js"
+import { MenuData,compute_img_url ,UserCtr} from "src/core/index.js"
 import PageSourceData  from  "src/core/page-source/page-source.js";
 import { lang } from 'src/base-h5/mixin/userctr.js'
 

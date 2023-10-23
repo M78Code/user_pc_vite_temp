@@ -9,7 +9,7 @@
     <!--无盘口数据时,赛事推荐-->
     <div class="match-recommend-wrapper" v-if="show_recommend">
       <!-- 无数据背景图  :src="get_is_hengping ? (`/image/wwwassets/bw3/svg/full_screen_match_odds_closed.svg`) : `/image/wwwassets/bw3/svg/match_odds_closed.svg`"-->
-      <img :src="`/${project_name}/image/svg/match_odds_closed.svg`" />
+      <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/match_odds_closed.svg`" />
       <!-- 背景下面文字说明 -->
       <div class="empty-m-list-w">
         <!-- 当前赛事盘口已全部关闭-->
@@ -93,7 +93,7 @@ import loading from "src/base-h5/components/common/loading.vue"
 import detailMatchList from 'src/base-h5/components/details/components/detail-match-list.vue';
 import uid from "src/core/uuid/index.js"
 import lodash from "lodash";
-import { project_name } from "src/core/";
+import { LOCAL_PROJECT_FILE_PREFIX } from "src/core/";
 import { useRouter, useRoute } from "vue-router";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 // import { Level_one_detail_odd_info } from "../category-list.js";
@@ -110,6 +110,12 @@ export default defineComponent({
     detailMatchList
   },
   props: ['category_arr'],
+  data() {
+    return {
+      LOCAL_PROJECT_FILE_PREFIX
+    }
+  },
+  
   setup(props, evnet) {
     // 路由
     const router = useRouter();

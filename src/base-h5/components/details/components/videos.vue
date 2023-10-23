@@ -62,12 +62,12 @@
         <!-- 第一次显示 用户指导页 -->
         <div class="floating-layer" v-if="first_login" @click.self.stop="first_login = false">
           <div>
-            <img class="animate-bounce-up" :src="`/${project_name}/image/svg/one-click.svg`" alt="">
+            <img class="animate-bounce-up" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/one-click.svg`" alt="">
             <span>{{i18n_t("video.click_on")}}</span>
             <p>{{i18n_t("video.show_hide")}}</p>
           </div>
           <div>
-            <img class="animate-bounce-up" :src="`/${project_name}/image/svg/double-click.svg`" alt="">
+            <img class="animate-bounce-up" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/double-click.svg`" alt="">
             <span>{{i18n_t("video.double_click")}}</span>
             <p>{{i18n_t("video.full_screen_play")}}</p>
           </div>
@@ -240,7 +240,7 @@
           <div class="img-wrap" v-if="[1,2].includes(+get_detail_data.csid) && get_is_full_screen && get_video_url.active == 'muUrl' && get_is_hengping">
             <!-- 分析弹窗 -->
             <!-- <img :src="select_item == 3 ? (!('y0')?analyze2:analyze2_y0) : (!('y0')?analyze:analyze_yo)" @click.stop="change_analyze"/> -->
-            <img :style="compute_img(select_item == 3?'video-analyze':'video-analyze-s')">
+            <img :style="compute_img_url(select_item == 3?'video-analyze':'video-analyze-s')">
 
           </div>
         </div>
@@ -296,12 +296,12 @@ import uid from "src/core/uuid/index.js"
 import lodash from "lodash";
 
 import { useRouter, useRoute } from "vue-router";
-import { useMittOn, useMittEmit, MITT_TYPES, MenuData, MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouse, MatchDetailCalss } from  "src/core/index.js"
+import { useMittOn, useMittEmit, MITT_TYPES, MenuData, MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouse, MatchDetailCalss,LOCAL_PROJECT_FILE_PREFIX } from  "src/core/index.js"
 import { format_total_score } from "src/core/format/index.js"
 import { video_info } from "./videos.js";
 import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch,ref } from "vue";
 import { i18n_t } from "src/boot/i18n.js";
-import {UserCtr,compute_img} from "src/core/";
+import {UserCtr,compute_img_url} from "src/core/";
 
 
 //国际化
@@ -331,26 +331,26 @@ export default defineComponent({
     // 详情页的数据
     const get_detail_data = ref(lodash.get(MatchDataWarehouse, 'list_to_obj.mid_obj[`${route.params.mid}_`]'))
     let component_data = reactive({
-      tips_def: `/${project_name}/image/svg/video_b.svg`,
-      tips_act: `/${project_name}/image/svg/video_a.svg`,
-      voice_def: `/${project_name}/image/svg/video_i.svg`,
-      voice_act: `/${project_name}/image/svg/video_h.svg`,
-      // nail_def: `/${project_name}/image/svg/video_f.svg`,
-      // nail_act: `/${project_name}/image/svg/video_e.svg`,
-      donghua: `/${project_name}/image/svg/v-donghua.svg`,
+      tips_def: `${LOCAL_PROJECT_FILE_PREFIX}/image/svg/video_b.svg`,
+      tips_act: `${LOCAL_PROJECT_FILE_PREFIX}/image/svg/video_a.svg`,
+      voice_def: `${LOCAL_PROJECT_FILE_PREFIX}/image/svg/video_i.svg`,
+      voice_act: `${LOCAL_PROJECT_FILE_PREFIX}/image/svg/video_h.svg`,
+      // nail_def: `${LOCAL_PROJECT_FILE_PREFIX}/image/svg/video_f.svg`,
+      // nail_act: `${LOCAL_PROJECT_FILE_PREFIX}/image/svg/video_e.svg`,
+      donghua: `${LOCAL_PROJECT_FILE_PREFIX}/image/svg/v-donghua.svg`,
       // 直播 切换的图标
-      shipin: `/${project_name}/image/svg/v-shipin.svg`,
+      shipin: `${LOCAL_PROJECT_FILE_PREFIX}/image/svg/v-shipin.svg`,
       // 演播厅 切换的图标
-      studio_icon:`/${project_name}/image/svg/studio_icon.svg`,
+      studio_icon:`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/studio_icon.svg`,
       // 赛前直播的
-      lvs_icon_pre : `/${project_name}/image/common/zhibo-before.svg`,
-      // ding1: `/${project_name}/image/svg/ding1.svg`,
-      // ding2: `/${project_name}/image/svg/ding2.svg`,
-      bet: `/${project_name}/image/svg/bet.svg`,
-      analyze: `/${project_name}/image/svg/analyse.svg`,
-      analyze2: `/${project_name}/image/svg/analyse2.svg`,
-      analyze_yo: `/${project_name}/image/svg/analyse2_y0.svg`,
-      analyze2_y0: `/${project_name}/image/svg/analyse_y0.svg`,
+      lvs_icon_pre : `${LOCAL_PROJECT_FILE_PREFIX}/image/common/zhibo-before.svg`,
+      // ding1: `${LOCAL_PROJECT_FILE_PREFIX}/image/svg/ding1.svg`,
+      // ding2: `${LOCAL_PROJECT_FILE_PREFIX}/image/svg/ding2.svg`,
+      bet: `${LOCAL_PROJECT_FILE_PREFIX}/image/svg/bet.svg`,
+      analyze: `${LOCAL_PROJECT_FILE_PREFIX}/image/svg/analyse.svg`,
+      analyze2: `${LOCAL_PROJECT_FILE_PREFIX}/image/svg/analyse2.svg`,
+      analyze_yo: `${LOCAL_PROJECT_FILE_PREFIX}/image/svg/analyse2_y0.svg`,
+      analyze2_y0: `${LOCAL_PROJECT_FILE_PREFIX}/image/svg/analyse_y0.svg`,
       select_item:-1,
       voice: true,
       nail: true,
@@ -845,7 +845,8 @@ export default defineComponent({
     //   'set_is_dp_video_full_screen',
     // ]),
 
-    return {compute_img,
+    return {compute_img_url,
+      LOCAL_PROJECT_FILE_PREFIX,
       ...toRefs(data)
     }
 

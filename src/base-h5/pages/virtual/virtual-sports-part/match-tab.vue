@@ -12,11 +12,11 @@
     <!-- 分析icon显示 -->
     <div class="sr-icon-wrapper row justify-center items-center" @click.stop="trend_event"  v-if="GlobalAccessConfig.get_statisticsSwitch()&& sub_menu_type != 1004">
       <img class="sub-item-trend-icon2" v-if="[1002, 1011, 1010, 1009].includes(sub_menu_type) && trend_is_show"
-            :src="`/${project_name}/image/common/analyse_icon.svg`" alt="" />
+            :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/analyse_icon.svg`" alt="" />
       <img class="sub-item-trend-icon1" v-if="[1001,1004].includes(sub_menu_type) && trend_is_show"
-            :src="`/${project_name}/image/common/analyse_icon.svg`" alt="" />
+            :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/analyse_icon.svg`" alt="" />
       <img class="sub-item-close-icon" v-if="!trend_is_show"
-            :src="`/${project_name}/image/common/sub_item_list_close.svg`" alt="">
+            :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/sub_item_list_close.svg`" alt="">
     </div>
   </div>
 </template>
@@ -25,7 +25,7 @@
 // #TODO VUEX
 // import { mapGetters, mapMutations } from "vuex"
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
-import {utils, project_name } from 'src/core/index.js';
+import {utils, LOCAL_PROJECT_FILE_PREFIX } from 'src/core/index.js';
 import lodash from "lodash";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
@@ -50,7 +50,11 @@ export default defineComponent({
     is_basket_ball_next_no:Number,
     before_match_tab_trend:Number,
   },
-
+  data() {
+    return {
+      LOCAL_PROJECT_FILE_PREFIX
+    }
+  },
   setup(props, evnet) {
     const data = reactive({
       // 事件集合

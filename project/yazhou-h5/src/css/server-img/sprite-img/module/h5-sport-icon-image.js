@@ -20,7 +20,7 @@ const config = {
  * @param {*} param0
  * @returns
  */
-function compute_css({ position, theme  ,path  }) {
+function compute_css_obj({ position, theme  ,path  }) {
     // 当前主题的 服务端配置
      let theme_config=   server_resource[theme] ||{}
       //最终资源键 计算
@@ -34,4 +34,4 @@ function compute_css({ position, theme  ,path  }) {
     };
 }
 
-export { compute_css };
+export { compute_css_obj };

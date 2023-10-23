@@ -99,11 +99,11 @@ function compute_position(position) {
  * @param {*} param0
  * @returns
  */
-function compute_css(position) {
+function compute_css_obj(position) {
 
   return {
     "background-position": compute_position(position),
   };
 }
 
-export default compute_css;
+export default compute_css_obj;

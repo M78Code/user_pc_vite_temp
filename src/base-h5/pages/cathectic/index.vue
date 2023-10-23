@@ -17,12 +17,12 @@
         <div class="col-2 close">
           <span class="close-click-padding" @click="close_show">
             <template v-if="lodash.get(UserCtr, 'theme').includes('day')">
-              <img :src="compute_css({key: 'h5-img-bet-record-close', theme: 'local_dev', type: 'img'})">
-              <!-- <div :style="compute_css({key: 'h5-img-bet-record-close', theme: 'local_dev'})"></div> -->
+              <img :src="compute_css_obj({key: 'h5-img-bet-record-close', theme: 'local_dev', type: 'img'})">
+              <!-- <div :style="compute_css_obj({key: 'h5-img-bet-record-close', theme: 'local_dev'})"></div> -->
               </template>
             <template v-else>
-              <img :src="compute_css({key: 'h5-img-bet-record-close', theme: 'local_dev', type: 'img'})">
-              <!-- <div :style="compute_css({key: 'h5-img-bet-record-close', theme: 'local_dev'})"></div> -->
+              <img :src="compute_css_obj({key: 'h5-img-bet-record-close', theme: 'local_dev', type: 'img'})">
+              <!-- <div :style="compute_css_obj({key: 'h5-img-bet-record-close', theme: 'local_dev'})"></div> -->
             </template>
           </span>
         </div>
@@ -51,7 +51,7 @@
   import store from 'src/store-redux/index.js'
   import UserCtr from "src/core/user-config/user-ctr.js";
   import { i18n_t } from "src/boot/i18n.js";
-  import {compute_css} from "src/core/index.js"
+  import {compute_css_obj} from "src/core/index.js"
   import { compute_css_variables } from "src/core/css-var/index.js"
   
   let { cathecticReducer, userInfoReducer, themeReducer } = store.getState()

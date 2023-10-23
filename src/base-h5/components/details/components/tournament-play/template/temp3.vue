@@ -29,7 +29,7 @@
                 <div class="play-box-style details_color warp bor-style">
                   <div class="ellipsis remark details_t_color7 fz_14" v-show="get_detail_data.csid != 1">{{ol_item.on || ol_item.ott}}</div>
                   <div class="text-left">
-                    <img class="icon-lock" :src="`/${project_name}/image/common/match-icon-lock.svg`" />
+                    <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                   </div>
                 </div>
                 <!-- lock 锁状态 end -->
@@ -39,7 +39,7 @@
                 <!-- 关盘 锁占位 -->
                 <div class="play-box-style details_color warp bor-style">
                   <div class="text-left">
-                    <img class="icon-lock" :src="`/${project_name}/image/common/match-icon-lock.svg`" />
+                    <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                   </div>
                 </div>
               </template>
@@ -50,7 +50,7 @@
                 <!-- 关盘 锁占位 -->
                 <div class="play-box-style details_color warp bor-style">
                   <div class="text-left">
-                    <img class="icon-lock" :src="`/${project_name}/image/common/match-icon-lock.svg`" />
+                    <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                   </div>
                 </div>
               </template>
@@ -59,7 +59,7 @@
                 <div class="play-box-style details_color warp bor-style">
                   <div class="ellipsis remark details_t_color7 fz_14" v-show="get_detail_data.csid != 1">{{ol_item.on || ol_item.ott}}</div>
                   <div class="text-left">
-                    <img class="icon-lock" :src="`/${project_name}/image/common/match-icon-lock.svg`" />
+                    <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                   </div>
                 </div>
                 <!-- lock 锁状态 end -->
@@ -69,7 +69,7 @@
               <!-- 盘口级别状态关盘时，要占位 -->
               <div class="play-box-style details_color warp bor-style">
                 <div class="text-left">
-                  <img class="icon-lock" :src="`/${project_name}/image/common/match-icon-lock.svg`" />
+                  <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                 </div>
               </div>
             </template>
@@ -80,7 +80,7 @@
             <div class="play-box-style details_color warp bor-style">
               <div class="ellipsis remark details_t_color7 fz_14" v-show="get_detail_data.csid != 1">{{ol_item.on || ol_item.ott}}</div>
               <div class="text-left">
-                <img class="icon-lock" :src="`/${project_name}/image/common/match-icon-lock.svg`" />
+                <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
               </div>
             </div>
             <!-- lock 锁状态 end -->
@@ -90,7 +90,7 @@
             <!-- 关盘 锁占位 -->
             <div class="play-box-style details_color warp bor-style">
               <div class="text-left">
-                <img class="icon-lock" :src="`/${project_name}/image/common/match-icon-lock.svg`" />
+                <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
               </div>
             </div>
           </template>
@@ -106,7 +106,7 @@
 // import { mapGetters } from "vuex";
 import oddsNew from "src/base-h5/components/details/components/tournament-play/unit/odds-new.vue";
 // import odd_convert from "src/base-h5/mixins/odds_conversion/odds_conversion.js";
-import {utils, project_name } from 'src/core/index.js';
+import {utils, LOCAL_PROJECT_FILE_PREFIX } from 'src/core/index.js';
 import store from "src/store-redux/index.js";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
@@ -145,6 +145,7 @@ export default defineComponent({
       get_detail_data,
       get_is_hengping,
       is_match_result,
+      LOCAL_PROJECT_FILE_PREFIX,
       go_to_bet
     }
   }

@@ -21,12 +21,7 @@
             <scrollNav v-show="is_scroll_ball" :title="i18n_t('footer_menu.all')"
               @click="select_all_sub_menu_handle" :count="all_sport_count_calc"
               v-if="GlobalAccessConfig.get_playAllShow()">
-              <span class="sport-icon-wrap" :style="compute_css(
-                !(current_lv2?.mi) ?
-                  'menu-sport-active-image' : 'menu-sport-icon-image'
-                , 0
-              )
-                "></span>
+              <span class="sport-icon-wrap" :style="compute_css_obj({ key: !(current_lv2.mi) ? 'menu-sport-active-image' : 'menu-sport-icon-image',position: 0})"></span>
             </scrollNav>
             <template v-for="( item, index ) in  current_menu " :key="lodash.get(item, 'mi')">
               <div class="sport-menu-item flex justify-center" v-show="!is_export && !is_results ? item.ct > 0 : true"
@@ -38,9 +33,7 @@
                   ">
                   <div class="sport-w-icon">
                     <span class="sport-icon-wrap"
-                      :style="compute_css(current_lv2?.mi == item.mi ? 'menu-sport-active-image' : 'menu-sport-icon-image', format_type(item))"></span>
-                    <!-- :data-type="format_menu_type(sub)" -->
-                    <!-- :class="[get_sport_icon(selected_sub_menu_i_list.includes(sub_i)), `${'s' + format_type(sub)}`]" -->
+                      :style="compute_css_obj({key:current_lv2?.mi == item.mi ? 'menu-sport-active-image' : 'menu-sport-icon-image', position:format_type(item)})"></span>
 
                     <div class="sport-match-count" v-show="two_menu_show(item)">
                       {{ show_favorite_list ? '' : item.ct ? item.ct : 0 }}
@@ -68,7 +61,7 @@ import MatchFold from 'src/core/match-fold'
 import base_data from "src/core/base-data/base-data.js";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import { ref, watch, computed,onUpdated } from "vue";
-import { i18n_t, compute_css, GlobalAccessConfig, MenuData, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/index.js";
+import { i18n_t, compute_css_obj, GlobalAccessConfig, MenuData, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/index.js";
 import { is_scroll_ball, update_time, is_export, is_mix,is_results, is_kemp, is_jinzu, menu_type } from 'src/base-h5/mixin/menu.js'
 import { get_sport_menu } from "../top-menu/top-list";
 //菜单容器是否收起
@@ -161,20 +154,20 @@ function select_all_sub_menu_handle() {
   MatchMeta.set_origin_match_data()
 }
 /**
-     * @description: 球类id转化背景
-     * @param {String} id 球类id
-     * @return {}
-     */
-     const format_type = (id) => {
+ * @description: 球类id转化背景
+ * @param {String} id 球类id
+ * @return {}
+ */
+const format_type = ( item = {} ) => {
   if (MenuData.is_results()) {
-    let type = +id?.menuId
+    let type = +item.menuId
     // 赛果电竞图标
     if ([100, 101, 103, 102].includes(type)) {
       type += 2000
     }
     // 赛果 我的投注
-    if (id?.menuType && id.menuType == 29) {
-      type = id.menuType
+    if (item.menuType && item.menuType == 29) {
+      type = item.menuType
     }
     // 赛果冠军
     if (type == 10000) {
@@ -183,8 +176,8 @@ function select_all_sub_menu_handle() {
     return type
   }
   //电竞背景处理
-  if (base_data.sports_mi.includes(+id?.mi)) return +id?.mi
-  return MenuData.recombine_menu_bg(id, true)
+  if (base_data.sports_mi.includes(+item.mi)) return +item.mi
+  return MenuData.recombine_menu_bg(item, true)
 }
 // 获取主菜单列表  main_select_items 弹出的一级 菜单数据   main_menu_list_items 一级菜单数据
 watch(update_time, (v) => {

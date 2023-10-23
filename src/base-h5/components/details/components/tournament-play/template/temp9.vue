@@ -17,7 +17,7 @@
           </div>
           <div class="temp9-ov">
             <div v-if="item.os != 2">{{get_odds(item)}}</div>
-            <div v-else><img :src="`/${project_name}/image/common/match-icon-lock.svg`" /></div>
+            <div v-else><img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" /></div>
           </div>
         </div>
       </div>

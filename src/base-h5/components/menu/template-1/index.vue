@@ -2,12 +2,12 @@
   <div class="menu  match-main-menu" :style="{ 'z-index': 501 }">
     <div class="menu-inner-wrap">
       <!--  电竞背景图片  -->
-      <div class="m-i-background" v-if="is_export" :style="compute_css('menu-bg-' + dj_back_type)"></div>
+      <div class="m-i-background" v-if="is_export" :style="compute_css_obj('menu-bg-' + dj_back_type)"></div>
       <div class="main-wrap flex" :class="{ is_export }">
         <!--  返回按鈕  -->
         <slot name="menu-left" >
           <div class="goback-icon-wrapper  column justify-center" @click="handle_go_back">
-            <div class="img" :style="compute_css('menu-go-back-icon')"></div>
+            <div class="img" :style="compute_css_obj('menu-go-back-icon')"></div>
           </div>
         </slot>
         <div class="main-menu-container" :class="{ is_export }">
@@ -54,7 +54,7 @@
             <sub-menu-specially v-show="is_scroll_ball" :title="i18n_t('footer_menu.all')"
               @click="select_all_sub_menu_handle" :count="all_sport_count_calc"
               v-if="GlobalAccessConfig.get_playAllShow()">
-              <span class="sport-icon-wrap" :style="compute_css(
+              <span class="sport-icon-wrap" :style="compute_css_obj(
                 !(current_lv2?.mi) ?
                   'menu-sport-active-image' : 'menu-sport-icon-image'
                 , 0
@@ -71,7 +71,7 @@
                   ">
                   <div class="sport-w-icon">
                     <span class="sport-icon-wrap"
-                      :style="compute_css(current_lv2?.mi == item.mi ? 'menu-sport-active-image' : 'menu-sport-icon-image', format_type(item))"></span>
+                      :style="compute_css_obj(current_lv2?.mi == item.mi ? 'menu-sport-active-image' : 'menu-sport-icon-image', format_type(item))"></span>
                     <!-- :data-type="format_menu_type(sub)" -->
                     <!-- :class="[get_sport_icon(selected_sub_menu_i_list.includes(sub_i)), `${'s' + format_type(sub)}`]" -->
 
@@ -156,7 +156,7 @@
 <script setup>
 import subMenuSpecially from "./sub-menu-specially.vue";
 import { ref, watch, nextTick, computed, onBeforeUnmount, } from "vue";
-import { i18n_t, compute_css, GlobalAccessConfig, useMittOn, MITT_TYPES, UserCtr, MenuData, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5,PROJECT_NAME } from "src/core/index.js";
+import { i18n_t, compute_css_obj, GlobalAccessConfig, useMittOn, MITT_TYPES, UserCtr, MenuData, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5,PROJECT_NAME } from "src/core/index.js";
 import base_data from "src/core/base-data/base-data.js";
 import { useRoute, useRouter } from "vue-router";
 import lodash from "lodash"

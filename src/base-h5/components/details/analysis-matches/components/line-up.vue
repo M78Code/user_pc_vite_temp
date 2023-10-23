@@ -188,7 +188,7 @@ import { project_name } from 'src/core'
   const line_up_data = ref([])
   const no_data = ref(true)
   //默认图片地址
-  const default_url = (`/${project_name}/image/png/my.png`)
+  const default_url = (`${LOCAL_PROJECT_FILE_PREFIX}/image/png/my.png`)
   // 最后一位数
   const number = ref('')
   // 代表多少列 并且里边的数字

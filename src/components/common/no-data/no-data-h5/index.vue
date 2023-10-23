@@ -3,7 +3,7 @@
   <div class="no-data"
     :style="{ 'min-height': top_height + 'px', paddingTop: is_detail && top_height < 500 ? '.6rem' : '80px' }">
     <div class="empty-favorite-bg" 
-    :style="compute_css(lodash.get(arr[which], 'key'))">
+    :style="compute_css_obj(lodash.get(arr[which], 'key'))">
     </div>
     <p>
             <!-- 有消息用消息 没有信息 用默认信息 -->
@@ -15,7 +15,7 @@
 <script setup>
 import { ref, onMounted, onUnmounted, watch } from 'vue'
 import { useMittEmit, MITT_TYPES } from "src/core/mitt"
-import { i18n_t, compute_css } from "src/core/index.js";
+import { i18n_t, compute_css_obj } from "src/core/index.js";
 import { useRoute } from "vue-router"
 
 //-------------------- 对接参数 prop 注册  开始  -------------------- 

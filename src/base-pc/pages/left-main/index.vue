@@ -16,7 +16,7 @@
           class="menu-item menu-top menu-border item bet_history"
           :class="[bet_count > 0 ? 'justify-end' : 'justify-start']">
 
-          <span class="record-icon" :style="compute_css('pc-img-bet-record')" alt=""></span>
+          <span class="record-icon" :style="compute_img_url('pc-img-bet-record')" alt=""></span>
 
           <div class="col">
             {{ $t("common.betting_record") }}
@@ -92,7 +92,7 @@ import { MenuData, LayOutMain_pc } from "src/core/index.js";
 import { api_betting } from "src/api/index.js";
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
 
-import { compute_css } from 'src/core/server-img/index.js'
+import { compute_img_url } from 'src/core/server-img/index.js'
 
 
 onMounted(() => {

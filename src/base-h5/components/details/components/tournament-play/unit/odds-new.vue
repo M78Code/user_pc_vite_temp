@@ -7,7 +7,7 @@
   <div :class="['odds_new',{'odds-new2':ol_data.result != undefined}]" :id="DOM_ID_SHOW && `list-${lodash.get(ol_data, 'oid')}`">
     <template v-if="ol_data.result == undefined">
       <span v-if="odds_value() < 1.01 && get_cur_odd == 'EU'">
-        <img :src="`/${project_name}/image/common/match-icon-lock.svg`" alt="" style=" width: 0.12rem"/>
+        <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" alt="" style=" width: 0.12rem"/>
       </span>
       <span v-else class="odds" :class="[{'red_text': status == 10, 'green_text': status == -10,'white_text':get_bet_list.includes(ol_data.id_) }]">
         <span>{{ odds_value() }}</span>

@@ -53,7 +53,7 @@
                         v-if="value.profit > 0">+</template>{{ value.profit }}</span>
                   </span>
                   <span v-show="!value.open"><img class="icon-down-arrow"
-                      :src="`/${project_name}/image/list/league-collapse-icon.svg`" /></span>
+                      :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/league-collapse-icon.svg`" /></span>
                 </p>
                 <div class="line" :class="!value.open && (index != Object.keys(list_data).length - 1) && 'line2'"></div>
                 <q-slide-transition>
@@ -87,7 +87,7 @@ import store from 'src/store-redux/index.js'
 import { format_M_D } from 'src/core/format/index.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { i18n_t } from "src/boot/i18n.js";
-import { project_name } from "src/core";
+import { LOCAL_PROJECT_FILE_PREFIX } from "src/core";
 //国际化
 
 

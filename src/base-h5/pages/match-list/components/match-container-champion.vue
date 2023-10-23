@@ -7,16 +7,16 @@
     <div class="sport-title match-indent" v-if="get_sport_show(i)" @click="handle_ball_seed_fold">
       <span class="score-inner-span"> {{match_of_list.csna}} </span>
       <div class="collapse-dire">
-        <img class="icon-down-arrow" :class="{ 'collapsed': league_collapsed }" :src='compute_img("icon-collapse")' />
+        <img class="icon-down-arrow" :class="{ 'collapsed': league_collapsed }" :src='compute_img_url("icon-collapse")' />
       </div>
     </div>
     <div v-if="is_show_league(i)" class="league-container flex items-center justify-between hairline-border" @click="handle_league_fold">
       <div class="league-wrapper champion flex items-center">
         <div @click.stop="handle_match_collect" class="collect-img">
           <!-- 未收藏图标 -->
-          <img v-if="!match_collect_state" :src="compute_img('icon-favorite')" alt="">
+          <img v-if="!match_collect_state" :src="compute_img_url('icon-favorite')" alt="">
           <!-- 收藏图标 -->
-          <img v-if='match_collect_state' :src="compute_img('icon-favorite-s')">
+          <img v-if='match_collect_state' :src="compute_img_url('icon-favorite-s')">
         </div>
         <div v-if="menu_type === 100 && GlobalAccessConfig.get_collectSwitch()"  class="favorite" :class="[{favorited:match_of_list.tf},theme]"
           @click.stop="handle_league_fold"></div>
@@ -26,7 +26,7 @@
         </div>
 
       <div class="collapse-dire">
-        <img class="icon-down-arrow" :class="{collapsed:collapsed}" alt="" :src="compute_img('icon-collapse')">
+        <img class="icon-down-arrow" :class="{collapsed:collapsed}" alt="" :src="compute_img_url('icon-collapse')">
       </div>
     </div>
 
@@ -80,7 +80,7 @@ import { ref, computed, onUnmounted } from "vue";
 import lodash from 'lodash'
 import { i18n_t} from 'src/core/index.js'
 import store from "src/store-redux/index.js";
-import { MenuData, compute_img, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/index.js"
+import { MenuData, compute_img_url, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/index.js"
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt";
 import oddItemChampion from "./odd-item-champion.vue";
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"

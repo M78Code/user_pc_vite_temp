@@ -6,22 +6,14 @@ import server_resource from "app/job/output/assets/index.json";
 import { get } from "lodash";
 const { CURRENT_ENV } = window.BUILDIN_CONFIG;
 const config = {
-    default: "h5-sport-active-image",
-    // local_dev: "pc-left-menu-bg-image",
-    // local_test: "",
-    // local_ylcs: "pc-left-menu-bg-image",
-    // idc_pre: "pc-left-menu-bg-image",
-    // idc_sandbox: "pc-left-menu-bg-image",
-    // idc_lspre: "pc-left-menu-bg-image",
-    // idc_online: "pc-left-menu-bg-image",
-
+    default: "menu-sport-active-image",
 };
 /**
  * 拿图片地址 和位置
  * @param {*} param0
  * @returns
  */
-function compute_css({ position, theme  ,path  }) {
+function compute_css_obj({ position, theme  ,path  }) {
     // 当前主题的 服务端配置
      let theme_config=   server_resource[theme] ||{}
       //最终资源键 计算
@@ -35,4 +27,4 @@ function compute_css({ position, theme  ,path  }) {
     };
 }
 
-export { compute_css };
+export { compute_css_obj };

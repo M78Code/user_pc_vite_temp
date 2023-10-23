@@ -2,7 +2,7 @@
     <div class="px-6 py-5 navigation-bar">
         <div class="navigation-bar-left">
             <div class="navigation-bar-close" @click="router.back()">
-                <div class="img" :style="compute_css('menu-go-back-icon')"></div>
+                <div class="img" :style="compute_css_obj('menu-go-back-icon')"></div>
             </div>
         </div>
         <div v-if="centerContentType === 'text'" class="navigation-bar-center font-weight-bold text-no-wrap">
@@ -17,7 +17,7 @@
     </div>
 </template>
 <script setup>
-import { i18n_t, compute_css } from "src/core/index.js";
+import { i18n_t, compute_css_obj } from "src/core/index.js";
 import { useRouter,useRoute } from "vue-router";
 
 const router = useRouter();

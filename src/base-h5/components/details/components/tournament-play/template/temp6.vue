@@ -52,7 +52,7 @@
                               <div class="play-box-style details_color warp bor-style">
                                 <div class="size-color ellipsis-t remark details_t_color7 fz_16" :class="{'is-score':check_score(ol_list_0[ol_index0 - 1].on)}">{{ ol_list_0[ol_index0 - 1].on }}</div>
                                 <div class="text-left">
-                                  <img class="icon-lock" :src="`/${project_name}/image/common/match-icon-lock.svg`" />
+                                  <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                                 </div>
                               </div>
                               <!-- lock 锁状态 end -->
@@ -66,7 +66,7 @@
                               <div class="play-box-style details_color warp bor-style">
                                 <div class="size-color ellipsis remark details_t_color6 fz_16" :class="{'is-score':check_score(ol_list_0[ol_index0 - 1].on)}" v-show="get_detail_data.csid != 1">{{ ol_list_0[ol_index0 - 1].on }}</div>
                                 <div class="text-left">
-                                  <img class="icon-lock" :src="`/${project_name}/image/common/match-icon-lock.svg`" />
+                                  <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                                 </div>
                               </div>
                               <!-- lock 锁状态 end -->
@@ -84,7 +84,7 @@
                           <div class="play-box-style details_color warp bor-style">
                             <div class="size-color ellipsis remark details_t_color7 fz_16" :class="{'is-score':check_score(ol_list_0[ol_index0 - 1].on)}" v-show="get_detail_data.csid != 1">{{ ol_list_0[ol_index0 - 1].on }}</div>
                             <div class="text-left">
-                              <img class="icon-lock" :src="`/${project_name}/image/common/match-icon-lock.svg`" />
+                              <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                             </div>
                           </div>
                           <!-- lock 锁状态 end -->
@@ -134,7 +134,7 @@
                               <div class="play-box-style details_color bor-style">
                                 <div class="size-color ellipsis remark details_t_color7 fz_16" :class="{'is-score':check_score(ol_list_1[ol_index1 - 1].on)}" v-show="get_detail_data.csid != 1">{{ ol_list_1[ol_index1 - 1].on }}</div>
                                 <div class="text-left">
-                                  <img class="icon-lock" :src="`/${project_name}/image/common/match-icon-lock.svg`" />
+                                  <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                                 </div>
                               </div>
                               <!-- lock 锁状态 end -->
@@ -148,7 +148,7 @@
                               <div class="play-box-style details_color bor-style">
                                 <div class="size-color ellipsis remark details_t_color6 fz_16" :class="{'is-score':check_score(ol_list_1[ol_index1 - 1].on)}" v-show="get_detail_data.csid != 1">{{ ol_list_1[ol_index1 - 1].on }}</div>
                                 <div class="text-left">
-                                  <img class="icon-lock" :src="`/${project_name}/image/common/match-icon-lock.svg`" />
+                                  <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                                 </div>
                               </div>
                               <!-- lock 锁状态 end -->
@@ -166,7 +166,7 @@
                           <div class="play-box-style details_color bor-style">
                             <div class="size-color ellipsis remark details_t_color7 fz_16" :class="{'is-score':check_score(ol_list_1[ol_index1 - 1].on)}" v-show="get_detail_data.csid != 1">{{ ol_list_1[ol_index1 - 1].on }}</div>
                             <div class="text-left">
-                              <img class="icon-lock" :src="`/${project_name}/image/common/match-icon-lock.svg`" />
+                              <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                             </div>
                           </div>
                           <!-- lock 锁状态 end -->
@@ -216,7 +216,7 @@
                             <div class="play-box-style details_color">
                               <div class="ellipsis remark details_t_color7 fz_16" v-show="get_detail_data.csid != 1">{{ ol_item.on }}</div>
                               <div class="text-left">
-                                <img class="icon-lock" :src="`/${project_name}/image/common/match-icon-lock.svg`" />
+                                <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                               </div>
                             </div>
                             <!-- lock 锁状态 end -->
@@ -230,7 +230,7 @@
                             <div class="play-box-style details_color">
                               <div class="ellipsis remark details_t_color6 fz_16" v-show="get_detail_data.csid != 1">{{ ol_item.on }}</div>
                               <div class="text-left">
-                                <img class="icon-lock" :src="`/${project_name}/image/common/match-icon-lock.svg`" />
+                                <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                               </div>
                             </div>
                             <!-- lock 锁状态 end -->
@@ -248,7 +248,7 @@
                         <div class="play-box-style details_color">
                           <div class="ellipsis remark details_t_color7 fz_16" v-show="get_detail_data.csid != 1">{{ ol_item.on }}</div>
                           <div class="text-left">
-                            <img class="icon-lock" :src="`/${project_name}/image/common/match-icon-lock.svg`" />
+                            <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
                           </div>
                         </div>
                         <!-- lock 锁状态 end -->
@@ -279,7 +279,7 @@
 // import {mapGetters, mapMutations, mapActions} from "vuex";
 import odds_new from "src/base-h5/components/details/components/tournament-play/unit/odds-new.vue";
 // import odd_convert from "src/base-h5/mixins/odds_conversion/odds_conversion.js";
-import {utils, project_name } from 'src/core/index.js';
+import {utils, LOCAL_PROJECT_FILE_PREFIX } from 'src/core/index.js';
 import lodash from "lodash";
 import store from "src/store-redux/index.js";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, ref } from "vue";
@@ -296,6 +296,11 @@ export default defineComponent({
   props: ["item_data", "title"],
   components: {
     "odds-new": odds_new
+  },
+  data() {
+    return {
+      LOCAL_PROJECT_FILE_PREFIX
+    }
   },
   setup(props, evnet) {
     const route = useRoute()
@@ -450,7 +455,8 @@ export default defineComponent({
       go_to_bet,
       change_show,
       check_score,
-      set_highlight_cls
+      set_highlight_cls,
+      LOCAL_PROJECT_FILE_PREFIX,
     }
   }
 })

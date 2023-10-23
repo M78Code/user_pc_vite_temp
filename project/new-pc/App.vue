@@ -1,17 +1,17 @@
 <template>
   <div id="q-app" class="full-height">
     <appload v-if="init_load"></appload>
-    <!-- <div :style="compute_css({ label: 'image01', theme: 'day' })"></div>
+    <!-- <div :style="compute_css_obj({ label: 'image01', theme: 'day' })"></div>
     <div
       :style="
-        compute_css({ label: 'bet-menu-icon', theme: 'day', key: 'item_6' })
+        compute_css_obj({ label: 'bet-menu-icon', theme: 'day', key: 'item_6' })
       "
       style="width: 36px; height: 36px"
     ></div> -->
   </div>
 </template>
 <script setup>
-// import { compute_css } from "src/core/server-img/";
+// import { compute_css_obj } from "src/core/server-img/";
 import appload from "./app-load.vue";
 import { ref } from "vue";
 import { http, AllDomain } from "src/core/http/";

@@ -78,7 +78,7 @@
             </div>
           </div>
           <div v-if="sub_menu_type == 1004" class="c-s-timer-w basketball row justify-center items-center">
-            <img :src="`/${project_name}/image/list/basket_ball_video_playing.svg`" alt="">
+            <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/basket_ball_video_playing.svg`" alt="">
           </div>
         </div>
       </div>
@@ -166,7 +166,7 @@ import dateMatchList from 'project_path/pages/virtual/virtual_sports_part/date_m
 import virtualBasketball from 'project_path/pages/details/children/virtual_basketball.vue'
 
 import lodash from "lodash";
-import { project_name } from "src/core";
+import { LOCAL_PROJECT_FILE_PREFIX } from "src/core";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
 export default defineComponent({
@@ -203,7 +203,12 @@ export default defineComponent({
       }
     },
   },
-
+  data() {
+    return {
+      LOCAL_PROJECT_FILE_PREFIX
+    }
+  },
+  
   setup(props, evnet) {
     const component_data = reactive({
       // 事件集合
