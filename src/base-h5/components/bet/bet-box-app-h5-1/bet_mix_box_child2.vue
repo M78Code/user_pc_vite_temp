@@ -20,26 +20,13 @@
       <!-- 中间可滚动区域 -->
       <div class="scroll-box scroll-box-center" ref="scroll_box" :style="{ 'max-height': `${max_height1}px` }"
         @touchmove="touchmove_handle($event)" @touchstart="touchstart_handle($event)">
-        <bet-mix-box-child3></bet-mix-box-child3>
+          <bet-mix-box-child3 :item="BetData.bet_single_list[0]" :key='index'></bet-mix-box-child3>
       </div>
 
-      <div class="scroll-box" ref="scroll_box">
-        <bet-mix-box-child4></bet-mix-box-child4>
-      </div>
-      <div class="yb_px12" v-if="get_mix_bet_flag">
-        <div class="row justify-between items-center content-t yb_mb6 yb_mt8 yb_fontsize14 fw_600 bet-mix-show">
-          <div>{{ $t('bet.total_income') }}</div>
-          <div>{{ $t('bet.total_bet') }} <span v-if="bet_num > 0">{{ bet_num }}</span></div>
-        </div>
-        <div class="row justify-between items-center content-t yb_mb6 yb_mt8">
-          <div class="yellow-color yb_fontsize16">{{ (award_total) }}</div>
-          <div class="yb_fontsize16 bet-mix-show">{{ BetData.bet_money_total.toFixed(2) }}</div>
-        </div>
-      </div>
 
-      <!-- 对应单关多个注单样式 -->
       <!-- 单关金额输入框 v-bind="$attrs"-->
-      <bet-single-detail></bet-single-detail>
+      <!-- 输入框 与键盘 -->
+      <bet-single-detail :item="BetData.bet_single_list[0]" :index="0"/>
 
       <!-- 键盘 -->
       <key-board v-show="bet_keyboard_show" :bet_min_max_money="bet_min_max_money"></key-board>

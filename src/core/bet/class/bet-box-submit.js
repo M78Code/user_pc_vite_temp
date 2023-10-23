@@ -342,7 +342,6 @@ const submit_handle = type => {
                 set_orderNo_bet_obj(orderDetailRespList)
             }, 1000);
             // 通知页面更新 
-            // useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY)
         }
         // 设置投注 code 码
         BetViewDataClass.set_bet_error_code(res)
@@ -374,6 +373,7 @@ const set_bet_obj_config = (params = {}, other = {}) => {
             query = MatchDataWarehouse_PC_Detail_Common
         }
     }
+    
     // 获取对应的仓库数据
     const hl_obj = lodash_.get(query.list_to_obj, `hl_obj.${_mid}_${_hid}`, {})
     const hn_obj = lodash_.get(query.list_to_obj, `hn_obj.${_hn}`, {})

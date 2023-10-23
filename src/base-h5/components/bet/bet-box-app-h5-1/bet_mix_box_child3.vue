@@ -5,28 +5,38 @@
 
 <template>
   <div class="bet-mix-show">
+   <div v-show="false"> {{BetData.bet_data_class_version }}</div>
     <div class="nonebox4-content">
         <div class="nonebox4-content-left">
-            <div class="nonebox4-content-left-title">阿根廷 +0/0.5</div>
+            <div class="nonebox4-content-left-title">{{ item.handicap }}</div>
             <div class="nonebox4-content-left-content">
                 <div class="nonebox4-content-left-content-xian"></div>
                 <div class="nonebox4-content-left-content-text">
-                    <div>上半场大小-附加盘（3-0）</div>
-                    <div>阿根廷 VS 克罗地亚</div>
-                    <div>2022 PESI欧洲超级联赛</div>
+                    <div>{{ item.playName }} </div>
+                    <div>{{ item.home }} VS {{ item.away }}</div>
+                    <div>{{ item.tid_name }}</div>
                 </div>
             </div>
         </div>
         <div class="nonebox4-content-right">
-            <div class="nonebox4-content-right-profit"><span class="nonebox4-content-right-profit-type">@</span>6.65</div>
-            <div class="nonebox4-content-right-num">
-                <div>6</div>
-            </div>
+            <div class="nonebox4-content-right-profit"><span class="nonebox4-content-right-profit-type">@</span>{{ format_odds(item.oddFinally, item.sportId) }}</div>
         </div>
     </div>
+   
   </div>
 </template>
-<script setup></script>
+<script setup>
+import BetData from "src/core/bet/class/bet-data-class.js";
+import { format_odds, format_currency, formatTime } from "src/core/format/index.js"
+
+import betSingleDetail from './bet-single-detail.vue';
+
+const props = defineProps({
+    item:{},
+    index:{}
+})
+
+</script>
 
 <style lang="scss" scoped>
 .nonebox4-content{
