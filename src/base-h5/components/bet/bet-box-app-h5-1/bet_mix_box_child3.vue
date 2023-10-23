@@ -19,9 +19,6 @@
         </div>
         <div class="nonebox4-content-right">
             <div class="nonebox4-content-right-profit"><span class="nonebox4-content-right-profit-type">@</span>6.65</div>
-            <div class="nonebox4-content-right-num">
-                <div>6</div>
-            </div>
         </div>
     </div>
   </div>
@@ -31,28 +28,26 @@
 <style lang="scss" scoped>
 .nonebox4-content{
     width: 100%;
-    margin-top: 10px;
     display: flex;
     justify-content: space-between;
 }
 .nonebox4-content-left-title{
     font-size: 13px;
-    color: #000;
 }
 .nonebox4-content-left-content{
-    height: 70px;
+    height: 0.7rem;
     display: flex;
-    margin-top: 5px;
+    margin-top: 0.1rem;
 }
 .nonebox4-content-left-content-xian{
     width: 2px;
     height: 100%;
-    background: #2394fc;
+    background: var(--q-gb-t-c-1);
     margin-right: 4px;
 }
 .nonebox4-content-left-content-text{
     font-size: 12px;
-    color: #999;
+    color: var(--q-gb-t-c-3);
     line-height: 23px;
 }
 .nonebox4-content-right-profit{

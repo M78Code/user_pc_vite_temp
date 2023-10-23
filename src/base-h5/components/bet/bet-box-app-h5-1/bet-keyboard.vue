@@ -4,8 +4,42 @@
 -->
 
 <template>
-  <div class="keyboard yb_mx10 yb_pb6" @click.stop="_handleKeyPress($event)" style="opacity: 1;" @touchmove.prevent>
-    <div class="key-row row">
+  <div class="keyboard yb_pb6" @click.stop="_handleKeyPress($event)" style="opacity: 1;" @touchmove.prevent>
+    <div class="nonebox4-fourth">
+        <div class="nonebox4-fourth-a">
+            <div class="nonebox4-fourth-a-son">100</div>
+            <div class="nonebox4-fourth-a-son">500</div>
+            <div class="nonebox4-fourth-a-son">1000</div>
+            <div class="nonebox4-fourth-a-son">2000</div>
+            <div class="nonebox4-fourth-a-son">5000</div>
+        </div>
+        <div class="nonebox4-fourth-a">
+            <div class="nonebox4-fourth-num">
+                <div class="nonebox4-fourth-num-sun">1</div>
+                <div class="nonebox4-fourth-num-sun">4</div>
+                <div class="nonebox4-fourth-num-sun">7</div>
+                <div class="nonebox4-fourth-num-sun">0</div>
+            </div>
+            <div class="nonebox4-fourth-num">
+                <div class="nonebox4-fourth-num-sun">2</div>
+                <div class="nonebox4-fourth-num-sun">5</div>
+                <div class="nonebox4-fourth-num-sun">8</div>
+                <div class="nonebox4-fourth-num-sun">.</div>
+            </div>
+            <div class="nonebox4-fourth-num">
+                <div class="nonebox4-fourth-num-sun">3</div>
+                <div class="nonebox4-fourth-num-sun">6</div>
+                <div class="nonebox4-fourth-num-sun">9</div>
+                <div class="nonebox4-fourth-num-sun">00</div>
+            </div>
+            <div class="nonebox4-fourth-num">
+                <div class="nonebox4-fourth-num-sun">最大</div>
+                <div class="nonebox4-fourth-num-sun">删除</div>
+                <div class="nonebox4-fourth-num-sun">收起</div>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="key-row row">
       <div class="key-cell" data-num="qon" :class="{ 'shadow-show': prevent_click(addnum.qon) }">
         <span>+</span>{{ addnum.qon }}
       </div>
@@ -36,7 +70,7 @@
       <div class="key-cell" data-num=".">.</div>
       <div class="key-cell" data-num="0">0</div>
       <div class="key-cell del-key" data-num="x"></div>
-    </div>
+    </div> -->
   </div>
 </template>
   
@@ -270,6 +304,81 @@ onUnmounted(() => {
 
 <style lang="scss" scoped>
 @import url( "src/base-h5/css/bet/bet_single_detail.scss");
+.nonebox4-fourth {
+    width: 100%;
+    background-color: #e8f5fe;
+    border-radius: 10px;
+    padding-left: 4px;
+    padding-right: 4px;
+    padding-top: 4px;
+    padding-bottom: 2px;
+    margin-top: 10px;
+}
+.nonebox4-fourth-a {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 4px;
+}
+.nonebox4-fourth-a-son {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    color: #2394fc;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 6px;
+    margin-left: 2px;
+    margin-right: 2px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    box-shadow: 0 2px 2px #eeeeee;
+}
+.nonebox4-fourth-num {
+    height: 156px;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-left: 2px;
+    margin-right: 2px;
+}
+.nonebox4-fourth-num-sun {
+    width: 100%;
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    box-shadow: 0 2px 2px #eeeeee;
+    color: #333;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 6px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+.nonebox4-fourth-num-sun2 {
+    width: 100%;
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    box-shadow: 0 2px 2px #eeeeee;
+    color: #333;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 6px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    height: 50px;
+}
 
 .keyboard {
   height: 216px;

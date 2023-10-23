@@ -443,12 +443,12 @@ const item_click3 = lodash.debounce(() => {
       if (props.match.match_status) return
     } else { //正常赛事走这里逻辑
       console.error('ol_list_item',odd_item.value)
-      const {oid,hids,_hn,mid } = odd_item.value
+      const {oid,_hid,_hn,_mid } = odd_item.value
       let params = {
         oid, // 投注项id ol_obj
-        _hid:hids, // hl_obj 
+        _hid, // hl_obj 
         _hn,  // hn_obj
-        _mid:mid,  //赛事id mid_obj
+        _mid,  //赛事id mid_obj
       }
       let other = {
         is_detail: false,
