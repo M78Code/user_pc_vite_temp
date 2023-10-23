@@ -181,7 +181,7 @@
 <script>
 // #TODO vuex 
 // import { mapGetters } from "vuex";
-import oddsNew from "src/base-h5/pages/details/components/tournament_play/unit/odds_new.vue";
+import oddsNew from "src/base-h5/components/details/components/tournament_play/unit/odds_new.vue";
 import {utils } from 'src/core/index.js';
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 export default defineComponent({

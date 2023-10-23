@@ -43,7 +43,7 @@
 <script setup>
 // import { mapGetters, mapMutations } from "vuex";
 import { api_common } from "src/api/index.js";
-// import resultHeader from "src/base-h5/pages/details/components/result-header.vue";
+// import resultHeader from "src/base-h5/components/details/components/result-header.vue";
 import resultDetailsTab from "src/base-h5/components/details/components/result-details-tab.vue";
 // TODO: src/components有相同的组件
 import resultDetailsDialog from "src/base-h5/components/details/result-details-dialog.vue";

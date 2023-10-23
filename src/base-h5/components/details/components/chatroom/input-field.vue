@@ -1,5 +1,5 @@
 <!--
- * @FilePath: d:/projects/user-h5/src/base-h5/pages/details/components/chatroom/input_field.vue
+ * @FilePath: d:/projects/user-h5/src/base-h5/components/details/components/chatroom/input_field.vue
  * @Description: 输入栏组件
 -->
 
@@ -67,13 +67,13 @@
 <script>
 // #TODO vuex
 // import { mapMutations, mapGetters } from "vuex";
-import PopperBlockHint from 'src/base-h5/pages/details/components/chatroom/popper_block_hint.vue';   // 屏蔽消息提示组件
-import PopperSendHint from 'src/base-h5/pages/details/components/chatroom/popper_send_hint.vue';    // 发言条件提示组件
-import EmojiSelector from 'src/base-h5/pages/details/components/chatroom/emoji_selector.vue';      //表情选择框
+import PopperBlockHint from 'src/base-h5/components/details/components/chatroom/popper_block_hint.vue';   // 屏蔽消息提示组件
+import PopperSendHint from 'src/base-h5/components/details/components/chatroom/popper_send_hint.vue';    // 发言条件提示组件
+import EmojiSelector from 'src/base-h5/components/details/components/chatroom/emoji_selector.vue';      //表情选择框
 import { api_chatroom } from "src/project/api/index.js";
-import { muteType } from "src/base-h5/pages/details/components/chatroom/constant";
+import { muteType } from "src/base-h5/components/details/components/chatroom/constant";
 // #TODO mixins
-// import chatroom_mixin from "src/base-h5/pages/details/components/chatroom/chatroom_mixin";
+// import chatroom_mixin from "src/base-h5/components/details/components/chatroom/chatroom_mixin";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { t } from "src/boot/i18n.js";
 import UserCtr from "src/core/user-config/user-ctr.js";

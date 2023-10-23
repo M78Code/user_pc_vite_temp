@@ -76,7 +76,7 @@ import{api_common} from 'src/api/'
 // import { mapGetters, mapMutations } from "vuex";
 
 // #TODO 路径需修改
-import virtualSports from "src/base-h5/pages/virtual/virtual-sports-part/virtual-sports.vue";    // 虚拟体育
+import virtualSports from "src/base-h5/components/virtual/virtual-sports-part/virtual-sports.vue";    // 虚拟体育
 // import setMenu from "src/project/components/common/set_menu.vue"    // 设置菜单
 import { api_virtual } from "src/api/index";
 // 公共方法
@@ -84,7 +84,7 @@ import {utils } from 'src/core/index.js';
 // import { axios_api_loop } from "src/core/http"
 import axios_api_loop from "src/core/http/axios-loop.js"
 // import scroll_top from "src/project/components/record_scroll/scroll_top";
-import virtualFooterMenu from 'src/base-h5/pages/virtual/virtual-sports-part/virtual-footer-menu.vue'
+import virtualFooterMenu from 'src/base-h5/components/virtual/virtual-sports-part/virtual-footer-menu.vue'
 import base_data from "src/core/menu-h5/menu-data-class.js";
 
 import lodash from "lodash";

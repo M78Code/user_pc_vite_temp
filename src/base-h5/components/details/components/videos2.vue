@@ -285,7 +285,7 @@
 import {api_common} from "src/api/index.js";
 import video from "src/core/video/video.js"   // 视频相关公共方法
 import matchScore from 'src/base-h5/components/match/match-score.vue' // 比分组件
-import footballEvents from "src/base-h5/pages/details/football-events.vue";
+import footballEvents from "src/base-h5/components/details/football-events.vue";
 import analysis_football_matches from "src/base-h5/components/details/analysis-matches/football-match-analysis/analysis-football-matches.vue"; // 详情页  足球赛事分析
 import basketball_match_analysis from "src/base-h5/components/details/analysis-matches/basketball-match-analysis/basketball-match-analysis.vue";  // 详情页 或者 赛果  篮球赛事分析
 // import uid from "src/core/uuid/index.js"

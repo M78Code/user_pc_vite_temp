@@ -16,7 +16,7 @@
 <script>
 import commonCathecticItem from "src/base-h5/components/common/common-cathectic-item.vue";
 // import {mapGetters} from "vuex";
-import settleVoid from "src/base-h5/pages/cathectic/settle-void.vue";
+import settleVoid from "src/base-h5/components/cathectic/settle-void.vue";
 // import common from "src/base-h5/mixins/constant/module/common.js"
 
 export default {

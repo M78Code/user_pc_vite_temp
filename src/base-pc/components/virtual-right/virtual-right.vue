@@ -90,13 +90,13 @@
 
 <script>
 import loadData from "src/components/load_data/load_data.vue"
-import eliminationRank from "src/base-pc/pages/virtual-right/elimination-rank.vue"
-import groupRank from "src/base-pc/pages/virtual-right/group-rank.vue"
-import leagueRank from "src/base-pc/pages/virtual-right/league-rank.vue"
-import virtualVideo from "src/base-pc/pages/virtual-right/virtual-video.vue"
-import horseResult from "src/base-pc/pages/virtual-right/horse-result.vue"
-import horseReplay from "src/base-pc/pages/virtual-right/horse-replay.vue"
-import footbalReplay from "src/base-pc/pages/virtual-right/footbal-replay.vue"
+import eliminationRank from "src/base-pc/components/virtual-right/elimination-rank.vue"
+import groupRank from "src/base-pc/components/virtual-right/group-rank.vue"
+import leagueRank from "src/base-pc/components/virtual-right/league-rank.vue"
+import virtualVideo from "src/base-pc/components/virtual-right/virtual-video.vue"
+import horseResult from "src/base-pc/components/virtual-right/horse-result.vue"
+import horseReplay from "src/base-pc/components/virtual-right/horse-replay.vue"
+import footbalReplay from "src/base-pc/components/virtual-right/footbal-replay.vue"
 import vScrollArea from "src/base-pc/components/v-scroll-area/v-scroll-area.vue";
 import {VrSportCtr} from "src/core/index"
 export default {

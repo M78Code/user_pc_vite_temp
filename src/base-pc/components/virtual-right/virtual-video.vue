@@ -93,8 +93,8 @@
 
 <script>
 import loadData from "src/components/load_data/load_data.vue"
-import arcProgress from "src/base-pc/pages/virtual-right/arc-progress.vue"
-import basketballResult from "src/base-pc/pages/virtual-right/basketball-result.vue"
+import arcProgress from "src/base-pc/components/virtual-right/arc-progress.vue"
+import basketballResult from "src/base-pc/components/virtual-right/basketball-result.vue"
 import noVideo from "src/base-pc/components/match-detail/match_info/no_video.vue"
 import { compute_local_project_file_path } from "src/core";
 export default {

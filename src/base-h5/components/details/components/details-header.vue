@@ -26,7 +26,7 @@ import lodash from "lodash";
 import commonHeader from "src/base-h5/components/common/common-header1.vue";
 import headerTop from "src/base-h5/components/details/components/header/header-top.vue";   // 详情页视频区域中部(主副队logo+主副队名+赛事[阶段+时间+比分])
 import headerBottom from "src/base-h5/components/details/components/header/header-bottom.vue";   // 详情页视频区域(视频+动画按钮)+底部(赛事比分或者是足球犯规显示)
-// import matchResultsHeader_top from "src/base-h5/pages/details/components/details-match-results/match-results-header-top.vue";  // 整个赛果详情页的上部比分
+// import matchResultsHeader_top from "src/base-h5/components/details/components/details-match-results/match-results-header-top.vue";  // 整个赛果详情页的上部比分
 import { detail_csid_config } from "src/core/match-detail/match-detail-h5/config/details-bg.js";  // 球类背景图background路径
 import MenuData from "src/core/menu-h5/menu-data-class.js"
 

@@ -143,11 +143,11 @@ import detailsTab from "src/base-h5/components/details/components/details-tab.vu
 import detailsDialog from "src/base-h5/components/details/details-dialog.vue";   // 详情赛事下拉,赛事列表组件
 // // import no_data from "src/project/components/common/no-data.vue";   // 无网络展示组件
 import videos from "src/base-h5/components/details/components/videos2.vue";   // 详情页视频+动画直播区域
-// import change_header from "src/base-h5/pages/details/components/header/change-header.vue";  // 详情页下拉置顶title
+// import change_header from "src/base-h5/components/details/components/header/change-header.vue";  // 详情页下拉置顶title
 import info_rules from "src/base-h5/components/details/components/info-rules.vue"  // 视频info说明弹框
 // import SDetails from "src/project/components/skeleton/skeleton-details.vue"  // 详情骨架屏
 import category from "./children/category.vue";
-// import chatroom from "src/base-h5/pages/details/components/chatroom/chatroom.vue"
+// import chatroom from "src/base-h5/components/details/components/chatroom/chatroom.vue"
 import analysisFootballMatches from "src/base-h5/components/details/analysis-matches/football-match-analysis/analysis-football-matches.vue"
 import basketballMatchAnalysis from "src/base-h5/components/details/analysis-matches/basketball-match-analysis/basketball-match-analysis.vue"
 import { useRouter, useRoute } from "vue-router";
