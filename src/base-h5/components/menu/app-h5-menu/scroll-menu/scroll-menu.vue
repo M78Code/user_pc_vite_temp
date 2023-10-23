@@ -64,7 +64,7 @@ import lodash from "lodash"
 import MatchFold from 'src/core/match-fold'
 import base_data from "src/core/base-data/base-data.js";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
-import { ref, watch, computed,onUpdated } from "vue";
+import { ref, watch, computed,onUpdated, onMounted } from "vue";
 import { i18n_t, compute_css_obj, GlobalAccessConfig, MenuData, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/index.js";
 import { is_scroll_ball, update_time, is_export, is_mix,is_results, is_kemp, is_jinzu, menu_type } from 'src/base-h5/mixin/menu.js'
 import { get_sport_menu } from "../top-menu/top-list";
@@ -75,6 +75,7 @@ const sport_container_simple = ref(false);
 //一级菜单
 let menu_list = ref([]);
 let current_lv1 = ref({});
+
 // 是否初次渲染
 const is_first = ref(true)
 let show_favorite_list = ref('')
@@ -101,7 +102,7 @@ function select_all_sub_menu_handle() {
 /**
  * 二级菜单事件
  */
- async function set_menu_lv2(item, index, type = "click") {
+ async function set_menu_lv2(item = {}, index, type = "click") {
   const mi = lodash.get(MenuData.current_lv_2_menu, 'mi', "")
   if (mi === item.mi && !is_first.value) return
   MenuData.set_current_lv2_menu(item, index, type);
@@ -113,10 +114,10 @@ function select_all_sub_menu_handle() {
   handle_match_render_data()
 }
 /**
-    * 二级菜单数量 是否展示
-    * @param {Number} sub  赛种item
-    */
-    const two_menu_show = (sub) => {
+* 二级菜单数量 是否展示
+* @param {Number} sub  赛种item
+*/
+const two_menu_show = (sub) => {
   if (MenuData.is_results()) {
     return false
   }
@@ -191,10 +192,10 @@ watch(update_time, (v) => {
 });
 
 watch(()=>current_lv1.value, (v) => {
- if(MenuData.is_scroll_ball(current_lv1.value.mi)){
+ if(MenuData.is_scroll_ball(current_lv1.value?.mi)){
   select_all_sub_menu_handle()
  }else{
-  set_menu_lv2(current_lv1.value.sl[0],0,"click")
+  set_menu_lv2(current_lv1.value?.sl[0],0,"click")
  }
 });
 </script>

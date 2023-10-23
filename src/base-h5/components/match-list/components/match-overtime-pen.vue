@@ -250,7 +250,7 @@ watch(() => get_c303_data_change.value, (curr) => {
         let o_hps_key = get_hps_key_by(item);
         let params = {
           mids: match_info.mid,
-          cuid: get_uid,
+          cuid: get_euid,
           pids: item.pids,
           playId: item.play_id,
           device: 'v2_h5_st',

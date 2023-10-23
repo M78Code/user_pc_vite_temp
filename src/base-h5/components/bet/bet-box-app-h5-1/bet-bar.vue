@@ -11,7 +11,7 @@
     <div v-show="false">{{ userData.user_version }}</div>
     <div class="nonebox4-first">
         <div class="nonebox4-first-left">
-            <div class="nonebox4-first-left-img">单</div>
+            <div class="nonebox4-first-left-img">{{BetData.is_bet_single?"单":"串"}}</div>
             <div class="nonebox4-first-left-text">PM体育</div>
         </div>
         <div class="nonebox4-first-right">
