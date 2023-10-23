@@ -1,42 +1,3 @@
-# 动态导入
-
-```
-const  { default:json_data} = await import( json_data_path, { assert: { type: "json" }, } );
-
-
-```
-
-
-
-
-```
-import { readFile } from "fs/promises";
-const json_data = JSON.parse( await readFile(new URL(json_data_path, import.meta.url)) );
-
-```
-
-```
- const { default: MyComponent } = await import('./MyComponent');
-
-```
-
-```
-https://cn.vitejs.dev/guide/features.html#glob-import
-
-const modules = import.meta.glob('./dir/*.js', {
-  import: 'default',
-  eager: true,
-})
-// vite 生成的代码
-const modules = {
-  './dir/foo.js': () => import('./dir/foo.js?foo=bar&bar=true'),
-  './dir/bar.js': () => import('./dir/bar.js?foo=bar&bar=true'),
-}
-
-
-```
-
-```
 
 /**
  * @description 需要动态传入的组件
@@ -66,4 +27,4 @@ export const import_vue_component = async (name) => {
   const { default: components } = await import(`${path}`)
   return components;
 };
-```
+
