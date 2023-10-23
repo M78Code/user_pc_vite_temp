@@ -14,7 +14,7 @@
 <script>
 // import { mapGetters } from "vuex"
 // import msc from "src/public/mixins/common/msc.js";
-import { utils } from 'src/core/utils/index.js';
+import { utils } from 'src/core/index.js';
 import UserCtr from "src/core/user-config/user-ctr.js";
 
 export default {

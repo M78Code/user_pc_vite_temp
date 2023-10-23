@@ -31,7 +31,7 @@ let  DEV_TARGET_VERSION = ''
 // 打包 亚洲版 PC（新版)   测试环境  
 DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1697985660460-test";
 // 打包 亚洲版 PC（新版)   试玩环境  
-// DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1698038174090-shiwan";
+DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1698038174090-shiwan";
 // 打包 亚洲版 PC（新版)   生产环境
 // DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1698038537883-online";
 

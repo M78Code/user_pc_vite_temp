@@ -79,6 +79,8 @@ class BetViewData {
 
     // 限额
     this.bet_min_max_money = {}
+    // 键盘状态
+    this.bet_keyboard_show = false;
 
     this.bet_view_version = ref('11')
 
@@ -106,6 +108,12 @@ class BetViewData {
   // 设置 金额的范围  -1:输入金额小于最低限额时，1: 输入金额超出最大限额时 2:输入金额超出用户余额时 3:用户余额是小于等于输入金额(转换后)
   set_input_money_state(val) {
     this.input_money_state = val
+    this.set_bet_view_version()
+  }
+
+  // 设置键盘状态
+  set_bet_keyboard_show(val){
+    this.bet_keyboard_show = val
     this.set_bet_view_version()
   }
 

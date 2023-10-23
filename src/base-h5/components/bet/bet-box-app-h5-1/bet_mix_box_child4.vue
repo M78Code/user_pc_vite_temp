@@ -38,11 +38,10 @@
 }
 .nonebox4-content-result-left{
     font-size: 12px;
-    color: #999;
+    color: var(--q-gb-t-c-3);
 }
 .nonebox4-content-result-right{
     font-size: 14px;
-    color: #000;
 }
 .nonebox4-sub{
     padding: 8px 0;
