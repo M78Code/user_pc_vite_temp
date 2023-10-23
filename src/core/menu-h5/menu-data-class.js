@@ -74,7 +74,7 @@ class MenuData {
       BaseData.base_data_version,
       lodash.debounce((v) => {
         const { mew_menu_list_res } = BaseData; //获取主数据
-        this.recombine_menu(mew_menu_list_res, mew_menu_list_res);
+        this.recombine_menu(mew_menu_list_res);
         this.update();
       }, 10)
     );

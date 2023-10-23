@@ -16,6 +16,9 @@
           simple: sport_container_simple && !is_export,
           'shadow-down': !is_export,
         }">
+          
+        <div v-show="false">  {{ MenuData.update_time }} </div>
+
           <div class="s-menu-container flex" ref="sub_menu_scroller">
             <!--二级菜单 除了‘全部’按钮的其他所有 二级菜单  二级菜单 滚球下边的一个按钮   "全部"按钮  -->
             <scrollNav v-show="is_scroll_ball" :title="i18n_t('footer_menu.all')"
@@ -23,17 +26,18 @@
               v-if="GlobalAccessConfig.get_playAllShow()">
               <span class="sport-icon-wrap" :style="compute_css_obj({ key: !(current_lv2?.mi) ? 'menu-sport-active-image' : 'menu-sport-icon-image',position: 0})"></span>
             </scrollNav>
-            <template v-for="( item, index ) in  current_menu " :key="lodash.get(item, 'mi')">
+           
+            <template v-for="( item, index ) in  MenuData.menu_lv2 " :key="lodash.get(item, 'mi')">
               <div class="sport-menu-item flex justify-center" v-show="!is_export && !is_results ? item.ct > 0 : true"
                 @click="set_menu_lv2(item, index)">
                 <div class="inner-w flex justify-between items-center" :class="{
                   favorite: show_favorite_list,
-                  current: current_lv2?.mi == item.mi
+                  current: current_lv2.mi == item.mi
                 }
                   ">
                   <div class="sport-w-icon">
                     <span class="sport-icon-wrap"
-                      :style="compute_css_obj({key:current_lv2?.mi == item.mi ? 'menu-sport-active-image' : 'menu-sport-icon-image', position:format_type(item)})"></span>
+                      :style="compute_css_obj({key:current_lv2.mi == item.mi ? 'menu-sport-active-image' : 'menu-sport-icon-image', position:format_type(item)})"></span>
 
                     <div class="sport-match-count" v-show="two_menu_show(item)">
                       {{ show_favorite_list ? '' : item.ct ? item.ct : 0 }}
@@ -44,7 +48,7 @@
                     'din-regular': is_export
                   }
                     ">
-                    {{ item.name || MenuData.get_menus_i18n_map(item?.mi) }}
+                    {{ item.name || MenuData.get_menus_i18n_map(item.mi) }}
                   </div>
                 </div>
 
@@ -71,8 +75,6 @@ const sport_container_simple = ref(false);
 //一级菜单
 let menu_list = ref([]);
 let current_lv1 = ref({});
-//二级 菜单 当前菜单
-let current_menu = ref({});
 // 是否初次渲染
 const is_first = ref(true)
 let show_favorite_list = ref('')
@@ -184,7 +186,6 @@ watch(update_time, (v) => {
   const [menu_lv1] = get_sport_menu(MenuData.menu_list)
   menu_list.value = menu_lv1; //一级
   current_lv1.value = MenuData.current_lv_1_menu;
-  current_menu.value = MenuData.menu_lv2; //2级
   current_lv2.value = MenuData.current_lv_2_menu;//二级
   // set_menu_lv2(MenuData.current_lv_2_menu)
 });
