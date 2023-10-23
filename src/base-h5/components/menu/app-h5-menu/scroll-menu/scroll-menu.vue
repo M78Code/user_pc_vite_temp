@@ -21,7 +21,7 @@
             <scrollNav v-show="is_scroll_ball" :title="i18n_t('footer_menu.all')"
               @click="select_all_sub_menu_handle" :count="all_sport_count_calc"
               v-if="GlobalAccessConfig.get_playAllShow()">
-              <span class="sport-icon-wrap" :style="compute_css_obj({ key: !(current_lv2.mi) ? 'menu-sport-active-image' : 'menu-sport-icon-image',position: 0})"></span>
+              <span class="sport-icon-wrap" :style="compute_css_obj({ key: !(current_lv2?.mi) ? 'menu-sport-active-image' : 'menu-sport-icon-image',position: 0})"></span>
             </scrollNav>
             <template v-for="( item, index ) in  current_menu " :key="lodash.get(item, 'mi')">
               <div class="sport-menu-item flex justify-center" v-show="!is_export && !is_results ? item.ct > 0 : true"
@@ -189,7 +189,7 @@ watch(update_time, (v) => {
   // set_menu_lv2(MenuData.current_lv_2_menu)
 });
 
-watch(()=>current_lv1.value.mi, (v) => {
+watch(()=>current_lv1.value, (v) => {
  if(MenuData.is_scroll_ball(current_lv1.value.mi)){
   select_all_sub_menu_handle()
  }else{
