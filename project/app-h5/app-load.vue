@@ -29,6 +29,7 @@ import { useRoute } from "vue-router";
 
 import './src/css/common/app.scss'
 import './src/css/common/public.scss'
+import './src/css/common/common.scss'
 
 window.wslog = wslog;
 const BUILDIN_CONFIG = window.BUILDIN_CONFIG;

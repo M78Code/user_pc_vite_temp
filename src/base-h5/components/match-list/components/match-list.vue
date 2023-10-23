@@ -23,8 +23,8 @@
               :menu_type="menu_type"
               @toggle_collect_league="toggle_collect">
             </match-container-champion>
-            <!--真实体育玩法 -->
-            <match-container 
+            <!--yazhou-h5 真实体育玩法 -->
+            <match-container
               v-else
               :match_of_list="match_item" 
               :i="index" 
@@ -90,15 +90,17 @@ import lodash from 'lodash'
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt"
 import { add_or_cancel_tournament, add_or_cancel_match } from 'src/api/module/common/index.js';
 import GlobalAccessConfig from "src/core/access-config/access-config.js"
-import matchContainer from "./match-container.vue";  // 赛事组件，用于赛事列表展示赛事信息
+// import matchContainer from "./match-container.vue";  // yazhou-h5 赛事组件，用于赛事列表展示赛事信息
+import matchContainerApp from "./match-container-app.vue";  // app-h5 赛事组件，用于赛事列表展示赛事信息
 import vMatchContainer from "./virtual-match-container.vue";  // 虚拟体育赛狗赛马赛果项
 import matchContainerChampion from "./match-container-champion.vue";    // 冠军赛事组件，用于赛事列表展示赛事信息
 import matchContainerResult from "./match-container-result.vue" // 赛果冠军
 import scrollWrapper from 'src/base-h5/components/scroll-wraper/scroll-wrapper.vue';    // 滚动操作处理
 import UserCtr from 'src/core/user-config/user-ctr.js'
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
-import { MenuData, i18n_t, utils,compute_img_url, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/index.js"
+import { MenuData, i18n_t, utils,compute_img_url, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, PROJECT_NAME } from "src/core/index.js"
 import { standard_edition } from 'src/base-h5/mixin/userctr.js'
+import { matchContainer } from 'src/base-h5/mixin/comp.js'
 import { is_kemp, menu_lv2, is_results, menu_type, is_hot, is_detail } from 'src/base-h5/mixin/menu.js'
 // import { change_favorite_state } from 'src/core/match-list-h5/composables/match-list-collect.js'
 // import matchListCardFold from 'src/core/match-list-h5/match-card/match-list-card-fold.js'

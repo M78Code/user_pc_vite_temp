@@ -39,6 +39,8 @@ import {
 // import skt_data_esports_score from "/mixins/websocket/data/skt_data_esports_score.js";
 import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/index.js";
 import MenuData from "src/core/menu-pc/menu-data-class.js";
+import { useRouter } from "vue-router";
+const router = useRouter()
 export default {
   name:'esportsMatchList',
   // mixins: [skt_data_esports_score],
@@ -203,7 +205,7 @@ export default {
     match_switch(match){
       this.set_is_pause_video(false)
       // details.on_switch_match('auto', match)
-      details.on_go_detail(match)
+      details.on_go_detail(match,null,router)
     }
   },
   beforeUnmount() {

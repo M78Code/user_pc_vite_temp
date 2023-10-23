@@ -425,7 +425,6 @@ class MatchMeta {
    * @description 计算所需渲染数据
    */
   compute_page_render_list () {
-  
     // 计算当前页所需渲染数据
     const end_index = VirtualList.compute_page_render_list_end_index(this.complete_matchs)
     const target_index = end_index > 10 ? end_index : this.complete_mids.length

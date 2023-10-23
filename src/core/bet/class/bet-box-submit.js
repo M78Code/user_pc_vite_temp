@@ -342,7 +342,6 @@ const submit_handle = type => {
                 set_orderNo_bet_obj(orderDetailRespList)
             }, 1000);
             // 通知页面更新 
-            // useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY)
         }
         // 设置投注 code 码
         BetViewDataClass.set_bet_error_code(res)
@@ -367,6 +366,7 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         query = h5_match_data_switch(other.match_data_type)
         useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX,true)
         BetViewDataClass.set_bet_show(true)
+        BetViewDataClass.set_bet_keyboard_show(false)
     }else{
         query = MatchDataWarehouse_PC_List_Common
         // 判断是不是详情点击 详情使用详情数据仓库
@@ -374,6 +374,7 @@ const set_bet_obj_config = (params = {}, other = {}) => {
             query = MatchDataWarehouse_PC_Detail_Common
         }
     }
+    
     // 获取对应的仓库数据
     const hl_obj = lodash_.get(query.list_to_obj, `hl_obj.${_mid}_${_hid}`, {})
     const hn_obj = lodash_.get(query.list_to_obj, `hn_obj.${_hn}`, {})

@@ -184,7 +184,7 @@ export default {
       
       clearTimeout(this.handle_screen_timer)
       this.handle_screen_timer = setTimeout(() => {
-        video.full_screen(this.match_info,play_type,size)
+        video.full_screen(this.match_info,play_type,size,this.$route,this.$router)
       }, 50)
     },
     /**

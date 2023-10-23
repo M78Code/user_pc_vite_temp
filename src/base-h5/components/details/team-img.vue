@@ -9,7 +9,7 @@
     <!-- {{url}}{{fr}}{{csid}} -->
     <!-- <img class="img-style" v-img="([url, fr, csid])" :class="[size == 22 && `img-style-s`]" alt /> -->
           <div
-              :style="compute_css_obj({key:'pc-team-logo-image',position:['',fr, csid, ]})"  
+              :style="compute_css_obj({key:'pc-team-logo-image',position:[url,fr, csid, ]})"  
               :class="[size == 22 && `img-style-s`]"
               class="img-style"
             ></div>

@@ -1,5 +1,4 @@
 import { ref } from "vue";
-// import route from "project_path/src/router/index.js"
 // 浏览器高度
 let client_height = Math.max(
   document.body.clientHeight,
