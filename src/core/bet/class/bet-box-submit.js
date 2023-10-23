@@ -366,6 +366,7 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         query = h5_match_data_switch(other.match_data_type)
         useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX,true)
         BetViewDataClass.set_bet_show(true)
+        BetViewDataClass.set_bet_keyboard_show(false)
     }else{
         query = MatchDataWarehouse_PC_List_Common
         // 判断是不是详情点击 详情使用详情数据仓库

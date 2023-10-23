@@ -7,79 +7,49 @@
   <div class="keyboard yb_pb6" @click.stop="_handleKeyPress($event)" style="opacity: 1;" @touchmove.prevent>
     <div class="nonebox4-fourth">
         <div class="nonebox4-fourth-a">
-            <div class="nonebox4-fourth-a-son">100</div>
-            <div class="nonebox4-fourth-a-son">500</div>
-            <div class="nonebox4-fourth-a-son">1000</div>
-            <div class="nonebox4-fourth-a-son">2000</div>
-            <div class="nonebox4-fourth-a-son">5000</div>
+            <div class="nonebox4-fourth-a-son" data-number='100'>100</div>
+            <div class="nonebox4-fourth-a-son" data-number='500'>500</div>
+            <div class="nonebox4-fourth-a-son" data-number='1000'>1000</div>
+            <div class="nonebox4-fourth-a-son" data-number='2000'>2000</div>
+            <div class="nonebox4-fourth-a-son" data-number='5000'>5000</div>
         </div>
         <div class="nonebox4-fourth-a">
             <div class="nonebox4-fourth-num">
-                <div class="nonebox4-fourth-num-sun">1</div>
-                <div class="nonebox4-fourth-num-sun">4</div>
-                <div class="nonebox4-fourth-num-sun">7</div>
-                <div class="nonebox4-fourth-num-sun">0</div>
+                <div class="nonebox4-fourth-num-sun" data-number='1'>1</div>
+                <div class="nonebox4-fourth-num-sun" data-number='4'>4</div>
+                <div class="nonebox4-fourth-num-sun" data-number='7'>7</div>
+                <div class="nonebox4-fourth-num-sun" data-number='0'>0</div>
             </div>
             <div class="nonebox4-fourth-num">
-                <div class="nonebox4-fourth-num-sun">2</div>
-                <div class="nonebox4-fourth-num-sun">5</div>
-                <div class="nonebox4-fourth-num-sun">8</div>
-                <div class="nonebox4-fourth-num-sun">.</div>
+                <div class="nonebox4-fourth-num-sun" data-number='2'>2</div>
+                <div class="nonebox4-fourth-num-sun" data-number='5'>5</div>
+                <div class="nonebox4-fourth-num-sun" data-number='8'>8</div>
+                <div class="nonebox4-fourth-num-sun" data-number='.'>.</div>
             </div>
             <div class="nonebox4-fourth-num">
-                <div class="nonebox4-fourth-num-sun">3</div>
-                <div class="nonebox4-fourth-num-sun">6</div>
-                <div class="nonebox4-fourth-num-sun">9</div>
-                <div class="nonebox4-fourth-num-sun">00</div>
+                <div class="nonebox4-fourth-num-sun" data-number='3'>3</div>
+                <div class="nonebox4-fourth-num-sun" data-number='6'>6</div>
+                <div class="nonebox4-fourth-num-sun" data-number='9'>9</div>
+                <div class="nonebox4-fourth-num-sun" data-number='10'>00</div>
             </div>
             <div class="nonebox4-fourth-num">
-                <div class="nonebox4-fourth-num-sun">最大</div>
-                <div class="nonebox4-fourth-num-sun">删除</div>
-                <div class="nonebox4-fourth-num-sun">收起</div>
+                <div class="nonebox4-fourth-num-sun" data-number='max'>最大</div>
+                <div class="nonebox4-fourth-num-sun" data-number='x'>删除</div>
+                <div class="nonebox4-fourth-num-sun" data-number='shouqi'>收起</div>
             </div>
         </div>
     </div>
-    <!-- <div class="key-row row">
-      <div class="key-cell" data-num="qon" :class="{ 'shadow-show': prevent_click(addnum.qon) }">
-        <span>+</span>{{ addnum.qon }}
-      </div>
-      <div class="key-cell" data-num="1">1</div>
-      <div class="key-cell" data-num="2">2</div>
-      <div class="key-cell" data-num="3">3</div>
-    </div>
-    <div class="key-row row">
-      <div class="key-cell" data-num="qtw" :class="{ 'shadow-show': prevent_click(addnum.qtw) }">
-        <span>+</span>{{ addnum.qtw }}
-      </div>
-      <div class="key-cell" data-num="4">4</div>
-      <div class="key-cell" data-num="5">5</div>
-      <div class="key-cell" data-num="6">6</div>
-    </div>
-    <div class="key-row row">
-      <div class="key-cell" data-num="qth" :class="{ 'shadow-show': prevent_click(addnum.qth) }">
-        <span>+</span>{{ addnum.qth }}
-      </div>
-      <div class="key-cell" data-num="7">7</div>
-      <div class="key-cell" data-num="8">8</div>
-      <div class="key-cell" data-num="9">9</div>
-    </div>
-    <div class="key-row row">
-      <div class="key-cell" data-num="max">
-        MAX
-      </div>
-      <div class="key-cell" data-num=".">.</div>
-      <div class="key-cell" data-num="0">0</div>
-      <div class="key-cell del-key" data-num="x"></div>
-    </div> -->
+
   </div>
 </template>
   
 <script setup>
 import { ref, reactive, onMounted, watch, computed, onUnmounted } from 'vue';
 import BetData from "src/core/bet/class/bet-data-class.js";
+import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import { UserCtr } from "src/core/index.js";
-import lodash from 'lodash'
+import lodash_ from 'lodash'
 
 
 const active_index = ref(BetData.active_index)
@@ -93,17 +63,19 @@ const ref_data = reactive({
   active: 1,    //投注项状态
   min_money: 10, // 最小投注金额
   max_money: 8888, // 最大投注金额
-  money: '', // 投注金额
   keyborard: true, // 是否显示 最高可赢 和 键盘
 })
-// bet_min_max_money max_money最大可投注的金额 min_money最小可投注的金额
+
 const props = defineProps({
-  bet_min_max_money: {
-    type: [Object],
-    default: () => { }
-  }
+  index:{},
+  item:{}
 })
 
+onMounted(()=>{
+  let play_oid = props.item.playOptionsId
+  ref_data.min_money = lodash_.get(BetViewDataClass.bet_min_max_money,`${play_oid}.min_money`,10) 
+  ref_data.max_money = lodash_.get(BetViewDataClass.bet_min_max_money,`${play_oid}.max_money`,8888)
+})
 
 
 // 预约输入赔率或者盘口
@@ -157,7 +129,7 @@ watch(() => active_index, (new_) => {
 const _handleKeyPress = (e) => {
   e.preventDefault();
   if (e.target.className.includes("shadow-show")) { return }; // 置灰的按钮不能再点击
-  let num = e.target.dataset.num;
+  let num = e.target.dataset.number;
   switch (num) {
     //最大值
     case "max":
@@ -244,7 +216,7 @@ const _handleDeleteKey = () => {
 // 数字建
 const _handleNumberKey = (num) => {
   if (!num) return
-
+  money.value = BetData.bet_amount
   if (['qon', 'qtw', 'qth'].includes(num)) {
     if (!money.value) {
       money.value = addnum[num]

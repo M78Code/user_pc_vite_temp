@@ -10,7 +10,7 @@
     <!-- 投注中的蒙层，所有不能点击 -->
     <div v-if="get_bet_status == 2" class="fixed full-shadow2" @touchmove.prevent></div>
 
-    <div style="display: none;">{{ BetData.bet_data_class_version }} </div>
+    <div style="display: none;">{{ BetData.bet_data_class_version }} {{BetViewDataClass.bet_view_version}}</div>
 
     <div class="content-box">
 
@@ -29,7 +29,7 @@
       <bet-single-detail :item="BetData.bet_single_list[0]" :index="0"/>
 
       <!-- 键盘 -->
-      <key-board v-show="bet_keyboard_show" :bet_min_max_money="bet_min_max_money"></key-board>
+      <key-board v-show="BetViewDataClass.bet_keyboard_show" :item="BetData.bet_single_list[0]" :index="0"></key-board>
 
       
       <div class="dele-wrap yb_px12 yb_py10 row" v-if="!BetData.is_bet_success_status" @touchmove.prevent>
@@ -140,11 +140,9 @@ import { format_money3, format_money2 } from 'src/core/format/index.js'
 import { submit_handle } from "src/core/bet/class/bet-box-submit.js"
 import acceptRules from ".//accept-rules.vue"
 
-const bet_keyboard_show = ref(true)
 const scroll_box = ref()
 const series_order_respList = ref([])
 const award_total = ref()
-const bet_min_max_money = ref()  // 投注限额
 const bet_list_data = ref([])
 const tips_msg = ref('失效')  // 提示信息
 

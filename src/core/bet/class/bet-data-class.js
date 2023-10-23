@@ -140,7 +140,7 @@ this.bet_appoint_ball_head= null */
     this.chat_room_type = "";
     // 记录投注金额
     this.bet_current_money_obj = {};
-    // 投注金额
+    // 投注金额 h5使用
     this.bet_amount = 0;
     //自动化 测试
     this.auto_test_bet_info = {};

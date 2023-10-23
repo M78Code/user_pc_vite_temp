@@ -8,6 +8,7 @@
   <!-- 头部 -->
   <div class="bet-bar row justify-between items-center" @touchmove.prevent @click="menu_click"
     :class="{ 'fixed-bottom': $route.name != 'matchList' && get_bet_status == 0 }">
+    <div v-show="false">{{ userData.user_version }}</div>
     <div class="nonebox4-first">
         <div class="nonebox4-first-left">
             <div class="nonebox4-first-left-img">单</div>

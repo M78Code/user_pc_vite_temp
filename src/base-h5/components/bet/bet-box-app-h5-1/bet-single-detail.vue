@@ -7,10 +7,9 @@
   <!-- 混合过关投注选项 -->
   <div class="bet_single_detail" ref="bet_single_detail">
     <div class="content-b" :class="{ 'red-color': !money_ok }" @click.stop="input_click">
-      <span v-if="ref_data.money" class="yb_fontsize20 money-number">{{ format_money3(ref_data.money) }}</span>
+      <span v-if="ref_data.money" class="yb_fontsize20 money-number">{{ ref_data.money }}</span>
       <span class="money-span" ref="money_span"
-        :style="{ opacity: BetData.active_index === bet_index && [1, 7].includes(+get_bet_status) ? '1' : '0' }"></span>
-      <span class="yb_fontsize14 limit-txt" v-show="ref_data.money">{{ ref_data.money }}</span>
+        :style="{ opacity:  '1' }"></span>
       <span class="yb_fontsize14 limit-txt" v-show="!ref_data.money">限额{{ ref_data.min_money }}-{{ ref_data.max_money }}</span>
       <span @click.stop="clear_money" class="money-close" :style="{ opacity: ref_data.money > 0 ? '1' : '0' }">x</span>
     </div>
@@ -84,11 +83,23 @@ onMounted(() => {
   timer4 = null;
   flicker_timer = null  //光标闪动计时器
 
+  cursor_flashing()
 
   //监听键盘金额改变事件
   useMittOn(MITT_TYPES.EMIT_INPUT_BET_MONEY, change_money_handle)
   useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money)
 })
+
+/**
+ *@description 光标闪动，animation有兼容问题，用函数替代
+ *@return {Undefined} undefined
+ */
+ const cursor_flashing = () => {
+  clearInterval(flicker_timer)
+  flicker_timer = setInterval(() => {
+    money_span.value && money_span.value.classList.toggle('money-span3')
+  }, 700);
+}
 
 /**   ----------------computed 开始-----------------*/
 
@@ -117,7 +128,7 @@ const obj_bet_money = computed(() => {
  */
 const clear_money = () => {
   ref_data.money = 0
-  BetData.set_bet_amount("0")
+  BetData.set_bet_amount(0)
 }
 
 /**
@@ -196,23 +207,17 @@ const set_win_money = () => {
  */
  const input_click = (evnet) => {
   event.preventDefault()
-  set_keyboard_show(true)
+  BetViewDataClass.set_bet_keyboard_show(true)
 
   if ([4, 5].includes(+get_bet_status)) { return };
 
-  set_active_index(bet_index);
+  // set_active_index(bet_index);
 
   let ele = bet_single_detail.value
   ele && ele.scrollIntoView({ block: "nearest" })
 
-  send_money_to_keyboard()
 }
-// 将当前活动项的金额和最高可投金额传递给键盘
-const send_money_to_keyboard = () => {
-  if (BetData.active_index == bet_index) {
-    useMittEmit(MITT_TYPES.EMIT_SEND_VALUE, { money: ref_data.money, max_money: ref_data.max_money })
-  }
-}
+
 
 
 onUnmounted(() => {
@@ -305,6 +310,10 @@ onUnmounted(() => {
   width: 0.02rem;
   height: 0.16rem;
   margin: 0 1px;
+  background: var(--q-gb-bg-c-1);
+  &.money-span3{
+    background: transparent;
+  }
 }
 .money-close {
   position: absolute;
