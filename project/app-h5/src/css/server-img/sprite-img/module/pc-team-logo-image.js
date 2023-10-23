@@ -7,16 +7,7 @@ import { get_server_file_path } from "src/core/file-path/file-path.js";
 import lodash from "lodash";
 const { CURRENT_ENV } = window.BUILDIN_CONFIG;
 const config = {
-  locationUrl:"/src/core/server-img/sprite-img/image/pc-team-logo-day.png",
-  default:"pc-team-logo",
-  // local_dev: "pc-left-menu-bg-image",
-  // local_test: "pc-left-menu-bg-image",
-  // local_ylcs: "pc-left-menu-bg-image",
-  // idc_pre: "pc-left-menu-bg-image",
-  // idc_sandbox: "pc-left-menu-bg-image",
-  // idc_lspre: "pc-left-menu-bg-image",
-  // idc_online: "pc-left-menu-bg-image",
- 
+  default:"pc-team-logo-image",
 };
 // x y 
 // const item = {
@@ -37,7 +28,7 @@ function compute_position(position) {
   const width = 0; //表示是 横 向
   const x_space = 0; //每张图的间距 x
 
-  const height = position[2]? 46: 28; //表示是 纵 向
+  const height = position[2]? 44: 28; //表示是 纵 向
   const y_space = 10; //每张图的间距 y
    //如果使用本地图片 position的索引1位真的时候  
   const _v = item[position[1]];
