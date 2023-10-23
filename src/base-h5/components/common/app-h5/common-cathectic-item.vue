@@ -102,9 +102,9 @@ onUnmounted(() => {
 <style lang="scss" scoped>
 .common-cathectic-item {
   width: 100%;
-  padding: 0.12rem;
   border-radius: 0.1rem;
   background: var(--q-gb-bg-c-15);
+  overflow: hidden;
 }
 .common-cathectic-item2 {
   margin-top: 0;
