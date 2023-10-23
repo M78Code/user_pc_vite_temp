@@ -2,15 +2,16 @@
  * @Description: 赛事组件，用于赛事列表展示赛事信息
 -->
 <template>
-  <div class="match-container" :style="{ marginTop: is_hot ? '0' : '' }" :class='{
-    first: i == 0,
-    match_status_bar: match.is_show_no_play,
-    is_league_tail: get_league_show(i + 1),
-    is_division_league: match.is_show_league,
-    started_un_started_next: get_m_status_show(i + 1),
-    started_and_un_started: match.is_show_no_play,
-    favorite_un_start_title: favorite_un_start_title(i, match_of_list.ms),
-  }'>
+  <div :style="{ marginTop: is_hot ? '0' : '' }" 
+    :class="['match-container app-h5-match-container', {
+      first: i == 0,
+      match_status_bar: match.is_show_no_play,
+      is_league_tail: get_league_show(i + 1),
+      is_division_league: match.is_show_league,
+      started_un_started_next: get_m_status_show(i + 1),
+      started_and_un_started: match.is_show_no_play,
+      favorite_un_start_title: favorite_un_start_title(i, match_of_list.ms),
+    }]">
   <template v-if="match" >
     <!-- <div style="display: none;">{{ MatchDataBaseH5.data_version.version }}</div> -->
     <!--体育类别 -- 标题  menuType 1:滚球 2:即将开赛 3:今日 4:早盘 11:串关 -->
@@ -29,10 +30,6 @@
         {{ match_of_list.csna }}
         <!-- {{match_of_list.csna || get_current_menu.sub.menuName}} -->
       </span>
-      <!-- 折叠收起不用消失 -->
-      <div v-if="!is_hot">
-        <img class="league-collapse-dir" :class="{ 'collapsed': !league_collapsed }" :src='compute_img_url("icon-collapse")' />
-      </div>
     </div>
     <!-- 未开赛标题  -->
     <div class="match-status-fixed flex items-center" v-if="match.is_show_no_play">
@@ -41,17 +38,6 @@
         {{ $t('list.match_no_start') }}&nbsp;&nbsp;<span v-show="no_start_total">(0)</span>
       </span>
     </div>
-    <!-- 首页热门才有的样式  -->
-    <div
-      v-if="is_hot && match_of_list.time_title && lodash.get(MenuData.hot_tab_menu, 'index') != 0"
-      class="hot_time_change">
-      <span>{{ time_change }}</span>
-      <!-- 热门模块的 榜单页 和 赛程列表页面 的切换    menuId == "30101"是 竞彩足球的 唯一字段  ['1','2'].includes(MenuData.hot_tab_menu.field1) 表示只在篮球足球下显示时间-->
-      <span @click="leaderboard_switch"
-        v-show="i == 0 && !MenuData.hot_tab_menu.chinaBetting && ['1', '2'].includes(MenuData.hot_tab_menu.field1)">{{
-          i18n_t('home_popular.ranking') }}</span>
-    </div>
-
 
     <!-- 最核心的div模块     标题 + 倒计时 + 比分 + 赔率盘口模块 -->
     <div class="match-inner-container">
@@ -71,33 +57,31 @@
           <div class="esport" v-else-if="match_of_list.csid == 103" :style="compute_css_obj('menu-sport-active-image', 2103)"></div>
           <div class="esport" v-else-if="match_of_list.csid == 102" :style="compute_css_obj('menu-sport-active-image', 2102)"></div>
           <div class="esport" v-else-if="match_of_list.csid == 100" :style="compute_css_obj('menu-sport-active-image', 2100)"></div>
-          <div class="league-icon-mini" v-else>
-            <image-cache-load :csid="match_of_list.csid" :path="match_of_list.lurl" type="league"></image-cache-load>
-          </div>
           <span class="league-title-text row justify-between">
             <span :class="['league-t-wrapper', { 'league-t-main-wrapper': menu_type !== 28, export: is_export }]">
               <span class="match-league ellipsis-2-lines" :class="{ 'match-main-league': menu_type !== 28 }">
                 {{ match.tn }}
               </span>
             </span>
-            <!--标准版 赔率标题栏-->
-            <div class="odd-title-wraper row " :style="{width: !collapsed ? '100%' : 0}">
-              <div class="odd-title-i-w flex">
-                <div class="odd-t-i-wrapper flex items-center"
-                  :class="{ 'status2': get_standard_odd_status == 1 && match_of_list_ascertain.length > 3 }">
-                  <div class="hpl-title row items-center justify-center" :class="{ 'boxing': match_of_list.csid == 12 }"
-                    :key="i" v-for="(hpl_title, i) of i18n_t('list_title.' + match.csid + '.title')">
-                    <div class="hpl-t-inner">
-                      {{ hpl_title }}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            
           </span>
           <template v-if="!(is_hot || is_detail) && collapsed">
             <img class="league-collapse-dir" :class="{ 'collapsed': collapsed }"  :src='compute_img_url("icon-collapse")'  />
           </template>
+        </div>
+        <!--标准版 赔率标题栏-->
+        <div class="odd-title-wraper row " :style="{width: !collapsed ? '100%' : 0}">
+          <div class="odd-title-i-w flex">
+            <div class="odd-t-i-wrapper flex items-center"
+              :class="{ 'status2': get_standard_odd_status == 1 && match_of_list_ascertain.length > 3 }">
+              <div class="hpl-title row items-center justify-center" :class="{ 'boxing': match_of_list.csid == 12 }"
+                :key="i" v-for="(hpl_title, i) of i18n_t('list_title.' + match.csid + '.title')">
+                <div class="hpl-t-inner">
+                  {{ hpl_title }}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <!-- 卡片主内容 -->
@@ -1384,5 +1368,5 @@ onUnmounted(() => {
 
 
 <style scoped lang="scss">
-  @import "../styles/match-container";
+  @import "../styles/match-container-app";
 </style>
