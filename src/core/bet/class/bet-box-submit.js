@@ -5,7 +5,15 @@ import { compute_value_by_cur_odd_type } from "src/core/format/module/format-odd
 import UserCtr from "src/core/user-config/user-ctr.js"
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import { getSeriesCountJointNumber } from "src/core/bet/common-helper/module/bet-single-config.js"
-import { MatchDataWarehouse_PC_List_Common, MatchDataWarehouse_PC_Detail_Common } from 'src/core/index.js'
+import { 
+    MatchDataWarehouse_PC_List_Common, 
+    MatchDataWarehouse_PC_Detail_Common,
+    MatchDataWarehouse_H5_List_Common,
+    MatchDataWarehouse_H5_Detail_Common,
+    MatchDataWarehouse_H5_List_Hot_Main,
+    MatchDataWarehouse_H5_List_Jingxuan,
+    MatchDataWarehouse_H5_Detail_Jingxuan
+ } from 'src/core/index.js'
 import lodash_ from "lodash"
 import { ALL_SPORT_PLAY } from "src/core/constant/config/play-mapping.js"
 
@@ -334,7 +342,6 @@ const submit_handle = type => {
                 set_orderNo_bet_obj(orderDetailRespList)
             }, 1000);
             // 通知页面更新 
-            // useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY)
         }
         // 设置投注 code 码
         BetViewDataClass.set_bet_error_code(res)
@@ -352,13 +359,22 @@ const set_bet_obj_config = (params = {}, other = {}) => {
     BetData.set_bet_mode(-1)
 
     const { oid, _hid, _hn, _mid } = params
-    // console.error('MatchDataWarehouse_PC_List_Common',MatchDataWarehouse_PC_List_Common)
-    // 列表数据仓库
-    let query = MatchDataWarehouse_PC_List_Common
-    // 判断是不是详情点击 详情使用详情数据仓库
-    if (other.is_detail) {
-        query = MatchDataWarehouse_PC_Detail_Common
+     // 列表数据仓库
+     let query = {}
+    // device_type 设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备 
+    if(other.device_type == 1){
+        query = h5_match_data_switch(other.match_data_type)
+        useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX,true)
+        BetViewDataClass.set_bet_show(true)
+        BetViewDataClass.set_bet_keyboard_show(false)
+    }else{
+        query = MatchDataWarehouse_PC_List_Common
+        // 判断是不是详情点击 详情使用详情数据仓库
+        if (other.is_detail) {
+            query = MatchDataWarehouse_PC_Detail_Common
+        }
     }
+    
     // 获取对应的仓库数据
     const hl_obj = lodash_.get(query.list_to_obj, `hl_obj.${_mid}_${_hid}`, {})
     const hn_obj = lodash_.get(query.list_to_obj, `hn_obj.${_hn}`, {})
@@ -370,7 +386,7 @@ const set_bet_obj_config = (params = {}, other = {}) => {
     if ([1, 2].includes(Number(mid_obj.ms))) {
         matchType = 2
     }
-    console.error('sssssss',query.list_to_obj)
+  
     // 列表和详情 取值字段不同
     // 投注项 显示
     let handicap = '', handicap_attach = ''
@@ -458,6 +474,31 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         // 获取限额 常规
         get_query_bet_amount_common(bet_obj)
     }
+}
+
+// h5 投注选择 数据仓库
+const h5_match_data_switch = match_data_type => {
+    let query = {}
+    switch(match_data_type){
+        case "h5_list" :
+            query = MatchDataWarehouse_H5_List_Common
+            break
+        case "h5_detail" :
+            query = MatchDataWarehouse_H5_Detail_Common
+            break
+
+        case "h5_list_hot" :
+            query = MatchDataWarehouse_H5_List_Hot_Main
+            break
+
+        case "h5_list_jingxuan" :
+            query = MatchDataWarehouse_H5_List_Jingxuan
+            break
+        case "h5_detail_jingxuan" :
+            query = MatchDataWarehouse_H5_Detail_Jingxuan
+            break   
+    }
+    return query
 }
 
 // 获取盘口值 附加值

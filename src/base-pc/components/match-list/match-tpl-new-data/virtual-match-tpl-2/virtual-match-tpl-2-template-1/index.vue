@@ -52,7 +52,8 @@ import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
 useRegistPropsHelper(component_symbol, need_register_props)
 import { is_eports_csid } from 'src/core/index.js'
-
+import { useRouter } from "vue-router";
+const router = useRouter()
 ;
 
 /**
@@ -64,7 +65,7 @@ const on_go_detail = () => {
   if(is_eports_csid(this.match.csid)){
     this.match.go_detail_type = 'no_switch'
   }
-  details.on_go_detail(this.match);
+  details.on_go_detail(this.match,null,router);
 }
 
 </script>

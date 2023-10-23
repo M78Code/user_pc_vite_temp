@@ -1,5 +1,5 @@
 <template>
-  <div class="basic-wrap" @click.stop="details.on_go_detail(match)" >
+  <div class="basic-wrap" @click.stop="details.on_go_detail(match,null,router)" >
     <!-- 主队信息 --> 
     <div class="row-item team-item">
       <div class="team-logo">
@@ -114,8 +114,8 @@ import { MenuData, MatchDataWarehouse_PC_List_Common } from "src/core/index.js"
 import details  from "src/core/match-list-pc/details-class/details.js"
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import { i18n_t,compute_local_project_file_path } from "src/core/index.js";
-
-
+import { useRouter } from "vue-router";
+const router = useRouter()
 const props = defineProps({
   match: {
     type: Object,

@@ -582,6 +582,7 @@ export default defineComponent({
       matchDetailCtr,
       new_match_detail_ctr,
       page_style,
+      is_export
     }
   }
 })

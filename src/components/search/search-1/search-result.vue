@@ -158,7 +158,7 @@ const scrollRef = ref(null)
 function match_click(match) {
     search.result_scroll = scrollRef.value.getScrollPosition()
     search.insert_history(match.name)
-    details.on_go_detail(match, keyword.value.substr(5))
+    details.on_go_detail(match, keyword.value.substr(5),router)
     set_search_status(false)
 }
 

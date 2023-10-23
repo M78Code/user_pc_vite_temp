@@ -166,8 +166,8 @@
       line-height: 0.34rem;
       width: 30%;
       &.active-p {
-        background: var(--q-cathectic-color-6);
-        color: var(--q-gb-t-c-14);
+        background: var(--q-gb-bg-c-9);
+        color: var(--q-gb-bg-c-15);
       }
     }
   }

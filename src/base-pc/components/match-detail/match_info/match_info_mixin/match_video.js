@@ -353,7 +353,7 @@ export default {
           
           this.show_type = 'play-video'
           // 目标赛事视频url相关信息获取
-          video.get_video_url(this.match_info, (show_type,media_src) => {
+          video.get_video_url(this.match_info,this.$route,(show_type,media_src) => {
             // 未登录
             if(media_src === true && show_type === 'no-login'){
               this.is_limited = true

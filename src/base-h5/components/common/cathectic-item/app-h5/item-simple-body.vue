@@ -5,7 +5,7 @@
 -->
 <template>
 <!-- 矩形框中部 -->
-  <div class="item-body">
+  <div class="item-body yb_fontsize14">
     <div class="body-title">
       <span>罗斯托拉夫U20</span>
     </div>
@@ -126,6 +126,7 @@ import { project_name } from 'src/core'
 
 <style lang="scss" scoped>
 .item-body {
+  padding: 0.12rem;
   .body-title {
     display: flex;
     justify-content: space-around;
@@ -135,7 +136,7 @@ import { project_name } from 'src/core'
   }
   .body-info {
     text-align: center;
-    background-color: var(--q-cathectic-color-6);
+    background-color: var(--q-gb-bg-c-9);
     padding: 0.1rem;
     border-radius: 0.1rem;
     color: var(--q-gb-t-c-14);

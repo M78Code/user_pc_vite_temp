@@ -110,7 +110,8 @@ import details  from "src/core/match-list-pc/details-class/details.js"
 import { MatchProcessFullVersionWapper as MatchProcess } from 'src/components/match-process/index.js';
 import { MatchHandicapFullVersionWapper as MatchHandicap } from 'src/base-pc/components/match-list/match-handicap/index.js'
 import MatchMedia from 'src/base-pc/components/match-list/match-media/index.vue'
-
+import { useRouter } from "vue-router";
+const router = useRouter()
 
 const props = defineProps({
   mid: {
@@ -168,7 +169,7 @@ function on_go_detail () {
   if(is_eports_csid(match.csid)){
     match.go_detail_type = 'no_switch'
   }
-  details.on_go_detail(match);
+  details.on_go_detail(match,null,router);
 }
 
 /**

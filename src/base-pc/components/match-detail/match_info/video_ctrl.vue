@@ -475,7 +475,7 @@ const full_screen = () => {
   let play_type = get_media_icon_index(
     vx_play_media.value.media_type
   );
-  video.full_screen(props.match_info, play_type);
+  video.full_screen(props.match_info, play_type,route,router);
 };
 
 onMounted(() => {
