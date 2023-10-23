@@ -14,7 +14,7 @@
 import { api_common, api_analysis } from "src/api";
 import lodash from "lodash";
 import { computed, ref, watch } from "vue";
-import { SessionStorage, useMittEmit, MITT_TYPES, UserCtr,sprite_images_postion } from "src/core/";
+import { SessionStorage, useMittEmit, MITT_TYPES, UserCtr, sprite_images_postion } from "src/core/";
 import BaseData from "src/core/base-data/base-data.js";
 const Cache_key = {
   CACHE_CRRENT_MEN_KEY: "CACHE_CRRENT_MEN_KEY", //缓存当前菜单的key
@@ -74,7 +74,7 @@ class MenuData {
       BaseData.base_data_version,
       lodash.debounce((v) => {
         const { mew_menu_list_res } = BaseData; //获取主数据
-        this.recombine_menu(mew_menu_list_res, mew_menu_list_res);
+        this.recombine_menu(mew_menu_list_res);
         this.update();
       }, 10)
     );
@@ -752,16 +752,19 @@ class MenuData {
       current_lv_1_menu_i,
       menu_type: current_lv_1_menu?.mi, //设置一级菜单menutype
     });
-    //设置二级菜单 赛果和电竞是不需要設置二級菜單的
-    switch (current_lv_1_menu?.mi) {
-      case 28:
-        await this.get_results_menu();
-        break;
-      default:
-        this.set_cache_class({
-          menu_lv2: current_lv_1_menu.sl || [],
-        });
+    if (current_lv_1_menu) {
+      //设置二级菜单 赛果和电竞是不需要設置二級菜單的
+      switch (current_lv_1_menu?.mi) {
+        case 28:
+          await this.get_results_menu();
+          break;
+        default:
+          this.set_cache_class({
+            menu_lv2: current_lv_1_menu?.sl || [],
+          });
+      }
     }
+
     this.update();
   }
   /**
