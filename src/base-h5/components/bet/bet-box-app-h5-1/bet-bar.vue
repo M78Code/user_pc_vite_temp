@@ -8,28 +8,17 @@
   <!-- 头部 -->
   <div class="bet-bar row justify-between items-center" @touchmove.prevent @click="menu_click"
     :class="{ 'fixed-bottom': $route.name != 'matchList' && get_bet_status == 0 }">
-    <div>
-      <!-- 投注单 -->
-      <span class="yb_fontsize16">
-        <div v-if="get_bet_status != 0">
-          <div class="yb-left">
-            <div class="yb-left-tag">单</div>
-            <div class="yb-left-title">PM体育</div>
-          </div>
+    <div class="nonebox4-first">
+        <div class="nonebox4-first-left">
+            <div class="nonebox4-first-left-img">单</div>
+            <div class="nonebox4-first-left-text">PM体育</div>
         </div>
-        <div v-else>
-          <span class="odds-wrapper">{{$t("footer_menu.bet_record")}}
-            <span class='odds'>{{ mix_sum_odds }}</span>
-          </span>
+        <div class="nonebox4-first-right">
+            <div class="nonebox4-first-right-window" @click.stop="get_balance">
+                <div class="nonebox4-first-right-window-num">{{ format_money2(userData.balance) }}</div>
+                <div class="refesh yb_mr8" :class="{ 'refesh2': is_loading_balance }"></div>
+            </div>
         </div>
-      </span>
-    </div>
-    <img :src="compute_local_project_file_path('/image/bet/bet_close.svg')" v-if="[3, 6, 8].includes(+get_bet_status)" alt="">
-    <div class="row items-center yb-right" v-else>
-        <!-- 账户余额 -->
-        <p class="yb_fontsize16" @click.stop="get_balance">{{ format_money2(userData.balance) }}</p>
-        <!-- 金额刷新按钮 -->
-        <div class="refesh yb_mr8" :class="{ 'refesh2': is_loading_balance }" @click.stop="get_balance"></div>
     </div>
   </div>
 </template>
@@ -164,6 +153,71 @@ onUnmounted(() => {
 
 
 <style lang="scss" scoped>
+.nonebox4-first {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0.02rem 0;
+}
+.nonebox4-first-left {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.nonebox4-first-left-img {
+    display: flex;
+    width: 0.25rem;
+    height: 0.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--q-gb-bg-c-15);
+    background: var(--q-gb-bg-c-9);
+    border-radius: 50%;
+}
+.nonebox4-first-left-text {
+    margin-left: 0.05rem;
+    display: flex;
+    font-size: 14px;
+    color: #333;
+}
+.nonebox4-first-right {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: flex-end;
+    flex-direction: row;
+}
+.nonebox4-first-right-window {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: #f4f9ff;
+    padding-right: 3px;
+    padding-left: 10px;
+    border-radius: 30px;
+}
+.nonebox4-first-right-window-num {
+    display: flex;
+    font-size: 16px;
+    font-weight: bold;
+    margin-right: 4px;
+}
+.nonebox4-first-right-window-img {
+    display: flex;
+    border-radius: 30px;
+    width: 24px;
+    height: 24px;
+}
+.nonebox4-first-right-window-img img {
+    border-radius: 30px;
+    width: 100%;
+    height: 100%;
+}
+
+
+
 .yb-right{
   display: flex;
   padding: 0.01rem 0.02rem 0.01rem 0.06rem;
@@ -197,7 +251,6 @@ onUnmounted(() => {
 .bet-bar {
   width: 100%;
   height: 0.5rem;
-  padding: 0 0.2rem 0 0.12rem;
   border-radius: 0.16rem 0.16rem 0 0;
   border-width: 1px 1px 0 1px;
   //border-style: solid;
