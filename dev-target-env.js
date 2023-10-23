@@ -31,9 +31,9 @@ let  DEV_TARGET_VERSION = ''
 // 打包 亚洲版 PC（新版)   测试环境  
 DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1697985660460-test";
 // 打包 亚洲版 PC（新版)   试玩环境  
-// DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1697889603593-shiwan";
+// DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1698038174090-shiwan";
 // 打包 亚洲版 PC（新版)   生产环境
-// DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1697889608615-online";
+// DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1698038537883-online";
 
 //----------------------------------亚洲版-PC-202310新平坦化版本  new-pc 6-------------------------------------------
 // 打包 亚洲版 PC（新版)   测试环境  
