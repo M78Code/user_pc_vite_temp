@@ -22,7 +22,7 @@
       
       <Tab />
       <router-view />
-      <!-- <BetBoxWapper /> -->
+      <BetBoxWapper />
       <!--页脚-->
       <Tabbar class="m-layout" v-if="['sport_menu', 'matchList'].includes(route.name)">
       </Tabbar>
