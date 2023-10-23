@@ -24,15 +24,15 @@ const { BUILD_VERSION, PROJECT_NAME } = BUILD_VERSION_CONFIG;
 
 
 
-dynamicImportVueConfig
+ 
 
 
 
 /**
  * 
  * 
- * 
- * 
+ * 动态导入组件 
+ * 代码示例： 
  import {import_vue_component} from  "src/core/index.js"
 const  dynamicImportVueConfig={
   'app-h5':'src/base-h5/components/bet/bet-box-h5-1/bet_mix_box_child1.vue',
