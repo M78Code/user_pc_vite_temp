@@ -140,7 +140,7 @@ import { format_money3, format_money2 } from 'src/core/format/index.js'
 import { submit_handle } from "src/core/bet/class/bet-box-submit.js"
 import acceptRules from ".//accept-rules.vue"
 
-const bet_keyboard_show = ref(false)
+const bet_keyboard_show = ref(true)
 const scroll_box = ref()
 const series_order_respList = ref([])
 const award_total = ref()
@@ -342,7 +342,7 @@ onUnmounted(() => {
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
   margin-bottom: -1px;
-  background-color: var(--q-gb-bg-c-9);
+  background-color: var(--q-gb-t-c-7);
   padding: 12px;
   border-radius: 12px;
 }

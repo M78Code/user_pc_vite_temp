@@ -15,6 +15,12 @@
       <span @click.stop="clear_money" class="money-close" :style="{ opacity: ref_data.money > 0 ? '1' : '0' }">x</span>
     </div>
     <div class="content-rmb">RMB</div>
+
+    <!-- <div class="nonebox4-third">
+      <div class="nonebox4-third-left">
+        <input type="number" placeholder="限额 0.00-100,000" /><span style="color:#666">RMB<span>
+      </div>
+    </div> -->
   </div>
 </template>
 
@@ -225,10 +231,31 @@ onUnmounted(() => {
 
 </script>
 <style lang="scss" scoped>
+.nonebox4-third {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 20px;
+}
+.nonebox4-third-left {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    font-size: 14px;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 10px;
+    border-radius: 10px;
+    color: #e8f5fe;
+    background-color: #f4f9ff;
+}
 @import url("src/base-h5/css/bet/bet_single_detail.scss");
 .bet_single_detail{
   margin-top: 0.1rem;
-  background:var(--q-gb-bg-c-9);
+  background: var(--q-gb-t-c-7);
   border-radius: 0.01rem;
   display: flex;
   justify-content: space-between;
@@ -252,7 +279,6 @@ onUnmounted(() => {
   height: 0.56rem;
   position: relative;
 }
-
 /* ************** 右边内容 ************** -S */
 .content-b {
   width: 1.6rem;
@@ -267,24 +293,19 @@ onUnmounted(() => {
   justify-content: flex-start;
   width: 70%;
 }
-
 /* ************** 右边内容 ************** -E */
-
 .set-opacity {
   opacity: 0.2;
   pointer-events: none;
 }
-
 .money-number {
   margin-top: 1px;
 }
-
 .money-span {
   width: 0.02rem;
   height: 0.16rem;
   margin: 0 1px;
 }
-
 .money-close {
   position: absolute;
   top: 50%;
@@ -299,7 +320,6 @@ onUnmounted(() => {
   border-radius: 50%;
   font-size: 13px;
 }
-
 /* ************** 左边内容 ************** -S */
 .content-t {
   padding-left: 0.12rem;
