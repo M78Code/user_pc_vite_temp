@@ -56,19 +56,10 @@ let box_bool = ref(false)
 let props = defineProps({
   data_b: {
     type: Object
-  },
-  is_pre: {
-    type: Boolean
   }
 })
-const orderVOS = ref([
-  { name: '普马斯', a: '1.64', b: '零失球', c: '普马斯 vs 电风扇科技' },
-  { name: '中央海岸选手', a: '1.64', b: '滚球 独赢 第三局', c: '普马斯 vs 电风扇科技 vs 辅导时间辅导时间诶玩过诶玩过可根据', d: '全程 25-9', e: '赢' },
-  { name: '普马斯', a: '1.64', b: '零失球', c: '普马斯 vs 电风扇科技' },
-  { name: '普马斯', a: '1.64', b: '零失球', c: '普马斯 vs 电风扇科技' },
-])
+
 onMounted(() => {
-  console.log(props.data_b);
   rules_a();
   rules_b();
   rules_c()
@@ -91,7 +82,7 @@ const toggle_box = () => {
 }
 // 串关并且长度大于等于3,默认收起,展示一条;
 const rules_a = () => {
-  if ((props.is_pre && props.data_b.detailList) || props.data_b.orderVOS.length >= 3) {
+  if (props.data_b.orderVOS.length >= 3) {
     btn_text.value = t("bet_record.pack_down");
     box_bool.value = true;
   }

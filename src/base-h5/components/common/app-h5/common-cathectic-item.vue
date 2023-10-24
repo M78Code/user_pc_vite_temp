@@ -4,30 +4,18 @@
  * @Description: bw3新版投注记录的页每一条注单（矩形框）
 -->
 <template>
-    <div
-      v-if="show_bet_record"
-      class="common-cathectic-item hairline-border" :class="{'common-cathectic-item2': key2==0,'common-cathectic-item3': len==key2+1,}" v-show="(!is_early || (is_early && is_show_early_settle)) && !is_show_pre">
-    <!-- 内容显示 -->
-    <template>
-        <!-- 单关内容显示 -->
-        <!-- <item-simple-body v-if="item_data.seriesType == '1'" :is_pre="is_pre" :data_b="item_data"></item-simple-body> -->
-        <!-- 串关内容显示 -->
-        <!-- <item-multiple-body v-else :is_pre="is_pre" :data_b="item_data"></item-multiple-body> -->
-    </template>
-    <!-- bw3新版矩形框底部 -->
-    <!-- <item-footer :is_pre="is_pre" :data_f="item_data"></item-footer> -->
+    <div v-if="show_bet_record" class="common-cathectic-item hairline-border">
+    <!-- 单关、串关内容显示 -->
+    <item-simple-body v-if="item_data.seriesType == '1'" :data_b="item_data"></item-simple-body>
+    <item-multiple-body v-else :data_b="item_data"></item-multiple-body>
     <!-- 投注记录页提前结算的按钮、滑块和提前结算详情 -->
-    <early-settle :item_data="item_data"></early-settle>
-    <!-- bw3新版投注记录页底部订单号和时间 -->
-    <!-- <item-order :data_o="item_data"></item-order> -->
+    <early-settle v-if="type === 'unsettle'" :item_data="item_data"></early-settle>
   </div>
 </template>
 
 <script setup>
 import itemSimpleBody from "src/base-h5/components/common/cathectic-item/app-h5/item-simple-body.vue";
 import itemMultipleBody from "src/base-h5/components/common/cathectic-item/app-h5/item-multiple-body.vue";
-import itemFooter from "src/base-h5/components/common/cathectic-item/item-footer.vue";
-import itemOrder from "src/base-h5/components/common/cathectic-item/item-order.vue";
 import earlySettle from "src/base-h5/components/common/cathectic-item/app-h5/early-settle.vue";
 import lodash from 'lodash';
 import { computed, ref, onMounted, onUnmounted, nextTick } from "vue";
@@ -56,8 +44,8 @@ const props = defineProps(
       type: Boolean
 
     },
-    is_pre: {
-      type: Boolean
+    type: {  // pre-record(预约)、 settle(已结算)、unsettle(未结算)
+      type: String
 
     },
     is_show_pre: {
@@ -111,12 +99,8 @@ onUnmounted(() => {
   border-radius: 0.1rem;
   background: var(--q-gb-bg-c-15);
   overflow: hidden;
-}
-.common-cathectic-item2 {
-  margin-top: 0;
-}
-.common-cathectic-item3 {
-  margin-bottom: 0;
+  margin:  0 0 0.1rem;
+  padding-bottom: 0.1rem;
 }
 .item-header {
   height: 0.38rem;

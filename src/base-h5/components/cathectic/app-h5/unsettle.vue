@@ -14,7 +14,7 @@
               <q-slide-transition>
                 <div v-show="value.open">
                   <!--投注记录的页每一条注单-->
-                  <common-cathectic-item :main_item="main_item" :item_data="item2" v-for="(item2,key) in value.data" :key="key" class="my-4" :key2="key" :len="value.data.length" :is_early="is_early"></common-cathectic-item>
+                  <common-cathectic-item :main_item="main_item" :item_data="item2" type="unsettle" v-for="(item2,key) in value.data" :key="key" :key2="key" :len="value.data.length" :is_early="is_early"></common-cathectic-item>
                 </div>
               </q-slide-transition>
             </template>
@@ -371,9 +371,6 @@ const props = defineProps({
   /**线*/
   .line {
     height: 0.5px;
-  }
-  .unsettle-list {
-    margin-bottom: 0.2rem;
   }
 }
 /**提前结算默认*/
