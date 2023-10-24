@@ -2,15 +2,16 @@
  * @Author: rise
  * @Date: 2023-10-20 16:27:18
  * @LastEditors: rise
- * @LastEditTime: 2023-10-23 17:49:57
+ * @LastEditTime: 2023-10-24 19:12:36
  * @Description:  
 -->
 <template>
-    <div class="search-tab-wap" v-show="!Array.isArray(menu_lv2) && +menu_lv2?.mi === 1011">
+    <!-- <div class="search-tab-wap" v-show="!Array.isArray(menu_lv2) && +menu_lv2?.mi === 1011"> -->
+    <div class="search-tab-wap">
         <div class="search-tab-content">
-            <ul>
+            <ul class="search-tab-content-ul">
                 <li :class="{ active: activeOn === item.val }" v-for="(item, index) in dataList" :key="index"
-                    @click="changeTab(item.val)">
+                    @click="changeTab(item.val,index,$event)">
                     <img v-show="item.img" :src="item.img" />
                     {{ item.name }}
                 </li>
@@ -25,7 +26,7 @@
 <script setup>
 import { ref  } from "vue";
 import search from "./img/search.svg";
-import { menu_lv2 } from 'src/base-h5/mixin/menu.js'
+import {scrollMenu} from "../utils";
 
 const props = defineProps({
     dataList: {
@@ -78,10 +79,11 @@ const activeOn = ref(props.defaultVal || 0);//默认值
  * 选中事件
  * @param {*} val 
  */
-const changeTab = (val) => {
+const changeTab = (val,i,event) => {
     console.log(`${props.dataList[val].name}-${val}`)
     if(activeOn.value === val)return;
     activeOn.value = val;
+    scrollMenu(event,".search-tab-content-ul",".active");
 }
 /**
  * 搜索足球事件
@@ -121,7 +123,9 @@ const searchClick = () => {
             overflow: hidden;
             overflow-x: auto;
             display: flex;
-
+            &::-webkit-scrollbar {
+                display: none;
+            }
             li {
                 width: 0.6rem;
                 height: 100%;

@@ -67,7 +67,7 @@ const menu_list = reactive([
  * @param {*} type 
  */
 const set_menu_lv1 = item => {
-    MenuData.set_current_lv1_menu(item);
+    MenuData.set_current_lv1_menu(item.mi);
 }
 
 /**

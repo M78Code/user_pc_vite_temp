@@ -3,7 +3,7 @@
  * @Author: Router
 -->
 <template>
-  <div class="mx-10 settle" ref="settle" @click="change_is_sort_show">
+  <div class="mx-10 settle" ref="settle">
       <!-- 加载中 -->
       <SRecord v-if="is_loading" />
       <!-- 滚动部分 -->
@@ -16,8 +16,8 @@
                 <q-slide-transition>
                   <div v-show="value.open">
                     <!-- 投注记录的每一个卡片 -->
-                    <common-cathectic-item :main_item="main_item" :item_data="item2" v-for="(item2, key) in value.data" :key="key" class="yb_my12"
-                      :key2="key" :len="value.data.length" :is_early="is_early"></common-cathectic-item>
+                    <common-cathectic-item :main_item="main_item" :item_data="item2" v-for="(item2, key) in value.data" :key="key"
+                      :key2="key" :len="value.data.length" :is_early="is_early" type="settle"></common-cathectic-item>
                   </div>
               </q-slide-transition>
             </template>
@@ -98,14 +98,7 @@ watch(() => props.main_item, (newval) => {
     !last_record.value && init_data()
   }
 })
-/**
-   *@description 点击其他地方要让排序设置弹框消失
-*/
-const change_is_sort_show = () => {
-  if (is_sort_show.value) {
-    is_sort_show.value = false
-  }
-}
+
 /**
  * @description 判断单个订单是否有结算注单
  */

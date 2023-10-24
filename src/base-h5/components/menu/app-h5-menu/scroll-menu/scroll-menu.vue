@@ -39,7 +39,7 @@
                     'din-regular': is_export
                   }
                     ">
-                    {{ item.name || MenuData.get_menus_i18n_map(item.mi) }} {{item.mi}}
+                    {{ item.name || MenuData.get_menus_i18n_map(item.mi) }}
                   </div>
                 </div>
 
