@@ -2,44 +2,176 @@
  * @Author: rise
  * @Date: 2023-10-22 13:33:28
  * @LastEditors: rise
- * @LastEditTime: 2023-10-23 15:20:24
+ * @LastEditTime: 2023-10-24 14:33:03
  * @Description:  
 -->
 <template>
-  <q-carousel
-    class="q-carousel-wap"
-    arrows
-    height="52px"
-  >
-    <q-carousel-slide>
-      <div class="absolute-bottom custom-caption">
-        <div class="q-display-1">First stop</div>
-        <div class="q-headline">Mountains</div>
-      </div>
-    </q-carousel-slide>
-    <q-carousel-slide img-src="statics/parallax1.jpg">
-      <div class="absolute-bottom custom-caption">
-        <div class="q-display-1">Second stop</div>
-        <div class="q-headline">Famous City</div>
-      </div>
-    </q-carousel-slide>
-    <q-carousel-slide img-src="statics/parallax2.jpg">
-      <div class="absolute-bottom custom-caption">
-        <div class="q-display-1">Third stop</div>
-        <div class="q-headline">Famous Bridge</div>
-      </div>
-    </q-carousel-slide>
-  </q-carousel>
+  <div class="swiper-nav">
+    <q-carousel
+      animated
+      v-model="slide"
+      infinite
+      :autoplay="true"
+      swipeable
+      no-swipe
+      height="0.52rem"
+    >
+    <template v-for="(item,index) in slideList" :key="index" >
+      <q-carousel-slide  :name="index" :img-src="item.img" v-if="!item.isGame" />
+      <q-carousel-slide :name="index" img-src="" v-else>
+          <div class="swiper-game-content">
+            <div class="swiper-game-content-left">
+              <p class="swiper-game-content-img">
+                <img class="swiper-game-content-left-avatar" :src="item.anchorAvatar" />
+                <img class="swiper-game-content-left-icon" :src="anchor" />
+              </p>
+              <span>{{item.anchorName}}</span>
+            </div>
+            <div class="swiper-game-content-right">
+              <p>{{item.gameName}}</p>
+              <div class="swiper-game-content-right-participants">
+                <span>
+                  {{item.gameParticipants?.[0]?.name}}
+                  <img :src="item.gameParticipants?.[0]?.avatar" />
+                </span>
+                VS
+                <span>
+                  {{item.gameParticipants?.[1]?.name}}
+                  <img :src="item.gameParticipants?.[1]?.avatar" />
+                </span>
+              </div>
+            </div>
+          </div>
+      </q-carousel-slide>
+    </template>
+      <template v-slot:control v-if="slideList.length > 1">
+        <!-- 控制按钮 -->
+        <q-carousel-control position="bottom" :offset="[0, 3]">
+          <span v-for="(n,m) in slideList" :key="m" class="tab" :class="{'tab2': m == slide}"></span>
+        </q-carousel-control>
+      </template>
+    </q-carousel>
+  </div>
 </template>
 
-<style>
-.q-carousel-wap{
-  background-color: #dddddd;
-  border-radius: 0.08rem;
-}
-.custom-caption {
-  text-align: center;
-  padding: 12px;
-  background: rgba(0, 0, 0, 0.5);
+<script setup>
+import { ref } from 'vue';
+import anchor from "./img/anchor.svg";
+const slide = ref(1);
+const props = defineProps({
+  slideList: {
+      type: Array,
+      default:[]
+  }
+})
+</script>
+<style scoped lang="scss">
+.swiper-nav{
+  width: 100%;
+  height: 0.52rem;
+  overflow: hidden;
+  :deep(.q-carousel__control) {
+    display: flex;
+    justify-content: center;
+  }
+  :deep(.q-carousel__slide) {
+    background-size: 100% 100%;
+    padding: 0;
+  }
+  :deep(.q-carousel) {
+    background: transparent;
+  }
+  .swiper-game-content{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    background: #e8f5ff;
+    .swiper-game-content-left{
+      width: 0.52rem;
+      height: 100%;
+      position: relative;
+      text-align: center;
+      &::after{
+        content: "";
+        position: absolute;
+        width: 0.01rem;
+        height: 0.4rem;
+        background-color: var(--q-gb-t-c-1);
+        right: 0;
+        top: 50%;
+        margin-top: -0.2rem;
+      }
+      .swiper-game-content-img{
+        width: 0.32rem;
+        height: 0.32rem;
+        border-radius: 50%;
+        border: 0.01rem solid var(--q-gb-t-c-1);
+        text-align: center;
+        margin: 0.04rem auto 0;
+        line-height: 0.32rem;
+        position: relative;
+        .swiper-game-content-left-avatar{
+          width: 0.28rem;
+          height: 0.28rem;
+          border-radius: 50%;
+          margin-top: 0.01rem;
+          overflow: hidden;
+        }
+        .swiper-game-content-left-icon{
+          position: absolute;
+          right: -0.02rem;
+          bottom: -0.02rem;
+        }
+      }
+      span{
+        width: 100%;
+        font-size: 0.1rem;
+        text-align: center;
+      }
+    }
+    .swiper-game-content-right{
+      flex: 1;
+      font-size: 0.1rem;
+      p{
+        width: 100%;
+        height: 0.14rem;
+        line-height: 0.14rem;
+        margin: 0.06rem auto 0;
+        text-align: center;
+        color:#7981A4;
+      }
+      .swiper-game-content-right-participants{
+        width: 100%;
+        height: 0.23rem;
+        line-height: 0.23rem;
+        font-weight: 600;
+        text-align: center;
+        span{
+          margin: 0 0.02rem;
+          img{
+            width: 0.15rem;
+            height: 0.15rem;
+            border-radius: 50%;
+            vertical-align: middle;
+            margin-top: -2px;
+          }
+        }
+      }
+    }
+  }
+  .tab {
+    width: 0.04rem;
+    height: 0.02rem;
+    border-radius: 2px;
+    display: inline-block;
+    margin: 0 2px;
+    opacity: .4;
+    background-color: var(--q-gb-t-c-1);
+  }
+  .tab2 {
+    width: 0.08rem;
+    opacity: 1;
+    background-color: var(--q-gb-t-c-1);
+  }
 }
 </style>
