@@ -467,10 +467,10 @@
     align-items: center;
     overflow: hidden;
     .icon-wapper{
-      transform: rotate(-90deg);
+      transform: rotate(90deg);
     }
     .close{
-      transform: rotate(0deg);
+      transform: rotate(180deg);
     }
 
     .league-t-wrapper {
