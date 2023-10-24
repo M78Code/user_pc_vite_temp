@@ -51,6 +51,8 @@
         <bet-mix-box-child4></bet-mix-box-child4>
       </div>
 
+      <!--加减-->
+        <bet-mix-box-child6></bet-mix-box-child6>
 
         <!--投注成功后的预约金额和可用金额-->
         <bet-mix-box-child5></bet-mix-box-child5>
@@ -133,6 +135,7 @@
 import betMixBoxChild3 from './bet_mix_box_child3.vue';
 import betMixBoxChild4 from './bet_mix_box_child4.vue';
 import betMixBoxChild5 from './bet_mix_box_child5.vue';
+import betMixBoxChild6 from './bet_mix_box_child6.vue';
 
 // import betMixShow from './/bet_mix_show.vue';
 import betMixShow from './bet_mix_show3.vue';
