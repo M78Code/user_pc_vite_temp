@@ -40,10 +40,10 @@
     </div>
 
     <!-- 最核心的div模块     标题 + 倒计时 + 比分 + 赔率盘口模块 -->
-    <div class="match-inner-container">
+    <div :class="['match-inner-container', {'collapsed': collapsed}]">
       <!--联赛标题 -->
       <div @click="handle_league_fold" v-if="match.is_show_league || (is_hot && get_league_show(i))"
-        :class="[('league match-indent hairline-border'), { 'no-radius': get_sport_show && is_hot, 'home-hot': is_hot }]">
+        :class="[('league match-indent hairline-border'), { 'no-radius': get_sport_show, 'no-border': collapsed }]">
         <div class="league-t-wrap">
           <!-- 联赛收藏 -->
           <div v-if="![3000, 900].includes(menu_type)" class="favorited-icon" @click.stop="handle_league_collect">
@@ -63,32 +63,27 @@
                 {{ match.tn }}
               </span>
             </span>
-            
           </span>
-          <template v-if="!(is_hot || is_detail) && collapsed">
-            <img class="league-collapse-dir" :class="{ 'collapsed': collapsed }"  :src='compute_img_url("icon-collapse")'  />
-          </template>
         </div>
-        <!--标准版 赔率标题栏-->
-        <div class="odd-title-wraper row " :style="{width: !collapsed ? '100%' : 0}">
-          <div class="odd-title-i-w flex">
-            <div class="odd-t-i-wrapper flex items-center"
-              :class="{ 'status2': get_standard_odd_status == 1 && match_of_list_ascertain.length > 3 }">
-              <div class="hpl-title row items-center justify-center" :class="{ 'boxing': match_of_list.csid == 12 }"
-                :key="i" v-for="(hpl_title, i) of i18n_t('list_title.' + match.csid + '.title')">
-                <div class="hpl-t-inner">
-                  {{ hpl_title }}
+        
+      </div>
+      <!-- 卡片主内容 -->
+      <q-slide-transition>
+        <div style="width: 100%;" v-if="!collapsed">
+          <!--标准版 赔率标题栏-->
+          <div class="odd-title-wraper row " @click.stop :style="{width: !collapsed ? '100%' : 0}">
+            <div class="odd-title-i-w flex">
+              <div class="odd-t-i-wrapper flex items-center"
+                :class="{ 'status2': get_standard_odd_status == 1 && match_of_list_ascertain.length > 3 }">
+                <div class="hpl-title row items-center justify-center" :class="{ 'boxing': match_of_list.csid == 12 }"
+                  :key="i" v-for="(hpl_title, i) of i18n_t('list_title.' + match.csid + '.title')">
+                  <div class="hpl-t-inner">
+                    {{ hpl_title }}
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
-      <!-- 卡片主内容 -->
-      <q-slide-transition>
-        <div style="width: 100%" v-if="!collapsed">
-          <!--  间隔,因为要求不能用 marginTop,因此加上此元素  -->
-          <div style="height: 0.04rem " />
           <!--  一整块赛事的 div 内容 ： 1. 左边 【时间，队名，比分】   2. 右边 【赔率 模块】  -->
           <div class="match-odds-container study_height_s hairline-border" :ref="'mid-' + match.mid">
             <div class="match-odds-container-border-radius">
@@ -150,10 +145,16 @@
                     :class="{ 'special-lang': ['zh', 'tw'].includes(get_lang) }">{{ $t('match_info.match_parlay') }}
                   </div>
                 </div>
-                <!-- 标准版 比分组件 -->
-                <!-- 电竞中，如果是比分判定中，则不显示该比分 -->
-                <div class="eports_scoring_tip" v-if="eports_scoring">{{ $t('mmp.eports_scoring') }}</div>
-                <score-list v-else-if="!is_hot" :match="match"></score-list>
+                <!--玩法数量-->
+                <div class="goto-detail" @click='goto_details(match)'>
+                  <span class="count_span" :class="{ esports: 3000 == menu_type }">
+                    <span class="mc-n">
+                      {{GlobalAccessConfig.get_handicapNum()? get_match_mc(match) :
+                        i18n_t('footer_menu.more') }}
+                    </span>
+                    <span class="add_text" v-if="GlobalAccessConfig.get_handicapNum()">+</span>
+                  </span>
+                </div>
               </div>
               <!-- 下边的模块，左方是  队名和 队比分,  右面是  盘口  模块 -->
               <div class="odd-list match-indent" :class="{ 'simple': show_newer_edition, result: is_results }">
@@ -171,10 +172,6 @@
                       result: is_results
                     }">
                       <div class="team-title-inner-con">
-                        <!-- 1-足球 2-篮球 3-棒球 4-冰球 5-网球 6-美式足球 7-斯诺克 8-乒乓球 9-排球  10-羽毛球 -->
-                        <div class="team-icon row no-wrap" v-if="!([5, 10, 7, 8].includes(Number(match.csid)))">
-                          <image-cache-load :csid="+match.csid" :path="match.mhlu" type="home"></image-cache-load>
-                        </div>
                         <div class='team-t-title-w' :class="{
                           'is-handicap': match.handicap_index == 1,
                           'is-handicap-1': match.handicap_index == 2,
@@ -208,11 +205,6 @@
                       result: is_results
                     }">
                       <div class="team-title-inner-con">
-                        <!-- 1-足球 2-篮球 3-棒球 4-冰球 5-网球 6-美式足球 7-斯诺克 8-乒乓球 9-排球  10-羽毛球 -->
-                        <div v-if="!([5, 10, 7, 8].includes(Number(match.csid)))" class="team-icon row no-wrap">
-                          <image-cache-load :csid="match.csid ? match.csid : match.sportId"
-                            :path="match.malu ? match.malu : match.picUrl" type="away"></image-cache-load>
-                        </div>
                         <div class='team-t-title-w' :class="{
                           'is-handicap': match.handicap_index == 2,
                           'is-handicap-1': match.handicap_index == 1,
@@ -277,16 +269,6 @@
                         <img :src="mearlys_icon" alt="" style="width:0.2rem">
                       </div>
 
-                          <!--玩法数量-->
-                          <div class="goto-detail" @click='goto_details(match)'>
-                            <span class="count_span" :class="{ esports: 3000 == menu_type }">
-                              <span class="mc-n">
-                                {{GlobalAccessConfig.get_handicapNum()? get_match_mc(match) :
-                                  i18n_t('footer_menu.more') }}
-                              </span>
-                              <span class="add_text" v-if="GlobalAccessConfig.get_handicapNum()">+</span>
-                            </span>
-                          </div>
                         </div>
                       </div>
                     </div>
@@ -322,94 +304,6 @@
                   <score-list v-if="is_results" :match="match"></score-list>
                 </div>
               </div>
-
-              <!--  新手版才有的  倒计时  玩法数量  底部比分 组件  -->
-              <div class="date-container simple match-indent"
-                :class="{ 'no-running-timer-wrapper': !show_counting_down(match) }"
-                v-if="show_newer_edition && !is_results">
-                <div class='l test-match-mf'>
-                  <!--收藏图标-->
-                  <div v-if="!GlobalAccessConfig.get_collectSwitch()" class="go-container-w flex no-wrap favorite">
-                    <div class="fav-i-wrap-match row items-center" @click.stop="handle_match_collect">
-                      <div class="favorite-icon match">
-                        <!-- 未收藏图标 -->
-                        <img v-if="!match_collect_state" :src="compute_img_url('icon-favorite')" alt="">
-                        <!-- 收藏图标 -->
-                        <img v-if='match_collect_state' :src="compute_img_url('icon-favorite-s')">
-                      </div>
-                    </div>
-                  </div>
-                  <!--竞彩足球 星期与编号-->
-                  <div class="week-mcid row items-center" v-if="menu_type == 30">
-                    <span class="din-regular" style="font-size:.14rem">
-                      {{ match.mcid }}
-                    </span>
-                  </div>
-                  <!--开赛时间-->
-                  <div class="timer-wrapper-c newer">
-                    <!--即将开赛 ms = 110-->
-                    <div class="coming-soon" v-show="match.ms == 110">
-                      {{ $t(`ms[${match.ms}]`) }}
-                    </div>
-                    <!--开赛日期 ms != 110 (不为即将开赛)  subMenuType = 13网球(进行中不显示，赛前需要显示)-->
-                    <div class="date-time" v-show="match.ms != 110 && !show_start_counting_down(match) && !show_counting_down(match)">
-                      {{ format_time_zone(+match.mgt).Format(i18n_t('time4')) }}
-                    </div>
-                    <!--一小时内开赛 -->
-                    <div class="start-counting-down" v-show="match.ms != 110 && show_start_counting_down(match)">
-                      <counting-down-start :match="match" :index="i" :mgt_time="match.mgt">
-                      </counting-down-start>
-                    </div>
-                    <!--倒计时或正计时-->
-                    <div class="counting-down-up-container relative-position"
-                      :class="{ 'long-time': match.mst >= 6000, 'intermission': match.mmp == 31, 'special-match-container': match.mfo || [0, 31].includes(+match.mmp) }"
-                      :style="{ width: counting_down_up_wrapper_width === 'auto' ? 'auto' : counting_down_up_wrapper_width + 'rem' }"
-                      v-if="match.ms != 110 && show_counting_down(match)">
-                      <!--csid足球1冰球4手球11累加  排球csid:9 倒计时-->
-                      <counting-down-second ref="counting-down-second-simple" :title="mmp_map_title" :mmp="match.mmp"
-                        :is_add="[1, 4, 11, 14, 100, 101, 102, 103].includes(+match.csid)" :m_id="match.mid"
-                        :second="match.mst" :match="match" @counting-wrapper-width="update_counting_down_up_wrapper_width">
-                      </counting-down-second>
-                    </div>
-                  </div>
-                  <!-- 直播 主播 视频 动画  icon 栏目   -->
-                  <!-- 正常的 优先级 ： lvs 直播   muUrl 视频  animationUrl 动画 -->
-                  <div class="live-i-b-wrap v-mode-span row items-center" v-if="media_button_state_obj.icon_path"
-                    @click="media_button_handle()">
-                    <img class="live-icon-btn" :src='media_button_state_obj.icon_path' />
-                  </div>
-                  <!--中立场图标-->
-                  <div class="live-i-b-wrap newer" v-show="match.mng * 1 && ![5, 10, 7, 8].includes(Number(match.csid))">
-                    <img class="neutral-icon-btn" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/m-list-neutral.svg`" />
-                  </div>
-                  <!--玩法数量-->
-                  <div class="go-container-w mcount flex">
-                    <div class='goto-detail' @click='goto_details(match)'>
-                      <div class="count_span">
-                        <span class="mc-n">
-                          {{ GlobalAccessConfig.get_handicapNum() ? get_match_mc(match) : i18n_t('footer_menu.more') }}
-                        </span>
-                        <span class="add_text" v-if="GlobalAccessConfig.get_handicapNum()">+</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <!--比分栏-->
-                <div class="r row no-wrap">
-                  <div class="score-wrapper flex" v-show="match.ms != 0 && (match.csid != 1 || MenuData.footer_sub_menu_id != 114)">
-                    <score-list :main_source="main_source" :match="match"></score-list>
-                  </div>
-                </div>
-                <!-- 简版 比分组件 -->
-                <!-- 电竞中，如果是比分判定中，则不显示该比分 -->
-                <div class="eports_scoring_tip" v-if="eports_scoring">{{ $t('mmp.eports_scoring') }}</div>
-              </div>
-              <!--角球，罚牌，晋级，加时赛，点球大战玩法-->
-              <!-- cisd:1 足球， 2 篮球， 5 网球， 7 斯诺克， 8 乒乓球 -->
-              <match-overtime-pen 
-                v-if="!is_hot && !is_detail && !is_results && [1, 2, 5, 7, 8].includes(+match.csid) && standard_edition != 1"
-                :main_source="main_source" 
-                :mid="match_of_list.mid" />
             </div>
           </div>
         </div>
@@ -665,6 +559,7 @@ const handle_ball_seed_fold = () => {
  * @description 联赛折叠
  */
 const handle_league_fold = () => {
+  console.log(11111)
   // 首页热门，详情页，不需要用到折叠
   if (is_hot.value || is_detail.value) return;
   MatchFold.set_league_fold(props.match_of_list.tid)
@@ -1368,5 +1263,5 @@ onUnmounted(() => {
 
 
 <style scoped lang="scss">
-  @import "../styles/match-container-app";
+  @import "../styles/match-container-2";
 </style>

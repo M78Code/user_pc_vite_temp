@@ -24,7 +24,7 @@ const comp_config = {
 export const import_vue_component = async (name) => {
   if (!comp_config[name]) return
   const path = comp_config[name][PROJECT_NAME]
-  const { default: components } = await import(`${path}`)
+  const components = await import(/* @vite-ignore */`${path}`)
   return components;
 };
 

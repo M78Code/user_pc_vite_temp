@@ -10,28 +10,12 @@
     .hairline-border::after{
       display: none;
     }
-    // .sport-title.match-indent{
-    //   width: 100%;
-    //   height: 20px;
-    //   border-radius: 0;
-    //   font-size: 12px;
-    //   padding: 0 5px 0 30px;
-    //   background: #f7f9fe;
-    //   .league-collapse-dir{
-    //     display: none;
-    //   }
-    // }
-    // .s-w-item{
-    //   background: #ffffff;
-    // }
-    // .match-indent{
-    //   height: 25px;
-    //   background: #fff;
-    //   border-radius: 0;
-    //   border-bottom: 1px solid #e9e9e9;
-    //   .match-league{
-    //     font-size: 11px;
-    //   }
-    // }
+    .s-w-item{
+      background: #ffffff;
+      // margin-bottom: 5px;
+    }
+    .odd-column-item{
+      background: #F2F2F6 !important;
+    }
   }
 }
