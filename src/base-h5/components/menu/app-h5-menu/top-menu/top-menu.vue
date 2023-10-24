@@ -5,21 +5,20 @@
  * @Last Modified time: 2023-10-Sa 06:06:46
  */
 <template>
-    <div class="main-wrap flex" :class="{ is_export }">
+    <div class="main-wrap flex">
         <!--  返回按鈕  -->
         <slot name="menu-left">
             <div class="goback-icon-wrapper column justify-center" @click="router.back()">
                 <div class="img" :style="compute_css_obj('menu-go-back-icon')"></div>
             </div>
         </slot>
-        <div class="main-menu-container" :class="{ is_export }">
-            <template v-for="(item, index) in menu_list" :key="lodash.get(item, 'mi')">
-                <div class="m-menu-item" :class="{ current: lodash.get(item, 'mi') == menu_type, esport: is_export }"
-                    v-show="show_dianjing(item, index)">
+       <div v-show="false"> {{MenuData_App_H5.update_time}} </div> 
+        <div class="main-menu-container">
+            <template v-for="(item, index) in menu_list" :key="lodash_.get(item, 'code')">
+                <div class="m-menu-item" :class="{ current: lodash_.get(item, 'mi') == MenuData_App_H5.current_lv_1_menu_mi }">
                     <span class="i-title" @click="set_menu_lv1(item, index)">
-                        {{ i18n_t("new_menu." + lodash.get(item, 'mi')) || lodash.get(item, 'mi') }}
+                        {{ i18n_t("new_menu." + lodash_.get(item, 'mi')) || lodash_.get(item, 'mi') }}
                     </span>
-
                 </div>
             </template>
         </div>
@@ -29,66 +28,51 @@
     </div>
 </template>
 <script setup>
-import lodash from "lodash";
-import { ref, watch } from "vue";
-import base_data from "src/core/base-data/base-data.js";
-import { useRouter,useRoute } from "vue-router";
+import lodash_ from "lodash";
+import { reactive } from "vue";
+import { useRouter } from "vue-router";
 import { format_money2 } from "src/core/format/index.js";
-import { i18n_t, compute_css_obj, MenuData, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5,UserCtr } from "src/core/index.js";
-import { update_time, is_export, menu_type } from 'src/base-h5/mixin/menu.js';
-import { get_sport_menu } from "./top-list";
+import { i18n_t, compute_css_obj, MenuData_App_H5,UserCtr } from "src/core/index.js";
 const router = useRouter();
-let menu_list = ref([]);//一级菜单list
+
+//一级菜单list
+const menu_list = reactive([
+    {
+        mi:2, // 今日
+        code:"today"
+    },
+    {
+        mi:1, //滚球
+        code:"play"
+    },
+    {
+        mi:3, // 早盘
+        code:"early"
+    },
+    {
+        mi:6, //串关
+        code:"match_bet"
+    },
+    {
+        mi:400, // 冠军
+        code:"champion"
+    },
+])
+
 /**
  * 点击一级菜单
  * @param {*} item 
  * @param {*} index 
  * @param {*} type 
  */
-const set_menu_lv1 = (item, index, type = "click") => {
-    MenuData.set_current_lv1_menu(item, index);
-//     if (MenuData.is_scroll_ball(item.mi)) {
-//     //滚球第一个是全部
-//     if (type == "click") {
-//       //表示点击的是全部
-//       MenuData.set_current_lv2_menu(item.sl, -1, type);
-//     } else {
-//       MenuData.set_current_lv2_menu(item.sl[0], 0, type);
-//     }
-//   } else if (MenuData.is_results(item.mi)) {// "赛果",
-//   } else if (MenuData.is_vr(item.mi)) {// "VR",
-//     router.push({
-//       name: "virtual_sports",
-//       query: {
-//         from: route.name,
-//       },
-//     });
-//   } else {
-//     if (item.sl && item.sl[0]) {
-//       MenuData.set_current_lv2_menu(item.sl[0], 0, type);
-//     }
-//   }
+const set_menu_lv1 = item => {
+    MenuData_App_H5.set_current_lv1_menu(item.mi);
 }
 
 /**
- * 判断后台是否展示 VR / 电竞  原逻辑
- * @param {*} item 
- * @param {*} index 
- */
-const show_dianjing = (item, index) => {
-    if (MenuData.is_export(item.mi)) return base_data.is_mi_2000_open; // 电竞tob后台关闭隐藏
-    if (MenuData.is_vr(item.mi)) return base_data.is_mi_300_open; // VRtob后台关闭隐藏
-    return ![2, 3, 6, 7].includes(index);
-};
-watch(update_time, (v) => {
-    const [menu_lv1] = get_sport_menu(MenuData.menu_list)
-    menu_list.value = menu_lv1; //一级
-});
-/**
  * 初始化数据
  */
-const [menu_lv1] = get_sport_menu(MenuData.menu_list)
-set_menu_lv1(menu_lv1[0], 0, 'init')
+
 </script>
 <style scoped lang="scss">
 .main-wrap {
