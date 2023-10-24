@@ -332,7 +332,8 @@ export default defineComponent({
       get_detail_data,
       home_name,
       away_name,
-      go_to_bet
+      go_to_bet,
+      LOCAL_PROJECT_FILE_PREFIX
     }
   }
 })
