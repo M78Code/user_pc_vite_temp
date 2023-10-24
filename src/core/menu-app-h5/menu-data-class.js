@@ -183,7 +183,7 @@ class MenuData {
    *一级菜单顶层菜单的 菜单类型  ，没有则是0
    * */
   get_menu_type() {
-    return this.current_lv_1_menu?.mi || 0;
+    return this.current_lv_1_menu_mi || 0;
   }
   /**
    * 获取 euid
@@ -439,7 +439,7 @@ class MenuData {
    * 没有传递对比当前菜单
   */
   is_vr(mi) {
-    return this._is_cur_mi(8, mi)
+    return this._is_cur_mi(300, mi)
   }
   /**
    * 是否选中了赛果
@@ -474,14 +474,14 @@ class MenuData {
    *  mi [number|string] 要比对的值
   */
   is_kemp(mi) {
-    return this._is_cur_mi(4, mi)
+    return this._is_cur_mi(400, mi)
   }
   /**
    * 是否选中了电竞
    *  mi [number|string] 要比对的值
   */
   is_export(mi) {
-    return this._is_cur_mi(7, mi)
+    return this._is_cur_mi(2000, mi)
   }
   /**
    * 是否选中了串关
@@ -499,7 +499,7 @@ class MenuData {
   }
   //- 三级菜单 日期 (只有 串关，早盘，赛果，电竞，才有) -->
   get_is_show_three_menu(mi) {
-    return [3, 6, 7, 28].includes(mi || this.current_lv_1_menu?.mi);
+    return [3, 6, 28, 2000].includes(mi || this.current_lv_1_menu_mi);
   }
   // 赛果下数据
   async get_results_menu() {
