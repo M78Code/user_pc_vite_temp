@@ -9,7 +9,7 @@
       v-show="!hid && !is_remove">
     <template v-if="!hid && !is_remove">
       <!-- 玩法title栏 -->
-      <div class="play-name-outer-wrapper">
+      <div class="play-name-outer-wrapper" :class="[judage_hshow != 'Yes'?'show_component':'hide_component' ]">
         <div class="play-name" :class="{'vir-mar':item_data.hotName}">
           <div class="row items-center" :class="{'bottom-style':is_show_underline}">
             <!-- 玩法名称 -->
@@ -86,7 +86,7 @@
             <div  v-if="!item_data.hotName" class="text-right" @click.stop="set_hton(item_data)" :class="icon_name">
             </div>
             <!-- 折叠按钮 -->
-            <icon-wapper  @click="set_hshow(item_data)" color="blue"   name="icon-triangle1" size="16px" />
+            <icon-wapper  @click="set_hshow(item_data)" color="blue"   :name="judage_hshow == 'Yes' ? 'icon-triangle1' : 'icon-triangle3'" size="16px" />
           </div>
           <!-- 调试专用勿删除 -->
           <span v-if="wsl_flag" style="color:red;font-size:12px;" text = "调试用span">模板(hpt)<span>{{item_data.hpt}}玩法(hpid)=>{{item_data.hpid}}</span></span>
@@ -94,7 +94,7 @@
       </div>
       <template v-if="[0,1,2,3,4,5,6,7,9,10,11,12,13,14,15,18,51].includes(+item_data.hpt)">
         <q-slide-transition :duration="200">
-          <div v-show="judage_hshow == 'Yes'">
+          <div v-show="judage_hshow == 'Yes'" :class="[judage_hshow != 'Yes'?'show_border_r':'hide_border_r' ]">
             <!-- 模板id  hpt -->
             <component
                 :is="`temp${item_data.hpt}`"
@@ -105,7 +105,7 @@
           </div>
         </q-slide-transition>
       </template>
-      <template v-else-if="item_data.hotName">
+      <template v-else-if="item_data.hotName" :class="[judage_hshow != 'Yes'?'show_border_r':'hide_border_r' ]">
         <q-slide-transition :duration="200">
           <div v-show="judage_hshow == 'Yes'">
             <!-- 模板id=8 --用于虚拟体育-热门 -->
@@ -800,5 +800,64 @@ export default defineComponent({
    &::after {
      border: none !important
    }
+}
+.tournament-play {
+  &.tournament-play-outer {
+    background:#f5f5f5 !important;
+    .play-name-outer-wrapper {
+      padding: 0 0.1rem 0.04rem 0.1rem;
+    }
+    .show_border_r{
+      :deep(.hairline-border,), :deep(.item-wrap) {
+      background-color: #ffffff;
+      
+      }
+    }
+    .hide_border_r{
+      :deep(.hairline-border,), :deep(.item-wrap) {
+      background-color: #ffffff;
+      border-radius:0 0 0.08rem 0.08rem!important;
+      border-top:0.5px solid #F2F2F6;
+      }
+    }
+    .play-name {
+      position: relative;
+      min-width: 3.55rem;
+
+      padding: 0 0.12rem 0 0.18rem;
+      background: #ffffff !important;
+      border-radius: 0.08rem;
+
+      &::after {
+        content: "";
+        pointer-events: none;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 200%;
+        height: 200%;
+        -webkit-transform: scale(0.5);
+        transform: scale(0.5);
+        -webkit-transform-origin: left top;
+        transform-origin: left top;
+        border: 1px solid #cfcfcf;// var(--q-color-border-color-24);
+        border-radius: 0.16rem;
+        overflow: hidden;
+      }
+    }
+  }
+}
+.show_component{
+  padding-bottom:0.04rem !important;
+  
+ 
+}
+.hide_component{
+  padding-bottom:0 !important;
+  .play-name{
+    border-bottom-left-radius:0 !important;
+    border-bottom-right-radius:0 !important;
+  }
+
 }
 </style>

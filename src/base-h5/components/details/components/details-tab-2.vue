@@ -225,7 +225,7 @@ export default defineComponent({
 .fat-btn {
   float: right;
   text-align: center;
-  padding-top: 0.05rem;
+  padding-top: 0.06rem;
 
   width: 0.4rem;
 }
