@@ -37,6 +37,7 @@ class MatchMeta {
    * @param { mi } 菜单类型
    */
   set_origin_match_data() {
+    console.log(MenuData)
     // 菜单 ID 对应的 元数据赛事 mids
     const menu_lv_v1 = MenuData.current_lv_1_menu_mi
     const menu_lv_v2 = MenuData.current_lv_2_menu_mi
@@ -409,7 +410,7 @@ class MatchMeta {
    */
   set_match_mids (mids = [], match_list = []) {
 
-    this.complete_mids = mids
+    this.complete_mids = [...new Set(mids)]
     // 过滤赛事
     this.complete_matchs = match_list.filter((t) => t.mid)
     

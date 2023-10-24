@@ -52,9 +52,6 @@
       border-top-left-radius: 0.08rem;
       border-top-right-radius: 0.08rem;
     }
-    &.collapsed{
-      margin-bottom: 0.05rem;
-    }
   }
 
   &.started_and_un_started {
@@ -82,6 +79,9 @@
     .match-odds-container-border-radius {
       overflow: hidden;
     }
+    &.border-top{
+      border-top: 1px solid #e9e9e9;
+    }
 
     .eports_scoring_tip {
       color: var(--q-gb-t-c-13);
@@ -98,7 +98,7 @@
   }
 
   &.is_division_league {
-
+    margin-bottom: 0.05rem;
     &.started_un_started_next {
       .match-odds-container {
         &:after {
@@ -145,6 +145,9 @@
   .match-indent {
     width: 100%;
     margin: 0 auto;
+    &.bottom{
+      margin-top: 0.05rem;
+    }
   }
 
   /* **************体育展示********************** -S*/
@@ -182,6 +185,7 @@
     background: #f7f9fe;
     line-height: 22px;
     font-size: 11px;
+    margin-bottom: -0.04rem;
     .league-collapse-dir{
       display: none;
     }
@@ -307,7 +311,6 @@
   /* **************联赛展示********************** -S*/
   .league {
     height: 0.26rem;
-    border-bottom: 1px solid #e9e9e9 !important;
     background: #fff !important;
     border-radius: 0;
 
@@ -325,6 +328,7 @@
       display: flex;
       align-items: center;
       flex-wrap: nowrap;
+      padding-left: 0.08rem;
       .esport {
         margin: 0.01rem 0.07rem 0 0rem;
         position: relative;
@@ -355,9 +359,9 @@
         }
       }
       .favorited-icon{
-        width: 0.3rem;
+        width: 0.2rem;
         height: 100%;
-        padding-left: 10px;
+        padding-left: 0.0.8rem;
         position: relative;
         top: 1px;
         flex-shrink: 0;
@@ -392,6 +396,7 @@
     color: #303442;
     flex-direction: row-reverse;
     background: #fff;
+    border-top: 1px solid #e9e9e9;
     border-bottom: 1px solid #e9e9e9;
 
     .odd-title-i-w {
@@ -418,7 +423,7 @@
       height: auto;
       line-height: 1;
       margin-left: 0.01rem;
-      font-size: 0.11rem;
+      font-size: 0.1rem;
       color: var(--q-color-com-fs-color-1);
       flex-shrink: 0;
 
@@ -453,13 +458,20 @@
 
   .league-title-text {
     font-size: 0.13rem;
+    width: 100%;
     height: 100%;
+    padding-right: 5px;
     transform: translateY(1px);
     text-overflow: ellipsis;
-    width: 3.18rem;
     flex-wrap: nowrap;
     align-items: center;
     overflow: hidden;
+    .icon-wapper{
+      transform: rotate(-90deg);
+    }
+    .close{
+      transform: rotate(0deg);
+    }
 
     .league-t-wrapper {
       line-height: 1;
@@ -888,12 +900,14 @@
 .date-container {
   background-color: var(--q-color-com-bg-color-12);
   width: 100%;
+  color: #999;
   padding: 0 0.08rem;
   height: 0.2rem;
   display: flex;
   align-items: center;
   margin: 0 auto;
-  font-size: 0.12rem;
+  font-size: 0.1rem;
+  align-items: center;
   justify-content: space-between;
 
   &.simple {
@@ -910,9 +924,6 @@
   }
 
   &.n-s-edition {
-    padding-top: 0.03rem;
-    position: relative;
-
     &:before {
       top: 0;
       left: 0;
@@ -981,13 +992,9 @@
     }
   }
 
-  &.match-indent {
-    padding-left: 0.1rem;
-    position: relative;
-  }
-
   .timer-wrapper-c {
     height: 100%;
+    color: #999;
 
     &.newer {
       margin-left: 0;
@@ -1004,6 +1011,8 @@
     height: 0.13rem;
     flex-shrink: 0;
     margin-right: .07rem;
+    position: relative;
+    top: 1px;
 
     img {
       width: 100%;
@@ -1100,6 +1109,9 @@
 
   .add_text {
     font-size: 0.12rem;
+    .icon-wapper-more{
+      transform: rotate(-90deg);
+    }
   }
 
   .mfo-title {

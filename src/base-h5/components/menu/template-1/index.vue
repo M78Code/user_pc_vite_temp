@@ -155,7 +155,7 @@
 </template>
 <script setup>
 import subMenuSpecially from "./sub-menu-specially.vue";
-import { ref, watch, nextTick, computed, onBeforeUnmount, } from "vue";
+import { ref, watch, nextTick, computed, onBeforeUnmount, onMounted, } from "vue";
 import { i18n_t, compute_css_obj, GlobalAccessConfig, useMittOn, MITT_TYPES, UserCtr, MenuData, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5,PROJECT_NAME } from "src/core/index.js";
 import base_data from "src/core/base-data/base-data.js";
 import { useRoute, useRouter } from "vue-router";

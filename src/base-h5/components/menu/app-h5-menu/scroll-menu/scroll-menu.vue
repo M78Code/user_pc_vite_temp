@@ -55,7 +55,7 @@ import lodash from "lodash";
 import MatchFold from 'src/core/match-fold'
 import BaseData from "src/core/base-data/base-data.js";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
-import { ref, computed } from "vue";
+import { ref, computed, onMounted } from "vue";
 import { compute_css_obj, MenuData, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/index.js";
 import { is_scroll_ball, update_time, is_export, is_mix,is_results, is_kemp, is_jinzu, menu_type } from 'src/base-h5/mixin/menu.js'
 import { get_sport_menu } from "../top-menu/top-list";
@@ -69,6 +69,10 @@ const sport_container_simple = ref(false);
 // 是否初次渲染
 const is_first = ref(true)
 let show_favorite_list = ref('')
+
+onMounted(() => {
+  set_menu_lv2({ mi: '1012' })
+})
 
 /**
  * 二级菜单事件

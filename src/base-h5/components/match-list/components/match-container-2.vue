@@ -3,11 +3,10 @@
 -->
 <template>
   <div :style="{ marginTop: is_hot ? '0' : '' }" 
-    :class="['match-container app-h5-match-container', {
+    :class="['match-container', {
       first: i == 0,
       match_status_bar: match.is_show_no_play,
       is_league_tail: get_league_show(i + 1),
-      is_division_league: match.is_show_league,
       started_un_started_next: get_m_status_show(i + 1),
       started_and_un_started: match.is_show_no_play,
       favorite_un_start_title: favorite_un_start_title(i, match_of_list.ms),
@@ -43,7 +42,7 @@
     <div :class="['match-inner-container', {'collapsed': collapsed}]">
       <!--联赛标题 -->
       <div @click="handle_league_fold" v-if="match.is_show_league || (is_hot && get_league_show(i))"
-        :class="[('league match-indent hairline-border'), { 'no-radius': get_sport_show, 'no-border': collapsed }]">
+        :class="[('league match-indent hairline-border'), { 'no-radius': get_sport_show, 'no-border': collapsed, 'bottom': match.is_show_league }]">
         <div class="league-t-wrap">
           <!-- 联赛收藏 -->
           <div v-if="![3000, 900].includes(menu_type)" class="favorited-icon" @click.stop="handle_league_collect">
@@ -63,15 +62,16 @@
                 {{ match.tn }}
               </span>
             </span>
+            <icon-wapper color="#888" name="icon-triangle1" size="16px" :class="['icon-wapper', {'close': !collapsed}]" />
           </span>
         </div>
         
       </div>
       <!-- 卡片主内容 -->
-      <q-slide-transition>
+      <!-- <q-slide-transition> -->
         <div style="width: 100%;" v-if="!collapsed">
           <!--标准版 赔率标题栏-->
-          <div class="odd-title-wraper row " @click.stop :style="{width: !collapsed ? '100%' : 0}">
+          <div class="odd-title-wraper row " v-if="match.is_show_league" @click.stop :style="{width: !collapsed ? '100%' : 0}">
             <div class="odd-title-i-w flex">
               <div class="odd-t-i-wrapper flex items-center"
                 :class="{ 'status2': get_standard_odd_status == 1 && match_of_list_ascertain.length > 3 }">
@@ -85,7 +85,7 @@
             </div>
           </div>
           <!--  一整块赛事的 div 内容 ： 1. 左边 【时间，队名，比分】   2. 右边 【赔率 模块】  -->
-          <div class="match-odds-container study_height_s hairline-border" :ref="'mid-' + match.mid">
+          <div :class="['match-odds-container study_height_s hairline-border', {'border-top': !match.is_show_league}]">
             <div class="match-odds-container-border-radius">
               <!-- 上边的 赛事日期标准版,包含 比分组件 -->
               <div class="date-container match-indent" :class="{ 'n-s-edition': !show_newer_edition }"
@@ -152,7 +152,9 @@
                       {{GlobalAccessConfig.get_handicapNum()? get_match_mc(match) :
                         i18n_t('footer_menu.more') }}
                     </span>
-                    <span class="add_text" v-if="GlobalAccessConfig.get_handicapNum()">+</span>
+                    <span class="add_text" v-if="GlobalAccessConfig.get_handicapNum()">
+                      <icon-wapper color="#888" name="icon-triangle1" size="14px" class="icon-wapper-more" />
+                    </span>
                   </span>
                 </div>
               </div>
@@ -307,7 +309,7 @@
             </div>
           </div>
         </div>
-      </q-slide-transition>
+      <!-- </q-slide-transition> -->
     </div>
   </template>
   </div>
@@ -325,6 +327,7 @@ import scoreList from './score-list.vue';
 import oddListWrap from './odd-list-wrap.vue';
 import MatchFold from 'src/core/match-fold'
 import MatchCollect from 'src/core/match-collect'
+import { IconWapper } from 'src/components/icon'
 import matchOvertimePen from './match-overtime-pen.vue'
 import ImageCacheLoad from "./public-cache-image.vue";
 import PageSourceData from "src/core/page-source/page-source.js";

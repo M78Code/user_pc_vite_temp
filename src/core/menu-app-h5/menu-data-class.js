@@ -85,7 +85,8 @@ class MenuData {
   }
 
   get_menu_lv_2_mi_list(mi){
-    return (this.menu_lv_mi_lsit.find(item=> item.mi == mi)).sl
+    const item = this.menu_lv_mi_lsit.find(item=> item.mi == mi)
+    return item && item.sl
   }
 
   // 设置二级菜单id

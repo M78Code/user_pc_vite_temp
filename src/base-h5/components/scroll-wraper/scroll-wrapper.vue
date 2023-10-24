@@ -14,7 +14,7 @@
       }]"
       :style="{ 'min-height': `${menu_type == 100 ? list_wrap_height : match_list_wrapper_height}rem` }">
       <template v-if="MatchMeta.match_mids.length > 0" >
-        <div v-for="(match_mid, index) in MatchMeta.match_mids" :index="index" :key="match_mid"
+        <div v-for="(match_mid, index) in MatchMeta.match_mids" :index="index" :key="match_mid" :data-mid="match_mid"
           :class="['s-w-item', { static: is_static_item, last: index == match_mids.length - 1 }]" 
           :style="{ transform: `translateY(${is_static_item ? 0 : get_match_top_by_mid(match_mid)}rem)`, zIndex: `${200 - index}` }">
           <!-- 调试用 -->
