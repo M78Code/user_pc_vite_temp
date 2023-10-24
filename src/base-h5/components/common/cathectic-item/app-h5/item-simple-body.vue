@@ -7,14 +7,14 @@
 <!-- 矩形框中部 -->
   <div class="item-body yb_fontsize14">
     <div class="body-title">
-      <span>{{data_b.matchInfo}}</span>
+      <span>瓦伦西亚 VS 罗斯托拉夫U20</span>
     </div>
     <div class="body-info">
       <div>
-        <p>{{data_b.sportName}}</p>
-        <p>{{data_b.sportName}}</p>
+        <p>投注项:角球:滚球</p>
+        <p>大/小-上半场</p>
       </div>
-      <span>大3.5 @{{data_b.oddFinally}}</span>
+      <span>大3.5 @2.16</span>
     </div>
     <div class="body-main">
       <p><label>投注单号：</label> <span>{{data_b.betNo}}</span></p>
