@@ -80,6 +80,9 @@ class MenuData {
     }
     // 默认设置二级菜单id
     console.error('menu_lv_mi_lsit',menu_lv_mi_lsit)
+    // 默认设置二级菜单id
+    this.set_current_lv_2_menu_mi( lodash_.get(menu_lv_mi_lsit,'[0]',{}))
+
     this.menu_lv_mi_lsit = menu_lv_mi_lsit
     return menu_lv_mi_lsit
   }
@@ -95,8 +98,6 @@ class MenuData {
     if(![1,2,400].includes(this.current_lv_1_menu_mi)){
      
     }
-    this.update()
-
   }
 
   /**
