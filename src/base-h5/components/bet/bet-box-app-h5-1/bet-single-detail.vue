@@ -5,21 +5,18 @@
 -->
 <template>
   <!-- 混合过关投注选项 -->
-  <div class="bet_single_detail" ref="bet_single_detail">
-    <div class="content-b" :class="{ 'red-color': !money_ok }" @click.stop="input_click">
-      <span v-if="ref_data.money" class="yb_fontsize20 money-number">{{ ref_data.money }}</span>
-      <span class="money-span" ref="money_span"
-        :style="{ opacity:  '1' }"></span>
-      <span class="yb_fontsize14 limit-txt" v-show="!ref_data.money">限额{{ ref_data.min_money }}-{{ ref_data.max_money }}</span>
-      <span @click.stop="clear_money" class="money-close" :style="{ opacity: ref_data.money > 0 ? '1' : '0' }">x</span>
-    </div>
-    <div class="content-rmb">RMB</div>
-
-    <!-- <div class="nonebox4-third">
-      <div class="nonebox4-third-left">
-        <input type="number" placeholder="限额 0.00-100,000" /><span style="color:#666">RMB<span>
+  <div class="bet_single_info">
+    <div class="bet_single_detail" ref="bet_single_detail" :style="is_btn?'width: 73%':'width:100%'">
+      <div class="content-b" :class="{ 'red-color': !money_ok }" @click.stop="input_click">
+        <span v-if="ref_data.money" class="yb_fontsize20 money-number">{{ ref_data.money }}</span>
+        <span class="money-span" ref="money_span"
+          :style="{ opacity:  '1' }"></span>
+        <span class="yb_fontsize14 limit-txt" v-show="!ref_data.money">限额{{ ref_data.min_money }}-{{ ref_data.max_money }}</span>
+        <span @click.stop="clear_money" class="money-close" :style="{ opacity: ref_data.money > 0 ? '1' : '0' }">x</span>
       </div>
-    </div> -->
+      <div class="content-rmb">RMB</div>
+    </div>
+    <div class="bet_single_info_btn" v-if="is_btn">+预约</div>
   </div>
 </template>
 
@@ -39,6 +36,9 @@ import { format_currency } from "src/core/format/module/format-currency.js"
 let timer1 = null
 let timer4 = null;
 let flicker_timer = null
+
+//预约的按钮是否显示
+const is_btn = ref(true)
 
 const get_cur_odd = ref()
 const get_bet_status = ref()
@@ -236,6 +236,22 @@ onUnmounted(() => {
 
 </script>
 <style lang="scss" scoped>
+.bet_single_info{
+  display: flex;
+  justify-content: space-between;
+}
+.bet_single_info_btn{
+    width: 25%;
+    font-size: 16px;
+    background: var(--q-gb-t-c-1);
+    color: var(--q-gb-t-c-14);
+    border-radius: 10px;
+    height: 0.38rem;
+    margin-top: 0.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 .nonebox4-third {
     width: 100%;
     display: flex;
