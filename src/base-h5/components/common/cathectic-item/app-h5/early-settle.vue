@@ -3,145 +3,38 @@
  * @Author:
 -->
 <template>
-  <div class="early-settle yb_mt10 yb_mb12" v-if="calc_show || details_show2">
-    <template v-if="calc_show">
-      <!-- 提示消息 -->
-      <p class="row justify-between yb_pl10">
-        <span class="col-7">
-          <!-- 提前结算申请未通过 -->
-          <i class="tips" v-if="tips == 1">{{ t('early.info2') }}</i>
-          <!-- 功能暂停中，请稍后再试 -->
-          <i class="tips" v-else-if="tips == 2">{{ t('early.info6') }}</i>
-          <!-- 提前结算金额调整中，请再试一次 -->
-          <i class="tips" v-else-if="tips == 3">{{ t('early.info7') }}</i>
-          <!-- 提前结算金额已包含本金 -->
-          <i v-else>{{ t('early.info1') }}</i>
-        </span>
-        <span class="col-5 text-right tips-right" v-if="status == 6">{{ t('early.info3') }}</span>
-      </p>
-
-      <div class="btn-wrap row justify-between yb_mt8 yb_mb12">
-        <div class="btn-l row justify-between col"
-          :class="{ 'btn2': status !== 1 && status !== 5 && status !== 6, 'btn3': status == 5 }">
-          <p class="btn-ll text-center col ellipsis yb_fontsize12 column justify-center" @click="submit_click">
-            <!-- 暂停提前结算 -->
-            <span v-if="status == 5">{{ t('early.btn1') }} </span>
-            <!-- 提前结算 -->
-            <span v-if="status == 1 || status == 6">{{ t('early.btn2') }}</span>
-            <!-- 确认提前结算 -->
-            <span v-if="status == 2">{{ t('early.btn3') }}</span>
-            <!-- 确认中... -->
-            <span v-if="status == 3">{{ t('early.btn4') }}</span>
-            <!-- 已提前结算 -->
-            <span v-if="status == 4">{{ t('early.btn5') }}</span>
-            <!-- 按钮上的金额 -->
-            <span v-if="status !== 5 && (Number(front_settle_amount) || expected_profit)">{{ betting_amount }}</span>
-          </p>
-
-          <!-- 转圈按钮 -->
-          <p class="btn-spin" v-if="status != 1 && status != 5">
-            <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/record/loading.svg`" alt="" v-if="status == 3" class="loading2">
-            <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/record/done.svg`" alt="" v-if="status == 4">
-          </p>
-        </div>
-
-        <!-- 右边设置按钮 -->
-        <div class="btn-r text-center" @click="change_slider_show"
-          v-if="(status == 1 || status == 5 || status == 6) && lodash.get(UserCtr, 'pcs')"
-          :style="{ opacity: status == 5 || status == 6 ? 0.3 : 1 }">
-          <template v-if="slider_show">
-             <img :style="compute_css_obj('log-set')"  alt="">
-            <!-- <img :style="" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/record/set4.svg`" alt="" v-if="('y0')">
-            <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/record/set.svg`" alt="" v-else> -->
-          </template>
-          <template v-else>
-            <img :style="compute_css_obj('log-set')"  alt="">
-            <!-- <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/record/set2.svg`" v-if="('day')" alt="">
-            <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/record/set3.svg`" v-else alt=""> -->
-          </template>
-
-        </div>
-
-      </div>
-
-      <!-- 滑块 -->
-      <q-slide-transition>
-        <div v-show="slider_show" class="slider-wrap">
-          <!-- 提前结算投注额 -->
-          <p class="yb_mb14">{{ t('early.info4') }}：{{ cashout_stake.toFixed(2) }} </p>
-          <q-slider track-size="0.06rem" @change="change_percentage" class="slider-content" thumb-size="0.16rem"
-            v-model="percentage" :min="0" :max="100" :step="25" />
-          <div class="num row yb_pt6">
-            <i v-for="(n, i) in [25, 50, 75, 100]" :key="i" class="col text-right">{{ `${n}%` }}</i>
-          </div>
-        </div>
-      </q-slide-transition>
-
-    </template>
-    <div class="yb_pl10 yb_pt10 yb_mb6" v-if="is_tips_show">
-      <!-- 注单剩余本金 -->
-      <p class="yb_mb4">{{ t('early.info8') }}：{{ (+item_data.preSettleBetAmount).toFixed(2) }}</p>
-      <!-- 提前结算可用次数 -->
-      <p
-        v-if="item_data.enablePreSettle && item_data.initPresettleWs && lodash.get(UserCtr, 'pcs') == 1 && lodash.get(UserCtr, 'user_info.settleSwitch')">
-        {{ t('early.info9') }}：{{ remaining_num }}</p>
+  <div class="early-settle">
+    <span class="tips" @click="alertTips=true;">提前兑现规则申明</span>
+  
+    <div class="early-button">
+      <button @click="earlyBtnClick">
+        {{ sure_settle_button_text }}
+        <span v-if="btnStatus===1 || btnStatus===2">(含本金)</span>
+      </button>
+      <button class="change" v-if="btnStatus===2"> 金额有变更 </button>
+      <button class="cancel" v-if="btnStatus===2" @click="btnStatus=1;"> 取消 </button>
     </div>
-
-    <!-- 提前结算详情 -->
-    <p class="row justify-between yb_pl10 yb_py4" @click="fetch_early_settle_detail" v-if="details_show2">
-      <!-- 提前结算详情 -->
-      <span>{{ t('early.list1') }}</span>
-      <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/league-collapse-icon.svg`" alt="" :class="{ arrow2: details_show }" class="arrow">
-    </p>
+    <!-- 滑块 -->
     <q-slide-transition>
-      <div v-show="details_show">
-
-        <template v-if="presettleorderdetail_data.length">
-          <div class="detail-wrap yb_pb12" v-for="(item, index) in presettleorderdetail_data" :key="index">
-            <!-- 注单号和时间 -->
-            <p class="order-title row yb_px10">
-              <span class="order-num" v-if="item.preOrderNo">{{ item.preOrderNo }}
-                &ensp;<img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/copy.svg`" style="width:0.1rem;vertical-align:-2px" alt=""
-                  @click="copy($event, item.preOrderNo)">
-              </span>
-              <span class="order-num" v-else>{{ t('early.list6') }}</span>
-              <!-- .Format(t('time4')) -->
-              <span>{{ (new Date(format_time_zone_time(+item.createTime))) }}</span>
-            </p>
-            <!-- 取消原因 -->
-            <div class="row yb_px10 yb_py4" v-if="item.orderStatus == 2">
-              <span class="cancel">{{ t('common.cancel') }}</span>
-            </div>
-            <!-- 注单被取消 -->
-            <template v-if="item.orderStatus == 2">
-              <!-- 部分结算 -->
-              <!-- 结算本金 -->
-              <p class="yb_mt4">
-                <span>{{ item.remainingBetAmount ? t('early.list7') : t('early.list2') }}</span><span>0.00</span></p>
-              <!-- 返还金额 -->
-              <p><span>{{ t('early.list4') }}</span><span>0.00</span></p>
-              <!-- 输/赢 -->
-              <p><span>{{ t('early.list5') }}</span><span>0.00</span></p>
-            </template>
-            <template v-else>
-              <!-- 部分结算 -->
-              <!-- 结算本金 -->
-              <p class="yb_mt4">
-                <span>{{ item.remainingBetAmount ? t('early.list7') : t('early.list2') }}</span><span>{{ (+item.preBetAmount).toFixed(2) }}</span>
-              </p>
-              <!-- 返还金额 -->
-              <p><span>{{ t('early.list4') }}</span><span>{{ (+item.settleAmount).toFixed(2) }}</span></p>
-              <!-- 输/赢 -->
-              <p><span>{{ t('early.list5') }}</span><span>{{ (+item.profit).toFixed(2) }}</span></p>
-              <!-- 剩余本金 -->
-              <p v-if="item.remainingBetAmount">
-                <span>{{ t('early.list3') }}</span><span>{{ (+item.remainingBetAmount).toFixed(2) }}</span></p>
-            </template>
-          </div>
-        </template>
+      <div v-show="slider_show" class="slider-wrap">
+        <!-- 提前结算投注额 -->
+        <p class="yb_mb14">{{ t('early.info4') }}：{{ cashout_stake.toFixed(2) }} </p>
+        <q-slider track-size="0.06rem" @change="change_percentage" class="slider-content" thumb-size="0.16rem"
+          v-model="percentage" :min="0" :max="100" :step="25" />
+        <div class="num row yb_pt6">
+          <i v-for="(n, i) in [25, 50, 75, 100]" :key="i" class="col text-right">{{ `${n}%` }}</i>
+        </div>
       </div>
     </q-slide-transition>
-
+    <!-- 提前兑现规则申明弹框 -->
+    <q-dialog v-model="alertTips">
+      <div class="tips-main">
+        <h2>提前兑现规则申明</h2>
+        <p>开云体育提前兑现只适用于指定赛事和盘口，如遇到赛事或盘口取消，提前兑现注单将会被收回重新结算。开云体育保留赛果最终解释权。</p>
+        <p>具体兑现规则请查看【帮助中心】-【开云体育提前兑现规则】</p>
+        <span @click="alertTips=false;">我知道了</span>
+      </div>
+    </q-dialog>
   </div>
 </template>
 
@@ -159,13 +52,17 @@ import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/"
 import { t } from "src/boot/i18n.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 
-
 let store_cathectic = store.getState().cathecticReducer
 const props = defineProps({
   item_data: {
     type: Object
   }
 })
+// 提前兑现规则申明弹框
+let alertTips = ref(false)
+// 1 - 初始状态，2 - 确认提前结算， 3 - 兑现中...
+let btnStatus = ref(1)
+
 // 待确认中的提前结算单
 let queryorderpresettleconfirm_data = inject('queryorderpresettleconfirm_data')
 // 1 - 初始状态，2 - 确认提前结算， 3 - 确认中..., 4 - 已提前结算, 5 - 暂停提前结算(置灰), 6 - 仅支持全额结算, 7 - 按钮不显示
@@ -197,6 +94,31 @@ let timer2 = ref(null)
 let timer3 = ref(null)
 let timer4 = ref(null)
 let timer5 = ref(null)
+
+// 提前兑现button文案
+const sure_settle_button_text = computed(() => {
+  if (btnStatus.value === 1) {
+    return '确认兑现9.00元'
+  }
+  if (btnStatus.value === 2) {
+    return '提起兑现9.00元'
+  }
+  if (btnStatus.value === 3) {
+    return '兑现中'
+  }
+  console.log(btnStatus.value);
+})
+
+const earlyBtnClick = () => {
+  if(btnStatus.value === 1) {
+    btnStatus.value = 2;
+    return;
+  }
+  if (btnStatus.value === 2) {
+    btnStatus.value = 3;
+    return;
+  }
+}
 
 // ...mapGetters([
 //当前皮肤
@@ -557,158 +479,65 @@ const clear_timer = () => {
 </script>
 <style lang="scss" scoped>
 .early-settle {
-  width: 3.25rem;
-  margin: 0.1rem auto 0;
-  font-size: 0.11rem;
-  line-height: 1.3;
-}
-
-.tips {
-  color: #ff0000;
-}
-
-/* ************** 注单取消原因 ************** -S */
-.tips-wrap {
-  i {
-    width: 1.04rem;
-    line-height: 0.38rem;
-    background: #ffffff;
-    border: 1px solid #d1d1d1;
-    border-radius: 4px;
-    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1);
-    top: 120%;
-    left: -0.12rem;
-    color: #000;
-
-    &::before {
-      content: "";
-      position: absolute;
-      border: inherit;
-      border-width: 1px 0 0 1px;
-      background: inherit;
-      width: 0.08rem;
-      height: 0.08rem;
-      transform: rotate(45deg);
-      top: -0.04rem;
-      left: 0.14rem;
-    }
-  }
-
-  img {
-    height: 0.14rem;
-    transform: translateY(1px);
-  }
-
-  /* ************** 注单取消原因 ************** -E */
-}
-
-.cancel {
-  color: #ffffff;
-  border-radius: 2px;
-  background-color: #ff7272;
-  padding: 0 0.04rem;
-  line-height: 0.18rem;
-  height: 0.16rem;
-  display: inline-block;
-}
-
-.btn-l {
-  border-radius: 4px;
-  box-sizing: border-box;
-  padding: 0 0.2rem;
-  background-image: var(--q-color-linear-gradient-bg-9);
-  border-style: solid;
-  border-width: 1px;
-}
-
-.btn2 {
-  width: 100%;
-  padding: 0 0.2rem 0 0.38rem;
-  background-image: linear-gradient(270deg, #ffb001 0%, #ff7000 100%);
-}
-
-.btn3 {
-  background-image: none;
-  border: unset;
-
-  span {
-    font-size: 0.14rem;
-  }
-}
-
-.btn-r {
-  width: 0.6rem;
-  line-height: 0.4rem;
-}
-
-.btn-wrap {
-  height: 0.4rem;
-}
-
-.btn-spin {
-  flex: 1 1 0.18rem;
-
-  img {
-    width: 0.18rem;
-    transform: translateY(0.09rem) rotate(0);
-  }
-
-  /* ************** 滑动条 ************** -S */
-}
-
-.slider-wrap {
-  --width: 3.05rem;
-  padding: 0 0.1rem;
-}
-
-.slider-content {
-  :deep(.q-slider__track-container--h) {
-    padding: 0;
-  }
-}
-
-.num {
-  i {
-    font-style: normal;
-    margin-right: -0.1rem;
-  }
-
-  /* ************** 滑动条 ************** -E */
-}
-
-.loading2 {
-  animation: loading 1s linear infinite;
-}
-
-@keyframes loading {
-  to {
-    transform: translateY(0.09rem) rotate(360deg);
-  }
-}
-
-.detail-wrap {
-  p {
-    display: flex;
-    justify-content: space-between;
-    line-height: 0.2rem;
-    margin-bottom: 1px;
-    padding: 0 0.1rem;
-
-    &:last-child {
-      margin-bottom: 0;
-    }
-  }
-
-  span:nth-child(2n) {
+  .tips {
+    display: block;
+    text-align: right;
+    padding-right: 0.14rem;
+    color: var(--q-gb-bg-c-6);
     font-size: 0.12rem;
+    line-height: 2;
+  }
+  .early-button {
+    padding: 0 0.14rem;
+    button {
+      display: block;
+      border: none;
+      background-color: var(--q-gb-bg-c-9);
+      color: var(--q-gb-bg-c-15);
+      width: 100%;
+      height: 0.4rem;
+      line-height: 0.4rem;
+      font-size: 0.16rem;
+      border-radius: 0.1rem;
+      &.cancel {
+        background-color: transparent;
+        color: var(--q-gb-bg-c-6);
+      }
+      &.change {
+        background-color: transparent;
+        color: var(--q-gb-bg-c-12);
+        line-height: 0.5rem;
+      }
+      span {
+        font-size: 0.14rem;
+      }
+    }
   }
 }
-
-.arrow {
-  transform: rotate(180deg);
-  transition: transform 0.3s;
+.tips-main {
+  background-color: #fff;
+  border-radius: 0.1rem;
+  width: 90%;
+  padding: 0 0.14rem;
+  h2 {
+    font-size: 0.2rem;
+    font-weight: bold;
+    text-align: center;
+    line-height: 4;
+  }
+  p {
+    font-size: 0.16rem;
+    line-height: 1.5;
+    margin-bottom: 0.2rem;
+    text-align: justify;
+  }
+  span {
+    font-size: 0.20rem;
+    color: var(--q-info);
+    line-height: 2.5;
+    border-top: 1px solid #e5e5e5;
+    display: block;
+    text-align: center;
+  }
 }
-
-.arrow2 {
-  transform: rotate(0);
-}</style>
+</style>

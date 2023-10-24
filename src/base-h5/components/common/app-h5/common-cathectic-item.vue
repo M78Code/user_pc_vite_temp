@@ -8,7 +8,12 @@
       v-if="show_bet_record"
       class="common-cathectic-item hairline-border" :class="{'common-cathectic-item2': key2==0,'common-cathectic-item3': len==key2+1,}" v-show="(!is_early || (is_early && is_show_early_settle)) && !is_show_pre">
     <!-- 内容显示 -->
-    <item-body :is_pre="is_pre" :item_data="item_data"></item-body>
+    <template>
+        <!-- 单关内容显示 -->
+        <!-- <item-simple-body v-if="item_data.seriesType == '1'" :is_pre="is_pre" :data_b="item_data"></item-simple-body> -->
+        <!-- 串关内容显示 -->
+        <!-- <item-multiple-body v-else :is_pre="is_pre" :data_b="item_data"></item-multiple-body> -->
+    </template>
     <!-- bw3新版矩形框底部 -->
     <!-- <item-footer :is_pre="is_pre" :data_f="item_data"></item-footer> -->
     <!-- 投注记录页提前结算的按钮、滑块和提前结算详情 -->
@@ -19,7 +24,8 @@
 </template>
 
 <script setup>
-import itemBody from "src/base-h5/components/common/cathectic-item/app-h5/item-body.vue";
+import itemSimpleBody from "src/base-h5/components/common/cathectic-item/app-h5/item-simple-body.vue";
+import itemMultipleBody from "src/base-h5/components/common/cathectic-item/app-h5/item-multiple-body.vue";
 import itemFooter from "src/base-h5/components/common/cathectic-item/item-footer.vue";
 import itemOrder from "src/base-h5/components/common/cathectic-item/item-order.vue";
 import earlySettle from "src/base-h5/components/common/cathectic-item/app-h5/early-settle.vue";
