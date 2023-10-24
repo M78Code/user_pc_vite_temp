@@ -25,18 +25,24 @@
 
     <!-- 球数 内容 -->
     <template v-else>
-        <!-- <match-result-ht :key="'matchResultHtBalls' + index" :title="'大小球'" :source="'bigAndSmallBall'"></match-result-ht> -->
-        <answer-questions title="训练营"></answer-questions>
+        <match-result-ht v-if="!state.inAnswerQuestion" :key="'matchResultHtBalls' + index" :title="'大小球'" :source="'bigAndSmallBall'"></match-result-ht>
+        <answer-questions v-else title="训练营"></answer-questions>
+
+        <div class="ht-congrats">恭喜，您已进阶为足球大师</div>
 
         <div class="ht-handle">
             <div class="ht-button">
                 实战来一注
             </div>
-            <div class="ht-button default">
+            <div class="ht-button default" @click="() => { state.inAnswerQuestion = !state.inAnswerQuestion}">
                 模拟先练习
             </div>
         </div>
 
+        <div class="ht-again">
+            再学一次
+            <div class="icon"></div>
+        </div>
 
     </template>
 </template>
@@ -53,7 +59,8 @@ const matchResultList = 4
 const props = defineProps({})
 const state = reactive({
     currentSwitchValue: 0, // 让球：0 大小球：1 对应switchMenu index
-    currentSlideValue: 0 // 球数 目前slideMenu写死
+    currentSlideValue: 0, // 球数 目前slideMenu写死
+    inAnswerQuestion: false // 是否进入了答题状态
 })
 
 const switchHandle = (val) => {

@@ -21,9 +21,9 @@
             </div>
             <!-- 答题选项 -->
             <div class="ht-answer-options">
-                <div class="ht-anwser-item">
+                <div class="ht-anwser-item selected">
                     <div class="option">
-                        <div>A.</div>
+                        <!-- <div>A.</div> -->
                         <div class="options-icon"></div>
                     </div>
                     <div class="option-content">
@@ -37,7 +37,7 @@
                 <div class="ht-anwser-item">
                     <div class="option">
                         <div>A.</div>
-                        <div class="options-icon"></div>
+                        <!-- <div class="options-icon"></div> -->
                     </div>
                     <div class="option-content">
                         <div class="text">大2.5</div>
@@ -50,7 +50,7 @@
                 <div class="ht-anwser-item">
                     <div class="option">
                         <div>A.</div>
-                        <div class="options-icon"></div>
+                        <!-- <div class="options-icon"></div> -->
                     </div>
                     <div class="option-content">
                         <div class="text">大2.5</div>
@@ -63,7 +63,7 @@
                 <div class="ht-anwser-item">
                     <div class="option">
                         <div>A.</div>
-                        <div class="options-icon"></div>
+                        <!-- <div class="options-icon"></div> -->
                     </div>
                     <div class="option-content">
                         <div class="text">大2.5</div>
@@ -72,6 +72,18 @@
                             <div>1.99</div>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <div class="ht-answer-result">
+                <div class="result fail">
+                    <div class="result-icon"></div>
+                    <div class="text">恭喜红单</div>
+                </div>
+
+                <div class="info">
+                    <div>进球数2，小于2.5</div>
+                    <div>故投注<span>小2.5</span>能全赢</div>
                 </div>
             </div>
 
@@ -181,6 +193,15 @@ defineProps({
                 .option {
                     margin-right: .04rem;
                     font-size: .14rem;
+                    div {
+                        width: .2rem;
+                        height: .2rem;
+                        text-align: center;
+                    }
+                    .options-icon {
+                        background-color: var(--q-gb-t-c-1);
+                        border-radius: .2rem;
+                    }
                 }
                 .option-content {
                     display: flex;
@@ -190,7 +211,11 @@ defineProps({
                     width: 1rem;
                     height: .41rem;
                     border-radius: .04rem;
-                    background-color: var(--q-gb-t-c-8);
+                    background-color: var(--q-gb-bd-c-7);
+                    .text {
+                        font-size: .12rem;
+                        color: var(--q-gb-t-c-3);
+                    }
                     .point {
                         display: flex;
                         justify-content: center;
@@ -227,6 +252,40 @@ defineProps({
                             border-top-color: #00bd00;
                         }
                     }
+                }
+            }
+            .selected {
+                .option-content {
+                    background-color: var(--q-gb-t-c-7);
+                }
+            }
+        }
+
+        .ht-answer-result {
+            padding:  0 .3rem;
+            padding-bottom: .13rem;
+            .result {
+                display: flex;
+                align-items: center;
+                font-size: .14rem;
+                margin-bottom: .14rem;
+                .result-icon {
+                    width: .2rem;
+                    height: .2rem;
+                    background-color: var(--q-gb-t-c-1);
+                    margin-right: .06rem;
+                }
+            }
+            .win {
+                color: var(--q-gb-t-c-1);
+            }
+            .fail {
+                color: var(--q-gb-bd-c-8);
+            }
+            .info {
+                font-size: .12rem;
+                span {
+                    color: var(--q-gb-t-c-1);
                 }
             }
         }
