@@ -117,6 +117,7 @@ export default defineComponent({
       ...toRefs(data),
       get_bet_list,
       go_to_bet,
+      LOCAL_PROJECT_FILE_PREFIX
     }
   }
 })

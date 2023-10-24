@@ -400,7 +400,8 @@ export default defineComponent({
       touch_pan,
       bet_slide,
       route,
-      go_to_bet
+      go_to_bet,
+      LOCAL_PROJECT_FILE_PREFIX
     }
   }
 })

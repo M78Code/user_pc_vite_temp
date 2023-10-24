@@ -164,7 +164,8 @@ export default defineComponent({
       olitem_name,
       go_to_bet,
       calc_num,
-      calc_classname
+      calc_classname,
+      LOCAL_PROJECT_FILE_PREFIX
     }
   }
 })
