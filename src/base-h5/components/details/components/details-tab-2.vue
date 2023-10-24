@@ -185,7 +185,7 @@ export default defineComponent({
   overflow-y: hidden;
   -webkit-overflow-scrolling: auto;
   white-space: nowrap;
-  padding:2px 0;
+  padding:0.02rem 0;
 
   &::-webkit-scrollbar {
     display: none;
@@ -216,9 +216,9 @@ export default defineComponent({
   font-weight: bold;
   color: var(--q-gb-t-c-14);
   background:var(--q-gb-bg-c-13);
-  border-radius: 22px;
-  height:30px;
-  line-height:30px;
+  border-radius: 0.22rem;
+  height:0.30rem;
+  line-height:0.30rem;
   }
 
 /*************** 选中的玩法集 *************** -E*/

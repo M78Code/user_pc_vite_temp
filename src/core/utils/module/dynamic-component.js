@@ -21,6 +21,11 @@ const comp_config = {
   'details-tab': { 
     'app-h5': `/src/base-h5/components/details/components/details-tab-2.vue`,
     'yazhou-h5': `/src/base-h5/components/details/components/details-tab.vue`
+  },
+  // 详情盘口组件
+  'tournament-play': { 
+    'app-h5': `/src/base-h5/components/details/components/tournament-play/tournament-play-new-2.vue`,
+    'yazhou-h5': `/src/base-h5/components/details/components/tournament-play/tournament-play-new.vue`
   }
 }
 
