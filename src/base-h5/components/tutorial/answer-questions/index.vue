@@ -156,7 +156,7 @@ defineProps({
                 font-size: .09rem;
                 color: var(--q-gb-t-c-14);
                 display: flex;
-                align-items: center;
+                align-items: end;
                 justify-content: center;
                 border-radius: .04rem;
                 margin-right: .02rem;
