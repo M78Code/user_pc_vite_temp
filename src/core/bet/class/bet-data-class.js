@@ -476,6 +476,7 @@ this.bet_appoint_ball_head= null */
     this.single_list_copy = []
     this.bet_single_list = []
     this.bet_read_write_refer_obj = {}
+    this.set_bet_amount(0)
     this.set_bet_data_class_version()
   }
 

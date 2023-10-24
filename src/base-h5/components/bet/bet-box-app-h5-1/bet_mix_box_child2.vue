@@ -46,11 +46,11 @@
           <acceptRules v-if="BetData.better_rules_show"></acceptRules>
         </div>
       </div>
-
       <!-- 点击投注后 -->
       <div class="scroll-box" ref="scroll_box" v-if="BetViewDataClass.bet_order_status != 1">
         <bet-mix-box-child4></bet-mix-box-child4>
       </div>
+
       <div class="yb_px12" v-if="get_mix_bet_flag">
         <div class="row justify-between items-center content-t yb_mb6 yb_mt8 yb_fontsize14 fw_600 bet-mix-show">
           <div>{{ $t('bet.total_income') }}</div>
@@ -96,23 +96,19 @@
           </template>
           <template v-else>
             <!-- 投注 -->
-            <div v-if="btn_show == 0" @click="submit_order" :class="{ 'set-opacity': true }"
+            <div v-if="BetViewDataClass.bet_order_status == 1" @click="submit_order" :class="{ 'set-opacity': true }"
               class="row justify-center items-center content-center">
               <p class="yb_fontsize12 yb_mr10">{{ $t('bet_record.bet_val') }}</p>
               <p class="yb_fontsize20">{{ bet_amount }}</p>
             </div>
             <!-- 投注 有投注项失效后点击接受变化的置灰样式-->
-            <div v-if="btn_show == 5" class="row justify-center items-center content-center set-opacity">
+            <!-- <div v-if="BetViewDataClass.bet_order_status == 5" class="row justify-center items-center content-center set-opacity">
               <p class="yb_fontsize12 yb_mr10">{{ $t('bet_record.bet_val') }}</p>
               <p class="yb_fontsize20">{{ format_money2(500) }}</p>
-            </div>
+            </div> -->
             <!-- 确定 -->
-            <p v-if="btn_show == 1" @click="pack_up" class="yb_fontsize16">{{ $t('common.ok') }}</p>
-            <!-- 处理中 -->
-            <div v-if="btn_show == 2" class="yb_fontsize16 row justify-center items-center">
-              <p class="yb_mr8">{{ $t('bet_record.submitting_bet') }}</p>
-              <ball-spin />
-            </div>
+            <p v-if="[3,4,5].includes(BetViewDataClass.bet_order_status)" @click="pack_up" class="yb_fontsize16">{{ $t('common.ok') }}</p>
+          
             <!-- 接受变化 -->
             <p v-if="btn_show == 3" @click="agree_change" class="yb_fontsize16">{{ $t('bet.agree_change') }}</p>
             <!-- 接受变化并投注 -->
@@ -224,6 +220,8 @@ const is_bet_check_rc = () => {
 const pack_up = (val) => {
   // TODO: 临时调试用
   useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX, false);
+  BetData.set_clear_bet_info()
+  BetViewDataClass.set_clear_bet_view_config()
 }
 
 const submit_order = (type) => {
@@ -532,5 +530,8 @@ onUnmounted(() => {
 /* ************** 移除投注项删除图标 ************** -E */
 .yellow-color {
   color: var(--q-color-fs-color-116);
+}
+.set-opacity{
+  background:var(--q-gb-bg-c-9)
 }
 </style>
