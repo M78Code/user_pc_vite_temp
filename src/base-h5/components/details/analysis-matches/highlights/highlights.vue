@@ -82,7 +82,7 @@
                 }
               ]">
             <div class="load-error-mask" v-show="is_expand && is_replay_load_error">
-              <div><img src="image/bw3/svg/details/reconnect.svg" /></div>
+              <div><img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/details/reconnect.svg`" /></div>
               <div>{{ i18n_t('highlights.reconnect') }}</div>
             </div>
 

@@ -8,6 +8,7 @@ import "@quasar/extras/material-icons/material-icons.css";
 // Import Quasar css
 import "quasar/src/css/index.sass";
 
+import  "./src/css/style.css";
 // 引入 当前 计算出的植入配置
 
 import BUILDIN_CONFIG from "app/job/output/env/index.js";

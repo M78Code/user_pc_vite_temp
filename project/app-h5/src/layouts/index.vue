@@ -13,11 +13,11 @@
           <setMenu />
         </template>
       </MenuWapper> -->
-
+      <div v-show="false">{{MenuData_App_H5.update_time}}</div>
       <!-- 当路由为盘口教程时 不展示topMenu 和 scrollMenu -->
       <template v-if="['matchList', 'sport_menu'].includes(route.name)">
         <TopMenu />
-        <ScrollMenu />
+        <ScrollMenu :menu_list="MenuData_App_H5.get_menu_lvmi_list(MenuData_App_H5.current_lv_1_menu_mi)" />
         <DateTab />
         <SwiperWap />
         <SwitchWap />
@@ -65,7 +65,7 @@ import {
   defineAsyncComponent,
   nextTick,
 } from "vue";
-import { useMittOn, MITT_TYPES, i18n_t, UserCtr } from "src/core/";
+import { useMittOn, MITT_TYPES, i18n_t, UserCtr,MenuData_App_H5 } from "src/core/";
 // import { FooterWapper } from "src/components/footer/index.js";
 import { TopMenu,Tabbar,ScrollMenu,DateTab,SearchTab,SwitchWap,SwiperWap } from 'src/base-h5/components/menu/app-h5-menu/index'
 import { MenuWapper } from "src/base-h5/components/menu";
@@ -109,7 +109,6 @@ const userBannerTimer = ref(5);
 const timer_3 = ref(null);
 // 开启注单历史弹窗及遮罩
 const settle_dialog_bool = ref(true);
-
 // let unsubscribe = store.subscribe(() => {
 //   const { footerMenuReducer: new_footer_menu_reducer } = store.getState();
 //   settle_dialog_bool.value = new_footer_menu_reducer.settle_dialog_bool;
@@ -118,6 +117,7 @@ const settle_dialog_bool = ref(true);
 const toggleLeftDrawer = () => {
   leftDrawerOpen.value = !leftDrawerOpen.value;
 };
+
 
 // useMittOn(MITT_TYPES["change_accept"], (e) => {
 //   get_accept_show.value = e

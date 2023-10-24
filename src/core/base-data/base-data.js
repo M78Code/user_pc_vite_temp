@@ -39,6 +39,7 @@ import {
   useMittEmitterGenerator,
   MITT_TYPES,
 } from "src/core/index.js"
+import { MenuData_App_H5 } from "src/core/";
 
 class BaseData {
   constructor() {
@@ -372,6 +373,9 @@ class BaseData {
     // 设置新菜单
     this.set_left_menu_init(menu_old_or_nem_data_list);
 
+    // app-h5使用
+    MenuData_App_H5.set_init_menu_list()
+
     // 计算   冠军 数据  对象形式   commn_sport_guanjun_obj
     // 计算虚拟体育 的 数据对象
     // this.set_vr_mi_config()
@@ -622,6 +626,7 @@ class BaseData {
     // 菜单 国际化 数据  map
     res["2000"] = esports || "Esports";
     this.menus_i18n_map = res;
+    console.error('BaseData',this)
   }
   /**
    * 解析  新的菜单到旧的菜单的映射关系

@@ -112,9 +112,6 @@ class BetData {
     };
 
     //==============================================投注之后 有注单ID=============
-
-    // 投注后的 
-    this.orderNo_bet_obj = []
     ///////////////////
 
     // 当前电竞查询的模式 false单关模式
@@ -479,6 +476,7 @@ this.bet_appoint_ball_head= null */
     this.single_list_copy = []
     this.bet_single_list = []
     this.bet_read_write_refer_obj = {}
+    this.set_bet_amount(0)
     this.set_bet_data_class_version()
   }
 
@@ -659,11 +657,6 @@ this.bet_appoint_ball_head= null */
     this.deviceType = val
   }
 
-  // 投注后的数据
-  set_orderNo_bet_obj(array) {
-    this.orderNo_bet_obj = array
-    this.set_bet_data_class_version()
-  }
    //设置输入框最小值
   set_pre_min_odd_value(val){
     this.bet_pre_min_odd_value = val

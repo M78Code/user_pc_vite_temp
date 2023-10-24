@@ -81,6 +81,8 @@ class BetViewData {
     this.bet_min_max_money = {}
     // 键盘状态
     this.bet_keyboard_show = false;
+    // 投注后的 
+    this.orderNo_bet_obj = []
 
     this.bet_view_version = ref('11')
 
@@ -361,6 +363,19 @@ class BetViewData {
   set_bet_special_series(array) {
     this.bet_special_series = array
     this.set_bet_view_version()
+  }
+
+  // 投注后的数据
+  set_orderNo_bet_obj(array) {
+    this.orderNo_bet_obj = array
+    this.set_bet_view_version()
+  }
+
+  // 清空数据
+  set_clear_bet_view_config(){
+    this.orderNo_bet_obj = []
+    this.bet_order_status = 1
+    this.order_confirm_complete = 0
   }
 }
 export default new BetViewData();

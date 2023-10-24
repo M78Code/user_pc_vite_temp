@@ -200,13 +200,13 @@ const get_query_bet_amount_esports_or_vr = () => {
             useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY)
 
             // 设置投注项及时比分
-            let latestMarketInfo  = lodash_.get(res,'data.latestMarketInfo')
-            latestMarketInfo.forEach(item=>{
-                let custom_id = lodash_.get(item,'currentMarket[0].id')
-                //获取及时比分
-                let timerly_basic_score = item.preBetBenchmarkScore
-                BetData.set_custom_id_obj(custom_id,'timerly_basic_score',timerly_basic_score)
-            })
+            // let latestMarketInfo  = lodash_.get(res,'data.latestMarketInfo')
+            // latestMarketInfo.forEach(item=>{
+            //     let custom_id = lodash_.get(item,'currentMarket[0].id')
+            //     //获取及时比分
+            //     let timerly_basic_score = item.preBetBenchmarkScore
+            //     BetData.set_custom_id_obj(custom_id,'timerly_basic_score',timerly_basic_score)
+            // })
 
         } else {
             // 获取限额失败的信息
@@ -527,7 +527,7 @@ const set_orderNo_bet_obj = order_no_list => {
             playId,
         }
     })
-    BetData.set_orderNo_bet_obj(order_list)
+    BetViewDataClass.set_orderNo_bet_obj(order_list)
 }
 // 是否显示基准分 
 const get_mark_score = ol_obj => {

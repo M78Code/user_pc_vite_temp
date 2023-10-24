@@ -545,4 +545,7 @@ onUnmounted(() => {
   height: 0.14rem;
   background: var(--q-color-img-bg-98) no-repeat center / contain;
 }
+.set-opacity{
+  background:var(--q-gb-bg-c-9)
+}
 </style>

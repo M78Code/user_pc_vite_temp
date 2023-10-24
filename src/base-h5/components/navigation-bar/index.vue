@@ -1,3 +1,6 @@
+<!--
+ * @Description:盘口教程头部复用操作组件
+-->
 <template>
     <div class="px-6 py-5 navigation-bar">
         <div class="navigation-bar-left">
@@ -20,6 +23,10 @@
 import { i18n_t, compute_css_obj } from "src/core/index.js";
 import { useRouter,useRoute } from "vue-router";
 
+defineOptions({
+    name: 'navigationBar' // 设置组件名称
+})
+
 const router = useRouter();
 
 defineProps({
@@ -36,20 +43,20 @@ defineProps({
 <style scoped lang="scss">
 // 组件样式
 .navigation-bar {
-    max-height: 60px;
-    height: 44px;
+    max-height: .6rem;
+    height: .44rem;
     display: flex;
     justify-content: space-between;
-    border-bottom: 1px solid #F2F2F6;
+    border-bottom: .01rem solid var(--q-gb-bd-c-7);
     &-close {
         display: flex;
         justify-content: center;
         align-items: center;
         height: 100%;
-        padding-left: 14px;
+        padding-left: .14rem;
         .img {
-            height: 20px;
-            width: 12px;
+            height: .20rem;
+            width: .12rem;
         }
     }
     &-center, &-left, &-right {
@@ -62,7 +69,7 @@ defineProps({
         justify-content: center;
         overflow: hidden;
         span {
-            font-size: 18px;
+            font-size: .18rem;
             width: 100%;
             overflow: hidden;
             font-weight: bold;

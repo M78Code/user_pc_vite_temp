@@ -72,7 +72,7 @@
 <script>
 // #TODO vuex
 // import { mapGetters, mapMutations } from "vuex"
-import tournament_play_new from "src/base-h5/components/details/components/tournament-play/tournament-play-new.vue"
+
 // 引入接口封装文件
 import { api_common, api_analysis} from 'src/api/index.js'
 // 引入国际化
@@ -94,10 +94,12 @@ import detailMatchList from 'src/base-h5/components/details/components/detail-ma
 import uid from "src/core/uuid/index.js"
 import lodash from "lodash";
 import { useRouter, useRoute } from "vue-router";
-import { useMittOn, useMittEmit, MITT_TYPES,compute_local_project_file_path } from  "src/core/"
+import { useMittOn, useMittEmit, MITT_TYPES,compute_local_project_file_path,import_vue_component } from  "src/core/"
 // import { Level_one_detail_odd_info } from "../category-list.js";
 import { category_info } from "./category.js"
-import { reactive, nextTick, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
+import { reactive, nextTick, onMounted, onUnmounted, toRefs, watch, defineComponent,defineAsyncComponent } from "vue";
+
+const tournament_play_new = defineAsyncComponent(() =>  import_vue_component('tournament-play') )
 export default defineComponent({
   name: "category",
   // #TODO mixins
