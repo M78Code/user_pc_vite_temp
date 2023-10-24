@@ -10,8 +10,6 @@
     <template v-if="!hid && !is_remove">
       <!-- 玩法title栏 -->
       <div class="play-name-outer-wrapper">
-         <!-- 左侧标题样式 -->
-        <div class="title-left" ></div>
         <div class="play-name" :class="{'vir-mar':item_data.hotName}">
           <div class="row items-center" :class="{'bottom-style':is_show_underline}">
             <!-- 玩法名称 -->
@@ -778,13 +776,29 @@ export default defineComponent({
   height: 0.14rem;
   background: url($SCSSPROJECTPATH + "/image/svg/stick_btn_def.svg") no-repeat center / 96% 96% !important;
 }
-.title-left{
-  position:absolute;
-  left:0.12rem;
-  top:0.12rem;
-  width: 0.02rem;
-  height: 0.16rem;
-  background: url($SCSSPROJECTPATH + "/image/svg/title_tag.svg") no-repeat center / 96% 96% !important;
-  z-index:99;
+.base-font-weg {
+  min-height: 0.29rem !important;
+  &:after {
+    content: ' ';
+    background: url($SCSSPROJECTPATH + "/image/svg/title_tag.svg") no-repeat center  !important;
+    display: block;
+    position: absolute;
+    width: 3px;
+    height: 0.14rem;
+    top: calc(50% - 0.08rem);
+    left: -0.1rem;
+    border-radius: 1.5px;
+  }
+}
+// 去除boredr
+.play-name{
+   &::after {
+     border: none !important
+   }
+}
+.item-wrap{
+   &::after {
+     border: none !important
+   }
 }
 </style>
