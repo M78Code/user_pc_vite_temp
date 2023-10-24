@@ -12,10 +12,10 @@
                 <div class="img" :style="compute_css_obj('menu-go-back-icon')"></div>
             </div>
         </slot>
-       <div v-show="false"> {{MenuData_App_H5.update_time}} </div> 
+       <div v-show="false"> {{MenuData.update_time}} </div> 
         <div class="main-menu-container">
             <template v-for="(item, index) in menu_list" :key="lodash_.get(item, 'code')">
-                <div class="m-menu-item" :class="{ current: lodash_.get(item, 'mi') == MenuData_App_H5.current_lv_1_menu_mi }">
+                <div class="m-menu-item" :class="{ current: lodash_.get(item, 'mi') == MenuData.current_lv_1_menu_mi }">
                     <span class="i-title" @click="set_menu_lv1(item, index)">
                         {{ i18n_t("new_menu." + lodash_.get(item, 'mi')) || lodash_.get(item, 'mi') }}
                     </span>
@@ -32,7 +32,8 @@ import lodash_ from "lodash";
 import { reactive } from "vue";
 import { useRouter } from "vue-router";
 import { format_money2 } from "src/core/format/index.js";
-import { i18n_t, compute_css_obj, MenuData_App_H5,UserCtr } from "src/core/index.js";
+import { i18n_t, compute_css_obj, MenuData,UserCtr } from "src/core/index.js";
+import { get_sport_menu } from "./top-list";
 const router = useRouter();
 
 //一级菜单list
@@ -66,7 +67,7 @@ const menu_list = reactive([
  * @param {*} type 
  */
 const set_menu_lv1 = item => {
-    MenuData_App_H5.set_current_lv1_menu(item.mi);
+    MenuData.set_current_lv1_menu(item);
 }
 
 /**

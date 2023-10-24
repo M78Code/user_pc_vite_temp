@@ -61,10 +61,13 @@ import MenuData_H5 from "src/core/menu-h5/menu-data-class.js";
 import MatchListCard_H5 from "src/core/match-list-h5/match-card/match-list-card-class.js";
 import MatchListCardData_H5 from "src/core/match-list-h5/match-card/module/match-list-card-data-class.js";
 
-import MenuData_App_H5 from "src/core/menu-app-h5/menu-data-class.js";
+import MenuData_App_h5 from "src/core/menu-app-h5/menu-data-class.js";
 
  
-const MenuData = IS_PC ? MenuData_PC : MenuData_H5;
+let MenuData = IS_PC ? MenuData_PC : MenuData_H5;
+if(PROJECT_NAME == 'app-h5'){
+  MenuData = MenuData_App_h5
+}
 const MatchListCard = IS_PC ? MatchListCard_PC : MatchListCard_H5;
 const MatchListCardData = IS_PC ? MatchListCardData_PC : MatchListCardData_H5;
 
@@ -243,7 +246,6 @@ export {
   IS_PC,
   PROJECT_NAME,
   MenuData,
-  MenuData_App_H5,
   MatchListCard,
   MatchListCardData,
   PageSourceData,

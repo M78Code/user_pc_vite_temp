@@ -16,20 +16,19 @@
           simple: sport_container_simple && !is_export,
           'shadow-down': !is_export,
         }">
-          
-        <div v-show="false">  {{ MenuData_App_H5.update_time }} {{BaseData.base_data_version}} </div>
+        <div v-show="false">   {{MenuData.update_time}} </div>
 
           <div class="s-menu-container flex" ref="sub_menu_scroller">
-            <template v-for="( item, index ) in menu_list" :key="lodash.get(item, 'mi')">
+            <template v-for="( item, index ) in MenuData.get_menu_lvmi_list(MenuData.current_lv_1_menu_mi)" :key="lodash.get(item, 'mi')">
               <div class="sport-menu-item flex justify-center" v-show="item.ct > 0" @click="set_menu_lv2(item, index)">
                 <div class="inner-w flex justify-between items-center" :class="{
                   favorite: show_favorite_list,
-                  current: MenuData_App_H5.current_lv_2_menu_mi == item.mi
+                  current: MenuData.current_lv_2_menu_mi == item.mi
                 }
                   ">
                   <div class="sport-w-icon">
                     <span class="sport-icon-wrap"
-                      :style="compute_css_obj({key:MenuData_App_H5.current_lv_2_menu_mi == item.mi ? 'menu-sport-active-image' : 'menu-sport-icon-image', position:format_type(item)})"></span>
+                      :style="compute_css_obj({key:MenuData.current_lv_2_menu_mi == item.mi ? 'menu-sport-active-image' : 'menu-sport-icon-image', position:format_type(item)})"></span>
 
                     <div class="sport-match-count" v-show="two_menu_show(item)">
                       {{ show_favorite_list ? '' : item.ct ? item.ct : 0 }}
@@ -40,7 +39,7 @@
                     'din-regular': is_export
                   }
                     ">
-                    {{ item.name || MenuData_App_H5.get_menus_i18n_map(item.mi) }}
+                    {{ item.name || MenuData.get_menus_i18n_map(item.mi) }} {{item.mi}}
                   </div>
                 </div>
 
@@ -56,8 +55,8 @@ import lodash from "lodash";
 import MatchFold from 'src/core/match-fold'
 import BaseData from "src/core/base-data/base-data.js";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
-import { ref, watch, computed,onUpdated, onMounted, reactive } from "vue";
-import { i18n_t, compute_css_obj, GlobalAccessConfig, MenuData_App_H5, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/index.js";
+import { ref, computed } from "vue";
+import { compute_css_obj, MenuData, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/index.js";
 import { is_scroll_ball, update_time, is_export, is_mix,is_results, is_kemp, is_jinzu, menu_type } from 'src/base-h5/mixin/menu.js'
 import { get_sport_menu } from "../top-menu/top-list";
 
@@ -66,65 +65,34 @@ const menu_wrap_simple = ref(false);
 //菜单容器二级菜单是否收起
 const sport_container_simple = ref(false);
 
-let ref_data = reactive({
-  // 二级菜单列表
-  menu_lv2_list:[],
-  // 当前选中的二级菜单id
-  current_lv2:''
-})
-
-
-const props = defineProps({
-  // 菜单列表
-  menu_list: []
-})
-
 
 // 是否初次渲染
 const is_first = ref(true)
 let show_favorite_list = ref('')
-const current_lv2 = ref(MenuData_App_H5.current_lv_2_menu || {})//二级菜单选中
-//点击滚球下的全部
-function select_all_sub_menu_handle() {
-  let data_list = props.menu_list.find((item) => lodash.get(item, 'mi') == 1);
-  if (data_list) {
-    set_menu_lv2(data_list.sl, -1, "click");
-  }
-}
-// 切换到电竞时 的菜单 背景图片
-// function dj_back_img(item) {
-//   let value = +item || 2100
-//   let type = ''
-//   switch (value) {
-//     case 2100: type = "lol"; break;
-//     case 2101: type = "dota"; break;
-//     case 2102: type = "csgo"; break;
-//     case 2103: type = "wangzhe"; break;
-//   }
-//   dj_back_type.value = type
-// }
+
 /**
  * 二级菜单事件
  */
  async function set_menu_lv2(item = {}) {
   // 选中后点击无效
-  if (mi == MenuData_App_H5.current_lv_2_menu_mi) return
-  MenuData_App_H5.set_current_lv_2_menu_mi(mi)
+  if (item.mi == MenuData.current_lv_2_menu_mi) return
+  MenuData.set_current_lv_2_menu_mi(item)
   // 今日 / 滚球/ 冠军 没有 三级
-  if([1,2,400].includes(this.current_lv_1_menu_mi)){
+  if([1,2,400].includes(MenuData.current_lv_1_menu_mi)){
     handle_match_render_data()
   }
 }
+
 /**
 * 二级菜单数量 是否展示
 * @param {Number} sub  赛种item
 */
 const two_menu_show = (sub) => {
-  if (MenuData_App_H5.is_results()) {
+  if (MenuData.is_results()) {
     return false
   }
   // 滚球下足球处理 1011足球
-  let mi_list = MenuData_App_H5.is_scroll_ball() ? [1001, 1002, 1004, 1010] : [1001, 1002, 1004, 1011, 1010]
+  let mi_list = MenuData.is_scroll_ball() ? [1001, 1002, 1004, 1010] : [1001, 1002, 1004, 1011, 1010]
   return ![is_export.value, is_results.value, is_export.value].includes(true) && !mi_list.includes(+sub.mi)
 }
 /**
@@ -134,7 +102,7 @@ const two_menu_show = (sub) => {
   //找到滚球
   let data_list = props.menu_list.find((item) => item.mi == 1);
   //滚球下所有是数量总和 updateime是时间作为计算属性变化
-  return MenuData_App_H5.count_menu(data_list, update_time.value)
+  return MenuData.count_menu(data_list, update_time.value)
 });
 /**
  * @description 处理赛事列表渲染数据
@@ -146,11 +114,11 @@ const two_menu_show = (sub) => {
   MatchFold.clear_fold_info()
 
   // 冠军拉取旧接口； 待 元数据提供 冠军赛事后 再删除
-  if (MenuData_App_H5.is_kemp()) return MatchMeta.get_champion_match()
+  if (MenuData.is_kemp()) return MatchMeta.get_champion_match()
   // 赛果不走元数据， 直接拉取接口
-  if (MenuData_App_H5.is_results()) return MatchMeta.get_results_match()
+  if (MenuData.is_results()) return MatchMeta.get_results_match()
   // 电竞不走元数据， 直接拉取接口
-  if (MenuData_App_H5.is_export()) return MatchMeta.get_esports_match()
+  if (MenuData.is_export()) return MatchMeta.get_esports_match()
 
   const mi_tid_mids_res = lodash.get(BaseData, 'mi_tid_mids_res')
   if (lodash.isEmpty(mi_tid_mids_res)) return
@@ -164,7 +132,7 @@ const two_menu_show = (sub) => {
  * @return {}
  */
 const format_type = ( item = {} ) => {
-  if (MenuData_App_H5.is_results()) {
+  if (MenuData.is_results()) {
     let type = +item.menuId
     // 赛果电竞图标
     if ([100, 101, 103, 102].includes(type)) {
@@ -182,7 +150,7 @@ const format_type = ( item = {} ) => {
   }
   //电竞背景处理
   if (BaseData.sports_mi.includes(+item.mi)) return +item.mi
-  return MenuData_App_H5.recombine_menu_bg(item, true)
+  return MenuData.recombine_menu_bg(item, true)
 }
 
 

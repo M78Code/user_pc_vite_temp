@@ -7,7 +7,7 @@ import lodash from 'lodash'
 import { api_common } from "src/api/index.js";
 import BaseData from 'src/core/base-data/base-data.js'
 import MatchPage from 'src/core/match-list-h5/match-class/match-page'
-import MenuData from "src/core/menu-h5/menu-data-class.js"
+import MenuData from "src/core/menu-app-h5/menu-data-class.js"
 import UserCtr from 'src/core/user-config/user-ctr.js'
 import MatchFold from 'src/core/match-fold'
 import MatchCollect from 'src/core/match-collect'
@@ -37,11 +37,12 @@ class MatchMeta {
    * @param { mi } 菜单类型
    */
   set_origin_match_data() {
+    debugger
     // 菜单 ID 对应的 元数据赛事 mids
-    const menu_lv_v1 = lodash.get(MenuData.current_lv_1_menu, 'mi')
-    const menu_lv_v2 = lodash.get(MenuData.current_lv_2_menu, 'mi')
-    const menu_lv_v1_sl = lodash.get(MenuData.current_lv_1_menu, 'sl')
-    const menu_lv_v2_sl = lodash.get(MenuData.current_lv_2_menu, 'sl')
+    const menu_lv_v1 = MenuData.current_lv_1_menu_mi
+    const menu_lv_v2 = MenuData.current_lv_2_menu_mi
+    const menu_lv_v1_sl = MenuData.get_menu_lvmi_list(MenuData.current_lv_1_menu_mi)
+    const menu_lv_v2_sl = MenuData.get_menu_lv_2_mi_list(MenuData.current_lv_2_menu_mi)
     // 滚球全部
     if (+menu_lv_v1 === 1 && !menu_lv_v2) return this.get_origin_match_mids_by_mis(menu_lv_v1_sl)
 

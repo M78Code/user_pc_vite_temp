@@ -34,7 +34,7 @@ class MenuData {
     }
    
     //当前的菜单 lv1
-    this.current_lv_1_menu_mi = 2;
+    this.current_lv_1_menu_mi = '';
     //当前的菜单 lv2
     this.current_lv_2_menu_mi = '';
     //当前的菜单 lv3
@@ -43,6 +43,9 @@ class MenuData {
     this.current_lv_4_menu_mi = '';
     //================主列表用的  结束==================
     this.menu_list = []
+    this.menu_type = ref(2)
+    this.get_sport_all_selected = ''
+    this.menu_lv_mi_lsit = []
   }
 
   // 初始化需要使用的数据
@@ -54,13 +57,14 @@ class MenuData {
       }
     })
     this.menu_list = menu_list
-    this.update()
+    this.set_current_lv1_menu(2)
   }
 
   // 根据菜单id获取下级菜单id 二级菜单
   // mid 顶级菜单id
   get_menu_lvmi_list(mid){
     let menu_lv_mi_lsit = []
+    
     // 冠军 直接取值
     if(mid == 400){
       menu_lv_mi_lsit = (BaseData.mew_menu_list_res.find(item=> item.mi == 400 ) || {}).sl
@@ -75,18 +79,24 @@ class MenuData {
       })
     }
     // 默认设置二级菜单id
-    this.set_current_lv_2_menu_mi( lodash_.get(menu_lv_mi_lsit,'[0].mi',''))
     console.error('menu_lv_mi_lsit',menu_lv_mi_lsit)
+    this.menu_lv_mi_lsit = menu_lv_mi_lsit
     return menu_lv_mi_lsit
   }
 
+  get_menu_lv_2_mi_list(mi){
+    return (this.menu_lv_mi_lsit.find(item=> item.mi == mi)).sl
+  }
+
   // 设置二级菜单id
-  set_current_lv_2_menu_mi(val){
-    this.current_lv_2_menu_mi = val
+  set_current_lv_2_menu_mi(val = {}){
+    this.current_lv_2_menu_mi = val.mi
     // 今日 / 滚球/ 冠军 没有 三级
     if(![1,2,400].includes(this.current_lv_1_menu_mi)){
      
     }
+    this.update()
+
   }
 
   /**
@@ -651,7 +661,7 @@ class MenuData {
    * 选中1级menu
    * item [object]当前点击对象
    */
-  async set_current_lv1_menu(lv1_mi) {
+  set_current_lv1_menu(lv1_mi) {
     this.current_lv_1_menu_mi = lv1_mi  
     this.update();
   }
@@ -816,6 +826,29 @@ class MenuData {
       footer_sub_menu_id
     })
   }
+    /**
+   * 设置值 并且缓存
+   * obj [Object] 需要设置的缓存  key要和本类系统哦
+   * is_cache是否缓存
+   */
+    set_cache_class(obj, is_cache = true) {
+      for (const key in obj) {
+        if (Object.hasOwnProperty.call(this, key)) {
+          if (["menu_type"].includes(key)) {
+            this[key].value = obj[key];
+          } else {
+            this[key] = obj[key];
+          }
+        }
+      }
+      if (is_cache) {
+        const current = SessionStorage.get(Cache_key.CACHE_CRRENT_MEN_KEY, {});
+        SessionStorage.set(
+          Cache_key.CACHE_CRRENT_MEN_KEY,
+          lodash.assign({}, current, obj)
+        );
+      }
+    }
   /**
   * 设置当前选中得页脚子菜单变化 
   */

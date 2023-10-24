@@ -39,7 +39,7 @@ import {
   useMittEmitterGenerator,
   MITT_TYPES,
 } from "src/core/index.js"
-import { MenuData_App_H5 } from "src/core/";
+import { MenuData } from "src/core/";
 
 class BaseData {
   constructor() {
@@ -374,7 +374,7 @@ class BaseData {
     this.set_left_menu_init(menu_old_or_nem_data_list);
 
     // app-h5使用
-    MenuData_App_H5.set_init_menu_list()
+    MenuData.set_init_menu_list()
 
     // 计算   冠军 数据  对象形式   commn_sport_guanjun_obj
     // 计算虚拟体育 的 数据对象
