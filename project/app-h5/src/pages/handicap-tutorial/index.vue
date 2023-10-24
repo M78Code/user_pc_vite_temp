@@ -25,7 +25,8 @@
 
     <!-- 球数 内容 -->
     <template v-else>
-        <match-result-ht :key="'matchResultHtBalls' + index" :title="'大小球'" :source="'bigAndSmallBall'"></match-result-ht>
+        <!-- <match-result-ht :key="'matchResultHtBalls' + index" :title="'大小球'" :source="'bigAndSmallBall'"></match-result-ht> -->
+        <answer-questions title="训练营"></answer-questions>
 
         <div class="ht-handle">
             <div class="ht-button">
@@ -36,12 +37,14 @@
             </div>
         </div>
 
+
     </template>
 </template>
 <script setup>
 import { onMounted, onBeforeMount, reactive } from "vue";
-import navigationBar from 'src/base-h5/components/navigation-bar/index.vue'
-import matchResultHt from 'src/base-h5/components/match-result-ht/index.vue'
+import navigationBar from 'src/base-h5/components/tutorial/navigation-bar/index.vue'
+import matchResultHt from 'src/base-h5/components/tutorial/match-result-ht/index.vue'
+import answerQuestions from 'src/base-h5/components/tutorial/answer-questions/index.vue'
 
 const switchMenu = ['让球', '大小球']
 const slideMenu = ['0', '0/0.5', '0.5', '0.5/1', '1球', '1/1.5球', '2球', '2/2.5球']
