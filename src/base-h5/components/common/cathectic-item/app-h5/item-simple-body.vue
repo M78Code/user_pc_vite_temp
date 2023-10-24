@@ -46,9 +46,6 @@ import { project_name } from 'src/core'
   let props = defineProps({
     data_b: {
       type: Object
-    },
-    is_pre: {
-      type: Boolean
     }
   })
   onMounted(() => {
@@ -92,7 +89,7 @@ import { project_name } from 'src/core'
     }
     // 串关并且长度大于等于3,默认收起,展示一条;
   const rules_a = () => {
-      if ((props.is_pre && props.data_b.detailList) || props.data_b.orderVOS.length >= 3)
+      if (props.data_b.orderVOS.length >= 3)
         [btn_text, direction, box_bool] = [
           t("bet_record.pack_down"),
           "down",
