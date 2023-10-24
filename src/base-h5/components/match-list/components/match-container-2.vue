@@ -62,7 +62,7 @@
                 {{ match.tn }}
               </span>
             </span>
-            <icon-wapper color="#888" name="icon-triangle1" size="16px" :class="['icon-wapper', {'close': !collapsed}]" />
+            <icon-wapper color="#999" name="icon-arrow" size="15px" :class="['icon-wapper', {'close': !collapsed}]" />
           </span>
         </div>
         
