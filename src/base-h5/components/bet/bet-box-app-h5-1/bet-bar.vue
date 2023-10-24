@@ -193,14 +193,14 @@ onUnmounted(() => {
     display: flex;
     flex-direction: row;
     align-items: center;
-    background-color: #f4f9ff;
+    background-color: var(--q-gb-t-c-7);;
     padding-right: 3px;
     padding-left: 10px;
     border-radius: 30px;
 }
 .nonebox4-first-right-window-num {
     display: flex;
-    font-size: 16px;
+    font-size: 18px;
     font-weight: bold;
     margin-right: 4px;
 }
@@ -320,8 +320,8 @@ onUnmounted(() => {
 }
 
 .refesh {
-  width: 0.12rem;
-  height: 0.12rem;
+  width: 0.13rem;
+  height: 0.13rem;
   background: url( $SCSSPROJECTPATH+"/image/bet/shuaxin.svg") no-repeat center / 100% 100%;
   // background: var(--q-color-com-img-bg-58) no-repeat center / 100% 100%;
   margin-left: 0.05rem
