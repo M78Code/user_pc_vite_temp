@@ -21,7 +21,10 @@
       <p><label>投注时间：</label> <span>{{data_b.beginTime}}</span></p>
       <p><label>{{data_b.matchName}}</label></p>
       <p><label>投资额：</label> <span>{{data_b.betAmount}}元</span></p>
-      <p><label>可赢额：</label> <span>{{data_b.oddsValue}}元</span></p>
+      <template>
+        <p v-if="type !== 'settle'" class="acount"><label>可赢额：</label> <span>5.60元</span></p>
+        <p v-else class="acount"><label>结算：</label> <span>赢 5.60元</span></p>
+      </template>
       <p><label>注单状态：</label> <span>投注成功</span></p>
     </div>
   </div>
@@ -46,6 +49,9 @@ import { project_name } from 'src/core'
   let props = defineProps({
     data_b: {
       type: Object
+    },
+    type: {
+      type: String
     }
   })
   onMounted(() => {
@@ -123,6 +129,9 @@ import { project_name } from 'src/core'
 </script>
 
 <style lang="scss" scoped>
+template {
+  display: block;
+}
 .item-body {
   padding: 0.12rem;
   .body-title {
@@ -150,6 +159,9 @@ import { project_name } from 'src/core'
       line-height: 2;
       display: flex;
       justify-content: space-between;
+      &.acount {
+        color: var(--q-gb-bg-c-9);
+      }
     }
   }
 }

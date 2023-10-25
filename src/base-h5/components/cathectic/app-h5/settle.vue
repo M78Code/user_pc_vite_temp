@@ -3,7 +3,7 @@
  * @Author: Router
 -->
 <template>
-  <div class="mx-10 settle" ref="settle">
+  <div class="settle" ref="settle">
       <!-- 加载中 -->
       <SRecord v-if="is_loading" />
       <!-- 滚动部分 -->

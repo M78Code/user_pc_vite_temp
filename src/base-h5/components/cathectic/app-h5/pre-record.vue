@@ -3,7 +3,7 @@
  * @Author: Iverson
 -->
 <template>
-    <div class="mx-10 pre_record" ref="pre_record">
+    <div class="pre_record" ref="pre_record">
         <!-- 加载中 -->
         <SRecord v-if="is_loading" />
         <scroll ref="myScroll" :on-pull="onPull" v-else>

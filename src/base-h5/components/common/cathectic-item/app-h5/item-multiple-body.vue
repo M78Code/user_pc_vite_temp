@@ -33,7 +33,10 @@
     </div>
     <div class="foot-main">
       <p><label>投资额：</label> <span>10.00元</span></p>
-      <p><label>可赢额：</label> <span>5.60元</span></p>
+      <template>
+        <p v-if="type !== 'settle'" class="acount"><label>可赢额：</label> <span>5.60元</span></p>
+        <p v-else class="acount"><label>结算：</label> <span>赢 5.60元</span></p>
+      </template>
       <p><label>注单状态：</label> <span>投注成功</span></p>
     </div>
   </div>
@@ -56,6 +59,9 @@ let box_bool = ref(false)
 let props = defineProps({
   data_b: {
     type: Object
+  },
+  type: {
+    type: String
   }
 })
 
@@ -114,6 +120,9 @@ const toggle_rule_b = () => {
 </script>
 
 <style lang="scss" scoped>
+template {
+  display: block;
+}
 .item-body {
   .item-header {
     background-color: var(--q-gb-bg-c-9);
@@ -208,6 +217,9 @@ const toggle_rule_b = () => {
       line-height: 2;
       display: flex;
       justify-content: space-between;
+      &.acount {
+        color: var(--q-gb-bg-c-9);
+      }
     }
   }
 }

@@ -4,8 +4,8 @@
 -->
 <template>
   <div class="early-settle">
-    <span class="tips" @click="alertTips=true;">提前兑现规则申明</span>
-  
+    <!-- 提前兑现规则申明 -->
+    <early-settle-tips />
     <div class="early-button">
       <button @click="earlyBtnClick">
         {{ sure_settle_button_text }}
@@ -26,15 +26,6 @@
         </div>
       </div>
     </q-slide-transition>
-    <!-- 提前兑现规则申明弹框 -->
-    <q-dialog v-model="alertTips">
-      <div class="tips-main">
-        <h2>提前兑现规则申明</h2>
-        <p>开云体育提前兑现只适用于指定赛事和盘口，如遇到赛事或盘口取消，提前兑现注单将会被收回重新结算。开云体育保留赛果最终解释权。</p>
-        <p>具体兑现规则请查看【帮助中心】-【开云体育提前兑现规则】</p>
-        <span @click="alertTips=false;">我知道了</span>
-      </div>
-    </q-dialog>
   </div>
 </template>
 
@@ -51,6 +42,7 @@ import store from "src/store-redux/index.js"
 import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/"
 import { t } from "src/boot/i18n.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
+import earlySettleTips from "src/base-h5/components/common/cathectic-item/app-h5/early-settle-tips.vue";
 
 let store_cathectic = store.getState().cathecticReducer
 const props = defineProps({
@@ -58,8 +50,6 @@ const props = defineProps({
     type: Object
   }
 })
-// 提前兑现规则申明弹框
-let alertTips = ref(false)
 // 1 - 初始状态，2 - 确认提前结算， 3 - 兑现中...
 let btnStatus = ref(1)
 
@@ -479,14 +469,6 @@ const clear_timer = () => {
 </script>
 <style lang="scss" scoped>
 .early-settle {
-  .tips {
-    display: block;
-    text-align: right;
-    padding-right: 0.14rem;
-    color: var(--q-gb-bg-c-6);
-    font-size: 0.12rem;
-    line-height: 2;
-  }
   .early-button {
     padding: 0 0.14rem;
     button {
@@ -512,32 +494,6 @@ const clear_timer = () => {
         font-size: 0.14rem;
       }
     }
-  }
-}
-.tips-main {
-  background-color: #fff;
-  border-radius: 0.1rem;
-  width: 90%;
-  padding: 0 0.14rem;
-  h2 {
-    font-size: 0.2rem;
-    font-weight: bold;
-    text-align: center;
-    line-height: 4;
-  }
-  p {
-    font-size: 0.16rem;
-    line-height: 1.5;
-    margin-bottom: 0.2rem;
-    text-align: justify;
-  }
-  span {
-    font-size: 0.20rem;
-    color: var(--q-info);
-    line-height: 2.5;
-    border-top: 1px solid #e5e5e5;
-    display: block;
-    text-align: center;
   }
 }
 </style>

@@ -6,10 +6,16 @@
 <template>
     <div v-if="show_bet_record" class="common-cathectic-item hairline-border">
     <!-- 单关、串关内容显示 -->
-    <item-simple-body v-if="item_data.seriesType == '1'" :data_b="item_data"></item-simple-body>
-    <item-multiple-body v-else :data_b="item_data"></item-multiple-body>
-    <!-- 投注记录页提前结算的按钮、滑块和提前结算详情 -->
+    <template>
+      <item-simple-body v-if="item_data.seriesType == '1'" :type="type" :data_b="item_data"></item-simple-body>
+      <item-multiple-body v-else :type="type" :data_b="item_data"></item-multiple-body>
+    </template>
+    <!-- 未结算列表 => 投注记录页提前结算的按钮、滑块 -->
     <early-settle v-if="type === 'unsettle'" :item_data="item_data"></early-settle>
+    <!-- 已结算列表 => 提前结算详情 -->
+    <early-settled-detail v-if="type === 'settle'"></early-settled-detail>
+    <!-- 预约列表 => 取消预约 -->
+    <cancel-reserve v-if="type === 'pre-record'"></cancel-reserve>
   </div>
 </template>
 
@@ -17,6 +23,8 @@
 import itemSimpleBody from "src/base-h5/components/common/cathectic-item/app-h5/item-simple-body.vue";
 import itemMultipleBody from "src/base-h5/components/common/cathectic-item/app-h5/item-multiple-body.vue";
 import earlySettle from "src/base-h5/components/common/cathectic-item/app-h5/early-settle.vue";
+import earlySettledDetail from "src/base-h5/components/common/cathectic-item/app-h5/early-settled-detail.vue";
+import cancelReserve from "src/base-h5/components/common/cathectic-item/app-h5/cancel-reserve.vue";
 import lodash from 'lodash';
 import { computed, ref, onMounted, onUnmounted, nextTick } from "vue";
 import { useMittOn, MITT_TYPES } from "src/core/mitt/"
@@ -94,13 +102,16 @@ onUnmounted(() => {
 </script>
 
 <style lang="scss" scoped>
+template {
+  display: block;
+}
 .common-cathectic-item {
   width: 100%;
   border-radius: 0.1rem;
   background: var(--q-gb-bg-c-15);
   overflow: hidden;
   margin:  0 0 0.1rem;
-  padding-bottom: 0.1rem;
+  padding-bottom: 0.2rem;
 }
 .item-header {
   height: 0.38rem;
