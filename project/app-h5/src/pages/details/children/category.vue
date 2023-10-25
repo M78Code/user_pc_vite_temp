@@ -264,6 +264,21 @@ export default defineComponent({
         // component_data.matchInfoCtr.destroy()
       }
     })
+     /**
+   * @description:  //操作盘口逻辑
+   * @param {*} fewer  1 2 3
+   * @return {*}
+   */ 
+  const toggle_handicap =(fewer)=>{
+   if(fewer != 3 && Array.isArray( match_list_normal_data.value)){
+       match_list_normal_data.value.map((item)=>{
+          fewer == 1 ?  item.hshow =  'Yes':item.hshow = 'No'
+       })
+   }
+  }
+  //一键折叠盘口
+  const {off}  = useMittOn(MITT_TYPES.EMIT_DETAILS_TOGGLE_HANDICAP, toggle_handicap);
+  onUnmounted(off)
     return {
       ...toRefs(component_data),
       i18n_t,

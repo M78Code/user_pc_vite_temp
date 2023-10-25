@@ -26,6 +26,14 @@ const router = createRouter({
               keepAlive: true // 需要缓存
             },
           },
+          {
+            path: "/matchResults",
+            name: "matchResults",
+            component: () => import("../pages/match-results/index.vue"),
+            meta: {
+              keepAlive: true // 需要缓存
+            },
+          },
           // {
           //   path: "/home",
           //   name: "home",

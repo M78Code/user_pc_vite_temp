@@ -288,4 +288,6 @@ export const EMIT_INPUT_BET_MONEY = "EMIT_INPUT_BET_MONEY"
 // 菜单切换
 export const EMIT_MENU_ANIMATION = "EMIT_MENU_ANIMATION"
 
+// 详情盘口一键折叠
+export const EMIT_DETAILS_TOGGLE_HANDICAP= "EMIT_DETAILS_TOGGLE_HANDICAP"
 //------------------------------------------------------------------命令定义-E-------------------------------------------------------------------------------------

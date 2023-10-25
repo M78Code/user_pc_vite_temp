@@ -92,10 +92,12 @@ export default defineComponent({
       if (props.data_list && props.data_list.length == 1 && matchDetailCtr.value.current_category_id == '0') return;
       if(get_fewer.value == 1 || get_fewer.value == 3){
         get_fewer.value = 2
+        useMittEmit(MITT_TYPES.EMIT_DETAILS_TOGGLE_HANDICAP, 2);
         SessionStorage.set("SET_FEWER", 2)
       }else{
         get_fewer.value = 1
-        SessionStorage.set("SET_FEWER", 2)
+        useMittEmit(MITT_TYPES.EMIT_DETAILS_TOGGLE_HANDICAP, 1);
+        SessionStorage.set("SET_FEWER", 1)
       }
     };
     // 单击玩法集--玩法集和tab 点击 

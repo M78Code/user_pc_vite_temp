@@ -169,7 +169,7 @@ import { i18n_t } from "src/boot/i18n.js";
 import { get_server_file_path } from "src/core/file-path/file-path.js"
 import UserCtr from "src/core/user-config/user-ctr.js";
 import lodash from "lodash"
-import { project_name } from 'src/core'
+import { LOCAL_PROJECT_FILE_PREFIX } from 'src/core'
 
 //国际化
 

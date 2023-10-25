@@ -785,7 +785,7 @@ export default defineComponent({
     width: 3px;
     height: 0.14rem;
     top: calc(50% - 0.08rem);
-    left: -0.1rem;
+    left: -0.15rem;
     border-radius: 1.5px;
   }
 }
@@ -862,7 +862,10 @@ export default defineComponent({
 .icon-wapper{
       transform: rotate(90deg);
     }
-    .close{
-      transform: rotate(180deg);
-    }
+ .close{
+   transform: rotate(180deg);
+ }
+ .text-right{
+  margin-right:0.2rem
+ }
 </style>

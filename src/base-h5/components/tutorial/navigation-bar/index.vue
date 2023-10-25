@@ -2,7 +2,7 @@
  * @Description:盘口教程头部复用操作组件
 -->
 <template>
-    <div class="px-6 py-5 navigation-bar">
+    <div class="navigation-bar" :style="{borderBottomColor: borderBottomNoShow && 'transparent'}">
         <div class="navigation-bar-left">
             <div class="navigation-bar-close" @click="router.back()">
                 <div class="img" :style="compute_css_obj('menu-go-back-icon')"></div>
@@ -11,7 +11,7 @@
         <div v-if="centerContentType === 'text'" class="navigation-bar-center font-weight-bold text-no-wrap">
             <span>{{ title }}</span>
         </div>
-        <div v-else class="navigation-bar-center navigation-bar-center-slot">
+        <div v-else :style="{'flex' : ['switch', 'select'].includes(centerContentType) && 3}" class="navigation-bar-center navigation-bar-center-slot">
             <slot name="center"></slot>
         </div>
         <div class="navigation-bar-right">
@@ -37,6 +37,10 @@ defineProps({
     title: {
         type: String,
         default: '请在组件中设置title值'
+    },
+    borderBottomNoShow: {
+        type: Boolean,
+        default: false
     }
 })
 </script>

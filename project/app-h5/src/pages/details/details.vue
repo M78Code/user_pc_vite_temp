@@ -40,22 +40,25 @@
                 shrink
                 stretch
                 inline-label
-                :breakpoint="0"
-                :narrow-color="scroll_visible && !get_show_video ? 'view-tab-active-top': ''"
+                narrow-indicator
                 class="bg-tabs"
                 active-color="active-tab"
                 :content-class="curr_active_tab">
               <q-tab v-if="show_match_analysis_tab || show_chatroom_tab" name="bet" :content-class="viewTab === 'match_analysis' ? 'tab-bet' : ''" :ripple="false" :label="i18n_t('bet.betting')" />
               <q-tab
                 v-if="show_match_analysis_tab"
-                name="match_analysis"
-                :content-class="viewTab === 'bet' ? 'tab-match-analysis' : 'tab-match-analysis-active'"
+                name="shoufa"
                 :ripple="false"
-                :label="i18n_t('match_result.match_analysis')"
-                alert
-                :alert-icon="icon_replay"/>
+                label="首发"
+               />
+         
               <!-- 根据中文，繁体、聊天室ID不为空以及 chatRoomSwitch 打开 才显示聊天室Tab -->
-              <q-tab name="chatroom" :content-class="viewTab === 'chatroom' ? 'tab-chatroom' : ''" v-if="show_chatroom_tab" :ripple="false" :label="i18n_t('bet.chatroom')" />
+              <q-tab
+                v-if="show_match_analysis_tab"
+                name="playback"
+                :ripple="false"
+                label="精彩回放"
+               />          
             </q-tabs>
             <!-- 玩法集展示内容 -->
             <details-tab 
@@ -607,10 +610,15 @@ export default defineComponent({
 }
 .bg-tabs {
     background: var(--q-gb-bg-c-15);
-    .bg-active-tab {
+   
+  .bg-active-tab {
     background: var(--q-gb-bg-c-15);
+  
   }
   }
+ .details-tab{
+  border-top:0.5px solid #F2F2F6;
+ } 
 </style>
 <style lang="scss">
 .detail-top-pop .q-dialog__inner--minimized {
