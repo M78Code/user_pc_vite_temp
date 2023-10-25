@@ -1,10 +1,38 @@
+/*
+ * @Author: rise
+ * @Date: 2023-10-24 19:10:02
+ * @LastEditors: rise
+ * @LastEditTime: 2023-10-25 11:43:17
+ * @Description:  
+ */
+
 /**
  *  tab滚动动画
  * @param {*} dom 
  * @param {*} x 
  */
 const scrollMenuAnimate = (dom,x) =>{
-    
+    if (!window.requestAnimationFrame) {
+        window.requestAnimationFrame = function(callback, element) {
+            return setTimeout(callback, 17);
+        };
+    }
+    // 当前滚动距离
+    let scrollLeft = dom.scrollLeft;
+    // 滚动step方法
+    let step = function () {
+        // 距离目标滚动距离
+        let distance = x - scrollLeft;
+        // 目标滚动位置
+        scrollLeft = scrollLeft + distance / 5;
+        if (Math.abs(distance) < 1) {
+            dom.scrollTo(x, 0);
+        } else {
+            dom.scrollTo(scrollLeft,0);
+            requestAnimationFrame(step);
+        }
+    };
+    step();
 }
 /**
  * tab滚动
@@ -24,7 +52,7 @@ const scrollMenuAnimate = (dom,x) =>{
     // 当元素左边距离 或者 右边距离小于总宽一半
     if (spanRight < widths || spanLeft < widths) {
          let n = scrollL + (spanLeft - widths) + divBox;
-        scrollBox.scrollLeft = n;
+        scrollMenuAnimate(scrollBox,n)
     }
 }
 export default {

@@ -20,7 +20,7 @@
 
           <div class="s-menu-container flex" ref="sub_menu_scroller">
             <template v-for="( item, index ) in MenuData.get_menu_lvmi_list(MenuData.current_lv_1_menu_mi)" :key="lodash.get(item, 'mi')">
-              <div class="sport-menu-item flex justify-center" v-show="item.ct > 0" @click="set_menu_lv2(item, index)">
+              <div class="sport-menu-item flex justify-center" v-show="item.ct > 0" @click="set_menu_lv2(item, $event)">
                 <div class="inner-w flex justify-between items-center" :class="{
                   favorite: show_favorite_list,
                   current: MenuData.current_lv_2_menu_mi == item.mi
@@ -59,6 +59,7 @@ import { ref, computed, onMounted } from "vue";
 import { compute_css_obj, MenuData, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/index.js";
 import { is_scroll_ball, update_time, is_export, is_mix,is_results, is_kemp, is_jinzu, menu_type } from 'src/base-h5/mixin/menu.js'
 import { get_sport_menu } from "../top-menu/top-list";
+import {scrollMenu} from "../utils";
 
 //菜单容器是否收起
 const menu_wrap_simple = ref(false);
@@ -77,10 +78,11 @@ onMounted(() => {
 /**
  * 二级菜单事件
  */
- async function set_menu_lv2(item = {}) {
+ async function set_menu_lv2(item = {},event) {
   // 选中后点击无效
   if (item.mi == MenuData.current_lv_2_menu_mi) return
   MenuData.set_current_lv_2_menu_mi(item)
+  scrollMenu(event,".s-menu-container",".current");
   // 今日 / 滚球/ 冠军 没有 三级
   if([1,2,400].includes(MenuData.current_lv_1_menu_mi)){
     handle_match_render_data()
