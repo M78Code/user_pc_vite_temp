@@ -2,18 +2,48 @@
  * @Author: rise
  * @Date: 2023-10-24 19:10:02
  * @LastEditors: rise
- * @LastEditTime: 2023-10-25 11:43:17
+ * @LastEditTime: 2023-10-25 16:16:43
  * @Description:  
  */
-
+/**
+ * 一周时间
+ * @param {*} day 
+ * @returns 
+ */
+export const dateWeekFormat = (day) => {
+    let result = [];
+    Date.prototype.getMonthDay = function () {
+        let dateVal = (this.getMonth() + 1) + '/' + this.getDate();
+        return {
+          val:dateVal,
+          name:dateVal
+        };
+    }
+    result.push(day.getMonthDay());
+    for (let i = 0; i < 6; i++) {
+        day.setDate(day.getDate() + 1);
+        result.push(day.getMonthDay())
+    }
+    return result;
+};
+/**
+ * 时间组件默认值
+ * @param {*} day 日期new Date()
+ * @param {*} pre tab首位
+ * @param {*} next tab末尾
+ * @returns 
+ */
+export const dateTabList = (day,pre={name:"全部",val:""},next={name:"其他",val:'other'}) => {
+    return [pre,...dateWeekFormat(day),next];
+};
 /**
  *  tab滚动动画
  * @param {*} dom 
  * @param {*} x 
  */
-const scrollMenuAnimate = (dom,x) =>{
+export const scrollMenuAnimate = (dom, x) => {
     if (!window.requestAnimationFrame) {
-        window.requestAnimationFrame = function(callback, element) {
+        window.requestAnimationFrame = function (callback, element) {
             return setTimeout(callback, 17);
         };
     }
@@ -28,19 +58,19 @@ const scrollMenuAnimate = (dom,x) =>{
         if (Math.abs(distance) < 1) {
             dom.scrollTo(x, 0);
         } else {
-            dom.scrollTo(scrollLeft,0);
+            dom.scrollTo(scrollLeft, 0);
             requestAnimationFrame(step);
         }
     };
     step();
-}
+};
 /**
  * tab滚动
  * @param {*} event
  * @param {*} parentClass  父元素类
  * @param {*} childClass  选中类
  */
- export const scrollMenu = (event,parentClass,childClass) =>{
+export const scrollMenu = (event, parentClass, childClass) => {
     let scrollBox = document.querySelector(parentClass),//父元素
         scrollBoxNav = document.querySelector(childClass),//子元素
         spanLeft = event.clientX, // 当前点击的元素左边距离
@@ -51,10 +81,13 @@ const scrollMenuAnimate = (dom,x) =>{
         scrollL = scrollBox.scrollLeft; // 滚动条滚动的距离
     // 当元素左边距离 或者 右边距离小于总宽一半
     if (spanRight < widths || spanLeft < widths) {
-         let n = scrollL + (spanLeft - widths) + divBox;
-        scrollMenuAnimate(scrollBox,n)
+        let n = scrollL + (spanLeft - widths) + divBox;
+        scrollMenuAnimate(scrollBox, n)
     }
 }
 export default {
-    scrollMenu:scrollMenu
+    dateWeekFormat:dateWeekFormat,
+    dateTabList:dateTabList,
+    dateWeekFormat:dateWeekFormat,
+    scrollMenu: scrollMenu
 }

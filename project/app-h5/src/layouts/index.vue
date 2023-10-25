@@ -17,7 +17,6 @@
       <template v-if="['matchList', 'sport_menu'].includes(route.name)">
         <TopMenu />
         <ScrollMenu />
-        <DateTab />
         <SwiperWap />
         <SwitchWap />
         <SearchTab />
@@ -66,7 +65,7 @@ import {
 } from "vue";
 import { useMittOn, MITT_TYPES, i18n_t, UserCtr,MenuData } from "src/core/";
 // import { FooterWapper } from "src/components/footer/index.js";
-import { TopMenu,Tabbar,ScrollMenu,DateTab,SearchTab,SwitchWap,SwiperWap } from 'src/base-h5/components/menu/app-h5-menu/index'
+import { TopMenu,Tabbar,ScrollMenu,SearchTab,SwitchWap,SwiperWap } from 'src/base-h5/components/menu/app-h5-menu/index'
 import { MenuWapper } from "src/base-h5/components/menu";
 import { BetBoxWapper } from "src/base-h5/components/bet";
 import activityIcon from "src/base-h5/components/common/activity-icon.vue"; // 设置
@@ -93,7 +92,6 @@ import BetData from "src/core/bet/class/bet-data-class.js";// project/yazhou-h5/
 // import layoutConent from "./layout-content.vue";
 
 import "./index.scss"
-
 const inner_height = window.innerHeight;  // 视口高度
 const { footerMenuReducer } = store.getState();
 const route = useRoute();
