@@ -164,7 +164,7 @@ export default defineComponent({
 .icon-wrap {
   display: flex;
   justify-content: center;
-  background-color: rgba(255, 255, 255, 0.1);
+  // background-color: rgba(255, 255, 255, 0.1); //todo 复刻版不需要
   border-radius: 4px;
 }
 

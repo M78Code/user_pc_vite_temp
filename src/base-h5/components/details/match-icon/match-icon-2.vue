@@ -371,8 +371,9 @@ export default defineComponent({
   flex-shrink: 0;
   border-radius: 10px;
   background: linear-gradient(180deg, #179CFF 0%, #127DCC 100%);
+  margin-right:4px;
   &:after {
-    background:none
+    background:none !important
   }
 }
 </style>
