@@ -815,7 +815,7 @@ export default defineComponent({
     .hide_border_r{
       :deep(.hairline-border,), :deep(.item-wrap) {
       background-color: #ffffff;
-      border-radius:0 0 0.08rem 0.08rem!important;
+      border-radius:0 0 0.04rem 0.04rem!important;
       border-top:0.5px solid #F2F2F6;
       }
     }
@@ -825,7 +825,7 @@ export default defineComponent({
 
       padding: 0 0.12rem 0 0.18rem;
       background: #ffffff !important;
-      border-radius: 0.08rem;
+      border-radius: 0.04rem;
 
       &::after {
         content: "";

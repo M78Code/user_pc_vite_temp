@@ -25,10 +25,10 @@
         </match-icon>
       </template>
       <!-- 收藏按钮 -->
-      <div v-if="GlobalAccessConfig.get_collectSwitch()" class="match-icon match-icon-single" @click="details_collect(get_detail_data)">
+      <!-- <div v-if="GlobalAccessConfig.get_collectSwitch()" class="match-icon match-icon-single" @click="details_collect(get_detail_data)">
         <div class="collect-icon" :class="{active:get_detail_data.mf}"></div>
         <div class="text">{{ i18n_t('footer_menu.collect')}}</div>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -39,7 +39,7 @@
 import { reactive, computed, toRefs, defineComponent } from "vue";
 import lodash from "lodash";
 import UserCtr from "src/core/user-config/user-ctr.js";
-import match_icon from "src/base-h5/components/details/match-icon/match-icon.vue"  // 赛事icon操作
+import match_icon from "src/base-h5/components/details/match-icon/match-icon-2.vue"  // 赛事icon操作
 
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import { api_common } from "src/api/index.js";
