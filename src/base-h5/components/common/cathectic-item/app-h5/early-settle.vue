@@ -18,14 +18,11 @@
     <q-slide-transition>
       <div v-show="slider_show" class="slider-wrap">
         <!-- 提前结算投注额 -->
-        <p class="yb_mb14">{{ t('early.info4') }}：{{ cashout_stake.toFixed(2) }} </p>
         <q-slider track-size="0.06rem" @change="change_percentage" class="slider-content" thumb-size="0.16rem"
-          v-model="percentage" :min="0" :max="100" :step="25" />
-        <div class="num row yb_pt6">
-          <i v-for="(n, i) in [25, 50, 75, 100]" :key="i" class="col text-right">{{ `${n}%` }}</i>
-        </div>
+          v-model="percentage" :min="0" :max="100" label label-always :label-value="percentage + '.00'" />
       </div>
     </q-slide-transition>
+    <div class="change-btn" @click="slider_show=!slider_show">调整金额</div>
   </div>
 </template>
 
@@ -471,6 +468,7 @@ const clear_timer = () => {
 .early-settle {
   .early-button {
     padding: 0 0.14rem;
+    margin-bottom: 0.1rem;
     button {
       display: block;
       border: none;
@@ -495,5 +493,16 @@ const clear_timer = () => {
       }
     }
   }
+  .slider-wrap {
+    margin: 0 0.14rem;
+    padding-top: 0.2rem;
+  }
+  .change-btn {
+    text-align: center;
+    font-size: 0.16rem;
+  }
 }
+:deep(.q-slider--inactive .q-slider__thumb--h) {
+      // width: 0.4rem!important;
+    }
 </style>
