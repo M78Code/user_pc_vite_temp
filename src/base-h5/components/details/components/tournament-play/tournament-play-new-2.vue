@@ -862,7 +862,10 @@ export default defineComponent({
 .icon-wapper{
       transform: rotate(90deg);
     }
-    .close{
-      transform: rotate(180deg);
-    }
+ .close{
+   transform: rotate(180deg);
+ }
+ .text-right{
+  margin-right:0.2rem
+ }
 </style>
