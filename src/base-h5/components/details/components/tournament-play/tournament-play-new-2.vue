@@ -86,7 +86,7 @@
             <div  v-if="!item_data.hotName" class="text-right" @click.stop="set_hton(item_data)" :class="icon_name">
             </div>
             <!-- 折叠按钮 -->
-            <icon-wapper  @click="set_hshow(item_data)" color="blue"   :name="judage_hshow == 'Yes' ? 'icon-triangle1' : 'icon-triangle3'" size="16px" />
+            <icon-wapper  @click="set_hshow(item_data)" color="#999" name="icon-arrow"  :class="['icon-wapper', {'close': judage_hshow == 'Yes'}]"  size="16px" />
           </div>
           <!-- 调试专用勿删除 -->
           <span v-if="wsl_flag" style="color:red;font-size:12px;" text = "调试用span">模板(hpt)<span>{{item_data.hpt}}玩法(hpid)=>{{item_data.hpid}}</span></span>
@@ -130,11 +130,13 @@
 // import { mapGetters, mapMutations } from "vuex";
 import { ref } from "vue";
 import { api_common } from "src/api/index.js";
+import { useRoute } from "vue-router";
 // #TODO mixins
 // import betting from "src/project/mixins/betting/betting.js";
 import lodash from "lodash";
 import { IconWapper } from 'src/components/icon'
-import { useMittOn, useMittEmit, MITT_TYPES ,compute_css_obj} from  "src/core/"
+import { useMittOn, useMittEmit, MITT_TYPES ,compute_css_obj,UserCtr,MatchDetailCalss,MatchDataWarehouse_H5_Detail_Common} from  "src/core/"
+
 // 模板id=0(默认模板)
 import temp0 from "./template/temp0.vue"
 // 模板id=1
@@ -173,7 +175,7 @@ import temp18 from "./template/temp18.vue"
 import temp51 from "./template/temp51.vue"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, nextTick, defineAsyncComponent, markRaw } from "vue";
 import { api_details } from "src/api/";
-import UserCtr from "src/core/user-config/user-ctr.js";;
+
 
 //国际化
 
@@ -225,6 +227,7 @@ export default defineComponent({
   // mixins: [betting],
   setup(props, evnet) {
     // console.error("tournament-play-new", props);
+    const route = useRoute()
     const get_menu_type = ref(0)
     let component_data = reactive({
       emitters: [],
@@ -317,12 +320,8 @@ export default defineComponent({
     //   'get_details_data_cache',
     // ]),
     //=================TODO: 后续修改===================
-    const get_uid = computed(() => {
-      return "";
-    });
-    const get_detail_data = computed(() => {
-      return "";
-    });
+    const get_uid = ref(UserCtr.get_uid()); // userId
+    const get_detail_data = ref(lodash.get(MatchDataWarehouse_H5_Detail_Common,`list_to_obj.mid_obj[${route.params.mid}_]`, {})); // userId
     const get_fewer = computed(() => {
       return "";
     });
@@ -860,4 +859,10 @@ export default defineComponent({
   }
 
 }
+.icon-wapper{
+      transform: rotate(90deg);
+    }
+    .close{
+      transform: rotate(180deg);
+    }
 </style>

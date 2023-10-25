@@ -57,7 +57,7 @@
               <!-- 根据中文，繁体、聊天室ID不为空以及 chatRoomSwitch 打开 才显示聊天室Tab -->
               <q-tab name="chatroom" :content-class="viewTab === 'chatroom' ? 'tab-chatroom' : ''" v-if="show_chatroom_tab" :ripple="false" :label="i18n_t('bet.chatroom')" />
             </q-tabs>
-            <!-- 玩法集展示内容 -->{{}}
+            <!-- 玩法集展示内容 -->
             <details-tab 
             v-show="viewTab === 'bet' || get_is_hengping" 
             :data_list="data_list" 
@@ -153,11 +153,11 @@ import store from "src/store-redux/index.js";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt/index.js"
 import { details_main } from "./details.js";
 import { ref, defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch, provide,defineAsyncComponent } from "vue";
-import {UserCtr,compute_css_obj,compute_img_url,MatchDetailCalss,MenuData,utils,import_vue_component} from "src/core/";
+import {UserCtr,compute_css_obj,compute_img_url,MatchDetailCalss,MenuData,utils} from "src/core/";
 import { compute_css_variables } from "src/core/css-var/index.js"
 import {is_export } from "src/base-h5/mixin/menu";
 // 详情页中部玩法集tab
-const detailsTab = defineAsyncComponent(() => import_vue_component('details-tab') )
+import detailsTab from "src/base-h5/components/details/components/details-tab-2.vue";
 //国际化
 
 export default defineComponent({
