@@ -16,8 +16,7 @@
                 <q-slide-transition>
                   <div v-show="value.open">
                     <!-- 投注记录的每一个卡片 -->
-                    <common-cathectic-item :main_item="main_item" :item_data="item2" v-for="(item2, key) in value.data" :key="key"
-                      :key2="key" :len="value.data.length" :is_early="is_early" type="settle"></common-cathectic-item>
+                    <common-cathectic-item :main_item="main_item" :item_data="item2" v-for="(item2, key) in value.data" :key="key"></common-cathectic-item>
                   </div>
               </q-slide-transition>
             </template>

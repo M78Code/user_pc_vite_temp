@@ -60,8 +60,8 @@ let slider_show = ref(false)
 let details_show = ref(false)
 // 展开 提前结算详情列表 的按钮是否显示
 let details_show2 = ref(false)
-// 0  25 - 25%, 50 - 50%, 75 - 75%, 100 - 100%, 一共5个点
-let percentage = ref(100)
+// 0  100
+let percentage = ref(50)
 // 0-提前结算金额已包含本金  1-提前结算申请未通过  2-功能暂停中，请稍后再试  3-提前结算金额调整中，请再试一次
 let tips = ref(0)
 // 提前结算详情数据
@@ -503,6 +503,14 @@ const clear_timer = () => {
   }
 }
 :deep(.q-slider--inactive .q-slider__thumb--h) {
-      // width: 0.4rem!important;
+    width: 0.3rem!important;
+    background-color: var(--q-gb-bg-c-9);
+    border-radius: 0.06rem;
+    svg {
+      display: none;
     }
+  }
+  :deep(.q-slider__track), :deep(.q-slider__thumb) {
+    color: var(--q-gb-bg-c-9);
+  }
 </style>

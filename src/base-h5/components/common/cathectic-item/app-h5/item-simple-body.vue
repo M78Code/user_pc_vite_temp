@@ -22,7 +22,7 @@
       <p><label>{{data_b.matchName}}</label></p>
       <p><label>投资额：</label> <span>{{data_b.betAmount}}元</span></p>
       <template>
-        <p v-if="type !== 'settle'" class="acount"><label>可赢额：</label> <span>5.60元</span></p>
+        <p v-if="main_item != '1'" class="acount"><label>可赢额：</label> <span>5.60元</span></p>
         <p v-else class="acount"><label>结算：</label> <span>赢 5.60元</span></p>
       </template>
       <p><label>注单状态：</label> <span>投注成功</span></p>
@@ -46,8 +46,8 @@ import { project_name } from 'src/core'
     data_b: {
       type: Object
     },
-    type: {
-      type: String
+    main_item: {
+      type: [String, Number],
     }
   })
   onMounted(() => {

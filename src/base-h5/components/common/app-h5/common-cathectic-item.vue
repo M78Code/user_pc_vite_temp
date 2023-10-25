@@ -7,15 +7,15 @@
     <div v-if="show_bet_record" class="common-cathectic-item hairline-border">
     <!-- 单关、串关内容显示 -->
     <template>
-      <item-simple-body v-if="item_data.seriesType == '1'" :type="type" :data_b="item_data"></item-simple-body>
-      <item-multiple-body v-else :type="type" :data_b="item_data"></item-multiple-body>
+      <item-simple-body v-if="item_data.seriesType == '1'" :main_item="main_item" :data_b="item_data"></item-simple-body>
+      <item-multiple-body v-else :main_item="main_item" :data_b="item_data"></item-multiple-body>
     </template>
     <!-- 未结算列表 => 投注记录页提前结算的按钮、滑块 -->
-    <early-settle v-if="type === 'unsettle'" :item_data="item_data"></early-settle>
+    <early-settle v-if="main_item == '0'" :item_data="item_data"></early-settle>
     <!-- 已结算列表 => 提前结算详情 -->
-    <early-settled-detail v-if="type === 'settle'"></early-settled-detail>
+    <early-settled-detail v-if="main_item == '1'"></early-settled-detail>
     <!-- 预约列表 => 取消预约 -->
-    <cancel-reserve v-if="type === 'pre-record'"></cancel-reserve>
+    <cancel-reserve v-if="main_item == '2'"></cancel-reserve>
   </div>
 </template>
 
@@ -40,25 +40,8 @@ const props = defineProps(
       type: Object
 
     },
-    key2: {
-      type: Number
-
-    },
-    len: {
-      type: Number
-
-    },
-    is_early: {
-      type: Boolean
-
-    },
-    type: {  // pre-record(预约)、 settle(已结算)、unsettle(未结算)
-      type: String
-
-    },
-    is_show_pre: {
-      type: Boolean
-
+    main_item: {
+      type: [String, Number],
     }
   }
 )
