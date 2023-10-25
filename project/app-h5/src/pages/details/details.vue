@@ -91,12 +91,13 @@
             </div>
           </div>
           <!-- 赛事分析展示内容 -->
-          <template v-if="viewTab == 'match_analysis' && (!get_is_hengping || get_is_dp_video_full_screen)">
+          <template v-if="viewTab == 'shoufa' && (!get_is_hengping || get_is_dp_video_full_screen)">
             <div>
                 <!-- 足球赛事分析 页面-->
-                <analysis-football-matches :detail_data="detail_data" v-if="detail_data.csid == '1'"></analysis-football-matches>
+                <!-- <analysis-football-matches :detail_data="detail_data" v-if="detail_data.csid == '1'"></analysis-football-matches> -->
+                <line-up :detail_data="detail_data" ></line-up>
                 <!-- 篮球赛事分析 页面-->
-                <basketball-match-analysis  :detail_data="detail_data" v-if="detail_data.csid == '2'"></basketball-match-analysis>
+                <!-- <basketball-match-analysis  :detail_data="detail_data" v-if="detail_data.csid == '2'"></basketball-match-analysis> -->
             </div>
           </template>
           <!-- 聊天室 -->
@@ -162,7 +163,7 @@ import {is_export } from "src/base-h5/mixin/menu";
 // 详情页中部玩法集tab
 import detailsTab from "src/base-h5/components/details/components/details-tab-2.vue";
 //国际化
-
+import lineUp from "src/base-h5/components/details/analysis-matches/components/line-up.vue"
 export default defineComponent({
   name: "details",
   // mixins: [websocket_data,common],
@@ -178,6 +179,7 @@ export default defineComponent({
     videos: videos,
 //     // SDetails,
     category,
+    lineUp
 //     // chatroom
   },
   // 从首页轮播区域跳转到详情页 增加判断
