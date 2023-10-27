@@ -18,7 +18,7 @@
     </div>
 
     <div class="match-options">
-        <div class="option" v-for="( item, index ) in MenuData.get_menu_lvmi_list(MenuData.current_lv_1_menu_mi)"
+        <div class="option" v-for="( item, index ) in MenuData.get_menu_lvmi_list(MenuData.current_lv_1_menu_mi.value)"
             :key="lodash.get(item, 'mi')">
             <span class="sport-icon-wrap"
                 :style="compute_css_obj({ key: MenuData.current_lv_2_menu_mi == item.mi ? 'menu-sport-active-image' : 'menu-sport-icon-image', position: format_type(item) })"></span>

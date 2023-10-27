@@ -17,9 +17,8 @@
           'shadow-down': !is_export,
         }">
         <div v-show="false">   {{MenuData.update_time}} </div>
-
           <div class="s-menu-container flex" ref="sub_menu_scroller">
-            <template v-for="( item, index ) in MenuData.get_menu_lvmi_list(MenuData.current_lv_1_menu_mi)" :key="lodash.get(item, 'mi')">
+            <template v-for="item in MenuData.menu_lv_mi_lsit" :key="lodash_.get(item, 'mi')">
               <div class="sport-menu-item flex justify-center" v-show="item.ct > 0" @click="set_menu_lv2(item, $event)">
                 <div class="inner-w flex justify-between items-center" :class="{
                   favorite: show_favorite_list,
@@ -51,11 +50,11 @@
 </template>
 <script setup>
 import scrollNav from "./scroll-nav.vue";
-import lodash from "lodash";
+import lodash_ from "lodash";
 import MatchFold from 'src/core/match-fold'
 import BaseData from "src/core/base-data/base-data.js";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
-import { ref, computed, onMounted } from "vue";
+import { ref, computed, onMounted, watch, reactive } from "vue";
 import { compute_css_obj, MenuData, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/index.js";
 import { is_scroll_ball, update_time, is_export, is_mix,is_results, is_kemp, is_jinzu, menu_type } from 'src/base-h5/mixin/menu.js'
 import { get_sport_menu } from "../top-menu/top-list";
@@ -84,10 +83,15 @@ onMounted(() => {
   MenuData.set_current_lv_2_menu_mi(item)
   scrollMenu(event,".s-menu-container",".current");
   // 今日 / 滚球/ 冠军 没有 三级
-  if([1,2,400].includes(MenuData.current_lv_1_menu_mi)){
+  if([1,2,400].includes(MenuData.current_lv_1_menu_mi.value)){
     handle_match_render_data()
   }
 }
+
+watch(()=> MenuData.current_lv_1_menu_mi.value,() => {
+  // 默认设置二级菜单id
+  MenuData.set_current_lv_2_menu_mi( lodash_.get(MenuData.menu_lv_mi_lsit,'[0]',{}))
+})
 
 /**
 * 二级菜单数量 是否展示
@@ -126,8 +130,8 @@ const two_menu_show = (sub) => {
   // 电竞不走元数据， 直接拉取接口
   if (MenuData.is_export()) return MatchMeta.get_esports_match()
 
-  const mi_tid_mids_res = lodash.get(BaseData, 'mi_tid_mids_res')
-  if (lodash.isEmpty(mi_tid_mids_res)) return
+  const mi_tid_mids_res = lodash_.get(BaseData, 'mi_tid_mids_res')
+  if (lodash_.isEmpty(mi_tid_mids_res)) return
 
   // 设置菜单对应源数据
   MatchMeta.set_origin_match_data()

@@ -12,10 +12,10 @@
                 <div class="img" :style="compute_css_obj('menu-go-back-icon')"></div>
             </div>
         </slot>
-       <div v-show="false"> {{MenuData.update_time}} </div> 
+        <div v-show="false">   {{MenuData.update_time}} </div>
         <div class="main-menu-container">
             <template v-for="(item, index) in menu_list" :key="lodash_.get(item, 'code')">
-                <div class="m-menu-item" :class="{ current: lodash_.get(item, 'mi') == MenuData.current_lv_1_menu_mi }">
+                <div class="m-menu-item" :class="{ current: lodash_.get(item, 'mi') == MenuData.current_lv_1_menu_mi.value }">
                     <span class="i-title" @click="set_menu_lv1(item, index)">
                         {{ i18n_t("new_menu." + lodash_.get(item, 'mi')) || lodash_.get(item, 'mi') }}
                     </span>
@@ -29,7 +29,7 @@
 </template>
 <script setup>
 import lodash_ from "lodash";
-import { reactive } from "vue";
+import { onMounted, reactive,ref } from "vue";
 import { useRouter } from "vue-router";
 import { format_money2 } from "src/core/format/index.js";
 import { i18n_t, compute_css_obj, MenuData,UserCtr } from "src/core/index.js";
@@ -60,6 +60,10 @@ const menu_list = reactive([
     },
 ])
 
+
+onMounted(()=>{
+    set_menu_lv1({mi:2})
+})
 /**
  * 点击一级菜单
  * @param {*} item 
@@ -68,6 +72,7 @@ const menu_list = reactive([
  */
 const set_menu_lv1 = item => {
     MenuData.set_current_lv1_menu(item.mi);
+    MenuData.get_menu_lvmi_list(item.mi)
 }
 
 /**

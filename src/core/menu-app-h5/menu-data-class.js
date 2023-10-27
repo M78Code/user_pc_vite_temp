@@ -34,7 +34,7 @@ class MenuData {
     }
    
     //当前的菜单 lv1
-    this.current_lv_1_menu_mi = '';
+    this.current_lv_1_menu_mi = ref('')
     //当前的菜单 lv2
     this.current_lv_2_menu_mi = '';
     //当前的菜单 lv3
@@ -81,10 +81,9 @@ class MenuData {
     // 默认设置二级菜单id
     console.error('menu_lv_mi_lsit',menu_lv_mi_lsit)
     // 默认设置二级菜单id
-    this.set_current_lv_2_menu_mi( lodash_.get(menu_lv_mi_lsit,'[0]',{}))
+    // this.set_current_lv_2_menu_mi( lodash_.get(menu_lv_mi_lsit,'[0]',{}))
 
     this.menu_lv_mi_lsit = menu_lv_mi_lsit
-    return menu_lv_mi_lsit
   }
 
   get_menu_lv_2_mi_list(mi){
@@ -96,9 +95,10 @@ class MenuData {
   set_current_lv_2_menu_mi(val = {}){
     this.current_lv_2_menu_mi = val.mi
     // 今日 / 滚球/ 冠军 没有 三级
-    if(![1,2,400].includes(this.current_lv_1_menu_mi)){
+    if(![1,2,400].includes(this.current_lv_1_menu_mi.value)){
      
     }
+    this.update()
   }
 
   /**
@@ -195,7 +195,7 @@ class MenuData {
    *一级菜单顶层菜单的 菜单类型  ，没有则是0
    * */
   get_menu_type() {
-    return this.current_lv_1_menu_mi || 0;
+    return this.current_lv_1_menu_mi.value || 0;
   }
   /**
    * 获取 euid
@@ -511,7 +511,7 @@ class MenuData {
   }
   //- 三级菜单 日期 (只有 串关，早盘，赛果，电竞，才有) -->
   get_is_show_three_menu(mi) {
-    return [3, 6, 28, 2000].includes(mi || this.current_lv_1_menu_mi);
+    return [3, 6, 28, 2000].includes(mi || this.current_lv_1_menu_mi.value);
   }
   // 赛果下数据
   async get_results_menu() {
@@ -664,7 +664,7 @@ class MenuData {
    * item [object]当前点击对象
    */
   set_current_lv1_menu(lv1_mi) {
-    this.current_lv_1_menu_mi = lv1_mi  
+    this.current_lv_1_menu_mi.value = lv1_mi  
     this.update();
   }
   /**
