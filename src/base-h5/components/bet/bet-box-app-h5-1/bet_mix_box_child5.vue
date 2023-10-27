@@ -5,14 +5,14 @@
 
 <template>
   <div class="bet-mix-show">
-   <!-- <div v-show="false"> {{ BetViewDataClass.bet_view_version}} </div> -->
+   <div v-show="false"> {{ BetViewDataClass.bet_view_version}} </div>
     <div class="nonebox4-result" v-for="item in BetViewDataClass.orderNo_bet_obj" :key="item.playOptionsId">
         <div class="nonebox4-content-result nonebox4-content-top0">
             <div class="nonebox4-content-result-left">预约金额</div>
             <div class="nonebox4-content-result-right">  {{ format_currency(parseFloat(item.betMoney)/100) }}</div>
         </div>
         <div class="nonebox4-content-result">
-            <div class="nonebox4-content-result-left">可用金额</div>
+            <div class="nonebox4-content-result-left">可赢金额</div>
             <div class="nonebox4-content-result-right">  {{ format_currency(parseFloat(item.maxWinMoney)/100) }}</div>
         </div>
     </div>

@@ -1,38 +1,30 @@
+
 /**
- * 虚拟赛事 源数据相关处理
+ * @description 虚拟体育数据处理
  */
 
-import { onMounted } from "vue"
-import store from "src/store-redux/index.js";
-import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
-import { gen_video_api_cache_key } from './handle-video'
 
-// TODO: set_virtual_data_loading 顶部菜单信息 store
-
-export const use_virtual_data = (props) => {
-
-  const { menu_list, tab_item_i, propsParams, tab_item_click_handle } = props
-
-  const ol_dictionary = ref([])
-  const no_title_list = ref([])
-  const match_list_by_no = ref([])
-  const no_virtual_match = ref(false)
-  const virtual_match_list = ref([])
-  const is_user_switch_league = ref(0)
-  const virtual_data_loading = ref(false)
-  const virtual_m_list_data_cache_key = ref('virtual_m_list_data_cache_key')
-
-  onMounted(() => {
-    useMittOn(MITT_TYPES.EMIT_NO_VIRTUAL_MENU_DATA, no_virtual_menu_data);
-  })
+class VirtualData {
+  constructor () {
+    this.menu_list = []
+    this.tab_item_i = 0
+    this.ol_dictionary = []
+    this.no_title_list = []
+    this.match_list_by_no = []
+    this.no_virtual_match = false
+    this.virtual_match_list = []
+    this.is_user_switch_league = 0
+    this.virtual_data_loading = false
+    this.virtual_m_list_data_cache_key = 'virtual_m_list_data_cache_key'
+  }
 
   /**
-     * 生成赛事请求接口参数
-     */
-  const param_generate = () => {
+   * 生成赛事请求接口参数
+   */
+  param_generate () {
     let params = null;
-    if(menu_list && menu_list[tab_item_i]){
-      let league = menu_list[tab_item_i];
+    if(this.menu_list && this.menu_list[this.tab_item_i]){
+      let league = this.menu_list[tab_item_i];
       params = {
         tid: league.field1,
         csid: propsParams.csid
@@ -45,19 +37,17 @@ export const use_virtual_data = (props) => {
    * @description: 虚拟菜单数据未空时的逻辑处理函数
    * @return {*}
    */
-  const no_virtual_menu_data = () => {
-    store.dispatch({ type: 'set_virtual_data_loading',  data: 0 })
-    virtual_data_loading.value= false;
-    no_match_list_handle();
+  no_virtual_menu_data () {
+    this.virtual_data_loading = false;
+    this.no_match_list_handle();
   }
   /**
    * @description: 附加初始化赛果result字段
-   * @param {Array} match_list 赛事列表
    * @return {String}
    */
-  const append_result_fields = (no_title_list) => {
-    if(no_title_list && no_title_list.length){
-      no_title_list.forEach(no_title => {
+  append_result_fields () {
+    if(this.no_title_list && this.no_title_list.length){
+      this.no_title_list.forEach(no_title => {
         if(!no_title.matchs || !no_title.matchs.length) { return }
         no_title.matchs.forEach(match => {
 
@@ -76,15 +66,15 @@ export const use_virtual_data = (props) => {
         });
       });
     }
-    return no_title_list
+    return this.no_title_list
   }
   /**
    * 获取本地缓存虚拟体育赛事列表
    * @param {String} cache_key 缓存键
    */
-  const get_local_cache_virtual_match = (cache_key) => {
+  get_local_cache_virtual_match (cache_key) {
     let pre_store_data = {};
-    let data_store = sessionStorage.getItem(virtual_m_list_data_cache_key.value);
+    let data_store = sessionStorage.getItem(this.virtual_m_list_data_cache_key);
     if(data_store){
       pre_store_data = JSON.parse(data_store);
     }
@@ -95,47 +85,45 @@ export const use_virtual_data = (props) => {
    * @param {Array} match_list 写入缓存的赛事列表
    * @param {String} cache_key 缓存键
    */
-  const set_local_cache_virtual_match = (match_list,cache_key) => {
+  set_local_cache_virtual_match (match_list,cache_key) {
     let pre_store_data = {};
-    let data_store = sessionStorage.getItem(virtual_m_list_data_cache_key.value);
+    let data_store = sessionStorage.getItem(this.virtual_m_list_data_cache_key);
     if(data_store){
       pre_store_data = JSON.parse(data_store);
     }
     pre_store_data[cache_key] = match_list;
-    sessionStorage.setItem(virtual_m_list_data_cache_key.value,JSON.stringify(pre_store_data));
+    sessionStorage.setItem(this.virtual_m_list_data_cache_key,JSON.stringify(pre_store_data));
   }
   /**
    * @description: 获取虚拟体育赛事列表
    * @param {Object} params 接口参数
    * @return {String}
    */
-  const get_virtual_sport_local = (is_user_clicked) => {
+  get_virtual_sport_local (is_user_clicked) {
     gen_video_api_cache_key();
     let params = param_generate();
     if(!params) {
-      store.dispatch({ type: 'set_virtual_data_loading',  data: 0 })
-      virtual_data_loading.value= false;
-      no_match_list_handle();
+      this.virtual_data_loading= false;
+      this.no_match_list_handle();
       return;
     }
     if(is_user_clicked != 'is_user_refreshing'){
       useMittEmit(MITT_TYPES.EMIT_VIRTUAL_MATCH_LOADING,true);
-      virtual_match_list.value = [];
-      match_list_by_no.value = [];
-      no_title_list.value = [];
-      virtual_data_loading.value= true;
+      this.virtual_match_list = [];
+      this.match_list_by_no = [];
+      this.no_title_list = [];
+      this.virtual_data_loading= true;
     }
     api_v_sports.get_virtual_sport_list(params).then(res => {
-      virtual_data_loading.value= false;
+      this.virtual_data_loading= false;
       useMittEmit(MITT_TYPES.EMIT_VIRTUAL_MATCH_LOADING,false);
-      store.dispatch({ type: 'set_virtual_data_loading',  data: 0 })
       useMittEmit(MITT_TYPES.EMIT_IS_FIRST_LOADED);
       useMittEmit(MITT_TYPES.EMIT_MATCH_LIST_DATA_TAKED);
 
       if(res.code == 200 && res.data && res.data.length){
-        virtual_match_list.value = append_result_fields(res.data);
+        this.virtual_match_list = append_result_fields(res.data);
         check_next_no_start_time();
-        no_title_list.value = virtual_match_list.value.map(m => {
+        this.no_title_list = this.virtual_match_list.map(m => {
           let {no,mmp,batchNo} = m;
           m.matchs.forEach(match_item => {
             if(match_item.homeScore){
@@ -154,7 +142,7 @@ export const use_virtual_data = (props) => {
         });
 
         if(is_user_clicked){
-          is_user_switch_league.value = Math.random();
+          this.is_user_switch_league = Math.random();
         }
         get_ol_dictionary();
         //赛马赛狗赛 摩托车事初始化
@@ -170,29 +158,29 @@ export const use_virtual_data = (props) => {
         }
       }
       else{
-        virtual_match_list.value = [];
-        match_list_by_no.value = [];
+        this.virtual_match_list = [];
+        this.match_list_by_no = [];
       }
-      this.match_list_is_empty = !virtual_match_list.value.length;
+      this.match_list_is_empty = !this.virtual_match_list.length;
       if(this.match_list_is_empty){
         this.current_match = {};
-        this.virtual_m_list_no_data_();
+        this.virtual_m_list_no_data();
       }
       else{
         if(!this.current_league) return;
         let p_key = `${this.sub_menu_type}-${this.current_league.menuId}`;
         let match_list_map = _.cloneDeep(this.get_prev_v_sports);
         if(!match_list_map) match_list_map = {};
-        match_list_map[p_key] = _.cloneDeep(virtual_match_list.value);
+        match_list_map[p_key] = _.cloneDeep(this.virtual_match_list);
         this.set_prev_v_sports(match_list_map);
-        no_virtual_match.value = false;
+        this.no_virtual_match = false;
 
         //选中上次选择的期
         let curr_batch = this.current_batch,found_batch_i = 0;
         if(!curr_batch){
-          curr_batch = virtual_match_list.value[0];
+          curr_batch = this.virtual_match_list[0];
         }
-        let found_batch = virtual_match_list.value.filter((cu,cu_i) => {
+        let found_batch = this.virtual_match_list.filter((cu,cu_i) => {
           if(cu.batchNo == curr_batch.batchNo){
             found_batch_i = cu_i;
             return true;
@@ -200,7 +188,7 @@ export const use_virtual_data = (props) => {
           return false;
         })[0];
         if(!found_batch){
-          found_batch = virtual_match_list.value[0];
+          found_batch = this.virtual_match_list[0];
         }
         this.sub_nav_changed({
           nav:found_batch,
@@ -210,27 +198,26 @@ export const use_virtual_data = (props) => {
       }
       this.is_reset_tab_i = Math.random();
     }).catch((e) => {
-      virtual_data_loading.value= false;
+      this.virtual_data_loading= false;
       useMittEmit(MITT_TYPES.EMIT_VIRTUAL_MATCH_LOADING,false);
-      store.dispatch({ type: 'set_virtual_data_loading',  data: 0 })
       useMittEmit(MITT_TYPES.EMIT_IS_FIRST_LOADED);
       useMittEmit(MITT_TYPES.EMIT_MATCH_LIST_DATA_TAKED);
 
-      virtual_match_list.value = [];
-      match_list_by_no.value = [];
+      this.virtual_match_list = [];
+      this.match_list_by_no = [];
       this.match_list_is_empty = true;
       this.current_match = {};
-      this.virtual_m_list_no_data_();
+      this.virtual_m_list_no_data();
       this.is_reset_tab_i = Math.random();
     });
   }
 
   /**
-       * 附加赛果到赛事列表
-       * @param {Array} result_list 赛果数据
-       * @param {Array} match_list_source 需要更新的赛事数据
-       */
-  const append_match_result = (result_list,match_list_source) => {
+   * 附加赛果到赛事列表
+   * @param {Array} result_list 赛果数据
+   * @param {Array} match_list_source 需要更新的赛事数据
+   */
+  append_match_result (result_list,match_list_source) {
     if(result_list && result_list.length && match_list_source.length){
       result_list.forEach(match => {
         match.forEach(hp => {
@@ -268,9 +255,9 @@ export const use_virtual_data = (props) => {
   /**
    * 虚拟体育赛事接口未获取到数据处理
    */
-  const virtual_m_list_no_data_  = () => {
+  virtual_m_list_no_data  () {
     if(!this.current_league) {
-      no_match_list_handle();
+      this.no_match_list_handle();
       return;
     }
 
@@ -281,14 +268,14 @@ export const use_virtual_data = (props) => {
       match_list.forEach(m => {
         m.mhs = 11;
       });
-      virtual_match_list.value = match_list;
+      this.virtual_match_list = match_list;
       this.sub_nav_changed({
-        nav:_.cloneDeep(virtual_match_list.value[0]),
+        nav:_.cloneDeep(this.virtual_match_list[0]),
         i:0
       });
     }
     else{
-      no_match_list_handle();
+      this.no_match_list_handle();
       return;
     }
     //当前赛事
@@ -303,7 +290,7 @@ export const use_virtual_data = (props) => {
           this.skeleton = false
           if(res.code == 200){
             let result_list = res.data;
-            this.append_match_result(result_list,match_list_by_no.value);
+            this.append_match_result(result_list,this.match_list_by_no);
             useMittEmit(MITT_TYPES.EMIT_MATCH_RESULT_DATA_LOADED,result_list);
           }
         }).catch((err)=>{
@@ -317,15 +304,15 @@ export const use_virtual_data = (props) => {
   /**
    * 未获取到虚拟体育赛事列表设置空数据提醒
    */
-  const no_match_list_handle = () => {
-    no_virtual_match.value = true;
+  no_match_list_handle () {
+    this.no_virtual_match = true;
   }
   /**
    * 检测下一轮开赛时间刷新数据
    */
-  const check_next_no_start_time = () => {
-    if(virtual_match_list.value && virtual_match_list.value.length > 1){
-      let mgt = Number(virtual_match_list.value[1].matchs[0].mgt);
+  check_next_no_start_time () {
+    if(this.virtual_match_list && this.virtual_match_list.length > 1){
+      let mgt = Number(this.virtual_match_list[1].matchs[0].mgt);
       let now = this.get_now_server();
       let sub = mgt - now;
       //下一轮开赛
@@ -345,13 +332,13 @@ export const use_virtual_data = (props) => {
   /**
    * 获取投注项字典对象
    */
-  const get_ol_dictionary = () => {
-    Object.keys(ol_dictionary.value).forEach(k => {
-      delete ol_dictionary.value[k];
+  get_ol_dictionary () {
+    Object.keys(this.ol_dictionary).forEach(k => {
+      delete this.ol_dictionary[k];
     });
 
-    if(no_title_list.value && no_title_list.value.length){
-      no_title_list.value.forEach(no_title => {
+    if(this.no_title_list && this.no_title_list.length){
+      this.no_title_list.forEach(no_title => {
 
         if(!no_title.match || !no_title.match.length) { return }
         no_title.match.forEach(match => {
@@ -364,7 +351,7 @@ export const use_virtual_data = (props) => {
 
               if(!hl_item.ol || !hl_item.ol.length) {return}
               hl_item.ol.forEach(ol_item => {
-                ol_dictionary.value[ol_item.oid] = ol_item;
+                this.ol_dictionary[ol_item.oid] = ol_item;
               });
             });
           });
@@ -373,3 +360,5 @@ export const use_virtual_data = (props) => {
     }
   }
 }
+
+export default new VirtualData()

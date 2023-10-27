@@ -138,7 +138,7 @@
         </div>
         <!--新手版-->
         <div v-if="get_newer_standard_edition == 1" class="bet-item-wrap row border-radius4">
-          <v-s-odd-item :ol_item="ol_item" :hl_item="get_hl_item(match_item)" @click.native="item_click4(match_item,ol_item)"
+          <v-s-odd-item :ol_item="ol_item" :hl_item="get_hl_item(match_item)" @click="item_click4(match_item,ol_item)"
             :match_invalid="match_item.invalid" :match="match_item"
             v-for="(ol_item,o_i) of get_ol_list_f_match(match_item)" :key="o_i">
           </v-s-odd-item>
@@ -200,7 +200,7 @@ export default defineComponent({
     })
     // #TODO EMIT
       // created(){
-      //   useMittOn(MITT_TYPES.EMIT_VIDEO_PROCESS_DATA_GOT,video_process_init_video);
+      //   useMittOn(MITT_TYPES.EMIT_VIDEO_PROCESS_DATA_GOT,VirtualVideo.get_match_video_process);
       // },
 
 
@@ -213,12 +213,12 @@ export default defineComponent({
     onMounted(() => {
       // #TODO EMIT
       // useMittOn(MITT_TYPES.EMIT_PRE_COUNTING_EDN,pre_counting_end_handle)
-      video_process_init_video()
+      VirtualVideo.get_match_video_process()
       // #TODO EMIT
       // useMittOn(MITT_TYPES.EMIT_XU_NI_TY_STANDARD_ODD_STATUS,xu_ni_ty_standard_odd_status);
 
       emitters = [
-        useMittOn(MITT_TYPES.EMIT_VIDEO_PROCESS_DATA_GOT, video_process_init_video).off,
+        useMittOn(MITT_TYPES.EMIT_VIDEO_PROCESS_DATA_GOT, VirtualVideo.get_match_video_process).off,
         useMittOn(MITT_TYPES.EMIT_PRE_COUNTING_EDN, pre_counting_end_handle).off,
         useMittOn(MITT_TYPES.EMIT_XU_NI_TY_STANDARD_ODD_STATUS, xu_ni_ty_standard_odd_status).off,
       ]

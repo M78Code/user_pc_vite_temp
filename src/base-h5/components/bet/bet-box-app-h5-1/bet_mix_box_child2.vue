@@ -48,17 +48,23 @@
       </div>
       <!-- 点击投注后 -->
       <div class="scroll-box" ref="scroll_box" v-if="BetViewDataClass.bet_order_status != 1">
-        <bet-mix-box-child4></bet-mix-box-child4>
+        <div v-if="BetData.is_bet_pre">
+          <!--投注成功后的预约金额和可用金额-->
+          <bet-mix-box-child5></bet-mix-box-child5>
+        </div>
+        <!-- 常规投注 -->
+        <div v-else>
+          <bet-mix-box-child4 v-if=" BetViewDataClass.orderNo_bet_obj.length "></bet-mix-box-child4>
+        </div>
+
       </div>
 
-      <!--加减-->
-        <bet-mix-box-child6></bet-mix-box-child6>
+    
 
-        <!--投注成功后的预约金额和可用金额-->
-        <bet-mix-box-child5></bet-mix-box-child5>
+     
 
       <!--确定按钮-->
-      <div class="nonebox4-sub">确认</div>
+      <!-- <div class="nonebox4-sub">确认</div> -->
 
       <div class="yb_px12" v-if="get_mix_bet_flag">
         <div class="row justify-between items-center content-t yb_mb6 yb_mt8 yb_fontsize14 fw_600 bet-mix-show">
@@ -135,7 +141,7 @@
 import betMixBoxChild3 from './bet_mix_box_child3.vue';
 import betMixBoxChild4 from './bet_mix_box_child4.vue';
 import betMixBoxChild5 from './bet_mix_box_child5.vue';
-import betMixBoxChild6 from './bet_mix_box_child6.vue';
+
 
 // import betMixShow from './/bet_mix_show.vue';
 import betMixShow from './bet_mix_show3.vue';
