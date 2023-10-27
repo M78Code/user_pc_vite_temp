@@ -289,7 +289,7 @@ export default defineComponent({
 
 
     timer_super28 = setTimeout(() => {
-      video_process_init_video();
+      VirtualVideo.get_match_video_process();
     },500);
     set_loading_state();
     user_destroy_resource();
@@ -361,7 +361,7 @@ export default defineComponent({
      * @description: 视频同步函数
      */
     const set_init_video_on = (video_data) => {
-      video_process_init_video("v_p_d_got",video_data);
+      VirtualVideo.get_match_video_process("v_p_d_got",video_data);
     };
     /**
     *@description:虚拟体育详情页返回
@@ -402,7 +402,7 @@ export default defineComponent({
      * 时钟计时结束
      */
     const timer_ended_handle = (mid) => {
-      video_process_init_video();
+      VirtualVideo.get_match_video_process();
       if(sub_menu_type == 1004){
         if(current_batch.mmp == 'INGAME'){
           $emit('time_ended','is_basketball_playing');
@@ -421,7 +421,7 @@ export default defineComponent({
       if(player){
         player.destroy();
         player = null;
-        video_process_init_video();
+        VirtualVideo.get_match_video_process();
       }
     };
     /**
@@ -620,7 +620,7 @@ export default defineComponent({
     /**
      * 获取到视频进程数据
      */
-    const video_process_init_video = (type_s) => {
+    const VirtualVideo.get_match_video_process = (type_s) => {
       clearTimeout(init_player_timeout);
       init_player_timeout = setTimeout(() => {
         let new_ = current_match;
@@ -757,7 +757,7 @@ export default defineComponent({
       () => props.match_process_update,
       (new_) => {
         if(new_){
-          video_process_init_video();
+          VirtualVideo.get_match_video_process();
         }
         set_loading_state();
         is_pre_counting_end = false;
@@ -788,20 +788,20 @@ export default defineComponent({
             $emit('basketball_end');
           }
         }
-        video_process_init_video();
+        VirtualVideo.get_match_video_process();
       }
     );
     watch(
       () => props.source,
       () => {
-        video_process_init_video();
+        VirtualVideo.get_match_video_process();
       }
     );
 
     // #TODO watch vuex
     // watch(
       // if(current_match){
-      //   video_process_init_video();
+      //   VirtualVideo.get_match_video_process();
       // }
     // );
     // #TODO watch vuex
@@ -853,7 +853,7 @@ export default defineComponent({
       get_next_batch_no,
       sync_video_data_handle,
       get_score_list,
-      video_process_init_video,
+      VirtualVideo.get_match_video_process,
       set_loading_state,
       clear_timer,
       home_name,

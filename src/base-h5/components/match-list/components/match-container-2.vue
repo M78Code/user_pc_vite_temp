@@ -69,7 +69,7 @@
       </div>
       <!-- 卡片主内容 -->
       <!-- <q-slide-transition> -->
-        <div style="width: 100%;" v-if="!collapsed">
+        <div class="match-content" style="width: 100%;" v-if="!collapsed">
           <!--标准版 赔率标题栏-->
           <div class="odd-title-wraper row " v-if="match.is_show_league" @click.stop :style="{width: !collapsed ? '100%' : 0}">
             <div class="odd-title-i-w flex">

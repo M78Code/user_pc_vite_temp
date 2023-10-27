@@ -200,7 +200,7 @@ export default defineComponent({
     })
     // #TODO EMIT
       // created(){
-      //   useMittOn(MITT_TYPES.EMIT_VIDEO_PROCESS_DATA_GOT,video_process_init_video);
+      //   useMittOn(MITT_TYPES.EMIT_VIDEO_PROCESS_DATA_GOT,VirtualVideo.get_match_video_process);
       // },
 
 
@@ -213,12 +213,12 @@ export default defineComponent({
     onMounted(() => {
       // #TODO EMIT
       // useMittOn(MITT_TYPES.EMIT_PRE_COUNTING_EDN,pre_counting_end_handle)
-      video_process_init_video()
+      VirtualVideo.get_match_video_process()
       // #TODO EMIT
       // useMittOn(MITT_TYPES.EMIT_XU_NI_TY_STANDARD_ODD_STATUS,xu_ni_ty_standard_odd_status);
 
       emitters = [
-        useMittOn(MITT_TYPES.EMIT_VIDEO_PROCESS_DATA_GOT, video_process_init_video).off,
+        useMittOn(MITT_TYPES.EMIT_VIDEO_PROCESS_DATA_GOT, VirtualVideo.get_match_video_process).off,
         useMittOn(MITT_TYPES.EMIT_PRE_COUNTING_EDN, pre_counting_end_handle).off,
         useMittOn(MITT_TYPES.EMIT_XU_NI_TY_STANDARD_ODD_STATUS, xu_ni_ty_standard_odd_status).off,
       ]

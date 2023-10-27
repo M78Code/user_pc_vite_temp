@@ -105,7 +105,6 @@ import matchContainer from "./match-container.vue";  // 虚拟体育赛狗赛马
 import matchContainerApp from "./match-container-2.vue";  // 虚拟体育赛狗赛马赛果项
 import vMatchContainer from "./virtual-match-container.vue";  // 虚拟体育赛狗赛马赛果项
 import matchContainerChampion from "./match-container-champion.vue";    // 冠军赛事组件，用于赛事列表展示赛事信息
-import matchContainerResult from "./match-container-result.vue" // 赛果冠军
 import scrollWrapper from 'src/base-h5/components/scroll-wraper/scroll-wrapper.vue';    // 滚动操作处理
 import UserCtr from 'src/core/user-config/user-ctr.js'
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
