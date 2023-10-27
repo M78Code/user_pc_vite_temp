@@ -52,7 +52,6 @@ class GlobalAccessConfig {
     try {
       let res = await api_common.get_access_config();
       let data = res?.data?.data || '';
-      console.error("客户端-获取紧急开关配置", data)
       if (data) {
         this.init_load = true;
         this.set_access_config(data)

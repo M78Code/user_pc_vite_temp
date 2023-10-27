@@ -26,6 +26,7 @@
 </template>
 <script setup>
 import { onMounted, onBeforeMount, reactive } from "vue";
+import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import { ScrollMenu } from 'src/base-h5/components/menu/app-h5-menu/index'
 import navigationBar from 'src/base-h5/components/tutorial/navigation-bar/index.vue'
 import { scrollMenu } from "src/base-h5/components/menu/app-h5-menu/utils.js"
@@ -66,6 +67,10 @@ onMounted(()=>{
 const set_menu_lv1 = item => {
     MenuData.set_current_lv1_menu(item.mi);
     MenuData.get_menu_lvmi_list(item.mi)
+    MenuData.get_results_menu();
+    setTimeout(() => {
+        MatchMeta.get_results_match()
+    }, 2000)
 }
 
 // onBeforeMount(() => {

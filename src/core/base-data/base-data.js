@@ -216,7 +216,6 @@ class BaseData {
     // let user_info = lodash_.get(res,'data.data',{})
     // let user_info = lodash_.get(res,'data.data',{})
     let user_info = userCtr.get_user_info_data()
-    console.error('user_info', user_info);
     if (user_info && Object.keys(user_info).length) {
       // let old_user = JSON.stringify(store.getters.get_user)
       // let new_user = JSON.stringify(user_info)
@@ -419,7 +418,6 @@ class BaseData {
           esport_menu.push(obj);
         }
       });
-      console.error(' this.esport_menu', left_menu)
       // 重置默认数据
       this.left_menu_base_mi_arr = left_menu;
 
@@ -626,7 +624,6 @@ class BaseData {
     // 菜单 国际化 数据  map
     res["2000"] = esports || "Esports";
     this.menus_i18n_map = res;
-    console.error('BaseData',this)
   }
   /**
    * 解析  新的菜单到旧的菜单的映射关系
@@ -958,11 +955,11 @@ class BaseData {
     // this.is_mi_300_open = res_2.includes("false");
 
     this.base_data_version.value = Date.now();
-    console.warn(
-      "用户数据解析完成----------电竞--",
-      this.is_mi_300_open_int,
-      "--vr--" + this.is_mi_2000_open_int
-    );
+    // console.warn(
+    //   "用户数据解析完成----------电竞--",
+    //   this.is_mi_300_open_int,
+    //   "--vr--" + this.is_mi_2000_open_int
+    // );
   }
 }
 
