@@ -23,16 +23,13 @@
 <script>
 // #TODO vuex 
 // import { mapGetters } from "vuex";
-import { reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
+import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 export default defineComponent({
-  name: "virtual_sports_d_r_timer",
-
+  name: "virtual-sports-d-r-timer",
   props:{
     team_list:Array,
     match:Object,
   },
-
-
   setup(props, evnet) {
     const component_data = reactive({
       team_obj :null,

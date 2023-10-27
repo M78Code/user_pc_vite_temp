@@ -38,17 +38,17 @@
 </template>
 
 <script>
-import { api_v_sports } from "project_path/api";
-import no_data from "project_path/components/common/no_data";
+import { api_virtual } from "src/api/index.js";
+import noData from "src/base-h5/components/common/no-data.vue";
 
 // #TODO VUEX 
 // import {mapGetters} from "vuex";
 
-import { reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
+import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 export default defineComponent({
   name: "group_matches",
   components: {
-    "no-data": no_data
+    "no-data": noData
   },
   props:{
     tid: {

@@ -157,24 +157,22 @@
 
 <script>
 // #TODO
-// import {mapGetters,mapMutations} from 'vuex';
-import virtualSportsTimer from "project_path/pages/virtual/virtual_sports_part/virtual_sports_timer.vue";
-import common from "project_path/mixins/constant/module/common.js";
-import settleDialog from "project_path/components/footer_bar/settle_dialog.vue";
-import loading from 'project_path/components/common/loading.vue';
-import dateMatchList from 'project_path/pages/virtual/virtual_sports_part/date_match_list.vue'
-import virtualBasketball from 'project_path/pages/details/children/virtual_basketball.vue'
+import virtualSportsTimer from "src/base-h5/components/virtual/virtual-sports-timer.vue";
+import settleDialog from "src/base-h5/components/footer-bar/settle-dialog.vue";
+import loading from 'src/base-h5/components/common/loading.vue';
+import dateMatchList from 'src/base-h5/components/virtual/date-match-list.vue'
+import virtualBasketball from 'src/base-h5/components/details/children/virtual-basketball.vue'
 
 import lodash from "lodash";
 import { LOCAL_PROJECT_FILE_PREFIX } from "src/core";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
-import { reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
+import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 export default defineComponent({
-  name: "virtual_sports_stage",
+  name: "virtual-sports-stage",
   // #TODO mixins
   // mixins:[common],
   components:{
-    'virtual-sports-timer':virtualSportsTimer,
+    virtualSportsTimer,
     dateMatchList,
     settleDialog,
     loading,
@@ -865,7 +863,7 @@ export default defineComponent({
 });
 </script>
 <style scoped lang="scss">
-  @import "../styles/virtual-sports-stage.scss";
+  @import "./styles/virtual-sports-stage.scss";
 </style>
 <style lang="scss">
 .dplayer-controller, .dplayer-menu, .dplayer-setting, .dplayer-bar-time,

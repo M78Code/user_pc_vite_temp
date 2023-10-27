@@ -12,7 +12,7 @@
                 <div class="img" :style="compute_css_obj('menu-go-back-icon')"></div>
             </div>
         </slot>
-        <div v-show="false">   {{MenuData.update_time}} </div>
+        <div v-show="false">   {{MenuData.update_time}} {{UserCtr.user_version}}</div>
         <div class="main-menu-container">
             <template v-for="(item, index) in menu_list" :key="lodash_.get(item, 'code')">
                 <div class="m-menu-item" :class="{ current: lodash_.get(item, 'mi') == MenuData.current_lv_1_menu_mi.value }">

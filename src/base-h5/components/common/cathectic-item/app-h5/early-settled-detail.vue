@@ -16,7 +16,10 @@
         </div>
       </div>
     </q-slide-transition>
-    <div class="settle-btn" @click="detail_show=!detail_show">提前兑现详情</div>
+    <div class="settle-btn" :class="detail_show ? 'up' : 'down'" @click="detail_show=!detail_show">
+      <span>提前兑现详情</span>
+      <img src="/public/app-h5/image/gif/change.gif">
+    </div>
   </div>
 </template>
 
@@ -55,8 +58,25 @@ let detail_show = ref(false)
     }
   }
   .settle-btn {
-    text-align: center;
     font-size: 0.14rem;
     padding-top: 0.1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    span {
+      margin-right: 0.1rem;
+    }
+    img {
+      width: 0.2rem;
+    }
+    &.down span {
+      padding-top: 0.04rem;
+    }
+    &.down img {
+        transform: rotate(-90deg);
+      }
+    &.up img {
+      transform: rotate(90deg);
+    }
   }
 </style>

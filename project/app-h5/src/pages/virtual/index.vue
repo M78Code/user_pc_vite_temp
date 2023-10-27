@@ -16,7 +16,7 @@
           <div class="virtual-menu-list" ref='virtual_menu_list_dom'>
             <div class="tabs-bar">
               <div class="tabs-bar-nav" ref="scroll_main">
-                <div ref="scroll_box" @click="virtual_menu_changed(i)" v-for="(tab, i) in sub_menu_list" :key="i" 
+                <div ref="scroll_box" v-for="(tab, i) in sub_menu_list" :key="i" @click="virtual_menu_changed(tab, i)"
                   :class="['tabs-tab', sub_menu_i == i ? 'tabs-active' : '']">
                   <div :class="['icon','icon'+tab.field1]">
                     <img v-if="false" class="menu-new-icon" src="image/bw3/svg/virtual-sports/new.svg" />
@@ -29,14 +29,14 @@
         </div>
       </div>
       <!--虚拟体育-->
-      <virtual-sports
+      <!-- <virtual-sports
         :params="virtual_sports_params"
         :current_sub_menu="current_sub_menu"
         :is_user_refresh='refreshing'
         :menu_list="current_sub_menu.subList ? current_sub_menu.subList : []"
         :v_match_router_ente="v_match_router_ente"
         :v_menu_changed="v_menu_changed">
-      </virtual-sports>
+      </virtual-sports> -->
 
     </div>
 
@@ -64,7 +64,7 @@ import { theme } from 'src/base-h5/mixin/userctr.js'
 // 设置菜单
 // import setMenu from "src/project/components/common/set_menu.vue"    
 // 虚拟体育
-import virtualSports from "src/base-h5/components/virtual/virtual-sports-part/virtual-sports.vue";
+// import virtualSports from "src/base-h5/components/virtual/virtual-sports.vue";
 // 底部菜单
 // import virtualFooterMenu from 'src/base-h5/components/virtual/virtual-sports-part/virtual-footer-menu.vue'
 
@@ -160,10 +160,9 @@ const vir_refresh = () => {
 /**
  * 虚拟体育菜单切换
  */
-const virtual_menu_changed = (i) => {
-  utils.tab_move(i,scroll_main.vlaue, scroll_box.vlaue)
+const virtual_menu_changed = (tab, i) => {
   sub_menu_i.value = i;
-  current_sub_menu.value = sub_menu_list.value[i];
+  current_sub_menu.value = tab;
   virtual_sports_params.csid = current_sub_menu.value.menuId;
 
   // 足蓝跳转到其他虚拟赛种前， 给状态一个标识

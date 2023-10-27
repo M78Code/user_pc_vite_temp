@@ -15,8 +15,8 @@
       <div class="match-item" v-for="(item,index) in list_data" :key="index">
         <template v-if="list_data[0].list">
           <div class="left_contend">
-            <template v-for="(troops, index) in item.list" >
-              <div class="team" :key="index">
+            <template v-for="(troops, index) in item.list" :key="index">
+              <div class="team">
                 <div class="number">{{ String.fromCharCode(+troops.ranking_index +65) }}</div>
                 <div class="name">
                   <div class="ellipsis yb-absolute-fit">{{ troops.homeName }}</div>
@@ -74,13 +74,13 @@
 // #TODO VUEX 
 // import {mapGetters} from "vuex";
 import { project_name } from 'src/core'
-import { api_v_sports } from "project_path/api";
-import no_data from "project_path/components/common/no_data";
-import { reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
+import { api_virtual } from "src/api/index.js";
+import noData from "src/base-h5/components/common/no-data.vue";
+import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 export default defineComponent({
   name: "knockout",
   components: {
-    "no-data": no_data
+    "no-data": noData
   },
   props:{
     tid: {

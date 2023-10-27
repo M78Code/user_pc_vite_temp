@@ -7,22 +7,23 @@
     <div class="settle-dialog" :style="page_style">
       <div class="row items-center yb_fontsize16 head-top" @touchmove.prevent>
         <div class="row col items-center justify-center">
-          <p @click="change_record(0)" :class="main_item == 0 && 'active-p'">
-            {{ i18n_t('bet_record.no_account') }}</p>
-          <p @click="change_record(1)" :class="main_item == 1 && 'active-p'">
-            {{ i18n_t('bet_record.account') }}</p>
-          <p @click="change_record(2)" :class="main_item == 2 && 'active-p'">
-            {{ i18n_t('pre_record.book') }}</p>
+          <p v-for="(item, index) in tabs" 
+            :key="index" 
+            @click="change_record(index)" 
+            :class="main_item == index && 'active-p'"
+            > {{ item.title }}
+          </p>
         </div>
       </div>
   
       <div class="content-m" ref="record_box">
-        <!--未结算  -->
-        <unsettle ref="unsettle_child" v-show="main_item == '0'" :main_item="main_item"></unsettle>      
-        <!--已结算-->
-        <settle v-show="main_item == '1'" :main_item="main_item"></settle>
-        <!--预约-->
-        <preRecord v-show="main_item == '2'" :main_item="main_item"></preRecord>
+        <template v-for="(item, index) in tabs" :key="index">
+          <component 
+            v-show="main_item == index" 
+            :is="item.componentName" 
+            :main_item="main_item">
+          </component>
+        </template>
       </div>
     </div>
   </template>
@@ -33,7 +34,7 @@
   import unsettle from "src/base-h5/components/cathectic/app-h5/unsettle.vue"
   import settle from "src/base-h5/components/cathectic/app-h5/settle.vue"
   import preRecord from "src/base-h5/components/cathectic/app-h5/pre-record.vue"
-  import { onMounted, onUnmounted, ref, computed, provide, watch, nextTick } from 'vue'
+  import { onMounted, onUnmounted, ref, shallowRef, computed, provide, watch, nextTick } from 'vue'
   import lodash from 'lodash'
   import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
   import store from 'src/store-redux/index.js'
@@ -54,6 +55,11 @@
   const provided_ = ref({})
   // 选中tab的下标
   const main_item = ref('0')
+  const tabs = ref([
+    { title: i18n_t('bet_record.no_account'), componentName: shallowRef(unsettle) },
+    { title: i18n_t('pre_record.book'), componentName: shallowRef(preRecord) },
+    { title: i18n_t('bet_record.account'), componentName: shallowRef(settle) },
+  ])
   // 锚点
   const unsettle_child = ref(null)
   const record_box = ref(null)
@@ -93,11 +99,11 @@
         provided_.value = { queryorderpresettleconfirm_data: data }
       }
       // 弹窗显示接口获取列表后延迟
-        timer_1.value = setTimeout(() => {
-        let el = unsettle_child.value
-        el.check_early_order()
-        el.search_early_money()
-      }, 800);    
+      // timer_1.value = setTimeout(() => {
+      //   let el = unsettle_child.value
+      //   el.check_early_order()
+      //   el.search_early_money()
+      // }, 800);    
     })
   })
   //   ...mapMutations(['set_main_item']),
