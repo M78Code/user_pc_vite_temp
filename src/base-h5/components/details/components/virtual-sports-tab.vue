@@ -26,7 +26,7 @@
 
 <script>
 // import { mapGetters,mapMutations } from "vuex"
-import { api_common } from "src/project/api/index.js";
+import { api_common } from "src/api/index.js";
 import { useRoute, useRouter } from "vue-router"
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import lodash from "lodash"

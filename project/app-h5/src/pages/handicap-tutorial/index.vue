@@ -31,7 +31,7 @@
         <div class="ht-congrats">恭喜，您已进阶为足球大师</div>
 
         <div class="ht-handle">
-            <div class="ht-button">
+            <div class="ht-button" @click='go_back'>
                 实战来一注
             </div>
             <div class="ht-button default" @click="() => { state.inAnswerQuestion = !state.inAnswerQuestion}">
@@ -48,6 +48,7 @@
 </template>
 <script setup>
 import { onMounted, onBeforeMount, reactive } from "vue";
+import { useRouter, useRoute } from "vue-router"
 import navigationBar from 'src/base-h5/components/tutorial/navigation-bar/index.vue'
 import matchResultHt from 'src/base-h5/components/tutorial/match-result-ht/index.vue'
 import answerQuestions from 'src/base-h5/components/tutorial/answer-questions/index.vue'
@@ -55,13 +56,18 @@ import answerQuestions from 'src/base-h5/components/tutorial/answer-questions/in
 const switchMenu = ['让球', '大小球']
 const slideMenu = ['0', '0/0.5', '0.5', '0.5/1', '1球', '1/1.5球', '2球', '2/2.5球']
 const matchResultList = 4
-
+const router = useRouter()
 const props = defineProps({})
 const state = reactive({
     currentSwitchValue: 0, // 让球：0 大小球：1 对应switchMenu index
     currentSlideValue: 0, // 球数 目前slideMenu写死
     inAnswerQuestion: false // 是否进入了答题状态
 })
+
+// 返回上一页
+const go_back = () => {
+    router.go(-1)
+}
 
 const switchHandle = (val) => {
     state.currentSwitchValue = val

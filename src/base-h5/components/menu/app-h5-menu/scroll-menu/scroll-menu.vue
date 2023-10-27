@@ -90,7 +90,6 @@ const init_match_callback = () => {
  * 二级菜单事件
  */
  async function set_menu_lv2(item = {},event) {
-  console.log(item)
   // 选中后点击无效
   if (item.mi == MenuData.current_lv_2_menu_mi) return
   MenuData.set_current_lv_2_menu_mi(item)
@@ -102,7 +101,7 @@ const init_match_callback = () => {
 }
 
 watch(()=> MenuData.current_lv_1_menu_mi.value,() => {
-  
+
   // 默认设置二级菜单id
   MenuData.set_current_lv_2_menu_mi( lodash_.get(MenuData.menu_lv_mi_lsit,'[0]',{}))
   if([1,2,400].includes(MenuData.current_lv_1_menu_mi.value)){
@@ -135,7 +134,6 @@ const two_menu_show = (sub) => {
  * @description 处理赛事列表渲染数据
  */
  const handle_match_render_data = () => {
-  
   is_first.value = false
   // 清除赛事折叠信息
   MatchDataBaseH5.init()
@@ -151,6 +149,7 @@ const two_menu_show = (sub) => {
   if (lodash_.isEmpty(mi_tid_mids_res)) return
 
   // 设置菜单对应源数据
+  
   MatchMeta.set_origin_match_data()
 }
 /**

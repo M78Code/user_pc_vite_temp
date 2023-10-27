@@ -36,13 +36,11 @@
       </div>
 
       <!-- 投注记录弹层 -->
-      <div v-if="record_show" :class="settle_dialog_bool && 'shadow-box2'" class="shadow-box"
-        @click="change_settle_status(false)" @touchmove.prevent></div>
+      <div v-if="record_show" :class="settle_dialog_bool && 'shadow-box2'" class="shadow-box" @click="change_settle_status(false)" @touchmove.prevent></div>
       <!-- 投注记录弹框（已结算+未结算） -->
-      <div class="bet-record-box" v-if="record_show" :class="settle_dialog_bool && 'bet-record-box2'"
-        :style="{ bottom: calc_bottom }">
+      <div class="bet-record-box" v-if="record_show" :class="settle_dialog_bool && 'bet-record-box2'" :style="{ bottom: calc_bottom }">
         <!-- 结算弹窗 -->
-        <settle-dialog></settle-dialog>
+        <settle-dialog :record_show_settle="record_show_settle"></settle-dialog>
       </div>
 
 
@@ -98,6 +96,7 @@ const route = useRoute();
 const get_accept_show = ref(false); // 接受更好赔率变化 弹窗
 const get_combine_tips_show = ref(false); // 合并投注项提示弹框 弹窗
 const record_show = ref(false);
+const record_show_settle = ref(true);  // 未结注单  已结注单
 const lastTouchEnd = ref(0);
 const select_dialog = ref(false)//暂时筛选窗口
 const activity_status = ref(false)//首页活动弹框
@@ -204,8 +203,11 @@ onMounted(() => {
   init_local_server_time()
   // 开启注单历史弹窗
   useMittOn(MITT_TYPES.EMIT_CHANGE_RECORD_SHOW, (val) => {
-    // record_show.value = val
-    change_settle_status(val);
+    // footer中点击，传过来的是对象，根据settle值确定显示未结注单还是已结注单
+    if(typeof(val) === 'object') {
+      record_show_settle.value = val.settle;
+    }
+    change_settle_status(Boolean(val));
   });
   // 设置设备类型
   BetData.set_device_type(1)

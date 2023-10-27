@@ -21,13 +21,13 @@
 <script>
 // #TODO VUEX
 // import { mapGetters, mapActions } from "vuex";
-import v_s_match_timer from "project_path/pages/virtual/virtual_sports_part/virtual_sports_match_timer.vue";
-import virtual_sports_match_item from "project_path/pages/virtual/virtual_sports_part/virtual_sports_match_item.vue";
+import SVirtual from "src/base-h5/components/skeleton/virtual-sports/virtual.vue"
+import v_s_match_timer from "src/base-h5/components/virtual/virtual-sports-match-timer.vue";
+import virtualSportsMatchItem from "src/base-h5/components/virtual/virtual-sports-match-item.vue";
 // #TODO MIXINS 
 // import betting from 'project_path/mixins/betting/betting.js';
 import {  PageSourceData  } from "src/core/index.js";
-import SVirtual from "project_path/components/skeleton/virtual_sports/virtual"
-import { reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
+import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 export default defineComponent({
   name: "virtual_sports_match_list",
   // #TODO MIXINS 
@@ -35,7 +35,7 @@ export default defineComponent({
 
   components:{
     'v-s-match-timer':v_s_match_timer,
-    'v-sports-match-item':virtual_sports_match_item,
+    virtualSportsMatchItem,
     SVirtual
   },
 

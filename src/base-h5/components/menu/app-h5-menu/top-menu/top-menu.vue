@@ -12,7 +12,7 @@
                 <div class="img" :style="compute_css_obj('menu-go-back-icon')"></div>
             </div>
         </slot>
-        <div v-show="false">   {{MenuData.update_time}} </div>
+        <div v-show="false">   {{MenuData.update_time}} {{UserCtr.user_version}}</div>
         <div class="main-menu-container">
             <template v-for="(item, index) in menu_list" :key="lodash_.get(item, 'code')">
                 <div class="m-menu-item" :class="{ current: lodash_.get(item, 'mi') == MenuData.current_lv_1_menu_mi.value }">
@@ -23,13 +23,13 @@
             </template>
         </div>
         <div class="main-menu-right">
-            ￥{{ format_money2(UserCtr.balance) }}
+            ￥{{ format_money2(balance) }}
         </div>
     </div>
 </template>
 <script setup>
 import lodash_ from "lodash";
-import { onMounted, reactive,ref } from "vue";
+import { onMounted, reactive, ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import { format_money2 } from "src/core/format/index.js";
 import { i18n_t, compute_css_obj, MenuData,UserCtr } from "src/core/index.js";
@@ -59,7 +59,14 @@ const menu_list = reactive([
         code:"champion"
     },
 ])
-
+// 用户余额
+const balance = ref(UserCtr.balance)
+/**
+ * 监听用户信息版本号
+*/
+watch(UserCtr.user_version, () => {
+    balance.value = UserCtr.balance //获取用户最新余额
+})
 
 onMounted(()=>{
     set_menu_lv1({mi:2})

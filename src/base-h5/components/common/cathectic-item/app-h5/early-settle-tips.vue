@@ -3,7 +3,10 @@
  * @Author:
 -->
 <template>
-    <span class="tips" @click="alertTips=true;">提前兑现规则申明</span>
+    <span class="tips" @click="alertTips=true;">
+      提前兑现规则申明
+      <icon-wapper name="icon-tips" size="0.14rem" />
+    </span>
     <!-- 提前兑现规则申明弹框 -->
     <q-dialog v-model="alertTips">
       <div class="tips-main">
@@ -16,6 +19,7 @@
 </template>
 
 <script setup>
+import { IconWapper } from 'src/components/icon'
 import { ref } from 'vue'
 // 提前兑现规则申明弹框
 let alertTips = ref(false)
@@ -23,13 +27,16 @@ let alertTips = ref(false)
 
 <style lang="scss" scoped>
 .tips {
-    display: block;
-    text-align: right;
-    padding-right: 0.14rem;
+    display: flex;
+    justify-content: right;
+    align-items: center;
     margin-bottom: 0.08rem;
     color: var(--q-gb-bg-c-6);
     font-size: 0.12rem;
     line-height: 2;
+    i {
+      margin: 0 0.14rem 0 0.04rem;
+    }
   }
 .tips-main {
   background-color: #fff;

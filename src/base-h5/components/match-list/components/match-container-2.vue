@@ -26,7 +26,8 @@
         </div>
       </template>
       <span class="score-inner-span" v-else>
-        {{ match_of_list.csna }}
+        <!-- PROJECT_NAME == 'app-h5' 复刻版需要展示数量 -->
+        {{ match_of_list.csna }}{{PROJECT_NAME == 'app-h5' ? '(' + MenuData.current_lv_2_menu_item.ct + ')' : ''}}
         <!-- {{match_of_list.csna || get_current_menu.sub.menuName}} -->
       </span>
     </div>
@@ -37,13 +38,14 @@
         {{ $t('list.match_no_start') }}&nbsp;&nbsp;<span v-show="no_start_total">(0)</span>
       </span>
     </div>
-
+   
     <!-- 最核心的div模块     标题 + 倒计时 + 比分 + 赔率盘口模块 -->
     <div :class="['match-inner-container', {'collapsed': collapsed}]">
       <!--联赛标题 -->
       <div @click="handle_league_fold" v-if="match.is_show_league || (is_hot && get_league_show(i))"
         :class="[('league match-indent hairline-border'), { 'no-radius': get_sport_show, 'no-border': collapsed, 'bottom': match.is_show_league }]">
         <div class="league-t-wrap">
+        <div class="league-t-tubiao"></div>
           <!-- 联赛收藏 -->
           <div v-if="![3000, 900].includes(menu_type)" class="favorited-icon" @click.stop="handle_league_collect">
             <!-- 未收藏 -->
@@ -62,7 +64,7 @@
                 {{ match.tn }}
               </span>
             </span>
-            <icon-wapper color="#999" name="icon-arrow" size="15px" :class="['icon-wapper', {'close': !collapsed}]" />
+            <icon-wapper color="var(--q-match-fs-color-62)" name="icon-arrow" size="15px" :class="['icon-wapper', {'close': !collapsed}]" />
           </span>
         </div>
         
@@ -331,7 +333,7 @@ import { IconWapper } from 'src/components/icon'
 import matchOvertimePen from './match-overtime-pen.vue'
 import ImageCacheLoad from "./public-cache-image.vue";
 import PageSourceData from "src/core/page-source/page-source.js";
-import { i18n_t,MenuData, score_switch_handle,compute_img_url, compute_css_obj, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/index.js"
+import { i18n_t,MenuData, score_switch_handle,compute_img_url, compute_css_obj, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, PROJECT_NAME } from "src/core/index.js"
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import matchListClass from 'src/core/match-list-h5/match-class/match-list.js'
 import { format_time_zone, format_time_zone_time, format_how_many_days, format_week } from "src/core/format/index.js"

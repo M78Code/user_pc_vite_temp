@@ -1,7 +1,6 @@
 <template>
   <div class="virtual-sports">
-    <!-- <virtual-skeleton v-show="virtual_data_loading">
-    </virtual-skeleton> -->
+    <virtual-skeleton v-show="virtual_data_loading"></virtual-skeleton>
     <!--联赛tab-->
     <div class="tab-wrapper">
       <div class="tab-item" :class="{active:i == tab_item_i}" v-for="(tab_item,i) of tab_items"
@@ -13,7 +12,7 @@
     <template v-if="!no_virtual_match">
       <!--选中的赛事阶段组件包含赛前倒计时,赛中视频,完赛等状态-->
       <!--此组件:key去除后有问题, 赛事倒计时时钟颜色红黄错乱-->
-      <!-- <virtual-sports-stage ref="virtual_sports_stage"
+      <virtual-sports-stage ref="virtual_sports_stage"
         :is_before_destroy="is_before_destroy"
         :key="current_match.mid"
         :m_status="current_match.match_status"
@@ -25,12 +24,12 @@
         @basketball_end="basketball_end_handle"
         @time_ended="timer_ended_handle"
         @update_next_batch_match="update_n_batch_handle">
-      </virtual-sports-stage> -->
+      </virtual-sports-stage>
       <div class="test-line" v-if="show_debug">
         {{current_match.mid}}
       </div>
       <!--赛事轮|期菜单-->
-      <!-- <match-tab
+      <match-tab
         :is_reset_tab_i="is_reset_tab_i"
         :no_list="no_title_list"
         :is_user_switch_league="is_user_switch_league"
@@ -44,7 +43,7 @@
         @trend_event_change="trend_event_change"
         @time_ended="timer_ended_handle"
         @update_next_batch_match="v_basket_ball_update_n"
-      ></match-tab> -->
+      ></match-tab>
       <!--  虚拟体育主列表页面  -->
       <div
           v-if="!ranking_list_change"
@@ -53,38 +52,38 @@
           :style="{'padding-bottom': get_betbar_show ? '0.5rem' : '0'}"
       >
         <!-- 虚拟体育足球赛事列表 -->
-        <!-- <v-s-match-list v-if="[1001,1004].includes(sub_menu_type)" :virtual_match_list="match_list_by_no"
+        <v-s-match-list v-if="[1001,1004].includes(sub_menu_type)" :virtual_match_list="match_list_by_no"
           :match_list_loaded="match_list_loaded" :csid="sub_menu_type" :v_menu_changed="v_menu_changed"
           @switch_match="switch_match_handle"  @start="match_start_handle">
-        </v-s-match-list> -->
+        </v-s-match-list>
 
         <div v-if="current_match.match_status == 0">
           <!-- 赛马切换玩法集tab组件 -->
-          <!-- <virtual-sports-tab
+          <virtual-sports-tab
             :batch="current_match_id"
             v-if="![1001,1004].includes(sub_menu_type)">
-          </virtual-sports-tab> -->
+          </virtual-sports-tab>
           <!-- 打印请勿删除 -->
-          <!-- <div><span>赛事状态</span>{{current_match.match_status}}</div> -->
+          <div><span>赛事状态</span>{{current_match.match_status}}</div>
           <!-- 赛马投注区域 -->
           <div v-if="match_list_by_no && match_list_by_no.length && ![1001,1004].includes(sub_menu_type)">
-            <!-- <virtual-sports-category
+            <virtual-sports-category
                 :top_menu_changed="top_menu_changed"
                 :current_match="match_list_by_no[0]" 
                 source='sports'
                 @top_menu_change="handle_top_menu_change"
-            /> -->
+            />
           </div>
         </div>
 
         <!-- 注释勿删除 -->
         <div class="v-sports-ranking" v-if="![1001,1004].includes(sub_menu_type)">
           <!-- 打印请勿删除 -->
-          <!-- <div><span>赛事状态</span>{{current_match.match_status}}</div> -->
+          <div><span>赛事状态</span>{{current_match.match_status}}</div>
           <!-- 赛马的动态排名---赛马在比赛过程的时候显示 -->
-          <!-- <dynamic-ranking v-if="current_match.match_status == 1" :virtual_match_list="[current_match]" /> -->
+          <dynamic-ranking v-if="current_match.match_status == 1" :virtual_match_list="[current_match]" />
           <!-- 赛马的结果展示页---赛马开奖结束后显示赛果 -->
-          <!-- <result-page v-if="current_match.match_status == 2" :match_mid="current_match.mid" :current_match="current_match" @send_virtual_result_rank_data='send_virtual_result_rank_data'/> -->
+          <result-page v-if="current_match.match_status == 2" :match_mid="current_match.mid" :current_match="current_match" @send_virtual_result_rank_data='send_virtual_result_rank_data'/>
         </div>
         <!-- 注释勿删除 -->
       </div>
@@ -93,64 +92,57 @@
         <!--  足球 页面  -->
         <div v-if="[1001,1004].includes(sub_menu_type)">
           <!--  足球小组赛,淘汰赛页面  -->
-          <!-- <group-knockout
+          <group-knockout
             v-if="tab_items[tab_item_i] ? tab_items[tab_item_i].field3 != '': false"
             :tid="menu_list[tab_item_i].field1"
             :current_match="current_match"
-          /> -->
+          />
           <!--  足球排行榜页面  -->
-          <!-- <football-ranking-list v-else :tid="menu_list[tab_item_i].field1"/> -->
+          <football-ranking-list v-else :tid="menu_list[tab_item_i].field1"/>
         </div>
         <!--  非足球排行榜页面  -->
-        <!-- <ranking-list-start v-else :mid="current_match.mid"/> -->
+        <ranking-list-start v-else :mid="current_match.mid"/>
       </div>
       <!-- 占位撑开高度 -->
     </template>
-    <!-- <no-data v-else which='noMatch' height='500'></no-data> -->
+    <no-data v-else which='noMatch' height='500'></no-data>
 
   </div>
 </template>
 
 <script>
-// #TODO 
-// import { mapGetters,mapMutations } from "vuex"
-// #TODO mixins 
-// import common from 'project_path/mixins/constant/module/common.js';
-// import virtual_sports_mixin from "project_path/mixins/virtual_sports/virtual_sports_mixin.js"
-
-// import noData from "project_path/components/common/no_data.vue";
-// import matchTab from "project_path/pages/virtual/virtual_sports_part/match_tab.vue"
-// import v_s_match_list from "project_path/pages/virtual/virtual_sports_part/virtual_sports_match_list.vue"
-// import ranking_list_start from "project_path/pages/virtual/virtual_sports_part/ranking_list_start.vue"
-// import group_knockout from "project_path/pages/virtual/virtual_sports_part/group_knockout.vue"
-// import football_ranking_list from "project_path/pages/virtual/virtual_sports_part/football_ranking_list.vue"
-// import virtualSportsTab from "project_path/pages/details/components/virtual_sports_tab.vue"
-// import virtual_sports_category from "project_path/pages/details/children/virtual_sports_category.vue"
-// 公共方法
-import {utils } from 'src/core/index.js';
-// import virtual_sports_stage from "project_path/pages/virtual/virtual_sports_part/virtual_sports_stage.vue"
-// import dynamic_ranking from "project_path/pages/virtual/virtual_sports_part/dynamic_ranking.vue"
-// import result_page from "project_path/pages/match-list/components/result_page.vue"
-// import virtual_skeleton from "project_path/components/skeleton/virtual_sports/virtual.vue"
-import {  PageSourceData  } from "src/core/index.js";
+import matchTab from "src/base-h5/components/virtual/match-tab.vue"
+import virtualSportsStage from "src/base-h5/components/virtual/virtual-sports-stage.vue"
+import dynamicRanking from "src/base-h5/components/virtual/dynamic-ranking.vue"
+import vsMatchList from "src/base-h5/components/virtual/virtual-sports-match-list.vue"
+import rankingListStart from "src/base-h5/components/virtual/ranking-list-start.vue"
+import groupKnockout from "src/base-h5/components/virtual/group-knockout.vue"
+import footballRankingList from "src/base-h5/components/virtual/football-ranking-list.vue"
+import virtualSportsTab from "src/base-h5/components/details/components/virtual-sports-tab.vue"
+// TODO: 里面死循环 直接卡死，  后续修改
+// import virtualSportsCategory from "src/base-h5/components/details/children/virtual-sports-category.vue"
+import resultPage from "src/base-h5/components/match-list/components/result-page.vue"
+import noData from "src/base-h5/components/common/no-data.vue";
+import virtualSkeleton from "src/base-h5/components/skeleton/virtual-sports/virtual.vue"
+import { PageSourceData } from "src/core/index.js";
 import lodash from "lodash";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
 export default defineComponent({
   name: "virtual",
   components:{
-    // 'virtual-sports-category':virtual_sports_category,
-    // 'match-tab':matchTab,
-    // 'v-s-match-list':v_s_match_list,
-    // 'ranking-list-start':ranking_list_start,
-    // 'football-ranking-list':football_ranking_list,
-    // 'group-knockout':group_knockout,
-    // 'virtual-sports-tab':virtualSportsTab,
-    // 'virtual-sports-stage':virtual_sports_stage,
-    // 'dynamic-ranking': dynamic_ranking,
-    // 'result-page': result_page,
-    // noData,
-    // 'virtual-skeleton':virtual_skeleton,
+    noData,
+    // 'virtual-sports-category':virtualSportsCategory,
+    'match-tab':matchTab,
+    'v-s-match-list':vsMatchList,
+    'ranking-list-start':rankingListStart,
+    'football-ranking-list':footballRankingList,
+    'group-knockout':groupKnockout,
+    'virtual-sports-tab':virtualSportsTab,
+    'virtual-sports-stage':virtualSportsStage,
+    'dynamic-ranking': dynamicRanking,
+    'result-page': resultPage,
+    'virtual-skeleton':virtualSkeleton,
   },
   props:{
     menu_list:Array,
@@ -163,7 +155,6 @@ export default defineComponent({
   
   setup(props, evnet) {
     const { menu_list, params, current_sub_menu, is_user_refresh, v_match_router_ente } = toRefs(props);
-    console.log("current_sub_menu", current_sub_menu);
     const component_data = reactive({
       // 事件集合
       emitters: [],
@@ -216,32 +207,6 @@ export default defineComponent({
       procee_again_timer: null,
       timer1_: null
     });
-    component_data.timer1_ = null;
-    // utils.load_player_js();
-  // computed:{
-  //   //
-  //   ...mapGetters({
-  //     sub_menuid: 'get_current_sub_menuid',
-  //     sub_menu_type: 'get_curr_sub_menu_type',
-  //     current_league: 'get_current_league',
-  //     current_batch:'get_current_batch',
-  //     get_video_process_data:"get_video_process_data",
-  //     get_prev_v_sports_params:"get_prev_v_sports_params",
-  //     get_prev_v_sports:"get_prev_v_sports",
-  //     is_show_analyse:"get_is_show_details_analyse",
-  //     get_bet_list:"get_bet_list",
-  //     get_betbar_show:"get_betbar_show",
-  //     get_newer_standard_edition:"get_newer_standard_edition",
-  //   }),
-  //   //标签页列表
-  //   tab_items(){
-  //     let r = [];
-  //     if(menu_list && menu_list.length){
-  //       r = menu_list;
-  //     }
-  //     return r;
-  //   }
-  // },
     const sub_menuid = computed(() => {
       return ""
     });
@@ -284,19 +249,14 @@ export default defineComponent({
     });
     
     
-    watch(
-      () => props.v_menu_changed,
-      (change_str) => {
-        let { tab_item_i } = data;
-        tab_item_i = 0;
-        component_data.ranking_list_change = is_show_analyse;
+    watch(() => props.v_menu_changed, (change_str) => {
+        component_data.tab_item_i = 0;
+        component_data.ranking_list_change = false;
         // 根据 足蓝标识设置二级菜单切换状态
         component_data.top_menu_changed = !change_str.includes('zu_lan_')
       }
     );
-    watch(
-      () => menu_list,
-      () => {
+    watch( () => menu_list, () => {
         if(tab_items.value && tab_items.value.length){
 
           if(current_league){
@@ -313,9 +273,7 @@ export default defineComponent({
         }
       }
     );
-    watch(
-      () => props.current_sub_menu,
-      () => {
+    watch( () => props.current_sub_menu, () => {
         let prev_league_id = ''
         if(current_league){
           prev_league_id = current_league.menuId;
@@ -327,27 +285,7 @@ export default defineComponent({
       }
     );
 
-    watch(
-      () => props.is_user_refresh,
-      (n) => {
-        if(n){
-          // get_virtual_sport_local('is_user_refreshing')
-        }
-      }
-    );
-
-    watch(
-      () => props.is_user_refresh,
-      (n) => {
-        if(n){
-          // get_virtual_sport_local('is_user_refreshing')
-        }
-      }
-    );
-
-    watch(
-      () => sub_menu_type,
-      (c,n) => {
+    watch( () => sub_menu_type, (c,n) => {
         //赛马赛狗 摩托车
         if([1011, 1002, 1010, 1009].includes(c)){
           component_data.ranking_list_change = false;
@@ -362,7 +300,7 @@ export default defineComponent({
       ]
       // useMittOn(MITT_TYPES.EMIT_ARRIVED10,arrived10_handle);
       // useMittOn(MITT_TYPES.EMIT_MATCH_EDNED_STATUS2,match_ended_status2_handle);
-      match_ended_status2_handle();
+      // match_ended_status2_handle();
     });
 
     onUnmounted(() => {
@@ -376,9 +314,6 @@ export default defineComponent({
 
       clear_timer()
 
-      for (const key in $data) {
-        $data[key] = null
-      }
     })
 
     // #TODO vuex actions 
