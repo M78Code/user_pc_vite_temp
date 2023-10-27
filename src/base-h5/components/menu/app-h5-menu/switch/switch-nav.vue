@@ -2,13 +2,13 @@
  * @Author: rise
  * @Date: 2023-10-22 17:03:22
  * @LastEditors: rise
- * @LastEditTime: 2023-10-23 16:54:52
+ * @LastEditTime: 2023-10-27 22:14:22
  * @Description:  
 -->
 <template>
     <div class="switch-nav">
         <ul>
-            <li v-for="(item,index) in list" :key="index" :class="{active:activeOn == item.val}" @click="changeActive(item.val,item.changeFun,item.isSort)">
+            <li v-for="(item,index) in list" :key="index" :class="{active:activeOn == index}" @click="changeActive(item.val,index,item.changeFun,item.isSort)">
                 {{  item.name }}
                 <template v-if="item.isSort">
                     <span>
@@ -59,7 +59,7 @@
      * @param {*} callback  执行方法
      * @param {*} sort  排序值
      */
-    const changeActive = (val,callback,sort) => {
+    const changeActive = (val,i,callback,sort) => {
         if(sort){
             if(activeOn.value !== val)sortVal.value=0;
             sortVal.value = sortVal.value === 0?1:sortVal.value === 1?2:1;
@@ -67,8 +67,8 @@
             const enVal = sortJson.filter((item)=>{return item.val === sortVal.value })?.[0].enVal;
             return callback(val,enVal);
         }
-        if(activeOn.value === val)return;
-        activeOn.value = val;
+        if(activeOn.value === i)return;
+        activeOn.value = i;
         callback(val);
     }
 </script>

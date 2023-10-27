@@ -94,6 +94,7 @@ class MenuData {
   // 设置二级菜单id
   set_current_lv_2_menu_mi(val = {}){
     this.current_lv_2_menu_mi = val.mi
+    this.current_lv_2_menu = val;
     // 今日 / 滚球/ 冠军 没有 三级
     if(![1,2,400].includes(this.current_lv_1_menu_mi.value)){
      

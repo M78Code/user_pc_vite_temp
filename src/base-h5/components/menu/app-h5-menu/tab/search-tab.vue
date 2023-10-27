@@ -2,12 +2,12 @@
  * @Author: rise
  * @Date: 2023-10-20 16:27:18
  * @LastEditors: rise
- * @LastEditTime: 2023-10-27 19:01:15
+ * @LastEditTime: 2023-10-27 21:07:02
  * @Description:  
 -->
 <template>
-    <!-- <div class="search-tab-wap" v-show="!Array.isArray(menu_lv2) && +menu_lv2?.mi === 1011"> -->
-    <div class="search-tab-wap">
+    <div class="search-tab-wap" v-show="!Array.isArray(menu_lv2) && [401,1016,1013,1011,1012].includes(+menu_lv2?.mi)">
+    <!-- <div class="search-tab-wap"> -->
         <div class="search-tab-content">
             <ul class="search-tab-content-ul">
                 <li :class="{ active: activeOn === item.val }" v-for="(item, index) in dataList" :key="index"
@@ -24,10 +24,10 @@
 </template>
   
 <script setup>
-import { ref  } from "vue";
+import { ref } from "vue";
 import search from "./img/search.svg";
 import {scrollMenu} from "../utils";
-
+import {  menu_lv2 } from 'src/base-h5/mixin/menu.js'
 const props = defineProps({
     dataList: {
         type: Array,
@@ -85,6 +85,7 @@ const changeTab = (val,i,event) => {
     activeOn.value = val;
     event && scrollMenu(event,".search-tab-content-ul",".active");
 }
+
 /**
  * 搜索足球事件
  */

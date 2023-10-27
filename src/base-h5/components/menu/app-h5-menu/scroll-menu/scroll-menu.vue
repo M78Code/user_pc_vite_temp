@@ -105,8 +105,6 @@ watch(()=> MenuData.current_lv_1_menu_mi.value,() => {
   
   // 默认设置二级菜单id
   MenuData.set_current_lv_2_menu_mi( lodash_.get(MenuData.menu_lv_mi_lsit,'[0]',{}))
-
-  // 今日 / 滚球/ 冠军 没有 三级
   if([1,2,400].includes(MenuData.current_lv_1_menu_mi.value)){
     handle_match_render_data()
   }
