@@ -27,10 +27,10 @@
 <script>
 // #TODO VUEX 
 // import {mapGetters} from "vuex";
-import group_matches from "project_path/pages/virtual/virtual_sports_part/group_matches.vue";
-import knockout from "project_path/pages/virtual/virtual_sports_part/knockout.vue";
+import group_matches from "src/base-h5/components/virtual/group-matches.vue";
+import knockout from "src/base-h5/components/virtual/knockout.vue";
 
-import { reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
+import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 export default defineComponent({
   name: "group_knockout",
   props:{

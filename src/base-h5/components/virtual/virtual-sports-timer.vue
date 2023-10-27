@@ -23,9 +23,9 @@
 // #TODO mixins
 // import common from 'project_path/mixins/constant/module/common.js'
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
-import { reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
+import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 export default defineComponent({
-  name: "virtual_sports_timer",
+  name: "virtual-sports-timer",
   // components:{
   //   'virtual-sports-category':virtual_sports_category,
   //   'match-tab':matchTab,

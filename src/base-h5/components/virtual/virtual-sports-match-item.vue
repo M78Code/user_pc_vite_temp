@@ -138,7 +138,7 @@
         </div>
         <!--新手版-->
         <div v-if="get_newer_standard_edition == 1" class="bet-item-wrap row border-radius4">
-          <v-s-odd-item :ol_item="ol_item" :hl_item="get_hl_item(match_item)" @click.native="item_click4(match_item,ol_item)"
+          <v-s-odd-item :ol_item="ol_item" :hl_item="get_hl_item(match_item)" @click="item_click4(match_item,ol_item)"
             :match_invalid="match_item.invalid" :match="match_item"
             v-for="(ol_item,o_i) of get_ol_list_f_match(match_item)" :key="o_i">
           </v-s-odd-item>
@@ -157,9 +157,9 @@
 // #TODO VUEX
 // import { mapGetters, mapActions, mapMutations } from "vuex";
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
-import v_s_odd_item from "project_path/pages/virtual/virtual_sports_part/virtual_sports_odd_item.vue"
-import v_s_match_timer from "project_path/pages/virtual/virtual_sports_part/virtual_sports_match_timer.vue"
-import odd_column_item from "project_path/pages/match-list/components/odd_column_item.vue"
+import v_s_odd_item from "src/base-h5/components/virtual/virtual-sports-odd-item.vue"
+import v_s_match_timer from "src/base-h5/components/virtual/virtual-sports-match-timer.vue"
+import odd_column_item from "src/base-h5/components/match-list/components/odd-column-item.vue"
 
 // #TODO MIXINS
 // import betting from 'project_path/mixins/betting/betting.js';
@@ -168,9 +168,9 @@ import {  PageSourceData  } from "src/core/index.js";
 import {MenuData,compute_img_url } from "src/core/index.js";
 import lodash from "lodash";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
-import { reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
+import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 export default defineComponent({
-  name: "virtual_sports_match_item",
+  name: "virtual-sports-match-item",
   // #TODO MIXINS
   // mixins:[common],
 
@@ -625,35 +625,35 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@include keyframes(dir_remind_animate) {
-  0% {
-    transform: translateX(0);
-    opacity: 0;
-  }
-  60% {
-    transform: translateX(-0.06rem);
-    opacity: 1;
-  }
-  100% {
-    transform: translateX(-0.09rem);
-    opacity: 0;
-  }
-}
+// @include keyframes(dir_remind_animate) {
+//   0% {
+//     transform: translateX(0);
+//     opacity: 0;
+//   }
+//   60% {
+//     transform: translateX(-0.06rem);
+//     opacity: 1;
+//   }
+//   100% {
+//     transform: translateX(-0.09rem);
+//     opacity: 0;
+//   }
+// }
 
-@include keyframes(dir_right_remind_animate) {
-  0% {
-    transform: translateX(-0.09rem);
-    opacity: 0;
-  }
-  60% {
-    transform: translateX(-0.06rem);
-    opacity: 1;
-  }
-  100% {
-    transform: translateX(0);
-    opacity: 0;
-  }
-}
+// @include keyframes(dir_right_remind_animate) {
+//   0% {
+//     transform: translateX(-0.09rem);
+//     opacity: 0;
+//   }
+//   60% {
+//     transform: translateX(-0.06rem);
+//     opacity: 1;
+//   }
+//   100% {
+//     transform: translateX(0);
+//     opacity: 0;
+//   }
+// }
 
 .match-item-wrap {
   width: 3.61rem;
