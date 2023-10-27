@@ -637,6 +637,7 @@ class MenuData {
 
   //根据路由参数 设置菜单信息 选中一级 二级menu
   set_enter_params({ m, s, t, mt1, mt2 }) {
+    console.log(' m, s, t, mt1, mt2', m, s, t, mt1, mt2)
     if (!m && !mt1) {
       return;
     }
