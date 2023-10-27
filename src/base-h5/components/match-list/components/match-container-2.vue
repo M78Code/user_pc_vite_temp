@@ -37,13 +37,14 @@
         {{ $t('list.match_no_start') }}&nbsp;&nbsp;<span v-show="no_start_total">(0)</span>
       </span>
     </div>
-
+   
     <!-- 最核心的div模块     标题 + 倒计时 + 比分 + 赔率盘口模块 -->
     <div :class="['match-inner-container', {'collapsed': collapsed}]">
       <!--联赛标题 -->
       <div @click="handle_league_fold" v-if="match.is_show_league || (is_hot && get_league_show(i))"
         :class="[('league match-indent hairline-border'), { 'no-radius': get_sport_show, 'no-border': collapsed, 'bottom': match.is_show_league }]">
         <div class="league-t-wrap">
+        <div class="league-t-tubiao"></div>
           <!-- 联赛收藏 -->
           <div v-if="![3000, 900].includes(menu_type)" class="favorited-icon" @click.stop="handle_league_collect">
             <!-- 未收藏 -->
