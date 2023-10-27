@@ -4,7 +4,7 @@
  * @Description: 红升绿降的展示
 -->
 <template>
-  <div :class="['odds_new',{'odds-new2':ol_data.result != undefined}]" :id="DOM_ID_SHOW && `list-${lodash.get(ol_data, 'oid')}`">
+  <div :class="['odds_new',{'odds-new2':ol_data.result != undefined,'odds-new-ky':project_name == 'app-h5'}]" :id="DOM_ID_SHOW && `list-${lodash.get(ol_data, 'oid')}`"   >
     <template v-if="ol_data.result == undefined">
       <span v-if="odds_value() < 1.01 && get_cur_odd == 'EU'">
         <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" alt="" style=" width: 0.12rem"/>
@@ -126,7 +126,8 @@ export default defineComponent({
       get_bet_list,
       odds_value,
       calc_text,
-      lodash
+      lodash,
+      project_name
     }
   }
 })
@@ -140,7 +141,9 @@ export default defineComponent({
 
   letter-spacing: 0;
 }
-
+.odds-new-ky {
+  flex:1
+}
 .odds {
   position: relative;
 }
