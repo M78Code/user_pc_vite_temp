@@ -6,7 +6,7 @@
   <div class="temp15 mx-5">
     <div class="hairline-border">
       <!-- justify-between -->
-      <div v-for="(item,index) in item_data.hl" :key="index" class="row" :class="item_data.hl && item_data.hl.length > 1 ? 'many-item-border':'sigle-item-border'">
+      <div v-for="(item,index) in item_data.hl" :key="index" class="row temp15-pd"  :class="item_data.hl && item_data.hl.length > 1 ? 'many-item-border':'sigle-item-border'">
         <!-- ms: 0开 1封 2关 11锁 -->
         <!-- hs: 0开 1封 2关 11锁 -->
         <!-- os: 1开 2封 3隐藏不显示不占地方-->
@@ -174,7 +174,9 @@ export default defineComponent({
 <style lang="scss" scoped>
 .temp15 {
   border-radius: 4px;
-
+  .temp15-pd{
+    padding:0.08rem;
+  }
   .every1 {
     flex: 1;
   }
@@ -194,7 +196,7 @@ export default defineComponent({
   }
 
   .every4 {
-    flex-basis: 25%;
+    flex-basis: 22.5%;
     color: var(--q-gb-t-c-11);
     // &:nth-child(n+5){
     //   border-bottom: 1px solid var(--q-gb-bd-c-7);
@@ -208,7 +210,7 @@ export default defineComponent({
   }
 
   .every5 {
-    flex-basis: 33.333%;
+    flex-basis: 31%;
     color: var(--q-gb-t-c-11);
     &:nth-child(3n-1) {
       div {
@@ -218,22 +220,25 @@ export default defineComponent({
   }
 
   .every5 ~ i {
-    flex-basis: 33.333%;
+    flex-basis: 31%;
   }
 
   .play-box {
     // margin-bottom: 0.01rem;
     padding: 0.06rem 0.05rem 0;
     // border-bottom:1px solid  var(--q-gb-bd-c-7);
-
-    height: 0.52rem;
-
+    height: 0.48rem;
     text-align: center;
+    background:var(--q-gb-bg-c-15);
+    border-radius: 4px;
+    color:#7981A4;
+    box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.04);
+    margin:0.04rem;
   }
 
   .play-box-lock {
     padding: 0;
-    line-height: 0.52rem;
+    line-height: 0.48rem;
 
     img {
       width: 0.12rem;

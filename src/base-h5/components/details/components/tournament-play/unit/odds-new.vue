@@ -137,7 +137,7 @@ export default defineComponent({
 .odds_new {
   width: 100%;
   color: #414655; // var(--q-detials-color-6);
-  font-size: 0.16rem;
+  font-size: 0.14rem; //todo app-h5
 
   letter-spacing: 0;
 }
