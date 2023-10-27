@@ -120,7 +120,6 @@ import groupKnockout from "src/base-h5/components/virtual/group-knockout.vue"
 import footballRankingList from "src/base-h5/components/virtual/football-ranking-list.vue"
 import virtualSportsTab from "src/base-h5/components/details/components/virtual-sports-tab.vue"
 import virtualSportsCategory from "src/base-h5/components/details/children/virtual-sports-category.vue"
-import {utils } from 'src/core/index.js';
 import resultPage from "src/base-h5/components/match-list/components/result-page.vue"
 import noData from "src/base-h5/components/common/no-data.vue";
 import virtualSkeleton from "src/base-h5/components/skeleton/virtual-sports/virtual.vue"
@@ -131,18 +130,18 @@ import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, wa
 export default defineComponent({
   name: "virtual",
   components:{
-    // 'virtual-sports-category':virtual_sports_category,
-    // 'match-tab':matchTab,
-    // 'v-s-match-list':v_s_match_list,
-    // 'ranking-list-start':ranking_list_start,
-    // 'football-ranking-list':football_ranking_list,
-    // 'group-knockout':group_knockout,
-    // 'virtual-sports-tab':virtualSportsTab,
-    // 'virtual-sports-stage':virtual_sports_stage,
-    // 'dynamic-ranking': dynamic_ranking,
-    // 'result-page': result_page,
-    // noData,
-    // 'virtual-skeleton':virtual_skeleton,
+    noData,
+    'virtual-sports-category':virtualSportsCategory,
+    'match-tab':matchTab,
+    'v-s-match-list':vsMatchList,
+    'ranking-list-start':rankingListStart,
+    'football-ranking-list':footballRankingList,
+    'group-knockout':groupKnockout,
+    'virtual-sports-tab':virtualSportsTab,
+    'virtual-sports-stage':virtualSportsStage,
+    'dynamic-ranking': dynamicRanking,
+    'result-page': resultPage,
+    'virtual-skeleton':virtualSkeleton,
   },
   props:{
     menu_list:Array,
@@ -155,7 +154,6 @@ export default defineComponent({
   
   setup(props, evnet) {
     const { menu_list, params, current_sub_menu, is_user_refresh, v_match_router_ente } = toRefs(props);
-    console.log("current_sub_menu", current_sub_menu);
     const component_data = reactive({
       // 事件集合
       emitters: [],
@@ -208,32 +206,6 @@ export default defineComponent({
       procee_again_timer: null,
       timer1_: null
     });
-    component_data.timer1_ = null;
-    // utils.load_player_js();
-  // computed:{
-  //   //
-  //   ...mapGetters({
-  //     sub_menuid: 'get_current_sub_menuid',
-  //     sub_menu_type: 'get_curr_sub_menu_type',
-  //     current_league: 'get_current_league',
-  //     current_batch:'get_current_batch',
-  //     get_video_process_data:"get_video_process_data",
-  //     get_prev_v_sports_params:"get_prev_v_sports_params",
-  //     get_prev_v_sports:"get_prev_v_sports",
-  //     is_show_analyse:"get_is_show_details_analyse",
-  //     get_bet_list:"get_bet_list",
-  //     get_betbar_show:"get_betbar_show",
-  //     get_newer_standard_edition:"get_newer_standard_edition",
-  //   }),
-  //   //标签页列表
-  //   tab_items(){
-  //     let r = [];
-  //     if(menu_list && menu_list.length){
-  //       r = menu_list;
-  //     }
-  //     return r;
-  //   }
-  // },
     const sub_menuid = computed(() => {
       return ""
     });
@@ -277,16 +249,13 @@ export default defineComponent({
     
     
     watch(() => props.v_menu_changed, (change_str) => {
-        console.log(change_str)
         component_data.tab_item_i = 0;
         component_data.ranking_list_change = false;
         // 根据 足蓝标识设置二级菜单切换状态
         component_data.top_menu_changed = !change_str.includes('zu_lan_')
       }
     );
-    watch(
-      () => menu_list,
-      () => {
+    watch( () => menu_list, () => {
         if(tab_items.value && tab_items.value.length){
 
           if(current_league){
@@ -303,9 +272,7 @@ export default defineComponent({
         }
       }
     );
-    watch(
-      () => props.current_sub_menu,
-      () => {
+    watch( () => props.current_sub_menu, () => {
         let prev_league_id = ''
         if(current_league){
           prev_league_id = current_league.menuId;
@@ -317,27 +284,21 @@ export default defineComponent({
       }
     );
 
-    watch(
-      () => props.is_user_refresh,
-      (n) => {
+    watch( () => props.is_user_refresh, (n) => {
         if(n){
           // get_virtual_sport_local('is_user_refreshing')
         }
       }
     );
 
-    watch(
-      () => props.is_user_refresh,
-      (n) => {
+    watch( () => props.is_user_refresh, (n) => {
         if(n){
           // get_virtual_sport_local('is_user_refreshing')
         }
       }
     );
 
-    watch(
-      () => sub_menu_type,
-      (c,n) => {
+    watch( () => sub_menu_type, (c,n) => {
         //赛马赛狗 摩托车
         if([1011, 1002, 1010, 1009].includes(c)){
           component_data.ranking_list_change = false;
@@ -352,7 +313,7 @@ export default defineComponent({
       ]
       // useMittOn(MITT_TYPES.EMIT_ARRIVED10,arrived10_handle);
       // useMittOn(MITT_TYPES.EMIT_MATCH_EDNED_STATUS2,match_ended_status2_handle);
-      match_ended_status2_handle();
+      // match_ended_status2_handle();
     });
 
     onUnmounted(() => {
@@ -366,9 +327,6 @@ export default defineComponent({
 
       clear_timer()
 
-      for (const key in $data) {
-        $data[key] = null
-      }
     })
 
     // #TODO vuex actions 

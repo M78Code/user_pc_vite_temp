@@ -366,7 +366,10 @@ const menu_item_click = (item, i) => {
   }
   //筛选
   else if (item.id === 3) {
-    useMittEmit(MITT_TYPES.EMIT_CHANGE_RECORD_SHOW, true);
+    useMittEmit(MITT_TYPES.EMIT_CHANGE_RECORD_SHOW, {
+      open: true,
+      settle: item.settle
+    });
   }
   //刷新
   else if (item.id === 4) {
@@ -495,6 +498,7 @@ const set_footer_menulist = (init_footer_menulist_data = true) => {
           is_saiguo_gz ||
           show_favorite_list.value ||
           is_electronicSports,
+        settle: false
       },
       //已结注单
       {
@@ -507,6 +511,7 @@ const set_footer_menulist = (init_footer_menulist_data = true) => {
           is_saiguo_gz ||
           show_favorite_list.value ||
           is_electronicSports,
+        settle: true
       },
       // 刷新
       {
