@@ -4,7 +4,7 @@
  * @Description: 玩法模板12
 -->
 <template>
-  <div class="temp12 mx-10">
+  <div class="temp12 mx-5">
     <div class="hairline-border">
       <div class="bet-wrapper">
         <!-- 主队 -->

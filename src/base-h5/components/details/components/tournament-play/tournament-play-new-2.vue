@@ -802,9 +802,9 @@ export default defineComponent({
 }
 .tournament-play {
   &.tournament-play-outer {
-    background:#f5f5f5 !important;
+    background:#e4e6ed !important;
     .play-name-outer-wrapper {
-      padding: 0 0.1rem 0.04rem 0.1rem;
+      padding: 0 0.05rem 0.04rem 0.05rem;
     }
     .show_border_r{
       :deep(.hairline-border,), :deep(.item-wrap) {
@@ -824,7 +824,7 @@ export default defineComponent({
       min-width: 3.55rem;
 
       padding: 0 0.12rem 0 0.18rem;
-      background: #ffffff !important;
+      background:#F8F9FA !important;
       border-radius: 0.04rem;
 
       &::after {
@@ -834,7 +834,7 @@ export default defineComponent({
         left: 0;
         top: 0;
         width: 200%;
-        height: 200%;
+        height: 200%;                          
         -webkit-transform: scale(0.5);
         transform: scale(0.5);
         -webkit-transform-origin: left top;

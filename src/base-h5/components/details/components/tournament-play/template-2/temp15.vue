@@ -3,7 +3,7 @@
  * @Description:15号模板,单一盘口，投注项总数ol超过4个时，换行展示，每行展示3个，不够一行的用空白灰框填充。否则一行最多4个，最少1个。如准确进球数、准确局数玩法
 -->
 <template>
-  <div class="temp15 mx-10">
+  <div class="temp15 mx-5">
     <div class="hairline-border">
       <!-- justify-between -->
       <div v-for="(item,index) in item_data.hl" :key="index" class="row" :class="item_data.hl && item_data.hl.length > 1 ? 'many-item-border':'sigle-item-border'">

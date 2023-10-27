@@ -4,7 +4,7 @@
  * @Description: 针对虚拟体育新增的玩法模板11
 -->
 <template>
-  <div class="temp11 mx-10">
+  <div class="temp11 mx-5">
     <div class="hairline-border">
       <div class="row virtual-bet-wrapper">
         <!-- 分割线 -->

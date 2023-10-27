@@ -2,7 +2,7 @@
  * @Description: 模板id=5 --用于多重条件&多个投注项的玩法，例如全场大小、进球大小···
 -->
 <template>
-  <div class="temp5 mx-10">
+  <div class="temp5 mx-5">
     <div class="hairline-border">
       <div class="content-wrapper">
         <!-- 单个投注项的名称开始 -->

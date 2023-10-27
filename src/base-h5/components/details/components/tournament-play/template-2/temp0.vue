@@ -1,5 +1,5 @@
 <template>
-  <div class="temp0 mx-10 box-style">
+  <div class="temp0 mx-5 box-style">
     <div class="item-wrap">
       {{void(odds_conut=0)}}
       <div v-for="(item,index_) in item_data.hl" :key="index_">

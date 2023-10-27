@@ -4,7 +4,7 @@
  * @Description: 模板id=6 --用于无盘口&区分主客的多个投注项玩法 比如最后进球球员
 -->
 <template>
-  <div class="temp6 mx-10 super-vip-oper">
+  <div class="temp6 mx-5 super-vip-oper">
     <div class="hairline-border">
       <div class="row title-style">
         <div class="col text-center ellipsis fz_13">{{ item_data.title[0].osn }}</div>

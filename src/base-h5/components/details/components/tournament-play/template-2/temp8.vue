@@ -4,7 +4,7 @@
  * @Description: 针对虚拟体育新增的玩法模板8
 -->
 <template>
-  <div class="temp8 mx-10" >
+  <div class="temp8 mx-5" >
     <div>
       <div v-for="(team,index) in item_data.team" :key="index" :style="{'margin-top':index > 0 ? '0.04rem':''}" class="hairline-border">
         <div class="row special items-center justify-between" >

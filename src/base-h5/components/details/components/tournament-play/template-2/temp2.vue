@@ -1,5 +1,5 @@
 <template>
-  <div class="temp2 mx-10 text-center">
+  <div class="temp2 mx-5 text-center">
     <div class="play-name-wrapper" v-show="get_is_hengping">
       <div class="item-name ellipsis">{{lodash.get(item_data, 'title[0].osn')}}</div>
       <div class="item-name ellipsis">{{lodash.get(item_data, 'title[1].osn')}}</div>

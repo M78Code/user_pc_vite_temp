@@ -1,6 +1,6 @@
 <template>
   <!-- hpt: 1 -->
-  <div class="temp1 mx-10" v-cloak>
+  <div class="temp1 mx-5" v-cloak>
     <div class="item-wrap">
       <div v-for="(item,index) in item_data.hl" :key="index">
         <div class="row item-bet-ky" v-if="index > 0||index == 0" :class="{'result-style':is_match_result}">

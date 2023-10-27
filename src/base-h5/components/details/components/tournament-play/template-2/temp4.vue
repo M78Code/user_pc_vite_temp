@@ -5,7 +5,7 @@
  * os 1:开盘 2:封盘 3:关盘
 -->
 <template>
-  <div class="temp4 mx-10">
+  <div class="temp4 mx-5">
     <div class="hairline-border">
       <div class="row title-style ">
         <div class="col text-center ellipsis fam">{{item_data.title[0].osn}}</div>

@@ -4,7 +4,7 @@
  * @Description: 模板id=7 --用于有盘口&3个投注项玩法
 -->
 <template>
-  <div class="temp7 mx-10">
+  <div class="temp7 mx-5">
     <div class="content hairline-border">
       <div class="row title-style ">
         <div class="col text-center ellipsis fam">{{item_data.title[0].osn}}</div>

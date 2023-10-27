@@ -4,7 +4,7 @@
  * 多用于电竞
 -->
 <template>
-  <div class="temp2 temp51 mx-10 text-center">
+  <div class="temp2 temp51 mx-5 text-center">
     <div class="hairline-border">
       <div class="esport-bet-wrapper">
         <div v-for="(item,index) in item_data.hl" :key="index" class="row">

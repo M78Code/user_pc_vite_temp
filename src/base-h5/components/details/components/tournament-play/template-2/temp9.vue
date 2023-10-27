@@ -4,7 +4,7 @@
  * @Description: 针对虚拟体育新增的玩法模板9
 -->
 <template>
-  <div class="temp9 mx-10">
+  <div class="temp9 mx-5">
     <div class="hairline-border">
       <div class="row virtual-bet-wrapper">
         <div class="row justify-between champion-item col-6"

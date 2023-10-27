@@ -4,7 +4,7 @@
  *               主盘放第一个，多盘口排序规则维持不变；坑位规则保持不变；
 -->
 <template>
-  <div class="temp13 mx-10">
+  <div class="temp13 mx-5">
     <div class="hairline-border">
       <div class="rad-style">
         <i class="slide_icon slide_icon_l animate-effect" v-show="is_show_slide && !get_is_hengping"></i>

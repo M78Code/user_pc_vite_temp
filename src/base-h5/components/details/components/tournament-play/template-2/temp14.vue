@@ -6,7 +6,7 @@
   <!-- ms: 0开 1封 2关 11锁 -->
   <!-- hs: 0开 1封 2关 11锁 -->
   <!-- os: 1开 2封 3隐藏不显示不占地方-->
-  <div class="temp14 mx-10 text-center">
+  <div class="temp14 mx-5 text-center">
     <div class="hairline-border">
       <div v-for="(item,index) in item_data.hl" :key="index" class="content">
         <div class="row tittle">
