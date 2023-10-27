@@ -36,11 +36,9 @@
       </div>
 
       <!-- 投注记录弹层 -->
-      <div v-if="record_show" :class="settle_dialog_bool && 'shadow-box2'" class="shadow-box"
-        @click="change_settle_status(false)" @touchmove.prevent></div>
+      <div v-if="record_show" :class="settle_dialog_bool && 'shadow-box2'" class="shadow-box" @click="change_settle_status(false)" @touchmove.prevent></div>
       <!-- 投注记录弹框（已结算+未结算） -->
-      <div class="bet-record-box" v-if="record_show" :class="settle_dialog_bool && 'bet-record-box2'"
-        :style="{ bottom: calc_bottom }">
+      <div class="bet-record-box" v-if="record_show" :class="settle_dialog_bool && 'bet-record-box2'" :style="{ bottom: calc_bottom }">
         <!-- 结算弹窗 -->
         <settle-dialog></settle-dialog>
       </div>

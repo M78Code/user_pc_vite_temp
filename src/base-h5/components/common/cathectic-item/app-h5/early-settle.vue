@@ -10,6 +10,7 @@
       <button @click="earlyBtnClick">
         {{ sure_settle_button_text }}
         <span v-if="btnStatus===1 || btnStatus===2">(含本金)</span>
+        <img class="load" v-if="btnStatus===3" src="/public/app-h5/image/gif/loding.gif">
       </button>
       <button class="change" v-if="btnStatus===2"> 金额有变更 </button>
       <button class="cancel" v-if="btnStatus===2" @click="btnStatus=1;"> 取消 </button>
@@ -22,7 +23,10 @@
           v-model="percentage" :min="0" :max="100" label label-always :label-value="percentage + '.00'" />
       </div>
     </q-slide-transition>
-    <div class="change-btn" @click="slider_show=!slider_show">调整金额</div>
+    <div class="change-btn" :class="slider_show ? 'up' : 'down'" @click="slider_show=!slider_show">
+      <span>调整金额</span>
+      <img src="/public/app-h5/image/gif/change.gif">
+    </div>
   </div>
 </template>
 
@@ -470,7 +474,9 @@ const clear_timer = () => {
     padding: 0 0.14rem;
     margin-bottom: 0.1rem;
     button {
-      display: block;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       border: none;
       background-color: var(--q-gb-bg-c-9);
       color: var(--q-gb-bg-c-15);
@@ -491,6 +497,11 @@ const clear_timer = () => {
       span {
         font-size: 0.14rem;
       }
+      img.load {
+        width: 0.26rem;
+        height: auto;
+        margin-left: 0.04rem;
+      }
     }
   }
   .slider-wrap {
@@ -498,8 +509,25 @@ const clear_timer = () => {
     padding-top: 0.2rem;
   }
   .change-btn {
-    text-align: center;
     font-size: 0.16rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    span {
+      margin-right: 0.1rem;
+    }
+    img {
+      width: 0.2rem;
+    }
+    &.down span {
+      padding-top: 0.04rem;
+    }
+    &.down img {
+        transform: rotate(-90deg);
+      }
+    &.up img {
+      transform: rotate(90deg);
+    }
   }
 }
 :deep(.q-slider--inactive .q-slider__thumb--h) {
