@@ -310,7 +310,7 @@ onUnmounted(() => {
     transform: translateX(-50%);
     bottom: 0;
     border-radius: 1.5px;
-    background-color: var(--q-gb-bg-c-13);
+    background: url($SCSSPROJECTPATH + "/image/svg/title_tag.svg") no-repeat center  !important;
   }
 }
 </style>

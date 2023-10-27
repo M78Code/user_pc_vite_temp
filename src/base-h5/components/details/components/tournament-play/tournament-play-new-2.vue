@@ -92,7 +92,7 @@
           <span v-if="wsl_flag" style="color:red;font-size:12px;" text = "调试用span">模板(hpt)<span>{{item_data.hpt}}玩法(hpid)=>{{item_data.hpid}}</span></span>
         </div>
       </div>
-      <template v-if="[0,1,2,3,4,5,6,7,9,10,11,12,13,14,15,18,51].includes(+item_data.hpt)">
+      <template v-if="[0,1,2,3,4,5,6,7,9,10,11,12,13,14,15,18,51].includes(+item_data.hpt)">{{item_data.hpt}}
         <q-slide-transition :duration="200">
           <div v-show="judage_hshow == 'Yes'" :class="[judage_hshow != 'Yes'?'show_border_r':'hide_border_r' ]">
             <!-- 模板id  hpt -->
@@ -782,10 +782,10 @@ export default defineComponent({
     background: url($SCSSPROJECTPATH + "/image/svg/title_tag.svg") no-repeat center  !important;
     display: block;
     position: absolute;
-    width: 3px;
-    height: 0.14rem;
+    width: 2px;
+    height: 0.16rem;
     top: calc(50% - 0.08rem);
-    left: -0.15rem;
+    left: -0.18rem;
     border-radius: 1.5px;
   }
 }
