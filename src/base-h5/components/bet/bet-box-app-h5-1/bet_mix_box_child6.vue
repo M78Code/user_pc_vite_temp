@@ -6,13 +6,18 @@
 <template>
   <div class="bet-mix-show">
     <div>-</div>
-    <div class="bet-mix-show-value"><span class="bet-mix-show-box">@</span>9.99</div>
+    <div class="bet-mix-show-value"><span class="bet-mix-show-box">@</span>{{ format_odds(item.oddFinally, item.sportId) }}</div>
     <div>+</div>
   </div>
 </template>
 <script setup>
-import { format_currency } from 'src/core/index.js'
+import { format_currency,format_odds } from 'src/core/index.js'
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
+import BetData from "src/core/bet/class/bet-data-class.js";
+
+const props = defineProps({
+  item: {}
+})
 </script>
 
 <style lang="scss" scoped>

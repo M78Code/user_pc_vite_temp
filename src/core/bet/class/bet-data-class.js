@@ -15,6 +15,8 @@ class BetData {
     this.cur_odd = "eu";
     // 投注项id集合
     // this.bet_list = [];
+     // 是否预约
+    this.is_bet_pre = false
     //是否接受更好赔率
     this.bet_is_accept = false;
     // 接受更好赔率规则
@@ -468,7 +470,7 @@ this.bet_appoint_ball_head= null */
   // 设置 投注版本
   set_bet_data_class_version = lodash_.debounce(() => {
     this.bet_data_class_version.value = Date.now()
-  }, 50)
+  }, 5)
 
   // 投注成功后 不保留投注项 需要清空投注数据 
   set_clear_bet_info() {
@@ -655,6 +657,12 @@ this.bet_appoint_ball_head= null */
   set_device_type(val) {
     // 设备类型 "设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备"
     this.deviceType = val
+  }
+
+  // 设置是否预约
+  set_is_bet_pre() {
+    this.is_bet_pre = !this.is_bet_pre
+    this.set_bet_data_class_version()
   }
 
    //设置输入框最小值
