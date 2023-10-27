@@ -5,7 +5,7 @@
 -->
 <template>
     <div class="settle-dialog" :style="page_style">
-      <div class="row items-center yb_fontsize16 head-top" @touchmove.prevent>
+      <div v-if="!record_show_settle" class="row items-center yb_fontsize16 head-top" @touchmove.prevent>
         <div class="row col items-center justify-center">
           <p v-for="(item, index) in tabs" 
             :key="index" 
@@ -17,13 +17,14 @@
       </div>
   
       <div class="content-m" ref="record_box">
-        <template v-for="(item, index) in tabs" :key="index">
-          <component 
-            v-show="main_item == index" 
-            :is="item.componentName" 
-            :main_item="main_item">
-          </component>
+        <!-- 未结注单(未结算、预约中、已失效) -->
+        <template v-if="!record_show_settle">
+          <component :is="tabs[main_item].componentName" :main_item="main_item"></component>
         </template>
+        <!-- 已结注单 -->
+        <template>
+          <settle />
+        </template>>
       </div>
     </div>
   </template>
@@ -34,6 +35,7 @@
   import unsettle from "src/base-h5/components/cathectic/app-h5/unsettle.vue"
   import settle from "src/base-h5/components/cathectic/app-h5/settle.vue"
   import preRecord from "src/base-h5/components/cathectic/app-h5/pre-record.vue"
+  import invalid from "src/base-h5/components/cathectic/app-h5/invalid.vue"
   import { onMounted, onUnmounted, ref, shallowRef, computed, provide, watch, nextTick } from 'vue'
   import lodash from 'lodash'
   import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
@@ -49,6 +51,12 @@
   // 待确认中的提前结算订单
   provide('queryorderpresettleconfirm_data', '')
   
+  const props = defineProps({
+    record_show_settle: { // false未结注单   true已结注单
+      type: Boolean
+    }
+  })
+
   // 延时器
   const timer_1 = ref(null)
   // 待确认中的提前结算单
@@ -57,8 +65,8 @@
   const main_item = ref('0')
   const tabs = ref([
     { title: i18n_t('bet_record.no_account'), componentName: shallowRef(unsettle) },
-    { title: i18n_t('pre_record.book'), componentName: shallowRef(preRecord) },
-    { title: i18n_t('bet_record.account'), componentName: shallowRef(settle) },
+    { title: "预约中", componentName: shallowRef(preRecord) },
+    { title: "已失效", componentName: shallowRef(invalid) },
   ])
   // 锚点
   const unsettle_child = ref(null)

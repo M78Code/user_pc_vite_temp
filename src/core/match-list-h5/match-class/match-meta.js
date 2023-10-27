@@ -342,7 +342,6 @@ class MatchMeta {
 
   /**
    * @description 赛果不走元数据， 直接掉接口 不需要走模板计算以及获取赔率
-   * @param { md } 三级菜单 事件
    */
   async get_results_match () {
     const md = lodash.get(MenuData.current_lv_3_menu, 'field1')
@@ -353,7 +352,9 @@ class MatchMeta {
     const res = await api_common.get_match_result_api({
       ...params,
       category,
-      "md": md
+      "md": md,
+      // TODO: app-h5 菜单结构出来 后续删除
+      type: 29
     })
     this.handle_custom_matchs(res)
   }

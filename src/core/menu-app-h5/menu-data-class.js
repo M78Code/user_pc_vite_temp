@@ -32,15 +32,23 @@ class MenuData {
     this.destroy = () => {
       this.update && this.update.cancel()
     }
-   
+    this.menu_lv2 = []; //2级菜单列表
+    this.menu_lv3 = []; //3级菜单列表
+    this.menu_lv4 = []; //4级菜单列表
     //当前的菜单 lv1
     this.current_lv_1_menu_mi = ref('')
     //当前的菜单 lv2
-    this.current_lv_2_menu_mi = '';
+    //当前的菜单 lv2  注意  二级菜单 可能 有一个【全部】选项 get_sport_all_selected
+    this.current_lv_2_menu = {};
+    this.current_lv_2_menu_i = undefined;
     //当前的菜单 lv3
-    this.current_lv_3_menu_mi = '';
+    this.current_lv_3_menu = {};
+    this.current_lv_3_menu_i = undefined;
     //当前的菜单 lv4
-    this.current_lv_4_menu_mi = '';
+    this.current_lv_4_menu = {};
+    this.current_lv_4_menu_i = undefined;
+    // 当前选中的二级菜单item数据 --- app-h5用 （TODO:待确定）
+    this.current_lv_2_menu_item = {}
     //================主列表用的  结束==================
     this.menu_list = []
     this.menu_type = ref(2)
@@ -79,8 +87,6 @@ class MenuData {
       })
     }
     // 默认设置二级菜单id
-    console.error('menu_lv_mi_lsit',menu_lv_mi_lsit)
-    // 默认设置二级菜单id
     // this.set_current_lv_2_menu_mi( lodash_.get(menu_lv_mi_lsit,'[0]',{}))
 
     this.menu_lv_mi_lsit = menu_lv_mi_lsit
@@ -94,6 +100,8 @@ class MenuData {
   // 设置二级菜单id
   set_current_lv_2_menu_mi(val = {}){
     this.current_lv_2_menu_mi = val.mi
+    // 存储二级菜单选择的tab --- app-h5 用（TODO: 待确定）
+    this.current_lv_2_menu_item = !!val.ct ? val : this.menu_lv_mi_lsit[0]
     // 今日 / 滚球/ 冠军 没有 三级
     if(![1,2,400].includes(this.current_lv_1_menu_mi.value)){
      
@@ -612,7 +620,7 @@ class MenuData {
       }
     } else if (this.is_results()) {
       // 如果是赛果 在一级菜单时候已经获取过二级菜单
-      this.set_cache_class({
+      this.current_lv_2_menu && this.set_cache_class({
         menu_lv3: this.current_lv_2_menu.subList,
       });
       if (this.menu_lv3) {
@@ -622,6 +630,7 @@ class MenuData {
             this.current_lv_3_menu_i, type
           );
         } else {
+         
           this.set_current_lv3_menu(this.menu_lv3[0], 0, type);
         }
       }
@@ -637,6 +646,7 @@ class MenuData {
 
   //根据路由参数 设置菜单信息 选中一级 二级menu
   set_enter_params({ m, s, t, mt1, mt2 }) {
+    console.log(' m, s, t, mt1, mt2', m, s, t, mt1, mt2)
     if (!m && !mt1) {
       return;
     }
