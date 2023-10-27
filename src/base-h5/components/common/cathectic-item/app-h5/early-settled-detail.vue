@@ -23,6 +23,11 @@
 <script setup>
 import earlySettleTips from "src/base-h5/components/common/cathectic-item/app-h5/early-settle-tips.vue";
 import { ref } from 'vue'
+const props = defineProps({
+  item_data: {
+    type: Object
+  }
+})
 // 提前兑现详情
 let detail_show = ref(false)
 </script>
