@@ -24,9 +24,9 @@
 
 .slide-box {
     display: flex;
-    justify-content: space-between;
+    // justify-content: space-between;
     padding: 0 .14rem;
-    width: 100%;
+    // width: 100%;
     overflow-x: scroll;
 
     .slide-item {
@@ -52,43 +52,6 @@
         span {
             color: var(--q-gb-t-c-1);
             border-bottom: .02rem solid var(--q-gb-t-c-1);
-        }
-    }
-}
-
-
-
-.match-options {
-    display: flex;
-    padding: .04rem 0;
-    width: 100%;
-    overflow-x: scroll;
-    flex-wrap: nowrap;
-    scrollbar-width: none; // 去除滚动条火狐浏览器兼容性问题
-
-    .option {
-        flex: 0 0 .68rem;
-        height: .5rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
-
-        span {
-            --per: -0.32rem;
-            display: block;
-            width: auto;
-            height: 0.22rem;
-            width: 0.22rem;
-            background-position: 0 0;
-            background-size: 0.22rem 18.88rem;
-            transform: scale(1.1);
-            margin-bottom: .04rem;
-        }
-
-        .title {
-            font-size: .10rem;
-            color: var(--q-gb-bg-c-4);
         }
     }
 }
