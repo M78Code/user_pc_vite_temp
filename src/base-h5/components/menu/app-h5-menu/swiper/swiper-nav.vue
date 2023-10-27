@@ -2,7 +2,7 @@
  * @Author: rise
  * @Date: 2023-10-22 13:33:28
  * @LastEditors: rise
- * @LastEditTime: 2023-10-24 14:33:03
+ * @LastEditTime: 2023-10-27 16:46:47
  * @Description:  
 -->
 <template>
@@ -17,8 +17,8 @@
       height="0.52rem"
     >
     <template v-for="(item,index) in slideList" :key="index" >
-      <q-carousel-slide  :name="index" :img-src="item.img" v-if="!item.isGame" />
-      <q-carousel-slide :name="index" img-src="" v-else>
+      <q-carousel-slide  @click="changeSwiper(item)" :name="index" :img-src="item.imgUrl" v-if="!item.isGame" />
+      <q-carousel-slide @click="changeSwiper(item,1)" :name="index" img-src="" v-else>
           <div class="swiper-game-content">
             <div class="swiper-game-content-left">
               <p class="swiper-game-content-img">
@@ -32,12 +32,28 @@
               <div class="swiper-game-content-right-participants">
                 <span>
                   {{item.gameParticipants?.[0]?.name}}
-                  <img :src="item.gameParticipants?.[0]?.avatar" />
+                  <template v-for="(n,m) in item.gameParticipants?.[0]?.imgFile">
+                    <img v-img="[
+                      n,
+                      item.gameParticipants?.[0]?.initials[m],
+                      item.gameParticipants?.[0]?.csid,
+                      { data: item.gameParticipants?.[0], name: `_t1${m+1}_img` }
+                    ]" alt/>
+                  </template>
+                  <!-- <img :src="item.gameParticipants?.[0]?.avatar" /> -->
                 </span>
                 VS
                 <span>
+                  <template v-for="(n,m) in item.gameParticipants?.[1]?.imgFile">
+                    <img v-img="[
+                      n,
+                      item.gameParticipants?.[1]?.initials[m],
+                      item.gameParticipants?.[1]?.csid,
+                      { data: item.gameParticipants?.[1], name: `_t2${m+1}_img` }
+                    ]" alt/>
+                  </template>
+                  <!-- <img :src="item.gameParticipants?.[1]?.avatar" /> -->
                   {{item.gameParticipants?.[1]?.name}}
-                  <img :src="item.gameParticipants?.[1]?.avatar" />
                 </span>
               </div>
             </div>
@@ -58,12 +74,20 @@
 import { ref } from 'vue';
 import anchor from "./img/anchor.svg";
 const slide = ref(1);
+const emits = defineEmits(['swiperChange'])
 const props = defineProps({
   slideList: {
       type: Array,
       default:[]
   }
 })
+/**
+ * 轮播点击事件
+ * @param {*} item 
+ */
+const changeSwiper = (item,type) =>{
+  emits('swiperChange',item,type);
+}
 </script>
 <style scoped lang="scss">
 .swiper-nav{

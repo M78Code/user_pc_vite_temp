@@ -225,7 +225,7 @@ export default defineComponent({
     transform: translateX(-50%);
     bottom: 0.05rem;
     border-radius: 0.08rem;
-    background-color: var(--q-gb-bg-c-13);
+    background: url($SCSSPROJECTPATH + "/image/svg/title_tag.svg") no-repeat center  !important;
   }
 }
 

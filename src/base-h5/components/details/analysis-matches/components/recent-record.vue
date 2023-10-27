@@ -243,7 +243,7 @@ onMounted(() => {
         position: absolute;
         left: 0.16rem;
         top: 0.14rem;
-        background-color: var(--q-gb-bg-c-13);
+        background: url($SCSSPROJECTPATH + "/image/svg/title_tag.svg") no-repeat center  !important;
         border-radius: 1.5px;
       }
     }
