@@ -9,7 +9,7 @@
             </div>
         </template>
         <template v-slot:right>
-            <div class="right-icon"></div>
+            <div class="right-icon" @click="state.select_dialog = true"></div>
         </template>
     </navigation-bar>
 
@@ -24,6 +24,12 @@
 
     <match-container />
 
+    <div v-if="state.select_dialog" position="bottom" class="select-mask" :style="`height:${inner_height}px`">
+        <div style="height:100%;width: 100%" @click="state.select_dialog = false"></div>
+        <!-- 筛选弹窗 -->
+        <select-dia />
+    </div>
+
     <!-- <match-container2 /> -->
 
 </template>
@@ -33,19 +39,21 @@ import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import { ScrollMenu } from 'src/base-h5/components/menu/app-h5-menu/index'
 import navigationBar from 'src/base-h5/components/tutorial/navigation-bar/index.vue'
 import { scrollMenu } from "src/base-h5/components/menu/app-h5-menu/utils.js"
+import selectDia from "src/base-h5/components/match-list/components/select-dia.vue"
 import matchContainer from "src/base-h5/components/match-list/index.vue";
 import { i18n_t, compute_css_obj, MenuData } from "src/core/index.js";
 import { is_results, is_kemp } from 'src/base-h5/mixin/menu.js'
 
 
 // import matchContainer2 from "src/base-h5/components/match-list/components/match-container-2.vue";
-
+const inner_height = window.innerHeight;  // 视口高度
 const switchMenu = ['普通赛果', '冠军赛果']
 const slideMenu = ['11/16', '11/15', '11/14', '11/13', '11/12', '11/11', '11/10', '11/09', '11/08', '11/07', '11/06', '11/05', '11/04']
 const props = defineProps({})
 const state = reactive({
     currentSwitchValue: 0, // 普通赛果：0  冠军赛果：1
     currentSlideValue: 0, // 日期数 目前slideMenu写死
+    select_dialog:false
 })
 
 const switchHandle = (val) => {
