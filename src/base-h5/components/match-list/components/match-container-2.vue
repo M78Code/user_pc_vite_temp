@@ -562,7 +562,6 @@ const handle_ball_seed_fold = () => {
  * @description 联赛折叠
  */
 const handle_league_fold = () => {
-  console.log(11111)
   // 首页热门，详情页，不需要用到折叠
   if (is_hot.value || is_detail.value) return;
   MatchFold.set_league_fold(props.match_of_list.tid)

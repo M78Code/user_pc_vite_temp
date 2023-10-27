@@ -104,7 +104,7 @@ class VirtualData {
     let params = param_generate();
     if(!params) {
       this.virtual_data_loading= false;
-      no_match_list_handle();
+      this.no_match_list_handle();
       return;
     }
     if(is_user_clicked != 'is_user_refreshing'){
@@ -257,7 +257,7 @@ class VirtualData {
    */
   virtual_m_list_no_data  () {
     if(!this.current_league) {
-      no_match_list_handle();
+      this.no_match_list_handle();
       return;
     }
 
@@ -275,7 +275,7 @@ class VirtualData {
       });
     }
     else{
-      no_match_list_handle();
+      this.no_match_list_handle();
       return;
     }
     //当前赛事

@@ -2,14 +2,8 @@
 /**
  * @description 虚拟体育类
  */
-
 class VirtualClass {
-  /**
-   * @Description:构造函数
-   * @param {Object} sport_data // 虚拟体育赛事信息
-   * @param {Function} callback // 回调函数
-   */
-  constructor(sport_data, callback) {
+  constructor() {
     // 消费开关
     this.run = true;
     // 目前加载时间(毫秒)
@@ -32,63 +26,9 @@ class VirtualClass {
     this.match_status = 0;
     // 赛事 loading 状态
     this.virtual_data_loading = false
-    if (sport_data && callback) {
-      // 赛事信息对象,消费数据
-      this.sport_data = sport_data;
-      if (sport_data.list) {
-        this.upd_list = _.cloneDeep(sport_data.list);
-      }
-      // 设置比赛的总时长 默认90s
-      if (sport_data.totalTime) {
-        this.total_time = parseFloat(sport_data.totalTime);
-      }
-      // 回调函数
-      this.callback = callback;
-      // 启动定时器
-      this.start();
-    }
-    // 记录上一次的回调数据对象
-    this.item_obj_old = null;
-  }
-
-  /**
-   * 初始化
-   */
-  init_virtual () {
-
-  }
-
-  /**
-   * @description: 销毁函数(vue组件销毁时关闭)
-   */
-  destroy() {
-    // 赛事状态
-    this.match_status = 0;
-    // 消费开关
-    this.run = false;
-    // 初始化时间
-    this.current_time = 0;
-    this.update_time = 0;
-    // 赛事信息对象,消费数据
-    this.sport_data = null;
-    // 回调函数
-    this.callback = null;
-    // 赛事播放中联赛所有信息
-    this.match_play_data_obj = {};
-    // 赛事播放中的单场数据
-    this.match_info = null;
-    // 清除定时器
-    if (this.interval_current_time) {
-      clearInterval(this.interval_current_time);
-      this.interval_current_time = null;
-    }
-
-    // 循环调用接口对象销毁
-    if (this.loop_callback) {
-      this.loop_callback.destroy();
-    }
-    this.loop_callback = null;
-    // 记录上一次的回调数据对象
+    // 启动定时器
+    this.start();
+    // 上一次的对象
     this.item_obj_old = null;
   }
 
@@ -151,7 +91,7 @@ class VirtualClass {
    * @param {Array} list 赛事所有数据列表
    * @param {Number} upd_time 目前更新的时间
    */
-  work(list, upd_time) {
+  work() {
     if (this.sport_data) this.update_match_video_data()
   }
 
@@ -372,7 +312,7 @@ class VirtualClass {
   /**
    * @description 更新赛事数据
    */
-  update_match_video_data () {
+  update_match_video_data (match = {}) {
     const res = this.get_upd_time_obj_data(this.upd_list, this.current_time / 1000);
     match.show_time = res.show_time;
     match.match_status = res.match_status;
@@ -406,6 +346,39 @@ class VirtualClass {
       default:
         break;
     }
+  }
+   /**
+   * @description: 销毁函数(vue组件销毁时关闭)
+   */
+   destroy() {
+    // 赛事状态
+    this.match_status = 0;
+    // 消费开关
+    this.run = false;
+    // 初始化时间
+    this.current_time = 0;
+    this.update_time = 0;
+    // 赛事信息对象,消费数据
+    this.sport_data = null;
+    // 回调函数
+    this.callback = null;
+    // 赛事播放中联赛所有信息
+    this.match_play_data_obj = {};
+    // 赛事播放中的单场数据
+    this.match_info = null;
+    // 清除定时器
+    if (this.interval_current_time) {
+      clearInterval(this.interval_current_time);
+      this.interval_current_time = null;
+    }
+
+    // 循环调用接口对象销毁
+    if (this.loop_callback) {
+      this.loop_callback.destroy();
+    }
+    this.loop_callback = null;
+    // 记录上一次的回调数据对象
+    this.item_obj_old = null;
   }
 }
 

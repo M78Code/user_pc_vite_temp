@@ -138,7 +138,7 @@
         </div>
         <!--新手版-->
         <div v-if="get_newer_standard_edition == 1" class="bet-item-wrap row border-radius4">
-          <v-s-odd-item :ol_item="ol_item" :hl_item="get_hl_item(match_item)" @click.native="item_click4(match_item,ol_item)"
+          <v-s-odd-item :ol_item="ol_item" :hl_item="get_hl_item(match_item)" @click="item_click4(match_item,ol_item)"
             :match_invalid="match_item.invalid" :match="match_item"
             v-for="(ol_item,o_i) of get_ol_list_f_match(match_item)" :key="o_i">
           </v-s-odd-item>
