@@ -64,7 +64,7 @@
                 {{ match.tn }}
               </span>
             </span>
-            <icon-wapper color="#999" name="icon-arrow" size="15px" :class="['icon-wapper', {'close': !collapsed}]" />
+            <icon-wapper color="var(--q-match-fs-color-62)" name="icon-arrow" size="15px" :class="['icon-wapper', {'close': !collapsed}]" />
           </span>
         </div>
         
