@@ -54,6 +54,7 @@ const get_money_notok_list2 = ref()
 
 const bet_single_detail = ref()  // 实列
 const money_span = ref()  // 实列
+const money_ok = ref('')
 
 // 复式连串过关投注
 const special_series = reactive({
