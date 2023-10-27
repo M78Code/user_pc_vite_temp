@@ -37,7 +37,6 @@ class MatchMeta {
    * @param { mi } 菜单类型
    */
   set_origin_match_data() {
-    console.log(MenuData)
     // 菜单 ID 对应的 元数据赛事 mids
     const menu_lv_v1 = MenuData.current_lv_1_menu_mi
     const menu_lv_v2 = MenuData.current_lv_2_menu_mi
