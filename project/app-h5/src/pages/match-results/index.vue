@@ -19,7 +19,9 @@
 
     <ScrollMenu />
 
-    <match-container2 />
+    <match-container />
+
+    <!-- <match-container2 /> -->
 
 </template>
 <script setup>
@@ -28,7 +30,8 @@ import { ScrollMenu } from 'src/base-h5/components/menu/app-h5-menu/index'
 import navigationBar from 'src/base-h5/components/tutorial/navigation-bar/index.vue'
 import { scrollMenu } from "src/base-h5/components/menu/app-h5-menu/utils.js"
 import matchContainer from "src/base-h5/components/match-list/index.vue";
-import matchContainer2 from "src/base-h5/components/match-list/components/match-container-2.vue";
+
+// import matchContainer2 from "src/base-h5/components/match-list/components/match-container-2.vue";
 
 const switchMenu = ['普通赛果', '冠军赛果']
 const slideMenu = ['11/16', '11/15', '11/14', '11/13', '11/12', '11/11', '11/10', '11/09', '11/08', '11/07', '11/06', '11/05', '11/04']
