@@ -112,13 +112,13 @@ class VirtualClass {
       while (this.run) {
         time = new Date().getTime();
         // 消费一条记录
-        this.work();
-        await sleep(800);
-        let timer = setTimeout(() => {
-          this.current_time += (new Date().getTime() - time);
-          clearTimeout(timer)
-          timer = null
-        }, 800)
+        // this.work();
+        // await sleep(800);
+        // let timer = setTimeout(() => {
+        //   this.current_time += (new Date().getTime() - time);
+        //   clearTimeout(timer)
+        //   timer = null
+        // }, 800)
       }
     })();
   }

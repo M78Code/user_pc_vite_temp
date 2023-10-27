@@ -362,21 +362,11 @@ const menu_item_click = (item, i) => {
   }
   //注单
   else if (item.id === 2) {
-    useMittEmit(MITT_TYPES.EMIT_CHANGE_RECORD_SHOW, true);
+    
   }
   //筛选
   else if (item.id === 3) {
-    if (
-      !GlobalAccessConfig.get_filterSwitch() &&
-      !GlobalAccessConfig.get_searchSwitch()
-    ) {
-      $toast(i18n_t(`common.temporarily_unavailable`), 2000);
-      return;
-    }
-    //TODO
-    // 监听搜索框状态
-    useMittEmit(MITT_TYPES.EMIT_CHANGE_SELECT_DIALOG, true)
-    // set_show_match_filter(true);
+    useMittEmit(MITT_TYPES.EMIT_CHANGE_RECORD_SHOW, true);
   }
   //刷新
   else if (item.id === 4) {

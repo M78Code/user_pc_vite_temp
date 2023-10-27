@@ -41,18 +41,15 @@
 </template>
 
 <script>
-import { api_v_sports } from "project_path/api";
-// #TODO VUEX 
-// import {mapGetters} from "vuex";
-
-import no_data from "project_path/components/common/no_data"
-import { onUnmounted, reactive, toRefs } from "vue";
+import { api_virtual } from "src/api/index.js";
+import noData from "src/base-h5/components/common/no-data.vue";
+import { onUnmounted, reactive, toRefs, defineComponent } from "vue";
 import{ compute_img_url} from 'src/core/'
 export default defineComponent({
   name: "ranking_list_start",
 
   components: {
-    "no-data": no_data
+    "no-data": noData
   },
 
   props: {
@@ -121,7 +118,7 @@ export default defineComponent({
     };
     const get_list = async () => {
       try {
-        let { code, data } = await api_v_sports.get_virtual_match_detail_count({ mid: this.get_current_mid })
+        let { code, data } = await api_virtual.get_virtual_match_detail_count({ mid: this.get_current_mid })
         if (code == 200 && data.length > 0) {
           this.ranking_data = data
           // this.results_filter(this.ranking_data)

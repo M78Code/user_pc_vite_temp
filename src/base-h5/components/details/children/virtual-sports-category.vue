@@ -39,21 +39,18 @@
 <script>
 // #TODO vuex
 // import { mapGetters, mapMutations } from "vuex"
-import tournament_play_new from "src/base-h5/components/details/components/tournament_play/tournament_play_new.vue"
+import tournament_play_new from "src/base-h5/components/details/components/tournament-play/tournament-play-new.vue"
  // 引入接口封装文件
-import { api_common } from 'src/project/api/index.js'
+import { api_common } from "src/api/index.js";
  // 引入投注逻辑mixin
  // #TODO mixins
-import betting from "src/project/mixins/betting/betting.js";
+// import betting from "src/project/mixins/betting/betting.js";
 
  // 引入加载中的组件
-import loading from "src/project/components/common/loading.vue"
- // 引入quasar
-import { dom, useQuasar } from 'quasar'
+import loading from "src/base-h5/components/common/loading.vue"
  // 引入处理数据的封装方法
-import MatchInfoCtr from "src/base-h5/utils/dataClassCtr/matchInfoCtr.js";
-import VSport from 'src/base-h5/utils/vsport/vsport.js';
-import axios_debounce_cache from "utils/http/axios_debounce_cache";
+// import MatchInfoCtr from "src/core/utils/dataClassCtr/matchInfoCtr.js";
+import VirtualClass from "src/core/match-list-h5/virtual-sports/virtual-class"
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { useRoute, useRouter } from "vue-router"
@@ -61,6 +58,7 @@ import lodash from "lodash";
 
 let route =  useRoute()
 let router = useRouter()
+const MatchInfoCtr = {}
 export default defineComponent({
   name: "virtual_sports_category",
   props: {
@@ -87,7 +85,7 @@ export default defineComponent({
   // #TODO mixins
   // mixins:[betting],
   setup(props, evnet) {
-    let data = reactive({
+    let state = reactive({
       // 事件集合
       emitters: [],
       // 加载数据的效果
@@ -119,6 +117,7 @@ export default defineComponent({
       match_status:0,
       // 上次请求的虚拟体育赛马赛事id
       pre_params_mid:'',
+      get_video_timer: null,
       created_init_event:false,
     });
     // #TODO VUEX
@@ -309,38 +308,38 @@ export default defineComponent({
      * @description: 初始化VSport
      */
     const init_vsport = () => {
-      if(vsport){
-        vsport.destroy();
+      if(VirtualClass){
+        VirtualClass.destroy();
       }
-      vsport = new VSport(current_match,(res)=>{
-        if(res.match_status == 0){
-          // console.warn(res.match_status,"----->>match_status",res.upd_time,"----->>upd_time");
-          if(res.upd_time>=-10){
-            if(!is_lock_add){
-              set_all_match_os_status(2)
-              $forceUpdate();
-            }
-            is_lock_add = true;
-          }
-        } else if(res.match_status == 1){
-          if(!is_lock_add){
-            set_all_match_os_status(2)
-            $forceUpdate();
-          }
-          is_lock_add = true;
-        } if(res.match_status == 2){
-        }
-        if(source=='virtual_sports_details')
-        {
-          set_detail_data_assign((detail_data)=>{
-            $set(detail_data, 'match_status',res.match_status);
-          });
-        } else{
-          $set(current_match, 'match_status',res.match_status);
-        }
-        match_status = res.match_status;
-        // console.log(current_match.totalTime+'---------current_match----------'+current_match.match_status)
-      })
+      // vsport = new VSport(current_match,(res)=>{
+      //   if(res.match_status == 0){
+      //     // console.warn(res.match_status,"----->>match_status",res.upd_time,"----->>upd_time");
+      //     if(res.upd_time>=-10){
+      //       if(!is_lock_add){
+      //         set_all_match_os_status(2)
+      //         $forceUpdate();
+      //       }
+      //       is_lock_add = true;
+      //     }
+      //   } else if(res.match_status == 1){
+      //     if(!is_lock_add){
+      //       set_all_match_os_status(2)
+      //       $forceUpdate();
+      //     }
+      //     is_lock_add = true;
+      //   } if(res.match_status == 2){
+      //   }
+      //   if(source=='virtual_sports_details')
+      //   {
+      //     set_detail_data_assign((detail_data)=>{
+      //       $set(detail_data, 'match_status',res.match_status);
+      //     });
+      //   } else{
+      //     $set(current_match, 'match_status',res.match_status);
+      //   }
+      //   match_status = res.match_status;
+      //   // console.log(current_match.totalTime+'---------current_match----------'+current_match.match_status)
+      // })
     };
     /**
      *@description: 获取当前赛事视频总时长
@@ -799,8 +798,8 @@ export default defineComponent({
       emitters.map((x) => x())
       // useMittOn(MITT_TYPES.EMIT_REF_API, initEvent).off;
       // useMittOn(MITT_TYPES.EMIT_CATEGORY_SKT, sendSocketInitCmd).off;
-      if(vsport){
-        vsport.destroy();
+      if(VirtualClass){
+        VirtualClass.destroy();
       }
 
       clearTimeout(get_video_timer)

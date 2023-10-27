@@ -47,7 +47,7 @@ const router = createRouter({
         {
           path: "/virtual",
           name: "virtual_sports",
-          component: () => import("../pages/virtual/virtual.vue"),
+          component: () => import("../pages/virtual/index.vue"),
         },
         {
           path: "/menu",
