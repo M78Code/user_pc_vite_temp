@@ -174,12 +174,12 @@ export default defineComponent({
     height: auto;
     border-radius: 4px;
     overflow: hidden;
-
+    padding:0.04rem;
     .item2 {
       flex: 1;
       max-width: 50%;
       min-width: 45%;
-
+      padding:0.04rem;
       &:nth-child(2n) {
         margin-right: 0;
         border-right: 0;
@@ -195,10 +195,13 @@ export default defineComponent({
     width: 100%;
     height: 0.52rem;
     line-height: 0.52rem;
-
+    background:var(--q-gb-bg-c-15) !important;
     padding: 0 0.15rem;
     display: flex;
     justify-content: center;
+    border-radius: 4px;
+    box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.04);
+
   }
 
   .play-box-sty {

@@ -45,7 +45,8 @@ for(let theme_key in  final_assets_config){
 
  
       if(url.startsWith('/')){
-        url = `http://assets-image.3p4z6.com${url}`
+        // url = `http://assets-image.oceasfe.com${url}`
+        url = `http://api-doc-server-new.sportxxxw1box.com${url}`
       }
      
     if(url){

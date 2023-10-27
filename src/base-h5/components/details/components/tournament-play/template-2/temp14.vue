@@ -257,6 +257,7 @@ export default defineComponent({
   .row-bet-wrapper {
     border-radius: 4px;
     overflow: hidden;
+    padding:0.08rem;
   }
 
   .play-box {
@@ -282,5 +283,11 @@ export default defineComponent({
       margin-top: 2px;
     }
   }
+}
+.bet-box-bg {
+  margin:0.04rem;
+  box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.04);
+  background:var(--q-gb-bg-c-15);
+  border-radius: 4px;
 }
 </style>

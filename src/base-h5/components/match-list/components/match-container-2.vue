@@ -26,7 +26,8 @@
         </div>
       </template>
       <span class="score-inner-span" v-else>
-        {{ match_of_list.csna }}
+        <!-- PROJECT_NAME == 'app-h5' 复刻版需要展示数量 -->
+        {{ match_of_list.csna }}{{PROJECT_NAME == 'app-h5' ? '(' + MenuData.current_lv_2_menu_item.ct + ')' : ''}}
         <!-- {{match_of_list.csna || get_current_menu.sub.menuName}} -->
       </span>
     </div>
@@ -86,6 +87,7 @@
             </div>
           </div>
           <!--  一整块赛事的 div 内容 ： 1. 左边 【时间，队名，比分】   2. 右边 【赔率 模块】  -->
+            <!-- <div style="border-top: 1px solid #000; width: 96%;"></div>  ！-->
           <div :class="['match-odds-container study_height_s hairline-border', {'border-top': !match.is_show_league}]">
             <div class="match-odds-container-border-radius">
               <!-- 上边的 赛事日期标准版,包含 比分组件 -->
@@ -147,7 +149,7 @@
                   </div>
                 </div>
                 <!--玩法数量-->
-                <div class="goto-detail" @click='goto_details(match)'>
+                <div class="goto-detail" style="margin-right: 0.03rem;" @click='goto_details(match)'>
                   <span class="count_span" :class="{ esports: 3000 == menu_type }">
                     <span class="mc-n">
                       {{GlobalAccessConfig.get_handicapNum()? get_match_mc(match) :
@@ -332,7 +334,7 @@ import { IconWapper } from 'src/components/icon'
 import matchOvertimePen from './match-overtime-pen.vue'
 import ImageCacheLoad from "./public-cache-image.vue";
 import PageSourceData from "src/core/page-source/page-source.js";
-import { i18n_t,MenuData, score_switch_handle,compute_img_url, compute_css_obj, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/index.js"
+import { i18n_t,MenuData, score_switch_handle,compute_img_url, compute_css_obj, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, PROJECT_NAME } from "src/core/index.js"
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import matchListClass from 'src/core/match-list-h5/match-class/match-list.js'
 import { format_time_zone, format_time_zone_time, format_how_many_days, format_week } from "src/core/format/index.js"

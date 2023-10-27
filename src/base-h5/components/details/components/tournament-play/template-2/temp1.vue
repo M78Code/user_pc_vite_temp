@@ -388,8 +388,7 @@ export default defineComponent({
   display: flex;
   justify-content: center;
   align-items: center;
-  background:var(--q-gb-bg-c-18);
-  border-radius:4px;
+
 }
 
 .odds-lock {
@@ -486,6 +485,12 @@ export default defineComponent({
 }
 .item-bet-ky {
   padding:0.08rem;
-  background-color: var(--q-gb-bg-c-15);
+  background-color: #F8F9FA;
+  .fat-warp {
+    margin:0.04rem;
+    background:var(--q-gb-bg-c-15);
+    border-radius: 4px;
+    box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.04);
+  }
 }
 </style>

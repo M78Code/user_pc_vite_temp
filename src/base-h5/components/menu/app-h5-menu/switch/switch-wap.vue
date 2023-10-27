@@ -2,7 +2,7 @@
  * @Author: rise
  * @Date: 2023-10-22 17:03:22
  * @LastEditors: rise
- * @LastEditTime: 2023-10-23 14:53:07
+ * @LastEditTime: 2023-10-27 22:10:26
  * @Description:  
 -->
 <template>
@@ -14,6 +14,10 @@
 </template>
 <script setup>
 import SwitchNav from "./switch-nav.vue";
+import { ref, computed, onUnmounted, watch } from "vue";
+import { theme_list, theme_map } from "src/core/theme/"
+import UserCtr from "src/core/user-config/user-ctr.js"
+import { lang } from "src/base-h5/mixin/userctr";
 /**
  * 首页switch wap
  */
@@ -59,23 +63,16 @@ const switchData = [
         ]
     },
     {
-        defaultVal:0,
-        list:[
-            {
-                name:"日间",
-                val:0,
-                changeFun:(val)=>{
-                    return console.log(`执行日间-${val}`)
-                }
-            },
-            {
-                name:"夜间",
-                val:1,
-                changeFun:(val)=>{
-                    return console.log(`执行夜间-${val}`)
-                }
+        defaultVal:theme_list.findIndex((item)=>{return item.is_default === 1;}),
+        list:theme_list.map((item)=>{
+            item.name = item.i18n[lang.value];
+            item.val = item.key;
+            item.changeFun = (val)=>{
+                console.log(val)
+                return UserCtr.set_theme(val)
             }
-        ]
+            return item;
+        })
     },
 ]
 </script>

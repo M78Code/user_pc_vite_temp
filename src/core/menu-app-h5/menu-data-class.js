@@ -47,6 +47,8 @@ class MenuData {
     //当前的菜单 lv4
     this.current_lv_4_menu = {};
     this.current_lv_4_menu_i = undefined;
+    // 当前选中的二级菜单item数据 --- app-h5用 （TODO:待确定）
+    this.current_lv_2_menu_item = {}
     //================主列表用的  结束==================
     this.menu_list = []
     this.menu_type = ref(2)
@@ -97,7 +99,10 @@ class MenuData {
 
   // 设置二级菜单id
   set_current_lv_2_menu_mi(val = {}){
-    this.current_lv_2_menu_mi = val.mi
+    this.current_lv_2_menu_mi = val.mi;
+    this.current_lv_2_menu = val;
+    // 存储二级菜单选择的tab --- app-h5 用（TODO: 待确定）
+    this.current_lv_2_menu_item = !!val.ct ? val : this.menu_lv_mi_lsit[0]
     // 今日 / 滚球/ 冠军 没有 三级
     if(![1,2,400].includes(this.current_lv_1_menu_mi.value)){
      

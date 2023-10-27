@@ -13,7 +13,7 @@
 
         <div v-for="(item,index) in item_data.hl" :key="index" class="row">
           <!-- 左 -->
-          <div class="col yb_fontsize14" style="min-width: 1px;">
+          <div class="col col-mg yb_fontsize14" style="min-width: 1px;">
             <template v-for="(ol_item,ol_index) in item.ol">
               <div v-if="lodash.get(item_data.title,'[0].otd') == ol_item.otd" :key="ol_index" class="ellipsis font_color play-box-style">
                 {{ol_item.on}}
@@ -22,7 +22,7 @@
           </div>
 
           <!-- 中 -->
-          <div class="col">
+          <div class="col col-mg">
             <template v-for="(ol_item,ol_index) in item.ol">
               <div v-if="lodash.get(item_data.title,'[0].otd') == ol_item.otd" :key="ol_index">
                 <!--  0开 2关 1封 11锁 -->
@@ -75,7 +75,7 @@
           </div>
 
           <!-- 右 -->
-          <div class="col">
+          <div class="col col-mg">
             <template v-for="(ol_item,ol_index) in item.ol">
               <div v-if="lodash.get(item_data.title,'[1].otd') == ol_item.otd" :key="ol_index">
                 <!--  0开 2关 1封 11锁 -->
@@ -226,7 +226,13 @@ export default defineComponent({
   .head {
     line-height: 0.17rem;
   }
-
+  .col-mg{
+    margin:0.04rem;
+    background:var(--q-gb-bg-c-15);
+    border-radius: 4px;
+    color:#7981A4;
+    box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.04);
+  }
   .play-box-style {
     text-align: center;
     height: 0.52rem;
