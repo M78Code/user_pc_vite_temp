@@ -8,6 +8,9 @@
                 </div>
             </div>
         </template>
+        <template v-slot:right>
+            <div class="right-icon"></div>
+        </template>
     </navigation-bar>
 
     <div class="slide-box">

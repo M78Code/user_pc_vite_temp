@@ -19,7 +19,7 @@
             </div>
             <div class="center">
                 <div class="vs">VS</div>
-                <div v-if="state.source !== 'bigAndSmallBall'" class="text">主客实力相当<br />均不让球即0（平手盘）</div>
+                <div v-if="state.source !== 'bigAndSmallBall'" class="text-style">主客实力相当<br />均不让球即0（平手盘）</div>
             </div>
             <div class="right">
                 <div class="teams-logo">队标位</div>
@@ -42,7 +42,7 @@
                 <div class="round-ball">
                     <div class="title">赛果</div>
                     <div class="score">1 - 0</div>
-                    <div class="text">反之亦然</div>
+                    <div class="text-style">反之亦然</div>
                 </div>
             </div>
             <div class="right">
@@ -175,7 +175,7 @@ const state = reactive({
                 color: var(--q-gb-bg-c-8);
             }
 
-            .text {
+            .text-style {
                 text-align: center;
                 color: var(--q-gb-t-c-1);
                 ;
@@ -304,7 +304,7 @@ const state = reactive({
                     color: var(--q-gb-t-c-1);
                 }
 
-                .text {
+                .text-style {
                     font-size: .1rem;
                     color: var(--q-gb-t-c-4);
                 }

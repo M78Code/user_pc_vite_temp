@@ -345,6 +345,7 @@ import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import { lang, standard_edition, theme } from 'src/base-h5/mixin/userctr.js'
 import { is_hot, menu_type, menu_lv2, is_detail, is_export, is_results } from 'src/base-h5/mixin/menu.js'
 
+is_results = true
 // TODO: 其他模块得 store  待添加
 const props = defineProps({
   // 当前组件的赛事数据对应列表的赛事
