@@ -61,6 +61,19 @@
         </div>
       </div>
 
+      <!--加减-->
+        <bet-mix-box-child6></bet-mix-box-child6>
+
+        <!--投注成功后的预约金额和可用金额-->
+        <bet-mix-box-child5></bet-mix-box-child5>
+
+      <!--确定按钮-->
+      <div class="nonebox4-sub">确认</div>
+
+      <div>
+        <slide></slide>
+      </div>
+
       <div class="yb_px12" v-if="get_mix_bet_flag">
         <div class="row justify-between items-center content-t yb_mb6 yb_mt8 yb_fontsize14 fw_600 bet-mix-show">
           <div>{{ $t('bet.total_income') }}</div>
@@ -139,6 +152,7 @@ import betMixBoxChild3 from './bet_mix_box_child3.vue';
 import betMixBoxChild4 from './bet_mix_box_child4.vue';
 import betMixBoxChild5 from './bet_mix_box_child5.vue';
 import betAfterStatus from './bet-after-status.vue';
+import slide from './slide.vue';
 
 // import betMixShow from './/bet_mix_show.vue';
 import betMixShow from './bet_mix_show3.vue';
