@@ -72,6 +72,7 @@
 </template>
 
 <script setup>
+import { ref } from 'vue'
 import skeleton from '../index.vue'
 
 const thumbStyle = ref({background: "transparent"})

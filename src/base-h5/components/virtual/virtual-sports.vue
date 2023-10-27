@@ -119,7 +119,8 @@ import rankingListStart from "src/base-h5/components/virtual/ranking-list-start.
 import groupKnockout from "src/base-h5/components/virtual/group-knockout.vue"
 import footballRankingList from "src/base-h5/components/virtual/football-ranking-list.vue"
 import virtualSportsTab from "src/base-h5/components/details/components/virtual-sports-tab.vue"
-import virtualSportsCategory from "src/base-h5/components/details/children/virtual-sports-category.vue"
+// TODO: 里面死循环 直接卡死，  后续修改
+// import virtualSportsCategory from "src/base-h5/components/details/children/virtual-sports-category.vue"
 import resultPage from "src/base-h5/components/match-list/components/result-page.vue"
 import noData from "src/base-h5/components/common/no-data.vue";
 import virtualSkeleton from "src/base-h5/components/skeleton/virtual-sports/virtual.vue"
@@ -131,7 +132,7 @@ export default defineComponent({
   name: "virtual",
   components:{
     noData,
-    'virtual-sports-category':virtualSportsCategory,
+    // 'virtual-sports-category':virtualSportsCategory,
     'match-tab':matchTab,
     'v-s-match-list':vsMatchList,
     'ranking-list-start':rankingListStart,
@@ -281,20 +282,6 @@ export default defineComponent({
         set_league_i_by_id(prev_league_id);
         tab_item_click_handle(component_data.tab_item_i);
         // get_virtual_sport_local();
-      }
-    );
-
-    watch( () => props.is_user_refresh, (n) => {
-        if(n){
-          // get_virtual_sport_local('is_user_refreshing')
-        }
-      }
-    );
-
-    watch( () => props.is_user_refresh, (n) => {
-        if(n){
-          // get_virtual_sport_local('is_user_refreshing')
-        }
       }
     );
 
