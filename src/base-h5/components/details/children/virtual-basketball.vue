@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import { api_v_sports } from "src/project/api/index.js";
+import { api_virtual } from "src/api/index.js";
 // #TODO mixins
 // import common from 'src/project/mixins/constant/module/common.js';
 

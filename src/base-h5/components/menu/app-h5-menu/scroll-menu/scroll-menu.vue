@@ -51,33 +51,46 @@
 <script setup>
 import scrollNav from "./scroll-nav.vue";
 import lodash_ from "lodash";
+import { useRoute } from "vue-router";
 import MatchFold from 'src/core/match-fold'
 import BaseData from "src/core/base-data/base-data.js";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
-import { ref, computed, onMounted, watch, reactive } from "vue";
-import { compute_css_obj, MenuData, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/index.js";
+import { ref, computed, onMounted, watch, reactive, nextTick, onUnmounted } from "vue";
+import { compute_css_obj, MenuData, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, useMittOn, MITT_TYPES  } from "src/core/index.js";
 import { is_scroll_ball, update_time, is_export, is_mix,is_results, is_kemp, is_jinzu, menu_type } from 'src/base-h5/mixin/menu.js'
 import { get_sport_menu } from "../top-menu/top-list";
 import {scrollMenu} from "../utils";
 
+const route = useRoute();
+const emitters = ref({});
 //菜单容器是否收起
 const menu_wrap_simple = ref(false);
 //菜单容器二级菜单是否收起
 const sport_container_simple = ref(false);
-
 
 // 是否初次渲染
 const is_first = ref(true)
 let show_favorite_list = ref('')
 
 onMounted(() => {
-  set_menu_lv2({ mi: '1012' })
+  emitters.value = {
+    emitter_1: useMittOn(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA, init_match_callback).off
+  };
 })
+
+/**
+ * @description 元数据请求回来 初始化赛事加载
+ */
+const init_match_callback = () => {
+  if (route.name !== 'matchList') return
+  nextTick(() => { set_menu_lv2({ mi: '1012' }) })
+}
 
 /**
  * 二级菜单事件
  */
  async function set_menu_lv2(item = {},event) {
+  console.log(item)
   // 选中后点击无效
   if (item.mi == MenuData.current_lv_2_menu_mi) return
   MenuData.set_current_lv_2_menu_mi(item)
@@ -85,10 +98,11 @@ onMounted(() => {
   if([1,2,400].includes(MenuData.current_lv_1_menu_mi.value)){
     handle_match_render_data()
   }
-  scrollMenu(event,".s-menu-container",".current");
+  event && scrollMenu(event,".s-menu-container",".sport-menu-item");
 }
 
 watch(()=> MenuData.current_lv_1_menu_mi.value,() => {
+  
   // 默认设置二级菜单id
   MenuData.set_current_lv_2_menu_mi( lodash_.get(MenuData.menu_lv_mi_lsit,'[0]',{}))
 
@@ -123,11 +137,11 @@ const two_menu_show = (sub) => {
  * @description 处理赛事列表渲染数据
  */
  const handle_match_render_data = () => {
+  
   is_first.value = false
   // 清除赛事折叠信息
   MatchDataBaseH5.init()
   MatchFold.clear_fold_info()
-
   // 冠军拉取旧接口； 待 元数据提供 冠军赛事后 再删除
   if (MenuData.is_kemp()) return MatchMeta.get_champion_match()
   // 赛果不走元数据， 直接拉取接口
@@ -167,6 +181,10 @@ const format_type = ( item = {} ) => {
   if (BaseData.sports_mi.includes(+item.mi)) return +item.mi
   return MenuData.recombine_menu_bg(item, true)
 }
+
+onUnmounted(() => {
+  Object.values(emitters.value).map((x) => x());
+})
 
 
 </script>

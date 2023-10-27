@@ -78,6 +78,8 @@
     display: block;
     position: relative;
     transition: max-height 0.3s;
+    padding-left: 10px;
+    background: #fff;
 
     .match-odds-container-border-radius {
       overflow: hidden;
@@ -88,6 +90,9 @@
 
     .eports_scoring_tip {
       color: var(--q-gb-t-c-13);
+    }
+    &.hairline-border{
+      border-radius: 0;
     }
   }
 
@@ -351,6 +356,14 @@
           left: 0;
         }
       }
+      .league-t-tubiao {
+        height: 0.15rem;
+        width: 0.02rem;
+        background-color: #303442;
+        border-radius: 10px;
+
+
+      }
       .league-collapse-dir {
         width: 0.12rem;
         height: 0.06rem;
@@ -610,7 +623,6 @@
 
       .score-wrapper {
         margin-top: 0.04rem;
-        padding-left: 0.05rem;
         position: absolute;
         bottom: 0;
 

@@ -42,7 +42,7 @@ const changeTabMenu = (i,event) => {
   if(activeOn.value === i)return;
   activeOn.value = i;
   
-  scrollMenu(event,".date-tab-content-ul",".active");
+  event && scrollMenu(event,".date-tab-content-ul",".active");
   emits('changeTab',props.dataList[i].val);
 }
 emits('changeTab',activeOn.value);

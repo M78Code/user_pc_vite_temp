@@ -48,10 +48,10 @@
 // #TODO MIXINS
 // import common from 'src/project/mixins/constant/module/common.js';
 // import virtual_sports_mixin from "src/project/mixins/virtual_sports/virtual_sports_mixin.js"
+import { api_virtual } from "src/api/index.js";
 import virtual_sports_tab from 'src/base-h5/components/details/components/virtual_sports_tab.vue'
 import virtual_sports_category from "src/base-h5/components/details/children/virtual_sports_category.vue"
 import virtual_match_statistic from 'src/base-h5/components/details/components/virtual_match_statistic.vue'
-import {api_v_sports} from 'src/project/api/index.js'
 import virtual_sports_stage from 'src/project/pages/virtual/virtual_sports_part/virtual_sports_stage.vue'
 import VSport from 'src/base-h5/utils/vsport/vsport.js';
 

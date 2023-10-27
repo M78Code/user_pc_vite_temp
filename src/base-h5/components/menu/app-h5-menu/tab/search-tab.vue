@@ -2,7 +2,7 @@
  * @Author: rise
  * @Date: 2023-10-20 16:27:18
  * @LastEditors: rise
- * @LastEditTime: 2023-10-25 11:44:00
+ * @LastEditTime: 2023-10-27 19:01:15
  * @Description:  
 -->
 <template>
@@ -83,7 +83,7 @@ const changeTab = (val,i,event) => {
     console.log(`${props.dataList[val].name}-${val}`)
     if(activeOn.value === val)return;
     activeOn.value = val;
-    scrollMenu(event,".search-tab-content-ul",".active");
+    event && scrollMenu(event,".search-tab-content-ul",".active");
 }
 /**
  * 搜索足球事件

@@ -37,13 +37,14 @@
         {{ $t('list.match_no_start') }}&nbsp;&nbsp;<span v-show="no_start_total">(0)</span>
       </span>
     </div>
-
+   
     <!-- 最核心的div模块     标题 + 倒计时 + 比分 + 赔率盘口模块 -->
     <div :class="['match-inner-container', {'collapsed': collapsed}]">
       <!--联赛标题 -->
       <div @click="handle_league_fold" v-if="match.is_show_league || (is_hot && get_league_show(i))"
         :class="[('league match-indent hairline-border'), { 'no-radius': get_sport_show, 'no-border': collapsed, 'bottom': match.is_show_league }]">
         <div class="league-t-wrap">
+        <div class="league-t-tubiao"></div>
           <!-- 联赛收藏 -->
           <div v-if="![3000, 900].includes(menu_type)" class="favorited-icon" @click.stop="handle_league_collect">
             <!-- 未收藏 -->
@@ -69,7 +70,7 @@
       </div>
       <!-- 卡片主内容 -->
       <!-- <q-slide-transition> -->
-        <div class="match-content" style="width: 100%;" v-if="!collapsed">
+        <div style="width: 100%;" v-if="!collapsed">
           <!--标准版 赔率标题栏-->
           <div class="odd-title-wraper row " v-if="match.is_show_league" @click.stop :style="{width: !collapsed ? '100%' : 0}">
             <div class="odd-title-i-w flex">
@@ -562,7 +563,6 @@ const handle_ball_seed_fold = () => {
  * @description 联赛折叠
  */
 const handle_league_fold = () => {
-  console.log(11111)
   // 首页热门，详情页，不需要用到折叠
   if (is_hot.value || is_detail.value) return;
   MatchFold.set_league_fold(props.match_of_list.tid)

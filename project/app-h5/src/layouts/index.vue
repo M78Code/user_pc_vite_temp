@@ -17,8 +17,8 @@
       <template v-if="['matchList', 'sport_menu'].includes(route.name)">
         <TopMenu />
         <ScrollMenu />
-        <SwiperWap />
-        <SwitchWap />
+        <!-- <SwiperWap />
+        <SwitchWap /> -->
         <SearchTab />
       </template>
       
