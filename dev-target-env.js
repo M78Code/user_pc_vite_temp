@@ -3,7 +3,7 @@
  */
  
 // 运维自动化 读取地址
-// http://assets-image.oceasfe.com/public/upload/yunwei/need_packup.json
+// https://assets-image.oceasfe.com/public/upload/yunwei/need_packup.json
 
  
 //本地开发 目标项目
@@ -29,7 +29,7 @@ DEV_TARGET_VERSION = "project_3-652cce36feffd80f0fcda0f0-1698407516978-test";
 
 //----------------------------------分割线  复刻版-H5-KYAPP  app-h5  5 -------------------------------------------
 // 打包 亚洲版 PC（新版)   测试环境  
-// DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1698392979023-test";
+// DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1698408268409-test";
 // 打包 亚洲版 PC（新版)   试玩环境  
 // DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1698375224411-shiwan";
 // 打包 亚洲版 PC（新版)   生产环境
