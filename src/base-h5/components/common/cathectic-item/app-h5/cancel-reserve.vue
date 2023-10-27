@@ -19,6 +19,11 @@
 
 <script setup>
 import { ref } from 'vue'
+const props = defineProps({
+  item_data: {
+    type: Object
+  }
+})
 // 取消预约
 let alertTips = ref(false)
 </script>

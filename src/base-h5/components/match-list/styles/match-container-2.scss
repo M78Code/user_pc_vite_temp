@@ -39,7 +39,6 @@
 
   .match-inner-container {
     margin: 0 auto;
-    margin: 0 .069rem;
     /* 兼容iPhone11边框显示不全 */
     //width: 100%;
     display: flex;
@@ -51,6 +50,10 @@
     &.show-sport {
       border-top-left-radius: 0.08rem;
       border-top-right-radius: 0.08rem;
+    }
+    .match-content{
+      background: #fff;
+      padding: 0 0.1rem;
     }
   }
 
@@ -145,6 +148,7 @@
   .match-indent {
     width: 100%;
     margin: 0 auto;
+    background: #f7f9fe;
     &.bottom{
       margin-top: 0.05rem;
     }
@@ -183,9 +187,8 @@
     font-size: 12px;
     padding: 0 5px 0 20px;
     background: #f7f9fe;
-    line-height: 22px;
+    line-height: 20px;
     font-size: 11px;
-    margin-bottom: -0.04rem;
     .league-collapse-dir{
       display: none;
     }
@@ -311,8 +314,8 @@
   /* **************联赛展示********************** -S*/
   .league {
     height: 0.26rem;
-    background: #fff !important;
     border-radius: 0;
+    padding: 0 0.1rem;
 
     &.show-sport {
       border-radius: 0.12rem 0.12rem 0 0;
@@ -401,7 +404,6 @@
 
     .odd-title-i-w {
       width: 50%;
-      margin-right: 2%;
       overflow: hidden;
 
       .odd-t-i-wrapper {
@@ -901,7 +903,7 @@
   background-color: var(--q-color-com-bg-color-12);
   width: 100%;
   color: #999;
-  padding: 0 0.08rem;
+  padding: 0 0 0 0.08rem;
   height: 0.2rem;
   display: flex;
   align-items: center;

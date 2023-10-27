@@ -90,7 +90,7 @@
               </div>
             </div>
           </div>
-          <!-- 赛事分析展示内容 -->
+          <!-- 赛事首发展示内容 -->
           <template v-if="viewTab == 'shoufa' && (!get_is_hengping || get_is_dp_video_full_screen)">
             <div>
                 <!-- 足球赛事分析 页面-->
@@ -100,9 +100,9 @@
                 <!-- <basketball-match-analysis  :detail_data="detail_data" v-if="detail_data.csid == '2'"></basketball-match-analysis> -->
             </div>
           </template>
-          <!-- 聊天室 -->
-          <template v-if="viewTab === 'chatroom'">
-            <!-- <chatroom></chatroom> -->
+          <!-- 精彩回放 -->
+          <template v-if="viewTab === 'playback'">
+            <highlights :detail_data="detail_data" />
           </template>
         </div>
 
@@ -162,8 +162,9 @@ import { compute_css_variables } from "src/core/css-var/index.js"
 import {is_export } from "src/base-h5/mixin/menu";
 // 详情页中部玩法集tab
 import detailsTab from "src/base-h5/components/details/components/details-tab-2.vue";
-//国际化
+//首发组件
 import lineUp from "src/base-h5/components/details/analysis-matches/components/line-up.vue"
+import highlights from "src/base-h5/components/details/analysis-matches/highlights/highlights.vue"
 export default defineComponent({
   name: "details",
   // mixins: [websocket_data,common],
@@ -179,8 +180,8 @@ export default defineComponent({
     videos: videos,
 //     // SDetails,
     category,
-    lineUp
-//     // chatroom
+    lineUp,
+    highlights
   },
   // 从首页轮播区域跳转到详情页 增加判断
 //   beforeRouteEnter(to, from, next) {

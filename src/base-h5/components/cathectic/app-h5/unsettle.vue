@@ -13,8 +13,15 @@
             <template v-if="!is_early|| (is_early && clac_is_early(value.data))">
               <q-slide-transition>
                 <div v-show="value.open">
-                  <!--投注记录的页每一条注单-->
-                  <common-cathectic-item :main_item="main_item" :item_data="item2" v-for="(item2,key) in value.data" :key="key"></common-cathectic-item>
+                  <div v-for="(item2,key) in value.data" :key="key" :item_data="item2" class="cathectic-item">
+                    <!-- 单关、串关内容显示 -->
+                    <template>
+                      <item-simple-body v-if="item2.seriesType == '1'" :main_item="main_item" :data_b="item2"></item-simple-body>
+                      <item-multiple-body v-else :main_item="main_item" :data_b="item2"></item-multiple-body>
+                    </template>
+                    <!-- 未结算列表 => 投注记录页提前结算的按钮、滑块 -->
+                    <early-settle :item_data="item2"></early-settle>
+                  </div>
                 </div>
               </q-slide-transition>
             </template>
@@ -29,7 +36,7 @@
 <script setup>
 import lodash from 'lodash';
 import { api_betting } from "src/api/index.js";
-import commonCathecticItem from "src/base-h5/components/common/app-h5/common-cathectic-item.vue";
+import { itemSimpleBody, itemMultipleBody, earlySettle } from "src/base-h5/components/common/cathectic-item/app-h5/index";
 import settleVoid from "src/base-h5/components/cathectic/app-h5/settle-void.vue";
 import scroll from "src/base-h5/components/common/record-scroll/scroll.vue";
 // import skt_order from "src/base-h5/mixins/websocket/data/skt-data-order.js"
@@ -325,6 +332,17 @@ const props = defineProps({
 </script>
 
 <style lang="scss" scoped>
+template {
+  display: block;
+}
+.cathectic-item {
+  width: 100%;
+  border-radius: 0.1rem;
+  background: var(--q-gb-bg-c-15);
+  overflow: hidden;
+  margin:  0 0 0.1rem;
+  padding-bottom: 0.2rem;
+}
 /**投注记录弹框未结算*/
 .unsettle {
   height: 100%;
