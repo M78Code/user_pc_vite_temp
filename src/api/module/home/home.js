@@ -36,7 +36,7 @@ export const get_hot_list = (params, config, url = "/v2/w/menu/hotList") => http
 export const get_ranking_by_tournamentId = (params, config, url = "/v1/tournamentRanking/getRankingByTournamentId") => http.get(`${prefix}${url}`, params, config);
 
 //移动端热门猜你喜欢赛事(miller)
-export const hot_ulike_recommendation = (params, config, url = "/v1/m/hotUlikeRecommendationPB") => http.get(`${prefix}${url}`, params, config);
+export const hot_ulike_recommendation = (params, config, url = "/v1/m/hotUlikeRecommendation") => http.get(`${prefix}${url}`, params, config);
 // 【后台参数】banner图标list查询（jeffrey）
 export const get_bannerList = (params, config, url='/v1/banner/getBannersUrl') => {
   return http.get(`${prefix_12}${url}`, params, config);

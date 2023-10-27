@@ -2,7 +2,7 @@
  * @Author: rise
  * @Date: 2023-10-20 16:27:18
  * @LastEditors: rise
- * @LastEditTime: 2023-10-25 11:44:00
+ * @LastEditTime: 2023-10-27 18:57:15
  * @Description:  
 -->
 <template>
@@ -83,7 +83,7 @@ const changeTab = (val,i,event) => {
     console.log(`${props.dataList[val].name}-${val}`)
     if(activeOn.value === val)return;
     activeOn.value = val;
-    scrollMenu(event,".search-tab-content-ul",".active");
+    event && scrollMenu(event,".search-tab-content-ul",".active");
 }
 /**
  * 搜索足球事件
@@ -91,6 +91,16 @@ const changeTab = (val,i,event) => {
 const searchClick = () => {
     console.log(`搜索足球`)
 }
+watch(update_time, (v) => {
+  const [menu_lv1, pop_list] = get_sport_menu(MenuData.menu_list)
+  menu_list.value = menu_lv1; //一级
+  pop_main_items.value = pop_list; //pop级
+  current_menu.value = MenuData.menu_lv2; //2级
+  date_menu_list.value = MenuData.menu_lv3; //三级
+  virtual_sports_results_tab.value = MenuData.menu_lv4; //4级
+  current_lv2.value = MenuData.current_lv_2_menu;//二级
+  date_menu_curr_i.value = MenuData.current_lv_3_menu_i; //三级index
+});
 </script>
 <style lang="scss" scoped>
 .search-tab-wap {

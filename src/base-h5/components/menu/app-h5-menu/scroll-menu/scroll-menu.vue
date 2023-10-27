@@ -71,13 +71,14 @@ const is_first = ref(true)
 let show_favorite_list = ref('')
 
 onMounted(() => {
-  set_menu_lv2({ mi: '1012' })
+  set_menu_lv2({ mi: 28 })
 })
 
 /**
  * 二级菜单事件
  */
  async function set_menu_lv2(item = {},event) {
+  console.log(item)
   // 选中后点击无效
   if (item.mi == MenuData.current_lv_2_menu_mi) return
   MenuData.set_current_lv_2_menu_mi(item)
@@ -85,7 +86,7 @@ onMounted(() => {
   if([1,2,400].includes(MenuData.current_lv_1_menu_mi.value)){
     handle_match_render_data()
   }
-  scrollMenu(event,".s-menu-container",".current");
+  event && scrollMenu(event,".s-menu-container",".sport-menu-item");
 }
 
 watch(()=> MenuData.current_lv_1_menu_mi.value,() => {
