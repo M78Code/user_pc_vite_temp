@@ -34,11 +34,11 @@ const router = createRouter({
               keepAlive: true // 需要缓存
             },
           },
-          // {
-          //   path: "/home",
-          //   name: "home",
-          //   component: () => import("../pages/home/index.vue")
-          // },
+          {
+            path: "/home",
+            name: "home",
+            component: () => import("../pages/home/index.vue")
+          },
           // {
           //   path: "/activity_task",
           //   name: "activity_task",

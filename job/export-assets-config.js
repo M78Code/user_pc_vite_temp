@@ -42,6 +42,12 @@ for(let theme_key in  final_assets_config){
   let  theme_value= final_assets_config[theme_key]
   for(let assets_key  in theme_value ){
     let url =theme_value[assets_key]
+
+ 
+      if(url.startsWith('/')){
+        url = `http://assets-image.3p4z6.com${url}`
+      }
+     
     if(url){
       try {
         const filename = url.split("/").pop();//文件名称

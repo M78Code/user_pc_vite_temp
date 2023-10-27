@@ -470,7 +470,7 @@ this.bet_appoint_ball_head= null */
   // 设置 投注版本
   set_bet_data_class_version = lodash_.debounce(() => {
     this.bet_data_class_version.value = Date.now()
-  }, 50)
+  }, 5)
 
   // 投注成功后 不保留投注项 需要清空投注数据 
   set_clear_bet_info() {

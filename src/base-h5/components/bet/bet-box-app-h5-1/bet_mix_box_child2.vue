@@ -11,16 +11,19 @@
     <div v-if="get_bet_status == 2" class="fixed full-shadow2" @touchmove.prevent></div>
 
     <div style="display: none;">{{ BetData.bet_data_class_version }} {{BetViewDataClass.bet_view_version}}</div>
-
+   
     <div class="content-box">
-
-      <!-- 头部 -->
-      <bet-bar @click="pack_up"></bet-bar>
+      <div>
+        <!-- 头部 -->
+        <bet-bar @click="pack_up" v-if="BetViewDataClass.bet_order_status == 1"></bet-bar>
+        <!-- 投注后的状态 -->
+        <bet-after-status v-else></bet-after-status>
+      </div>
 
       <!-- 中间可滚动区域 -->
       <div class="scroll-box scroll-box-center" ref="scroll_box" :style="{ 'max-height': `${max_height1}px` }"
         @touchmove="touchmove_handle($event)" @touchstart="touchstart_handle($event)">
-          <bet-mix-box-child3 :item="BetData.bet_single_list[0]" :key='index'></bet-mix-box-child3>
+          <bet-mix-box-child3 :item="BetData.bet_single_list[0]" :key='0'></bet-mix-box-child3>
       </div>
 
       <!-- 投注前 -->
@@ -56,15 +59,20 @@
         <div v-else>
           <bet-mix-box-child4 v-if=" BetViewDataClass.orderNo_bet_obj.length "></bet-mix-box-child4>
         </div>
-
       </div>
 
-    
+      <!--加减-->
+        <bet-mix-box-child6></bet-mix-box-child6>
 
-     
+        <!--投注成功后的预约金额和可用金额-->
+        <bet-mix-box-child5></bet-mix-box-child5>
 
       <!--确定按钮-->
-      <!-- <div class="nonebox4-sub">确认</div> -->
+      <div class="nonebox4-sub">确认</div>
+
+      <div>
+        <slide></slide>
+      </div>
 
       <div class="yb_px12" v-if="get_mix_bet_flag">
         <div class="row justify-between items-center content-t yb_mb6 yb_mt8 yb_fontsize14 fw_600 bet-mix-show">
@@ -78,61 +86,63 @@
       </div>
 
       <!-- 底部按钮 -->
-      <div class="row yb_px10 yb_pb8 justify-between" @touchmove.prevent>
+      <div class="row yb_px10 yb_pb8 justify-between" @touchmove.prevent v-if="BetViewDataClass.bet_order_status == 1">
 
-        <!-- 左边， 3种情况-->
-        <!-- 保留选项 -->
-        <div class="add-box add-box2" :class="{ 'add-box2': BetData.is_bet_success_status, 'add-box3': calc_class }"
-          @click.stop="pack_up(4)" v-if="BetData.is_bet_success_status">{{ $t('bet.save') }}</div>
-        <!-- 单关 -->
-        <div v-else-if="true" class="bet-add-box text-bold display_center one_text_color"
-          :class="{ 'add-box3': calc_class }" @click.stop="pack_up(5)">
-          <div class="bet-add-new bet_margin_left"></div>
-          <div class="bet_text_left bet-one">{{ $t('bet.kushikatsu') }}</div>
+          <!-- 左边， 3种情况-->
+          <!-- 保留选项 -->
+          <div class="add-box add-box2" :class="{ 'add-box2': BetData.is_bet_success_status, 'add-box3': calc_class }"
+            @click.stop="pack_up(4)" v-if="BetData.is_bet_success_status">{{ $t('bet.save') }}</div>
+          <!-- 单关 -->
+          <div v-else-if="true" class="bet-add-box text-bold display_center one_text_color"
+            :class="{ 'add-box3': calc_class }" @click.stop="pack_up(5)">
+            <div class="bet-add-new bet_margin_left"></div>
+            <div class="bet_text_left bet-one">{{ $t('bet.kushikatsu') }}</div>
+          </div>
+          <!-- 串关+ -->
+          <div v-else-if="!hide_bet_series_but()" class="bet-add-box text-bold display_center linkUp_text_color"
+            :class="{ 'add-box3': calc_class }" @click.stop="pack_up(6)">
+            <div class="bet_text_right">{{ $t('bet.kushikatsu') }}</div>
+            <div class="bet-add-new bet-linkUp"></div>
+          </div>
+
+          <!-- 右边 -->
+          <div class="bet-box">
+            <template v-if="exist_code == '666'">
+              <p @click="go_record" class="yb_fontsize16">{{ $t('bet.msg13') }}</p>
+            </template>
+            <template v-else-if="is_conflict">
+              <!-- 投注 -->
+              <div class="row justify-center items-center content-center set-opacity">
+                <p class="yb_fontsize12 yb_mr10">{{ $t('bet_record.bet_val') }}</p>
+                <p class="yb_fontsize20">{{ format_money2(BetData.bet_money_total.toFixed(2)) }}</p>
+              </div>
+            </template>
+            <template v-else>
+              <!-- 投注 -->
+              <div v-if="BetViewDataClass.bet_order_status == 1" @click="submit_order" :class="{ 'set-opacity': true }"
+                class="row justify-center items-center content-center">
+                <p class="yb_fontsize12 yb_mr10">{{ $t('bet_record.bet_val') }}</p>
+                <p class="yb_fontsize20">{{ bet_amount }}</p>
+              </div>
+              <!-- 投注 有投注项失效后点击接受变化的置灰样式-->
+              <!-- <div v-if="BetViewDataClass.bet_order_status == 5" class="row justify-center items-center content-center set-opacity">
+                <p class="yb_fontsize12 yb_mr10">{{ $t('bet_record.bet_val') }}</p>
+                <p class="yb_fontsize20">{{ format_money2(500) }}</p>
+              </div> -->
+              <!-- 确定 -->
+              <p v-if="[3,4,5].includes(BetViewDataClass.bet_order_status)" @click="pack_up" class="yb_fontsize16">{{ $t('common.ok') }}</p>
+            
+              <!-- 接受变化 -->
+              <p v-if="btn_show == 3" @click="agree_change" class="yb_fontsize16">{{ $t('bet.agree_change') }}</p>
+              <!-- 接受变化并投注 -->
+              <p v-if="btn_show == 4" @click="submit_order" class="yb_fontsize16">{{ $t('bet.agree_change2') }}</p>
+            </template>
+          </div>
         </div>
-        <!-- 串关+ -->
-        <div v-else-if="!hide_bet_series_but()" class="bet-add-box text-bold display_center linkUp_text_color"
-          :class="{ 'add-box3': calc_class }" @click.stop="pack_up(6)">
-          <div class="bet_text_right">{{ $t('bet.kushikatsu') }}</div>
-          <div class="bet-add-new bet-linkUp"></div>
-        </div>
 
-        <!-- 右边 -->
-        <div class="bet-box">
-          <template v-if="exist_code == '666'">
-            <p @click="go_record" class="yb_fontsize16">{{ $t('bet.msg13') }}</p>
-          </template>
-          <template v-else-if="is_conflict">
-            <!-- 投注 -->
-            <div class="row justify-center items-center content-center set-opacity">
-              <p class="yb_fontsize12 yb_mr10">{{ $t('bet_record.bet_val') }}</p>
-              <p class="yb_fontsize20">{{ format_money2(BetData.bet_money_total.toFixed(2)) }}</p>
-            </div>
-          </template>
-          <template v-else>
-            <!-- 投注 -->
-            <div v-if="BetViewDataClass.bet_order_status == 1" @click="submit_order" :class="{ 'set-opacity': true }"
-              class="row justify-center items-center content-center">
-              <p class="yb_fontsize12 yb_mr10">{{ $t('bet_record.bet_val') }}</p>
-              <p class="yb_fontsize20">{{ bet_amount }}</p>
-            </div>
-            <!-- 投注 有投注项失效后点击接受变化的置灰样式-->
-            <!-- <div v-if="BetViewDataClass.bet_order_status == 5" class="row justify-center items-center content-center set-opacity">
-              <p class="yb_fontsize12 yb_mr10">{{ $t('bet_record.bet_val') }}</p>
-              <p class="yb_fontsize20">{{ format_money2(500) }}</p>
-            </div> -->
-            <!-- 确定 -->
-            <p v-if="[3,4,5].includes(BetViewDataClass.bet_order_status)" @click="pack_up" class="yb_fontsize16">{{ $t('common.ok') }}</p>
-          
-            <!-- 接受变化 -->
-            <p v-if="btn_show == 3" @click="agree_change" class="yb_fontsize16">{{ $t('bet.agree_change') }}</p>
-            <!-- 接受变化并投注 -->
-            <p v-if="btn_show == 4" @click="submit_order" class="yb_fontsize16">{{ $t('bet.agree_change2') }}</p>
-          </template>
-        </div>
-      </div>
-
-
+        <!--投注后的 确定按钮 -->
+        <div v-else @click="set_clear()" class="nonebox4-sub">确认</div>
+      
     </div>
   </div>
 </template>
@@ -141,7 +151,8 @@
 import betMixBoxChild3 from './bet_mix_box_child3.vue';
 import betMixBoxChild4 from './bet_mix_box_child4.vue';
 import betMixBoxChild5 from './bet_mix_box_child5.vue';
-
+import betAfterStatus from './bet-after-status.vue';
+import slide from './slide.vue';
 
 // import betMixShow from './/bet_mix_show.vue';
 import betMixShow from './bet_mix_show3.vue';
@@ -306,6 +317,15 @@ const set_ref_data_bet_money = () => {
   console.error('bet_single_list', BetData.bet_single_list);
   bet_show_single.value = true
 }
+
+// 清空数据
+const set_clear = () => {
+  // 关闭弹窗 清空数据
+  useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX)
+  BetData.set_clear_bet_info()
+  BetData.set_clear_bet_view_config()
+}
+
 onUnmounted(() => {
   useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money).off
   useMittOn(MITT_TYPES.EMIT_INPUT_BET_MONEY, change_money_handle).off
@@ -314,12 +334,14 @@ onUnmounted(() => {
 <style lang="scss" scoped>
 .nonebox4-sub{
     padding: 0.08rem 0;
+    margin-top: 0.08rem;
     width: 100%;
     font-size: 16px;
     text-align: center;
     color: #FFFFFF;
     background-color: var(--q-gb-t-c-1);
     border-radius: 12px;
+    margin-bottom: .2rem ;
 }
 .bet-mix-box-child2 {
   .used-money {

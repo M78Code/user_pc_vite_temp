@@ -4,7 +4,7 @@
  *
  */
 import { ref } from "vue";
-import _lodash from "lodash"
+import lodash_ from "lodash"
 import BetData from "./bet-data-class"
 
 
@@ -103,9 +103,9 @@ class BetViewData {
   }
 
   // 设置当前 投注页面显示 版本
-  set_bet_view_version() {
+  set_bet_view_version = lodash_.debounce(() => {
     this.bet_view_version.value = Date.now()
-  }
+  }, 5)
 
   // 设置 金额的范围  -1:输入金额小于最低限额时，1: 输入金额超出最大限额时 2:输入金额超出用户余额时 3:用户余额是小于等于输入金额(转换后)
   set_input_money_state(val) {
@@ -124,7 +124,7 @@ class BetViewData {
   // type 接口类型 min_max 或者最大值 最小值接口 数据结构不同
   set_bet_min_max_money(obj, type = '') {
     // 获取query_bet_amount数据对应的限额
-    let bet_amount_list = _lodash.get(obj, 'betAmountInfo')
+    let bet_amount_list = lodash_.get(obj, 'betAmountInfo')
     // min_max 或者最大值 最小值接口 数据结构不同
     if (type == 'min_max') {
       bet_amount_list = obj

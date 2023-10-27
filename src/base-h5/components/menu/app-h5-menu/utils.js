@@ -2,7 +2,7 @@
  * @Author: rise
  * @Date: 2023-10-24 19:10:02
  * @LastEditors: rise
- * @LastEditTime: 2023-10-25 16:16:43
+ * @LastEditTime: 2023-10-27 18:39:33
  * @Description:  
  */
 /**
@@ -72,14 +72,15 @@ export const scrollMenuAnimate = (dom, x) => {
  */
 export const scrollMenu = (event, parentClass, childClass) => {
     let scrollBox = document.querySelector(parentClass),//父元素
-        scrollBoxNav = document.querySelector(childClass),//子元素
-        spanLeft = event.clientX, // 当前点击的元素左边距离
-        divBox = scrollBoxNav.clientWidth / 2, // 点击的元素一半宽度
-        totalWidths = scrollBox.clientWidth, // 父元素总宽度
+        scrollBoxNav = document.querySelector(parentClass).querySelector(childClass),//子元素
+        spanLeft = event?.clientX, // 当前点击的元素左边距离
+        divBox = scrollBoxNav?.clientWidth / 2, // 点击的元素一半宽度
+        totalWidths = scrollBox?.clientWidth, // 父元素总宽度
         widths = totalWidths / 2, // 父元素总宽度一半
         spanRight = totalWidths - spanLeft, // 元素的右边距离
         scrollL = scrollBox.scrollLeft; // 滚动条滚动的距离
     // 当元素左边距离 或者 右边距离小于总宽一半
+    if(!scrollBoxNav)return;
     if (spanRight < widths || spanLeft < widths) {
         let n = scrollL + (spanLeft - widths) + divBox;
         scrollMenuAnimate(scrollBox, n)

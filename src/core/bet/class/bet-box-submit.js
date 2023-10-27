@@ -340,6 +340,9 @@ const submit_handle = type => {
                 // 获取投注后的数据列表
                 let orderDetailRespList = lodash_.get(res,'data.orderDetailRespList') || []
                 set_orderNo_bet_obj(orderDetailRespList)
+
+                // 设置投注中状态 后续用ws推送改变
+                BetViewDataClass.set_bet_order_status(3)
             }, 1000);
             // 通知页面更新 
         }

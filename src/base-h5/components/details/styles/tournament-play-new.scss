@@ -146,13 +146,13 @@
 
   &:after {
     content: ' ';
-    background-color: var(--q-gb-bg-c-13);
+    background: url($SCSSPROJECTPATH + "/image/svg/title_tag.svg") no-repeat center  !important;
     display: block;
     position: absolute;
-    width: 3px;
-    height: 0.14rem;
+    width: 2px;
+    height: 0.16rem;
     top: calc(50% - 0.08rem);
-    left: -0.1rem;
+    left: -0.18rem;
     border-radius: 1.5px;
   }
 }
@@ -169,12 +169,12 @@
     content: ' ';
     display: block;
     position: absolute;
-    width: 3px;
-    height: 0.12rem;
+    width: 2px;
+    height: 0.16rem;
     top: 0.035rem;
-    left: -0.06rem;
+    left: -0.18rem;
     border-radius: 1.5px;
-    background-color: var(--q-gb-bg-c-13);
+    background: url($SCSSPROJECTPATH + "/image/svg/title_tag.svg") no-repeat center  !important;
   }
 
   i {
@@ -398,7 +398,7 @@
       padding-left: 0;
 
       &::after {
-        left: -0.1rem;
+        left: -0.18rem;
       }
     }
 
