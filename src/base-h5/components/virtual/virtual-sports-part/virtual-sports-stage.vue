@@ -620,7 +620,7 @@ export default defineComponent({
     /**
      * 获取到视频进程数据
      */
-    const VirtualVideo.get_match_video_process = (type_s) => {
+    const get_match_video_process = (type_s) => {
       clearTimeout(init_player_timeout);
       init_player_timeout = setTimeout(() => {
         let new_ = current_match;
@@ -853,7 +853,7 @@ export default defineComponent({
       get_next_batch_no,
       sync_video_data_handle,
       get_score_list,
-      VirtualVideo.get_match_video_process,
+      get_match_video_process,
       set_loading_state,
       clear_timer,
       home_name,

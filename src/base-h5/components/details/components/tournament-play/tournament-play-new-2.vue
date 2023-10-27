@@ -138,41 +138,41 @@ import { IconWapper } from 'src/components/icon'
 import { useMittOn, useMittEmit, MITT_TYPES ,compute_css_obj,UserCtr,MatchDetailCalss,MatchDataWarehouse_H5_Detail_Common} from  "src/core/"
 
 // 模板id=0(默认模板)
-import temp0 from "./template/temp0.vue"
+import temp0 from "./template-2/temp0.vue"
 // 模板id=1
-import temp1 from "./template/temp1.vue"
+import temp1 from "./template-2/temp1.vue"
 // 模板id=2
-import temp2 from "./template/temp2.vue"
+import temp2 from "./template-2/temp2.vue"
 // 模板id=3
-import temp3 from "./template/temp3.vue"
+import temp3 from "./template-2/temp3.vue"
 // 模板id=4
-import temp4 from "./template/temp4.vue"
+import temp4 from "./template-2/temp4.vue"
 // 模板id=5
-import temp5 from "./template/temp5.vue"
+import temp5 from "./template-2/temp5.vue"
 // 模板id=6
-import temp6 from "./template/temp6.vue"
+import temp6 from "./template-2/temp6.vue"
 // 模板id=7
-import temp7 from "./template/temp7.vue"
+import temp7 from "./template-2/temp7.vue"
 // 模板id=8
-import temp8 from "./template/temp8.vue"
+import temp8 from "./template-2/temp8.vue"
 // 模板id=9
-import temp9 from "./template/temp9.vue"
+import temp9 from "./template-2/temp9.vue"
 // 模板id=10
-import temp10 from "./template/temp10.vue"
+import temp10 from "./template-2/temp10.vue"
 // 模板id=11
-import temp11 from "./template/temp11.vue"
+import temp11 from "./template-2/temp11.vue"
 // 模板id=12
-import temp12 from "./template/temp12.vue"
+import temp12 from "./template-2/temp12.vue"
 // 模板id=13
-import temp13 from "./template/temp13.vue"
+import temp13 from "./template-2/temp13.vue"
 // 模板id=14
-import temp14 from "./template/temp14.vue"
+import temp14 from "./template-2/temp14.vue"
 // 模板id=15
-import temp15 from "./template/temp15.vue"
+import temp15 from "./template-2/temp15.vue"
 // 模板id=18
-import temp18 from "./template/temp18.vue"
+import temp18 from "./template-2/temp18.vue"
 // 模板id=51
-import temp51 from "./template/temp51.vue"
+import temp51 from "./template-2/temp51.vue"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, nextTick, defineAsyncComponent, markRaw } from "vue";
 import { api_details } from "src/api/";
 
