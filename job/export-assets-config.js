@@ -49,7 +49,7 @@ for(let theme_key in  final_assets_config){
         if(IS_DEV){
           url = `http://assets-image.oceasfe.com${url}`
         }else{
-          url = `http://api-doc-server-new.sportxxxw1box.com${url}`
+          url = `https://assets-image.sportxxxw1box.com${url}`
         }
  
       }
