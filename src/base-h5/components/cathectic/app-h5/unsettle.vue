@@ -7,10 +7,10 @@
     <!-- 加载中 -->
     <SRecord v-if="is_loading"/>
     <scroll ref="myScroll" :on-pull="onPull" v-else>
-      <template v-if="no_data && !is_all_early_flag">
+      <template v-if="no_data">
         <!-- 订单内容 -->
         <div v-for="(value,name,index) in list_data" :key="index" class="unsettle-list">
-            <template v-if="!is_early|| (is_early && clac_is_early(value.data))">
+            <template>
               <q-slide-transition>
                 <div v-show="value.open">
                   <div v-for="(item2,key) in value.data" :key="key" :item_data="item2" class="cathectic-item">
@@ -27,8 +27,8 @@
             </template>
           </div>
       </template>
-      <!-- 去投注 -->
-      <settle-void :is_early="is_all_early_flag" v-if="(!no_data || is_all_early_flag)" :is_limit="is_limit"></settle-void>
+      <!-- 没有数据 -->
+      <settle-void v-else :main_item="main_item"></settle-void>
     </scroll>
   </div>
 </template>

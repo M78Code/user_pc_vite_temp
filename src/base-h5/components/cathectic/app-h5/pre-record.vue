@@ -28,7 +28,7 @@
         </div>
       </template>
       <!-- 无数据展示 -->
-      <settle-void v-else></settle-void>
+      <settle-void v-else :main_item="main_item"></settle-void>
     </scroll>
   </div>
 </template>
@@ -305,13 +305,11 @@ const toggle_show = (val) => {
   instance.proxy.$forceUpdate()
 }
 /**
-     *@description 初次切换到预约时加载数据
-    *@return {Undefined} undefined
-    */
-watch(() => props.main_item, (newVal) => {
-  if (newVal == 2) {
-    lodash.isEmpty(list_data.value) && init_data()
-  }
+ *@description 初次切换到预约时加载数据
+*@return {Undefined} undefined
+*/
+onMounted(() => {
+  init_data()
 })
 watch(() => list_data.value, (newVal) => {
   //监听预约记录数据，是否有预约中的订单，并轮询获取
