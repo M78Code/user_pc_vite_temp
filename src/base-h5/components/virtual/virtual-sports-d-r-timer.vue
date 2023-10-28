@@ -6,7 +6,7 @@
       >
         <div class="row justify-between dynamic-title">
           <div class="row items-center">
-            <div class="virtual-num" :class="`virtual-num-${item.id} csid-${[1010].includes(sub_menu_type) ? '1002' : sub_menu_type} ${[1010].includes(sub_menu_type) ? `motorcycle-${item.id}` : ''}`"></div>
+            <div class="virtual-num" :class="`virtual-num-${item.id} csid-${[1010].includes(menu_lv2) ? '1002' : menu_lv2} ${[1010].includes(menu_lv2) ? `motorcycle-${item.id}` : ''}`"></div>
             <div class="virtual-name">{{item.name}}</div>
           </div>
         </div>
@@ -23,6 +23,7 @@
 <script>
 // #TODO vuex 
 // import { mapGetters } from "vuex";
+import { menu_lv2 } from 'src/base-h5/mixin/menu.js'
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 export default defineComponent({
   name: "virtual-sports-d-r-timer",
@@ -31,19 +32,10 @@ export default defineComponent({
     match:Object,
   },
   setup(props, evnet) {
-    const component_data = reactive({
+    const state = reactive({
       team_obj :null,
       change_effect:true,
       team_list_sort:null,
-    })
-    // #TODO VUEX 
-    // computed: {
-    //   ...mapGetters({
-    //     sub_menu_type: 'get_curr_sub_menu_type',
-    //   }),
-    // },
-    const sub_menu_type = computed(() => {
-      return "get_curr_sub_menu_type";
     })
     onMounted(() => {
       let obj = {};
@@ -121,8 +113,8 @@ export default defineComponent({
       }
     };
     return {
-      ...toRefs(component_data),
-      sub_menu_type,
+      ...toRefs(state),
+      menu_lv2,
       upd_list_sort,
       get_list_i_top,
       set_new_poi_to_old

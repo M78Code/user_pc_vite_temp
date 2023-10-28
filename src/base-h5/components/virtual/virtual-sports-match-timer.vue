@@ -15,8 +15,6 @@
   </div>
 </template>
 <script>
-// #TODO MIXINS 
-// import common from "project_path/mixins/constant/module/common.js"
 import { reactive, toRefs, watch, defineComponent } from "vue";
 export default defineComponent({
   name: "virtual_sports_match_timer",
@@ -31,7 +29,7 @@ export default defineComponent({
   
   
   setup(props, evnet) {
-    const component_data = reactive({
+    const state = reactive({
       minutes:0,
       seconds:0
     })
@@ -42,7 +40,7 @@ export default defineComponent({
       }
     );
     return {
-      ...toRefs(component_data),
+      ...toRefs(state),
     }
   }
 });

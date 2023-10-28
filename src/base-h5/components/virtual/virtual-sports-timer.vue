@@ -56,12 +56,10 @@ export default defineComponent({
       start:null,
       timer_mid_map:{},
       path_d:'',
-      strokeColor: false,//
-      strokeBgColor: '',
-      timer_super31,
+      strokeColor: false,
+      strokeBgColor: 'rgba(255,255,255,.2)'
     })
-    strokeBgColor='rgba(255,255,255,.2)';
-    timer_super31 = 0;
+    let timer_super31 = 0;
 
     onMounted(() => {
       draw_timer_by_second();
@@ -125,10 +123,10 @@ export default defineComponent({
      * @return {Undefined}Undefined
      */
     const draw_timer_by_second = () => {
-      if(!match || !match.mgt || !match.mid){
+      if(!props.match || !props.match.mgt || !props.match.mid){
         return;
       }
-      let ms = Number(match.mgt) - get_now_server();
+      let ms = Number(props.match.mgt) - get_now_server();
       let single_circle = 60 * 1000;
       let now = get_now_server();
       if(start == null) start = now;
@@ -191,13 +189,9 @@ export default defineComponent({
         if(seconds <= 10 && !(seconds % 3)){
           // #TODO emit事件
           useMittEmit(MITT_TYPES.EMIT_ARRIVED10, {
-            mid:match.mid,
-            batchNo:match.batchNo
+            mid:props.match.mid,
+            batchNo:props.match.batchNo
           });
-          // useMittEmit(MITT_TYPES.EMIT_ARRIVED10,{
-          //   mid:match.mid,
-          //   batchNo:match.batchNo
-          // });
         }
       },10);
     };

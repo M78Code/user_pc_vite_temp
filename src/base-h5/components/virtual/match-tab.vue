@@ -1,19 +1,19 @@
 <template>
   <div class="match-tab row justify-end">
     <!-- 足球联赛league_type 0 -->
-    <div class="row items-center part-nav" ref="scrollBox" :class="{'part-nav-full': GlobalAccessConfig.get_statisticsSwitch() && sub_menu_type != 1004}">
+    <div class="row items-center part-nav" ref="scrollBox" :class="{'part-nav-full': GlobalAccessConfig.get_statisticsSwitch() && menu_lv2 != 1004}">
       <div ref="scrollItem" v-for="(item,i) in no_list" class="row sub-nav-item" @click="sub_nav_click_handle(item.batchNo, true)"
-        :class="{focus:item.batchNo === sub_focus_batch_no,footbal:[1001,1004].includes(sub_menu_type)}"
-        v-show="sub_menu_type != '1004' || item.mmp != 'PREGAME' || !pre_to_playing || i != 0"
+        :class="{focus:item.batchNo === sub_focus_batch_no,footbal:[1001,1004].includes(menu_lv2)}"
+        v-show="menu_lv2 != '1004' || item.mmp != 'PREGAME' || !pre_to_playing || i != 0"
         :key="i">
         {{item.no}}
       </div>
     </div>
     <!-- 分析icon显示 -->
-    <div class="sr-icon-wrapper row justify-center items-center" @click.stop="trend_event"  v-if="GlobalAccessConfig.get_statisticsSwitch()&& sub_menu_type != 1004">
-      <img class="sub-item-trend-icon2" v-if="[1002, 1011, 1010, 1009].includes(sub_menu_type) && trend_is_show"
+    <div class="sr-icon-wrapper row justify-center items-center" @click.stop="trend_event"  v-if="GlobalAccessConfig.get_statisticsSwitch()&& menu_lv2 != 1004">
+      <img class="sub-item-trend-icon2" v-if="[1002, 1011, 1010, 1009].includes(menu_lv2) && trend_is_show"
             :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/analyse_icon.svg`" alt="" />
-      <img class="sub-item-trend-icon1" v-if="[1001,1004].includes(sub_menu_type) && trend_is_show"
+      <img class="sub-item-trend-icon1" v-if="[1001,1004].includes(menu_lv2) && trend_is_show"
             :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/analyse_icon.svg`" alt="" />
       <img class="sub-item-close-icon" v-if="!trend_is_show"
             :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/sub_item_list_close.svg`" alt="">
@@ -27,6 +27,8 @@
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import {utils, LOCAL_PROJECT_FILE_PREFIX } from 'src/core/index.js';
 import lodash from "lodash";
+import { menu_lv2 } from 'src/base-h5/mixin/menu.js'
+import VirtualData from 'src/core/match-list-h5/virtual-sports/virtual-data.js'
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 export default defineComponent({
@@ -56,9 +58,7 @@ export default defineComponent({
     }
   },
   setup(props, evnet) {
-    const data = reactive({
-      // 事件集合
-      emitters: [],
+    const state = reactive({
       // 默认显示分析按钮
       trend_is_show:true,
       // 默认选中第一项
@@ -67,15 +67,10 @@ export default defineComponent({
       sub_focus_batch_no:'',
       // 赛前切到滚球
       pre_to_playing:false,
-      timer1_: null,
     })
-    // #TODO VUEX COMPUTED
-    // computed: {
-    // ...mapGetters({
-    //   sub_menu_type: 'get_curr_sub_menu_type',
-    //   current_batch:'get_current_batch',
-    //   get_access_config
-    // }),
+    // 事件集合
+    let emitters = []
+    let timer1_ = null
     // 联赛的类型 field3: 空:不是杯赛 不为空:是杯赛
     const league_type = computed(() => {
       return current_league ? current_league.field3 : ''
@@ -87,9 +82,6 @@ export default defineComponent({
         useMittOn(MITT_TYPES.EMIT_FORCE_END_PLAYING_BASKETBALL, end_playing_basketball_handle).off,
         useMittOn(MITT_TYPES.EMIT_INGAME_RESULT_SHOW_END, ingame_result_show_end).off,
       ]
-      // useMittOn(MITT_TYPES.EMIT_BASKETBALL_TIME_ARRIVED,basket_ball_time_handle);
-      // useMittOn(MITT_TYPES.EMIT_FORCE_END_PLAYING_BASKETBALL,end_playing_basketball_handle);
-      // useMittOn(MITT_TYPES.EMIT_INGAME_RESULT_SHOW_END,ingame_result_show_end);
     })
     onUnmounted(() => {
       emitters.map((x) => x())
@@ -109,7 +101,7 @@ export default defineComponent({
     watch(
       () => props.v_menu_changed,
       () => {
-        trend_is_show = true;
+        state.trend_is_show = true;
       }
     );
     /**
@@ -121,7 +113,7 @@ export default defineComponent({
     watch(
       () => props.no_list,
       () => {
-        pre_to_playing = false;
+        state.pre_to_playing = false;
       }
     );
     /**
@@ -156,7 +148,7 @@ export default defineComponent({
     watch(
       () => props.is_reset_tab_i,
       () => {
-        sub_nav_focus_i = 0;
+        state.sub_nav_focus_i = 0;
         no_init_selected();
       }
     );
@@ -168,8 +160,8 @@ export default defineComponent({
     watch(
       () => props.auto_change_tab_i_first,
       () => {
-        sub_focus_batch_no = '';
-        let batchNo = no_list[sub_nav_focus_i].batchNo;
+        state.sub_focus_batch_no = '';
+        let batchNo = no_list[state.sub_nav_focus_i].batchNo;
         sub_nav_click_handle(batchNo);
       }
     );
@@ -190,7 +182,7 @@ export default defineComponent({
         let no_item = no_list.filter(no_item => no_item.mmp == 'INGAME')[0];
         if(no_item){
           sub_nav_click_handle(no_item.batchNo);
-          pre_to_playing = true;
+          state.pre_to_playing = true;
         }else{
           timer1_ = setTimeout(() => {
             // #TODO EMIT
@@ -206,26 +198,24 @@ export default defineComponent({
      */
     const sub_nav_click_handle = (batchNo, is_user_lick = false) => {
       // 期号相同 且 是用户点击 则直接退出
-      if(batchNo == sub_focus_batch_no && is_user_lick){
+      if(batchNo == state.sub_focus_batch_no && is_user_lick){
         return;
       }
-      sub_nav_focus_i = lodash.findIndex(no_list,{batchNo:batchNo});
-      sub_focus_batch_no = batchNo;
-      utils.tab_move2(sub_nav_focus_i, $refs.scrollBox)
-      let current_sub_nav = no_list[sub_nav_focus_i];
+      state.sub_nav_focus_i = lodash.findIndex(no_list,{batchNo:batchNo});
+      state.sub_focus_batch_no = batchNo;
+      utils.tab_move2(state.sub_nav_focus_i, $refs.scrollBox)
+      let current_sub_nav = no_list[state.sub_nav_focus_i];
 
-      // #TODO EMIT
-      // $emit('sub_nav_change',{
-      //   nav:current_sub_nav,
-      //   i:sub_nav_focus_i
-      // });
-
+      VirtualData.sub_nav_changed({
+        nav:current_sub_nav,
+        i:state.sub_nav_focus_i
+      })
       //将赛马赛事信息跟新到vuex
       let match_info = lodash.get(current_sub_nav,'match[0]')
       match_info && set_detail_data(lodash.cloneDeep(match_info))
 
       //赛马传递赛事集合唯一赛事的赛事id
-      if([1002, 1011, 1010, 1009].includes(sub_menu_type)){
+      if([1002, 1011, 1010, 1009].includes(menu_lv2.value)){
         let mid = '';
         try{
           mid = current_sub_nav.match[0].mid;
@@ -243,14 +233,13 @@ export default defineComponent({
     const no_init_selected = () => {
       if(!no_list || !no_list.length) return;
       set_i_by_batch_no();
-      let selected = no_list[sub_nav_focus_i];
-      // #TODO EMIT
-      // $emit('sub_nav_change', {
-      //   nav:selected,
-      //   i:sub_nav_focus_i
-      // });
+      let selected = no_list[state.sub_nav_focus_i];
+      VirtualData.sub_nav_changed({
+        nav:current_sub_nav,
+        i:state.sub_nav_focus_i
+      })
       //赛马传递赛事集合唯一赛事的赛事id
-      if(![1001,1004].includes(sub_menu_type)){
+      if(![1001,1004].includes(menu_lv2.value)){
         let mid = '';
         try{
           mid = selected.match[0].mid;
@@ -268,9 +257,9 @@ export default defineComponent({
      * @param {Undefined}
      */
     const trend_event = () => {
-      trend_is_show = !trend_is_show
+      state.trend_is_show = !state.trend_is_show
       // #TODO EMIT
-      // $emit('trend_event_change', !trend_is_show)
+      // $emit('trend_event_change', !state.trend_is_show)
     };
     /**
      * 通过当前期设置期下标
@@ -315,13 +304,15 @@ export default defineComponent({
       }
     }
     return {
-      ...toRefs(data),
+      ...toRefs(state),
       lodash,
+      menu_lv2,
       league_type,
       basket_ball_time_handle,
       sub_nav_click_handle,
       no_init_selected,
       trend_event,
+      GlobalAccessConfig,
       set_i_by_batch_no,
       end_playing_basketball_handle,
       ingame_result_show_end

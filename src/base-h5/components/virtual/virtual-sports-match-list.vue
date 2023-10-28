@@ -1,7 +1,7 @@
 <template>
-  <div class="match-list-wrapper" :class="{standard:get_newer_standard_edition == 2}">
+  <div class="match-list-wrapper" :class="{standard:standard_edition == 2}">
     <template>
-      <div class="title-wrap-standard row justify-end" v-if="get_newer_standard_edition == 2">
+      <div class="title-wrap-standard row justify-end" v-if="standard_edition == 2">
         <div class="odd-title-wrapper row">
           <div class="odd-t-w-inner row items-center" :class="{status2:standard_odd_status}">
             <div v-for="(hpl_title, hp_i) of i18n_t('list_title.'+csid+'.title')" :key="hp_i">
@@ -26,7 +26,7 @@ import v_s_match_timer from "src/base-h5/components/virtual/virtual-sports-match
 import virtualSportsMatchItem from "src/base-h5/components/virtual/virtual-sports-match-item.vue";
 // #TODO MIXINS 
 // import betting from 'project_path/mixins/betting/betting.js';
-import {  PageSourceData  } from "src/core/index.js";
+import { standard_edition } from 'src/base-h5/mixin/userctr.js'
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 export default defineComponent({
   name: "virtual_sports_match_list",
@@ -48,7 +48,7 @@ export default defineComponent({
   
   
   setup(props, evnet) {
-    const component_data = reactive({
+    const state = reactive({
       selected_match_i:0,
       v_match_hps:[],
       standard_odd_status:0,
@@ -63,15 +63,11 @@ export default defineComponent({
     //   computed:{
     //   ...mapGetters({
     //     footer_sub_menu_id:"get_footer_sub_menu_id",
-    //     get_newer_standard_edition:"get_newer_standard_edition",//新手版1    标准版  2
     //   }),
     // },
     const set_details_item = () => {}
     const footer_sub_menu_id = computed(() => {
       return ""
-    })
-    const get_newer_standard_edition = computed(() => {
-      return PageSourceData.get_newer_standard_edition()
     })
     onMounted(() => {
       // #TODO emit
@@ -87,7 +83,7 @@ export default defineComponent({
      * @return {Undefined}
      */
     const switch_match_handle = (i) => {
-      component_data.selected_match_i = i;
+      state.selected_match_i = i;
       // #TODO emit
       // $emit('switch_match',i);
     };
@@ -95,29 +91,29 @@ export default defineComponent({
      * 赔率滑动状态
      */
     const odd_pan_handle = (status) => {
-      component_data.standard_odd_status = status;
+      state.standard_odd_status = status;
     };
     watch(
       () => props.v_menu_changed,
       () => {
-        component_data.standard_odd_status = 0;
+        state.standard_odd_status = 0;
       }
     );
     watch(
       () => props.virtual_match_list,
       () => {
         if(!virtual_match_list || !virtual_match_list.length) return;
-        component_data.v_match_hps = virtual_match_list[0].hps
-        switch_match_handle(component_data.selected_match_i);
+        state.v_match_hps = virtual_match_list[0].hps
+        switch_match_handle(state.selected_match_i);
 
         // #TODO emit 
         // $emit('switch_match',selected_match_i);
       }
     );
     return {
-      ...toRefs(component_data),
+      ...toRefs(state),
       footer_sub_menu_id,
-      get_newer_standard_edition,
+      standard_edition,
       switch_match_handle,
       odd_pan_handle,
       set_details_item,

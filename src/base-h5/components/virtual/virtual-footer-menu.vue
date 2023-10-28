@@ -1,5 +1,5 @@
 <template>
-  <div class="virtual-footer-menu black2" v-if="get_newer_standard_edition == 1">
+  <div class="virtual-footer-menu black2" v-if="standard_edition == 1">
     <!-- 刷新按钮 -->
     <!-- <div class="refesh-wrap yb-flex-center" @click="set_loading">
       <img :class="{rotate:is_refresh}" src="image/bw3/svg/virtual-sports/refresh.svg">
@@ -31,7 +31,7 @@
 <script>
 // #TODO VUEX 
 // import { mapGetters, mapMutations} from "vuex";
-import {  PageSourceData  } from "src/core/index.js";
+import { standard_edition } from 'src/base-h5/mixin/userctr.js'
 import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 export default defineComponent({
   name: "virtual_footer_menu",
@@ -59,7 +59,6 @@ export default defineComponent({
     // ...mapGetters([
     //   "get_show_favorite_list",
     //   "get_curr_sub_menu_type",
-    //   "get_newer_standard_edition", // 1新手版 2标准版
     //   "get_theme"
     // ]),
     const get_show_favorite_list = computed(() => {
@@ -67,9 +66,6 @@ export default defineComponent({
     });
     const get_curr_sub_menu_type = computed(() => {
       return ""
-    });
-    const get_newer_standard_edition = computed(() => {
-      return PageSourceData.get_newer_standard_edition();
     });
     const get_theme = computed(() => {
       return ""
@@ -151,7 +147,7 @@ export default defineComponent({
       footer_sub_m_list,
       get_show_favorite_list,
       get_curr_sub_menu_type,
-      get_newer_standard_edition, // 1新手版 2标准版
+      standard_edition, // 1新手版 2标准版
       get_theme
     }
   }
