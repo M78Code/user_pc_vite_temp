@@ -10,10 +10,13 @@
     </div>
     <div class="sl-search">
       <div class="sl-input-content">
-        <div class="sl-icon">
+        <div class="sl-icon-left">
           <div class="search-icon"></div>
         </div>
         <input class="sl-input" placeholder="请输入联赛名">
+        <div class="sl-icon-right">
+          <div class="clear-icon"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -77,17 +80,25 @@ defineProps({
       width: 100%;
       background: var(--q-gb-t-c-6);
       border-radius: .4rem;
-      padding-left: .42rem;
-      padding-right: .2rem;
+      padding: 0 .42rem;
       display: flex;
       align-items: center;
       position: relative;
-      .sl-icon {
+      .sl-icon-left {
         position: absolute;
         left: .16rem;
         .search-icon {
           width: .18rem;
           height: .18rem;
+          background: var(--q-gb-t-c-1);
+        }
+      }
+      .sl-icon-right {
+        position: absolute;
+        right: .16rem;
+        .clear-icon {
+          width: .12rem;
+          height: .12rem;
           background: var(--q-gb-t-c-1);
         }
       }
