@@ -105,6 +105,8 @@ export default class MatchDetailCtr {
     this.details_item = 0;
     // 一键收起状态: 1.全展开 2.全收起 3.部分展开 1和3箭头向上
     this.fewer = 1;
+     // 详情玩法集第一个
+     this.first_details_item = '0';
     /* =========H5 */
   }
 
@@ -412,6 +414,15 @@ export default class MatchDetailCtr {
   */
   set_fewer(val){
     this.fewer = val
+    this.set_details_data_version()  
+  }
+  /**
+   * @description:H5详情 详情玩法集第一个
+   * @param {{*}} 
+   * @return {*}
+  */
+  set_first_details_item(val){
+    this.first_details_item = val
     this.set_details_data_version()  
   }
 }

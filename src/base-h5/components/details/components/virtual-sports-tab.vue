@@ -12,7 +12,7 @@
     <!-- 灰色间隔线 -->
     <div class="menu-third"></div>
     <!-- 玩法集 -->
-    <div class="menu-s" ref="reset_scroll_dom">111
+    <div class="menu-s" ref="reset_scroll_dom">{{data_list}}
       <div class="menu-item" v-for="(item, i) in data_list" :key="i" @click.self="selete_item(item['id'],$event)" :class="get_details_item == item['id']?'t_color':''">
         {{item.marketName}}
       </div>
@@ -32,7 +32,7 @@ import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import lodash from "lodash"
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import { MatchDetailCalss,MenuData } from "src/core";
-import { defineComponent,ref,onMounted,watch,onUnmounted } from "vue";
+import { defineComponent,ref,onMounted,watch,onUnmounted,computed } from "vue";
 export default defineComponent({
   props:[
     "virtual_match_list",
@@ -47,8 +47,11 @@ export default defineComponent({
     // 渲染的数据
     const data_list = ref([])
     //获取二级菜单ID
-    const sub_menu_type = ref(MenuData.get_current_lv_2_menu_type())
-     
+    const sub_menu_type = ref(MenuData.get_current_sub_menuid())
+   // 正在跳转详情的赛事  
+    const  get_details_item =ref( MatchDetailCalss.details_item)
+    // 详情一键收起状态:
+    const  get_fewer =ref( MatchDetailCalss.fewer) 
     let timer1_,timer_ = null
     const reset_scroll_dom = ref(null)
     const initEvent =()=>{
@@ -66,7 +69,7 @@ export default defineComponent({
       *
     */
     watch(()=>MenuData.update_time,()=>{
-      sub_menu_type.value =MenuData.get_current_lv_2_menu_type()
+      sub_menu_type.value =MenuData.get_current_sub_menuid()
     })
     onMounted(()=>{
      // 延时器
@@ -100,15 +103,15 @@ export default defineComponent({
     const change_btn=()=>{
       // 设置vuex变量值
       if(get_fewer == 1 || get_fewer == 3){
-        set_fewer(2)
+        MatchDetailCalss.set_fewer(2)
       }else{
-        set_fewer(1)
+        MatchDetailCalss.set_fewer(1)
       }
     }
     // 单击玩法集
     const selete_item =(uId,e)=>{
       // 点击的玩法是当前选中的玩法
-      if(get_details_item == uId) return false;
+      if(get_details_item.value == uId) return false;
       if(is_show_analyse){
         analyse = true
       }
@@ -156,7 +159,7 @@ export default defineComponent({
       // 虚拟体育切换玩法集,滚动条高度默认恢复为0
       $emit('virtual_play_height')
       if(get_fewer == 3){
-        set_fewer(1)
+        MatchDetailCalss.set_fewer(1)
       }
     }
 
@@ -178,26 +181,33 @@ export default defineComponent({
         let params = { sportId: sub_menu_type.value,mid: new_mid};
         api_common.get_category_list(params).then(res =>{
           if(res.code == 200 && res.data){
-            data_list = lodash.get(res, "data");
-            let first_data_item = data_list[0];
+            data_list.value = lodash.get(res, "data");
+            let first_data_item = data_list.value[0];
             if(first_data_item){
-              // 将玩法集第一个存入store，后续赛种/赛事期数跳转时做判断用
-              set_first_details_item(first_data_item.id);
-              set_details_item(first_data_item.id);
+              // 将玩法集第一个存入详情类，后续赛种/赛事期数跳转时做判断用
+             MatchDetailCalss.set_first_details_item(first_data_item.id);
+             MatchDetailCalss.set_details_item(first_data_item.id);
             }
           }
         })
       }
     }
+      //   // 历史战绩：标准赛事详情页的时候不显示,只在虚拟体育详情显示历史战绩(其中篮球不显示历史战绩)
+    const anlyse_show=computed(()=>{
+      return   GlobalAccessConfig.get_statisticsSwitch()&& route.name != 'virtual_sports' && get_detail_data.csid != 1004
+    }) 
     onUnmounted(()=>{
       OFF_TAB_BET()
       off()
-      set_fewer(1);
+      MatchDetailCalss.set_fewer(1);
       clearTimeout(timer1_)
       clearInterval(timer_);
     })
     return {
-    reset_scroll_dom,
+      reset_scroll_dom,
+      data_list,
+      get_details_item,
+      get_fewer
     }
   }
 
@@ -218,13 +228,7 @@ export default defineComponent({
   //   //   sub_menu_type: 'get_curr_sub_menu_type',
   //   //   is_show_analyse: 'get_is_show_details_analyse'
   //   // }),
-  //   // 历史战绩：标准赛事详情页的时候不显示,只在虚拟体育详情显示历史战绩(其中篮球不显示历史战绩)
-  //   anlyse_show(){
 
-
-  //     return   GlobalAccessConfig.get_statisticsSwitch()&& route.name != 'virtual_sports' && get_detail_data.csid != 1004
-  //   }
-  // },
 
   
 

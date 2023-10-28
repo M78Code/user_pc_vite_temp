@@ -421,6 +421,9 @@ export default defineComponent({
   }
 })
 </script>
+<style lang="scss">
+@import "src/base-h5/css/pages/virtual-sports.scss";
+</style>
 <style lang="scss" scoped>
 .virtual-detail {
   height: calc(var(--vh, 1vh) * 100);
