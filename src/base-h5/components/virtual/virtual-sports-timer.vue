@@ -50,7 +50,7 @@ export default defineComponent({
   },
   
   setup(props, evnet) {
-    const data = reactive({
+    const allData = reactive({
       start_second:null,
       timer_format:'',
       is_last_circle:false,
@@ -78,7 +78,7 @@ export default defineComponent({
     watch(
       () => props.mid,
       () => {
-        data.start = null;
+        allData.start = null;
         draw_timer_by_second();
       }
     );
@@ -130,7 +130,7 @@ export default defineComponent({
       let ms = Number(props.match.mgt) - get_now_server();
       let single_circle = 60 * 1000;
       let now = get_now_server();
-      if(data.start == null) data.start = now;
+      if(allData.start == null) allData.start = now;
       //最初时间(用于计算总圈数)
       let timer_key = `virtual-sports-timer`;
 
@@ -154,10 +154,10 @@ export default defineComponent({
       //剩余圈数
       let remain_circle = Math.ceil(remaining_time / single_circle);
 
-      data.is_last_circle = false;
+      allData.is_last_circle = false;
       if(remain_circle == 1){
-        data.strokeColor = true
-        data.is_last_circle = true;
+        allData.strokeColor = true
+        allData.is_last_circle = true;
       }
 
       //时钟毫秒数
@@ -176,7 +176,7 @@ export default defineComponent({
       seconds_f = String(seconds_f);
       let minutes_format = minutes.padStart(2, '0');
       let seconds_f_format = seconds_f.padStart(2, '0');
-      timer_format = `${minutes_format}'${seconds_f_format}"`;
+      allData.timer_format = `${minutes_format}'${seconds_f_format}"`;
       path_d = get_path_d(remaining_time);
       if(remaining_time < 1000){
         // #TODO emit事件
@@ -197,7 +197,7 @@ export default defineComponent({
       },10);
     };
     return {
-      ...toRefs(data),
+      ...toRefs(allData),
       to_fixed,
       get_path_d,
       get_path_background_d,

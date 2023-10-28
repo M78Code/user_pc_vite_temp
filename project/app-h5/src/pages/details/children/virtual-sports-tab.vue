@@ -12,9 +12,9 @@
     <!-- 灰色间隔线 -->
     <div class="menu-third"></div>
     <!-- 玩法集 -->
-    <div class="menu-s" ref="reset_scroll_dom">
+    <div class="menu-s" ref="reset_scroll_dom">{{data_list}}
       <div class="menu-item" v-for="(item, i) in data_list" :key="i" @click.self="selete_item(item['id'],$event)" :class="get_details_item == item['id']?'t_color':''">
-        {{item.marketName}}11
+        {{item.marketName}}
       </div>
     </div>
     <!-- 分析icon(详情页面的时候显示分析,在其他页面不显示分析按钮) -->
@@ -39,7 +39,9 @@ export default defineComponent({
     "batch" //赛马期
   ],
   name:"virtual-sports-tab",
-  setup(props){
+  setup(props,event){
+    // 复刻版tab栏菜单
+    const new_data_list = [ ]
     const route = useRoute()
     const router = useRouter()
     // 默认显示虚拟体育分析按钮
@@ -99,12 +101,12 @@ export default defineComponent({
      *@return {Undefined} undefined
      */
     const analyse_btn =()=> {
-      analyse = !analyse
+      analyse.value = !analyse
       MatchDetailCalss.set_is_show_details_analyse(!is_show_analyse)
     }
     const change_btn=()=>{
       // 设置vuex变量值
-      if(get_fewer == 1 || get_fewer == 3){
+      if(get_fewer.value == 1 || get_fewer.value == 3){
         MatchDetailCalss.set_fewer(2)
       }else{
         MatchDetailCalss.set_fewer(1)
@@ -115,7 +117,7 @@ export default defineComponent({
       // 点击的玩法是当前选中的玩法
       if(get_details_item.value == uId) return false;
       if(is_show_analyse){
-        analyse = true
+        analyse.value = true
       }
       MatchDetailCalss.set_is_show_details_analyse(false)
       //实现动态效果
@@ -159,8 +161,8 @@ export default defineComponent({
       // 点击玩法对页面吸顶tab做高度处理
       useMittEmit(MITT_TYPES.EMIT_DETAILILS_TAB_CHANGED)
       // 虚拟体育切换玩法集,滚动条高度默认恢复为0
-      $emit('virtual_play_height')
-      if(get_fewer == 3){
+      event.emit('virtual_play_height')
+      if(get_fewer.value == 3){
         MatchDetailCalss.set_fewer(1)
       }
     }
@@ -211,7 +213,8 @@ export default defineComponent({
       get_details_item,
       get_fewer,
       selete_item,
-      anlyse_show
+      anlyse_show,
+      analyse
     }
   }
 

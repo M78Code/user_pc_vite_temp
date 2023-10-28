@@ -52,7 +52,6 @@ class VirtualData {
 
   // 设置当前选中的联赛
   set_current_league (item) {
-    debugger
     this.current_league = item
   }
 
