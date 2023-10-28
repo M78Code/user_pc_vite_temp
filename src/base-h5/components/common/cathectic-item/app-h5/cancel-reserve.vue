@@ -3,8 +3,8 @@
  * @Author:
 -->
 <template>
+    <div style="display: none;">{{ BetRecordClass.bet_record_version }}</div>
     <div class="cancel-btn" @click="alertTips=true;">取消预约</div>
-    <div>{{ BetRecordClass.bet_record_version }}</div>
     <!-- 取消预约弹框 -->
     <q-dialog v-model="alertTips">
       <div class="tips-main">

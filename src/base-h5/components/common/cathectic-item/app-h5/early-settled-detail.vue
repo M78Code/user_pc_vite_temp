@@ -3,9 +3,9 @@
  * @Author:
 -->
 <template>
+  <div style="display: none;">{{ BetRecordClass.bet_record_version }}</div>
   <early-settle-tips />
   <div class="warp">
-    <div>{{ BetRecordClass.bet_record_version }}</div>
     <!-- 滑块 -->
     <q-slide-transition>
       <div v-show="detail_show" class="slider-wrap">

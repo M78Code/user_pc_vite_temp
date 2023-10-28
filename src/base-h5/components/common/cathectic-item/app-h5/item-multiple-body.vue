@@ -4,6 +4,7 @@
  * @Description: bw3新版矩形框中部
 -->
 <template>
+  <div style="display: none;">{{ BetRecordClass.bet_record_version }}</div>
   <!-- 矩形框中部 -->
   <div class="item-body yb_fontsize14">
     <div class="item-header">
@@ -45,6 +46,7 @@
 <script setup>
 import lodash from 'lodash'
 import { ref, onMounted, onUnmounted } from 'vue'
+import BetRecordClass from "src/core/bet-record/bet-record.js";
 import { t } from "src/boot/i18n.js";;
 import { project_name } from 'src/core'
 

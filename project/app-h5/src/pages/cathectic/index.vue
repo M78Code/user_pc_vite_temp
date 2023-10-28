@@ -8,7 +8,7 @@
     <div class="settle-dialog" :style="page_style">
       <div v-if="BetRecordClass.selected != 3" class="row items-center yb_fontsize16 head-top" @touchmove.prevent>
         <div class="row col items-center justify-center">
-          <p v-for="(item, index) in tabs" 
+          <p v-for="(item, index) in tabs.slice(0, 3)" 
             :key="index" 
             @click="change_record(index)" 
             :class="BetRecordClass.selected == index && 'active-p'"
@@ -18,15 +18,9 @@
       </div>
   
       <div class="content-m" ref="record_box">
-        <cathectic-item-all />
-        <!-- 未结注单(未结算、预约中、已失效) -->
-        <!-- <template v-if="BetRecordClass.selected != 3">
-          <component :is="tabs[BetRecordClass.selected].componentName"></component>
-        </template> -->
-        <!-- 已结注单 -->
-        <!-- <template>
-          <settle />
-        </template> -->
+        <!-- <cathectic-item-all /> -->
+        <!-- 未结注单(未结算、预约中、已失效)、已结算注单 -->
+        <component :is="tabs[BetRecordClass.selected].componentName"></component>
       </div>
     </div>
   </template>
@@ -65,6 +59,7 @@
     { title: i18n_t('bet_record.no_account'), componentName: shallowRef(unsettle) },
     { title: "预约中", componentName: shallowRef(preRecord) },
     { title: "已失效", componentName: shallowRef(invalid) },
+    { title: "已结算", componentName: shallowRef(settle) }
   ])
   // 锚点
   const unsettle_child = ref(null)
