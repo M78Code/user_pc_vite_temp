@@ -10,7 +10,7 @@
           <template v-if="item">
             <template v-for="(ol_item,ol_index) in item.ol">
               <!-- 左 -->
-              <div class="col border-style" v-if="lodash.get(item_data.title,'[0].otd') == ol_item.otd" :key="ol_index">
+              <div class="col border-style mg-4-bg" v-if="lodash.get(item_data.title,'[0].otd') == ol_item.otd" :key="ol_index">
                 <!-- ms就是外层的赛事级别状态mhs: 0开 2关 1封 11锁 -->
                 <!-- 开盘or锁盘 正常显示 -->
                 <template v-if="ol_item._mhs == 0 || ol_item._mhs == 11">
@@ -70,7 +70,7 @@
               </div>
 
               <!-- 右 -->
-              <div class="col" v-if="lodash.get(item_data.title,'[1].otd') == ol_item.otd" :key="ol_index">
+              <div class="col  mg-4-bg" v-if="lodash.get(item_data.title,'[1].otd') == ol_item.otd" :key="ol_index">
                 <!--  0开 2关 1封 11锁 -->
                 <!-- 开盘or锁盘 正常显示 -->
                 <template v-if="ol_item._mhs == 0 || ol_item._mhs == 11">
@@ -193,6 +193,7 @@ export default defineComponent({
   .bet-wrapper {
     border-radius: 0.08rem;
     overflow: hidden;
+    padding:0.04rem;
     .border-style{
       border-right: 1px solid var(--q-gb-bd-c-7);
     }

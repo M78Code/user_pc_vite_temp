@@ -14,7 +14,7 @@
       <div class="item-wrap">
           <div v-for="(item,index) in item_data.hl" :key="index" :class="{'bor-style':item_data.hl.length > 1 && index != item_data.hl.length-1}">
             <div class="row" v-if="(index>0||index==0) && (item._hs!=2)">
-              <div class="col">
+              <div class="col mg-4-bg">
                 <template v-for="(ol_item,ol_index) in item.ol">
                   <div
                       v-if="lodash.get(item_data.title,'[0].otd') == ol_item.otd"
@@ -91,7 +91,7 @@
                   </div>
                 </template>
               </div>
-              <div class="col">
+              <div class="col mg-4-bg">
                 <template v-for="(ol_item,ol_index) in item.ol">
                   <div
                       v-if="lodash.get(item_data.title,'[1].otd') == ol_item.otd"
@@ -168,7 +168,7 @@
                   </div>
                 </template>
               </div>
-              <div v-if="item_data.title.length > 2" class="col">
+              <div v-if="item_data.title.length > 2" class="col mg-4-bg">
                 <template v-for="(ol_item,ol_index) in item.ol">
                   <div
                       v-if="lodash.get(item_data.title,'[2].otd') == ol_item.otd"
@@ -303,6 +303,7 @@ export default defineComponent({
   height: auto;
   border-radius: 0.03rem 0.03rem 0.03rem 0.03rem;
   overflow: hidden;
+  padding:0.04rem;
 }
 
 .bor-style {
