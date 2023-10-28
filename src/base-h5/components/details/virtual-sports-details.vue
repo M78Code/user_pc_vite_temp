@@ -58,7 +58,7 @@ import VSport from 'src/base-h5/utils/vsport/vsport.js';
 import lodash from "lodash";
 import { useRouter, useRoute } from "vue-router";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
-
+import { MatchDetailCalss,MenuData } from "src/core";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
 export default defineComponent({
   name: "virtual_sports_details",
@@ -86,13 +86,23 @@ export default defineComponent({
       // 默认不刷新
       refreshing:false,
     });
-
+    const is_show_analyse =  ref(MatchDetailCalss.is_show_details_analyse)
+    const matchid =  ref(MatchDetailCalss.get_goto_detail_matchid)
+    const get_current_gotodetail_match =  ref(MatchDetailCalss.current_gotodetail_match)
+    watch(
+      () => MatchDetailCalss.details_data_version.version,
+      (val) => {
+        if (val) {
+          is_show_analyse.value = MatchDetailCalss.is_show_details_analyse
+          matchid.value = MatchDetailCalss.get_goto_detail_matchid
+          get_current_gotodetail_match.value = MatchDetailCalss.current_gotodetail_match
+        }
+      },
+      { deep: true }
+  );
     // #TODO VUEX
     // computed: {
     //   ...mapGetters({
-    //     is_show_analyse: 'get_is_show_details_analyse',
-    //     matchid: "get_goto_detail_matchid",
-    //     get_current_gotodetail_match:"get_current_gotodetail_match",
     //     sub_menuid: 'get_current_sub_menuid',
     //     sub_menu_type: 'get_curr_sub_menu_type',
     //     current_league: 'get_current_league',
@@ -136,7 +146,7 @@ export default defineComponent({
       mid = mid_;
       if(mid_) set_goto_detail_matchid(mid_);
       let parma = {
-        mid: matchid || mid_,
+        mid: matchid.value || mid_,
       }
       api_v_sports.get_virtual_match_detail(parma).then(res => {
         let code = lodash.get(res,'code');

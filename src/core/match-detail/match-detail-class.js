@@ -92,7 +92,15 @@ export default class MatchDetailCtr {
     this.details_data_cache = {} // 玩法集对应玩法缓存数据
     this.details_data_version = reactive({
       version:'111'
-    })
+    });
+    
+    /* =========H5 */
+    // H5是否显示详情页的统计页面
+    this.is_show_details_analyse =false;
+    // H5赛事id
+    this.get_goto_detail_matchid = null;
+    //正在跳转详情的赛事
+    this.current_gotodetail_match={};
   }
 
   // =============H5获取/设置数据==============
