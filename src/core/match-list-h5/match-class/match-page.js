@@ -11,6 +11,7 @@ import MatchListParams from '../composables/match-list-params'
 import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, i18n_t, UserCtr, MenuData, useMittEmit, MITT_TYPES, utils } from 'src/core'
 import { nextTick } from "vue";
 import MatchMeta from './match-meta'
+import { get_now_server } from 'src/core/utils/module/other.js'
 
 // import MatchDataBase from "src/core/data-warehouse/match-ctr/match-ctr.js"
 /** TODO临时放置
@@ -901,7 +902,7 @@ class MatchPage {
     let delete_boxing_match = () => {
       let c_match = MatchDataBaseH5.get_quick_mid_obj(match_id);
       if (c_match && c_match.csid == 12) {
-        let server_now = _this.get_now_server();
+        let server_now = get_now_server();
         let now_sub = Number(c_match.mgt) - server_now;
         if (now_sub <= 0) {
           delete_ended_match();

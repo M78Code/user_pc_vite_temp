@@ -64,12 +64,10 @@
       >
         <!-- 比分和视频icon -->
         <div class="score-wrap">
-          <div class="score"
-            v-if="match_item.mmp == 'INGAME' && (match_item.match_status > 0 || show_basketball_score)">
+          <div class="score" v-if="match_item.mmp == 'INGAME' && (match_item.match_status > 0 || show_basketball_score)">
             {{match_item.home}}
           </div>
-          <div class="score"
-            v-if="match_item.mmp == 'INGAME' && (match_item.match_status > 0 || show_basketball_score)">
+          <div class="score" v-if="match_item.mmp == 'INGAME' && (match_item.match_status > 0 || show_basketball_score)">
             {{match_item.away}}
           </div>
           <!-- 视频icon -->
@@ -167,9 +165,13 @@ import odd_column_item from "src/base-h5/components/match-list/components/odd-co
 import {  PageSourceData  } from "src/core/index.js";
 import {MenuData,compute_img_url } from "src/core/index.js";
 import lodash from "lodash";
-import { standard_edition } from 'src/base-h5/mixin/userctr.js'
+import VirtualVideo from 'src/core/match-list-h5/virtual-sports/virtual-video.js'
+import { standard_edition, theme } from 'src/base-h5/mixin/userctr.js'
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
+
+import 'src/base-h5/css/pages/virtual-sports-match-item.scss'
+
 export default defineComponent({
   name: "virtual-sports-match-item",
   // #TODO MIXINS
@@ -190,15 +192,13 @@ export default defineComponent({
 
 
   setup(props, evnet) {
-    const { match_item, match_selected_i, other_status } = toRefs(props);
-    const data = reactive({
-      // 事件集合
-      emitters: [],
+    const { match_selected_i, other_status } = toRefs(props);
+    const state = reactive({
       curr_match_map_time:{},
-      vsports:null,
       standard_odd_status:0,
       is_basketball_score:false,
     })
+    let emitters = []
     // #TODO EMIT
       // created(){
       //   useMittOn(MITT_TYPES.EMIT_VIDEO_PROCESS_DATA_GOT,VirtualVideo.get_match_video_process);
@@ -255,9 +255,9 @@ export default defineComponent({
         ol_list = hp_i.hl[0].ol;
       }
       else{
-        if([1,4].includes(+match_item.csid)){
-          if(match_item.hps && match_item.hps[hp_i_i]){
-            if(match_item.hps[hp_i_i].hpid == 1){
+        if([1,4].includes(+props.match_item.csid)){
+          if(props.match_item.hps && props.match_item.hps[hp_i_i]){
+            if(props.match_item.hps[hp_i_i].hpid == 1){
               return 3;
             }
           }
@@ -273,15 +273,15 @@ export default defineComponent({
     const get_hp_list = (type) => {
       if(type == 0){
         let hps = [];
-        if(match_item && match_item.hps){
-          hps = match_item.hps.slice(0,3);
+        if(props.match_item && props.match_item.hps){
+          hps = props.match_item.hps.slice(0,3);
         }
         return hps;
       }
       else if(type == 1){
         let hps = [];
-        if(match_item && match_item.hps && match_item.hps.length > 3){
-          hps = match_item.hps.slice(3,6);
+        if(props.match_item && props.match_item.hps && props.match_item.hps.length > 3){
+          hps = props.match_item.hps.slice(3,6);
         }
         return hps;
       }
@@ -514,21 +514,21 @@ export default defineComponent({
     };
     /**
      *@description 虚拟体育点击列表小方块投注
-     *@param {Object} match_item 最外层赛事数据
+     *@param {Object} props.match_item 最外层赛事数据
      *@param {Object} ol_item 里层ol数据
      *@return {Undefined} undefined
      */
     const item_click4 = (match_item,ol_item) => {
       //对应没有赔率值或者欧赔小于101000,或者虚拟体育赛事状态不为0
-      if (match_item.mhs != 0 || !ol_item.ov || ol_item.ov < 101000 || match_item.match_status){
+      if (props.match_item.mhs != 0 || !ol_item.ov || ol_item.ov < 101000 || props.match_item.match_status){
         return;
       }
 
-      let hl_item = get_hl_item(match_item)
+      let hl_item = get_hl_item(props.match_item)
       if (!hl_item) return;
       ol_item.id_ = lodash.get(hl_item,'hl[0].hn') ?
-        `${match_item.mid}_${hl_item.chpid || hl_item.hpid}_${ol_item.ot}_${hl_item.hl[0].hn}` : ol_item.oid;
-      set_bet_obj_config(match_item, hl_item, ol_item);
+        `${props.match_item.mid}_${hl_item.chpid || hl_item.hpid}_${ol_item.ot}_${hl_item.hl[0].hn}` : ol_item.oid;
+      set_bet_obj_config(props.match_item, hl_item, ol_item);
     }
 
     // #TODO VUEX GETEERES
@@ -536,10 +536,7 @@ export default defineComponent({
     // ...mapGetters({
     //   footer_sub_menu_id:"get_footer_sub_menu_id",
     //   get_video_process_data:"get_video_process_data",
-    //   get_n_s_changed_loaded:"get_n_s_changed_loaded",
     //   get_curr_sub_menu_type:"get_curr_sub_menu_type",
-    //   get_theme:'get_theme',
-    //   get_access_config,
     // }),
     const footer_sub_menu_id = computed(() => {
       return ""
@@ -549,15 +546,6 @@ export default defineComponent({
     });
     const get_curr_sub_menu_type = computed(() => {
       return MenuData.get_curr_sub_menu_type();
-    });
-    const get_theme = computed(() => {
-      return ""
-    });
-    /**
-     * @Description 获取全局配置开关
-     * @param {undefined} undefined
-     */
-     const GlobalAccessConfig = computed(() => {
     });
     const show_debugger_line = computed(() => {
       let wsl = sessionStorage.getItem('wsl');
@@ -570,7 +558,7 @@ export default defineComponent({
         flag = true;
       }
       if(get_curr_sub_menu_type == 1004){
-        if(match_item.mmp == "INGAME"){
+        if(props.match_item.mmp == "INGAME"){
           flag = true;
         }
       }
@@ -583,22 +571,17 @@ export default defineComponent({
       }
     );
     onUnmounted(() => {
-      if(vsports){
-        vsports.destroy();
-      }
       // #TODO EMIT
       emitters.map((x) => x())
     });
     return {
-      ...toRefs(data),
+      ...toRefs(state),
       lodash,
       standard_edition,
       footer_sub_menu_id,
       get_video_process_data,
-      get_n_s_changed_loaded,
       get_curr_sub_menu_type,
-      get_theme,
-      get_access_config,
+      theme,
       pre_counting_end_handle,
       get_hl_hs,
       get_ol_length,
@@ -612,6 +595,7 @@ export default defineComponent({
       goto_details,
       xu_ni_ty_standard_odd_status,
       item_click4,
+      GlobalAccessConfig,
       show_debugger_line,
       show_basketball_score,
       compute_img_url

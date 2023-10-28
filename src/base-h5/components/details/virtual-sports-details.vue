@@ -54,7 +54,7 @@ import virtual_sports_category from "src/base-h5/components/details/children/vir
 import virtual_match_statistic from 'src/base-h5/components/details/components/virtual_match_statistic.vue'
 import virtual_sports_stage from 'src/project/pages/virtual/virtual_sports_part/virtual_sports_stage.vue'
 import VSport from 'src/base-h5/utils/vsport/vsport.js';
-
+import VirtualVideo from 'src/core/match-list-h5/virtual-sports/virtual-video.js'
 import lodash from "lodash";
 import { useRouter, useRoute } from "vue-router";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
@@ -155,7 +155,7 @@ export default defineComponent({
           let now_se = get_now_server();
           let mgt_n = Number(data.mgt);
           if(now_se > mgt_n){
-            get_video_process_by_api(() => {
+            VirtualVideo.get_video_process_by_api(() => {
               init_video_play_status(video_process_data);
             });
           }
@@ -321,7 +321,7 @@ export default defineComponent({
         // 如果是滚球状态,并且是列表的第一场赛事,进入详情页要播放视频
         if(current_match.mmp == "INGAME" && route.query.i == 0){
           // 播放视频
-          get_video_process_by_api(() => {
+          VirtualVideo.get_video_process_by_api(() => {
             init_video_play_status(video_process_data);
           });
         }else{
@@ -330,7 +330,7 @@ export default defineComponent({
         }
       }else{
         // 比赛已开始, 获取视频接口
-        get_video_process_by_api(() => {
+        VirtualVideo.get_video_process_by_api(() => {
           init_video_play_status(video_process_data);
         });
       }

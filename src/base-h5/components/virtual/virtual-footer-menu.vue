@@ -1,9 +1,9 @@
 <template>
   <div class="virtual-footer-menu black2" v-if="standard_edition == 1">
     <!-- 刷新按钮 -->
-    <!-- <div class="refesh-wrap yb-flex-center" @click="set_loading">
+    <div class="refesh-wrap yb-flex-center" @click="set_loading">
       <img :class="{rotate:is_refresh}" src="image/bw3/svg/virtual-sports/refresh.svg">
-    </div> -->
+    </div>
 
     <!--玩法菜单-->
     <div class="sub-m-menu flex justify-around items-center">
@@ -32,7 +32,8 @@
 // #TODO VUEX 
 // import { mapGetters, mapMutations} from "vuex";
 import { standard_edition } from 'src/base-h5/mixin/userctr.js'
-import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
+import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
+import 'src/base-h5/css/pages/virtual-footer-menu.scss'
 export default defineComponent({
   name: "virtual_footer_menu",
   setup(props, evnet) {

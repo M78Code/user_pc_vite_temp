@@ -30,10 +30,8 @@
       </div>
       <!--虚拟体育-->
       <virtual-sports
-        :params="virtual_sports_params"
         :current_sub_menu="current_sub_menu"
         :is_user_refresh='refreshing'
-        :menu_list="current_sub_menu.subList ? current_sub_menu.subList : []"
         :v_match_router_ente="v_match_router_ente"
         :v_menu_changed="v_menu_changed">
       </virtual-sports>
@@ -41,10 +39,10 @@
     </div>
 
     <!-- 回到顶部按钮组件 -->
-    <!-- <scroll-top v-show="!right_menu_show && list_scroll_top > 0" ref="scroll_top" :list_scroll_top="list_scroll_top" @back-top="back_top" /> -->
+    <scroll-top v-show="!right_menu_show && list_scroll_top > 0" ref="scroll_top" :list_scroll_top="list_scroll_top" @back-top="back_top" />
 
     <!-- 简版 底部菜单 -->
-    <!-- <virtual-footer-menu v-show="!right_menu_show" /> -->
+    <virtual-footer-menu v-show="!right_menu_show" />
 
   </div>
 </template>
@@ -58,27 +56,21 @@ import { i18n_t, MenuData } from 'src/core/'
 import base_data from "src/core/menu-h5/menu-data-class.js";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { theme } from 'src/base-h5/mixin/userctr.js'
-
+import VirtualData from 'src/core/match-list-h5/virtual-sports/virtual-data.js'
 // 回到顶部
-// import scrollTop from "src/project/components/record_scroll/scroll_top";
+import scrollTop from "src/base-h5/components/common/record-scroll/scroll-top.vue";
 // 设置菜单
 // import setMenu from "src/project/components/common/set_menu.vue"    
 // 虚拟体育
 import virtualSports from "src/base-h5/components/virtual/virtual-sports.vue";
 // 底部菜单
-// import virtualFooterMenu from 'src/base-h5/components/virtual/virtual-sports-part/virtual-footer-menu.vue'
+import virtualFooterMenu from 'src/base-h5/components/virtual/virtual-footer-menu.vue'
 
 
 // 当前选中的虚拟体育菜单(虚拟足球 赛马 赛狗 等)
 const current_sub_menu = ref({})
-//虚拟体育赛事列表接口请求参数
-const virtual_sports_params = ref({
-  csid:''
-})
 //虚拟体育菜单选中项下标
 const sub_menu_i = ref(0)
-//虚拟体育菜单
-const menu_list = ref([])
 const sub_menu_list = ref([])
 //详情页返回的菜单id
 const prev_sub_menu_id = ref('')
@@ -88,6 +80,7 @@ const get_curr_sub_menu_type = ref('')
 const get_virtual_current_sub_menuid = ref('')
 // 默认不刷新
 const refreshing = ref(false)
+const right_menu_show = ref(false)
 // 虚拟体育菜单切换标志
 const v_menu_changed = ref(0)
 //进入虚拟体育赛事列表标志
@@ -163,12 +156,9 @@ const vir_refresh = () => {
 const virtual_menu_changed = (tab, i) => {
   sub_menu_i.value = i;
   current_sub_menu.value = tab;
-  virtual_sports_params.csid = current_sub_menu.value.menuId;
-
   // 足蓝跳转到其他虚拟赛种前， 给状态一个标识
   v_menu_changed.value = ([1001, 1004].includes(get_curr_sub_menu_type) ? 'zu_lan_' : '') + Math.random();
-
-  // set_virtual_current_sub_menuid(current_sub_menu.value.menuId);
+  VirtualData.set_current_sub_menu(current_sub_menu.value)
   // set_curr_sub_menu_type(current_sub_menu.value.menuType || current_sub_menu.value.menuId)
 }
 const get_sub_menu_c_index = () => {
@@ -216,12 +206,14 @@ const virtual_menus_loaded = (menues) => {
     useMittEmit(MITT_TYPES.EMIT_VIRTUAL_MATCH_LOADING, false);
     return;
   }
-  virtual_sports_params.csid = menues[sub_menu_i.value].menuId;
+  VirtualData.set_current_sub_menu(menues[sub_menu_i.value])
   if(menues.length){
     // set_virtual_current_sub_menuid(menues[sub_menu_i].menuId);
     // set_curr_sub_menu_type(menues[sub_menu_i].menuId);
   }
   current_sub_menu.value = menues[sub_menu_i.value];
+  VirtualData.set_menu_list(current_sub_menu.value.subList)
+
 }
 
 const clear_timer = () => {

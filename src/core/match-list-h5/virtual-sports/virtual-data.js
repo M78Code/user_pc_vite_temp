@@ -2,20 +2,38 @@
 /**
  * @description 虚拟体育数据处理
  */
-
+import { ref } from 'vue'
+import lodash from 'lodash'
 import VirtualVideo from './virtual-video'
+import { api_virtual, api_common } from "src/api/index.js";
+import { menu_lv2 } from 'src/base-h5/mixin/menu.js'
+import { useMittEmit, MITT_TYPES } from  "src/core/mitt"
+import { get_now_server } from 'src/core/utils/module/other.js'
 
 class VirtualData {
   constructor () {
+    // 虚拟体育菜单
     this.menu_list = []
+    // 虚拟体育菜单选中项下标
+    this.sub_menu_i = 0
     this.tab_item_i = 0
+    // 当前选中的菜单
+    this.current_sub_menu = {}
+    // 当前选中的联赛
+    this.current_league = {}
+    // 当前选中的批次
+    this.current_batch = {}
+    //上次请求的虚拟体育赛事列表
+    this.prev_v_sports = {},
     this.ol_dictionary = []
+    // 批次(足球轮列表或赛马期列表等)
     this.no_title_list = []
+    // 当前赛事列表
     this.match_list_by_no = []
     this.no_virtual_match = false
     // 虚拟赛事列表
     this.virtual_match_list = []
-    // 自动改变批次到第1个
+    // 是否为用户手动切换联赛
     this.is_user_switch_league = 0
     // 自动改变批次到第1个
     this.auto_change_tab_i_first = 0
@@ -23,16 +41,37 @@ class VirtualData {
     this.virtual_m_list_data_cache_key = 'virtual_m_list_data_cache_key'
   }
 
+  // 设置虚拟体育菜单
+  set_menu_list (menu_list) {
+    this.menu_list = menu_list
+  }
+
+  // 设置当前选中的联赛
+  set_current_league (item) {
+    this.current_league = item
+  }
+
+  // 设置当前选中的联赛
+  set_current_sub_menu (current_sub_menu) {
+    this.current_sub_menu = current_sub_menu
+  }
+
+  // 设置当前选中的批次
+  set_current_batch (item) {
+    this.current_batch = item
+  }
+
   /**
    * 生成赛事请求接口参数
    */
   param_generate () {
     let params = null;
+    const menuId = lodash.get(this.current_sub_menu, 'menuId', '')
     if(this.menu_list && this.menu_list[this.tab_item_i]){
-      let league = this.menu_list[tab_item_i];
+      let league = this.menu_list[this.tab_item_i];
       params = {
         tid: league.field1,
-        csid: propsParams.csid
+        csid: menuId
       };
     }
     return params;
@@ -50,9 +89,9 @@ class VirtualData {
    * @description: 附加初始化赛果result字段
    * @return {String}
    */
-  append_result_fields () {
-    if(this.no_title_list && this.no_title_list.length){
-      this.no_title_list.forEach(no_title => {
+  append_result_fields (list) {
+    if(list && list.length){
+      list.forEach(no_title => {
         if(!no_title.matchs || !no_title.matchs.length) { return }
         no_title.matchs.forEach(match => {
 
@@ -71,7 +110,7 @@ class VirtualData {
         });
       });
     }
-    return this.no_title_list
+    return list
   }
   /**
    * 获取本地缓存虚拟体育赛事列表
@@ -106,7 +145,7 @@ class VirtualData {
    */
   get_virtual_sport_local (is_user_clicked) {
     VirtualVideo.gen_video_api_cache_key();
-    let params = param_generate();
+    let params = this.param_generate();
     if(!params) {
       this.virtual_data_loading= false;
       this.no_match_list_handle();
@@ -119,15 +158,14 @@ class VirtualData {
       this.no_title_list = [];
       this.virtual_data_loading= true;
     }
-    api_v_sports.get_virtual_sport_list(params).then(res => {
+    api_virtual.get_virtual_sport_list(params).then(res => {
       this.virtual_data_loading= false;
       useMittEmit(MITT_TYPES.EMIT_VIRTUAL_MATCH_LOADING,false);
       useMittEmit(MITT_TYPES.EMIT_IS_FIRST_LOADED);
       useMittEmit(MITT_TYPES.EMIT_MATCH_LIST_DATA_TAKED);
-
       if(res.code == 200 && res.data && res.data.length){
-        this.virtual_match_list = append_result_fields(res.data);
-        check_next_no_start_time();
+        this.virtual_match_list = this.append_result_fields(res.data);
+        // this.check_next_no_start_time();
         this.no_title_list = this.virtual_match_list.map(m => {
           let {no,mmp,batchNo} = m;
           m.matchs.forEach(match_item => {
@@ -149,13 +187,13 @@ class VirtualData {
         if(is_user_clicked){
           this.is_user_switch_league = Math.random();
         }
-        get_ol_dictionary();
+        this.get_ol_dictionary();
         //赛马赛狗赛 摩托车事初始化
-        if([1002,1011,1010,1009].includes(this.sub_menu_type)){
+        if([1002,1011,1010,1009].includes(menu_lv2.value)){
           let found = res.data[0];
           if(found){
             let c_match = this.append_init_fields(found.matchs[0]);
-            let server_now = this.get_now_server();
+            let server_now = get_now_server();
             c_match.start_now_sub = Number(c_match.mgt) - server_now;
             this.current_match = c_match;
             this.set_current_mid(this.current_match.mid);
@@ -173,11 +211,12 @@ class VirtualData {
       }
       else{
         if(!this.current_league) return;
-        let p_key = `${this.sub_menu_type}-${this.current_league.menuId}`;
-        let match_list_map = _.cloneDeep(this.get_prev_v_sports);
+        const menuId = lodash.get(this.current_sub_menu, 'menuId', '')
+        let p_key = `${menuId}-${this.current_league.menuId}`;
+        let match_list_map = lodash.cloneDeep(this.prev_v_sports);
         if(!match_list_map) match_list_map = {};
-        match_list_map[p_key] = _.cloneDeep(this.virtual_match_list);
-        this.set_prev_v_sports(match_list_map);
+        match_list_map[p_key] = lodash.cloneDeep(this.virtual_match_list);
+        this.prev_v_sports = match_list_map;
         this.no_virtual_match = false;
 
         //选中上次选择的期
@@ -223,7 +262,7 @@ class VirtualData {
   v_basket_ball_update_n(){
     let params = this.param_generate();
     if(!params) return;
-    api_v_sports.get_virtual_sport_list(params).then(res => {
+    api_virtual.get_virtual_sport_list(params).then(res => {
       if(res.code == 200 && res.data && res.data.length){
         this.virtual_match_list = this.append_result_fields(res.data);
 
@@ -264,11 +303,11 @@ class VirtualData {
       let params = this.param_generate();
       if(!params) return;
       if(this.current_batch.mmp == 'PREGAME' && this.no_title_list.length == 2) return
-      api_v_sports.get_virtual_sport_list(params).then(res => {
+      api_virtual.get_virtual_sport_list(params).then(res => {
         if(res.code == 200 && res.data && res.data.length){
           this.virtual_match_list = this.append_result_fields(res.data);
           if(this.current_match.mmp == "INGAME" && res.data.length == 1 && res.data[0].mmp == "PREGAME"){
-            this.$root.$emit(this.emit_cmd.EMIT_FORCE_END_PLAYING_BASKETBALL);
+            useMittEmit(MITT_TYPES.EMIT_FORCE_END_PLAYING_BASKETBALL);
             return;
           }
           this.no_title_list = this.virtual_match_list.map(m => {
@@ -347,17 +386,17 @@ class VirtualData {
       this.no_match_list_handle();
       return;
     }
-
-    let p_key = `${this.sub_menu_type}-${this.current_league.menuId}`;
+    const menuId = lodash.get(this.current_sub_menu, 'menuId', '')
+    let p_key = `${menuId}-${this.current_league.menuId}`;
     //赛事列表
-    let match_list = _.cloneDeep(this.get_prev_v_sports[p_key]);
+    let match_list = lodash.cloneDeep(this.prev_v_sports[p_key]);
     if(match_list){
       match_list.forEach(m => {
         m.mhs = 11;
       });
       this.virtual_match_list = match_list;
       this.sub_nav_changed({
-        nav:_.cloneDeep(this.virtual_match_list[0]),
+        nav:lodash.cloneDeep(this.virtual_match_list[0]),
         i:0
       });
     }
@@ -366,14 +405,14 @@ class VirtualData {
       return;
     }
     //当前赛事
-    let match = _.cloneDeep(this.get_prev_v_sports_params[p_key]);
+    let match = lodash.cloneDeep(this.get_prev_v_sports_params[p_key]);
     if(match){
       match.match_status = 2;
       this.is_video_playing = false;
-      this.current_match = _.cloneDeep(match);
+      this.current_match = lodash.cloneDeep(match);
       if(match_list && match_list.length){
         let params = {mids:match.mid};
-        api_v_sports.get_virtual_match_result(params).then(res => {
+        api_virtual.get_virtual_match_result(params).then(res => {
           this.skeleton = false
           if(res.code == 200){
             let result_list = res.data;
@@ -400,7 +439,7 @@ class VirtualData {
   check_next_no_start_time () {
     if(this.virtual_match_list && this.virtual_match_list.length > 1){
       let mgt = Number(this.virtual_match_list[1].matchs[0].mgt);
-      let now = this.get_now_server();
+      let now = get_now_server();
       let sub = mgt - now;
       //下一轮开赛
       if(sub <= 0){
@@ -411,7 +450,7 @@ class VirtualData {
       else{
         clearTimeout(this.timer_super5);
         this.timer_super5 = setTimeout(() => {
-          check_next_no_start_time();
+          this.check_next_no_start_time();
         },1000);
       }
     }
@@ -469,7 +508,7 @@ class VirtualData {
         totalTime = totalTime * 1;
         let mgt = match.mgt * 1;
         let future = mgt + totalTime * 1000;
-        let now_server = this.get_now_server();
+        let now_server = get_now_server();
         if(future - now_server < 1000){
           this.update_no_title_list();
         }
@@ -489,7 +528,7 @@ class VirtualData {
       api_common.get_Video_MaxTime(params).then(res => {
         let res_data = null;
         if (res.code == 200) {
-          res_data = _.get(res,'data');
+          res_data = lodash.get(res,'data');
           let totalTime = res_data[params.tid];
           if(totalTime){
             if(!this.video_pro_maxtime){
@@ -512,7 +551,7 @@ class VirtualData {
         let first_m_item = first_t_item.match[0];
         if(first_m_item){
           let mgt = first_m_item.mgt * 1;
-          let time_ = this.get_now_server() - mgt;
+          let time_ = get_now_server() - mgt;
           if(time_ > -1){
             this.checking_first_delete_batchNo = first_m_item.batchNo;
             invok_video_process(first_m_item);
@@ -535,7 +574,7 @@ class VirtualData {
   update_no_title_list(){
     let params = this.param_generate();
     if(!params) return;
-    api_v_sports.get_virtual_sport_list(params).then(res => {
+    api_virtual.get_virtual_sport_list(params).then(res => {
       if(res.code == 200 && res.data && res.data.length){
         let n_title_list = res.data.map(res_item => {
           let {no,mmp,batchNo} = res_item;
@@ -553,7 +592,7 @@ class VirtualData {
           if(this.current_match.mmp == "INGAME"){
             if(n_title_list.length == 1 && this.no_title_list.length > 1){
               let f_b_no = n_title_list[0].batchNo;
-              let found_i = _.findIndex(this.no_title_list,{batchNo:f_b_no});
+              let found_i = lodash.findIndex(this.no_title_list,{batchNo:f_b_no});
               if(found_i > -1){
                 return;
               }
@@ -576,7 +615,7 @@ class VirtualData {
    */
   get_match_result(mid_str,callback){
     let params = {mids:mid_str};
-    api_v_sports.get_virtual_match_result(params).then(res => {
+    api_virtual.get_virtual_match_result(params).then(res => {
       this.skeleton = false
       if(res.code == 200){
         let match_list = res.data;
@@ -585,11 +624,12 @@ class VirtualData {
           this.append_match_result(match_list,this.match_list_by_no);
 
           //赛事列表
-          let cache_dict = _.cloneDeep(this.get_prev_v_sports);
-          let p_key = `${this.sub_menu_type}-${this.current_league.menuId}`;
-          cache_dict[p_key] = _.cloneDeep(this.virtual_match_list);
-          this.set_prev_v_sports(cache_dict);
-          this.$root.$emit(this.emit_cmd.EMIT_MATCH_RESULT_DATA_LOADED,match_list);
+          let cache_dict = lodash.cloneDeep(this.prev_v_sports);
+          const menuId = lodash.get(this.current_sub_menu, 'menuId', '')
+          let p_key = `${menuId}-${this.current_league.menuId}`;
+          cache_dict[p_key] = lodash.cloneDeep(this.virtual_match_list);
+          this.prev_v_sports = cache_dict;
+          useMittEmit(MITT_TYPES.EMIT_MATCH_RESULT_DATA_LOADED,match_list);
         }
       }
       callback()
@@ -622,16 +662,16 @@ class VirtualData {
   sub_nav_changed(params){
     if(!params || !params.nav) return;
     let data = params.nav;
-    let dom_stage = this.$refs.virtual_sports_stage
+    // let dom_stage = this.$refs.virtual_sports_stage
     this.checking_first_delete_batchNo = '';
     this.tab_league_i = params.i;
-    if(dom_stage){
-      dom_stage.user_destroy_resource();
-    }
-    this.gen_video_api_cache_key();
-    this.set_current_batch(_.cloneDeep(data));
-    if(this.sub_menu_type == 1004){
-      this.$root.$emit(this.emit_cmd.EMIT_XU_NI_TY_STANDARD_ODD_STATUS, 0)
+    // if(dom_stage){
+    //   dom_stage.user_destroy_resource();
+    // }
+    VirtualVideo.gen_video_api_cache_key();
+    this.set_current_batch(lodash.cloneDeep(data));
+    if(menu_lv2.value == 1004){
+      useMittEmit(MITT_TYPES.EMIT_XU_NI_TY_STANDARD_ODD_STATUS,0);
     }
     let found = this.virtual_match_list.filter(vm => {
       let r = false;
@@ -649,16 +689,16 @@ class VirtualData {
         });
         if(this.match_list_by_no.length){
           this.current_match = this.match_list_by_no[0];
-          let server_now = this.get_now_server();
+          let server_now = get_now_server();
           this.current_match.start_now_sub = Number(this.current_match.mgt) - server_now;
-          if(this.sub_menu_type == 1004){
+          if(menu_lv2.value == 1004){
             if(this.current_match.mmp == "PREGAME"){
-              this.get_video_process_by_api();
+              VirtualVideo.get_video_process_by_api();
             }
             //篮球滚球开赛后9秒,获取视频接口
             else if(this.current_match.mmp == "INGAME"){
               if(this.current_match.start_now_sub <= -(9 * 1000)){
-                this.get_video_process_by_api();
+                VirtualVideo.get_video_process_by_api();
                 this.is_video_playing = true;
               }
               this.get_score_basket_ball();
@@ -667,7 +707,7 @@ class VirtualData {
           else{
             // 比赛已开始, 获取视频接口
             if(this.current_match.start_now_sub <= 0){
-              this.get_video_process_by_api();
+              VirtualVideo.get_video_process_by_api();
             }
           }
           this.current_match_id = this.match_list_by_no[0].mid;
@@ -689,7 +729,7 @@ class VirtualData {
   get_score_by_api(){
     let mid_str = this.match_list_by_no.map(match => match.mid).join(',');
     if(!mid_str) return;
-    api_v_sports.get_v_match_score_api({mids:mid_str}).then(res => {
+    api_virtual.get_v_match_score_api({mids:mid_str}).then(res => {
       if(res.code == 200){
         let score_dict = res.data;
         if(!res.data || !Object.keys(res.data).length){
@@ -737,4 +777,7 @@ class VirtualData {
   }
 }
 
-export default new VirtualData()
+// 暂时先整体响应式
+const VirtualDataRef = ref(new VirtualData())
+
+export default VirtualDataRef.value

@@ -40,9 +40,7 @@
 <script>
 import { api_virtual } from "src/api/index.js";
 import noData from "src/base-h5/components/common/no-data.vue";
-
-// #TODO VUEX 
-// import {mapGetters} from "vuex";
+import 'src/base-h5/css/pages/virtual-group-matches.scss'
 
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 export default defineComponent({

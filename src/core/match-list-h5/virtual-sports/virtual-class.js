@@ -1,9 +1,10 @@
-import { resolve } from "licia/Promise";
-import { reject } from "lodash";
 
 /**
  * @description 虚拟体育类
  */
+
+import PageSourceData from "src/core/page-source/page-source.js";
+
 class VirtualClass {
   constructor() {
     // 消费开关
@@ -74,8 +75,8 @@ class VirtualClass {
   upd_current_time() {
     if (this.sport_data && Vue) {
       let mgt = Number(this.sport_data.mgt);
-      let remote_time = Number(Vue.get_local_server_time.server_time);
-      let local_time = Number(Vue.get_local_server_time.local_time_init);
+      let remote_time = Number(PageSourceData.init_time.server_time);
+      let local_time = Number(PageSourceData.init_time.local_time);
       this.current_time = (remote_time + (new Date().getTime() - local_time) - mgt);
     }
   }
