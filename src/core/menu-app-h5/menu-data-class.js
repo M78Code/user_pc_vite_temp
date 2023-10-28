@@ -64,6 +64,7 @@ class MenuData {
     })
     this.menu_list = menu_list
     this.set_current_lv1_menu(2)
+   
   }
 
   // 根据菜单id获取下级菜单id 二级菜单
@@ -672,7 +673,8 @@ class MenuData {
    */
   set_current_lv1_menu(lv1_mi) {
     this.current_lv_1_menu_mi.value = lv1_mi  
-    this.update();
+    this.get_menu_lvmi_list(lv1_mi)
+    // this.update();
   }
   /**
    * 选中二级menu
