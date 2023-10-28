@@ -73,18 +73,8 @@ const is_first = ref(true)
 let show_favorite_list = ref('')
 
 onMounted(() => {
-  emitters.value = {
-    emitter_1: useMittOn(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA, init_match_callback).off
-  };
+  set_menu_mi_change_get_api_data()
 })
-
-/**
- * @description 元数据请求回来 初始化赛事加载
- */
-const init_match_callback = () => {
-  if (route.name !== 'matchList') return
-  nextTick(() => { set_menu_lv2({ mi: '1012' }) })
-}
 
 /**
  * 二级菜单事件
@@ -94,20 +84,21 @@ const init_match_callback = () => {
   if (item.mi == MenuData.current_lv_2_menu_mi) return
   MenuData.set_current_lv_2_menu_mi(item)
   // 今日 / 滚球/ 冠军 没有 三级
-  if([1,2,400].includes(MenuData.current_lv_1_menu_mi.value)){
-    handle_match_render_data()
-  }
+  set_menu_mi_change_get_api_data()
   event && scrollMenu(event,".s-menu-container",".sport-menu-item");
 }
 
 watch(()=> MenuData.current_lv_1_menu_mi.value,() => {
+  set_menu_mi_change_get_api_data()
+})
 
-  // 默认设置二级菜单id
-  MenuData.set_current_lv_2_menu_mi( lodash_.get(MenuData.menu_lv_mi_lsit,'[0]',{}))
+// 菜单变化页面请求数据
+const set_menu_mi_change_get_api_data = () => {
+  // 今日 / 滚球/ 冠军 没有 三级
   if([1,2,400].includes(MenuData.current_lv_1_menu_mi.value)){
     handle_match_render_data()
   }
-})
+}
 
 /**
 * 二级菜单数量 是否展示
