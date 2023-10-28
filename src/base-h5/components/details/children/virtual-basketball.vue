@@ -181,7 +181,7 @@ export default defineComponent({
       let params = {
         mids:current_match.mid
       }
-      api_v_sports.get_v_match_score_api(params).then( res => {
+      api_virtual.get_v_match_score_api(params).then( res => {
         let code = _.get(res,'code')
         let basketball_score = _.get(res,'data')
         if(code == 200 && basketball_score[current_match.mid]){
@@ -221,7 +221,7 @@ export default defineComponent({
         orderNo: current_match.orderNo,
         tid: current_match.tid
       }
-      api_v_sports.get_virtual_video_process(params).then(res => {
+      api_virtual.get_virtual_video_process(params).then(res => {
         if(_.get(res,'code') == 200){
           let score_list = _.get(res,`data.detail.${current_match.mid}.list`) || []
           if(score_list.length > 0){

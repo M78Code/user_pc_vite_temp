@@ -9,7 +9,7 @@ import VirtualData from "./virtual-data"
 import VirtualClass from "./virtual-class"
 import { menu_lv2 } from 'src/base-h5/mixin/menu.js'
 import { useMittEmit, MITT_TYPES } from "src/core/mitt"
-
+import { api_virtual } from "src/api/index.js";
 class VirtualVideo {
 
   constructor() {
@@ -83,7 +83,7 @@ class VirtualVideo {
       this.video_by_api_cache_key += `-${params.orderNo}`;
     }
     this.api_video_params = params;
-    api_v_sports.get_virtual_video_process(params).then(res => {
+    api_virtual.get_virtual_video_process(params).then(res => {
       if (res.code == 200) {
         if (res.data && res.data.detail && Object.keys(res.data.detail).length) {
           if (!is_no_match_data) {
@@ -134,7 +134,7 @@ class VirtualVideo {
         }
         let params = this.api_video_params;
         if (!params.csid) return;
-        api_v_sports.get_virtual_video_process(params).then(res => {
+        api_virtual.get_virtual_video_process(params).then(res => {
           let get_data = false;
           if (res.code == 200) {
             if (res.data && res.data.detail && Object.keys(res.data.detail).length) {

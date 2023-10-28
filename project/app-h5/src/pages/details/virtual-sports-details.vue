@@ -49,26 +49,27 @@
 // import common from 'src/project/mixins/constant/module/common.js';
 // import virtual_sports_mixin from "src/project/mixins/virtual_sports/virtual_sports_mixin.js"
 import { api_virtual } from "src/api/index.js";
-import virtual_sports_tab from 'src/base-h5/components/details/components/virtual_sports_tab.vue'
-import virtual_sports_category from "src/base-h5/components/details/children/virtual_sports_category.vue"
-import virtual_match_statistic from 'src/base-h5/components/details/components/virtual_match_statistic.vue'
-import virtual_sports_stage from 'src/project/pages/virtual/virtual_sports_part/virtual_sports_stage.vue'
-import VSport from 'src/base-h5/utils/vsport/vsport.js';
+// import virtual_sports_tab from 'src/base-h5/components/details/components/virtual_sports_tab.vue'
+// import virtual_sports_category from "src/base-h5/components/details/children/virtual_sports_category.vue"
+// import virtual_match_statistic from 'src/base-h5/components/details/components/virtual_match_statistic.vue'
+// import virtual_sports_stage from 'src/project/pages/virtual/virtual_sports_part/virtual_sports_stage.vue'
+// import VSport from 'src/base-h5/utils/vsport/vsport.js';
 import VirtualVideo from 'src/core/match-list-h5/virtual-sports/virtual-video.js'
 import lodash from "lodash";
+import {debounce} from "lodash";
 import { useRouter, useRoute } from "vue-router";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { MatchDetailCalss,MenuData } from "src/core";
-import { reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
+import { reactive, computed, onMounted, onUnmounted, toRefs, watch,defineComponent,ref } from "vue";
 export default defineComponent({
   name: "virtual_sports_details",
   // #TODO MIXINS
   // mixins:[common,virtual_sports_mixin],
   components: {
-    'virtual-sports-tab': virtual_sports_tab,
-    'virtual-match-statistic': virtual_match_statistic,
-    'virtual-sports-stage': virtual_sports_stage,
-    'virtual-sports-category': virtual_sports_category,
+    // 'virtual-sports-tab': virtual_sports_tab,
+    // 'virtual-match-statistic': virtual_match_statistic,
+    // 'virtual-sports-stage': virtual_sports_stage,
+    // 'virtual-sports-category': virtual_sports_category,
   },
 
   setup(props, evnet) {
@@ -85,6 +86,7 @@ export default defineComponent({
       basketball_status:0,
       // 默认不刷新
       refreshing:false,
+      current_league:{name:null,menuId:''}  //todo
     });
     const is_show_analyse =  ref(MatchDetailCalss.is_show_details_analyse)
     const matchid =  ref(MatchDetailCalss.get_goto_detail_matchid)
@@ -120,7 +122,7 @@ export default defineComponent({
     //     init_video_play_status(new_);
     //   }
     // );
-
+     let timer_super28,timer1_ =null
     onMounted(() => {
       // 原created
 
@@ -143,8 +145,8 @@ export default defineComponent({
 
       //获取赛事详情数据
       let mid_ = route.query && route.query.mid;
-      mid = mid_;
-      if(mid_) set_goto_detail_matchid(mid_);
+      data.mid = mid_;
+      if(mid_) MatchDetailCalss.set_goto_detail_matchid(mid_);
       let parma = {
         mid: matchid.value || mid_,
       }
@@ -175,7 +177,7 @@ export default defineComponent({
       .catch(err => {
         console.error(err)
       });
-      cancel_ref = debounce(cancel_ref,200)
+      // cancel_ref = debounce(()=>{cancel_ref()},200)
     })
     onUnmounted(() => {
       debounce_throttle_cancel(cancel_ref);
