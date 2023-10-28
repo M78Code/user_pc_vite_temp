@@ -31,6 +31,7 @@ import { useRoute, useRouter } from "vue-router"
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import lodash from "lodash"
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
+import { MatchDetailCalss } from "src/core";
 import { defineComponent,ref } from "vue";
 export default defineComponent({
   props:[
@@ -51,7 +52,7 @@ export default defineComponent({
     timer_ = null;
     initEvent();
     play_list()
-    set_is_show_details_analyse(false)
+    MatchDetailCalss.set_is_show_details_analyse(false)
    }) 
   const {off} = useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB, initEvent)
   const {off:OFF_TAB_BET} = useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB_BET, initEvent)
@@ -72,7 +73,7 @@ export default defineComponent({
      */
     const analyse_btn =()=> {
       analyse = !analyse
-      set_is_show_details_analyse(!is_show_analyse)
+      MatchDetailCalss.set_is_show_details_analyse(!is_show_analyse)
     }
     const change_btn=()=>{
       // 设置vuex变量值
@@ -89,7 +90,7 @@ export default defineComponent({
       if(is_show_analyse){
         analyse = true
       }
-      set_is_show_details_analyse(false)
+      MatchDetailCalss.set_is_show_details_analyse(false)
       //实现动态效果
       try {
         let dom = $refs.reset_scroll_dom;

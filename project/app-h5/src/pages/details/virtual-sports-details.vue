@@ -5,7 +5,7 @@
       <div class="type-bg bg1001">
         <div class="back-wrap">
           <!-- 返回按钮 -->
-          <div class="detail-back" @click="$common.go_where({back_to: 'go_back_from_virtual_detail'})"></div>
+          <div class="detail-back" @click="go_where({back_to: 'go_back_from_virtual_detail',route_name:route.name,route,router})"></div>
           <!-- 虚拟体育 -->
           <div class="col">{{current_league.name}}</div>
           <!--刷新按钮-->
@@ -18,7 +18,7 @@
       <div class="detail-header-bg"></div>
       <div class="detail-header">
         <!--视频区域-->
-        <div class="stage-wrapper">{{current_match}}
+        <div class="stage-wrapper">{{current_match}}{{current_league}}11
           <virtual-sports-stage source='detail'
             :current_match="current_match" @update_next_batch_match="update_n_batch_handle"
             :match_process_update="match_process_update"
@@ -55,11 +55,12 @@ import { api_virtual } from "src/api/index.js";
 import virtualSportsStage from 'src/base-h5/components/virtual/virtual-sports-stage.vue'
 // import VSport from 'src/base-h5/utils/vsport/vsport.js';
 import VirtualVideo from 'src/core/match-list-h5/virtual-sports/virtual-video.js'
+import VirtualData from 'src/core/match-list-h5/virtual-sports/virtual-data.js'
 import lodash from "lodash";
 import {debounce} from "lodash";
 import { useRouter, useRoute } from "vue-router";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
-import { MatchDetailCalss,MenuData,MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance } from "src/core";
+import { MatchDetailCalss,MenuData,MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance,go_where } from "src/core";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch,defineComponent,ref } from "vue";
 import { get_now_server } from 'src/core/utils/module/other.js'
 export default defineComponent({
@@ -87,7 +88,7 @@ export default defineComponent({
       basketball_status:0,
       // 默认不刷新
       refreshing:false,
-      current_league:{name:null,menuId:''}  //todo
+      current_league:VirtualData.current_league  //todo
     });
     const is_show_analyse =  ref(MatchDetailCalss.is_show_details_analyse)
     const matchid =  ref(MatchDetailCalss.get_goto_detail_matchid)
@@ -415,6 +416,9 @@ export default defineComponent({
       init_video_play_status,
       timer_ended_handle,
       get_local_match_process_data,
+      go_where,
+      route,
+      router
     }
   }
 })

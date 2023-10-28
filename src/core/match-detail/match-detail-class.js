@@ -394,4 +394,13 @@ export default class MatchDetailCtr {
     this.get_goto_detail_matchid = id
     this.set_details_data_version()  
   }
+  /**
+   * @description:H5详情是否显示统计
+   * @param {Boolean} flag 
+   * @return {*}
+  */
+  set_is_show_details_analyse(flag){
+    this.is_show_details_analyse = flag
+    this.set_details_data_version()  
+  }
 }
