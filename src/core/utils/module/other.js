@@ -5,10 +5,7 @@
  */
 // import  lodash from "lodash";
 
-import lodash from "lodash";
-// 目前环境信息
-
-
+import PageSourceData from "src/core/page-source/page-source.js";
 
 /**
  * 深度合并方法 和lodash Merge不一样
@@ -69,15 +66,15 @@ export const is_low = () => {
  * @return {Boolean}
  */
 export const get_now_server = () => {
-  if (!window.vue.get_local_server_time) {
+  if (!PageSourceData.init_time.server_time) {
     let now = new Date();
-    window.vue.get_local_server_time = {
+    PageSourceData.set_init_time({
       server_time: now.getTime(),
-      local_time_init: now.getTime(),
-    };
+      local_time: now.getTime(),
+    });
   }
-  let remote_time = window.vue.get_local_server_time.server_time * 1;
-  let local_time = window.vue.get_local_server_time.local_time_init * 1;
+  let remote_time = PageSourceData.init_time.server_time * 1;
+  let local_time = PageSourceData.init_time.local_time * 1;
   let now = new Date().getTime();
   return remote_time + (now - local_time);
 };

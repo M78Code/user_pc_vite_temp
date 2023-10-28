@@ -19,11 +19,14 @@
         </div>
       </div>
     </div>
+    <match-filter></match-filter>
   </div>
 </template>
 <script setup>
 import { i18n_t, compute_css_obj } from "src/core/index.js";
 import { useRouter, useRoute } from "vue-router";
+import matchFilter from "src/base-h5/components/match-filter/index.vue"// 骨架屏
+
 
 defineOptions({
   name: 'selectLeague' // 设置组件名称

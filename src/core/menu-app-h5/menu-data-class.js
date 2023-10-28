@@ -36,19 +36,17 @@ class MenuData {
     this.menu_lv3 = []; //3级菜单列表
     this.menu_lv4 = []; //4级菜单列表
     //当前的菜单 lv1
-    this.current_lv_1_menu_mi = ref('')
+    this.current_lv_1_menu_mi = ref('0')
     //当前的菜单 lv2
     //当前的菜单 lv2  注意  二级菜单 可能 有一个【全部】选项 get_sport_all_selected
     this.current_lv_2_menu = {};
-    this.current_lv_2_menu_i = undefined;
+    this.current_lv_2_menu_mi = '';
     //当前的菜单 lv3
     this.current_lv_3_menu = {};
-    this.current_lv_3_menu_i = undefined;
+    this.current_lv_3_menu_mi = '';
     //当前的菜单 lv4
     this.current_lv_4_menu = {};
-    this.current_lv_4_menu_i = undefined;
-    // 当前选中的二级菜单item数据 --- app-h5用 （TODO:待确定）
-    this.current_lv_2_menu_item = {}
+    this.current_lv_4_menu_mi = '';
     //================主列表用的  结束==================
     this.menu_list = []
     this.menu_type = ref(2)
@@ -66,6 +64,7 @@ class MenuData {
     })
     this.menu_list = menu_list
     this.set_current_lv1_menu(2)
+   
   }
 
   // 根据菜单id获取下级菜单id 二级菜单
@@ -101,8 +100,6 @@ class MenuData {
   set_current_lv_2_menu_mi(val = {}){
     this.current_lv_2_menu_mi = val.mi;
     this.current_lv_2_menu = val;
-    // 存储二级菜单选择的tab --- app-h5 用（TODO: 待确定）
-    this.current_lv_2_menu_item = !!val.ct ? val : this.menu_lv_mi_lsit[0]
     // 今日 / 滚球/ 冠军 没有 三级
     if(![1,2,400].includes(this.current_lv_1_menu_mi.value)){
      
@@ -608,7 +605,7 @@ class MenuData {
           ) {
             this.set_current_lv3_menu(
               this.current_lv_3_menu,
-              this.current_lv_3_menu_i, 'init'
+              this.current_lv_3_menu_mi, 'init'
             );
           } else {
             this.set_current_lv3_menu(this.menu_lv3[0], 0, 'init');
@@ -628,7 +625,7 @@ class MenuData {
         if (type == "init" && this.menu_lv3.length && this.current_lv_3_menu) {
           this.set_current_lv3_menu(
             this.current_lv_3_menu,
-            this.current_lv_3_menu_i, type
+            this.current_lv_3_menu_mi, type
           );
         } else {
          
@@ -676,7 +673,8 @@ class MenuData {
    */
   set_current_lv1_menu(lv1_mi) {
     this.current_lv_1_menu_mi.value = lv1_mi  
-    this.update();
+    this.get_menu_lvmi_list(lv1_mi)
+    // this.update();
   }
   /**
    * 选中二级menu
