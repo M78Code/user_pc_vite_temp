@@ -63,7 +63,7 @@ export default defineComponent({
   },
   
   setup(props, evnet) {
-    const component_data = reactive({
+    const state = reactive({
       group_stage_list: [],
       no_data: false
     });
@@ -102,7 +102,7 @@ export default defineComponent({
       // }
     })
     return {
-      ...toRefs(component_data),
+      ...toRefs(state),
       get_list,
       get_lang,
     }

@@ -29,14 +29,14 @@
         </div>
       </div>
       <!--虚拟体育-->
-      <!-- <virtual-sports
+      <virtual-sports
         :params="virtual_sports_params"
         :current_sub_menu="current_sub_menu"
         :is_user_refresh='refreshing'
         :menu_list="current_sub_menu.subList ? current_sub_menu.subList : []"
         :v_match_router_ente="v_match_router_ente"
         :v_menu_changed="v_menu_changed">
-      </virtual-sports> -->
+      </virtual-sports>
 
     </div>
 
@@ -64,7 +64,7 @@ import { theme } from 'src/base-h5/mixin/userctr.js'
 // 设置菜单
 // import setMenu from "src/project/components/common/set_menu.vue"    
 // 虚拟体育
-// import virtualSports from "src/base-h5/components/virtual/virtual-sports.vue";
+import virtualSports from "src/base-h5/components/virtual/virtual-sports.vue";
 // 底部菜单
 // import virtualFooterMenu from 'src/base-h5/components/virtual/virtual-sports-part/virtual-footer-menu.vue'
 

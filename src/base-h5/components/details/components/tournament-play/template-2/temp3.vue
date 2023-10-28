@@ -15,7 +15,7 @@
                      :class="[get_bet_list.includes(ol_item.id_)?['details-bg5','first-rad']:'','bor-style',{'win':utils.calc_win(ol_item.result)}]">
                   <div class="ellipsis remark details_t_color6 fz_14" :class="[{'white_text':get_bet_list.includes(ol_item.id_)}]">
                   <span :class="[{'white_text':get_bet_list.includes(ol_item.id_)}]">
-                    {{ol_item.on || ol_item.ott}}
+                    {{ol_item.on || ol_item.ott}}2
                   </span>
                   </div>
                   <div class="text-right odds-wrap">

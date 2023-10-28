@@ -47,7 +47,7 @@ export default defineComponent({
   },
   
   setup(props, evnet) {
-    const component_data = reactive({
+    const state = reactive({
       tabIndex: 0,
       tab_list: [
         { index: 0, label: i18n_t('virtual_sports.group_matches'), value: 'group_matches' ,disable: false},
@@ -78,11 +78,11 @@ export default defineComponent({
     watch(
       () => data.currentContent,
       () => {
-        component_data.height_change = '400px'
+        state.height_change = '400px'
 
-        clearTimeout(component_data.timer)
-        component_data.timer = setTimeout(() => {
-          component_data.height_change = '100%'
+        clearTimeout(state.timer)
+        state.timer = setTimeout(() => {
+          state.height_change = '100%'
         },200)
       }
     );
@@ -92,36 +92,36 @@ export default defineComponent({
       () => current_batch.value.mmp,
       (n,o) => {
         const key_list = ['Q8', 'Q4', 'SEMIFINAL', 'FINAL']
-        if(key_list.includes(component_data.current_batch.value.mmp)){
-          component_data.tabIndex = 1
-          component_data.currentContent = 'knockout'
-          component_data.tab_list[0].disable = true
-          component_data.tab_list[1].disable = false
+        if(key_list.includes(state.current_batch.value.mmp)){
+          state.tabIndex = 1
+          state.currentContent = 'knockout'
+          state.tab_list[0].disable = true
+          state.tab_list[1].disable = false
         }else{
-          component_data.tabIndex = 0
-          component_data.currentContent = 'group_matches'
-          component_data.tab_list[0].disable = false
-          component_data.tab_list[1].disable = true
+          state.tabIndex = 0
+          state.currentContent = 'group_matches'
+          state.tab_list[0].disable = false
+          state.tab_list[1].disable = true
         }
       }
     );
     // 点击菜单切换
     const tab_click = (tab) => {
       if(tab.index==1 && tab.disable) return
-      component_data.tabIndex = tab.index
-      component_data.currentContent = tab.value
+      state.tabIndex = tab.index
+      state.currentContent = tab.value
     }
     onUnmounted(() => {
-      clearTimeout(component_data.timer)
-      component_data.timer = null
+      clearTimeout(state.timer)
+      state.timer = null
 
       // #TODO $data 
-      // for (const key in component_data.$data) {
-      //   component_data.$data[key] = null
+      // for (const key in state.$data) {
+      //   state.$data[key] = null
       // }
     })
     return {
-      ...toRefs(component_data),
+      ...toRefs(state),
       tab_click,
       current_batch
     }

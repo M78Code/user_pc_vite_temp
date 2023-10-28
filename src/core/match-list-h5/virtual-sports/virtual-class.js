@@ -1,3 +1,5 @@
+import { resolve } from "licia/Promise";
+import { reject } from "lodash";
 
 /**
  * @description 虚拟体育类
@@ -112,13 +114,13 @@ class VirtualClass {
       while (this.run) {
         time = new Date().getTime();
         // 消费一条记录
-        // this.work();
-        // await sleep(800);
-        // let timer = setTimeout(() => {
-        //   this.current_time += (new Date().getTime() - time);
-        //   clearTimeout(timer)
-        //   timer = null
-        // }, 800)
+        this.work();
+        await this.sleep(800);
+        let timer = setTimeout(() => {
+          this.current_time += (new Date().getTime() - time);
+          clearTimeout(timer)
+          timer = null
+        }, 800)
       }
     })();
   }
@@ -347,6 +349,20 @@ class VirtualClass {
         break;
     }
   }
+  
+  /**
+   * 睡眠函数
+   */
+  sleep () {
+    return new Promise((resolve, reject) => {
+      let timer = setTimeout(() => {
+        resolve()
+        clearTimeout(timer)
+        timer = null
+      }, 800)
+    })
+  }
+
    /**
    * @description: 销毁函数(vue组件销毁时关闭)
    */
