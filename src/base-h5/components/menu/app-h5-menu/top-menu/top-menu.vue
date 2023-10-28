@@ -5,25 +5,30 @@
  * @Last Modified time: 2023-10-Sa 06:06:46
  */
 <template>
-    <div class="main-wrap flex">
-        <!--  返回按鈕  -->
-        <slot name="menu-left">
-            <div class="goback-icon-wrapper column justify-center" @click="router.back()">
-                <div class="img" :style="compute_css_obj('menu-go-back-icon')"></div>
-            </div>
-        </slot>
-        <div v-show="false">   {{MenuData.update_time}} {{UserCtr.user_version}}</div>
-        <div class="main-menu-container">
-            <template v-for="(item, index) in menu_list" :key="lodash_.get(item, 'code')">
-                <div class="m-menu-item" :class="{ current: lodash_.get(item, 'mi') == MenuData.current_lv_1_menu_mi.value }">
-                    <span class="i-title" @click="set_menu_lv1(item, index)">
-                        {{ i18n_t("new_menu." + lodash_.get(item, 'mi')) || lodash_.get(item, 'mi') }}
-                    </span>
+    <div>
+        <div class="main-wrap flex">
+            <!--  返回按鈕  -->
+            <slot name="menu-left">
+                <div class="goback-icon-wrapper column justify-center" @click="router.back()">
+                    <div class="img" :style="compute_css_obj('menu-go-back-icon')"></div>
                 </div>
-            </template>
+            </slot>
+            <div v-show="false">   {{MenuData.update_time}} {{UserCtr.user_version}}</div>
+            <div class="main-menu-container">
+                <template v-for="(item, index) in menu_list" :key="lodash_.get(item, 'code')">
+                    <div class="m-menu-item" :class="{ current: lodash_.get(item, 'mi') == MenuData.current_lv_1_menu_mi.value }">
+                        <span class="i-title" @click="set_menu_lv1(item, index)">
+                            {{ i18n_t("new_menu." + lodash_.get(item, 'mi')) || lodash_.get(item, 'mi') }}
+                        </span>
+                    </div>
+                </template>
+            </div>
+            <div class="main-menu-right">
+                ￥{{ format_money2(balance) }}
+            </div>
         </div>
-        <div class="main-menu-right">
-            ￥{{ format_money2(balance) }}
+        <div v-if="[3,6].includes(MenuData.current_lv_1_menu_mi.value)">
+            <DateTab :active_on="MenuData.date_time" />
         </div>
     </div>
 </template>
@@ -34,6 +39,11 @@ import { useRouter } from "vue-router";
 import { format_money2 } from "src/core/format/index.js";
 import { i18n_t, compute_css_obj, MenuData,UserCtr } from "src/core/index.js";
 import { get_sport_menu } from "./top-list";
+import { DateTab } from 'src/base-h5/components/menu/app-h5-menu/index';
+import { dateTabList } from "src/base-h5/components/menu/app-h5-menu/utils";
+
+const dataList = dateTabList(new Date());
+
 const router = useRouter();
 
 //一级菜单list

@@ -16,6 +16,8 @@ import lodash_ from "lodash";
 import { computed, nextTick, ref, watch } from "vue";
 import { SessionStorage, useMittEmit, MITT_TYPES, UserCtr, sprite_images_postion } from "src/core/";
 import BaseData from "src/core/base-data/base-data.js";
+import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
+
 const Cache_key = {
   CACHE_CRRENT_MEN_KEY: "CACHE_CRRENT_MEN_KEY", //缓存当前菜单的key
   RESULT_SUB_MENU_CACHE: "RESULT_SUB_MENU_CACHE", //赛果 缓存
@@ -52,6 +54,8 @@ class MenuData {
     this.menu_type = ref(2)
     this.get_sport_all_selected = ''
     this.menu_lv_mi_lsit = []
+    // 选中的当前时间
+    this.date_time = ""
   }
 
   // 初始化需要使用的数据
@@ -111,13 +115,17 @@ class MenuData {
    * item [object]当前点击对象
    */
   set_current_lv1_menu(lv1_mi) {
-    console.error('asdasdasd',lv1_mi)
     this.current_lv_1_menu_mi.value = lv1_mi  
     this.get_menu_lvmi_list(lv1_mi)
     this.set_current_lv_2_menu_mi( lodash_.get(this.menu_lv_mi_lsit,'[0]',{}))
     // this.update();
   }
 
+  // 设置时间
+  set_date_time(time){
+    this.data_time = time
+    MatchMeta.set_origin_match_data()
+  }
   /**
    * 兼容老的菜单ID?
   */
