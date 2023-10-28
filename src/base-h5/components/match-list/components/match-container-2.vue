@@ -27,7 +27,7 @@
       </template>
       <span class="score-inner-span" v-else>
         <!-- PROJECT_NAME == 'app-h5' 复刻版需要展示数量 -->
-        {{ match_of_list.csna }}{{PROJECT_NAME == 'app-h5' ? '(' + MenuData.current_lv_2_menu_item.ct + ')' : ''}}
+        {{ match_of_list.csna }}{{PROJECT_NAME == 'app-h5' ? '(' + MenuData.current_lv_2_menu.ct + ')' : ''}}
         <!-- {{match_of_list.csna || get_current_menu.sub.menuName}} -->
       </span>
     </div>
