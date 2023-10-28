@@ -61,18 +61,9 @@
         </div>
       </div>
 
-      <!--加减-->
-        <bet-mix-box-child6></bet-mix-box-child6>
-
-        <!--投注成功后的预约金额和可用金额-->
-        <bet-mix-box-child5></bet-mix-box-child5>
-
-      <!--确定按钮-->
-      <div class="nonebox4-sub">确认</div>
-
-      <div>
+      <!-- <div>
         <slide></slide>
-      </div>
+      </div> -->
 
       <div class="yb_px12" v-if="get_mix_bet_flag">
         <div class="row justify-between items-center content-t yb_mb6 yb_mt8 yb_fontsize14 fw_600 bet-mix-show">
@@ -323,7 +314,7 @@ const set_clear = () => {
   // 关闭弹窗 清空数据
   useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX)
   BetData.set_clear_bet_info()
-  BetData.set_clear_bet_view_config()
+  BetViewDataClass.set_clear_bet_view_config()
 }
 
 onUnmounted(() => {

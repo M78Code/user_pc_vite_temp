@@ -6,6 +6,8 @@
 import { i18n_t, i18n } from "src/boot/i18n.js";
 import { ref } from "vue";
 import { dianjing_sublist } from "src/core/constant/config/csid.js"
+import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
+const { PROJECT_NAME } = BUILD_VERSION_CONFIG;
 
 //   约定 四个 值
 
@@ -373,7 +375,9 @@ class BaseData {
     this.set_left_menu_init(menu_old_or_nem_data_list);
 
     // app-h5使用
-    MenuData.set_init_menu_list()
+    if(PROJECT_NAME == 'app-h5'){
+      MenuData.set_init_menu_list()
+    }
 
     // 计算   冠军 数据  对象形式   commn_sport_guanjun_obj
     // 计算虚拟体育 的 数据对象

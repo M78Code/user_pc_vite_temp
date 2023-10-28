@@ -92,7 +92,7 @@
           </template>
           <!-- 没有title时按ol循环 -->
           <template v-if="!item_data.title[0]">
-            <div class="row" v-for="(ol_item,ol_index) in item.ol" :key="ol_index">
+            <div class="row mg-4-bg" v-for="(ol_item,ol_index) in item.ol" :key="ol_index">
               <template v-if=" (hide_show_more_layout || (!hide_show_more_layout && (show_more || (!show_more && ol_index<5))))">
                 <template v-if="((odds_conut<show_more_max && !show_more) || show_more)">
                   {{void(odds_conut++)}}
@@ -110,7 +110,7 @@
                       :class="[get_bet_list.includes(ol_item.id_)?'details-bg5':'',{'win':utils.calc_win(ol_item.result),'bor-btm':ol_index != item.ol.length-1 || index_ != item_data.hl.length-1}]"
                     >
                       <div class="ellipsis remark details_t_color6 fz_13">
-                        <span class="size-color" :class="[{'white_text':get_bet_list.includes(ol_item.id_)},{'gray': is_number(ol_item.ott) || is_number(ol_item.on) }]">
+                        <span class="size-color" :class="[{'white_text':get_bet_list.includes(ol_item.id_)}]">
                           {{ol_item.ott}}{{ol_item.on}}
                         </span>
                       </div>

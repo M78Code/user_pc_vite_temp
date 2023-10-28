@@ -25,8 +25,8 @@
         </div>
         <!-- 滚动时置顶的悬浮条 -->
         <!-- <div style="position: fixed;z-index: 1000; top: 100px;background:#000;color: #fff;">{{ scroll_visible_1 }}{{ get_show_video }}</div> -->
-        <div class="mini-header-container" :class="{'no-z-index': get_is_dp_video_full_screen}" :style="{ visibility: scroll_visible_1 && !get_show_video&& viewTab != 'chatroom'? 'visible' : 'hidden' }">
-          <!-- <change-header :detail_data="detail_data"></change-header> -->
+        <div class="mini-header-container" :class="{'no-z-index': get_is_dp_video_full_screen}" :style="{ visibility: scroll_visible && !get_show_video&& viewTab != 'chatroom'? 'visible' : 'hidden' }">
+          <change-header :detail_data="detail_data"></change-header>
         </div>
 
         <!-- @click.stop -->
@@ -145,7 +145,7 @@ import detailsHeader from "src/base-h5/components/details/components/details-hea
 import detailsDialog from "src/base-h5/components/details/details-dialog.vue";   // 详情赛事下拉,赛事列表组件
 // // import no_data from "src/project/components/common/no-data.vue";   // 无网络展示组件
 import videos from "src/base-h5/components/details/components/videos2.vue";   // 详情页视频+动画直播区域
-// import change_header from "src/base-h5/components/details/components/header/change-header.vue";  // 详情页下拉置顶title
+import changeHeader from "src/base-h5/components/details/components/header/change-header.vue";  // 详情页下拉置顶title
 import info_rules from "src/base-h5/components/details/components/info-rules.vue"  // 视频info说明弹框
 // import SDetails from "src/project/components/skeleton/skeleton-details.vue"  // 详情骨架屏
 import category from "./children/category.vue";
@@ -173,7 +173,7 @@ export default defineComponent({
     basketballMatchAnalysis,
     "details-header": detailsHeader,
     "details-dialog": detailsDialog,
-    // "change-header": change_header,
+    changeHeader,
     detailsTab,
 //     // "no-data": no_data,
     "info-rules": info_rules,
@@ -201,8 +201,8 @@ export default defineComponent({
     const scroll_visible_1 = ref(true)
     const page_style = ref('')
     
-    
     const {
+      scroller_scroll_top,
       state_data,
       is_highlights,
       show_match_analysis_tab,
