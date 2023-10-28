@@ -93,12 +93,12 @@ class MenuData {
     // 今日 加入 收藏/vr体育/电竞 滚球加入全部
     
     if(mid == 1){
-      menu_lv_mi_lsit.unshift({mi:'',btn:1, ct:"2",title:"全部"})
+      menu_lv_mi_lsit.unshift({mi:'0',btn:1, ct:"2",title:"全部"})
     }
     if(mid == 2){
-      menu_lv_mi_lsit.unshift({mi:'',btn:1,ct:"2",title:"收藏"})
-      menu_lv_mi_lsit.splice(3,0,{mi:'',btn:1,ct:"2",title:"VR体育"})
-      menu_lv_mi_lsit.splice(4,0,{mi:'',btn:1,ct:"2",title:"电竞"})
+      menu_lv_mi_lsit.unshift({mi:'5000',btn:1,ct:"2",title:"收藏"})
+      menu_lv_mi_lsit.splice(3,0,{mi:'300',btn:1,ct:"2",title:"VR体育"})
+      menu_lv_mi_lsit.splice(4,0,{mi:'2000',btn:1,ct:"2",title:"电竞"})
     }
     this.menu_lv_mi_lsit = menu_lv_mi_lsit
     return menu_lv_mi_lsit
