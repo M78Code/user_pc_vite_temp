@@ -52,7 +52,7 @@ const ranking_data = ref([])
 
 const get_list = async () => {
   try {
-    let {code , data} = await api_v_sports.get_virtual_sport_team_ranking({tid: this.tid})
+    let {code , data} = await api_virtual.get_virtual_sport_team_ranking({tid: this.tid})
     if(code == 200) {
       if (data && data.length > 0) {
         this.ranking_data = data

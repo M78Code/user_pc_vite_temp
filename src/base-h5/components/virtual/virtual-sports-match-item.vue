@@ -162,14 +162,14 @@ import odd_column_item from "src/base-h5/components/match-list/components/odd-co
 // #TODO MIXINS
 // import betting from 'project_path/mixins/betting/betting.js';
 // import virtual_sports_m_item_mixin from 'project_path/mixins/virtual_sports/virtual_sports_m_item_mixin.js'
-import {  PageSourceData  } from "src/core/index.js";
+import {  PageSourceData,MatchDetailCalss  } from "src/core/index.js";
 import {MenuData,compute_img_url } from "src/core/index.js";
 import lodash from "lodash";
 import VirtualVideo from 'src/core/match-list-h5/virtual-sports/virtual-video.js'
 import { standard_edition, theme } from 'src/base-h5/mixin/userctr.js'
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
-
+import { useRouter, useRoute} from "vue-router";
 import 'src/base-h5/css/pages/virtual-sports-match-item.scss'
 
 export default defineComponent({
@@ -192,6 +192,8 @@ export default defineComponent({
 
 
   setup(props, evnet) {
+    const router = useRouter()
+    const route = useRoute()
     const { match_selected_i, other_status } = toRefs(props);
     const state = reactive({
       curr_match_map_time:{},
@@ -498,14 +500,14 @@ export default defineComponent({
     const goto_details =(match) => {
       let mid = match.mid;
       let copied = lodash.cloneDeep(match);
-      set_current_gotodetail_match(copied);
-      set_details_item(0);
-      $router.push({
+      MatchDetailCalss.set_current_gotodetail_match(copied);
+      MatchDetailCalss.set_details_item(0);
+      router.push({
         name: 'virtual_sports_details',
         query: {
           mid: mid,
-          i: id,
-          home: $route.query.home ? $route.query.home : 'match'
+          // i: id,
+          home: route.query.home ? route.query.home : 'match'
         }
       })
     };

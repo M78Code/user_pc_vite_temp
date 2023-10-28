@@ -32,7 +32,7 @@
 // #TODO VUEX 
 // import { mapGetters, mapMutations} from "vuex";
 import { standard_edition } from 'src/base-h5/mixin/userctr.js'
-import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
+import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch,ref } from "vue";
 import 'src/base-h5/css/pages/virtual-footer-menu.scss'
 export default defineComponent({
   name: "virtual_footer_menu",
@@ -47,7 +47,8 @@ export default defineComponent({
     // cancel_loading = debounce(this.cancel_loading,500)
 
     onUnmounted(() => {
-      this.debounce_throttle_cancel(this.cancel_loading);
+      
+      // this.debounce_throttle_cancel(this.cancel_loading);
     })
 
     // #TODO VUEX ACTIONS 

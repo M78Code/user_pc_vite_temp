@@ -210,7 +210,7 @@ export default {
       let params = {
         mids:mids.join(',')
       }
-      api_v_sports.get_v_match_score_api(params).then( res => {
+      api_virtual.get_v_match_score_api(params).then( res => {
         let code = _.get(res,'code')
         let basketball_score = _.get(res,'data')
         if(code == 200 && basketball_score[mids[0]]){

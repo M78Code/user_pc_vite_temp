@@ -101,18 +101,18 @@ const router = createRouter({
             ]
           },
         //   // 虚拟赛事详情页
-        //   {
-        //     path: "/virtual_sports_details",
-        //     name: "virtual_sports_details",
-        //     component: () => import("project_path/pages/details/virtual_sports_details.vue"),
-        //     children: [
-        //       {
-        //         path: "virtual_sports_category/:id",
-        //         name: "virtual_sports_category",
-        //         component: () => import("project_path/pages/details/children/virtual_sports_category.vue")
-        //       },
-        //     ]
-        //   },
+          {
+            path: "/virtual_sports_details",
+            name: "virtual_sports_details",
+            component: () => import("../pages/details/virtual-sports-details.vue"),
+            children: [
+              {
+                path: "virtual_sports_category/:id",
+                name: "virtual_sports_category",
+                component: () => import("../pages/details/children/virtual-sports-category.vue")
+              },
+            ]
+          },
       ],
     },
     {
