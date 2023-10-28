@@ -1,6 +1,6 @@
 <template>
   <div class="virtual-sports">
-    <virtual-skeleton v-show="virtual_data_loading"></virtual-skeleton>
+    <!-- <virtual-skeleton v-show="virtual_data_loading"></virtual-skeleton> -->
     <!--联赛tab-->
     <div class="tab-wrapper">
       <div class="tab-item" :class="{active:i == tab_item_i}" v-for="(tab_item,i) of tab_items"
@@ -12,7 +12,7 @@
     <template v-if="!no_virtual_match">
       <!--选中的赛事阶段组件包含赛前倒计时,赛中视频,完赛等状态-->
       <!--此组件:key去除后有问题, 赛事倒计时时钟颜色红黄错乱-->
-      <virtual-sports-stage ref="virtual_sports_stage"
+      <virtual-sports-stage
         :is_before_destroy="is_before_destroy"
         :key="current_match.mid"
         :m_status="current_match.match_status"
@@ -28,31 +28,23 @@
         {{current_match.mid}}
       </div>
       <!--赛事轮|期菜单-->
-      <!-- <match-tab
+      <match-tab
         :is_reset_tab_i="is_reset_tab_i"
-        :no_list="no_title_list"
-        :is_user_switch_league="is_user_switch_league"
-        :auto_change_tab_i_first="auto_change_tab_i_first"
         :current_league="tab_items[tab_item_i]"
         :current_match="current_match"
         :is_basket_ball_next_no="is_basket_ball_next_no"
         :v_menu_changed="v_menu_changed"
         :before_match_tab_trend="before_match_tab_trend"
-        @sub_nav_change="sub_nav_changed"
         @trend_event_change="trend_event_change"
         @time_ended="timer_ended_handle"
-        @update_next_batch_match="v_basket_ball_update_n"
-      ></match-tab> -->
+      ></match-tab>
       <!--  虚拟体育主列表页面  -->
-      <div
-          v-if="!ranking_list_change"
-          class="v-sports-main-list" 
-          :class="{'v-sports-main-list-style': standard_edition === 1}" 
-          :style="{'padding-bottom': get_betbar_show ? '0.5rem' : '0'}"
-      >
+      <div v-if="!ranking_list_change" class="v-sports-main-list" 
+        :class="{'v-sports-main-list-style': standard_edition === 1}" 
+        :style="{'padding-bottom': get_betbar_show ? '0.5rem' : '0'}">
         <!-- 虚拟体育足球赛事列表 -->
-        <v-s-match-list v-if="[1001,1004].includes(menu_lv2)" :virtual_match_list="match_list_by_no"
-          :match_list_loaded="match_list_loaded" :csid="menu_lv2" :v_menu_changed="v_menu_changed"
+        <v-s-match-list v-if="[1001,1004].includes(current_sub_menu_id)" :virtual_match_list="match_list_by_no"
+          :match_list_loaded="match_list_loaded" :csid="current_sub_menu_id" :v_menu_changed="v_menu_changed"
           @switch_match="switch_match_handle"  @start="match_start_handle">
         </v-s-match-list>
 
@@ -60,23 +52,23 @@
           <!-- 赛马切换玩法集tab组件 -->
           <virtual-sports-tab
             :batch="current_match_id"
-            v-if="![1001,1004].includes(menu_lv2)">
+            v-if="![1001,1004].includes(current_sub_menu_id)">
           </virtual-sports-tab>
           <!-- 打印请勿删除 -->
           <div><span>赛事状态</span>{{current_match.match_status}}</div>
           <!-- 赛马投注区域 -->
-          <div v-if="match_list_by_no && match_list_by_no.length && ![1001,1004].includes(menu_lv2)">
-            <!-- <virtual-sports-category
+          <div v-if="match_list_by_no && match_list_by_no.length && ![1001,1004].includes(current_sub_menu_id)">
+            <virtual-sports-category
                 :top_menu_changed="top_menu_changed"
                 :current_match="match_list_by_no[0]" 
                 source='sports'
                 @top_menu_change="handle_top_menu_change"
-            /> -->
+            />
           </div>
         </div>
 
         <!-- 注释勿删除 -->
-        <div class="v-sports-ranking" v-if="![1001,1004].includes(menu_lv2)">
+        <div class="v-sports-ranking" v-if="![1001,1004].includes(current_sub_menu_id)">
           <!-- 打印请勿删除 -->
           <div><span>赛事状态</span>{{current_match.match_status}}</div>
           <!-- 赛马的动态排名---赛马在比赛过程的时候显示 -->
@@ -89,7 +81,7 @@
       <!-- 排行榜页面,小组赛淘汰赛页面  -->
       <div v-else class="list-wrapper">
         <!--  足球 页面  -->
-        <div v-if="[1001,1004].includes(menu_lv2)">
+        <div v-if="[1001,1004].includes(current_sub_menu_id)">
           <!--  足球小组赛,淘汰赛页面  -->
           <group-knockout
             v-if="tab_items[tab_item_i] ? tab_items[tab_item_i].field3 != '': false"
@@ -124,12 +116,14 @@ import VirtualVideo from 'src/core/match-list-h5/virtual-sports/virtual-video.js
 import resultPage from "src/base-h5/components/match-list/components/result-page.vue"
 import noData from "src/base-h5/components/common/no-data.vue";
 import virtualSkeleton from "src/base-h5/components/skeleton/virtual-sports/virtual.vue"
-import { PageSourceData } from "src/core/index.js";
 import lodash from "lodash";
-import { menu_lv2 } from 'src/base-h5/mixin/menu.js'
+import { get_now_server } from 'src/core/utils/module/other.js'
 import { standard_edition } from 'src/base-h5/mixin/userctr.js'
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
+
+import 'src/base-h5/css/pages/virtual-sports.scss'
+
 export default defineComponent({
   name: "virtual",
   components:{
@@ -149,14 +143,13 @@ export default defineComponent({
   props:{
     menu_list:Array,
     params:Object,
-    current_sub_menu:Object,
     is_user_refresh:Boolean,
     v_menu_changed:Number | String,
     v_match_router_ente:Number,
   },
   
   setup(props, evnet) {
-    const { menu_list, params, current_sub_menu, is_user_refresh, v_match_router_ente } = toRefs(props);
+    const { menu_list, params, is_user_refresh, v_match_router_ente } = toRefs(props);
     const state = reactive({
       // 事件集合
       emitters: [],
@@ -169,10 +162,6 @@ export default defineComponent({
       trend_is_show:true,
       //联赛选中项下标
       tab_item_i:0,
-      //批次(足球轮列表或赛马期列表等)
-      no_title_list:[],
-      //指定轮或期下的赛事列表
-      match_list_by_no:[],
       //当前选中的播放的赛事
       current_match:{},
       //赛事列表获取到空数据标志
@@ -209,10 +198,20 @@ export default defineComponent({
       procee_again_timer: null,
       timer1_: null
     });
-    const sub_menuid = computed(() => {
-      return ""
+    const match_list_by_no = computed(() => {
+      return VirtualData.match_list_by_no || []
+    })
+    const tab_items = computed(() => {
+      let r = [];
+      if(menu_list.value && menu_list.value.length){
+        r = menu_list.value;
+      }
+      return r;
     });
-    const current_league = computed(() => {
+    const current_sub_menu_id = computed(() => {
+      return Number(lodash.get(VirtualData.current_sub_menu, 'menuId', 0))
+    })
+    const sub_menuid = computed(() => {
       return ""
     });
     const current_batch = computed(() => {
@@ -224,9 +223,6 @@ export default defineComponent({
     const get_prev_v_sports_params = computed(() => {
       return ""
     });
-    const get_prev_v_sports = computed(() => {
-      return ""
-    });
     const is_show_analyse = computed(() => {
       return ""
     });
@@ -236,13 +232,7 @@ export default defineComponent({
     const get_betbar_show = computed(() => {
       return ""
     });
-    const tab_items = computed(() => {
-      let r = [];
-      if(menu_list && menu_list.length){
-        r = menu_list;
-      }
-      return r;
-    });
+    
     
     
     watch(() => props.v_menu_changed, (change_str) => {
@@ -252,42 +242,37 @@ export default defineComponent({
         state.top_menu_changed = !change_str.includes('zu_lan_')
       }
     );
-    watch( () => menu_list, () => {
+    watch( () => menu_list.value, () => {
         if(tab_items.value && tab_items.value.length){
 
-          if(current_league){
+          if(VirtualData.current_league){
             tab_items.value.forEach((t_item,i) => {
-              if(t_item.menuId == current_league.menuId){
+              if(t_item.menuId == VirtualData.current_league.menuId){
                 state.tab_item_i = i;
               }
             });
           }
 
-          let current_league = tab_items.value[tab_item_i];
-          // set_current_league(_.cloneDeep(current_league));
+          let current_league = tab_items.value[state.tab_item_i];
+          VirtualData.set_current_league(lodash.cloneDeep(current_league));
           // tab_item_click_handle(tab_item_i,'is_force');
         }
-      }
-    );
-    watch( () => props.current_sub_menu, () => {
-        let prev_league_id = ''
-        if(current_league){
-          prev_league_id = current_league.menuId;
-        }
-        // set_current_batch({});
-        set_league_i_by_id(prev_league_id);
-        tab_item_click_handle(state.tab_item_i);
-        // get_virtual_sport_local();
-      }
-    );
+      }, { deep: true });
 
-    watch( () => menu_lv2.value, (c,n) => {
+    watch( () => current_sub_menu_id.value, (c,n) => {
         //赛马赛狗 摩托车
         if([1011, 1002, 1010, 1009].includes(c)){
           state.ranking_list_change = false;
         }
-      }
-    );
+        let prev_league_id = ''
+        if(VirtualData.current_league){
+          prev_league_id = VirtualData.current_league.menuId;
+        }
+        VirtualData.set_current_batch({});
+        set_league_i_by_id(prev_league_id);
+        tab_item_click_handle(state.tab_item_i);
+        VirtualData.get_virtual_sport_local();
+      }, { deep: true });
     onMounted(() => {
       // #TODO emit事件
       state.emitters = [
@@ -314,7 +299,6 @@ export default defineComponent({
 
     // #TODO vuex actions 
     // ...mapMutations({
-    //   set_current_league:"set_current_league",
     //   set_video_process_data:"set_video_process_data",
     //   set_prev_v_sports_params:"set_prev_v_sports_params",
     //   set_current_mid:'set_current_mid',
@@ -331,7 +315,7 @@ export default defineComponent({
      *@return {Undefined} undefined
      */
     const send_virtual_result_rank_data = (arr) => {
-      if(menu_lv2.value == 1009) {
+      if(current_sub_menu_id.value == 1009) {
         state.virtual_result_rank_data = arr
       }
     };
@@ -340,14 +324,14 @@ export default defineComponent({
      * @params {Object} mid 赛事id,batchNo 期号
      */
     const arrived10_handle = ({mid,batchNo}) => {
-      if(state.match_list_by_no && state.match_list_by_no.length){
-        state.match_list_by_no.forEach(m => {
+      if(match_list_by_no.value && match_list_by_no.value.length){
+        match_list_by_no.value.forEach(m => {
           if(m.batchNo == batchNo){
             m.mhs = 1;
           }
         });
       }
-      if(menu_lv2.value == 1004 && !state.singleton_10second){
+      if(current_sub_menu_id.value == 1004 && !state.singleton_10second){
         state.singleton_10second = true;
         VirtualData.get_score_basket_ball();
       }
@@ -360,11 +344,11 @@ export default defineComponent({
       // get_result_score();
 
       let is_all_end = true;
-      if(!state.match_list_by_no || !state.match_list_by_no.length){
+      if(!match_list_by_no.value || !match_list_by_no.value.length){
         is_all_end = false;
       }
-      for (let i = 0; i < state.match_list_by_no.length; i++) {
-        const m = state.match_list_by_no[i];
+      for (let i = 0; i < match_list_by_no.value.length; i++) {
+        const m = match_list_by_no.value[i];
         if(current_batch.batchNo != m.batchNo){
           is_all_end = false;
           break;
@@ -377,12 +361,12 @@ export default defineComponent({
       //所有赛事结束时,状态改为锁盘11(可以看到赔率不能投注)
       if (is_all_end) {
         let mid_list = [];
-        state.match_list_by_no.forEach(m => {
+        match_list_by_no.value.forEach(m => {
           mid_list.push(m.mid);
         });
         if (mid_list.length) {
           get_match_result(mid_list.join(','), () => {
-            state.match_list_by_no.forEach(m => {
+            match_list_by_no.value.forEach(m => {
               m.mhs = 11;
               mid_list.push(m.mid);
             });
@@ -392,7 +376,7 @@ export default defineComponent({
         // useMittEmit(MITT_TYPES.EMIT_IS_ALL_END_NOTICE);
 
         //1011赛马、1002赛狗、1010摩托车、1009泥地摩托车结束时更新下一期
-        if([1011, 1002, 1010, 1009].includes(menu_lv2.value)){
+        if([1011, 1002, 1010, 1009].includes(current_sub_menu_id.value)){
           state.timer1_ = setTimeout(() => {
             check_is_first_tab_delete();
           },5000);
@@ -407,16 +391,16 @@ export default defineComponent({
      */
     const timer_ended_handle = (flag) => {
       //篮球滚球倒计时结束拉取视频接口
-      if(menu_lv2.value == 1004){
+      if(current_sub_menu_id.value == 1004){
         if(flag == 'is_basketball_playing'){
-          get_video_process_by_api(() => {
+          VirtualVideo.get_video_process_by_api(() => {
             VirtualVideo.get_match_video_process(state.current_match);
           });
           state.is_video_playing = true;
           get_next_pre_basketball();
         }
         else if(flag == 'is_basketball_pre'){
-          get_video_process_by_api();
+          VirtualVideo.get_video_process_by_api();
           VirtualData.get_score_basket_ball();
           useMittEmit(MITT_TYPES.EMIT_PRE_COUNTING_EDN);
           // useMittEmit(MITT_TYPES.EMIT_PRE_COUNTING_EDN); //篮球早盘倒计时结束
@@ -424,7 +408,7 @@ export default defineComponent({
       }
       else{
         // 比赛已开始, 获取视频接口
-        get_video_process_by_api(() => {
+        VirtualVideo.get_video_process_by_api(() => {
           VirtualVideo.get_match_video_process(state.current_match);
         });
       }
@@ -435,14 +419,14 @@ export default defineComponent({
      * @params {Object} match赛事对象
      */
     const switch_match_handle = (i) => {
-      let match = state.match_list_by_no[i];
+      let match = match_list_by_no.value[i];
       if(match){
         let server_now = get_now_server();
         match.start_now_sub = Number(match.mgt) - server_now;
-        if(menu_lv2.value == 1004){
+        if(current_sub_menu_id.value == 1004){
           if(match.mmp == 'INGAME'){
             if(match.start_now_sub <= 0){
-              get_video_process_by_api(() => {
+              VirtualVideo.get_video_process_by_api(() => {
                 state.current_match = match;
                 VirtualVideo.get_match_video_process(state.current_match);
               });
@@ -450,7 +434,7 @@ export default defineComponent({
           }
           else if(match.mmp == 'PREGAME'){
             if(match.start_now_sub <= 0){
-              get_video_process_by_api();
+              VirtualVideo.get_video_process_by_api();
               useMittEmit(MITT_TYPES.EMIT_BASKETBALL_TIME_ARRIVED);
               // useMittEmit(MITT_TYPES.EMIT_BASKETBALL_TIME_ARRIVED);
             }
@@ -460,7 +444,7 @@ export default defineComponent({
         else{
           if(match.start_now_sub < 0){
             state.current_match = {};
-            get_video_process_by_api(() => {
+            VirtualVideo.get_video_process_by_api(() => {
               state.current_match = match;
               VirtualVideo.get_match_video_process(state.current_match);
             });
@@ -477,25 +461,25 @@ export default defineComponent({
      * @params {Object} match赛事对象
      */
     const match_start_handle = () => {
-      get_video_process_by_api();
+      VirtualVideo.get_video_process_by_api();
     };
     /**
      * 更新下一期赛事列表
      */
     const update_n_batch_handle = () => {
-      // get_virtual_sport_local('is_user_clicked');
+      VirtualData.get_virtual_sport_local('is_user_clicked');
     };
     /**
      * 联赛切换
      * @params {Number} i
      */
     const tab_item_click_handle = (i,is_force,user_change) => {
-      if(state.tab_item_i === i && !is_force) return;
+      if(state.tab_item_i=== i && !is_force) return;
       if(state.ranking_list_change) {
         state.before_match_tab_trend = Math.random();
       }
       if(user_change == 'user_change'){
-        // set_current_batch({});
+        VirtualData.set_current_batch({});
       }
       state.tab_item_i = i;
       if(tab_items.value && tab_items.value.length && state.tab_item_i > -1){
@@ -503,20 +487,20 @@ export default defineComponent({
         if(!current_league){
           current_league = tab_items.value[0];
         }
-        set_current_league(lodash.cloneDeep(current_league));
+        VirtualData.set_current_league(lodash.cloneDeep(current_league));
       }else{
-        set_current_league({});
+        VirtualData.set_current_league({});
       }
       state.current_match = {};
-      // get_virtual_sport_local('is_user_clicked');
+      VirtualData.get_virtual_sport_local('is_user_clicked');
     };
     /**
      * 生成赛事请求接口参数
      */
     const param_generate = () => {
       let params = null;
-      if(menu_list && menu_list[state.tab_item_i]){
-        let league = menu_list[state.tab_item_i];
+      if(menu_list.value && menu_list.value[state.tab_item_i]){
+        let league = menu_list.value[state.tab_item_i];
         params = {
           tid:league.field1,
           csid:params.csid
@@ -571,14 +555,13 @@ export default defineComponent({
       update_n_batch_handle,
       tab_items,
       sub_menuid,
-      menu_lv2,
-      current_league,
       current_batch,
       get_video_process_data,
       get_prev_v_sports_params,
-      get_prev_v_sports,
       is_show_analyse,
       get_bet_list,
+      match_list_by_no,
+      current_sub_menu_id,
       get_betbar_show,
     }
   }

@@ -7,6 +7,7 @@ import lodash from 'lodash'
 import store from "src/store-redux/index.js";
 import VirtualData from "./virtual-data"
 import VirtualClass from "./virtual-class"
+import { menu_lv2 } from 'src/base-h5/mixin/menu.js'
 import { useMittEmit, MITT_TYPES } from "src/core/mitt"
 
 class VirtualVideo {
@@ -55,14 +56,13 @@ class VirtualVideo {
    * 生成视频进程接口请求缓存key
    */
   gen_video_api_cache_key() {
-    let { sub_menu_type, current_league, current_batch } = state;
-    if (!sub_menu_type || !current_league || !current_batch) {
+    if (!menu_lv2.value || !VirtualData.current_league || !VirtualData.current_batch) {
       return {};
     }
     let params = {
-      csid: sub_menu_type,
-      tid: current_league.menuId,
-      batchNo: current_batch.batchNo
+      csid: menu_lv2.value,
+      tid: VirtualData.current_league.menuId,
+      batchNo: VirtualData.current_batch.batchNo
     };
     this.video_by_api_cache_key = `${params.csid}-${params.tid}-${params.batchNo}`;
     return params;

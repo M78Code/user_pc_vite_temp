@@ -29,7 +29,7 @@
 // import {mapGetters} from "vuex";
 import group_matches from "src/base-h5/components/virtual/group-matches.vue";
 import knockout from "src/base-h5/components/virtual/knockout.vue";
-
+import 'src/base-h5/css/pages/virtual-group-knockout.scss'
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 export default defineComponent({
   name: "group_knockout",

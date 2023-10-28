@@ -158,6 +158,7 @@ import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt/index.js"
 import { details_main } from "./details.js";
 import { ref, defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch, provide,defineAsyncComponent } from "vue";
 import {UserCtr,compute_css_obj,compute_img_url,MatchDetailCalss,MenuData,utils} from "src/core/";
+console.log(MenuData,'MenuData');
 import { compute_css_variables } from "src/core/css-var/index.js"
 import {is_export } from "src/base-h5/mixin/menu";
 // 详情页中部玩法集tab

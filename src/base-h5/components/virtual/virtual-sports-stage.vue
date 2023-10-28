@@ -1,11 +1,11 @@
 <template>
   <div class="virtual-sports-stage" :data-mid="'mid-'+current_match.mid" :data-mstatus="'status-'+m_status">
     <div class="banner" :class="{
-      horse:menu_lv2 == 1011,
-      dog: [1002, 1010, 1009].includes(menu_lv2),
-      basketball:menu_lv2 == 1004,
-      motorcycle: [1010, 1009].includes(menu_lv2),
-      dirt_motorcycle:menu_lv2 == 1009
+      horse:current_sub_menu_id == 1011,
+      dog: [1002, 1010, 1009].includes(current_sub_menu_id),
+      basketball:current_sub_menu_id == 1004,
+      motorcycle: [1010, 1009].includes(current_sub_menu_id),
+      dirt_motorcycle:current_sub_menu_id == 1009
       }">
       <loading v-show="virtual_match_list_data_loading" class="wrapper-loading-c" />
 
@@ -33,7 +33,7 @@
           </div>
         </div>
         <!-- 实时比分-->
-        <div v-if="[1001,1004].includes(menu_lv2)"
+        <div v-if="[1001,1004].includes(current_sub_menu_id)"
           class="current-score row justify-around items-center">
           <div class="score-info-wrapper">
             <div class="team-and-score">
@@ -71,29 +71,29 @@
           <div>
             {{current_match.teams[1] ? current_match.teams[1] : 0}}
           </div>-->
-          <div v-if="menu_lv2 != 1004" class="c-s-timer-w row justify-center items-center">
+          <div v-if="current_sub_menu_id != 1004" class="c-s-timer-w row justify-center items-center">
             {{current_match.show_time}}'
             <div class="update-timer">
               {{match_process_update}}
             </div>
           </div>
-          <div v-if="menu_lv2 == 1004" class="c-s-timer-w basketball row justify-center items-center">
+          <div v-if="current_sub_menu_id == 1004" class="c-s-timer-w basketball row justify-center items-center">
             <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/basket_ball_video_playing.svg`" alt="">
           </div>
         </div>
       </div>
       <!-- 2:赛事结束显示对阵 -->
-      <div v-if="m_status == 2 && get_score_list().length && menu_lv2 != 1004" class="fat-box ended">
+      <div v-if="m_status == 2 && get_score_list().length && current_sub_menu_id != 1004" class="fat-box ended">
       <!--<div  class="fat-box ended">-->
 
         <!-- 赛马/赛狗赛事结束对阵 -->
-        <div v-if="![1001,1004].includes(menu_lv2)" class="score row justify-center items-center">
+        <div v-if="![1001,1004].includes(current_sub_menu_id)" class="score row justify-center items-center">
           <!-- 已完赛 -->
-          <div :style="{visibility: ![1002, 1011, 1010, 1009].includes(menu_lv2) ? 'hidden':'visible'}"
+          <div :style="{visibility: ![1002, 1011, 1010, 1009].includes(current_sub_menu_id) ? 'hidden':'visible'}"
             v-if="source != 'detail'"
             class="match-over">{{ $t('collect.match_end')}}</div>
           <div v-for="(score,i) in get_score_list()" :key="i">
-            <div class="score-box row justify-center items-center" :class="get_rank_background(score,menu_lv2)"></div>
+            <div class="score-box row justify-center items-center" :class="get_rank_background(score,current_sub_menu_id)"></div>
           </div>
         </div>
         <!-- 足球赛事结束对阵 -->
@@ -110,10 +110,8 @@
               <span>{{away_score}}</span>
             </div>
             <div
-                v-show="current_match &&
-                (current_match.s170_home > 0 || current_match.s170_away > 0)"
-                class="match-msc match-penalty"
-            >
+                v-show="current_match && (current_match.s170_home > 0 || current_match.s170_away > 0)"
+                class="match-msc match-penalty" >
               <!--<span>-->
               <!--  {{ $t('mmp[1][50]')}}:&nbsp;-->
               <!--</span>-->
@@ -144,7 +142,7 @@
     <dateMatchList :current_match="current_match" :v_m_status="m_status"
       :virtual_match_list="virtual_match_list" :source="source"
       :is_pre_counting_end="is_pre_counting_end" :match_status="current_batch.mmp"
-      v-if="basketball_status == 0 && menu_lv2 == 1004 && (match_started && !is_video_playing || m_status == 2 || is_pre_counting_end)" />
+      v-if="basketball_status == 0 && current_sub_menu_id == 1004 && (match_started && !is_video_playing || m_status == 2 || is_pre_counting_end)" />
     <!-- 虚拟篮球详情组件 -->
     <virtualBasketball
       v-if="basketball_status > 0"
@@ -166,14 +164,12 @@ import VirtualData from 'src/core/match-list-h5/virtual-sports/virtual-data.js'
 import VirtualVideo from 'src/core/match-list-h5/virtual-sports/virtual-video.js'
 
 import lodash from "lodash"
-import { menu_lv2 } from 'src/base-h5/mixin/menu.js'
 import { LOCAL_PROJECT_FILE_PREFIX } from "src/core";
+import { get_now_server } from 'src/core/utils/module/other.js'
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 export default defineComponent({
   name: "virtual-sports-stage",
-  // #TODO mixins
-  // mixins:[common],
   components:{
     virtualSportsTimer,
     dateMatchList,
@@ -258,6 +254,10 @@ export default defineComponent({
 
     // #TODO EMIT 事件
     let emitters = []
+
+    const current_sub_menu_id = computed(() => {
+      return Number(lodash.get(VirtualData.current_sub_menu, 'menuId', 0))
+    })
     onMounted(() => {
       set_loading_state();
       user_destroy_resource();
@@ -381,7 +381,7 @@ export default defineComponent({
      */
     const timer_ended_handle = (mid) => {
       get_current_match_video_process();
-      if(menu_lv2.value == 1004){
+      if(current_sub_menu_id.value == 1004){
         if(current_batch.mmp == 'INGAME'){
           $emit('time_ended','is_basketball_playing');
         }
@@ -548,7 +548,7 @@ export default defineComponent({
       clearTimeout(match_ended_timer);
       let delay_time = 30000;
       //虚拟篮球10秒后获取下一期
-      if(menu_lv2.value == 1004) {
+      if(current_sub_menu_id.value == 1004) {
         delay_time = 1000 * 14;
       }
 
@@ -587,7 +587,7 @@ export default defineComponent({
           res.push(last_win_obj.ranking3);
         }
       }
-      if(virtual_result_rank_data.length && menu_lv2.value == 1009) {
+      if(virtual_result_rank_data.length && current_sub_menu_id.value == 1009) {
         let arr = lodash.sortBy(virtual_result_rank_data, 'ranking')
         for (const item of arr) {
           res.push(item.no)
@@ -631,7 +631,7 @@ export default defineComponent({
         }
         if(current_league){
           let p = lodash.cloneDeep(get_prev_v_sports_params);
-          let p_key = `${menu_lv2.value}-${current_league.menuId}`;
+          let p_key = `${current_sub_menu_id.value}-${current_league.menuId}`;
           p[p_key] = lodash.cloneDeep(new_);
           set_prev_v_sports_params(p);
         }
@@ -756,7 +756,7 @@ export default defineComponent({
           state.seek_to_target = 0;
           next_match_time_counting_down();
           get_next_batch_no();
-          if(menu_lv2.value == 1004){
+          if(current_sub_menu_id.value == 1004){
             VirtualData.get_score_basket_ball();
           }
         }
@@ -814,7 +814,7 @@ export default defineComponent({
       set_init_video_on,
       detail_back,
       open,
-      menu_lv2,
+      current_sub_menu_id,
       change_settle_status,
       all_ended_handle,
       timer_ended_handle,

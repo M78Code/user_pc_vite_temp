@@ -54,11 +54,11 @@ import virtual_sports_category from "src/base-h5/components/details/children/vir
 import virtual_match_statistic from 'src/base-h5/components/details/components/virtual_match_statistic.vue'
 import virtual_sports_stage from 'src/project/pages/virtual/virtual_sports_part/virtual_sports_stage.vue'
 import VSport from 'src/base-h5/utils/vsport/vsport.js';
-
+import VirtualVideo from 'src/core/match-list-h5/virtual-sports/virtual-video.js'
 import lodash from "lodash";
 import { useRouter, useRoute } from "vue-router";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
-
+import { MatchDetailCalss,MenuData } from "src/core";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
 export default defineComponent({
   name: "virtual_sports_details",
@@ -86,13 +86,23 @@ export default defineComponent({
       // 默认不刷新
       refreshing:false,
     });
-
+    const is_show_analyse =  ref(MatchDetailCalss.is_show_details_analyse)
+    const matchid =  ref(MatchDetailCalss.get_goto_detail_matchid)
+    const get_current_gotodetail_match =  ref(MatchDetailCalss.current_gotodetail_match)
+    watch(
+      () => MatchDetailCalss.details_data_version.version,
+      (val) => {
+        if (val) {
+          is_show_analyse.value = MatchDetailCalss.is_show_details_analyse
+          matchid.value = MatchDetailCalss.get_goto_detail_matchid
+          get_current_gotodetail_match.value = MatchDetailCalss.current_gotodetail_match
+        }
+      },
+      { deep: true }
+  );
     // #TODO VUEX
     // computed: {
     //   ...mapGetters({
-    //     is_show_analyse: 'get_is_show_details_analyse',
-    //     matchid: "get_goto_detail_matchid",
-    //     get_current_gotodetail_match:"get_current_gotodetail_match",
     //     sub_menuid: 'get_current_sub_menuid',
     //     sub_menu_type: 'get_curr_sub_menu_type',
     //     current_league: 'get_current_league',
@@ -136,7 +146,7 @@ export default defineComponent({
       mid = mid_;
       if(mid_) set_goto_detail_matchid(mid_);
       let parma = {
-        mid: matchid || mid_,
+        mid: matchid.value || mid_,
       }
       api_v_sports.get_virtual_match_detail(parma).then(res => {
         let code = lodash.get(res,'code');
@@ -155,7 +165,7 @@ export default defineComponent({
           let now_se = get_now_server();
           let mgt_n = Number(data.mgt);
           if(now_se > mgt_n){
-            get_video_process_by_api(() => {
+            VirtualVideo.get_video_process_by_api(() => {
               init_video_play_status(video_process_data);
             });
           }
@@ -321,7 +331,7 @@ export default defineComponent({
         // 如果是滚球状态,并且是列表的第一场赛事,进入详情页要播放视频
         if(current_match.mmp == "INGAME" && route.query.i == 0){
           // 播放视频
-          get_video_process_by_api(() => {
+          VirtualVideo.get_video_process_by_api(() => {
             init_video_play_status(video_process_data);
           });
         }else{
@@ -330,7 +340,7 @@ export default defineComponent({
         }
       }else{
         // 比赛已开始, 获取视频接口
-        get_video_process_by_api(() => {
+        VirtualVideo.get_video_process_by_api(() => {
           init_video_play_status(video_process_data);
         });
       }

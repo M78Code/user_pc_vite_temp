@@ -1,7 +1,6 @@
 <template>
   <div class="match-list-wrapper" :class="{standard:standard_edition == 2}">
-    <template>
-      <div class="title-wrap-standard row justify-end" v-if="standard_edition == 2">
+    <div class="title-wrap-standard row justify-end" v-if="standard_edition == 2">
         <div class="odd-title-wrapper row">
           <div class="odd-t-w-inner row items-center" :class="{status2:standard_odd_status}">
             <div v-for="(hpl_title, hp_i) of i18n_t('list_title.'+csid+'.title')" :key="hp_i">
@@ -10,11 +9,10 @@
           </div>
         </div>
       </div>
-      <v-sports-match-item v-for="(match_item,i) in virtual_match_list" :match_selected_i="selected_match_i"
-        :key="i" :i="i" :match_item="match_item" @switch_match="switch_match_handle"
-        @odd_pan="odd_pan_handle" :other_status="standard_odd_status">
-      </v-sports-match-item>
-    </template>
+    <VirtualSportsMatchItem v-for="(match_item,i) in virtual_match_list" :match_selected_i="selected_match_i"
+      :key="i" :i="i" :match_item="match_item" @switch_match="switch_match_handle"
+      @odd_pan="odd_pan_handle" :other_status="standard_odd_status">
+    </VirtualSportsMatchItem>
   </div>
 </template>
 
@@ -22,8 +20,7 @@
 // #TODO VUEX
 // import { mapGetters, mapActions } from "vuex";
 import SVirtual from "src/base-h5/components/skeleton/virtual-sports/virtual.vue"
-import v_s_match_timer from "src/base-h5/components/virtual/virtual-sports-match-timer.vue";
-import virtualSportsMatchItem from "src/base-h5/components/virtual/virtual-sports-match-item.vue";
+import VirtualSportsMatchItem from "src/base-h5/components/virtual/virtual-sports-match-item.vue";
 // #TODO MIXINS 
 // import betting from 'project_path/mixins/betting/betting.js';
 import { standard_edition } from 'src/base-h5/mixin/userctr.js'
@@ -34,8 +31,7 @@ export default defineComponent({
   // mixins:[common],
 
   components:{
-    'v-s-match-timer':v_s_match_timer,
-    virtualSportsMatchItem,
+    VirtualSportsMatchItem,
     SVirtual
   },
 
@@ -70,6 +66,9 @@ export default defineComponent({
       return ""
     })
     onMounted(() => {
+      setTimeout(() => {
+        console.log(props.virtual_match_list)
+      }, 3000)
       // #TODO emit
       // useMittOn(MITT_TYPES.EMIT_XU_NI_TY_STANDARD_ODD_STATUS,odd_pan_handle);
     })
@@ -99,11 +98,9 @@ export default defineComponent({
         state.standard_odd_status = 0;
       }
     );
-    watch(
-      () => props.virtual_match_list,
-      () => {
-        if(!virtual_match_list || !virtual_match_list.length) return;
-        state.v_match_hps = virtual_match_list[0].hps
+    watch( () => props.virtual_match_list, (newValue) => {
+        if(!newValue || !newValue.length) return;
+        state.v_match_hps = newValue[0].hps
         switch_match_handle(state.selected_match_i);
 
         // #TODO emit 

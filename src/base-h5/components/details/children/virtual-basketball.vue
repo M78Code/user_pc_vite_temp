@@ -51,7 +51,7 @@
 import { api_virtual } from "src/api/index.js";
 // #TODO mixins
 // import common from 'src/project/mixins/constant/module/common.js';
-
+import { get_now_server } from 'src/core/utils/module/other.js'
 import teamImg from "src/components/details/team-img/team-img-template-1/team-img.vue";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { t } from "src/boot/i18n.js";;

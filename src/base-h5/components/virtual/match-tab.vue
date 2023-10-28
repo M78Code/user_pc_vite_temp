@@ -2,12 +2,10 @@
   <div class="match-tab row justify-end">
     <!-- 足球联赛league_type 0 -->
     <div class="row items-center part-nav" ref="scrollBox" :class="{'part-nav-full': GlobalAccessConfig.get_statisticsSwitch() && menu_lv2 != 1004}">
-      <div ref="scrollItem" v-for="(item,i) in no_list" class="row sub-nav-item" @click="sub_nav_click_handle(item.batchNo, true)"
+      <div ref="scrollItem" v-for="(item,i) in no_title_list" class="row sub-nav-item" @click="sub_nav_click_handle(item.batchNo, true)"
         :class="{focus:item.batchNo === sub_focus_batch_no,footbal:[1001,1004].includes(menu_lv2)}"
         v-show="menu_lv2 != '1004' || item.mmp != 'PREGAME' || !pre_to_playing || i != 0"
-        :key="i">
-        {{item.no}}
-      </div>
+        :key="i"> {{item.no}} </div>
     </div>
     <!-- 分析icon显示 -->
     <div class="sr-icon-wrapper row justify-center items-center" @click.stop="trend_event"  v-if="GlobalAccessConfig.get_statisticsSwitch()&& menu_lv2 != 1004">
@@ -31,6 +29,7 @@ import { menu_lv2 } from 'src/base-h5/mixin/menu.js'
 import VirtualData from 'src/core/match-list-h5/virtual-sports/virtual-data.js'
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
+import 'src/base-h5/css/pages/virtual-match-tab.scss'
 export default defineComponent({
   name: "match_tab",
   props:{
@@ -40,12 +39,8 @@ export default defineComponent({
     current_league:Object,
     //当前虚拟赛事的日期编号列表
     no_list:Array,
-    //是否为用户手动切换联赛
-    is_user_switch_league:Number,
     //重设日期所在的列表中的下标
     is_reset_tab_i:Number,
-    //是否为自动切换到第一个tab(0否,非0是)
-    auto_change_tab_i_first:Number,
     //是否为主菜单(虚拟足球篮球赛马赛狗等)切换动作(0否,非0是)
     v_menu_changed:Number | String,
     //虚拟篮球更新到下一期
@@ -74,6 +69,11 @@ export default defineComponent({
     // 联赛的类型 field3: 空:不是杯赛 不为空:是杯赛
     const league_type = computed(() => {
       return current_league ? current_league.field3 : ''
+    })
+    const no_title_list = computed(() => {
+      console.log(VirtualData.no_title_list)
+      console.log(11111111111111111111)
+      return VirtualData.no_title_list
     })
     onMounted(() => {
       // #TODO EMIT
@@ -134,9 +134,7 @@ export default defineComponent({
      * @param {Undefined}
      * @param {Undefined}
      */
-    watch(
-      () => props.is_user_switch_league,
-      () => {
+    watch( () => VirtualData.is_user_switch_league, () => {
         no_init_selected()
       }
     );
@@ -158,7 +156,7 @@ export default defineComponent({
      * @param {Undefined}
      */
     watch(
-      () => props.auto_change_tab_i_first,
+      () => VirtualData.auto_change_tab_i_first,
       () => {
         state.sub_focus_batch_no = '';
         let batchNo = no_list[state.sub_nav_focus_i].batchNo;
@@ -312,6 +310,7 @@ export default defineComponent({
       sub_nav_click_handle,
       no_init_selected,
       trend_event,
+      no_title_list,
       GlobalAccessConfig,
       set_i_by_batch_no,
       end_playing_basketball_handle,
