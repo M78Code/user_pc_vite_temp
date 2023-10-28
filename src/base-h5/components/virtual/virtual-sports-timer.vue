@@ -78,7 +78,7 @@ export default defineComponent({
     watch(
       () => props.mid,
       () => {
-        start = null;
+        data.start = null;
         draw_timer_by_second();
       }
     );
@@ -130,7 +130,7 @@ export default defineComponent({
       let ms = Number(props.match.mgt) - get_now_server();
       let single_circle = 60 * 1000;
       let now = get_now_server();
-      if(start == null) start = now;
+      if(data.start == null) data.start = now;
       //最初时间(用于计算总圈数)
       let timer_key = `virtual-sports-timer`;
 
@@ -138,13 +138,13 @@ export default defineComponent({
       let first_time_ms = sessionStorage.getItem(timer_key);
       if(first_time_ms){
         let cache = JSON.parse(first_time_ms);
-        if(cache[mid]){
-          f_t_m_s = cache[mid] * 1;
+        if(cache[props.mid]){
+          f_t_m_s = cache[props.mid] * 1;
         }
       }
       if(!f_t_m_s){
         let dict = {};
-        dict[mid] = ms;
+        dict[props.mid] = ms;
         sessionStorage.setItem(timer_key,JSON.stringify(dict));
         f_t_m_s = ms;
       }
@@ -154,10 +154,10 @@ export default defineComponent({
       //剩余圈数
       let remain_circle = Math.ceil(remaining_time / single_circle);
 
-      is_last_circle = false;
+      data.is_last_circle = false;
       if(remain_circle == 1){
         strokeColor = true
-        is_last_circle = true;
+        data.is_last_circle = true;
       }
 
       //时钟毫秒数

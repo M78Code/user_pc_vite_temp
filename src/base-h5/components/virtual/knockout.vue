@@ -138,7 +138,7 @@ export default defineComponent({
           beginTime: current_match.mgt,
         }
         // json_list  调试用的, data 才是真实数据
-        let {code, data} = await api_v_sports.get_match_sorce(params)
+        let {code, data} = await api_virtual.get_match_sorce(params)
         visible = false
         check_if_there_tab = data
         // check_if_there_tab = json_list

@@ -80,7 +80,7 @@ export default defineComponent({
     );
     const get_list = async() => {
       try {
-        let {code , data} = await api_v_sports.get_virtual_sport_XZ_team_ranking({tid: tid})
+        let {code , data} = await api_virtual.get_virtual_sport_XZ_team_ranking({tid: tid})
         if(code == 200) {
           if(data && data.length > 0){
             group_stage_list = data

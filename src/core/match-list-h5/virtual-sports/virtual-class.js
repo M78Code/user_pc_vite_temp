@@ -4,7 +4,7 @@
  */
 
 import PageSourceData from "src/core/page-source/page-source.js";
-
+import { api_virtual  } from "src/api/index";
 class VirtualClass {
   constructor() {
     // 消费开关
@@ -280,7 +280,7 @@ class VirtualClass {
     // 实例化循环调用接口对象
     this.loop_callback = new LoopCallback(async (n) => {
       let res_ = false;
-      await api_v_sports.get_virtual_video_process(params).then(res => {
+      await api_virtual.get_virtual_video_process(params).then(res => {
         if (res.code == 200) {
           if (res.data && res.data.detail && Object.keys(res.data.detail).length) {
             let match_play_data = _.cloneDeep(res.data);

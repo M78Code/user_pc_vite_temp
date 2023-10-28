@@ -10,7 +10,6 @@ import VirtualClass from "./virtual-class"
 import { menu_lv2 } from 'src/base-h5/mixin/menu.js'
 import { useMittEmit, MITT_TYPES } from "src/core/mitt"
 import { api_virtual } from "src/api/index.js";
-
 class VirtualVideo {
 
   constructor() {

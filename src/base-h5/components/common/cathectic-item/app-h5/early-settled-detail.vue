@@ -5,6 +5,7 @@
 <template>
   <early-settle-tips />
   <div class="warp">
+    <div>{{ BetRecordClass.bet_record_version }}</div>
     <!-- 滑块 -->
     <q-slide-transition>
       <div v-show="detail_show" class="slider-wrap">
@@ -24,6 +25,7 @@
 </template>
 
 <script setup>
+import BetRecordClass from "src/core/bet-record/bet-record.js";
 import earlySettleTips from "src/base-h5/components/common/cathectic-item/app-h5/early-settle-tips.vue";
 import { ref } from 'vue'
 const props = defineProps({

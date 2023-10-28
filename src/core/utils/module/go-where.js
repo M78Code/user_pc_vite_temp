@@ -9,7 +9,7 @@
   let golistpage = false
   let godetailpage = false
 // =============================================
-
+import { MatchDetailCalss } from "src/core";
 // 返回首页
 const go_home = ({back_to, route_name, route, router}) => {
   if(get_show_favorite_list){
@@ -65,7 +65,7 @@ const go_back_from_virtual_detail = ({back_to, route_name, route, router}) => {
     }
   }
   // 重置此值
-  set_is_show_details_analyse(false)
+  MatchDetailCalss.set_is_show_details_analyse(false)
   router.push({name:'virtual_sports',query:{home: route.query.home ? route.query.home : 'match'}})
 }
 // 公告页返回

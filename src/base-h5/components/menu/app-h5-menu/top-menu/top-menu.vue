@@ -69,7 +69,7 @@ watch(UserCtr.user_version, () => {
 })
 
 onMounted(()=>{
-    MenuData.set_current_lv1_menu({mi:2});
+    MenuData.set_current_lv1_menu(2);
 })
 /**
  * 点击一级菜单

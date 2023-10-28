@@ -92,7 +92,18 @@ export default class MatchDetailCtr {
     this.details_data_cache = {} // 玩法集对应玩法缓存数据
     this.details_data_version = reactive({
       version:'111'
-    })
+    });
+
+    /* =========H5 */
+    // H5是否显示详情页的统计页面
+    this.is_show_details_analyse =false;
+    // H5赛事id
+    this.get_goto_detail_matchid = null;
+    //正在跳转详情的赛事
+    this.current_gotodetail_match={};
+    // 玩法tab 所有投注 - 进球 - 上半场 - 球队 - 让球&大小
+    this.details_item = 0;
+    /* =========H5 */
   }
 
   // =============H5获取/设置数据==============
@@ -353,6 +364,43 @@ export default class MatchDetailCtr {
   */
   set_top_id(val){
     this.topId = val
+    this.set_details_data_version()  
+  }
+
+  /**
+   * @description:正在跳转详情的赛事 
+   * @param {*} match
+   * @return {*}
+  */
+  set_current_gotodetail_match(match){
+    this.current_gotodetail_match = match
+    this.set_details_data_version()  
+  }
+  /**
+   * @description:正在跳转详情的赛事  
+   * @param {*} id 玩法tab 
+   * @return {*}
+  */
+  set_details_item(id){
+    this.details_item = id
+    this.set_details_data_version()  
+  }
+  /**
+   * @description:H5赛事id
+   * @param {*} id 玩法tab 
+   * @return {*}
+  */
+  set_goto_detail_matchid(id){
+    this.get_goto_detail_matchid = id
+    this.set_details_data_version()  
+  }
+  /**
+   * @description:H5详情是否显示统计
+   * @param {Boolean} flag 
+   * @return {*}
+  */
+  set_is_show_details_analyse(flag){
+    this.is_show_details_analyse = flag
     this.set_details_data_version()  
   }
 }

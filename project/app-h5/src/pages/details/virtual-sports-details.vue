@@ -5,7 +5,7 @@
       <div class="type-bg bg1001">
         <div class="back-wrap">
           <!-- 返回按钮 -->
-          <div class="detail-back" @click="$common.go_where({back_to: 'go_back_from_virtual_detail'})"></div>
+          <div class="detail-back" @click="go_where({back_to: 'go_back_from_virtual_detail',route_name:route.name,route,router})"></div>
           <!-- 虚拟体育 -->
           <div class="col">{{current_league.name}}</div>
           <!--刷新按钮-->
@@ -18,7 +18,7 @@
       <div class="detail-header-bg"></div>
       <div class="detail-header">
         <!--视频区域-->
-        <div class="stage-wrapper">
+        <div class="stage-wrapper">{{current_match}}{{current_league}}11
           <virtual-sports-stage source='detail'
             :current_match="current_match" @update_next_batch_match="update_n_batch_handle"
             :match_process_update="match_process_update"
@@ -49,26 +49,29 @@
 // import common from 'src/project/mixins/constant/module/common.js';
 // import virtual_sports_mixin from "src/project/mixins/virtual_sports/virtual_sports_mixin.js"
 import { api_virtual } from "src/api/index.js";
-import virtual_sports_tab from 'src/base-h5/components/details/components/virtual_sports_tab.vue'
-import virtual_sports_category from "src/base-h5/components/details/children/virtual_sports_category.vue"
-import virtual_match_statistic from 'src/base-h5/components/details/components/virtual_match_statistic.vue'
-import virtual_sports_stage from 'src/project/pages/virtual/virtual_sports_part/virtual_sports_stage.vue'
-import VSport from 'src/base-h5/utils/vsport/vsport.js';
+// import virtual_sports_tab from 'src/base-h5/components/details/components/virtual_sports_tab.vue'
+// import virtual_sports_category from "src/base-h5/components/details/children/virtual_sports_category.vue"
+// import virtual_match_statistic from 'src/base-h5/components/details/components/virtual_match_statistic.vue'
+import virtualSportsStage from 'src/base-h5/components/virtual/virtual-sports-stage.vue'
+// import VSport from 'src/base-h5/utils/vsport/vsport.js';
 import VirtualVideo from 'src/core/match-list-h5/virtual-sports/virtual-video.js'
+import VirtualData from 'src/core/match-list-h5/virtual-sports/virtual-data.js'
 import lodash from "lodash";
+import {debounce} from "lodash";
 import { useRouter, useRoute } from "vue-router";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
-import { MatchDetailCalss,MenuData } from "src/core";
-import { reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
+import { MatchDetailCalss,MenuData,MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance,go_where } from "src/core";
+import { reactive, computed, onMounted, onUnmounted, toRefs, watch,defineComponent,ref } from "vue";
+import { get_now_server } from 'src/core/utils/module/other.js'
 export default defineComponent({
   name: "virtual_sports_details",
   // #TODO MIXINS
   // mixins:[common,virtual_sports_mixin],
   components: {
-    'virtual-sports-tab': virtual_sports_tab,
-    'virtual-match-statistic': virtual_match_statistic,
-    'virtual-sports-stage': virtual_sports_stage,
-    'virtual-sports-category': virtual_sports_category,
+    virtualSportsStage,
+    // 'virtual-sports-tab': virtual_sports_tab,
+    // 'virtual-match-statistic': virtual_match_statistic,
+    // 'virtual-sports-category': virtual_sports_category,
   },
 
   setup(props, evnet) {
@@ -85,6 +88,7 @@ export default defineComponent({
       basketball_status:0,
       // 默认不刷新
       refreshing:false,
+      current_league:VirtualData.current_league  //todo
     });
     const is_show_analyse =  ref(MatchDetailCalss.is_show_details_analyse)
     const matchid =  ref(MatchDetailCalss.get_goto_detail_matchid)
@@ -120,7 +124,7 @@ export default defineComponent({
     //     init_video_play_status(new_);
     //   }
     // );
-
+     let timer_super28,timer1_ =null
     onMounted(() => {
       // 原created
 
@@ -128,7 +132,7 @@ export default defineComponent({
       //首页跳转虚拟体育设置menu_type为900
       clearTimeout(timer_super28)
       timer_super28 = setTimeout(()=>{
-        set_menu_type(900);
+         MenuData.set_menu_type(900);
       }, 500)
       // 延时器
       timer1_ = null;
@@ -143,8 +147,8 @@ export default defineComponent({
 
       //获取赛事详情数据
       let mid_ = route.query && route.query.mid;
-      mid = mid_;
-      if(mid_) set_goto_detail_matchid(mid_);
+      allData.mid = mid_;
+      if(mid_) MatchDetailCalss.set_goto_detail_matchid(mid_);
       let parma = {
         mid: matchid.value || mid_,
       }
@@ -154,12 +158,12 @@ export default defineComponent({
         if(code == 200 && data){
           init_match_fields(data);
           allData.match = data;
-          if(!current_match){
-            current_match = JSON.parse(JSON.stringify(data));
-            init_match_fields(current_match);
+          if(!allData.current_match){
+            allData.current_match = JSON.parse(JSON.stringify(data));
+            init_match_fields(allData.current_match);
           }
           else{
-            Object.assign(current_match,data);
+            Object.assign(allData.current_match,data);
           }
 
           let now_se = get_now_server();
@@ -169,16 +173,16 @@ export default defineComponent({
               init_video_play_status(video_process_data);
             });
           }
-          set_detail_data(data)
+          MatchDataWarehouseInstance.set_match_details(data)
         }
       })
       .catch(err => {
         console.error(err)
       });
-      cancel_ref = debounce(cancel_ref,200)
+      // cancel_ref = debounce(()=>{cancel_ref()},200)
     })
     onUnmounted(() => {
-      debounce_throttle_cancel(cancel_ref);
+      // debounce_throttle_cancel(cancel_ref);
       clearTimeout(timer1_)
       timer1_ = null
       clearTimeout(timer_super28);
@@ -250,7 +254,7 @@ export default defineComponent({
      * 初始化视频进程数据
      */
     const init_video_play_status = (video_p_data) => {
-      if(sub_menu_type == 1004 && (current_match.mmp == 'PREGAME' || route.query.i != 0)){
+      if(sub_menu_type == 1004 && (allData.current_match.mmp == 'PREGAME' || route.query.i != 0)){
         return
       }
       if(video_p_data){
@@ -258,59 +262,59 @@ export default defineComponent({
         if(video_p_data.detail){
           let m_o_video = video_p_data.detail[match_mid];
           if(!m_o_video) return;
-          if(current_match && (current_match.batchNo == m_o_video.batchNo ||
-            current_match.mid == m_o_video.mid) ){
-            Object.assign(current_match,lodash.cloneDeep(m_o_video));
+          if(allData.current_match && (allData.current_match.batchNo == m_o_video.batchNo ||
+            allData.current_match.mid == m_o_video.mid) ){
+            Object.assign(allData.current_match,lodash.cloneDeep(m_o_video));
           }
-          if(current_match){
-            current_match.start_now_sub = Number(current_match.mgt) - get_now_server();
-            set_current_sub_menuid(current_match.csid);
+          if(allData.current_match){
+            allData.current_match.start_now_sub = Number(allData.current_match.mgt) - get_now_server();
+            set_current_sub_menuid(allData.current_match.csid);
             let detail_setted = false;
             if(vsport_operate && typeof vsport_operate.destroy == 'function'){
               vsport_operate.destroy();
             }
-            vsport_operate = new VSport(current_match,res => {
+            vsport_operate = new VSport(allData.current_match,res => {
               if(sub_menu_type == 1004 && res.match_status == 2){
                 basketball_status = 2
                 res.match_status = 4
               }
               match_process_update = Math.random();
-              current_match.match_status = res.match_status;
-              current_match.show_time = res.show_time;
+              allData.current_match.match_status = res.match_status;
+              allData.current_match.show_time = res.show_time;
               //当赛事结束
-              if(current_match.match_status == 2){
+              if(allData.current_match.match_status == 2){
                 useMittEmit(MITT_TYPES.EMIT_SYNC_VIDEO_DATA, res);
                 // useMittEmit(MITT_TYPES.EMIT_SYNC_VIDEO_DATA,res);
               }
               //开赛后封盘
-              if(current_match.match_status > 0){
-                current_match.mhs = 1;
+              if(allData.current_match.match_status > 0){
+                allData.current_match.mhs = 1;
               }
               //视频时间更新,快进视频到相应的时间点
               if(res.upd == 1){
                 useMittEmit(MITT_TYPES.EMIT_SYNC_VIDEO_DATA, res);
                 // useMittEmit(MITT_TYPES.EMIT_SYNC_VIDEO_DATA,res);
               }
-              switch (Number(current_match.csid)) {
+              switch (Number(allData.current_match.csid)) {
                 case 1001:
                 case 1004:
                   if(res.upd == 1 && res.item_obj){
-                    Object.assign(current_match,res.item_obj);
+                    Object.assign(allData.current_match,res.item_obj);
                   }
                   break;
                 case 1011:
                 case 1010:
                 case 1002:
                   if(res.upd == 1 && res.item_obj){
-                    Object.assign(current_match,res.item_obj);
-                    $set(current_match,'upd_data', JSON.stringify(res.item_obj));
+                    Object.assign(allData.current_match,res.item_obj);
+                    $set(allData.current_match,'upd_data', JSON.stringify(res.item_obj));
                   }
                   break;
               }
 
               if(!detail_setted){
                 detail_setted = true;
-                set_current_gotodetail_match(lodash.cloneDeep(current_match));
+                set_current_gotodetail_match(lodash.cloneDeep(allData.current_match));
               }
 
             });
@@ -329,14 +333,14 @@ export default defineComponent({
       //篮球滚球倒计时结束拉取视频接口
       if(sub_menu_type == 1004){
         // 如果是滚球状态,并且是列表的第一场赛事,进入详情页要播放视频
-        if(current_match.mmp == "INGAME" && route.query.i == 0){
+        if(allData.current_match.mmp == "INGAME" && route.query.i == 0){
           // 播放视频
           VirtualVideo.get_video_process_by_api(() => {
             init_video_play_status(video_process_data);
           });
         }else{
           basketball_status = 1
-          current_match.match_status = 3
+          allData.current_match.match_status = 3
         }
       }else{
         // 比赛已开始, 获取视频接口
@@ -353,33 +357,33 @@ export default defineComponent({
 
       let match = "";
       if(match && match.mid == route.query.mid){
-        current_match = match;
-        set_current_sub_menuid(current_match.csid);
+       allData.current_match = match;
+        set_current_sub_menuid(allData.current_match.csid);
         let detail_setted = false;
         if(vsport_operate){
           vsport_operate.destroy();
         }
-        vsport_operate = new VSport(current_match,res => {
-          current_match.match_status = res.match_status;
-          current_match.show_time = res.show_time;
+        vsport_operate = new VSport(allData.current_match,res => {
+          allData.current_match.match_status = res.match_status;
+          allData.current_match.show_time = res.show_time;
           //当赛事结束
-          if(current_match.match_status == 2){
+          if(allData.current_match.match_status == 2){
             useMittEmit(MITT_TYPES.EMIT_SYNC_VIDEO_DATA, res);
             // useMittEmit(MITT_TYPES.EMIT_SYNC_VIDEO_DATA,res);
           }
           //开赛后封盘
-          if(current_match.match_status > 0){
-            current_match.mhs = 1;
+          if(allData.current_match.match_status > 0){
+            allData.current_match.mhs = 1;
           }
           //视频时间更新,快进视频到相应的时间点
           if(res.upd == 1){
             useMittEmit(MITT_TYPES.EMIT_SYNC_VIDEO_DATA, res);
             // useMittEmit(MITT_TYPES.EMIT_SYNC_VIDEO_DATA,res);
           }
-          switch (Number(current_match.csid)) {
+          switch (Number(allData.current_match.csid)) {
             case 1001:
               if(res.upd == 1 && res.item_obj){
-                Object.assign(current_match,res.item_obj);
+                Object.assign(allData.current_match,res.item_obj);
               }
               break;
             case 1011:
@@ -387,14 +391,14 @@ export default defineComponent({
             case 1009:
             case 1002:
               if(res.upd == 1 && res.item_obj){
-                Object.assign(current_match,res.item_obj);
-                $set(current_match,'upd_data', JSON.stringify(res.item_obj));
+                Object.assign(allData.current_match,res.item_obj);
+                $set(allData.current_match,'upd_data', JSON.stringify(res.item_obj));
               }
               break;
           }
           if(!detail_setted){
             detail_setted = true;
-            set_current_gotodetail_match(lodash.cloneDeep(current_match));
+            set_current_gotodetail_match(lodash.cloneDeep(allData.current_match));
           }
         });
 
@@ -412,6 +416,9 @@ export default defineComponent({
       init_video_play_status,
       timer_ended_handle,
       get_local_match_process_data,
+      go_where,
+      route,
+      router
     }
   }
 })
@@ -443,7 +450,8 @@ export default defineComponent({
     .detail-back {
       width: 0.3rem;
       height: 100%;
-      background: var(--q-color-com-img-bg-3) center no-repeat;
+       // TODO: 后续上传
+      background: url($SCSSPROJECTPATH + '/image/common/go_back.svg') no-repeat center / 96% 96%;
       background-size: 0.1rem auto;
       margin-left: 0.05rem;
     }

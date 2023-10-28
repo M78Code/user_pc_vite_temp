@@ -4,6 +4,7 @@
 -->
 <template>
     <div class="cancel-btn" @click="alertTips=true;">取消预约</div>
+    <div>{{ BetRecordClass.bet_record_version }}</div>
     <!-- 取消预约弹框 -->
     <q-dialog v-model="alertTips">
       <div class="tips-main">
@@ -19,6 +20,7 @@
 
 <script setup>
 import { ref } from 'vue'
+import BetRecordClass from "src/core/bet-record/bet-record.js";
 const props = defineProps({
   item_data: {
     type: Object

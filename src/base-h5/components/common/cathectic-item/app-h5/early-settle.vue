@@ -4,6 +4,7 @@
 -->
 <template>
   <div class="early-settle">
+    <div>{{ BetRecordClass.bet_record_version }}</div>
     <!-- 提前兑现规则申明 -->
     <early-settle-tips />
     <div class="early-button">
@@ -31,6 +32,7 @@
 </template>
 
 <script setup>
+import BetRecordClass from "src/core/bet-record/bet-record.js";
 import ClipboardJS from "clipboard";
 import { api_betting } from "src/api/index.js"
 // import { mapGetters, mapMutations } from "vuex";

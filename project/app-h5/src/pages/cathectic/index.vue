@@ -4,34 +4,38 @@
  * @Description: bw3新版从底部弹出的投注记录弹框（已结算+未结算+预约）
 -->
 <template>
+    <div style="display: none;">{{ BetRecordClass.bet_record_version }}</div>
     <div class="settle-dialog" :style="page_style">
-      <div v-if="!record_show_settle" class="row items-center yb_fontsize16 head-top" @touchmove.prevent>
+      <div v-if="BetRecordClass.selected != 3" class="row items-center yb_fontsize16 head-top" @touchmove.prevent>
         <div class="row col items-center justify-center">
           <p v-for="(item, index) in tabs" 
             :key="index" 
             @click="change_record(index)" 
-            :class="main_item == index && 'active-p'"
+            :class="BetRecordClass.selected == index && 'active-p'"
             > {{ item.title }}
           </p>
         </div>
       </div>
   
       <div class="content-m" ref="record_box">
+        <cathectic-item-all />
         <!-- 未结注单(未结算、预约中、已失效) -->
-        <template v-if="!record_show_settle">
-          <component :is="tabs[main_item].componentName" :main_item="main_item"></component>
-        </template>
+        <!-- <template v-if="BetRecordClass.selected != 3">
+          <component :is="tabs[BetRecordClass.selected].componentName"></component>
+        </template> -->
         <!-- 已结注单 -->
-        <template>
+        <!-- <template>
           <settle />
-        </template>>
+        </template> -->
       </div>
     </div>
   </template>
   
   <script setup>
+  import BetRecordClass from "src/core/bet-record/bet-record.js";
   import { api_betting } from "src/api/index.js";
   //   import { mapGetters, mapMutations } from "vuex"
+  import cathecticItemAll from "src/base-h5/components/cathectic/app-h5/cathectic-item-all.vue"
   import unsettle from "src/base-h5/components/cathectic/app-h5/unsettle.vue"
   import settle from "src/base-h5/components/cathectic/app-h5/settle.vue"
   import preRecord from "src/base-h5/components/cathectic/app-h5/pre-record.vue"
@@ -50,12 +54,6 @@
   
   // 待确认中的提前结算订单
   provide('queryorderpresettleconfirm_data', '')
-  
-  const props = defineProps({
-    record_show_settle: { // false未结注单   true已结注单
-      type: Boolean
-    }
-  })
 
   // 延时器
   const timer_1 = ref(null)
@@ -135,10 +133,8 @@
   }
   const change_record = (key) => {
     //已选中状态下不能点击
-    if (main_item.value === key) return;
-    main_item.value = key
-    store.dispatch({ type: "SET_MAIN_ITEM", data: key })
-  
+    if (BetRecordClass.selected === key) return;
+    BetRecordClass.set_selected(key);  
   }
   // 清除当前组件所有定时器
   const clear_timer = () => {

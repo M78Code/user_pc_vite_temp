@@ -13,7 +13,7 @@
 
 import { api_common, api_analysis } from "src/api";
 import lodash_ from "lodash";
-import { computed, ref, watch } from "vue";
+import { computed, nextTick, ref, watch } from "vue";
 import { SessionStorage, useMittEmit, MITT_TYPES, UserCtr, sprite_images_postion } from "src/core/";
 import BaseData from "src/core/base-data/base-data.js";
 const Cache_key = {
@@ -71,7 +71,6 @@ class MenuData {
   // mid 顶级菜单id
   get_menu_lvmi_list(mid){
     let menu_lv_mi_lsit = []
-    
     // 冠军 直接取值
     if(mid == 400){
       menu_lv_mi_lsit = (BaseData.mew_menu_list_res.find(item=> item.mi == 400 ) || {}).sl
@@ -87,13 +86,14 @@ class MenuData {
     }
     // 默认设置二级菜单id
     // this.set_current_lv_2_menu_mi( lodash_.get(menu_lv_mi_lsit,'[0]',{}))
-
+    console.error('menu_lv_mi_lsit',menu_lv_mi_lsit)
     this.menu_lv_mi_lsit = menu_lv_mi_lsit
+    return menu_lv_mi_lsit
   }
 
   get_menu_lv_2_mi_list(mi){
-    const item = this.menu_lv_mi_lsit.find(item=> item.mi == mi)
-    return item && item.sl
+    const item = this.menu_lv_mi_lsit.find(item=> item.mi == mi) || {}
+    return item.sl
   }
 
   // 设置二级菜单id
@@ -105,6 +105,17 @@ class MenuData {
      
     }
     this.update()
+  }
+  /**
+   * 选中1级menu
+   * item [object]当前点击对象
+   */
+  set_current_lv1_menu(lv1_mi) {
+    console.error('asdasdasd',lv1_mi)
+    this.current_lv_1_menu_mi.value = lv1_mi  
+    this.get_menu_lvmi_list(lv1_mi)
+    this.set_current_lv_2_menu_mi( lodash_.get(this.menu_lv_mi_lsit,'[0]',{}))
+    // this.update();
   }
 
   /**
