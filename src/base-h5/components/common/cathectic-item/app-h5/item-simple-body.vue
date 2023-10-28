@@ -17,41 +17,48 @@
       <span>大3.5 @2.16</span>
     </div>
     <div class="body-main">
-      <p><label>投注单号：</label> <span>{{data_b.betNo}}</span></p>
-      <p><label>投注时间：</label> <span>{{data_b.beginTime}}</span></p>
+      <p><label>投注单号：</label> <span>{{data_b.orderNo}}</span></p>
+      <p><label>投注时间：</label> <span>{{formatTime(+data_b.betTime, 'YYYY-mm-DD HH:MM')}}</span></p>
       <p><label>{{data_b.matchName}}</label></p>
-      <p><label>投资额：</label> <span>{{data_b.betAmount}}元</span></p>
+      <p><label>投注额：</label> <span>{{format_money2(data_b.orderAmountTotal)}}元</span></p>
       <template>
-        <p v-if="main_item != '1'" class="acount"><label>可赢额：</label> <span>5.60元</span></p>
+        <p v-if="main_item != '1'" class="acount"><label>可赢额：</label> <span>{{format_money2(data_b.maxWinAmount)}}元</span></p>
         <p v-else class="acount"><label>结算：</label> <span>赢 5.60元</span></p>
       </template>
-      <p><label>注单状态：</label> <span>投注成功</span></p>
+      <p><label>注单状态：</label> <span :class="class_foter">{{calc_text}}</span></p>
     </div>
   </div>
 </template>
 
 <script setup>
 import lodash from 'lodash'
-import { ref, onMounted, onUnmounted} from 'vue'
-import { t } from "src/boot/i18n.js";;
+import { ref, onMounted, onUnmounted, computed } from 'vue'
+import { i18n_t } from "src/boot/i18n.js";;
 import { project_name } from 'src/core'
+import { formatTime, format_money2 } from 'src/core/format/index.js'
 
-  //按钮名字
-  let btn_text = ref('')
-  //按钮图标的方向
-  let direction = ref('')
-  //是否展开
-  let box_bool = ref('')
-  let props = defineProps({
+let props = defineProps({
     data_b: {
+      type: Object
+    },
+    data_value: {
       type: Object
     },
     main_item: {
       type: [String, Number],
     }
   })
+  //按钮名字
+  let btn_text = ref('')
+  //按钮图标的方向
+  let direction = ref('')
+  //是否展开
+  let box_bool = ref('')
+  //订单状态的颜色类名
+  const class_foter = ref('')
+  
   onMounted(() => {
-    console.log(props.data_b);
+    console.log(props);
     rules_normal();
     rules_a();
     rules_b();
@@ -64,19 +71,84 @@ import { project_name } from 'src/core'
     //   $data[key] = null
     // }
   })
-
+ //返回订单状态
+ const calc_text = computed(() => {
+      let res = '';
+      switch (props.data_b.orderStatus) {
+        case '0':
+          class_foter.value = 'green'
+          res = i18n_t('bet_record.successful_betting')
+          break;
+        case '1':
+          class_foter.value = 'black'
+          let flag = props.data_b.seriesType == '1' && props.data_b.orderVOS[0]
+          //单关
+          if (flag) {
+            if (+props.data_b.preBetAmount > 0) {
+               // 提前结算的输赢单独一套逻辑算
+              let difference = props.data_b.backAmount - props.data_b.orderAmountTotal
+              // 赢
+              if (difference > 0) {
+                class_foter.value = 'red'
+                is_win.value = true
+                res = bet_result.value[4]
+              } else if (difference < 0) {
+                 // 输
+                res = bet_result.value[3]
+              } else {  // 走水
+                res = bet_result.value[2]
+              }
+              break;
+            }
+            let betresult = props.data_b.orderVOS[0].betResult
+            if (betresult == 13 || betresult == 16) {
+              res = i18n_t('bet_record.invalid');
+            } else {
+              if (betresult == 4 || betresult == 5) {
+                class_foter.value = 'red'
+                is_win.value = true
+              }
+              res =  bet_result.value[betresult] || '';
+            }
+          } else {
+            //串关
+            if (props.data_b.outcome == 4 || props.data_b.outcome == 5) {
+              class_foter.value = 'red'
+              is_win.value = true
+            }
+            res = outcome[props.data_b.outcome] || i18n_t('bet_record.successful_betting')
+          }
+          break;
+        case '2':
+          class_foter.value = 'black'
+          res = i18n_t('bet_record.invalid_bet')
+          break;
+        case '3':
+          class_foter.value = 'orange'
+          res = i18n_t('bet_record.confirming')
+          break;
+        case '4':
+          class_foter.value = 'red'
+          res = i18n_t('bet.bet_err')
+          break;
+        default:
+          res = ''
+          break;
+      }
+      return res;
+    })
     //切换是否展开
   const toggle_box = () => {
       box_bool = !box_bool;
       if (box_bool == true) {
         [btn_text, direction] = [
-          t("bet_record.pack_down"),
+          i18n_t("bet_record.pack_down"),
           "down"
         ];
         toggle_rule_b();
       } else {
         [btn_text, direction] = [
-          t("bet_record.pack_up"),
+          i18n_t("bet_record.pack_up"),
           ""
         ];
         toggle_rule_a();
@@ -84,7 +156,7 @@ import { project_name } from 'src/core'
     }
   const rules_normal = () => {
       [btn_text, direction, box_bool] = [
-        // t("bet_record.pack_up"),
+        // i18n_t("bet_record.pack_up"),
         "",
         false
       ];
@@ -93,7 +165,7 @@ import { project_name } from 'src/core'
   const rules_a = () => {
       if (props.data_b.orderVOS.length >= 3)
         [btn_text, direction, box_bool] = [
-          t("bet_record.pack_down"),
+          i18n_t("bet_record.pack_down"),
           "down",
           true
         ];
