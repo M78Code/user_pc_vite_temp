@@ -19,7 +19,7 @@
           <!-- 左 -->
           <div class="col" :class="{col3: titles.length > 2}">
             <template v-for="(ol_item, ol_index) in item_data.hl[0].ol">
-              <div v-if="lodash.get(item_data.title,`[${index}][0].otd`) == ol_item.otd" :key="ol_index" class="bet-box-bg">
+              <div v-if="lodash.get(item_data.title,`[${index}][0].otd`) == ol_item.otd" :key="ol_index" class="bet-box-bg mg-4-bg">
                 <template v-if="ol_item._mhs == 0 || ol_item._mhs == 11">
                   <template v-if="ol_item._hs == 0 || ol_item._hs == 11">
                     <template v-if="ol_item.os == 1">
@@ -80,7 +80,7 @@
           <!-- 中 -->
           <div class="col" :class="{col3: titles.length > 2}">
             <template v-for="(ol_item,ol_index) in item_data.hl[0].ol">
-              <div v-if="lodash.get(item_data.title,`[${index}][1].otd`) == ol_item.otd" :key="ol_index" class="bet-box-bg">
+              <div v-if="lodash.get(item_data.title,`[${index}][1].otd`) == ol_item.otd" :key="ol_index" class="bet-box-bg mg-4-bg">
                 <template v-if="ol_item._mhs == 0 || ol_item._mhs == 11">
                   <template v-if="ol_item._hs == 0 || ol_item._hs == 11">
                     <template v-if="ol_item.os == 1">
@@ -131,7 +131,7 @@
           <!-- 右 -->
           <div v-if="titles.length > 2" class="col" :class="{col3: titles.length > 2}">
             <template v-for="(ol_item,ol_index) in item_data.hl[0].ol">
-              <div v-if="lodash.get(item_data.title,`[${index}][2].otd`) == ol_item.otd" :key="ol_index" class="bet-box-bg">
+              <div v-if="lodash.get(item_data.title,`[${index}][2].otd`) == ol_item.otd" :key="ol_index" class="bet-box-bg mg-4-bg">
                 <template v-if="ol_item._mhs == 0 || ol_item._mhs == 11">
                   <template v-if="ol_item._hs == 0 || ol_item._hs == 11">
                     <template v-if="ol_item.os == 1">
@@ -242,6 +242,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .temp16 {
+  padding:0.04rem;
   .content {
     border-radius: 0.08rem;
     overflow: hidden;

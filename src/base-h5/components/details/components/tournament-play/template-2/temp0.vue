@@ -5,7 +5,7 @@
       <div v-for="(item,index_) in item_data.hl" :key="index_">
         <div class="bor-style" :class="{'has-more': !hide_show_more_layout}" v-if="index_>0||index_==0">
           <template v-if="item_data.title[0]"><!--有title时按照title循环，没有title时按ol循环-->
-            <div v-for="(item2,index_title) in item_data.title" :key="index_title">
+            <div v-for="(item2,index_title) in item_data.title" :key="index_title" class="mg-4-bg">
               <div class="row" v-for="(ol_item ,ol_index) in item.ol" :key="ol_index">
               <template v-if=" (hide_show_more_layout || (!hide_show_more_layout && (show_more || (!show_more && ol_index<5))))">
                 <template v-if="item2.otd == ol_item.otd && ((odds_conut<show_more_max && !show_more) || show_more)">
@@ -326,6 +326,7 @@ export default defineComponent({
 .bor-style {
   border-radius: 4px;
   overflow: hidden;
+  padding:0.08rem;
 }
 
 .show-more {
