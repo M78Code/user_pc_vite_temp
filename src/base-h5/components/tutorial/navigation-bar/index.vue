@@ -61,6 +61,7 @@ defineProps({
         .img {
             height: .20rem;
             width: .12rem;
+            background-color: var(--q-gb-t-c-1);
         }
     }
     &-center, &-left, &-right {

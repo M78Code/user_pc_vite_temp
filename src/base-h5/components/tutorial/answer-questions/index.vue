@@ -27,7 +27,7 @@
                         <div class="options-icon"></div>
                     </div>
                     <div class="option-content">
-                        <div class="text">大2.5</div>
+                        <div class="text-style">大2.5</div>
                         <div class="point">
                             <div class="arrow"></div>
                             <div>1.99</div>
@@ -40,7 +40,7 @@
                         <!-- <div class="options-icon"></div> -->
                     </div>
                     <div class="option-content">
-                        <div class="text">大2.5</div>
+                        <div class="text-style">大2.5</div>
                         <div class="point fail">
                             <div class="arrow arrow-down"></div>
                             <div>1.99</div>
@@ -53,7 +53,7 @@
                         <!-- <div class="options-icon"></div> -->
                     </div>
                     <div class="option-content">
-                        <div class="text">大2.5</div>
+                        <div class="text-style">大2.5</div>
                         <div class="point win">
                             <div class="arrow arrow-up"></div>
                             <div>1.99</div>
@@ -66,7 +66,7 @@
                         <!-- <div class="options-icon"></div> -->
                     </div>
                     <div class="option-content">
-                        <div class="text">大2.5</div>
+                        <div class="text-style">大2.5</div>
                         <div class="point">
                             <div class="arrow"></div>
                             <div>1.99</div>
@@ -78,7 +78,7 @@
             <div class="ht-answer-result">
                 <div class="result fail">
                     <div class="result-icon"></div>
-                    <div class="text">恭喜红单</div>
+                    <div class="text-style">恭喜红单</div>
                 </div>
 
                 <div class="info">
@@ -212,7 +212,7 @@ defineProps({
                     height: .41rem;
                     border-radius: .04rem;
                     background-color: var(--q-gb-bd-c-7);
-                    .text {
+                    .text-style {
                         font-size: .12rem;
                         color: var(--q-gb-t-c-3);
                     }

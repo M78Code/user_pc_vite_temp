@@ -16,10 +16,10 @@
           <div v-for="(item,index) in item_data.hl" :key="index">
             <div class="row" v-if="index > 0 || index == 0">
               <!-- 左 -->
-              <div class="col">
+              <div class="col ">
                 <template v-for="(ol_index0,ol_index) in max_count_ol">
                   <template v-if="ol_list_0[ol_index0 - 1]">
-                    <div :key="ol_index" :data-ii="ol_index0 - 1">
+                    <div :key="ol_index" :data-ii="ol_index0 - 1" class="mg-4-bg">
                       <!--  0开 2关 1封 11锁 -->
                       <!-- 开盘or锁盘 正常显示 -->
                       <template v-if="ol_list_0[ol_index0 - 1]._mhs == 0 || ol_list_0[ol_index0 - 1]._mhs == 11">
@@ -102,7 +102,7 @@
               <div class="col" :class="{'col-middle': ['344'].includes(item_data.hpid)}">
                 <template v-for="(ol_index1,ol_index) in max_count_ol">
                   <template v-if="ol_list_1[ol_index1 - 1]">
-                    <div :key="ol_index" :data-oid="ol_list_1[ol_index1 - 1].oid">
+                    <div :key="ol_index" :data-oid="ol_list_1[ol_index1 - 1].oid" class="mg-4-bg">
                       <!--  0开 2关 1封 11锁 -->
                       <!-- 开盘or锁盘 正常显示 -->
                       <template v-if="ol_list_1[ol_index1 - 1]._mhs == 0 || ol_list_1[ol_index1 - 1]._mhs == 11">
@@ -184,7 +184,7 @@
               <div class="col">
                 <template v-for="(ol_index2,ol_index) in max_count_ol">
                   <template v-if="ol_list_2[ol_index2 - 1]">
-                    <div :key="ol_index">
+                    <div :key="ol_index" class="mg-4-bg">
                       <!--  0开 2关 1封 11锁 -->
                       <!-- 开盘or锁盘 正常显示 -->
                       <template v-if="ol_list_2[ol_index2 - 1]._mhs == 0 || ol_list_2[ol_index2 - 1]._mhs == 11">
@@ -491,6 +491,7 @@ export default defineComponent({
   min-height: 0.32rem;
   height: auto;
   overflow: hidden;
+  padding:0.08rem;
   .col-middle {
     flex: 0 0 .9rem;
   }
@@ -582,5 +583,13 @@ export default defineComponent({
 .lock-margin {
   padding-left: 0.2rem;
 }
-
+.mg-4-bg{
+  margin:0.04rem;
+  background:var(--q-gb-bg-c-15) !important;
+  border-radius: 4px;
+  box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.04);
+}
+// .mgb4{
+//   margin-bottom:4px
+// }
 </style>

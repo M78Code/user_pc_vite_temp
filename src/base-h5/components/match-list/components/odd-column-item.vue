@@ -31,7 +31,7 @@
         v-html="transfer_on(odd_item)">
       </div>
       <!-- 显示赔率 -->
-      <div class='odd-value' v-show="!is_fengpan(get_odd_status()) && (+odd_item.ov ) && !get_obv_is_lock(odd_item)"
+      <div class='odd-value fontbold' v-show="!is_fengpan(get_odd_status()) && (+odd_item.ov ) && !get_obv_is_lock(odd_item)"
         :class="{
           three:column_ceil > 2,
           red:red_green_status === 1,

@@ -92,7 +92,7 @@
           <span v-if="wsl_flag" style="color:red;font-size:12px;" text = "调试用span">模板(hpt)<span>{{item_data.hpt}}玩法(hpid)=>{{item_data.hpid}}</span></span>
         </div>
       </div>
-      <template v-if="[0,1,2,3,4,5,6,7,9,10,11,12,13,14,15,18,51].includes(+item_data.hpt)">{{item_data.hpt}}
+      <template v-if="[0,1,2,3,4,5,6,7,9,10,11,12,13,14,15,18,51].includes(+item_data.hpt)">
         <q-slide-transition :duration="200">
           <div v-show="judage_hshow == 'Yes'" :class="[judage_hshow != 'Yes'?'show_border_r':'hide_border_r' ]">
             <!-- 模板id  hpt -->
@@ -814,7 +814,7 @@ export default defineComponent({
     }
     .hide_border_r{
       :deep(.hairline-border,), :deep(.item-wrap) {
-      background-color: #ffffff;
+      background-color: #F8F9FA;
       border-radius:0 0 0.04rem 0.04rem!important;
       border-top:0.5px solid #F2F2F6;
       }
@@ -868,4 +868,12 @@ export default defineComponent({
  .text-right{
   margin-right:0.2rem
  }
+ /* 卡片边距背景色 */
+ :deep(.mg-4-bg){
+  margin:0.04rem;
+  background:var(--q-gb-bg-c-15) !important;
+  border-radius: 4px;
+  box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.04);
+}
+
 </style>

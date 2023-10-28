@@ -15,18 +15,23 @@
           <div class="item-name ellipsis">{{lodash.get(item_data, 'title[1].osn')}}</div>
         </div>
         <!-- 大 -->
-        <div class="row bor-style" :class="get_is_hengping?'bor-style2':'' ">
-          <div class="play-name " v-show="!get_is_hengping">
+        <div class="row bor-style bet-card-play-container" :class="get_is_hengping?'bor-style2':'' ">
+          <!-- <div class="play-name " v-show="!get_is_hengping">
             <div class="play-name-card ellipsis">
               {{lodash.get(item_data, 'title[0].osn')}}
             </div>
-          </div>
+          </div> -->
           <div class="row slide-con" ref="bet_slide" style="flex:1;" v-touch-pan.horizontal.prevent.mouse="touch_pan">
             <div class="slide-wrap"
             :class="[
               {'slide-wrap-width-100': append_single_list.filter(append_single=>lodash.get(item_data, 'title[0].otd') == append_single.otd).length==1,
                 'slide-wrap-width-50': append_single_list.filter(append_single=>lodash.get(item_data, 'title[0].otd') == append_single.otd).length==2 }]"
               :style="{left:`${left}px`}">
+              <div class="play-name  col bet-item" v-show="!get_is_hengping">
+                  <div class="play-name-card ellipsis">
+                          {{lodash.get(item_data, 'title[0].osn')}}
+                  </div>
+               </div>
               <template v-for="(append_single, index) of append_single_list">
                 <div class="col bet-item" :key="index" v-if="lodash.get(item_data, 'title[0].otd') == append_single.otd">
                   <div class="row row-fat">
@@ -37,10 +42,10 @@
                         <template v-if="append_single.os == 1">
                           <div class="play-box-sty details-color" @click="go_to_bet(append_single)"
                                :class="[get_bet_list.includes(append_single.id_)?['details-bg5','white_text']:'',{'win': utils.calc_win(append_single.result)}]">
-                            <div class="bet-item-ky-container">  
+                            <div class="bet-item-ky-container" :class="[{'click-bet-bgc':append_single.show_bgc}]">  
                               <div class="single-name">
                                 <span class="fz_14 ver-ali-top">{{devote_value_d(append_single.ot)}}</span>
-                                <span :class="get_bet_list.includes(append_single.id_) ? 'size-color-wit':'size-color'" class="fz_16">
+                                <span :class="get_bet_list.includes(append_single.id_) ? 'size-color-wit':'size-color'" class="fz_14">
                                 {{append_single.on}}
                               </span>
                               </div>
@@ -54,7 +59,7 @@
                             <div class="bet-item-ky-container">  
                               <div class="single-name details_t_color7" v-show="get_detail_data.csid != 1">
                                 <span class="fz_14 ver-ali-top ">{{devote_value_d(append_single.ot)}}</span>
-                                <span class="fz_16 odd-color">
+                                <span class="fz_14 odd-color">
                                 {{append_single.on}}
                               </span>
                               </div>
@@ -76,7 +81,7 @@
                             <div class="bet-item-ky-container">  
                               <div class="single-name" v-show="get_detail_data.csid != 1">111
                                 <span class="fz_14 ver-ali-top">{{devote_value_d(append_single.ot)}}</span>
-                                <span class="fz_16 night-style">
+                                <span class="fz_14 night-style">
                                 {{append_single.on}}
                               </span>
                               </div>
@@ -91,7 +96,7 @@
                           <div class="bet-item-ky-container">   
                             <div class="single-name">
                               <span class="fz_14 ver-ali-top"></span>
-                              <span class="fz_16"></span>
+                              <span class="fz_14"></span>
                             </div>
                           </div>
                         </div>
@@ -103,7 +108,7 @@
                         <div class="single-name details_t_color7" v-show="get_detail_data.csid != 1">
                           <div class="bet-item-ky-container">  
                             <span class="fz_14 ver-ali-top">{{devote_value_d(append_single.ot)}}</span>
-                            <span class="fz_16 size-color">
+                            <span class="fz_14 size-color">
                             {{append_single.on}}
                             </span>
                           </div>
@@ -122,19 +127,24 @@
             </div>
           </div>
         </div>
-        <div class="row">
+        <div class="row bet-card-play-container">
           <!-- 小 -->
-          <div class="play-name " v-show="!get_is_hengping">
+          <!-- <div class="play-name " v-show="!get_is_hengping">
               <div class="play-name-card ellipsis">
                 {{lodash.get(item_data, 'title[1].osn')}}
               </div>
-          </div>
+          </div> -->
           <div class="row slide-con" ref="bet_slide" style="flex:1;" v-touch-pan.horizontal.prevent.mouse="touch_pan">
             <div class="slide-wrap"
             :class="[
               {'slide-wrap-width-100': append_single_list.filter(append_single=>lodash.get(item_data, 'title[1].otd') == append_single.otd).length==1,
                 'slide-wrap-width-50': append_single_list.filter(append_single=>lodash.get(item_data, 'title[1].otd') == append_single.otd).length==2 }]"
             :style="{left:`${left}px`}">
+            <div class="play-name col bet-item" v-show="!get_is_hengping">
+                    <div class="play-name-card ellipsis">
+                      {{lodash.get(item_data, 'title[1].osn')}}
+                    </div>
+                </div>
               <template v-for="(append_single,index) of append_single_list">
                 <div class="col bet-item" :key="index" v-if="lodash.get(item_data, 'title[1].otd') == append_single.otd">
                   <div class="row row-fat" v-if="lodash.get(item_data, 'title[1].otd') == append_single.otd">
@@ -145,10 +155,10 @@
                         <template v-if="append_single.os == 1">
                           <div class="play-box-sty details-color" @click="go_to_bet(append_single)"
                                :class="[get_bet_list.includes(append_single.id_)?['details-bg5','white_text']:'',{'win':utils.calc_win(append_single.result)}]">
-                            <div class="bet-item-ky-container">
+                            <div class="bet-item-ky-container" :class="[{'click-bet-bgc':append_single.show_bgc}]">
                               <div class="single-name">
                                 <span class="fz_14 ver-ali-top">{{devote_value_x(append_single.ot)}}</span>
-                                <span :class="get_bet_list.includes(append_single.id_) ? 'size-color-wit':'size-color'" class="fz_16">
+                                <span :class="get_bet_list.includes(append_single.id_) ? 'size-color-wit':'size-color'" class="fz_14">
                                 {{append_single.on}}
                               </span>
                               </div>
@@ -162,7 +172,7 @@
                             <div class="bet-item-ky-container">  
                               <div class="single-name details_t_color7" v-show="get_detail_data.csid != 1">22
                                 <span class="fz_14 ver-ali-top">{{devote_value_x(append_single.ot)}}</span>
-                                <span class="fz_16 odd-color">
+                                <span class="fz_14 odd-color">
                                 {{append_single.on}}
                               </span>
                               </div>
@@ -184,7 +194,7 @@
                             <div class="bet-item-ky-container">  
                               <div class="single-name" v-show="get_detail_data.csid != 1">
                                 <span class="fz_14 ver-ali-top">{{devote_value_x(append_single.ot)}}</span>
-                                <span class="fz_16 night-style">
+                                <span class="fz_14 night-style">
                                 {{append_single.on}}
                               </span>
                               </div>
@@ -197,7 +207,7 @@
                       <template v-if="append_single._hs == 2">
                         <div class="play-box-sty details-color" style="flex:1;">
                           <div class="bet-item-ky-container">  
-                            <div class="single-name"><span class="fz_14 ver-ali-top"></span><span class="fz_16"></span></div>
+                            <div class="single-name"><span class="fz_14 ver-ali-top"></span><span class="fz_14"></span></div>
                           </div> 
                         </div>
                       </template>
@@ -208,7 +218,7 @@
                         <div class="bet-item-ky-container">  
                           <div class="single-name details_t_color7" v-show="get_detail_data.csid != 1">
                             <span class="fz_14 ver-ali-top">{{devote_value_x(append_single.ot)}}</span>
-                            <span class="size-color fz_16 odd-color">
+                            <span class="size-color fz_14 odd-color">
                             {{append_single.on}}
                           </span>
                           </div>
@@ -398,6 +408,9 @@ export default defineComponent({
       }
     }, 500);
     const go_to_bet = (ol_item) => {
+      append_single_list.value.map((item)=>{
+        ol_item.oid == item.oid ?  item.show_bgc = true: item.show_bgc = false
+      })
       useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX,true);
     };
     onMounted(() => {
@@ -494,10 +507,15 @@ export default defineComponent({
     left: 0;
     display: flex;
     //width: 200%;
-    height: 0.52rem;
+    height: 0.48rem;
     .bet-item {
-      min-width: 0.796rem;
+      min-width: 0.83rem;
+      margin:0.04rem;
+      &:nth-child(1) {
+          margin-left:0.08rem;
+        }
     }
+   
   }
   .slide-wrap-width-100{
     width: 100%;
@@ -536,18 +554,18 @@ export default defineComponent({
   .play-box-style {
     text-align: center;
     width: 100%;
-    height: 0.52rem;
-    line-height: 0.52rem;
+    height: 0.40;
+    line-height: 0.40;
   }
 
   .play-box-sty {
-    height: 0.52rem;
+    height: 0.40;
     text-align: center;
-    padding:0.08rem 0.04rem ;
+    // padding:0.08rem 0.04rem ;
   }
 
   .odds-lock {
-    line-height: 0.52rem;
+    line-height: 0.40;
   }
 
   .remark {
@@ -604,23 +622,26 @@ export default defineComponent({
   }
 
   .play-name {
-    width: 1.15rem;
+    // width: 0.95rem;
     height: 0.52rem;
     line-height: 0.36rem;
-    padding:  0.08rem 0.04rem 0.08rem 0.08rem;
+    // padding:  0.08rem 0.04rem 0.08rem 0.08rem;
     // margin-right: 1px;
     color: #999999;// var(--q-detials-color-7);
 
     text-align: center;
     font-size: 0.14rem;
     position: relative;
-    .play-name-card{
-      background:var(--q-gb-bg-c-18);
+ 
+  }
+  .play-name-card{
+      text-align: center;
+      font-size: 0.14rem;
+      background:var(--q-gb-bg-c-15);
       border-radius: 4px;
       color:#7981A4;
+      box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.04);
     }
-  }
-
   .single-name {
     line-height: 0.36rem;
   }
@@ -653,9 +674,16 @@ export default defineComponent({
 .bet-item-ky-container {
   display:flex;
   justify-content:center;
-  background:var(--q-gb-bg-c-18);
+  background:var(--q-gb-bg-c-15);
   border-radius: 4px;
   align-items:center;
   padding:0 0.04rem;
+  box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.04);
+}
+.bet-card-play-container{
+  height:0.48rem
+}
+.click-bet-bgc{
+  background:#D1EBFF;
 }
 </style>

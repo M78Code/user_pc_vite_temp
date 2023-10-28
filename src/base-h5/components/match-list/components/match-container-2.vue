@@ -87,6 +87,7 @@
             </div>
           </div>
           <!--  一整块赛事的 div 内容 ： 1. 左边 【时间，队名，比分】   2. 右边 【赔率 模块】  -->
+            <!-- <div style="border-top: 1px solid #000; width: 96%;"></div>  ！-->
           <div :class="['match-odds-container study_height_s hairline-border', {'border-top': !match.is_show_league}]">
             <div class="match-odds-container-border-radius">
               <!-- 上边的 赛事日期标准版,包含 比分组件 -->
@@ -148,7 +149,7 @@
                   </div>
                 </div>
                 <!--玩法数量-->
-                <div class="goto-detail" @click='goto_details(match)'>
+                <div class="goto-detail" style="margin-right: 0.03rem;" @click='goto_details(match)'>
                   <span class="count_span" :class="{ esports: 3000 == menu_type }">
                     <span class="mc-n">
                       {{GlobalAccessConfig.get_handicapNum()? get_match_mc(match) :
