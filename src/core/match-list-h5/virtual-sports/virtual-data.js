@@ -23,6 +23,10 @@ class VirtualData {
     this.current_league = {}
     // 当前选中的批次
     this.current_batch = {}
+    // 当前赛事id
+    this.current_match_mid = ''
+    // 详情页的数据
+    this.detail_data = "",
     //上次请求的虚拟体育赛事列表
     this.prev_v_sports = {},
     this.ol_dictionary = []
@@ -59,6 +63,14 @@ class VirtualData {
   // 设置当前选中的批次
   set_current_batch (item) {
     this.current_batch = item
+  }
+  // 设置详情页的数据
+  set_detail_data (data) {
+    this.detail_data = data
+  }
+  // 设置当前赛事id
+  set_current_match_mid (mid) {
+    this.current_match_mid = mid
   }
 
   /**
@@ -196,7 +208,7 @@ class VirtualData {
             let server_now = get_now_server();
             c_match.start_now_sub = Number(c_match.mgt) - server_now;
             this.current_match = c_match;
-            this.set_current_mid(this.current_match.mid);
+            this.set_current_match_mid(this.current_match.mid);
           }
         }
       }

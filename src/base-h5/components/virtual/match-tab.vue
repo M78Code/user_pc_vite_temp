@@ -28,7 +28,7 @@ import lodash from "lodash";
 import { menu_lv2 } from 'src/base-h5/mixin/menu.js'
 import VirtualData from 'src/core/match-list-h5/virtual-sports/virtual-data.js'
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
-import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
+import { ref, reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import 'src/base-h5/css/pages/virtual-match-tab.scss'
 export default defineComponent({
   name: "match_tab",
@@ -37,8 +37,6 @@ export default defineComponent({
     current_match:Object,
     //当前选中的联赛
     current_league:Object,
-    //当前虚拟赛事的日期编号列表
-    no_list:Array,
     //重设日期所在的列表中的下标
     is_reset_tab_i:Number,
     //是否为主菜单(虚拟足球篮球赛马赛狗等)切换动作(0否,非0是)
@@ -66,13 +64,12 @@ export default defineComponent({
     // 事件集合
     let emitters = []
     let timer1_ = null
+    const scrollBox = ref(null)
     // 联赛的类型 field3: 空:不是杯赛 不为空:是杯赛
     const league_type = computed(() => {
       return current_league ? current_league.field3 : ''
     })
     const no_title_list = computed(() => {
-      console.log(VirtualData.no_title_list)
-      console.log(11111111111111111111)
       return VirtualData.no_title_list
     })
     onMounted(() => {
@@ -110,9 +107,7 @@ export default defineComponent({
      * @param {Undefined}
      * @param {Undefined}
      */
-    watch(
-      () => props.no_list,
-      () => {
+    watch( () => no_title_list.value, () => {
         state.pre_to_playing = false;
       }
     );
@@ -159,25 +154,23 @@ export default defineComponent({
       () => VirtualData.auto_change_tab_i_first,
       () => {
         state.sub_focus_batch_no = '';
-        let batchNo = no_list[state.sub_nav_focus_i].batchNo;
+        let batchNo = no_title_list.value[state.sub_nav_focus_i].batchNo;
         sub_nav_click_handle(batchNo);
       }
     );
 
-    // #TODO VUEX ACTIONS
-    // ...mapMutations(['set_current_mid','set_detail_data']),
     /**
      * 篮球倒计时到达
      * @param {Undefined}
      * @param {Undefined}
      */
     const basket_ball_time_handle = () => {
-      if(current_batch.mmp == 'INGAME'){
+      if(VirtualData.current_batch.mmp == 'INGAME'){
         // #TODO EMIT
         // $emit('time_ended','is_basketball_playing');
       }
-      else if(current_batch.mmp == 'PREGAME'){
-        let no_item = no_list.filter(no_item => no_item.mmp == 'INGAME')[0];
+      else if(VirtualData.current_batch.mmp == 'PREGAME'){
+        let no_item = no_title_list.value.filter(no_item => no_item.mmp == 'INGAME')[0];
         if(no_item){
           sub_nav_click_handle(no_item.batchNo);
           state.pre_to_playing = true;
@@ -199,10 +192,12 @@ export default defineComponent({
       if(batchNo == state.sub_focus_batch_no && is_user_lick){
         return;
       }
-      state.sub_nav_focus_i = lodash.findIndex(no_list,{batchNo:batchNo});
+      const index = lodash.findIndex(no_title_list.value,{batchNo:batchNo});
+      if (index < 0) return
+      state.sub_nav_focus_i = index
       state.sub_focus_batch_no = batchNo;
-      utils.tab_move2(state.sub_nav_focus_i, $refs.scrollBox)
-      let current_sub_nav = no_list[state.sub_nav_focus_i];
+      utils.tab_move2(state.sub_nav_focus_i, scrollBox.value)
+      let current_sub_nav = no_title_list.value[state.sub_nav_focus_i];
 
       VirtualData.sub_nav_changed({
         nav:current_sub_nav,
@@ -210,7 +205,7 @@ export default defineComponent({
       })
       //将赛马赛事信息跟新到vuex
       let match_info = lodash.get(current_sub_nav,'match[0]')
-      match_info && set_detail_data(lodash.cloneDeep(match_info))
+      match_info && VirtualData.set_detail_data(lodash.cloneDeep(match_info))
 
       //赛马传递赛事集合唯一赛事的赛事id
       if([1002, 1011, 1010, 1009].includes(menu_lv2.value)){
@@ -219,7 +214,7 @@ export default defineComponent({
           mid = current_sub_nav.match[0].mid;
         }catch(e){console.error(e)}
         if(mid){
-          set_current_mid(mid);
+          VirtualData.set_current_match_mid(mid);
         }
       }
     };
@@ -229,12 +224,12 @@ export default defineComponent({
      * @param {Undefined}
      */
     const no_init_selected = () => {
-      if(!no_list || !no_list.length) return;
+      if(!no_title_list.value || !no_title_list.value.length) return;
       set_i_by_batch_no();
-      let selected = no_list[state.sub_nav_focus_i];
+      let selected = no_title_list.value[state.sub_nav_focus_i];
       VirtualData.sub_nav_changed({
-        nav:current_sub_nav,
-        i:state.sub_nav_focus_i
+        nav: selected,
+        i: state.sub_nav_focus_i
       })
       //赛马传递赛事集合唯一赛事的赛事id
       if(![1001,1004].includes(menu_lv2.value)){
@@ -242,11 +237,9 @@ export default defineComponent({
         try{
           mid = selected.match[0].mid;
           //将赛马赛事信息跟新到vuex
-          selected.match[0] && set_detail_data(lodash.cloneDeep(selected.match[0]));
+          selected.match[0] && VirtualData.set_detail_data(lodash.cloneDeep(selected.match[0]));
         }catch(e){console.error(e)}
-        if(mid){
-          set_current_mid(mid);
-        }
+        mid && VirtualData.set_current_match_mid(mid);
       }
     };
     /**
@@ -265,18 +258,18 @@ export default defineComponent({
      * @param {Undefined}
      */
     const set_i_by_batch_no = () => {
-      if(current_batch && current_batch.batchNo){
-        if(current_batch.mmp == "PREGAME"){
-          if(no_list && no_list[0].mmp == "INGAME"){
-            no_list.shift();
+      if(VirtualData.current_batch && VirtualData.current_batch.batchNo){
+        if(VirtualData.current_batch.mmp == "PREGAME"){
+          if(no_title_list.value && no_title_list.value[0].mmp == "INGAME"){
+            no_title_list.value.shift();
           }
         }
-        else if(current_batch.mmp == "INGAME"){
-          if(no_list && no_list[0].mmp == "PREGAME"){
-            no_list.shift();
+        else if(VirtualData.current_batch.mmp == "INGAME"){
+          if(no_title_list.value && no_title_list.value[0].mmp == "PREGAME"){
+            no_title_list.value.shift();
           }
         }
-        sub_nav_click_handle(current_batch.batchNo);
+        sub_nav_click_handle(VirtualData.current_batch.batchNo);
       }
     };
     /**
@@ -293,11 +286,11 @@ export default defineComponent({
      * @param {Undefined}
      */
     const ingame_result_show_end = () => {
-      let no_item = no_list.filter(no_item => no_item.mmp == 'PREGAME')[0];
+      let no_item = no_title_list.value.filter(no_item => no_item.mmp == 'PREGAME')[0];
       if(no_item){
         sub_nav_click_handle(no_item.batchNo);
-        if(no_list[0].mmp == 'INGAME'){
-          no_list.shift();
+        if(no_title_list.value[0].mmp == 'INGAME'){
+          no_title_list.value.shift();
         }
       }
     }

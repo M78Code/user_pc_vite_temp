@@ -1,4 +1,4 @@
-/**
+/**rops.no_list
  * 虚拟赛事 视频相关处理
  */
 
@@ -9,6 +9,7 @@ import VirtualData from "./virtual-data"
 import VirtualClass from "./virtual-class"
 import { menu_lv2 } from 'src/base-h5/mixin/menu.js'
 import { useMittEmit, MITT_TYPES } from "src/core/mitt"
+import { api_virtual } from "src/api/index.js";
 
 class VirtualVideo {
 
@@ -83,7 +84,7 @@ class VirtualVideo {
       this.video_by_api_cache_key += `-${params.orderNo}`;
     }
     this.api_video_params = params;
-    api_v_sports.get_virtual_video_process(params).then(res => {
+    api_virtual.get_virtual_video_process(params).then(res => {
       if (res.code == 200) {
         if (res.data && res.data.detail && Object.keys(res.data.detail).length) {
           if (!is_no_match_data) {
@@ -98,7 +99,7 @@ class VirtualVideo {
         else {
           if (!is_no_match_data) {
             this.no_process_data_p_key = this.video_by_api_cache_key;
-            get_video_process_by_api_again(success_cb);
+            this.get_video_process_by_api_again(success_cb);
           }
           else {
             success_cb(null);
@@ -134,7 +135,7 @@ class VirtualVideo {
         }
         let params = this.api_video_params;
         if (!params.csid) return;
-        api_v_sports.get_virtual_video_process(params).then(res => {
+        api_virtual.get_virtual_video_process(params).then(res => {
           let get_data = false;
           if (res.code == 200) {
             if (res.data && res.data.detail && Object.keys(res.data.detail).length) {
@@ -148,7 +149,7 @@ class VirtualVideo {
             }
           }
           if (!get_data) {
-            get_video_process_by_api_again();
+            this.get_video_process_by_api_again();
           }
         });
       }
