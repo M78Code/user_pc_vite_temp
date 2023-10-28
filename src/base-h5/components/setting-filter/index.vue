@@ -18,7 +18,7 @@
                     {{ item.name }}
                 </div>
                 <div class="more">
-                    >
+                    <Switch v-model:value="item.switchValue" :leftVal="item.leftVal" :rightVal="item.rightVal" />
                 </div>
             </div>
             <div class="setting-item">
@@ -33,7 +33,7 @@
                 <div class="title">
                     前往旧版
                 </div>
-                <div class="more">
+                <div class="goto-website">
                     前往网页版
                 </div>
             </div>
@@ -47,6 +47,8 @@
 import { i18n_t, compute_css_obj } from "src/core/index.js";
 import { useRouter, useRoute } from "vue-router";
 import { ref, watch, computed, nextTick, onBeforeUnmount, onMounted } from 'vue';
+import Switch from './components/switch.vue';
+
 
 defineOptions({
     name: 'settingFilter' // 设置组件名称
@@ -61,12 +63,12 @@ defineProps({
 const emit = defineEmits(["closedHandle"]);
 
 const setting_list = ref([
-    { name: '投注模式', leftVal: '新手版', righttVal: '专业版' },
-    { name: '排序规则', leftVal: '热门', righttVal: '时间' },
-    { name: '盘口设置', leftVal: '欧洲盘', righttVal: '香港盘' },
-    { name: '字号大小', leftVal: '默认', righttVal: '放大' },
-    { name: '主题风格', leftVal: '日间', righttVal: '夜间' },
-    { name: '每日活动', leftVal: '开启', righttVal: '关闭' },
+    { name: '投注模式', leftVal: '新手版', rightVal: '专业版', switchValue: 'rightVal' },
+    { name: '排序规则', leftVal: '热门', rightVal: '时间', switchValue: 'rightVal' },
+    { name: '盘口设置', leftVal: '欧洲盘', rightVal: '香港盘' },
+    { name: '字号大小', leftVal: '默认', rightVal: '放大' },
+    { name: '主题风格', leftVal: '日间', rightVal: '夜间' },
+    { name: '每日活动', leftVal: '开启', rightVal: '关闭' },
 ])
 
 const closedHandle = () => {
@@ -116,6 +118,16 @@ const closedHandle = () => {
         .more {
             color: var(--q-gb-bd-c-4);
         }
+        .goto-website {
+            width: 1.04rem;
+            height: 0.28rem;
+            line-height: 0.28rem;
+            background-color: #F3FAFF;
+            border-radius: 0.18rem;
+            text-align: center;
+            color: #7981a4;
+            font-weight: 500;
+        }
     }
 
     .closed-btn {
@@ -129,4 +141,5 @@ const closedHandle = () => {
             font-size: .18rem;
         }
     }
-}</style>
+}
+</style>
