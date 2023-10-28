@@ -12,7 +12,7 @@
     }
   }
   .detail-header-bg {
-     background-color:var(--q-color-page-bg-color-2);
+     background-color: url($SCSSPROJECTPATH + '/image/png/virtual_football.png') //todo 后续上传资源
     &:after {
       background-color:var(--q-color-com-bg-color-4);
     }

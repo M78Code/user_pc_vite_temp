@@ -11,4 +11,21 @@
       display: none;
     }
   }
+  .right-border{
+    height: 20px;
+    line-height: 20px;
+    position: relative;
+    overflow: hidden;
+    padding-left: 8px;
+    &::before{
+      content: "";
+      height: 100%;
+      width: 10px;
+      border-radius: 20px;
+      background: var(--q-virtual-bg-c-2);
+      display: block;
+      position: absolute;
+      left: -7px;
+    }
+  }
 }

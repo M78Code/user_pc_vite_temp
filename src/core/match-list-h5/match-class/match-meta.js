@@ -37,7 +37,6 @@ class MatchMeta {
    * @param { mi } 菜单类型
    */
   set_origin_match_data() {
-    console.log(MenuData)
     // 菜单 ID 对应的 元数据赛事 mids
     const menu_lv_v1 = MenuData.current_lv_1_menu_mi.value
     const menu_lv_v2 = MenuData.current_lv_2_menu_mi
@@ -51,7 +50,7 @@ class MatchMeta {
    
     // 对应 球种 mi 
     if (typeof menu_lv_v2 !== 'string') return
-    // 冠军
+    // 电竞、赛果 return
     if (MenuData.is_export() || MenuData.is_results()) return
     this.get_origin_match_mids_by_mi(menu_lv_v2)
   }
@@ -68,7 +67,7 @@ class MatchMeta {
       mids && match_mids_list.push(...mids)
     })
     this.zaopan_mids = [...new Set(match_mids_list)]
-    this.get_origin_match_by_mids(match_mids_list)
+    this.get_origin_match_by_mids(match_mids_list.slice(0 , 20))
   }
 
   /** 

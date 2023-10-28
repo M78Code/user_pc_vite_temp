@@ -14,7 +14,6 @@
       </div>
     </div>
     <!--视频，tab和玩法集部分-->
-    <template>
       <div class="detail-header-bg"></div>
       <div class="detail-header">
         <!--视频区域-->
@@ -34,7 +33,6 @@
           {{`orderNo:${current_match.orderNo}-tid:${current_league.menuId}`}}
         </div>
       </div>
-    </template>
      <!--玩法集区域 -->
     <div class="detail-main" :class="{'detail-main2':get_betbar_show}">
       <virtual-sports-category v-if="match && !is_show_analyse" :mid="mid" :current_match="match" :source="'virtual_sports_details'"/>
@@ -443,7 +441,7 @@ export default defineComponent({
     .detail-back {
       width: 0.3rem;
       height: 100%;
-      background: var(--q-color-com-img-bg-3) center no-repeat;
+      background: url($SCSSPROJECTPATH + '/image/common/go_back.svg')  center no-repeat;
       background-size: 0.1rem auto;
       margin-left: 0.05rem;
     }

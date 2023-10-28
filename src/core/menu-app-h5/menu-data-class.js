@@ -700,7 +700,16 @@ class MenuData {
       this.update();
     }
   }
-
+  /**
+   * 选中1级menu
+   * item [object]当前点击对象
+   */
+  set_current_lv1_menu(lv1_mi) {
+    this.current_lv_1_menu_mi.value = lv1_mi  
+    this.menu_type.value = lv1_mi //设置一级菜单menutype
+    this.get_menu_lvmi_list(lv1_mi)
+    // this.update();
+  }
   /**
    * 选中二级menu
    * item [object]当前点击对象

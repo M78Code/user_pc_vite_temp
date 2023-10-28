@@ -3,12 +3,19 @@
     <!-- <virtual-skeleton v-show="virtual_data_loading"></virtual-skeleton> -->
     <!--联赛tab-->
     <div class="tab-wrapper">
-      <div class="tab-item" :class="{active:i == tab_item_i}" v-for="(tab_item,i) of tab_items"
+      <div class="tab-item" v-for="(tab_item,i) of tab_items" :class="{active:i == tab_item_i}"
         :key="i" @click="tab_item_click_handle(i,null,'user_change')">
-        {{tab_item.name}}
+        <div>{{tab_item.name}}</div>
       </div>
     </div>
-
+    <div class="tab-title">
+      <div class="league-name right-border">{{ lengue_name }}</div>
+      <div class="status">
+        <span class="num">第10轮</span>
+        <span class="state">比赛中</span>
+        <icon-wapper class="icon" color="#e1e1e1" name="icon-arrow" size="15px" />
+      </div>
+    </div>
     <template v-if="!no_virtual_match">
       <!--选中的赛事阶段组件包含赛前倒计时,赛中视频,完赛等状态-->
       <!--此组件:key去除后有问题, 赛事倒计时时钟颜色红黄错乱-->
@@ -85,11 +92,11 @@
           <!--  足球小组赛,淘汰赛页面  -->
           <group-knockout
             v-if="tab_items[tab_item_i] ? tab_items[tab_item_i].field3 != '': false"
-            :tid="menu_list[tab_item_i].field1"
+            :tid="VirtualData.menu_list[tab_item_i].field1"
             :current_match="current_match"
           />
           <!--  足球排行榜页面  -->
-          <football-ranking-list v-else :tid="menu_list[tab_item_i].field1"/>
+          <football-ranking-list v-else :tid="VirtualData.menu_list[tab_item_i].field1"/>
         </div>
         <!--  非足球排行榜页面  -->
         <ranking-list-start v-else :mid="current_match.mid"/>
@@ -117,6 +124,7 @@ import resultPage from "src/base-h5/components/match-list/components/result-page
 import noData from "src/base-h5/components/common/no-data.vue";
 import virtualSkeleton from "src/base-h5/components/skeleton/virtual-sports/virtual.vue"
 import lodash from "lodash";
+import { IconWapper } from 'src/components/icon'
 import { get_now_server } from 'src/core/utils/module/other.js'
 import { standard_edition } from 'src/base-h5/mixin/userctr.js'
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
@@ -128,6 +136,7 @@ export default defineComponent({
   name: "virtual",
   components:{
     noData,
+    IconWapper,
     'virtual-sports-category':virtualSportsCategory,
     'match-tab':matchTab,
     'v-s-match-list':vsMatchList,
@@ -141,7 +150,6 @@ export default defineComponent({
     'virtual-skeleton':virtualSkeleton,
   },
   props:{
-    menu_list:Array,
     params:Object,
     is_user_refresh:Boolean,
     v_menu_changed:Number | String,
@@ -149,13 +157,13 @@ export default defineComponent({
   },
   
   setup(props, evnet) {
-    const { menu_list, params, is_user_refresh, v_match_router_ente } = toRefs(props);
+    const { params, is_user_refresh, v_match_router_ente } = toRefs(props);
     const state = reactive({
       // 事件集合
       emitters: [],
       show_debug:sessionStorage.getItem('wsl') == '9999',
       //当前选中的赛事id
-      current_match_id:'',
+      lengue_name:'',
       //赛事列表数据加载成功标识 用于初始化显示赛事列表
       match_list_loaded:0,
       //趋势图标显示标志
@@ -203,18 +211,18 @@ export default defineComponent({
     })
     const tab_items = computed(() => {
       let r = [];
-      if(menu_list.value && menu_list.value.length){
-        r = menu_list.value;
+      if(VirtualData.menu_list && VirtualData.menu_list.length){
+        r = VirtualData.menu_list;
       }
       return r;
     });
     const current_sub_menu_id = computed(() => {
       return Number(lodash.get(VirtualData.current_sub_menu, 'menuId', 0))
     })
+    const current_match_id = computed(() => {
+      return VirtualData.current_match_mid
+    })
     const sub_menuid = computed(() => {
-      return ""
-    });
-    const current_batch = computed(() => {
       return ""
     });
     const get_video_process_data = computed(() => {
@@ -242,22 +250,22 @@ export default defineComponent({
         state.top_menu_changed = !change_str.includes('zu_lan_')
       }
     );
-    watch( () => menu_list.value, () => {
-        if(tab_items.value && tab_items.value.length){
+    watch( () => VirtualData.menu_list, () => {
+      if(tab_items.value && tab_items.value.length){
 
-          if(VirtualData.current_league){
-            tab_items.value.forEach((t_item,i) => {
-              if(t_item.menuId == VirtualData.current_league.menuId){
-                state.tab_item_i = i;
-              }
-            });
-          }
-
-          let current_league = tab_items.value[state.tab_item_i];
-          VirtualData.set_current_league(lodash.cloneDeep(current_league));
-          // tab_item_click_handle(tab_item_i,'is_force');
+        if(VirtualData.current_league){
+          tab_items.value.forEach((t_item,i) => {
+            if(t_item.menuId == VirtualData.current_league.menuId){
+              state.tab_item_i = i;
+            }
+          });
         }
-      }, { deep: true });
+
+        let current_league = tab_items.value[state.tab_item_i];
+        VirtualData.set_current_league(lodash.cloneDeep(current_league));
+        tab_item_click_handle(state.tab_item_i,'is_force');
+      }
+    }, { deep: true });
 
     watch( () => current_sub_menu_id.value, (c,n) => {
         //赛马赛狗 摩托车
@@ -349,7 +357,7 @@ export default defineComponent({
       }
       for (let i = 0; i < match_list_by_no.value.length; i++) {
         const m = match_list_by_no.value[i];
-        if(current_batch.batchNo != m.batchNo){
+        if(VirtualData.current_batch.batchNo != m.batchNo){
           is_all_end = false;
           break;
         }
@@ -482,8 +490,9 @@ export default defineComponent({
         VirtualData.set_current_batch({});
       }
       state.tab_item_i = i;
-      if(tab_items.value && tab_items.value.length && state.tab_item_i > -1){
-        let current_league = tab_items.value[state.tab_item_i];
+      if(tab_items.value && tab_items.value.length && i > -1){
+        let current_league = tab_items.value[i];
+        state.lengue_name = current_league.name
         if(!current_league){
           current_league = tab_items.value[0];
         }
@@ -499,8 +508,8 @@ export default defineComponent({
      */
     const param_generate = () => {
       let params = null;
-      if(menu_list.value && menu_list.value[state.tab_item_i]){
-        let league = menu_list.value[state.tab_item_i];
+      if(VirtualData.menu_list && VirtualData.menu_list[state.tab_item_i]){
+        let league = VirtualData.menu_list[state.tab_item_i];
         params = {
           tid:league.field1,
           csid:params.csid
@@ -555,7 +564,7 @@ export default defineComponent({
       update_n_batch_handle,
       tab_items,
       sub_menuid,
-      current_batch,
+      current_match_id,
       get_video_process_data,
       get_prev_v_sports_params,
       is_show_analyse,
@@ -569,9 +578,6 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.virtual-sports {
-
-}
 
 /*  联赛菜单 */
 .tab-wrapper {
@@ -581,7 +587,7 @@ export default defineComponent({
   overflow: auto;
   align-items: center;
   padding: 0 0.08rem;
-
+  border-bottom: 0.1rem solid var(--q-virtual-bd-c-2);
   .tab-item {
     height: 0.26rem;
     line-height: 0.26rem;
@@ -589,6 +595,31 @@ export default defineComponent({
     margin-right: 0.06rem;
     padding: 0 0.1rem;
     flex-shrink: 0;
+  }
+}
+.tab-title{
+  height: 0.25rem;
+  display: flex;
+  padding: 0 0.1rem;
+  align-items: center;
+  justify-content: space-between;
+  .league-name{
+    color: #303442;
+    font-weight: 600;
+  }
+  .status{
+    .state{
+      margin: 0 5px;
+      color: #fff;
+      padding: 0 6px;
+      border-radius: 3px;
+      font-size: 0.11rem;
+      display: inline-block;
+      background: #7981A4;
+    }
+    .icon{
+      transform: rotate(180deg);
+    }
   }
 }
 

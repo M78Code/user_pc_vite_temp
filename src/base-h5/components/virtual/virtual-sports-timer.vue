@@ -156,7 +156,7 @@ export default defineComponent({
 
       data.is_last_circle = false;
       if(remain_circle == 1){
-        strokeColor = true
+        data.strokeColor = true
         data.is_last_circle = true;
       }
 

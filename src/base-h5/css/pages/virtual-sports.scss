@@ -5,7 +5,7 @@
 [class*=theme0] {
   /*  头部 */
   .virtual-head {
-    background-color: var(--q-color-page-bg-color-35);
+    background-color: var(--q-virtual-bg-c-1);
     .bg1001 {
       background-image: var(--q-color-img-bg-47);
     }
@@ -27,7 +27,7 @@
     .back-wrap {
       color:  var(--q-color-fs-color-54);
       .detail-back {
-        background: var(--q-color-com-img-bg-3) center no-repeat;
+        background: url($SCSSPROJECTPATH + '/image/common/go_back.svg')  center no-repeat;
       }
       .no-single {
         background: var(--q-color-img-bg-53)  center no-repeat;
@@ -94,13 +94,12 @@
     .tab-wrapper {
        background-color:var(--q-color-page-bg-color-2);
       .tab-item {
-        color:  var(--q-color-fs-color-13);
-        background-color: var(--q-color-page-bg-color-95);
-        border: 1px solid var(--q-color-border-color-53);
+        color:  var(--q-virtual-t-c-2);
         &.active {
-          color:  var(--q-color-fs-color-51);
-          border: 1px solid var(--q-color-fs-color-51);
-          background-color: var(--q-color-page-bg-color-85);
+          color:  var(--q-virtual-t-c-1);
+          > div {
+            border-bottom: 2px solid var(--q-virtual-bd-c-1);
+          }
         }
       }
     }

@@ -12,7 +12,7 @@
     <!-- 灰色间隔线 -->
     <div class="menu-third"></div>
     <!-- 玩法集 -->
-    <div class="menu-s" ref="reset_scroll_dom">
+    <div class="menu-s" ref="reset_scroll_dom">111
       <div class="menu-item" v-for="(item, i) in data_list" :key="i" @click.self="selete_item(item['id'],$event)" :class="get_details_item == item['id']?'t_color':''">
         {{item.marketName}}
       </div>
@@ -31,8 +31,8 @@ import { useRoute, useRouter } from "vue-router"
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import lodash from "lodash"
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
-import { MatchDetailCalss } from "src/core";
-import { defineComponent,ref } from "vue";
+import { MatchDetailCalss,MenuData } from "src/core";
+import { defineComponent,ref,onMounted,watch,onUnmounted } from "vue";
 export default defineComponent({
   props:[
     "virtual_match_list",
@@ -46,16 +46,38 @@ export default defineComponent({
     const analyse = ref(true)
     // 渲染的数据
     const data_list = ref([])
+    //获取二级菜单ID
+    const sub_menu_type = ref(MenuData.get_current_lv_2_menu_type())
+     
+    let timer1_,timer_ = null
+    const reset_scroll_dom = ref(null)
+    const initEvent =()=>{
+      if(timer1_) { clearTimeout(timer1_) }
+      timer1_ = setTimeout(() => {
+        try{
+          reset_scroll_dom.value.scrollLeft = 0
+        }catch(e){
+          console.error(e)
+        }
+      }, 400);
+    }
+    /* 
+      *监听菜单版本获取最新的二级菜单id
+      *
+    */
+    watch(()=>MenuData.update_time,()=>{
+      sub_menu_type.value =MenuData.get_current_lv_2_menu_type()
+    })
     onMounted(()=>{
      // 延时器
-    timer1_ = null;
-    timer_ = null;
-    initEvent();
-    play_list()
-    MatchDetailCalss.set_is_show_details_analyse(false)
-   }) 
-  const {off} = useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB, initEvent)
-  const {off:OFF_TAB_BET} = useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB_BET, initEvent)
+      timer1_ = null;
+      timer_ = null;
+      initEvent()
+      play_list()
+      MatchDetailCalss.set_is_show_details_analyse(false)
+    }) 
+    const {off} = useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB, initEvent)
+    const {off:OFF_TAB_BET} = useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB_BET, initEvent)
 
    watch(()=>props.batch,()=>{
     play_list()
@@ -93,7 +115,7 @@ export default defineComponent({
       MatchDetailCalss.set_is_show_details_analyse(false)
       //实现动态效果
       try {
-        let dom = $refs.reset_scroll_dom;
+        let dom = reset_scroll_dom.value;
         if(!dom) return;
 
         let start_ = dom.scrollLeft;
@@ -137,16 +159,7 @@ export default defineComponent({
         set_fewer(1)
       }
     }
-    const initEvent =()=>{
-      if(timer1_) { clearTimeout(timer1_) }
-      timer1_ = setTimeout(() => {
-        try{
-          $refs.reset_scroll_dom.scrollLeft = 0
-        }catch(e){
-          console.error(e)
-        }
-      }, 400);
-    }
+
     /**
      *@description: 调用玩法集的接口
      *@param {Undefined}
@@ -155,14 +168,14 @@ export default defineComponent({
     const play_list=()=>{
       // 1.在足球页进入详情需要调用玩法集合接口
       // 2.在赛马页需要调用玩法集合接口
-      if(![1001,1004].includes(sub_menu_type) || $route.name == 'virtual_sports_details'){
+      if(![1001,1004].includes(sub_menu_type.value) || route.name == 'virtual_sports_details'){
         let new_mid = ''
-        if(batch){
-          new_mid =  batch
+        if(props.batch){
+          new_mid = props.batch
         }else{
-          new_mid = $route.query.mid
+          new_mid = route.query.mid
         }
-        let params = { sportId: sub_menu_type,mid: new_mid};
+        let params = { sportId: sub_menu_type.value,mid: new_mid};
         api_common.get_category_list(params).then(res =>{
           if(res.code == 200 && res.data){
             data_list = lodash.get(res, "data");
@@ -183,6 +196,9 @@ export default defineComponent({
       clearTimeout(timer1_)
       clearInterval(timer_);
     })
+    return {
+    reset_scroll_dom,
+    }
   }
 
   //todo
@@ -210,7 +226,7 @@ export default defineComponent({
   //   }
   // },
 
-
+  
 
 })
 

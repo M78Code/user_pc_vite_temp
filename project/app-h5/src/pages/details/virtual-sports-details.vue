@@ -14,11 +14,10 @@
       </div>
     </div>
     <!--视频，tab和玩法集部分-->
-    <template>
       <div class="detail-header-bg"></div>
       <div class="detail-header">
         <!--视频区域-->
-        <div class="stage-wrapper">{{current_match}}{{current_league}}11
+        <div class="stage-wrapper">{{current_league}}11
           <virtual-sports-stage source='detail'
             :current_match="current_match" @update_next_batch_match="update_n_batch_handle"
             :match_process_update="match_process_update"
@@ -34,7 +33,6 @@
           {{`orderNo:${current_match.orderNo}-tid:${current_league.menuId}`}}
         </div>
       </div>
-    </template>
      <!--玩法集区域 -->
     <div class="detail-main" :class="{'detail-main2':get_betbar_show}">
       <virtual-sports-category v-if="match && !is_show_analyse" :mid="mid" :current_match="match" :source="'virtual_sports_details'"/>
@@ -49,7 +47,7 @@
 // import common from 'src/project/mixins/constant/module/common.js';
 // import virtual_sports_mixin from "src/project/mixins/virtual_sports/virtual_sports_mixin.js"
 import { api_virtual } from "src/api/index.js";
-// import virtual_sports_tab from 'src/base-h5/components/details/components/virtual_sports_tab.vue'
+import virtualSportsTab from 'src/base-h5/components/details/components/virtual-sports-tab.vue'
 // import virtual_sports_category from "src/base-h5/components/details/children/virtual_sports_category.vue"
 // import virtual_match_statistic from 'src/base-h5/components/details/components/virtual_match_statistic.vue'
 import virtualSportsStage from 'src/base-h5/components/virtual/virtual-sports-stage.vue'
@@ -69,7 +67,7 @@ export default defineComponent({
   // mixins:[common,virtual_sports_mixin],
   components: {
     virtualSportsStage,
-    // 'virtual-sports-tab': virtual_sports_tab,
+    virtualSportsTab,
     // 'virtual-match-statistic': virtual_match_statistic,
     // 'virtual-sports-category': virtual_sports_category,
   },
@@ -469,7 +467,7 @@ export default defineComponent({
     .virtual-ref {
       width: 0.4rem;
       height: 100%;
-      background: var(--q-color-com-img-bg-70) center no-repeat;
+      background: url($SCSSPROJECTPATH + '/image/list/virtual-ref.svg') center no-repeat;
       background-size: 0.2rem auto;
 
       &.refreshing {
