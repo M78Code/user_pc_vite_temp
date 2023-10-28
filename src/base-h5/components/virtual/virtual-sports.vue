@@ -257,7 +257,7 @@ export default defineComponent({
           VirtualData.set_current_league(lodash.cloneDeep(current_league));
           // tab_item_click_handle(tab_item_i,'is_force');
         }
-      }, { deep: true });
+      }, { deep: true});
 
     watch( () => current_sub_menu_id.value, (c,n) => {
         //赛马赛狗 摩托车

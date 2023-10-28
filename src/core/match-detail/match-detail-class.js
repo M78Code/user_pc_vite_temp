@@ -103,6 +103,8 @@ export default class MatchDetailCtr {
     this.current_gotodetail_match={};
     // 玩法tab 所有投注 - 进球 - 上半场 - 球队 - 让球&大小
     this.details_item = 0;
+    // 一键收起状态: 1.全展开 2.全收起 3.部分展开 1和3箭头向上
+    this.fewer = 1;
     /* =========H5 */
   }
 
@@ -401,6 +403,15 @@ export default class MatchDetailCtr {
   */
   set_is_show_details_analyse(flag){
     this.is_show_details_analyse = flag
+    this.set_details_data_version()  
+  }
+  /**
+   * @description:H5详情一键收起状态: 
+   * @param {Number} 1.全展开 2.全收起 3.部分展开 1和3箭头向上 
+   * @return {*}
+  */
+  set_fewer(val){
+    this.fewer = val
     this.set_details_data_version()  
   }
 }
