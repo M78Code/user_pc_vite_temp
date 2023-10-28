@@ -10,6 +10,7 @@
         </template>
         <template v-slot:right>
             <div class="right-icon" @click="state.select_dialog = true"></div>
+            <div @click="state.setting_dialog = true">setting</div>
         </template>
     </navigation-bar>
 
@@ -24,12 +25,19 @@
 
     <match-container />
 
+    <!--  弹窗  -->
     <div v-if="state.select_dialog" position="bottom" class="select-mask" :style="`height:${inner_height}px`">
         <div style="height:100%;width: 100%" @click="state.select_dialog = false"></div>
-        <!-- 筛选弹窗 -->
-        <select-dia />
+        <!-- 搜索联赛 -->
+        <setect-league @closedHandle="state.select_dialog = false" @finishHandle="selectFinishHandle"></setect-league>
     </div>
 
+    <!-- 设置 -->
+    <div v-if="state.setting_dialog" position="bottom" class="select-mask" :style="`height:${inner_height}px`">
+        <div style="height:100%;width: 100%" @click="state.setting_dialog = false"></div>
+        <!-- 筛选弹窗 -->
+        <setting-filter></setting-filter>
+    </div>
     <!-- <match-container2 /> -->
 
 </template>
@@ -38,8 +46,9 @@ import { onMounted, onBeforeMount, reactive } from "vue";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import { ScrollMenu } from 'src/base-h5/components/menu/app-h5-menu/index'
 import navigationBar from 'src/base-h5/components/tutorial/navigation-bar/index.vue'
+import settingFilter from 'src/base-h5/components/setting-filter/index.vue'
+import setectLeague from 'src/base-h5/components/setect-league/index.vue'
 import { scrollMenu } from "src/base-h5/components/menu/app-h5-menu/utils.js"
-import selectDia from "src/base-h5/components/match-list/components/select-dia.vue"
 import matchContainer from "src/base-h5/components/match-list/index.vue";
 import { i18n_t, compute_css_obj, MenuData } from "src/core/index.js";
 import { is_results, is_kemp } from 'src/base-h5/mixin/menu.js'
@@ -53,7 +62,8 @@ const props = defineProps({})
 const state = reactive({
     currentSwitchValue: 0, // 普通赛果：0  冠军赛果：1
     currentSlideValue: 0, // 日期数 目前slideMenu写死
-    select_dialog:false
+    select_dialog:false,
+    setting_dialog: false
 })
 
 const switchHandle = (val) => {
@@ -69,6 +79,11 @@ const slideHandle = (val, e) => {
     if (state.currentSlideValue === val) return
     state.currentSlideValue = val
     scrollMenu(e, ".slide-box", ".switch-item-active");
+}
+
+const selectFinishHandle = (val) => {
+    console.log('选择完成')
+    state.select_dialog = false
 }
 
 onMounted(()=>{
