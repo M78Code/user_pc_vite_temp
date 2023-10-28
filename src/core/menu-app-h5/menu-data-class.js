@@ -90,7 +90,16 @@ class MenuData {
     }
     // 默认设置二级菜单id
     // this.set_current_lv_2_menu_mi( lodash_.get(menu_lv_mi_lsit,'[0]',{}))
-    console.error('menu_lv_mi_lsit',menu_lv_mi_lsit)
+    // 今日 加入 收藏/vr体育/电竞 滚球加入全部
+    
+    if(mid == 1){
+      menu_lv_mi_lsit.unshift({mi:'',ct:"2",title:"全部"})
+    }
+    if(mid == 2){
+      menu_lv_mi_lsit.unshift({mi:'',ct:"2",title:"收藏"})
+      menu_lv_mi_lsit.splice(3,0,{mi:'',ct:"2",title:"VR体育"})
+      menu_lv_mi_lsit.splice(4,0,{mi:'',ct:"2",title:"电竞"})
+    }
     this.menu_lv_mi_lsit = menu_lv_mi_lsit
     return menu_lv_mi_lsit
   }
@@ -106,7 +115,7 @@ class MenuData {
     this.current_lv_2_menu = val;
     // 今日 / 滚球/ 冠军 没有 三级
     if(![1,2,400].includes(this.current_lv_1_menu_mi.value)){
-     
+      this.get_date_menu_api_when_subchange()
     }
     this.update()
   }
@@ -117,7 +126,12 @@ class MenuData {
   set_current_lv1_menu(lv1_mi) {
     this.current_lv_1_menu_mi.value = lv1_mi  
     this.get_menu_lvmi_list(lv1_mi)
-    this.set_current_lv_2_menu_mi( lodash_.get(this.menu_lv_mi_lsit,'[0]',{}))
+    let index = 0
+    // 今日第一位是收藏 默认选中足球 
+    if(lv1_mi == 2){
+      index = 1
+    }
+    this.set_current_lv_2_menu_mi( lodash_.get(this.menu_lv_mi_lsit,`[${index}]`,{}))
     // this.update();
   }
 
