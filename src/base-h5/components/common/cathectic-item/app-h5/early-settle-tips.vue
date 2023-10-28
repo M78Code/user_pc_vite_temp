@@ -3,6 +3,7 @@
  * @Author:
 -->
 <template>
+    <div style="display: none;">{{ BetRecordClass.bet_record_version }}</div>
     <span class="tips" @click="alertTips=true;">
       提前兑现规则申明
       <icon-wapper name="icon-tips" size="0.14rem" />
@@ -19,6 +20,7 @@
 </template>
 
 <script setup>
+import BetRecordClass from "src/core/bet-record/bet-record.js";
 import { IconWapper } from 'src/components/icon'
 import { ref } from 'vue'
 // 提前兑现规则申明弹框

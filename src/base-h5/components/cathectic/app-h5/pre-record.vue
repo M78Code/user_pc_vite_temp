@@ -3,65 +3,47 @@
  * @Author: Iverson
 -->
 <template>
+  <div style="display: none;">{{ BetRecordClass.bet_record_version }}</div>
   <div class="pre_record" ref="pre_record">
     <!-- 加载中 -->
     <SRecord v-if="is_loading" />
     <scroll ref="myScroll" :on-pull="onPull" v-else>
-      <template v-if="!lodash.isEmpty(list_data)">
+      <template v-if="!lodash.isEmpty(BetRecordClass.list_data)">
         <!-- 订单内容 -->
-        <div v-for="(value, name, index) in list_data" :key="index">
+        <div v-for="(value, name, index) in BetRecordClass.list_data" :key="index">
           <template v-if="expired_all_flag(value)">
             <q-slide-transition>
-              <div v-show="value.open">
-                <div v-for="(item2, key) in value.data" :key="key" :item_data="item2" class="cathectic-item">
-                  <!-- 单关、串关内容显示 -->
-                  <template>
-                    <item-simple-body v-if="item2.seriesType == '1'" :main_item="main_item" :data_b="item2"></item-simple-body>
-                    <item-multiple-body v-else :main_item="main_item" :data_b="item2"></item-multiple-body>
-                  </template>
-                  <!-- 预约列表 => 取消预约 -->
-                  <cancel-reserve :item_data="item2"></cancel-reserve>
-                </div>
+              <div v-for="(item2, key) in value.data" :key="key" :item_data="item2" class="cathectic-item">
+                <!-- 单关、串关内容显示 -->
+                <template>
+                  <item-simple-body v-if="item2.seriesType == '1'" :data_b="item2"></item-simple-body>
+                  <item-multiple-body v-else :data_b="item2"></item-multiple-body>
+                </template>
+                <!-- 预约列表 => 取消预约 -->
+                <cancel-reserve :item_data="item2"></cancel-reserve>
               </div>
             </q-slide-transition>
           </template>
         </div>
       </template>
       <!-- 无数据展示 -->
-      <settle-void v-else :main_item="main_item"></settle-void>
+      <settle-void v-else></settle-void>
     </scroll>
   </div>
 </template>
 
 <script setup>
 import { ref, getCurrentInstance, watch, onUnmounted, onMounted } from 'vue'
+import BetRecordClass from "src/core/bet-record/bet-record.js";
 import { api_betting } from "src/api/index.js";
 import { itemSimpleBody, itemMultipleBody, cancelReserve } from "src/base-h5/components/common/cathectic-item/app-h5/index";
-import { format_M_D } from 'src/core/format/index.js'
-// 合并投注项提示弹框
-import cancleConfirmPop from 'src/base-h5/components/cathectic/cancle-confirm-pop.vue';
 import settleVoid from "src/base-h5/components/cathectic/app-h5/settle-void.vue";
 import scroll from "src/base-h5/components/common/record-scroll/scroll.vue";
 import SRecord from "src/base-h5/components/skeleton/record.vue";
 import store from 'src/store-redux/index.js';
 import lodash from "lodash";
-import { useMittOn, MITT_TYPES } from "src/core/mitt/"
 import { i18n_t } from "src/boot/i18n.js";
-import UserCtr from "src/core/user-config/user-ctr.js";
-import { project_name } from "src/core";
-// TODO vuex 待数据调通后删除
-// import { mapGetters, mapMutations } from 'vuex';
 
-// 仓库数据
-let { cathecticReducer, userInfoReducer } = store.getState()
-const store_cathectic = ref(cathecticReducer)
-
-const props = defineProps({
-  main_item: {
-    type: [Number, String],
-    default: ''
-  }
-})
 // 页面锚点
 const myScroll = ref(null)
 // 定时器
@@ -75,8 +57,6 @@ const teamName = ref('')
 const orderNumber = ref('')
 //是否在加载中
 const is_loading = ref(true)
-//列表数据
-const list_data = ref({})
 //list_data里面最后的一条数据的日期 '2020-11-17'
 const last_record = ref('')
 // 是否存在下一页
@@ -88,21 +68,25 @@ const selected_expired = ref(false)
 // 强制更新DOM
 const instance = getCurrentInstance()
 
+
+/**
+ *@description 初次切换到预约时加载数据
+*@return {Undefined} undefined
+*/
+onMounted(() => {
+  init_data()
+})
+
 //获取预约订单状态
 const change_pre_status = (orderList) => {
   const params = {
     orderNoList: orderList
   }
   api_betting.get_book_status_record(params).then(result => {
-    let res = {}
-    if (result.status) {
-      res = result.data
-    } else {
-      res = result
-    }
+    let res = result.status ? result.data : result
     if (res.code == 200) {
       const { data } = res
-      const listObj = lodash.cloneDeep(list_data.value)
+      const listObj = lodash.cloneDeep(BetRecordClass.list_data)
       for (let key in listObj) {
         let listItem = listObj[key]
         for (let i = 0; i < listItem.data.length; i++) {
@@ -112,18 +96,13 @@ const change_pre_status = (orderList) => {
           }
         }
       }
-      list_data.value = listObj
+      BetRecordClass.set_list_data(listObj)
     }
   }).catch(() => {
     //不处理
   })
 }
-//点击取消打开弹层，将数据传输到组件
-const show_cancle_pop = (params) => {
-  cancle_confirm_pop_visible.value = true
-  teamName.value = params.name
-  orderNumber.value = params.orderNo
-}
+
 //判断是否当前日期所有已失效订单状态
 const expired_all_flag = (param) => {
   if (!selected_expired.value) {
@@ -169,7 +148,7 @@ const cancle_pre_order = () => {
           orderNo: orderNumber.value
         }])
       }, 1000)
-      init_data(true)
+      init_data()
     } else if (['0400546', '0400547'].includes(res.code)) {
       cancle_confirm_pop_visible.value = false
       store.dispatch({
@@ -190,31 +169,20 @@ const cancle_pre_pop = () => {
   teamName.value = ''
   orderNumber.value = ''
 }
-/**
- *@description 重新请求主单记录数据
-*@return {Undefined} undefined
-*/
-const refreshOrderList = () => {
-  init_data(true)
-}
+
 /**
  *@description 初始请求注单记录数据
 *@return {Undefined} undefined
 */
-const init_data = (flag) => {
+const init_data = () => {
   var params = {
     preOrderStatusList: [0, 2, 3, 4]
   }
-  is_loading.value = !flag
+  is_loading.value = true
   //第一次加载时的注单数
   let size = 0
   api_betting.get_preOrderList_news(params).then(result => {
-    let res = {}
-    if (result.status) {
-      res = result.data
-    } else {
-      res = result
-    }
+    let res = result.status ? result.data : result
     if (res.code == 200 && res.data) {
       is_loading.value = false
       let { record, hasNext } = lodash.get(res, "data");
@@ -222,17 +190,16 @@ const init_data = (flag) => {
       if (lodash.isEmpty(record)) {
         return;
       }
-      // 合并数据
-      let obj = lodash.cloneDeep(list_data.value)
-      list_data.value = lodash.merge(obj, record)
-      for (let item of Object.values(list_data.value)) {
-        item.open = true
+      for (let item of Object.values(record)) {
         for (var i = 0; i < item.data.length; i++) {
           item.data[i].orderVOS = item.data[i].detailList
         }
         size += item.data.length
       }
       last_record.value = lodash.findLastKey(record);
+      // 合并数据
+      let obj = lodash.cloneDeep(BetRecordClass.list_data)
+      BetRecordClass.set_list_data(Object.assign(obj, record))
     } else {
       is_loading.value = false;
       return;
@@ -260,12 +227,7 @@ const onPull = () => {
   //加载中
   ele.setState(4);
   api_betting.get_preOrderList_news(params).then(result => {
-    let res = {}
-    if (result.status) {
-      res = result.data
-    } else {
-      res = result
-    }
+    let res = result.status ? result.data : result
     // 为 null 时容错处理
     if (!res.data) {
       is_hasnext.value = false
@@ -278,75 +240,29 @@ const onPull = () => {
     let { record, hasNext } = lodash.get(res, "data", {});
     is_hasnext.value = hasNext
     if (res.code == 200 && res.data) {
-      last_record.value = lodash.findLastKey(record);
-      // 合并数据
-      let obj = lodash.cloneDeep(list_data.value);
-      list_data.value = lodash.merge(obj, record)
-      for (let item of Object.values(list_data.value)) {
+      for (let item of Object.values(record)) {
         item.open = true
         for (var i = 0; i < item.data.length; i++) {
           item.data[i].orderVOS = item.data[i].detailList
         }
       }
-
+      last_record.value = lodash.findLastKey(record);
+      // 合并数据
+      let obj = lodash.cloneDeep(BetRecordClass.list_data)
+      BetRecordClass.set_list_data(Object.assign(obj, record))
     } else {
       //没有更多
       ele.setState(7);
     }
   }).catch(err => { console.error(err) });
 }
-/**
- *@description 展开与收起切换
-*@param {Boolean} val 展开-true  收起-false
-*@return {Undefined} undefined
-*/
-const toggle_show = (val) => {
-  val.open = !val.open
-  instance.proxy.$forceUpdate()
-}
-/**
- *@description 初次切换到预约时加载数据
-*@return {Undefined} undefined
-*/
-onMounted(() => {
-  init_data()
-})
-watch(() => list_data.value, (newVal) => {
-  //监听预约记录数据，是否有预约中的订单，并轮询获取
-  if (lodash.isEmpty(newVal)) return
-  let new_orderNumber = []
-  lodash.forIn(newVal, (item, key) => {
-    const tempOrderList = lodash.filter(item.data, (o) => {
-      return o.preOrderStatus === 0
-    })
-    orderNumber.value = lodash.concat(new_orderNumber, tempOrderList);
-  })
-  if (new_orderNumber.length > 0) {
-    const orderList = []
-    new_orderNumber.map((item) => {
-      orderList.push(item.orderNo)
-    })
-    clearTimeout(timer_1.value)
-    timer_1.value = setTimeout(() => {
-      if (store_cathectic.value.main_item.value == 2 && document.visibilityState == 'visible') {
-        change_pre_status(orderList)
-      }
-    }, 5000)
-  } else {
-    clearTimeout(timer_1.value)
-  }
-})
+
 // 组件销毁后执行的操作
 onUnmounted(() => {
   clearTimeout(timer_1.value)
   timer_1.value = null
   clearTimeout(timer_2.value)
   timer_2.value = null
-  useMittOn(MITT_TYPES.EMIT_GET_ORDER_LIST, refreshOrderList).off
-  useMittOn(MITT_TYPES.EMIT_SHOW_CANCLE_POP, show_cancle_pop).off
-  // for (const key in $data) {
-  // $data[key] = null
-  // }
 })
 
 </script>
@@ -444,4 +360,5 @@ template {
 
 .early2 {
   background-image: url($SCSSPROJECTPATH + "/image/svg/select_a.svg");
-}</style>
+}
+</style>
