@@ -36,7 +36,7 @@
     <div v-if="state.setting_dialog" position="bottom" class="select-mask" :style="`height:${inner_height}px`">
         <div style="height:100%;width: 100%" @click="state.setting_dialog = false"></div>
         <!-- 筛选弹窗 -->
-        <setting-filter></setting-filter>
+        <setting-filter @closedHandle="state.setting_dialog = false"></setting-filter>
     </div>
     <!-- <match-container2 /> -->
 
