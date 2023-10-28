@@ -74,7 +74,7 @@ export default defineComponent({
   setup(props, evnet) {
     const router = useRouter()
     const route = useRoute()
-    let data = reactive({
+    let allData = reactive({
       vsport_operate:null,
       match_of_video:null,
       show_debug:sessionStorage.getItem('wsl') == '9999',
@@ -153,7 +153,7 @@ export default defineComponent({
         let data = lodash.get(res,'data');
         if(code == 200 && data){
           init_match_fields(data);
-          match = data;
+          allData.match = data;
           if(!current_match){
             current_match = JSON.parse(JSON.stringify(data));
             init_match_fields(current_match);
@@ -402,7 +402,7 @@ export default defineComponent({
 
     };
     return {
-      ...toRefs(data),
+      ...toRefs(allData),
       vir_refresh,
       cancel_ref,
       api_interface,

@@ -98,7 +98,7 @@ class VirtualVideo {
         else {
           if (!is_no_match_data) {
             this.no_process_data_p_key = this.video_by_api_cache_key;
-            get_video_process_by_api_again(success_cb);
+            this.get_video_process_by_api_again(success_cb);
           }
           else {
             success_cb(null);
@@ -148,7 +148,7 @@ class VirtualVideo {
             }
           }
           if (!get_data) {
-            get_video_process_by_api_again();
+            this.get_video_process_by_api_again();
           }
         });
       }
