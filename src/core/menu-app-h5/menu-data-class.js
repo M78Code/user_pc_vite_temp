@@ -40,13 +40,13 @@ class MenuData {
     //当前的菜单 lv2
     //当前的菜单 lv2  注意  二级菜单 可能 有一个【全部】选项 get_sport_all_selected
     this.current_lv_2_menu = {};
-    this.current_lv_2_menu_i = undefined;
+    this.current_lv_2_menu_mi = '';
     //当前的菜单 lv3
     this.current_lv_3_menu = {};
-    this.current_lv_3_menu_i = undefined;
+    this.current_lv_3_menu_mi = '';
     //当前的菜单 lv4
     this.current_lv_4_menu = {};
-    this.current_lv_4_menu_i = undefined;
+    this.current_lv_4_menu_mi = '';
     //================主列表用的  结束==================
     this.menu_list = []
     this.menu_type = ref(2)
@@ -605,7 +605,7 @@ class MenuData {
           ) {
             this.set_current_lv3_menu(
               this.current_lv_3_menu,
-              this.current_lv_3_menu_i, 'init'
+              this.current_lv_3_menu_mi, 'init'
             );
           } else {
             this.set_current_lv3_menu(this.menu_lv3[0], 0, 'init');
@@ -625,7 +625,7 @@ class MenuData {
         if (type == "init" && this.menu_lv3.length && this.current_lv_3_menu) {
           this.set_current_lv3_menu(
             this.current_lv_3_menu,
-            this.current_lv_3_menu_i, type
+            this.current_lv_3_menu_mi, type
           );
         } else {
          
