@@ -31,8 +31,7 @@ import { useRoute, useRouter } from "vue-router"
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import lodash from "lodash"
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
-const route = useRoute()
-const router = useRouter()
+import { defineComponent,ref } from "vue";
 export default defineComponent({
   props:[
     "virtual_match_list",
@@ -40,6 +39,8 @@ export default defineComponent({
   ],
   name:"virtual-sports-tab",
   setup(props){
+    const route = useRoute()
+    const router = useRouter()
     // 默认显示虚拟体育分析按钮
     const analyse = ref(true)
     // 渲染的数据
@@ -53,7 +54,7 @@ export default defineComponent({
     set_is_show_details_analyse(false)
    }) 
   const {off} = useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB, initEvent)
-  const {OFF_TAB_BET:off} = useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB_BET, initEvent)
+  const {off:OFF_TAB_BET} = useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB_BET, initEvent)
 
    watch(()=>props.batch,()=>{
     play_list()
