@@ -154,6 +154,9 @@
   </script>
   
   <style lang="scss" scoped>
+  template {
+    display: block;
+  }
   .settle-dialog {
     position: relative;
     overflow: hidden;   

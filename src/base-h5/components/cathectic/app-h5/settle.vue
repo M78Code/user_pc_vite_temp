@@ -3,16 +3,16 @@
  * @Author: Router
 -->
 <template>
-  <div class="settle" ref="settle">
+  <div class="settle">
       <!-- 加载中 -->
       <SRecord v-if="is_loading" />
       <!-- 滚动部分 -->
       <scroll ref="myScroll" :on-pull="onPull" v-else>
-        <template v-if="no_data && !is_all_early_flag">
+        <template v-if="no_data">
           <!-- 排序和时间选择 -->
           <!-- 订单内容 -->
           <div v-for="(value, name, index) in list_data" :key="index">
-              <template v-if="!is_early || (is_early && clac_is_early(value.data))">
+              <template>
                 <q-slide-transition>
                   <div v-show="value.open">
                     <div v-for="(item2, key) in value.data" :key="key" :item_data="item2" class="cathectic-item">
@@ -29,8 +29,8 @@
             </template>
           </div>
       </template>
-      <!-- 去投注 -->
-      <settle-void :is_early="is_all_early_flag" v-if="(!no_data || is_all_early_flag)" :is_limit="is_limit"></settle-void>
+      <!-- 没有数据 -->
+      <settle-void v-else :main_item="main_item"></settle-void>
     </scroll>
   </div>
 </template>
@@ -92,16 +92,13 @@ const new_main_item = ref(props.main_item)
 // onMounted(() => {
 //   store_cathectic.main_item == 1 && init_data()
 // })
-watch(() => props.main_item, (newval) => {
+onMounted(() => {
   /**
    * @description 初次切换到已结算时加载数据
    * @param {undefined} undefined
    * @return {undefined} undefined
    */
-   new_main_item.value = newval
-  if (newval == 1) {
-    !last_record.value && init_data()
-  }
+   init_data()
 })
 
 /**

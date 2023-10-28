@@ -56,8 +56,7 @@ import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineCompon
 import { useRoute, useRouter } from "vue-router"
 import lodash from "lodash";
 
-let route =  useRoute()
-let router = useRouter()
+
 const MatchInfoCtr = {}
 export default defineComponent({
   name: "virtual_sports_category",
@@ -85,6 +84,8 @@ export default defineComponent({
   // #TODO mixins
   // mixins:[betting],
   setup(props, evnet) {
+    let route =  useRoute()
+    let router = useRouter()
     let state = reactive({
       // 事件集合
       emitters: [],
