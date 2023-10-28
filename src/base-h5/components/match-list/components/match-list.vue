@@ -16,13 +16,22 @@
           </v-match-container>
           <div class="data_mid" v-else> <!--此data-mid用于分频订阅赛事,请勿修改-->
             <!--冠军玩法-->
-            <match-container-champion 
-              v-if="is_kemp"
-              :i="index" 
-              :match_of_list="match_item" 
-              :menu_type="menu_type"
-              @toggle_collect_league="toggle_collect">
-            </match-container-champion>
+            <template v-if="is_kemp">
+              <match-container-champion-app
+                v-if="PROJECT_NAME === 'yazhou-h5'"
+                :i="index" 
+                :match_of_list="match_item" 
+                :menu_type="menu_type"
+                @toggle_collect_league="toggle_collect">
+              </match-container-champion-app>
+              <match-container-champion
+                v-else
+                :i="index" 
+                :match_of_list="match_item" 
+                :menu_type="menu_type"
+                @toggle_collect_league="toggle_collect">
+              </match-container-champion>
+            </template>
             <!--yazhou-h5 真实体育玩法 -->
             <template v-else>
               <match-container
@@ -101,11 +110,12 @@ import lodash from 'lodash'
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt"
 import { add_or_cancel_tournament, add_or_cancel_match } from 'src/api/module/common/index.js';
 import GlobalAccessConfig from "src/core/access-config/access-config.js"
-import matchContainer from "./match-container.vue";  // 虚拟体育赛狗赛马赛果项
-import matchContainerApp from "./match-container-2.vue";  // 虚拟体育赛狗赛马赛果项
-import vMatchContainer from "./virtual-match-container.vue";  // 虚拟体育赛狗赛马赛果项
-import matchContainerChampion from "./match-container-champion.vue";    // 冠军赛事组件，用于赛事列表展示赛事信息
-import scrollWrapper from 'src/base-h5/components/scroll-wraper/scroll-wrapper.vue';    // 滚动操作处理
+import matchContainer from "./match-container.vue"; 
+import matchContainerApp from "./match-container-2.vue"; 
+import vMatchContainer from "./virtual-match-container.vue"; 
+import matchContainerChampion from "./match-container-champion.vue"; 
+import matchContainerChampionApp from "./match-container-champion-2.vue"; 
+import scrollWrapper from 'src/base-h5/components/scroll-wraper/scroll-wrapper.vue'; 
 import UserCtr from 'src/core/user-config/user-ctr.js'
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import { MenuData, i18n_t, utils,compute_img_url, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, PROJECT_NAME} from "src/core/index.js"

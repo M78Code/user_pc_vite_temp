@@ -95,7 +95,7 @@ watch(()=> MenuData.current_lv_1_menu_mi.value,() => {
 // 菜单变化页面请求数据
 const set_menu_mi_change_get_api_data = () => {
   // 今日 / 滚球/ 冠军 没有 三级
-  if([1,2,400].includes(MenuData.current_lv_1_menu_mi.value)){
+  if([1,2,3,400].includes(MenuData.current_lv_1_menu_mi.value)){
     handle_match_render_data()
   }
 }
