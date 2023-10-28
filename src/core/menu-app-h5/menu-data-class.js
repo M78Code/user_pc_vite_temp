@@ -93,12 +93,12 @@ class MenuData {
     // 今日 加入 收藏/vr体育/电竞 滚球加入全部
     
     if(mid == 1){
-      menu_lv_mi_lsit.unshift({mi:'',ct:"2",title:"全部"})
+      menu_lv_mi_lsit.unshift({mi:'1',btn:1, ct:"2",title:"全部"})
     }
     if(mid == 2){
-      menu_lv_mi_lsit.unshift({mi:'',ct:"2",title:"收藏"})
-      menu_lv_mi_lsit.splice(3,0,{mi:'',ct:"2",title:"VR体育"})
-      menu_lv_mi_lsit.splice(4,0,{mi:'',ct:"2",title:"电竞"})
+      menu_lv_mi_lsit.unshift({mi:'1',btn:1,ct:"2",title:"收藏"})
+      menu_lv_mi_lsit.splice(3,0,{mi:'1',btn:1,ct:"2",title:"VR体育"})
+      menu_lv_mi_lsit.splice(4,0,{mi:'1',btn:1,ct:"2",title:"电竞"})
     }
     this.menu_lv_mi_lsit = menu_lv_mi_lsit
     return menu_lv_mi_lsit
@@ -699,16 +699,6 @@ class MenuData {
       }
       this.update();
     }
-  }
-  /**
-   * 选中1级menu
-   * item [object]当前点击对象
-   */
-  set_current_lv1_menu(lv1_mi) {
-    this.current_lv_1_menu_mi.value = lv1_mi  
-    this.menu_type.value = lv1_mi //设置一级菜单menutype
-    this.get_menu_lvmi_list(lv1_mi)
-    // this.update();
   }
   /**
    * 选中二级menu
