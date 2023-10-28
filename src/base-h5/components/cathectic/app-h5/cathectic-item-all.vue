@@ -6,10 +6,11 @@
   <div class="cathectic">
     <div style="display: none;">{{ BetRecordClass.bet_record_version }}</div>
     <!-- 加载中 -->
-    <scroll ref="myScroll" :on-pull="onPull" :key="BetRecordClass.bet_record_version">
+    <scroll ref="myScroll" :on-pull="onPull">
       <template v-if="!lodash.isEmpty(BetRecordClass.list_data)">
         <!-- 订单内容 -->
         <div v-for="(value,name,index) in BetRecordClass.list_data" :key="index" class="cathectic-list">
+          <div>{{ value }}</div>
             <q-slide-transition>
               <div v-for="(item2,key) in value.data" :key="key" :item_data="item2" class="cathectic-item">
                 <!-- 单关、串关内容显示 -->
