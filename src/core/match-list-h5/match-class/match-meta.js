@@ -30,6 +30,9 @@ class MatchMeta {
     this.complete_mids = []
     // 赛事全量数据
     this.complete_matchs = []
+    this.timer = null
+    this.first = true
+    this.func = null
   }
 
   /**
@@ -67,7 +70,7 @@ class MatchMeta {
       mids && match_mids_list.push(...mids)
     })
     this.zaopan_mids = [...new Set(match_mids_list)]
-    this.get_origin_match_by_mids(match_mids_list.slice(0 , 20))
+    this.get_origin_match_by_mids(match_mids_list)
   }
 
   /** 
@@ -256,7 +259,7 @@ class MatchMeta {
     // 所有日期
     let target_mids = []
     if (!time) {
-      target_mids = [...new Set((this.zaopan_mids).slice(0, 10))]
+      target_mids = [...new Set(this.zaopan_mids)]
     } else {
       if (time === 0) return
       const hour_12 = 12 * 60 * 60 * 1000
@@ -265,7 +268,7 @@ class MatchMeta {
         const match = BaseData.resolve_base_info_by_mid(t)
         match && (Number(match.mgt) > Number(time) - hour_12) && (Number(match.mgt) < Number(time) + hour_12) && arr_mids.push(t)
       })
-      target_mids = [...new Set((arr_mids).slice(0, 8))]
+      target_mids = [...new Set(arr_mids)]
     }
     this.get_origin_match_by_mids(target_mids)
   }
@@ -413,7 +416,7 @@ class MatchMeta {
     this.complete_mids = [...new Set(mids)]
     // 过滤赛事
     this.complete_matchs = match_list.filter((t) => t.mid)
-    
+    console.log('this.complete_matchs', this.complete_matchs)
     // 计算所需渲染数据
     this.compute_page_render_list()
 
@@ -425,14 +428,30 @@ class MatchMeta {
   /**
    * @description 计算所需渲染数据
    */
-  compute_page_render_list () {
+  compute_page_render_list (scrollTop = 0) {
     // 计算当前页所需渲染数据
-    const end_index = VirtualList.compute_page_render_list_end_index(this.complete_matchs)
-    const target_index = end_index > 10 ? end_index : this.complete_mids.length
-    const target_list = this.complete_matchs.slice(0, target_index)
-    this.match_mids = this.complete_mids.slice(0, target_index)
+    // const end_index = VirtualList.compute_page_render_list_end_index(this.complete_matchs)
+    console.log(scrollTop)
+    const { arr, start_index, end_index } = VirtualList.compute_page_render_list(scrollTop)
+    console.log(arr)
+    // const target_index = end_index > 10 ? end_index : this.complete_mids.length
+    // const target_list = this.complete_matchs.slice(start_index, target_index)
+    // this.match_mids = this.complete_mids.slice(start_index, target_index)
+    // const func = lodash.throttle(() => {
+    //   console.log(11111)
+    //   this.match_mids = arr.map(t => {
+    //     return t.mid
+    //   })
+    //   // 向仓库提交数据
+    //   this.handle_submit_warehouse(arr)
+    // }, 3000)
+    // func()  
+    // 重新设置api域名函数
+    this.match_mids = arr.map(t => {
+      return t.mid
+    })
     // 向仓库提交数据
-    this.handle_submit_warehouse(target_list)
+    this.handle_submit_warehouse(arr)
   }
 
   /**

@@ -9,9 +9,6 @@ export default {
   // 字体
   "virtual-t-c-1": "#179CFF", 
   "virtual-t-c-2": "#AFB3C8", 
-  "menu-pop-active-bg": "#ff9124", 
-  "menu-pop-active-text": "#ffffff", 
-  "menu-pop-bd-top":"#BFCEDD",
 
   // border
   'virtual-bd-c-1': '#179CFF', 

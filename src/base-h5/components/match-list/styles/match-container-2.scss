@@ -378,7 +378,7 @@
       .favorited-icon{
         width: 0.2rem;
         height: 100%;
-        padding-left: 0.0.8rem;
+        padding-left: 0.08rem;
         position: relative;
         top: 1px;
         flex-shrink: 0;
@@ -505,7 +505,6 @@
      // 添加 line-height: 0.14rem 解决42682 生产BUG--malick
     .match-league {
       max-width: 2.8rem;
-      padding-top: 0.02rem;
       line-height: 0.14rem;
       &.match-main-league {
         //max-width: 1.4rem;

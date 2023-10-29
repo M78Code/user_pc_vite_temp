@@ -177,7 +177,7 @@ export default defineComponent({
       let minutes_format = minutes.padStart(2, '0');
       let seconds_f_format = seconds_f.padStart(2, '0');
       allData.timer_format = `${minutes_format}'${seconds_f_format}"`;
-      path_d = get_path_d(remaining_time);
+      allData.path_d = get_path_d(remaining_time);
       if(remaining_time < 1000){
         // #TODO emit事件
         // $emit("time_ended",mid);

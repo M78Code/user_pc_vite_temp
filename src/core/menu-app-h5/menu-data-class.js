@@ -126,6 +126,7 @@ class MenuData {
    */
   set_current_lv1_menu(lv1_mi) {
     this.current_lv_1_menu_mi.value = lv1_mi  
+    this.menu_type.value = lv1_mi  
     this.get_menu_lvmi_list(lv1_mi)
     let index = 0
     // 今日/滚球第一位是收藏 默认选中足球/全部 
