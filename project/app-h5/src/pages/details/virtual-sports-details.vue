@@ -148,7 +148,7 @@ export default defineComponent({
       allData.mid = mid_;
       if(mid_) MatchDetailCalss.set_goto_detail_matchid(mid_);
       let parma = {
-        mid: matchid.value || mid_,
+        mid: mid_,
       }
       api_virtual.get_virtual_match_detail(parma).then(res => {
         let code = lodash.get(res,'code');

@@ -83,6 +83,8 @@ export default defineComponent({
   setup(props, evnet) {
     // 所有数据集合
     const matchInfoCtr =ref(MatchDataWarehouse_H5_Detail_Common)
+    //数据仓库版本号  
+    const match_info_version =ref(MatchDataWarehouse_H5_Detail_Common.data_version.version )
     let route =  useRoute()
     let router = useRouter()
     let state = reactive({
@@ -240,7 +242,7 @@ export default defineComponent({
     // 监听详情数据仓库版本号更新odds_info数据
     watch(() => matchInfoCtr.value.data_version.version, () => {
         get_match_list_normal()
-    })
+    },{deep:true})
     // 监听get_fewer的值
     watch(
       () => get_fewer.value,
@@ -858,7 +860,7 @@ export default defineComponent({
       remove_session_storage,
       remove_detail_storage,
       route,
-      MatchDataWarehouse_H5_Detail_Common,
+      match_info_version
     }
   }
 })
