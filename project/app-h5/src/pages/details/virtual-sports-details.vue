@@ -122,6 +122,9 @@ export default defineComponent({
     //     init_video_play_status(new_);
     //   }
     // );
+    //悬浮"串"是否显示 |
+     const get_betbar_show=ref(true) //todo
+
      let timer_super28,timer1_ =null
     onMounted(() => {
       // 原created
@@ -403,6 +406,12 @@ export default defineComponent({
       }
 
     };
+    /**
+     * 赛果停留20秒后请求下一批赛事
+     */
+   const  update_n_batch_handle =()=>{
+
+    };
     return {
       ...toRefs(allData),
       vir_refresh,
@@ -417,13 +426,16 @@ export default defineComponent({
       go_where,
       route,
       router,
-      is_show_analyse
+      is_show_analyse,
+      update_n_batch_handle,
+      get_betbar_show
     }
   }
 })
 </script>
 <style lang="scss">
 @import "src/base-h5/css/pages/virtual-sports.scss";
+@import "src/base-h5/components/details/styles/details-theme/virtual_sports_tab.scss";
 </style>
 <style lang="scss" scoped>
 .virtual-detail {

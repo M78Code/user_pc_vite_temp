@@ -7,7 +7,7 @@
     <div class="sport-title match-indent" v-if="get_sport_show(i)" @click="handle_ball_seed_fold">
       <span class="score-inner-span"> {{match_of_list.csna}} </span>
       <div class="collapse-dire">
-        <img class="icon-down-arrow" :class="{ 'collapsed': league_collapsed }" :src='compute_img_url("icon-collapse")' />
+        <img class="icon-down-arrow" :class="{ 'collapsed': league_collapsed }" :src='compute_img_url("icon-collapse")' />456
       </div>
     </div>
     <div v-if="is_show_league(i)" class="league-container flex items-center justify-between hairline-border" @click="handle_league_fold">
@@ -26,34 +26,38 @@
         </div>
 
       <div class="collapse-dire">
-        <img class="icon-down-arrow" :class="{collapsed:collapsed}" alt="" :src="compute_img_url('icon-collapse')">
+        <!-- <img class="icon-down-arrow" :class="{ 'collapsed': league_collapsed }" :src='compute_img_url("icon-collapse")' /> -->
+        <icon-wapper color="var(--q-match-fs-color-62)" name="icon-arrow" size="15px" :class="['icon-wapper', {'close': !league_collapsed}]" />
       </div>
     </div>
 
     <template v-for="(hp,index) of match_of_list.hps">
       <div class="hps-wrap hairline-border" v-if="hp.hs != 2 && !collapsed" :key="index">
        
-        <div class="match-title flex items-center"
+        <div class="flex items-center justify-between"
           :class="{'is-favorite':get_show_favorite_list}">
-          <div class="debug-head" style="color:red;position:absolute;right:0;">
-            {{get_key_by_obg(hp)}}
+          <div class="match-title items-center">
+            <div class="debug-head" style="color:red;position:absolute;right:0;">
+              {{get_key_by_obg(hp)}}
+            </div>
+            <div class="hpn-wrap ellipsis">
+              {{hp.hps}}
+            </div>
           </div>
-          <div class="hpn-wrap ellipsis">
-            {{hp.hps}}
+          <div v-if="!collapsed && hp.hmed" class="limit-time"
+          :class="{'first-t':index == 0}">
+            <div class="limit-t-i">
+              <template v-if="!['zh', 'tw'].includes(lang)">
+                {{(new Date(+hp.hmed)).Format(i18n_t('time7'))}} {{ $t('match_main.cut_off')}}
+              </template>
+              <template v-else>
+                {{(new Date(+hp.hmed)).Format(i18n_t('time7'))}} {{ $t('match_main.cut_off')}}
+              </template>
+            </div>
           </div>
         </div>
 
-        <div v-if="!collapsed && hp.hmed" class="limit-time flex items-center justify-center"
-          :class="{'first-t':index == 0}">
-          <div class="limit-t-i row justify-center items-center">
-            <template v-if="!['zh', 'tw'].includes(lang)">
-              {{(new Date(+hp.hmed)).Format(i18n_t('time7'))}} {{ $t('match_main.cut_off')}}
-            </template>
-            <template v-else>
-              {{(new Date(+hp.hmed)).Format(i18n_t('time7'))}} {{ $t('match_main.cut_off')}}
-            </template>
-          </div>
-        </div>
+        
 
         <div class="ol-list-wrap flex justify-start" :data-ol="hp.ol.length" v-if="hp.ol">
 

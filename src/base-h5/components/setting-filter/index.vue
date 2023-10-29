@@ -104,6 +104,7 @@ const closedHandle = () => {
         height: 0.5rem;
         display: flex;
         justify-content: space-between;
+        align-items: center;
         font-size: 0.14rem;
         padding: 0.14rem 0;
         margin: 0 0.14rem;

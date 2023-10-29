@@ -94,7 +94,7 @@ onUnmounted(() => {
 <style lang="scss" scoped>
 
 .ol-li-item {
-  width: 1.72rem;
+  width: 49%;
   height: 0.4rem;
   padding: 0 0.1rem;
   margin-bottom: 0.02rem;
@@ -102,12 +102,13 @@ onUnmounted(() => {
   overflow: hidden;
 
   &:nth-child(2n-1) {
-    width: 1.73rem;
-    margin-right: 0.02rem;
+    width: 48%;
+    margin-right: 0.06rem;
+    margin-bottom: 0.06rem;
   }
 
   .on {
-    color: #999999;
+    color: var(--q-gb-bg-c-2);
     max-width: 1.06rem;
     text-overflow: ellipsis;
     overflow: hidden;

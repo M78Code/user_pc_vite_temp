@@ -123,24 +123,23 @@
             <template v-else>
               <!-- 投注 -->
               <div v-if="BetViewDataClass.bet_order_status == 1" @click="submit_order" :class="{ 'set-opacity': true }"
-                class="row justify-center items-center content-center">
-                <p class="yb_fontsize12 yb_mr10">{{ $t('bet_record.bet_val') }}</p>
-                <p class="yb_fontsize20">{{ bet_amount }}</p>
+                class="row justify-center items-center content-center yb-info">
+                <div>投注 <span class="yb-info-money">可赢100.00</span></div>
+                <div><span class="yb-info-one">></span><span class="yb-info-two">></span><span>></span></div>
+                <!-- <p class="yb_fontsize12 yb_mr10">{{ $t('bet_record.bet_val') }}</p>
+                <p class="yb_fontsize20">{{ bet_amount }}</p> -->
               </div>
               <!-- 投注 有投注项失效后点击接受变化的置灰样式-->
-              <!-- <div v-if="BetViewDataClass.bet_order_status == 5" class="row justify-center items-center content-center set-opacity">
-                <p class="yb_fontsize12 yb_mr10">{{ $t('bet_record.bet_val') }}</p>
-                <p class="yb_fontsize20">{{ format_money2(500) }}</p>
-              </div> -->
-              <!-- 确定 -->
-              <p v-if="[3,4,5].includes(BetViewDataClass.bet_order_status)" @click="pack_up" class="yb_fontsize16">{{ $t('common.ok') }}</p>
-            
-              <!-- 接受变化 -->
-              <p v-if="btn_show == 3" @click="agree_change" class="yb_fontsize16">{{ $t('bet.agree_change') }}</p>
-              <!-- 接受变化并投注 -->
-              <p v-if="btn_show == 4" @click="submit_order" class="yb_fontsize16">{{ $t('bet.agree_change2') }}</p>
+              <div v-if="BetViewDataClass.bet_order_status == 5" class="row justify-center items-center content-center yb-info yb-info-hui">
+                <div>投注 <span class="yb-info-money">可赢100.0</span></div>
+                <div><span class="yb-info-one">></span><span class="yb-info-two">></span><span>></span></div>
+              </div>
             </template>
           </div>
+
+          <!--串关-->
+          <div :class="is_strand?'yb-strand':'yb-nostrand'">+串</div>
+          
         </div>
 
         <!--投注后的 确定按钮 -->
@@ -185,6 +184,8 @@ import { format_money3, format_money2 } from 'src/core/format/index.js'
 import { submit_handle } from "src/core/bet/class/bet-box-submit.js"
 import acceptRules from ".//accept-rules.vue"
 
+//串关的按钮
+const is_strand = ref(true)
 const scroll_box = ref()
 const series_order_respList = ref([])
 const award_total = ref()
@@ -342,6 +343,53 @@ onUnmounted(() => {
 })
 </script>
 <style lang="scss" scoped>
+.yb-nostrand{
+  margin-left: 0.1rem;
+  height: 0.5rem;
+  width: 0.5rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.2rem;
+  color: var(--q-gb-t-c-9);
+  background: var(--q-gb-t-c-7);
+}
+.yb-strand{
+  margin-left: 0.1rem;
+  height: 0.5rem;
+  width: 0.5rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.2rem;
+  color: var(--q-gb-t-c-1);
+  background: var(--q-gb-t-c-7);
+}
+.yb-info{
+  background: var(--q-gb-t-c-1) !important;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 0.3rem;
+  border-radius: 0.7rem;
+  color: var(--q-gb-t-c-14);
+  font-size: 0.14rem;
+}
+.yb-info-hui{
+background: var(--q-gb-t-c-3) !important;
+}
+.yb-info-money{
+  font-size: 0.12rem;
+  color: var(--q-gb-bg-c-9);
+}
+
+.yb-info-one{
+  color: var(--q-gb-t-c-6);
+}
+.yb-info-two{
+  color: var(--q-gb-t-c-7);
+}
 .nonebox4-sub{
     padding: 0.08rem 0;
     margin-top: 0.08rem;
@@ -536,7 +584,7 @@ onUnmounted(() => {
   width: 0.85rem;
   border: 1px solid;
   border-radius: 4px;
-  margin-right: 0.1rem;
+  margin-left: 0.1rem;
   text-align: center;
 
 }

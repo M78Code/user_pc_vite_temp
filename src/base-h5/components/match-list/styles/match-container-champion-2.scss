@@ -6,6 +6,7 @@
   width: 100%;
   height: auto;
   position: relative;
+  border-radius: 4px;
 
   .league-container {
     height: 0.4rem;
@@ -99,7 +100,13 @@
         }
       }
     }
+  .collect-tubiao{
+    height: 0.15rem;
+    width: 0.02rem;
+    background-color:var(--q-gb-t-c-1) ;
+    border-radius: 10px;
 
+  }
     .collapse-dire {
       margin: 0.05rem 0.11rem 0.07rem 0;
 
@@ -153,12 +160,12 @@
 
   .hps-wrap {
     margin: 0 0.07rem;
-    margin-top: 0.05rem;
+    //margin-top: 0.05rem;
     padding-top: 0.05rem;
 
     .match-title {
       height: 0.34rem;
-      padding-left: 0.11rem;
+      // padding-left: 0.11rem;
       // padding-top: 0.12rem;
       position: relative;
      

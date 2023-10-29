@@ -55,7 +55,66 @@ import answerQuestions from 'src/base-h5/components/tutorial/answer-questions/in
 
 const switchMenu = ['让球', '大小球']
 const slideMenu = ['0', '0/0.5', '0.5', '0.5/1', '1球', '1/1.5球', '2球', '2/2.5球']
-const matchResultList = 4
+const matchResultList = [
+    {
+        ballNumber:'0',
+        title:'（平手盘）',
+        homeTeamScore: '0',
+        awayTeamScore: "1",
+        condition: '主客实力相当均不让球即0（平手盘）',
+        matchList: [
+           { homeTeam: '全赢', awayTeam: '全输', matchResult: '1 - 0', winIsWho: 'homeTeam', note:'主客谁赢球即全赢，打平则退回本金（走水）',},
+           { homeTeam: '退回本金', awayTeam: '退回本金', matchResult: '1 - 0', winIsWho: '', note: ''},
+        ]
+    },
+    {
+        ballNumber:'0/0.5',
+        title:'（平手半球盘）',
+        homeTeamScore: '-0/0.5',
+        awayTeamScore: '+0/0.5',
+        condition: '主队让0/0.5球',
+        matchList: [
+           { homeTeam: '全赢', awayTeam: '全输', matchResult: '1 - 0', winIsWho: 'homeTeam', note:'主队赢1球或以上，投注主队全赢，投注客队全输',},
+           { homeTeam: '输一般', awayTeam: '赢一般', matchResult: '0 - 0', winIsWho: 'awayTeam', note:'打平，投注主队输一半，投注客队赢一半',},
+        ]
+    },
+    {
+        ballNumber:'0.5',
+        title:'（半球盘）',
+        homeTeamScore: '-0.5',
+        awayTeamScore: '+0.5',
+        condition: '主队让0.5球',
+        matchList: [
+           { homeTeam: '全赢', awayTeam: '全输', matchResult: '1 - 0', winIsWho: 'homeTeam', note:'主队赢1球或以上，投注主队全赢，投注客队全输',},
+           { homeTeam: '全赢', awayTeam: '全输', matchResult: '0 - 0', winIsWho: 'awayTeam', note:'主队打平或输球，投注主队全输，投注客队全赢',},
+        ]
+    },
+    {
+        ballNumber:'0.5/1',
+        title:'（半球/一球盘）',
+        homeTeamScore: '-0.5/1',
+        awayTeamScore: '+0.5/1',
+        condition: '主队让0.5/1球',
+        matchList: [
+           { homeTeam: '赢一半', awayTeam: '输一半', matchResult: '1 - 0', winIsWho: 'homeTeam', note:'主队赢1球或以上，投注主队全赢，投注客队输一半'},
+           { homeTeam: '全赢', awayTeam: '全输', matchResult: '2 - 0', winIsWho: 'homeTeam', note:'主队赢2球或以上，投注主队全赢，投注客队全输'},
+           { homeTeam: '全输', awayTeam: '全赢', matchResult: '0 - 0', winIsWho: 'awayTeam', note:'主队打平或输球，投注主队全输，投注客队全赢'},
+        ]
+    },
+    {
+        ballNumber:'1',
+        title:'（一球盘）',
+        homeTeamScore: '-1',
+        awayTeamScore: '+1',
+        condition: '主队让1球',
+        note:'主队赢1球，投注主客均退回本金（走水）',
+        matchList: [
+           { homeTeam: '退回本金', awayTeam: '退回本金', matchResult: '1 - 0', winIsWho: ''},
+           { homeTeam: '全赢', awayTeam: '全输', matchResult: '2 - 0', winIsWho: 'homeTeam'},
+           { homeTeam: '全输', awayTeam: '全赢', matchResult: '0 - 0', winIsWho: 'awayTeam'},
+        ]
+    },
+]
 const router = useRouter()
 const props = defineProps({})
 const state = reactive({
