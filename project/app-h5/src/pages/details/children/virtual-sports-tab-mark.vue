@@ -5,24 +5,22 @@
 -->
 <template>
   <div ref='details_tab' class="row vir-details-tab" v-cloak>
+    <!-- 收起的箭头 -->
+    <div class="fat-btn" @click="change_btn()">
+      <div class="tab-btn" :class="{collapsed:get_fewer != 2}"></div>
+    </div>
+    <!-- 灰色间隔线 -->
+    <div class="menu-third"></div>
     <!-- 玩法集 -->
-    <!-- <div class="menu-s" ref="reset_scroll_dom">
-      <div class="menu-item" v-for="(item, i) in new_data_list" :key="i" @click.self="selete_item(item['id'],$event)" :class="get_details_item == item['id']?'t_color':''">
+    <div class="menu-s" ref="reset_scroll_dom">
+      <div class="menu-item" v-for="(item, i) in data_list" :key="i" @click.self="selete_item(item['id'],$event)" :class="get_details_item == item['id']?'t_color':''">
         {{item.marketName}}
       </div>
-    </div> -->
-      <q-tabs
-        v-model="viewTab"
-        inline-label
-        narrow-indicator
-        class="bg-tabs"
-        active-color="active-tab"
-        @update:model-value="change_tab"
-        :content-class="curr_active_tab">
-      <q-tab  :ripple="false" label="历史战绩" name="lszj" />
-      <q-tab  name="bet" :ripple="false" label="投注"/>
-      <q-tab  name="rank" :ripple="false" label="排行榜"/>      
-    </q-tabs>
+    </div>
+    <!-- 分析icon(详情页面的时候显示分析,在其他页面不显示分析按钮) -->
+    <div v-if="anlyse_show" class="icon-style" @click="analyse_btn">
+      <div :class="[analyse ? 'analyse-icon':'analyse-close-icon']"></div>
+    </div>
   </div>
 </template>
 
@@ -35,7 +33,6 @@ import lodash from "lodash"
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import { MatchDetailCalss,MenuData,MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance } from "src/core";
 import { defineComponent,ref,onMounted,watch,onUnmounted,computed } from "vue";
-
 export default defineComponent({
   props:[
     "virtual_match_list",
@@ -43,13 +40,8 @@ export default defineComponent({
   ],
   name:"virtual-sports-tab",
   setup(props,event){
-    const viewTab =ref('bet')
     // 复刻版tab栏菜单
-    const new_data_list = [
-      {marketName:"历史战绩",id:1},
-      {marketName:"投注",id:2},
-      {marketName:"排行榜",id:3}
-     ]
+    const new_data_list = [ ]
     const route = useRoute()
     const router = useRouter()
     // 默认显示虚拟体育分析按钮
@@ -167,7 +159,7 @@ export default defineComponent({
         console.error(error)
       }
 
-     MatchDetailCalss.set_details_item(uId);
+      set_details_item(uId);
       // 点击玩法对页面吸顶tab做高度处理
       useMittEmit(MITT_TYPES.EMIT_DETAILILS_TAB_CHANGED)
       // 虚拟体育切换玩法集,滚动条高度默认恢复为0
@@ -198,11 +190,9 @@ export default defineComponent({
             data_list.value = lodash.get(res, "data");
             let first_data_item = data_list.value[0];
             if(first_data_item){
-             // 将玩法集第一个存入详情类，后续赛种/赛事期数跳转时做判断用
+              // 将玩法集第一个存入详情类，后续赛种/赛事期数跳转时做判断用
              MatchDetailCalss.set_first_details_item(first_data_item.id);
              MatchDetailCalss.set_details_item(first_data_item.id);
-             //玩法集存入数据仓库
-             MatchDetailCalss.compute_category_refer(data_list.value); 
             }
           }
         })
@@ -212,9 +202,6 @@ export default defineComponent({
     const anlyse_show=computed(()=>{
       return   GlobalAccessConfig.get_statisticsSwitch()&& route.name != 'virtual_sports' && get_detail_data.value?.csid != 1004
     }) 
-    const change_tab =(val)=>{
-      event.emit('change_tab',val)
-    }
     onUnmounted(()=>{
       OFF_TAB_BET()
       off()
@@ -231,10 +218,7 @@ export default defineComponent({
       anlyse_show,
       analyse,
       change_btn,
-      analyse_btn,
-      new_data_list,
-      viewTab,
-      change_tab
+      analyse_btn
     }
   }
 
@@ -263,45 +247,127 @@ export default defineComponent({
 
 
 </script>
+
 <style lang="scss" scoped>
 .vir-details-tab {
   height: 0.4rem;
   margin-bottom: 0.04rem;
-  width:100%;
 }
 
-.bg-tabs {
-    width:100%;
-    background: var(--q-gb-bg-c-15);
-   
-  .bg-active-tab {
-    background: var(--q-gb-bg-c-15);
-  
-  }
-  }
- .details-tab{
-  border-top:0.5px solid #F2F2F6;
- }
- :deep(.q-tab) {
-    min-height: 0.4rem;
-    height: 0.4rem;
+.menu-s {
+  max-width: 2.85rem;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: auto;
+  white-space: nowrap;
 
-    &.text-active-tab {
-      .q-tab__label {
-        font-weight: bolder;
-        color: var(--q-gb-t-c-1);
-      }
-    }
-
-    .q-tab__label {
-      font-size: 0.14rem;
-      color: #999999; // var(--q-detials-color-7)
-    }
+  &::-webkit-scrollbar {
+    display: none;
   }
 
-  :deep(.q-tab__indicator) {
-    color: var(--q-gb-bg-c-13);
-    border-radius: 1.5px;
-    z-index: 1;
-  } 
+  scrollbar-width: none; /* firefox */
+  -ms-overflow-style: none; /* IE 10+ */
+}
+
+.menu-item {
+  font-size: 0.14rem;
+  letter-spacing: 0;
+  text-align: center;
+  line-height: 0.4rem;
+  padding: 0 0.12rem;
+  display: inline-block;
+}
+
+/*************** 选中的玩法集 *************** -S*/
+.t_color {
+  position: relative;
+  font-size: 0.14rem;
+  letter-spacing: 0;
+  text-align: center;
+  font-weight: bold;
+
+  &:after {
+    content: ' ';
+    display: block;
+    position: absolute;
+    width: 0.18rem;
+    height: 0.03rem;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 0;
+    border-radius: 0.08rem;
+  }
+}
+
+
+/*************** 选中的玩法集 *************** -E*/
+.fat-btn {
+  width: 0.4rem;
+  line-height: 0.42rem;
+  text-align: center;
+}
+
+.tab-btn {
+  width: 0.12rem;
+  height: 0.12rem;
+  display: inline-block;
+  background-image: url($SCSSPROJECTPATH + "/image/svg/tab_up_btn.svg");
+  background-size: 100% 100%;
+  transform: rotateZ(180deg);
+  // @include webkit(transition, transform 0.3s);
+
+  // &.collapsed {
+  //   transform: rotateZ(0);
+  //   @include webkit(transition, transform 0.3s);
+  // }
+}
+
+.menu-third {
+  padding-right: 0.1rem;
+  height: 0.4rem;
+  line-height: 0.4rem;
+  position: relative;
+  float: left;
+  text-align: center;
+
+  &:after {
+    content: ' ';
+    display: block;
+    width: 1px;
+    height: 0.21rem;
+    position: absolute;
+    top: 0.1rem;
+  }
+}
+
+.tab-fixed {
+  position: fixed;
+  top: 2.04rem;
+  z-index: 90;
+}
+
+.icon-style {
+  position: absolute;
+  right: 0;
+  width: 0.39rem;
+  height: 0.39rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: -0.05rem 0 0.1rem -0.01rem rgba(0, 0, 0, 0.08); 
+}
+
+.analyse-icon {
+  width: 0.2rem;
+  height: 0.2rem;
+  background-image:url($SCSSPROJECTPATH + "/image/common/analyse_icon.svg");//todo 后续上传到服务器
+  background-size: 100% 100%;
+}
+
+.analyse-close-icon {
+  width: 0.2rem;
+  height: 0.2rem;
+  background-image:url($SCSSPROJECTPATH + "/image/svg/virtual-sports/close_icon.svg");
+  background-size: 100% 100%;
+}
 </style>

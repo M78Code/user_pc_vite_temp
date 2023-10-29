@@ -21,9 +21,9 @@
                     <Switch v-model:value="item.switchValue" :leftVal="item.leftVal" :rightVal="item.rightVal" />
                 </div>
             </div>
-            <div class="setting-item">
+            <div class="setting-item" @click="jumpHandle">
                 <div class="title">
-                    赛果查询
+                    盘口教程
                 </div>
                 <div class="more">
                     >
@@ -55,6 +55,11 @@ defineOptions({
 })
 
 const router = useRouter();
+
+const jumpHandle = () => {
+    router.push({ name: "handicapTutorial" }); // 此处跳转至盘口教程
+    closedHandle()
+}
 
 defineProps({
 
@@ -99,6 +104,7 @@ const closedHandle = () => {
         height: 0.5rem;
         display: flex;
         justify-content: space-between;
+        align-items: center;
         font-size: 0.14rem;
         padding: 0.14rem 0;
         margin: 0 0.14rem;
@@ -118,6 +124,7 @@ const closedHandle = () => {
         .more {
             color: var(--q-gb-bd-c-4);
         }
+
         .goto-website {
             width: 1.04rem;
             height: 0.28rem;

@@ -36,7 +36,7 @@
 </template>
 
 <script setup>
-import { watch, onUnmounted, ref, onMounted } from 'vue';
+import { watch, onUnmounted, ref, onMounted, computed } from 'vue';
 import { api_betting } from "src/api/index.js";
 import BetRecordClass from "src/core/bet-record/bet-record.js";
 import { itemSimpleBody, itemMultipleBody, earlySettledDetail } from "src/base-h5/components/common/cathectic-item/app-h5/index";

@@ -36,6 +36,12 @@
         <setect-league @closedHandle="select_dialog = false"></setect-league>
       </div>
 
+      <div v-if="setting_dialog" position="bottom" class="select-mask" :style="`height:${inner_height}px`">
+        <div style="height:100%;width: 100%" @click="setting_dialog = false"></div>
+        <!-- 筛选弹窗 -->
+        <setting-filter @closedHandle="setting_dialog = false"></setting-filter>
+      </div>
+
       <!-- 投注记录弹层 -->
       <div v-if="record_show" :class="settle_dialog_bool && 'shadow-box2'" class="shadow-box" @click="change_settle_status(false)" @touchmove.prevent></div>
       <!-- 投注记录弹框（已结算+未结算） -->
@@ -70,6 +76,7 @@ import { BetBoxWapper } from "src/base-h5/components/bet";
 import activityIcon from "src/base-h5/components/common/activity-icon.vue"; // 设置
 import setMenu from "src/base-h5/components/common/set-menu.vue"; // 设置
 import selectDia from "src/base-h5/components/match-list/components/select-dia.vue"
+import settingFilter from 'src/base-h5/components/setting-filter/index.vue'
 import setectLeague from 'src/base-h5/components/setect-league/index.vue'
 import { useRoute } from "vue-router";
 import store from "src/store-redux/index.js";
@@ -101,6 +108,7 @@ const get_combine_tips_show = ref(false); // 合并投注项提示弹框 弹窗
 const record_show = ref(false);
 const lastTouchEnd = ref(0);
 const select_dialog = ref(false)//暂时筛选窗口
+const setting_dialog = ref(false)//暂时筛选窗口
 const activity_status = ref(false)//首页活动弹框
 const activity_layerimg = ref("") //首页活动图
 const userBannerTimer = ref(5);
@@ -216,6 +224,12 @@ onMounted(() => {
   BetData.set_device_type(1)
 });
 const mitt_list = [
+  // 监听搜索框状态
+  useMittOn(MITT_TYPES.EMIT_CHANGE_SETTING_SHOW, function (value) {
+    // this.select_cleck = type
+    //   this.select_dialog = val
+    setting_dialog.value = value
+  }).off,
   // 监听搜索框状态
   useMittOn(MITT_TYPES.EMIT_CHANGE_SELECT_DIALOG, function (value) {
     // this.select_cleck = type

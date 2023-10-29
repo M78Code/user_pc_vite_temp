@@ -568,7 +568,7 @@ const handle_league_fold = () => {
   // 首页热门，详情页，不需要用到折叠
   if (is_hot.value || is_detail.value) return;
   MatchFold.set_league_fold(props.match_of_list.tid)
-  MatchMeta.compute_page_render_list()
+  MatchMeta.compute_page_render_list(0, 2)
 }
 /**
  * @description 联赛折叠状态

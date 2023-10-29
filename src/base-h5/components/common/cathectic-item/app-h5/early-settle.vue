@@ -4,7 +4,7 @@
 -->
 <template>
   <div style="display: none;">{{ BetRecordClass.bet_record_version }}</div>
-  <div class="early-settle">
+  <div class="early-settle" v-if="calc_show">
     <!-- 提前兑现规则申明 -->
     <early-settle-tips />
     <div class="early-button">
@@ -17,17 +17,19 @@
       <button class="cancel" v-if="btnStatus===2" @click="btnStatus=1;"> 取消 </button>
     </div>
     <!-- 滑块 -->
-    <q-slide-transition>
-      <div v-show="slider_show" class="slider-wrap">
-        <!-- 提前结算投注额 -->
-        <q-slider track-size="0.06rem" @change="change_percentage" class="slider-content" thumb-size="0.16rem"
-          v-model="percentage" :min="0" :max="100" label label-always :label-value="percentage + '.00'" />
+    <template style="display: none;">
+      <q-slide-transition>
+        <div v-show="slider_show" class="slider-wrap">
+          <!-- 提前结算投注额 -->
+          <q-slider track-size="0.06rem" @change="change_percentage" class="slider-content" thumb-size="0.16rem"
+            v-model="percentage" :min="0" :max="100" label label-always :label-value="percentage + '.00'" />
+        </div>
+      </q-slide-transition>
+      <div class="change-btn" :class="slider_show ? 'up' : 'down'" @click="slider_show=!slider_show">
+        <span>调整金额</span>
+        <img src="/public/app-h5/image/gif/change.gif">
       </div>
-    </q-slide-transition>
-    <div class="change-btn" :class="slider_show ? 'up' : 'down'" @click="slider_show=!slider_show">
-      <span>调整金额</span>
-      <img src="/public/app-h5/image/gif/change.gif">
-    </div>
+    </template>
   </div>
 </template>
 
@@ -199,7 +201,7 @@ const min_bet_money = computed(() => {
 })
 // 计算提前结算按钮是否显示
 const calc_show = computed(() => {
-  return /10true[1-6]+/.test("" + lodash.get(UserCtr.user_info, 'settleSwitch') + store_cathectic.main_item + props.item_data.enablePreSettle + status.value);
+  return /10true[1-6]+/.test("" + lodash.get(UserCtr.user_info, 'settleSwitch') + BetRecordClass.selected + props.item_data.enablePreSettle + status.value);
 })
 watch(() => expected_profit, (_new, _old) => {
   // 小于 1 时暂停提前结算

@@ -376,6 +376,7 @@ class BetViewData {
     this.orderNo_bet_obj = []
     this.bet_order_status = 1
     this.order_confirm_complete = 0
+    this.set_bet_view_version()
   }
 }
 export default new BetViewData();

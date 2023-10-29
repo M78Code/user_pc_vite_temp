@@ -22,6 +22,7 @@ import { ALL_SPORT_PLAY } from "src/core/constant/config/play-mapping.js"
 // is_single 是否单关/串关 
 // is_merge  是否单关合并
 const set_min_max_money = (bet_list, is_single, is_merge) => {
+    
     let order_min_max_money = bet_list.map(item => {
         let obj = {
             "sportId": item.sportId,   // 赛种id
@@ -41,7 +42,7 @@ const set_min_max_money = (bet_list, is_single, is_merge) => {
             "tournamentId": item.tournamentId,   // 联赛id
             "dataSource": item.dataSource,   // 数据源
             "matchType": item.matchType, // 1 ：早盘赛事 ，2： 滚球盘赛事，3：冠军，4：虚拟赛事，5：电竞赛事
-            "userId": UserCtr.get_uid()
+            // "userId": UserCtr.get_uid()
         }
         // 串关没有 这个字段 
         if (is_single) {
@@ -174,10 +175,10 @@ const get_query_bet_amount_common = (obj) => {
             set_bet_pre_list(latestMarketInfo)
         } else {
             // 获取限额失败的信息
-            BetViewDataClass.set_bet_error_code({
-                code: res.code,
-                message: res.message
-            })
+            // BetViewDataClass.set_bet_error_code({
+            //     code: res.code,
+            //     message: res.message
+            // })
         }
     })
 }

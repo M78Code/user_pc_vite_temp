@@ -311,7 +311,6 @@ this.bet_appoint_ball_head= null */
     // 设置 投注内容
     this.bet_read_write_refer_obj[custom_id] = bet_refer_obj
 
-
     // 单关/串关 投注
     if (this.is_bet_single) {
       // 单关 不合并 只有一条 

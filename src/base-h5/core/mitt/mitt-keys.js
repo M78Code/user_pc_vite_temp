@@ -115,6 +115,8 @@ export const EMIT_DOMAIN_ERROR_ALERT = "EMIT_DOMAIN_ERROR_ALERT";
 export const EMIT_SET_PRE_VIDEO_SRC = "EMIT_SET_PRE_VIDEO_SRC";
 // 监听搜索弹框是否展示
 export const EMIT_CHANGE_SELECT_DIALOG = "EMIT_CHANGE_SELECT_DIALOG";
+// 监听设置弹框是否展示
+export const EMIT_CHANGE_SETTING_SHOW = "EMIT_CHANGE_SETTING_SHOW";
 // 触发获取用户余额
 export const EMIT_GET_USER_ACCOUNT1 = "EMIT_GET_USER_ACCOUNT1";
 // 首页是否已经加载完接口，显示骨架屏

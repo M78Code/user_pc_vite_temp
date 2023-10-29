@@ -12,7 +12,7 @@
         <p>确定取消本场比赛预约？</p>
         <div class="confirm">
           <span @click="alertTips=false;">取消</span>
-          <span @click="alertTips=false;">确定</span>
+          <span @click="cancle_pre_order">确定</span>
         </div>
       </div>
     </q-dialog>
@@ -20,14 +20,44 @@
 
 <script setup>
 import { ref } from 'vue'
+import { api_betting } from "src/api/index.js";
 import BetRecordClass from "src/core/bet-record/bet-record.js";
 const props = defineProps({
-  item_data: {
-    type: Object
+  orderNumber: {
+    type: [ String, Number ]
   }
 })
 // 取消预约
 let alertTips = ref(false)
+
+/**
+ *@descript 取消预约投注项
+*@param {String} orderNumer 订单号
+*/
+const emit = defineEmits(['success'])
+const cancle_pre_order = () => {
+    api_betting.cancle_pre_order({ orderNo: props.orderNumber }).then((result) => {
+        let res = result.status ? result.data : result;
+        if (res.code == 200) {
+            store.dispatch({
+                'txt': i18n_t('pre_record.canceled'),
+                hide_time: 3000
+            })
+            alertTips.value = false
+            emit('success')
+        } else if (['0400546', '0400547'].includes(res.code)) {
+          alertTips.value = false
+            store.dispatch({
+                'txt': res.code == '0400546' ? i18n_t('pre_record.cancle_fail_tips') : i18n_t('pre_record.cancle_fail_tips2'),
+                hide_time: 3000
+            })
+        }
+    }).catch(() => {
+      alertTips.value = false
+    })
+}
+
+
 </script>
 
 <style lang="scss" scoped>

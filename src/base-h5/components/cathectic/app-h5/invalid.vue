@@ -11,8 +11,7 @@
       <template v-if="!lodash.isEmpty(BetRecordClass.list_data)">
         <!-- 订单内容 -->
         <div v-for="(value, name, index) in BetRecordClass.list_data" :key="index">
-          <template v-if="expired_all_flag(value)">
-            <q-slide-transition>
+          <q-slide-transition>
               <div v-for="(item2, key) in value.data" :key="key" :item_data="item2" class="cathectic-item">
                 <!-- 单关、串关内容显示 -->
                 <template>
@@ -21,7 +20,6 @@
                 </template>
               </div>
             </q-slide-transition>
-          </template>
         </div>
       </template>
       <!-- 无数据展示 -->
@@ -38,34 +36,16 @@ import { itemSimpleBody, itemMultipleBody, cancelReserve } from "src/base-h5/com
 import settleVoid from "src/base-h5/components/cathectic/app-h5/settle-void.vue";
 import scroll from "src/base-h5/components/common/record-scroll/scroll.vue";
 import SRecord from "src/base-h5/components/skeleton/record.vue";
-import store from 'src/store-redux/index.js';
 import lodash from "lodash";
-import { i18n_t } from "src/boot/i18n.js";
 
 // 页面锚点
 const myScroll = ref(null)
-// 定时器
-const timer_2 = ref(null)
-const timer_1 = ref(null)
-// 确认取消弹框
-const cancle_confirm_pop_visible = ref(false)
-//要取消的队名
-const teamName = ref('')
-//要取消的订单号
-const orderNumber = ref('')
 //是否在加载中
 const is_loading = ref(true)
 //list_data里面最后的一条数据的日期 '2020-11-17'
 const last_record = ref('')
 // 是否存在下一页
 const is_hasnext = ref(false)
-//需要查绚提前结算金额的订单集合
-const orderNumberItemList = ref([])
-//已失效按钮选装状态，默认不选中
-const selected_expired = ref(false)
-// 强制更新DOM
-const instance = getCurrentInstance()
-
 
 /**
  *@description 初次切换到预约时加载数据
@@ -75,106 +55,13 @@ onMounted(() => {
   init_data()
 })
 
-//获取预约订单状态
-const change_pre_status = (orderList) => {
-  const params = {
-    orderNoList: orderList
-  }
-  api_betting.get_book_status_record(params).then(result => {
-    let res = result.status ? result.data : result
-    if (res.code == 200) {
-      const { data } = res
-      const listObj = lodash.cloneDeep(BetRecordClass.list_data)
-      for (let key in listObj) {
-        let listItem = listObj[key]
-        for (let i = 0; i < listItem.data.length; i++) {
-          let tempData = lodash.find(data, (o) => { return listItem.data[i].orderNo == o.orderNo })
-          if (tempData) {
-            listItem.data[i].preOrderStatus = tempData.preOrderStatus
-          }
-        }
-      }
-      BetRecordClass.set_list_data(listObj)
-    }
-  }).catch(() => {
-    //不处理
-  })
-}
-
-//判断是否当前日期所有已失效订单状态
-const expired_all_flag = (param) => {
-  if (!selected_expired.value) {
-    return true
-  } else {
-    return lodash.find(param.data, (data) => {
-      return [2, 3, 4].includes(data.preOrderStatus)
-    }) ? true : false
-  }
-}
-//判断当前订单是否是已失效
-const expired_flag = (data) => {
-  if (!selected_expired.value) {
-    return false
-  } else {
-    return ![2, 3, 4].includes(data.preOrderStatus)
-  }
-}
-//显示已失效订单
-const show_cancle_order = () => {
-  selected_expired.value = !selected_expired.value
-}
-/**
- *@descript 取消预约投注项
-*@param {String} orderNumer 订单号
-*/
-const cancle_pre_order = () => {
-  api_betting.cancle_pre_order({ orderNo: orderNumber.value }).then((result) => {
-    let res = {}
-    if (result.status) {
-      res = result.data
-    } else {
-      res = result
-    }
-    if (res.code == 200) {
-      store.dispatch({
-        'txt': i18n_t('pre_record.canceled'),
-        hide_time: 3000
-      })
-      cancle_confirm_pop_visible.value = false
-      timer_2.value = setTimeout(() => {
-        change_pre_status([{
-          orderNo: orderNumber.value
-        }])
-      }, 1000)
-      init_data()
-    } else if (['0400546', '0400547'].includes(res.code)) {
-      cancle_confirm_pop_visible.value = false
-      store.dispatch({
-        'txt': res.code == '0400546' ? i18n_t('pre_record.cancle_fail_tips') : i18n_t('pre_record.cancle_fail_tips2'),
-        hide_time: 3000
-      })
-    }
-  }).catch(() => {
-    cancle_confirm_pop_visible.value = false
-  })
-}
-/**
- *@descript 取消预约投注项
-*@param {String} orderNumer 订单号
-*/
-const cancle_pre_pop = () => {
-  cancle_confirm_pop_visible.value = false
-  teamName.value = ''
-  orderNumber.value = ''
-}
-
 /**
  *@description 初始请求注单记录数据
 *@return {Undefined} undefined
 */
 const init_data = () => {
   var params = {
-    preOrderStatusList: [0, 2, 3, 4]
+    preOrderStatusList: [0]
   }
   is_loading.value = true
   //第一次加载时的注单数
@@ -205,7 +92,6 @@ const init_data = () => {
   }).catch((err) => {
     is_loading.value = false;
   })
-
 }
 /**
  *@description 页面上推分页加载
@@ -219,7 +105,7 @@ const onPull = () => {
     return;
   }
   var params = {
-    preOrderStatusList: [0, 2, 3, 4],
+    preOrderStatusList: [0],
     searchAfter: last_record.value || undefined,
   };
   //加载中
@@ -254,15 +140,6 @@ const onPull = () => {
     }
   }).catch(err => { console.error(err) });
 }
-
-// 组件销毁后执行的操作
-onUnmounted(() => {
-  clearTimeout(timer_1.value)
-  timer_1.value = null
-  clearTimeout(timer_2.value)
-  timer_2.value = null
-})
-
 </script>
 
 <style lang="scss" scoped>

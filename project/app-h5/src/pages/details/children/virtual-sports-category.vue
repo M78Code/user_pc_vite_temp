@@ -5,6 +5,12 @@
 -->
 <template>
   <div class='category virtual-sport'>
+             <!-- 玩法集展示内容 -->
+    <details-tab  
+     :data_list="data_list" 
+     :scroller_scroll_top="scroller_scroll_top" 
+     :get_details_item="get_details_item"
+     :new_match_detail_ctr="new_match_detail_ctr" /> 
     <!-- loading效果 -->
     <loading v-if="is_loading" :top="route.name == 'virtual_sports' ? '76%' : '64%'"></loading>
       <!-- 详情玩法投注项有数据 -->
@@ -15,17 +21,17 @@
           <!-- 置顶 -->
           <template v-for="(item,keyscorll) in match_list_new">
             <template v-if="item.hton!=0">
-              <tournament-play-new @change_show="change_show" :key="item.topKey + item.hpid" :list="matchInfoCtr.list" :item_data="item" :scorllIndex="keyscorll"></tournament-play-new>
+              <tournament-play-new @change_show="change_show" :key="item.topKey + item.hpid" :list="matchInfoCtr?.list" :item_data="item" :scorllIndex="keyscorll"></tournament-play-new>
             </template>
           </template>
           <!-- 非置顶 -->
           <template v-for="(item,keyscorll) in match_list_normal">
             <template v-if="item.hton==0">
               <template v-if="match_list_new.length == 0">
-                <tournament-play-new @change_show="change_show" :key="item.topKey + item.hpid" :list="matchInfoCtr.list" :item_data="item" :scorllIndex="keyscorll"></tournament-play-new>
+                <tournament-play-new @change_show="change_show" :key="item.topKey + item.hpid" :list="matchInfoCtr?.list" :item_data="item" :scorllIndex="keyscorll"></tournament-play-new>
               </template>
               <template v-else>
-                <tournament-play-new @change_show="change_show" :key="item.topKey + item.hpid" :list="matchInfoCtr.list" :item_data="item"></tournament-play-new>
+                <tournament-play-new @change_show="change_show" :key="item.topKey + item.hpid" :list="matchInfoCtr?.list" :item_data="item"></tournament-play-new>
               </template>
             </template>
           </template>
@@ -39,13 +45,13 @@
 <script>
 // #TODO vuex
 // import { mapGetters, mapMutations } from "vuex"
-import tournament_play_new from "src/base-h5/components/details/components/tournament-play/tournament-play-new.vue"
+import tournament_play_new from "src/base-h5/components/details/components/tournament-play/tournament-play-new-2.vue"
  // 引入接口封装文件
 import { api_common } from "src/api/index.js";
  // 引入投注逻辑mixin
  // #TODO mixins
 // import betting from "src/project/mixins/betting/betting.js";
-
+import detailsTab from "src/base-h5/components/details/components/details-tab-2.vue";
  // 引入加载中的组件
 import loading from "src/base-h5/components/common/loading.vue"
 import VirtualClass from "src/core/match-list-h5/virtual-sports/virtual-class"
@@ -55,7 +61,6 @@ import { useRoute, useRouter } from "vue-router"
 import {debounce} from "lodash";
 import { MatchDataWarehouse_H5_Detail_Common ,MatchDetailCalss,UserCtr } from "src/core";
 import VirtualData from 'src/core/match-list-h5/virtual-sports/virtual-data.js'
-
 export default defineComponent({
   name: "virtual_sports_category",
   props: {
@@ -70,7 +75,8 @@ export default defineComponent({
   },
   components: {
     'tournament-play-new': tournament_play_new,
-    loading
+    loading,
+    detailsTab
   },
   beforeRouteEnter(to, from, next) {
     next(() => {
@@ -83,7 +89,9 @@ export default defineComponent({
   // mixins:[betting],
   setup(props, evnet) {
     // 所有数据集合
-    const MatchInfoCtr =ref(MatchDataWarehouse_H5_Detail_Common)
+    const matchInfoCtr =ref(MatchDataWarehouse_H5_Detail_Common)
+    //数据仓库版本号  
+    const match_info_version =ref(MatchDataWarehouse_H5_Detail_Common.data_version.version )
     let route =  useRoute()
     let router = useRouter()
     let state = reactive({
@@ -137,6 +145,7 @@ export default defineComponent({
     //   'get_is_user_refreshing',
     //   'get_is_show_details_analyse',
     // ]),
+
     //详情页是否显示统计 
     const  get_is_show_details_analyse =ref(MatchDetailCalss.is_show_details_analyse) 
     const get_is_user_refreshing = ref(VirtualData.is_user_refreshing)
@@ -154,12 +163,17 @@ export default defineComponent({
      const get_uid =  ref(UserCtr.get_uid())
     // 置顶列表
     const match_list_new = computed(() => {
-      return matchInfoCtr.value.listSortNew()
+      // TODO: 还未调试待修改
+      return  lodash.get(matchInfoCtr.value, `list_to_obj.mid_obj[${route.query.mid}_].odds_info`);
     });
     // 非置顶列表
-    const match_list_normal = computed(() => {
-      return matchInfoCtr.value.listSortNormal()
-    });
+    const match_list_normal = ref(lodash.get(matchInfoCtr.value, `list_to_obj.mid_obj[${route.query.mid}_].odds_info`))
+    console.log(matchInfoCtr.value,'matchInfoCtr.value',match_list_normal);
+    const get_match_list_normal = () => {
+      match_list_normal.value =  lodash.get(matchInfoCtr.value, `list_to_obj.mid_obj[${route.query.mid}_].odds_info`)
+    };
+
+
     //押注状态0-隐藏状态 1-初始弹出状态,2-注单处理中状态,3-投注成功,4-投注失败(bet接口没返回200),5-盘口变化、失效，赔率变化，6-注单确认中（提交成功）,7-有投注项锁盘，8-单关投注失败(bet接口返回200)
     const get_bet_status = computed(() => {
       return 0;
@@ -233,6 +247,10 @@ export default defineComponent({
         initEvent();
       }
     );
+    // 监听详情数据仓库版本号更新odds_info数据
+    watch(() => matchInfoCtr.value.data_version.version, () => {
+        get_match_list_normal()
+    },{deep:true})
     // 监听get_fewer的值
     watch(
       () => get_fewer.value,
@@ -272,7 +290,7 @@ export default defineComponent({
 
              if(!res.data || res.data.length == 0){
                state.is_no_data = true;
-               matchInfoCtr.value.setList([]);
+               matchInfoCtr.value.set_match_details(matchInfoCtr.value.get_quick_mid_obj(params.mid),[]);
                set_detail_data_storage(params,'');
                if(callback) callback();
                return;
@@ -296,7 +314,7 @@ export default defineComponent({
                  });
                }
              temp = save_hshow(temp); // 保存当前相关hshow状态;
-             matchInfoCtr.value.setList(lodash.cloneDeep(temp))
+             matchInfoCtr.value.set_match_details(matchInfoCtr.value.get_quick_mid_obj(params.mid),lodash.cloneDeep(temp));
              delete res.data;
              if(callback) callback();
            }).catch(err =>console.error(err));
@@ -582,7 +600,7 @@ export default defineComponent({
       {
         item.hl.forEach(item2 => {
           if(item2.hid){
-            matchInfoCtr.value.hl_obj[item2.hid]=item2;
+            matchInfoCtr.value.list_to_obj.hl_obj[item2.hid]=item2;
           }
           if(item2&&item2.ol&&item2.ol.length){
             item2.ol.forEach(item3 => {
@@ -646,7 +664,7 @@ export default defineComponent({
        state.is_loading = false;
         if(!res.data || res.data.length == 0){
           state.is_no_data = true;
-          matchInfoCtr.value.setList([]);
+          matchInfoCtr.value.set_match_details(matchInfoCtr.value.get_quick_mid_obj(params.mid),[]);
           set_detail_data_storage(params,'');
           return;
         }
@@ -679,7 +697,7 @@ export default defineComponent({
           });
         }
         let list_ = lodash.cloneDeep(temp);
-        matchInfoCtr.value.setList(list_);
+        matchInfoCtr.value.set_match_details(matchInfoCtr.value.get_quick_mid_obj(params.mid),list_);
         delete res.data;
       })
     };
@@ -699,7 +717,7 @@ export default defineComponent({
         state.is_loading = false;
         if(!res.data || res.data.length == 0){
           state.is_no_data = true;
-          matchInfoCtr.value.setList([]);
+          matchInfoCtr.value.set_match_details(matchInfoCtr.value.get_quick_mid_obj(params.mid),[]);
           set_detail_data_storage(params,'');
           return;
         }
@@ -709,7 +727,7 @@ export default defineComponent({
         // 虚拟体育title字段增加
         vir_add_title(result_list)
         let result_ = lodash.cloneDeep(result_list);
-        matchInfoCtr.value.setList(result_);
+        matchInfoCtr.value.set_match_details(matchInfoCtr.value.get_quick_mid_obj(params.mid),result_);
       }).catch( err=> {
         console.error(err);
       })
@@ -768,7 +786,7 @@ export default defineComponent({
         if(state.is_lock_add){
           set_all_match_os_status(2, list_);
         }
-        matchInfoCtr.value.setList(list_);
+        matchInfoCtr.value.set_match_details(matchInfoCtr.value.get_quick_mid_obj(params.mid),list_);
       }
       return cach_string;
     };
@@ -807,7 +825,17 @@ export default defineComponent({
         sessionStorage.removeItem(cach_key);
       });
     };
-
+    //设置玩法集
+    const data_list = ref(MatchDetailCalss.category_arr)
+    watch(
+      () => MatchDetailCalss.details_data_version.version,
+      (val) => {
+        if (val) {
+          data_list.value = MatchDetailCalss.category_arr
+        }
+      },
+      { deep: true }
+   );
     /**
      *@description: 销毁前:清除回调函数
      *@param {Undefined}
@@ -850,6 +878,9 @@ export default defineComponent({
       remove_session_storage,
       remove_detail_storage,
       route,
+      match_info_version,
+      matchInfoCtr,
+      data_list
     }
   }
 })

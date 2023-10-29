@@ -23,17 +23,29 @@
       <!-- 中间可滚动区域 -->
       <div class="scroll-box scroll-box-center" ref="scroll_box" :style="{ 'max-height': `${max_height1}px` }"
         @touchmove="touchmove_handle($event)" @touchstart="touchstart_handle($event)">
-          <bet-mix-box-child3 :item="BetData.bet_single_list[0]" :key='0'></bet-mix-box-child3>
+          <div v-if="BetData.is_bet_single">
+            <!-- 单关投注项列表 -->
+            <bet-mix-box-child3 :item="BetData.bet_single_list[0]" :key='0'></bet-mix-box-child3>
+          </div>
+          <div v-else>
+            <!-- 串关投注项列表 -->
+            <bet-conflict-tips v-for="(item,index) in BetData.bet_s_list" :item="item" :key='index'></bet-conflict-tips>
+          </div>
       </div>
 
+      <!-- 串关输入框 -->
+      <template v-if="BetData.bet_s_list.length > 1 && !BetData.is_bet_single">
+        <bet-collusion-input></bet-collusion-input>
+      </template>
+      
       <!-- 投注前 -->
-      <div v-if="BetViewDataClass.bet_order_status == 1">
+      <div v-if="BetViewDataClass.bet_order_status == 1 && BetData.is_bet_single">
         <!-- 单关金额输入框 v-bind="$attrs"-->
         <!-- 输入框 与键盘 -->
         <bet-single-detail :item="BetData.bet_single_list[0]" :index="0"/>
 
         <!-- 键盘 -->
-        <key-board v-show="BetViewDataClass.bet_keyboard_show" :item="BetData.bet_single_list[0]" :index="0"></key-board>
+        <key-board v-if="BetViewDataClass.bet_keyboard_show" :item="BetData.bet_single_list[0]" :index="0"></key-board>
      
         <div class="dele-wrap yb_px12 yb_py10 row"  @touchmove.prevent>
           <!-- 右 自动接受跟好赔率 -->
@@ -75,23 +87,23 @@
           <div class="yb_fontsize16 bet-mix-show">{{ BetData.bet_money_total.toFixed(2) }}</div>
         </div>
       </div>
-
+      {{BetViewDataClass.bet_order_status}} ---
       <!-- 底部按钮 -->
       <div class="row yb_px10 yb_pb8 justify-between" @touchmove.prevent v-if="BetViewDataClass.bet_order_status == 1">
-
+      
           <!-- 左边， 3种情况-->
           <!-- 保留选项 -->
-          <div class="add-box add-box2" :class="{ 'add-box2': BetData.is_bet_success_status, 'add-box3': calc_class }"
-            @click.stop="pack_up(4)" v-if="BetData.is_bet_success_status">{{ $t('bet.save') }}</div>
+          <div class="add-box add-box2" :class="{ 'add-box2': BetViewDataClass.bet_order_status, 'add-box3': calc_class }"
+            @click.stop="pack_up(4)" v-if="![1,2].includes(BetViewDataClass.bet_order_status)">{{ $t('bet.save') }}</div>
           <!-- 单关 -->
-          <div v-else-if="true" class="bet-add-box text-bold display_center one_text_color"
-            :class="{ 'add-box3': calc_class }" @click.stop="pack_up(5)">
+          <div v-else-if="BetViewDataClass.bet_order_status == 1 && BetData.is_bet_single " class="bet-add-box text-bold display_center one_text_color"
+            :class="{ 'add-box3': calc_class }" @click.stop="set_is_bet_single">
             <div class="bet-add-new bet_margin_left"></div>
-            <div class="bet_text_left bet-one">{{ $t('bet.kushikatsu') }}</div>
+            <div class="bet_text_left bet-one">单关</div>
           </div>
           <!-- 串关+ -->
-          <div v-else-if="!hide_bet_series_but()" class="bet-add-box text-bold display_center linkUp_text_color"
-            :class="{ 'add-box3': calc_class }" @click.stop="pack_up(6)">
+          <div v-else-if="BetViewDataClass.bet_order_status == 1 && !BetData.is_bet_single " class="bet-add-box text-bold display_center linkUp_text_color"
+            :class="{ 'add-box3': calc_class }" @click.stop="set_is_bet_single">
             <div class="bet_text_right">{{ $t('bet.kushikatsu') }}</div>
             <div class="bet-add-new bet-linkUp"></div>
           </div>
@@ -111,24 +123,23 @@
             <template v-else>
               <!-- 投注 -->
               <div v-if="BetViewDataClass.bet_order_status == 1" @click="submit_order" :class="{ 'set-opacity': true }"
-                class="row justify-center items-center content-center">
-                <p class="yb_fontsize12 yb_mr10">{{ $t('bet_record.bet_val') }}</p>
-                <p class="yb_fontsize20">{{ bet_amount }}</p>
+                class="row justify-center items-center content-center yb-info">
+                <div>投注 <span class="yb-info-money">可赢100.00</span></div>
+                <div><span class="yb-info-one">></span><span class="yb-info-two">></span><span>></span></div>
+                <!-- <p class="yb_fontsize12 yb_mr10">{{ $t('bet_record.bet_val') }}</p>
+                <p class="yb_fontsize20">{{ bet_amount }}</p> -->
               </div>
               <!-- 投注 有投注项失效后点击接受变化的置灰样式-->
-              <!-- <div v-if="BetViewDataClass.bet_order_status == 5" class="row justify-center items-center content-center set-opacity">
-                <p class="yb_fontsize12 yb_mr10">{{ $t('bet_record.bet_val') }}</p>
-                <p class="yb_fontsize20">{{ format_money2(500) }}</p>
-              </div> -->
-              <!-- 确定 -->
-              <p v-if="[3,4,5].includes(BetViewDataClass.bet_order_status)" @click="pack_up" class="yb_fontsize16">{{ $t('common.ok') }}</p>
-            
-              <!-- 接受变化 -->
-              <p v-if="btn_show == 3" @click="agree_change" class="yb_fontsize16">{{ $t('bet.agree_change') }}</p>
-              <!-- 接受变化并投注 -->
-              <p v-if="btn_show == 4" @click="submit_order" class="yb_fontsize16">{{ $t('bet.agree_change2') }}</p>
+              <div v-if="BetViewDataClass.bet_order_status == 5" class="row justify-center items-center content-center yb-info yb-info-hui">
+                <div>投注 <span class="yb-info-money">可赢100.0</span></div>
+                <div><span class="yb-info-one">></span><span class="yb-info-two">></span><span>></span></div>
+              </div>
             </template>
           </div>
+
+          <!--串关-->
+          <div :class="is_strand?'yb-strand':'yb-nostrand'">+串</div>
+          
         </div>
 
         <!--投注后的 确定按钮 -->
@@ -156,6 +167,8 @@ import keyBoard from './/bet-keyboard.vue';
 import ballSpin from './/ball-spin.vue';
 import betBar from ".//bet-bar.vue";
 import betSingleDetail from './bet-single-detail.vue';
+import betConflictTips from './bet-conflict-tips.vue'
+import betCollusionInput from './bet-collusion-input.vue'
 
 // import {utils } from 'src/core/index.js';
 // import { api_betting } from "src/api/index.js";
@@ -171,6 +184,8 @@ import { format_money3, format_money2 } from 'src/core/format/index.js'
 import { submit_handle } from "src/core/bet/class/bet-box-submit.js"
 import acceptRules from ".//accept-rules.vue"
 
+//串关的按钮
+const is_strand = ref(true)
 const scroll_box = ref()
 const series_order_respList = ref([])
 const award_total = ref()
@@ -235,12 +250,17 @@ const is_bet_check_rc = () => {
   return res;
 }
 
+// 单关 串关切换
+const set_is_bet_single = () =>{
+  BetData.set_is_bet_single()
+  useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX, false);
+}
 // 投注事件
 const pack_up = (val) => {
   // TODO: 临时调试用
   useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX, false);
-  BetData.set_clear_bet_info()
-  BetViewDataClass.set_clear_bet_view_config()
+  // BetData.set_clear_bet_info()
+  // BetViewDataClass.set_clear_bet_view_config()
 }
 
 const submit_order = (type) => {
@@ -323,6 +343,53 @@ onUnmounted(() => {
 })
 </script>
 <style lang="scss" scoped>
+.yb-nostrand{
+  margin-left: 0.1rem;
+  height: 0.5rem;
+  width: 0.5rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.2rem;
+  color: var(--q-gb-t-c-9);
+  background: var(--q-gb-t-c-7);
+}
+.yb-strand{
+  margin-left: 0.1rem;
+  height: 0.5rem;
+  width: 0.5rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.2rem;
+  color: var(--q-gb-t-c-1);
+  background: var(--q-gb-t-c-7);
+}
+.yb-info{
+  background: var(--q-gb-t-c-1) !important;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 0.3rem;
+  border-radius: 0.7rem;
+  color: var(--q-gb-t-c-14);
+  font-size: 0.14rem;
+}
+.yb-info-hui{
+background: var(--q-gb-t-c-3) !important;
+}
+.yb-info-money{
+  font-size: 0.12rem;
+  color: var(--q-gb-bg-c-9);
+}
+
+.yb-info-one{
+  color: var(--q-gb-t-c-6);
+}
+.yb-info-two{
+  color: var(--q-gb-t-c-7);
+}
 .nonebox4-sub{
     padding: 0.08rem 0;
     margin-top: 0.08rem;
@@ -517,7 +584,7 @@ onUnmounted(() => {
   width: 0.85rem;
   border: 1px solid;
   border-radius: 4px;
-  margin-right: 0.1rem;
+  margin-left: 0.1rem;
   text-align: center;
 
 }
@@ -554,8 +621,8 @@ onUnmounted(() => {
 }
 
 .linkUp_text_color {
-  color: #FFFFFF !important;
-  border: 0.5px solid #FFFFFF !important;
+  color: #99A3B1 !important;
+  border: 1px solid #CBCED8;
 }
 
 .close {

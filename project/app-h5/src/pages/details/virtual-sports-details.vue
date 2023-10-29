@@ -27,7 +27,7 @@
           </virtual-sports-stage>
         </div>
         <!--热门等tab键-->
-        <virtual-sports-tab @virtual_play_height="virtual_play_height"></virtual-sports-tab>
+        <virtual-sports-tab @virtual_play_height="virtual_play_height" @change_tab="change_tab"></virtual-sports-tab>
         <div class="debug-test" v-if="show_debug">
           {{`batchNo:${current_batch.batchNo}-csid:${sub_menuid}-mid:${current_match.mid}`}}<br />
           {{`orderNo:${current_match.orderNo}-tid:${current_league.menuId}`}}
@@ -35,8 +35,8 @@
       </div>
      <!--玩法集区域 -->
     <div class="detail-main" :class="{'detail-main2':get_betbar_show}">
-      <virtual-sports-category v-if="match && !is_show_analyse" :mid="mid" :current_match="match" :source="'virtual_sports_details'"/>
-      <virtual-match-statistic v-if="match && is_show_analyse" />
+      <virtual-sports-category v-if="match && tabs_name == 'bet'" :mid="mid" :current_match="match" :source="'virtual_sports_details'"/>
+      <virtual-match-statistic v-if="match && tabs_name == 'lszj'" />
     </div>
   </div>
 </template>
@@ -69,7 +69,7 @@ export default defineComponent({
     virtualSportsStage,
     virtualSportsTab,
     virtualSportsCategory,
-    virtualMatchStatistic
+    virtualMatchStatistic,
   },
 
   setup(props, evnet) {
@@ -91,6 +91,7 @@ export default defineComponent({
     const is_show_analyse =  ref(MatchDetailCalss.is_show_details_analyse)
     const matchid =  ref(MatchDetailCalss.get_goto_detail_matchid)
     const get_current_gotodetail_match =  ref(MatchDetailCalss.current_gotodetail_match)
+   
     watch(
       () => MatchDetailCalss.details_data_version.version,
       (val) => {
@@ -122,6 +123,9 @@ export default defineComponent({
     //     init_video_play_status(new_);
     //   }
     // );
+    //悬浮"串"是否显示 |
+     const get_betbar_show=ref(true) //todo
+
      let timer_super28,timer1_ =null
     onMounted(() => {
       // 原created
@@ -148,7 +152,7 @@ export default defineComponent({
       allData.mid = mid_;
       if(mid_) MatchDetailCalss.set_goto_detail_matchid(mid_);
       let parma = {
-        mid: matchid.value || mid_,
+        mid: mid_,
       }
       api_virtual.get_virtual_match_detail(parma).then(res => {
         let code = lodash.get(res,'code');
@@ -171,7 +175,7 @@ export default defineComponent({
               init_video_play_status(video_process_data);
             });
           }
-          MatchDataWarehouseInstance.set_match_details(data)
+          MatchDataWarehouseInstance.set_match_details(data,[])
         }
       })
       .catch(err => {
@@ -396,13 +400,28 @@ export default defineComponent({
           }
           if(!detail_setted){
             detail_setted = true;
-            set_current_gotodetail_match(lodash.cloneDeep(allData.current_match));
+            MatchDetailCalss.set_current_gotodetail_match(lodash.cloneDeep(allData.current_match));
           }
         });
 
       }
 
     };
+    /**
+     * 赛果停留20秒后请求下一批赛事
+     */
+    const  update_n_batch_handle =()=>{
+
+    };
+    /**
+     * @description: 改变tab栏
+     * @param {string} tabs
+     * @return {*}
+     */
+    const tabs_name = ref("bet")
+    const change_tab =(tabs)=>{
+      tabs_name.value = tabs
+    }
     return {
       ...toRefs(allData),
       vir_refresh,
@@ -416,13 +435,20 @@ export default defineComponent({
       get_local_match_process_data,
       go_where,
       route,
-      router
+      router,
+      is_show_analyse,
+      update_n_batch_handle,
+      get_betbar_show,
+      tabs_name,
+      change_tab
     }
   }
 })
 </script>
 <style lang="scss">
+@import "./styles/details.scss";
 @import "src/base-h5/css/pages/virtual-sports.scss";
+@import "src/base-h5/components/details/styles/details-theme/virtual_sports_tab.scss";
 </style>
 <style lang="scss" scoped>
 .virtual-detail {

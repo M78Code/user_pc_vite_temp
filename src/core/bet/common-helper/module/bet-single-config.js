@@ -9,6 +9,7 @@ import lodash_ from "lodash"
  */
 export const getSeriesCountJointNumber = (callback) => {
   let bet_s_list_count = BetData.bet_s_list.length
+  
   let data = BetCountJointNumber.getBetCountJoint(bet_s_list_count);
   // if (bet_s_list_count <= 10) {
   //   data = data.filter((item) => {
