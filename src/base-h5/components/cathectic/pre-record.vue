@@ -303,7 +303,6 @@ const onPull = () => {
                     item.data[i].orderVOS = item.data[i].detailList
                 }
             }
-
         } else {
             //没有更多
             ele.setState(7);

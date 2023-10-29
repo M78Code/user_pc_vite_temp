@@ -1,6 +1,26 @@
 import { ref } from "vue"
 import lodash from "lodash"
-import { api_betting } from "src/api/index.js";
+import { t } from "src/boot/i18n.js";
+
+const bet_result = {
+  "2": t("bet_record.bet_no_status02"), //'走水',
+  "3": t("bet_record.bet_no_status03"), //'输',
+  "4": t("bet_record.bet_no_status04"), //'赢',
+  "5": t("bet_record.bet_no_status05"), //'赢半',
+  "6": t("bet_record.bet_no_status06"), //'输半',
+  "7": t("bet_record.bet_no_status07"), //'比赛取消',
+  "8": t("bet_record.bet_no_status08"), //'比赛延期',
+  "11": t("bet_record.bet_no_status11"), // '比赛延迟',
+  "12": t("bet_record.bet_no_status12"), // '比赛中断',
+  "15": t("bet_record.bet_no_status15"), // '比赛放弃'
+}
+const outcome = {
+  "2": t("bet_record.bet_no_status02"), //'走水',
+  "3": t("bet_record.bet_no_status03"), //'输',
+  "4": t("bet_record.bet_no_status04"), //'赢',
+  "5": t("bet_record.bet_no_status05"), //'赢半',
+  "6": t("bet_record.bet_no_status06"), //'输半',
+}
 
 class BetRecord {
   constructor() {
@@ -22,43 +42,6 @@ class BetRecord {
     this.set_bet_record_version()
   }
 
-  // 获取未结算列表
-  get_unsettle_list() {
-    const params = {
-      searchAfter: this.last_record || undefined,
-      orderStatus: '0',
-    }
-    //第一次加载时的注单数
-    let size = 0
-    this.is_loading = true
-    // 请求接口
-    api_betting.post_getH5OrderList(params).then(reslut => {
-      let res = reslut.status ? reslut.data : reslut
-      if (res.code == 200) {
-        let { record, hasNext } = lodash.get(res, "data");
-        this.is_hasnext = hasNext
-        // record为空时
-        if (lodash.isEmpty(record)) return
-        for (let item of Object.values(record)) {
-          size += item.data.length
-        }
-        this.last_record = lodash.findLastKey(record)
-        // 合并数据
-        let obj = lodash.cloneDeep(this.list_data)
-        this.list_data = Object.assign(obj, record)
-      }
-      //容错处理，接口再调一次
-      if (size < 5 && size > 0 && res.data.hasNext == true) {
-        this.get_unsettle_list()
-      }
-      this.is_loading = false;
-      this.set_bet_record_version()
-    }).catch(err => {
-      this.is_loading = false;
-      console.error(err)
-    });
-  }
-
   set_list_data(value) {
     this.list_data = value
     this.set_bet_record_version()
@@ -67,6 +50,41 @@ class BetRecord {
   // 更新投注记录版本
   set_bet_record_version() {
     this.bet_record_version.value = Date.now()
+  }
+
+  //返回订单状态   orderStatus(0:未结算,1:已结算,2:注单无效,3:确认中,4:投注失败)
+  calc_text(data_b) {
+    switch (data_b.orderStatus) {
+      case '0':
+        return { text: t('bet_record.successful_betting'), color: 'green' }
+      case '1':
+        let flag = data_b.seriesType == '1' && data_b.orderVOS[0]
+        let color = 'black'
+        if (flag) {   //单关
+          let betresult = data_b.orderVOS[0].betResult
+          if (betresult == 13 || betresult == 16) {
+            return { text: t('bet_record.invalid'), color }
+          } else {
+            if (betresult == 4 || betresult == 5) {
+              color = 'red'
+            }
+            return { text: bet_result[betresult] || '', color };
+          }
+        } else {  //串关
+          if (data_b.outcome == 4 || data_b.outcome == 5) {
+            color = 'red'
+          }
+          return { text: outcome[data_b.outcome] || t('bet_record.successful_betting') || '', color };
+        }
+      case '2':
+        return { text: t('bet_record.invalid_bet'), color: 'gray' }
+      case '3':
+        return { text: t('bet_record.confirming'), color: 'orange' }
+      case '4':
+        return { text: t('bet.bet_err'), color: 'red' }
+      default:
+        return { text: '', color: '' }
+    }
   }
 }
 

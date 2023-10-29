@@ -11,110 +11,117 @@
       {{ data_b.seriesValue }}
     </div>
     <div class="item-main three-more">
-      <template v-for="(item, index) in data_b.orderVOS" :key="index">
+      <template v-for="(item, index) in show_data_orderVOS" :key="index">
         <div class="items" v-if="item.isBoolean">
           <div class="top">
-            <p>{{ item.matchName }}</p>
+            <p>{{item.matchName}}<template v-if="item.sportId == 1001">{{item.matchDay}}&ensp;{{item.batchNo}}</template></p>
             <span>{{ item.oddFinally }}</span>
           </div>
-          <p class="list">{{ item.playName }}</p>
+          <p class="list">
+            <template v-if="data_b.seriesType == '3' && item.sportName">[{{item.sportName}}]</template>
+            <template v-if="item.sportId == 1011 || item.sportId == 1002">{{item.batchNo}}</template>
+            <template v-else>{{item.matchInfo}}</template>
+          </p>
           <div class="list score">
-            <p v-if="item.playName">{{ item.playName }}</p>
-            <span v-if="item.playName">{{ item.playName }}</span>
+            <!-- <p>{{item.marketValue}}</p> -->
+            <!-- <span>赢</span> -->
           </div>
-          <span class="info">{{ item.matchInfo }}</span>
+          <!--球类名称 赛前还是滚球 玩法名称 基准分 赔率类型-->
+          <span class="info">
+            {{$i18n.messages[data_b.langCode?data_b.langCode:'zh']['sport2'][item.sportId]}}
+            <span v-if="data_b.seriesType != '3' && item.matchType != 4" v-html="$i18n.messages[data_b.langCode?data_b.langCode:'zh']['matchtype'][item.matchType]"></span>
+            &ensp;{{item.playName}}
+            <template v-if="item.scoreBenchmark">
+              ({{item.scoreBenchmark | format_score}})
+            </template>
+            &ensp;[{{$i18n.messages[data_b.langCode?data_b.langCode:'zh']['odds'][item.marketType]}}]
+          </span>
         </div>
       </template>
-      <!-- 串关时大于2条时,显示 展开收起按钮-->
-      <div class="toggle row" v-if="data_b.orderVOS.length > 2">
-        <span class="btn_style" @click="toggle_box">
+      <!-- 串关时大于等于3条时,显示 展开收起按钮-->
+      <div class="toggle row" v-if="data_b.orderVOS.length >= 3">
+        <span class="btn_style" @click.stop="toggle_box">
           <span class="text_c">{{ btn_text }}</span>
         </span>
       </div>
     </div>
     <div class="foot-main">
-      <p><label>投资额：</label> <span>10.00元</span></p>
+      <p><label>投注额：</label> <span>{{format_money2(data_b.orderAmountTotal)}}</span></p>
       <template>
-        <p v-if="main_item != '1'" class="acount"><label>可赢额：</label> <span>5.60元</span></p>
-        <p v-else class="acount"><label>结算：</label> <span>赢 5.60元</span></p>
+        <!-- orderStatus 订单状态(0:未结算,1:已结算,2:注单无效,3:确认中,4:投注失败) -->
+        <!-- 在未结算页 -->
+        <p v-if="BetRecordClass.selected !== 3" class="acount">
+          <label>可赢额：</label> 
+          <template v-if="data_b.orderStatus == 1 || data_b.orderStatus == 2 || data_b.orderStatus == 4">
+            <span>
+              <template v-if="data_b.backAmount !== null">{{format_money2(data_b.backAmount)}}</template>
+              <template v-else>{{format_money2(data_b.orderAmountTotal)}}</template>
+            </span>
+          </template>
+          <template v-else>
+            <span>{{format_money2(data_b.maxWinAmount)}}</span>
+          </template>
+        </p>
+        <!-- 在已结算页 -->
+        <p v-else class="acount">
+          <label>结算：</label> 
+          <span>{{format_money2(data_b.backAmount)}}</span>
+        </p>
       </template>
-      <p><label>注单状态：</label> <span>投注成功</span></p>
+      <p><label>注单状态：</label> 
+        <span :class="BetRecordClass.calc_text(data_b).color">
+          {{ BetRecordClass.calc_text(data_b).text }}
+        </span>
+      </p>
     </div>
   </div>
 </template>
 
 <script setup>
 import lodash from 'lodash'
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import BetRecordClass from "src/core/bet-record/bet-record.js";
-import { t } from "src/boot/i18n.js";;
+import { t } from "src/boot/i18n.js";
 import { project_name } from 'src/core'
+import { formatTime, format_money2 } from 'src/core/format/index.js'
 
 //按钮名字
-let btn_text = ref(t("bet_record.pack_up"))
+let btn_text = ref(t("bet_record.pack_down"))
 //是否展开
 let box_bool = ref(false)
+
 let props = defineProps({
   data_b: {
     type: Object
-  },
-  main_item: {
-    type: [String, Number],
   }
 })
 
-onMounted(() => {
-  rules_a();
-  rules_b();
-  rules_c()
+
+const show_data_orderVOS = computed(() => {
+  // orderVOS 长度大于等于3 且按钮是收起状态, 隐藏多于3条的
+  if(box_bool.value === false && props.data_b.orderVOS.length >= 3) {
+    return lodash.map(props.data_b.orderVOS, (item, index) => {
+      item.isBoolean = index < 3 ? true : false;
+      return item;
+    });
+  }
+  // 否则全部战死
+  return lodash.map(props.data_b.orderVOS, (item, index) => {
+    item.isBoolean = true;
+    return item;
+  });
 })
 
 //切换是否展开
 const toggle_box = () => {
-  box_bool = !box_bool;
-  if (box_bool == true) {
-    [btn_text] = [
-      t("bet_record.pack_down")
-    ];
-    toggle_rule_b();
+  box_bool.value = !box_bool.value;
+  if (box_bool.value == true) {
+    btn_text.value = t("bet_record.pack_up");
   } else {
-    [btn_text] = [
-      t("bet_record.pack_up")
-    ];
-    toggle_rule_a();
-  }
-}
-// 串关并且长度大于等于3,默认收起,展示一条;
-const rules_a = () => {
-  if (props.data_b.orderVOS.length >= 3) {
     btn_text.value = t("bet_record.pack_down");
-    box_bool.value = true;
   }
 }
 
-const rules_b = () => {
-  if (props.data_b.orderVOS.length <= 3) toggle_rule_a();
-}
-const rules_c = () => {
-  if (props.data_b.orderVOS.length > 3) toggle_rule_b();
-}
-//小于等于3个时都展开
-const toggle_rule_a = () => {
-  lodash.map(props.data_b.orderVOS, (item, index) => {
-    item.isBoolean = true;
-    return item;
-  });
-}
-//大于3个时，第一个和第二个展开
-const toggle_rule_b = () => {
-  lodash.map(props.data_b.orderVOS, (item, index) => {
-    item.isBoolean = false;
-    if (index < 3) {
-      item.isBoolean = true;
-    }
-    return item;
-  });
-}
 </script>
 
 <style lang="scss" scoped>
@@ -219,6 +226,25 @@ template {
         color: var(--q-gb-bg-c-9);
       }
     }
+  }
+  .green {
+    color: #69C969
+  }
+
+  .red {
+    color: #E93D3D
+  }
+
+  .black {
+    color: #666666
+  }
+
+  .orange {
+    color: #FFB001
+  }
+
+  .gray {
+    color: #D2D2D2
   }
 }
 </style>

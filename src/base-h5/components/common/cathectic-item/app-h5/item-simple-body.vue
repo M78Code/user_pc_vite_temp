@@ -8,25 +8,53 @@
 <!-- 矩形框中部 -->
   <div class="item-body yb_fontsize14">
     <div class="body-title">
-      <span>瓦伦西亚 VS 罗斯托拉夫U20</span>
+      <span>
+        <template v-if="data_b.seriesType == '3' && Item.sportName">[{{Item.sportName}}]</template>
+        <template v-if="Item.sportId == 1011 || Item.sportId == 1002">{{Item.batchNo}}</template>
+        <template v-else>{{Item.matchInfo}}</template>
+      </span>
     </div>
     <div class="body-info">
       <div>
-        <p>投注项:角球:滚球</p>
-        <p>大/小-上半场</p>
+        <p>投注项: {{$i18n.messages[data_b.langCode?data_b.langCode:'zh']['sport2'][Item.sportId]}}
+        </p>
+        <p>{{Item.playName}} - {{$i18n.messages[data_b.langCode?data_b.langCode:'zh']['odds'][Item.marketType]}}</p>
       </div>
-      <span>大3.5 @2.16</span>
+      <span>
+        <!-- 大3.5  -->
+        @{{ Item.oddFinally }}</span>
     </div>
     <div class="body-main">
       <p><label>投注单号：</label> <span>{{data_b.orderNo}}</span></p>
       <p><label>投注时间：</label> <span>{{formatTime(+data_b.betTime, 'YYYY-mm-DD HH:MM')}}</span></p>
       <p><label>{{data_b.matchName}}</label></p>
-      <p><label>投注额：</label> <span>{{format_money2(data_b.orderAmountTotal)}}元</span></p>
+      <p><label>投注额：</label> <span>{{format_money2(data_b.orderAmountTotal)}}</span></p>
       <template>
-        <p v-if="main_item != '1'" class="acount"><label>可赢额：</label> <span>{{format_money2(data_b.maxWinAmount)}}元</span></p>
-        <p v-else class="acount"><label>结算：</label> <span>赢 5.60元</span></p>
+        <!-- orderStatus 订单状态(0:未结算,1:已结算,2:注单无效,3:确认中,4:投注失败) -->
+        <!-- 在未结算页 -->
+        <p v-if="BetRecordClass.selected !== 3" class="acount">
+          <label>可赢额：</label> 
+          <template v-if="data_b.orderStatus == 1 || data_b.orderStatus == 2 || data_b.orderStatus == 4">
+            <span>
+              <template v-if="data_b.backAmount !== null">{{format_money2(data_b.backAmount)}}</template>
+              <template v-else>{{format_money2(data_b.orderAmountTotal)}}</template>
+            </span>
+          </template>
+          <template v-else>
+            <span>{{format_money2(data_b.maxWinAmount)}}</span>
+          </template>
+        </p>
+        <!-- 在已结算页 -->
+        <p v-else class="acount">
+          <label>结算：</label> 
+          <span>{{format_money2(data_b.backAmount)}}</span>
+        </p>
       </template>
-      <p><label>注单状态：</label> <span :class="class_foter">{{calc_text}}</span></p>
+      <p><label>注单状态：</label> 
+        <span :class="BetRecordClass.calc_text(data_b).color">
+          {{ BetRecordClass.calc_text(data_b).text }}
+        </span>
+      </p>
     </div>
   </div>
 </template>
@@ -56,8 +84,10 @@ let props = defineProps({
   let direction = ref('')
   //是否展开
   let box_bool = ref('')
-  //订单状态的颜色类名
-  const class_foter = ref('')
+
+  const Item = computed(() => {
+    return props.data_b.orderVOS[0] || []
+  })
   
   onMounted(() => {
     console.log(props);
@@ -68,77 +98,6 @@ let props = defineProps({
 
   })
 
-  onUnmounted(() => {
-    // for (const key in $data) {
-    //   $data[key] = null
-    // }
-  })
- //返回订单状态
- const calc_text = computed(() => {
-      let res = '';
-      switch (props.data_b.orderStatus) {
-        case '0':
-          class_foter.value = 'green'
-          res = i18n_t('bet_record.successful_betting')
-          break;
-        case '1':
-          class_foter.value = 'black'
-          let flag = props.data_b.seriesType == '1' && props.data_b.orderVOS[0]
-          //单关
-          if (flag) {
-            if (+props.data_b.preBetAmount > 0) {
-               // 提前结算的输赢单独一套逻辑算
-              let difference = props.data_b.backAmount - props.data_b.orderAmountTotal
-              // 赢
-              if (difference > 0) {
-                class_foter.value = 'red'
-                is_win.value = true
-                res = bet_result.value[4]
-              } else if (difference < 0) {
-                 // 输
-                res = bet_result.value[3]
-              } else {  // 走水
-                res = bet_result.value[2]
-              }
-              break;
-            }
-            let betresult = props.data_b.orderVOS[0].betResult
-            if (betresult == 13 || betresult == 16) {
-              res = i18n_t('bet_record.invalid');
-            } else {
-              if (betresult == 4 || betresult == 5) {
-                class_foter.value = 'red'
-                is_win.value = true
-              }
-              res =  bet_result.value[betresult] || '';
-            }
-          } else {
-            //串关
-            if (props.data_b.outcome == 4 || props.data_b.outcome == 5) {
-              class_foter.value = 'red'
-              is_win.value = true
-            }
-            res = outcome[props.data_b.outcome] || i18n_t('bet_record.successful_betting')
-          }
-          break;
-        case '2':
-          class_foter.value = 'black'
-          res = i18n_t('bet_record.invalid_bet')
-          break;
-        case '3':
-          class_foter.value = 'orange'
-          res = i18n_t('bet_record.confirming')
-          break;
-        case '4':
-          class_foter.value = 'red'
-          res = i18n_t('bet.bet_err')
-          break;
-        default:
-          res = ''
-          break;
-      }
-      return res;
-    })
     //切换是否展开
   const toggle_box = () => {
       box_bool = !box_bool;
@@ -210,6 +169,11 @@ template {
     font-weight: bold;
     font-size: 0.14rem;
     line-height: 3;
+    span {
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
   }
   .body-info {
     text-align: center;
@@ -233,6 +197,25 @@ template {
         color: var(--q-gb-bg-c-9);
       }
     }
+  }
+  .green {
+    color: #69C969
+  }
+
+  .red {
+    color: #E93D3D
+  }
+
+  .black {
+    color: #666666
+  }
+
+  .orange {
+    color: #FFB001
+  }
+
+  .gray {
+    color: #D2D2D2
   }
 }
 </style>
