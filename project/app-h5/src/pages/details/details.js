@@ -187,7 +187,7 @@ const route = useRoute();
   });
   // mid 
   const matchid = computed(() => {
-    return state_data.detail_data.mid || route.params.mid;
+    return state_data.detail_data?.mid || route.params.mid || route.query.mid
   });
   // 当前tab
   const curr_active_tab = computed(() => {

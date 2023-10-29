@@ -14,7 +14,7 @@
     <!-- loading效果 -->
     <loading v-if="is_loading" :top="route.name == 'virtual_sports' ? '76%' : '64%'"></loading>
       <!-- 详情玩法投注项有数据 -->
-    <div v-if="!is_no_data && !is_loading" style="width:100%;height:auto;">
+    <div v-if="!is_no_data && !is_loading" style="width:100%;height:auto;background:#e4e6ed;">
       <div slot="scrollList" class="scrollList">
         <!-- 置顶操作时增加动画 -->
         <transition-group name="transition-play-list">
@@ -61,6 +61,7 @@ import { useRoute, useRouter } from "vue-router"
 import {debounce} from "lodash";
 import { MatchDataWarehouse_H5_Detail_Common ,MatchDetailCalss,UserCtr } from "src/core";
 import VirtualData from 'src/core/match-list-h5/virtual-sports/virtual-data.js'
+import {details_main} from "../details.js";
 export default defineComponent({
   name: "virtual_sports_category",
   props: {
@@ -854,6 +855,11 @@ export default defineComponent({
       clearTimeout(get_video_timer)
       get_video_timer = null
     })
+    const {
+      scroller_scroll_top,
+      new_match_detail_ctr
+
+    } = details_main()
     return {
       ...toRefs(state),
       match_list_new,
@@ -880,7 +886,10 @@ export default defineComponent({
       route,
       match_info_version,
       matchInfoCtr,
-      data_list
+      data_list,
+      scroller_scroll_top,
+      get_details_item,
+      new_match_detail_ctr
     }
   }
 })
@@ -892,6 +901,7 @@ export default defineComponent({
   max-width: 7rem;
 
   .scrollList {
+    padding-top:0.06rem;
     &::-webkit-scrollbar {
       display: none;
     }

@@ -37,6 +37,8 @@
     <div class="detail-main" :class="{'detail-main2':get_betbar_show}">
       <virtual-sports-category v-if="match && tabs_name == 'bet'" :mid="mid" :current_match="match" :source="'virtual_sports_details'"/>
       <virtual-match-statistic v-if="match && tabs_name == 'lszj'" />
+      <!--  足球排行榜页面  :tid="menu_list[tab_item_i].field1"-->
+      <football-ranking-list  v-if="match && tabs_name == 'rank'" :tid="current_league.field1" />  
     </div>
   </div>
 </template>
@@ -61,6 +63,7 @@ import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { MatchDetailCalss,MenuData,MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance,go_where } from "src/core";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch,defineComponent,ref } from "vue";
 import { get_now_server } from 'src/core/utils/module/other.js'
+import footballRankingList from "src/base-h5/components/virtual/football-ranking-list.vue"
 export default defineComponent({
   name: "virtual_sports_details",
   // #TODO MIXINS
@@ -70,6 +73,7 @@ export default defineComponent({
     virtualSportsTab,
     virtualSportsCategory,
     virtualMatchStatistic,
+    footballRankingList
   },
 
   setup(props, evnet) {
@@ -86,7 +90,8 @@ export default defineComponent({
       basketball_status:0,
       // 默认不刷新
       refreshing:false,
-      current_league:VirtualData.current_league  //todo
+      current_league:VirtualData.current_league,  //todo
+   
     });
     const is_show_analyse =  ref(MatchDetailCalss.is_show_details_analyse)
     const matchid =  ref(MatchDetailCalss.get_goto_detail_matchid)

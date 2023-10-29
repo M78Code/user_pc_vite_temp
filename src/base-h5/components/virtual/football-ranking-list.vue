@@ -34,37 +34,35 @@
 <script setup>
 import { api_virtual } from "src/api/index.js";
 import noData from "src/base-h5/components/common/no-data.vue";
-import { onUnmounted } from 'vue';
+import { onUnmounted,watch,ref } from 'vue';
 const props = defineProps({
   tid: {
-    type: Number|String,
+    type:String,
     default: null,
     require: true
   },
 })
 
-watch(() => props.tid, () => {
-  this.get_list()
-}, { immediate: true })
-
 const no_data = ref(false)
 const ranking_data = ref([])
-
 const get_list = async () => {
   try {
-    let {code , data} = await api_virtual.get_virtual_sport_team_ranking({tid: this.tid})
+    let {code , data} = await api_virtual.get_virtual_sport_team_ranking({tid: props.tid})
     if(code == 200) {
       if (data && data.length > 0) {
-        this.ranking_data = data
+        ranking_data.value = data
       }else {
-        this.no_data = true
+        no_data.value = true
       }
     }
   } catch (error) {
-    this.no_data = true
+    no_data.value = true
     console.error(error);
   }
 }
+watch(() => props.tid, () => {
+  get_list()
+}, { immediate: true })
 </script>
 
 <style lang="scss" scoped>

@@ -35,7 +35,7 @@ import lodash from "lodash"
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import { MatchDetailCalss,MenuData,MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance } from "src/core";
 import { defineComponent,ref,onMounted,watch,onUnmounted,computed } from "vue";
-
+import { details_main } from "../details";
 export default defineComponent({
   props:[
     "virtual_match_list",
@@ -70,7 +70,7 @@ export default defineComponent({
       if(timer1_) { clearTimeout(timer1_) }
       timer1_ = setTimeout(() => {
         try{
-          reset_scroll_dom.value.scrollLeft = 0
+          // reset_scroll_dom.value.scrollLeft = 0 //todo
         }catch(e){
           console.error(e)
         }
@@ -213,6 +213,7 @@ export default defineComponent({
       return   GlobalAccessConfig.get_statisticsSwitch()&& route.name != 'virtual_sports' && get_detail_data.value?.csid != 1004
     }) 
     const change_tab =(val)=>{
+      viewTab.value =val
       event.emit('change_tab',val)
     }
     onUnmounted(()=>{
@@ -222,6 +223,10 @@ export default defineComponent({
       clearTimeout(timer1_)
       clearInterval(timer_);
     })
+    const {
+      scroller_scroll_top,
+      curr_active_tab
+    } = details_main()
     return {
       reset_scroll_dom,
       data_list,
@@ -234,7 +239,8 @@ export default defineComponent({
       analyse_btn,
       new_data_list,
       viewTab,
-      change_tab
+      change_tab,
+      curr_active_tab
     }
   }
 
