@@ -1,7 +1,7 @@
 [class*=theme0] {
   .champion-wrap {
     .league-container {
-      background:var(--q-match-page-bg-color-96);
+      background:var(--q-gb-bg-c-15);
       .league-wrapper {
         .league-title {
           color:  var(--q-color-fs-color-14);
@@ -18,9 +18,9 @@
       }
     }
     .hps-wrap {
-      background:var(--q-gb-bg-c-15);
+      background:var(--q-gb-bg-c-10);
       .match-title {
-        background: var(--q-match-page-bg-color-10);
+        //background: var(--q-match-page-bg-color-10);
         &:before {
           background:var(--q-gb-bd-c-10);
         }
@@ -32,7 +32,8 @@
       }
       .ol-list-wrap {
         .ol-li-item {
-          background-color: var(--q-match-page-bg-color-10);
+          background-color: var(--q-gb-bd-c-1);
+          border-radius: 8px;
         }
       }
     }
