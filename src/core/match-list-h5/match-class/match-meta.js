@@ -30,9 +30,8 @@ class MatchMeta {
     this.complete_mids = []
     // 赛事全量数据
     this.complete_matchs = []
-    this.timer = null
-    this.first = true
-    this.func = null
+    // 上一次滚动得距离
+    this.prev_scroll = null
   }
 
   /**
@@ -225,7 +224,7 @@ class MatchMeta {
     MatchFold.set_match_mid_fold_obj(match)
 
     // 虚拟列表计算
-    VirtualList.set_match_mid_map_height(mid)
+    VirtualList.set_match_mid_map_base_info(mid)
 
     // 初始化球种折叠状态
     if (!(`csid_${csid}` in MatchFold.ball_seed_csid_fold_obj.value)) MatchFold.set_ball_seed_csid_fold_obj(csid)
@@ -428,29 +427,23 @@ class MatchMeta {
   /**
    * @description 计算所需渲染数据
    */
-  compute_page_render_list (scrollTop = 0) {
+  compute_page_render_list (scrollTop = 0, type = 1) {
+    if (scrollTop === 0 || (this.prev_scroll === 0 &&  Math.abs(scrollTop) >= 500) || Math.abs(scrollTop - this.prev_scroll) >= 500) {
+      this.prev_scroll = scrollTop
+    } else {
+      return
+    }
     // 计算当前页所需渲染数据
-    // const end_index = VirtualList.compute_page_render_list_end_index(this.complete_matchs)
-    console.log(scrollTop)
-    const { arr, start_index, end_index } = VirtualList.compute_page_render_list(scrollTop)
-    console.log(arr)
-    // const target_index = end_index > 10 ? end_index : this.complete_mids.length
+    // const { arr, start_index, end_index } = VirtualList.compute_page_render_list(scrollTop)
+    const { arr } = VirtualList.run_process_when_need_recompute_container_list_step_three_recompute_next_list_container_top_obj(scrollTop)
+    // const target_index = end_index > 10 ? end_index + 1 : this.complete_mids.length
     // const target_list = this.complete_matchs.slice(start_index, target_index)
     // this.match_mids = this.complete_mids.slice(start_index, target_index)
-    // const func = lodash.throttle(() => {
-    //   console.log(11111)
-    //   this.match_mids = arr.map(t => {
-    //     return t.mid
-    //   })
-    //   // 向仓库提交数据
-    //   this.handle_submit_warehouse(arr)
-    // }, 3000)
-    // func()  
-    // 重新设置api域名函数
     this.match_mids = arr.map(t => {
       return t.mid
     })
     // 向仓库提交数据
+    if (type === 2) return this.handle_update_match_info(arr)
     this.handle_submit_warehouse(arr)
   }
 

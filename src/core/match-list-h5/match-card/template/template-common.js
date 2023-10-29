@@ -171,7 +171,7 @@ export const set_template_width_base = (
 
 
 // 赛事样式模板
-export const match_style_template = {
+export const match_style_template1 = {
   // 联赛标题高度
   show_league_height: 40,
   // 赛事标题高度
@@ -182,6 +182,21 @@ export const match_style_template = {
   play_title_height: 36,
   // 次要玩法盘口默认高度
   tab_play_total_height: 111,
+  // 是否需要动态计算高度
+  is_dynamic_compute_height: false,
+}
+
+export const match_style_template = {
+  // 联赛标题高度
+  show_league_height: 46,
+  // 赛事标题高度
+  // match_title_height: 30,
+  // 主盘口高度
+  main_handicap_height: 133,
+  // 次要玩法标题高度
+  play_title_height: 0,
+  // 次要玩法盘口默认高度
+  tab_play_total_height: 0,
   // 是否需要动态计算高度
   is_dynamic_compute_height: false,
 }

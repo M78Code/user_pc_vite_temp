@@ -3,12 +3,12 @@
 .match-list-page {
   opacity: 1;
   width: 100%;
-  height: 100%;
-  overflow: hidden;
+  height: 450px;
+  overflow-y: hidden;
   position: relative;
   transition: transform 0.2s;
   // padding-top: 1rem;
-  padding-bottom: 2.2rem;
+  // padding-bottom: 2.2rem;
   /*border-top: 0.01rem solid transparent;*/
   background: var(--q-gb-bg-c-17);
   .animation{

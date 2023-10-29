@@ -2,7 +2,7 @@
  * @Description: 列表页主内容
 -->
 <template>
-  <div :class="['match-list-container', { empty_page: match_is_empty }]" :style="page_style" @scroll="handler_match_container_scroll">
+  <div :class="['match-list-container', { empty_page: match_is_empty }]" :style="page_style">
     <template v-if="!match_is_empty">
       <match-list
         :source="invok_source ? invok_source : 'match_main'"
@@ -70,11 +70,6 @@ onMounted(() => {
   on_listeners();
 })
 
-const handler_match_container_scroll = lodash.throttle(($ev) => {
-  // console.log($ev.target.scrollTop)
-  // MatchMeta.compute_page_render_list($ev.target.scrollTop)
-}, 1000)
-
 /**
  * @description: 赛事列表为空通知事件函数
  */
@@ -112,9 +107,9 @@ const clear_timer = () => {
  
 <style scoped lang="scss">
 .match-list-container{
-  height: 100%;
-  overflow-y: auto;
-  overflow-x: hidden;
+  height: 667px;
+  overflow: hidden;
+  position: relative;
 }
 .empty_page{
   height: 100%;

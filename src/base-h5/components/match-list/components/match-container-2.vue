@@ -568,6 +568,7 @@ const handle_league_fold = () => {
   // 首页热门，详情页，不需要用到折叠
   if (is_hot.value || is_detail.value) return;
   MatchFold.set_league_fold(props.match_of_list.tid)
+  MatchMeta.compute_page_render_list()
 }
 /**
  * @description 联赛折叠状态
@@ -584,7 +585,7 @@ const collapsed = computed(() => {
   if (is_hot.value) return false
   const key = MatchFold.get_match_fold_key(props.match_of_list)
   const show_card = lodash.get(MatchFold.match_mid_fold_obj.value, `${key}.show_card`)
-  return !show_card
+  return show_card
 })
 
 const eports_scoring = computed(() => {
