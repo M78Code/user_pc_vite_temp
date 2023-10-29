@@ -95,6 +95,8 @@ export default defineComponent({
     //   'set_fewer',
     //   'set_is_show_details_analyse'
     // ]),
+    //详情是否显示统计信息
+     const is_show_analyse =ref(MatchDetailCalss.is_show_details_analyse) 
     /**
      *@description: 虚拟体育分析按钮
      *@param {Undefined}
@@ -102,7 +104,7 @@ export default defineComponent({
      */
     const analyse_btn =()=> {
       analyse.value = !analyse
-      MatchDetailCalss.set_is_show_details_analyse(!is_show_analyse)
+      MatchDetailCalss.set_is_show_details_analyse(!is_show_analyse.value)
     }
     const change_btn=()=>{
       // 设置vuex变量值
@@ -116,7 +118,7 @@ export default defineComponent({
     const selete_item =(uId,e)=>{
       // 点击的玩法是当前选中的玩法
       if(get_details_item.value == uId) return false;
-      if(is_show_analyse){
+      if(is_show_analyse.value){
         analyse.value = true
       }
       MatchDetailCalss.set_is_show_details_analyse(false)
@@ -214,7 +216,9 @@ export default defineComponent({
       get_fewer,
       selete_item,
       anlyse_show,
-      analyse
+      analyse,
+      change_btn,
+      analyse_btn
     }
   }
 
@@ -350,20 +354,20 @@ export default defineComponent({
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: -0.05rem 0 0.1rem -0.01rem rgba(0, 0, 0, 0.08);
+  box-shadow: -0.05rem 0 0.1rem -0.01rem rgba(0, 0, 0, 0.08); 
 }
 
 .analyse-icon {
   width: 0.2rem;
   height: 0.2rem;
-  background-image: var(--q-color-com-img-bg-97);
+  background-image:url($SCSSPROJECTPATH + "/image/common/analyse_icon.svg");//todo 后续上传到服务器
   background-size: 100% 100%;
 }
 
 .analyse-close-icon {
   width: 0.2rem;
   height: 0.2rem;
-  background-image: var(--q-color-com-img-bg-98);
+  background-image:url($SCSSPROJECTPATH + "/image/svg/virtual-sports/close_icon.svg");
   background-size: 100% 100%;
 }
 </style>

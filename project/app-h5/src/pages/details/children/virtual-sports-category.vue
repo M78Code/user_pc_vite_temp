@@ -860,7 +860,8 @@ export default defineComponent({
       remove_session_storage,
       remove_detail_storage,
       route,
-      match_info_version
+      match_info_version,
+      matchInfoCtr
     }
   }
 })

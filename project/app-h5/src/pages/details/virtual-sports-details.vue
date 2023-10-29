@@ -396,7 +396,7 @@ export default defineComponent({
           }
           if(!detail_setted){
             detail_setted = true;
-            set_current_gotodetail_match(lodash.cloneDeep(allData.current_match));
+            MatchDetailCalss.set_current_gotodetail_match(lodash.cloneDeep(allData.current_match));
           }
         });
 
@@ -416,7 +416,8 @@ export default defineComponent({
       get_local_match_process_data,
       go_where,
       route,
-      router
+      router,
+      is_show_analyse
     }
   }
 })
