@@ -362,7 +362,10 @@ const menu_item_click = (item, i) => {
   }
   //注单
   else if (item.id === 2) {
-    
+    // 派发首页设置菜单展开事件
+    useMittEmit(MITT_TYPES.EMIT_CHANGE_SETTING_SHOW, {
+      open: true,
+    });
   }
   //筛选
   else if (item.id === 3) {
