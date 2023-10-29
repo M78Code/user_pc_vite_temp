@@ -19,7 +19,7 @@
         <ScrollMenu />
         <!-- <SwiperWap /> -->
         <SwitchWap />
-        <SearchTab />
+        <SearchTab @searchHandle="select_dialog = true"/>
       </template>
       
       <router-view />
@@ -32,7 +32,8 @@
       <div v-if="select_dialog" position="bottom" class="select-mask" :style="`height:${inner_height}px`">
         <div style="height:100%;width: 100%" @click="select_dialog = false" />
         <!-- 筛选弹窗 -->
-        <select-dia />
+        <!-- <select-dia /> -->
+        <setect-league @closedHandle="select_dialog = false"></setect-league>
       </div>
 
       <!-- 投注记录弹层 -->
@@ -69,6 +70,7 @@ import { BetBoxWapper } from "src/base-h5/components/bet";
 import activityIcon from "src/base-h5/components/common/activity-icon.vue"; // 设置
 import setMenu from "src/base-h5/components/common/set-menu.vue"; // 设置
 import selectDia from "src/base-h5/components/match-list/components/select-dia.vue"
+import setectLeague from 'src/base-h5/components/setect-league/index.vue'
 import { useRoute } from "vue-router";
 import store from "src/store-redux/index.js";
 import { api_common } from "src/api/index.js";

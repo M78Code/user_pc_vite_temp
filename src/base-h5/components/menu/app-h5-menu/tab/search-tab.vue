@@ -75,6 +75,8 @@ const props = defineProps({
     }
 });
 const activeOn = ref(props.defaultVal || 0);//默认值
+const emit = defineEmits(["searchHandle"]);
+
 /**
  * 选中事件
  * @param {*} val 
@@ -91,6 +93,8 @@ const changeTab = (val,i,event) => {
  */
 const searchClick = () => {
     console.log(`搜索足球`)
+    emit('searchHandle')
+
 }
 </script>
 <style lang="scss" scoped>
