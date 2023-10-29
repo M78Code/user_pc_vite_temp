@@ -4,40 +4,94 @@
 -->
 <template>
   <div style="display: none;">{{ BetRecordClass.bet_record_version }}</div>
-  <early-settle-tips />
-  <div class="warp">
-    <!-- 滑块 -->
-    <q-slide-transition>
-      <div v-show="detail_show" class="slider-wrap">
-        <p>全部提前兑现成功</p>
-        <div class="body-main">
-          <p><label>提前兑现本金：</label> <span>300.00元</span></p>
-          <p><label>输/赢：</label> <span>-290.00元</span></p>
-          <p><label>提前兑现返还：</label> <span>300.00元</span></p>
+  <template v-if="details_show">
+    <early-settle-tips />
+    <div class="warp">
+      <!-- 滑块 -->
+      <q-slide-transition>
+        <div v-show="detail_show_info && presettleorderdetail_data.length" class="slider-wrap">
+          <template v-for="(item, index) in presettleorderdetail_data" :key="index">
+            <!-- 注单被取消 -->
+            <template v-if="item.orderStatus == 2">
+              <p>提前兑现失败</p>
+              <div class="body-main">
+                <!-- 结算本金 -->
+                <p><label>{{ item.remainingBetAmount ? t('early.list7') : t('early.list2') }}：</label> <span>0.00</span></p>
+                <!-- 输/赢 -->
+                <p><label>{{ t('early.list5') }}：</label> <span>0.00</span></p>
+                <!-- 返还金额 -->
+                <p><label>{{ t('early.list4') }}：</label> <span>0.00</span></p>
+              </div>              
+            </template>
+            <template v-else>
+              <p>全部提前兑现成功</p>
+              <div class="body-main">
+                <!-- 结算本金 -->
+                <p><label>{{ item.remainingBetAmount ? t('early.list7') : t('early.list2') }}：</label> <span>{{ (+item.preBetAmount).toFixed(2) }}</span></p>
+                <!-- 输/赢 -->
+                <p><label>{{ t('early.list5') }}：</label> <span>{{ (+item.profit).toFixed(2) }}</span></p>
+                <!-- 返还金额 -->
+                <p><label>{{ t('early.list4') }}：</label> <span>{{ (+item.settleAmount).toFixed(2) }}</span></p>
+              </div>
+            </template>
+          </template>
         </div>
+      </q-slide-transition>
+      <div class="settle-btn" :class="detail_show_info ? 'up' : 'down'" @click="fetch_early_settle_detail">
+        <span>提前兑现详情</span>
+        <img src="/public/app-h5/image/gif/change.gif">
       </div>
-    </q-slide-transition>
-    <div class="settle-btn" :class="detail_show ? 'up' : 'down'" @click="detail_show=!detail_show">
-      <span>提前兑现详情</span>
-      <img src="/public/app-h5/image/gif/change.gif">
     </div>
-  </div>
+  </template>
 </template>
 
 <script setup>
 import BetRecordClass from "src/core/bet-record/bet-record.js";
 import earlySettleTips from "src/base-h5/components/common/cathectic-item/app-h5/early-settle-tips.vue";
-import { ref } from 'vue'
+import { api_betting } from "src/api/index.js";
+import { ref, computed } from 'vue'
 const props = defineProps({
   item_data: {
     type: Object
   }
 })
-// 提前兑现详情
-let detail_show = ref(false)
+
+// 是否展示详情按钮
+const details_show = computed(() => {
+  // 已发生过提前结算或者提前结算取消
+  return (props.item_data.preBetAmount > 0 || [3, 4, 5].includes(props.item_data.settleType))
+})
+
+// 提前兑现详情信息
+let detail_show_info = ref(false)
+// 提前结算详情数据
+let presettleorderdetail_data = ref([])
+
+/**
+ *@description 获取提前结算详情数据
+ */
+ const fetch_early_settle_detail = () => {
+  if (detail_show_info.value) {
+    detail_show_info.value = false;
+  } else {
+    api_betting.get_pre_settle_order_detail({ orderNo: props.item_data.orderNo }).then((res) => {
+      let { code, data = [] } = res || {};
+      if (code == 200) {
+        presettleorderdetail_data.value = data;
+        detail_show_info.value = true;
+      }
+    }).catch((err) => {
+      console.error(err);
+    });
+  }
+}
+
 </script>
 
 <style lang="scss" scoped>
+template {
+  display: block;
+}
 .warp {
   margin: 0 0.14rem;
   border-top: 1px solid #ebebeb;
