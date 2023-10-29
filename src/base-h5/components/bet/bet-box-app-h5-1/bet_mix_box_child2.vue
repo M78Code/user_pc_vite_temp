@@ -23,17 +23,29 @@
       <!-- 中间可滚动区域 -->
       <div class="scroll-box scroll-box-center" ref="scroll_box" :style="{ 'max-height': `${max_height1}px` }"
         @touchmove="touchmove_handle($event)" @touchstart="touchstart_handle($event)">
-          <bet-mix-box-child3 :item="BetData.bet_single_list[0]" :key='0'></bet-mix-box-child3>
+          <div v-if="BetData.is_bet_single">
+            <!-- 单关投注项列表 -->
+            <bet-mix-box-child3 :item="BetData.bet_single_list[0]" :key='0'></bet-mix-box-child3>
+          </div>
+          <div v-else>
+            <!-- 串关投注项列表 -->
+            <bet-conflict-tips v-for="(item,index) in BetData.bet_s_list" :item="item" :key='index'></bet-conflict-tips>
+          </div>
       </div>
 
+      <!-- 串关输入框 -->
+      <template v-if="BetData.bet_s_list.length > 1 && !BetData.is_bet_single">
+        <bet-collusion-input></bet-collusion-input>
+      </template>
+      
       <!-- 投注前 -->
-      <div v-if="BetViewDataClass.bet_order_status == 1">
+      <div v-if="BetViewDataClass.bet_order_status == 1 && BetData.is_bet_single">
         <!-- 单关金额输入框 v-bind="$attrs"-->
         <!-- 输入框 与键盘 -->
         <bet-single-detail :item="BetData.bet_single_list[0]" :index="0"/>
 
         <!-- 键盘 -->
-        <key-board v-show="BetViewDataClass.bet_keyboard_show" :item="BetData.bet_single_list[0]" :index="0"></key-board>
+        <key-board v-if="BetViewDataClass.bet_keyboard_show" :item="BetData.bet_single_list[0]" :index="0"></key-board>
      
         <div class="dele-wrap yb_px12 yb_py10 row"  @touchmove.prevent>
           <!-- 右 自动接受跟好赔率 -->
@@ -75,23 +87,23 @@
           <div class="yb_fontsize16 bet-mix-show">{{ BetData.bet_money_total.toFixed(2) }}</div>
         </div>
       </div>
-
+      {{BetViewDataClass.bet_order_status}} ---
       <!-- 底部按钮 -->
       <div class="row yb_px10 yb_pb8 justify-between" @touchmove.prevent v-if="BetViewDataClass.bet_order_status == 1">
-
+      
           <!-- 左边， 3种情况-->
           <!-- 保留选项 -->
-          <div class="add-box add-box2" :class="{ 'add-box2': BetData.is_bet_success_status, 'add-box3': calc_class }"
-            @click.stop="pack_up(4)" v-if="BetData.is_bet_success_status">{{ $t('bet.save') }}</div>
+          <div class="add-box add-box2" :class="{ 'add-box2': BetViewDataClass.bet_order_status, 'add-box3': calc_class }"
+            @click.stop="pack_up(4)" v-if="![1,2].includes(BetViewDataClass.bet_order_status)">{{ $t('bet.save') }}</div>
           <!-- 单关 -->
-          <div v-else-if="true" class="bet-add-box text-bold display_center one_text_color"
-            :class="{ 'add-box3': calc_class }" @click.stop="pack_up(5)">
+          <div v-else-if="BetViewDataClass.bet_order_status == 1 && BetData.is_bet_single " class="bet-add-box text-bold display_center one_text_color"
+            :class="{ 'add-box3': calc_class }" @click.stop="set_is_bet_single">
             <div class="bet-add-new bet_margin_left"></div>
-            <div class="bet_text_left bet-one">{{ $t('bet.kushikatsu') }}</div>
+            <div class="bet_text_left bet-one">单关</div>
           </div>
           <!-- 串关+ -->
-          <div v-else-if="!hide_bet_series_but()" class="bet-add-box text-bold display_center linkUp_text_color"
-            :class="{ 'add-box3': calc_class }" @click.stop="pack_up(6)">
+          <div v-else-if="BetViewDataClass.bet_order_status == 1 && !BetData.is_bet_single " class="bet-add-box text-bold display_center linkUp_text_color"
+            :class="{ 'add-box3': calc_class }" @click.stop="set_is_bet_single">
             <div class="bet_text_right">{{ $t('bet.kushikatsu') }}</div>
             <div class="bet-add-new bet-linkUp"></div>
           </div>
@@ -156,6 +168,8 @@ import keyBoard from './/bet-keyboard.vue';
 import ballSpin from './/ball-spin.vue';
 import betBar from ".//bet-bar.vue";
 import betSingleDetail from './bet-single-detail.vue';
+import betConflictTips from './bet-conflict-tips.vue'
+import betCollusionInput from './bet-collusion-input.vue'
 
 // import {utils } from 'src/core/index.js';
 // import { api_betting } from "src/api/index.js";
@@ -235,12 +249,17 @@ const is_bet_check_rc = () => {
   return res;
 }
 
+// 单关 串关切换
+const set_is_bet_single = () =>{
+  BetData.set_is_bet_single()
+  useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX, false);
+}
 // 投注事件
 const pack_up = (val) => {
   // TODO: 临时调试用
   useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX, false);
-  BetData.set_clear_bet_info()
-  BetViewDataClass.set_clear_bet_view_config()
+  // BetData.set_clear_bet_info()
+  // BetViewDataClass.set_clear_bet_view_config()
 }
 
 const submit_order = (type) => {
@@ -554,8 +573,8 @@ onUnmounted(() => {
 }
 
 .linkUp_text_color {
-  color: #FFFFFF !important;
-  border: 0.5px solid #FFFFFF !important;
+  color: #99A3B1 !important;
+  border: 1px solid #CBCED8;
 }
 
 .close {
