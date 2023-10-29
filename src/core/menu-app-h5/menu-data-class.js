@@ -94,6 +94,7 @@ class MenuData {
     
     if(mid == 1){
       menu_lv_mi_lsit.unshift({mi:'0',btn:1, ct:"2",title:"全部"})
+      menu_lv_mi_lsit.unshift({mi:'5000',btn:1,ct:"2",title:"收藏"})
     }
     if(mid == 2){
       menu_lv_mi_lsit.unshift({mi:'5000',btn:1,ct:"2",title:"收藏"})
@@ -115,7 +116,7 @@ class MenuData {
     this.current_lv_2_menu = val;
     // 今日 / 滚球/ 冠军 没有 三级
     if(![1,2,400].includes(this.current_lv_1_menu_mi.value)){
-      this.get_date_menu_api_when_subchange()
+      this.get_date_menu_api_when_subchange(this.current_lv_2_menu_mi)
     }
     this.update()
   }
@@ -127,8 +128,8 @@ class MenuData {
     this.current_lv_1_menu_mi.value = lv1_mi  
     this.get_menu_lvmi_list(lv1_mi)
     let index = 0
-    // 今日第一位是收藏 默认选中足球 
-    if(lv1_mi == 2){
+    // 今日/滚球第一位是收藏 默认选中足球/全部 
+    if([1,2].includes(lv1_mi)){
       index = 1
     }
     this.set_current_lv_2_menu_mi( lodash_.get(this.menu_lv_mi_lsit,`[${index}]`,{}))
@@ -241,7 +242,7 @@ class MenuData {
    * arg_mi 如果传值 则获取特定值euid 如果没有就是二级菜单的euis
    * */
   get_euid(arg_mi) {
-    let mi = arg_mi || this.current_lv_2_menu?.mi;
+    let mi = arg_mi || this.current_lv_2_menu_mi;
     if (!mi) return "";
     // 赛果
     if (this.is_results()) return mi;
@@ -608,16 +609,16 @@ class MenuData {
     res_data && res_data.length && this.set_current_lv2_menu(res_data[0], 0);
   }
   // 早盘,串关,电竞拉取接口更新日期菜单 3,6,7
-  async get_date_menu_api_when_subchange(item, type) {
+  async get_date_menu_api_when_subchange(mid, type) {
     // 如果是早盘，串关，电竞的话
-    const euid = this.get_euid(item.mi)
+    const euid = this.get_euid(mid)
     if ([this.is_zaopan(), this.is_mix(), this.is_export()].includes(true) && euid) {
       // 三级菜单先显示骨架屏，接口回来后，再隐藏骨架屏
       let api_func = null,
         params = { euid: euid };
       if (this.is_export()) { //电竞
         api_func = api_common.get_esports_date_menu;
-        let value = item.mi.slice(1, 4);
+        let value = mid.slice(1, 4);
         params = { csid: value };
         if (!params.csid) {
           params.csid = value;
