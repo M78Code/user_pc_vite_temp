@@ -52,10 +52,10 @@ import VirtualClass from "src/core/match-list-h5/virtual-sports/virtual-class"
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent,ref } from "vue";
 import { useRoute, useRouter } from "vue-router"
-import lodash from "lodash";
-import { MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance,MatchDetailCalss,UserCtr } from "src/core";
+import {debounce} from "lodash";
+import { MatchDataWarehouse_H5_Detail_Common ,MatchDetailCalss,UserCtr } from "src/core";
+import VirtualData from 'src/core/match-list-h5/virtual-sports/virtual-data.js'
 
-const MatchInfoCtr = {}
 export default defineComponent({
   name: "virtual_sports_category",
   props: {
@@ -82,6 +82,8 @@ export default defineComponent({
   // #TODO mixins
   // mixins:[betting],
   setup(props, evnet) {
+    // 所有数据集合
+    const MatchInfoCtr =ref(MatchDataWarehouse_H5_Detail_Common)
     let route =  useRoute()
     let router = useRouter()
     let state = reactive({
@@ -95,8 +97,7 @@ export default defineComponent({
       playlist_length:undefined,
       // 玩法集合投注底部兼容白块的处理PS-12302
       // dom_play_bool: false,
-      // 所有数据集合
-      matchInfoCtr: MatchDataWarehouseInstance,
+   
       // dom_play元素的观察对象
       observer_:undefined,
       // 第一次进来根据数据是否折叠玩法
@@ -136,6 +137,9 @@ export default defineComponent({
     //   'get_is_user_refreshing',
     //   'get_is_show_details_analyse',
     // ]),
+    //详情页是否显示统计 
+    const  get_is_show_details_analyse =ref(MatchDetailCalss.is_show_details_analyse) 
+    const get_is_user_refreshing = ref(VirtualData.is_user_refreshing)
     let get_video_timer = null
      // 正在跳转详情的赛事  
      const  get_details_item =ref(MatchDetailCalss.details_item)
@@ -150,11 +154,15 @@ export default defineComponent({
      const get_uid =  ref(UserCtr.get_uid())
     // 置顶列表
     const match_list_new = computed(() => {
-      return matchInfoCtr.listSortNew()
+      return matchInfoCtr.value.listSortNew()
     });
     // 非置顶列表
     const match_list_normal = computed(() => {
-      return matchInfoCtr.listSortNormal()
+      return matchInfoCtr.value.listSortNormal()
+    });
+    //押注状态0-隐藏状态 1-初始弹出状态,2-注单处理中状态,3-投注成功,4-投注失败(bet接口没返回200),5-盘口变化、失效，赔率变化，6-注单确认中（提交成功）,7-有投注项锁盘，8-单关投注失败(bet接口返回200)
+    const get_bet_status = computed(() => {
+      return 0;
     });
     // #TODO vuex
     // watch(
@@ -200,7 +208,7 @@ export default defineComponent({
       (to, from) => {
         initEvent();
         // 当切换玩法集的时候变为: true
-        first_load = true;
+        state.first_load = true;
       }
     );
     watch(
@@ -230,15 +238,71 @@ export default defineComponent({
       () => get_fewer.value,
       (n) => {
         if(n != 3){
-          if(Array.isArray(matchInfoCtr.list) && matchInfoCtr.list.length){
-            for (const item of matchInfoCtr.list) {
+          if(Array.isArray(matchInfoCtr.value.list) && matchInfoCtr.value.list.length){
+            for (const item of matchInfoCtr.value.list) {
               item.hshow = n == 1 ? 'Yes':'No'
             }
           }
         }
       }
     );
+       // 调用:/v1/m/matchDetail/getMatchOddsInfoPB接口
+    const socket_upd_list =debounce((skt_data,callback) => {
+           let mid
+           if(route.name == "virtual_sports"){
+             mid = get_current_mid.value
+           }else if(route.name == "virtual_sports_details"){
+             mid = route.query.mid
+           }
 
+           // 调用接口的参数
+           let params = {
+             // 当前选中玩法项的id
+             mcid: get_details_item.value,
+             // 赛事id
+             mid: mid,
+             // userId或者uuid
+             cuid: get_uid.value,
+             showType: '2'
+           }
+           // 获取缓存数据，将参数params传进去
+           getdetail_cache_session(params);
+           api_common.get_matchDetail_getVirtualMatchOddsInfo(params).then(res=>{
+             state.is_loading = false;
+
+             if(!res.data || res.data.length == 0){
+               state.is_no_data = true;
+               matchInfoCtr.value.setList([]);
+               set_detail_data_storage(params,'');
+               if(callback) callback();
+               return;
+             }
+             state.is_no_data = false;
+             var temp = lodash.get(res, 'data');
+             set_detail_data_storage(params,temp);
+             try {   //getMatchOddsInfo 接口拉取时，联动跟新投注框的数据
+               if(get_bet_status == 1 || get_bet_status == 7 || get_bet_status == 5){
+                 update_ol(null, temp)
+               }
+             } catch (error) {
+               console.error(error)
+             }
+             if(temp&&temp.length)
+               {
+                state.playlist_length = temp.length;
+                 temp.forEach(item => {
+                   // 附加盘收缩
+                   listItemAddCustomAttr(item)
+                 });
+               }
+             temp = save_hshow(temp); // 保存当前相关hshow状态;
+             matchInfoCtr.value.setList(lodash.cloneDeep(temp))
+             delete res.data;
+             if(callback) callback();
+           }).catch(err =>console.error(err));
+           $forceUpdate();
+          },500)
+     
     onMounted(() => {
       // 原created
       // 延时器
@@ -263,12 +327,12 @@ export default defineComponent({
       // 2.顶部按钮刷新触发
       else if (
           !props.top_menu_changed && get_first_details_item.value=== get_details_item.value
-          || get_is_user_refreshing
-          || !get_is_show_details_analyse
+          || get_is_user_refreshing.value
+          || !get_is_show_details_analyse.value
       ) {
-        initEvent(mid);
+        initEvent(props.mid);
         // 刷新过后重置刷新状态
-        set_is_user_refreshing(false)
+        VirtualData.set_is_user_refreshing(false)
       }
 
       // 重置顶部菜单切换状态
@@ -278,8 +342,6 @@ export default defineComponent({
       state.emitters.push(useMittOn(MITT_TYPES.EMIT_CATEGORY_SKT, sendSocketInitCmd).off);
       // useMittOn(MITT_TYPES.EMIT_CATEGORY_SKT, sendSocketInitCmd);
       //函数防抖 在500毫秒内只触发最后一次需要执行的事件
-      socket_upd_list = debounce(socket_upd_list, 500);
-
       // 调用接口的参数
       let params = {
         // 当前选中玩法项的id
@@ -290,7 +352,7 @@ export default defineComponent({
         cuid: get_uid.value,
         showType: '2'
       }
-      cache_limiting_throttling_get_list(params, socket_upd_list, 'match_detail_odds_info')
+      // cache_limiting_throttling_get_list(params, socket_upd_list, 'match_detail_odds_info')
     })
     // #TODO vuex
     // methods: {
@@ -426,7 +488,7 @@ export default defineComponent({
      * @param {Number} status 盘口状态
      */
     const set_all_match_os_status = (status, list_data) => {
-      let list = matchInfoCtr.list;
+      let list = matchInfoCtr.value.list;
       if(list_data){
         list = list_data;
       }
@@ -461,13 +523,13 @@ export default defineComponent({
       }
     };
     const change_show = (val) => {
-      if(Array.isArray(matchInfoCtr.list) && matchInfoCtr.list.length){
+      if(Array.isArray(matchInfoCtr.value.list) && matchInfoCtr.value.list.length){
 
-        let flag1 = matchInfoCtr.list.every(item =>{
+        let flag1 = matchInfoCtr.value.list.every(item =>{
           return item.hshow == 'Yes'
         })
 
-        let flag2 = matchInfoCtr.list.every(item =>{
+        let flag2 = matchInfoCtr.value.list.every(item =>{
           return item.hshow == 'No'
         })
 
@@ -509,18 +571,18 @@ export default defineComponent({
       if(!item) {return;}
       // 附加盘收缩
       // playlist_length:单个玩法集下的玩法数量存在而且玩法数量小于11
-      if(playlist_length && playlist_length < 11) item.hshow = 'Yes';
-      if(get_fewer.value == 2 && playlist_length){
+      if(state.playlist_length && state.playlist_length < 11) item.hshow = 'Yes';
+      if(get_fewer.value == 2 && state.playlist_length){
         item.hshow = 'No';
       }
-      if(get_fewer.value == 1 && playlist_length && first_load){
+      if(get_fewer.value == 1 && state.playlist_length && state.first_load){
         item.hshow = 'Yes';
       }
       if(item&&item.hl&&item.hl.length)
       {
         item.hl.forEach(item2 => {
           if(item2.hid){
-            matchInfoCtr.hl_obj[item2.hid]=item2;
+            matchInfoCtr.value.hl_obj[item2.hid]=item2;
           }
           if(item2&&item2.ol&&item2.ol.length){
             item2.ol.forEach(item3 => {
@@ -554,7 +616,7 @@ export default defineComponent({
 
     const initEvent = () => {
       if(state.match_status == 2) return
-      is_loading = true;
+      state.is_loading = true;
 
       let mid
       if(route.name == "virtual_sports"){
@@ -563,7 +625,7 @@ export default defineComponent({
         mid = route.query.mid
       }
 
-      match_mid = mid;
+      state.match_mid = mid;
       let params = {
         mcid: get_details_item.value, // 玩法集id
         mid, // 赛事id
@@ -572,26 +634,26 @@ export default defineComponent({
       if(!params.mid) {
         return;
       }
-      pre_params_mid = params.mid;
+      state.pre_params_mid = params.mid;
       let cache_data_str = getdetail_cache_session(params);
       if(cache_data_str) {
         // is_loading = false;
-        is_no_data = false;
+        state.is_no_data = false;
       }
       // 正常赛事调用: /v1/m/matchDetail/getMatchOddsInfoPB接口
       // 虚拟体育调用: /v1/m/matchDetail/getVirtualMatchOddsInfo接口
       api_common.get_matchDetail_getVirtualMatchOddsInfo(params).then(res => {
-        is_loading = false;
+       state.is_loading = false;
         if(!res.data || res.data.length == 0){
-          is_no_data = true;
-          matchInfoCtr.setList([]);
+          state.is_no_data = true;
+          matchInfoCtr.value.setList([]);
           set_detail_data_storage(params,'');
           return;
         }
-        is_no_data = false;
+        state.is_no_data = false;
 
         let temp = lodash.get(res, 'data');
-        if(is_lock_add){
+        if(state.is_lock_add){
           set_all_match_os_status(2, temp);
         }
         // 赛马数据字段增加
@@ -610,14 +672,14 @@ export default defineComponent({
         set_detail_data_storage(params,temp);
         if(temp&&temp.length)
         {
-          playlist_length = temp.length;
+          state.playlist_length = temp.length;
           temp.forEach(item => {
             // 附加盘收缩
             listItemAddCustomAttr(item)
           });
         }
         let list_ = lodash.cloneDeep(temp);
-        matchInfoCtr.setList(list_);
+        matchInfoCtr.value.setList(list_);
         delete res.data;
       })
     };
@@ -634,20 +696,20 @@ export default defineComponent({
       }
       // 传值赛事id: mid
       api_common.get_virtual_matchResult(params).then( res => {
-        is_loading = false;
+        state.is_loading = false;
         if(!res.data || res.data.length == 0){
-          is_no_data = true;
-          matchInfoCtr.setList([]);
+          state.is_no_data = true;
+          matchInfoCtr.value.setList([]);
           set_detail_data_storage(params,'');
           return;
         }
-        is_no_data = false;
+        state.is_no_data = false;
 
         let result_list = lodash.get(res, 'data');
         // 虚拟体育title字段增加
         vir_add_title(result_list)
         let result_ = lodash.cloneDeep(result_list);
-        matchInfoCtr.setList(result_);
+        matchInfoCtr.value.setList(result_);
       }).catch( err=> {
         console.error(err);
       })
@@ -659,62 +721,7 @@ export default defineComponent({
       // useMittEmit(MITT_TYPES.EMIT_TABS_LIST_UPDATE_HANDLE);
     };
 
-    // 调用:/v1/m/matchDetail/getMatchOddsInfoPB接口
-    const socket_upd_list = (skt_data,callback) => {
-      let mid
-      if(route.name == "virtual_sports"){
-        mid = get_current_mid.value
-      }else if(route.name == "virtual_sports_details"){
-        mid = route.query.mid
-      }
-
-      // 调用接口的参数
-      let params = {
-        // 当前选中玩法项的id
-        mcid: get_details_item.value,
-        // 赛事id
-        mid: mid,
-        // userId或者uuid
-        cuid: get_uid.value,
-        showType: '2'
-      }
-      // 获取缓存数据，将参数params传进去
-      getdetail_cache_session(params);
-      api_common.get_matchDetail_getVirtualMatchOddsInfo(params).then(res=>{
-        is_loading = false;
-
-        if(!res.data || res.data.length == 0){
-          is_no_data = true;
-          matchInfoCtr.setList([]);
-          set_detail_data_storage(params,'');
-          if(callback) callback();
-          return;
-        }
-        is_no_data = false;
-        var temp = lodash.get(res, 'data');
-        set_detail_data_storage(params,temp);
-        try {   //getMatchOddsInfo 接口拉取时，联动跟新投注框的数据
-          if(get_bet_status == 1 || get_bet_status == 7 || get_bet_status == 5){
-            update_ol(null, temp)
-          }
-        } catch (error) {
-          console.error(error)
-        }
-        if(temp&&temp.length)
-          {
-            playlist_length = temp.length;
-            temp.forEach(item => {
-              // 附加盘收缩
-              listItemAddCustomAttr(item)
-            });
-          }
-        temp = save_hshow(temp); // 保存当前相关hshow状态;
-        matchInfoCtr.setList(lodash.cloneDeep(temp))
-        delete res.data;
-        if(callback) callback();
-      }).catch(err =>console.error(err));
-      $forceUpdate();
-    };
+ 
 
     const save_hshow = (temp,list_old) => {
 
@@ -723,7 +730,7 @@ export default defineComponent({
       {
         middle_data = lodash.cloneDeep(list_old);
       } else {
-        middle_data = lodash.cloneDeep(matchInfoCtr.list);
+        middle_data = lodash.cloneDeep(matchInfoCtr.value.list);
       }
       let middle_obj = {}
       lodash.forEach(middle_data, (item) =>{
@@ -751,17 +758,17 @@ export default defineComponent({
         let none_data = '';
         if(data && data.length){
           // data是数组，其中每一项表示单个投注项
-          playlist_length = data.length;
+          state.playlist_length = data.length;
           data.forEach(item => {
             // 列表子项增加自定义属性
             listItemAddCustomAttr(item)
           });
         }
         let list_ = lodash.cloneDeep(data);
-        if(is_lock_add){
+        if(state.is_lock_add){
           set_all_match_os_status(2, list_);
         }
-        matchInfoCtr.setList(list_);
+        matchInfoCtr.value.setList(list_);
       }
       return cach_string;
     };
@@ -842,7 +849,7 @@ export default defineComponent({
       set_detail_data_storage,
       remove_session_storage,
       remove_detail_storage,
-      route
+      route,
     }
   }
 })

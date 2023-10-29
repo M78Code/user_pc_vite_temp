@@ -34,7 +34,7 @@
         </div>
       </div>
      <!--玩法集区域 -->
-    <div class="detail-main" :class="{'detail-main2':get_betbar_show}">{{match}}{{is_show_analyse}}
+    <div class="detail-main" :class="{'detail-main2':get_betbar_show}">
       <virtual-sports-category v-if="match && !is_show_analyse" :mid="mid" :current_match="match" :source="'virtual_sports_details'"/>
       <virtual-match-statistic v-if="match && is_show_analyse" />
     </div>

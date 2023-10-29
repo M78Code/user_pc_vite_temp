@@ -144,7 +144,7 @@ const wrapper_scroll_handler = (e) => {
 const vir_refresh = () => {
   if(refreshing.value) return;
   refreshing.value = true;
-  set_is_user_refreshing(true)
+  VirtualData.set_is_user_refreshing(true)
   timer_super1 = setTimeout(() => {
     // 取消刷新 已做节流
     refreshing.value = false;
