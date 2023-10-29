@@ -48,14 +48,12 @@ import { api_common } from "src/api/index.js";
 
  // 引入加载中的组件
 import loading from "src/base-h5/components/common/loading.vue"
- // 引入处理数据的封装方法
-// import MatchInfoCtr from "src/core/utils/dataClassCtr/matchInfoCtr.js";
 import VirtualClass from "src/core/match-list-h5/virtual-sports/virtual-class"
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
-import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
+import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent,ref } from "vue";
 import { useRoute, useRouter } from "vue-router"
 import lodash from "lodash";
-
+import { MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance,MatchDetailCalss,UserCtr } from "src/core";
 
 const MatchInfoCtr = {}
 export default defineComponent({
@@ -98,7 +96,7 @@ export default defineComponent({
       // 玩法集合投注底部兼容白块的处理PS-12302
       // dom_play_bool: false,
       // 所有数据集合
-      matchInfoCtr: new MatchInfoCtr(),
+      matchInfoCtr: MatchDataWarehouseInstance,
       // dom_play元素的观察对象
       observer_:undefined,
       // 第一次进来根据数据是否折叠玩法
@@ -118,7 +116,7 @@ export default defineComponent({
       match_status:0,
       // 上次请求的虚拟体育赛马赛事id
       pre_params_mid:'',
-      get_video_timer: null,
+    
       created_init_event:false,
     });
     // #TODO VUEX
@@ -128,7 +126,7 @@ export default defineComponent({
     //   'get_details_item',
     //   'get_first_details_item',
     //   'get_goto_detail_matchid',
-    //   'get_uid',
+    //   'get_uid.value',
     //   'get_show_video',
     //   "get_details_tabs_list",
     //   "get_fewer",
@@ -138,6 +136,18 @@ export default defineComponent({
     //   'get_is_user_refreshing',
     //   'get_is_show_details_analyse',
     // ]),
+    let get_video_timer = null
+     // 正在跳转详情的赛事  
+     const  get_details_item =ref(MatchDetailCalss.details_item)
+     //获取赛事ID
+     const  get_current_mid =ref(route.params.mid)
+     //
+     const get_goto_detail_matchid =  ref(MatchDetailCalss.get_goto_detail_matchid)
+     const get_first_details_item =  ref(MatchDetailCalss.first_details_item)
+
+     const get_fewer =  ref(MatchDetailCalss.fewer)
+
+     const get_uid =  ref(UserCtr.get_uid())
     // 置顶列表
     const match_list_new = computed(() => {
       return matchInfoCtr.listSortNew()
@@ -155,7 +165,7 @@ export default defineComponent({
     // );
     // 监听current_match的状态
     watch(
-      () => match_status,
+      () =>state.match_status,
       (new_) => {
         // match_status == 1 比赛开始时 拉取当前此赛事的视频总时长
         if(new_ == 1){
@@ -169,15 +179,15 @@ export default defineComponent({
     );
     // 虚拟体育切换玩法集id(赛事结束也可以切换玩法集ID)
     watch(
-      () => get_details_item,
+      () => get_details_item.value,
       () => {
-        if(created_init_event){
-          created_init_event = false
+        if(state.created_init_event){
+          state.created_init_event = false
           // return
         }
 
         // 当赛事结束时:切换玩法集调用赛事结果的接口
-        if(match_status == 2){
+        if(state.match_status == 2){
           get_match_result()
         }else{
           // 当赛事等于赛前/开赛中的时候  调用玩法集的接口
@@ -194,30 +204,30 @@ export default defineComponent({
       }
     );
     watch(
-      () => current_match,
+      () => props.current_match,
       (to, from) => {
-        if(!created_init_event){
+        if(!state.created_init_event){
           initEvent();
         }
-        created_init_event = false;
+        state.created_init_event = false;
       }
     );
     watch(
-      () => get_current_mid,
+      () => get_current_mid.value,
       () => {
         initEvent();
       }
     );
     // 监听赛事id的变化 如果赛事id变化 及时更新调用玩法集合的接口
     watch(
-      () => get_goto_detail_matchid,
+      () => get_goto_detail_matchid.value,
       (new_) => {
         initEvent();
       }
     );
     // 监听get_fewer的值
     watch(
-      () => get_fewer,
+      () => get_fewer.value,
       (n) => {
         if(n != 3){
           if(Array.isArray(matchInfoCtr.list) && matchInfoCtr.list.length){
@@ -232,27 +242,27 @@ export default defineComponent({
     onMounted(() => {
       // 原created
       // 延时器
-      get_video_timer = null;
+     get_video_timer = null;
       // 满足刷新页面保持向上展开的状态
-      set_fewer(1);
+      MatchDetailCalss.set_fewer(1);
       // #TODO emit
-      emitters.push(useMittOn(MITT_TYPES.EMIT_REF_API, sendSocketInitCmd).off);
+      state.emitters.push(useMittOn(MITT_TYPES.EMIT_REF_API, sendSocketInitCmd).off);
       // useMittOn(MITT_TYPES.EMIT_REF_API, initEvent);
 
       if(route.query.mid || route.name == 'virtual_sports'){
         init_vsport();
       }
 
-      created_init_event = true;
+      state.created_init_event = true;
       // 不做ms的判断 进入详情页即调玩法集接口  :因为现在ms的状态不统一
       // 虚拟体育赛事结束时调用赛事结果的接口  否则刷新调用玩法集的接口
-      if((current_match && current_match.match_status == 2) || get_score_list().length){
+      if((props.current_match && props.current_match.match_status == 2) || get_score_list().length){
         get_match_result()
       }
       // 1.顶部菜单切换及赛事期数切换时 过滤重复请求
       // 2.顶部按钮刷新触发
       else if (
-          !top_menu_changed && get_first_details_item === get_details_item
+          !props.top_menu_changed && get_first_details_item.value=== get_details_item.value
           || get_is_user_refreshing
           || !get_is_show_details_analyse
       ) {
@@ -265,7 +275,7 @@ export default defineComponent({
       // #TODO emit
       // $emit('top_menu_change', false)
       // #TODO emit
-      emitters.push(useMittOn(MITT_TYPES.EMIT_CATEGORY_SKT, sendSocketInitCmd).off);
+      state.emitters.push(useMittOn(MITT_TYPES.EMIT_CATEGORY_SKT, sendSocketInitCmd).off);
       // useMittOn(MITT_TYPES.EMIT_CATEGORY_SKT, sendSocketInitCmd);
       //函数防抖 在500毫秒内只触发最后一次需要执行的事件
       socket_upd_list = debounce(socket_upd_list, 500);
@@ -273,11 +283,11 @@ export default defineComponent({
       // 调用接口的参数
       let params = {
         // 当前选中玩法项的id
-        mcid: get_details_item,
+        mcid: get_details_item.value,
         // 赛事id
-        mid: get_goto_detail_matchid,
+        mid: get_goto_detail_matchid.value,
         // userId或者uuid
-        cuid: get_uid,
+        cuid: get_uid.value,
         showType: '2'
       }
       cache_limiting_throttling_get_list(params, socket_upd_list, 'match_detail_odds_info')
@@ -289,14 +299,17 @@ export default defineComponent({
     //   "set_detail_data_assign",
     //   'set_is_user_refreshing',
     // ]),
+    /* 后续做 todo */ 
+    const sendSocketInitCmd =()=>{
 
+    }
     /**
      * 获取赛马最终结果
      */
     const get_score_list = () => {
       let res = [];
-      if(current_match && current_match.list && current_match.list.length){
-        let last_win_obj = current_match.list[current_match.list.length - 1];
+      if(props.current_match && props.current_match.list && props.current_match.list.length){
+        let last_win_obj = props.current_match.list[props.current_match.list.length - 1];
         if(last_win_obj){
           res.push(last_win_obj.ranking1);
           res.push(last_win_obj.ranking2);
@@ -312,7 +325,7 @@ export default defineComponent({
       if(VirtualClass){
         VirtualClass.destroy();
       }
-      // vsport = new VSport(current_match,(res)=>{
+      // vsport = new VSport(props.current_match,(res)=>{
       //   if(res.match_status == 0){
       //     // console.warn(res.match_status,"----->>match_status",res.upd_time,"----->>upd_time");
       //     if(res.upd_time>=-10){
@@ -336,10 +349,10 @@ export default defineComponent({
       //       $set(detail_data, 'match_status',res.match_status);
       //     });
       //   } else{
-      //     $set(current_match, 'match_status',res.match_status);
+      //     $set(props.current_match, 'match_status',res.match_status);
       //   }
       //   match_status = res.match_status;
-      //   // console.log(current_match.totalTime+'---------current_match----------'+current_match.match_status)
+      //   // console.log(props.current_match.totalTime+'---------props.current_match----------'+props.current_match.match_status)
       // })
     };
     /**
@@ -364,7 +377,7 @@ export default defineComponent({
                 $set(detail_data, 'totalTime',totalTime);
               });
             } else{
-              $set(current_match, 'totalTime',totalTime);
+              $set(props.current_match, 'totalTime',totalTime);
             }
           }
           if(get_video_timer) { clearTimeout(get_video_timer) }
@@ -459,22 +472,22 @@ export default defineComponent({
         })
 
         if(flag1 || (val && val ==1)){
-          set_fewer(1)
+          MatchDetailCalss.set_fewer(1)
         }else{
-          set_fewer(3)
+          MatchDetailCalss.set_fewer(3)
         }
 
         if(val){
           if(flag2 && (val && val ==2)){
-            set_fewer(2)
+            MatchDetailCalss.set_fewer(2)
           }else{
-            set_fewer(3)
+            MatchDetailCalss.set_fewer(3)
           }
         }else{
           if(flag2){
-            set_fewer(2)
+            MatchDetailCalss.set_fewer(2)
           }else{
-            set_fewer(3)
+            MatchDetailCalss.set_fewer(3)
           }
         }
 
@@ -497,10 +510,10 @@ export default defineComponent({
       // 附加盘收缩
       // playlist_length:单个玩法集下的玩法数量存在而且玩法数量小于11
       if(playlist_length && playlist_length < 11) item.hshow = 'Yes';
-      if(get_fewer == 2 && playlist_length){
+      if(get_fewer.value == 2 && playlist_length){
         item.hshow = 'No';
       }
-      if(get_fewer == 1 && playlist_length && first_load){
+      if(get_fewer.value == 1 && playlist_length && first_load){
         item.hshow = 'Yes';
       }
       if(item&&item.hl&&item.hl.length)
@@ -540,21 +553,21 @@ export default defineComponent({
     };
 
     const initEvent = () => {
-      if(match_status == 2) return
+      if(state.match_status == 2) return
       is_loading = true;
 
       let mid
       if(route.name == "virtual_sports"){
-        mid = get_current_mid
+        mid = get_current_mid.value
       }else if(route.name == "virtual_sports_details"){
         mid = route.query.mid
       }
 
       match_mid = mid;
       let params = {
-        mcid: get_details_item, // 玩法集id
+        mcid: get_details_item.value, // 玩法集id
         mid, // 赛事id
-        cuid: get_uid, // userId或者uuid
+        cuid: get_uid.value, // userId或者uuid
       }
       if(!params.mid) {
         return;
@@ -616,8 +629,8 @@ export default defineComponent({
     const get_match_result = () => {
       let params = {
         mid: route.query.mid,
-        mcid: get_details_item,
-        cuid: get_uid, // userId或者uuid
+        mcid: get_details_item.value,
+        cuid: get_uid.value, // userId或者uuid
       }
       // 传值赛事id: mid
       api_common.get_virtual_matchResult(params).then( res => {
@@ -650,7 +663,7 @@ export default defineComponent({
     const socket_upd_list = (skt_data,callback) => {
       let mid
       if(route.name == "virtual_sports"){
-        mid = get_current_mid
+        mid = get_current_mid.value
       }else if(route.name == "virtual_sports_details"){
         mid = route.query.mid
       }
@@ -658,11 +671,11 @@ export default defineComponent({
       // 调用接口的参数
       let params = {
         // 当前选中玩法项的id
-        mcid: get_details_item,
+        mcid: get_details_item.value,
         // 赛事id
         mid: mid,
         // userId或者uuid
-        cuid: get_uid,
+        cuid: get_uid.value,
         showType: '2'
       }
       // 获取缓存数据，将参数params传进去
@@ -766,9 +779,9 @@ export default defineComponent({
     //移除本地缓存
     const remove_session_storage = () => {
       let params = {
-        mcid: get_details_item, // 玩法集id
-        mid: get_goto_detail_matchid, // 赛事id
-        cuid: get_uid, // userId或者uuid
+        mcid: get_details_item.value, // 玩法集id
+        mid: get_goto_detail_matchid.value, // 赛事id
+        cuid: get_uid.value, // userId或者uuid
       }
       let cach_key = `${params.mid}-${params.cuid}-${params.mcid}-cache`;
       sessionStorage.removeItem(cach_key);
@@ -778,8 +791,8 @@ export default defineComponent({
     const remove_detail_storage = () => {
       remove_session_storage();
 
-      let mid = get_goto_detail_matchid, // 赛事id
-        cuid = get_uid; // userId或者uuid
+      let mid = get_goto_detail_matchid.value, // 赛事id
+        cuid = get_uid.value; // userId或者uuid
 
       get_details_tabs_list && get_details_tabs_list.forEach(tab => {
         let mcid = tab.id;
@@ -796,7 +809,7 @@ export default defineComponent({
     onUnmounted(() => {
       // 取消订阅事件
       // #TODO emit
-      emitters.map((x) => x())
+      state.emitters.map((x) => x())
       // useMittOn(MITT_TYPES.EMIT_REF_API, initEvent).off;
       // useMittOn(MITT_TYPES.EMIT_CATEGORY_SKT, sendSocketInitCmd).off;
       if(VirtualClass){
@@ -807,7 +820,7 @@ export default defineComponent({
       get_video_timer = null
     })
     return {
-      ...toRefs(data),
+      ...toRefs(state),
       match_list_new,
       match_list_normal,
       get_score_list,
@@ -828,7 +841,8 @@ export default defineComponent({
       getdetail_cache_session,
       set_detail_data_storage,
       remove_session_storage,
-      remove_detail_storage
+      remove_detail_storage,
+      route
     }
   }
 })

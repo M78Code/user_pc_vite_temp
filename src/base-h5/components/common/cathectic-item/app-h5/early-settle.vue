@@ -3,8 +3,8 @@
  * @Author:
 -->
 <template>
+  <div style="display: none;">{{ BetRecordClass.bet_record_version }}</div>
   <div class="early-settle">
-    <div>{{ BetRecordClass.bet_record_version }}</div>
     <!-- 提前兑现规则申明 -->
     <early-settle-tips />
     <div class="early-button">

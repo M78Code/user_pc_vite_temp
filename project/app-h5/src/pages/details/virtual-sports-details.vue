@@ -17,7 +17,7 @@
       <div class="detail-header-bg"></div>
       <div class="detail-header">
         <!--视频区域-->
-        <div class="stage-wrapper">{{current_league}}11
+        <div class="stage-wrapper">
           <virtual-sports-stage source='detail'
             :current_match="current_match" @update_next_batch_match="update_n_batch_handle"
             :match_process_update="match_process_update"
@@ -34,7 +34,7 @@
         </div>
       </div>
      <!--玩法集区域 -->
-    <div class="detail-main" :class="{'detail-main2':get_betbar_show}">
+    <div class="detail-main" :class="{'detail-main2':get_betbar_show}">{{match}}{{is_show_analyse}}
       <virtual-sports-category v-if="match && !is_show_analyse" :mid="mid" :current_match="match" :source="'virtual_sports_details'"/>
       <virtual-match-statistic v-if="match && is_show_analyse" />
     </div>
@@ -47,10 +47,10 @@
 // import common from 'src/project/mixins/constant/module/common.js';
 // import virtual_sports_mixin from "src/project/mixins/virtual_sports/virtual_sports_mixin.js"
 import { api_virtual } from "src/api/index.js";
-import virtualSportsTab from 'src/base-h5/components/details/components/virtual-sports-tab.vue'
-// import virtual_sports_category from "src/base-h5/components/details/children/virtual_sports_category.vue"
-// import virtual_match_statistic from 'src/base-h5/components/details/components/virtual_match_statistic.vue'
-import virtualSportsStage from 'src/base-h5/components/virtual/virtual-sports-stage.vue'
+import virtualSportsTab from 'project_path/src/pages/details/children/virtual-sports-tab.vue'
+import virtualSportsCategory from "project_path/src/pages/details/children/virtual-sports-category.vue"
+import virtualMatchStatistic from 'src/base-h5/components/details/components/virtual-match-statistic.vue'
+import virtualSportsStage from 'src/base-h5/components/virtual/virtual-sports-stage-2.vue'
 // import VSport from 'src/base-h5/utils/vsport/vsport.js';
 import VirtualVideo from 'src/core/match-list-h5/virtual-sports/virtual-video.js'
 import VirtualData from 'src/core/match-list-h5/virtual-sports/virtual-data.js'
@@ -68,8 +68,8 @@ export default defineComponent({
   components: {
     virtualSportsStage,
     virtualSportsTab,
-    // 'virtual-match-statistic': virtual_match_statistic,
-    // 'virtual-sports-category': virtual_sports_category,
+    virtualSportsCategory,
+    virtualMatchStatistic
   },
 
   setup(props, evnet) {
@@ -421,6 +421,9 @@ export default defineComponent({
   }
 })
 </script>
+<style lang="scss">
+@import "src/base-h5/css/pages/virtual-sports.scss";
+</style>
 <style lang="scss" scoped>
 .virtual-detail {
   height: calc(var(--vh, 1vh) * 100);
