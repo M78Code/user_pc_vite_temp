@@ -15,17 +15,17 @@
           <!-- 置顶 -->
           <template v-for="(item,keyscorll) in match_list_new">
             <template v-if="item.hton!=0">
-              <tournament-play-new @change_show="change_show" :key="item.topKey + item.hpid" :list="matchInfoCtr.list" :item_data="item" :scorllIndex="keyscorll"></tournament-play-new>
+              <tournament-play-new @change_show="change_show" :key="item.topKey + item.hpid" :list="matchInfoCtr?.list" :item_data="item" :scorllIndex="keyscorll"></tournament-play-new>
             </template>
           </template>
           <!-- 非置顶 -->
           <template v-for="(item,keyscorll) in match_list_normal">
             <template v-if="item.hton==0">
               <template v-if="match_list_new.length == 0">
-                <tournament-play-new @change_show="change_show" :key="item.topKey + item.hpid" :list="matchInfoCtr.list" :item_data="item" :scorllIndex="keyscorll"></tournament-play-new>
+                <tournament-play-new @change_show="change_show" :key="item.topKey + item.hpid" :list="matchInfoCtr?.list" :item_data="item" :scorllIndex="keyscorll"></tournament-play-new>
               </template>
               <template v-else>
-                <tournament-play-new @change_show="change_show" :key="item.topKey + item.hpid" :list="matchInfoCtr.list" :item_data="item"></tournament-play-new>
+                <tournament-play-new @change_show="change_show" :key="item.topKey + item.hpid" :list="matchInfoCtr?.list" :item_data="item"></tournament-play-new>
               </template>
             </template>
           </template>
@@ -55,7 +55,6 @@ import { useRoute, useRouter } from "vue-router"
 import {debounce} from "lodash";
 import { MatchDataWarehouse_H5_Detail_Common ,MatchDetailCalss,UserCtr } from "src/core";
 import VirtualData from 'src/core/match-list-h5/virtual-sports/virtual-data.js'
-
 export default defineComponent({
   name: "virtual_sports_category",
   props: {
@@ -83,7 +82,7 @@ export default defineComponent({
   // mixins:[betting],
   setup(props, evnet) {
     // 所有数据集合
-    const MatchInfoCtr =ref(MatchDataWarehouse_H5_Detail_Common)
+    const matchInfoCtr =ref(MatchDataWarehouse_H5_Detail_Common)
     let route =  useRoute()
     let router = useRouter()
     let state = reactive({
@@ -154,12 +153,17 @@ export default defineComponent({
      const get_uid =  ref(UserCtr.get_uid())
     // 置顶列表
     const match_list_new = computed(() => {
-      return matchInfoCtr.value.listSortNew()
+      // TODO: 还未调试待修改
+      return  lodash.get(matchInfoCtr.value, `list_to_obj.mid_obj[${route.query.mid}_].odds_info`);
     });
     // 非置顶列表
-    const match_list_normal = computed(() => {
-      return matchInfoCtr.value.listSortNormal()
-    });
+    const match_list_normal = ref(lodash.get(matchInfoCtr.value, `list_to_obj.mid_obj[${route.query.mid}_].odds_info`))
+    console.log(matchInfoCtr.value,'matchInfoCtr.value',match_list_normal);
+    const get_match_list_normal = () => {
+      match_list_normal.value =  lodash.get(matchInfoCtr.value, `list_to_obj.mid_obj[${route.query.mid}_].odds_info`)
+    };
+
+
     //押注状态0-隐藏状态 1-初始弹出状态,2-注单处理中状态,3-投注成功,4-投注失败(bet接口没返回200),5-盘口变化、失效，赔率变化，6-注单确认中（提交成功）,7-有投注项锁盘，8-单关投注失败(bet接口返回200)
     const get_bet_status = computed(() => {
       return 0;
@@ -233,6 +237,10 @@ export default defineComponent({
         initEvent();
       }
     );
+    // 监听详情数据仓库版本号更新odds_info数据
+    watch(() => matchInfoCtr.value.data_version.version, () => {
+        get_match_list_normal()
+    })
     // 监听get_fewer的值
     watch(
       () => get_fewer.value,
@@ -272,7 +280,7 @@ export default defineComponent({
 
              if(!res.data || res.data.length == 0){
                state.is_no_data = true;
-               matchInfoCtr.value.setList([]);
+               matchInfoCtr.value.set_match_details(matchInfoCtr.value.get_quick_mid_obj(params.mid),[]);
                set_detail_data_storage(params,'');
                if(callback) callback();
                return;
@@ -296,7 +304,7 @@ export default defineComponent({
                  });
                }
              temp = save_hshow(temp); // 保存当前相关hshow状态;
-             matchInfoCtr.value.setList(lodash.cloneDeep(temp))
+             matchInfoCtr.value.set_match_details(matchInfoCtr.value.get_quick_mid_obj(params.mid),lodash.cloneDeep(temp));
              delete res.data;
              if(callback) callback();
            }).catch(err =>console.error(err));
@@ -582,7 +590,7 @@ export default defineComponent({
       {
         item.hl.forEach(item2 => {
           if(item2.hid){
-            matchInfoCtr.value.hl_obj[item2.hid]=item2;
+            matchInfoCtr.value.list_to_obj.hl_obj[item2.hid]=item2;
           }
           if(item2&&item2.ol&&item2.ol.length){
             item2.ol.forEach(item3 => {
@@ -646,7 +654,7 @@ export default defineComponent({
        state.is_loading = false;
         if(!res.data || res.data.length == 0){
           state.is_no_data = true;
-          matchInfoCtr.value.setList([]);
+          matchInfoCtr.value.set_match_details(matchInfoCtr.value.get_quick_mid_obj(params.mid),[]);
           set_detail_data_storage(params,'');
           return;
         }
@@ -679,7 +687,7 @@ export default defineComponent({
           });
         }
         let list_ = lodash.cloneDeep(temp);
-        matchInfoCtr.value.setList(list_);
+        matchInfoCtr.value.set_match_details(matchInfoCtr.value.get_quick_mid_obj(params.mid),list_);
         delete res.data;
       })
     };
@@ -699,7 +707,7 @@ export default defineComponent({
         state.is_loading = false;
         if(!res.data || res.data.length == 0){
           state.is_no_data = true;
-          matchInfoCtr.value.setList([]);
+          matchInfoCtr.value.set_match_details(matchInfoCtr.value.get_quick_mid_obj(params.mid),[]);
           set_detail_data_storage(params,'');
           return;
         }
@@ -709,7 +717,7 @@ export default defineComponent({
         // 虚拟体育title字段增加
         vir_add_title(result_list)
         let result_ = lodash.cloneDeep(result_list);
-        matchInfoCtr.value.setList(result_);
+        matchInfoCtr.value.set_match_details(matchInfoCtr.value.get_quick_mid_obj(params.mid),result_);
       }).catch( err=> {
         console.error(err);
       })
@@ -768,7 +776,7 @@ export default defineComponent({
         if(state.is_lock_add){
           set_all_match_os_status(2, list_);
         }
-        matchInfoCtr.value.setList(list_);
+        matchInfoCtr.value.set_match_details(matchInfoCtr.value.get_quick_mid_obj(params.mid),list_);
       }
       return cach_string;
     };
@@ -850,6 +858,7 @@ export default defineComponent({
       remove_session_storage,
       remove_detail_storage,
       route,
+      MatchDataWarehouse_H5_Detail_Common,
     }
   }
 })

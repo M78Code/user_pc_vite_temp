@@ -171,7 +171,7 @@ export default defineComponent({
               init_video_play_status(video_process_data);
             });
           }
-          MatchDataWarehouseInstance.set_match_details(data)
+          MatchDataWarehouseInstance.set_match_details(data,[])
         }
       })
       .catch(err => {
