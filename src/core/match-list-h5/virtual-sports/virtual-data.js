@@ -43,6 +43,8 @@ class VirtualData {
     this.auto_change_tab_i_first = 0
     this.virtual_data_loading = false
     this.virtual_m_list_data_cache_key = 'virtual_m_list_data_cache_key'
+     // 是否是用户（顶部按钮）刷新
+    this.is_user_refreshing =false;
   }
 
   // 设置虚拟体育菜单
@@ -786,6 +788,15 @@ class VirtualData {
       r = JSON.parse(socre);
     }
     return r;
+  }
+
+  /**
+   * @description:设置顶部是否刷新
+   * @param {Boolean} flag
+   * @return {*}
+   */
+  set_is_user_refreshing(flag){
+    this.is_user_refreshing = flag
   }
 }
 

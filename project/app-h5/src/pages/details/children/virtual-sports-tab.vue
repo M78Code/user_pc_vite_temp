@@ -12,7 +12,7 @@
     <!-- 灰色间隔线 -->
     <div class="menu-third"></div>
     <!-- 玩法集 -->
-    <div class="menu-s" ref="reset_scroll_dom">{{data_list}}
+    <div class="menu-s" ref="reset_scroll_dom">
       <div class="menu-item" v-for="(item, i) in data_list" :key="i" @click.self="selete_item(item['id'],$event)" :class="get_details_item == item['id']?'t_color':''">
         {{item.marketName}}
       </div>
