@@ -19,13 +19,15 @@
         </div>
       </div>
     </div>
-    <match-filter></match-filter>
+    <div class="sl-filter-content">
+      <match-filter></match-filter>
+    </div>
   </div>
 </template>
 <script setup>
 import { i18n_t, compute_css_obj } from "src/core/index.js";
 import { useRouter, useRoute } from "vue-router";
-import matchFilter from "src/base-h5/components/match-filter/index.vue"// 骨架屏
+import matchFilter from "src/base-h5/components/match-filter/index.vue"
 
 
 defineOptions({
@@ -113,6 +115,10 @@ defineProps({
         font-size: .14rem;
       }
     }
+  }
+
+  .sl-filter-content {
+    position: relative;
   }
 }
 </style>
