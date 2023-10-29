@@ -593,10 +593,6 @@ export default defineComponent({
 })
 </script>
 <style scoped lang="scss">
-  
-</style>
-
-<style scoped lang="scss">
   /****************** 横屏投注弹窗*******************/
   // @import "./styles/details-bet.scss";
 </style>

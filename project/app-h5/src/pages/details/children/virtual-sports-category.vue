@@ -5,6 +5,12 @@
 -->
 <template>
   <div class='category virtual-sport'>
+             <!-- 玩法集展示内容 -->
+    <details-tab  
+     :data_list="data_list" 
+     :scroller_scroll_top="scroller_scroll_top" 
+     :get_details_item="get_details_item"
+     :new_match_detail_ctr="new_match_detail_ctr" /> 
     <!-- loading效果 -->
     <loading v-if="is_loading" :top="route.name == 'virtual_sports' ? '76%' : '64%'"></loading>
       <!-- 详情玩法投注项有数据 -->
@@ -39,13 +45,13 @@
 <script>
 // #TODO vuex
 // import { mapGetters, mapMutations } from "vuex"
-import tournament_play_new from "src/base-h5/components/details/components/tournament-play/tournament-play-new.vue"
+import tournament_play_new from "src/base-h5/components/details/components/tournament-play/tournament-play-new-2.vue"
  // 引入接口封装文件
 import { api_common } from "src/api/index.js";
  // 引入投注逻辑mixin
  // #TODO mixins
 // import betting from "src/project/mixins/betting/betting.js";
-
+import detailsTab from "src/base-h5/components/details/components/details-tab-2.vue";
  // 引入加载中的组件
 import loading from "src/base-h5/components/common/loading.vue"
 import VirtualClass from "src/core/match-list-h5/virtual-sports/virtual-class"
@@ -69,7 +75,8 @@ export default defineComponent({
   },
   components: {
     'tournament-play-new': tournament_play_new,
-    loading
+    loading,
+    detailsTab
   },
   beforeRouteEnter(to, from, next) {
     next(() => {
@@ -138,6 +145,7 @@ export default defineComponent({
     //   'get_is_user_refreshing',
     //   'get_is_show_details_analyse',
     // ]),
+
     //详情页是否显示统计 
     const  get_is_show_details_analyse =ref(MatchDetailCalss.is_show_details_analyse) 
     const get_is_user_refreshing = ref(VirtualData.is_user_refreshing)
@@ -817,7 +825,17 @@ export default defineComponent({
         sessionStorage.removeItem(cach_key);
       });
     };
-
+    //设置玩法集
+    const data_list = ref(MatchDetailCalss.category_arr)
+    watch(
+      () => MatchDetailCalss.details_data_version.version,
+      (val) => {
+        if (val) {
+          data_list.value = MatchDetailCalss.category_arr
+        }
+      },
+      { deep: true }
+   );
     /**
      *@description: 销毁前:清除回调函数
      *@param {Undefined}
@@ -861,7 +879,8 @@ export default defineComponent({
       remove_detail_storage,
       route,
       match_info_version,
-      matchInfoCtr
+      matchInfoCtr,
+      data_list
     }
   }
 })
