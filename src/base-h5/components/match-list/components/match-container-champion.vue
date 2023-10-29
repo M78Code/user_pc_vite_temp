@@ -12,12 +12,10 @@
     </div>
     <div v-if="is_show_league(i)" class="league-container flex items-center justify-between hairline-border" @click="handle_league_fold">
       <div class="league-wrapper champion flex items-center">
-        <div @click.stop="handle_match_collect" class="collect-img">
-          <!-- 未收藏图标 -->
+        <!-- <div @click.stop="handle_match_collect" class="collect-img">
           <img v-if="!match_collect_state" :src="compute_img_url('icon-favorite')" alt="">
-          <!-- 收藏图标 -->
           <img v-if='match_collect_state' :src="compute_img_url('icon-favorite-s')">
-        </div>
+        </div> -->
         <div v-if="menu_type === 100 && GlobalAccessConfig.get_collectSwitch()"  class="favorite" :class="[{favorited:match_of_list.tf},theme]"
           @click.stop="handle_league_fold"></div>
             <div class="league-title-text row justify-between" :class="{'without-collect': menu_type !== 100 || (menu_type === 100 && !GlobalAccessConfig.get_collectSwitch())}" >
