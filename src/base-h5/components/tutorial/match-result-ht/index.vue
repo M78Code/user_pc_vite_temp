@@ -5,7 +5,10 @@
     <div :class="['ht-content', state.source === 'bigAndSmallBall' && 'ht-border']">
         <div class="ht-title">
             <div class="pattern"></div>
-            <div class="title">{{ title }}</div>
+            <div class="title">
+                {{ option.ballNumber }}
+                <span>{{ option.title }}</span>
+            </div>
             <div class="hint" v-if="state.source === 'bigAndSmallBall'">全场90分钟（含伤停补时）两队进球数的总和</div>
         </div>
 
@@ -13,68 +16,48 @@
             <div class="left">
                 <div class="teams">
                     <div>主队</div>
-                    <div v-if="state.source !== 'bigAndSmallBall'" class="score">0</div>
+                    <div v-if="state.source !== 'bigAndSmallBall'" class="score">{{ option.homeTeamScore }}</div>
                 </div>
                 <div class="teams-logo">队标位</div>
             </div>
             <div class="center">
                 <div class="vs">VS</div>
-                <div v-if="state.source !== 'bigAndSmallBall'" class="text-style">主客实力相当<br />均不让球即0（平手盘）</div>
+                <div v-if="state.source !== 'bigAndSmallBall'" class="text-style" v-html="option.condition"></div>
             </div>
             <div class="right">
                 <div class="teams-logo">队标位</div>
                 <div class="teams">
                     <div>客队</div>
-                    <div v-if="state.source !== 'bigAndSmallBall'" class="score">0</div>
+                    <div v-if="state.source !== 'bigAndSmallBall'" class="score">{{ option.awayTeamScore }}</div>
                 </div>
             </div>
         </div>
 
-        <div class="match-result">
-            <div class="left">
-                <div class="home-team teams">
-                    <div class="title">投注本队</div>
-                    <div class="result win">全赢</div>
+        <div class="match-result-list" v-for="(item, index) in option.matchList" :key="'matchResult' + index">
+            <div class="note" v-html="item.note"></div>
+            <div class="match-result">
+                <div class="left">
+                    <div class="home-team teams">
+                        <div class="title">投注本队</div>
+                        <div :class="['result', item.winIsWho === 'homeTeam' && 'win']">{{ item.homeTeam }}</div>
+                    </div>
+                    <div v-if="item.winIsWho === 'homeTeam'" class="win-icon">筹</div>
                 </div>
-                <div class="win-icon">筹</div>
-            </div>
-            <div class="center">
-                <div class="round-ball">
-                    <div class="title">赛果</div>
-                    <div class="score">1 - 0</div>
-                    <div class="text-style">反之亦然</div>
+                <div class="center">
+                    <div class="round-ball">
+                        <div class="title">赛果</div>
+                        <div class="score">{{ item.matchResult }}</div>
+                        <div v-if="item.matchResult === '0 - 0'" class="text-style">反之亦然</div>
+                    </div>
                 </div>
-            </div>
-            <div class="right">
-                <div class="away-team teams">
-                    <div class="title">投注客队</div>
-                    <div class="result">全输</div>
+                <div class="right">
+                    <div class="away-team teams">
+                        <div class="title">投注客队</div>
+                        <div :class="['result', item.winIsWho === 'awayTeam' && 'win']">{{ item.awayTeam }}</div>
+                    </div>
+                    <div v-if="item.winIsWho === 'awayTeam'" class="win-icon">筹</div>
+                    <!-- <div class="win-icon"></div> -->
                 </div>
-                <!-- <div class="win-icon"></div> -->
-            </div>
-        </div>
-
-        <div class="match-result">
-            <div class="left">
-                <div class="home-team teams">
-                    <div class="title">投注本队</div>
-                    <div class="result">退回本金</div>
-                </div>
-                <!-- <div class="win-icon">筹</div> -->
-            </div>
-            <div class="center">
-                <div class="round-ball">
-                    <div class="title">{{ state.source !== 'bigAndSmallBall' ? '赛果' : '进球之和' }}</div>
-                    <div class="score">{{ state.source !== 'bigAndSmallBall' ? '0 - 0' : '0' }}</div>
-                    <!-- <div class="text">反之亦然</div> -->
-                </div>
-            </div>
-            <div class="right">
-                <div class="away-team teams">
-                    <div class="title">投注客队</div>
-                    <div class="result">退回本金</div>
-                </div>
-                <!-- <div class="win-icon"></div> -->
             </div>
         </div>
 
@@ -96,7 +79,7 @@ const props = defineProps({
         type: String,
         default: 'handicap' // handicap：让球   bigAndSmallBall：大小球
     },
-    title: {
+    option: {
         type: String,
         default: '0'
     }
@@ -112,7 +95,7 @@ const state = reactive({
 
 .ht-content {
     padding-bottom: .2rem;
-
+    border-top: .01rem solid transparent;
     .ht-title {
         margin: .15rem .15rem 0 .3rem;
         padding-bottom: .15rem;
@@ -134,6 +117,10 @@ const state = reactive({
             font-size: .14rem;
             margin-right: .08rem;
             font-weight: 500;
+
+            span {
+                font-weight: bold;
+            }
         }
 
         .hint {
@@ -152,6 +139,7 @@ const state = reactive({
         .center,
         .right {
             flex: 1;
+            color: var(--q-gb-bg-c-3);
         }
 
         .left {
@@ -214,111 +202,125 @@ const state = reactive({
         }
     }
 
-    .match-result {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-bottom: .3rem;
-
-        .left,
-        .center,
-        .right {
-            // flex: 1;
-            display: flex;
-        }
-
-        .left,
-        .right {
-            width: 1.44rem;
-            height: .56rem;
-            display: flex;
-            position: relative;
-
-            .title {
-                font-size: .12rem;
-                color: var(--q-gb-bg-c-8);
-                text-align: center;
-            }
-
-            .result {
-                font-size: .12rem;
-                color: var(--q-gb-bg-c-4);
-                text-align: center;
-                margin-top: .03rem;
-            }
-
-            .win {
-                color: var(--q-gb-bd-c-8);
-            }
-        }
-
-        .win-icon {
-            position: absolute;
-            width: .2rem;
-            height: .2rem;
-            border-radius: .2rem;
-            background-color: var(--q-gb-t-c-1);
+    .match-result-list {
+        .note {
             display: flex;
             justify-content: center;
             align-items: center;
+            color: var(--q-gb-t-c-1);
+            padding: .08rem 0;
         }
 
-        .left {
+        .match-result {
+            display: flex;
             justify-content: center;
             align-items: center;
-            background-image: linear-gradient(90deg, #e7edfe 0%, #fff 100%);
-            border-top-left-radius: .56rem;
-            border-bottom-left-radius: .56rem;
-            margin-right: -.24rem;
+            margin-bottom: .3rem;
 
-            .win-icon {
-                left: .16rem;
-            }
-        }
-
-        .center {
-            justify-content: center;
-            z-index: 1;
-
-            .round-ball {
+            .left,
+            .center,
+            .right {
+                // flex: 1;
                 display: flex;
-                width: .66rem;
-                height: .66rem;
-                border-radius: .66rem;
-                flex-direction: column;
-                background-image: linear-gradient(270deg, #f3f6fe 0%, #f6f8fd 49.27%, #f4f6fb 100%);
-                justify-content: center;
-                align-items: center;
+            }
 
-                div {
-                    text-align: center;
-                }
+            .left,
+            .right {
+                width: 1.44rem;
+                height: .56rem;
+                display: flex;
+                position: relative;
 
                 .title {
                     font-size: .12rem;
+                    color: var(--q-gb-bg-c-8);
+                    text-align: center;
+                }
+
+                .result {
+                    font-size: .12rem;
                     color: var(--q-gb-bg-c-4);
+                    text-align: center;
+                    margin-top: .03rem;
                 }
 
-                .score {
-                    font-size: .16rem;
-                    color: var(--q-gb-t-c-1);
+                .win {
+                    color: var(--q-gb-bd-c-8);
                 }
+            }
 
-                .text-style {
-                    font-size: .1rem;
-                    color: var(--q-gb-t-c-4);
+            .win-icon {
+                position: absolute;
+                width: .2rem;
+                height: .2rem;
+                border-radius: .2rem;
+                background-color: var(--q-gb-t-c-1);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .left {
+                justify-content: center;
+                align-items: center;
+                background-image: linear-gradient(90deg, #e7edfe 0%, #fff 100%);
+                border-top-left-radius: .56rem;
+                border-bottom-left-radius: .56rem;
+                margin-right: -.24rem;
+
+                .win-icon {
+                    left: .16rem;
+                }
+            }
+
+            .center {
+                justify-content: center;
+                z-index: 1;
+
+                .round-ball {
+                    display: flex;
+                    width: .66rem;
+                    height: .66rem;
+                    border-radius: .66rem;
+                    flex-direction: column;
+                    background-image: linear-gradient(270deg, #f3f6fe 0%, #f6f8fd 49.27%, #f4f6fb 100%);
+                    justify-content: center;
+                    align-items: center;
+
+                    div {
+                        text-align: center;
+                    }
+
+                    .title {
+                        font-size: .12rem;
+                        color: var(--q-gb-bg-c-4);
+                    }
+
+                    .score {
+                        font-size: .16rem;
+                        color: var(--q-gb-t-c-1);
+                    }
+
+                    .text-style {
+                        font-size: .1rem;
+                        color: var(--q-gb-t-c-4);
+                    }
+                }
+            }
+
+            .right {
+                justify-content: center;
+                align-items: center;
+                background-image: linear-gradient(120deg, #fff 0%, #e7edfe 100%);
+                border-top-right-radius: .56rem;
+                border-bottom-right-radius: .56rem;
+                margin-left: -24px;
+                .win-icon {
+                    right: .16rem;
                 }
             }
         }
-
-        .right {
-            justify-content: center;
-            align-items: center;
-            background-image: linear-gradient(120deg, #fff 0%, #e7edfe 100%);
-            border-top-right-radius: .56rem;
-            border-bottom-right-radius: .56rem;
-            margin-left: -24px;
-        }
     }
+
 }
 </style>
