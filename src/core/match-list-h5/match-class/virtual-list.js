@@ -6,6 +6,7 @@
 
 import { ref } from 'vue'
 import MatchFold from 'src/core/match-fold'
+import { compute_style_template_by_match_height } from '../match-card/module/compute-style-template.js'
 
 class VirtualList {
   constructor () {
@@ -71,6 +72,21 @@ class VirtualList {
    */
   get_match_height_key (mid) {
     return `mid_height_${mid}`
+  }
+
+  // 计算 容器 总高度
+  compute_container_total_height () {
+    this.match_height_map_list = MatchMeta.match_mids.map((mid, i) => {
+      return compute_style_template_by_match_height(match);
+    });
+    // 计算每个赛事容器的高度，累加 = 总高度
+    let total_height = this.match_height_map_list.reduce((total, map_obj) => {
+      let p_total = 0;
+      if (typeof total == "number") p_total = total;
+      return p_total + this.get_match_dom_height_by_matchdata(map_obj);
+    }, 0);
+    //页面容器 总高度
+    this.match_list_wrapper_height = total_height;
   }
 }
 
