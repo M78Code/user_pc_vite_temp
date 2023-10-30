@@ -93,13 +93,13 @@ class MenuData {
     // 今日 加入 收藏/vr体育/电竞 滚球加入全部
     
     if(mid == 1){
-      menu_lv_mi_lsit.unshift({mi:'0',btn:1, ct:"2",title:"全部"})
-      menu_lv_mi_lsit.unshift({mi:'5000',btn:1,ct:"2",title:"收藏"})
+      menu_lv_mi_lsit.unshift({mi:0,btn:1, ct:"2",title:"全部"})
+      menu_lv_mi_lsit.unshift({mi:5000,btn:1,ct:"2",title:"收藏"})
     }
     if(mid == 2){
-      menu_lv_mi_lsit.unshift({mi:'5000',btn:1,ct:"2",title:"收藏"})
-      menu_lv_mi_lsit.splice(3,0,{mi:'300',btn:1,ct:"2",title:"VR体育"})
-      menu_lv_mi_lsit.splice(4,0,{mi:'2000',btn:1,ct:"2",title:"电竞"})
+      menu_lv_mi_lsit.unshift({mi:5000,btn:1,ct:"2",title:"收藏"})
+      menu_lv_mi_lsit.splice(3,0,{mi:300,btn:1,ct:"2",title:"VR体育"})
+      menu_lv_mi_lsit.splice(4,0,{mi:2000,btn:1,ct:"2",title:"电竞"})
     }
     this.menu_lv_mi_lsit = menu_lv_mi_lsit
     return menu_lv_mi_lsit
@@ -244,7 +244,22 @@ class MenuData {
    * */
   get_euid(arg_mi) {
     let mi = arg_mi || this.current_lv_2_menu_mi;
-    if (!mi) return "";
+    // 全部
+    if (mi == 0) {
+      let mid_list = []
+      let euid = ''
+      // 获取滚球全部的 菜单id
+      this.menu_lv_mi_lsit.forEach(item=>{
+        if( ![0,5000].includes(item.mi)){
+          mid_list.push(item.mi)
+        }
+      })
+      // 根据 菜单id 获取euid
+      mid_list.forEach(item=>{
+        euid += BaseData.mi_euid_map_res[item].h + ','
+      })
+      return euid
+    }
     // 赛果
     if (this.is_results()) return mi;
     if (BaseData.mi_euid_map_res && BaseData.mi_euid_map_res[mi]) {
