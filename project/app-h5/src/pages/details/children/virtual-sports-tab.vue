@@ -5,13 +5,8 @@
 -->
 <template>
   <div ref='details_tab' class="row vir-details-tab" v-cloak>
-    <!-- 玩法集 -->
-    <!-- <div class="menu-s" ref="reset_scroll_dom">
-      <div class="menu-item" v-for="(item, i) in new_data_list" :key="i" @click.self="selete_item(item['id'],$event)" :class="get_details_item == item['id']?'t_color':''">
-        {{item.marketName}}
-      </div>
-    </div> -->
-      <q-tabs
+
+      <!-- <q-tabs
         v-model="viewTab"
         inline-label
         narrow-indicator
@@ -22,7 +17,32 @@
       <q-tab  :ripple="false" label="历史战绩" name="lszj" />
       <q-tab  name="bet" :ripple="false" label="投注"/>
       <q-tab  name="rank" :ripple="false" label="排行榜"/>      
-    </q-tabs>
+    </q-tabs> -->
+     <!-- 玩法集 -->
+    <!-- <div class="menu-s" ref="reset_scroll_dom">
+      <div class="menu-item" v-for="(item, i) in data_list" :key="i" @click.self="selete_item(item['id'],$event)" :class="get_details_item == item['id']?'t_color':''">
+        {{item.marketName}}
+      </div>
+    </div> -->
+
+
+
+    <!-- 收起的箭头 -->
+    <div class="fat-btn" @click="change_btn()">
+      <div class="tab-btn" :class="{collapsed:get_fewer != 2}"></div>
+    </div>
+    <!-- 灰色间隔线 -->
+    <div class="menu-third"></div>
+    <!-- 玩法集 -->
+    <div class="menu-s" ref="reset_scroll_dom">
+      <div class="menu-item" v-for="(item, i) in data_list" :key="i" @click.self="selete_item(item['id'],$event)" :class="get_details_item == item['id']?'t_color':''">
+        {{item.marketName}}
+      </div>
+    </div>
+    <!-- 分析icon(详情页面的时候显示分析,在其他页面不显示分析按钮) -->
+    <div v-if="anlyse_show" class="icon-style" @click="analyse_btn">
+      <div :class="[analyse ? 'analyse-icon':'analyse-close-icon']"></div>
+    </div>
   </div>
 </template>
 
@@ -36,6 +56,7 @@ import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import { MatchDetailCalss,MenuData,MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance } from "src/core";
 import { defineComponent,ref,onMounted,watch,onUnmounted,computed } from "vue";
 import { details_main } from "../details";
+import VirtualData from 'src/core/match-list-h5/virtual-sports/virtual-data.js'
 export default defineComponent({
   props:[
     "virtual_match_list",
@@ -57,7 +78,7 @@ export default defineComponent({
     // 渲染的数据
     const data_list = ref([])
     //获取二级菜单ID
-    const sub_menu_type = ref(MenuData.get_current_sub_menuid())
+    const sub_menu_type = ref(VirtualData.current_sub_menu)
    // 正在跳转详情的赛事  
     const  get_details_item =ref( MatchDetailCalss.details_item)
    // 从数据仓库获取赛事详情 
@@ -81,7 +102,7 @@ export default defineComponent({
       *
     */
     watch(()=>MenuData.update_time,()=>{
-      sub_menu_type.value =MenuData.get_current_sub_menuid()
+      sub_menu_type.value =current_sub_menu.current_sub_menu
     })
     onMounted(()=>{
      // 延时器
@@ -185,14 +206,14 @@ export default defineComponent({
     const play_list=()=>{
       // 1.在足球页进入详情需要调用玩法集合接口
       // 2.在赛马页需要调用玩法集合接口
-      if(![1001,1004].includes(sub_menu_type.value) || route.name == 'virtual_sports_details'){
+      if(![1001,1004].includes(sub_menu_type.value.menuId) || route.name == 'virtual_sports_details'){
         let new_mid = ''
         if(props.batch){
           new_mid = props.batch
         }else{
           new_mid = route.query.mid
         }
-        let params = { sportId: sub_menu_type.value,mid: new_mid};
+        let params = { sportId: sub_menu_type.value.menuId,mid: new_mid};
         api_common.get_category_list(params).then(res =>{
           if(res.code == 200 && res.data){
             data_list.value = lodash.get(res, "data");
@@ -310,4 +331,126 @@ export default defineComponent({
     border-radius: 1.5px;
     z-index: 1;
   } 
+
+  .vir-details-tab {
+  height: 0.4rem;
+  margin-bottom: 0.04rem;
+}
+
+.menu-s {
+  max-width: 2.85rem;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: auto;
+  white-space: nowrap;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  scrollbar-width: none; /* firefox */
+  -ms-overflow-style: none; /* IE 10+ */
+}
+
+.menu-item {
+  font-size: 0.14rem;
+  letter-spacing: 0;
+  text-align: center;
+  line-height: 0.4rem;
+  padding: 0 0.12rem;
+  display: inline-block;
+}
+
+/*************** 选中的玩法集 *************** -S*/
+.t_color {
+  position: relative;
+  font-size: 0.14rem;
+  letter-spacing: 0;
+  text-align: center;
+  font-weight: bold;
+
+  &:after {
+    content: ' ';
+    display: block;
+    position: absolute;
+    width: 0.18rem;
+    height: 0.03rem;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 0;
+    border-radius: 0.08rem;
+  }
+}
+
+
+/*************** 选中的玩法集 *************** -E*/
+.fat-btn {
+  width: 0.4rem;
+  line-height: 0.42rem;
+  text-align: center;
+}
+
+.tab-btn {
+  width: 0.12rem;
+  height: 0.12rem;
+  display: inline-block;
+  background-image: url($SCSSPROJECTPATH + "/image/svg/tab_up_btn.svg");
+  background-size: 100% 100%;
+  transform: rotateZ(180deg);
+  // @include webkit(transition, transform 0.3s);
+
+  // &.collapsed {
+  //   transform: rotateZ(0);
+  //   @include webkit(transition, transform 0.3s);
+  // }
+}
+
+.menu-third {
+  padding-right: 0.1rem;
+  height: 0.4rem;
+  line-height: 0.4rem;
+  position: relative;
+  float: left;
+  text-align: center;
+
+  &:after {
+    content: ' ';
+    display: block;
+    width: 1px;
+    height: 0.21rem;
+    position: absolute;
+    top: 0.1rem;
+  }
+}
+
+.tab-fixed {
+  position: fixed;
+  top: 2.04rem;
+  z-index: 90;
+}
+
+.icon-style {
+  position: absolute;
+  right: 0;
+  width: 0.39rem;
+  height: 0.39rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: -0.05rem 0 0.1rem -0.01rem rgba(0, 0, 0, 0.08); 
+}
+
+.analyse-icon {
+  width: 0.2rem;
+  height: 0.2rem;
+  background-image:url($SCSSPROJECTPATH + "/image/common/analyse_icon.svg");//todo 后续上传到服务器
+  background-size: 100% 100%;
+}
+
+.analyse-close-icon {
+  width: 0.2rem;
+  height: 0.2rem;
+  background-image:url($SCSSPROJECTPATH + "/image/svg/virtual-sports/close_icon.svg");
+  background-size: 100% 100%;
+}
 </style>
