@@ -2,7 +2,7 @@
  * @Author: rise
  * @Date: 2023-10-24 19:10:02
  * @LastEditors: rise
- * @LastEditTime: 2023-10-27 18:39:33
+ * @LastEditTime: 2023-10-30 14:54:18
  * @Description:  
  */
 /**
@@ -15,7 +15,7 @@ export const dateWeekFormat = (day) => {
     Date.prototype.getMonthDay = function () {
         let dateVal = (this.getMonth() + 1) + '/' + this.getDate();
         return {
-          val:dateVal,
+          val:new Date(this.setHours(0, 0, 0, 0)).getTime(),
           name:dateVal
         };
     }

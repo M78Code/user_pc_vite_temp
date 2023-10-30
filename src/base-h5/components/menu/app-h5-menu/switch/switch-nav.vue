@@ -2,7 +2,7 @@
  * @Author: rise
  * @Date: 2023-10-22 17:03:22
  * @LastEditors: rise
- * @LastEditTime: 2023-10-27 22:14:22
+ * @LastEditTime: 2023-10-30 15:19:54
  * @Description:  
 -->
 <template>
@@ -78,25 +78,28 @@
         height: 0.24rem;
         position: relative;
         font-weight: 500;
+        font-family: 'PingFang SC';
         ul{
             width: 100%;
             height: 100%;
             border-radius: 25px;    
-            // background: var(--q-gb-bg-c-10);
-            background: #f8f9fa;
+            background: var(--q-gb-bg-c-18);
             display: flex;
             font-size: 12px;
+            font-weight: 500;
             li{
                 line-height:  0.24rem;
                 flex: 1;
                 text-align: center;
-                color: var(--q-gb-bd-c-4);
+                // color: var(--q-gb-bd-c-4);
                 margin: 0.02rem;
+                color: #AFB3C8;
                 &.active{
                     border-radius: 25px;
-                    background-image: linear-gradient(#ffffff, #f6fafe);
                     // background:var(--q-gb-bg-c-11); 
                     color: var(--q-gb-bd-c-2);
+                    background: linear-gradient(180deg, #FFFFFF 32.81%, #EEF1F9 73.63%, #F9FDFF 100%);
+                    box-shadow: 0px 2px 4px rgba(121, 129, 164, 0.2);
                 }
             }
         }

@@ -29,7 +29,7 @@
             </div>
         </div>
         <div v-if="[3,6].includes(MenuData.current_lv_1_menu_mi.value)">
-            <DateTab :active_on="MenuData.date_time" />
+            <DateTab  :dataList="dataList[MenuData.current_lv_1_menu_mi.value]"  />
         </div>
     </div>
 </template>
@@ -43,7 +43,7 @@ import { get_sport_menu } from "./top-list";
 import { DateTab } from 'src/base-h5/components/menu/app-h5-menu/index';
 import { dateTabList } from "src/base-h5/components/menu/app-h5-menu/utils";
 
-const dataList = dateTabList(new Date());
+// const dataList = dateTabList(new Date());
 
 const router = useRouter();
 
@@ -70,6 +70,10 @@ const menu_list = reactive([
         code:"champion"
     },
 ])
+const dataList = reactive({
+    3:dateTabList(new Date()),
+    6:dateTabList(new Date(new Date().getTime()+24*60*60*1000),{name:"今日",val:new Date()})
+});
 // 用户余额
 const balance = ref(UserCtr.balance)
 /**
