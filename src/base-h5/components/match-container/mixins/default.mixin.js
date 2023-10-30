@@ -1,5 +1,5 @@
 
-import { ref, computed, onMounted, onUnmounted, watch, nextTick } from 'vue'
+import { ref, computed,    watch, nextTick } from 'vue'
 import lodash from 'lodash'
 import store from "src/store-redux/index.js";
 import { useRouter, useRoute } from 'vue-router'
@@ -90,22 +90,7 @@ const get_goto_detail_matchid = ref(store_state.get_goto_detail_matchid)
 const get_goto_detail_match_info = ref(store_state.get_goto_detail_match_info)
 const get_not_found_target_dom_count = ref(store_state.get_not_found_target_dom_count)
 const get_standard_odd_status = ref(store_state.get_standard_odd_status)
-onMounted(() => {
-  is_first_coming.value = true;
-  //赛事切换时钟
-  match_change_timer.value = null;
-  //防止赛事列表初始显示时大面积红升绿降
-  timer_super11.value = setTimeout(() => {
-    is_first_coming.value = false;
-  },1000);
-  clear_timer();
-  run_new_init_timer();
-  score_value();
-  media_button_button_type_check()
-  emitters.value = {
-    emitter_1: useMittOn(MITT_TYPES.EMIT_SET_SCROLL_TOP, set_scroll_top).off,
-  }
-})
+ 
 
 // 当前显示的赛事数据
 const match = computed(() => {
@@ -939,10 +924,58 @@ const unsubscribe = store.subscribe(() => {
   get_standard_odd_status.value = new_state.get_standard_odd_status
 })
 
-onUnmounted(() => {
-  unsubscribe()
-  Object.values(emitters.value).map((x) => x())
-  clear_timer();
-})
+ 
 
 
+
+
+export default {
+  setup(props) {
+match,
+prev_match,
+is_replay_switch,
+animationUrl_icon,
+muUrl_icon,
+get_sport_show,
+is_show_video_icon,
+show_newer_edition,
+match_of_list_ascertain,
+time_change,
+league_collect_state,
+match_collect_state,
+league_collapsed,
+collapsed,
+eports_scoring,
+  },
+  data() {
+    return {
+      // key: value
+    }
+  },
+  computed: {
+    
+  },
+ 
+  mounted () {
+    is_first_coming.value = true;
+    //赛事切换时钟
+    match_change_timer.value = null;
+    //防止赛事列表初始显示时大面积红升绿降
+    timer_super11.value = setTimeout(() => {
+      is_first_coming.value = false;
+    },1000);
+    clear_timer();
+    run_new_init_timer();
+    score_value();
+    media_button_button_type_check()
+    emitters.value = {
+      emitter_1: useMittOn(MITT_TYPES.EMIT_SET_SCROLL_TOP, set_scroll_top).off,
+    }
+  },
+
+  unmounted() {
+    unsubscribe()
+    Object.values(emitters.value).map((x) => x())
+    clear_timer(); 
+  },
+}

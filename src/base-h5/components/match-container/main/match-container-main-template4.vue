@@ -1,5 +1,5 @@
 <!--
- * @Description: 冠军赛事组件，用于赛事列表展示赛事信息
+ * @Description: app-h5  冠军   冠军赛事组件，用于赛事列表展示赛事信息
 -->
 <template>
   <div class="champion-wrap-2" v-if="is_show">

@@ -1,5 +1,6 @@
 <!--
- * @Description: 赛事组件，用于赛事列表展示赛事信息
+ * @Description:   yazhou-h5       新手版 赛事组件，用于赛事列表展示赛事信息
+           
 -->
 <template>
     <div class="match-container" :style="{ marginTop: is_hot ? '0' : '' }" :class='{
