@@ -26,7 +26,6 @@ class VirtualList {
     // 赛事与dom高度的映射
     this.mid_top_map = {};
     this.mid_dom_height_dict = {};
-    this.prev_scroll = 0
   }
   /**
    * @description 设置 赛事 mid 虚拟高度 映射
@@ -36,29 +35,33 @@ class VirtualList {
    *  1: 初始化时，赋值虚拟高度即 默认高度 40 
    *  2：赛事折叠/展开/次要玩法展开/次要玩法收起 均需更新对应赛事 高度（即真实高度）
    */
-  set_match_mid_map_base_info (mid, info = { height: 40, top: 0, bottom: 0 }) {
-    const key = this.get_match_height_key(mid)
-    const { height, top, bottom } = info
+  set_match_mid_map_base_info (match, config = { top: 0, show_league_height: 0, playing_title_height: 0, main_handicap_height: 0, }) {
+    const key = this.get_match_height_key(match.mid)
+    const { top, playing_title_height, show_league_height, main_handicap_height } = config
     Object.assign(this.match_mid_map_height.value, {
       [key]: {
-        top: top,
-        bottom: bottom,
-        height: height,
+        top,
+        show_league_height,
+        playing_title_height,
+        main_handicap_height
       }
     })
     // console.log(this.match_mid_map_height.value)
   }
-  /**
-   * @description 校正元素位置大小信息
-   */
-    check_match_base_info () {
-      const nodes = document.querySelectorAll('.scroll-i-con > .s-w-item')
-      nodes.forEach(node => {
-        const mid = lodash.get(node, 'dataset.mid')
-        const match_rect = node.getBoundingClientRect()
-        this.set_match_mid_map_base_info(mid, match_rect)
-      })
-    }
+
+  get_match_total_height (match) {
+    const { is_show_league, mid } = match
+    const key = this.get_match_height_key(mid)
+    const fold_key = MatchFold.get_match_fold_key(match)
+    const fold_info = MatchFold.match_mid_fold_obj.value[fold_key]
+    const { show_league_height = 0, playing_title_height = 0, main_handicap_height = 0 } = this.match_mid_map_height.value[key]
+    let total = 0
+    // 联赛标题高度 
+    if (is_show_league) total = show_league_height + playing_title_height
+    // 赛事卡片高度
+    if (!fold_info.show_card) total += main_handicap_height
+    return total
+  }
 
   /**
    * @description 计算渲染的数据
@@ -66,14 +69,11 @@ class VirtualList {
    * @returns 
    */
   compute_page_render_list (scrollTop = 0) {
-    this.check_match_base_info()
     // 可视区高度
-    const view_height = window.innerHeight - 48 - 44 - 59 - 13
-    let result = 0
     let end_index = 0
-    let scroll_height = 1
     let start_index = Math.ceil(scrollTop / 31)
-    const arr = []
+    let accrual_height = 0
+    const match_datas = []
     // 折叠对象
     const fold_data = MatchFold.match_mid_fold_obj.value
     // 高度映射 对象
@@ -83,31 +83,22 @@ class VirtualList {
       const fold_key = MatchFold.get_match_fold_key(match)
       const fold_info = fold_data[fold_key]
       const virtual_key = this.get_match_height_key(mid)
-      const height = lodash.get(source_data[virtual_key], 'height', 0)
-      
-      if (scrollTop > 0) scroll_height += height
-      if (scroll_height >= scrollTop) {
-        if (!fold_info.show_card) {
-          if (is_show_league) {
-            result += +height
-            arr.push(match)
-          }
-        } else {
-          result += +height
-          arr.push(match)
-        }
-        if (result > view_height + 100) {
-          end_index = index
-          this.end_index = index
-          // 退出循环
-          return true
-        }
+      // 赛事高度
+      const total = this.get_match_total_height(match)
+      // 该赛事是否显示
+      if (is_show_league || !fold_info.show_card) {
+        // 赛事偏移量
+        accrual_height += total
+        Object.assign(source_data, {
+          [virtual_key]: { top: accrual_height }
+        })
+        match_datas.push(match)
       }
-      
+      // 退出循环
+      if (match_datas.length >= 18) return true
     })
-    console.log(start_index, end_index)
     return { 
-      arr, 
+      arr: match_datas, 
       start_index, 
       end_index 
     }
@@ -154,14 +145,10 @@ class VirtualList {
    *  调用  vuex 里面 set_match_top_map_dict 设置容器 定位 top 值 表征对象
    */
    run_process_when_need_recompute_container_list_step_three_recompute_next_list_container_top_obj( scroll_top ) {
+    const menu_lv_v1 = MenuData.current_lv_1_menu_mi.value
+    const menu_lv_v2 = MenuData.current_lv_2_menu_mi
+    
     this.compute_container_total_height()
-     // 菜单 ID 对应的 元数据赛事 mids
-     const menu_lv_v1 = MenuData.current_lv_1_menu_mi.value
-     const menu_lv_v2 = MenuData.current_lv_2_menu_mi
-    // 冠军  或者  电竞冠军 或者   赛果虚拟体育  ，赋值全部数据， 不走下边计算逻辑
-    if ([100, 300].includes(menu_lv_v1) || (menu_lv_v1 == 28 && [1001, 1002, 1004, 1011, 1010, 1009, 100].includes(menu_lv_v2)) ) {
-      // return MatchDataBaseH5.set_list(MatchMeta.complete_matchs, false);
-    }
 
     let page_count = 18;
     // 新手版
@@ -176,6 +163,7 @@ class VirtualList {
         page_count = 20;
       }
     }
+    this.mid_top_map = {}
     let match = null
     let show_card = false
     let is_show_league = false
@@ -273,7 +261,6 @@ class VirtualList {
       // H5 列表页显示的 可视区域的  数据源
       // MatchDataBaseH5.set_list(current_screen_match)
     }
-    console.log(current_screen_match)
     return { arr: current_screen_match }
   }
 }

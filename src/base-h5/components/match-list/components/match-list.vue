@@ -17,20 +17,20 @@
           <div class="data_mid" v-else> <!--此data-mid用于分频订阅赛事,请勿修改-->
             <!--冠军玩法-->
             <template v-if="is_kemp">
-              <match-container-champion-app
+              <match-container-champion
                 v-if="PROJECT_NAME === 'yazhou-h5'"
                 :i="index" 
                 :match_of_list="match_item" 
                 :menu_type="menu_type"
                 @toggle_collect_league="toggle_collect">
-              </match-container-champion-app>
-              <match-container-champion
+              </match-container-champion>
+              <match-container-champion-app
                 v-else
                 :i="index" 
                 :match_of_list="match_item" 
                 :menu_type="menu_type"
                 @toggle_collect_league="toggle_collect">
-              </match-container-champion>
+              </match-container-champion-app>
             </template>
             <!--yazhou-h5 真实体育玩法 -->
             <template v-else>

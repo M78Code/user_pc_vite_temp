@@ -223,12 +223,15 @@ class MatchMeta {
     // 初始化赛事折叠
     MatchFold.set_match_mid_fold_obj(match)
 
-    // 虚拟列表计算
-    VirtualList.set_match_mid_map_base_info(mid)
-
     // 初始化球种折叠状态
     if (!(`csid_${csid}` in MatchFold.ball_seed_csid_fold_obj.value)) MatchFold.set_ball_seed_csid_fold_obj(csid)
 
+    // 获取模板默认高度
+    const template_config = this.get_match_default_template_config(csid)
+    // 虚拟列表计算
+    VirtualList.set_match_mid_map_base_info(match, template_config.match_template_config)
+
+ 
     // 赛事收藏处理
     MatchCollect.handle_collect_state(match)
     // // 初始化赛事收藏
@@ -415,7 +418,7 @@ class MatchMeta {
     this.complete_mids = [...new Set(mids)]
     // 过滤赛事
     this.complete_matchs = match_list.filter((t) => t.mid)
-    console.log('this.complete_matchs', this.complete_matchs)
+    // console.log('this.complete_matchs', this.complete_matchs)
     // 计算所需渲染数据
     this.compute_page_render_list()
 
@@ -428,23 +431,29 @@ class MatchMeta {
    * @description 计算所需渲染数据
    */
   compute_page_render_list (scrollTop = 0, type = 1) {
-    if (scrollTop === 0 || (this.prev_scroll === 0 &&  Math.abs(scrollTop) >= 500) || Math.abs(scrollTop - this.prev_scroll) >= 500) {
-      this.prev_scroll = scrollTop
-    } else {
-      return
-    }
     // 计算当前页所需渲染数据
+    const scroll_top = scrollTop === 0 ? this.prev_scroll : scrollTop
+    this.prev_scroll = scroll_top
+
+    // 菜单 ID 对应的 元数据赛事 mids
+    const menu_lv_v1 = MenuData.current_lv_1_menu_mi.value
+    const menu_lv_v2 = MenuData.current_lv_2_menu_mi
+    // 冠军  或者  电竞冠军 或者   赛果虚拟体育  ，赋值全部数据， 不走下边计算逻辑
+    console.log(menu_lv_v1)
+    if ([400, 300].includes(menu_lv_v1) || (menu_lv_v1 == 28 && [1001, 1002, 1004, 1011, 1010, 1009, 100].includes(menu_lv_v2)) ) {
+      console.log()
+      return
+     }
     // const { arr, start_index, end_index } = VirtualList.compute_page_render_list(scrollTop)
-    const { arr } = VirtualList.run_process_when_need_recompute_container_list_step_three_recompute_next_list_container_top_obj(scrollTop)
+    const { arr } = VirtualList.run_process_when_need_recompute_container_list_step_three_recompute_next_list_container_top_obj(scroll_top)
     // const target_index = end_index > 10 ? end_index + 1 : this.complete_mids.length
     // const target_list = this.complete_matchs.slice(start_index, target_index)
     // this.match_mids = this.complete_mids.slice(start_index, target_index)
     this.match_mids = arr.map(t => {
       return t.mid
     })
-    // 向仓库提交数据
     if (type === 2) return this.handle_update_match_info(arr)
-    this.handle_submit_warehouse(arr)
+    if (type === 1) return this.handle_submit_warehouse(arr)
   }
 
   /**
@@ -474,20 +483,22 @@ class MatchMeta {
     if (+code !== 200) return
     const list = MatchPage.get_obj(data)
     // 设置仓库渲染数据
-    this.handle_update_match_info(list)
+    this.handle_update_match_info(list, 'cover')
   }
 
   /**
    * @description 更新对应赛事
    * @param { list } 赛事数据 
+   * @param { type } 接口请求时， 以接口数据为准， 反之已上一次的数据为准
    */
-  handle_update_match_info(list) {
+  handle_update_match_info(list, type) {
     // 合并前后两次赛事数据
     list = lodash.map(list, t => {
       const match = MatchDataBaseH5.get_quick_mid_obj(t.mid)
       // 覆写次要玩法折叠参数
       // MatchFold.set_match_mid_fold_obj()
-      return Object.assign({}, match, t)
+      const target = type === 'cover' ? Object.assign({}, match, t) : Object.assign({}, t, match)
+      return target
     })
     // 设置仓库渲染数据
     MatchDataBaseH5.set_list(list)
