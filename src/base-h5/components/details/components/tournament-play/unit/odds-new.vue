@@ -136,9 +136,9 @@ export default defineComponent({
 <style lang="scss" scoped>
 .odds_new {
   width: 100%;
-  color: #414655; // var(--q-detials-color-6);
+  color: #303442; // var(--q-detials-color-6);
   font-size: 0.14rem; //todo app-h5
-
+  font-weight: 700;
   letter-spacing: 0;
 }
 .odds-new-ky {
