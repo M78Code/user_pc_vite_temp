@@ -25,7 +25,7 @@
             </template>
           </template>
           <!-- 非置顶 -->
-          <template v-for="(item,keyscorll) in match_list_normal">
+          <template v-for="(item,keyscorll) in match_list_normal">{{item.hpid}}
             <template v-if="item.hton==0">
               <template v-if="match_list_new.length == 0">
                 <tournament-play-new @change_show="change_show" :key="item.topKey + item.hpid" :list="matchInfoCtr?.list" :item_data="item" :scorllIndex="keyscorll"></tournament-play-new>
