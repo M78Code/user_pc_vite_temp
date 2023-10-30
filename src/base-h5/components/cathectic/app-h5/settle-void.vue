@@ -7,7 +7,7 @@
   <div style="display: none;">{{ BetRecordClass.bet_record_version }}</div>
   <div class="settle-void" @touchmove.prevent>
     <!-- <div class="img-s" :style="compute_css_obj('no-record')"></div> -->
-    <img src="/public/app-h5/image/bet/no-data.png">
+    <img :src="compute_local_project_file_path('/image/bet/no-data.png')">
     <template>
       <p v-if="BetRecordClass.selected === 0">您暂无未结算数据</p>
       <p v-else-if="BetRecordClass.selected == 1">您暂无预约中数据</p>
@@ -19,6 +19,7 @@
 
 <script setup>
 import BetRecordClass from "src/core/bet-record/bet-record.js";
+import { utils,compute_css_obj, compute_local_project_file_path } from 'src/core/index.js'
 </script>
 
 <style lang="scss" scoped>

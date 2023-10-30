@@ -5,7 +5,7 @@
 -->
 <template>
   <div class='category virtual-sport'>
-             <!-- 玩法集展示内容 -->
+    <!-- 玩法集展示内容 -->
     <details-tab  
      :data_list="data_list" 
      :scroller_scroll_top="scroller_scroll_top" 
@@ -128,6 +128,8 @@ export default defineComponent({
       pre_params_mid:'',
     
       created_init_event:false,
+      // 玩法集是否已切换过
+      match_play_item_changed: false,
     });
     // #TODO VUEX
     // computed:{
@@ -146,12 +148,12 @@ export default defineComponent({
     //   'get_is_user_refreshing',
     //   'get_is_show_details_analyse',
     // ]),
-
+    const get_menu_type = VirtualData.current_sub_menu
     //详情页是否显示统计 
     const  get_is_show_details_analyse =ref(MatchDetailCalss.is_show_details_analyse) 
     const get_is_user_refreshing = ref(VirtualData.is_user_refreshing)
     let get_video_timer = null
-     // 正在跳转详情的赛事  
+     // 正在跳转详情的赛事 玩法集id 
      const  get_details_item =ref(MatchDetailCalss.details_item)
      //获取赛事ID
      const  get_current_mid =ref(route.params.mid)
@@ -163,10 +165,11 @@ export default defineComponent({
 
      const get_uid =  ref(UserCtr.get_uid())
     // 置顶列表
-    const match_list_new = computed(() => {
-      // TODO: 还未调试待修改
-      return  lodash.get(matchInfoCtr.value, `list_to_obj.mid_obj[${route.query.mid}_].odds_info`);
-    });
+    // const match_list_new = computed(() => {
+    //   // TODO: 还未调试待修改
+    //   return  lodash.get(matchInfoCtr.value, `list_to_obj.mid_obj[${route.query.mid}_].odds_info`);
+    // });
+    const match_list_new = ref([])
     // 非置顶列表
     const match_list_normal = ref(lodash.get(matchInfoCtr.value, `list_to_obj.mid_obj[${route.query.mid}_].odds_info`))
     console.log(matchInfoCtr.value,'matchInfoCtr.value',match_list_normal);
@@ -640,7 +643,7 @@ export default defineComponent({
       let mid
       if(route.name == "virtual_sports"){
         mid = get_current_mid.value
-      }else if(route.name == "virtual_sports_details"){
+      }else if(route.name == "virtual_sports_details" ||  route.name == "virtual_sports_category"){
         mid = route.query.mid
       }
 
@@ -833,6 +836,7 @@ export default defineComponent({
       (val) => {
         if (val) {
           data_list.value = MatchDetailCalss.category_arr
+          get_details_item.value = MatchDetailCalss.details_item
         }
       },
       { deep: true }

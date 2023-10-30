@@ -9,7 +9,7 @@
         <div class="type-bg" :class="'bg'+lodash.get(sub_menu_list,`[${sub_menu_i}].field1`)">
           <!-- 返回按钮 及 刷新 注单  设置 按钮 -->
           <div class="back-wrap">
-            <div class="detail-back" @click="go_where({back_to: 'go_back_from_virtual'})"></div>
+            <div class="detail-back" @click="go_where({back_to: 'go_back_from_virtual_detail',route_name:route.name,route,router})"></div>
             <!-- 虚拟体育 -->
             <div class="col">{{i18n_t('common.virtual_sports')}} {{lodash.get(sub_menu_list,`[${sub_menu_i}].name`)}}</div>
             <div class="virtual-ref" :class="{'refreshing':refreshing}" @click="vir_refresh"></div>
@@ -64,7 +64,9 @@ import { i18n_t, MenuData } from 'src/core/'
 import base_data from "src/core/menu-h5/menu-data-class.js";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { theme } from 'src/base-h5/mixin/userctr.js'
-
+import { useRoute,useRouter } from "vue-router";
+const route = useRoute()
+const router = useRouter()
 // 回到顶部
 // import scrollTop from "src/project/components/record_scroll/scroll_top";
 // 设置菜单

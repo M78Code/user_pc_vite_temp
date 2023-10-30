@@ -72,7 +72,7 @@ const props = defineProps({
 })
 
 onMounted(()=>{
-  let play_oid = props.item.playOptionsId
+  let play_oid = props.item?props.item.playOptionsId:''
   ref_data.min_money = lodash_.get(BetViewDataClass.bet_min_max_money,`${play_oid}.min_money`,10) 
   ref_data.max_money = lodash_.get(BetViewDataClass.bet_min_max_money,`${play_oid}.max_money`,8888)
 })

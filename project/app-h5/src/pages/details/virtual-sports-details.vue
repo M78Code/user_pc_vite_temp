@@ -232,8 +232,9 @@ export default defineComponent({
      *@param {Undefined}
      *@return {Undefined} undefined
      */
+    const virtual_detail_box =ref(null)
     const virtual_play_height = () => {
-      $refs.virtual_detail_box.scrollTop = 0
+      virtual_detail_box.value.scrollTop = 0
     };
     /**
      * 初始化赛事字段
@@ -445,7 +446,8 @@ export default defineComponent({
       update_n_batch_handle,
       get_betbar_show,
       tabs_name,
-      change_tab
+      change_tab,
+      virtual_detail_box
     }
   }
 })

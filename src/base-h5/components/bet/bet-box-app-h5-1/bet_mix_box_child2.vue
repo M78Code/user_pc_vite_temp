@@ -73,10 +73,6 @@
         </div>
       </div>
 
-      <!-- <div>
-        <slide></slide>
-      </div> -->
-
       <div class="yb_px12" v-if="get_mix_bet_flag">
         <div class="row justify-between items-center content-t yb_mb6 yb_mt8 yb_fontsize14 fw_600 bet-mix-show">
           <div>{{ $t('bet.total_income') }}</div>
@@ -87,27 +83,10 @@
           <div class="yb_fontsize16 bet-mix-show">{{ BetData.bet_money_total.toFixed(2) }}</div>
         </div>
       </div>
-      {{BetViewDataClass.bet_order_status}} ---
+      <!-- {{BetViewDataClass.bet_order_status}} --- -->
       <!-- 底部按钮 -->
       <div class="row yb_px10 yb_pb8 justify-between" @touchmove.prevent v-if="BetViewDataClass.bet_order_status == 1">
-      
-          <!-- 左边， 3种情况-->
-          <!-- 保留选项 -->
-          <div class="add-box add-box2" :class="{ 'add-box2': BetViewDataClass.bet_order_status, 'add-box3': calc_class }"
-            @click.stop="pack_up(4)" v-if="![1,2].includes(BetViewDataClass.bet_order_status)">{{ $t('bet.save') }}</div>
-          <!-- 单关 -->
-          <div v-else-if="BetViewDataClass.bet_order_status == 1 && BetData.is_bet_single " class="bet-add-box text-bold display_center one_text_color"
-            :class="{ 'add-box3': calc_class }" @click.stop="set_is_bet_single">
-            <div class="bet-add-new bet_margin_left"></div>
-            <div class="bet_text_left bet-one">单关</div>
-          </div>
-          <!-- 串关+ -->
-          <div v-else-if="BetViewDataClass.bet_order_status == 1 && !BetData.is_bet_single " class="bet-add-box text-bold display_center linkUp_text_color"
-            :class="{ 'add-box3': calc_class }" @click.stop="set_is_bet_single">
-            <div class="bet_text_right">{{ $t('bet.kushikatsu') }}</div>
-            <div class="bet-add-new bet-linkUp"></div>
-          </div>
-
+          <div v-if="!BetData.is_bet_single" @click.stop="pack_up(4)">删除</div>
           <!-- 右边 -->
           <div class="bet-box">
             <template v-if="exist_code == '666'">
@@ -126,8 +105,6 @@
                 class="row justify-center items-center content-center yb-info">
                 <div>投注 <span class="yb-info-money">可赢100.00</span></div>
                 <div><span class="yb-info-one">></span><span class="yb-info-two">></span><span>></span></div>
-                <!-- <p class="yb_fontsize12 yb_mr10">{{ $t('bet_record.bet_val') }}</p>
-                <p class="yb_fontsize20">{{ bet_amount }}</p> -->
               </div>
               <!-- 投注 有投注项失效后点击接受变化的置灰样式-->
               <div v-if="BetViewDataClass.bet_order_status == 5" class="row justify-center items-center content-center yb-info yb-info-hui">
@@ -138,8 +115,17 @@
           </div>
 
           <!--串关-->
-          <div :class="is_strand?'yb-strand':'yb-nostrand'">+串</div>
-          
+          <div v-if="BetData.is_bet_single">
+            <div :class="BetViewDataClass.bet_order_status == 1 && BetData.is_bet_single?'yb-strand':'yb-nostrand'" @click.stop="set_is_bet_single">+串</div>
+          </div>
+          <div style="align-items: center;
+    background-color: var(--q-gb-t-c-7);
+    padding-right: 3px;
+    padding-left: 10px;
+    border-radius: 30px;" v-else>
+            <div>单关投注</div>
+          </div>
+
         </div>
 
         <!--投注后的 确定按钮 -->
@@ -154,15 +140,8 @@ import betMixBoxChild3 from './bet_mix_box_child3.vue';
 import betMixBoxChild4 from './bet_mix_box_child4.vue';
 import betMixBoxChild5 from './bet_mix_box_child5.vue';
 import betAfterStatus from './bet-after-status.vue';
-import slide from './slide.vue';
 
-// import betMixShow from './/bet_mix_show.vue';
 import betMixShow from './bet_mix_show3.vue';
-// import betMixShow2 from './/bet_mix_show2.vue';
-// import betMixDetail from './/bet-mix-detail.vue';
-// import betMixSingleDetail from './/bet-mix-single-detail.vue';
-// import betSuccessBar from './/bet-success-bar.vue';
-// import betting from 'src/mixins/betting/betting.js';
 import keyBoard from './/bet-keyboard.vue';
 import ballSpin from './/ball-spin.vue';
 import betBar from ".//bet-bar.vue";
@@ -170,13 +149,9 @@ import betSingleDetail from './bet-single-detail.vue';
 import betConflictTips from './bet-conflict-tips.vue'
 import betCollusionInput from './bet-collusion-input.vue'
 
-// import {utils } from 'src/core/index.js';
-// import { api_betting } from "src/api/index.js";
-// import {useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt/"
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import { UserCtr,compute_css_obj,useMittOn, useMittEmit, MITT_TYPES  } from "src/core/index.js";
-// import { hide_bet_series_but } from "src/core/bet/index.js"
 import { ref, onMounted, watch, computed, onUnmounted } from 'vue';
 import { get_query_bet_amount_common } from "src/core/bet/class/bet-box-submit.js"
 import lodash from 'lodash'
@@ -460,8 +435,8 @@ background: var(--q-gb-t-c-3) !important;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
   margin-bottom: -1px;
-  background-color: var(--q-gb-t-c-7);
-  padding: 12px;
+  //background-color: var(--q-gb-t-c-7);
+  //padding: 12px;
   border-radius: 12px;
 }
 .scroll-box-center{

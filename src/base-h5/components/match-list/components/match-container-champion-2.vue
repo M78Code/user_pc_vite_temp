@@ -83,7 +83,7 @@ import { ref, computed, onUnmounted } from "vue";
 import lodash from 'lodash'
 import { i18n_t} from 'src/core/index.js'
 import store from "src/store-redux/index.js";
-import { MenuData, compute_img_url, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/index.js"
+import { MenuData,get_odds_active, compute_img_url, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/index.js"
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt";
 import oddItemChampion from "./odd-item-champion.vue";
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
@@ -269,9 +269,10 @@ const get_odds_value = (ol_item,hsw) => {
  */
 const item_click = (match,hp,ol_item) => {
   if (!ol_item.ov || ol_item.ov < 101000) return;   //对应没有赔率值或者欧赔小于101000
-  let flag = $common.odds.get_odds_active(0, hp.hs, ol_item.os);
+  let flag = get_odds_active(0, hp.hs, ol_item.os);
   if (flag == 1 || flag == 4) {   //开盘和锁盘可以点击弹起来
-    bet_click2(match, hp, ol_item);
+    // bet_click2(match, hp, ol_item);
+    console.error('ssss',ol_item)
   }
 }
 /**

@@ -2,7 +2,9 @@
   <div class="ty-bet-after-status">
     <div v-show="false">{{BetViewDataClass.bet_view_version}}</div>
     <img :src="set_bet_order_status" alt="" />
-    <div class="ty-bet-after-status-title">{{title}}</div>
+    <div class="ty-bet-after-status-title" :class="{
+      active: bet_order_status_active
+    }">{{title}}</div>
   </div>
 </template>
 
@@ -30,6 +32,9 @@ const set_bet_order_status = computed(()=>{
     return `${LOCAL_PROJECT_FILE_PREFIX}/image/app-h5/icon_order_error.png`
   }
 })
+const bet_order_status_active = computed(()=>{
+  return [2, 3].includes(+BetViewDataClass.bet_order_status);
+})
 
 </script> 
 
@@ -48,6 +53,9 @@ const set_bet_order_status = computed(()=>{
     letter-spacing: 0;
     width: 100%;
     padding: 0.08rem 0;
+    &.active{
+      color: var(--q-gb-t-c-1)
+    }
   }
 }
 </style>

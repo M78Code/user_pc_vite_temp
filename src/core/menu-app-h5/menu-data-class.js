@@ -94,10 +94,10 @@ class MenuData {
     
     if(mid == 1){
       menu_lv_mi_lsit.unshift({mi:0,btn:1, ct:"2",title:"全部"})
-      menu_lv_mi_lsit.unshift({mi:5000,btn:1,ct:"2",title:"收藏"})
+      menu_lv_mi_lsit.unshift({mi:50000,btn:1,ct:"2",title:"收藏"})
     }
     if(mid == 2){
-      menu_lv_mi_lsit.unshift({mi:5000,btn:1,ct:"2",title:"收藏"})
+      menu_lv_mi_lsit.unshift({mi:50000,btn:1,ct:"2",title:"收藏"})
       menu_lv_mi_lsit.splice(3,0,{mi:300,btn:1,ct:"2",title:"VR体育"})
       menu_lv_mi_lsit.splice(4,0,{mi:2000,btn:1,ct:"2",title:"电竞"})
     }

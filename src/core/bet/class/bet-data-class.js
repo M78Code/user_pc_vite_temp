@@ -129,6 +129,8 @@ class BetData {
     this.bet_appoint_obj = {};
     // 预约投注项id 投注项中可以预约的
     this.bet_pre_list = []
+    // 预约投注数据 点击投注时 合并到投注项中的内容
+    this.bet_pre_obj = {}
     //需要预约的盘口
     /* this bet_appoint_odds_value= null;
 this.bet_appoint_ball_head= null */
@@ -425,6 +427,12 @@ this.bet_appoint_ball_head= null */
   set_bet_pre_list(val) {
     this.bet_pre_list = val
     this.set_bet_data_class_version()
+  }
+
+  // 设置预约投注项内容 用于投注时合并
+  set_bet_pre_obj(val){
+    // custom_id 投注项id
+    this.bet_pre_obj[val.custom_id] = val
   }
   
   // 设置 是否已投注
