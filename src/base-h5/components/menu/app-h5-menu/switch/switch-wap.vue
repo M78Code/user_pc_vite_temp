@@ -2,7 +2,7 @@
  * @Author: rise
  * @Date: 2023-10-22 17:03:22
  * @LastEditors: rise
- * @LastEditTime: 2023-10-30 11:57:27
+ * @LastEditTime: 2023-10-30 15:44:07
  * @Description:  
 -->
 <template>
@@ -42,7 +42,7 @@ const switchData = [
         ]
     },
     {
-        defaultVal:1,
+        defaultVal:0,
         list:[
             {
                 name:"热门",
