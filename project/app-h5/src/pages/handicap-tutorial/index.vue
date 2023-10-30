@@ -17,7 +17,7 @@
 
     <!-- '让球', '大小球' 内容-->
     <template v-if="!state.currentSwitchValue">
-        <div class="ht-scroll">
+        <div class="ht-scroll" @scroll="handleScroll">
             <match-result-ht v-for="(item, index) in handicapData" :option="item"
                 :key="'matchResultHt' + index"></match-result-ht>
         </div>
@@ -70,6 +70,7 @@ const state = reactive({
     currentSwitchValue: 0, // 让球：0 大小球：1 对应switchMenu index
     currentSlideValue: 0, // 球数 目前slideMenu写死
     inAnswerQuestion: false, // 是否进入了答题状态
+    htContentHeightList: []
 })
 
 // 返回上一页
@@ -88,10 +89,27 @@ const slideHandle = (val, e) => {
     const scrollContainer = document.getElementsByClassName('ht-scroll')[0]
     const contentContainer = document.getElementsByClassName('ht-content')[val]
     const topH = contentContainer.offsetTop - scrollContainer.offsetTop
+    console.log(topH)
     scrollContainer.scrollTop = topH
 }
-// onBeforeMount(() => {
-// })
+
+const handleScroll = (e) => {
+    const index = state.htContentHeightList.findIndex(v => v > e.target.scrollTop) - 1
+    if (state.currentSlideValue === index) return
+    if (index < 0) return
+    console.log('滚动位置：', e.target.scrollTop, index);
+    const dom = document.getElementsByClassName('slide-item')[index]
+    state.currentSlideValue = index
+    scrollMenu(dom, ".ht-slide-box", ".slide-item-active");
+}
+
+onMounted(() => {
+    const scrollContainer = document.getElementsByClassName('ht-scroll')[0]
+    const contentContainer = document.getElementsByClassName('ht-content')
+    state.htContentHeightList = Array.from(contentContainer).map(i => {
+        return i.offsetTop - scrollContainer.offsetTop
+    })
+})
 </script>
 <style scoped lang="scss">
 @import "./index.scss";
