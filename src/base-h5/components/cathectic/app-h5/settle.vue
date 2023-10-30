@@ -14,7 +14,7 @@
         <div v-for="(value, name, index) in BetRecordClass.list_data" :key="index">
           <template>
             <q-slide-transition>
-              <div v-show="value.open">
+              <div>
                 <div v-for="(item2, key) in value.data" :key="key" :item_data="item2" class="cathectic-item">
                   <!-- 单关、串关内容显示 -->
                   <template>

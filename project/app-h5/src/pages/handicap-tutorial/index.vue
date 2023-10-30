@@ -18,28 +18,31 @@
     <!-- '让球', '大小球' 内容-->
     <template v-if="!state.currentSwitchValue">
         <div class="ht-scroll">
-            <match-result-ht v-for="(item, index) in matchResultList" :option="item"
-            :key="'matchResultHt' + index"></match-result-ht>
+            <match-result-ht v-for="(item, index) in handicapData" :option="item"
+                :key="'matchResultHt' + index"></match-result-ht>
         </div>
     </template>
 
     <!-- 球数 内容 -->
     <template v-else>
-        <match-result-ht v-if="!state.inAnswerQuestion" :key="'matchResultHtBalls' + index" :title="'大小球'" :source="'bigAndSmallBall'"></match-result-ht>
+        <template v-if="!state.inAnswerQuestion">
+            <match-result-ht  v-for="(item, index) in bigAndSmallBallData" :option="item"
+            :key="'matchResultHtBalls' + index" :source="'bigAndSmallBall'"></match-result-ht>
+        </template>
         <answer-questions v-else title="训练营"></answer-questions>
 
-        <div class="ht-congrats">恭喜，您已进阶为足球大师</div>
+        <div v-if="state.inAnswerQuestion" class="ht-congrats">恭喜，您已进阶为足球大师</div>
 
         <div class="ht-handle">
             <div class="ht-button" @click='go_back'>
                 实战来一注
             </div>
-            <div class="ht-button default" @click="() => { state.inAnswerQuestion = !state.inAnswerQuestion}">
+            <div class="ht-button default" @click="() => { state.inAnswerQuestion = !state.inAnswerQuestion }">
                 模拟先练习
             </div>
         </div>
 
-        <div class="ht-again">
+        <div v-if="state.inAnswerQuestion" class="ht-again">
             再学一次
             <div class="icon"></div>
         </div>
@@ -57,101 +60,116 @@ import { scrollMenu } from "src/base-h5/components/menu/app-h5-menu/utils.js"
 
 const switchMenu = ['让球', '大小球']
 const slideMenu = ['0', '0/0.5', '0.5', '0.5/1', '1球', '1/1.5球', '1.5/2球',]
-const matchResultList = [
+const bigAndSmallBallData = [
     {
-        ballNumber:'0',
-        title:'（平手盘）',
+        ballNumber: '',
+        title: '大小球',
+        homeTeamScore: '',
+        awayTeamScore: "",
+        condition: '主客实力相当<br/>均不让球即0（平手盘）',
+        matchList: [
+            { homeTeam: '全赢', awayTeam: '全输', matchResult: '3', winIsWho: 'homeTeam', note: '', homeTeamText: '投注大2.5', awayTeamText: '投注小2.5' },
+            { homeTeam: '赢一半', awayTeam: '输一半', matchResult: '3', winIsWho: 'homeTeam', note: '', homeTeamText: '投注大2.5/3', awayTeamText: '投注小2.5/3' },
+            { homeTeam: '输一半', awayTeam: '赢一半', matchResult: '3', winIsWho: 'awayTeam', note: '', homeTeamText: '投注大3/3.5', awayTeamText: '投注小3/3.5' },
+            { homeTeam: '退回本金（打和）', awayTeam: '退回本金（打和）', matchResult: '3', winIsWho: '', note: '', homeTeamText: '投注大3', awayTeamText: '投注小3' }
+        ]
+    },
+]
+const handicapData = [
+    {
+        ballNumber: '0',
+        title: '（平手盘）',
         homeTeamScore: '0',
         awayTeamScore: "0",
         condition: '主客实力相当<br/>均不让球即0（平手盘）',
         matchList: [
-           { homeTeam: '全赢', awayTeam: '全输', matchResult: '1 - 0', winIsWho: 'homeTeam', note:'主客谁赢球即全赢，打平则退回本金（走水）',},
-           { homeTeam: '退回本金', awayTeam: '退回本金', matchResult: '0 - 0', winIsWho: '', note: ''},
+            { homeTeam: '全赢', awayTeam: '全输', matchResult: '1 - 0', winIsWho: 'homeTeam', note: '主客谁赢球即全赢，打平则退回本金（走水）', },
+            { homeTeam: '退回本金', awayTeam: '退回本金', matchResult: '0 - 0', winIsWho: '', note: '' },
         ]
     },
     {
-        ballNumber:'0/0.5',
-        title:'（平手半球盘）',
+        ballNumber: '0/0.5',
+        title: '（平手半球盘）',
         homeTeamScore: '-0/0.5',
         awayTeamScore: '+0/0.5',
         condition: '主队让0/0.5球',
         matchList: [
-           { homeTeam: '全赢', awayTeam: '全输', matchResult: '1 - 0', winIsWho: 'homeTeam', note:'主队赢1球或以上，投注主队全赢，投注客队全输',},
-           { homeTeam: '输一般', awayTeam: '赢一般', matchResult: '0 - 0', winIsWho: 'awayTeam', note:'打平，投注主队输一半，投注客队赢一半',},
+            { homeTeam: '全赢', awayTeam: '全输', matchResult: '1 - 0', winIsWho: 'homeTeam', note: '主队赢1球或以上，投注主队全赢，投注客队全输', },
+            { homeTeam: '输一般', awayTeam: '赢一般', matchResult: '0 - 0', winIsWho: 'awayTeam', note: '打平，投注主队输一半，投注客队赢一半', },
         ]
     },
     {
-        ballNumber:'0.5',
-        title:'（半球盘）',
+        ballNumber: '0.5',
+        title: '（半球盘）',
         homeTeamScore: '-0.5',
         awayTeamScore: '+0.5',
         condition: '主队让0.5球',
         matchList: [
-           { homeTeam: '全赢', awayTeam: '全输', matchResult: '1 - 0', winIsWho: 'homeTeam', note:'主队赢1球或以上，投注主队全赢，投注客队全输',},
-           { homeTeam: '全赢', awayTeam: '全输', matchResult: '0 - 0', winIsWho: 'awayTeam', note:'主队打平或输球，投注主队全输，投注客队全赢',},
+            { homeTeam: '全赢', awayTeam: '全输', matchResult: '1 - 0', winIsWho: 'homeTeam', note: '主队赢1球或以上，投注主队全赢，投注客队全输', },
+            { homeTeam: '全赢', awayTeam: '全输', matchResult: '0 - 0', winIsWho: 'awayTeam', note: '主队打平或输球，投注主队全输，投注客队全赢', },
         ]
     },
     {
-        ballNumber:'0.5/1',
-        title:'（半球/一球盘）',
+        ballNumber: '0.5/1',
+        title: '（半球/一球盘）',
         homeTeamScore: '-0.5/1',
         awayTeamScore: '+0.5/1',
         condition: '主队让0.5/1球',
         matchList: [
-           { homeTeam: '赢一半', awayTeam: '输一半', matchResult: '1 - 0', winIsWho: 'homeTeam', note:'主队赢1球或以上，投注主队全赢，投注客队输一半'},
-           { homeTeam: '全赢', awayTeam: '全输', matchResult: '2 - 0', winIsWho: 'homeTeam', note:'主队赢2球或以上，投注主队全赢，投注客队全输'},
-           { homeTeam: '全输', awayTeam: '全赢', matchResult: '0 - 0', winIsWho: 'awayTeam', note:'主队打平或输球，投注主队全输，投注客队全赢'},
+            { homeTeam: '赢一半', awayTeam: '输一半', matchResult: '1 - 0', winIsWho: 'homeTeam', note: '主队赢1球或以上，投注主队全赢，投注客队输一半' },
+            { homeTeam: '全赢', awayTeam: '全输', matchResult: '2 - 0', winIsWho: 'homeTeam', note: '主队赢2球或以上，投注主队全赢，投注客队全输' },
+            { homeTeam: '全输', awayTeam: '全赢', matchResult: '0 - 0', winIsWho: 'awayTeam', note: '主队打平或输球，投注主队全输，投注客队全赢' },
         ]
     },
     {
-        ballNumber:'1',
-        title:'（一球盘）',
+        ballNumber: '1',
+        title: '（一球盘）',
         homeTeamScore: '-1',
         awayTeamScore: '+1',
         condition: '主队让1球',
         matchList: [
-           { homeTeam: '退回本金', awayTeam: '退回本金', matchResult: '1 - 0', winIsWho: '',note:'主队赢1球，投注主客均退回本金（走水）',},
-           { homeTeam: '全赢', awayTeam: '全输', matchResult: '2 - 0', winIsWho: 'homeTeam', note:'主队赢2球或以上，投注主队全赢，投注客队全输' },
-           { homeTeam: '全输', awayTeam: '全赢', matchResult: '0 - 0', winIsWho: 'awayTeam', note:'主队打平或输球，投注主队全输，投注客队全赢'},
+            { homeTeam: '退回本金', awayTeam: '退回本金', matchResult: '1 - 0', winIsWho: '', note: '主队赢1球，投注主客均退回本金（走水）', },
+            { homeTeam: '全赢', awayTeam: '全输', matchResult: '2 - 0', winIsWho: 'homeTeam', note: '主队赢2球或以上，投注主队全赢，投注客队全输' },
+            { homeTeam: '全输', awayTeam: '全赢', matchResult: '0 - 0', winIsWho: 'awayTeam', note: '主队打平或输球，投注主队全输，投注客队全赢' },
         ]
     },
     {
-        ballNumber:'1/1.5球',
-        title:'（一球/球半盘）',
+        ballNumber: '1/1.5球',
+        title: '（一球/球半盘）',
         homeTeamScore: '-1/1.5',
         awayTeamScore: '+1/1.5',
         condition: '主队让1/1.5球',
         matchList: [
-           { homeTeam: '输一半', awayTeam: '赢一半', matchResult: '1 - 0', winIsWho: 'awayTeam ',note:'主队赢1球，投注主队输一半，投注客队赢一半',},
-           { homeTeam: '全赢', awayTeam: '全输', matchResult: '2 - 0', winIsWho: 'homeTeam', note:'主队赢2球或以上，投注主队全赢，投注客队全输' },
-           { homeTeam: '全输', awayTeam: '全赢', matchResult: '0 - 0', winIsWho: 'awayTeam', note:'主队打平或输球，投注主队全输，投注客队全赢'},
+            { homeTeam: '输一半', awayTeam: '赢一半', matchResult: '1 - 0', winIsWho: 'awayTeam ', note: '主队赢1球，投注主队输一半，投注客队赢一半', },
+            { homeTeam: '全赢', awayTeam: '全输', matchResult: '2 - 0', winIsWho: 'homeTeam', note: '主队赢2球或以上，投注主队全赢，投注客队全输' },
+            { homeTeam: '全输', awayTeam: '全赢', matchResult: '0 - 0', winIsWho: 'awayTeam', note: '主队打平或输球，投注主队全输，投注客队全赢' },
         ]
     },
     {
-        ballNumber:'1.5球',
-        title:'（球半盘）',
+        ballNumber: '1.5球',
+        title: '（球半盘）',
         homeTeamScore: '-1.5',
         awayTeamScore: '+1.5',
         condition: '主队让1.5球',
         matchList: [
-           { homeTeam: '全输', awayTeam: '全赢', matchResult: '1 - 0', winIsWho: 'awayTeam ',note:'主队赢1球，投注主队输一半，投注客队全赢',},
-           { homeTeam: '全赢', awayTeam: '全输', matchResult: '2 - 0', winIsWho: 'homeTeam', note:'主队赢2球或以上，投注主队全赢，投注客队全输' },
-           { homeTeam: '全输', awayTeam: '全赢', matchResult: '0 - 0', winIsWho: 'awayTeam', note:'主队打平或输球，投注主队全输，投注客队全赢'},
+            { homeTeam: '全输', awayTeam: '全赢', matchResult: '1 - 0', winIsWho: 'awayTeam ', note: '主队赢1球，投注主队输一半，投注客队全赢', },
+            { homeTeam: '全赢', awayTeam: '全输', matchResult: '2 - 0', winIsWho: 'homeTeam', note: '主队赢2球或以上，投注主队全赢，投注客队全输' },
+            { homeTeam: '全输', awayTeam: '全赢', matchResult: '0 - 0', winIsWho: 'awayTeam', note: '主队打平或输球，投注主队全输，投注客队全赢' },
         ]
     },
     {
-        ballNumber:'1.5/2球',
-        title:'（球半/两球盘）',
+        ballNumber: '1.5/2球',
+        title: '（球半/两球盘）',
         homeTeamScore: '-1.5/2',
         awayTeamScore: '+1.5/2',
         condition: '主队让1.5/2球',
         matchList: [
-           { homeTeam: '全输', awayTeam: '全赢', matchResult: '1 - 0', winIsWho: 'awayTeam',note:'主队赢1球，投注主队全输，投注客队全赢',},
-           { homeTeam: '赢一半', awayTeam: '输一半', matchResult: '2 - 0', winIsWho: 'homeTeam', note:'主队赢2球，投注主队赢一半，投注客队输一半'},
-           { homeTeam: '全赢', awayTeam: '全输', matchResult: '3 - 0', winIsWho: 'homeTeam', note:'主队赢3球或以上，投注主队全赢，投注客队全输'},
-           { homeTeam: '全输', awayTeam: '全赢', matchResult: '0 - 0', winIsWho: 'awayTeam', note:'主队打平或输球，投注主队全输，投注客队全赢'},
+            { homeTeam: '全输', awayTeam: '全赢', matchResult: '1 - 0', winIsWho: 'awayTeam', note: '主队赢1球，投注主队全输，投注客队全赢', },
+            { homeTeam: '赢一半', awayTeam: '输一半', matchResult: '2 - 0', winIsWho: 'homeTeam', note: '主队赢2球，投注主队赢一半，投注客队输一半' },
+            { homeTeam: '全赢', awayTeam: '全输', matchResult: '3 - 0', winIsWho: 'homeTeam', note: '主队赢3球或以上，投注主队全赢，投注客队全输' },
+            { homeTeam: '全输', awayTeam: '全赢', matchResult: '0 - 0', winIsWho: 'awayTeam', note: '主队打平或输球，投注主队全输，投注客队全赢' },
         ]
-    }, 
+    },
 ]
 const router = useRouter()
 const props = defineProps({})

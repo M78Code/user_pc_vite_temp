@@ -21,6 +21,7 @@
 <script setup>
 import { ref } from 'vue'
 import { api_betting } from "src/api/index.js";
+import { i18n_t } from "src/boot/i18n.js";;
 import BetRecordClass from "src/core/bet-record/bet-record.js";
 const props = defineProps({
   orderNumber: {
@@ -39,18 +40,10 @@ const cancle_pre_order = () => {
     api_betting.cancle_pre_order({ orderNo: props.orderNumber }).then((result) => {
         let res = result.status ? result.data : result;
         if (res.code == 200) {
-            store.dispatch({
-                'txt': i18n_t('pre_record.canceled'),
-                hide_time: 3000
-            })
             alertTips.value = false
             emit('success')
         } else if (['0400546', '0400547'].includes(res.code)) {
           alertTips.value = false
-            store.dispatch({
-                'txt': res.code == '0400546' ? i18n_t('pre_record.cancle_fail_tips') : i18n_t('pre_record.cancle_fail_tips2'),
-                hide_time: 3000
-            })
         }
     }).catch(() => {
       alertTips.value = false

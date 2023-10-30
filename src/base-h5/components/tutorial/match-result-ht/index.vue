@@ -12,7 +12,7 @@
             <div class="hint" v-if="state.source === 'bigAndSmallBall'">全场90分钟（含伤停补时）两队进球数的总和</div>
         </div>
 
-        <div class="ht-both-teams">
+        <div :class="['ht-both-teams', state.source === 'bigAndSmallBall' && 'pb20']">
             <div class="left">
                 <div class="teams">
                     <div>主队</div>
@@ -35,7 +35,7 @@
 
         <div class="match-result-list" v-for="(item, index) in option.matchList" :key="'matchResult' + index">
             <div class="note" v-html="item.note"></div>
-            <div class="match-result">
+            <div :class="['match-result', state.source === 'bigAndSmallBall' && 'mb20']">
                 <div class="left">
                     <div class="home-team teams">
                         <div class="title">投注本队</div>
@@ -45,7 +45,7 @@
                 </div>
                 <div class="center">
                     <div class="round-ball">
-                        <div class="title">赛果</div>
+                        <div class="title">{{state.source !== 'bigAndSmallBall' ? '赛果' : '进球之和'}}</div>
                         <div class="score">{{ item.matchResult }}</div>
                         <div v-if="item.matchResult === '0 - 0'" class="text-style">反之亦然</div>
                     </div>
@@ -96,6 +96,12 @@ const state = reactive({
 .ht-content {
     padding-bottom: .2rem;
     border-top: .01rem solid transparent;
+    .pb20 {
+        padding-bottom: .2rem !important;
+    }
+    .mb20 {
+        margin-bottom: .2rem !important;
+    }
     .ht-title {
         margin: .15rem .15rem 0 .3rem;
         padding-bottom: .15rem;
@@ -276,6 +282,7 @@ const state = reactive({
             .center {
                 justify-content: center;
                 z-index: 1;
+                margin: 0 .1rem;
 
                 .round-ball {
                     display: flex;

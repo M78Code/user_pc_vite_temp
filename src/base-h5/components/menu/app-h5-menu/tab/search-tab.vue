@@ -2,7 +2,7 @@
  * @Author: rise
  * @Date: 2023-10-20 16:27:18
  * @LastEditors: rise
- * @LastEditTime: 2023-10-27 22:26:33
+ * @LastEditTime: 2023-10-30 15:24:43
  * @Description:  
 -->
 <template>
@@ -136,13 +136,19 @@ const searchClick = () => {
                 height: 100%;
                 flex-shrink: 0;
                 text-align: center;
-
+                font-family: 'PingFang SC';
+                font-style: normal;
+                font-weight: 400;
+                color: #7981A4;
                 &:first-child {
                     width: 0.4rem;
                 }
 
                 &.active {
                     color: var(--q-gb-t-c-1);
+                    font-family: 'PingFang SC';
+                    font-style: normal;
+                    font-weight: 400;
                 }
 
                 img {

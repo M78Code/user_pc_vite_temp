@@ -468,7 +468,7 @@ class MatchMeta {
       mids: match_mids,
       cuid: UserCtr.get_uid(),
       sort: PageSourceData.sort_type,
-      euid: MenuData.is_jinzu() ? "" : MenuData.get_euid(lodash.get(MenuData, 'current_lv_2_menu.mi')),
+      euid: MenuData.is_jinzu() ? "" : MenuData.get_euid(lodash.get(MenuData, 'current_lv_2_menu_mi')),
       device: ['', 'v2_h5', 'v2_h5_st'][UserCtr.standard_edition],
     };
     let res = ''
