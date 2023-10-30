@@ -572,7 +572,7 @@ export default defineComponent({
 
 .detail-main {
   margin-top: 0.04rem;
-
+  background:#e4e6ed;
   &::-webkit-scrollbar {
     display: none;
   }
