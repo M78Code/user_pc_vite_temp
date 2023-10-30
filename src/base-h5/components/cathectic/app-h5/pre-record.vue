@@ -64,7 +64,7 @@ onMounted(() => {
 */
 const init_data = () => {
   var params = {
-    preOrderStatusList: [2, 3, 4]
+    preOrderStatusList: [0]
   }
   is_loading.value = true
   //第一次加载时的注单数
@@ -109,7 +109,7 @@ const onPull = () => {
     return;
   }
   var params = {
-    preOrderStatusList: [2, 3, 4],
+    preOrderStatusList: [0],
     searchAfter: last_record.value || undefined,
   };
   //加载中
