@@ -2,7 +2,7 @@
  * @Author: rise
  * @Date: 2023-10-22 17:03:22
  * @LastEditors: rise
- * @LastEditTime: 2023-10-30 15:19:54
+ * @LastEditTime: 2023-10-30 15:47:09
  * @Description:  
 -->
 <template>
@@ -52,7 +52,7 @@
         }
     });
     const activeOn = ref(props.defaultVal);//选中值
-    const sortVal = ref(0);//排序code
+    const sortVal = ref(1);//排序code
     /**
      * 点击事件
      * @param {*} val  值0 1
@@ -62,7 +62,8 @@
     const changeActive = (val,i,callback,sort) => {
         if(sort){
             if(activeOn.value !== val)sortVal.value=0;
-            sortVal.value = sortVal.value === 0?1:sortVal.value === 1?2:1;
+            // sortVal.value = sortVal.value === 0?1:sortVal.value === 1?2:1;
+            sortVal.value = sortVal.value === 1?2:1;
             activeOn.value = val;
             const enVal = sortJson.filter((item)=>{return item.val === sortVal.value })?.[0].enVal;
             return callback(val,enVal);
