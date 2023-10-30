@@ -30,8 +30,11 @@ const props = defineProps({
 <style scoped lang="scss">  
 
 .yb_fontsize12{
-    margin-bottom: 20px;
-    border-bottom: 1px solid #ccc;
+    margin-bottom: 6px;
+    //border-bottom: 1px solid #ccc;
+    background-color: var(--q-gb-t-c-7);
+    border-radius: 12px;
+    padding: 0.12rem;
     span{
         float: right;
     }
