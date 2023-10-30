@@ -16,7 +16,7 @@
     </div>
     <div class="body-info">
       <div>
-        <p>投注项: {{$i18n.messages[data_b.langCode?data_b.langCode:'zh']['sport2'][Item.sportId]}}
+        <p>投注项: [{{Item.sportName}}
         </p>
         <p>{{Item.playName}} - {{$i18n.messages[data_b.langCode?data_b.langCode:'zh']['odds'][Item.marketType]}}</p>
       </div>
@@ -27,7 +27,7 @@
     <div class="body-main">
       <p><label>投注单号：</label> <span>{{data_b.orderNo}}</span></p>
       <p><label>投注时间：</label> <span>{{formatTime(+data_b.betTime, 'YYYY-mm-DD HH:MM')}}</span></p>
-      <p><label>{{data_b.matchName}}</label></p>
+      <p><label>[{{Item.sportName}}] {{Item.matchName}}</label></p>
       <p><label>投注额：</label> <span>{{format_money2(data_b.orderAmountTotal)}}</span></p>
       <template>
         <!-- orderStatus 订单状态(0:未结算,1:已结算,2:注单无效,3:确认中,4:投注失败) -->

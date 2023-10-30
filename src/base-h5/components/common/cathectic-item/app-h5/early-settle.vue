@@ -4,33 +4,49 @@
 -->
 <template>
   <div style="display: none;">{{ BetRecordClass.bet_record_version }}</div>
+  <!-- 提前兑现规则申明 -->
+  <early-settle-tips />
+  <!-- 提前兑换按钮 -->
   <div class="early-settle" v-if="calc_show">
-    <!-- 提前兑现规则申明 -->
-    <early-settle-tips />
     <div class="early-button">
-      <button @click="earlyBtnClick">
-        {{ sure_settle_button_text }}
-        <span v-if="btnStatus===1 || btnStatus===2">(含本金)</span>
-        <img class="load" v-if="btnStatus===3" src="/public/app-h5/image/gif/loding.gif">
+      <button @click="submit_click">
+        <!-- 暂停提前结算 -->
+        <template v-if="status == 5">{{ t('early.btn1') }} </template>
+        <!-- 提前结算 -->
+        <template v-if="status == 1 || status == 6">{{ t('early.btn2') }}</template>
+        <!-- 确认提前结算 -->
+        <template v-if="status == 2">{{ t('early.btn3') }}</template>
+        <!-- 确认中... -->
+        <template v-if="status == 3">{{ t('early.btn4') }}</template>
+        <!-- 已提前结算 -->
+        <template v-if="status == 4">{{ t('early.btn5') }}</template>
+        <!-- 按钮上的金额 -->
+        <template v-if="status !== 5 && (Number(front_settle_amount) || expected_profit)">{{ betting_amount }}</template>
+        <img class="load" v-if="status == 3" :src="compute_local_project_file_path('/image/gif/loding.gif')">
       </button>
-      <button class="change" v-if="btnStatus===2"> 金额有变更 </button>
-      <button class="cancel" v-if="btnStatus===2" @click="btnStatus=1;"> 取消 </button>
+      <!-- <button class="change"> 金额有变更 </button>
+      <button class="cancel"> 取消 </button> -->
     </div>
-    <!-- 滑块 -->
-    <template style="display: none;">
+    <!-- 调整金额滑块 -->
+    <template>
       <q-slide-transition>
         <div v-show="slider_show" class="slider-wrap">
           <!-- 提前结算投注额 -->
           <q-slider track-size="0.06rem" @change="change_percentage" class="slider-content" thumb-size="0.16rem"
-            v-model="percentage" :min="0" :max="100" label label-always :label-value="percentage + '.00'" />
+            v-model="percentage" :min="0" :max="100" label label-always :label-value="cashout_stake.toFixed(2)" />
         </div>
       </q-slide-transition>
-      <div class="change-btn" :class="slider_show ? 'up' : 'down'" @click="slider_show=!slider_show">
+      <div class="change-btn" 
+        v-if="(status == 1 || status == 5 || status == 6) && lodash.get(UserCtr, 'pcs')"
+        :class="slider_show ? 'up' : 'down'" 
+        @click="change_slider_show">
         <span>调整金额</span>
-        <img src="/public/app-h5/image/gif/change.gif">
+        <img :src="compute_local_project_file_path('/image/gif/change.gif')">
       </div>
     </template>
   </div>
+  <!-- 提前兑现详情 -->
+  <early-settled-detail v-if="details_show_btn" :orderNo="item_data.orderNo" />
 </template>
 
 <script setup>
@@ -39,10 +55,11 @@ import ClipboardJS from "clipboard";
 import { api_betting } from "src/api/index.js"
 // import { mapGetters, mapMutations } from "vuex";
 import { format_time_zone_time } from "src/core/format/index.js"
-import { utils,compute_css_obj, LOCAL_PROJECT_FILE_PREFIX } from 'src/core/index.js'
+import { earlySettledDetail } from "src/base-h5/components/common/cathectic-item/app-h5/index";
 import { Platform } from "quasar";
 import { inject, ref, computed, onMounted, onUnmounted, watch, nextTick } from 'vue'
 import lodash from 'lodash'
+import { utils,compute_css_obj, compute_local_project_file_path } from 'src/core/index.js'
 import store from "src/store-redux/index.js"
 import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/"
 import { t } from "src/boot/i18n.js";
@@ -55,9 +72,6 @@ const props = defineProps({
     type: Object
   }
 })
-// 1 - 初始状态，2 - 确认提前结算， 3 - 兑现中...
-let btnStatus = ref(1)
-
 // 待确认中的提前结算单
 let queryorderpresettleconfirm_data = inject('queryorderpresettleconfirm_data')
 // 1 - 初始状态，2 - 确认提前结算， 3 - 确认中..., 4 - 已提前结算, 5 - 暂停提前结算(置灰), 6 - 仅支持全额结算, 7 - 按钮不显示
@@ -67,7 +81,7 @@ let slider_show = ref(false)
 // 提前结算详情列表是否显示
 let details_show = ref(false)
 // 展开 提前结算详情列表 的按钮是否显示
-let details_show2 = ref(false)
+let details_show_btn = ref(false)
 // 0  100
 let percentage = ref(50)
 // 0-提前结算金额已包含本金  1-提前结算申请未通过  2-功能暂停中，请稍后再试  3-提前结算金额调整中，请再试一次
@@ -84,36 +98,12 @@ let front_settle_amount = ref('')
 // let count_ = ref(0)
 let origin_settle_money = ref(lodash.cloneDeep(props.item_data.maxCashout))
 // 延时器
-let timer = ref(null)
-let timer2 = ref(null)
-let timer3 = ref(null)
-let timer4 = ref(null)
-let timer5 = ref(null)
+let timer = null
+let timer4 = null
 
-// 提前兑现button文案
-const sure_settle_button_text = computed(() => {
-  if (btnStatus.value === 1) {
-    return '确认兑现9.00元'
-  }
-  if (btnStatus.value === 2) {
-    return '提起兑现9.00元'
-  }
-  if (btnStatus.value === 3) {
-    return '兑现中'
-  }
-  console.log(btnStatus.value);
-})
+let mitt_c201_handle = null
+let mitt_c210_handle = null
 
-const earlyBtnClick = () => {
-  if(btnStatus.value === 1) {
-    btnStatus.value = 2;
-    return;
-  }
-  if (btnStatus.value === 2) {
-    btnStatus.value = 3;
-    return;
-  }
-}
 
 // ...mapGetters([
 //当前皮肤
@@ -125,7 +115,7 @@ const earlyBtnClick = () => {
 // ]),
 // 剩余可提前结算次数
 const remaining_num = computed(() => {
-  if (details_show2.value || is_only_fullbet.value) {
+  if (details_show_btn.value || is_only_fullbet.value) {
     return 1
   } else {
     return 2
@@ -136,7 +126,7 @@ const is_tips_show = computed(() => {
   // 必备条件,没有 剩余可提前结算的本金 时不显示, 按钮不展示时不显示
   let flag1 = props.item_data.preSettleBetAmount && calc_show
   // 第一次就全额结算
-  let flag2 = status.value == 4 && details_show2.value == false
+  let flag2 = status.value == 4 && details_show_btn.value == false
   // 发生过2次提前结算
   let flag3 = props.item_data.settleType == 999
   return flag1 && !flag2 && !flag3
@@ -159,7 +149,6 @@ const is_only_fullbet = computed(() => {
 })
 // 提前结算投注额,四舍五入取整
 const cashout_stake = computed(() => {
-
   let pba = props.item_data.preSettleBetAmount || 0
   let _money = Math.round(pba * (percentage.value / 100));
   if (percentage.value == 100) {
@@ -179,7 +168,7 @@ const cashout_stake = computed(() => {
 const expected_profit = computed(() => {
   let _maxCashout = props.item_data.maxCashout
   // if (_maxCashout) {
-  const moneyData = lodash.find(store_cathectic.early_moey_data, (item) => {
+  const moneyData = lodash.find(BetRecordClass.early_money_list, (item) => {
     return props.item_data.orderNo == item.orderNo
   })
   if (moneyData && moneyData.orderStatus === 0) {
@@ -222,7 +211,7 @@ if (ordervos_.hs != 0) {
   status.value = 5;
 }
 // 设置哪些注单处于确认中的状态
-if (Array.isArray(queryorderpresettleconfirm_data) && store_cathectic.main_item == 0) {
+if (Array.isArray(queryorderpresettleconfirm_data) && BetRecordClass.select == 0) {
   queryorderpresettleconfirm_data.forEach((item) => {
     if (item.orderNo == props.item_data.orderNo && item.preSettleOrderStatus == 0) {
       status.value = 3
@@ -233,25 +222,26 @@ if (Array.isArray(queryorderpresettleconfirm_data) && store_cathectic.main_item 
 onMounted(() => {
   // 已发生过提前结算或者提前结算取消
   if (props.item_data.preBetAmount > 0 || [3, 4, 5].includes(props.item_data.settleType)) {
-    details_show2.value = true;
+    details_show_btn.value = true;
   }
   if (is_only_fullbet.value) {
     // 剩余的金额小于最低限额时，只支持全额结算
     status.value = 6;
   }
   // 该注单支持提前结算，或者做过提前结算的话，需要打个标记
-  if (calc_show.value || details_show2.value) {
+  if (calc_show.value || details_show_btn.value) {
     props.item_data.is_show_early_settle = true
   }
 
   // 处理ws订单状态推送
-  useMittOn(MITT_TYPES.EMIT_C201_HANDLE, c201_handle).on;
-  useMittOn(MITT_TYPES.EMIT_C210_HANDLE, c210_handle).on;
+  mitt_c201_handle = useMittOn(MITT_TYPES.EMIT_C201_HANDLE, c201_handle).off;
+  mitt_c210_handle = useMittOn(MITT_TYPES.EMIT_C210_HANDLE, c210_handle).off;
 })
 onUnmounted(() => {
-  clear_timer();
-  useMittOn(MITT_TYPES.EMIT_C201_HANDLE, c201_handle).off;
-  useMittOn(MITT_TYPES.EMIT_C210_HANDLE, c210_handle).off;
+  // 清除定时器 和 ws推送
+  clear_timer()
+  mitt_c201_handle()
+  mitt_c210_handle()
 })
 
 // ...mapMutations(["set_toast","set_early_moey_data"]),
@@ -318,24 +308,7 @@ const change_percentage = (val) => {
   front_settle_amount.value = ''
   percentage.value = val;
 }
-/**
- *@description 获取提前结算详情数据
- */
-const fetch_early_settle_detail = () => {
-  if (details_show) {
-    details_show = false;
-  } else {
-    api_betting.get_pre_settle_order_detail({ orderNo: props.item_data.orderNo }).then((res) => {
-      let { code, data = [] } = res || {};
-      if (code == 200) {
-        presettleorderdetail_data = data;
-        details_show = true;
-      }
-    }).catch((err) => {
-      console.error(err);
-    });
-  }
-}
+
 /**
  *@description 提前结算提交事件
  */
@@ -352,14 +325,10 @@ const submit_early_settle = () => {
     // 预计返还（盈利）
     frontSettleAmount: String(front_settle_amount.value || expected_profit.value),
   };
+  let count_ = 0
   // 响应码【0000000 成功（仅在测试模式出现） | 0400524 确认中（仅在非测试模式出现）| 0400500 提交申请失败，提示msg信息】
   api_betting.post_pre_bet_order(params).then((reslut) => {
-    let res = {}
-    if (reslut.status) {
-      res = reslut.data
-    } else {
-      res = reslut
-    }
+    let res = reslut.status ? reslut.data : reslut
 
     if (res.code == 200) {
       status.value = 4;
@@ -457,22 +426,14 @@ const copy = (evt, orderno) => {
 }
 // 批量清除定时器
 const clear_timer = () => {
-  const timer_arr = [
-    'timer',
-    'timer2',
-    'timer3',
-    'timer4',
-    'timer5',
-    'timer6',
-  ]
-
-  // for (const timer of timer_arr) {
-  //   clearTimeout([timer])
-  //   timer = null
-  // }
+  clearTimeout(timer)
+  clearInterval(timer4)
 }
 </script>
 <style lang="scss" scoped>
+template {
+  display: block;
+}
 .early-settle {
   .early-button {
     padding: 0 0.14rem;

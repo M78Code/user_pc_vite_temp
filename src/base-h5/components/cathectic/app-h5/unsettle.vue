@@ -20,7 +20,7 @@
                     <item-simple-body v-if="item2.seriesType == '1'" :data_b="item2"></item-simple-body>
                     <item-multiple-body v-else :data_b="item2"></item-multiple-body>
                   </template>
-                  <!-- 未结算列表 => 投注记录页提前结算的按钮、滑块 -->
+                  <!-- 投注记录页提前结算的按钮、滑块、提前结算详情 -->
                   <early-settle :item_data="item2"></early-settle>
                 </div>
               </div>
@@ -50,13 +50,10 @@ import store from 'src/store-redux/index.js'
 // ws 数据接入  投注记录订单消息推送
 // mixins: [skt_order]
 
-const store_data = store.getState()
 // 锚点
 const myScroll = ref(null)
 //是否在加载中
 const is_loading = ref(false)
-//列表数据
-const list_data = ref({})
 //list_data里面最后的一条数据的日期 '2020-11-17'
 const last_record = ref('')
 // 是否存在下一页
@@ -89,35 +86,17 @@ onMounted(() => {
   }, 10000)
 })
 
-/**
-   * @description 判断所有订单是否有结算注单
-   * @param {undefined} undefined
-   * @returns {boolean} 是否有结算注单
-   */
-const clac_all_is_early = () => {
-  const data = lodash.values(list_data.value)
-  return lodash.find(data, (item) => {
-    return lodash.some(item.data, { is_show_early_settle: true })
-  }) ? false : true
-}
+
 /**
  * @description 查询提前结算金额
  */
 const search_early_money = () => {
   let params = { orderNo: orderNumberItemList.value.join(',') }
-  // if(orderNumberItemList.length === 0){return}
+  if(orderNumberItemList.length === 0) {return}
   api_betting.get_cashout_max_amount_list(params).then(reslut => {
-    let res = {}
-    if (reslut.status) {
-      res = reslut.data
-    } else {
-      res = reslut
-    }
+    let res = reslut.status ? reslut.data : reslut
     if (res.code == 200 && res.data) {
-      store.dispatch({
-        type: "SET_EARLY_MOEY_DATA",
-        data: res, data
-      })
+      BetRecordClass.set_early_money_list(res.data)
     }
   })
 }
@@ -130,7 +109,7 @@ const check_early_order = () => {
     return;
   }
   let tempList = []
-  lodash.forEach(list_data.value, (value, key) => {
+  lodash.forEach(BetRecordClass.list_data, (value, key) => {
     lodash.forEach(value.data, (item) => {
       if (item.enablePreSettle) {
         tempList.push(item.orderNo)
