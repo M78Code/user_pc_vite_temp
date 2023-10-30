@@ -435,6 +435,20 @@
     </div>
   </template>
    
+   <script>
+
+export default {
+    mixins:[],
+    setup(){},
+    data() {
+        return {
+           
+        }
+    },
+}
+
+    
+  </script>
   <style scoped lang="scss">
     @import "../styles/match-container";
   </style>
