@@ -125,7 +125,6 @@ const onPull = () => {
     is_hasnext.value = hasNext
     if (res.code == 200 && res.data) {
       for (let item of Object.values(record)) {
-        item.open = true
         for (var i = 0; i < item.data.length; i++) {
           item.data[i].orderVOS = item.data[i].detailList
         }

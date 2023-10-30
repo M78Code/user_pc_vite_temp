@@ -21,6 +21,7 @@
 <script setup>
 import { ref } from 'vue'
 import { api_betting } from "src/api/index.js";
+import { i18n_t } from "src/boot/i18n.js";;
 import BetRecordClass from "src/core/bet-record/bet-record.js";
 const props = defineProps({
   orderNumber: {
