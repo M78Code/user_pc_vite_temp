@@ -13,6 +13,13 @@
     }]">
   <template v-if="match" >
     <!-- <div style="display: none;">{{ MatchDataBaseH5.data_version.version }}</div> -->
+    <!-- 未开赛标题  -->
+    <div class="match-status-fixed flex items-center" v-if="match.is_show_no_play">
+      <img src='image/list/list-red.svg' />
+      <span class="din-regular">
+        {{ $t('list.match_no_start') }}&nbsp;&nbsp;<span v-show="no_start_total">(0)</span>
+      </span>
+    </div>
     <!--体育类别 -- 标题  menuType 1:滚球 2:即将开赛 3:今日 4:早盘 11:串关 -->
     <div v-if="get_sport_show"
       :class="['sport-title match-indent', { home_hot_page: is_hot, is_gunqiu: [1].includes(+menu_type), first: i == 0, }]"
@@ -29,13 +36,6 @@
         <!-- PROJECT_NAME == 'app-h5' 复刻版需要展示数量 -->
         {{ match_of_list.csna }}{{PROJECT_NAME == 'app-h5' ? '(' + MenuData.current_lv_2_menu.ct + ')' : ''}}
         <!-- {{match_of_list.csna || get_current_menu.sub.menuName}} -->
-      </span>
-    </div>
-    <!-- 未开赛标题  -->
-    <div class="match-status-fixed flex items-center" v-if="match.is_show_no_play">
-      <img src='image/list/list-red.svg' />
-      <span class="din-regular">
-        {{ $t('list.match_no_start') }}&nbsp;&nbsp;<span v-show="no_start_total">(0)</span>
       </span>
     </div>
    
