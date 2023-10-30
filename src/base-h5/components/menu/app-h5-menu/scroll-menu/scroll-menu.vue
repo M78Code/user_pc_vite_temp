@@ -81,13 +81,16 @@ onMounted(() => {
  * 二级菜单事件
  */
  async function set_menu_lv2(item = {},event) {
+  // vr体育
   if(item.mi == 300){
     return router.push({ name: "virtual_sports" });
   }
+  // 电竞
   if(item.mi == 2000){
     return router.push({ name: "esports_sports" });
   }
-  if(item.mi == 5000){
+  // 收藏
+  if(item.mi == 50000){
     return router.push({ name: "collect" });
   }
 

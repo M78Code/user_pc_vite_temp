@@ -11,7 +11,7 @@
   </div>
 </template>
 <script setup>
-import { format_currency,format_odds } from 'src/core/index.js'
+import { format_odds } from 'src/core/index.js'
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { onMounted, reactive } from 'vue';
@@ -51,6 +51,7 @@ const reduce_btn = () => {
     return
   }else{
     ref_custom.oddFinally = mathJs.subtract( ref_custom.oddFinally,0.01)
+    set_bet_obj_config()
   }
 }
 
@@ -61,8 +62,16 @@ const add_btn = () => {
     return
   }else{
     ref_custom.oddFinally = mathJs.add( ref_custom.oddFinally,0.01)
+    set_bet_obj_config()
   }
 }
+
+// 设置投注信息
+const set_bet_obj_config = () => { 
+  ref_custom.odds = mathJs.multiply(ref_custom.oddFinally,100000)
+  BetData.set_bet_pre_obj(ref_custom)
+}
+
 </script>
 
 <style lang="scss" scoped>
