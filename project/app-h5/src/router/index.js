@@ -52,7 +52,7 @@ const router = createRouter({
         {
           path: "/esports", // 电竞
           name: "esports_sports",
-          component: () => import("../pages/virtual/index.vue"),
+          component: () => import("../pages/esports/index.vue"),
         },
         {
           path: "/collect", // 收藏
