@@ -153,7 +153,6 @@ export default defineComponent({
       () => route.params,
       (to, from) => {
         // 1. 非赛果页 且 不是通过搜索进入 2.搜索进入且已切换过玩法集
-        
         if (
             get_menu_type.value != 28 && !to.search_term && to.mid == from.mid
             || to.search_term && component_data.match_play_item_changed
@@ -209,7 +208,6 @@ export default defineComponent({
     );
     onMounted(() => {
       // #TODO 测试假数据
-
       // console.log("match_list_new", match_list_normal.value)
       // 原created
       // 满足刷新页面保持向上展开的状态

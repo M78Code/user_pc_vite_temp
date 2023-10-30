@@ -111,6 +111,7 @@ export default defineComponent({
       let search_term = route.query.search_term
       // 重新加载category组件，触发重新请求
       router.replace({name: 'category', params: {mid: match_id.value, mcid: uId}, query: {search_term: search_term}})
+      // router.replace({name: 'virtual_sports_category', params: {mid: route.query.mid, mcid: uId}, query: {search_term: search_term}})
       // 点击玩法对页面吸顶tab做高度处理
       useMittEmit(MITT_TYPES.EMIT_DETAILILS_TAB_CHANGED);
       // 记录当前玩法集ID和玩法集合

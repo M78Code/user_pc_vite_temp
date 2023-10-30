@@ -86,11 +86,11 @@ const router = createRouter({
           // 常规赛事和电竞赛事详情页,赛事id必传，玩法集id可选
         {
           path: "/details/:mid/:mcid?/:csid?",
-          name: "category",
+          name: "details",
           component: () => import("../pages/details/details.vue"),
           children: [
             {
-              path: "category/:mid?/:id?",
+              path: "category/:id?",
               name: "category",
               component: () =>
                 import("../pages/details/children/category.vue"),
@@ -99,12 +99,12 @@ const router = createRouter({
         },
           // 赛果详情页
           {
-            path: "/result_details/:mid",
+            path: "/result_details",
             name: "result_details",
             component: () => import("../pages/details/result-details.vue"),
             children: [
               {
-                path: "/result_details/:mid/:index",
+                path: "/result_details/:index",
                 name: "match_result",
                 component: () => import("../pages/details/components/result-fat-tab.vue")
               }
@@ -117,7 +117,7 @@ const router = createRouter({
             component: () => import("../pages/details/virtual-sports-details.vue"),
             children: [
               {
-                path: "virtual_sports_category/:id",
+                path: "virtual_sports_category/:id?",
                 name: "virtual_sports_category",
                 component: () => import("../pages/details/children/virtual-sports-category.vue")
               },

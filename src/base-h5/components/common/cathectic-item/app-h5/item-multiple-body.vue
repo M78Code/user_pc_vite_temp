@@ -28,11 +28,11 @@
           </div>
           <!--球类名称 赛前还是滚球 玩法名称 基准分 赔率类型-->
           <span class="info">
-            {{$i18n.messages[data_b.langCode?data_b.langCode:'zh']['sport2'][item.sportId]}}
+            {{item.sportName}}
             <span v-if="data_b.seriesType != '3' && item.matchType != 4" v-html="$i18n.messages[data_b.langCode?data_b.langCode:'zh']['matchtype'][item.matchType]"></span>
             &ensp;{{item.playName}}
             <template v-if="item.scoreBenchmark">
-              ({{item.scoreBenchmark | format_score}})
+              ({{item.scoreBenchmark}})
             </template>
             &ensp;[{{$i18n.messages[data_b.langCode?data_b.langCode:'zh']['odds'][item.marketType]}}]
           </span>
@@ -68,10 +68,20 @@
           <span>{{format_money2(data_b.backAmount)}}</span>
         </p>
       </template>
-      <p><label>注单状态：</label> 
-        <span :class="BetRecordClass.calc_text(data_b).color">
-          {{ BetRecordClass.calc_text(data_b).text }}
-        </span>
+      <p>
+        <label>注单状态：</label> 
+        <template>
+          <!-- 预约中、预约失效页 -->
+          <span v-if="BetRecordClass.selected === 1 || BetRecordClass.selected === 2">
+            <template v-if="[2,3].includes(data_b.preOrderStatus)">{{i18n_t('pre_record.booked_fail')}}</template>
+            <template v-else-if="[4].includes(data_b.preOrderStatus)">{{i18n_t('pre_record.canceled')}}</template>
+            <template v-else>{{i18n_t('pre_record.booking')}}</template>
+          </span>
+          <!-- 未结算、已结算页 -->
+          <span v-else :class="BetRecordClass.calc_text(data_b).color"> 
+            {{ BetRecordClass.calc_text(data_b).text }} 
+          </span>
+        </template>
       </p>
     </div>
   </div>

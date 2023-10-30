@@ -5,7 +5,7 @@
 -->
 <template>
   <div class='category virtual-sport'>
-             <!-- 玩法集展示内容 -->
+    <!-- 玩法集展示内容 -->
     <details-tab  
      :data_list="data_list" 
      :scroller_scroll_top="scroller_scroll_top" 
@@ -163,10 +163,11 @@ export default defineComponent({
 
      const get_uid =  ref(UserCtr.get_uid())
     // 置顶列表
-    const match_list_new = computed(() => {
-      // TODO: 还未调试待修改
-      return  lodash.get(matchInfoCtr.value, `list_to_obj.mid_obj[${route.query.mid}_].odds_info`);
-    });
+    // const match_list_new = computed(() => {
+    //   // TODO: 还未调试待修改
+    //   return  lodash.get(matchInfoCtr.value, `list_to_obj.mid_obj[${route.query.mid}_].odds_info`);
+    // });
+    const match_list_new = ref([])
     // 非置顶列表
     const match_list_normal = ref(lodash.get(matchInfoCtr.value, `list_to_obj.mid_obj[${route.query.mid}_].odds_info`))
     console.log(matchInfoCtr.value,'matchInfoCtr.value',match_list_normal);

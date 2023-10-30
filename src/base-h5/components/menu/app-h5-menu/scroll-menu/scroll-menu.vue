@@ -227,7 +227,7 @@ onUnmounted(() => {
         height: 100%;
         overflow-x: auto;
         overflow-y: hidden;
-        padding-top: 0.06rem;
+        padding-top: 0.04rem;
         padding-bottom: 0.05rem;
         flex-wrap: nowrap;
         scrollbar-width: none; // 去除滚动条火狐浏览器兼容性问题

@@ -4,9 +4,7 @@
 -->
 <template>
   <div style="display: none;">{{ BetRecordClass.bet_record_version }}</div>
-  <template v-if="details_show">
-    <early-settle-tips />
-    <div class="warp">
+  <div class="warp">
       <!-- 滑块 -->
       <q-slide-transition>
         <div v-show="detail_show_info && presettleorderdetail_data.length" class="slider-wrap">
@@ -39,27 +37,21 @@
       </q-slide-transition>
       <div class="settle-btn" :class="detail_show_info ? 'up' : 'down'" @click="fetch_early_settle_detail">
         <span>提前兑现详情</span>
-        <img src="/public/app-h5/image/gif/change.gif">
+        <img :src="compute_local_project_file_path('/image/gif/change.gif')">
       </div>
     </div>
-  </template>
 </template>
 
 <script setup>
 import BetRecordClass from "src/core/bet-record/bet-record.js";
 import earlySettleTips from "src/base-h5/components/common/cathectic-item/app-h5/early-settle-tips.vue";
 import { api_betting } from "src/api/index.js";
+import { utils,compute_css_obj, compute_local_project_file_path } from 'src/core/index.js'
 import { ref, computed } from 'vue'
 const props = defineProps({
-  item_data: {
-    type: Object
+  orderNo: {
+    type: [String, Number]
   }
-})
-
-// 是否展示详情按钮
-const details_show = computed(() => {
-  // 已发生过提前结算或者提前结算取消
-  return (props.item_data.preBetAmount > 0 || [3, 4, 5].includes(props.item_data.settleType))
 })
 
 // 提前兑现详情信息
@@ -74,7 +66,7 @@ let presettleorderdetail_data = ref([])
   if (detail_show_info.value) {
     detail_show_info.value = false;
   } else {
-    api_betting.get_pre_settle_order_detail({ orderNo: props.item_data.orderNo }).then((res) => {
+    api_betting.get_pre_settle_order_detail({ orderNo: props.orderNo }).then((res) => {
       let { code, data = [] } = res || {};
       if (code == 200) {
         presettleorderdetail_data.value = data;

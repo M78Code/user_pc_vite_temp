@@ -439,9 +439,7 @@ class MatchMeta {
     const menu_lv_v1 = MenuData.current_lv_1_menu_mi.value
     const menu_lv_v2 = MenuData.current_lv_2_menu_mi
     // 冠军  或者  电竞冠军 或者   赛果虚拟体育  ，赋值全部数据， 不走下边计算逻辑
-    console.log(menu_lv_v1)
     if ([400, 300].includes(menu_lv_v1) || (menu_lv_v1 == 28 && [1001, 1002, 1004, 1011, 1010, 1009, 100].includes(menu_lv_v2)) ) {
-      console.log()
       return
      }
     // const { arr, start_index, end_index } = VirtualList.compute_page_render_list(scrollTop)
