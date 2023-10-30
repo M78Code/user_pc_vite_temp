@@ -5,8 +5,7 @@
 -->
 <template>
   <div ref='details_tab' class="row vir-details-tab" v-cloak>
-
-      <!-- <q-tabs
+      <q-tabs
         v-model="viewTab"
         inline-label
         narrow-indicator
@@ -17,32 +16,13 @@
       <q-tab  :ripple="false" label="历史战绩" name="lszj" />
       <q-tab  name="bet" :ripple="false" label="投注"/>
       <q-tab  name="rank" :ripple="false" label="排行榜"/>      
-    </q-tabs> -->
+    </q-tabs>
      <!-- 玩法集 -->
     <!-- <div class="menu-s" ref="reset_scroll_dom">
       <div class="menu-item" v-for="(item, i) in data_list" :key="i" @click.self="selete_item(item['id'],$event)" :class="get_details_item == item['id']?'t_color':''">
         {{item.marketName}}
       </div>
     </div> -->
-
-
-
-    <!-- 收起的箭头 -->
-    <div class="fat-btn" @click="change_btn()">
-      <div class="tab-btn" :class="{collapsed:get_fewer != 2}"></div>
-    </div>
-    <!-- 灰色间隔线 -->
-    <div class="menu-third"></div>
-    <!-- 玩法集 -->
-    <div class="menu-s" ref="reset_scroll_dom">
-      <div class="menu-item" v-for="(item, i) in data_list" :key="i" @click.self="selete_item(item['id'],$event)" :class="get_details_item == item['id']?'t_color':''">
-        {{item.marketName}}
-      </div>
-    </div>
-    <!-- 分析icon(详情页面的时候显示分析,在其他页面不显示分析按钮) -->
-    <div v-if="anlyse_show" class="icon-style" @click="analyse_btn">
-      <div :class="[analyse ? 'analyse-icon':'analyse-close-icon']"></div>
-    </div>
   </div>
 </template>
 
@@ -101,9 +81,6 @@ export default defineComponent({
       *监听菜单版本获取最新的二级菜单id
       *
     */
-    watch(()=>MenuData.update_time,()=>{
-      sub_menu_type.value =current_sub_menu.current_sub_menu
-    })
     onMounted(()=>{
      // 延时器
       timer1_ = null;
@@ -206,14 +183,15 @@ export default defineComponent({
     const play_list=()=>{
       // 1.在足球页进入详情需要调用玩法集合接口
       // 2.在赛马页需要调用玩法集合接口
-      if(![1001,1004].includes(sub_menu_type.value.menuId) || route.name == 'virtual_sports_details'){
+      let menuId =  sub_menu_type.value.menuId ||  JSON.parse(sessionStorage.getItem('VR_CURRENT_SUB_MENU')).menuId
+      if(![1001,1004].includes(menuId) || route.name == 'virtual_sports_details'){
         let new_mid = ''
         if(props.batch){
           new_mid = props.batch
         }else{
           new_mid = route.query.mid
         }
-        let params = { sportId: sub_menu_type.value.menuId,mid: new_mid};
+        let params = { sportId: menuId,mid: new_mid};
         api_common.get_category_list(params).then(res =>{
           if(res.code == 200 && res.data){
             data_list.value = lodash.get(res, "data");
@@ -261,7 +239,8 @@ export default defineComponent({
       new_data_list,
       viewTab,
       change_tab,
-      curr_active_tab
+      curr_active_tab,
+      sub_menu_type
     }
   }
 

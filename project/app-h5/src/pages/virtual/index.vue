@@ -159,6 +159,7 @@ const virtual_menu_changed = (tab, i) => {
   // 足蓝跳转到其他虚拟赛种前， 给状态一个标识
   v_menu_changed.value = ([1001, 1004].includes(get_curr_sub_menu_type) ? 'zu_lan_' : '') + Math.random();
   VirtualData.set_current_sub_menu(current_sub_menu.value)
+  // 存缓存到当前菜单信息 避免刷新缓存数据丢失
   // set_curr_sub_menu_type(current_sub_menu.value.menuType || current_sub_menu.value.menuId)
 }
 const get_sub_menu_c_index = () => {
