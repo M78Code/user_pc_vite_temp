@@ -26,26 +26,29 @@
     <!-- 球数 内容 -->
     <template v-else>
         <template v-if="!state.inAnswerQuestion">
-            <match-result-ht  v-for="(item, index) in bigAndSmallBallData" :option="item"
-            :key="'matchResultHtBalls' + index" :source="'bigAndSmallBall'"></match-result-ht>
+            <match-result-ht v-for="(item, index) in bigAndSmallBallData" :option="item" :key="'matchResultHtBalls' + index"
+                :source="'bigAndSmallBall'"></match-result-ht>
         </template>
-        <answer-questions v-else title="训练营"></answer-questions>
+        <template v-else>
+            <answer-questions title="训练营" :questionsData="questionsData">
+            </answer-questions>
+        </template>
+        <!-- <div v-if="state.inAnswerQuestion" class="ht-congrats">恭喜，您已进阶为足球大师</div> -->
 
-        <div v-if="state.inAnswerQuestion" class="ht-congrats">恭喜，您已进阶为足球大师</div>
-
-        <div class="ht-handle">
+        <!-- 没有进入答题 或 没有点击选项回答时 -->
+        <div v-if="!state.inAnswerQuestion" class="ht-handle">
             <div class="ht-button" @click='go_back'>
                 实战来一注
             </div>
-            <div class="ht-button default" @click="() => { state.inAnswerQuestion = !state.inAnswerQuestion }">
+            <div class="ht-button default" @click="() => { state.inAnswerQuestion = true }">
                 模拟先练习
             </div>
         </div>
 
-        <div v-if="state.inAnswerQuestion" class="ht-again">
+        <!-- <div v-if="state.inAnswerQuestion" class="ht-again">
             再学一次
             <div class="icon"></div>
-        </div>
+        </div> -->
 
     </template>
 </template>
@@ -60,6 +63,58 @@ import { scrollMenu } from "src/base-h5/components/menu/app-h5-menu/utils.js"
 
 const switchMenu = ['让球', '大小球']
 const slideMenu = ['0', '0/0.5', '0.5', '0.5/1', '1球', '1/1.5球', '1.5/2球',]
+const questionsData = [
+    {
+        questionsType: 0, // 0 - 单选
+        homeTeam: '皇马',
+        awayTeam: '巴萨',
+        matchResult: '1-1',
+        questions: '哪个选项能全赢?',
+        options: [
+            {
+                label: 'A',
+                option: '大2.5',
+                isRight: 'error',
+                odds: '1.99',
+                isWin: false
+            },
+            {
+                label: 'B',
+                option: '小2.5',
+                isRight: 'success',
+                odds: '1.98',
+                isWin: true
+            }
+        ],
+        note: '进球数2，小于2.5',
+        note1: '故投注<span>小2.5</span>能全赢'
+    },
+    {
+        questionsType: 0, // 0 - 单选
+        homeTeam: '曼城',
+        awayTeam: '曼联',
+        matchResult: '1-1',
+        questions: '哪个选项能赢一半?',
+        options: [
+            {
+                label: 'A',
+                option: '大2/2.5',
+                isRight: 'error',
+                odds: '1.99',
+                isWin: false
+            },
+            {
+                label: 'B',
+                option: '小2/2.5',
+                isRight: 'success',
+                odds: '1.98',
+                isWin: true
+            }
+        ],
+        note: '进球数2，小于2/2.5',
+        note1: '基本对分原理，投注<span>小2/2.5</span>才能赢一半，投注<span>大2/2.5</span>则输一半'
+    }
+]
 const bigAndSmallBallData = [
     {
         ballNumber: '',
@@ -176,7 +231,7 @@ const props = defineProps({})
 const state = reactive({
     currentSwitchValue: 0, // 让球：0 大小球：1 对应switchMenu index
     currentSlideValue: 0, // 球数 目前slideMenu写死
-    inAnswerQuestion: false // 是否进入了答题状态
+    inAnswerQuestion: false, // 是否进入了答题状态
 })
 
 // 返回上一页
@@ -186,6 +241,7 @@ const go_back = () => {
 
 const switchHandle = (val) => {
     state.currentSwitchValue = val
+    state.inAnswerQuestion = false // 切换swtich 重置答题状态
 }
 
 const slideHandle = (val, e) => {
