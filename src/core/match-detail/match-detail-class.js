@@ -26,7 +26,7 @@ export default class MatchDetailCtr {
     //玩法集 对象
     this.category_obj={}
     //当前玩法集ID 
-    this.current_category_id = SessionStorage.get('DETAIL_TAB_ID') ? SessionStorage.get('DETAIL_TAB_ID') : '0';
+    this.current_category_id =  SessionStorage.get('DETAIL_TAB_ID') || '0';
     //当前显示 玩法 数组 
     this.current_category_plays=[]
     // ===========H5页面需要存储的数据===============

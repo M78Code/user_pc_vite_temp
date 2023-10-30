@@ -64,11 +64,11 @@ export default defineComponent({
     watch(
       () => props.ol_data,
       (n) => {
-        if(Math.ceil(Number(n.ov /1000)) > Math.ceil(Number(cacheData /1000))){
+        if(Math.ceil(Number(n.ov /1000)) > Math.ceil(Number(component_data.cacheData /1000))){
           component_data.status = 10;
           component_data.cacheData = n.ov;
         }
-        else if(Math.ceil(Number(n.ov /1000)) < Math.ceil(Number(cacheData /1000))){
+        else if(Math.ceil(Number(n.ov /1000)) < Math.ceil(Number(component_data.cacheData /1000))){
           component_data.status = -10;
           component_data.cacheData = n.ov;
         }

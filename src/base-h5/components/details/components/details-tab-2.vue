@@ -50,8 +50,8 @@ export default defineComponent({
     const router = useRouter()
     // 一键收起状态: 1.全展开 2.全收起 3.部分展开 1和3箭头向上
     const get_fewer = ref(lodash.get(SessionStorage.get("SET_FEWER")) || 1)
-    const matchDetailCtr = ref(MatchDetailCalss)
-    const current_category_id = ref(SessionStorage.get("DETAIL_TAB_ID"))
+    const matchDetailCtr = ref(MatchDetailCalss)     
+    const current_category_id = ref(MatchDetailCalss.current_category_id)
     const data = reactive({
       emitters: [],
       timer1_: null,
@@ -74,8 +74,8 @@ export default defineComponent({
     const match_id = computed(() => {
       return route.params.mid || get_detail_data.mid
     });
-    watch(() => matchDetailCtr.value.details_data_version.version, (val, old) => {
-      current_category_id.value = lodash.get(matchDetailCtr.value, "current_category_id", SessionStorage.get("DETAIL_TAB_ID"))
+    watch(() => MatchDetailCalss.details_data_version.version, (val, old) => {
+      current_category_id.value = MatchDetailCalss.current_category_id || '0'
     })
    
     onMounted(() => {
