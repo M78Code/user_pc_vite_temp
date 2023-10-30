@@ -2,7 +2,7 @@
  * @Author: rise
  * @Date: 2023-10-22 17:03:22
  * @LastEditors: rise
- * @LastEditTime: 2023-10-27 22:10:26
+ * @LastEditTime: 2023-10-30 11:57:27
  * @Description:  
 -->
 <template>
@@ -72,7 +72,7 @@ const switchData = [
                 return UserCtr.set_theme(val)
             }
             return item;
-        })
+        }).reverse()
     },
 ]
 </script>
