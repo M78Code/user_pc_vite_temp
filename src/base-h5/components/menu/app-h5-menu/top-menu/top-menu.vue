@@ -6,11 +6,20 @@
  */
 <template>
     <div>
-        <div class="main-wrap flex">
+        <TopHeader :title="menu_lv2.title" v-if="!Array.isArray(menu_lv2) && [300,2000,5000].includes(+menu_lv2?.mi)">
+            <template #right>
+                <div class="main-menu-right">
+                    <span class="main-menu-right-symbol">￥</span>
+                    <span class="main-menu-right-money">{{ format_money2(balance) }}</span>
+                </div>
+            </template>
+        </TopHeader>
+        <div class="main-wrap flex" v-else>
             <!--  返回按鈕  -->
             <slot name="menu-left">
                 <div class="goback-icon-wrapper column justify-center" @click="router.back()">
-                    <div class="img" :style="compute_css_obj('menu-go-back-icon')"></div>
+                    <!-- <div class="img" :style="compute_css_obj('menu-go-back-icon')"></div> -->
+                    <img class="img" :src="back" />
                 </div>
             </slot>
             <div v-show="false">   {{MenuData.update_time}} {{UserCtr.user_version}}</div>
@@ -36,14 +45,15 @@
 <script setup>
 import lodash_ from "lodash";
 import { onMounted, reactive, ref, watch } from "vue";
+import back from "./img/back.svg";
 import { useRouter } from "vue-router";
 import { format_money2 } from "src/core/format/index.js";
 import { i18n_t, compute_css_obj, MenuData,UserCtr } from "src/core/index.js";
 import { get_sport_menu } from "./top-list";
 import { DateTab } from 'src/base-h5/components/menu/app-h5-menu/index';
 import { dateTabList } from "src/base-h5/components/menu/app-h5-menu/utils";
-
-// const dataList = dateTabList(new Date());
+import {  menu_lv2 } from 'src/base-h5/mixin/menu.js'
+import TopHeader from './top-header.vue';
 
 const router = useRouter();
 
@@ -70,6 +80,9 @@ const menu_list = reactive([
         code:"champion"
     },
 ])
+/**
+ * 早盘串关日期格式
+ */
 const dataList = reactive({
     3:dateTabList(new Date()),
     6:dateTabList(new Date(new Date().getTime()+24*60*60*1000),{name:"今日",val:new Date()})
@@ -109,7 +122,7 @@ const set_menu_lv1 = item => {
     display: flex;
     align-items: center;
     color: #414655;
-    padding: 0 0.05rem;
+    padding: 0 0.14rem;
     transition: padding-top 0.3s;
     // position: absolute;
     // top: 0;
@@ -123,8 +136,7 @@ const set_menu_lv1 = item => {
 
     .goback-icon-wrapper {
         height: 0.14rem;
-        padding-left: 0.09em;
-
+                height: 0.36rem;
         .img {
             width: 0.08rem;
             height: 0.14rem;
@@ -280,33 +292,7 @@ const set_menu_lv1 = item => {
         }
     }
 
-    .main-menu-right {
-        max-width: 0.87rem;
-        height: 0.22rem;
-        line-height: 0.22rem;
-        border-radius: 25px;
-        background: var(--q-gb-bg-c-18);
-        color: var(--q-gb-bd-c-2);
-        text-align: center;
-        margin-right: 0.09rem;
-        display: flex;
-        padding: 0 0.1rem 0 0.03rem;
-        .main-menu-right-symbol{
-            font-family: 'Akrobat';
-            font-style: normal;
-            font-weight: 600;
-        }
-        .main-menu-right-money{
-            font-family: 'Akrobat';
-            font-style: normal;
-            font-weight: 700;
-            flex: 1;
-            line-height: 0.26rem;
-            overflow:hidden;
-            text-overflow:ellipsis;
-            white-space:nowrap;
-        }
-    }
+
 
     .activity-logo {
         display: block;
@@ -327,4 +313,32 @@ const set_menu_lv1 = item => {
         right: 0.42rem;
         top: 0.06rem;
     }
-}</style>
+}
+.main-menu-right {
+        max-width: 0.87rem;
+        height: 0.22rem;
+        line-height: 0.22rem;
+        border-radius: 25px;
+        float: right;
+        background: var(--q-gb-bg-c-18);
+        color: var(--q-gb-bd-c-2);
+        text-align: center;
+        display: flex;
+        padding: 0 0.1rem 0 0.03rem;
+        .main-menu-right-symbol{
+            font-family: 'Akrobat';
+            font-style: normal;
+            font-weight: 600;
+        }
+        .main-menu-right-money{
+            font-family: 'Akrobat';
+            font-style: normal;
+            font-weight: 700;
+            flex: 1;
+            line-height: 0.26rem;
+            overflow:hidden;
+            text-overflow:ellipsis;
+            white-space:nowrap;
+        }
+    }
+</style>

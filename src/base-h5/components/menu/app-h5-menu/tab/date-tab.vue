@@ -2,7 +2,7 @@
  * @Author: rise
  * @Date: 2023-10-20 16:27:18
  * @LastEditors: rise
- * @LastEditTime: 2023-10-30 15:29:52
+ * @LastEditTime: 2023-10-30 16:00:35
  * @Description:  
 -->
 <template>
@@ -80,13 +80,14 @@
                 height: 100%;
                 flex-shrink: 0;
                 text-align: center;
-                font-weight: 500;
+                font-weight: 400;
                 // &:first-child {
                 //     width: 0.4rem;
                 // }
                 &.active {
                     color: var(--q-gb-t-c-1);
                     position: relative;
+                    font-weight: 500;
                     &::after{
                       content: "";
                       position: absolute;

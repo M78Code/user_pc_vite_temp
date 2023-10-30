@@ -60,7 +60,7 @@ import { compute_css_obj, MenuData, MatchDataWarehouse_H5_List_Common as MatchDa
 import { is_scroll_ball, update_time, is_export, is_mix,is_results, is_kemp, is_jinzu, menu_type } from 'src/base-h5/mixin/menu.js'
 import { get_sport_menu } from "../top-menu/top-list";
 import {scrollMenu} from "../utils";
-
+import {  menu_lv2 } from 'src/base-h5/mixin/menu.js'
 const route = useRoute();
 const router = useRouter();
 const emitters = ref({});
@@ -81,15 +81,15 @@ onMounted(() => {
  * 二级菜单事件
  */
  async function set_menu_lv2(item = {},event) {
-  if(item.mi == 300){
-    return router.push({ name: "virtual_sports" });
-  }
-  if(item.mi == 2000){
-    return router.push({ name: "esports_sports" });
-  }
-  if(item.mi == 5000){
-    return router.push({ name: "collect" });
-  }
+  // if(item.mi == 300){
+  //   return router.push({ name: "virtual_sports" });
+  // }
+  // if(item.mi == 2000){
+  //   return router.push({ name: "esports_sports" });
+  // }
+  // if(item.mi == 5000){
+  //   return router.push({ name: "collect" });
+  // }
 
   // 选中后点击无效
   if (item.mi == MenuData.current_lv_2_menu_mi) return
@@ -102,7 +102,6 @@ onMounted(() => {
 watch(()=> MenuData.current_lv_1_menu_mi.value,() => {
   set_menu_mi_change_get_api_data()
 })
-
 // 菜单变化页面请求数据
 const set_menu_mi_change_get_api_data = () => {
   // 今日 / 滚球/ 冠军 没有 三级
