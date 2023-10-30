@@ -109,7 +109,6 @@ const state = reactive({
 
 const selectOptionHandle = (v) => {
     if (state.afterAnswerQuestion) return
-    console.log(v)
     if (v.isRight === 'success') state.recordSuccess++
     state.afterAnswerQuestion = v.isRight
     state.currentAnswer++

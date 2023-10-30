@@ -18,7 +18,7 @@ class VirtualData {
     this.sub_menu_i = 0
     this.tab_item_i = 0
     // 当前选中的菜单
-    this.current_sub_menu = {}
+    this.current_sub_menu =  {}
     // 当前选中的联赛
     this.current_league = {}
     // 当前选中的批次
@@ -59,6 +59,7 @@ class VirtualData {
 
   // 设置当前选中的联赛
   set_current_sub_menu (current_sub_menu) {
+    sessionStorage.setItem('VR_CURRENT_SUB_MENU',JSON.stringify(current_sub_menu))
     this.current_sub_menu = current_sub_menu
   }
 

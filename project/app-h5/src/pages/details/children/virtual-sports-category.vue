@@ -128,6 +128,8 @@ export default defineComponent({
       pre_params_mid:'',
     
       created_init_event:false,
+      // 玩法集是否已切换过
+      match_play_item_changed: false,
     });
     // #TODO VUEX
     // computed:{
@@ -146,12 +148,12 @@ export default defineComponent({
     //   'get_is_user_refreshing',
     //   'get_is_show_details_analyse',
     // ]),
-
+    const get_menu_type = VirtualData.current_sub_menu
     //详情页是否显示统计 
     const  get_is_show_details_analyse =ref(MatchDetailCalss.is_show_details_analyse) 
     const get_is_user_refreshing = ref(VirtualData.is_user_refreshing)
     let get_video_timer = null
-     // 正在跳转详情的赛事  
+     // 正在跳转详情的赛事 玩法集id 
      const  get_details_item =ref(MatchDetailCalss.details_item)
      //获取赛事ID
      const  get_current_mid =ref(route.params.mid)
@@ -641,7 +643,7 @@ export default defineComponent({
       let mid
       if(route.name == "virtual_sports"){
         mid = get_current_mid.value
-      }else if(route.name == "virtual_sports_details"){
+      }else if(route.name == "virtual_sports_details" ||  route.name == "virtual_sports_category"){
         mid = route.query.mid
       }
 
@@ -834,6 +836,7 @@ export default defineComponent({
       (val) => {
         if (val) {
           data_list.value = MatchDetailCalss.category_arr
+          get_details_item.value = MatchDetailCalss.details_item
         }
       },
       { deep: true }

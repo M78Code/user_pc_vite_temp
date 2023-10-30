@@ -258,7 +258,7 @@ export default defineComponent({
         }
         // 只有一个玩法集时，及时更新当前玩法集id
         if (lodash.get(data,'length') == 1) {
-          // set_details_item(data[0].id)
+          MatchDetailCalss.set_details_item(data[0].id)
           matchDetailCtr.current_category_id = data[0].id
         }
         // 玩法个数不及3个时，提前退出
@@ -617,6 +617,7 @@ export default defineComponent({
   }
  .details-tab{
   border-top:0.5px solid #F2F2F6;
+  background: var(--q-gb-bg-c-15);
  } 
 </style>
 <style lang="scss">
