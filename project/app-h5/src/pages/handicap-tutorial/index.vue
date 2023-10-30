@@ -89,7 +89,6 @@ const slideHandle = (val, e) => {
     const scrollContainer = document.getElementsByClassName('ht-scroll')[0]
     const contentContainer = document.getElementsByClassName('ht-content')[val]
     const topH = contentContainer.offsetTop - scrollContainer.offsetTop
-    console.log(topH)
     scrollContainer.scrollTop = topH
 }
 
@@ -97,7 +96,6 @@ const handleScroll = (e) => {
     const index = state.htContentHeightList.findIndex(v => v > e.target.scrollTop) - 1
     if (state.currentSlideValue === index) return
     if (index < 0) return
-    console.log('滚动位置：', e.target.scrollTop, index);
     const dom = document.getElementsByClassName('slide-item')[index]
     state.currentSlideValue = index
     scrollMenu(dom, ".ht-slide-box", ".slide-item-active");
