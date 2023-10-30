@@ -1,5 +1,5 @@
 <template>
-    <navigation-bar title="盘口教程"></navigation-bar>
+    <navigation-bar :title="i18n_t('app_h5.cathectic.handicap_tutorial')"></navigation-bar>
 
     <!-- '让球', '大小球' -->
     <div class="ht-switch-box">
@@ -30,18 +30,18 @@
                 :source="'bigAndSmallBall'"></match-result-ht>
         </template>
         <template v-else>
-            <answer-questions title="训练营" :questionsData="questionsData">
+            <answer-questions :title="i18n_t('app_h5.handicap_tutorial.training_camp')" :questionsData="questionsData">
             </answer-questions>
         </template>
-        <!-- <div v-if="state.inAnswerQuestion" class="ht-congrats">恭喜，您已进阶为足球大师</div> -->
+        <!-- <div v-if="state.inAnswerQuestion" class="ht-congrats">{{i18n_t('app_h5.handicap_tutorial.actual_combat')}}</div> -->
 
         <!-- 没有进入答题 或 没有点击选项回答时 -->
         <div v-if="!state.inAnswerQuestion" class="ht-handle">
             <div class="ht-button" @click='go_back'>
-                实战来一注
+                {{i18n_t('app_h5.handicap_tutorial.actual_combat')}}
             </div>
             <div class="ht-button default" @click="() => { state.inAnswerQuestion = true }">
-                模拟先练习
+                {{i18n_t('app_h5.handicap_tutorial.practise')}}
             </div>
         </div>
 
@@ -59,7 +59,7 @@ import navigationBar from 'src/base-h5/components/tutorial/navigation-bar/index.
 import matchResultHt from 'src/base-h5/components/tutorial/match-result-ht/index.vue'
 import answerQuestions from 'src/base-h5/components/tutorial/answer-questions/index.vue'
 import { scrollMenu } from "src/base-h5/components/menu/app-h5-menu/utils.js"
-import {questionsData, bigAndSmallBallData, handicapData} from "./config.json"
+import {questionsData, bigAndSmallBallData, handicapData} from "./config.js"
 
 const switchMenu = ['让球', '大小球']
 const slideMenu = ['0', '0/0.5', '0.5', '0.5/1', '1球', '1/1.5球', '1.5/2球',]

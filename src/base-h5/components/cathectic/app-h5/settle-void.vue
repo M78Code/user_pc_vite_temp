@@ -9,17 +9,17 @@
     <!-- <div class="img-s" :style="compute_css_obj('no-record')"></div> -->
     <img :src="compute_local_project_file_path('/image/bet/no-data.png')">
     <template>
-      <p v-if="BetRecordClass.selected === 0">您暂无未结算数据</p>
-      <p v-else-if="BetRecordClass.selected == 1">您暂无预约中数据</p>
-      <p v-else-if="BetRecordClass.selected == 2">您暂无已失效数据</p>
-      <p v-else="BetRecordClass.selected == 3">您暂无已结算数据</p>
+      <p v-if="BetRecordClass.selected === 0">{{i18n_t("app_h5.cathectic.no_data_unsettle")}}</p>
+      <p v-else-if="BetRecordClass.selected == 1">{{i18n_t("app_h5.cathectic.no_data_pre")}}</p>
+      <p v-else-if="BetRecordClass.selected == 2">{{i18n_t("app_h5.cathectic.no_data_invalid")}}</p>
+      <p v-else="BetRecordClass.selected == 3">{{i18n_t("app_h5.cathectic.no_data_settle")}}</p>
     </template>
   </div>
 </template>
 
 <script setup>
 import BetRecordClass from "src/core/bet-record/bet-record.js";
-import { utils,compute_css_obj, compute_local_project_file_path } from 'src/core/index.js'
+import { utils, i18n_t, compute_css_obj, compute_local_project_file_path } from 'src/core/index.js'
 </script>
 
 <style lang="scss" scoped>
