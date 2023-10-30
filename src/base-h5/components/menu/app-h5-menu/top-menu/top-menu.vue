@@ -24,7 +24,8 @@
                 </template>
             </div>
             <div class="main-menu-right">
-                ￥{{ format_money2(balance) }}
+                <span class="main-menu-right-symbol">￥</span>
+                <span class="main-menu-right-money">{{ format_money2(balance) }}</span>
             </div>
         </div>
         <div v-if="[3,6].includes(MenuData.current_lv_1_menu_mi.value)">
@@ -118,7 +119,7 @@ const set_menu_lv1 = item => {
 
     .goback-icon-wrapper {
         height: 0.14rem;
-        padding-left: 0.15rem;
+        padding-left: 0.09em;
 
         .img {
             width: 0.08rem;
@@ -147,21 +148,21 @@ const set_menu_lv1 = item => {
         overflow: hidden;
         overflow-x: auto;
         //   margin-left: 0.15rem;
-
+        
         &.esport,
         &.is_export {
             background-color: transparent;
         }
 
         .m-menu-item {
+            font-family: 'PingFang SC';
             flex: 1;
-            max-width: 0.5rem;
+            max-width: 0.44rem;
             position: relative;
             height: 0.2rem;
-            font-size: 0.16rem;
-            display: flex;
-            justify-content: center;
-            font-size: 14px;
+            // display: flex;
+            text-align: center;
+            font-size: 0.14rem;
             color: var(--q-gb-t-c-4);
             &.current {
                 .i-title {
@@ -276,14 +277,31 @@ const set_menu_lv1 = item => {
     }
 
     .main-menu-right {
-        width: 0.87rem;
+        max-width: 0.87rem;
         height: 0.22rem;
         line-height: 0.22rem;
         border-radius: 25px;
-        background: var(--q-gb-bg-c-10);
+        background: var(--q-gb-bg-c-18);
         color: var(--q-gb-bd-c-2);
         text-align: center;
-        margin-right: 0.14rem;
+        margin-right: 0.09rem;
+        display: flex;
+        padding: 0 0.1rem 0 0.03rem;
+        .main-menu-right-symbol{
+            font-family: 'Akrobat';
+            font-style: normal;
+            font-weight: 600;
+        }
+        .main-menu-right-money{
+            font-family: 'Akrobat';
+            font-style: normal;
+            font-weight: 700;
+            flex: 1;
+            line-height: 0.26rem;
+            overflow:hidden;
+            text-overflow:ellipsis;
+            white-space:nowrap;
+        }
     }
 
     .activity-logo {
