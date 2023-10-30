@@ -45,9 +45,19 @@ const router = createRouter({
           //   component: () => import("../activity-page/activity-task/index.vue")
           // },
         {
-          path: "/virtual",
+          path: "/virtual",  // vr体育
           name: "virtual_sports",
           component: () => import("../pages/virtual/index.vue"),
+        },
+        {
+          path: "/esports", // 电竞
+          name: "esports_sports",
+          component: () => import("../pages/virtual/index.vue"),
+        },
+        {
+          path: "/collect", // 收藏
+          name: "collect",
+          component: () => import("../pages/collect/index.vue"),
         },
         {
           path: "/menu",

@@ -51,7 +51,7 @@
 <script setup>
 import scrollNav from "./scroll-nav.vue";
 import lodash_ from "lodash";
-import { useRoute } from "vue-router";
+import { useRoute,useRouter } from "vue-router";
 import MatchFold from 'src/core/match-fold'
 import BaseData from "src/core/base-data/base-data.js";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
@@ -62,6 +62,7 @@ import { get_sport_menu } from "../top-menu/top-list";
 import {scrollMenu} from "../utils";
 
 const route = useRoute();
+const router = useRouter();
 const emitters = ref({});
 //菜单容器是否收起
 const menu_wrap_simple = ref(false);
@@ -80,6 +81,16 @@ onMounted(() => {
  * 二级菜单事件
  */
  async function set_menu_lv2(item = {},event) {
+  if(item.mi == 300){
+    return router.push({ name: "virtual_sports" });
+  }
+  if(item.mi == 2000){
+    return router.push({ name: "esports_sports" });
+  }
+  if(item.mi == 5000){
+    return router.push({ name: "collect" });
+  }
+
   // 选中后点击无效
   if (item.mi == MenuData.current_lv_2_menu_mi) return
   MenuData.set_current_lv_2_menu_mi(item)
