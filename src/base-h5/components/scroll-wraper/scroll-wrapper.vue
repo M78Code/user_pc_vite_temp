@@ -171,13 +171,6 @@ const get_is_static = () => {
   return is_kemp.value || is_results.value
 }
 // 计算每个赛事id 对应的 容器高度 top 值
-const get_match_top_by_mid1 = (mid) => {
-  const info = VirtualList.match_mid_map_height.value
-  const key = VirtualList.get_match_height_key(mid)
-  const top = info[key].top
-  return top / 100
-}
-
 const get_match_top_by_mid = (mid) => {
   let r = 0;
   if (mid in VirtualList.mid_top_map) {
@@ -185,6 +178,15 @@ const get_match_top_by_mid = (mid) => {
     r = +r.toFixed(6);
   }
   return r;
+}
+
+const get_match_top_by_mid1 = (mid) => {
+  const key = VirtualList.get_match_height_key(mid)
+  let r = 0;
+  if (key in VirtualList.mid_top_map) {
+    r = VirtualList.mid_top_map[key].toFixed(6);
+  }
+  return r / 100;
 }
 
 watch(() => props.is_goto_top_random, () => {

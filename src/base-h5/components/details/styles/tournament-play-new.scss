@@ -480,7 +480,7 @@
           -webkit-transform-origin: left top;
           transform-origin: left top;
           border: 1px solid rgb(207, 207, 207);
-          border-radius: 0.16rem;
+          border-radius: 0; //复刻版不需要 圆角 todo
           overflow: hidden;
         }
       }

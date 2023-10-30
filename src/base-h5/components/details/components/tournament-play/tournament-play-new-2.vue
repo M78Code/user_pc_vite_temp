@@ -809,12 +809,11 @@ export default defineComponent({
     .show_border_r{
       :deep(.hairline-border,), :deep(.item-wrap) {
       background-color: #ffffff;
-      
       }
     }
     .hide_border_r{
       :deep(.hairline-border,), :deep(.item-wrap) {
-      background-color: #F8F9FA;
+      background-color: #F8F9FA !important;
       border-radius:0 0 0.04rem 0.04rem!important;
       border-top:0.5px solid #F2F2F6;
       }
@@ -840,9 +839,11 @@ export default defineComponent({
         -webkit-transform-origin: left top;
         transform-origin: left top;
         border: 1px solid #cfcfcf;// var(--q-color-border-color-24);
-        border-radius: 0.16rem;
+        border-radius: 0 !important;
         overflow: hidden;
       }
+
+      
     }
   }
 }

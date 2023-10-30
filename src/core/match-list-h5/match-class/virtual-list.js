@@ -35,31 +35,33 @@ class VirtualList {
    *  1: 初始化时，赋值虚拟高度即 默认高度 40 
    *  2：赛事折叠/展开/次要玩法展开/次要玩法收起 均需更新对应赛事 高度（即真实高度）
    */
-  set_match_mid_map_base_info (match, config = { top: 0, show_league_height: 0, playing_title_height: 0, main_handicap_height: 0, }) {
+  set_match_mid_map_base_info (match, config = { show_league_height: 26, playing_title_height: 20, main_handicap_height: 133, }) {
     const key = this.get_match_height_key(match.mid)
-    const { top, playing_title_height, show_league_height, main_handicap_height } = config
+    const { playing_title_height, show_league_height, main_handicap_height } = config
     Object.assign(this.match_mid_map_height.value, {
       [key]: {
-        top,
         show_league_height,
         playing_title_height,
         main_handicap_height
       }
     })
-    // console.log(this.match_mid_map_height.value)
   }
 
-  get_match_total_height (match) {
+  get_match_total_height (match, index) {
     const { is_show_league, mid } = match
     const key = this.get_match_height_key(mid)
     const fold_key = MatchFold.get_match_fold_key(match)
     const fold_info = MatchFold.match_mid_fold_obj.value[fold_key]
     const { show_league_height = 0, playing_title_height = 0, main_handicap_height = 0 } = this.match_mid_map_height.value[key]
     let total = 0
-    // 联赛标题高度 
-    if (is_show_league) total = show_league_height + playing_title_height
-    // 赛事卡片高度
-    if (!fold_info.show_card) total += main_handicap_height
+    // 联赛标题高度  31: 联赛之间的 margin-bottom 5px + 联赛高度 26px
+    if (is_show_league) {
+      total += !fold_info.show_card ? show_league_height + playing_title_height + main_handicap_height : 31
+    } else {
+      // 赛事卡片高度
+      if (!fold_info.show_card) total += main_handicap_height
+    }
+    if (index === 0) total += 25
     return total
   }
 
@@ -69,6 +71,7 @@ class VirtualList {
    * @returns 
    */
   compute_page_render_list (scrollTop = 0) {
+    this.compute_container_total_height()
     // 可视区高度
     let end_index = 0
     let start_index = Math.ceil(scrollTop / 31)
@@ -77,31 +80,38 @@ class VirtualList {
     // 折叠对象
     const fold_data = MatchFold.match_mid_fold_obj.value
     // 高度映射 对象
-    const source_data = this.match_mid_map_height.value
     MatchMeta.complete_matchs.some((match, index) => {
       const { mid, is_show_league } = match
       const fold_key = MatchFold.get_match_fold_key(match)
       const fold_info = fold_data[fold_key]
       const virtual_key = this.get_match_height_key(mid)
       // 赛事高度
-      const total = this.get_match_total_height(match)
+      const total = this.get_match_total_height(match, index)
       // 该赛事是否显示
-      if (is_show_league || !fold_info.show_card) {
+      if (is_show_league || fold_info.show_card) {
         // 赛事偏移量
+        this.mid_top_map[virtual_key] = accrual_height
         accrual_height += total
-        Object.assign(source_data, {
-          [virtual_key]: { top: accrual_height }
-        })
         match_datas.push(match)
       }
       // 退出循环
       if (match_datas.length >= 18) return true
     })
+   
     return { 
       arr: match_datas, 
       start_index, 
       end_index 
     }
+  }
+
+  compute_container_total_height1 () {
+    let total_height = 0
+    MatchMeta.complete_matchs.forEach((match, index) => {
+      const total = this.get_match_total_height(match, index)
+      total_height += total
+    })
+    this.container_total_height = total_height / 100;
   }
 
   /**

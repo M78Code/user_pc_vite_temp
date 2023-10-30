@@ -89,7 +89,6 @@
             font-size: 12px;
             font-weight: 500;
             li{
-                line-height:  0.24rem;
                 flex: 1;
                 text-align: center;
                 // color: var(--q-gb-bd-c-4);

@@ -50,8 +50,8 @@ export default defineComponent({
     const router = useRouter()
     // 一键收起状态: 1.全展开 2.全收起 3.部分展开 1和3箭头向上
     const get_fewer = ref(lodash.get(SessionStorage.get("SET_FEWER")) || 1)
-    const matchDetailCtr = ref(MatchDetailCalss)
-    const current_category_id = ref(SessionStorage.get("DETAIL_TAB_ID"))
+    const matchDetailCtr = ref(MatchDetailCalss)     
+    const current_category_id = ref(MatchDetailCalss.current_category_id)
     const data = reactive({
       emitters: [],
       timer1_: null,
@@ -74,8 +74,8 @@ export default defineComponent({
     const match_id = computed(() => {
       return route.params.mid || get_detail_data.mid
     });
-    watch(() => matchDetailCtr.value.details_data_version.version, (val, old) => {
-      current_category_id.value = lodash.get(matchDetailCtr.value, "current_category_id", SessionStorage.get("DETAIL_TAB_ID"))
+    watch(() => MatchDetailCalss.details_data_version.version, (val, old) => {
+      current_category_id.value = MatchDetailCalss.current_category_id || '0'
     })
    
     onMounted(() => {
@@ -106,12 +106,18 @@ export default defineComponent({
       if(matchDetailCtr.value.current_category_id == uId) return false;
       // 移动当前玩法的位置
       utils.tab_move2(index, data.reset_scroll_dom)
-      // set_details_item(uId);
+      MatchDetailCalss.set_details_item(uId);
       // set_subscript_game_index(index)
       let search_term = route.query.search_term
       // 重新加载category组件，触发重新请求
-      router.replace({name: 'category', params: {mid: match_id.value, mcid: uId}, query: {search_term: search_term}})
-      // router.replace({name: 'virtual_sports_category', params: {mid: route.query.mid, mcid: uId}, query: {search_term: search_term}})
+      //如果是常规详情玩法集
+      if(route.name == 'category'){
+        router.replace({name: 'category', params: {mid: match_id.value, mcid: uId}, query: {search_term: search_term}})
+      }
+      //如果是vr详情玩法集
+      else{
+        router.replace({name: 'virtual_sports_category', query: {mid: route.query.mid, mcid: uId}})
+      }
       // 点击玩法对页面吸顶tab做高度处理
       useMittEmit(MITT_TYPES.EMIT_DETAILILS_TAB_CHANGED);
       // 记录当前玩法集ID和玩法集合
@@ -179,7 +185,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 .details-tab {
   min-height: 0.4rem;
-  // background-color: var(--q-gb-bg-c-15);
+  background-color: var(--q-gb-bg-c-15);
   // border-bottom: 0.01rem solid var(--q-gb-bd-c-5);
 }
 

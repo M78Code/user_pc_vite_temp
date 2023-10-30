@@ -73,7 +73,6 @@ const set_bet_order_list = (bet_list, is_single) => {
     if (!is_single) {
         order_list = single_bet.map(obj => {
             let bet_s_list = []
-            console.error("串关投注信息",bet_list)
             bet_list.forEach(item => {
                 let bet_s_obj = {
                     "sportId": item.sportId,   // 赛种id
@@ -97,6 +96,7 @@ const set_bet_order_list = (bet_list, is_single) => {
                     "playId": item.playId,   // 玩法id
                     "dataSource": item.dataSource,   // 数据源
                 }
+               
                 bet_s_list.push(bet_s_obj)
             })
 
@@ -110,42 +110,48 @@ const set_bet_order_list = (bet_list, is_single) => {
         })
 
     } else {
-        order_list = bet_list.map((item, index) => {
-            let obj = {
-                "seriesSum": 1,   // 串关数量
-                "seriesType": 1,  // 串关类型(单关、串关)  1-单关, 2-串关 3, 冠军
-                "seriesValues": "单关",  // 串关值 2串1 3串1...
-                "fullBet": 0,   // 是否满额投注，1：是，0：否
-                "orderDetailList": [
-                    {
-                        "sportId": item.sportId,   // 赛种id
-                        "matchId": item.matchId,   // 赛事id
-                        "tournamentId": item.tournamentId,   // 联赛id
-                        "scoreBenchmark": "",    // 基准分
-                        "betAmount": BetData.bet_amount,  //投注金额         
-                        "placeNum": item.placeNum, //盘口坑位
-                        "marketId": item.marketId,  //盘口id
-                        "playOptionsId": item.playOptionsId,   // 投注项id
-                        "marketTypeFinally": "EU",     // 欧洲版默认是欧洲盘 HK代表香港盘
-                        "odds": item.odds,  // 赔率 万位
-                        "oddFinally": compute_value_by_cur_odd_type(item.odds, '', '', item.sportId),  //赔率
-                        "playName": item.playName, //玩法名称
-                        "sportName": item.sportName,  // 球种名称
-                        "matchType": item.matchType, // 1 ：早盘赛事 ，2： 滚球盘赛事，3：冠军，4：虚拟赛事，5：电竞赛事
-                        "matchName": item.matchName,   //赛事名称
-                        "playOptionName": item.playOptionName,   // 投注项名称
-                        "playOptions": item.playOptions,   // 投注项配置项
-                        "tournamentLevel": item.tournamentLevel,   // 联赛级别
-                        "playId": item.playId,   // 玩法id
-                        "dataSource": item.dataSource,   // 数据源
-                    }
-                ]
+        debugger
+        let single_list = bet_list.map((item, index) => {
+           let bet_s_obj = {
+                "sportId": item.sportId,   // 赛种id
+                "matchId": item.matchId,   // 赛事id
+                "tournamentId": item.tournamentId,   // 联赛id
+                "scoreBenchmark": "",    // 基准分
+                "betAmount": BetData.bet_amount,  //投注金额         
+                "placeNum": item.placeNum, //盘口坑位
+                "marketId": item.marketId,  //盘口id
+                "playOptionsId": item.playOptionsId,   // 投注项id
+                "marketTypeFinally": "EU",     // 欧洲版默认是欧洲盘 HK代表香港盘
+                "odds": item.odds,  // 赔率 万位
+                "oddFinally": compute_value_by_cur_odd_type(item.odds, '', '', item.sportId),  //赔率
+                "playName": item.playName, //玩法名称
+                "sportName": item.sportName,  // 球种名称
+                "matchType": item.matchType, // 1 ：早盘赛事 ，2： 滚球盘赛事，3：冠军，4：虚拟赛事，5：电竞赛事
+                "matchName": item.matchName,   //赛事名称
+                "playOptionName": item.playOptionName,   // 投注项名称
+                "playOptions": item.playOptions,   // 投注项配置项
+                "tournamentLevel": item.tournamentLevel,   // 联赛级别
+                "playId": item.playId,   // 玩法id
+                "dataSource": item.dataSource,   // 数据源
+            }
+            // 预约投注
+            // 需要用对应的数据 对投注数据进行覆盖
+            bet_s_obj = {
+                ...bet_s_obj,
+                ...BetData.bet_pre_obj[item.playOptionsId]
             }
 
-            console.error("投注信息",obj)
-            return obj
+            return bet_s_obj
 
         }) || []
+        
+        order_list = {
+            "seriesSum": 1,   // 串关数量
+            "seriesType": 1,  // 串关类型(单关、串关)  1-单关, 2-串关 3, 冠军
+            "seriesValues": "单关",  // 串关值 2串1 3串1...
+            "fullBet": 0,   // 是否满额投注，1：是，0：否
+            "orderDetailList": single_list
+        }
     }
 
     return order_list
@@ -291,6 +297,17 @@ const submit_handle = type => {
     // 设置投注中状态
     BetViewDataClass.set_bet_order_status(2)
 
+   
+    // 单关才有预约投注
+     // 是否预约投注  1 预约  0 不预约
+    //  是否合并投注  bet_single_list。length  0:1个 1:多个
+    let pre_type = 0
+    let milt_single = 0
+    if(BetData.is_bet_single){
+        pre_type = BetData.is_bet_pre ? 1 : 0
+        milt_single = BetData.bet_single_list.length > 1 ? 1 : 0
+    }
+
     let params = {
         "userId": UserCtr.get_uid(),
         "acceptOdds": 2,  // 接受赔率变化情况
@@ -299,8 +316,8 @@ const submit_handle = type => {
         "currencyCode": "CNY",  // 币种
         "deviceImei": "",   // 设备imei码，只有手机有，没有不添加
         "fpId": "",  // 指纹id 
-        "openMiltSingle": 1,  // 是否为多个单关 0:1个 1:多个
-        "preBet": 0,  // 1 预约  0 不预约
+        "openMiltSingle": milt_single,  // 是否为多个单关 0:1个 1:多个
+        "preBet": pre_type,  // 1 预约  0 不预约
         seriesOrders: []
     }
     let seriesOrders = []
