@@ -151,7 +151,7 @@ const props = defineProps({
    */
   const search_early_money = () => {
     let params = {orderNo:orderNumberItemList.value.join(',')}
-    // if(orderNumberItemList.length === 0){return}
+    if(orderNumberItemList.length === 0){return}
     api_betting.get_cashout_max_amount_list(params).then(reslut=>{
       let res = {}
       if (reslut.status) {
