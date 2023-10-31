@@ -53,7 +53,25 @@
       "note_11": "主队赢1球，投注主队全输，投注客队全赢",
       "note_12": "主队赢2球，投注主队赢一半，投注客队输一半",
       "note_13": "主队赢3球或以上，投注主队全赢，投注客队全输",
-      "ball": "%s球"
+      "questionsData": {
+        "1": {
+          "note_1": "进球数2，小于2.5",
+          "note_2": "故投注<span>小2.5</span>能全赢"
+        },
+        "2": {
+          "note_1": "进球数2，小于2/2.5",
+          "note_2": "基本对分原理，投注<span>小2/2.5</span>才能赢一半，投注<span>大2/2.5</span>则输一半"
+        }
+      },
+      "ball": "%s球",
+      "big": "大%s",
+      "small": "小%s",
+      "which_win": "哪个选项能全赢?",
+      "which_win_half": "哪个选项能赢一半?",
+      "real_madrid": "皇马",
+      "m_chesester_city": "曼城",
+      "m_chesester_untied": "曼联",
+      "barcelona": "巴萨"
     }
   },
   "ac_rules": {
