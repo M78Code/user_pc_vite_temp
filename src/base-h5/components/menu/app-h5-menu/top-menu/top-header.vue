@@ -4,6 +4,7 @@
             <div class="top-header-left-img" @click="goBack()">
                 <!-- <div class="img" :style="compute_css_obj('menu-go-back-icon')"></div> -->
                 <img class="img" :src="back" />
+                <!-- <span class="icon-arrow-left"></span> -->
             </div>
         </div>
         <div class="top-header-content">
