@@ -41,6 +41,9 @@
         <div v-if="[3,6].includes(MenuData.current_lv_1_menu_mi.value)">
             <DateTab  :dataList="dataList[MenuData.current_lv_1_menu_mi.value]"  />
         </div>
+        <div v-if="[2000].includes(MenuData.current_lv_2_menu_mi)">
+            <DateTab  :dataList="dataList[MenuData.current_lv_2_menu_mi]"  />
+        </div>
     </div>
 </template>
 <script setup>
@@ -86,7 +89,8 @@ const menu_list = reactive([
  */
 const dataList = reactive({
     3:dateTabList(new Date()),
-    6:dateTabList(new Date(new Date().getTime()+24*60*60*1000),{name:"今日",val:new Date()})
+    6:dateTabList(new Date(new Date().getTime()+24*60*60*1000),{name:"今日",val:new Date()}),
+    2000:dateTabList(new Date(new Date().getTime()+24*60*60*1000),{name:"今日",val:new Date()})
 });
 // 用户余额
 const balance = ref(UserCtr.balance)
