@@ -19,9 +19,10 @@
   </template>
   
   <script setup>
-  import { ref , watch } from "vue";
+  import { onMounted, ref , watch } from "vue";
   import { scrollMenu } from "../utils";
   import { MenuData } from "src/core/index.js";
+  import { api_common } from "src/api/"
   const emits = defineEmits(['changeTab'])
   const props = defineProps({
     defaultVal: {
@@ -34,16 +35,26 @@
     },
   
   });
-  const activeOn = ref(props.defaultVal || 0);//默认值
+  
+  const activeOn = ref(props.defaultVal || '');//默认值
+
+  onMounted(()=>{
+    changeTabMenu(0)
+  })
+
   /**
   * 选中事件
   * @param {*} val 
   */
   const changeTabMenu = (i,event) => {
+    console.error('ssss',i,'---',props.dataList[i].val)
     if(activeOn.value === i)return;
     activeOn.value = i;
     // 设置日期
     MenuData.set_date_time(props.dataList[i].val)
+
+    set_menu_match_date()
+
     event && scrollMenu(event,".date-tab-content-ul",".active");
     // emits('changeTab',props.dataList[i].val);
   }
@@ -51,10 +62,21 @@
     /**
      * 一级菜单切换  时间置空
      */
-    watch(()=> MenuData.current_lv_1_menu_mi.value,() => {
-        activeOn.value = 0;
-        MenuData.set_date_time(props.dataList[0].val)
-    })
+    // watch(()=> MenuData.current_lv_1_menu_mi.value,() => {
+    //     activeOn.value = 0;
+    //     MenuData.set_date_time(props.dataList[0].val)
+    // })
+
+    // 根据菜单数据 请求接口
+    const set_menu_match_date = () => {
+        // 获取菜单中的数据 进去接口请求
+        const { menu_match_date_api_config:{ api,params } } = MenuData
+        api_common[api](params).then(res => {
+
+        })
+
+    }   
+    
   </script>
   <style lang="scss" scoped>
   .date-tab-wap {

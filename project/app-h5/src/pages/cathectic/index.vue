@@ -18,9 +18,9 @@
       </div>
   
       <div class="content-m" ref="record_box">
-        <!-- <cathectic-item-all /> -->
         <!-- 未结注单(未结算、预约中、已失效)、已结算注单 -->
-        <component :is="tabs[BetRecordClass.selected].componentName"></component>
+        <cathectic-item-all />
+        <!-- <component :is="tabs[BetRecordClass.selected].componentName"></component> -->
       </div>
     </div>
   </template>
@@ -53,8 +53,7 @@
   const timer_1 = ref(null)
   // 待确认中的提前结算单
   const provided_ = ref({})
-  // 选中tab的下标
-  const main_item = ref('0')
+
   const tabs = ref([
     { title: i18n_t('bet_record.no_account'), componentName: shallowRef(unsettle) },
     { title: "预约中", componentName: shallowRef(preRecord) },
@@ -115,7 +114,9 @@
   const height_calc = () => {
     let ele = record_box.value
     if (!ele) return
-    let rem_1 = window.innerWidth * 100 / 375;
+    // 未结算页面不显示切换栏，所以高度可以高些
+    const baseHeight = BetRecordClass.selected === 3 ? 700: 375
+    let rem_1 = window.innerWidth * 100 / baseHeight;
     ele.style['height'] = window.innerHeight - rem_1 + 'px';
   }
   

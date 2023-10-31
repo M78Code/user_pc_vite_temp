@@ -5,7 +5,7 @@
  */
 import {http} from "src/core/http/index.js";
 const { API_PREFIX = {}} = window.BUILDIN_CONFIG;
-const { API_PREFIX_JOB:prefix,API_PREFIX_USER:prefix2,API_PREFIX_BAT:prefix3 } = API_PREFIX;
+const { API_PREFIX_JOB:prefix,API_PREFIX_USER:prefix2,API_PREFIX_BAT:prefix3,API_PREFIX_BAT:prefix13 } = API_PREFIX;
 
 // 获取押注列表最新数据（valar）
 /* export const query_last_market_info = (params, config={}, url = "/v1/betOrder/verifyOddsBeforeBet") => http.post(`${prefix}${url}`, params, config); */
@@ -70,7 +70,7 @@ export const get_book_status_record = (params, config={}, url = "/order/betRecor
 export const get_pre_settle_order_detail = (params, config={}, url = "/order/betRecord/getPreSettleOrderDetail") => http.get(`${prefix}${url}`, params, config);
 
 // 提前结算实时查询最高返还批量,每5秒请求一次
-export const get_cashout_max_amount_list = (params, config={}, url = "/order/betRecord/getCashoutMaxAmountList") => http.get(`${prefix}${url}`, params, config);
+export const get_cashout_max_amount_list = (params, config={}, url = "/order/betRecord/getCashoutMaxAmountList") => http.get(`${prefix13}${url}`, params, config);
 
 // 查询提前结算单状态 该接口当发起请求之后310s之内没有收到推送状态还在转圈时，请求一次
 /* export const query_pre_settle_order_status = (params, config={}, url = "/v1/betOrder/queryPreSettleOrderStatus") => http.get(`${prefix}${url}`, params, config); */
@@ -92,6 +92,6 @@ export const query_order_status = (params, config, url = "/v1/betOrder/queryOrde
 // 获取预约投注列表2（david）
 export const get_preOrderList_news = (params, config, url = "/order/betRecord/getH5PreBetOrderlist") => http.post(`${prefix3}${url}`, params, config)
 // 取消预约投注单（david）
-export const cancle_pre_order = (params, config, url = "/v1/betOrder/cancelPreBetOrder") => http.get(`${prefix}${url}`, params, config)
+export const cancle_pre_order = (params, config, url = "/v1/betOrder/cancelPreBetOrder") => http.get(`${prefix13}${url}`, params, config)
 
  

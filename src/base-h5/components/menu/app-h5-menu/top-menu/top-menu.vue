@@ -39,7 +39,7 @@
             </div>
         </div>
         <div v-if="[3,6].includes(MenuData.current_lv_1_menu_mi.value)">
-            <DateTab  :dataList="dataList[MenuData.current_lv_1_menu_mi.value]"  />
+            <DateTab :dataList="dataList[MenuData.current_lv_1_menu_mi.value]"  />
         </div>
         <div v-if="[2000].includes(MenuData.current_lv_2_menu_mi)">
             <DateTab  :dataList="dataList[MenuData.current_lv_2_menu_mi]"  />

@@ -38,8 +38,8 @@
           </span>
         </div>
       </template>
-      <!-- 串关时大于等于3条时,显示 展开收起按钮-->
-      <div class="toggle row" v-if="data_b.orderVOS.length >= 3">
+      <!-- 串关时大于3条时,显示 展开收起按钮-->
+      <div class="toggle row" v-if="data_b.orderVOS.length > 3">
         <span class="btn_style" @click.stop="toggle_box">
           <span class="text_c">{{ btn_text }}</span>
         </span>
@@ -108,14 +108,14 @@ let props = defineProps({
 
 
 const show_data_orderVOS = computed(() => {
-  // orderVOS 长度大于等于3 且按钮是收起状态, 隐藏多于3条的
-  if(box_bool.value === false && props.data_b.orderVOS.length >= 3) {
+  // orderVOS 长度大于3 且按钮是收起状态, 隐藏多于3条的
+  if(box_bool.value === false && props.data_b.orderVOS.length > 3) {
     return lodash.map(props.data_b.orderVOS, (item, index) => {
       item.isBoolean = index < 3 ? true : false;
       return item;
     });
   }
-  // 否则全部战死
+  // 否则全部展示
   return lodash.map(props.data_b.orderVOS, (item, index) => {
     item.isBoolean = true;
     return item;

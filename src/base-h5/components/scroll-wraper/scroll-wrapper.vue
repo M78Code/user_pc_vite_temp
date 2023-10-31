@@ -52,7 +52,6 @@ import { standard_edition } from 'src/base-h5/mixin/userctr.js'
 
 // 避免定时器每次滚动总是触发
 const props = defineProps({
-  match_list_wrapper_height: Number,
   is_goto_top_random: Number,
 })
 
@@ -189,13 +188,6 @@ const get_match_top_by_mid1 = (mid) => {
   return r / 100;
 }
 
-watch(() => props.is_goto_top_random, () => {
-  //回到顶部
-  goto_top();
-})
-// ...mapGetters([
-//   'store_state.matchReducer.list_scroll_top',
-// ]),
 // 设置是否快速滚动显示骨架屏背景
 const set_ishigh_scrolling = computed(() => {
   // 滚动过程中，是否显示  骨架屏背景图片

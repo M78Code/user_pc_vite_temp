@@ -100,7 +100,6 @@ let props = defineProps({
   })
   
   onMounted(() => {
-    console.log(props);
     rules_normal();
     rules_a();
     rules_b();

@@ -253,6 +253,16 @@ export const post_date_menu = (params, config={}, url = "/v2/menu/getDateMenuLis
   return http.post(`${prefix_job}${url}`, params, config);
 }
 
+// 专业版获取----主列表顶部日期菜单 有PB
+export const post_date_menu_count = (params, config={}, url = "/v2/m/menu/getDateMenuCount")=>{
+  return http.post(`${prefix_job}${url}`, params, config);
+}
+
+// 电竞日期菜单 有PB PB
+export const get_esports_date_menu_count = (params, config={}, url = "/v1/w/esports/getDateMenuCountList") => {
+  return http.post(`${prefix_job}${url}`, params, config);
+};
+
 // 电竞日期菜单
 export const get_esports_date_menu = (params, config={}, url = "/v1/w/esports/getDateMenuList") => {
   return http.post(`${prefix_job}${url}`, params, config);
