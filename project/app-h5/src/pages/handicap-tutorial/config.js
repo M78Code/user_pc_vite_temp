@@ -1,53 +1,53 @@
 const questionsData = [
    {
       questionsType: 0,
-      homeTeam: "皇马",
-      awayTeam: "巴萨",
+      homeTeam: i18n_t('app_h5.handicap_tutorial.real_madrid'),
+      awayTeam: i18n_t('app_h5.handicap_tutorial.barcelona'),
       matchResult: "1-1",
-      questions: "哪个选项能全赢?",
+      questions: i18n_t('app_h5.handicap_tutorial.which_win'),
       options: [
          {
             label: "A",
-            option: "大2.5",
+            option: i18n_t('app_h5.handicap_tutorial.big').replace('%s', '2.5'),
             isRight: "error",
             odds: "1.99",
             isWin: false
          },
          {
             label: "B",
-            option: "小2.5",
+            option: i18n_t('app_h5.handicap_tutorial.small').replace('%s', '2.5'),
             isRight: "success",
             odds: "1.98",
             isWin: true
          }
       ],
-      note: "进球数2，小于2.5",
-      note1: "故投注<span>小2.5</span>能全赢"
+      note: i18n_t('app_h5.handicap_tutorial.questionsData.1.note_1'), 
+      note1: i18n_t('app_h5.handicap_tutorial.questionsData.1.note_2')
    },
    {
       questionsType: 0,
-      homeTeam: "曼城",
-      awayTeam: "曼联",
+      homeTeam: i18n_t('app_h5.handicap_tutorial.m_chesester_city'),
+      awayTeam: i18n_t('app_h5.handicap_tutorial.m_chesester_untied'),
       matchResult: "1-1",
-      questions: "哪个选项能赢一半?",
+      questions: i18n_t('app_h5.handicap_tutorial.which_win_half'),
       options: [
          {
             label: "A",
-            option: "大2/2.5",
+            option: i18n_t('app_h5.handicap_tutorial.big').replace('%s', '2/2.5'),
             isRight: "error",
             odds: "1.99",
             isWin: false
          },
          {
             label: "B",
-            option: "小2/2.5",
+            option: i18n_t('app_h5.handicap_tutorial.small').replace('%s', '2/2.5'),
             isRight: "success",
             odds: "1.98",
             isWin: true
          }
       ],
-      note: "进球数2，小于2/2.5",
-      note1: "基本对分原理，投注<span>小2/2.5</span>才能赢一半，投注<span>大2/2.5</span>则输一半"
+      note: i18n_t('app_h5.handicap_tutorial.questionsData.2.note_1'), 
+      note1: i18n_t('app_h5.handicap_tutorial.questionsData.2.note_2')
    }
 ]
 const bigAndSmallBallData = [
