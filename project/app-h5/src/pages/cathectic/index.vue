@@ -115,7 +115,9 @@
   const height_calc = () => {
     let ele = record_box.value
     if (!ele) return
-    let rem_1 = window.innerWidth * 100 / 375;
+    // 未结算页面不显示切换栏，所以高度可以高些
+    const baseHeight = BetRecordClass.selected === 3 ? 700: 375
+    let rem_1 = window.innerWidth * 100 / baseHeight;
     ele.style['height'] = window.innerHeight - rem_1 + 'px';
   }
   

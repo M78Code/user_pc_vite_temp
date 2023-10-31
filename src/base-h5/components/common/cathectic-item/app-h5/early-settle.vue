@@ -5,7 +5,7 @@
 <template>
   <div style="display: none;">{{ BetRecordClass.bet_record_version }}</div>
   <!-- 提前兑现规则申明 -->
-  <early-settle-tips />
+  <early-settle-tips v-if="calc_show || details_show_btn" />
   <!-- 提前兑换按钮 -->
   <div class="early-settle" v-if="calc_show">
     <div class="early-button">
@@ -28,7 +28,7 @@
       <button class="cancel"> 取消 </button> -->
     </div>
     <!-- 调整金额滑块 -->
-    <template>
+    <template style="display: none;">
       <q-slide-transition>
         <div v-show="slider_show" class="slider-wrap">
           <!-- 提前结算投注额 -->
@@ -66,7 +66,6 @@ import { t } from "src/boot/i18n.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import earlySettleTips from "src/base-h5/components/common/cathectic-item/app-h5/early-settle-tips.vue";
 
-let store_cathectic = store.getState().cathecticReducer
 const props = defineProps({
   item_data: {
     type: Object
@@ -83,7 +82,7 @@ let details_show = ref(false)
 // 展开 提前结算详情列表 的按钮是否显示
 let details_show_btn = ref(false)
 // 0  100
-let percentage = ref(50)
+let percentage = ref(100)
 // 0-提前结算金额已包含本金  1-提前结算申请未通过  2-功能暂停中，请稍后再试  3-提前结算金额调整中，请再试一次
 let tips = ref(0)
 // 提前结算详情数据
@@ -190,7 +189,8 @@ const min_bet_money = computed(() => {
 })
 // 计算提前结算按钮是否显示
 const calc_show = computed(() => {
-  return /10true[1-6]+/.test("" + lodash.get(UserCtr.user_info, 'settleSwitch') + BetRecordClass.selected + props.item_data.enablePreSettle + status.value);
+  return BetRecordClass.selected === 0 && props.item_data.seriesType === '1' && props.item_data.enablePreSettle
+  // return /10true[1-6]+/.test("" + lodash.get(UserCtr.user_info, 'settleSwitch') + BetRecordClass.selected + props.item_data.enablePreSettle + status.value);
 })
 watch(() => expected_profit, (_new, _old) => {
   // 小于 1 时暂停提前结算
@@ -257,7 +257,6 @@ const c201_handle = ({ orderNo, orderStatus }) => {
     } else if (orderStatus == 2) {
       // 失败
       status.value = 1;
-      tips = 1;
     }
   }
   // console.log("qwe", orderStatus, orderNo);
@@ -325,13 +324,13 @@ const submit_early_settle = () => {
     // 预计返还（盈利）
     frontSettleAmount: String(front_settle_amount.value || expected_profit.value),
   };
-  let count_ = 0
   // 响应码【0000000 成功（仅在测试模式出现） | 0400524 确认中（仅在非测试模式出现）| 0400500 提交申请失败，提示msg信息】
   api_betting.post_pre_bet_order(params).then((reslut) => {
     let res = reslut.status ? reslut.data : reslut
-
+    let message = ''
     if (res.code == 200) {
       status.value = 4;
+      message = '已提交申请，请耐心等待';
     } else if (res.code == "0400524") {
       // 注单确认中···
       // 前5次 每3s拉一次
@@ -358,11 +357,10 @@ const submit_early_settle = () => {
     } else if (res.code == "0400527") {
       // 不支持提前结算或者暂停
       status.value = 5;
-      tips = 2;
     } else if (res.code == "0400537") {
       // 金额有变动，需要更新按钮上的金额
       status.value = 1;
-      tips = 3;
+      message = t('early.info7');
       let money = res.data
       if (+money > 0) {
         nextTick(() => {
@@ -370,20 +368,21 @@ const submit_early_settle = () => {
         })
       }
     } else {
+      // 提前结算申请未通过
       status.value = 1;
-      tips = 1;
+      message = t('early.info2');
     }
   }).catch((err) => {
-    console.error(err)
+    // 提前结算申请未通过
     status.value = 1;
-    tips = 1;
+    message = t('early.info2');
   });
+  useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, message)
 }
 /**
  *@description 橙色大按钮点击处理
  */
 const submit_click = () => {
-  tips = 0
   if (status.value == 1 || status.value == 6) {
     slider_show = false;
     status.value = 2;
