@@ -86,7 +86,7 @@
       <!-- {{BetViewDataClass.bet_order_status}} --- -->
       <!-- 底部按钮 -->
       <div class="row yb_px10 yb_pb8 justify-between" @touchmove.prevent v-if="BetViewDataClass.bet_order_status == 1">
-          <div v-if="!BetData.is_bet_single" @click.stop="pack_up(4)">删除</div>
+          <div v-if="!BetData.is_bet_single" @click.stop="pack_up(4)" class="yb_delete">删除</div>
           <!-- 右边 -->
           <div class="bet-box">
             <template v-if="exist_code == '666'">
@@ -118,11 +118,7 @@
           <div v-if="BetData.is_bet_single">
             <div :class="BetViewDataClass.bet_order_status == 1 && BetData.is_bet_single?'yb-strand':'yb-nostrand'" @click.stop="set_is_bet_single">+串</div>
           </div>
-          <div style="align-items: center;
-    background-color: var(--q-gb-t-c-7);
-    padding-right: 3px;
-    padding-left: 10px;
-    border-radius: 30px;" v-else>
+          <div class="yb-dan-btn" v-else>
             <div>单关投注</div>
           </div>
 
@@ -318,6 +314,31 @@ onUnmounted(() => {
 })
 </script>
 <style lang="scss" scoped>
+.yb_delete{
+  width: 0.5rem;
+  height: 0.5rem;
+  background: var(--q-gb-t-c-7);
+  color: var(--q-gb-t-c-1);
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  margin-right: 0.1rem;
+}
+.yb-dan-btn{
+  width: 0.5rem;
+  height: 0.5rem;
+  padding: 0 0.13rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  margin-left: 0.1rem;
+  background: var(--q-gb-t-c-7);
+  color: var(--q-gb-t-c-1);
+  font-weight: bold;
+}
 .yb-nostrand{
   margin-left: 0.1rem;
   height: 0.5rem;
