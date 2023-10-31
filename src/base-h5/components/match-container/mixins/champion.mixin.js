@@ -1,6 +1,6 @@
  
  
-import { ref, computed, onUnmounted } from "vue";
+import { ref, computed, onUnmounted, onMounted } from "vue";
 import lodash from 'lodash'
 import { i18n_t} from 'src/core/index.js'
 import store from "src/store-redux/index.js";
@@ -211,9 +211,23 @@ const toggle_collect = (match) => {
   useMittEmit(MITT_TYPES.TOGGLE_COLLECT_LEAGUE,param);
 }
 
-onUnmounted(() => {
-  unsubscribe()
-})
 
  
+
+export default {
+  setup(props) {
+    
+
+    return{
+
+    }
+  },
+  mounted(){
+    
+  },
+  unmounted() {
+    unsubscribe()
+  },
+  
+}
  

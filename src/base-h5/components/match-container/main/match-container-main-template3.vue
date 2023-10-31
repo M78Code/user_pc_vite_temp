@@ -75,8 +75,14 @@
 
   </div>
 </template>
+<script>
+import champion_mixin from  "../mixins/champion.mixin.js"
+export default{
 
+  mixins:[champion_mixin]
+}
+</script>
 <style scoped lang="scss">
   @import "../styles/match-container-champion.scss";
 </style>
-../../match-list/components/odd-item-champion.vue
+ 
