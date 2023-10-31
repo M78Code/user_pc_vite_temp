@@ -6,7 +6,7 @@
  */
 <template>
     <div>
-        <TopHeader :title="menu_lv2.title" v-if="!Array.isArray(menu_lv2) && [300,2000,5000].includes(+menu_lv2?.mi)">
+        <TopHeader :title="menu_lv2.title" v-if="!Array.isArray(menu_lv2) && [300,2000,50000].includes(+menu_lv2?.mi)">
             <template #right>
                 <div class="main-menu-right">
                     <span class="main-menu-right-symbol">￥</span>
@@ -20,6 +20,7 @@
                 <div class="goback-icon-wrapper column justify-center" @click="router.back()">
                     <!-- <div class="img" :style="compute_css_obj('menu-go-back-icon')"></div> -->
                     <img class="img" :src="back" />
+                    <!-- <span class="icon-arrow-left"></span> -->
                 </div>
             </slot>
             <div v-show="false">   {{MenuData.update_time}} {{UserCtr.user_version}}</div>
