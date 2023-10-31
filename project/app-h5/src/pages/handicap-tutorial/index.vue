@@ -61,8 +61,16 @@ import answerQuestions from 'src/base-h5/components/tutorial/answer-questions/in
 import { scrollMenu } from "src/base-h5/components/menu/app-h5-menu/utils.js"
 import {questionsData, bigAndSmallBallData, handicapData} from "./config.js"
 
-const switchMenu = ['让球', '大小球']
-const slideMenu = ['0', '0/0.5', '0.5', '0.5/1', '1球', '1/1.5球', '1.5/2球',]
+const switchMenu = [i18n_t('footer_menu.rangqiu'), i18n_t('app_h5.handicap_tutorial.big_small_ball')]
+const slideMenu = [
+    '0', 
+    '0/0.5', 
+    '0.5', 
+    '0.5/1', 
+    i18n_t('app_h5.handicap_tutorial.ball').replace('%s', '1'), 
+    i18n_t('app_h5.handicap_tutorial.ball').replace('%s', '1/1.5'), 
+    i18n_t('app_h5.handicap_tutorial.ball').replace('%s', '1.5/2')
+]
 
 const router = useRouter()
 const props = defineProps({})

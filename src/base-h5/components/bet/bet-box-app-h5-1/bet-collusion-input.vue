@@ -14,7 +14,7 @@
 
 <script setup>
 import {ref} from 'vue';
-import keyBoard from './/bet-keyboard.vue';
+import keyBoard from './bet-keyboard.vue';
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 
