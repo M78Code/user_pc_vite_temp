@@ -4,7 +4,7 @@
   <div
     class="c-esports-header"
     :style="compute_css_obj(`pc-img-esports-${current_menu.csid}-banner`)"
-    v-show="menu_config.menu_root == 2000"
+    v-show="MenuData.is_esports()"
   >
     <!-- 游戏种类列表 -->
     <div class="sport-tab">
@@ -31,12 +31,11 @@
   </div>
 </template>
 <script setup>
-import { onMounted, defineProps,ref } from "vue";
+import { onMounted, defineProps,ref,watch } from "vue";
 import DateTab from "src/base-pc/components/tab/date-tab/index.vue";
 import BaseData from "src/core/base-data/base-data.js";
 import { compute_css_obj } from "src/core/server-img/index.js";
-import { t } from "src/core/index.js";
-import menu_config from "src/core/menu-pc/menu-data-class.js";
+import { MenuData } from "src/core/index.js";
 import sportIcon from "src/components/sport_icon/sport_icon.vue";
 const current_menu = ref({});
 const dianjing_sublist = ref(BaseData.dianjing_sublist);
@@ -46,7 +45,7 @@ const props = defineProps({});
 
 onMounted(() => {
   //解析菜单数据
-  const { left_menu_result } = menu_config;
+  const { left_menu_result } = MenuData;
   current_menu.value =
     dianjing_sublist.value.find((item) => item.mi == left_menu_result.lv2_mi) ||
     {};
@@ -88,16 +87,25 @@ function sport_click(item) {
     },
   };
   // 设置      左侧 菜单输出
-  menu_config.set_left_menu_result({
-    ...menu_config.left_menu_result,
+  MenuData.set_left_menu_result({
+    ...MenuData.left_menu_result,
     lv2_mi: item.mi,
   });
   // 设置     中间 菜单输出
-  menu_config.set_mid_menu_result(params);
+  MenuData.set_mid_menu_result(params);
   // 设置   请求  列表结构  API 参数的  值
-  menu_config.set_match_list_api_config(config);
+  MenuData.set_match_list_api_config(config);
 }
 
+watch(MenuData.menu_data_version,()=>{
+  const { left_menu_result } = MenuData;
+  if( current_menu.value?.mi!=left_menu_result.lv2_mi){
+    current_menu.value =
+      dianjing_sublist.value.find((item) => item.mi == left_menu_result.lv2_mi) ||
+      {};
+    sport_click(current_menu.value);
+  }
+})
 /**
  * @Description 日期菜单点击
  * @param {undefined} undefined
