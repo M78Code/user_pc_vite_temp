@@ -125,8 +125,8 @@ class MatchMeta {
       const match = BaseData.resolve_base_info_by_mid(t)
       // 获取赛事模板参数
       const template = this.set_match_default_template(match)
-      // 获取赛事默认参数
-      const params = this.set_match_default_properties(index, result_mids)
+      // 设置赛事默认参数
+      const params = this.set_match_default_properties(match, index, result_mids)
       // 赛事最终数据
       const target = { ...match, ...params, ...template, }
       //  赛事操作
@@ -205,15 +205,18 @@ class MatchMeta {
    * @param { match } 赛事对象
    * @param { index } 赛事对应下标
    */
-  set_match_default_properties(index, mids) {
+  set_match_default_properties(match, index, mids) {
     // 是否展示联赛标题
     let is_show_league = MatchUtils.get_match_is_show_league(index, mids)
     let is_show_no_pla = MatchUtils.get_match_is_show_no_play(index, mids)
+    const { home_score, away_score } = MatchUtils.get_match_score(match)
     return {
       source_index: index,
       is_show_league,
       is_show_no_pla,
-      is_show_league
+      is_show_league,
+      away_score,
+      home_score
     }
   }
 
