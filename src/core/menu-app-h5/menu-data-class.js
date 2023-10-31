@@ -56,6 +56,8 @@ class MenuData {
     this.menu_lv_mi_lsit = []
     // 选中的当前时间
     this.date_time = ""
+    // 时间api接口及参数信息 
+    this.menu_match_date_api_config = {}
   }
 
   // 初始化需要使用的数据
@@ -115,9 +117,9 @@ class MenuData {
     this.current_lv_2_menu_mi = val.mi;
     this.current_lv_2_menu = val;
     // 今日 / 滚球/ 冠军 没有 三级
-    if(![1,2,400].includes(this.current_lv_1_menu_mi.value)){
-      this.get_date_menu_api_when_subchange(this.current_lv_2_menu_mi)
-    }
+    // if(![1,2,400].includes(this.current_lv_1_menu_mi.value)){
+      // this.get_date_menu_api_when_subchange(this.current_lv_2_menu_mi)
+    // }
     this.update()
   }
   /**
@@ -137,10 +139,29 @@ class MenuData {
     // this.update();
   }
 
-  // 设置时间
+  // 设置时间 并且设置时间请求参数
   set_date_time(time){
     this.data_time = time
-    MatchMeta.set_origin_match_data()
+    this.set_menu_match_date()
+  }
+
+  // 设置时间请求参数
+  set_menu_match_date(){
+    let config = {
+      api: "",
+      params: {
+        md: this.data_time , // 非必传
+        type: "", // 非必传 // 
+      }
+    }
+    // 早盘
+    if([3,6].includes( this.current_lv_1_menu_mi.value * 1 )){
+      config.api = "post_date_menu_count"
+      /// 4 早盘 11 串关
+      config.params.type = this.current_lv_1_menu_mi.value * 1 == 3 ? 4 : 11
+    }
+
+    this.menu_match_date_api_config = config
   }
   /**
    * 兼容老的菜单ID?
@@ -309,7 +330,6 @@ class MenuData {
    * @return {}
    */
   recombine_menu_bg(item, get_ball_id = false, is_result = false) {
-    console.error('ssss')
     if (is_result) {
       return parseInt(item - 100);
     }
@@ -743,7 +763,7 @@ class MenuData {
       this.set_current_lv3_menu();
       return;
     }
-    this.get_date_menu_api_when_subchange(current_lv_2_menu, type)
+    // this.get_date_menu_api_when_subchange(current_lv_2_menu, type)
   }
 
   /**

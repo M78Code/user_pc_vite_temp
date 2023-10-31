@@ -80,7 +80,7 @@ onMounted(() => {
 /**
  * 二级菜单事件
  */
- async function set_menu_lv2(item = {},event) {
+async function set_menu_lv2(item = {},event) {
   // if(item.mi == 300){
   //   return router.push({ name: "virtual_sports" });
   // }

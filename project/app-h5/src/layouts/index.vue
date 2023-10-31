@@ -14,13 +14,7 @@
         </template>
       </MenuWapper> -->
       <!-- 当路由为盘口教程时 不展示topMenu 和 scrollMenu -->
-      <template v-if="['matchList', 'sport_menu'].includes(route.name)">
-        <TopMenu />
-        <ScrollMenu />
-        <!-- <SwiperWap /> -->
-        <SwitchWap />
-        <SearchTab @searchHandle="select_dialog = true"/>
-      </template>
+      <layoutTop />
       
       <router-view />
       <BetBoxWapper />
@@ -70,7 +64,7 @@ import {
 } from "vue";
 import { useMittOn, MITT_TYPES, i18n_t, UserCtr,MenuData } from "src/core/";
 // import { FooterWapper } from "src/components/footer/index.js";
-import { TopMenu,Tabbar,ScrollMenu,SearchTab,SwitchWap,SwiperWap } from 'src/base-h5/components/menu/app-h5-menu/index'
+import { Tabbar } from 'src/base-h5/components/menu/app-h5-menu/index'
 import { MenuWapper } from "src/base-h5/components/menu";
 import { BetBoxWapper } from "src/base-h5/components/bet";
 import activityIcon from "src/base-h5/components/common/activity-icon.vue"; // 设置
@@ -78,6 +72,7 @@ import setMenu from "src/base-h5/components/common/set-menu.vue"; // 设置
 import selectDia from "src/base-h5/components/match-list/components/select-dia.vue"
 import settingFilter from 'src/base-h5/components/setting-filter/index.vue'
 import setectLeague from 'src/base-h5/components/setect-league/index.vue'
+import layoutTop from "./top.vue"
 import { useRoute } from "vue-router";
 import store from "src/store-redux/index.js";
 import { api_common } from "src/api/index.js";
