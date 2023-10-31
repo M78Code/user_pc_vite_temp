@@ -30,7 +30,7 @@ import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 <style lang="scss" scoped>
 .nonebox4-result{
     width: 100%;
-    margin-top: 10px;
+    margin-top: 14px;
 }
 .nonebox4-content-top0{
     margin-top: 0 !important;
@@ -41,7 +41,7 @@ import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
     margin-top: 10px;
 }
 .nonebox4-content-result-left{
-    font-size: 12px;
+    font-size: 10px;
     color: var(--q-gb-t-c-3);
 }
 .nonebox4-content-result-right{
