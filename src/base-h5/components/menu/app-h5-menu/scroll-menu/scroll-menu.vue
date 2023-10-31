@@ -5,40 +5,25 @@
  * @Last Modified time: 2023-10-Sa 05:38:13
  */
 <template>
-    <!--二级菜单, 三级菜单，上下滑动 隐藏显示 , 竞彩足球 (get_menu_type:30 不显示二级菜单) -->
-    <div class="sub-menu-date-w" v-if="!is_jinzu" :class="{
-        simple: menu_wrap_simple && !is_export,
-        zaopan: is_mix || is_kemp || is_results || is_export,
-        esport: is_export,
-      }">
-        <!-- 二级菜单, 三级菜单, 四级菜单  -->
-        <div class="sport-m-container" :class="{
-          simple: sport_container_simple && !is_export,
-          'shadow-down': !is_export,
-        }">
-        <div v-show="false">   {{MenuData.update_time}} </div>
-          <div class="s-menu-container flex" ref="sub_menu_scroller">
-            <template v-for="item in MenuData.menu_lv_mi_lsit" :key="lodash_.get(item, 'mi')">
-              <div class="sport-menu-item flex justify-center" v-show="item.ct > 0" @click="set_menu_lv2(item, $event)">
+    <div class="sub-menu-date-w">
+        <div class="sport-m-container">
+          <div class="s-menu-container flex">
+            <template v-for="item in scrollDataList" :key="lodash_.get(item, 'mi')">
+              <div class="sport-menu-item flex justify-center" v-show="item.ct > 0" @click="!isSpecial?set_menu_lv2(item, $event):set_menu_lv_special(item, $event)">
                 <div class="inner-w flex justify-between items-center" :class="{
-                  favorite: show_favorite_list,
-                  current: MenuData.current_lv_2_menu_mi == item.mi
+                  current: activeMi == item.mi
                 }
                   ">
                   <div class="sport-w-icon">
                     <span class="sport-icon-wrap"
-                      :style="compute_css_obj({key:MenuData.current_lv_2_menu_mi == item.mi ? 'menu-sport-active-image' : 'menu-sport-icon-image', position:format_type(item)})"></span>
+                      :style="compute_css_obj({key:activeMi == item.mi ? 'menu-sport-active-image' : 'menu-sport-icon-image', position:format_type(item)})"></span>
 
-                    <div class="sport-match-count" v-show="two_menu_show(item)">
-                      {{ show_favorite_list ? '' : item.ct ? item.ct : 0 }}
+                    <div class="sport-match-count">
+                      {{ item.ct || 0 }}
                     </div>
                   </div>
-                  <div class="s-w-i-title" :class="{
-                    esport: is_export,
-                    'din-regular': is_export
-                  }
-                    ">
-                    {{ item.btn ?item.title : item.name || MenuData.get_menus_i18n_map(item.mi) }}
+                  <div class="s-w-i-title">
+                    {{ (item.btn ?item.title : item.name) || MenuData.get_menus_i18n_map(item.mi) }}
                   </div>
                 </div>
 
@@ -49,30 +34,21 @@
       </div>
 </template>
 <script setup>
-import scrollNav from "./scroll-nav.vue";
 import lodash_ from "lodash";
-import { useRoute,useRouter } from "vue-router";
 import MatchFold from 'src/core/match-fold'
 import BaseData from "src/core/base-data/base-data.js";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
-import { ref, computed, onMounted, watch, reactive, nextTick, onUnmounted } from "vue";
-import { compute_css_obj, MenuData, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, useMittOn, MITT_TYPES  } from "src/core/index.js";
-import { is_scroll_ball, update_time, is_export, is_mix,is_results, is_kemp, is_jinzu, menu_type } from 'src/base-h5/mixin/menu.js'
-import { get_sport_menu } from "../top-menu/top-list";
+import { ref, computed, onMounted, watch, onUnmounted } from "vue";
+import { compute_css_obj, MenuData, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/index.js";
 import {scrollMenu} from "../utils";
 import {  menu_lv2 } from 'src/base-h5/mixin/menu.js'
-const route = useRoute();
-const router = useRouter();
 const emitters = ref({});
-//菜单容器是否收起
-const menu_wrap_simple = ref(false);
-//菜单容器二级菜单是否收起
-const sport_container_simple = ref(false);
+const isSpecial = computed(()=>{return Object.keys(MenuData.current_lv_2_menu_mi_special).includes(menu_lv2.value?.mi?.toString())})
+const scrollDataList = computed(()=>{return Object.keys(MenuData.current_lv_2_menu_mi_special).includes(menu_lv2.value?.mi?.toString())?MenuData.menu_lv_mi_special_lsit:MenuData.menu_lv_mi_lsit})
+const activeMi = computed(()=>{return Object.keys(MenuData.current_lv_2_menu_mi_special).includes(menu_lv2.value?.mi?.toString())?MenuData.current_lv_special_menu_mi:MenuData.current_lv_2_menu_mi})
 
 // 是否初次渲染
 const is_first = ref(true)
-let show_favorite_list = ref('')
-
 onMounted(() => {
   set_menu_mi_change_get_api_data()
 })
@@ -80,28 +56,31 @@ onMounted(() => {
 /**
  * 二级菜单事件
  */
-async function set_menu_lv2(item = {},event) {
-  // if(item.mi == 300){
-  //   return router.push({ name: "virtual_sports" });
-  // }
-  // if(item.mi == 2000){
-  //   return router.push({ name: "esports_sports" });
-  // }
-  // if(item.mi == 5000){
-  //   return router.push({ name: "collect" });
-  // }
-
+ function set_menu_lv2(item = {},event) {
   // 选中后点击无效
   if (item.mi == MenuData.current_lv_2_menu_mi) return
   MenuData.set_current_lv_2_menu_mi(item)
+  if(Object.keys(MenuData.current_lv_2_menu_mi_special).includes(item.mi.toString())){
+    return MenuData.get_menu_lvmi_special_list(item.mi)
+  }
   // 今日 / 滚球/ 冠军 没有 三级
   set_menu_mi_change_get_api_data()
+  event && scrollMenu(event,".s-menu-container",".sport-menu-item");
+}
+/**
+ * 三级特殊菜单事件
+ */
+ function set_menu_lv_special(item = {},event) {
+  // 选中后点击无效
+  if (item.mi == MenuData.current_lv_special_menu_mi) return;
+  MenuData.set_current_lv_special_menu_mi(item);
   event && scrollMenu(event,".s-menu-container",".sport-menu-item");
 }
 
 watch(()=> MenuData.current_lv_1_menu_mi.value,() => {
   set_menu_mi_change_get_api_data()
 })
+
 // 菜单变化页面请求数据
 const set_menu_mi_change_get_api_data = () => {
   // 今日 / 滚球/ 冠军 没有 三级
@@ -109,28 +88,6 @@ const set_menu_mi_change_get_api_data = () => {
     handle_match_render_data()
   }
 }
-
-/**
-* 二级菜单数量 是否展示
-* @param {Number} sub  赛种item
-*/
-const two_menu_show = (sub) => {
-  if (MenuData.is_results()) {
-    return false
-  }
-  // 滚球下足球处理 1011足球
-  let mi_list = MenuData.is_scroll_ball() ? [1001, 1002, 1004, 1010] : [1001, 1002, 1004, 1011, 1010]
-  return ![is_export.value, is_results.value, is_export.value].includes(true) && !mi_list.includes(+sub.mi)
-}
-/**
- * 计算滚球下的全部数量
- */
- const all_sport_count_calc = computed(() => {
-  //找到滚球
-  let data_list = props.menu_list.find((item) => item.mi == 1);
-  //滚球下所有是数量总和 updateime是时间作为计算属性变化
-  return MenuData.count_menu(data_list, update_time.value)
-});
 /**
  * @description 处理赛事列表渲染数据
  */
@@ -191,27 +148,8 @@ onUnmounted(() => {
       z-index: 501;
     width: 100%;
     max-height: 1.35rem;
-    // position: absolute;
-    // left: 0;
-    // top: 0.44rem;
     padding: 0 0.05rem;
     transition: transform 0.6s, max-height 0.3s;
-
-    &.esport {
-      transition: unset !important;
-
-      .sport-m-container {
-        background-color: transparent;
-      }
-    }
-
-    &.simple {
-      transform: translate3d(0, -0.6rem, 0);
-
-      &.zaopan {
-        transform: translate3d(0, -0.93rem, 0);
-      }
-    }
 
     // 二级菜单
     .sport-m-container {
@@ -236,24 +174,13 @@ onUnmounted(() => {
           height: 100%;
           flex-shrink: 0;
           color: var(--q-gb-t-c-4);
-          &.champion {
-            // width: 0.9rem;
-          }
-
           .current {
             color: var(--q-gb-bd-c-2);
             .inner-w {
               position: relative;
               font-size: 0.1rem;
-
-              &.favorite {
-                &:after {
-                  background: rgba(255, 145, 36, 0.08);
-                }
-              }
             }
           }
-
           .inner-w {
             height: 0.41rem;
             flex-direction: column;
@@ -272,35 +199,6 @@ onUnmounted(() => {
                 width: 0.22rem;
                 background-position: 0 0;
                 background-size: 0.22rem 18.88rem;
-
-           
-                &.focus-d {
-                  background-image: var(--q-color-com-img-bg-205);
-                }
-
-                &.focus-c {
-                  background-image: var(--q-color-com-img-bg-206);
-                }
-
-                &.focus-a {
-                  background-image: var(--q-color-com-img-bg-207);
-                }
-
-                &.focus-e {
-                  background-image: var(--q-color-com-img-bg-208);
-                }
-
-                &.focus-b {
-                  background-image: var(--q-color-com-img-bg-209);
-                }
-              }
-
-              .sport-icon-wrap2 {
-                position: absolute;
-                bottom: 0;
-                right: -0.04rem;
-                width: 0.13rem;
-                height: 0.14rem;
               }
 
               .sport-match-count {
@@ -325,94 +223,6 @@ onUnmounted(() => {
             }
           }
         }
-      }
-    }
-
-    // 三级菜单
-    .d-c-wrapper {
-      width: 100%;
-      height: 0.33rem;
-      overflow: hidden;
-    }
-
-    .date-container {
-      width: 100%;
-      height: 0.34rem;
-      padding-top: 0.1rem;
-      overflow-x: auto;
-      overflow-y: hidden;
-      display: flex;
-      line-height: 1;
-      padding-left: 0.2rem;
-
-      &::-webkit-scrollbar {
-        display: none;
-      }
-
-      &.esport {
-        background-color: initial !important;
-      }
-
-      &:after {
-        content: " ";
-        display: block;
-        width: 0.01rem;
-        height: 0.02rem;
-        flex-shrink: 0;
-      }
-
-      /*****   日期菜单  ******* -S*/
-      .date-menu-item {
-        height: 0.2rem;
-        font-size: 0.12rem;
-        line-height: 1;
-        display: flex;
-        justify-content: space-between;
-        flex-direction: column;
-        flex-shrink: 0;
-        align-items: center;
-        margin-right: 0.19rem;
-        position: relative;
-
-        &:last-child {
-          width: auto;
-          margin-right: 0.1rem;
-        }
-
-        &.focus {
-          font-size: 0.12rem;
-
-          &:after {
-            content: " ";
-            width: 0.14rem;
-            height: 0.02rem;
-            display: block;
-            border-radius: 0.08rem;
-          }
-        }
-
-        &.hidden-champion {
-          display: none;
-        }
-      }
-    }
-
-    /*  联赛菜单 */
-    .virtual-sports-results {
-      height: 0.42rem;
-      display: flex;
-      flex-wrap: nowrap;
-      overflow: auto;
-      align-items: center;
-      padding-left: 0.15rem;
-
-      .tab-item {
-        height: 0.26rem;
-        line-height: 0.26rem;
-        border-radius: 0.04rem;
-        margin-right: 0.06rem;
-        padding: 0 0.1rem;
-        flex-shrink: 0;
       }
     }
   }

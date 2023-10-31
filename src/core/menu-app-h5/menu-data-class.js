@@ -43,6 +43,22 @@ class MenuData {
     //当前的菜单 lv2  注意  二级菜单 可能 有一个【全部】选项 get_sport_all_selected
     this.current_lv_2_menu = {};
     this.current_lv_2_menu_mi = '';
+    //-----------------------------------VR 电竞 收藏--------------------------------------//
+    this.current_lv_2_menu_mi_special = {
+      '300':(n)=>{
+        return +n === 300;
+      },
+      '2000':(n)=>{
+        return +n>2000 || +n<2200;
+      },
+      '50000':(n)=>{
+        return +n <300;
+      },
+    };
+    this.menu_lv_mi_special_lsit = [];
+    this.current_lv_special_menu_mi = '';
+    this.current_lv_special_menu = {};
+    //-------------------------------------------------------------------------------------//
     //当前的菜单 lv3
     this.current_lv_3_menu = {};
     this.current_lv_3_menu_mi = '';
@@ -76,7 +92,7 @@ class MenuData {
   // 根据菜单id获取下级菜单id 二级菜单
   // mid 顶级菜单id
   get_menu_lvmi_list(mid){
-    let menu_lv_mi_lsit = []
+    let menu_lv_mi_lsit = [];
     // 冠军 直接取值
     if(mid == 400){
       menu_lv_mi_lsit = (BaseData.mew_menu_list_res.find(item=> item.mi == 400 ) || {}).sl
@@ -106,7 +122,18 @@ class MenuData {
     this.menu_lv_mi_lsit = menu_lv_mi_lsit
     return menu_lv_mi_lsit
   }
-
+  /**
+   * 特殊菜单（3级）处理
+   * @param {*} mid 
+   * @returns 
+   */
+  get_menu_lvmi_special_list(mid){
+    let list = BaseData.mew_menu_list_res.filter(item=> this.current_lv_2_menu_mi_special[mid](item.mi));
+    let menu_lv_mi_special_lsit = list && list.length>1?list.map((n)=>{return n.sl}).flat():list[0].sl;
+    this.menu_lv_mi_special_lsit = menu_lv_mi_special_lsit
+    this.update()
+    return menu_lv_mi_special_lsit
+  }
   get_menu_lv_2_mi_list(mi){
     const item = this.menu_lv_mi_lsit.find(item=> item.mi == mi) || {}
     return item.sl
@@ -120,6 +147,13 @@ class MenuData {
     // if(![1,2,400].includes(this.current_lv_1_menu_mi.value)){
       // this.get_date_menu_api_when_subchange(this.current_lv_2_menu_mi)
     // }
+    this.update()
+  }
+   // 设置三级菜单id
+   set_current_lv_special_menu_mi(val = {}){
+    this.current_lv_special_menu_mi = val.mi;
+    this.current_lv_special_menu = val;
+    console.log("特殊点击",val)
     this.update()
   }
   /**
