@@ -250,7 +250,7 @@ class MenuData {
       let euid = ''
       // 获取滚球全部的 菜单id
       this.menu_lv_mi_lsit.forEach(item=>{
-        if( ![0,5000].includes(item.mi)){
+        if( ![0,50000].includes(item.mi)){
           mid_list.push(item.mi)
         }
       })
@@ -309,6 +309,7 @@ class MenuData {
    * @return {}
    */
   recombine_menu_bg(item, get_ball_id = false, is_result = false) {
+    console.error('ssss')
     if (is_result) {
       return parseInt(item - 100);
     }
@@ -316,6 +317,12 @@ class MenuData {
     let id = parseInt(bg_mi - 100);
     if (this.is_kemp()) {
       id = parseInt(bg_mi - 400);
+    }
+    // 收藏 vr 电竞 全部 不在此列
+    if([1,2].includes(Number(this.current_lv_1_menu_mi.value))){
+      if([300,2000,50000].includes( item.mi)){
+        id = item.mi
+      }
     }
     if (get_ball_id) return sprite_images_postion[id];
     let type = "";
