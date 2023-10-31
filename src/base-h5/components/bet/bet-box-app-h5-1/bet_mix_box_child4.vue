@@ -9,11 +9,11 @@
     <div class="nonebox4-result" v-for="item in BetViewDataClass.orderNo_bet_obj" :key="item.playOptionsId">
         <div class="nonebox4-content-result nonebox4-content-top0">
             <div class="nonebox4-content-result-left">投注金额</div>
-            <div class="nonebox4-content-result-right">  {{ format_currency(parseFloat(item.betMoney)/100) }}</div>
+            <div class="nonebox4-content-result-right num">  {{ format_currency(parseFloat(item.betMoney)/100) }}</div>
         </div>
         <div class="nonebox4-content-result">
             <div class="nonebox4-content-result-left">可盈金额</div>
-            <div class="nonebox4-content-result-right">  {{ format_currency(parseFloat(item.maxWinMoney)/100) }}</div>
+            <div class="nonebox4-content-result-right num">  {{ format_currency(parseFloat(item.maxWinMoney)/100) }}</div>
         </div>
         <div class="nonebox4-content-result">
             <div class="nonebox4-content-result-left">注单号</div>
@@ -46,6 +46,9 @@ import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 }
 .nonebox4-content-result-right{
     font-size: 14px;
+  &.num{
+    font-weight: bold;
+  }
 }
 .nonebox4-sub{
     padding: 8px 0;
