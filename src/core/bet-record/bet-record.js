@@ -1,6 +1,7 @@
 import { ref } from "vue"
 import lodash from "lodash"
 import { t } from "src/boot/i18n.js";
+import {useMittEmit, MITT_TYPES} from  "src/core/mitt/index.js"
 
 const bet_result = {
   "2": t("bet_record.bet_no_status02"), //'走水',
@@ -35,12 +36,14 @@ class BetRecord {
     this.early_money_list = []
     // 投注记录版本变更
     this.bet_record_version = ref('1111')
+    
   }
 
   // 设置投注记录 tab切换
   set_selected(number) {
     this.selected = number
     this.list_data = {}
+    useMittEmit(MITT_TYPES.EMIT_BET_RECORD_SELECTED_CHANGE, this.selected)
     this.set_bet_record_version()
   }
 
