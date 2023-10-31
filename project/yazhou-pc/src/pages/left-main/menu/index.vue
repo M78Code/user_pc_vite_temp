@@ -99,8 +99,7 @@ const new_menu_click = (root) => {
     sports: "",
     guanjun: "",
   };
-  // 设置 中间 菜单输出
-  MenuData.set_mid_menu_result(params);
+
 
   // 设置 左侧菜单
   MenuData.set_left_menu_result({
@@ -112,6 +111,8 @@ const new_menu_click = (root) => {
     mid_menu_show,
     has_mid_menu: true,
   });
+  // 设置 中间 菜单输出
+  MenuData.set_mid_menu_result(params);
 };
 
 /**
