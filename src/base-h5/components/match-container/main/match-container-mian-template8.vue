@@ -1,5 +1,5 @@
 <!--
- * @Description: 赛事组件，用于赛事列表展示赛事信息
+ * @Description:  app-h5       新手版 赛事组件，用于赛事列表展示赛事信息
 -->
 <template>
     <div :style="{ marginTop: is_hot ? '0' : '' }" 

@@ -1,5 +1,5 @@
 <!--
- * @Description: 虚拟体育赛狗赛马赛果项
+ * @Description:   app-h5   虚拟体育赛狗赛马赛果项
 -->
 <template>
     <div class="v-match-container">

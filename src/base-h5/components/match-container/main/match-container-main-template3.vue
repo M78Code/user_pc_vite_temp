@@ -1,6 +1,6 @@
 
 <!--
- * @Description: 冠军赛事组件，用于赛事列表展示赛事信息
+ * @Description: yazhou-h5  冠军  冠军赛事组件，用于赛事列表展示赛事信息
 -->
 <template>
   <div class="champion-wrap" v-if="is_show">
