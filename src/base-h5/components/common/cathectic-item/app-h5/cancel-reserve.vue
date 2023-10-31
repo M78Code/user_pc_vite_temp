@@ -4,15 +4,15 @@
 -->
 <template>
     <div style="display: none;">{{ BetRecordClass.bet_record_version }}</div>
-    <div class="cancel-btn" @click="alertTips=true;">取消预约</div>
+    <div class="cancel-btn" @click="alertTips=true;">{{i18n_t('app_h5.bet.cancel_appoint')}}</div>
     <!-- 取消预约弹框 -->
     <q-dialog v-model="alertTips">
       <div class="tips-main">
-        <h2>温馨提示</h2>
-        <p>确定取消本场比赛预约？</p>
+        <h2>{{ i18n_t('app_h5.cathectic.kind_tips') }}</h2>
+        <p>{{ i18n_t('app_h5.cathectic.confirm_cancel_reservation') }}</p>
         <div class="confirm">
-          <span @click="alertTips=false;">取消</span>
-          <span @click="cancle_pre_order">确定</span>
+          <span @click="alertTips=false;">{{ i18n_t('common.cancel') }}</span>
+          <span @click="cancle_pre_order">{{ i18n_t('common.ok') }}</span>
         </div>
       </div>
     </q-dialog>
@@ -21,7 +21,7 @@
 <script setup>
 import { ref } from 'vue'
 import { api_betting } from "src/api/index.js";
-import { i18n_t } from "src/boot/i18n.js";;
+import { i18n_t } from "src/core/index.js";
 import BetRecordClass from "src/core/bet-record/bet-record.js";
 const props = defineProps({
   orderNumber: {

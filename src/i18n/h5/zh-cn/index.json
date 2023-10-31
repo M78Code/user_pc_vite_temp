@@ -7,7 +7,12 @@
       "no_data_pre": "您暂无预约中数据",
       "no_data_unsettle": "您暂无未结算数据",
       "no_data_settle": "您暂无已结算数据",
-      "no_data_invalid": "您暂无已失效数据"
+      "no_data_invalid": "您暂无已失效数据",
+      "kind_tips": "温馨提示",
+      "adjustment_amount": "调整金额",
+      "cash_rules": "提前兑现规则申明",
+      "explain": "<p>开云体育提前兑现只适用于指定赛事和盘口，如遇到赛事或盘口取消，提前兑现注单将会被收回重新结算。开云体育保留赛果最终解释权。</p><p>具体兑现规则请查看【帮助中心】-【开云体育提前兑现规则】</p>",
+      "confirm_cancel_reservation": "确定取消本场比赛预约？"
     },
     "handicap_tutorial": {
       "football_master": "恭喜，您已进阶为足球大师",

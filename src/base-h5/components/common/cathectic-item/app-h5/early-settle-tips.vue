@@ -5,16 +5,15 @@
 <template>
     <div style="display: none;">{{ BetRecordClass.bet_record_version }}</div>
     <span class="tips" @click="alertTips=true;">
-      提前兑现规则申明
+      {{ i18n_t('app_h5.cathectic.cash_rules') }}
       <icon-wapper name="icon-tips" size="0.14rem" />
     </span>
     <!-- 提前兑现规则申明弹框 -->
     <q-dialog v-model="alertTips">
       <div class="tips-main">
-        <h2>提前兑现规则申明</h2>
-        <p>开云体育提前兑现只适用于指定赛事和盘口，如遇到赛事或盘口取消，提前兑现注单将会被收回重新结算。开云体育保留赛果最终解释权。</p>
-        <p>具体兑现规则请查看【帮助中心】-【开云体育提前兑现规则】</p>
-        <span @click="alertTips=false;">我知道了</span>
+        <h2>{{ i18n_t('app_h5.cathectic.cash_rules') }}</h2>
+        {{ i18n_t('app_h5.cathectic.explain') }}
+        <span @click="alertTips=false;">{{ i18n_t("ac_rules.understand")}}</span>
       </div>
     </q-dialog>
 </template>
@@ -22,7 +21,9 @@
 <script setup>
 import BetRecordClass from "src/core/bet-record/bet-record.js";
 import { IconWapper } from 'src/components/icon'
+import { i18n_t } from "src/core/index.js";
 import { ref } from 'vue'
+
 // 提前兑现规则申明弹框
 let alertTips = ref(false)
 </script>
