@@ -6,7 +6,7 @@
         <div
           :key="`vr_menu_obj_sl${item.mi}`"
           v-if="item.ct && BaseData.menus_i18n_map[item.mi]"
-          @click="handle_click_menu_mi_500({ mi: item.mi, root: '500' })"
+          @click="handle_click_menu_mi_500(item.mi)"
           class="item yb-flex-center hot-item"
           :class="current_menu == item.mi ? 'active' : 'no-active'"
         >
@@ -56,9 +56,10 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import menu_config from "src/core/menu-pc/menu-data-class.js";
-import { t, is_eports_csid } from "src/core/index.js";
+import { t, is_eports_csid,UserCtr } from "src/core/index.js";
 import BaseData from "src/core/base-data/base-data.js";
 import DragScroll from "src/base-pc/components/cus-scroll/drag_scroll.vue";
+const root=500//常量 500
 const props = defineProps({
   match: {
     type: Object,
@@ -123,20 +124,18 @@ let top_logos = [
   "64",
 ];
 onMounted(() => {
-  resolve_mew_menu_res_mi_500();
-  let mid_b = mi_500_obj.value["sl"].find((item) => item.ct > 0) || {};
-  // 刷新后 根据中间件 重新输出
-  const { mi = mid_b.mi } = menu_config.mid_menu_result;
-  current_menu.value = mi;
+  const hot_menu= BaseData.mew_menu_list_res.find((x) => x.mi == root)
+  if(hot_menu){
+    let mid_b = hot_menu.sl?.find((item) => item.ct > 0) || {};
+    // 刷新后 根据中间件 重新输出
+    const { mi = mid_b.mi } = menu_config.mid_menu_result;
+    current_menu.value = mi;
+    mi&&handle_click_menu_mi_500(mi);
+    mi_500_obj.value=hot_menu;
+  }else{
+    mi_500_obj.value={sl:[]}
+  } 
 });
-/**
- * 解析 新接口返回值  热门
- */
-function resolve_mew_menu_res_mi_500() {
-  mi_500_obj.value = BaseData.mew_menu_list_res.find((x) => x.mi == 500) || {
-    sl: [],
-  };
-}
 /**
  * @Description:计算精灵图联赛logo的偏移位置
  * @param {string|number} id  联赛id
@@ -172,9 +171,8 @@ function compute_if_has_local_icon(mi) {
 /**
  * 热门 赛事点击  热门的
  */
-function handle_click_menu_mi_500(detail = {}) {
+function handle_click_menu_mi_500(mi) {
   // this.handle_click_menu_mi_pre_process( )
-  let { mi, root } = detail;
   current_menu.value = mi;
   let guanjun = "";
   let sports = "";
@@ -197,9 +195,9 @@ function handle_click_menu_mi_500(detail = {}) {
     params: {},
   };
   let base_params = {
-    cuid: this.vx_get_uid,
-    selectionHour: this.$store.state.filter.open_select_time,
-    sort: this.vx_match_sort,
+    cuid: UserCtr.get_uid(),
+    // selectionHour: this.$store.state.filter.open_select_time,
+    sort:UserCtr.sort_type, //this.vx_match_sort,
     apiType: 1,
     orpt: -1,
   };
