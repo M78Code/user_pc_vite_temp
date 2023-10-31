@@ -72,6 +72,20 @@
       "m_chesester_city": "曼城",
       "m_chesester_untied": "曼联",
       "barcelona": "巴萨"
+    },
+    "bet": {
+      "bet_win": "可赢%s",
+      "delete": "删除",
+      "confirm": "确认",
+      "parlay": "串",
+      "odd": "单",
+      "limit": "限额",
+      "cancel_appoint": "取消预约",
+      "pm_sport": "PM体育",
+      "bet_confirm": "注单已确认",
+      "bet_error": "注单已确认",
+      "reserve_win": "预约金额",
+      "win_amount": "可盈金额"
     }
   },
   "ac_rules": {

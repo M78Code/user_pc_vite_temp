@@ -52,7 +52,7 @@
           <span>
             <i class="img2" :class="{ 'img3': BetData.bet_is_accept }" @click="toggle_accept"></i>
             <span :class="{ 'auto-text': BetData.bet_is_accept }" class="yb_mx4 err-msg2" style="max-width:2.1rem"
-              @click="toggle_accept">{{ $t("ac_rules.auto") }}</span>
+              @click="toggle_accept">{{ i18n_t("ac_rules.auto") }}</span>
             <!-- <img src="image/wwwassets/bw3/svg/rules2.svg" @click="change_accept" class="img1" -->
             <span class="img1" :style="compute_css_obj('icon-issue')"></span>
           </span>
@@ -75,8 +75,8 @@
 
       <div class="yb_px12" v-if="get_mix_bet_flag">
         <div class="row justify-between items-center content-t yb_mb6 yb_mt8 yb_fontsize14 fw_600 bet-mix-show">
-          <div>{{ $t('bet.total_income') }}</div>
-          <div>{{ $t('bet.total_bet') }} <span v-if="bet_num > 0">{{ bet_num }}</span></div>
+          <div>{{ i18n_t('bet.total_income') }}</div>
+          <div>{{ i18n_t('bet.total_bet') }} <span v-if="bet_num > 0">{{ bet_num }}</span></div>
         </div>
         <div class="row justify-between items-center content-t yb_mb6 yb_mt8">
           <div class="yellow-color yb_fontsize16">{{ (award_total) }}</div>
@@ -86,16 +86,16 @@
       <!-- {{BetViewDataClass.bet_order_status}} --- -->
       <!-- 底部按钮 -->
       <div class="row yb_px10 yb_pb8 justify-between" @touchmove.prevent v-if="BetViewDataClass.bet_order_status == 1">
-          <div v-if="!BetData.is_bet_single" @click.stop="pack_up(4)" class="yb_delete">删除</div>
+          <div v-if="!BetData.is_bet_single" @click.stop="pack_up(4)" class="yb_delete">{{i18n_t('app_h5.bet.delete')}}</div>
           <!-- 右边 -->
           <div class="bet-box">
             <template v-if="exist_code == '666'">
-              <p @click="go_record" class="yb_fontsize16">{{ $t('bet.msg13') }}</p>
+              <p @click="go_record" class="yb_fontsize16">{{ i18n_t('bet.msg13') }}</p>
             </template>
             <template v-else-if="is_conflict">
               <!-- 投注 -->
               <div class="row justify-center items-center content-center set-opacity">
-                <p class="yb_fontsize12 yb_mr10">{{ $t('bet_record.bet_val') }}</p>
+                <p class="yb_fontsize12 yb_mr10">{{ i18n_t('bet_record.bet_val') }}</p>
                 <p class="yb_fontsize20">{{ format_money2(BetData.bet_money_total.toFixed(2)) }}</p>
               </div>
             </template>
@@ -103,12 +103,12 @@
               <!-- 投注 -->
               <div v-if="BetViewDataClass.bet_order_status == 1" @click="submit_order" :class="{ 'set-opacity': true }"
                 class="row justify-center items-center content-center yb-info">
-                <div>投注 <span class="yb-info-money">可赢100.00</span></div>
+                <div>{{ i18n_t('bet.betting') }}<span class="yb-info-money">{{ i18n_t('app_h5.bet.bet_win').replace("%s", "100.00") }}</span></div>
                 <div><span class="yb-info-one">></span><span class="yb-info-two">></span><span>></span></div>
               </div>
               <!-- 投注 有投注项失效后点击接受变化的置灰样式-->
               <div v-if="BetViewDataClass.bet_order_status == 5" class="row justify-center items-center content-center yb-info yb-info-hui">
-                <div>投注 <span class="yb-info-money">可赢100.0</span></div>
+                <div>{{ i18n_t('bet.betting') }} <span class="yb-info-money">{{ i18n_t('app_h5.bet.bet_win').replace("%s", "100.00") }}</span></div>
                 <div><span class="yb-info-one">></span><span class="yb-info-two">></span><span>></span></div>
               </div>
             </template>
@@ -119,13 +119,13 @@
             <div :class="BetViewDataClass.bet_order_status == 1 && BetData.is_bet_single?'yb-strand':'yb-nostrand'" @click.stop="set_is_bet_single">+串</div>
           </div>
           <div class="yb-dan-btn" v-else>
-            <div>单关投注</div>
+            <div>{{ i18n_t('common.single') }}</div>
           </div>
 
         </div>
 
         <!--投注后的 确定按钮 -->
-        <div v-else @click="set_clear()" class="nonebox4-sub">确认</div>
+        <div v-else @click="set_clear()" class="nonebox4-sub">{{ i18n_t('app_h5.bet.confirm')}}</div>
       
     </div>
   </div>
@@ -147,7 +147,7 @@ import betCollusionInput from './bet-collusion-input.vue'
 
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
-import { UserCtr,compute_css_obj,useMittOn, useMittEmit, MITT_TYPES  } from "src/core/index.js";
+import { UserCtr, i18n_t, compute_css_obj,useMittOn, useMittEmit, MITT_TYPES  } from "src/core/index.js";
 import { ref, onMounted, watch, computed, onUnmounted } from 'vue';
 import { get_query_bet_amount_common } from "src/core/bet/class/bet-box-submit.js"
 import lodash from 'lodash'
