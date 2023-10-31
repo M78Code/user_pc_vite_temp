@@ -110,7 +110,6 @@ const set_bet_order_list = (bet_list, is_single) => {
         })
 
     } else {
-        debugger
         let single_list = bet_list.map((item, index) => {
            let bet_s_obj = {
                 "sportId": item.sportId,   // 赛种id
