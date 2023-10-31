@@ -315,7 +315,6 @@ const set_menu_lv1 = item => {
     }
 }
 .main-menu-right {
-        max-width: 0.87rem;
         height: 0.22rem;
         line-height: 0.22rem;
         border-radius: 25px;
@@ -324,6 +323,7 @@ const set_menu_lv1 = item => {
         color: var(--q-gb-bd-c-2);
         text-align: center;
         display: flex;
+        align-items: center;
         padding: 0 0.1rem 0 0.03rem;
         .main-menu-right-symbol{
             font-family: 'Akrobat';
