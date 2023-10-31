@@ -84,6 +84,30 @@ class MatchUtils {
     }
     return is_show_league
   }
+  /**
+	 * @description 获取比分 比分变化 或者 赛事阶段变化时调用
+	 * @param  {object} match  当场赛事信息
+	 */
+	get_match_score(match) {
+		let key = "S1";
+		let { csid, mmp, msc_obj = {} } = match;
+		// 足球 | 手球
+		if ([1, 11].includes(+csid)) {
+			// S7:加时赛比分
+			if ([32, 33, 41, 42, 110].includes(+mmp)) {
+				key = "S7";
+			}
+			// S170:点球大战比分
+			else if ([34, 50, 120].includes(+mmp)) {
+				key = "S170";
+			}
+		}
+		// 主队比分
+    let home_score = lodash.get(msc_obj, `${key}.home`, "0")
+    // 客队比分
+    let away_score = lodash.get(msc_obj, `${key}.away`, "0")
+    return { home_score, away_score }
+	}
 }
 
 export default new MatchUtils()
