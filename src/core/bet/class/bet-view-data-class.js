@@ -146,6 +146,8 @@ class BetViewData {
     // console.error("最大最小值",this.bet_min_max_money)
     this.set_bet_view_version()
   }
+
+
   // 显示投注框
   set_bet_show(val) {
     this.bet_show = val
@@ -362,6 +364,21 @@ class BetViewData {
   // 串关专用参数
   set_bet_special_series(array) {
     this.bet_special_series = array
+    this.set_bet_view_version()
+  }
+
+
+  // 设置限额对应的金额
+  set_bet_special_series_item(item) {
+    let special_series = this.bet_special_series.map(obj=>{
+      if(obj.id == item.id){
+        return {
+          ...obj,
+          ...item
+        }
+      }
+    })
+    this.bet_special_series = special_series
     this.set_bet_view_version()
   }
 

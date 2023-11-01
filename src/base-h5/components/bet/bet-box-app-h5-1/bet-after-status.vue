@@ -28,7 +28,7 @@ const set_bet_order_status = computed(()=>{
   }
   // ,4-投注失败状态,5-投注项失效
   if([4,5].includes(BetViewDataClass.bet_order_status)){
-    title.value = 'i18n_t('app_h5.bet.bet_error')
+    title.value = i18n_t('app_h5.bet.bet_error')
     return `${LOCAL_PROJECT_FILE_PREFIX}/image/app-h5/icon_order_error.png`
   }
 })

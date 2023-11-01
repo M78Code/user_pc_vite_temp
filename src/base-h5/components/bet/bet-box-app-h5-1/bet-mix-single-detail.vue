@@ -22,7 +22,7 @@
         <span v-if="money" class="yb_fontsize20 money-number">{{  format_money3(money) }}</span>
         <span class="money-span" ref="money_span"
           :class="{ 'money-span2': !(BetData.active_index == index_ && [1, 7].includes(+get_bet_status)) }"></span>
-        <span v-if="!money && max_money_back" class="yb_fontsize14 limit-txt">{{ BetData.bet_money_format() }}</span>
+        <span v-if="!money && max_money_back" class="yb_fontsize14 limit-txt">-----</span>
         <span @click.stop="clear_money" class="money-close" :style="{ opacity: money > 0 ? '1' : '0' }">x</span>
       </div>
     </div>

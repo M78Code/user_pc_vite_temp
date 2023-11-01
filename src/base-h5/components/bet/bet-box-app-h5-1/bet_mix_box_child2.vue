@@ -282,7 +282,7 @@ const calc_class = computed(() => {
 })
 // 投注金额赋值
 const change_money_handle = (val) => {
-  bet_amount.value = format_money2(val)
+  bet_amount.value = format_money2(val.money)
   // console.log("投注金额",bet_amount.value)
 }
 onMounted(() => {
