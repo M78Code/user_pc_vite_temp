@@ -321,6 +321,7 @@
   },
   "collect": {},
   "common": {
+    "in_box": "In the box......",
     "collect_toast": "รายการโปรดไม่สำเร็จ โปรดลองอีกครั้งภายหลัง",
     "account": "บัญชี",
     "account_invalid": "ข้อมูลบัญชีถูกปิดการใช้งาน",

@@ -41,7 +41,7 @@
 </template>
 
 <script setup>
-import { defineProps, nextTick, ref, computed, watch, onMounted, onBeforeUnmount } from "vue";
+import {   nextTick, ref, computed, watch, onMounted, onBeforeUnmount } from "vue";
 import lodash from "lodash";
 import { api_common } from "src/api/index.js";
 import BaseData from "src/core/base-data/base-data.js";

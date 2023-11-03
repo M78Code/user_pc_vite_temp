@@ -5,14 +5,14 @@
 -->
 <template>
   <div class="ranking_list hairline-border">
-    <span class="navigation-title">{{ $root.$t('virtual_sports.leaderboard') }}</span>
+    <span class="navigation-title">{{ i18n_t('virtual_sports.leaderboard') }}</span>
     <!-- header -->
     <div class="header">
       <div class="col1"></div>
-      <div class="col2">{{ $root.$t('virtual_sports.team') }}</div>
-      <div class="col3">{{ $root.$t('virtual_sports.game') }}</div>
-      <div class="col4">{{ $root.$t('virtual_sports.win_tie_loss') }}</div>
-      <div class="col5">{{ $root.$t('virtual_sports.integral') }}</div>
+      <div class="col2">{{ i18n_t('virtual_sports.team') }}</div>
+      <div class="col3">{{ i18n_t('virtual_sports.game') }}</div>
+      <div class="col4">{{ i18n_t('virtual_sports.win_tie_loss') }}</div>
+      <div class="col5">{{ i18n_t('virtual_sports.integral') }}</div>
     </div>
     <!-- 小组 -->
     <div class="group-item" v-if="!no_data">
@@ -35,6 +35,8 @@
 import { api_virtual } from "src/api/index.js";
 import noData from "src/base-h5/components/common/no-data.vue";
 import { onUnmounted,watch,ref } from 'vue';
+import { i18n_t } from "src/core/index.js"
+
 const props = defineProps({
   tid: {
     type:String,

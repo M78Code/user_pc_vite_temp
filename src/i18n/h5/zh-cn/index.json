@@ -16,6 +16,9 @@
       "settle": "结算",
       "bet_status": "注单状态",
       "cash_failed": "提前兑现失败",
+      "sub_wait": "已提交申请，请耐心等待",
+      "all_cash_sess": "全部提前兑现成功",
+      "cash_details": "提前兑现详情",
       "cash_rules": "提前兑现规则申明",
       "explain": "<p>开云体育提前兑现只适用于指定赛事和盘口，如遇到赛事或盘口取消，提前兑现注单将会被收回重新结算。开云体育保留赛果最终解释权。</p><p>具体兑现规则请查看【帮助中心】-【开云体育提前兑现规则】</p>",
       "confirm_cancel_reservation": "确定取消本场比赛预约？"
@@ -26,12 +29,18 @@
       "actual_combat": "实战来一注",
       "practise": "模拟先练习",
       "again": "再学一次",
+      "single": "单选",
+      "return_home": "返回主页",
+      "next": "下一题",
+      "results_appear": "当出现这样的赛果",
+      "red_list": "恭喜红单",
+      "not_master": "很遗憾，您还未完全掌握",
       "big_small_ball": "大小球",
       "big_small_ball_tip": "全场90分钟（含伤停补时）两队进球数的总和",
       "handicapData_condition": "主客实力相当<br/>均不让球即0（平手盘）",
       "all_win": "全赢",
       "home_team": "主队",
-      "bet_home_team": "投注主队",
+      "bet_home_team": "投注本队",
       "bet_away_team": "投注客队",
       "away_team": "客队",
       "all_lose": "全输",
@@ -94,9 +103,33 @@
       "cancel_appoint": "取消预约",
       "pm_sport": "PM体育",
       "bet_confirm": "注单已确认",
-      "bet_error": "注单已确认",
+      "bet_error": "注单失败",
       "reserve_win": "预约金额",
       "win_amount": "可盈金额"
+    },
+    "match": {
+      "all": "全部",
+      "champions": "欧冠",
+      "premier": "英超",
+      "serie": "意甲",
+      "laliga": "西甲",
+      "ligue": "法甲",
+      "china_super ": "中超",
+      "normal_results": "普通赛果",
+      "championship_results": "普通赛果"
+    },
+    "filter": {
+      "more": "更多>",
+      "enlarge": "放大",
+      "font_size": "字号大小",
+      "default": "默认",
+      "turn_on": "开启",
+      "daily_activities": "每日活动",
+      "go_old_version": "前往旧版",
+      "go_web_version": "前往网页版"
+    },
+    "v_sports": {
+      "event_status": "赛事状态"
     }
   },
   "ac_rules": {
@@ -411,6 +444,7 @@
   },
   "common": {
     "temporarily_unavailable": "本功能暂不可用",
+    "in_box": "抽盒中......",
     "please_refresh": "请您刷新下页面重试",
     "all_notice": "所有公告",
     "all_select": "全选",
@@ -441,6 +475,7 @@
     "virtual_sports": "VR体育",
     "auto_close": "%s 秒后自动关闭",
     "HD": "高清",
+    "return": "返回",
     "SD": "标清"
   },
   "detail": {
@@ -2249,6 +2284,7 @@
     "clear": "清空",
     "post_bet2": "发布晒单",
     "bulletin": "聊天室公告",
+    "room_not_open": "聊天室未开启",
     "close": "关闭"
   },
   "new_menu": {

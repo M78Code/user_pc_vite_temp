@@ -11,8 +11,8 @@
     <div class="tab-title">
       <div class="league-name right-border">{{ lengue_name }}</div>
       <div class="status">
-        <span class="num">第10轮</span>
-        <span class="state">比赛中</span>
+        <!-- <span class="num">第10轮</span>
+        <span class="state">比赛中</span> -->
         <icon-wapper class="icon" color="#e1e1e1" name="icon-arrow" size="15px" />
       </div>
     </div>
@@ -62,7 +62,7 @@
             v-if="![1001,1004].includes(current_sub_menu_id)">
           </virtual-sports-tab>
           <!-- 打印请勿删除 -->
-          <div><span>赛事状态</span>{{current_match.match_status}}</div>
+          <div><span>{{ i18n_t('app_h5.v_sports.event_status') }}</span>{{current_match.match_status}}</div>
           <!-- 赛马投注区域 -->
           <div v-if="match_list_by_no && match_list_by_no.length && ![1001,1004].includes(current_sub_menu_id)">
             <virtual-sports-category
@@ -77,7 +77,7 @@
         <!-- 注释勿删除 -->
         <div class="v-sports-ranking" v-if="![1001,1004].includes(current_sub_menu_id)">
           <!-- 打印请勿删除 -->
-          <div><span>赛事状态</span>{{current_match.match_status}}</div>
+          <div><span>{{ i18n_t('app_h5.v_sports.event_status') }}</span>{{current_match.match_status}}</div>
           <!-- 赛马的动态排名---赛马在比赛过程的时候显示 -->
           <dynamic-ranking v-if="current_match.match_status == 1" :virtual_match_list="[current_match]" />
           <!-- 赛马的结果展示页---赛马开奖结束后显示赛果 -->

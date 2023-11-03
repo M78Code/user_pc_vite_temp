@@ -9,13 +9,14 @@
     <!-- 返回顶部 -->
     <div class="go-top-btn" @click="on_go_top">
       <icon-wapper name="icon-go_top" size="14px"></icon-wapper>
-      <div class="msg">{{$t("common.back_top") || ""}}</div>
+      <div class="msg">{{i18n_t("common.back_top") || ""}}</div>
     </div>
   </div>
 </template>
 
 <script setup>
 import { IconWapper } from 'src/components/icon'
+import { i18n_t } from "src/core/index.js"
 const emit = defineEmits(['on_go_top'])
 
     /**

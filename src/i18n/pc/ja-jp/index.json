@@ -320,6 +320,7 @@
   },
   "collect": {},
   "common": {
+    "in_box": "In the box......",
     "collect_toast": "Failed to add to favourites, please try again later",
     "account": "Account",
     "account_invalid": "Account information is invalid,",

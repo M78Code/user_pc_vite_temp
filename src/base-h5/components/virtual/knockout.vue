@@ -73,7 +73,7 @@
 <script>
 // #TODO VUEX 
 // import {mapGetters} from "vuex";
-import { project_name } from 'src/core'
+import { project_name, i18n_t } from 'src/core/index.js'
 import { api_virtual } from "src/api/index.js";
 import noData from "src/base-h5/components/common/no-data.vue";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";

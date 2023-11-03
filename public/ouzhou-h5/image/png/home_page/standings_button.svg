@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="56px" height="24px" viewBox="0 0 56 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>积分榜按钮</title>
+    <defs>
+        <linearGradient x1="50%" y1="-36.9482863%" x2="50%" y2="83.482879%" id="linearGradient-1">
+            <stop stop-color="#FFB001" stop-opacity="0.3" offset="0%"></stop>
+            <stop stop-color="#FFB001" stop-opacity="0" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-opacity="0.05">
+        <g id="积分榜-赛程不可点击备份" transform="translate(-312.000000, -158.000000)" fill="url(#linearGradient-1)" stroke="#FFFFFF" stroke-width="0.5">
+            <g id="积分榜按钮" transform="translate(312.000000, 158.000000)">
+                <rect id="矩形" x="0.25" y="0.25" width="55.5" height="23.5" rx="11.5"></rect>
+            </g>
+        </g>
+    </g>
+</svg>

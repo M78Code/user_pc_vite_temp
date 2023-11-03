@@ -19,8 +19,6 @@ const PROJECT_MAP = {
   project_4: "yazhou-pc", //亚洲版 PC（新版)
   project_5: "app-h5", // 复刻版 H5 - KYAPP
   project_6: "new-pc", // 亚洲版 pc 202310 新平坦化版本
-  project_7: "ouzhou-pc", // 欧洲版-PC 
-  project_8: "ouzhou-h5", // 欧洲版-H5
 };
 //布局名字
 const PROJECT_NAME = PROJECT_MAP[PROJECT];
@@ -65,6 +63,7 @@ function format_date(value) {
 const BUILD_VERSION = format_date(new Date().getTime());
 
  
+
 const config = {
   BUILD_VERSION: IS_DEV ? "" : BUILD_VERSION,
   IS_DEV,
