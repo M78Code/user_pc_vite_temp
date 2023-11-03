@@ -16,6 +16,7 @@ import {
  } from 'src/core/index.js'
 import lodash_ from "lodash"
 import { ALL_SPORT_PLAY } from "src/core/constant/config/play-mapping.js"
+import WsMan from "src/core/data-warehouse/ws/ws-ctr/ws-man.js"
 
 // 获取限额请求数据
 // bet_list 投注列表
@@ -179,11 +180,15 @@ const get_query_bet_amount_common = (obj) => {
             // 获取预约投注项
             set_bet_pre_list(latestMarketInfo)
         } else {
+            useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD,{
+                code: res.code,
+                msg: res.message
+            })
             // 获取限额失败的信息
-            // BetViewDataClass.set_bet_error_code({
-            //     code: res.code,
-            //     message: res.message
-            // })
+            BetData.set_bet_before_message({
+                code: res.code,
+                msg: res.message
+            })
         }
     })
 }
@@ -215,10 +220,14 @@ const get_query_bet_amount_esports_or_vr = () => {
             // })
 
         } else {
-            // 获取限额失败的信息
-            BetViewDataClass.set_bet_error_code({
+            useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD,{
                 code: res.code,
-                message: res.message
+                msg: res.message
+            })
+            // 获取限额失败的信息
+            BetData.set_bet_before_message({
+                code: res.code,
+                msg: res.message
             })
         }
     })
@@ -246,10 +255,14 @@ const get_query_bet_amount_pre = () => {
             BetData.set_bet_appoint_obj(latestMarketInfo)
 
         } else {
-            // 获取限额失败的信息
-            BetViewDataClass.set_bet_error_code({
+            useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD,{
                 code: res.code,
-                message: res.message
+                msg: res.message
+            })
+            // 获取限额失败的信息
+            BetData.set_bet_before_message({
+                code: res.code,
+                msg: res.message
             })
         }
     })
@@ -293,10 +306,7 @@ const set_bet_pre_list = bet_appoint => {
 
 // 提交投注信息 
 const submit_handle = type => {
-    // 设置投注中状态
-    BetViewDataClass.set_bet_order_status(2)
-
-   
+      
     // 单关才有预约投注
      // 是否预约投注  1 预约  0 不预约
     //  是否合并投注  bet_single_list。length  0:1个 1:多个
@@ -347,41 +357,67 @@ const submit_handle = type => {
     api_betting.post_submit_bet_list(params).then(res => {
 
         if (res.code == 200) {
-            setTimeout(() => {
-                // 投注成功 更新余额
-                UserCtr.get_balance()
-                // 投注成功后获取投注记录数据 24小时内的
-                useMittEmit(MITT_TYPES.EMIT_TICKRTS_COUNT_CONFIG)
-                // 获取
-                BetData.set_bet_mode(lodash_.get(res,'data.lock'),-1)
-                // 获取投注后的数据列表
-                let orderDetailRespList = lodash_.get(res,'data.orderDetailRespList') || []
-                set_orderNo_bet_obj(orderDetailRespList)
+            // 投注成功 更新余额
+            UserCtr.get_balance()
+            // 投注成功后获取投注记录数据 24小时内的
+            useMittEmit(MITT_TYPES.EMIT_TICKRTS_COUNT_CONFIG)
+            // 获取
+            BetData.set_bet_mode(lodash_.get(res,'data.lock'),-1)
+            // 获取投注后的数据列表
+            let orderDetailRespList = lodash_.get(res,'data.orderDetailRespList') || []
+            set_orderNo_bet_obj(orderDetailRespList)
 
-                // 单关且只有一条投注项 
-                if(BetData.is_bet_single && orderDetailRespList.length == 1){
-                    // 订单状态 0:投注失败 1: 投注成功 2: 订单确认中
-                    let status_code = orderDetailRespList[0].orderStatusCode
-                    let status = 2
-                    // 设置投注中状态 后续用ws推送改变
-                    switch (+status_code) {
-                        case 0:
-                            status = 5;
-                            break;
-                        case 1:
-                            status = 3;
-                            break;
-                        default:
-                            break;
-                    }
-                    //  1-投注状态,2-投注中状态,3-投注成功状态(主要控制完成按钮),4-投注失败状态,5-投注项失效
-                    BetViewDataClass.set_bet_order_status(status)
+            // 单关且只有一条投注项 
+            if(BetData.is_bet_single && orderDetailRespList.length == 1){
+                // 订单状态 0:投注失败 1: 投注成功 2: 订单确认中
+                let status_code = orderDetailRespList[0].orderStatusCode
+                let status = 2
+                // 设置投注中状态 后续用ws推送改变
+                switch (+status_code) {
+                    case 0:
+                        status = 5;
+                        break;
+                    case 1:
+                        status = 3;
+                        break;
+                    default:
+                        break;
                 }
-            }, 1000);
+                // 1-投注状态,2-投注中状态,3-投注成功状态(主要控制完成按钮),4-投注失败状态,5-投注项失效
+                BetViewDataClass.set_bet_order_status(status)
+            }
+            let obj = {};
+            obj.cmd = 'C2'
+            obj.hid = ''
+            obj.mid = ''
+            // 盘口Id，多个Id使用逗号分隔
+            // 赛事Id，多个Id使用逗号分隔
+            if(BetData.is_bet_single){
+                seriesOrders.orderDetailList.forEach( item => {
+                    obj.hid = item.marketId 
+                    obj.mid = item.matchId 
+                })
+            }else{
+                seriesOrders[0].orderDetailList.forEach( item => {
+                    obj.hid = item.marketId 
+                    obj.mid = item.matchId 
+                })
+            }
+            // 用户赔率分组
+            obj.marketLevel = lodash_.get(UserCtr.user_info,'marketLevel','0');
+            WsMan.skt_send_bat_handicap_odds(obj);
             // 通知页面更新 
+        }else{
+            useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD,{
+                code: res.code,
+                msg: res.message
+            })
+            // 获取限额失败的信息
+            BetData.set_bet_before_message({
+                code: res.code,
+                msg: res.message
+            })
         }
-        // 设置投注 code 码
-        BetViewDataClass.set_bet_error_code(res)
     })
 }
 
@@ -403,7 +439,8 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         query = h5_match_data_switch(other.match_data_type)
         useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX,true)
         BetViewDataClass.set_bet_show(true)
-        BetViewDataClass.set_bet_keyboard_show(false)
+        BetData.set_bet_keyboard_show(true)
+        // BetViewDataClass.set_bet_keyboard_show(true)
     }else{
         query = MatchDataWarehouse_PC_List_Common
         // 判断是不是详情点击 详情使用详情数据仓库

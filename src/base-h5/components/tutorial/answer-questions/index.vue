@@ -66,12 +66,12 @@
                 实战来一注
             </div>
             <div class="ht-button default" @click="nextQuestionsHandle">
-                {{state.currentAnswer === props.questionsData.length && state.recordSuccess === props.questionsData.length ? '返回主页' : '下一题'}}
+                {{state.currentAnswer === props.questionsData.length && state.recordSuccess === props.questionsData.length ? i18n_t('app_h5.handicap_tutorial.return_home') : i18n_t('app_h5.handicap_tutorial.next')}}
             </div>
         </div>
 
         <div v-if="state.currentAnswer === props.questionsData.length && state.recordSuccess !== props.questionsData.length" class="ht-again" @click="resetHandle">
-            再学一次
+            {{ i18n_t('app_h5.handicap_tutorial.again') }}
             <div class="icon"></div>
         </div>
 

@@ -1,0 +1,163 @@
+/* com1图标 ------------------------------------------------------------------------------------熊猫体育*/
+.custom-format-com1.theme01 .custom-format-img-logo-01{
+    /* 主logo日间 day_logo.svg */
+    background-image: url('yazhou-pc/image/com.svg') !important;
+}
+
+.custom-format-com1 .custom-format-img-logo-01-theme01{
+    /* 主logo日间 day_logo.svg */
+    background-image: url('yazhou-pc/image/com.svg') !important;
+}
+
+.custom-format-com1.theme02 .custom-format-img-logo-01{
+    /* 主logo夜间 night_logo.png */
+    background-image: url('./com01/night_logo.svg') !important;
+}
+
+.custom-format-com1.theme01 .team-logo-logo[src^=data]{
+    /* 联赛logo日间 */
+    background-image: url('./com01/league_logo_day.svg') !important;
+}
+
+.custom-format-com1.theme02 .team-logo-logo[src^=data]{
+    /* 联赛logo夜间 */
+    background-image: url('./com01/league_logo_night.svg') !important;
+}
+
+.custom-format-com1 .custom-format-img-logo-04{
+    /* 浏览器兼容页logo */
+    background-image: url('./com01/logo_yabo.svg') !important;
+}
+
+.custom-format-com1 .custom-format-web-icon-05{
+    /* no_video.png */
+    background-image: url('./com01/no_video.png') !important;
+}
+
+.custom-format-com1 .custom-format-web-icon-06{
+    /* novideo.jpg */
+    background-image: url('./com01/novideo.jpg') !important;
+}
+
+/* com2图标 ------------------------------------------------------------------------------------OB体育*/
+.custom-format-com2.theme01 .custom-format-img-logo-01{
+    /* 主logo日间 day_logo.svg */
+    background-image: url('./com02/day_logo.svg') !important;
+}
+
+.custom-format-com2 .custom-format-img-logo-01-theme01{
+    /* 主logo日间 day_logo.svg */
+    background-image: url('./com02/day_logo.svg') !important;
+}
+
+.custom-format-com2.theme02 .custom-format-img-logo-01{
+    /* 主logo夜间 night_logo.svg */
+    background-image: url('./com02/day_logo.svg') !important;
+}
+
+.custom-format-com2.theme01 .team-logo-logo[src^=data]{
+    /* 联赛logo日间 */
+    background-image: url('./com02/league_logo_day.svg') !important;
+}
+
+.custom-format-com2.theme02 .team-logo-logo[src^=data]{
+    /* 联赛logo夜间 */
+    background-image: url('./com02/league_logo_night.svg') !important;
+}
+
+.custom-format-com2 .custom-format-img-logo-04{
+    /* 浏览器兼容页logo */
+    background-image: url('./com02/logo_yabo.svg') !important;
+}
+
+.custom-format-com2 .custom-format-web-icon-05{
+    /* novideo.svg */
+    background-image: url('./com02/novideo.svg') !important;
+}
+
+.custom-format-com2 .custom-format-web-icon-06{
+    /* novideo.png */
+    background-image: url('./com02/novideo.png') !important;
+}
+
+/* com3图标 ------------------------------------------------------------------------------------BOB*/
+.custom-format-com3.theme01 .custom-format-img-logo-01{
+    /* 主logo日间 day_logo.svg */
+    background-image: url('./com03/day_logo.png') !important;
+}
+
+.custom-format-com3 .custom-format-img-logo-01-theme01{
+    /* 主logo日间 day_logo.svg */
+    background-image: url('./com03/day_logo.png') !important;
+}
+
+.custom-format-com3.theme02 .custom-format-img-logo-01{
+    /* 主logo夜间 night_logo.png */
+    background-image: url('./com03/night_logo.svg') !important;
+}
+
+.custom-format-com3.theme01 .team-logo-logo[src^=data]{
+    /* 联赛logo日间 */
+    background-image: url('./com03/league_logo_day.svg') !important;
+}
+
+.custom-format-com3.theme02 .team-logo-logo[src^=data]{
+    /* 联赛logo夜间 */
+    background-image: url('./com03/league_logo_night.svg') !important;
+}
+
+.custom-format-com3 .custom-format-img-logo-04{
+    /* 浏览器兼容页logo */
+    background-image: url('./com03/logo_yabo.svg') !important;
+}
+
+.custom-format-com3 .custom-format-web-icon-05{
+    /* novideo.svg */
+    background-image: url('./com03/novideo@2x.png') !important;
+}
+
+.custom-format-com3 .custom-format-web-icon-06{
+    /* novideo.png */
+    background-image: url('./com03/novideo.png') !important;
+}
+
+/* com4图标 ------------------------------------------------------------------------------------乐天*/
+.custom-format-com4.theme01 .custom-format-img-logo-01{
+    /* 主logo日间 day_logo.svg */
+    background-image: url('./com04/day_logo.png') !important;
+}
+
+.custom-format-com4 .custom-format-img-logo-01-theme01{
+    /* 主logo日间 day_logo.svg */
+    background-image: url('./com04/day_logo.png') !important;
+}
+
+.custom-format-com4.theme02 .custom-format-img-logo-01{
+    /* 主logo夜间 night_logo.png */
+    background-image: url('./com04/night_logo.png') !important;
+}
+
+.custom-format-com4.theme01 .team-logo-logo[src^=data]{
+    /* 联赛logo日间 */
+    background-image: url('./com04/league_logo_day.svg') !important;
+}
+
+.custom-format-com4.theme02 .team-logo-logo[src^=data]{
+    /* 联赛logo夜间 */
+    background-image: url('./com04/league_logo_night.svg') !important;
+}
+
+.custom-format-com4 .custom-format-img-logo-04{
+    /* 浏览器兼容页logo */
+    background-image: url('./com04/logo_yabo.svg') !important;
+}
+
+.custom-format-com4 .custom-format-web-icon-05{
+    /* novideo.svg */
+    background-image: url('./com04/novideo@2x.png') !important;
+}
+
+.custom-format-com4 .custom-format-web-icon-06{
+    /* novideo.png */
+    background-image: url('./com04/novideo.png') !important;
+}

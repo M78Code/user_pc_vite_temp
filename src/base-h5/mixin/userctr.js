@@ -1,5 +1,5 @@
 import { watch, onBeforeUnmount, ref } from "vue";
-import { UserCtr, useMittOn, MITT_TYPES, PageSourceData } from 'src/core/'
+import { UserCtr, useMittOn, MITT_TYPES } from 'src/core/'
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 const theme = ref(UserCtr.theme)//主题
 const lang = ref(UserCtr.lang)//语言
@@ -27,6 +27,7 @@ const mitt_list = [
         theme.value = UserCtr.theme;
     }).off,
     useMittOn(MITT_TYPES.EMIT_STANDARD_EDITION_CHANGE, (v) => {
+        console.log(2222222222)
         standard_edition.value = v
     }).off,
     //通知收藏变化了

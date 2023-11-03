@@ -142,7 +142,7 @@ const is_show_home_red = ref(false) // 是否显示主队红牌动画
 const is_show_away_red = ref(false) // 是否显示客队红牌动画
 const is_collect = ref(false) //赛事是否收藏
 
-let match_style_obj = MatchListCardDataClass.all_card_obj[lodash.get(props, 'match.mid')+'_']
+let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(lodash.get(props, 'match.mid'))
 
 const handicap_num = computed(() => {
   if(GlobalAccessConfig.get_handicapNum()){

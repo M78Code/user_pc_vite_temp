@@ -64,7 +64,7 @@ import MenuData_App_h5 from "src/core/menu-app-h5/menu-data-class.js";
 
  
 let MenuData = IS_PC ? MenuData_PC : MenuData_H5;
-if(PROJECT_NAME == 'app-h5'){
+if( ['ouzhou-h5','app-h5'].includes(PROJECT_NAME)){
   MenuData = MenuData_App_h5
 }
 const MatchListCard = IS_PC ? MatchListCard_PC : MatchListCard_H5;

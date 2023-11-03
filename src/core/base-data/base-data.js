@@ -375,7 +375,7 @@ class BaseData {
     this.set_left_menu_init(menu_old_or_nem_data_list);
 
     // app-h5使用
-    if(PROJECT_NAME == 'app-h5'){
+    if( ['ouzhou-h5','app-h5'].includes(PROJECT_NAME)){
       MenuData.set_init_menu_list()
     }
 

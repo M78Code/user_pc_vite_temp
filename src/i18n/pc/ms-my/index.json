@@ -321,6 +321,7 @@
   },
   "collect": {},
   "common": {
+    "in_box": "In the box......",
     "collect_toast": "Gagal save. Cuba lagi",
     "account": "Akaun",
     "account_invalid": "Info akaun expired",

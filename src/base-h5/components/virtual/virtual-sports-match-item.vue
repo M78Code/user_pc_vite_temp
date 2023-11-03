@@ -163,7 +163,7 @@ import odd_column_item from "src/base-h5/components/match-list/components/odd-co
 // import betting from 'project_path/mixins/betting/betting.js';
 // import virtual_sports_m_item_mixin from 'project_path/mixins/virtual_sports/virtual_sports_m_item_mixin.js'
 import {  PageSourceData,MatchDetailCalss  } from "src/core/index.js";
-import {MenuData,compute_img_url } from "src/core/index.js";
+import {MenuData,compute_img_url, i18n_t } from "src/core/index.js";
 import lodash from "lodash";
 import VirtualVideo from 'src/core/match-list-h5/virtual-sports/virtual-video.js'
 import { standard_edition, theme } from 'src/base-h5/mixin/userctr.js'

@@ -38,8 +38,12 @@ import { is_hot } from 'src/base-h5/mixin/menu.js'
 
 import NoData from "src/base-h5/components/common/no-data.vue"; // 无网络展示组件
 
+// yazhou-h5 赛事列表
 import MatchList1 from './components/match-list1.vue'
+// app-h5 赛事列表
 import MatchList2 from './components/match-list2.vue'
+// ouzhou-h5 赛事列表
+import MatchList3 from './components/match-list3.vue'
 
 import { PROJECT_NAME } from "src/core/index.js"
 
@@ -80,7 +84,8 @@ onMounted(() => {
 
 const config = {
   'app-h5': MatchList2,
-  'yazhou-h5': MatchList1
+  'yazhou-h5': MatchList1,
+  'ouzhou-h5': MatchList3,
 }
 
 const target_com = computed(() => {

@@ -317,6 +317,7 @@
 		"text3": "스포츠 사용자 경험 센터"
 	},
 	"common": {
+		"in_box": "In the box......",
 		"account": "계좌",
 		"account_invalid": "계좌정보 실패",
 		"account_invalid2": "다시 입장하셔서 시청해주세요",

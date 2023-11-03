@@ -8,17 +8,17 @@
     <!-- header -->
     <div class="header">
       <div class="col1"></div>
-      <div class="col2">{{ $t('virtual_sports.team') }}</div>
-      <div class="col3">{{ $t('virtual_sports.game') }}</div>
-      <div class="col4">{{ $t('virtual_sports.win_tie_loss') }}</div>
-      <div class="col5">{{ $t('virtual_sports.advance') }}</div>
-      <div class="col6">{{ $t('virtual_sports.lose') }}</div>
-      <div class="col7">{{ $t('virtual_sports.goal_difference') }}</div>
-      <div class="col8">{{ $t('virtual_sports.integral') }}</div>
+      <div class="col2">{{ i18n_t('virtual_sports.team') }}</div>
+      <div class="col3">{{ i18n_t('virtual_sports.game') }}</div>
+      <div class="col4">{{ i18n_t('virtual_sports.win_tie_loss') }}</div>
+      <div class="col5">{{ i18n_t('virtual_sports.advance') }}</div>
+      <div class="col6">{{ i18n_t('virtual_sports.lose') }}</div>
+      <div class="col7">{{ i18n_t('virtual_sports.goal_difference') }}</div>
+      <div class="col8">{{ i18n_t('virtual_sports.integral') }}</div>
     </div>
     <!-- 小组 -->
     <div class="group-item hairline-border" v-for="(detail_list,index) in group_stage_list" :key="index" v-show="!no_data">
-      <div class="group-name">{{get_lang == 'vi' ? (i18n_t('virtual_sports.group')+ '  ' + detail_list.groupId) : (detail_list.groupId+ '  ' +$t('virtual_sports.group'))}}</div>
+      <div class="group-name">{{get_lang == 'vi' ? (i18n_t('virtual_sports.group')+ '  ' + detail_list.groupId) : (detail_list.groupId+ '  ' +i18n_t('virtual_sports.group'))}}</div>
       <div class="team-item" v-for="(item,i) in detail_list.sVirtualSportXZTeamRankingDetailPOList" :key="i">
         <div class="col1">{{+i + 1}}</div>
         <div class="col2">
@@ -41,7 +41,7 @@
 import { api_virtual } from "src/api/index.js";
 import noData from "src/base-h5/components/common/no-data.vue";
 import 'src/base-h5/css/pages/virtual-group-matches.scss'
-
+import { i18n_t } from "src/core/index.js"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 export default defineComponent({
   name: "group_matches",

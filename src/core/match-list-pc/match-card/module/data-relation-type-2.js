@@ -38,6 +38,7 @@
   */
   export const compute_match_list_style_obj_and_match_list_mapping_relation_obj_type2=(match_list,is_ws_call)=>{
     let template_id = MenuData.get_match_tpl_number()
+    console.log('template_id', template_id);
     // 已开赛 到卡片key的 映射对象
     let play_to_card_key_arr = ['play_title']
     // 未开赛 到卡片key的 映射对象
@@ -84,8 +85,6 @@
         card_index,
       }
     }
-    console.log('matchmatchmatch', match_list);
-
     // 遍历所有赛事列表
     lodash.each(match_list, _match => {
       let match = MatchListData.list_to_obj.mid_obj[_match.mid + '_']

@@ -161,7 +161,7 @@ import { i18n_t} from 'src/core/index.js'
 import oddColumnItem from "./odd-column-item.vue";
 import { img1, img2, img3, img4, Y0_img_white } from 'src/base-h5/core/utils/local-image'
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
-import { MenuData,compute_img_url ,UserCtr} from "src/core/index.js"
+import { MenuData,compute_img_url ,UserCtr, compute_css_obj} from "src/core/index.js"
 import PageSourceData  from  "src/core/page-source/page-source.js";
 import { lang, standard_edition, theme } from 'src/base-h5/mixin/userctr.js'
 
@@ -445,7 +445,7 @@ const ol_list = computed(() => {
   let ol_list_custom = [];
   if (found) {
     Object.assign(hp_item.value, found);
-
+    if (!found.hl) return
     let f_hl_item = found.hl[0];
     if (found.hl && f_hl_item) {
       hl_hs.value = f_hl_item.hs;

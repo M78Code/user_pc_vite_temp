@@ -1,11 +1,12 @@
 <template>
   <div class="c-match-item tpl-esports-bg">
+    <div v-show="false">{{ MatchListData.data_version.version }}</div>
     <!-- 主盘 -->
     <div class="match-handicap-item">
       <!-- 比赛进程 -->
       <div class="process-col yb-flex-center tpl-esports">
         <!--热门赛事显示hot标识-->
-        <img class="match-hot" :src="compute_local_project_file_path('/image/common/svg/hot.svg')" v-if="match.is_hot"/>
+        <img class="match-hot" :src="compute_local_project_file_path('/image/common/svg/hot.svg')" v-if="lodash.get(match, 'is_hot')"/>
         <!-- 串 ：可串关文字提示 ispo：0否 1普通串关 2局内串关 -->
         <div class="match-parlay">
           <template v-if="lodash.get(match,'ispo', 0) != 0">
@@ -16,7 +17,7 @@
         </div>
 
         <!-- 比赛进程 -->
-        <match-process v-if="is_mounted && match.api_update_time !=0" :match="match" source='match_list' 
+        <match-process v-if="is_mounted && match && match.api_update_time !=0" :match="match" source='match_list' 
           :class="pos_class" show_page="match-list" :rows="2" />
       </div>
       <!-- 赛事基础信息 -->
@@ -26,14 +27,15 @@
 
       <!-- 赛事盘口投注项 -->
       <match-handicap
+        v-if="match"
         :handicap_list="match.main_handicap_list"
         :match="match"
         :is_show_score="false"
       />
 
       <!-- 视频按钮 -->
-      <div class="media-col" >
-        <match-media :match="match" />
+      <div class="media-col"  >
+        <match-media v-if="match" :match="match" />
       </div>
     </div>
 
@@ -64,7 +66,7 @@ const props = defineProps({
   }
 })
 
-let match_style_obj = MatchListCardDataClass.all_card_obj[props.mid+'_']
+let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.mid)
 const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`].width_config
 let match = MatchListData.list_to_obj.mid_obj[props.mid+'_'];
 const is_mounted = ref(true);

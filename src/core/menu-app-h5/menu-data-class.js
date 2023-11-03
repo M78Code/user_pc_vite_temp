@@ -49,7 +49,7 @@ class MenuData {
         return +n === 300;
       },
       '2000':(n)=>{
-        return +n>2000 || +n<2200;
+        return +n>2000 && +n<2200;
       },
       '50000':(n)=>{
         return +n <300;
@@ -339,7 +339,11 @@ class MenuData {
   get_menus_i18n_map(mi) {
     //"7": "电竞" 直接可以返回不做处理 slice(0,3)
     if (this.is_export()) {
-      return BaseData.menus_i18n_map[mi]
+      return BaseData.menus_i18n_map[+mi]
+    }
+    //二级菜单
+    if (this.is_export(+this.current_lv_2_menu_mi) || this.is_vr(+this.current_lv_2_menu_mi)) {
+      return BaseData.menus_i18n_map[+mi]
     }
     return BaseData.menus_i18n_map[this.recombine_menu_desc(mi)];
   }

@@ -49,7 +49,7 @@
 </template>
 
 <script setup>
-import { defineProps } from 'vue'
+ 
 import teamImg from 'src/base-h5/components/details/team-img.vue'
 
 const props = defineProps({

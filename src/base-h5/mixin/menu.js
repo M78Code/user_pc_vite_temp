@@ -52,6 +52,8 @@ const is_detail = computed(() => {
     // return page_source.value === 'detail_match_list';
 });
 
+const footer_menu_id = ''
+
 const menu_lv1 = ref(MenuData.current_lv_1_menu)//1级 大类
 const menu_lv2 = ref(MenuData.current_lv_2_menu)//2级 球种
 const menu_lv3 = ref(MenuData.current_lv_3_menu)//3级 日期
@@ -62,6 +64,6 @@ watch(update_time, () => {
     menu_lv3.value = MenuData.current_lv_3_menu;//3级
     menu_lv4.value = MenuData.current_lv_4_menu;//4级
 });
-export {update_time,
+export { update_time, footer_menu_id,
     is_jinzu, is_kemp, is_mix, is_vr, is_zaopan, is_export, is_scroll_ball, is_today, is_results, menu_type, menu_lv1, menu_lv2, is_hot, is_detail
 }
