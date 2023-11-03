@@ -70,6 +70,7 @@ class MatchListCardDataClass {
     no_start_to_card_key_arr && (this.no_start_to_card_key_arr = no_start_to_card_key_arr)
     match_list_card_key_arr && (this.match_list_card_key_arr = match_list_card_key_arr)
     csid_to_card_key_obj && (this.csid_to_card_key_obj = csid_to_card_key_obj)
+    this.set_list_version()
   }
   // 设置 的列表scroll_top
   set_scroll_top(scroll_top) {
@@ -78,6 +79,7 @@ class MatchListCardDataClass {
 
   set_match_list_style_info(payload) {
     this.match_list_style_info.value = payload;
+    this.set_list_version()
   }
 
   set_list_version() {

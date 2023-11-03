@@ -259,7 +259,6 @@
         match_list_card_key_arr,
         csid_to_card_key_obj//赛种ID 到卡片key的 映射对象
       })
-    MatchListCardData.set_list_version()
     // // 遍历所有联赛容器卡片
     all_league_container_keys_arr.forEach( card_key => {
       // 设置联赛容器卡片
