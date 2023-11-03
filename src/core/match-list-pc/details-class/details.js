@@ -23,7 +23,6 @@ export default {
   */
   on_go_detail(match,keyword,router) {
     let { mid, tid= -1, csid, go_detail_type, varl, vurl, mms, ms, mvs } = match;
-    console.log(match,'match');
     if((+mid === 0) ||!csid){
       return
     }

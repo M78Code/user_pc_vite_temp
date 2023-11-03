@@ -131,7 +131,6 @@ export const set_sticky_top = () => {
       };
     }
   }
-  console.log('page_source', PageSourceData);
   obj.fixed_header_height = obj.type + "px";
 
   Object.assign(MatchListCardData.sticky_top, obj);
