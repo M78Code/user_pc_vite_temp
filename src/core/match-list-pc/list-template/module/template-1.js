@@ -1,11 +1,11 @@
 /**
- *   0号模板 足球让球与大小
+ *   1号模板 足球让球与大小
  *
  */
 import * as TemplateCommon from "./template-common.js";
 import { UserCtr } from "src/core/index.js";
 let hps_15_minute = TemplateCommon.hps_15_minute;
-//0号模板  模板主盘
+//1号模板  模板主盘
 export const template_1_main = [
   {
     ols: [
@@ -34,7 +34,7 @@ export const template_1_main = [
     ols: [{ _hpid: 18, ot: "Over" }, { _hpid: 18, ot: "Under" }, { empty: 1 }],
   },
 ];
-// 0号模板
+// 1号模板
 export const template_1 = {
   //主盘
   main_handicap_list: [...template_1_main],
