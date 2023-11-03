@@ -78,13 +78,13 @@ import { project_name } from 'src/core'
       box_bool = !box_bool;
       if (box_bool == true) {
         [btn_text, direction] = [
-          t("bet_record.pack_down"),
+          i18n_t("bet_record.pack_down"),
           "down"
         ];
         toggle_rule_b();
       } else {
         [btn_text, direction] = [
-          t("bet_record.pack_up"),
+          i18n_t("bet_record.pack_up"),
           ""
         ];
         toggle_rule_a();
@@ -92,7 +92,7 @@ import { project_name } from 'src/core'
     }
   const rules_normal = () => {
       [btn_text, direction, box_bool] = [
-        // t("bet_record.pack_up"),
+        // i18n_t("bet_record.pack_up"),
         "",
         false
       ];
@@ -101,7 +101,7 @@ import { project_name } from 'src/core'
   const rules_a = () => {
       if ((props.is_pre && props.data_b.detailList) || props.data_b.orderVOS.length >= 3)
         [btn_text, direction, box_bool] = [
-          t("bet_record.pack_down"),
+          i18n_t("bet_record.pack_down"),
           "down",
           true
         ];

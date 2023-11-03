@@ -2,7 +2,7 @@
  * @Author: rise
  * @Date: 2023-10-22 17:03:22
  * @LastEditors: rise
- * @LastEditTime: 2023-10-30 15:47:09
+ * @LastEditTime: 2023-11-03 10:48:01
  * @Description:  
 -->
 <template>
@@ -94,6 +94,7 @@
                 // color: var(--q-gb-bd-c-4);
                 margin: 0.02rem;
                 color: #AFB3C8;
+                line-height: 0.22rem;
                 &.active{
                     border-radius: 25px;
                     // background:var(--q-gb-bg-c-11); 

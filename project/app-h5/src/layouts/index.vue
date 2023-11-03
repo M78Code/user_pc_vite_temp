@@ -23,12 +23,10 @@
       </Tabbar>
 
       <!-- 筛选+搜索   已脱离文档流-->
-      <div v-if="select_dialog" position="bottom" class="select-mask" :style="`height:${inner_height}px`">
+      <!-- <div v-if="select_dialog" position="bottom" class="select-mask" :style="`height:${inner_height}px`">
         <div style="height:100%;width: 100%" @click="select_dialog = false" />
-        <!-- 筛选弹窗 -->
-        <!-- <select-dia /> -->
         <setect-league @closedHandle="select_dialog = false"></setect-league>
-      </div>
+      </div> -->
 
       <div v-if="setting_dialog" position="bottom" class="select-mask" :style="`height:${inner_height}px`">
         <div style="height:100%;width: 100%" @click="setting_dialog = false"></div>
@@ -71,7 +69,7 @@ import activityIcon from "src/base-h5/components/common/activity-icon.vue"; // �
 import setMenu from "src/base-h5/components/common/set-menu.vue"; // 设置
 import selectDia from "src/base-h5/components/match-list/components/select-dia.vue"
 import settingFilter from 'src/base-h5/components/setting-filter/index.vue'
-import setectLeague from 'src/base-h5/components/setect-league/index.vue'
+// import setectLeague from 'src/base-h5/components/setect-league/index.vue'
 import layoutTop from "./top.vue"
 import { useRoute } from "vue-router";
 import store from "src/store-redux/index.js";
@@ -102,7 +100,7 @@ const get_accept_show = ref(false); // 接受更好赔率变化 弹窗
 const get_combine_tips_show = ref(false); // 合并投注项提示弹框 弹窗
 const record_show = ref(false);
 const lastTouchEnd = ref(0);
-const select_dialog = ref(false)//暂时筛选窗口
+// const select_dialog = ref(false)//暂时筛选窗口
 const setting_dialog = ref(false)//暂时筛选窗口
 const activity_status = ref(false)//首页活动弹框
 const activity_layerimg = ref("") //首页活动图
@@ -219,18 +217,18 @@ onMounted(() => {
   BetData.set_device_type(1)
 });
 const mitt_list = [
-  // 监听搜索框状态
+  // 监听设置框状态
   useMittOn(MITT_TYPES.EMIT_CHANGE_SETTING_SHOW, function (value) {
     // this.select_cleck = type
     //   this.select_dialog = val
     setting_dialog.value = value
   }).off,
   // 监听搜索框状态
-  useMittOn(MITT_TYPES.EMIT_CHANGE_SELECT_DIALOG, function (value) {
-    // this.select_cleck = type
-    //   this.select_dialog = val
-    select_dialog.value = value
-  }).off,
+  // useMittOn(MITT_TYPES.EMIT_CHANGE_SELECT_DIALOG, function (value) {
+  //   // this.select_cleck = type
+  //   //   this.select_dialog = val
+  //   select_dialog.value = value
+  // }).off,
   //首页活动弹框
   useMittOn(MITT_TYPES.EMIT_INDEX_ACTIVITY_STATUS, function (imgUrl) {
     if (route.name == 'home' && imgUrl) {

@@ -21,13 +21,13 @@
         <span style="margin-right:auto" @click="pack_up(3)">
           <!-- <img src="image/wwwassets/bw3/svg/close3.svg" class="yb_mr4 img1" /> -->
           <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/bet/close3.svg`" class="yb_mr4 img1" />
-          {{ $t('bet.delete_all') }}
+          {{ i18n_t('bet.delete_all') }}
         </span>
         <!-- 右 自动接受跟好赔率 -->
         <span>
           <i class="img2" :class="{ 'img3': BetData.bet_is_accept }" @click="toggle_accept"></i>
           <span :class="{ 'auto-text': BetData.bet_is_accept }" class="yb_mx4 err-msg2" style="max-width:2.1rem"
-            @click="toggle_accept">{{ $t("ac_rules.auto") }}</span>
+            @click="toggle_accept">{{ i18n_t("ac_rules.auto") }}</span>
           <!-- <img src="image/wwwassets/bw3/svg/rules2.svg" @click="change_accept" class="img1" -->
           <span class="img1" :style="compute_css_obj('icon-issue')"></span>
         </span>
@@ -75,12 +75,12 @@
             class="order-ok row yb_px14 yb_py8 yb_fontsize14">
             <div class="col-6">
               <!-- 可赢总金额 -->
-              <span style="font-weight:600">{{ $t('bet_record.total_winable_amount') }}</span>
+              <span style="font-weight:600">{{ i18n_t('bet_record.total_winable_amount') }}</span>
               <p class="yb_fontsize18 moey-p">{{ (max_win_money_total / 100).toFixed(2) }}</p>
             </div>
             <div class="col-6 text-right">
               <!-- 投注总金额 -->
-              <span style="font-weight:600">{{ $t('bet_record.total_bet_amount') }}</span>
+              <span style="font-weight:600">{{ i18n_t('bet_record.total_bet_amount') }}</span>
               <p class="yb_fontsize18 moey-p2">{{ (bet_money_total / 100).toFixed(2) }}</p>
             </div>
           </div>
@@ -88,8 +88,8 @@
       </div>
       <div class="yb_px12" v-if="get_mix_bet_flag">
         <div class="row justify-between items-center content-t yb_mb6 yb_mt8 yb_fontsize14 fw_600 bet-mix-show">
-          <div>{{ $t('bet.total_income') }}</div>
-          <div>{{ $t('bet.total_bet') }} <span v-if="bet_num > 0">{{ bet_num }}</span></div>
+          <div>{{ i18n_t('bet.total_income') }}</div>
+          <div>{{ i18n_t('bet.total_bet') }} <span v-if="bet_num > 0">{{ bet_num }}</span></div>
         </div>
         <div class="row justify-between items-center content-t yb_mb6 yb_mt8">
           <div class="yellow-color yb_fontsize16">{{ (award_total) }}</div>
@@ -110,7 +110,7 @@
         <div class="err-msg3 yb_px14 text-center" @touchmove.prevent @click="reomve_invalid">
           <i class="close yb_mr4"></i>
           <!-- 移除无效投注 -->
-          {{ $t('bet.msg11') }}
+          {{ i18n_t('bet.msg11') }}
         </div>
       </template>
       <!-- 失效和赔率变化 或者 正常状态 -->
@@ -154,29 +154,29 @@
         <!-- 左边， 3种情况-->
         <!-- 保留选项 -->
         <div class="add-box add-box2" :class="{ 'add-box2': BetData.is_bet_success_status, 'add-box3': calc_class }"
-          @click.stop="pack_up(4)" v-if="BetData.is_bet_success_status">{{ $t('bet.save') }}</div>
+          @click.stop="pack_up(4)" v-if="BetData.is_bet_success_status">{{ i18n_t('bet.save') }}</div>
         <!-- 单关 -->
         <div v-else-if="true" class="bet-add-box text-bold display_center one_text_color"
           :class="{ 'add-box3': calc_class }" @click.stop="pack_up(5)">
           <div class="bet-add-new bet_margin_left"></div>
-          <div class="bet_text_left bet-one">{{ $t('bet.kushikatsu') }}</div>
+          <div class="bet_text_left bet-one">{{ i18n_t('bet.kushikatsu') }}</div>
         </div>
         <!-- 串关+ -->
         <div v-else-if="!hide_bet_series_but()" class="bet-add-box text-bold display_center linkUp_text_color"
           :class="{ 'add-box3': calc_class }" @click.stop="pack_up(6)">
-          <div class="bet_text_right">{{ $t('bet.kushikatsu') }}</div>
+          <div class="bet_text_right">{{ i18n_t('bet.kushikatsu') }}</div>
           <div class="bet-add-new bet-linkUp"></div>
         </div>
 
         <!-- 右边 -->
         <div class="bet-box">
           <template v-if="exist_code == '666'">
-            <p @click="go_record" class="yb_fontsize16">{{ $t('bet.msg13') }}</p>
+            <p @click="go_record" class="yb_fontsize16">{{ i18n_t('bet.msg13') }}</p>
           </template>
           <template v-else-if="is_conflict">
             <!-- 投注 -->
             <div class="row justify-center items-center content-center set-opacity">
-              <p class="yb_fontsize12 yb_mr10">{{ $t('bet_record.bet_val') }}</p>
+              <p class="yb_fontsize12 yb_mr10">{{ i18n_t('bet_record.bet_val') }}</p>
               <p class="yb_fontsize20">{{ format_money2(BetData.bet_money_total.toFixed(2)) }}</p>
             </div>
           </template>
@@ -184,25 +184,25 @@
             <!-- 投注 -->
             <div v-if="btn_show == 0" @click="submit_order" :class="{ 'set-opacity': true }"
               class="row justify-center items-center content-center">
-              <p class="yb_fontsize12 yb_mr10">{{ $t('bet_record.bet_val') }}</p>
+              <p class="yb_fontsize12 yb_mr10">{{ i18n_t('bet_record.bet_val') }}</p>
               <p class="yb_fontsize20">{{ bet_amount }}</p>
             </div>
             <!-- 投注 有投注项失效后点击接受变化的置灰样式-->
             <div v-if="btn_show == 5" class="row justify-center items-center content-center set-opacity">
-              <p class="yb_fontsize12 yb_mr10">{{ $t('bet_record.bet_val') }}</p>
+              <p class="yb_fontsize12 yb_mr10">{{ i18n_t('bet_record.bet_val') }}</p>
               <p class="yb_fontsize20">{{ format_money2(500) }}</p>
             </div>
             <!-- 确定 -->
-            <p v-if="btn_show == 1" @click="pack_up" class="yb_fontsize16">{{ $t('common.ok') }}</p>
+            <p v-if="btn_show == 1" @click="pack_up" class="yb_fontsize16">{{ i18n_t('common.ok') }}</p>
             <!-- 处理中 -->
             <div v-if="btn_show == 2" class="yb_fontsize16 row justify-center items-center">
-              <p class="yb_mr8">{{ $t('bet_record.submitting_bet') }}</p>
+              <p class="yb_mr8">{{ i18n_t('bet_record.submitting_bet') }}</p>
               <ball-spin />
             </div>
             <!-- 接受变化 -->
-            <p v-if="btn_show == 3" @click="agree_change" class="yb_fontsize16">{{ $t('bet.agree_change') }}</p>
+            <p v-if="btn_show == 3" @click="agree_change" class="yb_fontsize16">{{ i18n_t('bet.agree_change') }}</p>
             <!-- 接受变化并投注 -->
-            <p v-if="btn_show == 4" @click="submit_order" class="yb_fontsize16">{{ $t('bet.agree_change2') }}</p>
+            <p v-if="btn_show == 4" @click="submit_order" class="yb_fontsize16">{{ i18n_t('bet.agree_change2') }}</p>
           </template>
         </div>
       </div>
@@ -229,7 +229,7 @@ import betBar from ".//bet-bar.vue";
 // import {useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt/"
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
-import { UserCtr,compute_css_obj,useMittOn, useMittEmit, MITT_TYPES, LOCAL_PROJECT_FILE_PREFIX } from "src/core/index.js";
+import { UserCtr,compute_css_obj,useMittOn, useMittEmit, MITT_TYPES, LOCAL_PROJECT_FILE_PREFIX, i18n_t } from "src/core/index.js";
 // import { hide_bet_series_but } from "src/core/bet/index.js"
 import { ref, onMounted, watch, computed, onUnmounted } from 'vue';
 import { get_query_bet_amount_common } from "src/core/bet/class/bet-box-submit.js"
@@ -244,7 +244,7 @@ const series_order_respList = ref([])
 const award_total = ref()
 const bet_min_max_money = ref()  // 投注限额
 const bet_list_data = ref([])
-const tips_msg = ref('失效')  // 提示信息
+const tips_msg = ref(i18n_t('bet.invalidation'))  // 提示信息
 
 let bet_show_single = ref(true)  // 单关显示
 const get_bet_status = ref(0) // 投注状态
@@ -358,7 +358,7 @@ const calc_class = computed(() => {
 })
 // 投注金额赋值
 const change_money_handle = (val) => {
-  bet_amount.value = format_money2(val)
+  bet_amount.value = format_money2(val.money)
   // console.log("投注金额",bet_amount.value)
 }
 onMounted(() => {

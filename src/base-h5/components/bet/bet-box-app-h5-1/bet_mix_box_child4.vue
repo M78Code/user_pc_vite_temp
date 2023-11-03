@@ -8,22 +8,22 @@
    <div v-show="false"> {{ BetViewDataClass.bet_view_version}} </div>
     <div class="nonebox4-result" v-for="item in BetViewDataClass.orderNo_bet_obj" :key="item.playOptionsId">
         <div class="nonebox4-content-result nonebox4-content-top0">
-            <div class="nonebox4-content-result-left">投注金额</div>
+            <div class="nonebox4-content-result-left">{{ i18n_t('bet.bet_val') }}</div>
             <div class="nonebox4-content-result-right num">  {{ format_currency(parseFloat(item.betMoney)/100) }}</div>
         </div>
         <div class="nonebox4-content-result">
-            <div class="nonebox4-content-result-left">可赢金额</div>
+            <div class="nonebox4-content-result-left">{{ i18n_t('app_h5.bet.win_amount')}}</div>
             <div class="nonebox4-content-result-right num">  {{ format_currency(parseFloat(item.maxWinMoney)/100) }}</div>
         </div>
         <div class="nonebox4-content-result">
-            <div class="nonebox4-content-result-left">注单号</div>
+            <div class="nonebox4-content-result-left">{{i18n_t('bet.order_no')}}</div>
             <div class="nonebox4-content-result-left">{{item.orderNo}}</div>
         </div>
     </div>
   </div>
 </template>
 <script setup>
-import { format_currency } from 'src/core/index.js'
+import { format_currency, i18n_t } from 'src/core/index.js'
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 </script>
 

@@ -12,14 +12,14 @@
           <span v-if="ref_data.money" class="yb_fontsize20 money-number">{{ ref_data.money }}</span>
           <span class="money-span" ref="money_span"
             :style="{ opacity:  '1' }"></span>
-          <span class="yb_fontsize14 limit-txt" v-show="!ref_data.money">限额{{ ref_data.min_money }}-{{ ref_data.max_money }}</span>
+          <span class="yb_fontsize14 limit-txt" v-show="!ref_data.money">{{ i18n_t('app_h5.bet.limit')}}{{ ref_data.min_money }}-{{ ref_data.max_money }}</span>
           <span @click.stop="clear_money" class="money-close" :style="{ opacity: ref_data.money > 0 ? '1' : '0' }">x</span>
         </div>
         <div class="content-rmb">RMB</div>
       </div>
       <div class="bet_single_info_btn" v-if="BetData.bet_pre_list.includes(item.playOptionsId)">
-        <div class="" v-if="ref_data.is_bet_pre" @click="set_bet_pre">取消预约</div>
-        <div class="" v-else @click="set_bet_pre">+预约</div>
+        <div class="" v-if="ref_data.is_bet_pre" @click="set_bet_pre">{{ i18n_t('app_h5.bet.cancel_appoint') }}</div>
+        <div class="" v-else @click="set_bet_pre">+{{ i18n_t('pre_record.book')}}</div>
       </div>
     </div>
 
@@ -41,6 +41,7 @@ import mathJs from 'src/core/bet/common/mathjs.js'
 import { format_money3, format_money2 } from 'src/core/format/index.js'
 import { format_currency } from "src/core/format/module/format-currency.js"
 import { get_query_bet_amount_pre } from "src/core/bet/class/bet-box-submit.js"
+import { i18n_t } from "src/core/index.js"
 
 
 let timer1 = null
@@ -156,7 +157,7 @@ const clear_money = () => {
  *@param {Number} new_money 最新金额值
  */
  const change_money_handle = (new_money) => {
-  ref_data.money = new_money
+  ref_data.money = new_money.money
 }
 
 
@@ -168,7 +169,7 @@ const set_ref_data_bet_money = () => {
     if (!BetData.is_bet_single) {
 
         // 复式连串关投注
-        const { id, name, count } = BetViewDataClass.bet_special_series[props.index]
+        const { id, name, count } = BetViewDataClass.bet_special_series[props.index] || {}
         special_series.id = id
         special_series.name = name
         special_series.count = count

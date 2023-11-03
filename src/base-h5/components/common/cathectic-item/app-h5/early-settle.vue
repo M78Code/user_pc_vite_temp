@@ -11,15 +11,15 @@
     <div class="early-button">
       <button @click="submit_click">
         <!-- 暂停提前结算 -->
-        <template v-if="status == 5">{{ t('early.btn1') }} </template>
+        <template v-if="status == 5">{{ i18n_t('early.btn1') }} </template>
         <!-- 提前结算 -->
-        <template v-if="status == 1 || status == 6">{{ t('early.btn2') }}</template>
+        <template v-if="status == 1 || status == 6">{{ i18n_t('early.btn2') }}</template>
         <!-- 确认提前结算 -->
-        <template v-if="status == 2">{{ t('early.btn3') }}</template>
+        <template v-if="status == 2">{{ i18n_t('early.btn3') }}</template>
         <!-- 确认中... -->
-        <template v-if="status == 3">{{ t('early.btn4') }}</template>
+        <template v-if="status == 3">{{ i18n_t('early.btn4') }}</template>
         <!-- 已提前结算 -->
-        <template v-if="status == 4">{{ t('early.btn5') }}</template>
+        <template v-if="status == 4">{{ i18n_t('early.btn5') }}</template>
         <!-- 按钮上的金额 -->
         <template v-if="status !== 5 && (Number(front_settle_amount) || expected_profit)">{{ betting_amount }}</template>
         <img class="load" v-if="status == 3" :src="compute_local_project_file_path('/image/gif/loding.gif')">
@@ -40,7 +40,7 @@
         v-if="(status == 1 || status == 5 || status == 6) && lodash.get(UserCtr, 'pcs')"
         :class="slider_show ? 'up' : 'down'" 
         @click="change_slider_show">
-        <span>调整金额</span>
+        <span>{{i18n_t('app_h5.cathectic.adjustment_amount')}}</span>
         <img :src="compute_local_project_file_path('/image/gif/change.gif')">
       </div>
     </template>
@@ -62,7 +62,7 @@ import lodash from 'lodash'
 import { utils,compute_css_obj, compute_local_project_file_path } from 'src/core/index.js'
 import store from "src/store-redux/index.js"
 import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/"
-import { t } from "src/boot/i18n.js";
+import { i18n_t } from "src/boot/i18n.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import earlySettleTips from "src/base-h5/components/common/cathectic-item/app-h5/early-settle-tips.vue";
 
@@ -360,7 +360,7 @@ const submit_early_settle = () => {
     } else if (res.code == "0400537") {
       // 金额有变动，需要更新按钮上的金额
       status.value = 1;
-      message = t('early.info7');
+      message = i18n_t('early.info7');
       let money = res.data
       if (+money > 0) {
         nextTick(() => {
@@ -370,12 +370,12 @@ const submit_early_settle = () => {
     } else {
       // 提前结算申请未通过
       status.value = 1;
-      message = t('early.info2');
+      message = i18n_t('early.info2');
     }
   }).catch((err) => {
     // 提前结算申请未通过
     status.value = 1;
-    message = t('early.info2');
+    message = i18n_t('early.info2');
   });
   useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, message)
 }
@@ -407,7 +407,7 @@ const copy = (evt, orderno) => {
     text: () => orderno
   })
   clipboard.on('success', () => {
-    useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, t("bet_record.copy_suc"))
+    useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t("bet_record.copy_suc"))
     // h5嵌入时Safari阻止弹窗
     if (!Platform.is.safari) {
       try {

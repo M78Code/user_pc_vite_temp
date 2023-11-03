@@ -7,7 +7,18 @@
       "no_data_pre": "您暂无预约中数据",
       "no_data_unsettle": "您暂无未结算数据",
       "no_data_settle": "您暂无已结算数据",
-      "no_data_invalid": "您暂无已失效数据"
+      "no_data_invalid": "您暂无已失效数据",
+      "kind_tips": "温馨提示",
+      "adjustment_amount": "调整金额",
+      "winnable": "可赢额",
+      "bet_number": "投注单号",
+      "bets": "投注项",
+      "settle": "结算",
+      "bet_status": "注单状态",
+      "cash_failed": "提前兑现失败",
+      "cash_rules": "提前兑现规则申明",
+      "explain": "<p>开云体育提前兑现只适用于指定赛事和盘口，如遇到赛事或盘口取消，提前兑现注单将会被收回重新结算。开云体育保留赛果最终解释权。</p><p>具体兑现规则请查看【帮助中心】-【开云体育提前兑现规则】</p>",
+      "confirm_cancel_reservation": "确定取消本场比赛预约？"
     },
     "handicap_tutorial": {
       "football_master": "恭喜，您已进阶为足球大师",
@@ -72,6 +83,20 @@
       "m_chesester_city": "曼城",
       "m_chesester_untied": "曼联",
       "barcelona": "巴萨"
+    },
+    "bet": {
+      "bet_win": "可赢%s",
+      "delete": "删除",
+      "confirm": "确认",
+      "parlay": "串",
+      "odd": "单",
+      "limit": "限额",
+      "cancel_appoint": "取消预约",
+      "pm_sport": "PM体育",
+      "bet_confirm": "注单已确认",
+      "bet_error": "注单已确认",
+      "reserve_win": "预约金额",
+      "win_amount": "可盈金额"
     }
   },
   "ac_rules": {

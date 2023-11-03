@@ -165,7 +165,7 @@ const get_query_bet_amount_common = (obj) => {
         orderMaxBetMoney: []
     }
     // 获取限额请求参数数据
-    params.orderMaxBetMoney = get_query_bet_amount_parmas()
+    params.orderMaxBetMoney = get_query_bet_amount_params()
 
     // 获取额度接口合并
     api_betting.query_bet_amount(params).then((res = {}) => {
@@ -196,7 +196,7 @@ const get_query_bet_amount_esports_or_vr = () => {
         orderMaxBetMoney: []
     }
     // 获取限额请求参数数据
-    params.orderMaxBetMoney = get_query_bet_amount_parmas()
+    params.orderMaxBetMoney = get_query_bet_amount_params()
 
     // 获取最大值和最小值接口
     api_betting.post_getBetMinAndMaxMoney(params).then((res = {}) => {
@@ -232,7 +232,7 @@ const get_query_bet_amount_pre = () => {
         orderMaxBetMoney: []
     }
     // 获取限额请求参数数据
-    params.orderMaxBetMoney = get_query_bet_amount_parmas()
+    params.orderMaxBetMoney = get_query_bet_amount_params()
 
     // 获取额度接口合并
     api_betting.query_pre_bet_amount(params).then((res = {}) => {
@@ -256,7 +256,7 @@ const get_query_bet_amount_pre = () => {
 }
 
 //设置获取限额参数 
-const get_query_bet_amount_parmas = () =>{
+const get_query_bet_amount_params = () =>{
     let order_min_max_money = []
     // 单关 
     if (BetData.is_bet_single) {
@@ -358,8 +358,25 @@ const submit_handle = type => {
                 let orderDetailRespList = lodash_.get(res,'data.orderDetailRespList') || []
                 set_orderNo_bet_obj(orderDetailRespList)
 
-                // 设置投注中状态 后续用ws推送改变
-                BetViewDataClass.set_bet_order_status(3)
+                // 单关且只有一条投注项 
+                if(BetData.is_bet_single && orderDetailRespList.length == 1){
+                    // 订单状态 0:投注失败 1: 投注成功 2: 订单确认中
+                    let status_code = orderDetailRespList[0].orderStatusCode
+                    let status = 2
+                    // 设置投注中状态 后续用ws推送改变
+                    switch (+status_code) {
+                        case 0:
+                            status = 5;
+                            break;
+                        case 1:
+                            status = 3;
+                            break;
+                        default:
+                            break;
+                    }
+                    //  1-投注状态,2-投注中状态,3-投注成功状态(主要控制完成按钮),4-投注失败状态,5-投注项失效
+                    BetViewDataClass.set_bet_order_status(status)
+                }
             }, 1000);
             // 通知页面更新 
         }

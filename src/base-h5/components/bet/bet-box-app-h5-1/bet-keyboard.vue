@@ -33,9 +33,9 @@
                 <div class="nonebox4-fourth-num-sun" data-number='10'>00</div>
             </div>
             <div class="nonebox4-fourth-num">
-                <div class="nonebox4-fourth-num-sun" data-number='max'>最大</div>
-                <div class="nonebox4-fourth-num-sun" data-number='x'>删除</div>
-                <div class="nonebox4-fourth-num-sun" data-number='shouqi'>收起</div>
+                <div class="nonebox4-fourth-num-sun" data-number='max'>{{ i18n_t('bet.max')}}</div>
+                <div class="nonebox4-fourth-num-sun" data-number='x'>{{ i18n_t('app_h5.bet.delete')}}</div>
+                <div class="nonebox4-fourth-num-sun" data-number='shouqi'>{{ i18n_t('bet.pack_up')}}</div>
             </div>
         </div>
     </div>
@@ -48,7 +48,7 @@ import { ref, reactive, onMounted, watch, computed, onUnmounted } from 'vue';
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
-import { UserCtr } from "src/core/index.js";
+import { UserCtr, i18n_t } from "src/core/index.js";
 import lodash_ from 'lodash'
 
 
@@ -68,11 +68,15 @@ const ref_data = reactive({
 
 const props = defineProps({
   index:{},
-  item:{}
+  item:{},
+  config:{
+    type: Object,
+    default: () => {},
+  }
 })
 
 onMounted(()=>{
-  let play_oid = props.item?props.item.playOptionsId:''
+  let play_oid = props.config.playOptionsId || ''
   ref_data.min_money = lodash_.get(BetViewDataClass.bet_min_max_money,`${play_oid}.min_money`,10) 
   ref_data.max_money = lodash_.get(BetViewDataClass.bet_min_max_money,`${play_oid}.max_money`,8888)
 })
@@ -118,7 +122,7 @@ watch(() => pre_odds_value, (new_) => {
   }
 })
 watch(() => money.value, (new_) => {
-  useMittEmit(MITT_TYPES.EMIT_INPUT_BET_MONEY, money.value)
+  useMittEmit(MITT_TYPES.EMIT_INPUT_BET_MONEY,{ params:props.config, money:money.value })
 })
 watch(() => active_index, (new_) => {
   if (money.value) delete_all.value = true;
@@ -152,13 +156,13 @@ const _handleKeyPress = (e) => {
       _handleNumberKey(num);
       break;
   }
-  useMittEmit(MITT_TYPES.EMIT_INPUT_BET_MONEY, money.value)
+  useMittEmit(MITT_TYPES.EMIT_INPUT_BET_MONEY, { params:props.config, money:money.value } )
 }
 
 // 小数点 .
 const _handleDecimalPoint = () => {
   //超过最大金额时不让输入
-  if (money.value && money.value >= props.items.orderMaxPay) return
+  if (money.value && money.value >= ref_data.max_money) return
   //如果包含小数点，直接返回
   if (money.value && money.value.includes(".")) return
 
