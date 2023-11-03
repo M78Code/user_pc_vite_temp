@@ -58,7 +58,7 @@ import { useRouter, useRoute } from "vue-router"
 import navigationBar from 'src/base-h5/components/tutorial/navigation-bar/index.vue'
 import matchResultHt from 'src/base-h5/components/tutorial/match-result-ht/index.vue'
 import answerQuestions from 'src/base-h5/components/tutorial/answer-questions/index.vue'
-import { scrollMenu } from "src/base-h5/components/menu/ouzhou-h5-menu/utils.js"
+import { scrollMenu } from "src/base-h5/components/menu/app-h5-menu/utils.js"
 import {questionsData, bigAndSmallBallData, handicapData} from "./config.js"
 
 const switchMenu = [i18n_t('footer_menu.rangqiu'), i18n_t('app_h5.handicap_tutorial.big_small_ball')]

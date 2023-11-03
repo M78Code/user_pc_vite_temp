@@ -38,11 +38,11 @@
 <script setup>
 import { onMounted, onBeforeMount, reactive } from "vue";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
-import { ScrollMenu } from 'src/base-h5/components/menu/ouzhou-h5-menu/index'
+import { ScrollMenu } from 'src/base-h5/components/menu/app-h5-menu/index'
 import navigationBar from 'src/base-h5/components/tutorial/navigation-bar/index.vue'
 import settingFilter from 'src/base-h5/components/setting-filter/index.vue'
 import setectLeague from 'src/base-h5/components/setect-league/index.vue'
-import { scrollMenu } from "src/base-h5/components/menu/ouzhou-h5-menu/utils.js"
+import { scrollMenu } from "src/base-h5/components/menu/app-h5-menu/utils.js"
 import matchContainer from "src/base-h5/components/match-list/index.vue";
 import { i18n_t, compute_css_obj, MenuData } from "src/core/index.js";
 import { is_results, is_kemp } from 'src/base-h5/mixin/menu.js'

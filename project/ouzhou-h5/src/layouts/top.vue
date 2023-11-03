@@ -29,7 +29,7 @@ import {
   ref
 } from "vue";
 import { useMittOn, MITT_TYPES } from "src/core/";
-import { TopMenu,ScrollMenu,SearchTab,SwitchWap } from 'src/base-h5/components/menu/ouzhou-h5-menu/index'
+import { TopMenu,ScrollMenu,SearchTab,SwitchWap } from 'src/base-h5/components/menu/app-h5-menu/index'
 import setectLeague from 'src/base-h5/components/setect-league/index.vue'
 import { useRoute } from "vue-router";
 const route = useRoute();

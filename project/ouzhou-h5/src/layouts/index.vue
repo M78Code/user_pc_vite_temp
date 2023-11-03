@@ -62,7 +62,7 @@ import {
 } from "vue";
 import { useMittOn, MITT_TYPES, i18n_t, UserCtr,MenuData } from "src/core/";
 // import { FooterWapper } from "src/components/footer/index.js";
-import { Tabbar } from 'src/base-h5/components/menu/ouzhou-h5-menu/index'
+import { Tabbar } from 'src/base-h5/components/menu/app-h5-menu/index'
 import { MenuWapper } from "src/base-h5/components/menu";
 import { BetBoxWapper } from "src/base-h5/components/bet";
 import activityIcon from "src/base-h5/components/common/activity-icon.vue"; // 设置
