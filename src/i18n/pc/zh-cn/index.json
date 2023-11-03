@@ -321,6 +321,7 @@
   },
   "collect": {},
   "common": {
+    "in_box": "抽盒中......",
     "collect_toast": "收藏失败，请稍后再试",
     "account": "账户",
     "account_invalid": "帐户信息已经失效",

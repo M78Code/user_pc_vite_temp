@@ -318,6 +318,7 @@
 		"text3": "Pusat sport user"
 	},
 	"common": {
+		"in_box": "In the box......",
 		"collect_toast":"Gagal tambahkan ke favorit, coba sesaat lagi",
 		"account": "Akun",
 		"account_invalid": "Info akun kadaluarsa",

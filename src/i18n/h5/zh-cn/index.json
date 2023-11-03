@@ -30,6 +30,8 @@
       "practise": "模拟先练习",
       "again": "再学一次",
       "single": "单选",
+      "return_home": "返回主页",
+      "next": "下一题",
       "results_appear": "当出现这样的赛果",
       "red_list": "恭喜红单",
       "not_master": "很遗憾，您还未完全掌握",
@@ -38,7 +40,7 @@
       "handicapData_condition": "主客实力相当<br/>均不让球即0（平手盘）",
       "all_win": "全赢",
       "home_team": "主队",
-      "bet_home_team": "投注主队",
+      "bet_home_team": "投注本队",
       "bet_away_team": "投注客队",
       "away_team": "客队",
       "all_lose": "全输",
@@ -101,7 +103,7 @@
       "cancel_appoint": "取消预约",
       "pm_sport": "PM体育",
       "bet_confirm": "注单已确认",
-      "bet_error": "注单已确认",
+      "bet_error": "注单失败",
       "reserve_win": "预约金额",
       "win_amount": "可盈金额"
     },
@@ -125,6 +127,9 @@
       "daily_activities": "每日活动",
       "go_old_version": "前往旧版",
       "go_web_version": "前往网页版"
+    },
+    "v_sports": {
+      "event_status": "赛事状态"
     }
   },
   "ac_rules": {
@@ -439,6 +444,7 @@
   },
   "common": {
     "temporarily_unavailable": "本功能暂不可用",
+    "in_box": "抽盒中......",
     "please_refresh": "请您刷新下页面重试",
     "all_notice": "所有公告",
     "all_select": "全选",

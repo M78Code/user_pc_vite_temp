@@ -317,6 +317,7 @@
 		"text3": "Centro de experiencia del usuario de deportes"
 	},
 	"common": {
+		"in_box": "In the box......",
 		"account": "Cuenta",
 		"account_invalid": "La información de la cuenta no es válida,",
 		"account_invalid2": "Vuelva a introducirla",

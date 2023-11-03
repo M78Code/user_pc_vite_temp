@@ -9,13 +9,13 @@
                 {{ option.ballNumber }}
                 <span>{{ option.title }}</span>
             </div>
-            <div class="hint" v-if="state.source === 'bigAndSmallBall'">全场90分钟（含伤停补时）两队进球数的总和</div>
+            <div class="hint" v-if="state.source === 'bigAndSmallBall'">{{ i18n_t('app_h5.handicap_tutorial.big_small_ball_tip') }}</div>
         </div>
 
         <div :class="['ht-both-teams', state.source === 'bigAndSmallBall' && 'pb20']">
             <div class="left">
                 <div class="teams">
-                    <div>主队</div>
+                    <div>{{ i18n_t('app_h5.handicap_tutorial.home_team') }}</div>
                     <div v-if="state.source !== 'bigAndSmallBall'" class="score">{{ option.homeTeamScore }}</div>
                 </div>
                 <div class="teams-logo">队标位</div>
@@ -27,7 +27,7 @@
             <div class="right">
                 <div class="teams-logo">队标位</div>
                 <div class="teams">
-                    <div>客队</div>
+                    <div>{{ i18n_t('app_h5.handicap_tutorial.away_team') }}</div>
                     <div v-if="state.source !== 'bigAndSmallBall'" class="score">{{ option.awayTeamScore }}</div>
                 </div>
             </div>
@@ -38,21 +38,21 @@
             <div :class="['match-result', state.source === 'bigAndSmallBall' && 'mb20']">
                 <div class="left">
                     <div class="home-team teams">
-                        <div class="title">投注本队</div>
+                        <div class="title">{{ i18n_t('app_h5.handicap_tutorial.bet_home_team') }}</div>
                         <div :class="['result', item.winIsWho === 'homeTeam' && 'win']">{{ item.homeTeam }}</div>
                     </div>
                     <div v-if="item.winIsWho === 'homeTeam'" class="win-icon">筹</div>
                 </div>
                 <div class="center">
                     <div class="round-ball">
-                        <div class="title">{{state.source !== 'bigAndSmallBall' ? '赛果' : '进球之和'}}</div>
+                        <div class="title">{{state.source !== 'bigAndSmallBall' ? i18n_t('menu_itme_name.results') : i18n_t('app_h5.handicap_tutorial.enter_ball')}}</div>
                         <div class="score">{{ item.matchResult }}</div>
-                        <div v-if="item.matchResult === '0 - 0'" class="text-style">反之亦然</div>
+                        <div v-if="item.matchResult === '0 - 0'" class="text-style">{{ i18n_t('app_h5.handicap_tutorial.vice_versa') }}</div>
                     </div>
                 </div>
                 <div class="right">
                     <div class="away-team teams">
-                        <div class="title">投注客队</div>
+                        <div class="title">{{ i18n_t('app_h5.handicap_tutorial.bet_away_team') }}</div>
                         <div :class="['result', item.winIsWho === 'awayTeam' && 'win']">{{ item.awayTeam }}</div>
                     </div>
                     <div v-if="item.winIsWho === 'awayTeam'" class="win-icon">筹</div>
