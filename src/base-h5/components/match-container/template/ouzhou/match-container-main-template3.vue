@@ -86,7 +86,7 @@ import { IconWapper } from 'src/components/icon'
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import OddItemChampion from "src/base-h5/components/match-list/components/odd-item-champion.vue";
 
-import champion_mixin from '../mixins/champion.mixin.js'
+import champion_mixin from '../../mixins/champion.mixin.js'
 import 'src/base-h5/css/pages/match-container-champion.scss'
 
 export default {
