@@ -61,6 +61,16 @@ class MatchListCardDataClass {
       league: 0,
     };
   }
+  set_all_card_obj({
+    all_card_obj,play_to_card_key_arr,no_start_to_card_key_arr,match_list_card_key_arr,csid_to_card_key_obj
+  }){
+    // 合并所有卡片样式对象
+    lodash.merge(this.all_card_obj,all_card_obj)
+    play_to_card_key_arr&&(this.play_to_card_key_arr=play_to_card_key_arr)
+    no_start_to_card_key_arr&&(this.no_start_to_card_key_arr=no_start_to_card_key_arr)
+    match_list_card_key_arr&&(this.match_list_card_key_arr=match_list_card_key_arr)
+    csid_to_card_key_obj&&(this.csid_to_card_key_obj=csid_to_card_key_obj)
+  }
   // 设置 的列表scroll_top
   set_scroll_top(scroll_top) {
     this.scroll_top = scroll_top;
