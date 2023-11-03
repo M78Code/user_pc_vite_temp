@@ -29,11 +29,11 @@
   import BetRecordClass from "src/core/bet-record/bet-record.js";
   import { api_betting } from "src/api/index.js";
   //   import { mapGetters, mapMutations } from "vuex"
-  import cathecticItemAll from "src/base-h5/components/cathectic/ouzhou-h5/cathectic-item-all.vue"
-  import unsettle from "src/base-h5/components/cathectic/ouzhou-h5/unsettle.vue"
-  import settle from "src/base-h5/components/cathectic/ouzhou-h5/settle.vue"
-  import preRecord from "src/base-h5/components/cathectic/ouzhou-h5/pre-record.vue"
-  import invalid from "src/base-h5/components/cathectic/ouzhou-h5/invalid.vue"
+  import cathecticItemAll from "src/base-h5/components/cathectic/app-h5/cathectic-item-all.vue"
+  import unsettle from "src/base-h5/components/cathectic/app-h5/unsettle.vue"
+  import settle from "src/base-h5/components/cathectic/app-h5/settle.vue"
+  import preRecord from "src/base-h5/components/cathectic/app-h5/pre-record.vue"
+  import invalid from "src/base-h5/components/cathectic/app-h5/invalid.vue"
   import { onMounted, onUnmounted, ref, shallowRef, computed, provide, watch, nextTick } from 'vue'
   import lodash from 'lodash'
   import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
