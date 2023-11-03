@@ -84,12 +84,12 @@
       <div class="correct_style_title">
         <div>
           <span>{{match.mhn}}</span>
-          <span>{{ $t('football_playing_way.full_time_draw')}}</span>
+          <span>{{ i18n_t('football_playing_way.full_time_draw')}}</span>
           <span>{{match.man}}</span>
         </div>
         <div>
           <span>{{match.mhn}}</span>
-          <span>{{ $t('football_playing_way.half_time_draw')}}</span>
+          <span>{{ i18n_t('football_playing_way.half_time_draw')}}</span>
           <span>{{match.man}}</span>
         </div>
       </div>
@@ -157,7 +157,7 @@
 import { ref, watch, computed, onMounted, onUnmounted } from "vue";
 import store from "src/store-redux/index.js"
 import lodash from 'lodash'
-import { i18n_t} from 'src/core/index.js'
+import { i18n_t } from 'src/core/index.js'
 import oddColumnItem from "./odd-column-item.vue";
 import { img1, img2, img3, img4, Y0_img_white } from 'src/base-h5/core/utils/local-image'
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"

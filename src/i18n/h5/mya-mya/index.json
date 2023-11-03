@@ -314,6 +314,7 @@
     "mute_hint3": "",
     "mute_hint4": "",
     "pop_send_hint5": "",
+    "room_not_open": "Chat room is not open",
     "mute_hint": {
       "time": ["", "", "", "", ""],
       "type": ["", "", ""]
@@ -358,6 +359,7 @@
     "title_188": "အာရှအမြင်",
     "title_panda": "ဥရောပအမြင်",
     "under": "ဒုတိယပိုင်း",
+    "return": "return",
     "unit": "ယွမ်",
     "virtual_sports": "VR အားကစား"
   },

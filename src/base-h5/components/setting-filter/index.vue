@@ -6,10 +6,10 @@
     <div class="setting-filter">
         <div class="setting-top setting-item">
             <div class="title">
-                联赛筛选<span> (已选16)</span>
+                {{i18n_t('footer_menu.league_filter')}}<span>{{'(' + i18n_t('footer_menu.selected') + '16' + ')'}}</span>
             </div>
             <div class="more">
-                更多>
+                {{ i18n_t('app_h5.filter.more') }}
             </div>
         </div>
         <div class="setting-list">
@@ -23,7 +23,7 @@
             </div>
             <div class="setting-item" @click="jumpHandle">
                 <div class="title">
-                    盘口教程
+                    {{ i18n_t('app_h5.cathectic.handicap_tutorial') }}
                 </div>
                 <div class="more">
                     >
@@ -31,15 +31,15 @@
             </div>
             <div class="setting-item">
                 <div class="title">
-                    前往旧版
+                    {{ i18n_t('app_h5.filter.go_old_version') }}
                 </div>
                 <div class="goto-website">
-                    前往网页版
+                    {{ i18n_t('app_h5.filter.go_web_version') }}
                 </div>
             </div>
         </div>
         <div class="closed-btn" @click="closedHandle">
-            <span>关闭</span>
+            <span>{{ i18n_t('common.close') }}</span>
         </div>
     </div>
 </template>
@@ -66,14 +66,14 @@ defineProps({
 })
 
 const emit = defineEmits(["closedHandle"]);
-
+//   i18n_t('footer_menu.bet_model')
 const setting_list = ref([
-    { name: '投注模式', leftVal: '新手版', rightVal: '专业版', switchValue: 'rightVal' },
-    { name: '排序规则', leftVal: '热门', rightVal: '时间', switchValue: 'rightVal' },
-    { name: '盘口设置', leftVal: '欧洲盘', rightVal: '香港盘' },
-    { name: '字号大小', leftVal: '默认', rightVal: '放大' },
-    { name: '主题风格', leftVal: '日间', rightVal: '夜间' },
-    { name: '每日活动', leftVal: '开启', rightVal: '关闭' },
+    { name: i18n_t('footer_menu.bet_model'), leftVal: i18n_t('footer_menu.new_v'), rightVal: i18n_t('footer_menu.pro_v'), switchValue: 'rightVal' },
+    { name: i18n_t('footer_menu.sort_title'), leftVal: i18n_t('footer_menu.hot'), rightVal: i18n_t('footer_menu.time'), switchValue: 'rightVal' },
+    { name: i18n_t('footer_menu.odds_set'), leftVal: i18n_t('setting_menu.odd_europe2'), rightVal: i18n_t('setting_menu.odd_hong_kong2') },
+    { name: i18n_t('app_h5.filter.font_size'), leftVal: i18n_t('app_h5.filter.default'), rightVal: i18n_t('app_h5.filter.enlarge') },
+    { name: i18n_t('footer_menu.theme'), leftVal: i18n_t('footer_menu.daytime'), rightVal: i18n_t('footer_menu.night') },
+    { name: i18n_t('app_h5.filter.daily_activities'), leftVal: i18n_t('app_h5.filter.turn_on'), rightVal: i18n_t('common.close') },
 ])
 
 const closedHandle = () => {

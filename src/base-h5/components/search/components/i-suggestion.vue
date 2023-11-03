@@ -17,7 +17,7 @@
         <div class="score-time">
           <span class="score" v-if="item.msc.S1">{{ lodash.get(item, "msc.S1.home", "0") }}-{{ lodash.get(item,
             "msc.S1.away", "0") }}</span>
-          <span class="time" v-else>{{ (new Date(+item.mgt)).Format($t('time4')) }}</span>
+          <span class="time" v-else>{{ (new Date(+item.mgt)).Format(i18n_t('time4')) }}</span>
           <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/league-collapse-icon.svg`" alt="">
         </div>
       </li>
@@ -37,7 +37,7 @@
           <div class="score-time">
             <span class="score" v-if="item.msc.S1">{{ lodash.get(item, "msc.S1.home", "0") }}-{{ lodash.get(item,
               "msc.S1.away", "0") }}</span>
-            <span class="time" v-else>{{ (new Date(+item.mgt)).Format($t('time4')) }}</span>
+            <span class="time" v-else>{{ (new Date(+item.mgt)).Format(i18n_t('time4')) }}</span>
             <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/league-collapse-icon.svg`" alt="">
           </div>
         </li>
@@ -72,7 +72,7 @@
             <template v-else>
               <span class="score" v-if="item.msc.S1">{{ lodash.get(item, "msc.S1.home", "0") }}-{{ lodash.get(item,
                 "msc.S1.away", "0") }}</span>
-              <span class="time" v-else>{{ (new Date(+item.mgt)).Format($t('time4')) }}</span>
+              <span class="time" v-else>{{ (new Date(+item.mgt)).Format(i18n_t('time4')) }}</span>
             </template>
             <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/league-collapse-icon.svg`" alt="">
           </div>
@@ -92,7 +92,7 @@ const { get_insert_history } = api_search || {}
 import NoData from 'src/base-h5/components/common/no-data.vue'// 无数据组件
 import { computed, onBeforeUnmount, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { UserCtr, MenuData, SearchData,compute_img_url, LOCAL_PROJECT_FILE_PREFIX } from 'src/core/'
+import { UserCtr, MenuData, SearchData,compute_img_url, LOCAL_PROJECT_FILE_PREFIX, i18n_t } from 'src/core/index.js'
 import lodash from 'lodash'
 const router = useRouter()
 // 模糊搜索的数据源

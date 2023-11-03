@@ -45,11 +45,11 @@ const get_detail_data = ref({
   // name: "basketball_incident",
 
   const event_data = ref([
-        {key: '第一节'},
-        {key: '第二节'},
-        {key: '第三节'},
-        {key: '第四节'},
-        {key: '++赛'},
+        {key: 'Q1'},
+        {key: 'Q2'},
+        {key: 'Q3'},
+        {key: 'Q4'},
+        {key: 'OT'},
       ])
   const tab_index = ref(0)
   const no_data = ref(false)

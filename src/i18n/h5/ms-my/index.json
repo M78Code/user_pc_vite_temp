@@ -307,6 +307,7 @@
     "post_bet_info2": "Nota: Hanya papar slip acara langsung. Ke Siarkan setelah memilih",
     "read_more": "Banyak mesej lagi",
     "send_err_hint1": "Input chat",
+    "room_not_open": "Chat room is not open",
     "send_err_hint2": "Maaf. Ujaran anda pantas"
   },
   "collect": {
@@ -345,6 +346,7 @@
     "title_188": "Asian Handicap",
     "title_panda": "Decimal",
     "under": "2H",
+    "return": "return",
     "unit": "￥",
     "virtual_sports": "Virtuals"
   },

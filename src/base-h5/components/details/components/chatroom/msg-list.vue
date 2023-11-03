@@ -12,7 +12,7 @@
     <!--</div>-->
     <chat_msg v-for="msgItem in filtered_msg_list" :msgItem="msgItem" :key="msgItem.messageId"></chat_msg>
     <div class="read-more" v-if="read_more_visible" @click="scrollToBottom">
-      {{ t('chatroom.read_more') }}
+      {{ i18n_t('chatroom.read_more') }}
     </div>
   </div>
 </template>
@@ -23,7 +23,7 @@ import chat_msg from 'src/base-h5/components/details/components/chatroom/chat_ms
 import { msgType, muteType } from 'src/base-h5/components/details/components/chatroom/constant.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, nextTick } from "vue";
-import { t } from "src/boot/i18n.js";;
+import { i18n_t } from "src/boot/i18n.js";;
 //国际化
 
 
@@ -97,10 +97,10 @@ export default defineComponent({
       let res = '';
       switch (computed_mute_type) {
         case muteType.self_mute:   // 个人禁言
-          res = t('chatroom.mute_hint1');
+          res = i18n_t('chatroom.mute_hint1');
           break;
         case muteType.global_mute:  // 全体禁言
-          res = t('chatroom.mute_hint2');
+          res = i18n_t('chatroom.mute_hint2');
           break;
       }
       return res;

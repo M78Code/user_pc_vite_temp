@@ -330,7 +330,7 @@ const submit_early_settle = () => {
     let message = ''
     if (res.code == 200) {
       status.value = 4;
-      message = '已提交申请，请耐心等待';
+      message = i18n_t('app_h5.cathectic.sub_wait');
     } else if (res.code == "0400524") {
       // 注单确认中···
       // 前5次 每3s拉一次

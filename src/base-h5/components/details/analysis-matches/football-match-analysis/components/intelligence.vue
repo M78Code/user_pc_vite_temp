@@ -42,7 +42,7 @@ import { i18n_t } from "src/boot/i18n.js";
     //按钮下标
     const radio_button_index = ref(0)
     //主客队名称
-    const tab_radio_button = ref(['曼联', '德联'])
+    const tab_radio_button = ref([])
     //详细情报数据
     const data_list = ref([])
     //数据加载完成
