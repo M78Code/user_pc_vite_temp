@@ -46,12 +46,12 @@
       </div>
     </div>
     <div class="foot-main">
-      <p><label>投注额：</label> <span>{{format_money2(data_b.orderAmountTotal)}}</span></p>
+      <p><label>{{i18n_t('bet_record.bet_val')}}：</label> <span>{{format_money2(data_b.orderAmountTotal)}}</span></p>
       <template>
         <!-- orderStatus 订单状态(0:未结算,1:已结算,2:注单无效,3:确认中,4:投注失败) -->
         <!-- 在未结算页 -->
         <p v-if="BetRecordClass.selected !== 3" class="acount">
-          <label>可赢额：</label> 
+          <label>{{ i18n_t('app_h5.cathectic.winnable') }}：</label> 
           <template v-if="data_b.orderStatus == 1 || data_b.orderStatus == 2 || data_b.orderStatus == 4">
             <span>
               <template v-if="data_b.backAmount !== null">{{format_money2(data_b.backAmount)}}</template>
@@ -64,12 +64,12 @@
         </p>
         <!-- 在已结算页 -->
         <p v-else class="acount">
-          <label>结算：</label> 
+          <label>{{i18n_t('app_h5.cathectic.settle')}}：</label> 
           <span>{{format_money2(data_b.backAmount)}}</span>
         </p>
       </template>
       <p>
-        <label>注单状态：</label> 
+        <label>{{ i18n_t('app_h5.catchetic.bet_status')}}：</label> 
         <template>
           <!-- 预约中、预约失效页 -->
           <span v-if="BetRecordClass.selected === 1 || BetRecordClass.selected === 2">
@@ -91,12 +91,11 @@
 import lodash from 'lodash'
 import { ref, onMounted, computed } from 'vue'
 import BetRecordClass from "src/core/bet-record/bet-record.js";
-import { t } from "src/boot/i18n.js";
-import { project_name } from 'src/core'
+import { i18n_t, project_name } from 'src/core/index.js'
 import { formatTime, format_money2 } from 'src/core/format/index.js'
 
 //按钮名字
-let btn_text = ref(t("bet_record.pack_down"))
+let btn_text = ref(i18n_t("bet_record.pack_down"))
 //是否展开
 let box_bool = ref(false)
 
@@ -126,9 +125,9 @@ const show_data_orderVOS = computed(() => {
 const toggle_box = () => {
   box_bool.value = !box_bool.value;
   if (box_bool.value == true) {
-    btn_text.value = t("bet_record.pack_up");
+    btn_text.value = i18n_t("bet_record.pack_up");
   } else {
-    btn_text.value = t("bet_record.pack_down");
+    btn_text.value = i18n_t("bet_record.pack_down");
   }
 }
 

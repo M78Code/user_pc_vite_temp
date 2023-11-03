@@ -16,7 +16,7 @@
     </div>
     <div class="body-info">
       <div>
-        <p>投注项: [{{Item.sportName}}
+        <p>{{ i18n_t('app_h5.cathectic.bets') }}: [{{Item.sportName}}
         </p>
         <p>{{Item.playName}} - {{$i18n.messages[data_b.langCode?data_b.langCode:'zh']['odds'][Item.marketType]}}</p>
       </div>
@@ -25,15 +25,15 @@
         @{{ Item.oddFinally }}</span>
     </div>
     <div class="body-main">
-      <p><label>投注单号：</label> <span>{{data_b.orderNo}}</span></p>
-      <p><label>投注时间：</label> <span>{{formatTime(+data_b.betTime, 'YYYY-mm-DD HH:MM')}}</span></p>
+      <p><label>{{ i18n_t('app_h5.cathectic.bet_number') }}：</label> <span>{{data_b.orderNo}}</span></p>
+      <p><label>{{i18n_t('bet_record.bet_time')}}：</label> <span>{{formatTime(+data_b.betTime, 'YYYY-mm-DD HH:MM')}}</span></p>
       <p><label>[{{Item.sportName}}] {{Item.matchName}}</label></p>
-      <p><label>投注额：</label> <span>{{format_money2(data_b.orderAmountTotal)}}</span></p>
+      <p><label>{{i18n_t('bet_record.bet_val')}}：</label> <span>{{format_money2(data_b.orderAmountTotal)}}</span></p>
       <template>
         <!-- orderStatus 订单状态(0:未结算,1:已结算,2:注单无效,3:确认中,4:投注失败) -->
         <!-- 在未结算页 -->
         <p v-if="BetRecordClass.selected !== 3" class="acount">
-          <label>可赢额：</label> 
+          <label>{{ i18n_t('app_h5.cathectic.winnable') }}：</label> 
           <template v-if="data_b.orderStatus == 1 || data_b.orderStatus == 2 || data_b.orderStatus == 4">
             <span>
               <template v-if="data_b.backAmount !== null">{{format_money2(data_b.backAmount)}}</template>
@@ -46,12 +46,12 @@
         </p>
         <!-- 在已结算页 -->
         <p v-else class="acount">
-          <label>结算：</label> 
+          <label>{{ i18n_t('app_h5.cathectic.settle') }}：</label> 
           <span>{{format_money2(data_b.backAmount)}}</span>
         </p>
       </template>
       <p>
-        <label>注单状态：</label> 
+        <label>{{ i18n_t('app_h5.cathectic.bet_status') }}：</label> 
         <template>
           <!-- 预约中、预约失效页 -->
           <span v-if="BetRecordClass.selected === 1 || BetRecordClass.selected === 2">
