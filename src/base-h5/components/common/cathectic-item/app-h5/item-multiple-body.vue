@@ -29,12 +29,12 @@
           <!--球类名称 赛前还是滚球 玩法名称 基准分 赔率类型-->
           <span class="info">
             {{item.sportName}}
-            <span v-if="data_b.seriesType != '3' && item.matchType != 4" v-html="$i18n.messages[data_b.langCode?data_b.langCode:'zh']['matchtype'][item.matchType]"></span>
+            <span v-if="data_b.seriesType != '3' && item.matchType != 4" v-html="i18n_t(`matchtype.${item.matchType}`)"></span>
             &ensp;{{item.playName}}
             <template v-if="item.scoreBenchmark">
               ({{item.scoreBenchmark}})
             </template>
-            &ensp;[{{$i18n.messages[data_b.langCode?data_b.langCode:'zh']['odds'][item.marketType]}}]
+            &ensp;[{{i18n_t(`odds.${item.marketType}`)}}]
           </span>
         </div>
       </template>
@@ -69,7 +69,7 @@
         </p>
       </template>
       <p>
-        <label>{{ i18n_t('app_h5.catchetic.bet_status')}}：</label> 
+        <label>{{ i18n_t('app_h5.cathectic.bet_status')}}：</label> 
         <template>
           <!-- 预约中、预约失效页 -->
           <span v-if="BetRecordClass.selected === 1 || BetRecordClass.selected === 2">

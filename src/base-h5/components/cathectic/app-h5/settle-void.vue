@@ -5,8 +5,8 @@
 -->
 <template>
   <div style="display: none;">{{ BetRecordClass.bet_record_version }}</div>
-  <div class="settle-void" @touchmove.prevent>
-    <!-- <div class="img-s" :style="compute_css_obj('no-record')"></div> -->
+  <div class="settle-void" @touchmove.prevent 
+    :style="{ backgroundImage: 'url('+ compute_local_project_file_path('/image/bet/img_betbg_nor.png') +')' }">
     <img :src="compute_local_project_file_path('/image/bet/no-data.png')">
     <template>
       <p v-if="BetRecordClass.selected === 0">{{i18n_t("app_h5.cathectic.no_data_unsettle")}}</p>
@@ -35,6 +35,8 @@ template {
   min-height: 4rem;
   border-radius: 0.1rem;
   background-color: var(--q-gb-bg-c-15);
+  background-repeat: no-repeat;
+  background-size: cover;
   img {
     width: 1.8rem;
     height: 1.8rem;
