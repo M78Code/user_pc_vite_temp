@@ -7,8 +7,8 @@
     <div class="scroll-list">
       <slot></slot>
       <div class="scroll-bottom">
-        <p v-if="state==4">{{t('myScroll.msg5')}}</p>
-        <p v-if="state==5">{{t('myScroll.msg6')}}</p>
+        <p v-if="state==4">{{i18n_t('myScroll.msg5')}}</p>
+        <p v-if="state==5">{{i18n_t('myScroll.msg6')}}</p>
       </div>
     </div>
   </div>
@@ -16,7 +16,7 @@
 
 <script setup>
 import { ref, onUnmounted} from 'vue'
-import { t } from "src/boot/i18n.js";;
+import { i18n_t } from "src/boot/i18n.js";;
 //国际化
 
 

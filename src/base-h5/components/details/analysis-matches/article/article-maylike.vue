@@ -4,7 +4,7 @@
 -->
 <template>
   <div class="article-maylike yb_px16">
-    <div class="title yb_fontsize14">猜你喜欢</div>
+    <div class="title yb_fontsize14">{{ i18n_t('home_popular.you_may_also_like') }}</div>
     <hr />  
     <template v-for="(item, index) in favorite_article_data">
       <div class="content row justify-between yb_pt12 yb_pb10" :key="index" @click="show_details(index)" v-if="item.id != dialog_article_id">
@@ -16,13 +16,13 @@
       </div> 
     </template>
     <template v-if="!favorite_article_data.length || favorite_article_data.length == 1 && favorite_article_data[0].id == dialog_article_id">
-      <div class="empty text-center" style="padding: 0.3rem 0 0.3rem">空空如也~</div>
+      <div class="empty text-center" style="padding: 0.3rem 0 0.3rem">{{ i18n_t('msg.msg_nodata_02') }}~</div>
     </template>
   </div>
 </template>
 
 <script setup>
-  import { formete_date  } from "src/core/index.js";
+  import { formete_date, i18n_t  } from "src/core/index.js";
   import { get_server_file_path } from "src/core/file-path/file-path.js";
 
   const props = defineProps({
