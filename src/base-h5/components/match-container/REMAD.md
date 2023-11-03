@@ -1,22 +1,25 @@
 <!-- 
 
    H5 赛事拆分说明： 
+    app：
+      match-container-main-template1 :   通用 赛事容器  默认 
+      match-container-main-template2 :   冠军
+      match-container-main-template3 :   赛果
+      match-container-main-template4 :   虚拟体育赛狗赛马赛果项
+      match-container-main-template5 :   新手版
+    
+    yazhou-h5：
+      match-container-main-template1 :   通用 赛事容器  默认 
+      match-container-main-template2 :   冠军
+      match-container-main-template3 :   赛果
+      match-container-main-template4 :   虚拟体育赛狗赛马赛果项
 
-    main 目录： 存放相关 赛事组件
-      match-container-main-template1 :   yazhou-h5 通用 赛事容器  默认 
-      match-container-main-template2 :   app-h5 通用 赛事容器  默认 
+    ouzhou-h5:
+      match-container-main-template1 :   通用 赛事容器  默认 
+      match-container-main-template2 :   冠军
+      match-container-main-template3 :   赛果
+      match-container-main-template4 :   虚拟体育赛狗赛马赛果项
 
-      match-container-main-template3 ：  yazhou-h5  冠军  
-      match-container-main-template4 ：  app-h5  冠军  
-
-      match-container-main-template5 ：  yazhou-h5   虚拟体育赛狗赛马赛果项
-      match-container-main-template6 ：  app-h5       虚拟体育赛狗赛马赛果项
-
-      match-container-main-template7 ：   yazhou-h5   新手版
-      match-container-main-template8 ：  app-h5       新手版
-
-      match-container-main-template9 ：   yazhou-h5   赛果
-      match-container-main-template10 ：  app-h5      赛果
 
   second 目录： 存放相关次要 玩法组件
       match-container-second-template1 :   yazhou-h5  次要玩法

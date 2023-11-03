@@ -1,5 +1,5 @@
 <!--
- * @Description: app-h5 赛事列表组件
+ * @Description: yazhou-h5 赛事列表组件
 -->
 
 <template>
@@ -8,15 +8,16 @@
     <ScrollWrapper>
       <template v-slot="{ match_item, index }">
         <template v-if="match_item">
-          <div class="data_mid"> <!--此data-mid用于分频订阅赛事,请勿修改-->
+          <!--此data-mid用于分频订阅赛事,请勿修改-->
+          <div class="data_mid"> 
             <!--冠军玩法-->
             <template v-if="is_kemp">
-              <MatchContainerMainTemplate3
+              <MatchContainerMainTemplate2
                 :i="index" 
                 :match_of_list="match_item">
-              </MatchContainerMainTemplate3>
+              </MatchContainerMainTemplate2>
             </template>
-            <!--app-h5 真实体育玩法 -->
+            <!-- 真实体育玩法 -->
             <template v-else>
               <MatchContainerMainTemplate1
                 :i="index"
@@ -32,10 +33,10 @@
 </template>
 <script setup>
 
-// app-h5 赛事组件
-import MatchContainerMainTemplate1 from "src/base-h5/components/match-container/main/match-container-main-template1.vue"; 
-// app-h5 冠军组件
-import MatchContainerMainTemplate3 from "src/base-h5/components/match-container/main/match-container-main-template3.vue"; 
+// yazhou-h5 赛事组件
+import MatchContainerMainTemplate1 from "src/base-h5/components/match-container/template/yazhou/match-container-main-template1.vue"; 
+// yazhou-h5 冠军组件
+import MatchContainerMainTemplate2 from "src/base-h5/components/match-container/template/yazhou/match-container-main-template2.vue"; 
 // 赛事滚动组件
 import ScrollWrapper from 'src/base-h5/components/scroll-wraper/scroll-wrapper.vue'; 
 

@@ -1,0 +1,359 @@
+<!--
+ * @Description: app-h5  冠军   冠军赛事组件，用于赛事列表展示赛事信息
+-->
+<template>
+  <div class="champion-wrap-2" v-if="is_show">
+    <div class="sport-title match-indent" v-if="get_sport_show(i)" @click="handle_ball_seed_fold">
+      <span class="score-inner-span"> {{match_of_list.csna}} </span>
+      <div class="collapse-dire">
+        <img class="icon-down-arrow" :class="{ 'collapsed': league_collapsed }" :src='compute_img_url("icon-collapse")' />
+      </div>
+    </div>
+    <div v-if="is_show_league(i)" 
+      :class="['league-container flex items-center justify-between right-border', {collapsed: !collapsed}]"
+      @click="handle_league_fold">
+      <div class="league-wrapper champion flex items-center">
+        <div v-if="menu_type === 100 && GlobalAccessConfig.get_collectSwitch()"  class="favorite" :class="[{favorited:match_of_list.tf},theme]"
+          @click.stop="handle_league_fold"></div>
+            <span class="league-title-text row justify-between" :class="{'without-collect': menu_type !== 100 || (menu_type === 100 && !GlobalAccessConfig.get_collectSwitch())}" >
+              {{menu_type == 100 ? match_of_list.onTn : match_of_list.tn}}
+            </span>
+        </div>
+
+      <div class="collapse-dire">
+        <icon-wapper color="#c9c9c9" name="icon-arrow" size="15px" :class="['icon-wapper', {'collapsed': !collapsed}]" />
+      </div>
+    </div>
+
+    <template v-for="(hp,index) of match_of_list.hps">
+      <div class="hps-wrap hairline-border" v-if="hp.hs != 2 && !collapsed" :key="index">
+        <div class="flex items-center justify-between"
+          :class="{'is-favorite': false}">
+          <div class="match-title items-center">
+            <div class="debug-head" style="color:red;position:absolute;right:0;">
+              {{get_key_by_obg(hp)}}
+            </div>
+            <div class="hpn-wrap ellipsis">
+              {{hp.hps}}
+            </div>
+          </div>
+          <div v-if="!collapsed && hp.hmed" class="limit-time">
+            <div class="limit-t-i">
+              <template v-if="!['zh', 'tw'].includes(lang)">
+                {{(new Date(+hp.hmed)).Format(i18n_t('time7'))}} {{ $t('match_main.cut_off')}}
+              </template>
+              <template v-else>
+                {{(new Date(+hp.hmed)).Format(i18n_t('time7'))}} {{ $t('match_main.cut_off')}}
+              </template>
+            </div>
+          </div>
+        </div>
+        
+        <div class="ol-list-wrap flex justify-start" :data-ol="hp.ol.length" v-if="hp.ol">
+          <!-- 右侧赔率组件 -->
+          <OddItemChampion
+            v-for="(ol_item,i) of hp.ol"
+            :key="i"
+            :hs="hp.hs"
+            :data-i="i"
+            :ol_item="ol_item"
+            :csid="match_of_list.csid"
+            @click.stop="item_click(match_of_list,hp,ol_item)">
+          </OddItemChampion>
+        </div>
+      </div>
+    </template>
+
+  </div>
+</template>
+
+<script>
+
+import { i18n_t} from 'src/core/index.js'
+import { lang, theme } from 'src/base-h5/mixin/userctr.js'
+import { menu_type } from 'src/base-h5/mixin/menu.js'
+import { compute_img_url } from "src/core/index.js"
+
+import { IconWapper } from 'src/components/icon'
+import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
+import OddItemChampion from "src/base-h5/components/match-list/components/odd-item-champion.vue";
+
+import champion_mixin from '../../mixins/champion.mixin.js'
+import 'src/base-h5/css/pages/match-container-champion.scss'
+
+export default {
+  name: "match-container-main-template4",
+  mixins: [champion_mixin],
+  props: {
+    // 当前组件的赛事数据对应列表的赛事
+    match_of_list: Object,
+    // 赛事处于列表中的下标
+    i: Number,
+  },
+  components: {
+    IconWapper,
+    OddItemChampion,
+  },
+  setup () {
+    return { 
+      lang,
+      theme,
+      i18n_t,
+      menu_type,
+      compute_img_url,
+      GlobalAccessConfig,
+    }
+  }
+}
+</script>
+
+<style scoped lang="scss">
+.champion-wrap-2 {
+  //width: 3.61rem;
+  //margin: 0 0 0 0.07rem;
+  //border-radius: 0.08rem;
+  //overflow: hidden;
+  width: calc(100% - 0.1rem);
+  height: auto;
+  position: relative;
+  margin: 0 auto;
+  background: #F2F2F6;
+  border-radius: 0.05rem;
+
+  .league-container {
+    height: 0.26rem;
+    // margin: 0 0.07rem;
+    margin-top: 0.07rem;
+    &.collapsed{
+      border-bottom: 1px solid var(--q-gb-bg-c-19);
+    }
+
+    .league-wrapper {
+      padding-left: 0.1rem;
+      .favorite {
+        width: 0.16rem;
+        height: 0.16rem;
+        margin: 0 0.1rem 0.02rem 0.06rem;
+        background: var(--q-color-com-img-bg-38);
+        background-size: contain;
+        background-repeat: no-repeat;
+
+        &.favorited {
+          background-image: var(--q-color-com-img-bg-8);
+        }
+
+        &.theme02 {
+          &.favorited {
+            background-image: var(--q-color-com-img-bg-9);
+          }
+        }
+
+        &.theme01_y0,
+        &.theme02_y0 {
+          &.favorited {
+            background-image: var(--q-color-com-img-bg-10);
+          }
+        }
+      }
+
+      .league-title {
+        overflow: hidden;
+        white-space: nowrap;
+        font-size: 0.13rem;
+        font-weight: bold;
+
+        .league-icon-mini {
+          width: 0.22rem;
+          height: 0.22rem;
+          margin: 0.01rem 0.07rem 0 0.09rem;
+          position: relative;
+          transform: scale(0.85);
+
+          &.league-icon-mini2 {
+            --per: -0.32rem;
+            background: var(--q-color-com-img-bg-11) no-repeat center / 0.2rem 18.88rem;
+            background-position-y: calc(var(--per) * var(--num));
+          }
+
+          img {
+            width: 0.22rem;
+            height: 0.22rem;
+            position: absolute;
+            top: 0;
+            left: 0;
+          }
+        }
+      }
+
+      .league-title-text {
+        font-weight: 600;
+      }
+      .collect-img{
+        width: 16px;
+        height: 16px;
+        text-align: center;
+        line-height: 20px;
+        margin: 0 6px 0 10px;
+        > img {
+          width: 14px;
+          height: 13px;
+        }
+      }
+    }
+
+    .collapse-dire {
+      margin-right: 0.05rem;
+      .icon-arrow {
+        width: 0.12rem;
+        height: 0.06rem;
+        display: block;
+        transition: transform 0.3s;
+
+        &.collapsed {
+          transform: rotateZ(180deg);
+        }
+      }
+    }
+  }
+  .limit-time {
+    // width: 100%;
+    height: 0.25rem;
+    font-size: 0.11rem;
+    text-align: right;
+    margin-top: 0.02rem;
+    margin-right: 0.08rem;
+    display: flex;
+    align-items: center;
+
+    .limit-t-i {
+      // width: 3.45rem;
+      margin: 0 auto;
+      color: #999;
+      border-radius: 0.04rem;
+    }
+  }
+
+  .hps-wrap {
+
+    > div {
+      border-bottom: 1px solid var(--q-gb-bg-c-19);
+    }
+
+    .match-title {
+      height: 0.24rem;
+      padding-left: 0.11rem;
+      // padding-top: 0.12rem;
+      position: relative;
+      display: flex;
+      width: 50%;
+    
+
+      // &:before {
+      //   width: 0.03rem;
+      //   height: 0.16rem;
+      //   transform: translateY(-1px);
+      //   content: ' ';
+      //   display: block;
+      //   border-radius: 0.015rem;
+      //   background: var(--q-gb-t-c-1);
+      // }
+
+      .hpn-wrap {
+        color: #414655;
+        font-size: 11px;
+      }
+    }
+
+    .ol-list-wrap {
+      width: 100%;
+      height: auto;
+      flex-wrap: wrap;
+      margin-top: 0.07rem;
+      padding-left: 0.07rem;
+      // padding-bottom: 0.08rem;
+      .ol-li-item{
+        background: #fff;
+      }
+    }
+
+    .ol-list-wrap2 {
+      padding-bottom: 0.08rem;
+    }
+  }
+}
+
+.sport-title {
+  width: calc(100% - 0.07rem * 2);
+  display: flex;
+  align-items: center;
+  padding-left: 0.1rem;
+  height: 0.26rem;
+  font-size: 0.11rem;
+  background-image: var(--q-gb-bg-lg-19);
+  /*transform: translateY(3px);*/
+  margin: 0 auto;
+  border-radius: 0.06rem;
+
+  &.hidden_sport {
+    display: none !important;
+  }
+
+  .score-inner-span {
+    width: 3.3rem;
+    color: var(--q-match-fs-color-153);
+  }
+
+  .icon_match_cup,
+  .icon_notstarted {
+    margin-right: 0.1rem;
+    font-size: 0.12rem;
+
+    &:before {
+      color: var(--q-color-com-fs-color-35);
+    }
+  }
+
+  .icon_notstarted {
+    &:before {
+      color: var(--q-color-com-fs-color-36);
+    }
+  }
+
+  &.menu-type-3 {
+    height: 0.25rem;
+    border-top: 1px solid var(--q-color-com-border-color-19);
+    background-color: var(--q-color-com-bg-color-12);
+    font-weight: bold;
+    box-shadow: var(--q-color-box-shadow-color-3);
+    position: relative;
+    z-index: 2;
+    padding-left: 0;
+
+    &.not-playing {
+      &:before {
+        background: var(--q-color-com-bg-color-38);
+      }
+    }
+
+    &:before {
+      margin-right: 0.1rem;
+      display: block;
+      content: ' ';
+      width: 0.04rem;
+      height: 100%;
+      background: var(--q-color-com-bg-color-39);
+    }
+  }
+
+  .collapse-dire {
+    margin: 0.05rem 0.11rem 0.07rem 0;
+
+    .icon-arrow {
+      width: 0.12rem;
+      height: 0.06rem;
+      display: block;
+      transition: transform 0.3s;
+    }
+  }
+}
+</style>

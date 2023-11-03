@@ -1,5 +1,5 @@
 <!--
- * @Description: app-h5 赛事列表组件
+ * @Description: ouzhou-h5 赛事列表组件
 -->
 
 <template>
@@ -11,14 +11,14 @@
           <div class="data_mid"> <!--此data-mid用于分频订阅赛事,请勿修改-->
             <!-- 专业版 -->
             <template v-if="standard_edition === 2">
-              <!-- 冠军玩法 -->
+              <!--冠军玩法-->
               <template v-if="is_kemp">
                 <MatchContainerMainTemplate2
                   :i="index" 
                   :match_of_list="match_item">
                 </MatchContainerMainTemplate2>
               </template>
-              <!-- 真实体育玩法 -->
+              <!--app-h5 真实体育玩法 -->
               <template v-else>
                 <MatchContainerMainTemplate1
                   :i="index"
@@ -28,10 +28,10 @@
             </template>
             <!-- 新手版 -->
             <template v-else>
-              <MatchContainerMainTemplate5
+              <MatchContainerMainTemplate8
                 :i="index"
                 :match_of_list="match_item">
-              </MatchContainerMainTemplate5>
+              </MatchContainerMainTemplate8>
             </template>
           </div>
         </template>
@@ -42,12 +42,10 @@
 </template>
 <script setup>
 
-// app-h5 赛事组件
-import MatchContainerMainTemplate1 from "src/base-h5/components/match-container/template/app/match-container-main-template1.vue"; 
-// app-h5 冠军组件
-import MatchContainerMainTemplate2 from "src/base-h5/components/match-container/template/app/match-container-main-template2.vue"; 
-// app-h5 新手版
-import MatchContainerMainTemplate5 from "src/base-h5/components/match-container/template/app/match-container-main-template5.vue"; 
+// ouzhou-h5 赛事组件
+import MatchContainerMainTemplate1 from "src/base-h5/components/match-container/template/ouzhou/match-container-main-template1.vue"; 
+// ouzhou-h5 冠军组件
+import MatchContainerMainTemplate2 from "src/base-h5/components/match-container/template/ouzhou/match-container-main-template2.vue"; 
 
 // 赛事滚动组件
 import ScrollWrapper from 'src/base-h5/components/scroll-wraper/scroll-wrapper.vue'; 
