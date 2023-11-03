@@ -368,7 +368,7 @@ function RCMD_C106(obj) {
  * @return {undefined} undefined
  */
 function RCMD_C109(obj) {
-  //console.log(`=============进入websocket========RCMD_C109`);
+  console.log(`=============进入websocket========RCMD_C109`);
   if (!obj) return;
   let id, bet_obj, skt_data = obj.cd;
   let len = skt_data.length

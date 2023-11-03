@@ -1,7 +1,7 @@
 
 
 /*
- * @Description:列表页面赛事信息操作类-实现快速检索,修改等功能
+ * @Description:列表页面赛事信息操作类-实现快速检索,修改等功能   !!!! 废弃
  */
 import { ref } from 'vue'
 import lodash from 'lodash'

@@ -151,7 +151,7 @@ const set_footer_position = () => {
     // 最后再次设置滚动位置
     // set_scroll_position([scroll_footer_top, 0]);
     
-    set_scroll_position([scroll_footer_top, 0]);
+    set_scroll_position([scroll_footer_top,'vertical']);
   } else {
     footer_position.value = {
       bottom: "0px",
@@ -169,7 +169,8 @@ const on_scroll = (position) => {
 }
 // 设置滚动位置
 const set_scroll_position = (position) => {
- ref_v_scroll_area.value.setScrollPosition(position[0], position[1])
+ const dir=['vertical','horizontal'].includes(position[1])?position[1]:'vertical'
+ ref_v_scroll_area.value.setScrollPosition(dir,position[0])
 }
 
 onMounted(() => {

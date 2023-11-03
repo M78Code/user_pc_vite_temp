@@ -1,6 +1,6 @@
 <template>
   <div class="change-header">
-    <div class="bg-wrap" :style="get_menu_type == 3000 ? URL.gaming_type[detail_data.csid] : lodash.get(URL.sporting_type,`${ballType}.B`)">
+    <div class="bg-wrap" :style="get_menu_type == 3000 ? URL.gaming_type[detail_data.csid] :ballTypeBackground">
     </div>
     <div class="h-row row mx-15">
         <!-- 返回按钮 -->
@@ -15,7 +15,7 @@
           <div class="col-2 text-center header-font" v-show="is_show_score && !eports_scoring">{{score.home}}</div>
           <!-- 中间的赛事阶段 上半场和一个倒计时-->
           <div class="col text-center base-header-font">
-            <!-- <match-stage :detail_data="detail_data" v-if="show_match_stage"></match-stage> -->
+            <match-stage :detail_data="detail_data" v-if="show_match_stage"></match-stage>
           </div>
           <div class="col eports_scoring_tip" v-if="eports_scoring">{{i18n_t('mmp.eports_scoring')}}</div>
           <!-- 右边的比分 -->
@@ -30,13 +30,13 @@
 // #TODO vuex
 // import { mapGetters} from "vuex";
 // import global_filters from 'src/boot/global-filters.js'
-// import match_stage from 'src/project/components/match/match_other_stage.vue';   // 详情页上推后置顶的赛事具体状态(1.未开赛显示2.开赛时间小于1小时显示分钟)
 // 球类背景图base64路径集合
-import base64 from "src/core/match-detail/match-detail-h5/config/details-bg.js"; 
+import {detail_csid_config} from "src/core/match-detail/match-detail-h5/config/details-bg.js"; 
 import lodash from "lodash";
-import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
+import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent,nextTick } from "vue";
 import { i18n_t } from "src/boot/i18n.js";
 import { format_total_score } from "src/core/format/index.js"
+import matchStage from "src/base-h5/components/match/match-stage.vue";  // 详情页上推后置顶的赛事具体状态(1.未开赛显示2.开赛时间小于1小时显示分钟)
 //国际化
 
 
@@ -46,18 +46,19 @@ export default defineComponent({
     detail_data:Object,
   },
   components: {
-    // "match-stage":match_stage
+    matchStage
   },
   setup(props, evnet) {
     let component_data = reactive({
       // 背景图片引入
-      URL: base64,
+      URL: detail_csid_config,
       // 顶部赛事阶段及时间 显示控制
       show_match_stage: false,
     });
     // #TODO vuex
     // computed: {
     // ...mapGetters(["get_menu_type", "get_change_count"]),
+    let ballTypeBackground = computed(() => lodash.get(detail_csid_config,`[CSID_${props.detail_data.csid}].detail.B`))
     const get_menu_type = computed(() => {
       return "";
     });
@@ -92,6 +93,12 @@ export default defineComponent({
     const is_show_score = computed(() => {
       return  [1,2,3,4].includes(+props.detail_data.ms) || (get_menu_type.value == 3000 && props.detail_data.ms > 0)
     });
+    onMounted(()=>{
+      nextTick(() => {
+      // ios兼容处理，延迟显示
+      component_data.show_match_stage = true
+    })
+    })
     return {
       ...toRefs(component_data),
       get_menu_type,
@@ -100,7 +107,8 @@ export default defineComponent({
       score,
       eports_scoring,
       is_show_score,
-      lodash
+      lodash,
+      ballTypeBackground
     }
   }
 })
@@ -153,7 +161,7 @@ export default defineComponent({
 .base-header-font {
   position: relative;
   font-size: 0.12rem;
-  color: var(--q-gb-t-c-18);
+  color: var(--q-gb-t-c-14);
   letter-spacing: 0;
 }
 

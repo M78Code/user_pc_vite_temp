@@ -90,7 +90,7 @@
 body {
   color: #414655;
   font-size: 0.12rem !important;
-  font-family: dinMedium, PingFangSC, Arial, Helvetica, sans-serif !important;
+  font-family:'PingFang SC', Arial, Helvetica, sans-serif !important;
 }
 /* 字体大小 */
 .yb_fontsize8 {
@@ -691,6 +691,10 @@ i {
 .mx-4 {
   margin: 0 4px;
   margin: 0 0.04rem;
+}
+.mx-5 {
+  margin: 0 5px;
+  margin: 0 0.05rem;
 }
 .mx-8 {
   margin: 0 8px;

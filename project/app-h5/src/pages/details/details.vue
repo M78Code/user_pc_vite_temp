@@ -25,8 +25,8 @@
         </div>
         <!-- 滚动时置顶的悬浮条 -->
         <!-- <div style="position: fixed;z-index: 1000; top: 100px;background:#000;color: #fff;">{{ scroll_visible_1 }}{{ get_show_video }}</div> -->
-        <div class="mini-header-container" :class="{'no-z-index': get_is_dp_video_full_screen}" :style="{ visibility: scroll_visible_1 && !get_show_video&& viewTab != 'chatroom'? 'visible' : 'hidden' }">
-          <!-- <change-header :detail_data="detail_data"></change-header> -->
+        <div class="mini-header-container" :class="{'no-z-index': get_is_dp_video_full_screen}" :style="{ visibility: scroll_visible && !get_show_video&& viewTab != 'chatroom'? 'visible' : 'hidden' }">
+          <change-header :detail_data="detail_data"></change-header>
         </div>
 
         <!-- @click.stop -->
@@ -40,23 +40,25 @@
                 shrink
                 stretch
                 inline-label
-                switch-indicator
-                :indicator-color="scroll_visible && !get_show_video ? 'view-tab-active-top': ''"
+                narrow-indicator
                 class="bg-tabs"
                 active-color="active-tab"
-                active-bg-color="active-tab"
                 :content-class="curr_active_tab">
               <q-tab v-if="show_match_analysis_tab || show_chatroom_tab" name="bet" :content-class="viewTab === 'match_analysis' ? 'tab-bet' : ''" :ripple="false" :label="i18n_t('bet.betting')" />
               <q-tab
                 v-if="show_match_analysis_tab"
-                name="match_analysis"
-                :content-class="viewTab === 'bet' ? 'tab-match-analysis' : 'tab-match-analysis-active'"
+                name="shoufa"
                 :ripple="false"
-                :label="i18n_t('match_result.match_analysis')"
-                alert
-                :alert-icon="icon_replay"/>
+                label="首发"
+               />
+         
               <!-- 根据中文，繁体、聊天室ID不为空以及 chatRoomSwitch 打开 才显示聊天室Tab -->
-              <q-tab name="chatroom" :content-class="viewTab === 'chatroom' ? 'tab-chatroom' : ''" v-if="show_chatroom_tab" :ripple="false" :label="i18n_t('bet.chatroom')" />
+              <q-tab
+                v-if="show_match_analysis_tab"
+                name="playback"
+                :ripple="false"
+                label="精彩回放"
+               />          
             </q-tabs>
             <!-- 玩法集展示内容 -->
             <details-tab 
@@ -88,18 +90,19 @@
               </div>
             </div>
           </div>
-          <!-- 赛事分析展示内容 -->
-          <template v-if="viewTab == 'match_analysis' && (!get_is_hengping || get_is_dp_video_full_screen)">
+          <!-- 赛事首发展示内容 -->
+          <template v-if="viewTab == 'shoufa' && (!get_is_hengping || get_is_dp_video_full_screen)">
             <div>
                 <!-- 足球赛事分析 页面-->
-                <analysis-football-matches :detail_data="detail_data" v-if="detail_data.csid == '1'"></analysis-football-matches>
+                <!-- <analysis-football-matches :detail_data="detail_data" v-if="detail_data.csid == '1'"></analysis-football-matches> -->
+                <line-up :detail_data="detail_data" ></line-up>
                 <!-- 篮球赛事分析 页面-->
-                <basketball-match-analysis  :detail_data="detail_data" v-if="detail_data.csid == '2'"></basketball-match-analysis>
+                <!-- <basketball-match-analysis  :detail_data="detail_data" v-if="detail_data.csid == '2'"></basketball-match-analysis> -->
             </div>
           </template>
-          <!-- 聊天室 -->
-          <template v-if="viewTab === 'chatroom'">
-            <!-- <chatroom></chatroom> -->
+          <!-- 精彩回放 -->
+          <template v-if="viewTab === 'playback'">
+            <highlights :detail_data="detail_data" />
           </template>
         </div>
 
@@ -139,11 +142,10 @@
 // 引入国际化
 import lodash from "lodash";
 import detailsHeader from "src/base-h5/components/details/components/details-header.vue";   // 整个详情页的上部视频区域
-import detailsTab from "src/base-h5/components/details/components/details-tab.vue";         // 详情页中部玩法集tab
 import detailsDialog from "src/base-h5/components/details/details-dialog.vue";   // 详情赛事下拉,赛事列表组件
 // // import no_data from "src/project/components/common/no-data.vue";   // 无网络展示组件
 import videos from "src/base-h5/components/details/components/videos2.vue";   // 详情页视频+动画直播区域
-// import change_header from "src/base-h5/components/details/components/header/change-header.vue";  // 详情页下拉置顶title
+import changeHeader from "src/base-h5/components/details/components/header/change-header.vue";  // 详情页下拉置顶title
 import info_rules from "src/base-h5/components/details/components/info-rules.vue"  // 视频info说明弹框
 // import SDetails from "src/project/components/skeleton/skeleton-details.vue"  // 详情骨架屏
 import category from "./children/category.vue";
@@ -154,13 +156,15 @@ import { useRouter, useRoute } from "vue-router";
 import store from "src/store-redux/index.js";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt/index.js"
 import { details_main } from "./details.js";
-import { ref, defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch, provide } from "vue";
+import { ref, defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch, provide,defineAsyncComponent } from "vue";
 import {UserCtr,compute_css_obj,compute_img_url,MatchDetailCalss,MenuData,utils} from "src/core/";
 import { compute_css_variables } from "src/core/css-var/index.js"
 import {is_export } from "src/base-h5/mixin/menu";
-
-//国际化
-
+// 详情页中部玩法集tab
+import detailsTab from "src/base-h5/components/details/components/details-tab-2.vue";
+//首发组件
+import lineUp from "src/base-h5/components/details/analysis-matches/components/line-up.vue"
+import highlights from "src/base-h5/components/details/analysis-matches/highlights/highlights.vue"
 export default defineComponent({
   name: "details",
   // mixins: [websocket_data,common],
@@ -169,14 +173,15 @@ export default defineComponent({
     basketballMatchAnalysis,
     "details-header": detailsHeader,
     "details-dialog": detailsDialog,
-    // "change-header": change_header,
+    changeHeader,
     detailsTab,
 //     // "no-data": no_data,
     "info-rules": info_rules,
     videos: videos,
 //     // SDetails,
     category,
-//     // chatroom
+    lineUp,
+    highlights
   },
   // 从首页轮播区域跳转到详情页 增加判断
 //   beforeRouteEnter(to, from, next) {
@@ -196,8 +201,8 @@ export default defineComponent({
     const scroll_visible_1 = ref(true)
     const page_style = ref('')
     
-    
     const {
+      scroller_scroll_top,
       state_data,
       is_highlights,
       show_match_analysis_tab,
@@ -253,7 +258,7 @@ export default defineComponent({
         }
         // 只有一个玩法集时，及时更新当前玩法集id
         if (lodash.get(data,'length') == 1) {
-          // set_details_item(data[0].id)
+          MatchDetailCalss.set_details_item(data[0].id)
           matchDetailCtr.current_category_id = data[0].id
         }
         // 玩法个数不及3个时，提前退出
@@ -588,10 +593,6 @@ export default defineComponent({
 })
 </script>
 <style scoped lang="scss">
-  
-</style>
-
-<style scoped lang="scss">
   /****************** 横屏投注弹窗*******************/
   // @import "./styles/details-bet.scss";
 </style>
@@ -607,12 +608,17 @@ export default defineComponent({
 }
 }
 .bg-tabs {
-    background: var(--q-gb-bg-c-10);
-    .bg-active-tab {
     background: var(--q-gb-bg-c-15);
+   
+  .bg-active-tab {
+    background: var(--q-gb-bg-c-15);
+  
   }
   }
-
+ .details-tab{
+  border-top:0.5px solid #F2F2F6;
+  background: var(--q-gb-bg-c-15);
+ } 
 </style>
 <style lang="scss">
 .detail-top-pop .q-dialog__inner--minimized {

@@ -8,9 +8,9 @@
   <div class="bet-single-detail yb_px14 row items-center" ref="bet_single_detail">
     <!-- 左 -->
     <div class="yb_fontsize16 content-t">
-      <p>单关</p>
+      <p>{{ i18n_t('bet.bet') }}</p>
       <p>
-        <span>最高可赢</span>
+        <span>{{ i18n_t('bet_record.bet_max_win') }}</span>
         <span :class="{ 'red-color': !(max_win_money == '0.00' || money_ok), 'yellow-color': money_ok && money }">{{
           format_money2(max_win_money) }}
         </span>
@@ -39,6 +39,7 @@ import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import mathJs from 'src/core/bet/common/mathjs.js'
 import { format_money3, format_money2 } from 'src/core/format/index.js'
 import { format_currency } from "src/core/format/module/format-currency.js"
+import { i18n_t } from "src/core/index.js"
 
 const money = ref('10')  //输入框金额
 const money_ok = ref(true)   //金额是否合适
@@ -288,7 +289,7 @@ const get_money_format = () => {
   let mi = format_money3(ref_data.min_money)
   let ma = format_money3(ref_data.max_money)
   // console.error('ref_data', ref_data)
-  return `限额 ${mi}~${ma}`
+  return `${i18n_t('app_h5.bet.limit')} ${mi}~${ma}`
   // return licia_format(i18n_t('bet.money_limit2'), mi, ma);
 }
 /**

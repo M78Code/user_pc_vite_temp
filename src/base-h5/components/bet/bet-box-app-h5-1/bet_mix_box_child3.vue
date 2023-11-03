@@ -41,7 +41,7 @@
   <style lang="scss" scoped>
   .nonebox4-content{
       width: 100%;
-      margin-top: 10px;
+      //margin-top: 10px;
       display: flex;
       justify-content: space-between;
   }

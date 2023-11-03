@@ -4,7 +4,7 @@
  * @Description: 红升绿降的展示
 -->
 <template>
-  <div :class="['odds_new',{'odds-new2':ol_data.result != undefined}]" :id="DOM_ID_SHOW && `list-${lodash.get(ol_data, 'oid')}`">
+  <div :class="['odds_new',{'odds-new2':ol_data.result != undefined,'odds-new-ky':project_name == 'app-h5'}]" :id="DOM_ID_SHOW && `list-${lodash.get(ol_data, 'oid')}`"   >
     <template v-if="ol_data.result == undefined">
       <span v-if="odds_value() < 1.01 && get_cur_odd == 'EU'">
         <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" alt="" style=" width: 0.12rem"/>
@@ -64,11 +64,11 @@ export default defineComponent({
     watch(
       () => props.ol_data,
       (n) => {
-        if(Math.ceil(Number(n.ov /1000)) > Math.ceil(Number(cacheData /1000))){
+        if(Math.ceil(Number(n.ov /1000)) > Math.ceil(Number(component_data.cacheData /1000))){
           component_data.status = 10;
           component_data.cacheData = n.ov;
         }
-        else if(Math.ceil(Number(n.ov /1000)) < Math.ceil(Number(cacheData /1000))){
+        else if(Math.ceil(Number(n.ov /1000)) < Math.ceil(Number(component_data.cacheData /1000))){
           component_data.status = -10;
           component_data.cacheData = n.ov;
         }
@@ -126,7 +126,8 @@ export default defineComponent({
       get_bet_list,
       odds_value,
       calc_text,
-      lodash
+      lodash,
+      project_name
     }
   }
 })
@@ -135,12 +136,14 @@ export default defineComponent({
 <style lang="scss" scoped>
 .odds_new {
   width: 100%;
-  color: #414655; // var(--q-detials-color-6);
-  font-size: 0.16rem;
-
+  color: #303442; // var(--q-detials-color-6);
+  font-size: 0.14rem; //todo app-h5
+  font-weight: 700;
   letter-spacing: 0;
 }
-
+.odds-new-ky {
+  flex:1
+}
 .odds {
   position: relative;
 }

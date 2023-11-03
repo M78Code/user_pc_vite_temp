@@ -33,7 +33,7 @@
 // import { mapGetters} from "vuex";
 import { colors } from 'quasar';
 import lodash from "lodash";
-import { project_name } from 'src/core'
+import { LOCAL_PROJECT_FILE_PREFIX } from 'src/core'
 import store from "src/store-redux/index.js";
 // import odd_convert from "src/base-h5/mixins/odds_conversion/odds_conversion.js";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
@@ -116,7 +116,8 @@ export default defineComponent({
       get_curr_sub_menu_type,
       lodash,
       go_to_bet,
-      temp_odds
+      temp_odds,
+      LOCAL_PROJECT_FILE_PREFIX
     }
   }
 })

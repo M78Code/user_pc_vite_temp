@@ -191,7 +191,7 @@ let   SCSSPROJECTPATH =  ''
  
   //生产打包
   if(BUILD_VERSION){
-    SCSSPROJECTPATH =`${BUILD_VERSION}/${PROJECT_NAME}`
+    SCSSPROJECTPATH =`/${BUILD_VERSION}/${PROJECT_NAME}`
   }else{
     //本地运行
 

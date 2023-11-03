@@ -5,18 +5,19 @@
 -->
 
 <template>
-  <div class="scroll-wrapper">
+  <!-- :style="`transform: translateY(${translateY / 100}rem)`" -->
+  <div class="scroll-wrapper" @scroll="handler_match_container_scroll">
     <div style="display: none;">{{ MatchDataBaseH5.data_version.version }}</div>
-    <div :class="['scroll-i-con', {high_scrolling: set_ishigh_scrolling && menu_type !== 100 &&
+    <div  :class="['scroll-i-con', {high_scrolling: set_ishigh_scrolling && menu_type !== 100 &&
        !(menu_type == 28 && [1001, 1002, 1004, 1011, 1010, 1009].includes(menu_lv2.mi)) && menu_type != 100,
         detail_list: is_detail,
         simple: standard_edition == 1,
       }]"
-      :style="{ 'min-height': `${menu_type == 100 ? list_wrap_height : match_list_wrapper_height}rem` }">
+      :style="{ 'height': get_is_static() ? 'auto' : `${VirtualList.container_total_height}rem` }">
       <template v-if="MatchMeta.match_mids.length > 0" >
-        <div v-for="(match_mid, index) in MatchMeta.match_mids" :index="index" :key="match_mid"
-          :class="['s-w-item', { static: is_static_item, last: index == match_mids.length - 1 }]" 
-          :style="{ transform: `translateY(${is_static_item ? 0 : get_match_top_by_mid(match_mid)}rem)`, zIndex: `${200 - index}` }">
+        <div v-for="(match_mid, index) in MatchMeta.match_mids" :index="index" :key="match_mid" :data-mid="match_mid"
+          :class="['s-w-item', {last: index == MatchMeta.match_mids.length - 1, static: get_is_static() }]" 
+          :style="{ transform: `translateY(${get_match_top_by_mid(match_mid)}rem)`, zIndex: `${200 - index}` }">
           <!-- 调试用 -->
           <div v-if="test" class="debug-head data_mid" :data-mid="match_mid" :class="{ first: index === 0 }">
             <span> {{ get_index_f_data_source(match_mid) + '-' + index }} </span>
@@ -43,14 +44,14 @@ import UserCtr from "src/core/user-config/user-ctr.js";
 import MenuData from  "src/core/menu-h5/menu-data-class.js";
 import PageSourceData from "src/core/page-source/page-source.js";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
+import VirtualList from "src/core/match-list-h5/match-class/virtual-list.js";
 import RouterScroll from "src/core/match-list-h5/match-class/router-scroll.js";
 import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from 'src/core'
-import { menu_type, menu_lv2, is_kemp, is_hot, is_detail } from 'src/base-h5/mixin/menu.js'
+import { menu_type, menu_lv2, is_kemp, is_hot, is_detail, is_results } from 'src/base-h5/mixin/menu.js'
 import { standard_edition } from 'src/base-h5/mixin/userctr.js'
 
 // 避免定时器每次滚动总是触发
 const props = defineProps({
-  match_list_wrapper_height: Number,
   is_goto_top_random: Number,
 })
 
@@ -63,13 +64,17 @@ let prev_frame_poi = ref(0)
 let list_wrap_height = ref(0)
 let target_scroll_obj = ref(null)
 let scroll_frame_timer = null
+// 上一次滚动的距离
+const prev_scroll = ref(0)
 // 赛事mids
 const match_mids = ref([])
+const scroll_timer = ref(0)
 
 onMounted(() => {
   test.value = sessionStorage.getItem('wsl') == '9999';
   // 详情页以外的列表才设置最小高度
   if (is_detail.value) list_wrap_height.value = 8;
+
 })
 
 const get_match_item = (mid) => {
@@ -77,8 +82,26 @@ const get_match_item = (mid) => {
 }
 
 const get_index_f_data_source = (mid) => {
-  return lodash.findIndex(match_mids.value, { mid });
+  return lodash.findIndex(MatchMeta.match_mids, { mid });
 }
+
+// 赛事列表容器滚动事件
+const handler_match_container_scroll = lodash.debounce(($ev) => {
+  const scrollTop = $ev.target.scrollTop
+  if (scrollTop === 0 || (prev_scroll.value === 0 &&  Math.abs(scrollTop) >= 500) || Math.abs(scrollTop - prev_scroll.value) >= 500) {
+    prev_scroll.value = scrollTop
+    MatchMeta.compute_page_render_list($ev.target.scrollTop, 2)
+    get_match_base_hps()
+  }
+}, 100)
+
+// 获取赔率
+const get_match_base_hps = lodash.debounce(() => {
+  MatchMeta.get_match_base_hps_by_mids()
+  clearTimeout(scroll_timer.value)
+  scroll_timer.value = null
+}, 600)
+
 
 /**
  * @description: 页面滚动事件处理函数
@@ -142,28 +165,34 @@ const get_is_show_footer_animate = () => {
 const goto_top = () => {
   RouterScroll.scroll_list_wrapper_by(0);
 }
+
+const get_is_static = () => {
+  return is_kemp.value || is_results.value
+}
 // 计算每个赛事id 对应的 容器高度 top 值
 const get_match_top_by_mid = (mid) => {
   let r = 0;
-  if (mid in store_state.matchReducer.match_top_map_dict) {
-    r = store_state.matchReducer.match_top_map_dict[mid];
+  if (mid in VirtualList.mid_top_map) {
+    r = VirtualList.mid_top_map[mid];
     r = +r.toFixed(6);
   }
   return r;
 }
 
-watch(() => props.is_goto_top_random, () => {
-  //回到顶部
-  goto_top();
-})
-// ...mapGetters([
-//   'store_state.matchReducer.list_scroll_top',
-// ]),
+const get_match_top_by_mid1 = (mid) => {
+  const key = VirtualList.get_match_height_key(mid)
+  let r = 0;
+  if (key in VirtualList.mid_top_map) {
+    r = VirtualList.mid_top_map[key].toFixed(6);
+  }
+  return r / 100;
+}
+
 // 设置是否快速滚动显示骨架屏背景
 const set_ishigh_scrolling = computed(() => {
   // 滚动过程中，是否显示  骨架屏背景图片
   let flag = false;
-  if (is_detail.vlaue || (MatchMeta.match_mids && MatchMeta.match_mids <= 0)) {
+  if (is_detail.vlaue || (match_mids.value && match_mids.value <= 0)) {
     flag = false;
   } else {
     flag = get_to_bottom_space > 350 && !is_kemp.value
@@ -209,7 +238,8 @@ onUnmounted(() => {
 <style lang="scss" scoped>
 .scroll-wrapper {
   width: 100%;
-  height: auto;
+  height: 100%;
+  overflow-y: auto;
   background-color: #f5f5f5;
   &.data-get-empty {
     min-height: 0 !important;
@@ -218,7 +248,7 @@ onUnmounted(() => {
   }
   .scroll-i-con {
     width: 100%;
-    height: auto;
+    height: 10000px;
     position: relative;
     background-repeat: repeat-y;
     &.high_scrolling {

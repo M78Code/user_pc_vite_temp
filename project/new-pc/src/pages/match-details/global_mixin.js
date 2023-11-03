@@ -59,9 +59,9 @@ export const useGetGlobal = ({ details_params, back_to }) => {
    */
   const mx_autoset_active_match = (params = { mid: 0 }) => {
     console.log(1111111111111111, menu_config);
-    let { name: route_name, params: cur_parmas } = route;
+    let { name: route_name, params: cur_params } = route;
     let return_status =
-      (route_name === "video" && [3, 4, 5].includes(+cur_parmas.play_type)) ||
+      (route_name === "video" && [3, 4, 5].includes(+cur_params.play_type)) ||
       (route_name === "details" &&
         ["studio", "topic", "anchor"].includes(play_media.value.media_type)) ||
       menu_config.is_esports();

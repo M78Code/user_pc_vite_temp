@@ -8,9 +8,9 @@
         'sport_title',
         'play_title',
         'no_start_title',
-      ].includes(card_style_obj.card_type),
+      ].includes(card_style_obj?.card_type),
     }"
-    :style="`height:${card_style_obj.card_total_height}px  !important;width:${
+    :style="`height:${card_style_obj?.card_total_height}px  !important;width:${
       LayOutMain_pc.layout_content_width - 15
     }px  !important;${card_style}`"
   >
@@ -23,7 +23,7 @@
       <play-match-type
         v-if="
           ['sport_title', 'play_title', 'no_start_title'].includes(
-            card_style_obj.card_type
+            card_style_obj?.card_type
           )
         "
         :card_style_obj="card_style_obj"
@@ -31,18 +31,18 @@
       <!-- 联赛标题 -->
       <play-match-league
         v-else-if="
-          card_style_obj.card_type == 'league_title' && card_style_obj.mid
+          card_style_obj?.card_type == 'league_title' && card_style_obj?.mid
         "
         :card_style_obj="card_style_obj"
-        :key="card_style_obj.card_type"
+        :key="card_style_obj?.card_type"
       />
       <!-- 冠军联赛标题 -->
       <match-type-champion
-        v-else-if="card_style_obj.card_type == 'champion_league_title'"
+        v-else-if="card_style_obj?.card_type == 'champion_league_title'"
         :card_style_obj="card_style_obj"
       />
       <!-- 暂无数据 -->
-      <div class="fit" v-else-if="card_style_obj.card_type == 'no_data'">
+      <div class="fit" v-else-if="card_style_obj?.card_type == 'no_data'">
         <load-data style="max-height: 260px" state="empty" />
         <!-- 强力推荐 -->
         <div class="row">
@@ -51,7 +51,7 @@
         </div>
       </div>
       <!-- 赛事卡片 -->
-      <template v-else-if="card_style_obj.card_type == 'league_container'">
+      <template v-else-if="card_style_obj?.card_type == 'league_container'">
         <!-- 数据加载状态 -->
         <!-- 赛事列表 -->
                
@@ -127,8 +127,8 @@ const card_style = computed(() => {
  */
 const mids_arr = computed(() => {
   let mids_arr = [];
-  if (card_style_obj.card_type == "league_container") {
-    mids_arr = card_style_obj.mids.split(",");
+  if (card_style_obj?.card_type == "league_container") {
+    mids_arr = card_style_obj?.mids.split(",");
     return mids_arr;
   }
   return mids_arr;

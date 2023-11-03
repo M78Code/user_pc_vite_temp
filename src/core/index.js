@@ -31,7 +31,6 @@ import {
 } from "src/core/mitt/index.js";
 import uid from "src/core/uuid/index.js";
 import SearchData from "src/core/search-class/search-data-class.js";
-import VrSportCtr from "src/core/vr-sport/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import MatchDetailCtr from "src/core/match-detail/match-detail-class.js";
 import MatchListDetailMiddleware from "src/core/match-detail/match-detail-h5/match-list-detail-h5/index.js";
@@ -61,8 +60,13 @@ import MenuData_H5 from "src/core/menu-h5/menu-data-class.js";
 import MatchListCard_H5 from "src/core/match-list-h5/match-card/match-list-card-class.js";
 import MatchListCardData_H5 from "src/core/match-list-h5/match-card/module/match-list-card-data-class.js";
 
+import MenuData_App_h5 from "src/core/menu-app-h5/menu-data-class.js";
+
  
-const MenuData = IS_PC ? MenuData_PC : MenuData_H5;
+let MenuData = IS_PC ? MenuData_PC : MenuData_H5;
+if(PROJECT_NAME == 'app-h5'){
+  MenuData = MenuData_App_h5
+}
 const MatchListCard = IS_PC ? MatchListCard_PC : MatchListCard_H5;
 const MatchListCardData = IS_PC ? MatchListCardData_PC : MatchListCardData_H5;
 
@@ -212,6 +216,7 @@ export * from "src/core/server-img/";
  *
  */
 import ServerTime from './server-time/server-time'
+
 export {
   //
   http,
@@ -233,7 +238,6 @@ export {
   MITT_TYPES,
   uid,
   SearchData,
-  VrSportCtr,
   MatchDetailCtr,
   MatchDetailCalss,
   UserCtr,

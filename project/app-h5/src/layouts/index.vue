@@ -13,14 +13,9 @@
           <setMenu />
         </template>
       </MenuWapper> -->
-
       <!-- 当路由为盘口教程时 不展示topMenu 和 scrollMenu -->
-      <template v-if="['matchList', 'sport_menu'].includes(route.name)">
-        <TopMenu />
-        <ScrollMenu />
-      </template>
+      <layoutTop />
       
-      <Tab />
       <router-view />
       <BetBoxWapper />
       <!--页脚-->
@@ -28,18 +23,21 @@
       </Tabbar>
 
       <!-- 筛选+搜索   已脱离文档流-->
-      <div v-if="select_dialog" position="bottom" class="select-mask" :style="`height:${inner_height}px`">
+      <!-- <div v-if="select_dialog" position="bottom" class="select-mask" :style="`height:${inner_height}px`">
         <div style="height:100%;width: 100%" @click="select_dialog = false" />
+        <setect-league @closedHandle="select_dialog = false"></setect-league>
+      </div> -->
+
+      <div v-if="setting_dialog" position="bottom" class="select-mask" :style="`height:${inner_height}px`">
+        <div style="height:100%;width: 100%" @click="setting_dialog = false"></div>
         <!-- 筛选弹窗 -->
-        <select-dia />
+        <setting-filter @closedHandle="setting_dialog = false"></setting-filter>
       </div>
 
       <!-- 投注记录弹层 -->
-      <div v-if="record_show" :class="settle_dialog_bool && 'shadow-box2'" class="shadow-box"
-        @click="change_settle_status(false)" @touchmove.prevent></div>
+      <div v-if="record_show" :class="settle_dialog_bool && 'shadow-box2'" class="shadow-box" @click="change_settle_status(false)" @touchmove.prevent></div>
       <!-- 投注记录弹框（已结算+未结算） -->
-      <div class="bet-record-box" v-if="record_show" :class="settle_dialog_bool && 'bet-record-box2'"
-        :style="{ bottom: calc_bottom }">
+      <div class="bet-record-box" v-if="record_show" :class="settle_dialog_bool && 'bet-record-box2'" :style="{ bottom: calc_bottom }">
         <!-- 结算弹窗 -->
         <settle-dialog></settle-dialog>
       </div>
@@ -62,18 +60,22 @@ import {
   defineAsyncComponent,
   nextTick,
 } from "vue";
-import { useMittOn, MITT_TYPES, i18n_t, UserCtr } from "src/core/";
+import { useMittOn, MITT_TYPES, i18n_t, UserCtr,MenuData } from "src/core/";
 // import { FooterWapper } from "src/components/footer/index.js";
-import { TopMenu,Tabbar,ScrollMenu,Tab } from 'src/base-h5/components/menu/app-h5-menu/index'
+import { Tabbar } from 'src/base-h5/components/menu/app-h5-menu/index'
 import { MenuWapper } from "src/base-h5/components/menu";
 import { BetBoxWapper } from "src/base-h5/components/bet";
 import activityIcon from "src/base-h5/components/common/activity-icon.vue"; // 设置
 import setMenu from "src/base-h5/components/common/set-menu.vue"; // 设置
 import selectDia from "src/base-h5/components/match-list/components/select-dia.vue"
+import settingFilter from 'src/base-h5/components/setting-filter/index.vue'
+// import setectLeague from 'src/base-h5/components/setect-league/index.vue'
+import layoutTop from "./top.vue"
 import { useRoute } from "vue-router";
 import store from "src/store-redux/index.js";
 import { api_common } from "src/api/index.js";
 import PageSourceData from "src/core/page-source/page-source.js";
+import BetRecordClass from "src/core/bet-record/bet-record.js";
 // 活动弹出框
 const activityLayer = defineAsyncComponent(() => import("src/base-h5/components/common/activity-layer.vue"))
 const settleDialog = defineAsyncComponent(() =>
@@ -91,7 +93,6 @@ import BetData from "src/core/bet/class/bet-data-class.js";// project/yazhou-h5/
 // import layoutConent from "./layout-content.vue";
 
 import "./index.scss"
-
 const inner_height = window.innerHeight;  // 视口高度
 const { footerMenuReducer } = store.getState();
 const route = useRoute();
@@ -99,14 +100,14 @@ const get_accept_show = ref(false); // 接受更好赔率变化 弹窗
 const get_combine_tips_show = ref(false); // 合并投注项提示弹框 弹窗
 const record_show = ref(false);
 const lastTouchEnd = ref(0);
-const select_dialog = ref(false)//暂时筛选窗口
+// const select_dialog = ref(false)//暂时筛选窗口
+const setting_dialog = ref(false)//暂时筛选窗口
 const activity_status = ref(false)//首页活动弹框
 const activity_layerimg = ref("") //首页活动图
 const userBannerTimer = ref(5);
 const timer_3 = ref(null);
 // 开启注单历史弹窗及遮罩
-const settle_dialog_bool = ref('');
-
+const settle_dialog_bool = ref(true);
 // let unsubscribe = store.subscribe(() => {
 //   const { footerMenuReducer: new_footer_menu_reducer } = store.getState();
 //   settle_dialog_bool.value = new_footer_menu_reducer.settle_dialog_bool;
@@ -115,6 +116,7 @@ const settle_dialog_bool = ref('');
 const toggleLeftDrawer = () => {
   leftDrawerOpen.value = !leftDrawerOpen.value;
 };
+
 
 // useMittOn(MITT_TYPES["change_accept"], (e) => {
 //   get_accept_show.value = e
@@ -204,19 +206,29 @@ onMounted(() => {
   init_local_server_time()
   // 开启注单历史弹窗
   useMittOn(MITT_TYPES.EMIT_CHANGE_RECORD_SHOW, (val) => {
-    // record_show.value = val
-    change_settle_status(val);
+    // footer中点击，传过来的是对象，根据settle值确定显示未结注单还是已结注单
+    if(typeof(val) === 'object') {
+      const num = val.settle ? 3 : 0;
+      BetRecordClass.set_selected(num);
+    }
+    change_settle_status(Boolean(val));
   });
   // 设置设备类型
   BetData.set_device_type(1)
 });
 const mitt_list = [
-  // 监听搜索框状态
-  useMittOn(MITT_TYPES.EMIT_CHANGE_SELECT_DIALOG, function (value) {
+  // 监听设置框状态
+  useMittOn(MITT_TYPES.EMIT_CHANGE_SETTING_SHOW, function (value) {
     // this.select_cleck = type
     //   this.select_dialog = val
-    select_dialog.value = value
+    setting_dialog.value = value
   }).off,
+  // 监听搜索框状态
+  // useMittOn(MITT_TYPES.EMIT_CHANGE_SELECT_DIALOG, function (value) {
+  //   // this.select_cleck = type
+  //   //   this.select_dialog = val
+  //   select_dialog.value = value
+  // }).off,
   //首页活动弹框
   useMittOn(MITT_TYPES.EMIT_INDEX_ACTIVITY_STATUS, function (imgUrl) {
     if (route.name == 'home' && imgUrl) {
@@ -310,7 +322,7 @@ if (UserCtr.get_user_token()) {
   /* ************** 悬浮按钮 ************** -E */
   /* **********注单记录********************* *-S*/
   .shadow-box {
-    background-color: rgba(0, 0, 0, 0.3); //var(--q-color-page-bg-color-4);
+    background-color: rgba(0, 0, 0, 1); //var(--q-color-page-bg-color-4);
     opacity: 0;
     transition: opacity 0.3s;
     backdrop-filter: var(--q-color-backdrop-filter-bg-1);
@@ -337,11 +349,11 @@ if (UserCtr.get_user_token()) {
 
   /* **********注单记录********************* *-S*/
   .bet-record-box {
-    width: 100%;
+    width: 80%;
     max-width: 7.7rem !important;
     transition: bottom 0.3s;
     position: fixed;
-    left: 0;
+    left: 10%;
     z-index: 600;
   }
 

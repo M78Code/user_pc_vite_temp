@@ -4,12 +4,11 @@
   opacity: 1;
   width: 100%;
   height: 100%;
-  overflow-x: hidden;
-  overflow-y: auto;
+  overflow-y: hidden;
   position: relative;
   transition: transform 0.2s;
   // padding-top: 1rem;
-  padding-bottom: 0.55rem;
+  // padding-bottom: 2.2rem;
   /*border-top: 0.01rem solid transparent;*/
   background: var(--q-gb-bg-c-17);
   .animation{
@@ -44,14 +43,14 @@
   }
 
   &.zaopan {
-    padding-top:1.3rem;
+    // padding-top:1.3rem;
   }
   // &.esport {
   //   padding-top: 1.4rem;
   // }
 
   &.guanjun {
-    padding-top: 1.1rem;
+    // padding-top: 1.1rem;
   }
 
   &.level_four_menu {

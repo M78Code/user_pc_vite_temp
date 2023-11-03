@@ -4,7 +4,7 @@
 <template>
   <div class="combine-tips fullscreen" @click.self="show_hebing_alert" @touchmove.prevent>
     <div class="main-box fixed-center text-center">
-      <header class="text-bold yb_fontsize16">合并投注项</header>
+      <header class="text-bold yb_fontsize16">{{ i18n_t('tips.msg1') }}</header>
       <p class="text-left yb_fontsize14"></p>
       <footer class="yb_fontsize16"><span class="padding10" @click.self="show_hebing_alert"></span></footer>
     </div>

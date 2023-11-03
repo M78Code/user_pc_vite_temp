@@ -20,7 +20,7 @@ const  final_assets_config  = await import_json_data("./output/assets/config.jso
 
 // 本次打包的 客户端版本
 import BUILD_VERSION_CONFIG from "./output/version/build-version.js";
-const {BUILD_VERSION ,PROJECT_NAME} = BUILD_VERSION_CONFIG;
+const {BUILD_VERSION ,PROJECT_NAME ,IS_DEV} = BUILD_VERSION_CONFIG;
  
 console.log(colors.bgRed("export-assets-config.js----------resolve_merchant_config_assets  ----"));
 // 商户配置 输出目录
@@ -42,6 +42,18 @@ for(let theme_key in  final_assets_config){
   let  theme_value= final_assets_config[theme_key]
   for(let assets_key  in theme_value ){
     let url =theme_value[assets_key]
+
+ //因为加白问题 ，打包构建和 本地开发拉取资源使用不同域名
+      if(url.startsWith('/')){
+        // url = `http://assets-image.oceasfe.com${url}`
+        if(IS_DEV){
+          url = `http://assets-image.oceasfe.com${url}`
+        }else{
+          url = `https://assets-image.sportxxxw1box.com${url}`
+        }
+ 
+      }
+     
     if(url){
       try {
         const filename = url.split("/").pop();//文件名称

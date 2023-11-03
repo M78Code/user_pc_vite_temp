@@ -12,7 +12,7 @@
       @tab_click="tab_click"
       ref="head-tab"
       class="football-tab-header"
-    ></head-tab>
+    ></head-tab>{{currentContent}}
     <!-- 顶部切换 下边的内容组件 -->
     <component :is="currentContent" :detail_data="detail_data" />
   </div>

@@ -5,13 +5,13 @@
   overflow-y: auto;
   overflow-x: hidden;
   .details-f {
-    background-color: #f5f5f5; // var(--q-detials-color-8)
+    background-color: var(--q-gb-bg-c-19); // var(--q-detials-color-8)
     :deep(.transition-zhiding) {
       .play-name-outer-wrapper {
         .play-name {
-          background-image: linear-gradient(180deg, #ffffff 22.04%, #f7f8ff 100%);
+          // background-image: linear-gradient(180deg, #ffffff 22.04%, #f7f8ff 100%);
           &::after {
-            border: 1px solid #cfcfcf ;
+            border: none !important;
           }
         }
       }
@@ -26,7 +26,7 @@
     &.text-active-tab {
       .q-tab__label {
         font-weight: bolder;
-        color: var(--q-detials-color-6);
+        color: var(--q-gb-t-c-1);
       }
     }
 

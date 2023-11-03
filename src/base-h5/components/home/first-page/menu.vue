@@ -29,7 +29,7 @@
                 <span class="match-type">{{ item.name || MenuData.get_menus_i18n_map(item.mi) }}</span>
                 <span class="match-num ellipsis">{{ item.ct || 0 }}</span>
                 <span class="match-label ellipsis-2-lines">{{
-                  $t("home.can_bet")
+                  i18n_t("home.can_bet")
                 }}</span>
               </div>
             </div>
@@ -43,7 +43,7 @@
 </template>
 <script setup>
 import { watch, ref, onMounted } from "vue";
-import { useMittOn, MITT_TYPES } from "src/core/";
+import { useMittOn, MITT_TYPES, i18n_t } from "src/core/index.js";
 // 无网络展示组件
 import no_data from "src/base-h5/components/common/no-data.vue";
 import { MenuData, UserCtr, compute_css_obj } from "src/core/";
@@ -218,7 +218,7 @@ const to_list = (item, index) => {
       },
     });
   } else {
-    $toast(t("home.match_no_has"), 800);
+    $toast(i18n_t("home.match_no_has"), 800);
   }
   return;
 };

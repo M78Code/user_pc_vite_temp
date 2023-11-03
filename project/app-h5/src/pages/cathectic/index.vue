@@ -4,36 +4,37 @@
  * @Description: bw3新版从底部弹出的投注记录弹框（已结算+未结算+预约）
 -->
 <template>
+    <div style="display: none;">{{ BetRecordClass.bet_record_version }}</div>
     <div class="settle-dialog" :style="page_style">
-      <div class="row items-center yb_fontsize16 head-top" @touchmove.prevent>
+      <div v-if="BetRecordClass.selected != 3" class="row items-center yb_fontsize16 head-top" @touchmove.prevent>
         <div class="row col items-center justify-center">
-          <p @click="change_record(0)" :class="main_item == 0 && 'active-p'">
-            {{ i18n_t('bet_record.no_account') }}</p>
-          <p @click="change_record(1)" :class="main_item == 1 && 'active-p'">
-            {{ i18n_t('bet_record.account') }}</p>
-          <p @click="change_record(2)" :class="main_item == 2 && 'active-p'">
-            {{ i18n_t('pre_record.book') }}</p>
+          <p v-for="(item, index) in tabs.slice(0, 3)" 
+            :key="index" 
+            @click="change_record(index)" 
+            :class="BetRecordClass.selected == index && 'active-p'"
+            > {{ item.title }}
+          </p>
         </div>
       </div>
   
       <div class="content-m" ref="record_box">
-        <!--未结算  -->
-        <unsettle ref="unsettle_child" v-show="main_item == '0'" :main_item="main_item"></unsettle>      
-        <!--已结算-->
-        <settle v-show="main_item == '1'" :main_item="main_item"></settle>
-        <!--预约-->
-        <preRecord v-show="main_item == '2'" :main_item="main_item"></preRecord>
+        <!-- 未结注单(未结算、预约中、已失效)、已结算注单 -->
+        <cathectic-item-all />
+        <!-- <component :is="tabs[BetRecordClass.selected].componentName"></component> -->
       </div>
     </div>
   </template>
   
   <script setup>
+  import BetRecordClass from "src/core/bet-record/bet-record.js";
   import { api_betting } from "src/api/index.js";
   //   import { mapGetters, mapMutations } from "vuex"
+  import cathecticItemAll from "src/base-h5/components/cathectic/app-h5/cathectic-item-all.vue"
   import unsettle from "src/base-h5/components/cathectic/app-h5/unsettle.vue"
   import settle from "src/base-h5/components/cathectic/app-h5/settle.vue"
   import preRecord from "src/base-h5/components/cathectic/app-h5/pre-record.vue"
-  import { onMounted, onUnmounted, ref, computed, provide, watch, nextTick } from 'vue'
+  import invalid from "src/base-h5/components/cathectic/app-h5/invalid.vue"
+  import { onMounted, onUnmounted, ref, shallowRef, computed, provide, watch, nextTick } from 'vue'
   import lodash from 'lodash'
   import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
   import store from 'src/store-redux/index.js'
@@ -47,13 +48,18 @@
   
   // 待确认中的提前结算订单
   provide('queryorderpresettleconfirm_data', '')
-  
+
   // 延时器
   const timer_1 = ref(null)
   // 待确认中的提前结算单
   const provided_ = ref({})
-  // 选中tab的下标
-  const main_item = ref('0')
+
+  const tabs = ref([
+    { title: i18n_t('bet_record.no_account'), componentName: shallowRef(unsettle) },
+    { title: i18n_t('pre_record.booking'), componentName: shallowRef(preRecord) },
+    { title: i18n_t('pre_record.expired'), componentName: shallowRef(invalid) },
+    { title: i18n_t('bet_record.account'), componentName: shallowRef(settle) }
+  ])
   // 锚点
   const unsettle_child = ref(null)
   const record_box = ref(null)
@@ -93,11 +99,11 @@
         provided_.value = { queryorderpresettleconfirm_data: data }
       }
       // 弹窗显示接口获取列表后延迟
-        timer_1.value = setTimeout(() => {
-        let el = unsettle_child.value
-        el.check_early_order()
-        el.search_early_money()
-      }, 800);    
+      // timer_1.value = setTimeout(() => {
+      //   let el = unsettle_child.value
+      //   el.check_early_order()
+      //   el.search_early_money()
+      // }, 800);    
     })
   })
   //   ...mapMutations(['set_main_item']),
@@ -108,7 +114,9 @@
   const height_calc = () => {
     let ele = record_box.value
     if (!ele) return
-    let rem_1 = window.innerWidth * 100 / 375;
+    // 未结算页面不显示切换栏，所以高度可以高些
+    const baseHeight = BetRecordClass.selected === 3 ? 700: 375
+    let rem_1 = window.innerWidth * 100 / baseHeight;
     ele.style['height'] = window.innerHeight - rem_1 + 'px';
   }
   
@@ -121,10 +129,8 @@
   }
   const change_record = (key) => {
     //已选中状态下不能点击
-    if (main_item.value === key) return;
-    main_item.value = key
-    store.dispatch({ type: "SET_MAIN_ITEM", data: key })
-  
+    if (BetRecordClass.selected === key) return;
+    BetRecordClass.set_selected(key);  
   }
   // 清除当前组件所有定时器
   const clear_timer = () => {
@@ -140,6 +146,9 @@
   </script>
   
   <style lang="scss" scoped>
+  template {
+    display: block;
+  }
   .settle-dialog {
     position: relative;
     overflow: hidden;   
@@ -166,8 +175,8 @@
       line-height: 0.34rem;
       width: 30%;
       &.active-p {
-        background: var(--q-cathectic-color-6);
-        color: var(--q-gb-t-c-14);
+        background: var(--q-gb-bg-c-9);
+        color: var(--q-gb-bg-c-15);
       }
     }
   }

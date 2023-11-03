@@ -15,6 +15,8 @@ class BetData {
     this.cur_odd = "eu";
     // 投注项id集合
     // this.bet_list = [];
+     // 是否预约
+    this.is_bet_pre = false
     //是否接受更好赔率
     this.bet_is_accept = false;
     // 接受更好赔率规则
@@ -112,9 +114,6 @@ class BetData {
     };
 
     //==============================================投注之后 有注单ID=============
-
-    // 投注后的 
-    this.orderNo_bet_obj = []
     ///////////////////
 
     // 当前电竞查询的模式 false单关模式
@@ -130,6 +129,8 @@ class BetData {
     this.bet_appoint_obj = {};
     // 预约投注项id 投注项中可以预约的
     this.bet_pre_list = []
+    // 预约投注数据 点击投注时 合并到投注项中的内容
+    this.bet_pre_obj = {}
     //需要预约的盘口
     /* this bet_appoint_odds_value= null;
 this.bet_appoint_ball_head= null */
@@ -312,7 +313,6 @@ this.bet_appoint_ball_head= null */
     // 设置 投注内容
     this.bet_read_write_refer_obj[custom_id] = bet_refer_obj
 
-
     // 单关/串关 投注
     if (this.is_bet_single) {
       // 单关 不合并 只有一条 
@@ -428,6 +428,12 @@ this.bet_appoint_ball_head= null */
     this.bet_pre_list = val
     this.set_bet_data_class_version()
   }
+
+  // 设置预约投注项内容 用于投注时合并
+  set_bet_pre_obj(val){
+    // custom_id 投注项id
+    this.bet_pre_obj[val.custom_id] = val
+  }
   
   // 设置 是否已投注
   set_bet_flag() {
@@ -471,7 +477,7 @@ this.bet_appoint_ball_head= null */
   // 设置 投注版本
   set_bet_data_class_version = lodash_.debounce(() => {
     this.bet_data_class_version.value = Date.now()
-  }, 50)
+  }, 5)
 
   // 投注成功后 不保留投注项 需要清空投注数据 
   set_clear_bet_info() {
@@ -479,6 +485,7 @@ this.bet_appoint_ball_head= null */
     this.single_list_copy = []
     this.bet_single_list = []
     this.bet_read_write_refer_obj = {}
+    this.set_bet_amount(0)
     this.set_bet_data_class_version()
   }
 
@@ -659,11 +666,12 @@ this.bet_appoint_ball_head= null */
     this.deviceType = val
   }
 
-  // 投注后的数据
-  set_orderNo_bet_obj(array) {
-    this.orderNo_bet_obj = array
+  // 设置是否预约
+  set_is_bet_pre() {
+    this.is_bet_pre = !this.is_bet_pre
     this.set_bet_data_class_version()
   }
+
    //设置输入框最小值
   set_pre_min_odd_value(val){
     this.bet_pre_min_odd_value = val

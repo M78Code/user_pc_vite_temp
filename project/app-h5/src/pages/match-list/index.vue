@@ -4,8 +4,6 @@
 <template>
   <!--赛事列表-->
   <div class="match-list-page"
-    ref="match_list_page" 
-    @scroll="wrapper_scroll_handler" 
     :class="{
       guanjun: is_kemp,
       jingzu: is_jinzu,

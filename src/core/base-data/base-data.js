@@ -6,6 +6,8 @@
 import { i18n_t, i18n } from "src/boot/i18n.js";
 import { ref } from "vue";
 import { dianjing_sublist } from "src/core/constant/config/csid.js"
+import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
+const { PROJECT_NAME } = BUILD_VERSION_CONFIG;
 
 //   约定 四个 值
 
@@ -39,6 +41,7 @@ import {
   useMittEmitterGenerator,
   MITT_TYPES,
 } from "src/core/index.js"
+import { MenuData } from "src/core/";
 
 class BaseData {
   constructor() {
@@ -215,7 +218,6 @@ class BaseData {
     // let user_info = lodash_.get(res,'data.data',{})
     // let user_info = lodash_.get(res,'data.data',{})
     let user_info = userCtr.get_user_info_data()
-    console.error('user_info', user_info);
     if (user_info && Object.keys(user_info).length) {
       // let old_user = JSON.stringify(store.getters.get_user)
       // let new_user = JSON.stringify(user_info)
@@ -372,6 +374,11 @@ class BaseData {
     // 设置新菜单
     this.set_left_menu_init(menu_old_or_nem_data_list);
 
+    // app-h5使用
+    if(PROJECT_NAME == 'app-h5'){
+      MenuData.set_init_menu_list()
+    }
+
     // 计算   冠军 数据  对象形式   commn_sport_guanjun_obj
     // 计算虚拟体育 的 数据对象
     // this.set_vr_mi_config()
@@ -415,7 +422,6 @@ class BaseData {
           esport_menu.push(obj);
         }
       });
-      console.error(' this.esport_menu', left_menu)
       // 重置默认数据
       this.left_menu_base_mi_arr = left_menu;
 
@@ -466,6 +472,7 @@ class BaseData {
       // 更新版本
       this.base_data_version.value = Date.now();
     }
+    console.error('this',this)
   }
 
   /**
@@ -953,11 +960,11 @@ class BaseData {
     // this.is_mi_300_open = res_2.includes("false");
 
     this.base_data_version.value = Date.now();
-    console.warn(
-      "用户数据解析完成----------电竞--",
-      this.is_mi_300_open_int,
-      "--vr--" + this.is_mi_2000_open_int
-    );
+    // console.warn(
+    //   "用户数据解析完成----------电竞--",
+    //   this.is_mi_300_open_int,
+    //   "--vr--" + this.is_mi_2000_open_int
+    // );
   }
 }
 

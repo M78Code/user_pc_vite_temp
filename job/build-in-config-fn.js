@@ -5,7 +5,7 @@
  */
 // 本次打包的 客户端版本
 import BUILD_VERSION_CONFIG from "./output/version/build-version.js";
- const {BUILD_VERSION ,IS_PROD ,NODE_ENV} = BUILD_VERSION_CONFIG
+ const {BUILD_VERSION ,IS_PROD ,NODE_ENV } = BUILD_VERSION_CONFIG
 import { compute_build_in_oss_by_current_env  } from "./build-in-oss.js";
 import { htmlVariables } from "./html-variables.js";
 import {compute_oss_file_path_arr} from "./copy-oss.js"

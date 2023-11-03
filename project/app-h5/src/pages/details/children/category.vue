@@ -72,7 +72,7 @@
 <script>
 // #TODO vuex
 // import { mapGetters, mapMutations } from "vuex"
-import tournament_play_new from "src/base-h5/components/details/components/tournament-play/tournament-play-new.vue"
+
 // 引入接口封装文件
 import { api_common, api_analysis} from 'src/api/index.js'
 // 引入国际化
@@ -98,6 +98,7 @@ import { useMittOn, useMittEmit, MITT_TYPES,compute_local_project_file_path } fr
 // import { Level_one_detail_odd_info } from "../category-list.js";
 import { category_info } from "./category.js"
 import { reactive, nextTick, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
+import tournament_play_new from "src/base-h5/components/details/components/tournament-play/tournament-play-new-2.vue";
 export default defineComponent({
   name: "category",
   // #TODO mixins
@@ -152,7 +153,6 @@ export default defineComponent({
       () => route.params,
       (to, from) => {
         // 1. 非赛果页 且 不是通过搜索进入 2.搜索进入且已切换过玩法集
-        
         if (
             get_menu_type.value != 28 && !to.search_term && to.mid == from.mid
             || to.search_term && component_data.match_play_item_changed
@@ -208,7 +208,6 @@ export default defineComponent({
     );
     onMounted(() => {
       // #TODO 测试假数据
-
       // console.log("match_list_new", match_list_normal.value)
       // 原created
       // 满足刷新页面保持向上展开的状态
@@ -263,6 +262,21 @@ export default defineComponent({
         // component_data.matchInfoCtr.destroy()
       }
     })
+     /**
+   * @description:  //操作盘口逻辑
+   * @param {*} fewer  1 2 3
+   * @return {*}
+   */ 
+  const toggle_handicap =(fewer)=>{
+   if(fewer != 3 && Array.isArray( match_list_normal_data.value)){
+       match_list_normal_data.value.map((item)=>{
+          fewer == 1 ?  item.hshow =  'Yes':item.hshow = 'No'
+       })
+   }
+  }
+  //一键折叠盘口
+  const {off}  = useMittOn(MITT_TYPES.EMIT_DETAILS_TOGGLE_HANDICAP, toggle_handicap);
+  onUnmounted(off)
     return {
       ...toRefs(component_data),
       i18n_t,

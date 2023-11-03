@@ -140,7 +140,7 @@ const route = useRoute();
     get_betbar_show: true,
 
     get_is_hengping: false,
-    get_is_dp_video_full_screen: "get_is_dp_video_full_screen",// TODO: 待处理
+    get_is_dp_video_full_screen: false,// TODO: 待处理
     get_match_base_info_obj: "get_match_base_info_obj",// TODO: 待处理
     // 'get_analyze_show',
     // 'get_goto_detail_matchid',
@@ -187,7 +187,7 @@ const route = useRoute();
   });
   // mid 
   const matchid = computed(() => {
-    return state_data.detail_data.mid || route.params.mid;
+    return state_data.detail_data?.mid || route.params.mid || route.query.mid
   });
   // 当前tab
   const curr_active_tab = computed(() => {

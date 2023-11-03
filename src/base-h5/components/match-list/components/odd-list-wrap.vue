@@ -51,7 +51,7 @@
                 :key="ol_item_i" v-for="(ol_item,ol_item_i) in get_ol_list(hp_item_obj,hp_i_i)">
               <odd-column-item
                 :placeholder="ol_item.placeholder"
-                :n_s="get_newer_standard_edition"
+                :n_s="standard_edition"
                 :column_ceil="get_ol_length(hp_item_obj)"
                 :odd_item_i="ol_item_i"
                 :match="match"
@@ -69,11 +69,11 @@
         <div class="block" :class="{selected:standard_odd_status == 1}"></div>
       </div>
       <!--标准版 才有的样式  动态图方向箭头-->
-      <template v-if="UserCtr.theme.includes('night')">
+      <template v-if="theme.includes('night')">
         <i class="slide_icon slide_icon_l animate-effect" v-if="is_show_scroll_dir(0)"></i>
         <i class="slide_icon slide_icon_r animate-effect-r" v-if="is_show_scroll_dir(1)"></i>
       </template>
-      <template v-if="UserCtr.theme.includes('day')">
+      <template v-if="theme.includes('day')">
         <i class="slide_icon slide_icon_l animate-effect" v-if="is_show_scroll_dir(0)"></i>
         <i class="slide_icon slide_icon_r animate-effect-r" v-if="is_show_scroll_dir(1)"></i>
       </template>
@@ -84,12 +84,12 @@
       <div class="correct_style_title">
         <div>
           <span>{{match.mhn}}</span>
-          <span>{{ $t('football_playing_way.full_time_draw')}}</span>
+          <span>{{ i18n_t('football_playing_way.full_time_draw')}}</span>
           <span>{{match.man}}</span>
         </div>
         <div>
           <span>{{match.mhn}}</span>
-          <span>{{ $t('football_playing_way.half_time_draw')}}</span>
+          <span>{{ i18n_t('football_playing_way.half_time_draw')}}</span>
           <span>{{match.man}}</span>
         </div>
       </div>
@@ -104,7 +104,7 @@
             >
               <odd-column-item
                 :placeholder="ol_item.placeholder"
-                :n_s="get_newer_standard_edition"
+                :n_s="standard_edition"
                 :ol_list_item="ol_item"
                 :match="match"
                 :odd_field="hp_item"
@@ -130,7 +130,7 @@
       >
         <odd-column-item
           :placeholder="ol_item.placeholder"
-          :n_s="get_newer_standard_edition"
+          :n_s="standard_edition"
           :ol_list_item="ol_item"
           :match="match"
           :odd_field="five_minutes_all_list"
@@ -157,19 +157,17 @@
 import { ref, watch, computed, onMounted, onUnmounted } from "vue";
 import store from "src/store-redux/index.js"
 import lodash from 'lodash'
-import { i18n_t} from 'src/core/index.js'
+import { i18n_t } from 'src/core/index.js'
 import oddColumnItem from "./odd-column-item.vue";
 import { img1, img2, img3, img4, Y0_img_white } from 'src/base-h5/core/utils/local-image'
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { MenuData,compute_img_url ,UserCtr} from "src/core/index.js"
 import PageSourceData  from  "src/core/page-source/page-source.js";
-import { lang } from 'src/base-h5/mixin/userctr.js'
+import { lang, standard_edition, theme } from 'src/base-h5/mixin/userctr.js'
 
 const props = defineProps({
   // 赛事信息
   match: Object,
-  // 来源组件
-  main_source: String,
   invoke_source: String,
   // 当前选中的小节玩法
   current_tab_item: {
@@ -202,7 +200,6 @@ const show_lock_selected = ref(false);
 // 简版投注项选中时角球标志
 const index_show_map = ref({});
 const screen_changing_timer = ref(0);
-const get_newer_standard_edition = ref(PageSourceData.get_newer_standard_edition())
 
 const get_bet_list = ref(store_state.get_bet_list)
 const get_standard_odd_status = ref(store_state.get_standard_odd_status)
@@ -213,8 +210,6 @@ const unsubscribe = store.subscribe(() => {
   const new_state = store.getState()
   get_bet_list.value = new_state.get_bet_list
   get_standard_odd_status.value = new_state.get_standard_odd_status
-  // TODO:
-  // get_n_s_changed_loaded.value = new_state.get_n_s_changed_loaded
   get_secondary_unfold_map.value = new_state.get_secondary_unfold_map
 })
 
@@ -270,7 +265,7 @@ const minutes_of_the_Xth_goal = computed(() => {
 
 // 显示新手版
 const show_newer_edition = computed(() => {
-  return get_newer_standard_edition.value == 1 || props.main_source == "detail_match_list"
+  return standard_edition.value == 1 || PageSourceData.page_source == "detail_match_list"
 });
 
 
@@ -393,7 +388,7 @@ const ol_list = computed(() => {
   }
 
   // 赛果精选赛事
-  if (props.main_source == "detail_match_list") {
+  if (PageSourceData.page_source == "detail_match_list") {
     switch (sport_id) {
       case 5:
         sport_id_convert = 154;
@@ -828,7 +823,7 @@ const show_3_space = () => {
   if (MenuData.footer_sub_menu_id == 1) {
     r = [1, 4, 11, 16].includes(props.match.csid * 1);
   }
-  if (props.main_source == "detail_match_list") {
+  if (PageSourceData.page_source == "detail_match_list") {
     r = false;
   }
   return r;

@@ -1,0 +1,108 @@
+[class*=theme0] {
+  .group_knockout {
+    .tabs {
+      background: var(--q-color-page-bg-color-83);
+      > div {
+        color: var(--q-color-com-fs-color-19);
+        &.is-active {
+          background: var(--q-color-page-bg-color-55);
+          color:  var(--q-color-fs-color-135);
+        }
+      }
+    }
+    .q-carousel {
+      background: unset;
+    }
+  }
+  .elimination-rank {
+     background-color:var(--q-color-page-bg-color-45);
+    .tabs-bar {
+      > div {
+        color: var(--q-color-fs-color-58);
+        i {
+          background: var(--q-color-page-bg-color-40);
+        }
+        &.progress_bar {
+          color:var(--q-color-fs-color-135);
+          i {
+            background: var(--q-color-page-bg-color-73);
+          }
+        }
+      }
+    }
+    .match-item {
+      .right_side_win {
+        .left-line {
+          &:before {
+            border: 1px solid  var(--q-color-border-color-5);
+          }
+          &:after {
+            background-color:  var(--q-color-border-color-5);
+          }
+        }
+        /*  ���� */
+        .final {
+          color: var(--q-color-fs-color-119);
+          background-color: var(--q-color-page-bg-color-102);
+          &::after {
+            border-color: var(--q-color-border-color-5) !important;
+          }
+          .number {
+            color: var(--q-color-fs-color-140);
+          }
+        }
+      }
+      .team {
+        background-color: var(--q-color-page-bg-color-102);
+        color: var(--q-color-fs-color-119);
+        &::after {
+          border-color: var(--q-color-border-color-5) !important;
+        }
+        &:nth-child(2n) {
+          &::before {
+            border-color: var(--q-color-border-color-5) !important;
+          }
+          &:after {
+            background:  var(--q-color-page-bg-color-65);
+          }
+        }
+        .number {
+          color: var(--q-color-fs-color-140);
+        }
+        .name {
+          .ellipsis {
+            color: var(--q-color-fs-color-3);
+          }
+        }
+        .score {
+          color: var(--q-color-fs-color-3);
+        }
+      }
+    }
+    .main-finals {
+      .finals-team {
+        background: var(--q-color-page-bg-color-56);
+        &::after {
+          border-color: var(--q-color-border-color-5) !important;
+        }
+        span {
+          color: var(--q-color-fs-color-119);
+        }
+      }
+      .middle {
+        > span {
+          color: var(--q-color-fs-color-119);
+        }
+        &:after {
+          background: var(--q-color-com-bg-color-11);
+        }
+        &:before {
+          background: var(--q-color-com-bg-color-11);
+        }
+      }
+    }
+    .q-inner-loading {
+      background: var(--q-color-com-bg-color-12);
+    }
+  }
+}

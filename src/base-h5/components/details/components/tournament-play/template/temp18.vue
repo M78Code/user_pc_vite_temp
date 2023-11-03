@@ -233,7 +233,8 @@ export default defineComponent({
       get_bet_list,
       get_cur_odd,
       get_detail_data,
-      go_to_bet
+      go_to_bet,
+      LOCAL_PROJECT_FILE_PREFIX
     }
   }
 })

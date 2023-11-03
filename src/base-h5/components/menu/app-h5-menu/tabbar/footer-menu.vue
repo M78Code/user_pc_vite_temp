@@ -362,21 +362,17 @@ const menu_item_click = (item, i) => {
   }
   //注单
   else if (item.id === 2) {
-    useMittEmit(MITT_TYPES.EMIT_CHANGE_RECORD_SHOW, true);
+    // 派发首页设置菜单展开事件
+    useMittEmit(MITT_TYPES.EMIT_CHANGE_SETTING_SHOW, {
+      open: true,
+    });
   }
   //筛选
   else if (item.id === 3) {
-    if (
-      !GlobalAccessConfig.get_filterSwitch() &&
-      !GlobalAccessConfig.get_searchSwitch()
-    ) {
-      $toast(i18n_t(`common.temporarily_unavailable`), 2000);
-      return;
-    }
-    //TODO
-    // 监听搜索框状态
-    useMittEmit(MITT_TYPES.EMIT_CHANGE_SELECT_DIALOG, true)
-    // set_show_match_filter(true);
+    useMittEmit(MITT_TYPES.EMIT_CHANGE_RECORD_SHOW, {
+      open: true,
+      settle: item.settle
+    });
   }
   //刷新
   else if (item.id === 4) {
@@ -505,6 +501,7 @@ const set_footer_menulist = (init_footer_menulist_data = true) => {
           is_saiguo_gz ||
           show_favorite_list.value ||
           is_electronicSports,
+        settle: false
       },
       //已结注单
       {
@@ -517,6 +514,7 @@ const set_footer_menulist = (init_footer_menulist_data = true) => {
           is_saiguo_gz ||
           show_favorite_list.value ||
           is_electronicSports,
+        settle: true
       },
       // 刷新
       {

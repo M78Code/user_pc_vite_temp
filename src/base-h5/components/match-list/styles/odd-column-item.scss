@@ -90,6 +90,11 @@
       font-size: 0.12rem;
     }
   }
+  .fontbold{
+    font-weight: 600;
+    font-family: Akrobat;
+    font-size: 12px;
+  }
 
   .odd-title {
     word-break: break-all;
@@ -101,6 +106,7 @@
     &.standard {
       margin-bottom: 0.03rem;
       font-size: 0.12rem;
+    
     }
 
     &.three {

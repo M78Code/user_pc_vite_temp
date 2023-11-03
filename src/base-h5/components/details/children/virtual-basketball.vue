@@ -48,10 +48,10 @@
 </template>
 
 <script>
-import { api_v_sports } from "src/project/api/index.js";
+import { api_virtual } from "src/api/index.js";
 // #TODO mixins
 // import common from 'src/project/mixins/constant/module/common.js';
-
+import { get_now_server } from 'src/core/utils/module/other.js'
 import teamImg from "src/components/details/team-img/team-img-template-1/team-img.vue";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { t } from "src/boot/i18n.js";;
@@ -181,7 +181,7 @@ export default defineComponent({
       let params = {
         mids:current_match.mid
       }
-      api_v_sports.get_v_match_score_api(params).then( res => {
+      api_virtual.get_v_match_score_api(params).then( res => {
         let code = _.get(res,'code')
         let basketball_score = _.get(res,'data')
         if(code == 200 && basketball_score[current_match.mid]){
@@ -221,7 +221,7 @@ export default defineComponent({
         orderNo: current_match.orderNo,
         tid: current_match.tid
       }
-      api_v_sports.get_virtual_video_process(params).then(res => {
+      api_virtual.get_virtual_video_process(params).then(res => {
         if(_.get(res,'code') == 200){
           let score_list = _.get(res,`data.detail.${current_match.mid}.list`) || []
           if(score_list.length > 0){

@@ -20,8 +20,23 @@ function get_date_format() {
 }
 //服务器端 配置文件 路径 
 //暂时取全量-1.json  差量的 -2.json
-// const SERVER_CONFIG_FILE_PATH = `http://api-doc-server-new.sportxxxw1box.com/public/upload/json/20230903/project_4-36304ea0499e11ee8848ada2b8a1d739-1693720827442-shiwan-1.json`;
-const SERVER_CONFIG_FILE_PATH = `http://api-doc-server-new.sportxxxw1box.com/public/upload/json/${get_date_format()}/${BUILD_VERSION_CONFIG.MODULE_SDK_VERSION}-1.json`;
+/**
+ * https://assets-image.sportxxxw1box.com  jenkins 内网打包专用
+ * https://assets-image.oceasfe.com  静态资源CDN
+ * https://api-doc-server-new.sportxxxw1box.com 对外文档API 域名
+ */
+
+
+//因为加白问题 ，打包构建和 本地开发拉取资源使用不同域名
+let SERVER_CONFIG_FILE_PATH =  `https://assets-image.sportxxxw1box.com/public/upload/json/${get_date_format()}/${BUILD_VERSION_CONFIG.MODULE_SDK_VERSION}-1.json`;
+// const SERVER_CONFIG_FILE_PATH = `https://assets-image.oceasfe.com/public/upload/json/20230903/project_4-36304ea0499e11ee8848ada2b8a1d739-1693720827442-shiwan-1.json`;
+// const SERVER_CONFIG_FILE_PATH = `https://assets-image.oceasfe.com/public/upload/json/${get_date_format()}/${BUILD_VERSION_CONFIG.MODULE_SDK_VERSION}-1.json`;
+
+if(BUILD_VERSION_CONFIG.IS_DEV){
+  SERVER_CONFIG_FILE_PATH = `https://assets-image.oceasfe.com/public/upload/json/${get_date_format()}/${BUILD_VERSION_CONFIG.MODULE_SDK_VERSION}-1.json`;
+}
+  
+ 
  
 console.log(SERVER_CONFIG_FILE_PATH, 'SERVER_CONFIG_FILE_PATH');
 

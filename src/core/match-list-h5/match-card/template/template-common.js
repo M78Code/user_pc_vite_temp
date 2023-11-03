@@ -1,4 +1,6 @@
 import lodash from "lodash";
+import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
+
 /**
  * @Description 设置默认模板
  * @param {Number} num 列数
@@ -170,8 +172,8 @@ export const set_template_width_base = (
 };
 
 
-// 赛事样式模板
-export const match_style_template = {
+// yazhou-h5 赛事样式模板
+const match_style_template_yazhou = {
   // 联赛标题高度
   show_league_height: 40,
   // 赛事标题高度
@@ -186,6 +188,32 @@ export const match_style_template = {
   is_dynamic_compute_height: false,
 }
 
+// app-h5 赛事样式模板
+const match_style_template_app = {
+  // 联赛标题高度
+  show_league_height: 46,
+  // 玩法标题高度
+  // playing_title_height: 20,
+  // 赛事标题高度
+  // match_title_height: 30,
+  // 主盘口高度
+  main_handicap_height: 133,
+  // 次要玩法标题高度
+  play_title_height: 0,
+  // 次要玩法盘口默认高度
+  tab_play_total_height: 0,
+  // 是否需要动态计算高度
+  is_dynamic_compute_height: false,
+}
+
+const template_config = {
+  'app-h5': match_style_template_app,
+  'yazhou-h5': match_style_template_yazhou,
+}
+
+const { PROJECT_NAME = 'yazhou-h5' } = BUILD_VERSION_CONFIG
+
+export const match_style_template = template_config[PROJECT_NAME]
 
 // 赛事样式模板
 // export const match_style_template = {

@@ -103,7 +103,7 @@ export default class MatchDataBase
     // 方法：    set_list(match_list,config)
     //处于激活的赛事mids数组
     this.mids_ation = [];
-    
+    this.match_list = []
     // 所有赛事列表数据转obj对象
     this.list_to_obj = {
       // 页面显示赛事投注项对象
@@ -666,15 +666,101 @@ init(){
   set_list(list, param={}){
     console.log('set_list', list)
     if(list){
+      // 索引置换
+      let temp = lodash.cloneDeep(this.match_list);
+      let old_mid_list = this.match_list.map(m => m.mid).join(',');
+      let new_mid_list = list.map(m => m.mid).join(',');
+      if (new_mid_list != old_mid_list) {
+        this.flex_index(list,temp)
+        this.match_list = lodash.cloneDeep(list);
+      } else{
+        this.match_list = lodash.cloneDeep(list);
+      }
       this.type = param.type || 'list';
       // 格式化列表赛事(部分数组转对象)
-      this.list_serialized_match_obj(list);
+      this.list_serialized_match_obj(this.match_list);
       // 列表数据同步到快捷操作对象中
-      this._list_to_obj_fun(list,this.list_to_obj)
+      this._list_to_obj_fun(this.match_list,this.list_to_obj)
       // ws命令赛事订阅
       this.ws_ctr.scmd_c8();
       this.upd_data_version();
     }
+  }
+
+   /**
+   * @description: 用户修正组件中的key值
+   * @param {*} new_ 新列表
+   * @param {*} old_ 旧列表
+   * @return {*}
+   */
+   flex_index(new_, old_) {
+    let flg = []
+    // 最多支持99个动态key值
+    for (let i = 1; i < 100; i++) {
+      flg.push(i)
+    }
+    let obj_ = {};
+    old_.forEach(element => {
+      obj_[element.mid] = element;
+    });
+
+    let new_obj = {};
+    let old_obj = {};
+    // new_obj去重处理
+    for (let i = 0; i < new_.length; i++) {
+      const element = new_[i];
+      let temp = (element.flex_index)
+      if(element && temp){
+        if(new_obj[temp]){
+          delete element.flex_index;
+        } else {
+          new_obj[temp]=1;
+        }
+      }
+      // new_str[element.mid] = element.flex_index;
+    }
+    // old_obj去重处理
+    for (let i = 0; i < old_.length; i++) {
+      const element = old_[i];
+      let temp = (element.flex_index)
+      if(temp){
+        if(old_obj[temp]){
+          delete element.flex_index;
+        } else {
+          old_obj[temp]=1;
+        }
+      }
+      // old_str[element.mid] = element.flex_index;
+    }
+
+    for (let i = 0; i < new_.length; i++) {
+      const element = new_[i];
+      if (new_[i] && new_[i].mid && obj_[new_[i].mid]) {
+        if(new_[i].mid == obj_[new_[i].mid].mid){
+            new_[i].flex_index = obj_[new_[i].mid].flex_index;
+            for (let k = 0; k < flg.length; k++) {
+            if (flg[k] == obj_[new_[i].mid].flex_index) {
+                flg.splice(k, 1);
+                break;
+            }
+            }
+        } else {
+            element.flex_index = 0;
+        }
+      } else if(element) {
+        element.flex_index = 0;
+      }
+    }
+    for (let i = 0; i < new_.length; i++) {
+      const element = new_[i];
+      if ((!new_[i].flex_index)) {
+        if (flg.length) {
+          new_[i].flex_index = flg[0];
+          flg.splice(0, 1);
+        }
+      }
+    }
+
   }
 
   /**

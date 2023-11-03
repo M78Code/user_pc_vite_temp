@@ -4,7 +4,7 @@
  *
  */
 import { ref } from "vue";
-import _lodash from "lodash"
+import lodash_ from "lodash"
 import BetData from "./bet-data-class"
 
 
@@ -81,6 +81,8 @@ class BetViewData {
     this.bet_min_max_money = {}
     // 键盘状态
     this.bet_keyboard_show = false;
+    // 投注后的 
+    this.orderNo_bet_obj = []
 
     this.bet_view_version = ref('11')
 
@@ -101,9 +103,9 @@ class BetViewData {
   }
 
   // 设置当前 投注页面显示 版本
-  set_bet_view_version() {
+  set_bet_view_version = lodash_.debounce(() => {
     this.bet_view_version.value = Date.now()
-  }
+  }, 5)
 
   // 设置 金额的范围  -1:输入金额小于最低限额时，1: 输入金额超出最大限额时 2:输入金额超出用户余额时 3:用户余额是小于等于输入金额(转换后)
   set_input_money_state(val) {
@@ -122,7 +124,7 @@ class BetViewData {
   // type 接口类型 min_max 或者最大值 最小值接口 数据结构不同
   set_bet_min_max_money(obj, type = '') {
     // 获取query_bet_amount数据对应的限额
-    let bet_amount_list = _lodash.get(obj, 'betAmountInfo')
+    let bet_amount_list = lodash_.get(obj, 'betAmountInfo')
     // min_max 或者最大值 最小值接口 数据结构不同
     if (type == 'min_max') {
       bet_amount_list = obj
@@ -144,6 +146,8 @@ class BetViewData {
     // console.error("最大最小值",this.bet_min_max_money)
     this.set_bet_view_version()
   }
+
+
   // 显示投注框
   set_bet_show(val) {
     this.bet_show = val
@@ -360,6 +364,35 @@ class BetViewData {
   // 串关专用参数
   set_bet_special_series(array) {
     this.bet_special_series = array
+    this.set_bet_view_version()
+  }
+
+
+  // 设置限额对应的金额
+  set_bet_special_series_item(item) {
+    let special_series = this.bet_special_series.map(obj=>{
+      if(obj.id == item.id){
+        return {
+          ...obj,
+          ...item
+        }
+      }
+    })
+    this.bet_special_series = special_series
+    this.set_bet_view_version()
+  }
+
+  // 投注后的数据
+  set_orderNo_bet_obj(array) {
+    this.orderNo_bet_obj = array
+    this.set_bet_view_version()
+  }
+
+  // 清空数据
+  set_clear_bet_view_config(){
+    this.orderNo_bet_obj = []
+    this.bet_order_status = 1
+    this.order_confirm_complete = 0
     this.set_bet_view_version()
   }
 }

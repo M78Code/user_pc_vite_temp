@@ -45,8 +45,7 @@ import { defineProps, nextTick, ref, computed, watch, onMounted, onBeforeUnmount
 import lodash from "lodash";
 import { api_common } from "src/api/index.js";
 import BaseData from "src/core/base-data/base-data.js";
-import { UserCtr } from 'src/core/index.js'
-import menu_config from "src/core/menu-pc/menu-data-class.js";
+import { UserCtr,MenuData } from 'src/core/index.js'
 
 const props = defineProps({
   //item盒子左右padding
@@ -131,7 +130,7 @@ onMounted(() => {
 async function get_date_menu_list() {
   let params = compute_get_date_menu_list_params();
   let api_fn_name = ''
-  if (menu_config.menu_root == 2000) {
+  if (MenuData.is_esports()) {
     //电竞
     api_fn_name = "get_esports_date_menu"
 
@@ -154,7 +153,8 @@ async function get_date_menu_list() {
   date_menu_version.value = Date.now()
 
   let index_info = 0, md_info = ''
-  const { left_menu_result, match_list_api_config = {} } = menu_config
+  const { left_menu_result, match_list_api_config = {} } = MenuData
+
 
   // 收藏返回还是当前数据
   if (left_menu_result.root == 3) {
@@ -167,13 +167,18 @@ async function get_date_menu_list() {
   handle_click_menu_mi_3_date({ md: md_info, index: index_info })
   console.log('match_list_api_config', match_list_api_config);
 }
+watch(MenuData.menu_data_version,()=>{
+  nextTick(()=>{
+    get_date_menu_list()
+  })
+})
 
 /**
  * 计算 日期 接口 请求参数
  */
 function compute_get_date_menu_list_params() {
   let params = {};
-  let left_menu_result = menu_config.left_menu_result;
+  let left_menu_result = MenuData.left_menu_result;
   let {
     lv1_mi,
     lv2_mi,
@@ -217,11 +222,11 @@ function compute_get_date_menu_list_params() {
 function handle_click_menu_mi_3_date (detail = {}) {
   let { md, index } = detail;
   final_index.value = index;
-  let root = menu_config.menu_root;
+  let root = MenuData.menu_root;
   let guanjun = "";
   let sports = "common-date";
   let route = "list";
-  let { lv2_mi, lv1_mi } = menu_config.left_menu_result
+  let { lv2_mi, lv1_mi } = MenuData.left_menu_result
   // 当前 pid 和 orpt
   let lv2_mi_info = BaseData.mi_info_map[`mi_${lv2_mi}`];
   // 父级euid
@@ -255,7 +260,7 @@ function handle_click_menu_mi_3_date (detail = {}) {
   }
 
   //设置当前的root
-  // root = menu_config.menu_root
+  // root = MenuData.menu_root
   // euid  早盘今日  玩法级别 传参 传 euid 为 父级的
   // 今日 早盘
   let api_name = 'post_league_list'
@@ -305,9 +310,9 @@ function handle_click_menu_mi_3_date (detail = {}) {
     bymids,
   };
   // 设置      中间 菜单输出
-  menu_config.set_mid_menu_result(params);
+  MenuData.set_mid_menu_result(params);
   // 设置   请求  列表结构  API 参数的  值
-  menu_config.set_match_list_api_config(config);
+  MenuData.set_match_list_api_config(config);
 }
 
 /**
@@ -338,9 +343,9 @@ function onclick(index, item) {
 function set_mid_menu_result() {
   //     请求  列表结构  API 参数的   模板
   let { config, description } =
-    menu_config.get_match_list_api_config_tepmlate_and_description();
+    MenuData.get_match_list_api_config_tepmlate_and_description();
   let params = {};
-  let left_menu_result = menu_config.left_menu_result;
+  let left_menu_result = MenuData.left_menu_result;
   let { lv1_mi, lv2_mi, euid } = left_menu_result;
   if (lv1_mi == 2000) {
     //  早盘 或者 今日的  电竞
@@ -360,9 +365,9 @@ function set_mid_menu_result() {
     };
   }
   // 设置      中间 菜单输出
-  menu_config.set_mid_menu_result(params);
+  MenuData.set_mid_menu_result(params);
   // 设置   请求  列表结构  API 参数的  值
-  menu_config.get_match_list_api_config_tepmlate_and_description(config);
+  MenuData.get_match_list_api_config_tepmlate_and_description(config);
 }
 
 function hand_cilck_move(left) {

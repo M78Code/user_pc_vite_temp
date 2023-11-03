@@ -46,7 +46,7 @@
                   <span v-if="item.ms == 1 || item.ms == 2 || item.ms == 3 || item.ms == 4 || is_match_result" class="decated">
                     <!-- 增加比分判定中的判断和显示 -->
                     <template v-if="is_eports_scoring(item)">
-                      {{t('mmp.eports_scoring')}}
+                      {{i18n_t('mmp.eports_scoring')}}
                     </template>
                     <template v-if="is_match_result">
                       {{calc_score(item)}}
@@ -87,6 +87,8 @@ import match_dialog_stage from 'src/base-h5/components/match/match-dialog-stage.
 import show_start_time from 'src/base-h5/components/details/wight/show-start-time.vue'
 import { format_total_score } from 'src/core/format/index.js'
 import { useRoute, useRouter } from "vue-router"
+import { i18n_t } from "src/core/index.js"
+
 let route = useRoute()
 let router = useRouter()
 export default {

@@ -11,8 +11,8 @@
     <div v-show="false">{{ userData.user_version }}</div>
     <div class="nonebox4-first">
         <div class="nonebox4-first-left">
-            <div class="nonebox4-first-left-img">单</div>
-            <div class="nonebox4-first-left-text">PM体育</div>
+            <div class="nonebox4-first-left-img">{{BetData.is_bet_single? i18n_t('app_h5.bet.odd') : i18n_t('app_h5.bet.parlay')}}</div>
+            <div class="nonebox4-first-left-text">{{ i18n_t('app_h5.bet.pm_sport') }}</div>
         </div>
         <div class="nonebox4-first-right">
             <div class="nonebox4-first-right-window" @click.stop="get_balance">
@@ -27,7 +27,7 @@
 <script setup>
 import lodash from "lodash"
 // import store from "src/store-redux/index.js";
-import { compute_local_project_file_path } from "src/core/index.js";
+import { compute_local_project_file_path, i18n_t } from "src/core/index.js";
 import { format_money2 } from 'src/core/format/module/format-money.js'
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { ref,computed,onUnmounted } from 'vue';
@@ -193,14 +193,14 @@ onUnmounted(() => {
     display: flex;
     flex-direction: row;
     align-items: center;
-    background-color: #f4f9ff;
+    background-color: var(--q-gb-t-c-7);;
     padding-right: 3px;
     padding-left: 10px;
     border-radius: 30px;
 }
 .nonebox4-first-right-window-num {
     display: flex;
-    font-size: 16px;
+    font-size: 18px;
     font-weight: bold;
     margin-right: 4px;
 }
@@ -320,8 +320,8 @@ onUnmounted(() => {
 }
 
 .refesh {
-  width: 0.12rem;
-  height: 0.12rem;
+  width: 0.13rem;
+  height: 0.13rem;
   background: url( $SCSSPROJECTPATH+"/image/bet/shuaxin.svg") no-repeat center / 100% 100%;
   // background: var(--q-color-com-img-bg-58) no-repeat center / 100% 100%;
   margin-left: 0.05rem

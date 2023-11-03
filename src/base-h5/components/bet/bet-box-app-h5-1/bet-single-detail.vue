@@ -5,26 +5,32 @@
 -->
 <template>
   <!-- 混合过关投注选项 -->
-  <div class="bet_single_detail" ref="bet_single_detail">
-    <div class="content-b" :class="{ 'red-color': !money_ok }" @click.stop="input_click">
-      <span v-if="ref_data.money" class="yb_fontsize20 money-number">{{ ref_data.money }}</span>
-      <span class="money-span" ref="money_span"
-        :style="{ opacity:  '1' }"></span>
-      <span class="yb_fontsize14 limit-txt" v-show="!ref_data.money">限额{{ ref_data.min_money }}-{{ ref_data.max_money }}</span>
-      <span @click.stop="clear_money" class="money-close" :style="{ opacity: ref_data.money > 0 ? '1' : '0' }">x</span>
-    </div>
-    <div class="content-rmb">RMB</div>
-
-    <!-- <div class="nonebox4-third">
-      <div class="nonebox4-third-left">
-        <input type="number" placeholder="限额 0.00-100,000" /><span style="color:#666">RMB<span>
+  <div>
+    <div class="bet_single_info">
+      <div class="bet_single_detail" ref="bet_single_detail" :style="BetData.bet_pre_list.includes(item.playOptionsId) ?'width: 73%':'width:100%'">
+        <div class="content-b" :class="{ 'red-color': !money_ok }" @click.stop="input_click">
+          <span v-if="ref_data.money" class="yb_fontsize20 money-number">{{ ref_data.money }}</span>
+          <span class="money-span" ref="money_span"
+            :style="{ opacity:  '1' }"></span>
+          <span class="yb_fontsize14 limit-txt" v-show="!ref_data.money">{{ i18n_t('app_h5.bet.limit')}}{{ ref_data.min_money }}-{{ ref_data.max_money }}</span>
+          <span @click.stop="clear_money" class="money-close" :style="{ opacity: ref_data.money > 0 ? '1' : '0' }">x</span>
+        </div>
+        <div class="content-rmb">RMB</div>
       </div>
-    </div> -->
+      <div class="bet_single_info_btn" v-if="BetData.bet_pre_list.includes(item.playOptionsId)">
+        <div class="" v-if="ref_data.is_bet_pre" @click="set_bet_pre">{{ i18n_t('app_h5.bet.cancel_appoint') }}</div>
+        <div class="" v-else @click="set_bet_pre">+{{ i18n_t('pre_record.book')}}</div>
+      </div>
+    </div>
+
+     <!--加减-->
+     <bet-mix-box-child6 v-if="ref_data.is_bet_pre" :item='item'></bet-mix-box-child6>
+
   </div>
 </template>
 
 <script setup>
-// import betting from 'src/project/mixins/betting/betting.js';
+import betMixBoxChild6 from './bet_mix_box_child6.vue';
 import lodash_ from 'lodash'
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
@@ -34,6 +40,8 @@ import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import mathJs from 'src/core/bet/common/mathjs.js'
 import { format_money3, format_money2 } from 'src/core/format/index.js'
 import { format_currency } from "src/core/format/module/format-currency.js"
+import { get_query_bet_amount_pre } from "src/core/bet/class/bet-box-submit.js"
+import { i18n_t } from "src/core/index.js"
 
 
 let timer1 = null
@@ -47,6 +55,7 @@ const get_money_notok_list2 = ref()
 
 const bet_single_detail = ref()  // 实列
 const money_span = ref()  // 实列
+const money_ok = ref('')
 
 // 复式连串过关投注
 const special_series = reactive({
@@ -67,6 +76,7 @@ const ref_data = reactive({
   money: '', // 投注金额
   keyborard: true, // 是否显示 最高可赢 和 键盘
   seriesOdds: '', // 赔率
+  is_bet_pre: false, // 预约按钮
 })
 
 const props = defineProps({
@@ -89,6 +99,17 @@ onMounted(() => {
   useMittOn(MITT_TYPES.EMIT_INPUT_BET_MONEY, change_money_handle)
   useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money)
 })
+
+// 设置预约开关
+const set_bet_pre = () => {
+  ref_data.is_bet_pre = !ref_data.is_bet_pre
+  // 预约开启 获取预约数据
+  if(ref_data.is_bet_pre){
+    get_query_bet_amount_pre()
+  }
+  // 设置是否开启预约
+  BetData.set_is_bet_pre()
+}
 
 /**
  *@description 光标闪动，animation有兼容问题，用函数替代
@@ -136,7 +157,7 @@ const clear_money = () => {
  *@param {Number} new_money 最新金额值
  */
  const change_money_handle = (new_money) => {
-  ref_data.money = new_money
+  ref_data.money = new_money.money
 }
 
 
@@ -148,7 +169,7 @@ const set_ref_data_bet_money = () => {
     if (!BetData.is_bet_single) {
 
         // 复式连串关投注
-        const { id, name, count } = BetViewDataClass.bet_special_series[props.index]
+        const { id, name, count } = BetViewDataClass.bet_special_series[props.index] || {}
         special_series.id = id
         special_series.name = name
         special_series.count = count
@@ -236,6 +257,22 @@ onUnmounted(() => {
 
 </script>
 <style lang="scss" scoped>
+.bet_single_info{
+  display: flex;
+  justify-content: space-between;
+}
+.bet_single_info_btn{
+    width: 25%;
+    font-size: 16px;
+    background: var(--q-gb-t-c-1);
+    color: var(--q-gb-t-c-14);
+    border-radius: 10px;
+    height: 0.38rem;
+    margin-top: 0.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 .nonebox4-third {
     width: 100%;
     display: flex;

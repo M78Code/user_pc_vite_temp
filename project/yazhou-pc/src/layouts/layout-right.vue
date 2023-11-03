@@ -12,15 +12,16 @@
     v-if="LayOutMain_pc.layout_right_width > 0"
   >
     <!-- 虚拟体育 -->
-    <virtual-right
+    <!-- <virtual-right
       v-if="
         MenuData.is_virtual_sport() &&
         route.name != 'search' &&
         route.name != 'details'
       "
-    />
+    /> -->
+    <!-- v-else -->
     <!-- 常规竞猜 -->
-    <match-details-right v-else class="page-match-detail fit" />
+    <match-details-right  class="page-match-detail fit" />
   </div>
   </div>
 </template>
@@ -31,7 +32,7 @@ import { useMittOn, MITT_TYPES } from "src/core/mitt";
 import matchDetailsRight  from "src/base-pc/components/match-details-right/match-details-right.vue"
 import { LayOutMain_pc,MenuData } from "src/core/index.js";
 import { useRoute, useRouter } from "vue-router"
-import virtualRight from "src/base-pc/components/virtual-right/virtual-right.vue";
+// import virtualRight from "src/base-pc/components/virtual-right/virtual-right.vue";
 const route = useRoute()
 const right_status=ref(null)
 

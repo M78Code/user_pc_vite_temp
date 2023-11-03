@@ -14,7 +14,7 @@
     <!-- 玩法集 -->
     <div class="menu-s" ref="reset_scroll_dom">
       <div class="menu-item" v-for="(item, i) in data_list" :key="i" @click.self="selete_item(item['id'],$event)" :class="get_details_item == item['id']?'t_color':''">
-        {{item.marketName}}
+        {{item.marketName}}11
       </div>
     </div>
     <!-- 分析icon(详情页面的时候显示分析,在其他页面不显示分析按钮) -->
@@ -26,68 +26,67 @@
 
 <script>
 // import { mapGetters,mapMutations } from "vuex"
-import { api_common } from "src/project/api/index.js";
+import { api_common } from "src/api/index.js";
 import { useRoute, useRouter } from "vue-router"
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import lodash from "lodash"
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
-const route = useRoute()
-const router = useRouter()
-
-export default {
-  name: 'virtual_sports_tab',
-  data(){
-    return {
-      // 默认显示虚拟体育分析按钮
-      analyse:true,
-      // 渲染的数据
-      data_list:[],
-    }
-  },
-  computed:{
-    // ...mapGetters([
-    //   'get_details_item',
-    //   'get_uid',
-    //   'get_tab_fix',
-    //   "get_fewer",
-    //   "get_current_league",
-    //   "get_detail_data",
-
-    // ]),
-    // ...mapGetters({
-    //   matchid: "get_goto_detail_matchid",
-    //   sub_menu_id: 'get_current_sub_menuid',
-    //   sub_menu_type: 'get_curr_sub_menu_type',
-    //   is_show_analyse: 'get_is_show_details_analyse'
-    // }),
-    // 历史战绩：标准赛事详情页的时候不显示,只在虚拟体育详情显示历史战绩(其中篮球不显示历史战绩)
-    anlyse_show(){
-
-
-      return   GlobalAccessConfig.get_statisticsSwitch()&& route.name != 'virtual_sports' && get_detail_data.csid != 1004
-    }
-  },
-  watch: {
-    "batch"(){
-      play_list()
-    }
-  },
+import { MatchDetailCalss,MenuData,MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance } from "src/core";
+import { defineComponent,ref,onMounted,watch,onUnmounted,computed } from "vue";
+export default defineComponent({
   props:[
     "virtual_match_list",
     "batch" //赛马期
   ],
-  created(){
-    // 延时器
-    timer1_ = null;
-    timer_ = null;
-    useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB, initEvent)
-    useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB_BET, initEvent)
+  name:"virtual-sports-tab",
+  setup(props){
+    const route = useRoute()
+    const router = useRouter()
+    // 默认显示虚拟体育分析按钮
+    const analyse = ref(true)
+    // 渲染的数据
+    const data_list = ref([])
+    //获取二级菜单ID
+    const sub_menu_type = ref(MenuData.get_current_sub_menuid())
+   // 正在跳转详情的赛事  
+    const  get_details_item =ref( MatchDetailCalss.details_item)
+   // 从数据仓库获取赛事详情 
+    const  get_detail_data =ref(lodash.get(MatchDataWarehouseInstance, `list_to_obj.mid_obj[${route.params.mid}_]`))
+    // 详情一键收起状态:
+    const  get_fewer =ref( MatchDetailCalss.fewer) 
+    let timer1_,timer_ = null
+    const reset_scroll_dom = ref(null)
+    const initEvent =()=>{
+      if(timer1_) { clearTimeout(timer1_) }
+      timer1_ = setTimeout(() => {
+        try{
+          reset_scroll_dom.value.scrollLeft = 0
+        }catch(e){
+          console.error(e)
+        }
+      }, 400);
+    }
+    /* 
+      *监听菜单版本获取最新的二级菜单id
+      *
+    */
+    watch(()=>MenuData.update_time,()=>{
+      sub_menu_type.value =MenuData.get_current_sub_menuid()
+    })
+    onMounted(()=>{
+     // 延时器
+      timer1_ = null;
+      timer_ = null;
+      initEvent()
+      play_list()
+      MatchDetailCalss.set_is_show_details_analyse(false)
+    }) 
+    const {off} = useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB, initEvent)
+    const {off:OFF_TAB_BET} = useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB_BET, initEvent)
 
-    initEvent();
+   watch(()=>props.batch,()=>{
     play_list()
-    set_is_show_details_analyse(false)
-  },
-  methods:{
+    })
     // ...mapMutations([
     //   'set_details_item',
     //   'set_first_details_item',
@@ -99,29 +98,29 @@ export default {
      *@param {Undefined}
      *@return {Undefined} undefined
      */
-    analyse_btn() {
+    const analyse_btn =()=> {
       analyse = !analyse
-      set_is_show_details_analyse(!is_show_analyse)
-    },
-    change_btn(){
+      MatchDetailCalss.set_is_show_details_analyse(!is_show_analyse)
+    }
+    const change_btn=()=>{
       // 设置vuex变量值
       if(get_fewer == 1 || get_fewer == 3){
-        set_fewer(2)
+        MatchDetailCalss.set_fewer(2)
       }else{
-        set_fewer(1)
+        MatchDetailCalss.set_fewer(1)
       }
-    },
+    }
     // 单击玩法集
-    selete_item(uId,e){
+    const selete_item =(uId,e)=>{
       // 点击的玩法是当前选中的玩法
-      if(get_details_item == uId) return false;
+      if(get_details_item.value == uId) return false;
       if(is_show_analyse){
         analyse = true
       }
-      set_is_show_details_analyse(false)
+      MatchDetailCalss.set_is_show_details_analyse(false)
       //实现动态效果
       try {
-        let dom = $refs.reset_scroll_dom;
+        let dom = reset_scroll_dom.value;
         if(!dom) return;
 
         let start_ = dom.scrollLeft;
@@ -162,57 +161,84 @@ export default {
       // 虚拟体育切换玩法集,滚动条高度默认恢复为0
       $emit('virtual_play_height')
       if(get_fewer == 3){
-        set_fewer(1)
+        MatchDetailCalss.set_fewer(1)
       }
-    },
-    initEvent(){
-      if(timer1_) { clearTimeout(timer1_) }
-      timer1_ = setTimeout(() => {
-        try{
-          $refs.reset_scroll_dom.scrollLeft = 0
-        }catch(e){
-          console.error(e)
-        }
-      }, 400);
-    },
+    }
+
     /**
      *@description: 调用玩法集的接口
      *@param {Undefined}
      *@return {Undefined} undefined
      */
-    play_list(){
+    const play_list=()=>{
       // 1.在足球页进入详情需要调用玩法集合接口
       // 2.在赛马页需要调用玩法集合接口
-      if(![1001,1004].includes(sub_menu_type) || $route.name == 'virtual_sports_details'){
+      if(![1001,1004].includes(sub_menu_type.value) || route.name == 'virtual_sports_details'){
         let new_mid = ''
-        if(batch){
-          new_mid =  batch
+        if(props.batch){
+          new_mid = props.batch
         }else{
-          new_mid = $route.query.mid
+          new_mid = route.query.mid
         }
-        let params = { sportId: sub_menu_type,mid: new_mid};
+        let params = { sportId: sub_menu_type.value,mid: new_mid};
         api_common.get_category_list(params).then(res =>{
           if(res.code == 200 && res.data){
-            data_list = lodash.get(res, "data");
-            let first_data_item = data_list[0];
+            data_list.value = lodash.get(res, "data");
+            let first_data_item = data_list.value[0];
             if(first_data_item){
-              // 将玩法集第一个存入store，后续赛种/赛事期数跳转时做判断用
-              set_first_details_item(first_data_item.id);
-              set_details_item(first_data_item.id);
+              // 将玩法集第一个存入详情类，后续赛种/赛事期数跳转时做判断用
+             MatchDetailCalss.set_first_details_item(first_data_item.id);
+             MatchDetailCalss.set_details_item(first_data_item.id);
             }
           }
         })
       }
     }
-  },
-  beforeUnmount() {
-    useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB, initEvent).off;
-    useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB_BET, initEvent).off
-    set_fewer(1);
-    clearTimeout(timer1_)
-    clearInterval(timer_);
+      //   // 历史战绩：标准赛事详情页的时候不显示,只在虚拟体育详情显示历史战绩(其中篮球不显示历史战绩)
+    const anlyse_show=computed(()=>{
+      return   GlobalAccessConfig.get_statisticsSwitch()&& route.name != 'virtual_sports' && get_detail_data.value?.csid != 1004
+    }) 
+    onUnmounted(()=>{
+      OFF_TAB_BET()
+      off()
+      MatchDetailCalss.set_fewer(1);
+      clearTimeout(timer1_)
+      clearInterval(timer_);
+    })
+    return {
+      reset_scroll_dom,
+      data_list,
+      get_details_item,
+      get_fewer,
+      selete_item,
+      anlyse_show
+    }
   }
-}
+
+  //todo
+  // computed:{
+  //   // ...mapGetters([
+  //   //   'get_details_item',
+  //   //   'get_uid',
+  //   //   'get_tab_fix',
+  //   //   "get_fewer",
+  //   //   "get_current_league",
+  //   //   "get_detail_data",
+
+  //   // ]),
+  //   // ...mapGetters({
+  //   //   matchid: "get_goto_detail_matchid",
+  //   //   sub_menu_id: 'get_current_sub_menuid',
+  //   //   sub_menu_type: 'get_curr_sub_menu_type',
+  //   //   is_show_analyse: 'get_is_show_details_analyse'
+  //   // }),
+
+
+  
+
+})
+
+
 </script>
 
 <style lang="scss" scoped>

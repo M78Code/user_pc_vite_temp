@@ -270,8 +270,8 @@ export default defineComponent({
      *@return {Undefined} undefined
      */
     const change_show = () => {
-      if (show_more) {
-        let distance = (len - 5) * utils.rem(0.52)
+      if (data.show_more) {
+        let distance = (data.len - 5) * utils.rem(0.52)
         if ($route.name == 'virtual_sports_details') {
           document.documentElement.scrollTop -= distance
         } else {
