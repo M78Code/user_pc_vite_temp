@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="72px" height="62px" viewBox="0 0 72 62" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>椭圆形@2x</title>
+    <defs>
+        <path d="M246,416 C269.583008,416 281.945312,396 286.333333,386 C282.375,376 269.092773,356 246,356 C229.431458,356 216,369.431458 216,386 C216,402.568542 229.431458,416 246,416 Z" id="path-1"></path>
+    </defs>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="椭圆形" transform="translate(-215.000000, -355.000000)">
+            <use fill="#191919" xlink:href="#path-1"></use>
+            <use stroke="#FFB001" stroke-width="1" fill-opacity="0.3" fill="#FFB001" xlink:href="#path-1"></use>
+        </g>
+    </g>
+</svg>

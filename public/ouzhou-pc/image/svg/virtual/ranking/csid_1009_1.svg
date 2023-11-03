@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>1</title>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="泥地摩托车" transform="translate(-254.000000, -308.000000)">
+            <g id="1" transform="translate(254.000000, 308.000000)">
+                <rect id="矩形" stroke-opacity="0.25" stroke="#000000" fill="#FFB001" x="0.5" y="0.5" width="23" height="23" rx="2"></rect>
+                <polygon fill="#FFFFFF" fill-rule="nonzero" points="13.3275 18 13.3275 7.32 11.7975 7.32 9.7125 9.12 9.7125 10.815 11.7975 8.985 11.7975 18"></polygon>
+            </g>
+        </g>
+    </g>
+</svg>

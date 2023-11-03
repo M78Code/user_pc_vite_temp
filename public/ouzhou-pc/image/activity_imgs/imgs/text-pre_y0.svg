@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="12px" height="12px" viewBox="0 0 12 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>文本标备份</title>
+    <defs>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#62B6FF" offset="0%"></stop>
+            <stop stop-color="#4276FB" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-2">
+            <stop stop-color="#62B6FF" offset="0%"></stop>
+            <stop stop-color="#3D72FA" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="PC-每日任务" transform="translate(-460.000000, -844.000000)">
+            <g id="文本标备份" transform="translate(460.000000, 844.000000)">
+                <path d="M6,0.288675135 L10.9461524,3.14433757 L10.9461524,8.85566243 L6,11.7113249 L1.05384758,8.85566243 L1.05384758,3.14433757 L6,0.288675135 Z" id="多边形" stroke="url(#linearGradient-1)" stroke-width="0.5"></path>
+                <polygon id="多边形备份" fill="url(#linearGradient-2)" points="6 3 8.59807621 4.5 8.59807621 7.5 6 9 3.40192379 7.5 3.40192379 4.5"></polygon>
+            </g>
+        </g>
+    </g>
+</svg>
