@@ -5,7 +5,7 @@ const all_components_obj = {
 };
 const component_config = {
   registered_component_key: "MatchTplEsportsAfterFullVersionWapper",
-  default_component_key: "MatchTplEsportsAfterFullVersionWapper_1",
+  default_component_key: "MatchTplEsportsAfterFullVersionWapper",
   all_components_obj,
 };
 const wapper_config = compute_component_wapper_config(component_config);

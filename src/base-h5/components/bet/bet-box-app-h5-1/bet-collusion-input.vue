@@ -4,11 +4,11 @@
   <div v-show="false">{{BetViewDataClass.bet_view_version}}{{BetData.bet_data_class_version}}</div>
 
   <div v-for="item in BetViewDataClass.bet_special_series" :key="item.id" class="list">
-    {{item.name}} X{{item.count}} --{{item.money}}
+    <span>{{item.name}} X{{item.count}} --{{item.money}}</span>
     <span v-if="item.money" class="yb_fontsize20 money-number" @click.stop="input_click(item,$event)">{{  item.money }}</span>
-    <span class="money-span" ref="money_span"
+    <span class="money-span" ref="money_span"  v-show="!item.money"
       :class="{ 'money-span2': !(BetData.active_index == index_ ) }" @click.stop="input_click(item,$event)">
-      <span v-if="!item.money" >{{ i18n_t('app_h5.bet.limit')}}{{ set_min_max_money(item.id,'min_money') }}-{{ set_min_max_money(item.id,'max_money')  }}</span>
+      <span >{{ i18n_t('app_h5.bet.limit')}}{{ set_min_max_money(item.id,'min_money') }}-{{ set_min_max_money(item.id,'max_money')  }}</span>
     </span>
   </div>
 
@@ -68,5 +68,8 @@ const change_money_handle = val => {
     margin: 0.1rem 0;
     padding: 0.1rem;
     border-radius: 12px;
+  }
+  .yb_fontsize20{
+    font-size: 0.12rem;
   }
 </style>

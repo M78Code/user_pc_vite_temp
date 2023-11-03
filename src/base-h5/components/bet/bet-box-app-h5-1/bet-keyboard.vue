@@ -35,7 +35,7 @@
             <div class="nonebox4-fourth-num">
                 <div class="nonebox4-fourth-num-sun" data-number='max'>{{ i18n_t('bet.max')}}</div>
                 <div class="nonebox4-fourth-num-sun" data-number='x'>{{ i18n_t('app_h5.bet.delete')}}</div>
-                <div class="nonebox4-fourth-num-sun" data-number='shouqi'>{{ i18n_t('bet.pack_up')}}</div>
+                <div class="nonebox4-fourth-num-sun" data-number='shouqi'  @click.stop="shou(item,$event)">{{ i18n_t('bet.pack_up')}}</div>
             </div>
         </div>
     </div>
@@ -65,6 +65,12 @@ const ref_data = reactive({
   max_money: 8888, // 最大投注金额
   keyborard: true, // 是否显示 最高可赢 和 键盘
 })
+
+const shou = (item,evnet) => {
+  // event.preventDefault()
+  // BetData.set_bet_keyboard_config(item)
+  BetData.set_bet_keyboard_show(false)
+}
 
 // 预约输入赔率或者盘口
 watch(() => pre_odds_value, (new_) => {
