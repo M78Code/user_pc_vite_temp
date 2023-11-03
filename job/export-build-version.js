@@ -63,7 +63,6 @@ function format_date(value) {
 const BUILD_VERSION = format_date(new Date().getTime());
 
  
-
 const config = {
   BUILD_VERSION: IS_DEV ? "" : BUILD_VERSION,
   IS_DEV,
