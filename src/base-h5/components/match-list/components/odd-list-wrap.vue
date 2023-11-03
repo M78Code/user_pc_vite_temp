@@ -84,12 +84,12 @@
       <div class="correct_style_title">
         <div>
           <span>{{match.mhn}}</span>
-          <span>{{ i18n_t('football_playing_way.full_time_draw')}}</span>
+          <span>{{ $t('football_playing_way.full_time_draw')}}</span>
           <span>{{match.man}}</span>
         </div>
         <div>
           <span>{{match.mhn}}</span>
-          <span>{{ i18n_t('football_playing_way.half_time_draw')}}</span>
+          <span>{{ $t('football_playing_way.half_time_draw')}}</span>
           <span>{{match.man}}</span>
         </div>
       </div>
@@ -157,11 +157,11 @@
 import { ref, watch, computed, onMounted, onUnmounted } from "vue";
 import store from "src/store-redux/index.js"
 import lodash from 'lodash'
-import { i18n_t } from 'src/core/index.js'
+import { i18n_t} from 'src/core/index.js'
 import oddColumnItem from "./odd-column-item.vue";
 import { img1, img2, img3, img4, Y0_img_white } from 'src/base-h5/core/utils/local-image'
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
-import { MenuData,compute_img_url ,UserCtr} from "src/core/index.js"
+import { MenuData,compute_img_url ,UserCtr, compute_css_obj} from "src/core/index.js"
 import PageSourceData  from  "src/core/page-source/page-source.js";
 import { lang, standard_edition, theme } from 'src/base-h5/mixin/userctr.js'
 
@@ -445,7 +445,7 @@ const ol_list = computed(() => {
   let ol_list_custom = [];
   if (found) {
     Object.assign(hp_item.value, found);
-
+    if (!found.hl) return
     let f_hl_item = found.hl[0];
     if (found.hl && f_hl_item) {
       hl_hs.value = f_hl_item.hs;

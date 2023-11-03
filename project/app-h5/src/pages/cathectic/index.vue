@@ -56,9 +56,9 @@
 
   const tabs = ref([
     { title: i18n_t('bet_record.no_account'), componentName: shallowRef(unsettle) },
-    { title: i18n_t('pre_record.booking'), componentName: shallowRef(preRecord) },
-    { title: i18n_t('pre_record.expired'), componentName: shallowRef(invalid) },
-    { title: i18n_t('bet_record.account'), componentName: shallowRef(settle) }
+    { title: "预约中", componentName: shallowRef(preRecord) },
+    { title: "已失效", componentName: shallowRef(invalid) },
+    { title: "已结算", componentName: shallowRef(settle) }
   ])
   // 锚点
   const unsettle_child = ref(null)

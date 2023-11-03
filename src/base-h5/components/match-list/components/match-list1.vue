@@ -27,8 +27,6 @@
         </template>
       </template>
     </ScrollWrapper>
-
-    <SecondaryDescription />
   </div>
   
 </template>

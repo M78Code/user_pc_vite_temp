@@ -340,7 +340,6 @@
     "virtual_sports": "VR體育",
     "auto_close": "%s 秒後自動關閉",
     "HD": "高清",
-    "return": "返回",
     "SD": "標清"
   },
   "detail": {
@@ -2154,7 +2153,6 @@
     "mute_hint2": "當前為全體禁言",
     "mute_hint3": "抱歉，您還不能發言！",
     "mute_hint4": "您{type}，禁言{time}",
-    "room_not_open": "聊天室未開啟",
     "mute_hint": {
       "time": ["15分鐘", "30分鐘", "60分鐘", "180分鐘", "永久"],
       "type": ["違規濫發廣告", "辱罵主播或其他會員", "違法違規言論"]

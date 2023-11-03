@@ -18,7 +18,7 @@ import { ref, computed, onUnmounted, watch } from "vue";
 import { theme_list, theme_map } from "src/core/theme/"
 import UserCtr from "src/core/user-config/user-ctr.js"
 import { lang } from "src/base-h5/mixin/userctr";
-import { i18n_t } from "src/core/index.js"
+
 /**
  * 首页switch wap
  */
@@ -27,14 +27,16 @@ const switchData = [
         defaultVal:0,
         list:[
             {
-                name: i18n_t('footer_menu.pro_v'),
+                name:"专业版",
                 val:0,
                 changeFun:(val)=>{
-                    return console.log(`执行专业版-${val}`)
+                    // 1 新手版 2 专业版
+                    const value = val === 1 ? 1 : 2
+                    UserCtr.set_standard_edition(value)
                 }
             },
             {
-                name: i18n_t('footer_menu.new_v'),
+                name:"新手版",
                 val:1,
                 changeFun:(val)=>{
                     return console.log(`执行新手版-${val}`)
@@ -46,7 +48,7 @@ const switchData = [
         defaultVal:0,
         list:[
             {
-                name: i18n_t('footer_menu.hot'),
+                name:"热门",
                 val:0,
                 isSort:1,
                 changeFun:(val,sort)=>{
@@ -54,7 +56,7 @@ const switchData = [
                 }
             },
             {
-                name: i18n_t('footer_menu.time'),
+                name:"时间",
                 val:1,
                 isSort:1,
                 changeFun:(val,sort)=>{

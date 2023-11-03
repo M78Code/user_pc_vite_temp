@@ -27,45 +27,44 @@
 import { ref } from "vue";
 import search from "./img/search.svg";
 import {scrollMenu} from "../utils";
-import { useMittEmit, MITT_TYPES, i18n_t } from "src/core/index.js";
+import { useMittEmit, MITT_TYPES } from "src/core/index.js";
 import {  menu_lv2 } from 'src/base-h5/mixin/menu.js'
-
 const props = defineProps({
     dataList: {
         type: Array,
         default: [
             {
-                name: i18n_t('app_h5.match.all'),
+                name: "全部",
                 val: 0,
                 img: ""
             },
             {
-                name: i18n_t('app_h5.match.champions'),
+                name: "欧冠",
                 val: 1,
                 img: ""
             },
             {
-                name: i18n_t('app_h5.match.premier'),
+                name: "英超",
                 val: 2,
                 img: ""
             },
             {
-                name: i18n_t('app_h5.match.serie'),
+                name: "意甲",
                 val: 3,
                 img: ""
             },
             {
-                name: i18n_t('app_h5.match.laliga'),
+                name: "西甲",
                 val: 4,
                 img: ""
             },
             {
-                name: i18n_t('app_h5.match.ligue'),
+                name: "法甲",
                 val: 5,
                 img: ""
             },
             {
-                name: i18n_t('app_h5.match.china_super'),
+                name: "中超",
                 val: 6,
                 img: ""
             }

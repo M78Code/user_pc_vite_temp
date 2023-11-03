@@ -8,7 +8,7 @@
       <component :is="target_com"></component>
       <!-- 到底了容器原加载更多容器-->
       <div :class="['loading-more-container', { home_hot: is_hot }]" v-if="MatchMeta.match_mids.length > 3">
-        <div style="color:#AAAEB8;font-size:.12rem;"> {{ i18n_t("scroll_wrapper.is_footer") }} </div>
+        <div style="color:#AAAEB8;font-size:.12rem;"> {{ $t("scroll_wrapper.is_footer") }} </div>
       </div>
     </template>
 
@@ -41,7 +41,7 @@ import NoData from "src/base-h5/components/common/no-data.vue"; // 无网络展�
 import MatchList1 from './components/match-list1.vue'
 import MatchList2 from './components/match-list2.vue'
 
-import { PROJECT_NAME, i18n_t } from "src/core/index.js"
+import { PROJECT_NAME } from "src/core/index.js"
 
 // 次要玩法描述组件
 import SecondaryDescription from "src/base-h5/components/match-list/components/secondary-description.vue"; 

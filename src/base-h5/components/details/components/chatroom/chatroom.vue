@@ -23,7 +23,7 @@
     <q-dialog v-model="is_show_bulletin_dialog" >
       <q-card class="dialog-wrap" >
         <div  class="card-header">
-          <div class="text-center">{{i18n_t('chatroom.bulletin')}}</div>
+          <div class="text-center">{{t('chatroom.bulletin')}}</div>
         </div>
         <q-card-section class="card-body">
           <div class="dialog-scroll">
@@ -33,7 +33,7 @@
         </q-card-section>
 
         <div class="card-footer">
-          <div class="btn"  @click.stop="is_show_bulletin_dialog = false">{{ i18n_t('chatroom.close') }}</div>
+          <div class="btn"  @click.stop="is_show_bulletin_dialog = false">{{ t('chatroom.close') }}</div>
         </div>
       </q-card>
     </q-dialog>
@@ -59,7 +59,7 @@ import notice_bar from 'src/base-h5/components/details/components/chatroom/notic
 import marquee_bulletin from 'src/base-h5/components/marquee/marquee_bulletin.vue'
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
-import { i18n_t } from "src/boot/i18n.js";
+import { t } from "src/boot/i18n.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 //国际化
 
@@ -112,7 +112,7 @@ export default defineComponent({
         set_chatroom_id(chatRoomId);
         onLiveChatLogin();   // 登录聊天室
       } else {
-        set_toast({ txt: i18n_t("chatroom.room_not_open") });
+        set_toast({ txt: '聊天室未开启' });
       }
       // #TODO emit
       useMittOn(MITT_TYPES.EMIT_REFRESH_CHATROOM, onLiveChatLogin)

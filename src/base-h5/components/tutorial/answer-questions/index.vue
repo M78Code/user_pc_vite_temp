@@ -10,8 +10,8 @@
                 <!-- 题目 -->
                 <div class="ht-topic">
                     <div class="ht-topic-text">
-                        <div class="ht-topic-type">{{ !item.questionsType && i18n_t('app_h5.handicap_tutorial.single') }}</div>
-                        <span>{{ i18n_t('app_h5.handicap_tutorial.results_appear') }}：{{ item.homeTeam }}</span>
+                        <div class="ht-topic-type">{{ !item.questionsType && '单选' }}</div>
+                        <span>当出现这样的赛果：{{ item.homeTeam }}</span>
                         <div class="team-logo"></div>
                         <span>{{ item.matchResult }}</span>
                         <div class="team-logo"></div>
@@ -48,7 +48,7 @@
                 <div v-if="state.afterAnswerQuestion" class="ht-answer-result">
                     <div :class="['result', state.afterAnswerQuestion === 'success' ? 'win' : 'fail']">
                         <div class="result-icon"></div>
-                        <div class="text-style">{{state.afterAnswerQuestion === 'success' ? i18n_t('app_h5.handicap_tutorial.red_list') : i18n_t('app_h5.handicap_tutorial.not_master')}}</div>
+                        <div class="text-style">{{state.afterAnswerQuestion === 'success' ? '恭喜红单' : '很遗憾，您还未完全掌握'}}</div>
                     </div>
 
                     <div class="info">
@@ -59,11 +59,11 @@
             </div>
         </template>
 
-        <div v-if="state.currentAnswer === props.questionsData.length && state.recordSuccess === props.questionsData.length" class="ht-congrats">{{ i18n_t('app_h5.handicap_tutorial.football_master') }}</div>
+        <div v-if="state.currentAnswer === props.questionsData.length && state.recordSuccess === props.questionsData.length" class="ht-congrats">恭喜，您已进阶为足球大师</div>
 
         <div v-if="state.afterAnswerQuestion" class="ht-handle">
             <div class="ht-button" @click='go_back'>
-                {{ i18n_t('app_h5.handicap_tutorial.actual_combat') }}
+                实战来一注
             </div>
             <div class="ht-button default" @click="nextQuestionsHandle">
                 {{state.currentAnswer === props.questionsData.length && state.recordSuccess === props.questionsData.length ? '返回主页' : '下一题'}}

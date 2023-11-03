@@ -48,10 +48,10 @@
           :class="{'first-t':index == 0}">
           <div class="limit-t-i row justify-center items-center">
             <template v-if="!['zh', 'tw'].includes(lang)">
-              {{(new Date(+hp.hmed)).Format(i18n_t('time7'))}} {{ i18n_t('match_main.cut_off')}}
+              {{(new Date(+hp.hmed)).Format(i18n_t('time7'))}} {{ $t('match_main.cut_off')}}
             </template>
             <template v-else>
-              {{(new Date(+hp.hmed)).Format(i18n_t('time7'))}} {{ i18n_t('match_main.cut_off')}}
+              {{(new Date(+hp.hmed)).Format(i18n_t('time7'))}} {{ $t('match_main.cut_off')}}
             </template>
           </div>
         </div>

@@ -3,7 +3,7 @@
     <div class="q-mx-md">
       <div class="text-bol half-border-bottom">
         <!-- 搜索历史 -->
-        {{ i18n_t('search.search_history') }}
+        {{ $t('search.search_history') }}
       </div>
       <!-- h5的搜索历史记录只显示3个，做兜底处理，免得后台返回多了，样式错乱，编辑器报错不用管 -->
       <div v-for="(item, index) in history_list" :key="index" class="historyItem half-border-bottom" v-show="index <= 2">
@@ -16,14 +16,14 @@
       </div>
       <div class="text-center clear-all remove-history-item" @click="remove_history_item('')">
         <!-- 清除搜索记录 -->
-        {{ i18n_t('search.clear_search_history') }}
+        {{ $t('search.clear_search_history') }}
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { SearchData, LOCAL_PROJECT_FILE_PREFIX, i18n_t } from "src/core/index.js";
+import { SearchData, LOCAL_PROJECT_FILE_PREFIX } from "src/core/";
 export default {
   name: 'searchHistory',
   props: {

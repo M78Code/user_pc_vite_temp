@@ -309,7 +309,6 @@
     "send_err_hint2": "죄송합니다! 당신은 너무 빨리 말합니다",
     "post_bet_info2": "참고: 이 페이지에는 생방송 룸의 관련 이벤트 베팅 목록만 표시되며, 선택 후 게시 목록을 게시할 수 있습니다",
     "read_more": "메시지 더 보기",
-    "room_not_open": "Chat room is not open",
     "pop_send_hint4": null,
     "mute_hint4": null,
     "pop_send_hint5": null,
@@ -357,7 +356,6 @@
     "title_188": "아시아 버전",
     "title_panda": "유럽 버전",
     "under": "아래의",
-    "return": "return",
     "unit": "위안",
     "virtual_sports": "가상 스포츠"
   },

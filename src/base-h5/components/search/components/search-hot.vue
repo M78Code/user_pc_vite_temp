@@ -10,7 +10,7 @@
     <div class="q-mx-md">
       <div class="text-bol half-border-bottom">
         <!-- 热门搜索 -->
-        {{ i18n_t('search.search_hot') }}
+        {{ $t('search.search_hot') }}
       </div>
       <!-- 热门内容 -->
       <div class="row">
@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import { SearchData, i18n_t } from "src/core/index.js";
+import { SearchData } from "src/core/";
 
 export default {
   name: 'searchHot',

@@ -308,7 +308,6 @@
     "post_bet_info2": "NB: laman ini hanya menampilkan tiket dari live streaming bersangkutan. Setelah memilih dapat langsung diposting",
     "read_more": "Cek info lebih lanjut",
     "send_err_hint1": "Silakan input konten chat",
-    "room_not_open": "Chat room is not open",
     "send_err_hint2": "Maaf, Anda berbicara terlalu cepat"
   },
   "collect": {
@@ -348,7 +347,6 @@
     "title_188": "Versi Asia",
     "title_panda": "Versi Eropa",
     "under": "2H",
-    "return": "return",
     "unit": "￥",
     "virtual_sports": "VR Sports"
   },
