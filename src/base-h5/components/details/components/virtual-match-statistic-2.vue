@@ -112,6 +112,7 @@ export default defineComponent({
   .bg-card-startistic{
     background: var(--q-gb-bg-c-15);
     border-radius: 4px;
+    padding: 0.08rem;
   }
   .score-list {
     // margin-top: 0.2rem;
@@ -159,20 +160,22 @@ export default defineComponent({
 
   .result-wrap {
     margin-top: 0.2rem;
-    padding: 0 0.7rem;
+    // padding: 0 0.7rem;
     padding-bottom: 0.35rem;
 
     .item {
       flex: 1;
-
+      background-color: var(--q-gb-bg-c-18);
       .result-list {
         margin-top: 0.08rem;
-
+        font-size: 0.10rem;
+        display: flex;
+        justify-content: center;
         .result-item {
           border-radius: 2px;
+          margin: 0.02rem;
           text-align: center;
-          margin: 0 0.01rem;
-          width: 0.16rem;
+          width: 0.20rem;
           height: 0.16rem;
         }
       }
