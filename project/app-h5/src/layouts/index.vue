@@ -103,7 +103,7 @@ const get_combine_tips_show = ref(false); // 合并投注项提示弹框 弹窗
 const record_show = ref(false);
 const lastTouchEnd = ref(0);
 const select_dialog = ref(false)//暂时筛选窗口
-const setting_dialog = ref(false)//暂时筛选窗口
+const setting_dialog = ref(false)//暂时设置窗口
 const activity_status = ref(false)//首页活动弹框
 const activity_layerimg = ref("") //首页活动图
 const userBannerTimer = ref(5);
@@ -219,14 +219,14 @@ onMounted(() => {
   BetData.set_device_type(1)
 });
 const mitt_list = [
-  // 监听搜索框状态
+  // 监听设置框状态
   useMittOn(MITT_TYPES.EMIT_CHANGE_SETTING_SHOW, function (value) {
     // this.select_cleck = type
     //   this.select_dialog = val
     setting_dialog.value = value
   }).off,
-  // 监听搜索框状态
-  useMittOn(MITT_TYPES.EMIT_CHANGE_SELECT_DIALOG, function (value) {
+   // 监听搜索筛选框状态
+   useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
     // this.select_cleck = type
     //   this.select_dialog = val
     select_dialog.value = value
