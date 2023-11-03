@@ -15,6 +15,9 @@
       match-container-main-template7 ：   yazhou-h5   新手版
       match-container-main-template8 ：  app-h5       新手版
 
+      match-container-main-template9 ：   yazhou-h5   赛果
+      match-container-main-template10 ：  app-h5      赛果
+
   second 目录： 存放相关次要 玩法组件
       match-container-second-template1 :   yazhou-h5  次要玩法
       match-container-second-template2 :   app-h5    次要玩法
