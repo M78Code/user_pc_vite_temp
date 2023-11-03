@@ -473,9 +473,6 @@ onUnmounted(() => {
   position: absolute;
   top: 0;
   left: 0;
-
-
-  height: 0.12rem;
   display: flex;
   align-items: baseline;
   color: var(--q-color-fs-color-30);

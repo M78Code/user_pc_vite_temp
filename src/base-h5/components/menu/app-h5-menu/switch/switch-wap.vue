@@ -18,6 +18,7 @@ import { ref, computed, onUnmounted, watch } from "vue";
 import { theme_list, theme_map } from "src/core/theme/"
 import UserCtr from "src/core/user-config/user-ctr.js"
 import { lang } from "src/base-h5/mixin/userctr";
+
 /**
  * 首页switch wap
  */
@@ -29,7 +30,9 @@ const switchData = [
                 name:"专业版",
                 val:0,
                 changeFun:(val)=>{
-                    return console.log(`执行专业版-${val}`)
+                    // 1 新手版 2 专业版
+                    const value = val === 1 ? 1 : 2
+                    UserCtr.set_standard_edition(value)
                 }
             },
             {

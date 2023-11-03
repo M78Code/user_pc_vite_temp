@@ -86,7 +86,7 @@ class UserCtr {
     //  用户余额是否展示状态
     this.show_balance = false;
     //用户版本 移动端有简版 1 和标准版 2
-    this.standard_edition = 2
+    this.standard_edition = 1
     //登录弹窗状态
     this.show_login_popup = false;
     // 是否首次登录
@@ -285,9 +285,8 @@ class UserCtr {
    * 2标准 1简易
   */
   set_standard_edition(v) {
-    let edition = this.standard_edition == 2 ? 1 : 2;
-    this.standard_edition = edition;
-    useMittEmit(MITT_TYPES.EMIT_STANDARD_EDITION_CHANGE, edition)
+    this.standard_edition = v;
+    useMittEmit(MITT_TYPES.EMIT_STANDARD_EDITION_CHANGE, this.standard_edition)
     // set_newer_standard_edition(edition);
     // set_secondary_unfold_map({}); // 清空次要玩法折叠的记录，收起来
     // // 发送埋点
