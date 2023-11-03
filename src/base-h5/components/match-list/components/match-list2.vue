@@ -47,7 +47,7 @@ import MatchContainerMainTemplate2 from "src/base-h5/components/match-container/
 // app-h5 冠军组件
 import MatchContainerMainTemplate4 from "src/base-h5/components/match-container/main/match-container-main-template4.vue"; 
 // app-h5 新手版
-import MatchContainerMainTemplate8 from "src/base-h5/components/match-container/main/match-container-main-template8.vue"; 
+// import MatchContainerMainTemplate8 from "src/base-h5/components/match-container/main/match-container-main-template8.vue"; 
 
 // 赛事滚动组件
 import ScrollWrapper from 'src/base-h5/components/scroll-wraper/scroll-wrapper.vue'; 
