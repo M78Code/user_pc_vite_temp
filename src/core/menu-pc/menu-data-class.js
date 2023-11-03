@@ -103,7 +103,6 @@ class MenuData {
       type_name:'',
       pre_name:''
     }
-    this.current_euid = ''
   }
 
   // 设置 菜单的版本变化
@@ -259,7 +258,6 @@ class MenuData {
    * 获取当前的列表的默认的 模板配置
    */
    get_match_tpl_number() {
-    let euid = this.current_euid;
     // 根据当前的菜单id 取到对应的模板id
     let current_template_id = computed_menu_to_match_templte(euid)
     return current_template_id
@@ -319,7 +317,6 @@ class MenuData {
         version: Date.now(),
       };
     }
-    this.current_euid = lodash.get(this.left_menu_result, 'lv2_mi')
     MATCH_LIST_TEMPLATE_CONFIG[`template_${this.get_match_tpl_number()}_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'))
     if ([2, 3].includes(Number(obj.root))) {
       // 角球
@@ -380,7 +377,6 @@ class MenuData {
       version: Date.now(),
     };
     this.menu_root_show_shoucang = obj.root;
-    this.current_euid = obj.mif
     MATCH_LIST_TEMPLATE_CONFIG[`template_${this.get_match_tpl_number()}_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'))
     console.error(
       "set_mid_menu_result-------",
