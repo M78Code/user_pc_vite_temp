@@ -13,11 +13,11 @@ class MatchListCardDataClass {
     this.scroll_top = 0;
     // 所有卡片对象
     this.all_card_obj = {};
-    this.list_version =  ref('1') 
+    this.list_version = ref('1')
     //当前列表的卡片key列表  不包含赛事卡片
-    this.match_list_card_key_arr =    [
+    this.match_list_card_key_arr = [
       // 'card_key'
-    ] ;
+    ];
     this.match_list_style_info = ref({})
     // 赛种ID到card_key的映射对象
     this.csid_to_card_key_obj = {
@@ -62,14 +62,14 @@ class MatchListCardDataClass {
     };
   }
   set_all_card_obj({
-    all_card_obj,play_to_card_key_arr,no_start_to_card_key_arr,match_list_card_key_arr,csid_to_card_key_obj
-  }){
+    all_card_obj, play_to_card_key_arr, no_start_to_card_key_arr, match_list_card_key_arr, csid_to_card_key_obj
+  }) {
     // 合并所有卡片样式对象
-    lodash.merge(this.all_card_obj,all_card_obj)
-    play_to_card_key_arr&&(this.play_to_card_key_arr=play_to_card_key_arr)
-    no_start_to_card_key_arr&&(this.no_start_to_card_key_arr=no_start_to_card_key_arr)
-    match_list_card_key_arr&&(this.match_list_card_key_arr=match_list_card_key_arr)
-    csid_to_card_key_obj&&(this.csid_to_card_key_obj=csid_to_card_key_obj)
+    lodash.merge(this.all_card_obj, all_card_obj)
+    play_to_card_key_arr && (this.play_to_card_key_arr = play_to_card_key_arr)
+    no_start_to_card_key_arr && (this.no_start_to_card_key_arr = no_start_to_card_key_arr)
+    match_list_card_key_arr && (this.match_list_card_key_arr = match_list_card_key_arr)
+    csid_to_card_key_obj && (this.csid_to_card_key_obj = csid_to_card_key_obj)
   }
   // 设置 的列表scroll_top
   set_scroll_top(scroll_top) {
@@ -81,7 +81,11 @@ class MatchListCardDataClass {
   }
 
   set_list_version() {
-    this.list_version.value = Date.now() ;    
+    this.list_version.value = Date.now();
+  }
+  //获取单个卡片对象
+  get_card_obj_bymid(mid) {
+    return this.all_card_obj[mid + '_']
   }
 }
 export default new MatchListCardDataClass();

@@ -115,7 +115,7 @@ const props = defineProps({
   }
 })
 
-let match_style_obj = MatchListCardDataClass.all_card_obj[lodash.get(props, 'card_style_obj.mid')+'_']
+let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(lodash.get(props, 'card_style_obj.mid'))
 const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`].width_config
 // 获取菜单类型
 if (!lodash.get(props, 'card_style_obj.league_obj.csid') && ['1', '500'].includes(menu_config.menu_root)) {

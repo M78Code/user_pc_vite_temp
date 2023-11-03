@@ -87,9 +87,9 @@ const props = defineProps({
   },
 });
 // 卡片样式对象
-let card_style_obj = MatchListCardDataClass.all_card_obj[props.card_key];
+let card_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.card_key);
 watch(() => MatchListCardDataClass.list_version.value, () => {
-  card_style_obj = MatchListCardDataClass.all_card_obj[props.card_key];
+  card_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.card_key);
 })
 let sticky_top = ref(null);
 // 组件是否加载完成
