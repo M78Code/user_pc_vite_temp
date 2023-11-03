@@ -11,25 +11,25 @@
           <template v-for="(item, index) in presettleorderdetail_data" :key="index">
             <!-- 注单被取消 -->
             <template v-if="item.orderStatus == 2">
-              <p>提前兑现失败</p>
+              <p>{{ i18n_t('app_h5.cathectic.cash_failed') }}</p>
               <div class="body-main">
                 <!-- 结算本金 -->
-                <p><label>{{ item.remainingBetAmount ? t('early.list7') : t('early.list2') }}：</label> <span>0.00</span></p>
+                <p><label>{{ item.remainingBetAmount ? i18n_t('early.list7') : i18n_t('early.list2') }}：</label> <span>0.00</span></p>
                 <!-- 输/赢 -->
-                <p><label>{{ t('early.list5') }}：</label> <span>0.00</span></p>
+                <p><label>{{ i18n_t('early.list5') }}：</label> <span>0.00</span></p>
                 <!-- 返还金额 -->
-                <p><label>{{ t('early.list4') }}：</label> <span>0.00</span></p>
+                <p><label>{{ i18n_t('early.list4') }}：</label> <span>0.00</span></p>
               </div>              
             </template>
             <template v-else>
               <p>全部提前兑现成功</p>
               <div class="body-main">
                 <!-- 结算本金 -->
-                <p><label>{{ item.remainingBetAmount ? t('early.list7') : t('early.list2') }}：</label> <span>{{ (+item.preBetAmount).toFixed(2) }}</span></p>
+                <p><label>{{ item.remainingBetAmount ? i18n_t('early.list7') : i18n_t('early.list2') }}：</label> <span>{{ (+item.preBetAmount).toFixed(2) }}</span></p>
                 <!-- 输/赢 -->
-                <p><label>{{ t('early.list5') }}：</label> <span>{{ (+item.profit).toFixed(2) }}</span></p>
+                <p><label>{{ i18n_t('early.list5') }}：</label> <span>{{ (+item.profit).toFixed(2) }}</span></p>
                 <!-- 返还金额 -->
-                <p><label>{{ t('early.list4') }}：</label> <span>{{ (+item.settleAmount).toFixed(2) }}</span></p>
+                <p><label>{{ i18n_t('early.list4') }}：</label> <span>{{ (+item.settleAmount).toFixed(2) }}</span></p>
               </div>
             </template>
           </template>
@@ -46,7 +46,7 @@
 import BetRecordClass from "src/core/bet-record/bet-record.js";
 import earlySettleTips from "src/base-h5/components/common/cathectic-item/app-h5/early-settle-tips.vue";
 import { api_betting } from "src/api/index.js";
-import { utils,compute_css_obj, compute_local_project_file_path } from 'src/core/index.js'
+import { utils, i18n_t, compute_css_obj, compute_local_project_file_path } from 'src/core/index.js'
 import { ref, computed } from 'vue'
 const props = defineProps({
   orderNo: {

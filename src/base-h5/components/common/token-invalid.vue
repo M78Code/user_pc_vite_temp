@@ -4,15 +4,15 @@
     <div class="fixed-center">
       <div :class="token_bg" :style="{ 'background-image': `url(${token_bg_url})` }"></div>
       <div class="txt-info">
-        <div class="dear-user">{{ t("token_inv.dear_user") }}</div>
+        <div class="dear-user">{{ i18n_t("token_inv.dear_user") }}</div>
         <!-- 您的登录信息已失效, 请关闭本页面 -->
-        <p>{{ t("token_inv.token_dis") }}</p>
+        <p>{{ i18n_t("token_inv.token_dis") }}</p>
         <!-- 再次重新进入本场馆 -->
-        <p>{{ t("token_inv.reaccess") }}</p>
+        <p>{{ i18n_t("token_inv.reaccess") }}</p>
         <!-- 祝您游戏愉快 -->
-        <p>{{ t("token_inv.play_happily") }}</p>
+        <p>{{ i18n_t("token_inv.play_happily") }}</p>
         <!-- 知道了 -->
-        <p class="know" @click="isgo_vender_url(true)">{{ t("token_inv.confrim") }}</p>
+        <p class="know" @click="isgo_vender_url(true)">{{ i18n_t("token_inv.confrim") }}</p>
       </div>
     </div>
   </div>
@@ -24,7 +24,7 @@ import { useMittEmit, MITT_TYPES } from "src/core/mitt"
 // TODO:
 // import { mapMutations, mapGetters } from 'vuex';
 import { invalid_url } from 'src/core/index.js'
-import { t } from "src/boot/i18n.js";;
+import { i18n_t } from "src/boot/i18n.js";;
 //国际化
 
 

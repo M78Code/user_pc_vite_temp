@@ -7,7 +7,7 @@
     <!--  -->
     <SwitchWap />
     <!--  -->
-    <SearchTab @searchHandle="select_dialog = true"/>
+    <SearchTab />
   </template>
 </template>
 

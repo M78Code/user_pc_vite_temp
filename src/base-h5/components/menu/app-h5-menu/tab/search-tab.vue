@@ -27,6 +27,7 @@
 import { ref } from "vue";
 import search from "./img/search.svg";
 import {scrollMenu} from "../utils";
+import { useMittEmit, MITT_TYPES } from "src/core/index.js";
 import {  menu_lv2 } from 'src/base-h5/mixin/menu.js'
 const props = defineProps({
     dataList: {
@@ -75,8 +76,6 @@ const props = defineProps({
     }
 });
 const activeOn = ref(props.defaultVal || 0);//默认值
-const emit = defineEmits(["searchHandle"]);
-
 /**
  * 选中事件
  * @param {*} val 
@@ -92,8 +91,11 @@ const changeTab = (val,i,event) => {
  * 搜索足球事件
  */
 const searchClick = () => {
-    console.log(`搜索足球`)
-    emit('searchHandle')
+    // console.log(`搜索足球`)
+    useMittEmit(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, {
+      open: true,
+    });
+    // emit('searchHandle')
 
 }
 </script>
