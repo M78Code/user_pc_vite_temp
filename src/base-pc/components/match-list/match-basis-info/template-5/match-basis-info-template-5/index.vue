@@ -91,7 +91,7 @@ const props = {
   }
 }
 
-let match_style_obj = MatchListCardDataClass.all_card_obj[props.match.mid+'_']
+let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.match.mid)
 // 赛事模板宽度
 const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`].width_config
 
