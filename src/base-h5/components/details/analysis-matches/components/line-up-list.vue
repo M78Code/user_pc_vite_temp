@@ -316,5 +316,5 @@ import { LOCAL_PROJECT_FILE_PREFIX } from 'src/core'
 </script>
 
 <style lang="scss" scoped>
-@import "../styles/line-up.scss"
+@import "../styles/line-up-list.scss";
 </style>
