@@ -10,7 +10,7 @@
         <template v-if="match_item">
           <div class="data_mid"> <!--此data-mid用于分频订阅赛事,请勿修改-->
             <!-- 专业版 -->
-            <template v-if="true">
+            <template v-if="standard_edition === 2">
               <!--冠军玩法-->
               <template v-if="is_kemp">
                 <MatchContainerMainTemplate4

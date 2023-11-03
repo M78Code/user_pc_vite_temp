@@ -445,7 +445,7 @@ const ol_list = computed(() => {
   let ol_list_custom = [];
   if (found) {
     Object.assign(hp_item.value, found);
-
+    if (!found.hl) return
     let f_hl_item = found.hl[0];
     if (found.hl && f_hl_item) {
       hl_hs.value = f_hl_item.hs;
