@@ -228,7 +228,7 @@ const set_win_money = () => {
  */
  const input_click = (evnet) => {
   event.preventDefault()
-  BetViewDataClass.set_bet_keyboard_show(true)
+  BetData.set_bet_keyboard_show(true)
 
   if ([4, 5].includes(+get_bet_status)) { return };
 

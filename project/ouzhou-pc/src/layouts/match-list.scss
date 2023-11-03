@@ -1,0 +1,1150 @@
+/*
+ * @Author: Cable
+ * @Date: 2020-09-15 16:05:21
+ * @Description: 赛事列表夜间版样式
+ */
+
+
+
+
+body {
+
+  /* 列表 */
+  .yb-match-list {
+    // &::before {
+    //   content: '';
+    //   position: absolute;
+    //   right: 11px;
+    //   z-index: 499;
+    //   top: 0;
+    //   left: 0;
+    //   height: 6px;
+    //   background-color: var(--q-gb-bg-c-11);
+    // }
+
+    /*顶部下横线*/
+    .scroll-fixed-header {
+      border-bottom: 0;
+    }
+
+    /**电子竞技头部*/
+    &.match-tplesports {
+
+      /*顶部下横线*/
+      .scroll-fixed-header {
+        .c-esports-header {
+          border-radius: 0 0 6px 6px;
+          z-index: -1;
+          position: relative;
+
+          .date-wrap {
+            border-radius: 0 0 6px 6px;
+            border: 1px solid var(--q-gb-bg-c-9);
+            border-top: 0;
+          }
+
+          &::after {
+            content: "";
+            position: absolute;
+            bottom: -4px;
+            height: 10px;
+            width: 100%;
+            background-color: var(--q-gb-bg-c-11);
+            z-index: -1;
+          }
+        }
+      }
+    }
+
+
+    &:after {
+      background-color: var(--q-gb-bg-c-22);
+      border-left: none;
+    }
+
+
+    /*  详情页热门赛事 */
+    .detais-hot-head {
+      color: var(--q-gb-t-c-1);
+    }
+
+    /* 无数据边框 */
+    .scroll-fixed-header.no-data {
+      border-bottom: 1px solid var(--q-gb-bg-c-5);
+    }
+
+    /*  赛事边框、背景色样式 */
+    .c-match-item {
+      border-radius: 6px;
+      border: 1px solid var(--q-gb-bg-c-9);
+      background-color: var(--q-gb-bd-c-13);
+      overflow: hidden;
+
+      //让球              虚拟足球     曲棍球和联合橄榄球 比分  独赢/让球胜平负   电竞背景
+      &.match-tpl1-bg,
+      &.virtual-football,
+      &.tpl-20,
+      &.tpl-21,
+      &.tpl-22,
+      &.tpl-24,
+      &.tpl-25,
+      &.tpl-esports-bg {
+        .c-match-handicap {
+          .handicap-col:nth-of-type(n+4):nth-of-type(-n+6) {
+            .bet-item-wrap {
+              background-color: var(--q-gb-bg-c-14);
+            }
+          }
+        }
+      }
+      .compose-tpl-bg {
+        .handicap-col:nth-of-type(n+5):nth-of-type(-n+8) {
+          .bet-item-wrap {
+            background: none !important;
+          }
+        }
+      }
+      .high_light {
+        background-color: var(--q-gb-bg-c-14) !important;
+      }
+      // 5分钟玩法 早盘
+      .min5-early-handicap {
+        .handicap-col:nth-of-type(n+3):nth-of-type(-n+4) {
+          .bet-item-wrap {
+            background-color: var(--q-gb-bg-c-14) !important;
+          }
+        }
+        &.unfold_multi_column {
+          .handicap-value-text {
+            min-width: 70px;
+          }
+        }
+        .handicap-value-text {
+          min-width: 76px;
+          text-align: right!important;
+        }
+      }
+      // 5分钟滚球玩法 
+      .min5-roll-handicap {
+        &.unfold_multi_column {
+          .handicap-value-text {
+            min-width: 70px;
+          }
+        }
+        .handicap-value-text {
+          min-width: 76px;
+          text-align: right!important;
+        }
+      }
+      .not-bg-handicap {
+        .handicap-col {
+          .bet-item-wrap {
+            background: none !important;
+          }
+        }
+      }
+      //进球单双
+      &.tpl-3 {
+        .c-match-handicap {
+          .handicap-col:nth-of-type(n+3):nth-of-type(-n+4) {
+            .bet-item-wrap {
+              background-color: var(--q-gb-bg-c-14);
+              ;
+            }
+          }
+        }
+      }
+
+      &.virtual-match-tpl2 {
+        .team-wrap {
+          .team-item {
+            border-top: 1px solid var(--q-gb-bd-c-8);
+
+            &:first-child {
+              border-top: 0;
+            }
+          }
+        }
+
+        .more-row {
+          border-top: 1px solid var(--q-gb-bd-c-8);
+        }
+
+        .c-match-handicap,
+        .bet-item-wrap {
+          border-right: none;
+        }
+
+        .media-col {
+          .media-item {
+            border-top: 1px solid var(--q-gb-bd-c-8);
+
+            &:first-child {
+              border-top: 0;
+            }
+          }
+        }
+      }
+
+      .match-handicap-item {
+
+        /* 串 */
+        .match-parlay {
+          position: absolute;
+          top: 10px;
+          text-align: center;
+          width: 100%;
+          
+          >div{display: inline-block;overflow:hidden}
+          .wd,.wd1{color: var(--q-gb-bg-c-16);}
+          .wd{margin-right: 3px;}
+          .wd1{width: 10px;}
+        }
+
+        .c-match-process {
+          .jingcai {
+            color: var(--q-gb-bd-c-11);
+          }
+        }
+
+        &:first-child {
+          .basic-col {
+            border-top: none;
+          }
+
+          .bet-item-wrap:first-child {
+            border-top: none;
+          }
+        }
+
+        .no-wrap {
+          .handicap-col:last-child {
+            .bet-item-wrap {
+              border-right: none;
+            }
+          }
+        }
+      }
+
+      .process-col {
+        border-right: 1px solid var(--q-gb-bd-c-8);
+      }
+
+      .basic-col {
+        border-right: 1px solid var(--q-gb-bd-c-8);
+        border-top: 1px solid var(--q-gb-bd-c-8);
+      }
+
+      .c-match-handicap {
+        border-right: 1px solid var(--q-gb-bd-c-8);
+      }
+
+      .bet-item-wrap {
+        border-top: 0.5px solid var(--q-gb-bd-c-8);
+        border-right: 0.5px solid var(--q-gb-bd-c-8);
+
+        &:first-child {
+          border-top: 0.5px solid var(--q-gb-bd-c-8);
+        }
+
+        &:last-child {
+          border-bottom: none;
+        }
+      }
+
+      .score-more {
+        border-top: 1px solid var(--q-gb-bd-c-8);
+
+        .stage-score {
+          .item:last-child {
+            color: var(--q-gb-bd-c-11);
+          }
+        }
+      }
+
+      .action-wrap {
+        border-right: 1px solid var(--q-gb-bd-c-8);
+      }
+
+      .other-play-tab {
+        .arrow-wrap {
+          border-right: 1px solid var(--q-gb-bd-c-8);
+        }
+      }
+
+      .fifteen-box .row {
+        border-right: 1px solid var(--q-gb-bd-c-8);
+
+        .tab-tilte-bg {
+          background-color: var(--q-gb-bg-c-14);
+        }
+      }
+    }
+
+
+    .process-name {
+      color: var(--q-gb-bd-c-2);
+    }
+
+    /*  竞彩足球样式 */
+    .jingcai {
+      .basic-col {
+        color: var(--q-gb-bd-c-11);
+
+        .font-vs {
+          color: var(--q-gb-bd-c-11);
+        }
+
+        .score-wrap {
+          background-color: var(--q-gb-bg-c-14);
+
+          .onset-team {
+            &:after {
+              background-color: #6dd400;
+            }
+          }
+
+          .score {
+            color: var(--q-gb-bd-c-11);
+          }
+        }
+      }
+    }
+
+    /* 其他背景样式 */
+    .c-match-item {
+      .process-col {
+        color: var(--q-gb-bg-c-2);
+      }
+
+      .basic-col {
+        .basic-wrap {
+          position: relative;
+
+          .tips-icon {
+            background-image: var(--qq--bg-image-url8);
+
+            &:hover {
+              background-image: var(--qq--bg-image-url9);
+            }
+          }
+
+          // 进球
+          // .gif-text {
+          //   color: var(--qq--y0-text-color2);
+          // }
+
+          /*  发球方 */
+          .serve-ball {
+
+            &.home .home,
+            &.away .away {
+              background-color: var(--q-gb-bd-c-11);
+            }
+
+            .point {
+              background-color: var(---q-gb-bd-c-7);
+            }
+          }
+
+          .team-wrap {
+            background-color: var(--q-gb-bg-c-8);
+          }
+
+          .team-item {
+            .team-name {
+              &.bold {
+                color: var(--q-gb-t-c-12);
+              }
+            }
+
+            .red-ball {
+              background: #ba0e0e;
+              color: var(--q-gb-t-c-18);
+            }
+
+            .score {
+              color: var(--q-gb-bd-c-11);
+              font-weight: 700;
+
+              &.score-cur {
+                color: var(--q-gb-bg-c-8);
+              }
+
+              &.score-game {
+                color: var(--q-gb-bd-c-3);
+              }
+            }
+            .scoring {
+              position: absolute;
+              right: 0;
+              top: 50%;
+              transform: translateY(-50%);
+            }
+          }
+
+          &:hover {
+
+            .team-name,
+            .up-half-text {
+              color: var(--q-gb-bd-c-11);
+
+              &.bold {
+                color: var(--q-gb-t-c-12) !important;
+              }
+            }
+          }
+
+          .play-count-wrap {
+            .play-count {
+              color: var(--q-gb-bd-c-11);
+            }
+            &:hover {
+              .icon-triangle-right {
+                &:before {
+                  color: var(--q-gb-bg-c-8);
+                }
+              }
+            }
+          }
+        }
+      }
+
+      .match-handicap-item-wrap {
+        .other-handicap-item {
+          .handicap-col {
+            &:last-child {
+              .bet-item-wrap {
+                border-right: none;
+              }
+            }
+            &:nth-child(3) {
+              .col3 {
+                border-right: none;
+              }
+            }
+          }
+        }
+      }
+      .unfold_multi_column {
+        .handicap-col {
+          &:nth-child(3) {
+            .col3 {
+              border-right: 0.5px solid var(--q-gb-bd-c-8) !important;
+            }
+          }
+        }
+      }
+    }
+
+    .highlight-t {
+      color: var(--q-gb-bd-c-11) !important;
+    }
+
+    /*  足球其他玩法（角球、罚牌等） 玩法标题 边框 颜色 */
+    .c-match-item {
+      .other-play-tab {
+        .yb-icon-arrow {
+          &::before {
+            border-color: var(--q-gb-bd-c-11);
+          }
+        }
+        .play-title.col {
+          border-top: .5px solid var(--q-gb-bd-c-8);
+          background-color: var(--q-gb-bd-c-13);
+          position: relative;
+          .tab-wrap {
+            overflow: unset;
+            font-size: 12px;
+            color: var(--q-gb-bg-c-2);
+            height: 32px !important;
+
+            .item-wrap {
+              width: auto !important;
+              align-items: center;
+
+              .line-wrap {
+                display: none;
+              }
+
+              .tab-item {
+                font-size: 12px;
+                font-weight: 500;
+                min-width: 70px;
+                height: 24px;
+                line-height: 22px;
+                border: 0.5px solid var(--q-gb-bd-c-8);
+                border-radius: 17px;
+                margin-right: 6px;
+
+                &.active {
+                  color: var(--q-gb-bd-c-11);
+                  background-color: var(--q-gb-bg-c-19);
+                  border: 0.5px solid var(--q-gb-bd-c-11) !important;
+                }
+              }
+            }
+          }
+        }
+        .media-col{
+          border-left: 1px solid var(--q-gb-bd-c-8);
+        }
+      }
+
+      .media-col {
+        .media-item {
+          &:nth-of-type(odd) {
+            background-color: var(--q-gb-bg-c-11);
+          }
+        }
+      }
+    }
+
+    /*  赛事类型 */
+    .v-scroll-content .matc-type-card {
+      // &::before {
+      //   content: '';
+      //   position: absolute;
+      //   height: 10px;
+      //   width: 100%;
+      //   left: 0;
+      //   bottom: 0;
+      //   background-color: var(--q-gb-bg-c-11);
+      //   z-index: 0;
+      // }
+
+      &:nth-of-type(2) {
+        .match-type {
+          border-radius: 0 0 6px 6px;
+          border: 1px solid var(--q-gb-bg-c-9);
+          border-top:0;
+        }
+      }
+    }
+
+    .today-champion-bg {
+      position: sticky;
+      top: 36px;
+      height: 0px;
+      z-index: 200;
+      &::before {
+        content: '';
+        position: absolute;
+        height: 20px;
+        width: 100%;
+        left: 0;
+        top: -5px;
+        background-color: var(--q-gb-bg-c-11);
+        z-index: 0;
+      }
+    }
+
+    &.virtual-list {
+      .scroll-fixed-header {
+        border-radius: 6px;
+        border-bottom: 1px solid transparent;
+
+        .c-virtual-list-header {
+          border-radius: 6px;
+          position: relative;
+          border: 1px solid var(--q-gb-bg-c-9);
+          overflow: hidden;
+
+          .list-header {
+            border-radius: 6px 6px 0 0;
+          }
+
+          .leagues-tabs {
+            border-radius: 0 0 6px 6px;
+
+            .tab-wrap {
+              .item-wrap {
+                .line-wrap {
+                  bottom: 0 !important;
+                }
+              }
+            }
+          }
+        }
+      }
+
+      .match-type.text-left {
+        border-radius: 0 0 6px 6px;
+      }
+    }
+
+    .match-type {
+      border: 1px solid var(--q-gb-bg-c-9);
+      background: var(--q-gb-bg-lg-7);
+      border-radius: 6px;
+      color: var(--q-gb-t-c-18);
+
+      &.match-type-even {
+        border: 1px solid var(--q-gb-bg-c-9);
+        background-image: var(--q-gb-bg-lg-7);
+      }
+    }
+
+    /*  联赛标题 */
+    .c-match-league {
+      &::before {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 6px;
+        background-color: var(--q-gb-bg-c-11);
+        left: 0;
+        top: 0;
+        z-index: -1;
+      }
+
+      .tr-match-head {
+        background-image: var(--q-gb-bg-lg-18);
+        border: 1px solid var(--q-gb-bg-c-9);
+        border-radius: 6px;
+
+        // color: var(--q-gb-bg-c-8)FFF;
+        .leagues-wrap {
+          color: var(--q-gb-bg-c-2);
+          font-weight: 550;
+        }
+
+        .icon-arrow {
+          &::before {
+            color: var(--q-gb-bd-c-11);
+          }
+        }
+
+        .play-name {
+          .col {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--q-gb-bg-c-2);
+            font-family: "PingFangSC-Medium";
+            border-left: .5px solid transparent;
+
+            &.bet-col3,
+            &.bet-col4,
+            &.bet-col5 {
+              background: var(--q-gb-bg-c-22);
+              // font-weight: 400;
+              &.no-bg {
+                background: none;
+              }
+
+              &.y0-col4 {
+                border-right: 1px solid var(--q-gb-bd-c-8);
+                border-left: 1px solid var(--q-gb-bd-c-8);
+              }
+            }
+
+            &.bet-col2,
+            &.bet-col5 {
+              border-right: .5px solid var(--q-gb-bd-c-8);
+            }
+          }
+
+          /*  投注项列 名称 */
+        }
+      }
+
+      .tr-col-name {
+        background: var(--q-gb-bg-c-11);
+        color: var(--q-gb-bg-c-2);
+        position: relative;
+
+        &::before {
+          content: '';
+          position: absolute;
+          width: 100%;
+          height: 6px;
+          background-color: var(--q-gb-bg-c-11);
+          left: 0;
+          top: -6px;
+          z-index: -1;
+        }
+      }
+    }
+
+    /*  模板18相关样式 */
+    .tpl-18 {
+      .play-wrap {
+        /*  玩法基本信息 */
+        .play-info {
+          background: var(--q-site-header-color-6);
+          // border-color: rgba(0, 0, 0, 0.15);
+          color: var(--q-gb-bd-c-11);
+        }
+      }
+
+      .bet-col {
+        border-top: 1px solid var(--q-gb-bd-c-8);
+        border-right: 1px solid var(--q-gb-bd-c-8);
+
+        &:nth-of-type(even) {
+          border-right: none;
+        }
+
+        .handicap-value {
+          &.color-highlight {
+            color: var(--q-gb-bd-c-3) !important;
+          }
+        }
+      }
+
+      //一个联赛多个小组赛
+      .play-wrap:not(:last-child) {
+        .bet-list-wrap {
+
+          .bet-col:nth-last-child(2),
+          .bet-col:last-child {
+            border-bottom: 1px solid var(--q-gb-bd-c-8);
+          }
+        }
+      }
+    }
+
+    .c-match-item {
+
+      /* 上垒图标 */
+      .score-more {
+        .result {
+          .yb-text-color1 {
+            color: var(--q-gb-bd-c-11);
+          }
+        }
+
+        .active-text {
+          color: var(--q-gb-bd-c-11);
+        }
+
+        .icon-on_base1 {
+
+          .path1,
+          .path2,
+          .path3 {
+            &:before {
+              color: var(--q-gb-bd-c-8);
+            }
+
+            &.active:before {
+              color: var(--q-gb-bd-c-11);
+            }
+          }
+        }
+      }
+    }
+
+    .v-scroll-item-hot:last-child {
+      border-bottom: 1px solid var(--q-gb-bd-c-8);
+    }
+
+    /*  联赛折叠样式 */
+    .leagues-fold .tr-match-head th {
+      border-bottom: 1px solid var(--q-gb-bg-c-11);
+    }
+
+    /* *** 单场赛事公共样式++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+    .list-card-inner {
+      border-top-color: var(--q-gb-bg-c-11);
+      color: var(--q-gb-bg-c-2);
+    }
+
+    /* *** 统计分析 ************************ -S */
+    .sr-link-icon-w {
+      transform: translateY(1px);
+
+      i.icon-signal {
+        &:before {
+          color: var(--q-gb-bg-c-8);
+        }
+      }
+
+      &:hover {
+        i.icon-signal {
+          &:before {
+            color: var(--q-gb-bd-c-11);
+          }
+        }
+      }
+    }
+
+    /* *** 蒙层 ************************ -E */
+    .refresh-mask {
+      background: var(--q-gb-bg-c-9);
+
+      .img-loading {
+        background-image: var(--qq--bg-image-url10);
+      }
+    }
+  }
+
+  .tips-box {
+    background: var(--q-gb-bg-c-11);
+    border: 1px solid var(--q-gb-bd-c-7);
+    color: var(--q-gb-bg-c-2);
+    .tips-title {
+      background: var(--q-gb-bg-c-14);
+      color: var(--q-gb-bg-c-2);
+
+      .tip-before {
+        &::before {
+          background: var(--q-gb-bd-c-11);
+        }
+      }
+    }
+     /* 15分钟内容 下边线及文字颜色 */
+    .tips-item {
+      border-bottom: 1px solid var(--q-gb-bd-c-7) !important;
+    }
+  }
+
+  /* 下拉箭头及边框 */
+  .fifteen-arrow {
+    border-bottom: 7px solid var(--q-gb-bd-c-7);
+
+    &::after {
+      border-color: transparent transparent var(--q-gb-bg-c-14);
+    }
+  }
+
+  /*  详情页强力推荐背景色，不要去掉 */
+  .hot-match-list {
+    .load-data-wrap {
+      //background: #181820;
+    }
+
+    /*** 虚拟体育 ++++++++++++++++++++++++++++++++++++ */
+  }
+
+  .leagues-bg {
+    background: var(--q-gb-bg-lg-15);
+  }
+
+  .virtual-list {
+    .media-col-wrap {
+      .icon-signal {
+        &:before {
+          color: #99a3b1;
+        }
+      }
+
+      .icon-play {
+        &:before {
+          color: #99a3b1;
+        }
+      }
+
+      &.active {
+        .icon-play {
+          &:before {
+            color: var(--q-gb-bg-c-16);
+          }
+        }
+      }
+    }
+
+    .sticky-wrap {
+      &:nth-of-type(2) {
+        &::before {
+          content: "";
+          position: absolute;
+          top: -10px;
+          height: 20px;
+          width: 100%;
+          background-color: var(--q-gb-bg-c-11);
+          z-index: -1;
+        }
+      }
+
+      .match-type {
+        border: 1px solid var(--q-gb-bg-c-9);
+        background-image: var(--q-gb-bg-lg-18);
+        color: var(--q-gb-bg-c-2);
+
+        .basic-width {
+
+          .icon-timer:before,
+          .timer-wrap {
+            color: var(--q-gb-bg-c-2);
+          }
+        }
+
+        .play-name {
+          width: 100%;
+          .col {
+            font-weight: 500;
+            border-left: .5px solid transparent;
+
+            &.bet-col3,
+            &.bet-col4,
+            &.bet-col5 {
+              background: var(--q-gb-bg-c-22);
+            }
+
+            &.bet-col2,
+            &.bet-col5 {
+              border-right: .5px solid var(--q-gb-bd-c-8);
+            }
+          }
+        }
+      }
+
+      /*  最后 60s */
+      &.header-highlight {
+        border-top: none;
+
+        .basic-width {
+
+          .timer-wrap,
+          .icon-timer:before {
+            color: var(--q-gb-bd-c-11);
+          }
+        }
+      }
+
+      /*  停止投注  */
+      &.match-status2 {
+        margin-bottom: 4px;
+
+        .match-type {
+            margin-top: 4px;
+          
+            background-image: var(--q-gb-bg-lg-1);
+            color: #ffffff;
+            border: 0;
+
+          .media-col-wrap {
+            .icon-play {
+              &:before {
+                color: #ffffff;
+                opacity: .8;
+              }
+            }
+
+            .icon-signal {
+              display: none;
+            }
+
+            &.active {
+              .icon-play {
+                &:before {
+                  opacity: 1;
+                }
+              }
+            }
+          }
+        }
+      }
+
+      .hscroll-handler {
+        &:hover {
+          background: var(--q-gb-bg-c-11);
+        }
+      }
+    }
+
+    .virtual-match-tpl1 {
+      .virtual-match-item {
+        .match-handicap-item {
+          border-top: 1px solid var(--q-gb-bd-c-8);
+        }
+      }
+    }
+
+    .media-col-wrap,
+    .virtual-match-tpl2 {
+      .team-wrap {
+        color: var(--q-gb-t-c-3);
+
+        .team-item {
+          &:nth-of-type(odd) {
+            background-color: var(--q-gb-bg-c-11);
+          }
+        }
+      }
+
+      .bet-item-wrap {
+        &:nth-of-type(odd) {
+          background-color: var(--q-gb-bg-c-11);
+        }
+      }
+
+      .more-row {
+        color: var(--q-gb-bg-c-2);
+        border-top: 1px solid var(--q-gb-bd-c-8);
+        background-color: var(--q-gb-bg-c-11);
+      }
+
+      .media-col {
+        .media-item {
+          &:nth-of-type(odd) {
+            background-color: var(--q-gb-bg-c-11);
+          }
+
+          border-top: 1px solid var(--q-gb-bd-c-8);
+        }
+      }
+
+      .c-match-startistic {
+        .item {
+          .name {
+            color: var(--q-gb-bd-c-8);
+          }
+        }
+      }
+    }
+  }
+
+  /* *** 投注项样式 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+  .main {
+    .c-bet-item {
+      color: var(--q-gb-bg-c-2);
+      /*  赔率升 */
+      &.show-odds-icon.up {
+        background-color: rgba(233, 61, 61, 0.05);
+
+        .odds {
+          color: #e93d3d !important;
+        }
+      }
+
+      /*  赔率降 */
+      &.show-odds-icon.down {
+        background-color: rgba(80, 192, 66, 0.05);
+
+        .odds {
+          color: #50c042 !important;
+        }
+      }
+      
+      .handicap-value {
+        color: var(--q-gb-bg-c-2);
+
+        &.color-highlight {
+          color: var(--q-gb-t-c-16);
+        }
+          
+        .handicap-more {
+          color: var(--q-gb-bg-c-2);
+        }
+      }
+      .lock {
+        background-image: var(--qq--bg-image-url11);
+      }
+
+      .icon-odds_up {
+        &:before {
+          color: var(--q-gb-t-c-3);
+        }
+      }
+
+      .icon-odds_down {
+        &:before {
+          color: #50c042;
+        }
+      }
+
+      .odds {
+        font-weight: 600;        
+        span {
+          &:hover {
+            background-color: var(--q-gb-bg-c-16);
+            border-radius: 2px;
+            color: #ffffff;
+            padding: 0 2px;
+          }
+        }
+      }
+
+      &.normal,
+      &.active,
+      &.lock {
+        &:hover {
+          background: var(--q-gb-bg-c-10);
+        }
+      }
+
+      /*  详情默认 */
+      &.active {
+        background: var(--q-gb-bg-c-16) !important;
+
+        .color-highlight {
+          color: #ffffff;
+        }
+
+        .handicap-value {
+          color: #ffffff;
+        }
+
+        .handicap-more {
+          color: #ffffff;
+        }
+
+        .odds,
+        .handicap-value-text {
+          color: #ffffff !important;
+        }
+
+        .odds {
+          span {
+            &:hover {
+              background: none;
+              padding: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  /* *** 收藏 ************ -S */
+  .icon-star:before {
+    color: var(--q-gb-bg-c-8) !important;
+  }
+
+  .icon-star {
+    &.active:before {
+      color: var(--q-gb-t-c-16) !important;
+    }
+  }
+
+  /* 虚拟赛事—赛事分析 弹窗容器 */
+  .c-match-startistic {
+    color: var(--q-gb-bd-c-3) !important;
+    background: var(--q-gb-bg-c-11) !important;
+  }
+
+  /* 弹窗箭头 */
+  .tips-body {
+    .direction {
+      border-bottom: 7px solid var(--q-gb-bd-c-8);
+
+      &::after {
+        border-color: transparent transparent var(--q-gb-bg-c-11);
+      }
+    }
+  }
+
+  /** 返回顶部*/
+  .go-top-btn {
+    background: var(--q-gb-bg-c-11) !important;
+    color: var(--q-gb-t-c-5) !important;
+    border: 1px solid var(--q-gb-bd-c-8);
+    .icon-go_top {
+      &:before {
+        color: var(--q-gb-bd-c-4)  !important;
+      }
+    }
+    &:hover {
+      background: var(--q-gb-bg-c-18) !important;
+      color: var(--q-gb-bd-c-13) !important;
+      .icon-go_top {
+        &:before {
+          color: var(--q-gb-bd-c-13) !important;
+        }
+      }
+    }
+  }
+
+}

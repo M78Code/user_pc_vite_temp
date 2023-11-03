@@ -194,9 +194,6 @@ export const set_template_width_base = (
     total_width -
     config.process_team_width -
     config.bet_width * config.bet_col_count;
-    console.log('process_team_width', config.process_team_width, config.bet_width * config.bet_col_count, total_width, total_width -
-      config.process_team_width -
-      config.bet_width * config.bet_col_count);
   // 设置赛事阶段加主客队宽度
   config.process_team_width = config.process_team_width;
   // 设置主客队信息宽度
