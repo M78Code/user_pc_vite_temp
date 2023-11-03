@@ -11,7 +11,7 @@
     <div class="tr-match-head">
       <div
         class="leagues-wrap"
-        @click.stop="MatchListCardDataClass.recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_tid_zhedie(card_style_obj)"
+        @click.stop="MatchListCardClass.recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_tid_zhedie(card_style_obj)"
       >
        <!-- 箭头 -->
       <i class="icon-arrow q-icon c-icon" size="14px" ></i>
@@ -45,7 +45,7 @@ import lodash from 'lodash';
 // import sportIcon from "src/public/components/sport_icon/sport_icon.vue"
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
-import MatchListCardDataClass from 'src/core/match-list-pc/match-card/match-list-card-class.js';
+import MatchListCardClass from 'src/core/match-list-pc/match-card/match-list-card-class.js';
 import useMatchListMx from "src/core/match-list-pc/match-list-composition.js";
 
 const { mx_collect } = useMatchListMx();
