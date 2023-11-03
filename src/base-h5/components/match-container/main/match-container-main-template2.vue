@@ -16,7 +16,7 @@
     <div class="match-status-fixed flex items-center" v-if="match.is_show_no_play">
       <img src='image/list/list-red.svg' />
       <span class="din-regular">
-        {{ $t('list.match_no_start') }}&nbsp;&nbsp;<span v-show="no_start_total">(0)</span>
+        {{ i18n_t('list.match_no_start') }}&nbsp;&nbsp;<span v-show="no_start_total">(0)</span>
       </span>
     </div>
     <!--体育类别 -- 标题  menuType 1:滚球 2:即将开赛 3:今日 4:早盘 11:串关 -->
@@ -135,7 +135,7 @@
 
                   <!-- 电竞串关标识 -->
                   <div v-if="menu_type == 3000 && match.ispo" class="flag-chuan"
-                    :class="{ 'special-lang': ['zh', 'tw'].includes(get_lang) }">{{ $t('match_info.match_parlay') }}
+                    :class="{ 'special-lang': ['zh', 'tw'].includes(get_lang) }">{{ i18n_t('match_info.match_parlay') }}
                   </div>
                 </div>
                 <!--玩法数量-->
@@ -176,7 +176,7 @@
                         <!-- 进球动画 -->
                         <div class="yb-flex-center" v-if="is_show_home_goal && is_new_init2 && (!is_show_away_goal)">
                           <div class="yb-goal-gif" :class="{ 'yb-goal-yo': theme.includes('y0') }"></div>
-                          <div class="gif-text">{{ $t('match_result.goal') }}</div>
+                          <div class="gif-text">{{ i18n_t('match_result.goal') }}</div>
                         </div>
                         <span class='score-punish' v-show="home_red_score"
                           :class="{ flash: is_show_home_red && !is_results }">
@@ -210,7 +210,7 @@
                         <div class="yb-flex-center" v-if="is_show_away_goal && is_new_init2 && (!is_show_home_goal)">
 
                       <div class="yb-goal-gif yb-goal-yo"></div>
-                      <div class="gif-text">{{ $t('match_result.goal') }}</div>
+                      <div class="gif-text">{{ i18n_t('match_result.goal') }}</div>
                     </div>
                     <!--进行中的赛事显示比分-->
                     <span class='score-punish' v-show="away_red_score"
@@ -271,7 +271,7 @@
 <script>
 
 import { ref, computed, watch, nextTick } from 'vue'
-import { LOCAL_PROJECT_FILE_PREFIX } from  "src/core"
+import { LOCAL_PROJECT_FILE_PREFIX, compute_img_url, i18n_t } from  "src/core/index.js"
 
 import { IconWapper } from 'src/components/icon'
 import CountingDownSecond from 'src/base-h5/components/common/counting-down.vue';
@@ -281,7 +281,6 @@ import OddListWrap from 'src/base-h5/components/match-list/components/odd-list-w
 import ImageCacheLoad from "src/base-h5/components/match-list/components/public-cache-image.vue";
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 
-import { i18n_t, compute_img_url } from "src/core/index.js"
 import { format_time_zone } from "src/core/format/index.js"
 import { mearlys_icon } from 'src/base-h5/core/utils/local-image.js'
 

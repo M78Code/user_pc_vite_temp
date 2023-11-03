@@ -2,7 +2,7 @@
  * @Author: rise
  * @Date: 2023-10-31 19:13:00
  * @LastEditors: rise
- * @LastEditTime: 2023-11-03 13:30:59
+ * @LastEditTime: 2023-11-03 14:03:32
  * @Description:  
 -->
 <template>
@@ -14,13 +14,14 @@
     <!--  -->
     <!-- <SwitchWap /> -->
     <!--  -->
-    <SearchTab @searchHandle="select_dialog = true"/>
-    <!-- 筛选+搜索   已脱离文档流-->
+    <SearchTab />
+     <!-- 筛选+搜索  已脱离文档流-->
     <div v-if="select_dialog" position="bottom" class="select-mask" :style="`height:${inner_height}px`">
         <div style="height:100%;width: 100%" @click="select_dialog = false" />
         <setect-league @closedHandle="select_dialog = false"></setect-league>
     </div>
   </template>
+ 
 </template>
 
 <script setup> 
@@ -33,10 +34,20 @@ import setectLeague from 'src/base-h5/components/setect-league/index.vue'
 import { useRoute } from "vue-router";
 const route = useRoute();
 const inner_height = window.innerHeight;  // 视口高度
-const select_dialog = ref(false)//暂时筛选窗口
+const select_dialog = ref(false);//暂时筛选窗口
 // 监听搜索框状态
-useMittOn(MITT_TYPES.EMIT_CHANGE_SELECT_DIALOG, function (value) {
+useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
     select_dialog.value = value
   }).off
 
 </script>
+<style lang="scss" scoped>
+.select-mask {
+  position: fixed;
+  width: 100vw;
+  background: rgba(0, 0, 0, 0.4);
+  top: 0;
+  z-index: 2000;
+  left: 0
+}
+</style>

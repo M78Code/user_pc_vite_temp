@@ -5,60 +5,62 @@
 -->
 <template>
   <div class="c-match-startistic">
-    <!-- 比分板 -->
-    <div class="score-list">
-      <div
-        v-for="(score, index) in datas.score_list"
-        :key="index+'-'"
-        class="score-item items-center row"
-      >
-        <div class="info main">
-          <span
-            :class="['line', score.home == 0 && 'line0']"
-            :style="`width:${score.home * 10}%`"
-          ></span>
-          <span class="score">{{ score.home }}</span>
-        </div>
-        <div class="separate"></div>
-        <div class="info away">
-          <span
-            :class="['line', score.away == 0 && 'line0']"
-            :style="`width:${score.away * 10}%`"
-          ></span>
-          <span class="score">{{ score.away }}</span>
-        </div>
-      </div>
-    </div>
-    <!-- 胜负百分比 -->
-    <div class="result-wrap row">
-      <div class="home item  column items-center">
-        <div class="win-percent">{{ datas.win_home }}%</div>
-
-        <div class="result-list row ">
-          <div
-            v-for="(item, index) in datas.result_home"
-            :key="index"
-            :class="['result-item', 'item-' + item]"
-          >
-            {{ item }}
+    <div class="bg-card-startistic">
+      <!-- 比分板 -->
+      <div class="score-list">
+        <div
+          v-for="(score, index) in datas.score_list"
+          :key="index+'-'"
+          class="score-item items-center row"
+        >
+          <div class="info main">
+            <span
+              :class="['line', score.home == 0 && 'line0']"
+              :style="`width:${score.home * 10}%`"
+            ></span>
+            <span class="score">{{ score.home }}</span>
+          </div>
+          <div class="separate"></div>
+          <div class="info away">
+            <span
+              :class="['line', score.away == 0 && 'line0']"
+              :style="`width:${score.away * 10}%`"
+            ></span>
+            <span class="score">{{ score.away }}</span>
           </div>
         </div>
       </div>
+      <!-- 胜负百分比 -->
+      <div class="result-wrap row">
+        <div class="home item  column items-center">
+          <div class="win-percent">{{ datas.win_home }}%</div>
 
-      <div class="away item column items-center">
-        <div class="win-percent">{{ datas.win_away }}%</div>
+          <div class="result-list row ">
+            <div
+              v-for="(item, index) in datas.result_home"
+              :key="index"
+              :class="['result-item', 'item-' + item]"
+            >
+              {{ item }}
+            </div>
+          </div>
+        </div>
 
-        <div class="result-list row">
-           <div
-            v-for="(item, index) in datas.result_away"
-            :key="index"
-            :class="['result-item', 'item-' + item]"
-          >
-            {{ item }}
+        <div class="away item column items-center">
+          <div class="win-percent">{{ datas.win_away }}%</div>
+
+          <div class="result-list row">
+            <div
+              v-for="(item, index) in datas.result_away"
+              :key="index"
+              :class="['result-item', 'item-' + item]"
+            >
+              {{ item }}
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </div> 
   </div>
 </template>
 
@@ -105,10 +107,14 @@ export default defineComponent({
 
 .c-match-startistic {
   min-width: 3.75rem;
-
+  padding:0.05rem;
+  background:#F8F9FA;
+  .bg-card-startistic{
+    background: var(--q-gb-bg-c-15);
+    border-radius: 4px;
+  }
   .score-list {
-    margin-top: 0.2rem;
-
+    // margin-top: 0.2rem;
     .score-item {
 
       font-size: 0.12rem;

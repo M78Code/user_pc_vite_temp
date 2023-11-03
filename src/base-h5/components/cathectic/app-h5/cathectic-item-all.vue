@@ -13,7 +13,8 @@
         <div v-for="(value, name, index) in BetRecordClass.list_data" :key="index" class="cathectic-list">
           <q-slide-transition>
             <template>
-              <div v-for="(item2, key) in value.data" :key="key" :item_data="item2" class="cathectic-item">
+              <div v-for="(item2, key) in value.data" :key="key" :item_data="item2" class="cathectic-item"
+              :style="{ backgroundImage: 'url('+ compute_local_project_file_path('/image/bet/img_betbg_nor.png') +')' }">
               <!-- 单关、串关内容显示 -->
               <template>
                 <item-simple-body v-if="item2.seriesType == '1'" :data_b="item2"></item-simple-body>
@@ -23,7 +24,7 @@
                 <!-- 未结算列表 => 投注记录页提前结算的按钮、滑块、提前结算详情 -->
                 <early-settle v-if="BetRecordClass.selected === 0 || BetRecordClass.selected === 3" :item_data="item2"></early-settle>
                 <!-- 预约列表 => 取消预约 -->
-                <cancel-reserve v-else-if="BetRecordClass.selected === 1" :item_data="item2"></cancel-reserve>
+                <cancel-reserve v-else-if="BetRecordClass.selected === 1" :item_data="item2" @success="init_data(1)"></cancel-reserve>
               </template>
             </div>
             </template>
@@ -47,6 +48,7 @@ import SRecord from "src/base-h5/components/skeleton/record.vue";
 import { ref, watch, onMounted, onUnmounted } from 'vue'
 import UserCtr from "src/core/user-config/user-ctr.js";
 import {useMittOn, MITT_TYPES} from  "src/core/mitt/index.js"
+import { utils, i18n_t, compute_css_obj, compute_local_project_file_path } from 'src/core/index.js'
 
 // 锚点
 const myScroll = ref(null)
@@ -274,7 +276,9 @@ template {
 .cathectic-item {
   width: 100%;
   border-radius: 0.1rem;
-  background: var(--q-gb-bg-c-15);
+  background-color: var(--q-gb-bg-c-15);
+  background-repeat: no-repeat;
+  background-size: cover;
   overflow: hidden;
   margin: 0 0 0.1rem;
   padding-bottom: 0.2rem;

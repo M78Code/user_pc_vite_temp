@@ -2,7 +2,7 @@
  * @Author: rise
  * @Date: 2023-10-20 16:27:18
  * @LastEditors: rise
- * @LastEditTime: 2023-10-30 15:24:43
+ * @LastEditTime: 2023-11-03 14:04:11
  * @Description:  
 -->
 <template>
@@ -27,44 +27,45 @@
 import { ref } from "vue";
 import search from "./img/search.svg";
 import {scrollMenu} from "../utils";
-import { useMittEmit, MITT_TYPES } from "src/core/index.js";
+import { useMittEmit, MITT_TYPES, i18n_t } from "src/core/index.js";
 import {  menu_lv2 } from 'src/base-h5/mixin/menu.js'
+
 const props = defineProps({
     dataList: {
         type: Array,
         default: [
             {
-                name: "全部",
+                name: i18n_t('app_h5.match.all'),
                 val: 0,
                 img: ""
             },
             {
-                name: "欧冠",
+                name: i18n_t('app_h5.match.champions'),
                 val: 1,
                 img: ""
             },
             {
-                name: "英超",
+                name: i18n_t('app_h5.match.premier'),
                 val: 2,
                 img: ""
             },
             {
-                name: "意甲",
+                name: i18n_t('app_h5.match.serie'),
                 val: 3,
                 img: ""
             },
             {
-                name: "西甲",
+                name: i18n_t('app_h5.match.laliga'),
                 val: 4,
                 img: ""
             },
             {
-                name: "法甲",
+                name: i18n_t('app_h5.match.ligue'),
                 val: 5,
                 img: ""
             },
             {
-                name: "中超",
+                name: i18n_t('app_h5.match.china_super'),
                 val: 6,
                 img: ""
             }
