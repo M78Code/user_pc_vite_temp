@@ -28,12 +28,12 @@ let  DEV_TARGET_VERSION = ''
 // DEV_TARGET_VERSION = "project_4-652ccfacfeffd80f0fcda107-1697972059806-online"
 
 //----------------------------------分割线  复刻版-H5-KYAPP  app-h5  5 -------------------------------------------
-// 打包 亚洲版 PC（新版)   测试环境  
-DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1698460136471-test";
-// 打包 亚洲版 PC（新版)   试玩环境  
+// 测试环境  
+// DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1698460136471-test";
+// 试玩环境  
 // DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1698742048199-shiwan";
-// 打包 亚洲版 PC（新版)   生产环境
-DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1698990836566-online";
+// 生产环境
+// DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1698990836566-online";
 
 //----------------------------------亚洲版-PC-202310新平坦化版本  new-pc 6-------------------------------------------
 // 打包 亚洲版 PC（新版)   测试环境  
@@ -46,6 +46,13 @@ DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1698990836566-online";
 
 
  
+//----------------------------------欧洲版-H5  ouzhou-h5 8-------------------------------------------
+// 测试环境  
+// DEV_TARGET_VERSION = "project_8-6544b116720143009a2f282d-1699000607498-test";
+// 试玩环境  
+DEV_TARGET_VERSION = "project_8-6544b116720143009a2f282d-1699003362037-shiwan";
+// 生产环境
+// DEV_TARGET_VERSION = "project_8-6544b116720143009a2f282d-1699003368156-online";
 
 
 export {

@@ -206,8 +206,6 @@ function set_base_data_init () {
 				});
 			} else {
 				let mid_1 = midf + '4';
-				console.log('mew_menu_list_res', mew_menu_list_res);
-
 				matchs_list = get_match_list_by_mid_for_base_data_res( mid_1, csid, "ld" );
 
 			}
@@ -365,7 +363,6 @@ function fetch_match_list(is_socket = false, cut) {
 	// 设置列表接口 和 参数
 	let api = api_match[match_api.api_name];
 	let _params = lodash.clone(match_api.params) || {};
-	console.log('match_api', match_api);
 	// 切换是 排序后 设置当前的排序
 	_params.sort = filterHeader.vx_match_sort;
 	delete _params.index;
@@ -700,7 +697,6 @@ const check_match_last_update_time = () => {
 	let mids = [];
 	let now_time = ServerTime.get_remote_time();
 	// 遍历可视区域赛事ID
-	console.log('MatchListScrollClass', MatchListScrollClass.show_mids);
 	MatchListScrollClass.show_mids.forEach((mid) => {
 		// 更新时间间隔
 		let api_time_dif = 0,
