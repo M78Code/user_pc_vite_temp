@@ -296,11 +296,11 @@
     }
   
     .title {
-      height: 0.4rem;
-      line-height: 0.4rem;
-      padding-left: 0.24rem;
+      height: 0.25rem;
+      line-height: 0.25rem;
+      padding-left: 0.09rem;
       color: var(--q-analysis-text-color-15);
-      font-size: 0.14rem;
+      font-size: 0.12rem;
       background-color:var(--q-gb-bg-c-15);
       letter-spacing: 0;
   
@@ -309,13 +309,14 @@
   
       &:before {
         content: '';
-        width: 0.03rem;
-        height: 0.12rem;
+        width: 0.02rem;
+        height: 0.16rem;
         position: absolute;
-        left: 0.16rem;
-        top: 0.14rem;
+        left: 0rem;
+        top: 50%;
+        transform: translateY(-50%);
         background:var(--q-analysis-text-color-31);
-        border-radius: 1.5px;
+        border-radius: 0px 2px 2px 0px;
       }
     }
   
