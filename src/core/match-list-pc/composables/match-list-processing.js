@@ -381,7 +381,6 @@ const mx_use_list_res = (data, backend_run, cut, collect) => {
 		// 格式化
 		match_list = virtual_sport_format(match_list);
 	}
-  console.log('datadatadata', data);
 	if (code == 200 && match_list) {
 		mx_use_list_res_when_code_200_and_list_length_gt_0({match_list, collect, backend_run});
 	} else {

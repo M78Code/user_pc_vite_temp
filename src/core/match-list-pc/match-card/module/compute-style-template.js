@@ -211,7 +211,6 @@ const compute_style_template_by_matchinfo_template18 = (match) => {
 			add_handicap_height = add_handicap_height + Math.ceil(ol_count / 2) * 35;
 		// }
 	});
-	console.log('add_handicap_height', add_handicap_height);
 	return { add_handicap_height };
 };
 
