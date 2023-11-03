@@ -66,22 +66,6 @@ const ref_data = reactive({
   keyborard: true, // 是否显示 最高可赢 和 键盘
 })
 
-const props = defineProps({
-  index:{},
-  item:{},
-  config:{
-    type: Object,
-    default: () => {},
-  }
-})
-
-onMounted(()=>{
-  let play_oid = props.config.playOptionsId || ''
-  ref_data.min_money = lodash_.get(BetViewDataClass.bet_min_max_money,`${play_oid}.min_money`,10) 
-  ref_data.max_money = lodash_.get(BetViewDataClass.bet_min_max_money,`${play_oid}.max_money`,8888)
-})
-
-
 // 预约输入赔率或者盘口
 watch(() => pre_odds_value, (new_) => {
   if (active_index.toString().indexOf('market') > -1) {  // 篮球才可以用键盘输入预约盘口
@@ -122,7 +106,7 @@ watch(() => pre_odds_value, (new_) => {
   }
 })
 watch(() => money.value, (new_) => {
-  useMittEmit(MITT_TYPES.EMIT_INPUT_BET_MONEY,{ params:props.config, money:money.value })
+  useMittEmit(MITT_TYPES.EMIT_INPUT_BET_MONEY,{ params:BetData.bet_keyboard_config, money:money.value })
 })
 watch(() => active_index, (new_) => {
   if (money.value) delete_all.value = true;
@@ -156,13 +140,14 @@ const _handleKeyPress = (e) => {
       _handleNumberKey(num);
       break;
   }
-  useMittEmit(MITT_TYPES.EMIT_INPUT_BET_MONEY, { params:props.config, money:money.value } )
+  useMittEmit(MITT_TYPES.EMIT_INPUT_BET_MONEY, { params:BetData.bet_keyboard_config, money:money.value } )
 }
 
 // 小数点 .
 const _handleDecimalPoint = () => {
+  const { max_money,min_money } = BetData.bet_keyboard_config
   //超过最大金额时不让输入
-  if (money.value && money.value >= ref_data.max_money) return
+  if (money.value && money.value >= max_money) return
   //如果包含小数点，直接返回
   if (money.value && money.value.includes(".")) return
 

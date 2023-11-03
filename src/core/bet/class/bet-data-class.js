@@ -167,6 +167,12 @@ this.bet_appoint_ball_head= null */
     this.bet_flag = true
     // 预约投注最小值
     this.bet_pre_min_odd_value = 0
+    // 限额/投注接口报错 
+    this.bet_before_message = {}
+    // ---------------------------------- H5 ------------------------------------------------------------------------------------------
+    this.bet_keyboard_config = {}
+    // 键盘状态
+    this.bet_keyboard_show = false;
   }
 
   // 通过  mount_point_key 计算 取值字段映射
@@ -678,5 +684,27 @@ this.bet_appoint_ball_head= null */
     this.set_bet_data_class_version()
   }
 
+  // 设置键盘状态
+  set_bet_keyboard_show(val){
+    if(val == this.bet_keyboard_show){
+      return
+    }
+    this.bet_keyboard_show = val
+   
+    this.set_bet_data_class_version()
+  }
+  
+  // 设置键盘信息 
+  // 限额 /
+  set_bet_keyboard_config(val) {
+    this.bet_keyboard_config = val
+    this.set_bet_data_class_version()
+  }
+
+  // 设置 接口报错的显示
+  set_bet_before_message(val) {
+    this.bet_before_message = val 
+    this.set_bet_data_class_version()
+  }
 }
 export default new BetData();
