@@ -45,7 +45,7 @@
         <bet-single-detail :item="BetData.bet_single_list[0]" :index="0"/>
 
         <!-- 键盘 -->
-        <key-board v-if="BetViewDataClass.bet_keyboard_show" :item="BetData.bet_single_list[0]" :index="0"></key-board>
+        <key-board v-if="BetViewDataClass.bet_keyboard_show" :config="BetData.bet_single_list[0]" :index="0"></key-board>
      
         <div class="dele-wrap yb_px12 yb_py10 row"  @touchmove.prevent>
           <!-- 右 自动接受跟好赔率 -->
@@ -61,6 +61,7 @@
           <acceptRules v-if="BetData.better_rules_show"></acceptRules>
         </div>
       </div>
+
       <!-- 点击投注后 -->
       <div class="scroll-box" ref="scroll_box" v-if="BetViewDataClass.bet_order_status != 1">
         <div v-if="BetData.is_bet_pre">

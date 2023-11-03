@@ -217,7 +217,7 @@ onMounted(() => {
   BetData.set_device_type(1)
 });
 const mitt_list = [
-  // 监听搜索框状态
+  // 监听设置框状态
   useMittOn(MITT_TYPES.EMIT_CHANGE_SETTING_SHOW, function (value) {
     // this.select_cleck = type
     //   this.select_dialog = val

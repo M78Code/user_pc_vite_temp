@@ -51,7 +51,7 @@
 import { api_virtual } from "src/api/index.js";
 import virtualSportsTab from 'project_path/src/pages/details/children/virtual-sports-tab.vue'
 import virtualSportsCategory from "project_path/src/pages/details/children/virtual-sports-category.vue"
-import virtualMatchStatistic from 'src/base-h5/components/details/components/virtual-match-statistic.vue'
+import virtualMatchStatistic from 'src/base-h5/components/details/components/virtual-match-statistic-2.vue'
 import virtualSportsStage from 'src/base-h5/components/virtual/virtual-sports-stage-2.vue'
 // import VSport from 'src/base-h5/utils/vsport/vsport.js';
 import VirtualVideo from 'src/core/match-list-h5/virtual-sports/virtual-video.js'
@@ -461,6 +461,7 @@ export default defineComponent({
 .virtual-detail {
   height: calc(var(--vh, 1vh) * 100);
   overflow: auto;
+  background: #e4e6ed; //#0E1014 
 }
 /*  头部 */
 .virtual-head {

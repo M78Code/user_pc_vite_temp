@@ -76,7 +76,6 @@ const props = defineProps({
 })
 
 onMounted(()=>{
-  console.error('sssss',props.config)
   let play_oid = props.config.playOptionsId || ''
   ref_data.min_money = lodash_.get(BetViewDataClass.bet_min_max_money,`${play_oid}.min_money`,10) 
   ref_data.max_money = lodash_.get(BetViewDataClass.bet_min_max_money,`${play_oid}.max_money`,8888)
@@ -163,7 +162,7 @@ const _handleKeyPress = (e) => {
 // 小数点 .
 const _handleDecimalPoint = () => {
   //超过最大金额时不让输入
-  if (money.value && money.value >= props.items.orderMaxPay) return
+  if (money.value && money.value >= ref_data.max_money) return
   //如果包含小数点，直接返回
   if (money.value && money.value.includes(".")) return
 
