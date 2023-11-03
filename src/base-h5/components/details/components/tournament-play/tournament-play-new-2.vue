@@ -802,7 +802,7 @@ export default defineComponent({
 }
 .tournament-play {
   &.tournament-play-outer {
-    background:#e4e6ed !important;
+    background: var(--q-gb-bg-c-19) !important;
     .play-name-outer-wrapper {
       padding: 0 0.05rem 0.04rem 0.05rem;
     }

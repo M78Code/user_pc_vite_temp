@@ -461,7 +461,7 @@ export default defineComponent({
 .virtual-detail {
   height: calc(var(--vh, 1vh) * 100);
   overflow: auto;
-  background: #e4e6ed; //#0E1014 
+  background: var(--q-gb-bg-c-19); //夜间版#0E1014 
 }
 /*  头部 */
 .virtual-head {
@@ -573,7 +573,7 @@ export default defineComponent({
 
 .detail-main {
   margin-top: 0.04rem;
-  background:#e4e6ed;
+  background: var(--q-gb-bg-c-19);
   &::-webkit-scrollbar {
     display: none;
   }

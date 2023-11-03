@@ -14,7 +14,7 @@
     <!-- loading效果 -->
     <loading v-if="is_loading" :top="route.name == 'virtual_sports' ? '76%' : '64%'"></loading>
       <!-- 详情玩法投注项有数据 -->
-    <div v-if="!is_no_data && !is_loading" style="width:100%;height:auto;background:#e4e6ed;">
+    <div v-if="!is_no_data && !is_loading" class="vr_container">
       <div slot="scrollList" class="scrollList">
         <!-- 置顶操作时增加动画 -->
         <transition-group name="transition-play-list">
@@ -903,7 +903,11 @@ export default defineComponent({
   width: 100%;
   height: auto;
   max-width: 7rem;
-
+  .vr_container {
+    width:100%;
+    height:auto;
+    background: var(--q-gb-bg-c-19);
+  }
   .scrollList {
     padding-top:0.06rem;
     &::-webkit-scrollbar {
