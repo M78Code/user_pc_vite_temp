@@ -129,7 +129,7 @@ class MenuData {
    */
   get_menu_lvmi_special_list(mid){
     let list = BaseData.mew_menu_list_res.filter(item=> this.current_lv_2_menu_mi_special[mid](item.mi));
-    let menu_lv_mi_special_lsit = list && list.length>1?list.map((n)=>{return n.sl}).flat():list[0].sl;
+    let menu_lv_mi_special_lsit = list && list.length>1?list.map((n)=>{return n}).flat():list[0].sl;
     this.menu_lv_mi_special_lsit = menu_lv_mi_special_lsit
     this.update()
     return menu_lv_mi_special_lsit
