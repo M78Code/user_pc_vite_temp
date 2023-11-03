@@ -1,7 +1,7 @@
 <template>
   <div class="ty-bet-after-status">
     <div v-show="false">{{BetViewDataClass.bet_view_version}}</div>
-    <img :src="set_bet_order_status" alt="" />
+    <img :src="set_bet_order_status(BetViewDataClass.bet_order_status)" alt="" />
     <div class="ty-bet-after-status-title" :class="{
       active: bet_order_status_active
     }">{{title}}</div>
@@ -15,19 +15,19 @@ import { LOCAL_PROJECT_FILE_PREFIX, i18n_t } from "src/core/index.js";
 
 let title = ref('')
 
-const set_bet_order_status = computed(()=>{
+const set_bet_order_status = computed(()=> status => {
   // 2-投注中状态,
-  if(BetViewDataClass.bet_order_status == 2){
+  if(status == 2){
     title.value = i18n_t('bet.bet_loading')
     return `${LOCAL_PROJECT_FILE_PREFIX}/image/app-h5/icon_order_loading.png`
   }
   //3-投注成功状态(主要控制完成按钮)
-  if(BetViewDataClass.bet_order_status == 3){
+  if(status == 3){
     title.value = i18n_t('app_h5.bet.bet_confirm')
     return `${LOCAL_PROJECT_FILE_PREFIX}/image/app-h5/icon_order_success.png`
   }
   // ,4-投注失败状态,5-投注项失效
-  if([4,5].includes(BetViewDataClass.bet_order_status)){
+  if([4,5].includes(+status)){
     title.value = i18n_t('app_h5.bet.bet_error')
     return `${LOCAL_PROJECT_FILE_PREFIX}/image/app-h5/icon_order_error.png`
   }
