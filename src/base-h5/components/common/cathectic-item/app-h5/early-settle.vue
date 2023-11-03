@@ -60,7 +60,6 @@ import { Platform } from "quasar";
 import { inject, ref, computed, onMounted, onUnmounted, watch, nextTick } from 'vue'
 import lodash from 'lodash'
 import { utils,compute_css_obj, compute_local_project_file_path } from 'src/core/index.js'
-import store from "src/store-redux/index.js"
 import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/"
 import { i18n_t } from "src/boot/i18n.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
