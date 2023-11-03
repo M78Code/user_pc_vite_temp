@@ -27,7 +27,7 @@ class MatchFold {
       [key]: {
         show_tab,
         // 赛事区域
-        show_card: false,
+        show_card: true,
         // 次要玩法内容区
         show_tab_content: false
       }

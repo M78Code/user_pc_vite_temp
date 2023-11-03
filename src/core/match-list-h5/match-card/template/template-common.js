@@ -197,7 +197,7 @@ const match_style_template_app = {
   // 赛事标题高度
   // match_title_height: 30,
   // 主盘口高度
-  main_handicap_height: 133,
+  main_handicap_height: 132,
   // 次要玩法标题高度
   play_title_height: 0,
   // 次要玩法盘口默认高度

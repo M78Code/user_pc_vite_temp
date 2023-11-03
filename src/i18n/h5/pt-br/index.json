@@ -312,7 +312,6 @@
     "pop_send_hint4": "",
     "mute_hint4": "",
     "pop_send_hint5": "",
-    "room_not_open": "Chat room is not open",
     "mute_hint": {
       "time": ["", "", "", "", ""],
       "type": ["", "", ""]
@@ -358,7 +357,6 @@
     "title_188": "Versão asiática",
     "title_panda": "Versão européia",
     "under": "em",
-    "return": "return",
     "unit": "Dólar",
     "virtual_sports": "VR Esportes"
   },

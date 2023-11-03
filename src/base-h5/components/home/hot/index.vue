@@ -63,7 +63,7 @@ import lodash from 'lodash'
 import { utils, MenuData ,compute_css_obj, LOCAL_PROJECT_FILE_PREFIX} from 'src/core/index.js';
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import MatchListParams from 'src/core/match-list-h5/composables/match-list-params.js'
-import {compute_img_url, i18n_t} from 'src/core/index.js'
+import {compute_img_url} from 'src/core/'
 import { theme } from 'src/base-h5/mixin/userctr.js'
 
 let tabList = ref([])  // tab选项卡内容
@@ -125,7 +125,7 @@ const host = (item) => {
 }
 // tab 初始化数据
 const get_list = (first) => {
-  const jing_xuan = { menuName: i18n_t('home_popular.featured'), field3: "", index: 0 }
+  const jing_xuan = { menuName:'精选', field3: "", index: 0 }
   first ? first_loading.value = true : first_loading.value = false
   let parameter = {
     menuType: 12, // 菜单类型  12热门赛事

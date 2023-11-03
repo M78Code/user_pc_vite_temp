@@ -101,18 +101,6 @@ watch(() => MenuData.footer_sub_menu_id, () => {
 }
 );
 
-// 新手版标准版切换
-watch(() => standard_edition.value, () => {
-  // 虚拟体育
-  if (menu_type.value == 900) return
-  // 如果是简版
-  if (n == 1) {
-    MatchListCard.sliding_can_trigger_process_distance = 500;
-  }
-  run_process_when_need_recompute_container_list_when_scroll(false, { update_type: "standard_simple_change", });
-}
-);
-
 const calc_show = computed(() => {
   return  menu_type.value == 1 && !show_favorite_list && !match_is_empty.value && route.name != "home" && is_detail.value
 });

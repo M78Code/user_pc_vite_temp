@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import {utils, i18n_t } from 'src/core/index.js';
+import {utils } from 'src/core/index.js';
 import { format_time_zone_time, format_H_M } from "src/core/format/index.js"
 //国际化
 

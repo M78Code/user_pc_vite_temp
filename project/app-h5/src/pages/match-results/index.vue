@@ -50,7 +50,7 @@ import { is_results, is_kemp } from 'src/base-h5/mixin/menu.js'
 
 // import matchContainer2 from "src/base-h5/components/match-list/components/match-container-2.vue";
 const inner_height = window.innerHeight;  // 视口高度
-const switchMenu = [i18n_t('app_h5.match.normal_results'), i18n_t('app_h5.match.championship_results')]
+const switchMenu = ['普通赛果', '冠军赛果']
 const slideMenu = ['11/16', '11/15', '11/14', '11/13', '11/12', '11/11', '11/10', '11/09', '11/08', '11/07', '11/06', '11/05', '11/04']
 const props = defineProps({})
 const state = reactive({

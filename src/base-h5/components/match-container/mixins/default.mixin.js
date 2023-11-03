@@ -245,7 +245,7 @@ export default {
 
       if (new_ > 0 && new_ != old_ && old_ !== null && (menu_type.value == 1 || menu_type.value == 3)) {
         this.is_show_away_goal = true
-        hide_away_goal()
+        this.hide_away_goal()
       }
     },
     // 监听主队红牌比分变化

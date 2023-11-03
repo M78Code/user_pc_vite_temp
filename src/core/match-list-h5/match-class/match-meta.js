@@ -447,16 +447,16 @@ class MatchMeta {
     if ([400, 300].includes(menu_lv_v1) || (menu_lv_v1 == 28 && [1001, 1002, 1004, 1011, 1010, 1009, 100].includes(menu_lv_v2)) ) {
       return
      }
-    // const { arr, start_index, end_index } = VirtualList.compute_page_render_list(scrollTop)
-    const { arr } = VirtualList.run_process_when_need_recompute_container_list_step_three_recompute_next_list_container_top_obj(scroll_top)
+    // const { match_data, start_index, end_index } = VirtualList.compute_page_render_list(scrollTop)
+    const { match_datas } = VirtualList.compute_container_list_by_scroll_top(scroll_top)
     // const target_index = end_index > 10 ? end_index + 1 : this.complete_mids.length
     // const target_list = this.complete_matchs.slice(start_index, target_index)
     // this.match_mids = this.complete_mids.slice(start_index, target_index)
-    this.match_mids = arr.map(t => {
+    this.match_mids = match_datas.map(t => {
       return t.mid
     })
-    if (type === 2) return this.handle_update_match_info(arr)
-    if (type === 1) return this.handle_submit_warehouse(arr)
+    if (type === 2) return this.handle_update_match_info(match_datas)
+    if (type === 1) return this.handle_submit_warehouse(match_datas)
 
   }
 

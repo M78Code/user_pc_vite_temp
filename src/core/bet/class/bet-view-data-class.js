@@ -79,8 +79,7 @@ class BetViewData {
 
     // 限额
     this.bet_min_max_money = {}
-    // 键盘状态
-    this.bet_keyboard_show = false;
+  
     // 投注后的 
     this.orderNo_bet_obj = []
 
@@ -110,12 +109,6 @@ class BetViewData {
   // 设置 金额的范围  -1:输入金额小于最低限额时，1: 输入金额超出最大限额时 2:输入金额超出用户余额时 3:用户余额是小于等于输入金额(转换后)
   set_input_money_state(val) {
     this.input_money_state = val
-    this.set_bet_view_version()
-  }
-
-  // 设置键盘状态
-  set_bet_keyboard_show(val){
-    this.bet_keyboard_show = val
     this.set_bet_view_version()
   }
 
@@ -156,6 +149,7 @@ class BetViewData {
   // 设置投注状态
   // 1-投注状态,2-投注中状态,3-投注成功状态(主要控制完成按钮),4-投注失败状态,5-投注项失效
   set_bet_order_status(code) {
+    console.error('ssss')
     this.bet_order_status = code
     // 更新页面
     this.set_bet_view_version()
@@ -166,6 +160,7 @@ class BetViewData {
   set_bet_error_code({ code, message }) {
     this.error_message = message
     this.error_code = code
+    console.error('aaaaa')
 
     if (code == 200) {
       // 3-投注成功状态(主要控制完成按钮)

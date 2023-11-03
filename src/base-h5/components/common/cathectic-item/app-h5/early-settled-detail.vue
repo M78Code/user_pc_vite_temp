@@ -22,7 +22,7 @@
               </div>              
             </template>
             <template v-else>
-              <p>{{ i18n_t('app_h5.cathectic.all_cash_sess') }}</p>
+              <p>全部提前兑现成功</p>
               <div class="body-main">
                 <!-- 结算本金 -->
                 <p><label>{{ item.remainingBetAmount ? i18n_t('early.list7') : i18n_t('early.list2') }}：</label> <span>{{ (+item.preBetAmount).toFixed(2) }}</span></p>
@@ -36,7 +36,7 @@
         </div>
       </q-slide-transition>
       <div class="settle-btn" :class="detail_show_info ? 'up' : 'down'" @click="fetch_early_settle_detail">
-        <span>{{ i18n_t('app_h5.cathectic.cash_details') }}</span>
+        <span>提前兑现详情</span>
         <img :src="compute_local_project_file_path('/image/gif/change.gif')">
       </div>
     </div>

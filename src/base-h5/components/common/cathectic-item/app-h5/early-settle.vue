@@ -60,6 +60,7 @@ import { Platform } from "quasar";
 import { inject, ref, computed, onMounted, onUnmounted, watch, nextTick } from 'vue'
 import lodash from 'lodash'
 import { utils,compute_css_obj, compute_local_project_file_path } from 'src/core/index.js'
+import store from "src/store-redux/index.js"
 import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/"
 import { i18n_t } from "src/boot/i18n.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
@@ -329,7 +330,7 @@ const submit_early_settle = () => {
     let message = ''
     if (res.code == 200) {
       status.value = 4;
-      message = i18n_t('app_h5.cathectic.sub_wait');
+      message = '已提交申请，请耐心等待';
     } else if (res.code == "0400524") {
       // 注单确认中···
       // 前5次 每3s拉一次

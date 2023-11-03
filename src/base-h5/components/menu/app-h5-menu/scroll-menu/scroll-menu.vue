@@ -9,7 +9,8 @@
         <div class="sport-m-container">
           <div class="s-menu-container flex">
             <template v-for="item in scrollDataList" :key="lodash_.get(item, 'mi')">
-              <div class="sport-menu-item flex justify-center" v-show="item.ct > 0" @click="!isSpecial?set_menu_lv2(item, $event):set_menu_lv_special(item, $event)">
+              <!-- v-show="item.ct > 0" -->
+              <div class="sport-menu-item flex justify-center"  @click="!isSpecial?set_menu_lv2(item, $event):set_menu_lv_special(item, $event)">
                 <div class="inner-w flex justify-between items-center" :class="{
                   current: activeMi == item.mi
                 }
@@ -18,11 +19,12 @@
                     <span class="sport-icon-wrap"
                       :style="compute_css_obj({key:activeMi == item.mi ? 'menu-sport-active-image' : 'menu-sport-icon-image', position:format_type(item)})"></span>
 
-                    <div class="sport-match-count">
+                    <div v-show="item.ct > 0" class="sport-match-count">
                       {{ item.ct || 0 }}
                     </div>
                   </div>
                   <div class="s-w-i-title">
+                    <!-- {{item.mi}} -->
                     {{ (item.btn ?item.title : item.name) || MenuData.get_menus_i18n_map(item.mi) }}
                   </div>
                 </div>

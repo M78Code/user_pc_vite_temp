@@ -11,59 +11,61 @@
       started_and_un_started: match.is_show_no_play,
       favorite_un_start_title: favorite_un_start_title(i, match_of_list.ms),
     }]">
-  <template v-if="match" >
-    <!-- 未开赛标题  -->
-    <div class="match-status-fixed flex items-center" v-if="match.is_show_no_play">
-      <img src='image/list/list-red.svg' />
-      <span class="din-regular">
-        {{ i18n_t('list.match_no_start') }}&nbsp;&nbsp;<span v-show="no_start_total">(0)</span>
-      </span>
-    </div>
-    <!--体育类别 -- 标题  menuType 1:滚球 2:即将开赛 3:今日 4:早盘 11:串关 -->
-    <div v-if="get_sport_show"
-      :class="['sport-title match-indent', { home_hot_page: is_hot, is_gunqiu: [1].includes(+menu_type), first: i == 0, }]"
-      @click="handle_ball_seed_fold">
-      <span class="score-inner-span">
-        <!-- PROJECT_NAME == 'app-h5' 复刻版需要展示数量 -->
-        {{ match_of_list.csna }}{{'(' + menu_lv2.ct + ')'}}
-      </span>
-    </div>
-    
-    <!-- 最核心的div模块     标题 + 倒计时 + 比分 + 赔率盘口模块 -->
-    <div :class="['match-inner-container', {'collapsed': collapsed}]">
-      <!--联赛标题 -->
-      <div @click="handle_league_fold" v-if="match.is_show_league || (is_hot && get_league_show(i))"
-        :class="[('league match-indent hairline-border'), { 'no-radius': get_sport_show, 'no-border': collapsed, 'bottom': match.is_show_league }]">
-        <div class="league-t-wrap right-border">
-        <!-- <div class="league-t-tubiao"></div> -->
-          <!-- 联赛收藏 -->
-          <div v-if="![3000, 900].includes(menu_type)" class="favorited-icon" @click.stop="handle_league_collect">
-            <!-- 未收藏 -->
-            <img v-if="!league_collect_state" :src="compute_img_url('icon-favorite')" alt="">
-            <!-- 收藏图标 -->
-            <img v-if='league_collect_state' :src="compute_img_url('icon-favorite-s')">
-          </div>
-          <!-- 电竞图标 写死 -->
-          <div class="esport" v-if="match_of_list.csid == 101" :style="compute_css_obj('menu-sport-active-image', 2101)"></div>
-          <div class="esport" v-else-if="match_of_list.csid == 103" :style="compute_css_obj('menu-sport-active-image', 2103)"></div>
-          <div class="esport" v-else-if="match_of_list.csid == 102" :style="compute_css_obj('menu-sport-active-image', 2102)"></div>
-          <div class="esport" v-else-if="match_of_list.csid == 100" :style="compute_css_obj('menu-sport-active-image', 2100)"></div>
-          <span class="league-title-text row justify-between">
-            <span :class="['league-t-wrapper', { 'league-t-main-wrapper': menu_type !== 28, export: is_export }]">
-              <span class="match-league ellipsis-2-lines" :class="{ 'match-main-league': menu_type !== 28 }">
-                {{ match.tn }}
-              </span>
-            </span>
-            <icon-wapper color="var(--q-match-fs-color-62)" name="icon-arrow" size="15px" :class="['icon-wapper', {'close': !collapsed}]" />
-          </span>
-        </div>
-        
+    <template v-if="match" >
+      <!-- 未开赛标题  -->
+      <div class="match-status-fixed flex items-center" v-if="match.is_show_no_play">
+        <img src='image/list/list-red.svg' />
+        <span class="din-regular">
+          {{ $t('list.match_no_start') }}&nbsp;&nbsp;<span v-show="no_start_total">(0)</span>
+        </span>
       </div>
-      <!-- 卡片主内容 -->
-      <!-- <q-slide-transition> -->
-        <div style="width: 100%;" v-if="!collapsed">
+      <!--体育类别 -- 标题  menuType 1:滚球 2:即将开赛 3:今日 4:早盘 11:串关 -->
+      <div v-if="get_sport_show"
+        :class="['sport-title match-indent', { home_hot_page: is_hot, is_gunqiu: [1].includes(+menu_type), first: i == 0, }]"
+        @click="handle_ball_seed_fold">
+        <span class="score-inner-span">
+          <!-- PROJECT_NAME == 'app-h5' 复刻版需要展示数量 -->
+          {{ match_of_list.csna }}{{'(' + menu_lv2.ct + ')'}}
+        </span>
+      </div>
+      
+      <!-- 最核心的div模块     标题 + 倒计时 + 比分 + 赔率盘口模块 -->
+      <div :class="['match-inner-container', {'collapsed': !collapsed}]">
+         <!-- 缓冲容器， 避免滚动时骨架屏漏光问题 -->
+        <div class="buffer-container" v-if="match.is_show_league && i !== 0"></div>
+        <!--联赛标题 -->
+        <div @click="handle_league_fold" v-if="match.is_show_league || (is_hot && get_league_show(i))"
+          :class="[('league match-indent hairline-border'), { 'no-radius': get_sport_show, 'no-border': !collapsed}]">
+          <div class="league-t-wrap right-border">
+          <!-- <div class="league-t-tubiao"></div> -->
+            <!-- 联赛收藏 -->
+            <div v-if="![3000, 900].includes(menu_type)" class="favorited-icon" @click.stop="handle_league_collect">
+              <!-- 未收藏 -->
+              <img v-if="!league_collect_state" :src="compute_img_url('icon-favorite')" alt="">
+              <!-- 收藏图标 -->
+              <img v-if='league_collect_state' :src="compute_img_url('icon-favorite-s')">
+            </div>
+            <!-- 电竞图标 写死 -->
+            <div class="esport" v-if="match_of_list.csid == 101" :style="compute_css_obj('menu-sport-active-image', 2101)"></div>
+            <div class="esport" v-else-if="match_of_list.csid == 103" :style="compute_css_obj('menu-sport-active-image', 2103)"></div>
+            <div class="esport" v-else-if="match_of_list.csid == 102" :style="compute_css_obj('menu-sport-active-image', 2102)"></div>
+            <div class="esport" v-else-if="match_of_list.csid == 100" :style="compute_css_obj('menu-sport-active-image', 2100)"></div>
+            <span class="league-title-text row justify-between">
+              <span :class="['league-t-wrapper', { 'league-t-main-wrapper': menu_type !== 28, export: is_export }]">
+                <span class="match-league ellipsis-2-lines" :class="{ 'match-main-league': menu_type !== 28 }">
+                  {{ match.tn }}
+                </span>
+              </span>
+              <icon-wapper color="#c9c9c9" name="icon-arrow" size="15px" :class="['icon-wapper', {'close': collapsed}]" />
+            </span>
+          </div>
+          
+        </div>
+        <!-- 卡片主内容 -->
+        <!-- <q-slide-transition> -->
+        <div style="width: 100%;" v-if="collapsed">
           <!--标准版 赔率标题栏-->
-          <div class="odd-title-wraper row " v-if="match.is_show_league" @click.stop :style="{width: !collapsed ? '100%' : 0}">
+          <div class="odd-title-wraper row " v-if="match.is_show_league" @click.stop :style="{width: collapsed ? '100%' : 0}">
             <div class="odd-title-i-w flex">
               <div class="odd-t-i-wrapper flex items-center"
                 :class="{ 'status2': get_standard_odd_status == 1 && match_of_list_ascertain.length > 3 }">
@@ -135,7 +137,7 @@
 
                   <!-- 电竞串关标识 -->
                   <div v-if="menu_type == 3000 && match.ispo" class="flag-chuan"
-                    :class="{ 'special-lang': ['zh', 'tw'].includes(get_lang) }">{{ i18n_t('match_info.match_parlay') }}
+                    :class="{ 'special-lang': ['zh', 'tw'].includes(get_lang) }">{{ $t('match_info.match_parlay') }}
                   </div>
                 </div>
                 <!--玩法数量-->
@@ -176,7 +178,7 @@
                         <!-- 进球动画 -->
                         <div class="yb-flex-center" v-if="is_show_home_goal && is_new_init2 && (!is_show_away_goal)">
                           <div class="yb-goal-gif" :class="{ 'yb-goal-yo': theme.includes('y0') }"></div>
-                          <div class="gif-text">{{ i18n_t('match_result.goal') }}</div>
+                          <div class="gif-text">{{ $t('match_result.goal') }}</div>
                         </div>
                         <span class='score-punish' v-show="home_red_score"
                           :class="{ flash: is_show_home_red && !is_results }">
@@ -210,7 +212,7 @@
                         <div class="yb-flex-center" v-if="is_show_away_goal && is_new_init2 && (!is_show_home_goal)">
 
                       <div class="yb-goal-gif yb-goal-yo"></div>
-                      <div class="gif-text">{{ i18n_t('match_result.goal') }}</div>
+                      <div class="gif-text">{{ $t('match_result.goal') }}</div>
                     </div>
                     <!--进行中的赛事显示比分-->
                     <span class='score-punish' v-show="away_red_score"
@@ -227,51 +229,51 @@
                   <span class="serving-party" :class="{ 'simple': standard_edition == 1 }"
                     v-show="set_serving_side(match_of_list, 'away')">
                   </span>
-                </div>
-                <!--  左边收藏  视频动画 图标 玩法数量  赛事分析图标 提前结算图标  -->
-                <div class="score-wrapper flex items-center" v-if="!show_newer_edition && !is_results"
-                  v-show="footer_sub_menu_id != 114">
-                  <div class="r row no-wrap">
-                    <div class="go-container-w flex no-wrap new-standard">
-                      <!-- 直播 主播 视频 动画  icon 栏目   -->
-                      <!-- 正常的 优先级 ： lvs 直播   muUrl 视频  animationUrl 动画 -->
-                      <div class="live-i-b-wrap v-mode-span row items-center"
-                        v-if="media_button_state_obj.icon_path" @click="media_button_handle()">
-                        <slot></slot>
-                        <img class="live-icon-btn" :src='media_button_state_obj.icon_path' />
-                      </div>
-                      <!-- 足篮球展示赛事分析图标 -->
-                      <div class="column justify-center yb_px4"
-                      v-if="[1, 2].includes(+match.csid) && GlobalAccessConfig.get_statisticsSwitch()"
-                        @click='goto_details(match, 1)'>
-                        <img :src="compute_img_url('data-analysis')" alt="" style="width:0.12rem">
-                      </div>
-                      <!-- 此赛事支持提前结算 -->
-                      <div class="column justify-center yb_px2" v-if="match_of_list.mearlys == 1">
-                        <img :src="mearlys_icon" alt="" style="width:0.2rem">
-                      </div>
-
+                  </div>
+                  <!--  左边收藏  视频动画 图标 玩法数量  赛事分析图标 提前结算图标  -->
+                  <div class="score-wrapper flex items-center" v-if="!show_newer_edition && !is_results"
+                    v-show="footer_menu_id != 114">
+                    <div class="r row no-wrap">
+                      <div class="go-container-w flex no-wrap new-standard">
+                        <!-- 直播 主播 视频 动画  icon 栏目   -->
+                        <!-- 正常的 优先级 ： lvs 直播   muUrl 视频  animationUrl 动画 -->
+                        <div class="live-i-b-wrap v-mode-span row items-center"
+                          v-if="media_button_state_obj.icon_path" @click="media_button_handle()">
+                          <slot></slot>
+                          <img class="live-icon-btn" :src='media_button_state_obj.icon_path' />
+                        </div>
+                        <!-- 足篮球展示赛事分析图标 -->
+                        <div class="column justify-center yb_px4"
+                          v-if="[1, 2].includes(+match.csid) && GlobalAccessConfig.get_statisticsSwitch()"
+                          @click='goto_details(match, 1)'>
+                          <img :src="compute_img_url('data-analysis')" alt="" style="width:0.12rem">
+                        </div>
+                        <!-- 此赛事支持提前结算 -->
+                        <div class="column justify-center yb_px2" v-if="match_of_list.mearlys == 1">
+                          <img :src="mearlys_icon" alt="" style="width:0.2rem">
                         </div>
                       </div>
                     </div>
                   </div>
-                  <!-- 右边盘口组件 -->
-                  <odd-list-wrap :main_source="main_source" :match="match_of_list" />
+                </div>
+                <!-- 右边盘口组件 -->
+                <odd-list-wrap :main_source="main_source" :match="match_of_list" />
                 </div>
               </div>
             </div>
           </div>
         </div>
-      <!-- </q-slide-transition> -->
-    </div>
-  </template>
+
+        <!-- </q-slide-transition> -->
+      </div>
+    </template>
   </div>
 </template>
   
 <script>
 
 import { ref, computed, watch, nextTick } from 'vue'
-import { LOCAL_PROJECT_FILE_PREFIX, compute_img_url, i18n_t } from  "src/core/index.js"
+import { LOCAL_PROJECT_FILE_PREFIX } from  "src/core"
 
 import { IconWapper } from 'src/components/icon'
 import CountingDownSecond from 'src/base-h5/components/common/counting-down.vue';
@@ -281,11 +283,12 @@ import OddListWrap from 'src/base-h5/components/match-list/components/odd-list-w
 import ImageCacheLoad from "src/base-h5/components/match-list/components/public-cache-image.vue";
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 
+import { i18n_t, compute_img_url, compute_css_obj  } from "src/core/index.js"
 import { format_time_zone } from "src/core/format/index.js"
 import { mearlys_icon } from 'src/base-h5/core/utils/local-image.js'
 
 import { lang, standard_edition, theme } from 'src/base-h5/mixin/userctr.js'
-import { is_hot, menu_type, menu_lv2, is_detail, is_export, is_results } from 'src/base-h5/mixin/menu.js'
+import { is_hot, menu_type, menu_lv2, is_detail, is_export, is_results, footer_menu_id } from 'src/base-h5/mixin/menu.js'
 
 import default_mixin from '../mixins/default.mixin.js'
 
@@ -310,10 +313,9 @@ export default {
     CountingDownSecond,
   },
   setup () {
-    const footer_sub_menu_id = ''
     return { 
-      lang, theme, i18n_t, menu_lv2, menu_type, compute_img_url, format_time_zone, GlobalAccessConfig, footer_sub_menu_id,LOCAL_PROJECT_FILE_PREFIX,
-      is_hot, menu_type, menu_lv2, is_detail, is_export, is_results, standard_edition, mearlys_icon
+      lang, theme, i18n_t, compute_img_url, format_time_zone, GlobalAccessConfig, footer_menu_id,LOCAL_PROJECT_FILE_PREFIX,
+      is_hot, menu_type, menu_lv2, is_detail, is_export, is_results, standard_edition, mearlys_icon, compute_css_obj
     }
   }
 }
@@ -367,6 +369,11 @@ export default {
     flex-direction: column;
     align-items: center;
     background: #ffffff;
+    .buffer-container{
+      background: #f7f9fe;
+      height: 5px;
+      width: 100%;
+    }
 
     // padding-top: 0.05779rem;  /* 兼容iPhone11边框显示不全 */
     &.show-sport {
@@ -405,7 +412,6 @@ export default {
 
     .match-odds-container-border-radius {
       overflow: hidden;
-      border-top: 1px solid #e9e9e9;
     }
     &.border-top{
       border-top: 1px solid #e9e9e9;

@@ -14,7 +14,7 @@
 
     <!-- 弹出框 -->
     <q-dialog v-model="is_show_dialog" content-class="article-dialog" position="bottom" @hide="handle_hide_dialog">
-      <div class="dialog-title yb_px12 yb_fontsize16" @click="back"><i class="back yb_mr8"></i>{{ i18n_t('common.return') }}</div>
+      <div class="dialog-title yb_px12 yb_fontsize16" @click="back"><i class="back yb_mr8"></i>返回</div>
       <div class="dialog-content">
         <template v-if="article_detail2.articleTittle">
           <article-content :article_detail="article_detail2" />
@@ -44,7 +44,7 @@ import { useRoute } from 'vue-router'
 import lodash from 'lodash'
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { get_server_file_path } from "src/core/file-path/file-path.js"
-import { utils, i18n_t } from "src/core/index.js"
+import { utils } from "src/core/index.js"
 
   // 弹框是否显示
   let is_show_dialog = ref(false)
