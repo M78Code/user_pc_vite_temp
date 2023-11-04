@@ -422,12 +422,9 @@ background: var(--q-gb-t-c-3) !important;
   z-index: 600;
   overflow: hidden;
   width: 100%;
-  padding: 0 0.15rem;
   -webkit-overflow-scrolling: touch;
-  border-radius: 24px 24px 0 0;
-  //border: 1px solid;
   background-color: var(--q-gb-t-c-14);
-  ;
+  border-top: 4px solid var(--q-gb-t-c-11);
 
   .yb_pl14 {
     margin-right: 0.01rem;
