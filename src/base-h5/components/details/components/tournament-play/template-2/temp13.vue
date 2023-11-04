@@ -464,7 +464,40 @@ export default defineComponent({
   //     opacity: 0;
   //   }
   // }
-
+  @keyframes dir_remind_animate {
+  0% {
+    transform: translateX(0);
+    opacity: 0;
+  }
+  60% {
+    transform: translateX(-0.06rem);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-0.09rem);
+    opacity: 0;
+  }
+}
+  @keyframes dir_right_remind_animate {
+  0% {
+    transform: translateX(-0.09rem) rotate(180deg);
+    opacity: 0;
+  }
+  60% {
+    transform: translateX(-0.06rem) rotate(180deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(0) rotate(180deg);
+    opacity: 0;
+  }
+}
+  .slide_icon_l{
+    background: url($SCSSPROJECTPATH + '/image/common/slide_icon_y0.svg') no-repeat  center / cover;  //todo上传不同主题图片
+  }
+  .slide_icon_r{
+    background: url($SCSSPROJECTPATH + '/image/common/slide_icon_y0.svg') no-repeat  center / cover;  //todo上传不同主题图片
+  }
   .slide_icon {
     width: 0.12rem;
     height: 0.12rem;
@@ -473,7 +506,7 @@ export default defineComponent({
     right: -0.03rem;
     z-index: 10;
     margin-top: -0.06rem;
-
+  
     &.animate-effect {
       animation: dir_remind_animate cubic-bezier(0.49, 0.49, 0.61, 0.59) 1.4s infinite;
     }
