@@ -249,15 +249,16 @@
     })
     // MatchListCardData.set_all_card_obj(all_card_obj)
     // 合并所有卡片样式对象
-    lodash.merge(MatchListCardData.all_card_obj, all_card_obj) 
     // 已开赛 到卡片key的 映射对象
-    
-    MatchListCardData.play_to_card_key_arr = play_to_card_key_arr
-    // 未开赛 到卡片key的 映射对象
-    MatchListCardData.no_start_to_card_key_arr = no_start_to_card_key_arr
-    // 所有卡片列表
-    MatchListCardData.match_list_card_key_arr =  match_list_card_key_arr 
-    MatchListCardData.set_list_version()
+    MatchListCardData.set_all_card_obj({
+      // 合并所有卡片样式对象
+        all_card_obj,
+        play_to_card_key_arr,// 已开赛 到卡片key的 映射对象
+        no_start_to_card_key_arr,// 未开赛 到卡片key的 映射对象
+        //卡片key列表
+        match_list_card_key_arr,
+        csid_to_card_key_obj//赛种ID 到卡片key的 映射对象
+      })
     // // 遍历所有联赛容器卡片
     all_league_container_keys_arr.forEach( card_key => {
       // 设置联赛容器卡片

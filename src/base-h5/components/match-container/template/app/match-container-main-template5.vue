@@ -1,5 +1,5 @@
 <!--
- * @Description:  app-h5       新手版 赛事组件，用于赛事列表展示赛事信息
+ * @Description:  app-h5   新手版 
 -->
 <template>
   <div :style="{ marginTop: is_hot ? '0' : '' }" 
@@ -153,7 +153,7 @@ import { mearlys_icon } from 'src/base-h5/core/utils/local-image.js'
 import { lang, standard_edition, theme } from 'src/base-h5/mixin/userctr.js'
 import { is_hot, menu_type, menu_lv2, is_detail, is_export, is_results, footer_menu_id } from 'src/base-h5/mixin/menu.js'
 
-import default_mixin from '../mixins/default.mixin.js'
+import default_mixin from '../../mixins/default.mixin.js'
 
 export default {
   name: "match-container-main-template8",

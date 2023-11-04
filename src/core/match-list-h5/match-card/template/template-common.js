@@ -206,9 +206,28 @@ const match_style_template_app = {
   is_dynamic_compute_height: false,
 }
 
+// ouzhou-h5 赛事样式模板
+const match_style_template_ouzhou = {
+  // 联赛标题高度
+  show_league_height: 46,
+  // 玩法标题高度
+  // playing_title_height: 20,
+  // 赛事标题高度
+  // match_title_height: 30,
+  // 主盘口高度
+  main_handicap_height: 132,
+  // 次要玩法标题高度
+  play_title_height: 0,
+  // 次要玩法盘口默认高度
+  tab_play_total_height: 0,
+  // 是否需要动态计算高度
+  is_dynamic_compute_height: false,
+}
+
 const template_config = {
   'app-h5': match_style_template_app,
   'yazhou-h5': match_style_template_yazhou,
+  'ouzhou-h5': match_style_template_ouzhou,
 }
 
 const { PROJECT_NAME = 'yazhou-h5' } = BUILD_VERSION_CONFIG
