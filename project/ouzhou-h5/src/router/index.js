@@ -123,6 +123,12 @@ const router = createRouter({
               },
             ]
           },
+          // 投注列表
+          {
+            path: "/betting_history",
+            name: "betting_history",
+            component: () => import("../pages/cathectic/index.vue"),
+          }
       ],
     },
     {
