@@ -7,6 +7,7 @@
 import { ref } from 'vue'
 import MatchFold from 'src/core/match-fold'
 import { utils } from "src/core/index.js";
+import UserCtr from "src/core/user-config/user-ctr.js";
 import MenuData from "src/core/menu-app-h5/menu-data-class.js"
 import PageSourceData from "src/core/page-source/page-source.js";
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
@@ -168,17 +169,17 @@ class VirtualList {
 
     let page_count = 18;
     // 新手版
-    if (PageSourceData.newer_standard_edition == 1) {
+    if (UserCtr.standard_edition == 1) {
       page_count = 20;
-    }
-    //赛果虚拟赛狗|赛马 摩托车
-    if (menu_lv_v1 == 28) {
+    } else if (menu_lv_v1 == 28) {
+      //赛果虚拟赛狗|赛马 摩托车
       if ([1002, 1011, 1010, 1009].includes(menu_lv_v2)) {
         page_count = lodash.get(MatchMeta.complete_matchs, 'length')
       } else {
         page_count = 20;
       }
     }
+    this.already_folded = 0
     this.mid_top_map = {}
     let match = null
     let show_card = false
@@ -224,7 +225,8 @@ class VirtualList {
             get_match_total++; //赛事容器数量加1
           }
           // 如果当前折叠 并且 当前赛事 显示联赛，则 -1 操作
-          if (!match.show_card && match.is_show_league) {
+          console.log(show_card)
+          if (!show_card && match.is_show_league) {
             if (this.already_folded <= 7) {
               get_match_total--; //赛事容器数量减1，相当于页面可视区域 总数量 page_count 加1个
             }
@@ -233,6 +235,7 @@ class VirtualList {
         }
         if (i === 0) current_match_dom_top += 0.2
         if (is_show_league || show_card) current_match_dom_top += show_card ? match_height : 0.31;
+        
       }
 
       // 如果当前赛事折叠超过 8场赛事 并且 高度 大于5.5  走  虚拟滚动 真正的滑动 算法，和上边 aaaaaaa 逻辑一模一样

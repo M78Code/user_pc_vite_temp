@@ -13,7 +13,7 @@
     }]">
     <template v-if="match" >
       <!-- 未开赛标题  -->
-      <div class="match-status-fixed flex items-center" v-if="match.is_show_no_play">
+      <div class="match-status-fixed flex items-center" v-if="is_show_opening_title">
         <img src='image/list/list-red.svg' />
         <span class="din-regular">
           {{ $t('list.match_no_start') }}&nbsp;&nbsp;<span v-show="no_start_total">(0)</span>
@@ -120,8 +120,7 @@
                     </div>
                     <!--倒计时或正计时-->
                     <div v-if="match.ms != 110 && show_counting_down(match)" 
-                      :class="['counting-down-up-container relative-position', { 'special-match-container': match.mfo || [0, 31].includes(+match.mmp) }]"
-                      :style="{ width: counting_down_up_wrapper_width === 'auto' ? 'auto' :  match.mfo ? 'auto' : counting_down_up_wrapper_width + 'rem' }">
+                      :class="['counting-down-up-container relative-position', { 'special-match-container': match.mfo || [0, 31].includes(+match.mmp) }]">
                       <!--足球csid:1 冰球csid:4 橄榄球csid:14 DotaCsid:101 累加 排球csid:9 倒计时-->
                       <CountingDownSecond ref="counting-down-second" :title="mmp_map_title" :mmp="match.mmp"
                         :is_add="[1, 4, 11, 14, 100, 101, 102, 103].includes(+match.csid)" :m_id="match.mid"
@@ -1414,7 +1413,7 @@ export default {
     }
 
     .counting-down-up-container {
-      width: 0.8rem;
+      width: 1rem;
       height: .14rem;
 
       &.intermission {

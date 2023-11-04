@@ -6,7 +6,7 @@
     :id="DOM_ID_SHOW && `list-${lodash.get(ol_item, 'oid')}`"
     v-if="odd_status !== 3"> <!--关盘 odd_status === 3 移除-->
     <div class="on">
-      {{ol_item.on}}
+      {{ol_item.on || ol_item.ot}}
     </div>
 
     <!--封盘-->

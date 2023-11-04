@@ -35,7 +35,7 @@ class MatchUtils {
     let is_show_no_play = false;
     const menu_lv_v1 = MenuData.current_lv_1_menu_mi.value
     // 详情页，或者  非今日串关不显示
-    if(PageSourceData.page_source == 'detail_match_list' || ![3,11].includes(+menu_lv_v1)){
+    if(PageSourceData.page_source == 'detail_match_list' || ![1,2,3,6].includes(+menu_lv_v1)){
       return false
     } else if(menu_lv_v1 == 11){
       //串关时,日期为今日才显示
