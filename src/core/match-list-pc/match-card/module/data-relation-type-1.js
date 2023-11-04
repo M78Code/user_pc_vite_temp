@@ -38,7 +38,7 @@
     // 需要更的赛事ID列表
     let update_mids_arr = []
     all_league_container_keys_arr.forEach( card_key => {
-      let card_obj = MatchListCardData.all_card_obj[card_key];
+      let card_obj = MatchListCardData.get_card_obj_bymid(card_key);
       // 判断联赛是否显示
       if(card_obj.is_show_card){
         let mids_arr = card_obj.mids.split(',')
@@ -257,14 +257,13 @@
         no_start_to_card_key_arr,// 未开赛 到卡片key的 映射对象
         //卡片key列表
         match_list_card_key_arr,
-        csid_to_card_key_obj//赛种ID 到卡片key的 映射对象
       })
     // // 遍历所有联赛容器卡片
     all_league_container_keys_arr.forEach( card_key => {
       // 设置联赛容器卡片
-      let league_container_card_obj = MatchListCardData.all_card_obj[card_key]
+      let league_container_card_obj = MatchListCardData.get_card_obj_bymid(card_key)
       // 联赛标题卡片
-      let league_title_card_obj = MatchListCardData.all_card_obj[league_container_card_obj.league_title_card_key]
+      let league_title_card_obj = MatchListCardData.get_card_obj_bymid(league_container_card_obj.league_title_card_key)
       // 如果未设置折叠数据  设置折叠数据
       if(!league_container_card_obj.hasOwnProperty('is_show_card')){
         Object.assign(league_container_card_obj,fold_template)
