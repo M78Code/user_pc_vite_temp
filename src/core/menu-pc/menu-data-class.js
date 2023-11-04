@@ -258,6 +258,7 @@ class MenuData {
    * 获取当前的列表的默认的 模板配置
    */
    get_match_tpl_number() {
+    let euid = lodash.get(this.left_menu_result, 'lv2_mi');
     // 根据当前的菜单id 取到对应的模板id
     let current_template_id = computed_menu_to_match_templte(euid)
     return current_template_id

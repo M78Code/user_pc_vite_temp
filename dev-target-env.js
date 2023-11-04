@@ -34,7 +34,7 @@ DEV_TARGET_VERSION = "project_4-652ccfacfeffd80f0fcda107-1697972059806-online"
 // 试玩环境  
 // DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1698742048199-shiwan";
 // 生产环境
-DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1698990836566-online";
+// DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1698990836566-online";
 
 //----------------------------------亚洲版-PC-202310新平坦化版本  new-pc 6-------------------------------------------
 // 测试环境  
