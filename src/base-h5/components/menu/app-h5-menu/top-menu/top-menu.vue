@@ -38,12 +38,7 @@
                 <span class="main-menu-right-money">{{ format_money2(balance) }}</span>
             </div>
         </div>
-        <div v-if="[3,6].includes(MenuData.current_lv_1_menu_mi.value)">
-            <DateTab  :dataList="dataList[MenuData.current_lv_1_menu_mi.value]"  />
-        </div>
-        <div v-if="[2000].includes(MenuData.current_lv_2_menu_mi)">
-            <DateTab  :dataList="dataList[MenuData.current_lv_2_menu_mi]"  />
-        </div>
+      
     </div>
 </template>
 <script setup>
@@ -54,8 +49,7 @@ import { useRouter } from "vue-router";
 import { format_money2 } from "src/core/format/index.js";
 import { i18n_t, compute_css_obj, MenuData,UserCtr } from "src/core/index.js";
 import { get_sport_menu } from "./top-list";
-import { DateTab } from 'src/base-h5/components/menu/app-h5-menu/index';
-import { dateTabList } from "src/base-h5/components/menu/app-h5-menu/utils";
+
 import {  menu_lv2 } from 'src/base-h5/mixin/menu.js'
 import TopHeader from './top-header.vue';
 
@@ -84,14 +78,7 @@ const menu_list = reactive([
         code:"champion"
     },
 ])
-/**
- * 早盘串关日期格式
- */
-const dataList = reactive({
-    3:dateTabList(new Date()),
-    6:dateTabList(new Date(new Date().getTime()+24*60*60*1000),{name:"今日",val:new Date()}),
-    2000:dateTabList(new Date(new Date().getTime()+24*60*60*1000),{name:"今日",val:new Date()})
-});
+
 // 用户余额
 const balance = ref(UserCtr.balance)
 /**

@@ -10,14 +10,14 @@
           <div class="s-menu-container flex">
             <template v-for="item in scrollDataList" :key="lodash_.get(item, 'mi')">
               <!-- v-show="item.ct > 0" -->
-              <div class="sport-menu-item flex justify-center"  @click="!isSpecial?set_menu_lv2(item, $event):set_menu_lv_special(item, $event)">
+              <div class="sport-menu-item flex justify-center" @click="set_menu_lv2(item, $event)">
                 <div class="inner-w flex justify-between items-center" :class="{
-                  current: activeMi == item.mi
+                  current: current_mi == item.mi
                 }
                   ">
                   <div class="sport-w-icon">
                     <span class="sport-icon-wrap"
-                      :style="compute_css_obj({key:activeMi == item.mi ? 'menu-sport-active-image' : 'menu-sport-icon-image', position:format_type(item)})"></span>
+                      :style="compute_css_obj({key:current_mi == item.mi ? 'menu-sport-active-image' : 'menu-sport-icon-image', position:format_type(item)})"></span>
 
                     <div v-show="item.ct > 0" class="sport-match-count">
                       {{ item.ct || 0 }}
@@ -43,11 +43,25 @@ import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import { ref, computed, onMounted, watch, onUnmounted } from "vue";
 import { compute_css_obj, MenuData, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/index.js";
 import {scrollMenu} from "../utils";
-import {  menu_lv2 } from 'src/base-h5/mixin/menu.js'
+
 const emitters = ref({});
-const isSpecial = computed(()=>{return Object.keys(MenuData.current_lv_2_menu_mi_special).includes(menu_lv2.value?.mi?.toString())})
-const scrollDataList = computed(()=>{return Object.keys(MenuData.current_lv_2_menu_mi_special).includes(menu_lv2.value?.mi?.toString())?MenuData.menu_lv_mi_special_lsit:MenuData.menu_lv_mi_lsit})
-const activeMi = computed(()=>{return Object.keys(MenuData.current_lv_2_menu_mi_special).includes(menu_lv2.value?.mi?.toString())?MenuData.current_lv_special_menu_mi:MenuData.current_lv_2_menu_mi})
+
+// const isSpecial = computed(()=>{return Object.keys(MenuData.current_lv_2_menu_mi_special).includes(menu_lv2.value?.mi?.toString())})
+// const scrollDataList = computed(()=>{return Object.keys(MenuData.current_lv_2_menu_mi_special).includes(menu_lv2.value?.mi?.toString())?MenuData.menu_lv_mi_special_lsit:MenuData.menu_lv_mi_lsit})
+// const current_mi = computed(()=>{return Object.keys(MenuData.current_lv_2_menu_mi_special).includes(menu_lv2.value?.mi?.toString())?MenuData.current_lv_special_menu_mi:MenuData.current_lv_2_menu_mi})
+
+const props = defineProps({
+  // 滑动菜单数据
+  scrollDataList:{
+    type: Array,
+    default: () => []
+  },
+  // 当前选中的值
+  current_mi:{
+    type: String || Number,
+    default: ''
+  }
+})
 
 // 是否初次渲染
 const is_first = ref(true)
@@ -59,14 +73,12 @@ onMounted(() => {
  * 二级菜单事件
  */
  function set_menu_lv2(item = {},event) {
+  console.error('item',item)
   // 选中后点击无效
   if (item.mi == MenuData.current_lv_2_menu_mi) return
-  MenuData.set_current_lv_2_menu_mi(item)
-  if(Object.keys(MenuData.current_lv_2_menu_mi_special).includes(item.mi.toString())){
-    return MenuData.get_menu_lvmi_special_list(item.mi)
-  }
-  // 今日 / 滚球/ 冠军 没有 三级
-  set_menu_mi_change_get_api_data()
+
+
+
   event && scrollMenu(event,".s-menu-container",".sport-menu-item");
 }
 /**
