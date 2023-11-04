@@ -5,24 +5,18 @@
 -->
 <template>
     <div style="display: none;">{{ BetRecordClass.bet_record_version }}</div>
-    <div class="settle-dialog" :style="page_style">
-      <div v-if="BetRecordClass.selected != 3" class="row items-center yb_fontsize16 head-top" @touchmove.prevent>
-        <div class="row col items-center justify-center">
-          <p v-for="(item, index) in tabs.slice(0, 3)" 
-            :key="index" 
-            @click="change_record(index)" 
-            :class="BetRecordClass.selected == index && 'active-p'"
-            > {{ item.title }}
-          </p>
-        </div>
-      </div>
-  
-      <div class="content-m" ref="record_box">
-        <!-- 未结注单(未结算、预约中、已失效)、已结算注单 -->
-        <cathectic-item-all />
-        <!-- <component :is="tabs[BetRecordClass.selected].componentName"></component> -->
-      </div>
+    <div class="second-header flex">
+      <p v-for="(item, index) in tabs" 
+        :key="index" 
+        @click="change_record(index)" 
+        :class="BetRecordClass.selected == index && 'active-p'"
+        > {{ item.title }}
+      </p>
+      <days-select @changeDays="changeDays" />
     </div>
+    <!-- <div class="content-m" ref="record_box">
+      <cathectic-item-all />
+    </div> -->
   </template>
   
   <script setup>
@@ -30,10 +24,7 @@
   import { api_betting } from "src/api/index.js";
   //   import { mapGetters, mapMutations } from "vuex"
   import cathecticItemAll from "src/base-h5/components/cathectic/app-h5/cathectic-item-all.vue"
-  import unsettle from "src/base-h5/components/cathectic/app-h5/unsettle.vue"
-  import settle from "src/base-h5/components/cathectic/app-h5/settle.vue"
-  import preRecord from "src/base-h5/components/cathectic/app-h5/pre-record.vue"
-  import invalid from "src/base-h5/components/cathectic/app-h5/invalid.vue"
+  import daysSelect from "src/base-h5/components/cathectic/ouzhou-h5/days-select.vue"
   import { onMounted, onUnmounted, ref, shallowRef, computed, provide, watch, nextTick } from 'vue'
   import lodash from 'lodash'
   import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
@@ -42,7 +33,7 @@
   import { i18n_t } from "src/boot/i18n.js";
   import {compute_css_obj} from "src/core/index.js"
   import { compute_css_variables } from "src/core/css-var/index.js"
-  
+
   let { cathecticReducer, userInfoReducer, themeReducer } = store.getState()
   const store_cathectic = ref(cathecticReducer)
   
@@ -55,11 +46,13 @@
   const provided_ = ref({})
 
   const tabs = ref([
-    { title: i18n_t('bet_record.no_account'), componentName: shallowRef(unsettle) },
-    { title: i18n_t('pre_record.booking'), componentName: shallowRef(preRecord) },
-    { title: i18n_t('pre_record.expired'), componentName: shallowRef(invalid) },
-    { title: i18n_t('bet_record.account'), componentName: shallowRef(settle) }
+    { title: i18n_t('bet_record.no_account') },
+    { title: i18n_t('bet_record.account') }
   ])
+
+  const changeDays = (dayValue) => {
+    console.log(dayValue);
+  }
   // 锚点
   const unsettle_child = ref(null)
   const record_box = ref(null)
@@ -149,34 +142,17 @@
   template {
     display: block;
   }
-  .settle-dialog {
-    position: relative;
-    overflow: hidden;   
-    color: var(--q-cathectic-color-1);
-    .content-m {
-        padding-top: 0.2rem;
-      }
-  }
-  
-  .head-top {
-    height: 0.4rem;
-    background:var(--q-gb-bg-c-15);
-    border-radius: 1rem;
-  
-    & > div {
-      justify-content: space-between;
-      padding: 0.03rem;
-    }
-  
+  .second-header {
+    height: 0.5rem;
+    border-bottom: 1px solid var(--q-gb-bd-c-8);
     p {
-      text-align: center;
-      border-radius: 1rem;
-      height: 0.34rem;
-      line-height: 0.34rem;
-      width: 30%;
+      margin: 0 0.2rem;
+      font-size: 0.16rem;
+      font-weight: bold;
+      line-height: 0.46rem;
       &.active-p {
-        background: var(--q-gb-bg-c-9);
-        color: var(--q-gb-bg-c-15);
+        color: var(--q-gb-bd-c-8);
+        border-bottom: 0.04rem solid var(--q-gb-bd-c-8);
       }
     }
   }

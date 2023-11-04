@@ -56,7 +56,7 @@ import "./index.scss"
 
 const inner_height = window.innerHeight;  // 视口高度
 const route = useRoute();
-
+let lastTouchEnd = ref(0)
 // 是否展示左侧菜单
 const toggleLeftDrawer = () => {
   leftDrawerOpen.value = !leftDrawerOpen.value;
