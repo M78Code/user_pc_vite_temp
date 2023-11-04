@@ -53,6 +53,9 @@ export default defineConfig({
       
     }),
   ],
+  css:{
+    devSourcemap: true,
+  },
     // root: path.resolve(__dirname, `../../project/${project}/`),
   build: {
     outDir ,
