@@ -15,7 +15,11 @@ import { lvs_icon_theme01, lvs_icon_theme02, animationUrl_icon_theme01,
 
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import { lang, standard_edition, theme } from 'src/base-h5/mixin/userctr.js'
-import { is_hot, menu_type, is_detail, is_results } from 'src/base-h5/mixin/menu.js'
+import { is_hot, menu_type, is_detail, is_results, menu_lv1 } from 'src/base-h5/mixin/menu.js'
+
+
+// i: 每个组件的 props 赛事下标， 来源 === 组件
+// match_of_list: 每个组件的 props 赛事对象， 来源 === 组件
 
 export default {
   data () {
@@ -53,7 +57,7 @@ export default {
       //赛事切换中
       match_changing: false,
       // 定时器外层容器宽度
-      counting_down_up_wrapper_width: 0.8,
+      counting_down_up_wrapper_width: 1,
       // 列表页进球动画和红牌动画要等组件初始化3秒后开始监听变化
       is_new_init2: false,
       // 防抖 防止急速状态下点击两次
@@ -202,6 +206,11 @@ export default {
         }
       }
       return scoring
+    },
+    // 是否显示赛事阶段标题
+    is_show_opening_title () {
+      // 今日、早盘、串关
+      return [1,2,3,6].includes(menu_lv1.value) && this.match_of_list.is_show_no_play
     }
   },
   watch: {

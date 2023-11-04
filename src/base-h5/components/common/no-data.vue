@@ -176,7 +176,7 @@ function refresh_data() {
     p {
         margin: 0.14rem;
         font-size: 0.14rem;
-        color: var(--q-gb-t-c-5);
+        color: var(--q-gb-t-c-3);
         span {
             display: inline-block;
             width: 1.4rem;

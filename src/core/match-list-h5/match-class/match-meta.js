@@ -208,12 +208,12 @@ class MatchMeta {
   set_match_default_properties(match, index, mids) {
     // 是否展示联赛标题
     let is_show_league = MatchUtils.get_match_is_show_league(index, mids)
-    let is_show_no_pla = MatchUtils.get_match_is_show_no_play(index, mids)
+    let is_show_no_play = MatchUtils.get_match_is_show_no_play(index, mids)
     const { home_score, away_score } = MatchUtils.get_match_score(match)
     return {
       source_index: index,
       is_show_league,
-      is_show_no_pla,
+      is_show_no_play,
       is_show_league,
       away_score,
       home_score

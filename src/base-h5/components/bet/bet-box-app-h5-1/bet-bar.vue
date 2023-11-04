@@ -11,13 +11,12 @@
     <div v-show="false">{{ userData.user_version }}</div>
     <div class="nonebox4-first">
         <div class="nonebox4-first-left">
-            <div class="nonebox4-first-left-img">{{BetData.is_bet_single? i18n_t('app_h5.bet.odd') : i18n_t('app_h5.bet.parlay')}}</div>
-            <div class="nonebox4-first-left-text">{{ i18n_t('app_h5.bet.pm_sport') }}</div>
+            <div class="nonebox4-first-left-img">1</div>
+            <div class="nonebox4-first-left-text">Bet slip</div>
         </div>
         <div class="nonebox4-first-right">
             <div class="nonebox4-first-right-window" @click.stop="get_balance">
                 <div class="nonebox4-first-right-window-num">{{ format_money2(userData.balance) }}</div>
-                <div class="refesh yb_mr8" :class="{ 'refesh2': is_loading_balance }"></div>
             </div>
         </div>
     </div>
@@ -174,13 +173,14 @@ onUnmounted(() => {
     align-items: center;
     justify-content: center;
     color: var(--q-gb-bg-c-14);
-    background: var(--q-gb-t-c-1);
+    background: var(--q-gb-t-c-11);
     border-radius: 50%;
 }
 .nonebox4-first-left-text {
     margin-left: 0.05rem;
     display: flex;
     font-size: 14px;
+    color: var(--q-gb-bg-c-14);
 }
 .nonebox4-first-right {
     display: flex;
@@ -193,7 +193,6 @@ onUnmounted(() => {
     display: flex;
     flex-direction: row;
     align-items: center;
-    background-color: var(--q-gb-t-c-7);;
     padding-right: 3px;
     padding-left: 10px;
     border-radius: 30px;
@@ -203,6 +202,7 @@ onUnmounted(() => {
     font-size: 18px;
     font-weight: bold;
     margin-right: 4px;
+    color: var(--q-gb-t-c-11);
 }
 .nonebox4-first-right-window-img {
     display: flex;
@@ -251,10 +251,11 @@ onUnmounted(() => {
 .bet-bar {
   width: 100%;
   height: 0.5rem;
-  border-radius: 0.16rem 0.16rem 0 0;
   border-width: 1px 1px 0 1px;
   //border-style: solid;
   position: relative;
+  background: var(--q-gb-t-c-18);
+  padding: 0 0.15rem;
 
   &::after {
     content: "";

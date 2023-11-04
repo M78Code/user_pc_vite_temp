@@ -1529,5 +1529,77 @@ init(){
     // 销毁ws数据通信实例
     this.ws_ctr && this.ws_ctr.destroy();
   }
+  /**
+   * @description: 冒泡排序(原来地址顺序不发生变化---保持原来的顺序不变,返回新的列表但是子项使用原来的地址)
+   * @param {mid} 赛事id
+   * @return {undefined} undefined
+   */
+  listSortNew(mid){
+    let list = this.get_quick_mid_obj(mid).odds_info;
+    var list_ = [];
+    if(list && (list instanceof Array))
+    {
+      for (let i = 0; i < list.length; i++) {
+        if(list[i].hton!=0)
+        {
+          list_.push(list[i]);
+        }
+      }
+      if(list_.length)
+      {
+        var len = list_.length-1;
+        var t = '';
+        for (let i = 0; i < len; i++) {
+          for (let k = 0; k < len-i; k++) {
+            if(parseInt(list_[k].hton) < parseInt(list_[k+1].hton)){
+                t = list_[k];
+                list_[k] = list_[k+1];
+                list_[k+1] = t;
+            }
+          }
+        }
+      }
+    }
+    // 虚拟赛马/赛狗/摩托车/泥地摩托车详情页所有投注--热门需固定置顶在首位
+    list_.sort((a, b) => {
+      let a_ = a.team?1:0;
+      let b_ = b.team?1:0;
+      return b_- a_;
+    });
+    return list_;
+  }
+   /**
+   * @description: 非置顶的玩法项冒泡排序
+   * @param @param {mid} 赛事id
+   * @return {undefined} undefined
+   */
+  listSortNormal(mid){
+   let list = this.get_quick_mid_obj(mid).odds_info;
+   var list_normal = [];
+   if(list && (list instanceof Array))
+   {
+     for (let i = 0; i < list.length; i++) {
+       if(list[i].hton == 0)
+       {
+         list_normal.push(list[i]);
+       }
+     }
+     if(list_normal.length)
+     {
+       var len = list_normal.length-1;
+       var t = '';
+       for (let i = 0; i < len; i++) {
+         for (let k = 0; k < len-i; k++) {
+           if(parseInt(list_normal[k].hpon) > parseInt(list_normal[k+1].hpon)){
+               t = list_normal[k];
+               list_normal[k] = list_normal[k+1];
+               list_normal[k+1] = t;
+           }
+         }
+       }
+     }
+   }
+   return list_normal;
+  }
 }
 
