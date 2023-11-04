@@ -12,7 +12,7 @@
     </div>
 </template>
 <script setup>
-import { ref, onMounted } from "vue"
+import { ref, onMounted, onUnmounted } from "vue"
 import { IconWapper } from 'src/components/icon'
 let showList = ref(false)
 let _index = ref(0)
@@ -29,6 +29,16 @@ const change = (index) => {
     emit('changeDays', list.value[index].val)
 }
 
+const close = () => {
+    showList.value = false
+}
+
+onMounted(() => {
+    document.addEventListener('click', close)
+})
+onUnmounted(() => {
+    document.removeEventListener('click', close)
+})
 </script>
 <style lang="scss" scoped>
 .fliter {
