@@ -17,7 +17,7 @@
       <layoutTop />
       
       <router-view />
-      <BetBoxWapper />
+      <BetBoxWapper use_component_key='BetBoxAppH5_1' />
       <!--页脚-->
       <Tabbar class="m-layout" v-if="['sport_menu', 'matchList'].includes(route.name)">
       </Tabbar>
