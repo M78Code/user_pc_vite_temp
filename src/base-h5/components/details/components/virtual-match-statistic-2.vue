@@ -45,7 +45,9 @@
             </div>
           </div>
         </div>
+        <div class="separate">
 
+        </div>
         <div class="away item column items-center">
           <div class="win-percent">{{ datas.win_away }}%</div>
 
@@ -162,12 +164,16 @@ export default defineComponent({
     margin-top: 0.2rem;
     // padding: 0 0.7rem;
     padding-bottom: 0.35rem;
-
+    .separate{
+      width: 0.08rem;
+    }
     .item {
       flex: 1;
       background-color: var(--q-gb-bg-c-18);
+      border-radius: 0.04rem;
+      padding: .08rem 0;
       .result-list {
-        margin-top: 0.08rem;
+        margin-top: 0.04rem;
         font-size: 0.10rem;
         display: flex;
         justify-content: center;
