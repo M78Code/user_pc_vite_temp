@@ -298,3 +298,7 @@ export const EMIT_DETAILS_TOGGLE_HANDICAP= "EMIT_DETAILS_TOGGLE_HANDICAP"
 // 投注列表切换
 export const EMIT_BET_RECORD_SELECTED_CHANGE= "EMIT_BET_RECORD_SELECTED_CHANGE"
 //------------------------------------------------------------------命令定义-E-------------------------------------------------------------------------------------
+
+
+// 滑动菜单点击
+export const EMIT_SCROLL_TOP_NAV_CHANGE = "EMIT_SCROLL_TOP_NAV_CHANGE"
