@@ -1,0 +1,33 @@
+diff a/src/base-h5/components/bet/bet-box-app-h5-1/bet_mix_box_child3.vue b/src/base-h5/components/bet/bet-box-app-h5-1/bet_mix_box_child3.vue	(rejected hunks)
+@@ -10,17 +10,24 @@
+           <div class="nonebox4-content-left">
+               <div class="nonebox4-content-left-title">{{ item.handicap }}</div>
+               <div class="nonebox4-content-left-content">
+-                  <div class="nonebox4-content-left-content-xian"></div>
+-                  <div class="nonebox4-content-left-content-text">
+-                      <div>{{ item.playName }} </div>
++                  <div class="nonebox4-content-left-content-xian">删</div>
++                  <div class="nonebox4-content-left-info">
++                    <div class="nonebox4-content-left-content-text">
++                      <!-- <div>{{ item.playName }} </div>
+                       <div>{{ item.home }} VS {{ item.away }}</div>
+-                      <div>{{ item.tid_name }}</div>
++                      <div>{{ item.tid_name }}</div> -->
++                      <div class="nonebox4-content-left-content-text-one">Sevilla Futbol Club <span class="text-one-span">0.25</span></div>
++                      <div class="nonebox4-content-left-content-text-two">[In-play] <span class="text-two-span">1X2</span></div>
++                      <div class="nonebox4-content-left-content-text-three">Sevilla Futbol Club</div>
++                    </div>
++                    <div>
++                        <div class="nonebox4-content-right">
++                            <div class="nonebox4-content-right-profit">{{ format_odds(item.oddFinally, item.sportId) }}</div>
++                        </div>
++                    </div>
+                   </div>
+               </div>
+           </div>
+-          <div class="nonebox4-content-right">
+-              <div class="nonebox4-content-right-profit"><span class="nonebox4-content-right-profit-type">@</span>{{ format_odds(item.oddFinally, item.sportId) }}</div>
+-          </div>
+       </div>
+      
+     </div>

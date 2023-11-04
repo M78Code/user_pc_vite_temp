@@ -1,0 +1,30 @@
+{
+    "leftmenu": {
+        "level": 2,
+        "menuName": "客户端PC",
+        "sonName": "h5-投注组件"
+      },
+    "category": "component",
+    "component-name": "BetComponent",
+    "support-customization":"1",
+    "descriptions":[
+        "投注组件"
+    ],
+    "optional-component":[
+       {
+        "component-name": "BetBoxH5_1",
+        "descriptions":[
+            "投注组件-重构版_1"
+        ]
+        
+       } ,
+       {
+        "component-name": "BetBoxAppH5_1",
+        "descriptions":[
+            "投注组件-app复刻版_1"
+        ]
+        
+       } 
+    ]
+
+}

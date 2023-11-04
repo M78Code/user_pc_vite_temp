@@ -15,12 +15,24 @@ class MatchUtils {
     let started = []
     let not_started = []
     list.forEach(t => {
+      // ms 1 100 为 已开赛
       if ([1,110].includes(+t.ms)) {
         started.push(t)
       } else {
         not_started.push(t)
       }
     })
+    // 设置开赛，未开赛标题以及数量
+    const s_length = lodash.get(started, 'length', 0)
+    if (s_length > 0) {
+      started[0].start_falg = 1
+      started[0].in_progress_total = s_length
+    }
+    const n_length = lodash.get(not_started, 'length', 0)
+    if (n_length > 0) {
+      not_started[0].start_falg = 2
+      not_started[0].no_start_total = n_length
+    }
     return lodash.uniqBy([ ...started, ...not_started ], 'mid')
   }
 
@@ -46,7 +58,6 @@ class MatchUtils {
       }
     }
     if(match){
-      // 如果大于第一个赛事
       if(i > 0){
         // 上一个赛事
         let prev_match = BaseData.resolve_base_info_by_mid(mids[i - 1]);

@@ -12,20 +12,24 @@
       favorite_un_start_title: favorite_un_start_title(i, match_of_list.ms),
     }]">
     <template v-if="match" >
-      <!-- 未开赛标题  -->
-      <div class="match-status-fixed flex items-center" v-if="is_show_opening_title">
-        <img src='image/list/list-red.svg' />
-        <span class="din-regular">
-          {{ $t('list.match_no_start') }}&nbsp;&nbsp;<span v-show="no_start_total">(0)</span>
-        </span>
+      <!-- 开赛标题  -->
+      <div :class="['match-status-fixed', { progress: +match.start_falg === 1, not_begin: +match.start_falg === 2 }]" v-if="is_show_opening_title">
+        <!-- 进行中 -->
+        <template v-if="+match.start_falg === 1">
+          <img :src="in_progress" /> <span class="din-regular"> 进行中</span>
+        </template>
+        <!-- 未开赛 -->
+        <template v-else>
+          <img :src="not_begin" /> <span class="din-regular"> {{ $t('list.match_no_start') }}</span>
+        </template>
       </div>
       <!--体育类别 -- 标题  menuType 1:滚球 2:即将开赛 3:今日 4:早盘 11:串关 -->
-      <div v-if="get_sport_show"
+      <div v-if="show_sport_title"
         :class="['sport-title match-indent', { home_hot_page: is_hot, is_gunqiu: [1].includes(+menu_type), first: i == 0, }]"
         @click="handle_ball_seed_fold">
         <span class="score-inner-span">
           <!-- PROJECT_NAME == 'app-h5' 复刻版需要展示数量 -->
-          {{ match_of_list.csna }}{{'(' + menu_lv2.ct + ')'}}
+          {{ match_of_list.csna }} ({{ +match.start_falg === 1 ? match.in_progress_total : match.no_start_total }})
         </span>
       </div>
       
@@ -35,15 +39,15 @@
         <div class="buffer-container" v-if="match.is_show_league && i !== 0"></div>
         <!--联赛标题 -->
         <div @click="handle_league_fold" v-if="match.is_show_league || (is_hot && get_league_show(i))"
-          :class="[('league match-indent hairline-border'), { 'no-radius': get_sport_show, 'no-border': !collapsed}]">
+          :class="[('league match-indent hairline-border'), { 'no-radius': show_sport_title, 'no-border': !collapsed}]">
           <div class="league-t-wrap right-border">
           <!-- <div class="league-t-tubiao"></div> -->
             <!-- 联赛收藏 -->
             <div v-if="![3000, 900].includes(menu_type)" class="favorited-icon" @click.stop="handle_league_collect">
-              <!-- 未收藏 -->
-              <img v-if="!league_collect_state" :src="compute_img_url('icon-favorite')" alt="">
-              <!-- 收藏图标 -->
-              <img v-if='league_collect_state' :src="compute_img_url('icon-favorite-s')">
+              <!-- 未收藏 compute_img_url('icon-favorite')-->
+              <img v-if="!league_collect_state" :src="normal_img_not_favorite_white" alt="">
+              <!-- 收藏图标 compute_img_url('icon-favorite-s')-->
+              <img v-if='league_collect_state' :src="normal_img_is_favorite">
             </div>
             <!-- 电竞图标 写死 -->
             <div class="esport" v-if="match_of_list.csid == 101" :style="compute_css_obj('menu-sport-active-image', 2101)"></div>
@@ -83,8 +87,7 @@
           <div :class="['match-odds-container study_height_s hairline-border', {'border-top': !match.is_show_league}]">
             <div class="match-odds-container-border-radius">
               <!-- 上边的 赛事日期标准版,包含 比分组件 -->
-              <div class="date-container match-indent" :class="{ 'n-s-edition': !show_newer_edition }"
-                v-if="!show_newer_edition && !is_results">
+              <div class="date-container match-indent" v-if="!show_newer_edition && !is_results">
                 <div class='l standard'>
                   <!--竞彩足球 星期与编号-->
                   <div class="week-mcid row items-center" v-if="menu_type == 30">
@@ -92,10 +95,10 @@
                   </div>
                   <!--赛事列表收藏-->
                   <div class="favorite-icon-top match list-m" @click.stop="handle_match_collect">
-                    <!-- 未收藏图标 -->
-                    <img v-if="!match_collect_state" :src="compute_img_url('icon-favorite')" alt="">
-                    <!-- 收藏图标 -->
-                    <img v-if='match_collect_state' :src="compute_img_url('icon-favorite-s')">
+                    <!-- 未收藏图标 compute_img_url('icon-favorite')-->
+                    <img v-if="!match_collect_state" :src="normal_img_not_favorite_white" alt="">
+                    <!-- 收藏图标 compute_img_url('icon-favorite-s')-->
+                    <img v-if='match_collect_state' :src="normal_img_is_favorite">
                   </div>
                   <!-- 赛事日期标准版 -->
                   <div :class="['timer-wrapper-c flex items-center', { esports: is_export, 'din-regular': is_export }]">
@@ -143,8 +146,7 @@
                 <div class="goto-detail" style="margin-right: 0.03rem;" @click='goto_details(match)'>
                   <span class="count_span" :class="{ esports: 3000 == menu_type }">
                     <span class="mc-n">
-                      {{GlobalAccessConfig.get_handicapNum()? get_match_mc(match) :
-                        i18n_t('footer_menu.more') }}
+                      {{GlobalAccessConfig.get_handicapNum()? get_match_mc(match) : i18n_t('footer_menu.more') }}+
                     </span>
                     <span class="add_text" v-if="GlobalAccessConfig.get_handicapNum()">
                       <icon-wapper color="#888" name="icon-triangle1" size="14px" class="icon-wapper-more" />
@@ -239,7 +241,7 @@
                         <div class="live-i-b-wrap v-mode-span row items-center"
                           v-if="media_button_state_obj.icon_path" @click="media_button_handle()">
                           <slot></slot>
-                          <img class="live-icon-btn" :src='media_button_state_obj.icon_path' />
+                          <img class="live-icon-btn" :src='video_play_app' />
                         </div>
                         <!-- 足篮球展示赛事分析图标 -->
                         <div class="column justify-center yb_px4"
@@ -249,7 +251,7 @@
                         </div>
                         <!-- 此赛事支持提前结算 -->
                         <div class="column justify-center yb_px2" v-if="match_of_list.mearlys == 1">
-                          <img :src="mearlys_icon" alt="" style="width:0.2rem">
+                          <img :src="settlement_app" alt="" style="width:0.2rem">
                         </div>
                       </div>
                     </div>
@@ -284,7 +286,8 @@ import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 
 import { i18n_t, compute_img_url, compute_css_obj  } from "src/core/index.js"
 import { format_time_zone } from "src/core/format/index.js"
-import { mearlys_icon } from 'src/base-h5/core/utils/local-image.js'
+import { mearlys_icon, in_progress, not_begin, video_play_app, settlement_app, 
+  normal_img_not_favorite_white, normal_img_is_favorite } from 'src/base-h5/core/utils/local-image.js'
 
 import { lang, standard_edition, theme } from 'src/base-h5/mixin/userctr.js'
 import { is_hot, menu_type, menu_lv2, is_detail, is_export, is_results, footer_menu_id } from 'src/base-h5/mixin/menu.js'
@@ -311,10 +314,15 @@ export default {
     CountingDownStart,
     CountingDownSecond,
   },
-  setup () {
+  setup (ctx) {
+    // 是否显示球种标题
+    const show_sport_title = computed(() => {
+      return [1,2].includes(+ctx.match_of_list.start_falg)
+    })
     return { 
-      lang, theme, i18n_t, compute_img_url, format_time_zone, GlobalAccessConfig, footer_menu_id,LOCAL_PROJECT_FILE_PREFIX,
-      is_hot, menu_type, menu_lv2, is_detail, is_export, is_results, standard_edition, mearlys_icon, compute_css_obj
+      lang, theme, i18n_t, compute_img_url, format_time_zone, GlobalAccessConfig, footer_menu_id,LOCAL_PROJECT_FILE_PREFIX,in_progress,not_begin,
+      is_hot, menu_type, menu_lv2, is_detail, is_export, is_results, standard_edition, mearlys_icon, compute_css_obj, show_sport_title, video_play_app, settlement_app,
+      normal_img_not_favorite_white, normal_img_is_favorite
     }
   }
 }
@@ -341,13 +349,21 @@ export default {
   position: relative;
 
   .match-status-fixed {
-    width: 3.75rem;
-    height: 0.17rem;
+    width: 100%;
+    height: 0.25rem;
     line-height: 1;
     font-size: 0.11rem;
-    margin-left: -0.07rem;
+    padding-left: 0.20rem;
+    display: flex;
+    align-items: center;
     color: var(--q-color-com-fs-color-38);
-    padding: 0.03rem 0.03rem 0.03rem 0.15rem;
+    background: #fff;
+    &.progress{
+      border-top: 2px solid #74C4FF
+    }
+    &.not_begin{
+      border-top: 2px solid #E95B5B
+    }
 
     img {
       margin-right: .06rem;
@@ -369,7 +385,7 @@ export default {
     align-items: center;
     background: #ffffff;
     .buffer-container{
-      background: var(--q-gb-bg-c-10);
+      background: #fff;
       height: 5px;
       width: 100%;
     }
@@ -406,7 +422,7 @@ export default {
     display: block;
     position: relative;
     transition: max-height 0.3s;
-    padding-left: 10px;
+    padding-left: 6px;
     background: var(--q-match-page-bg-color-10);
 
     .match-odds-container-border-radius {
@@ -519,7 +535,7 @@ export default {
     border-radius: 0;
     font-size: 12px;
     padding: 0 5px 0 20px;
-    background: var(--q-gb-bg-c-10);
+    background: rgba(175, 179, 200, 0.1);
     line-height: 20px;
     font-size: 11px;
     .league-collapse-dir{
@@ -704,7 +720,7 @@ export default {
       }
       .favorited-icon{
         height: 100%;
-        margin: 0 0.08rem;
+        margin: 0 10px 0 12px;
         position: relative;
         top: 1px;
         flex-shrink: 0;
@@ -1103,11 +1119,10 @@ export default {
 
           .team-t-title-w {
             font-size: 0.12rem;
-            height: 0.2rem;
-            line-height: 0.15rem;
+            height: 0.3rem;
             -webkit-line-clamp: 2;
             display: flex;
-
+            flex-direction: column-reverse;
             &.is-handicap {
               font-weight: bold;
             }
@@ -1245,7 +1260,7 @@ export default {
   background-color: var(--q-color-com-bg-color-12);
   width: 100%;
   color: #999;
-  padding: 0 0 0 0.08rem;
+  padding-left: 6px;
   height: 0.2rem;
   display: flex;
   align-items: center;
@@ -1397,7 +1412,6 @@ export default {
 
   .l {
     display: flex;
-    line-height: 1.2;
     align-items: center;
     flex-shrink: 0;
     font-size: 0.1rem;

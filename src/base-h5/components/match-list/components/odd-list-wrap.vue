@@ -46,7 +46,7 @@
         <!--标准版-->
         <div class="standard-odd-list row"  :class="{'f-child':standard_odd_status == 0,'r-child':standard_odd_status == 1}">
           <div class="odd-column-w" :key="hp_i_i+''+standard_odd_status" :class="{'boxing':match.csid == 12 } "
-               v-for="(hp_item_obj,hp_i_i) in odd_hps_data">
+               v-for="(hp_item_obj,hp_i_i) in fill_empty_hps(get_hp_list(standard_odd_status))">
             <div class="odd-wrap-min" :class="`hp-${get_ol_length(hp_item_obj,hp_i_i)}`"
                 :key="ol_item_i" v-for="(ol_item,ol_item_i) in get_ol_list(hp_item_obj,hp_i_i)">
               <odd-column-item
@@ -194,7 +194,7 @@ const hp_item = ref({});
 const hl_hs = ref(0);
 const sport_convert = ref("");
 // 0 在左 1 在右
-const standard_odd_status = ref(0);
+const standard_odd_status = ref(PageSourceData.standard_odd_status);
 // 简版投注项选中时角球标志
 const show_lock_selected = ref(false);
 // 简版投注项选中时角球标志
@@ -202,20 +202,17 @@ const index_show_map = ref({});
 const screen_changing_timer = ref(0);
 
 const get_bet_list = ref(store_state.get_bet_list)
-const get_standard_odd_status = ref(store_state.get_standard_odd_status)
 const get_n_s_changed_loaded = ref(true)
 const get_secondary_unfold_map = ref(store_state.get_secondary_unfold_map)
 
 const unsubscribe = store.subscribe(() => {
   const new_state = store.getState()
   get_bet_list.value = new_state.get_bet_list
-  get_standard_odd_status.value = new_state.get_standard_odd_status
   get_secondary_unfold_map.value = new_state.get_secondary_unfold_map
 })
 
 onMounted(() => {
-  standard_odd_status.value = get_standard_odd_status.value
-  modify_overtime_status(get_standard_odd_status.value); // 初始化时也调用
+
   emitters.value = {
     emitter_2: useMittOn(MITT_TYPES.EMIT_FAPAI_WAY_TIPS_STATUS_CHANGE, fapai_way_tips_status_change_h).off,
   }
@@ -223,11 +220,7 @@ onMounted(() => {
 
 // 左右tab切换也要计算赔率
 watch( () => props.hps, (status) => {
-  modify_overtime_status(get_standard_odd_status.value);
-});
-
-watch( () => get_standard_odd_status.value, (status) => {
-  modify_overtime_status(status);
+  modify_overtime_status(PageSourceData.standard_odd_status.value);
 });
 
 // 5分钟第X个进球时分tips文本提示
@@ -482,12 +475,6 @@ const finally_ol_list = computed(() => {
   return data;
 });
 
-// 赔率
-const odd_hps_data = computed(() => {
-  // TODO: get_hp_list(standard_odd_status.value)
-  return fill_empty_hps(get_hp_list(0))
-})
-
 // 占位,填充三个空元素
 const fill_empty_hps = (hpsArr) => {
   if ((hpsArr || []).length == 0) {
@@ -672,20 +659,14 @@ const is_show_scroll_dir = (dir) => {
  * @return Undefined Undefined
  */
 const odd_wrapper_pan = ({ direction }) => {
-  let standard_odd_status = 0;
+  let status = 0;
   if (get_hp_list(1).length) {
     if (direction == "left") {
-      standard_odd_status = 1;
+      status = 1;
     } else {
-      standard_odd_status = 0;
+      status = 0;
     }
-    store.dispatch({ type: 'matchReducer/set_standard_odd_status',  payload: standard_odd_status });
-    // $emit('odd_pan',standard_odd_status.value);
-    clearTimeout(screen_changing_timer.value);
-    store.dispatch({ type: 'matchReducer/set_foot_ball_screen_changing',  payload: 1 });
-    screen_changing_timer.value = setTimeout(() => {
-      store.dispatch({ type: 'matchReducer/set_foot_ball_screen_changing',  payload: 0 });
-    }, 500);
+    PageSourceData.set_standard_odd_status(status)
   }
 };
 /**
@@ -809,8 +790,9 @@ const modify_overtime_status = (vuex_status) => {
   // 如果第二页为空 则取第一页
   if (vuex_status == 1 && get_hp_list(1).length == 0) {
     standard_odd_status.value = 0;
+    PageSourceData.set_standard_odd_status(0)
   } else {
-    standard_odd_status.value = vuex_status;
+    PageSourceData.set_standard_odd_status(1)
   }
 };
 /**

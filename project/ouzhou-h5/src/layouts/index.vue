@@ -12,7 +12,7 @@
       <router-view />
 
       <!-- 投注框 -->
-      <BetBoxWapper />
+      <BetBoxWapper use_component_key="BetOuzhouH5"/>
 
      
       <FooterWapper />

@@ -37,7 +37,7 @@
           <div class="menu_item" :class="[
             'menu_item_' + item.mi,
             // { active: meta_data_store.current_menu.mi == item.mi },
-          ]" v-for="item in BaseData.mew_menu_list_res" :key="item.mi" @click="change_current_menu(item)"
+          ]" v-for="item in allSports" :key="item.mi" @click="change_current_menu(item)"
             :data-id="item.mi">
             <sport_icon size="18" :sport_id="item.mi" />
             <!-- 有电竟体育时展示电竞体育2000  Esports  -->
@@ -68,6 +68,7 @@ const popular = reactive([
   { name: "Basketball", className: "basketball", mi: "102" },
   { name: "Tennis", className: "tennis", mi: "105" },
 ])
+const allSports = BaseData.mew_menu_list_res.filter((item)=>{return +item.mi<300})
 const set_menu_obj = (data) => {
 }
 const change_current_menu = (m_data) => {

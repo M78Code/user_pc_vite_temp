@@ -10,23 +10,16 @@
           <div class="nonebox4-content-left">
               <div class="nonebox4-content-left-title">{{ item.handicap }}</div>
               <div class="nonebox4-content-left-content">
-                  <div class="nonebox4-content-left-content-xian">删</div>
-                  <div class="nonebox4-content-left-info">
-                    <div class="nonebox4-content-left-content-text">
-                      <!-- <div>{{ item.playName }} </div>
+                  <div class="nonebox4-content-left-content-xian"></div>
+                  <div class="nonebox4-content-left-content-text">
+                      <div>{{ item.playName }} </div>
                       <div>{{ item.home }} VS {{ item.away }}</div>
-                      <div>{{ item.tid_name }}</div> -->
-                      <div class="nonebox4-content-left-content-text-one">Sevilla Futbol Club <span class="text-one-span">0.25</span></div>
-                      <div class="nonebox4-content-left-content-text-two">[In-play] <span class="text-two-span">1X2</span></div>
-                      <div class="nonebox4-content-left-content-text-three">Sevilla Futbol Club</div>
-                    </div>
-                    <div>
-                        <div class="nonebox4-content-right">
-                            <div class="nonebox4-content-right-profit">{{ format_odds(item.oddFinally, item.sportId) }}</div>
-                        </div>
-                    </div>
+                      <div>{{ item.tid_name }}</div>
                   </div>
               </div>
+          </div>
+          <div class="nonebox4-content-right">
+              <div class="nonebox4-content-right-profit"><span class="nonebox4-content-right-profit-type">@</span>{{ format_odds(item.oddFinally, item.sportId) }}</div>
           </div>
       </div>
      
@@ -46,32 +39,13 @@
   </script>
   
   <style lang="scss" scoped>
-  .text-one-span{
-    color: var(--q-gb-t-c-11);
-  }
-  .nonebox4-content-left-content-text-three{
-    font-size: 0.16rem;
-  }
-  .nonebox4-content-left-content-text-two{
-    color: var(--q-gb-t-c-1);
-    font-size: 0.16rem;
-  }
-  .text-two-span{
-    color: var(--q-gb-t-c-18);
-  }
-  .nonebox4-content-left-content-text-one{
-    font-size: 0.18rem;
-  }
-  .nonebox4-content-left-info{
-    display: flex;
-    justify-content: space-between;
-    width: calc(100% - 0.25rem);
-  }
   .nonebox4-content{
       width: 100%;
-      background: var(--q-gb-t-c-14);
+      //margin-top: 10px;
+      display: flex;
+      justify-content: space-between;
+      background: var(--q-gb-bg-c-9);
       padding: 10px;
-      padding: 0.15rem;
   }
   .nonebox4-content-left-title{
       font-size: 13px;
@@ -81,23 +55,21 @@
       height: 70px;
       display: flex;
       margin-top: 5px;
-      width: 100%;
   }
   .nonebox4-content-left-content-xian{
-      color: var(--q-gb-t-c-18);
-      font-size: 0.12rem;
-      width: 0.1rem;
-      margin-right: 0.15rem;
-      margin-top: 0.06rem;
+      width: 2px;
+      height: 100%;
+      background: #2394fc;
+      margin-right: 4px;
   }
   .nonebox4-content-left-content-text{
-      line-height: 0.25rem;
-        margin-top: 0.02rem;
+      font-size: 12px;
+      color: #999;
+      line-height: 23px;
   }
   .nonebox4-content-right-profit{
-      font-size: 0.2rem;
+      font-size: 18px;
       font-weight: bold;
-      color: var(--q-gb-t-c-11);
   }
   .nonebox4-content-right-profit-type{
       font-size: 16px;

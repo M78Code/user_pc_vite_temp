@@ -1,3 +1,10 @@
+/*
+ * @Author: rise
+ * @Date: 2023-11-03 16:37:52
+ * @LastEditors: rise
+ * @LastEditTime: 2023-11-04 17:12:25
+ * @Description:  
+ */
 import { createRouter, createWebHashHistory } from "vue-router";
 const router = createRouter({
   history: createWebHashHistory(),
@@ -14,6 +21,14 @@ const router = createRouter({
             path: "/match",
             name: "matchList",
             component: () => import("../pages/match-list/index.vue"),
+            meta: {
+              keepAlive: true // 需要缓存
+            },
+          },
+          {
+            path: "/personal",
+            name: "personal",
+            component: () => import("../pages/personal/index.vue"),
             meta: {
               keepAlive: true // 需要缓存
             },
@@ -128,6 +143,12 @@ const router = createRouter({
             path: "/betting_history",
             name: "betting_history",
             component: () => import("../pages/cathectic/index.vue"),
+          },
+          // 个人中心
+          {
+            path: "/personal",
+            name: "personal",
+            component: () => import("../pages/personal/index.vue"),
           }
       ],
     },
