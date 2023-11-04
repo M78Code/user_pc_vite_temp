@@ -449,7 +449,6 @@ class MatchMeta {
      }
     // const { match_data, start_index, end_index } = VirtualList.compute_page_render_list(scrollTop)
     const { match_datas } = VirtualList.compute_container_list_by_scroll_top(scroll_top)
-    console.log(VirtualList.mid_top_map)
     // const target_index = end_index > 10 ? end_index + 1 : this.complete_mids.length
     // const target_list = this.complete_matchs.slice(start_index, target_index)
     // this.match_mids = this.complete_mids.slice(start_index, target_index)

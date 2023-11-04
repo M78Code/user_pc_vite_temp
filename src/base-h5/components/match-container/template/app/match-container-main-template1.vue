@@ -369,7 +369,7 @@ export default {
     align-items: center;
     background: #ffffff;
     .buffer-container{
-      background: #f7f9fe;
+      background: var(--q-gb-bg-c-10);
       height: 5px;
       width: 100%;
     }
@@ -407,7 +407,7 @@ export default {
     position: relative;
     transition: max-height 0.3s;
     padding-left: 10px;
-    background: #fff;
+    background: var(--q-match-page-bg-color-10);
 
     .match-odds-container-border-radius {
       overflow: hidden;
@@ -519,7 +519,7 @@ export default {
     border-radius: 0;
     font-size: 12px;
     padding: 0 5px 0 20px;
-    background: #f7f9fe;
+    background: var(--q-gb-bg-c-10);
     line-height: 20px;
     font-size: 11px;
     .league-collapse-dir{
@@ -738,9 +738,9 @@ export default {
     font-size: 0.1rem;
     color: #303442;
     flex-direction: row-reverse;
-    background: #fff;
+    background: var(--q-match-page-bg-color-10);
     border-top: 1px solid #e9e9e9;
-    // border-bottom: 1px solid #e9e9e9;
+    border-bottom: 1px solid #e9e9e9;
 
     .odd-title-i-w {
       width: 50%;
