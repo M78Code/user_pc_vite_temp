@@ -13,16 +13,12 @@
         <div v-for="(value, name, index) in BetRecordClass.list_data" :key="index" class="cathectic-list">
           <q-slide-transition>
             <template>
-              <div>032/12</div>
+              <div>03/12</div>
               <div v-for="(item2, key) in value.data" :key="key" :item_data="item2" class="cathectic-item">
-              <item-multiple-body :data_b="item2"></item-multiple-body>
-              <template>
+                <item-multiple-body :data_b="item2"></item-multiple-body>
                 <!-- 未结算列表 => 投注记录页提前结算的按钮、滑块、提前结算详情 -->
-                <early-settle v-if="BetRecordClass.selected === 0 || BetRecordClass.selected === 3" :item_data="item2"></early-settle>
-                <!-- 预约列表 => 取消预约 -->
-                <cancel-reserve v-else-if="BetRecordClass.selected === 1" :item_data="item2"></cancel-reserve>
-              </template>
-            </div>
+                <early-settle :item_data="item2"></early-settle>
+              </div>
             </template>
           </q-slide-transition>
         </div>
@@ -37,7 +33,7 @@
 import lodash from 'lodash';
 import { api_betting } from "src/api/index.js";
 import BetRecordClass from "src/core/bet-record/bet-record.js";
-import { itemSimpleBody, itemMultipleBody, earlySettle, cancelReserve } from "src/base-h5/components/common/cathectic-item/ouzhou-h5/index";
+import { itemMultipleBody, earlySettle } from "src/base-h5/components/common/cathectic-item/ouzhou-h5/index";
 import settleVoid from "src/base-h5/components/cathectic/app-h5/settle-void.vue";
 import scroll from "src/base-h5/components/common/record-scroll/scroll.vue";
 import SRecord from "src/base-h5/components/skeleton/record.vue";

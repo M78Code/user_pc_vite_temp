@@ -8,24 +8,18 @@
   <!-- 矩形框中部 -->
   <div class="item-body yb_fontsize14">
     <div class="item-header">
-      {{ data_b.seriesValue }}
+      Australia New South Wales
     </div>
     <div class="item-main three-more">
       <template v-for="(item, index) in show_data_orderVOS" :key="index">
         <div class="items" v-if="item.isBoolean">
           <div class="top">
-            <p>{{item.matchName}}<template v-if="item.sportId == 1001">{{item.matchDay}}&ensp;{{item.batchNo}}</template></p>
-            <span>{{ item.oddFinally }}</span>
+            <p>Sevilla Futabol Club <i>2.5</i></p>
+            <span>08/17 03:00</span>
           </div>
           <p class="list">
-            <template v-if="data_b.seriesType == '3' && item.sportName">[{{item.sportName}}]</template>
-            <template v-if="item.sportId == 1011 || item.sportId == 1002">{{item.batchNo}}</template>
-            <template v-else>{{item.matchInfo}}</template>
+            [In-play] 1*2 <i>7.24</i>
           </p>
-          <div class="list score">
-            <!-- <p>{{item.marketValue}}</p> -->
-            <!-- <span>赢</span> -->
-          </div>
           <!--球类名称 赛前还是滚球 玩法名称 基准分 赔率类型-->
           <span class="info">
             {{item.sportName}}
@@ -46,43 +40,8 @@
       </div>
     </div>
     <div class="foot-main">
-      <p><label>{{i18n_t('bet_record.bet_val')}}：</label> <span>{{format_money2(data_b.orderAmountTotal)}}</span></p>
-      <template>
-        <!-- orderStatus 订单状态(0:未结算,1:已结算,2:注单无效,3:确认中,4:投注失败) -->
-        <!-- 在未结算页 -->
-        <p v-if="BetRecordClass.selected !== 3" class="acount">
-          <label>{{ i18n_t('app_h5.cathectic.winnable') }}：</label> 
-          <template v-if="data_b.orderStatus == 1 || data_b.orderStatus == 2 || data_b.orderStatus == 4">
-            <span>
-              <template v-if="data_b.backAmount !== null">{{format_money2(data_b.backAmount)}}</template>
-              <template v-else>{{format_money2(data_b.orderAmountTotal)}}</template>
-            </span>
-          </template>
-          <template v-else>
-            <span>{{format_money2(data_b.maxWinAmount)}}</span>
-          </template>
-        </p>
-        <!-- 在已结算页 -->
-        <p v-else class="acount">
-          <label>{{i18n_t('app_h5.cathectic.settle')}}：</label> 
-          <span>{{format_money2(data_b.backAmount)}}</span>
-        </p>
-      </template>
-      <p>
-        <label>{{ i18n_t('app_h5.cathectic.bet_status')}}：</label> 
-        <template>
-          <!-- 预约中、预约失效页 -->
-          <span v-if="BetRecordClass.selected === 1 || BetRecordClass.selected === 2">
-            <template v-if="[2,3].includes(data_b.preOrderStatus)">{{i18n_t('pre_record.booked_fail')}}</template>
-            <template v-else-if="[4].includes(data_b.preOrderStatus)">{{i18n_t('pre_record.canceled')}}</template>
-            <template v-else>{{i18n_t('pre_record.booking')}}</template>
-          </span>
-          <!-- 未结算、已结算页 -->
-          <span v-else :class="BetRecordClass.calc_text(data_b).color"> 
-            {{ BetRecordClass.calc_text(data_b).text }} 
-          </span>
-        </template>
-      </p>
+      <item-footer :data_f=data_b></item-footer>
+      <item-order :data_o=data_b></item-order>
     </div>
   </div>
 </template>
@@ -93,7 +52,7 @@ import { ref, onMounted, computed } from 'vue'
 import BetRecordClass from "src/core/bet-record/bet-record.js";
 import { i18n_t, project_name } from 'src/core/index.js'
 import { formatTime, format_money2 } from 'src/core/format/index.js'
-
+import { itemFooter, itemOrder } from "src/base-h5/components/common/cathectic-item/ouzhou-h5/index";
 //按钮名字
 let btn_text = ref(i18n_t("bet_record.pack_down"))
 //是否展开
@@ -139,8 +98,6 @@ template {
 }
 .item-body {
   .item-header {
-    background-color: var(--q-gb-bg-c-9);
-    color: var(--q-gb-bg-c-15);
     line-height: 0.4rem;
     padding-left: 0.12rem;
   }
