@@ -11,6 +11,44 @@
         <div
           v-for="(score, index) in datas.score_list"
           :key="index+'-'"
+          class="score-item items-center col"
+        >
+          <div class="score-header row justify-center">
+            <div class="left team team-home">
+              <span class="score">{{ score.home }}</span>
+            </div>
+            <div class="separate"></div>
+            <div class="right team team-away">
+              <span class="score">{{ score.away }}</span>
+            </div>
+          </div>
+
+          <div class="score-line">
+            <div class="info main">
+              <span
+                :class="['line', score.home == 0 && 'line0']"
+                :style="`width:${score.home * 10}%`"
+              ></span>
+              <span class="score">{{ score.home }}</span>
+            </div>
+            <div class="separate">
+              
+            </div>
+            <div class="info away">
+              <span
+                :class="['line', score.away == 0 && 'line0']"
+                :style="`width:${score.away * 10}%`"
+              ></span>
+              <span class="score">{{ score.away }}</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="score-list">
+        <div
+          v-for="(score, index) in datas.score_list"
+          :key="index+'-'"
           class="score-item items-center row"
         >
           <div class="info main">
@@ -20,7 +58,9 @@
             ></span>
             <span class="score">{{ score.home }}</span>
           </div>
-          <div class="separate"></div>
+          <div class="separate">
+
+          </div>
           <div class="info away">
             <span
               :class="['line', score.away == 0 && 'line0']"
@@ -45,7 +85,9 @@
             </div>
           </div>
         </div>
+        <div class="separate">
 
+        </div>
         <div class="away item column items-center">
           <div class="win-percent">{{ datas.win_away }}%</div>
 
@@ -112,12 +154,25 @@ export default defineComponent({
   .bg-card-startistic{
     background: var(--q-gb-bg-c-15);
     border-radius: 4px;
+    padding: 0.08rem;
   }
   .score-list {
     // margin-top: 0.2rem;
     .score-item {
 
       font-size: 0.12rem;
+      font-weight: 700;
+      color: var(--q-gb-t-c-18);
+      .score-header{
+        
+      }
+      .separate {
+        text-align: center;
+        margin: 0 .025rem;
+        height: 0.02rem;
+        width: 0.12rem;
+        background-color: var(--q-gb-bg-c-18);
+      }
 
       .info {
         flex: 1;
@@ -148,31 +203,31 @@ export default defineComponent({
           }
         }
       }
-
-      .separate {
-        margin: 0 0.13rem;
-        width: 0.08rem;
-        height: 0.02rem;
-      }
     }
   }
 
   .result-wrap {
     margin-top: 0.2rem;
-    padding: 0 0.7rem;
+    // padding: 0 0.7rem;
     padding-bottom: 0.35rem;
-
+    .separate{
+      width: 0.08rem;
+    }
     .item {
       flex: 1;
-
+      background-color: var(--q-gb-bg-c-18);
+      border-radius: 0.04rem;
+      padding: .08rem 0;
       .result-list {
-        margin-top: 0.08rem;
-
+        margin-top: 0.04rem;
+        font-size: 0.10rem;
+        display: flex;
+        justify-content: center;
         .result-item {
           border-radius: 2px;
+          margin: 0.02rem;
           text-align: center;
-          margin: 0 0.01rem;
-          width: 0.16rem;
+          width: 0.20rem;
           height: 0.16rem;
         }
       }

@@ -107,17 +107,6 @@ const searchClick = () => {
     padding: 0 0.05rem;
     position: relative;
 
-    &::after {
-        content: "";
-        width: 100%;
-        height: 0.02rem;
-        position: absolute;
-        left: 0;
-        bottom: 0;
-        opacity: .5;
-        background-color: var(--q-gb-t-c-1);
-    }
-
     .search-tab-content {
         width: 100%;
         height: 0.32rem;

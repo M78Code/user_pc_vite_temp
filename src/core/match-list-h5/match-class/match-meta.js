@@ -13,7 +13,6 @@ import MatchFold from 'src/core/match-fold'
 import MatchCollect from 'src/core/match-collect'
 import MatchUtils from 'src/core/match-list-h5/match-class/match-utils';
 import PageSourceData from "src/core/page-source/page-source.js";
-import MatchListCardClass from '../match-card/match-list-card-class'
 import VirtualList from './virtual-list'
 import { MATCH_LIST_TEMPLATE_CONFIG } from "src/core/match-list-h5/match-card/template"
 import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, useMittEmit, MITT_TYPES } from 'src/core'
@@ -128,7 +127,7 @@ class MatchMeta {
       // 设置赛事默认参数
       const params = this.set_match_default_properties(match, index, result_mids)
       // 赛事最终数据
-      const target = { ...match, ...params, ...template, }
+      const target = Object.assign(match, params, template)
       //  赛事操作
       this.match_assistance_operations(target)
       return target
@@ -209,6 +208,7 @@ class MatchMeta {
     // 是否展示联赛标题
     let is_show_league = MatchUtils.get_match_is_show_league(index, mids)
     let is_show_no_play = MatchUtils.get_match_is_show_no_play(index, mids)
+
     const { home_score, away_score } = MatchUtils.get_match_score(match)
     return {
       source_index: index,
@@ -422,8 +422,8 @@ class MatchMeta {
     this.complete_mids = mids
 
     const target_data = MatchUtils.handler_match_classify_by_ms(match_list)
-    // 过滤赛事
-    this.complete_matchs = target_data.filter((t) => t.mid)
+    // 过滤赛事 .filter((t) => t.mid)
+    this.complete_matchs = target_data
 
     const length = lodash.get(this.complete_matchs, 'length', 0)
     useMittEmit(MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, length > 1 ? false : true);

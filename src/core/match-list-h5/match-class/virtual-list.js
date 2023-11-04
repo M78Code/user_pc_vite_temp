@@ -225,7 +225,6 @@ class VirtualList {
             get_match_total++; //赛事容器数量加1
           }
           // 如果当前折叠 并且 当前赛事 显示联赛，则 -1 操作
-          console.log(show_card)
           if (!show_card && match.is_show_league) {
             if (this.already_folded <= 7) {
               get_match_total--; //赛事容器数量减1，相当于页面可视区域 总数量 page_count 加1个
@@ -234,44 +233,45 @@ class VirtualList {
           }
         }
         if (i === 0) current_match_dom_top += 0.2
+        if ([1, 2].includes(+match.start_falg)) current_match_dom_top += 0.26
         if (is_show_league || show_card) current_match_dom_top += show_card ? match_height : 0.31;
         
       }
 
       // 如果当前赛事折叠超过 8场赛事 并且 高度 大于5.5  走  虚拟滚动 真正的滑动 算法，和上边 aaaaaaa 逻辑一模一样
-      if (this.already_folded > 7 && this.container_total_height > 550) {
-        current_match_dom_top = 0; // 可视区域的赛事的top 值  18场
-        get_match_total = 0; // 当前页面的赛事数量
-        this.mid_top_map = {}; // 对应的 赛事id 的  偏移 位置值
-        let current_list_total_length = current_screen_match.length,
-          current_list_total_height = 0,
-          list_visible_areas_number = 25;
-        // 计算出 当前可视区域赛事的容器总高度，以rem 计算
-        for (let j = 0; j < current_list_total_length; j++) {
-          let h_map = this.mid_dom_height_dict[current_screen_match[j].mid];
-          // 计算出 当前赛事的容器高度，以rem 计算
-          current_list_total_height += +this.get_match_dom_height_by_match_data(h_map);
-        }
-        let many_distances = utils.px_2_rem(scroll_top) - (current_list_total_height / page_count) * 7; // 可视区域  每一场的平均高度 × 7
-        current_screen_match = []; // 列表页可视区域 赛事的数据
-        for (let i = 0; i < match_list_length; i++) {
-          let h_map = this.match_height_map_list[i];
-          let match_height = this.get_match_dom_height_by_match_data(h_map);
-          if (current_match_dom_top > many_distances) {
-            if (get_match_total < list_visible_areas_number) {
-              this.mid_top_map[h_map.mid] = current_match_dom_top;
-            } else {
-              break;
-            }
-            const match = MatchMeta.complete_matchs[i]
-            if (match && match_height > 0) {
-              current_screen_match.push(match);
-              get_match_total++; //赛事容器数量加1
-            }
-          }
-          current_match_dom_top += match_height;
-        }
-      }
+      // if (this.already_folded > 7 && this.container_total_height > 550) {
+      //   current_match_dom_top = 0; // 可视区域的赛事的top 值  18场
+      //   get_match_total = 0; // 当前页面的赛事数量
+      //   this.mid_top_map = {}; // 对应的 赛事id 的  偏移 位置值
+      //   let current_list_total_length = current_screen_match.length,
+      //     current_list_total_height = 0,
+      //     list_visible_areas_number = 25;
+      //   // 计算出 当前可视区域赛事的容器总高度，以rem 计算
+      //   for (let j = 0; j < current_list_total_length; j++) {
+      //     let h_map = this.mid_dom_height_dict[current_screen_match[j].mid];
+      //     // 计算出 当前赛事的容器高度，以rem 计算
+      //     current_list_total_height += +this.get_match_dom_height_by_match_data(h_map);
+      //   }
+      //   let many_distances = utils.px_2_rem(scroll_top) - (current_list_total_height / page_count) * 7; // 可视区域  每一场的平均高度 × 7
+      //   current_screen_match = []; // 列表页可视区域 赛事的数据
+      //   for (let i = 0; i < match_list_length; i++) {
+      //     let h_map = this.match_height_map_list[i];
+      //     let match_height = this.get_match_dom_height_by_match_data(h_map);
+      //     if (current_match_dom_top > many_distances) {
+      //       if (get_match_total < list_visible_areas_number) {
+      //         this.mid_top_map[h_map.mid] = current_match_dom_top;
+      //       } else {
+      //         break;
+      //       }
+      //       const match = MatchMeta.complete_matchs[i]
+      //       if (match && match_height > 0) {
+      //         current_screen_match.push(match);
+      //         get_match_total++; //赛事容器数量加1
+      //       }
+      //     }
+      //     current_match_dom_top += match_height;
+      //   }
+      // }
       // H5 列表页显示的 可视区域的  数据源
       // MatchDataBaseH5.set_list(current_screen_match)
     } else {

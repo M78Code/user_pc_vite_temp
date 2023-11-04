@@ -107,7 +107,7 @@ class UserCtr {
     this.callbackUrl = ''
     //电竞图片地址 
     this.e_sports_img_domain = ''
-
+    
 
     // 常规体育的 图片地址 
     this.common_img_domain = ''

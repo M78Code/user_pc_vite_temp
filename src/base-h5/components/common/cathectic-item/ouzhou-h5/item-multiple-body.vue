@@ -149,7 +149,6 @@ template {
     padding: 0.12rem;
 
     .items {
-
       &:last-child {
 
         .list,
