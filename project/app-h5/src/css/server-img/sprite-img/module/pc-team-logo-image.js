@@ -16,13 +16,16 @@ const config = {
 // };
  // 字母顺序
  const item = {A:0,B:1,C:2,D:3,E:4,F:5,G:6,H:7,I:8,J:9,K:10,L:11,M:12,N:13,O:14,P:15,Q:16,R:17,S:18,T:19,U:20,V:21,W:22,X:23,Y:24,Z:25,}
+ // item2 专为详情页字母图标位置定制，其他地方慎用，如有冲突建议另建方法区分(此方法存在少许偏差暂时没有更好方法解决)
+ const item2 = {A:0,B:3.9,C:7.9,D:11.9,E:15.8,F:19.7,G:23.7,H:27.6,I:31.6,J:35.5,K:39.5,L:43.4,M:47.4,N:51.3,O:55.3,P:59.2,Q:63.2,R:67.2,S:71.1,T:75.1,U:79,V:83,W:86.9,X:90.9,Y:94.8,Z:98.7,}
+ // 0 3.9 7.9 11.9 15.8 19.7  23.7  27.6  31.6  35.5  39.5  43.4  47.4  51.3 55.3  59.2  63.2  67.2  71.1 75.1  79  83  86.9  90.9  94.8  98.7
 /**
  * 根据item 计算雪碧图位置
  * @param {*} position 下标从0开始
  * @returns
  */
 function compute_position(position) {
-  console.log(position,'position');
+  // console.log(position,'position');
   const top = 0; // 雪碧图 距离顶部的 空白距离
   const left = 0; //左侧
   const width = 0; //表示是 横 向
@@ -31,12 +34,12 @@ function compute_position(position) {
   const height = position[2]? 44: 28; //表示是 纵 向
   const y_space = 10; //每张图的间距 y
    //如果使用本地图片 position的索引1位真的时候  
-  const _v = item[position[1]];
+  const _v = item2[position[1]];
   if (_v > -1) {
     // const x = x_space * _v + _v * width + left;
     // const y = y_space * _v + _v * height + top;
     let y = parseInt(_v * height * 64 / 44 * 100) / 100;
-    return `0px -${y}px`;
+    return `0px ${_v}%`;
   }
   return "0 0";
 }
