@@ -130,6 +130,9 @@
     },
     "v_sports": {
       "event_status": "赛事状态"
+    },
+    "detail": {
+      "half": "上半场"
     }
   },
   "ac_rules": {

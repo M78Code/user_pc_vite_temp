@@ -8,7 +8,7 @@
     <div>
       <!-- 上半场，全场，加时赛，点球大战-->
       <span>&nbsp;&nbsp;</span>
-      <span v-if="score_array[1] && collection_a.includes(detail_data.mmp)"> {{i18n_t('match_info.half')}}</span>
+      <span v-if="score_array[1] && collection_a.includes(detail_data.mmp)"> {{PROJECT_NAME == 'app-h5' ? i18n_t('app_h5.detail.half') : i18n_t('match_info.half')}}</span>
       <span v-if="score_array[0] && collection_b.includes(detail_data.mmp)">/{{i18n_t('match_info.full')}}</span>
       <span v-if="add_score && collection_c.includes(detail_data.mmp)">/{{i18n_t('match_info.add')}}</span>
       <span v-if="shoot_score && collection_c.includes(detail_data.mmp) && ['result_details', 'match_result'].includes($route.name)">/{{i18n_t('match_info.shoot_out')}}</span>
@@ -25,21 +25,21 @@
       <span v-if="red_flag">
         <span>&nbsp;&nbsp;</span>
         <span><q-img style="width: 0.16rem;height: 0.16rem;margin-top:-5px;"  :src="`/${LOCAL_PROJECT_FILE_PREFIX}image/svg/corner_kick.svg`" ></q-img></span>
-        <span>&nbsp;&nbsp;</span>
+        <span>&nbsp;&nbsp;{{PROJECT_NAME == 'app-h5' ? i18n_t('match_result.corner_kick') : ''}}</span>
         <span>{{ $filters.score_format(score_array_status[0])}}</span>
       </span>
       <!-- 黄牌数 -->
       <span v-if="yellow_card">
         <span>&nbsp;&nbsp;</span>
         <span><q-img style="width: 0.16rem;height: 0.16rem;margin-top:-5px;"  :src="`/${LOCAL_PROJECT_FILE_PREFIX}image/svg/details_yellow.svg`" ></q-img></span>
-        <span>&nbsp;&nbsp;</span>
+        <span>&nbsp;&nbsp;{{PROJECT_NAME == 'app-h5' ? i18n_t('match_result.yellow_card') : ''}}</span>
         <span>{{ $filters.score_format(score_array_status[2])}}</span>
       </span>
       <!-- 红牌数 -->
       <span v-if="red_card">
         <span>&nbsp;&nbsp;</span>
         <span><q-img style="width: 0.16rem;height: 0.16rem;margin-top:-5px;"  :src="`/${LOCAL_PROJECT_FILE_PREFIX}image/svg/details_red_card.svg`" ></q-img></span>
-        <span>&nbsp;&nbsp;</span>
+        <span>&nbsp;&nbsp;{{PROJECT_NAME == 'app-h5' ? i18n_t('match_result.red_card') : ''}}</span>
         <span>{{ $filters.score_format(score_array_status[1])}}</span>
       </span>
 
@@ -50,7 +50,7 @@
 <script>
 // import { mapGetters } from "vuex"
 import lodash from "lodash"
-import { LOCAL_PROJECT_FILE_PREFIX } from 'src/core'
+import { LOCAL_PROJECT_FILE_PREFIX, PROJECT_NAME } from 'src/core/index.js'
 import { i18n_t } from "src/boot/i18n.js";
 
 export default {
@@ -58,6 +58,7 @@ export default {
   data(){
     return {
       LOCAL_PROJECT_FILE_PREFIX,
+      PROJECT_NAME,
       // 1全场  2上半场  7加时赛  170点球大战
       msc_array:["S1","S2","S7","S170"],
       // 5角球  11红牌  12黄牌
@@ -92,6 +93,9 @@ export default {
     //   // 赛果标识
     //   "get_menu_type"
     // ])
+  },
+  mounted() {
+    console.error(PROJECT_NAME, PROJECT_NAME == 'app-h5' ? i18n_t('app_h5.detail.half') : i18n_t('match_info.half'));
   },
   watch: {
     detail_data:{
@@ -135,6 +139,7 @@ export default {
           score_arr.push(item.split("|")[1]);
         }
       })
+      console.error(score_arr);
       return score_arr;
     },
     /**
