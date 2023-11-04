@@ -765,7 +765,7 @@ export default defineComponent({
 </script>
 <style scoped lang="scss">
   @import "../../styles/tournament-play-new.scss";
-  @import "../../styles/details-theme/temp.scss";
+  @import "src/base-h5/components/details/styles/details-theme/temp.scss";
 .icon_zd_select {
   width: 0.16rem;
   height: 0.14rem;
