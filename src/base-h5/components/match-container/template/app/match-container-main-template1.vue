@@ -146,8 +146,7 @@
                 <div class="goto-detail" style="margin-right: 0.03rem;" @click='goto_details(match)'>
                   <span class="count_span" :class="{ esports: 3000 == menu_type }">
                     <span class="mc-n">
-                      {{GlobalAccessConfig.get_handicapNum()? get_match_mc(match) :
-                        i18n_t('footer_menu.more') }}
+                      {{GlobalAccessConfig.get_handicapNum()? get_match_mc(match) : i18n_t('footer_menu.more') }}+
                     </span>
                     <span class="add_text" v-if="GlobalAccessConfig.get_handicapNum()">
                       <icon-wapper color="#888" name="icon-triangle1" size="14px" class="icon-wapper-more" />
@@ -354,16 +353,16 @@ export default {
     height: 0.25rem;
     line-height: 1;
     font-size: 0.11rem;
-    margin-left: 0.20rem;
+    padding-left: 0.20rem;
     display: flex;
     align-items: center;
     color: var(--q-color-com-fs-color-38);
     background: #fff;
     &.progress{
-      border-top: 2xp solid #74C4FF
+      border-top: 2px solid #74C4FF
     }
     &.not_begin{
-      border-top: 2xp solid #E95B5B
+      border-top: 2px solid #E95B5B
     }
 
     img {
@@ -386,7 +385,7 @@ export default {
     align-items: center;
     background: #ffffff;
     .buffer-container{
-      background: #f7f9fe;
+      background: #fff;
       height: 5px;
       width: 100%;
     }
@@ -424,7 +423,7 @@ export default {
     position: relative;
     transition: max-height 0.3s;
     padding-left: 6px;
-    background: #fff;
+    background: var(--q-match-page-bg-color-10);
 
     .match-odds-container-border-radius {
       overflow: hidden;
@@ -536,7 +535,7 @@ export default {
     border-radius: 0;
     font-size: 12px;
     padding: 0 5px 0 20px;
-    background: #f7f9fe;
+    background: rgba(175, 179, 200, 0.1);
     line-height: 20px;
     font-size: 11px;
     .league-collapse-dir{
@@ -755,7 +754,7 @@ export default {
     font-size: 0.1rem;
     color: #303442;
     flex-direction: row-reverse;
-    background: #fff;
+    background: var(--q-match-page-bg-color-10);
     border-top: 1px solid #e9e9e9;
     border-bottom: 1px solid #e9e9e9;
 

@@ -132,6 +132,7 @@ export const category_info = (category_arr=[]) => {
   // 监听详情数据仓库版本号更新odds_info数据
   watch(() => MatchDataWarehouseInstance.value.data_version.version, () => {
     match_list_normal()
+    match_list_new()
   })
 
   // 监听tab的ID变动时重新赋值
@@ -158,12 +159,13 @@ export const category_info = (category_arr=[]) => {
   // 置顶列表
   const match_list_new = () => {
     // TODO: 还未调试待修改
-    match_list_new_data.value = component_data.match_info_list;
+    match_list_new_data.value = MatchDataWarehouseInstance.value.listSortNew(route.params.mid);
   };
   // 非置顶列表
   const match_list_normal = () => {
     // return component_data.matchInfoCtr.listSortNormal();
-    match_list_normal_data.value = lodash.get(MatchDataWarehouseInstance.value, `list_to_obj.mid_obj[${route.params.mid}_].odds_info`);
+    // match_list_normal_data.value = lodash.get(MatchDataWarehouseInstance.value, `list_to_obj.mid_obj[${route.params.mid}_].odds_info`);
+    match_list_normal_data.value = MatchDataWarehouseInstance.value.listSortNormal(route.params.mid);
   };
 
   onMounted(() => {
