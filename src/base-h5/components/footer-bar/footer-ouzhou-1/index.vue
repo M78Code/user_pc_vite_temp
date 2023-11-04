@@ -26,7 +26,7 @@
   </div>
 </template>
 
-<script set>
+<script setup>
   import {defineComponent, ref, reactive, watch } from "vue";
   import { useRouter, useRoute } from "vue-router";
 

@@ -5,51 +5,23 @@
 <template>
   <q-layout view="lHh Lpr lFf" class="layout_container">
     <q-page-container id="ouzhou-h5" class="page_container" :style="`height:${+inner_height / 100}rem`">
-      <!-- <layout-header /> -->
-      <!-- <layout-conent /> -->
-      <!-- <MenuWapper v-if="['sport_menu', 'matchList'].includes(route.name)">
-        <template #menu-right>
-          <activityIcon />
-          <setMenu />
-        </template>
-      </MenuWapper> -->
-      <!-- 当路由为盘口教程时 不展示topMenu 和 scrollMenu -->
-      <layoutTop />
+      
+      <!-- 顶部菜单 -->
+      <TopMenuWapper />
       
       <router-view />
+
+      <!-- 投注框 -->
       <BetBoxWapper />
-      <!--页脚-->
-      <Tabbar class="m-layout" v-if="['sport_menu', 'matchList'].includes(route.name)">
-      </Tabbar>
 
-      <!-- 筛选+搜索   已脱离文档流-->
-      <!-- <div v-if="select_dialog" position="bottom" class="select-mask" :style="`height:${inner_height}px`">
-        <div style="height:100%;width: 100%" @click="select_dialog = false" />
-        <setect-league @closedHandle="select_dialog = false"></setect-league>
-      </div> -->
-
-      <div v-if="setting_dialog" position="bottom" class="select-mask" :style="`height:${inner_height}px`">
-        <div style="height:100%;width: 100%" @click="setting_dialog = false"></div>
-        <!-- 筛选弹窗 -->
-        <setting-filter @closedHandle="setting_dialog = false"></setting-filter>
-      </div>
-
-      <!-- 投注记录弹层 -->
-      <div v-if="record_show" :class="settle_dialog_bool && 'shadow-box2'" class="shadow-box" @click="change_settle_status(false)" @touchmove.prevent></div>
-      <!-- 投注记录弹框（已结算+未结算） -->
-      <div class="bet-record-box" v-if="record_show" :class="settle_dialog_bool && 'bet-record-box2'" :style="{ bottom: calc_bottom }">
-        <!-- 结算弹窗 -->
-        <settle-dialog></settle-dialog>
-      </div>
-
+     
+      <FooterWapper />
 
     </q-page-container>
   </q-layout>
+
   <!-- 吐司提示框 v-if="toast_show" -->
   <toast></toast>
-  <!-- 商户活动的弹层,只在home页展示，两个都已 脱离文档流-->
-  <activity-layer v-if="activity_status" @activity_hide="activity_status = false" :activity_layerimg="activity_layerimg"
-    :count_down_time="userBannerTimer" />
 </template>
 
 <script setup>
@@ -60,70 +32,37 @@ import {
   defineAsyncComponent,
   nextTick,
 } from "vue";
-import { useMittOn, MITT_TYPES, i18n_t, UserCtr,MenuData } from "src/core/";
-// import { FooterWapper } from "src/components/footer/index.js";
-import { Tabbar } from 'src/base-h5/components/menu/app-h5-menu/index'
+
+
 import { MenuWapper } from "src/base-h5/components/menu";
+import { TopMenuWapper } from "src/base-h5/components/top-menu/"
 import { BetBoxWapper } from "src/base-h5/components/bet";
-import activityIcon from "src/base-h5/components/common/activity-icon.vue"; // 设置
-import setMenu from "src/base-h5/components/common/set-menu.vue"; // 设置
-import selectDia from "src/base-h5/components/match-list/components/select-dia.vue"
-import settingFilter from 'src/base-h5/components/setting-filter/index.vue'
-// import setectLeague from 'src/base-h5/components/setect-league/index.vue'
-import layoutTop from "./top.vue"
+import { FooterWapper } from "src/base-h5/components/footer-bar/"
+
 import { useRoute } from "vue-router";
-import store from "src/store-redux/index.js";
+
 import { api_common } from "src/api/index.js";
-import PageSourceData from "src/core/page-source/page-source.js";
-import BetRecordClass from "src/core/bet-record/bet-record.js";
-// 活动弹出框
-const activityLayer = defineAsyncComponent(() => import("src/base-h5/components/common/activity-layer.vue"))
-const settleDialog = defineAsyncComponent(() =>
-  import("project_path/src/pages/cathectic/index.vue") // project/yazhou-h5/src/pages/cathectic/index.vue
-);
+import { useMittOn, MITT_TYPES, i18n_t, UserCtr,MenuData } from "src/core/";
+
 const toast = defineAsyncComponent(() =>
   import("src/base-h5/components/common/toast.vue")
 );
-// const selectDia = defineAsyncComponent(() =>
-//   import("../pages/match-list/components/select-dia.vue")
-// );
 
-import BetData from "src/core/bet/class/bet-data-class.js";// project/yazhou-h5/src/components/common/toast.vue
-// import layoutHeader from "./layout-header.vue";
-// import layoutConent from "./layout-content.vue";
+
+import BetData from "src/core/bet/class/bet-data-class.js";
+
 
 import "./index.scss"
+
 const inner_height = window.innerHeight;  // 视口高度
-const { footerMenuReducer } = store.getState();
 const route = useRoute();
-const get_accept_show = ref(false); // 接受更好赔率变化 弹窗
-const get_combine_tips_show = ref(false); // 合并投注项提示弹框 弹窗
-const record_show = ref(false);
-const lastTouchEnd = ref(0);
-// const select_dialog = ref(false)//暂时筛选窗口
-const setting_dialog = ref(false)//暂时筛选窗口
-const activity_status = ref(false)//首页活动弹框
-const activity_layerimg = ref("") //首页活动图
-const userBannerTimer = ref(5);
-const timer_3 = ref(null);
-// 开启注单历史弹窗及遮罩
-const settle_dialog_bool = ref(true);
-// let unsubscribe = store.subscribe(() => {
-//   const { footerMenuReducer: new_footer_menu_reducer } = store.getState();
-//   settle_dialog_bool.value = new_footer_menu_reducer.settle_dialog_bool;
-// });
+
 // 是否展示左侧菜单
 const toggleLeftDrawer = () => {
   leftDrawerOpen.value = !leftDrawerOpen.value;
 };
 
 
-// useMittOn(MITT_TYPES["change_accept"], (e) => {
-//   get_accept_show.value = e
-// })
-// useMittOn(MITT_TYPES["change_combine_tips"], (e) => {
-//   get_combine_tips_show.value = e
-// })
 /**
  * @description: touchstart事件方法体
  */
@@ -163,27 +102,7 @@ const show_bet = () => {
  * @description 投注记录显示开关
  * @param {Boolean} val
  * @return {Undefined} undefined
- */
-const change_settle_status = (val) => {
-  // set_virtual_video_show(!val)
-  if (val) {
-    record_show.value = true;
-    nextTick(() => {
-      store.dispatch({
-        type: "SET_SETTLE_DIALOG_BOOL",
-        data: true,
-      });
-    });
-  } else {
-    store.dispatch({
-      type: "SET_SETTLE_DIALOG_BOOL",
-      data: false,
-    });
-    timer_3.value = setTimeout(() => {
-      record_show.value = false;
-    }, 300);
-  }
-};
+
 /**
  * @description 获取服务器当前时间
  */
@@ -191,10 +110,10 @@ const init_local_server_time = () => {
   api_common.get_time_server().then(res => {
     let server_time = res.data;
     let local_time = new Date().getTime();
-    PageSourceData.set_init_time({
-      server_time,
-      local_time,
-    });
+    // PageSourceData.set_init_time({
+    //   server_time,
+    //   local_time,
+    // });
   });
 }
 onMounted(() => {
@@ -260,7 +179,7 @@ onUnmounted(() => {
   document.removeEventListener("touchstart", touchstart_event_fun);
   document.removeEventListener("touchend", touchend_event_fun);
   document.removeEventListener("gesturestart", gesturestart_event_fun);
-  timer_3.value = null;
+  // timer_3.value = null;
   // unsubscribe();
   mitt_list.map(i => i())
 });

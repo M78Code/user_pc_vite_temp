@@ -2,47 +2,52 @@
   <!-- 规则 / 公告 头部 -->
   <template v-if="is_rule_page">
     <div class="top_header" @click="go_back">
-      <img src="~assets/images/menu/back.png" alt="" />
+      <!-- <img src="~assets/images/menu/back.png" alt="" /> -->
       <span>Personal</span>
       <span class="line"></span>
       <span class="f_weight">Announcement</span>
     </div>
   </template>
   <template v-else>
-    <div class="top_info">
-      <!-- home 头部 -->
-      <template v-if="is_home_page">
-        <!--左侧菜单 -->
+    <div class="top_header">
+      <div class="top_info">
+        <!-- home 头部 -->
         <template v-if="is_home_page">
-          <!-- <q-btn flat dense round icon="menu" aria-label="Menu" @click="toggleLeftDrawer" /> -->
-          <img class="navigation" src="~assets/images/menu/navigation.png" @click="toggleLeftDrawer" alt="">
+          <!--左侧菜单 -->
+          <template v-if="is_home_page">
+            <!-- <q-btn flat dense round icon="menu" aria-label="Menu" @click="toggleLeftDrawer" /> -->
+            <div  @click="toggleLeftDrawer">左侧</div>
+            <!-- <img class="navigation" src="~assets/images/menu/navigation.png" @click="toggleLeftDrawer" alt=""> -->
+          </template>
+
+          <!-- 搜索 -->
+          <div class="top_info_search">
+            <input type="search" maxlength="15" placeholder="Search" @input="search_match" />
+            <!-- <img src="~assets/images/menu/top_seach.png" alt="" /> -->
+          </div>
+          <!-- 头像 -->
+          <div class="top_info_right">
+            <span class="top_avatar" @click="jump_personal">
+              <!-- <span class="badge"></span> -->
+              <!-- <img src="~assets/images/menu/top_avatar.png" alt="" /> -->
+            </span>
+            <span class="info_amount">{{ format_money2(amount) }}</span>
+          </div>
+        </template>
+        <template v-if="get_route_path == '/detail'">
+          <detail_top_info />
         </template>
 
-        <!-- 搜索 -->
-        <div class="top_info_search">
-          <input type="search" maxlength="15" placeholder="Search" @input="search_match" />
-          <img src="~assets/images/menu/top_seach.png" alt="" />
-        </div>
-        <!-- 头像 -->
-        <div class="top_info_right">
-          <span class="top_avatar" @click="jump_personal">
-            <!-- <span class="badge"></span> -->
-            <img src="~assets/images/menu/top_avatar.png" alt="" />
-          </span>
-          <span class="info_amount">{{ format_money2(amount) }}</span>
-        </div>
-      </template>
-      <template v-if="get_route_path == '/detail'">
-        <detail_top_info />
-      </template>
-
-      <!-- 个人中心 头部 -->
-      <template v-if="get_route_path === '/personal' || get_route_path === '/coming_soon'">
-        <div class="back" @click="go_back"> <img src="~assets/images/menu/back.png" alt="" /> Back</div>
-      </template>
+        <!-- 个人中心 头部 -->
+        <template v-if="get_route_path === '/personal' || get_route_path === '/coming_soon'">
+          <div class="back" @click="go_back">
+            <!-- <img src="~assets/images/menu/back.png" alt="" /> -->
+            Back</div>
+        </template>
 
 
-  </div>
+    </div>
+    </div>
   </template>
   <!-- 菜单抽屉 -->
   <q-drawer v-model="leftDrawerOpen" show-if-above bordered >
@@ -51,9 +56,10 @@
 </template>
 
   <script setup>
+
 import { ref, computed, watch } from "vue";
 import { useRouter, useRoute } from "vue-router"
-
+import { format_money2,UserCtr } from "src/core/"
 
 const router = useRouter();
 const route = useRoute()
@@ -68,7 +74,7 @@ const get_route_path = computed(() => {
 })
 
 const is_rule_page = ref(false)
-const is_home_page = ref(false)
+const is_home_page = ref(true)
 
 
 const search_match = (item) => {
@@ -105,7 +111,7 @@ const toggleLeftDrawer = () => {
   padding: 0 15px 0 15px;
   justify-content: space-between;
   color: rgba(255, 255, 255, 1);
-  background: url('assets/images/menu/top_bg.png') no-repeat;
+  //background: url('assets/images/menu/top_bg.png') no-repeat;
   background-size: cover;
   .navigation{
     width: 18px;
@@ -203,6 +209,7 @@ const toggleLeftDrawer = () => {
   color:#C2C2C2;
   background: url('assets/images/personal/bg.png') no-repeat;
   background-size: cover;
+  height: 40px;
   > img {
     width: 5px;
     height: 8px;
