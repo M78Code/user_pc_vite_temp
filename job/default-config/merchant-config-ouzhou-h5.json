@@ -12,6 +12,12 @@
       "params": {
         "tableClass": "bg-deep-purple-14"
       }
+    },
+    "BetBox": {
+      "use_component": "BetOuzhouH5",
+      "params": {
+        "tableClass": "bg-deep-purple-14"
+      }
     }
   }
 
