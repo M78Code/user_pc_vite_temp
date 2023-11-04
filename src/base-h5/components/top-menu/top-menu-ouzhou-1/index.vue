@@ -41,7 +41,7 @@
         <!-- 个人中心 头部 -->
         <template v-if="get_route_path === '/personal' || get_route_path === '/coming_soon'">
           <div class="back" @click="go_back">
-            <!-- <img src="~assets/images/menu/back.png" alt="" /> -->
+            <img src="./img/back.png" alt="" />
             Back</div>
         </template>
 
@@ -70,11 +70,14 @@ const emit = defineEmits(["change"]);
 // 事件执行函数
 
 const get_route_path = computed(() => {
-  return 
+  return  router.currentRoute.value.path;
 })
-
-const is_rule_page = ref(false)
-const is_home_page = ref(true)
+const is_rule_page = computed(() => {
+  return ['/rules', '/announcement'].includes(router.currentRoute.value.path)
+})
+const is_home_page = computed(() => {
+  return ['/', '/results', '/menu_list', '/inPlay', '/betting_history'].includes(router.currentRoute.value.path)
+})
 
 
 const search_match = (item) => {
@@ -82,7 +85,7 @@ const search_match = (item) => {
 };
 
 const jump_personal = () => {
-  // router.push('/personal')
+  router.push('/personal')
 }
 
 // 回到上一页

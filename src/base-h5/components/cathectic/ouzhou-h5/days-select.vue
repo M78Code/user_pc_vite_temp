@@ -54,6 +54,7 @@ onUnmounted(() => {
 
     ul {
         position: absolute;
+        z-index: 10;
         left: 0;
         top: 0.5rem;
         background: var(--q-gb-bg-c-15);

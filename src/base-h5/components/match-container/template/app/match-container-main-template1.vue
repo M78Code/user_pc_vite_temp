@@ -1119,11 +1119,10 @@ export default {
 
           .team-t-title-w {
             font-size: 0.12rem;
-            height: 0.2rem;
-            line-height: 0.15rem;
+            height: 0.3rem;
             -webkit-line-clamp: 2;
             display: flex;
-
+            flex-direction: column-reverse;
             &.is-handicap {
               font-weight: bold;
             }
