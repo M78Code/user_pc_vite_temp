@@ -3,14 +3,7 @@
 -->
 <template>
   <div :style="{ marginTop: is_hot ? '0' : '' }" 
-    :class="['match-container', {
-      first: i == 0,
-      match_status_bar: match.is_show_no_play,
-      is_league_tail: get_league_show(i + 1),
-      started_un_started_next: get_m_status_show(i + 1),
-      started_and_un_started: match.is_show_no_play,
-      favorite_un_start_title: favorite_un_start_title(i, match_of_list.ms),
-    }]">
+    :class="['match-container']">
     <template v-if="match" >
       <!-- 开赛标题  -->
       <div :class="['match-status-fixed', { progress: +match.start_falg === 1, not_begin: +match.start_falg === 2 }]" v-if="is_show_opening_title">
@@ -26,7 +19,7 @@
       <!--体育类别 -- 标题  menuType 1:滚球 2:即将开赛 3:今日 4:早盘 11:串关 -->
       <div v-if="show_sport_title"
         :class="['sport-title match-indent', { home_hot_page: is_hot, is_gunqiu: [1].includes(+menu_type), first: i == 0, }]"
-        @click="handle_ball_seed_fold">
+        @click.stop="handle_ball_seed_fold">
         <span class="score-inner-span">
           <!-- PROJECT_NAME == 'app-h5' 复刻版需要展示数量 -->
           {{ match_of_list.csna }} ({{ +match.start_falg === 1 ? match.in_progress_total : match.no_start_total }})
@@ -347,6 +340,9 @@ export default {
   width: 100%;
   height: auto;
   position: relative;
+  &.border_top{
+    border-top: 1px solid rgba(175, 179, 200, 0.1);
+  }
 
   .match-status-fixed {
     width: 100%;
@@ -403,10 +399,7 @@ export default {
 
   &.started_and_un_started {
     display: block;
-
-    &.match_status_bar {
-      /*margin-top: 0.07rem;*/
-    }
+  
   }
 
   &.show_un_started {
@@ -484,14 +477,6 @@ export default {
 
   &.favorite_un_start_title {
     margin-top: 0 !important;
-  }
-
-  &.match_status_bar {
-    .league {
-
-      //overflow: hidden;
-      margin-top: 0.08rem;
-    }
   }
 
   .match-indent {
@@ -883,7 +868,7 @@ export default {
   background-color: var(--q-color-com-bg-color-12);
   height: auto;
   position: relative;
-  min-height: 1.11rem;
+  height: 1.12rem;
 
   &.simple,
   &.result {
@@ -968,9 +953,8 @@ export default {
       }
 
       .score-wrapper {
-        margin-top: 0.04rem;
         position: absolute;
-        bottom: 0;
+        bottom: 2px;
 
         .score-section {
           padding-left: 0;

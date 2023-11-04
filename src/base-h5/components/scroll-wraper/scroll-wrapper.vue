@@ -13,11 +13,11 @@
         detail_list: is_detail,
         simple: standard_edition == 1,
       }]"
-      :style="{ 'height': get_is_static() ? 'auto' : `${VirtualList.container_total_height}rem` }">
+      :style="{ 'height': get_is_static() ? 'auto' : `${VirtualList.container_total_height}px` }">
       <template v-if="MatchMeta.match_mids.length > 0" >
         <div v-for="(match_mid, index) in MatchMeta.match_mids" :index="index" :key="match_mid" :data-mid="match_mid"
           :class="['s-w-item', {last: index == MatchMeta.match_mids.length - 1, static: get_is_static() }]" 
-          :style="{ transform: `translateY(${get_match_top_by_mid(match_mid)}rem)`, zIndex: `${200 - index}` }">
+          :style="{ transform: `translateY(${get_match_top_by_mid(match_mid)}px)`, zIndex: `${100 + index}` }">
           <!-- 调试用 -->
           <div v-if="test" class="debug-head data_mid" :data-mid="match_mid" :class="{ first: index === 0 }">
             <span> {{ get_index_f_data_source(match_mid) + '-' + index }} </span>
@@ -170,7 +170,7 @@ const get_is_static = () => {
   return is_kemp.value || is_results.value
 }
 // 计算每个赛事id 对应的 容器高度 top 值
-const get_match_top_by_mid = (mid) => {
+const get_match_top_by_mid1 = (mid) => {
   let r = 0;
   if (mid in VirtualList.mid_top_map) {
     r = VirtualList.mid_top_map[mid];
@@ -179,13 +179,13 @@ const get_match_top_by_mid = (mid) => {
   return r;
 }
 
-const get_match_top_by_mid1 = (mid) => {
+const get_match_top_by_mid = (mid) => {
   const key = VirtualList.get_match_height_key(mid)
   let r = 0;
   if (key in VirtualList.mid_top_map) {
     r = VirtualList.mid_top_map[key].toFixed(6);
   }
-  return r / 100;
+  return r;
 }
 
 // 设置是否快速滚动显示骨架屏背景

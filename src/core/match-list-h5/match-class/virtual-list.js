@@ -49,20 +49,37 @@ class VirtualList {
   }
 
   get_match_total_height (match, index) {
-    const { is_show_league, mid } = match
-    const key = this.get_match_height_key(mid)
+    const { is_show_league, mid, csid, start_falg } = match
+    // 赛事折叠信息
     const fold_key = MatchFold.get_match_fold_key(match)
     const fold_info = MatchFold.match_mid_fold_obj.value[fold_key]
-    const { show_league_height = 0, playing_title_height = 0, main_handicap_height = 0 } = this.match_mid_map_height.value[key]
+    // 赛事是否显示
+    const show_card = lodash.get(fold_info, `show_card`)
+    // 获取模板默认高度
+    const template_config = MatchMeta.get_match_default_template_config(csid)
+    // 模板预设高度
+    const { show_league_height, playing_title_height, main_handicap_height } = template_config.match_template_config
+    // 缓冲高度
+    const buffer_height = 2
+    // 缓冲容器高度
+    const buffer_container_height = 5
     let total = 0
-    // 联赛标题高度  31: 缓冲容器 5px + 联赛高度 26px
-    if (is_show_league) {
-      total += !fold_info.show_card ? show_league_height + playing_title_height + main_handicap_height : 31
-    } else {
-      // 赛事卡片高度
-      if (!fold_info.show_card) total += main_handicap_height
+    // 第一个显示球种
+    if (index === 0) total += 17
+    // 显示开赛、未开赛
+    if ([1, 2].includes(+start_falg)) total += 25
+    // 本来应该是 联赛高度 26 + 缓存容器高度 5 = 31； 
+    // 但是并不需要那么高的间隙（赛事之间的间隙， 取缓存容器的高度） 所以减去3； 赛事之间相叠避免漏光
+    if (is_show_league && show_card) {
+      // 联赛 赛事均显示
+      total += (show_league_height + playing_title_height + main_handicap_height + buffer_container_height - buffer_height)
+    } else if (is_show_league && !show_card) {
+      // 联赛显示 赛事不显示
+      total += (show_league_height + buffer_container_height - buffer_height)
+    } else if (!is_show_league && show_card) {
+      // 联赛不显示 赛事显示
+      total += main_handicap_height
     }
-    if (index === 0) total += 20
     return total
   }
 
@@ -72,11 +89,15 @@ class VirtualList {
    * @returns 
    */
   compute_page_render_list (scrollTop = 0) {
+    // 计算总高度
     this.compute_container_total_height()
     // 可视区高度
-    let end_index = 0
-    let start_index = 0
+    let match_count = 0
+    let page_count = 18;
     let accrual_height = 0
+    let already_folded = 0;
+    // 顶部滚动距离减去  上面5个列表赛事  的距离
+    const start_position = scrollTop - 234 * 5
     const match_datas = []
     // 展开的话缓冲 6场 赛事； 全部折叠 12个
     const buffer_height = scrollTop - 6 * 179
@@ -85,39 +106,46 @@ class VirtualList {
     // 高度映射 对象
     MatchMeta.complete_matchs.some((match, index) => {
       const { mid, is_show_league } = match
+      // 赛事折叠信息
       const fold_key = MatchFold.get_match_fold_key(match)
-      const fold_info = fold_data[fold_key]
+      // 赛事是否显示
+      const show_card = lodash.get(fold_data[fold_key], `show_card`)
       const virtual_key = this.get_match_height_key(mid)
       // 赛事高度
-      const total = this.get_match_total_height(match, index)
-      if (accrual_height > buffer_height) {
-        // 该赛事是否显示
-        if (total > 0 && is_show_league || !fold_info.show_card) {
-          match_datas.push(match)
+      const match_height = this.get_match_total_height(match, index)
+
+      // 退出循环
+      if (match_count >= page_count) return true 
+
+      if (accrual_height > start_position) {
+        // 列表页每一个赛事的 translateY( ${top}px) top 定位值
+        this.mid_top_map[virtual_key] = accrual_height;
+        if (match_height > 0 && (is_show_league || show_card)) {
+          // 列表页赛事数据
+          match_datas.push(match);
+          match_count++; //赛事容器数量加1
+        }
+        // 如果当前折叠 并且 当前赛事 显示联赛，则 -1 操作
+        if (is_show_league && !show_card) {
+          // 赛事容器数量减1，相当于页面可视区域 总数量 page_count 加1个
+          if (already_folded <= 7) match_count--; 
+          already_folded++;
         }
       }
-      // 赛事偏移量
-      this.mid_top_map[virtual_key] = accrual_height
-      accrual_height += total
-      // 退出循环
-      if (match_datas.length >= 18) return true
-      
+      accrual_height += match_height
     })
    
-    return { 
-      match_datas, 
-      start_index, 
-      end_index 
-    }
+    return match_datas
   }
 
-  compute_container_total_height1 () {
+  // 计算容器总高度
+  compute_container_total_height () {
     let total_height = 0
     MatchMeta.complete_matchs.forEach((match, index) => {
       const total = this.get_match_total_height(match, index)
       total_height += total
     })
-    this.container_total_height = total_height / 100;
+    this.container_total_height = total_height;
   }
 
   /**
@@ -130,7 +158,7 @@ class VirtualList {
   }
 
   // 计算 容器 总高度
-  compute_container_total_height () {
+  compute_container_total_height1 () {
     this.match_height_map_list = MatchMeta.complete_matchs.map((match, i) => {
       let result = compute_style_template_by_match_height(match);
       this.mid_dom_height_dict[match.mid] = result;
@@ -182,12 +210,13 @@ class VirtualList {
     this.already_folded = 0
     this.mid_top_map = {}
     let match = null
+    const buffer_height = 2
     let show_card = false
     let is_show_league = false
     let current_match_dom_top = 0, // 可视区域的赛事的top 值  18场
       match_list_length = this.match_height_map_list.length, // 当前列表数据的总数量  长度
       get_match_total = 0, // 当前页面的赛事数量
-      start_rem = utils.px_2_rem(scroll_top) - 2.34 * 5, // 顶部滚动距离减去  上面5个列表赛事  的距离
+      start_rem = scroll_top - 234 * 5, // 顶部滚动距离减去  上面5个列表赛事  的距离
       current_screen_match = []; // 列表页可视区域 赛事的数据
     // 只有在列表页才有计算逻辑，节省性能
     if ( !["detail_match_list", "home_hot_page_schedule"].includes( PageSourceData.page_source) ) {
@@ -201,8 +230,8 @@ class VirtualList {
         const key = MatchFold.get_match_fold_key(match)
         show_card = lodash.get(MatchFold.match_mid_fold_obj.value, `${key}.show_card`)
         // 计算出 当前赛事的容器高度，以rem 计算
-        // let match_height = this.get_match_total_height(match, i) / 100;
-        let match_height = this.get_match_dom_height_by_match_data(h_map);
+        let match_height = this.get_match_total_height(match, i)
+        // let match_height = this.get_match_dom_height_by_match_data(h_map);
         // 当前赛事id 在整体列表页的高度位置， 大于滑动 的距离，就是可视区域的赛事了
         if (current_match_dom_top > start_rem) {
           // 数量小于 18 或者 20 时，执行下边 赋值操作，列表页每一个赛事的 translateY( ${top}rem) top 定位值
@@ -232,9 +261,23 @@ class VirtualList {
             this.already_folded++;
           }
         }
-        if (i === 0) current_match_dom_top += 0.2
-        if ([1, 2].includes(+match.start_falg)) current_match_dom_top += 0.26
-        if (is_show_league || show_card) current_match_dom_top += show_card ? match_height : 0.31;
+        current_match_dom_top += match_height
+        // // 第一个显示球种
+        // if (i === 0) current_match_dom_top += 17
+        // // 显示开赛、未开赛
+        // if ([1, 2].includes(+match.start_falg)) current_match_dom_top += 25
+        // // 本来应该是 联赛高度 26 + 缓存容器高度 5 = 31； 
+        // // 但是并不需要那么高的间隙（赛事之间的间隙， 取缓存容器的高度） 所以减去3； 赛事之间相叠避免漏光
+        // if (is_show_league && show_card) {
+        //   // 联赛合赛事均显示
+        //   current_match_dom_top += (26 + 20 + 132 + 5 - buffer_height)
+        // } else if (is_show_league && !show_card) {
+        //   // 联赛显示卡片不显示
+        //   current_match_dom_top += (26 + 5 - buffer_height)
+        // } else if (!is_show_league && show_card) {
+        //   // 联赛不显示卡片显示
+        //   current_match_dom_top += 132
+        // }
         
       }
 

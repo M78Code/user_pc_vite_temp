@@ -6,7 +6,7 @@
     <template v-if="!match_is_empty">
       <!-- <match-list></match-list> -->
       <component :is="target_com"></component>
-      <!-- 到底了容器原加载更多容器-->
+      <!-- 到底了容器-->
       <div :class="['loading-more-container', { home_hot: is_hot }]" v-if="MatchMeta.match_mids.length > 3">
         <div style="color:#AAAEB8;font-size:.12rem;"> {{ $t("scroll_wrapper.is_footer") }} </div>
       </div>

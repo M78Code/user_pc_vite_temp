@@ -447,15 +447,19 @@ class MatchMeta {
     if ([400, 300].includes(menu_lv_v1) || (menu_lv_v1 == 28 && [1001, 1002, 1004, 1011, 1010, 1009, 100].includes(menu_lv_v2)) ) {
       return
      }
-    // const { match_data, start_index, end_index } = VirtualList.compute_page_render_list(scrollTop)
-    const { match_datas } = VirtualList.compute_container_list_by_scroll_top(scroll_top)
-    // const target_index = end_index > 10 ? end_index + 1 : this.complete_mids.length
-    // const target_list = this.complete_matchs.slice(start_index, target_index)
-    // this.match_mids = this.complete_mids.slice(start_index, target_index)
+
+    // 虚拟列表所需渲染数据
+    const match_datas = VirtualList.compute_page_render_list(scroll_top)
+
+    // 当前渲染的 mids
     this.match_mids = match_datas.map(t => {
       return t.mid
     })
+
+    // 不获取赔率
     if (type === 2) return this.handle_update_match_info(match_datas)
+
+    // 获取赔率
     if (type === 1) return this.handle_submit_warehouse(match_datas)
 
   }

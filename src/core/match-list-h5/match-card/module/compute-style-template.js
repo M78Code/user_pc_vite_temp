@@ -333,7 +333,8 @@ export const compute_style_template_by_match_height = (match) => {
  */
 const compute_match_total = (match_style_obj) => {
   let height = Object.values(match_style_obj).filter(t => typeof t === 'number').reduce((a, b) => a + b, 0)
-  return utils.px_2_rem(height)
+  return height
+  // return utils.px_2_rem(height)
 }
 
 /**
