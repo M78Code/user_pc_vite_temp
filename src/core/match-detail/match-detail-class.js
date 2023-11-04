@@ -337,7 +337,11 @@ export default class MatchDetailCtr {
    * @return {*}
   */
   set_details_data_cache(val){
-    this.details_data_cache = val
+    if (!val || !Object.keys(val).length) {
+      this.details_data_cache = {}
+      return
+    }
+    this.details_data_cache = Object.assign({}, this.details_data_cache, val)
     this.set_details_data_version()  
   }
   /**

@@ -16,20 +16,20 @@
           <!--左侧菜单 -->
           <template v-if="is_home_page">
             <!-- <q-btn flat dense round icon="menu" aria-label="Menu" @click="toggleLeftDrawer" /> -->
-            <div  @click="toggleLeftDrawer">左侧</div>
-            <!-- <img class="navigation" src="~assets/images/menu/navigation.png" @click="toggleLeftDrawer" alt=""> -->
+            <!-- <div  @click="toggleLeftDrawer">左侧</div> -->
+            <img class="navigation" src="./img/navigation.png" @click="toggleLeftDrawer" alt="">
           </template>
 
           <!-- 搜索 -->
           <div class="top_info_search">
             <input type="search" maxlength="15" placeholder="Search" @input="search_match" />
-            <!-- <img src="~assets/images/menu/top_seach.png" alt="" /> -->
+            <img src="./img/top_seach.png" alt="" />
           </div>
           <!-- 头像 -->
           <div class="top_info_right">
             <span class="top_avatar" @click="jump_personal">
               <!-- <span class="badge"></span> -->
-              <!-- <img src="~assets/images/menu/top_avatar.png" alt="" /> -->
+              <img src="./img/top_avatar.png" alt="" />
             </span>
             <span class="info_amount">{{ format_money2(amount) }}</span>
           </div>
@@ -60,7 +60,7 @@
 import { ref, computed, watch } from "vue";
 import { useRouter, useRoute } from "vue-router"
 import { format_money2,UserCtr } from "src/core/"
-
+import leftMenu from "./left_menu/left_menu.vue"
 const router = useRouter();
 const route = useRoute()
 const amount = ref('')
@@ -108,10 +108,11 @@ const toggleLeftDrawer = () => {
   align-items: center;
   height: 100%;
   font-size: 14px;
-  padding: 0 15px 0 15px;
+  width: 100%;
+  // padding: 0 15px 0 15px;
   justify-content: space-between;
   color: rgba(255, 255, 255, 1);
-  //background: url('assets/images/menu/top_bg.png') no-repeat;
+  background: url('./img/top_bg.png') no-repeat;
   background-size: cover;
   .navigation{
     width: 18px;
@@ -136,6 +137,7 @@ const toggleLeftDrawer = () => {
       padding-left: 30px;
       background: #ff8b33;
       outline: none;
+      color: #fff;
     }
     ::-webkit-input-placeholder {
       color: #ffffff;
@@ -147,7 +149,7 @@ const toggleLeftDrawer = () => {
   .top_info_right {
     display: flex;
     align-items: center;
-    padding: 2px 0 0 12px;
+    padding: 2px 2px 0 12px;
     font-size: 14px;
     flex-direction: row-reverse;
     .info_amount {
@@ -159,6 +161,7 @@ const toggleLeftDrawer = () => {
       text-overflow: ellipsis;
       text-align: right;
       font-family: 'DIN';
+      mix-blend-mode: normal;
     }
     .top_avatar {
       display: inline-block;
@@ -207,9 +210,9 @@ const toggleLeftDrawer = () => {
   padding: 0 15px;
   font-size: 12px;
   color:#C2C2C2;
-  background: url('assets/images/personal/bg.png') no-repeat;
+  background: url('./img/top_bg.png') no-repeat;
   background-size: cover;
-  height: 40px;
+  height: 0.5rem;
   > img {
     width: 5px;
     height: 8px;
