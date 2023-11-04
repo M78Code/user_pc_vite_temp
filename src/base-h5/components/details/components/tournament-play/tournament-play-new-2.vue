@@ -610,15 +610,17 @@ export default defineComponent({
           useMittEmit(MITT_TYPES.EMIT_ANIMATE_RESET_MYSCROLL_TOP, 100);
           useMittEmit(MITT_TYPES.EMIT_RESET_SET_HTON);
           // 获取最大置顶排序值
-          // var hton_ = 0;
-          // for (let i = 0; i < list.length; i++) {
-          //   var hton = parseInt(list[i].hton);
-          //   if (hton > hton_) {
-          //     hton_ = hton;
-          //   }
-          // }
+          var hton_ = 0;
+          let arr = MatchDataWarehouse_H5_Detail_Common.get_quick_mid_obj(route.params.mid)?.odds_info
+          for (let i = 0; i < arr.length; i++) {
+            var hton = parseInt(arr[i].hton);
+            if (hton > hton_) {
+              hton_ = hton;
+            }
+          }
           // 将点击置顶的hton设置为:最大置顶排序值+1
           item_data.hton = Date.now() + '';
+          MatchDataWarehouse_H5_Detail_Common.set_match_details(MatchDataWarehouse_H5_Detail_Common.get_quick_mid_obj(route.params.mid),arr)
         }
 
         // 置顶状态变化时，更新相应玩法存储状态
@@ -636,7 +638,7 @@ export default defineComponent({
           }
         })
         // 更新当前赛事所有玩法状态
-        set_details_data_cache({
+       MatchDetailCalss.set_details_data_cache({
           [key]: all_list_data
         })
 
