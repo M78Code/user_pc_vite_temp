@@ -12,6 +12,7 @@
  * 
  */
 
+import { ref } from 'vue'
 import{set_sticky_top}  from  "src/core/match-list-pc/match-card/module/sticky-top.js"
 
 
@@ -68,6 +69,8 @@ class PageSourceData {
     this.newer_standard_edition = 2 
     // 列表 搜素 文字 
     this.get_search_txt =''
+    // 所选主要玩法
+    this.standard_odd_status = ref(0)
     // 列表查询额外辅助参数
     this.list_query_other_params={
       // batchNo  ： 虚拟体育期号，
@@ -89,6 +92,11 @@ class PageSourceData {
   // 设置服务器时间
   set_init_time (time) {
     this.init_time = time
+  }
+
+  // 设置所选主要玩法
+  set_standard_odd_status (val) {
+    this.standard_odd_status.value = val
   }
 
   /**

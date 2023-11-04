@@ -27,7 +27,6 @@ const mitt_list = [
         theme.value = UserCtr.theme;
     }).off,
     useMittOn(MITT_TYPES.EMIT_STANDARD_EDITION_CHANGE, (v) => {
-        console.log(2222222222)
         standard_edition.value = v
     }).off,
     //通知收藏变化了
