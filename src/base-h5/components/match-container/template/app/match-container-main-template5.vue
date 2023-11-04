@@ -119,7 +119,7 @@
           <!-- 赛事队伍 -->
           <div class="event-team">
             <div class="name">
-
+              
             </div>
             <div class="odds">
 
