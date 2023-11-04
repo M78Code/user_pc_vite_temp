@@ -87,7 +87,7 @@ class MatchListCardDataClass {
   }
   //获取单个卡片对象
   get_card_obj_bymid(mid) {
-    return this.all_card_obj[mid + '_']
+    return this.all_card_obj[mid] || this.all_card_obj[mid + '_'] || {}
   }
 }
 export default new MatchListCardDataClass();

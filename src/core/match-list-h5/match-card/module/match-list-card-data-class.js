@@ -16,6 +16,11 @@ class MatchListCardData {
     this.match_list_card_key_arr = [
       // 'card_key'
     ];
+    // 已开赛 到卡片key的 映射对象
+    this.play_to_card_key_arr = []
+    // 未开赛 到卡片key的 映射对象
+    this.no_start_to_card_key_arr = [
+    ];
     /**
      * 哪种列表类型
      * 1. 列表数据类型为联赛列表   有未开赛 已开赛
@@ -37,9 +42,24 @@ class MatchListCardData {
 
   
   }
+  set_all_card_obj({
+    all_card_obj, play_to_card_key_arr, no_start_to_card_key_arr, match_list_card_key_arr, csid_to_card_key_obj
+  }) {
+    // 合并所有卡片样式对象
+    lodash.merge(this.all_card_obj, all_card_obj)
+    play_to_card_key_arr && (this.play_to_card_key_arr = play_to_card_key_arr)
+    no_start_to_card_key_arr && (this.no_start_to_card_key_arr = no_start_to_card_key_arr)
+    match_list_card_key_arr && (this.match_list_card_key_arr = match_list_card_key_arr)
+    csid_to_card_key_obj && (this.csid_to_card_key_obj = csid_to_card_key_obj)
+    this.set_list_version()
+  }
   // 设置 的列表scroll_top
   set_scroll_top(scroll_top) {
     this.scroll_top = scroll_top;
+  }
+   //获取单个卡片对象
+   get_card_obj_bymid(mid) {
+    return this.all_card_obj[mid]
   }
 }
 export default new MatchListCardData();
