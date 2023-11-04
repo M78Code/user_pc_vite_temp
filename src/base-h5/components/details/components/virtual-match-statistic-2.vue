@@ -11,6 +11,44 @@
         <div
           v-for="(score, index) in datas.score_list"
           :key="index+'-'"
+          class="score-item items-center col"
+        >
+          <div class="score-header row justify-center">
+            <div class="left team team-home">
+              <span class="score">{{ score.home }}</span>
+            </div>
+            <div class="separate"></div>
+            <div class="right team team-away">
+              <span class="score">{{ score.away }}</span>
+            </div>
+          </div>
+
+          <div class="score-line">
+            <div class="info main">
+              <span
+                :class="['line', score.home == 0 && 'line0']"
+                :style="`width:${score.home * 10}%`"
+              ></span>
+              <span class="score">{{ score.home }}</span>
+            </div>
+            <div class="separate">
+              
+            </div>
+            <div class="info away">
+              <span
+                :class="['line', score.away == 0 && 'line0']"
+                :style="`width:${score.away * 10}%`"
+              ></span>
+              <span class="score">{{ score.away }}</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="score-list">
+        <div
+          v-for="(score, index) in datas.score_list"
+          :key="index+'-'"
           class="score-item items-center row"
         >
           <div class="info main">
@@ -20,7 +58,9 @@
             ></span>
             <span class="score">{{ score.home }}</span>
           </div>
-          <div class="separate"></div>
+          <div class="separate">
+
+          </div>
           <div class="info away">
             <span
               :class="['line', score.away == 0 && 'line0']"
@@ -121,6 +161,18 @@ export default defineComponent({
     .score-item {
 
       font-size: 0.12rem;
+      font-weight: 700;
+      color: var(--q-gb-t-c-18);
+      .score-header{
+        
+      }
+      .separate {
+        text-align: center;
+        margin: 0 .025rem;
+        height: 0.02rem;
+        width: 0.12rem;
+        background-color: var(--q-gb-bg-c-18);
+      }
 
       .info {
         flex: 1;
@@ -150,12 +202,6 @@ export default defineComponent({
             margin: 0 0 0 0.08rem;
           }
         }
-      }
-
-      .separate {
-        margin: 0 0.13rem;
-        width: 0.08rem;
-        height: 0.02rem;
       }
     }
   }
