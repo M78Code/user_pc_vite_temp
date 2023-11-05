@@ -34,7 +34,8 @@
       </template>
       <!-- 对应显示国际化文字(视频/动画) -->
       <div class="col text-left">
-        <span class="tx-style">{{ text }}</span>
+        <!-- <span class="tx-style">{{ text }}</span> -->
+        <span class="tx-style">视频直播</span>
       </div>
     </div>
   </div>
@@ -364,7 +365,7 @@ export default defineComponent({
   display: flex;
   width: 0.80rem;
   height: 0.24rem;
-  padding: 4.5px 10px 5.5px 10px;
+  padding: 0.045rem 0.10rem 0.055rem 0.10rem;
   justify-content: center;
   align-items: center;
   gap: 4px;

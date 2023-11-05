@@ -114,7 +114,6 @@ class MenuData {
 
   // 设置 收藏 /vr体育 /电竞头部
   set_top_menu_title(val){
-    console.error('set_top_menu_title',val)
     this.top_menu_title = val
     this.update()
   }
@@ -330,12 +329,8 @@ class MenuData {
    * @returns 
    */
   get_menus_i18n_map(mi) {
-    //"7": "电竞" 直接可以返回不做处理 slice(0,3)
-    if (this.is_export()) {
-      return BaseData.menus_i18n_map[+mi]
-    }
     //二级菜单
-    if (this.is_export(+this.current_lv_2_menu_mi) || this.is_vr(+this.current_lv_2_menu_mi)) {
+    if (this.is_export(+this.top_menu_title.mi) || this.is_vr(+this.top_menu_title.mi)) {
       return BaseData.menus_i18n_map[+mi]
     }
     return BaseData.menus_i18n_map[this.recombine_menu_desc(mi)];
@@ -375,6 +370,7 @@ class MenuData {
         id = item.mi
       }
     }
+    console.error('id',id,'===',sprite_images_postion[id])
     if (get_ball_id) return sprite_images_postion[id];
     let type = "";
     switch (String(id)) {
