@@ -29,44 +29,105 @@ const odds_coversion_map = {}
 /** 聊天室来源跟单盘口状况eu */
 // const vx_get_chat_room_type = {}
 
-const bet_chat_room_type = ''
-
+// 两个浮点数相减
+const acc_sub = (num1, num2 = num1) => {
+  var r1, r2, m;
+  try {
+    if (num1.toString().split('.')[1]) {
+      r1 = num1.toString().split('.')[1].length;
+    } else {
+      r1 = 0;
+    }
+    if (num2.toString().split(".")[1]) {
+      r2 = num2.toString().split(".")[1].length;
+    } else {
+      r2 = 0;
+    }
+  } catch (e) {
+    console.error(e);
+  }
+  m = Math.pow(10, Math.max(r1, r2));
+  let n = (r1 >= r2) ? r1 : r2;
+  return (Math.round(num1 * m - num2 * m) / m).toFixed(n);
+}
 
 
 // created() {
 //   odds_coversion_map = store.getState().odds_coversion_map || {}
 //   vx_get_chat_room_type = store.getState().chat_room_type || {}
 // },
-export const compute_value_by_cur_odd_type = (val, breakVal, arr=[], csid) => {
-  
-  /**
-   * 此方法预留  后期 对于 不支持转换赔率的 盘口 做特殊加工
-   * 是 对全局 赔率转换的 基础设定
-   * arr: 当前盘口 支持的赔率转换类型的 全部值
-   * csid ：赛种ID
-   */
-  if (!val) return
-  let odds_val = (Math.floor(val / 1000) / 100)
-  // PS-9881赔率优化
+export const compute_value_by_cur_odd_type = (val, breakVal, hsw_param,flag,csid) => {
+  breakVal = '';
+  // 此方法预留  后期 对于 不支持转换赔率的 盘口 做特殊加工
+  // 是 对全局 赔率转换的 基础设定
+  // arr: 当前盘口 支持的赔率转换类型的 全部值
+  if (!val) return;
+  let arr = [];
   let str = "";
-  breakVal = ""; // 断档值废弃
-  // 从欧盘转到港盘
-  if (!arr || ['2'].includes(oddsTable[cur_odd]) && cur_odd == 'HK') {
-    str = calc_odds(odds_val, csid);
-    //聊天室跟单特殊处理
-    if (arr && arr.includes(oddsTable[cur_odd]) || bet_chat_room_type == "HK") {
-      str = change_EU_HK(str);
-    }
-    return str;
+  // 印尼盘(ID) id: 6
+  // 美式盘(US) id: 5
+  // 马来盘(MY) id: 3
+  // 英式盘(GB) id: 4
+  // 香港盘(HK) id: 2
+  // 欧洲盘(EU) id: 1
+  if((typeof hsw_param) == 'string'){
+    arr = hsw_param.split(',');
+  }else{
+    arr = hsw_param;
   }
-
-  if (!arr || arr.includes(oddsTable[cur_odd]) && cur_odd) {
-    cur_odd == 'EU' ? str = calc_odds(odds_val, csid) : str = compute_value_by_odd_type(breakVal ? breakVal : odds_val, cur_odd, csid);
+  if (!arr || arr.includes(oddsTable[cur_odd])) {
+    //欧洲盘不用转换,香港盘直接减1处理,其他(目前不存在其他赔率类型)的走赔率转换方法
+    if(cur_odd == 'EU'){
+      str = calc_odds(val,csid)
+    }else if(cur_odd == 'HK'){
+      let calc_num = acc_sub(val,1)
+      str = calc_odds(calc_num,csid)
+    }else{
+      str = compute_value_by_odd_type(breakVal ? breakVal : val, cur_odd)
+    }
   } else {
-    str = calc_odds(odds_val, csid);
+    str = calc_odds(val,csid);
+  }
+  //投注的时候传值不需要格式化
+  if (!flag) {
+    str = format_odds(str,csid)
   }
   return str;
-  // return get_accuracy(str);
+}
+/**
+ *@description 赔率展示优化，见优化单 13807,电竞不走这个逻辑
+  *@param {Number|String} val 最终赔率 30.40 100.00
+  *@param {Number|String} csid 球类id
+  *@return {String} 优化后的赔率，30.4 100
+  */
+const format_odds = (val, csid) => {
+  if(val=='' || val == undefined){
+    return '';
+  }
+  if ( float_3_csid.includes(1*csid)) return val;
+  val = (val || '0').toString();
+  let ret = val;
+  if (val.includes('.')){
+    if (val >= 100) {
+      if (val.split('.')[1] == '00') {
+          ret = val.split('.')[0];
+      } else {
+        let len = val.length;
+        if(val.indexOf('.0') == (len-2)){
+          ret = val.substring(0,len-2);
+        } else {
+          ret = val;
+        }
+      }
+    } else if (val >= 10) {
+      if (val.split('.')[1][1] == '0') {
+        ret = val.slice(0,val.length-1);
+      } else {
+        ret = val;
+      }
+    }
+  }
+  return ret;
 }
 //返回字符串保留两位小数,csid-赛种ID
 const calc_odds = (val, csid) => {

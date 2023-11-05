@@ -15,8 +15,8 @@
     </div>
     <!--开盘|锁盘-->
     <div v-else class="odds" :class="{red:red_green_status === 1,green:red_green_status === -1,}">
-      <span class="change-icon" v-show="red_green_status"
-            :class="{'icon-red':red_green_status === 1,'icon-green':red_green_status === -1}">
+      <span v-show="red_green_status"
+        :class="['change-icon', {'icon-red':red_green_status === 1,'icon-green':red_green_status === -1}]">
       </span>
       {{get_odds_value(ol_item)}}
     </div>

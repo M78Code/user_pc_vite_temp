@@ -4,75 +4,62 @@
 <template>
   <div class="champion-wrap-2" v-if="is_show">
     <div class="sport-title match-indent" v-if="get_sport_show(i)" @click="handle_ball_seed_fold">
-      <span class="score-inner-span"> {{ match_of_list.csna }} </span>
+      <span class="score-inner-span"> {{match_of_list.csna}} </span>
       <div class="collapse-dire">
         <img class="icon-down-arrow" :class="{ 'collapsed': league_collapsed }" :src='compute_img_url("icon-collapse")' />
       </div>
     </div>
-    <div v-if="is_show_league(i)"
-      :class="['league-container flex items-center justify-between right-border', { collapsed: !collapsed }]"
+    <div v-if="is_show_league(i)" 
+      :class="['league-container flex items-center justify-between right-border', {collapsed: !collapsed}]"
       @click="handle_league_fold">
       <div class="league-wrapper champion flex items-center">
-        <div v-if="menu_type === 100 && GlobalAccessConfig.get_collectSwitch()" class="favorite"
-          :class="[{ favorited: match_of_list.tf }, theme]" @click.stop="handle_league_fold"></div>
-        <span class="league-title-text row justify-between"
-          :class="{ 'without-collect': menu_type !== 100 || (menu_type === 100 && !GlobalAccessConfig.get_collectSwitch()) }">
-          <!-- {{ menu_type == 100 ? match_of_list.onTn : match_of_list.tn }} -->
-          {{(new Date(+match_of_list.med)).Format(i18n_t('time8')).split(' ')[0]}}
-        </span>
-      </div>
+        <div v-if="menu_type === 100 && GlobalAccessConfig.get_collectSwitch()"  class="favorite" :class="[{favorited:match_of_list.tf},theme]"
+          @click.stop="handle_league_fold"></div>
+            <span class="league-title-text row justify-between" :class="{'without-collect': menu_type !== 100 || (menu_type === 100 && !GlobalAccessConfig.get_collectSwitch())}" >
+              {{menu_type == 100 ? match_of_list.onTn : match_of_list.tn}}
+            </span>
+        </div>
 
       <div class="collapse-dire">
-        <icon-wapper color="#c9c9c9" name="icon-arrow" size="15px" :class="['icon-wapper', { 'collapsed': !collapsed }]" />
+        <icon-wapper color="#c9c9c9" name="icon-arrow" size="15px" :class="['icon-wapper', {'collapsed': !collapsed}]" />
       </div>
     </div>
 
-    <template v-for="(hp, index) of match_of_list.hps">
+    <template v-for="(hp,index) of match_of_list.hps">
       <div class="hps-wrap hairline-border" v-if="hp.hs != 2 && !collapsed" :key="index">
-        <div class="flex items-center justify-between" :class="{ 'is-favorite': false }">
-
-          
+        <div class="flex items-center justify-between"
+          :class="{'is-favorite': false}">
           <div class="match-title items-center">
             <div class="debug-head" style="color:red;position:absolute;right:0;">
-              {{ get_key_by_obg(hp) }}
+              {{get_key_by_obg(hp)}}
             </div>
             <div class="hpn-wrap ellipsis">
-              联赛
+              {{hp.hps}}
             </div>
           </div>
-          <div class="match-title items-center">
-            <div class="debug-head" style="color:red;position:absolute;right:0;">
-              {{ get_key_by_obg(hp) }}
-            </div>
-            <div class="hpn-wrap ellipsis">
-              {{ hp.hps }}
+          <div v-if="!collapsed && hp.hmed" class="limit-time">
+            <div class="limit-t-i">
+              <template v-if="!['zh', 'tw'].includes(lang)">
+                {{(new Date(+hp.hmed)).Format(i18n_t('time7'))}} {{ $t('match_main.cut_off')}}
+              </template>
+              <template v-else>
+                {{(new Date(+hp.hmed)).Format(i18n_t('time7'))}} {{ $t('match_main.cut_off')}}
+              </template>
             </div>
           </div>
         </div>
-
-        <div v-if="!collapsed && hp.hmed" class="limit-time">
-          <div class="limit-t-i">
-            <template v-if="!['zh', 'tw'].includes(lang)">
-              {{(new Date(+hp.hmed)).Format(i18n_t('time7'))}} 
-            </template>
-            <template v-else>
-              {{(new Date(+hp.hmed)).Format(i18n_t('time7'))}} 
-            </template>
-          </div>
-        </div>
-
-        <div class="ol-list-wrap flex" :data-ol="hp.ol.length" v-if="hp.ol">
-          <div class="ol-list-left">
-            <div class="ol-list-left-title">
-              <span>{{ menu_type == 100 ? match_of_list.onTn : match_of_list.tn }}</span>
-            </div>
-          </div>
-          <div class="ol-list-right">
-            <!-- 右侧赔率组件 -->
-            <OddItemChampion v-for="(ol_item, i) of hp.ol" :key="i" :hs="hp.hs" :data-i="i" :ol_item="ol_item"
-              :csid="match_of_list.csid" @click.stop="item_click(match_of_list, hp, ol_item)">
-            </OddItemChampion>
-          </div>
+        
+        <div class="ol-list-wrap flex justify-start" :data-ol="hp.ol.length" v-if="hp.ol">
+          <!-- 右侧赔率组件 -->
+          <OddItemChampion
+            v-for="(ol_item,i) of hp.ol"
+            :key="i"
+            :hs="hp.hs"
+            :data-i="i"
+            :ol_item="ol_item"
+            :csid="match_of_list.csid"
+            @click.stop="item_click(match_of_list,hp,ol_item)">
+          </OddItemChampion>
         </div>
       </div>
     </template>
@@ -82,13 +69,13 @@
 
 <script>
 
-import { i18n_t } from 'src/core/index.js'
+import { i18n_t} from 'src/core/index.js'
 import { lang, theme } from 'src/base-h5/mixin/userctr.js'
 import { menu_type } from 'src/base-h5/mixin/menu.js'
 import { compute_img_url } from "src/core/index.js"
 
 import { IconWapper } from 'src/components/icon'
-import GlobalAccessConfig from "src/core/access-config/access-config.js"
+import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import OddItemChampion from "src/base-h5/components/match-list/components/odd-item-champion.vue";
 
 import champion_mixin from '../../mixins/champion.mixin.js'
@@ -107,8 +94,8 @@ export default {
     IconWapper,
     OddItemChampion,
   },
-  setup() {
-    return {
+  setup () {
+    return { 
       lang,
       theme,
       i18n_t,
@@ -137,14 +124,12 @@ export default {
     height: 0.26rem;
     // margin: 0 0.07rem;
     margin-top: 0.07rem;
-
-    &.collapsed {
-      border-bottom: 1px solid var(--q-gb-t-c-6);
+    &.collapsed{
+      border-bottom: 1px solid var(--q-gb-bg-c-19);
     }
 
     .league-wrapper {
       padding-left: 0.1rem;
-
       .favorite {
         width: 0.16rem;
         height: 0.16rem;
@@ -203,15 +188,13 @@ export default {
       .league-title-text {
         font-weight: 600;
       }
-
-      .collect-img {
+      .collect-img{
         width: 16px;
         height: 16px;
         text-align: center;
         line-height: 20px;
         margin: 0 6px 0 10px;
-
-        >img {
+        > img {
           width: 14px;
           height: 13px;
         }
@@ -220,7 +203,6 @@ export default {
 
     .collapse-dire {
       margin-right: 0.05rem;
-
       .icon-arrow {
         width: 0.12rem;
         height: 0.06rem;
@@ -233,7 +215,6 @@ export default {
       }
     }
   }
-
   .limit-time {
     // width: 100%;
     height: 0.25rem;
@@ -241,14 +222,12 @@ export default {
     text-align: right;
     margin-top: 0.02rem;
     margin-right: 0.08rem;
-      padding-left: 0.11rem;
     display: flex;
     align-items: center;
-    border-bottom: 0 !important;
 
     .limit-t-i {
       // width: 3.45rem;
-      // margin: 0 auto;
+      margin: 0 auto;
       color: #999;
       border-radius: 0.04rem;
     }
@@ -256,8 +235,8 @@ export default {
 
   .hps-wrap {
 
-    >div {
-      border-bottom: 1px solid var(--q-gb-t-c-6);
+    > div {
+      border-bottom: 1px solid var(--q-gb-bg-c-19);
     }
 
     .match-title {
@@ -267,8 +246,7 @@ export default {
       position: relative;
       display: flex;
       width: 50%;
-      justify-content: center;
-
+    
 
       // &:before {
       //   width: 0.03rem;
@@ -292,38 +270,9 @@ export default {
       flex-wrap: wrap;
       margin-top: 0.07rem;
       padding-left: 0.07rem;
-      justify-content: space-between;
       // padding-bottom: 0.08rem;
-      .ol-li-item {
+      .ol-li-item{
         background: #fff;
-        width: 98%;
-        margin: 0;
-        margin-bottom: .06rem;
-      }
-      .ol-list-left {
-        flex: 1;
-        .ol-list-left-title {
-          background: #fff;
-          width: 98%;
-          margin: 0;
-          margin-bottom: 0.06rem;
-          height: 0.4rem;
-          padding: 0 0.1rem;
-          overflow: hidden;
-          justify-content: center;
-          align-items: center;
-          display: flex;
-          border-radius: 0.04rem;
-          span {
-            max-width: 1.56rem;
-            text-overflow: ellipsis;
-            overflow: hidden;
-            white-space: nowrap;
-          }
-        }
-      }
-      .ol-list-right {
-        flex: 1;
       }
     }
 
