@@ -67,7 +67,7 @@ export const get_book_status_record = (params, config={}, url = "/order/betRecor
 /* export const get_pre_bet_order_info = (params, config={}, url = "/v1/betOrder/orderPreSettleList") => http.get(`${prefix}${url}`, params, config); */
 
 // 查询提前结算订单记录
-export const get_pre_settle_order_detail = (params, config={}, url = "/order/betRecord/getPreSettleOrderDetail") => http.get(`${prefix}${url}`, params, config);
+export const get_pre_settle_order_detail = (params, config={}, url = "/order/betRecord/getPreSettleOrderDetail") => http.get(`${prefix13}${url}`, params, config);
 
 // 提前结算实时查询最高返还批量,每5秒请求一次
 export const get_cashout_max_amount_list = (params, config={}, url = "/order/betRecord/getCashoutMaxAmountList") => http.get(`${prefix13}${url}`, params, config);
