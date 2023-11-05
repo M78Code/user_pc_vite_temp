@@ -24,21 +24,22 @@
       <!-- 角球数 -->
       <span v-if="red_flag">
         <span>&nbsp;&nbsp;</span>
-        <span><q-img style="width: 0.16rem;height: 0.16rem;margin-top:-5px;"  :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/corner_kick.svg`" ></q-img></span>
+        <q-img v-if="PROJECT_NAME == 'app-h5'" style="width: 0.17rem;height: 0.17rem;margin-top:-8px;"  :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/corner_kick.svg`"></q-img>
+        <span v-else><q-img style="width: 0.16rem;height: 0.16rem;margin-top:-5px;"  :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/corner_kick.svg`" ></q-img></span>
         <span>&nbsp;&nbsp;{{PROJECT_NAME == 'app-h5' ? i18n_t('match_result.corner_kick') : ''}}</span>
         <span>{{ $filters.score_format(score_array_status[0])}}</span>
       </span>
       <!-- 黄牌数 -->
       <span v-if="yellow_card">
         <span>&nbsp;&nbsp;</span>
-        <span><q-img style="width: 0.16rem;height: 0.16rem;margin-top:-5px;"  :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/details_yellow.svg`" ></q-img></span>
+        <span><q-img style="width: 0.16rem;height: 0.16rem;margin-top:-5px;"  class="rounded-borders" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/details_yellow.svg`" ></q-img></span>
         <span>&nbsp;&nbsp;{{PROJECT_NAME == 'app-h5' ? i18n_t('match_result.yellow_card') : ''}}</span>
         <span>{{ $filters.score_format(score_array_status[2])}}</span>
       </span>
       <!-- 红牌数 -->
       <span v-if="red_card">
         <span>&nbsp;&nbsp;</span>
-        <span><q-img style="width: 0.16rem;height: 0.16rem;margin-top:-5px;"  :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/details_red_card.svg`" ></q-img></span>
+        <span><q-img style="width: 0.16rem;height: 0.16rem;margin-top:-5px;"  class="rounded-borders"  :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/details_red_card.svg`" ></q-img></span>
         <span>&nbsp;&nbsp;{{PROJECT_NAME == 'app-h5' ? i18n_t('match_result.red_card') : ''}}</span>
         <span>{{ $filters.score_format(score_array_status[1])}}</span>
       </span>

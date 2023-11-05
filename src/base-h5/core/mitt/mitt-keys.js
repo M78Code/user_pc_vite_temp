@@ -274,6 +274,8 @@ export const EMIT_USER_LOGON_OK_EVENT = "EMIT_USER_LOGON_OK_EVENT";
 // 触发首页跳转
 export const EMIT_HOME_TAB = "EMIT_HOME_TAB";
 export const EMIT_MAIN_LIST_MATCH_IS_EMPTY = "EMIT_MAIN_LIST_MATCH_IS_EMPTY";
+// 到底了
+export const EMIT_MAIN_LIST_MAX_HEIGHT = "EMIT_MAIN_LIST_MAX_HEIGHT";
 /**
  * 触发toast弹框
  */
