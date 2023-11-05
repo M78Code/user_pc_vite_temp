@@ -17,10 +17,10 @@
         <bet-bar @click="pack_up"></bet-bar>
         <!-- 删除全部和选择type -->
         <bet-all-detele></bet-all-detele>
-        <!-- 单关投注项列表 -->
+        <!-- 单关投注项列表  -->
         <bet-mix-box-child1></bet-mix-box-child1>
-        <!-- 单关的输入框 -->
-        <bet-input-info></bet-input-info>
+        <!-- 单关的输入框
+        <bet-input-info></bet-input-info> -->
 
    </div>
    
@@ -28,10 +28,10 @@
 </template>
 
 <script setup>
-import betInputInfo from ".//bet_input_info";
-import betMixBoxChild1 from ".//bet_mix_box_child1.vue";
-import betAllDetele from ".//bet_all_detele.vue";
-import betBar from ".//bet-bar.vue";
+//import betInputInfo from "//bet_input_info";
+import betMixBoxChild1 from "./bet_mix_box_child1.vue";
+import betAllDetele from "./bet_all_detele.vue";
+import betBar from "./bet-bar.vue";
 
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
