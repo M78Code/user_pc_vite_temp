@@ -111,7 +111,6 @@ export default {
     // TODO: 判断是否显示体育类型
     show_sport_title () {
       if (is_detail.value) { return false }
-      debugger
       if (is_hot.value) {
         // 热门
         if (lodash.get(MenuData.hot_tab_menu, 'index') !== 0) { return false }

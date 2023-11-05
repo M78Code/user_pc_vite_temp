@@ -1155,7 +1155,8 @@ export default {
           align-items: center;
           position: absolute;
           right: 0.12rem;
-          top: 0;
+          bottom: 0;
+          flex-direction: column-reverse;
 
           &.simple {
             right: 0.08rem;
