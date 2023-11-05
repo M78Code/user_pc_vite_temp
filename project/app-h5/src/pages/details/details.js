@@ -507,7 +507,13 @@ watch(() => MatchDataWarehouseInstance.data_version.version, () => {
             match_detail_data_handle(res_data)
             // 数据传入数据仓库
             MatchDataWarehouseInstance.set_match_details(res_data)
-            if(state_data.refresh) useMittEmit(MITT_TYPES.EMIT_REF_API,(true))
+            //如果是切换tab页
+            if(state_data.refresh){
+              //获取玩法集 
+              get_odds_list()
+              //获取盘口
+              useMittEmit(MITT_TYPES.EMIT_REF_API,(true))
+            } 
             // 球种ID
             sport_id.value = res_data.csid
             if (params.init) {get_football_replay(0)}
