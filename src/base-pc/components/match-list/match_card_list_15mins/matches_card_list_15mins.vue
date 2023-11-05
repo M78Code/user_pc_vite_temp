@@ -30,7 +30,7 @@
 
 <style lang="scss" scoped>
 	.matches-card-list-wrap {
-		background: linear-gradient(272.18deg, #FFF1E6 0%, #FFFFFF 100%);
+		background: linear-gradient(272deg, #FFF1E6 0%, #FFF 100%);
 		padding: 25px 21px 25px 12px;
 		box-sizing: border-box;
 		width: 100%;
