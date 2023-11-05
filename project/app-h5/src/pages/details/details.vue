@@ -72,7 +72,7 @@
           <!-- tab 激活投注展示内容 -->
           <!-- 投注展示内容 -->
           <div
-              v-show="viewTab === 'bet' || get_is_hengping"
+              v-if="viewTab === 'bet' || get_is_hengping"
               class="content-box play-items"
               :class="[{baseball: detail_data.csid == '3'},  'details-f']"
               ref="content_box">
@@ -84,7 +84,7 @@
               <div style="height:inherit" ref="scroll_box">
                 <div>
                   <!-- ms 为0 或者 1时，表示未开赛或进行中 -->
-                  <category v-if="[0,1,110].includes(+detail_data.ms)" :category_arr="matchDetailCtr.category_arr" ref="category"></category>
+                  <category v-if="[0,1,110].includes(+detail_data.ms) && viewTab === 'bet'" :category_arr="matchDetailCtr.category_arr" ref="category"></category>
                   <!-- <no-data v-else which='noMatch' height='500'></no-data> -->
                 </div>
               </div>
@@ -380,9 +380,12 @@ export default defineComponent({
     // 监听tab状态
     watch(
       () => state_data.viewTab,
-      () => {
+      (val) => {
         // #TODO $utils
         // $utils.zhuge_event_send('H5_情报分析', data.UserCtr);
+        if(val == 'bet'){
+          initEvent(true)
+        }
       }
     );
     // 赛事分析三级服务开关开启后，视图切换到投注tab
