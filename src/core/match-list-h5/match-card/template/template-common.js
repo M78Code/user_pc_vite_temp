@@ -191,9 +191,9 @@ const match_style_template_yazhou = {
 // app-h5 赛事样式模板
 const match_style_template_app = {
   // 联赛标题高度
-  show_league_height: 46,
+  show_league_height: 26,
   // 玩法标题高度
-  // playing_title_height: 20,
+  playing_title_height: 20,
   // 赛事标题高度
   // match_title_height: 30,
   // 主盘口高度
@@ -209,9 +209,9 @@ const match_style_template_app = {
 // ouzhou-h5 赛事样式模板
 const match_style_template_ouzhou = {
   // 联赛标题高度
-  show_league_height: 46,
+  show_league_height: 26,
   // 玩法标题高度
-  // playing_title_height: 20,
+  playing_title_height: 20,
   // 赛事标题高度
   // match_title_height: 30,
   // 主盘口高度
