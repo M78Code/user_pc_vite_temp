@@ -33,7 +33,42 @@ class MatchUtils {
       not_started[0].start_falg = 2
       not_started[0].no_start_total = n_length
     }
-    return lodash.uniqBy([ ...started, ...not_started ], 'mid')
+    return lodash.uniqBy([ ...this.handler_match_classify_by_csid(started), ...this.handler_match_classify_by_csid(not_started) ], 'mid')
+  }
+
+  /**
+   * @description 赛事球种归类 
+   * @param {*} list 赛事数据
+   */
+  handler_match_classify_by_csid (list) {
+    const csid_list = list.map(l => {
+      return l.csid
+    })
+    const result_csids = lodash.uniq(csid_list)
+    const csid_matchs = []
+    result_csids.forEach(csid => {
+      const cur_csid_arr = list.filter(item => item.csid === csid)
+      cur_csid_arr.length > 0 && csid_matchs.push(...cur_csid_arr)
+    })
+    return csid_matchs
+  }
+
+  /**
+   * @description 赛事未开赛标题
+   * @param {*} i 赛事下标
+   * @returns 
+   */
+  get_match_is_show_ball_title (i, list) {
+    // 当前赛事
+    let is_show_ball_title = false
+    const match = list[i]
+    if (i === 0) {
+      is_show_ball_title = true
+    } else {
+      const prev_match = list[i - 1];
+      is_show_ball_title = match.csid !== prev_match.csid
+    }
+    return is_show_ball_title
   }
 
   /**

@@ -10,8 +10,7 @@
     <div style="display: none;">{{ MatchDataBaseH5.data_version.version }}</div>
     <div  :class="['scroll-i-con', {high_scrolling: set_ishigh_scrolling && menu_type !== 100 &&
        !(menu_type == 28 && [1001, 1002, 1004, 1011, 1010, 1009].includes(menu_lv2.mi)) && menu_type != 100,
-        detail_list: is_detail,
-        simple: standard_edition == 1,
+        detail_list: is_detail, simple: standard_edition == 1,
       }]"
       :style="{ 'height': get_is_static() ? 'auto' : `${VirtualList.container_total_height}px` }">
       <template v-if="MatchMeta.match_mids.length > 0" >
@@ -32,6 +31,10 @@
           </div>
         </div>
       </template>
+      <!-- 到底了容器-->
+      <div :class="['loading-more-container']" v-if="max_height">
+        <div style="color:#AAAEB8;font-size:.12rem;"> {{ $t("scroll_wrapper.is_footer") }} </div>
+      </div>
     </div>
   </div>
 </template>
@@ -46,6 +49,7 @@ import PageSourceData from "src/core/page-source/page-source.js";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import VirtualList from "src/core/match-list-h5/match-class/virtual-list.js";
 import RouterScroll from "src/core/match-list-h5/match-class/router-scroll.js";
+import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt";
 import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from 'src/core'
 import { menu_type, menu_lv2, is_kemp, is_hot, is_detail, is_results } from 'src/base-h5/mixin/menu.js'
 import { standard_edition } from 'src/base-h5/mixin/userctr.js'
@@ -66,15 +70,19 @@ let target_scroll_obj = ref(null)
 let scroll_frame_timer = null
 // 上一次滚动的距离
 const prev_scroll = ref(0)
+const max_height = ref(false)
 // 赛事mids
 const match_mids = ref([])
 const scroll_timer = ref(0)
+const emitters = ref({})
 
 onMounted(() => {
   test.value = sessionStorage.getItem('wsl') == '9999';
   // 详情页以外的列表才设置最小高度
   if (is_detail.value) list_wrap_height.value = 8;
-
+  emitters.value = {
+    emitter: useMittOn(MITT_TYPES.EMIT_MAIN_LIST_MAX_HEIGHT, update_max_height).off,
+  }
 })
 
 const get_match_item = (mid) => {
@@ -228,10 +236,18 @@ const is_static_item = computed(() => {
   return !flag;
 })
 
+/**
+ * @description: 赛事列表到底了
+ */
+const update_max_height = (flag) => {
+  max_height.value = flag;
+}
+
 // 触发本组件销毁之前回调
 onUnmounted(() => {
   clearTimeout(scroll_frame_timer);
   scroll_frame_timer = null;
+  Object.values(emitters.value).map((x) => x());
 })
 </script>
 
@@ -305,24 +321,15 @@ onUnmounted(() => {
       }
     }
   }
-  .loading-more-container {
+  .loading-more-container{
     width: 100%;
-    height: 1.81rem;
-    padding: 0.88rem 0 0.6rem 0;
-    text-align: center;
-    bottom: -2rem;
     position: absolute;
-    left: 0;
-    &.static {
-      position: static;
-    }
-    .loading {
-      margin-top: 0.08rem;
-    }
-    .loading-static-animation {
-      width: 0.21rem;
-      height: 0.21rem;
-    }
+    bottom: 181px;
+    height: 181px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
   }
 }
 </style>

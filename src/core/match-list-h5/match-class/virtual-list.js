@@ -2,31 +2,31 @@
 
 /**
  * @description 赛事 虚拟列表 类
+ * @remarks 该文件所有H5项目共用， 禁止私自改动改文件, 要改动这里 请先问下 dolphin
  */
 
 import { ref } from 'vue'
 import MatchFold from 'src/core/match-fold'
-import { utils } from "src/core/index.js";
+import { useMittEmit, MITT_TYPES } from "src/core/mitt"
 import UserCtr from "src/core/user-config/user-ctr.js";
 import MenuData from "src/core/menu-app-h5/menu-data-class.js"
 import PageSourceData from "src/core/page-source/page-source.js";
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
+
 import { compute_style_template_by_match_height } from '../match-card/module/compute-style-template.js'
 
 class VirtualList {
   constructor () {
-    // 开始下标
-    this.start_index = 0
-    // 结束下标
-    this.end_index = 15
-    // 赛事 mid 高度 映射 对象
-    this.match_mid_map_height = ref({})
-    this.match_height_map_list = []
-    this.already_folded = 0;
-    this.container_total_height = 0;
     // 赛事与dom高度的映射
     this.mid_top_map = {};
+    // 赛事 mid 高度 映射 对象
+    this.match_mid_map_height = ref({})
+    // 容器总高度
+    this.container_total_height = 0;
+
+    this.already_folded = 0;
     this.mid_dom_height_dict = {};
+    this.match_height_map_list = []
   }
   /**
    * @description 设置 赛事 mid 虚拟高度 映射
@@ -48,8 +48,9 @@ class VirtualList {
     })
   }
 
+  // 获取该赛事高度 
   get_match_total_height (match, index) {
-    const { is_show_league, mid, csid, start_falg } = match
+    const { is_show_league, mid, csid, start_falg, is_show_ball_title } = match
     // 赛事折叠信息
     const fold_key = MatchFold.get_match_fold_key(match)
     const fold_info = MatchFold.match_mid_fold_obj.value[fold_key]
@@ -64,10 +65,10 @@ class VirtualList {
     // 缓冲容器高度
     const buffer_container_height = 5
     let total = 0
-    // 第一个显示球种
-    if (index === 0) total += 17
-    // 显示开赛、未开赛
-    if ([1, 2].includes(+start_falg)) total += 25
+    // 显示开赛、未开赛 原高度 25 -3 缓冲高度
+    if ([1, 2].includes(+start_falg)) total += 22
+    // 显示球种类别
+    if (is_show_ball_title) total += 20
     // 本来应该是 联赛高度 26 + 缓存容器高度 5 = 31； 
     // 但是并不需要那么高的间隙（赛事之间的间隙， 取缓存容器的高度） 所以减去3； 赛事之间相叠避免漏光
     if (is_show_league && show_card) {
@@ -99,8 +100,6 @@ class VirtualList {
     // 顶部滚动距离减去  上面5个列表赛事  的距离
     const start_position = scrollTop - 234 * 5
     const match_datas = []
-    // 展开的话缓冲 6场 赛事； 全部折叠 12个
-    const buffer_height = scrollTop - 6 * 179
     // 折叠对象
     const fold_data = MatchFold.match_mid_fold_obj.value
     // 高度映射 对象
@@ -113,11 +112,9 @@ class VirtualList {
       const virtual_key = this.get_match_height_key(mid)
       // 赛事高度
       const match_height = this.get_match_total_height(match, index)
-
       // 退出循环
       if (match_count >= page_count) return true 
-
-      if (accrual_height > start_position) {
+      if (match.mid && accrual_height > start_position) {
         // 列表页每一个赛事的 translateY( ${top}px) top 定位值
         this.mid_top_map[virtual_key] = accrual_height;
         if (match_height > 0 && (is_show_league || show_card)) {
@@ -132,9 +129,12 @@ class VirtualList {
           already_folded++;
         }
       }
-      accrual_height += match_height
+      if (match.mid) accrual_height += match_height
     })
-   
+    // 是否到底了
+    const flag = accrual_height >= this.container_total_height || match_datas.length < 17
+    useMittEmit(MITT_TYPES.EMIT_MAIN_LIST_MAX_HEIGHT, flag);
+
     return match_datas
   }
 
@@ -145,7 +145,7 @@ class VirtualList {
       const total = this.get_match_total_height(match, index)
       total_height += total
     })
-    this.container_total_height = total_height;
+    this.container_total_height = total_height + 181 + 155
   }
 
   /**
@@ -237,12 +237,6 @@ class VirtualList {
           // 数量小于 18 或者 20 时，执行下边 赋值操作，列表页每一个赛事的 translateY( ${top}rem) top 定位值
           if (get_match_total < page_count) {
             // 显示的 top 值，在 scroll_wrapper.vue 文件中引用
-            // if (i > 0) {
-            //   const prev_match = MatchMeta.complete_matchs[i - 1]
-            //   if (prev_match && prev_match.is_show_league && !match.is_show_league && prev_match.tid === match.tid && !show_card){
-            //     current_match_dom_top += 0.03
-            //   }
-            // }
             this.mid_top_map[h_map.mid] = current_match_dom_top;
           } else {
             // 执行break，则立即退出 循环
