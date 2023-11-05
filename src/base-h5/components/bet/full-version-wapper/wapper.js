@@ -6,11 +6,13 @@ const all_components_obj = {
   BetBoxH5_1,
   BetBoxAppH5_1,
   BetOuzhouH5
+
 };
 const component_config = {
   registered_component_key: "BetBox",
-  default_component_key: "BetBoxH5_1",
+  default_component_key: "BetOuzhouH5",
   all_components_obj,
+  
 };
 const wapper_config = compute_component_wapper_config(component_config);
 export default wapper_config;

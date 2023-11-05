@@ -18,6 +18,9 @@ import * as api_activity from "./module/activity/index.js"; //activity
 
 import * as socket_api from "./module/socket/socket_api.js"; // router
 
+import * as api_match_list from  "./module/matches_list/index.js"
+
+
 export {
   api_base_data,
   // 公共API接口定义
@@ -52,4 +55,7 @@ export {
   api_activity,
   // 
   socket_api,
+
+  //15分钟赛事数据
+  api_match_list
 };

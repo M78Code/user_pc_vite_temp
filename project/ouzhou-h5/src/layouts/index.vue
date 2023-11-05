@@ -9,10 +9,10 @@
       <!-- 顶部菜单 -->
       <TopMenuWapper />
       
-      <router-view />
+      <!-- <router-view /> -->
 
       <!-- 投注框 -->
-      <BetBoxWapper use_component_key="BetOuzhouH5"/>
+      <BetBoxWapper use_component_key="BetOuzhouH5">123456789</BetBoxWapper>
 
      
       <FooterWapper />
