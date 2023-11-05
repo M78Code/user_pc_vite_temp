@@ -158,8 +158,7 @@ export default {
       if (!ol_item.ov || ol_item.ov < 101000) return;   //对应没有赔率值或者欧赔小于101000
       let flag = get_odds_active(0, hp.hs, ol_item.os);
       if (flag == 1 || flag == 4) {   //开盘和锁盘可以点击弹起来
-        bet_click2(match, hp, ol_item);
-        const {oid,_hid,_hn,_mid } = odd_item.value
+        const {oid,_hid,_hn,_mid } = ol_item
         let params = {
           oid, // 投注项id ol_obj
           _hid, // hl_obj 
