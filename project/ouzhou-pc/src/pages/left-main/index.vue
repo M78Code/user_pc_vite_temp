@@ -9,6 +9,9 @@
 
     <div class="menu-wrap scroll-fixed-bg relative-position border-bottom">
       <div class="left-header-all">
+        <div>
+          <LeftMenuTemplate1/>
+        </div>
         <!-- 昵称、余额 -->
         <main-header />
         <!-- 投注记录 入口 -->
@@ -92,7 +95,7 @@ import BetData from "src/core/bet/class/bet-data-class.js";
 import { MenuData, LayOutMain_pc } from "src/core/index.js";
 import { api_betting } from "src/api/index.js";
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
-
+import LeftMenuTemplate1 from "src/base-pc/components/menus/menu.vue";
 import { compute_css_obj } from 'src/core/server-img/index.js'
 
 
