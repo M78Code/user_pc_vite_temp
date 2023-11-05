@@ -321,7 +321,7 @@ class MatchMeta {
     const hpsflag = MenuData.is_kemp() || MenuData.get_menu_type() == 28 ? "" : 0
     return {
       cuid: UserCtr.get_cuid(),
-      euid: euid ? euid : lodash.get(MenuData, 'current_lv_2_menu.mi'),
+      euid: euid ? euid : MenuData.get_euid(lodash.get(MenuData, 'current_lv_2_menu_mi')),
       // 一级菜单筛选类型 1滚球 2 今日 3早盘 400冠军  6串关
       type: lodash.get(MenuData, 'current_lv_1_menu_mi'),
       //排序	 int 类型 1 按热门排序 2 按时间排序
