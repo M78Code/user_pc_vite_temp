@@ -76,7 +76,7 @@ const is_rule_page = computed(() => {
   return ['/rules', '/announcement'].includes(router.currentRoute.value.path)
 })
 const is_home_page = computed(() => {
-  return ['/', '/results', '/menu_list', '/inPlay', '/betting_history'].includes(router.currentRoute.value.path)
+  return ['/','/match', '/results', '/menu_list', '/inPlay', '/betting_history'].includes(router.currentRoute.value.path)
 })
 
 
