@@ -1,0 +1,120 @@
+$basic-color:#FF7000;    //基本颜色
+$menu-bc-color:#3C3C3C;    //菜单背景颜色
+$q-page-container-background: #E2E2E2;    //容器背景颜色
+.left-container {
+    width: 240px !important;
+    height: calc(100vh - 76px);
+    overflow-y: auto;
+    background: $menu-bc-color !important;
+    // &:deep(.q-drawer){
+    //         background:$menu-bc-color!important;
+    //         top:76px !important;
+    //         width:240px !important
+    //     }
+    &:deep(.q-item__section--avatar) {
+      min-width: 0px;
+    }
+    &:deep(.q-item__section--side) {
+      padding-right: 8px;
+    }
+    &:deep(.q-separator) {
+      background: #e2e2e2;
+      opacity: 0.1;
+      //  margin:20px 0;
+    }
+    &:deep(.q-item) {
+      min-height: 40px;
+      &:hover {
+        background-color: #4b4b4b;
+      }
+    }
+    // 菜单点击背景颜色
+    .active-menu {
+      background-color: #4b4b4b;
+    }
+    .menu-text {
+      color: #c2c2c2;
+    }
+    .menu-label {
+      margin-top: 16px;
+      margin-left: 16px;
+      font-weight: 600;
+      color: $basic-color;
+    }
+    //收藏
+    .icon-star {
+      font-size: 16px;
+      &::before {
+        color: #777777;
+      }
+    }
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+  
+  .menu-nav-li{
+    width: 100%;
+    p{
+      font-family: "Roboto";
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: 0px;
+      text-align: left;
+      color: #ff7000;
+      padding: 12px 0 1px 20px;
+      margin: 0;
+    }
+    .menu-list{
+      width: 100%;
+      li{
+        height: 44px;
+        padding-left: 19px;
+        font-family: "Roboto";
+        font-size: 16px;
+        font-weight: 400;
+        letter-spacing: 0px;
+        text-align: left;
+        color: #C2C2C2;
+        cursor: pointer;
+        transition: .03s;
+        .icon{
+          margin-right: 12px;
+        }
+        &:hover{
+          font-weight: 500;
+          color: #fff;
+          background: #4B4B4B;
+        }
+        &.menu_checked{
+          font-weight: 500;
+          color: #fff;
+          background: #4B4B4B;
+        }
+      }
+      &.menu-favouritse{
+       li{
+        height: 62px;
+       }
+      }
+    }
+  }
+
+  .menu-nav-line{
+    width: 100%;
+    height: 1px;
+    background: #e2e2e2;
+    opacity: 0.1;
+  }
+
+  .menu-line{
+    width: 100%;
+    height: 64px;
+  }
+
+  
+@media (max-width: 1450px) { 
+  .left-container {
+   width: 210px !important;
+  }
+}
