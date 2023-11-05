@@ -1,26 +1,32 @@
 <template>
   <div class="basic-wrap" @click.stop="details.on_go_detail(match,null,router)" >
-    <!-- 主队信息 --> 
-    <div class="row-item team-item">
-      <div class="team-logo">
-        <img v-if="show_type == 'all'" style="width: 22px; max-height: 24px;" v-img="[((lodash.get(match, 'match_logo') || {}) || {}).home_1_logo,(lodash.get(match, 'match_logo') || {}).home_1_letter]" />
+    <!-- 赛事信息 -->
+    <div class="collect-box flex items-center justify-between">
+      <div class="left-info-box flex items-center flex-start">
+        <!-- 是否收藏 -->
+        <div>
+          <i class="icon-star q-icon c-icon"></i>
+        </div>
+        <!-- 时间信息 -->
+        <div class="bet-num flex items-center flex-start">
+          <div class="match_times_hour" :class="{no_start: !Number(card_info)}">1H</div>
+          <div class="match_times">45:30</div>
+        </div>
       </div>
+      <!-- 比分 -->
+      <div class="right-handle-box flex flex-start items-center">
+        <span>122</span>
+        <div class="yb-icon-arrow"></div>
+      </div>
+    </div>
+
+     <!-- 主队信息 --> 
+     <div class="row-item team-item">
       <div class="ellipsis-wrap">
         <div class="row no-wrap absolute-full">
           <div class="team-name home ellipsis allow-user-select" :class="{'bold':lodash.get(match, 'team_let_ball')=='T1'}" v-tooltip="{content:lodash.get(match, 'mhn')+play_name_obj.suffix_name,overflow:1}">
             {{lodash.get(match, 'mhn')}}{{play_name_obj.suffix_name}}
           </div>
-          <!-- 进球动画 -->
-          <div class="yb-flex-center" v-if="is_show_home_goal">
-            <div class="yb-goal-gif"></div>
-            <div class="gif-text">{{i18n_t('common.goal')}}</div>
-          </div>
-          <!-- 红牌数 -->
-          <span
-            v-show="lodash.get(match, 'msc_obj.S11.home')> 0"
-            class="red-ball"
-            :class="{flash:is_show_home_red}"
-          >{{lodash.get(match, 'msc_obj.S11.home')}}</span>
         </div>
       </div>
       <!-- 主比分 -->
@@ -28,9 +34,6 @@
     </div>
     <!-- 客队信息 -->
     <div class="row-item team-item">
-      <div class="team-logo">
-        <img v-if="show_type == 'all'" style="width: 22px; max-height: 24px;" v-img="[(lodash.get(match, 'match_logo') || {}).away_1_logo,(lodash.get(match, 'match_logo') || {}).away_1_letter]" />
-      </div>
       <div class="ellipsis-wrap">
         <div class="row no-wrap absolute-full">
           <div 
@@ -38,17 +41,6 @@
             :class="{'bold':lodash.get(match, 'team_let_ball')=='T2'}" 
             v-tooltip="{content:lodash.get(match,'man')+play_name_obj.suffix_name,overflow:1}"
           >{{lodash.get(match, 'man')}}{{play_name_obj.suffix_name}}</div>
-          <!-- 进球动画 -->
-          <div class="yb-flex-center" v-if="is_show_away_goal">
-            <div class="yb-goal-gif"></div>
-            <div class="gif-text">{{i18n_t('common.goal')}}</div>
-          </div>
-          <!-- 红牌数 -->
-          <span
-            v-show="lodash.get(match, 'msc_obj.S11.away') > 0"
-            class="red-ball"
-            :class="{flash:is_show_away_red}"
-          >{{lodash.get(match, 'msc_obj.S11.away')}}</span>
         </div>
       </div>
       <!-- 主比分 -->
@@ -61,41 +53,7 @@
         {{play_name_obj.score_key ?  lodash.get(match,`msc_obj.${play_name_obj.score_key}.away`) : lodash.get(match, 'cur_score.away')}}
       </div>
     </div>
-    <!-- 中立场、盘口数 -->
-    <div class="row-item match-icon" v-if="show_type == 'all' ">
-       <!-- 提前结算 -->
-       <div @click.stop="">
-         <div
-          v-if="lodash.get(match, 'mearlys', 0) && match_style_obj.data_tpl_id != 12"
-          class="icon-wrap settlement-pre relative-position"
-          v-tooltip="{content: i18n_t('bet_record.settlement_pre')}"
-        >
-          <img class="match_pre" :src="compute_local_project_file_path('/image/png/match_pre.png')"/>
-        </div>
-       </div>
-       <div class="more-info flex">
-          <!-- 中立场 -->
-          <div class="neutral-wrap">
-            <span v-if="lodash.get(match, 'mng')"   class="icon-neutral q-icon c-icon"><span class="path1"></span><span class="path2"></span></span>
-          </div>
-          <!-- 是否收藏 -->
-         
-          <span @click.stop="collect" class="yb-flex-center yb-hover-bg m-star-wrap-match" v-if="GlobalAccessConfig.get_collectSwitch()">
-            <i aria-hidden="true" class="icon-star q-icon c-icon" :class="is_collect && 'active'"></i>
-          </span>
-          <!-- 统计分析 -->
-          <div class="sr-link-icon-w" v-tooltip="{content:i18n_t('common.analysis')}" v-if="utils.is_show_sr_flg(match)" @click.stop='details.sr_click_handle(match)'>
-            <i aria-hidden="true" class="icon-signal q-icon c-icon"></i>
-          </div>
-          <!-- 玩法数量 -->
-          <div class="play-count-wrap row no-wrap">
-            <span class="play-count">{{ handicap_num }}</span>
-            <span class="yb-flex-center">
-              <div class="yb-icon-arrow"></div>
-            </span>
-          </div>
-       </div>
-    </div>
+   
 
   </div>
 </template>
@@ -242,39 +200,40 @@ onUnmounted(() => {
 })
 </script>
 <style lang="scss" scoped>
-.basic-col {
+.basic-wrap {
+  padding: 10px 10px;
+  .collect-box {
+    margin-bottom: 7px;
+    .bet-num {
+      margin-left: 12px;
+      .match_times_hour {
+          font-size: 12px;
+          font-weight: 500;
+          line-height: 16px;
+          letter-spacing: 0px;
+          color: #8A8986;
+          margin-right: 5px;
+      }
+      .match_times {
+           color: #3D3B37;
+          font-weight: 500;
+      }
+    }
+    .right-handle-box {
+      span {
+        font-weight: 500;
+        margin-right: 6px;
+      }
+    }
+  }
   .row-item {
     display: flex;
-    height: 35px;
+    height: 16px;
     align-items: center;
-    .team-logo {
-      display: flex;
-      width: 22px;
-      min-width: 22px;
-      align-items: center;
+    &+.row-item {
+      margin-top: 4px;
     }
-  }
-  .gif-text {
-    white-space: nowrap;
-    padding-left: 3px;
-    animation: 1s text-flash linear infinite normal;
-  }
-  .red-ball {
-    margin: 0 0 2.5px 8px;
-    position: relative;
-    top: 1px;
-    padding: 0 2px;
-    height: 14px;
-    line-height: 14px;
-    &.flash {
-      animation: 1s text-flash linear infinite normal;
-    }
-  }
-  .match-icon {
-    justify-content: space-between;
-  }
-  .more-info{
-     align-items: center;
   }
 }
+
 </style>
