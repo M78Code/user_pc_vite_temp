@@ -18,7 +18,7 @@ import BetData from "src/core/bet/class/bet-data-class.js";
 
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js"
 
-const bet_show = ref(true)
+const bet_show = ref(false)
 
 
 const set_bet_show = (ref)=>{
