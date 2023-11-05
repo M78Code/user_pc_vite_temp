@@ -49,10 +49,11 @@
     </div>
     <div class="foot-main">
       <item-footer :data_f=data_b></item-footer>
+      <!-- 未结算列表 => 投注记录页提前结算的按钮、滑块、提前结算详情 -->
+      <early-settle :item_data="data_b"></early-settle>
       <item-order :data_o=data_b></item-order>
     </div>
-    <!-- 未结算列表 => 投注记录页提前结算的按钮、滑块、提前结算详情 -->
-    <early-settle :item_data="data_b"></early-settle>
+    
   </div>
 </template>
 
@@ -62,8 +63,7 @@ import { ref, onMounted, computed } from 'vue'
 import BetRecordClass from "src/core/bet-record/bet-record.js";
 import { i18n_t, project_name } from 'src/core/index.js'
 import { IconWapper } from 'src/components/icon'
-import { itemFooter, itemOrder } from "src/base-h5/components/common/cathectic-item/ouzhou-h5/index";
-import { earlySettle } from "src/base-h5/components/common/cathectic-item/ouzhou-h5/index";
+import { itemFooter, itemOrder, earlySettle, earlySettledDetail } from "src/base-h5/components/common/cathectic-item/ouzhou-h5/index";
 //按钮名字
 let btn_text = ref(i18n_t("bet_record.pack_down"))
 //是否展开

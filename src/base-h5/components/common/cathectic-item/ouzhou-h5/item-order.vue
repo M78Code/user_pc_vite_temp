@@ -6,13 +6,16 @@
   <div style="display: none;">{{ BetRecordClass.bet_record_version }}</div>
   <div class="item-order row mx-16 justify-between">
     <!-- 订单号 -->
-    <div class="text-left ellipsis"  @click="copy">
-      {{i18n_t('bet.order_no')}}&thinsp;
+    <div class="text-left row ellipsis"  @click="copy">
+      <p class="title">{{i18n_t('bet.order_no')}}</p>
       <span class="yb_mr4 orderno">{{data_o.orderNo}}</span>
       <img :src="compute_local_project_file_path('/image/svg/copy.svg')" alt=""  style="width:0.1rem" />
     </div>
     <!-- 时间 i18n_t('bet_record.bet_time')   .Format(i18n_t('time4'))-->
-    <div class="text-right">{{i18n_t('bet_record.bet_time')}}<span class="orderno">&thinsp;{{formatTime(+data_o.betTime, 'mm/DD HH:MM')}}</span></div>
+    <div class="text-right row">
+      <p class="title">{{i18n_t('bet_record.bet_time')}}</p>
+      <span class="orderno">{{formatTime(+data_o.betTime, 'mm/DD HH:MM')}}</span>
+    </div>
   </div>
 </template>
 
@@ -56,11 +59,6 @@ import BetRecordClass from "src/core/bet-record/bet-record.js";
         text: () => orderno
       })
       clipboard.on('success', () => {
-        store.dispatch({
-          type: "SET_TEXT",
-          data: i18n_t('bet_record.copy_suc'),
-        });
-
         // h5嵌入时Safari阻止弹窗
         if (!Platform.is.safari) {
           try {
@@ -82,5 +80,9 @@ import BetRecordClass from "src/core/bet-record/bet-record.js";
 .item-order {
   height: 0.4rem;
   line-height: 0.5rem;
+}
+.title {
+  color: var(--q-gb-bg-c-8);
+  margin-right: 0.1rem;
 }
 </style>

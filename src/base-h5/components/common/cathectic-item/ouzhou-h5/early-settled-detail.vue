@@ -5,49 +5,45 @@
 <template>
   <div style="display: none;">{{ BetRecordClass.bet_record_version }}</div>
   <div class="warp">
+    <div class="settle-btn" @click="fetch_early_settle_detail">
+      <span>Cashout Details</span>
+      <icon-wapper :name="detail_show_info ? 'icon-triangle' : 'icon-triangle1'" />
+    </div>
       <!-- 滑块 -->
       <q-slide-transition>
         <div v-show="detail_show_info && presettleorderdetail_data.length" class="slider-wrap">
           <template v-for="(item, index) in presettleorderdetail_data" :key="index">
-            <!-- 注单被取消 -->
-            <template v-if="item.orderStatus == 2">
-              <p>{{ i18n_t('app_h5.cathectic.cash_failed') }}</p>
-              <div class="body-main">
-                <!-- 结算本金 -->
-                <p><label>{{ item.remainingBetAmount ? i18n_t('early.list7') : i18n_t('early.list2') }}：</label> <span>0.00</span></p>
-                <!-- 输/赢 -->
-                <p><label>{{ i18n_t('early.list5') }}：</label> <span>0.00</span></p>
+            <div class="body-main">
+                <!-- 单号、日期 -->
+                <p>
+                  <label class="number"  @click="copy">
+                    50658wa4e8r748237443
+                    <img :src="compute_local_project_file_path('/image/svg/copy.svg')" alt=""  style="width:0.1rem" />
+                  </label> 
+                  <span>27/06 21:41</span>
+                </p>
+                <!-- 结算本金  item.orderStatus == 2(注单被取消) -->
+                <p><label>{{ item.remainingBetAmount ? i18n_t('early.list7') : i18n_t('early.list2') }}：</label> <span>{{ item.orderStatus == 2 ? '0.00' : (+item.preBetAmount).toFixed(2) }}</span></p>
                 <!-- 返还金额 -->
-                <p><label>{{ i18n_t('early.list4') }}：</label> <span>0.00</span></p>
-              </div>              
-            </template>
-            <template v-else>
-              <p>全部提前兑现成功</p>
-              <div class="body-main">
-                <!-- 结算本金 -->
-                <p><label>{{ item.remainingBetAmount ? i18n_t('early.list7') : i18n_t('early.list2') }}：</label> <span>{{ (+item.preBetAmount).toFixed(2) }}</span></p>
+                <p><label>{{ i18n_t('early.list4') }}：</label> <span>{{ item.orderStatus == 2 ? '0.00' : (+item.settleAmount).toFixed(2) }}</span></p>
                 <!-- 输/赢 -->
-                <p><label>{{ i18n_t('early.list5') }}：</label> <span>{{ (+item.profit).toFixed(2) }}</span></p>
-                <!-- 返还金额 -->
-                <p><label>{{ i18n_t('early.list4') }}：</label> <span>{{ (+item.settleAmount).toFixed(2) }}</span></p>
+                <p><label>{{ i18n_t('early.list5') }}：</label> <span>{{ item.orderStatus == 2 ? '0.00' : (+item.profit).toFixed(2) }}</span></p>
               </div>
-            </template>
           </template>
         </div>
       </q-slide-transition>
-      <div class="settle-btn" :class="detail_show_info ? 'up' : 'down'" @click="fetch_early_settle_detail">
-        <span>提前兑现详情</span>
-        <img :src="compute_local_project_file_path('/image/gif/change.gif')">
-      </div>
+
     </div>
 </template>
 
 <script setup>
 import BetRecordClass from "src/core/bet-record/bet-record.js";
-import earlySettleTips from "src/base-h5/components/common/cathectic-item/app-h5/early-settle-tips.vue";
 import { api_betting } from "src/api/index.js";
-import { utils, i18n_t, compute_css_obj, compute_local_project_file_path } from 'src/core/index.js'
+import { i18n_t, compute_local_project_file_path } from 'src/core/index.js'
+import { IconWapper } from 'src/components/icon'
 import { ref, computed } from 'vue'
+import { Platform } from "quasar";
+
 const props = defineProps({
   orderNo: {
     type: [String, Number]
@@ -78,6 +74,31 @@ let presettleorderdetail_data = ref([])
   }
 }
 
+    /**
+     *@description 复制订单号
+     *@param {Object} evt 事件对象
+     */
+     const copy = (evt) => {
+      let orderno = props.orderNo
+      const clipboard = new ClipboardJS(".text-left", {
+        text: () => orderno
+      })
+      clipboard.on('success', () => {
+        // h5嵌入时Safari阻止弹窗
+        if (!Platform.is.safari) {
+          try {
+            location.href = `pasteOrderAction://paste?orderSN=${orderno}`;
+          } catch (error) {
+            console.error(error)
+          }
+        }
+        clipboard.destroy()
+      })
+      clipboard.on('error', () => {
+        clipboard.destroy()
+      })
+      clipboard.onClick(evt)
+    }
 </script>
 
 <style lang="scss" scoped>
@@ -86,22 +107,15 @@ template {
 }
 .warp {
   margin: 0 0.14rem;
-  border-top: 1px solid #ebebeb;
-}
-.slider-wrap {
-  font-size: 0.14rem;
-  border-bottom: 1px solid #ebebeb;
-  & > p {
-    line-height: 3;
-  }
 }
 .body-main {
     p {
-      line-height: 2;
+      line-height: 3;
       display: flex;
       justify-content: space-between;
-      label {
-        color: var(--q-gb-bg-c-6);
+      border-bottom: 1px solid var(--q-gb-bg-c-18);
+      label.number {
+        color: var(--q-gb-bg-c-12);
       }
     }
   }
@@ -109,22 +123,13 @@ template {
     font-size: 0.14rem;
     padding-top: 0.1rem;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    span {
-      margin-right: 0.1rem;
-    }
-    img {
-      width: 0.2rem;
-    }
-    &.down span {
-      padding-top: 0.04rem;
-    }
-    &.down img {
-        transform: rotate(-90deg);
-      }
-    &.up img {
-      transform: rotate(90deg);
+    font-size: 0.18rem;
+    line-height: 0.4rem;
+    border-bottom: 1px solid var(--q-gb-bg-c-18);
+    i {
+      font-size: 0.24rem;
     }
   }
 </style>

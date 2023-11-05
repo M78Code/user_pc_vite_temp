@@ -15,9 +15,9 @@
                 }
                   ">
                   <div class="sport-w-icon">
+                   
                     <span class="sport-icon-wrap"
                       :style="compute_css_obj({key:current_mi == item.mi ? 'menu-sport-active-image' : 'menu-sport-icon-image', position:format_type(item)})"></span>
-
                     <div v-show="item.ct > 0" class="sport-match-count">
                       {{ item.ct || 0 }}
                     </div>
@@ -128,7 +128,7 @@ onUnmounted(() => {
         scrollbar-width: none; // 去除滚动条火狐浏览器兼容性问题
 
         .sport-menu-item {
-          width: 0.5rem;
+          min-width: 0.5rem;
           height: 100%;
           flex-shrink: 0;
           color: var(--q-gb-t-c-4);
@@ -150,13 +150,13 @@ onUnmounted(() => {
               position: relative;
 
               .sport-icon-wrap {
-                --per: -0.32rem;
+                --per: -0.22rem;
                 display: block;
                 width: auto;
                 height: 0.22rem;
                 width: 0.22rem;
                 background-position: 0 0;
-                background-size: 0.22rem 18.88rem;
+                background-size: 0.22rem auto;
               }
 
               .sport-match-count {
