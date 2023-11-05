@@ -120,7 +120,7 @@
 
 <style lang="scss" scoped>
 .img36 {
-  background-image:url('../img/icon_sports.png');
+  background-image:url('../../img/icon_sports.png');
 }
 .c-icon {
   &:before {

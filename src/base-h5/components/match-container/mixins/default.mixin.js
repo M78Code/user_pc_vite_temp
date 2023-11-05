@@ -111,6 +111,7 @@ export default {
     // TODO: 判断是否显示体育类型
     show_sport_title () {
       if (is_detail.value) { return false }
+      debugger
       if (is_hot.value) {
         // 热门
         if (lodash.get(MenuData.hot_tab_menu, 'index') !== 0) { return false }
@@ -119,10 +120,9 @@ export default {
           return this.prev_match.csid !== this.match.csid;
         }
       } else if ([1, 2, 3, 4, 11, 12, 28, 30, 3000].includes(+menu_type.value)) {
-        if (this.i === 0) {
-          return true
-        } else {
-          return false
+        if (this.i === 0) { return true }
+        if (this.prev_match && this.match) {
+          return this.prev_match.csid !== this.match.csid;
         }
       } else {
         return false;
@@ -320,7 +320,8 @@ export default {
      * @description 球种折叠
      */
     handle_ball_seed_fold () {
-      MatchFold.set_ball_seed_match_fold(this.match_of_list.csid)
+      const { csid, start_falg = '' }  = this.match_of_list
+      MatchFold.set_ball_seed_match_fold(csid, start_falg)
       MatchMeta.compute_page_render_list(0, 2)
     },
     /**

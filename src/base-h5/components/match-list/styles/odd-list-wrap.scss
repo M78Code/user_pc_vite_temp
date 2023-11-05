@@ -241,7 +241,7 @@
 
   &.standard {
     width: 1.84rem;
-    height: 1.05rem;
+    height: 1.07rem;
     flex-wrap: nowrap;
     overflow: hidden;
   }
@@ -321,7 +321,7 @@
   .dir-standard {
     width: 1.8rem;
     position: absolute;
-    bottom: 0;
+    bottom: 1px;
 
     .block {
       width:4px;
