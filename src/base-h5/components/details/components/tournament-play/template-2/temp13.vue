@@ -100,15 +100,15 @@
                     <!-- 封盘ms=1 -->
                     <template v-if="append_single._mhs == 1">
                       <div class="play-box-sty details-color " style="flex:1;" :class="get_detail_data.csid == 1? 'odds-lock' : '' ">
-                        <div class="single-name details_t_color7" v-show="get_detail_data.csid != 1">
-                          <div class="bet-item-ky-container">  
+                        <div class="bet-item-ky-container">  
+                          <div class="single-name details_t_color7" v-show="get_detail_data.csid != 1">
                             <span class="fz_14 ver-ali-top">{{devote_value_d(append_single.ot)}}</span>
-                            <span class="fz_14 size-color">
+                            <span class="size-color fz_14 odd-color">
                             {{append_single.on}}
-                            </span>
+                          </span>
                           </div>
-                        </div>
-                        <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
+                          <img class="icon-lock" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
+                        </div> 
                       </div>
                     </template>
                     <!-- 关盘ms=2 -->
@@ -678,6 +678,7 @@ export default defineComponent({
   .icon-lock {
     width: 0.12rem;
     height: 0.14rem;
+    margin-left: 0.02rem;
     vertical-align: middle;
   }
   .odd-color {
