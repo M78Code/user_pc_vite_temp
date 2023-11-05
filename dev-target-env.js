@@ -31,7 +31,7 @@ let  DEV_TARGET_VERSION = ''
 // 测试环境  
 // DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1698460136471-test";
 // 试玩环境  
-// DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1698742048199-shiwan";
+DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1698742048199-shiwan";
 // 生产环境
 // DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1698990836566-online";
 
@@ -57,7 +57,7 @@ let  DEV_TARGET_VERSION = ''
  
 //----------------------------------欧洲版-H5  ouzhou-h5 8-------------------------------------------
 // 测试环境  
-DEV_TARGET_VERSION = "project_8-6544b116720143009a2f282d-1699000607498-test";
+// DEV_TARGET_VERSION = "project_8-6544b116720143009a2f282d-1699000607498-test";
 // 试玩环境  
 // DEV_TARGET_VERSION = "project_8-6544b116720143009a2f282d-1699003362037-shiwan";
 // 生产环境

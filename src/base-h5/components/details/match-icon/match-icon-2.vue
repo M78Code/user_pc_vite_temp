@@ -34,7 +34,8 @@
       </template>
       <!-- 对应显示国际化文字(视频/动画) -->
       <div class="col text-left">
-        <span class="tx-style">{{ text }}</span>
+        <!-- <span class="tx-style">{{ text }}</span> -->
+        <span class="tx-style">视频直播</span>
       </div>
     </div>
   </div>
