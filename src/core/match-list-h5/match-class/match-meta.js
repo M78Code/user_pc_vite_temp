@@ -322,8 +322,8 @@ class MatchMeta {
     return {
       cuid: UserCtr.get_cuid(),
       euid: euid ? euid : lodash.get(MenuData, 'current_lv_2_menu.mi'),
-      // 一级菜单筛选类型 1滚球 2 即将开赛 3今日赛事 4早盘 11串关
-      type: lodash.get(MenuData, 'current_lv_1_menu.mi'),
+      // 一级菜单筛选类型 1滚球 2 今日 3早盘 400冠军  6串关
+      type: lodash.get(MenuData, 'current_lv_1_menu_mi'),
       //排序	 int 类型 1 按热门排序 2 按时间排序
       sort: PageSourceData.sort_type,
       //标准版和简版 1为新手版  2为标准版

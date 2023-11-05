@@ -53,6 +53,7 @@ import { dateTabList } from "src/base-h5/components/menu/app-h5-menu/utils";
 
 import { TopMenu,ScrollMenu,SearchTab,DateTab } from 'src/base-h5/components/menu/app-h5-menu/index'
 import setectLeague from 'src/base-h5/components/setect-league/index.vue'
+import { Base } from "licia/Class";
 
 const route = useRoute();
 const inner_height = window.innerHeight;  // 视口高度
@@ -90,16 +91,40 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
 
   // 设置滑动菜单的选中id
   const set_scroll_current = val => {
-    console.error('nevalw_',val)
     ref_data.current_mi = val.mi
     // 设置二级菜单 
     MenuData.set_current_lv_2_menu_mi(val)
+    // 设置菜单属性
+    if([300,2000,50000].includes(+val.mi)){
+      // 设置vr /收藏 电竞 头信息
+      MenuData.set_top_menu_title(val)
+      console.error("Ba",BaseData)
+      // 清空一级菜单显示 用于后续更新
+      MenuData.current_lv_1_menu_mi.value = ''
+      // 设置 对应菜单的数据
+      switch(+val.mi){
+        case 300:
+          ref_data.scroll_data_list = MenuData.get_menu_lvmi_special_list(val.mi)
+          break
+
+        case 2000:
+          ref_data.scroll_data_list = BaseData.dianjing_sublist
+          break  
+        
+        case 50000:
+          ref_data.scroll_data_list = ''
+          break  
+      }
+
+      let obj = lodash_.get(ref_data.scroll_data_list,`[0]`,{})
+      // 设置选中菜单的id
+      ref_data.current_mi = obj.mi
+    }
     
     set_menu_mi_change_get_api_data()
   }
 
   watch(()=> MenuData.current_lv_1_menu_mi.value, new_ => {
-    console.error('new_',new_)
     // 今日 滚球 冠军
     if( [1,2,400].includes(1*new_) ){
       set_scroll_data_list(new_)
