@@ -153,7 +153,7 @@ import {MatchDataWarehouse_PC_List_Common as MatchListData ,GlobalAccessConfig} 
 import CurrentMatchTitle from "src/base-pc/components/match-list/current_match_title.vue"
 import MatchCardList15Mins from 'src/base-pc/components/match-list/match_card_list_15mins/matches_card_list_15mins.vue';
 import FeaturedMatches from 'src/base-pc/components/match-list/featured_matches/featured_matches_card.vue';
-
+import { get_home_matches, map_matches_list, filter_15mins_func, filter_featured_list } from './featch_matches';
 import "./match_list.scss";
 
 const { mounted_fn, load_data_state, show_refresh_mask, collect_count, is_show_hot, on_refresh } = useMatchListMx();
@@ -183,6 +183,18 @@ export default {
     // 热推数据
     const matches_featured_list = ref([]);
 
+    const init_home_matches = () => {
+      const params = {
+        type: 1, 
+        sort: 1, 
+        // hasFlag: 0 
+      }
+      get_home_matches(params).then(res => {
+        // 处理返回数据 将扁平化数组更改为页面适用数据
+        matches_15mins_list.value = filter_15mins_func(res.p15);
+        matches_featured_list.value = filter_featured_list(res.hots);
+      });
+    }
 
     onMounted(() => {
       mounted_fn();
