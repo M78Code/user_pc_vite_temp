@@ -41,7 +41,7 @@
     }
     .del-info{
       display: flex;
-      font-size: 0.12rem;
+      font-size: 0.13rem;
     }
     .bet-all-detele{
       display: flex;
