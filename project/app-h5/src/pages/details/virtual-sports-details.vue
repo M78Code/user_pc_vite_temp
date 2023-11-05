@@ -34,6 +34,7 @@
         </div>
       </div>
      <!--玩法集区域 -->
+     <!-- 该区域在APP复刻版中已经改为白色背景了, 且不需要上边距 -->
     <div class="detail-main" :class="{'detail-main2':get_betbar_show}">
       <virtual-sports-category v-if="match && tabs_name == 'bet'" :mid="mid" :current_match="match" :source="'virtual_sports_details'"/>
       <virtual-match-statistic v-if="match && tabs_name == 'lszj'" />
@@ -461,7 +462,9 @@ export default defineComponent({
 .virtual-detail {
   height: calc(var(--vh, 1vh) * 100);
   overflow: auto;
-  background: var(--q-gb-bg-c-19); //夜间版#0E1014 
+  // 根据APP复刻版最新的ui 设置背景色为#ffffff var(--q-gb-bg-c-15)
+  background-color: var(--q-gb-bg-c-15);
+  // background: var(--q-gb-bg-c-19); //夜间版#0E1014 
 }
 /*  头部 */
 .virtual-head {
@@ -570,10 +573,11 @@ export default defineComponent({
     position: absolute;
   }
 }
-
 .detail-main {
+  // 该区域在APP复刻版中已经改为白色背景
   margin-top: 0.04rem;
-  background: var(--q-gb-bg-c-19);
+  // background: var(--q-gb-bg-c-19);
+  background-color: var(--q-gb-bg-c-15);
   &::-webkit-scrollbar {
     display: none;
   }

@@ -5,7 +5,7 @@
 -->
 <template>
   <div class="ranking_list hairline-border">
-    <span class="navigation-title">{{ i18n_t('virtual_sports.leaderboard') }}</span>
+    <!-- <span class="navigation-title">{{ i18n_t('virtual_sports.leaderboard') }}</span> -->
     <!-- header -->
     <div class="header">
       <div class="col1"></div>
@@ -70,7 +70,7 @@ watch(() => props.tid, () => {
 <style lang="scss" scoped>
 .ranking_list {
   padding-top: 0.15rem;
-
+  background-color: var(--q-gb-bg-c-15);
   .navigation-title {
 
     font-size: 0.15rem;
