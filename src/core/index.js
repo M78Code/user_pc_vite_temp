@@ -61,11 +61,22 @@ import MatchListCard_H5 from "src/core/match-list-h5/match-card/match-list-card-
 import MatchListCardData_H5 from "src/core/match-list-h5/match-card/module/match-list-card-data-class.js";
 
 import MenuData_App_h5 from "src/core/menu-app-h5/menu-data-class.js";
+import OZ_MenuData_App_h5 from "src/core/menu-app-h5/oz-menu-data-class.js";
 
  
 let MenuData = IS_PC ? MenuData_PC : MenuData_H5;
-if( ['ouzhou-h5','app-h5'].includes(PROJECT_NAME)){
-  MenuData = MenuData_App_h5
+// if( ['ouzhou-h5','app-h5'].includes(PROJECT_NAME)){
+//   MenuData = MenuData_App_h5
+// }
+switch (PROJECT_NAME) {
+  case 'ouzhou-h5':
+    MenuData = OZ_MenuData_App_h5
+    break;
+  case 'app-h5':
+    MenuData = MenuData_App_h5
+    break;
+  default:
+    break;
 }
 const MatchListCard = IS_PC ? MatchListCard_PC : MatchListCard_H5;
 const MatchListCardData = IS_PC ? MatchListCardData_PC : MatchListCardData_H5;

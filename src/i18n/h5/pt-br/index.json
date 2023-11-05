@@ -1005,6 +1005,7 @@
     "add": "Adicione",
     "abandon": "Desistir",
     "animation": "Animação",
+    "animation_info": "Info Animação",
     "ball": "Más metas",
     "delay": "Atrasado",
     "cancel": "Cancelado",
@@ -1038,6 +1039,7 @@
     "match_parlay": "Parlay",
     "unknown": "Desconhecido",
     "video": "Vídeo",
+    "video_info": "Info Vídeo",
     "Topic": "",
     "topic": ""
   },

@@ -1105,6 +1105,7 @@
     "add": "加",
     "all_result": "所有赛果",
     "animation": "动画",
+    "animation_info": "动画信息",
     "ball": "坏球",
     "cancel": "取消",
     "delay": "延迟",
@@ -1135,6 +1136,7 @@
     "total_score": "当前总分",
     "unknown": "未知",
     "video": "视频",
+    "video_info": "视频信息",
     "yes": "是",
     "match_parlay": "串"
   },

@@ -44,12 +44,12 @@
   import sport_icon from "src/base-pc/components/match-list/sport_icon.vue";
 
   // let state = store.getState();
-  // const props = defineProps({
-  //   current_tab: {
-  //     type: [ Object, Array ],
-  //     default: () => {},
-  //   },
-  // });
+  const props = defineProps({
+    current_tab: {
+      type: [ Object, Array ],
+      default: () => {},
+    },
+  });
   
   // const current_check_betId = ref(state.betInfoReducer.current_check_betId);
 

@@ -353,6 +353,7 @@ export default defineComponent({
   color: #FFFFFF;
   letter-spacing: 0;
   line-height: 0.24rem;
+  white-space: nowrap;
 }
 
 .icon-style {
@@ -364,7 +365,7 @@ export default defineComponent({
   display: flex;
   width: 0.80rem;
   height: 0.24rem;
-  padding: 0.045rem 0.10rem 0.055rem 0.10rem;
+  // padding: 0.045rem 0.10rem 0.055rem 0.10rem;
   justify-content: center;
   align-items: center;
   gap: 4px;

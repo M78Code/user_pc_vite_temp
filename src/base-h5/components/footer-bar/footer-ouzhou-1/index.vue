@@ -32,7 +32,7 @@ const tab_list = reactive([
   { label: 'Favorites', value: 'favorites', route: '/collect' },
 ])
 
-const tab_active = ref('')
+const tab_active = ref('');
 
 const jump_page = (item) => {
 

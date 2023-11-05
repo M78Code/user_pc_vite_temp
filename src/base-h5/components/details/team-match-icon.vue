@@ -16,12 +16,12 @@
 
         <!-- 视频状态大于1时，显示视频按钮 i18n_t('match_info.video')是国际化取值 -->
         <match-icon v-if="get_detail_data.mms > 1" class="fl" :status="get_detail_data.mms"
-          which="muUrl" icon_class="shipin" :detail_data="detail_data" :text="i18n_t('match_info.video')">
+          which="muUrl" icon_class="shipin" :detail_data="detail_data" :text="i18n_t('match_info.video_info')">
         </match-icon>
 
         <!-- 动画状态大于-1时，显示动画按钮 i18n_t('match_info.animation')是国际化取值 -->
         <match-icon v-if="get_detail_data.mvs > -1" class="fl" :status="get_detail_data.mvs" :detail_data="detail_data"
-          which="animationUrl" icon_class="donghua" :text="i18n_t('match_info.animation')">
+          which="animationUrl" icon_class="donghua" :text="i18n_t('match_info.animation_info')">
         </match-icon>
       </template>
       <!-- 收藏按钮 -->
