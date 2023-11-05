@@ -462,8 +462,9 @@ export default defineComponent({
 .virtual-detail {
   height: calc(var(--vh, 1vh) * 100);
   overflow: auto;
-  // 根据APP复刻版最新的ui 设置背景色为#ffffff var(--q-gb-bg-c-15)
-  background-color: var(--q-gb-bg-c-15);
+  // 根据APP复刻版最新的ui 设置背景色为#F8F9FA
+  // background-color: var(--q-gb-bg-c-15);
+  background-color: #F8F9FA; //#TODO css var
   // background: var(--q-gb-bg-c-19); //夜间版#0E1014 
 }
 /*  头部 */
@@ -574,8 +575,10 @@ export default defineComponent({
   }
 }
 .detail-main {
-  // 该区域在APP复刻版中已经改为白色背景
-  margin-top: 0.04rem;
+  margin-top: 0.08rem;
+  margin-left: 0.05rem;
+  margin-right: 0.05rem;
+  border-radius: 0.04rem;
   // background: var(--q-gb-bg-c-19);
   background-color: var(--q-gb-bg-c-15);
   &::-webkit-scrollbar {

@@ -69,8 +69,10 @@ watch(() => props.tid, () => {
 
 <style lang="scss" scoped>
 .ranking_list {
-  padding-top: 0.04rem;
+  // padding-top: 0.04rem;
   background-color: var(--q-gb-bg-c-15);
+  color: #303442; // #TODO css var
+  padding: 0 .09rem;
   .navigation-title {
 
     font-size: 0.15rem;
@@ -94,25 +96,27 @@ watch(() => props.tid, () => {
   }
 
   .col1 {
-    width: 0.4rem;
+    flex: 20;
   }
 
   .col2 {
-    width: 0.94rem;
+    flex: 112;
     text-align: left;
     display: unset !important; /*  避免flex 没有显示省略号 */
   }
   /*  3~8 总宽度220px */
   .col3 {
-    width: 0.5rem;
+    flex: 78;
   }
 
   .col4 {
-    width: 1rem;
+    flex: 78;
   }
 
   .col5 {
-    flex: 1;
+    flex: 59;
+    text-align: right;
+    width: 100%;
   }
 
   .col6 {
@@ -128,11 +132,14 @@ watch(() => props.tid, () => {
     display: flex;
     text-align: center;
     // line-height: 0.32rem;
-    margin: 0 0.1rem;
-
     > div {
       font-size: 0.10rem;
     }
+  }
+  .header,.team-item{
+    --private-padding-y: 0.04rem;
+    padding-left: var(--private-padding-y);
+    padding-right: var(--private-padding-y);
   }
 
   .group-name {
@@ -146,25 +153,25 @@ watch(() => props.tid, () => {
   .team-item {
     display: flex;
     align-items: center;
-    margin: 0 0.1rem;
-    font-size: 0.13rem;
+    font-size: 0.12rem;
     height: 0.40rem;
     text-align: center;
-
+    border-top: 0.005rem solid var(--q-gb-bg-c-18);
+    &:last-child{
+      // border-bottom: 0.005rem solid var(--q-gb-bg-c-18);
+    }
     div {
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.13rem;
+      font-size: 0.12rem;
+      font-weight: 500;
     }
 
     &:nth-child(-n+3) {
-
-      font-weight: bold;
-
       div {
-        font-size: 0.14rem;
-        color: var(--q-color-fs-color-3);
+        // font-size: 0.14rem;
+        // color: var(--q-color-fs-color-3);
       }
     }
 
@@ -175,6 +182,10 @@ watch(() => props.tid, () => {
 
     .col2 {
       justify-content: inherit;
+      font-weight: 800;
+    }
+    .col5{
+      justify-content: flex-end;
     }
   }
 }
