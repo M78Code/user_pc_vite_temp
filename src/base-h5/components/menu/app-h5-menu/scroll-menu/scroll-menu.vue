@@ -9,8 +9,7 @@
         <div class="sport-m-container">
           <div class="s-menu-container flex">
             <template v-for="item in scrollDataList" :key="lodash_.get(item, 'mi')">
-              <!-- v-show="item.ct > 0" -->
-              <div class="sport-menu-item flex justify-center" @click="set_menu_lv2(item, $event)">
+              <div class="sport-menu-item flex justify-center" @click="set_menu_lv2(item, $event)" >
                 <div class="inner-w flex justify-between items-center" :class="{
                   current: current_mi == item.mi
                 }
@@ -24,7 +23,6 @@
                     </div>
                   </div>
                   <div class="s-w-i-title">
-                    <!-- {{item.mi}} -->
                     {{ (item.btn ?item.title : item.name) || MenuData.get_menus_i18n_map(item.mi) }}
                   </div>
                 </div>
@@ -36,19 +34,14 @@
       </div>
 </template>
 <script setup>
+import { ref,onUnmounted } from "vue";
 import lodash_ from "lodash";
-import MatchFold from 'src/core/match-fold'
 import BaseData from "src/core/base-data/base-data.js";
-import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
-import { ref, computed, onMounted, watch, onUnmounted } from "vue";
-import { compute_css_obj, MenuData, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/index.js";
+import { compute_css_obj, MenuData } from "src/core/index.js";
 import {scrollMenu} from "../utils";
+import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 
 const emitters = ref({});
-
-// const isSpecial = computed(()=>{return Object.keys(MenuData.current_lv_2_menu_mi_special).includes(menu_lv2.value?.mi?.toString())})
-// const scrollDataList = computed(()=>{return Object.keys(MenuData.current_lv_2_menu_mi_special).includes(menu_lv2.value?.mi?.toString())?MenuData.menu_lv_mi_special_lsit:MenuData.menu_lv_mi_lsit})
-// const current_mi = computed(()=>{return Object.keys(MenuData.current_lv_2_menu_mi_special).includes(menu_lv2.value?.mi?.toString())?MenuData.current_lv_special_menu_mi:MenuData.current_lv_2_menu_mi})
 
 const props = defineProps({
   // 滑动菜单数据
@@ -63,67 +56,18 @@ const props = defineProps({
   }
 })
 
-// 是否初次渲染
-const is_first = ref(true)
-onMounted(() => {
-  set_menu_mi_change_get_api_data()
-})
-
 /**
  * 二级菜单事件
- */
- function set_menu_lv2(item = {},event) {
-  console.error('item',item)
+*/
+function set_menu_lv2(item = {},event) {
   // 选中后点击无效
   if (item.mi == MenuData.current_lv_2_menu_mi) return
-
-
+  // 设置菜单点击事件
+  useMittEmit(MITT_TYPES.EMIT_SCROLL_TOP_NAV_CHANGE,item )
 
   event && scrollMenu(event,".s-menu-container",".sport-menu-item");
 }
-/**
- * 三级特殊菜单事件
- */
- function set_menu_lv_special(item = {},event) {
-  // 选中后点击无效
-  if (item.mi == MenuData.current_lv_special_menu_mi) return;
-  MenuData.set_current_lv_special_menu_mi(item);
-  event && scrollMenu(event,".s-menu-container",".sport-menu-item");
-}
 
-watch(()=> MenuData.current_lv_1_menu_mi.value,() => {
-  set_menu_mi_change_get_api_data()
-})
-
-// 菜单变化页面请求数据
-const set_menu_mi_change_get_api_data = () => {
-  // 今日 / 滚球/ 冠军 没有 三级
-  if([1,2,3,400].includes(MenuData.current_lv_1_menu_mi.value)){
-    handle_match_render_data()
-  }
-}
-/**
- * @description 处理赛事列表渲染数据
- */
- const handle_match_render_data = () => {
-  is_first.value = false
-  // 清除赛事折叠信息
-  MatchDataBaseH5.init()
-  MatchFold.clear_fold_info()
-  // 冠军拉取旧接口； 待 元数据提供 冠军赛事后 再删除
-  if (MenuData.is_kemp()) return MatchMeta.get_champion_match()
-  // 赛果不走元数据， 直接拉取接口
-  if (MenuData.is_results()) return MatchMeta.get_results_match()
-  // 电竞不走元数据， 直接拉取接口
-  if (MenuData.is_export()) return MatchMeta.get_esports_match()
-
-  const mi_tid_mids_res = lodash_.get(BaseData, 'mi_tid_mids_res')
-  if (lodash_.isEmpty(mi_tid_mids_res)) return
-
-  // 设置菜单对应源数据
-  
-  MatchMeta.set_origin_match_data()
-}
 /**
  * @description: 球类id转化背景
  * @param {String} id 球类id

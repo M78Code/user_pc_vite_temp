@@ -17,37 +17,48 @@
       <div class="fold-btn" @click="match_list_card.test_log_data()">打印数据</div>
       <div> load_data_state {{ load_data_state }}</div>
     </div> -->
-    <div class="scroll-fixed-header" :class="{ 'no-data': load_data_state != 'data' }">
+    
+    <!-- <div v-show="matches_15mins_list.length"> -->
+    <div>
+      <CurrentMatchTitle :title_value="'15 Mins'" :show_more_icon="false" />
+      <MatchCardList15Mins :matches_15mins_list="matches_15mins_list" />
+    </div>
+    <!-- <div v-show="matches_featured_list.length"> -->
+    <div>
+      <CurrentMatchTitle :title_value="'Featured Matches'" :show_more_icon="false" />
+      <!-- <FeaturedMatches :matches_featured_list="matches_featured_list" /> -->
+    </div>
+    <!-- <div class="scroll-fixed-header" :class="{ 'no-data': load_data_state != 'data' }"> -->
       <!-- banner -->
-      <div class="banner-box" :style="{height: GlobalAccessConfig.get_show_banner() ? '120px' : '0px'}" v-if="GlobalAccessConfig.get_show_banner()"></div>
+      <!-- <div class="banner-box" :style="{height: GlobalAccessConfig.get_show_banner() ? '120px' : '0px'}" v-if="GlobalAccessConfig.get_show_banner()"></div> -->
       <!-- 列表头 -->
-      <list-header :collect_count="collect_count" :is_show_hot="is_show_hot" :load_data_state="load_data_state">
-        <template v-slot:refresh_icon>
+      <!-- <list-header :collect_count="collect_count" :is_show_hot="is_show_hot" :load_data_state="load_data_state"> -->
+        <!-- <template v-slot:refresh_icon> -->
           <!-- 刷新组件 -->
-          <refresh :loaded="load_data_state != 'loading'" :other_icon="true" :icon_name="1"
-            @click="on_refresh" />
-        </template>
-      </list-header>
+          <!-- <refresh :loaded="load_data_state != 'loading'" :other_icon="true" :icon_name="1" -->
+            <!-- @click="on_refresh" /> -->
+        <!-- </template> -->
+      <!-- </list-header> -->
       <!-- <div>menu_config.match_list_menu_show.list_filter {{ menu_config.match_list_menu_show.list_filter }}</div> -->
       <!-- 顶部菜单  // 滚球  冠军 -->
-      <list-filter v-if="[1, 400].includes(parseInt(menu_config.menu_root))"
-        :collect_count="collect_count" :load_data_state="load_data_state" />
+      <!-- <list-filter v-if="[1, 400].includes(parseInt(menu_config.menu_root))" -->
+        <!-- :collect_count="collect_count" :load_data_state="load_data_state" /> -->
       <!-- 日期菜单   早盘 日期 -->
-      <list-filter-date v-if="menu_config.menu_root == 3"
-        :collect_count="collect_count" :load_data_state="load_data_state" />
+      <!-- <list-filter-date v-if="menu_config.menu_root == 3" -->
+        <!-- :collect_count="collect_count" :load_data_state="load_data_state" /> -->
       <!-- 热门赛事顶部菜单 -->
-      <list-filter-hot v-if="menu_config.menu_root == 500"
-        :collect_count="collect_count" :load_data_state="load_data_state" />
+      <!-- <list-filter-hot v-if="menu_config.menu_root == 500" -->
+        <!-- :collect_count="collect_count" :load_data_state="load_data_state" /> -->
       <!-- 电竞顶部菜单 -->
-      <esports-header v-if="menu_config.menu_root == 2000" :load_data_state="load_data_state" />
+      <!-- <esports-header v-if="menu_config.menu_root == 2000" :load_data_state="load_data_state" /> -->
       <!-- 赛事状态 | 赛种类型      -->
       <!-- <play-virtual-match-type class="sticky-wrap" v-if="menu_config.menu_root_show_shoucang == 300" style="top:100px" /> -->
       <!-- 联赛  VR 足球才会有联赛-->
-      <div class="leagues-tabs leagues-bg" v-if="menu_config.mid_menu_result.mi == '1001'">
+      <!-- <div class="leagues-tabs leagues-bg" v-if="menu_config.mid_menu_result.mi == '1001'"> -->
         <!-- 联赛菜单 -->
-        <LeagueTab />
-      </div>
-    </div>
+        <!-- <LeagueTab /> -->
+      <!-- </div> -->
+    <!-- </div> -->
     <!-- 列表容器 -->
     <load-data :state="'data'"  >
       <!-- 滚球虚拟体育列表 -->
@@ -139,6 +150,9 @@ import useMatchListMx from "src/core/match-list-pc/match-list-composition.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import { PageSourceData,compute_css_obj } from 'src/core/index.js';
 import {MatchDataWarehouse_PC_List_Common as MatchListData ,GlobalAccessConfig} from "src/core/index.js";
+import CurrentMatchTitle from "src/base-pc/components/match-list/current_match_title.vue"
+import MatchCardList15Mins from 'src/base-pc/components/match-list/match_card_list_15mins/matches_card_list_15mins.vue';
+// import FeaturedMatches from 'src/base-pc/components/match-list/featured_matches/featured_matches_card.vue';
 
 import "./match_list.scss";
 
@@ -158,7 +172,10 @@ export default {
     LoadData,
     refresh,
     EsportsHeader,
-    ListHeader
+    ListHeader,
+    CurrentMatchTitle,
+    // FeaturedMatches,
+    MatchCardList15Mins
   },
   setup() {
     onMounted(() => {

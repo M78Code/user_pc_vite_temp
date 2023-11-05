@@ -143,6 +143,12 @@ const router = createRouter({
             path: "/betting_history",
             name: "betting_history",
             component: () => import("../pages/cathectic/index.vue"),
+          },
+          // 个人中心
+          {
+            path: "/personal",
+            name: "personal",
+            component: () => import("../pages/personal/index.vue"),
           }
       ],
     },

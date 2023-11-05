@@ -305,6 +305,7 @@ export default {
   },
   data() {
     return {
+      LOCAL_PROJECT_FILE_PREFIX:LOCAL_PROJECT_FILE_PREFIX,
       tips_def: `${LOCAL_PROJECT_FILE_PREFIX}/image/svg/video_b.svg`,
       tips_act: `${LOCAL_PROJECT_FILE_PREFIX}/image/svg/video_a.svg`,
       voice_def: `${LOCAL_PROJECT_FILE_PREFIX}/image/svg/video_i.svg`,

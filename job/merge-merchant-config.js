@@ -28,7 +28,7 @@ const merge_merchant_config_inner = (scg, add_obj) => {
   let config = {};
   let { project } = add_obj;
   //暂时组件配置使用本地配置
-  delete  scg.component
+  // delete  scg.component
   lodash.merge(config, default_merchant_config, scg, add_obj);
   if (!project) {
     console.error("当前未设置目标项目名字 ，必须设置 。");

@@ -34,7 +34,7 @@ DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1698460136471-test";
 // 试玩环境  
 // DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1698742048199-shiwan";
 // 生产环境
-// DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1698990836566-online";
+// DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1699154069801-online";
 
 //----------------------------------亚洲版-PC-202310新平坦化版本  new-pc 6-------------------------------------------
 // 测试环境  
@@ -51,7 +51,7 @@ DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1698460136471-test";
 // 测试环境  
 //  DEV_TARGET_VERSION = "project_7-6544b0f3fb906b00ad5e8733-1699000611383-test";
 // 试玩环境  
-// DEV_TARGET_VERSION = "project_7-6544b0f3fb906b00ad5e8733-1699003372610-shiwan";
+DEV_TARGET_VERSION = "project_7-6544b0f3fb906b00ad5e8733-1699003372610-shiwan";
 // 生产环境
 // DEV_TARGET_VERSION = "project_7-6544b0f3fb906b00ad5e8733-1699003377370-online";
 

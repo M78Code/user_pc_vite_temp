@@ -43,21 +43,10 @@ class MenuData {
     //当前的菜单 lv2  注意  二级菜单 可能 有一个【全部】选项 get_sport_all_selected
     this.current_lv_2_menu = {};
     this.current_lv_2_menu_mi = '';
+   
     //-----------------------------------VR 电竞 收藏--------------------------------------//
-    this.current_lv_2_menu_mi_special = {
-      '300':(n)=>{
-        return +n === 300;
-      },
-      '2000':(n)=>{
-        return +n>2000 && +n<2200;
-      },
-      '50000':(n)=>{
-        return +n <300;
-      },
-    };
-    this.menu_lv_mi_special_lsit = [];
-    this.current_lv_special_menu_mi = '';
-    this.current_lv_special_menu = {};
+    this.top_menu_title = {}
+
     //-------------------------------------------------------------------------------------//
     //当前的菜单 lv3
     this.current_lv_3_menu = {};
@@ -122,17 +111,21 @@ class MenuData {
     this.menu_lv_mi_lsit = menu_lv_mi_lsit
     return menu_lv_mi_lsit
   }
+
+  // 设置 收藏 /vr体育 /电竞头部
+  set_top_menu_title(val){
+    console.error('set_top_menu_title',val)
+    this.top_menu_title = val
+    this.update()
+  }
   /**
-   * 特殊菜单（3级）处理
+   * 根据菜单id获取对应的数据id s
    * @param {*} mid 
    * @returns 
    */
   get_menu_lvmi_special_list(mid){
-    let list = BaseData.mew_menu_list_res.filter(item=> this.current_lv_2_menu_mi_special[mid](item.mi));
-    let menu_lv_mi_special_lsit = list && list.length>1?list.map((n)=>{return n}).flat():list[0].sl;
-    this.menu_lv_mi_special_lsit = menu_lv_mi_special_lsit
-    this.update()
-    return menu_lv_mi_special_lsit
+    let menu_lv_mi_lsit = (BaseData.mew_menu_list_res.find(item=> item.mi == mid ) || {}).sl
+    return menu_lv_mi_lsit
   }
   get_menu_lv_2_mi_list(mi){
     const item = this.menu_lv_mi_lsit.find(item=> item.mi == mi) || {}
