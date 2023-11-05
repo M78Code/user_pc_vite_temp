@@ -69,7 +69,7 @@ watch(() => props.tid, () => {
 
 <style lang="scss" scoped>
 .ranking_list {
-  padding-top: 0.15rem;
+  padding-top: 0.04rem;
   background-color: var(--q-gb-bg-c-15);
   .navigation-title {
 
@@ -123,22 +123,21 @@ watch(() => props.tid, () => {
 
   /*  头部 */
   .header {
-    height: 0.32rem;
-
+    // height: 0.32rem;
+    padding: .13rem 0rem;
     display: flex;
     text-align: center;
-    line-height: 0.32rem;
+    // line-height: 0.32rem;
     margin: 0 0.1rem;
 
     > div {
-
-      font-size: 0.12rem;
+      font-size: 0.10rem;
     }
   }
 
   .group-name {
-    height: 0.42rem;
-    line-height: 0.42rem;
+    height: 0.40rem;
+    line-height: 0.40rem;
     padding-left: 0.15rem;
     font-size: 0.14rem;
     margin-bottom: 0.07rem;
@@ -149,7 +148,7 @@ watch(() => props.tid, () => {
     align-items: center;
     margin: 0 0.1rem;
     font-size: 0.13rem;
-    height: 0.48rem;
+    height: 0.40rem;
     text-align: center;
 
     div {
