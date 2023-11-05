@@ -70,7 +70,6 @@ export default {
       get_goto_detail_matchid: '',
       get_goto_detail_match_info: '',
       get_not_found_target_dom_count: '',
-      get_standard_odd_status: '',
     }
   },
   mounted() {

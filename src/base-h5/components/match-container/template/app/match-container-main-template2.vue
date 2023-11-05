@@ -2,6 +2,11 @@
  * @Description: app-h5  冠军   冠军赛事组件，用于赛事列表展示赛事信息
 -->
 <template>
+  <!-- 全部联赛标题 -->
+  <div class="all_league_title" v-if="i === 0" @click.stop="handle_ball_seed_fold">
+    <div> <img :src="icon_date" alt=""> <span>全部联赛</span> </div>
+    <img class="expand_item" :src="expand_item" alt="">
+  </div>
   <div class="champion-wrap-2" v-if="is_show">
     <div class="sport-title match-indent" v-if="get_sport_show(i)" @click="handle_ball_seed_fold">
       <span class="score-inner-span"> {{match_of_list.csna}} </span>
@@ -27,7 +32,7 @@
 
     <template v-for="(hp,index) of match_of_list.hps">
       <div class="hps-wrap hairline-border" v-if="hp.hs != 2 && !collapsed" :key="index">
-        <div class="flex items-center justify-between"
+        <div class="title flex items-center justify-between"
           :class="{'is-favorite': false}">
           <div class="match-title items-center">
             <div class="debug-head" style="color:red;position:absolute;right:0;">
@@ -77,6 +82,7 @@ import { compute_img_url } from "src/core/index.js"
 import { IconWapper } from 'src/components/icon'
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import OddItemChampion from "src/base-h5/components/match-list/components/odd-item-champion.vue";
+import { icon_date, expand_item } from 'src/base-h5/core/utils/local-image.js'
 
 import champion_mixin from '../../mixins/champion.mixin.js'
 import 'src/base-h5/css/pages/match-container-champion.scss'
@@ -100,6 +106,8 @@ export default {
       theme,
       i18n_t,
       menu_type,
+      icon_date,
+      expand_item,
       compute_img_url,
       GlobalAccessConfig,
     }
@@ -108,6 +116,23 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.all_league_title{
+  display: flex;
+  height: 30px;
+  background: #fff;
+  padding: 0 10px;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 2px solid #FEBE55;
+  > div {
+    display: flex;
+    align-items: center;
+    > span {
+      padding-left: 5px;
+    }
+  }
+
+}
 .champion-wrap-2 {
   //width: 3.61rem;
   //margin: 0 0 0 0.07rem;
@@ -125,7 +150,7 @@ export default {
     // margin: 0 0.07rem;
     margin-top: 0.07rem;
     &.collapsed{
-      border-bottom: 1px solid var(--q-gb-bg-c-19);
+      border-bottom: 1px solid #e9e9e9;
     }
 
     .league-wrapper {
@@ -152,35 +177,6 @@ export default {
         &.theme02_y0 {
           &.favorited {
             background-image: var(--q-color-com-img-bg-10);
-          }
-        }
-      }
-
-      .league-title {
-        overflow: hidden;
-        white-space: nowrap;
-        font-size: 0.13rem;
-        font-weight: bold;
-
-        .league-icon-mini {
-          width: 0.22rem;
-          height: 0.22rem;
-          margin: 0.01rem 0.07rem 0 0.09rem;
-          position: relative;
-          transform: scale(0.85);
-
-          &.league-icon-mini2 {
-            --per: -0.32rem;
-            background: var(--q-color-com-img-bg-11) no-repeat center / 0.2rem 18.88rem;
-            background-position-y: calc(var(--per) * var(--num));
-          }
-
-          img {
-            width: 0.22rem;
-            height: 0.22rem;
-            position: absolute;
-            top: 0;
-            left: 0;
           }
         }
       }
@@ -235,8 +231,8 @@ export default {
 
   .hps-wrap {
 
-    > div {
-      border-bottom: 1px solid var(--q-gb-bg-c-19);
+    > .title {
+      border-bottom: 1px solid #e9e9e9;
     }
 
     .match-title {
