@@ -16,22 +16,17 @@
         </div>
         <!-- 大 -->
         <div class="row bor-style bet-card-play-container" :class="get_is_hengping?'bor-style2':'' ">
-          <!-- <div class="play-name " v-show="!get_is_hengping">
+          <div class="play-name " v-show="!get_is_hengping">
             <div class="play-name-card ellipsis">
               {{lodash.get(item_data, 'title[0].osn')}}
             </div>
-          </div> -->
+          </div>
           <div class="row slide-con" ref="bet_slide" style="flex:1;" v-touch-pan.horizontal.prevent.mouse="touch_pan">
             <div class="slide-wrap"
             :class="[
               {'slide-wrap-width-100': append_single_list.filter(append_single=>lodash.get(item_data, 'title[0].otd') == append_single.otd).length==1,
                 'slide-wrap-width-50': append_single_list.filter(append_single=>lodash.get(item_data, 'title[0].otd') == append_single.otd).length==2 }]"
               :style="{left:`${left}px`}">
-              <div class="play-name  col bet-item" v-show="!get_is_hengping">
-                  <div class="play-name-card ellipsis">
-                          {{lodash.get(item_data, 'title[0].osn')}}
-                  </div>
-               </div>
               <template v-for="(append_single, index) of append_single_list">
                 <div class="col bet-item" :key="index" v-if="lodash.get(item_data, 'title[0].otd') == append_single.otd">
                   <div class="row row-fat">
@@ -129,22 +124,17 @@
         </div>
         <div class="row bet-card-play-container">
           <!-- 小 -->
-          <!-- <div class="play-name " v-show="!get_is_hengping">
+          <div class="play-name " v-show="!get_is_hengping">
               <div class="play-name-card ellipsis">
                 {{lodash.get(item_data, 'title[1].osn')}}
               </div>
-          </div> -->
+          </div>
           <div class="row slide-con" ref="bet_slide" style="flex:1;" v-touch-pan.horizontal.prevent.mouse="touch_pan">
             <div class="slide-wrap"
             :class="[
               {'slide-wrap-width-100': append_single_list.filter(append_single=>lodash.get(item_data, 'title[1].otd') == append_single.otd).length==1,
                 'slide-wrap-width-50': append_single_list.filter(append_single=>lodash.get(item_data, 'title[1].otd') == append_single.otd).length==2 }]"
             :style="{left:`${left}px`}">
-            <div class="play-name col bet-item" v-show="!get_is_hengping">
-                    <div class="play-name-card ellipsis">
-                      {{lodash.get(item_data, 'title[1].osn')}}
-                    </div>
-                </div>
               <template v-for="(append_single,index) of append_single_list">
                 <div class="col bet-item" :key="index" v-if="lodash.get(item_data, 'title[1].otd') == append_single.otd">
                   <div class="row row-fat" v-if="lodash.get(item_data, 'title[1].otd') == append_single.otd">
@@ -347,9 +337,9 @@ export default defineComponent({
       }
       // 如果只有大玩法没小的玩法 此时需要做判断 如果大小玩法都有则空盒子数目除2 否则不除2
       if (arr_max && arr_min) {
-        count = append_single_list.length / 2
+        count = append_single_list.value.length / 2
       } else {
-        count = append_single_list.length
+        count = append_single_list.value.length
       }
       if (count > 3) {
         count = 6 - count
@@ -360,10 +350,10 @@ export default defineComponent({
       return arr
     })
     const is_show_slide = computed(() => {
-      return (append_single_list.length / 2) > 3 && init_data.left == 0
+      return (append_single_list.value.length / 2) > 3 && init_data.left == 0
     })
     const is_show_slide_r = computed(() => {
-      return (append_single_list.length / 2) > 3 && init_data.left != 0
+      return (append_single_list.value.length / 2) > 3 && init_data.left != 0
     })
     const is_match_result = computed(() => {
       return ['result_details', 'match_result'].includes(route.name)
@@ -376,10 +366,10 @@ export default defineComponent({
     const touch_pan = lodash.debounce((e) => {
       let dom_width = bet_slide.value?.clientWidth
 
-      if ((append_single_list.length / 2) < 4) {
+      if ((append_single_list.value.length / 2) < 4) {
         return
       }
-      if (bet_slide.value?.direction == 'left') {
+      if (e?.direction == 'left') {
         // 左滑
         let slide_num
         let temp_num = props.item_data.hl.length / 3
@@ -396,7 +386,6 @@ export default defineComponent({
         if (Math.abs(init_data.left) >= max_left) {
           return
         }
-
         init_data.left -= dom_width
 
       } else {
@@ -475,7 +464,40 @@ export default defineComponent({
   //     opacity: 0;
   //   }
   // }
-
+  @keyframes dir_remind_animate {
+  0% {
+    transform: translateX(0);
+    opacity: 0;
+  }
+  60% {
+    transform: translateX(-0.06rem);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-0.09rem);
+    opacity: 0;
+  }
+}
+  @keyframes dir_right_remind_animate {
+  0% {
+    transform: translateX(-0.09rem) rotate(180deg);
+    opacity: 0;
+  }
+  60% {
+    transform: translateX(-0.06rem) rotate(180deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(0) rotate(180deg);
+    opacity: 0;
+  }
+}
+  .slide_icon_l{
+    background: url($SCSSPROJECTPATH + '/image/common/slide_icon_y0.svg') no-repeat  center / cover;  //todo上传不同主题图片
+  }
+  .slide_icon_r{
+    background: url($SCSSPROJECTPATH + '/image/common/slide_icon_y0.svg') no-repeat  center / cover;  //todo上传不同主题图片
+  }
   .slide_icon {
     width: 0.12rem;
     height: 0.12rem;
@@ -484,7 +506,7 @@ export default defineComponent({
     right: -0.03rem;
     z-index: 10;
     margin-top: -0.06rem;
-
+  
     &.animate-effect {
       animation: dir_remind_animate cubic-bezier(0.49, 0.49, 0.61, 0.59) 1.4s infinite;
     }
@@ -509,7 +531,7 @@ export default defineComponent({
     //width: 200%;
     height: 0.48rem;
     .bet-item {
-      min-width: 0.83rem;
+      min-width: 0.85rem;
       margin:0.04rem;
       &:nth-child(1) {
           margin-left:0.08rem;
@@ -623,7 +645,7 @@ export default defineComponent({
 
   .play-name {
     // width: 0.95rem;
-    height: 0.52rem;
+    height: 0.45rem;
     line-height: 0.36rem;
     // padding:  0.08rem 0.04rem 0.08rem 0.08rem;
     // margin-right: 1px;
@@ -635,11 +657,13 @@ export default defineComponent({
  
   }
   .play-name-card{
+      margin: 0.04rem;
       text-align: center;
       font-size: 0.14rem;
       background:var(--q-gb-bg-c-15);
       border-radius: 4px;
       color:#7981A4;
+      width: 0.85rem;
       box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.04);
     }
   .single-name {

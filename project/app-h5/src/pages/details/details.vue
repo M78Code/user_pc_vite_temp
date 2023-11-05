@@ -54,7 +54,7 @@
          
               <!-- 根据中文，繁体、聊天室ID不为空以及 chatRoomSwitch 打开 才显示聊天室Tab -->
               <q-tab
-                v-if="show_match_analysis_tab"
+                v-if="get_event_list.length>0"
                 name="playback"
                 :ripple="false"
                 label="精彩回放"

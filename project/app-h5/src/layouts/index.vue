@@ -4,7 +4,7 @@
 -->
 <template>
   <q-layout view="lHh Lpr lFf" class="layout_container">
-    <q-page-container id="app-h5" class="page_container" :style="`height:${+inner_height / 100}rem`">
+    <q-page-container id="app-h5" class="page_container" :style="`height:${inner_height}px`">
       <!-- <layout-header /> -->
       <!-- <layout-conent /> -->
       <!-- <MenuWapper v-if="['sport_menu', 'matchList'].includes(route.name)">
@@ -17,7 +17,7 @@
       <layoutTop />
       
       <router-view />
-      <BetBoxWapper />
+      <BetBoxWapper use_component_key='BetBoxAppH5_1' />
       <!--页脚-->
       <Tabbar class="m-layout" v-if="['sport_menu', 'matchList'].includes(route.name)">
       </Tabbar>
@@ -76,6 +76,8 @@ import store from "src/store-redux/index.js";
 import { api_common } from "src/api/index.js";
 import PageSourceData from "src/core/page-source/page-source.js";
 import BetRecordClass from "src/core/bet-record/bet-record.js";
+import {debounce} from "lodash";
+
 // 活动弹出框
 const activityLayer = defineAsyncComponent(() => import("src/base-h5/components/common/activity-layer.vue"))
 const settleDialog = defineAsyncComponent(() =>
@@ -93,7 +95,7 @@ import BetData from "src/core/bet/class/bet-data-class.js";// project/yazhou-h5/
 // import layoutConent from "./layout-content.vue";
 
 import "./index.scss"
-const inner_height = window.innerHeight;  // 视口高度
+const inner_height = ref(window.innerHeight);  // 视口高度
 const { footerMenuReducer } = store.getState();
 const route = useRoute();
 const get_accept_show = ref(false); // 接受更好赔率变化 弹窗
@@ -198,6 +200,10 @@ const init_local_server_time = () => {
   });
 }
 onMounted(() => {
+  window.onresize = debounce((e) => {
+    console.log(e)
+    inner_height.value = window.innerHeight
+  }, 500)
   // 阻止双击放大
   document.addEventListener("touchstart", touchstart_event_fun, false);
   document.addEventListener("touchend", touchend_event_fun, false);

@@ -69,7 +69,7 @@
         </p>
       </template>
       <p>
-        <label>{{ i18n_t('app_h5.catchetic.bet_status')}}：</label> 
+        <label>{{ i18n_t('app_h5.cathectic.bet_status')}}：</label> 
         <template>
           <!-- 预约中、预约失效页 -->
           <span v-if="BetRecordClass.selected === 1 || BetRecordClass.selected === 2">
@@ -149,7 +149,6 @@ template {
     padding: 0.12rem;
 
     .items {
-      padding-bottom: 0.1rem;
 
       &:last-child {
 
@@ -198,6 +197,7 @@ template {
         font-size: 0.12rem;
         color: var(--q-gb-bg-c-6);
         display: block;
+        padding-bottom: 0.1rem;
       }
     }
   }

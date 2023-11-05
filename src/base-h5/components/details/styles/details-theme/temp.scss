@@ -725,7 +725,7 @@
       color:var(--q-gb-t-c-13) !important;
     }
     [class*="slide_icon_"] {
-      background: var(--q-color-img-bg-36) no-repeat  center / cover;
+      background: url($SCSSPROJECTPATH + '/image/common/slide_icon_y0.svg') no-repeat  center / cover;  //todo
     }
   }
   /*************** temp13结束 *************** -E*/
