@@ -9,8 +9,7 @@
         <div class="sport-m-container">
           <div class="s-menu-container flex">
             <template v-for="item in scrollDataList" :key="lodash_.get(item, 'mi')">
-              <!-- v-show="item.ct > 0" -->
-              <div class="sport-menu-item flex justify-center" @click="set_menu_lv2(item, $event)" v-if="item.ct">
+              <div class="sport-menu-item flex justify-center" @click="set_menu_lv2(item, $event)" >
                 <div class="inner-w flex justify-between items-center" :class="{
                   current: current_mi == item.mi
                 }
@@ -24,7 +23,6 @@
                     </div>
                   </div>
                   <div class="s-w-i-title">
-                    <!-- {{item.mi}} -->
                     {{ (item.btn ?item.title : item.name) || MenuData.get_menus_i18n_map(item.mi) }}
                   </div>
                 </div>
@@ -62,7 +60,6 @@ const props = defineProps({
  * 二级菜单事件
 */
 function set_menu_lv2(item = {},event) {
-  console.error('item',item)
   // 选中后点击无效
   if (item.mi == MenuData.current_lv_2_menu_mi) return
   // 设置菜单点击事件
