@@ -234,6 +234,7 @@ import BetRecordClass from "src/core/bet-record/bet-record.js";
   .top-p {
     margin-bottom: -0.02rem;
     min-height: 0.18rem;
+    color: var(--q-gb-bg-c-8);
   }
   .money-p {
     color: var(--q-cathectic-color-1);

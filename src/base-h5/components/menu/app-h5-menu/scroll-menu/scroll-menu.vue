@@ -150,13 +150,13 @@ onUnmounted(() => {
               position: relative;
 
               .sport-icon-wrap {
-                --per: -0.32rem;
+                --per: -0.22rem;
                 display: block;
                 width: auto;
                 height: 0.22rem;
                 width: 0.22rem;
                 background-position: 0 0;
-                background-size: 0.22rem 18.88rem;
+                background-size: 0.22rem auto;
               }
 
               .sport-match-count {
