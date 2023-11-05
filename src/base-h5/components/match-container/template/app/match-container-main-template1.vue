@@ -64,7 +64,7 @@
           <div class="odd-title-wraper row " v-if="match.is_show_league" @click.stop :style="{width: collapsed ? '100%' : 0}">
             <div class="odd-title-i-w flex">
               <div class="odd-t-i-wrapper flex items-center"
-                :class="{ 'status2': get_standard_odd_status == 1 && match_of_list_ascertain.length > 3 }">
+                :class="{ 'status2': PageSourceData.standard_odd_status.value == 1 && match_of_list_ascertain.length > 3 }">
                 <div class="hpl-title row items-center justify-center" :class="{ 'boxing': match_of_list.csid == 12 }"
                   :key="i" v-for="(hpl_title, i) of i18n_t('list_title.' + match.csid + '.title')">
                   <div class="hpl-t-inner">
@@ -275,7 +275,7 @@ import ScoreList from 'src/base-h5/components/match-list/components/score-list.v
 import OddListWrap from 'src/base-h5/components/match-list/components/odd-list-wrap.vue';
 import ImageCacheLoad from "src/base-h5/components/match-list/components/public-cache-image.vue";
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
-
+import PageSourceData  from  "src/core/page-source/page-source.js";
 import { i18n_t, compute_img_url, compute_css_obj  } from "src/core/index.js"
 import { format_time_zone } from "src/core/format/index.js"
 import { mearlys_icon, in_progress, not_begin, video_play_app, settlement_app, 
@@ -315,7 +315,7 @@ export default {
     return { 
       lang, theme, i18n_t, compute_img_url, format_time_zone, GlobalAccessConfig, footer_menu_id,LOCAL_PROJECT_FILE_PREFIX,in_progress,not_begin,
       is_hot, menu_type, menu_lv2, is_detail, is_export, is_results, standard_edition, mearlys_icon, compute_css_obj, show_sport_title, video_play_app, settlement_app,
-      normal_img_not_favorite_white, normal_img_is_favorite
+      normal_img_not_favorite_white, normal_img_is_favorite, PageSourceData
     }
   }
 }
