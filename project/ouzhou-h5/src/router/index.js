@@ -2,7 +2,7 @@
  * @Author: rise
  * @Date: 2023-11-03 16:37:52
  * @LastEditors: rise
- * @LastEditTime: 2023-11-04 17:12:25
+ * @LastEditTime: 2023-11-05 15:47:43
  * @Description:  
  */
 import { createRouter, createWebHashHistory } from "vue-router";

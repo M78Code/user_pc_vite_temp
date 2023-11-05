@@ -11,7 +11,7 @@
           <div class="item" :class="[
             item.className,
             // { active: meta_data_store.current_menu.mi == item.mi },
-          ]" v-for="(item, index) in sportsGenre" :key="index" @click="set_menu_obj">
+          ]" v-for="(item, index) in sportsGenre" :key="index" @click="set_menu_obj(item)">
             <sport_icon size="20" :sport_id="item.mi" />
             <div>{{ item.name }}</div>
           </div>
@@ -58,10 +58,12 @@
 import { defineComponent, reactive, defineEmits, onMounted } from "vue";
 import sport_icon from "./sport_icon.vue";
 import BaseData from "src/core/base-data/base-data.js";
-
+import { useRouter, useRoute } from "vue-router"
+const router = useRouter();
+const emits = defineEmits(['isLeftDrawer'])
 const sportsGenre = reactive([
-  { name: "Esports", className: "esports", mi: "2000" },
-  { name: "VR Sports", className: "vr-sports", mi: "300" },
+  { name: "Esports", className: "esports", mi: "2000",route: '/esports'},
+  { name: "VR Sports", className: "vr-sports", mi: "300",route: '/virtual' },
 ])
 const popular = reactive([
   { name: "Football", className: "football", mi: "101" },
@@ -70,9 +72,12 @@ const popular = reactive([
 ])
 const allSports = BaseData.mew_menu_list_res.filter((item)=>{return +item.mi<300})
 const set_menu_obj = (data) => {
+  router.push(data.route)
 }
 const change_current_menu = (m_data) => {
-
+  console.log(m_data)
+  emits('isLeftDrawer')
+  router.push("/");
 }
 </script>
 <style lang="scss" scoped>
