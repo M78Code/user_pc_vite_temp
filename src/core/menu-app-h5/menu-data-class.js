@@ -39,25 +39,15 @@ class MenuData {
     this.menu_lv4 = []; //4级菜单列表
     //当前的菜单 lv1
     this.current_lv_1_menu_mi = ref('0')
+    this.current_lv_1_menu_i = ''
     //当前的菜单 lv2
     //当前的菜单 lv2  注意  二级菜单 可能 有一个【全部】选项 get_sport_all_selected
     this.current_lv_2_menu = {};
-    this.current_lv_2_menu_mi = '';
+    this.current_lv_2_menu_i = '';
+   
     //-----------------------------------VR 电竞 收藏--------------------------------------//
-    this.current_lv_2_menu_mi_special = {
-      '300':(n)=>{
-        return +n === 300;
-      },
-      '2000':(n)=>{
-        return +n>2000 && +n<2200;
-      },
-      '50000':(n)=>{
-        return +n <300;
-      },
-    };
-    this.menu_lv_mi_special_lsit = [];
-    this.current_lv_special_menu_mi = '';
-    this.current_lv_special_menu = {};
+    this.top_menu_title = {}
+
     //-------------------------------------------------------------------------------------//
     //当前的菜单 lv3
     this.current_lv_3_menu = {};
@@ -107,7 +97,7 @@ class MenuData {
       })
     }
     // 默认设置二级菜单id
-    // this.set_current_lv_2_menu_mi( lodash_.get(menu_lv_mi_lsit,'[0]',{}))
+    // this.set_current_lv_2_menu_i( lodash_.get(menu_lv_mi_lsit,'[0]',{}))
     // 今日 加入 收藏/vr体育/电竞 滚球加入全部
     
     if(mid == 1){
@@ -122,17 +112,20 @@ class MenuData {
     this.menu_lv_mi_lsit = menu_lv_mi_lsit
     return menu_lv_mi_lsit
   }
+
+  // 设置 收藏 /vr体育 /电竞头部
+  set_top_menu_title(val){
+    this.top_menu_title = val
+    this.update()
+  }
   /**
-   * 特殊菜单（3级）处理
+   * 根据菜单id获取对应的数据id s
    * @param {*} mid 
    * @returns 
    */
   get_menu_lvmi_special_list(mid){
-    let list = BaseData.mew_menu_list_res.filter(item=> this.current_lv_2_menu_mi_special[mid](item.mi));
-    let menu_lv_mi_special_lsit = list && list.length>1?list.map((n)=>{return n}).flat():list[0].sl;
-    this.menu_lv_mi_special_lsit = menu_lv_mi_special_lsit
-    this.update()
-    return menu_lv_mi_special_lsit
+    let menu_lv_mi_lsit = (BaseData.mew_menu_list_res.find(item=> item.mi == mid ) || {}).sl
+    return menu_lv_mi_lsit
   }
   get_menu_lv_2_mi_list(mi){
     const item = this.menu_lv_mi_lsit.find(item=> item.mi == mi) || {}
@@ -140,12 +133,12 @@ class MenuData {
   }
 
   // 设置二级菜单id
-  set_current_lv_2_menu_mi(val = {}){
-    this.current_lv_2_menu_mi = val.mi;
+  set_current_lv_2_menu_i(val = {}){
+    this.current_lv_2_menu_i = val.mi;
     this.current_lv_2_menu = val;
     // 今日 / 滚球/ 冠军 没有 三级
     // if(![1,2,400].includes(this.current_lv_1_menu_mi.value)){
-      // this.get_date_menu_api_when_subchange(this.current_lv_2_menu_mi)
+      // this.get_date_menu_api_when_subchange(this.current_lv_2_menu_i)
     // }
     this.update()
   }
@@ -162,6 +155,7 @@ class MenuData {
    */
   set_current_lv1_menu(lv1_mi) {
     this.current_lv_1_menu_mi.value = lv1_mi  
+    this.current_lv_1_menu_i = lv1_mi
     this.menu_type.value = lv1_mi  
     this.get_menu_lvmi_list(lv1_mi)
     let index = 0
@@ -169,7 +163,7 @@ class MenuData {
     if([1,2].includes(lv1_mi)){
       index = 1
     }
-    this.set_current_lv_2_menu_mi( lodash_.get(this.menu_lv_mi_lsit,`[${index}]`,{}))
+    this.set_current_lv_2_menu_i( lodash_.get(this.menu_lv_mi_lsit,`[${index}]`,{}))
     // this.update();
   }
 
@@ -298,7 +292,7 @@ class MenuData {
    * arg_mi 如果传值 则获取特定值euid 如果没有就是二级菜单的euis
    * */
   get_euid(arg_mi) {
-    let mi = arg_mi || this.current_lv_2_menu_mi;
+    let mi = arg_mi || this.current_lv_2_menu_i;
     // 全部
     if (mi == 0) {
       let mid_list = []
@@ -337,12 +331,8 @@ class MenuData {
    * @returns 
    */
   get_menus_i18n_map(mi) {
-    //"7": "电竞" 直接可以返回不做处理 slice(0,3)
-    if (this.is_export()) {
-      return BaseData.menus_i18n_map[+mi]
-    }
     //二级菜单
-    if (this.is_export(+this.current_lv_2_menu_mi) || this.is_vr(+this.current_lv_2_menu_mi)) {
+    if (this.is_export(+this.top_menu_title.mi) || this.is_vr(+this.top_menu_title.mi)) {
       return BaseData.menus_i18n_map[+mi]
     }
     return BaseData.menus_i18n_map[this.recombine_menu_desc(mi)];
@@ -382,6 +372,7 @@ class MenuData {
         id = item.mi
       }
     }
+    console.error('id',id,'===',sprite_images_postion[id])
     if (get_ball_id) return sprite_images_postion[id];
     let type = "";
     switch (String(id)) {

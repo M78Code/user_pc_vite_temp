@@ -983,6 +983,7 @@
     "add": "加",
     "all_result": "所有賽果",
     "animation": "動畫",
+    "animation_info": "動畫訊息",
     "ball": "壞球",
     "cancel": "取消",
     "delay": "延遲",
@@ -1013,6 +1014,7 @@
     "total_score": "當前總分",
     "unknown": "未知",
     "video": "視頻",
+    "video_info": "視訊訊息",
     "yes": "是",
     "match_parlay": "串"
   },

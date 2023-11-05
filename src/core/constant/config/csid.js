@@ -270,9 +270,9 @@ export const csid_map_concede_points_id = {
 
 // 精灵图对应的位置
 export const sprite_images_postion = {
-  0: 0, //下标从0开始
-  1: 1,
-  2: 3,
+  0: 2, //下标从0开始
+  1: 3,
+  2: 4,
   3: 28,
   4: 2,
   5: 19,
@@ -328,4 +328,6 @@ export const sprite_images_postion = {
   50000: 57,
   300: 58,
   2000: 59,
+  90: 60,
+  91: 61,
 }

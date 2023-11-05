@@ -1,12 +1,13 @@
  
  
 import lodash from 'lodash'
-import {MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/index.js"
+import {MatchDataWarehouse_H5_List_Common as MatchDataBaseH5,get_odds_active } from "src/core/index.js"
 import { useMittEmit, MITT_TYPES } from "src/core/mitt";
 import { menu_type } from 'src/base-h5/mixin/menu.js'
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import MatchFold from 'src/core/match-fold'
 import MatchCollect from 'src/core/match-collect'
+import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
 
 // i: 每个组件的 props 赛事下标， 来源 === 组件
 // match_of_list: 每个组件的 props 赛事对象， 来源 === 组件
@@ -155,9 +156,26 @@ export default {
      */
     item_click(match,hp,ol_item) {
       if (!ol_item.ov || ol_item.ov < 101000) return;   //对应没有赔率值或者欧赔小于101000
-      let flag = $common.odds.get_odds_active(0, hp.hs, ol_item.os);
+      let flag = get_odds_active(0, hp.hs, ol_item.os);
       if (flag == 1 || flag == 4) {   //开盘和锁盘可以点击弹起来
-        bet_click2(match, hp, ol_item);
+        const {oid,_hid,_hn,_mid } = ol_item
+        let params = {
+          oid, // 投注项id ol_obj
+          _hid, // hl_obj 
+          _hn,  // hn_obj
+          _mid,  //赛事id mid_obj
+        }
+        let other = {
+          is_detail: false,
+          // 投注类型 “vr_bet”， "common_bet", "guanjun_bet", "esports_bet"
+          // 根据赛事纬度判断当前赛事属于 那种投注类型
+          bet_type: 'common_bet',
+          // 设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备
+          device_type: 1,  
+          // 数据仓库类型
+          match_data_type: "h5_list",
+        }
+        set_bet_obj_config(params,other)
       }
     },
     /**

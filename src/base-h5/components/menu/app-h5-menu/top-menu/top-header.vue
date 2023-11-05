@@ -1,14 +1,14 @@
 <template>
     <div class="top-header">
-        <div v-if="props.isBack" class="top-header-left">
+        <div class="top-header-left">
             <div class="top-header-left-img" @click="goBack()">
                 <!-- <div class="img" :style="compute_css_obj('menu-go-back-icon')"></div> -->
-                <img class="img" :src="back" />
+                <img class="img" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/back.svg`" alt="" />
                 <!-- <span class="icon-arrow-left"></span> -->
             </div>
         </div>
         <div class="top-header-content">
-            {{props.title}}
+            {{MenuData.top_menu_title.title}}
         </div>
         <div class="top-header-right">
             <slot name="right"></slot>
@@ -16,23 +16,14 @@
     </div>
 </template>
 <script setup>
-import back from "./img/back.svg";
-import {compute_css_obj, MenuData } from "src/core/index.js";
-  const props = defineProps({
-    isBack: {
-        type: Boolean,
-        default: true
-    },
-    title:{
-        type: String,
-        default: ""
-    }
-  });
+import {compute_css_obj, MenuData,LOCAL_PROJECT_FILE_PREFIX } from "src/core/index.js";
+
   /**
    * 初始化数据
    */
   const goBack = () =>{
-    MenuData?.set_init_menu_list()
+    MenuData.set_top_menu_title({})
+    MenuData.set_init_menu_list()
   }
 </script>
 <style lang="scss" scoped>

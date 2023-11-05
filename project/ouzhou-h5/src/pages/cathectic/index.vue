@@ -78,7 +78,7 @@
   }
   .second-header {
     height: 0.5rem;
-    border-bottom: 1px solid var(--q-gb-bd-c-8);
+    border-bottom: 1px solid var(--q-gb-bg-c-12);
     position: relative;
     p {
       margin: 0 0.2rem;
@@ -86,8 +86,8 @@
       font-weight: bold;
       line-height: 0.46rem;
       &.active-p {
-        color: var(--q-gb-bd-c-8);
-        border-bottom: 0.04rem solid var(--q-gb-bd-c-8);
+        color: var(--q-gb-bg-c-12);
+        border-bottom: 0.04rem solid var(--q-gb-bg-c-12);
       }
     }
     img {

@@ -9,15 +9,32 @@
     <SRecord v-if="is_loading" />
     <scroll ref="myScroll" :on-pull="onPull" v-else>
       <template v-if="!lodash.isEmpty(BetRecordClass.list_data)">
+        <!-- 已结算筛选按钮 -->
+        <div class="settled-select flex" v-if="BetRecordClass.selected === 1">
+            <div class="select flex">
+              <span class="active">Settled Time</span>
+              <span>Bet Time</span>
+            </div>
+            <div class="cashout">Cashout</div>
+        </div>
         <!-- 订单内容 -->
         <div v-for="(value, name, index) in BetRecordClass.list_data" :key="index" class="cathectic-list">
           <q-slide-transition>
             <template>
-              <div>03/12</div>
+              <div class="date-header flex">
+                <span class="date">03/12</span>
+                <!-- 第一项显示 cashout按钮、 已结算信息 -->
+                <template v-if="index === 0">
+                  <div v-if="BetRecordClass.selected === 0" class="cashout">Cashout</div>
+                  <div v-else class="settled-date">
+                    Number <span>2</span>
+                    Bet <span>20</span>
+                    Lose/Win <span class="oringe">+20.00</span>
+                  </div>
+                </template>
+              </div>
               <div v-for="(item2, key) in value.data" :key="key" :item_data="item2" class="cathectic-item">
                 <item-multiple-body :data_b="item2"></item-multiple-body>
-                <!-- 未结算列表 => 投注记录页提前结算的按钮、滑块、提前结算详情 -->
-                <early-settle :item_data="item2"></early-settle>
               </div>
             </template>
           </q-slide-transition>
@@ -33,7 +50,7 @@
 import lodash from 'lodash';
 import { api_betting } from "src/api/index.js";
 import BetRecordClass from "src/core/bet-record/bet-record.js";
-import { itemMultipleBody, earlySettle } from "src/base-h5/components/common/cathectic-item/ouzhou-h5/index";
+import { itemMultipleBody } from "src/base-h5/components/common/cathectic-item/ouzhou-h5/index";
 import settleVoid from "src/base-h5/components/cathectic/app-h5/settle-void.vue";
 import scroll from "src/base-h5/components/common/record-scroll/scroll.vue";
 import SRecord from "src/base-h5/components/skeleton/record.vue";
@@ -251,20 +268,82 @@ onUnmounted(() => {
 template {
   display: block;
 }
-
+.cathectic-list {
+  background-color: var(--q-gb-bg-c-10);
+}
 .cathectic-item {
   width: 100%;
-  border-radius: 0.1rem;
   background: var(--q-gb-bg-c-15);
   overflow: hidden;
-  margin: 0 0 0.1rem;
+  margin-top: 0.1rem;
   padding-bottom: 0.2rem;
 }
-
+.settled-select {
+  height: 0.7rem;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 0.14rem;
+  .select {
+    height: 0.5rem;
+    padding: 0.04rem;
+    border-radius: 0.5rem;
+    background-color: var(--q-gb-bg-c-18);
+    align-items: center;
+    span {
+      height: 0.42rem;
+      line-height: 0.42rem;
+      font-size: 0.16rem;
+      font-weight: bold;
+      border-radius: 0.5rem;
+      padding: 0 0.14rem;
+      &.active {
+        background-color: var(--q-gb-bg-c-15);
+        border: 1px solid var(--q-gb-bg-c-12);
+      }
+    }
+  }
+}
+.date-header {
+  margin-top: 0.1rem;
+  height: 0.4rem;
+  align-items: center;
+  padding: 0 0.14rem;
+  justify-content: space-between;
+  .date {
+    font-size: 0.2rem;
+    font-weight: bold;
+  }
+  .settled-date {
+    font-size: 0.14rem;
+    color: var(--q-gb-bg-c-6);
+    span {
+      font-weight: bold;
+      margin-right: 0.06rem;
+      &.oringe {
+        color: var(--q-gb-bg-c-12);
+        margin-right: 0;
+      }
+    }
+  }
+}
+.cashout {
+    font-size: 0.18rem;
+    background-color: var(--q-gb-bg-c-15);
+    height: 0.4rem;
+    line-height: 0.4rem;
+    width: 1rem;
+    text-align: center;
+    border-radius: 0.5rem;
+    border: 1px solid var(--q-gb-bg-c-8);
+    &.active {
+      color: var(--q-gb-bg-c-15);
+      background-color: var(--q-gb-bg-c-12);
+      border-color: var(--q-gb-bg-c-12);
+    }
+}
 /**投注记录弹框未结算*/
 .cathectic {
   height: 100%;
-  border-radius: 0.1rem;
   overflow: hidden;
 
   /**提前结算筛选按钮*/

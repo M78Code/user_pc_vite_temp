@@ -18,7 +18,8 @@
       <div>
         <p>{{ i18n_t('app_h5.cathectic.bets') }}: [{{Item.sportName}}
         </p>
-        <p>{{Item.playName}} - {{$i18n.messages[data_b.langCode?data_b.langCode:'zh']['odds'][Item.marketType]}}</p>
+        <p>{{Item.playName}} - {{i18n_t(`odds.${Item.marketType}`)}}</p>
+        <p>{{Item.playName}} - {{i18n_t(`odds.${Item.marketType}`)}}</p>
       </div>
       <span>
         <!-- 大3.5  -->

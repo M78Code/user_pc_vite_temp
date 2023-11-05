@@ -1015,6 +1015,7 @@
     "add": "Add",
     "all_result": "All result",
     "animation": "Anime",
+    "animation_info": "Anime Info",
     "ball": "Ball",
     "cancel": "Cancel",
     "delay": "Delay",
@@ -1046,6 +1047,7 @@
     "total_score": "Points",
     "unknown": "Unknown",
     "video": "Video",
+    "video_info": "Video Info",
     "yes": "Ya",
     "match_parlay": "X"
   },

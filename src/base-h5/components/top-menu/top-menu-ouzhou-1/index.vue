@@ -1,8 +1,8 @@
 <template>
   <!-- 规则 / 公告 头部 -->
   <template v-if="is_rule_page">
-    <div class="top_header" @click="go_back">
-      <!-- <img src="~assets/images/menu/back.png" alt="" /> -->
+    <div class="top_header_rule" @click="go_back">
+      <img src="./img/back.png" alt="" />
       <span>Personal</span>
       <span class="line"></span>
       <span class="f_weight">Announcement</span>
@@ -38,8 +38,8 @@
           <detail_top_info />
         </template>
 
-        <!-- 个人中心 头部 -->
-        <template v-if="get_route_path === '/personal' || get_route_path === '/coming_soon'">
+        <!-- 个人中心 vr 电竞 头部 -->
+        <template v-if="is_personal_page">
           <div class="back" @click="go_back">
             <img src="./img/back.png" alt="" />
             Back</div>
@@ -60,7 +60,7 @@
 import { ref, computed, watch } from "vue";
 import { useRouter, useRoute } from "vue-router"
 import { format_money2,UserCtr } from "src/core/"
-import leftMenu from "./left_menu/left_menu.vue"
+import leftMenu from "./components/left_menu/left_menu.vue"
 const router = useRouter();
 const route = useRoute()
 const amount = ref('')
@@ -72,11 +72,23 @@ const emit = defineEmits(["change"]);
 const get_route_path = computed(() => {
   return  router.currentRoute.value.path;
 })
-const is_rule_page = computed(() => {
-  return ['/rules', '/announcement'].includes(router.currentRoute.value.path)
+/**
+ * 个人中心 vr 电竞
+ */
+const is_personal_page = computed(() => {
+  return ['/personal','/esports','/virtual'].includes(router.currentRoute.value.path)
 })
+/**
+ * 公告  规则
+ */
+const is_rule_page = computed(() => {
+  return ['/rules', '/notice'].includes(router.currentRoute.value.path)
+})
+/**
+ * 主页的路由
+ */
 const is_home_page = computed(() => {
-  return ['/','/match', '/results', '/menu_list', '/inPlay', '/betting_history'].includes(router.currentRoute.value.path)
+  return ['/','/match','/match/', '/betting_history', '/matchResults', '/inPlay', '/collect'].includes(router.currentRoute.value.path)
 })
 
 
@@ -206,7 +218,7 @@ const toggleLeftDrawer = () => {
     }
   }
 }
-.top_header{
+.top_header,.top_header_rule{
   height: 100%;
   display: flex;
   align-items: center;
@@ -230,6 +242,10 @@ const toggleLeftDrawer = () => {
   .f_weight{
     color: #fff;
   }
+}
+.top_header_rule{
+  background: url('./img/top_bg_rule.jpg') no-repeat;
+  background-size: cover;
 }
 :deep(.fullscreen) {
   -webkit-backdrop-filter: blur(2px);

@@ -28,11 +28,11 @@ const tab_list = reactive([
   { label: 'In-Play', value: 'rollball', route: '/inPlay' },
   { label: 'MyBets', value: 'bet', route: '/betting_history' },
   { label: 'Home-Page', value: 'home_page', route: '/' },
-  { label: 'Results', value: 'results', route: '/coming_soon' },
-  { label: 'Favorites', value: 'favorites', route: '/coming_soon' },
+  { label: 'Results', value: 'results', route: '/matchResults' },
+  { label: 'Favorites', value: 'favorites', route: '/collect' },
 ])
 
-const tab_active = ref('')
+const tab_active = ref('');
 
 const jump_page = (item) => {
 

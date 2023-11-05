@@ -5,7 +5,7 @@
 -->
 <template>
   <div style="display: none;">{{ BetRecordClass.bet_record_version }}</div>
-  <div class="item-footer yb_mx10 yb_px14 yb_mt10 yb_pt8 row yb_fontsize12">
+  <div class="item-footer yb_px14 yb_pt8 row yb_fontsize12">
     <!-- 左 -->
     <div class="col-4">
       <p class="top-p">Bet Amoint</p>
@@ -227,15 +227,14 @@ import BetRecordClass from "src/core/bet-record/bet-record.js";
 <style lang="scss" scoped>
 .item-footer {
   height: 0.5rem;
-  border-radius: 0.04rem;
-  color: var(--q-gb-t-c-3);
-  background: var(--q-cathectic-color-7);
+  background: var(--q-gb-bg-c-18);
   .result-p {
     line-height: 0.12rem;
   }
   .top-p {
     margin-bottom: -0.02rem;
     min-height: 0.18rem;
+    color: var(--q-gb-bg-c-8);
   }
   .money-p {
     color: var(--q-cathectic-color-1);

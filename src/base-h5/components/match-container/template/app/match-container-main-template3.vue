@@ -138,7 +138,15 @@
                   </div>
                 </div>
                 <!-- 右边盘口组件 -->
-                <odd-list-wrap :main_source="main_source" :match="match_of_list" />
+                <!-- <odd-list-wrap :main_source="main_source" :match="match_of_list" /> -->
+                <!-- 右边赛果结构 -->
+                <div class="default-match-results-right" :style="{ width: needMatchResultsRowNumber(3) }" >
+                  <div class="dmrr-item" v-for="(item, index) in matchResultsLength" :key="'dmrr-item'+index">
+                    <span v-if="index < 3" class="dmrr-item-fail">取消</span>
+                    <span v-else class="dmrr-item-fail">{{index}}</span>
+                  </div>
+                </div>
+
                 </div>
               </div>
             </div>
@@ -193,6 +201,18 @@ export default {
     ImageCacheLoad,
     CountingDownStart,
     CountingDownSecond,
+  },
+  data () {
+    return {
+      matchResultsLength: 6
+    }
+  },
+  methods: {
+    needMatchResultsRowNumber(val) {
+      const width = val * 60
+      const margin = val * 1
+      return (width + margin) / 100 + 'rem'
+    }
   },
   setup (ctx) {
     // 是否显示球种标题
@@ -560,7 +580,7 @@ export default {
       display: flex;
       align-items: center;
       flex-wrap: nowrap;
-      //padding-left: 0.08rem;
+      padding-left: 0.08rem;
       .esport {
         margin: 0.01rem 0.07rem 0 0rem;
         position: relative;
@@ -1379,5 +1399,33 @@ export default {
 /* **************日期********************** -E*/
 
 /* ********赛事容器相关********** -E*/
+
+
+/* ********右边赛果相关样式********** -S*/
+
+.default-match-results-right {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-content: space-between;
+  // width: 1.84rem;
+  .dmrr-item {
+    // flex: 0 0 calc(33.33% - .02rem);
+    width: .6rem;
+    height: .32rem;
+    background: var(--q-gb-bg-c-15) !important;
+    border-radius: .04rem;
+    margin-bottom: .02rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: .12rem;
+    .dmrr-item-fail {
+      color: var(--q-match-fs-color-13);
+    }
+  }
+}
+
+/* ********右边赛果相关样式********** -E*/
 </style>
   

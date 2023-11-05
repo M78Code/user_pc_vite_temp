@@ -2,16 +2,10 @@
  * @Description: app-h5 赛事组件，用于赛事列表展示赛事信息
 -->
 <template>
-  <div :style="{ marginTop: is_hot ? '0' : '' }" 
-    :class="['match-container', {
-      first: i == 0,
-      match_status_bar: match.is_show_no_play,
-      is_league_tail: get_league_show(i + 1),
-      started_un_started_next: get_m_status_show(i + 1),
-      started_and_un_started: match.is_show_no_play,
-      favorite_un_start_title: favorite_un_start_title(i, match_of_list.ms),
-    }]">
+  <div :class="['match-container']" 
+    :style="{ marginTop: is_hot ? '0' : '' }">
     <template v-if="match" >
+      
       <!-- 开赛标题  -->
       <div :class="['match-status-fixed', { progress: +match.start_falg === 1, not_begin: +match.start_falg === 2 }]" v-if="is_show_opening_title">
         <!-- 进行中 -->
@@ -23,20 +17,18 @@
           <img :src="not_begin" /> <span class="din-regular"> {{ $t('list.match_no_start') }}</span>
         </template>
       </div>
+      <!-- 缓冲容器， 避免滚动时骨架屏漏光问题 -->
+      <div class="buffer-container" v-if="match.is_show_league && !is_show_opening_title"></div>
       <!--体育类别 -- 标题  menuType 1:滚球 2:即将开赛 3:今日 4:早盘 11:串关 -->
-      <div v-if="show_sport_title"
-        :class="['sport-title match-indent', { home_hot_page: is_hot, is_gunqiu: [1].includes(+menu_type), first: i == 0, }]"
-        @click="handle_ball_seed_fold">
+      <div v-if="show_sport_title"  @click.stop="handle_ball_seed_fold"
+        :class="['sport-title match-indent', { home_hot_page: is_hot, is_gunqiu: [1].includes(+menu_type), first: i == 0, }]">
         <span class="score-inner-span">
-          <!-- PROJECT_NAME == 'app-h5' 复刻版需要展示数量 -->
           {{ match_of_list.csna }} ({{ +match.start_falg === 1 ? match.in_progress_total : match.no_start_total }})
         </span>
       </div>
       
       <!-- 最核心的div模块     标题 + 倒计时 + 比分 + 赔率盘口模块 -->
       <div :class="['match-inner-container', {'collapsed': !collapsed}]">
-         <!-- 缓冲容器， 避免滚动时骨架屏漏光问题 -->
-        <div class="buffer-container" v-if="match.is_show_league && i !== 0"></div>
         <!--联赛标题 -->
         <div @click="handle_league_fold" v-if="match.is_show_league || (is_hot && get_league_show(i))"
           :class="[('league match-indent hairline-border'), { 'no-radius': show_sport_title, 'no-border': !collapsed}]">
@@ -317,7 +309,8 @@ export default {
   setup (ctx) {
     // 是否显示球种标题
     const show_sport_title = computed(() => {
-      return [1,2].includes(+ctx.match_of_list.start_falg)
+      const { start_falg, is_show_ball_title } = ctx.match_of_list
+      return is_show_ball_title
     })
     return { 
       lang, theme, i18n_t, compute_img_url, format_time_zone, GlobalAccessConfig, footer_menu_id,LOCAL_PROJECT_FILE_PREFIX,in_progress,not_begin,
@@ -347,6 +340,9 @@ export default {
   width: 100%;
   height: auto;
   position: relative;
+  &.border_top{
+    border-top: 1px solid rgba(175, 179, 200, 0.1);
+  }
 
   .match-status-fixed {
     width: 100%;
@@ -375,7 +371,11 @@ export default {
   .v-mode-span {
     margin-right: 0.1rem;
   }
-
+  .buffer-container{
+    background: #fff;
+    height: 5px;
+    margin: 0 4px;
+  }
   .match-inner-container {
     margin: 0 auto;
     /* 兼容iPhone11边框显示不全 */
@@ -384,11 +384,6 @@ export default {
     flex-direction: column;
     align-items: center;
     background: #ffffff;
-    .buffer-container{
-      background: #fff;
-      height: 5px;
-      width: 100%;
-    }
 
     // padding-top: 0.05779rem;  /* 兼容iPhone11边框显示不全 */
     &.show-sport {
@@ -403,10 +398,7 @@ export default {
 
   &.started_and_un_started {
     display: block;
-
-    &.match_status_bar {
-      /*margin-top: 0.07rem;*/
-    }
+  
   }
 
   &.show_un_started {
@@ -484,14 +476,6 @@ export default {
 
   &.favorite_un_start_title {
     margin-top: 0 !important;
-  }
-
-  &.match_status_bar {
-    .league {
-
-      //overflow: hidden;
-      margin-top: 0.08rem;
-    }
   }
 
   .match-indent {
@@ -883,7 +867,7 @@ export default {
   background-color: var(--q-color-com-bg-color-12);
   height: auto;
   position: relative;
-  min-height: 1.11rem;
+  height: 1.12rem;
 
   &.simple,
   &.result {
@@ -968,9 +952,8 @@ export default {
       }
 
       .score-wrapper {
-        margin-top: 0.04rem;
         position: absolute;
-        bottom: 0;
+        bottom: 2px;
 
         .score-section {
           padding-left: 0;
@@ -1172,7 +1155,8 @@ export default {
           align-items: center;
           position: absolute;
           right: 0.12rem;
-          top: 0;
+          bottom: 0;
+          flex-direction: column-reverse;
 
           &.simple {
             right: 0.08rem;

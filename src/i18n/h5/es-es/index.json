@@ -1088,6 +1088,7 @@
     "add": "Más",
     "abandon": "Abandonada",
     "animation": "Animación",
+    "animation_info": "Animación Info",
     "ball": "Bola",
     "delay": "Retrasado",
     "cancel": "Cancelado",
@@ -1121,6 +1122,7 @@
     "match_parlay": "Parlay",
     "unknown": "Desconocido",
     "video": "Video",
+    "video_info": "Video Info",
     "Topic": "",
     "topic": ""
   },
