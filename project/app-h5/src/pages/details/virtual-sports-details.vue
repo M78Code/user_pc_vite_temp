@@ -63,7 +63,7 @@ import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { MatchDetailCalss,MenuData,MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance,go_where } from "src/core";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch,defineComponent,ref } from "vue";
 import { get_now_server } from 'src/core/utils/module/other.js'
-import footballRankingList from "src/base-h5/components/virtual/football-ranking-list.vue"
+import footballRankingList from "src/base-h5/components/virtual/football-ranking-list-2.vue"
 export default defineComponent({
   name: "virtual_sports_details",
   // #TODO MIXINS
