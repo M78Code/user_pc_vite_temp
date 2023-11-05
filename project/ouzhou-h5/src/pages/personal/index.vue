@@ -1,10 +1,10 @@
 <template>
-    <div>
-        个人中心
-    </div>
+    <personal />
 </template>
 <script setup>
+import personal from "src/base-h5/components/personal/components/index.vue"
 </script>
-<style lang="">
-    
+
+<style scoped lang="scss">
+
 </style>

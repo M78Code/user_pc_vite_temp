@@ -1,65 +1,100 @@
 <template>
-  <div class="personal_page">
-    <q-scroll-area ref="scrollAreaRef" :visible="false" style="height: 100%;">
-      <!-- 用户名称 -->
-      <header>
-        <img src="~assets/images/menu/avatar.png" alt="" />  Hi, Dafsghtyuh
-      </header>
-      <!-- 用户信息 -->
-      <div class="info">
-        <div class="name">
-          <span>Money</span>
-          <img @click="on_show_money(false)" src="~assets/images/menu/hide.png" alt="" />
-          <img @click="on_show_money(true)" src="~assets/images/menu/show.png" alt="" />
-        </div>
-        <div class="amount">{{ showMount }}</div>
-      </div>
-      <div class="bg_line">
-        <img src="~assets/images/menu/tips.png" alt="" />
+  <div class="personal_page"> 
+    <q-scroll-area ref="scrollAreaRef" :visible="false" style="height: 100%;"> 
+      <!-- 用户名称 --> 
+      <header> 
+        <img src="#" alt="" />  Hi, Dafsghtyuh
+      </header> 
+      <!-- 用户信息 --> 
+      <div class="info"> 
+        <div class="name"> 
+          <span>Money</span> 
+          <img @click="on_show_money(false)" src="#g" alt="" />
+          <img @click="on_show_money(true)" src="#" alt="" />
+        </div> 
+        <div class="amount">{{ showMount }}</div> 
+      </div> 
+      <div class="bg_line"> 
+        <img src="#" alt="" /> 
       </div>
       <!-- 设置 -->
-      <section>
+      <section> 
         <!-- Rules -->
-        <collapse :disabled="true" title="Rules" @click="jumpRules">
+        <!-- <collapse :disabled="true" title="Rules" @click="jumpRules">  -->
           <!-- 图片 -->
-          <template v-slot:title_icon>
-            <img class="icon" src="~assets/images/menu/rule.png" alt="" />
+          <!-- <template v-slot:title_icon>
+            <img class="icon" src="#" alt="" />
           </template>
-        </collapse>
+        </collapse> -->
+        <q-list class="rounded-borders">
+          <q-expansion-item
+            expand-separator
+            icon="perm_identity"
+            label="Rules"
+          >
+          </q-expansion-item>
+        </q-list>
         <!-- Language -->
-        <collapse v-model="l_visible" title="Language">
+        <!-- <collapse v-model="l_visible" title="Language">
           <template v-slot:title_icon>
-            <img class="icon" src="~assets/images/menu/language.png" alt="" />
+            <img class="icon" src="#" alt="" />
           </template>
           <template v-slot:content>
             <div :class="['language_item', {active: lang === key}]" v-for="{ key, language } in languages" :key="key" @click="on_change_lang(key)">
               <span> <span class="lang-icon" :class="`lang-${key}`"></span> {{ language }} </span>
-              <img class="lang" v-if="lang === key" src="~assets/images/personal/vector.png" alt="">
+              <img class="lang" v-if="lang === key" src="#" alt="">
             </div>
           </template>
-        </collapse>
+        </collapse> -->
+        <q-list class="rounded-borders">
+          <q-expansion-item
+            expand-separator
+            icon="perm_identity"
+            label="Language"
+          >
+            <div :class="['language_item', {active: lang === key}]" v-for="{ key, language } in languages" :key="key" @click="on_change_lang(key)">
+              <span> <span class="lang-icon" :class="`lang-${key}`"></span> {{ language }} </span>
+              <img class="lang" v-if="lang === key" src="#" alt="">
+            </div>
+          </q-expansion-item>
+        </q-list>
         <!-- Odds Settings -->
-        <collapse v-model="s_visible" title="Odds Settings">
+        <!-- <collapse v-model="s_visible" title="Odds Settings">
           <template v-slot:title_icon>
-            <img class="icon" src="~assets/images/menu/setting.png" alt="" />
+            <img class="icon" src="#" alt="" />
           </template>
           <template v-slot:content>
             <div class="setting_item" v-for="setting in settingData" :key="setting.title">
               <span>{{ setting.title }}</span>
-              <div class="switch">
+              <div class="switch"> 
                 <span class="bg" :style="{left: setting.index === setting.params[0] ? 0 : '50px'}"></span>
                 <span v-for="s in setting.params" :key="s" @click="setting.index = s" :class="{active: setting.index === s}">{{ s }}</span>
-              </div>
-            </div>
-          </template>
-        </collapse>
-      </section>
-    </q-scroll-area>
+              </div>  
+            </div> 
+          </template> 
+        </collapse>  -->
+        <q-list class="rounded-borders">
+          <q-expansion-item
+            expand-separator
+            icon="perm_identity"
+            label="Odds Settings"
+          >
+          <div class="setting_item" v-for="setting in settingData" :key="setting.title">
+              <span>{{ setting.title }}</span>
+              <div class="switch"> 
+                <span class="bg" :style="{left: setting.index === setting.params[0] ? 0 : '50px'}"></span>
+                <span v-for="s in setting.params" :key="s" @click="setting.index = s" :class="{active: setting.index === s}">{{ s }}</span>
+              </div>  
+            </div> 
+          </q-expansion-item>
+        </q-list>
+      </section> 
+    </q-scroll-area> 
   </div>
 </template>
  
 <script setup>
-import collapse from `project_path/src/components/collapse/index.vue`
+// import collapse from `project_path/src/components/collapse/index.vue`
 import { ref } from "vue"
 import { useRouter } from "vue-router"
 const lang = ref('zh')
@@ -154,7 +189,7 @@ const jumpRules = () => {
     position: relative;
     border-radius: 8px 8px 0 0;
     background-repeat: no-repeat;
-    background-image: url("src/assets/images/menu/bg.png");
+    background-image: url("#");
     background-size: cover;
     .name{
       display: flex;
@@ -180,7 +215,7 @@ const jumpRules = () => {
     margin-top: -40px;
     position: relative;
     background-repeat: no-repeat;
-    background-image: url("../../../assets/images/menu/bg_line.png");
+    background-image: url("#");
     background-size: cover;
     > img {
       width: 343px;
@@ -215,7 +250,7 @@ const jumpRules = () => {
           }
         }
       }
-      .content{
+      
         .language_item{
           display: flex;
           height: 50px;
@@ -283,17 +318,83 @@ const jumpRules = () => {
             }
           }
         }
-      }
+      
     }
   }
 }
-
+.language_item{
+          display: flex;
+          height: 50px;
+          align-items: center;
+          padding: 0 45px 0 27px;
+          transition: all 0.25s;
+          background: #F5F5F5;
+          justify-content: space-between;
+          &.active{
+            color: #FF7000;
+            background: #FFF1E6;
+          }
+          > span {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            font-weight: 400;
+          }
+          .lang{
+            width: 12px;
+            height: 9px;
+          }
+        }
+        .setting_item{
+          height: 50px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 0 30px 0 30px;
+          font-size: 14px;
+          font-weight: 400;
+          background: #F5F5F5;
+          > span {
+            height: 26px;
+          }
+          .switch{
+            position: relative;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            background: #E2E2E2;
+            border-radius: 20px;
+            justify-content: space-between;
+            > span {
+              width: 50px;
+              height: 100%;
+              font-size: 12px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              transition: all 0.25s;
+              color: #8A8986;
+              &.active{
+                color: #000;
+                background: #fff;
+                border-radius: 20px;
+              }
+            }
+            .bg{
+              position: absolute;
+              top: 0;
+              border-radius: 20px;
+              border: 1px solid #FF7000;
+              transition: all 0.25s;
+            }
+          }
+        }
 /* ************** 切换语言前面的图标 ************** -S */
 .lang-icon{
   width: 17px;
   height: 13px;
   margin-right: 10px;
-  background: url('assets/images/personal/lang.png') no-repeat;
+  background: url('#') no-repeat;
   background-size: calc(3.2px * 5) calc(36.4px * 5);
 }
 
