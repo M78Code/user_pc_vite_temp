@@ -94,9 +94,6 @@ export default {
     //   "get_menu_type"
     // ])
   },
-  mounted() {
-    console.error(PROJECT_NAME, PROJECT_NAME == 'app-h5' ? i18n_t('app_h5.detail.half') : i18n_t('match_info.half'));
-  },
   watch: {
     detail_data:{
       handler(n, o){
@@ -139,7 +136,6 @@ export default {
           score_arr.push(item.split("|")[1]);
         }
       })
-      console.error(score_arr);
       return score_arr;
     },
     /**

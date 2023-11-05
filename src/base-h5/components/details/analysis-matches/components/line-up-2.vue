@@ -317,4 +317,13 @@ import { LOCAL_PROJECT_FILE_PREFIX } from 'src/core'
 
 <style lang="scss" scoped>
 @import "../styles/line-up-list.scss";
+.line-up{
+  position: sticky;
+  top: 0.44rem;
+  z-index: 80;
+}
+.header {
+  // z-index:99999 !important;
+  top:0.8rem !important;
+}
 </style>
