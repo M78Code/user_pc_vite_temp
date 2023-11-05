@@ -26,7 +26,8 @@ const route = useRoute();
   const get_bet_show = ref(false)
   const get_info_show = ref(false)
   let state_data = reactive({
-    
+    //切换浏览器页面 获取最新的盘口数据
+    refresh:false,
     // 切换赛事时，重置玩法集请求次数计数
     get_category_list_req_count: 0,
     // refs['fixedHeight']
@@ -278,6 +279,8 @@ watch(() => MatchDataWarehouseInstance.data_version.version, () => {
   };
   const api_interface = () => {
     // useMittEmit(MITT_TYPES.EMIT_REF_API)
+    get_odds_list()
+    // useMittEmit(MITT_TYPES.EMIT_REF_API)
   };
   /**
    *@description 0号模板点击收起的时候，要调整滚动距离
@@ -418,7 +421,9 @@ watch(() => MatchDataWarehouseInstance.data_version.version, () => {
 
 
   //  赛事详情页面接口(/v1/m/matchDetail/getMatchDetail)
-  const initEvent = () => {
+  // refresh为刷新页面 切换网页页面触发获取最新盘口信息
+  const initEvent = (refresh=false) => {
+    state_data.refresh = refresh
     // get_uid为空时循环检测进行拉取逻辑处理
     if (UserCtr.uid || state_data.init_event_timer_count > 30) {
       
@@ -485,7 +490,6 @@ watch(() => MatchDataWarehouseInstance.data_version.version, () => {
    * 赛事详情页面接口(/v1/m/matchDetail/getMatchDetailPB)
    */
   const get_match_details = (params) => {
-
     let api =
       state_data.get_menu_type == 3000
         ? api_common.get_DJ_matchDetail_MatchInfo
@@ -503,6 +507,13 @@ watch(() => MatchDataWarehouseInstance.data_version.version, () => {
             match_detail_data_handle(res_data)
             // 数据传入数据仓库
             MatchDataWarehouseInstance.set_match_details(res_data)
+            //如果是切换tab页
+            if(state_data.refresh){
+              //获取玩法集 
+              get_odds_list()
+              //获取盘口
+              useMittEmit(MITT_TYPES.EMIT_REF_API,(true))
+            } 
             // 球种ID
             sport_id.value = res_data.csid
             if (params.init) {get_football_replay(0)}
@@ -628,7 +639,6 @@ watch(() => MatchDataWarehouseInstance.data_version.version, () => {
     params = { sportId: sport_id.value, mid: matchid.value },
     init_req
   ) => {
-    
     // state_data.data_list = Level_one_category_list();
     const get_details_category_list = () => {
       api_common
@@ -889,7 +899,7 @@ watch(() => MatchDataWarehouseInstance.data_version.version, () => {
       useMittOn(MITT_TYPES.EMIT_GET_ODDS_LIST, get_odds_list),
       useMittOn(MITT_TYPES.EMIT_SET_SHOW_VIDEO, set_show_video),
       useMittOn(MITT_TYPES.EMIT_VIDEO_DESCRIPTION_SHOW, video_description_show),
-      useMittOn(MITT_TYPES.EMIT_REF_API, details_refresh),
+      // useMittOn(MITT_TYPES.EMIT_REF_API, details_refresh),
       // // 拳击赛事级别关盘+当前时间(服务器时间)>=赛事开赛时间(mgt) 此时详情页拳击赛事切换下一场
       useMittOn(MITT_TYPES.EMIT_CHANGE_DETAILS_MATCH, event_switch),
       // TODO: ws相关

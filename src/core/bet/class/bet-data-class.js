@@ -172,7 +172,7 @@ this.bet_appoint_ball_head= null */
     // ---------------------------------- H5 ------------------------------------------------------------------------------------------
     this.bet_keyboard_config = {}
     // 键盘状态
-    this.bet_keyboard_show = false;
+    this.bet_keyboard_show = true;
   }
 
   // 通过  mount_point_key 计算 取值字段映射

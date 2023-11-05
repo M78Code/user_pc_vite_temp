@@ -241,7 +241,7 @@
 
   &.standard {
     width: 1.84rem;
-    height: 1.05rem;
+    height: 1.07rem;
     flex-wrap: nowrap;
     overflow: hidden;
   }
@@ -321,13 +321,17 @@
   .dir-standard {
     width: 1.8rem;
     position: absolute;
-    bottom: 0;
+    bottom: 1px;
 
     .block {
-      width: 0.08rem;
+      width:4px;
       height: 0.02rem;
-      background: var(--q-color-com-bg-color-44);
+      background: #E4E6ED !important;
       border-radius: 0.01rem;
+      &.selected {
+        width: 8px;
+        background: #C9CDDB !important;
+      }
 
       &:last-child {
         margin-left: 0.04rem;

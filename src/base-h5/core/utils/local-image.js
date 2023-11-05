@@ -52,6 +52,16 @@ const league_icon_back = compute_local_project_file_path('/image/list/league-col
 const polular_spirite =  compute_local_project_file_path('/image/png/home_page/polular_spirite.png')
 const polular_spirite_theme02 =  compute_local_project_file_path('/image/png/home_page/polular_spirite_theme02.png')
 
+// 进行中
+const in_progress = compute_local_project_file_path('/image/list/in_progress.png')
+// 未开赛
+const not_begin = compute_local_project_file_path('/image/list/not_begin.png')
+
+// 视频播放
+const video_play_app = compute_local_project_file_path('/image/list/video_play_app.svg')
+// 提前结算
+const settlement_app = compute_local_project_file_path('/image/list/settlement_app.png')
+
 //弹出框菜单图片
 const popup_menu = {
   refesh: compute_local_project_file_path('/image/menu/refesh.svg'),
@@ -68,5 +78,5 @@ export {
   img1, img2, img3, img4, Y0_img_white, match_icon_lock, normal_img_not_favorite_white, normal_img_not_favorite_black, normal_img_is_favorite, y0_img_favorite_black,
   lvs_icon_theme01, lvs_icon_theme02, animationUrl_icon_theme01, animationUrl_icon_theme02, muUrl_theme01, muUrl_theme01_y0, muUrl_theme02, muUrl_theme02_y0,
   none_league_icon, none_league_icon_black, image_panda_placeholder, default_league_icon, home_default_avatar, away_default_avatar, match_analysis, match_analysis2, mearlys_icon,
-  league_collapse_icon, league_icon, league_icon_back, popup_menu, polular_spirite, polular_spirite_theme02
+  league_collapse_icon, league_icon, league_icon_back, popup_menu, polular_spirite, polular_spirite_theme02, in_progress, not_begin, video_play_app, settlement_app
 }

@@ -15,13 +15,60 @@ class MatchUtils {
     let started = []
     let not_started = []
     list.forEach(t => {
+      // ms 1 100 为 已开赛
       if ([1,110].includes(+t.ms)) {
         started.push(t)
       } else {
         not_started.push(t)
       }
     })
-    return lodash.uniqBy([ ...started, ...not_started ], 'mid')
+    // 设置开赛，未开赛标题以及数量
+    const s_length = lodash.get(started, 'length', 0)
+    if (s_length > 0) {
+      started[0].start_falg = 1
+      started[0].in_progress_total = s_length
+    }
+    const n_length = lodash.get(not_started, 'length', 0)
+    if (n_length > 0) {
+      not_started[0].start_falg = 2
+      not_started[0].no_start_total = n_length
+    }
+    return lodash.uniqBy([ ...this.handler_match_classify_by_csid(started), ...this.handler_match_classify_by_csid(not_started) ], 'mid')
+  }
+
+  /**
+   * @description 赛事球种归类 
+   * @param {*} list 赛事数据
+   */
+  handler_match_classify_by_csid (list) {
+    const csid_list = list.map(l => {
+      return l.csid
+    })
+    const result_csids = lodash.uniq(csid_list)
+    const csid_matchs = []
+    result_csids.forEach(csid => {
+      const cur_csid_arr = list.filter(item => item.csid === csid)
+      cur_csid_arr.length > 0 && csid_matchs.push(...cur_csid_arr)
+    })
+    return csid_matchs
+  }
+
+  /**
+   * @description 赛事未开赛标题
+   * @param {*} i 赛事下标
+   * @returns 
+   */
+  get_match_is_show_ball_title (i, list) {
+    // 当前赛事
+    let is_show_ball_title = false
+    const match = list[i]
+    if (i === 0) {
+      is_show_ball_title = true
+    } else {
+      const prev_match = list[i - 1];
+      is_show_ball_title = match.csid !== prev_match.csid
+    }
+    return is_show_ball_title
   }
 
   /**
@@ -35,7 +82,7 @@ class MatchUtils {
     let is_show_no_play = false;
     const menu_lv_v1 = MenuData.current_lv_1_menu_mi.value
     // 详情页，或者  非今日串关不显示
-    if(PageSourceData.page_source == 'detail_match_list' || ![3,11].includes(+menu_lv_v1)){
+    if(PageSourceData.page_source == 'detail_match_list' || ![1,2,3,6].includes(+menu_lv_v1)){
       return false
     } else if(menu_lv_v1 == 11){
       //串关时,日期为今日才显示
@@ -46,7 +93,6 @@ class MatchUtils {
       }
     }
     if(match){
-      // 如果大于第一个赛事
       if(i > 0){
         // 上一个赛事
         let prev_match = BaseData.resolve_base_info_by_mid(mids[i - 1]);

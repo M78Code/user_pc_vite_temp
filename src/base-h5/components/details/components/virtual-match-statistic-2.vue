@@ -11,25 +11,37 @@
         <div
           v-for="(score, index) in datas.score_list"
           :key="index+'-'"
-          class="score-item items-center row"
+          class="score-item items-center col"
         >
-          <div class="info main">
-            <span
-              :class="['line', score.home == 0 && 'line0']"
-              :style="`width:${score.home * 10}%`"
-            ></span>
-            <span class="score">{{ score.home }}</span>
+          <div class="score-header row justify-center items-center">
+            <div class="left team team-home">
+              <span class="score">{{ score.home }}</span>
+            </div>
+            <div class="separate"></div>
+            <div class="right team team-away">
+              <span class="score">{{ score.away }}</span>
+            </div>
           </div>
-          <div class="separate"></div>
-          <div class="info away">
-            <span
-              :class="['line', score.away == 0 && 'line0']"
-              :style="`width:${score.away * 10}%`"
-            ></span>
-            <span class="score">{{ score.away }}</span>
+          <!-- 占比条 -->
+          <div class="score-line row">
+            <div class="info main">
+              <span
+                :class="['line', score.home == 0 && 'line0']"
+                :style="`width:${score.home * 10}%`"
+              ></span>
+            </div>
+            <div class="separate"></div>
+            <div class="info away">
+              <span
+                :class="['line', score.away == 0 && 'line0']"
+                :style="`width:${score.away * 10}%`"
+              ></span>
+            </div>
           </div>
+
         </div>
       </div>
+      
       <!-- 胜负百分比 -->
       <div class="result-wrap row">
         <div class="home item  column items-center">
@@ -45,7 +57,9 @@
             </div>
           </div>
         </div>
+        <div class="separate">
 
+        </div>
         <div class="away item column items-center">
           <div class="win-percent">{{ datas.win_away }}%</div>
 
@@ -112,12 +126,34 @@ export default defineComponent({
   .bg-card-startistic{
     background: var(--q-gb-bg-c-15);
     border-radius: 4px;
+    padding: 0.08rem;
   }
   .score-list {
     // margin-top: 0.2rem;
     .score-item {
 
       font-size: 0.12rem;
+      font-weight: 700;
+      color: var(--q-gb-t-c-18);
+      margin-bottom: 0.12rem;
+      .score-header{
+        padding: .05rem 0;
+      }
+      .score-line{
+        //按照设计图的3px太细了，故设置4px
+        --private-score-line-height: .04rem;
+        height: var(--private-score-line-height);
+        background-color: var(--q-gb-bg-c-18);
+        .separate{
+          background-color: transparent;
+        }
+      }
+      .separate {
+        text-align: center;
+        margin: 0 .025rem;
+        height: 0.02rem;
+        width: 0.06rem;
+      }
 
       .info {
         flex: 1;
@@ -131,12 +167,11 @@ export default defineComponent({
         }
 
         .line {
-          border-radius: 2px;
-          margin-right: 0.08rem;
-          height: 0.04rem;
+          border-radius: 1rem 0 0 1rem;
+          height: var(--private-score-line-height);
 
           &.line0 {
-            width: 2px !important;
+            
           }
         }
 
@@ -144,35 +179,35 @@ export default defineComponent({
           flex-direction: row-reverse;
 
           .line {
-            margin: 0 0 0 0.08rem;
+            border-radius: 0rem 1rem 1rem 0rem;
           }
         }
-      }
-
-      .separate {
-        margin: 0 0.13rem;
-        width: 0.08rem;
-        height: 0.02rem;
       }
     }
   }
 
   .result-wrap {
     margin-top: 0.2rem;
-    padding: 0 0.7rem;
+    // padding: 0 0.7rem;
     padding-bottom: 0.35rem;
-
+    .separate{
+      width: 0.08rem;
+    }
     .item {
       flex: 1;
-
+      background-color: var(--q-gb-bg-c-18);
+      border-radius: 0.04rem;
+      padding: .08rem 0;
       .result-list {
-        margin-top: 0.08rem;
-
+        margin-top: 0.04rem;
+        font-size: 0.10rem;
+        display: flex;
+        justify-content: center;
         .result-item {
           border-radius: 2px;
+          margin: 0.02rem;
           text-align: center;
-          margin: 0 0.01rem;
-          width: 0.16rem;
+          width: 0.20rem;
           height: 0.16rem;
         }
       }

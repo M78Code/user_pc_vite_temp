@@ -6,7 +6,9 @@
  */
 <template>
     <div>
-        <TopHeader :title="menu_lv2.title" v-if="!Array.isArray(menu_lv2) && [300,2000,50000].includes(+menu_lv2?.mi)">
+        <div v-show="false">   {{MenuData.update_time}} {{UserCtr.user_version}}</div>
+
+        <TopHeader v-if="[300,2000,50000].includes(+MenuData.top_menu_title.mi )">
             <template #right>
                 <div class="main-menu-right">
                     <span class="main-menu-right-symbol">￥</span>
@@ -14,16 +16,17 @@
                 </div>
             </template>
         </TopHeader>
+        
         <div class="main-wrap flex" v-else>
             <!--  返回按鈕  -->
             <slot name="menu-left">
                 <div class="goback-icon-wrapper column justify-center" @click="router.back()">
                     <!-- <div class="img" :style="compute_css_obj('menu-go-back-icon')"></div> -->
-                    <img class="img" :src="back" />
+                    <img class="img" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/back.svg`" alt="" />
                     <!-- <span class="icon-arrow-left"></span> -->
                 </div>
             </slot>
-            <div v-show="false">   {{MenuData.update_time}} {{UserCtr.user_version}}</div>
+           
             <div class="main-menu-container">
                 <template v-for="(item, index) in menu_list" :key="lodash_.get(item, 'code')">
                     <div class="m-menu-item" :class="{ current: lodash_.get(item, 'mi') == MenuData.current_lv_1_menu_mi.value }">
@@ -38,25 +41,16 @@
                 <span class="main-menu-right-money">{{ format_money2(balance) }}</span>
             </div>
         </div>
-        <div v-if="[3,6].includes(MenuData.current_lv_1_menu_mi.value)">
-            <DateTab  :dataList="dataList[MenuData.current_lv_1_menu_mi.value]"  />
-        </div>
-        <div v-if="[2000].includes(MenuData.current_lv_2_menu_mi)">
-            <DateTab  :dataList="dataList[MenuData.current_lv_2_menu_mi]"  />
-        </div>
+      
     </div>
 </template>
 <script setup>
 import lodash_ from "lodash";
-import { onMounted, reactive, ref, watch } from "vue";
-import back from "./img/back.svg";
+import { reactive, ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import { format_money2 } from "src/core/format/index.js";
-import { i18n_t, compute_css_obj, MenuData,UserCtr } from "src/core/index.js";
-import { get_sport_menu } from "./top-list";
-import { DateTab } from 'src/base-h5/components/menu/app-h5-menu/index';
-import { dateTabList } from "src/base-h5/components/menu/app-h5-menu/utils";
-import {  menu_lv2 } from 'src/base-h5/mixin/menu.js'
+import { i18n_t, compute_css_obj, MenuData,UserCtr,LOCAL_PROJECT_FILE_PREFIX } from "src/core/index.js";
+
 import TopHeader from './top-header.vue';
 
 const router = useRouter();
@@ -84,14 +78,7 @@ const menu_list = reactive([
         code:"champion"
     },
 ])
-/**
- * 早盘串关日期格式
- */
-const dataList = reactive({
-    3:dateTabList(new Date()),
-    6:dateTabList(new Date(new Date().getTime()+24*60*60*1000),{name:"今日",val:new Date()}),
-    2000:dateTabList(new Date(new Date().getTime()+24*60*60*1000),{name:"今日",val:new Date()})
-});
+
 // 用户余额
 const balance = ref(UserCtr.balance)
 /**

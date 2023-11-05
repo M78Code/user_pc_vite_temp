@@ -44,17 +44,17 @@
           <!-- 置顶 -->
           <template v-for="(item,keyscorll) in match_list_new_data">
             <template v-if="item.hton!=0">
-              <tournament-play-new @change_show="change_show" :key="item.topKey + item.hpid" :list="matchInfoCtr.list" :item_data="item" :scorllIndex="keyscorll"></tournament-play-new>
+              <tournament-play-new @change_show="change_show" :key="item.topKey + item.hpid" v-model:list="getlist" :item_data="item" :scorllIndex="keyscorll"></tournament-play-new>
             </template>
           </template>
           <!-- 非置顶 -->
           <template v-for="(item, keyscorll) in match_list_normal_data">
             <template v-if="item.hton==0">
               <template v-if="match_list_new_data.length == 0">
-                <tournament-play-new @change_show="change_show" :key="item.topKey + item.hpid" :list="matchInfoCtr.list" :item_data="item" :scorllIndex="keyscorll"></tournament-play-new>
+                <tournament-play-new @change_show="change_show" :key="item.topKey + item.hpid" v-model:list="getlist" :item_data="item" :scorllIndex="keyscorll"></tournament-play-new>
               </template>
               <template v-else>
-                <tournament-play-new @change_show="change_show" :key="item.topKey + item.hpid" :list="matchInfoCtr.list" :item_data="item"></tournament-play-new>
+                <tournament-play-new @change_show="change_show" :key="item.topKey + item.hpid" v-model:list="getlist" :item_data="item"></tournament-play-new>
               </template>
             </template>
           </template>
@@ -97,7 +97,7 @@ import { useRouter, useRoute } from "vue-router";
 import { useMittOn, useMittEmit, MITT_TYPES,compute_local_project_file_path } from  "src/core/"
 // import { Level_one_detail_odd_info } from "../category-list.js";
 import { category_info } from "./category.js"
-import { reactive, nextTick, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
+import { reactive, nextTick, onMounted, onUnmounted, toRefs, watch, defineComponent,computed } from "vue";
 import tournament_play_new from "src/base-h5/components/details/components/tournament-play/tournament-play-new-2.vue";
 export default defineComponent({
   name: "category",
@@ -274,6 +274,10 @@ export default defineComponent({
        })
    }
   }
+  const getlist =computed(()=>{
+    debugger
+    return MatchDataWarehouseInstance.get_quick_mid_obj(route.params.mid)?.odds_info
+  })
   //一键折叠盘口
   const {off}  = useMittOn(MITT_TYPES.EMIT_DETAILS_TOGGLE_HANDICAP, toggle_handicap);
   onUnmounted(off)
@@ -313,6 +317,7 @@ export default defineComponent({
       set_detail_data_storage,
       remove_session_storage,
       remove_detail_storage,
+      getlist
     }
   }
 })

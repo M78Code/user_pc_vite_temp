@@ -132,6 +132,7 @@ export const category_info = (category_arr=[]) => {
   // 监听详情数据仓库版本号更新odds_info数据
   watch(() => MatchDataWarehouseInstance.value.data_version.version, () => {
     match_list_normal()
+    match_list_new()
   })
 
   // 监听tab的ID变动时重新赋值
@@ -158,12 +159,13 @@ export const category_info = (category_arr=[]) => {
   // 置顶列表
   const match_list_new = () => {
     // TODO: 还未调试待修改
-    match_list_new_data.value = component_data.match_info_list;
+    match_list_new_data.value = MatchDataWarehouseInstance.value.listSortNew(route.params.mid);
   };
   // 非置顶列表
   const match_list_normal = () => {
     // return component_data.matchInfoCtr.listSortNormal();
-    match_list_normal_data.value = lodash.get(MatchDataWarehouseInstance.value, `list_to_obj.mid_obj[${route.params.mid}_].odds_info`);
+    // match_list_normal_data.value = lodash.get(MatchDataWarehouseInstance.value, `list_to_obj.mid_obj[${route.params.mid}_].odds_info`);
+    match_list_normal_data.value = MatchDataWarehouseInstance.value.listSortNormal(route.params.mid);
   };
 
   onMounted(() => {
@@ -172,6 +174,7 @@ export const category_info = (category_arr=[]) => {
     match_list_new()
     // 获取非置顶列表数据
     match_list_normal()
+    on_listeners()
     
   })
   // #TODO VUEX
@@ -318,7 +321,7 @@ export const category_info = (category_arr=[]) => {
   const initEvent = async (to_refresh, init_req) => {
     // console.error("初始化方法");
     if (to_refresh) {
-      to_refresh = to_refresh;
+      component_data.to_refresh = to_refresh;
     } else {
       component_data.arr_hshow = [];
     }
@@ -871,13 +874,23 @@ export const category_info = (category_arr=[]) => {
   };
 
   /** 批量注册mitt */
-const { emitters_off } = useMittEmitterGenerator([
-  { type: MITT_TYPES.EMIT_REF_API, initEvent },
-  { type: MITT_TYPES.EMIT_HIDE_DETAIL_MATCH_LIST, hide_detail_match_list },
-])
-
+// const { emitters_off } = useMittEmitterGenerator([
+//   { type: MITT_TYPES.EMIT_REF_API, initEvent },
+//   { type: MITT_TYPES.EMIT_HIDE_DETAIL_MATCH_LIST, hide_detail_match_list },
+// ])
+const on_listeners = () => {
+  // #TODO: IMIT
+  emitters =[
+   useMittOn( MITT_TYPES.EMIT_REF_API, initEvent ),
+   useMittOn( MITT_TYPES.EMIT_HIDE_DETAIL_MATCH_LIST, hide_detail_match_list),
+  ]
+};
+const off_listeners = () => {
+  // #TODO IMIT
+  emitters.map((x) => x && x.off());
+};
   onUnmounted(() => {
-    emitters_off()
+    off_listeners()
   })
   return {
     component_data,

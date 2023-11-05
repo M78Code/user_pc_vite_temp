@@ -4,12 +4,7 @@
 <template>
   <div :class="['match-list-container', { empty_page: match_is_empty }]" :style="page_style">
     <template v-if="!match_is_empty">
-      <!-- <match-list></match-list> -->
       <component :is="target_com"></component>
-      <!-- 到底了容器原加载更多容器-->
-      <div :class="['loading-more-container', { home_hot: is_hot }]" v-if="MatchMeta.match_mids.length > 3">
-        <div style="color:#AAAEB8;font-size:.12rem;"> {{ $t("scroll_wrapper.is_footer") }} </div>
-      </div>
     </template>
 
     <template v-else>
@@ -38,8 +33,12 @@ import { is_hot } from 'src/base-h5/mixin/menu.js'
 
 import NoData from "src/base-h5/components/common/no-data.vue"; // 无网络展示组件
 
+// yazhou-h5 赛事列表
 import MatchList1 from './components/match-list1.vue'
+// app-h5 赛事列表
 import MatchList2 from './components/match-list2.vue'
+// ouzhou-h5 赛事列表
+import MatchList3 from './components/match-list3.vue'
 
 import { PROJECT_NAME } from "src/core/index.js"
 
@@ -63,7 +62,7 @@ let subscription_timer = null
 
 // TODO: 下面需要替换
 const invok_source = ref('')
-const  ws_invoke_key = ref('match_main')
+const ws_invoke_key = ref('match_main')
 const match_is_empty = ref(false)
 const window_scrolly = ref(0)
 const match_list_wrapper_height = ref(0)
@@ -80,7 +79,8 @@ onMounted(() => {
 
 const config = {
   'app-h5': MatchList2,
-  'yazhou-h5': MatchList1
+  'yazhou-h5': MatchList1,
+  'ouzhou-h5': MatchList3,
 }
 
 const target_com = computed(() => {

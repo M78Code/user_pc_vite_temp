@@ -61,7 +61,7 @@ const props = defineProps({
     default: null,
   },
 });
-let match_style_obj = MatchListCardDataClass.all_card_obj[props.mid + "_"];
+let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.mid)
 const match_list_tpl_size =
   MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`]
     .width_config;

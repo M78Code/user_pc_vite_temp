@@ -67,7 +67,7 @@ export default {
   },
   setup(props) {
     // 赛事样式对象
-    let match_style_obj = MatchListCardDataClass.all_card_obj[props.mid+'_']
+    let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.mid)
     // 组件是否加载完成
     const is_mounted = ref(true);
     // 显示部分dom ID
@@ -77,6 +77,7 @@ export default {
       // setTimeout(()=>{
       //   is_mounted.value = true
       // })
+      console.log('match_style_obj', match_style_obj);
     })
     onUnmounted(() => {
       match_style_obj = null

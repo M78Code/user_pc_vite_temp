@@ -8,6 +8,9 @@ import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import MatchFold from 'src/core/match-fold'
 import MatchCollect from 'src/core/match-collect'
 
+// i: 每个组件的 props 赛事下标， 来源 === 组件
+// match_of_list: 每个组件的 props 赛事对象， 来源 === 组件
+
 export default {
   computed: {
     is_show () {

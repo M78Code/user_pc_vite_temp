@@ -150,7 +150,6 @@ class MatchListCardInfo {
   update_match_style(mids) {
     let current_match_info = update_match_style(mids);
     MatchListCardData.set_match_list_style_info(current_match_info)
-    MatchListCardData.set_list_version()
   }
 
   /**
