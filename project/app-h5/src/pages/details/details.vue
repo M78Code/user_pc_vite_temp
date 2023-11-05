@@ -163,7 +163,7 @@ import {is_export } from "src/base-h5/mixin/menu";
 // 详情页中部玩法集tab
 import detailsTab from "src/base-h5/components/details/components/details-tab-2.vue";
 //首发组件
-import lineUp from "src/base-h5/components/details/analysis-matches/components/line-up-list.vue"
+import lineUp from "src/base-h5/components/details/analysis-matches/components/line-up-2.vue"
 import highlights from "src/base-h5/components/details/analysis-matches/highlights/highlights.vue"
 export default defineComponent({
   name: "details",
