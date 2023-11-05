@@ -52,7 +52,7 @@
                   {{ match.tn }}
                 </span>
               </span>
-              <icon-wapper color="#c9c9c9" name="icon-arrow" size="15px" :class="['icon-wapper', {'close': collapsed}]" />
+              <IconWapper color="#c9c9c9" name="icon-arrow" size="15px" :class="['icon-wapper', {'close': collapsed}]" />
             </span>
           </div>
           
@@ -141,7 +141,7 @@
                       {{GlobalAccessConfig.get_handicapNum()? get_match_mc(match) : i18n_t('footer_menu.more') }}+
                     </span>
                     <span class="add_text" v-if="GlobalAccessConfig.get_handicapNum()">
-                      <icon-wapper color="#888" name="icon-triangle1" size="14px" class="icon-wapper-more" />
+                      <IconWapper color="#888" name="icon-triangle1" size="14px" class="icon-wapper-more" />
                     </span>
                   </span>
                 </div>

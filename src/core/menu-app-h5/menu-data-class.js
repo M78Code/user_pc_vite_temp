@@ -370,7 +370,6 @@ class MenuData {
         id = item.mi
       }
     }
-    console.error('id',id,'===',sprite_images_postion[id])
     if (get_ball_id) return sprite_images_postion[id];
     let type = "";
     switch (String(id)) {
