@@ -37,7 +37,7 @@
           <div class="menu_item" :class="[
             'menu_item_' + item.mi,
             // { active: meta_data_store.current_menu.mi == item.mi },
-          ]" v-for="item in allSports" :key="item.mi" @click="change_current_menu(item)"
+          ]" v-for="item in MenuData.menu_list" :key="item.mi" @click="change_current_menu(item)"
             :data-id="item.mi">
             <sport_icon size="18" :sport_id="item.mi" />
             <!-- 有电竟体育时展示电竞体育2000  Esports  -->
@@ -55,29 +55,43 @@
   </div>
 </template>
 <script setup>
-import { defineComponent, reactive, defineEmits, onMounted } from "vue";
+import { reactive, defineEmits} from "vue";
 import sport_icon from "./sport_icon.vue";
 import BaseData from "src/core/base-data/base-data.js";
-import { useRouter, useRoute } from "vue-router"
+import { MenuData } from 'src/core/';
+import { useRouter } from "vue-router";
 const router = useRouter();
-const emits = defineEmits(['isLeftDrawer'])
+const emits = defineEmits(['isLeftDrawer']);
+/**
+ * vr 电竞
+ */
 const sportsGenre = reactive([
   { name: "Esports", className: "esports", mi: "2000",route: '/esports'},
   { name: "VR Sports", className: "vr-sports", mi: "300",route: '/virtual' },
 ])
+/**
+ * 热门
+ */
 const popular = reactive([
   { name: "Football", className: "football", mi: "101" },
   { name: "Basketball", className: "basketball", mi: "102" },
   { name: "Tennis", className: "tennis", mi: "105" },
 ])
-const allSports = BaseData.mew_menu_list_res.filter((item)=>{return +item.mi<300})
+/**
+ * 电竞 vr点击
+ * @param {*} data 
+ */
 const set_menu_obj = (data) => {
   router.push(data.route)
 }
-const change_current_menu = (m_data) => {
-  console.log(m_data)
+/**
+ * 球类点击
+ * @param {*} m_data 
+ */
+const change_current_menu = (item) => {
+  MenuData.set_menu_mi(item.mi);
   emits('isLeftDrawer')
-  router.push("/");
+  router.push("/");//跳转今日列表
 }
 </script>
 <style lang="scss" scoped>

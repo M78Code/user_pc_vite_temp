@@ -119,7 +119,7 @@ export const league_container_card_template  = {
   // 卡片总高度备份 用于折叠展开还原卡片高度
   card_total_height_back:0,
   // 联赛下的赛事ID 字符串格式 逗号隔开
-  mids:'',
+  mids:'123123，45345,134,4324，',
   // 对应的联赛标题卡片key
   league_title_card_key:'',
   // 赛事数据加载状态 loaded：赛事数据已加载，loading：数据加载中，user_api_limited：接口限流 empty:暂无数据
@@ -163,4 +163,12 @@ export const fold_template = {
   is_show_card:true,
 }
 
- 
+// 欧洲版 顶部 15分钟 卡片模板
+
+// 欧洲版  热门 卡片模板
+
+// 欧洲版球种标题模板
+
+// 欧洲版联赛标题模板
+
+// 欧洲版赛事卡片模板

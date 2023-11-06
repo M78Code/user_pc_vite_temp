@@ -7,11 +7,12 @@
   <div class="bet-all-detele">
     <div class="del-info">
       <div class="del-info-icon">删</div>
-      <div class="del-info-name">Detele All</div>
+      <div class="del-info-name">Single Bet</div>
+        <div class="del-info-name">Highest Win 0.00</div>
     </div>
     <div class="del-info">
-      <div class="del-info-type">Betting Type</div>
-      <div class="del-info-dui">√</div>
+      <div class="del-info-type">Limits</div>
+      <div class="del-info-dui">10-9999</div>
     </div>
   </div>
 </template>
@@ -41,7 +42,7 @@
     }
     .del-info{
       display: flex;
-      font-size: 0.12rem;
+      font-size: 0.13rem;
     }
     .bet-all-detele{
       display: flex;

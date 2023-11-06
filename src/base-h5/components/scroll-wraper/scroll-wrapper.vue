@@ -32,7 +32,7 @@
         </div>
       </template>
       <!-- 到底了容器-->
-      <div :class="['loading-more-container']" v-if="max_height">
+      <div :class="['loading-more-container']" v-if="max_height && !get_is_static()">
         <div style="color:#AAAEB8;font-size:.12rem;"> {{ $t("scroll_wrapper.is_footer") }} </div>
       </div>
     </div>
@@ -256,7 +256,7 @@ onUnmounted(() => {
   width: 100%;
   height: 100%;
   overflow-y: auto;
-  background-color: #f5f5f5;
+  // background-color: #f5f5f5;
   &.data-get-empty {
     min-height: 0 !important;
     height: 0 !important;

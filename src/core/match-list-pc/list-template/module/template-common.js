@@ -222,3 +222,9 @@ export const match_style_template = {
   // 是否需要动态计算高度
   is_dynamic_compute_height:false,
 }
+
+// 欧洲版赛事样式模板
+export const match_style_template_ouzhou = {
+  // 主盘口高度
+  main_handicap_height:105,
+}

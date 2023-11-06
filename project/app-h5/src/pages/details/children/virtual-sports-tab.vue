@@ -313,6 +313,7 @@ export default defineComponent({
 
   .vir-details-tab {
   height: 0.4rem;
+  // 此处边距会导致页面露出背景色, 先修改背景色为ui的var(--q-gb-bg-c-15)
   margin-bottom: 0.04rem;
 }
 

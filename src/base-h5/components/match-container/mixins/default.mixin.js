@@ -70,7 +70,6 @@ export default {
       get_goto_detail_matchid: '',
       get_goto_detail_match_info: '',
       get_not_found_target_dom_count: '',
-      get_standard_odd_status: '',
     }
   },
   mounted() {
@@ -111,7 +110,6 @@ export default {
     // TODO: 判断是否显示体育类型
     show_sport_title () {
       if (is_detail.value) { return false }
-      debugger
       if (is_hot.value) {
         // 热门
         if (lodash.get(MenuData.hot_tab_menu, 'index') !== 0) { return false }
