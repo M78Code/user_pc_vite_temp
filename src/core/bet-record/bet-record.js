@@ -23,6 +23,7 @@ const outcome = {
   "6": t("bet_record.bet_no_status06"), //'输半',
 }
 
+
 class BetRecord {
   constructor() {
     this.init_core()
@@ -110,14 +111,17 @@ class BetRecord {
         return { text: '', color: '' }
     }
   }
-  // 根据提前结算按钮状态， 过滤数据
+  // 根据提前结算按钮状态， 过滤提前结算的数据
   filter_early_money_list(value, bol) {
     let all_list = lodash.cloneDeep(value)
     if(bol) {
       lodash.forEach(all_list, (value, key) => {
-        value.data = value.data.map(item => {
+        value.data = lodash.filter(value.data, item => {
           return item.enablePreSettle
         })
+        if(!value.data.length) {
+          delete all_list[key]
+        }
       })
     }
     return all_list
