@@ -22,8 +22,8 @@
                   <div class="row items-center">
                     <div class="row items-center">
                       <!-- 联赛icon -->
-                      <img :src="item1.picUrlthumb ? get_server_file_path(item1.picUrlthumb) : compute_img_url('match-cup')"
-                        @error="league_icon_error" class="match_logo" />
+                      <!-- <img :src="item1.picUrlthumb ? get_server_file_path(item1.picUrlthumb) : compute_img_url('match-cup')"
+                        @error="league_icon_error" class="match_logo" /> -->
                       <div class="name-overhide">{{ item1.nameText }}</div>
                       <div class="nums"
                         v-show="!(type == 28 && [1001, 1002, 1004, 1011, 1010, 1009].includes(get_curr_sub_menu_type))">
