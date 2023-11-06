@@ -110,7 +110,11 @@ watch(() => pre_odds_value, (new_) => {
 })
 
 watch(() => money.value, (new_) => {
-  useMittEmit(MITT_TYPES.EMIT_INPUT_BET_MONEY,{ params:BetData.bet_keyboard_config, money:money.value })
+  let emit_name = 'EMIT_INPUT_BET_MONEY'
+  if(BetData.is_bet_single){
+    emit_name = 'EMIT_INPUT_BET_MONEY_SINGLE'
+  }
+  useMittEmit(MITT_TYPES[emit_name],{ params:BetData.bet_keyboard_config, money: new_ })
 })
 
 watch(() => active_index, (new_) => {
@@ -145,7 +149,11 @@ const _handleKeyPress = (e) => {
       _handleNumberKey(num);
       break;
   }
-  useMittEmit(MITT_TYPES.EMIT_INPUT_BET_MONEY, { params:BetData.bet_keyboard_config, money:money.value } )
+  let emit_name = 'EMIT_INPUT_BET_MONEY'
+  if(BetData.is_bet_single){
+    emit_name = 'EMIT_INPUT_BET_MONEY_SINGLE'
+  }
+  useMittEmit(MITT_TYPES[emit_name], { params:BetData.bet_keyboard_config, money:money.value } )
 }
 
 // 小数点 .

@@ -5,6 +5,7 @@
 <template>
   <div class="bet-mix-box-child2">
     <!-- 多注顶部蒙层 -->
+   
     <div v-if="false" class="full-shadow" @click.self="pack_up" @touchmove.prevent></div>
     <div class="full-shadow" @click.self="pack_up" @touchmove.prevent></div>
     <!-- 投注中的蒙层，所有不能点击 -->
@@ -13,6 +14,7 @@
     <div style="display: none;">{{ BetData.bet_data_class_version }} {{BetViewDataClass.bet_view_version}}</div>
    
     <div class="content-box">
+      {{BetViewDataClass.bet_order_status}} - {{BetData.is_bet_single}}
       <div>
         <!-- 头部 -->
         <bet-bar @click="pack_up" v-if="BetViewDataClass.bet_order_status == 1"></bet-bar>
@@ -284,14 +286,9 @@ const calc_class = computed(() => {
     || btn_show.value == 5;
   return flag
 })
-// 投注金额赋值
-const change_money_handle = (val) => {
-  bet_amount.value = format_money2(val.money)
-  // console.log("投注金额",bet_amount.value)
-}
+
 onMounted(() => {
   useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money)
-  useMittOn(MITT_TYPES.EMIT_INPUT_BET_MONEY, change_money_handle)
   let munu_type = true
   if (munu_type) {
     // get_query_bet_amount_common()
@@ -300,7 +297,6 @@ onMounted(() => {
 
 const set_ref_data_bet_money = () => {
   // let markInfo = lodash.get(BetData, 'bet_single_list')
-  console.error('bet_single_list', BetData.bet_single_list);
   bet_show_single.value = true
 }
 
@@ -314,7 +310,6 @@ const set_clear = () => {
 
 onUnmounted(() => {
   useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money).off
-  useMittOn(MITT_TYPES.EMIT_INPUT_BET_MONEY, change_money_handle).off
 })
 </script>
 <style lang="scss" scoped>
