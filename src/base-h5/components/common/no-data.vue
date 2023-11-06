@@ -18,12 +18,10 @@
                     {{ arr.noMatchNew.txt[2] }}</span>
             </p>
         </template> -->
-        <div class="empty-favorite-bg" :style="compute_css_obj(lodash.get(arr_const[which], 'key'))">
-        </div>
-        <p>
-            <!-- 有消息用消息 没有信息 用默认信息 -->
-            {{ msg ? $t(msg) : lodash.get(arr_const[which], 'txt') }}
-        </p>
+        <!-- <div class="empty-favorite-bg" :style="compute_css_obj(lodash.get(arr_const[which], 'key'))"> </div> -->
+        <img class="no_data_img" :src="no_data_img" alt="">
+         <!-- 有消息用消息 没有信息 用默认信息 -->
+        <p> {{ msg ? $t(msg) : lodash.get(arr_const[which], 'txt') }} </p>
     </div>
 </template>
 
@@ -33,6 +31,7 @@ import { useRoute } from 'vue-router'
 
 import { i18n_t ,} from "src/boot/i18n.js";
 import { useMittEmit,compute_css_obj, MITT_TYPES, LOCAL_PROJECT_FILE_PREFIX } from "src/core/index.js"
+import { no_data_img } from 'src/base-h5/core/utils/local-image.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
 // const noMatch2 = () => import(`${LOCAL_PROJECT_FILE_PREFIX}/image/png/noMatch2.png`)
 
@@ -136,6 +135,10 @@ function refresh_data() {
     min-height: 100%;
     text-align: center;
     color: #a5a9b3;
+    .no_data_img{
+        width: 300px;
+        height: 200px;
+    }
 
     .empty-favorite-bg {
         width: 1.8rem;

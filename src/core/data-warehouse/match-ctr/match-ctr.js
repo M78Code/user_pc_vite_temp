@@ -31,7 +31,7 @@
  */
 import MatchDataBaseWS from  "./match-ctr-ws.js"
 import { reactive } from 'vue'
-
+import {other_play_name_to_playid} from 'src/core/constant/config/data-class-ctr/other-play-id.js'
 export default class MatchDataBase
 {
   /**

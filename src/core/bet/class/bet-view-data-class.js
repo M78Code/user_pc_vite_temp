@@ -149,7 +149,6 @@ class BetViewData {
   // 设置投注状态
   // 1-投注状态,2-投注中状态,3-投注成功状态(主要控制完成按钮),4-投注失败状态,5-投注项失效
   set_bet_order_status(code) {
-    console.error('ssss')
     this.bet_order_status = code
     // 更新页面
     this.set_bet_view_version()
@@ -160,7 +159,6 @@ class BetViewData {
   set_bet_error_code({ code, message }) {
     this.error_message = message
     this.error_code = code
-    console.error('aaaaa')
 
     if (code == 200) {
       // 3-投注成功状态(主要控制完成按钮)

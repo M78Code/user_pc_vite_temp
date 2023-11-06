@@ -1017,6 +1017,7 @@
     "add": "Tambah",
     "all_result": "Semua hasil",
     "animation": "Animasi",
+    "animation_info": "Info Animasi",
     "ball": "Ball",
     "cancel": "Batal",
     "delay": "Tunda",
@@ -1048,6 +1049,7 @@
     "total_score": "Pts skrg",
     "unknown": "Tak dikenal",
     "video": "Video",
+    "video_info": "Infor Video",
     "yes": "Ya",
     "match_parlay": "Fold"
   },

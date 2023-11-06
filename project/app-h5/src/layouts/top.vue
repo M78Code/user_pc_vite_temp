@@ -14,8 +14,8 @@
       <DateTab :dataList="dataList[MenuData.current_lv_1_menu_mi.value]"  />
     </div>
 
-    <div v-if="[2000].includes(MenuData.current_lv_2_menu_mi)">
-        <DateTab :dataList="dataList[MenuData.current_lv_2_menu_mi]"  />
+    <div v-if="[2000].includes(MenuData.current_lv_2_menu_i)">
+        <DateTab :dataList="dataList[MenuData.current_lv_2_menu_i]"  />
     </div>
     <!-- 滑动菜单组件 -->
     <ScrollMenu :scrollDataList="ref_data.scroll_data_list" :current_mi="ref_data.current_mi" />
@@ -53,6 +53,7 @@ import { dateTabList } from "src/base-h5/components/menu/app-h5-menu/utils";
 
 import { TopMenu,ScrollMenu,SearchTab,DateTab } from 'src/base-h5/components/menu/app-h5-menu/index'
 import setectLeague from 'src/base-h5/components/setect-league/index.vue'
+import { Base } from "licia/Class";
 
 const route = useRoute();
 const inner_height = window.innerHeight;  // 视口高度
@@ -90,16 +91,44 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
 
   // 设置滑动菜单的选中id
   const set_scroll_current = val => {
-    console.error('nevalw_',val)
     ref_data.current_mi = val.mi
     // 设置二级菜单 
-    MenuData.set_current_lv_2_menu_mi(val)
+    MenuData.set_current_lv_2_menu_i(val)
+    // 设置菜单属性
+    if([300,2000,50000].includes(+val.mi)){
+      // 设置vr /收藏 电竞 头信息
+      MenuData.set_top_menu_title(val)
+      console.error("Ba",BaseData)
+      // 清空一级菜单显示 用于后续更新
+      MenuData.current_lv_1_menu_mi.value = ''
+      // 设置 对应菜单的数据
+      switch(+val.mi){
+        case 300:
+          ref_data.scroll_data_list = MenuData.get_menu_lvmi_special_list(val.mi)
+          break
+
+        case 2000:
+          ref_data.scroll_data_list = BaseData.dianjing_sublist
+          break  
+        
+        case 50000:
+          let menu_list_res = BaseData.mew_menu_list_res.filter(item=> item.mi*1 < 300) || []
+          menu_list_res.unshift({mi:0,btn:1, ct:"",title:"全部"})
+          ref_data.scroll_data_list = menu_list_res
+          break  
+      }
+
+      let obj = lodash_.get(ref_data.scroll_data_list,`[0]`,{})
+      // 设置选中菜单的id
+      ref_data.current_mi = obj.mi
+      // 设置二级菜单 
+      MenuData.set_current_lv_2_menu_i(obj)
+    }
     
     set_menu_mi_change_get_api_data()
   }
 
   watch(()=> MenuData.current_lv_1_menu_mi.value, new_ => {
-    console.error('new_',new_)
     // 今日 滚球 冠军
     if( [1,2,400].includes(1*new_) ){
       set_scroll_data_list(new_)
@@ -116,7 +145,7 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
     }
     let obj = lodash_.get(ref_data.scroll_data_list,`[${index}]`,{})
     // 设置二级菜单 
-    MenuData.set_current_lv_2_menu_mi(obj)
+    MenuData.set_current_lv_2_menu_i(obj)
     // 设置选中菜单的id
     ref_data.current_mi = obj.mi
 
@@ -125,9 +154,21 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
 
   // 菜单变化页面请求数据
   const set_menu_mi_change_get_api_data = () => {
-    // 今日 / 滚球/ 冠军 没有 三级
-    if([1,2,3,400].includes(MenuData.current_lv_1_menu_mi.value)){
+    // 今日 / 滚球 
+    if([1,2].includes(MenuData.current_lv_1_menu_mi.value)){
       handle_match_render_data()
+    }
+    // 冠军
+    if(MenuData.current_lv_1_menu_mi.value == 400){
+      MatchMeta.get_champion_match()
+    }
+    // 电竞
+    if(MenuData.top_menu_title.mi == 2000){
+      MatchMeta.get_esports_match()
+    }
+    // 电竞
+    if(MenuData.top_menu_title.mi == 50000){
+      MatchMeta.get_collect_matche()
     }
   }
   /**

@@ -63,9 +63,8 @@ export const  width_config ={
     return base_config
   }
 
-  // 赛事模板配置
+// 赛事模板配置
 export const match_template_config = {
-  ...TemplateCommon.match_style_template,
- 
-}
-
+    ...TemplateCommon.match_style_template_ouzhou,
+  };
+  

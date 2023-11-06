@@ -8,7 +8,7 @@
   <div @touchmove.prevent.stop class='dialog-header' v-cloak>
     <div class="row mx-15">
       <!-- 返回按钮 -->
-      <div class="col-1 details-t-color5 parent-back-icon" @click="$common.go_where({back_to: 'go_to_back'})">
+      <div class="col-1 details-t-color5 parent-back-icon" @click="go_where_item({back_to: 'go_to_back'})">
         <div class="go-back"></div>
       </div>
       <!-- 显示赛事名称 -->
@@ -25,7 +25,7 @@
 
 <script>
 import seamlessMarquee from 'src/project/components/common/seamless_marquee.vue' // 详情页头部联赛名文字超出隐藏无缝滚动
-
+import { go_where } from "src/core/utils/index.js"
 export default {
   name: 'dialog_header',
   data(){
@@ -48,7 +48,10 @@ export default {
     hide_dialog(){
       // 显示联赛列表传false
       useMittEmit(MITT_TYPES.EMIT_IS_BOOL_DIALOG_DETAILS, false)
-    }
+    },
+    go_where_item(params) {
+      go_where( {...params, route: this.route, router: this.router} );
+    },
   }
 }
 </script>

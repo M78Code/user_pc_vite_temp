@@ -969,6 +969,7 @@
     "add": "Thêm",
     "all_result": "Kết quả",
     "animation": "Animation",
+    "animation_info": "Info Animation",
     "ball": "Xấu",
     "cancel": "Hủy",
     "delay": "Trì hoãn",
@@ -999,6 +1000,7 @@
     "total_score": "Tổng điểm hiện tại",
     "unknown": "Chưa xác định",
     "video": "Video",
+    "video_info": "Info Video",
     "yes": "Có",
     "match_parlay": "Xâu"
   },

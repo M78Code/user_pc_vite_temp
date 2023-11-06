@@ -34,6 +34,7 @@
         </div>
       </div>
      <!--玩法集区域 -->
+     <!-- 该区域在APP复刻版中已经改为白色背景了, 且不需要上边距 -->
     <div class="detail-main" :class="{'detail-main2':get_betbar_show}">
       <virtual-sports-category v-if="match && tabs_name == 'bet'" :mid="mid" :current_match="match" :source="'virtual_sports_details'"/>
       <virtual-match-statistic v-if="match && tabs_name == 'lszj'" />
@@ -63,7 +64,7 @@ import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { MatchDetailCalss,MenuData,MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance,go_where } from "src/core";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch,defineComponent,ref } from "vue";
 import { get_now_server } from 'src/core/utils/module/other.js'
-import footballRankingList from "src/base-h5/components/virtual/football-ranking-list.vue"
+import footballRankingList from "src/base-h5/components/virtual/football-ranking-list-2.vue"
 export default defineComponent({
   name: "virtual_sports_details",
   // #TODO MIXINS
@@ -461,7 +462,10 @@ export default defineComponent({
 .virtual-detail {
   height: calc(var(--vh, 1vh) * 100);
   overflow: auto;
-  background: var(--q-gb-bg-c-19); //夜间版#0E1014 
+  // 根据APP复刻版最新的ui 设置背景色为#F8F9FA
+  // background-color: var(--q-gb-bg-c-15);
+  background-color: #F8F9FA; //#TODO css var
+  // background: var(--q-gb-bg-c-19); //夜间版#0E1014 
 }
 /*  头部 */
 .virtual-head {
@@ -570,10 +574,13 @@ export default defineComponent({
     position: absolute;
   }
 }
-
 .detail-main {
-  margin-top: 0.04rem;
-  background: var(--q-gb-bg-c-19);
+  margin-top: 0.08rem;
+  margin-left: 0.05rem;
+  margin-right: 0.05rem;
+  border-radius: 0.04rem;
+  // background: var(--q-gb-bg-c-19);
+  background-color: var(--q-gb-bg-c-15);
   &::-webkit-scrollbar {
     display: none;
   }

@@ -7,7 +7,7 @@
           <span>{{ title }}</span>
         </span>
         <slot name="title_right">
-          <img :class="['arrow', { expend: visible }]" src="#" alt="" />
+          <img :class="['arrow', { expend: visible }]" src="./images/arrow.png" alt="" />
         </slot>
         <div class="line"></div>
       </div>

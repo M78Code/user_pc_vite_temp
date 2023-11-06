@@ -4,46 +4,33 @@
 -->
 <template>
   <div style="display: none;">{{ BetRecordClass.bet_record_version }}</div>
-  <!-- 提前兑现规则申明 -->
-  <early-settle-tips v-if="calc_show || details_show_btn" />
   <!-- 提前兑换按钮 -->
   <div class="early-settle" v-if="calc_show">
-    <div class="early-button">
-      <button @click="submit_click">
-        <!-- 暂停提前结算 -->
-        <template v-if="status == 5">{{ i18n_t('early.btn1') }} </template>
-        <!-- 提前结算 -->
-        <template v-if="status == 1 || status == 6">{{ i18n_t('early.btn2') }}</template>
-        <!-- 确认提前结算 -->
-        <template v-if="status == 2">{{ i18n_t('early.btn3') }}</template>
-        <!-- 确认中... -->
-        <template v-if="status == 3">{{ i18n_t('early.btn4') }}</template>
-        <!-- 已提前结算 -->
-        <template v-if="status == 4">{{ i18n_t('early.btn5') }}</template>
-        <!-- 按钮上的金额 -->
-        <template v-if="status !== 5 && (Number(front_settle_amount) || expected_profit)">{{ betting_amount }}</template>
-        <img class="load" v-if="status == 3" :src="compute_local_project_file_path('/image/gif/loding.gif')">
-      </button>
-      <!-- <button class="change"> 金额有变更 </button>
-      <button class="cancel"> 取消 </button> -->
+    <div class="early-tips row">
+      <p>Cashout Amount Included Stake</p>
+      <span v-if="status == 2 || status == 3">Only For Full Cashout</span>
     </div>
-    <!-- 调整金额滑块 -->
-    <template style="display: none;">
-      <q-slide-transition>
-        <div v-show="slider_show" class="slider-wrap">
-          <!-- 提前结算投注额 -->
-          <q-slider track-size="0.06rem" @change="change_percentage" class="slider-content" thumb-size="0.16rem"
-            v-model="percentage" :min="0" :max="100" label label-always :label-value="cashout_stake.toFixed(2)" />
-        </div>
-      </q-slide-transition>
-      <div class="change-btn" 
-        v-if="(status == 1 || status == 5 || status == 6) && lodash.get(UserCtr, 'pcs')"
-        :class="slider_show ? 'up' : 'down'" 
-        @click="change_slider_show">
-        <span>{{i18n_t('app_h5.cathectic.adjustment_amount')}}</span>
-        <img :src="compute_local_project_file_path('/image/gif/change.gif')">
-      </div>
-    </template>
+    <div class="early-button">
+      <button @click="submit_click" :class="{'confirm': status == 2 || status == 3, 'success': status == 4}">
+        <span>
+          <!-- 暂停提前结算 -->
+          <template v-if="status == 5">{{ i18n_t('early.btn1') }} </template>
+          <!-- 提前结算 -->
+          <template v-if="status == 1 || status == 6">{{ i18n_t('early.btn2') }}</template>
+          <!-- 确认提前结算 -->
+          <template v-if="status == 2">{{ i18n_t('early.btn3') }}</template>
+          <!-- 确认中... -->
+          <template v-if="status == 3">{{ i18n_t('early.btn4') }}</template>
+          <!-- 已提前结算 -->
+          <template v-if="status == 4">{{ i18n_t('early.btn5') }}</template>
+          <!-- 按钮上的金额 -->
+          <i v-if="status !== 5 && (Number(front_settle_amount) || expected_profit)" class="amount">{{ betting_amount }}</i>
+        </span>
+        <!-- loading -->
+        <img class="load" v-if="status == 3" :src="compute_local_project_file_path('/image/gif/loding.gif')">
+        <icon-wapper v-if="status == 4" name="icon-success" />
+      </button>
+    </div>
   </div>
   <!-- 提前兑现详情 -->
   <early-settled-detail v-if="details_show_btn" :orderNo="item_data.orderNo" />
@@ -55,7 +42,7 @@ import ClipboardJS from "clipboard";
 import { api_betting } from "src/api/index.js"
 // import { mapGetters, mapMutations } from "vuex";
 import { format_time_zone_time } from "src/core/format/index.js"
-import { earlySettledDetail } from "src/base-h5/components/common/cathectic-item/app-h5/index";
+import { earlySettledDetail } from "src/base-h5/components/common/cathectic-item/ouzhou-h5/index";
 import { Platform } from "quasar";
 import { inject, ref, computed, onMounted, onUnmounted, watch, nextTick } from 'vue'
 import lodash from 'lodash'
@@ -64,7 +51,7 @@ import store from "src/store-redux/index.js"
 import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/"
 import { i18n_t } from "src/boot/i18n.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
-import earlySettleTips from "src/base-h5/components/common/cathectic-item/app-h5/early-settle-tips.vue";
+import { IconWapper } from 'src/components/icon'
 
 const props = defineProps({
   item_data: {
@@ -434,38 +421,57 @@ template {
   display: block;
 }
 .early-settle {
+  .early-tips {
+    justify-content: space-between;
+    padding: 0 0.14rem;
+    margin: 0.1rem 0;
+    p {
+      color: var(--q-gb-bg-c-8);
+    }
+    span {
+      color: var(--q-gb-bg-c-12);
+    }
+  }
   .early-button {
     padding: 0 0.14rem;
     margin-bottom: 0.1rem;
     button {
       display: flex;
-      justify-content: center;
+      justify-content: space-around;
       align-items: center;
-      border: none;
-      background-color: var(--q-gb-bg-c-9);
-      color: var(--q-gb-bg-c-15);
+      background-color: var(--q-gb-bg-c-14);
+      border: 2px solid var(--q-gb-bg-c-12);
       width: 100%;
-      height: 0.4rem;
-      line-height: 0.4rem;
-      font-size: 0.16rem;
-      border-radius: 0.1rem;
-      &.cancel {
-        background-color: transparent;
-        color: var(--q-gb-bg-c-6);
+      height: 0.5rem;
+      line-height: 0.5rem;
+      font-size: 0.18rem;
+      border-radius: 0.5rem;
+      position: relative;
+      &.confirm {
+        background-color: var(--q-gb-bg-c-12);
+        color: var(--q-gb-bg-c-15);
+        i.amount {
+          color: var(--q-gb-bg-c-15);
+        }
       }
-      &.change {
-        background-color: transparent;
+      &.success {
+        background-color: var(--q-gb-bg-c-18);
+        color: var(--q-gb-bg-c-2);
+        border-color: var(--q-gb-bg-c-18);
+        i.amount {
+          color: var(--q-gb-bg-c-12);
+        }
+      }
+      i.amount {
         color: var(--q-gb-bg-c-12);
-        line-height: 0.5rem;
-      }
-      span {
-        font-size: 0.14rem;
+        margin-left: 0.16rem;
       }
       img.load {
         width: 0.26rem;
         height: auto;
         margin-left: 0.04rem;
       }
+      
     }
   }
   .slider-wrap {

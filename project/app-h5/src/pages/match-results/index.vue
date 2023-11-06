@@ -81,7 +81,7 @@ const selectFinishHandle = (val) => {
 }
 
 onMounted(()=>{
-    set_menu_lv1({mi:28})
+    set_menu_lv1({mi:2})
 })
 
 const set_menu_lv1 = item => {

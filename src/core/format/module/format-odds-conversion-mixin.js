@@ -24,13 +24,33 @@ const oddsTable = {
   US: '5',
   ID: '6',
 }
+const bet_chat_room_type = ''
 /** 赔率映射表 */
 const odds_coversion_map = {}
 /** 聊天室来源跟单盘口状况eu */
 // const vx_get_chat_room_type = {}
 
-const bet_chat_room_type = ''
-
+// 两个浮点数相减
+const acc_sub = (num1, num2 = num1) => {
+  var r1, r2, m;
+  try {
+    if (num1.toString().split('.')[1]) {
+      r1 = num1.toString().split('.')[1].length;
+    } else {
+      r1 = 0;
+    }
+    if (num2.toString().split(".")[1]) {
+      r2 = num2.toString().split(".")[1].length;
+    } else {
+      r2 = 0;
+    }
+  } catch (e) {
+    console.error(e);
+  }
+  m = Math.pow(10, Math.max(r1, r2));
+  let n = (r1 >= r2) ? r1 : r2;
+  return (Math.round(num1 * m - num2 * m) / m).toFixed(n);
+}
 
 
 // created() {
@@ -67,6 +87,42 @@ export const compute_value_by_cur_odd_type = (val, breakVal, arr=[], csid) => {
   }
   return str;
   // return get_accuracy(str);
+}
+
+/**
+ *@description 赔率展示优化，见优化单 13807,电竞不走这个逻辑
+  *@param {Number|String} val 最终赔率 30.40 100.00
+  *@param {Number|String} csid 球类id
+  *@return {String} 优化后的赔率，30.4 100
+  */
+const format_odds = (val, csid) => {
+  if(val=='' || val == undefined){
+    return '';
+  }
+  if ( float_3_csid.includes(1*csid)) return val;
+  val = (val || '0').toString();
+  let ret = val;
+  if (val.includes('.')){
+    if (val >= 100) {
+      if (val.split('.')[1] == '00') {
+          ret = val.split('.')[0];
+      } else {
+        let len = val.length;
+        if(val.indexOf('.0') == (len-2)){
+          ret = val.substring(0,len-2);
+        } else {
+          ret = val;
+        }
+      }
+    } else if (val >= 10) {
+      if (val.split('.')[1][1] == '0') {
+        ret = val.slice(0,val.length-1);
+      } else {
+        ret = val;
+      }
+    }
+  }
+  return ret;
 }
 //返回字符串保留两位小数,csid-赛种ID
 const calc_odds = (val, csid) => {

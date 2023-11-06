@@ -70,7 +70,6 @@ export default {
       get_goto_detail_matchid: '',
       get_goto_detail_match_info: '',
       get_not_found_target_dom_count: '',
-      get_standard_odd_status: '',
     }
   },
   mounted() {
@@ -119,10 +118,9 @@ export default {
           return this.prev_match.csid !== this.match.csid;
         }
       } else if ([1, 2, 3, 4, 11, 12, 28, 30, 3000].includes(+menu_type.value)) {
-        if (this.i === 0) {
-          return true
-        } else {
-          return false
+        if (this.i === 0) { return true }
+        if (this.prev_match && this.match) {
+          return this.prev_match.csid !== this.match.csid;
         }
       } else {
         return false;
@@ -320,7 +318,8 @@ export default {
      * @description 球种折叠
      */
     handle_ball_seed_fold () {
-      MatchFold.set_ball_seed_match_fold(this.match_of_list.csid)
+      const { csid, start_falg = '' }  = this.match_of_list
+      MatchFold.set_ball_seed_match_fold(csid, start_falg)
       MatchMeta.compute_page_render_list(0, 2)
     },
     /**

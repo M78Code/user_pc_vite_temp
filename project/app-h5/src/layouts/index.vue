@@ -18,8 +18,9 @@
       
       <router-view />
       <BetBoxWapper use_component_key='BetBoxAppH5_1' />
+
       <!--页脚-->
-      <Tabbar class="m-layout" v-if="['sport_menu', 'matchList'].includes(route.name)">
+      <Tabbar class="m-layout" v-if="['sport_menu', 'matchList', 'virtual_sports'].includes(route.name)">
       </Tabbar>
 
       <!-- 筛选+搜索   已脱离文档流-->

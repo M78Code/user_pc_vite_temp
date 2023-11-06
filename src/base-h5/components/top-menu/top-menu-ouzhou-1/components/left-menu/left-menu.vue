@@ -1,6 +1,9 @@
 <!--
-* @Author: Malick
-* @Description: 菜单列表
+ * @Author: rise
+ * @Date: 2023-11-02 16:27:18
+ * @LastEditors: rise
+ * @LastEditTime: 2023-11-06 14:28:13
+ * @Description:  
 -->
 <template>
   <div class="left_drawer_page">
@@ -11,8 +14,8 @@
           <div class="item" :class="[
             item.className,
             // { active: meta_data_store.current_menu.mi == item.mi },
-          ]" v-for="(item, index) in sportsGenre" :key="index" @click="set_menu_obj">
-            <sport_icon size="20" :sport_id="item.mi" />
+          ]" v-for="(item, index) in sportsGenre" :key="index" @click="set_menu_obj(item)">
+            <sport-icon size="20" :sport_id="item.mi" />
             <div>{{ item.name }}</div>
           </div>
         </div>
@@ -25,7 +28,7 @@
             item.className,
             // { active: meta_data_store.current_menu.mi == item.mi },
           ]" v-for="(item, index) in popular" :key="item.mi" @click="change_current_menu(item)">
-            <sport_icon size="18" :sport_id="item.mi" />
+            <sport-icon size="18" :sport_id="item.mi" />
             <div>{{ item.name }}</div>
           </div>
         </div>
@@ -37,9 +40,9 @@
           <div class="menu_item" :class="[
             'menu_item_' + item.mi,
             // { active: meta_data_store.current_menu.mi == item.mi },
-          ]" v-for="item in allSports" :key="item.mi" @click="change_current_menu(item)"
+          ]" v-for="item in MenuData.menu_list" :key="item.mi" @click="change_current_menu(item)"
             :data-id="item.mi">
-            <sport_icon size="18" :sport_id="item.mi" />
+            <sport-icon size="18" :sport_id="item.mi" />
             <!-- 有电竟体育时展示电竞体育2000  Esports  -->
             <div>
               {{
@@ -55,24 +58,43 @@
   </div>
 </template>
 <script setup>
-import { defineComponent, reactive, defineEmits, onMounted } from "vue";
-import sport_icon from "./sport_icon.vue";
+import { reactive, defineEmits} from "vue";
+import sportIcon from "./sport-icon.vue";
 import BaseData from "src/core/base-data/base-data.js";
-
+import { MenuData } from 'src/core/';
+import { useRouter } from "vue-router";
+const router = useRouter();
+const emits = defineEmits(['isLeftDrawer']);
+/**
+ * vr 电竞
+ */
 const sportsGenre = reactive([
-  { name: "Esports", className: "esports", mi: "2000" },
-  { name: "VR Sports", className: "vr-sports", mi: "300" },
+  { name: "Esports", className: "esports", mi: "2000",route: '/esports'},
+  { name: "VR Sports", className: "vr-sports", mi: "300",route: '/virtual' },
 ])
+/**
+ * 热门
+ */
 const popular = reactive([
   { name: "Football", className: "football", mi: "101" },
   { name: "Basketball", className: "basketball", mi: "102" },
   { name: "Tennis", className: "tennis", mi: "105" },
 ])
-const allSports = BaseData.mew_menu_list_res.filter((item)=>{return +item.mi<300})
+/**
+ * 电竞 vr点击
+ * @param {*} data 
+ */
 const set_menu_obj = (data) => {
+  router.push(data.route)
 }
-const change_current_menu = (m_data) => {
-
+/**
+ * 球类点击
+ * @param {*} m_data 
+ */
+const change_current_menu = (item) => {
+  MenuData.set_menu_mi(item.mi);
+  emits('isLeftDrawer')
+  router.push("/");//跳转今日列表
 }
 </script>
 <style lang="scss" scoped>

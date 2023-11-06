@@ -17,9 +17,9 @@ import { IconWapper } from 'src/components/icon'
 let showList = ref(false)
 let _index = ref(0)
 const list = ref([
-    { title: '今天', val: 0 },
-    { title: '7天', val: 3 },
-    { title: '30天', val: 4 },
+    { title: 'Today', val: 0 },
+    { title: 'Week', val: 3 },
+    { title: 'Month', val: 4 },
 ])
 
 const emit = defineEmits(['changeDays'])

@@ -6,13 +6,16 @@
   <div style="display: none;">{{ BetRecordClass.bet_record_version }}</div>
   <div class="item-order row mx-16 justify-between">
     <!-- 订单号 -->
-    <div class="text-left ellipsis"  @click="copy">
-      {{i18n_t('bet.order_no')}}&thinsp;
+    <div class="text-left row ellipsis"  @click="copy">
+      <p class="title">{{i18n_t('bet.order_no')}}</p>
       <span class="yb_mr4 orderno">{{data_o.orderNo}}</span>
-      <!-- <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/copy.svg`" alt=""  style="width:0.1rem" /> -->
+      <img :src="compute_local_project_file_path('/image/svg/copy.svg')" alt=""  style="width:0.1rem" />
     </div>
     <!-- 时间 i18n_t('bet_record.bet_time')   .Format(i18n_t('time4'))-->
-    <div class="text-right">{{i18n_t('bet_record.bet_time')}}<span class="orderno">&thinsp;{{formatTime(+data_o.betTime, 'mm/DD HH:MM')}}</span></div>
+    <div class="text-right row">
+      <p class="title">{{i18n_t('bet_record.bet_time')}}</p>
+      <span class="orderno">{{formatTime(+data_o.betTime, 'mm/DD HH:MM')}}</span>
+    </div>
   </div>
 </template>
 
@@ -22,6 +25,7 @@ import ClipboardJS from "clipboard";
 import { Platform } from "quasar";
 import { ref, onUnmounted } from 'vue'
 import { formatTime } from 'src/core/format/index.js'
+import { compute_local_project_file_path } from 'src/core/index.js'
 import { i18n_t } from "src/boot/i18n.js";
 import store from "src/store-redux/index.js";
 import BetRecordClass from "src/core/bet-record/bet-record.js";
@@ -55,11 +59,6 @@ import BetRecordClass from "src/core/bet-record/bet-record.js";
         text: () => orderno
       })
       clipboard.on('success', () => {
-        store.dispatch({
-          type: "SET_TEXT",
-          data: i18n_t('bet_record.copy_suc'),
-        });
-
         // h5嵌入时Safari阻止弹窗
         if (!Platform.is.safari) {
           try {
@@ -79,8 +78,11 @@ import BetRecordClass from "src/core/bet-record/bet-record.js";
 
 <style lang="scss" scoped>
 .item-order {
-  font-size: 0.11rem;
-  height: 0.36rem;
-  line-height: 0.36rem;
+  height: 0.4rem;
+  line-height: 0.5rem;
+}
+.title {
+  color: var(--q-gb-bg-c-8);
+  margin-right: 0.1rem;
 }
 </style>

@@ -61,11 +61,22 @@ import MatchListCard_H5 from "src/core/match-list-h5/match-card/match-list-card-
 import MatchListCardData_H5 from "src/core/match-list-h5/match-card/module/match-list-card-data-class.js";
 
 import MenuData_App_h5 from "src/core/menu-app-h5/menu-data-class.js";
+import OZ_MenuData_App_h5 from "src/core/menu-app-h5/oz-menu-data-class.js";
 
  
 let MenuData = IS_PC ? MenuData_PC : MenuData_H5;
-if( ['ouzhou-h5','app-h5'].includes(PROJECT_NAME)){
-  MenuData = MenuData_App_h5
+// if( ['ouzhou-h5','app-h5'].includes(PROJECT_NAME)){
+//   MenuData = MenuData_App_h5
+// }
+switch (PROJECT_NAME) {
+  case 'ouzhou-h5':
+    MenuData = OZ_MenuData_App_h5
+    break;
+  case 'app-h5':
+    MenuData = MenuData_App_h5
+    break;
+  default:
+    break;
 }
 const MatchListCard = IS_PC ? MatchListCard_PC : MatchListCard_H5;
 const MatchListCardData = IS_PC ? MatchListCardData_PC : MatchListCardData_H5;
@@ -120,6 +131,30 @@ import MatchDataBase from "src/core/data-warehouse/match-ctr/match-ctr.js";
 
 const MatchDataWarehouse_PC_List_Common = new MatchDataBase({
   name_code: "MatchDataWarehouse_PC_List_Common",
+});
+
+/**
+ * 欧洲版 PC/H5 数据仓库 15mins 顶部列表
+ */
+
+const MatchDataWarehouse_ouzhou_PC_l5mins_List_Common = new MatchDataBase({
+  name_code: "MatchDataWarehouse_ouzhou_PC_l5mins_List_Common",
+});
+
+/**
+ * 欧洲版 PC/H5 数据仓库 热推 顶部列表
+ */
+
+const MatchDataWarehouse_ouzhou_PC_hots_List_Common = new MatchDataBase({
+  name_code: "MatchDataWarehouse_ouzhou_PC_hots_List_Common",
+});
+
+/**
+ * 欧洲版 PC/H5 数据仓库 通用列表
+ */
+
+const MatchDataWarehouse_ouzhou_PC_List_Common = new MatchDataBase({
+  name_code: "MatchDataWarehouse_ouzhou_PC_List_Common",
 });
 
 /**
@@ -256,6 +291,9 @@ export {
   MatchDataWarehouse_H5_List_Hot_Main,
   MatchDataWarehouse_H5_List_Jingxuan,
   MatchDataWarehouse_H5_Detail_Jingxuan,
+  MatchDataWarehouse_ouzhou_PC_l5mins_List_Common,
+  MatchDataWarehouse_ouzhou_PC_hots_List_Common,
+  MatchDataWarehouse_ouzhou_PC_List_Common,
   LayOutMain_pc,
   compute_css_variables,
   GlobalSwitchClass,
