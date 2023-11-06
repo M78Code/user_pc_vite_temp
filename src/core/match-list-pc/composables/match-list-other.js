@@ -254,8 +254,9 @@ export const get_compute_other_play_data = (match) => {
 
   let cur_other_play = other_play_current_play[mid + '_']
   let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(mid)
-  const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`]
-  match.tpl_id = match_style_obj.data_tpl_id;
+  const { data_tpl_id } = match_style_obj;
+  const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${data_tpl_id}_config`][`template_${data_tpl_id}`]
+  match.tpl_id = data_tpl_id;
   // 其他玩法盘口列表
   let other_handicap_list = clone_arr(match_tpl_info[cur_other_play])
   // 波胆
@@ -272,6 +273,8 @@ export const get_compute_other_play_data = (match) => {
   // 4：15分钟玩法 1：其他玩法
   let type = cur_other_play == 'hps15Minutes' ? 4 : 1
   other_handicap_list = merge_template_data({ match, handicap_list: other_handicap_list, type, play_key: cur_other_play })
+  console.log('other_handicap_list', other_handicap_list);
+
   // coverage_match_data({ other_handicap_list }, mid)
   // match.other_handicap_list = other_handicap_list
   return other_handicap_list||[]

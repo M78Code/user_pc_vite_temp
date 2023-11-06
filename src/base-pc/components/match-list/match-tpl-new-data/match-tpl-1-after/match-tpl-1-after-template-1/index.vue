@@ -143,7 +143,7 @@ const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.da
 let match = MatchListData.get_quick_mid_obj(props.mid);
 match && set_play_name_list(MatchListData.get_tab_play_keys(match))
 const is_mounted = ref(true);
-const compute_other_play_data=get_compute_other_play_data(match)
+let compute_other_play_data=get_compute_other_play_data(match)
 watch(() => MatchListData.data_version.version, (new_value, old_value) => {
   match = MatchListData.get_quick_mid_obj(props.mid);
   compute_other_play_data=get_compute_other_play_data(match)
