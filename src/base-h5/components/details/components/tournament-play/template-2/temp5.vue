@@ -33,7 +33,7 @@
                       <!-- 主程序 start -->
                       <div 
                       class="play-box-style" 
-                      @click="go_to_bet(ol_item)" 
+                      @click="utils.go_to_bet(ol_item)" 
                       :class="[get_bet_list.includes(ol_item.id_)?'active-play':'',{'win': utils.calc_win(ol_item.result)}]">
                         <odds-new :item_data="item_data" :ol_data="ol_item" ></odds-new>
                       </div>
@@ -84,7 +84,7 @@
                   <template v-if="ol_item._hs == 0 || ol_item._hs == 11">
                     <template v-if="ol_item.os == 1">
                       <!-- 主程序 start -->
-                      <div class="play-box-style" @click="go_to_bet(ol_item)" :class="[get_bet_list.includes(ol_item.id_)?'active-play':'',{'win':utils.calc_win(ol_item.result)}]">
+                      <div class="play-box-style" @click="utils.go_to_bet(ol_item)" :class="[get_bet_list.includes(ol_item.id_)?'active-play':'',{'win':utils.calc_win(ol_item.result)}]">
                         <odds-new :item_data="item_data" :ol_data="ol_item" ></odds-new>
                       </div>
                       <!-- 主程序 end -->
@@ -136,7 +136,7 @@
                   <template v-if="ol_item.os == 1">
                     <!-- 主程序 start -->
                     <div class="ellipsis remark play-box-style bw_mr1">{{ol_item.on}}</div>
-                    <div @click="go_to_bet(ol_item)" :class="[get_bet_list.includes(ol_item.id_)?'active-play':'',{'win':utils.calc_win(ol_item.result)}]" class="play-box-style col">
+                    <div @click="utils.go_to_bet(ol_item)" :class="[get_bet_list.includes(ol_item.id_)?'active-play':'',{'win':utils.calc_win(ol_item.result)}]" class="play-box-style col">
                       <odds-new :item_data="item_data" :ol_data="ol_item" ></odds-new>
                     </div>
                     <!-- 主程序 end -->
@@ -208,12 +208,8 @@ export default defineComponent({
     const change_ms = computed(() => {
       return lodash.get(item_data,'hl[0].ol[0].os')
     });
-    const go_to_bet = (ol_item) => {
-      useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX,true);
-    };
     return {
       utils,
-      go_to_bet,
       get_bet_list,
       LOCAL_PROJECT_FILE_PREFIX,
     }

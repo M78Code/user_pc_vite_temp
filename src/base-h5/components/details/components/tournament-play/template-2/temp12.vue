@@ -322,8 +322,8 @@ export default defineComponent({
       }
     );
     const go_to_bet = (ol_item) => {
-      if(ol_item.os == 1 && ol_item._hs != 1){
-        useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX,true);
+      if(ol_item.os == 1 && ol_item._hs != 1){      
+        utils.go_to_bet(ol_item)
       }
     };
     return {
@@ -332,8 +332,8 @@ export default defineComponent({
       get_detail_data,
       home_name,
       away_name,
-      go_to_bet,
-      LOCAL_PROJECT_FILE_PREFIX
+      LOCAL_PROJECT_FILE_PREFIX,
+      go_to_bet
     }
   }
 })

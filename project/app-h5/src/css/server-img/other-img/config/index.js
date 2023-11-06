@@ -24,4 +24,7 @@ export default {
   'h5-close-icon': {
     default: "h5-close-icon",
   },
+  'h5-no-data-ky-bg': {
+    default: "h5-no-data-ky-bg",
+  },
 }

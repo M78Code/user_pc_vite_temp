@@ -34,7 +34,7 @@
       </div>
 
       <!-- 串关输入框 -->
-      <template v-if="BetData.bet_s_list.length > 1 && !BetData.is_bet_single">
+      <template v-if="BetData.bet_s_list.length > 1 && !BetData.is_bet_single &&  BetViewDataClass.bet_order_status == 1 ">
         <bet-collusion-input></bet-collusion-input>
       </template>
       
