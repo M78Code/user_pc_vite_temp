@@ -58,11 +58,7 @@ DEV_TARGET_VERSION = "project_7-6544b0f3fb906b00ad5e8733-1699003372610-shiwan";
  
 //----------------------------------欧洲版-H5  ouzhou-h5 8-------------------------------------------
 // 测试环境  
-<<<<<<< HEAD
 // DEV_TARGET_VERSION = "project_8-6544b116720143009a2f282d-1699000607498-test";
-=======
-//DEV_TARGET_VERSION = "project_8-6544b116720143009a2f282d-1699000607498-test";
->>>>>>> 6d7fcaa680234e9bd1abfd167ee6b5ae3a2690bc
 // 试玩环境  
 // DEV_TARGET_VERSION = "project_8-6544b116720143009a2f282d-1699003362037-shiwan";
 // 生产环境

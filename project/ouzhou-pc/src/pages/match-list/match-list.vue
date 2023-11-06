@@ -198,6 +198,7 @@ export default {
 
     onMounted(() => {
       mounted_fn();
+      init_home_matches()
     });
     onUnmounted(() => {
       // handle_destroyed()
