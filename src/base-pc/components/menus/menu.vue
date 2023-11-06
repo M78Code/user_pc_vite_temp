@@ -62,7 +62,7 @@
   import { ref, onMounted, onUnmounted  } from "vue";
   import { useRouter } from "vue-router";
   import BaseData from "src/core/base-data/base-data.js";
-  // import sport_icon from "src/components/sport_icon.vue";
+  import sport_icon from "src/base-pc/components/sport_icon.vue";
   // import { use_base_data,useMenuData,useMenuI18n } from "./base_data";
   import { useLoadMapping } from './load_mapping.js';
   

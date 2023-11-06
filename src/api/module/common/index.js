@@ -37,7 +37,7 @@ export const post_match_full_list = (params) => {
 };
 
 // 收藏列表 2739 需求 
-export const get_new_collect_matches = (params,config,url="/v1/w/collectMatchesPB") => {
+export const get_new_collect_matches = (params,config,url="/v1/w/collectMatches") => {
   return http.post(`${prefix}${url}`, params, config);
 };
 

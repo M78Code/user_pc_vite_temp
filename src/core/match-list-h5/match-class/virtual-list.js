@@ -87,7 +87,7 @@ class VirtualList {
    * @param {*} scrollTop 滑动的距离
    * @returns 
    */
-  compute_page_render_list (scrollTop = 0) {
+  compute_current_page_render_list (scrollTop = 0) {
     // 计算总高度
     this.compute_container_total_height()
     // 可视区高度
@@ -188,7 +188,7 @@ class VirtualList {
    *  调用  vuex 里面 set_match_top_map_dict 设置容器 定位 top 值 表征对象
    */
   compute_container_list_by_scroll_top( scroll_top ) {
-    const menu_lv_v1 = MenuData.current_lv_1_menu_mi.value
+    const menu_lv_v1 = MenuData.current_lv_1_menu_i
     const menu_lv_v2 = MenuData.current_lv_2_menu_i
     
     this.compute_container_total_height()
