@@ -116,6 +116,7 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
           menu_list_res.unshift({mi:0,btn:1, ct:"",title:"全部"})
           ref_data.scroll_data_list = menu_list_res
           MenuData.set_collect_list(menu_list_res)
+          MenuData.set_collect_menu_type(50000)
           break  
       }
 
@@ -169,7 +170,7 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
     }
     // 收藏
     if(MenuData.top_menu_title.mi == 50000){
-      MatchMeta.get_collect_matche(MenuData.current_lv_2_menu_i)
+      MatchMeta.get_collect_match()
     }
   }
   /**

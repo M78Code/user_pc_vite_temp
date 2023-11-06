@@ -29,7 +29,7 @@ const menu_type_config = {
   400: 100,
   6: 11,
   2000: 3000,
-  50000 : 50000 ,
+  50000: 50000
 }
 
 class MenuData {
@@ -194,6 +194,10 @@ class MenuData {
     // this.update();
   }
 
+  set_collect_menu_type (lv1_mi) {
+    this.menu_type.value = menu_type_config[lv1_mi]  
+  }
+
   // 设置时间 并且设置时间请求参数
   set_date_time(time){
     this.data_time = time
@@ -222,18 +226,6 @@ class MenuData {
    * 兼容老的菜单ID?
   */
   menu_id_map(mi, menu_arr = false) {
-    const menu_type_config = {
-      1: 1,
-      2: 3,
-      3: 4,
-      4: 100,
-      5: "",
-      6: 11,
-      7: 3000,
-      8: 900,
-      28: 28,
-      30: 30,
-    };
     return menu_arr
       ? Object.values(menu_type_config)[mi]
       : menu_type_config[mi];
@@ -391,7 +383,6 @@ class MenuData {
    * @return {}
    */
   recombine_menu_bg(item, get_ball_id = false, is_result = false) {
-    console.error('ss')
     if (is_result) {
       return parseInt(item - 100);
     }
@@ -668,7 +659,7 @@ class MenuData {
    *  mi [number|string] 要比对的值
   */
   is_collect(mi) {
-    return this._is_cur_mi(50000, mi)
+    return this._is_cur_mi_special(50000, mi)
   }
   //- 三级菜单 日期 (只有 串关，早盘，赛果，电竞，才有) -->
   get_is_show_three_menu(mi) {
