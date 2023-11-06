@@ -4,7 +4,7 @@
   <div v-show="false">{{BetViewDataClass.bet_view_version}}{{BetData.bet_data_class_version}}</div>
 
   <div v-for="(item,index) in BetViewDataClass.bet_special_series" :key="item.id" class="list">
-    <span>{{item.name}} X{{item.count}} --{{item.money}}- {{BetData.active_index}}- {{index}}</span> 
+    <span>{{item.name}} X{{item.count}}</span> 
 
     <span class="money-span1" @click.stop="input_click(item,index,$event)">
 
@@ -42,6 +42,8 @@ const ref_data = reactive({
 onMounted(()=>{
   flicker_timer = null
   cursor_flashing()
+  // 设置默认值
+  BetData.set_bet_keyboard_config(BetViewDataClass.bet_special_series[0])
 
   useMittOn(MITT_TYPES.EMIT_INPUT_BET_MONEY, change_money_handle).on;
 })

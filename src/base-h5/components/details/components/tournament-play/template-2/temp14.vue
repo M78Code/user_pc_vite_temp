@@ -24,7 +24,7 @@
                   <template v-if="ol_item._hs == 0 || ol_item._hs == 11">
                     <template v-if="ol_item.os == 1">
                       <!-- 主程序 start -->
-                      <div class="play-box" @click="go_to_bet(ol_item)" :class="{'win':utils.calc_win(ol_item.result),'active':get_bet_list.includes(ol_item.id_)}">
+                      <div class="play-box" @click="utils.go_to_bet(ol_item)" :class="{'win':utils.calc_win(ol_item.result),'active':get_bet_list.includes(ol_item.id_)}">
                         <div class="ellipsis remark">
                         <span class="item-fat">
                           {{ol_item.on.trim().split(" ")[0]}}
@@ -84,7 +84,7 @@
                 <template v-if="ol_item._mhs == 0 || ol_item._mhs == 11">
                   <template v-if="ol_item._hs == 0 || ol_item._hs == 11">
                     <template v-if="ol_item.os == 1">
-                      <div class="play-box" @click="go_to_bet(ol_item)" :class="{'win':utils.calc_win(ol_item.result),'active':get_bet_list.includes(ol_item.id_)}">
+                      <div class="play-box" @click="utils.go_to_bet(ol_item)" :class="{'win':utils.calc_win(ol_item.result),'active':get_bet_list.includes(ol_item.id_)}">
                         <div class="ellipsis remark">
                         <span class="item-fat">
                           {{ol_item.on.trim().split(" ")[0]}}
@@ -135,7 +135,7 @@
                 <template v-if="ol_item._mhs == 0 || ol_item._mhs == 11">
                   <template v-if="ol_item._hs == 0 || ol_item._hs == 11">
                     <template v-if="ol_item.os == 1">
-                      <div class="play-box" @click="go_to_bet(ol_item)" :class="{'win':utils.calc_win(ol_item.result),'active':get_bet_list.includes(ol_item.id_)}">
+                      <div class="play-box" @click="utils.go_to_bet(ol_item)" :class="{'win':utils.calc_win(ol_item.result),'active':get_bet_list.includes(ol_item.id_)}">
                         <div class="ellipsis remark">
                         <span class="item-fat">
                           {{ol_item.on.trim().split(" ")[0]}}
@@ -225,16 +225,12 @@ export default defineComponent({
       //   $data[key] = null
       // }
     });
-    const go_to_bet = (ol_item) => {
-      useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX,true);
-    }
     return {
       ...toRefs(data),
       lodash,
       get_bet_list,
       get_cur_odd,
       get_detail_data,
-      go_to_bet,
       LOCAL_PROJECT_FILE_PREFIX
     }
   }

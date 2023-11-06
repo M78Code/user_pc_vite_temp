@@ -60,6 +60,7 @@ const props = defineProps({
  * 二级菜单事件
 */
 function set_menu_lv2(item = {},event) {
+  console.log(item)
   // 选中后点击无效
   if (item.mi == MenuData.current_lv_2_menu_i) return
   // 设置菜单点击事件
