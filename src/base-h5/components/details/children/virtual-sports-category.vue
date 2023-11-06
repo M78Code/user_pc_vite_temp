@@ -267,9 +267,6 @@ export default defineComponent({
       // #TODO emit
       emitters.push(useMittOn(MITT_TYPES.EMIT_CATEGORY_SKT, sendSocketInitCmd).off);
       // useMittOn(MITT_TYPES.EMIT_CATEGORY_SKT, sendSocketInitCmd);
-      //函数防抖 在500毫秒内只触发最后一次需要执行的事件
-      socket_upd_list = debounce(socket_upd_list, 500);
-
       // 调用接口的参数
       let params = {
         // 当前选中玩法项的id
@@ -647,7 +644,7 @@ export default defineComponent({
     };
 
     // 调用:/v1/m/matchDetail/getMatchOddsInfoPB接口
-    const socket_upd_list = (skt_data,callback) => {
+    const socket_upd_list = lodash.debounce((skt_data,callback) => {
       let mid
       if(route.name == "virtual_sports"){
         mid = get_current_mid
@@ -701,7 +698,7 @@ export default defineComponent({
         if(callback) callback();
       }).catch(err =>console.error(err));
       $forceUpdate();
-    };
+    }, 500);
 
     const save_hshow = (temp,list_old) => {
 
