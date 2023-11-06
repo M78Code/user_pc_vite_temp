@@ -35,6 +35,8 @@ class MatchMeta {
     this.complete_matchs = []
     // 上一次滚动得距离
     this.prev_scroll = null
+    // 重置折叠对象
+    MatchFold.clear_fold_info()
   }
 
   /**
@@ -376,6 +378,7 @@ class MatchMeta {
    * @description 获取冠军赛事； 元数据接口暂时未提供所以走老逻辑， 后续会提供
    */
   async get_champion_match() {
+    MatchFold.clear_fold_info()
     const menu_lv_v2 = lodash.get(MenuData.current_lv_2_menu, 'mi')
     const euid = lodash.get(BaseData.mi_info_map, `mi_${menu_lv_v2}.h5_euid`, '40602')
     const res = await api_common.post_match_full_list({

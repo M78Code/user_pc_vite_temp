@@ -29,6 +29,7 @@ const menu_type_config = {
   400: 100,
   6: 11,
   2000: 3000,
+  50000 : 50000 ,
 }
 
 class MenuData {
@@ -614,7 +615,7 @@ class MenuData {
    *  mi [number|string] 要比对的值
   */
   is_kemp(mi) {
-    return this._is_cur_mi(400, mi)
+    return this._is_cur_mi(100, mi)
   }
   /**
    * 是否选中了电竞
