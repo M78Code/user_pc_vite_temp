@@ -4,9 +4,10 @@
       class="item-wrap relative-position"
       ref="item_wrap"
       style="color: #ffffff;"
-      :style="{ left: item_wrap_left + 'px' }"
       :key="key"
     >
+    <!-- :style="{ left: item_wrap_left + 'px' }" -->
+
       <div
         class="tab-item yb-flex-center"
         :class="[{ active: currentIndex == index }, val.class]"
@@ -29,7 +30,6 @@
         <span v-if="is_list_top_menu" class="match-count"
           >({{ val.count }})</span
         >
-
         <template v-if="val.tab_name2"> <br />{{ val.tab_name2 }} </template>
       </div>
       <template v-if="currentIndex !== -1 && width > 0 && is_show_line">

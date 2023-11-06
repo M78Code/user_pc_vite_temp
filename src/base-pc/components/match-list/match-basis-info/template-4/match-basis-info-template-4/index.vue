@@ -9,9 +9,9 @@
         </div>
       </div>
       <!-- 角球比分 -->
-      <div class="score" v-if="is_show_score && match.play_current_key == 'hpsCorner'">{{match.score_obj.S5.home}}</div>
+      <div class="score" v-if="is_show_score && match.play_current_key == 'hpsCorner'">{{match.msc_obj?.S5.home}}</div>
       <!-- 罚牌比分 -->
-      <div class="score" v-if="is_show_score && match.play_current_key == 'hpsPunish'">{{match.score_obj.S10102.home}}</div>
+      <div class="score" v-if="is_show_score && match.play_current_key == 'hpsPunish'">{{match.msc_obj?.S10102.home}}</div>
     </div>
     <!-- 客队信息 -->
     <div class="row-item team-item">
@@ -22,9 +22,9 @@
         </div>
       </div>
       <!-- 角球比分 -->
-      <div class="score" v-if="is_show_score && match.play_current_key == 'hpsCorner'">{{match.score_obj.S5.away}}</div>
+      <div class="score" v-if="is_show_score && match.play_current_key == 'hpsCorner'">{{match.msc_obj?.S5.away}}</div>
       <!-- 罚牌比分 -->
-      <div class="score" v-if="is_show_score && match.play_current_key == 'hpsPunish'">{{match.score_obj.S10102.away}}</div>
+      <div class="score" v-if="is_show_score && match.play_current_key == 'hpsPunish'">{{match.msc_obj?.S10102.away}}</div>
     </div>
     <!-- 玩法说明 -->
     <tips v-if="play_key && is_show_score" :ms="match.ms" :type="play_key" playId="307" :tipstatus="true" />

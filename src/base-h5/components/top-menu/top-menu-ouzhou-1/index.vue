@@ -2,7 +2,7 @@
  * @Author: rise
  * @Date: 2023-11-02 16:27:18
  * @LastEditors: rise
- * @LastEditTime: 2023-11-06 17:08:43
+ * @LastEditTime: 2023-11-06 20:11:17
  * @Description:  
 -->
 <template>
@@ -57,7 +57,7 @@
     </div>
 
   </template>
-  <scrollMenu v-if="MenuData.menu_list.length" />
+  <scrollMenu v-if="MenuData.menu_list.length && get_route_name == 'matchList'" />
   <!-- 菜单抽屉 -->
   <q-drawer v-model="leftDrawerOpen" show-if-above bordered >
     <leftMenu @isLeftDrawer="toggleLeftDrawer"/>

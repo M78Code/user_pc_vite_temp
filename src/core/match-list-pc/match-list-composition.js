@@ -35,8 +35,6 @@ const { api_bymids } = use_featch_fn();
 const { load_video_resources } = pre_load_video
 // 数据请求状态
 const load_data_state = ref("loading");
-// 列表数据
-const match_list = ref([]);
 // 是否展示强力推荐
 const is_show_hot = ref(false);
 // 是否继续请求
@@ -727,7 +725,6 @@ function emit_site_tab_active() {
 };
 export  default function(){
 	return {
-		match_list,
 		is_loading,
 		match_tpl_component,
 		show_refresh_mask,
