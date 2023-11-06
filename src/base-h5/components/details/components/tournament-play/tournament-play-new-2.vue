@@ -623,7 +623,7 @@ export default defineComponent({
           item_data.hton = Date.now() + '';
          
         }
-        // MatchDataWarehouse_H5_Detail_Common.set_match_details(MatchDataWarehouse_H5_Detail_Common.get_quick_mid_obj(route.params.mid),MatchDataWarehouse_H5_Detail_Common.get_quick_mid_obj(route.params.mid).odds_info)
+        MatchDataWarehouse_H5_Detail_Common.set_match_details(MatchDataWarehouse_H5_Detail_Common.get_quick_mid_obj(route.params.mid),MatchDataWarehouse_H5_Detail_Common.get_quick_mid_obj(route.params.mid).odds_info)
         // 置顶状态变化时，更新相应玩法存储状态
         const key = `${item_data.mid}-0`
         const all_list_data = lodash.cloneDeep(get_details_data_cache.value[key]) || []
