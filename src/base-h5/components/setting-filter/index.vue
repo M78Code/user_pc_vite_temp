@@ -18,7 +18,7 @@
                     {{ item.name }}
                 </div>
                 <div class="more">
-                    <Switch v-model:value="item.switchValue" :leftVal="item.leftVal" :rightVal="item.rightVal" @click="switch_hanle(item)"/>
+                    <Switch v-model:value="item.switchValue" :leftVal="item.leftVal" :rightVal="item.rightVal" @update="switch_hanle(item)"/>
                 </div>
             </div>
             <div class="setting-item" @click="jumpHandle">
@@ -48,7 +48,8 @@ import { i18n_t, compute_css_obj } from "src/core/index.js";
 import { useRouter, useRoute } from "vue-router";
 import { ref, watch, computed, nextTick, onBeforeUnmount, onMounted } from 'vue';
 import Switch from './components/switch.vue';
-
+import { standard_edition } from 'src/base-h5/mixin/userctr.js'
+import { UserCtr } from 'src/core/'
 
 defineOptions({
     name: 'settingFilter' // 设置组件名称
@@ -68,11 +69,11 @@ defineProps({
 const emit = defineEmits(["closedHandle"]);
 
 const setting_list = ref([
-    { name: '投注模式', leftVal: '新手版', rightVal: '专业版', switchValue: 'rightVal',mark:'version' },
-    { name: '排序规则', leftVal: '热门', rightVal: '时间', switchValue: 'rightVal',mark:'sort' },
+    { name: '投注模式', leftVal: '新手版', rightVal: '专业版', switchValue: UserCtr.standard_edition,mark:'version' },
+    { name: '排序规则', leftVal: '热门', rightVal: '时间', switchValue: UserCtr.sort_type,mark:'sort' },
     { name: '盘口设置', leftVal: '欧洲盘', rightVal: '香港盘',mark:'Handicap' },
     { name: '字号大小', leftVal: '默认', rightVal: '放大',mark:'size' },
-    { name: '主题风格', leftVal: '日间', rightVal: '夜间',mark:'theme'},
+    { name: '主题风格', leftVal: '日间', rightVal: '夜间',switchValue: LocalStorage.get("theme", default_theme_key), mark:'theme'},
     { name: '每日活动', leftVal: '开启', rightVal: '关闭',mark:'activity' },
 ])
 
@@ -84,16 +85,15 @@ const closedHandle = () => {
  *@return {Undefined} undefined
  */
 const switch_hanle = (item) => {
-    const type = item.mark
     const typeMap = {
-    version: version_hanle,
-    sort: sort_hanle,
-    Handicap: Handicap_hanle,
-    size: size_hanle,
-    theme: theme_hanle,
-    activity: activity_hanle,
-  }
-  typeMap[type] && typeMap[type](item)
+        version: version_hanle,
+        sort: sort_hanle,
+        Handicap: Handicap_hanle,
+        size: size_hanle,
+        theme: theme_hanle,
+        activity: activity_hanle,
+    }
+    typeMap[item.mark] && typeMap[item.mark](item)
 }
 /**
  *@description 处理版本改变
