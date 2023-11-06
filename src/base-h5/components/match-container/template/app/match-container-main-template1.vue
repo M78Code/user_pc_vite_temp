@@ -7,7 +7,8 @@
     <template v-if="match" >
       
       <!-- 开赛标题  -->
-      <div :class="['match-status-fixed', { progress: +match.start_falg === 1, not_begin: +match.start_falg === 2 }]" v-if="is_show_opening_title">
+      <div v-if="is_show_opening_title" @click.stop="handle_ball_seed_fold"
+        :class="['match-status-fixed', { progress: +match.start_falg === 1, not_begin: +match.start_falg === 2 }]" >
         <!-- 进行中 -->
         <template v-if="+match.start_falg === 1">
           <img :src="in_progress" /> <span class="din-regular"> 进行中</span>
@@ -20,7 +21,7 @@
       <!-- 缓冲容器， 避免滚动时骨架屏漏光问题 -->
       <div class="buffer-container" v-if="match.is_show_league && !is_show_opening_title"></div>
       <!--体育类别 -- 标题  menuType 1:滚球 2:即将开赛 3:今日 4:早盘 11:串关 -->
-      <div v-if="show_sport_title"  @click.stop="handle_ball_seed_fold"
+      <div v-if="show_sport_title" @click.stop
         :class="['sport-title match-indent', { home_hot_page: is_hot, is_gunqiu: [1].includes(+menu_type), first: i == 0, }]">
         <span class="score-inner-span">
           {{ match_of_list.csna }} ({{ +match.start_falg === 1 ? match.in_progress_total : match.no_start_total }})
@@ -41,18 +42,13 @@
               <!-- 收藏图标 compute_img_url('icon-favorite-s')-->
               <img v-if='league_collect_state' :src="normal_img_is_favorite">
             </div>
-            <!-- 电竞图标 写死 -->
-            <div class="esport" v-if="match_of_list.csid == 101" :style="compute_css_obj('menu-sport-active-image', 2101)"></div>
-            <div class="esport" v-else-if="match_of_list.csid == 103" :style="compute_css_obj('menu-sport-active-image', 2103)"></div>
-            <div class="esport" v-else-if="match_of_list.csid == 102" :style="compute_css_obj('menu-sport-active-image', 2102)"></div>
-            <div class="esport" v-else-if="match_of_list.csid == 100" :style="compute_css_obj('menu-sport-active-image', 2100)"></div>
             <span class="league-title-text row justify-between">
               <span :class="['league-t-wrapper', { 'league-t-main-wrapper': menu_type !== 28, export: is_export }]">
                 <span class="match-league ellipsis-2-lines" :class="{ 'match-main-league': menu_type !== 28 }">
                   {{ match.tn }}
                 </span>
               </span>
-              <icon-wapper color="#c9c9c9" name="icon-arrow" size="15px" :class="['icon-wapper', {'close': collapsed}]" />
+              <IconWapper color="#c9c9c9" name="icon-arrow" size="15px" :class="['icon-wapper', {'close': collapsed}]" />
             </span>
           </div>
           
@@ -64,7 +60,7 @@
           <div class="odd-title-wraper row " v-if="match.is_show_league" @click.stop :style="{width: collapsed ? '100%' : 0}">
             <div class="odd-title-i-w flex">
               <div class="odd-t-i-wrapper flex items-center"
-                :class="{ 'status2': get_standard_odd_status == 1 && match_of_list_ascertain.length > 3 }">
+                :class="{ 'status2': PageSourceData.standard_odd_status.value == 1 && match_of_list_ascertain.length > 3 }">
                 <div class="hpl-title row items-center justify-center" :class="{ 'boxing': match_of_list.csid == 12 }"
                   :key="i" v-for="(hpl_title, i) of i18n_t('list_title.' + match.csid + '.title')">
                   <div class="hpl-t-inner">
@@ -141,7 +137,7 @@
                       {{GlobalAccessConfig.get_handicapNum()? get_match_mc(match) : i18n_t('footer_menu.more') }}+
                     </span>
                     <span class="add_text" v-if="GlobalAccessConfig.get_handicapNum()">
-                      <icon-wapper color="#888" name="icon-triangle1" size="14px" class="icon-wapper-more" />
+                      <IconWapper color="#888" name="icon-triangle1" size="14px" class="icon-wapper-more" />
                     </span>
                   </span>
                 </div>
@@ -275,7 +271,7 @@ import ScoreList from 'src/base-h5/components/match-list/components/score-list.v
 import OddListWrap from 'src/base-h5/components/match-list/components/odd-list-wrap.vue';
 import ImageCacheLoad from "src/base-h5/components/match-list/components/public-cache-image.vue";
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
-
+import PageSourceData  from  "src/core/page-source/page-source.js";
 import { i18n_t, compute_img_url, compute_css_obj  } from "src/core/index.js"
 import { format_time_zone } from "src/core/format/index.js"
 import { mearlys_icon, in_progress, not_begin, video_play_app, settlement_app, 
@@ -315,7 +311,7 @@ export default {
     return { 
       lang, theme, i18n_t, compute_img_url, format_time_zone, GlobalAccessConfig, footer_menu_id,LOCAL_PROJECT_FILE_PREFIX,in_progress,not_begin,
       is_hot, menu_type, menu_lv2, is_detail, is_export, is_results, standard_edition, mearlys_icon, compute_css_obj, show_sport_title, video_play_app, settlement_app,
-      normal_img_not_favorite_white, normal_img_is_favorite
+      normal_img_not_favorite_white, normal_img_is_favorite, PageSourceData
     }
   }
 }
@@ -1155,7 +1151,8 @@ export default {
           align-items: center;
           position: absolute;
           right: 0.12rem;
-          top: 0;
+          bottom: 0;
+          flex-direction: column-reverse;
 
           &.simple {
             right: 0.08rem;

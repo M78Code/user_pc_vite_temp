@@ -15,8 +15,8 @@
     </div>
     <!--开盘|锁盘-->
     <div v-else class="odds" :class="{red:red_green_status === 1,green:red_green_status === -1,}">
-      <span class="change-icon" v-show="red_green_status"
-            :class="{'icon-red':red_green_status === 1,'icon-green':red_green_status === -1}">
+      <span v-show="red_green_status"
+        :class="['change-icon', {'icon-red':red_green_status === 1,'icon-green':red_green_status === -1}]">
       </span>
       {{get_odds_value(ol_item)}}
     </div>
@@ -26,7 +26,6 @@
 
 <script setup>
 import { computed, onMounted, onUnmounted, ref, watch} from "vue";
-import store from "src/store-redux/index.js"
 import lodash from 'lodash'
 import { compute_value_by_cur_odd_type } from "src/core/format/module/format-odds-conversion-mixin.js"
 // import odd_convert from "/mixins/odds_conversion/odds_conversion.js";
@@ -38,19 +37,9 @@ const props = defineProps({
   csid:String|Number,
 })
 
-const store_state = store.getState()
 const timer_ = ref(null)
 const red_green_status = ref(0)
-const get_theme = ref(store_state.get_theme)
 const DOM_ID_SHOW = ref(null)
-
-// TODO: 其他模块得 store  待添加
-// mixins:[odd_convert],
-
-const unsubscribe = store.subscribe(() => {
-  const new_state = store.getState()
-  get_theme.value = new_state.get_theme
-})
 
 onMounted(() => {
   // 设置是否显示投注项dom的id属性值
@@ -84,10 +73,6 @@ const get_odds_value = (ol_item,hsw) => {
   let r1 = compute_value_by_cur_odd_type(ov / 100000,null, hsw,null,csid);
   return r1 || 0;
 }
-
-onUnmounted(() => {
-  unsubscribe()
-})
 
 </script>
 

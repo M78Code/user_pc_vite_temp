@@ -39,10 +39,11 @@ class MenuData {
     this.menu_lv4 = []; //4级菜单列表
     //当前的菜单 lv1
     this.current_lv_1_menu_mi = ref('0')
+    this.current_lv_1_menu_i = ''
     //当前的菜单 lv2
     //当前的菜单 lv2  注意  二级菜单 可能 有一个【全部】选项 get_sport_all_selected
     this.current_lv_2_menu = {};
-    this.current_lv_2_menu_mi = '';
+    this.current_lv_2_menu_i = '';
    
     //-----------------------------------VR 电竞 收藏--------------------------------------//
     this.top_menu_title = {}
@@ -96,7 +97,7 @@ class MenuData {
       })
     }
     // 默认设置二级菜单id
-    // this.set_current_lv_2_menu_mi( lodash_.get(menu_lv_mi_lsit,'[0]',{}))
+    // this.set_current_lv_2_menu_i( lodash_.get(menu_lv_mi_lsit,'[0]',{}))
     // 今日 加入 收藏/vr体育/电竞 滚球加入全部
     
     if(mid == 1){
@@ -132,12 +133,12 @@ class MenuData {
   }
 
   // 设置二级菜单id
-  set_current_lv_2_menu_mi(val = {}){
-    this.current_lv_2_menu_mi = val.mi;
+  set_current_lv_2_menu_i(val = {}){
+    this.current_lv_2_menu_i = val.mi;
     this.current_lv_2_menu = val;
     // 今日 / 滚球/ 冠军 没有 三级
     // if(![1,2,400].includes(this.current_lv_1_menu_mi.value)){
-      // this.get_date_menu_api_when_subchange(this.current_lv_2_menu_mi)
+      // this.get_date_menu_api_when_subchange(this.current_lv_2_menu_i)
     // }
     this.update()
   }
@@ -154,6 +155,7 @@ class MenuData {
    */
   set_current_lv1_menu(lv1_mi) {
     this.current_lv_1_menu_mi.value = lv1_mi  
+    this.current_lv_1_menu_i = lv1_mi
     this.menu_type.value = lv1_mi  
     this.get_menu_lvmi_list(lv1_mi)
     let index = 0
@@ -161,7 +163,7 @@ class MenuData {
     if([1,2].includes(lv1_mi)){
       index = 1
     }
-    this.set_current_lv_2_menu_mi( lodash_.get(this.menu_lv_mi_lsit,`[${index}]`,{}))
+    this.set_current_lv_2_menu_i( lodash_.get(this.menu_lv_mi_lsit,`[${index}]`,{}))
     // this.update();
   }
 
@@ -290,7 +292,7 @@ class MenuData {
    * arg_mi 如果传值 则获取特定值euid 如果没有就是二级菜单的euis
    * */
   get_euid(arg_mi) {
-    let mi = arg_mi || this.current_lv_2_menu_mi;
+    let mi = arg_mi || this.current_lv_2_menu_i;
     // 全部
     if (mi == 0) {
       let mid_list = []
@@ -330,7 +332,7 @@ class MenuData {
    */
   get_menus_i18n_map(mi) {
     //二级菜单
-    if (this.is_export(+this.top_menu_title.mi) || this.is_vr(+this.top_menu_title.mi)) {
+    if (this.is_export(+this.top_menu_title.mi) || this.is_vr(+this.top_menu_title.mi) ) {
       return BaseData.menus_i18n_map[+mi]
     }
     return BaseData.menus_i18n_map[this.recombine_menu_desc(mi)];
@@ -359,18 +361,21 @@ class MenuData {
     if (is_result) {
       return parseInt(item - 100);
     }
+   
     let bg_mi = parseInt(this.recombine_menu_desc(item?.mi));
     let id = parseInt(bg_mi - 100);
     if (this.is_kemp()) {
       id = parseInt(bg_mi - 400);
     }
     // 收藏 vr 电竞 全部 不在此列
-    if([1,2].includes(Number(this.current_lv_1_menu_mi.value))){
+    if([1,2].includes(Number(this.current_lv_1_menu_i))){
       if([300,2000,50000].includes( item.mi)){
         id = item.mi
       }
     }
-    console.error('id',id,'===',sprite_images_postion[id])
+    if([300,2000,50000].includes(this.top_menu_title.mi*1 )){
+      id = item.mi
+    }
     if (get_ball_id) return sprite_images_postion[id];
     let type = "";
     switch (String(id)) {

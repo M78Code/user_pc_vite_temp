@@ -110,7 +110,7 @@ class MatchUtils {
       }
     }
     return is_show_no_play;
-  }
+  } 
 
   /**
    * @description 是否展示联赛标题

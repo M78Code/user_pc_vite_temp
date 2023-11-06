@@ -32,7 +32,7 @@
         </div>
       </template>
       <!-- 到底了容器-->
-      <div :class="['loading-more-container']" v-if="max_height">
+      <div :class="['loading-more-container']" v-if="max_height && !get_is_static()">
         <div style="color:#AAAEB8;font-size:.12rem;"> {{ $t("scroll_wrapper.is_footer") }} </div>
       </div>
     </div>
@@ -49,9 +49,10 @@ import PageSourceData from "src/core/page-source/page-source.js";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import VirtualList from "src/core/match-list-h5/match-class/virtual-list.js";
 import RouterScroll from "src/core/match-list-h5/match-class/router-scroll.js";
+import { use_defer_render } from "src/core/match-list-h5/match-class/match-hooks.js";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt";
 import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from 'src/core'
-import { menu_type, menu_lv2, is_kemp, is_hot, is_detail, is_results } from 'src/base-h5/mixin/menu.js'
+import { menu_type, menu_lv2, is_kemp, is_hot, is_detail, is_results, is_export } from 'src/base-h5/mixin/menu.js'
 import { standard_edition } from 'src/base-h5/mixin/userctr.js'
 
 // 避免定时器每次滚动总是触发
@@ -99,7 +100,7 @@ const handler_match_container_scroll = lodash.debounce(($ev) => {
   if (scrollTop === 0 || (prev_scroll.value === 0 &&  Math.abs(scrollTop) >= 500) || Math.abs(scrollTop - prev_scroll.value) >= 500) {
     prev_scroll.value = scrollTop
     MatchMeta.compute_page_render_list($ev.target.scrollTop, 2)
-    get_match_base_hps()
+    if (!is_export) get_match_base_hps()
   }
 }, 100)
 
@@ -256,7 +257,7 @@ onUnmounted(() => {
   width: 100%;
   height: 100%;
   overflow-y: auto;
-  background-color: #f5f5f5;
+  // background-color: #f5f5f5;
   &.data-get-empty {
     min-height: 0 !important;
     height: 0 !important;
