@@ -43,7 +43,7 @@ const route = useRoute();
     // 固定的状态
     fixed_status: false,
     // 默认接口数据
-    detail_data: lodash.get(MatchDataWarehouse_H5_Detail_Common,`list_to_obj.mid_obj[${route.params.mid}_]`, {}),
+    detail_data: null,
     // 固定高度
     fixedHeight: "",
     // 赛事列表数据
@@ -886,7 +886,9 @@ watch(() => MatchDataWarehouseInstance.data_version.version, () => {
     emitters_off()
     SessionStorage.remove('DETAIL_TAB_ID')
     SessionStorage.remove('DETAILS_DATA_CACHE')
+    state_data.detail_data = null
     // 清空操作类的mid
+    MatchDataWarehouseInstance.remove_match(lodash.get(route, 'params.mid'))
     MatchDetailCalss.set_match_details_params({})
   })
   const on_listeners = () => {

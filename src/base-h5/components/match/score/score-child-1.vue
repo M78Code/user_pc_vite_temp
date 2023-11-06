@@ -152,7 +152,7 @@ export default {
       })
       let score_arr = ['0:0','0:0','0:0'];
       lodash.forEach(msc, (item, index)=>{
-        let num_index = item.split("|")[0];
+        let num_index = item?.split("|")[0];
         if(num_index == 'S5'){
           score_arr[0] = item.split("|")[1]
         }else if(num_index == 'S11'){

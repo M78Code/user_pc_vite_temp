@@ -784,7 +784,7 @@ export default defineComponent({
       reload_create_fun();
       // iframe视频参数时间戳
       iframe_rdm = new Date().getTime()
-      useMittOn(MITT_TYPES.IFRAME_VIDEO_VOLUME, video_volume);
+      useMittOn(MITT_TYPES.EMIT_IFRAME_VIDEO_VOLUME, video_volume);
       // iframe标签
       useMittOn(MITT_TYPES.EMIT_SET_IFRAME_ONLOAD, set_iframe_onload);
 
@@ -818,7 +818,7 @@ export default defineComponent({
       clearTimeout(reload_iframe_timer)
       clearInterval(get_replay_video_timer)
       useMittOn(MITT_TYPES.EMIT_VIDEO_SWITCHING,icon_click_lvs).off;
-      useMittOn(MITT_TYPES.IFRAME_VIDEO_VOLUME, video_volume).off;
+      useMittOn(MITT_TYPES.EMIT_IFRAME_VIDEO_VOLUME, video_volume).off;
     });
     // #TODO vuex actions
     // ...mapMutations([
