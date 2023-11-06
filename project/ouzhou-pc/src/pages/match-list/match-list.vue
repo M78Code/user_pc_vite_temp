@@ -214,7 +214,7 @@ export default {
     })
 
     watch(
-      () => MatchListCardDataClass.list_version,
+      MatchListCardDataClass.list_version,
       (list_version) => {
         MatchListCardDataClass_match_list_card_key_arr()
         proxy?.$forceUpdate()
