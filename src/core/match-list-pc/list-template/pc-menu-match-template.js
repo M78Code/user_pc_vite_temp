@@ -1,3 +1,5 @@
+import { PROJECT_NAME } from 'src/core/index.js';
+
 /**
  * 通过菜单id 来映射显示每个菜单下边的默认模板
  * 需要自己计算的用 custom
@@ -121,6 +123,16 @@ const menu_to_match_templte = {
   110: { label: "滚球-羽毛球", value: "11" },
 };
 
+// 这里的话 
+// 因为我们会有多个版本  
+// 需要映射到不同的赔率模板 
+// 所以加一个配置  
+// 欧洲版从100开始  
+// 亚洲版从0开始
+const different_version_config = {
+  ouzhou_pc: 100,
+  yazhou_pc: 0,
+}
 /**
  *
  * @param {String | Number} data_tpl_id
@@ -128,6 +140,8 @@ const menu_to_match_templte = {
  * @returns 返回出去对应的模板id
  */
 export const computed_menu_to_match_templte = (data_tpl_id) => {
+console.log('PROJECT_NAME', PROJECT_NAME);
+
   let default_template_value = 1;
   return menu_to_match_templte[data_tpl_id]?.value || default_template_value;
 };
