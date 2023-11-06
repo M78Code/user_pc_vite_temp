@@ -115,6 +115,7 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
           let menu_list_res = BaseData.mew_menu_list_res.filter(item=> item.mi*1 < 300) || []
           menu_list_res.unshift({mi:0,btn:1, ct:"",title:"全部"})
           ref_data.scroll_data_list = menu_list_res
+          MenuData.set_collect_list(menu_list_res)
           break  
       }
 

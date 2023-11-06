@@ -56,7 +56,7 @@ class MenuData {
    
     //-----------------------------------VR 电竞 收藏--------------------------------------//
     this.top_menu_title = {}
-
+    this.collect_list = []
     //-------------------------------------------------------------------------------------//
     //当前的菜单 lv3
     this.current_lv_3_menu = {};
@@ -86,6 +86,10 @@ class MenuData {
     this.menu_list = menu_list
     this.set_current_lv1_menu(2)
    
+  }
+
+  set_collect_list (list) {
+    this.collect_list = list
   }
 
   // 根据菜单id获取下级菜单id 二级菜单
