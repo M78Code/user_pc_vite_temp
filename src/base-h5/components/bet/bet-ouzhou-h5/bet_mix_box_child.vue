@@ -17,17 +17,28 @@
         <bet-bar @click="pack_up"></bet-bar>
         <!-- 删除全部和选择type -->
         <bet-all-detele></bet-all-detele>
-        <!-- 单关投注项列表  -->
-        <bet-mix-box-child1></bet-mix-box-child1>
-        <!-- 单关的输入框 -->
-        <bet-input-info></bet-input-info>
+        <div>
+            <div v-if="state == 1">
+                <!-- 单关投注项列表  -->
+                <bet-mix-box-child1></bet-mix-box-child1>
+                <!-- 单关的输入框 -->
+                <bet-input-info></bet-input-info>
+            </div>
+            <div v-if="state == 2">
+                <!-- 串关投注项列表  -->
+                <div class="scroll-box scroll-box-center" ref="scroll_box" :style="{ 'max-height': `${max_height1}px` }"
+                    @touchmove="touchmove_handle($event)" @touchstart="touchstart_handle($event)">
+                    <bet-mix-box-child2></bet-mix-box-child2>
+                </div>
+                
+            </div>
+        </div>
         <!-- 键盘 -->
         <key-board></key-board>
         <!-- 按钮 -->
         <bet-btn></bet-btn>
 
    </div>
-   
   </div>
 </template>
 
@@ -36,6 +47,7 @@ import betBtn from './bet-btn.vue';
 import keyBoard from './keyboard.vue';
 import betInputInfo from "./bet_input_info.vue";
 import betMixBoxChild1 from "./bet_mix_box_child1.vue";
+import betMixBoxChild2 from "./bet_mix_box_child2.vue";
 import betAllDetele from "./bet_all_detele.vue";
 import betBar from "./bet-bar.vue";
 //import betInputInfo from "//bet_input_info";
@@ -48,6 +60,8 @@ import lodash from 'lodash'
 import { format_money3, format_money2 } from 'src/core/format/index.js'
 import { submit_handle } from "src/core/bet/class/bet-box-submit.js"
 
+const state = 2 //1单关投注  2：合并单关
+
 //串关的按钮
 const is_strand = ref(true)
 const scroll_box = ref()
@@ -59,7 +73,7 @@ const tips_msg = ref('失效')  // 提示信息
 let bet_show_single = ref(true)  // 单关显示
 const get_bet_status = ref(0) // 投注状态
 const btn_show = ref(0) // 投注状态2
-const max_height1 = ref(150) // 投注赛事高度
+const max_height1 = ref(250) // 投注赛事高度
 const get_mix_bet_flag = ref(false) // 最小投注开关
 const exist_code = ref(555)
 const bet_amount = ref(0)
@@ -347,7 +361,7 @@ background: var(--q-gb-t-c-3) !important;
   margin-bottom: -1px;
   //background-color: var(--q-gb-t-c-7);
   //padding: 12px;
-  border-radius: 12px;
+  //border-radius: 12px;
 }
 .scroll-box-center{
   margin: 0 0 0.1rem 0;

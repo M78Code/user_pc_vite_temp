@@ -15,7 +15,7 @@
             {{ item.hpn }}
             <span v-if="item.hps">({{ item.hps.split('|')[1] }})</span>
             <!-- <img v-if="item.mouse_in" :src="in_muse" alt="" srcset="" class="expand-mouse-in" :style="{transform:item.expanded?'rotate(0deg)':'rotate(180deg)'}" > -->
-            <img  :src="down_arrow_fold" alt="" srcset="" class="expand-icon" :style="{transform:item.expanded?'rotate(0deg)':'rotate(180deg)'}" >
+            <img  :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/down_arrow_fold.png`" alt="" srcset="" class="expand-icon" :style="{transform:item.expanded?'rotate(0deg)':'rotate(180deg)'}" >
           </div>
         </template>
         <q-card>
@@ -39,7 +39,7 @@
 
                           </div>
                           <div style="text-align: center;width:100%" class="tem4" v-show="item.hl[0].hs">
-                            <img class="vector" src="../../../../assets/images/vector.png" alt="" >
+                            <img class="vector" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/vector.png`" alt="" >
                           </div>
                            
                         </template>
@@ -84,10 +84,11 @@
 
 <script setup>
 import { onMounted, ref, computed,inject} from "vue";
+import {LOCAL_PROJECT_FILE_PREFIX } from 'src/core/index.js';
 import template5 from './template5.vue'
 import common_template from './common_template.vue'
-import { storage_bet_info } from 'src/utils/bet_info'
-import down_arrow_fold from 'src/assets/images/down_arrow_fold.png'
+// import { storage_bet_info } from 'src/utils/bet_info'
+// import down_arrow_fold from 'src/assets/images/down_arrow_fold.png'
 import in_muse from 'src/assets/images/video/in_muse.png'
 import close_thehand_icap from 'src/assets/images/close_the_handicap.png'//无盘口数据提示图片
 
@@ -181,7 +182,7 @@ const betItemClick = (item, ol) => {
       hps: item,
       ol
     }
-     storage_bet_info(params)
+    //  storage_bet_info(params)
   }
 }
 // 事件执行函数

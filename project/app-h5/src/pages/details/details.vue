@@ -333,8 +333,9 @@ export default defineComponent({
     );
     // 监听赛事状态mmp的值
     watch(
-      () => state_data.detail_data.mmp,
+      () => state_data.detail_data?.mmp,
       (_new) => {
+        console.log(_new,'_new');
         // 如果是999赛事结束即调接口切换赛事
         if(_new == '999'){
           event_switch();
@@ -347,7 +348,7 @@ export default defineComponent({
     );
     // 监听赛事状态ms的值，0:未开赛 1:滚球阶段 2:暂停 3:结束 4:关闭 5:取消 6:比赛放弃 7:延迟 8:未知 9:延期 10:比赛中断 110:即将开赛
     watch(
-      () => state_data.detail_data.ms,
+      () => state_data.detail_data?.ms,
       (_new, _old) => {
         let arr_ms = [0, 1, 2, 7, 10, 110];
         if(!arr_ms.includes(Number(_new))){

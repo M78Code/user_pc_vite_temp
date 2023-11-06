@@ -23,7 +23,7 @@
                     </div>
                   </div>
                   <div class="s-w-i-title">
-                    {{ (item.btn ?item.title : item.name) || MenuData.get_menus_i18n_map(item.mi) }}
+                    {{ (item.btn ?item.title : item.name) || MenuData.get_menus_i18n_map(item.mi) }} 
                   </div>
                 </div>
 
@@ -60,7 +60,6 @@ const props = defineProps({
  * 二级菜单事件
 */
 function set_menu_lv2(item = {},event) {
-  console.log(item)
   // 选中后点击无效
   if (item.mi == MenuData.current_lv_2_menu_i) return
   // 设置菜单点击事件

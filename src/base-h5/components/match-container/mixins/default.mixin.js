@@ -208,7 +208,7 @@ export default {
     },
     // 是否显示赛事阶段标题
     is_show_opening_title () {
-      const menu_lv_v1 = MenuData.current_lv_1_menu_mi.value
+      const menu_lv_v1 = MenuData.current_lv_1_menu_i
       // 今日、早盘、串关
       return [1,2,3,6].includes(+menu_lv_v1) && [1,2].includes(this.match_of_list.start_falg)
     }

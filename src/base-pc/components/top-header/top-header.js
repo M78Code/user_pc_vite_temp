@@ -1,0 +1,1 @@
+export { default as TopHeaderTemplate1 } from "./template1/template1.vue"

@@ -2,7 +2,7 @@
  * @Author: rise
  * @Date: 2023-11-02 16:27:18
  * @LastEditors: rise
- * @LastEditTime: 2023-11-06 14:30:25
+ * @LastEditTime: 2023-11-06 20:11:17
  * @Description:  
 -->
 <template>
@@ -41,8 +41,8 @@
             <span class="info_amount">{{ format_money2(amount) }}</span>
           </div>
         </template>
-        <template v-if="get_route_path == '/detail'">
-          <detail_top_info />
+        <template v-if="get_route_name == 'details'">
+          <detail-top-info />
         </template>
 
         <!-- 个人中心 vr 电竞 头部 -->
@@ -57,7 +57,7 @@
     </div>
 
   </template>
-  <scrollMenu v-if="MenuData.menu_list.length" />
+  <scrollMenu v-if="MenuData.menu_list.length && get_route_name == 'matchList'" />
   <!-- 菜单抽屉 -->
   <q-drawer v-model="leftDrawerOpen" show-if-above bordered >
     <leftMenu @isLeftDrawer="toggleLeftDrawer"/>
@@ -67,10 +67,11 @@
   <script setup>
 
 import { ref, computed, watch } from "vue";
-import { useRouter, useRoute } from "vue-router"
-import { format_money2,UserCtr } from "src/core/"
-import leftMenu from "./components/left-menu/left-menu.vue"
-import scrollMenu from "./scroll-menu/scroll-menu.vue"
+import { useRouter, useRoute } from "vue-router";
+import { format_money2,UserCtr } from "src/core/";
+import leftMenu from "./components/left-menu/left-menu.vue";
+import scrollMenu from "./scroll-menu/scroll-menu.vue";
+import detailTopInfo from "./detail-top/detail-top.vue";
 import { MenuData } from 'src/core/';
 const router = useRouter();
 const route = useRoute()
@@ -80,8 +81,8 @@ const leftDrawerOpen = ref(false)
 const emit = defineEmits(["change"]);
 // 事件执行函数
 
-const get_route_path = computed(() => {
-  return  router.currentRoute.value.path;
+const get_route_name = computed(() => {
+  return  router.currentRoute.value.name;
 })
 /**
  * 个人中心 vr 电竞

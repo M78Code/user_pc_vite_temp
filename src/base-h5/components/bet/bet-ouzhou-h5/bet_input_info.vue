@@ -146,15 +146,16 @@ const bet_tabs = [
 .size_14{
     font-size: 14px;
     font-weight: 400;
-    color: #8A8986;
+    color: var(--q-gb-bg-c-8);
 }
 .margin_left_4{
     margin-left: 4px;
     font-family: "DIN";
 }
 .size_16{
-    font-size: 0.18rem;
-    font-weight: 500;
+    font-size: 0.17rem;
+    font-weight: 700;
+    color: var(--q-gb-bg-c-3);
 }
 .color_ff700{
     color: var(--q-gb-t-c-11);
