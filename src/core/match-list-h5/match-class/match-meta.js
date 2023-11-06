@@ -79,7 +79,7 @@ class MatchMeta {
    */
   get_origin_match_mids_by_mis (sl) {
     const length = lodash.get(sl, 'length', 0)
-    if (length < 1) return
+    if (length < 1) return this.set_page_match_empty_status(true);
     const match_mids_list = []
     sl.forEach(t => {
       const mids = this.get_match_mids_by_mi(t.mi)
@@ -129,7 +129,7 @@ class MatchMeta {
     // 显示空数据页面
     const result_mids = lodash.uniq(mids)
     const length = lodash.get(result_mids, 'length', 0)
-    if (length < 1) return useMittEmit(MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, true);
+    if (length < 1) return this.set_page_match_empty_status(true);
     // 赛事全量数据
     const match_list = result_mids.map((t, index) => {
       // 获取对应赛事数据
@@ -156,7 +156,7 @@ class MatchMeta {
    */
     handler_match_list_data(list) {
       const length = lodash.get(list, 'length', 0)
-      if (length < 1) return useMittEmit(MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, true);
+      if (length < 1) return this.set_page_match_empty_status(true);
       const result_mids = list.map(t => t.mid)
       // 赛事全量数据
       const match_list = list.map((match, index) => {
@@ -174,6 +174,9 @@ class MatchMeta {
 
       // 计算所需渲染数据
       this.compute_page_render_list(0, 2)
+
+      this.set_page_match_empty_status(false)
+
     }
 
   /**
@@ -290,7 +293,7 @@ class MatchMeta {
    */
   get_match_mids (list) {
     const length = lodash.get(list, 'length', 0)
-    if (length < 1) return useMittEmit(MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, true);
+    if (length < 1) return this.set_page_match_empty_status(true);
     const match_mids_list = list.map(t => {
       return t.mid
     })
@@ -422,19 +425,25 @@ class MatchMeta {
       category,
       "type":3000,
     })
-    if (+res.code !== 200) return
+    if (+res.code !== 200) return this.set_page_match_empty_status(true);
     const list = lodash.get(res, 'data', [])
     this.handler_match_list_data(list)
-    // this.handle_custom_matchs(res)
   }
 
   /**
    * @description 获取收藏赛事
    */
   async get_collect_matche () {
-
+    
   }
 
+  /**
+   * @description 设置页面是否为空
+   * @param {*} state 
+   */
+  set_page_match_empty_status (state) {
+    useMittEmit(MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, state);
+  }
 
   /**
    * @description 处理非元数据赛事, 不需要走 模版计算以及获取赔率
@@ -468,7 +477,6 @@ class MatchMeta {
    * @param { match_list } 全量 赛事 match
    */
   set_match_mids (mids = [], match_list = []) {
-
     this.complete_mids = mids
 
     const target_data = MatchUtils.handler_match_classify_by_ms(match_list).filter((t) => t.mid)
@@ -480,7 +488,7 @@ class MatchMeta {
     })
 
     const length = lodash.get(this.complete_matchs, 'length', 0)
-    useMittEmit(MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, length > 1 ? false : true);
+    this.set_page_match_empty_status(length > 0 ? false : true);
     // console.log('this.complete_matchs', this.complete_matchs)
     // 计算所需渲染数据
     this.compute_page_render_list()

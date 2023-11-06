@@ -11,26 +11,27 @@
     <q-scroll-area class="scroll-area" v-if="!no_find_content && !list_data_loading" ref="scrollArea">
       <div v-if="list.length" v-scroll="scrolled" class="yb_mb18">
         <!-- 循环整个后台返回数据 -->
-        <div class="scroll-area1" v-for="(item1, index) in list" :key="index" ref="scroll_area1">
-          <div class="bg-f6f7f8" ref="bg_f6f7f8" v-if="item1.title">{{ item1.title }}</div>
+        <div class="scroll-area1" v-for="(item, index) in list" :key="index" ref="scroll_area1">
+          <div class="bg-f6f7f8" ref="bg_f6f7f8" v-if="item.title">{{ item.title }}</div>
           <!-- 联赛名称部分 -->
           <q-slide-transition>
-            <div v-if="!item1.hide">
+            <div v-if="!item.hide">
               <div :key="index + 'League-name'" class="row  items-center content_box1">
                 <div class="row justify-between items-center content_box2"
-                  :class="{ 'content_box3': item1.title && item1.spell }" @click.stop.prevent="select_li_ctr(item1)">
+                  :class="{ 'content_box3': item.title && item.spell }" @click.stop.prevent="select_li_ctr(item)">
                   <div class="row items-center">
                     <div class="row items-center">
                       <!-- 联赛icon -->
-                      <img :src="item1.picUrlthumb ? get_server_file_path(item1.picUrlthumb) : compute_img_url('match-cup')"
-                        @error="league_icon_error" class="match_logo" />
-                      <div class="name-overhide">{{ item1.nameText }}</div>
+                      <!-- 无法找到对应图片资源导致死循环加载图片资源 暂时注释 后续调整完后 放开 -->
+                      <!-- <img :src="item.picUrlthumb ? get_server_file_path(item.picUrlthumb) : compute_img_url('match-cup')"
+                        @error="league_icon_error" class="match_logo" /> -->
+                      <div class="name-overhide">{{ item.nameText }}</div>
                       <div class="nums"
                         v-show="!(type == 28 && [1001, 1002, 1004, 1011, 1010, 1009].includes(get_curr_sub_menu_type))">
-                        {{ item1.num }}</div>
+                        {{ item.num }}</div>
                     </div>
                   </div>
-                  <img class="icon-search" :src="compute_img_url(item1.select ? 'checkbox-box-s' : 'checkbox-box')" />
+                  <img class="icon-search" :src="compute_img_url(item.select ? 'checkbox-box-s' : 'checkbox-box')" />
                 </div>
               </div>
             </div>
@@ -97,7 +98,7 @@ const none_league_icon_black = `${LOCAL_PROJECT_FILE_PREFIX}/image/svg/match_cup
 
 const list_data_loading = ref(false)     //数据加载中
 const list = ref([]) //数据列表整个赛事
-const type = MenuData.menu_type  //筛选类型 1-滚球 3-今日  4-早盘  100-冠军 28 赛果
+const type = MenuData.menu_type  // 100（冠军）  3000（电竞） 赛果29  滚球:1 今日:3 早盘:4 串关:11 冠军:100  竞足 30
 const anchor_arr = ref([i18n_t('search.hot'), "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]) //右边字母数组
 const active_index = ref("")  //活动的下标
 const active_index_position = ref("")   // 活动的下标对应的position，在右侧字母的时候，scroll 不支持传float，这个值用于记录
@@ -404,7 +405,7 @@ function fetch_filter_match() {
     params = {
       // 29 是代表 赛果里边的 我的投注的选项
       type: MenuData.is_results(m_type) && get_curr_sub_menu_type.value == 29 ? '29' : type.value,
-      euid: MenuData.is_jinzu(m_type) ? m_id : MenuData.get_current_sub_menuid(), // menuType 30竞足
+      euid: MenuData.is_jinzu(m_type) ? m_id : MenuData.get_euid(MenuData.get_current_sub_menuid()), // menuType 30竞足
       inputText: '',
       cuid: UserCtr.get_uid(),
       device: 'v2_h5',
@@ -417,6 +418,7 @@ function fetch_filter_match() {
   list_data_loading.value = true;
   //调用：v1/m/getFilterMatchList接口
   api_match_filter(params).then(({ code, data }) => {
+
     try {
       list_data_loading.value = false;
       if (data && data.length > 0) {
@@ -442,10 +444,13 @@ function fetch_filter_match() {
       list.value = (data || []).map(i => ({ ...i, select: i.id in selected.value })); // 初始化select
       // 筛选时，把首字母相同的集合 放在第一个item 上,
       filter_alphabet(list.value)
+      console.log('list.valuelist.valuelist.valuelist.value',list.value)
       // 动态生成有联赛的字母，并非A - Z 全量字母；
       dynamic_letters(list.value)
       scroll_obj_fn(-1);
+      
     } catch (e) {
+      list_data_loading.value = false;
       console.error(e);
     }
   }).catch(err => {
@@ -477,6 +482,7 @@ function filter_alphabet(arr) {
       }
     }
   }
+  console.log('arrarrarr',arr)
 }
 // 动态生成有联赛的字母，并非A - Z 全量字母；
 function dynamic_letters(arr) {
@@ -512,7 +518,7 @@ if (type.value == 30) {
 .boss-box {
   padding: 0.5rem 0 0.64rem;
   position: absolute;
-  top: 0;
+  top: 0.75rem;
   left: 0;
   bottom: 0;
   right: 0;
@@ -721,6 +727,7 @@ if (type.value == 30) {
 
 .scroll-area {
   height: 100%;
+  min-width: 400px;
   overflow-x: hidden;
   overflow-y: auto;
 

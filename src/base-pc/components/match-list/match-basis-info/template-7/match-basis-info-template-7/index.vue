@@ -203,6 +203,9 @@ onUnmounted(() => {
   padding: 10px 10px;
   .collect-box {
     margin-bottom: 7px;
+    .icon-star {
+      margin-top: -3px;
+    }
     .bet-num {
       margin-left: 12px;
       .match_times_hour {
@@ -214,7 +217,7 @@ onUnmounted(() => {
           margin-right: 5px;
       }
       .match_times {
-           color: var(--q-gb-bg-c-1);
+          color: var(--q-gb-bg-c-1);
           font-weight: 500;
       }
     }
@@ -229,11 +232,16 @@ onUnmounted(() => {
     display: flex;
     height: 16px;
     align-items: center;
+    padding-left: 25px;
     &+.row-item {
       margin-top: 4px;
     }
     &.kedui-item {
       color: var(--q-gb-bd-c-4);
+    }
+    .score {
+      font-weight: 500;
+      color: var(--q-gb-bg-c-1);
     }
   }
 }

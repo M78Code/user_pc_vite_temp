@@ -7,11 +7,7 @@
   <div class="keyboard yb_pb6" @click.stop="_handleKeyPress($event)" style="opacity: 1;" @touchmove.prevent>
     <div class="nonebox4-fourth">
         <div class="nonebox4-fourth-a">
-            <div class="nonebox4-fourth-a-son" data-number='100'>100</div>
-            <div class="nonebox4-fourth-a-son" data-number='500'>500</div>
-            <div class="nonebox4-fourth-a-son" data-number='1000'>1000</div>
-            <div class="nonebox4-fourth-a-son" data-number='2000'>2000</div>
-            <div class="nonebox4-fourth-a-son" data-number='5000'>5000</div>
+            <div class="nonebox4-fourth-a-son" v-for="(item,index) of addnum" :key='item' :data-number='index'>{{item}}</div>
         </div>
         <div class="nonebox4-fourth-a">
             <div class="nonebox4-fourth-num">
@@ -64,6 +60,7 @@ const ref_data = reactive({
   min_money: 10, // 最小投注金额
   max_money: 8888, // 最大投注金额
   keyborard: true, // 是否显示 最高可赢 和 键盘
+  add_num: {},
 })
 
 const shou = (item,evnet) => {
@@ -111,9 +108,11 @@ watch(() => pre_odds_value, (new_) => {
     }
   }
 })
+
 watch(() => money.value, (new_) => {
   useMittEmit(MITT_TYPES.EMIT_INPUT_BET_MONEY,{ params:BetData.bet_keyboard_config, money:money.value })
 })
+
 watch(() => active_index, (new_) => {
   if (money.value) delete_all.value = true;
 })
@@ -151,95 +150,88 @@ const _handleKeyPress = (e) => {
 
 // 小数点 .
 const _handleDecimalPoint = () => {
-  const { max_money,min_money } = BetData.bet_keyboard_config
+  //超过最大金额  显示最大金额
+  let old = BetData.bet_keyboard_config.playOptionsId
+  let max_money = BetViewDataClass.bet_min_max_money[old].max_money
+  let money_ = money.value
   //超过最大金额时不让输入
-  if (money.value && money.value >= max_money) return
+  if (money_ && money_*1 >= max_money*1) return
   //如果包含小数点，直接返回
-  if (money.value && money.value.includes(".")) return
+  if (money_ && money_.includes(".")) return
 
   //如果小数点是第一位，补0
-  if (!money.value) {
-    money.value = "0.";
+  if (!money_) {
+    money_ = "0.";
   } else {
     //如果不是，添加一个小数点
-    money.value = money.value + ".";
+    money_ = money_ + ".";
   }
-  // money_s.value = money.value
+  money.value = money_
+  BetData.set_bet_amount(money_)
 }
-// //处理小数点函数
-// const _handleDecimalPoint = () => {
-//       if(this.has_pre_market){
-//         //如果包含小数点，直接返回
-//         if (this.pre_odds_value.indexOf(".") > -1) {return false};
-
-//         //如果小数点是第一位，补0
-//         if (!this.pre_odds_value.length) this.pre_odds_value = "0.";
-//         //如果不是，添加一个小数点
-//         else this.pre_odds_value = this.pre_odds_value + ".";
-//         return
-//       }
-//       //超过最大金额时不让输入
-//       if (this.money > this.max_money) {
-//         return
-//       }
-
-//       //如果包含小数点，直接返回
-//       if (this.money.indexOf(".") > -1) {return false};
-
-//       //如果小数点是第一位，补0
-//       if (!this.money.length) this.money = "0.";
-//       //如果不是，添加一个小数点
-//       else this.money = this.money + ".";
-//     },
 
 // MAX键
 const _handmaxKey = () => {
-  // if (+amount.value < +props.items.orderMaxPay) {
-  //   money.value = amount.value
-  //   return
-  // }
-  money.value = ref_data.max_money
-}
-// 删除键
-const _handleDeleteKey = () => {
-  if (!money.value) return
-  //删除最后一个
-  let s = money.value.toString()
-  money.value = s.substring(0, s.length - 1);
-  // money_s.value = money.value
-}
-// 数字建
-const _handleNumberKey = (num) => {
-  if (!num) return
-  money.value = BetData.bet_amount
-  if (['qon', 'qtw', 'qth'].includes(num)) {
-    if (!money.value) {
-      money.value = addnum[num]
-    } else {
-      money.value = (+money.value + addnum[num]).toString();
-    }
-  } else {
-    if (!money.value) { // 输入第一位
-      money.value = num === '0' ? '0.' : num // 第一位输入0 则显示0.  其他的正常显示
-    } else {
-      money.value = money.value + num
-    }
-    let S = money.value
-    let S_length = S.substring(S.indexOf(".") + 1).length // 0. 后面输入的字符长度  最多只保留两位
-    if (S.includes(".") && S_length > 1) {
-      money.value = S.substring(0, S.indexOf(".") + 3);// 最多只保留小数点两位
-    }
-
-  }
-
-  //超过最大金额  显示最大金额
-  if (money.value && +money.value >= +ref_data.max_money) {
-    money.value = ref_data.max_money
-  }
+  let old = BetData.bet_keyboard_config.playOptionsId
+  money.value = BetViewDataClass.bet_min_max_money[old].max_money
 
   BetData.set_bet_amount(money.value)
 }
+// 删除键
+const _handleDeleteKey = () => {
+  if (!money.value) return   
+  //删除最后一个
+  let s = money.value.toString()
+  money.value = s.substring(0, s.length - 1);
+  BetData.set_bet_amount(money.value )
+}
+// 数字建
+const _handleNumberKey = (num) => {
+  
+  if (!num) return
+  let money_ = BetData.bet_amount
+  if (['qon', 'qtw', 'qth','qfo','qfi'].includes(num)) {
+    if (!money_) {
+      money_ = ref_data.add_num[num]
+    } else {
+      money_ = (+money_ + ref_data.add_num[num]).toString();
+    }
+  } else {
+    if (!money_) { // 输入第一位
+      money_ = num === '0' ? '0.' : num // 第一位输入0 则显示0.  其他的正常显示
+    } else {
+      money_ = money_ + num
+    }
+    let sum = money_
+    let s_length = sum.substring(sum.indexOf(".") + 1).length // 0. 后面输入的字符长度  最多只保留两位
+    if (sum.includes(".") && s_length > 1) {
+      money_ = sum.substring(0, sum.indexOf(".") + 3);// 最多只保留小数点两位
+    }
+  }
 
+  //超过最大金额  显示最大金额
+  let old = BetData.bet_keyboard_config.playOptionsId
+  let max_money = BetViewDataClass.bet_min_max_money[old].max_money
+
+  // 显示最大金额
+  if (money_ && +money_ >= +max_money) {
+    money_ = max_money
+  }
+
+  money.value = money_
+  BetData.set_bet_amount(money_)
+}
+
+// 获取商户配置的 快捷金额
+const addnum = computed(() => {
+  if (BetData.bet_is_single) {
+    ref_data.add_num = lodash.get(UserCtr, 'cvo.series', { qon: 10, qtw: 50, qth: 100, qfo: 200, qfi: 500 })
+    return ref_data.add_num
+  } else {
+    ref_data.add_num = lodash.get(UserCtr, 'cvo.single', { qon: 100, qtw: 500, qth: 1000, qfo: 2000, qfi: 5000 })
+    return ref_data.add_num
+  }
+})
 
 // 左侧+的按钮 置灰
 const prevent_click = computed((value) => {
@@ -251,13 +243,7 @@ const prevent_click = computed((value) => {
   }
 })
 
-const addnum = computed(() => {
-  if (BetData.bet_mix_bet_flag) {
-    return lodash.get(UserCtr, 'cvo.series', { qon: 100, qtw: 200, qth: 100 })
-  } else {
-    return lodash.get(UserCtr, 'cvo.single', { qon: 100, qtw: 200, qth: 1000 })
-  }
-})
+
 
 // 预约投注赔率值可通过键盘输入 max，左侧三个按钮置灰，输入金额时放开
 const has_pre_market = computed(() => {

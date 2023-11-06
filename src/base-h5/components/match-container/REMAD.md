@@ -4,9 +4,10 @@
     app：
       match-container-main-template1 :   通用 赛事容器  默认 
       match-container-main-template2 :   冠军
-      match-container-main-template3 :   赛果
+      match-container-main-template3 :   普通赛果
       match-container-main-template4 :   虚拟体育赛狗赛马赛果项
       match-container-main-template5 :   新手版
+      match-container-main-template6 :   冠军赛果
     
     yazhou-h5：
       match-container-main-template1 :   通用 赛事容器  默认 

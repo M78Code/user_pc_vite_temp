@@ -103,7 +103,6 @@
 
 import { ref, computed, watch, onMounted, nextTick } from 'vue';
 import lodash from 'lodash'
-
 import { t, get_match_status, MatchDataWarehouse_PC_List_Common as MatchListData, UserCtr, compute_local_project_file_path } from "src/core/index.js";
 import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card-class.js'
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
@@ -132,14 +131,17 @@ const props = defineProps({
 })
 
 const play_name_list = ref([]);
+//当前选中的次要玩法
+const play_current_index=ref(-1)
 let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.mid)
 const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`].width_config
 const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`]
-let match = MatchListData.list_to_obj.mid_obj[props.mid+'_'];
+let match = MatchListData.get_quick_mid_obj(props.mid);
+match&&set_play_name_list(MatchListData.get_tab_play_keys(match))
 const is_mounted = ref(true);
-
 watch(() => MatchListData.data_version.version, (new_value, old_value) => {
-  match = MatchListData.list_to_obj.mid_obj[props.mid+'_'];
+  match = MatchListData.get_quick_mid_obj(props.mid);
+  match&&set_play_name_list(MatchListData.get_tab_play_keys(match))
 })
 
 // const match = computed(() => {
@@ -149,9 +151,8 @@ watch(() => MatchListData.data_version.version, (new_value, old_value) => {
 const bet_col = computed(() => {
   let bet_col = []
   //是否多列
-  let multi_column = lodash.get( 'match_style_obj.data_tpl_id') == 13
-  let play_current_key = lodash.get( 'match.play_current_key')
-
+  let multi_column = lodash.get(match_style_obj,'data_tpl_id') == 13
+  let play_current_key = lodash.get(match,'play_current_key')
   // 5分钟玩法
   if (play_current_key == 'hps5Minutes') {
     let hpid = 361
@@ -164,6 +165,7 @@ const bet_col = computed(() => {
     }
     // 波胆
   } else if (play_current_key == 'hpsBold') {
+    
     let { mhn, man } = match
     let [draw, ht_draw] = t('list.match_tpl_title.tpl1.bold_bet_col')
     bet_col = [mhn, draw, man, mhn, ht_draw, man]
@@ -249,9 +251,9 @@ const bet_col = computed(() => {
  * @Description 设置次要玩法 tab
  * @param {string} tab_play_keys  所有次要玩法
 */
-function set_play_name_list(tab_play_keys = '') {
+function set_play_name_list(tab_play_keys = '') { 
   let play_name_list_info = []
-  if (typeof tab_play_keys !== 'string') return
+  if (typeof tab_play_keys !== 'string') return;
   let play_name_obj = {
     // 角球
     hpsCorner: { play_name: t('list.corner'), field: 'hpsCorner' },
@@ -276,7 +278,28 @@ function set_play_name_list(tab_play_keys = '') {
   tab_play_keys.forEach(key => {
     play_name_obj[key] && play_name_list_info.push(play_name_obj[key])
   });
-  play_name_list.value = play_name_list_info
+  play_name_list.value = play_name_list_info;
+    // 是否有其他玩法
+    match.has_other_play = tab_play_keys.length > 0
+    if(match.has_other_play){
+      // 当前选中的其他的玩法
+      let play_key = play_current_index.value
+      //玩法关闭时选择第一个
+      if(!tab_play_keys.includes(play_key)){
+        play_key = tab_play_keys[0]
+      }
+      // 设置选中的玩法索引
+      match.play_current_index = tab_play_keys.findIndex( key => key == play_key)
+      play_current_index.value=match.play_current_index;
+      // // 设置选中的玩法key
+      match.play_current_key = play_key
+    }else{
+      play_current_index.value=-1
+      match.play_current_key=-1;
+      match.play_current_key=''
+    }
+    // // 保存当前选中的玩法
+    // this.other_play_current_play['mid_'+match.mid] = play_key
 }
 
 /**
@@ -340,7 +363,7 @@ function get_bet_width (index, length) {
  * @Description 点击tab玩法
  * @param {undefined} undefined
 */
-function play_tab_click (obj) {
+function play_tab_click(obj) {
   // 当前已选中
   if(match.play_current_index == obj.index){
     return
@@ -369,26 +392,12 @@ function fold_tab_play () {
 function get_tab_play_keys() {
 
 }
-
 onMounted(() => {
   // 异步设置组件是否挂载完成
   // setTimeout(()=>{
   //   is_mounted.value = true
   // })
 })
-
-// 监听其他tab玩法标题变化  设置其他玩法tab栏
-// watch(match.tab_play_keys, (tab_play_keys) => {
-//   set_play_name_list(tab_play_keys)
-// }, { immediate: true })
-
-//赛事阶段变化时更新次要玩法
-// watch(match.ms, () => {
-//   let tab_play_keys = lodash.get( 'match.tab_play_keys', '') || ''
-//   if (tab_play_keys.includes('hps5Minutes')) {
-//     set_play_name_list(tab_play_keys)
-//   }
-// }, { immediate: true })
 </script>
 
 <style lang="scss" scoped>
