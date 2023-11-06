@@ -13,7 +13,7 @@
         <div class="sl-icon-left">
           <div class="search-icon"></div>
         </div>
-        <input class="sl-input" placeholder="请输入联赛名">
+        <input class="sl-input" placeholder="请输入联赛名" type="search" maxlength="15" @input="search_match" >
         <div class="sl-icon-right">
           <div class="clear-icon"></div>
         </div>
@@ -118,7 +118,7 @@ defineProps({
   }
 
   .sl-filter-content {
-    position: relative;
+    //position: relative;
   }
 }
 </style>

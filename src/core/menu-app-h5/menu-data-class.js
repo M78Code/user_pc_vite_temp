@@ -1,13 +1,12 @@
 /**
  * 菜单 需要实现 保留 各级菜单 以及最终输出结果的   两个版本 ，
  */
-// "1": "滚球",  "2": "今日", "3": "早盘",  "4": "冠军","5": "即将开赛", "6": "串关","7": "电竞",
+// "1": "滚球",  "2": "今日", "3": "早盘",  "400": "冠军","5": "即将开赛", "6": "串关","7": "电竞",
 // "8": "VR",// "28": "赛果", "30": "竞足",// 500热门
 
 
 /*以下是老的菜单对应ID*/
-// menu_type // 100（冠军）  3000（电竞） 赛果28 
-// 滚球:1 今日:3 早盘:4 串关:11 冠军:100 虚拟体育:900  赛果:20,
+// menu_type  100（冠军）  3000（电竞） 赛果29  滚球:1 今日:3 早盘:4 串关:11 冠军:100  竞足 30  vr300 待定
 // 如果不是 虚拟体育 900.则设置当前菜单
 /*--------------end----------*/
 
@@ -22,6 +21,16 @@ const Cache_key = {
   CACHE_CRRENT_MEN_KEY: "CACHE_CRRENT_MEN_KEY", //缓存当前菜单的key
   RESULT_SUB_MENU_CACHE: "RESULT_SUB_MENU_CACHE", //赛果 缓存
 };
+
+const menu_type_config = {
+  1: 1,
+  2: 3,
+  3: 4,
+  400: 100,
+  6: 11,
+  2000: 3000,
+}
+
 class MenuData {
   constructor() {
     const that = this;
@@ -47,7 +56,7 @@ class MenuData {
    
     //-----------------------------------VR 电竞 收藏--------------------------------------//
     this.top_menu_title = {}
-
+    this.collect_list = []
     //-------------------------------------------------------------------------------------//
     //当前的菜单 lv3
     this.current_lv_3_menu = {};
@@ -57,7 +66,7 @@ class MenuData {
     this.current_lv_4_menu_mi = '';
     //================主列表用的  结束==================
     this.menu_list = []
-    this.menu_type = ref(2)
+    this.menu_type = ref(3)
     this.get_sport_all_selected = ''
     this.menu_lv_mi_lsit = []
     // 选中的当前时间
@@ -77,6 +86,10 @@ class MenuData {
     this.menu_list = menu_list
     this.set_current_lv1_menu(2)
    
+  }
+
+  set_collect_list (list) {
+    this.collect_list = list
   }
 
   // 根据菜单id获取下级菜单id 二级菜单
@@ -156,7 +169,7 @@ class MenuData {
   set_current_lv1_menu(lv1_mi) {
     this.current_lv_1_menu_mi.value = lv1_mi  
     this.current_lv_1_menu_i = lv1_mi
-    this.menu_type.value = lv1_mi  
+    this.menu_type.value = menu_type_config[lv1_mi]  
     this.get_menu_lvmi_list(lv1_mi)
     let index = 0
     // 今日/滚球第一位是收藏 默认选中足球/全部 
@@ -369,7 +382,7 @@ class MenuData {
     }
     // 收藏 vr 电竞 全部 不在此列
     if([1,2].includes(Number(this.current_lv_1_menu_i))){
-      if([300,2000,50000].includes( item.mi)){
+      if([0,300,2000,50000].includes( item.mi)){
         id = item.mi
       }
     }
@@ -623,6 +636,13 @@ class MenuData {
   */
   is_jinzu(mi) {
     return this._is_cur_mi(30, mi)
+  }
+  /**
+   * 是否选中了收藏
+   *  mi [number|string] 要比对的值
+  */
+  is_collect(mi) {
+    return this._is_cur_mi(50000, mi)
   }
   //- 三级菜单 日期 (只有 串关，早盘，赛果，电竞，才有) -->
   get_is_show_three_menu(mi) {
@@ -910,7 +930,7 @@ class MenuData {
         const euid = this.get_euid('50101') || 40603; // 获取euid
         return euid;
       }
-      return this.current_lv_2_menu?.mi || this.current_lv_2_menu?.menuId || "40003";
+      return this.current_lv_2_menu_i || this.current_lv_2_menu?.menuId || "40003";
     }
   }
   /**

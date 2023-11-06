@@ -745,7 +745,11 @@ const lv_2_click_common = (detail = {}) => {
     // 常规赛种 euid
     if (lv1_mi != 118) {
       let mid = `mi_${lv1_mi}${jinri_zaopan_.value}`;
-      obj.euid = lodash_.get(BaseData.mi_info_map,`${mid}.euid`) || '';
+      try {
+        obj.euid = lodash_.get(BaseData.mi_info_map,`${mid}.euid`) || '';
+      } catch (error) {
+        
+      }
     }
   }
   // 常规赛种下 冠军模板都是18

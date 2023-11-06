@@ -18,8 +18,8 @@
         <!-- 详情页面包屑 -->
         <breadcrumbs :detail_info="detail_info || {}" />
         <div class="bread-right">
-          <img :src="detail_top" alt="" srcset="" class="signal" @click="go_analyse">
-          <img :src="detail_refresh" alt="" srcset="" :class="{ 'balance_refresh': true, 'route_btn': refresh_data }"
+          <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/detail_top.png`" alt="" srcset="" class="signal" @click="go_analyse">
+          <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/detail_refresh.png`" alt="" srcset="" :class="{ 'balance_refresh': true, 'route_btn': refresh_data }"
             @click="refresh_click">
         </div>
       </div>
@@ -27,7 +27,7 @@
         <div class="detail-head-leagal">
           <span class="match-detail-head-name">{{ detail_info.tn }}</span>
           <img :src="neutral" alt="" srcset="" style="margin:0 10px;height: 14px;" v-if="sportId == 1">
-          <span class="leagal-time" v-if="sportId == 1 && detail_info.ms==0"> {{ formatTime(detail_info.mgt, 'dd/mm hh:MM') }}</span>
+          <span class="leagal-time" v-if="sportId == 1 && detail_info.ms==0"> {{ detail_info.mgt }}</span>
 
         </div>
         <div>
@@ -40,7 +40,7 @@
                   <span class="match-detail-head-name m-10">v</span>
                   <span class="home-vs-away">{{ detail_info.man }}</span>
                 </div>
-                <img :src="down_arrow_fold" alt="" srcset="" class="expand-icon">
+                <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/down_arrow_fold.png`" alt="" srcset="" class="expand-icon">
               </div>
             </template>
             <q-card class="match-name-list">
@@ -74,18 +74,19 @@
 
 <script setup>
 import { onMounted, ref, provide } from "vue";
+import {utils, MenuData, LOCAL_PROJECT_FILE_PREFIX } from 'src/core/index.js';
 import neutral from 'src/assets/images/neutral.png'
-import odds_info from "src/project-ouzhou/pages/detail/components/odds_info.vue";
+import odds_info from "./components/odds_info.vue";
 import analysis from './analysis/index.vue'
-import tabs from 'src/components/tabs.vue'
+import tabs from './components/tabs.vue'
 import breadcrumbs from './components/breadcrumbs.vue'
 import { usedetailData } from './index'
-import down_arrow_fold from 'src/assets/images/down_arrow_fold.png'
-import detail_top from 'src/assets/images/detail-top.png'
-import detail_refresh from 'src/assets/images/detail-fresh.png'
-import { formatTime } from "src/public/utils/time_format";
-import loading from 'src/components/loading/index.vue'
-import store from "src/store-redux-vuex/index.js";
+// import down_arrow_fold from 'src/assets/images/down_arrow_fold.png'
+// import detail_top from 'src/assets/images/detail-top.png'
+// import detail_refresh from 'src/assets/images/detail-fresh.png'
+// import { formatTime } from "src/public/utils/time_format";
+import loading from './components/loading/index'
+// import store from "src/store-redux-vuex/index.js";
 
 import { useRouter, useRoute } from 'vue-router'
 
@@ -143,13 +144,13 @@ const sport_ball_type = {
   9: 270
 
 }
-const go_analyse = () => {
-      store.dispatch({
-        type: "TIP_SHOW_STATE",
-        data: true,
-    })
+// const go_analyse = () => {
+//       store.dispatch({
+//         type: "TIP_SHOW_STATE",
+//         data: true,
+//     })
 
-    }
+//     }
 
 </script>
 

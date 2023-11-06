@@ -587,7 +587,7 @@ export default defineComponent({
   overflow: auto;
   align-items: center;
   padding: 0 0.08rem;
-  border-bottom: 0.1rem solid var(--q-virtual-bd-c-2);
+  border-bottom: 0.1rem solid #f8f9fa;
   .tab-item {
     height: 0.26rem;
     line-height: 0.26rem;

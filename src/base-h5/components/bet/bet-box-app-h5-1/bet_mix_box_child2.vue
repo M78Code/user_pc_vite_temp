@@ -34,7 +34,7 @@
       </div>
 
       <!-- 串关输入框 -->
-      <template v-if="BetData.bet_s_list.length > 1 && !BetData.is_bet_single">
+      <template v-if="BetData.bet_s_list.length > 1 && !BetData.is_bet_single &&  BetViewDataClass.bet_order_status == 1 ">
         <bet-collusion-input></bet-collusion-input>
       </template>
       
@@ -87,7 +87,10 @@
       <!-- {{BetViewDataClass.bet_order_status}} --- -->
       <!-- 底部按钮 -->
       <div class="row yb_px10 yb_pb8 justify-between" @touchmove.prevent v-if="BetViewDataClass.bet_order_status == 1">
-          <div v-if="!BetData.is_bet_single" @click.stop="pack_up(4)" class="yb_delete">{{i18n_t('app_h5.bet.delete')}}</div>
+
+          <div v-if="!BetData.is_bet_single" @click.stop="pack_up(4)" class="yb_delete">
+            {{i18n_t('app_h5.bet.delete')}}
+          </div>
           <!-- 右边 -->
           <div class="bet-box">
             <template v-if="exist_code == '666'">
@@ -119,7 +122,7 @@
           <div v-if="BetData.is_bet_single">
             <div :class="BetViewDataClass.bet_order_status == 1 && BetData.is_bet_single?'yb-strand':'yb-nostrand'" @click.stop="set_is_bet_single">+串</div>
           </div>
-          <div class="yb-dan-btn" v-else>
+          <div class="yb-dan-btn" v-else @click.stop="set_is_bet_single">
             <div>{{ i18n_t('common.single') }}</div>
           </div>
 

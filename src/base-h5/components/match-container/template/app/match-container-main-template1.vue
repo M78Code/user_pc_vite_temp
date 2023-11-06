@@ -42,11 +42,6 @@
               <!-- 收藏图标 compute_img_url('icon-favorite-s')-->
               <img v-if='league_collect_state' :src="normal_img_is_favorite">
             </div>
-            <!-- 电竞图标 写死 -->
-            <div class="esport" v-if="match_of_list.csid == 101" :style="compute_css_obj('menu-sport-active-image', 2101)"></div>
-            <div class="esport" v-else-if="match_of_list.csid == 103" :style="compute_css_obj('menu-sport-active-image', 2103)"></div>
-            <div class="esport" v-else-if="match_of_list.csid == 102" :style="compute_css_obj('menu-sport-active-image', 2102)"></div>
-            <div class="esport" v-else-if="match_of_list.csid == 100" :style="compute_css_obj('menu-sport-active-image', 2100)"></div>
             <span class="league-title-text row justify-between">
               <span :class="['league-t-wrapper', { 'league-t-main-wrapper': menu_type !== 28, export: is_export }]">
                 <span class="match-league ellipsis-2-lines" :class="{ 'match-main-league': menu_type !== 28 }">

@@ -2,16 +2,17 @@
  * @Description: 虚拟体育 VR
 -->
 <template>
-  <div>
+  <navigation-bar borderBottomNoShow :title="i18n_t('common.virtual_sports')">
+        <template v-slot:right>
+            <div class="right-icon" @click="state.select_dialog = true"></div>
+        </template>
+    </navigation-bar>
+
     <div class="virtual-main router_scroll_layout" ref="scrollArea" @scroll="wrapper_scroll_handler">
       <!-- 头部 -->
       <div class="virtual-head">
-        <div class="type-bg" :class="'bg'+lodash.get(sub_menu_list,`[${sub_menu_i}].field1`)">
+        <div class="type-bg">
           <!-- 返回按钮 及 刷新 注单  设置 按钮 -->
-          <div class="back-wrap">
-            <!-- 虚拟体育 -->
-            <div>{{i18n_t('common.virtual_sports')}}</div>
-          </div>
           <!-- 虚拟体育菜单 -->
           <div class="virtual-menu-list" ref='virtual_menu_list_dom'>
             <div class="tabs-bar">
@@ -28,6 +29,9 @@
           </div>
         </div>
       </div>
+    </div>
+
+    <div class="vr-sports-content">
       <!--虚拟体育-->
       <virtual-sports
         :current_sub_menu="current_sub_menu"
@@ -35,36 +39,30 @@
         :v_match_router_ente="v_match_router_ente"
         :v_menu_changed="v_menu_changed">
       </virtual-sports>
-
     </div>
 
+
+
     <!-- 回到顶部按钮组件 -->
-    <scroll-top v-show="!right_menu_show && list_scroll_top > 0" ref="scroll_top" :list_scroll_top="list_scroll_top" @back-top="back_top" />
+    <!-- <scroll-top v-show="!right_menu_show && list_scroll_top > 0" ref="scroll_top" :list_scroll_top="list_scroll_top" @back-top="back_top" /> -->
 
     <!-- 简版 底部菜单 -->
-    <virtual-footer-menu v-show="!right_menu_show" />
+    <!-- <virtual-footer-menu v-show="!right_menu_show" /> -->
 
-  </div>
 </template>
 <script setup>
 import { onMounted, onUnmounted, ref } from "vue";
 import lodash from "lodash";
 import { api_common } from "src/api/index";
-import axios_api_loop from "src/core/http/axios-loop.js"
-import { go_where, utils } from "src/core/utils/index.js"
+import navigationBar from 'src/base-h5/components/tutorial/navigation-bar/index.vue'
 import { i18n_t, MenuData } from 'src/core/'
-import base_data from "src/core/menu-h5/menu-data-class.js";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
-import { theme } from 'src/base-h5/mixin/userctr.js'
 import VirtualData from 'src/core/match-list-h5/virtual-sports/virtual-data.js'
 // 回到顶部
 import scrollTop from "src/base-h5/components/common/record-scroll/scroll-top.vue";
-// 设置菜单
-// import setMenu from "src/project/components/common/set_menu.vue"    
 // 虚拟体育
-import virtualSports from "src/base-h5/components/virtual/virtual-sports.vue";
+import virtualSports from "src/base-h5/components/match-container/virtual/app/virtual-sports.vue";
 // 底部菜单
-import virtualFooterMenu from 'src/base-h5/components/virtual/virtual-footer-menu.vue'
 
 
 // 当前选中的虚拟体育菜单(虚拟足球 赛马 赛狗 等)
@@ -240,7 +238,6 @@ onUnmounted(() => {
 <style lang="scss" scoped>
 .virtual-main {
   width: 100%;
-  height: calc(var(--vh, 1vh) * 100);
   overflow: auto;
 
   /* ************** 列表上滑箭头图标 **************** -S */
@@ -291,7 +288,7 @@ onUnmounted(() => {
       .virtual-ref {
         width: 0.4rem;
         height: 100%;
-        background: var(--q-color-com-img-bg-70) center no-repeat;
+        background: var(--q-gb-t-c-1) center no-repeat;
         background-size: 0.2rem auto;
 
         &.refreshing {
@@ -351,7 +348,7 @@ onUnmounted(() => {
             width: 0.22rem;
             height: 0.22rem;
             margin-bottom: 0.1rem;
-            background: var(--q-color-com-img-bg-140) no-repeat 0 0 / 0.22rem 18.88rem;
+            background: var(--q-gb-t-c-1) no-repeat 0 0 / 0.22rem 18.88rem;
             --per: -0.32rem;
 
             .menu-new-icon {
@@ -410,7 +407,7 @@ onUnmounted(() => {
 
         margin-right: 0.04rem;
         display: none;
-        background: var(--q-color-com-img-bg-20) no-repeat 0 0 / 100%;
+        background: var(--q-gb-t-c-1) no-repeat 0 0 / 100%;
         --per: -0.3rem;
       }
 
@@ -426,5 +423,10 @@ onUnmounted(() => {
       }
     }
   }
+}
+
+.vr-sports-content {
+  overflow-y: scroll;
+  height: calc(100% - .94rem);
 }
 </style>

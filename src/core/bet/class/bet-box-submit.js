@@ -173,8 +173,10 @@ const get_query_bet_amount_common = (obj) => {
         if (res.code == 200) {
             BetViewDataClass.set_bet_min_max_money(res.data)
             // 通知页面更新 
-            useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY)
-
+            // 串关不更新
+            if(BetData.is_bet_single){
+                useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY)
+            }
             // 获取盘口值 
             const latestMarketInfo = lodash_.get(res, 'data.latestMarketInfo')
             // 获取预约投注项
@@ -208,7 +210,10 @@ const get_query_bet_amount_esports_or_vr = () => {
         if (res.code == 200) {
             BetViewDataClass.set_bet_min_max_money(res.data,'min_max')
             // 通知页面更新 
-            useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY)
+            // 串关不更新
+            if(BetData.is_bet_single){
+                useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY)
+            }
 
             // 设置投注项及时比分
             // let latestMarketInfo  = lodash_.get(res,'data.latestMarketInfo')
@@ -359,16 +364,20 @@ const submit_handle = type => {
         if (res.code == 200) {
             // 投注成功 更新余额
             UserCtr.get_balance()
-            // 投注成功后获取投注记录数据 24小时内的
-            useMittEmit(MITT_TYPES.EMIT_TICKRTS_COUNT_CONFIG)
+            // pc 有的 
+            if(params.deviceType == 2){
+                // 投注成功后获取投注记录数据 24小时内的
+                useMittEmit(MITT_TYPES.EMIT_TICKRTS_COUNT_CONFIG)
+            }
             // 获取
             BetData.set_bet_mode(lodash_.get(res,'data.lock'),-1)
             // 获取投注后的数据列表
             let orderDetailRespList = lodash_.get(res,'data.orderDetailRespList') || []
-            set_orderNo_bet_obj(orderDetailRespList)
-
-            // 单关且只有一条投注项 
-            if(BetData.is_bet_single && orderDetailRespList.length == 1){
+            let seriesOrderRespList = lodash_.get(res,'data.seriesOrderRespList') || []
+           
+            // 单关
+            if(BetData.is_bet_single){
+                set_orderNo_bet_obj(orderDetailRespList)
                 // 订单状态 0:投注失败 1: 投注成功 2: 订单确认中
                 let status_code = orderDetailRespList[0].orderStatusCode
                 let status = 2
@@ -385,9 +394,22 @@ const submit_handle = type => {
                 }
                 // 1-投注状态,2-投注中状态,3-投注成功状态(主要控制完成按钮),4-投注失败状态,5-投注项失效
                 BetViewDataClass.set_bet_order_status(status)
+            }else{
+                BetViewDataClass.set_orderNo_bet_obj(orderDetailRespList)
+                BetViewDataClass.set_orderNo_bet_single_obj(seriesOrderRespList)
+
+                let number_list = []
+                number_list = seriesOrderRespList.filter(item=> item.orderStatusCode == 1)
+                
+                if(seriesOrderRespList.length == number_list.length){
+                    // 1-投注状态,2-投注中状态,3-投注成功状态(主要控制完成按钮),4-投注失败状态,5-投注项失效
+                    BetViewDataClass.set_bet_order_status(3)
+                }else{
+                    BetViewDataClass.set_bet_order_status(2)
+                }
+
             }
             let obj = {};
-            obj.cmd = 'C2'
             obj.hid = ''
             obj.mid = ''
             // 盘口Id，多个Id使用逗号分隔
@@ -430,6 +452,8 @@ const set_bet_obj_config = (params = {}, other = {}) => {
     // 切换投注状态
     BetViewDataClass.set_bet_order_status(1)
     BetData.set_bet_mode(-1)
+    // 重置金额为 0
+    BetData.set_bet_amount(0)
 
     const { oid, _hid, _hn, _mid } = params
      // 列表数据仓库

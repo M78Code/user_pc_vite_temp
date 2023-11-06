@@ -1,3 +1,10 @@
+<!--
+ * @Author: rise
+ * @Date: 2023-11-02 16:27:18
+ * @LastEditors: rise
+ * @LastEditTime: 2023-11-06 14:30:25
+ * @Description:  
+-->
 <template>
   <!-- 规则 / 公告 头部 -->
   <template v-if="is_rule_page">
@@ -48,7 +55,9 @@
 
     </div>
     </div>
+
   </template>
+  <scrollMenu v-if="MenuData.menu_list.length" />
   <!-- 菜单抽屉 -->
   <q-drawer v-model="leftDrawerOpen" show-if-above bordered >
     <leftMenu @isLeftDrawer="toggleLeftDrawer"/>
@@ -60,7 +69,9 @@
 import { ref, computed, watch } from "vue";
 import { useRouter, useRoute } from "vue-router"
 import { format_money2,UserCtr } from "src/core/"
-import leftMenu from "./components/left_menu/left_menu.vue"
+import leftMenu from "./components/left-menu/left-menu.vue"
+import scrollMenu from "./scroll-menu/scroll-menu.vue"
+import { MenuData } from 'src/core/';
 const router = useRouter();
 const route = useRoute()
 const amount = ref('')
@@ -107,9 +118,7 @@ const go_back = () => {
   } else {
     router.go(-1)
   }
-
 }
-
 
 const toggleLeftDrawer = () => {
   leftDrawerOpen.value = !leftDrawerOpen.value
