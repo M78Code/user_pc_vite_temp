@@ -25,12 +25,19 @@
                 <bet-input-info></bet-input-info>
             </div>
             <div v-if="state == 2">
-                <!-- 串关投注项列表  -->
+                <!-- 合并单关  -->
                 <div class="scroll-box scroll-box-center" ref="scroll_box" :style="{ 'max-height': `${max_height1}px` }"
                     @touchmove="touchmove_handle($event)" @touchstart="touchstart_handle($event)">
                     <bet-mix-box-child2></bet-mix-box-child2>
                 </div>
-                
+            </div>
+            <div v-if="state == 3">
+                <!-- 串关投注项列表  -->
+                <div class="scroll-box scroll-box-center" ref="scroll_box" :style="{ 'max-height': `${max_height1}px` }"
+                    @touchmove="touchmove_handle($event)" @touchstart="touchstart_handle($event)">
+                    <bet-mix-box-child3></bet-mix-box-child3>
+                </div>
+                <bet-info></bet-info>
             </div>
         </div>
         <!-- 键盘 -->
@@ -43,11 +50,13 @@
 </template>
 
 <script setup>
+import betInfo from "./bet_info.vue";
 import betBtn from './bet-btn.vue';
 import keyBoard from './keyboard.vue';
 import betInputInfo from "./bet_input_info.vue";
 import betMixBoxChild1 from "./bet_mix_box_child1.vue";
 import betMixBoxChild2 from "./bet_mix_box_child2.vue";
+import betMixBoxChild3 from "./bet_mix_box_child3.vue";
 import betAllDetele from "./bet_all_detele.vue";
 import betBar from "./bet-bar.vue";
 //import betInputInfo from "//bet_input_info";
