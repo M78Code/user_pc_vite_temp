@@ -193,7 +193,7 @@
     <!--  首发阵容，替补阵容 伤停阵容-->
     <template v-if="!no_data">
       <!-- 首发名单-->
-      <div class="title" >
+      <div class="title">
         {{i18n_t('analysis_football_matches.starting_lineup') }}
       </div>
       <div class="public_form football_standings">
@@ -554,58 +554,103 @@ import { LOCAL_PROJECT_FILE_PREFIX, MenuData } from 'src/core'
     }
   }
   // 获取伤停数据
-  const get_data_list = () => {
+  const get_data_list = async () => {
       try {
         let parameter = {
-          standardMatchId: match_id.value, //2274159, //2274159 ,//2079863足球测试id
+          standardMatchId: 2385166,
+          // standardMatchId: match_id.value, //2274159, //2274159 ,//2079863足球测试id
           parentMenuId: 2,
           sonMenuId: 1
         }
         let {code , data} = api_analysis.get_match_analysise_data(parameter)
         // if(code == 200 && Object.keys(data).length > 0) {
-          injury_situation_data.value = lodash.get(data, 'basicInfoMap.sThirdMatchSidelinedDTOMap', {
-    "1": [{
-        "homeAway": 1,
-        "playerName": "朱利安·杜兰维尔",
-        "positionName": "前锋",
-        "reason": "肌肉损伤"
-    }],
-    "2": [{
-        "homeAway": 2,
-        "playerName": "亚历山大-伊萨克",
-        "positionName": "前锋",
-        "reason": "腹股沟受伤"
-    },
-    {
-        "homeAway": 2,
-        "playerName": "哈维-巴恩斯",
-        "positionName": "中场",
-        "reason": "脚趾受伤"
-    },
-    {
-        "homeAway": 2,
-        "playerName": "博特曼-斯文",
-        "positionName": "后卫",
-        "reason": "膝伤"
-    },
-    {
-        "homeAway": 2,
-        "playerName": "埃利奥特安德森",
-        "positionName": "中场",
-        "reason": "背部受伤"
-    },
-    {
-        "homeAway": 2,
-        "playerName": "马特-塔吉特",
-        "positionName": "后卫",
-        "reason": "腿筋拉伤"
-    },
-    {
-        "homeAway": 2,
-        "playerName": "哈维尔-曼奎洛",
-        "positionName": "后卫",
-        "reason": "腹股沟受伤"
-    }]
+          injury_situation_data.value = await lodash.get(data, 'basicInfoMap.sThirdMatchSidelinedDTOMap', {
+    // "1": [
+    //   {
+    //     "homeAway": 1,
+    //     "playerName": "朱利安·杜兰维尔",
+    //     "positionName": "前锋",
+    //     "reason": "肌肉损伤",
+    //     "shirtNumber": 3
+    //   },
+    //   {
+    //     "homeAway": 1,
+    //     "playerName": "tom",
+    //     "positionName": "前锋",
+    //     "reason": "肌肉损伤",
+    //     "shirtNumber": 8
+    //   },
+    //   {
+    //     "homeAway": 1,
+    //     "playerName": "babay",
+    //     "positionName": "前锋",
+    //     "reason": "肌肉损伤",
+    //     "shirtNumber": 13
+    //   },
+    //   {
+    //     "homeAway": 1,
+    //     "playerName": "cats",
+    //     "positionName": "前锋",
+    //     "reason": "肌肉损伤",
+    //     "shirtNumber": 31
+    //   },
+    //   {
+    //     "homeAway": 1,
+    //     "playerName": "gayer",
+    //     "positionName": "前锋",
+    //     "reason": "肌肉损伤",
+    //     "shirtNumber": 21
+    //   },
+    //   {
+    //     "homeAway": 1,
+    //     "playerName": "C罗",
+    //     "positionName": "前锋",
+    //     "reason": "肌肉损伤",
+    //     "shirtNumber": 7
+    //   },
+    // ],
+    // "2": [{
+    //     "homeAway": 2,
+    //     "playerName": "亚历山大-伊萨克",
+    //     "positionName": "前锋",
+    //     "reason": "腹股沟受伤",
+    //     "shirtNumber": 15
+    // },
+    // {
+    //     "homeAway": 2,
+    //     "playerName": "哈维-巴恩斯",
+    //     "positionName": "中场",
+    //     "reason": "脚趾受伤",
+    //     "shirtNumber": 5
+    // },
+    // {
+    //     "homeAway": 2,
+    //     "playerName": "博特曼-斯文",
+    //     "positionName": "后卫",
+    //     "reason": "膝伤",
+    //     "shirtNumber": 17
+    // },
+    // {
+    //     "homeAway": 2,
+    //     "playerName": "埃利奥特安德森",
+    //     "positionName": "中场",
+    //     "reason": "背部受伤",
+    //     "shirtNumber": 18
+    // },
+    // {
+    //     "homeAway": 2,
+    //     "playerName": "马特-塔吉特",
+    //     "positionName": "后卫",
+    //     "reason": "腿筋拉伤",
+    //     "shirtNumber": 32
+    // },
+    // {
+    //     "homeAway": 2,
+    //     "playerName": "哈维尔-曼奎洛",
+    //     "positionName": "后卫",
+    //     "reason": "腹股沟受伤",
+    //     "shirtNumber": 2
+    // }]
 })
         // }
       } catch (error) {
