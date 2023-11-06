@@ -80,7 +80,7 @@ class MatchUtils {
     // 当前赛事
     const match = BaseData.resolve_base_info_by_mid(mids[i])
     let is_show_no_play = false;
-    const menu_lv_v1 = MenuData.current_lv_1_menu_mi.value
+    const menu_lv_v1 = MenuData.current_lv_1_menu_i
     // 详情页，或者  非今日串关不显示
     if(PageSourceData.page_source == 'detail_match_list' || ![1,2,3,6].includes(+menu_lv_v1)){
       return false

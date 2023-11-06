@@ -17,7 +17,7 @@
                       <!-- 主程序 start -->
                       <div
                         class="play-box-style details_color first-radius warp"
-                        @click="go_to_bet(ol_item)"
+                        @click="utils.go_to_bet(ol_item)"
                         :class="[get_bet_list.includes(ol_item.id_)?['details-bg5','white_text','first-rad']:'',{'win':utils.calc_win(ol_item.result)}]"
                       >
                         <div class="text-center odds-wrap">
@@ -90,7 +90,7 @@
                         <!-- 主程序 start -->
                         <div
                           class="play-box-style details_color first-radius warp"
-                          @click="go_to_bet(ol_item)"
+                          @click="utils.go_to_bet(ol_item)"
                           :class="[get_bet_list.includes(ol_item.id_)?['details-bg5','white_text','first-rad']:'',{'win':utils.calc_win(ol_item.result)}]"
                         >
                           <div class="text-center odds-wrap">
@@ -165,7 +165,7 @@
                         <!-- 主程序 start -->
                         <div
                           class="play-box-style details_color warp"
-                          @click="go_to_bet(ol_item)"
+                          @click="utils.go_to_bet(ol_item)"
                           :class="[get_bet_list.includes(ol_item.id_)?['details-bg5','white_text','first-rad']:'',,{'win':utils.calc_win(ol_item.result)}]"
                         >
                           <div class="text-center odds-wrap">
@@ -240,7 +240,7 @@
                         <!-- 主程序 start -->
                         <div
                           class="play-box-style details_color last-radius"
-                          @click="go_to_bet(ol_item)"
+                          @click="utils.go_to_bet(ol_item)"
                           :class="[get_bet_list.includes(ol_item.id_)?['details-bg5','white_text']:'',{'win':utils.calc_win(ol_item.result)}]"
                         >
                           <div class="text-center odds-wrap">
@@ -346,9 +346,6 @@ export default defineComponent({
     const is_match_result = computed(() => {
       return ['result_details', 'match_result'].includes(route.name)
     });
-    const go_to_bet = (ol_item) => {
-      useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX,true);
-    };
     return {
       utils,
       lodash,
@@ -358,7 +355,6 @@ export default defineComponent({
       get_detail_data,
       is_match_result,
       LOCAL_PROJECT_FILE_PREFIX,
-      go_to_bet
     }
   }
 })

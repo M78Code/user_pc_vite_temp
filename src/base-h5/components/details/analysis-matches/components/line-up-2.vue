@@ -282,7 +282,7 @@
         
       <div class="public_form football_standings">
         <!-- 没有数据 组件 -->
-      <div v-if="injury_situation_data.length <= 0" class="no-list">
+      <div v-if="Object.keys(injury_situation_data).length <= 0" class="no-list">
           <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/def_common.svg`" alt="">
           {{ i18n_t('app_h5.detail.not_data_Injury') }}
         </div>
@@ -486,6 +486,7 @@ import { LOCAL_PROJECT_FILE_PREFIX, MenuData } from 'src/core'
   // 触发两次接口获取主客队信息  1主2客
   get_list(1)
   get_list(2)
+  // 伤停接口
   get_data_list()
   })
 
@@ -553,9 +554,10 @@ import { LOCAL_PROJECT_FILE_PREFIX, MenuData } from 'src/core'
       console.error(error);
     }
   }
-  // 获取伤停数据
+  // 获取伤停数据---目前伤停接口返回数据：缺少头像和号码字段
   const get_data_list = () => {
       try {
+        // sonMenuId： 旧版 基本面是1 
         let parameter = {
           standardMatchId: match_id.value, //2274159, //2274159 ,//2079863足球测试id
           parentMenuId: 2,
@@ -563,6 +565,7 @@ import { LOCAL_PROJECT_FILE_PREFIX, MenuData } from 'src/core'
         }
         let {code , data} = api_analysis.get_match_analysise_data(parameter)
         // if(code == 200 && Object.keys(data).length > 0) {
+          // TODO: 数据暂时写死，后续修改
           injury_situation_data.value = lodash.get(data, 'basicInfoMap.sThirdMatchSidelinedDTOMap', {
     "1": [{
         "homeAway": 1,

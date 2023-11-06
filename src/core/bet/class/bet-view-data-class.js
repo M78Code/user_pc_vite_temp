@@ -9,7 +9,9 @@ import BetData from "./bet-data-class"
 
 
 class BetViewData {
-  constructor() { }
+  constructor() { 
+    this.init()
+  }
   init() {
     // 金额的范围  -1:输入金额小于最低限额时，1: 输入金额超出最大限额时 2:输入金额超出用户余额时 3:用户余额是小于等于输入金额(转换后)
     this.input_money_state = 0;
@@ -82,6 +84,8 @@ class BetViewData {
   
     // 投注后的 
     this.orderNo_bet_obj = []
+    // 投注后串关信息 
+    this.orderNo_bet_single_obj = []
 
     this.bet_view_version = ref('11')
 
@@ -378,6 +382,12 @@ class BetViewData {
   // 投注后的数据
   set_orderNo_bet_obj(array) {
     this.orderNo_bet_obj = array
+    this.set_bet_view_version()
+  }
+
+  // 投注后的 串关信息数据
+  set_orderNo_bet_single_obj(array) {
+    this.orderNo_bet_single_obj = array
     this.set_bet_view_version()
   }
 

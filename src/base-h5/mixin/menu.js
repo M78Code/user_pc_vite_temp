@@ -46,6 +46,10 @@ const is_jinzu = computed(() => {
 const is_hot = computed(() => {
     return MenuData.is_hot(menu_type.value);
 });
+// 是否 收藏
+const is_collect = computed(() => {
+return MenuData.is_collect(menu_type.value);
+});
 //是否 详情页 用途： 赛事列表、热门、详情 引入赛事列表组件
 const is_detail = computed(() => {
     return useRoute().name === 'category'
@@ -65,5 +69,5 @@ watch(update_time, () => {
     menu_lv4.value = MenuData.current_lv_4_menu;//4级
 });
 export { update_time, footer_menu_id,
-    is_jinzu, is_kemp, is_mix, is_vr, is_zaopan, is_export, is_scroll_ball, is_today, is_results, menu_type, menu_lv1, menu_lv2, is_hot, is_detail
+    is_jinzu, is_kemp, is_mix, is_vr, is_zaopan, is_export, is_scroll_ball, is_today, is_results, menu_type, menu_lv1, menu_lv2, is_hot, is_detail, is_collect
 }

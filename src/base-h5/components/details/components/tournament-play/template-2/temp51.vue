@@ -111,7 +111,7 @@ export default defineComponent({
       // }
     });
     const go_to_bet = (ol_item) => {
-      useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX,true);
+      utils.go_to_bet(ol_item)
     }
     return {
       ...toRefs(data),

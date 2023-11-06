@@ -118,7 +118,7 @@ defineProps({
   }
 
   .sl-filter-content {
-    position: relative;
+    //position: relative;
   }
 }
 </style>

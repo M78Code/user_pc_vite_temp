@@ -1,15 +1,16 @@
 <template>
-  <div class="c-match-item  match-tpl1-bg" :class="{ 'more-handicap': lodash.get(match, 'has_add1') || lodash.get(match, 'has_add2') }">
-  <!-- <div class="c-match-item  match-tpl1-bg" :class="{ 'more-handicap': match.has_add1 || match.has_add2 }"> -->
+  <div class="c-match-item  match-tpl1-bg"
+    :class="{ 'more-handicap': lodash.get(match, 'has_add1') || lodash.get(match, 'has_add2') }">
+    <!-- <div class="c-match-item  match-tpl1-bg" :class="{ 'more-handicap': match.has_add1 || match.has_add2 }"> -->
     <div v-show="false">{{ MatchListData.data_version.version }}</div>
     <div v-show="false">{{ MatchListCardData.list_version }}</div>
     <!-- 比赛进程 -->
     <div class="process-col yb-flex-center">
       <!--热门赛事显示hot标识-->
-      <img class="match-hot" :src="compute_local_project_file_path('/image/common/svg/hot.svg')" v-show="lodash.get(match, 'is_hot')" />
+      <img class="match-hot" :src="compute_local_project_file_path('/image/common/svg/hot.svg')"
+        v-show="lodash.get(match, 'is_hot')" />
       <!-- 比赛进程 -->
-      <match-process v-if="is_mounted && match" :match="match" source='match_list'
-        show_page="match-list" :rows="2" />
+      <match-process v-if="is_mounted && match" :match="match" source='match_list' show_page="match-list" :rows="2" />
     </div>
     <!-- 盘口 -->
     <div class="match-handicap-item-wrap">
@@ -20,7 +21,8 @@
           <basis-info1 v-if="is_mounted && match" :match="match" show_type="all" />
         </div>
         <!-- 赛事盘口投注项 -->
-        <match-handicap v-if="match"  :handicap_list="match_tpl_info[`template_${match_style_obj.data_tpl_id}`].main_handicap_list" :match="match" />
+        <match-handicap v-if="match"
+          :handicap_list="match_tpl_info[`template_${match_style_obj.data_tpl_id}`].main_handicap_list" :match="match" />
         <!-- 视频按钮 -->
         <div class="media-col">
           <match-media v-if="match" :match="match" />
@@ -33,7 +35,8 @@
           <!-- <basis-info4 v-if="is_mounted" :match="match" /> -->
         </div>
         <!-- 赛事盘口投注项 -->
-        <match-handicap v-if="match"  :handicap_list="match_tpl_info[`template_${match_style_obj.data_tpl_id}`].add_handicap_list" :match="match" />
+        <match-handicap v-if="match"
+          :handicap_list="match_tpl_info[`template_${match_style_obj.data_tpl_id}`].add_handicap_list" :match="match" />
         <!-- 视频按钮 -->
         <div class="media-col"></div>
       </div>
@@ -44,7 +47,8 @@
           <!-- <basis-info4 v-if="is_mounted" :match="match" /> -->
         </div>
         <!-- 赛事盘口投注项 -->
-        <match-handicap v-if="match"  :handicap_list="match_tpl_info[`template_${match_style_obj.data_tpl_id}`].add_handicap_list" :match="match" />
+        <match-handicap v-if="match"
+          :handicap_list="match_tpl_info[`template_${match_style_obj.data_tpl_id}`].add_handicap_list" :match="match" />
         <!-- 视频按钮 -->
         <div class="media-col"></div>
       </div>
@@ -56,8 +60,8 @@
           <div class="arrow-wrap yb-flex-center">
             <div class="yb-icon-arrow" :class="{ active: match_style_obj.is_fold_tab_play }"></div>
           </div>
-          <tab :list="play_name_list" :padding="10" :currentIndex="lodash.get(match, 'play_current_index')" tab_name_key="play_name"
-            @onclick="play_tab_click" />
+          <tab :list="play_name_list" :padding="10" :currentIndex="lodash.get(match, 'play_current_index')"
+            tab_name_key="play_name" @onclick="play_tab_click" />
 
         </div>
         <div class="media-col"></div>
@@ -90,7 +94,9 @@
           <basis-info4 v-if="is_mounted && match" :is_other_concede="true" :match="match" :is_show_score="true" />
         </div>
         <!-- 赛事盘口投注项 -->
-        <match-handicap v-if="match"  :handicap_list="match_tpl_info[`template_${match_style_obj.data_tpl_id}`].hpsOutright" :match="match" other_play />
+        <match-handicap v-if="match"
+          :handicap_list="match_tpl_info[`template_${match_style_obj.data_tpl_id}`].hpsOutright" :match="match"
+          other_play />
         <!-- 视频按钮 -->
         <div class="media-col"></div>
       </div>
@@ -103,7 +109,6 @@
 
 import { ref, computed, watch, onMounted, nextTick } from 'vue';
 import lodash from 'lodash'
-
 import { t, get_match_status, MatchDataWarehouse_PC_List_Common as MatchListData, UserCtr, compute_local_project_file_path } from "src/core/index.js";
 import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card-class.js'
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
@@ -119,7 +124,7 @@ import { MatchBasisInfo4FullVersionWapper as BasisInfo4 } from 'src/base-pc/comp
 import { MatchHandicapFullVersionWapper as MatchHandicap } from 'src/base-pc/components/match-list/match-handicap/index.js'
 import MatchMedia from 'src/base-pc/components/match-list/match-media/index.vue'
 import { CommonTabFullVersionWapper as Tab } from "src/base-pc/components/tab/common-tab/index.js";
-
+import { use_other_play, compute_other_play_data } from 'src/core/match-list-pc/composables/match-list-other.js'
 const props = defineProps({
   mid: {
     type: [String, Number],
@@ -130,16 +135,22 @@ const props = defineProps({
     default: () => false
   }
 })
-
 const play_name_list = ref([]);
+//当前选中的次要玩法
+const {
+  play_current_index, play_current_key, switch_other_play
+} = use_other_play()
 let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.mid)
 const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`].width_config
 const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`]
-let match = MatchListData.list_to_obj.mid_obj[props.mid+'_'];
+let match = MatchListData.get_quick_mid_obj(props.mid);
+match && set_play_name_list(MatchListData.get_tab_play_keys(match))
 const is_mounted = ref(true);
-
+match && compute_other_play_data(match)
 watch(() => MatchListData.data_version.version, (new_value, old_value) => {
-  match = MatchListData.list_to_obj.mid_obj[props.mid+'_'];
+  match = MatchListData.get_quick_mid_obj(props.mid);
+  match && compute_other_play_data(match)
+  match && set_play_name_list(MatchListData.get_tab_play_keys(match))
 })
 
 // const match = computed(() => {
@@ -149,21 +160,21 @@ watch(() => MatchListData.data_version.version, (new_value, old_value) => {
 const bet_col = computed(() => {
   let bet_col = []
   //是否多列
-  let multi_column = lodash.get( 'match_style_obj.data_tpl_id') == 13
-  let play_current_key = lodash.get( 'match.play_current_key')
-
+  let multi_column = lodash.get(match_style_obj, 'data_tpl_id') == 13
+  let play_current_key = lodash.get(match, 'play_current_key')
   // 5分钟玩法
   if (play_current_key == 'hps5Minutes') {
     let hpid = 361
-    if (get_match_status(lodash.get( 'match.ms'), [110]) == 1) {
+    if (get_match_status(lodash.get('match.ms'), [110]) == 1) {
       hpid = 362
     }
-    bet_col = [lodash.get( `match.play_obj.hpid_${hpid}.hpn`, '')]
+    bet_col = [lodash.get(`match.play_obj.hpid_${hpid}.hpn`, '')]
     if (multi_column) {
       bet_col.push('')
     }
     // 波胆
   } else if (play_current_key == 'hpsBold') {
+
     let { mhn, man } = match
     let [draw, ht_draw] = t('list.match_tpl_title.tpl1.bold_bet_col')
     bet_col = [mhn, draw, man, mhn, ht_draw, man]
@@ -251,7 +262,7 @@ const bet_col = computed(() => {
 */
 function set_play_name_list(tab_play_keys = '') {
   let play_name_list_info = []
-  if (typeof tab_play_keys !== 'string') return
+  if (typeof tab_play_keys !== 'string') return;
   let play_name_obj = {
     // 角球
     hpsCorner: { play_name: t('list.corner'), field: 'hpsCorner' },
@@ -270,13 +281,34 @@ function set_play_name_list(tab_play_keys = '') {
     // 波胆
     hpsBold: { play_name: t('list.bold'), field: 'hpsBold' },
     // 5分钟玩法 5minutes_roll
-    hps5Minutes: { play_name: get_match_status(lodash.get( 'match.ms'), [110]) == 1 ? t('list.5minutes_roll') : t('list.5minutes'), field: 'hps5Minutes' },
+    hps5Minutes: { play_name: get_match_status(lodash.get('match.ms'), [110]) == 1 ? t('list.5minutes_roll') : t('list.5minutes'), field: 'hps5Minutes' },
   }
   tab_play_keys = tab_play_keys.split(',')
   tab_play_keys.forEach(key => {
     play_name_obj[key] && play_name_list_info.push(play_name_obj[key])
   });
-  play_name_list.value = play_name_list_info
+  play_name_list.value = play_name_list_info;
+  // 是否有其他玩法
+  match.has_other_play = tab_play_keys.length > 0
+  if (match.has_other_play) {
+    // 当前选中的其他的玩法
+    let play_key = play_current_index.value
+    //玩法关闭时选择第一个
+    if (!tab_play_keys.includes(play_key)) {
+      play_key = tab_play_keys[0]
+    }
+    // 设置选中的玩法索引
+    match.play_current_index = tab_play_keys.findIndex(key => key == play_key)
+    play_current_index.value = match.play_current_index;
+    // // 设置选中的玩法key
+    match.play_current_key = play_key
+  } else {
+    play_current_index.value = -1
+    match.play_current_key = -1;
+    match.play_current_key = ''
+  }
+  // // 保存当前选中的玩法
+  // this.other_play_current_play['mid_'+match.mid] = play_key
 }
 
 /**
@@ -286,7 +318,7 @@ function set_play_name_list(tab_play_keys = '') {
 */
 function set_secondary_bg(index, length) {
   let bg_status = false
-  if ([2, 5].includes(length) && index == 1 && lodash.get( 'match.play_current_key') !== 'hps5Minutes') {
+  if ([2, 5].includes(length) && index == 1 && lodash.get('match.play_current_key') !== 'hps5Minutes') {
     bg_status = true
   } else if ([3, 4, 5].includes(index) && length > 5) {
     bg_status = true
@@ -300,9 +332,9 @@ function set_secondary_bg(index, length) {
  * @param {Number} length 整行标题个数
  * @return {Number} bet_width 标题长度
 */
-function get_bet_width (index, length) {
+function get_bet_width(index, length) {
   //是否多列
-  let multi_column = lodash.get( 'match_style_obj.data_tpl_id') == 13
+  let multi_column = lodash.get('match_style_obj.data_tpl_id') == 13
   let bet_width = match_list_tpl_size.bet_width
   if (multi_column) {
     if (length == 5) {
@@ -340,14 +372,14 @@ function get_bet_width (index, length) {
  * @Description 点击tab玩法
  * @param {undefined} undefined
 */
-function play_tab_click (obj) {
+function play_tab_click(obj) {
   // 当前已选中
-  if(match.play_current_index == obj.index){
+  if (match.play_current_index == obj.index) {
     return
   }
   let play_key = play_name_list.value[obj.index].field
   // 切换玩法
-  this.match_list_data.switch_other_play(match.mid,play_key)
+  switch_other_play(match.mid, play_key)
   if (match.csid == 1) {
     let zhugeObj = {
       "玩法集名称": play_name_list.value[obj.index].play_name,
@@ -355,44 +387,39 @@ function play_tab_click (obj) {
       "区域位置": "主列表"
     }
   }
-  MatchListCardData && MatchListCardData.update_match_cur_card_style(match.mid,play_key)
+  MatchListCardData && MatchListCardData.update_match_cur_card_style(match.mid, play_key)
 }
 
 /**
  * @Description 角球折叠
  * @param {undefined} undefined
 */
-function fold_tab_play () {
+function fold_tab_play() {
   MatchListCardData && MatchListCardData.fold_tab_play(match.mid)
 }
 
 function get_tab_play_keys() {
 
 }
-
 onMounted(() => {
   // 异步设置组件是否挂载完成
   // setTimeout(()=>{
   //   is_mounted.value = true
   // })
 })
-
-// 监听其他tab玩法标题变化  设置其他玩法tab栏
-// watch(match.tab_play_keys, (tab_play_keys) => {
-//   set_play_name_list(tab_play_keys)
-// }, { immediate: true })
-
 </script>
 
 <style lang="scss" scoped>
 .other-play-tab {
   height: 32px;
   display: flex;
+
   .play-title {
     cursor: pointer;
     display: flex;
     justify-content: flex-start;
     position: relative;
+
     .tab-wrap {
       :deep(.item-wrap) {
         .tab-item {
@@ -401,27 +428,34 @@ onMounted(() => {
       }
     }
   }
+
   .arrow-wrap {
     width: 34px;
     height: 100%;
+
     .yb-icon-arrow {
       transform: rotate(270deg);
+
       &.active {
         transform: rotate(90deg);
       }
     }
   }
 }
+
 /*15分钟和角球tab*/
 .fifteen-box {
   display: flex;
   height: 24px;
-  &.double-title{
+
+  &.double-title {
     height: 40px;
+
     .fifteen-item {
       line-height: 40px;
     }
   }
+
   .fifteen-item {
     text-align: center;
     font-weight: 500;
@@ -432,11 +466,13 @@ onMounted(() => {
     font-size: 12px;
     height: 100%;
     padding: 0 2px;
-    &.flex{
+
+    &.flex {
       line-height: 16px;
     }
   }
-  .bet-item-wrap:last-child{
+
+  .bet-item-wrap:last-child {
     border-right: none !important;
   }
 }
