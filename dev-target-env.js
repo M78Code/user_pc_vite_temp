@@ -30,9 +30,9 @@ let  DEV_TARGET_VERSION = ''
 
 //----------------------------------分割线  复刻版-H5-KYAPP  app-h5  5 -------------------------------------------
 // 测试环境  
-DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1699175661579-test";
+// DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1699175661579-test";
 // 试玩环境  
-// DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1698742048199-shiwan";
+DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1698742048199-shiwan";
 // 生产环境
 // DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1699154069801-online";
 
