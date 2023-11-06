@@ -147,7 +147,7 @@ class UserCtr {
     this.uid = uid;
   }
   get_cuid() {
-    return this.uid;
+    return this.user_info.userId;
   }
   /**
    * 排序变化      //排序	 int 类型 1 按热门排序 2 按时间排序

@@ -60,11 +60,12 @@ class MatchFold {
       [`csid_${csid}`]: falg
     })
   }
+ 
   /**
    * @description 联赛折叠
    * @param { tid } 联赛 tid
    */
-  set_league_fold (tid) {
+  set_league_fold (tid, csid) {
     // 赛事 mids
     const match_mids = lodash.get(MatchMeta, 'complete_mids', [])
     match_mids.forEach(mid => {
@@ -74,6 +75,14 @@ class MatchFold {
       const show_card = !lodash.get(this.match_mid_fold_obj.value, `${key}.show_card`, false)
       this.set_match_fold(key, { show_card })
     })
+    if (csid) {
+      debugger
+      let flag = true
+      Object.values(this.match_mid_fold_obj.value).forEach(item => {
+        if (!item.show_card) flag = false
+      })
+      this.set_ball_seed_csid_fold_obj(flag)
+    }
   }
   /**
    * @description 球种折叠

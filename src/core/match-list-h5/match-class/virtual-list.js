@@ -143,7 +143,7 @@ class VirtualList {
       const total = this.get_match_total_height(match, index)
       total_height += total
     })
-    this.container_total_height = total_height + 181 + 155
+    this.container_total_height = total_height + 181
   }
 
   /**

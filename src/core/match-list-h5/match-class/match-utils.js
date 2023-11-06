@@ -62,7 +62,9 @@ class MatchUtils {
     // 当前赛事
     let is_show_ball_title = false
     const match = list[i]
-    if (i === 0) {
+    if ([1,2].includes(match.start_falg)) {
+      is_show_ball_title = true
+    } else if (i === 0) {
       is_show_ball_title = true
     } else {
       const prev_match = list[i - 1];

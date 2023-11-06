@@ -59,7 +59,7 @@ class MatchCollect {
     // 赛事 是否 收藏
     Object.assign(this.match_mid_collect_obj.value, {
       [match_key]: { match_collect: is_collect }
-    })
+    }) 
   }
   /*
    * @description 获取联赛收藏状态
@@ -84,22 +84,20 @@ class MatchCollect {
    * @description 获取 赛事 收藏数据
    * @returns 
    */
-  get_collect_matche_data () {
-    return new Promise((resolve, reject) => {
-      api_common.get_new_collect_matches({
-        matchType: 0,
-        cuid: UserCtr.get_cuid()
-      }).then(res => {
-        if(lodash.get(res,'code') == 200){
-          const data = lodash.get(res,'data');
-          Object.assign(this.match_collect_obj, { ...data })
-          MatchMeta.complete_matchs.forEach(match => {
-            requestAnimationFrame(() => {
-              this.handle_collect_state(match)
-            })
+  get_collect_match_data () {
+    api_common.get_new_collect_matches({
+      matchType: 0,
+      cuid: UserCtr.get_cuid()
+    }).then(res => {
+      if(lodash.get(res,'code') == 200){
+        const data = lodash.get(res,'data');
+        Object.assign(this.match_collect_obj, { ...data })
+        MatchMeta.complete_matchs.forEach(match => {
+          requestAnimationFrame(() => {
+            this.handle_collect_state(match)
           })
-        }
-      }).finally(() => resolve())
+        })
+      }
     })
   }
   /**
