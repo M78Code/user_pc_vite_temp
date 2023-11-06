@@ -41,7 +41,7 @@ class MatchMeta {
    * @description 设置 赛事 元数据
    * @param { mi } 菜单类型
    */
-  set_origin_match_data() {
+  async set_origin_match_data() {
     this.init()
     let menu_lv_v1 = ''
     let menu_lv_v2 = ''
@@ -145,9 +145,6 @@ class MatchMeta {
       return target
     })
     this.set_match_mids(result_mids, match_list)
-    
-    // 获取赛事收藏状态 该接口还没发到试玩
-    // await MatchCollect.get_collect_matche_data()
   }
 
     /**
@@ -280,7 +277,7 @@ class MatchMeta {
     VirtualList.set_match_mid_map_base_info(match, template_config.match_template_config)
 
     // 赛事收藏处理
-    MatchCollect.handle_collect_state(match)
+    // MatchCollect.handle_collect_state(match)
     // // 初始化赛事收藏
     // MatchCollect.set_match_collect_state(t)
     // // 初始化联赛收藏状态
@@ -492,6 +489,9 @@ class MatchMeta {
     // console.log('this.complete_matchs', this.complete_matchs)
     // 计算所需渲染数据
     this.compute_page_render_list()
+
+    // 获取赛 事收藏状态 该接口还没发到试玩
+    MatchCollect.get_collect_matche_data()
   }
 
   /**
@@ -511,7 +511,7 @@ class MatchMeta {
      }
 
     // 虚拟列表所需渲染数据
-    const match_datas = VirtualList.compute_page_render_list(scroll_top)
+    const match_datas = VirtualList.compute_current_page_render_list(scroll_top)
 
     // 当前渲染的 mids
     this.match_mids = match_datas.map(t => {
@@ -523,7 +523,7 @@ class MatchMeta {
 
     // 获取赔率
     if (type === 1) return this.handle_submit_warehouse(match_datas)
-
+  
   }
 
   /**

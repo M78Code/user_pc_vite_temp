@@ -87,7 +87,7 @@ class VirtualList {
    * @param {*} scrollTop 滑动的距离
    * @returns 
    */
-  compute_page_render_list (scrollTop = 0) {
+  compute_current_page_render_list (scrollTop = 0) {
     // 计算总高度
     this.compute_container_total_height()
     // 可视区高度
