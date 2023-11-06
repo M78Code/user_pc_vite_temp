@@ -226,10 +226,12 @@
                       <div class="go-container-w flex no-wrap new-standard">
                         <!-- 直播 主播 视频 动画  icon 栏目   -->
                         <!-- 正常的 优先级 ： lvs 直播   muUrl 视频  animationUrl 动画 -->
-                        <div class="live-i-b-wrap v-mode-span row items-center"
-                          v-if="media_button_state_obj.icon_path" @click="media_button_handle()">
-                          <slot></slot>
-                          <img class="live-icon-btn" :src='video_play_app' />
+                        <div class="live-i-b-wrap v-mode-span row items-center" @click="media_button_handle()">
+                          <img :class="['live-icon-btn', { disabled: !media_button_state_obj.icon_path }]" :src='animation_icon' />
+                        </div>
+                        <!-- 视频 -->
+                        <div class="live-i-b-wrap v-mode-span row items-center" @click="media_button_handle()">
+                          <img :class="['live-icon-btn', { disabled: !media_button_state_obj.icon_path }]" :src='video_icon' />
                         </div>
                         <!-- 足篮球展示赛事分析图标 -->
                         <div class="column justify-center yb_px4"
@@ -239,7 +241,7 @@
                         </div>
                         <!-- 此赛事支持提前结算 -->
                         <div class="column justify-center yb_px2" v-if="match_of_list.mearlys == 1">
-                          <img :src="settlement_app" alt="" style="width:0.2rem">
+                          <img :src="mearlys_icon" alt="" style="width:0.2rem">
                         </div>
                       </div>
                     </div>
@@ -274,7 +276,7 @@ import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import PageSourceData  from  "src/core/page-source/page-source.js";
 import { i18n_t, compute_img_url, compute_css_obj  } from "src/core/index.js"
 import { format_time_zone } from "src/core/format/index.js"
-import { mearlys_icon, in_progress, not_begin, video_play_app, settlement_app, 
+import { mearlys_icon, in_progress, not_begin, animation_icon, video_icon, 
   normal_img_not_favorite_white, normal_img_is_favorite } from 'src/base-h5/core/utils/local-image.js'
 
 import { lang, standard_edition, theme } from 'src/base-h5/mixin/userctr.js'
@@ -305,12 +307,12 @@ export default {
   setup (ctx) {
     // 是否显示球种标题
     const show_sport_title = computed(() => {
-      const { start_falg, is_show_ball_title } = ctx.match_of_list
+      const { is_show_ball_title } = ctx.match_of_list
       return is_show_ball_title
     })
     return { 
       lang, theme, i18n_t, compute_img_url, format_time_zone, GlobalAccessConfig, footer_menu_id,LOCAL_PROJECT_FILE_PREFIX,in_progress,not_begin,
-      is_hot, menu_type, menu_lv2, is_detail, is_export, is_results, standard_edition, mearlys_icon, compute_css_obj, show_sport_title, video_play_app, settlement_app,
+      is_hot, menu_type, menu_lv2, is_detail, is_export, is_results, standard_edition, mearlys_icon, compute_css_obj, show_sport_title, animation_icon, video_icon,
       normal_img_not_favorite_white, normal_img_is_favorite, PageSourceData
     }
   }
@@ -957,6 +959,9 @@ export default {
         }
 
         .go-container-w {
+          .disabled{
+            filter: grayscale(100%);
+          }
           .goto-detail {
             display: flex;
             height: auto;
@@ -985,8 +990,8 @@ export default {
               margin-right: 0.05rem;
 
               img {
-                height: 0.14rem;
-                width: 0.18rem;
+                height: 0.16rem;
+                width: 0.16rem;
               }
 
               .live-icon-btn {
@@ -1284,6 +1289,7 @@ export default {
     white-space: nowrap;
     height: 100%;
     flex-wrap: nowrap;
+
   }
 
   .go-container-w {
@@ -1329,6 +1335,7 @@ export default {
         }
       }
     }
+   
   }
 
   .timer-wrapper-c {
