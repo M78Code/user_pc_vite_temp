@@ -72,6 +72,11 @@ const shou = (item,evnet) => {
   BetData.set_bet_keyboard_show(false)
 }
 
+onMounted(()=>{
+  console.error('aaaaa',BetData.bet_keyboard_config)
+  // ref_data.min_money = 
+})
+
 // 预约输入赔率或者盘口
 watch(() => pre_odds_value, (new_) => {
   if (active_index.toString().indexOf('market') > -1) {  // 篮球才可以用键盘输入预约盘口

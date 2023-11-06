@@ -6,7 +6,7 @@
     :style="compute_css_obj(lodash.get(arr[which], 'key'))">
     </div>
     <p>
-            <!-- 有消息用消息 没有信息 用默认信息 -->
+      <!-- 有消息用消息 没有信息 用默认信息 -->
       {{ msg ? $t(msg) : lodash.get(arr[which], 'txt') }}
     </p>
   </div>
@@ -21,6 +21,7 @@ import { useRoute } from "vue-router"
 //-------------------- 对接参数 prop 注册  开始  -------------------- 
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
+
 
 console.error('nodata++++', props);
 useRegistPropsHelper(component_symbol, need_register_props)

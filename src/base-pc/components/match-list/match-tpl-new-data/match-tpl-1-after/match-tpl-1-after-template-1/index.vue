@@ -366,6 +366,10 @@ function fold_tab_play () {
   MatchListCardData && MatchListCardData.fold_tab_play(match.mid)
 }
 
+function get_tab_play_keys() {
+
+}
+
 onMounted(() => {
   // 异步设置组件是否挂载完成
   // setTimeout(()=>{
@@ -378,13 +382,6 @@ onMounted(() => {
 //   set_play_name_list(tab_play_keys)
 // }, { immediate: true })
 
-//赛事阶段变化时跟新次要玩法
-// watch(match.ms, () => {
-//   let tab_play_keys = lodash.get( 'match.tab_play_keys', '') || ''
-//   if (tab_play_keys.includes('hps5Minutes')) {
-//     set_play_name_list(tab_play_keys)
-//   }
-// }, { immediate: true })
 </script>
 
 <style lang="scss" scoped>

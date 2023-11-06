@@ -191,6 +191,7 @@ export default {
       }
       get_home_matches(params).then(res => {
         // 处理返回数据 将扁平化数组更改为页面适用数据
+        console.log(res, 'xxxxxx')
         matches_15mins_list.value = filter_15mins_func(res.p15);
         matches_featured_list.value = filter_featured_list(res.hots);
       });
@@ -198,6 +199,7 @@ export default {
 
     onMounted(() => {
       mounted_fn();
+      init_home_matches()
     });
     onUnmounted(() => {
       // handle_destroyed()
