@@ -5,6 +5,7 @@
 <template>
   <div class="bet-mix-box-child2">
     <!-- 多注顶部蒙层 -->
+   
     <div v-if="false" class="full-shadow" @click.self="pack_up" @touchmove.prevent></div>
     <div class="full-shadow" @click.self="pack_up" @touchmove.prevent></div>
     <!-- 投注中的蒙层，所有不能点击 -->
@@ -34,7 +35,7 @@
       </div>
 
       <!-- 串关输入框 -->
-      <template v-if="BetData.bet_s_list.length > 1 && !BetData.is_bet_single">
+      <template v-if="BetData.bet_s_list.length > 1 && !BetData.is_bet_single &&  BetViewDataClass.bet_order_status == 1 ">
         <bet-collusion-input></bet-collusion-input>
       </template>
       
@@ -151,7 +152,7 @@ import betCollusionInput from './bet-collusion-input.vue'
 
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
-import { UserCtr, i18n_t, compute_css_obj,useMittOn, useMittEmit, MITT_TYPES  } from "src/core/index.js";
+import { i18n_t, compute_css_obj,useMittOn, useMittEmit, MITT_TYPES  } from "src/core/index.js";
 import { ref, onMounted, watch, computed, onUnmounted } from 'vue';
 import { get_query_bet_amount_common } from "src/core/bet/class/bet-box-submit.js"
 import lodash from 'lodash'
@@ -284,14 +285,9 @@ const calc_class = computed(() => {
     || btn_show.value == 5;
   return flag
 })
-// 投注金额赋值
-const change_money_handle = (val) => {
-  bet_amount.value = format_money2(val.money)
-  // console.log("投注金额",bet_amount.value)
-}
+
 onMounted(() => {
   useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money)
-  useMittOn(MITT_TYPES.EMIT_INPUT_BET_MONEY, change_money_handle)
   let munu_type = true
   if (munu_type) {
     // get_query_bet_amount_common()
@@ -300,7 +296,6 @@ onMounted(() => {
 
 const set_ref_data_bet_money = () => {
   // let markInfo = lodash.get(BetData, 'bet_single_list')
-  console.error('bet_single_list', BetData.bet_single_list);
   bet_show_single.value = true
 }
 
@@ -314,7 +309,6 @@ const set_clear = () => {
 
 onUnmounted(() => {
   useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money).off
-  useMittOn(MITT_TYPES.EMIT_INPUT_BET_MONEY, change_money_handle).off
 })
 </script>
 <style lang="scss" scoped>

@@ -2,7 +2,7 @@
  * @Author: rise
  * @Date: 2023-11-05 16:46:06
  * @LastEditors: rise
- * @LastEditTime: 2023-11-06 13:33:12
+ * @LastEditTime: 2023-11-06 17:05:25
  * @Description:  
  */
 
@@ -48,6 +48,20 @@ class MenuData {
   set_menu_mi(mi){
     this.menu_mi = mi;
     this.update()
+  }
+  // 根据菜单id获取下级菜单id 二级菜单
+  // mid 顶级菜单id
+  get_menu_lvmi_list(mid){
+    this.menu_list.forEach(item => {
+      (item.sl || {}).find(obj=>{
+        // 菜单id最后一位为顶级菜单的id
+        if(obj.mi.substr(obj.mi.length-1,1) == mid){
+          menu_lv_mi_lsit.push(obj)
+        }
+      })
+    })
+    this.menu_lv_mi_lsit = menu_lv_mi_lsit
+    return menu_lv_mi_lsit
   }
   /**
    * 获取 euid

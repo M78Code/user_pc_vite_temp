@@ -24,7 +24,7 @@ export default {
     /**
      * @description 联赛折叠状态
      */
-    league_collapsed ()  {
+    ball_seed_collapsed ()  {
       return !lodash.get(MatchFold.ball_seed_csid_fold_obj.value, `csid_${this.match_of_list.csid}`, true)
     },
     /**
@@ -64,7 +64,8 @@ export default {
      * @description 联赛折叠
      */
     handle_league_fold() {
-      MatchFold.set_league_fold(this.match_of_list.tid)
+      const { tid, csid } = this.match_of_list
+      MatchFold.set_league_fold(tid, csid)
     },
 
     /**

@@ -28,7 +28,7 @@
                           <!-- 主程序 start -->
                           <div
                               class="play-box-style details_color warp"
-                              @click="go_to_bet(ol_item)"
+                              @click="utils.go_to_bet(ol_item)"
                               :class="[get_bet_list.includes(ol_item.id_)?['details-bg5','first-rad']:'',{'win': utils.calc_win(ol_item.result)}]"
                           >
                             <div class="ellipsis remark details_t_color6 fz_16">
@@ -105,7 +105,7 @@
                           <!-- 主程序 start -->
                           <div
                               class="play-box-style details_color warp"
-                              @click="go_to_bet(ol_item)"
+                              @click="utils.go_to_bet(ol_item)"
                               :class="[get_bet_list.includes(ol_item.id_)?['details-bg5','first-rad']:'',{'win':utils.calc_win(ol_item.result)}]"
                           >
                             <div class="ellipsis remark details_t_color6 fz_16">
@@ -182,7 +182,7 @@
                           <!-- 主程序 start -->
                           <div
                               class="play-box-style details_color warp"
-                              @click="go_to_bet(ol_item)"
+                              @click="utils.go_to_bet(ol_item)"
                               :class="[get_bet_list.includes(ol_item.id_)?'details-bg5':'',{'win':utils.calc_win(ol_item.result)}]"
                           >
                             <div class="ellipsis remark details_t_color6 fz_16">
@@ -277,12 +277,8 @@ export default defineComponent({
   },
   setup(props, evnet) {
     const get_bet_list = ref(BetData.bet_list)
-    const go_to_bet = (ol_item) => {
-      useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX,true);
-    };
     return {
       utils,
-      go_to_bet,
       get_bet_list
     }
   }

@@ -487,7 +487,7 @@ setup(props, context){
       replay_url.value = slider_events_list[index].fragmentVideo
       check_replay_url(replay_video_src.value)
       // 静音当前播放媒体
-      useMittEmit(MITT_TYPES.IFRAME_VIDEO_VOLUME, { volume: 0 })
+      useMittEmit(MITT_TYPES.EMIT_IFRAME_VIDEO_VOLUME, { volume: 0 })
     }
 
     // 滚动目标到屏幕显示区域
@@ -554,7 +554,7 @@ setup(props, context){
 
 
         // 静音当前播放媒体
-        useMittEmit(MITT_TYPES.IFRAME_VIDEO_VOLUME, { volume: 0 })
+        useMittEmit(MITT_TYPES.EMIT_IFRAME_VIDEO_VOLUME, { volume: 0 })
       })
 
     }

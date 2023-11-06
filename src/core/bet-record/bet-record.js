@@ -23,6 +23,7 @@ const outcome = {
   "6": t("bet_record.bet_no_status06"), //'输半',
 }
 
+
 class BetRecord {
   constructor() {
     this.init_core()
@@ -32,6 +33,8 @@ class BetRecord {
     this.selected = 0
     //列表数据
     this.list_data = {}
+    // 提前结算图标是否选中
+    this.is_early = false
     // 提前结算金额列表
     this.early_money_list = []
     // 投注记录版本变更
@@ -43,6 +46,8 @@ class BetRecord {
   set_selected(number) {
     this.selected = number
     this.list_data = {}
+    this.is_early = false
+    this.early_money_list = {}
     useMittEmit(MITT_TYPES.EMIT_BET_RECORD_SELECTED_CHANGE, this.selected)
     this.set_bet_record_version()
   }
@@ -50,6 +55,14 @@ class BetRecord {
   // 更新列表
   set_list_data(value) {
     this.list_data = value
+    this.early_money_list = this.filter_early_money_list(value, this.is_early)
+    this.set_bet_record_version()
+  }
+
+  // 设置提前结算按钮
+  set_is_early(value) {
+    this.is_early = value
+    this.early_money_list = this.filter_early_money_list(this.list_data, value)
     this.set_bet_record_version()
   }
 
@@ -97,6 +110,21 @@ class BetRecord {
       default:
         return { text: '', color: '' }
     }
+  }
+  // 根据提前结算按钮状态， 过滤提前结算的数据
+  filter_early_money_list(value, bol) {
+    let all_list = lodash.cloneDeep(value)
+    if(bol) {
+      lodash.forEach(all_list, (value, key) => {
+        value.data = lodash.filter(value.data, item => {
+          return item.enablePreSettle
+        })
+        if(!value.data.length) {
+          delete all_list[key]
+        }
+      })
+    }
+    return all_list
   }
 }
 

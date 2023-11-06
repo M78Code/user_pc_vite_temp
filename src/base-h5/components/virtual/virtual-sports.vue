@@ -35,7 +35,7 @@
         {{current_match.mid}}
       </div>
       <!--赛事轮|期菜单-->
-      <!-- <match-tab
+      <match-tab
         :is_reset_tab_i="is_reset_tab_i"
         :current_league="tab_items[tab_item_i]"
         :current_match="current_match"
@@ -44,7 +44,7 @@
         :before_match_tab_trend="before_match_tab_trend"
         @trend_event_change="trend_event_change"
         @time_ended="timer_ended_handle"
-      ></match-tab> -->
+      ></match-tab>
       <!--  虚拟体育主列表页面  -->
       <div v-if="!ranking_list_change" class="v-sports-main-list" 
         :class="{'v-sports-main-list-style': standard_edition === 1}" 

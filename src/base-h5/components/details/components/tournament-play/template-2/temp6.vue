@@ -33,7 +33,7 @@
                               <!-- 主程序 start -->
                               <div
                                   class="play-box-style details_color warp bor-style"
-                                  @click="go_to_bet(ol_list_0[ol_index0 - 1])"
+                                  @click="utils.go_to_bet(ol_list_0[ol_index0 - 1])"
                                   :class="[get_bet_list.includes(ol_list_0[ol_index0 - 1].id_)?['details-bg5','first-rad']:'',{'win':utils.calc_win(ol_list_0[ol_index0 - 1].result)}]"
                               >
                                 <div class="ellipsis-t remark details_t_color6 fz_16">
@@ -116,7 +116,7 @@
                               <!-- 主程序 start -->
                               <div
                                   class="play-box-style details_color bor-style"
-                                  @click="go_to_bet(ol_list_1[ol_index1 - 1])"
+                                  @click="utils.go_to_bet(ol_list_1[ol_index1 - 1])"
                                   :class="[get_bet_list.includes(ol_list_1[ol_index1 - 1].id_)?'details-bg5':'',{'win':utils.calc_win(ol_list_1[ol_index1 - 1].result)}]">
                                 <div class="ellipsis-t remark details_t_color6 fz_16">
                                 <span :class="[{'is-score':check_score(ol_list_1[ol_index1 - 1].on),'white_text':get_bet_list.includes(ol_list_1[ol_index1 - 1].id_)},'size-color']">
@@ -198,7 +198,7 @@
                             <!-- 主程序 start -->
                             <div
                                 class="play-box-style details_color"
-                                @click="go_to_bet(ol_item)"
+                                @click="utils.go_to_bet(ol_item)"
                                 :class="[get_bet_list.includes(ol_item.id_)?'details-bg5':'',{'win':utils.calc_win(ol_item.result)}]">
                               <div class="ellipsis-t remark details_t_color6 fz_16">
                               <span :class="[{'is-score':check_score(ol_item.on),'white_text':get_bet_list.includes(ol_item.id_)}]">
@@ -435,9 +435,6 @@ export default defineComponent({
       let reg = /^\d*-?\d*$/
       return reg.test(val) ? "highlight" :""
     };
-    const go_to_bet = (ol_item) => {
-      useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX,true);
-    };
     return {
       ...toRefs(state_data),
       utils,
@@ -452,7 +449,6 @@ export default defineComponent({
       // 收到C105推送赔率,生成一个浮点, 伪随机数在范围从0到小于1
       get_flag_get_ol_list,
       hide_show_more_layout,
-      go_to_bet,
       change_show,
       check_score,
       set_highlight_cls,

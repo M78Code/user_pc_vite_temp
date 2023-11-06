@@ -5,18 +5,20 @@
 -->
 <template>
     <div style="display: none;">{{ BetRecordClass.bet_record_version }}</div>
-    <div class="second-header flex">
-      <img :src="compute_local_project_file_path('/image/bet/my-bets.png')">
-      <p v-for="(item, index) in tabs" 
-        :key="index" 
-        @click="change_record(index)" 
-        :class="BetRecordClass.selected == index && 'active-p'"
-        > {{ item.title }}
-      </p>
-      <days-select v-if="BetRecordClass.selected == 1" @changeDays="changeDays" />
-    </div>
-    <div class="content-m" ref="record_box">
-      <cathectic-item-all />
+    <div class="content-warp">
+      <div class="second-header flex">
+        <img :src="compute_local_project_file_path('/image/bet/my-bets.png')">
+        <p v-for="(item, index) in tabs" 
+          :key="index" 
+          @click="change_record(index)" 
+          :class="BetRecordClass.selected == index && 'active-p'"
+          > {{ item.title }}
+        </p>
+        <days-select v-if="BetRecordClass.selected == 1" @changeDays="changeDays" />
+      </div>
+      <div class="content-m">
+        <cathectic-item-all ref="cathecticItem" />
+      </div>
     </div>
   </template>
   
@@ -40,8 +42,12 @@
     { title: i18n_t('bet_record.account') }
   ])
 
+  // 已结算页面切换时间，获取新列表
+  const cathecticItem = ref(null)
   const changeDays = (dayValue) => {
-    console.log(dayValue);
+    const $el = cathecticItem.value
+    $el.timeType = dayValue
+    $el.init_data(1)
   }
 
   const page_style = ref('')
@@ -76,6 +82,9 @@
   template {
     display: block;
   }
+  .content-warp {
+    background-color: var(--q-gb-bg-c-15);
+  }
   .second-header {
     height: 0.5rem;
     border-bottom: 1px solid var(--q-gb-bg-c-12);
@@ -92,7 +101,6 @@
     }
     img {
       position: absolute;
-      z-index: -1;
       height: 100%;
       width: auto;
       right: 0;

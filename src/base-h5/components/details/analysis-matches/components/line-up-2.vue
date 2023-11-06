@@ -282,7 +282,7 @@
         
       <div class="public_form football_standings">
         <!-- 没有数据 组件 -->
-      <div v-if="injury_situation_data.length <= 0" class="no-list">
+      <div v-if="Object.keys(injury_situation_data).length <= 0" class="no-list">
           <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/def_common.svg`" alt="">
           {{ i18n_t('app_h5.detail.not_data_Injury') }}
         </div>
@@ -486,6 +486,7 @@ import { LOCAL_PROJECT_FILE_PREFIX, MenuData } from 'src/core'
   // 触发两次接口获取主客队信息  1主2客
   get_list(1)
   get_list(2)
+  // 伤停接口
   get_data_list()
   })
 
@@ -556,6 +557,7 @@ import { LOCAL_PROJECT_FILE_PREFIX, MenuData } from 'src/core'
   // 获取伤停数据
   const get_data_list = async () => {
       try {
+        // sonMenuId： 旧版 基本面是1 
         let parameter = {
           standardMatchId: 2385166,
           // standardMatchId: match_id.value, //2274159, //2274159 ,//2079863足球测试id

@@ -9,7 +9,7 @@
       <div class="row virtual-bet-wrapper">
         <!-- 分割线 -->
         <div v-for="(item,index) in odds_list"
-             @click="go_to_bet(item)" :key="index"
+             @click="utils.go_to_bet(item)" :key="index"
              :style="{width:odds_list.length > 30 ?'25%':'20%'}"
              class="item-style2" :class="[![0,1,2,3,4].includes(index) ? 'border-bot':'',is_select(item.oid) ? 'blue-color':'']"
         >
@@ -33,7 +33,7 @@
 // import { mapGetters} from "vuex";
 import { colors } from 'quasar';
 import lodash from "lodash";
-import { LOCAL_PROJECT_FILE_PREFIX } from 'src/core'
+import { LOCAL_PROJECT_FILE_PREFIX,utils } from 'src/core'
 import store from "src/store-redux/index.js";
 // import odd_convert from "src/base-h5/mixins/odds_conversion/odds_conversion.js";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
@@ -85,14 +85,6 @@ export default defineComponent({
         deep: true
       }
     );
-    /**
-     *@description 虚拟体育(赛马)点击详细页小方块投注
-     *@param {Object} ol_item 里层ol数据
-     *@return {Undefined} undefined
-     */
-    const go_to_bet = (ol_item) => {
-      useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX,true);
-    };
     const temp_odds = () => {
       hsw_single = lodash.get(item_data,'hsw').toString()
       let odd_ol_list = lodash.get(item_data,'hl[0].ol')
@@ -115,9 +107,9 @@ export default defineComponent({
       get_bet_list,
       get_curr_sub_menu_type,
       lodash,
-      go_to_bet,
       temp_odds,
-      LOCAL_PROJECT_FILE_PREFIX
+      LOCAL_PROJECT_FILE_PREFIX,
+      utils
     }
   }
 })

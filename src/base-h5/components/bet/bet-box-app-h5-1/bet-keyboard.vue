@@ -110,7 +110,11 @@ watch(() => pre_odds_value, (new_) => {
 })
 
 watch(() => money.value, (new_) => {
-  useMittEmit(MITT_TYPES.EMIT_INPUT_BET_MONEY,{ params:BetData.bet_keyboard_config, money:money.value })
+  let emit_name = 'EMIT_INPUT_BET_MONEY'
+  if(BetData.is_bet_single){
+    emit_name = 'EMIT_INPUT_BET_MONEY_SINGLE'
+  }
+  useMittEmit(MITT_TYPES[emit_name],{ params:BetData.bet_keyboard_config, money: new_ })
 })
 
 watch(() => active_index, (new_) => {
@@ -145,7 +149,11 @@ const _handleKeyPress = (e) => {
       _handleNumberKey(num);
       break;
   }
-  useMittEmit(MITT_TYPES.EMIT_INPUT_BET_MONEY, { params:BetData.bet_keyboard_config, money:money.value } )
+  let emit_name = 'EMIT_INPUT_BET_MONEY'
+  if(BetData.is_bet_single){
+    emit_name = 'EMIT_INPUT_BET_MONEY_SINGLE'
+  }
+  useMittEmit(MITT_TYPES[emit_name], { params:BetData.bet_keyboard_config, money:money.value } )
 }
 
 // 小数点 .
@@ -210,8 +218,15 @@ const _handleNumberKey = (num) => {
   }
 
   //超过最大金额  显示最大金额
-  let old = BetData.bet_keyboard_config.playOptionsId
-  let max_money = BetViewDataClass.bet_min_max_money[old].max_money
+  let ol_id = ''
+  let ol_type = ''
+  if(BetData.is_bet_single){
+    ol_type = 'playOptionsId'
+  }else{
+    ol_type = 'id'
+  }
+  ol_id = lodash_.get(BetData.bet_keyboard_config,ol_type)
+  let max_money = BetViewDataClass.bet_min_max_money[ol_id].max_money
 
   // 显示最大金额
   if (money_ && +money_ >= +max_money) {

@@ -57,7 +57,7 @@ const on_change_play = (item, index) => {
   
 <style scoped lang="scss">
 .top_events_page {
-    height: 100%;
+    // height: 100%;
     width: 100%;
 
     header {

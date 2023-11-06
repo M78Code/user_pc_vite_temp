@@ -19,7 +19,6 @@
       <div class="dele-wrap yb_px12 yb_py10 row" v-if="!BetData.is_bet_success_status" @touchmove.prevent>
         <!-- 左 删除全部 -->
         <span style="margin-right:auto" @click="pack_up(3)">
-          <!-- <img src="image/wwwassets/bw3/svg/close3.svg" class="yb_mr4 img1" /> -->
           <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/bet/close3.svg`" class="yb_mr4 img1" />
           {{ i18n_t('bet.delete_all') }}
         </span>
@@ -28,7 +27,6 @@
           <i class="img2" :class="{ 'img3': BetData.bet_is_accept }" @click="toggle_accept"></i>
           <span :class="{ 'auto-text': BetData.bet_is_accept }" class="yb_mx4 err-msg2" style="max-width:2.1rem"
             @click="toggle_accept">{{ i18n_t("ac_rules.auto") }}</span>
-          <!-- <img src="image/wwwassets/bw3/svg/rules2.svg" @click="change_accept" class="img1" -->
           <span class="img1" :style="compute_css_obj('icon-issue')"></span>
         </span>
 

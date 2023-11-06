@@ -35,8 +35,6 @@ const { api_bymids } = use_featch_fn();
 const { load_video_resources } = pre_load_video
 // 数据请求状态
 const load_data_state = ref("loading");
-// 列表数据
-const match_list = ref([]);
 // 是否展示强力推荐
 const is_show_hot = ref(false);
 // 是否继续请求
@@ -443,7 +441,7 @@ function fetch_match_list(is_socket = false, cut) {
 		send_match_list_request();
 	}
 };
-const handle_destroyed = () => {
+function handle_destroyed() {
 	clearTimeout(axios_debounce_timer);
 	clearTimeout(axios_debounce_timer2);
 	clearInterval(check_match_last_update_timer_id);
@@ -469,7 +467,7 @@ const handle_destroyed = () => {
 	useMittOn(MITT_TYPES.EMIT_MX_COLLECT_MATCH, mx_collect_match()).off;
 	timer_obj.value = {};
 }
-const init_page_when_base_data_first_loaded=()=>{
+function init_page_when_base_data_first_loaded() {
     // 元数据 
   set_base_data_init();
   //释放试图 
@@ -480,7 +478,7 @@ const init_page_when_base_data_first_loaded=()=>{
     30000
   );
 }
-const mounted_fn = () => {
+function mounted_fn() {
 	// fetch_match_list();
 // 开启自动化测试功能
 	 // this.DOM_ID_SHOW = window.BUILDIN_CONFIG.DOM_ID_SHOW;
@@ -533,7 +531,7 @@ const mounted_fn = () => {
 /**
  * // 处理服务器返回的 列表 数据   fetch_match_list
  */
-const handle_match_list_request_when_ok = (data, is_socket, cut, collect) => {
+function handle_match_list_request_when_ok(data, is_socket, cut, collect) {
 	let {
 		match_list_api_config,
 		menu_root,
@@ -562,7 +560,7 @@ const handle_match_list_request_when_ok = (data, is_socket, cut, collect) => {
  * @param  {boolean} backend_run 是否后台 调用
  * @return {undefined} undefined
  */
-const get_hot_match_list = (backend_run = false) => {
+function get_hot_match_list(backend_run = false) {
 	// 更新收藏数量
 	if (!backend_run) {
 		mx_collect_count();
@@ -630,14 +628,14 @@ const get_hot_match_list = (backend_run = false) => {
  * @description 返回顶部
  * @return {undefined} undefined
  */
-const on_go_top = () => {
+function on_go_top() {
 	useMittEmit(MITT_TYPES.EMIT_SET_MATCH_LIST_SCROLL_TOP, 0);
 };
 /**
  * @description 无感刷新
  * @return {undefined} undefined
  */
-const on_refresh = () => {
+function on_refresh() {
 	fetch_match_list(2);
 	show_refresh_mask.value = true;
 };
@@ -645,7 +643,7 @@ const on_refresh = () => {
  * @Description 删除赛事数据 卡片
  * @param {*} mid 删除赛事id
  */
-const remove_match_data = (mid) => {
+function remove_match_data(mid) {
 	// 移除卡片
 	MatchListCardClass.remove_match(mid);
 	//清除数据仓库数据
@@ -663,7 +661,7 @@ const remove_match_data = (mid) => {
  * @return:
  * @Date 2020/03/19 17:44:06
  */
-const socket_remove_match = (match) => {
+function socket_remove_match(match) {
 	// 列表加载中不操作
 	if (load_data_state.value != "data") {
 		return;
@@ -682,14 +680,14 @@ const socket_remove_match = (match) => {
  * @param {string} 数据加载状态
  * @param {undefined} undefined
  */
-const set_load_data_state = (data) => {
+function set_load_data_state(data) {
 	load_data_state.value = data;
 };
 /**
  * @Description 每30秒检查一次可视区域赛事数据最后更新时间，如果超过1分钟未更新数据  调用bymids接口更新数据
  * @param {undefined} undefined
  */
-const check_match_last_update_time = () => {
+function check_match_last_update_time() {
 	// 非滚球 今日 不检查
 	if (![1, 2].includes(MenuData.menu_root)) {
 		return;
@@ -722,12 +720,11 @@ const check_match_last_update_time = () => {
 /**
  * 发送站点选项卡事件
  */
-const emit_site_tab_active = () => {
+function emit_site_tab_active() {
 	fetch_match_list(true);
 };
 export  default function(){
 	return {
-		match_list,
 		is_loading,
 		match_tpl_component,
 		show_refresh_mask,

@@ -14,7 +14,7 @@
       }">
         <span v-show="value[0].hs"> {{ Math.floor(value[0].ov / 1000) / 100 }}</span>
         <div style="text-align: center; width: 100%"  v-show="value[0].hs">
-            <img class="vector" src="../../../../assets/images/vector.png" alt="" />
+            <img class="vector" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/vector.png`" alt="" />
           </div>
       </div>
       <template v-else>
@@ -24,7 +24,7 @@
         }" :key="o.oid" @click="betItemClick(key, o)">
           <span  v-show="!o.hs"> {{ Math.floor(o.ov / 1000) / 100 }}</span>
           <div style="text-align: center; width: 100%"  v-show="o.hs">
-            <img class="vector" src="../../../../assets/images/vector.png" alt="" />
+            <img class="vector" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/vector.png`" alt="" />
           </div>
         </div>
       </template>
@@ -34,6 +34,7 @@
 
 <script setup>
 import { onMounted, ref, computed } from "vue";
+import {LOCAL_PROJECT_FILE_PREFIX } from 'src/core/index.js';
 
 const props = defineProps({
   match_info: {
