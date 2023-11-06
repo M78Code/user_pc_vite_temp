@@ -97,7 +97,7 @@ const none_league_icon_black = `${LOCAL_PROJECT_FILE_PREFIX}/image/svg/match_cup
 
 const list_data_loading = ref(false)     //数据加载中
 const list = ref([]) //数据列表整个赛事
-const type = MenuData.menu_type  //筛选类型 1-滚球 3-今日  4-早盘  100-冠军 28 赛果
+const type = MenuData.menu_type  // 100（冠军）  3000（电竞） 赛果29  滚球:1 今日:3 早盘:4 串关:11 冠军:100  竞足 30
 const anchor_arr = ref([i18n_t('search.hot'), "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]) //右边字母数组
 const active_index = ref("")  //活动的下标
 const active_index_position = ref("")   // 活动的下标对应的position，在右侧字母的时候，scroll 不支持传float，这个值用于记录
@@ -401,10 +401,11 @@ function fetch_filter_match() {
     };
     api_match_filter = api_filter.get_filter_match_list
   } else {
+    debugger
     params = {
       // 29 是代表 赛果里边的 我的投注的选项
       type: MenuData.is_results(m_type) && get_curr_sub_menu_type.value == 29 ? '29' : type.value,
-      euid: MenuData.is_jinzu(m_type) ? m_id : MenuData.get_current_sub_menuid(), // menuType 30竞足
+      euid: MenuData.is_jinzu(m_type) ? m_id : MenuData.get_euid(MenuData.get_current_sub_menuid()), // menuType 30竞足
       inputText: '',
       cuid: UserCtr.get_uid(),
       device: 'v2_h5',

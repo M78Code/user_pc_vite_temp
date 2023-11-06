@@ -359,8 +359,11 @@ const submit_handle = type => {
         if (res.code == 200) {
             // 投注成功 更新余额
             UserCtr.get_balance()
-            // 投注成功后获取投注记录数据 24小时内的
-            useMittEmit(MITT_TYPES.EMIT_TICKRTS_COUNT_CONFIG)
+            // pc 有的 
+            if(params.deviceType == 2){
+                // 投注成功后获取投注记录数据 24小时内的
+                useMittEmit(MITT_TYPES.EMIT_TICKRTS_COUNT_CONFIG)
+            }
             // 获取
             BetData.set_bet_mode(lodash_.get(res,'data.lock'),-1)
             // 获取投注后的数据列表
