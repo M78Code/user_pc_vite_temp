@@ -28,7 +28,7 @@
                             <!-- 主程序 start -->
                             <div
                                 class="play-box-style details_color warp"
-                                @click="go_to_bet(ol_list_0[ol_index0 - 1])"
+                                @click="utils.go_to_bet(ol_list_0[ol_index0 - 1])"
                                 :class="{
                                   'details-bg5 first-rad': get_bet_list.includes(ol_list_0[ol_index0 - 1].id_),
                                   'bor-style': ol_index != max_count_ol-1,
@@ -111,7 +111,7 @@
                             <!-- 主程序 start -->
                             <div
                                 class="play-box-style details_color warp"
-                                @click="go_to_bet(ol_list_1[ol_index1 - 1])"
+                                @click="utils.go_to_bet(ol_list_1[ol_index1 - 1])"
                                 :class="{
                                   'details-bg5 first-rad': get_bet_list.includes(ol_list_1[ol_index1 - 1].id_),
                                   'bor-style': ol_index != max_count_ol-1,
@@ -193,7 +193,7 @@
                             <!-- 主程序 start -->
                             <div
                                 class="play-box-style details_color"
-                                @click="go_to_bet(ol_list_2[ol_index2 - 1])"
+                                @click="utils.go_to_bet(ol_list_2[ol_index2 - 1])"
                                 :class="{
                                   'details-bg5 first-rad': get_bet_list.includes(ol_list_2[ol_index2 - 1].id_),
                                   'bor-style': ol_index != max_count_ol-1,
@@ -274,7 +274,7 @@
                     <!-- 主程序 start -->
                     <div
                         class="play-box-style details_color"
-                        @click="go_to_bet(ol_item)"
+                        @click="utils.go_to_bet(ol_item)"
                         :class="[get_bet_list.includes(ol_item.id_)?'details-bg5':'',{'win':utils.calc_win(ol_item.result)}]">
                       <div class="ellipsis details_t_color6 fz_13" :class="{'text-right': !['344'].includes(item_data.hpid)}">
                         <span :class="[{'white_text':get_bet_list.includes(ol_item.id_)}]">
@@ -359,7 +359,7 @@ import lodash from "lodash";
 import store from "src/store-redux/index.js";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, ref } from "vue";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
-
+import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
 export default defineComponent({
   // #TODO mixins
   // mixins: [odd_convert],
@@ -402,9 +402,6 @@ export default defineComponent({
     const change_ms = computed(() => {
       return lodash.get(props.item_data,'hl[0].ol[0].os')
     });
-    const go_to_bet = (ol_item) => {
-      useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX,true);
-    };
     watch(
       () => get_flag_get_ol_list,
       () => {
@@ -460,7 +457,6 @@ export default defineComponent({
     return {
       utils,
       change_ms,
-      go_to_bet,
       ol_list_0,
       ol_list_1,
       ol_list_2,
