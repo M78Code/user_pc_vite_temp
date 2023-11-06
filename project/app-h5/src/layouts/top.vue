@@ -14,8 +14,8 @@
       <DateTab :dataList="dataList[MenuData.current_lv_1_menu_mi.value]"  />
     </div>
 
-    <div v-if="[2000].includes(MenuData.current_lv_2_menu_mi)">
-        <DateTab :dataList="dataList[MenuData.current_lv_2_menu_mi]"  />
+    <div v-if="[2000].includes(MenuData.current_lv_2_menu_i)">
+        <DateTab :dataList="dataList[MenuData.current_lv_2_menu_i]"  />
     </div>
     <!-- 滑动菜单组件 -->
     <ScrollMenu :scrollDataList="ref_data.scroll_data_list" :current_mi="ref_data.current_mi" />
@@ -93,7 +93,7 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
   const set_scroll_current = val => {
     ref_data.current_mi = val.mi
     // 设置二级菜单 
-    MenuData.set_current_lv_2_menu_mi(val)
+    MenuData.set_current_lv_2_menu_i(val)
     // 设置菜单属性
     if([300,2000,50000].includes(+val.mi)){
       // 设置vr /收藏 电竞 头信息
@@ -112,13 +112,17 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
           break  
         
         case 50000:
-          ref_data.scroll_data_list = ''
+          let menu_list_res = BaseData.mew_menu_list_res.filter(item=> item.mi*1 < 300) || []
+          menu_list_res.unshift({mi:0,btn:1, ct:"",title:"全部"})
+          ref_data.scroll_data_list = menu_list_res
           break  
       }
 
       let obj = lodash_.get(ref_data.scroll_data_list,`[0]`,{})
       // 设置选中菜单的id
       ref_data.current_mi = obj.mi
+      // 设置二级菜单 
+      MenuData.set_current_lv_2_menu_i(obj)
     }
     
     set_menu_mi_change_get_api_data()
@@ -141,7 +145,7 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
     }
     let obj = lodash_.get(ref_data.scroll_data_list,`[${index}]`,{})
     // 设置二级菜单 
-    MenuData.set_current_lv_2_menu_mi(obj)
+    MenuData.set_current_lv_2_menu_i(obj)
     // 设置选中菜单的id
     ref_data.current_mi = obj.mi
 
@@ -150,9 +154,21 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
 
   // 菜单变化页面请求数据
   const set_menu_mi_change_get_api_data = () => {
-    // 今日 / 滚球/ 冠军 没有 三级
-    if([1,2,3,400].includes(MenuData.current_lv_1_menu_mi.value)){
+    // 今日 / 滚球 
+    if([1,2].includes(MenuData.current_lv_1_menu_mi.value)){
       handle_match_render_data()
+    }
+    // 冠军
+    if(MenuData.current_lv_1_menu_mi.value == 400){
+      MatchMeta.get_champion_match()
+    }
+    // 电竞
+    if(MenuData.top_menu_title.mi == 2000){
+      MatchMeta.get_esports_match()
+    }
+    // 电竞
+    if(MenuData.top_menu_title.mi == 50000){
+      MatchMeta.get_collect_matche()
     }
   }
   /**

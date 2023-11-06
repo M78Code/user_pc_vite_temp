@@ -7,7 +7,6 @@ import lodash from 'lodash'
 import { api_common } from "src/api/index.js";
 import BaseData from 'src/core/base-data/base-data.js'
 import MatchPage from 'src/core/match-list-h5/match-class/match-page'
-import MenuData from "src/core/menu-app-h5/menu-data-class.js"
 import UserCtr from 'src/core/user-config/user-ctr.js'
 import MatchFold from 'src/core/match-fold'
 import MatchCollect from 'src/core/match-collect'
@@ -15,7 +14,7 @@ import MatchUtils from 'src/core/match-list-h5/match-class/match-utils';
 import PageSourceData from "src/core/page-source/page-source.js";
 import VirtualList from './virtual-list'
 import { MATCH_LIST_TEMPLATE_CONFIG } from "src/core/match-list-h5/match-card/template"
-import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, useMittEmit, MITT_TYPES } from 'src/core'
+import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, useMittEmit, MITT_TYPES,project_name,MenuData } from 'src/core'
 
 class MatchMeta {
 
@@ -44,11 +43,24 @@ class MatchMeta {
    */
   set_origin_match_data() {
     this.init()
-    // 菜单 ID 对应的 元数据赛事 mids
-    const menu_lv_v1 = MenuData.current_lv_1_menu_mi.value
-    const menu_lv_v2 = MenuData.current_lv_2_menu_mi
-    const menu_lv_v1_sl = MenuData.get_menu_lvmi_list(menu_lv_v1)
-    const menu_lv_v2_sl = MenuData.get_menu_lv_2_mi_list(menu_lv_v2)
+    let menu_lv_v1 = ''
+    let menu_lv_v2 = ''
+    let menu_lv_v1_sl = []
+    let menu_lv_v2_sl = []
+    if(project_name == 'yazhou-h5'){
+      // 菜单 ID 对应的 元数据赛事 mids
+      menu_lv_v1 = lodash.get(MenuData.current_lv_1_menu, 'mi')
+      menu_lv_v2 = lodash.get(MenuData.current_lv_2_menu, 'mi')
+      menu_lv_v1_sl = lodash.get(MenuData.current_lv_1_menu, 'sl')
+      menu_lv_v2_sl = lodash.get(MenuData.current_lv_2_menu, 'sl')
+    }else{
+      // 菜单 ID 对应的 元数据赛事 mids
+      menu_lv_v1 = MenuData.current_lv_1_menu_i
+      menu_lv_v2 = MenuData.current_lv_2_menu_i
+      menu_lv_v1_sl = MenuData.get_menu_lvmi_list(menu_lv_v1)
+      menu_lv_v2_sl = MenuData.get_menu_lv_2_mi_list(menu_lv_v2)
+    }
+   
     // 滚球全部
     if (+menu_lv_v1 === 1 && menu_lv_v2 == 0) return this.get_origin_match_mids_by_mis(menu_lv_v1_sl)
 
@@ -323,7 +335,7 @@ class MatchMeta {
     const hpsflag = MenuData.is_kemp() || MenuData.get_menu_type() == 28 ? "" : 0
     return {
       cuid: UserCtr.get_cuid(),
-      euid: euid ? euid : lodash.get(MenuData, 'current_lv_2_menu.mi'),
+      euid: euid ? euid : MenuData.get_euid(lodash.get(MenuData, 'current_lv_2_menu_i')),
       // 一级菜单筛选类型 1滚球 2 今日 3早盘 400冠军  6串关
       type: lodash.get(MenuData, 'current_lv_1_menu_mi'),
       //排序	 int 类型 1 按热门排序 2 按时间排序
@@ -455,8 +467,8 @@ class MatchMeta {
     this.prev_scroll = scroll_top
 
     // 菜单 ID 对应的 元数据赛事 mids
-    const menu_lv_v1 = MenuData.current_lv_1_menu_mi.value
-    const menu_lv_v2 = MenuData.current_lv_2_menu_mi
+    const menu_lv_v1 = MenuData.current_lv_1_menu_i
+    const menu_lv_v2 = MenuData.current_lv_2_menu_i
     // 冠军  或者  电竞冠军 或者   赛果虚拟体育  ，赋值全部数据， 不走下边计算逻辑
     if ([400, 300].includes(menu_lv_v1) || (menu_lv_v1 == 28 && [1001, 1002, 1004, 1011, 1010, 1009, 100].includes(menu_lv_v2)) ) {
       return
@@ -464,8 +476,6 @@ class MatchMeta {
 
     // 虚拟列表所需渲染数据
     const match_datas = VirtualList.compute_page_render_list(scroll_top)
-
-    console.log(match_datas)
 
     // 当前渲染的 mids
     this.match_mids = match_datas.map(t => {
@@ -493,7 +503,7 @@ class MatchMeta {
       mids: match_mids,
       cuid: UserCtr.get_uid(),
       sort: PageSourceData.sort_type,
-      euid: MenuData.is_jinzu() ? "" : MenuData.get_euid(lodash.get(MenuData, 'current_lv_2_menu_mi')),
+      euid: MenuData.is_jinzu() ? "" : MenuData.get_euid(lodash.get(MenuData, 'current_lv_2_menu_i')),
       device: ['', 'v2_h5', 'v2_h5_st'][UserCtr.standard_edition],
     };
     let res = ''

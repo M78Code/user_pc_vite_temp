@@ -191,7 +191,7 @@ class VirtualList {
    */
   compute_container_list_by_scroll_top( scroll_top ) {
     const menu_lv_v1 = MenuData.current_lv_1_menu_mi.value
-    const menu_lv_v2 = MenuData.current_lv_2_menu_mi
+    const menu_lv_v2 = MenuData.current_lv_2_menu_i
     
     this.compute_container_total_height()
 

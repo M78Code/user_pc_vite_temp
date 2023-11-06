@@ -99,7 +99,7 @@ export default defineComponent({
      *@return {Undefined} undefined
      */
     const analyse_btn =()=> {
-      analyse = !analyse
+      analyse.value = !analyse.value
       MatchDetailCalss.set_is_show_details_analyse(!is_show_analyse)
     }
     const change_btn=()=>{
@@ -115,7 +115,7 @@ export default defineComponent({
       // 点击的玩法是当前选中的玩法
       if(get_details_item.value == uId) return false;
       if(is_show_analyse){
-        analyse = true
+        analyse.value = true
       }
       MatchDetailCalss.set_is_show_details_analyse(false)
       //实现动态效果

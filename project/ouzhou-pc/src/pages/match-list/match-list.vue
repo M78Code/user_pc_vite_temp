@@ -4,7 +4,7 @@
  * @Description: 赛事主列表页
 -->
 <template>
-  <div class="yb-match-list column full-height   relative-position"
+  <div class="yb-match-list full-height   relative-position"
   :data-version="MatchListCardDataClass.list_version"
     >
     <div class="test-info-wrap" v-if="GlobalAccessConfig.other.wsl">
@@ -18,15 +18,15 @@
       <div> load_data_state {{ load_data_state }}</div>
     </div> -->
     
-    <!-- <div v-show="matches_15mins_list.length"> -->
+    <!-- 头部15 Mins模块 -->
     <div>
       <CurrentMatchTitle :title_value="'15 Mins'" :show_more_icon="false" />
       <MatchCardList15Mins :matches_15mins_list="matches_15mins_list" />
     </div>
-    <!-- <div v-show="matches_featured_list.length"> -->
+    <!-- 头部Featured Matches模块 -->
     <div>
       <CurrentMatchTitle :title_value="'Featured Matches'" :show_more_icon="false" />
-      <!-- <FeaturedMatches :matches_featured_list="matches_featured_list" /> -->
+      <FeaturedMatches :matches_featured_list="matches_featured_list" />
     </div>
     <!-- <div class="scroll-fixed-header" :class="{ 'no-data': load_data_state != 'data' }"> -->
       <!-- banner -->
@@ -122,7 +122,7 @@
   </div>
 </template>
 <script>
-import { onMounted, onUnmounted } from "vue";
+import { onMounted, onUnmounted, ref } from "vue";
 
 import { IconWapper } from 'src/components/icon'
 import LoadData from 'src/components/load_data/load_data.vue';
@@ -152,8 +152,8 @@ import { PageSourceData,compute_css_obj } from 'src/core/index.js';
 import {MatchDataWarehouse_PC_List_Common as MatchListData ,GlobalAccessConfig} from "src/core/index.js";
 import CurrentMatchTitle from "src/base-pc/components/match-list/current_match_title.vue"
 import MatchCardList15Mins from 'src/base-pc/components/match-list/match_card_list_15mins/matches_card_list_15mins.vue';
-// import FeaturedMatches from 'src/base-pc/components/match-list/featured_matches/featured_matches_card.vue';
-
+import FeaturedMatches from 'src/base-pc/components/match-list/featured_matches/featured_matches_card.vue';
+import { get_home_matches, map_matches_list, filter_15mins_func, filter_featured_list } from './featch_matches';
 import "./match_list.scss";
 
 const { mounted_fn, load_data_state, show_refresh_mask, collect_count, is_show_hot, on_refresh } = useMatchListMx();
@@ -174,10 +174,28 @@ export default {
     EsportsHeader,
     ListHeader,
     CurrentMatchTitle,
-    // FeaturedMatches,
+    FeaturedMatches,
     MatchCardList15Mins
   },
   setup() {
+    // 15分钟赛事数据
+    const matches_15mins_list = ref([]);
+    // 热推数据
+    const matches_featured_list = ref([]);
+
+    const init_home_matches = () => {
+      const params = {
+        type: 1, 
+        sort: 1, 
+        // hasFlag: 0 
+      }
+      get_home_matches(params).then(res => {
+        // 处理返回数据 将扁平化数组更改为页面适用数据
+        matches_15mins_list.value = filter_15mins_func(res.p15);
+        matches_featured_list.value = filter_featured_list(res.hots);
+      });
+    }
+
     onMounted(() => {
       mounted_fn();
     });
@@ -192,7 +210,9 @@ export default {
       is_show_hot,
       page_source,
       GlobalAccessConfig,
-      on_refresh
+      on_refresh,
+      matches_15mins_list,
+      matches_featured_list
     };
   },
   data() {
