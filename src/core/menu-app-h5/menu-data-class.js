@@ -56,7 +56,7 @@ class MenuData {
    
     //-----------------------------------VR 电竞 收藏--------------------------------------//
     this.top_menu_title = {}
-
+    this.collect_list = []
     //-------------------------------------------------------------------------------------//
     //当前的菜单 lv3
     this.current_lv_3_menu = {};
@@ -86,6 +86,10 @@ class MenuData {
     this.menu_list = menu_list
     this.set_current_lv1_menu(2)
    
+  }
+
+  set_collect_list (list) {
+    this.collect_list = list
   }
 
   // 根据菜单id获取下级菜单id 二级菜单
@@ -119,6 +123,19 @@ class MenuData {
       menu_lv_mi_lsit.splice(4,0,{mi:2000,btn:1,ct:"2",title:"电竞"})
     }
     this.menu_lv_mi_lsit = menu_lv_mi_lsit
+    return menu_lv_mi_lsit
+  }
+
+  get_menu_lvmi_list_only(mid){
+    let menu_lv_mi_lsit = [];
+    this.menu_list.forEach(item => {
+      (item.sl || {}).find(obj=>{
+        // 菜单id最后一位为顶级菜单的id
+        if(obj.mi.substr(obj.mi.length-1,1) == mid){
+          menu_lv_mi_lsit.push(obj)
+        }
+      })
+    })
     return menu_lv_mi_lsit
   }
 
@@ -297,6 +314,12 @@ class MenuData {
     return this.current_lv_1_menu_mi.value || 0;
   }
   /**
+ *一级菜单顶层菜单的 菜单类型  ，没有则是0 特殊的 电竞 vr 
+  * */
+  get_menu_type_special() {
+    return this.top_menu_title.mi || 0;
+  }
+  /**
    * 获取 euid
    * arg_mi 如果传值 则获取特定值euid 如果没有就是二级菜单的euis
    * */
@@ -367,6 +390,7 @@ class MenuData {
    * @return {}
    */
   recombine_menu_bg(item, get_ball_id = false, is_result = false) {
+    console.error('ss')
     if (is_result) {
       return parseInt(item - 100);
     }
@@ -376,15 +400,14 @@ class MenuData {
     if (this.is_kemp()) {
       id = parseInt(bg_mi - 400);
     }
-    // 收藏 vr 电竞 全部 不在此列
-    if([1,2].includes(Number(this.current_lv_1_menu_i))){
-      if([300,2000,50000].includes( item.mi)){
-        id = item.mi
-      }
-    }
-    if([300,2000,50000].includes(this.top_menu_title.mi*1 )){
+    if (this.is_export() || this.is_vr()) {
       id = item.mi
     }
+    // 收藏 vr 电竞 全部 不在此列
+    if([0,300,2000,50000].includes(item.mi)){
+      id = item.mi
+    }
+    
     if (get_ball_id) return sprite_images_postion[id];
     let type = "";
     switch (String(id)) {
@@ -561,6 +584,12 @@ class MenuData {
     }
     return this.get_menu_type() == mi
   }
+  _is_cur_mi_special(mi, param) {
+    if (param) {
+      return mi == param
+    }
+    return this.get_menu_type_special() == mi
+  }
   /**
    * 是否选中了 热门
    * mi [number|string] 要比对的值
@@ -575,7 +604,7 @@ class MenuData {
    * 没有传递对比当前菜单
   */
   is_vr(mi) {
-    return this._is_cur_mi(300, mi)
+    return this._is_cur_mi_special(300, mi)
   }
   /**
    * 是否选中了赛果
@@ -617,7 +646,7 @@ class MenuData {
    *  mi [number|string] 要比对的值
   */
   is_export(mi) {
-    return this._is_cur_mi(2000, mi)
+    return this._is_cur_mi_special(2000, mi)
   }
   /**
    * 是否选中了串关
@@ -632,6 +661,13 @@ class MenuData {
   */
   is_jinzu(mi) {
     return this._is_cur_mi(30, mi)
+  }
+  /**
+   * 是否选中了收藏
+   *  mi [number|string] 要比对的值
+  */
+  is_collect(mi) {
+    return this._is_cur_mi(50000, mi)
   }
   //- 三级菜单 日期 (只有 串关，早盘，赛果，电竞，才有) -->
   get_is_show_three_menu(mi) {

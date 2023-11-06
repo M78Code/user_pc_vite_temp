@@ -7,7 +7,7 @@
           <span>{{ title }}</span>
         </span>
         <slot name="title_right">
-          <img :class="['arrow', { expend: visible }]" src="./images/arrow.png" alt="" />
+          <img :class="['arrow', { expend: visible }]" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/arrow.png`" alt="" />
         </slot>
         <div class="line"></div>
       </div>
@@ -23,6 +23,7 @@
   </template>
   
   <script setup>
+import {LOCAL_PROJECT_FILE_PREFIX } from "src/core";
 import { onMounted, ref } from 'vue'
   const visible = ref(false)
   const emits = defineEmits(['update:modelValue'])

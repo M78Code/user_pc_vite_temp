@@ -19,7 +19,7 @@
                     <!-- os: 1、开盘 2、封盘 -->
                     <template v-if="ol_item.os == 1">
                       <!-- 主程序 start -->
-                      <div class="play-box" @click="go_to_bet(ol_item)" :class="[get_bet_list.includes(ol_item.id_)?'active_play':'',{'win':utils.calc_win(ol_item.result)}]">
+                      <div class="play-box" @click="utils.go_to_bet(ol_item)" :class="[get_bet_list.includes(ol_item.id_)?'active_play':'',{'win':utils.calc_win(ol_item.result)}]">
                         <div class="ellipsis">
                           <span v-show="!get_is_hengping" class="odds-osn">{{item_data.title[0].osn}}</span>
                           <span class="size-color">{{ol_item.on || ol_item.ott}}</span>
@@ -78,7 +78,7 @@
                     <!-- os: 1、开盘 2、封盘 3、隐藏不显示，不占地方 -->
                     <template v-if="ol_item.os == 1">
                       <!-- 主程序 start -->
-                      <div class="play-box" @click="go_to_bet(ol_item)" :class="[get_bet_list.includes(ol_item.id_)?'active_play':'',{'win':utils.calc_win(ol_item.result)}]">
+                      <div class="play-box" @click="utils.go_to_bet(ol_item)" :class="[get_bet_list.includes(ol_item.id_)?'active_play':'',{'win':utils.calc_win(ol_item.result)}]">
                         <div class="ellipsis">
                           <span v-show="!get_is_hengping" class="odds-osn">{{item_data.title[1].osn}}</span>
                           <span class="size-color">{{ol_item.on || ol_item.ott}}</span>
@@ -171,9 +171,6 @@ export default defineComponent({
     const is_match_result = computed(() => {
       return ['result_details', 'match_result'].includes($route.name)
     });
-    const go_to_bet = (ol_item) => {
-      useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX,true);
-    };
     return {
       utils,
       lodash,
@@ -182,7 +179,6 @@ export default defineComponent({
       get_is_hengping,
       is_match_result,
       LOCAL_PROJECT_FILE_PREFIX,
-      go_to_bet
     }
   }
 })

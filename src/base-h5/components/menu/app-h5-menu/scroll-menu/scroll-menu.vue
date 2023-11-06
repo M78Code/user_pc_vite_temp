@@ -23,7 +23,7 @@
                     </div>
                   </div>
                   <div class="s-w-i-title">
-                    {{ (item.btn ?item.title : item.name) || MenuData.get_menus_i18n_map(item.mi) }}
+                    {{ (item.btn ?item.title : item.name) || MenuData.get_menus_i18n_map(item.mi) }} 
                   </div>
                 </div>
 

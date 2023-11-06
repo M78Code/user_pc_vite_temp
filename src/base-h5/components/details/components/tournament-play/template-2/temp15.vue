@@ -17,7 +17,7 @@
           <template v-if="ol_item._mhs == 0 || ol_item._mhs == 11">
             <template v-if="ol_item._hs == 0 || ol_item._hs == 11">
               <template v-if="ol_item.os == 1">
-                <div @click="go_to_bet(ol_item)"
+                <div @click="utils.go_to_bet(ol_item)"
                      :class="[{'win':utils.calc_win(ol_item.result),'active-play':get_bet_list.includes(ol_item.id_), 'border-top': index2 > 2},name_]"
                      :key="index2" class="play-box">
                   <div class="remark">{{olitem_name(ol_item)}}</div>
@@ -110,10 +110,6 @@ export default defineComponent({
       //   $data[key] = null
       // }
     });
-    
-    const go_to_bet = (ol_item) => {
-      useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX,true);
-    };
     /**
      *@description 计算要填充的数量
      *@return {Undefined} undefined
@@ -162,10 +158,10 @@ export default defineComponent({
       get_bet_list,
       get_detail_data,
       olitem_name,
-      go_to_bet,
       calc_num,
       calc_classname,
-      LOCAL_PROJECT_FILE_PREFIX
+      LOCAL_PROJECT_FILE_PREFIX,
+      utils
     }
   }
 })

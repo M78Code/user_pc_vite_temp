@@ -400,7 +400,7 @@ export default defineComponent({
       append_single_list.value.map((item)=>{
         ol_item.oid == item.oid ?  item.show_bgc = true: item.show_bgc = false
       })
-      useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX,true);
+      utils.go_to_bet(ol_item)
     };
     onMounted(() => {
       // 原created
