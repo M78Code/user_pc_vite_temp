@@ -58,7 +58,7 @@ const props = defineProps ({
   }
 })
 
-let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.match.mid)
+let match_style_obj = MatchListCardDataClass.all_card_obj[props.match.mid+'_']
 
 
 // 其他玩法标题

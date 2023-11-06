@@ -712,7 +712,7 @@ export default {
     this.reload_create_fun();
     // iframe视频参数时间戳
     this.iframe_rdm = new Date().getTime()
-    this.mitt_obj[MITT_TYPES.IFRAME_VIDEO_VOLUME] = useMittOn(MITT_TYPES.IFRAME_VIDEO_VOLUME, this.video_volume);
+    this.mitt_obj[MITT_TYPES.EMIT_IFRAME_VIDEO_VOLUME] = useMittOn(MITT_TYPES.EMIT_IFRAME_VIDEO_VOLUME, this.video_volume);
     this.mitt_obj[MITT_TYPES.EMIT_SET_IFRAME_ONLOAD] = useMittOn(MITT_TYPES.EMIT_SET_IFRAME_ONLOAD, this.set_iframe_onload);
     // 监听精彩回放iframe传来的消息
     window.addEventListener("message", this.handle_replay_message);
