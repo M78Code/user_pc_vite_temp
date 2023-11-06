@@ -1,7 +1,8 @@
 
 import lodash from 'lodash'
+import { api_common } from "src/api/index.js";
 import store from "src/store-redux/index.js";
-import { useMittEmit, MITT_TYPES,UserCtr } from  "src/core"
+import { useMittEmit, MITT_TYPES, UserCtr } from  "src/core"
 import MatchFold from 'src/core/match-fold'
 import MatchCollect from 'src/core/match-collect'
 import PageSourceData from "src/core/page-source/page-source.js";
@@ -301,17 +302,33 @@ export default {
     /**
      * @description: 设置 联赛收藏与否
      */
-    handle_league_collect () {
-      MatchCollect.handle_league_collect_state(this.match_of_list.tid)
+    async handle_league_collect () {
+      const { tid } = this.match_of_list
+      const league_collect = MatchCollect.get_league_collect_state(tid)
+      api_common.add_or_cancel_tournament({
+        tid,
+        cf: league_collect ? 0 : 1,
+        cuid: UserCtr.get_cuid()
+      }).then(res => {
+        if (+res.code !== 200) return
+      })
+      MatchCollect.handle_league_collect_state(tid)
     },
 
     /**
      * @description: 设置 赛事收藏与否
      */
-    handle_match_collect () {
-      // 获取当前收藏状态
-      const state = MatchCollect.get_match_collect_state(this.match_of_list)
-      MatchCollect.set_match_collect_state(this.match_of_list, !state)
+    async handle_match_collect () {
+      const { mid } = this.match_of_list
+      const match_state = MatchCollect.get_match_collect_state(this.match_of_list)
+      api_common.add_or_cancel_match({
+        mid,
+        cf: match_state ? 0 : 1,
+        cuid: UserCtr.get_cuid()
+      }).then(res => {
+        if (+res.code !== 200) return
+      })
+      MatchCollect.set_match_collect_state(this.match_of_list, !match_state)
     },
 
     /**
