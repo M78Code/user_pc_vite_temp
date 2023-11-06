@@ -14,7 +14,7 @@
           </span></div>
         <div  v-show="!match_info.hl[0].hs">{{ Math.floor(o.ov / 1000) / 100 }} </div>
         <div style="text-align: center;width:100%" v-show="match_info.hl[0].hs">
-          <img class="vector" src="../../../../assets/images/vector.png" alt="" >
+          <img class="vector" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/vector.png`" alt="" >
         </div>
 
       </div>
@@ -39,7 +39,7 @@
           </div>
 
           <div style="text-align: center;width:100%" v-show="item.hs">
-          <img class="vector" src="../../../../assets/images/vector.png" alt="" >
+          <img class="vector" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/vector.png`" alt="" >
         </div>
         </div>
       </div>
@@ -50,6 +50,7 @@
 
 <script setup>
 import { onMounted, ref, computed, watch } from "vue";
+import { LOCAL_PROJECT_FILE_PREFIX } from 'src/core/index.js';
 const bet_oid = ref('')
 
 const props = defineProps({

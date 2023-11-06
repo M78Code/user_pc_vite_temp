@@ -9,9 +9,9 @@
 import { ref, onMounted, watch, onUnmounted } from "vue";
 import { api_match_list } from "src/api";
 import { useRoute } from "vue-router";
-import store from "src/store-redux-vuex/index.js";
+// import store from "src/store-redux-vuex/index.js";
 
-import { filter_odds_func, handle_course_data, format_mst_data } from 'src/utils/matches_list.js'
+import { filter_odds_func, handle_course_data, format_mst_data } from './matches_list'
 
 export function usedetailData() {
   const route = useRoute();
@@ -36,12 +36,13 @@ export function usedetailData() {
 
   let timer = "";
   let mst_timer = "";
-  let state = store.getState();
+  // let state = store.getState();
 
   const { get_detail_category, get_detail_list, get_detail_data ,getMatchDetailByTournamentId} =
     api_match_list; // 接口
 
-  const userInfo = state.userReducer.userInfo; // 用户数据
+  //const userInfo = state.userReducer.userInfo; // 用户数据
+  const userInfo = {}; // 用户数据
 
   const current_id = ref()
 
