@@ -82,9 +82,9 @@ onMounted(() => {
    */
 const init_data = (_index) => {
   last_record.value = ''
-  const api_info = init_params_api(_index)
+  const { params, url_api } = init_params_api(_index)
   //请求注单记录接口
-  get_order_list(_index, api_info.params, api_info.url_api)
+  get_order_list(_index, params, url_api)
 
   // 未结算时，轮休获取提前结算列表金额
   if(_index === 0) {
