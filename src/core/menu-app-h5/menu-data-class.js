@@ -56,7 +56,7 @@ class MenuData {
    
     //-----------------------------------VR 电竞 收藏--------------------------------------//
     this.top_menu_title = {}
-
+    this.collect_list = []
     //-------------------------------------------------------------------------------------//
     //当前的菜单 lv3
     this.current_lv_3_menu = {};
@@ -86,6 +86,10 @@ class MenuData {
     this.menu_list = menu_list
     this.set_current_lv1_menu(2)
    
+  }
+
+  set_collect_list (list) {
+    this.collect_list = list
   }
 
   // 根据菜单id获取下级菜单id 二级菜单
@@ -378,7 +382,7 @@ class MenuData {
     }
     // 收藏 vr 电竞 全部 不在此列
     if([1,2].includes(Number(this.current_lv_1_menu_i))){
-      if([300,2000,50000].includes( item.mi)){
+      if([0,300,2000,50000].includes( item.mi)){
         id = item.mi
       }
     }
@@ -632,6 +636,13 @@ class MenuData {
   */
   is_jinzu(mi) {
     return this._is_cur_mi(30, mi)
+  }
+  /**
+   * 是否选中了收藏
+   *  mi [number|string] 要比对的值
+  */
+  is_collect(mi) {
+    return this._is_cur_mi(50000, mi)
   }
   //- 三级菜单 日期 (只有 串关，早盘，赛果，电竞，才有) -->
   get_is_show_three_menu(mi) {

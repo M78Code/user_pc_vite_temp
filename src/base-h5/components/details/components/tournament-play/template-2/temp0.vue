@@ -25,7 +25,7 @@
                           > -->
                           <div
                             class="play-box-style details_color"
-                            @click="go_to_bet(ol_item)"
+                            @click="utils.go_to_bet(ol_item)"
                             :class="[get_bet_list.includes(ol_item.id_)?'details-bg5':'',{'win':true,'bor-btm':ol_index != item.ol.length-1 || index_ != item_data.hl.length-1}]"
                           >
                             <div class="ellipsis remark details_t_color6 fz_13 odds-on">
@@ -106,7 +106,7 @@
                     <!-- 主程序 start -->
                     <div
                       class="play-box-style details_color"
-                      @click="go_to_bet(ol_item)"
+                      @click="utils.go_to_bet(ol_item)"
                       :class="[get_bet_list.includes(ol_item.id_)?'details-bg5':'',{'win':utils.calc_win(ol_item.result),'bor-btm':ol_index != item.ol.length-1 || index_ != item_data.hl.length-1}]"
                     >
                       <div class="ellipsis remark details_t_color6 fz_13">
@@ -282,9 +282,6 @@ export default defineComponent({
       const reg = new RegExp(/^[0-9]/);
       return reg.test(val)
     };
-    const go_to_bet = () => {
-      useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX,true);
-    };
     /**
      *@description 0号模板点击收起的时候，要调整滚动距离
      *@return {Undefined} undefined
@@ -308,7 +305,6 @@ export default defineComponent({
       get_detail_data,
       i18n_t,
       is_number,
-      go_to_bet,
       change_show,
       hide_show_more_layout,
       LOCAL_PROJECT_FILE_PREFIX,

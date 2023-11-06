@@ -119,9 +119,7 @@ const go_back = () => {
   } else {
     router.go(-1)
   }
-
 }
-
 
 const toggleLeftDrawer = () => {
   leftDrawerOpen.value = !leftDrawerOpen.value

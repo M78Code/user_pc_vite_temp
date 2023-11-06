@@ -11,7 +11,7 @@
             <template v-if="ol_item._hs == 0 || ol_item._hs == 11">
               <template v-if="ol_item.os == 1">
                 <!-- 主程序 start -->
-                <div class="play-box-style details_color warp" @click="go_to_bet(ol_item)"
+                <div class="play-box-style details_color warp" @click="utils.go_to_bet(ol_item)"
                      :class="[get_bet_list.includes(ol_item.id_)?['details-bg5','first-rad']:'','bor-style',{'win':utils.calc_win(ol_item.result)}]">
                   <div class="ellipsis remark details_t_color6 fz_14" :class="[{'white_text':get_bet_list.includes(ol_item.id_)}]">
                   <span :class="[{'white_text':get_bet_list.includes(ol_item.id_)}]">
@@ -136,9 +136,6 @@ export default defineComponent({
     const is_match_result = computed(() => {
       return ['result_details', 'match_result'].includes($route.name)
     });
-    const go_to_bet = (ol_item) => {
-      useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX,true);
-    };
     return {
       utils,
       get_bet_list,
@@ -146,7 +143,6 @@ export default defineComponent({
       get_is_hengping,
       is_match_result,
       LOCAL_PROJECT_FILE_PREFIX,
-      go_to_bet
     }
   }
 })
