@@ -19,12 +19,12 @@
     </div> -->
     
     <!-- 头部15 Mins模块 -->
-    <div>
+    <div v-show="matches_15mins_list.length">
       <CurrentMatchTitle :title_value="'15 Mins'" :show_more_icon="false" />
       <MatchCardList15Mins :matches_15mins_list="matches_15mins_list" />
     </div>
     <!-- 头部Featured Matches模块 -->
-    <div>
+    <div v-show="matches_featured_list.length">
       <CurrentMatchTitle :title_value="'Featured Matches'" :show_more_icon="false" />
       <FeaturedMatches :matches_featured_list="matches_featured_list" />
     </div>
@@ -60,7 +60,7 @@
       <!-- </div> -->
     <!-- </div> -->
     <!-- 列表容器 -->
-    <load-data :state="'data'"  >
+    <load-data :state="'data'" limit_height="1000" >  <!--此处先写死高度用来调试UI -->
       <!-- 滚球虚拟体育列表 -->
       <scroll-list v-if="menu_config.menu_root_show_shoucang == 300">
         <template v-slot:before>
@@ -122,7 +122,7 @@
   </div>
 </template>
 <script>
-import { onMounted, onUnmounted, ref } from "vue";
+import { onMounted, onUnmounted, ref, watch, getCurrentInstance } from "vue";
 
 import { IconWapper } from 'src/components/icon'
 import LoadData from 'src/components/load_data/load_data.vue';
@@ -183,6 +183,10 @@ export default {
     // 热推数据
     const matches_featured_list = ref([]);
 
+    const match_list_card_key_arr = ref([])
+
+    const { proxy } = getCurrentInstance()
+
     const init_home_matches = () => {
       const params = {
         type: 1, 
@@ -191,19 +195,32 @@ export default {
       }
       get_home_matches(params).then(res => {
         // 处理返回数据 将扁平化数组更改为页面适用数据
-        console.log(res, 'xxxxxx')
         matches_15mins_list.value = filter_15mins_func(res.p15);
         matches_featured_list.value = filter_featured_list(res.hots);
       });
     }
 
+    const MatchListCardDataClass_match_list_card_key_arr = () => {
+      match_list_card_key_arr.value= MatchListCardDataClass.match_list_card_key_arr
+    }
+
     onMounted(() => {
       mounted_fn();
       init_home_matches()
+      MatchListCardDataClass_match_list_card_key_arr()
     });
     onUnmounted(() => {
       // handle_destroyed()
     })
+
+    watch(
+      () => MatchListCardDataClass.list_version,
+      (list_version) => {
+        MatchListCardDataClass_match_list_card_key_arr()
+        proxy?.$forceUpdate()
+      }
+    )
+
     return {
       menu_config,
       MatchListData,
@@ -214,30 +231,12 @@ export default {
       GlobalAccessConfig,
       on_refresh,
       matches_15mins_list,
-      matches_featured_list
-    };
-  },
-  data() {
-    return {
+      matches_featured_list,
+      match_list_card_key_arr,
       compute_css_obj,
       MatchListCardDataClass   ,
       load_data_state,
-      match_list_card_key_arr:[]
-    }
-  },
-  mounted () {
-    this.MatchListCardDataClass_match_list_card_key_arr()  ;
-  },
-  watch: {
-    'MatchListCardDataClass.list_version'(newValue, oldValue) {
-      this.MatchListCardDataClass_match_list_card_key_arr()
-       this.$forceUpdate()
-    }
-  },
-  methods: {
-    MatchListCardDataClass_match_list_card_key_arr() {
-      this.match_list_card_key_arr= MatchListCardDataClass.match_list_card_key_arr
-    },
+    };
   },
 };
 // 赛事列表筛选：滚球-球种、早盘-日期

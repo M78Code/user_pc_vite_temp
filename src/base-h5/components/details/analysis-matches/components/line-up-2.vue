@@ -22,139 +22,138 @@
         ></team-img>
           <span>
             {{detail_data.mhn}}
-            <span>{{ line_up_data.homeFormation }}</span>
+            <span>{{ line_up_data_home.homeFormation }}</span>
           </span>
         </div>
         <!-- 名字 -->
         <div>
-          {{'齐内丁·齐达内'}}
         </div>
       </div>
-      <!-- 裁判 -->
-      <div class="referee">
-        {{'裁判'}}
-      </div>
-      <!-- 加载第一项 和 最后一项 -->
-      <div class="home-team">
-        <template v-for="(item, i) in line_up_data.up" :key="i+'f_l'">
-        <div class="first_and_last"          
-          :class="[
-            `location${item.position}`,
-            (number == 3 && item.position > 8) ? calculatelast(item) : '',
-            (number == 2 && item.position > 9) ? calculatelast(item) : '',
-            (number == 1 && item.position > 10 && item.position <=11) ? calculatelast(item) : '',
-          ]"       
-          v-if="((number == 3 && item.position > 8) || item.position == 1 || (number == 2 && item.position > 9) ||
-          (number == 1 && item.position > 10)) && item.position<=11"
-          
-        >
-          <div>
-            <span>{{ item.shirtNumber || 0 }}</span>
-          </div>
-          <span class="ellipsis">{{ item.thirdPlayerName }}</span>
-        </div>
-      </template>
-      <!--  加载中间的内容  -->
-      <!-- 主队 -->
-      <!--  如果首发阵容是两列，前面有两列 比如 4-2-4 -->
-      <template v-if="number_columns.length == 2">
-        <div class="two_columns four-two-four"
-             v-for="(list, index) in football_filtered_data" :key="index+'middle'"
-             :class="[
-               list.data.length == 5 && calculation_radian(index) && 'five_columns',
-               'two_columns-'+ index
-             ]"
-        >
-          <div class="first_and_last"
-               v-for="(item, index) in list.data" :key="index+'l_f'"
-               :class="[
-               (index == 0 || index ==4) && list.data.length == 5 ? calculation_radian(index): ''
-             ]"
-          >
-          
-            <div>
-              <span>{{ item.shirtNumber || 0 }}</span>
-            </div>
-            <span class="ellipsis">{{ item.thirdPlayerName }}</span>
-          </div>
-        </div>
-      </template>
-      <!--  如果首发阵容是三列，前面有两列  4-2-3-1 -->
-      <template v-if="number_columns.length == 3">
-        <div :class="'two_columns-'+ index "
-            class="two_columns"
-             v-for="(list, index) in football_filtered_data" :key="index"
-        >
-          <div class="first_and_last" v-for="(item, index) in list.data" :key="index+'s'">
+      <!-- 无首发数据 -->
+      <div v-if="lodash.get(line_up_data_home, 'up.length') <= 0 && lodash.get(line_up_data_away, 'up.length') <= 0" class="not-data-starter">{{ i18n_t('app_h5.detail.not_data_starter') }}</div>
+      <template v-else>
+        <!-- 加载第一项 和 最后一项 -->
+        <div class="home-team">
+          <template v-for="(item, i) in line_up_data_home.up" :key="i+'f_l'">
+          <div class="first_and_last"          
+            :class="[
+              `location${item.position}`,
+              (number == 3 && item.position > 8) ? calculatelast(item) : '',
+              (number == 2 && item.position > 9) ? calculatelast(item) : '',
+              (number == 1 && item.position > 10 && item.position <=11) ? calculatelast(item) : '',
+            ]"       
+            v-if="((number == 3 && item.position > 8) || item.position == 1 || (number == 2 && item.position > 9) ||
+            (number == 1 && item.position > 10)) && item.position<=11"
             
-            <div>
-              <span>{{ item.shirtNumber || 0 }}</span>
-            </div>
-            <span class="ellipsis">{{ item.thirdPlayerName }}</span>
-          </div>
-        </div>
-      </template>
-      </div>
-      
-      <!-- 客队 -->
-      <div class="away-team">
-        <template v-for="(item, i) in line_up_data.up" :key="i+'f_l'">
-        <div class="first_and_last"          
-          :class="[
-            `location${item.position}`,
-            (number == 3 && item.position > 8) ? calculatelast(item) : '',
-            (number == 2 && item.position > 9) ? calculatelast(item) : '',
-            (number == 1 && item.position > 10 && item.position <=11) ? calculatelast(item) : '',
-          ]"       
-          v-if="((number == 3 && item.position > 8) || item.position == 1 || (number == 2 && item.position > 9) ||
-          (number == 1 && item.position > 10)) && item.position<=11"
-          
-        >
-          <div>
-            <span>{{ item.shirtNumber || 0 }}</span>
-          </div>
-          <span class="ellipsis">{{ item.thirdPlayerName }}</span>
-        </div>
-      </template>
-      <!--  加载中间的内容  -->
-      <!-- 主队 -->
-      <!--  如果首发阵容是两列，前面有两列 比如 4-2-4 -->
-      <template v-if="number_columns.length == 2">
-        <div class="two_columns four-two-four"             
-        v-for="(list, index) in football_filtered_data" :key="index+'middle'"
-             :class="[
-               list.data.length == 5 && calculation_radian(index) && 'five_columns',
-               'two_columns-'+ index
-             ]"
-        >
-          <div class="first_and_last"
-               v-for="(item, index) in list.data" :key="index+'l_f'"
-               :class="[
-               (index == 0 || index ==4) && list.data.length == 5 ? calculation_radian(index): ''
-             ]"
           >
             <div>
               <span>{{ item.shirtNumber || 0 }}</span>
             </div>
             <span class="ellipsis">{{ item.thirdPlayerName }}</span>
           </div>
-        </div>
-      </template>
-      <!--  如果首发阵容是三列，前面有两列  4-2-3-1 -->
-      <template v-if="number_columns.length == 3">
-        <div class="two_columns "
-        :class="'two_columns-'+ index "
-             v-for="(list, index) in football_filtered_data" :key="index"
-        >
-          <div class="first_and_last" v-for="(item, index) in list.data" :key="index+'s'">
+        </template>
+        <!--  加载中间的内容  -->
+        <!-- 主队 -->
+        <!--  如果首发阵容是两列，前面有两列 比如 4-2-4 -->
+        <template v-if="number_columns.length == 2">
+          <div class="two_columns four-two-four"
+              v-for="(list, index) in football_filtered_data_home" :key="index+'middle'"
+              :class="[
+                list.data.length == 5 && calculation_radian(index) && 'five_columns',
+                'two_columns-'+ index
+              ]"
+          >
+            <div class="first_and_last"
+                v-for="(item, index) in list.data" :key="index+'l_f'"
+                :class="[
+                (index == 0 || index ==4) && list.data.length == 5 ? calculation_radian(index): ''
+              ]"
+            >
+            
+              <div>
+                <span>{{ item.shirtNumber || 0 }}</span>
+              </div>
+              <span class="ellipsis">{{ item.thirdPlayerName }}</span>
+            </div>
+          </div>
+        </template>
+        <!--  如果首发阵容是三列，前面有两列  4-2-3-1 -->
+        <template v-if="number_columns.length == 3">
+          <div :class="'two_columns-'+ index "
+              class="two_columns"
+              v-for="(list, index) in football_filtered_data_home" :key="index"
+          >
+            <div class="first_and_last" v-for="(item, index) in list.data" :key="index+'s'">
+              
+              <div>
+                <span>{{ item.shirtNumber || 0 }}</span>
+              </div>
+              <span class="ellipsis">{{ item.thirdPlayerName }}</span>
+            </div>
+          </div>
+        </template>
+        </div>     
+        <!-- 客队 -->
+        <div class="away-team">
+          <template v-for="(item, i) in line_up_data_away.up" :key="i+'f_l'">
+          <div class="first_and_last"          
+            :class="[
+              `location${item.position}`,
+              (number == 3 && item.position > 8) ? calculatelast(item) : '',
+              (number == 2 && item.position > 9) ? calculatelast(item) : '',
+              (number == 1 && item.position > 10 && item.position <=11) ? calculatelast(item) : '',
+            ]"       
+            v-if="((number == 3 && item.position > 8) || item.position == 1 || (number == 2 && item.position > 9) ||
+            (number == 1 && item.position > 10)) && item.position<=11"
+            
+          >
             <div>
               <span>{{ item.shirtNumber || 0 }}</span>
             </div>
             <span class="ellipsis">{{ item.thirdPlayerName }}</span>
           </div>
+        </template>
+        <!--  加载中间的内容  -->
+        <!-- 客队 -->
+        <!--  如果首发阵容是两列，前面有两列 比如 4-2-4 -->
+        <template v-if="number_columns.length == 2">
+          <div class="two_columns four-two-four"             
+          v-for="(list, index) in football_filtered_data_away" :key="index+'middle'"
+              :class="[
+                list.data.length == 5 && calculation_radian(index) && 'five_columns',
+                'two_columns-'+ index
+              ]"
+          >
+            <div class="first_and_last"
+                v-for="(item, index) in list.data" :key="index+'l_f'"
+                :class="[
+                (index == 0 || index ==4) && list.data.length == 5 ? calculation_radian(index): ''
+              ]"
+            >
+              <div>
+                <span>{{ item.shirtNumber || 0 }}</span>
+              </div>
+              <span class="ellipsis">{{ item.thirdPlayerName }}</span>
+            </div>
+          </div>
+        </template>
+        <!--  如果首发阵容是三列，前面有两列  4-2-3-1 -->
+        <template v-if="number_columns.length == 3">
+          <div class="two_columns "
+          :class="'two_columns-'+ index "
+              v-for="(list, index) in football_filtered_data_away" :key="index"
+          >
+            <div class="first_and_last" v-for="(item, index) in list.data" :key="index+'s'">
+              <div>
+                <span>{{ item.shirtNumber || 0 }}</span>
+              </div>
+              <span class="ellipsis">{{ item.thirdPlayerName }}</span>
+            </div>
+          </div>
+        </template>
         </div>
       </template>
-      </div>
+      
       <!-- 球队名和队长 -->
       <div class="away-team-top">
         <!-- 球队和icon -->
@@ -169,12 +168,11 @@
         ></team-img>
           <span>
             {{detail_data.man}}
-            <span>{{ line_up_data.awayFormation }}</span>
+            <span>{{ line_up_data_away.awayFormation }}</span>
           </span>
         </div>
         <!-- 名字 -->
         <div>
-          {{'齐内丁·齐达内'}}
         </div>
       </div>
     </div>
@@ -228,7 +226,7 @@
         <div class="content-item">
             <!-- 主队 -->
           <div class="home-team-item">
-            <div class="team-item" v-for="(item, i) in line_up_data.up" :key="i+'a'">
+            <div class="team-item" v-for="(item, i) in line_up_data_home.up" :key="i+'a'">
               <div class="col1">
                 <!-- 联赛icon -->
                 <img class="match_logo"
@@ -239,7 +237,7 @@
               <div class="name-position">
                 <div class="col3 ellipsis">
                   <template v-if="UserCtr.lang == 'en'">&ensp;</template>
-                  {{ item.thirdPlayerName || '-' }}
+                  {{ (item.thirdPlayerName.length > 6 ? item.thirdPlayerName.slice(0, 6) + '...' : item.thirdPlayerName) || '-' }}
                 </div>
                 <div class="col2">{{ item.positionName || '-' }}</div>
               </div>
@@ -251,7 +249,7 @@
           </div>
           <!-- 客队 -->
           <div class="away-team-item">
-            <div class="team-item" v-for="(item, i) in line_up_data.up" :key="i+'a'">
+            <div class="team-item" v-for="(item, i) in line_up_data_away.up" :key="i+'a'">
               <div class="col1">
                 <!-- 联赛icon -->
                 <img class="match_logo"
@@ -262,7 +260,7 @@
               <div class="name-position">
                 <div class="col3 ellipsis">
                   <template v-if="UserCtr.lang == 'en'">&ensp;</template>
-                  {{ item.thirdPlayerName || '-' }}
+                  {{ (item.thirdPlayerName.length > 6 ? item.thirdPlayerName.slice(0, 6) + '...' : item.thirdPlayerName) || '-' }}
                 </div>
                 <div class="col2">{{ item.positionName || '-' }}</div>
               </div>
@@ -273,72 +271,153 @@
           </div>
         </div>
         
+        <!-- 没有数据 组件 TODO: 待处理-->
+        <div v-if="lodash.get(line_up_data_home, 'up.length') <= 0 && lodash.get(line_up_data_away, 'up.length') <= 0" class="no-list">{{ i18n_t('common.no_data') }}</div>
+      </div>
+      <!-- 伤停名单-->
+      <div class="title">
+        <span>{{i18n_t('analysis_football_matches.Injury_situation') }}</span>
+      </div>
+      
+        
+      <div class="public_form football_standings">
         <!-- 没有数据 组件 -->
-        <div v-if="line_up_data.up.length <= 0" class="no-list">{{ i18n_t('common.no_data') }}</div>
+      <div v-if="Object.keys(injury_situation_data).length <= 0" class="no-list">
+          <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/def_common.svg`" alt="">
+          {{ i18n_t('app_h5.detail.not_data_Injury') }}
+        </div>
+        <template v-else>
+           <!-- 头部 -->
+          <div class="header">
+          <div>
+            <team-img
+              v-if="!lodash.isEmpty(detail_data)"
+              :type="0"
+              :csid="detail_data.csid"
+              :url="lodash.get(detail_data,'mhlu[0]')"
+              :fr="MenuData.get_menu_type() != 3000 ? lodash.get(detail_data,'frmhn[0]') : detail_data.frmhn"
+              :size="44"
+            ></team-img>
+            <span>{{detail_data.man}}</span>
+          </div>
+          <div>
+            <team-img
+              v-if="!lodash.isEmpty(detail_data)"
+              :type="0"
+              :csid="detail_data.csid"
+              :url="lodash.get(detail_data,'malu[0]')"
+              :fr="MenuData.get_menu_type() != 3000 ? lodash.get(detail_data,'frmhn[0]') : detail_data.frmhn"
+              :size="44"
+            ></team-img>
+            <span>{{detail_data.mhn}}</span>
+          </div>
+          </div>
+        <!-- 主内容 -->
+        <div class="content-item">
+            <!-- 主队 -->
+          <div class="home-team-item">
+            <div class="team-item" v-for="(item, i) in injury_situation_data['1']" :key="i+'a'">
+              <div class="col1">
+                <!-- 联赛icon -->
+                <img class="match_logo"
+                    :src=" item.thirdPlayerPicUrl ? get_server_file_path(item.thirdPlayerPicUrl) : default_url"
+                    @error="league_icon_error"
+                />
+              </div>
+              <div class="name-position">
+                <div class="col3 ellipsis">
+                  <template v-if="UserCtr.lang == 'en'">&ensp;</template>
+                  {{ (item.playerName.length > 6 ? item.playerName.slice(0, 6) + '...' : item.playerName) || '-' }}
+                </div>
+                <div class="col2">{{ item.positionName || '-' }}</div>
+              </div>
+              <div class="col4 end-btn">
+                <span>{{ item.shirtNumber }}</span>
+              </div>
+              
+            </div>
+          </div>
+          <!-- 客队 -->
+          <div class="away-team-item">
+            <div class="team-item" v-for="(item, i) in injury_situation_data['2']" :key="i+'a'">
+              <div class="col1">
+                <!-- 联赛icon -->
+                <img class="match_logo"
+                    :src=" item.thirdPlayerPicUrl ? get_server_file_path(item.thirdPlayerPicUrl) : default_url"
+                    @error="league_icon_error"
+                />
+              </div>
+              <div class="name-position">
+                <div class="col3 ellipsis">
+                  <template v-if="UserCtr.lang == 'en'">&ensp;</template>
+                  {{ (item.playerName.length > 6 ? item.playerName.slice(0, 6) + '...' : item.playerName) || '-' }}
+                </div>
+                <div class="col2">{{ item.positionName || '-' }}</div>
+              </div>
+              <div class="col4 end-btn">
+                <span>{{ item.shirtNumber }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        </template>
       </div>
       <!-- 替补名单-->
       <div class="title">
         <span>{{i18n_t('analysis_football_matches.bench_lineup') }}</span>
       </div>
       <div class="public_form football_standings">
-        <!-- 头部 -->
-        <div class="header">
-          <div class="col1"></div>
-          <div class="col2">{{i18n_t('analysis_football_matches.position') }}</div>
-          <div class="col3" v-html="i18n_t('analysis_football_matches.name')"></div>
-          <div class="col4">{{i18n_t('analysis_football_matches.number') }}</div>
-        </div>
-        <!-- 主内容 -->
-        <div class="team-item" v-for="(item, i) in line_up_data.down" :key="i+'b'">
-          <div class="col1">
-            <!-- 联赛icon -->
-            <img class="match_logo"
-                 :src=" item.thirdPlayerPicUrl ? get_server_file_path(item.thirdPlayerPicUrl) : default_url"
-                 @error="league_icon_error"
-            />
-          </div>
-          <div class="col2">{{ item.positionName || '-' }}</div>
-          <div class="col3 ellipsis">
-            {{ item.thirdPlayerName || '-' }}
-          </div>
-          <div class="col4 end-btn">
-            <span>{{ item.shirtNumber }}</span>
-          </div>
-        </div>
         <!-- 没有数据 组件 -->
-        <div v-if="line_up_data.down.length <= 0" class="no-list">{{ i18n_t('common.no_data') }}</div>
-      </div>
-      <!-- 伤停名单-->
-      <div class="title">
-        <span>{{i18n_t('analysis_football_matches.bench_lineup') }}</span>
-      </div>
-      <div class="public_form football_standings">
-        <!-- 头部 -->
-        <div class="header">
-          <div class="col1"></div>
-          <div class="col2">{{i18n_t('analysis_football_matches.position') }}</div>
-          <div class="col3" v-html="i18n_t('analysis_football_matches.name')"></div>
-          <div class="col4">{{i18n_t('analysis_football_matches.number') }}</div>
+        <div v-if="lodash.get(line_up_data_home, 'down.length') <= 0 && lodash.get(line_up_data_away, 'down.length') <= 0" class="no-list">
+          <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/def_common.svg`" alt="">
+          {{ i18n_t('app_h5.detail.not_data_substitute') }}
         </div>
-        <!-- 主内容 -->
-        <div class="team-item" v-for="(item, i) in line_up_data.down" :key="i+'b'">
-          <div class="col1">
-            <!-- 联赛icon -->
-            <img class="match_logo"
-                 :src=" item.thirdPlayerPicUrl ? get_server_file_path(item.thirdPlayerPicUrl) : default_url"
-                 @error="league_icon_error"
-            />
+        <template v-else>
+          <!-- 头部 -->
+          <div class="header">
+            <div>
+              <team-img
+                v-if="!lodash.isEmpty(detail_data)"
+                :type="0"
+                :csid="detail_data.csid"
+                :url="lodash.get(detail_data,'mhlu[0]')"
+                :fr="MenuData.get_menu_type() != 3000 ? lodash.get(detail_data,'frmhn[0]') : detail_data.frmhn"
+                :size="44"
+              ></team-img>
+              <span>{{detail_data.man}}</span>
+            </div>
+            <div>
+              <team-img
+                v-if="!lodash.isEmpty(detail_data)"
+                :type="0"
+                :csid="detail_data.csid"
+                :url="lodash.get(detail_data,'malu[0]')"
+                :fr="MenuData.get_menu_type() != 3000 ? lodash.get(detail_data,'frmhn[0]') : detail_data.frmhn"
+                :size="44"
+              ></team-img>
+              <span>{{detail_data.mhn}}</span>
+            </div>
           </div>
-          <div class="col2">{{ item.positionName || '-' }}</div>
-          <div class="col3 ellipsis">
-            {{ item.thirdPlayerName || '-' }}
-          </div>
-          <div class="col4 end-btn">
-            <span>{{ item.shirtNumber }}</span>
-          </div>
+          <!-- 主内容 -->
+          <div class="team-item" v-for="(item, i) in line_up_data_home.down" :key="i+'b'">
+            <div class="col1">
+              <!-- 联赛icon -->
+              <img class="match_logo"
+                  :src=" item.thirdPlayerPicUrl ? get_server_file_path(item.thirdPlayerPicUrl) : default_url"
+                  @error="league_icon_error"
+              />
+            </div>
+            <div class="col2">{{ item.positionName || '-' }}</div>
+            <div class="col3 ellipsis">
+              {{ item.thirdPlayerName.split(6, '...') || '-' }}
+            </div>
+            <div class="col4 end-btn">
+              <span>{{ item.shirtNumber }}</span>
+            </div>
         </div>
-        <!-- 没有数据 组件 -->
-        <div v-if="line_up_data.down.length <= 0" class="no-list">{{ i18n_t('common.no_data') }}</div>
+        </template>
+        
+        
       </div>
     </template>
   </div>
@@ -367,10 +446,19 @@ import { LOCAL_PROJECT_FILE_PREFIX, MenuData } from 'src/core'
       default: () => {}
     }
   })
-  const radio_button_index = ref(0)
-  const tab_radio_button = ref(['曼联', '德联'])
   // 列表数据
-  const line_up_data = ref([])
+  //主队首发
+  const line_up_data_home = ref({
+    down: [],
+    up: [],
+  })
+  // 客队首发
+  const line_up_data_away = ref({
+    down: [],
+    up: [],
+  })
+  // 伤停信息
+  const injury_situation_data = ref({})
   const no_data = ref(true)
   //默认图片地址
   const default_url = (`${LOCAL_PROJECT_FILE_PREFIX}/image/png/my.png`)
@@ -378,7 +466,13 @@ import { LOCAL_PROJECT_FILE_PREFIX, MenuData } from 'src/core'
   const number = ref('')
   // 代表多少列 并且里边的数字
   const number_columns = ref([])
-  const football_filtered_data = ref([
+  // 主队
+  const football_filtered_data_home = ref([
+    {data:[]},
+    // {data:[]},
+  ])
+  // 客队
+  const football_filtered_data_away = ref([
     {data:[]},
     // {data:[]},
   ])
@@ -389,8 +483,11 @@ import { LOCAL_PROJECT_FILE_PREFIX, MenuData } from 'src/core'
   onMounted(() => {
     //  添加监听 赛事分析刷新事件 
   useMittOn(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis)
-  get_list()
-  tab_radio_button.value = [props.detail_data.mhn, props.detail_data.man]
+  // 触发两次接口获取主客队信息  1主2客
+  get_list(1)
+  get_list(2)
+  // 伤停接口
+  get_data_list()
   })
 
   const match_id = computed(() => {
@@ -423,31 +520,26 @@ import { LOCAL_PROJECT_FILE_PREFIX, MenuData } from 'src/core'
     $event.target.src = default_url;
     $event.target.onerror = null
   }
-  const radioButton = (item, index) => {
-    if(radio_button_index.value == index) return
-    radio_button_index.value = index
-    basketball_data.value = []
-    get_list()
-  }
-  const get_list = async () => {
+  // 获取主客队信息
+  const get_list = async (index = 1) => {
     no_data.value = true
     try {
       let parameter = {
         // 2079863足球测试id  2185843篮球测试id
         matchInfoId: match_id.value,
         // 主客队标识(1主队，2客队)
-        homeAway: radio_button_index.value + 1
+        homeAway: index
       }
       let {code , data} = await api_analysis.get_match_lineup_list(parameter)
       if(code == 200 && Object.keys(data).length > 0) {
         // 如果是足球赛事
-        line_up_data.value = data
         if(props.detail_data.csid == 1){
-          if(radio_button_index.value == 0){
-            filter_numbers(data.homeFormation)
-            // filter_numbers('4-2-3-1')
+          if(index == 1){
+            line_up_data_home.value = data
+            filter_numbers(data.homeFormation, index)
           }else{
-            filter_numbers(data.awayFormation)
+            line_up_data_away.value = data
+            filter_numbers(data.awayFormation, index)
           }
         }else if(props.detail_data.csid == 2){
           //  如果是 篮球赛事
@@ -462,33 +554,113 @@ import { LOCAL_PROJECT_FILE_PREFIX, MenuData } from 'src/core'
       console.error(error);
     }
   }
+  // 获取伤停数据---目前伤停接口返回数据：缺少头像和号码字段
+  const get_data_list = () => {
+      try {
+        // sonMenuId： 旧版 基本面是1 
+        let parameter = {
+          standardMatchId: match_id.value, //2274159, //2274159 ,//2079863足球测试id
+          parentMenuId: 2,
+          sonMenuId: 1
+        }
+        let {code , data} = api_analysis.get_match_analysise_data(parameter)
+        // if(code == 200 && Object.keys(data).length > 0) {
+          // TODO: 数据暂时写死，后续修改
+          injury_situation_data.value = lodash.get(data, 'basicInfoMap.sThirdMatchSidelinedDTOMap', {
+    "1": [{
+        "homeAway": 1,
+        "playerName": "朱利安·杜兰维尔",
+        "positionName": "前锋",
+        "reason": "肌肉损伤"
+    }],
+    "2": [{
+        "homeAway": 2,
+        "playerName": "亚历山大-伊萨克",
+        "positionName": "前锋",
+        "reason": "腹股沟受伤"
+    },
+    {
+        "homeAway": 2,
+        "playerName": "哈维-巴恩斯",
+        "positionName": "中场",
+        "reason": "脚趾受伤"
+    },
+    {
+        "homeAway": 2,
+        "playerName": "博特曼-斯文",
+        "positionName": "后卫",
+        "reason": "膝伤"
+    },
+    {
+        "homeAway": 2,
+        "playerName": "埃利奥特安德森",
+        "positionName": "中场",
+        "reason": "背部受伤"
+    },
+    {
+        "homeAway": 2,
+        "playerName": "马特-塔吉特",
+        "positionName": "后卫",
+        "reason": "腿筋拉伤"
+    },
+    {
+        "homeAway": 2,
+        "playerName": "哈维尔-曼奎洛",
+        "positionName": "后卫",
+        "reason": "腹股沟受伤"
+    }]
+})
+        // }
+      } catch (error) {
+        console.error(error);
+      }
+    }
   // 过滤 首发阵容的最后一位数字 和  首发阵容的队列数字
-  const filter_numbers = (data) => {
+  const filter_numbers = (data, index) => {
     if(!data ) return
     number.value = data.slice(-1)
     number_columns.value = data.split('-').join('').slice(0,-1)
     let [number1, number2] = [+number_columns.value[0], +number_columns.value[1]]
     if(number_columns.value.length == 2){
-      football_filtered_data.value = [{},{}]
-      football_filtered_data.value[0].data = line_up_data.value.up.slice(1, number1 + 1)
-      football_filtered_data.value[1].data = line_up_data.value.up.slice(number1 + 1, number1 + number2 + 1)
-    }else if(number_columns.value.length == 3){
+      if (index == 1) {
+        // 主队
+        football_filtered_data_home.value = [{},{}]
+        football_filtered_data_home.value[0].data = line_up_data_home.value.up.slice(1, number1 + 1)
+        football_filtered_data_home.value[1].data = line_up_data_home.value.up.slice(number1 + 1, number1 + number2 + 1)
+      } else {
+        // 客队
+        football_filtered_data_away.value = [{},{}]
+        football_filtered_data_away.value[0].data = line_up_data_away.value.up.slice(1, number1 + 1)
+        football_filtered_data_away.value[1].data = line_up_data_away.value.up.slice(number1 + 1, number1 + number2 + 1)
+      }
+      
 
-      football_filtered_data.value = [{},{},{}]
+      
+    }else if(number_columns.value.length == 3){
       let [number3] = [+number_columns.value[2]]
-      football_filtered_data.value[0].data = line_up_data.value.up.slice(1, number1+1)
-      football_filtered_data.value[1].data = line_up_data.value.up.slice(number1 + 1, number1 + number2 + 1)
-      football_filtered_data.value[2].data = line_up_data.value.up.slice(number1 + number2 + 1, number1 + number2 + number3 + 1)
+      if (index == 1) {
+        // 主队
+        football_filtered_data_home.value = [{},{},{}]
+        football_filtered_data_home.value[0].data = line_up_data_home.value.up.slice(1, number1+1)
+        football_filtered_data_home.value[1].data = line_up_data_home.value.up.slice(number1 + 1, number1 + number2 + 1)
+        football_filtered_data_home.value[2].data = line_up_data_home.value.up.slice(number1 + number2 + 1, number1 + number2 + number3 + 1)
+      } else {
+        // 客队
+        football_filtered_data_away.value = [{},{},{}]
+        football_filtered_data_away.value[0].data = line_up_data_away.value.up.slice(1, number1+1)
+        football_filtered_data_away.value[1].data = line_up_data_away.value.up.slice(number1 + 1, number1 + number2 + 1)
+        football_filtered_data_away.value[2].data = line_up_data_away.value.up.slice(number1 + number2 + 1, number1 + number2 + number3 + 1)
+      }
+      
+
+      
     }
   }
   // 刷新 当前赛事分析信息
   const refresh_match_analysis = () => {
-    const clone_radio_button_index = radio_button_index.value
-    radio_button_index.value = -1
-
-    nextTick(() => {
-      radioButton(tab_radio_button.value[clone_radio_button_index], clone_radio_button_index)
-    })
+    get_list(1)
+    get_list(2)
+    get_data_list()
   }
   onUnmounted(() => {
      //   // 移除监听 赛事分析刷新事件 TODO: 后续修改调整
@@ -596,11 +768,34 @@ import { LOCAL_PROJECT_FILE_PREFIX, MenuData } from 'src/core'
         }
       }
     }
+    .no-list {
+      display: grid;
+      align-items: center;
+      justify-content: center;
+      height: 2.5rem;
+      img {
+        width: 1.8rem;
+        height: 1.8rem;
+
+      }
+    }
   }
   .football_field {
     height: 7.37rem;
     padding-top: 0;
     padding-bottom: 0;
+    .not-data-starter {
+      width: 100%;
+      height: 0.5rem;
+      color: #ffffff;
+      text-align: center;
+      font-size: 14px;
+      font-weight: 400;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(270deg, rgba(57, 80, 20, 0.00) 0%, rgba(57, 80, 20, 0.92) 34.58%, rgba(57, 80, 20, 0.92) 65.24%, rgba(57, 80, 20, 0.00) 100%);
+    }
     .referee {
       color: #ffffff;
       opacity: 0.7194;

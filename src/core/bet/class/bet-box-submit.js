@@ -433,6 +433,8 @@ const set_bet_obj_config = (params = {}, other = {}) => {
     // 切换投注状态
     BetViewDataClass.set_bet_order_status(1)
     BetData.set_bet_mode(-1)
+    // 重置金额为 0
+    BetData.set_bet_amount(0)
 
     const { oid, _hid, _hn, _mid } = params
      // 列表数据仓库
