@@ -680,8 +680,8 @@ this.bet_appoint_ball_head= null */
   }
 
   // 设置是否预约
-  set_is_bet_pre() {
-    this.is_bet_pre = !this.is_bet_pre
+  set_is_bet_pre(val) {
+    this.is_bet_pre = val
     this.set_bet_data_class_version()
   }
 
