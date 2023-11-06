@@ -477,8 +477,6 @@ class MatchMeta {
     // 虚拟列表所需渲染数据
     const match_datas = VirtualList.compute_page_render_list(scroll_top)
 
-    console.log(match_datas)
-
     // 当前渲染的 mids
     this.match_mids = match_datas.map(t => {
       return t.mid
