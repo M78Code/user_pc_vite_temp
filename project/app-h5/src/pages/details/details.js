@@ -655,7 +655,7 @@ watch(() => MatchDataWarehouseInstance.data_version.version, () => {
               (item) => item.id == SessionStorage.get("DETAIL_TAB_ID")
             );
             // 找不到就赋值为玩法集第一项
-            if (!set_details_item_flag) {
+            if (!set_details_item_flag) { 
               matchDetailCtr.value.category_tab_click(res_data[0]);
             }
           } else {
@@ -667,7 +667,7 @@ watch(() => MatchDataWarehouseInstance.data_version.version, () => {
           if (search_term) {
             router.replace({
               name: "category",
-              params: { mid: matchid.value, mcid: data_list[0]["id"] },
+              params: { mid: matchid.value, mcid: state_data.data_list[0]["id"] },
               query: { search_term: search_term },
             });
           }
