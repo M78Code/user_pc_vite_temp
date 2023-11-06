@@ -325,7 +325,7 @@ onUnmounted(() => {
   .loading-more-container{
     width: 100%;
     position: absolute;
-    bottom: 181px;
+    bottom: 0;
     height: 181px;
     display: flex;
     align-items: center;

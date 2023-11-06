@@ -151,7 +151,7 @@ class MatchMeta {
    * @description 非元数据处理
    * @param { list } 赛事 list
    */
-    handler_match_list_data(list) {
+    handler_match_list_data(list, type = 2) {
       const length = lodash.get(list, 'length', 0)
       if (length < 1) return this.set_page_match_empty_status(true);
       const result_mids = list.map(t => t.mid)
@@ -170,7 +170,7 @@ class MatchMeta {
       this.complete_mids = lodash.uniq(result_mids)
 
       // 计算所需渲染数据
-      this.compute_page_render_list(0, 2)
+      this.compute_page_render_list(0, type)
 
       this.set_page_match_empty_status(false)
 
@@ -433,10 +433,10 @@ class MatchMeta {
    */
   async get_collect_matche () {
     const params = this.get_base_params()
-    const res = api_common.get_collect_matches(params)
+    const res = await api_common.get_collect_matches({"cuid":"508895784655200024","euid":"40203","type":3,"sort":2,"device":"v2_h5_st","hpsFlag":0})
     if (+res.code !== 200) return this.set_page_match_empty_status(true);
     const list = lodash.get(res, 'data', [])
-    console.log(list)
+    this.handler_match_list_data(list, 1)
   }
 
   /**
