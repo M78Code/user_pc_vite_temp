@@ -23,7 +23,7 @@
                 <!-- 未结算列表 => 投注记录页提前结算的按钮、滑块、提前结算详情 -->
                 <early-settle v-if="BetRecordClass.selected === 0 || BetRecordClass.selected === 3" :item_data="item2"></early-settle>
                 <!-- 预约列表 => 取消预约 -->
-                <cancel-reserve v-else-if="BetRecordClass.selected === 1" :item_data="item2"></cancel-reserve>
+                <cancel-reserve v-else-if="BetRecordClass.selected === 1" :orderNumber="item2.orderNo" @success="init_data(1)"></cancel-reserve>
               </template>
             </div>
             </template>
@@ -102,26 +102,26 @@ const init_params_api = (_index) => {
   let params = {}
   let url_api = null;
   switch (_index) {
-    case 0:
+    case 0: //未结算
       params = {
         searchAfter: last_record.value || undefined,
         orderStatus: '0',
       }
       url_api = api_betting.post_getH5OrderList      
       break;
-    case 1:
+    case 1: //预约中
       params = {
         preOrderStatusList: [0]
       }
       url_api = api_betting.get_preOrderList_news
       break;
-    case 2:
+    case 2: // 已失效
       params = {
         preOrderStatusList: [2, 3, 4]
       }
       url_api = api_betting.get_preOrderList_news
       break;
-    case 3:
+    case 3: //已结算
       params = {
         searchAfter: last_record.value || undefined,
         orderStatus: '1',

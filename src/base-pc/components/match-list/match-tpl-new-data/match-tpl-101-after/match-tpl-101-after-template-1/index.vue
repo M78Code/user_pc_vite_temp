@@ -114,7 +114,7 @@ import { utils_info } from 'src/core/utils/module/match-list-utils.js';
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 
 import { MatchProcessFullVersionWapper as MatchProcess } from 'src/components/match-process/index.js';
-import { MatchBasisInfo1FullVersionWapper as BasisInfo1 } from 'src/base-pc/components/match-list/match-basis-info/template-1/index.js'
+import { MatchBasisInfo1FullVersionWapper as BasisInfo1 } from 'src/base-pc/components/match-list/match-basis-info/template-7/index.js'
 import { MatchBasisInfo4FullVersionWapper as BasisInfo4 } from 'src/base-pc/components/match-list/match-basis-info/template-4/index.js'
 import { MatchHandicapFullVersionWapper as MatchHandicap } from 'src/base-pc/components/match-list/match-handicap/index.js'
 import MatchMedia from 'src/base-pc/components/match-list/match-media/index.vue'
@@ -366,10 +366,6 @@ function fold_tab_play () {
   MatchListCardData && MatchListCardData.fold_tab_play(match.mid)
 }
 
-function get_tab_play_keys() {
-
-}
-
 onMounted(() => {
   // 异步设置组件是否挂载完成
   // setTimeout(()=>{
@@ -382,6 +378,13 @@ onMounted(() => {
 //   set_play_name_list(tab_play_keys)
 // }, { immediate: true })
 
+//赛事阶段变化时跟新次要玩法
+// watch(match.ms, () => {
+//   let tab_play_keys = lodash.get( 'match.tab_play_keys', '') || ''
+//   if (tab_play_keys.includes('hps5Minutes')) {
+//     set_play_name_list(tab_play_keys)
+//   }
+// }, { immediate: true })
 </script>
 
 <style lang="scss" scoped>

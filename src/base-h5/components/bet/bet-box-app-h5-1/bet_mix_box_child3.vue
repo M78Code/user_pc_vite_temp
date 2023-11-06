@@ -32,7 +32,10 @@
   import betSingleDetail from './bet-single-detail.vue';
   
   const props = defineProps({
-      item:{},
+      item:{
+        type: Object,
+        default: () => {}
+      },
       index:{}
   })
   

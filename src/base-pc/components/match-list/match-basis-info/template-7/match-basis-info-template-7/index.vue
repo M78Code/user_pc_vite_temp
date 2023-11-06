@@ -21,7 +21,7 @@
     </div>
 
      <!-- 主队信息 --> 
-     <div class="row-item team-item">
+     <div class="row-item">
       <div class="ellipsis-wrap">
         <div class="row no-wrap absolute-full">
           <div class="team-name home ellipsis allow-user-select" :class="{'bold':lodash.get(match, 'team_let_ball')=='T1'}" v-tooltip="{content:lodash.get(match, 'mhn')+play_name_obj.suffix_name,overflow:1}">
@@ -33,13 +33,12 @@
       <div class="score" v-if="show_type == 'all'" v-tooltip="{content: is_15min ? i18n_t('list.15min_stage'):'' ,overflow:1}">{{  play_name_obj.score_key ? lodash.get(match,`msc_obj.${play_name_obj.score_key}.home`) : lodash.get(match, 'cur_score.home')}}</div>
     </div>
     <!-- 客队信息 -->
-    <div class="row-item team-item">
+    <div class="row-item kedui-item">
       <div class="ellipsis-wrap">
         <div class="row no-wrap absolute-full">
           <div 
             class="team-name away ellipsis allow-user-select" 
             :class="{'bold':lodash.get(match, 'team_let_ball')=='T2'}" 
-            v-tooltip="{content:lodash.get(match,'man')+play_name_obj.suffix_name,overflow:1}"
           >{{lodash.get(match, 'man')}}{{play_name_obj.suffix_name}}</div>
         </div>
       </div>
@@ -211,11 +210,11 @@ onUnmounted(() => {
           font-weight: 500;
           line-height: 16px;
           letter-spacing: 0px;
-          color: #8A8986;
+          color: var(--q-gb-bd-c-4);
           margin-right: 5px;
       }
       .match_times {
-           color: #3D3B37;
+           color: var(--q-gb-bg-c-1);
           font-weight: 500;
       }
     }
@@ -232,6 +231,9 @@ onUnmounted(() => {
     align-items: center;
     &+.row-item {
       margin-top: 4px;
+    }
+    &.kedui-item {
+      color: var(--q-gb-bd-c-4);
     }
   }
 }

@@ -24,6 +24,7 @@ const oddsTable = {
   US: '5',
   ID: '6',
 }
+const bet_chat_room_type = ''
 /** 赔率映射表 */
 const odds_coversion_map = {}
 /** 聊天室来源跟单盘口状况eu */
@@ -56,44 +57,38 @@ const acc_sub = (num1, num2 = num1) => {
 //   odds_coversion_map = store.getState().odds_coversion_map || {}
 //   vx_get_chat_room_type = store.getState().chat_room_type || {}
 // },
-export const compute_value_by_cur_odd_type = (val, breakVal, hsw_param,flag,csid) => {
-  breakVal = '';
-  // 此方法预留  后期 对于 不支持转换赔率的 盘口 做特殊加工
-  // 是 对全局 赔率转换的 基础设定
-  // arr: 当前盘口 支持的赔率转换类型的 全部值
-  if (!val) return;
-  let arr = [];
+export const compute_value_by_cur_odd_type = (val, breakVal, arr=[], csid) => {
+  
+  /**
+   * 此方法预留  后期 对于 不支持转换赔率的 盘口 做特殊加工
+   * 是 对全局 赔率转换的 基础设定
+   * arr: 当前盘口 支持的赔率转换类型的 全部值
+   * csid ：赛种ID
+   */
+  if (!val) return
+  let odds_val = (Math.floor(val / 1000) / 100)
+  // PS-9881赔率优化
   let str = "";
-  // 印尼盘(ID) id: 6
-  // 美式盘(US) id: 5
-  // 马来盘(MY) id: 3
-  // 英式盘(GB) id: 4
-  // 香港盘(HK) id: 2
-  // 欧洲盘(EU) id: 1
-  if((typeof hsw_param) == 'string'){
-    arr = hsw_param.split(',');
-  }else{
-    arr = hsw_param;
-  }
-  if (!arr || arr.includes(oddsTable[cur_odd])) {
-    //欧洲盘不用转换,香港盘直接减1处理,其他(目前不存在其他赔率类型)的走赔率转换方法
-    if(cur_odd == 'EU'){
-      str = calc_odds(val,csid)
-    }else if(cur_odd == 'HK'){
-      let calc_num = acc_sub(val,1)
-      str = calc_odds(calc_num,csid)
-    }else{
-      str = compute_value_by_odd_type(breakVal ? breakVal : val, cur_odd)
+  breakVal = ""; // 断档值废弃
+  // 从欧盘转到港盘
+  if (!arr || ['2'].includes(oddsTable[cur_odd]) && cur_odd == 'HK') {
+    str = calc_odds(odds_val, csid);
+    //聊天室跟单特殊处理
+    if (arr && arr.includes(oddsTable[cur_odd]) || bet_chat_room_type == "HK") {
+      str = change_EU_HK(str);
     }
-  } else {
-    str = calc_odds(val,csid);
+    return str;
   }
-  //投注的时候传值不需要格式化
-  if (!flag) {
-    str = format_odds(str,csid)
+
+  if (!arr || arr.includes(oddsTable[cur_odd]) && cur_odd) {
+    cur_odd == 'EU' ? str = calc_odds(odds_val, csid) : str = compute_value_by_odd_type(breakVal ? breakVal : odds_val, cur_odd, csid);
+  } else {
+    str = calc_odds(odds_val, csid);
   }
   return str;
+  // return get_accuracy(str);
 }
+
 /**
  *@description 赔率展示优化，见优化单 13807,电竞不走这个逻辑
   *@param {Number|String} val 最终赔率 30.40 100.00
