@@ -61,7 +61,7 @@ import VirtualData from 'src/core/match-list-h5/virtual-sports/virtual-data.js'
 // 回到顶部
 import scrollTop from "src/base-h5/components/common/record-scroll/scroll-top.vue";
 // 虚拟体育
-import virtualSports from "src/base-h5/components/virtual/virtual-sports.vue";
+import virtualSports from "src/base-h5/components/match-container/virtual/app/virtual-sports.vue";
 // 底部菜单
 
 
