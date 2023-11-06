@@ -26,14 +26,6 @@ const router = createRouter({
             },
           },
           {
-            path: "/personal",
-            name: "personal",
-            component: () => import("../pages/personal/index.vue"),
-            meta: {
-              keepAlive: true // 需要缓存
-            },
-          },
-          {
             path: "/handicap",
             name: "handicapTutorial",
             component: () => import("../pages/handicap-tutorial/index.vue"),
@@ -149,6 +141,9 @@ const router = createRouter({
             path: "/personal",
             name: "personal",
             component: () => import("../pages/personal/index.vue"),
+            meta: {
+              keepAlive: true // 需要缓存
+            },
           }
       ],
     },
