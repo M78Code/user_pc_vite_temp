@@ -250,7 +250,7 @@ export const get_compute_other_play_data = (match) => {
   }
   // set_tab_play_keys(match)
   //当前选中玩法
-  let cur_other_play = get_play_current_play(mid)
+  let cur_other_play = get_play_current_play(match)
   let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(mid)
   const { data_tpl_id } = match_style_obj;
   const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${data_tpl_id}_config`][`template_${data_tpl_id}`]
@@ -407,6 +407,7 @@ export function get_21_bold_template(match) {
   if (tpl_21_hpids?.includes(341)) {
     list_name = list_name.replace("20", "341")
   }
+  console.log('get_21_bold_template',MATCH_LIST_TEMPLATE_CONFIG.template_21_config.template_21[list_name])
   return clone_arr(MATCH_LIST_TEMPLATE_CONFIG.template_21_config.template_21[list_name])
 }
 /**
@@ -460,6 +461,6 @@ export const set_match_play_current_index = (match, play_key) => {
 
 
 //获取保存的盘口玩法
-export function get_play_current_play(mid) {
-  return other_play_current_play[mid + '_'];
+export function get_play_current_play(match) {
+  return other_play_current_play[match.mid + '_'] || MatchListData.get_tab_play_keys(match).split(",")[0];
 }
