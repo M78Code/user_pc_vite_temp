@@ -422,6 +422,11 @@ this.bet_appoint_ball_head= null */
   set_is_single_handle(val) {
     this.is_single_handle = val
   }
+  // 设置 h5 串关 当前点击输入的投注项
+  set_active_index(val) {
+    this.active_index = val
+    this.set_bet_data_class_version()
+  }
 
   // 设置预约投注盘口信息
   set_bet_appoint_obj(val) {
@@ -533,7 +538,7 @@ this.bet_appoint_ball_head= null */
 
 
   http_upd_data() { }
-  
+
   // 设置投注金额
   set_bet_amount(val) {
     this.bet_amount = val;
