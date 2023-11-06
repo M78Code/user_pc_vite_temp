@@ -167,9 +167,9 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
     if(MenuData.top_menu_title.mi == 2000){
       MatchMeta.get_esports_match()
     }
-    // 电竞
+    // 收藏
     if(MenuData.top_menu_title.mi == 50000){
-      MatchMeta.get_collect_matche()
+      MatchMeta.get_collect_matche(MenuData.current_lv_2_menu_i)
     }
   }
   /**
