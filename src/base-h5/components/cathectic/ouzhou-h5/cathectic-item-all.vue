@@ -4,15 +4,19 @@
 -->
 <template>
   <div class="cathectic">
-    <div style="display: none;">{{ BetRecordClass.bet_record_version }}</div>
     <!-- 加载中 -->
-    <SRecord v-if="is_loading" />
-    <scroll ref="myScroll" :on-pull="onPull" v-else>
+    <!-- <SRecord v-if="is_loading" /> -->
+    <scroll ref="myScroll" :on-pull="onPull">
+      <!-- 未结算 cashout 按钮 -->
+      <div v-if="UserCtr.user_info.settleSwitch == 1 && BetRecordClass.selected === 0" 
+      :class="['cashout', 'unsellteCashout', BetRecordClass.is_early ? 'active': '']"
+      @click="BetRecordClass.set_is_early(!BetRecordClass.is_early)">Cashout</div>
+      <div style="display: none;">{{ BetRecordClass.bet_record_version }}</div>
       <!-- 已结算筛选按钮 -->
       <div class="settled-select flex" v-if="BetRecordClass.selected === 1">
           <div class="select flex">
-            <span class="active">Settled Time</span>
-            <span>Bet Time</span>
+            <span :class="{'active': sort_active === 2}" @click="sortChange(2)">Settled Time</span>
+            <span :class="{'active': sort_active === 1}" @click="sortChange(1)">Bet Time</span>
           </div>
           <div 
             :class="['cashout', BetRecordClass.is_early ? 'active': '']" 
@@ -28,16 +32,11 @@
               <div class="date-header flex">
                 <span class="date">03/12</span>
                 <!-- 第一项显示 cashout按钮、 已结算信息 -->
-                <template v-if="index === 0">
-                  <div v-if="UserCtr.user_info.settleSwitch == 1 && BetRecordClass.selected === 0" 
-                  :class="['cashout', BetRecordClass.is_early ? 'active': '']"
-                  @click="BetRecordClass.set_is_early(!BetRecordClass.is_early)">Cashout</div>
-                  <div v-else class="settled-date">
-                    Number <span>2</span>
-                    Bet <span>20</span>
-                    Lose/Win <span class="oringe">+20.00</span>
-                  </div>
-                </template>
+                <div class="settled-date" v-if="BetRecordClass.selected === 1 && index === 0">
+                  Number <span>2</span>
+                  Bet <span>20</span>
+                  Lose/Win <span class="oringe">+20.00</span>
+                </div>
               </div>
               <div v-for="(item2, key) in value.data" :key="key" class="cathectic-item">
                 <item-multiple-body :data_b="item2"></item-multiple-body>
@@ -57,7 +56,7 @@ import lodash from 'lodash';
 import { api_betting } from "src/api/index.js";
 import BetRecordClass from "src/core/bet-record/bet-record.js";
 import { itemMultipleBody } from "src/base-h5/components/common/cathectic-item/ouzhou-h5/index";
-import settleVoid from "src/base-h5/components/cathectic/app-h5/settle-void.vue";
+import settleVoid from "src/base-h5/components/cathectic/ouzhou-h5/settle-void.vue";
 import scroll from "src/base-h5/components/common/record-scroll/scroll.vue";
 import SRecord from "src/base-h5/components/skeleton/record.vue";
 import { ref, watch, computed, onMounted, onUnmounted } from 'vue'
@@ -74,6 +73,10 @@ const last_record = ref('')
 const is_hasnext = ref(false)
 // 接口是否返回错误码为0401038限频
 const is_limit = ref(false)
+// 按什么排序  2-默认排序（结算时间） 1-投注时间  3-开赛时间
+const sort_active = ref(2)
+// 展示多长时间的注单记录  1天(0)  7天(3)  30天(4)
+const timeType = ref(0)
 //需要查绚提前结算金额的订单集合
 const orderNumberItemList = ref([])
 let useMitt = null
@@ -129,8 +132,8 @@ const init_params_api = (_index) => {
       params = {
         searchAfter: last_record.value || undefined,
         orderStatus: '1',
-        orderBy: 2,  // 按什么排序  2-默认排序（结算时间） 1-投注时间  3-开赛时间
-        timeType: 3
+        orderBy: sort_active.value,  // 按什么排序  2-默认排序（结算时间） 1-投注时间  3-开赛时间
+        timeType: timeType.value
       }
       url_api = api_betting.post_getH5OrderList
       break;
@@ -139,6 +142,12 @@ const init_params_api = (_index) => {
     params,
     url_api
   }
+}
+
+// 已结算页面，排序改变  2-默认排序（结算时间） 1-投注时间
+const sortChange = (index) => {
+  sort_active.value = index
+  init_data(1)
 }
 
 /**
@@ -255,6 +264,11 @@ onUnmounted(() => {
   clearInterval(timer_2.value)
   useMitt && useMitt()
 })
+
+defineExpose({
+  timeType,
+  init_data
+  })
 </script>
     
 <style lang="scss" scoped>
@@ -332,6 +346,11 @@ template {
       color: var(--q-gb-bg-c-15);
       background-color: var(--q-gb-bg-c-12);
       border-color: var(--q-gb-bg-c-12);
+    }
+    &.unsellteCashout {
+      position: absolute;
+      top: 0.1rem;
+      right: 0.1rem;
     }
 }
 /**投注记录弹框未结算*/
