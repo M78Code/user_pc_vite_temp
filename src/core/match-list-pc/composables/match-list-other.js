@@ -243,16 +243,14 @@ function get_match_template_id({ csid }) {
    * @param {undefined} undefined
   */
 export const get_compute_other_play_data = (match) => {
-  if(!match)return []
+  if (!match) return []
   let { cos15Minutes, cos5Minutes, mst, mid } = match
   if (cos15Minutes || cos5Minutes) {
     set_min15(match, mst)
   }
   // set_tab_play_keys(match)
   //当前选中玩法
-
-
-  let cur_other_play = other_play_current_play[mid + '_']
+  let cur_other_play = get_play_current_play(mid)
   let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(mid)
   const { data_tpl_id } = match_style_obj;
   const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${data_tpl_id}_config`][`template_${data_tpl_id}`]
@@ -273,11 +271,9 @@ export const get_compute_other_play_data = (match) => {
   // 4：15分钟玩法 1：其他玩法
   let type = cur_other_play == 'hps15Minutes' ? 4 : 1
   other_handicap_list = merge_template_data({ match, handicap_list: other_handicap_list, type, play_key: cur_other_play })
-  console.log('other_handicap_list', other_handicap_list);
-
   // coverage_match_data({ other_handicap_list }, mid)
   // match.other_handicap_list = other_handicap_list
-  return other_handicap_list||[]
+  return other_handicap_list || []
 }
 
 
@@ -378,10 +374,40 @@ export const get_tab_param_build = (mids) => {
 export function get_21_bold_template(match) {
   let list_name = "main_handicap_list_20"
   match.tpl_id == 13 && (list_name += '_13')
-  if (match.tpl_21_hpids?.includes(341)) {
+  let tpl_21_hpids = ''
+  function compute_hl_obj_data(hl_obj) {
+    let { hpid } = hl_obj
+    if ([7, 20, 74, 341, 342].includes(+hpid) && lodash.get(hl_obj, 'hl.hs', 2) != 2) {
+      tpl_21_hpids += hpid + ','
+    }
+  }
+  // // 遍历主盘口数据
+  lodash.each(match.hpsData, hpsData => {
+    lodash.each(hpsData.hps, hl_obj => {
+      compute_hl_obj_data(hl_obj)
+    })
+  })
+  // 遍历附加盘数据
+  let add_hps = lodash.get(match, 'hpsData[0].hpsAdd', [])
+  add_hps.forEach(item => {
+    // 遍历附加盘盘口
+    let { hl: hls_arr = [], hpid, chpid } = item
+    hls_arr.forEach((hl) => {
+      compute_hl_obj_data({ hl, hpid, chpid })
+    })
+  })
+  // 足球让球与大小玩法 遍历其他玩法数据
+  if (match.csid == 1 && [0, 13].includes(+match.tpl_id)) {
+    lodash.each(Object.keys(other_play_name_to_playid), key => {
+      lodash.each(match[key], hl_obj => {
+        compute_hl_obj_data(hl_obj)
+      })
+    })
+  }
+  if (tpl_21_hpids?.includes(341)) {
     list_name = list_name.replace("20", "341")
   }
-  return clone_arr(MATCH_LIST_TEMPLATE_CONFIG.template_21_config[list_name])
+  return clone_arr(MATCH_LIST_TEMPLATE_CONFIG.template_21_config.template_21[list_name])
 }
 /**
    * @Description 获取5分钟玩法模板
@@ -416,20 +442,6 @@ function coverage_match_data(data_obj, mid) {
 export function switch_other_play(mid, play_key) {
   let match = MatchListData.get_quick_mid_obj(mid)
   set_match_play_current_index(match, play_key)
-  let { tpl_id } = match
-  let template_name = `template_${tpl_id}_config`
-  let other_handicap_list = clone_arr(MATCH_LIST_TEMPLATE_CONFIG[template_name][play_key])
-  if (play_key === 'hpsBold') {
-    other_handicap_list = get_21_bold_template(match);
-    match = {}
-  }
-  if (play_key === 'hps5Minutes') {
-    other_handicap_list = get_5minutes_template({ tpl_id });
-    match = {}
-  }
-  let type = play_key == 'hps15Minutes' ? 4 : 1
-  other_handicap_list = merge_template_data({ match, handicap_list: other_handicap_list, type, play_key })
-  coverage_match_data({ other_handicap_list }, mid)
   useMittEmit(MITT_TYPES.EMIT_API_BYMIDS, { mids: [mid] });
 }
 /**
@@ -448,6 +460,6 @@ export const set_match_play_current_index = (match, play_key) => {
 
 
 //获取保存的盘口玩法
-export function get_play_current_play(mid){
-  return  other_play_current_play[mid + '_'] ;
+export function get_play_current_play(mid) {
+  return other_play_current_play[mid + '_'];
 }
