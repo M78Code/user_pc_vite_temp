@@ -12,26 +12,30 @@
       <div v-if="list.length" v-scroll="scrolled" class="yb_mb18">
         <!-- 循环整个后台返回数据 -->
         <div class="scroll-area1" v-for="(item, index) in list" :key="index" ref="scroll_area1">
-          <div class="bg-f6f7f8" ref="bg_f6f7f8" v-if="item.title">{{ item.title }}</div>
+          <div class="bg-f6f7f8 scroll-title" ref="bg_f6f7f8" v-if="item.title">
+            <div class="scroll-title-text">
+              <div class="scroll-title-icon"></div>
+              <span>{{ item.title }}</span>
+            </div>
+            <div class="scroll-setect">
+              <div class="scroll-setect-options"></div>
+            </div>
+          </div>
           <!-- 联赛名称部分 -->
           <q-slide-transition>
             <div v-if="!item.hide">
               <div :key="index + 'League-name'" class="row  items-center content_box1">
                 <div class="row justify-between items-center content_box2"
                   :class="{ 'content_box3': item.title && item.spell }" @click.stop.prevent="select_li_ctr(item)">
-                  <div class="row items-center">
-                    <div class="row items-center">
-                      <!-- 联赛icon -->
-                      <!-- 无法找到对应图片资源导致死循环加载图片资源 暂时注释 后续调整完后 放开 -->
-                      <!-- <img :src="item.picUrlthumb ? get_server_file_path(item.picUrlthumb) : compute_img_url('match-cup')"
-                        @error="league_icon_error" class="match_logo" /> -->
-                      <div class="name-overhide">{{ item.nameText }}</div>
-                      <div class="nums"
+                  <div class="name-overhide">{{ item.nameText }}</div>
+                  <div>
+                    <div class="nums"
                         v-show="!(type == 28 && [1001, 1002, 1004, 1011, 1010, 1009].includes(get_curr_sub_menu_type))">
-                        {{ item.num }}</div>
-                    </div>
+                        （{{ item.num }}）
+                        <!-- <img class="icon-search" :src="compute_img_url(item.select ? 'checkbox-box-s' : 'checkbox-box')" /> -->
+                        <div class="scroll-setect-options"></div>
+                      </div>
                   </div>
-                  <img class="icon-search" :src="compute_img_url(item.select ? 'checkbox-box-s' : 'checkbox-box')" />
                 </div>
               </div>
             </div>
@@ -52,7 +56,7 @@
     </ul>
 
     <!-- 字母悬浮图标 -->
-    <div v-if="is_show" class="active-point" :style="[{ top: fixed_top + 150 + 'px' }, compute_css_obj('work-s')]">
+    <div v-if="is_show" class="active-point" :style="[{ top: fixed_top + 100 + 'px' }, compute_css_obj('work-s')]">
       <span>{{ active_index }}</span>
     </div>
 
@@ -560,7 +564,7 @@ if (type.value == 30) {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    right: 0.1rem;
+    right: 0.02rem;
     z-index: 200;
     list-style: none;
     text-align: center;
@@ -572,9 +576,10 @@ if (type.value == 30) {
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 0.12rem;
+      font-size: 0.10rem;
       box-sizing: content-box;
       border: 2px solid transparent;
+      color:var(--q-gb-bg-c-6);;
 
       .t-wrap {
         width: 0.14rem;
@@ -592,10 +597,10 @@ if (type.value == 30) {
       &.actived {
 
 
-        background-clip: content-box;
-        border-radius: 50%;
+        // background-clip: content-box;
+        // border-radius: 50%;
 
-        font-size: 0.12rem;
+        // font-size: 0.12rem;
       }
     }
   }
@@ -605,19 +610,23 @@ if (type.value == 30) {
     top: 3.4rem;
     right: 0.85rem;
     z-index: 100;
-    width: 0.7rem;
-    height: 0.6rem;
+    width: 0.48rem;
+    height: 0.48rem;
     font-size: 0.28rem;
-    background: var(--q-color-img-bg-96) no-repeat center / 98%;
-
-
-
-    span {
-      display: inline-block;
-      width: 0.65rem;
-      height: 0.6rem;
-      line-height: 0.6rem;
-      text-align: center;
+    background: var(--q-gb-bg-c-13) no-repeat center / 98%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: .48rem;
+    color: var(--q-gb-bg-c-15);
+    &::after {
+      content: ' ';
+      border-top:  .20rem solid transparent;
+      border-bottom:  .20rem solid transparent;
+      border-left:  .20rem solid var(--q-gb-bg-c-13);
+      position: absolute;
+      right: -0.1rem;
+      border-radius: 0.16rem;
     }
   }
 }
@@ -633,16 +642,16 @@ if (type.value == 30) {
 }
 
 .content_box1 {
-  height: 0.56rem;
+  height: 0.40rem;
 
   font-size: 12px;
 
   .content_box2 {
     width: 100%;
-    margin-right: 0.46rem;
     font-size: 0.16rem;
+    margin: 0 .36rem 0 .4rem;
+    height: 100%;
     position: relative;
-    margin-left: 0.08rem;
 
     &:before {
       content: "";
@@ -661,6 +670,22 @@ if (type.value == 30) {
         display: none;
       }
     }
+
+    .name-overhide {
+      font-size: .12rem;
+    }
+    .nums {
+      display: flex;
+      align-items: center;
+      font-size: .1rem;
+      color: var(--q-gb-bg-c-6);
+      .scroll-setect-options {
+        width: .16rem;
+        height: .16rem;
+        border-radius: 50%;
+        border: .01rem solid var(--q-gb-bg-c-8);
+      }
+    }
   }
 
   img {
@@ -673,7 +698,7 @@ if (type.value == 30) {
 
     font-size: 0.14rem;
     margin-left: 0.05rem;
-    position: absolute;
+    // position: absolute;
     right: 0.31rem;
   }
 
@@ -753,6 +778,34 @@ if (type.value == 30) {
 
     font-size: 0.14rem;
   }
+
+  .scroll-title {
+    height: .4rem;
+    background-color: var(--q-gb-bd-c-5);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 .36rem 0 .14rem;
+    .scroll-title-text {
+      display: flex;
+      align-items: center;
+      .scroll-title-icon {
+        width: .16rem;
+        height: .16rem;
+        background-color: var(--q-gb-t-c-1);
+        margin-right: .12rem;
+      }
+    }
+    .scroll-setect {
+      display: flex;
+      .scroll-setect-options {
+        width: .16rem;
+        height: .16rem;
+        border-radius: 50%;
+        border: .01rem solid var(--q-gb-bg-c-8);
+      }
+    }
+  }
 }
 
 .name-overhide {
@@ -804,9 +857,9 @@ if (type.value == 30) {
       }
 
       &.actived {
-        color: var(--q-gb-t-c-14);
-        background: var(--q-gb-bg-c-12);
-        border: 1px solid var(--q-gb-bd-c-10);
+        // color: var(--q-gb-t-c-14);
+        // background: var(--q-gb-bg-c-12);
+        // border: 1px solid var(--q-gb-bd-c-10);
       }
     }
   }
