@@ -1,23 +1,31 @@
+<!--
+ * @Author: rise
+ * @Date: 2023-11-02 16:27:18
+ * @LastEditors: rise
+ * @LastEditTime: 2023-11-06 14:28:38
+ * @Description:  
+-->
 <template>
   <div class="detail-top-info">
     <div class="sport-info" @click="toHome">
-      <span>{{ detail_store.get_detail_params.csna }}</span>
-      <img class="bakc-icon" src="~assets/images/detail/back.png" alt="" />
+      <span>Football</span>
+      <img class="bakc-icon" src="../img/back.png" alt="" />
     </div>
     <div class="detail-select">
-      <q-btn class="label" >
-        <span class="btn-label">{{ detail_store.get_detail_params.tn }}</span>
+      <div class="detail-select-nav">
+        <q-btn class="label" >
+        <span class="btn-label">{{ drop_down_list[active].name }}</span>
         <q-menu class="detail-top-pop">
           <div class="detail-top-pop-content" ref="detail_top_pop">
             <div class="match_detail_top_list">
               <div
-                v-for="(item, index) in matchDetail_getMatchDetailByTournamentId"
+                v-for="(item, index) in drop_down_list"
                 :class="[
-                  { active: active == item.mid },
+                  { active: active == index },
                   'match_detail_top_list_item',
                 ]"
                 :key="index"
-                @click="change_active(item)"
+                @click="change_active(item,index)"
                 v-close-popup
               >
                 <div class="item_team_name">{{ item.mhn }}</div>
@@ -30,14 +38,16 @@
       </q-btn>
       <img
         :class="['down-icon', { 'up-icon': show_list }]"
-        src="~assets/images/detail/top-down.png"
+        src="../img/top-down.png"
         alt=""
       />
+      </div>
+      
     </div>
     <div class="refresh" @click="refresh">
       <img
         ref="refresh_icon"
-        src="~assets/images/top_events/refresh.png"
+        src="../img/refresh.png"
         alt=""
         srcset=""
         :class="[{ 'refresh-active': refresh_is_active }, 'refresh-icon']"
@@ -47,57 +57,46 @@
 </template>
 
 <script setup>
-import { onMounted, ref, watch } from "vue";
+import { ref, watch } from "vue";
 import { useRouter } from "vue-router";
-import { api_match } from "src/api/index.js";
-import { Loading } from 'quasar'
-import { detail_module } from "src/project-ouzhou/stores/detail";
-// import { get_matchDetail_getMatchDetailByTournamentId } from "src/project-ouzhou/pages/detail/mock.js";
-import EMITTER from  "src/global/mitt.js"
-const model = ref("Australia New South Wales");
 const router = useRouter();
-const refresh_icon = ref(null);
 const refresh_is_active = ref(false);
-const is_dialog_details = ref(false);
-const active = ref("");
+const active = ref(0);
 const show_list = ref(false);
 const detail_top_pop = ref(null);
-const matchDetail_getMatchDetailByTournamentId = ref({});
-const detail_store = detail_module();
-/**
- * @description: 返回上一页
- * @param {*}
- * @return {*}
- */
+const drop_down_list = ref([
+  {
+    mid:1,
+    name:"联赛联赛11111",
+    mhn:"美国",
+    man:"日本"
+  },
+  {
+    mid:2,
+    name:"联赛联赛22222",
+    mhn:"美国",
+    man:"日本"
+  },
+  {
+    mid:3,
+    name:"联赛联赛33333",
+    mhn:"美国",
+    man:"日本"
+  },
+  {
+    mid:4,
+    name:"联赛联赛44444",
+    mhn:"美国",
+    man:"日本"
+  }
+]);
+// /**
+//  * @description: 返回上一页
+//  * @param {*}
+//  * @return {*}
+//  */
 const toHome = () => {
   router.go(-1);
-};
-/**
- * @description: 详情页顶部下数据
- * @param {params} params 接口入参
- * @return {*}
- */
-const get_top_data = (params, status) => {
-  api_match
-    .get_matchDetail_getMatchDetailByTournamentId(params)
-    .then((res) => {
-      // console.log("get_matchDetail_getMatchDetailByTournamentId", res);
-      matchDetail_getMatchDetailByTournamentId.value = res.data.data;
-      if (status == "setup") {
-        active.value = res.data.data[0].mid;
-      }
-    });
-};
-/**
- * @description: 详情页顶部下拉弹框
- * @param {*}
- * @return {*}
- */
-const showList = () => {
-  get_top_data({
-    tId: detail_store.get_detail_params.tid,
-  });
-  is_dialog_details.value = true;
 };
 watch(() => detail_top_pop.value,
 (newPath, oldPath) => {
@@ -108,14 +107,9 @@ watch(() => detail_top_pop.value,
  * @param {item} item循环参数
  * @return {*}
  */
-const change_active = (item) => {
-    // console.log("detail_store.get_detail_params", detail_store.get_detail_params, item);
-    if (item.mid != detail_store.get_detail_params.mid) {
-      active.value = item.mid;
-      detail_store.set_detail_params(item);
-      refresh();
-    }
-    is_dialog_details.value = false;
+const change_active = (item,index) => {
+  if(active.value === index)return;
+    active.value = index;
 }
 /**
  * @description: 刷新
@@ -123,18 +117,11 @@ const change_active = (item) => {
  * @return {*}
  */
 const refresh = () => {
-  EMITTER.emit("detail_refresh", true);
   refresh_is_active.value = true;
   setTimeout(() => {
     refresh_is_active.value = false;
   }, 1000);
 }
-setTimeout(() => {
-  get_top_data({
-    tId: detail_store.get_detail_params.tid,
-  }, "setup");
-}, 100);
-onMounted(() => {});
 </script>
 
 <style lang="scss" scoped>
@@ -142,8 +129,23 @@ onMounted(() => {});
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
+  :deep(.q-btn){
+      &::before{
+        content: "";
+        display: block;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        border-radius: inherit;
+        box-shadow: none;
+      }
+    }
   .sport-info {
     color: #ffd5b2;
+    width: 18%;
     .bakc-icon {
       width: 5px;
       height: 8px;
@@ -156,6 +158,9 @@ onMounted(() => {});
     display: flex;
     flex-wrap: nowrap;
     align-items: center;
+    // flex: 1;
+    .detail-selec-nav{
+      margin: 0 auto;
     .btn-label {
       // height: 45px;
       // line-height: 45px;
@@ -186,13 +191,15 @@ onMounted(() => {});
     }
     .up-icon {
       transform: rotate(180deg);
-    }
+    } 
+  }
   }
   .refresh {
-    position: absolute;
-    right: 15px;
-    width: 14px;
+    // position: absolute;
+    // right: 15px;
     height: 14px;
+    width: 18%;
+    text-align: right;
     .refresh-icon {
       width: 14px;
       height: 14px;
