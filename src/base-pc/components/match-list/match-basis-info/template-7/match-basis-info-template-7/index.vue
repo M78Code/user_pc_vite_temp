@@ -9,8 +9,8 @@
         </div>
         <!-- 时间信息 -->
         <div class="bet-num flex items-center flex-start">
-          <div class="match_times_hour" :class="{no_start: !Number(card_info)}">1H</div>
-          <div class="match_times">45:30</div>
+          <div class="match_times_hour">1H</div>
+          <div class="match_times">{{lodash.get(match, 'mstValue')}}</div>
         </div>
       </div>
       <!-- 比分 -->
@@ -59,7 +59,7 @@
 
 <script setup>
 
-import { computed, ref, watch, onUnmounted } from 'vue';
+import { computed, ref, watch, onMounted, onUnmounted } from 'vue';
 import lodash from 'lodash'
 import  { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import {component_symbol ,need_register_props} from "../config/index.js"
@@ -72,6 +72,8 @@ import details  from "src/core/match-list-pc/details-class/details.js"
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import { i18n_t,compute_local_project_file_path } from "src/core/index.js";
 import { useRouter } from "vue-router";
+import { format_mst_data } from 'src/core/utils/matches_list.js'
+
 const router = useRouter()
 const props = defineProps({
   match: {
@@ -177,6 +179,36 @@ is_collect.value = Boolean (lodash.get(props, 'match.mf'))
 //   }
 // })
 
+let timer;
+
+/**
+   * @description 开赛时间自动加1
+   * @param {object} payload 
+   */
+   const use_polling_mst = payload => {
+    if (payload.cmec === 'timeout' ) return payload.mstValue = format_mst_data(payload.mst)
+    // mlet 每个阶段的时间
+    if ([301, 302, 303].includes(payload.mle)) return payload.mstValue = payload.mlet;
+    if (Number(payload.mst) <= 0 || payload.ms !== 1) return
+    if (payload.csid === '2') {
+      
+      timer = setInterval(() => {
+      if (payload.mst <= 0) return
+        payload.mst--
+        payload.mstValue = format_mst_data(payload.mst)
+      }, 1000)
+    } else {
+      timer = setInterval(() => {
+        payload.mst++
+        payload.mstValue = format_mst_data(payload.mst)
+        console.log('payload.mstValue', payload.mstValue);
+        
+      }, 1000)
+    }
+    console.log('payload', payload);
+    
+  }
+
 /**
  * @Description 隐藏主队进球动画
  * @param {undefined} undefined
@@ -193,7 +225,13 @@ function hide_away_goal () {
   is_show_away_goal.value = false;
 }
 
+onMounted(()=>{
+  use_polling_mst(props.match);
+})
+
 onUnmounted(() => {
+  clearInterval(timer);
+  timer = null;
   // this.debounce_throttle_cancel(hide_home_goal());
   // this.debounce_throttle_cancel(hide_away_goal());
 })
