@@ -38,14 +38,14 @@
     }
     .place_bet{
       font-family: "DIN";
-      font-size: 0.15rem;
+      font-size: 0.14rem;
       font-weight: 500;
       line-height: 0.4rem;
       width: 2.17rem;
       // height: 46px;
       border-radius: 2px;
-      background: #FF7000;
-      color:  #FFFFFF;
+      background: var(--q-gb-bg-c-12);
+      color:  var(--q-gb-bg-c-15);
       .right_amount{
         font-family: DIN;
         font-size: 0.2rem;
