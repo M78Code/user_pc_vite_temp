@@ -55,7 +55,10 @@
   height: 185px;
   -webkit-overflow-scrolling: touch;
   font-size: 0.18rem;
-  font-weight: 500;
+  font-weight: 600;
+  color: var(--q-gb-bg-c-3);
+  font-family: "DIN";
+  border-top: 1px solid var(--q-gb-t-c-5)
 }
 .key-cell {
   flex: 1;

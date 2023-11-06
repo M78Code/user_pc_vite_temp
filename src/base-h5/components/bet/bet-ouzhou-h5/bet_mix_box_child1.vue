@@ -18,6 +18,8 @@
                     <div>
                         <div class="nonebox4-content-right">
                             <div class="nonebox4-content-right-profit">123</div>
+                            <div v-if="type == 2" class="content-right-duo"></div>
+                            <div v-else-if="type == 3" class="content-right-shao"></div>
                         </div>
                     </div>
                   </div>
@@ -28,9 +30,24 @@
     </div>
   </template>
   <script setup>
+  const type = 2;//1:不涨也不少    2：增长     3：减少
   </script>
   
   <style lang="scss" scoped>
+  .content-right-duo{
+    display: inline-block;
+    background: url($SCSSPROJECTPATH+"/image/bet/select_b.svg") no-repeat center / contain;
+    width: 0.14rem;
+    height: 0.2rem;
+    margin-top: 0.05rem;
+  }
+  .content-right-shao{
+    display: inline-block;
+    background: url($SCSSPROJECTPATH+"/image/bet/select_b.svg") no-repeat center / contain;
+    width: 0.14rem;
+    height: 0.2rem;
+    margin-top: 0.05rem;
+  }
   .text-one-span{
     color: var(--q-gb-t-c-11);
   }
@@ -87,22 +104,8 @@
       font-weight: bold;
       color: var(--q-gb-t-c-11);
   }
-  .nonebox4-content-right-profit-type{
-      font-size: 16px;
+  .nonebox4-content-right{
+    display: flex;
   }
-  .nonebox4-content-right-num{
-      width: 20px;
-      height: 20px;
-      background: #2394fc;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #666;
-      border-radius: 50%;
-      font-size: 16px;
-      margin-top: 44px;
-      float: right;
-  }
-  
   </style>
   
