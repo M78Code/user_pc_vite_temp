@@ -163,7 +163,7 @@
         top: 0;
         width: 80px;
         height: 60px;
-        background-image:url('src/assets/images/icon_sport_top.png');
+        // background-image:url('src/assets/images/icon_sport_top.png');
 		    background-size: 80px ;
       }
       .matches_description {
