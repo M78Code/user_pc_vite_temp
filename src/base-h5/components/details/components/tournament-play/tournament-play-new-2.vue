@@ -605,6 +605,7 @@ export default defineComponent({
         // 取消置顶
         if (item_data.hton != 0) {
           item_data.hton = '0';
+         
         } else {
           // #TODO emit
           useMittEmit(MITT_TYPES.EMIT_ANIMATE_RESET_MYSCROLL_TOP, 100);
@@ -620,9 +621,9 @@ export default defineComponent({
           }
           // 将点击置顶的hton设置为:最大置顶排序值+1
           item_data.hton = Date.now() + '';
-          MatchDataWarehouse_H5_Detail_Common.set_match_details(MatchDataWarehouse_H5_Detail_Common.get_quick_mid_obj(route.params.mid),arr)
+         
         }
-
+        // MatchDataWarehouse_H5_Detail_Common.set_match_details(MatchDataWarehouse_H5_Detail_Common.get_quick_mid_obj(route.params.mid),MatchDataWarehouse_H5_Detail_Common.get_quick_mid_obj(route.params.mid).odds_info)
         // 置顶状态变化时，更新相应玩法存储状态
         const key = `${item_data.mid}-0`
         const all_list_data = lodash.cloneDeep(get_details_data_cache.value[key]) || []

@@ -28,7 +28,7 @@ const is_timer = [ '5', '10', '8', '7', '9', '13', '3' ]
  */
 export const get_home_matches = async payload => {
   const res = await api_match_list.get_home_matches(payload);
-  let obj = res?.data?.data || [];
+  let obj = res?.data || [];
   return obj;
 }
 
