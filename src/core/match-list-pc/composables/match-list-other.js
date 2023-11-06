@@ -242,7 +242,8 @@ function get_match_template_id({ csid }) {
    * @Description 计算角球、罚牌等其他玩法数据 (获取角球、罚牌模板数据，并与接口数据合并)
    * @param {undefined} undefined
   */
-export const compute_other_play_data = (match) => {
+export const get_compute_other_play_data = (match) => {
+  if(!match)return []
   let { cos15Minutes, cos5Minutes, mst, mid } = match
   if (cos15Minutes || cos5Minutes) {
     set_min15(match, mst)
@@ -271,8 +272,9 @@ export const compute_other_play_data = (match) => {
   // 4：15分钟玩法 1：其他玩法
   let type = cur_other_play == 'hps15Minutes' ? 4 : 1
   other_handicap_list = merge_template_data({ match, handicap_list: other_handicap_list, type, play_key: cur_other_play })
-  coverage_match_data({ other_handicap_list }, mid)
-  match.other_handicap_list = other_handicap_list
+  // coverage_match_data({ other_handicap_list }, mid)
+  // match.other_handicap_list = other_handicap_list
+  return other_handicap_list||[]
 }
 
 

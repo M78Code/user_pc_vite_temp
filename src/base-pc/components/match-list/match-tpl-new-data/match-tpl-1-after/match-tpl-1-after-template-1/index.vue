@@ -95,7 +95,7 @@
         </div>
         <!-- 赛事盘口投注项 -->
         <match-handicap v-if="match"
-          :handicap_list="match_tpl_info[`template_${match_style_obj.data_tpl_id}`].hpsOutright" :match="match"
+          :handicap_list="compute_other_play_data" :match="match"
           other_play />
         <!-- 视频按钮 -->
         <div class="media-col"></div>
@@ -124,7 +124,7 @@ import { MatchBasisInfo4FullVersionWapper as BasisInfo4 } from 'src/base-pc/comp
 import { MatchHandicapFullVersionWapper as MatchHandicap } from 'src/base-pc/components/match-list/match-handicap/index.js'
 import MatchMedia from 'src/base-pc/components/match-list/match-media/index.vue'
 import { CommonTabFullVersionWapper as Tab } from "src/base-pc/components/tab/common-tab/index.js";
-import { switch_other_play, compute_other_play_data, set_match_play_current_index,get_play_current_play } from 'src/core/match-list-pc/composables/match-list-other.js'
+import { switch_other_play, get_compute_other_play_data, set_match_play_current_index,get_play_current_play } from 'src/core/match-list-pc/composables/match-list-other.js'
 const props = defineProps({
   mid: {
     type: [String, Number],
@@ -143,10 +143,10 @@ const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.da
 let match = MatchListData.get_quick_mid_obj(props.mid);
 match && set_play_name_list(MatchListData.get_tab_play_keys(match))
 const is_mounted = ref(true);
-match && compute_other_play_data(match)
+const compute_other_play_data=get_compute_other_play_data(match)
 watch(() => MatchListData.data_version.version, (new_value, old_value) => {
   match = MatchListData.get_quick_mid_obj(props.mid);
-  match && compute_other_play_data(match)
+  compute_other_play_data=get_compute_other_play_data(match)
   match && set_play_name_list(MatchListData.get_tab_play_keys(match))
 })
 
