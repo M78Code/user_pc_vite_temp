@@ -2,7 +2,7 @@
  * @Author: rise
  * @Date: 2023-11-05 16:46:06
  * @LastEditors: rise
- * @LastEditTime: 2023-11-05 18:25:47
+ * @LastEditTime: 2023-11-06 13:33:12
  * @Description:  
  */
 
@@ -53,8 +53,9 @@ class MenuData {
    * 获取 euid
    * 
    * */
-  get_euid() {
-    return BaseData.mi_euid_map_res[this.menu_mi+this.menu_type]?.h || "";
+  get_euid(menu_type) {
+    const menuId = menu_type || this.menu_type;
+    return BaseData.mi_euid_map_res[this.menu_mi+menuId]?.h || "";
   }
   //内部方法
   _is_cur_mi(mi, param) {
