@@ -16,8 +16,8 @@
         </p>
         <days-select v-if="BetRecordClass.selected == 1" @changeDays="changeDays" />
       </div>
-      <div class="content-m" ref="record_box">
-        <cathectic-item-all />
+      <div class="content-m">
+        <cathectic-item-all ref="cathecticItem" />
       </div>
     </div>
   </template>
@@ -42,8 +42,12 @@
     { title: i18n_t('bet_record.account') }
   ])
 
+  // 已结算页面切换时间，获取新列表
+  const cathecticItem = ref(null)
   const changeDays = (dayValue) => {
-    console.log(dayValue);
+    const $el = cathecticItem.value
+    $el.timeType = dayValue
+    $el.init_data(1)
   }
 
   const page_style = ref('')

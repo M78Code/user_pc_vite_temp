@@ -98,7 +98,6 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
     if([300,2000,50000].includes(+val.mi)){
       // 设置vr /收藏 电竞 头信息
       MenuData.set_top_menu_title(val)
-      console.error("Ba",BaseData)
       // 清空一级菜单显示 用于后续更新
       MenuData.current_lv_1_menu_mi.value = ''
       // 设置 对应菜单的数据
@@ -112,7 +111,8 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
           break  
         
         case 50000:
-          let menu_list_res = BaseData.mew_menu_list_res.filter(item=> item.mi*1 < 300) || []
+          let menu_list_res = MenuData.get_menu_lvmi_list_only(MenuData.current_lv_1_menu_i)
+          console.error('menu_list_res',menu_list_res)
           menu_list_res.unshift({mi:0,btn:1, ct:"",title:"全部"})
           ref_data.scroll_data_list = menu_list_res
           MenuData.set_collect_list(menu_list_res)
@@ -167,9 +167,9 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
     if(MenuData.top_menu_title.mi == 2000){
       MatchMeta.get_esports_match()
     }
-    // 电竞
+    // 收藏
     if(MenuData.top_menu_title.mi == 50000){
-      MatchMeta.get_collect_matche()
+      MatchMeta.get_collect_matche(MenuData.current_lv_2_menu_i)
     }
   }
   /**

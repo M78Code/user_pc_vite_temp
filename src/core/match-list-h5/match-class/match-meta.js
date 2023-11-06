@@ -431,26 +431,29 @@ class MatchMeta {
   /**
    * @description 获取收藏赛事
    */
-  async get_collect_matche () {
-    console.error('collect_list',MenuData.collect_list)
+  async get_collect_matche (mid) {
     let mid_list = lodash.get(MenuData,'collect_list')
-    let lv1_mi =  lodash.get(MenuData,'current_lv_1_menu_i')
+    let lv1_mi = lodash.get(MenuData,'current_lv_1_menu_i')
     let euid = ''
     let lv1_mi_list = []
-    // 根据一级菜单 获取菜单下对应的赛种数据
-    mid_list.forEach(item=> {
-      // 父级菜单mi + 一级菜单mi = 二级菜单mi
-      let lv2_list = (item.sl || []).find(obj => obj.mi == (item.mi+''+lv1_mi)) || {}
-      if(lv2_list.mi){
-        lv1_mi_list.push(lv2_list)
-      }
-    })
-    // 根据 菜单id 获取euid
-    lv1_mi_list.forEach(item => {
-      if(BaseData.mi_euid_map_res[item.mi] && BaseData.mi_euid_map_res[item.mi].h){
-        euid += BaseData.mi_euid_map_res[item.mi].h + ','
-      }
-    })
+    if(mid == 0){
+      // 根据一级菜单 获取菜单下对应的赛种数据
+      mid_list.forEach(item=> {
+        // 父级菜单mi + 一级菜单mi = 二级菜单mi
+        let lv2_list = (item.sl || []).find(obj => obj.mi == (item.mi+''+lv1_mi)) || {}
+        if(lv2_list.mi){
+          lv1_mi_list.push(lv2_list)
+        }
+      })
+      // 根据 菜单id 获取euid
+      lv1_mi_list.forEach(item => {
+        if(BaseData.mi_euid_map_res[item.mi] && BaseData.mi_euid_map_res[item.mi].h){
+          euid += BaseData.mi_euid_map_res[item.mi].h + ','
+        }
+      })
+    }else{
+      euid = MenuData.get_euid(mid+''+lv1_mi)
+    }
     console.error('sss',euid)
     const params = this.get_base_params(euid)
     const res = api_common.get_collect_matches(params)

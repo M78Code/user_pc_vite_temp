@@ -67,7 +67,9 @@ const set_min_max_money = computed(()=> (id,type) => {
 })
 
 // 设置投注金额
-const change_money_handle = val => {
+const change_money_handle = (val = {} ) => {
+  // 单关 串关切换 引起方法被调用  
+  if(!val.params.id) return
   let obj = {
     money: val.money,
     ...val.params,

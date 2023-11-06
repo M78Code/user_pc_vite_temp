@@ -35,12 +35,9 @@ import betMixBoxChild6 from './bet_mix_box_child6.vue';
 import lodash_ from 'lodash'
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
-import UserCtr from 'src/core/user-config/user-ctr.js'
-import { ref, reactive, onMounted, watch, computed, onUnmounted } from 'vue';
-import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
-import mathJs from 'src/core/bet/common/mathjs.js'
+import { ref, reactive, onMounted,computed, onUnmounted } from 'vue';
+import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import { format_money3, format_money2 } from 'src/core/format/index.js'
-import { format_currency } from "src/core/format/module/format-currency.js"
 import { get_query_bet_amount_pre } from "src/core/bet/class/bet-box-submit.js"
 import { i18n_t } from "src/core/index.js"
 
@@ -99,7 +96,7 @@ onMounted(() => {
   ref_data.money = BetData.bet_amount
 
   //监听键盘金额改变事件
-  useMittOn(MITT_TYPES.EMIT_INPUT_BET_MONEY, change_money_handle)
+  useMittOn(MITT_TYPES.EMIT_INPUT_BET_MONEY_SINGLE, change_money_handle)
   useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money)
 })
 
@@ -111,7 +108,7 @@ const set_bet_pre = () => {
     get_query_bet_amount_pre()
   }
   // 设置是否开启预约
-  BetData.set_is_bet_pre()
+  BetData.set_is_bet_pre(true)
 }
 
 /**
@@ -249,7 +246,7 @@ const set_win_money = () => {
 onUnmounted(() => {
   // clear_timer()
 
-  useMittOn(MITT_TYPES.EMIT_INPUT_BET_MONEY, change_money_handle).off;
+  useMittOn(MITT_TYPES.EMIT_INPUT_BET_MONEY_SINGLE, change_money_handle).off;
   useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money).off
 
   // for (const key in $data) {

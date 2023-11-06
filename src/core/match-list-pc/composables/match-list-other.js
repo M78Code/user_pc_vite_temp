@@ -7,7 +7,7 @@ import { ref } from 'vue';
 import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/core/index.js";
 import { get_match_status } from 'src/core/index.js'
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
-
+import { csid_to_tpl_id } from 'src/core/constant/util/csid-util.js'
 let other_play_current_play = {};
 
 import { other_play_name_to_playid } from 'src/core/constant/config/data-class-ctr/index.js';
@@ -218,6 +218,25 @@ export function data_move_up(list) {
     ols.push(ol)
   }
   return list
+}  /**
+* @Description 获取赛事模板ID
+* @param {number} csid 球种类型
+*/
+function get_match_template_id({ csid }) {
+  let tpl_id = $menu.menu_data.match_tpl_number
+  // 虚拟足球1001、虚拟篮球1004
+  if ([1001, 1004].includes(+csid)) {
+    tpl_id = csid
+  }
+  // 虚拟赛狗1002 虚拟摩托1010 虚拟赛马1011 泥地摩托车1009
+  else if ([1002, 1010, 1011, 1009].includes(+csid)) {
+    tpl_id = 1002
+  }
+  // 99模板根据球种获取模板ID
+  else if (tpl_id == -1) {
+    tpl_id = csid_to_tpl_id(csid)
+  }
+  return tpl_id
 }
 /**
    * @Description 计算角球、罚牌等其他玩法数据 (获取角球、罚牌模板数据，并与接口数据合并)
@@ -235,7 +254,7 @@ export const compute_other_play_data = (match) => {
   let cur_other_play = other_play_current_play[mid + '_']
   let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(mid)
   const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`]
-  match.tpl_id=match_style_obj.data_tpl_id;
+  match.tpl_id = match_style_obj.data_tpl_id;
   // 其他玩法盘口列表
   let other_handicap_list = clone_arr(match_tpl_info[cur_other_play])
   // 波胆
@@ -354,7 +373,7 @@ export const get_tab_param_build = (mids) => {
 export function get_21_bold_template(match) {
   let list_name = "main_handicap_list_20"
   match.tpl_id == 13 && (list_name += '_13')
-  if (match.tpl_21_hpids.includes(341)) {
+  if (match.tpl_21_hpids?.includes(341)) {
     list_name = list_name.replace("20", "341")
   }
   return clone_arr(MATCH_LIST_TEMPLATE_CONFIG.template_21_config[list_name])
@@ -384,49 +403,46 @@ function coverage_match_data(data_obj, mid) {
   let match = MatchListData.get_quick_mid_obj(mid)
   if (match) Object.assign(match, data_obj);
 }
-export function use_other_play() {
-  // 次要玩法标题
-  const play_current_key = ref('');
-  const play_current_index = ref('');
-  /**
-   * @Description 切换其他玩法
-   * @param {string} mid 赛事id
-  */
-  const switch_other_play = (mid, play_key) => {
-    let match = MatchListData.get_quick_mid_obj(mid)
-    set_match_play_current_index(match, play_key)
-    let { tpl_id } = match
-    let template_name = `template_${tpl_id}_config`
-    let other_handicap_list = clone_arr(MATCH_LIST_TEMPLATE_CONFIG[template_name][play_key])
-    if (play_key === 'hpsBold') {
-      other_handicap_list = get_21_bold_template(match);
-      match = {}
-    }
-    if (play_key === 'hps5Minutes') {
-      other_handicap_list = get_5minutes_template({ tpl_id });
-      match = {}
-    }
-    let type = play_key == 'hps15Minutes' ? 4 : 1
-    other_handicap_list = merge_template_data({ match, handicap_list: other_handicap_list, type, play_key })
-    coverage_match_data({ other_handicap_list }, mid)
-    useMittOn(MITT_TYPES.EMIT_API_BYMIDS, { mids: [mid] });
-  }
-  /**
-     * @Description 设置其他玩法选中索引    更新玩法模板及数据
-     * @param {undefined} undefined
-    */
-  const set_match_play_current_index = (match, play_key) => {
-    let tab_play_keys = MatchListData.get_tab_play_keys(match).split(",")
-    // 设置选中的玩法索引
-    match.play_current_index = play_current_index.value = match.play_current_index = tab_play_keys.findIndex(key => key == play_key)
-    // 设置选中的玩法key
-    match.play_current_key = play_current_key.value = match.play_current_key = play_key
-    // 保存当前选中的玩法
-    other_play_current_play[match.mid + '_'] = play_key
-  }
 
-  return {
-    play_current_key, play_current_index,
-    switch_other_play
+/**
+ * @Description 切换其他玩法
+ * @param {string} mid 赛事id
+*/
+export function switch_other_play(mid, play_key) {
+  let match = MatchListData.get_quick_mid_obj(mid)
+  set_match_play_current_index(match, play_key)
+  let { tpl_id } = match
+  let template_name = `template_${tpl_id}_config`
+  let other_handicap_list = clone_arr(MATCH_LIST_TEMPLATE_CONFIG[template_name][play_key])
+  if (play_key === 'hpsBold') {
+    other_handicap_list = get_21_bold_template(match);
+    match = {}
   }
+  if (play_key === 'hps5Minutes') {
+    other_handicap_list = get_5minutes_template({ tpl_id });
+    match = {}
+  }
+  let type = play_key == 'hps15Minutes' ? 4 : 1
+  other_handicap_list = merge_template_data({ match, handicap_list: other_handicap_list, type, play_key })
+  coverage_match_data({ other_handicap_list }, mid)
+  useMittEmit(MITT_TYPES.EMIT_API_BYMIDS, { mids: [mid] });
+}
+/**
+   * @Description 设置其他玩法选中索引    更新玩法模板及数据
+   * @param {undefined} undefined
+  */
+export const set_match_play_current_index = (match, play_key) => {
+  let tab_play_keys = MatchListData.get_tab_play_keys(match).split(",")
+  // 设置选中的玩法索引
+  match.play_current_index = tab_play_keys.findIndex(key => key == play_key)
+  // 设置选中的玩法key
+  match.play_current_key = play_key
+  // 保存当前选中的玩法
+  other_play_current_play[match.mid + '_'] = play_key
+}
+
+
+//获取保存的盘口玩法
+export function get_play_current_play(mid){
+  return  other_play_current_play[mid + '_'] ;
 }
