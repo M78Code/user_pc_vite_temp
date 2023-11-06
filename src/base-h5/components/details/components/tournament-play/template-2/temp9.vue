@@ -93,7 +93,7 @@ export default defineComponent({
     const go_to_bet = (index) =>{
       let ol_item = data.champion_list[index]
       ol_item.num = index + 1
-      useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX,true);
+      utils.go_to_bet(ol_item)
     };
     onMounted(() => {
       init()

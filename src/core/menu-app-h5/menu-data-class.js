@@ -633,6 +633,13 @@ class MenuData {
   is_jinzu(mi) {
     return this._is_cur_mi(30, mi)
   }
+  /**
+   * 是否选中了收藏
+   *  mi [number|string] 要比对的值
+  */
+  is_collect(mi) {
+    return this._is_cur_mi(50000, mi)
+  }
   //- 三级菜单 日期 (只有 串关，早盘，赛果，电竞，才有) -->
   get_is_show_three_menu(mi) {
     return [3, 6, 28, 2000].includes(mi || this.current_lv_1_menu_mi.value);

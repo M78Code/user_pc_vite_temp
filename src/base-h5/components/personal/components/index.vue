@@ -3,19 +3,19 @@
     <q-scroll-area ref="scrollAreaRef" :visible="false" style="height: 100%;"> 
       <!-- 用户名称 --> 
       <header> 
-        <img src="./images/avatar.png" alt="" />  Hi, Dafsghtyuh
+        <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/avatar.png`" alt="" />  Hi, Dafsghtyuh
       </header> 
-      <!-- 用户信息 --> 
+      <!-- 用户信息 -->
       <div class="info"> 
         <div class="name"> 
           <span>Money</span> 
-          <img @click="on_show_money(false)" src="./images/hide.png" alt="" />
-          <img @click="on_show_money(true)" src="./images/show.png" alt="" />
+          <img @click="on_show_money(false)" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/hide.png`" alt="" />
+          <img @click="on_show_money(true)" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/show.png`" alt="" />
         </div> 
         <div class="amount">{{ showMount }}</div> 
       </div> 
       <div class="bg_line"> 
-        <img src="./images/tips.png" alt="" /> 
+        <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/tips.png`" alt="" /> 
       </div>
       <!-- 设置 -->
       <section> 
@@ -23,25 +23,25 @@
         <collapse :disabled="true" title="Rules" @click="jumpRules"> 
           <!-- 图片 -->
           <template v-slot:title_icon>
-            <img class="icon" src="./images/rule.png" alt="" />
+            <img class="icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/rule.png`" alt="" />
           </template>
         </collapse>
         <!-- Language -->
         <collapse v-model="l_visible" title="Language">
           <template v-slot:title_icon>
-            <img class="icon" src="./images/language.png" alt="" />
+            <img class="icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/language.png`" alt="" />
           </template>
           <template v-slot:content>
             <div :class="['language_item', {active: lang === key}]" v-for="{ key, language } in languages" :key="key" @click="on_change_lang(key)">
               <span> <span class="lang-icon" :class="`lang-${key}`"></span> {{ language }} </span>
-              <img class="lang" v-if="lang === key" src="./images/vector.png" alt="">
+              <img class="lang" v-if="lang === key" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/vector.png`" alt="">
             </div>
           </template>
         </collapse>
         <!-- Odds Settings -->
         <collapse v-model="s_visible" title="Odds Settings">
           <template v-slot:title_icon>
-            <img class="icon" src="./images/setting.png" alt="" />
+            <img class="icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/setting.png`" alt="" />
           </template>
           <template v-slot:content>
             <div class="setting_item" v-for="setting in settingData" :key="setting.title">
@@ -63,6 +63,7 @@ import collapse from "src/base-h5/components/personal/components/collapse.vue"
 import { onMounted, ref } from "vue"
 import { useRouter } from "vue-router"
 import UserCtr from "src/core/user-config/user-ctr.js";
+import {LOCAL_PROJECT_FILE_PREFIX } from "src/core";
 const lang = ref('zh')
 const router = useRouter();
 const mount = '946,568,970.31'
@@ -118,7 +119,6 @@ const settingData = ref([{
 }])
 
 onMounted(() => {
-  user()
 })
 
 // 金额显示与隐藏
@@ -161,7 +161,7 @@ const jumpRules = () => {
     position: relative;
     border-radius: 8px 8px 0 0;
     background-repeat: no-repeat;
-    background-image: url("./images/bg.png");
+    background-image: url('./images/bg.png');
     background-size: cover;
     .name{
       display: flex;

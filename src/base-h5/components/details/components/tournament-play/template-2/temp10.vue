@@ -10,7 +10,7 @@
         <div v-for="(item,index) in odds_list" :key="index"
              class="col-4 item-height"
              :class="[index >= 3 ? 'border-bot':'',is_select(item.oid) ? 'blue-color':'']"
-             @click="go_to_bet(item)"
+             @click="utils.go_to_bet(item)"
         >
           <div class="row justify-center">
             <div v-for="(item_data_count,index2) in item.two_num" :key="index2">
@@ -81,14 +81,6 @@ export default defineComponent({
         deep: true
       }
     );
-    /**
-     *@description 虚拟体育(赛马)点击详细页小方块投注
-     *@param {Object} ol_item 里层ol数据
-     *@return {Undefined} undefined
-     */
-    const go_to_bet = (ol_item) => {
-      useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX,true);
-    };
     const temp_odds = () => {
       hsw_single = _.get(item_data,'hsw').toString()
       let odd_ol_list = _.get(item_data,'hl[0].ol')
@@ -116,7 +108,6 @@ export default defineComponent({
       is_select,
       get_bet_list,
       get_curr_sub_menu_type,
-      go_to_bet,
       temp_odds,
       LOCAL_PROJECT_FILE_PREFIX
     }
