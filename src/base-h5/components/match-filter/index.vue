@@ -10,6 +10,10 @@
     <!-- 中间滚动选择项 -->
     <q-scroll-area class="scroll-area" v-if="!no_find_content && !list_data_loading" ref="scrollArea">
       <div v-if="list.length" v-scroll="scrolled" class="yb_mb18">
+        <div class="scroll-setect-all">
+          <span>全选</span>
+          <div class="scroll-setect-options"></div>
+        </div>
         <!-- 循环整个后台返回数据 -->
         <div class="scroll-area1" v-for="(item, index) in list" :key="index" ref="scroll_area1">
           <div class="bg-f6f7f8 scroll-title" ref="bg_f6f7f8" v-if="item.title">
@@ -62,22 +66,19 @@
 
     <!-- 底部固定部分 -->
     <!-- 全选/反选/确定 -->
-    <div class="allCheck row justify-between items-center" v-if="change && !list_data_loading">
+    <!-- <div class="allCheck row justify-between items-center" v-if="change && !list_data_loading">
       <div class="row items-center"
         :style="{ lineHeight: ['vi', 'en', 'th', 'ms', 'ad'].includes(get_lang) ? '1' : 'unset' }">
-        <!-- <template> -->
         <img class="icon-search" @click="all_checked_click"
           :src="compute_img_url(all_checked ? 'checkbox-box-s' : 'checkbox-box')" />
         <span class="txt ellipsis-2-lines" @click="all_checked_click">{{ $t('common.all_select') }}</span>
-        <!-- </template> -->
         <span class="txt ellipsis-3-lines" @click="select_btn_click">{{ $t('filter.reverse_election') }}</span>
       </div>
-      <!-- 确定选择按钮 -->
       <div class="right-box" @click="search_btn">
         <p class="confirm">{{ $t('common.ok') }}</p>
         <p class="round-box">{{ select_num }}</p>
       </div>
-    </div>
+    </div> -->
     <!-- 无数据展示 -->
     <no-data which="noMatch" style="margin-top: 0.26rem" :height="100"
       v-if="!list_data_loading && no_find_content"></no-data>
@@ -520,9 +521,10 @@ if (type.value == 30) {
 </script>
 <style lang="scss" scoped>
 .boss-box {
-  padding: 0.5rem 0 0.64rem;
+  // padding: 0.5rem 0 0.64rem;
+  padding-top: 1.03rem;
   position: absolute;
-  top: 0.75rem;
+  top: 0;
   left: 0;
   bottom: 0;
   right: 0;
@@ -641,6 +643,26 @@ if (type.value == 30) {
   font-weight: bold;
 }
 
+.scroll-setect-all {
+  display: flex;
+  justify-content: flex-end;
+  font-size: 0.16rem;
+  padding: 0 0.36rem 0 0.4rem;
+  height: .4rem;
+  align-items: center;
+  font-size: .14rem;
+  color: var(--q-gb-bg-c-6);
+  span {
+    margin-right: .04rem;
+  }
+}
+
+.scroll-setect-options {
+  width: .16rem;
+  height: .16rem;
+  border-radius: 50%;
+  border: .01rem solid var(--q-gb-bg-c-8);
+}
 .content_box1 {
   height: 0.40rem;
 
@@ -679,12 +701,6 @@ if (type.value == 30) {
       align-items: center;
       font-size: .1rem;
       color: var(--q-gb-bg-c-6);
-      .scroll-setect-options {
-        width: .16rem;
-        height: .16rem;
-        border-radius: 50%;
-        border: .01rem solid var(--q-gb-bg-c-8);
-      }
     }
   }
 
@@ -798,12 +814,6 @@ if (type.value == 30) {
     }
     .scroll-setect {
       display: flex;
-      .scroll-setect-options {
-        width: .16rem;
-        height: .16rem;
-        border-radius: 50%;
-        border: .01rem solid var(--q-gb-bg-c-8);
-      }
     }
   }
 }
