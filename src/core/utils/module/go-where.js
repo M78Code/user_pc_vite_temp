@@ -86,7 +86,7 @@ const go_back_from_notice = ({back_to, route_name, route, router}) => {
  const go_back_from_mini_header = ({back_to, route_name, route, router}) => {
   let count = -1;
   // 因为get_change_count默认是0次 点击切换视频或动画 此数字+1
-  count -= get_change_count;
+  // count -= get_change_count; //todo
   // 所以返回页面不能写死-1 需要动态获取
   router.go(count);
 }

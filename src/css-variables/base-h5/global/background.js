@@ -19,5 +19,5 @@ export default {
     'gb-bg-c-16': 'tranparent',
     'gb-bg-c-18': '#f2f2f6',
     'gb-bg-c-19': '#e4e6ed',
-    'gb-bg-c-20': '#E4E6ED'
+    'gb-bg-c-20': '#E4E6ED' 
   }

@@ -41,6 +41,8 @@ import { MatchTpl12AfterFullVersionWapper as MatchTpl12After } from "src/base-pc
 import { MatchTpl17AfterFullVersionWapper as MatchTpl17After } from "src/base-pc/components/match-list/match-tpl-new-data/match-tpl-17-after/index.js";
 // // // 玩法模板 18  所有冠军玩法 政治娱
 import { MatchTpl18AfterFullVersionWapper as MatchTpl18After } from "src/base-pc/components/match-list/match-tpl-new-data/match-tpl-18-after/index.js";
+// // // 玩法模板 101 欧洲版
+import { MatchTpl101AfterFullVersionWapper as MatchTpl101After } from "src/base-pc/components/match-list/match-tpl-new-data/match-tpl-101-after/index.js";
 // // // 玩法模板 21  足球-比分
 // import { MatchTpl21AfterFullVersionWapper as MatchTpl21After } from "src/base-pc/components/match-list/match-tpl-new-data/match-tpl-21-after/index.js";
 // // // 玩法模板 24  足球-15分钟
@@ -63,6 +65,7 @@ export default {
     MatchTpl17After,
     MatchTpl10After,
     MatchTpl18After,
+    MatchTpl101After,
     MatchTplEsportsAfter
   },
   setup(props) {
