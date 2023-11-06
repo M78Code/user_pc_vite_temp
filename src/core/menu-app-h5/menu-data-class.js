@@ -382,7 +382,7 @@ class MenuData {
     }
     // 收藏 vr 电竞 全部 不在此列
     if([1,2].includes(Number(this.current_lv_1_menu_i))){
-      if([300,2000,50000].includes( item.mi)){
+      if([0,300,2000,50000].includes( item.mi)){
         id = item.mi
       }
     }

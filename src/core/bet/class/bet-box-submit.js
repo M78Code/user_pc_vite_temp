@@ -410,7 +410,6 @@ const submit_handle = type => {
 
             }
             let obj = {};
-            obj.cmd = 'C2'
             obj.hid = ''
             obj.mid = ''
             // 盘口Id，多个Id使用逗号分隔
