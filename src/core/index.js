@@ -134,6 +134,30 @@ const MatchDataWarehouse_PC_List_Common = new MatchDataBase({
 });
 
 /**
+ * 欧洲版 PC/H5 数据仓库 15mins 顶部列表
+ */
+
+const MatchDataWarehouse_ouzhou_PC_l5mins_List_Common = new MatchDataBase({
+  name_code: "MatchDataWarehouse_ouzhou_PC_l5mins_List_Common",
+});
+
+/**
+ * 欧洲版 PC/H5 数据仓库 热推 顶部列表
+ */
+
+const MatchDataWarehouse_ouzhou_PC_hots_List_Common = new MatchDataBase({
+  name_code: "MatchDataWarehouse_ouzhou_PC_hots_List_Common",
+});
+
+/**
+ * 欧洲版 PC/H5 数据仓库 通用列表
+ */
+
+const MatchDataWarehouse_ouzhou_PC_List_Common = new MatchDataBase({
+  name_code: "MatchDataWarehouse_ouzhou_PC_List_Common",
+});
+
+/**
  * PC  数据仓库  常规赛事  通用详情
  */
 
