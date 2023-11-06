@@ -17,7 +17,6 @@ import { LOCAL_PROJECT_FILE_PREFIX, i18n_t } from "src/core/index.js";
 let title = ref('')
 
 const set_bet_order_status = computed(()=> status => {
-  console.error('sssss',status)
   // 2-投注中状态,
   if(status == 2){
     title.value = i18n_t('bet.bet_loading')

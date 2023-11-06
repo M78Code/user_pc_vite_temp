@@ -1,6 +1,9 @@
 <!--
-* @Author: Malick
-* @Description: 菜单列表
+ * @Author: rise
+ * @Date: 2023-11-02 16:27:18
+ * @LastEditors: rise
+ * @LastEditTime: 2023-11-06 14:28:13
+ * @Description:  
 -->
 <template>
   <div class="left_drawer_page">
@@ -12,7 +15,7 @@
             item.className,
             // { active: meta_data_store.current_menu.mi == item.mi },
           ]" v-for="(item, index) in sportsGenre" :key="index" @click="set_menu_obj(item)">
-            <sport_icon size="20" :sport_id="item.mi" />
+            <sport-icon size="20" :sport_id="item.mi" />
             <div>{{ item.name }}</div>
           </div>
         </div>
@@ -25,7 +28,7 @@
             item.className,
             // { active: meta_data_store.current_menu.mi == item.mi },
           ]" v-for="(item, index) in popular" :key="item.mi" @click="change_current_menu(item)">
-            <sport_icon size="18" :sport_id="item.mi" />
+            <sport-icon size="18" :sport_id="item.mi" />
             <div>{{ item.name }}</div>
           </div>
         </div>
@@ -39,7 +42,7 @@
             // { active: meta_data_store.current_menu.mi == item.mi },
           ]" v-for="item in MenuData.menu_list" :key="item.mi" @click="change_current_menu(item)"
             :data-id="item.mi">
-            <sport_icon size="18" :sport_id="item.mi" />
+            <sport-icon size="18" :sport_id="item.mi" />
             <!-- 有电竟体育时展示电竞体育2000  Esports  -->
             <div>
               {{
@@ -56,7 +59,7 @@
 </template>
 <script setup>
 import { reactive, defineEmits} from "vue";
-import sport_icon from "./sport_icon.vue";
+import sportIcon from "./sport-icon.vue";
 import BaseData from "src/core/base-data/base-data.js";
 import { MenuData } from 'src/core/';
 import { useRouter } from "vue-router";

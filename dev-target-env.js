@@ -30,9 +30,11 @@ let  DEV_TARGET_VERSION = ''
 
 //----------------------------------分割线  复刻版-H5-KYAPP  app-h5  5 -------------------------------------------
 // 测试环境  
-DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1698460136471-test";
+// DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1699239723632-test";
 // 试玩环境  
 // DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1698742048199-shiwan";
+// 隔离环境  
+// DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1699178741277-geli";
 // 生产环境
 // DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1699154069801-online";
 
@@ -51,7 +53,7 @@ DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1698460136471-test";
 // 测试环境  
  DEV_TARGET_VERSION = "project_7-6544b0f3fb906b00ad5e8733-1699000611383-test";
 // 试玩环境  
-DEV_TARGET_VERSION = "project_7-6544b0f3fb906b00ad5e8733-1699003372610-shiwan";
+// DEV_TARGET_VERSION = "project_7-6544b0f3fb906b00ad5e8733-1699003372610-shiwan";
 // 生产环境
 // DEV_TARGET_VERSION = "project_7-6544b0f3fb906b00ad5e8733-1699003377370-online";
 
