@@ -32,7 +32,7 @@ const toggle = () => {
 }
 </script>
   
-<style scoped>
+<style scoped lang="scss">
 .switch {
     display: inline-block;
     position: relative;
@@ -61,7 +61,7 @@ const toggle = () => {
     align-items: center;
     height: 0.28rem;
 
-    >div {
+    div {
         width: 50%;
         text-align: center;
         position: relative;
