@@ -67,7 +67,7 @@ class UserCtr {
     // 用户主题  日间版本 ，夜间版本 可能有多版本哦 不止二个
     this.theme = LocalStorage.get("theme", default_theme_key);
 
-    // 当前 选择的 赔率 ，有些赛种只有港赔理论上和这里无关
+    // 当前 选择的 赔率 ，有些赛种只有港赔理论上和这里无关 盘口
     this.odds = {
       // 上次赔率
       pre_odds: "EU",

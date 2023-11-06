@@ -18,7 +18,7 @@
                     {{ item.name }}
                 </div>
                 <div class="more">
-                    <Switch v-model:value="item.switchValue" :leftVal="item.leftVal" :rightVal="item.rightVal" @update="switch_hanle(item)"/>
+                    <Switch  :value="item.switchValue" :leftVal="item.leftVal" :rightVal="item.rightVal" @update="switch_hanle(item)"/>
                 </div>
             </div>
             <div class="setting-item" @click="jumpHandle">
@@ -50,6 +50,8 @@ import { ref, watch, computed, nextTick, onBeforeUnmount, onMounted } from 'vue'
 import Switch from './components/switch.vue';
 import { standard_edition } from 'src/base-h5/mixin/userctr.js'
 import { UserCtr } from 'src/core/'
+import {LocalStorage} from "src/core/index.js";
+import { default_theme_key } from "src/core/theme/"
 
 defineOptions({
     name: 'settingFilter' // 设置组件名称
@@ -72,7 +74,7 @@ const setting_list = ref([
     { name: '投注模式', leftVal: '新手版', rightVal: '专业版', switchValue: UserCtr.standard_edition,mark:'version' },
     { name: '排序规则', leftVal: '热门', rightVal: '时间', switchValue: UserCtr.sort_type,mark:'sort' },
     { name: '盘口设置', leftVal: '欧洲盘', rightVal: '香港盘',mark:'Handicap' },
-    { name: '字号大小', leftVal: '默认', rightVal: '放大',mark:'size' },
+    // { name: '字号大小', leftVal: '默认', rightVal: '放大',mark:'size' },
     { name: '主题风格', leftVal: '日间', rightVal: '夜间',switchValue: LocalStorage.get("theme", default_theme_key), mark:'theme'},
     { name: '每日活动', leftVal: '开启', rightVal: '关闭',mark:'activity' },
 ])
