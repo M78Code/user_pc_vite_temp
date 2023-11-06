@@ -122,8 +122,8 @@ class MatchMeta {
   }
 
   /**
-   * @description 根据 mids 获取对应的赛事数据
-   * @param { mid } 二级菜单
+   * @description 元数据处理 根据 mids 获取对应的赛事数据 
+   * @param { mids } 赛事 mids
    */
   get_origin_match_by_mids(mids) {
     // 显示空数据页面
@@ -149,6 +149,32 @@ class MatchMeta {
     // 获取赛事收藏状态 该接口还没发到试玩
     // await MatchCollect.get_collect_matche_data()
   }
+
+    /**
+   * @description 非元数据处理
+   * @param { list } 赛事 list
+   */
+    handler_match_list_data(list) {
+      const length = lodash.get(list, 'length', 0)
+      if (length < 1) return useMittEmit(MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, true);
+      const result_mids = list.map(t => t.mid)
+      // 赛事全量数据
+      const match_list = list.map((match, index) => {
+        Object.assign(match, {
+          is_show_league: index === 0 ? true : list[index].tid !== list[index - 1].tid
+        })
+        //  赛事操作
+        this.match_assistance_operations(match)
+        return match
+      })
+
+      this.complete_matchs = match_list
+      this.match_mids = lodash.uniq(result_mids)
+      this.complete_mids = lodash.uniq(result_mids)
+
+      // 计算所需渲染数据
+      this.compute_page_render_list(0, 2)
+    }
 
   /**
    * @description 设置赛事默认模板 输出最终赛事完整数据 更新仓库
@@ -222,7 +248,6 @@ class MatchMeta {
     const { home_score, away_score } = MatchUtils.get_match_score(match)
     return {
       source_index: index,
-      is_show_league,
       is_show_no_play,
       is_show_league,
       away_score,
@@ -397,7 +422,10 @@ class MatchMeta {
       category,
       "type":3000,
     })
-    this.handle_custom_matchs(res)
+    if (+res.code !== 200) return
+    const list = lodash.get(res, 'data', [])
+    this.handler_match_list_data(list)
+    // this.handle_custom_matchs(res)
   }
 
   /**
