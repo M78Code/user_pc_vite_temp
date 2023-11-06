@@ -95,6 +95,8 @@ onMounted(() => {
 
   cursor_flashing()
 
+  ref_data.money = BetData.bet_amount
+
   //监听键盘金额改变事件
   useMittOn(MITT_TYPES.EMIT_INPUT_BET_MONEY, change_money_handle)
   useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money)
@@ -163,7 +165,6 @@ const clear_money = () => {
 
 // 限额改变 修改限额内容
 const set_ref_data_bet_money = () => {
-  console.error('ssss')
     let value = props.item.playOptionsId
     // 串关获取 复试连串
     if (!BetData.is_bet_single) {
@@ -186,6 +187,9 @@ const set_ref_data_bet_money = () => {
     ref_data.seriesOdds = seriesOdds
     // 限额改变 重置投注金额
     ref_data.money = ''
+
+    // 设置键盘设置的限额和数据
+    BetData.set_bet_keyboard_config({playOptionsId:props.item.playOptionsId})
 }
 
 // 快捷金额

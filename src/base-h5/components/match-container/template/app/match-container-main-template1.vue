@@ -7,7 +7,8 @@
     <template v-if="match" >
       
       <!-- 开赛标题  -->
-      <div :class="['match-status-fixed', { progress: +match.start_falg === 1, not_begin: +match.start_falg === 2 }]" v-if="is_show_opening_title">
+      <div v-if="is_show_opening_title" @click.stop="handle_ball_seed_fold"
+        :class="['match-status-fixed', { progress: +match.start_falg === 1, not_begin: +match.start_falg === 2 }]" >
         <!-- 进行中 -->
         <template v-if="+match.start_falg === 1">
           <img :src="in_progress" /> <span class="din-regular"> 进行中</span>
@@ -20,7 +21,7 @@
       <!-- 缓冲容器， 避免滚动时骨架屏漏光问题 -->
       <div class="buffer-container" v-if="match.is_show_league && !is_show_opening_title"></div>
       <!--体育类别 -- 标题  menuType 1:滚球 2:即将开赛 3:今日 4:早盘 11:串关 -->
-      <div v-if="show_sport_title"  @click.stop="handle_ball_seed_fold"
+      <div v-if="show_sport_title" @click.stop
         :class="['sport-title match-indent', { home_hot_page: is_hot, is_gunqiu: [1].includes(+menu_type), first: i == 0, }]">
         <span class="score-inner-span">
           {{ match_of_list.csna }} ({{ +match.start_falg === 1 ? match.in_progress_total : match.no_start_total }})
@@ -41,11 +42,6 @@
               <!-- 收藏图标 compute_img_url('icon-favorite-s')-->
               <img v-if='league_collect_state' :src="normal_img_is_favorite">
             </div>
-            <!-- 电竞图标 写死 -->
-            <div class="esport" v-if="match_of_list.csid == 101" :style="compute_css_obj('menu-sport-active-image', 2101)"></div>
-            <div class="esport" v-else-if="match_of_list.csid == 103" :style="compute_css_obj('menu-sport-active-image', 2103)"></div>
-            <div class="esport" v-else-if="match_of_list.csid == 102" :style="compute_css_obj('menu-sport-active-image', 2102)"></div>
-            <div class="esport" v-else-if="match_of_list.csid == 100" :style="compute_css_obj('menu-sport-active-image', 2100)"></div>
             <span class="league-title-text row justify-between">
               <span :class="['league-t-wrapper', { 'league-t-main-wrapper': menu_type !== 28, export: is_export }]">
                 <span class="match-league ellipsis-2-lines" :class="{ 'match-main-league': menu_type !== 28 }">

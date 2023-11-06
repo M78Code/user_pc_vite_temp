@@ -79,7 +79,7 @@ class MatchMeta {
    */
   get_origin_match_mids_by_mis (sl) {
     const length = lodash.get(sl, 'length', 0)
-    if (length < 1) return
+    if (length < 1) return this.set_page_match_empty_status(true);
     const match_mids_list = []
     sl.forEach(t => {
       const mids = this.get_match_mids_by_mi(t.mi)
@@ -122,14 +122,14 @@ class MatchMeta {
   }
 
   /**
-   * @description 根据 mids 获取对应的赛事数据
-   * @param { mid } 二级菜单
+   * @description 元数据处理 根据 mids 获取对应的赛事数据 
+   * @param { mids } 赛事 mids
    */
   get_origin_match_by_mids(mids) {
     // 显示空数据页面
     const result_mids = lodash.uniq(mids)
     const length = lodash.get(result_mids, 'length', 0)
-    if (length < 1) return useMittEmit(MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, true);
+    if (length < 1) return this.set_page_match_empty_status(true);
     // 赛事全量数据
     const match_list = result_mids.map((t, index) => {
       // 获取对应赛事数据
@@ -149,6 +149,35 @@ class MatchMeta {
     // 获取赛事收藏状态 该接口还没发到试玩
     // await MatchCollect.get_collect_matche_data()
   }
+
+    /**
+   * @description 非元数据处理
+   * @param { list } 赛事 list
+   */
+    handler_match_list_data(list) {
+      const length = lodash.get(list, 'length', 0)
+      if (length < 1) return this.set_page_match_empty_status(true);
+      const result_mids = list.map(t => t.mid)
+      // 赛事全量数据
+      const match_list = list.map((match, index) => {
+        Object.assign(match, {
+          is_show_league: index === 0 ? true : list[index].tid !== list[index - 1].tid
+        })
+        //  赛事操作
+        this.match_assistance_operations(match)
+        return match
+      })
+
+      this.complete_matchs = match_list
+      this.match_mids = lodash.uniq(result_mids)
+      this.complete_mids = lodash.uniq(result_mids)
+
+      // 计算所需渲染数据
+      this.compute_page_render_list(0, 2)
+
+      this.set_page_match_empty_status(false)
+
+    }
 
   /**
    * @description 设置赛事默认模板 输出最终赛事完整数据 更新仓库
@@ -222,7 +251,6 @@ class MatchMeta {
     const { home_score, away_score } = MatchUtils.get_match_score(match)
     return {
       source_index: index,
-      is_show_league,
       is_show_no_play,
       is_show_league,
       away_score,
@@ -265,7 +293,7 @@ class MatchMeta {
    */
   get_match_mids (list) {
     const length = lodash.get(list, 'length', 0)
-    if (length < 1) return useMittEmit(MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, true);
+    if (length < 1) return this.set_page_match_empty_status(true);
     const match_mids_list = list.map(t => {
       return t.mid
     })
@@ -397,16 +425,25 @@ class MatchMeta {
       category,
       "type":3000,
     })
-    this.handle_custom_matchs(res)
+    if (+res.code !== 200) return this.set_page_match_empty_status(true);
+    const list = lodash.get(res, 'data', [])
+    this.handler_match_list_data(list)
   }
 
   /**
    * @description 获取收藏赛事
    */
   async get_collect_matche () {
-
+    
   }
 
+  /**
+   * @description 设置页面是否为空
+   * @param {*} state 
+   */
+  set_page_match_empty_status (state) {
+    useMittEmit(MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, state);
+  }
 
   /**
    * @description 处理非元数据赛事, 不需要走 模版计算以及获取赔率
@@ -440,7 +477,6 @@ class MatchMeta {
    * @param { match_list } 全量 赛事 match
    */
   set_match_mids (mids = [], match_list = []) {
-
     this.complete_mids = mids
 
     const target_data = MatchUtils.handler_match_classify_by_ms(match_list).filter((t) => t.mid)
@@ -452,7 +488,7 @@ class MatchMeta {
     })
 
     const length = lodash.get(this.complete_matchs, 'length', 0)
-    useMittEmit(MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, length > 1 ? false : true);
+    this.set_page_match_empty_status(length > 0 ? false : true);
     // console.log('this.complete_matchs', this.complete_matchs)
     // 计算所需渲染数据
     this.compute_page_render_list()
@@ -476,8 +512,6 @@ class MatchMeta {
 
     // 虚拟列表所需渲染数据
     const match_datas = VirtualList.compute_page_render_list(scroll_top)
-
-    console.log(match_datas)
 
     // 当前渲染的 mids
     this.match_mids = match_datas.map(t => {

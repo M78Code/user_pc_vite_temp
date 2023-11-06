@@ -64,6 +64,7 @@ const settlement_app = compute_local_project_file_path('/image/list/settlement_a
 // 日期
 const icon_date = compute_local_project_file_path('/image/list/icon_date.png')
 const expand_item = compute_local_project_file_path('/image/list/expand_item.png')
+const no_data_img = compute_local_project_file_path('/image/png/no_data.png')
 
 //弹出框菜单图片
 const popup_menu = {
@@ -82,5 +83,5 @@ export {
   lvs_icon_theme01, lvs_icon_theme02, animationUrl_icon_theme01, animationUrl_icon_theme02, muUrl_theme01, muUrl_theme01_y0, muUrl_theme02, muUrl_theme02_y0,icon_date,
   none_league_icon, none_league_icon_black, image_panda_placeholder, default_league_icon, home_default_avatar, away_default_avatar, match_analysis, match_analysis2, mearlys_icon,
   league_collapse_icon, league_icon, league_icon_back, popup_menu, polular_spirite, polular_spirite_theme02, in_progress, not_begin, video_play_app, settlement_app,
-  expand_item
+  expand_item, no_data_img
 }
