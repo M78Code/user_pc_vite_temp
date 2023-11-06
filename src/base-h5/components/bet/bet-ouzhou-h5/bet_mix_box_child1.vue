@@ -36,6 +36,7 @@
   }
   .nonebox4-content-left-content-text-three{
     font-size: 0.16rem;
+    color: var(--q-gb-bg-c-8);
   }
   .nonebox4-content-left-content-text-two{
     color: var(--q-gb-t-c-1);
@@ -43,9 +44,11 @@
   }
   .text-two-span{
     color: var(--q-gb-t-c-18);
+    font-weight: 400;
   }
   .nonebox4-content-left-content-text-one{
     font-size: 0.18rem;
+    font-weight: 600;
   }
   .nonebox4-content-left-info{
     display: flex;

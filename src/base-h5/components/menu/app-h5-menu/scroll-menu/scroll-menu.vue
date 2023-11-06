@@ -91,7 +91,6 @@ const format_type = ( item = {} ) => {
     return type
   }
   //电竞背景处理
-  if (BaseData.sports_mi.includes(+item.mi)) return +item.mi
   return MenuData.recombine_menu_bg(item, true)
 }
 

@@ -332,7 +332,7 @@ class MenuData {
    */
   get_menus_i18n_map(mi) {
     //二级菜单
-    if (this.is_export(+this.top_menu_title.mi) || this.is_vr(+this.top_menu_title.mi)) {
+    if (this.is_export(+this.top_menu_title.mi) || this.is_vr(+this.top_menu_title.mi) ) {
       return BaseData.menus_i18n_map[+mi]
     }
     return BaseData.menus_i18n_map[this.recombine_menu_desc(mi)];
@@ -361,16 +361,20 @@ class MenuData {
     if (is_result) {
       return parseInt(item - 100);
     }
+   
     let bg_mi = parseInt(this.recombine_menu_desc(item?.mi));
     let id = parseInt(bg_mi - 100);
     if (this.is_kemp()) {
       id = parseInt(bg_mi - 400);
     }
     // 收藏 vr 电竞 全部 不在此列
-    if([1,2].includes(Number(this.current_lv_1_menu_mi.value))){
+    if([1,2].includes(Number(this.current_lv_1_menu_i))){
       if([300,2000,50000].includes( item.mi)){
         id = item.mi
       }
+    }
+    if([300,2000,50000].includes(this.top_menu_title.mi*1 )){
+      id = item.mi
     }
     if (get_ball_id) return sprite_images_postion[id];
     let type = "";
