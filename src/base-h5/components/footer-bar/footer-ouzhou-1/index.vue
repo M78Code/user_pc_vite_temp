@@ -8,7 +8,7 @@
     <span class="arc"></span>
     <!-- 底部菜单 -->
     <div v-for="( item, index ) in tab_list" :key="index" class="footer_menu_item"
-      :class="tab_active == item.value ? 'active' : ''" @click="jump_page(item)">
+      :class="tab_active == item.route ? 'active' : ''" @click="jump_page(item)">
       <!-- 图标 -->
       <div class="item_img" :class="item.value" />
       <!-- 菜单名 -->
@@ -20,23 +20,24 @@
 </template>
 
 <script setup>
-import { defineComponent, ref, reactive, watch } from "vue";
+import { defineComponent, ref, reactive, watch,computed  } from "vue";
 import { useRouter, useRoute } from "vue-router";
 const router = useRouter();
 // 底部菜单集合
 const tab_list = reactive([
   { label: 'In-Play', value: 'rollball', route: '/inPlay' },
   { label: 'MyBets', value: 'bet', route: '/betting_history' },
-  { label: 'Home-Page', value: 'home_page', route: '/' },
+  { label: 'Home-Page', value: 'home_page', route: '/home' },
   { label: 'Results', value: 'results', route: '/matchResults' },
   { label: 'Favorites', value: 'favorites', route: '/collect' },
 ])
-
-const tab_active = ref('');
+const get_route_path = computed(() => {
+  return  router.currentRoute.value.path;
+})
+const tab_active = ref(get_route_path);
 
 const jump_page = (item) => {
-
-  tab_active.value = item.value
+  tab_active.value = item.route
   router.push(item.route)
 
 }

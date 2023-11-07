@@ -2,7 +2,7 @@
  * @Author: rise
  * @Date: 2023-11-02 16:27:18
  * @LastEditors: rise
- * @LastEditTime: 2023-11-06 20:11:17
+ * @LastEditTime: 2023-11-07 16:29:35
  * @Description:  
 -->
 <template>
@@ -18,14 +18,23 @@
   <template v-else>
     <div class="top_header">
       <div class="top_info">
+        <template v-if="get_route_name == 'details'">
+          <detail-top-info />
+        </template>
+        
+        <!-- 个人中心 vr 电竞 头部 -->
+        <template v-else-if="is_personal_page">
+          <div class="back" @click="go_back">
+            <img src="./img/back.png" alt="" />
+            Back</div>
+        </template>
         <!-- home 头部 -->
-        <template v-if="is_home_page">
+        <template v-else>
           <!--左侧菜单 -->
-          <template v-if="is_home_page">
+          <div class="navigation" @click="toggleLeftDrawer" >
             <!-- <q-btn flat dense round icon="menu" aria-label="Menu" @click="toggleLeftDrawer" /> -->
-            <!-- <div  @click="toggleLeftDrawer">左侧</div> -->
-            <img class="navigation" src="./img/navigation.png" @click="toggleLeftDrawer" alt="">
-          </template>
+            <img  src="./img/navigation.png" alt="">
+          </div>
 
           <!-- 搜索 -->
           <div class="top_info_search">
@@ -41,23 +50,10 @@
             <span class="info_amount">{{ format_money2(amount) }}</span>
           </div>
         </template>
-        <template v-if="get_route_name == 'details'">
-          <detail-top-info />
-        </template>
-
-        <!-- 个人中心 vr 电竞 头部 -->
-        <template v-if="is_personal_page">
-          <div class="back" @click="go_back">
-            <img src="./img/back.png" alt="" />
-            Back</div>
-        </template>
-
-
     </div>
     </div>
 
   </template>
-  <scrollMenu v-if="MenuData.menu_list.length && get_route_name == 'matchList'" />
   <!-- 菜单抽屉 -->
   <q-drawer v-model="leftDrawerOpen" show-if-above bordered >
     <leftMenu @isLeftDrawer="toggleLeftDrawer"/>
@@ -70,7 +66,6 @@ import { ref, computed, watch } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { format_money2,UserCtr } from "src/core/";
 import leftMenu from "./components/left-menu/left-menu.vue";
-import scrollMenu from "./scroll-menu/scroll-menu.vue";
 import detailTopInfo from "./detail-top/detail-top.vue";
 import { MenuData } from 'src/core/';
 const router = useRouter();
@@ -99,9 +94,9 @@ const is_rule_page = computed(() => {
 /**
  * 主页的路由
  */
-const is_home_page = computed(() => {
-  return ['/','/match','/match/', '/betting_history', '/matchResults', '/inPlay', '/collect'].includes(router.currentRoute.value.path)
-})
+// const is_home_page = computed(() => {
+//   return ['/','/home','/home/', '/betting_history', '/matchResults', '/inPlay', '/collect'].includes(router.currentRoute.value.path)
+// })
 
 
 const search_match = (item) => {
@@ -143,6 +138,10 @@ const toggleLeftDrawer = () => {
     width: 18px;
     height: 18px;
     margin-left: 6px;
+    img{
+      width: 100%;
+      height: 100%;
+    }
   }
   .top_info_search {
     position: relative;

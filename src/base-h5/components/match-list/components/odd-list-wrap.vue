@@ -69,13 +69,17 @@
         <div class="block" :class="{selected:standard_odd_status == 1}"></div>
       </div>
       <!--标准版 才有的样式  动态图方向箭头-->
-      <template v-if="theme.includes('night')">
-        <i class="slide_icon slide_icon_l animate-effect" v-if="is_show_scroll_dir(0)"></i>
-        <i class="slide_icon slide_icon_r animate-effect-r" v-if="is_show_scroll_dir(1)"></i>
+      <template v-if="theme.includes('theme-2')">
+        <!-- <i class="slide_icon slide_icon_l animate-effect" v-if="is_show_scroll_dir(0)"></i> -->
+        <img class="slide_icon slide_icon_l animate-effect" :src="slide_icon_0" alt="" v-if="is_show_scroll_dir(0)">
+        <!-- <i class="slide_icon slide_icon_r animate-effect-r" v-if="is_show_scroll_dir(1)"></i> -->
+        <img class="slide_icon slide_icon_r animate-effect-r" :src="slide_icon_0" alt="" v-if="is_show_scroll_dir(1)">
       </template>
-      <template v-if="theme.includes('day')">
-        <i class="slide_icon slide_icon_l animate-effect" v-if="is_show_scroll_dir(0)"></i>
-        <i class="slide_icon slide_icon_r animate-effect-r" v-if="is_show_scroll_dir(1)"></i>
+      <template v-else>
+        <img class="slide_icon slide_icon_r animate-effect-r" :src="slide_icon_1" alt="" v-if="is_show_scroll_dir(0)">
+        <img class="slide_icon slide_icon_l animate-effect" :src="slide_icon_1" alt="" v-if="is_show_scroll_dir(1)">
+        <!-- <i class="slide_icon slide_icon_l animate-effect" v-if="is_show_scroll_dir(0)"></i>
+        <i class="slide_icon slide_icon_r animate-effect-r" v-if="is_show_scroll_dir(1)"></i> -->
       </template>
     </template>
     <!-- 标准版 波胆玩法盘口赔率组件 -->
@@ -159,7 +163,7 @@ import store from "src/store-redux/index.js"
 import lodash from 'lodash'
 import { i18n_t} from 'src/core/index.js'
 import oddColumnItem from "./odd-column-item.vue";
-import { img1, img2, img3, img4, Y0_img_white } from 'src/base-h5/core/utils/local-image'
+import { img1, img2, img3, img4, Y0_img_white, slide_icon_0, slide_icon_1 } from 'src/base-h5/core/utils/local-image'
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { MenuData,compute_img_url ,UserCtr, compute_css_obj} from "src/core/index.js"
 import PageSourceData  from  "src/core/page-source/page-source.js";
@@ -212,7 +216,6 @@ const unsubscribe = store.subscribe(() => {
 })
 
 onMounted(() => {
-
   emitters.value = {
     emitter_2: useMittOn(MITT_TYPES.EMIT_FAPAI_WAY_TIPS_STATUS_CHANGE, fapai_way_tips_status_change_h).off,
   }
@@ -445,7 +448,7 @@ const ol_list = computed(() => {
       let ol_list = f_hl_item.ol;
       if (ol_list && ol_list.length) {
         //主胜,客胜,平变为主胜,平,客胜
-        if (show_newer_edition) {
+        if (show_newer_edition.value) {
           if (ol_list.length == 3) {
             //只有三个投注项时才做此操作
             let found = lodash.findIndex(ol_list, (item) => item.ot == 2);
@@ -640,17 +643,9 @@ const is_show_scroll_dir = (dir) => {
   if (!have_2_part) return false;
   // 增加水球csid：16 联合式橄榄球14 的显示
   if (dir == 0) {
-    return (
-      standard_odd_status.value != 1 &&
-      !show_newer_edition &&
-      [1, 7, 11, 16, 14].includes(+props.match.csid)
-    );
+    return standard_odd_status.value !== 1 && !show_newer_edition.value && [1, 7, 11, 16, 14].includes(+props.match.csid)
   } else if (dir == 1) {
-    return (
-      standard_odd_status.value == 1 &&
-      !show_newer_edition &&
-      [1, 7, 11, 16, 14].includes(+props.match.csid)
-    );
+    return standard_odd_status.value === 1 && !show_newer_edition.value && [1, 7, 11, 16, 14].includes(+props.match.csid)
   }
 };
 /**

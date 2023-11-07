@@ -182,7 +182,7 @@ import { is_hot, menu_type, menu_lv2, is_detail, is_export, is_results, footer_m
 import default_mixin from '../../mixins/default.mixin.js'
 
 export default {
-  name: "match-container-main-template4",
+  name: "match-container-main-template3",
   mixins: [default_mixin],
   props: {
     // 当前组件的赛事数据对应列表的赛事
@@ -216,7 +216,7 @@ export default {
   setup (ctx) {
     // 是否显示球种标题
     const show_sport_title = computed(() => {
-      return [1,2].includes(+ctx.match_of_list.start_falg)
+      return [1,2].includes(+ctx.match_of_list.start_flag)
     })
     return { 
       lang, theme, i18n_t, compute_img_url, format_time_zone, GlobalAccessConfig, footer_menu_id,LOCAL_PROJECT_FILE_PREFIX,in_progress,not_begin,

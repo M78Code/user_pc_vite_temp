@@ -90,6 +90,7 @@ class MatchCollect {
       cuid: UserCtr.get_cuid()
     }).then(res => {
       if(lodash.get(res,'code') == 200){
+        this.clear_collect_info()
         const data = lodash.get(res,'data');
         Object.assign(this.match_collect_obj, { ...data })
         MatchMeta.complete_matchs.forEach(match => {
@@ -135,6 +136,14 @@ class MatchCollect {
     this.set_league_collect_state(tid, league_collect_state)
     // 该赛事是否收藏
     this.set_match_collect_state(match, match_collect_state)
+  }
+  /**
+   * @description 重置收藏对象
+   */
+  clear_collect_info () {
+    this.league_tid_collect_obj.value = {}
+    this.match_mid_collect_obj.value = {}
+    this.match_collect_obj = { 1: [], 2: [], 3: [] }
   }
 }
 

@@ -201,11 +201,9 @@ let timer;
       timer = setInterval(() => {
         payload.mst++
         payload.mstValue = format_mst_data(payload.mst)
-        console.log('payload.mstValue', payload.mstValue);
         
       }, 1000)
     }
-    console.log('payload', payload);
     
   }
 
@@ -226,7 +224,7 @@ function hide_away_goal () {
 }
 
 onMounted(()=>{
-  use_polling_mst(props.match);
+  // use_polling_mst(props.match);
 })
 
 onUnmounted(() => {
