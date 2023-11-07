@@ -5,22 +5,17 @@
     :class="{ 'activity_bonus': has_bonus_type, 'is-iframe': is_iframe }"
     :style="page_style">
     <div>
-<!-- <template1/> -->
+      <template1/>
     </div>
-    <site-header v-bind="site_header_data" @navigate="navigate" />
-    <!-- 第二行 -->
+    <!-- <site-header v-bind="site_header_data" @navigate="navigate" />
     <div style="display:none">{{SearchPCClass.update_time}}</div>
     <div :class="['header-item item2 row items-center', { 'search-off': !globalAccessConfig.get_activitySwitch() }]"
       :style="SearchPCClass.search_isShow ? 'z-index:900;' : ''">
-      <!-- 搜索 -->
       <header-search />
-      <!-- 公告滚动组件 -->
       <marquee-cst v-if='!SearchPCClass.search_isShow' @navigate="navigate" />
-      <!-- 占位盒子 -->
       <div :style="`width:${is_iframe ? 10 : 14}px`"></div>
-      <!-- 广告 & 语言主题等切换 -->
       <header-select />
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -47,7 +42,7 @@ import headerSelect from 'src/base-pc/components/site-header/header-select.vue'
 import gift_package from '/ouzhou-pc/image/common/activity_banner/gift_package.png'
 import { compute_css_variables } from "src/core/css-var/index.js"
 import BaseData from "src/core/base-data/base-data.js";
-// import template1 from "src/base-pc/components/top-header/template1/template1.vue";
+import template1 from "src/base-pc/components/top-header/template1/template1.vue";
 const page_style = ref('')
 page_style.value = compute_css_variables({ category: 'component', module: 'site-header' })
 

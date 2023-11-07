@@ -5,7 +5,7 @@ import * as TemplateCommon from "./template-common.js"
 
 
  // 欧洲版 足球 赔率模板 全量赔率
- export const template_2={
+ export const template_101={
   main_handicap_list: [
     {
       ols: [
