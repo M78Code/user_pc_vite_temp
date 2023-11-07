@@ -80,7 +80,6 @@ export default {
       // setTimeout(()=>{
       //   is_mounted.value = true
       // })
-      console.log('match_style_obj', match_style_obj);
     })
     onUnmounted(() => {
       match_style_obj = null
