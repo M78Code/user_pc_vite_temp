@@ -156,7 +156,7 @@ import { onMounted, ref } from "vue";
   background: #ffffff;
   padding: 14px 0 0 20px;
   box-sizing: border-box;
-  background-image: url("src/assets/images/keno.png");
+  // background-image: url("src/assets/images/keno.png");
   background-repeat: no-repeat;
   background-position: right;
   .analysis-bottom-title {

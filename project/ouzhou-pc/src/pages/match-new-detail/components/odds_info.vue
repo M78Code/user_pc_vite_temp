@@ -71,7 +71,7 @@
     <!-- 无数据时展示无盘口的数据提示 -->
     <div v-else class="close_thehand_icap">
       <div>
-      <img :src="close_thehand_icap" alt="" srcset="">
+      <img src="" alt="" srcset="">
       <div style="text-align: center;color:#A1A3A5;font-weight: 500;">Close the Handicap</div>
       </div>
     </div>
@@ -89,8 +89,7 @@ import template5 from './template5.vue'
 import common_template from './common_template.vue'
 // import { storage_bet_info } from 'src/utils/bet_info'
 // import down_arrow_fold from 'src/assets/images/down_arrow_fold.png'
-import in_muse from 'src/assets/images/video/in_muse.png'
-import close_thehand_icap from 'src/assets/images/close_the_handicap.png'//无盘口数据提示图片
+// import close_thehand_icap from 'src/assets/images/close_the_handicap.png'//无盘口数据提示图片
 
 const props = defineProps({
   matchDetail: {

@@ -66,7 +66,7 @@
         const { menu_match_date_api_config:{ api,params } } = MenuData
         api_common[api](params).then(res => {
             // if(res.code == 200 ){
-                useMittEmit(MITT_TYPES.EMIT_SCROLL_DATE_TIME_CHANGE,res.data)
+                useMittEmit(MITT_TYPES.EMIT_SCROLL_DATE_TIME_CHANGE,res.data || {})
             // }
         })
     }   
