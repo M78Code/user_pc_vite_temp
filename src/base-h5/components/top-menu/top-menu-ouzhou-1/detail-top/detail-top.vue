@@ -1,8 +1,8 @@
 <!--
  * @Author: rise
  * @Date: 2023-11-02 16:27:18
- * @LastEditors: rise
- * @LastEditTime: 2023-11-06 14:28:38
+ * @LastEditors: lowen pmtylowen@itcom888.com
+ * @LastEditTime: 2023-11-07 21:15:43
  * @Description:  
 -->
 <template>
@@ -59,6 +59,7 @@
 <script setup>
 import { ref, watch } from "vue";
 import { useRouter } from "vue-router";
+import { useMittEmit, MITT_TYPES } from "src/core";
 const router = useRouter();
 const refresh_is_active = ref(false);
 const active = ref(0);
@@ -118,6 +119,7 @@ const change_active = (item,index) => {
  */
 const refresh = () => {
   refresh_is_active.value = true;
+  useMittEmit(MITT_TYPES.EMIT_REFRESH_DETAILS)
   setTimeout(() => {
     refresh_is_active.value = false;
   }, 1000);
