@@ -721,6 +721,7 @@ export default defineComponent({
   }
   .match-list-wrapper {
     background: var(--q-gb-bg-c-18);
+    margin-bottom: .5rem;
   }
   // background: var(--q-match-page-bg-color-10);
 }
