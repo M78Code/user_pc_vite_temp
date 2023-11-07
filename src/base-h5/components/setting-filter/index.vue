@@ -5,7 +5,7 @@
 <template>
   <div class="setting-filter">
     <div class="setting-top setting-item">
-      <div class="title">
+      <div class="title" @click="searchClick">
         联赛筛选
         <span>(已选16)</span>
       </div>
@@ -40,6 +40,7 @@
 <script setup>
 import { i18n_t, compute_css_obj } from "src/core/index.js";
 import { useRouter, useRoute } from "vue-router";
+import { useMittEmit, MITT_TYPES } from "src/core/index.js";
 import {
   ref,
   watch,
@@ -111,6 +112,15 @@ const setting_list = ref([
 const closedHandle = () => {
   emit("closedHandle");
 };
+/**
+ * 打开联赛筛选框
+ */
+const searchClick = () => {
+    // console.log(`搜索足球`)
+    useMittEmit(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, {
+      open: true,
+    });
+}
 /**
  *@description 设置菜单改变
  *@return {Undefined} undefined

@@ -42,7 +42,7 @@ import { ScrollMenu } from 'src/base-h5/components/menu/app-h5-menu/index'
 import navigationBar from 'src/base-h5/components/tutorial/navigation-bar/index.vue'
 import settingFilter from 'src/base-h5/components/setting-filter/index.vue'
 import setectLeague from 'src/base-h5/components/setect-league/index.vue'
-import { scrollMenu } from "src/base-h5/components/menu/app-h5-menu/utils.js"
+import { scrollMenuEvent } from "src/base-h5/components/menu/app-h5-menu/utils.js"
 import matchContainer from "src/base-h5/components/match-list/index.vue";
 import { i18n_t, compute_css_obj, MenuData } from "src/core/index.js";
 import { is_results, is_kemp } from 'src/base-h5/mixin/menu.js'
@@ -72,7 +72,7 @@ const switchHandle = (val) => {
 const slideHandle = (val, e) => {
     if (state.currentSlideValue === val) return
     state.currentSlideValue = val
-    scrollMenu(e, ".slide-box", ".switch-item-active");
+    scrollMenuEvent(e, ".slide-box", ".switch-item-active");
 }
 
 const selectFinishHandle = (val) => {

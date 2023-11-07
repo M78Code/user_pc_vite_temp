@@ -23,7 +23,7 @@
                     </div>
                   </div>
                   <div class="s-w-i-title">
-                    {{ (item.btn ?item.title : item.name) || MenuData.get_menus_i18n_map(item.mi) }} 
+                    {{ (item.btn ?item.title : item.name) || MenuData.get_menus_i18n_map(item.mi) }}
                   </div>
                 </div>
 
@@ -38,7 +38,7 @@ import { ref,onUnmounted } from "vue";
 import lodash_ from "lodash";
 import BaseData from "src/core/base-data/base-data.js";
 import { compute_css_obj, MenuData } from "src/core/index.js";
-import {scrollMenu} from "../utils";
+import {scrollMenuEvent} from "../utils";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 
 const emitters = ref({});
@@ -65,7 +65,7 @@ function set_menu_lv2(item = {},event) {
   // 设置菜单点击事件
   useMittEmit(MITT_TYPES.EMIT_SCROLL_TOP_NAV_CHANGE,item )
 
-  event && scrollMenu(event,".s-menu-container",".sport-menu-item");
+  event && scrollMenuEvent(event,".s-menu-container",".sport-menu-item");
 }
 
 /**

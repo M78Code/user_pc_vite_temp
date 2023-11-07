@@ -124,7 +124,6 @@ const clear_timer = () => {
  
 <style scoped lang="scss">
 .match-list-container{
-  height: calc(100% - 44px - 50px - 32px - 48px);
   overflow: hidden;
   position: relative;
 }
