@@ -210,7 +210,22 @@ export default {
     is_show_opening_title () {
       const menu_lv_v1 = MenuData.current_lv_1_menu_i
       // 今日、早盘、串关
-      return [1,2,3,6].includes(+menu_lv_v1) && [1,2].includes(this.match_of_list.start_falg)
+      return [1,2,3,6].includes(+menu_lv_v1) && [1,2].includes(this.match_of_list.start_flag)
+    },
+    // 获取赛事数量
+    get_match_count () {
+      const { csid, start_flag } = this.match_of_list
+      const key = start_flag === 1 ? `progress_csid_${csid}` : `not_csid_${csid}`
+      return lodash.get(MatchMeta.ball_seed_count.value, `${key}`, 0)
+    },
+    // 是否有角球
+    get_corner_kick () {
+      const { msc_obj: { S5 } } = this.match_of_list
+      let is_show = false
+      S5 && Object.values(S5).forEach(t => {
+        is_show = t && true
+      })
+      return is_show
     }
   },
   watch: {
@@ -340,9 +355,10 @@ export default {
      * @description 球种折叠
      */
     handle_ball_seed_fold () {
-      const { csid, start_falg = '' }  = this.match_of_list
-      MatchFold.set_ball_seed_match_fold(csid, start_falg)
+      const { csid, start_flag = '' }  = this.match_of_list
+      MatchFold.set_ball_seed_match_fold(csid, start_flag)
       MatchMeta.compute_page_render_list(0, 2)
+      MatchMeta.get_match_base_hps_by_mids()
     },
     /**
      * @description 联赛折叠
@@ -352,6 +368,7 @@ export default {
       if (is_hot.value || is_detail.value) return;
       MatchFold.set_league_fold(this.match_of_list.tid)
       MatchMeta.compute_page_render_list(0, 2)
+      MatchMeta.get_match_base_hps_by_mids()
     },
     /**
      *启动 组件新初始化后 ，判定组件是否是刚刚新初始化的 定时器

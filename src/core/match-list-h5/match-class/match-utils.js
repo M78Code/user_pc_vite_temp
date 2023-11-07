@@ -2,6 +2,7 @@ import lodash from 'lodash'
 import BaseData from 'src/core/base-data/base-data.js'
 import MenuData from "src/core/menu-app-h5/menu-data-class.js"
 import PageSourceData from "src/core/page-source/page-source.js";
+import matchMeta from './match-meta';
 
 class MatchUtils {
 
@@ -25,13 +26,15 @@ class MatchUtils {
     // 设置开赛，未开赛标题以及数量
     const s_length = lodash.get(started, 'length', 0)
     if (s_length > 0) {
-      started[0].start_falg = 1
+      started[0].start_flag = 1
       started[0].in_progress_total = s_length
+      this.get_match_total_by_csid('progress', started)
     }
     const n_length = lodash.get(not_started, 'length', 0)
     if (n_length > 0) {
-      not_started[0].start_falg = 2
+      not_started[0].start_flag = 2
       not_started[0].no_start_total = n_length
+      this.get_match_total_by_csid('not', not_started)
     }
     return lodash.uniqBy([ ...this.handler_match_classify_by_csid(started), ...this.handler_match_classify_by_csid(not_started) ], 'mid')
   }
@@ -62,7 +65,7 @@ class MatchUtils {
     // 当前赛事
     let is_show_ball_title = false
     const match = list[i]
-    if ([1,2].includes(match.start_falg)) {
+    if ([1,2].includes(match.start_flag)) {
       is_show_ball_title = true
     } else if (i === 0) {
       is_show_ball_title = true
@@ -156,6 +159,19 @@ class MatchUtils {
     let away_score = lodash.get(msc_obj, `${key}.away`, "0")
     return { home_score, away_score }
 	}
+  /**
+   * @description 获取 各球种的数量
+   * @param { String } key
+   * @param { Array } list
+   */
+  get_match_total_by_csid (key, list) {
+    const csids = list.map(item => item.csid)
+    const csid_list = lodash.uniq(csids)
+    csid_list.forEach(t => {
+      const matchs = list.filter(list => list.csid === t)
+      matchMeta.set_ball_seed_count(`${key}_csid_${t}`, matchs.length)
+    })
+  }
 }
 
 export default new MatchUtils()

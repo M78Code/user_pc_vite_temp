@@ -12,6 +12,7 @@ const Y0_img_white = compute_local_project_file_path('/image/list/m_list_jiaoqiu
 // Y0 白色版角球选中图标
 const match_icon_lock = compute_local_project_file_path('/image/common/match-icon-lock.svg') // Y0 白色版角球选中图标
 // 未收藏相关图标
+const not_favorite_app = compute_local_project_file_path('/image/common/not_favorite_app.png')
 const normal_img_not_favorite_white = compute_local_project_file_path('/image/common/m-list-favorite.svg')
 const normal_img_not_favorite_black = compute_local_project_file_path('/image/common/m-list-favorite-s.svg')
 // 已经收藏的图标
@@ -65,6 +66,17 @@ const video_icon = compute_local_project_file_path('/image/list/video_icon.svg')
 const icon_date = compute_local_project_file_path('/image/list/icon_date.png')
 const expand_item = compute_local_project_file_path('/image/list/expand_item.png')
 const no_data_img = compute_local_project_file_path('/image/png/no_data.png')
+const no_data_app = compute_local_project_file_path('/image/png/no_data_app.png')
+const no_data_collect = compute_local_project_file_path('/image/png/no_data_collect.png')
+// 角球图标
+const corner_icon = compute_local_project_file_path('/image/list/corner_icon.svg')
+// app-h5 提前结算
+const mearlys_icon_app = compute_local_project_file_path('/image/list/midfield_icon_app.svg')
+// app-h5 中力场
+const midfield_icon_app = compute_local_project_file_path('/image/list/midfield_icon_app.svg')
+
+const slide_icon_0 =  compute_local_project_file_path('/image/common/slide_icon_y0.svg')
+const slide_icon_1 =  compute_local_project_file_path('/image/common/slide_icon.svg')
 
 //弹出框菜单图片
 const popup_menu = {
@@ -83,5 +95,5 @@ export {
   lvs_icon_theme01, lvs_icon_theme02, animationUrl_icon_theme01, animationUrl_icon_theme02, muUrl_theme01, muUrl_theme01_y0, muUrl_theme02, muUrl_theme02_y0,icon_date,
   none_league_icon, none_league_icon_black, image_panda_placeholder, default_league_icon, home_default_avatar, away_default_avatar, match_analysis, match_analysis2, mearlys_icon,
   league_collapse_icon, league_icon, league_icon_back, popup_menu, polular_spirite, polular_spirite_theme02, in_progress, not_begin, animation_icon, video_icon,
-  expand_item, no_data_img
+  expand_item, no_data_img, corner_icon, mearlys_icon_app, midfield_icon_app, no_data_app, no_data_collect, slide_icon_0, slide_icon_1, not_favorite_app
 }
