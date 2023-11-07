@@ -386,7 +386,7 @@ const update_data = (val) => {
   if(!val) return
   match_infoData.value = MatchDetailsData.get_quick_mid_obj(val);
   match_details.value = [MatchDetailsData.get_quick_mid_obj(val)];
-  console.log(match_infoData.value ,'match_infoData.value ',MatchDetailsData);
+ 
 };
 
 /*

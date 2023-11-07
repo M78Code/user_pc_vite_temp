@@ -1,102 +1,5 @@
 <template>
-  <div class="c-match-item  match-tpl1-bg" :class="{ 'more-handicap': lodash.get(match, 'has_add1') || lodash.get(match, 'has_add2') }">
-  <!-- <div class="c-match-item  match-tpl1-bg" :class="{ 'more-handicap': match.has_add1 || match.has_add2 }"> -->
-    <div v-show="false">{{ MatchListData.data_version.version }}</div>
-    <div v-show="false">{{ MatchListCardData.list_version }}</div>
-    <!-- 比赛进程 -->
-    <div class="process-col yb-flex-center">
-      <!--热门赛事显示hot标识-->
-      <img class="match-hot" :src="compute_local_project_file_path('/image/common/svg/hot.svg')" v-show="lodash.get(match, 'is_hot')" />
-      <!-- 比赛进程 -->
-      <match-process v-if="is_mounted && match" :match="match" source='match_list'
-        show_page="match-list" :rows="2" />
-    </div>
-    <!-- 盘口 -->
-    <div class="match-handicap-item-wrap">
-      <!-- 主盘 -->
-      <div class="match-handicap-item">
-        <!-- 赛事基础信息 -->
-        <div class="basic-col" :style="`width:${match_list_tpl_size.team_width}px !important;height:105px !important;`">
-          <basis-info1 v-if="is_mounted && match" :match="match" show_type="all" />
-        </div>
-        <!-- 赛事盘口投注项 -->
-        <match-handicap v-if="match"  :handicap_list="match_tpl_info[`template_${match_style_obj.data_tpl_id}`].main_handicap_list" :match="match" />
-        <!-- 视频按钮 -->
-        <div class="media-col">
-          <match-media v-if="match" :match="match" />
-        </div>
-      </div>
-      <!-- 附加盘1 -->
-      <div class="match-handicap-item" v-if="lodash.get(match, 'has_add1')">
-        <!-- 赛事基础信息 -->
-        <div class="basic-col" :style="`width:${match_list_tpl_size.team_width}px !important;height:70px !important;`">
-          <!-- <basis-info4 v-if="is_mounted" :match="match" /> -->
-        </div>
-        <!-- 赛事盘口投注项 -->
-        <match-handicap v-if="match"  :handicap_list="match_tpl_info[`template_${match_style_obj.data_tpl_id}`].add_handicap_list" :match="match" />
-        <!-- 视频按钮 -->
-        <div class="media-col"></div>
-      </div>
-      <!-- 附加盘2 -->
-      <div class="match-handicap-item" v-if="lodash.get(match, 'has_add2')">
-        <!-- 赛事基础信息 -->
-        <div class="basic-col" :style="`width:${match_list_tpl_size.team_width}px !important;height:70px !important;`">
-          <!-- <basis-info4 v-if="is_mounted" :match="match" /> -->
-        </div>
-        <!-- 赛事盘口投注项 -->
-        <match-handicap v-if="match"  :handicap_list="match_tpl_info[`template_${match_style_obj.data_tpl_id}`].add_handicap_list" :match="match" />
-        <!-- 视频按钮 -->
-        <div class="media-col"></div>
-      </div>
-      <!-- 角球玩法tab -->
-      <div class="other-play-tab" v-if="lodash.get(match, 'has_other_play')">
-        <!-- <div class="process-col"></div> -->
-        <div class="play-title col" @click="fold_tab_play"
-          :style="`width:${match_list_tpl_size.team_width + match_list_tpl_size.bet_width * (match_style_obj.data_tpl_id == 13 ? 13 : 6)}px !important;flex:none`">
-          <div class="arrow-wrap yb-flex-center">
-            <div class="yb-icon-arrow" :class="{ active: match_style_obj.is_fold_tab_play }"></div>
-          </div>
-          <tab :list="play_name_list" :padding="10" :currentIndex="lodash.get(match, 'play_current_index')" tab_name_key="play_name"
-            @onclick="play_tab_click" />
-
-        </div>
-        <div class="media-col"></div>
-      </div>
-      <!-- 次要玩法标题 -->
-      <div :class="['fifteen-box', { 'double-title': ['en', 'ad', 'ms'].includes(UserCtr.lang) }]"
-        v-if="lodash.get(match, 'has_other_play') && !match_style_obj.is_fold_tab_play">
-        <div class="basic-col" :style="`width:${match_list_tpl_size.team_width}px !important;`"></div>
-        <div class="row">
-          <div class="handicap-col fifteen-item bet-item-wrap fifteen_tab_txt"
-            :class="[{ 'tab-tilte-bg': set_secondary_bg(key, bet_col.length) }, { 'flex justify-center items-center': item.includes('%n') }, { 'highlight-t': set_secondary_bg(key, bet_col.length) && !item.includes('%n') }]"
-            :key="key" :style="`width:${get_bet_width(key, bet_col.length)}px !important;`"
-            v-tooltip="{ content: item.includes('%n') ? '' : item, overflow: 1 }" v-for="(item, key) in bet_col">
-            <div class="double-row" v-if="item.includes('%n')">
-              <div v-for="(text, i) in item.split('%n')" :class="[{ 'highlight-t': i === 1 && [3, 4, 5].includes(key) }]"
-                :key="i">{{ text }}</div>
-            </div>
-            <template v-else>
-              {{ item }}
-            </template>
-          </div>
-        </div>
-      </div>
-      <!-- 次要玩法盘 -->
-      <!--  is_fold_tab_play 次要玩法 是否折叠  -->
-      <div class="match-handicap-item other-handicap-item"
-        v-if="lodash.get(match, 'has_other_play') && !match_style_obj.is_fold_tab_play">
-        <!-- 赛事基础信息 -->
-        <div class="basic-col" :style="`width:${match_list_tpl_size.team_width}px !important;`">
-          <basis-info4 v-if="is_mounted && match" :is_other_concede="true" :match="match" :is_show_score="true" />
-        </div>
-        <!-- 赛事盘口投注项 -->
-        <match-handicap v-if="match"  :handicap_list="match_tpl_info[`template_${match_style_obj.data_tpl_id}`].hpsOutright" :match="match" other_play />
-        <!-- 视频按钮 -->
-        <div class="media-col"></div>
-      </div>
-
-    </div>
-  </div>
+  <div></div>
 </template>
 
 <script setup>
@@ -114,7 +17,7 @@ import { utils_info } from 'src/core/utils/module/match-list-utils.js';
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 
 import { MatchProcessFullVersionWapper as MatchProcess } from 'src/components/match-process/index.js';
-import { MatchBasisInfo1FullVersionWapper as BasisInfo1 } from 'src/base-pc/components/match-list/match-basis-info/template-7/index.js'
+import { MatchBasisInfo1FullVersionWapper as BasisInfo1 } from 'src/base-pc/components/match-list/match-basis-info/template-101/index.js'
 import { MatchBasisInfo4FullVersionWapper as BasisInfo4 } from 'src/base-pc/components/match-list/match-basis-info/template-4/index.js'
 import { MatchHandicapFullVersionWapper as MatchHandicap } from 'src/base-pc/components/match-list/match-handicap/index.js'
 import MatchMedia from 'src/base-pc/components/match-list/match-media/index.vue'
