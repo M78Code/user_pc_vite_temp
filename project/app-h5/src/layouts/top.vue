@@ -11,7 +11,7 @@
     <TopMenu />
 
     <div v-if="[3,6].includes(MenuData.current_lv_1_menu_mi.value)">
-      <DateTab :dataList="dataList[MenuData.current_lv_1_menu_mi.value]"  />
+      <DateTab :dataList="dataList[MenuData.current_lv_1_menu_i]"  />
     </div>
 
     <div v-if="[2000].includes(MenuData.current_lv_2_menu_i)">
@@ -79,8 +79,8 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
    */
   const dataList = reactive({
     3: dateTabList(new Date()),
-    6: dateTabList(new Date(new Date().getTime()+24*60*60*1000),{name:"今日",val:new Date()}),
-    2000: dateTabList(new Date(new Date().getTime()+24*60*60*1000),{name:"今日",val:new Date()})
+    6: dateTabList(new Date(new Date().getTime()+24*60*60*1000),{name:"今日",val:new Date().getTime()}),
+    2000: dateTabList(new Date(new Date().getTime()+24*60*60*1000),{name:"今日",val:new Date().getTime()})
   });
 
   const ref_data = reactive({
@@ -97,10 +97,7 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
     MenuData.set_current_lv_2_menu_i(val)
     // 设置菜单属性
     if([300,2000,50000].includes(+val.mi)){
-      // 设置vr /收藏 电竞 头信息
-      MenuData.set_top_menu_title(val)
-      // 清空一级菜单显示 用于后续更新
-      MenuData.current_lv_1_menu_mi.value = ''
+    
       // 设置 对应菜单的数据
       switch(+val.mi){
         case 300:
@@ -112,14 +109,21 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
           break  
         
         case 50000:
+          val.title = '我的收藏'
           let menu_list_res = MenuData.get_menu_lvmi_list_only(MenuData.current_lv_1_menu_i)
 
           menu_list_res.unshift({mi:0,btn:1, ct:"",title:"全部"})
           ref_data.scroll_data_list = menu_list_res
+          
           MenuData.set_collect_list(menu_list_res)
           MenuData.set_collect_menu_type(50000)
           break  
       }
+
+      // 设置vr /收藏 电竞 头信息
+      MenuData.set_top_menu_title(val)
+      // 清空一级菜单显示 用于后续更新
+      MenuData.current_lv_1_menu_mi.value = ''
 
       let obj = lodash_.get(ref_data.scroll_data_list,`[0]`,{})
       // 设置选中菜单的id
@@ -139,7 +143,7 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
   })
 
   // 早盘 串关
-  const set_scroll_early_single = val => {
+  const set_scroll_early_single = (val = {}) => {
     const menu_list = MenuData.get_menu_lvmi_list_only(MenuData.current_lv_1_menu_i)
     let early_single = []
     if(Object.keys(val).length){
@@ -220,7 +224,6 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
     if (lodash_.isEmpty(mi_tid_mids_res)) return
 
     // 设置菜单对应源数据
-
     MatchMeta.set_origin_match_data()
   }
 

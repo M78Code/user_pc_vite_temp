@@ -9,30 +9,10 @@
       <template v-slot="{ match_item, index }">
         <template v-if="match_item">
           <div class="data_mid"> <!--此data-mid用于分频订阅赛事,请勿修改-->
-            <!-- 专业版 -->
-            <template v-if="standard_edition === 2">
-              <!--冠军玩法-->
-              <template v-if="is_kemp">
-                <MatchContainerMainTemplate2
-                  :i="index" 
-                  :match_of_list="match_item">
-                </MatchContainerMainTemplate2>
-              </template>
-              <!--app-h5 真实体育玩法 -->
-              <template v-else>
-                <MatchContainerMainTemplate1
-                  :i="index"
-                  :match_of_list="match_item">
-                </MatchContainerMainTemplate1>
-              </template>
-            </template>
-            <!-- 新手版 -->
-            <template v-else>
-              <MatchContainerMainTemplate8
-                :i="index"
-                :match_of_list="match_item">
-              </MatchContainerMainTemplate8>
-            </template>
+            <MatchContainerMainTemplate1
+              :i="index"
+              :match_of_list="match_item">
+            </MatchContainerMainTemplate1>
           </div>
         </template>
       </template>
@@ -44,8 +24,6 @@
 
 // ouzhou-h5 赛事组件
 import MatchContainerMainTemplate1 from "src/base-h5/components/match-container/template/ouzhou/match-container-main-template1.vue"; 
-// ouzhou-h5 冠军组件
-import MatchContainerMainTemplate2 from "src/base-h5/components/match-container/template/ouzhou/match-container-main-template2.vue"; 
 
 // 赛事滚动组件
 import ScrollWrapper from 'src/base-h5/components/scroll-wraper/scroll-wrapper.vue'; 

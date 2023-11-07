@@ -185,7 +185,6 @@ class PageSourceData {
 const  instance =new PageSourceData()
 const PageSourceDataProxy =new Proxy(instance, {
   set: function (target, key, value, receiver) {
-    console.log(`setting : key: ${key} value:${value} , `)
     if(key=='page_source'){
 
       let check =  PAGE_SOURCE_POOL_H5.includes(value) || PAGE_SOURCE_POOL_PC.includes(value)

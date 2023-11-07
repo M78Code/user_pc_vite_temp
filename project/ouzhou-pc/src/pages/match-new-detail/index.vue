@@ -75,7 +75,7 @@
 <script setup>
 import { onMounted, ref, provide } from "vue";
 import {utils, MenuData, LOCAL_PROJECT_FILE_PREFIX } from 'src/core/index.js';
-import neutral from 'src/assets/images/neutral.png'
+// import neutral from 'src/assets/images/neutral.png'
 import odds_info from "./components/odds_info.vue";
  import analysis from './analysis/index.vue'
 import tabs from './components/tabs.vue'
@@ -305,7 +305,7 @@ const sport_ball_type = {
 .sport_bg {
   width: 226px;
   height: 80px;
-  background-image: url('src/assets/images/icon_sport_bg.png');
+  // background-image: url('src/assets/images/icon_sport_bg.png');
   background-size: 226px;
   position: absolute;
   top: 0;
