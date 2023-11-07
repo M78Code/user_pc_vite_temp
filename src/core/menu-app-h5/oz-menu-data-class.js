@@ -23,6 +23,7 @@ class MenuData {
     }
     this.current_lv_1_menu_i = ''
     this.current_lv_2_menu_i = ''
+    this.menu_lv_mi_lsit = []
 
     this.menu_list = []; //常规球种 101...
     this.menu_mi = ""; //常规球种选中

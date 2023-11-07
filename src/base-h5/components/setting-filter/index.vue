@@ -18,7 +18,7 @@
                     {{ item.name }}
                 </div>
                 <div class="more">
-                    <Switch  :value="item.switchValue" :leftVal="item.leftVal" :rightVal="item.rightVal" @update="switch_hanle(item)"/>
+                    <Switch  :value="item.switchValue" :leftVal="item.leftVal" :rightVal="item.rightVal" @update="switch_handle(item)"/>
                 </div>
             </div>
             <div class="setting-item" @click="jumpHandle">
@@ -71,7 +71,7 @@ defineProps({
 const emit = defineEmits(["closedHandle"]);
 
 const setting_list = ref([
-    { name: '投注模式', leftVal: '新手版', rightVal: '专业版', switchValue: UserCtr.standard_edition,mark:'version' },
+    { name: '投注模式', leftVal: '新手版', rightVal: '专业版', switchValue: UserCtr.standard_edition === 2 ? 'rightVal' :'leftVal',mark:'version' },
     { name: '排序规则', leftVal: '热门', rightVal: '时间', switchValue: UserCtr.sort_type,mark:'sort' },
     { name: '盘口设置', leftVal: '欧洲盘', rightVal: '香港盘',mark:'Handicap' },
     // { name: '字号大小', leftVal: '默认', rightVal: '放大',mark:'size' },
@@ -86,14 +86,14 @@ const closedHandle = () => {
  *@description 设置菜单改变
  *@return {Undefined} undefined
  */
-const switch_hanle = (item) => {
+const switch_handle = (item) => {
     const typeMap = {
-        version: version_hanle,
-        sort: sort_hanle,
-        Handicap: Handicap_hanle,
-        size: size_hanle,
-        theme: theme_hanle,
-        activity: activity_hanle,
+        version: version_handle,
+        sort: sort_handle,
+        Handicap: Handicap_handle,
+        size: size_handle,
+        theme: theme_handle,
+        activity: activity_handle,
     }
     typeMap[item.mark] && typeMap[item.mark](item)
 }
@@ -101,42 +101,42 @@ const switch_hanle = (item) => {
  *@description 处理版本改变
  *@return {Undefined} undefined
  */
-const version_hanle = (item) => {
+const version_handle = (item) => {
     console.log('item',item)
 }
 /**
  *@description 处理排序规则
  *@return {Undefined} undefined
  */
-const sort_hanle = (item) => {
+const sort_handle = (item) => {
     console.log('item',item)
 }
 /**
  *@description 处理盘口设置
  *@return {Undefined} undefined
  */
-const Handicap_hanle = (item) => {
+const Handicap_handle = (item) => {
     console.log('item',item)
 }
 /**
  *@description 处理字号大小
  *@return {Undefined} undefined
  */
-const size_hanle = (item) => {
+const size_handle = (item) => {
     console.log('item',item)
 }
 /**
  *@description 处理主题风格
  *@return {Undefined} undefined
  */
-const theme_hanle = (item) => {
+const theme_handle = (item) => {
     console.log('item',item)
 }
 /**
  *@description 处理每日活动
  *@return {Undefined} undefined
  */
-const activity_hanle = (item) => {
+const activity_handle = (item) => {
     console.log('item',item)
 }
 
