@@ -356,7 +356,7 @@ export const get_tab_param_build = (mids) => {
   mids.forEach(mid => {
     let match = MatchListData.get_quick_mid_obj(mid)
     // 有其他玩法
-    if (match.has_other_play) {
+    if (match && match.has_other_play) {
       // 添加玩法ID
       tabs.push({
         mid,

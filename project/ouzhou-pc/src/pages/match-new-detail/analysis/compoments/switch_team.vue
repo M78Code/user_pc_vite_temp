@@ -142,7 +142,7 @@ import shoucan from "src/assets/images/shoucan.png";
     font-size: 18px;
     color: #401c00;
     span:nth-child(2) {
-      color: $basic-color;
+      color: #401c00;
     }
   }
   .mr-8 {
@@ -183,7 +183,7 @@ import shoucan from "src/assets/images/shoucan.png";
     border: 0.5px solid #ff7000;
     border-radius: 20px;
     background: rgba(255, 112, 0, 0.02);
-    color: $basic-color;
+    color: #ff7000;;
     display: flex;
     align-items: center;
     justify-content: center;

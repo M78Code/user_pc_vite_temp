@@ -86,7 +86,7 @@ const init_data = (_index) => {
   //请求注单记录接口
   get_order_list(_index, params, url_api)
 
-  // 未结算时，轮休获取提前结算列表金额
+  // 未结算时，轮询获取提前结算列表金额
   if(_index === 0) {
     clearInterval(timer_2.value)
     timer_2.value = setInterval(() => {

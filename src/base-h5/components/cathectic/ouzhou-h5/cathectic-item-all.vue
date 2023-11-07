@@ -11,6 +11,7 @@
       <div v-if="UserCtr.user_info.settleSwitch == 1 && BetRecordClass.selected === 0" 
       :class="['cashout', 'unsellteCashout', BetRecordClass.is_early ? 'active': '']"
       @click="BetRecordClass.set_is_early(!BetRecordClass.is_early)">Cashout</div>
+      <!-- BetRecordClass.bet_record_version -->
       <div style="display: none;">{{ BetRecordClass.bet_record_version }}</div>
       <!-- 已结算筛选按钮 -->
       <div class="settled-select flex" v-if="BetRecordClass.selected === 1">

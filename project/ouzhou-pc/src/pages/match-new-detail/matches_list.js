@@ -7,8 +7,8 @@
 
 import _ from 'lodash';
 
-import courseData from 'src/global/course.js'
-import match_play from 'src/global/match_os.js';
+import courseData from './utils/course'
+import match_play from './utils/match_os';
 
 const sort_odds_list = [ '2', "173", "244" ]
 /**
