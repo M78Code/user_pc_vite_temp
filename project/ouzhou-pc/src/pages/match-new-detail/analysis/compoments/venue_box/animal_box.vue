@@ -30,7 +30,7 @@
 <script setup>
 import { onMounted, ref,watch ,nextTick} from "vue";
 import { api_match_list } from "src/api";
-import loading from 'src/components/loading/index.vue'
+import loading from '../../../components/loading/index.vue'
 import _ from 'lodash'
 
 const props = defineProps({

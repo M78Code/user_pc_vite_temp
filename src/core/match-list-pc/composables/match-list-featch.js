@@ -7,6 +7,7 @@ import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-c
 import { PageSourceData } from "src/core/index.js";
 import BetCommonHelper from "src/core/bet/common-helper/index.js";
 import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/core/index.js";
+import { get_tab_param_build } from 'src/core/match-list-pc/composables/match-list-other.js';
 import MatchListCardClass from "src/core/match-list-pc/match-card/match-list-card-class.js";
 import MatchListScrollClass from 'src/core/match-list-pc/match-scroll.js'
 import MenuData from "src/core/menu-pc/menu-data-class.js";
@@ -189,7 +190,7 @@ const api_bymids = (
   // 		}
   // 	});
   // 获取足球tab玩法参数
-  // let tabs = MatchListData.get_tab_param_build(mids);
+  let tabs = get_tab_param_build(mids);
   let match_list_api_config = MenuData.match_list_api_config.match_list;
   let _params = lodash.clone(match_list_api_config.params) || {};
   let params = {
@@ -199,9 +200,9 @@ const api_bymids = (
     orpt: _params.orpt,
     sort: filterHeader.vx_match_sort,
   };
-  // if (tabs.length > 0) {
-  // 	params.tabs = tabs;
-  // }
+  if (tabs.length > 0) {
+  	params.tabs = tabs;
+  }
   // 非滚球传 玩法ID
   if (MenuData.menu_root != "1" && page_source != "search") {
     params.pids = _params.pids;

@@ -56,7 +56,7 @@ export const record_user_preference = (params, config={}, url = "/v1/betOrder/re
 //投注记录（ 新  带提前结算相关字段）
 export const post_order_list = (params, config={}, url = "/order/betRecord/getOrderList") => http.post(`${prefix2}${url}`, params, config);
 //提前结算
-export const post_pre_bet_order = (params, config={}, url = "/v1/betOrder/orderPreSettle") => http.post(`${prefix}${url}`, params, config);
+export const post_pre_bet_order = (params, config={}, url = "/v1/betOrder/orderPreSettle") => http.post(`${prefix13}${url}`, params, config);
 //预投住注单记录
 export const post_book_list = (params, config={}, url = "/order/betRecord/getPreBetOrderlist") => http.post(`${prefix3}${url}`, params, config);
 // 5秒预约投注拉单

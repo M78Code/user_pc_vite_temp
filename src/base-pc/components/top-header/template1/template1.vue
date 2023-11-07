@@ -18,7 +18,7 @@
   <div class="header-main">
     <div class="header-content">
       <div class="logo">
-        <img :src="logo" alt="" srcset="" class="" />
+        <!-- <img :src="logo" alt="" srcset="" class="" /> -->
       </div>
       <div class="header-right">
         <!-- 头部菜单 -->
@@ -29,9 +29,9 @@
           </div>
         </div>
         <!-- 右侧 -->
-        <div>
+        <!-- <div>
           <right_head />
-        </div>
+        </div> -->
 
       </div>
     </div>
@@ -40,18 +40,16 @@
 <script>
 import { defineComponent, onMounted, ref, watch } from "vue";
 import _ from "lodash"
-import right_head from "./right_head.vue";
-import SvgIcon from "src/public/components/svg_icon/index.vue";
-import logo from "src/assets/images/logo.png";
+// import right_head from "./right_head.vue";
+// import logo from "src/assets/images/logo.png";
 import { useRouter, useRoute } from 'vue-router'
 
-import store from "src/store-redux-vuex/redux_menu";
+// import store from "src/store-redux-vuex/redux_menu";
 
 export default defineComponent({
   name: "TopHeaderTemplate1",
   components: {
-    SvgIcon,
-    right_head,
+    // right_head,
   },
   props: {},
   setup(props, context) {
@@ -96,25 +94,25 @@ export default defineComponent({
           break;
       }
 
-      let state = store.getState()
-      // 获取最新的 数据
-      let redux_menu = _.cloneDeep(state.menusReducer.redux_menu)
-      // 修改菜单数据
-      redux_menu.menu_root = item.id
+      // let state = store.getState()
+      // // 获取最新的 数据
+      // let redux_menu = _.cloneDeep(state.menusReducer.redux_menu)
+      // // 修改菜单数据
+      // redux_menu.menu_root = item.id
 
-      // in play 默认足球
-      if (item.id == 2) {
-        redux_menu.mid_tab_menu_type = 101
-      }
-      // 存储
-      store.dispatch({
-        type: 'SETREDUXMENU',
-        data: redux_menu
-      })
+      // // in play 默认足球
+      // if (item.id == 2) {
+      //   redux_menu.mid_tab_menu_type = 101
+      // }
+      // // 存储
+      // store.dispatch({
+      //   type: 'SETREDUXMENU',
+      //   data: redux_menu
+      // })
 
     };
     return {
-      logo,
+      // logo,
       current_id,
       navList,
       nav_click,
@@ -128,7 +126,7 @@ export default defineComponent({
   height: 68px;
 
 
-  // background-color: $basic-color;
+  background-color: #FF7000;
 
   .header-content {
     display: flex;
@@ -163,6 +161,7 @@ export default defineComponent({
 
         .header-nav-title {
           border-bottom: 2px solid #ffffff;
+          color:#ffffff;
         }
       }
     }
@@ -172,6 +171,7 @@ export default defineComponent({
 
       .header-nav-title {
         border-bottom: 2px solid #ffffff;
+        color:#ffffff;
       }
     }
   }

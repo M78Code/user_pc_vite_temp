@@ -57,7 +57,7 @@
         mids: update_mids_arr,
       };
       // 拉取http请求
-      useMittEmit(MITT_TYPES.MITT_TYPES.EMIT_API_BYMIDS,params)
+      useMittEmit(MITT_TYPES.EMIT_API_BYMIDS,params)
     }
   }
 

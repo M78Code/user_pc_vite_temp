@@ -60,56 +60,56 @@
   
   // let state = store.getState();
 
-  // const props = defineProps({
-  //   matches_featured_list: {
-  //     type: [ Array ],
-  //     default: () => [],
-  //   }
-  // })
+  const props = defineProps({
+    matches_featured_list: {
+      type: [ Array ],
+      default: () => [],
+    }
+  })
 
   // 获取当前header展示背景图
   // const current_ball_type = ref(630)
   // key值为赛种id value值为对应的背景图y轴坐标
-  // const sport_ball = {
-  //   1:0,
-  //   2:1,
-  //   3:5,
-  //   4:10,
-  //   5:6,
-  //   6:8,
-  //   7:13,
-  //   8:2,
-  //   9:3,
-  //   10:4,
-  //   11:12,
-  //   12:9,
-  //   13:14,
-  //   14:15,
-  //   15:16,
-  //   16:12,
-  //   17:20,
-  //   18:'',
-  //   19:12,
-  //   20:25,
-  //   21:13,
-  //   22:1,
-  //   23:1,
-  //   24:1,
-  //   25:1,
-  //   26:1,
-  //   27:1,
-  //   28:1,
-  //   29:1,
-  //   30:1,
-  //   31:1,
-  //   32:1,
-  //   37:1,
-  //   38:1,
-  //   100:1,
-  //   101:1,
-  //   102:1,
-  //   103:1,
-  // }
+  const sport_ball = {
+    1:0,
+    2:1,
+    3:5,
+    4:10,
+    5:6,
+    6:8,
+    7:13,
+    8:2,
+    9:3,
+    10:4,
+    11:12,
+    12:9,
+    13:14,
+    14:15,
+    15:16,
+    16:12,
+    17:20,
+    18:'',
+    19:12,
+    20:25,
+    21:13,
+    22:1,
+    23:1,
+    24:1,
+    25:1,
+    26:1,
+    27:1,
+    28:1,
+    29:1,
+    30:1,
+    31:1,
+    32:1,
+    37:1,
+    38:1,
+    100:1,
+    101:1,
+    102:1,
+    103:1,
+  }
 
   //const current_ball_type = computed((csid = 0) => {
   //  console.error("sssssssssss",csid)
@@ -117,9 +117,9 @@
   //})
   
   // 每个banner在精灵图中的高度为70
-  // const current_ball_type = csid => {
-  //   return sport_ball[csid] * 70 
-  // }
+  const current_ball_type = csid => {
+    return sport_ball[csid] * 70 
+  }
 
 
   // const current_check_betId = ref(state.betInfoReducer.current_check_betId)
@@ -131,16 +131,16 @@
   // });
 
   // // 选中当前td 使td高亮 且将投注信息存储到数据仓库中
-  // const checked_current_td = payload => {
-  //   // 锁盘状态不高亮
-  //   if (payload.hps.hs) {
-  //     return;
-  //   }
-  //   if (payload.ol.oid !== current_check_betId.value) {
-  //     storage_bet_info(payload);
-  //   }
-  //   storage_bet_id(payload.ol.oid);
-  // }
+  const checked_current_td = payload => {
+    // 锁盘状态不高亮
+    if (payload.hps.hs) {
+      return;
+    }
+    // if (payload.ol.oid !== current_check_betId.value) {
+    //   storage_bet_info(payload);
+    // }
+    // storage_bet_id(payload.ol.oid);
+  }
 
 </script>
 

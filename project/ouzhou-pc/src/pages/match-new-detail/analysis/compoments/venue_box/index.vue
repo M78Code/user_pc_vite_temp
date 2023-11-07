@@ -45,7 +45,7 @@
   import animal_active from 'src/assets/images/video/animal_active.png'
   import score from 'src/assets/images/video/score.png'
   import score_active from 'src/assets/images/video/score_active.png'
-  import sport_icon from "src/components/sport_icon.vue";
+  import sport_icon from "./sport_icon.vue";
   
   const props =  defineProps({
     detail_info: {  // 赛事详情

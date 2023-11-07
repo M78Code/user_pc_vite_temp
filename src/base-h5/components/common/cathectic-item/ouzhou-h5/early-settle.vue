@@ -38,7 +38,6 @@
 
 <script setup>
 import BetRecordClass from "src/core/bet-record/bet-record.js";
-import ClipboardJS from "clipboard";
 import { api_betting } from "src/api/index.js"
 // import { mapGetters, mapMutations } from "vuex";
 import { format_time_zone_time } from "src/core/format/index.js"
@@ -78,45 +77,20 @@ let presettleorderdetail_data = ref([])
 let ordervos_ = ref({})
 // 接口返回的正在确认中的金额，当 [2, 3, 4, 6] 4种情况时，也用于赋值锁定金额
 let front_settle_amount = ref('')
+// 根据轮询获取的最新预计返还金额
+let expected_profit = ref(0)
 // 工具方法
 // let utils = ref(utils)
 // 接口调用次数计数 // 概率，用于计算钮下的预计返还（盈利），注意，查询订单记录接口是直接返回的金额，而ws推送返回的是概率，所以概率更新了需要重新计算钮下的预计返还（盈利）
-// let count_ = ref(0)
-let origin_settle_money = ref(lodash.cloneDeep(props.item_data.maxCashout))
 // 延时器
 let timer = null
 let timer4 = null
 
 let mitt_c201_handle = null
 let mitt_c210_handle = null
+let mitt_expected_profit = null
 
 
-// ...mapGetters([
-//当前皮肤
-//用户信息
-// 0未结算/筛选 1已结算/搜索
-//   "get_main_item",
-//提前结算金额集合
-//   "get_early_moey_data",
-// ]),
-// 剩余可提前结算次数
-const remaining_num = computed(() => {
-  if (details_show_btn.value || is_only_fullbet.value) {
-    return 1
-  } else {
-    return 2
-  }
-})
-// 提示信息是否展示
-const is_tips_show = computed(() => {
-  // 必备条件,没有 剩余可提前结算的本金 时不显示, 按钮不展示时不显示
-  let flag1 = props.item_data.preSettleBetAmount && calc_show
-  // 第一次就全额结算
-  let flag2 = status.value == 4 && details_show_btn.value == false
-  // 发生过2次提前结算
-  let flag3 = props.item_data.settleType == 999
-  return flag1 && !flag2 && !flag3
-})
 const betting_amount = computed(() => {
   let bet_amount;
   // 提前结算应先取接口返回利率
@@ -131,8 +105,9 @@ const betting_amount = computed(() => {
  * 是否仅支持全额结算
  */
 const is_only_fullbet = computed(() => {
-  return props.item_data.preSettleBetAmount != null && props.item_data.preSettleBetAmount <= min_bet_money && expected_profit >= 1
+  return props.item_data.preSettleBetAmount != null && props.item_data.preSettleBetAmount <= min_bet_money && expected_profit.value >= 1
 })
+
 // 提前结算投注额,四舍五入取整
 const cashout_stake = computed(() => {
   let pba = props.item_data.preSettleBetAmount || 0
@@ -146,30 +121,7 @@ const cashout_stake = computed(() => {
     return _money
   }
 })
-/**
-  * @description 按钮下的预计返还（盈利）返回Number类型
-  * @param {undefined} undefined
-  * @return {number}  返还金额
-  */
-const expected_profit = computed(() => {
-  let _maxCashout = props.item_data.maxCashout
-  // if (_maxCashout) {
-  const moneyData = lodash.find(BetRecordClass.early_money_list, (item) => {
-    return props.item_data.orderNo == item.orderNo
-  })
-  if (moneyData && moneyData.orderStatus === 0) {
-    if (moneyData.preSettleMaxWin != origin_settle_money) {
-      _maxCashout = moneyData.preSettleMaxWin
-    }
-  }
-  let _percentage = cashout_stake.value / parseInt(props.item_data.preSettleBetAmount)
-  //四舍五入至小数点第二位
 
-  return Math.round(_maxCashout * _percentage * 100) / 100
-  // } else {
-  //   return 0
-  // }
-})
 // 单关最低投注金额
 const min_bet_money = computed(() => {
   return lodash.get(UserCtr, "cvo.single.min") || 10;
@@ -179,7 +131,7 @@ const calc_show = computed(() => {
   return BetRecordClass.selected === 0 && props.item_data.seriesType === '1' && props.item_data.enablePreSettle
   // return /10true[1-6]+/.test("" + lodash.get(UserCtr.user_info, 'settleSwitch') + BetRecordClass.selected + props.item_data.enablePreSettle + status.value);
 })
-watch(() => expected_profit, (_new, _old) => {
+watch(() => expected_profit.value, (_new, _old) => {
   // 小于 1 时暂停提前结算
   if (_new < 1) {
     status.value = 5;
@@ -219,6 +171,24 @@ onMounted(() => {
   if (calc_show.value || details_show_btn.value) {
     props.item_data.is_show_early_settle = true
   }
+  /**
+   * 监听轮询提前结算列表数据
+   * 给expected_profit赋值
+   */
+  mitt_expected_profit = useMittOn(MITT_TYPES.EMIT_EARLY_MONEY_LIST_CHANGE, (early_money_list_data) => {
+    let _maxCashout = props.item_data.maxCashout
+    const moneyData = lodash.find(early_money_list_data, (item) => {
+      return props.item_data.orderNo == item.orderNo
+    })
+    if (moneyData && moneyData.orderStatus === 0) {
+      if (moneyData.preSettleMaxWin !=  props.item_data.maxCashout) {
+        _maxCashout = moneyData.preSettleMaxWin
+      }
+    }
+    let _percentage = cashout_stake.value / parseInt(props.item_data.preSettleBetAmount)
+    //四舍五入至小数点第二位
+    expected_profit.value =  Math.round(_maxCashout * _percentage * 100) / 100
+  }).off;
 
   // 处理ws订单状态推送
   mitt_c201_handle = useMittOn(MITT_TYPES.EMIT_C201_HANDLE, c201_handle).off;
@@ -229,6 +199,7 @@ onUnmounted(() => {
   clear_timer()
   mitt_c201_handle()
   mitt_c210_handle()
+  mitt_expected_profit()
 })
 
 // ...mapMutations(["set_toast","set_early_moey_data"]),
@@ -266,7 +237,7 @@ const c210_handle = ({ hid, cashOutStatus, hs }) => {
         if (!props.item_data.maxCashout) {
           useMittEmit(MITT_TYPES.EMIT_GET_ORDER_LIST)
         }
-        if (expected_profit > 1) {
+        if (expected_profit.value > 1) {
           status.value = 1;
         }
       }
@@ -311,36 +282,17 @@ const submit_early_settle = () => {
     // 预计返还（盈利）
     frontSettleAmount: String(front_settle_amount.value || expected_profit.value),
   };
+  let message = ''
   // 响应码【0000000 成功（仅在测试模式出现） | 0400524 确认中（仅在非测试模式出现）| 0400500 提交申请失败，提示msg信息】
   api_betting.post_pre_bet_order(params).then((reslut) => {
     let res = reslut.status ? reslut.data : reslut
-    let message = ''
     if (res.code == 200) {
       status.value = 4;
-      message = '已提交申请，请耐心等待';
+      message = i18n_t('early.info10');
     } else if (res.code == "0400524") {
       // 注单确认中···
-      // 前5次 每3s拉一次
-      // 6-10次 每5s拉一次
-      // 11~35次  每10s拉一次
-      timer4 = setInterval(() => {
-        count_++;
-        if (count_ > 5) {
-          clearInterval(timer4)
-          timer4 = setInterval(() => {
-            count_++;
-            if (count_ > 10) {
-              clearInterval(timer4)
-              timer4 = setInterval(() => {
-                count_++;
-                if (count_ > 35) {
-                  clearInterval(timer4)
-                }
-              }, 10000);
-            }
-          }, 5000);
-        }
-      }, 3000);
+      status.value = 4;
+      message = i18n_t('early.info10');
     } else if (res.code == "0400527") {
       // 不支持提前结算或者暂停
       status.value = 5;
@@ -359,12 +311,13 @@ const submit_early_settle = () => {
       status.value = 1;
       message = i18n_t('early.info2');
     }
+    useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, message)
   }).catch((err) => {
     // 提前结算申请未通过
     status.value = 1;
     message = i18n_t('early.info2');
+    useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, message)
   });
-  useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, message)
 }
 /**
  *@description 橙色大按钮点击处理
@@ -384,32 +337,7 @@ const submit_click = () => {
     submit_early_settle();
   }
 }
-/**
- *@description 复制订单号
- *@param {Object} evt 事件对象
- *@param {String} orderno 订单号
- */
-const copy = (evt, orderno) => {
-  const clipboard = new ClipboardJS(evt.target, {
-    text: () => orderno
-  })
-  clipboard.on('success', () => {
-    useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t("bet_record.copy_suc"))
-    // h5嵌入时Safari阻止弹窗
-    if (!Platform.is.safari) {
-      try {
-        location.href = `pasteOrderAction://paste?orderSN=${orderno}`;
-      } catch (error) {
-        console.error(error)
-      }
-    }
-    clipboard.destroy()
-  })
-  clipboard.on('error', () => {
-    clipboard.destroy()
-  })
-  clipboard.onClick(evt)
-}
+
 // 批量清除定时器
 const clear_timer = () => {
   clearTimeout(timer)
