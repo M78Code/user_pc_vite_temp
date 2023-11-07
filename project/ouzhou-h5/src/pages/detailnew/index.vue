@@ -81,7 +81,8 @@ import loading_page from 'src/components/details/loading/index.vue'
 // import event_analysis from "./components/event_analysis.vue";
 // import { detail_module } from "src/project-ouzhou/stores/detail"; //todo
 import { api_match_list } from "src/api/index.js";
-// import courseData from 'src/global/course.js' //todo
+// import { courseData } from 'src/core/index.js' //todo
+import courseData from 'src/core/global/course.js' //todo
 // import EMITTER from  "src/global/mitt.js" //todo
 // import { Loading } from 'quasar'
 // 传入模拟数据
@@ -301,7 +302,8 @@ const get_matchDetail_MatchInfo = (params) => {
       const res_data = lodash.get(res, 'data')
       if (res_data && res_data.mhid) {
         match_detail.value = res_data;
-        match_detail.value.course =  lodash.get(res_data, 'ms') == 110 ? 'Soon' : (courseData[lodash.get(res_data, 'csid')][lodash.get(res_data, 'mmp')] || "");
+        match_detail.value.course =  lodash.get(res_data, 'ms') == 110 ?
+          'Soon' : (courseData[lodash.get(res_data, 'csid')][lodash.get(res_data, 'mmp')] || "");
         match_detail.value.mstValueTime = format_mst_data(match_detail.value);
         use_polling_mst(match_detail.value)
       } else {
