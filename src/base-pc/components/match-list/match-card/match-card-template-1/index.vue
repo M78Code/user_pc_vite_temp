@@ -7,8 +7,9 @@
     :style="`height:${lodash.get(match_style_obj, `total_height`)}px !important;width:${LayOutMain_pc.layout_content_width - 15}px  !important;`"
   >
   <div v-show="false">{{ MatchListCardDataClass.list_version }}</div>
+  <!--改成101用来打包调试--> 
     <component
-      :is="`MatchTpl${match_style_obj.view_tpl_id}After`"
+      :is="`MatchTpl${101}After`" 
       :mid="mid"
     />
     <!-- {{`MatchTpl${match_style_obj.view_tpl_id}After`}} -->
@@ -80,7 +81,6 @@ export default {
       // setTimeout(()=>{
       //   is_mounted.value = true
       // })
-      console.log('match_style_obj', match_style_obj);
     })
     onUnmounted(() => {
       match_style_obj = null

@@ -7,11 +7,11 @@
   <div class="detail-bread">
     <div class="detail-bread-item " style="cursor: pointer;" @click="jumpTo">
       <span >{{ detail_info.csna }}</span>
-      <img :src="t_left" alt="">
+      <!-- <img :src="t_left" alt=""> -->
     </div>
     <div class="detail-bread-item">
       <span>{{ detail_info.tn }}</span>
-      <img :src="t_left" alt="">
+      <!-- <img :src="t_left" alt=""> -->
     </div>
     <div class="text-bread_av_color">
       <span>{{ last_label }}</span>
@@ -22,7 +22,7 @@
 <script setup>
 import { onMounted, ref, computed, watch } from "vue";
 import { useRoute,useRouter } from 'vue-router'
-import t_left from 'src/assets/images/t_left.png'
+// import t_left from 'src/assets/images/t_left.png'
 
 const props = defineProps({
   detail_info: {

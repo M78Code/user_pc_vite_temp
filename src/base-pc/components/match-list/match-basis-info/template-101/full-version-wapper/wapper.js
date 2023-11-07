@@ -1,11 +1,11 @@
-import MatchBasisInfo7 from "../match-basis-info-template-7/index.vue";
+import MatchBasisInfo101 from "../match-basis-info-template-101/index.vue";
 import { compute_component_wapper_config } from "app/job/use-output/index.js";
 const all_components_obj = {
-  MatchBasisInfo7,
+  MatchBasisInfo101,
 };
 const component_config = {
-  registered_component_key: "MatchBasisInfo7",
-  default_component_key: "MatchBasisInfo7",
+  registered_component_key: "MatchBasisInfo101",
+  default_component_key: "MatchBasisInfo101",
   all_components_obj,
 };
 const wapper_config = compute_component_wapper_config(component_config);

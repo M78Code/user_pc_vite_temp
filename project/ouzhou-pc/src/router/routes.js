@@ -36,11 +36,11 @@ const routes = [
       //             keepAlive: true // 需要缓存
       //           }
       //       },
-      // {
-      //   path: "/details",
-      //   name: "details",
-      //   component: () => import('../pages/match-new-detail/index.vue')
-      // },
+      {
+        path: "/details",
+        name: "details",
+        component: () => import('../pages/match-new-detail/index.vue')
+      },
       {
         path: "/video/:mid/:tid/:csid/:play_type/:video_size",
         name: "video",

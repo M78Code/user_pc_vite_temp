@@ -2,7 +2,7 @@
  * @Author: rise
  * @Date: 2023-11-05 16:46:06
  * @LastEditors: rise
- * @LastEditTime: 2023-11-06 17:05:25
+ * @LastEditTime: 2023-11-07 16:00:35
  * @Description:  
  */
 
@@ -21,9 +21,38 @@ class MenuData {
     this.destroy = () => {
       this.update && this.update.cancel()
     }
+    this.current_lv_1_menu_i = ''
+    this.current_lv_2_menu_i = ''
+    this.menu_lv_mi_lsit = []
+
     this.menu_list = []; //常规球种 101...
     this.menu_mi = ""; //常规球种选中
-    this.menu_type = ref(2); //id   2今日(左侧抽屉) 1滚球(滚动tab) 8VR() 7电竞() 28赛果() 500热门
+    this.menu_type = ref(2); //id   2今日(左侧抽屉) 1滚球(滚动tab) 3早盘 8VR() 7电竞() 28赛果() 500热门
+  }
+
+  // 根据菜单id获取下级菜单id 二级菜单
+  // mid 顶级菜单id
+  get_menu_lvmi_list(mid){
+    let menu_lv_mi_lsit = [];
+    // 冠军 直接取值
+    if(mid == 400){
+      menu_lv_mi_lsit = (BaseData.mew_menu_list_res.find(item=> item.mi == 400 ) || {}).sl
+    }else{
+      this.menu_list.forEach(item => {
+        (item.sl || {}).find(obj=>{
+          // 菜单id最后一位为顶级菜单的id
+          if(obj.mi.substr(obj.mi.length-1,1) == mid){
+            menu_lv_mi_lsit.push(obj)
+          }
+        })
+      })
+    }
+    return menu_lv_mi_lsit
+  }
+
+  get_menu_lv_2_mi_list(mi){
+    const item = this.menu_lv_mi_lsit.find(item=> item.mi == mi) || {}
+    return item.sl
   }
 
   /**
@@ -32,6 +61,10 @@ class MenuData {
   set_init_menu_list(){
     const menu_list =  BaseData.mew_menu_list_res.filter((item)=>{return +item.mi<300})
     this.menu_list = menu_list;
+  }
+  
+  get_menu_type(){
+
   }
   /**
    * 设置id
@@ -52,6 +85,7 @@ class MenuData {
   // 根据菜单id获取下级菜单id 二级菜单
   // mid 顶级菜单id
   get_menu_lvmi_list(mid){
+    let menu_lv_mi_lsit = [];
     this.menu_list.forEach(item => {
       (item.sl || {}).find(obj=>{
         // 菜单id最后一位为顶级菜单的id
