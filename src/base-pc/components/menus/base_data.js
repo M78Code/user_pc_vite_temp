@@ -12,7 +12,7 @@ import useSWRV from 'swrv'
 import _ from "lodash"
 
 import { ref, computed, defineComponent, onMounted } from "vue";
-import store from "src/store-redux-vuex/redux_menu.js";
+// import store from "src/store-redux-vuex/redux_menu.js";
 
 /**
  * @description: 菜单列表
@@ -58,19 +58,19 @@ const init_mew_menu_list = async () => {
   let top_events = ( mi_5000.sl || [] ).map(item => (Number(item.mi) - 5000 + 100) ) || []
 
 
-  let state = store.getState()
-  // 获取最新的 数据
-  let redux_menu = _.cloneDeep(state.menusReducer.redux_menu) 
+  // let state = store.getState()
+  // // 获取最新的 数据
+  // let redux_menu = _.cloneDeep(state.menusReducer.redux_menu) 
 
-  redux_menu.in_play = in_play
-  redux_menu.top_events = top_events
-  redux_menu.menu_list = left_menu
+  // redux_menu.in_play = in_play
+  // redux_menu.top_events = top_events
+  // redux_menu.menu_list = left_menu
 
-  // 设置 左侧菜单
-	store.dispatch({
-    type: "SETREDUXMENU",
-    data: redux_menu,
-  });
+  // // 设置 左侧菜单
+	// store.dispatch({
+  //   type: "SETREDUXMENU",
+  //   data: redux_menu,
+  // });
 
   // 设置新菜单 
   return left_menu;
