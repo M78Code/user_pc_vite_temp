@@ -9,9 +9,18 @@
     </div>
     <div class="title-box">
       Athletic Club
+      <span class="num">0</span>
     </div>
     <div class="subTit-box">
       Real Club
+      <span class="num">2</span>
+    </div>
+  </div>
+  <div class="analysis">
+    <div class="item">
+      2
+      <img src="../svg/">
+      0
     </div>
   </div>
   <div class="tab-box">
@@ -42,7 +51,7 @@ const tabChange = (item, index) => {
 <style scoped lang="scss">
 .wrapper{
   padding: 12px 20px 14px 20px;
-  border-bottom: 1px solid #E2E2E2;
+  border-bottom: 1px solid #F5F5F5;
 }
 .time-box{
   display: flex;
@@ -66,11 +75,18 @@ const tabChange = (item, index) => {
   }
 }
 .title-box,.subTit-box{
+  display: flex;
+  justify-content: space-between;
   font-size: 16px;
   font-style: normal;
   font-weight: 500;
   color: #1A1A1A;
   margin-top: 14px;
+  .num{
+    color: #FF7000;
+    font-size: 18px;
+    font-weight: 500;
+  }
 }
 .title-box{
 }
