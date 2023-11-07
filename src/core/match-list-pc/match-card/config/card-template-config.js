@@ -164,8 +164,47 @@ export const fold_template = {
 }
 
 // 欧洲版 顶部 15分钟 卡片模板
+export const ouzhou_main_matc_15mins = {
+  // 卡片总高度
+  card_total_height: 150,
+  // 卡片顶部到列表顶部的偏移量
+  offset_top:0,
+  // 卡片底部到列表顶部的偏移量
+  offset_bottom:0,
+  // 卡片在前端的显示等级
+  show_level:1,
+}
 
 // 欧洲版  热门 卡片模板
+export const ouzhou_main_matc_featured = {
+  // 卡片总高度
+  card_total_height: 140,
+  // 卡片顶部到列表顶部的偏移量
+  offset_top:0,
+  // 卡片底部到列表顶部的偏移量
+  offset_bottom:0,
+  // 卡片在前端的显示等级
+  show_level:1,
+}
+
+// 欧洲版 赛事状态标题卡片模板 以及 15Mins 和 Featured Matches 标题模板
+export const ouzhou_match_status_title_card_template = {
+  // 卡片索引
+  card_index:0,
+  // 卡片类型  'play_title' 或者 'no_start_title'
+  card_type:'play_title',
+  // 卡片总高度
+  card_total_height:40,
+  // 该赛事状态下的赛事数量
+  match_count:0,
+  // 卡片顶部到列表顶部的偏移量
+  offset_top:0,
+  // 卡片底部到列表顶部的偏移量
+  offset_bottom:0,
+  // 卡片在前端的显示等级
+  show_level:1,
+  // 可能未来要加上他自己下面的所有联赛的内容高度
+}
 
 // 欧洲版球种标题卡片
 export const ouzhou_sport_title_card_template = {

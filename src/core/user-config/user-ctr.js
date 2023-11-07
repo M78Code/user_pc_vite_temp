@@ -86,7 +86,8 @@ class UserCtr {
     //  用户余额是否展示状态
     this.show_balance = false;
     //用户版本 移动端有简版 1 和标准版 2
-    this.standard_edition = 2
+    // this.standard_edition = 2
+    this.standard_edition = 1
     //登录弹窗状态
     this.show_login_popup = false;
     // 是否首次登录

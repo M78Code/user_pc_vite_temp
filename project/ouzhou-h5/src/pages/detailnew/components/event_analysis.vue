@@ -35,7 +35,7 @@
             <basket_ball_stats :detail_info="match_detail" :score_list="detail_info" />
           </div>
           <div v-else>
-            <!-- <img class="no-data" src="~assets/images/common/no_data.png" alt="">
+            <!-- <img class="no-data" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/no_data.png`" alt="">
             <div class="no-data-text">No Data</div> -->
           </div>
 
@@ -59,12 +59,12 @@
           </div>
         </template>
         <template v-else>
-            <img class="no-data" src="~assets/images/common/no_data.png" alt="">
+            <img class="no-data" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/no_data.png`" alt="">
             <div class="no-data-text">No Data</div>
         </template>
       </template>
       <template v-else>
-        <img class="no-data" src="~assets/images/detail/comming_soon.png" alt="">
+        <img class="no-data" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/comming_soon.png`"  alt="">
         <div class="no-data-text">Coming Soon</div>
       </template>
     </div>
@@ -74,6 +74,7 @@
 <script setup>
 import { onMounted, ref, computed } from "vue";
 import basket_ball_stats from './basketball_stats.vue'
+import { LOCAL_PROJECT_FILE_PREFIX } from "src/core";
 const props = defineProps({
   match_odds_info: {
     type: Array,

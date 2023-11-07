@@ -105,7 +105,7 @@ const show_move_video = computed(()=>{
   padding-top: 5px;
 }
 .layout_main_center {
-  padding-top: 5px;
+  padding: 5px 10px 0 10px;
 }
 .layout_main_right {
   padding-top: 5px;

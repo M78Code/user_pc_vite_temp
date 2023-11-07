@@ -74,7 +74,12 @@ const show_favorite_list = ref(store_state.show_favorite_list);
 const get_is_show_menu = ref(store_state.get_is_show_menu);
 const get_preload_animation_url = ref(store_state.get_preload_animation_url);
 
+
+watch(() => MenuData.update_time.value, () => {
+  console.log("菜单id-球类id-对应euid",`${MenuData.menu_type.value}-${MenuData.menu_mi.value}-${MenuData.get_euid()}`)
+})
 onMounted(() => {
+  
   // 初始化赛事列表操作工具类
   if (standard_edition.value == 2) {
     newer_standard_changing.value = true;
