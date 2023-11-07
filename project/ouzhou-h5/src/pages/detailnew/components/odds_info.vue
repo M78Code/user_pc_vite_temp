@@ -40,7 +40,7 @@ import temp1 from "./template/tem1.vue";
 import temp3 from "./template/tem3.vue";
 import temp5 from "./template/tem5.vue";
 // import tem_other from "./template/tem_other.vue";
-// import { storage_bet_info } from "src/public/utils/bet/bet_info.js";
+import { storage_bet_info } from "src/core/bet/module/bet_info.js"; //#TODO core/index.js not export storage_bet_info
 // import EMITTER from "src/global/mitt.js";
 import { LOCAL_PROJECT_FILE_PREFIX } from "src/core";
 const props = defineProps({
