@@ -19,7 +19,9 @@
         </template>
         <!-- 未开赛 -->
         <template v-else>
-          <img :src="not_begin" /> <span class="din-regular"> {{ $t('list.match_no_start') }}</span>
+          <div>
+            <img :src="not_begin" /> <span class="din-regular"> {{ $t('list.match_no_start') }}</span>
+          </div>
         </template>
       </div>
       <!-- 缓冲容器， 避免滚动时骨架屏漏光问题 -->
