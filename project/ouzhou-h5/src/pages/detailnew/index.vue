@@ -74,13 +74,13 @@ import { MatchDetailCalss } from "src/core";
 // import detail_header_tem0 from "./detail_header/detail_header_tem0.vue";
 // import detail_header_tem1 from "./detail_header/detail_header_tem1.vue";
 // import detail_header_tem2 from "./detail_header/detail_header_tem2.vue";
-// import detail_tabs from "./components/detail_tabs.vue";
+import detail_tabs from "./components/detail_tabs.vue";
 // import detail_event_tabs from "./components/detail_event_tabs.vue";
 // import odds_info from "./components/odds_info.vue";
 // import loading_page from 'src/components/details/loading/index.vue'
 // import event_analysis from "./components/event_analysis.vue";
 // import { detail_module } from "src/project-ouzhou/stores/detail"; //todo
-import { api_match } from "src/api/index.js";
+import { api_match_list } from "src/api/index.js";
 // import courseData from 'src/global/course.js' //todo
 // import EMITTER from  "src/global/mitt.js" //todo
 // import { Loading } from 'quasar'
@@ -254,8 +254,8 @@ const detail_scrolling = (event) => {
 const get_matchDetail_getMatchOddsInfo = (params) => {
   //赛果页面调用赛果玩法详情接口
   // match_odds_info.value = get_match_odds_info.value;
-  api_match
-    .get_matchDetail_getMatchOddsInfo(params)
+  api_match_list
+    .get_detail_list(params)
     .then((res) => {
       setTimeout(() => {
         loading.value = false;
@@ -279,8 +279,8 @@ const get_matchDetail_getMatchOddsInfo = (params) => {
  */
 const get_category_list_info = (params) => {
   // category_list.value = get_category_list.value;
-  api_match
-    .get_category_list(params)
+  api_match_list
+    .get_detail_category(params)
     .then((res) => {
       // console.log("get_category_list", res);
       category_list.value = res.data.data;
@@ -295,8 +295,8 @@ const get_category_list_info = (params) => {
  *@return {obj}
  */
 const get_matchDetail_MatchInfo = (params) => {
-  api_match
-    .get_matchDetail_MatchInfo(params)
+  api_match_list
+    .get_detail_data(params)
     .then((res) => {
       const res_data = lodash.get(res, 'data.data')
       if (res_data && res_data.mhid) {
@@ -326,7 +326,8 @@ const get_matchDetail_MatchInfo = (params) => {
  *@return {*}
 */
 const detail_init = () => {
-  const { mid, csid  } = detail_store.params;
+  // const { mid, csid  } = detail_store.params;
+  const mid = 2878615
   get_matchDetail_getMatchOddsInfo({
       mcid: 0,
       cuid: cuid.value,
