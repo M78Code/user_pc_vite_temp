@@ -631,7 +631,7 @@ class MenuData {
    *  mi [number|string] 要比对的值
   */
   is_kemp(mi) {
-    return this._is_cur_mi(100, mi)
+    return this._is_cur_mi(400, mi)
   }
   /**
    * 是否选中了电竞
