@@ -35,7 +35,7 @@ class BetRecord {
     this.list_data = {}
     // 提前结算图标是否选中
     this.is_early = false
-    // 提前结算金额列表
+    // 提前结算列表
     this.early_money_list = []
     // 投注记录版本变更
     this.bet_record_version = ref('1111')
@@ -64,14 +64,6 @@ class BetRecord {
   set_is_early(value) {
     this.is_early = value
     this.early_money_list = this.filter_early_money_list(this.list_data, value)
-    this.set_bet_record_version()
-  }
-
-  // 设置提前结算金额列表
-  set_early_money_list(value) {
-    this.early_money_list = value
-    // 通知提前结算数据金额变化
-    useMittEmit(MITT_TYPES.EMIT_EARLY_MONEY_LIST_CHANGE, value)
     this.set_bet_record_version()
   }
 

@@ -638,12 +638,14 @@ export default defineComponent({
 // }
 
 .match-item-wrap {
-  width: 3.61rem;
+  width: 100%;
   min-height: 0.9rem;
-  margin: 0 auto 0.08rem auto;
+  // margin: 0 auto 0.08rem auto;
   border-radius: 0.08rem;
 
   position: relative;
+  border-bottom: 1px solid #e9e9e9;
+
 
   &.standard {
     height: 1.2rem;

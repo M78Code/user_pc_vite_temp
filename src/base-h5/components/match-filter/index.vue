@@ -14,9 +14,6 @@
     <!-- 中间滚动选择项 -->
     <q-scroll-area class="scroll-area" v-if="!no_find_content && !list_data_loading" ref="scrollArea">
       <div v-if="list.length" v-scroll="scrolled" class="yb_mb18">
-
-      
-
         <!-- 循环整个后台返回数据 -->
         <div class="scroll-area1" v-for="(item, index) in list" :key="index" ref="scroll_area1">
           <div class="bg-f6f7f8 scroll-title" ref="bg_f6f7f8" v-if="item.title">
@@ -99,7 +96,8 @@ import {LOCAL_PROJECT_FILE_PREFIX} from 'src/core';
 import PageSourceData from "src/core/page-source/page-source.js";
 
 import { i18n_t, MITT_TYPES, compute_css_obj, useMittEmit, MenuData, compute_img_url, UserCtr, get_server_file_path } from 'src/core/'
-import { ref, watch, computed, nextTick, onBeforeUnmount, onMounted } from 'vue';
+import { ref, watch, computed, nextTick, onBeforeUnmount, onMounted, toRefs } from 'vue';
+import search from "src/core/search-class/search.js"
 const default_url = `${LOCAL_PROJECT_FILE_PREFIX}/image/svg/match_cup.svg` //默认图片地址
 // 无联赛logo图标黑色版
 const none_league_icon_black = `${LOCAL_PROJECT_FILE_PREFIX}/image/svg/match_cup_black.svg`
@@ -120,6 +118,7 @@ const no_find_content = ref(false) //是否显示未查找到相关搜索
 const change = ref(true) //是否显示全选按钮
 const selected = ref({})   //选中的赛事集合 //TODO get_filter_list
 const select_num = ref(0) //选中的赛事数量
+// const { get_hotselect3 } = api_search || {};
 
 //ref对象
 const scrollArea = ref(null);
@@ -140,8 +139,18 @@ const all_checked = computed(() => {
   return list.value.every(({ select }) => select); // 选中所有
 })
 
+const props = defineProps({
+  search_val: {
+    type: String,
+    default: "",
+  },
+});
 
-watch(active_index, (newVal) => {
+watch(()=>props.search_val, (newVal) => {
+  get_search_result(newVal)
+}
+)
+watch(active_index, (newVal) => {   
   // 活动的下标监听
   let dom_scrollArea = scrollArea.value
   if (is_scroll_right.value && scroll_obj2.value.hasOwnProperty(newVal) && dom_scrollArea) {
@@ -163,6 +172,7 @@ watch(select_num, (new_) => {
 //   'set_collapse_csid_map',
 //   'set_collapse_map_match',
 // ]),
+
 /**
  * @description: 联赛联赛图标出错
  * @param {Object} $event 错误事件对象
@@ -414,7 +424,7 @@ function fetch_filter_match() {
       // 29 是代表 赛果里边的 我的投注的选项
       type: MenuData.is_results(m_type) && get_curr_sub_menu_type.value == 29 ? '29' : type.value,
       euid: MenuData.is_jinzu(m_type) ? m_id : MenuData.get_euid(MenuData.get_current_sub_menuid()), // menuType 30竞足
-      inputText: '',
+      inputText: props.search_val,
       cuid: UserCtr.get_uid(),
       device: 'v2_h5',
       md: lodash.get(MenuData.current_lv_3_menu, 'field1')
@@ -466,6 +476,23 @@ function fetch_filter_match() {
     no_find_content.value = true;
     console.error(err)
   });
+}
+/**
+ * @Description:获取搜索结果数据
+ * @param {string} keyword 搜索关键字
+ * @return {Undefined} Undefined
+ */
+function get_search_result(keyword) {
+    list_data_loading.value = true;
+    //调用接口获取获取搜索结果数据
+    search.get_search_result(keyword, '').then(res => {
+        const { state, list } = res
+        list_data_loading.value = false;
+        console.log('resresresres',res)
+        // load_data_state.value = state
+        // res_list = list
+
+    })
 }
 // 首字母过滤放在放在第一个item 上
 function filter_alphabet(arr) {
@@ -525,9 +552,12 @@ if (type.value == 30) {
 <style lang="scss" scoped>
 .boss-box {
   // padding: 0.5rem 0 0.64rem;
+<<<<<<< HEAD
+=======
   margin-top: 1.03rem;
+>>>>>>> 080baa575eee0074c60e5296d7d34608b54e572d
   position: absolute;
-  top: 0;
+  top: 1.03rem;
   left: 0;
   bottom: 0;
   right: 0;

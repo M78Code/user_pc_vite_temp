@@ -161,6 +161,8 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
       ref_data.current_mi = obj_.mi
       // 设置二级菜单 
       MenuData.set_current_lv_2_menu_i(obj_)
+
+      handle_match_render_data()
     }
   }
 
@@ -183,8 +185,8 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
 
   // 菜单变化页面请求数据
   const set_menu_mi_change_get_api_data = () => {
-    // 今日 / 滚球 
-    if([1,2].includes(MenuData.current_lv_1_menu_mi.value)){
+    // 今日 / 滚球 早盘 串关 
+    if([1,2,3,6].includes(MenuData.current_lv_1_menu_mi.value)){
       handle_match_render_data()
     }
     // 冠军

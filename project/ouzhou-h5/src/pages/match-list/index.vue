@@ -2,11 +2,13 @@
  * @Description: 赛事列表页用于展示滚球、今日、早盘、串关、冠军等赛事
 -->
 <template>
+  <scroll-menu menu_type="1"  v-if="MenuData.menu_list.length" />
   <!--赛事列表-->
   <div>22222</div>
 </template>
 <script setup>
 import { computed, onUnmounted, onMounted, watch, onDeactivated, ref } from "vue";
+import scrollMenu from 'src/base-h5/components/top-menu/top-menu-ouzhou-1/scroll-menu/scroll-menu.vue';
 import { useRoute } from "vue-router";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt";
 import lodash from "lodash";

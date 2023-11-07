@@ -21,6 +21,25 @@
         <bet-after-status v-else></bet-after-status>
       </div>
 
+
+      <!-- 第一个弹窗的内容 -->
+      <!-- <div class="scroll-box scroll-box-center" ref="scroll_box" :style="{ 'max-height': `${max_other_height1}px` }"
+        @touchmove="touchmove_handle($event)" @touchstart="touchstart_handle($event)"> -->
+          <!-- 单关投注项列表 -->
+          <!-- <bet-mix-box-child7></bet-mix-box-child7>
+          <bet-collusion-input1></bet-collusion-input1>
+      </div> -->
+
+      <!-- 第二个弹窗内容 -->
+      <!-- <div class="scroll-box scroll-box-center" ref="scroll_box" :style="{ 'max-height': `${max_other_height1}px` }"
+        @touchmove="touchmove_handle($event)" @touchstart="touchstart_handle($event)"> -->
+          <!-- 列表 -->
+          <!-- <bet-mix-box-child8></bet-mix-box-child8> -->
+          <!-- 结果框 -->
+          <!-- <bet-collusion-input2></bet-collusion-input2>
+      </div> -->
+
+
       <!-- 中间可滚动区域 -->
       <div class="scroll-box scroll-box-center" ref="scroll_box" :style="{ 'max-height': `${max_height1}px` }"
         @touchmove="touchmove_handle($event)" @touchstart="touchstart_handle($event)">
@@ -141,6 +160,8 @@ import betMixBoxChild3 from './bet_mix_box_child3.vue';
 import betMixBoxChild4 from './bet_mix_box_child4.vue';
 import betMixBoxChild5 from './bet_mix_box_child5.vue';
 import betAfterStatus from './bet-after-status.vue';
+import betMixBoxChild7 from './bet_mix_box_child7.vue';
+import betMixBoxChild8 from './bet_mix_box_child8.vue';
 
 import betMixShow from './bet_mix_show3.vue';
 import keyBoard from './/bet-keyboard.vue';
@@ -149,6 +170,8 @@ import betBar from ".//bet-bar.vue";
 import betSingleDetail from './bet-single-detail.vue';
 import betConflictTips from './bet-conflict-tips.vue'
 import betCollusionInput from './bet-collusion-input.vue'
+import betCollusionInput1 from './bet-collusion-input1.vue'
+import betCollusionInput2 from './bet-collusion-input2.vue'
 
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
@@ -172,6 +195,7 @@ let bet_show_single = ref(true)  // 单关显示
 const get_bet_status = ref(0) // 投注状态
 const btn_show = ref(0) // 投注状态2
 const max_height1 = ref(150) // 投注赛事高度
+const max_other_height1 = ref(300)
 const get_mix_bet_flag = ref(false) // 最小投注开关
 const exist_code = ref(555)
 const bet_amount = ref(0)
@@ -456,7 +480,7 @@ background: var(--q-gb-t-c-3) !important;
   margin-bottom: -1px;
   //background-color: var(--q-gb-t-c-7);
   //padding: 12px;
-  border-radius: 12px;
+  border-radius: 0.04rem;
 }
 .scroll-box-center{
   margin: 0 0 0.1rem 0;
