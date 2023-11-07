@@ -53,7 +53,6 @@ class MatchMeta {
     let menu_lv_v2 = ''
     let menu_lv_v1_sl = []
     let menu_lv_v2_sl = []
-    debugger
     if(project_name == 'yazhou-h5'){
       // 菜单 ID 对应的 元数据赛事 mids
       menu_lv_v1 = lodash.get(MenuData.current_lv_1_menu, 'mi')
