@@ -2,7 +2,7 @@
  * @Author: rise
  * @Date: 2023-11-05 16:46:06
  * @LastEditors: rise
- * @LastEditTime: 2023-11-07 14:40:40
+ * @LastEditTime: 2023-11-07 16:00:35
  * @Description:  
  */
 
@@ -84,6 +84,7 @@ class MenuData {
   // 根据菜单id获取下级菜单id 二级菜单
   // mid 顶级菜单id
   get_menu_lvmi_list(mid){
+    let menu_lv_mi_lsit = [];
     this.menu_list.forEach(item => {
       (item.sl || {}).find(obj=>{
         // 菜单id最后一位为顶级菜单的id
