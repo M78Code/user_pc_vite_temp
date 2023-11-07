@@ -13,14 +13,14 @@
         <div class="sl-icon-left">
           <div class="search-icon"></div>
         </div>
-        <input class="sl-input" placeholder="请输入联赛名" type="search" maxlength="15" @input="search_match" >
+        <input class="sl-input" v-model="search_val" placeholder="请输入联赛名" type="text" maxlength="15">
         <div class="sl-icon-right">
           <div class="clear-icon"></div>
         </div>
       </div>
     </div>
     <div class="sl-filter-content">
-      <match-filter></match-filter>
+      <match-filter :search_val="search_val"></match-filter>
     </div>
   </div>
 </template>
@@ -28,6 +28,7 @@
 import { i18n_t, compute_css_obj } from "src/core/index.js";
 import { useRouter, useRoute } from "vue-router";
 import matchFilter from "src/base-h5/components/match-filter/index.vue"
+import { reactive,toRefs } from "vue";
 
 
 defineOptions({
@@ -35,10 +36,16 @@ defineOptions({
 })
 
 const router = useRouter();
+//数据
+const state = reactive({
+  //搜索值
+  search_val : ''
+})
+let { search_val } = toRefs(state);
+
 let rem_1 = window.innerWidth * 100 / 375;
 const bounced_high = { height: window.innerHeight - rem_1 + 50 + 'px !important' }
-
-const emit = defineEmits(["closedHandle", "finishHandle"]);
+const emit = defineEmits(["closedHandle", "finishHandle","search_fn"])
 
 const closedHandle = () => {
   emit("closedHandle");
@@ -50,7 +57,6 @@ const finishHandle = () => {
 
 defineProps({
 })
-
 </script>
 <style scoped lang="scss">
 // 组件样式
@@ -119,6 +125,7 @@ defineProps({
 
   .sl-filter-content {
     //position: relative;
+    //transform: translateY(1.03rem);
   }
 }
 </style>
