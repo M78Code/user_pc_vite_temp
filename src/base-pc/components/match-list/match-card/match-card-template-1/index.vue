@@ -9,7 +9,7 @@
   <div v-show="false">{{ MatchListCardDataClass.list_version }}</div>
   <!--改成101用来打包调试--> 
     <component
-      :is="`MatchTpl${view_tpl_id}After`" 
+      :is="`MatchTpl${match_style_obj.view_tpl_id}After`" 
       :mid="mid"
     />
     <!-- {{`MatchTpl${match_style_obj.view_tpl_id}After`}} -->
