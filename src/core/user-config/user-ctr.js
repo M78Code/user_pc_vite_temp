@@ -232,6 +232,9 @@ class UserCtr {
       window.postMessage({ event: 'WS', cmd: `WS_RESEND_SCMD_EVENT`, data: { user_id: user_obj.userId } }, '*');
     }
   }
+  /**
+   * 设置活动
+   * */
   set_user_activity(activity) {
     this.activity = { ...activity }
   }
