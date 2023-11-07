@@ -81,7 +81,7 @@ import loading_page from 'src/components/details/loading/index.vue'
 // import event_analysis from "./components/event_analysis.vue";
 // import { detail_module } from "src/project-ouzhou/stores/detail"; //todo
 import { api_match_list } from "src/api/index.js";
-// import courseData from 'src/global/course.js' //todo
+import courseData from "src/core/match-detail/match-detail-h5/config/course.js";
 // import EMITTER from  "src/global/mitt.js" //todo
 // import { Loading } from 'quasar'
 // 传入模拟数据
