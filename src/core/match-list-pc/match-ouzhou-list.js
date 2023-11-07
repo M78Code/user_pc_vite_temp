@@ -6,7 +6,7 @@ class MatchListOuzhouClass {
         this.init()
     }
     init() {
-        this.menu= {
+        this.redux_menu= {
             menu_list: [
                 101, 102, 105, 107, 110, 108, 103, 109, 111, 112, 113, 116, 115,
                 114, 104, 106, 118,
@@ -25,7 +25,7 @@ class MatchListOuzhouClass {
     }
 
     set_menu (state) {
-        this.menu = state
+        this.redux_menu = state
     }
 
 }
