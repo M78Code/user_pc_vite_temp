@@ -50,7 +50,7 @@
 <script setup>
 import { defineComponent, onMounted, ref, computed, toRef, watch } from "vue";
 import { api_match } from "src/api/index.js";
-import { detail_module } from "src/project-ouzhou/stores/detail";
+// import { detail_module } from "src/project-ouzhou/stores/detail";
 import { LOCAL_PROJECT_FILE_PREFIX } from "src/core";
 import _ from "lodash";
 const props = defineProps({
@@ -106,7 +106,7 @@ const cuid = ref("");
 const bg_img = ref({
 
 })
-const detail_store = detail_module();
+const detail_store = ref(null);
 let is_collect = ref(false);
 const football_score_icon_list = ref([
   {
