@@ -46,6 +46,7 @@
   const cathecticItem = ref(null)
   const changeDays = (dayValue) => {
     const $el = cathecticItem.value
+    if($el.timeType === dayValue) return
     $el.timeType = dayValue
     $el.init_data(1)
   }

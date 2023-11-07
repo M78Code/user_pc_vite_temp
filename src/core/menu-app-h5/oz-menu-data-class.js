@@ -21,8 +21,8 @@ class MenuData {
     this.destroy = () => {
       this.update && this.update.cancel()
     }
-    this.current_lv_1_menu_i = ''
-    this.current_lv_2_menu_i = ''
+    this.current_lv_1_menu_i = 2
+    this.current_lv_2_menu_i = '1012'
     this.menu_lv_mi_lsit = []
 
     this.menu_list = []; //常规球种 101...
@@ -183,6 +183,13 @@ class MenuData {
   */
   is_jinzu(mi) {
     return this._is_cur_mi(30, mi)
+  }
+  /**
+   * 是否选中了收藏
+   *  mi [number|string] 要比对的值
+  */
+  is_collect(mi) {
+    return this._is_cur_mi(50000, mi)
   }
 }
 export default new MenuData();
