@@ -1,8 +1,8 @@
 /*
  * @Author         : lane jstylane@itcom888.com
  * @Date           : 2023-07-05 20:37:45
- * @LastEditors: cooper cooper@123.com
- * @LastEditTime: 2023-07-15 13:51:43
+ * @LastEditors: lowen pmtylowen@itcom888.com
+ * @LastEditTime: 2023-11-07 21:08:47
  * @FilePath: \user-pc-vue3\src\api\module\matches_list\index.js
  * @Description    : 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -34,7 +34,7 @@ export const get_matches_list = (params, config={}, url = "/yewu11/v1/m/matches"
 
 // 详情获取动画地址接口()
 export const post_video_url = (params, config={}, url = "/yewu11/v1/w/videoAnimationUrl") => {
-    params.imgDm = window.env.config.oss_img_domains[0];
+    params.imgDm =lodash.get(window.BUILDIN_CONFIG,'DOMAIN_RESULT.img_domains[0]');
     return http.post(url, params);
     }
 
