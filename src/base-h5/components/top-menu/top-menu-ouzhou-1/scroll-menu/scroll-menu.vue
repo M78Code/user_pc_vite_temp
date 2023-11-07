@@ -2,7 +2,7 @@
  * @Author: rise
  * @Date: 2023-11-02 16:27:18
  * @LastEditors: rise
- * @LastEditTime: 2023-11-06 14:28:38
+ * @LastEditTime: 2023-11-07 14:45:59
  * @Description:  
 -->
 <template>
@@ -28,20 +28,26 @@ import { onMounted, ref } from "vue"
 import sportIcon from "../components/left-menu/sport-icon.vue"
 import BaseData from "src/core/base-data/base-data.js";
 import { MenuData } from 'src/core/';
-const playValue = ref('')
-const scrollRef = ref(null)
+const playValue = ref('');
+const scrollRef = ref(null);
+const props = defineProps({
+    menu_type: {
+    type: String,
+    default: "2"
+  },
+})
 /**
  * id设为滚球
  */
 onMounted(() => {
-    MenuData.set_current_lv1_menu('1');
+    MenuData.set_current_lv1_menu(props.menu_type);
 })
 /**
  * 获取滚球数量
  * @param {*} item 
  */
 const get_cont = (item) => {
-    return item.sl.filter((n) => { return n.mi == `${item.mi}1` })?.[0]?.ct || 0;
+    return item.sl.filter((n) => { return n.mi == `${item.mi}${props.menu_type}` })?.[0]?.ct || 0;
 }
 /**
  * 滚球选择
@@ -49,7 +55,11 @@ const get_cont = (item) => {
  * @param {*} index 
  */
 const on_change_play = (item, index) => {
-    playValue.value = item.mi
+    console.log(MenuData.menu_type.value);
+    console.log(item.mi);
+    if(playValue.value == item.mi)return;
+    playValue.value = item.mi;
+    MenuData.set_menu_mi(item.mi)
     scrollRef.value.scrollTo(index - 1, 'start-force')
 }
 
