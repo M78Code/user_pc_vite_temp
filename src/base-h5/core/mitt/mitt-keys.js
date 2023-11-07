@@ -297,14 +297,20 @@ export const EMIT_DETAILS_TOGGLE_HANDICAP= "EMIT_DETAILS_TOGGLE_HANDICAP"
 
 // 投注列表切换
 export const EMIT_BET_RECORD_SELECTED_CHANGE= "EMIT_BET_RECORD_SELECTED_CHANGE"
+
+// 提前结算列表金额变化
+export const EMIT_EARLY_MONEY_LIST_CHANGE= "EMIT_EARLY_MONEY_LIST_CHANGE"
 //------------------------------------------------------------------命令定义-E-------------------------------------------------------------------------------------
 
 
 // 滑动菜单点击
 export const EMIT_SCROLL_TOP_NAV_CHANGE = "EMIT_SCROLL_TOP_NAV_CHANGE"
+// 滑动 时间 获取的数据
+export const EMIT_SCROLL_DATE_TIME_CHANGE = "EMIT_SCROLL_DATE_TIME_CHANGE"
 
 // 串关键盘变动金额
 export const EMIT_INPUT_BET_MONEY = "EMIT_INPUT_BET_MONEY"
 
 // 单关键盘变动金额
 export const EMIT_INPUT_BET_MONEY_SINGLE = "EMIT_INPUT_BET_MONEY_SINGLE"
+

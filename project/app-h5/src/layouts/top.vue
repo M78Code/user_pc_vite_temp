@@ -53,7 +53,6 @@ import { dateTabList } from "src/base-h5/components/menu/app-h5-menu/utils";
 
 import { TopMenu,ScrollMenu,SearchTab,DateTab } from 'src/base-h5/components/menu/app-h5-menu/index'
 import setectLeague from 'src/base-h5/components/setect-league/index.vue'
-import { Base } from "licia/Class";
 
 const route = useRoute();
 const inner_height = window.innerHeight;  // 视口高度
@@ -67,10 +66,12 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
   onMounted(()=>{
     set_scroll_data_list(MenuData.current_lv_1_menu_mi.value)
     useMittOn(MITT_TYPES.EMIT_SCROLL_TOP_NAV_CHANGE, set_scroll_current)
+    useMittOn(MITT_TYPES.EMIT_SCROLL_DATE_TIME_CHANGE, set_scroll_early_single)
   })
 
   onUnmounted(()=>{
     useMittOn(MITT_TYPES.EMIT_SCROLL_TOP_NAV_CHANGE).off
+    useMittOn(MITT_TYPES.EMIT_SCROLL_DATE_TIME_CHANGE).off
   })
 
   /**
@@ -112,7 +113,7 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
         
         case 50000:
           let menu_list_res = MenuData.get_menu_lvmi_list_only(MenuData.current_lv_1_menu_i)
-          console.error('menu_list_res',menu_list_res)
+
           menu_list_res.unshift({mi:0,btn:1, ct:"",title:"全部"})
           ref_data.scroll_data_list = menu_list_res
           MenuData.set_collect_list(menu_list_res)
@@ -136,6 +137,32 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
       set_scroll_data_list(new_)
     }
   })
+
+  // 早盘 串关
+  const set_scroll_early_single = val => {
+    const menu_list = MenuData.get_menu_lvmi_list_only(MenuData.current_lv_1_menu_i)
+    let early_single = []
+    if(Object.keys(val).length){
+      for(let item in val){
+        let mi = 100 + item*1 +''+ MenuData.current_lv_1_menu_i
+        let obj = menu_list.find(page => page.mi == mi) || {}
+        if(obj.mi){
+          obj.ct = val[item]
+          early_single.push(obj)
+        }
+      }
+    }
+
+    ref_data.scroll_data_list = early_single
+
+    if(early_single.length){
+      let obj_ = lodash_.get(ref_data.scroll_data_list,`[0]`,{})
+      // 设置选中菜单的id
+      ref_data.current_mi = obj_.mi
+      // 设置二级菜单 
+      MenuData.set_current_lv_2_menu_i(obj_)
+    }
+  }
 
   // 根据一级菜单 设置滑动菜单数据
   const set_scroll_data_list = mid => {

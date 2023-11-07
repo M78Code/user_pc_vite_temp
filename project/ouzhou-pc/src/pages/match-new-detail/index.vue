@@ -12,16 +12,16 @@
  * @Description: 赛事详情页
 -->
 <template>
-  <div class="detail-page" v-show="!detail_loading">
+  <div class="detail-page">
     <div class="match-detail-container">
       <div class="match-detail-bread">
         <!-- 详情页面包屑 -->
         <breadcrumbs :detail_info="detail_info || {}" />
-        <div class="bread-right">
+        <!-- <div class="bread-right">
           <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/detail_top.png`" alt="" srcset="" class="signal" @click="go_analyse">
           <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/detail_refresh.png`" alt="" srcset="" :class="{ 'balance_refresh': true, 'route_btn': refresh_data }"
             @click="refresh_click">
-        </div>
+        </div> -->
       </div>
       <div class="match-detail-head">
         <div class="detail-head-leagal">
@@ -32,7 +32,7 @@
         </div>
         <div>
           <q-expansion-item ref="expansion_ref" expand-separator :expand-icon-toggle="false" :hide-expand-icon="true">
-            <!-- 赛事玩法名称 -->
+           
             <template v-slot:header>
               <div style="width:100%;line-height: 35px;font-weight: 500; display: flex;">
                 <div @click="show_item">
@@ -63,13 +63,13 @@
         :detail_info="detail_info || {}" />
     </div>
     <!-- 赛事分析页 -->
-    <div class="detail-analysis">
+    <!-- <div class="detail-analysis">
       <analysis :detail_info="detail_info || {}" />
-    </div>
+    </div> -->
   </div>
-  <div class="detail-loading" v-show="detail_loading">
+  <!-- <div class="detail-loading" v-show="detail_loading">
       <loading></loading>
-    </div>
+    </div> -->
 </template>
 
 <script setup>
@@ -77,7 +77,7 @@ import { onMounted, ref, provide } from "vue";
 import {utils, MenuData, LOCAL_PROJECT_FILE_PREFIX } from 'src/core/index.js';
 import neutral from 'src/assets/images/neutral.png'
 import odds_info from "./components/odds_info.vue";
-import analysis from './analysis/index.vue'
+ import analysis from './analysis/index.vue'
 import tabs from './components/tabs.vue'
 import breadcrumbs from './components/breadcrumbs.vue'
 import { usedetailData } from './index'
@@ -85,7 +85,7 @@ import { usedetailData } from './index'
 // import detail_top from 'src/assets/images/detail-top.png'
 // import detail_refresh from 'src/assets/images/detail-fresh.png'
 // import { formatTime } from "src/public/utils/time_format";
-import loading from './components/loading/index'
+import loading from './components/loading/index.vue'
 // import store from "src/store-redux-vuex/index.js";
 
 import { useRouter, useRoute } from 'vue-router'
