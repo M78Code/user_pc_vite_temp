@@ -2,7 +2,7 @@
  * @Author: rise
  * @Date: 2023-11-03 16:37:52
  * @LastEditors: rise
- * @LastEditTime: 2023-11-05 15:47:43
+ * @LastEditTime: 2023-11-07 16:17:18
  * @Description:  
  */
 import { createRouter, createWebHashHistory } from "vue-router";
@@ -12,11 +12,19 @@ const router = createRouter({
     {
       path: "/",
       redirect: {
-        name: 'matchList'
+        name: 'home'
       },
       name: "main",
       component: () => import("../layouts/index.vue"),
       children: [
+        {
+          path: "/inPlay",
+          name: "inPlay",
+          component: () => import("../pages/in-pay/index.vue"),
+          meta: {
+            keepAlive: true // 需要缓存
+          },
+        },
           {
             path: "/match",
             name: "matchList",

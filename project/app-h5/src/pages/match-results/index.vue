@@ -46,7 +46,7 @@ import { scrollMenu } from "src/base-h5/components/menu/app-h5-menu/utils.js"
 import matchContainer from "src/base-h5/components/match-list/index.vue";
 import { i18n_t, compute_css_obj, MenuData } from "src/core/index.js";
 import { is_results, is_kemp } from 'src/base-h5/mixin/menu.js'
-
+import { api_analysis } from "src/api/"
 
 // import matchContainer2 from "src/base-h5/components/match-list/components/match-container-2.vue";
 const inner_height = window.innerHeight;  // 视口高度
@@ -67,12 +67,15 @@ const switchHandle = (val) => {
     } else {
         set_menu_lv1({mi:2})
     }
+    api_analysis.get_match_result_menu({menuType:0})
     console.log(MenuData,'--------------------is_results------------------是否 赛果', is_results.value, is_kemp.value)
 }
 const slideHandle = (val, e) => {
     if (state.currentSlideValue === val) return
     state.currentSlideValue = val
     scrollMenu(e, ".slide-box", ".switch-item-active");
+
+    
 }
 
 const selectFinishHandle = (val) => {

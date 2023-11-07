@@ -2,7 +2,7 @@
  * @Author: rise
  * @Date: 2023-11-02 16:27:18
  * @LastEditors: rise
- * @LastEditTime: 2023-11-07 14:50:42
+ * @LastEditTime: 2023-11-07 16:24:55
  * @Description:  
 -->
 <template>
@@ -95,7 +95,7 @@ const change_current_menu = (item) => {
   MenuData.set_current_lv1_menu("2");
   MenuData.set_menu_mi(item.mi);
   emits('isLeftDrawer')
-  router.push("/");//跳转今日列表
+  router.push("/match");//跳转今日列表
 }
 </script>
 <style lang="scss" scoped>

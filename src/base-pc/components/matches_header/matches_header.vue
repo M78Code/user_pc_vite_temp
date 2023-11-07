@@ -204,16 +204,16 @@ const checked_current_tab = payload => {
 	// 	data: redux_menu
 	// })
 
-	// current_value.value = payload.value;
+	current_value.value = payload.value;
 	
-	// // 判断头部高度
-	// if (['featured','league','top_events'].includes( payload.value) ) {
-	// 	match_list_top.value = '80px'
-	// } else if(['matches'].includes(payload.value)){
-	// 	match_list_top.value = '134px'
-	// } else {
-	// 	match_list_top.value = '146px'
-	// }
+	// 判断头部高度
+	if (['featured','league','top_events'].includes( payload.value) ) {
+		match_list_top.value = '80px'
+	} else if(['matches'].includes(payload.value)){
+		match_list_top.value = '134px'
+	} else {
+		match_list_top.value = '146px'
+	}
 	
 	// set_mid_menu_top_result.value = data
 };
