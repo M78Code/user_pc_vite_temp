@@ -7,13 +7,16 @@
   <div class="boss-box">
     <!--  筛选骨架屏  -->
     <SFilter v-if="list_data_loading" />
+      <div class="scroll-setect-all">
+          <span>全选</span>
+          <div class="scroll-setect-options sso-active"></div>
+        </div>
     <!-- 中间滚动选择项 -->
     <q-scroll-area class="scroll-area" v-if="!no_find_content && !list_data_loading" ref="scrollArea">
       <div v-if="list.length" v-scroll="scrolled" class="yb_mb18">
-        <div class="scroll-setect-all">
-          <span>全选</span>
-          <div class="scroll-setect-options"></div>
-        </div>
+
+      
+
         <!-- 循环整个后台返回数据 -->
         <div class="scroll-area1" v-for="(item, index) in list" :key="index" ref="scroll_area1">
           <div class="bg-f6f7f8 scroll-title" ref="bg_f6f7f8" v-if="item.title">
@@ -522,7 +525,7 @@ if (type.value == 30) {
 <style lang="scss" scoped>
 .boss-box {
   // padding: 0.5rem 0 0.64rem;
-  padding-top: 1.03rem;
+  margin-top: 1.03rem;
   position: absolute;
   top: 0;
   left: 0;
@@ -647,7 +650,7 @@ if (type.value == 30) {
   display: flex;
   justify-content: flex-end;
   font-size: 0.16rem;
-  padding: 0 0.36rem 0 0.4rem;
+  padding: 0 0.26rem 0 0.4rem;
   height: .4rem;
   align-items: center;
   font-size: .14rem;
@@ -662,7 +665,23 @@ if (type.value == 30) {
   height: .16rem;
   border-radius: 50%;
   border: .01rem solid var(--q-gb-bg-c-8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  // position: relative;
 }
+.sso-active{
+  border: .01rem solid var(--q-gb-t-c-1);
+  &::after {
+    content: ' ';
+    position: absolute;
+    width: .10rem;
+    height: .10rem;
+    background-color: var(--q-gb-t-c-1);
+    border-radius: 50%;
+  }
+}
+  
 .content_box1 {
   height: 0.40rem;
 
