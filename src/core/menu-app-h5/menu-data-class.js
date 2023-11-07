@@ -163,10 +163,6 @@ class MenuData {
   set_current_lv_2_menu_i(val = {}){
     this.current_lv_2_menu_i = val.mi;
     this.current_lv_2_menu = val;
-    // 今日 / 滚球/ 冠军 没有 三级
-    // if(![1,2,400].includes(this.current_lv_1_menu_mi.value)){
-      // this.get_date_menu_api_when_subchange(this.current_lv_2_menu_i)
-    // }
     this.update()
   }
    // 设置三级菜单id
@@ -184,14 +180,18 @@ class MenuData {
     this.current_lv_1_menu_mi.value = lv1_mi  
     this.current_lv_1_menu_i = lv1_mi
     this.menu_type.value = menu_type_config[lv1_mi]  
-    this.get_menu_lvmi_list(lv1_mi)
-    let index = 0
-    // 今日/滚球第一位是收藏 默认选中足球/全部 
-    if([1,2].includes(lv1_mi)){
-      index = 1
+   
+    // 早盘 /串关 不走此逻辑
+    if([1,2,400].includes(lv1_mi*1)){
+
+      this.get_menu_lvmi_list(lv1_mi)
+      let index = 0
+      // 今日/滚球第一位是收藏 默认选中足球/全部 
+      if([1,2].includes(lv1_mi*1)) {
+        index = 1
+      }
+      this.set_current_lv_2_menu_i( lodash_.get(this.menu_lv_mi_lsit,`[${index}]`,{}))
     }
-    this.set_current_lv_2_menu_i( lodash_.get(this.menu_lv_mi_lsit,`[${index}]`,{}))
-    // this.update();
   }
 
   set_collect_menu_type (lv1_mi) {
@@ -214,10 +214,10 @@ class MenuData {
       }
     }
     // 早盘
-    if([3,6].includes( this.current_lv_1_menu_mi.value * 1 )){
+    if([3,6].includes( this.current_lv_1_menu_i * 1 )){
       config.api = "post_date_menu_count"
       /// 4 早盘 11 串关
-      config.params.type = this.current_lv_1_menu_mi.value * 1 == 3 ? 4 : 11
+      config.params.type = this.current_lv_1_menu_i == 3 ? 4 : 11
     }
 
     this.menu_match_date_api_config = config
