@@ -4,8 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "env-dev":"cross-env NODE_ENV=development",
-    "env-prod":"cross-env NODE_ENV=production",
+    "env-dev": "cross-env NODE_ENV=development",
+    "env-prod": "cross-env NODE_ENV=production",
     "dev-self-use-version-inner": "vite    --config  ./entries/self-use-version/self-use-version.vite.config.js",
     "dev-self-use-version": "run-s remove-output  env-dev  export-build-version-dev export-build-dir-1  remove-dist  copy-oss-3   copy-oss  export-merchant-config  export-build-in-config  resolve-merchant-config export-full-version-close  dev-self-use-version-inner",
     "build-self-use-version-inner": "vite  build  --config  ./entries/self-use-version/self-use-version.vite.config.js   --mode  production",
@@ -80,6 +80,7 @@
     "pako": "^2.1.0",
     "quasar": "^2.12.3",
     "redux": "^4.2.1",
+    "swrv": "^1.0.4",
     "vue": "^3.3.4",
     "vue-currency-input": "^3.0.5",
     "vue-draggable-resizable": "^2.3.0",

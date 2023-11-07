@@ -23,7 +23,8 @@
   import { scrollMenu } from "../utils";
   import { MenuData } from "src/core/index.js";
   import { api_common } from "src/api/"
-  const emits = defineEmits(['changeTab'])
+  import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
+
   const props = defineProps({
     defaultVal: {
         type: Number,
@@ -56,26 +57,21 @@
     set_menu_match_date()
 
     event && scrollMenu(event,".date-tab-content-ul",".active");
-    // emits('changeTab',props.dataList[i].val);
   }
-    //   emits('changeTab',activeOn.value);
-    /**
-     * 一级菜单切换  时间置空
-     */
-    // watch(()=> MenuData.current_lv_1_menu_mi.value,() => {
-    //     activeOn.value = 0;
-    //     MenuData.set_date_time(props.dataList[0].val)
-    // })
+  
 
-    // 根据菜单数据 请求接口
+    // 根据菜单数据 请求接口    
     const set_menu_match_date = () => {
         // 获取菜单中的数据 进去接口请求
         const { menu_match_date_api_config:{ api,params } } = MenuData
         api_common[api](params).then(res => {
-
+            // if(res.code == 200 ){
+                useMittEmit(MITT_TYPES.EMIT_SCROLL_DATE_TIME_CHANGE,res.data)
+            // }
         })
-
     }   
+
+
     
   </script>
   <style lang="scss" scoped>
