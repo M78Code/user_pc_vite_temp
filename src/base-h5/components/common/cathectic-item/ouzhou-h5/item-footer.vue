@@ -52,6 +52,8 @@
     <!-- 右 -->
     <div class="text-right" style="margin-left:auto">
       <p class="top-p">{{calc_settle_score}}</p>
+      <!-- 订单状态 -->
+      <p :class="class_foter" class="yb_fontsize12" style="line-height:0.2rem">{{calc_text}}</p>
     </div>
 
   </div>
