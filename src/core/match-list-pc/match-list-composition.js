@@ -7,7 +7,6 @@ import lodash from "lodash";
 import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache.js";
 import { PageSourceData, MatchDataWarehouse_PC_List_Common as MatchListData } from "src/core/index.js";
 import { api_match } from "src/api/index.js";
-import BaseData from 'src/core/base-data/base-data.js';
 import { useMittEmit, MITT_TYPES, useMittOn } from "src/core/mitt/index.js";
 // import { set_sticky_top } from 'src/core/match-list-pc/match-card/module/sticky-top.js'
 import MatchListScrollClass from 'src/core/match-list-pc/match-scroll.js'
@@ -15,7 +14,6 @@ import MatchListCardClass from "src/core/match-list-pc/match-card/match-list-car
 // import video from "src/core/video/video.js";
 import { pre_load_video } from 'src/core/pre-load/module/pre-load-video.js'
 import MenuData from "src/core/menu-pc/menu-data-class.js";
-import { compute_sport_id  } from 'src/core/constant/index.js'
 import collect_composable_fn from "./composables/match-list-collect.js";
 import ws_composable_fn from "./composables/match-list-ws.js";
 import use_featch_fn from "./composables/match-list-featch.js";

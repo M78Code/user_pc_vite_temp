@@ -21,9 +21,7 @@
             <!--  返回按鈕  -->
             <slot name="menu-left">
                 <div class="goback-icon-wrapper column justify-center" @click="router.back()">
-                    <!-- <div class="img" :style="compute_css_obj('menu-go-back-icon')"></div> -->
                     <img class="img" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/back.svg`" alt="" />
-                    <!-- <span class="icon-arrow-left"></span> -->
                 </div>
             </slot>
            

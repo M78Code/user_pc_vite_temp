@@ -53,7 +53,7 @@
         <div class="media-col"></div>
       </div>
       <!-- 角球玩法tab -->
-      <div class="other-play-tab" v-if="lodash.get(match, 'has_other_play')">
+      <div class="other-play-tab" v-if="has_other_play">
         <!-- <div class="process-col"></div> -->
         <div class="play-title col" @click="fold_tab_play"
           :style="`width:${match_list_tpl_size.team_width + match_list_tpl_size.bet_width * (match_style_obj.data_tpl_id == 13 ? 13 : 6)}px !important;flex:none`">
@@ -67,7 +67,7 @@
       </div>
       <!-- 次要玩法标题 -->
       <div :class="['fifteen-box', { 'double-title': ['en', 'ad', 'ms'].includes(UserCtr.lang) }]"
-        v-if="lodash.get(match, 'has_other_play') && !match_style_obj.is_fold_tab_play">
+        v-if="has_other_play && !match_style_obj.is_fold_tab_play">
         <div class="basic-col" :style="`width:${match_list_tpl_size.team_width}px !important;`"></div>
         <div class="row">
           <div class="handicap-col fifteen-item bet-item-wrap fifteen_tab_txt" v-for="(item, key) in bet_col" :class="[{ 'tab-tilte-bg': set_secondary_bg(key, bet_col.length) },
@@ -87,8 +87,7 @@
       </div>
       <!-- 次要玩法盘 -->
       <!--  is_fold_tab_play 次要玩法 是否折叠  -->
-      <div class="match-handicap-item other-handicap-item"
-        v-if="lodash.get(match, 'has_other_play') && !match_style_obj.is_fold_tab_play">
+      <div class="match-handicap-item other-handicap-item" v-if="has_other_play && !match_style_obj.is_fold_tab_play">
         <!-- 赛事基础信息 -->
         <div class="basic-col" :style="`width:${match_list_tpl_size.team_width}px !important;`">
           <basis-info4 v-if="is_mounted && match" :is_other_concede="true" :match="match" :is_show_score="true" />
@@ -105,7 +104,7 @@
 
 <script setup>
 
-import { ref, computed, watch, onMounted, nextTick } from 'vue';
+import { ref, computed, watch, onMounted } from 'vue';
 import lodash from 'lodash'
 import { t, get_match_status, MatchDataWarehouse_PC_List_Common as MatchListData, UserCtr, compute_local_project_file_path } from "src/core/index.js";
 import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card-class.js'
@@ -141,16 +140,16 @@ const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.da
 let match = MatchListData.get_quick_mid_obj(props.mid);
 match && set_play_name_list(MatchListData.get_tab_play_keys(match))
 const is_mounted = ref(true);
-let compute_other_play_data = get_compute_other_play_data(match)
+let compute_other_play_data = get_compute_other_play_data(match) //玩法数据
+const has_other_play = computed(() => { //是否有其他玩法
+  return play_name_list.value&&play_name_list.value.length > 0
+});
 watch(() => MatchListData.data_version.version, (new_value, old_value) => {
   match = MatchListData.get_quick_mid_obj(props.mid);
   compute_other_play_data = get_compute_other_play_data(match)
-  match && set_play_name_list(MatchListData.get_tab_play_keys(match))
+  match && set_play_name_list(MatchListData.get_tab_play_keys(match)) //其他玩法key
 })
 
-// const match = computed(() => {
-//   return MatchListData.list_to_obj.mid_obj[props.mid+'_']
-// })
 // 其他玩法标题
 const bet_col = computed(() => {
   let bet_col = []
@@ -284,8 +283,7 @@ function set_play_name_list(tab_play_keys = '') {
   });
   play_name_list.value = play_name_list_info;
   // 是否有其他玩法
-  match.has_other_play = tab_play_keys.length > 0
-  if (match.has_other_play) {
+  if (play_name_list_info.length > 0) {
     // 当前选中的其他的玩法
     let play_key = get_play_current_play(match)
     //玩法关闭时选择第一个
@@ -296,8 +294,6 @@ function set_play_name_list(tab_play_keys = '') {
   } else {
     set_match_play_current_index(match, '')
   }
-  // // 保存当前选中的玩法
-  // this.other_play_current_play['mid_'+match.mid] = play_key
 }
 
 /**

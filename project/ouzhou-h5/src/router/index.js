@@ -161,6 +161,15 @@ const router = createRouter({
             meta: {
               keepAlive: true // 需要缓存
             },
+          },
+          //公告
+          {
+            path: "/announcement",
+            name: "/announcement",
+            component: () => import("../pages/personal/announcement.vue"),
+            meta: {
+              keepAlive: true // 需要缓存
+            },
           }
       ],
     },

@@ -34,7 +34,7 @@ export const get_matches_list = (params, config={}, url = "/yewu11/v1/m/matches"
 
 // 详情获取动画地址接口()
 export const post_video_url = (params, config={}, url = "/yewu11/v1/w/videoAnimationUrl") => {
-    params.imgDm = window.env.config.oss_img_domains[0];
+    // params.imgDm = window.env.config.oss_img_domains[0]; //#TODO 疑似重构不再使用该逻辑, 注释暂时不影响主流程
     return http.post(url, params);
     }
 

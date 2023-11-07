@@ -32,6 +32,7 @@
 import { ref,onMounted,onUnmounted } from 'vue';
 import { useRouter } from "vue-router";
 import _ from "lodash"
+import MatchListOuzhouClass from 'src/core/match-list-pc/match-ouzhou-list.js'
 
 // import MatchesFilterTab from "./matches_filter_tab_ball_species.vue";
 // import MatchesDateTab from "./matches_filter_tab.vue";
@@ -71,8 +72,8 @@ const match_list_top = ref('80px')
 
 const b_menu_root = ref(0)
 
-// let menu_info = state?.menusReducer.redux_menu || {}
-const redux_menu = ref({});
+let menu_info = MatchListOuzhouClass?.redux_menu || {}
+const redux_menu = ref(menu_info);
 const coom_soon_state =ref(false)
 
 // const { set_mid_menu_top_result } = use_new_menu()
@@ -120,8 +121,8 @@ const sport_ball = {
 }
 
 onMounted(()=>{
-//   const { menu_root } = state?.menusReducer?.redux_menu
-//   set_header_tab(menu_root)
+  const { menu_root } = MatchListOuzhouClass?.redux_menu
+  set_header_tab(menu_root)
 })
 
 // // 菜单切换 右侧背景图片变化
@@ -171,11 +172,11 @@ const set_header_tab = val => {
 		tab_list.value = sport_tab
 		obj = sport_tab[0]
 		current_ball_type.value = 0
-		// const { menu_left } = state?.menusReducer?.redux_menu;
+		const { menu_left } = MatchListOuzhouClass?.redux_menu;
 		// console.error('menu_left',menu_left);
-		// if(menus_i18n_map.value){
-		// 	matches_header_title.value = (menus_i18n_map || {}).value[menu_left]
-		// }
+		if(menus_i18n_map.value){
+			matches_header_title.value = (menus_i18n_map || {}).value[menu_left]
+		}
 		
 	}
 
@@ -184,20 +185,20 @@ const set_header_tab = val => {
 
 const checked_current_tab = payload => {
 	// state = store.getState()
-	// // 获取最新的 数据
-	// let redux_menu = _.cloneDeep(state.menusReducer.redux_menu) 
-	// // 暂时不做 
-	// if (['top_events', 'league'].includes(payload.value)) {
-	// 	// 修改菜单数据
-	// 	redux_menu.coom_soon = true
+	// 获取最新的 数据
+	let redux_menu = _.cloneDeep(MatchListOuzhouClass.redux_menu) 
+	// 暂时不做 
+	if (['top_events', 'league'].includes(payload.value)) {
+		// 修改菜单数据
+		redux_menu.coom_soon = true
 
 		
-	// }else{
-	// 	// 修改菜单数据
-	// 	redux_menu.coom_soon = false
-	// }
+	}else{
+		// 修改菜单数据
+		redux_menu.coom_soon = false
+	}
 
-	// redux_menu.mid_tab_type = payload.value
+	redux_menu.mid_tab_type = payload.value
 
 	// store.dispatch({
 	// 	type: 'SETREDUXMENU',
@@ -249,7 +250,6 @@ onUnmounted(()=>{
 		top: 0;
 		width: 226px;
 		height: 78px;
-		background-image:url('src/assets/images/icon_sport_bg.png');
 		background-size: 226px ;
 	}
 

@@ -35,13 +35,13 @@
 
 <script setup>
 import { onMounted, ref, computed, markRaw } from "vue";
-import temp0 from "src/project-ouzhou/pages/detail/components/template/tem0.vue";
-import temp1 from "src/project-ouzhou/pages/detail/components/template/tem1.vue";
-import temp3 from "src/project-ouzhou/pages/detail/components/template/tem3.vue";
-import temp5 from "src/project-ouzhou/pages/detail/components/template/tem5.vue";
-import tem_other from "src/project-ouzhou/pages/detail/components/template/tem_other.vue";
-import { storage_bet_info } from "src/public/utils/bet/bet_info.js";
-import EMITTER from "src/global/mitt.js";
+// import temp0 from "./template/tem0.vue";
+// import temp1 from "./template/tem1.vue";
+// import temp3 from "./template/tem3.vue";
+// import temp5 from "./template/tem5.vue";
+// import tem_other from "./template/tem_other.vue";
+// import { storage_bet_info } from "src/public/utils/bet/bet_info.js";
+// import EMITTER from "src/global/mitt.js";
 import { LOCAL_PROJECT_FILE_PREFIX } from "src/core";
 const props = defineProps({
   match_odds_info: {
@@ -60,11 +60,11 @@ const props = defineProps({
 const emit = defineEmits(["change"]);
 const active = ref(1);
 const componentArr = ref({
-    tem0: markRaw(temp0),
-    tem1: markRaw(temp1),
-    tem3: markRaw(temp3),
-    tem5: markRaw(temp5),
-    tem_other: markRaw(tem_other),
+    // tem0: markRaw(temp0),
+    // tem1: markRaw(temp1),
+    // tem3: markRaw(temp3),
+    // tem5: markRaw(temp5),
+    // tem_other: markRaw(tem_other),
 });
 const tem_choice = (hpt) => {
   if ([0, 1, 5].includes(hpt)) {
@@ -98,7 +98,7 @@ const bet_click_ = (data) => {
       ov: get_oddv(data.ol.ov / 100000)
     },
   })
-  EMITTER.emit("show_bet_dialog", true);
+  // EMITTER.emit("show_bet_dialog", true);
 }
 // 处理赔率截取两位小数点
 const get_oddv = (num) => {
@@ -114,9 +114,9 @@ const clear_score_active = () => {
   active.value = 0;
 }
 onMounted(() => {
-  EMITTER.on("clear_score_active", () => {
-    clear_score_active()
-  })
+  // EMITTER.on("clear_score_active", () => {
+  //   clear_score_active()
+  // })
 });
 </script>
 
@@ -161,13 +161,13 @@ onMounted(() => {
     .odds-hpn-down-icon {
       width: 14px;
       height: 14px;
-      background: url('src/assets/images/detail/down.png') no-repeat center;
+      background: url($SCSSPROJECTPATH+"/image/detail/down.png") no-repeat center;  
     }
     .odds-hpn-up-icon {
       width: 14px;
       height: 14px;
       transform: rotate(180deg);
-      background: url('src/assets/images/detail/down.png') no-repeat center;
+      background: url($SCSSPROJECTPATH+"/image/detail/down.png") no-repeat center;
     }
   }
   .is-expend {

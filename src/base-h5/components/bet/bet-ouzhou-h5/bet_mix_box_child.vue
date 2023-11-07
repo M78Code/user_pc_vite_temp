@@ -39,11 +39,18 @@
                 </div>
                 <bet-info></bet-info>
             </div>
+            <div v-if="state == 4">
+              <bet-mix-box-child4></bet-mix-box-child4>
+            </div>
+            <div v-if="state == 5">
+              <bet-mix-box-child5></bet-mix-box-child5>
+            </div>
         </div>
         <!-- 键盘 -->
-        <key-board></key-board>
+        <key-board v-if="state < 4"></key-board>
         <!-- 按钮 -->
-        <bet-btn></bet-btn>
+        <bet-btn v-if="state < 4"></bet-btn>
+        <bet-btn1 v-else></bet-btn1>
 
    </div>
   </div>
@@ -52,11 +59,14 @@
 <script setup>
 import betInfo from "./bet_info.vue";
 import betBtn from './bet-btn.vue';
+import betBtn1 from './bet-btn1.vue';
 import keyBoard from './keyboard.vue';
 import betInputInfo from "./bet_input_info.vue";
 import betMixBoxChild1 from "./bet_mix_box_child1.vue";
 import betMixBoxChild2 from "./bet_mix_box_child2.vue";
 import betMixBoxChild3 from "./bet_mix_box_child3.vue";
+import betMixBoxChild4 from "./bet_mix_box_child4.vue";
+import betMixBoxChild5 from "./bet_mix_box_child5.vue";
 import betAllDetele from "./bet_all_detele.vue";
 import betBar from "./bet-bar.vue";
 //import betInputInfo from "//bet_input_info";
@@ -69,7 +79,7 @@ import lodash from 'lodash'
 import { format_money3, format_money2 } from 'src/core/format/index.js'
 import { submit_handle } from "src/core/bet/class/bet-box-submit.js"
 
-const state = 2 //1单关投注  2：合并单关
+const state = 5 //1单关投注  2：合并单关   3：串关投注   4:单关投注等待、单关投注成功、单关投注失败    5:单关投注成功
 
 //串关的按钮
 const is_strand = ref(true)
