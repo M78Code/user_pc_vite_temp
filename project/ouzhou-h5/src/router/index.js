@@ -17,18 +17,18 @@ const router = createRouter({
       name: "main",
       component: () => import("../layouts/index.vue"),
       children: [
-        {
-          path: "/inPlay",
-          name: "inPlay",
-          component: () => import("../pages/in-pay/index.vue"),
-          meta: {
-            keepAlive: true // 需要缓存
-          },
-        },
+        // {
+        //   path: "/inPlay",
+        //   name: "inPlay",
+        //   component: () => import("../pages/in-pay/index.vue"),
+        //   meta: {
+        //     keepAlive: true // 需要缓存
+        //   },
+        // },
           {
             path: "/match",
             name: "matchList",
-            component: () => import("../pages/match-list/index.vue"),
+            component: () => import("../pages/match-page/index.vue"),
             meta: {
               keepAlive: true // 需要缓存
             },

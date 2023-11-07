@@ -184,5 +184,12 @@ class MenuData {
   is_jinzu(mi) {
     return this._is_cur_mi(30, mi)
   }
+  /**
+   * 是否选中了收藏
+   *  mi [number|string] 要比对的值
+  */
+   is_collect(mi) {
+    return this._is_cur_mi(50000, mi)
+  }
 }
 export default new MenuData();
