@@ -368,7 +368,6 @@ class MatchMeta {
     Object.assign(this.ball_seed_count.value, {
       [key]: length
     })
-    console.log(this.ball_seed_count.value)
   }
 
   /**

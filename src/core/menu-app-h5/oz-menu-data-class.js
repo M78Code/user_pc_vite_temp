@@ -30,26 +30,6 @@ class MenuData {
     this.menu_type = ref(2); //id   2今日(左侧抽屉) 1滚球(滚动tab) 3早盘 8VR() 7电竞() 28赛果() 500热门
   }
 
-  // 根据菜单id获取下级菜单id 二级菜单
-  // mid 顶级菜单id
-  get_menu_lvmi_list(mid){
-    let menu_lv_mi_lsit = [];
-    // 冠军 直接取值
-    if(mid == 400){
-      menu_lv_mi_lsit = (BaseData.mew_menu_list_res.find(item=> item.mi == 400 ) || {}).sl
-    }else{
-      this.menu_list.forEach(item => {
-        (item.sl || {}).find(obj=>{
-          // 菜单id最后一位为顶级菜单的id
-          if(obj.mi.substr(obj.mi.length-1,1) == mid){
-            menu_lv_mi_lsit.push(obj)
-          }
-        })
-      })
-    }
-    return menu_lv_mi_lsit
-  }
-
   get_menu_lv_2_mi_list(mi){
     const item = this.menu_lv_mi_lsit.find(item=> item.mi == mi) || {}
     return item.sl
@@ -188,7 +168,7 @@ class MenuData {
    * 是否选中了收藏
    *  mi [number|string] 要比对的值
   */
-  is_collect(mi) {
+   is_collect(mi) {
     return this._is_cur_mi(50000, mi)
   }
 }

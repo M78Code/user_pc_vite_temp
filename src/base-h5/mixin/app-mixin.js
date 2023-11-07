@@ -15,6 +15,8 @@ import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import MenuData from "src/core/menu-h5/menu-data-class.js";
 import { http, AllDomain } from "src/core/http/";
+import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
+
 export default {
   data() {
     return {
@@ -106,6 +108,12 @@ export default {
       // ws和http域名切换逻辑
       http.setApiDomain();
     },
+    /**
+     * @description 元数据请求回来 初始化赛事加载
+     */
+    init_match_callback () {
+      MatchMeta.set_origin_match_data()
+    },
     /** 触发切网络api域名动作
      * @description:
      * @param {undefined}  data 消息体
@@ -164,6 +172,7 @@ export default {
           MITT_TYPES.EMIT_ALLOW_INIT_LOAD,
           this.handle_init_load
         ).off,
+        emitter_4: useMittOn(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA, this.init_match_callback).off
       };
     },
     // 移除相应监听事件

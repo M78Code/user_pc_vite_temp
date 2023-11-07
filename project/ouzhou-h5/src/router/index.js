@@ -1,8 +1,8 @@
 /*
  * @Author: rise
  * @Date: 2023-11-03 16:37:52
- * @LastEditors: rise
- * @LastEditTime: 2023-11-07 18:31:50
+ * @LastEditors: lowen pmtylowen@itcom888.com
+ * @LastEditTime: 2023-11-07 19:21:14
  * @Description:  
  */
 import { createRouter, createWebHashHistory } from "vue-router";
@@ -17,18 +17,18 @@ const router = createRouter({
       name: "main",
       component: () => import("../layouts/index.vue"),
       children: [
-          {
-            path: "/inPlay",
-            name: "inPlay",
-            component: () => import("../pages/in-pay/index.vue"),
-            meta: {
-              keepAlive: true // 需要缓存
-            },
-          },
+          // {
+          //   path: "/inPlay",
+          //   name: "inPlay",
+          //   component: () => import("../pages/in-pay/index.vue"),
+          //   meta: {
+          //     keepAlive: true // 需要缓存
+          //   },
+          // },
           {
             path: "/match",
             name: "matchList",
-            component: () => import("../pages/match-list/index.vue"),
+            component: () => import("../pages/match-page/index.vue"),
             meta: {
               keepAlive: true // 需要缓存
             },
@@ -101,16 +101,16 @@ const router = createRouter({
           // 常规赛事和电竞赛事详情页,赛事id必传，玩法集id可选
         {
           path: "/details/:mid/:mcid?/:csid?",
-          name: "details",
+          name: "category",
           component: () => import("../pages/detailnew/index.vue"),
-          children: [
-            {
-              path: "category/:id?",
-              name: "category",
-              component: () =>
-                import("../pages/details/children/category.vue"),
-            },
-          ],
+          // children: [
+          //   {
+          //     path: "category/:id?",
+          //     name: "category",
+          //     component: () =>
+          //       import("../pages/details/children/category.vue"),
+          //   },
+          // ],
         },
           // 赛果详情页
           {
