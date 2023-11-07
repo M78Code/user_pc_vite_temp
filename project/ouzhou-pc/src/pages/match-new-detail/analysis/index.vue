@@ -15,7 +15,7 @@
   <div>
     <div class="analysis-body">
       <!-- 动画比分榜 -->
-      <venue_box v-show="detail_info.ms>0" :score_list="score_list" :detail_info="detail_info"  />
+      <!-- <venue_box v-show="detail_info.ms>0" :score_list="score_list" :detail_info="detail_info"  /> -->
   
       <!-- <div class="analysis-top">
         <div class="analysis-top-l">
@@ -31,9 +31,9 @@
       <!-- <venue_box /> -->
       <!-- <score_info :score_list="score_list" :detail_info="detail_info" /> -->
        <!-- 足球分析页图表 -->
-      <foot-ball-stats v-if="detail_info.csid==1 &&detail_info.ms>0" :detail_info="detail_info" :score_list="score_list" />
+      <!-- <foot-ball-stats v-if="detail_info.csid==1 &&detail_info.ms>0" :detail_info="detail_info" :score_list="score_list" /> -->
        <!-- 足球分析页图表 -->
-       <basket-ball-stats  v-if="detail_info.csid==2 &&detail_info.ms>0" :detail_info="detail_info" :score_list="score_list" />
+       <!-- <basket-ball-stats  v-if="detail_info.csid==2 &&detail_info.ms>0" :detail_info="detail_info" :score_list="score_list" /> -->
       <!-- 选择哪队会赢组件 -->
       <switch_team />
     </div>
@@ -42,12 +42,13 @@
 
 <script setup>
 import { onMounted, ref,computed,watch } from "vue";
+// import {LOCAL_PROJECT_FILE_PREFIX } from 'src/core/index.js';
 
-import FootBallStats from './compoments/football_stats.vue'
-import BasketBallStats from './compoments/basketball_stats.vue'
+// import FootBallStats from './compoments/football_stats.vue'
+// import BasketBallStats from './compoments/basketball_stats.vue'
 import switch_team from './compoments/switch_team.vue'
 
-import venue_box from './compoments/venue_box/index.vue'
+// import venue_box from './compoments/venue_box/index.vue'
 import _ from 'lodash'
 
 const props =  defineProps({
