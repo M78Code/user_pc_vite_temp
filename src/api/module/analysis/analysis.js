@@ -71,6 +71,10 @@ export const get_result_menu = (params, config = {}, url = "/v2/m/menu/resultMen
 export const get_match_lineup_list = (params, config = {}, url = "/v2/matchLineup/getMatchLineupList") => {
   return http.get(`${prefix}${url}`, params, config);
 };
+// 赛果菜单接口 menuType 0 标准赛事，1冠军赛事
+export const get_match_result_menu = (params, config = {}, url = "/v2/m/menu/getMatchResult") => {
+  return http.get(`${prefix}${url}`, params, config);
+};
 
 
 

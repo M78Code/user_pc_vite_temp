@@ -25,7 +25,7 @@ const router = useRouter();
 const footer_list = [
   {
     title: i18n_t('menu_itme_name.results'), 
-    path_name: "result_details",
+    path_name: "matchResults",
     icon: `${LOCAL_PROJECT_FILE_PREFIX}/image/footer/tabbar_01_nor.png`,
     id: 1
   },
