@@ -1,8 +1,8 @@
 /*
  * @Author: jamison pmtyjamison@itcom888.com
  * @Date: 2023-09-22 13:27:10
- * @LastEditors: jamison pmtyjamison@itcom888.com
- * @LastEditTime: 2023-11-07 10:36:47
+ * @LastEditors: lowen pmtylowen@itcom888.com
+ * @LastEditTime: 2023-11-07 16:33:17
  * @FilePath: \user-pc-vite\dev-target-env.js
  * @Description: 
  */
@@ -38,7 +38,7 @@ DEV_TARGET_VERSION = "project_3-652cce36feffd80f0fcda0f0-1698407516978-test";
 
 //----------------------------------分割线  复刻版-H5-KYAPP  app-h5  5 -------------------------------------------
 // 测试环境  
-DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1699239723632-test";
+// DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1699239723632-test";
 // 试玩环境  
 // DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1698742048199-shiwan";
 // 隔离环境  

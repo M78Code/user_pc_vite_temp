@@ -216,7 +216,7 @@ export default {
   setup (ctx) {
     // 是否显示球种标题
     const show_sport_title = computed(() => {
-      return [1,2].includes(+ctx.match_of_list.start_falg)
+      return [1,2].includes(+ctx.match_of_list.start_flag)
     })
     return { 
       lang, theme, i18n_t, compute_img_url, format_time_zone, GlobalAccessConfig, footer_menu_id,LOCAL_PROJECT_FILE_PREFIX,in_progress,not_begin,
