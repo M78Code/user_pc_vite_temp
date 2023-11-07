@@ -16,14 +16,22 @@
     </div>
     <div class="body-info">
       <div>
-        <p>{{ i18n_t('app_h5.cathectic.bets') }}: [{{Item.sportName}}
+        <p>
+          {{ i18n_t('app_h5.cathectic.bets') }}:
+          {{Item.sportName}}:
+          <template v-if="data_b.seriesType != '3' && Item.matchType != 4">{{ i18n_t(`matchtype.${Item.matchType}`) }}</template>
         </p>
-        <p>{{Item.playName}} - {{i18n_t(`odds.${Item.marketType}`)}}</p>
         <p>{{Item.playName}} - {{i18n_t(`odds.${Item.marketType}`)}}</p>
       </div>
       <span>
+        <span>
+          <template v-if="!([1011, 1002, 1010, 1009].includes(+Item.sportId) && calc_num(Item) && calc_num(Item).length > 1)">
+            {{(BetRecordClass.selected === 1 || BetRecordClass.selected === 2) ? Item.playOptionName: Item.marketValue}}
+          </template>
+        </span>
         <!-- 大3.5  -->
-        @{{ Item.oddFinally }}</span>
+        @{{ Item.oddFinally }}
+      </span>
     </div>
     <div class="body-main">
       <p><label>{{ i18n_t('app_h5.cathectic.bet_number') }}：</label> <span>{{data_b.orderNo}}</span></p>
@@ -99,6 +107,15 @@ let props = defineProps({
   const Item = computed(() => {
     return props.data_b.orderVOS[0] || []
   })
+
+  //虚拟赛马计算标识数量
+  const calc_num = (Item) => {
+    if (/[0-9]/.test(Item.playOptions)) {
+      return Item.playOptions.split('/')
+    } else {
+      return false
+    }
+  }
   
   onMounted(() => {
     rules_normal();

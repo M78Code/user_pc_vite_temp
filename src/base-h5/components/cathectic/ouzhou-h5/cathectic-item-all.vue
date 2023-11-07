@@ -31,7 +31,7 @@
           <q-slide-transition>
             <template>
               <div class="date-header flex">
-                <span class="date">03/12</span>
+                <span class="date"><span>{{ formatTime(new Date(name).getTime(), 'mm/DD')}}</span></span>
                 <!-- 第一项显示 cashout按钮、 已结算信息 -->
                 <div class="settled-date" v-if="BetRecordClass.selected === 1 && index === 0">
                   Number <span>2</span>
@@ -63,7 +63,7 @@ import SRecord from "src/base-h5/components/skeleton/record.vue";
 import { ref, watch, computed, onMounted, onUnmounted } from 'vue'
 import UserCtr from "src/core/user-config/user-ctr.js";
 import {useMittEmit, useMittOn, MITT_TYPES} from  "src/core/mitt/index.js"
-
+import { formatTime } from 'src/core/format/index.js'
 // 锚点
 const myScroll = ref(null)
 //是否在加载中
@@ -146,6 +146,7 @@ const init_params_api = (_index) => {
 
 // 已结算页面，排序改变  2-默认排序（结算时间） 1-投注时间
 const sortChange = (index) => {
+  if(index === sort_active.value) return
   sort_active.value = index
   init_data(1)
 }
@@ -322,7 +323,7 @@ template {
   padding: 0 0.14rem;
   justify-content: space-between;
   .date {
-    font-size: 0.2rem;
+    font-size: 0.18rem;
     font-weight: bold;
   }
   .settled-date {
