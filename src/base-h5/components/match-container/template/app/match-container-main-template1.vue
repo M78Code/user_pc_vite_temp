@@ -379,6 +379,7 @@ export default {
     margin: 0 4px;
   }
   .match-inner-container {
+    width: 98%;
     margin: 0 auto;
     /* 兼容iPhone11边框显示不全 */
     //width: 100%;
