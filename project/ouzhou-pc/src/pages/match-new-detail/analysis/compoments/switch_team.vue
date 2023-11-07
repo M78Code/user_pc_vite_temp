@@ -21,14 +21,14 @@
       <div class="analysis-switch-main">
         <div class="analysis-switch">
           <div class="analysis-switch-l to-collect">
-            <q-img :src="no_shoucan" class="q-img" />
+            <q-img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/no_shoucan.png`" class="q-img" />
             <span>46%</span>
           </div>
           <div class="analysis-switch-r to-collect">
             <span>54%</span>
-            <q-img :src="shoucan" class="q-img" />
+            <q-img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/shoucan.png`" class="q-img" />
           </div>
-          <img :src="to_vs" alt="" class="switch-img" />
+          <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/to_vs.png`" alt="" class="switch-img" />
         </div>
         <div class="analysis-btn">
           <div class="analysis-btn-box mr-8">
@@ -42,7 +42,7 @@
         </div>
       </div>
     </div>
-    <img :src="trophy_img" alt="" />
+    <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/trophy.png`" alt="" />
   </div>
   <div class="analysis-bottom">
     <div class="analysis-bottom-title">
@@ -57,10 +57,10 @@
 
 <script setup>
 import { onMounted, ref } from "vue";
-import trophy_img from "src/assets/images/trophy.png";
-import to_vs from "src/assets/images/to_vs.png";
-import no_shoucan from "src/assets/images/no_shoucan.png";
-import shoucan from "src/assets/images/shoucan.png";
+// import trophy_img from "src/assets/images/trophy.png";
+// import to_vs from "src/assets/images/to_vs.png";
+// import no_shoucan from "src/assets/images/no_shoucan.png";
+// import shoucan from "src/assets/images/shoucan.png";
 </script>
 
 <style lang="scss" scoped>

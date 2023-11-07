@@ -77,7 +77,7 @@ import { onMounted, ref, provide } from "vue";
 import {utils, MenuData, LOCAL_PROJECT_FILE_PREFIX } from 'src/core/index.js';
 import neutral from 'src/assets/images/neutral.png'
 import odds_info from "./components/odds_info.vue";
-// import analysis from './analysis/index.vue'
+ import analysis from './analysis/index.vue'
 import tabs from './components/tabs.vue'
 import breadcrumbs from './components/breadcrumbs.vue'
 import { usedetailData } from './index'
