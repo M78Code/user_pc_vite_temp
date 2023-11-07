@@ -8,7 +8,12 @@
   <!-- 矩形框中部 -->
   <div class="item-body yb_fontsize14">
     <div class="item-header">
-      Australia New South Wales
+      <template v-if="data_b.seriesType == '1'">
+        {{ data_b.orderVOS[0]?.matchName }}
+      </template>
+      <template v-else>
+        {{ data_b.seriesValue }}
+      </template>
     </div>
     <div class="item-main three-more">
       <template v-for="(item, index) in show_data_orderVOS" :key="index">
@@ -18,14 +23,39 @@
               <icon-wapper name="icon-success" />
             </template>
             <div class="top-info flex">
-              <p>Sevilla Futabol Club <i>2.5</i></p>
-              <span>08/17 03:00</span>
+              <p>
+                <!-- 冠军趣味玩法特殊对应 -->
+                <!-- managerCode=4 代表电竞  -->
+                <!-- matchType=3 是冠军  -->
+                <!-- managerCode=3 代表虚拟体育 -->
+                <!-- seriesType = 3 表示冠军 -->
+                <!-- matchType= 4 表示虚拟体育(尽量不要用这个字段) -->
+                <template v-if="data_b.seriesType == '3' && item.sportId == 50">{{item.sportName}}</template>
+                <template v-else-if="[1011, 1002, 1010, 1009].includes(+item.sportId)">{{item.batchNo}}</template>
+                <template  v-else-if="data_b.seriesType == '3'">{{item.matchName}}</template>
+                <template v-else>{{item.matchInfo}}</template>
+              </p>
+              <span>{{formatTime(+item.beginTime, 'mm/DD HH:MM')}}</span>
             </div>
           </div>
           <div :class="['main-warp', index === show_data_orderVOS.length - 1 ? 'no-border':'']">
-            <p class="list">
-              [In-play] 1*2 <i>7.24</i>
+            <div class="list">
+              <p class="col-9">
+              <span>
+                <template v-if="!([1011, 1002, 1010, 1009].includes(+item.sportId) && calc_num && calc_num.length > 1)">
+                  <!-- {{is_pre ? item.playOptionName: item.marketValue}} -->
+                  {{item.marketValue}}
+                </template>
+              </span>
+              <!-- 优化后的赔率 -->
+              <span class="oddfinally" v-if="!data_b.acCode"><span>&nbsp;@&thinsp;{{format_odds(item.oddFinally, item.sportId)}}</span></span>
             </p>
+            <!-- managerCode=4 代表电竞 orderStatus=1 是已结算 -->
+            <p class="col-8 text-left yb_fontsize10 item-order" v-if="data_b.managerCode == 4&&data_b.orderStatus == 1">
+              <!-- {{i18n_t('bet_record.result_score')}}： -->
+              {{item.settleScore}}
+            </p>
+            </div>
             <!--球类名称 赛前还是滚球 玩法名称 基准分 赔率类型-->
             <span class="info flex">
               <div>
@@ -36,7 +66,9 @@
                 &ensp;[{{i18n_t(`odds.${item.marketType}`)}}]
               </div>
               <!-- 已结算显示输赢 -->
-              <span v-if="BetRecordClass.selected === 1" class="result">Win</span>
+              <span v-if="BetRecordClass.selected === 1" class="result" :class="BetRecordClass.calc_text(data_b).color">
+                {{ BetRecordClass.calc_text(data_b).text }} 
+              </span>
             </span>
             <div class="line"></div>
           </div>
@@ -64,6 +96,8 @@ import BetRecordClass from "src/core/bet-record/bet-record.js";
 import { i18n_t, project_name } from 'src/core/index.js'
 import { IconWapper } from 'src/components/icon'
 import { itemFooter, itemOrder, earlySettle, earlySettledDetail } from "src/base-h5/components/common/cathectic-item/ouzhou-h5/index";
+import { formatTime, format_odds } from 'src/core/format/index.js'
+
 //按钮名字
 let btn_text = ref(i18n_t("bet_record.pack_down"))
 //是否展开
@@ -75,6 +109,16 @@ let props = defineProps({
   }
 })
 
+
+  //虚拟赛马计算标识数量
+  const calc_num = computed(() => {
+    console.log(props.data_b);
+    if (/[0-9]/.test(props.data_b.playOptions)) {
+      return props.data_b.playOptions.split('/')
+    } else {
+      return false
+    }
+  })
 
 const show_data_orderVOS = computed(() => {
   // orderVOS 长度大于2 且按钮是收起状态, 隐藏多于2条的
@@ -134,6 +178,12 @@ template {
           font-size: 0.16rem;
           font-weight: bold;
           padding-left: 0.2rem;
+          p {
+            max-width: 60vw;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            text-wrap: nowrap;
+          }
         }
         i.q-icon {
           width: 0.1rem;

@@ -2,7 +2,7 @@
  * @Author: rise
  * @Date: 2023-11-02 16:27:18
  * @LastEditors: rise
- * @LastEditTime: 2023-11-07 14:45:59
+ * @LastEditTime: 2023-11-07 17:48:28
  * @Description:  
 -->
 <template>
@@ -10,7 +10,7 @@
         <header class="ball_tab">
             <q-virtual-scroll ref="scrollRef" v-if="MenuData.menu_list.length" :items="MenuData.menu_list"
                 virtual-scroll-horizontal v-slot="{ item, index }">
-                <div v-if="!['118', '400'].includes(item.mi) && get_cont(item)" @click="on_change_play(item, index)"
+                <div v-if="!['118', '400'].includes(item.mi) && get_cont(item)" @click="on_change_play(item)"
                     :key="index" dense clickable :class="['play_item', { active: item.mi === playValue }]">
                     <span class="icon">
                         <sport-icon size="24" :status="item.mi === playValue" :sport_id="item.mi" />
@@ -28,8 +28,6 @@ import { onMounted, ref } from "vue"
 import sportIcon from "../components/left-menu/sport-icon.vue"
 import BaseData from "src/core/base-data/base-data.js";
 import { MenuData } from 'src/core/';
-const playValue = ref('');
-const scrollRef = ref(null);
 const props = defineProps({
     menu_type: {
     type: String,
@@ -37,30 +35,42 @@ const props = defineProps({
   },
 })
 /**
+ * 获取滚球数量
+ * @param {*} item 
+ */
+ const get_cont = (item) => {
+    return item.sl.filter((n) => { return n.mi == `${item.mi}${props.menu_type}` })?.[0]?.ct || 0;
+}
+/**
+ * 列表数据
+ */
+const dataList = () =>{
+    return MenuData.menu_list.filter((item)=>{
+        return get_cont(item);
+    }) || []
+} 
+const playValue = ref(dataList()[0]?.mi||'');
+const scrollRef = ref(null);
+
+/**
  * id设为滚球
  */
 onMounted(() => {
     MenuData.set_current_lv1_menu(props.menu_type);
+    MenuData.set_menu_mi(dataList()[0]?.mi);
 })
-/**
- * 获取滚球数量
- * @param {*} item 
- */
-const get_cont = (item) => {
-    return item.sl.filter((n) => { return n.mi == `${item.mi}${props.menu_type}` })?.[0]?.ct || 0;
-}
+
 /**
  * 滚球选择
  * @param {*} item 
  * @param {*} index 
  */
-const on_change_play = (item, index) => {
-    console.log(MenuData.menu_type.value);
-    console.log(item.mi);
+const on_change_play = (item) => {
     if(playValue.value == item.mi)return;
     playValue.value = item.mi;
     MenuData.set_menu_mi(item.mi)
-    scrollRef.value.scrollTo(index - 1, 'start-force')
+    const index = dataList().findIndex(n=>n.mi == item.mi);
+    scrollRef.value.scrollTo(index-2, 'start-force')
 }
 
 </script>

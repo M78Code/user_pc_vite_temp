@@ -12,8 +12,8 @@
         </div>
         <div class="match-detail-time-collect" @click="collect_click">
           <!-- <img :src="is_collect ? '~assets/images/detail/collected.png' : '~assets/images/detail/collect.png'" alt="" /> -->
-          <img v-if="is_collect" src="~assets/images/detail/collected.png" alt="" />
-          <img v-else src="~assets/images/detail/collect.png" alt="" />
+          <img v-if="is_collect"  :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/detail/collected.png`"   alt="" />
+          <img v-else src="/images/detail/collect.png" alt="" />
         </div>
       </div>
       <div class="match-detail-score">
@@ -51,6 +51,7 @@
 import { defineComponent, onMounted, ref, computed, toRef, watch } from "vue";
 import { api_match } from "src/api/index.js";
 import { detail_module } from "src/project-ouzhou/stores/detail";
+import { LOCAL_PROJECT_FILE_PREFIX } from "src/core";
 import _ from "lodash";
 const props = defineProps({
   get_match_detail: {
