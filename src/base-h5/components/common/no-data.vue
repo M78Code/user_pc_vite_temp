@@ -19,20 +19,21 @@
             </p>
         </template> -->
         <!-- <div class="empty-favorite-bg" :style="compute_css_obj(lodash.get(arr_const[which], 'key'))"> </div> -->
-        <img class="no_data_img" :src="no_data_img" alt="">
+        <img class="no_data_img" :src="no_data_icon" alt="">
          <!-- 有消息用消息 没有信息 用默认信息 -->
-        <p> {{ msg ? $t(msg) : lodash.get(arr_const[which], 'txt') }} </p>
+        <!-- <p> {{ msg ? $t(msg) : lodash.get(arr_const[which], 'txt') }} </p> -->
     </div>
 </template>
 
 <script setup>
-import { watch, ref, onMounted } from 'vue'
+import { watch, ref, onMounted, computed } from 'vue'
 import { useRoute } from 'vue-router'
 
 import { i18n_t ,} from "src/boot/i18n.js";
 import { useMittEmit,compute_css_obj, MITT_TYPES, LOCAL_PROJECT_FILE_PREFIX } from "src/core/index.js"
-import { no_data_img } from 'src/base-h5/core/utils/local-image.js'
+import { no_data_img, no_data_app, no_data_collect } from 'src/base-h5/core/utils/local-image.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
+import { is_collect } from 'src/base-h5/mixin/menu.js'
 // const noMatch2 = () => import(`${LOCAL_PROJECT_FILE_PREFIX}/image/png/noMatch2.png`)
 
 // ==========图片===============
@@ -106,6 +107,14 @@ function init() {
 }
 onMounted(init)
 
+const no_data_icon = computed(() => {
+    if (is_collect.value) {
+        return no_data_collect
+    } else {
+        return no_data_app
+    }
+})
+
 // 监听国际化语种变化,一旦变化修正国际化字符串
 // watch(
 //     // () => $i18n.locale,
@@ -135,10 +144,6 @@ function refresh_data() {
     min-height: 100%;
     text-align: center;
     color: #a5a9b3;
-    .no_data_img{
-        width: 300px;
-        height: 200px;
-    }
 
     .empty-favorite-bg {
         width: 1.8rem;
