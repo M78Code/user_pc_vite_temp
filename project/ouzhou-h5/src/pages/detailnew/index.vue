@@ -70,18 +70,19 @@
 <script setup>
 import { onMounted, ref, watch, onUnmounted } from "vue";
 import { useRouter } from "vue-router";
-import detail_header_tem0 from "./detail_header/detail_header_tem0.vue";
-import detail_header_tem1 from "./detail_header/detail_header_tem1.vue";
-import detail_header_tem2 from "./detail_header/detail_header_tem2.vue";
-import detail_tabs from "./components/detail_tabs.vue";
-import detail_event_tabs from "./components/detail_event_tabs.vue";
-import odds_info from "./components/odds_info.vue";
-import loading_page from 'src/components/details/loading/index.vue'
-import event_analysis from "./components/event_analysis.vue";
-import { detail_module } from "src/project-ouzhou/stores/detail";
+import { MatchDetailCalss } from "src/core";
+// import detail_header_tem0 from "./detail_header/detail_header_tem0.vue";
+// import detail_header_tem1 from "./detail_header/detail_header_tem1.vue";
+// import detail_header_tem2 from "./detail_header/detail_header_tem2.vue";
+// import detail_tabs from "./components/detail_tabs.vue";
+// import detail_event_tabs from "./components/detail_event_tabs.vue";
+// import odds_info from "./components/odds_info.vue";
+// import loading_page from 'src/components/details/loading/index.vue'
+// import event_analysis from "./components/event_analysis.vue";
+// import { detail_module } from "src/project-ouzhou/stores/detail"; //todo
 import { api_match } from "src/api/index.js";
-import courseData from 'src/global/course.js'
-import EMITTER from  "src/global/mitt.js"
+// import courseData from 'src/global/course.js' //todo
+// import EMITTER from  "src/global/mitt.js" //todo
 // import { Loading } from 'quasar'
 // 传入模拟数据
 // import {
@@ -90,7 +91,8 @@ import EMITTER from  "src/global/mitt.js"
 //   get_category_list_mock,
 // } from "./mock";
 const router = useRouter();
-const detail_store = detail_module();
+// const detail_store = detail_module();
+const detail_store = ref(MatchDetailCalss); //todo
 const match_odds_info = ref([]);
 const match_detail = ref({});
 const category_list = ref([]);
@@ -324,7 +326,7 @@ const get_matchDetail_MatchInfo = (params) => {
  *@return {*}
 */
 const detail_init = () => {
-  const { mid, csid  } = detail_store.get_detail_params;
+  const { mid, csid  } = detail_store.params;
   get_matchDetail_getMatchOddsInfo({
       mcid: 0,
       cuid: cuid.value,
@@ -364,9 +366,9 @@ onMounted(() => {
     timer_s_interval(4000);
   }, 10);
   // 监听顶部刷新功能
-  EMITTER.on("detail_refresh", () => {
-    // detail_init();
-  });
+  // EMITTER.on("detail_refresh", () => {
+  //   // detail_init();
+  // });
 });
 onUnmounted(() => {
   clear_all_timer();
