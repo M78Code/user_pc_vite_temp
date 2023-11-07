@@ -10,11 +10,11 @@
     <div class="row no-wrap">
       <!-- 玩法列表 -->
       <div class="handicap-col" v-for="(col, col_index) in handicap_list" :key="col_index">
-        <div :class="['bet-item-wrap', ]"
-          :style="get_bet_style(col_index, lodash.get(col, 'ols.length'))" v-for="(ol_data, ol_index) in deal_width_handicap_ols(col.ols)"
-          :key="ol_index">
+        <div :class="['bet-item-wrap',]" :style="get_bet_style(col_index, lodash.get(col, 'ols.length'))"
+          v-for="(ol_data, ol_index) in deal_width_handicap_ols(col.ols)" :key="ol_index">
           <!-- 投注项组件 -->
-          <template v-if="match_style_obj.data_tpl_id != 'esports' || (match_style_obj.data_tpl_id == 'esports' && getCurState(ol_data._hipo))">
+          <template
+            v-if="match_style_obj.data_tpl_id != 'esports' || (match_style_obj.data_tpl_id == 'esports' && getCurState(ol_data._hipo))">
             <bet-item v-if="is_mounted && ol_data && ol_data._hpid" :ol_data="ol_data" />
           </template>
         </div>
@@ -40,7 +40,7 @@ import betItem from "src/base-pc/components/bet-item/bet-item-list-new-data.vue"
 import { MatchFooterScoreFullVersionWapper as MatchFooterScore } from "src/base-pc/components/match-list/match-footer-score/index.js"
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import BetData from 'src/core/bet/class/bet-data-class.js'
-import { compute_sport_id  } from 'src/core/constant/index.js'
+import { compute_sport_id } from 'src/core/constant/index.js'
 
 const props = defineProps({
   // 盘口列表
@@ -51,7 +51,7 @@ const props = defineProps({
   // 赛事
   match: {
     type: Object,
-    default: () => {},
+    default: () => { },
   },
   // 是否显示比分
   is_show_score: {
@@ -88,22 +88,24 @@ onMounted(() => {
   // })
 })
 
-function deal_width_handicap_ols (payload) {
+function deal_width_handicap_ols(payload) {
   const { match } = props;
   let handicap_type = 1
-  let { hn, mid } =  match
-  if(hn){
-    handicap_type =  hn
-  }else{
+  let { hn, mid } = match
+  if (hn) {
+    handicap_type = hn
+  } else {
     handicap_type = 1
   }
+  const hn_obj = lodash.get(MatchListDataInfo, "list_to_obj.hn_obj", {})
   let new_ols = payload.map(item => {
     if (item.empty) { return }
     // 投注项数据拼接
-    let hn_obj_config = `list_to_obj.hn_obj.${mid}_${mid}_${item._hpid}_${handicap_type}_${item.ot}`
+    let hn_obj_config = MatchListDataInfo.get_list_to_obj_key(mid, `${mid}_${item._hpid}_${handicap_type}_${item.ot}`, 'hn')
     // 获取投注项内容 
-      item = lodash.get(MatchListDataInfo, hn_obj_config,{})
-    return item;
+    const new_item = lodash.get(hn_obj, hn_obj_config, {})
+    console.log('deal_width_handicap_ols', new_item, item)
+    return new_item;
   })
   return new_ols
 }
@@ -111,7 +113,7 @@ function deal_width_handicap_ols (payload) {
 /**
  * @description 获取5分钟玩法时的类名，滚球时不需要背景色，早盘时需要背景色
  */
-function get_5min_classname () {
+function get_5min_classname() {
   let className = ''
   if (
     props.other_play && ['hps5Minutes'].includes(props.match.play_current_key) // 5分钟玩法
@@ -202,7 +204,7 @@ function get_bet_style(col_index, length, ol_data) {
  * @param {hipo} 盘口是否支持 0不支持 1支持  
  * @return {undefined} undefined
  */
-function getCurState (hipo) {
+function getCurState(hipo) {
   if (cur_esports_mode.value) {
     //判断盘口是否支持
     return hipo == 1

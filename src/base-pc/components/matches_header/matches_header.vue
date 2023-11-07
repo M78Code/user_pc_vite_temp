@@ -250,7 +250,6 @@ onUnmounted(()=>{
 		top: 0;
 		width: 226px;
 		height: 78px;
-		background-image:url('src/assets/images/icon_sport_bg.png');
 		background-size: 226px ;
 	}
 
