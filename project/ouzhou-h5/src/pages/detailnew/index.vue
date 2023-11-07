@@ -73,7 +73,7 @@ import { useRouter,useRoute } from "vue-router";
 import { MatchDetailCalss, MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance } from "src/core";
 import detail_header_tem0 from "./detail_header/detail_header_tem0.vue";
 import detail_header_tem1 from "./detail_header/detail_header_tem1.vue";
-// import detail_header_tem2 from "./detail_header/detail_header_tem2.vue";
+import detail_header_tem2 from "./detail_header/detail_header_tem2.vue";
 import detail_tabs from "./components/detail_tabs.vue";
 import detail_event_tabs from "./components/detail_event_tabs.vue";
 import odds_info from "./components/odds_info.vue";
@@ -301,7 +301,8 @@ const get_matchDetail_MatchInfo = (params) => {
       const res_data = lodash.get(res, 'data')
       if (res_data && res_data.mhid) {
         match_detail.value = res_data;
-        match_detail.value.course =  lodash.get(res_data, 'ms') == 110 ? 'Soon' : (courseData[lodash.get(res_data, 'csid')][lodash.get(res_data, 'mmp')] || "");
+        match_detail.value.course =  lodash.get(res_data, 'ms') == 110 ?
+          'Soon' : (courseData[lodash.get(res_data, 'csid')][lodash.get(res_data, 'mmp')] || "");
         match_detail.value.mstValueTime = format_mst_data(match_detail.value);
         use_polling_mst(match_detail.value)
       } else {

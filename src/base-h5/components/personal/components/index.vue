@@ -15,7 +15,7 @@
         <div class="amount">{{ showMount }}</div> 
       </div> 
       <div class="bg_line"> 
-        <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/tips.png`" alt="" /> 
+        <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/tips.png`" alt="" @click="goto_announcement" /> 
       </div>
       <!-- 设置 -->
       <section> 
@@ -134,6 +134,9 @@ const jumpRules = () => {
   router.push('/rules')
 }
 
+const goto_announcement = () => {
+  router.push('/announcement')
+}
 </script>
  
 <style lang="scss" scoped>
@@ -199,6 +202,7 @@ const jumpRules = () => {
   }
   section{
     margin-top: 30px;
+    margin-bottom: 60px;
     :deep(.collapse_page) {
       .title{
         height: 60px;

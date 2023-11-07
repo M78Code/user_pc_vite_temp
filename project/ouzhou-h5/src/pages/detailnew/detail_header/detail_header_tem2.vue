@@ -61,10 +61,10 @@
   
 <script setup>
 import { onMounted, ref, toRef, watch } from "vue";
-import _ from "lodash";
-import { api_match } from "src/api/index.js";
+import lodash from "lodash";
+import { api_match,api_match_list } from "src/api/index.js";
 import { get_animation_mock } from "../mock.js";
-import EMITTER from  "src/global/mitt.js"
+// import EMITTER from  "src/global/mitt.js" // import {mitt*} from "src/core/index.js"
 const props = defineProps({
   get_match_detail: {
     type: Object,
@@ -133,7 +133,7 @@ const img_url_host = "http://image-new.sportxxxifbdxm2.com/";
     // mock start
     // animation_src.value = get_animation_mock.data.animationUrl;
     // let style = 'day' 
-    // let animation3Url = _.get(get_animation_mock, "data.animation3Url") || []
+    // let animation3Url = lodash.get(get_animation_mock, "data.animation3Url") || []
     // animation3Url.forEach( item =>{
     //   if(item.styleName.indexOf(style) >= 0){
     //     animation_src.value = item.path
@@ -143,19 +143,19 @@ const img_url_host = "http://image-new.sportxxxifbdxm2.com/";
 
 
     //获取动画播放地址
-    api_match.post_video_url(params).then( res => {
+    api_match_list.post_video_url(params).then( res => {
     let animationUrl = ''
     // 足篮棒网使用3.0动画  其他使用2.0
     if([1,2,3,5].includes(match.csid*1)){
       let style = 'day' 
-      let animation3Url = _.get(res, "data.data.animation3Url") || []
+      let animation3Url = lodash.get(res, "data.data.animation3Url") || []
       animation3Url.forEach( item =>{
         if(item.styleName.indexOf(style) >= 0){
           animationUrl = item.path
         }
       })
     }
-    animationUrl = animationUrl || _.get(res, "data.data.animationUrl")
+    animationUrl = animationUrl || lodash.get(res, "data.data.animationUrl")
     if (animationUrl) {
       // 移除 http(s)
       animationUrl = animationUrl.replace(/https?:/, "")
