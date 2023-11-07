@@ -75,10 +75,10 @@ import detail_header_tem0 from "./detail_header/detail_header_tem0.vue";
 import detail_header_tem1 from "./detail_header/detail_header_tem1.vue";
 // import detail_header_tem2 from "./detail_header/detail_header_tem2.vue";
 import detail_tabs from "./components/detail_tabs.vue";
-// import detail_event_tabs from "./components/detail_event_tabs.vue";
+import detail_event_tabs from "./components/detail_event_tabs.vue";
 import odds_info from "./components/odds_info.vue";
 import loading_page from 'src/components/details/loading/index.vue'
-// import event_analysis from "./components/event_analysis.vue";
+import event_analysis from "./components/event_analysis.vue";
 // import { detail_module } from "src/project-ouzhou/stores/detail"; //todo
 import { api_match_list } from "src/api/index.js";
 import courseData from "src/core/match-detail/match-detail-h5/config/course.js";
