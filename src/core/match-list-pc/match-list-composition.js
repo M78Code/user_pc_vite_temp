@@ -496,7 +496,6 @@ export  default function(){
 		socket_remove_match,
 		set_load_data_state,
 		check_match_last_update_time,
-		get_match_list_by_mid_for_base_data_res,
 		mounted_fn,
 		mx_collect,
 	}
