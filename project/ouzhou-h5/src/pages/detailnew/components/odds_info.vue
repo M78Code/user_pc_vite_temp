@@ -26,7 +26,7 @@
     </template>
     <template v-else>
       <div v-if="!loading">
-        <img class="no-data" src="~assets/images/common/no_data.png" alt="">
+        <img class="no-data" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/no_data.png`" alt="">
         <div class="no-data-text">No Data</div>
       </div>
     </template>
@@ -42,7 +42,7 @@ import temp5 from "src/project-ouzhou/pages/detail/components/template/tem5.vue"
 import tem_other from "src/project-ouzhou/pages/detail/components/template/tem_other.vue";
 import { storage_bet_info } from "src/public/utils/bet/bet_info.js";
 import EMITTER from "src/global/mitt.js";
-
+import { LOCAL_PROJECT_FILE_PREFIX } from "src/core";
 const props = defineProps({
   match_odds_info: {
     type: Array,

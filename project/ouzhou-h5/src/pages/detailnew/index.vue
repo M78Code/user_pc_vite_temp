@@ -70,19 +70,18 @@
 <script setup>
 import { onMounted, ref, watch, onUnmounted } from "vue";
 import { useRouter } from "vue-router";
-import detail_header_tem0 from "src/project-ouzhou/pages/detail/detail_header/detail_header_tem0.vue";
-import detail_header_tem1 from "src/project-ouzhou/pages/detail/detail_header/detail_header_tem1.vue";
-import detail_header_tem2 from "src/project-ouzhou/pages/detail/detail_header/detail_header_tem2.vue";
-import detail_tabs from "src/project-ouzhou/pages/detail/components/detail_tabs.vue";
-import detail_event_tabs from "src/project-ouzhou/pages/detail/components/detail_event_tabs.vue";
-import odds_info from "src/project-ouzhou/pages/detail/components/odds_info.vue";
-import loading_page from 'src/project-ouzhou/components/loading/index.vue'
-import event_analysis from "src/project-ouzhou/pages/detail/components/event_analysis.vue";
+import detail_header_tem0 from "./detail_header/detail_header_tem0.vue";
+import detail_header_tem1 from "./detail_header/detail_header_tem1.vue";
+import detail_header_tem2 from "./detail_header/detail_header_tem2.vue";
+import detail_tabs from "./components/detail_tabs.vue";
+import detail_event_tabs from "./components/detail_event_tabs.vue";
+import odds_info from "./components/odds_info.vue";
+import loading_page from 'src/components/details/loading/index.vue'
+import event_analysis from "./components/event_analysis.vue";
 import { detail_module } from "src/project-ouzhou/stores/detail";
 import { api_match } from "src/api/index.js";
 import courseData from 'src/global/course.js'
 import EMITTER from  "src/global/mitt.js"
-import _ from "lodash"
 // import { Loading } from 'quasar'
 // 传入模拟数据
 // import {
@@ -297,10 +296,10 @@ const get_matchDetail_MatchInfo = (params) => {
   api_match
     .get_matchDetail_MatchInfo(params)
     .then((res) => {
-      const res_data = _.get(res, 'data.data')
+      const res_data = lodash.get(res, 'data.data')
       if (res_data && res_data.mhid) {
         match_detail.value = res_data;
-        match_detail.value.course =  _.get(res_data, 'ms') == 110 ? 'Soon' : (courseData[_.get(res_data, 'csid')][_.get(res_data, 'mmp')] || "");
+        match_detail.value.course =  lodash.get(res_data, 'ms') == 110 ? 'Soon' : (courseData[lodash.get(res_data, 'csid')][lodash.get(res_data, 'mmp')] || "");
         match_detail.value.mstValueTime = format_mst_data(match_detail.value);
         use_polling_mst(match_detail.value)
       } else {
