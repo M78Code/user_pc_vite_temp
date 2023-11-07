@@ -2,7 +2,7 @@
  * @Author: rise
  * @Date: 2023-11-02 16:27:18
  * @LastEditors: rise
- * @LastEditTime: 2023-11-06 14:28:13
+ * @LastEditTime: 2023-11-07 14:50:42
  * @Description:  
 -->
 <template>
@@ -16,7 +16,7 @@
             // { active: meta_data_store.current_menu.mi == item.mi },
           ]" v-for="(item, index) in sportsGenre" :key="index" @click="set_menu_obj(item)">
             <sport-icon size="20" :sport_id="item.mi" />
-            <div>{{ item.name }}</div>
+            <div>{{ BaseData.menus_i18n_map[item.mi]}}</div>
           </div>
         </div>
         <!-- 分割线 -->
@@ -29,7 +29,7 @@
             // { active: meta_data_store.current_menu.mi == item.mi },
           ]" v-for="(item, index) in popular" :key="item.mi" @click="change_current_menu(item)">
             <sport-icon size="18" :sport_id="item.mi" />
-            <div>{{ item.name }}</div>
+            <div>{{ BaseData.menus_i18n_map[item.mi] }}</div>
           </div>
         </div>
         <!-- 分割线 -->
@@ -92,6 +92,7 @@ const set_menu_obj = (data) => {
  * @param {*} m_data 
  */
 const change_current_menu = (item) => {
+  MenuData.set_current_lv1_menu("2");
   MenuData.set_menu_mi(item.mi);
   emits('isLeftDrawer')
   router.push("/");//跳转今日列表
