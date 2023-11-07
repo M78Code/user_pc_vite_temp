@@ -12,7 +12,8 @@
       <img src="./img/back.png" alt="" />
       <span>Personal</span>
       <span class="line"></span>
-      <span class="f_weight">Announcement</span>
+      <!-- <span class="f_weight">Announcement</span> -->
+      <span class="f_weight">Rules</span>
     </div>
   </template>
   <template v-else>
@@ -89,7 +90,7 @@ const is_personal_page = computed(() => {
  * 公告  规则
  */
 const is_rule_page = computed(() => {
-  return ['/rules', '/notice'].includes(router.currentRoute.value.path)
+  return ['/rules', '/notice','/announcement'].includes(router.currentRoute.value.path)
 })
 /**
  * 主页的路由
