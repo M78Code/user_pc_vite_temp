@@ -239,3 +239,7 @@ function set_base_data_init () {
 	// 联赛数据
 	// set_match_base_info_by_mids_info(matchs_list, mids_arr, ts1);
 };
+
+export {
+	set_base_data_init
+}

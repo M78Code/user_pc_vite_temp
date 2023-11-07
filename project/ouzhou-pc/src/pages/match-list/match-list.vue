@@ -29,62 +29,8 @@
         <CurrentMatchTitle :title_value="'Featured Matches'" :show_more_icon="false" />
         <FeaturedMatches :matches_featured_list="matches_featured_list" />
       </div>
-    <!-- <div class="scroll-fixed-header" :class="{ 'no-data': load_data_state != 'data' }"> -->
-      <!-- banner -->
-      <!-- <div class="banner-box" :style="{height: GlobalAccessConfig.get_show_banner() ? '120px' : '0px'}" v-if="GlobalAccessConfig.get_show_banner()"></div> -->
-      <!-- 列表头 -->
-      <!-- <list-header :collect_count="collect_count" :is_show_hot="is_show_hot" :load_data_state="load_data_state"> -->
-        <!-- <template v-slot:refresh_icon> -->
-          <!-- 刷新组件 -->
-          <!-- <refresh :loaded="load_data_state != 'loading'" :other_icon="true" :icon_name="1" -->
-            <!-- @click="on_refresh" /> -->
-        <!-- </template> -->
-      <!-- </list-header> -->
-      <!-- <div>menu_config.match_list_menu_show.list_filter {{ menu_config.match_list_menu_show.list_filter }}</div> -->
-      <!-- 顶部菜单  // 滚球  冠军 -->
-      <!-- <list-filter v-if="[1, 400].includes(parseInt(menu_config.menu_root))" -->
-        <!-- :collect_count="collect_count" :load_data_state="load_data_state" /> -->
-      <!-- 日期菜单   早盘 日期 -->
-      <!-- <list-filter-date v-if="menu_config.menu_root == 3" -->
-        <!-- :collect_count="collect_count" :load_data_state="load_data_state" /> -->
-      <!-- 热门赛事顶部菜单 -->
-      <!-- <list-filter-hot v-if="menu_config.menu_root == 500" -->
-        <!-- :collect_count="collect_count" :load_data_state="load_data_state" /> -->
-      <!-- 电竞顶部菜单 -->
-      <!-- <esports-header v-if="menu_config.menu_root == 2000" :load_data_state="load_data_state" /> -->
-      <!-- 赛事状态 | 赛种类型      -->
-      <!-- <play-virtual-match-type class="sticky-wrap" v-if="menu_config.menu_root_show_shoucang == 300" style="top:100px" /> -->
-      <!-- 联赛  VR 足球才会有联赛-->
-      <!-- <div class="leagues-tabs leagues-bg" v-if="menu_config.mid_menu_result.mi == '1001'"> -->
-        <!-- 联赛菜单 -->
-        <!-- <LeagueTab /> -->
-      <!-- </div> -->
-    <!-- </div> -->
     <!-- 列表容器 -->
       <load-data :state="'data'" limit_height="1000" >  <!--此处先写死高度用来调试UI -->
-        <!-- 滚球虚拟体育列表 -->
-        <scroll-list v-if="menu_config.menu_root_show_shoucang == 300">
-          <template v-slot:before>
-            <div :style="{ height: MatchListCardDataClass.sticky_top.fixed_header_height }"></div>
-          </template>
-          <template>
-            <!--虚拟体育 赛事列表 赛事头-->
-            <!-- <virtual-match-type v-for="(match_item, match_index) in match_list" :key="`match_type_${match_item.mid}`"
-              :mid="match_item.mid" :match_index="match_index"
-              :sticky_top="menu_config.mid_menu_result.csid == '1001' ? 157.5 : 117"
-              :style="`width:${vx_get_layout_size.list_content_width}px  !important;`" /> -->
-            <div class="v-scroll-item" :style="`width:${vx_get_layout_size.list_content_width}px  !important;`"
-              :key="match_item.mid">
-              <div v-if="wsl" class="test">{{ match_index }}———{{ match_item.mid }}-----{{ match_item.flex_index }}</div>
-              <!--玩法模板-->
-              <component :is="match_tpl_component" :mid="match_item.mid" />
-            </div>
-          </template>
-          <template v-slot:after>
-            <div style="height:15px"></div>
-          </template>
-        </scroll-list>
-        <!-- <div> {{match_list_card_key_arr }}</div> -->
         <!-- 滚球其他列表 -->
         <scroll-list  v-if="menu_config.menu_root_show_shoucang != 300">
           <!-- v-for="card_key in MatchListCardDataClass.match_list_card_key_arr" -->

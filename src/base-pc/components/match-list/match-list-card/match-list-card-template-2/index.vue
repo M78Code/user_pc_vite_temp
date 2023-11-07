@@ -1,0 +1,174 @@
+<!-- 欧洲版 主列表页面 -->
+<template>
+  <div>
+    <div v-show="false">{{ MatchListCardDataClass.list_version }}{{ LayOutMain_pc.layout_version}}</div>
+    <div
+    class="list-card-wrap v-scroll-item relative-position"
+    :class="{
+      'matc-type-card': [
+        'sport_title',
+        'play_title',
+        'no_start_title',
+      ].includes(card_type),
+    }"
+    :style="`height:${card_style_obj?.card_total_height}px  !important;width:${
+      LayOutMain_pc.layout_content_width - 15
+    }px  !important;${card_style}`"
+  >
+
+    <div
+      v-if="is_mounted"
+      :class="{ 'list-card-inner': !MatchListCardData.is_champion }"
+    >
+      <!-- 赛事状态 | 赛种类型 -->
+      <play-match-type
+        v-if="
+          ['sport_title', 'play_title', 'no_start_title'].includes(
+            card_type
+          )
+        "
+        :card_style_obj="card_style_obj"
+      />
+      <!-- 联赛标题 -->
+      <play-match-league
+        v-else-if="
+          card_type == 'league_title' && card_style_obj?.mid
+        "
+        :card_style_obj="card_style_obj"
+        :key="card_type"
+      />
+      <!-- 赛事卡片 -->
+      <template v-else-if="card_type == 'league_container'">
+        <!-- 数据加载状态 -->
+        <!-- 赛事列表 -->
+        <match-card
+          v-for="mid in mids_arr"
+          :key="mid"
+          :mid="mid"
+        /> 
+      </template>
+    </div>
+  </div>
+  </div>
+</template>
+<script setup>
+import { computed, onMounted, onUnmounted, ref, watch } from "vue";
+import { PlayMatchTypeFullVersionWapper as PlayMatchType } from "src/base-pc/components/match-list/play-match-type/index.js";
+import PlayMatchLeague from "src/base-pc/components/match-list/play-match-league/index.vue";
+import { MatchCardFullVersionWapper as MatchCard } from "src/base-pc/components/match-list/match-card/index.js";
+
+import MatchListCardData from "src/core/match-list-pc/match-card/match-list-card-class.js";
+import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
+import { LayOutMain_pc } from "src/core/index.js";
+
+const props = defineProps({
+  card_key: {
+    type: String,
+    default: () => "",
+  },
+});
+// 卡片样式对象
+let card_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.card_key);
+// 存储一个变量，减少对card_style_obj的重复访问和判断
+let card_type = ref(card_style_obj?.card_type);
+watch(() => MatchListCardDataClass.list_version.value, () => {
+  card_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.card_key);
+  card_type.value = card_style_obj?.card_type;
+})
+let sticky_top = ref(null);
+// 组件是否加载完成
+const is_mounted = ref(true);
+/**
+ * @Description 设置卡片样式
+ * @param {undefined} undefined
+ */
+const card_style = computed(() => {
+  // 设置卡片高度
+  let card_style = "";
+  // 如果卡片类型是球种标题、已开赛、未开赛标题  设置吸顶
+  if (
+    ["sport_title", "play_title", "no_start_title"].includes(
+      card_type.value
+    )
+  ) {
+    let top = sticky_top.value?.type || 0;
+    card_style = `top:${top - 0.5}px;`;
+  }
+  // 如果是联赛标题卡片  设置联赛吸顶
+  else if (
+    ["league_title", "champion_league_title"].includes(
+      card_type.value
+    )
+  ) {
+    let top = sticky_top.value?.league || "";
+    card_style = `top:${top - 0.5}px;`;
+  }
+  return card_style;
+});
+/**
+ * @Description 设置赛事ID列表
+ * @param {undefined} undefined
+ */
+const mids_arr = computed(() => {
+  let mids_arr = [];
+  if (card_style_obj?.card_type == "league_container") {
+    mids_arr = card_style_obj?.mids.split(",");
+    return mids_arr;
+  }
+  return mids_arr;
+});
+onMounted(() => {
+  // 异步设置组件是否挂载完成
+  // setTimeout(()=>{
+  //   is_mounted.value = true
+  // })
+});
+onUnmounted(() => {
+  card_style_obj = null;
+  card_type.value = null;
+});
+</script>
+<style lang="scss" scoped>
+.list-card-wrap {
+  overflow: hidden;
+  .list-card-inner {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+  }
+  /*  数据加载组件 */
+  .load-data-wrap {
+    width: 100%;
+    height: 100%;
+    :deep(.empty-wrap .img) {
+      width: 130px !important;
+      height: 130px !important;
+    }
+    :deep(.user_api_limited) {
+      .img {
+        display: none;
+      }
+    }
+  }
+  .test-info {
+    position: absolute;
+    color: red;
+    font-size: 14px;
+    z-index: 999999;
+    right: 0;
+    bottom: 0;
+    user-select: text;
+  }
+}
+.list-hot-icon {
+  width: 14px;
+  height: 14px;
+  margin: 2px 15px 0 10px;
+}
+.list-hot-text {
+  font-size: 14px;
+  font-weight: 600;
+}
+</style>
