@@ -70,7 +70,7 @@
 <script setup>
 import { onMounted, ref, watch, onUnmounted } from "vue";
 import { useRouter,useRoute } from "vue-router";
-import { MatchDetailCalss } from "src/core";
+import { MatchDetailCalss, MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance } from "src/core";
 // import detail_header_tem0 from "./detail_header/detail_header_tem0.vue";
 // import detail_header_tem1 from "./detail_header/detail_header_tem1.vue";
 // import detail_header_tem2 from "./detail_header/detail_header_tem2.vue";
@@ -128,7 +128,6 @@ const use_polling_mst = (t) => {
     }
     return
   }
-  // debugger
   mst_timer.value = setInterval(() => {
     if (t.csid == 2) {
       t.mst--
@@ -262,11 +261,11 @@ const get_matchDetail_getMatchOddsInfo = (params) => {
         loading.value = false;
       }, 1000);
       // console.log("get_matchDetail_getMatchOddsInfo", res);
-      get_match_odds_info.value = res.data.data;
+      get_match_odds_info.value = res.data;
       if (tab_selected_obj.value.marketName) {
         detail_tabs_change(tab_selected_obj.value);
       } else {
-        match_odds_info.value = res.data.data;
+        match_odds_info.value = res.data;
       }
     });
 
@@ -284,9 +283,9 @@ const get_category_list_info = (params) => {
     .get_detail_category(params)
     .then((res) => {
       // console.log("get_category_list", res);
-      category_list.value = res.data.data;
+      category_list.value = res.data;
       if (!tab_selected_obj.value.id) {
-        tab_selected_obj.value = res.data.data[0] || {};
+        tab_selected_obj.value = res.data[0] || {};
       }
     });
 };
@@ -299,7 +298,7 @@ const get_matchDetail_MatchInfo = (params) => {
   api_match_list
     .get_detail_data(params)
     .then((res) => {
-      const res_data = lodash.get(res, 'data.data')
+      const res_data = lodash.get(res, 'data')
       if (res_data && res_data.mhid) {
         match_detail.value = res_data;
         match_detail.value.course =  lodash.get(res_data, 'ms') == 110 ? 'Soon' : (courseData[lodash.get(res_data, 'csid')][lodash.get(res_data, 'mmp')] || "");
@@ -310,7 +309,7 @@ const get_matchDetail_MatchInfo = (params) => {
         router.replace("/");
       }
       // detail_store.get_detail_params
-      detail_store.set_detail_match_top_info(match_detail.value);
+      MatchDataWarehouseInstance.set_match_details(match_detail.value);
       // console.log("get_matchDetail_MatchInfo", res);
     });
 
