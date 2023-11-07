@@ -2,7 +2,7 @@
  * @Author: rise
  * @Date: 2023-11-05 16:46:06
  * @LastEditors: rise
- * @LastEditTime: 2023-11-07 16:00:35
+ * @LastEditTime: 2023-11-07 18:49:03
  * @Description:  
  */
 
@@ -26,7 +26,7 @@ class MenuData {
     this.menu_lv_mi_lsit = []
 
     this.menu_list = []; //常规球种 101...
-    this.menu_mi = ""; //常规球种选中
+    this.menu_mi = ref(''); //常规球种选中
     this.menu_type = ref(2); //id   2今日(左侧抽屉) 1滚球(滚动tab) 3早盘 8VR() 7电竞() 28赛果() 500热门
   }
 
@@ -79,7 +79,7 @@ class MenuData {
    * @param {*} mi 
    */
   set_menu_mi(mi){
-    this.menu_mi = mi;
+    this.menu_mi.value = mi;
     this.update()
   }
   // 根据菜单id获取下级菜单id 二级菜单
@@ -102,8 +102,8 @@ class MenuData {
    * 
    * */
   get_euid(menu_type) {
-    const menuId = menu_type || this.menu_type;
-    return BaseData.mi_euid_map_res[this.menu_mi+menuId]?.h || "";
+    const menuId = menu_type || this.menu_type.value;
+    return BaseData.mi_euid_map_res[this.menu_mi.value+menuId]?.h || "";
   }
   //内部方法
   _is_cur_mi(mi, param) {

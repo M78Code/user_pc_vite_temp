@@ -86,7 +86,8 @@ class UserCtr {
     //  用户余额是否展示状态
     this.show_balance = false;
     //用户版本 移动端有简版 1 和标准版 2
-    this.standard_edition = 2
+    // this.standard_edition = 2
+    this.standard_edition = 1
     //登录弹窗状态
     this.show_login_popup = false;
     // 是否首次登录
@@ -232,6 +233,9 @@ class UserCtr {
       window.postMessage({ event: 'WS', cmd: `WS_RESEND_SCMD_EVENT`, data: { user_id: user_obj.userId } }, '*');
     }
   }
+  /**
+   * 设置活动
+   * */
   set_user_activity(activity) {
     this.activity = { ...activity }
   }

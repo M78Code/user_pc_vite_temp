@@ -1,4 +1,7 @@
 import { ref } from "vue";
+import { project_name } from 'src/core'
+import PageSourceData from "src/core/page-source/page-source.js";
+const { page_source } = PageSourceData;
 // 浏览器高度
 let client_height = Math.max(
   document.body.clientHeight,
@@ -9,6 +12,18 @@ let client_width = Math.max(
   document.body.clientWidth,
   document.documentElement.clientWidth
 );
+
+//这里是不同版本的 布局配置
+const different_version_config = {
+  'yazhou-pc': {
+    left_width: 234,
+    right_width: 441,
+  },
+  'ouzhou-pc': {
+    left_width: 240,
+    right_width: 400,
+  },
+}
 
 class LayOutMain {
   /**
@@ -21,11 +36,11 @@ class LayOutMain {
     // 主内容最小宽度出现滚动条
     this.layout_min_width = 1440
     // 左侧菜单宽度
-    this.layout_left_width = 234
+    this.layout_left_width = 0
     // 左侧菜单宽度 mini
     // this.layout_left_width_mini = 64
     // 右侧区域宽度
-    this.layout_right_width = 441
+    this.layout_right_width = 0
     // 头部高度
     this.layout_top_height = 96
     // 头部导航高度
@@ -62,6 +77,8 @@ class LayOutMain {
 
   // 初始化
   init(){
+    this.set_layout_left_config()
+    this.set_layout_right_config()
     this.set_layout_content_config()
     this.set_layout_left_menu_status()
     this.set_layout_main_width()
@@ -133,26 +150,41 @@ class LayOutMain {
     }
     this.set_layout_version()
   }
-    /**
-   * @description: 设置是否展开多列玩法
-   * @param {boolean} val 
-   * @return {*}
+  /**
+ * @description: 设置是否展开多列玩法
+ * @param {boolean} val 
+ * @return {*}
+ */
+  set_unfold_multi_column(val){
+    this.is_unfold_multi_column = val
+    if(!val){
+    this.layout_right_width = 441
+    this.layout_content_width -= 441
+    }else{
+    this.layout_right_width = 0
+    this.layout_content_width += 441
+    }
+    this.set_layout_version()
+  }
+  get_is_unfold_multi_column() {
+    return this.is_unfold_multi_column
+  }
+  /**
+   * @description 设置左侧配置
    */
-   set_unfold_multi_column(val){
-     this.is_unfold_multi_column = val
-     if(!val){
-      this.layout_right_width = 441
-      this.layout_content_width -= 441
-     }else{
+  set_layout_left_config() {
+    this.layout_left_width = different_version_config[project_name].left_width
+  }
+  /**
+   * @description 设置右侧配置
+   */
+  set_layout_right_config() {
+    this.layout_right_width = different_version_config[project_name].right_width
+    // 如果是主页的话 是没有右侧详情的
+    if (page_source == 'ouzhou-home') {
       this.layout_right_width = 0
-      this.layout_content_width += 441
-     }
-     this.set_layout_version()
-   }
-   get_is_unfold_multi_column() {
-     return this.is_unfold_multi_column
-   }
-  
+    }
+  }
 }
 
 export default new LayOutMain();

@@ -72,10 +72,10 @@ const emit = defineEmits(["closedHandle"]);
 
 const setting_list = ref([
     { name: '投注模式', leftVal: '新手版', rightVal: '专业版', switchValue: UserCtr.standard_edition === 2 ? 'rightVal' :'leftVal',mark:'version' },
-    { name: '排序规则', leftVal: '热门', rightVal: '时间', switchValue: UserCtr.sort_type,mark:'sort' },
-    // { name: '盘口设置', leftVal: '欧洲盘', rightVal: '香港盘',switchValue: UserCtr.sort_type,mark:'Handicap' },
+    { name: '排序规则', leftVal: '热门', rightVal: '时间', switchValue: UserCtr.sort_type === 2 ? 'rightVal' :'leftVal',mark:'sort' },
+    { name: '盘口设置', leftVal: '欧洲盘', rightVal: '香港盘',switchValue: UserCtr.odds.cur_odds === 'HK' ? 'rightVal' :'leftVal',mark:'Handicap' },
     // { name: '字号大小', leftVal: '默认', rightVal: '放大',mark:'size' },
-    { name: '主题风格', leftVal: '日间', rightVal: '夜间',switchValue: LocalStorage.get("theme", default_theme_key), mark:'theme'},
+    { name: '主题风格', leftVal: '日间', rightVal: '夜间',switchValue: UserCtr.theme === 'y0' ? 'rightVal' :'leftVal', mark:'theme'},
     { name: '每日活动', leftVal: '开启', rightVal: '关闭',mark:'activity' },
 ])
 
@@ -103,7 +103,8 @@ const switch_handle = (item) => {
  *@return {Undefined} undefined
  */
 const version_handle = (item) => {
-    UserCtr.set_standard_edition()
+    const status = item.switchValue === 'rightVal' ? 2 : 1
+    UserCtr.set_standard_edition(status)
 }
 /**
  *@description 处理排序规则
@@ -111,7 +112,6 @@ const version_handle = (item) => {
  */
 const sort_handle = (item) => {
     const status = item.switchValue === 'rightVal' ? 2 : 1
-    console.log('status',status)
     UserCtr.set_sort_type(status);
 }
 /**
@@ -119,7 +119,8 @@ const sort_handle = (item) => {
  *@return {Undefined} undefined
  */
 const Handicap_handle = (item) => {
-    console.log('item',item)
+    const status = item.switchValue === 'rightVal' ? "HK" : "EU"
+    UserCtr.set_cur_odds(status)
 }
 /**
  *@description 处理字号大小
@@ -133,7 +134,8 @@ const size_handle = (item) => {
  *@return {Undefined} undefined
  */
 const theme_handle = (item) => {
-    console.log('item',item)
+    const status = item.switchValue === 'rightVal' ? "y0" : "y1"
+    UserCtr.set_theme(status)
 }
 /**
  *@description 处理每日活动
@@ -141,6 +143,7 @@ const theme_handle = (item) => {
  */
 const activity_handle = (item) => {
     console.log('item',item)
+    UserCtr.set_user_activity()
 }
 
 </script>
