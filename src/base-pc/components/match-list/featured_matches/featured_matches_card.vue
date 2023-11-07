@@ -33,7 +33,7 @@
           <div class="top-line"></div>
           <div 
             class="odds_item" 
-            v-for="option in item.current_ol[0].ol" 
+            v-for="option in item.current_ol[0]?.ol" 
             @click="checked_current_td({ payload: item, hps: item.current_ol[0], ol: option })"
             :class="{checked: option.oid == current_check_betId }"
             :key="option.oid"

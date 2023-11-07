@@ -61,8 +61,10 @@
   
 <script setup>
 import { onMounted, ref, toRef, watch } from "vue";
-import { api_match } from "src/api/index.js";
-// import EMITTER from  "src/global/mitt.js"
+import lodash from "lodash";
+import { api_match,api_match_list } from "src/api/index.js";
+import { get_animation_mock } from "../mock.js";
+// import EMITTER from  "src/global/mitt.js" // import {mitt*} from "src/core/index.js"
 const props = defineProps({
   get_match_detail: {
     type: Object,
@@ -141,7 +143,7 @@ const img_url_host = "http://image-new.sportxxxifbdxm2.com/";
 
 
     //获取动画播放地址
-    api_match.post_video_url(params).then( res => {
+    api_match_list.post_video_url(params).then( res => {
     let animationUrl = ''
     // 足篮棒网使用3.0动画  其他使用2.0
     if([1,2,3,5].includes(match.csid*1)){
@@ -276,19 +278,19 @@ onMounted(() => {
       }
     }
     .dianqiu {
-      background: url($SCSSPROJECTPATH+"/image/detail/dianqiu.png") ;
+      background: url('src/assets/images/detail/dianqiu.png');
     }
     .hongpai {
-      background: url($SCSSPROJECTPATH+"/image/detail/hongpai.png") ;
+      background: url('src/assets/images/detail/hongpai.png');
     }
     .huangpai {
-      background:url($SCSSPROJECTPATH+"/image/detail/huangpai.png") ;
+      background: url('src/assets/images/detail/huangpai.png');
     }
     .jiaoqiu {
-      background: url($SCSSPROJECTPATH+"/image/detail/jiaoqiu.png") ;
+      background: url('src/assets/images/detail/jiaoqiu.png');
     }
     .shangbanchang {
-      background:  url($SCSSPROJECTPATH+"/image/detail/shangbanchang.png") ;
+      background: url('src/assets/images/detail/shangbanchang.png');
     }
     .score-icon {
       display: inline-block;

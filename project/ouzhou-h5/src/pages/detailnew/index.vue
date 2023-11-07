@@ -300,7 +300,8 @@ const get_matchDetail_MatchInfo = (params) => {
       const res_data = lodash.get(res, 'data')
       if (res_data && res_data.mhid) {
         match_detail.value = res_data;
-        match_detail.value.course =  lodash.get(res_data, 'ms') == 110 ? 'Soon' : (courseData[lodash.get(res_data, 'csid')][lodash.get(res_data, 'mmp')] || "");
+        match_detail.value.course =  lodash.get(res_data, 'ms') == 110 ?
+          'Soon' : (courseData[lodash.get(res_data, 'csid')][lodash.get(res_data, 'mmp')] || "");
         match_detail.value.mstValueTime = format_mst_data(match_detail.value);
         use_polling_mst(match_detail.value)
       } else {

@@ -76,6 +76,8 @@ class UserCtr {
     };
     //排序	 int 类型 1 按热门排序 2 按时间排序
     this.sort_type = 1;
+     //每日活动	 Boolean 类型 ture 开启 false 关闭
+     this.daily_activities = false;
     //收藏/关注	true/false
     this.show_favorite_list = false;
 
@@ -115,15 +117,6 @@ class UserCtr {
 
   }
 
-
-
-
-
-
-
-
-
-
   /**
    * 获取初始化uid
    * @return {String} uid
@@ -160,6 +153,12 @@ class UserCtr {
       data,
     });
     this.update()
+  }
+  /**
+   * 每日活动    //开启关闭	 Boolean 类型 true 开启 false 关闭
+  */
+  set_daily_activities(status) {
+    this.daily_activities = status;
   }
   /**
    * 设置语言变化
