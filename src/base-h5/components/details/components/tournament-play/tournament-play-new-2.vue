@@ -136,7 +136,7 @@ import { useRoute } from "vue-router";
 import lodash from "lodash";
 import { IconWapper } from 'src/components/icon'
 import { useMittOn, useMittEmit, MITT_TYPES ,compute_css_obj,UserCtr,MatchDetailCalss,MatchDataWarehouse_H5_Detail_Common} from  "src/core/"
-
+import { SessionStorage } from "src/core/utils/index.js"
 // 模板id=0(默认模板)
 import temp0 from "./template-2/temp0.vue"
 // 模板id=1
@@ -341,7 +341,11 @@ export default defineComponent({
       return "";
     });
     const get_details_data_cache = computed(() => {
-      return "";
+        //从缓存获取玩法集数据
+        return JSON.parse(
+          JSON.stringify(SessionStorage.get("DETAILS_DATA_CACHE") || {})
+        );
+
     });
     // ==============================================
     const judage_hshow = computed(() => {
@@ -623,8 +627,8 @@ export default defineComponent({
           item_data.hton = Date.now() + '';
          
         }
+        // 置顶状态变化时，更新相应玩法存储状态  todo  后续再优化
         MatchDataWarehouse_H5_Detail_Common.set_match_details(MatchDataWarehouse_H5_Detail_Common.get_quick_mid_obj(route.params.mid),MatchDataWarehouse_H5_Detail_Common.get_quick_mid_obj(route.params.mid).odds_info)
-        // 置顶状态变化时，更新相应玩法存储状态
         const key = `${item_data.mid}-0`
         const all_list_data = lodash.cloneDeep(get_details_data_cache.value[key]) || []
         const target_play_id = item_data.chpid || item_data.hpid
@@ -642,7 +646,9 @@ export default defineComponent({
        MatchDetailCalss.set_details_data_cache({
           [key]: all_list_data
         })
-
+         // 当前玩法集下数据缓存
+        SessionStorage.set("DETAILS_DATA_CACHE", {[key]: all_list_data})
+        // MatchDataWarehouse_H5_Detail_Common.set_match_details(MatchDataWarehouse_H5_Detail_Common.get_quick_mid_obj(route.params.mid),all_list_data)
         let status = item_data.hton != 0 ? "0" : "1",
             playId = item_data.hpid,
             matchId = get_detail_data.value.mid,
