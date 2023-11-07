@@ -144,18 +144,19 @@ const img_url_host = "http://image-new.sportxxxifbdxm2.com/";
 
     //获取动画播放地址
     api_match_list.post_video_url(params).then( res => {
+      debugger
     let animationUrl = ''
     // 足篮棒网使用3.0动画  其他使用2.0
     if([1,2,3,5].includes(match.csid*1)){
       let style = 'day' 
-      let animation3Url = lodash.get(res, "data.data.animation3Url") || []
+      let animation3Url = lodash.get(res, "data.animation3Url") || []
       animation3Url.forEach( item =>{
         if(item.styleName.indexOf(style) >= 0){
           animationUrl = item.path
         }
       })
     }
-    animationUrl = animationUrl || lodash.get(res, "data.data.animationUrl")
+    animationUrl = animationUrl || lodash.get(res, "data.animationUrl")
     if (animationUrl) {
       // 移除 http(s)
       animationUrl = animationUrl.replace(/https?:/, "")
