@@ -2,7 +2,7 @@
  * @Author: rise
  * @Date: 2023-11-05 16:46:06
  * @LastEditors: rise
- * @LastEditTime: 2023-11-06 17:05:25
+ * @LastEditTime: 2023-11-07 14:40:40
  * @Description:  
  */
 
@@ -23,10 +23,11 @@ class MenuData {
     }
     this.current_lv_1_menu_i = ''
     this.current_lv_2_menu_i = ''
+    this.menu_lv_mi_lsit = []
 
     this.menu_list = []; //常规球种 101...
     this.menu_mi = ""; //常规球种选中
-    this.menu_type = ref(2); //id   2今日(左侧抽屉) 1滚球(滚动tab) 8VR() 7电竞() 28赛果() 500热门
+    this.menu_type = ref(2); //id   2今日(左侧抽屉) 1滚球(滚动tab) 3早盘 8VR() 7电竞() 28赛果() 500热门
   }
 
   // 根据菜单id获取下级菜单id 二级菜单

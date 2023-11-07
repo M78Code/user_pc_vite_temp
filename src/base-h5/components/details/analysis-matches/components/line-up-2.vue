@@ -193,10 +193,10 @@
     <!--  首发阵容，替补阵容 伤停阵容-->
     <template v-if="!no_data">
       <!-- 首发名单-->
-      <div class="title" v-if="!no_data">
+      <div class="title" v-if="lodash.isEmpty(detail_data)">
         {{i18n_t('analysis_football_matches.starting_lineup') }}
       </div>
-      <div class="public_form football_standings" v-if="!no_data">
+      <div class="public_form football_standings" v-if="lodash.isEmpty(detail_data)">
         <!-- 头部 -->
         <div class="header">
           <div>
@@ -559,8 +559,7 @@ import { LOCAL_PROJECT_FILE_PREFIX, MenuData } from 'src/core'
       try {
         // sonMenuId： 旧版 基本面是1 
         let parameter = {
-          standardMatchId: 2385166,
-          // standardMatchId: match_id.value, //2274159, //2274159 ,//2079863足球测试id
+          standardMatchId: match_id.value, //2274159, //2274159 ,//2079863足球测试id
           parentMenuId: 2,
           sonMenuId: 1
         }
