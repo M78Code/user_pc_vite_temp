@@ -312,7 +312,10 @@ export default {
       }).then(res => {
         if (+res.code !== 200) return
       })
+      // 收藏页手动处理数据
+      MenuData.is_collect() && MatchMeta.set_collect_match(this.match_of_list, 1)
       MatchCollect.handle_league_collect_state(tid)
+      
     },
 
     /**
@@ -328,6 +331,8 @@ export default {
       }).then(res => {
         if (+res.code !== 200) return
       })
+      // 收藏页手动处理数据
+      MenuData.is_collect() && MatchMeta.set_collect_match(this.match_of_list, 2)
       MatchCollect.set_match_collect_state(this.match_of_list, !match_state)
     },
 

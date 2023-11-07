@@ -94,9 +94,7 @@
           <basis-info4 v-if="is_mounted && match" :is_other_concede="true" :match="match" :is_show_score="true" />
         </div>
         <!-- 赛事盘口投注项 -->
-        <match-handicap v-if="match"
-          :handicap_list="compute_other_play_data" :match="match"
-          other_play />
+        <match-handicap v-if="match" :handicap_list="compute_other_play_data" :match="match" other_play />
         <!-- 视频按钮 -->
         <div class="media-col"></div>
       </div>
@@ -124,7 +122,7 @@ import { MatchBasisInfo4FullVersionWapper as BasisInfo4 } from 'src/base-pc/comp
 import { MatchHandicapFullVersionWapper as MatchHandicap } from 'src/base-pc/components/match-list/match-handicap/index.js'
 import MatchMedia from 'src/base-pc/components/match-list/match-media/index.vue'
 import { CommonTabFullVersionWapper as Tab } from "src/base-pc/components/tab/common-tab/index.js";
-import { switch_other_play, get_compute_other_play_data, set_match_play_current_index,get_play_current_play } from 'src/core/match-list-pc/composables/match-list-other.js'
+import { switch_other_play, get_compute_other_play_data, set_match_play_current_index, get_play_current_play } from 'src/core/match-list-pc/composables/match-list-other.js'
 const props = defineProps({
   mid: {
     type: [String, Number],
@@ -143,10 +141,10 @@ const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.da
 let match = MatchListData.get_quick_mid_obj(props.mid);
 match && set_play_name_list(MatchListData.get_tab_play_keys(match))
 const is_mounted = ref(true);
-let compute_other_play_data=get_compute_other_play_data(match)
+let compute_other_play_data = get_compute_other_play_data(match)
 watch(() => MatchListData.data_version.version, (new_value, old_value) => {
   match = MatchListData.get_quick_mid_obj(props.mid);
-  compute_other_play_data=get_compute_other_play_data(match)
+  compute_other_play_data = get_compute_other_play_data(match)
   match && set_play_name_list(MatchListData.get_tab_play_keys(match))
 })
 
@@ -158,7 +156,8 @@ const bet_col = computed(() => {
   let bet_col = []
   //是否多列
   let multi_column = lodash.get(match_style_obj, 'data_tpl_id') == 13
-  let _play_current_key = lodash.get(match, 'play_current_key')
+  let _play_current_key = get_play_current_play(match)
+  if (MatchListCardDataClass.list_version.value) { }
   // 5分钟玩法
   if (_play_current_key == 'hps5Minutes') {
     let hpid = 361
@@ -288,7 +287,7 @@ function set_play_name_list(tab_play_keys = '') {
   match.has_other_play = tab_play_keys.length > 0
   if (match.has_other_play) {
     // 当前选中的其他的玩法
-    let play_key = get_play_current_play(match.mid) || tab_play_keys[0]
+    let play_key = get_play_current_play(match)
     //玩法关闭时选择第一个
     if (!tab_play_keys.includes(play_key)) {
       play_key = tab_play_keys[0]
@@ -386,10 +385,6 @@ function play_tab_click(obj) {
 */
 function fold_tab_play() {
   MatchListCardData && MatchListCardData.fold_tab_play(match.mid)
-}
-
-function get_tab_play_keys() {
-
 }
 onMounted(() => {
   // 异步设置组件是否挂载完成
