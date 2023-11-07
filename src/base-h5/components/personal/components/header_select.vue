@@ -8,6 +8,15 @@
     >
       {{ item.name }}
     </div>
+
+    <div
+      v-for="(item, index) in announcement_headle_info"
+      :key="item.id"
+      @click="announcement_index(index)"
+      :class="{ fous: list_index == index }"
+    >
+      {{ item.name }}
+    </div>
   </div>
 </template>
 
@@ -19,12 +28,20 @@ const props = defineProps({
     type: Array,
     default: () => [],
   },
+  announcement_headle_info:{
+    type: Array,
+    default: () => [],
+  }
 });
 
 let tab_index = ref(0);
+let list_index = ref(0);
 
 const select_index = (index) => {
   tab_index.value = index;
+};
+const announcement_index = (index) => {
+  list_index.value = index;
 };
 </script>
 
