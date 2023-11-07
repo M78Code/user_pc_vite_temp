@@ -552,7 +552,7 @@ if (type.value == 30) {
 <style lang="scss" scoped>
 .boss-box {
   // padding: 0.5rem 0 0.64rem;
-  margin-top: 1.03rem;
+  //margin-top: 1.03rem;
   position: absolute;
   top: 1.03rem;
   left: 0;

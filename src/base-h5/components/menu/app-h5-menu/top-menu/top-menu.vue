@@ -11,7 +11,8 @@
         <TopHeader v-if="[300,2000,50000].includes(+MenuData.top_menu_title.mi )">
             <template #right>
                 <div class="main-menu-right">
-                    <span class="main-menu-right-symbol">￥</span>
+                    <!-- <span class="main-menu-right-symbol">￥</span> -->
+                    <img :src="compute_local_project_file_path('/image/svg/home/coin.svg')" alt="">
                     <span class="main-menu-right-money">{{ format_money2(balance) }}</span>
                 </div>
             </template>
@@ -35,7 +36,8 @@
                 </template>
             </div>
             <div class="main-menu-right">
-                <span class="main-menu-right-symbol">￥</span>
+                <!-- <span class="main-menu-right-symbol">￥</span> -->
+                <img :src="compute_local_project_file_path('image/svg/home/coin.svg')" alt="" style="margin-right: 4px;">
                 <span class="main-menu-right-money">{{ format_money2(balance) }}</span>
             </div>
         </div>
@@ -48,6 +50,7 @@ import { reactive, ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import { format_money2 } from "src/core/format/index.js";
 import { i18n_t, compute_css_obj, MenuData,UserCtr,LOCAL_PROJECT_FILE_PREFIX } from "src/core/index.js";
+import { useMittOn, useMittEmit, MITT_TYPES,compute_local_project_file_path } from  "src/core/"
 
 import TopHeader from './top-header.vue';
 

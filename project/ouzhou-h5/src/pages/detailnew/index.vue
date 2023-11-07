@@ -54,7 +54,8 @@
       <q-tab-panels v-model="tab" animated>
         <q-tab-panel name="betting">
           <!-- 玩法模板 -->
-          <div ref="fixedHeight" :class="['match-detail-odds-scroll', match_detail.mvs > -1 ? 'match-detail-odds-height2' : 'match-detail-odds-height3']">
+          <div ref="fixedHeight" class="match-detail-odds-scroll"
+            :class="[match_detail.mvs > -1 ? 'match-detail-odds-height2' : 'match-detail-odds-height3']">
             <odds_info :match_odds_info="match_odds_info" :match_detail="match_detail" :loading="loading"/>
           </div>
           <!-- <div class="match-detail-odds-bottom"></div> -->
@@ -70,7 +71,7 @@
 <script setup>
 import { onMounted, ref, watch, onUnmounted } from "vue";
 import { useRouter,useRoute } from "vue-router";
-import { MatchDetailCalss, MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance } from "src/core";
+import { MatchDetailCalss, MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance,useMittOn, MITT_TYPES } from "src/core";
 import detail_header_tem0 from "./detail_header/detail_header_tem0.vue";
 import detail_header_tem1 from "./detail_header/detail_header_tem1.vue";
 import detail_header_tem2 from "./detail_header/detail_header_tem2.vue";
@@ -82,7 +83,6 @@ import event_analysis from "./components/event_analysis.vue";
 // import { detail_module } from "src/project-ouzhou/stores/detail"; //todo
 import { api_match_list } from "src/api/index.js";
 import courseData from "src/core/match-detail/match-detail-h5/config/course.js";
-// import EMITTER from  "src/global/mitt.js" //todo
 // import { Loading } from 'quasar'
 // 传入模拟数据
 // import {
@@ -301,7 +301,8 @@ const get_matchDetail_MatchInfo = (params) => {
       const res_data = lodash.get(res, 'data')
       if (res_data && res_data.mhid) {
         match_detail.value = res_data;
-        match_detail.value.course =  lodash.get(res_data, 'ms') == 110 ? 'Soon' : (courseData[lodash.get(res_data, 'csid')][lodash.get(res_data, 'mmp')] || "");
+        match_detail.value.course =  lodash.get(res_data, 'ms') == 110 ?
+          'Soon' : (courseData[lodash.get(res_data, 'csid')][lodash.get(res_data, 'mmp')] || "");
         match_detail.value.mstValueTime = format_mst_data(match_detail.value);
         use_polling_mst(match_detail.value)
       } else {
@@ -365,13 +366,14 @@ onMounted(() => {
     detail_init();
     timer_s_interval(4000);
   }, 10);
-  // 监听顶部刷新功能
-  // EMITTER.on("detail_refresh", () => {
-  //   // detail_init();
-  // });
+
 });
+// 监听顶部刷新功能
+const {off} = useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS,detail_init)
+ 
 onUnmounted(() => {
   clear_all_timer();
+  off()
 })
 </script>
 
