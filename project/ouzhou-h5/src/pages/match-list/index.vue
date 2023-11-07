@@ -3,7 +3,27 @@
 -->
 <template>
   <!--赛事列表-->
-  <div>22222</div>
+  <div class="match-list-page"
+    :class="{
+      guanjun: is_kemp,
+      jingzu: is_jinzu,
+      esport: is_export,
+      animation: animation,
+      detail_match_list: is_hot || is_detail,
+      zaopan: [3, 11, 28, 3000].includes(menu_type) && !is_hot,
+      level_four_menu: menu_type == 28 && [1001, 1002, 1004, 1011, 1010, 1009].includes(menu_lv2.mi),
+    }" >
+    <!--缝隙 不通层级 遮罩 存在渲染偏差， 边界 双线 或者 侵蚀问题-->
+    <!-- <div class="gap" v-if="on_match && menu_type != 3000" :class="{ zaopan: [4, 11, 28, 3000].includes(menu_type) }" /> -->
+    <!-- 跳转到其他场馆的banner图 和猜你喜欢-->
+    <tiaozhuan-panel v-if="calc_show"></tiaozhuan-panel>
+    <!-- 列表骨架屏 -->
+    <!-- <SList v-if="show_skeleton_screen" :loading_body="true" /> -->
+    <!-- 赛事列表 -->
+    <match-container />
+    <!-- 回到顶部按钮组件 -->
+    <scroll-top v-show="!get_is_show_menu && list_scroll_top > 0" ref="scroll_top" :list_scroll_top="list_scroll_top" @back-top="back_top" />
+  </div>
 </template>
 <script setup>
 import { computed, onUnmounted, onMounted, watch, onDeactivated, ref } from "vue";
@@ -67,6 +87,8 @@ onMounted(() => {
   store.dispatch({ type: 'topMenuReducer/set_collapse_map_match', payload: {} })
   // 事件初始化
   event_init();
+
+  init_match_callback()
 });
 
 // 页脚子菜单
@@ -78,18 +100,6 @@ watch(() => MenuData.footer_sub_menu_id, () => {
     });
   }
   MenuData.prev_footer_sub_menu_id = curr;
-}
-);
-
-// 新手版标准版切换
-watch(() => standard_edition.value, () => {
-  // 虚拟体育
-  if (menu_type.value == 900) return
-  // 如果是简版
-  if (n == 1) {
-    MatchListCard.sliding_can_trigger_process_distance = 500;
-  }
-  run_process_when_need_recompute_container_list_when_scroll(false, { update_type: "standard_simple_change", });
 }
 );
 

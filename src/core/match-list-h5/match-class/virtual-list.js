@@ -48,7 +48,7 @@ class VirtualList {
 
   // 获取该赛事高度 
   get_match_total_height (match, index) {
-    const { is_show_league, mid, csid, start_falg, is_show_ball_title } = match
+    const { is_show_league, mid, csid, start_flag, is_show_ball_title } = match
     // 赛事折叠信息
     const fold_key = MatchFold.get_match_fold_key(match)
     const fold_info = MatchFold.match_mid_fold_obj.value[fold_key]
@@ -64,7 +64,7 @@ class VirtualList {
     const buffer_container_height = 5
     let total = 0
     // 显示开赛、未开赛 原高度 25 -3 缓冲高度
-    if ([1, 2].includes(+start_falg)) total += 22
+    if ([1, 2].includes(+start_flag)) total += 22
     // 显示球种类别
     if (is_show_ball_title) total += 20
     // 本来应该是 联赛高度 26 + 缓存容器高度 5 = 31； 
@@ -257,7 +257,7 @@ class VirtualList {
         // // 第一个显示球种
         // if (i === 0) current_match_dom_top += 17
         // // 显示开赛、未开赛
-        // if ([1, 2].includes(+match.start_falg)) current_match_dom_top += 25
+        // if ([1, 2].includes(+match.start_flag)) current_match_dom_top += 25
         // // 本来应该是 联赛高度 26 + 缓存容器高度 5 = 31； 
         // // 但是并不需要那么高的间隙（赛事之间的间隙， 取缓存容器的高度） 所以减去3； 赛事之间相叠避免漏光
         // if (is_show_league && show_card) {
