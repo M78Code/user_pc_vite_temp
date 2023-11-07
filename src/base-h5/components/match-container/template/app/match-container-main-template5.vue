@@ -68,7 +68,7 @@
               </div>
                 <!-- 足篮球展示赛事分析图标 -->
                 <!-- <div class="analysis" v-if="[1, 2].includes(+match.csid) && GlobalAccessConfig.get_statisticsSwitch()"
-                                                                                                                                @click='goto_details(match, 1)'> -->
+                                                                                                                                  @click='goto_details(match, 1)'> -->
                 <img :src="compute_img_url('data-analysis')" alt="" class="analysis"
                   v-if="[1, 2].includes(+match.csid) && GlobalAccessConfig.get_statisticsSwitch()"
                   @click='goto_details(match, 1)' style="width:0.12rem" />
@@ -134,6 +134,10 @@
                 <span>
                   {{ match.man }}
                 </span>
+                <!--发球方绿点-->
+                <span class="serving-party" :class="{ 'simple': standard_edition == 1 }"
+                  v-show="set_serving_side(match_of_list, 'home')">
+                </span>
                 <img v-if="match?.mhlu?.length" class="logo" v-img="([match.mhlu[0], match.frmhn[0], match.csid])" />
               </div>
               <span class="vs">VS</span>
@@ -142,7 +146,10 @@
                 <span>
                   {{ match.mhn }}
                 </span>
-
+                <!--发球方绿点-->
+                <span class="serving-party" :class="{ 'simple': standard_edition == 1 }"
+                  v-show="set_serving_side(match_of_list, 'away')">
+                </span>
               </div>
             </div>
             <!-- 比分选项 -->
@@ -686,9 +693,10 @@ export default {
             border-radius: 2px;
             background: var(--sys-brand-secodary-secondary-50, #F2F2F6);
             text-align: center;
-            display:flex;
-            flex-direction:column ;
+            display: flex;
+            flex-direction: column;
             justify-content: center;
+
             .on {
               color: var(--sys-brand-secodary-secondary-300, #AFB3C8);
               text-align: center;
@@ -711,9 +719,9 @@ export default {
     }
 
     .match-score-info {
-      /* display: flex;
+      display: flex;
       justify-content: space-between;
-      align-items: center; */
+      align-items: center;
       padding: 4px 9px 0;
 
       .right {
