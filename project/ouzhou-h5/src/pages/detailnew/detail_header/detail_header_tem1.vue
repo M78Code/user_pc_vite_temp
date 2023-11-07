@@ -13,7 +13,7 @@
         <div class="match-detail-time-collect" @click="collect_click">
           <!-- <img :src="is_collect ? '~assets/images/detail/collected.png' : '~assets/images/detail/collect.png'" alt="" /> -->
           <img v-if="is_collect"  :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/detail/collected.png`"   alt="" />
-          <img v-else src="/images/detail/collect.png" alt="" />
+          <img v-else :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/detail/collected.png`"  alt="" />
         </div>
       </div>
       <div class="match-detail-score">
@@ -225,16 +225,16 @@ setTimeout(() => {
     //   background:url('src/assets/images/detail/baseball_bg.png') no-repeat;
     // }
     .sports_bg2 {
-      background: url('src/assets/images/detail/basketball_bg.png') no-repeat;
+      background: url($SCSSPROJECTPATH+"/image/detail/basketball_bg.png")  no-repeat;
     }
     .sports_bg1 {
-      background: url('src/assets/images/detail/football_bg.png') no-repeat;
+      background:  url($SCSSPROJECTPATH+"/image/detail/football_bg.png") no-repeat;
     }
     .sports_bg5 {
-      background: url('src/assets/images/detail/tennis_bg.png') no-repeat;
+      background: url($SCSSPROJECTPATH+"/image/detail/tennis_bg.png")  no-repeat;
     }
     .sports_bg0 {
-      background: url('src/assets/images/detail/other_bg.png') no-repeat;
+      background: url($SCSSPROJECTPATH+"/image/detail/other_bg.png")  no-repeat;
     }
     .sport_bg{
       width: 140px;
@@ -295,19 +295,19 @@ setTimeout(() => {
 
       }
       .dianqiu {
-        background: url('src/assets/images/detail/dianqiu.png') no-repeat;
+       background: url($SCSSPROJECTPATH+"/image/detail/dianqiu.png")  no-repeat; 
       }
       .hongpai {
-        background: url('src/assets/images/detail/hongpai.png') no-repeat;
+        background: url($SCSSPROJECTPATH+"/image/detail/hongpai.png") no-repeat;
       }
       .huangpai {
-        background: url('src/assets/images/detail/huangpai.png') no-repeat;
+        background: url($SCSSPROJECTPATH+"/image/detail/huangpai.png") no-repeat;
       }
       .jiaoqiu {
-        background: url('src/assets/images/detail/jiaoqiu.png') no-repeat;
+        background: url($SCSSPROJECTPATH+"/image/detail/jiaoqiu.png") no-repeat;
       }
       .shangbanchang {
-        background: url('src/assets/images/detail/shangbanchang.png') no-repeat;
+        background: url($SCSSPROJECTPATH+"/image/detail/shangbanchang.png") no-repeat;
       }
       .score-icon {
         display: inline-block;

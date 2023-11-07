@@ -12,11 +12,16 @@
         :class="['match-status-fixed', { progress: +match.start_flag === 1, not_begin: +match.start_flag === 2 }]" >
         <!-- 进行中 -->
         <template v-if="+match.start_flag === 1">
-          <img :src="in_progress" /> <span class="din-regular"> 进行中</span>
+          <div>
+            <img :src="in_progress" /> <span class="din-regular"> 进行中</span>
+          </div>
+          <img :class="['expand_item', {ball_seed_collapsed: !ball_seed_collapsed}]" :src="expand_item" alt="">
         </template>
         <!-- 未开赛 -->
         <template v-else>
-          <img :src="not_begin" /> <span class="din-regular"> {{ $t('list.match_no_start') }}</span>
+          <div>
+            <img :src="not_begin" /> <span class="din-regular"> {{ $t('list.match_no_start') }}</span>
+          </div>
         </template>
       </div>
       <!-- 缓冲容器， 避免滚动时骨架屏漏光问题 -->
@@ -271,6 +276,7 @@ import CountingDownStart from 'src/base-h5/components/common/counting-down-start
 import ScoreList from 'src/base-h5/components/match-list/components/score-list.vue';
 import OddListWrap from 'src/base-h5/components/match-list/components/odd-list-wrap.vue';
 import ImageCacheLoad from "src/base-h5/components/match-list/components/public-cache-image.vue";
+import { icon_date, expand_item } from 'src/base-h5/core/utils/local-image.js'
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import PageSourceData  from  "src/core/page-source/page-source.js";
 import { i18n_t, compute_img_url, compute_css_obj  } from "src/core/index.js"
@@ -312,7 +318,7 @@ export default {
     return { 
       lang, theme, i18n_t, compute_img_url, format_time_zone, GlobalAccessConfig, footer_menu_id,LOCAL_PROJECT_FILE_PREFIX,in_progress,not_begin,
       is_hot, menu_type, menu_lv2, is_detail, is_export, is_results, standard_edition, compute_css_obj, show_sport_title, animation_icon, video_icon,
-      normal_img_not_favorite_white,not_favorite_app, normal_img_is_favorite, PageSourceData, corner_icon, mearlys_icon_app, midfield_icon_app, is_zaopan
+      normal_img_not_favorite_white,not_favorite_app, normal_img_is_favorite, PageSourceData, corner_icon, mearlys_icon_app, midfield_icon_app, is_zaopan, expand_item
     }
   }
 }
@@ -356,6 +362,7 @@ export default {
     align-items: center;
     color: var(--q-color-com-fs-color-38);
     background: #fff;
+      justify-content: space-between;
     &.progress{
       border-top: 2px solid #74C4FF
     }
@@ -367,6 +374,15 @@ export default {
       margin-right: .06rem;
       width: .13rem;
       height: .13rem;
+    }
+    .expand_item{
+      transition: transform 0.25s ease;
+      transform: rotate(-180deg);
+      width: 20px;
+      height: 16px;
+    }
+    .ball_seed_collapsed{
+      transform: rotate(0);
     }
   }
 
@@ -1040,6 +1056,13 @@ export default {
         display: flex;
         justify-content: space-between;
         position: relative;
+        text-overflow:ellipsis;
+        white-space: wrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        word-break: break-all;
 
         &.simple {
           width: 1.72rem;
@@ -1108,15 +1131,17 @@ export default {
           .team-t-title-w {
             font-size: 0.12rem;
             height: 0.3rem;
-            -webkit-line-clamp: 2;
             display: flex;
             width: 100%;
             overflow: hidden;
             flex-shrink: 0;
-            text-overflow: ellipsis;
-            white-space: nowrap;
             font-weight: 600;
             flex-direction: column-reverse;
+            text-overflow: ellipsis;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            word-break: break-all;
+
             &.is-handicap {
               font-weight: bold;
             }

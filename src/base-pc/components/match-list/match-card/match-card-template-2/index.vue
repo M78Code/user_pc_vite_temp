@@ -4,7 +4,7 @@
   <div
     class="c-match-card relative-position"
     :id="`list-mid-${mid}`"
-    :style="`height:${lodash.get(match_style_obj, `total_height`)}px !important;width:${LayOutMain_pc.layout_content_width - 15}px  !important;`"
+    :style="cardStyle"
   >
   <div v-show="false">{{ MatchListCardDataClass.list_version }}</div>
   <!--改成101用来打包调试--> 
@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, onMounted, onUnmounted, computed } from 'vue';
 import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card-class.js'
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import { LayOutMain_pc } from "src/core/index.js";
@@ -40,6 +40,18 @@ export default {
     let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.mid)
     // 组件是否加载完成
     const is_mounted = ref(true);
+
+    //将太长的行内样式优化
+    const cardStyle = computed(()=>{
+      const width = LayOutMain_pc.layout_content_width - 15;
+      const height = lodash.get(match_style_obj, `total_height`);
+
+      return {
+        width: `${width}px`,
+        height: `${height}px`,
+      }
+    })
+
     // 显示部分dom ID
     // this.DOM_ID_SHOW = window.BUILDIN_CONFIG.DOM_ID_SHOW;
     onMounted(() => {
@@ -57,6 +69,7 @@ export default {
       LayOutMain_pc,
       MatchListCardData,
       MatchListCardDataClass,
+      cardStyle
     }
   }
 }
