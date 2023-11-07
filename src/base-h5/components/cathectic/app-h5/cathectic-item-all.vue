@@ -46,8 +46,7 @@ import scroll from "src/base-h5/components/common/record-scroll/scroll.vue";
 import SRecord from "src/base-h5/components/skeleton/record.vue";
 import { ref, watch, onMounted, onUnmounted } from 'vue'
 import UserCtr from "src/core/user-config/user-ctr.js";
-import {useMittOn, MITT_TYPES} from  "src/core/mitt/index.js"
-
+import {useMittEmit, useMittOn, MITT_TYPES} from  "src/core/mitt/index.js"
 // 锚点
 const myScroll = ref(null)
 //是否在加载中
@@ -92,7 +91,6 @@ const init_data = (_index) => {
     timer_2.value = setInterval(() => {
       if (document.visibilityState == 'visible') {
         check_early_order()
-        search_early_money()
       }
     }, 10000)
   }
@@ -146,7 +144,8 @@ const search_early_money = () => {
   api_betting.get_cashout_max_amount_list(params).then(reslut => {
     let res = reslut.status ? reslut.data : reslut
     if (res.code == 200 && res.data) {
-      BetRecordClass.set_early_money_list(res.data)
+      // 通知提前结算组件 => 数据金额变化
+      useMittEmit(MITT_TYPES.EMIT_EARLY_MONEY_LIST_CHANGE, res.data)
     }
   })
 }
@@ -167,6 +166,8 @@ const check_early_order = () => {
     })
   })
   orderNumberItemList.value = tempList
+  //  查询提前结算金额
+  search_early_money()
 }
 
 /**
@@ -200,9 +201,10 @@ const get_order_list = (_index, params, url_api) => {
         }
       }
       last_record.value = lodash.findLastKey(record);
-      // 合并数据
-      let obj = lodash.cloneDeep(BetRecordClass.list_data)
-      BetRecordClass.set_list_data(Object.assign(obj, record))
+      // 赋值
+      BetRecordClass.set_list_data(record)
+      // 如果是未结算页面, 先获取提前结算列表金额
+      _index === 0 && check_early_order()
     } else if (res.code == '0401038') {
       is_limit.value = true
       is_loading.value = false
