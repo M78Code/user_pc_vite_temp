@@ -2,13 +2,11 @@
  * @Description: app-h5 赛事组件，用于赛事列表展示赛事信息
 -->
 <template>
-  <div :class="['match-container', {
-    zaopan: is_zaopan
-  }]" 
+  <div :class="['match-container']" 
     :style="{ marginTop: is_hot ? '0' : '' }">
     <template v-if="match" >
       <!-- 赛事标题 -->
-      <header>
+      <header class="match-header">
         <div>
           <sport_icon size="24" :status="false" :sport_id="match_of_list.icon" />
           <span>{{ match_of_list.csna }}</span>
@@ -170,6 +168,62 @@ export default {
    
 <style scoped lang="scss">
 /* ********赛事容器相关********** -S*/
+.match-header{
+  height: 50px;
+  display: flex;
+  align-items: center;
+  padding: 11px 10px;
+  > div{
+    flex: 1;
+    display: flex;
+    color: #1A1A1A;
+    font-size: 16px;
+    font-weight: 500;
+    align-items: center;
+    .icon {
+      width: 17px;
+      height: 17px;
+      margin-right: 10px;
+      display: inline-block;
+    }
+    .path{
+      width: 15px;
+      height: 5px;
+    }
+  }
+  .select_time{
+    display: flex;
+    align-items: center;
+    color: #FF7000;
+    justify-content: flex-end;
+    padding-right: 5px;
+    > img {
+      padding-left: 8px;
+    }
+    :deep(.q-btn){
+      &.disabled{
+        opacity: 1 !important;
+      }
+      .q-btn__content{
+        text-transform: capitalize;
+        .block{
+          font-size: 13px;
+          font-weight: 500;
+          margin-right: 10px;
+        }
+        .q-icon{
+          color: #333;
+          font-size: 14px;
+          margin-left: 5px;
+          display: none;
+        }
+      }
+      .q-ripple{
+        display: none;
+        }
+      }
+    }
+  }
 .play-icon {
   background-image: var(--q-color-img-bg-103);
   background-repeat: no-repeat;

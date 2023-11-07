@@ -7,18 +7,30 @@
   }]" 
     :style="{ marginTop: is_hot ? '0' : '' }">
     <template v-if="match" >
-      <!-- 开赛标题  -->
-      <div v-if="is_show_opening_title" @click.stop="handle_ball_seed_fold"
-        :class="['match-status-fixed', { progress: +match.start_flag === 1, not_begin: +match.start_flag === 2 }]" >
-        <!-- 进行中 -->
-        <template v-if="+match.start_flag === 1">
-          <img :src="in_progress" /> <span class="din-regular"> 进行中</span>
-        </template>
-        <!-- 未开赛 -->
-        <template v-else>
-          <img :src="not_begin" /> <span class="din-regular"> {{ $t('list.match_no_start') }}</span>
-        </template>
-      </div>
+      <!-- 赛事标题 -->
+      <header>
+        <div>
+          <!-- <sport_icon size="24" :status="false" :sport_id="match_of_list.icon" /> -->
+          <span>{{ match_of_list.csna }}</span>
+        </div>
+        <div class="select_time">
+          <!-- 玩法dropdown -->
+          <span @click.stop>
+            <q-btn-dropdown flat outline  style="color: #FF7000"  padding="0" :label="match_of_list.selectTitle" 
+              dropdown-icon="expand_more" content-class="select_time_style">
+              <q-list>
+                <q-item v-for="item in match_of_list.pMethods" :key="item.hpid"
+                   :class="{active: selectPlay === item.hpid}" clickable v-close-popup 
+                   @click.stop="on_select_play(match_of_list, item)">
+                  <q-item-section>
+                    <q-item-label>{{ item.hpn }}</q-item-label>
+                  </q-item-section>
+                </q-item>
+              </q-list>
+            </q-btn-dropdown>
+          </span>
+        </div>
+      </header>
       <!-- 缓冲容器， 避免滚动时骨架屏漏光问题 -->
       <div class="buffer-container" v-if="match.is_show_league && !is_show_opening_title && i !== 0"></div>
       <!--体育类别 -- 标题  menuType 1:滚球 2:即将开赛 3:今日 4:早盘 11:串关 -->
