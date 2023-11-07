@@ -18,7 +18,7 @@
                     {{ item.name }}
                 </div>
                 <div class="more">
-                    <Switch  :value="item.switchValue" :leftVal="item.leftVal" :rightVal="item.rightVal" @update="switch_handle(item)"/>
+                    <Switch  :value="item.switchValue" :leftVal="item.leftVal" :rightVal="item.rightVal" @change_value="switch_handle(item)"/>
                 </div>
             </div>
             <div class="setting-item" @click="jumpHandle">
@@ -73,7 +73,7 @@ const emit = defineEmits(["closedHandle"]);
 const setting_list = ref([
     { name: '投注模式', leftVal: '新手版', rightVal: '专业版', switchValue: UserCtr.standard_edition === 2 ? 'rightVal' :'leftVal',mark:'version' },
     { name: '排序规则', leftVal: '热门', rightVal: '时间', switchValue: UserCtr.sort_type,mark:'sort' },
-    { name: '盘口设置', leftVal: '欧洲盘', rightVal: '香港盘',mark:'Handicap' },
+    // { name: '盘口设置', leftVal: '欧洲盘', rightVal: '香港盘',switchValue: UserCtr.sort_type,mark:'Handicap' },
     // { name: '字号大小', leftVal: '默认', rightVal: '放大',mark:'size' },
     { name: '主题风格', leftVal: '日间', rightVal: '夜间',switchValue: LocalStorage.get("theme", default_theme_key), mark:'theme'},
     { name: '每日活动', leftVal: '开启', rightVal: '关闭',mark:'activity' },
@@ -87,6 +87,7 @@ const closedHandle = () => {
  *@return {Undefined} undefined
  */
 const switch_handle = (item) => {
+    item.switchValue =  item.switchValue === 'rightVal' ? 'leftVal' : 'rightVal'
     const typeMap = {
         version: version_handle,
         sort: sort_handle,
@@ -102,14 +103,16 @@ const switch_handle = (item) => {
  *@return {Undefined} undefined
  */
 const version_handle = (item) => {
-    console.log('item',item)
+    UserCtr.set_standard_edition()
 }
 /**
  *@description 处理排序规则
  *@return {Undefined} undefined
  */
 const sort_handle = (item) => {
-    console.log('item',item)
+    const status = item.switchValue === 'rightVal' ? 2 : 1
+    console.log('status',status)
+    UserCtr.set_sort_type(status);
 }
 /**
  *@description 处理盘口设置

@@ -55,11 +55,11 @@ onUnmounted(() => {
     ul {
         position: absolute;
         z-index: 10;
-        left: 0;
+        left: -0.1rem;
         top: 0.5rem;
         background: var(--q-gb-bg-c-15);
         width: 100%;
-
+        padding-left: 0.1rem;
         li {
             font-size: 0.14rem;
             line-height: 2.5;

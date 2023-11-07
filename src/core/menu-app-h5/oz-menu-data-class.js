@@ -21,8 +21,8 @@ class MenuData {
     this.destroy = () => {
       this.update && this.update.cancel()
     }
-    this.current_lv_1_menu_i = ''
-    this.current_lv_2_menu_i = ''
+    this.current_lv_1_menu_i = 2
+    this.current_lv_2_menu_i = '1012'
     this.menu_lv_mi_lsit = []
 
     this.menu_list = []; //常规球种 101...

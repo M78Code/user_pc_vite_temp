@@ -1,8 +1,8 @@
 /*
  * @Author: rise
  * @Date: 2023-11-03 16:37:52
- * @LastEditors: rise
- * @LastEditTime: 2023-11-07 16:17:18
+ * @LastEditors: lowen pmtylowen@itcom888.com
+ * @LastEditTime: 2023-11-07 17:23:56
  * @Description:  
  */
 import { createRouter, createWebHashHistory } from "vue-router";
@@ -102,7 +102,7 @@ const router = createRouter({
         {
           path: "/details/:mid/:mcid?/:csid?",
           name: "details",
-          component: () => import("../pages/details/details.vue"),
+          component: () => import("../pages/detailnew/index.vue"),
           children: [
             {
               path: "category/:id?",
