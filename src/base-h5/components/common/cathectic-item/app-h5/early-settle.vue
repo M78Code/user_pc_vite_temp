@@ -51,7 +51,6 @@
 
 <script setup>
 import BetRecordClass from "src/core/bet-record/bet-record.js";
-import ClipboardJS from "clipboard";
 import { api_betting } from "src/api/index.js"
 // import { mapGetters, mapMutations } from "vuex";
 import { format_time_zone_time } from "src/core/format/index.js"
@@ -78,7 +77,7 @@ let status = ref(1)
 // 滑块是否显示
 let slider_show = ref(false)
 // 提前结算详情列表是否显示
-let details_show = ref(false)
+let details_show = ref(false) 
 // 展开 提前结算详情列表 的按钮是否显示
 let details_show_btn = ref(false)
 // 0  100
@@ -189,9 +188,9 @@ onMounted(() => {
    * 监听轮询提前结算列表数据
    * 给expected_profit赋值
    */
-  mitt_expected_profit = useMittOn(MITT_TYPES.EMIT_EARLY_MONEY_LIST_CHANGE, (early_money_list) => {
+  mitt_expected_profit = useMittOn(MITT_TYPES.EMIT_EARLY_MONEY_LIST_CHANGE, (early_money_list_data) => {
     let _maxCashout = props.item_data.maxCashout
-    const moneyData = lodash.find(early_money_list, (item) => {
+    const moneyData = lodash.find(early_money_list_data, (item) => {
       return props.item_data.orderNo == item.orderNo
     })
     if (moneyData && moneyData.orderStatus === 0) {
@@ -296,36 +295,17 @@ const submit_early_settle = () => {
     // 预计返还（盈利）
     frontSettleAmount: String(front_settle_amount.value || expected_profit.value),
   };
+  let message = ''
   // 响应码【0000000 成功（仅在测试模式出现） | 0400524 确认中（仅在非测试模式出现）| 0400500 提交申请失败，提示msg信息】
   api_betting.post_pre_bet_order(params).then((reslut) => {
     let res = reslut.status ? reslut.data : reslut
-    let message = ''
     if (res.code == 200) {
       status.value = 4;
-      message = '已提交申请，请耐心等待';
+      message = i18n_t('early.info10');
     } else if (res.code == "0400524") {
       // 注单确认中···
-      // 前5次 每3s拉一次
-      // 6-10次 每5s拉一次
-      // 11~35次  每10s拉一次
-      timer4 = setInterval(() => {
-        count_++;
-        if (count_ > 5) {
-          clearInterval(timer4)
-          timer4 = setInterval(() => {
-            count_++;
-            if (count_ > 10) {
-              clearInterval(timer4)
-              timer4 = setInterval(() => {
-                count_++;
-                if (count_ > 35) {
-                  clearInterval(timer4)
-                }
-              }, 10000);
-            }
-          }, 5000);
-        }
-      }, 3000);
+      status.value = 4;
+      message = i18n_t('early.info10');
     } else if (res.code == "0400527") {
       // 不支持提前结算或者暂停
       status.value = 5;
@@ -344,12 +324,13 @@ const submit_early_settle = () => {
       status.value = 1;
       message = i18n_t('early.info2');
     }
+    useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, message)
   }).catch((err) => {
     // 提前结算申请未通过
     status.value = 1;
     message = i18n_t('early.info2');
+    useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, message)
   });
-  useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, message)
 }
 /**
  *@description 橙色大按钮点击处理

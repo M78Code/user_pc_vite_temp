@@ -7,9 +7,9 @@
   <div class="yb-match-list full-height   relative-position"
   :data-version="MatchListCardDataClass.list_version"
     >
-    <div class="test-info-wrap" v-if="GlobalAccessConfig.other.wsl">
+    <!-- <div class="test-info-wrap" v-if="GlobalAccessConfig.other.wsl">
    {{ MatchListCardDataClass.list_version }}--   {{ load_data_state }}-- length---  {{ match_list_card_key_arr.length }}
-    </div>
+    </div> -->
     <!-- <div class="test-info-wrap" v-if="GlobalAccessConfig.other.wsl">
       <div>{{ menu_config.mid_menu_result.match_tpl_number }}</div>
       <div class="fold-btn" @click="match_list_card.unfold_all_league()">展开联赛</div>
@@ -17,17 +17,18 @@
       <div class="fold-btn" @click="match_list_card.test_log_data()">打印数据</div>
       <div> load_data_state {{ load_data_state }}</div>
     </div> -->
-    
-    <!-- 头部15 Mins模块 -->
-    <div v-show="matches_15mins_list.length">
-      <CurrentMatchTitle :title_value="'15 Mins'" :show_more_icon="false" />
-      <MatchCardList15Mins :matches_15mins_list="matches_15mins_list" />
-    </div>
-    <!-- 头部Featured Matches模块 -->
-    <div v-show="matches_featured_list.length">
-      <CurrentMatchTitle :title_value="'Featured Matches'" :show_more_icon="false" />
-      <FeaturedMatches :matches_featured_list="matches_featured_list" />
-    </div>
+    <MatchesHeader />
+    <div class="match-list-scroll scroll">
+      <!-- 头部15 Mins模块 -->
+      <div v-show="matches_15mins_list.length">
+        <CurrentMatchTitle :title_value="'15 Mins'" :show_more_icon="false" />
+        <MatchCardList15Mins :matches_15mins_list="matches_15mins_list" />
+      </div>
+      <!-- 头部Featured Matches模块 -->
+      <div v-show="matches_featured_list.length">
+        <CurrentMatchTitle :title_value="'Featured Matches'" :show_more_icon="false" />
+        <FeaturedMatches :matches_featured_list="matches_featured_list" />
+      </div>
     <!-- <div class="scroll-fixed-header" :class="{ 'no-data': load_data_state != 'data' }"> -->
       <!-- banner -->
       <!-- <div class="banner-box" :style="{height: GlobalAccessConfig.get_show_banner() ? '120px' : '0px'}" v-if="GlobalAccessConfig.get_show_banner()"></div> -->
@@ -60,58 +61,59 @@
       <!-- </div> -->
     <!-- </div> -->
     <!-- 列表容器 -->
-    <load-data :state="'data'" limit_height="1000" >  <!--此处先写死高度用来调试UI -->
-      <!-- 滚球虚拟体育列表 -->
-      <scroll-list v-if="menu_config.menu_root_show_shoucang == 300">
-        <template v-slot:before>
-          <div :style="{ height: MatchListCardDataClass.sticky_top.fixed_header_height }"></div>
-        </template>
-        <template>
-          <!--虚拟体育 赛事列表 赛事头-->
-          <!-- <virtual-match-type v-for="(match_item, match_index) in match_list" :key="`match_type_${match_item.mid}`"
-            :mid="match_item.mid" :match_index="match_index"
-            :sticky_top="menu_config.mid_menu_result.csid == '1001' ? 157.5 : 117"
-            :style="`width:${vx_get_layout_size.list_content_width}px  !important;`" /> -->
-          <div class="v-scroll-item" :style="`width:${vx_get_layout_size.list_content_width}px  !important;`"
-            :key="match_item.mid">
-            <div v-if="wsl" class="test">{{ match_index }}———{{ match_item.mid }}-----{{ match_item.flex_index }}</div>
-            <!--玩法模板-->
-            <component :is="match_tpl_component" :mid="match_item.mid" />
-          </div>
-        </template>
-        <template v-slot:after>
-          <div style="height:15px"></div>
-        </template>
-      </scroll-list>
-      <!-- <div> {{match_list_card_key_arr }}</div> -->
-      <!-- 滚球其他列表 -->
-      <scroll-list  v-if="menu_config.menu_root_show_shoucang != 300">
-        <!-- v-for="card_key in MatchListCardDataClass.match_list_card_key_arr" -->
-        <template v-slot:before>
-          <div :style="{ height: MatchListCardDataClass.sticky_top.fixed_header_height }"></div>
-        </template>
-      <div
-        v-for="card_key in match_list_card_key_arr"
-        :key="card_key" 
-        :card_key="card_key" 
-        :data-card-key="card_key"
-        :class="`card_key   ${card_key}`"
-      >
-        <match-list-card 
-          :card_key="card_key" 
-        />
-      </div>  
-        <template v-slot:after>
-          <div style="height:15px"></div>
-          <div class="pager-wrap row justify-end">
-            <div class="go-top-btn yb-flex-center" @click="on_go_top">
-              <icon-wapper name="icon-go_top" size="14px" />
-              <div class="msg">{{ $t("common.back_top") || "" }}</div>
+      <load-data :state="'data'" limit_height="1000" >  <!--此处先写死高度用来调试UI -->
+        <!-- 滚球虚拟体育列表 -->
+        <scroll-list v-if="menu_config.menu_root_show_shoucang == 300">
+          <template v-slot:before>
+            <div :style="{ height: MatchListCardDataClass.sticky_top.fixed_header_height }"></div>
+          </template>
+          <template>
+            <!--虚拟体育 赛事列表 赛事头-->
+            <!-- <virtual-match-type v-for="(match_item, match_index) in match_list" :key="`match_type_${match_item.mid}`"
+              :mid="match_item.mid" :match_index="match_index"
+              :sticky_top="menu_config.mid_menu_result.csid == '1001' ? 157.5 : 117"
+              :style="`width:${vx_get_layout_size.list_content_width}px  !important;`" /> -->
+            <div class="v-scroll-item" :style="`width:${vx_get_layout_size.list_content_width}px  !important;`"
+              :key="match_item.mid">
+              <div v-if="wsl" class="test">{{ match_index }}———{{ match_item.mid }}-----{{ match_item.flex_index }}</div>
+              <!--玩法模板-->
+              <component :is="match_tpl_component" :mid="match_item.mid" />
             </div>
-          </div>
-        </template>
-      </scroll-list>
-    </load-data>
+          </template>
+          <template v-slot:after>
+            <div style="height:15px"></div>
+          </template>
+        </scroll-list>
+        <!-- <div> {{match_list_card_key_arr }}</div> -->
+        <!-- 滚球其他列表 -->
+        <scroll-list  v-if="menu_config.menu_root_show_shoucang != 300">
+          <!-- v-for="card_key in MatchListCardDataClass.match_list_card_key_arr" -->
+          <template v-slot:before>
+            <div :style="{ height: MatchListCardDataClass.sticky_top.fixed_header_height }"></div>
+          </template>
+        <div
+          v-for="card_key in match_list_card_key_arr"
+          :key="card_key" 
+          :card_key="card_key" 
+          :data-card-key="card_key"
+          :class="`card_key   ${card_key}`"
+        >
+          <match-list-card 
+            :card_key="card_key" 
+          />
+        </div>  
+          <template v-slot:after>
+            <div style="height:15px"></div>
+            <div class="pager-wrap row justify-end">
+              <div class="go-top-btn yb-flex-center" @click="on_go_top">
+                <icon-wapper name="icon-go_top" size="14px" />
+                <div class="msg">{{ $t("common.back_top") || "" }}</div>
+              </div>
+            </div>
+          </template>
+        </scroll-list>
+      </load-data>
+    </div>
     <!-- 联赛筛选层 -->
     <!-- <leagues-filter v-if="vx_show_filter_popup" /> -->
     <!-- 点击头部刷新弹出 loading 蒙层 -->
@@ -153,6 +155,7 @@ import {MatchDataWarehouse_PC_List_Common as MatchListData ,GlobalAccessConfig} 
 import CurrentMatchTitle from "src/base-pc/components/match-list/current_match_title.vue"
 import MatchCardList15Mins from 'src/base-pc/components/match-list/match_card_list_15mins/matches_card_list_15mins.vue';
 import FeaturedMatches from 'src/base-pc/components/match-list/featured_matches/featured_matches_card.vue';
+import MatchesHeader from "src/base-pc/components/matches_header/matches_header.vue";
 import { get_home_matches, map_matches_list, filter_15mins_func, filter_featured_list } from './featch_matches';
 import "./match_list.scss";
 
@@ -175,7 +178,8 @@ export default {
     ListHeader,
     CurrentMatchTitle,
     FeaturedMatches,
-    MatchCardList15Mins
+    MatchCardList15Mins,
+    MatchesHeader
   },
   setup() {
     // 15分钟赛事数据
@@ -270,6 +274,32 @@ export default {
     font-size: 16px;
     cursor: pointer;
     padding: 5px;
+  }
+}
+.scroll {
+  overflow-y: scroll; 
+  height: calc(100vh - v-bind('match_list_top'));
+  padding-right: 3px;
+  /* 火狐滚动条无法自定义宽度，只能通过此属性使滚动条宽度变细 */
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #cccccc;
+    border-radius: 4px;
+  }
+}
+.match-list-scroll {
+  box-sizing: border-box;
+  height: calc(100vh - v-bind('match_list_top'));
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #cccccc;
+    border-radius: 4px;
   }
 }
 .leagues-tabs {

@@ -131,12 +131,12 @@ const on_change_lang = (key) => {
 }
 // 跳转规则界面
 const jumpRules = () => {
-  // router.push('/rules')
+  router.push('/rules')
 }
 
 </script>
  
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .personal_page{
   height: calc(100% - 56px);
   :deep(.q-scrollarea__thumb){

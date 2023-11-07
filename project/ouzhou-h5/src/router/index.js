@@ -144,6 +144,15 @@ const router = createRouter({
             meta: {
               keepAlive: true // 需要缓存
             },
+          },
+          //规则
+          {
+            path: "/rules",
+            name: "/rules",
+            component: () => import("../pages/rules/rules.vue"),
+            meta: {
+              keepAlive: true // 需要缓存
+            },
           }
       ],
     },
