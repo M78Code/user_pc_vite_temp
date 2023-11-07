@@ -54,7 +54,8 @@
       <q-tab-panels v-model="tab" animated>
         <q-tab-panel name="betting">
           <!-- 玩法模板 -->
-          <div ref="fixedHeight" :class="['match-detail-odds-scroll', match_detail.mvs > -1 ? 'match-detail-odds-height2' : 'match-detail-odds-height3']">
+          <div ref="fixedHeight" class="match-detail-odds-scroll"
+            :class="[match_detail.mvs > -1 ? 'match-detail-odds-height2' : 'match-detail-odds-height3']">
             <odds_info :match_odds_info="match_odds_info" :match_detail="match_detail" :loading="loading"/>
           </div>
           <!-- <div class="match-detail-odds-bottom"></div> -->

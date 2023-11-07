@@ -35,10 +35,10 @@
 
 <script setup>
 import { onMounted, ref, computed, markRaw } from "vue";
-// import temp0 from "./template/tem0.vue";
-// import temp1 from "./template/tem1.vue";
-// import temp3 from "./template/tem3.vue";
-// import temp5 from "./template/tem5.vue";
+import temp0 from "./template/tem0.vue";
+import temp1 from "./template/tem1.vue";
+import temp3 from "./template/tem3.vue";
+import temp5 from "./template/tem5.vue";
 // import tem_other from "./template/tem_other.vue";
 // import { storage_bet_info } from "src/public/utils/bet/bet_info.js";
 // import EMITTER from "src/global/mitt.js";
@@ -60,10 +60,10 @@ const props = defineProps({
 const emit = defineEmits(["change"]);
 const active = ref(1);
 const componentArr = ref({
-    // tem0: markRaw(temp0),
-    // tem1: markRaw(temp1),
-    // tem3: markRaw(temp3),
-    // tem5: markRaw(temp5),
+    tem0: markRaw(temp0),
+    tem1: markRaw(temp1),
+    tem3: markRaw(temp3),
+    tem5: markRaw(temp5),
     // tem_other: markRaw(tem_other),
 });
 const tem_choice = (hpt) => {
