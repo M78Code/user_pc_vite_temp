@@ -1,3 +1,11 @@
+<!--
+ * @Author: jamison pmtyjamison@itcom888.com
+ * @Date: 2023-11-03 18:26:34
+ * @LastEditors: jamison pmtyjamison@itcom888.com
+ * @LastEditTime: 2023-11-07 16:36:42
+ * @FilePath: \user-pc-vite\src\base-h5\components\setting-filter\components\switch.vue
+ * @Description: 
+-->
 <template>
     <div class="switch" :class="{ 'switch-on': value === 'rightVal' }" @click="toggle">
         <div class="switch-toggle"></div>
@@ -25,10 +33,10 @@ const props = defineProps({
         default: ''
     },
 })
-const emit = defineEmits(["update:value"]);
+const emit = defineEmits(["change_value"]);
 
 const toggle = () => {
-    emit('update:value', props.value === 'leftVal' ? 'rightVal' : 'leftVal')
+    emit('change_value')
 }
 </script>
   

@@ -2,7 +2,7 @@
 /**
  * @description 赛事 元数据处理
  */
-
+import { ref } from 'vue'
 import lodash from 'lodash'
 import { api_common } from "src/api/index.js";
 import BaseData from 'src/core/base-data/base-data.js'
@@ -35,8 +35,12 @@ class MatchMeta {
     this.complete_matchs = []
     // 上一次滚动得距离
     this.prev_scroll = null
+    // 球种对应的数量
+    this.ball_seed_count = ref({})
     // 重置折叠对象
     MatchFold.clear_fold_info()
+    // 重置收藏对象
+    MatchCollect.clear_collect_info()
   }
 
   /**
@@ -156,18 +160,21 @@ class MatchMeta {
     handler_match_list_data(list, type = 2) {
       const length = lodash.get(list, 'length', 0)
       if (length < 1) return this.set_page_match_empty_status(true);
-      const result_mids = list.map(t => t.mid)
       // 赛事全量数据
       const match_list = list.map((match, index) => {
+        const is_show_ball_title = MatchUtils.get_match_is_show_ball_title(index, list)
         Object.assign(match, {
+          is_show_ball_title,
           is_show_league: index === 0 ? true : list[index].tid !== list[index - 1].tid
         })
         //  赛事操作
         this.match_assistance_operations(match)
         return match
       })
+      const target_data = MatchUtils.handler_match_classify_by_ms(match_list).filter((t) => t.mid)
+      const result_mids = target_data.map(t => t.mid)
 
-      this.complete_matchs = match_list
+      this.complete_matchs = target_data
       this.match_mids = lodash.uniq(result_mids)
       this.complete_mids = lodash.uniq(result_mids)
 
@@ -353,6 +360,18 @@ class MatchMeta {
   }
 
   /**
+   * @description 设置对应球种的key
+   * @param {string} key 
+   * @param {number} length 
+   */
+  set_ball_seed_count (key, length) {
+    Object.assign(this.ball_seed_count.value, {
+      [key]: length
+    })
+    console.log(this.ball_seed_count.value)
+  }
+
+  /**
    * 
    * @description 获取赛事请求参数
    * @returns { Object }
@@ -471,16 +490,15 @@ class MatchMeta {
    */
   set_collect_match (match, type) {
     const { mid, tid } = match
+    let target_mids = []
     if (type === 1) {
       const matchs = this.complete_matchs.filter(t => t.tid === tid)
-      matchs.forEach(item => {
-        const index = this.match_mids.findIndex(t => t === item.mid)
-        this.match_mids.splice(index, 1)
-      })
+      const mids = matchs.map(item => item.mid)
+      target_mids = this.match_mids.filter(t => !mids.includes(t))
     } else {
-      const index = this.match_mids.findIndex(t => t === mid)
-      this.match_mids.splice(index, 1)
+      target_mids = this.match_mids.filter(t => t !== mid)
     }
+    this.match_mids = target_mids
     MatchDataBaseH5.upd_data_version()
   }
 
