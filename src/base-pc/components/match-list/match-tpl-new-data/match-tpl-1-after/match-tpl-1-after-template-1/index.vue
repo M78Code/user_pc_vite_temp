@@ -159,7 +159,6 @@ const bet_col = computed(() => {
   //是否多列
   let multi_column = lodash.get(match_style_obj, 'data_tpl_id') == 13
   let _play_current_key = lodash.get(match, 'play_current_key')
-  console.log('_play_current_key', MatchListCardDataClass.list_version.value, match.play_current_index, _play_current_key)
   // 5分钟玩法
   if (_play_current_key == 'hps5Minutes') {
     let hpid = 361
