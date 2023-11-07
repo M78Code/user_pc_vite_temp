@@ -52,7 +52,7 @@ const router = createRouter({
           {
             path: "/home",
             name: "home",
-            component: () => import("../pages/home/index.vue")
+            component: () => import("../pages/match-page/index.vue"),
           },
           // {
           //   path: "/activity_task",
