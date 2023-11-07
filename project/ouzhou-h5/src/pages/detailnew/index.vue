@@ -69,7 +69,7 @@
 
 <script setup>
 import { onMounted, ref, watch, onUnmounted } from "vue";
-import { useRouter } from "vue-router";
+import { useRouter,useRoute } from "vue-router";
 import { MatchDetailCalss } from "src/core";
 // import detail_header_tem0 from "./detail_header/detail_header_tem0.vue";
 // import detail_header_tem1 from "./detail_header/detail_header_tem1.vue";
@@ -91,6 +91,7 @@ import { api_match_list } from "src/api/index.js";
 //   get_category_list_mock,
 // } from "./mock";
 const router = useRouter();
+const route = useRoute();
 // const detail_store = detail_module();
 const detail_store = ref(MatchDetailCalss); //todo
 const match_odds_info = ref([]);
@@ -326,8 +327,7 @@ const get_matchDetail_MatchInfo = (params) => {
  *@return {*}
 */
 const detail_init = () => {
-  // const { mid, csid  } = detail_store.params;
-  const mid = 2878615
+  const { mid, csid  } = route.params;
   get_matchDetail_getMatchOddsInfo({
       mcid: 0,
       cuid: cuid.value,
