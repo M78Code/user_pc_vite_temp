@@ -11,7 +11,7 @@
     <TopMenu />
 
     <div v-if="[3,6].includes(MenuData.current_lv_1_menu_mi.value)">
-      <DateTab :dataList="dataList[MenuData.current_lv_1_menu_mi.value]"  />
+      <DateTab :dataList="dataList[MenuData.current_lv_1_menu_i]"  />
     </div>
 
     <div v-if="[2000].includes(MenuData.current_lv_2_menu_i)">
@@ -79,8 +79,8 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
    */
   const dataList = reactive({
     3: dateTabList(new Date()),
-    6: dateTabList(new Date(new Date().getTime()+24*60*60*1000),{name:"今日",val:new Date()}),
-    2000: dateTabList(new Date(new Date().getTime()+24*60*60*1000),{name:"今日",val:new Date()})
+    6: dateTabList(new Date(new Date().getTime()+24*60*60*1000),{name:"今日",val:new Date().getTime()}),
+    2000: dateTabList(new Date(new Date().getTime()+24*60*60*1000),{name:"今日",val:new Date().getTime()})
   });
 
   const ref_data = reactive({
@@ -139,7 +139,7 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
   })
 
   // 早盘 串关
-  const set_scroll_early_single = val => {
+  const set_scroll_early_single = (val = {}) => {
     const menu_list = MenuData.get_menu_lvmi_list_only(MenuData.current_lv_1_menu_i)
     let early_single = []
     if(Object.keys(val).length){
@@ -220,7 +220,6 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
     if (lodash_.isEmpty(mi_tid_mids_res)) return
 
     // 设置菜单对应源数据
-
     MatchMeta.set_origin_match_data()
   }
 
