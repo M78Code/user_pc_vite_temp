@@ -26,6 +26,43 @@ const clone_arr = (arr) => {
   return new_arr;
 }
 /**
+   * @Description 计算角球、罚牌等其他玩法数据 (获取角球、罚牌模板数据，并与接口数据合并)
+   * @param {undefined} undefined
+  */
+export const get_compute_other_play_data = (match) => {
+  if (!match) return []
+  let { cos15Minutes, cos5Minutes, mst, mid } = match
+  if (cos15Minutes || cos5Minutes) {
+    set_min15(match, mst)
+  }
+  // set_tab_play_keys(match)
+  //当前选中玩法
+  let cur_other_play = get_play_current_play(match)
+  let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(mid)
+  const { data_tpl_id } = match_style_obj;
+  const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${data_tpl_id}_config`][`template_${data_tpl_id}`]
+  match.tpl_id = data_tpl_id;
+  // 其他玩法盘口列表
+  let other_handicap_list = clone_arr(match_tpl_info[cur_other_play])
+  // 波胆
+  if (cur_other_play == 'hpsBold') {
+    other_handicap_list = get_21_bold_template(match);
+  }
+  //5分钟
+  if (cur_other_play == 'hps5Minutes') {
+    other_handicap_list = get_5minutes_template(match);
+  }
+  if (!cur_other_play) {
+    other_handicap_list = clone_arr(match_tpl_info.hpsCorner)
+  }
+  // 4：15分钟玩法 1：其他玩法
+  let type = cur_other_play == 'hps15Minutes' ? 4 : 1
+  other_handicap_list = merge_template_data({ match, handicap_list: other_handicap_list, type, play_key: cur_other_play })
+  // coverage_match_data({ other_handicap_list }, mid)
+  // match.other_handicap_list = other_handicap_list
+  return other_handicap_list || []
+}
+/**
 * @Description 合并列表模板数据
 * @param {Object} match 赛事信息
 * @param {Object} handicap_list 模板数据
@@ -36,12 +73,10 @@ export function merge_template_data({ match, handicap_list, type, play_key }) {
   let length = handicap_list.length
   let { hSpecial5min, mid } = match
   let hn_obj = lodash.get(MatchListData, 'list_to_obj.hn_obj');
-  let ol_obj = lodash.get(MatchListData, 'list_to_obj.ol_obj');
-
   handicap_list.forEach((col, col_index) => {
     col.ols.forEach((ol, ol_index) => {
       let handicap_type = 1
-      let { hn, _hpid,  ot } = ol
+      let { hn, _hpid, ot } = ol
       if (type == 4) {
         handicap_type = get_min15_handicap_type(length, match.hSpecial, col_index)
         //22号模板 足球-独赢 让球胜平负 附加盘 合并到主盘   hn = 2 | 3 附加盘编号
@@ -52,6 +87,7 @@ export function merge_template_data({ match, handicap_list, type, play_key }) {
       }
       // let ol_data1 = ol_obj[MatchListData.get_list_to_obj_key(mid, oid, "ol")]
       let ol_data = hn_obj[MatchListData.get_list_to_obj_key(mid, `${mid}_${_hpid}_${handicap_type}_${ot}`, "hn")]
+     
       if (ol_data) {
         //附加盘1
         if (type == 2) {
@@ -73,7 +109,6 @@ export function merge_template_data({ match, handicap_list, type, play_key }) {
   if ('hps5Minutes' == play_key && hSpecial5min == 5) {
     handicap_list = data_move_up(handicap_list)
   }
-  console.log('handicap_list', handicap_list)
   return handicap_list
 }
 /**
@@ -244,43 +279,7 @@ function get_match_template_id({ csid }) {
   }
   return tpl_id
 }
-/**
-   * @Description 计算角球、罚牌等其他玩法数据 (获取角球、罚牌模板数据，并与接口数据合并)
-   * @param {undefined} undefined
-  */
-export const get_compute_other_play_data = (match) => {
-  if (!match) return []
-  let { cos15Minutes, cos5Minutes, mst, mid } = match
-  if (cos15Minutes || cos5Minutes) {
-    set_min15(match, mst)
-  }
-  // set_tab_play_keys(match)
-  //当前选中玩法
-  let cur_other_play = get_play_current_play(match)
-  let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(mid)
-  const { data_tpl_id } = match_style_obj;
-  const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${data_tpl_id}_config`][`template_${data_tpl_id}`]
-  match.tpl_id = data_tpl_id;
-  // 其他玩法盘口列表
-  let other_handicap_list = clone_arr(match_tpl_info[cur_other_play])
-  // 波胆
-  if (cur_other_play == 'hpsBold') {
-    other_handicap_list = get_21_bold_template(match);
-  }
-  //5分钟
-  if (cur_other_play == 'hps5Minutes') {
-    other_handicap_list = get_5minutes_template(match);
-  }
-  if (!cur_other_play) {
-    other_handicap_list = clone_arr(match_tpl_info.hpsCorner)
-  }
-  // 4：15分钟玩法 1：其他玩法
-  let type = cur_other_play == 'hps15Minutes' ? 4 : 1
-  other_handicap_list = merge_template_data({ match, handicap_list: other_handicap_list, type, play_key: cur_other_play })
-  // coverage_match_data({ other_handicap_list }, mid)
-  // match.other_handicap_list = other_handicap_list
-  return other_handicap_list || []
-}
+
 
 
 /**

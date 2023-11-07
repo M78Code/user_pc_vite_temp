@@ -7,7 +7,7 @@
 <template>
   <div class="loading_wrap">
     <div class="loading_box">
-      <img :src="loading_img" alt="">
+      <img src="" alt="">
       <div>
         LOADING...
       </div>
@@ -16,7 +16,7 @@
 </template>
 
 <script setup>
-  import loading_img from 'src/assets/images/loading.gif';
+  // import loading_img from 'src/assets/images/loading.gif';
 
 </script>
 
