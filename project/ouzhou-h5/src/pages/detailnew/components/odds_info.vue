@@ -161,13 +161,13 @@ onMounted(() => {
     .odds-hpn-down-icon {
       width: 14px;
       height: 14px;
-      background: url('src/assets/images/detail/down.png') no-repeat center;
+      background: url($SCSSPROJECTPATH+"/image/detail/down.png") no-repeat center;  
     }
     .odds-hpn-up-icon {
       width: 14px;
       height: 14px;
       transform: rotate(180deg);
-      background: url('src/assets/images/detail/down.png') no-repeat center;
+      background: url($SCSSPROJECTPATH+"/image/detail/down.png") no-repeat center;
     }
   }
   .is-expend {
