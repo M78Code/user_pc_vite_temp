@@ -140,7 +140,6 @@ const different_version_config = {
  * @returns 返回出去对应的模板id
  */
 export const computed_menu_to_match_templte = (data_tpl_id) => {
-console.log('PROJECT_NAME', PROJECT_NAME);
 
   let default_template_value = 1;
   return menu_to_match_templte[data_tpl_id]?.value || default_template_value;

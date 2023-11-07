@@ -182,7 +182,7 @@ import { is_hot, menu_type, menu_lv2, is_detail, is_export, is_results, footer_m
 import default_mixin from '../../mixins/default.mixin.js'
 
 export default {
-  name: "match-container-main-template4",
+  name: "match-container-main-template3",
   mixins: [default_mixin],
   props: {
     // 当前组件的赛事数据对应列表的赛事

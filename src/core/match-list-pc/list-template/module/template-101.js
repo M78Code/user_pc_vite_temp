@@ -5,7 +5,7 @@ import * as TemplateCommon from "./template-common.js"
 
 
  // 欧洲版 足球 赔率模板 全量赔率
- export const template_2={
+ export const template_101={
   main_handicap_list: [
     {
       ols: [
@@ -45,7 +45,8 @@ import * as TemplateCommon from "./template-common.js"
 //   列表宽度计算模板
 export const  width_config ={
   ...TemplateCommon.width_config_template,
-  bet_col_count: 9
+  bet_col_count: 9,
+  team_width: 338,
 }
 
 

@@ -21,7 +21,8 @@
     /> -->
     <!-- v-else -->
     <!-- 常规竞猜 -->
-    <match-details-right  class="page-match-detail fit" />
+    <analysis></analysis>
+    <!-- <match-details-right  class="page-match-detail fit" /> -->
   </div>
   </div>
 </template>
@@ -29,7 +30,8 @@
 import { ref,onBeforeUnmount } from "vue";
 import store from "src/store-redux/index.js";
 import { useMittOn, MITT_TYPES } from "src/core/mitt";
-import matchDetailsRight  from "src/base-pc/components/match-details-right/match-details-right.vue"
+import analysis from '../pages/match-new-detail/analysis/index.vue'
+// import matchDetailsRight  from "src/base-pc/components/match-details-right/match-details-right.vue"
 import { LayOutMain_pc,MenuData } from "src/core/index.js";
 import { useRoute, useRouter } from "vue-router"
 // import virtualRight from "src/base-pc/components/virtual-right/virtual-right.vue";

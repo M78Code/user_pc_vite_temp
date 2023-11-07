@@ -6,6 +6,7 @@ import { ref } from 'vue';
 
 import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/core/index.js";
 import { get_match_status } from 'src/core/index.js'
+
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import { csid_to_tpl_id } from 'src/core/constant/util/csid-util.js'
 let other_play_current_play = {};
@@ -33,11 +34,14 @@ const clone_arr = (arr) => {
 */
 export function merge_template_data({ match, handicap_list, type, play_key }) {
   let length = handicap_list.length
-  let { all_ol_data = {}, hSpecial5min } = match
+  let { hSpecial5min, mid } = match
+  let hn_obj = lodash.get(MatchListData, 'list_to_obj.hn_obj');
+  let ol_obj = lodash.get(MatchListData, 'list_to_obj.ol_obj');
+
   handicap_list.forEach((col, col_index) => {
     col.ols.forEach((ol, ol_index) => {
       let handicap_type = 1
-      let { hn, _hpid, ot } = ol
+      let { hn, _hpid,  ot } = ol
       if (type == 4) {
         handicap_type = get_min15_handicap_type(length, match.hSpecial, col_index)
         //22号模板 足球-独赢 让球胜平负 附加盘 合并到主盘   hn = 2 | 3 附加盘编号
@@ -46,7 +50,8 @@ export function merge_template_data({ match, handicap_list, type, play_key }) {
       } else {
         handicap_type = type
       }
-      let ol_data = all_ol_data[`${match.mid}_${_hpid}_${handicap_type}_${ot}`]
+      // let ol_data1 = ol_obj[MatchListData.get_list_to_obj_key(mid, oid, "ol")]
+      let ol_data = hn_obj[MatchListData.get_list_to_obj_key(mid, `${mid}_${_hpid}_${handicap_type}_${ot}`, "hn")]
       if (ol_data) {
         //附加盘1
         if (type == 2) {
@@ -68,6 +73,7 @@ export function merge_template_data({ match, handicap_list, type, play_key }) {
   if ('hps5Minutes' == play_key && hSpecial5min == 5) {
     handicap_list = data_move_up(handicap_list)
   }
+  console.log('handicap_list', handicap_list)
   return handicap_list
 }
 /**
@@ -250,7 +256,7 @@ export const get_compute_other_play_data = (match) => {
   }
   // set_tab_play_keys(match)
   //当前选中玩法
-  let cur_other_play = get_play_current_play(mid)
+  let cur_other_play = get_play_current_play(match)
   let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(mid)
   const { data_tpl_id } = match_style_obj;
   const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${data_tpl_id}_config`][`template_${data_tpl_id}`]
@@ -356,15 +362,21 @@ export const get_tab_param_build = (mids) => {
   mids.forEach(mid => {
     let match = MatchListData.get_quick_mid_obj(mid)
     // 有其他玩法
-    if (match.has_other_play) {
+    if (match && get_has_other_play(match)) {
       // 添加玩法ID
       tabs.push({
         mid,
-        playId: other_play_name_to_playid[other_play_current_play[mid + '_']]
+        playId: other_play_name_to_playid[get_play_current_play(match)]
       })
     }
   })
   return tabs
+}
+/*是否有其他玩法*/
+export function get_has_other_play(match) {
+  if (!match) return false
+  const tab_play_keys = MatchListData.get_tab_play_keys(match)
+  return tab_play_keys && tab_play_keys.split(",").length > 0
 }
 /**
    * @Description 获取21号模板(波胆)
@@ -407,6 +419,7 @@ export function get_21_bold_template(match) {
   if (tpl_21_hpids?.includes(341)) {
     list_name = list_name.replace("20", "341")
   }
+  console.log('get_21_bold_template', MATCH_LIST_TEMPLATE_CONFIG.template_21_config.template_21[list_name])
   return clone_arr(MATCH_LIST_TEMPLATE_CONFIG.template_21_config.template_21[list_name])
 }
 /**
@@ -460,6 +473,6 @@ export const set_match_play_current_index = (match, play_key) => {
 
 
 //获取保存的盘口玩法
-export function get_play_current_play(mid) {
-  return other_play_current_play[mid + '_'];
+export function get_play_current_play(match) {
+  return other_play_current_play[match.mid + '_'] || MatchListData.get_tab_play_keys(match).split(",")[0];
 }

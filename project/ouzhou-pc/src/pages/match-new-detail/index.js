@@ -9,6 +9,7 @@
 import { ref, onMounted, watch, onUnmounted } from "vue";
 import { api_match_list } from "src/api";
 import { useRoute } from "vue-router";
+import {match_info,categoryList,matchDetail} from './mock'
 // import store from "src/store-redux-vuex/index.js";
 
 import { filter_odds_func, handle_course_data, format_mst_data } from './matches_list'
@@ -127,12 +128,13 @@ export function usedetailData() {
         t: new Date().getTime(),
       };
       detail_loading.value = true;
-      const res = await get_detail_data(params);
+      console.log(1111111111111,match_info)
+      // const res = await get_detail_data(params);
 
      
-      getMatchDetailList(res.data.data)
+      getMatchDetailList(match_info.data)
       detail_loading.value = false;
-      detail_info.value ={...detail_info.value,...res.data.data}
+      detail_info.value ={...detail_info.value,...match_info.data}
       detail_info.value['course'] = handle_course_data(detail_info.value);
       use_polling_mst(detail_info.value);
     } catch (error) {}
@@ -143,12 +145,12 @@ export function usedetailData() {
    */
     const getMatchDetailList = async (data) => {
       try {
-        const params = {
-          tId: data.tid,
-          t: new Date().getTime(),
-        };
-        const res = await getMatchDetailByTournamentId(params);
-        matchDetailList.value = res.data.data
+        // const params = {
+        //   tId: data.tid,
+        //   t: new Date().getTime(),
+        // };
+        // const res = await getMatchDetailByTournamentId(params);
+        matchDetailList.value = matchDetail.data
       //  console.log(1111111111111,res)
       } catch (error) {}
     };
@@ -187,9 +189,9 @@ export function usedetailData() {
         mid,
         t: new Date().getTime(),
       };
-      const res = await get_detail_category(params);
-      category_list.value = res.data.data || [];
-      const list = res.data.data.filter((i) => i.marketName);
+      // const res = await get_detail_category(params);
+      category_list.value =categoryList.data || [];
+      const list = categoryList.data.filter((i) => i.marketName);
 
       tabList.value = list.map((item) => ({
         label: item.marketName,
@@ -209,8 +211,8 @@ export function usedetailData() {
         newUser: 0,
         t: new Date().getTime(),
       };
-      const res = await get_detail_list(params);
-      all_list.value = res.data.data || [];
+      // const res = await get_detail_list(params);
+      all_list.value = matchDetail.data || [];
        all_list.value.forEach(item=>item.expanded = true)
       // detail_loading.value = false;
       current_key.value = current_key.value

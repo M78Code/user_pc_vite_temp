@@ -156,7 +156,8 @@ const bet_col = computed(() => {
   let bet_col = []
   //是否多列
   let multi_column = lodash.get(match_style_obj, 'data_tpl_id') == 13
-  let _play_current_key = lodash.get(match, 'play_current_key') || MatchListCardDataClass.list_version.value
+  let _play_current_key = get_play_current_play(match)
+  if (MatchListCardDataClass.list_version.value) { }
   // 5分钟玩法
   if (_play_current_key == 'hps5Minutes') {
     let hpid = 361
@@ -286,7 +287,7 @@ function set_play_name_list(tab_play_keys = '') {
   match.has_other_play = tab_play_keys.length > 0
   if (match.has_other_play) {
     // 当前选中的其他的玩法
-    let play_key = get_play_current_play(match.mid) || tab_play_keys[0]
+    let play_key = get_play_current_play(match)
     //玩法关闭时选择第一个
     if (!tab_play_keys.includes(play_key)) {
       play_key = tab_play_keys[0]

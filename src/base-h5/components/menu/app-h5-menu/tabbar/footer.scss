@@ -233,8 +233,10 @@
     }
 
     .item-img-wrapper {
-      width: 0.23rem;
-      height: 0.34rem;
+      width: 0.24rem;
+      height: 0.24rem;
+      margin-top: 0.04rem;
+      margin-bottom: 0.02rem;
       display: flex;
 
       span {
@@ -272,15 +274,16 @@
 
     &:first-child {
       .menu-item-img {
-        width: 0.2rem;
-        height: 0.2rem;
+        width: 0.24rem;
+        height: 0.24rem;
       }
     }
 
     .menu-item-img {
-      width: 0.2rem;
-      height: 0.2rem;
+      width: 0.24rem;
+      height: 0.24rem;
       display: block;
+
 
       &.setting-newstan-icon {
         width: 0.2rem !important;
@@ -333,6 +336,7 @@
       min-width: 0.45rem;
       color: var(--q-color-com-fs-color-2);
       font-size: 0.11rem;
+      line-height: 0.14rem;
       display: flex;
       justify-content: center;
     }
