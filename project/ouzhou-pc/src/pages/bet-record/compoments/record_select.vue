@@ -51,7 +51,8 @@
 
 <script setup>
 import { onMounted, ref, watch } from "vue";
-import { formatTime } from '../../../../public/utils/time_format'
+import { formatTime } from "src/core/format/index.js"
+
 
 const props = defineProps({
   current_tab: {
