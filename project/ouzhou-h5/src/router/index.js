@@ -156,21 +156,29 @@ const router = createRouter({
           //规则
           {
             path: "/rules",
-            name: "/rules",
+            name: "rules",
             component: () => import("../pages/rules/rules.vue"),
             meta: {
               keepAlive: true // 需要缓存
             },
           },
           //公告
+          // {
+          //   path: "/announcement",
+          //   name: "/announcement",
+          //   component: () => import("../pages/personal/announcement.vue"),
+          //   meta: {
+          //     keepAlive: true // 需要缓存
+          //   },
+          // }
           {
-            path: "/announcement",
-            name: "/announcement",
-            component: () => import("../pages/personal/announcement.vue"),
-            meta: {
-              keepAlive: true // 需要缓存
-            },
-          },
+              path: "/announcement",
+              name: "announcement",
+              component: () => import("../pages/personal/announcement.vue"),
+              meta: {
+                keepAlive: true // 需要缓存
+              },
+            }
       ],
     },
     {

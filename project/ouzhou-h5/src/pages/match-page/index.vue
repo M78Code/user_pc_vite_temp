@@ -1,8 +1,9 @@
 <template>
+  <tab-date />
   <!--赛事列表-->
   <div class="match-list-page">
-    <match-container />
-  </div>
+            <match-container />
+          </div>
 </template>
 <script setup>
 import { computed, onUnmounted, onMounted, watch, ref } from "vue";
@@ -11,8 +12,10 @@ import matchContainer from "src/base-h5/components/match-list/index.vue";
 import MatchPage from "src/core/match-list-h5/match-class/match-page.js";
 import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from 'src/core'
 import MatchListCard from "src/core/match-list-h5/match-card/match-list-card-class";
+import tabDate from './tab-date/tab-date.vue';
 const emitters = ref({});
 const matchCtr = ref(MatchDataBaseH5);
+const tabValue = ref('matches');
 onMounted(() => {
   // 不让浏览器记住上次的滚动位置
   if ("scrollRestoration" in History) {
@@ -54,7 +57,7 @@ onUnmounted(() => {
 /* ************** 赛事列表包装器 **************** -S */
 .match-list-page {
   width: 100%;
-  height: calc(100% - 50px - 56px);
+  height: calc(100% - 2.1rem);
   overflow-y: hidden;
   position: relative;
   .match-list-container{

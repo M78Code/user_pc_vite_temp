@@ -9,6 +9,5 @@ class MatchResponsive {
     this.init()
   }
   init () {
-    this.1
   }
 }
