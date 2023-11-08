@@ -93,7 +93,7 @@
           <basis-info4 v-if="is_mounted && match" :is_other_concede="true" :match="match" :is_show_score="true" />
         </div>
         <!-- 赛事盘口投注项 -->
-        <match-handicap v-if="match" :handicap_list="compute_other_play_data" :match="match" other_play />
+        <match-handicap v-if="match"  :handicap_list="compute_other_play_data" :match="match" other_play />
         <!-- 视频按钮 -->
         <div class="media-col"></div>
       </div>
@@ -149,7 +149,6 @@ watch(() => MatchListData.data_version.version, (new_value, old_value) => {
   compute_other_play_data = get_compute_other_play_data(match)
   match && set_play_name_list(MatchListData.get_tab_play_keys(match)) //其他玩法key
 })
-
 // 其他玩法标题
 const bet_col = computed(() => {
   let bet_col = []

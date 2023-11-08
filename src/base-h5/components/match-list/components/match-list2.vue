@@ -25,6 +25,13 @@
                   :match_of_list="match_item">
                 </MatchContainerMainTemplate3>
               </template>
+              <!-- 赛果玩法 -->
+              <template v-else-if="is_results && is_kemp">
+                <MatchContainerMainTemplate6
+                  :i="index" 
+                  :match_of_list="match_item">
+                </MatchContainerMainTemplate6>
+              </template>
               <!-- 真实体育玩法 -->
               <template v-else>
                 <MatchContainerMainTemplate1
@@ -57,6 +64,8 @@ import MatchContainerMainTemplate2 from "src/base-h5/components/match-container/
 import MatchContainerMainTemplate3 from "src/base-h5/components/match-container/template/app/match-container-main-template3.vue"; 
 // app-h5 新手版
 import MatchContainerMainTemplate5 from "src/base-h5/components/match-container/template/app/match-container-main-template5.vue"; 
+// app-h5 冠军赛果
+import MatchContainerMainTemplate6 from "src/base-h5/components/match-container/template/app/match-container-main-template6.vue"; 
 
 // 赛事滚动组件
 import ScrollWrapper from 'src/base-h5/components/scroll-wraper/scroll-wrapper.vue'; 

@@ -7,7 +7,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";
 // import websocket_data from "src/base-h5/mixins/websocket/data/skt_data_info.js";
 // 引入投注逻辑mixin
 // import betting from "src/base-h5/mixins/betting/betting.js";
-import {MatchDataWarehouse_H5_Detail_Common,format_plays, MatchDetailCalss} from "src/core/index"; 
+import {MatchDataWarehouse_H5_Detail_Common,format_plays, MatchDetailCalss,MenuData} from "src/core/index"; 
 // 引入redux
 import store from "src/store-redux/index.js";
 // import { Level_one_detail_odd_info } from "../category-list.js";
@@ -104,9 +104,7 @@ export const category_info = (category_arr=[]) => {
   const get_goto_detail_matchid = computed(() => {
     return "get_goto_detail_matchid";
   });
-  const get_menu_type = computed(() => {
-    return "get_menu_type";
-  });
+  const  get_menu_type=ref(lodash.get(MenuData,'top_menu_title.mi'))
   const get_uid = computed(() => {
     return "get_uid";
   });
@@ -291,7 +289,7 @@ export const category_info = (category_arr=[]) => {
     const { plays = [], round = "" } = findItme;
     const res = all_data.filter((item) => {
       // 电竞需要判断第一局和第二局的原因，需要加上chpid判断
-      if (get_menu_type == 3000) {
+      if (get_menu_type == 2000) {
         if (round) {
           return (
             plays.includes(+item.hpid) &&
@@ -355,7 +353,7 @@ export const category_info = (category_arr=[]) => {
     //赛果页面调用赛果玩法详情接口
     let http = ["result_details", "match_result"].includes(route.name)
       ? api_analysis.get_match_result
-      : get_menu_type.value == 3000
+      : get_menu_type.value == 2000
       ? api_common.get_DJ_matchDetail_getMatchOddsInfo
       : api_common.get_matchDetail_getMatchOddsInfo;
     component_data.send_gcuuid = UserCtr.uid
@@ -684,7 +682,7 @@ export const category_info = (category_arr=[]) => {
       // userId或者uuid
       cuid: get_uid,
       round:
-        get_menu_type == 3000
+        get_menu_type == 2000
           ? component_data.matchInfoCtr.category_arr &&
           component_data.matchInfoCtr.category_arr[get_subscript_game_index] &&
           component_data.matchInfoCtr.category_arr[get_subscript_game_index].round
@@ -706,7 +704,7 @@ export const category_info = (category_arr=[]) => {
     //赛果页面调用赛果玩法详情接口
     let http = ["result_details", "match_result"].includes(route.name)
       ? api_analysis.get_match_result
-      : get_menu_type == 3000
+      : get_menu_type == 2000
       ? api_common.get_DJ_matchDetail_getMatchOddsInfo
       : api_common.get_matchDetail_getMatchOddsInfo;
       component_data.send_gcuuid = UserCtr.uid;

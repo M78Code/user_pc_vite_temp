@@ -2,9 +2,7 @@
     <div class="top-header">
         <div class="top-header-left">
             <div class="top-header-left-img" @click="goBack()">
-                <!-- <div class="img" :style="compute_css_obj('menu-go-back-icon')"></div> -->
                 <img class="img" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/back.svg`" alt="" />
-                <!-- <span class="icon-arrow-left"></span> -->
             </div>
         </div>
         <div class="top-header-content">
@@ -16,7 +14,7 @@
     </div>
 </template>
 <script setup>
-import {compute_css_obj, MenuData,LOCAL_PROJECT_FILE_PREFIX } from "src/core/index.js";
+import { MenuData,LOCAL_PROJECT_FILE_PREFIX } from "src/core/index.js";
 
   /**
    * 初始化数据

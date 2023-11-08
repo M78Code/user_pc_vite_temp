@@ -39,7 +39,7 @@
 
           <!-- 搜索 -->
           <div class="top_info_search">
-            <input type="search" maxlength="15" placeholder="Search" @input="search_match" />
+            <input type="search" maxlength="15" placeholder="Search" @input="search_match" @focus="to_search_page" />
             <img src="./img/top_seach.png" alt="" />
           </div>
           <!-- 头像 -->
@@ -103,6 +103,10 @@ const is_rule_page = computed(() => {
 const search_match = (item) => {
   console.error(item);
 };
+
+const to_search_page = () => {
+  router.push('/search')
+}
 
 const jump_personal = () => {
   router.push('/personal')
