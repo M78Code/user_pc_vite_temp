@@ -34,31 +34,31 @@
 <script setup>
 import { ref, reactive, watch, onUnmounted } from 'vue'
 import lodash from 'lodash'
-import store from "src/store-redux/index.js";
+// import store from "src/store-redux/index.js";
 import { i18n_t ,compute_img_url} from "src/core/"
 
 /** api */
 import { api_account } from "src/api/index.js";
 
 /** stroe仓库 */
-const { menuReducer, themeReducer } = store.getState()
-const unsubscribe = store.subscribe(() => {
-    theme.value = themeReducer.theme
-    main_menu_toggle.value = menuReducer.main_menu_toggle
-})
+// const { menuReducer, themeReducer } = store.getState()
+// const unsubscribe = store.subscribe(() => {
+    // theme.value = themeReducer.theme
+    // main_menu_toggle.value = menuReducer.main_menu_toggle
+// })
 /** 销毁监听 */
 onUnmounted(unsubscribe)
 /** 
  * 左侧列表显示形式 normal：展开 mini：收起
 * 路径: project_path\src\store\module\menu.js
  */
-const main_menu_toggle = ref(menuReducer.main_menu_toggle)
+const main_menu_toggle = ref()
 
 /** 
 * 用户余额是否展示状态 default: day
 * 路径: src/base-pc/store/module/theme.js
 */
-const theme = ref(themeReducer.theme)
+const theme = ref()
 
 /**
  * 切换皮肤的时候重新启动计时器

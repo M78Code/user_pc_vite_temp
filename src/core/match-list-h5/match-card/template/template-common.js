@@ -174,6 +174,10 @@ export const set_template_width_base = (
 
 // yazhou-h5 赛事样式模板
 const match_style_template_yazhou = {
+  // 赛事阶段高度 （开赛、未开赛）
+  match_stage_height: 25,
+  // 球种标题高度
+  ball_title_height: 20,
   // 联赛标题高度
   show_league_height: 40,
   // 赛事标题高度
@@ -186,42 +190,38 @@ const match_style_template_yazhou = {
   tab_play_total_height: 111,
   // 是否需要动态计算高度
   is_dynamic_compute_height: false,
+  // 需要减去的缓冲容器高度， 避免 margin 导致的骨架图漏光； 作用： 使赛事之间想叠
+  reduce_buffer_height: 5
 }
 
 // app-h5 赛事样式模板
 const match_style_template_app = {
+  // 赛事阶段高度 （开赛、未开赛）
+  match_stage_height: 25,
+  // 球种标题高度
+  ball_title_height: 20,
   // 联赛标题高度
   show_league_height: 26,
   // 玩法标题高度
   playing_title_height: 20,
-  // 赛事标题高度
-  // match_title_height: 30,
   // 主盘口高度
   main_handicap_height: 132,
-  // 次要玩法标题高度
-  play_title_height: 0,
-  // 次要玩法盘口默认高度
-  tab_play_total_height: 0,
-  // 是否需要动态计算高度
-  is_dynamic_compute_height: false,
+  // 需要减去的缓冲容器高度， 避免 margin 导致的骨架图漏光； 作用： 使赛事之间想叠
+  reduce_buffer_height: 5
 }
 
 // ouzhou-h5 赛事样式模板
 const match_style_template_ouzhou = {
+  // 球种标题高度
+  ball_title_height: 50,
   // 联赛标题高度
-  show_league_height: 26,
+  show_league_height: 36,
   // 玩法标题高度
-  playing_title_height: 20,
-  // 赛事标题高度
-  // match_title_height: 30,
+  playing_title_height: 0,
   // 主盘口高度
-  main_handicap_height: 132,
-  // 次要玩法标题高度
-  play_title_height: 0,
-  // 次要玩法盘口默认高度
-  tab_play_total_height: 0,
-  // 是否需要动态计算高度
-  is_dynamic_compute_height: false,
+  main_handicap_height: 90,
+  // 因欧洲版不需要 margin 所以缓冲容器 为 0
+  reduce_buffer_height: 0
 }
 
 const template_config = {

@@ -17,13 +17,13 @@ const WebStorage = class WebStorage {
    * @param {*} storage
    */
   constructor({
-    prefixKey = "",
+    // prefixKey = "",
     storage = sessionStorage,
     timeout = null,
     hasEncrypt = false,
   }) {
     this.storage = storage;
-    this.prefixKey = prefixKey;
+    this.prefixKey = "TY_SDK_";
     this.encryption = {
       encryptByAES: (e) => e,
       decryptByAES: (e) => e,

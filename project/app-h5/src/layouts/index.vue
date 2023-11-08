@@ -319,7 +319,7 @@ if (UserCtr.get_user_token()) {
   }
 
   :deep(.q-drawer) {
-    width: 260px !important;
+    width: 260px;
   }
 
   .page_container {

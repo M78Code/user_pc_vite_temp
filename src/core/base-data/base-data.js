@@ -160,7 +160,7 @@ class BaseData {
       this.clear_menu_init_time();
       // 5分钟一次
       this.set_menu_init_time(3000000);
-    }, 4000);
+    }, 2000);
   }
 
   // 模拟数据推送 左侧菜单和顶部菜单 修改

@@ -1,5 +1,5 @@
 <template>
-    <navigation-bar centerContentType="switch" borderBottomNoShow>
+    <navigation-bar centerContentType="switch" borderBottomNoShow :goBackAssign="goBackAssign">
         <template v-slot:center>
             <div class="switch-box">
                 <div v-for="(item, index) in switchMenu" :key="'swtich-' + index" @click="switchHandle(index)"
@@ -104,6 +104,11 @@ const set_scroll_current = val => {
 const set_result_menu_api = () => {
     // 设置菜单对应源数据
     MatchMeta.get_results_match()
+}
+
+const goBackAssign = () => {
+    MenuData.set_top_menu_title({})
+    MenuData.set_init_menu_list()
 }
 
 onMounted(()=>{

@@ -288,7 +288,7 @@ function mounted_fn() {
 /**
  * // 处理服务器返回的 列表 数据   fetch_match_list
  */
-function handle_match_list_request_when_ok(data, is_socket, cut, collect) {
+export function handle_match_list_request_when_ok(data, is_socket, cut, collect) {
 	let {
 		match_list_api_config,
 		menu_root,
