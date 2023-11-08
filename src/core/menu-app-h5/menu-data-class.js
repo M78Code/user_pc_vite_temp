@@ -29,7 +29,8 @@ const menu_type_config = {
   400: 100,
   6: 11,
   2000: 3000,
-  50000: 50000
+  50000: 50000,
+  28:28,
 }
 
 class MenuData {
@@ -212,6 +213,7 @@ class MenuData {
     }
   }
 
+  // 设置 menu_types
   set_collect_menu_type (lv1_mi) {
     this.menu_type.value = menu_type_config[lv1_mi]  
   }

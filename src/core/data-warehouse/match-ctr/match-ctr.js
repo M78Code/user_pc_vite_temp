@@ -895,6 +895,7 @@ init(){
                         item3.ol.forEach(item4 => {
                           // 处理ot是小数的情况,进行数据修正
                           let ot = ''; 
+                          
                           if(item4.ot && item4.ot.includes('.')) {
                             ot = item4.ot.replace('.','-');
                           } else {
@@ -954,6 +955,9 @@ init(){
                         item3.ol.forEach(item4 => {
                           // 处理ot是小数的情况,进行数据修正
                           let ot = '';
+                          if(!item4){
+                            return
+                          }
                           if(item4.ot && item4.ot.includes('.')) {
                             ot = item4.ot.replace('.','-');
                           } else {
@@ -990,6 +994,162 @@ init(){
         }
       });
     }
+  }
+   /**
+   * @description: 获取将赛事详情非坑位对象,以便提高操作速度和效率
+   * @param {String} mid 赛事对象
+   * @param {Array} key_arr 需要获取的值key ["hpsBold","hpsOvertime"]等
+   * @return {undefined} undefined
+   */
+   get_match_to_map_obj(mid,key_arr){
+    const item= this.get_quick_mid_obj(mid)
+    let map_obj={}
+    if(item)
+    {
+      try {
+        // 需要解析的投注项赛事基础数据的路径
+        const hps_key_arr =key_arr?key_arr:
+        ['hps','hpsAdd','hpsData[0].hps','hpsData[0].hpsAdd',"hpsBold","hpsOvertime","hps15Minutes","hps5Minutes","hpsCorner","hpsPunish","hpsPenalty","hpsPromotion","hpsOutright","odds_info"];
+        // 角球开关----------------------hpsCorner
+        // 罚牌开关----------------------hpsPunish
+        // 冠军开关----------------------hpsOutright
+        // 晋级赛开关--------------------hpsPromotion
+        // 加时赛开关--------------------hpsOvertime
+        // 点球大战开关------------------hpsPenalty
+        // 15分钟开关--------------------hps15Minutes
+        // 5分钟开关 ----------------------hps5Minutes                              
+        // 波胆开关-----------------------hpsBold
+        // 主盘口------------------------hps
+        // 副盘口------------------------hpsAdd
+        // 赛事详情,所有投注数据----------odds_info
+
+        // 投注项赛事列表数据
+        let hps_data_arr = null
+        hps_key_arr.forEach(hps_key_str => {
+          // 设置投注项赛事列表数据
+          hps_data_arr = lodash.get(item, hps_key_str)
+          switch (hps_key_str) {
+            // 主玩副盘口数据时
+            case 'hpsData[0].hpsAdd':
+            case 'hps':
+            case 'hpsAdd':
+            // 赛事详情所有玩法数据时
+            case 'odds_info':
+              if (lodash.get(hps_data_arr, 'length') && Array.isArray(hps_data_arr)) {
+                // 遍历玩法数据
+                hps_data_arr.forEach(item2 => {
+                  if(!lodash.get(item2,'hsw')){
+                    item2.hsw = lodash.get(item,`play_obj.hpid_${item2.hpid}.hsw`);
+                  }
+                  // 检查是否有盘口数据
+                  if (lodash.get(item2,'hl.length')) {
+                    // 遍历盘口数据
+                    item2.hl.forEach(item3 => {
+                      if (item3) {
+                        if (item3.hid) {
+                          // 增加玩法信息到盘口级别
+                          item3.mid = item.mid;
+                          item3.hpid = item2.hpid;
+                          item3.hsw = item2.hsw;
+                        }
+                        if (lodash.get(item3, 'ol.length')) {
+                          // 遍历投注项数据
+                          item3.ol.forEach(item4 => {
+                            // 处理ot是小数的情况,进行数据修正
+                            let ot = ''; 
+                            if(item4.ot && item4.ot.includes('.')) {
+                              ot = item4.ot.replace('.','-');
+                            } else {
+                              ot = item4.ot;
+                            }
+                            // 设置坑位信息
+                            if(!item3.hn) {
+                            let _hn = `${item.mid}_${item2.hpid}_1_${ot}`;
+                              // 押注项设置盘口状态
+                              Object.assign(item4, {
+                                _hpid: item2.hpid,
+                                _hs: (item3.hs ? item3.hs : 0),
+                                _mhs: (item.mhs ? item.mhs : 0),
+                                _mid: item.mid,
+                                _hid: item3.hid,
+                                _hn,
+                                _hsw:item2.hsw,
+                                _hipo:item3.hipo,
+                                os:Object.hasOwnProperty.call(item4,'os')?item4.os:1,
+                              });
+                              // 快速查询对象hn_obj增加数据
+                              map_obj[this.get_list_to_obj_key(item.mid,_hn,'hn')] = item4;
+                            }
+                          });
+                        }
+                      }
+                    });
+                  }
+                });
+              }
+              break;
+            default:
+              if (lodash.get(hps_data_arr, 'length') && Array.isArray(hps_data_arr)) {
+                // 遍历玩法数据
+                hps_data_arr.forEach(item2 => {
+                  if(!lodash.get(item2,'hsw')){
+                    item2.hsw = lodash.get(item,`play_obj.hpid_${item2.hpid}.hsw`);
+                  }
+                  // 检查是否有盘口数据
+                  if (lodash.get(item2,'hl.ol.length')) {
+                    // if(item2.hl.ol.forEach(item3 => {
+                    if(lodash.get(item2,'hl')){
+                      let item3 = item2.hl;
+                      if (item3) {
+                        if (item3.hid) {
+                          // 增加玩法信息到盘口级别
+                          item3.mid = item.mid;
+                          item3.hpid = item2.hpid;
+                          item3.hsw = item2.hsw;
+                        }
+                        if (lodash.get(item3, 'ol.length')) {
+                          // 遍历投注项数据
+                          item3.ol.forEach(item4 => {
+                            // 处理ot是小数的情况,进行数据修正
+                            let ot = '';
+                            if(item4.ot && item4.ot.includes('.')) {
+                              ot = item4.ot.replace('.','-');
+                            } else {
+                              ot = item4.ot;
+                            }
+                            // 设置非坑位信息
+                            if(!item3.hn) {
+                            let _hn =`${item.mid}_${item2.hpid}_1_${ot}`;
+                              // 押注项设置盘口状态
+                            Object.assign(item4, {
+                              _hpid: item2.hpid,
+                              _hs: (item3.hs ? item3.hs : 0),
+                              _mhs: (item.mhs ? item.mhs : 0),
+                              _mid: item.mid,
+                              _hid: item3.hid,
+                              _hn,
+                              _hsw:item2.hsw,
+                              _hipo:item3.hipo,
+                              os:Object.hasOwnProperty.call(item4,'os')?item4.os:1,
+                            });
+                              // 快速查询对象hn_obj增加数据
+                              map_obj[this.get_list_to_obj_key(item.mid,_hn,'hn')] = item4;
+                            }
+                          });
+                        }
+                      }
+                    }
+                  }
+                });
+              } 
+              break;
+          }
+        });
+      } catch (error) {
+          console.error('get_match_to_map_obj',error)
+      }
+    }
+    return map_obj;
   }
   /**
    * @description: 赛事详情模块设置赛事信息数据
