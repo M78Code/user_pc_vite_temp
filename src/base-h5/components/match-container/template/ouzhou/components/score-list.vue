@@ -5,7 +5,7 @@
 <template>
   <div class="score-list">
     <template v-if="score_data.length > 0">
-      <span v-for="s in score_data" :key="s" :class="{active: active_score === `${match_info.id}${s.oid}` }">
+      <span v-for="s in score_data" :key="s" @click="bet_click(s)" :class="{active: active_score === `${match_info.id}${s.oid}` }">
         <span v-if="s.os === 1">{{ get_odd_os(s.ov) }}</span>
         <img v-else class="lock" :src="odd_lock_ouzhou" alt="lock">
       </span>
@@ -19,6 +19,7 @@
 <script setup>
 import { computed, ref } from 'vue'
 import { odd_lock_ouzhou } from 'src/base-h5/core/utils/local-image.js'
+import { compute_value_by_cur_odd_type } from "src/core/index.js"
 
 const props = defineProps({
   hpid: {
@@ -38,13 +39,16 @@ const score_data = computed(() => {
   const hps = props.match_info.hps
   const hps_item = hps.find(t => t.hpid == props.hpid)
   const ol = lodash.get(hps_item, 'hl[0].ol', [{}, {}, {}])
-  console.log(ol)
   return ol
 })
 
 // 显示的赔率
 const get_odd_os = (ov) => {
-  return ov && (ov / 100000).toFixed(2)
+  return  compute_value_by_cur_odd_type(ov,'','',props.match_info.csid)
+}
+
+const bet_click = (s) => {
+  active_score.value = `${props.match_info.id}${s.oid}`
 }
 
 </script>
@@ -54,7 +58,6 @@ const get_odd_os = (ov) => {
     display: flex;
     align-items: center;
     justify-items: center;
-    padding-left: 5px;
     width: 100%;
     span.active{
       color: #fff;
