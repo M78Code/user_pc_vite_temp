@@ -16,6 +16,7 @@
         </q-tab-panel>
         <!-- top Events page -->
         <q-tab-panel name="top_events">
+          <scroll-menu menu_type="1" :is_show_badge="false"  v-if="MenuData.menu_list.length" />
           top_events
         </q-tab-panel>
       </q-tab-panels>
@@ -25,6 +26,12 @@
  
 <script setup> 
 import { ref } from "vue";
+import { watch } from "vue";
+import scrollMenu from 'src/base-h5/components/top-menu/top-menu-ouzhou-1/scroll-menu/scroll-menu.vue';
+import { MenuData } from "src/core/index.js";
+watch(() => MenuData.update_time.value, () => {
+  console.log("菜单id-球类id-对应euid",`${MenuData.menu_type.value}-${MenuData.menu_mi.value}-${MenuData.get_euid()}`)
+})
 const tabValue = ref('featured');
 // tabs 切换
 const on_update = () => {
@@ -57,6 +64,7 @@ const on_update = () => {
       .q-tab__label{
         color: #8A8986;
         text-transform: capitalize;
+        font-weight: 600;
       }
       .q-tab--active .q-tab__label{
         color: #FF7000;

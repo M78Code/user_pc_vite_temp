@@ -112,7 +112,7 @@ const goBackHandle = () => {
 }
 
 onMounted(()=>{
-    MenuData.set_collect_menu_type(28)
+    MenuData.set_current_lv1_menu(28)
     switchHandle(0)
     useMittOn(MITT_TYPES.EMIT_SCROLL_TOP_NAV_CHANGE, set_scroll_current)
 })

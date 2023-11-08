@@ -17,7 +17,7 @@
         <div class="analysis-top">
           <div class="analysis-top-l">
             <!-- <div class="v-icon switch-icon"></div> -->
-            <sport_icon :sport_id="detail_info.csid" :status="false" size="18px" class="icon" style="margin:0 10px"/>
+            <!-- <sport_icon :sport_id="detail_info.csid" :status="false" size="18px" class="icon" style="margin:0 10px"/> -->
             <span class="analysis-top-txt">{{ detail_info.tn }}</span>
           </div>
           <div class="analysis-top-right">
@@ -26,8 +26,9 @@
           
           </div>
         </div>
-     
-        <animal_box v-if="animal_key"  :detail_info="detail_info" />
+        <!-- 动画 -->
+        <!-- <animal_box v-if="animal_key"  :detail_info="detail_info" /> -->
+        <!-- 比分 -->
         <score_info v-show="score_key" :score_list="score_list" :detail_info="detail_info" />
        
   
@@ -40,12 +41,18 @@
   import { onMounted, ref,computed,watch } from "vue";
   import animal_box from './animal_box.vue'
 
-  import score_info from './score_info.vue'
-  import animal from 'src/assets/images/video/animal.png'
-  import animal_active from 'src/assets/images/video/animal_active.png'
-  import score from 'src/assets/images/video/score.png'
-  import score_active from 'src/assets/images/video/score_active.png'
-  import sport_icon from "./sport_icon.vue";
+   import score_info from './score_info.vue'
+  import {LOCAL_PROJECT_FILE_PREFIX } from 'src/core/index.js';
+  // import animal from 'src/assets/images/video/animal.png'
+  // import animal_active from 'src/assets/images/video/animal_active.png'
+  // import score from 'src/assets/images/video/score.png'
+  // import score_active from 'src/assets/images/video/score_active.png'
+  // import sport_icon from "./sport_icon.vue";
+
+  const animal = `${LOCAL_PROJECT_FILE_PREFIX}/image/png/video/animal.png`
+  const animal_active = `${LOCAL_PROJECT_FILE_PREFIX}/image/png/video/animal_active.png`
+  const score = `${LOCAL_PROJECT_FILE_PREFIX}/image/png/video/score.png`
+  const score_active = `${LOCAL_PROJECT_FILE_PREFIX}/image/png/video/score_active.png`
   
   const props =  defineProps({
     detail_info: {  // 赛事详情
