@@ -5,7 +5,7 @@
 -->
 <template>
   <div class="record-head">
-    <img :src="settled" alt="" srcset="" class="record-bc" />
+    <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/image/settled.png`" alt="" srcset="" class="record-bc" />
     <div class="record-head-title">My Bets</div>
     <div class="tabs-wrap">
       <span v-for="item in tabList" :key="item.id" @click="tabClick(item)"
@@ -17,7 +17,6 @@
 
 <script setup>
 import { onMounted, ref,watch } from "vue";
-import settled from "src/assets/images/settled.png";
 const tab = ref('unsettled')
 const emits = defineEmits(['tab_change'])
 const active = ref('unsettled');
