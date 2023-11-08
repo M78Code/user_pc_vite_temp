@@ -15,6 +15,7 @@ import { lvs_icon_theme01, lvs_icon_theme02, animationUrl_icon_theme01,
   animationUrl_icon_theme02, muUrl_theme01, muUrl_theme01_y0, muUrl_theme02, muUrl_theme02_y0 } from 'src/base-h5/core/utils/local-image.js'
 
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
+import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 import { lang, standard_edition, theme } from 'src/base-h5/mixin/userctr.js'
 import { is_hot, menu_type, is_detail, is_results, menu_lv1 } from 'src/base-h5/mixin/menu.js'
 
@@ -216,7 +217,7 @@ export default {
     get_match_count () {
       const { csid, start_flag } = this.match_of_list
       const key = start_flag === 1 ? `progress_csid_${csid}` : `not_csid_${csid}`
-      return lodash.get(MatchMeta.ball_seed_count.value, `${key}`, 0)
+      return lodash.get(MatchResponsive.ball_seed_count.value, `${key}`, 0)
     },
     // 是否有角球
     get_corner_kick () {

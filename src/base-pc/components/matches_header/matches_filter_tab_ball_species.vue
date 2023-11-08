@@ -1,8 +1,8 @@
 <!--
  * @Author         : lane jstylane@itcom888.com
  * @Date           : 2023-07-15 19:17:42
- * @LastEditors: Please set LastEditors
- * @LastEditTime: 2023-07-17 18:21:02
+ * @LastEditors: lowen pmtylowen@itcom888.com
+ * @LastEditTime: 2023-11-08 19:21:01
  * @FilePath: \user-pc-vue3\src\components\matches_header\matches_filter_tab_ball_species.vue
  * @Description    : 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -54,7 +54,7 @@
 import { ref, onMounted, onBeforeUnmount } from "vue";
 import MatchListOuzhouClass from 'src/core/match-list-pc/match-ouzhou-list.js'
 import sport_icon from "src/base-pc/components/sport_icon.vue";
-import { use_base_data,useMenuI18n } from "src/base-pc/components/menus/base_data";
+import { use_base_data } from "src/base-pc/components/menus/base_data";
 import _ from "lodash"
 const { compute_sport_id,mi_euid_map_res } = use_base_data()
 

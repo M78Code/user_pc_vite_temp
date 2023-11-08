@@ -20,7 +20,7 @@
             <q-circular-progress indeterminate rounded size="80px" :thickness="0.1" color="opt-basic" class="q-ma-md" />
           </div>
           <div class="no-data">
-            <img :src="no_data" alt="" srcset="">
+            <img class="no-data-icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/no-data.svg`" alt="" srcset="">
             <div style="text-align: center;color:#A1A3A5;font-weight: 500;">No Data</div>
           </div>
         </template>
@@ -37,7 +37,7 @@
               }}</span>
               <div>
                 <span class="datails-order">{{ props.row.orderNo }}</span>
-                <img :src="bet_copy" alt="" class="copy_icon" title="copy" @click="hand_copy(props.row.orderNo)">
+                <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/image/bet_copy.png`"  alt="" class="copy_icon" title="copy" @click="hand_copy(props.row.orderNo)">
                 <!-- <img :src="bet_copy" alt="" class="copy_icon" title="copy"  @click="utils.copy(props.row.orderNo)" > -->
                 <!-- <i class="icon-icon_copy copy" color="red" @copy_iconclick="utils.copy(props.row.orderNo)"></i> -->
               </div>
@@ -74,15 +74,15 @@
             <!-- 投注额 -->
             <q-td key="totalStake" :props="props">
               <span>
-                {{ utils.format_balance(props.row.orderAmountTotal) }}</span>
+                {{ format_balance(props.row.orderAmountTotal) }}</span>
             </q-td>
             <!-- 最高可赢 -->
             <q-td key="highestWin" :props="props">
-              <span> {{ utils.format_balance(props.row.maxWinAmount) }}</span>
+              <span> {{ format_balance(props.row.maxWinAmount) }}</span>
             </q-td>
             <!-- 返回金额 return -->
             <q-td key="return" :props="props">
-              <span> {{ utils.format_balance(props.row.maxWinAmount) }}</span>
+              <span> {{ format_balance(props.row.maxWinAmount) }}</span>
             </q-td>
             <!-- 状态 -->
             <q-td key="status" :props="props">
@@ -93,9 +93,9 @@
       </q-table>
       <!--分页组件-->
 
-      <Pagination v-if="tableData.length > 0" class="record-pagination" :count="total" :betTotalAmount="40"
-        @pageChange="changePage(arguments)">
-      </Pagination>
+<!--      <Pagination v-if="tableData.length > 0" class="record-pagination" :count="total" :betTotalAmount="40"-->
+<!--        @pageChange="changePage(arguments)">-->
+<!--      </Pagination>-->
 
 
     </div>
@@ -105,14 +105,14 @@
 <script setup>
 import { onMounted, ref, watch } from "vue";
 import { useGetOrderList } from "./tableConfig";
-import { formatTime } from "src/public/utils/time_format";
-import { utils } from "src/public/utils/utils";
-import Pagination from "src/components/Pagination.vue";
-import football_icon from 'src/assets/images/football_icon.png'
-import no_data from 'src/assets/images/no_data.png'
-import bet_copy from 'src/assets/images/bet_copy.png'
-import sport_icon from "src/components/sport_icon.vue";
-import store from "src/store-redux-vuex/index.js";
+import { formatTime } from "src/core/format/index.js"
+import { UserCtr, format_balance, LOCAL_PROJECT_FILE_PREFIX } from 'src/core/index.js'
+// import Pagination from "src/components/Pagination.vue";
+// import football_icon from 'src/assets/images/football_icon.png'
+// import no_data from 'src/assets/images/no_data.png'
+// import bet_copy from 'src/assets/images/bet_copy.png'
+// import sport_icon from "src/components/sport_icon.vue";
+import store from "src/store-redux/index.js";
 
 const props = defineProps({
   current_tab: {
@@ -183,6 +183,10 @@ const hand_copy = (data) => {
 </script>
 
 <style lang="scss" scoped>
+.no-data-icon{
+  width: 200px;
+  height: 200px;
+}
 .record-table {
   position: relative;
   margin-top: 10px;
@@ -240,7 +244,7 @@ const hand_copy = (data) => {
 
   &:hover {
     &:before {
-      color: $basic-color;
+      color: #FF7000;
     }
   }
 }

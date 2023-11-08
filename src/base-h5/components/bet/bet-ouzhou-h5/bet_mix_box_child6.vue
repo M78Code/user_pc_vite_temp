@@ -8,8 +8,7 @@
 
       <div>
         <div class="nonebox4-content" v-for="(i, index) in 3" :key="index">
-          <div style="width:0.15rem">
-          <!-- <div>{{index}}</div> -->
+          <div class="nonebox4-content-xian">
             <div v-for="item in 4" :key="item" class="nonebox4-content-left-content-dian" :class="type == 2?'green-nei':type == 3?'red-nei':''" v-if="index>0"></div>
             <div class="nonebox4-content-left-content-xian" :class="index>0?'top0':''" v-if="type == 1">
               <div class="nonebox4-content-left-content-nei"></div>
@@ -55,6 +54,9 @@
   </script>
   
   <style lang="scss" scoped>
+  .nonebox4-content-xian{
+    width: 0.15rem;
+  }
   .nonebox4-content-left-content-dian{
     width: 2px;
     height: 2px;

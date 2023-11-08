@@ -249,6 +249,8 @@ import { i18n_t, compute_img_url, compute_css_obj  } from "src/core/index.js"
 import { format_time_zone } from "src/core/format/index.js"
 import { have_collect_ouzhou, no_collect_ouzhou} from 'src/base-h5/core/utils/local-image.js'
 
+import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
+
 import { lang, standard_edition, theme } from 'src/base-h5/mixin/userctr.js'
 import { is_hot, menu_type, menu_lv2, is_detail, is_export, is_results, footer_menu_id } from 'src/base-h5/mixin/menu.js'
 
@@ -285,13 +287,23 @@ export default {
     })
     // 玩法
     const get_match_panel = computed(() => {
-      return ['1', '4', '16'].includes(ctx.match_of_list.csid) ? ['1', 'X', '2'] : ['1', '2']
+      const hps = ctx.match_of_list.hps
+      const hpid = MatchResponsive.match_hpid.value
+      const hps_item = hps.find(t => t.hpid == hpid)
+      const ol = lodash.get(hps_item, 'hl[0].ol', [{}, {}, {}])
+      let target = []
+      if (ol.length === 3) {
+        target = ['1', 'X', '2']
+      } else {
+        target = ['1', '2']
+      }
+      return target
     })
     // 计算有玩法的hps
     const get_hps_play_data = () => {
       let target_hps = []
       const { csid } = ctx.match_of_list
-      target_hps = MatchMeta.ball_seed_play_methods.value[`hps_csid_${csid}`]
+      target_hps = MatchResponsive.ball_seed_play_methods.value[`hps_csid_${csid}`]
       hps_play_data.value = target_hps
     }
 
@@ -306,6 +318,7 @@ export default {
       console.log(item)
       // game.selectTitle = item.hpn
       select_play.value = item.hpid
+      MatchResponsive.set_match_hpid(item.hpid)
       // item.panel = handle_odds_data(item)
     }
 

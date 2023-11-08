@@ -2,7 +2,7 @@ import lodash from 'lodash'
 import BaseData from 'src/core/base-data/base-data.js'
 import MenuData from "src/core/menu-app-h5/menu-data-class.js"
 import PageSourceData from "src/core/page-source/page-source.js";
-import matchMeta from './match-meta';
+import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 
 class MatchUtils {
 
@@ -169,7 +169,7 @@ class MatchUtils {
     const csid_list = lodash.uniq(csids)
     csid_list.forEach(t => {
       const matchs = list.filter(list => list.csid === t)
-      matchMeta.set_ball_seed_count(`${key}_csid_${t}`, matchs.length)
+      MatchResponsive.set_ball_seed_count(`${key}_csid_${t}`, matchs.length)
     })
   }
 }

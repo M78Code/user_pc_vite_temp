@@ -8,14 +8,14 @@
  */
 import { ref, onMounted } from "vue";
 import { api_match_list } from "src/api";
-import store from "src/store-redux-vuex/index.js";
+import store from "src/store-redux/index.js";
 import { responseData } from "./mock";
 export function useGetOrderList() {
   const { get_order_list } = api_match_list; // 接口
 
   let state = store.getState();
 
-  const userInfo = state.userReducer.userInfo; // 用户数据
+  const userInfo = state.userReducer?.userInfo || {}; // 用户数据
   const tableData = ref([]);
   const total = ref(0)
   const loading = ref(false)
@@ -83,9 +83,13 @@ export function useGetOrderList() {
        let res = await get_order_list(params);
        tableData.value = res.data.data?.records||[]
      
-       total.value = res.data.data.total
-       loading.value = false
-    } catch (error) {}
+       total.value = res.data.data?.total
+    } catch (error) {
+      console.error(error);
+    } 
+    finally {
+      loading.value = false
+    }
   };
 
 
