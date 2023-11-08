@@ -20,7 +20,7 @@
     </div>
 </template>
 <script setup>
-import { i18n_t, compute_css_obj,MenuData } from "src/core/index.js";
+import { i18n_t, compute_css_obj } from "src/core/index.js";
 import { useRouter,useRoute } from "vue-router";
 
 defineOptions({
@@ -29,7 +29,7 @@ defineOptions({
 
 const router = useRouter();
 
-defineProps({
+const props = defineProps({
     centerContentType: {
         type: String,
         default: 'text' // switch (顶部菜单切换) select（顶部选择）都使用slot方式  text（顶部title） 使用直接展示
@@ -41,13 +41,18 @@ defineProps({
     borderBottomNoShow: {
         type: Boolean,
         default: false
+    },
+    goBackHandle: {
+        type: Function,
+        default: null
     }
 })
 
 const set_back = () => {
     router.back()
-    MenuData.set_top_menu_title({})
-    MenuData.set_init_menu_list()
+    if (props.goBackHandle !== null) {
+        props.goBackHandle()
+    }
 }
 
 </script>
