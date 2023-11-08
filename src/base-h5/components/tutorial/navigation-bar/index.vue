@@ -42,7 +42,7 @@ const props = defineProps({
         type: Boolean,
         default: false
     },
-    goBackHandle: {
+    goBackAssign: {
         type: Function,
         default: null
     }
@@ -50,8 +50,8 @@ const props = defineProps({
 
 const set_back = () => {
     router.back()
-    if (props.goBackHandle !== null) {
-        props.goBackHandle()
+    if (props.goBackAssign !== null) {
+        props.goBackAssign()
     }
 }
 
