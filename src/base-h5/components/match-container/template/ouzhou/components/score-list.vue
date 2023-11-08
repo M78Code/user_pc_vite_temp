@@ -5,7 +5,7 @@
 <template>
   <div class="score-list">
     <template v-if="score_data.length > 0">
-      <span v-for="s in score_data" :key="s" @click="bet_click(s)" :class="{active: active_score === `${match_info.id}${s.oid}` }">
+      <span v-for="s in score_data" :key="s" @click="set_old_submit(s)" :class="{active: active_score === `${match_info.id}${s.oid}` }">
         <span v-if="s.os === 1">{{ get_odd_os(s.ov) }}</span>
         <img v-else class="lock" :src="odd_lock_ouzhou" alt="lock">
       </span>
@@ -19,6 +19,7 @@
 <script setup>
 import { computed, ref } from 'vue'
 import { odd_lock_ouzhou } from 'src/base-h5/core/utils/local-image.js'
+import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js" 
 import { compute_value_by_cur_odd_type } from "src/core/index.js"
 
 const props = defineProps({
@@ -47,9 +48,29 @@ const get_odd_os = (ov) => {
   return  compute_value_by_cur_odd_type(ov,'','',props.match_info.csid)
 }
 
-const bet_click = (s) => {
+const set_old_submit = (ol) => {
   active_score.value = `${props.match_info.id}${s.oid}`
+  
+  const {oid,_hid,_hn,_mid } = ol
+        let params = {
+          oid, // 投注项id ol_obj
+          _hid, // hl_obj 
+          _hn,  // hn_obj
+          _mid,  //赛事id mid_obj
+        }
+        let other = {
+          is_detail: false,
+          // 投注类型 “vr_bet”， "common_bet", "guanjun_bet", "esports_bet"
+          // 根据赛事纬度判断当前赛事属于 那种投注类型
+          bet_type: 'common_bet',
+          // 设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备
+          device_type: 1,  
+          // 数据仓库类型
+          match_data_type: "h5_list",
+        }
+        set_bet_obj_config(params,other)
 }
+
 
 </script>
  

@@ -37,7 +37,7 @@ const routes = [
       //           }
       //       },
       {
-        path: "/details",
+        path: "/details/:mid/:tid/:csid",
         name: "details",
         component: () => import('../pages/match-new-detail/index.vue')
       },

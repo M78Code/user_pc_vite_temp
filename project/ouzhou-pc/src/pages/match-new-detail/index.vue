@@ -96,9 +96,12 @@ const expansion_ref = ref(null)
 const refresh_data = ref(false)
 
 
+console.log(route)
 
 
-const { tabList, detail_list, current_key, detail_loading, detail_info, sportId, all_hl_item, init, show_close_thehand, matchDetailList, current_id, refresh } = usedetailData()
+
+
+const { tabList, detail_list, current_key, detail_loading, detail_info, sportId, all_hl_item, init, show_close_thehand, matchDetailList, current_id, refresh } = usedetailData(route)
 
 
 provide('all_hl_item', all_hl_item)
