@@ -102,6 +102,7 @@ const compute_style_template_by_matchinfo_template0_zuqiu = (
 ) => {
 	// 是否显示角球、罚牌、点球大战等玩法
 	let is_show_tab_play = match.has_other_play;
+	console.log('has_other_play',is_show_tab_play)
 	// 角球、罚牌、点球大战等玩法 是否折叠
 	let is_fold_tab_play = lodash.get(
 		MatchListCardData.all_card_obj["mid_" + match.mid],
