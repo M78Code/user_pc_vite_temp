@@ -98,7 +98,9 @@
 
   onMounted(()=>{
     // init()
-    console.error(BaseData,"BaseData====")
+    console.error(left_menu_list,"left_menu_list====")
+    left_menu_list.value = BaseData.left_menu_base_mi_arr;
+    console.error(left_menu_list.value.length,"BaseData====")
   })
   
   // 监听左侧变化
@@ -134,29 +136,7 @@ const go_to_favouritse= () =>{
 
     let euid = (load_mapping[payload + '2'] || {}).h || ''
     let ealy_euid = (load_mapping[payload + '3'] || {}).h || ''
-
-    // 获取最新的 数据
-    let redux_menu = state
-    // 修改菜单数据
-    redux_menu.menu_root = 4
-    redux_menu.menu_left = payload
-
-    redux_menu.mid_tab_menu_type = ''
-
-    redux_menu.menu_id_euid = euid
-
-    redux_menu.menu_id_euid_ealy = ealy_euid
-    
-    // 存储
-    // store.dispatch({
-    //   type: 'SETREDUXMENU',
-    //   data: redux_menu
-    // })
-
-    router.push({
-      path: '/event_list',
-      query: {},
-    })
+    BaseData.compute_current_mi_match_list(payload)
   }
 
   onUnmounted(()=>{
