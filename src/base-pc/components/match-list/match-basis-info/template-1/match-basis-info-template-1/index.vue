@@ -24,7 +24,7 @@
         </div>
       </div>
       <!-- 主比分 -->
-      <div class="score" v-if="show_type == 'all'" v-tooltip="{content: is_15min ? i18n_t('list.15min_stage'):'' ,overflow:1}">{{  play_name_obj.score_key ? lodash.get(match,`msc_obj.${play_name_obj.score_key}.home`) : lodash.get(match, 'cur_score.home')}}</div>
+      <div class="score" v-if="show_type == 'all'" v-tooltip="{content: is_15min ? i18n_t('list.15min_stage'):'' ,overflow:1}">{{  play_name_obj.score_key ? lodash.get(match,`msc_obj.${play_name_obj.score_key}.home`) : lodash.get(match, 'home_score')}}</div>
     </div>
     <!-- 客队信息 -->
     <div class="row-item team-item">
@@ -58,7 +58,7 @@
         v-if="show_type == 'all'" 
         v-tooltip="{content: is_15min ? i18n_t('list.15min_stage'):'' ,overflow:1}"
       >
-        {{play_name_obj.score_key ?  lodash.get(match,`msc_obj.${play_name_obj.score_key}.away`) : lodash.get(match, 'cur_score.away')}}
+        {{play_name_obj.score_key ?  lodash.get(match,`msc_obj.${play_name_obj.score_key}.away`) : lodash.get(match, 'away_score')}}
       </div>
     </div>
     <!-- 中立场、盘口数 -->
