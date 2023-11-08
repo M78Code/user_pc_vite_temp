@@ -2,7 +2,7 @@
  * @Author: cooper cooper@123.com
  * @Date: 2023-07-09 16:21:30
  * @LastEditors: lowen pmtylowen@itcom888.com
- * @LastEditTime: 2023-11-08 16:53:40
+ * @LastEditTime: 2023-11-08 18:22:40
  * @FilePath: \user-pc-vue3\src\project-ouzhou\pages\detail\index.js
  * @Description: 详情页相关接口数据处理
  */
@@ -11,7 +11,7 @@ import { api_match_list } from "src/api";
 import { useRoute } from "vue-router";
 import {match_info,categoryList,matchDetail} from './mock'
 // import store from "src/store-redux-vuex/index.js";
-
+import {MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance,MenuData} from "src/core/index"; 
 import { filter_odds_func, handle_course_data, format_mst_data } from './matches_list'
 
 export function usedetailData() {
@@ -86,7 +86,8 @@ export function usedetailData() {
     detail_list.value = list ||[];
    
     show_close_thehand.value = list.length==0
-
+    //存取玩法集数据到数据仓库 MatchDataWarehouseInstance.get_quick_mid_obj(mid)获取存到数据仓库的基础详情数据
+    MatchDataWarehouseInstance.set_match_details(MatchDataWarehouseInstance.get_quick_mid_obj(mid),detail_list.value)
 
     setTimeout(() => {
       get_all_hl_item();
@@ -136,6 +137,8 @@ export function usedetailData() {
       detail_loading.value = false;
       detail_info.value ={...detail_info.value,...res.data}
       detail_info.value['course'] = handle_course_data(detail_info.value);
+      //存取赛事详情基础信息
+      MatchDataWarehouseInstance.set_match_details(detail_info.value,[])
       use_polling_mst(detail_info.value);
     } catch (error) {}
   };
