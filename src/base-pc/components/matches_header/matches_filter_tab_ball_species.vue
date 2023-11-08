@@ -36,7 +36,7 @@
     </div>
     <div class="prev-btn-box" v-show="show_left_btn" @click="filter_tab_scroll('prev')">
       <div class="prev-btn">
-        <img src="../../assets/images/tr_right_arrow.png" alt="">
+        <img src="../../../assets/images/tr_right_arrow.png" alt="">
       </div>
       <div class="shadow-box"></div>
     </div>
@@ -52,17 +52,16 @@
 
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from "vue";
-import store from '@/store-redux-vuex/redux_menu.js';
+import MatchListOuzhouClass from 'src/core/match-list-pc/match-ouzhou-list.js'
 import sport_icon from "src/base-pc/components/sport_icon.vue";
-import { use_base_data,useMenuI18n } from "src/components/menus/base_data";
+import { use_base_data,useMenuI18n } from "src/base-pc/components/menus/base_data";
 import _ from "lodash"
 const { compute_sport_id,mi_euid_map_res } = use_base_data()
 
 // 国际化
 const { data:menus_i18n_map } = useMenuI18n()
 
-let state = store.getState()
-const top_events = ref(state.menusReducer.redux_menu.in_play)
+const top_events = ref(MatchListOuzhouClass.redux_menu.in_play)
 
 let area_obj = null;
 let area_obj_wrap = null;
@@ -88,9 +87,8 @@ onMounted(() => {
     show_right_btn.value = true;
   }
   console.log('lockie_test_console', area_obj.scrollWidth);
-  state = store.getState()
-  top_events.value = state.menusReducer.redux_menu.in_play;
-  current_choose_tab.value = state.menusReducer.redux_menu.mid_tab_menu_type;
+  top_events.value = MatchListOuzhouClass.redux_menu.in_play;
+  current_choose_tab.value = MatchListOuzhouClass.redux_menu.mid_tab_menu_type;
 })
 
 // 监听左侧变化
@@ -110,16 +108,12 @@ const choose_filter_tab = payload => {
 
   current_choose_tab.value = payload;
 
-  state = store.getState()
   // 获取最新的 数据
-  let redux_menu = _.cloneDeep(state.menusReducer.redux_menu) 
+  let redux_menu = _.cloneDeep(MatchListOuzhouClass.redux_menu) 
   // 修改菜单数据  header tab切换对应的 
   redux_menu.mid_tab_menu_type = payload
   // 存储
-  store.dispatch({
-    type: 'SETREDUXMENU',
-    data: redux_menu
-  })
+  MatchListOuzhouClass.set_menu(redux_menu)
 
  
 };
