@@ -140,16 +140,31 @@
                 <!-- 右边盘口组件 -->
                 <!-- <odd-list-wrap :main_source="main_source" :match="match_of_list" /> -->
                 <!-- 右边赛果结构 -->
+                <template v-if="matchResultsData.length">
                   <div class="default-match-results-right">
                     <div class="dmrr-list" v-for="(item, index) in matchResultsData" :key="'dmrr'+index">
                       <div class="dmrr-item">
-                        <span class="dmrr-item-fail">{{item.home}}</span>
+                        <span>{{item.home}}</span>
                       </div>
                       <div class="dmrr-item">
-                        <span class="dmrr-item-fail">{{item.away}}</span>
+                        <span>{{item.away}}</span>
                       </div>
                     </div>
                   </div>
+                </template>
+                <template v-else>
+                  <div class="default-match-results-right">
+                    <div class="dmrr-list" v-for="(item, index) in 3" :key="'dmrr'+index">
+                      <div class="dmrr-item">
+                        <span>-</span>
+                      </div>
+                      <div class="dmrr-item">
+                        <span>-</span>
+                      </div>
+                    </div>
+                  </div>
+                </template>
+                  
 
                 </div>
               </div>
