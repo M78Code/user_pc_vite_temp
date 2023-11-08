@@ -82,7 +82,7 @@ const expend_toggle = (item) => {
   }
 }
 const bet_click_ = (data) => {
-  active.value = data.ol.oid;
+  active.value = +data.ol.oid;
   // console.log("data", data);
   storage_bet_info({
     payload: {
