@@ -20,7 +20,6 @@
                             <div class="nonebox4-content-right-profit">{{compute_value_by_cur_odd_type(items.odds,'','',items.sportId)}}</div>
                             <div v-if="type == 2" class="content-right-duo"></div>
                             <div v-else-if="type == 3" class="content-right-shao"></div>
-                            <div class="nonebox4-content-right-profit">123</div>
                         </div>
                     </div>
                   </div>
