@@ -8,7 +8,7 @@
  */
 
 import { api_base_data } from "src/api/index.js";
-import useSWRV from 'swrv'
+// import useSWRV from 'swrv'
 import _ from "lodash"
 
 import { ref, computed, defineComponent, onMounted } from "vue";
@@ -89,12 +89,12 @@ const init_base_menu_il8n = async () => {
 }
 
 export const useMenuData = () => {
-  const { data, error } = useSWRV('/yewu11/v3/menu/init', init_mew_menu_list, { refreshInterval: 5000 })
+  // const { data, error } = useSWRV('/yewu11/v3/menu/init', init_mew_menu_list, { refreshInterval: 5000 })
   return { data, error }
 }
 
 export const useMenuI18n = () => {
-  const { data, error } = useSWRV('/yewu11/v3/menu/loadNameList', init_base_menu_il8n, { refreshInterval: 5000 })
+  // const { data, error } = useSWRV('/yewu11/v3/menu/loadNameList', init_base_menu_il8n, { refreshInterval: 5000 })
   return { data, error }
 }
 
