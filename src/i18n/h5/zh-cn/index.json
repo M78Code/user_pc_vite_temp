@@ -987,6 +987,15 @@
     "total_pp_score_count": "总分",
     "water_polo_countdown": "小于S%分钟"
   },
+  "match_results_title": {
+    "1": {
+      "title": [
+        "全场",
+        "上半场",
+        "下半场"
+      ]
+    }
+  },
   "list_title": {
     "1": {
       "title": [

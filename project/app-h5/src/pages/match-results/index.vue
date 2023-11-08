@@ -56,6 +56,8 @@ const switchHandle = val => {
     state.currentSwitchValue = val
 
     MenuData.set_result_menu_lv1_mi(val)
+    // MenuData.set_current_lv1_menu(val)
+
     //获取 赛果菜单
     api_analysis.get_match_result_menu( {menuType:val} ).then( ( res = {} ) => {
         if(res.code == 200){
