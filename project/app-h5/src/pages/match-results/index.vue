@@ -12,7 +12,6 @@
             <div class="right-icon" @click="state.select_dialog = true"></div>
         </template>
     </navigation-bar>
-
     <div class="slide-box">
         <div v-for="(item, index) in state.slideMenu" @click="slideHandle(item,$event)" :class="['slide-item', state.currentSlideValue == item.field1 &&
             'slide-item-active']" :key="'slide-' + index">
@@ -37,6 +36,7 @@ import matchContainer from "src/base-h5/components/match-list/index.vue";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import { api_analysis } from "src/api/"
 import { useMittOn,MITT_TYPES,MenuData } from "src/core/"
+import { M } from 'licia/moment';
 
 const inner_height = window.innerHeight;  // 视口高度
 const switchMenu = ['普通赛果', '冠军赛果']
@@ -106,6 +106,7 @@ const set_result_menu_api = () => {
 }
 
 onMounted(()=>{
+    MenuData.set_collect_menu_type(28)
     switchHandle(0)
     useMittOn(MITT_TYPES.EMIT_SCROLL_TOP_NAV_CHANGE, set_scroll_current)
 })
