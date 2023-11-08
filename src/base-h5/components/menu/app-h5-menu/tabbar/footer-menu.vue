@@ -18,7 +18,7 @@
 <script setup>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import { LOCAL_PROJECT_FILE_PREFIX,i18n_t,useMittEmit,MITT_TYPES,MenuData } from "src/core/index.js";
+import { LOCAL_PROJECT_FILE_PREFIX,i18n_t,useMittEmit,MITT_TYPES } from "src/core/index.js";
 // 路由
 const router = useRouter();
 
@@ -61,7 +61,6 @@ const menu_item_click = (item = {}) => {
 
     // 赛果
     case 1:
-      MenuData.set_collect_menu_type(28)
       router.push( {name: item.path_name } );
       break;
 

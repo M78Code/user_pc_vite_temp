@@ -1,13 +1,13 @@
-import PlayMatchType from "../play-match-type-template-1/index.vue";
-import PlayMatchType_2 from "../play-match-type-template-2/index.vue";
+import PlayMatchLeague from "../play-match-league/index.vue";
+import PlayMatchLeague_2 from "../play-match-league-1/index.vue";
 import { compute_component_wapper_config } from "app/job/use-output/index.js";
 const all_components_obj = {
-  PlayMatchType,
-  PlayMatchType_2
+  PlayMatchLeague,
+  PlayMatchLeague_2,
 };
 const component_config = {
-  registered_component_key: "PlayMatchType",
-  default_component_key: "PlayMatchType",
+  registered_component_key: "PlayMatchLeague",
+  default_component_key: "PlayMatchLeague",
   all_components_obj,
 };
 const wapper_config = compute_component_wapper_config(component_config);

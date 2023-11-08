@@ -40,7 +40,7 @@
                   <span class="match-detail-head-name m-10">v</span>
                   <span class="home-vs-away">{{ detail_info.man }}</span>
                 </div>
-                <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/down_arrow_fold.png`" alt="" srcset="" class="expand-icon">
+                <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/down_arrow.png`" alt="" srcset="" class="expand-icon">
               </div>
             </template>
             <q-card class="match-name-list">

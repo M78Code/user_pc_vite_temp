@@ -4,7 +4,7 @@
 <template>
     <div class="navigation-bar" :style="{borderBottomColor: borderBottomNoShow && 'transparent'}">
         <div class="navigation-bar-left">
-            <div class="navigation-bar-close" @click="router.back()">
+            <div class="navigation-bar-close" @click="set_back">
                 <div class="img" :style="compute_css_obj('menu-go-back-icon')"></div>
             </div>
         </div>
@@ -20,7 +20,7 @@
     </div>
 </template>
 <script setup>
-import { i18n_t, compute_css_obj } from "src/core/index.js";
+import { i18n_t, compute_css_obj,MenuData } from "src/core/index.js";
 import { useRouter,useRoute } from "vue-router";
 
 defineOptions({
@@ -43,6 +43,13 @@ defineProps({
         default: false
     }
 })
+
+const set_back = () => {
+    router.back()
+    MenuData.set_top_menu_title({})
+    MenuData.set_init_menu_list()
+}
+
 </script>
 <style scoped lang="scss">
 // 组件样式
