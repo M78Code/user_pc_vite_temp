@@ -278,19 +278,19 @@ onMounted(() => {
       }
     }
     .dianqiu {
-      background: url('src/assets/images/detail/dianqiu.png');
+      background: url($SCSSPROJECTPATH+"/image/detail/dianqiu.png");
     }
     .hongpai {
-      background: url('src/assets/images/detail/hongpai.png');
+      background: url($SCSSPROJECTPATH+"/image/detail/hongpai.png");
     }
     .huangpai {
-      background: url('src/assets/images/detail/huangpai.png');
+      background: url($SCSSPROJECTPATH+"/image/detail/huangpai.png");
     }
     .jiaoqiu {
-      background: url('src/assets/images/detail/jiaoqiu.png');
+      background:url($SCSSPROJECTPATH+"/image/detail/jiaoqiu.png");
     }
     .shangbanchang {
-      background: url('src/assets/images/detail/shangbanchang.png');
+      background:  url($SCSSPROJECTPATH+"/image/detail/shangbanchang.png");
     }
     .score-icon {
       display: inline-block;
