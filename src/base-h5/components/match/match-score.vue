@@ -15,10 +15,10 @@
     v-cloak
   >
     <!-- component 自定义标签:动态绑定组件,根据数据的不同更换不同的组件 'is' 关键字用来动态切换组件 -->
-    <component
+    <!-- <component
       :is="componentId"
       :detail_data="detail_data"
-    ></component>
+    ></component> -->
 
   </div>
 </template>

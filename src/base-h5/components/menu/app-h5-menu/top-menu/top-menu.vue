@@ -20,11 +20,11 @@
         
         <div class="main-wrap flex" v-else>
             <!--  返回按鈕  -->
-            <slot name="menu-left">
+            <!-- <slot name="menu-left">
                 <div class="goback-icon-wrapper column justify-center" @click="router.back()">
                     <img class="img" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/back.svg`" alt="" />
                 </div>
-            </slot>
+            </slot> -->
            
             <div class="main-menu-container">
                 <template v-for="(item, index) in menu_list" :key="lodash_.get(item, 'code')">

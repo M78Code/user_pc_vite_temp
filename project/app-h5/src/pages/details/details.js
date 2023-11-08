@@ -8,7 +8,7 @@ import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-c
 // import { Level_one_category_list, Level_one_detail_data } from "./category-list.js";
 import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch, nextTick, ref, onBeforeMount } from "vue";
 import UserCtr from "src/core/user-config/user-ctr.js";
-import { MatchDataWarehouse_H5_Detail_Common, MatchDetailCalss ,LOCAL_PROJECT_FILE_PREFIX} from "src/core/index";
+import { MatchDataWarehouse_H5_Detail_Common, MatchDetailCalss ,LOCAL_PROJECT_FILE_PREFIX,MenuData} from "src/core/index";
 import { SessionStorage } from "src/core/utils/index.js"
 
 export const details_main = () => {
@@ -128,7 +128,7 @@ const route = useRoute();
     // 设置玩法集固定
     get_tab_fix: "get_tab_fix",// TODO: 待处理
     // 赛果标识
-    get_menu_type: "",
+    get_menu_type:lodash.get(MenuData,'top_menu_title.mi'),
     // 获取列表页当前选中时间
     get_current_menu: "get_current_menu",// TODO: 待处理
     // 是否从直播进入详情
@@ -491,7 +491,7 @@ watch(() => MatchDataWarehouseInstance.data_version.version, () => {
    */
   const get_match_details = (params) => {
     let api =
-      state_data.get_menu_type == 3000
+      state_data.get_menu_type == 2000
         ? api_common.get_DJ_matchDetail_MatchInfo
         : api_common.get_matchDetail_MatchInfo;
     api(params)
@@ -593,7 +593,7 @@ watch(() => MatchDataWarehouseInstance.data_version.version, () => {
         state_data.math_list_data = store_data.list;
       }
     }
-    if (state_data.get_menu_type == 3000) {
+    if (state_data.get_menu_type == 2000) {
       Object.assign(params, { isESport: 1 });
     }
     /**
