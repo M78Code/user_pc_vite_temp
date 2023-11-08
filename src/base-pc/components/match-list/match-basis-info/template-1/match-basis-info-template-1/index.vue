@@ -1,100 +1,97 @@
 <template>
-  <div class="basic-wrap" @click.stop="details.on_go_detail(match,null,router)" >
-    <!-- 主队信息 --> 
+  <div class="basic-wrap" @click.stop="details.on_go_detail(match, null, router)">
+    <!-- 主队信息 -->
     <div class="row-item team-item">
       <div class="team-logo">
-        <img v-if="show_type == 'all'" style="width: 22px; max-height: 24px;" v-img="[((lodash.get(match, 'match_logo') || {}) || {}).home_1_logo,(lodash.get(match, 'match_logo') || {}).home_1_letter]" />
+        <img v-if="show_type == 'all'" style="width: 22px; max-height: 24px;"
+          v-img="[((lodash.get(match, 'match_logo') || {}) || {}).home_1_logo, (lodash.get(match, 'match_logo') || {}).home_1_letter]" />
       </div>
       <div class="ellipsis-wrap">
         <div class="row no-wrap absolute-full">
-          <div class="team-name home ellipsis allow-user-select" :class="{'bold':lodash.get(match, 'team_let_ball')=='T1'}" v-tooltip="{content:lodash.get(match, 'mhn')+play_name_obj.suffix_name,overflow:1}">
-            {{lodash.get(match, 'mhn')}}{{play_name_obj.suffix_name}}
+          <div class="team-name home ellipsis allow-user-select"
+            :class="{ 'bold': lodash.get(match, 'team_let_ball') == 'T1' }"
+            v-tooltip="{ content: lodash.get(match, 'mhn') + play_name_obj.suffix_name, overflow: 1 }">
+            {{ lodash.get(match, 'mhn') }}{{ play_name_obj.suffix_name }}
           </div>
           <!-- 进球动画 -->
           <div class="yb-flex-center" v-if="is_show_home_goal">
             <div class="yb-goal-gif"></div>
-            <div class="gif-text">{{i18n_t('common.goal')}}</div>
+            <div class="gif-text">{{ i18n_t('common.goal') }}</div>
           </div>
           <!-- 红牌数 -->
-          <span
-            v-show="lodash.get(match, 'msc_obj.S11.home')> 0"
-            class="red-ball"
-            :class="{flash:is_show_home_red}"
-          >{{lodash.get(match, 'msc_obj.S11.home')}}</span>
+          <span v-show="lodash.get(match, 'msc_obj.S11.home') > 0" class="red-ball"
+            :class="{ flash: is_show_home_red }">{{ lodash.get(match, 'msc_obj.S11.home') }}</span>
         </div>
       </div>
       <!-- 主比分 -->
-      <div class="score" v-if="show_type == 'all'" v-tooltip="{content: is_15min ? i18n_t('list.15min_stage'):'' ,overflow:1}">{{  play_name_obj.score_key ? lodash.get(match,`msc_obj.${play_name_obj.score_key}.home`) : lodash.get(match, 'cur_score.home')}}</div>
+      <div class="score" v-if="show_type == 'all'"
+        v-tooltip="{ content: is_15min ? i18n_t('list.15min_stage') : '', overflow: 1 }">
+        {{ play_name_obj.score_key ? lodash.get(match, `msc_obj.${play_name_obj.score_key}.home`) : scroe_list[0] }}</div>
     </div>
     <!-- 客队信息 -->
     <div class="row-item team-item">
       <div class="team-logo">
-        <img v-if="show_type == 'all'" style="width: 22px; max-height: 24px;" v-img="[(lodash.get(match, 'match_logo') || {}).away_1_logo,(lodash.get(match, 'match_logo') || {}).away_1_letter]" />
+        <img v-if="show_type == 'all'" style="width: 22px; max-height: 24px;"
+          v-img="[(lodash.get(match, 'match_logo') || {}).away_1_logo, (lodash.get(match, 'match_logo') || {}).away_1_letter]" />
       </div>
       <div class="ellipsis-wrap">
         <div class="row no-wrap absolute-full">
-          <div 
-            class="team-name away ellipsis allow-user-select" 
-            :class="{'bold':lodash.get(match, 'team_let_ball')=='T2'}" 
-            v-tooltip="{content:lodash.get(match,'man')+play_name_obj.suffix_name,overflow:1}"
-          >{{lodash.get(match, 'man')}}{{play_name_obj.suffix_name}}</div>
+          <div class="team-name away ellipsis allow-user-select"
+            :class="{ 'bold': lodash.get(match, 'team_let_ball') == 'T2' }"
+            v-tooltip="{ content: lodash.get(match, 'man') + play_name_obj.suffix_name, overflow: 1 }">{{
+              lodash.get(match,
+                'man') }}{{ play_name_obj.suffix_name }}</div>
           <!-- 进球动画 -->
           <div class="yb-flex-center" v-if="is_show_away_goal">
             <div class="yb-goal-gif"></div>
-            <div class="gif-text">{{i18n_t('common.goal')}}</div>
+            <div class="gif-text">{{ i18n_t('common.goal') }}</div>
           </div>
           <!-- 红牌数 -->
-          <span
-            v-show="lodash.get(match, 'msc_obj.S11.away') > 0"
-            class="red-ball"
-            :class="{flash:is_show_away_red}"
-          >{{lodash.get(match, 'msc_obj.S11.away')}}</span>
+          <span v-show="lodash.get(match, 'msc_obj.S11.away') > 0" class="red-ball"
+            :class="{ flash: is_show_away_red }">{{ lodash.get(match, 'msc_obj.S11.away') }}</span>
         </div>
       </div>
       <!-- 主比分 -->
-      <div 
-        class="score" 
-        :key="lodash.get(match, 'mid')" 
-        v-if="show_type == 'all'" 
-        v-tooltip="{content: is_15min ? i18n_t('list.15min_stage'):'' ,overflow:1}"
-      >
-        {{play_name_obj.score_key ?  lodash.get(match,`msc_obj.${play_name_obj.score_key}.away`) : lodash.get(match, 'cur_score.away')}}
+      <div class="score" :key="lodash.get(match, 'mid')" v-if="show_type == 'all'"
+        v-tooltip="{ content: is_15min ? i18n_t('list.15min_stage') : '', overflow: 1 }">
+
+        {{ play_name_obj.score_key ? lodash.get(match, `msc_obj.${play_name_obj.score_key}.away`) : scroe_list[1] }}
       </div>
     </div>
     <!-- 中立场、盘口数 -->
-    <div class="row-item match-icon" v-if="show_type == 'all' ">
-       <!-- 提前结算 -->
-       <div @click.stop="">
-         <div
-          v-if="lodash.get(match, 'mearlys', 0) && match_style_obj.data_tpl_id != 12"
-          class="icon-wrap settlement-pre relative-position"
-          v-tooltip="{content: i18n_t('bet_record.settlement_pre')}"
-        >
-          <img class="match_pre" :src="compute_local_project_file_path('/image/png/match_pre.png')"/>
+    <div class="row-item match-icon" v-if="show_type == 'all'">
+      <!-- 提前结算 -->
+      <div @click.stop="">
+        <div v-if="lodash.get(match, 'mearlys', 0) && match_style_obj.data_tpl_id != 12"
+          class="icon-wrap settlement-pre relative-position" v-tooltip="{ content: i18n_t('bet_record.settlement_pre') }">
+          <img class="match_pre" :src="compute_local_project_file_path('/image/png/match_pre.png')" />
         </div>
-       </div>
-       <div class="more-info flex">
-          <!-- 中立场 -->
-          <div class="neutral-wrap">
-            <span v-if="lodash.get(match, 'mng')"   class="icon-neutral q-icon c-icon"><span class="path1"></span><span class="path2"></span></span>
-          </div>
-          <!-- 是否收藏 -->
-         
-          <span @click.stop="collect" class="yb-flex-center yb-hover-bg m-star-wrap-match" v-if="GlobalAccessConfig.get_collectSwitch()">
-            <i aria-hidden="true" class="icon-star q-icon c-icon" :class="is_collect && 'active'"></i>
+      </div>
+      <div class="more-info flex">
+        <!-- 中立场 -->
+        <div class="neutral-wrap">
+          <span v-if="lodash.get(match, 'mng')" class="icon-neutral q-icon c-icon"><span class="path1"></span><span
+              class="path2"></span></span>
+        </div>
+        <!-- 是否收藏 -->
+
+        <span @click.stop="collect" class="yb-flex-center yb-hover-bg m-star-wrap-match"
+          v-if="GlobalAccessConfig.get_collectSwitch()">
+          <i aria-hidden="true" class="icon-star q-icon c-icon" :class="is_collect && 'active'"></i>
+        </span>
+        <!-- 统计分析 -->
+        <div class="sr-link-icon-w" v-tooltip="{ content: i18n_t('common.analysis') }" v-if="utils.is_show_sr_flg(match)"
+          @click.stop='details.sr_click_handle(match)'>
+          <i aria-hidden="true" class="icon-signal q-icon c-icon"></i>
+        </div>
+        <!-- 玩法数量 -->
+        <div class="play-count-wrap row no-wrap">
+          <span class="play-count">{{ handicap_num }}</span>
+          <span class="yb-flex-center">
+            <div class="yb-icon-arrow"></div>
           </span>
-          <!-- 统计分析 -->
-          <div class="sr-link-icon-w" v-tooltip="{content:i18n_t('common.analysis')}" v-if="utils.is_show_sr_flg(match)" @click.stop='details.sr_click_handle(match)'>
-            <i aria-hidden="true" class="icon-signal q-icon c-icon"></i>
-          </div>
-          <!-- 玩法数量 -->
-          <div class="play-count-wrap row no-wrap">
-            <span class="play-count">{{ handicap_num }}</span>
-            <span class="yb-flex-center">
-              <div class="yb-icon-arrow"></div>
-            </span>
-          </div>
-       </div>
+        </div>
+      </div>
     </div>
 
   </div>
@@ -104,34 +101,34 @@
 
 import { computed, ref, watch, onUnmounted } from 'vue';
 import lodash from 'lodash'
-import  { useRegistPropsHelper } from "src/composables/regist-props/index.js"
-import {component_symbol ,need_register_props} from "../config/index.js"
+import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
+import { component_symbol, need_register_props } from "../config/index.js"
 import { get_match_status } from 'src/core/utils/index'
 import { get_remote_time } from 'src/core/utils/module/match-list-utils.js';
 import { utils } from 'src/core/utils/module/utils.js'
-import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
+import GlobalAccessConfig from "src/core/access-config/access-config.js"
 import { MenuData, MatchDataWarehouse_PC_List_Common } from "src/core/index.js"
-import details  from "src/core/match-list-pc/details-class/details.js"
+import details from "src/core/match-list-pc/details-class/details.js"
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
-import { i18n_t,compute_local_project_file_path } from "src/core/index.js";
+import { i18n_t, compute_local_project_file_path } from "src/core/index.js";
 import { useRouter } from "vue-router";
 const router = useRouter()
 const props = defineProps({
   match: {
     type: Object,
-    default: () => {}
+    default: () => { }
   },
   show_type: {
     type: String,
     default: () => ''
   },
-  is_15min:{
-    type:Boolean,
-    default:false
+  is_15min: {
+    type: Boolean,
+    default: false
   },
   is_show_more: {
-    type:Boolean,
-    default:false
+    type: Boolean,
+    default: false
   }
 })
 
@@ -145,23 +142,55 @@ const is_collect = ref(false) //赛事是否收藏
 let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(lodash.get(props, 'match.mid'))
 
 const handicap_num = computed(() => {
-  if(GlobalAccessConfig.get_handicapNum()){
-    return `+${ lodash.get(props, 'match.mc') || 0}`
-  }else{
+  if (GlobalAccessConfig.get_handicapNum()) {
+    return `+${lodash.get(props, 'match.mc') || 0}`
+  } else {
     return i18n_t('match_info.more')
   }
 })
-
+const scroe_list = set_main_score(props.match)
+/**
+     * @description 设置总比分
+     * @param  {object} match  当场赛事信息
+     * @return {undefined} undefined
+     */
+function set_main_score(match) {
+  let _home_score = ""
+  let _away_score = ""
+  if (get_match_status(match.ms)) {
+    let key = "S1"
+    _home_score = "0"
+    _away_score = "0"
+    // 足球 | 手球
+    if ([1, 11].includes(Number(match.csid))) {
+      // S7:加时赛比分
+      if ([32, 33, 41, 42, 110].includes(Number(match.mmp))) {
+        key = "S7"
+      }
+      // S170:点球大战比分
+      else if ([34, 50, 120].includes(Number(match.mmp))) {
+        key = "S170"
+      }
+    }
+    let main_score = match.msc_obj[key]
+    if (main_score) {
+      _home_score = lodash.get(main_score, "home")
+      _away_score = lodash.get(main_score, "away")
+    }
+  }
+  return [_home_score, _away_score]
+}
 const play_name_obj = computed(() => {
   let play_name_obj = {
     key: 'main',
     suffix_name: '',
     score_key: ''
   }
-  let {ms, hSpecial}  =  props.match || {}
+  let { ms, hSpecial } = props.match || {}
+  if (MatchListCardDataClass.list_version) { }
   //滚球
   if (get_match_status(ms, [110]) == 1) {
-      //角球后缀
+    //角球后缀
     if (MenuData.is_corner_menu()) {
       play_name_obj = {
         key: 'corner',
@@ -176,7 +205,7 @@ const play_name_obj = computed(() => {
         score_key: 'S10102'
       }
       // 15分钟比分
-    }else if(match_style_obj.data_tpl_id == 24 ){
+    } else if (match_style_obj.data_tpl_id == 24) {
       play_name_obj = {
         key: 'main',
         suffix_name: '',
@@ -187,7 +216,7 @@ const play_name_obj = computed(() => {
   return play_name_obj
 })
 
-is_collect.value = Boolean (lodash.get(props, 'match.mf'))
+is_collect.value = Boolean(lodash.get(props, 'match.mf'))
 //进球特效防抖
 // hide_home_goal = this.debounce(hide_home_goal,5000);
 // hide_away_goal = this.debounce(hide_away_goal,5000);
@@ -224,7 +253,7 @@ is_collect.value = Boolean (lodash.get(props, 'match.mf'))
  * @Description 隐藏主队进球动画
  * @param {undefined} undefined
 */
-function hide_home_goal () {
+function hide_home_goal() {
   is_show_home_goal.value = false;
 }
 
@@ -232,7 +261,7 @@ function hide_home_goal () {
  * @Description 隐藏客队进球动画
  * @param {undefined} undefined
 */
-function hide_away_goal () {
+function hide_away_goal() {
   is_show_away_goal.value = false;
 }
 
@@ -247,6 +276,7 @@ onUnmounted(() => {
     display: flex;
     height: 35px;
     align-items: center;
+
     .team-logo {
       display: flex;
       width: 22px;
@@ -254,11 +284,13 @@ onUnmounted(() => {
       align-items: center;
     }
   }
+
   .gif-text {
     white-space: nowrap;
     padding-left: 3px;
     animation: 1s text-flash linear infinite normal;
   }
+
   .red-ball {
     margin: 0 0 2.5px 8px;
     position: relative;
@@ -266,15 +298,18 @@ onUnmounted(() => {
     padding: 0 2px;
     height: 14px;
     line-height: 14px;
+
     &.flash {
       animation: 1s text-flash linear infinite normal;
     }
   }
+
   .match-icon {
     justify-content: space-between;
   }
-  .more-info{
-     align-items: center;
+
+  .more-info {
+    align-items: center;
   }
 }
 </style>
