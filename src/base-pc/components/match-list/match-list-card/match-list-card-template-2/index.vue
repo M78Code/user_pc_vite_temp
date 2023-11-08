@@ -15,7 +15,6 @@
       LayOutMain_pc.layout_content_width - 15
     }px  !important;${card_style}`"
   >
-
     <div
       v-if="is_mounted"
       :class="{ 'list-card-inner': !MatchListCardData.is_champion }"

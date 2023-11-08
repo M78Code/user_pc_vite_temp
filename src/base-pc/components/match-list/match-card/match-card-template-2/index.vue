@@ -1,18 +1,18 @@
 <template>
   <!--赛事玩法模板-->
   <div v-show="false">{{ LayOutMain_pc.layout_version}}</div>
+  <div v-show="false">{{ MatchListCardDataClass.list_version }}</div>
   <div
     class="c-match-card relative-position"
     :id="`list-mid-${mid}`"
-    :style="cardStyle"
+    :style="`height:${lodash.get(match_style_obj, `total_height`)}px !important;width:${LayOutMain_pc.layout_content_width - 15}px  !important;`"
   >
-  <div v-show="false">{{ MatchListCardDataClass.list_version }}</div>
   <!--改成101用来打包调试--> 
-    <!-- <component
+    <component
       :is="`MatchTpl${101}After`" 
       :mid="mid"
-    /> -->
-    {{ `MatchTpl${101}After` }}
+    />
+    <!-- {{ `MatchTpl${101}After` }} -->
   </div>
 </template>
 
@@ -41,17 +41,6 @@ export default {
     // 组件是否加载完成
     const is_mounted = ref(true);
 
-    //将太长的行内样式优化
-    const cardStyle = computed(()=>{
-      const width = LayOutMain_pc.layout_content_width - 15;
-      const height = lodash.get(match_style_obj, `total_height`);
-
-      return {
-        width: `${width}px`,
-        height: `${height}px`,
-      }
-    })
-
     // 显示部分dom ID
     // this.DOM_ID_SHOW = window.BUILDIN_CONFIG.DOM_ID_SHOW;
     onMounted(() => {
@@ -69,7 +58,6 @@ export default {
       LayOutMain_pc,
       MatchListCardData,
       MatchListCardDataClass,
-      cardStyle
     }
   }
 }

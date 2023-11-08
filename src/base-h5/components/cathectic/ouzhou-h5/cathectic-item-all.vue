@@ -27,7 +27,7 @@
       </div>
       <template v-if="!lodash.isEmpty(BetRecordClass.early_money_list)">
         <!-- 订单内容 -->
-        <div v-for="(value, name, index) in BetRecordClass.early_money_list" :key="index" class="cathectic-list">
+        <div v-for="(value, name, index) in BetRecordClass.early_money_list" :key="name" class="cathectic-list">
           <q-slide-transition>
             <template>
               <div class="date-header flex">

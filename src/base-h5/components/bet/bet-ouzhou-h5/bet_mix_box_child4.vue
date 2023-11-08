@@ -5,16 +5,56 @@
 
 <template>
     <div class="bet-mix-show">
-      <div class="nonebox4-content">
+      <div class="nonebox4-content" v-if="type == 1">
           <div class="nonebox4-content-left">
               <div class="nonebox4-content-left-content">
-                  <div class="nonebox4-content-left-content-xian" v-if="type == 1">
+                  <div class="nonebox4-content-left-content-xian">
                     <div class="nonebox4-content-left-content-nei"></div>
                   </div>
-                  <div class="nonebox4-content-left-content-xian green" v-if="type == 2">
+                  <div class="nonebox4-content-left-info">
+                    <div class="nonebox4-content-left-content-text">
+                      <div class="nonebox4-content-left-content-text-one">Sevilla Futbol Club <span class="text-one-span">0.25</span></div>
+                      <div class="nonebox4-content-left-content-text-two">[In-play] <span class="text-two-span">1X2</span></div>
+                      <div class="nonebox4-content-left-content-text-three">Sevilla Futbol Club</div>
+                    </div>
+                    <div>
+                        <div class="nonebox4-content-right">
+                            <div class="nonebox4-content-right-profit">123</div>
+                        </div>
+                        <div class="nonebox4-content-right-bot">Bet Placed</div>
+                    </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      <div class="nonebox4-content" v-if="type == 2">
+          <div class="nonebox4-content-left">
+              <div class="nonebox4-content-left-content">
+                  <div class="nonebox4-content-left-content-xian green">
                     <div class="nonebox4-content-left-content-nei green-nei"></div>
                   </div>
-                  <div class="nonebox4-content-left-content-xian red" v-if="type == 3">
+                  <div class="nonebox4-content-left-info">
+                    <div class="nonebox4-content-left-content-text">
+                      <div class="nonebox4-content-left-content-text-one">Sevilla Futbol Club <span class="text-one-span">0.25</span></div>
+                      <div class="nonebox4-content-left-content-text-two">[In-play] <span class="text-two-span">1X2</span></div>
+                      <div class="nonebox4-content-left-content-text-three">Sevilla Futbol Club</div>
+                    </div>
+                    <div>
+                        <div class="nonebox4-content-right">
+                            <div class="nonebox4-content-right-profit">123</div>
+                        </div>
+                        <div class="nonebox4-content-right-bot green-color">Bet Placed</div>
+                    </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      <div class="nonebox4-content" v-if="type == 3">
+          <div class="nonebox4-content-left">
+              <div class="nonebox4-content-left-content">
+                  <div class="nonebox4-content-left-content-xian red">
                     <div class="nonebox4-content-left-content-nei red-nei"></div>
                   </div>
                   <div class="nonebox4-content-left-info">
@@ -27,7 +67,7 @@
                         <div class="nonebox4-content-right">
                             <div class="nonebox4-content-right-profit">123</div>
                         </div>
-                        <div class="nonebox4-content-right-bot" :class="type == 2?'green-color':type==3?'red-color':''">Bet Placed</div>
+                        <div class="nonebox4-content-right-bot red-color">Bet Placed</div>
                     </div>
                   </div>
               </div>

@@ -326,7 +326,7 @@ export const get_tab_param_build = (mids) => {
   mids.forEach(mid => {
     let match = MatchListData.get_quick_mid_obj(mid)
     // 有其他玩法
-    if (match&&match.has_other_play) {
+    if (match && match.has_other_play) {
       // 添加玩法ID
       tabs.push({
         mid,
@@ -422,7 +422,7 @@ export function switch_other_play(mid, play_key) {
    * @param {undefined} undefined
   */
 export const set_match_play_current_index = (match, play_key) => {
-  let tab_play_keys = MatchListData.get_tab_play_keys(match).split(",")
+  let tab_play_keys = String(match.tab_play_keys).split(",")
   // 设置选中的玩法索引
   match.play_current_index = tab_play_keys.findIndex(key => key == play_key)
   // 设置选中的玩法key
@@ -434,5 +434,5 @@ export const set_match_play_current_index = (match, play_key) => {
 
 //获取保存的盘口玩法
 export function get_play_current_play(match) {
-  return other_play_current_play[match.mid + '_'] || MatchListData.get_tab_play_keys(match).split(",")[0];
+  return other_play_current_play[match.mid + '_'] || String(match.tab_play_keys).split(",")[0];
 }

@@ -3,7 +3,7 @@ import lodash from "lodash"
 import { t } from "src/boot/i18n.js";
 import {useMittEmit, MITT_TYPES} from  "src/core/mitt/index.js"
 
-const bet_result = {
+export const bet_result = {
   "2": t("bet_record.bet_no_status02"), //'走水',
   "3": t("bet_record.bet_no_status03"), //'输',
   "4": t("bet_record.bet_no_status04"), //'赢',
@@ -15,7 +15,7 @@ const bet_result = {
   "12": t("bet_record.bet_no_status12"), // '比赛中断',
   "15": t("bet_record.bet_no_status15"), // '比赛放弃'
 }
-const outcome = {
+export const outcome = {
   "2": t("bet_record.bet_no_status02"), //'走水',
   "3": t("bet_record.bet_no_status03"), //'输',
   "4": t("bet_record.bet_no_status04"), //'赢',

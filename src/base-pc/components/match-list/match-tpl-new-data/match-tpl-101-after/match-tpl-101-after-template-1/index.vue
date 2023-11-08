@@ -1,15 +1,23 @@
 <template>
   <div class="match-tpl-101 flex flex-start items-center">
+    <div v-show="false">{{ MatchListData.data_version.version }}</div>
+    <div v-show="false">{{ MatchListCardData.list_version }}</div>
       <!-- 赛事基础信息 -->
       <div class="basic-col" :style="`width:${match_list_tpl_size.team_width}px !important;height:80px !important;`">
-          <basis-info1  :match="match" show_type="all" />
+        <!-- 比赛进程 -->
+          <basis-info101 v-if="match"  :match="match" show_type="all" />
       </div>
       <!-- 竖线 -->
       <div class="vertical-line"></div>
       <!-- 图标信息 -->
       <icon-box></icon-box>
       <!-- 投注信息 -->
-      <match-handicap></match-handicap>
+      <match-handicap 
+        v-if="match" 
+        :handicap_list="match_tpl_info.get_current_odds_list(current_choose_oid)" 
+        :match="match"
+      >
+      </match-handicap>
       <!-- 最右侧图标 -->
       <div class="score-data-box" @click="jump_to_details(match)">
         <i aria-hidden="true" class="icon-signal q-icon c-icon"></i>
@@ -31,10 +39,9 @@ import { component_symbol, need_register_props } from "../config/index.js"
 import { utils_info } from 'src/core/utils/module/match-list-utils.js';
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 
-import { MatchProcessFullVersionWapper as MatchProcess } from 'src/components/match-process/index.js';
-import { MatchBasisInfo1FullVersionWapper as BasisInfo1 } from 'src/base-pc/components/match-list/match-basis-info/template-101/index.js'
+import { MatchBasisInfo101FullVersionWapper as BasisInfo101 } from 'src/base-pc/components/match-list/match-basis-info/template-101/index.js'
 import IconBox from '../modules/iconBox/index.vue'
-import MatchHandicap from '../modules/matchHandicap/index.vue'
+import { MatchHandicapFullVersionWapper as MatchHandicap } from 'src/base-pc/components/match-list/match-handicap/index.js'
 import MatchMedia from 'src/base-pc/components/match-list/match-media/index.vue'
 
 const props = defineProps({
@@ -47,11 +54,12 @@ const props = defineProps({
     default: () => false
   }
 })
-
 let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.mid)
 match_style_obj.data_tpl_id = 101; //调试用
-const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`].width_config
-const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`]
+const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].width_config
+const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`]
+console.log('match_tpl_info', match_tpl_info);
+const current_choose_oid = ref({ first_hpid: '1', second_hpid: "2" });
 let match = MatchListData.list_to_obj.mid_obj[props.mid+'_'];
 const is_mounted = ref(true);
 

@@ -18,20 +18,30 @@
         <!-- 删除全部和选择type -->
         <bet-all-detele></bet-all-detele>
         <div>
-            <div v-if="state == 1">
-                <!-- 单关投注项列表  -->
-                <bet-mix-box-child1></bet-mix-box-child1>
-                <!-- 单关的输入框 -->
-                <bet-input-info></bet-input-info>
-            </div>
-            <div v-if="state == 2">
-                <!-- 合并单关  -->
-                <div class="scroll-box scroll-box-center" ref="scroll_box" :style="{ 'max-height': `${max_height1}px` }"
-                    @touchmove="touchmove_handle($event)" @touchstart="touchstart_handle($event)">
-                    <bet-mix-box-child2></bet-mix-box-child2>
+            <!-- 单关  -->
+            <div v-if="BetData.is_bet_single">
+                <!-- 单关单注  -->
+                <div v-if="!BetData.is_bet_merge">
+                  <!-- 单关投注项列表  -->
+                  <bet-mix-box-child1 :items="BetData.bet_single_list[0]" ></bet-mix-box-child1>
+                  <!-- 单关的输入框 -->
+                  <bet-input-info :item="BetData.bet_single_list[0]" index="0" ></bet-input-info>
+
+                  <!-- 键盘 -->
+                  <key-board></key-board>
+                </div>
+                <!-- 单关合并 -->
+                <div v-else>
+                    <!-- 合并单关  -->
+                    <div class="scroll-box scroll-box-center" ref="scroll_box" :style="{ 'max-height': `${max_height1}px` }"
+                        @touchmove="touchmove_handle($event)" @touchstart="touchstart_handle($event)">
+                        <bet-mix-box-child2></bet-mix-box-child2>
+                    </div>
                 </div>
             </div>
-            <div v-if="state == 3">
+            
+            <!-- 串关 -->
+            <div v-if="!BetData.is_bet_single">
                 <!-- 串关投注项列表  -->
                 <div class="scroll-box scroll-box-center" ref="scroll_box" :style="{ 'max-height': `${max_height1}px` }"
                     @touchmove="touchmove_handle($event)" @touchstart="touchstart_handle($event)">
@@ -39,7 +49,9 @@
                 </div>
                 <bet-info></bet-info>
             </div>
-            <div v-if="state == 4">
+
+
+            <!-- <div v-if="state == 4">
               <bet-mix-box-child4></bet-mix-box-child4>
             </div>
             <div v-if="state == 5">
@@ -47,12 +59,12 @@
             </div>
             <div v-if="state == 6">
               <bet-mix-box-child6></bet-mix-box-child6>
-            </div>
+            </div> -->
         </div>
         <!-- 键盘 -->
         <key-board v-if="state < 4"></key-board>
         <!-- 按钮 -->
-        <bet-btn v-if="state < 4"></bet-btn>
+        <bet-btn v-if="BetViewDataClass.bet_order_status == 1"></bet-btn>
         <bet-btn1 v-else></bet-btn1>
 
    </div>

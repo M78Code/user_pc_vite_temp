@@ -1,7 +1,9 @@
 import MatchHandicap from "../match-handicap-template-1/index.vue";
+import MatchHandicap2 from "../match-handicap-template-2/index.vue";
 import { compute_component_wapper_config } from "app/job/use-output/index.js";
 const all_components_obj = {
   MatchHandicap,
+  MatchHandicap2
 };
 const component_config = {
   registered_component_key: "MatchHandicap",
