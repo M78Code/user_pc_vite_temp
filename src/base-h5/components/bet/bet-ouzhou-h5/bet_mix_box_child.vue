@@ -45,6 +45,9 @@
             <div v-if="state == 5">
               <bet-mix-box-child5></bet-mix-box-child5>
             </div>
+            <div v-if="state == 6">
+              <bet-mix-box-child6></bet-mix-box-child6>
+            </div>
         </div>
         <!-- 键盘 -->
         <key-board v-if="state < 4"></key-board>
@@ -67,6 +70,7 @@ import betMixBoxChild2 from "./bet_mix_box_child2.vue";
 import betMixBoxChild3 from "./bet_mix_box_child3.vue";
 import betMixBoxChild4 from "./bet_mix_box_child4.vue";
 import betMixBoxChild5 from "./bet_mix_box_child5.vue";
+import betMixBoxChild6 from "./bet_mix_box_child6.vue";
 import betAllDetele from "./bet_all_detele.vue";
 import betBar from "./bet-bar.vue";
 //import betInputInfo from "//bet_input_info";
@@ -79,7 +83,7 @@ import lodash from 'lodash'
 import { format_money3, format_money2 } from 'src/core/format/index.js'
 import { submit_handle } from "src/core/bet/class/bet-box-submit.js"
 
-const state = 5 //1单关投注  2：合并单关   3：串关投注   4:单关投注等待、单关投注成功、单关投注失败    5:单关投注成功
+const state = 6 //1单关投注  2：合并单关   3：串关投注   4:单关投注等待、单关投注成功、单关投注失败    5:合并单关等待、合并单关成功、合并单关失败   6：串关投注等待、串关投注成功、串关投注失败
 
 //串关的按钮
 const is_strand = ref(true)

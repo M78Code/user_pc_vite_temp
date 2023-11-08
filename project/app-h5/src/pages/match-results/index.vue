@@ -22,7 +22,9 @@
 
     <ScrollMenu :scrollDataList="state.slideMenu_sport" :current_mi="state.current_mi" />
 
-    <match-container />
+    <div class="match-results-container-styles">
+        <match-container />
+    </div>
 
 
 </template>
@@ -37,6 +39,7 @@ import matchContainer from "src/base-h5/components/match-list/index.vue";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import { api_analysis } from "src/api/"
 import { useMittOn,MITT_TYPES,MenuData } from "src/core/"
+import { is_kemp, is_results } from 'src/base-h5/mixin/menu.js'
 
 const inner_height = window.innerHeight;  // 视口高度
 const switchMenu = ['普通赛果', '冠军赛果']
@@ -63,6 +66,7 @@ const switchHandle = val => {
             state.currentSlideValue = lodash_.get(res.data,'[0].field1', '')
             // 设置赛种数据
             set_scroll_data_list(lodash_.get(res.data,'[0].sportList', []))
+            console.log('is_results', is_results)
         }
     })
 }
