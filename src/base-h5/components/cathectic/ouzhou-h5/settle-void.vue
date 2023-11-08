@@ -8,9 +8,7 @@
   <div class="settle-void" @touchmove.prevent>
     <!-- <div class="img-s" :style="compute_css_obj('no-record')"></div> -->
     <img :src="compute_local_project_file_path('/image/bet/no-data.png')">
-    <template>
-      <p>No data</p>
-    </template>
+    <p>No data</p>
   </div>
 </template>
 
@@ -31,14 +29,13 @@ template {
   align-items: center;
   min-height: 4rem;
   border-radius: 0.1rem;
-  background-color: var(--q-gb-bg-c-15);
   img {
-    width: 1.8rem;
-    height: 1.8rem;
+    width: 2.4rem;
+    height: 2.4rem;
   }
   p {
-    color: var(--q-gb-bg-c-6);
-    font-size: 0.14rem;
+    font-size: 0.16rem;
+    font-weight: bold;
   }
 }
 

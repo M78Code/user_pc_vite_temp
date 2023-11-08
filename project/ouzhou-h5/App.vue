@@ -7,14 +7,15 @@
  
 import appload from "./app-load.vue";
 import app_mixin from "src/base-h5/mixin/app-mixin.js";
+import {LocalStorage} from "src/core/"
 export default {
   mixins: [app_mixin],
   components: {
     appload,
   },
-  data() {
-    return {};
-  },
+  beforeCreate(){
+    LocalStorage.set("lang",'en');
+  }
 };
 </script>
 <style lang="scss"></style>

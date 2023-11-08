@@ -34,14 +34,31 @@ class VirtualList {
    * @param { config } 赛事默认配置
    * @remarks
    */
-  set_match_mid_map_base_info (match, config = { show_league_height: 26, playing_title_height: 20, main_handicap_height: 133, }) {
+  set_match_mid_map_base_info (match, params) {
+    const config = Object.assign({ 
+      match_stage_height: 0, 
+      ball_title_height: 20,
+      reduce_buffer_height: 5,
+      show_league_height: 26,
+      playing_title_height: 20, 
+      main_handicap_height: 133
+    }, params)
     const key = this.get_match_height_key(match.mid)
-    const { playing_title_height, show_league_height, main_handicap_height } = config
+    const { reduce_buffer_height, match_stage_height, ball_title_height, playing_title_height, show_league_height, main_handicap_height } = config
     Object.assign(this.match_mid_map_height.value, {
       [key]: {
+        // 赛事阶段高度 （开赛、未开赛）
+        match_stage_height,
+        // 球种标题高度
+        ball_title_height,
+        // 联赛标题高度
         show_league_height,
+        // 玩法标题高度
         playing_title_height,
-        main_handicap_height
+        // 主盘口高度
+        main_handicap_height,
+        // 需要减去的缓冲容器高度
+        reduce_buffer_height
       }
     })
   }
@@ -57,24 +74,26 @@ class VirtualList {
     // 获取模板默认高度
     const template_config = MatchMeta.get_match_default_template_config(csid)
     // 模板预设高度
-    const { show_league_height, playing_title_height, main_handicap_height } = template_config.match_template_config
-    // 缓冲高度
+    const { reduce_buffer_height, match_stage_height, show_league_height, playing_title_height, main_handicap_height, ball_title_height } 
+      = template_config.match_template_config
+    // 要减去的缓冲高度 
     const buffer_height = 2
-    // 缓冲容器高度
-    const buffer_container_height = 5
+    // --------- 以下是赛事高度计算逻辑  只要有改动均需看下其他 H5 项目有没有影响 改动需谨慎； 特别配置去模板默认配置加上 ------------------------------------
+    // 赛事相叠高度 缓冲容器是 5px - buffer_height  就是交叠高度
+    let match_overlap_height = reduce_buffer_height ? reduce_buffer_height - buffer_height : 0
     let total = 0
-    // 显示开赛、未开赛 原高度 25 -3 缓冲高度
-    if ([1, 2].includes(+start_flag)) total += 22
+    // 显示开赛、未开赛 match_stage_height - 缓冲高度
+    if (match_stage_height && [1, 2].includes(+start_flag)) total += match_overlap_height
     // 显示球种类别
-    if (is_show_ball_title) total += 20
-    // 本来应该是 联赛高度 26 + 缓存容器高度 5 = 31； 
-    // 但是并不需要那么高的间隙（赛事之间的间隙， 取缓存容器的高度） 所以减去3； 赛事之间相叠避免漏光
+    if (is_show_ball_title) total += ball_title_height
+    // 本来应该是 联赛高度 show_league_height + 缓存容器高度 5 = 31； 
+    // 但是并不需要那么高的间隙（赛事之间的间隙， 取缓存容器的高度） 所以减去 buffer_height ； 赛事之间相叠避免漏光
     if (is_show_league && show_card) {
       // 联赛 赛事均显示
-      total += (show_league_height + playing_title_height + main_handicap_height + buffer_container_height - buffer_height)
+      total += (show_league_height + playing_title_height + main_handicap_height + match_overlap_height)
     } else if (is_show_league && !show_card) {
       // 联赛显示 赛事不显示
-      total += (show_league_height + buffer_container_height - buffer_height)
+      total += (show_league_height + match_overlap_height)
     } else if (!is_show_league && show_card) {
       // 联赛不显示 赛事显示
       total += main_handicap_height

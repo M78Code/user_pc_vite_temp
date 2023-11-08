@@ -26,7 +26,7 @@
               <div class="filter-count">{{ item.count }}</div>
             </div>
             <div :class="{ checked_text: current_choose_tab == item.mi }" class="label-text">
-              {{ (menus_i18n_map || {} )[item.mi] || "" }}
+              <!-- {{ (menus_i18n_map || {} )[item.mi] || "" }} -->
             </div>
           </div>
           <img class="current-mark" :class="{ 'show-mark': current_choose_tab == item.mi }" src="../../../assets/images/mask_group.png" alt="">
@@ -59,7 +59,7 @@ import _ from "lodash"
 const { compute_sport_id,mi_euid_map_res } = use_base_data()
 
 // 国际化
-const { data:menus_i18n_map } = useMenuI18n()
+// const { data:menus_i18n_map } = useMenuI18n()
 
 const top_events = ref(MatchListOuzhouClass.redux_menu.in_play)
 
