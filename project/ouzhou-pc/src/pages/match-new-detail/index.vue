@@ -18,8 +18,8 @@
         <!-- 详情页面包屑 -->
         <breadcrumbs :detail_info="detail_info || {}" />
         <div class="bread-right">
-          <q-img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/detail_top.png`" alt="" srcset="" class="signal" @click="go_analyse" />
-          <q-img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/detail_refresh.png`" alt="" srcset="" :class="{ 'balance_refresh': true, 'route_btn': refresh_data }"
+          <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/detail_top.png`" alt="" srcset="" class="signal" @click="go_analyse" />
+          <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/detail_fresh.png`" alt="" srcset="" :class="{ 'balance_refresh': true, 'route_btn': refresh_data }"
             @click="refresh_click" />
         </div>
       </div>
