@@ -20,7 +20,7 @@ const router = createRouter({
           {
             path: "/inPlay",
             name: "inPlay",
-            component: () => import("../pages/in-pay/index.vue"),
+            component: () => import("../pages/in-play/index.vue"),
             meta: {
               keepAlive: true // 需要缓存
             },
@@ -52,7 +52,7 @@ const router = createRouter({
           {
             path: "/home",
             name: "home",
-            component: () => import("../pages/match-page/index.vue"),
+            component: () => import("../pages/home/index.vue"),
           },
           // {
           //   path: "/activity_task",
