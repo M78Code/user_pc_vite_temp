@@ -7,13 +7,18 @@
     <p class="bet_cancel" @click="bet_retract">Bet Retract</p>
     <p class="place_bet"  @click="place_bet">
       <span>Place Bet</span>
-      <span class="right_amount">222</span>
+      <span class="right_amount">{{BetData.bet_amount}}</span>
     </p>
   </div>
 </template>
 
 <script setup>
+import BetData from "src/core/bet/class/bet-data-class.js";
+import { submit_handle } from "src/core/bet/class/bet-box-submit.js" 
 
+const place_bet = () => {
+  submit_handle()
+}
 
 </script>
 

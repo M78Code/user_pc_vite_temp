@@ -37,7 +37,7 @@ const routes = [
       //           }
       //       },
       {
-        path: "/details",
+        path: "/details/:mid/:tid/:csid",
         name: "details",
         component: () => import('../pages/match-new-detail/index.vue')
       },
@@ -66,11 +66,11 @@ const routes = [
     component: () => import('../pages/analysis-header/analysis-header.vue'),
   },
   // //投注记录
-  // {
-  //   path: "/bet_record",
-  //   name: "bet_record",
-  //   component: () => import('../pages/bet-record/index.vue'), // project/ouzhou-pc/src/pages/bet-record/index.vue
-  // },
+  {
+    path: "/bet_record",
+    name: "bet_record",
+    component: () => import('../pages/bet-record/index.vue'), // project/ouzhou-pc/src/pages/bet-record/index.vue
+  },
   // 赛果
   {
     path: "/match_results",

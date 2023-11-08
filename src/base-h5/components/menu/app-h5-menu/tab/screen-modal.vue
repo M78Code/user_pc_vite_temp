@@ -2,7 +2,7 @@
  * @Author: jamison pmtyjamison@itcom888.com
  * @Date: 2023-11-07 21:45:55
  * @LastEditors: jamison pmtyjamison@itcom888.com
- * @LastEditTime: 2023-11-08 16:59:12
+ * @LastEditTime: 2023-11-08 19:57:17
  * @FilePath: \user-pc-vite\src\base-h5\components\menu\app-h5-menu\tab\screen-modal.vue
  * @Description: 
 -->
@@ -24,24 +24,20 @@
         v-model="input_text"
         :input-class="{ 'search-keyword-input': true }"
         type="search"
-        @keydown.stop="key_down($event)"
         placeholder="请输入联赛/球队名称进行搜索"
-        @keyup.enter="changeStr"
-        @focus="search_input_focus_or_blur($event, true)"
-        @blur="search_input_focus_or_blur"
+        @blur="get_search_result"
       >
         <!-- 输入框的扩大镜图片 -->
         <template v-slot:prepend>
           <span
             :class="[`icon-search ${get_y0_suffix}`, { 'input-without-word': !input_text.length }]"
-            @click.stop.prevent.self="go_to_details"
+            @click.stop.prevent.self="get_search_result"
           ></span>
         </template>
         <template v-slot:append>
           <img
             :src="`/${project_name}image/svg/delete.svg`"
             alt
-            class="icon-delete"
             @click.stop.prevent.self="clear_search"
             v-show="input_text.length > 0"
           />
@@ -53,6 +49,7 @@
           <p class="row all_select_left">
             <img
               class="img"
+              
               src="/src/base-h5/components/menu/app-h5-menu/tab/img/eventicons.svg"
               alt
             />
@@ -60,9 +57,18 @@
           </p>
           <img
             class="select_img"
+            v-show="!is_all_checked"
+            @click="is_all_checked = true"
             src="/src/base-h5/components/menu/app-h5-menu/tab/img/icon_checkbox_nor.svg"
             alt
           />
+            <img
+              class="img"
+              v-show="is_all_checked"
+              @click="is_all_checked = false"
+              src="/src/base-h5/components/menu/app-h5-menu/tab/img/icon_checkbox_sel.svg"
+              alt
+            />
           <!-- <p>
             <img :src="`/${project_name}image/svg/Vector.svg`" alt class="icon-delete" />
           </p>-->
@@ -71,7 +77,7 @@
         <section class="league_list">
           <p class="league_title">
             热门联赛
-            <span class="league_num">61</span>
+            <span class="league_num">{{list.length}}</span>
           </p>
           <ul class="list_info">
             <li class="list_data row items-center justify-between">
@@ -96,8 +102,8 @@
 </template>
 <script setup>
 import { SearchData } from "src/core/";
-
-import { reactive, toRefs, ref } from "vue";
+import { reactive, toRefs, ref,onMounted } from "vue";
+import search from "src/core/search-class/search.js"
 defineOptions({
   name: "screen-modal" // 设置组件名称
 });
@@ -105,6 +111,12 @@ defineOptions({
 const input_text = ref("");
 //联赛的数据
 const list = ref([]);
+//是否全选
+const is_all_checked = ref(false);
+
+onMounted(()=>{
+  get_search_result()
+})
 function search_input_focus_or_blur(e, event_handle) {
   let selectDialog = document.querySelector(".select-dia");
   selectDialog.style.display = "none";
@@ -122,11 +134,28 @@ function search_input_focus_or_blur(e, event_handle) {
   }
 }
 function clear_search() {
-  SearchData.set_search_term("");
   input_text.value = "";
 }
+
 // 跳转到赛事详情
 function go_to_details() {}
+
+/**
+ * @Description:获取搜索结果数据
+ * @param {string} keyword 搜索关键字
+ * @return {Undefined} Undefined
+ */
+function get_search_result() {
+    //调用接口获取获取搜索结果数据
+    search.get_search_result(input_text.value, '').then(res => {
+        const { state, list } = res
+        // load_data_state.value = state
+        // res_list = list
+        // let _ref_scroll = scrollRef.value;
+        console.log('state, list',res)
+    
+    })
+}
 </script>
 <style scoped lang="scss">
 .setting-filter {
@@ -196,7 +225,7 @@ function go_to_details() {}
   .content {
     padding: 0 0.1rem;
     .all_select {
-      width: 2.4rem;
+      width: 2.68rem;
       height: 0.32rem;
       margin-bottom: 0.1rem;
       .all_select_left {
@@ -254,7 +283,7 @@ function go_to_details() {}
   }
 }
 :deep(.q-placeholder) {
-  transform: translateX(0.14rem);
+  transform: translateX(0.18rem);
 }
 /*******兼容部分ios下输入框背景色等样式异常情况 开始*******/
 :deep(.search-keyword-input) {

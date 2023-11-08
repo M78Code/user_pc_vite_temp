@@ -85,4 +85,16 @@ export default {
   "pc-lock-img-details": {
     default: "pc-lock-img-details"
   },
+  //列表数据图片
+  "pc-home-match-analysis": {
+    default: "pc-home-match-analysis"
+  },
+  //列表结算图片
+  "pc-home-early-settlement": {
+    default: "pc-home-early-settlement"
+  },
+  //coming soon图片
+  "pc-home-coming-soon": {
+    default: "pc-home-coming-soon"
+  },
 };
