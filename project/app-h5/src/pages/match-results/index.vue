@@ -80,6 +80,7 @@ const set_scroll_data_list = (data_list = []) => {
             mi: 100+item.sportId*1 + ''+'1',
             ct: item.count,
             md: item.date,
+            sport: item.sportId,
         }
     })
     state.slideMenu_sport = scroll_data
