@@ -2,13 +2,22 @@
     <div class="flex flex-start items-center">
         <!-- 图标1 -->
         <div class="sr-link-icon-w">
-            <i aria-hidden="true" class="icon-signal q-icon c-icon"></i>
+            <div :style="compute_css_obj({key: 'pc-home-early-settlement'})"></div>
         </div>
         <!-- 图标2 -->
         <div class="sr-link-icon-w">
-            <i aria-hidden="true" class="icon-signal q-icon c-icon"></i>
+            <div :style="compute_css_obj({key: 'pc-home-match-analysis'})"></div>
         </div>
     </div>
 </template>
 <script setup>
+import { compute_css_obj } from 'src/core/server-img/index.js'
+
 </script>
+<style>
+.sr-link-icon-w  div{
+    width: 12px;
+    height: 12px;
+    background-size: 100% 100%;
+}
+</style>

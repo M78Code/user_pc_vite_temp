@@ -19,7 +19,7 @@
 
   <div class="coming_soon_wrap">
     <div class="coming_soon_box">
-      <img class="coming_soon_img" :src="coming_soon" alt="">
+      <img class="coming_soon_img" :style="compute_css_obj({key: 'pc-home-coming-soon'})" alt="">
       <div class="description">Coming Soon</div>
     </div>
   </div>
@@ -27,7 +27,7 @@
 </template>
   
 <script setup>
- import coming_soon from 'src/assets/images/conming_soons.png';
+import { compute_css_obj } from 'src/core/server-img/index.js'
 </script>
   
 <style lang="scss" scoped>

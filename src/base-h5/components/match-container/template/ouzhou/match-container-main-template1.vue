@@ -16,9 +16,8 @@
             <q-btn-dropdown flat outline  style="color: #FF7000"  padding="0" label="Fulltime Result" 
               dropdown-icon="expand_more" content-class="select_time_style">
               <q-list>
-                <q-item v-for="item in match.pMethods" :key="item.hpid"
-                   :class="{active: selectPlay === item.hpid}" clickable v-close-popup 
-                   @click.stop="on_select_play(match, item)">
+                <q-item v-for="item in hps_play_data" :key="item.hpid" @click.stop="on_select_play(item)"
+                   :class="{active: select_play === item.hpid}" clickable v-close-popup >
                   <q-item-section>
                     <q-item-label>{{ item.hpn }}</q-item-label>
                   </q-item-section>
@@ -220,7 +219,7 @@
                       </div>
                     </div>
                     <!-- 右边盘口组件 -->
-                    <ScoreList :match_info="match_of_list" hpid="1"></ScoreList>
+                    <ScoreList :match_info="match_of_list" :hpid="select_play"></ScoreList>
                   </div>
                 </div>
               </div>
@@ -234,11 +233,12 @@
   
 <script>
 
-import { ref, computed, watch, nextTick } from 'vue'
+import { ref, computed, watch, nextTick, onMounted } from 'vue'
 import { LOCAL_PROJECT_FILE_PREFIX } from  "src/core"
 
 import { IconWapper } from 'src/components/icon'
 import ScoreList from './components/score-list.vue';
+import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import CountingDownSecond from 'src/base-h5/components/common/counting-down.vue';
 import CountingDownStart from 'src/base-h5/components/common/counting-down-start.vue';
 import OddListWrap from 'src/base-h5/components/match-list/components/odd-list-wrap.vue';
@@ -275,6 +275,9 @@ export default {
     CountingDownSecond,
   },
   setup (ctx) {
+    const select_play = ref('1')
+    const hps_play_data = ref([])
+
     // 是否显示球种标题
     const show_sport_title = computed(() => {
       const { is_show_ball_title } = ctx.match_of_list
@@ -284,10 +287,32 @@ export default {
     const get_match_panel = computed(() => {
       return ['1', '4', '16'].includes(ctx.match_of_list.csid) ? ['1', 'X', '2'] : ['1', '2']
     })
+    // 计算有玩法的hps
+    const get_hps_play_data = () => {
+      let target_hps = []
+      const { csid } = ctx.match_of_list
+      target_hps = MatchMeta.ball_seed_play_methods.value[`hps_csid_${csid}`]
+      hps_play_data.value = target_hps
+    }
+
+    watch(() => ctx.match_of_list.hps, () => {
+      const { is_show_league } = ctx.match_of_list
+      if (!is_show_league) return
+      get_hps_play_data()
+    }, { deep: true, immediate: true })
+
+    // 切换玩法赔率
+    const on_select_play = (item) => {
+      console.log(item)
+      // game.selectTitle = item.hpn
+      select_play.value = item.hpid
+      // item.panel = handle_odds_data(item)
+    }
+
     return { 
       lang, theme, i18n_t, compute_img_url, format_time_zone, GlobalAccessConfig, footer_menu_id,LOCAL_PROJECT_FILE_PREFIX, have_collect_ouzhou,
       is_hot, menu_type, menu_lv2, is_detail, is_export, is_results, standard_edition, compute_css_obj, show_sport_title, no_collect_ouzhou,
-      PageSourceData, get_match_panel
+      PageSourceData, get_match_panel, hps_play_data, on_select_play, select_play
     }
   }
 }
@@ -339,13 +364,11 @@ export default {
         .block{
           font-size: 13px;
           font-weight: 500;
-          margin-right: 10px;
         }
         .q-icon{
           color: #333;
           font-size: 14px;
           margin-left: 5px;
-          display: none;
         }
       }
       .q-ripple{
