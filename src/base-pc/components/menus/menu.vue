@@ -136,7 +136,8 @@ const go_to_favouritse= () =>{
 
     let euid = (load_mapping[payload + '2'] || {}).h || ''
     let ealy_euid = (load_mapping[payload + '3'] || {}).h || ''
-    BaseData.compute_current_mi_match_list(payload)
+    BaseData.compute_current_mi_match_list(payload);
+    console.error(BaseData,"当前选中的菜单")
   }
 
   onUnmounted(()=>{
