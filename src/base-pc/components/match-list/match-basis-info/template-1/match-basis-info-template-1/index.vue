@@ -52,10 +52,13 @@
         </div>
       </div>
       <!-- 主比分 -->
-      <div class="score" :key="lodash.get(match, 'mid')" v-if="show_type == 'all'"
-        v-tooltip="{ content: is_15min ? i18n_t('list.15min_stage') : '', overflow: 1 }">
-
-        {{ play_name_obj.score_key ? lodash.get(match, `msc_obj.${play_name_obj.score_key}.away`) : scroe_list[1] }}
+      <div 
+        class="score" 
+        :key="lodash.get(match, 'mid')" 
+        v-if="show_type == 'all'" 
+        v-tooltip="{content: is_15min ? i18n_t('list.15min_stage'):'' ,overflow:1}"
+      >
+        {{play_name_obj.score_key ?  lodash.get(match,`msc_obj.${play_name_obj.score_key}.away`) : lodash.get(match, 'away_score')}}
       </div>
     </div>
     <!-- 中立场、盘口数 -->

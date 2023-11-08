@@ -54,7 +54,7 @@
 import { ref, onMounted, onBeforeUnmount } from "vue";
 import MatchListOuzhouClass from 'src/core/match-list-pc/match-ouzhou-list.js'
 import sport_icon from "src/base-pc/components/sport_icon.vue";
-import { use_base_data,useMenuI18n } from "src/base-pc/components/menus/base_data";
+import { use_base_data } from "src/base-pc/components/menus/base_data";
 import _ from "lodash"
 const { compute_sport_id,mi_euid_map_res } = use_base_data()
 
