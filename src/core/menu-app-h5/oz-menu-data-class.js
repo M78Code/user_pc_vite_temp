@@ -9,6 +9,7 @@
 import lodash_ from "lodash";
 import { ref } from "vue";
 import BaseData from "src/core/base-data/base-data.js";
+import { api_common, api_analysis } from "src/api";
 class MenuData {
   constructor() {
     const that = this;
@@ -26,6 +27,7 @@ class MenuData {
     this.menu_lv_mi_lsit = []
 
     this.menu_list = []; //常规球种 101...
+    this.top_events_list = []; //热门球种
     this.menu_mi = ref(''); //常规球种选中
     this.menu_type = ref(2); //id   2今日(左侧抽屉) 1滚球(滚动tab) 3早盘 8VR() 7电竞() 28赛果() 500热门
   }
@@ -39,8 +41,11 @@ class MenuData {
    * 初始化
    */
   set_init_menu_list(){
-    const menu_list =  BaseData.mew_menu_list_res.filter((item)=>{return +item.mi<300})
+    //常规球种
+    const menu_list =  BaseData.mew_menu_list_res.filter((item)=>{return +item.mi<300});
+    const top_events_list =  BaseData.mew_menu_list_res.filter((item)=>{return item.mi==5000})?.[0].sl || [];
     this.menu_list = menu_list;
+    this.top_events_list = top_events_list;
   }
   
   get_menu_type(){
@@ -83,7 +88,7 @@ class MenuData {
    * */
   get_euid(menu_type) {
     const menuId = menu_type || this.menu_type.value;
-    return BaseData.mi_euid_map_res[this.menu_mi.value+menuId]?.h || "";
+    return BaseData.mi_euid_map_res?.[this.menu_mi.value+menuId]?.h || "";
   }
   //内部方法
   _is_cur_mi(mi, param) {
