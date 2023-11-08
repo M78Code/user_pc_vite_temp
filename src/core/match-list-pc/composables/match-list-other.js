@@ -39,10 +39,8 @@ export const get_compute_other_play_data = (match) => {
   // set_tab_play_keys(match)
   //当前选中玩法
   let play_key = get_play_current_play(match)
-  let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(mid)
-  const { data_tpl_id = 1 } = match_style_obj;
+  const { data_tpl_id = 1 } = MatchListCardDataClass.get_card_obj_bymid(mid)
   const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${data_tpl_id}_config`][`template_${data_tpl_id}`]
-  match.tpl_id = data_tpl_id;
   // 其他玩法盘口列表
   let handicap_list = clone_arr(match_tpl_info[play_key])
   // 波胆
@@ -56,8 +54,6 @@ export const get_compute_other_play_data = (match) => {
   if (!play_key) {
     handicap_list = clone_arr(match_tpl_info.hpsCorner)
   }
-  console.log('hps5Minutes', handicap_list)
-
   // coverage_match_data({ other_handicap_list }, mid)
   // match.other_handicap_list = other_handicap_list
   // return  merge_template_data({ match, handicap_list, play_key })
@@ -74,7 +70,6 @@ export function merge_template_data({ match, handicap_list, type = 1, play_key }
   let length = handicap_list.length
   let { mid, hSpecial5min, hSpecial } = match
   const many_obj = MatchListData.get_match_to_map_obj(mid)
-  console.log('many_obj', many_obj)
   const hn_obj = lodash.get(MatchListData, "list_to_obj.hn_obj", {})
   handicap_list.forEach((col, col_index) => {
     col.ols.forEach((ol, ol_index) => {
@@ -251,29 +246,7 @@ export function data_move_up(list) {
     ols.push(ol)
   }
   return list
-}  /**
-* @Description 获取赛事模板ID
-* @param {number} csid 球种类型
-*/
-function get_match_template_id({ csid }) {
-  let tpl_id = $menu.menu_data.match_tpl_number
-  // 虚拟足球1001、虚拟篮球1004
-  if ([1001, 1004].includes(+csid)) {
-    tpl_id = csid
-  }
-  // 虚拟赛狗1002 虚拟摩托1010 虚拟赛马1011 泥地摩托车1009
-  else if ([1002, 1010, 1011, 1009].includes(+csid)) {
-    tpl_id = 1002
-  }
-  // 99模板根据球种获取模板ID
-  else if (tpl_id == -1) {
-    tpl_id = csid_to_tpl_id(csid)
-  }
-  return tpl_id
 }
-
-
-
 /**
   * @Description 设置十五分钟玩法阶段
   * @param {Object} match 赛事信息
@@ -353,7 +326,7 @@ export const get_tab_param_build = (mids) => {
   mids.forEach(mid => {
     let match = MatchListData.get_quick_mid_obj(mid)
     // 有其他玩法
-    if (match && get_has_other_play(match)) {
+    if (match&&match.has_other_play) {
       // 添加玩法ID
       tabs.push({
         mid,
@@ -363,12 +336,6 @@ export const get_tab_param_build = (mids) => {
   })
   return tabs
 }
-/*是否有其他玩法*/
-export function get_has_other_play(match) {
-  if (!match) return false
-  const tab_play_keys = MatchListData.get_tab_play_keys(match)
-  return tab_play_keys && tab_play_keys.split(",").length > 0
-}
 /**
    * @Description 获取21号模板(波胆)
    * @param {object} match 赛事信息
@@ -376,7 +343,8 @@ export function get_has_other_play(match) {
   */
 export function get_21_bold_template(match) {
   let list_name = "main_handicap_list_20"
-  match.tpl_id == 13 && (list_name += '_13')
+  const { data_tpl_id = 1 } = MatchListCardDataClass.get_card_obj_bymid(match.mid)
+  data_tpl_id == 13 && (list_name += '_13')
   let tpl_21_hpids = ''
   function compute_hl_obj_data(hl_obj) {
     let { hpid } = hl_obj
@@ -400,7 +368,7 @@ export function get_21_bold_template(match) {
     })
   })
   // 足球让球与大小玩法 遍历其他玩法数据
-  if (match.csid == 1 && [0, 13].includes(+match.tpl_id)) {
+  if (match.csid == 1 && [0, 13].includes(+data_tpl_id)) {
     lodash.each(Object.keys(other_play_name_to_playid), key => {
       lodash.each(match[key], hl_obj => {
         compute_hl_obj_data(hl_obj)
@@ -410,7 +378,6 @@ export function get_21_bold_template(match) {
   if (tpl_21_hpids?.includes(341)) {
     list_name = list_name.replace("20", "341")
   }
-  console.log('get_21_bold_template', MATCH_LIST_TEMPLATE_CONFIG.template_21_config.template_21[list_name])
   return clone_arr(MATCH_LIST_TEMPLATE_CONFIG.template_21_config.template_21[list_name])
 }
 /**
@@ -419,12 +386,13 @@ export function get_21_bold_template(match) {
    * @return {Object} other_handicap_list 5分钟模板
    */
 export function get_5minutes_template(match = {}) {
-  let { tpl_id = 0, hSpecial5min = 6, ms = 110 } = match
+  let { hSpecial5min = 6, ms = 110 } = match
+  const { data_tpl_id = 1 } = MatchListCardDataClass.get_card_obj_bymid(match.mid)
   let other_handicap_list = []
   let hpid = get_match_status(ms, [110]) ? "362" : "361"
   let tpl_name = `hps5Minutes_${hpid}`
   let slice_index = Math.min(hSpecial5min - 1, 3)
-  const _template_data = lodash.get(MATCH_LIST_TEMPLATE_CONFIG, `template_${tpl_id}_config.template_${tpl_id}.${tpl_name}`);
+  const _template_data = lodash.get(MATCH_LIST_TEMPLATE_CONFIG, `template_${data_tpl_id}_config.template_${data_tpl_id}.${tpl_name}`);
   lodash.each(_template_data, col => {
     other_handicap_list.push({ ols: col.ols.slice(slice_index) })
   })

@@ -17,9 +17,7 @@
 
     ouzhou-h5:
       match-container-main-template1 :   通用 赛事容器  默认 
-      match-container-main-template2 :   冠军
       match-container-main-template3 :   赛果
-      match-container-main-template4 :   虚拟体育赛狗赛马赛果项
 
 
   second 目录： 存放相关次要 玩法组件

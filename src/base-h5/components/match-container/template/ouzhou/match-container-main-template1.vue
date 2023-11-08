@@ -29,7 +29,7 @@
         </div>
       </header>
       <!-- 缓冲容器， 避免滚动时骨架屏漏光问题 -->
-      <div class="buffer-container" v-if="match.is_show_league && !is_show_opening_title && i !== 0"></div>
+      <!-- <div class="buffer-container" v-if="match.is_show_league && !is_show_opening_title && i !== 0"></div> -->
       
       <!-- 最核心的div模块     标题 + 倒计时 + 比分 + 赔率盘口模块 -->
       <div :class="['match-inner-container', {'collapsed': !collapsed}]">
@@ -41,9 +41,9 @@
             <!-- 联赛收藏 -->
             <div v-if="![3000, 900].includes(menu_type)" class="favorited-icon" @click.stop="handle_league_collect">
               <!-- 未收藏 compute_img_url('icon-favorite')-->
-              <img v-if="!league_collect_state" :src="not_favorite_app" alt="">
+              <img v-if="!league_collect_state" :src="no_collect_ouzhou" alt="">
               <!-- 收藏图标 compute_img_url('icon-favorite-s')-->
-              <img v-if='league_collect_state' :src="normal_img_is_favorite">
+              <img v-if='league_collect_state' :src="have_collect_ouzhou">
             </div>
             <span class="league-title-text row justify-between">
               <span :class="['league-t-wrapper', { 'league-t-main-wrapper': menu_type !== 28, export: is_export }]">
@@ -57,7 +57,7 @@
                 </div>
               </template>
               <template v-else>
-                <span class="number" style="text-align: right;padding-right: 27px;">{{ get_match_count }}</span>
+                <span class="number" style="text-align: right;">{{ get_match_count }}</span>
               </template>
             </span>
           </div>
@@ -84,9 +84,9 @@
                         <!--赛事列表收藏-->
                         <div class="favorite-icon-top match list-m" @click.stop="handle_match_collect">
                           <!-- 未收藏图标 compute_img_url('icon-favorite')-->
-                          <img v-if="!match_collect_state" :src="not_favorite_app" alt="">
+                          <img v-if="!match_collect_state" :src="no_collect_ouzhou" alt="">
                           <!-- 收藏图标 compute_img_url('icon-favorite-s')-->
-                          <img v-if='match_collect_state' :src="normal_img_is_favorite">
+                          <img v-if='match_collect_state' :src="have_collect_ouzhou">
                         </div>
                         <!-- 赛事日期标准版 -->
                         <div :class="['timer-wrapper-c flex items-center', { esports: is_export, 'din-regular': is_export }]">
@@ -126,10 +126,10 @@
                         </div>
                       </div>
                       <!--玩法数量-->
-                      <div class="goto-detail" style="margin-right: 0.03rem;" @click='goto_details(match)'>
+                      <div class="goto-detail" @click='goto_details(match)'>
                         <span class="count_span" :class="{ esports: 3000 == menu_type }">
                           <span class="mc-n">
-                            {{GlobalAccessConfig.get_handicapNum()? get_match_mc(match) : i18n_t('footer_menu.more') }}+
+                            {{GlobalAccessConfig.get_handicapNum()? get_match_mc(match) : i18n_t('footer_menu.more') }}
                           </span>
                           <span class="add_text" v-if="GlobalAccessConfig.get_handicapNum()">
                             <IconWapper color="#888" name="icon-triangle1" size="14px" class="icon-wapper-more" />
@@ -143,6 +143,23 @@
                       standard: !show_newer_edition && !is_results,
                       result: is_results
                     }">
+                      <!-- 红、黄牌， 发球方绿点 -->
+                      <div class="team-left">
+                        <template v-if="home_red_score || home_yellow_score">
+                          <!-- 红牌 -->
+                          <span class='score-punish' v-show="home_red_score" :class="{ flash: is_show_home_red && !is_results }">
+                            {{ home_red_score }}
+                          </span>
+                          <!-- 黄牌 -->
+                          <span class='score-punish' v-show="home_yellow_score">
+                            {{ home_yellow_score }}
+                          </span>
+                        </template>
+                        <!--发球方绿点-->
+                        <template v-else>
+                          <span class="serving-party" :class="{ 'simple': standard_edition == 1 }" v-show="set_serving_side(match, 'home')"></span>
+                        </template>
+                      </div>
                       <div class="team-title-inner-con">
                         <div class='team-t-title-w' :class="{
                           'is-handicap': match.handicap_index == 1,
@@ -155,23 +172,32 @@
                           <div class="yb-goal-gif" :class="{ 'yb-goal-yo': theme.includes('y0') }"></div>
                           <div class="gif-text">{{ $t('match_result.goal') }}</div>
                         </div>
-                        <span class='score-punish' v-show="home_red_score"
-                          :class="{ flash: is_show_home_red && !is_results }">
-                          {{ home_red_score }}
-                        </span>
                       </div>
                       <!--进行中的赛事显示比分 ,如果是比分判定中，则不显示比分-->
                       <div class="score full-score" v-show="match.ms > 0 && !is_results && !eports_scoring"
                         :class="{ 'visibility-hidden': match.ms == 110 }">
                         {{ home_score }}
                       </div>
-                      <!--发球方绿点-->
-                      <span class="serving-party" :class="{ 'simple': standard_edition == 1 }"
-                        v-show="set_serving_side(match, 'home')">
-                      </span>
                     </div>
                     <!--客队图片和名称-->
                     <div class='team-title-container'>
+                      <!-- 红、黄牌， 发球方绿点 -->
+                      <div class="team-left">
+                        <template v-if="home_red_score || home_yellow_score">
+                          <!-- 红牌 -->
+                          <span class='score-punish' v-show="away_red_score" :class="{ flash: is_show_away_red && !is_results }">
+                            {{ away_red_score }}
+                          </span>
+                          <!-- 黄牌 -->
+                          <span class='score-punish' v-show="away_yellow_score">
+                            {{ away_yellow_score }}
+                          </span>
+                        </template>
+                        <!--发球方绿点-->
+                        <template v-else>
+                          <span class="serving-party" :class="{ 'simple': standard_edition == 1 }" v-show="set_serving_side(match_of_list, 'away')"> </span>
+                        </template>
+                      </div>
                       <div class="team-title-inner-con">
                         <div class='team-t-title-w visiting' :class="{
                           'is-handicap': match.handicap_index == 2,
@@ -181,29 +207,19 @@
                         </div>
                         <!-- 进球动画 -->
                         <div class="yb-flex-center" v-if="is_show_away_goal && is_new_init2 && (!is_show_home_goal)">
-
-                      <div class="yb-goal-gif yb-goal-yo"></div>
-                      <div class="gif-text">{{ $t('match_result.goal') }}</div>
+                          <div class="yb-goal-gif yb-goal-yo"></div>
+                          <div class="gif-text">{{ $t('match_result.goal') }}</div>
+                        </div>
+                      </div>
+                      <!--进行中的赛事显示比分 ,如果是比分判定中，则不显示比分-->
+                      <div class="score full-score" v-show="match_of_list.ms > 0 && !is_results && !eports_scoring"
+                        :class="{ 'visibility-hidden': match_of_list.ms == 110 }">
+                        {{ away_score }}
+                      </div>
                     </div>
-                    <!--进行中的赛事显示比分-->
-                    <span class='score-punish' v-show="away_red_score"
-                      :class="{ flash: is_show_away_red && !is_results }">
-                      {{ away_red_score }}
-                    </span>
-                  </div>
-                  <!--进行中的赛事显示比分 ,如果是比分判定中，则不显示比分-->
-                  <div class="score full-score" v-show="match_of_list.ms > 0 && !is_results && !eports_scoring"
-                    :class="{ 'visibility-hidden': match_of_list.ms == 110 }">
-                    {{ away_score }}
-                  </div>
-                  <!--发球方绿点-->
-                  <span class="serving-party" :class="{ 'simple': standard_edition == 1 }"
-                    v-show="set_serving_side(match_of_list, 'away')">
-                  </span>
-                  </div>
                   </div>
                   <!-- 右边盘口组件 -->
-                  <div></div>
+                  <ScoreList :match_info="match_of_list" hpid="1"></ScoreList>
                 </div>
               </div>
             </div>
@@ -222,17 +238,16 @@ import { ref, computed, watch, nextTick } from 'vue'
 import { LOCAL_PROJECT_FILE_PREFIX } from  "src/core"
 
 import { IconWapper } from 'src/components/icon'
+import ScoreList from './components/score-list.vue';
 import CountingDownSecond from 'src/base-h5/components/common/counting-down.vue';
 import CountingDownStart from 'src/base-h5/components/common/counting-down-start.vue';
-import ScoreList from 'src/base-h5/components/match-list/components/score-list.vue';
 import OddListWrap from 'src/base-h5/components/match-list/components/odd-list-wrap.vue';
 import ImageCacheLoad from "src/base-h5/components/match-list/components/public-cache-image.vue";
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import PageSourceData  from  "src/core/page-source/page-source.js";
 import { i18n_t, compute_img_url, compute_css_obj  } from "src/core/index.js"
 import { format_time_zone } from "src/core/format/index.js"
-import { in_progress, not_begin, animation_icon, video_icon, 
-  normal_img_not_favorite_white, not_favorite_app, normal_img_is_favorite, corner_icon, mearlys_icon_app, midfield_icon_app } from 'src/base-h5/core/utils/local-image.js'
+import { have_collect_ouzhou, no_collect_ouzhou} from 'src/base-h5/core/utils/local-image.js'
 
 import { lang, standard_edition, theme } from 'src/base-h5/mixin/userctr.js'
 import { is_hot, menu_type, menu_lv2, is_detail, is_export, is_results, footer_menu_id, is_zaopan } from 'src/base-h5/mixin/menu.js'
@@ -266,9 +281,9 @@ export default {
       return is_show_ball_title
     })
     return { 
-      lang, theme, i18n_t, compute_img_url, format_time_zone, GlobalAccessConfig, footer_menu_id,LOCAL_PROJECT_FILE_PREFIX,in_progress,not_begin,
-      is_hot, menu_type, menu_lv2, is_detail, is_export, is_results, standard_edition, compute_css_obj, show_sport_title, animation_icon, video_icon,
-      normal_img_not_favorite_white,not_favorite_app, normal_img_is_favorite, PageSourceData, corner_icon, mearlys_icon_app, midfield_icon_app, is_zaopan
+      lang, theme, i18n_t, compute_img_url, format_time_zone, GlobalAccessConfig, footer_menu_id,LOCAL_PROJECT_FILE_PREFIX, have_collect_ouzhou,
+      is_hot, menu_type, menu_lv2, is_detail, is_export, is_results, standard_edition, compute_css_obj, show_sport_title, no_collect_ouzhou,
+      PageSourceData, is_zaopan
     }
   }
 }
@@ -428,8 +443,8 @@ export default {
     width: 100%;
     display: flex;
     height: 90px;
-    padding: 10px;
-    border-bottom: 2px solid #eee;
+    padding: 10px 0 10px 10px;
+    border-bottom: 1px solid #eee;
 
     .match-odds-container-border-radius {
       width: 100%;
@@ -583,11 +598,10 @@ export default {
         }
       }
       .favorited-icon{
-        width: 14px;
+        width: 15px;
         height: 14px;
         margin: 0 10px 0 0;
         position: relative;
-        top: 1px;
         flex-shrink: 0;
         > img {
           width: 100%;
@@ -768,7 +782,8 @@ export default {
     position: relative;
     overflow: hidden;
     > div {
-      flex: 1;
+      width: 50%;
+      flex-shrink: 0;
     }
 
     .triangle-wrapper {
@@ -832,8 +847,12 @@ export default {
 
       .team-title-container {
         display: flex;
-        justify-content: space-between;
         position: relative;
+        .team-left{
+          width: 20px;
+          flex-shrink: 0;
+          margin-left: 2px;
+        }
 
         &.simple {
           width: 1.72rem;
@@ -902,8 +921,7 @@ export default {
           .team-t-title-w {
             font-size: 14px;
             height: 24px;
-            -webkit-line-clamp: 2;
-            display: flex;
+            line-height: 24px;
             width: 100%;
             overflow: hidden;
             flex-shrink: 0;
@@ -911,6 +929,7 @@ export default {
             text-overflow: ellipsis;
             white-space: nowrap;
             font-weight: 500;
+            color: #8a8986;
             &.visiting {
               color: #8a8986;
             }
@@ -960,7 +979,7 @@ export default {
           position: absolute;
           right: 0.07rem;
           bottom: 0;
-          flex-direction: column-reverse;
+          height: 24px;
           font-weight: 600;
 
           &.simple {
@@ -1055,6 +1074,12 @@ export default {
   justify-content: space-between;
   margin-bottom: 8px;
   background: #fff !important;
+  .goto-detail {
+    .count_span {
+      display: flex;
+      align-items: center;
+    }
+  }
 
   &.simple {
     height: 0.34rem;
@@ -1129,16 +1154,6 @@ export default {
         }
       }
     }
-
-    .goto-detail {
-      .count_span {
-        display: block;
-        align-items: center;
-        .mc-n {
-          width: 0.14rem;
-        }
-      }
-    }
    
   }
 
@@ -1156,11 +1171,13 @@ export default {
   }
 
   .favorite-icon-top {
-    width: 13px;
+    width: 15px;
     height: 100%;
-    height: 0.13rem;
+    height: 14px;
     flex-shrink: 0;
-    margin-right: .07rem;
+    margin-right: .05rem;
+    position: relative;
+    top: -1px;
 
     img {
       width: 100%;
@@ -1217,6 +1234,9 @@ export default {
     .counting-down-up-container {
       width: 1rem;
       height: .14rem;
+      :deep(.counting-down-wrap){
+        width: auto !important;
+      }
 
       &.intermission {
         width: 0.57rem;

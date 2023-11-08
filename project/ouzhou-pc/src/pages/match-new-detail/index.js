@@ -1,8 +1,8 @@
 /*
  * @Author: cooper cooper@123.com
  * @Date: 2023-07-09 16:21:30
- * @LastEditors: cooper cooper@123.com
- * @LastEditTime: 2023-07-17 14:25:41
+ * @LastEditors: lowen pmtylowen@itcom888.com
+ * @LastEditTime: 2023-11-08 16:53:40
  * @FilePath: \user-pc-vue3\src\project-ouzhou\pages\detail\index.js
  * @Description: 详情页相关接口数据处理
  */
@@ -47,7 +47,7 @@ export function usedetailData() {
 
   const current_id = ref()
 
-  let sportId, mid
+  let sportId =1, mid=2858623 
 
   // 监听分类切换数据
   watch(current_key, (val) => {
@@ -55,9 +55,9 @@ export function usedetailData() {
   });
     // 监听分类切换数据
     watch(()=>route.query, (val) => {
-    
-      sportId = val.sportId
-      mid = val.mid
+      // todo
+      // sportId = val.sportId
+      // mid = val.mid
       current_id.value = val.mid
     },
     {immediate:true}
@@ -123,18 +123,18 @@ export function usedetailData() {
   const get_detail = async () => {
     try {
       const params = {
-        mid,
+        mid:2865655,
         cuid: userInfo.userId,
         t: new Date().getTime(),
       };
       detail_loading.value = true;
-      console.log(1111111111111,match_info)
-      // const res = await get_detail_data(params);
+      // console.log(1111111111111,match_info)
+      const res = await get_detail_data(params);
 
      
-      getMatchDetailList(match_info.data)
+      getMatchDetailList(res.data)
       detail_loading.value = false;
-      detail_info.value ={...detail_info.value,...match_info.data}
+      detail_info.value ={...detail_info.value,...res.data}
       detail_info.value['course'] = handle_course_data(detail_info.value);
       use_polling_mst(detail_info.value);
     } catch (error) {}
@@ -145,12 +145,12 @@ export function usedetailData() {
    */
     const getMatchDetailList = async (data) => {
       try {
-        // const params = {
-        //   tId: data.tid,
-        //   t: new Date().getTime(),
-        // };
-        // const res = await getMatchDetailByTournamentId(params);
-        matchDetailList.value = matchDetail.data
+        const params = {
+          tId: data.tid,
+          t: new Date().getTime(),
+        };
+        const res = await getMatchDetailByTournamentId(params);
+        matchDetailList.value = res.data
       //  console.log(1111111111111,res)
       } catch (error) {}
     };
@@ -189,9 +189,9 @@ export function usedetailData() {
         mid,
         t: new Date().getTime(),
       };
-      // const res = await get_detail_category(params);
-      category_list.value =categoryList.data || [];
-      const list = categoryList.data.filter((i) => i.marketName);
+      const res = await get_detail_category(params);
+      category_list.value =res.data || [];
+      const list = res.data.filter((i) => i.marketName);
 
       tabList.value = list.map((item) => ({
         label: item.marketName,
@@ -211,8 +211,8 @@ export function usedetailData() {
         newUser: 0,
         t: new Date().getTime(),
       };
-      // const res = await get_detail_list(params);
-      all_list.value = matchDetail.data || [];
+      const res = await get_detail_list(params);
+      all_list.value = res.data || [];
        all_list.value.forEach(item=>item.expanded = true)
       // detail_loading.value = false;
       current_key.value = current_key.value

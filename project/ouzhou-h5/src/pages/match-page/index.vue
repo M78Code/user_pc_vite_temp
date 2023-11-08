@@ -61,6 +61,12 @@ onUnmounted(() => {
   .match-list-container{
     height: 100%;
     background: #fff !important;
+    :deep(.scroll-wrapper){
+      background: #fff !important;
+      .s-w-item{
+        background: #fff !important;
+      }
+    }
   }
 }
 </style>

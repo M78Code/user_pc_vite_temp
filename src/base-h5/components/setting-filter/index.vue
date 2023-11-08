@@ -40,7 +40,7 @@
 <script setup>
 import { i18n_t, compute_css_obj } from "src/core/index.js";
 import { useRouter, useRoute } from "vue-router";
-import { useMittEmit, MITT_TYPES } from "src/core/index.js";
+import { useMittEmit, MITT_TYPES,SessionStorage } from "src/core/index.js";
 import {
   ref,
   watch,
