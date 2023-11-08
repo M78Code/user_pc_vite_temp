@@ -2,7 +2,7 @@
  * @Author: jamison pmtyjamison@itcom888.com
  * @Date: 2023-11-07 21:45:55
  * @LastEditors: jamison pmtyjamison@itcom888.com
- * @LastEditTime: 2023-11-08 15:06:59
+ * @LastEditTime: 2023-11-08 16:59:12
  * @FilePath: \user-pc-vite\src\base-h5\components\menu\app-h5-menu\tab\screen-modal.vue
  * @Description: 
 -->
@@ -48,15 +48,47 @@
         </template>
       </q-input>
       <div class="content">
+        <!-- 全选 -->
         <section class="all_select row justify-between items-center">
           <p class="row all_select_left">
-            <img class="img" src="/src/base-h5/components/menu/app-h5-menu/tab/img/eventicons.svg" alt />
+            <img
+              class="img"
+              src="/src/base-h5/components/menu/app-h5-menu/tab/img/eventicons.svg"
+              alt
+            />
             <span>所有赛事</span>
           </p>
-          <img class="select_img" src="/src/base-h5/components/menu/app-h5-menu/tab/img/icon_checkbox_nor.svg" alt />
+          <img
+            class="select_img"
+            src="/src/base-h5/components/menu/app-h5-menu/tab/img/icon_checkbox_nor.svg"
+            alt
+          />
           <!-- <p>
             <img :src="`/${project_name}image/svg/Vector.svg`" alt class="icon-delete" />
-          </p> -->
+          </p>-->
+        </section>
+        <!-- 列表 -->
+        <section class="league_list">
+          <p class="league_title">
+            热门联赛
+            <span class="league_num">61</span>
+          </p>
+          <ul class="list_info">
+            <li class="list_data row items-center justify-between">
+              <p class="league_name row items-center">
+              <img
+                  class="img"
+                  src="/src/base-h5/components/menu/app-h5-menu/tab/img/icon_checkbox_sel.svg"
+                  alt/>
+                  欧洲冠军联赛
+              </p>
+              <img
+                class="league_select"
+                src="/src/base-h5/components/menu/app-h5-menu/tab/img/icon_checkbox_sel.svg"
+                alt
+              />
+            </li>
+          </ul>
         </section>
       </div>
     </div>
@@ -71,6 +103,8 @@ defineOptions({
 });
 //输入框值
 const input_text = ref("");
+//联赛的数据
+const list = ref([]);
 function search_input_focus_or_blur(e, event_handle) {
   let selectDialog = document.querySelector(".select-dia");
   selectDialog.style.display = "none";
@@ -159,21 +193,51 @@ function go_to_details() {}
     }
   }
   //内容样式
-  .content{
+  .content {
     padding: 0 0.1rem;
-    .all_select{
+    .all_select {
       width: 2.4rem;
       height: 0.32rem;
-      .all_select_left{
-        color: #7981A4;
+      margin-bottom: 0.1rem;
+      .all_select_left {
+        color: #7981a4;
         font-size: 0.12rem;
-        .img{
+        .img {
           margin-right: 0.04rem;
         }
       }
-      .select_img{
+      .select_img {
         width: 0.2rem;
         height: 0.2rem;
+      }
+    }
+  }
+  //联赛列表
+  .league_list{
+    .league_title{
+      font-size: 0.14rem;
+      color: #303442;
+      font-weight: 500;
+      padding: 0.1rem 0;
+      border-top: 0.01rem solid #E4E6ED;
+       .league_num{
+        display: inline-block;
+        width:  0.19rem;
+        height:  0.15rem;
+        border-radius: 0.8rem;
+        background: #EBD3A8;
+        font-size: 0.1rem;
+        line-height: 0.15rem;
+        text-align: center;
+      }
+    }
+    .list_info{
+      .list_data{
+        .league_name{
+          .img{
+             margin-right: 0.04rem;
+          }
+        }
       }
     }
   }
