@@ -390,7 +390,7 @@ export default {
     margin-right: 0.1rem;
   }
   .buffer-container{
-    background: #fff;
+    background: var(--q-gb-bg-c-10);
     height: 5px;
     margin: 0 4px;
   }
