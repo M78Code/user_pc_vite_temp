@@ -8,13 +8,13 @@
     <!-- 订单号 -->
     <div class="text-left row ellipsis"  @click="copy">
       <p class="title">{{i18n_t('bet.order_no')}}</p>
-      <span class="yb_mr4 orderno">{{data_o.orderNo}}</span>
+      <span class="yb_mr4 orderno fw_700">{{data_o.orderNo}}</span>
       <img :src="compute_local_project_file_path('/image/svg/copy.svg')" alt=""  style="width:0.1rem" />
     </div>
     <!-- 时间 i18n_t('bet_record.bet_time')   .Format(i18n_t('time4'))-->
     <div class="text-right row">
       <p class="title">{{i18n_t('bet_record.bet_time')}}</p>
-      <span class="orderno">{{formatTime(+data_o.betTime, 'mm/DD HH:MM')}}</span>
+      <span class="orderno fw_700">{{formatTime(+data_o.betTime, 'mm/DD HH:MM')}}</span>
     </div>
   </div>
 </template>
@@ -64,7 +64,7 @@ import BetRecordClass from "src/core/bet-record/bet-record.js";
           try {
             location.href = `pasteOrderAction://paste?orderSN=${orderno}`;
           } catch (error) {
-            console.error(error)
+            // console.error(error)
           }
         }
         clipboard.destroy()

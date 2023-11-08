@@ -171,6 +171,7 @@ onMounted(() => {
   if (calc_show.value || details_show_btn.value) {
     props.item_data.is_show_early_settle = true
   }
+
   /**
    * 监听轮询提前结算列表数据
    * 给expected_profit赋值

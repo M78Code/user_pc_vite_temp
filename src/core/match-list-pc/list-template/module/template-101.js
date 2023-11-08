@@ -9,33 +9,29 @@ import * as TemplateCommon from "./template-common.js"
   main_handicap_list: [
     {
       ols: [
-        {  _hpid: 1, ot: '1', class: 'no-handicap' },
+        { _hpid: 1, ot: "1" },
+        { _hpid: 1, ot: "2" },
+        { _hpid: 1, ot: "X" },
       ],
     },
     {
-      ols: [
-        {  _hpid: 4, ot: 'X', class: 'no-handicap' },
-      ],
+      ols: [{ _hpid: 4, ot: "1" }, { _hpid: 4, ot: "2" }, { empty: 1 }],
+    },
+    {
+      ols: [{ _hpid: 2, ot: "Over" }, { _hpid: 2, ot: "Under" }, { empty: 1 }],
     },
     {
       ols: [
-        {  _hpid: 2, ot: '2', class: 'no-handicap' },
+        { _hpid: 17, ot: "1" },
+        { _hpid: 17, ot: "2" },
+        { _hpid: 17, ot: "X" },
       ],
     },
     {
-      ols: [
-        {  _hpid: 17, ot: 'Over', class: 'no-handicap' },
-      ],
+      ols: [{ _hpid: 19, ot: "1" }, { _hpid: 19, ot: "2" }, { empty: 1 }],
     },
     {
-      ols: [
-        {  _hpid: 19, ot: 'Under', class: 'no-handicap' },
-      ],
-    },
-    {
-      ols: [
-        {  _hpid: 18, ot: 'X2', class: 'no-handicap' },
-      ],
+      ols: [{ _hpid: 18, ot: "Over" }, { _hpid: 18, ot: "Under" }, { empty: 1 }],
     },
   ],
 }

@@ -110,6 +110,7 @@
   }
   .content-m {
     height: calc(100vh - 1.46rem);
+    background-color: var(--q-gb-bg-c-10);
   }
   </style>
   

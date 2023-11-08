@@ -8,7 +8,7 @@
     <!-- <SRecord v-if="is_loading" /> -->
     <scroll ref="myScroll" :on-pull="onPull">
       <!-- 未结算 cashout 按钮 -->
-      <div v-if="UserCtr.user_info.settleSwitch == 1 && BetRecordClass.selected === 0" 
+      <div v-if="UserCtr.user_info.settleSwitch == 1 && BetRecordClass.selected === 0 && !lodash.isEmpty(BetRecordClass.list_data)" 
       :class="['cashout', 'unsellteCashout', BetRecordClass.is_early ? 'active': '']"
       @click="BetRecordClass.set_is_early(!BetRecordClass.is_early)">Cashout</div>
       <!-- BetRecordClass.bet_record_version -->
@@ -22,7 +22,7 @@
           <div 
             :class="['cashout', BetRecordClass.is_early ? 'active': '']" 
             @click="BetRecordClass.set_is_early(!BetRecordClass.is_early)"
-            v-if="UserCtr.user_info.settleSwitch == 1"
+            v-if="UserCtr.user_info.settleSwitch == 1 && !lodash.isEmpty(BetRecordClass.list_data)"
             >Cashout</div>
       </div>
       <template v-if="!lodash.isEmpty(BetRecordClass.early_money_list)">
@@ -33,13 +33,13 @@
               <div class="date-header flex">
                 <span class="date"><span>{{ formatTime(new Date(name).getTime(), 'mm/DD')}}</span></span>
                 <!-- 第一项显示 cashout按钮、 已结算信息 -->
-                <div class="settled-date" v-if="BetRecordClass.selected === 1 && index === 0">
+                <!-- <div class="settled-date" v-if="BetRecordClass.selected === 1 && index === 0">
                   Number <span>2</span>
                   Bet <span>20</span>
                   Lose/Win <span class="oringe">+20.00</span>
-                </div>
+                </div> -->
               </div>
-              <div v-for="(item2, key) in value.data" :key="key" class="cathectic-item">
+              <div v-for="(item2, key) in value.data" :key="item2.betTime" class="cathectic-item">
                 <item-multiple-body :data_b="item2"></item-multiple-body>
               </div>
             </template>
@@ -281,9 +281,6 @@ defineExpose({
 template {
   display: block;
 }
-.cathectic-list {
-  background-color: var(--q-gb-bg-c-10);
-}
 .cathectic-item {
   width: 100%;
   background: var(--q-gb-bg-c-15);
@@ -296,6 +293,7 @@ template {
   align-items: center;
   justify-content: space-between;
   padding: 0 0.14rem;
+  background: var(--q-gb-bg-c-15);
   .select {
     height: 0.46rem;
     padding: 0.04rem;
