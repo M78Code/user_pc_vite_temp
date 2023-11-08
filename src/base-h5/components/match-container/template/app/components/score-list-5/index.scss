@@ -8,7 +8,7 @@
   // justify-content: flex-end;
   z-index: 2;
   position: relative;
-  padding: 0 0 0 0.08rem;
+  // padding: 0 0 0 0.08rem;
   align-items: center;
   width: 100%;
 
@@ -83,6 +83,7 @@
     position: relative;
     flex-shrink: 0;
     width: 100%;
+
     .scroll-cover-f {
       position: absolute;
       left: 0;
@@ -108,8 +109,8 @@
       }
     }
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                &:before,
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                &:after {
+                                                                                                                                                                                                                                                                &:before,
+                                                                                                                                                                                                                                                                &:after {
       content: ' ';
       width: 0;
       height: 0;
@@ -167,15 +168,15 @@
     }
 
     .score-se-inner2 {
-    // width: 339px;
-      height: 100%;
+      width: 366px;
+        // height: 100%;
       line-height: 1;
       display: flex;
       flex-shrink: 0;
       justify-content: space-between;
 
       .basket-ball {
-        color: var(--q-color-com-fs-color-29);
+        // color: var(--q-color-com-fs-color-29);
         flex-shrink: 0;
         font-size: 0.1rem;
       }
@@ -183,6 +184,10 @@
       .score-fle-container-1 {
         flex-wrap: nowrap;
         flex-shrink: 0;
+        color: var(--sys-brand-secodary-secondary-800, #303442);
+          font-family: Akrobat;
+          font-size: 10px;
+          font-weight: 700;
 
         &.result {
           .score {
@@ -195,6 +200,18 @@
 
       .b-score-wrapper {
         margin-left: 0.05rem;
+        color: var(--sys-brand-secodary-secondary-800, #303442);
+          font-family: PingFang SC;
+          font-size: 10px;
+          font-weight: 400;
+        
+          .important-color-number {
+            color: var(--sys-brand-primary-primary-300, #74C4FF);
+            text-align: right;
+            font-family: Akrobat;
+            font-size: 10px;
+            font-weight: 700;
+          }
       }
     }
 
@@ -205,14 +222,19 @@
       color: var(--q-color-com-fs-color-29);
       align-items: center;
 
-      .score-value {
-        font-size: 0.1rem;
-        line-height: 0.1rem;
+      .score-value {}
+      
+        .divider {
+          width: 1px;
+          height: 10px;
+          background: var(--sys-brand-secodary-secondary-50, #F2F2F6);
+          margin: 0 2px;
       }
 
       .kk-icon {
         margin-right: 0.06rem;
         width: 0.14rem;
+
       }
 
       &.last {
@@ -221,8 +243,8 @@
 
       &:last-child {
         border: none !important;
-        font-size: 0.1rem;
         margin-right: 0.02rem;
+        color: var(--sys-brand-primary-primary-300, var(--sys-brand-primary-primary-300, #74C4FF)) !important;
       }
     }
 

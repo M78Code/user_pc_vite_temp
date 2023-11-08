@@ -414,17 +414,19 @@ class MatchMeta {
    * @description 赛果不走元数据， 直接掉接口 不需要走模板计算以及获取赔率
    */
   async get_results_match () {
-    const md = lodash.get(MenuData.current_lv_3_menu, 'field1')
+    const md = lodash.get(MenuData.result_menu_api_params, 'md')
+    const euid = lodash.get(MenuData.result_menu_api_params, 'sport')
     // 电竞的冠军
-    const category = MenuData.get_menu_type() === 100 ? 2 : 1
+    const category = MenuData.result_menu_lv1_mi ? 0 : 1
     if (!md) return
     const params = this.get_base_params()
     const res = await api_common.get_match_result_api({
       ...params,
       category,
-      "md": md,
-      // TODO: app-h5 菜单结构出来 后续删除
-      type: 29
+      md,
+      type: 28, // 默认是29 我改成了28 
+      euid,
+      showem: 1, // 新增的参数
     })
     this.handle_custom_matchs(res)
   }

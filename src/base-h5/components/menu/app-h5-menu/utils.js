@@ -70,7 +70,7 @@ export const scrollMenuAnimate = (dom, x) => {
  * @param {*} parentClass  父元素类
  * @param {*} childClass  选中类
  */
-export const scrollMenu = (event, parentClass, childClass) => {
+export const scrollMenuEvent = (event, parentClass, childClass) => {
     let scrollBox = document.querySelector(parentClass),//父元素
         scrollBoxNav = document.querySelector(parentClass).querySelector(childClass),//子元素
         spanLeft,
@@ -91,10 +91,4 @@ export const scrollMenu = (event, parentClass, childClass) => {
         let n = scrollL + (spanLeft - widths) + divBox;
         scrollMenuAnimate(scrollBox, n)
     }
-}
-export default {
-    dateWeekFormat:dateWeekFormat,
-    dateTabList:dateTabList,
-    dateWeekFormat:dateWeekFormat,
-    scrollMenu: scrollMenu
 }

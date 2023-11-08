@@ -3,8 +3,8 @@
         <template v-slot:center>
             <div class="switch-box">
                 <div v-for="(item, index) in switchMenu" :key="'swtich-' + index" @click="switchHandle(index)"
-                    :class="['switch-item', state.currentSwitchValue === index && 'switch-item-active']"><span>{{ item
-                    }}</span>
+                    :class="['switch-item', state.currentSwitchValue === index && 'switch-item-active']">
+                    <span> {{ item }} </span>
                 </div>
             </div>
         </template>
@@ -14,90 +14,106 @@
     </navigation-bar>
 
     <div class="slide-box">
-        <div v-for="(item, index) in slideMenu" @click="slideHandle(index,$event)" :class="['slide-item', state.currentSlideValue === index &&
+        <div v-for="(item, index) in state.slideMenu" @click="slideHandle(item,$event)" :class="['slide-item', state.currentSlideValue == item.field1 &&
             'slide-item-active']" :key="'slide-' + index">
-            <span>{{ item }}</span>
+            <span>{{ item.date }}</span>
         </div>
     </div>
 
-    <ScrollMenu />
+    <ScrollMenu :scrollDataList="state.slideMenu_sport" :current_mi="state.current_mi" />
 
     <match-container />
 
-    <!--  弹窗  -->
-    <div v-if="state.select_dialog" position="bottom" class="select-mask" :style="`height:${inner_height}px`">
-        <div style="height:100%;width: 100%" @click="state.select_dialog = false"></div>
-        <!-- 搜索联赛 -->
-        <setect-league @closedHandle="state.select_dialog = false" @finishHandle="selectFinishHandle"></setect-league>
-    </div>
-
-    <!-- 设置 -->
-    <!-- <match-container2 /> -->
 
 </template>
 <script setup>
-import { onMounted, onBeforeMount, reactive } from "vue";
-import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
+import lodash_ from 'lodash'
+import { onMounted, onUnmounted, reactive } from "vue";
 import { ScrollMenu } from 'src/base-h5/components/menu/app-h5-menu/index'
 import navigationBar from 'src/base-h5/components/tutorial/navigation-bar/index.vue'
 import settingFilter from 'src/base-h5/components/setting-filter/index.vue'
-import setectLeague from 'src/base-h5/components/setect-league/index.vue'
-import { scrollMenu } from "src/base-h5/components/menu/app-h5-menu/utils.js"
+import { scrollMenuEvent } from "src/base-h5/components/menu/app-h5-menu/utils.js"
 import matchContainer from "src/base-h5/components/match-list/index.vue";
-import { i18n_t, compute_css_obj, MenuData } from "src/core/index.js";
-import { is_results, is_kemp } from 'src/base-h5/mixin/menu.js'
+import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import { api_analysis } from "src/api/"
+import { useMittOn,MITT_TYPES,MenuData } from "src/core/"
 
-// import matchContainer2 from "src/base-h5/components/match-list/components/match-container-2.vue";
 const inner_height = window.innerHeight;  // 视口高度
 const switchMenu = ['普通赛果', '冠军赛果']
-const slideMenu = ['11/16', '11/15', '11/14', '11/13', '11/12', '11/11', '11/10', '11/09', '11/08', '11/07', '11/06', '11/05', '11/04']
-const props = defineProps({})
+
 const state = reactive({
     currentSwitchValue: 0, // 普通赛果：0  冠军赛果：1
     currentSlideValue: 0, // 日期数 目前slideMenu写死
     select_dialog:false,
-    setting_dialog: false
+    setting_dialog: false,
+    slideMenu_date: [], // 时间
+    slideMenu_sport: [], // 赛种
+    current_mi: '', // 当前选中的赛种
 })
 
-const switchHandle = (val) => {
+const switchHandle = val => {
     state.currentSwitchValue = val
-    if (val) {
-        set_menu_lv1({mi:400})
-    } else {
-        set_menu_lv1({mi:2})
-    }
-    api_analysis.get_match_result_menu({menuType:0})
-    console.log(MenuData,'--------------------is_results------------------是否 赛果', is_results.value, is_kemp.value)
+
+    MenuData.set_result_menu_lv1_mi(val)
+    //获取 赛果菜单
+    api_analysis.get_match_result_menu( {menuType:val} ).then( ( res = {} ) => {
+        if(res.code == 200){
+            state.slideMenu = res.data || {}
+            // 设置时间默认选中
+            state.currentSlideValue = lodash_.get(res.data,'[0].field1', '')
+            // 设置赛种数据
+            set_scroll_data_list(lodash_.get(res.data,'[0].sportList', []))
+        }
+    })
 }
 const slideHandle = (val, e) => {
     if (state.currentSlideValue === val) return
-    state.currentSlideValue = val
-    scrollMenu(e, ".slide-box", ".switch-item-active");
-
-    
+    state.currentSlideValue = val.field1
+    set_scroll_data_list(val.sportList)
+    scrollMenuEvent(e, ".slide-box", ".switch-item-active");
 }
 
-const selectFinishHandle = (val) => {
-    console.log('选择完成')
-    state.select_dialog = false
+// 设置赛种列表
+const set_scroll_data_list = (data_list = []) => {
+    let scroll_data = data_list.map( item => {
+        return {
+            mi: 100+item.sportId*1 + ''+'1',
+            ct: item.count,
+            md: item.date,
+            sport: item.sportId,
+        }
+    })
+    state.slideMenu_sport = scroll_data
+    state.current_mi = scroll_data[0].mi
+
+    MenuData.set_result_menu_api_params(scroll_data[0])
+
+    set_result_menu_api()
+}
+
+// 设置滑动菜单的选中id
+const set_scroll_current = val => {
+    state.current_mi = val.mi
+
+    MenuData.set_result_menu_api_params(val)
+
+    set_result_menu_api()
+}
+
+const set_result_menu_api = () => {
+    // 设置菜单对应源数据
+    MatchMeta.get_results_match()
 }
 
 onMounted(()=>{
-    set_menu_lv1({mi:2})
+    switchHandle(0)
+    useMittOn(MITT_TYPES.EMIT_SCROLL_TOP_NAV_CHANGE, set_scroll_current)
 })
 
-const set_menu_lv1 = item => {
-    MenuData.set_current_lv1_menu(item.mi);
-    MenuData.get_menu_lvmi_list(item.mi)
-    MenuData.get_results_menu();
-    setTimeout(() => {
-        MatchMeta.get_results_match()
-    }, 2000)
-}
+onUnmounted(()=>{
+    useMittOn(MITT_TYPES.EMIT_SCROLL_TOP_NAV_CHANGE).off
+})
 
-// onBeforeMount(() => {
-// })
 </script>
 <style scoped lang="scss">
 @import "./index.scss";

@@ -29,7 +29,8 @@ const menu_type_config = {
   400: 100,
   6: 11,
   2000: 3000,
-  50000: 50000
+  50000: 50000,
+  28:28,
 }
 
 class MenuData {
@@ -59,6 +60,14 @@ class MenuData {
     this.top_menu_title = {}
     this.collect_list = []
     //-------------------------------------------------------------------------------------//
+
+     //-----------------------------------VR 电竞 收藏--------------------------------------//
+     // 赛果一级菜单
+     this.result_menu_lv1_mi = ''
+     // 赛果 日期/赛中
+     this.result_menu_api_params = {}
+      //----------------------------------------------------------------------------------------//
+
     //当前的菜单 lv3
     this.current_lv_3_menu = {};
     this.current_lv_3_menu_mi = '';
@@ -91,6 +100,16 @@ class MenuData {
 
   set_collect_list (list) {
     this.collect_list = list
+  }
+
+  // 设置赛果一级菜单id
+  set_result_menu_lv1_mi(mi){
+    this.result_menu_lv1_mi = mi
+  }
+  
+  //设置赛果参数
+  set_result_menu_api_params(val){
+    this.result_menu_api_params = val
   }
 
   // 根据菜单id获取下级菜单id 二级菜单
@@ -194,6 +213,7 @@ class MenuData {
     }
   }
 
+  // 设置 menu_types
   set_collect_menu_type (lv1_mi) {
     this.menu_type.value = menu_type_config[lv1_mi]  
   }
@@ -389,7 +409,7 @@ class MenuData {
    
     let bg_mi = parseInt(this.recombine_menu_desc(item?.mi));
     let id = parseInt(bg_mi - 100);
-    if (this.is_kemp()) {
+    if (this.is_kemp() || this.is_kemp_mi()) {
       id = parseInt(bg_mi - 400);
     }
     if (this.is_export() || this.is_vr()) {
@@ -631,6 +651,13 @@ class MenuData {
    *  mi [number|string] 要比对的值
   */
   is_kemp(mi) {
+    return this._is_cur_mi(100, mi)
+  }
+  /**
+   * 是否选中了冠军
+   *  mi [number|string] 要比对的值
+  */
+  is_kemp_mi(mi) {
     return this._is_cur_mi(400, mi)
   }
   /**

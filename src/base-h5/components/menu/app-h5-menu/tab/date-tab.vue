@@ -20,7 +20,7 @@
   
   <script setup>
   import { onMounted, ref , watch } from "vue";
-  import { scrollMenu } from "../utils";
+  import { scrollMenuEvent } from "../utils";
   import { MenuData } from "src/core/index.js";
   import { api_common } from "src/api/"
   import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
@@ -56,7 +56,7 @@
 
     set_menu_match_date()
 
-    event && scrollMenu(event,".date-tab-content-ul",".active");
+    event && scrollMenuEvent(event,".date-tab-content-ul",".active");
   }
   
 

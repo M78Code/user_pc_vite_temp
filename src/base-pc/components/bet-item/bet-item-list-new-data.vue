@@ -96,10 +96,10 @@ const score = computed(() => {
   let score = "";
   let { _hpid: hpid, ot = "", on } = props.ol_data;
   // 比分玩法的显示
-  if ([7, 20, 74, 341, 342].includes(+hpid) && !_.isEmpty(ot)) {
+  if ([7, 20, 74, 341, 342].includes(+hpid) && !lodash.isEmpty(ot)) {
     if (ot.includes(":")) {
       score = ot.replace(":", "-");
-    } else if (_.toLower(ot) == "other") {
+    } else if (lodash.toLower(ot) == "other") {
       score = on;
     }
   }
@@ -206,8 +206,8 @@ const clear_odds_lift = () => {
  * @return {boolean}
  */
 const is_odds_seal = () => {
-  let ov = _.get(props.ol_data, "ov");
-  let obv = _.get(props.ol_data, "obv");
+  let ov = lodash.get(props.ol_data, "ov");
+  let obv = lodash.get(props.ol_data, "obv");
   let _odds = ov || obv;
   return _odds < 101000;
 };
@@ -221,7 +221,7 @@ const is_odds_seal = () => {
  */
 const get_odds_state = (mhs, hs, os) => {
   let _active = get_odds_active(mhs, hs, os);
-  let id = _.get(props.ol_data, "_hn") || _.get(props.ol_data, "oid");
+  let id = lodash.get(props.ol_data, "_hn") || lodash.get(props.ol_data, "oid");
   let state = "";
   const STATE = {
     // 封盘

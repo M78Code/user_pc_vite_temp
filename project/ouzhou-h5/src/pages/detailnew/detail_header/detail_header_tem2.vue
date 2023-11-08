@@ -148,14 +148,14 @@ const img_url_host = "http://image-new.sportxxxifbdxm2.com/";
     // 足篮棒网使用3.0动画  其他使用2.0
     if([1,2,3,5].includes(match.csid*1)){
       let style = 'day' 
-      let animation3Url = lodash.get(res, "data.data.animation3Url") || []
+      let animation3Url = lodash.get(res, "data.animation3Url") || []
       animation3Url.forEach( item =>{
         if(item.styleName.indexOf(style) >= 0){
           animationUrl = item.path
         }
       })
     }
-    animationUrl = animationUrl || lodash.get(res, "data.data.animationUrl")
+    animationUrl = animationUrl || lodash.get(res, "data.animationUrl")
     if (animationUrl) {
       // 移除 http(s)
       animationUrl = animationUrl.replace(/https?:/, "")
@@ -278,19 +278,19 @@ onMounted(() => {
       }
     }
     .dianqiu {
-      background: url('src/assets/images/detail/dianqiu.png');
+      background: url($SCSSPROJECTPATH+"/image/detail/dianqiu.png");
     }
     .hongpai {
-      background: url('src/assets/images/detail/hongpai.png');
+      background: url($SCSSPROJECTPATH+"/image/detail/hongpai.png");
     }
     .huangpai {
-      background: url('src/assets/images/detail/huangpai.png');
+      background: url($SCSSPROJECTPATH+"/image/detail/huangpai.png");
     }
     .jiaoqiu {
-      background: url('src/assets/images/detail/jiaoqiu.png');
+      background:url($SCSSPROJECTPATH+"/image/detail/jiaoqiu.png");
     }
     .shangbanchang {
-      background: url('src/assets/images/detail/shangbanchang.png');
+      background:  url($SCSSPROJECTPATH+"/image/detail/shangbanchang.png");
     }
     .score-icon {
       display: inline-block;

@@ -43,7 +43,7 @@
 <script setup>
 import { ref } from "vue";
 import search from "./img/search.svg";
-import {scrollMenu} from "../utils";
+import {scrollMenuEvent} from "../utils";
 import { useMittEmit, MITT_TYPES } from "src/core/index.js";
 import {  menu_lv2 } from 'src/base-h5/mixin/menu.js'
 import  screenModal from './screen-modal.vue'
@@ -103,7 +103,7 @@ const changeTab = (val,i,event) => {
     console.log(`${props.dataList[val].name}-${val}`)
     if(activeOn.value === val)return;
     activeOn.value = val;
-    event && scrollMenu(event,".search-tab-content-ul",".active");
+    event && scrollMenuEvent(event,".search-tab-content-ul",".active");
 }
 
 /**
