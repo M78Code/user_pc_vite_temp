@@ -284,7 +284,7 @@ export default {
     align-items: center;
     background: #ffffff;
     .buffer-container{
-      background: #fff;
+      background: var(--q-gb-bg-c-10);;
       height: 5px;
       width: 100%;
     }

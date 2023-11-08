@@ -124,6 +124,7 @@ export default defineComponent({
   position: relative;
   width: 100%;
   height: auto;
+  border-bottom: 1px solid #e9e9e9;
   padding-top: 0.08rem;
 
   &.standard {
