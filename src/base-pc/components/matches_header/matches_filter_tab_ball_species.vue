@@ -1,8 +1,8 @@
 <!--
  * @Author         : lane jstylane@itcom888.com
  * @Date           : 2023-07-15 19:17:42
- * @LastEditors: Please set LastEditors
- * @LastEditTime: 2023-07-17 18:21:02
+ * @LastEditors: lowen pmtylowen@itcom888.com
+ * @LastEditTime: 2023-11-08 19:21:01
  * @FilePath: \user-pc-vue3\src\components\matches_header\matches_filter_tab_ball_species.vue
  * @Description    : 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -26,7 +26,7 @@
               <div class="filter-count">{{ item.count }}</div>
             </div>
             <div :class="{ checked_text: current_choose_tab == item.mi }" class="label-text">
-              {{ (menus_i18n_map || {} )[item.mi] || "" }}
+              <!-- {{ (menus_i18n_map || {} )[item.mi] || "" }} -->
             </div>
           </div>
           <img class="current-mark" :class="{ 'show-mark': current_choose_tab == item.mi }" src="../../../assets/images/mask_group.png" alt="">

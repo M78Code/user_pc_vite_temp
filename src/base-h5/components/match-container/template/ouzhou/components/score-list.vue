@@ -21,6 +21,7 @@ import { computed, ref } from 'vue'
 import { odd_lock_ouzhou } from 'src/base-h5/core/utils/local-image.js'
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js" 
 import { compute_value_by_cur_odd_type } from "src/core/index.js"
+import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 
 const props = defineProps({
   hpid: {
@@ -38,7 +39,8 @@ const active_score = ref('')
 // 赔率数据
 const score_data = computed(() => {
   const hps = props.match_info.hps
-  const hps_item = hps.find(t => t.hpid == props.hpid)
+  const hpid = MatchResponsive.match_hpid.value
+  const hps_item = hps.find(t => t.hpid == hpid)
   const ol = lodash.get(hps_item, 'hl[0].ol', [{}, {}, {}])
   return ol
 })
@@ -49,8 +51,8 @@ const get_odd_os = (ov) => {
 }
 
 const set_old_submit = (ol) => {
-  active_score.value = `${props.match_info.id}${s.oid}`
-  
+  active_score.value = `${props.match_info.id}${ol.oid}`
+console.error('ol',ol)
   const {oid,_hid,_hn,_mid } = ol
         let params = {
           oid, // 投注项id ol_obj
@@ -66,7 +68,7 @@ const set_old_submit = (ol) => {
           // 设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备
           device_type: 1,  
           // 数据仓库类型
-          match_data_type: "h5_list",
+          match_data_type: "h5_list", // h5_detail
         }
         set_bet_obj_config(params,other)
 }

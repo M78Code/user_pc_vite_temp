@@ -1,8 +1,8 @@
 /*
  * @Author         : lane jstylane@itcom888.com
  * @Date           : 2023-07-05 13:42:11
- * @LastEditors: Please set LastEditors
- * @LastEditTime: 2023-07-10 19:45:23
+ * @LastEditors: lowen pmtylowen@itcom888.com
+ * @LastEditTime: 2023-11-08 18:39:54
  * @FilePath: \user-pc-vue3\src\components\menus\base_data.js
  * @Description    : 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -90,12 +90,12 @@ const init_base_menu_il8n = async () => {
 
 export const useMenuData = () => {
   // const { data, error } = useSWRV('/yewu11/v3/menu/init', init_mew_menu_list, { refreshInterval: 5000 })
-  return { data, error }
+  // return { data, error }
 }
 
 export const useMenuI18n = () => {
   // const { data, error } = useSWRV('/yewu11/v3/menu/loadNameList', init_base_menu_il8n, { refreshInterval: 5000 })
-  return { data, error }
+  // return { data, error }
 }
 
 /**

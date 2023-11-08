@@ -2,92 +2,109 @@
 <template>
     <div class="bet_input_info flex_input">
        <div class="info_left">
-       <div class="size_16 color_a1a1">name</div>
+       <div class="size_16 color_a1a1">single bet</div>
         <div class="size_14">
             <span>Highest Win</span>
-            <span class="margin_left_4">123</span>
+            <span class="margin_left_4">{{}}</span>
         </div>
        </div>
        <div class="info_right size_14">
-            <!-- <div class="input_amount">789</div>
-            <div class="input_cursor" ref="input_cursor"></div> -->
-            <div class="input_place">{{ `Limits 10~9999` }}</div>
+        <div class="content-b" @click.stop="input_click">
+            <span v-if="ref_data.money" class="yb_fontsize20 money-number">{{ ref_data.money }}</span>
+  
+            <span class="money-span" ref="money_span" :style="{ opacity:  '1' }"></span>
+            
+            <span class="yb_fontsize14 limit-txt" v-show="!ref_data.money">{{ i18n_t('app_h5.bet.limit')}} {{ ref_data.min_money }}-{{ ref_data.max_money }}</span>
+          
+          </div>
+          
        </div>
     </div>
 </template>
 
 <script setup>
-// import {ref  , reactive,onMounted,watch,computed,onUnmounted} from 'vue'
-// import EMITTER from  "src/global/mitt.js"
-// import store from 'src/store-redux-vuex/index.js';
-// import { format_money2 ,format_money1} from 'src/public/utils/bet/bet_filters.js'
+import lodash_ from "lodash"
+import { onMounted, onUnmounted, reactive,ref } from "vue"
+import {MITT_TYPES,useMittOn } from "src/core/"
+import BetData from "src/core/bet/class/bet-data-class.js";
+import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js"
 
-// let bet_input_amount = ref()
-// let flicker_timer = null
+const props = defineProps({
+    item:{},
+    index:{}
+})
 
-// const bet_input = ref();
-// const input_cursor = ref()
+// 光标
+const money_span = ref(null)
+let flicker_timer = null
 
-const bet_tabs = [
-  {
-    name: "Single Bet", // 单关
-    label: 'Single',
-    active: true,
-    badge: false,
-  },
-  {
-    name: "bets", // 串关
-    label: 'My Bets',
-    active: false,
-    badge: false,
-  },
-]
+const ref_data = reactive({
+    min_money: '',  // 最小投注金额
+    max_money: '', // 最大投注金额
+    seriesOdds: '', // 串关复式投注赔率
+    money: '', // 投注金额
 
-// const props = defineProps({
-//     items:{},
-//     show_keyboard:'',
-//     bet_state:'',
+})
 
-// })
+onMounted(()=>{
+    cursor_flashing()
+    useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money)
+    //监听键盘金额改变事件
+    useMittOn(MITT_TYPES.EMIT_INPUT_BET_MONEY_SINGLE, change_money_handle)
+})
 
-// const highest_amount = computed(() => {
-//     let text = '0.00'
-//     if( bet_input_amount.value){
-//         text = (+bet_input_amount.value * Number(props.items.oddFinally) - props.items.betAmount).toFixed(2)
-//     }
-//     return text
-// })
+onUnmounted(()=>{
+    useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY).off
+})
 
-// // 光标闪动
-// const cursor_flashing = () => {
-//     clearInterval(flicker_timer)
-//     flicker_timer = setInterval(() => {
-//         input_cursor.value && input_cursor.value.classList.toggle('money_input_cursor')
-//     }, 700);
-// }
+/**
+ *@description 金额改变事件
+ *@param {Number} new_money 最新金额值
+ */
+ const change_money_handle = (new_money) => {
+  ref_data.money = new_money.money
+}
 
-// watch(() => bet_input_amount.value,(newval)=>{
-//     let bet_info = {
-//         ...props.items,
-//     }
-//     bet_info.betAmount = Number(newval).toFixed(2)
-//     store.dispatch({
-//         type: "SET_BET_INFO",
-//         data: [bet_info],
-//     });
-// })
 
-// EMITTER.on("input_bet_money", (m) => {
-//     bet_input_amount.value = m.value 
-// })
+// 限额改变 修改限额内容
+const set_ref_data_bet_money = () => {
+    let value = props.item.playOptionsId
+    // 串关获取 复试连串
+    if (!BetData.is_bet_single) {
 
-// onMounted(()=>{
-//     cursor_flashing()
-// })
-// onUnmounted(() => {
-//     clearInterval(flicker_timer)
-//     EMITTER.off("input_bet_money")
-// })
+        // 复式连串关投注
+        const { id, name, count } = BetViewDataClass.bet_special_series[props.index] || {}
+        special_series.id = id
+        special_series.name = name
+        special_series.count = count
+        // 串关 type
+        value = id
+    }
+
+    const { min_money = 10, max_money = 8888, seriesOdds } = lodash_.get(BetViewDataClass.bet_min_max_money, `${value}`, {})
+    // 最小限额
+    ref_data.min_money = min_money
+    // 最大限额
+    ref_data.max_money = max_money
+    // 复试串关赔率
+    ref_data.seriesOdds = seriesOdds
+    // 限额改变 重置投注金额
+    ref_data.money = ''
+
+    // 设置键盘设置的限额和数据
+    BetData.set_bet_keyboard_config({playOptionsId:props.item.playOptionsId})
+}
+
+/**
+ *@description 光标闪动，animation有兼容问题，用函数替代
+ *@return {Undefined} undefined
+ */
+ const cursor_flashing = () => {
+  clearInterval(flicker_timer)
+  flicker_timer = setInterval(() => {
+    money_span.value && money_span.value.classList.toggle('money-span3')
+  }, 700);
+}
 
 </script>
 
@@ -162,7 +179,15 @@ const bet_tabs = [
 }
 .huise{
     color: #8A8986 !important;
-;
 }
+.money-span {
+    width: 0.02rem;
+    height: 0.16rem;
+    margin: 0 1px;
+    background: var(--q-gb-bg-c-1);
+    &.money-span3{
+      background: transparent;
+    }
+  }
 
 </style>
