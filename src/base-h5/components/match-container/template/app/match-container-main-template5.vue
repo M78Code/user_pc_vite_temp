@@ -158,11 +158,16 @@
                               <span class="serving-party" :class="{ 'simple': standard_edition == 1 }"
                                 v-show="set_serving_side(match, 'home')">
                               </span>
-                              <img v-if="match?.mhlu?.length" class="logo" v-img="([match.mhlu[0], match.frmhn[0], match.csid])" />
-                            </div>
-                            <span class="vs">VS</span>
-                            <div>
-                              <img v-if="match?.malu?.length" class="logo" v-img="([match.malu[0], match.frman[0], match.csid])" />
+
+                                             <!-- 1-足球 2-篮球 3-棒球 4-冰球 5-网球 6-美式足球 7-斯诺克 8-乒乓球 9-排球  10-羽毛球 -->
+                            <image-cache-load v-if="match?.mhlu?.length && !([5, 10, 7, 8].includes(Number(match.csid)))" :csid="+match.csid" :path="match.mhlu" type="home"></image-cache-load>
+                                <!-- <img v-if="match?.mhlu?.length" class="logo" v-img="([match.mhlu[0], match.frmhn[0], match.csid])" /> -->
+                              </div>
+                              <span class="vs">VS</span>
+                              <div>
+                            <image-cache-load v-if="match?.malu?.length && !([5, 10, 7, 8].includes(Number(match.csid)))" :csid="+match.csid" :path="match.malu" type="home"></image-cache-load>
+
+                                <!-- <img v-if="match?.malu?.length" class="logo" v-img="([match.malu[0], match.frman[0], match.csid])" /> -->
                                    <!--发球方绿点-->
                               <span class="serving-party" :class="{ 'simple': standard_edition == 1 }"
                                 v-show="set_serving_side(match, 'away')">
@@ -920,6 +925,7 @@ export default {
           display: flex;
           align-items: center;
           gap: 4px;
+          width:136px;
         }
       }
 
