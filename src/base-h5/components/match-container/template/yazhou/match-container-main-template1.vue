@@ -202,6 +202,7 @@
                           <div class="yb-goal-gif" :class="{ 'yb-goal-yo': theme.includes('y0') }"></div>
                           <div class="gif-text">{{ $t('match_result.goal') }}</div>
                         </div>
+                        <!-- 主队红牌 -->
                         <span class='score-punish' v-show="home_red_score"
                           :class="{ flash: is_show_home_red && !is_results }">
                           {{ home_red_score }}
@@ -241,11 +242,6 @@
                       <div class="yb-goal-gif yb-goal-yo"></div>
                       <div class="gif-text">{{ $t('match_result.goal') }}</div>
                     </div>
-                    <!--进行中的赛事显示比分-->
-                    <span class='score-punish' v-show="away_red_score"
-                      :class="{ flash: is_show_away_red && !is_results }">
-                      {{ away_red_score }}
-                    </span>
                   </div>
                   <!--进行中的赛事显示比分 ,如果是比分判定中，则不显示比分-->
                   <div class="score full-score" v-show="match_of_list.ms > 0 && !is_results && !eports_scoring"
