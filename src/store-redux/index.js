@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 
-import langReducer from "./module/languages";
-import themeReducer from "./module/theme";
+// import langReducer from "./module/languages";
+// import themeReducer from "./module/theme";
  
 
 // import configReducer from "./module/config";
@@ -9,8 +9,8 @@ import * as project_store from "base_path/store";
 const store = configureStore({
   reducer: {
  
-    langReducer,
-    themeReducer,
+    // langReducer,
+    // themeReducer,
     ...project_store,
   },
   middleware:getDefaultMiddleware=>getDefaultMiddleware({

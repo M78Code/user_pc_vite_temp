@@ -74,37 +74,63 @@ class BetRecord {
 
   //返回订单状态   orderStatus(0:未结算,1:已结算,2:注单无效,3:确认中,4:投注失败)
   calc_text(data_b) {
+    let color = 'black'
+    let text = ''
     switch (data_b.orderStatus) {
       case '0':
-        return { text: t('bet_record.successful_betting'), color: 'green' }
+        text = t('bet_record.successful_betting')
+        color = 'green'
+        break;
       case '1':
         let flag = data_b.seriesType == '1' && data_b.orderVOS[0]
-        let color = 'black'
         if (flag) {   //单关
+          if (+data_b.preBetAmount > 0) { 
+            // 提前结算的输赢单独一套逻辑算
+            let difference = data_b.backAmount - data_b.orderAmountTotal
+            // 赢
+            if (difference > 0) {
+              color = 'red'
+              text = bet_result['4']
+            } else if (difference < 0) {
+              // 输
+              text = bet_result['3']
+            } else {  // 走水
+              text = bet_result['2']
+            }
+            break;
+          }
           let betresult = data_b.orderVOS[0].betResult
           if (betresult == 13 || betresult == 16) {
-            return { text: t('bet_record.invalid'), color }
+            text = t('bet_record.invalid')
           } else {
             if (betresult == 4 || betresult == 5) {
               color = 'red'
             }
-            return { text: bet_result[betresult] || '', color };
+            text = bet_result[betresult] || ''
           }
         } else {  //串关
           if (data_b.outcome == 4 || data_b.outcome == 5) {
             color = 'red'
           }
-          return { text: outcome[data_b.outcome] || t('bet_record.successful_betting') || '', color };
+          text = outcome[data_b.outcome] || t('bet_record.successful_betting')
         }
+        break;
       case '2':
-        return { text: t('bet_record.invalid_bet'), color: 'gray' }
+        text = t('bet_record.invalid_bet')
+        color = 'gray'
+        break
       case '3':
-        return { text: t('bet_record.confirming'), color: 'orange' }
+        text = t('bet_record.confirming')
+        color = 'orange'
+        break
       case '4':
-        return { text: t('bet.bet_err'), color: 'red' }
+        text =  t('bet.bet_err')
+        color = 'red'
+        break
       default:
-        return { text: '', color: '' }
+        break
     }
+    return { text, color }
   }
   // 根据提前结算按钮状态， 过滤提前结算的数据
   filter_early_money_list(value, bol) {

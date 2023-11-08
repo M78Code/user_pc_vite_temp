@@ -22,8 +22,8 @@
 				</div>
 			</div>
 		</div>
-		<!-- <MatchesFilterTab v-show="(current_value == 'top_events' && redux_menu.menu_root == 1 && !coom_soon_state) || redux_menu.menu_root == 2 "  />
-		<MatchesDateTab v-show="redux_menu.menu_root == 4 && current_value == 'matches'" /> -->
+		<MatchesFilterTab v-show="(current_value == 'top_events' && redux_menu.menu_root == 1 && !coom_soon_state) || redux_menu.menu_root == 2 "  />
+		<MatchesDateTab v-show="redux_menu.menu_root == 4 && current_value == 'matches'" />
 	</div>
 </template>
 
@@ -34,8 +34,8 @@ import { useRouter } from "vue-router";
 import _ from "lodash"
 import MatchListOuzhouClass from 'src/core/match-list-pc/match-ouzhou-list.js'
 
-// import MatchesFilterTab from "./matches_filter_tab_ball_species.vue";
-// import MatchesDateTab from "./matches_filter_tab.vue";
+import MatchesFilterTab from "./matches_filter_tab_ball_species.vue";
+import MatchesDateTab from "./matches_filter_tab.vue";
 
 // import { use_new_menu } from "@/components/menus/menu.js"
 // import store from "src/store-redux-vuex/redux_menu.js";
@@ -126,34 +126,32 @@ onMounted(()=>{
 })
 
 // // 菜单切换 右侧背景图片变化
-// let un_subscribe = store.subscribe(() => {
-// 	state = store.getState();
+let un_subscribe = () => {
+	redux_menu.value = MatchListOuzhouClass.redux_menu;
+	const { menu_root,menu_left,mid_tab_menu_type,coom_soon } = MatchListOuzhouClass.redux_menu;
+	coom_soon_state.value=coom_soon
+	// console.error('header ', menu_root,mid_tab_menu_type,menu_left)
+	let ball_number = 0
+	if( menu_root == 1 ){
+		ball_number = sport_ball[0] * 90
+	}
+	// In-play页面头部背景球种图计算
+	if( menu_root == 2 ){
+		let sport_id = mid_tab_menu_type - 100
+		ball_number = sport_ball[sport_id] * 90
+	}
 
-// 	redux_menu.value = state.menusReducer.redux_menu;
-// 	const { menu_root,menu_left,mid_tab_menu_type,coom_soon } = state.menusReducer.redux_menu;
-// 	coom_soon_state.value=coom_soon
-// 	// console.error('header ', menu_root,mid_tab_menu_type,menu_left)
-// 	let ball_number = 0
-// 	if( menu_root == 1 ){
-// 		ball_number = sport_ball[0] * 90
-// 	}
-// 	// In-play页面头部背景球种图计算
-// 	if( menu_root == 2 ){
-// 		let sport_id = mid_tab_menu_type - 100
-// 		ball_number = sport_ball[sport_id] * 90
-// 	}
+	if( menu_root == 4 ){
+		let sport_id = menu_left - 100
+		ball_number = sport_ball[sport_id] * 90
+		if(menus_i18n_map.value){
+			matches_header_title.value = (menus_i18n_map || {}).value[menu_left]
+		}
+	}
 
-// 	if( menu_root == 4 ){
-// 		let sport_id = menu_left - 100
-// 		ball_number = sport_ball[sport_id] * 90
-// 		if(menus_i18n_map.value){
-// 			matches_header_title.value = (menus_i18n_map || {}).value[menu_left]
-// 		}
-// 	}
+	current_ball_type.value = ball_number
 
-// 	current_ball_type.value = ball_number
-
-// })
+}
 
 // 切换 header 信息 
 const set_header_tab = val => {
@@ -184,7 +182,6 @@ const set_header_tab = val => {
 }
 
 const checked_current_tab = payload => {
-	// state = store.getState()
 	// 获取最新的 数据
 	let redux_menu = _.cloneDeep(MatchListOuzhouClass.redux_menu) 
 	// 暂时不做 
@@ -200,10 +197,7 @@ const checked_current_tab = payload => {
 
 	redux_menu.mid_tab_type = payload.value
 
-	// store.dispatch({
-	// 	type: 'SETREDUXMENU',
-	// 	data: redux_menu
-	// })
+	MatchListOuzhouClass.set_menu(redux_menu)
 
 	current_value.value = payload.value;
 	
@@ -223,7 +217,7 @@ const checked_current_tab = payload => {
 onUnmounted(()=>{
   b_menu_root.value = 0
   current_ball_type.value = 630
-//   un_subscribe()
+  un_subscribe()
 })
 
 

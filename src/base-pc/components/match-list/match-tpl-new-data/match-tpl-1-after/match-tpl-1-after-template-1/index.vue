@@ -93,7 +93,7 @@
           <basis-info4 v-if="is_mounted && match" :is_other_concede="true" :match="match" :is_show_score="true" />
         </div>
         <!-- 赛事盘口投注项 -->
-        <match-handicap v-if="match" :handicap_list="compute_other_play_data" :match="match" other_play />
+        <match-handicap v-if="match"  :handicap_list="compute_other_play_data" :match="match" other_play />
         <!-- 视频按钮 -->
         <div class="media-col"></div>
       </div>
@@ -138,7 +138,7 @@ let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.mid)
 const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`].width_config
 const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`]
 let match = MatchListData.get_quick_mid_obj(props.mid);
-match && set_play_name_list(MatchListData.get_tab_play_keys(match))
+match && set_play_name_list(match.tab_play_keys)
 const is_mounted = ref(true);
 let compute_other_play_data = get_compute_other_play_data(match) //玩法数据
 const has_other_play = computed(() => { //是否有其他玩法
@@ -147,9 +147,8 @@ const has_other_play = computed(() => { //是否有其他玩法
 watch(() => MatchListData.data_version.version, (new_value, old_value) => {
   match = MatchListData.get_quick_mid_obj(props.mid);
   compute_other_play_data = get_compute_other_play_data(match)
-  match && set_play_name_list(MatchListData.get_tab_play_keys(match)) //其他玩法key
+  match && set_play_name_list(match.tab_play_keys) //其他玩法key
 })
-
 // 其他玩法标题
 const bet_col = computed(() => {
   let bet_col = []

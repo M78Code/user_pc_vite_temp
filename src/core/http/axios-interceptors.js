@@ -10,6 +10,7 @@ import { get_query_string } from "src/core/index.js";
 import { useMittEmit, MITT_TYPES } from "../mitt";
 // import userCtr from "../user-config/user-ctr";
 const token_key = STANDARD_KEY.get("token"); //token键
+const lang_key = STANDARD_KEY.get("lang"); // 语言key
 
 const FNANI_STATUS = {
   // token api接口连续失效次数
@@ -52,7 +53,7 @@ const requestHook = {
     const requestId = SessionStorage.get(token_key) || sessionStorage.getItem("token") ||get_query_string.token || "";
     config.headers["requestId"] = requestId;
     //请求语言
-    config.headers["lang"] = SessionStorage.get('lang'); // 语言调整
+    config.headers["lang"] = LocalStorage.get(lang_key); // 语言调整
     config.headers["checkId"] = `pc-${requestId}-${(UserCtr.get_uid()).replace(/-/g, "")}-${Date.now()}`;
     // config.url 后面是不带 ？的  会被 axios 解析掉参数放在其他地方
     if (SessionStorage.get(STANDARD_KEY.get("pb"))) {

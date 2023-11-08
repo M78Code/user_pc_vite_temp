@@ -4,7 +4,7 @@
 <template>
     <div class="navigation-bar" :style="{borderBottomColor: borderBottomNoShow && 'transparent'}">
         <div class="navigation-bar-left">
-            <div class="navigation-bar-close" @click="router.back()">
+            <div class="navigation-bar-close" @click="set_back">
                 <div class="img" :style="compute_css_obj('menu-go-back-icon')"></div>
             </div>
         </div>
@@ -29,7 +29,7 @@ defineOptions({
 
 const router = useRouter();
 
-defineProps({
+const props = defineProps({
     centerContentType: {
         type: String,
         default: 'text' // switch (顶部菜单切换) select（顶部选择）都使用slot方式  text（顶部title） 使用直接展示
@@ -41,8 +41,20 @@ defineProps({
     borderBottomNoShow: {
         type: Boolean,
         default: false
+    },
+    goBackAssign: {
+        type: Function,
+        default: null
     }
 })
+
+const set_back = () => {
+    router.back()
+    if (props.goBackAssign !== null) {
+        props.goBackAssign()
+    }
+}
+
 </script>
 <style scoped lang="scss">
 // 组件样式

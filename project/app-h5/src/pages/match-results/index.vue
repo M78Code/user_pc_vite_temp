@@ -1,5 +1,5 @@
 <template>
-    <navigation-bar centerContentType="switch" borderBottomNoShow>
+    <navigation-bar centerContentType="switch" borderBottomNoShow :goBackAssign="goBackAssign">
         <template v-slot:center>
             <div class="switch-box">
                 <div v-for="(item, index) in switchMenu" :key="'swtich-' + index" @click="switchHandle(index)"
@@ -12,7 +12,6 @@
             <div class="right-icon" @click="state.select_dialog = true"></div>
         </template>
     </navigation-bar>
-
     <div class="slide-box">
         <div v-for="(item, index) in state.slideMenu" @click="slideHandle(item,$event)" :class="['slide-item', state.currentSlideValue == item.field1 &&
             'slide-item-active']" :key="'slide-' + index">
@@ -22,7 +21,9 @@
 
     <ScrollMenu :scrollDataList="state.slideMenu_sport" :current_mi="state.current_mi" />
 
-    <match-container />
+    <div class="match-results-container-styles">
+        <match-container />
+    </div>
 
 
 </template>
@@ -80,6 +81,7 @@ const set_scroll_data_list = (data_list = []) => {
             mi: 100+item.sportId*1 + ''+'1',
             ct: item.count,
             md: item.date,
+            sport: item.sportId,
         }
     })
     state.slideMenu_sport = scroll_data
@@ -104,7 +106,13 @@ const set_result_menu_api = () => {
     MatchMeta.get_results_match()
 }
 
+const goBackAssign = () => {
+    MenuData.set_top_menu_title({})
+    MenuData.set_init_menu_list()
+}
+
 onMounted(()=>{
+    MenuData.set_current_lv1_menu(28)
     switchHandle(0)
     useMittOn(MITT_TYPES.EMIT_SCROLL_TOP_NAV_CHANGE, set_scroll_current)
 })

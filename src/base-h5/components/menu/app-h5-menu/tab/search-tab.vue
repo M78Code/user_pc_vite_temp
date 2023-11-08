@@ -1,8 +1,8 @@
 <!--
  * @Author: rise
  * @Date: 2023-10-20 16:27:18
- * @LastEditors: rise
- * @LastEditTime: 2023-11-03 14:04:11
+ * @LastEditors: jamison pmtyjamison@itcom888.com
+ * @LastEditTime: 2023-11-08 14:43:57
  * @Description:  
 -->
 <template>
@@ -16,9 +16,26 @@
                     {{ item.name }}
                 </li>
             </ul>
-            <div class="search-tab-content-img" @click="searchClick">
+            <div class="search-tab-content-img" @click="drawerRight = !drawerRight">
                 <img :src="search" />
             </div>
+            <!-- <div class="search-tab-content-img" @click="searchClick">
+                <img :src="search" />
+            </div> -->
+        <q-drawer
+            side="right"
+            v-model="drawerRight"
+            show-if-above
+            bordered
+            :width="300"
+            :breakpoint="500"
+            class="bg-grey-3 search-tab-content-img"
+            elevated
+        >
+        <q-scroll-area class="fit">
+            <screenModal></screenModal>
+        </q-scroll-area>
+      </q-drawer>
         </div>
     </div>
 </template>
@@ -29,6 +46,7 @@ import search from "./img/search.svg";
 import {scrollMenuEvent} from "../utils";
 import { useMittEmit, MITT_TYPES } from "src/core/index.js";
 import {  menu_lv2 } from 'src/base-h5/mixin/menu.js'
+import  screenModal from './screen-modal.vue'
 const props = defineProps({
     dataList: {
         type: Array,
@@ -75,6 +93,7 @@ const props = defineProps({
         default: 0
     }
 });
+const drawerRight = ref(false)
 const activeOn = ref(props.defaultVal || 0);//默认值
 /**
  * 选中事件
@@ -92,11 +111,19 @@ const changeTab = (val,i,event) => {
  */
 const searchClick = () => {
     // console.log(`搜索足球`)
-    useMittEmit(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, {
-      open: true,
-    });
+    // useMittEmit(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, {
+    //   open: true,
+    // });
     // emit('searchHandle')
-
+    is_show.value = true
+    console.log('is_showis_showis_showis_show',is_show)
+}
+// 键入回车换行
+function key_down(event) {
+  event = event || window.event;
+  if (event.keyCode == 13) {
+    event.returnValue = false;
+  }
 }
 </script>
 <style lang="scss" scoped>
@@ -159,7 +186,6 @@ const searchClick = () => {
         .search-tab-content-img {
             width: 0.38rem;
             text-align: center;
-
             img {
                 width: 0.18rem;
                 height: 0.18rem;
@@ -167,6 +193,8 @@ const searchClick = () => {
                 margin-top: -2px;
             }
         }
+    
     }
-}</style>
+}
+</style>
   

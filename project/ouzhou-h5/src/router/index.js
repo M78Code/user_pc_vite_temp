@@ -1,8 +1,8 @@
 /*
  * @Author: rise
  * @Date: 2023-11-03 16:37:52
- * @LastEditors: lowen pmtylowen@itcom888.com
- * @LastEditTime: 2023-11-07 19:21:14
+ * @LastEditors: rise
+ * @LastEditTime: 2023-11-08 13:42:14
  * @Description:  
  */
 import { createRouter, createWebHashHistory } from "vue-router";
@@ -17,14 +17,14 @@ const router = createRouter({
       name: "main",
       component: () => import("../layouts/index.vue"),
       children: [
-          // {
-          //   path: "/inPlay",
-          //   name: "inPlay",
-          //   component: () => import("../pages/in-pay/index.vue"),
-          //   meta: {
-          //     keepAlive: true // 需要缓存
-          //   },
-          // },
+          {
+            path: "/inPlay",
+            name: "inPlay",
+            component: () => import("../pages/in-play/index.vue"),
+            meta: {
+              keepAlive: true // 需要缓存
+            },
+          },
           {
             path: "/match",
             name: "matchList",
@@ -52,7 +52,7 @@ const router = createRouter({
           {
             path: "/home",
             name: "home",
-            component: () => import("../pages/match-page/index.vue"),
+            component: () => import("../pages/home/index.vue"),
           },
           // {
           //   path: "/activity_task",
@@ -170,7 +170,7 @@ const router = createRouter({
             meta: {
               keepAlive: true // 需要缓存
             },
-          }
+          },
       ],
     },
     {
@@ -179,6 +179,15 @@ const router = createRouter({
         name: 'matchList'
       },
       
+    },
+    //搜索
+    {
+      path: "/search",
+      name: "search",
+      component: () => import("../pages/search/index.vue"),
+      meta: {
+        keepAlive: true // 需要缓存
+      }
     }
   ],
 });

@@ -4,7 +4,7 @@
  * @Description: 标准建
  */
  
-const namespace = "TY_SDK";
+const namespace = "TY_SDK_";
 let STANDARD_KEY = {
   KEY_ARR:[],
   get(key) {

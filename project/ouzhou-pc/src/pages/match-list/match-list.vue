@@ -15,10 +15,9 @@
       <div class="fold-btn" @click="match_list_card.unfold_all_league()">展开联赛</div>
       <div class="fold-btn" @click="match_list_card.fold_all_league()">折叠联赛</div>
       <div class="fold-btn" @click="match_list_card.test_log_data()">打印数据</div>
-      <div> load_data_state {{ load_data_state }}</div>
     </div> -->
     <MatchesHeader />
-    <div class="match-list-scroll scroll">
+    <div class="match-list-scroll scroll" v-show="!coom_soon_state">
       <!-- 头部15 Mins模块 -->
       <div v-show="matches_15mins_list.length">
         <CurrentMatchTitle :title_value="'15 Mins'" :show_more_icon="false" />
@@ -33,7 +32,6 @@
       <load-data :state="'data'" limit_height="1000" >  <!--此处先写死高度用来调试UI -->
         <!-- 滚球其他列表 -->
         <scroll-list  v-if="menu_config.menu_root_show_shoucang != 300">
-          <!-- v-for="card_key in MatchListCardDataClass.match_list_card_key_arr" -->
           <template v-slot:before>
             <div :style="{ height: MatchListCardDataClass.sticky_top.fixed_header_height }"></div>
           </template>
@@ -46,6 +44,7 @@
         >
           <match-list-card 
             :card_key="card_key" 
+            use_component_key="MatchListCard_2"
           />
         </div>  
           <template v-slot:after>
@@ -67,6 +66,7 @@
       <!-- <div v-show="show_refresh_mask" class="refresh-mask absolute-full yb-flex-center" :style="{top:get_is_show_banner && get_is_roll_show_banner ? '156px' : '36px'}"> -->
       <div class="img-loading custom-format-img-loading" :style="compute_css_obj('pc-img-loading')"></div>
     </div>
+    <ConmingSoon v-if="coom_soon_state" />
   </div>
 </template>
 <script>
@@ -84,7 +84,8 @@ import ListHeader from "src/base-pc/components/match-list/list-header/index.vue"
 import ScrollList from 'src/base-pc/components/cus-scroll/scroll_list.vue';
 import refresh from "src/components/refresh/refresh.vue"
 import EsportsHeader from "src/base-pc/components/match-list/esports-header/index.vue";//电竞赛事列表筛选
-
+import ConmingSoon from "src/base-pc/components/conming_soon/conming_soon.vue"
+import MatchListOuzhouClass from 'src/core/match-list-pc/match-ouzhou-list.js'
 // import { VirtualMatchTypeFullVersionWapper as VirtualMatchType } from "src/base-pc/components/match-list/match-list-card/index.js";//虚拟体育 赛事列表 赛事头
 // import { LeaguesFilterFullVersionWapper as LeaguesFilter } from "src/base-pc/components/match-list/match-list-card/index.js";//联赛筛选页面
 // import { VirtualMatchTpl1FullVersionWapper as VirtualMatchTpl1 } from "src/base-pc/components/match-list/match-list-card/index.js"; //拟足球 、 虚拟篮球
@@ -125,7 +126,8 @@ export default {
     CurrentMatchTitle,
     FeaturedMatches,
     MatchCardList15Mins,
-    MatchesHeader
+    MatchesHeader,
+    ConmingSoon
   },
   setup() {
     // 15分钟赛事数据
@@ -134,6 +136,7 @@ export default {
     const matches_featured_list = ref([]);
 
     const match_list_card_key_arr = ref([])
+    const coom_soon_state =ref(false)
 
     const { proxy } = getCurrentInstance()
 
@@ -145,8 +148,8 @@ export default {
       }
       get_home_matches(params).then(res => {
         // 处理返回数据 将扁平化数组更改为页面适用数据
-        matches_15mins_list.value = filter_15mins_func(res.p15);
-        matches_featured_list.value = filter_featured_list(res.hots);
+        matches_15mins_list.value = filter_15mins_func(res.p15 || []);
+        matches_featured_list.value = filter_featured_list(res.hots || []);
       });
     }
 
@@ -171,6 +174,15 @@ export default {
       }
     )
 
+    watch(
+      MatchListOuzhouClass.redux_menu,
+      (list_version) => {
+        console.log( MatchListOuzhouClass.redux_menu, ' MatchListOuzhouClass.redux_menu')
+        const { coom_soon} = MatchListOuzhouClass.redux_menu
+        coom_soon_state.value=coom_soon 
+      }
+    )
+
     return {
       menu_config,
       MatchListData,
@@ -186,6 +198,7 @@ export default {
       compute_css_obj,
       MatchListCardDataClass   ,
       load_data_state,
+      coom_soon_state
     };
   },
 };

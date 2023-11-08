@@ -15,13 +15,14 @@
           <div>
             <img :src="in_progress" /> <span class="din-regular"> 进行中</span>
           </div>
-          <img :class="['expand_item', {ball_seed_collapsed: !ball_seed_collapsed}]" :src="expand_item" alt="">
+          <img :class="['expand_item', {collapsed: collapsed}]" :src="expand_item" alt="">
         </template>
         <!-- 未开赛 -->
         <template v-else>
           <div>
             <img :src="not_begin" /> <span class="din-regular"> {{ $t('list.match_no_start') }}</span>
           </div>
+          <img :class="['expand_item', {collapsed: collapsed}]" :src="expand_item" alt="">
         </template>
       </div>
       <!-- 缓冲容器， 避免滚动时骨架屏漏光问题 -->
@@ -381,7 +382,7 @@ export default {
       width: 20px;
       height: 16px;
     }
-    .ball_seed_collapsed{
+    .collapsed{
       transform: rotate(0);
     }
   }
@@ -390,7 +391,7 @@ export default {
     margin-right: 0.1rem;
   }
   .buffer-container{
-    background: #fff;
+    background: var(--q-gb-bg-c-10);
     height: 5px;
     margin: 0 4px;
   }
