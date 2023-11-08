@@ -840,7 +840,6 @@ init(){
    * @return {undefined} undefined
    */
   _list_item_to_many_obj(item, many_obj){
-    let trys=false;
     if(lodash.get(item,'mid'))
     {
       // 快速查询对象mid_obj增加数据
@@ -957,7 +956,6 @@ init(){
                           // 处理ot是小数的情况,进行数据修正
                           let ot = '';
                           if(!item4){
-                            trys=true
                             return
                           }
                           if(item4.ot && item4.ot.includes('.')) {
@@ -996,7 +994,6 @@ init(){
         }
       });
     }
-    if(trys)debugger
   }
    /**
    * @description: 获取将赛事详情非坑位对象,以便提高操作速度和效率
@@ -1122,7 +1119,7 @@ init(){
                             }
                             // 设置非坑位信息
                             if(!item3.hn) {
-                            let _hn =`${item.mid}_${item2.chpid}_1_${ot}`;
+                            let _hn =`${item.mid}_${item2.hpid}_1_${ot}`;
                               // 押注项设置盘口状态
                             Object.assign(item4, {
                               _hpid: item2.hpid,

@@ -21,7 +21,9 @@
 
     <ScrollMenu :scrollDataList="state.slideMenu_sport" :current_mi="state.current_mi" />
 
-    <match-container />
+    <div class="match-results-container-styles">
+        <match-container />
+    </div>
 
 
 </template>
@@ -36,7 +38,6 @@ import matchContainer from "src/base-h5/components/match-list/index.vue";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import { api_analysis } from "src/api/"
 import { useMittOn,MITT_TYPES,MenuData } from "src/core/"
-import { M } from 'licia/moment';
 
 const inner_height = window.innerHeight;  // 视口高度
 const switchMenu = ['普通赛果', '冠军赛果']

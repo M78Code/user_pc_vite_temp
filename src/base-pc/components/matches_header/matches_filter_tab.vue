@@ -19,13 +19,11 @@
 </template>
 
 <script setup>
-  import store from '@/store-redux-vuex/redux_menu.js';
   import { api_base_data } from "src/api/index.js";
   import { ref,onMounted,onUnmounted } from 'vue';
   import _ from "lodash"
-  import { utils } from "src/public/utils/utils";
-
-  let state = store.getState()
+  import { utils } from "src/base-pc/utils/utils";
+  import MatchListOuzhouClass from 'src/core/match-list-pc/match-ouzhou-list.js'
 
   const current_choose_tab = ref('');
 
@@ -33,25 +31,20 @@
   const current_filter_list = ref([{label:"Today",value:""}])
 
   onMounted(()=>{
-    state = store.getState()
     // 获取最新的 数据
-    let redux_menu = _.cloneDeep(state.menusReducer.redux_menu) 
+    let redux_menu = _.cloneDeep(MatchListOuzhouClass.redux_menu) 
     // 修改菜单数据
     //redux_menu.mid_tab_menu_type = ''
 
-    store.dispatch({
-      type: 'SETREDUXMENU',
-      data: redux_menu,
-    })
+    MatchListOuzhouClass.set_menu(redux_menu)
   })
  
  const set_time = ref(0) 
  const menu_id = ref(0)
 
   // 监听 tab切换变化
-let un_subscribe = store.subscribe(() => {
-  state = store.getState()
-  const { menu_id_euid_ealy,mid_tab_menu_type,menu_root,menu_left } = state.menusReducer.redux_menu
+let un_subscribe = () => {
+  const { menu_id_euid_ealy,mid_tab_menu_type,menu_root,menu_left } = MatchListOuzhouClass.redux_menu
 
   // 切换赛种后 初始化
   if(!mid_tab_menu_type){
@@ -67,7 +60,7 @@ let un_subscribe = store.subscribe(() => {
     }, 800);
   }
 
-});
+};
 
 
 /**
@@ -123,17 +116,12 @@ const get_sport_ealy_date = async euid => {
    * @param
    */
   const choose_filter_tab = payload => {
-   
-    state = store.getState()
     // 获取最新的 数据
-    let redux_menu = _.cloneDeep(state.menusReducer.redux_menu) 
+    let redux_menu = _.cloneDeep(MatchListOuzhouClass.redux_menu) 
     // 修改菜单数据
     redux_menu.mid_tab_menu_type = payload.value
 
-    store.dispatch({
-      type: 'SETREDUXMENU',
-      data: redux_menu,
-    })
+    MatchListOuzhouClass.set_menu(redux_menu)
 
     current_choose_tab.value = payload.value
     
