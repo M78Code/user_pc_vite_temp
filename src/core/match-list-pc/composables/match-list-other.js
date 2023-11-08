@@ -326,7 +326,7 @@ export const get_tab_param_build = (mids) => {
   mids.forEach(mid => {
     let match = MatchListData.get_quick_mid_obj(mid)
     // 有其他玩法
-    if (match && get_has_other_play(match)) {
+    if (match&&match.has_other_play) {
       // 添加玩法ID
       tabs.push({
         mid,
@@ -335,12 +335,6 @@ export const get_tab_param_build = (mids) => {
     }
   })
   return tabs
-}
-/*是否有其他玩法*/
-export function get_has_other_play(match) {
-  if (!match) return false
-  const tab_play_keys = MatchListData.get_tab_play_keys(match)
-  return tab_play_keys && tab_play_keys.split(",").length > 0
 }
 /**
    * @Description 获取21号模板(波胆)
