@@ -31,6 +31,7 @@
               </div>
             </div>
           </div>
+          <!-- 篮球比赛分析图 -->
           <div v-if="['2'].includes(match_detail.csid)">
             <basket_ball_stats :detail_info="match_detail" :score_list="detail_info" />
           </div>
