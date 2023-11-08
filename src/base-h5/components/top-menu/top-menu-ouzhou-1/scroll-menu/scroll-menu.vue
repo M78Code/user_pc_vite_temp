@@ -14,7 +14,7 @@
                     :key="index" dense clickable :class="['play_item', { active: item.mi === playValue }]">
                     <span class="icon">
                         <sport-icon size="24" :status="item.mi === playValue" :sport_id="item.mi" />
-                        <span class="badge"><q-badge rounded :label="get_cont(item)" /></span>
+                        <span class="badge" v-if="props.is_show_badge"><q-badge rounded :label="get_cont(item)" /></span>
                     </span>
                     <div class="label">{{ item.mi == '2000' ? "Esports" : BaseData.menus_i18n_map[item.mi] }} </div>
                     <span class="round"></span>
@@ -30,9 +30,13 @@ import BaseData from "src/core/base-data/base-data.js";
 import { MenuData } from 'src/core/';
 const props = defineProps({
     menu_type: {
-    type: String,
-    default: "2"
-  },
+        type: String,
+        default: "2"
+    },
+    is_show_badge:{
+        type: Boolean,
+        default: true
+    },
 })
 /**
  * 获取滚球数量

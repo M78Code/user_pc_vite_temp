@@ -18,9 +18,11 @@
     <div class="item-main three-more">
       <template v-for="(item, index) in show_data_orderVOS" :key="index">
         <div class="items" v-if="item.isBoolean">
-          <div class="top">
+          <div class="top" :class="{ 'gray-icon':BetRecordClass.selected === 1 }">
             <template>
+              <!-- orderStatus(0:未结算,1:已结算,2:注单无效,3:确认中,4:投注失败) -->
               <icon-wapper name="icon-success" />
+              <!-- <icon-wapper name="icon-failure" /> -->
             </template>
             <div class="top-info flex">
               <p>
@@ -38,7 +40,7 @@
               <span>{{formatTime(+item.beginTime, 'mm/DD HH:MM')}}</span>
             </div>
           </div>
-          <div :class="['main-warp', index === show_data_orderVOS.length - 1 ? 'no-border':'']">
+          <div :class="['main-warp', index === show_data_orderVOS.length - 1 ? 'no-border':'', BetRecordClass.selected === 1 ? 'gray-icon' : '']">
             <div class="list">
               <p class="col-9">
               <span>
@@ -66,7 +68,7 @@
                 &ensp;[{{i18n_t(`odds.${item.marketType}`)}}]
               </div>
               <!-- 已结算显示输赢 -->
-              <span v-if="BetRecordClass.selected === 1" class="result" :class="BetRecordClass.calc_text(data_b).color">
+              <span v-if="data_b.seriesType != '1'" class="result" :class="BetRecordClass.calc_text(data_b).color">
                 {{ BetRecordClass.calc_text(data_b).text }} 
               </span>
             </span>
@@ -194,14 +196,22 @@ template {
           left: 0;
           transform: translateY(-50%);
         }
+        &.gray-icon i.q-icon::before {
+            color: var(--q-gb-bg-c-6);
+          }
         span {
-          color: var(--q-gb-bg-c-9);
+          color: var(--q-gb-bg-c-6);
+          font-weight: normal;
+          font-size: 0.14rem;
         }
       }
       .main-warp {
         padding-left: 0.18rem;
         margin-left: 0.04rem;
         border-left: 1px dashed var(--q-gb-bg-c-9);
+        &.gray-icon {
+          border-left-color: var(--q-gb-bg-c-6);
+        }
       }
 
       .list {
@@ -213,9 +223,10 @@ template {
 
           span {
             color: var(--q-gb-bg-c-13)
-          }
-
-          ;
+          };
+        }
+        .oddfinally {
+          color: var(--q-gb-bg-c-12)
         }
       }
 
@@ -224,8 +235,9 @@ template {
         color: var(--q-gb-bg-c-6);
         padding-bottom: 0.1rem;
         justify-content: space-between;
+        align-items: center;
         .result {
-          font-size: 0.16rem;
+          font-size: 0.14rem;
           font-weight: bold;
         }
       }
@@ -258,23 +270,20 @@ template {
     }
   }
   .green {
-    color: #69C969
-  }
-
-  .red {
-    color: #E93D3D
-  }
-
-  .black {
-    color: #666666
-  }
-
-  .orange {
-    color: #FFB001
+    color: green;
   }
 
   .gray {
-    color: #D2D2D2
+    color: var(--q-gb-bg-c-6);
+  }
+  .orange {
+    color:  var(--q-gb-bg-c-12);
+  }
+  .red {
+    color: var(--q-gb-bg-c-12);
+  }
+  .black {
+    color: var(--q-gb-bg-c-1);
   }
 }
 </style>

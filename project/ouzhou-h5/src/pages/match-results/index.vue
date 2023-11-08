@@ -1,5 +1,5 @@
 <template>
-    <navigation-bar centerContentType="switch" borderBottomNoShow>
+    <!-- <navigation-bar centerContentType="switch" borderBottomNoShow>
         <template v-slot:center>
             <div class="switch-box">
                 <div v-for="(item, index) in switchMenu" :key="'swtich-' + index" @click="switchHandle(index)"
@@ -11,19 +11,20 @@
         <template v-slot:right>
             <div class="right-icon" @click="state.select_dialog = true"></div>
         </template>
-    </navigation-bar>
+    </navigation-bar> -->
 
-    <div class="slide-box">
+    <!-- <div class="slide-box">
         <div v-for="(item, index) in slideMenu" @click="slideHandle(index,$event)" :class="['slide-item', state.currentSlideValue === index &&
             'slide-item-active']" :key="'slide-' + index">
             <span>{{ item }}</span>
         </div>
+    </div> -->
+
+    <!-- <ScrollMenu /> -->
+    <scroll-menu menu_type="1" :is_show_badge="false"  v-if="MenuData.menu_list.length" />
+    <div class="match-container">
+        <match-container />
     </div>
-
-    <ScrollMenu />
-
-    <match-container />
-
     <!--  弹窗  -->
     <div v-if="state.select_dialog" position="bottom" class="select-mask" :style="`height:${inner_height}px`">
         <div style="height:100%;width: 100%" @click="state.select_dialog = false"></div>
@@ -36,9 +37,9 @@
 
 </template>
 <script setup>
-import { onMounted, onBeforeMount, reactive } from "vue";
+import { watch,onMounted, onBeforeMount, reactive } from "vue";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
-import { ScrollMenu } from 'src/base-h5/components/menu/app-h5-menu/index'
+// import { ScrollMenu } from 'src/base-h5/components/menu/app-h5-menu/index'
 import navigationBar from 'src/base-h5/components/tutorial/navigation-bar/index.vue'
 import settingFilter from 'src/base-h5/components/setting-filter/index.vue'
 import setectLeague from 'src/base-h5/components/setect-league/index.vue'
@@ -46,7 +47,10 @@ import { scrollMenuEvent } from "src/base-h5/components/menu/app-h5-menu/utils.j
 import matchContainer from "src/base-h5/components/match-list/index.vue";
 import { i18n_t, compute_css_obj, MenuData } from "src/core/index.js";
 import { is_results, is_kemp } from 'src/base-h5/mixin/menu.js'
-
+import scrollMenu from 'src/base-h5/components/top-menu/top-menu-ouzhou-1/scroll-menu/scroll-menu.vue';
+// watch(() => MenuData.update_time.value, () => {
+//   console.log("菜单id-球类id-对应euid",`${MenuData.menu_type.value}-${MenuData.menu_mi.value}-${MenuData.get_euid()}`)
+// })
 
 // import matchContainer2 from "src/base-h5/components/match-list/components/match-container-2.vue";
 const inner_height = window.innerHeight;  // 视口高度
@@ -87,7 +91,7 @@ onMounted(()=>{
 const set_menu_lv1 = item => {
     MenuData.set_current_lv1_menu(item.mi);
     MenuData.get_menu_lvmi_list(item.mi)
-    MenuData.get_results_menu();
+    // MenuData.get_results_menu();
     setTimeout(() => {
         MatchMeta.get_results_match()
     }, 2000)
@@ -98,4 +102,9 @@ const set_menu_lv1 = item => {
 </script>
 <style scoped lang="scss">
 @import "./index.scss";
+.match-container{
+    height: calc(100% - 2.16rem);
+    overflow: hidden;
+    overflow-y: auto;
+}
 </style>
