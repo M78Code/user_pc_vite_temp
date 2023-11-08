@@ -49,8 +49,8 @@ const get_odd_os = (ov) => {
 }
 
 const set_old_submit = (ol) => {
-  active_score.value = `${props.match_info.id}${s.oid}`
-  
+  active_score.value = `${props.match_info.id}${ol.oid}`
+console.error('ol',ol)
   const {oid,_hid,_hn,_mid } = ol
         let params = {
           oid, // 投注项id ol_obj
@@ -66,7 +66,7 @@ const set_old_submit = (ol) => {
           // 设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备
           device_type: 1,  
           // 数据仓库类型
-          match_data_type: "h5_list",
+          match_data_type: "h5_list", // h5_detail
         }
         set_bet_obj_config(params,other)
 }
