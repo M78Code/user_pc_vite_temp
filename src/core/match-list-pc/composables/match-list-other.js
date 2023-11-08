@@ -38,56 +38,89 @@ export const get_compute_other_play_data = (match) => {
   }
   // set_tab_play_keys(match)
   //当前选中玩法
-  let cur_other_play = get_play_current_play(match)
+  let play_key = get_play_current_play(match)
   let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(mid)
-  const { data_tpl_id=1 } = match_style_obj;
+  const { data_tpl_id = 1 } = match_style_obj;
   const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${data_tpl_id}_config`][`template_${data_tpl_id}`]
   match.tpl_id = data_tpl_id;
   // 其他玩法盘口列表
-  let other_handicap_list = clone_arr(match_tpl_info[cur_other_play])
+  let handicap_list = clone_arr(match_tpl_info[play_key])
   // 波胆
-  if (cur_other_play == 'hpsBold') {
-    other_handicap_list = get_21_bold_template(match);
+  if (play_key == 'hpsBold') {
+    handicap_list = get_21_bold_template(match);
   }
   //5分钟
-  if (cur_other_play == 'hps5Minutes') {
-    other_handicap_list = get_5minutes_template(match);
-    console.log('hps5Minutes', other_handicap_list)
+  if (play_key == 'hps5Minutes') {
+    handicap_list = get_5minutes_template(match);
   }
-  if (!cur_other_play) {
-    other_handicap_list = clone_arr(match_tpl_info.hpsCorner)
+  if (!play_key) {
+    handicap_list = clone_arr(match_tpl_info.hpsCorner)
   }
-  // 4：15分钟玩法 1：其他玩法
-  // let type = cur_other_play == 'hps15Minutes' ? 4 : 1
-  // other_handicap_list = merge_template_data({ match, handicap_list: other_handicap_list, type, play_key: cur_other_play })
+  console.log('hps5Minutes', handicap_list)
+
   // coverage_match_data({ other_handicap_list }, mid)
   // match.other_handicap_list = other_handicap_list
-  return other_handicap_list || []
+  // return  merge_template_data({ match, handicap_list, play_key })
+  return handicap_list
 }
-
+/**
+* @Description 合并列表模板数据
+* @param {Object} match 赛事信息
+* @param {Object} handicap_list 模板数据
+* @param {NUmber} type 盘口类型 1:主盘，  2：附加盘1， 3：附加盘2  4:15分钟玩法
+* @param {String} play_key 次要玩法key
+*/
+export function merge_template_data({ match, handicap_list, type = 1, play_key }) {
+  let length = handicap_list.length
+  let { mid, hSpecial5min, hSpecial } = match
+  const many_obj = MatchListData.get_match_to_map_obj(mid)
+  console.log('many_obj', many_obj)
+  const hn_obj = lodash.get(MatchListData, "list_to_obj.hn_obj", {})
+  handicap_list.forEach((col, col_index) => {
+    col.ols.forEach((ol, ol_index) => {
+      let { hn, _hpid, hpid, ot } = ol
+      let handicap_type = hn || type
+      // 4：15分钟玩法 1：其他玩法
+      if (play_key == 'hps15Minutes') {
+        handicap_type = get_min15_handicap_type(length, hSpecial, col_index)
+        //22号模板 足球-独赢 让球胜平负 附加盘 合并到主盘   hn = 2 | 3 附加盘编号
+      }
+      const hn_key = MatchListData.get_list_to_obj_key(mid, `${mid}_${_hpid || hpid}_${handicap_type}_${ot}`, 'hn')
+      let ol_data = lodash.get(hn_obj, hn_key) || many_obj[hn_key]
+      if (ol_data) {
+        //附加盘1
+        // if (type == 2) {
+        //   match.has_add1 = true
+        // }
+        // //附加盘2
+        // if (type == 3) {
+        //   match.has_add2 = true
+        // }
+        Object.assign(col.ols[ol_index], ol_data)
+      }
+    })
+  })
+  // 波胆置顶
+  if ('hpsBold' == play_key) {
+    handicap_list = data_topping(handicap_list)
+  }
+  // 滚球-下一个进球玩法，后边的依次往前移动
+  if ('hps5Minutes' == play_key && hSpecial5min == 5) {
+    handicap_list = data_move_up(handicap_list)
+  }
+  return handicap_list
+}
 /**
    * @Description 获取6列 十五分钟玩法 handicap_type 值
    * @param {Number} hSpecial 赛事阶段
-   * @param {Number} col_index 盘口列位置
+   * @param {Number} col_index 盘口列位置 当前列索引
    * @return {handicap_type} handicap_type 值
    */
 export function get_min15_handicap_type(length, hSpecial, col_index) {
   let handicap_type
-  let index = get_phase(col_index)
-  if (length > 6) {
-    handicap_type = get_min15_col13_handicap_type(hSpecial, index)
-  } else {
-    handicap_type = get_min15_col6_handicap_type(hSpecial, index)
-  }
-  return handicap_type
-}
-/**
- * @Description 获取盘口列位置
- * @param {Number} col_index  当前列索引
- * @return {Number} index  位置索引值 (0 = 1-3盘口列位置  1 = 4-6盘口列位置 2 = 7-9盘口列位置 3 = 10-13盘口列位置)
- */
-function get_phase(col_index) {
   let index = 0
+  ///@Description 获取盘口列位置
+  ///index  位置索引值 (0 = 1-3盘口列位置  1 = 4-6盘口列位置 2 = 7-9盘口列位置 3 = 10-13盘口列位置)
   if (col_index > 8) {
     index = 3
   } else if (col_index > 5) {
@@ -95,7 +128,12 @@ function get_phase(col_index) {
   } else if (col_index > 2) {
     index = 1
   }
-  return index
+  if (length > 6) {
+    handicap_type = get_min15_col13_handicap_type(hSpecial, index)
+  } else {
+    handicap_type = get_min15_col6_handicap_type(hSpecial, index)
+  }
+  return handicap_type
 }
 /**
  * @Description 获取6列 十五分钟玩法 handicap_type 值

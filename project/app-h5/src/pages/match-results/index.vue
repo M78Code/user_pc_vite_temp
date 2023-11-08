@@ -12,7 +12,6 @@
             <div class="right-icon" @click="state.select_dialog = true"></div>
         </template>
     </navigation-bar>
-
     <div class="slide-box">
         <div v-for="(item, index) in state.slideMenu" @click="slideHandle(item,$event)" :class="['slide-item', state.currentSlideValue == item.field1 &&
             'slide-item-active']" :key="'slide-' + index">
@@ -22,7 +21,9 @@
 
     <ScrollMenu :scrollDataList="state.slideMenu_sport" :current_mi="state.current_mi" />
 
-    <match-container />
+    <div class="match-results-container-styles">
+        <match-container />
+    </div>
 
 
 </template>
@@ -106,6 +107,7 @@ const set_result_menu_api = () => {
 }
 
 onMounted(()=>{
+    MenuData.set_current_lv1_menu(28)
     switchHandle(0)
     useMittOn(MITT_TYPES.EMIT_SCROLL_TOP_NAV_CHANGE, set_scroll_current)
 })
