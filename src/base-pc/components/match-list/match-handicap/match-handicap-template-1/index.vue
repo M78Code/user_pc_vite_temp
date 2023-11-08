@@ -96,7 +96,7 @@ function deal_width_handicap_ols(payload) {
     // 投注项数据拼接
     let hn_obj_config = MatchListDataInfo.get_list_to_obj_key(mid, `${mid}_${item._hpid}_${handicap_type}_${item.ot}`, 'hn')
     // 获取投注项内容 
-    return lodash.get(hn_obj, hn_obj_config) || many_obj[hn_obj_config] || [];
+    return lodash.get(hn_obj, hn_obj_config) || many_obj[hn_obj_config] || {};
   })
   return new_ols
 }
