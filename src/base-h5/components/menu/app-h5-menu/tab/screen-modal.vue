@@ -2,7 +2,7 @@
  * @Author: jamison pmtyjamison@itcom888.com
  * @Date: 2023-11-07 21:45:55
  * @LastEditors: jamison pmtyjamison@itcom888.com
- * @LastEditTime: 2023-11-08 14:19:42
+ * @LastEditTime: 2023-11-08 15:06:59
  * @FilePath: \user-pc-vite\src\base-h5\components\menu\app-h5-menu\tab\screen-modal.vue
  * @Description: 
 -->
@@ -47,18 +47,17 @@
           />
         </template>
       </q-input>
-
-      <div>
-        <p>
-          <img :src="`/${project_name}image/svg/eventicons.svg`" alt class="icon-delete" />
-          <span>所有赛事</span>
-        </p>
-        <p>
-          <img :src="`/${project_name}image/svg/icon_checkbox_nor.svg`" alt class="icon-delete" />
-        </p>
-        <p>
-          <img :src="`/${project_name}image/svg/Vector.svg`" alt class="icon-delete" />
-        </p>
+      <div class="content">
+        <section class="all_select row justify-between items-center">
+          <p class="row all_select_left">
+            <img class="img" src="/src/base-h5/components/menu/app-h5-menu/tab/img/eventicons.svg" alt />
+            <span>所有赛事</span>
+          </p>
+          <img class="select_img" src="/src/base-h5/components/menu/app-h5-menu/tab/img/icon_checkbox_nor.svg" alt />
+          <!-- <p>
+            <img :src="`/${project_name}image/svg/Vector.svg`" alt class="icon-delete" />
+          </p> -->
+        </section>
       </div>
     </div>
   </div>
@@ -109,94 +108,144 @@ function go_to_details() {}
     font-weight: 500;
     line-height: 0.44rem;
   }
- .icon-search {
-    position: relative;
-    background: var(--q-color-com-img-bg-113) no-repeat center / 100% 100%;
-    transition: all 0.3s ease-in-out;
-     &:before{
-     width: 0.2rem !important;
-     height: 0.2rem !important;;
-    }
-    &.input-without-word {
-      position: absolute;
-    }
-  }
-
-  .icon-delete {
-    -width: 0.32rem;
-    -height: 0.32rem;
-    -padding: 0.1rem;
-  }
-  }
-:deep(.q-field__control ){
-    &:before{
-        background: linear-gradient(0deg, #E4E6ED, #E4E6ED),
-                    linear-gradient(0deg, #F2F2F6, #F2F2F6);
-        border-left: none;
-        border-right: none;
-        border-radius:0;
-        border-width: 1px, 0px, 1px, 0px;
-        border-color: rgba(228, 230, 237, 1);
-    }
-}
-:deep(.q-placeholder){
-  transform: translateX(0.14rem);
-}
-  /*******兼容部分ios下输入框背景色等样式异常情况 开始*******/
-  :deep(.search-keyword-input) {
-    -webkit-appearance: none;
-    border-radius: 0;
-    outline: 0;
-    background: rgba(0, 0, 0, 0);
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-
-    &::-webkit-input-placeholder {
-      color: #AFB3C8;
-      font-size: 0.12rem;
-    }
-    &:-moz-placeholder {
-      color: #AFB3C8;
-      font-size: 0.12rem;
-    }
-
-    &::-moz-placeholder {
-      color: #AFB3C8;
-      font-size: 0.12rem;
-    }
-
-    &:-ms-input-placeholder {
-      
-      font-size: 0.12rem;
-    }
-
-    &:-webkit-autofill {
-      transition: background-color 5s ease-in-out;
-    }
-  }
-
-  /*******兼容部分ios下输入框背景色等样式异常情况 结束*******/
-  :deep(.q-placeholder) {
-    vertical-align: middle;
-    font-size: 0.12rem;
-    min-height: unset;
-    color: #AFB3C8;
-  }
-
-  :deep(.q-field__control),
-  :deep(.q-field__prepend),
-  :deep(.q-field__append) {
+  //输入框样式
+  .quasar_input {
+    width: 2.88rem;
     height: 0.4rem;
     vertical-align: middle;
+    margin-bottom: 0.1rem;
+    &.q-field--focused {
+      :deep().q-field__control:after {
+        border-width: 1px;
+      }
+
+      .icon-search {
+        background-image: var(--q-color-img-bg-93);
+        &._y0 {
+          &:before {
+            color: #569ffd;
+          }
+
+          &:after {
+            background: var(--q-color-page-bg-color-63);
+          }
+        }
+      }
+    }
+    .icon-search {
+      position: relative;
+      background: var(--q-color-com-img-bg-113) no-repeat center / 100% 100%;
+      transition: all 0.3s ease-in-out;
+      &:before {
+        width: 0.2rem !important;
+        height: 0.2rem !important;
+      }
+      &.input-without-word {
+        position: absolute;
+      }
+    }
+
+    .icon-delete {
+      width: 0.32rem;
+      height: 0.32rem;
+      padding: 0.1rem;
+    }
+    :deep(.q-field__control) {
+      height: 100%;
+      border-left: none;
+    }
+    :deep(.q-field__marginal) {
+      height: 100%;
+    }
+  }
+  //内容样式
+  .content{
+    padding: 0 0.1rem;
+    .all_select{
+      width: 2.4rem;
+      height: 0.32rem;
+      .all_select_left{
+        color: #7981A4;
+        font-size: 0.12rem;
+        .img{
+          margin-right: 0.04rem;
+        }
+      }
+      .select_img{
+        width: 0.2rem;
+        height: 0.2rem;
+      }
+    }
+  }
+}
+:deep(.q-field__control) {
+  &:before {
+    background: linear-gradient(0deg, #e4e6ed, #e4e6ed),
+      linear-gradient(0deg, #f2f2f6, #f2f2f6);
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
+    border-width: 1px, 0px, 1px, 0px;
+    border-color: rgba(228, 230, 237, 1);
+  }
+}
+:deep(.q-placeholder) {
+  transform: translateX(0.14rem);
+}
+/*******兼容部分ios下输入框背景色等样式异常情况 开始*******/
+:deep(.search-keyword-input) {
+  -webkit-appearance: none;
+  border-radius: 0;
+  outline: 0;
+  background: rgba(0, 0, 0, 0);
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+
+  &::-webkit-input-placeholder {
+    color: #afb3c8;
+    font-size: 0.12rem;
+  }
+  &:-moz-placeholder {
+    color: #afb3c8;
+    font-size: 0.12rem;
   }
 
-  :deep(.q-field__control-container),
-  :deep(.q-field__native) {
-    height: 0.38rem;
-    background: transparent;
+  &::-moz-placeholder {
+    color: #afb3c8;
+    font-size: 0.12rem;
   }
 
-  :deep(.q-field__control) {
-    min-height: unset;
-    align-items: center;
+  &:-ms-input-placeholder {
+    font-size: 0.12rem;
   }
+
+  &:-webkit-autofill {
+    transition: background-color 5s ease-in-out;
+  }
+}
+
+/*******兼容部分ios下输入框背景色等样式异常情况 结束*******/
+:deep(.q-placeholder) {
+  vertical-align: middle;
+  font-size: 0.12rem;
+  min-height: unset;
+  color: #afb3c8;
+}
+
+:deep(.q-field__control),
+:deep(.q-field__prepend),
+:deep(.q-field__append) {
+  height: 0.4rem;
+  vertical-align: middle;
+}
+
+:deep(.q-field__control-container),
+:deep(.q-field__native) {
+  height: 0.38rem;
+  background: transparent;
+}
+
+:deep(.q-field__control) {
+  min-height: unset;
+  align-items: center;
+}
 </style>

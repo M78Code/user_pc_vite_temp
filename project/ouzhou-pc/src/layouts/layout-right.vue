@@ -21,7 +21,7 @@
     /> -->
     <!-- v-else -->
     <!-- 常规竞猜 -->
-    <analysis></analysis>
+    <analysis :detail_info="detail_info || {}"></analysis>
     <!-- <match-details-right  class="page-match-detail fit" /> -->
   </div>
   </div>
@@ -34,9 +34,11 @@ import analysis from '../pages/match-new-detail/analysis/index.vue'
 // import matchDetailsRight  from "src/base-pc/components/match-details-right/match-details-right.vue"
 import { LayOutMain_pc,MenuData } from "src/core/index.js";
 import { useRoute, useRouter } from "vue-router"
+import {match_info} from '../pages/match-new-detail/mock'
 // import virtualRight from "src/base-pc/components/virtual-right/virtual-right.vue";
 const route = useRoute()
 const right_status=ref(null)
+const detail_info = match_info.data
 
 onBeforeUnmount(() => {
   list_emit.forEach((i) => i());

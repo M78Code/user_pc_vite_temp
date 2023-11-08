@@ -2,7 +2,7 @@
  * @Author: rise
  * @Date: 2023-10-20 16:27:18
  * @LastEditors: jamison pmtyjamison@itcom888.com
- * @LastEditTime: 2023-11-08 13:40:45
+ * @LastEditTime: 2023-11-08 14:43:57
  * @Description:  
 -->
 <template>
@@ -186,7 +186,6 @@ function key_down(event) {
         .search-tab-content-img {
             width: 0.38rem;
             text-align: center;
-
             img {
                 width: 0.18rem;
                 height: 0.18rem;
