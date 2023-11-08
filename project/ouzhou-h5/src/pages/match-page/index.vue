@@ -27,6 +27,8 @@ onMounted(() => {
 });
 
 const destroy_handle = () => {
+  MatchPage.del();
+  // matchCtr.value.init();
   off_listeners();
 };
 
@@ -45,6 +47,7 @@ const off_listeners = () => {
 
 onUnmounted(() => {
   destroy_handle();
+  // MatchDataBaseH5.clear()
 });
 
 </script>
@@ -57,6 +60,7 @@ onUnmounted(() => {
   position: relative;
   .match-list-container{
     height: 100%;
+    background: #fff !important;
   }
 }
 </style>
