@@ -8,14 +8,14 @@
  */
 import { ref, onMounted, watch, onUnmounted } from "vue";
 import { api_match_list } from "src/api";
-import { useRoute } from "vue-router";
+// import { useRoute } from "vue-router";
 import {match_info,categoryList,matchDetail} from './mock'
 // import store from "src/store-redux-vuex/index.js";
-
+import UserCtr from "src/core/user-config/user-ctr.js";
 import { filter_odds_func, handle_course_data, format_mst_data } from './matches_list'
 
-export function usedetailData() {
-  const route = useRoute();
+export function usedetailData(route) {
+  // const route = useRoute();
   const category_list = ref([]); //分类数据
   const detail_list = ref([]); //玩法数据
   const all_list = ref([]); //  所有玩法数据
@@ -43,25 +43,26 @@ export function usedetailData() {
     api_match_list; // 接口
 
   //const userInfo = state.userReducer.userInfo; // 用户数据
-  const userInfo = {}; // 用户数据
+  const {user_info} = UserCtr; // 用户数据
 
   const current_id = ref()
 
-  let sportId =1, mid=2858623 
+  let sportId =1, mid=2858623,tid
 
   // 监听分类切换数据
   watch(current_key, (val) => {
     getDetailData(val);
   });
     // 监听分类切换数据
-    watch(()=>route.query, (val) => {
-      // todo
-      // sportId = val.sportId
-      // mid = val.mid
-      current_id.value = val.mid
-    },
-    {immediate:true}
-    );
+    // watch(()=>route.query, (val) => {
+    //   console.log(11111111,val)
+    //   // todo
+    //   // sportId = val.sportId
+    //   // mid = val.mid
+    //   current_id.value = val.mid
+    // },
+    // {immediate:true}
+    // );
 
   //  根据分类id 过滤数据
   const getDetailData = (value) => {
@@ -123,8 +124,8 @@ export function usedetailData() {
   const get_detail = async () => {
     try {
       const params = {
-        mid:2865655,
-        cuid: userInfo.userId,
+        mid:mid,
+        cuid: user_info.userId,
         t: new Date().getTime(),
       };
       detail_loading.value = true;
@@ -206,7 +207,7 @@ export function usedetailData() {
     try {
       const params = {
         mcid: 0,
-        cuid: userInfo.userId,
+        cuid: user_info.userId,
         mid,
         newUser: 0,
         t: new Date().getTime(),
@@ -223,6 +224,11 @@ export function usedetailData() {
   };
 
   onMounted(() => {
+    console.log(UserCtr)
+    sportId = route.params.csid
+    mid = route.params.mid
+    tid = route.params.tid
+
     init();
     timer = setInterval(async () => {
       await get_category();
