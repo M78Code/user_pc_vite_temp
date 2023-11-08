@@ -24,29 +24,34 @@
             :class="{ result: get_menu_type == 28 && main_source !== 'detail_match_list', }">
             <template v-for="(score, i) of msc_converted">
               <div v-if="is_show_score(match, score)" class="score row items-start"
-                :class="{ 'basket-ball': match.csid == 2, 'important-color-number': i == msc_converted.length - 1 && match.csid == 2 && get_menu_type != 28 }"
-                :key="i" :data-scores="`${i}-${msc_converted.length}-${match.csid}`">
-                <!--角球图标-->
-                <img class="kk-icon" alt="" v-if="match.csid == 1 && score[0] == 'S5' && score[4]"
-                  :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/m-list-jiaoqiu.svg`" />
-                <!--HT(半场)或FT(全场)或OT-->
-                <span class="f-ht-ot" style="margin-right:.02rem" :score="`${match.csid}-${score[4]}`"
-                  v-show="[1, 11, 14, 15, 16].includes(+match.csid) && score[4] && score[0] != 'S5'">
-                  {{ score[4] }}
-                </span>
-                <!--比分-->
-                <span class="score-value" :class="{
-                  'jiaoqiu-score-value': [1, 11, 14].includes(+match.csid) && score[0] == 'S5' && score[4],
-                  'orange': ([1, 11, 14].includes(+match.csid) && score[4] && score[0] != 'S5') || ([3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 15, 16].includes(+match.csid) && msc_converted.length == i + 1 && match.mo != 1),
-                  'last-color': i == msc_converted.length - 1,
-                }">
-                  {{ score[1] }}-{{ score[2] }}
-                </span>
+                    :class="{
+                      //  'basket-ball': match.csid == 2, 
+                      'important-color-number': i == msc_converted.length - 1 && match.csid == 2 && get_menu_type != 28
+                    }"
+                    :key="i" :data-scores="`${i}-${msc_converted.length}-${match.csid}`">
+                    <!--角球图标-->
+                    <img class="kk-icon" alt="" v-if="match.csid == 1 && score[0] == 'S5' && score[4]"
+                      :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/m-list-jiaoqiu.svg`" />
+                    <!--HT(半场)或FT(全场)或OT-->
+                    <span class="f-ht-ot" style="margin-right:.02rem" :score="`${match.csid}-${score[4]}`"
+                      v-show="[1, 11, 14, 15, 16].includes(+match.csid) && score[4] && score[0] != 'S5'">
+                      {{ score[4] }}
+                    </span>
+                    <!--比分-->
+                    <span class="score-value" :class="{
+                      'jiaoqiu-score-value': [1, 11, 14].includes(+match.csid) && score[0] == 'S5' && score[4],
+                      'orange': ([1, 11, 14].includes(+match.csid) && score[4] && score[0] != 'S5') || ([3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 15, 16].includes(+match.csid) && msc_converted.length == i + 1 && match.mo != 1),
+                      'last-color': i == msc_converted.length - 1,
+                    }">
+                      {{ score[1] }}-{{ score[2] }}
+                    </span>
+                  </div>
+                </template>
               </div>
-            </template>
-          </div>
 
-          <div class="row items-center basket-ball" :class="{ 'b-score-wrapper': match.csid != 14 }"
+                <!-- <div class="row items-center basket-ball" :class="{ 'b-score-wrapper': match.csid != 14 }" -->
+                <div class="row items-center " :class="{ 'b-score-wrapper': match.csid != 14 }"
+
             v-if="[2, 6, 8, 9, 10, 13, 14, 15, 16].includes(+match.csid)">
             <!--分差-->
             <div class="row" style="margin-right:.05rem" v-if="[2].includes(+match.csid) && score_sub_win_faild">
