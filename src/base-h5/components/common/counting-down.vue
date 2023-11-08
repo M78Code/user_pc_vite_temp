@@ -474,7 +474,7 @@ onUnmounted(() => {
   top: 0;
   left: 0;
   display: flex;
-  align-items: baseline;
+  align-items: center;
   color: var(--q-color-fs-color-30);
   font-size: 0.12rem;
   overflow: hidden;

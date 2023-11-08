@@ -51,6 +51,7 @@ let timer, timer2;
 
 const route = useRoute();
 
+
 watch(
   () => route.name,
   () => {

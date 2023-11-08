@@ -7,6 +7,7 @@
  
 import appload from "./app-load.vue";
 import app_mixin from "src/base-h5/mixin/app-mixin.js";
+
 export default {
   mixins: [app_mixin],
   components: {
@@ -14,7 +15,7 @@ export default {
   },
   data() {
     return {};
-  },
+  }
 };
 </script>
 <style lang="scss"></style>
