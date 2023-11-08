@@ -15,7 +15,6 @@
       <div class="fold-btn" @click="match_list_card.unfold_all_league()">展开联赛</div>
       <div class="fold-btn" @click="match_list_card.fold_all_league()">折叠联赛</div>
       <div class="fold-btn" @click="match_list_card.test_log_data()">打印数据</div>
-      <div> load_data_state {{ load_data_state }}</div>
     </div> -->
     <MatchesHeader />
     <div class="match-list-scroll scroll">
@@ -33,7 +32,6 @@
       <load-data :state="'data'" limit_height="1000" >  <!--此处先写死高度用来调试UI -->
         <!-- 滚球其他列表 -->
         <scroll-list  v-if="menu_config.menu_root_show_shoucang != 300">
-          <!-- v-for="card_key in MatchListCardDataClass.match_list_card_key_arr" -->
           <template v-slot:before>
             <div :style="{ height: MatchListCardDataClass.sticky_top.fixed_header_height }"></div>
           </template>
@@ -46,6 +44,7 @@
         >
           <match-list-card 
             :card_key="card_key" 
+            use_component_key="MatchListCard_2"
           />
         </div>  
           <template v-slot:after>
@@ -145,8 +144,8 @@ export default {
       }
       get_home_matches(params).then(res => {
         // 处理返回数据 将扁平化数组更改为页面适用数据
-        matches_15mins_list.value = filter_15mins_func(res.p15);
-        matches_featured_list.value = filter_featured_list(res.hots);
+        matches_15mins_list.value = filter_15mins_func(res.p15 || []);
+        matches_featured_list.value = filter_featured_list(res.hots || []);
       });
     }
 

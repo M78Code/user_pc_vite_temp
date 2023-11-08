@@ -28,6 +28,7 @@
           )
         "
         :card_style_obj="card_style_obj"
+        use_component_key="PlayMatchType_2"
       />
       <!-- 联赛标题 -->
       <play-match-league
@@ -45,6 +46,7 @@
           v-for="mid in mids_arr"
           :key="mid"
           :mid="mid"
+          use_component_key="MatchCardTemplate2"
         /> 
       </template>
     </div>
@@ -54,7 +56,7 @@
 <script setup>
 import { computed, onMounted, onUnmounted, ref, watch } from "vue";
 import { PlayMatchTypeFullVersionWapper as PlayMatchType } from "src/base-pc/components/match-list/play-match-type/index.js";
-import PlayMatchLeague from "src/base-pc/components/match-list/play-match-league/index.vue";
+import { PlayMatchLeagueFullVersionWapper as PlayMatchLeague } from "src/base-pc/components/match-list/play-match-league/index.js";
 import { MatchCardFullVersionWapper as MatchCard } from "src/base-pc/components/match-list/match-card/index.js";
 
 import MatchListCardData from "src/core/match-list-pc/match-card/match-list-card-class.js";

@@ -170,7 +170,7 @@ const router = createRouter({
             meta: {
               keepAlive: true // 需要缓存
             },
-          }
+          },
       ],
     },
     {
@@ -179,6 +179,15 @@ const router = createRouter({
         name: 'matchList'
       },
       
+    },
+    //搜索
+    {
+      path: "/search",
+      name: "search",
+      component: () => import("../pages/search/index.vue"),
+      meta: {
+        keepAlive: true // 需要缓存
+      }
     }
   ],
 });
