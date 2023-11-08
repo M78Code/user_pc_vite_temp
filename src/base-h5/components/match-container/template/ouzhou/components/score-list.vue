@@ -20,6 +20,7 @@
 import { computed, ref } from 'vue'
 import { odd_lock_ouzhou } from 'src/base-h5/core/utils/local-image.js'
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js" 
+import { compute_value_by_cur_odd_type } from "src/core/index.js"
 
 const props = defineProps({
   hpid: {
@@ -39,18 +40,17 @@ const score_data = computed(() => {
   const hps = props.match_info.hps
   const hps_item = hps.find(t => t.hpid == props.hpid)
   const ol = lodash.get(hps_item, 'hl[0].ol', [{}, {}, {}])
-  console.log(ol)
   return ol
 })
 
 // 显示的赔率
 const get_odd_os = (ov) => {
-  return ov && (ov / 100000).toFixed(2)
+  return  compute_value_by_cur_odd_type(ov,'','',props.match_info.csid)
 }
 
 const set_old_submit = (ol) => {
-  console.error('ol',ol)
-
+  active_score.value = `${props.match_info.id}${s.oid}`
+  
   const {oid,_hid,_hn,_mid } = ol
         let params = {
           oid, // 投注项id ol_obj
@@ -79,7 +79,6 @@ const set_old_submit = (ol) => {
     display: flex;
     align-items: center;
     justify-items: center;
-    padding-left: 5px;
     width: 100%;
     span.active{
       color: #fff;
