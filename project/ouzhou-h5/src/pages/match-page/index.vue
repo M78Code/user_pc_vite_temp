@@ -30,7 +30,6 @@ onMounted(() => {
 });
 
 const destroy_handle = () => {
-  MatchPage.del();
   // matchCtr.value.init();
   off_listeners();
 };

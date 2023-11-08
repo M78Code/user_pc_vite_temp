@@ -37,6 +37,8 @@ class MatchMeta {
     this.prev_scroll = null
     // 球种对应的数量
     this.ball_seed_count = ref({})
+    // 球种对应的下拉玩法  ouzhou-h5 
+    this.ball_seed_play_methods = ref({})
     // 重置折叠对象
     MatchFold.clear_fold_info()
     // 重置收藏对象
@@ -307,6 +309,14 @@ class MatchMeta {
   }
 
   /**
+   * @description 获取球种下拉玩法
+   */
+  get_ball_seed_methods (match) {
+    const { hps, csid } = match
+    if (hps && hps.length > 0 && hps[0].hl && hps[0].hl[0] && hps[0].hl[0].ol) this.set_ball_seed_play_methods(`hps_csid_${csid}`, hps)
+  }
+
+  /**
    * @description 早盘 下根据时间来筛选
    * @param { time } 所选择的时间
    */
@@ -367,6 +377,17 @@ class MatchMeta {
   set_ball_seed_count (key, length) {
     Object.assign(this.ball_seed_count.value, {
       [key]: length
+    })
+  }
+
+  /**
+   * @description 设置对应球种的玩法
+   * @param {string} key 
+   * @param {Array} value 
+   */
+  set_ball_seed_play_methods (key, value) {
+    !this.ball_seed_play_methods.value[key] && Object.assign(this.ball_seed_play_methods.value, {
+      [key]: value
     })
   }
 
@@ -555,6 +576,7 @@ class MatchMeta {
 
     // 获取赛 事收藏状态 该接口还没发到试玩
     MatchCollect.get_collect_match_data()
+
   }
 
   /**
@@ -629,6 +651,7 @@ class MatchMeta {
   handle_update_match_info(list, type) {
     // 合并前后两次赛事数据
     list = lodash.map(list, t => {
+      this.get_ball_seed_methods(t)
       const match = MatchDataBaseH5.get_quick_mid_obj(t.mid)
       // 覆写次要玩法折叠参数
       // MatchFold.set_match_mid_fold_obj()
