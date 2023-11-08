@@ -1,7 +1,9 @@
 import MatchListCard from "../match-list-card-template-1/index.vue";
+import MatchListCard_2 from "../match-list-card-template-2/index.vue";
 import { compute_component_wapper_config } from "app/job/use-output/index.js";
 const all_components_obj = {
   MatchListCard,
+  MatchListCard_2,
 };
 const component_config = {
   registered_component_key: "MatchListCard",
