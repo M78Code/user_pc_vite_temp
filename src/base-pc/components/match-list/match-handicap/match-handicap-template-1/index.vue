@@ -41,7 +41,6 @@ import { MatchFooterScoreFullVersionWapper as MatchFooterScore } from "src/base-
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import BetData from 'src/core/bet/class/bet-data-class.js'
 import { compute_sport_id } from 'src/core/constant/index.js'
-
 const props = defineProps({
   // 盘口列表
   handicap_list: {
@@ -69,14 +68,14 @@ const props = defineProps({
     default: () => false,
   }
 })
-
 let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.match.mid)
 // 赛事模板宽度
 const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`].width_config
 let MatchListDataInfo = MatchListData
-
+let many_obj = MatchListData.get_match_to_map_obj(props.match.mid)
 watch(() => MatchListData.data_version.version, () => {
-  MatchListDataInfo = MatchListData
+  MatchListDataInfo = MatchListData;
+  many_obj = MatchListData.get_match_to_map_obj(props.match.mid)
 })
 // 组件是否已挂载
 const is_mounted = ref(true);
@@ -87,25 +86,17 @@ onMounted(() => {
   //   is_mounted.value = true
   // })
 })
-
 function deal_width_handicap_ols(payload) {
   const { match } = props;
-  let handicap_type = 1
   let { hn, mid } = match
-  if (hn) {
-    handicap_type = hn
-  } else {
-    handicap_type = 1
-  }
+  let handicap_type = hn || 1
   const hn_obj = lodash.get(MatchListDataInfo, "list_to_obj.hn_obj", {})
   let new_ols = payload.map(item => {
     if (item.empty) { return }
     // 投注项数据拼接
     let hn_obj_config = MatchListDataInfo.get_list_to_obj_key(mid, `${mid}_${item._hpid}_${handicap_type}_${item.ot}`, 'hn')
     // 获取投注项内容 
-    const new_item = lodash.get(hn_obj, hn_obj_config, {})
-    console.log('deal_width_handicap_ols', new_item, item)
-    return new_item;
+    return lodash.get(hn_obj, hn_obj_config) || many_obj[hn_obj_config] || [];
   })
   return new_ols
 }

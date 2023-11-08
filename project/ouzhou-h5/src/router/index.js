@@ -1,8 +1,8 @@
 /*
  * @Author: rise
  * @Date: 2023-11-03 16:37:52
- * @LastEditors: lowen pmtylowen@itcom888.com
- * @LastEditTime: 2023-11-07 19:21:14
+ * @LastEditors: rise
+ * @LastEditTime: 2023-11-08 13:42:14
  * @Description:  
  */
 import { createRouter, createWebHashHistory } from "vue-router";
@@ -17,14 +17,14 @@ const router = createRouter({
       name: "main",
       component: () => import("../layouts/index.vue"),
       children: [
-          // {
-          //   path: "/inPlay",
-          //   name: "inPlay",
-          //   component: () => import("../pages/in-pay/index.vue"),
-          //   meta: {
-          //     keepAlive: true // 需要缓存
-          //   },
-          // },
+          {
+            path: "/inPlay",
+            name: "inPlay",
+            component: () => import("../pages/in-pay/index.vue"),
+            meta: {
+              keepAlive: true // 需要缓存
+            },
+          },
           {
             path: "/match",
             name: "matchList",
