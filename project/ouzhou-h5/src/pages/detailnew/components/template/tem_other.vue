@@ -46,8 +46,8 @@
 
 <script setup>
 import { onMounted, ref, computed } from "vue";
-import { storage_bet_info } from 'src/public/utils/bet/bet_info.js'
-import EMITTER from  "src/global/mitt.js"
+import { storage_bet_info } from "src/core/bet/module/bet_info.js"; //#TODO core/index.js not export storage_bet_info
+// import EMITTER from  "src/global/mitt.js"
 const emit = defineEmits(["bet_click_"])
 const props = defineProps({
   item_data: {
@@ -65,7 +65,7 @@ const props = defineProps({
 
 const go_betting = (data) => {
   emit("bet_click_", data);
-  // storage_bet_info(payload)
+  storage_bet_info(payload)
   // EMITTER.emit("show_bet_dialog", true)
 }
 // 处理赔率截取两位小数点

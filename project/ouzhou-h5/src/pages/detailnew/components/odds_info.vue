@@ -39,7 +39,7 @@ import temp0 from "./template/tem0.vue";
 import temp1 from "./template/tem1.vue";
 import temp3 from "./template/tem3.vue";
 import temp5 from "./template/tem5.vue";
-// import tem_other from "./template/tem_other.vue";
+import tem_other from "./template/tem_other.vue";
 import { storage_bet_info } from "src/core/bet/module/bet_info.js"; //#TODO core/index.js not export storage_bet_info
 // import EMITTER from "src/global/mitt.js";
 import { LOCAL_PROJECT_FILE_PREFIX } from "src/core";
@@ -64,7 +64,7 @@ const componentArr = ref({
     tem1: markRaw(temp1),
     tem3: markRaw(temp3),
     tem5: markRaw(temp5),
-    // tem_other: markRaw(tem_other),
+    tem_other: markRaw(tem_other),
 });
 const tem_choice = (hpt) => {
   if ([0, 1, 5].includes(hpt)) {
