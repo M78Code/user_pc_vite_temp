@@ -8,7 +8,7 @@
 <template>
     <scroll-menu menu_type="1"  v-if="MenuData.menu_list.length" />
     <div>
-        in-pay 滚球
+        in-play 滚球
     </div>
 </template>
 <script setup>
