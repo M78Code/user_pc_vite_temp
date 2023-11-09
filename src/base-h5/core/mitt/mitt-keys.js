@@ -301,7 +301,8 @@ export const EMIT_BET_RECORD_SELECTED_CHANGE= "EMIT_BET_RECORD_SELECTED_CHANGE"
 // 提前结算列表金额变化
 export const EMIT_EARLY_MONEY_LIST_CHANGE= "EMIT_EARLY_MONEY_LIST_CHANGE"
 //------------------------------------------------------------------命令定义-E-------------------------------------------------------------------------------------
-
+// 切换主题
+export const EMIT_THE_THEME_CHANGE = "EMIT_THE_THEME_CHANGE"
 
 // 滑动菜单点击
 export const EMIT_SCROLL_TOP_NAV_CHANGE = "EMIT_SCROLL_TOP_NAV_CHANGE"
