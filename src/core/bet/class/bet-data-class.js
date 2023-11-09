@@ -170,7 +170,13 @@ this.bet_appoint_ball_head= null */
     // 限额/投注接口报错 
     this.bet_before_message = {}
     // 投注栏拖拽配置
-    this.bet_box_draggable = {}
+    this.bet_box_draggable = {
+      x: window.innerWidth * 0.6,
+      y: window.innerHeight * 0.7,
+      isActive: false,
+      height: 'auto',
+      show: false,
+    }
     // 默认展开 投注弹窗
     this.bet_state_show = true
     // ---------------------------------- H5 ------------------------------------------------------------------------------------------
@@ -509,6 +515,7 @@ this.bet_appoint_ball_head= null */
   // 设置 投注版本
   set_bet_data_class_version = lodash_.debounce(() => {
     this.bet_data_class_version.value = Date.now()
+    console.error('set_bet_data_class_version',this)
   }, 5)
 
   // 投注成功后 不保留投注项 需要清空投注数据 

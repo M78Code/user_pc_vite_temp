@@ -51,14 +51,7 @@ export default {
           base_data.init();
           // 投注信息 初始化
           BetData.init_core();
-          let obj = {
-            x: window.innerWidth * 0.6,
-            y: window.innerHeight * 0.7,
-            isActive: false,
-            height: 'auto',
-            show: true,
-          }
-          BetData.set_bet_box_draggable(obj)
+         
           // 设置设备类型 2 pc
           BetData.set_device_type(2);
           BetViewDataClass.init();

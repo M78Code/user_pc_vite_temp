@@ -2,6 +2,7 @@
 
 <template>
     <div class="bet-footer">
+        <div v-show="false">  {{BetViewDataClass.bet_view_version}}</div>
         <div class="bet-state" v-show="BetViewDataClass.error_message">
             <div class="w-100 f-c-c bet-title" :class="BetViewDataClass.error_code == 200 ? 'bet-success' : 'bet-error'">
                 {{ BetViewDataClass.error_message }}

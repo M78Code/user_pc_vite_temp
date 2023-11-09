@@ -8,7 +8,7 @@
                 }
             },
             "BetBox": {
-              "use_component": "BetBoxOuZhouPC_1",
+              "use_component": "BetBoxYaZhouPC_1",
               "params": {
                 "tableClass": "bg-deep-purple-14"
               }

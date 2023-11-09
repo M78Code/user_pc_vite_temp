@@ -1,6 +1,7 @@
 
 <template>
     <div class="bet-list">
+        <div v-show="false">{{BetViewDataClass.bet_view_version}}</div>
         <div class="f-b-s bet-content">
             <div class="fw-s-s bet-left">
                 <div class="w-100 f-s-c text-1a1 h15">
@@ -60,9 +61,10 @@
 </template>
 
 <script setup>
+
 import {LOCAL_PROJECT_FILE_PREFIX,compute_value_by_cur_odd_type } from "src/core/"
 import BetViewDataClass from 'src/core/bet/class/bet-view-data-class.js'
-import betTitle from "./bet-input.vue"  // 投注输入框
+import BetInput from "./bet-input.vue"  // 投注输入框
 
 const props = defineProps({
     items:{}

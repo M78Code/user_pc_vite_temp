@@ -51,7 +51,7 @@
       v-if="BetData.bet_box_draggable.show"
     >
     <div  class="ty-bet-box">
-      <bet-box-wapper use_component_key="BetBoxOuZhouPC_1"  />
+      <bet-box-wapper use_component_key="BetBoxYaZhouPC_1"  />
     </div>
   </Vue3DraggableResizable>
   </div>
