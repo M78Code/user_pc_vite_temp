@@ -164,13 +164,13 @@ class BetViewData {
     this.error_message = message
     this.error_code = code
 
-    if (code == 200) {
-      // 3-投注成功状态(主要控制完成按钮)
-      this.set_bet_order_status(3)
-    } else {
-      // 4-投注失败状态 显示错误信息
-      this.set_bet_order_status(4)
-    }
+    // if (code == 200) {
+    //   // 3-投注成功状态(主要控制完成按钮)
+    //   this.set_bet_order_status(3)
+    // } else {
+    //   // 4-投注失败状态 显示错误信息
+    //   this.set_bet_order_status(4)
+    // }
   }
   /**
    * @description: 完成按钮是否显示

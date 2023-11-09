@@ -169,11 +169,17 @@ this.bet_appoint_ball_head= null */
     this.bet_pre_min_odd_value = 0
     // 限额/投注接口报错 
     this.bet_before_message = {}
+    // 投注栏拖拽配置
+    this.bet_box_draggable = {}
+    // 默认展开 投注弹窗
+    this.bet_state_show = true
     // ---------------------------------- H5 ------------------------------------------------------------------------------------------
     this.bet_keyboard_config = {}
     // 键盘状态
     this.bet_keyboard_show = true;
   }
+
+
 
   // 通过  mount_point_key 计算 取值字段映射
   get_fields_map_by_mount_point_type(type) {
@@ -208,6 +214,21 @@ this.bet_appoint_ball_head= null */
   */
   set_accept_show(data) {
     this.better_rules_show = data
+    this.set_bet_data_class_version()
+  }
+
+  // 设置投注栏的拖拽属性
+  set_bet_box_draggable(val) {
+    this.bet_box_draggable = {
+      ...this.bet_box_draggable,
+      ...val,
+    }
+    this.set_bet_data_class_version()
+  }
+
+  // 设置投注弹窗 开启 关闭
+  set_bet_state_show(val) {
+    this.bet_state_show = val
     this.set_bet_data_class_version()
   }
 

@@ -37,6 +37,12 @@
         "params": {
           "tableClass": "bg-deep-purple-14"
         }
+      },
+      "BetBox": {
+        "use_component": "BetBoxOuZhouPC_1",
+        "params": {
+          "tableClass": "bg-deep-purple-14"
+        }
       }
     }
   }
