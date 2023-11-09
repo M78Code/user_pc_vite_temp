@@ -1,13 +1,13 @@
 
 <template>
-  <div class="page-main full-height" :style="page_style">
+  <div class="page-main full-height" :style="page_style" id="parent">
     <div :style="{ height: LayOutMain_pc.layout_top_height  }">
       <!-- 搜索 -->
       <search-wapper />
       <!-- 页面头部容器-->
       <layout-header />
     </div>
-    <div style="display: none;"> {{ LayOutMain_pc.layout_version }}</div>
+    <div style="display: none;"> {{ LayOutMain_pc.layout_version }}-{{BetData.bet_data_class_version}}</div>
     <div class="flex">
       <!-- 左侧 菜单 -->
       <div :style="{ height: LayOutMain_pc.layout_content_height + 'px' , width:LayOutMain_pc.layout_left_width }" class="layout_main_left">
@@ -38,10 +38,29 @@
     <toast-components />
     <confirm-components />
     <alert-components />
+
+
+    <Vue3DraggableResizable
+      v-model:x="BetData.bet_box_draggable.x"
+      v-model:y="BetData.bet_box_draggable.y"
+      v-model:h="BetData.bet_box_draggable.height"
+      v-model:active="BetData.bet_box_draggable.isActive"
+      :draggable="true"
+      :parent="true"
+      :resizable="false"
+      parent="#parent"
+      v-if="BetData.bet_box_draggable.show"
+    >
+    <div  class="ty-bet-box">
+      <bet-box-wapper use_component_key="BetBoxOuZhouPC_1"  />
+    </div>
+  </Vue3DraggableResizable>
+
   </div>
 </template>
 <script setup>
-import { ref, computed,onBeforeUnmount,watch } from "vue";
+import { ref, computed,onBeforeUnmount,watch, onMounted } from "vue";
+import Vue3DraggableResizable from 'vue3-draggable-resizable' //拖拽组件
 import { useRoute } from "vue-router";
 import { LayOutMain_pc,UserCtr } from "src/core/index.js";
 import "./main-layout.js"; //初始化数据
@@ -54,8 +73,10 @@ import layoutRight from "./layout-right.vue";
 import toastComponents from "src/base-pc/components/toast/toast.vue";
 import alertComponents from "src/base-pc/components/toast/alert.vue";
 import confirmComponents from "src/base-pc/components/toast/confirm.vue";
+import { BetBoxWapper } from "src/base-pc/components/bet";
 // import moveVideo from 'src/base-pc/components/video-replay/move-video.vue'
 import { compute_css_variables } from "src/core/css-var/index.js"
+import BetData from 'src/core/bet/class/bet-data-class.js'
 
 const page_style = ref('')
 page_style.value = compute_css_variables({ category: 'component', module: 'layout' })
@@ -66,6 +87,7 @@ console.error(route);
 const mitt_offs = [
   // useMittOn(MITT_TYPES.EMIT_LAYOUT_RESIZE, debounce(resize, 150)).off,
 ];
+
 // resize();
  // 屏蔽视频移动组件(视频回播功能)
  const  get_user = ref(UserCtr.get_user())
@@ -78,6 +100,18 @@ const show_move_video = computed(()=>{
     get_user.value =UserCtr.get_user()
   }
  }) 
+
+
+ onMounted(()=>{
+  let obj = {
+    x: window.innerWidth * 0.6,
+    y: window.innerHeight * 0.7,
+    isActive: false,
+    height: 'auto',
+    show: true,
+  }
+  BetData.set_bet_box_draggable(obj)
+ })
 </script>
 <style lang="scss">
 @import url(./content-layout.scss);
@@ -109,5 +143,16 @@ const show_move_video = computed(()=>{
 }
 .layout_main_right {
   padding-top: 5px;
+}
+
+
+:deep(.vdr-container){
+  width: 438px;
+  border: none;
+  z-index: 30000;
+}
+:deep(.ty-bet-box){
+   width:100%;
+  height:100%;
 }
 </style>
