@@ -28,7 +28,6 @@
   "analysis_football_matches": {
     "analysis_data": "Datos",
     "away_win": "Fuera de casa",
-    "bench_lineup": "Alineación del banquillo",
     "big": "O",
     "age": "edad",
     "big_ball": "Más de",
@@ -54,7 +53,8 @@
     "historical_war": "Cara a cara",
     "home_win1": "En casa",
     "Initial_offer": "Oferta inicial",
-    "Injury_situation": "Situación de lesión",
+    "bench_lineup": "Lista de banco",
+    "Injury_situation": "Lista de lesiones",
     "intelligence": "Inteligencia",
     "league": "Liga",
     "integral": "Pts",
