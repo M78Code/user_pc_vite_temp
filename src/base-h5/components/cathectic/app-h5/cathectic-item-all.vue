@@ -20,8 +20,10 @@
                 <item-multiple-body v-else :data_b="item2"></item-multiple-body>
               </template>
               <template>
-                <!-- 未结算列表 => 投注记录页提前结算的按钮、滑块、提前结算详情 -->
-                <early-settle v-if="BetRecordClass.selected === 0 || BetRecordClass.selected === 3" :item_data="item2"></early-settle>
+                <!-- 未结算列表 => 投注记录页提前结算的按钮、滑块 -->
+                <early-settle v-if="BetRecordClass.selected === 0" :item_data="item2"></early-settle>
+                <!-- 已结算列表 => 提前结算详情 -->
+                <early-settled-detail v-else-if="BetRecordClass.selected === 3" :item_data="item2"></early-settled-detail>
                 <!-- 预约列表 => 取消预约 -->
                 <cancel-reserve v-else-if="BetRecordClass.selected === 1" :orderNumber="item2.orderNo" @success="init_data(1)"></cancel-reserve>
               </template>
@@ -40,7 +42,7 @@
 import lodash from 'lodash';
 import { api_betting } from "src/api/index.js";
 import BetRecordClass from "src/core/bet-record/bet-record.js";
-import { itemSimpleBody, itemMultipleBody, earlySettle, cancelReserve } from "src/base-h5/components/common/cathectic-item/app-h5/index";
+import { itemSimpleBody, itemMultipleBody, earlySettle, earlySettledDetail, cancelReserve } from "src/base-h5/components/common/cathectic-item/app-h5/index";
 import settleVoid from "src/base-h5/components/cathectic/app-h5/settle-void.vue";
 import scroll from "src/base-h5/components/common/record-scroll/scroll.vue";
 import SRecord from "src/base-h5/components/skeleton/record.vue";

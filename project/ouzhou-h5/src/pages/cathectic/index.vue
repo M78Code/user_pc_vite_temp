@@ -32,10 +32,11 @@
   import {compute_local_project_file_path} from "src/core/index.js"
   import { compute_css_variables } from "src/core/css-var/index.js"
   
-  // 待确认中的提前结算订单
-  provide('queryorderpresettleconfirm_data', '')
+
   // 待确认中的提前结算单
-  const provided_ = ref({})
+  const provided_ = ref(null)
+  // 待确认中的提前结算订单
+  provide('queryorderpresettleconfirm_data', provided_)
 
   const tabs = ref([
     { title: i18n_t('bet_record.no_account') },
@@ -55,12 +56,16 @@
   page_style.value = compute_css_variables({ category: 'component', module: 'cathectic' })
     
   onMounted(() => {
+    setTimeout(() => {
+      provided_.value = [2,3]
+    }, 2000)
     // 查询待确认中的提前结算单
     api_betting.query_order_pre_settle_confirm().then(res => {
+      provided_.value = []
       let { code, data } = res || {}
       if (code == 200 && data) {
         // 待确认中的提前结算单
-        provided_.value = { queryorderpresettleconfirm_data: data }
+        provided_.value = data
       }
       // 弹窗显示接口获取列表后延迟
       // timer_1.value = setTimeout(() => {

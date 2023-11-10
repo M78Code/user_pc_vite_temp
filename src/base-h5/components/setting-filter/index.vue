@@ -117,9 +117,14 @@ const closedHandle = () => {
  */
 const searchClick = () => {
     // console.log(`搜索足球`)
+    // 派发首页设置菜单展开事件
+    useMittEmit(MITT_TYPES.EMIT_CHANGE_SETTING_SHOW, {
+      open: false,
+    });
     useMittEmit(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, {
       open: true,
     });
+
 }
 /**
  *@description 设置菜单改变

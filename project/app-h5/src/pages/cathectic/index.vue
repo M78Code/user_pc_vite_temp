@@ -175,7 +175,7 @@
       line-height: 0.34rem;
       width: 30%;
       &.active-p {
-        background: var(--q-gb-bg-c-9);
+        background: var(--q-gb-bg-c-13);
         color: var(--q-gb-bg-c-15);
       }
     }

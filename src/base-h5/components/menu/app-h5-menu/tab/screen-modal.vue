@@ -35,12 +35,11 @@
           ></span>
         </template>
         <template v-slot:append>
-          <img
-            :src="`/${project_name}image/svg/delete.svg`"
-            alt
+          <span
             @click.stop.prevent.self="clear_search"
             v-show="input_text.length > 0"
-          />
+            :class="[`icon-delete ${get_y0_suffix}`, { 'input-without-word': !input_text.length }]"
+          ></span>
         </template>
       </q-input>
       <div class="content">
@@ -49,7 +48,6 @@
           <p class="row all_select_left">
             <img
               class="img"
-              
               src="/src/base-h5/components/menu/app-h5-menu/tab/img/eventicons.svg"
               alt
             />
@@ -77,22 +75,40 @@
         <section class="league_list">
           <p class="league_title">
             热门联赛
-            <span class="league_num">{{list.length}}</span>
+            <span class="league_num">{{list_data.length}}</span>
           </p>
           <ul class="list_info">
-            <li class="list_data row items-center justify-between">
-              <p class="league_name row items-center">
-              <img
-                  class="img"
-                  src="/src/base-h5/components/menu/app-h5-menu/tab/img/icon_checkbox_sel.svg"
-                  alt/>
-                  欧洲冠军联赛
-              </p>
-              <img
-                class="league_select"
-                src="/src/base-h5/components/menu/app-h5-menu/tab/img/icon_checkbox_sel.svg"
-                alt
-              />
+           <!-- 类型 -->
+            <li class="list_data"
+                v-for="(type_item,type_index) in list_data" :key='type_index'>
+                <!-- 赛事 -->
+                 <div v-for="(match_item,match_index) in type_item.data" :key='match_index'>
+                 <!-- 联赛 -->
+                      <div v-for="(league_item,league_index) in match_item.league" :key='league_index'
+                           class="row items-center justify-between">
+                          <p class="league_name row items-center">
+                        <img
+                            class="img"
+                            :src="league_item.lurl"
+                            alt/>
+                            {{league_item.leagueName}}
+                        </p>
+                        <img
+                          class="select_img"
+                          v-show="!league_item.is_active"
+                          @click="league_item.is_active = true"
+                          src="/src/base-h5/components/menu/app-h5-menu/tab/img/icon_checkbox_nor.svg"
+                          alt
+                        />
+                          <img
+                            class="img"
+                            v-show="league_item.is_active"
+                            @click="league_item.is_active = false"
+                            src="/src/base-h5/components/menu/app-h5-menu/tab/img/icon_checkbox_sel.svg"
+                            alt
+                          />
+                      </div>
+                 </div>
             </li>
           </ul>
         </section>
@@ -102,7 +118,7 @@
 </template>
 <script setup>
 import { SearchData } from "src/core/";
-import { reactive, toRefs, ref,onMounted } from "vue";
+import { reactive, toRefs, ref,onMounted,watch} from "vue";
 import search from "src/core/search-class/search.js"
 defineOptions({
   name: "screen-modal" // 设置组件名称
@@ -110,35 +126,33 @@ defineOptions({
 //输入框值
 const input_text = ref("");
 //联赛的数据
-const list = ref([]);
+let list_data = reactive([]);
 //是否全选
 const is_all_checked = ref(false);
+//日间夜间
+const get_y0_suffix = ''
 
 onMounted(()=>{
   get_search_result()
 })
-function search_input_focus_or_blur(e, event_handle) {
-  let selectDialog = document.querySelector(".select-dia");
-  selectDialog.style.display = "none";
-
-  nextTick(() => {
-    selectDialog.style.display = "block";
-  });
-
-  // 搜索弹窗 滚动区域 聚焦时 滚动到顶部
-  if (event_handle) {
-    clearTimeout(event_handle_timer);
-    event_handle_timer = setTimeout(() => {
-      selectDialog.scrollTop = 0;
-    }, 200);
-  }
-}
+watch(()=>is_all_checked,(val)=>{
+  list_data = list_data.map(item=>{
+      item.children.forEach(sub => {
+        sub.children.forEach(sitem=>{
+          sitem.is_active = val
+        })
+      });
+      return item
+  })
+})
+/**
+ * @Description:获取搜索结果数据
+ * @param {string} keyword 搜索关键字
+ * @return {Undefined} Undefined
+ */
 function clear_search() {
   input_text.value = "";
 }
-
-// 跳转到赛事详情
-function go_to_details() {}
 
 /**
  * @Description:获取搜索结果数据
@@ -149,11 +163,7 @@ function get_search_result() {
     //调用接口获取获取搜索结果数据
     search.get_search_result(input_text.value, '').then(res => {
         const { state, list } = res
-        // load_data_state.value = state
-        // res_list = list
-        // let _ref_scroll = scrollRef.value;
-        console.log('state, list',res)
-    
+        list_data.value = list
     })
 }
 </script>
@@ -199,19 +209,17 @@ function get_search_result() {
       position: relative;
       background: var(--q-color-com-img-bg-113) no-repeat center / 100% 100%;
       transition: all 0.3s ease-in-out;
-      &:before {
-        width: 0.2rem !important;
-        height: 0.2rem !important;
-      }
+      transform: scale(0.8);
       &.input-without-word {
         position: absolute;
       }
     }
 
     .icon-delete {
-      width: 0.32rem;
-      height: 0.32rem;
-      padding: 0.1rem;
+      width: 0.2rem;
+      height: 0.2rem;
+      z-index: 9;
+      transform: scale(0.8);
     }
     :deep(.q-field__control) {
       height: 100%;

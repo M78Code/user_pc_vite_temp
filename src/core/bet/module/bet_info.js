@@ -10,6 +10,7 @@ import {compute_value_by_cur_odd_type} from  "src/core/format/module/format-odds
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import UserCtr from  "src/core/user-config/user-ctr.js";
 import { api_betting } from "src/api/index.js";
+import MatchListOuzhouClass from 'src/core/match-list-pc/match-ouzhou-list.js'
 
 
 
@@ -184,3 +185,17 @@ export const bet_click = (item,obj_hp,obj_hl) =>{
   
 }
 
+
+/**
+ * 
+ * @param {String} payload 当前选中的玩法ID
+ */
+export const storage_bet_id = payload => {
+  // 如果当前点击的td处于高亮状态则取消高亮
+  if (payload === current_check_betId) {
+    MatchListOuzhouClass.orderDetailList = MatchListOuzhouClass.orderDetailList.filter(item => item.playOptionsId !== payload)
+    MatchListOuzhouClass.current_check_betId.value = ""
+  } else {
+    MatchListOuzhouClass.current_check_betId.value = payload
+  }
+} 

@@ -2,6 +2,7 @@ import lodash from 'lodash'
 import BaseData from 'src/core/base-data/base-data.js'
 import MenuData from "src/core/menu-app-h5/menu-data-class.js"
 import PageSourceData from "src/core/page-source/page-source.js";
+import { playingMethods_15 } from "src/core/constant/config/15-minute.js";
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 
 class MatchUtils {
@@ -171,6 +172,34 @@ class MatchUtils {
       const matchs = list.filter(list => list.csid === t)
       MatchResponsive.set_ball_seed_count(`${key}_csid_${t}`, matchs.length)
     })
+  }
+   /**
+   * @description 15分钟玩法赛事阶段 ms 1 滚球
+   * @param { Number } ms
+   * @param { Number } mst
+   */
+   // 
+  get_match_15_minute_stage (ms, mst)  {
+    let isLock = false
+    let title = ''
+    if (ms !== 1) {
+      title = playingMethods_15[0].title
+    } else {
+      const difference = Math.floor(Number(mst) / 60)
+      const residue = Math.floor(difference / 15)
+      if (difference > 0 && difference <= 90) {
+        title = playingMethods_15.find(p => p.value === residue).title
+      }
+      if (difference < 0) {
+        isLock = true
+        title = playingMethods_15[0].title
+      }
+      if (difference > 90) {
+        isLock = true
+        title = playingMethods_15[playingMethods_15.length - 1].title
+      }
+    }
+    return { isLock, title }
   }
 }
 

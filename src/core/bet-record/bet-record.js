@@ -23,6 +23,88 @@ export const outcome = {
   "6": t("bet_record.bet_no_status06"), //'输半',
 }
 
+/**
+ * 返回订单状态
+ * orderStatus(0:未结算,1:已结算,2:注单无效,3:确认中,4:投注失败)
+ * @param {*} data_b 
+ * @returns 
+ */
+export const calc_text = (data_b) => {
+  let color = 'black'
+  let text = ''
+  switch (data_b.orderStatus) {
+    case '0':
+      text = t('bet_record.successful_betting')
+      color = 'green'
+      break;
+    case '1':
+      let flag = data_b.seriesType == '1' && data_b.orderVOS[0]
+      if (flag) {   //单关
+        if (+data_b.preBetAmount > 0) { 
+          // 提前结算的输赢单独一套逻辑算
+          let difference = data_b.backAmount - data_b.orderAmountTotal
+          // 赢
+          if (difference > 0) {
+            color = 'red'
+            text = bet_result['4']
+          } else if (difference < 0) {
+            // 输
+            text = bet_result['3']
+          } else {  // 走水
+            text = bet_result['2']
+          }
+          break;
+        }
+        let betresult = data_b.orderVOS[0].betResult
+        if (betresult == 13 || betresult == 16) {
+          text = t('bet_record.invalid')
+        } else {
+          if (betresult == 4 || betresult == 5) {
+            color = 'red'
+          }
+          text = bet_result[betresult] || ''
+        }
+      } else {  //串关
+        if (data_b.outcome == 4 || data_b.outcome == 5) {
+          color = 'red'
+        }
+        text = outcome[data_b.outcome] || t('bet_record.successful_betting')
+      }
+      break;
+    case '2':
+      text = t('bet_record.invalid_bet')
+      color = 'gray'
+      break
+    case '3':
+      text = t('bet_record.confirming')
+      color = 'orange'
+      break
+    case '4':
+      text =  t('bet.bet_err')
+      color = 'red'
+      break
+    default:
+      break
+  }
+  return { text, color }
+}
+
+// 根据状态，过滤数据，显示提前结算的列表
+const filter_early_money_list = (list_data, bol) => {
+  let all_list = lodash.cloneDeep(list_data)
+  if(bol) {
+    lodash.forEach(all_list, (list_data, key) => {
+      list_data.data = lodash.filter(list_data.data, item => {
+        return item.enablePreSettle
+      })
+      if(!list_data.data.length) {
+        delete all_list[key]
+      }
+    })
+  }
+  return all_list
+}
+
 
 class BetRecord {
   constructor() {
@@ -39,7 +121,6 @@ class BetRecord {
     this.early_money_list = []
     // 投注记录版本变更
     this.bet_record_version = ref('1111')
-    
   }
 
   // 设置投注记录 tab切换
@@ -56,14 +137,14 @@ class BetRecord {
   // 更新列表
   set_list_data(value) {
     this.list_data = value
-    this.early_money_list = this.filter_early_money_list(value, this.is_early)
+    this.early_money_list = filter_early_money_list(value, this.is_early)
     this.set_bet_record_version()
   }
 
   // 设置提前结算按钮
   set_is_early(value) {
     this.is_early = value
-    this.early_money_list = this.filter_early_money_list(this.list_data, value)
+    this.early_money_list = filter_early_money_list(this.list_data, value)
     this.set_bet_record_version()
   }
 
@@ -72,81 +153,6 @@ class BetRecord {
     this.bet_record_version.value = Date.now()
   }
 
-  //返回订单状态   orderStatus(0:未结算,1:已结算,2:注单无效,3:确认中,4:投注失败)
-  calc_text(data_b) {
-    let color = 'black'
-    let text = ''
-    switch (data_b.orderStatus) {
-      case '0':
-        text = t('bet_record.successful_betting')
-        color = 'green'
-        break;
-      case '1':
-        let flag = data_b.seriesType == '1' && data_b.orderVOS[0]
-        if (flag) {   //单关
-          if (+data_b.preBetAmount > 0) { 
-            // 提前结算的输赢单独一套逻辑算
-            let difference = data_b.backAmount - data_b.orderAmountTotal
-            // 赢
-            if (difference > 0) {
-              color = 'red'
-              text = bet_result['4']
-            } else if (difference < 0) {
-              // 输
-              text = bet_result['3']
-            } else {  // 走水
-              text = bet_result['2']
-            }
-            break;
-          }
-          let betresult = data_b.orderVOS[0].betResult
-          if (betresult == 13 || betresult == 16) {
-            text = t('bet_record.invalid')
-          } else {
-            if (betresult == 4 || betresult == 5) {
-              color = 'red'
-            }
-            text = bet_result[betresult] || ''
-          }
-        } else {  //串关
-          if (data_b.outcome == 4 || data_b.outcome == 5) {
-            color = 'red'
-          }
-          text = outcome[data_b.outcome] || t('bet_record.successful_betting')
-        }
-        break;
-      case '2':
-        text = t('bet_record.invalid_bet')
-        color = 'gray'
-        break
-      case '3':
-        text = t('bet_record.confirming')
-        color = 'orange'
-        break
-      case '4':
-        text =  t('bet.bet_err')
-        color = 'red'
-        break
-      default:
-        break
-    }
-    return { text, color }
-  }
-  // 根据提前结算按钮状态， 过滤提前结算的数据
-  filter_early_money_list(value, bol) {
-    let all_list = lodash.cloneDeep(value)
-    if(bol) {
-      lodash.forEach(all_list, (value, key) => {
-        value.data = lodash.filter(value.data, item => {
-          return item.enablePreSettle
-        })
-        if(!value.data.length) {
-          delete all_list[key]
-        }
-      })
-    }
-    return all_list
-  }
 }
 
 export default new BetRecord();

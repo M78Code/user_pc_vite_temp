@@ -15,7 +15,7 @@ export const get_fetch_keyword_related = (params, config = {}, url  = "/v1/hotSe
 export const get_hot_search = (params, config = {}, url = "/v1/keyword/selectKeywordList2") => http.get(`${prefix}${url}`, params)
 
 // /** 搜索历史记录 */
-export const get_history_search = (params, config = {}, url  = "/v1/hotSearch/queryHistoryPB") => http.get(`${prefix}${url}`, params)
+export const get_history_search = (params, config = {}, url  = "/v1/hotSearch/queryHistory") => http.get(`${prefix}${url}`, params)
 
 // /** 清空历史记录 */
 export const get_delete_history_search = (params, config = {}, url  = "/v1/hotSearch/deleteHistoryPB") => http.get(`${prefix}${url}`, params)
@@ -24,10 +24,10 @@ export const get_delete_history_search = (params, config = {}, url  = "/v1/hotSe
 export const post_fetch_search_result = (params, config = {}, url  = "/v1/w/hotSearch/searchMatchInfo") => http.post(`${prefix}${url}`, params)
 
 // 获取搜索结果
-export const get_search_result = (params, config = {}, url  = "/v1/hotSearch/hotSelect3PB") => http.get(`${prefix}${url}`, params)
+export const get_search_result = (params, config = {}, url  = "/v1/hotSearch/hotSelect3") => http.get(`${prefix}${url}`, params)
 
 // 获取搜索球种
-export const get_search_sport = (params, config = {}, url  = "/v1/hotSearch/getSportPB") => http.get(`${prefix}${url}`, params)
+export const get_search_sport = (params, config = {}, url  = "/v1/hotSearch/getSport") => http.get(`${prefix}${url}`, params)
 
 // 获取热推赛事
 export const get_hot_push = (params, config = {}, url  = "/v1/searchSettings/getHotPush") => http.post(`${prefix}${url}`, params)
@@ -48,7 +48,7 @@ export const get_hotselect3 = (params, config={}, url = "/v1/hotSearch/hotSelect
   export const get_fetch_hot_search = (params, config={}, url = "/v1/keyword/selectKeywordList") => http.get(`${prefix}${url}`, params, config)
   
   // 热词-------查询搜索历史
-  export function get_fetch_search_history(params, config={}, url = "/v1/hotSearch/queryHistoryPB") {
+  export function get_fetch_search_history(params, config={}, url = "/v1/hotSearch/queryHistory") {
     params.isPc = 0;  //1(Pc端)  0(h5端))
     return http.get(`${prefix}${url}`, params, config)
   }
