@@ -160,6 +160,7 @@ export default {
 
     onMounted(() => {
       mounted_fn();
+      console.log('asdasdasd');
       init_home_matches()
       MatchListCardDataClass_match_list_card_key_arr()
     });
