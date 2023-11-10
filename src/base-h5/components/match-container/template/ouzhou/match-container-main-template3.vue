@@ -6,13 +6,26 @@
     :style="{ marginTop: is_hot ? '0' : '' }">
     <template v-if="match" >
       <!-- 体育类别 -->
-      <header class="match-header" v-if="show_sport_title">
-        <div class="ht-slide-box">
-            <div v-for="(item, index) in [0,1,2,3,4,5,6,3,4,5,6]" @click="slideHandle(index, $event)" :class="['slide-item',  currentSlideValue === index && 'slide-item-active']" :key="'ht-slide-' + index">
-                <span>{{ item }}</span>
-            </div>
+      <!-- <header class="match-header" v-if="show_sport_title">
+        <div>
+          <span>{{ match.csna }}</span>
         </div>
-      </header>
+        <div class="select_time">
+          <span @click.stop>
+            <q-btn-dropdown flat outline  style="color: #FF7000"  padding="0" label="Fulltime Result" 
+              dropdown-icon="expand_more" content-class="select_time_style">
+              <q-list>
+                <q-item v-for="item in hps_play_data" :key="item.hpid" @click.stop="on_select_play(item)"
+                   :class="{active: select_play === item.hpid}" clickable v-close-popup >
+                  <q-item-section>
+                    <q-item-label>{{ item.hpn }}</q-item-label>
+                  </q-item-section>
+                </q-item>
+              </q-list>
+            </q-btn-dropdown>
+          </span>
+        </div>
+      </header> -->
       <!-- 缓冲容器， 避免滚动时骨架屏漏光问题 -->
       <!-- <div class="buffer-container" v-if="match.is_show_league && !is_show_opening_title && i !== 0"></div> -->
       
@@ -36,14 +49,14 @@
                   {{ match.tn }}
                 </span>
               </span>
-              <template v-if="collapsed">
+              <!-- <template v-if="collapsed">
                 <div class="play_title">
                   <span v-for="p in get_match_panel" :key="p">{{ p }}</span>
                 </div>
               </template>
               <template v-else>
                 <span class="number" style="text-align: right;">{{ get_match_count }}</span>
-              </template>
+              </template> -->
             </span>
           </div>
           
@@ -58,6 +71,7 @@
                 <!-- 下边的模块，左方是  队名和 队比分,  右面是  盘口  模块 -->
                 <div class="odd-list match-indent" :class="{ 'simple': show_newer_edition, result: is_results }">
                   <div class="odd-list-inner odd" :class="{ 'n-s-edition': !show_newer_edition, result: is_results }">
+                    {{ console.log(match) }}
                     <!--  左边 图片和名称  和 比分 和 视频图标 -->
                     <div @click='goto_details(match)' :class="['team-wrapper', { simple: standard_edition == 1, team_title: is_results }]">
                       <!-- 上边的 赛事日期标准版,包含 比分组件 -->
@@ -147,10 +161,12 @@
                           </template>
                         </div>
                         <div class="team-title-inner-con">
+                          <span>{{ format_time_zone(+match.mgt).Format(i18n_t('time4')) }} </span>
                           <div class='team-t-title-w' :class="{
                             'is-handicap': match.handicap_index == 1,
                             'is-handicap-1': match.handicap_index == 2,
                           }">
+                          {{  console.log(match)  }}
                             {{ match.mhn }}
                           </div>
                           <!-- 进球动画 -->
@@ -160,7 +176,7 @@
                           </div>
                         </div>
                         <!--进行中的赛事显示比分 ,如果是比分判定中，则不显示比分-->
-                        <div class="score full-score" v-show="match.ms > 0 && !is_results && !eports_scoring"
+                        <div class="score full-score"
                           :class="{ 'visibility-hidden': match.ms == 110 }">
                           {{ home_score }}
                         </div>
@@ -198,14 +214,18 @@
                           </div>
                         </div>
                         <!--进行中的赛事显示比分 ,如果是比分判定中，则不显示比分-->
-                        <div class="score full-score" v-show="match_of_list.ms > 0 && !is_results && !eports_scoring"
+                        <div class="score full-score"
                           :class="{ 'visibility-hidden': match_of_list.ms == 110 }">
                           {{ away_score }}
                         </div>
                       </div>
                     </div>
+                    <div class="mcmt-text">
+                      {{i18n_t('list.go_to_details')}}
+                      <img :class="['arrow']" alt="" />
+                    </div>
                     <!-- 右边盘口组件 -->
-                    <ScoreList :match_info="match_of_list" :score_length="score_length"></ScoreList>
+                    <!-- <ScoreList :match_info="match_of_list" :score_length="score_length"></ScoreList> -->
                   </div>
                 </div>
               </div>
@@ -234,7 +254,7 @@ import PageSourceData  from  "src/core/page-source/page-source.js";
 import { i18n_t, compute_img_url, compute_css_obj  } from "src/core/index.js"
 import { format_time_zone } from "src/core/format/index.js"
 import { have_collect_ouzhou, no_collect_ouzhou} from 'src/base-h5/core/utils/local-image.js'
-import { scrollMenuEvent } from "src/base-h5/components/menu/app-h5-menu/utils.js"
+
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 
 import { lang, standard_edition, theme } from 'src/base-h5/mixin/userctr.js'
@@ -266,14 +286,6 @@ export default {
     const select_play = ref('1')
     const score_length = ref(3)
     const hps_play_data = ref([])
-    const currentSlideValue = ref(0)
-
-    const slideHandle = (val, e) => {
-      currentSlideValue.value = val
-      scrollMenuEvent(e, ".ht-slide-box", ".slide-item-active");
-    }
-
-    console.log(ctx)
 
     // 是否显示球种标题
     const show_sport_title = computed(() => {
@@ -321,7 +333,7 @@ export default {
     return { 
       lang, theme, i18n_t, compute_img_url, format_time_zone, GlobalAccessConfig, footer_menu_id,LOCAL_PROJECT_FILE_PREFIX, have_collect_ouzhou,
       is_hot, menu_type, menu_lv2, is_detail, is_export, is_results, standard_edition, compute_css_obj, show_sport_title, no_collect_ouzhou,
-      PageSourceData, get_match_panel, hps_play_data, on_select_play, select_play, score_length, slideHandle, currentSlideValue
+      PageSourceData, get_match_panel, hps_play_data, on_select_play, select_play, score_length
     }
   }
 }
@@ -490,7 +502,7 @@ export default {
     display: flex;
     height: 90px;
     position: relative;
-    padding: 10px 0 10px 10px;
+    padding: .03rem 0 .03rem .03rem;
     border-bottom: 1px solid #eee;
     .match-odds-container-border-radius {
       width: 100%;
@@ -784,8 +796,13 @@ export default {
     }
      // 添加 line-height: 0.14rem 解决42682 生产BUG--malick
     .match-league {
-      max-width: 2.8rem;
+      width: 3rem;
       line-height: 0.14rem;
+      white-space: nowrap;
+      overflow: hidden;
+      -webkit-line-clamp: 1;
+      text-overflow: ellipsis;
+      display: block;
       &.match-main-league {
         //max-width: 1.4rem;
       }
@@ -841,7 +858,7 @@ export default {
     position: relative;
     overflow: hidden;
     > div {
-      width: 50%;
+      width: 80%;
       flex-shrink: 0;
     }
 
@@ -901,6 +918,12 @@ export default {
       &.team_title {
         .team-title-inner-con {
           width: 1.8rem !important;
+          display: flex;
+          flex-direction: column;
+          align-items: start !important;
+          span {
+            color: #8a8986;
+          }
         }
       }
 
@@ -990,7 +1013,7 @@ export default {
             font-weight: 500;
             color: #8a8986;
             &.visiting {
-              color: #8a8986;
+              // color: #8a8986;
             }
           }
         }
@@ -1360,35 +1383,14 @@ export default {
   }
 }
 
-
-
-.ht-slide-box {
-    display: flex;
-    justify-content: space-between;
-    // padding: .14rem .15rem;
-    width: 100%;
-    overflow-x: scroll;
-    // border-bottom: .08rem solid var(--q-gb-bg-c-11);
-
-    .slide-item-active {
-        span {
-            background: #FF7000;
-            border-radius: .26rem;
-            color: var(--q-gb-t-c-14);
-        }
-    }
-    .slide-item {
-        flex:0 0 .47rem;
-        span {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: .12rem;
-            height: .26rem;
-        }
-    }
+.mcmt-text {
+  color: #1A1A1A;
+  font-size: .12rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
 }
-
 /* **************日期********************** -E*/
 
 /* ********赛事容器相关********** -E*/

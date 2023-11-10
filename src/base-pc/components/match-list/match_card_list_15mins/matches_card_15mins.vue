@@ -35,11 +35,12 @@
 
 <script setup>
 
-  import { ref } from 'vue';
+  import { ref, watch } from 'vue';
   import _ from 'lodash';
 
   // import store from 'src/store-redux-vuex/index.js';
-  // import { storage_bet_info, storage_bet_id } from 'src/utils/bet_info.js'
+  import { storage_bet_info, storage_bet_id } from 'src/core/bet/module/bet_info.js'
+  import MatchListOuzhouClass from 'src/core/match-list-pc/match-ouzhou-list.js'
 
   import sport_icon from "src/base-pc/components/match-list/sport_icon.vue";
 
@@ -51,25 +52,27 @@
     },
   });
   
-  // const current_check_betId = ref(state.betInfoReducer.current_check_betId);
+  const current_check_betId = ref(MatchListOuzhouClass.current_check_betId.value);
 
   // // 监听 当前投注项ID的变化
-  // store.subscribe(() => {
-  //   state = store.getState()
-  //   current_check_betId.value = state.betInfoReducer.current_check_betId;
-  // });
+  watch(
+      MatchListOuzhouClass.current_check_betId,
+      () => {
+        current_check_betId.value= MatchListOuzhouClass.current_check_betId.value
+      },
+    )
 
-  // // 选中当前td 使td高亮 且将投注信息存储到数据仓库中
-  // const checked_current_td = payload => {
-  //   // 锁盘状态不高亮
-  //   if (payload.hps.hs) {
-  //     return;
-  //   }
-  //   if (payload.ol.oid !== current_check_betId.value) {
-  //     storage_bet_info(payload);
-  //   }
-  //   storage_bet_id(payload.ol.oid);
-  // }
+  // 选中当前td 使td高亮 且将投注信息存储到数据仓库中
+  const checked_current_td = payload => {
+    // 锁盘状态不高亮
+    if (payload.hps.hs) {
+      return;
+    }
+    if (payload.ol.oid !== current_check_betId.value) {
+      storage_bet_info(payload);
+    }
+    storage_bet_id(payload.ol.oid);
+  }
   
 </script>
 

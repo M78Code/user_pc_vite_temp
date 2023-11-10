@@ -15,6 +15,7 @@
           <section class="section-content">
             <!-- 时间赛事 -->
             <template v-if="time_events.length > 0">
+              <HeaderTitle title="15 Mins"></HeaderTitle>
               <TimeEvents :time_events="time_events" />
             </template>
             <!-- 特色赛事 -->
@@ -26,9 +27,16 @@
             <HeaderTitle title="In-Play"></HeaderTitle>
             <MatchContainer />
             <!-- 特色赛事 -->
-            <!-- <matches :matchesInfo="atpMatchesInfo" />
-            <HeaderTitle title="Top Leagues"></HeaderTitle>
-            <top_leagues :leaguesInfo="leaguesInfo" /> -->
+             <!-- 特色赛事 -->
+             <template v-if="featured_matches.length > 0">
+              <HeaderTitle title="ATP/WTA Rome"></HeaderTitle>
+              <FeaturedMatches :featured_matches="featured_matches" />
+            </template>
+            <!-- <matches :matchesInfo="atpMatchesInfo" /> -->
+            <template v-if="leagues_matchs.length > 0">
+              <HeaderTitle title="Top Leagues"></HeaderTitle>
+              <TopLeagues :leagues_matchs="leagues_matchs" />
+            </template>
           </section>
         </q-tab-panel>
         <!-- top Events page -->
@@ -50,12 +58,16 @@ import { watch } from "vue";
 
 import TimeEvents from './components/time-events.vue'
 import HeaderTitle from './components/header-title.vue'
+import TopLeagues from './components/top-leagues.vue'
 import FeaturedMatches from './components/feature-matches.vue'
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import MatchUtils from 'src/core/match-list-h5/match-class/match-utils';
 import MatchContainer from "src/base-h5/components/match-list/index.vue";
 import scrollMenu from 'src/base-h5/components/top-menu/top-menu-ouzhou-1/scroll-menu/scroll-menu.vue';
-import { MenuData, MatchDataWarehouse_ouzhou_PC_l5mins_List_Common as MatchDataBasel5minsH5, MatchDataWarehouse_ouzhou_PC_hots_List_Common as MatchDataBaseHotsH5 } from "src/core/index.js";
+import { MenuData, MatchDataWarehouse_ouzhou_PC_l5mins_List_Common as MatchDataBasel5minsH5, 
+  MatchDataWarehouse_ouzhou_PC_hots_List_Common as MatchDataBaseHotsH5 } from "src/core/index.js";
+
+import { de_img, dk_img, be_img, fr_img } from 'src/base-h5/core/utils/local-image.js'
 
 watch(() => MenuData.update_time.value, () => {
   console.log("菜单id-球类id-对应euid",`${MenuData.menu_type.value}-${MenuData.menu_mi.value}-${MenuData.get_euid()}`)
@@ -66,10 +78,6 @@ const featured_matches = ref([])
 
 onMounted(async () => {
   get_ouzhou_home_data()
-  // 先写死
-  setTimeout(() => {
-    MenuData.get_match_render_list();
-  }, 2000)
 })
 
 const get_ouzhou_home_data = async () => {
@@ -88,6 +96,66 @@ const get_ouzhou_home_data = async () => {
      }
   })
 }
+
+// 国家赛事
+const leagues_matchs = ref([{
+  national: 'Germany',
+  nationalIcon: de_img,
+  visible: true,
+  children: [{
+    isCollect: false,
+    value: '6',
+    title: 'Liga de primera división'
+  }, {
+    isCollect: false,
+    value: '8',
+    title: 'Liga de primera división'
+  }]
+}, {
+  national: 'Denmark',
+  nationalIcon: dk_img,
+  visible: false,
+  children: [{
+    isCollect: false,
+    value: '6',
+    title: 'Liga de primera división'
+  }, {
+    isCollect: false,
+    value: '8',
+    title: 'Liga de primera división'
+  }, {
+    isCollect: false,
+    value: '8',
+    title: 'Liga de primera división'
+  }]
+}, {
+  national: 'Belgium',
+  nationalIcon: be_img,
+  visible: false,
+  children: [{
+    isCollect: false,
+    value: '6',
+    title: 'Liga de primera división'
+  }, {
+    isCollect: false,
+    value: '8',
+    title: 'Liga de primera división'
+  }]
+}, {
+  national: 'France',
+  nationalIcon: fr_img,
+  visible: false,
+  children: [{
+    isCollect: false,
+    value: '6',
+    title: 'Liga de primera división'
+  }, {
+    isCollect: false,
+    value: '8',
+    title: 'Liga de primera división'
+  }]
+}])
+
 
 const tabValue = ref('featured');
 // tabs 切换

@@ -12,7 +12,7 @@
         <span>{{ title }}</span>
       </span>
       <slot name="title_right">
-        <img :class="['arrow', { expend: visible }]" src="~assets/images/menu/arrow.png" alt="" />
+        <!-- <img :class="['arrow', { expend: visible }]" src="~assets/images/menu/arrow.png" alt="" /> -->
       </slot>
       <div class="line"></div>
     </div>
