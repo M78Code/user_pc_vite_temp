@@ -66,6 +66,10 @@ const featured_matches = ref([])
 
 onMounted(async () => {
   get_ouzhou_home_data()
+  // 先写死
+  setTimeout(() => {
+    MenuData.get_match_render_list();
+  }, 2000)
 })
 
 const get_ouzhou_home_data = async () => {

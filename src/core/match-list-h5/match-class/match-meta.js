@@ -60,9 +60,10 @@ class MatchMeta {
       menu_lv_v1_sl = lodash.get(MenuData.current_lv_1_menu, 'sl')
       menu_lv_v2_sl = lodash.get(MenuData.current_lv_2_menu, 'sl')
     }else{
-      // 菜单 ID 对应的 元数据赛事 mids
-      menu_lv_v1 = MenuData.current_lv_1_menu_i
-      menu_lv_v2 = MenuData.current_lv_2_menu_i
+      // 菜单 ID 对应的 元数据赛事 mids   
+      // 先写死
+      menu_lv_v1 = MenuData.current_lv_1_menu_i || '1'
+      menu_lv_v2 = MenuData.current_lv_2_menu_i || '1011'
       menu_lv_v1_sl = MenuData.get_menu_lvmi_list(menu_lv_v1)
       menu_lv_v2_sl = MenuData.get_menu_lv_2_mi_list(menu_lv_v2)
     }
