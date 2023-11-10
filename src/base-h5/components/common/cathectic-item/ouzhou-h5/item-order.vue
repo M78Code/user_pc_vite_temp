@@ -4,15 +4,15 @@
 -->
 <template>
   <div style="display: none;">{{ BetRecordClass.bet_record_version }}</div>
-  <div class="item-order row mx-16 justify-between">
+  <div class="item-order row justify-between">
     <!-- 订单号 -->
-    <div class="text-left row ellipsis"  @click="copy">
+    <div class="text-left row col-7 ellipsis"  @click="copy">
       <p class="title">{{i18n_t('bet.order_no')}}</p>
       <span class="yb_mr4 orderno fw_700">{{data_o.orderNo}}</span>
       <img :src="compute_local_project_file_path('/image/svg/copy.svg')" alt=""  style="width:0.1rem" />
     </div>
     <!-- 时间 i18n_t('bet_record.bet_time')   .Format(i18n_t('time4'))-->
-    <div class="text-right row">
+    <div class="text-right row col-5">
       <p class="title">{{i18n_t('bet_record.bet_time')}}</p>
       <span class="orderno fw_700">{{formatTime(+data_o.betTime, 'mm/DD HH:MM')}}</span>
     </div>

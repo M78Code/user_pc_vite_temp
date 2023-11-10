@@ -152,20 +152,26 @@ watch(() => expected_profit.value, (_new, _old) => {
   }
 })
 
-onMounted(() => {
-  // 接口：当 enablePreSettle=true && hs = 0  提前结算显示高亮， 当 enablePreSettle=true && hs != 0  显示置灰， 当 enablePreSettle=false 不显示，
-  ordervos_ = lodash.get(props.item_data, "orderVOS[0]", {});
-  if (ordervos_.hs != 0) {
-    status.value = 5;
-  }
-  // 设置哪些注单处于确认中的状态
-  if (Array.isArray(queryorderpresettleconfirm_data) && BetRecordClass.select == 0) {
-    queryorderpresettleconfirm_data.forEach((item) => {
+
+// provide 进来的 待确认中的提前结算单
+watch(() => queryorderpresettleconfirm_data.value, (_new) => {
+    // 设置哪些注单处于确认中的状态
+    if (Array.isArray(_new) && BetRecordClass.select == 0) {
+      _new.forEach((item) => {
       if (item.orderNo == props.item_data.orderNo && item.preSettleOrderStatus == 0) {
         status.value = 3
         front_settle_amount.value = item.frontSettleAmount
       }
     });
+  }
+}, { immediate: true })
+
+
+onMounted(() => {
+  // 接口：当 enablePreSettle=true && hs = 0  提前结算显示高亮， 当 enablePreSettle=true && hs != 0  显示置灰， 当 enablePreSettle=false 不显示，
+  ordervos_ = lodash.get(props.item_data, "orderVOS[0]", {});
+  if (ordervos_.hs != 0) {
+    status.value = 5;
   }
 
   if (is_only_fullbet.value) {
