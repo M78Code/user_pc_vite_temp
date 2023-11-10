@@ -128,8 +128,8 @@ onMounted(()=>{
 // // 菜单切换 右侧背景图片变化
 let un_subscribe = () => {
 	redux_menu.value = MatchListOuzhouClass.redux_menu;
-	const { menu_root,menu_left,mid_tab_menu_type,coom_soon } = MatchListOuzhouClass.redux_menu;
-	coom_soon_state.value=coom_soon
+	const { menu_root,menu_left,mid_tab_menu_type } = MatchListOuzhouClass.redux_menu;
+	coom_soon_state.value= MatchListOuzhouClass.coom_soon.value
 	// console.error('header ', menu_root,mid_tab_menu_type,menu_left)
 	let ball_number = 0
 	if( menu_root == 1 ){
@@ -187,12 +187,12 @@ const checked_current_tab = payload => {
 	// 暂时不做 
 	if (['top_events', 'league'].includes(payload.value)) {
 		// 修改菜单数据
-		redux_menu.coom_soon = true
+		MatchListOuzhouClass.coom_soon.value = true
 
 		
 	}else{
 		// 修改菜单数据
-		redux_menu.coom_soon = false
+		MatchListOuzhouClass.coom_soon.value = false
 	}
 
 	redux_menu.mid_tab_type = payload.value
