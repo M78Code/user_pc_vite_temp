@@ -132,6 +132,10 @@ class BaseData {
    * 目前 按照约定 走 api
    */
   init() {
+
+    // 获取 用户信息
+    this.init_user_info();
+
     // 用默认数据 初始化
     this.init_by_default_data();
     // console.warn("BaseData.init()--------");
@@ -144,8 +148,7 @@ class BaseData {
     // 获取 菜单的国际化
     this.init_base_menu_il8n();
 
-    // 获取 用户信息
-    this.init_user_info();
+    
 
     // 获取 虚拟体育 的 数据对象
     this.set_vr_mi_config();
