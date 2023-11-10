@@ -310,7 +310,7 @@ export default {
       let target_hps = []
       const { csid } = ctx.match_of_list
       target_hps = MatchResponsive.ball_seed_play_methods.value[`hps_csid_${csid}`]
-      hps_play_data.value = target_hps
+      hps_play_data.value = target_hps || []
     }
 
     watch(() => ctx.match_of_list.hps, () => {

@@ -1,5 +1,9 @@
 <template>
     <div class="flex flex-start items-center">
+        <!-- 中立图片 -->
+        <div class="sr-link-icon-w">
+            <div :style="compute_css_obj({key: 'pc-home-neutral'})"></div>
+        </div>
         <!-- 图标1 -->
         <div class="sr-link-icon-w">
             <div :style="compute_css_obj({key: 'pc-home-early-settlement'})"></div>

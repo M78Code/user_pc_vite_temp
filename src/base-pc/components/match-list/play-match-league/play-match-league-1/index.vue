@@ -5,8 +5,7 @@
     <div v-show="false">{{ MatchListCardData.list_version }}</div>
     <div class="tr-match-head" @click="set_fold">
       <!-- 联赛信息 -->
-      <div class="leagues-wrap" :class="match_style_obj.data_tpl_id == 12 && 'jingcai'"
-        :style="`width:${match_list_tpl_size.process_team_width}px !important;`">
+      <div class="leagues-wrap" :style="`width:${match_list_tpl_size.process_team_width}px !important;`">
         <div class="yb-flex-center" :style="`width:${match_list_tpl_size.media_width - 3}px !important;`">
           <!-- 联赛是否收藏 -->
           <div @click.stop="mx_collect({ type: 'leagues', match: card_style_obj.league_obj })"
