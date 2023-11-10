@@ -26,7 +26,7 @@
                   <bet-mix-box-child1 :items="BetData.bet_single_list[0]" ></bet-mix-box-child1>
                   <!-- 单关的输入框 -->
                   <bet-input-info :item="BetData.bet_single_list[0]" index="0" ></bet-input-info>
-
+                  <!-- <bet-mix-box-child4></bet-mix-box-child4> -->
                   <!-- 键盘 -->
                   <key-board></key-board>
                 </div>
@@ -45,7 +45,8 @@
                 <!-- 串关投注项列表  -->
                 <div class="scroll-box scroll-box-center" ref="scroll_box" :style="{ 'max-height': `${max_height1}px` }"
                     @touchmove="touchmove_handle($event)" @touchstart="touchstart_handle($event)">
-                    <bet-mix-box-child3></bet-mix-box-child3>
+                    <bet-mix-box-child3 :items="BetData.bet_s_list"></bet-mix-box-child3>
+                    <bet-mix-box-child6></bet-mix-box-child6>
                 </div>
                 <bet-info></bet-info>
             </div>

@@ -191,7 +191,7 @@ onMounted(() => {
 <style lang="scss" scoped>
 .detail_header_tem2 {
   .detail-header-video {
-    height: 210px;
+    height: 230px;
     width: 100vw;
     background: #e2e2e2;
     .video {
