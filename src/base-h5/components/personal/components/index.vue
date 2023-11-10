@@ -66,7 +66,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";
 import {LOCAL_PROJECT_FILE_PREFIX } from "src/core";
 const lang = ref('zh')
 const router = useRouter();
-const mount = '946,568,970.31'
+const mount = UserCtr.balance.toString()
 const showMount = ref(mount)
 const l_visible = ref(false)
 const s_visible = ref(true)
@@ -119,7 +119,7 @@ const settingData = ref([{
 }])
 
 onMounted(() => {
-})
+  })
 
 // 金额显示与隐藏
 const on_show_money = (flag) => {
