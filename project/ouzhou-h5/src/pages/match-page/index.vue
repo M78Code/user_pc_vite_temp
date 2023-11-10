@@ -2,19 +2,18 @@
   <tab-date />
   <!--赛事列表-->
   <div class="match-list-page">
-            <match-container />
-          </div>
+    <match-container />
+  </div>
 </template>
 <script setup>
 import { computed, onUnmounted, onMounted, watch, ref } from "vue";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt";
-import matchContainer from "src/base-h5/components/match-list/index.vue";
+import MatchContainer from "src/base-h5/components/match-list/index.vue";
 import MatchPage from "src/core/match-list-h5/match-class/match-page.js";
 import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from 'src/core'
 import MatchListCard from "src/core/match-list-h5/match-card/match-list-card-class";
 import tabDate from './tab-date/tab-date.vue';
 const emitters = ref({});
-const matchCtr = ref(MatchDataBaseH5);
 const tabValue = ref('matches');
 onMounted(() => {
   // 不让浏览器记住上次的滚动位置
@@ -30,7 +29,6 @@ onMounted(() => {
 });
 
 const destroy_handle = () => {
-  // matchCtr.value.init();
   off_listeners();
 };
 

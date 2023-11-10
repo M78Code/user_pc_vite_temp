@@ -67,7 +67,7 @@
       <!-- <div v-show="show_refresh_mask" class="refresh-mask absolute-full yb-flex-center" :style="{top:get_is_show_banner && get_is_roll_show_banner ? '156px' : '36px'}"> -->
       <div class="img-loading custom-format-img-loading" :style="compute_css_obj('pc-img-loading')"></div>
     </div>
-    <ConmingSoon v-if="coom_soon_state" />
+    <ConmingSoon v-show="coom_soon_state" />
   </div>
 </template>
 <script>
@@ -176,12 +176,11 @@ export default {
     )
 
     watch(
-      MatchListOuzhouClass.redux_menu,
-      (list_version) => {
-        console.log( MatchListOuzhouClass.redux_menu, ' MatchListOuzhouClass.redux_menu')
-        const { coom_soon} = MatchListOuzhouClass.redux_menu
-        coom_soon_state.value=coom_soon 
-      }
+      MatchListOuzhouClass.coom_soon,
+      () => {
+        coom_soon_state.value= MatchListOuzhouClass.coom_soon.value
+        proxy?.$forceUpdate()
+      },
     )
 
     return {

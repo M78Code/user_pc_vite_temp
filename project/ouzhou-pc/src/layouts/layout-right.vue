@@ -20,34 +20,32 @@
       "
     /> -->
     <!-- v-else -->
-    <!-- 常规竞猜 -->
-    <analysis :detail_info="detail_info || {}"></analysis>
+    <!-- 右侧数据分析 -->
+    <analysis ></analysis>
     <!-- <match-details-right  class="page-match-detail fit" /> -->
   </div>
   </div>
 </template>
 <script setup>
 import { ref,onBeforeUnmount } from "vue";
-import store from "src/store-redux/index.js";
+// import store from "src/store-redux/index.js";
 import { useMittOn, MITT_TYPES } from "src/core/mitt";
 import analysis from '../pages/match-new-detail/analysis/index.vue'
 // import matchDetailsRight  from "src/base-pc/components/match-details-right/match-details-right.vue"
 import { LayOutMain_pc,MenuData } from "src/core/index.js";
 import { useRoute, useRouter } from "vue-router"
-import {match_info} from '../pages/match-new-detail/mock'
 // import virtualRight from "src/base-pc/components/virtual-right/virtual-right.vue";
 const route = useRoute()
 const right_status=ref(null)
-const detail_info = match_info.data
 
-onBeforeUnmount(() => {
-  list_emit.forEach((i) => i());
-});
+// onBeforeUnmount(() => {
+//   list_emit.forEach((i) => i());
+// });
 function handle_click() {
-  store.dispatch({
-    type: "SET_LAYOT_RIGHT_STATS",
-    data: !right_status.value,
-  });
+  // store.dispatch({
+  //   type: "SET_LAYOT_RIGHT_STATS",
+  //   data: !right_status.value,
+  // });
 }
 </script>
 <style scoped lang="scss">
