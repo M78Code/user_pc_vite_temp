@@ -9,7 +9,7 @@
       v-show="!hid && !is_remove">
     <template v-if="!hid && !is_remove">
       <!-- 玩法title栏 -->
-      <div class="play-name-outer-wrapper" :class="[judage_hshow != 'Yes'?'show_component':'hide_component' ]">
+      <div class="play-name-outer-wrapper" @click="set_hshow(item_data)" :class="[judage_hshow != 'Yes'?'show_component':'hide_component' ]">
         <div class="play-name" :class="{'vir-mar':item_data.hotName}">
           <div class="row items-center" :class="{'bottom-style':is_show_underline}">
             <!-- 玩法名称 -->
@@ -86,7 +86,7 @@
             <div  v-if="!item_data.hotName" class="text-right" @click.stop="set_hton(item_data)" :class="icon_name">
             </div>
             <!-- 折叠按钮 -->
-            <icon-wapper  @click="set_hshow(item_data)" color="#999" name="icon-arrow"  :class="['icon-wapper', {'close': judage_hshow == 'Yes'}]"  size="16px" />
+            <icon-wapper color="#999" name="icon-arrow"  :class="['icon-wapper', {'close': judage_hshow == 'Yes'}]"  size="16px" />
           </div>
           <!-- 调试专用勿删除 -->
           <span v-if="wsl_flag" style="color:red;font-size:12px;" text = "调试用span">模板(hpt)<span>{{item_data.hpt}}玩法(hpid)=>{{item_data.hpid}}</span></span>

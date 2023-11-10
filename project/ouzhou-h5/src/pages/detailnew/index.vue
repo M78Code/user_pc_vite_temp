@@ -178,7 +178,7 @@ const detail_tabs_change = (tab_item) => {
   tab_selected_obj.value = tab_item;
   const { plays } = tab_item;
   const m_plays = [];
-  const list = get_match_odds_info.value.filter(item => {
+  const list = get_match_odds_info.value?.filter(item => {
     let play = item.topKey;
     let topKeyArr = item.topKey.split("-");
     if (topKeyArr.length > 0) {
@@ -285,7 +285,7 @@ const get_category_list_info = (params) => {
       // console.log("get_category_list", res);
       category_list.value = res.data;
       if (!tab_selected_obj.value.id) {
-        tab_selected_obj.value = res.data[0] || {};
+        tab_selected_obj.value = lodash.get(res,'data[0]',{})
       }
     });
 };
