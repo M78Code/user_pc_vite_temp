@@ -10,12 +10,13 @@
     <!-- <div class="test-info-wrap" v-if="GlobalAccessConfig.other.wsl">
    {{ MatchListCardDataClass.list_version }}--   {{ load_data_state }}-- length---  {{ match_list_card_key_arr.length }}
     </div> -->
-    <!-- <div class="test-info-wrap" v-if="GlobalAccessConfig.other.wsl">
+    <div class="test-info-wrap" v-if="GlobalAccessConfig.other.wsl">
       <div>{{ menu_config.mid_menu_result.match_tpl_number }}</div>
       <div class="fold-btn" @click="match_list_card.unfold_all_league()">展开联赛</div>
       <div class="fold-btn" @click="match_list_card.fold_all_league()">折叠联赛</div>
       <div class="fold-btn" @click="match_list_card.test_log_data()">打印数据</div>
-    </div> -->
+      {{ MatchListCardDataClass.list_version }}--   {{ load_data_state }}-- length---  {{ match_list_card_key_arr.length }}
+    </div>
     <MatchesHeader />
     <div class="match-list-scroll scroll" v-show="!coom_soon_state">
       <!-- 头部15 Mins模块 -->
@@ -35,18 +36,18 @@
           <template v-slot:before>
             <div :style="{ height: MatchListCardDataClass.sticky_top.fixed_header_height }"></div>
           </template>
-        <div
-          v-for="card_key in match_list_card_key_arr"
-          :key="card_key" 
-          :card_key="card_key" 
-          :data-card-key="card_key"
-          :class="`card_key   ${card_key}`"
-        >
-          <match-list-card 
+          <div
+            v-for="card_key in match_list_card_key_arr"
+            :key="card_key" 
             :card_key="card_key" 
-            use_component_key="MatchListCard_2"
-          />
-        </div>  
+            :data-card-key="card_key"
+            :class="`card_key_${card_key}`"
+          >
+            <match-list-card 
+              :card_key="card_key" 
+              use_component_key="MatchListCard_2"
+            />
+          </div>  
           <template v-slot:after>
             <div style="height:15px"></div>
             <div class="pager-wrap row justify-end">

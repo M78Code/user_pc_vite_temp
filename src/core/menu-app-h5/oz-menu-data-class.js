@@ -9,7 +9,9 @@
 import lodash_ from "lodash";
 import { ref } from "vue";
 import BaseData from "src/core/base-data/base-data.js";
-import { api_common, api_analysis } from "src/api";
+import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
+import {MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/";
+import MatchFold from 'src/core/match-fold';
 class MenuData {
   constructor() {
     const that = this;
@@ -22,10 +24,11 @@ class MenuData {
     this.destroy = () => {
       this.update && this.update.cancel()
     }
-    this.current_lv_1_menu_i = 2
-    this.current_lv_2_menu_i = '1012'
+    this.current_lv_1_menu_i = '1';
+    this.current_lv_2_menu_i = 0;
     this.menu_lv_mi_lsit = []
-
+    // 赛果 日期/赛中
+    this.result_menu_api_params = {}
     this.menu_list = []; //常规球种 101...
     this.top_events_list = []; //热门球种
     this.menu_mi = ref(''); //常规球种选中
@@ -46,10 +49,22 @@ class MenuData {
     const top_events_list =  BaseData.mew_menu_list_res.filter((item)=>{return item.mi==5000})?.[0].sl || [];
     this.menu_list = menu_list;
     this.top_events_list = top_events_list;
+    this.update()
   }
-  
-  get_menu_type(){
-
+  /**
+   * 请求赛事列表
+   */
+  get_match_render_list(){
+    if (this.is_results()) return MatchMeta.get_results_match()
+    if(!['1','2','3','6'].includes(this.current_lv_1_menu_i))return;
+    // 清除赛事折叠信息
+    MatchDataBaseH5.init()
+    MatchFold.clear_fold_info()
+    // 赛果不走元数据， 直接拉取接口
+    const mi_tid_mids_res = lodash_.get(BaseData, 'mi_tid_mids_res')
+    if (lodash_.isEmpty(mi_tid_mids_res)) return
+    // 设置菜单对应源数据
+    MatchMeta.set_origin_match_data()
   }
   /**
    * 设置id
@@ -57,6 +72,7 @@ class MenuData {
    */
   set_current_lv1_menu(mi){
     this.menu_type.value = mi;
+    this.current_lv_1_menu_i = mi;
     this.update()
   }
   /**
@@ -65,6 +81,7 @@ class MenuData {
    */
   set_menu_mi(mi){
     this.menu_mi.value = mi;
+    this.current_lv_2_menu_i = `${mi}${this.menu_type.value}`;
     this.update()
   }
   // 根据菜单id获取下级菜单id 二级菜单

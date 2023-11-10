@@ -130,8 +130,8 @@ const menu_to_match_templte = {
 // 欧洲版从100开始  
 // 亚洲版从0开始
 const different_version_config = {
-  ouzhou_pc: 100,
-  yazhou_pc: 0,
+  "ouzhou-pc": 100,
+  "yazhou-pc": 0,
 }
 /**
  *
@@ -140,7 +140,8 @@ const different_version_config = {
  * @returns 返回出去对应的模板id
  */
 export const computed_menu_to_match_templte = (data_tpl_id) => {
-
   let default_template_value = 1;
-  return menu_to_match_templte[data_tpl_id]?.value || default_template_value;
+  let current_data_template_value = Number(menu_to_match_templte[data_tpl_id]?.value) + Number(different_version_config[PROJECT_NAME]);
+  let current_data_tpl_id = current_data_template_value || default_template_value;
+  return current_data_tpl_id;
 };

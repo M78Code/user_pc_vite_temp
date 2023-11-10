@@ -11,11 +11,12 @@
       <!-- 非收藏页 -->
       <NoData class="data-get-empty1" v-if='match_is_empty && !is_collcte_page' which='noMatch' height='400'></NoData>
       <!-- 收藏页 -->
-      <NoData class="data-get-empty2" v-if='match_is_empty && is_collcte_page' :which='menu_type === 28 ? "noMatch" : "collect"' height='400'></NoData>
-    </template>
+        <NoData class="data-get-empty2" v-if='match_is_empty && is_collcte_page'
+          :which='menu_type === 28 ? "noMatch" : "collect"' height='400'></NoData>
+      </template>
 
-    <SecondaryDescription />
-  </div>
+      <SecondaryDescription />
+    </div>
 </template>
  
 <script setup>
@@ -40,10 +41,13 @@ import MatchList2 from './components/match-list2.vue'
 // ouzhou-h5 赛事列表
 import MatchList3 from './components/match-list3.vue'
 
+import MatchListOuZhou from './components/match-list-ouzhou.vue'
+
+
 import { PROJECT_NAME } from "src/core/index.js"
 
 // 次要玩法描述组件
-import SecondaryDescription from "src/base-h5/components/match-list/components/secondary-description.vue"; 
+import SecondaryDescription from "src/base-h5/components/match-list/components/secondary-description.vue";
 
 import './styles/index.variables.scss'
 
@@ -81,6 +85,7 @@ const config = {
   'app-h5': MatchList2,
   'yazhou-h5': MatchList1,
   'ouzhou-h5': MatchList3,
+  // 'ouzhou-h5': MatchListOuZhou
 }
 
 const target_com = computed(() => {
@@ -111,7 +116,7 @@ const off_listeners = () => {
 
 // 批量清除定时器
 const clear_timer = () => {
-  const timer_arr = [ timer_super, subscription_timer, ];
+  const timer_arr = [timer_super, subscription_timer,];
 
   for (let timer of timer_arr) {
     clearTimeout(timer);
@@ -123,11 +128,12 @@ const clear_timer = () => {
 </script>
  
 <style scoped lang="scss">
-.match-list-container{
+.match-list-container {
   overflow: hidden;
   position: relative;
 }
-.empty_page{
+
+.empty_page {
   height: 100%;
   display: flex;
   align-items: center;

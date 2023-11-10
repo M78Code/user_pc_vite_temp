@@ -11,8 +11,10 @@ import { api_match_list } from "src/api";
 // import { useRoute } from "vue-router";
 import {match_info,categoryList,matchDetail} from './mock'
 // import store from "src/store-redux-vuex/index.js";
-import { MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance,MenuData,UserCtr } from "src/core/index"; 
+import { MatchDataWarehouse_PC_Detail_Common as MatchDataWarehouseInstance,MenuData,UserCtr } from "src/core/index"; 
 import { filter_odds_func, handle_course_data, format_mst_data } from './matches_list'
+
+import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 
 export function usedetailData(route) {
   // const route = useRoute();
@@ -140,6 +142,7 @@ export function usedetailData(route) {
       detail_info.value['course'] = handle_course_data(detail_info.value);
       //存取赛事详情基础信息
       MatchDataWarehouseInstance.set_match_details(detail_info.value,[])
+      useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, mid);
       use_polling_mst(detail_info.value);
     } catch (error) {}
   };
@@ -227,7 +230,6 @@ export function usedetailData(route) {
   };
 
   onMounted(() => {
-    console.log(1111111111,route)
     sportId = route.params.csid
     mid = route.params.mid
     tid = route.params.tid

@@ -55,7 +55,7 @@ const props = defineProps({
     default: () => ({}),
   },
   active: {
-    type: Number|String,
+    type: Number || String,
     default: () => 0,
   },
 });

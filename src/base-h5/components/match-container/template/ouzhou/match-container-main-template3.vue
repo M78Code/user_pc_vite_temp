@@ -6,9 +6,8 @@
     :style="{ marginTop: is_hot ? '0' : '' }">
     <template v-if="match" >
       <!-- 体育类别 -->
-      <header class="match-header" v-if="show_sport_title">
+      <!-- <header class="match-header" v-if="show_sport_title">
         <div>
-          <!-- <sport_icon size="24" :status="false" :sport_id="match_of_list.icon" /> -->
           <span>{{ match.csna }}</span>
         </div>
         <div class="select_time">
@@ -26,7 +25,7 @@
             </q-btn-dropdown>
           </span>
         </div>
-      </header>
+      </header> -->
       <!-- 缓冲容器， 避免滚动时骨架屏漏光问题 -->
       <!-- <div class="buffer-container" v-if="match.is_show_league && !is_show_opening_title && i !== 0"></div> -->
       
@@ -50,14 +49,14 @@
                   {{ match.tn }}
                 </span>
               </span>
-              <template v-if="collapsed">
+              <!-- <template v-if="collapsed">
                 <div class="play_title">
                   <span v-for="p in get_match_panel" :key="p">{{ p }}</span>
                 </div>
               </template>
               <template v-else>
                 <span class="number" style="text-align: right;">{{ get_match_count }}</span>
-              </template>
+              </template> -->
             </span>
           </div>
           
@@ -72,6 +71,7 @@
                 <!-- 下边的模块，左方是  队名和 队比分,  右面是  盘口  模块 -->
                 <div class="odd-list match-indent" :class="{ 'simple': show_newer_edition, result: is_results }">
                   <div class="odd-list-inner odd" :class="{ 'n-s-edition': !show_newer_edition, result: is_results }">
+                    {{ console.log(match) }}
                     <!--  左边 图片和名称  和 比分 和 视频图标 -->
                     <div @click='goto_details(match)' :class="['team-wrapper', { simple: standard_edition == 1, team_title: is_results }]">
                       <!-- 上边的 赛事日期标准版,包含 比分组件 -->
@@ -161,10 +161,12 @@
                           </template>
                         </div>
                         <div class="team-title-inner-con">
+                          <span>{{ format_time_zone(+match.mgt).Format(i18n_t('time4')) }} </span>
                           <div class='team-t-title-w' :class="{
                             'is-handicap': match.handicap_index == 1,
                             'is-handicap-1': match.handicap_index == 2,
                           }">
+                          {{  console.log(match)  }}
                             {{ match.mhn }}
                           </div>
                           <!-- 进球动画 -->
@@ -174,7 +176,7 @@
                           </div>
                         </div>
                         <!--进行中的赛事显示比分 ,如果是比分判定中，则不显示比分-->
-                        <div class="score full-score" v-show="match.ms > 0 && !is_results && !eports_scoring"
+                        <div class="score full-score"
                           :class="{ 'visibility-hidden': match.ms == 110 }">
                           {{ home_score }}
                         </div>
@@ -212,14 +214,18 @@
                           </div>
                         </div>
                         <!--进行中的赛事显示比分 ,如果是比分判定中，则不显示比分-->
-                        <div class="score full-score" v-show="match_of_list.ms > 0 && !is_results && !eports_scoring"
+                        <div class="score full-score"
                           :class="{ 'visibility-hidden': match_of_list.ms == 110 }">
                           {{ away_score }}
                         </div>
                       </div>
                     </div>
+                    <div class="mcmt-text">
+                      {{i18n_t('list.go_to_details')}}
+                      <img :class="['arrow']" alt="" />
+                    </div>
                     <!-- 右边盘口组件 -->
-                    <ScoreList :match_info="match_of_list" :score_length="score_length"></ScoreList>
+                    <!-- <ScoreList :match_info="match_of_list" :score_length="score_length"></ScoreList> -->
                   </div>
                 </div>
               </div>
@@ -496,7 +502,7 @@ export default {
     display: flex;
     height: 90px;
     position: relative;
-    padding: 10px 0 10px 10px;
+    padding: .03rem 0 .03rem .03rem;
     border-bottom: 1px solid #eee;
     .match-odds-container-border-radius {
       width: 100%;
@@ -790,8 +796,13 @@ export default {
     }
      // 添加 line-height: 0.14rem 解决42682 生产BUG--malick
     .match-league {
-      max-width: 2.8rem;
+      width: 3rem;
       line-height: 0.14rem;
+      white-space: nowrap;
+      overflow: hidden;
+      -webkit-line-clamp: 1;
+      text-overflow: ellipsis;
+      display: block;
       &.match-main-league {
         //max-width: 1.4rem;
       }
@@ -847,7 +858,7 @@ export default {
     position: relative;
     overflow: hidden;
     > div {
-      width: 50%;
+      width: 80%;
       flex-shrink: 0;
     }
 
@@ -907,6 +918,12 @@ export default {
       &.team_title {
         .team-title-inner-con {
           width: 1.8rem !important;
+          display: flex;
+          flex-direction: column;
+          align-items: start !important;
+          span {
+            color: #8a8986;
+          }
         }
       }
 
@@ -996,7 +1013,7 @@ export default {
             font-weight: 500;
             color: #8a8986;
             &.visiting {
-              color: #8a8986;
+              // color: #8a8986;
             }
           }
         }
@@ -1364,6 +1381,15 @@ export default {
       margin-left: .06rem;
     }
   }
+}
+
+.mcmt-text {
+  color: #1A1A1A;
+  font-size: .12rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
 }
 /* **************日期********************** -E*/
 

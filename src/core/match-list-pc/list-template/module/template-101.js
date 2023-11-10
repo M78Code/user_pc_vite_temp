@@ -72,12 +72,9 @@ export const  width_config ={
    * @Description 设置模板table宽度
    * @param {number} total_width 列表总宽度
   */
-  export  const set_template_width=(total_width)=>{
-    let base_config=  TemplateCommon.set_template_width_base(total_width, width_config)
-
+  export  const set_template_width=(total_width= 1180)=>{
+    let base_config=  TemplateCommon.set_ouzhou_template_width_base(total_width, width_config)
     // 加工 base_config 
-
-
     return base_config
   }
 

@@ -106,7 +106,7 @@ function fetch_match_list(is_socket = false, cut) {
 	}
 	// 【搜索列表】 WS 之类的调用 fetch_match_list 转向到 fetch_search_match_list
 	if (page_source == "search") {
-		this.fetch_search_match_list && this.fetch_search_match_list(is_socket);
+		// fetch_search_match_list && fetch_search_match_list(is_socket);
 		return false;
 	}
 	if (!is_socket) {
@@ -229,7 +229,6 @@ function init_page_when_base_data_first_loaded() {
   set_base_data_init();
   //释放试图 
   load_data_state.value ='data'
-
   check_match_last_update_timer_id = setInterval(
     check_match_last_update_time(),
     30000
@@ -261,6 +260,7 @@ function mounted_fn() {
 	useMittOn(MITT_TYPES.EMIT_API_BYMIDS, api_bymids);
 	useMittOn(MITT_TYPES.EMIT_MX_COLLECT_MATCH, mx_collect_match);
 	useMittOn(MITT_TYPES.EMIT_MiMATCH_LIST_SHOW_MIDS_CHANGE, show_mids_change);
+	init_page_when_base_data_first_loaded()
 	useMittOn(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA, init_page_when_base_data_first_loaded);
 	load_video_resources();
 }
@@ -396,21 +396,7 @@ function on_refresh() {
 	fetch_match_list(2);
 	show_refresh_mask.value = true;
 };
-/**
- * @Description 删除赛事数据 卡片
- * @param {*} mid 删除赛事id
- */
-function remove_match_data(mid) {
-	// 移除卡片
-	MatchListCardClass.remove_match(mid);
-	//清除数据仓库数据
-	MatchListData.remove_match_data(mid);
-	//切换右侧
-	if (this.vx_details_params.mid == mid) {
-		// 赛事移除时右侧赛事自动切换
-		this.mx_autoset_active_match({ mid });
-	}
-};
+
 /**
  * @Description:移除赛事
  * @Author success
@@ -427,9 +413,9 @@ function socket_remove_match(match) {
 	MatchListCardClass.remove_match(match.mid);
 	// 更新收藏数量
 	update_collect_data({ type: "remove", match });
-	if (this.vx_details_params.mid == match.mid) {
+	if (vx_details_params.mid == match.mid) {
 		// 赛事移除时右侧赛事自动切换
-		this.mx_autoset_active_match({ mid: match.mid });
+		mx_autoset_active_match({ mid: match.mid });
 	}
 };
 /**
@@ -490,7 +476,6 @@ export  default function(){
 		load_data_state,
 		on_go_top,
 		on_refresh,
-		remove_match_data,
 		socket_remove_match,
 		set_load_data_state,
 		check_match_last_update_time,

@@ -86,6 +86,12 @@ export const odd_lock_ouzhou = compute_local_project_file_path('/image/list/lock
 export const slide_icon_0 = compute_local_project_file_path('/image/common/slide_icon_y0.svg')
 export const slide_icon_1 = compute_local_project_file_path('/image/common/slide_icon.svg')
 
+
+export const de_img = compute_local_project_file_path('/image/national/DE.png')
+export const be_img = compute_local_project_file_path('/image/national/BE.png')
+export const dk_img = compute_local_project_file_path('/image/national/DK.png')
+export const fr_img = compute_local_project_file_path('/image/national/FR.png')
+
 //弹出框菜单图片
 export const popup_menu = {
   refesh: compute_local_project_file_path('/image/menu/refesh.svg'),

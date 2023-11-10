@@ -156,7 +156,7 @@ export const width_config_template = {
   // 视频按钮区域宽度
   media_width: 0,
   // 投注项数量
-  bet_col_count: 6,
+  bet_col_count: 4,
 };
 /**
  * @Description 设置模板table宽度
@@ -202,10 +202,29 @@ export const set_template_width_base = (
   } else {
     config.team_width = config.process_team_width - 77;
   }
+  console.log('config', config);
   return config;
 };
 
-
+/**
+ * @Description 设置欧洲版模板table宽度
+ * @param {number} total_width 列表总宽度
+ */
+export const set_ouzhou_template_width_base = (
+  total_width,
+  config,
+  middle_fn = () => {}
+) => {
+  // 基础信息宽度
+  config.process_team_width = 340;
+  // 视频按钮区域宽度
+  config.media_width = 46;
+  //  中间方法
+  middle_fn(config);
+  // 设置投注项宽度
+  config.bet_width = 330;
+  return config;
+};
 
 // 赛事样式模板
 export const match_style_template = {

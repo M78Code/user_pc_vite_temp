@@ -16,7 +16,7 @@
       </template>
       <template v-slot:content>
         <div class="game" v-for="game, index in item.children" :key="index">
-          <span> <img src="~assets/images/top_events/collect.png" alt=""> {{ game.title }} </span>
+          <span> <img :src="no_collect_ouzhou" alt=""> {{ game.title }} </span>
           <span>{{ game.value }}</span>
         </div>
       </template> 
@@ -25,7 +25,8 @@
 </template>
  
 <script setup>
-import collapse from "src/project-ouzhou/components/collapse/index.vue"
+import { have_collect_ouzhou, no_collect_ouzhou } from 'src/base-h5/core/utils/local-image.js'
+import collapse from "./collapse.vue"
 const props = defineProps({
   leaguesInfo: {
     type: Array,

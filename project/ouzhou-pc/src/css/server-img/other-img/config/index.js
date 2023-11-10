@@ -97,4 +97,8 @@ export default {
   "pc-home-coming-soon": {
     default: "pc-home-coming-soon"
   },
+  //中立图片
+  "pc-home-neutral": {
+    default: "pc-home-neutral"
+  },
 };
