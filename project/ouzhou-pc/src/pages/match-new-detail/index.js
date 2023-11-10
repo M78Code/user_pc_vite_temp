@@ -227,7 +227,7 @@ export function usedetailData(route) {
   };
 
   onMounted(() => {
-    console.log(UserCtr)
+    console.log(1111111111,route)
     sportId = route.params.csid
     mid = route.params.mid
     tid = route.params.tid
@@ -242,12 +242,13 @@ export function usedetailData(route) {
     clearInterval(timer);
     clearInterval(mst_timer);
   });
-
-  const refresh = ({sportId,mid})=>{
+  //  赛事切换刷新数据
+  const refresh = ()=>{
     all_list_toggle = {}
     detail_list.value = []
-   sportId = sportId
-   mid = mid
+    sportId = route.params.csid
+    mid = route.params.mid
+    tid = route.params.tid 
    current_id.value = mid
    init();
   }

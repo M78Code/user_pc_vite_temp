@@ -18,49 +18,95 @@
         <!-- 详情页面包屑 -->
         <breadcrumbs :detail_info="detail_info || {}" />
         <div class="bread-right">
-          <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/detail_top.png`" alt="" srcset="" class="signal" @click="go_analyse" />
-          <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/detail_fresh.png`" alt="" srcset="" :class="{ 'balance_refresh': true, 'route_btn': refresh_data }"
-            @click="refresh_click" />
+          <img
+            :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/detail_top.png`"
+            alt=""
+            srcset=""
+            class="signal"
+            @click="go_analyse"
+          />
+          <img
+            :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/detail_fresh.png`"
+            alt=""
+            srcset=""
+            :class="{ balance_refresh: true, route_btn: refresh_data }"
+            @click="refresh_click"
+          />
         </div>
       </div>
       <div class="match-detail-head">
         <div class="detail-head-leagal">
           <span class="match-detail-head-name">{{ detail_info.tn }}</span>
-          <img :src="neutral" alt="" srcset="" style="margin:0 10px;height: 14px;" v-if="sportId == 1">
-          <span class="leagal-time" v-if="sportId == 1 && detail_info.ms==0"> {{ detail_info.mgt }}</span>
-
+          <img
+            :src="neutral"
+            alt=""
+            srcset=""
+            style="margin: 0 10px; height: 14px"
+            v-if="sportId == 1"
+          />
+          <span class="leagal-time" v-if="sportId == 1 && detail_info.ms == 0">
+            {{ detail_info.mgt }}</span
+          >
         </div>
         <div>
-          <q-expansion-item ref="expansion_ref" expand-separator :expand-icon-toggle="false" :hide-expand-icon="true">
-           
+          <q-expansion-item
+            ref="expansion_ref"
+            expand-separator
+            :expand-icon-toggle="false"
+            :hide-expand-icon="true"
+          >
             <template v-slot:header>
-              <div style="width:100%;line-height: 35px;font-weight: 500; display: flex;">
+              <div
+                style="
+                  width: 100%;
+                  line-height: 35px;
+                  font-weight: 500;
+                  display: flex;
+                "
+              >
                 <div @click="show_item">
                   <span class="home-vs-away">{{ detail_info.mhn }} </span>
                   <span class="match-detail-head-name m-10">v</span>
                   <span class="home-vs-away">{{ detail_info.man }}</span>
                 </div>
-                <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/down_arrow.png`" alt="" srcset="" class="expand-icon">
+                <img
+                  :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/down_arrow.png`"
+                  alt=""
+                  srcset=""
+                  class="expand-icon"
+                />
               </div>
             </template>
             <q-card class="match-name-list">
               <div v-for="item in matchDetailList" :key="item.mid">
-                <div :class="{ 'card-item': true, 'active-nav': current_id == item.mid }" @click="match_click(item)">{{
-                  item.mhn + ' v ' + item.man }}</div>
-
+                <div
+                  :class="{
+                    'card-item': true,
+                    'active-nav': current_id == item.mid,
+                  }"
+                  @click="match_click(item)"
+                >
+                  {{ item.mhn + " v " + item.man }}
+                </div>
               </div>
             </q-card>
           </q-expansion-item>
         </div>
-        <div class="header_banne sport_bg" :style="`background-position:0 -${sport_ball_type[sportId]}px`"></div>
-
+        <div
+          class="header_banne sport_bg"
+          :style="`background-position:0 -${sport_ball_type[sportId]}px`"
+        ></div>
       </div>
       <!-- tabs 玩法分类切换 -->
       <tabs :tab_options="tabList" v-model="current_key" />
 
       <!-- 玩法模板 -->
-      <odds_info :show_close_thehand="show_close_thehand" :matchDetail="detail_list" :loading="detail_loading"
-        :detail_info="detail_info || {}" />
+      <odds_info
+        :show_close_thehand="show_close_thehand"
+        :matchDetail="detail_list"
+        :loading="detail_loading"
+        :detail_info="detail_info || {}"
+      />
     </div>
     <!-- 赛事分析页 -->
     <!-- <div class="detail-analysis">
@@ -74,68 +120,73 @@
 
 <script setup>
 import { onMounted, ref, provide } from "vue";
-import {utils, MenuData, LOCAL_PROJECT_FILE_PREFIX } from 'src/core/index.js';
+import { utils, MenuData, LOCAL_PROJECT_FILE_PREFIX } from "src/core/index.js";
 // import neutral from 'src/assets/images/neutral.png'
 import odds_info from "./components/odds_info.vue";
- import analysis from './analysis/index.vue'
-import tabs from './components/tabs.vue'
-import breadcrumbs from './components/breadcrumbs.vue'
-import { usedetailData } from './index'
+import analysis from "./analysis/index.vue";
+import tabs from "./components/tabs.vue";
+import breadcrumbs from "./components/breadcrumbs.vue";
+import { usedetailData } from "./index";
 // import down_arrow_fold from 'src/assets/images/down_arrow_fold.png'
 // import detail_top from 'src/assets/images/detail-top.png'
 // import detail_refresh from 'src/assets/images/detail-fresh.png'
 // import { formatTime } from "src/public/utils/time_format";
-import loading from './components/loading/index.vue'
+import loading from "./components/loading/index.vue";
 // import store from "src/store-redux-vuex/index.js";
 
-import { useRouter, useRoute } from 'vue-router'
+import { useRouter, useRoute } from "vue-router";
 
-const router = useRouter()
-const route = useRoute()
-const expansion_ref = ref(null)
-const refresh_data = ref(false)
+const router = useRouter();
+const route = useRoute();
+const expansion_ref = ref(null);
+const refresh_data = ref(false);
 
+console.log(route);
 
-console.log(route)
+const {
+  tabList,
+  detail_list,
+  current_key,
+  detail_loading,
+  detail_info,
+  sportId,
+  all_hl_item,
+  init,
+  show_close_thehand,
+  matchDetailList,
+  current_id,
+  refresh,
+} = usedetailData(route);
 
-
-
-
-const { tabList, detail_list, current_key, detail_loading, detail_info, sportId, all_hl_item, init, show_close_thehand, matchDetailList, current_id, refresh } = usedetailData(route)
-
-
-provide('all_hl_item', all_hl_item)
-
-
-
+provide("all_hl_item", all_hl_item);
 
 const match_click = (item) => {
-  current_id.value = item.mid
-  const { mid, csid } = item
+  console.log(111111, item);
+  current_id.value = item.mid;
+  const { mid, tid, csid } = item;
   const params = {
-    sportId: csid,
     mid,
-    resource:route.query.resource
-  }
+    tid,
+    csid,
+  };
 
   router.push({
-    path: '/details',
-    query: params,
-  })
-  expansion_ref.value.hide()
+    name: "details",
+    params,
+  });
+  expansion_ref.value.hide();
   setTimeout(() => {
-    refresh(params)
+    refresh();
   }, 200);
-}
+};
 
 const refresh_click = () => {
-  refresh_data.value = true
-  init()
+  refresh_data.value = true;
+  init();
   setTimeout(() => {
-    refresh_data.value = false
+    refresh_data.value = false;
   }, 1000);
-
-}
+};
 
 const sport_ball_type = {
   1: 0,
@@ -144,9 +195,8 @@ const sport_ball_type = {
   5: 540,
   7: 1170,
   8: 180,
-  9: 270
-
-}
+  9: 270,
+};
 // const go_analyse = () => {
 //       store.dispatch({
 //         type: "TIP_SHOW_STATE",
@@ -154,7 +204,6 @@ const sport_ball_type = {
 //     })
 
 //     }
-
 </script>
 
 <style lang="scss" scoped>
@@ -174,7 +223,6 @@ const sport_ball_type = {
   flex: 1;
   overflow: hidden;
 
-
   // height: calc(100vh - 60px);
   // width: 63%;
   .match-detail-bread {
@@ -182,7 +230,7 @@ const sport_ball_type = {
     line-height: 40px;
     font-size: 14px;
     overflow: hidden;
-    background: linear-gradient(to right, #3B3B3B, #9C9C9C);
+    background: linear-gradient(to right, #3b3b3b, #9c9c9c);
     display: flex;
     justify-content: space-between;
 
@@ -192,14 +240,13 @@ const sport_ball_type = {
       align-items: center;
 
       &::before {
-        content: '';
+        content: "";
         position: absolute;
         left: -20px;
         width: 2px;
         height: 20px;
         top: 9px;
         background-color: #d9d9d9;
-
       }
     }
   }
@@ -209,9 +256,11 @@ const sport_ball_type = {
     height: 80px;
 
     padding: 15px 0 16px 14px;
-    background: linear-gradient(90.05deg,
-        rgba(255, 255, 255, 0.81) 0.04%,
-        rgba(204, 204, 204, 0.6) 99.96%);
+    background: linear-gradient(
+      90.05deg,
+      rgba(255, 255, 255, 0.81) 0.04%,
+      rgba(204, 204, 204, 0.6) 99.96%
+    );
 
     .detail-head-leagal {
       display: flex;
@@ -219,10 +268,9 @@ const sport_ball_type = {
       align-items: center;
 
       .leagal-time {
-        background-color: #D9D9D9;
-        color: #1A1A1A;
+        background-color: #d9d9d9;
+        color: #1a1a1a;
         padding: 2px 10px;
-        ;
       }
     }
 
@@ -313,20 +361,18 @@ const sport_ball_type = {
   position: absolute;
   top: 0;
   right: 0;
-
 }
 
 .expand-icon {
   height: 10px;
   margin-left: 10px;
   margin-top: 12px;
-
 }
 
 .card-item {
   cursor: pointer;
   height: 45px;
-  color: #FFFFFF;
+  color: #ffffff;
   text-align: center;
   line-height: 45px;
 
@@ -336,7 +382,7 @@ const sport_ball_type = {
 }
 
 .active-nav {
-  color: #FF7000;
+  color: #ff7000;
   background-color: #626262;
 }
 
@@ -354,17 +400,17 @@ const sport_ball_type = {
     transform: rotate(360deg);
   }
 }
-.detail-loading{
+.detail-loading {
   height: 100%;
 }
-.match-name-list{
-  background-color: #7B7B7B;
-  width:75%;
+.match-name-list {
+  background-color: #7b7b7b;
+  width: 75%;
   z-index: 1000;
   margin-top: -10px;
   max-height: 500px;
   overflow-y: auto;
-   &::-webkit-scrollbar {
+  &::-webkit-scrollbar {
     width: 4px;
   }
 
@@ -372,8 +418,5 @@ const sport_ball_type = {
     background-color: #cccccc;
     border-radius: 4px;
   }
-
 }
-
-
 </style>
