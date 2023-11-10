@@ -26,7 +26,7 @@
               <div class="filter-count">{{ item.count }}</div>
             </div>
             <div :class="{ checked_text: current_choose_tab == item.mi }" class="label-text">
-              <!-- {{ (menus_i18n_map || {} )[item.mi] || "" }} -->
+              {{ (BaseData.menus_i18n_map || {} )[item.mi] || "" }}
             </div>
           </div>
           <img class="current-mark" :class="{ 'show-mark': current_choose_tab == item.mi }" src="../../../assets/images/mask_group.png" alt="">
@@ -56,7 +56,10 @@ import MatchListOuzhouClass from 'src/core/match-list-pc/match-ouzhou-list.js'
 import sport_icon from "src/base-pc/components/sport_icon.vue";
 import { use_base_data } from "src/base-pc/components/menus/base_data";
 import _ from "lodash"
+import BaseData from "src/core/base-data/base-data.js";
+
 const { compute_sport_id,mi_euid_map_res } = use_base_data()
+
 
 // 国际化
 // const { data:menus_i18n_map } = useMenuI18n()

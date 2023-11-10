@@ -1,5 +1,5 @@
 <template>
-  <div class="home_page">
+  <div class="home-page">
     <!-- tab 切换 -->
     <div class="header_tabs">
       <q-tabs v-model="tabValue" dense class="bg-grey-3" align="justify" narrow-indicator @update:modelValue="on_update">
@@ -12,15 +12,32 @@
       <q-tab-panels v-model="tabValue" animated>
         <!-- featured page -->
         <q-tab-panel name="featured">
-          featured
+          <section class="section-content">
+            <!-- 时间赛事 -->
+            <template v-if="time_events.length > 0">
+              <TimeEvents :time_events="time_events" />
+            </template>
+            <!-- 特色赛事 -->
+            <template v-if="featured_matches.length > 0">
+              <HeaderTitle title="Featured Matches"></HeaderTitle>
+              <FeaturedMatches :featured_matches="featured_matches" />
+            </template>
+            <!-- 赛事列表 -->
+            <HeaderTitle title="In-Play"></HeaderTitle>
+            <MatchContainer />
+            <!-- 特色赛事 -->
+            <!-- <matches :matchesInfo="atpMatchesInfo" />
+            <HeaderTitle title="Top Leagues"></HeaderTitle>
+            <top_leagues :leaguesInfo="leaguesInfo" /> -->
+          </section>
         </q-tab-panel>
         <!-- top Events page -->
         <q-tab-panel name="top_events">
           <scroll-menu menu_type="1" :is_show_badge="false"  v-if="MenuData.menu_list.length" />
           <!-- 赛事列表 -->
-          <div class="match_page">
+          <section class="match-page-section">
             <MatchContainer />
-          </div>
+          </section>
         </q-tab-panel>
       </q-tab-panels>
     </div>
@@ -28,14 +45,50 @@
 </template>
  
 <script setup> 
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { watch } from "vue";
+
+import TimeEvents from './components/time-events.vue'
+import HeaderTitle from './components/header-title.vue'
+import FeaturedMatches from './components/feature-matches.vue'
+import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
+import MatchUtils from 'src/core/match-list-h5/match-class/match-utils';
 import MatchContainer from "src/base-h5/components/match-list/index.vue";
 import scrollMenu from 'src/base-h5/components/top-menu/top-menu-ouzhou-1/scroll-menu/scroll-menu.vue';
-import { MenuData } from "src/core/index.js";
+import { MenuData, MatchDataWarehouse_ouzhou_PC_l5mins_List_Common as MatchDataBasel5minsH5, MatchDataWarehouse_ouzhou_PC_hots_List_Common as MatchDataBaseHotsH5 } from "src/core/index.js";
+
 watch(() => MenuData.update_time.value, () => {
   console.log("菜单id-球类id-对应euid",`${MenuData.menu_type.value}-${MenuData.menu_mi.value}-${MenuData.get_euid()}`)
 })
+
+const time_events = ref([])
+const featured_matches = ref([])
+
+onMounted(async () => {
+  get_ouzhou_home_data()
+  // 先写死
+  setTimeout(() => {
+    MenuData.get_match_render_list();
+  }, 2000)
+})
+
+const get_ouzhou_home_data = async () => {
+  const { p15_list, hots } = await MatchMeta.get_ouzhou_home_data()
+  time_events.value = p15_list.map(t => {
+    const match = MatchDataBasel5minsH5.get_quick_mid_obj(t.mid)
+    return match
+  })
+  featured_matches.value = hots.map(t => {
+    const match = MatchDataBaseHotsH5.get_quick_mid_obj(t.mid)
+    const { home_score, away_score } = MatchUtils.get_match_score(match)
+    return {
+      ...match,
+      home_score, 
+      away_score, 
+     }
+  })
+}
+
 const tabValue = ref('featured');
 // tabs 切换
 const on_update = () => {
@@ -44,7 +97,7 @@ const on_update = () => {
 </script>
  
 <style scoped lang="scss">
-.home_page{
+.home-page{
   height: 100%;
   overflow: hidden;
   .header_tabs{
@@ -86,7 +139,12 @@ const on_update = () => {
       .q-tab-panel{
         padding: 0;
         overflow: hidden;
-        .match_page{
+        .section-content{
+          height: calc(100% - 52px);
+          overflow-y: auto;
+          position: relative;
+        }
+        .match-page-section{
           height: calc(100% - 66px - 54px);
           overflow-y: hidden;
           position: relative;

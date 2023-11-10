@@ -82,16 +82,16 @@
             <li class="list_data"
                 v-for="(type_item,type_index) in list_data" :key='type_index'>
                 <!-- 赛事 -->
-                 <div v-for="(match_item,match_index) in type_item.children" :key='match_index'>
+                 <div v-for="(match_item,match_index) in type_item.data" :key='match_index'>
                  <!-- 联赛 -->
-                      <div v-for="(league_item,league_index) in match_item.children" :key='league_index'
+                      <div v-for="(league_item,league_index) in match_item.league" :key='league_index'
                            class="row items-center justify-between">
                           <p class="league_name row items-center">
                         <img
                             class="img"
                             :src="league_item.lurl"
                             alt/>
-                            {{league_item.name}}
+                            {{league_item.leagueName}}
                         </p>
                         <img
                           class="select_img"
@@ -118,7 +118,7 @@
 </template>
 <script setup>
 import { SearchData } from "src/core/";
-import { reactive, toRefs, ref,onMounted,} from "vue";
+import { reactive, toRefs, ref,onMounted,watch} from "vue";
 import search from "src/core/search-class/search.js"
 defineOptions({
   name: "screen-modal" // 设置组件名称
@@ -126,7 +126,7 @@ defineOptions({
 //输入框值
 const input_text = ref("");
 //联赛的数据
-let list_data = ref([]);
+let list_data = reactive([]);
 //是否全选
 const is_all_checked = ref(false);
 //日间夜间
@@ -134,6 +134,16 @@ const get_y0_suffix = ''
 
 onMounted(()=>{
   get_search_result()
+})
+watch(()=>is_all_checked,(val)=>{
+  list_data = list_data.map(item=>{
+      item.children.forEach(sub => {
+        sub.children.forEach(sitem=>{
+          sitem.is_active = val
+        })
+      });
+      return item
+  })
 })
 /**
  * @Description:获取搜索结果数据
@@ -154,7 +164,6 @@ function get_search_result() {
     search.get_search_result(input_text.value, '').then(res => {
         const { state, list } = res
         list_data.value = list
-        console.log('list_data.valuelist_data.value',list_data)
     })
 }
 </script>
