@@ -522,7 +522,7 @@ class MenuData {
     if (param) {
       return mi == param
     }
-    return this.get_menu_type_special() == mi
+    return false;
   }
   /**
    * 是否选中了 热门

@@ -179,7 +179,7 @@
 <script setup>
 import { ref, computed, onUnmounted, watch } from "vue";
 import { theme_list, theme_map } from "src/core/theme/"
-
+import { api_account } from 'src/api/index';
 import GlobalAccessConfig from "src/core/access-config/access-config.js";
 import { api_betting } from "src/api/index";
 import { format_money2 } from "src/core/format/index.js";
@@ -318,28 +318,22 @@ const setting_language_handle = (key) => {
     return;
   }
   // document.getElementById("loading-root-ele").style.visibility = "initial";
-  // 异步获取国际化数据,并设置
-  loadLanguageAsync(key)
-    .then((res) => {
-      // 切换语言时，清空赛果接口缓存
-      // sessionStorage.result_sub_menu_cache = ''
-      // 清除相应对象状态
-      // set_global_route_menu_param({});
-
-      // 会设置{ languageName: key }
-      UserCtr.set_lang(key);
-      // $i18n.local = key;
-      is_show_lang.value = false;
-      // 更新网站title
-      document.title = UserCtr.get_web_title(key);
-    })
-    .catch((err) => {
-      console.error(err)
-      // $toast(t("pre_record.cancle_fail_tips"), 2000);
-    })
-    .finally((res) => {
-      // document.getElementById("loading-root-ele").style.visibility = "hidden";
-    });
+  api_account.set_user_lang({ token: UserCtr.get_user_token(), languageName: key }).then(res => {
+      let code = lodash.get(res, 'code');
+      if (code == 200) {
+          // 设置国际化语言
+          loadLanguageAsync(key).then().finally(() => {
+            // 会设置{ languageName: key }
+            UserCtr.set_lang(key);
+            // $i18n.local = key;
+            is_show_lang.value = false;
+            // 更新网站title
+            document.title = UserCtr.get_web_title(key);
+          })
+      } else if (code == '0401038') {
+          useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t("common.code_empty"))
+      }
+  })
 };
 /**
  * 改变显示状态
