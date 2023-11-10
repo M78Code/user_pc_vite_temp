@@ -27,7 +27,7 @@
         v-for="(value, key) in matchInfo"
         :key="key"
         class="temp_grid ol_on"
-      >
+        >
         <!-- <div class="temp5-hv">{{ value.hv || key }}</div> -->
         <!-- <div >
           <div
@@ -77,7 +77,7 @@ const emit = defineEmits(["bet_click_"]);
 const props = defineProps({
   item_data: {
     type: Object,
-    default: () => ({}),
+    default: () => {},
   },
   active: {
     type: Number,
