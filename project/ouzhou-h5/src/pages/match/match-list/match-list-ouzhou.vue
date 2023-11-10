@@ -12,20 +12,21 @@
 
 <template>
     <div class="refresh-container">
-        <!--列表页 -->
+    <!--列表页 -->
                     <ScrollWrapper>
                         <template v-slot="{ match_item, index }">
                             <template v-if="match_item">
                                 <div class="data_mid"> <!--此data-mid用于分频订阅赛事,请勿修改-->
                                     <!-- <template v-if="is_results">
-                                        <MatchContainerMainTemplate3 :i="index" :match_of_list="match_item">
-                                        </MatchContainerMainTemplate3>
-                                    </template>
-                                    <template v-else>
-                                        <MatchContainerMainTemplate1 :i="index" :match_of_list="match_item">
-                                        </MatchContainerMainTemplate1>
-                                    </template> -->
-                                    <MatchContainerMainTemplate2  :i="index" :match_of_list="match_item"/>
+                                                                <MatchContainerMainTemplate3 :i="index" :match_of_list="match_item">
+                                                                </MatchContainerMainTemplate3>
+                                                            </template>
+                                                            <template v-else>
+                                                                <MatchContainerMainTemplate1 :i="index" :match_of_list="match_item">
+                                                                </MatchContainerMainTemplate1>
+                                                            </template> -->
+                                            <!-- <MatchContainerMainTemplate2  :i="index" :match_of_list="match_item"/> -->
+                                            <MatchItem :i="index" :match_of_list="match_item" />
                                 </div>
                             </template>
                         </template>
@@ -33,14 +34,18 @@
                 </div>
 </template>
 <script setup>
+import {getCurrentInstance} from 'vue';
 
 // ouzhou-h5 赛事组件
-import MatchContainerMainTemplate2 from "src/base-h5/components/match-container/template/ouzhou/match-container-main-template2.vue";
-
+// import MatchContainerMainTemplate2 from "src/base-h5/components/match-container/template/ouzhou/match-container-main-template2.vue";
+import MatchItem from './match-item.vue'
 
 // 赛事滚动组件
 import ScrollWrapper from 'src/base-h5/components/scroll-wraper/scroll-wrapper.vue';
 
+
+const ctx = getCurrentInstance();
+console.log('ctx: ', ctx);
 
 </script>
     
