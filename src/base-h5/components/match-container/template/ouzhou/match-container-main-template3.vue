@@ -71,7 +71,6 @@
                 <!-- 下边的模块，左方是  队名和 队比分,  右面是  盘口  模块 -->
                 <div class="odd-list match-indent" :class="{ 'simple': show_newer_edition, result: is_results }">
                   <div class="odd-list-inner odd" :class="{ 'n-s-edition': !show_newer_edition, result: is_results }">
-                    {{ console.log(match) }}
                     <!--  左边 图片和名称  和 比分 和 视频图标 -->
                     <div @click='goto_details(match)' :class="['team-wrapper', { simple: standard_edition == 1, team_title: is_results }]">
                       <!-- 上边的 赛事日期标准版,包含 比分组件 -->
