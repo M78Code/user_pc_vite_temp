@@ -16,6 +16,7 @@
         v-if="match" 
         :handicap_list="match_tpl_info.get_current_odds_list(current_choose_oid)" 
         :match="match"
+        use_component_key="MatchHandicap2"
       >
       </match-handicap>
       <!-- 最右侧图标 -->
@@ -58,7 +59,6 @@ let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.mid)
 match_style_obj.data_tpl_id = 101; //调试用
 const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].width_config
 const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`]
-console.log('match_tpl_info', match_tpl_info);
 const current_choose_oid = ref({ first_hpid: '1', second_hpid: "2" });
 let match = MatchListData.list_to_obj.mid_obj[props.mid+'_'];
 const is_mounted = ref(true);

@@ -71,6 +71,26 @@ const announcement_data = reactive([
       content:"abcdefgabcdefgabcdefgabcdefg",
       id:2
     },
+    {
+      content:"abcdefgabcdefgabcdefgabcdefg",
+      id:2
+    },
+    {
+      content:"abcdefgabcdefgabcdefgabcdefg",
+      id:2
+    },
+    {
+      content:"abcdefgabcdefgabcdefgabcdefg",
+      id:2
+    },
+    {
+      content:"abcdefgabcdefgabcdefgabcdefg",
+      id:2
+    },
+    {
+      content:"abcdefgabcdefgabcdefgabcdefg",
+      id:2
+    },
 ])
 
 const show = ref(true)
@@ -96,7 +116,7 @@ const showclick = (index) => {
       background: #fff;
     }
     section{
-      height: calc(100% - 54px);
+      height: calc(100% - 75px);
       background: #fff;
       font-size: 14px;
       font-weight: 400;
@@ -125,6 +145,7 @@ const showclick = (index) => {
       }
       :deep(.q-scrollarea__content){
         width: 100%;
+        margin-bottom: 67px;
       }
       .ann-time {
                 margin-top: 0.08rem;

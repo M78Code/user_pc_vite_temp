@@ -156,7 +156,7 @@ export const width_config_template = {
   // 视频按钮区域宽度
   media_width: 0,
   // 投注项数量
-  bet_col_count: 6,
+  bet_col_count: 4,
 };
 /**
  * @Description 设置模板table宽度
@@ -202,6 +202,7 @@ export const set_template_width_base = (
   } else {
     config.team_width = config.process_team_width - 77;
   }
+  console.log('config', config);
   return config;
 };
 

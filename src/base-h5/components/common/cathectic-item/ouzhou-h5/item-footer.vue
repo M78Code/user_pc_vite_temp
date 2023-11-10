@@ -47,8 +47,8 @@
     <div class="text-right" style="margin-left:auto">
       <!-- <p class="top-p">{{calc_settle_score}}</p> -->
       <!-- 订单状态 -->
-      <p :class="BetRecordClass.calc_text(data_f).color" class="yb_fontsize14 fw_700" style="line-height:0.36rem;padding-right: 0.3rem;">
-        {{BetRecordClass.calc_text(data_f).text}}
+      <p :class="calc_text(data_f).color" class="yb_fontsize14 fw_700" style="line-height:0.36rem;padding-right: 0.3rem;">
+        {{calc_text(data_f).text}}
       </p>
     </div>
 
@@ -59,7 +59,7 @@
 // import { mapGetters } from "vuex";
 import { format_money2 } from "src/core/format/index.js"
 import { i18n_t } from "src/boot/i18n.js";
-import BetRecordClass from "src/core/bet-record/bet-record.js";
+import { default as BetRecordClass, calc_text} from "src/core/bet-record/bet-record.js";
 
   const props = defineProps({
     data_f: {

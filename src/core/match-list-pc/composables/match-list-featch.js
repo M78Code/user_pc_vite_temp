@@ -21,7 +21,21 @@ let state = store.getState();
 const league_list_obj = ref([]);
 const { page_source } = PageSourceData;
 
-
+/**
+ * @Description 删除赛事数据 卡片
+ * @param {*} mid 删除赛事id
+ */
+function remove_match_data(mid) {
+	// 移除卡片
+	MatchListCardClass.remove_match(mid);
+	//清除数据仓库数据
+	MatchListData.remove_match_data(mid);
+	//切换右侧
+	if (vx_details_params.mid == mid) {
+		// 赛事移除时右侧赛事自动切换
+		mx_autoset_active_match({ mid });
+	}
+};
 
 // const route = useRoute() || {};
 
@@ -269,7 +283,7 @@ const api_bymids = (
         if (code == 200) {
           mids.forEach((mid) => {
             if (!mids_arr.includes(String(mid))) {
-              this.remove_match_data(mid);
+              remove_match_data(mid);
             }
           });
         }
