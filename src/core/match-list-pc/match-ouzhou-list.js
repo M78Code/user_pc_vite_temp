@@ -1,3 +1,4 @@
+import { reactive, ref } from "vue";
 
 
 
@@ -20,8 +21,9 @@ class MatchListOuzhouClass {
             mid_tab_type:'', // header tab切换
             mid_tab_menu_type:1, // header tab切换对应的 赛种菜单id 或者 时间 (左侧赛种菜单对应的 matches 今日 2 其他日期为 3)  或者 联赛类型
             mid_right_bg: 0 , // header 右上角对应的赛种
-            coom_soon:false
         }
+        this.coom_soon = ref(false)
+
     }
 
     set_menu (state) {

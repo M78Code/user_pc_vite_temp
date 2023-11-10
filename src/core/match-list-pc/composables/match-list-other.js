@@ -8,7 +8,6 @@ import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/core/ind
 import { get_match_status } from 'src/core/index.js'
 
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
-import { csid_to_tpl_id } from 'src/core/constant/util/csid-util.js'
 let other_play_current_play = {};
 
 import { other_play_name_to_playid } from 'src/core/constant/config/data-class-ctr/index.js';
@@ -398,16 +397,6 @@ export function get_5minutes_template(match = {}) {
   })
   return clone_arr(other_handicap_list)
 }
-/**
- * @Description 覆盖赛事数据
- * @param {Object} data_obj 覆盖对象
- * @param {String} mid 赛事id
- */
-function coverage_match_data(data_obj, mid) {
-  let match = MatchListData.get_quick_mid_obj(mid)
-  if (match) Object.assign(match, data_obj);
-}
-
 /**
  * @Description 切换其他玩法
  * @param {string} mid 赛事id

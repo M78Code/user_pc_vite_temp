@@ -26,48 +26,6 @@
               </div>
           </div>
       </div>
-
-      <div class="nonebox4-content" v-if="type == 2">
-          <div class="nonebox4-content-left">
-              <div class="nonebox4-content-left-content">
-                  <div class="nonebox4-content-left-content-xian">删</div>
-                  <div class="nonebox4-content-left-info">
-                    <div class="nonebox4-content-left-content-text">
-                      <div class="nonebox4-content-left-content-text-one">Sevilla Futbol Club <span class="text-one-span">0.25</span></div>
-                      <div class="nonebox4-content-left-content-text-two">[In-play] <span class="text-two-span">1X2</span></div>
-                      <div class="nonebox4-content-left-content-text-three">Sevilla Futbol Club</div>
-                    </div>
-                    <div>
-                        <div class="nonebox4-content-right">
-                            <div class="nonebox4-content-right-profit">123</div>
-                            <div class="content-right-duo"></div>
-                        </div>
-                    </div>
-                  </div>
-              </div>
-          </div>
-      </div>
-
-      <div class="nonebox4-content" v-if="type == 3">
-          <div class="nonebox4-content-left">
-              <div class="nonebox4-content-left-content">
-                  <div class="nonebox4-content-left-content-xian">删</div>
-                  <div class="nonebox4-content-left-info">
-                    <div class="nonebox4-content-left-content-text">
-                      <div class="nonebox4-content-left-content-text-one">Sevilla Futbol Club <span class="text-one-span">0.25</span></div>
-                      <div class="nonebox4-content-left-content-text-two">[In-play] <span class="text-two-span">1X2</span></div>
-                      <div class="nonebox4-content-left-content-text-three">Sevilla Futbol Club</div>
-                    </div>
-                    <div>
-                        <div class="nonebox4-content-right">
-                            <div class="nonebox4-content-right-profit">123</div>
-                            <div class="content-right-shao"></div>
-                        </div>
-                    </div>
-                  </div>
-              </div>
-          </div>
-      </div>
      
     </div>
   </template>
@@ -78,7 +36,7 @@
     items:{}
   })
 
-  const type = 1;//1:不涨也不少    2：增长     3：减少
+  const type = 2;//1:不涨也不少    2：增长     3：减少
   </script>
   
   <style lang="scss" scoped>
