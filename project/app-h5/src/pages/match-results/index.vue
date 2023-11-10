@@ -1,5 +1,5 @@
 <template>
-    <navigation-bar centerContentType="switch" borderBottomNoShow>
+    <navigation-bar centerContentType="switch" borderBottomNoShow :goBackAssign="goBackAssign">
         <template v-slot:center>
             <div class="switch-box">
                 <div v-for="(item, index) in switchMenu" :key="'swtich-' + index" @click="switchHandle(index)"
@@ -25,6 +25,13 @@
         <match-container />
     </div>
 
+    <!--  弹窗  -->
+    <div v-if="state.select_dialog" position="bottom" class="select-mask" :style="`height:${inner_height}px`">
+        <div style="height:100%;width: 100%" @click="state.select_dialog = false"></div>
+        <!-- 搜索联赛 -->
+        <setect-league @closedHandle="state.select_dialog = false" @finishHandle="selectFinishHandle"></setect-league>
+    </div>
+    
 
 </template>
 <script setup>
@@ -33,8 +40,10 @@ import { onMounted, onUnmounted, reactive } from "vue";
 import { ScrollMenu } from 'src/base-h5/components/menu/app-h5-menu/index'
 import navigationBar from 'src/base-h5/components/tutorial/navigation-bar/index.vue'
 import settingFilter from 'src/base-h5/components/setting-filter/index.vue'
-import { scrollMenuEvent } from "src/base-h5/components/menu/app-h5-menu/utils.js"
 import matchContainer from "src/base-h5/components/match-list/index.vue";
+import setectLeague from 'src/base-h5/components/setect-league/index.vue'
+
+import { scrollMenuEvent } from "src/base-h5/components/menu/app-h5-menu/utils.js"
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import { api_analysis } from "src/api/"
 import { useMittOn,MITT_TYPES,MenuData } from "src/core/"
@@ -56,6 +65,8 @@ const switchHandle = val => {
     state.currentSwitchValue = val
 
     MenuData.set_result_menu_lv1_mi(val)
+    // MenuData.set_current_lv1_menu(val)
+
     //获取 赛果菜单
     api_analysis.get_match_result_menu( {menuType:val} ).then( ( res = {} ) => {
         if(res.code == 200){
@@ -104,6 +115,17 @@ const set_scroll_current = val => {
 const set_result_menu_api = () => {
     // 设置菜单对应源数据
     MatchMeta.get_results_match()
+}
+
+const goBackAssign = () => {
+    MenuData.set_top_menu_title({})
+    MenuData.set_init_menu_list()
+}
+
+
+const selectFinishHandle = (val) => {
+    console.log('选择完成')
+    state.select_dialog = false
 }
 
 onMounted(()=>{

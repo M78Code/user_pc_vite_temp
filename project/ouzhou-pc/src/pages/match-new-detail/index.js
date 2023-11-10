@@ -1,21 +1,21 @@
 /*
  * @Author: cooper cooper@123.com
  * @Date: 2023-07-09 16:21:30
- * @LastEditors: cooper cooper@123.com
- * @LastEditTime: 2023-07-17 14:25:41
+ * @LastEditors: lowen pmtylowen@itcom888.com
+ * @LastEditTime: 2023-11-08 18:25:18
  * @FilePath: \user-pc-vue3\src\project-ouzhou\pages\detail\index.js
  * @Description: 详情页相关接口数据处理
  */
 import { ref, onMounted, watch, onUnmounted } from "vue";
 import { api_match_list } from "src/api";
-import { useRoute } from "vue-router";
+// import { useRoute } from "vue-router";
 import {match_info,categoryList,matchDetail} from './mock'
 // import store from "src/store-redux-vuex/index.js";
-
+import { MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance,MenuData,UserCtr } from "src/core/index"; 
 import { filter_odds_func, handle_course_data, format_mst_data } from './matches_list'
 
-export function usedetailData() {
-  const route = useRoute();
+export function usedetailData(route) {
+  // const route = useRoute();
   const category_list = ref([]); //分类数据
   const detail_list = ref([]); //玩法数据
   const all_list = ref([]); //  所有玩法数据
@@ -43,25 +43,26 @@ export function usedetailData() {
     api_match_list; // 接口
 
   //const userInfo = state.userReducer.userInfo; // 用户数据
-  const userInfo = {}; // 用户数据
+  const {user_info} = UserCtr; // 用户数据
 
   const current_id = ref()
 
-  let sportId, mid
+  let sportId =1, mid=2858623,tid
 
   // 监听分类切换数据
   watch(current_key, (val) => {
     getDetailData(val);
   });
     // 监听分类切换数据
-    watch(()=>route.query, (val) => {
-    
-      sportId = val.sportId
-      mid = val.mid
-      current_id.value = val.mid
-    },
-    {immediate:true}
-    );
+    // watch(()=>route.query, (val) => {
+    //   console.log(11111111,val)
+    //   // todo
+    //   // sportId = val.sportId
+    //   // mid = val.mid
+    //   current_id.value = val.mid
+    // },
+    // {immediate:true}
+    // );
 
   //  根据分类id 过滤数据
   const getDetailData = (value) => {
@@ -86,7 +87,8 @@ export function usedetailData() {
     detail_list.value = list ||[];
    
     show_close_thehand.value = list.length==0
-
+    //存取玩法集数据到数据仓库 MatchDataWarehouseInstance.get_quick_mid_obj(mid)获取存到数据仓库的基础详情数据
+    MatchDataWarehouseInstance.set_match_details(MatchDataWarehouseInstance.get_quick_mid_obj(mid),detail_list.value)
 
     setTimeout(() => {
       get_all_hl_item();
@@ -123,19 +125,21 @@ export function usedetailData() {
   const get_detail = async () => {
     try {
       const params = {
-        mid,
-        cuid: userInfo.userId,
+        mid:mid,
+        cuid: user_info.userId,
         t: new Date().getTime(),
       };
       detail_loading.value = true;
-      console.log(1111111111111,match_info)
-      // const res = await get_detail_data(params);
+      // console.log(1111111111111,match_info)
+      const res = await get_detail_data(params);
 
      
-      getMatchDetailList(match_info.data)
+      getMatchDetailList(res.data)
       detail_loading.value = false;
-      detail_info.value ={...detail_info.value,...match_info.data}
+      detail_info.value ={...detail_info.value,...res.data}
       detail_info.value['course'] = handle_course_data(detail_info.value);
+      //存取赛事详情基础信息
+      MatchDataWarehouseInstance.set_match_details(detail_info.value,[])
       use_polling_mst(detail_info.value);
     } catch (error) {}
   };
@@ -145,12 +149,12 @@ export function usedetailData() {
    */
     const getMatchDetailList = async (data) => {
       try {
-        // const params = {
-        //   tId: data.tid,
-        //   t: new Date().getTime(),
-        // };
-        // const res = await getMatchDetailByTournamentId(params);
-        matchDetailList.value = matchDetail.data
+        const params = {
+          tId: data.tid,
+          t: new Date().getTime(),
+        };
+        const res = await getMatchDetailByTournamentId(params);
+        matchDetailList.value = res.data
       //  console.log(1111111111111,res)
       } catch (error) {}
     };
@@ -189,9 +193,9 @@ export function usedetailData() {
         mid,
         t: new Date().getTime(),
       };
-      // const res = await get_detail_category(params);
-      category_list.value =categoryList.data || [];
-      const list = categoryList.data.filter((i) => i.marketName);
+      const res = await get_detail_category(params);
+      category_list.value =res.data || [];
+      const list = res.data.filter((i) => i.marketName);
 
       tabList.value = list.map((item) => ({
         label: item.marketName,
@@ -206,13 +210,13 @@ export function usedetailData() {
     try {
       const params = {
         mcid: 0,
-        cuid: userInfo.userId,
+        cuid: user_info.userId,
         mid,
         newUser: 0,
         t: new Date().getTime(),
       };
-      // const res = await get_detail_list(params);
-      all_list.value = matchDetail.data || [];
+      const res = await get_detail_list(params);
+      all_list.value = res.data || [];
        all_list.value.forEach(item=>item.expanded = true)
       // detail_loading.value = false;
       current_key.value = current_key.value
@@ -223,6 +227,11 @@ export function usedetailData() {
   };
 
   onMounted(() => {
+    console.log(1111111111,route)
+    sportId = route.params.csid
+    mid = route.params.mid
+    tid = route.params.tid
+
     init();
     timer = setInterval(async () => {
       await get_category();
@@ -233,12 +242,13 @@ export function usedetailData() {
     clearInterval(timer);
     clearInterval(mst_timer);
   });
-
-  const refresh = ({sportId,mid})=>{
+  //  赛事切换刷新数据
+  const refresh = ()=>{
     all_list_toggle = {}
     detail_list.value = []
-   sportId = sportId
-   mid = mid
+    sportId = route.params.csid
+    mid = route.params.mid
+    tid = route.params.tid 
    current_id.value = mid
    init();
   }

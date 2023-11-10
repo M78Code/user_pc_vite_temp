@@ -40,7 +40,7 @@
 <script setup>
 import { i18n_t, compute_css_obj } from "src/core/index.js";
 import { useRouter, useRoute } from "vue-router";
-import { useMittEmit, MITT_TYPES } from "src/core/index.js";
+import { useMittEmit, MITT_TYPES,SessionStorage } from "src/core/index.js";
 import {
   ref,
   watch,
@@ -97,7 +97,7 @@ const setting_list = ref([
     name: "主题风格",
     leftVal: "日间",
     rightVal: "夜间",
-    switchValue: UserCtr.theme === "y0" ? "rightVal" : "leftVal",
+    switchValue: UserCtr.theme === "theme-1" ? "rightVal" : "leftVal",
     mark: "theme"
   },
   {
@@ -173,8 +173,10 @@ const size_handle = item => {
  *@return {Undefined} undefined
  */
 const theme_handle = item => {
-  const status = item.switchValue === "rightVal" ? "y0" : "y1";
+  const status = item.switchValue === "rightVal" ? "theme-1" : "theme-2";
   UserCtr.set_theme(status);
+  // 切换主题色
+  useMittEmit(MITT_TYPES.EMIT_THE_THEME_CHANGE)
 };
 /**
  *@description 处理每日活动
@@ -195,7 +197,7 @@ const activity_handle = item => {
   //   border-radius: 0.16rem 0.16rem 0 0;
   position: absolute;
   bottom: 0;
-  background: var(--q-gb-bd-c-1);
+  background: var(--q-gb-bg-c-15);
   backdrop-filter: blur(5px);
 
   .setting-top.setting-item {

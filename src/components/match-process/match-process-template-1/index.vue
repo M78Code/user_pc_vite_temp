@@ -17,6 +17,7 @@
         (lodash.get(match, 'mcid') && lodash.get(match, 'mmp') != 0)
       "
       class="process-name"
+      :class="[periodColor === 'gray' && 'gray-color']"
       v-html="computed_process_name"
     >
     </div>
@@ -95,6 +96,11 @@ const props = defineProps({
   date_rows: {
     type: Number,
     default: 1,
+  },
+  // 场次颜色
+  periodColor: {
+    type: String,
+    default: '',
   },
   right: Boolean,
 });
@@ -379,5 +385,9 @@ onUnmounted(() => {
   .timer-layout {
     margin-left: -5px;
   }
+}
+
+.process-name.gray-color {
+  color: #8A8986;
 }
 </style>

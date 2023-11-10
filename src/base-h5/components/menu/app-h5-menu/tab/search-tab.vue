@@ -2,7 +2,7 @@
  * @Author: rise
  * @Date: 2023-10-20 16:27:18
  * @LastEditors: jamison pmtyjamison@itcom888.com
- * @LastEditTime: 2023-11-08 14:43:57
+ * @LastEditTime: 2023-11-08 16:50:41
  * @Description:  
 -->
 <template>
@@ -27,7 +27,7 @@
             v-model="drawerRight"
             show-if-above
             bordered
-            :width="300"
+            :width="290"
             :breakpoint="500"
             class="bg-grey-3 search-tab-content-img"
             elevated

@@ -69,7 +69,7 @@ const  loadLanguageAsync= async(lang)=>{
 try {
   const langfile =  await   import( /* webpackChunkName: "lang-[request]" */ `../i18n/${IS_PC ? 'pc' : 'h5'}/${map_lang[lang]}/index.json`  )
 
-  LocalStorage.set("lang", lang),
+  // LocalStorage.set("lang", lang),
   // 动态加载对应的语言包
   // let langFile = langfile.default || langfile;
   // 设置语言信息

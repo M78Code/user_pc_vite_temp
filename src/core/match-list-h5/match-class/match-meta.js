@@ -13,6 +13,7 @@ import MatchCollect from 'src/core/match-collect'
 import MatchUtils from 'src/core/match-list-h5/match-class/match-utils';
 import PageSourceData from "src/core/page-source/page-source.js";
 import VirtualList from './virtual-list'
+import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 import { MATCH_LIST_TEMPLATE_CONFIG } from "src/core/match-list-h5/match-card/template"
 import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, useMittEmit, MITT_TYPES,project_name,MenuData } from 'src/core'
 
@@ -35,8 +36,6 @@ class MatchMeta {
     this.complete_matchs = []
     // 上一次滚动得距离
     this.prev_scroll = null
-    // 球种对应的数量
-    this.ball_seed_count = ref({})
     // 重置折叠对象
     MatchFold.clear_fold_info()
     // 重置收藏对象
@@ -360,17 +359,6 @@ class MatchMeta {
   }
 
   /**
-   * @description 设置对应球种的key
-   * @param {string} key 
-   * @param {number} length 
-   */
-  set_ball_seed_count (key, length) {
-    Object.assign(this.ball_seed_count.value, {
-      [key]: length
-    })
-  }
-
-  /**
    * 
    * @description 获取赛事请求参数
    * @returns { Object }
@@ -555,6 +543,7 @@ class MatchMeta {
 
     // 获取赛 事收藏状态 该接口还没发到试玩
     MatchCollect.get_collect_match_data()
+
   }
 
   /**
@@ -629,6 +618,7 @@ class MatchMeta {
   handle_update_match_info(list, type) {
     // 合并前后两次赛事数据
     list = lodash.map(list, t => {
+      MatchResponsive.get_ball_seed_methods(t)
       const match = MatchDataBaseH5.get_quick_mid_obj(t.mid)
       // 覆写次要玩法折叠参数
       // MatchFold.set_match_mid_fold_obj()

@@ -16,11 +16,13 @@
       </template>
     </div>
     <div class="item-main three-more">
-      <template v-for="(item, index) in show_data_orderVOS" :key="index">
+      <template v-for="(item, index) in show_data_orderVOS" :key="item.betTime">
         <div class="items" v-if="item.isBoolean">
-          <div class="top">
+          <div class="top" :class="{ 'gray-icon':BetRecordClass.selected === 1 }">
             <template>
-              <icon-wapper name="icon-success" />
+              <!-- orderStatus(0:未结算,1:已结算,2:注单无效,3:确认中,4:投注失败) -->
+              <icon-wapper name="icon-failure" v-if="data_b.orderStatus == '2' || data_b.orderStatus == '4'" />
+              <icon-wapper name="icon-success" v-else />
             </template>
             <div class="top-info flex">
               <p>
@@ -38,7 +40,8 @@
               <span>{{formatTime(+item.beginTime, 'mm/DD HH:MM')}}</span>
             </div>
           </div>
-          <div :class="['main-warp', index === show_data_orderVOS.length - 1 ? 'no-border':'']">
+          <div :class="{'main-warp': true, 'no-border': index === show_data_orderVOS.length - 1, 
+                'gray-icon': BetRecordClass.selected === 1, 'error': data_b.orderStatus == '2' || data_b.orderStatus == '4'}">
             <div class="list">
               <p class="col-9">
               <span>
@@ -66,8 +69,8 @@
                 &ensp;[{{i18n_t(`odds.${item.marketType}`)}}]
               </div>
               <!-- 已结算显示输赢 -->
-              <span v-if="BetRecordClass.selected === 1" class="result" :class="BetRecordClass.calc_text(data_b).color">
-                {{ BetRecordClass.calc_text(data_b).text }} 
+              <span v-if="data_b.seriesType != '1'" class="result" :class="calc_text_item(item).color">
+                {{ calc_text_item(item).text }} 
               </span>
             </span>
             <div class="line"></div>
@@ -92,7 +95,7 @@
 <script setup>
 import lodash from 'lodash'
 import { ref, onMounted, computed } from 'vue'
-import BetRecordClass from "src/core/bet-record/bet-record.js";
+import {default as BetRecordClass, bet_result} from "src/core/bet-record/bet-record.js";
 import { i18n_t, project_name } from 'src/core/index.js'
 import { IconWapper } from 'src/components/icon'
 import { itemFooter, itemOrder, earlySettle, earlySettledDetail } from "src/base-h5/components/common/cathectic-item/ouzhou-h5/index";
@@ -110,15 +113,14 @@ let props = defineProps({
 })
 
 
-  //虚拟赛马计算标识数量
-  const calc_num = computed(() => {
-    console.log(props.data_b);
-    if (/[0-9]/.test(props.data_b.playOptions)) {
-      return props.data_b.playOptions.split('/')
-    } else {
-      return false
-    }
-  })
+//虚拟赛马计算标识数量
+const calc_num = computed(() => {
+  if (/[0-9]/.test(props.data_b.playOptions)) {
+    return props.data_b.playOptions.split('/')
+  } else {
+    return false
+  }
+})
 
 const show_data_orderVOS = computed(() => {
   // orderVOS 长度大于2 且按钮是收起状态, 隐藏多于2条的
@@ -143,6 +145,22 @@ const toggle_box = () => {
   } else {
     btn_text.value = i18n_t("bet_record.pack_down");
   }
+}
+
+// 串关每一项输赢展示
+const calc_text_item = (item) => {
+  let color = 'black'
+  let text = ''
+  let betresult = item.betResult
+  if (betresult == 13 || betresult == 16) {
+    text = i18n_t('bet_record.invalid')
+  } else {
+    if (betresult == 4 || betresult == 5) {
+      color = 'red'
+    }
+    text = bet_result[betresult] || ''
+  }
+  return { color, text }
 }
 
 </script>
@@ -194,14 +212,25 @@ template {
           left: 0;
           transform: translateY(-50%);
         }
+        &.gray-icon i.q-icon::before {
+            color: var(--q-gb-bg-c-6);
+          }
         span {
-          color: var(--q-gb-bg-c-9);
+          color: var(--q-gb-bg-c-6);
+          font-weight: normal;
+          font-size: 0.14rem;
         }
       }
       .main-warp {
         padding-left: 0.18rem;
         margin-left: 0.04rem;
         border-left: 1px dashed var(--q-gb-bg-c-9);
+        &.gray-icon {
+          border-left-color: var(--q-gb-bg-c-6);
+        }
+        &.error {
+          border-left-color: red;
+        }
       }
 
       .list {
@@ -213,9 +242,10 @@ template {
 
           span {
             color: var(--q-gb-bg-c-13)
-          }
-
-          ;
+          };
+        }
+        .oddfinally {
+          color: var(--q-gb-bg-c-12)
         }
       }
 
@@ -224,8 +254,9 @@ template {
         color: var(--q-gb-bg-c-6);
         padding-bottom: 0.1rem;
         justify-content: space-between;
+        align-items: center;
         .result {
-          font-size: 0.16rem;
+          font-size: 0.14rem;
           font-weight: bold;
         }
       }
@@ -258,23 +289,20 @@ template {
     }
   }
   .green {
-    color: #69C969
-  }
-
-  .red {
-    color: #E93D3D
-  }
-
-  .black {
-    color: #666666
-  }
-
-  .orange {
-    color: #FFB001
+    color: green;
   }
 
   .gray {
-    color: #D2D2D2
+    color: var(--q-gb-bg-c-6);
+  }
+  .orange {
+    color:  var(--q-gb-bg-c-12);
+  }
+  .red {
+    color: var(--q-gb-bg-c-12);
+  }
+  .black {
+    color: var(--q-gb-bg-c-1);
   }
 }
 </style>

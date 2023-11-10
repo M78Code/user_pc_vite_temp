@@ -55,7 +55,7 @@ const props = defineProps({
     default: () => ({}),
   },
   active: {
-    type: Number,
+    type: Number|String,
     default: () => 0,
   },
 });
@@ -65,7 +65,7 @@ const props = defineProps({
 
 const go_betting = (data) => {
   emit("bet_click_", data);
-  storage_bet_info(payload)
+  // storage_bet_info(payload)
   // EMITTER.emit("show_bet_dialog", true)
 }
 // 处理赔率截取两位小数点

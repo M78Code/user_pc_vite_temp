@@ -1,5 +1,6 @@
 <template>
   <div class="basic-wrap" @click.stop="details.on_go_detail(match,null,router)" >
+
     <!-- 赛事信息 -->
     <div class="collect-box flex items-center justify-between">
       <div class="left-info-box flex items-center flex-start">
@@ -7,30 +8,27 @@
         <div>
           <i class="icon-star q-icon c-icon"></i>
         </div>
-        <!-- 时间信息 -->
-        <div class="bet-num flex items-center flex-start">
-          <div class="match_times_hour">1H</div>
-          <div class="match_times">{{lodash.get(match, 'mstValue')}}</div>
-        </div>
+        <!-- 比赛进程 -->
+        <match-process v-if="match" :match="match" source='match_list' show_page="match-list" :rows="1"
+        periodColor="gray" />
       </div>
-      <!-- 比分 -->
+      <!-- 玩法数量 -->
       <div class="right-handle-box flex flex-start items-center">
-        <span>122</span>
+        <span>{{ handicap_num }}</span>
         <div class="yb-icon-arrow"></div>
       </div>
     </div>
-
      <!-- 主队信息 --> 
      <div class="row-item">
       <div class="ellipsis-wrap">
         <div class="row no-wrap absolute-full">
           <div class="team-name home ellipsis allow-user-select" :class="{'bold':lodash.get(match, 'team_let_ball')=='T1'}" v-tooltip="{content:lodash.get(match, 'mhn')+play_name_obj.suffix_name,overflow:1}">
-            {{lodash.get(match, 'mhn')}}{{play_name_obj.suffix_name}}
+            {{lodash.get(match, 'mhn')}}
           </div>
         </div>
       </div>
       <!-- 主比分 -->
-      <div class="score" v-if="show_type == 'all'" v-tooltip="{content: is_15min ? i18n_t('list.15min_stage'):'' ,overflow:1}">{{  play_name_obj.score_key ? lodash.get(match,`msc_obj.${play_name_obj.score_key}.home`) : lodash.get(match, 'cur_score.home')}}</div>
+      <div class="score" v-if="show_type == 'all'" v-tooltip="{content: is_15min ? i18n_t('list.15min_stage'):'' ,overflow:1}">{{ lodash.get(match,`msc_obj.S1.home`)}}</div>
     </div>
     <!-- 客队信息 -->
     <div class="row-item kedui-item">
@@ -49,7 +47,7 @@
         v-if="show_type == 'all'" 
         v-tooltip="{content: is_15min ? i18n_t('list.15min_stage'):'' ,overflow:1}"
       >
-        {{play_name_obj.score_key ?  lodash.get(match,`msc_obj.${play_name_obj.score_key}.away`) : lodash.get(match, 'cur_score.away')}}
+        {{lodash.get(match,`msc_obj.S1.away`)}}
       </div>
     </div>
    
@@ -61,11 +59,9 @@
 
 import { computed, ref, watch, onMounted, onUnmounted } from 'vue';
 import lodash from 'lodash'
-import  { useRegistPropsHelper } from "src/composables/regist-props/index.js"
-import {component_symbol ,need_register_props} from "../config/index.js"
+import { MatchProcessFullVersionWapper as MatchProcess } from 'src/components/match-process/index.js';
+
 import { get_match_status } from 'src/core/utils/index'
-import { get_remote_time } from 'src/core/utils/module/match-list-utils.js';
-import { utils } from 'src/core/utils/module/utils.js'
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import { MenuData, MatchDataWarehouse_PC_List_Common } from "src/core/index.js"
 import details  from "src/core/match-list-pc/details-class/details.js"
@@ -73,6 +69,7 @@ import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/mat
 import { i18n_t,compute_local_project_file_path } from "src/core/index.js";
 import { useRouter } from "vue-router";
 import { format_mst_data } from 'src/core/utils/matches_list.js'
+
 
 const router = useRouter()
 const props = defineProps({
@@ -102,7 +99,6 @@ const is_show_away_red = ref(false) // 是否显示客队红牌动画
 const is_collect = ref(false) //赛事是否收藏
 
 let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(lodash.get(props, 'match.mid'))
-
 const handicap_num = computed(() => {
   if(GlobalAccessConfig.get_handicapNum()){
     return `+${ lodash.get(props, 'match.mc') || 0}`
@@ -241,6 +237,7 @@ onUnmounted(() => {
     margin-bottom: 7px;
     .icon-star {
       margin-top: -3px;
+      margin-right: 12px;
     }
     .bet-num {
       margin-left: 12px;

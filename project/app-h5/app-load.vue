@@ -21,7 +21,7 @@
 // websocket Log文件
 import ws from "src/core/data-warehouse/ws/ws-ctr/ws.vue"
 import { wslog } from "src/core/log/";
-import { useMittEmit, MITT_TYPES } from "src/core/mitt"
+import { useMittEmit,useMittOn, MITT_TYPES } from "src/core/mitt"
 import { compute_css_variables } from "src/core/css-var/index.js"
 import { PageSourceData, GlobalAccessConfig, ServerTime } from "src/core/index.js";
 import { reactive, onBeforeMount, onMounted, onUnmounted, ref, watch } from "vue";
@@ -51,6 +51,10 @@ let timer, timer2;
 
 const route = useRoute();
 
+onMounted(()=>{
+  useMittOn(MITT_TYPES.EMIT_THE_THEME_CHANGE,set_global_theme_change )
+})
+
 watch(
   () => route.name,
   () => {
@@ -59,7 +63,11 @@ watch(
   { immediate: true }
 );
 
-
+// 设置主题
+const set_global_theme_change = () => {
+  Object.assign(page_style, global_color_obj());
+  console.error('ssss',page_style)
+}
 
 onBeforeMount(() => {
   // 定时器
@@ -71,7 +79,7 @@ onBeforeMount(() => {
   on_listeners();
   // 公共主题色
   // page_style = global_color_obj()
-  Object.assign(page_style, global_color_obj());
+  set_global_theme_change()
   // 初始化启动日志系统--开发模式时日志打开
   // window.wslog = new WsLog(window.env.NODE_ENV === 'development');
   if (window.wslog.wsRun) {
@@ -110,6 +118,7 @@ onBeforeMount(() => {
 
 
 onUnmounted(() => {
+  useMittOn(MITT_TYPES.EMIT_THE_THEME_CHANGE ).off
   // 释放日志功能对象
   if (window.wslog && window.wslog.destroyed) {
     window.wslog.beforeUnmount();

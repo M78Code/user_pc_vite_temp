@@ -1,10 +1,3 @@
-/*
- * @Author: rise
- * @Date: 2023-11-03 16:37:52
- * @LastEditors: rise
- * @LastEditTime: 2023-11-08 13:42:14
- * @Description:  
- */
 import { createRouter, createWebHashHistory } from "vue-router";
 const router = createRouter({
   history: createWebHashHistory(),
@@ -100,7 +93,7 @@ const router = createRouter({
           // },
           // 常规赛事和电竞赛事详情页,赛事id必传，玩法集id可选
         {
-          path: "/details/:mid/:mcid?/:csid?",
+          path: "/details/:mid/:csid?/:mcid?",
           name: "category",
           component: () => import("../pages/detailnew/index.vue"),
           // children: [
@@ -156,21 +149,29 @@ const router = createRouter({
           //规则
           {
             path: "/rules",
-            name: "/rules",
+            name: "rules",
             component: () => import("../pages/rules/rules.vue"),
             meta: {
               keepAlive: true // 需要缓存
             },
           },
           //公告
+          // {
+          //   path: "/announcement",
+          //   name: "/announcement",
+          //   component: () => import("../pages/personal/announcement.vue"),
+          //   meta: {
+          //     keepAlive: true // 需要缓存
+          //   },
+          // }
           {
-            path: "/announcement",
-            name: "/announcement",
-            component: () => import("../pages/personal/announcement.vue"),
-            meta: {
-              keepAlive: true // 需要缓存
-            },
-          },
+              path: "/announcement",
+              name: "announcement",
+              component: () => import("../pages/personal/announcement.vue"),
+              meta: {
+                keepAlive: true // 需要缓存
+              },
+            }
       ],
     },
     {
