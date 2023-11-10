@@ -33,7 +33,7 @@
             elevated
         >
         <q-scroll-area class="fit">
-            <screenModal></screenModal>
+            <screenModal class="screenModal"></screenModal>
         </q-scroll-area>
       </q-drawer>
         </div>
@@ -195,6 +195,9 @@ function key_down(event) {
         }
     
     }
+}
+.screenModal{
+    height: 9rem;
 }
 </style>
   
