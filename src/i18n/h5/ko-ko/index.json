@@ -28,7 +28,6 @@
   "analysis_football_matches": {
     "analysis_data": "데이터",
     "away_win": "어웨이 승",
-    "bench_lineup": "벤치 라인업",
     "big": "오버",
     "age": "연령",
     "big_ball": "오버",
@@ -54,7 +53,8 @@
     "historical_war": null,
     "home_win1": "홈경기 승",
     "Initial_offer": "초급 제공",
-    "Injury_situation": "부상 방지 조건",
+    "bench_lineup": "벤치 목록",
+    "Injury_situation": "부상자 목록",
     "intelligence": "정보",
     "league": "리그 경기",
     "integral": "포인트",
