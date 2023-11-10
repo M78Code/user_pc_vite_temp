@@ -76,7 +76,6 @@ class MatchListCardDataClass {
   set_scroll_top(scroll_top) {
     this.scroll_top = scroll_top;
   }
-
   set_match_list_style_info(payload) {
     this.match_list_style_info.value = payload;
     this.set_list_version()
