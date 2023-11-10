@@ -74,6 +74,7 @@ const set_old_submit = (ol) => {
     // 数据仓库类型
     match_data_type: "h5_list", // h5_detail
   }
+  console.log('score-list.vue ',params)
   set_bet_obj_config(params,other)
 }
 

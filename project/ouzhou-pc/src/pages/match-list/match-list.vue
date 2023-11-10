@@ -10,12 +10,13 @@
     <!-- <div class="test-info-wrap" v-if="GlobalAccessConfig.other.wsl">
    {{ MatchListCardDataClass.list_version }}--   {{ load_data_state }}-- length---  {{ match_list_card_key_arr.length }}
     </div> -->
-    <!-- <div class="test-info-wrap" v-if="GlobalAccessConfig.other.wsl">
+    <div class="test-info-wrap" v-if="GlobalAccessConfig.other.wsl">
       <div>{{ menu_config.mid_menu_result.match_tpl_number }}</div>
       <div class="fold-btn" @click="match_list_card.unfold_all_league()">展开联赛</div>
       <div class="fold-btn" @click="match_list_card.fold_all_league()">折叠联赛</div>
       <div class="fold-btn" @click="match_list_card.test_log_data()">打印数据</div>
-    </div> -->
+      {{ MatchListCardDataClass.list_version }}--   {{ load_data_state }}-- length---  {{ match_list_card_key_arr.length }}
+    </div>
     <MatchesHeader />
     <div class="match-list-scroll scroll" v-show="!coom_soon_state">
       <!-- 头部15 Mins模块 -->
@@ -66,7 +67,7 @@
       <!-- <div v-show="show_refresh_mask" class="refresh-mask absolute-full yb-flex-center" :style="{top:get_is_show_banner && get_is_roll_show_banner ? '156px' : '36px'}"> -->
       <div class="img-loading custom-format-img-loading" :style="compute_css_obj('pc-img-loading')"></div>
     </div>
-    <ConmingSoon v-if="coom_soon_state" />
+    <ConmingSoon v-show="coom_soon_state" />
   </div>
 </template>
 <script>
@@ -175,12 +176,11 @@ export default {
     )
 
     watch(
-      MatchListOuzhouClass.redux_menu,
-      (list_version) => {
-        console.log( MatchListOuzhouClass.redux_menu, ' MatchListOuzhouClass.redux_menu')
-        const { coom_soon} = MatchListOuzhouClass.redux_menu
-        coom_soon_state.value=coom_soon 
-      }
+      MatchListOuzhouClass.coom_soon,
+      () => {
+        coom_soon_state.value= MatchListOuzhouClass.coom_soon.value
+        proxy?.$forceUpdate()
+      },
     )
 
     return {
