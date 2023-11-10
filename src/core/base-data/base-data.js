@@ -18,7 +18,7 @@ const { PROJECT_NAME } = BUILD_VERSION_CONFIG;
 
 //  1001  1004
 import userCtr from "src/core/user-config/user-ctr.js";
-import lodash_ from "lodash";
+import lodash_, { reject } from "lodash";
 
 import { api_base_data, api_common } from "src/api/index.js";
 
@@ -140,13 +140,15 @@ class BaseData {
     this.init_by_default_data();
     // console.warn("BaseData.init()--------");
     //获取 新旧菜单ID对应
-    this.init_mi_euid_map();
+    // this.init_mi_euid_map();
     // 获取 菜单-联赛-赛事
-    this.init_mi_tid_mids();
+    // this.init_mi_tid_mids();
     // 获取 元数据接口
-    this.init_base_data();
+    // this.init_base_data();
     // 获取 菜单的国际化
-    this.init_base_menu_il8n();
+    // this.init_base_menu_il8n();
+
+    this.get_all_base_data()
 
     
 
@@ -164,6 +166,52 @@ class BaseData {
       // 5分钟一次
       this.set_menu_init_time(3000000);
     }, 2000);
+  }
+
+  /**
+   * @description 获取所有的元数据
+   * @returns
+   */
+  get_all_base_data () {
+    // 获取 新旧菜单ID对应
+    const p1 = new Promise((resolve, reject) => {
+      api_base_data.post_base_data_menu_mapping({}).then((res) => {
+        resolve({ key: 'p1', res: res })
+      }).catch(err => reject(err))
+    });
+    // 获取 元数据接口
+    const p2 = new Promise((resolve, reject) => {
+      api_base_data.get_base_data({}).then((res) => {
+        resolve({ key: 'p2', res: res })
+      }).catch(err => reject(err))
+    });
+    // 获取 国际化菜单
+    const p3 = new Promise((resolve, reject) => {
+      api_base_data.post_base_data_menu_i18n({}).then((res) => {
+        resolve({ key: 'p3', res: res })
+      }).catch(err => reject(err))
+    });
+    // 获取 菜单-联赛-赛事
+    const p4 = new Promise((resolve, reject) => {
+      api_base_data.post_base_data_mi_tid_mids({}).then((res) => {
+        resolve({ key: 'p4', res: res })
+      }).catch(err => reject(err))
+    });
+    return Promise.all([p1, p2, p3, p4]).then((res) => {
+      res.forEach(t => {
+        if (t.key === 'p1') {
+          this.init_mi_euid_map(t.res)
+        } else if (t.key === 'p2') {
+          this.init_base_data(t.res)
+        } else if (t.key === 'p3') {
+          this.init_base_menu_il8n(t.res)
+        } else if (t.key === 'p4') {
+          this.init_mi_tid_mids(t.res)
+        }
+      })
+    }).catch((err) => {
+      console.err('err:', '元数据接口请求超时')
+    })
   }
 
   // 模拟数据推送 左侧菜单和顶部菜单 修改
@@ -259,8 +307,8 @@ class BaseData {
   /**
    * 国际化菜单
    */
-  async init_base_menu_il8n() {
-    let res = await api_base_data.post_base_data_menu_i18n({});
+  async init_base_menu_il8n(res) {
+    // let res = await api_base_data.post_base_data_menu_i18n({});
 
     let menu_i18n = lodash_.get(res, 'data')
 
@@ -342,8 +390,8 @@ class BaseData {
   /**
    * 获取 新旧菜单ID对应
    */
-  async init_mi_euid_map() {
-    let res = await api_base_data.post_base_data_menu_mapping({});
+  async init_mi_euid_map(res) {
+    // let res = await api_base_data.post_base_data_menu_mapping({});
 
     this.set_mi_euid_map_res(res);
   }
@@ -537,16 +585,16 @@ class BaseData {
   /**
    * 获取 菜单-联赛-赛事
    */
-  async init_mi_tid_mids() {
-    let res = await api_base_data.post_base_data_mi_tid_mids({});
+  async init_mi_tid_mids(res) {
+    // let res = await api_base_data.post_base_data_mi_tid_mids({});
     await this.set_mi_tid_mids_res(res);
   }
   /**
    * 获取 元数据接口
    */
-  async init_base_data() {
+  async init_base_data(res) {
     try {
-      let res = await api_base_data.get_base_data({});
+      // let res = await api_base_data.get_base_data({});
       res && await this.set_base_data_res(res);
       //  元数据加载完成 
       useMittEmit(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA)
