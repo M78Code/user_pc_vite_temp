@@ -38,7 +38,7 @@ const bet_loadding = ref(false);
 
 
 onBeforeUnmount(() => {
-  list_emit.forEach((i) => i());
+  // list_emit.forEach((i) => i());
 });
 
 

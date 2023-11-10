@@ -41,7 +41,7 @@ const right_status=ref(null)
 const detail_info = match_info.data
 
 onBeforeUnmount(() => {
-  list_emit.forEach((i) => i());
+  // list_emit.forEach((i) => i());
 });
 function handle_click() {
   store.dispatch({
