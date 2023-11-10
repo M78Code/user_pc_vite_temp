@@ -13,9 +13,9 @@
       <div class="dropdown">
         <button class="dropbtn">Betting Type</button>
         <div class="dropdown-content">
-          <a href="#" :class="type==1?'dropdown-content-che':''">Betting Type</a>
+          <a href="#" :class="BetData.is_bet_single?'dropdown-content-che':''" @click.stop="set_is_bet_single(true)">Betting Type</a>
           <a href="#" :class="type==2?'dropdown-content-che':''">Multi Singles</a>
-          <a href="#" :class="type==3?'dropdown-content-che':''" @click.stop="set_is_bet_single">System</a>
+          <a href="#" :class="!BetData.is_bet_single?'dropdown-content-che':''" @click.stop="set_is_bet_single(false)">System</a>
         </div>
       </div>
 
@@ -24,11 +24,12 @@
   </div>
 </template>
 <script setup>
+  import BetData from "src/core/bet/class/bet-data-class.js";
   const type = 1//1:Betting Type  2:  3:System
   // 单关 串关切换
-  const set_is_bet_single = () =>{
+  const set_is_bet_single = (type) =>{
     BetData.set_is_bet_single()
-    useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX, false);
+    useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX, type);
   }
 </script>
 
