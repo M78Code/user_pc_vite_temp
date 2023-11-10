@@ -16,19 +16,22 @@
         <!-- 头部 -->
         <bet-bar @click="pack_up"></bet-bar>
         <!-- 删除全部和选择type -->
-        <bet-all-detele></bet-all-detele>
+        <bet-all-detele v-if="BetViewDataClass.bet_order_status == 1"></bet-all-detele>
+        <!-- --------{{BetViewDataClass.bet_order_status}} - {{BetData.is_bet_single}} -->
         <div>
             <!-- 单关  -->
             <div v-if="BetData.is_bet_single">
                 <!-- 单关单注  -->
                 <div v-if="!BetData.is_bet_merge">
-                  <!-- 单关投注项列表  -->
-                  <bet-mix-box-child1 :items="BetData.bet_single_list[0]" ></bet-mix-box-child1>
-                  <!-- 单关的输入框 -->
-                  <bet-input-info :item="BetData.bet_single_list[0]" index="0" ></bet-input-info>
-                  <!-- <bet-mix-box-child4></bet-mix-box-child4> -->
-                  <!-- 键盘 -->
-                  <key-board></key-board>
+                  <div v-if="BetViewDataClass.bet_order_status == 1">
+                       <!-- 单关投注项列表  -->
+                        <bet-mix-box-child1 :items="BetData.bet_single_list[0]" ></bet-mix-box-child1>
+                      <!-- 单关的输入框 -->
+                      <bet-input-info :item="BetData.bet_single_list[0]" index="0" ></bet-input-info>
+                      <!-- 键盘 -->
+                      <key-board></key-board>
+                  </div>
+                  <bet-mix-box-child4 v-else :item="BetData.bet_single_list[0]" index="0" ></bet-mix-box-child4>
                 </div>
                 <!-- 单关合并 -->
                 <div v-else>
@@ -51,7 +54,7 @@
                 <bet-info></bet-info>
             </div>
 
-
+ 
             <!-- <div v-if="state == 4">
               <bet-mix-box-child4></bet-mix-box-child4>
             </div>
