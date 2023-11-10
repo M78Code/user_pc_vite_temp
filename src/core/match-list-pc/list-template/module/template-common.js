@@ -202,6 +202,7 @@ export const set_template_width_base = (
   } else {
     config.team_width = config.process_team_width - 77;
   }
+  console.log('config', config);
   return config;
 };
 
@@ -226,5 +227,5 @@ export const match_style_template = {
 // 欧洲版赛事样式模板
 export const match_style_template_ouzhou = {
   // 主盘口高度
-  main_handicap_height:105,
+  main_handicap_height:80,
 }

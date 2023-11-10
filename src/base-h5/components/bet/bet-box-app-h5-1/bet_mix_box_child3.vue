@@ -47,7 +47,7 @@
       //margin-top: 10px;
       display: flex;
       justify-content: space-between;
-      background: var(--q-gb-bg-c-9);
+      background: var(--q-gb-bg-c-11);
       padding: 10px;
   }
   .nonebox4-content-left-title{

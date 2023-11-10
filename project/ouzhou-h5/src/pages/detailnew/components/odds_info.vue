@@ -41,7 +41,9 @@ import temp3 from "./template/tem3.vue";
 import temp5 from "./template/tem5.vue";
 import tem_other from "./template/tem_other.vue";
 import { storage_bet_info } from "src/core/bet/module/bet_info.js"; //#TODO core/index.js not export storage_bet_info
+import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js" 
 // import EMITTER from "src/global/mitt.js";
+import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import { LOCAL_PROJECT_FILE_PREFIX } from "src/core";
 const props = defineProps({
   match_odds_info: {
@@ -82,8 +84,7 @@ const expend_toggle = (item) => {
   }
 }
 const bet_click_ = (data) => {
-  active.value = data.ol.oid;
-  // console.log("data", data);
+  active.value = +data.ol.oid;
   storage_bet_info({
     payload: {
       ...data.payload,
@@ -98,7 +99,25 @@ const bet_click_ = (data) => {
       ov: get_oddv(data.ol.ov / 100000)
     },
   })
-  // EMITTER.emit("show_bet_dialog", true);
+  // useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX,true)
+  let params = {
+    oid: data.ol.oid, // 投注项id ol_obj
+    _hid: data.hl.hid, // hl_obj 
+    _hn: data.hl.hn,  // hn_obj
+    _mid: data.payload.mid,  //赛事id mid_obj
+  }
+  console.log("odds_info.vue", data, params);
+  let other = {
+    is_detail: true,
+    // 投注类型 “vr_bet”， "common_bet", "guanjun_bet", "esports_bet"
+    // 根据赛事纬度判断当前赛事属于 那种投注类型
+    bet_type: 'common_bet',
+    // 设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备
+    device_type: 1, 
+    // 数据仓库类型
+    match_data_type: "h5_detail", // h5_detail
+  }
+  set_bet_obj_config(params,other)
 }
 // 处理赔率截取两位小数点
 const get_oddv = (num) => {

@@ -9,10 +9,18 @@
       <template v-slot="{ match_item, index }">
         <template v-if="match_item">
           <div class="data_mid"> <!--此data-mid用于分频订阅赛事,请勿修改-->
-            <MatchContainerMainTemplate1
-              :i="index"
-              :match_of_list="match_item">
-            </MatchContainerMainTemplate1>
+            <template v-if="is_results">
+              <MatchContainerMainTemplate3
+                  :i="index" 
+                  :match_of_list="match_item">
+                </MatchContainerMainTemplate3>
+            </template>
+            <template v-else>
+              <MatchContainerMainTemplate1
+                :i="index"
+                :match_of_list="match_item">
+              </MatchContainerMainTemplate1>
+            </template>
           </div>
         </template>
       </template>
@@ -24,11 +32,12 @@
 
 // ouzhou-h5 赛事组件
 import MatchContainerMainTemplate1 from "src/base-h5/components/match-container/template/ouzhou/match-container-main-template1.vue"; 
+import MatchContainerMainTemplate3 from "src/base-h5/components/match-container/template/ouzhou/match-container-main-template3.vue"; 
 
 // 赛事滚动组件
 import ScrollWrapper from 'src/base-h5/components/scroll-wraper/scroll-wrapper.vue'; 
 
-import { is_kemp } from 'src/base-h5/mixin/menu.js'
+import { is_kemp, is_results } from 'src/base-h5/mixin/menu.js'
 import { standard_edition } from 'src/base-h5/mixin/userctr.js'
 
 </script>

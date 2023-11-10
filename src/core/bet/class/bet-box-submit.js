@@ -362,6 +362,10 @@ const submit_handle = type => {
     api_betting.post_submit_bet_list(params).then(res => {
 
         if (res.code == 200) {
+            useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD,{
+                code: res.code,
+                msg: res.message
+            })
             // 投注成功 更新余额
             UserCtr.get_balance()
             // pc 有的 

@@ -44,7 +44,7 @@ const routes = [
       {
         path: "/video/:mid/:tid/:csid/:play_type/:video_size",
         name: "video",
-        component: () =>import("../pages/video/video.vue")   
+        component: () => import("../pages/video/video.vue")
       },
       //       {
       //         path: "/virtual_details/:mid/:tid/:csid",
@@ -58,6 +58,20 @@ const routes = [
       //       },
     ],
   },
+  //无菜单主框架
+  {
+    path: "/",
+
+    component: () => import('../layouts/layout.vue'),
+    children: [
+      //滚球
+      {
+        path: "/in_play",
+        name: "in_play",
+        component: () => import('../pages/scroll-ball/index.vue'), // project/ouzhou-pc/src/pages/bet-record/index.vue
+      },
+    ]
+  },
   //赛事分析
   {
     path: "/analysis_header/:csid/:mid/:euid",
@@ -66,11 +80,11 @@ const routes = [
     component: () => import('../pages/analysis-header/analysis-header.vue'),
   },
   // //投注记录
-  // {
-  //   path: "/bet_record",
-  //   name: "bet_record",
-  //   component: () => import('../pages/bet-record/index.vue'), // project/ouzhou-pc/src/pages/bet-record/index.vue
-  // },
+  {
+    path: "/bet_record",
+    name: "bet_record",
+    component: () => import('../pages/bet-record/index.vue'), // project/ouzhou-pc/src/pages/bet-record/index.vue
+  },
   // 赛果
   {
     path: "/match_results",
@@ -89,6 +103,7 @@ const routes = [
     name: "rule",
     component: () => import("../pages/rule/index.vue"),
   },
+
   // // 每日成长任务
   // {
   //   path: '/activity',

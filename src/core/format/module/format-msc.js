@@ -652,7 +652,7 @@ export const basket_ball_score_handle = (match) => {
  */
 export const foot_ball_score_handle = (match) => {
   // 角球:S5 上半场:S2 全场比分:S1 下半场:S3 红牌:S11 黄牌:S12 点球:S10 加时:S7 点球大战:S170
-  let msc_dict = ["S5", "S1", "S7"];
+  let msc_dict = ["S5", "S2", "S3", "S1", "S7"];
   // 110-加时结束的时候，显示：角球、半场（HT）、全场（FT）、加时比分（OT）
   // 34-等待点球大战的是，显示：角球、半场（HT）、全场（FT）、加时比分（OT）
   // 50-点球大战的时候，显示：角球、半场（HT）、全场（FT）、加时比分（OT） 

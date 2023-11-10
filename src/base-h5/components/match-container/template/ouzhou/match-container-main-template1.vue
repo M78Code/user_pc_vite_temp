@@ -219,7 +219,7 @@
                       </div>
                     </div>
                     <!-- 右边盘口组件 -->
-                    <ScoreList :match_info="match_of_list" :hpid="select_play"></ScoreList>
+                    <ScoreList :match_info="match_of_list" :score_length="score_length"></ScoreList>
                   </div>
                 </div>
               </div>
@@ -249,6 +249,8 @@ import { i18n_t, compute_img_url, compute_css_obj  } from "src/core/index.js"
 import { format_time_zone } from "src/core/format/index.js"
 import { have_collect_ouzhou, no_collect_ouzhou} from 'src/base-h5/core/utils/local-image.js'
 
+import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
+
 import { lang, standard_edition, theme } from 'src/base-h5/mixin/userctr.js'
 import { is_hot, menu_type, menu_lv2, is_detail, is_export, is_results, footer_menu_id } from 'src/base-h5/mixin/menu.js'
 
@@ -276,6 +278,7 @@ export default {
   },
   setup (ctx) {
     const select_play = ref('1')
+    const score_length = ref(3)
     const hps_play_data = ref([])
 
     // 是否显示球种标题
@@ -285,14 +288,25 @@ export default {
     })
     // 玩法
     const get_match_panel = computed(() => {
-      return ['1', '4', '16'].includes(ctx.match_of_list.csid) ? ['1', 'X', '2'] : ['1', '2']
+     
+      const hps = ctx.match_of_list.hps
+      const hpid = MatchResponsive.match_hpid.value
+      const hps_item = hps.find(t => t.hpid == hpid)
+
+      const target_item = hps_play_data.value.find(t => t.hpid == hpid)
+      const target_ol = lodash.get(target_item, 'hl[0].ol')
+      score_length.value = lodash.get(target_ol, 'length', 3)
+
+      const ol = lodash.get(hps_item, 'hl[0].ol', Array.from({ length: score_length.value }, () => '{}'))
+
+      return ol.length === 3 ? ['1', 'X', '2'] : ['1', '2']
     })
     // 计算有玩法的hps
     const get_hps_play_data = () => {
       let target_hps = []
       const { csid } = ctx.match_of_list
-      target_hps = MatchMeta.ball_seed_play_methods.value[`hps_csid_${csid}`]
-      hps_play_data.value = target_hps
+      target_hps = MatchResponsive.ball_seed_play_methods.value[`hps_csid_${csid}`]
+      hps_play_data.value = target_hps || []
     }
 
     watch(() => ctx.match_of_list.hps, () => {
@@ -306,13 +320,14 @@ export default {
       console.log(item)
       // game.selectTitle = item.hpn
       select_play.value = item.hpid
+      MatchResponsive.set_match_hpid(item.hpid)
       // item.panel = handle_odds_data(item)
     }
 
     return { 
       lang, theme, i18n_t, compute_img_url, format_time_zone, GlobalAccessConfig, footer_menu_id,LOCAL_PROJECT_FILE_PREFIX, have_collect_ouzhou,
       is_hot, menu_type, menu_lv2, is_detail, is_export, is_results, standard_edition, compute_css_obj, show_sport_title, no_collect_ouzhou,
-      PageSourceData, get_match_panel, hps_play_data, on_select_play, select_play
+      PageSourceData, get_match_panel, hps_play_data, on_select_play, select_play, score_length
     }
   }
 }
@@ -1210,6 +1225,9 @@ export default {
   .timer-wrapper-c {
     height: 100%;
     color: #999;
+    .counting-down-wrap{
+      font-size: 13px;
+    }
 
     &.newer {
       margin-left: 0;

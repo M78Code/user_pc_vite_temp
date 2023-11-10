@@ -50,13 +50,27 @@ import switch_team from './compoments/switch_team.vue'
 
 import venue_box from './compoments/venue_box/index.vue'
 import _ from 'lodash'
+import { useMittOn, MITT_TYPES } from "src/core/mitt"
+import { MatchDataWarehouse_PC_Detail_Common as MatchDataWarehouseInstance,MenuData,UserCtr } from "src/core/index"; 
 
-const props =  defineProps({
-  detail_info: {  // 赛事详情
-    type: Object,
-    default: () => {}
-  },
+// const props =  defineProps({
+//   detail_info: {  // 赛事详情
+//     type: Object,
+//     default: () => {}
+//   },
+// })
+
+let detail_info = ref({})
+
+onMounted(()=>{
+  useMittOn(MITT_TYPES.EMIT_SHOW_DETAILS,get_detail_info)
 })
+
+// 获取数据
+const get_detail_info = (mid)=>{
+  console.log(111111, MatchDataWarehouseInstance.get_quick_mid_obj(mid))
+  detail_info.value = MatchDataWarehouseInstance.get_quick_mid_obj(mid)
+}
 // const show_page = ref(false)
 // watch(()=>props.detail_info,val=>{
 //   if (!_.isEmpty(val)) {
@@ -70,7 +84,7 @@ const props =  defineProps({
 
   // 详情数据msc处理
   const score_list = computed(()=>{
-  const obj = props.detail_info || {}
+  const obj = detail_info.value || {}
   let result = {}
  
   if (obj.msc&&obj.msc.length>0 ) {

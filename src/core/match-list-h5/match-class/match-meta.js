@@ -13,6 +13,7 @@ import MatchCollect from 'src/core/match-collect'
 import MatchUtils from 'src/core/match-list-h5/match-class/match-utils';
 import PageSourceData from "src/core/page-source/page-source.js";
 import VirtualList from './virtual-list'
+import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 import { MATCH_LIST_TEMPLATE_CONFIG } from "src/core/match-list-h5/match-card/template"
 import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, useMittEmit, MITT_TYPES,project_name,MenuData } from 'src/core'
 
@@ -35,10 +36,6 @@ class MatchMeta {
     this.complete_matchs = []
     // 上一次滚动得距离
     this.prev_scroll = null
-    // 球种对应的数量
-    this.ball_seed_count = ref({})
-    // 球种对应的下拉玩法  ouzhou-h5 
-    this.ball_seed_play_methods = ref({})
     // 重置折叠对象
     MatchFold.clear_fold_info()
     // 重置收藏对象
@@ -68,7 +65,6 @@ class MatchMeta {
       menu_lv_v1_sl = MenuData.get_menu_lvmi_list(menu_lv_v1)
       menu_lv_v2_sl = MenuData.get_menu_lv_2_mi_list(menu_lv_v2)
     }
-   
     // 滚球全部
     if (+menu_lv_v1 === 1 && menu_lv_v2 == 0) return this.get_origin_match_mids_by_mis(menu_lv_v1_sl)
 
@@ -309,14 +305,6 @@ class MatchMeta {
   }
 
   /**
-   * @description 获取球种下拉玩法
-   */
-  get_ball_seed_methods (match) {
-    const { hps, csid } = match
-    if (hps && hps.length > 0 && hps[0].hl && hps[0].hl[0] && hps[0].hl[0].ol) this.set_ball_seed_play_methods(`hps_csid_${csid}`, hps)
-  }
-
-  /**
    * @description 早盘 下根据时间来筛选
    * @param { time } 所选择的时间
    */
@@ -367,28 +355,6 @@ class MatchMeta {
     const mids = this.tid_map_mids[`tid_${tid}`].mids
     if (mids.length < 1) return 
     this.get_origin_match_by_mids(mids)
-  }
-
-  /**
-   * @description 设置对应球种的key
-   * @param {string} key 
-   * @param {number} length 
-   */
-  set_ball_seed_count (key, length) {
-    Object.assign(this.ball_seed_count.value, {
-      [key]: length
-    })
-  }
-
-  /**
-   * @description 设置对应球种的玩法
-   * @param {string} key 
-   * @param {Array} value 
-   */
-  set_ball_seed_play_methods (key, value) {
-    !this.ball_seed_play_methods.value[key] && Object.assign(this.ball_seed_play_methods.value, {
-      [key]: value
-    })
   }
 
   /**
@@ -651,7 +617,7 @@ class MatchMeta {
   handle_update_match_info(list, type) {
     // 合并前后两次赛事数据
     list = lodash.map(list, t => {
-      this.get_ball_seed_methods(t)
+      MatchResponsive.get_ball_seed_methods(t)
       const match = MatchDataBaseH5.get_quick_mid_obj(t.mid)
       // 覆写次要玩法折叠参数
       // MatchFold.set_match_mid_fold_obj()

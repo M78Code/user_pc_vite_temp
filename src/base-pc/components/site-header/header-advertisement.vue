@@ -47,7 +47,7 @@ import { api_account } from "src/api/index.js";
     // main_menu_toggle.value = menuReducer.main_menu_toggle
 // })
 /** 销毁监听 */
-onUnmounted(unsubscribe)
+// onUnmounted(unsubscribe)
 /** 
  * 左侧列表显示形式 normal：展开 mini：收起
 * 路径: project_path\src\store\module\menu.js

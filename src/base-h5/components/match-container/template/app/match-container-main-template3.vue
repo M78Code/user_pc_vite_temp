@@ -40,7 +40,7 @@
               <div class="odd-t-i-wrapper flex items-center"
                 :class="{ 'status2': get_standard_odd_status == 1 && match_of_list_ascertain.length > 3 }">
                 <div class="hpl-title row items-center justify-center" :class="{ 'boxing': match_of_list.csid == 12 }"
-                  :key="i" v-for="(hpl_title, i) of i18n_t('list_title.' + match.csid + '.title')">
+                  :key="i" v-for="(hpl_title, i) of i18n_t('match_results_title.' + match.csid + '.title')">
                   <div class="hpl-t-inner">
                     {{ hpl_title }}
                   </div>
@@ -140,12 +140,31 @@
                 <!-- 右边盘口组件 -->
                 <!-- <odd-list-wrap :main_source="main_source" :match="match_of_list" /> -->
                 <!-- 右边赛果结构 -->
-                <div class="default-match-results-right" :style="{ width: needMatchResultsRowNumber(3) }" >
-                  <div class="dmrr-item" v-for="(item, index) in matchResultsLength" :key="'dmrr-item'+index">
-                    <span v-if="index < 3" class="dmrr-item-fail">取消</span>
-                    <span v-else class="dmrr-item-fail">{{index}}</span>
+                <template v-if="matchResultsData.length">
+                  <div class="default-match-results-right">
+                    <div class="dmrr-list" v-for="(item, index) in matchResultsData" :key="'dmrr'+index">
+                      <div class="dmrr-item">
+                        <span>{{item.home}}</span>
+                      </div>
+                      <div class="dmrr-item">
+                        <span>{{item.away}}</span>
+                      </div>
+                    </div>
                   </div>
-                </div>
+                </template>
+                <template v-else>
+                  <div class="default-match-results-right">
+                    <div class="dmrr-list" v-for="(item, index) in 3" :key="'dmrr'+index">
+                      <div class="dmrr-item">
+                        <span>-</span>
+                      </div>
+                      <div class="dmrr-item">
+                        <span>-</span>
+                      </div>
+                    </div>
+                  </div>
+                </template>
+                  
 
                 </div>
               </div>
@@ -161,7 +180,7 @@
   
 <script>
 
-import { ref, computed, watch, nextTick } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { LOCAL_PROJECT_FILE_PREFIX } from  "src/core"
 
 import { IconWapper } from 'src/components/icon'
@@ -177,6 +196,7 @@ import { format_time_zone } from "src/core/format/index.js"
 import { mearlys_icon, in_progress, not_begin, normal_img_not_favorite_white, normal_img_is_favorite } from 'src/base-h5/core/utils/local-image.js'
 
 import { lang, standard_edition, theme } from 'src/base-h5/mixin/userctr.js'
+import { format_msc, foot_ball_score_handle } from "src/core/format/index.js"
 import { is_hot, menu_type, menu_lv2, is_detail, is_export, is_results, footer_menu_id } from 'src/base-h5/mixin/menu.js'
 
 import default_mixin from '../../mixins/default.mixin.js'
@@ -203,14 +223,29 @@ export default {
   },
   data () {
     return {
-      matchResultsLength: 6
+      matchResultsLength: 3,
+      matchResultsData:[]
     }
+  },
+  mounted() {
+    if (this.match_of_list.mmp === '999') this.filterScoreHandle(foot_ball_score_handle(this.match_of_list))
   },
   methods: {
     needMatchResultsRowNumber(val) {
-      const width = val * 60
-      const margin = val * 1
-      return (width + margin) / 100 + 'rem'
+      const width = 60
+      return (width) / 100 + 'rem'
+    },
+    filterScoreHandle (list) {
+      const result = list.filter(i => ['S1','S2','S3'].includes(i[0])).map(i => ({
+        round: i[0],
+        home: i[1],
+        away: i[2]
+      })).sort((a,b) => {
+        const numa = parseInt(a.round.slice(1))
+        const numb = parseInt(b.round.slice(1))
+        return numa - numb
+      })
+      this.matchResultsData = result
     }
   },
   setup (ctx) {
@@ -218,6 +253,7 @@ export default {
     const show_sport_title = computed(() => {
       return [1,2].includes(+ctx.match_of_list.start_flag)
     })
+
     return { 
       lang, theme, i18n_t, compute_img_url, format_time_zone, GlobalAccessConfig, footer_menu_id,LOCAL_PROJECT_FILE_PREFIX,in_progress,not_begin,
       is_hot, menu_type, menu_lv2, is_detail, is_export, is_results, standard_edition, mearlys_icon, compute_css_obj, show_sport_title,
@@ -1404,26 +1440,31 @@ export default {
 
 .default-match-results-right {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-content: space-between;
-  // width: 1.84rem;
-  .dmrr-item {
-    // flex: 0 0 calc(33.33% - .02rem);
-    width: .6rem;
-    height: .32rem;
-    background: var(--q-gb-bg-c-15) !important;
-    border-radius: .04rem;
-    margin-bottom: .02rem;
+  justify-content: end;
+  .dmrr-list {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: .12rem;
-    .dmrr-item-fail {
-      color: var(--q-match-fs-color-13);
+    flex-wrap: wrap;
+    flex: 0 0;
+    margin-right: 0.02rem;
+    // width: 1.84rem;
+    .dmrr-item {
+      // flex: 0 0 calc(33.33% - .02rem);
+      width: .6rem;
+      height: .32rem;
+      background: var(--q-gb-bg-c-15) !important;
+      border-radius: .04rem;
+      margin-bottom: .02rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .12rem;
+      .dmrr-item-fail {
+        color: var(--q-match-fs-color-13);
+      }
     }
   }
 }
+
 
 /* ********右边赛果相关样式********** -E*/
 </style>

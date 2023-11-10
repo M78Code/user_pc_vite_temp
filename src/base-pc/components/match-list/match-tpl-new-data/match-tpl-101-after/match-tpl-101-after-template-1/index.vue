@@ -12,11 +12,16 @@
       <!-- 图标信息 -->
       <icon-box></icon-box>
       <!-- 投注信息 -->
-      <match-handicap v-if="match"></match-handicap>
+      <match-handicap 
+        v-if="match" 
+        :handicap_list="match_tpl_info.get_current_odds_list(current_choose_oid)" 
+        :match="match"
+      >
+      </match-handicap>
       <!-- 最右侧图标 -->
-      <div class="score-data-box" @click="jump_to_details(match)">
+      <!-- <div class="score-data-box" @click="jump_to_details(match)">
         <i aria-hidden="true" class="icon-signal q-icon c-icon"></i>
-      </div>
+      </div> -->
   </div>
 </template>
 
@@ -36,7 +41,7 @@ import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/mat
 
 import { MatchBasisInfo101FullVersionWapper as BasisInfo101 } from 'src/base-pc/components/match-list/match-basis-info/template-101/index.js'
 import IconBox from '../modules/iconBox/index.vue'
-import MatchHandicap from '../modules/matchHandicap/index.vue'
+import { MatchHandicapFullVersionWapper as MatchHandicap } from 'src/base-pc/components/match-list/match-handicap/index.js'
 import MatchMedia from 'src/base-pc/components/match-list/match-media/index.vue'
 
 const props = defineProps({
@@ -51,8 +56,9 @@ const props = defineProps({
 })
 let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.mid)
 match_style_obj.data_tpl_id = 101; //调试用
-const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`].width_config
-const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`]
+const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].width_config
+const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`]
+const current_choose_oid = ref({ first_hpid: '1', second_hpid: "2" });
 let match = MatchListData.list_to_obj.mid_obj[props.mid+'_'];
 const is_mounted = ref(true);
 

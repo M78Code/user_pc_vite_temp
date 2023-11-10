@@ -108,6 +108,7 @@ class BetViewData {
   // 设置当前 投注页面显示 版本
   set_bet_view_version = lodash_.debounce(() => {
     this.bet_view_version.value = Date.now()
+    // console.error('set_bet_view_version',this)
   }, 5)
 
   // 设置 金额的范围  -1:输入金额小于最低限额时，1: 输入金额超出最大限额时 2:输入金额超出用户余额时 3:用户余额是小于等于输入金额(转换后)
@@ -164,13 +165,13 @@ class BetViewData {
     this.error_message = message
     this.error_code = code
 
-    if (code == 200) {
-      // 3-投注成功状态(主要控制完成按钮)
-      this.set_bet_order_status(3)
-    } else {
-      // 4-投注失败状态 显示错误信息
-      this.set_bet_order_status(4)
-    }
+    // if (code == 200) {
+    //   // 3-投注成功状态(主要控制完成按钮)
+    //   this.set_bet_order_status(3)
+    // } else {
+    //   // 4-投注失败状态 显示错误信息
+    //   this.set_bet_order_status(4)
+    // }
   }
   /**
    * @description: 完成按钮是否显示
