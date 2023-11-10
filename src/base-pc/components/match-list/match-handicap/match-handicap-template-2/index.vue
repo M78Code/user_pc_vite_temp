@@ -4,14 +4,13 @@
  * @Description: 列表赛事盘口
 -->
 <template>
-  <div :class="['c-match-handicap', { 'unfold_multi_column': match_style_obj.data_tpl_id == 13 }, get_5min_classname()]">
+  <div class="c-match-handicap-ouzhou">
     <div v-show="false">{{ MatchListData.data_version.version }}</div>
     <div v-show="false">{{ MatchListCardDataClass.list_version }}</div>
     <div class="row no-wrap">
       <!-- 玩法列表 -->
-      <div class="handicap-col" v-for="(col, col_index) in handicap_list" :key="col_index">
-        <div :class="['bet-item-wrap', ]"
-          :style="get_bet_style(col_index, lodash.get(col, 'ols.length'))" v-for="(ol_data, ol_index) in deal_width_handicap_ols(col.ols)"
+      <div class="handicap-col-ouzhou yb-flex-center" v-for="(col, col_index) in handicap_list" :key="col_index">
+        <div :class="['bet-item-wrap-ouzhou', ]" v-for="(ol_data, ol_index) in deal_width_handicap_ols(col.ols)"
           :key="ol_index">
           <!-- 投注项组件 -->
           <template v-if="match_style_obj.data_tpl_id != 'esports' || (match_style_obj.data_tpl_id == 'esports' && getCurState(ol_data._hipo))">

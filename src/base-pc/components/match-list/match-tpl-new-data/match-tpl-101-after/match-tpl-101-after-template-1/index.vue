@@ -19,9 +19,9 @@
       >
       </match-handicap>
       <!-- 最右侧图标 -->
-      <div class="score-data-box" @click="jump_to_details(match)">
+      <!-- <div class="score-data-box" @click="jump_to_details(match)">
         <i aria-hidden="true" class="icon-signal q-icon c-icon"></i>
-      </div>
+      </div> -->
   </div>
 </template>
 
