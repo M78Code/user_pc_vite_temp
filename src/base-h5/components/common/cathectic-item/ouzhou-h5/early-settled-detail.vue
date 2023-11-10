@@ -4,7 +4,7 @@
 -->
 <template>
   <div style="display: none;">{{ BetRecordClass.bet_record_version }}</div>
-  <div class="warp">
+  <div v-if="details_show_btn" class="warp">
     <div class="settle-btn" @click="fetch_early_settle_detail">
       <span>Cashout Details</span>
       <icon-wapper :name="detail_show_info ? 'icon-triangle' : 'icon-triangle1'" />
@@ -33,7 +33,7 @@
         </div>
       </q-slide-transition>
 
-    </div>
+  </div>
 </template>
 
 <script setup>
@@ -41,19 +41,28 @@ import BetRecordClass from "src/core/bet-record/bet-record.js";
 import { api_betting } from "src/api/index.js";
 import { i18n_t, compute_local_project_file_path } from 'src/core/index.js'
 import { IconWapper } from 'src/components/icon'
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { Platform } from "quasar";
 
 const props = defineProps({
-  orderNo: {
-    type: [String, Number]
+  item_data: {
+    type: Object
   }
 })
 
+// 展开 提前结算详情列表 的按钮是否显示
+let details_show_btn = ref(false)
 // 提前兑现详情信息
 let detail_show_info = ref(false)
 // 提前结算详情数据
 let presettleorderdetail_data = ref([])
+
+onMounted(() => {
+    // 已发生过提前结算或者提前结算取消
+  if (props.item_data.preBetAmount > 0 || [3, 4, 5].includes(props.item_data.settleType)) {
+    details_show_btn.value = true;
+  }
+})
 
 /**
  *@description 获取提前结算详情数据
@@ -62,7 +71,7 @@ let presettleorderdetail_data = ref([])
   if (detail_show_info.value) {
     detail_show_info.value = false;
   } else {
-    api_betting.get_pre_settle_order_detail({ orderNo: props.orderNo }).then((res) => {
+    api_betting.get_pre_settle_order_detail({ orderNo: props.item_data.orderNo }).then((res) => {
       let { code, data = [] } = res || {};
       if (code == 200) {
         presettleorderdetail_data.value = data;
@@ -74,31 +83,31 @@ let presettleorderdetail_data = ref([])
   }
 }
 
-    /**
-     *@description 复制订单号
-     *@param {Object} evt 事件对象
-     */
-     const copy = (evt) => {
-      let orderno = props.orderNo
-      const clipboard = new ClipboardJS(".text-left", {
-        text: () => orderno
-      })
-      clipboard.on('success', () => {
-        // h5嵌入时Safari阻止弹窗
-        if (!Platform.is.safari) {
-          try {
-            location.href = `pasteOrderAction://paste?orderSN=${orderno}`;
-          } catch (error) {
-            console.error(error)
-          }
-        }
-        clipboard.destroy()
-      })
-      clipboard.on('error', () => {
-        clipboard.destroy()
-      })
-      clipboard.onClick(evt)
+/**
+ *@description 复制订单号
+  *@param {Object} evt 事件对象
+  */
+  const copy = (evt) => {
+  let orderno = props.item_data.orderNo
+  const clipboard = new ClipboardJS(".text-left", {
+    text: () => orderno
+  })
+  clipboard.on('success', () => {
+    // h5嵌入时Safari阻止弹窗
+    if (!Platform.is.safari) {
+      try {
+        location.href = `pasteOrderAction://paste?orderSN=${orderno}`;
+      } catch (error) {
+        console.error(error)
+      }
     }
+    clipboard.destroy()
+  })
+  clipboard.on('error', () => {
+    clipboard.destroy()
+  })
+  clipboard.onClick(evt)
+}
 </script>
 
 <style lang="scss" scoped>

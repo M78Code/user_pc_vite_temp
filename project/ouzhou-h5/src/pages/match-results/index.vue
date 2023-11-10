@@ -23,6 +23,7 @@
     <!-- <ScrollMenu /> -->
     <scroll-menu menu_type="1" :is_show_badge="false"  v-if="MenuData.menu_list.length" />
     <div class="match-container">
+        <date-tab :reverse="1"/>
         <match-container />
     </div>
     <!--  弹窗  -->
@@ -48,6 +49,8 @@ import matchContainer from "src/base-h5/components/match-list/index.vue";
 import { i18n_t, compute_css_obj, MenuData } from "src/core/index.js";
 import { is_results, is_kemp } from 'src/base-h5/mixin/menu.js'
 import scrollMenu from 'src/base-h5/components/top-menu/top-menu-ouzhou-1/scroll-menu/scroll-menu.vue';
+import dateTab from 'src/base-h5/components/top-menu/top-menu-ouzhou-1/date-tab/date-tab.vue';
+
 // watch(() => MenuData.update_time.value, () => {
 //   console.log("菜单id-球类id-对应euid",`${MenuData.menu_type.value}-${MenuData.menu_mi.value}-${MenuData.get_euid()}`)
 // })

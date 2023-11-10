@@ -57,7 +57,7 @@ const emit = defineEmits(["bet_click_"]);
 const props = defineProps({
   item_data: {
     type: Object,
-    default: () => ({}),
+    default: () => {},
   },
   active: {
     type: Number,

@@ -15,7 +15,7 @@
   <div>
     <div class="analysis-body">
       <!-- 动画比分榜 -->
-      <venue_box v-show="detail_info.ms>0" :score_list="score_list" :detail_info="detail_info"  />
+      <!-- <venue_box v-show="detail_info.ms>0" :score_list="score_list" :detail_info="detail_info"  /> -->
   
       <!-- <div class="analysis-top">
         <div class="analysis-top-l">
@@ -31,7 +31,7 @@
       <!-- <venue_box /> -->
       <!-- <score_info :score_list="score_list" :detail_info="detail_info" /> -->
        <!-- 足球分析页图表 -->
-      <foot-ball-stats v-if="detail_info.csid==1 &&detail_info.ms>0" :detail_info="detail_info" :score_list="score_list" />
+      <!-- <foot-ball-stats v-if="detail_info.csid==1 &&detail_info.ms>0" :detail_info="detail_info" :score_list="score_list" /> -->
        <!-- 足球分析页图表 -->
        <!-- <basket-ball-stats  v-if="detail_info.csid==2 &&detail_info.ms>0" :detail_info="detail_info" :score_list="score_list" /> -->
       <!-- 选择哪队会赢组件 -->

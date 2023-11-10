@@ -46,7 +46,7 @@
       </div>
     </div>
     <div class="foot-main">
-      <p><label>{{i18n_t('bet_record.bet_val')}}：</label> <span>{{format_money2(data_b.orderAmountTotal)}}</span></p>
+      <p><label>{{i18n_t('bet_record.bet_val')}}：</label> <span>{{format_money2(data_b.orderAmountTotal)}}{{ i18n_t('common.unit') }}</span></p>
       <template>
         <!-- orderStatus 订单状态(0:未结算,1:已结算,2:注单无效,3:确认中,4:投注失败) -->
         <!-- 在未结算页 -->
@@ -54,18 +54,18 @@
           <label>{{ i18n_t('app_h5.cathectic.winnable') }}：</label> 
           <template v-if="data_b.orderStatus == 1 || data_b.orderStatus == 2 || data_b.orderStatus == 4">
             <span>
-              <template v-if="data_b.backAmount !== null">{{format_money2(data_b.backAmount)}}</template>
-              <template v-else>{{format_money2(data_b.orderAmountTotal)}}</template>
+              <template v-if="data_b.backAmount !== null">{{format_money2(data_b.backAmount)}}{{ i18n_t('common.unit') }}</template>
+              <template v-else>{{format_money2(data_b.orderAmountTotal)}}{{ i18n_t('common.unit') }}</template>
             </span>
           </template>
           <template v-else>
-            <span>{{format_money2(data_b.maxWinAmount)}}</span>
+            <span>{{format_money2(data_b.maxWinAmount)}}{{ i18n_t('common.unit') }}</span>
           </template>
         </p>
         <!-- 在已结算页 -->
         <p v-else class="acount">
           <label>{{i18n_t('app_h5.cathectic.settle')}}：</label> 
-          <span>{{format_money2(data_b.backAmount)}}</span>
+          <span>{{format_money2(data_b.backAmount)}}{{ i18n_t('common.unit') }}</span>
         </p>
       </template>
       <p>
@@ -78,8 +78,8 @@
             <template v-else>{{i18n_t('pre_record.booking')}}</template>
           </span>
           <!-- 未结算、已结算页 -->
-          <span v-else :class="BetRecordClass.calc_text(data_b).color"> 
-            {{ BetRecordClass.calc_text(data_b).text }} 
+          <span v-else :class="calc_text(data_b).color"> 
+            {{ calc_text(data_b).text }} 
           </span>
         </template>
       </p>
@@ -90,7 +90,7 @@
 <script setup>
 import lodash from 'lodash'
 import { ref, onMounted, computed } from 'vue'
-import BetRecordClass from "src/core/bet-record/bet-record.js";
+import { default as BetRecordClass, calc_text } from "src/core/bet-record/bet-record.js";
 import { i18n_t, project_name } from 'src/core/index.js'
 import { formatTime, format_money2 } from 'src/core/format/index.js'
 
@@ -139,7 +139,7 @@ template {
 }
 .item-body {
   .item-header {
-    background-color: var(--q-gb-bg-c-9);
+    background-color: var(--q-gb-bg-c-13);
     color: var(--q-gb-bg-c-15);
     line-height: 0.4rem;
     padding-left: 0.12rem;
@@ -167,7 +167,7 @@ template {
         padding-left: 0.14rem;
 
         span {
-          color: var(--q-gb-bg-c-9);
+          color: var(--q-gb-bg-c-13);
         }
       }
 
@@ -176,7 +176,7 @@ template {
         font-weight: bold;
         padding-left: 0.1rem;
         margin-left: 0.04rem;
-        border-left: 1px solid var(--q-gb-bg-c-9);
+        border-left: 1px solid var(--q-gb-bg-c-13);
 
         &.score {
           display: flex;
@@ -193,7 +193,7 @@ template {
       .info {
         padding-left: 0.1rem;
         margin-left: 0.04rem;
-        border-left: 1px solid var(--q-gb-bg-c-9);
+        border-left: 1px solid var(--q-gb-bg-c-13);
         font-size: 0.12rem;
         color: var(--q-gb-bg-c-6);
         display: block;
@@ -207,7 +207,7 @@ template {
     .text_c {
       display: block;
       padding: 0.02rem 0.1rem;
-      background-color: var(--q-gb-bg-c-9);
+      background-color: var(--q-gb-bg-c-13);
       border-radius: 0.2rem;
       font-size: 0.12rem;
       color: var(--q-gb-bg-c-15);
@@ -223,7 +223,7 @@ template {
     left: 0;
     transform: translateY(-50%);
     border-radius: 100%;
-    border: 2px solid var(--q-gb-bg-c-9);
+    border: 2px solid var(--q-gb-bg-c-13);
   }
   .foot-main {
     padding: 0 0.14rem 0.14rem;
@@ -232,7 +232,7 @@ template {
       display: flex;
       justify-content: space-between;
       &.acount {
-        color: var(--q-gb-bg-c-9);
+        color: var(--q-gb-bg-c-13);
       }
     }
   }

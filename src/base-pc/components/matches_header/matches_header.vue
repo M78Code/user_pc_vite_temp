@@ -1,19 +1,10 @@
-<!--
- * @Author         : lane jstylane@itcom888.com
- * @Date           : 2023-07-15 19:17:42
- * @LastEditors: nico
- * @LastEditTime: 2023-07-17 12:22:38
- * @FilePath: \user-pc-vue3\src\components\matches_header\matches_header.vue
- * @Description    : 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
--->
-
 <template>
 	<div class="matches_header_wrap">
 		<div class="matches_header">
 			<div class="header_banne header_banner" :style="`background-position:0 -${current_ball_type}px`"></div>
 			<div class="matches-title">
-				<div class="current_match_title" :class="redux_menu.menu_root == 2 ?'all_matches':''">{{ matches_header_title }}</div>
-				<div class="match_all_matches" v-if="redux_menu.menu_root == 2">All Matches</div>
+				<div class="current_match_title" :class="MenuData.is_today(redux_menu.menu_root) ?'all_matches':''">{{ matches_header_title }}</div>
+				<div class="match_all_matches" v-if="MenuData.is_today(redux_menu.menu_root)">All Matches</div>
 				<div v-else class="matches_tab" >
 					<div v-for="item in tab_list" :key="item.value" @click="checked_current_tab(item)"
 						:class="{ 'checked': item.value == current_value }">
@@ -22,7 +13,7 @@
 				</div>
 			</div>
 		</div>
-		<MatchesFilterTab v-show="(current_value == 'top_events' && redux_menu.menu_root == 1 && !coom_soon_state) || redux_menu.menu_root == 2 "  />
+		<MatchesFilterTab v-show="(current_value == 'top_events' && MenuData.is_scroll_ball(redux_menu.menu_root) && !coom_soon_state) || MenuData.is_today(redux_menu.menu_root)"  />
 		<MatchesDateTab v-show="redux_menu.menu_root == 4 && current_value == 'matches'" />
 	</div>
 </template>
@@ -36,6 +27,7 @@ import MatchListOuzhouClass from 'src/core/match-list-pc/match-ouzhou-list.js'
 
 import MatchesFilterTab from "./matches_filter_tab_ball_species.vue";
 import MatchesDateTab from "./matches_filter_tab.vue";
+import MenuData from "src/core/menu-pc/oz-menu-data-class.js"
 
 // import { use_new_menu } from "@/components/menus/menu.js"
 // import store from "src/store-redux-vuex/redux_menu.js";
