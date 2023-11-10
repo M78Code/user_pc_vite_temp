@@ -197,6 +197,7 @@ class BaseData {
         resolve({ key: 'p4', res: res })
       }).catch(err => reject(err))
     });
+    // 等待以上4个接口同时请求完成再通知列表获取
     return Promise.all([p1, p2, p3, p4]).then((res) => {
       res.forEach(t => {
         if (t.key === 'p1') {

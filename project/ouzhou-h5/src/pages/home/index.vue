@@ -15,6 +15,7 @@
           <section class="section-content">
             <!-- 时间赛事 -->
             <template v-if="time_events.length > 0">
+              <HeaderTitle title="15 Mins"></HeaderTitle>
               <TimeEvents :time_events="time_events" />
             </template>
             <!-- 特色赛事 -->
