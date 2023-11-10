@@ -145,7 +145,7 @@ const detail_info = computed(()=>{
   let result = {}
   if (obj.msc&&obj.msc.length>0 ) {
     for (const item of obj.msc) {
-      const list = item.split('|')
+      const list = item?.split('|')
       const score_list = list[1].split(':')
       // console.log(list)
       result[list[0]] = {

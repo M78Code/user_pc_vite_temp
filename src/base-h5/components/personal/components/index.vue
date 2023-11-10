@@ -9,8 +9,8 @@
       <div class="info"> 
         <div class="name"> 
           <span>Money</span> 
-          <img @click="on_show_money(false)" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/hide.png`" alt="" />
-          <img @click="on_show_money(true)" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/show.png`" alt="" />
+          <img v-if="show" @click="on_show_money(false)" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/show.png`" alt="" />
+          <img v-else @click="on_show_money(true)" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/hide.png`" alt="" />
         </div> 
         <div class="amount">{{ showMount }}</div> 
       </div> 
@@ -27,7 +27,7 @@
           </template>
         </collapse>
         <!-- Language -->
-        <collapse v-model="l_visible" title="Language">
+        <collapse v-model="l_visible" title="Language">  
           <template v-slot:title_icon>
             <img class="icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/language.png`" alt="" />
           </template>
@@ -64,12 +64,13 @@ import { onMounted, ref } from "vue"
 import { useRouter } from "vue-router"
 import UserCtr from "src/core/user-config/user-ctr.js";
 import {LOCAL_PROJECT_FILE_PREFIX } from "src/core";
-const lang = ref('zh')
+const lang = ref(UserCtr.lang)
 const router = useRouter();
 const mount = UserCtr.balance.toString()
 const showMount = ref(mount)
 const l_visible = ref(false)
 const s_visible = ref(true)
+const show = ref()
 const languages = [{
   key: 'zh',
   language: '简体中文',
@@ -119,15 +120,18 @@ const settingData = ref([{
 }])
 
 onMounted(() => {
-  })
+  on_show_money(UserCtr.show_balance)
+})
 
 // 金额显示与隐藏
 const on_show_money = (flag) => {
+  show.value = flag
   showMount.value = flag ? mount : mount.replace(/[0-9]/g, '*')
 }
 // 切换语言
 const on_change_lang = (key) => {
   lang.value = key
+  UserCtr.set_lang(lang.value) 
 }
 // 跳转规则界面
 const jumpRules = () => {
@@ -164,7 +168,7 @@ const goto_announcement = () => {
     position: relative;
     border-radius: 8px 8px 0 0;
     background-repeat: no-repeat;
-    background-image: url('./images/bg.png');
+    background-image: url($SCSSPROJECTPATH + '/image/personal/bg.png');
     background-size: cover;
     .name{
       display: flex;
@@ -190,7 +194,7 @@ const goto_announcement = () => {
     margin-top: -40px;
     position: relative;
     background-repeat: no-repeat;
-    background-image: url("./images/bg_line.png");
+    background-image: url($SCSSPROJECTPATH + "/image/personal/bg_line.png");
     background-size: cover;
     > img {
       width: 343px;
@@ -303,14 +307,16 @@ const goto_announcement = () => {
   width: 17px;
   height: 13px;
   margin-right: 10px;
-  background: url('./images/lang.png') no-repeat;
+  background: url($SCSSPROJECTPATH + '/image/personal/lang.png') no-repeat;
   background-size: calc(3.2px * 5) calc(36.4px * 5);
+  
 }
 
 /*语言国旗图标*/
 @each $code, $index in (zh: 0, en: 1, tw: 2, vi: 3, th: 4, ms: 5, ad: 6, md: 7, ry: 8, pty: 9, hy: 10) {
   .lang-#{$code} {
-    background-position: 0 calc(-17px * $index);
+    $position:-17px * $index;
+    background-position: 0 calc(#{$position});
   }
 }
 /* ************** 切换语言前面的图标 ************** -E */

@@ -28,7 +28,6 @@
   "analysis_football_matches": {
     "analysis_data": "Dados",
     "away_win": "Uma vitória",
-    "bench_lineup": "Linha de bancada",
     "big": "O",
     "age": "idade",
     "big_ball": "Mais de",
@@ -54,7 +53,8 @@
     "historical_war": "Históricos",
     "home_win1": "Vitória",
     "Initial_offer": "Oferta inicial",
-    "Injury_situation": "Situação de lesão",
+    "bench_lineup": "Lista de bancada",
+    "Injury_situation": "Lista de Lesões",
     "intelligence": "Inteligência",
     "league": "Campeonato",
     "integral": "Pontuação",

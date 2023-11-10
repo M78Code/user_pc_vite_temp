@@ -16,8 +16,8 @@
         v-if="match" 
         :handicap_list="match_tpl_info.get_current_odds_list(current_choose_oid)" 
         :match="match"
-      >
-      </match-handicap>
+        use_component_key="MatchHandicap2"
+      />
       <!-- 最右侧图标 -->
       <!-- <div class="score-data-box" @click="jump_to_details(match)">
         <i aria-hidden="true" class="icon-signal q-icon c-icon"></i>

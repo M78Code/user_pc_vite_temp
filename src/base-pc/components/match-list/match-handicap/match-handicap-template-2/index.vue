@@ -4,18 +4,21 @@
  * @Description: 列表赛事盘口
 -->
 <template>
-  <div class="c-match-handicap-ouzhou">
+  <div class="c-match-handicap-ouzhou" :style="`height:${lodash.get(match_style_obj, `total_height`)}px !important;`">
     <div v-show="false">{{ MatchListData.data_version.version }}</div>
     <div v-show="false">{{ MatchListCardDataClass.list_version }}</div>
     <div class="row no-wrap">
       <!-- 玩法列表 -->
-      <div class="handicap-col-ouzhou yb-flex-center" v-for="(col, col_index) in handicap_list" :key="col_index">
+      <div 
+        class="handicap-col-ouzhou" 
+        v-for="(col, col_index) in handicap_list" 
+        :key="col_index" 
+        :style="{ 'width': match_list_tpl_size.bet_width + 'px' }"
+      >
         <div :class="['bet-item-wrap-ouzhou', ]" v-for="(ol_data, ol_index) in deal_width_handicap_ols(col.ols)"
           :key="ol_index">
           <!-- 投注项组件 -->
-          <template v-if="match_style_obj.data_tpl_id != 'esports' || (match_style_obj.data_tpl_id == 'esports' && getCurState(ol_data._hipo))">
-            <bet-item v-if="is_mounted && ol_data && ol_data._hpid" :ol_data="ol_data" />
-          </template>
+          <bet-item v-if="is_mounted && ol_data && ol_data._hpid" :ol_data="ol_data" />
         </div>
       </div>
     </div>
@@ -65,6 +68,7 @@ const props = defineProps({
 let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.match.mid)
 // 赛事模板宽度
 const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`].width_config
+console.log('match_list_tpl_size', match_style_obj);
 let MatchListDataInfo = MatchListData
 
 watch(() => MatchListData.data_version.version, () => {
@@ -217,4 +221,30 @@ function getCurState (hipo) {
     }
   }
 }
+.c-match-handicap-ouzhou {
+  .row {
+    height: 100%;
+  }
+}
+::v-deep.bet-item-wrap-ouzhou {
+        display: flex;
+        width: 78px;
+        height: 48px;
+        border-radius: 2px;
+        justify-content: center;
+        align-items: center;
+
+        &:hover {
+            background: rgba(255, 112, 0, 0.1);
+        }
+
+        div {
+            color: #8A8986;
+            margin-right: 5px;
+        }
+
+        .odds {
+            color: #FF7000;
+        }
+    }
 </style>

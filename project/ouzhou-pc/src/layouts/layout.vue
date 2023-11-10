@@ -9,8 +9,10 @@
         </div>
         <div style="display: none;"> {{ LayOutMain_pc.layout_version }}-{{ BetData.bet_data_class_version }}</div>
         <div class="flex">
-            <div :style="{ height: LayOutMain_pc.layout_content_height + 'px', width: LayOutMain_pc.layout_content_width + 'px' }"
-                class="layout_main_center">
+            <div :style="{
+                height: LayOutMain_pc.layout_content_height + 'px',
+                width: (LayOutMain_pc.layout_content_width + parseFloat(LayOutMain_pc.layout_left_width)) + 'px'
+            }" class="layout_main_center">
                 <!-- 中间区域 -->
                 <router-view class="col" :class="{
                     video_page: route.params.video_size == 1,

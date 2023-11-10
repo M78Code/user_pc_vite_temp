@@ -1,7 +1,7 @@
 <template>
   <div ref='details_tab' :class="['details-tab',{'tab-fixed':get_tab_fix}]" v-cloak>
     <div class="fat-btn" @click="change_btn()">
-      <div class="tab-btn"></div>
+      <div class="tab-btn" :class="{collapsed:get_fewer != 2}"></div>
     </div>
     <span class="menu-third"></span>
     <div class="menu-s" ref="reset_scroll_dom">

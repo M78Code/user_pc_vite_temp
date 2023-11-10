@@ -1,11 +1,4 @@
-<!--
- * @Author         : lane jstylane@itcom888.com
- * @Date           : 2023-07-15 19:17:42
- * @LastEditors    : lane jstylane@itcom888.com
- * @LastEditTime   : 2023-07-16 19:45:50
- * @FilePath       : \user-pc-vue3\src\project-ouzhou\pages\detail\analysis\index.vue
- * @Description    : 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
--->
+
 <!--
  * @Author: cooper
  * @Date: 2023-06-06 14:13:55
@@ -15,7 +8,7 @@
   <div>
     <div class="analysis-body">
       <!-- 动画比分榜 -->
-      <venue_box v-show="detail_info.ms>0" :score_list="score_list" :detail_info="detail_info"  />
+      <!-- <venue_box v-show="detail_info.ms>0" :score_list="score_list" :detail_info="detail_info"  /> -->
   
       <!-- <div class="analysis-top">
         <div class="analysis-top-l">
@@ -31,7 +24,7 @@
       <!-- <venue_box /> -->
       <!-- <score_info :score_list="score_list" :detail_info="detail_info" /> -->
        <!-- 足球分析页图表 -->
-      <foot-ball-stats v-if="detail_info.csid==1 &&detail_info.ms>0" :detail_info="detail_info" :score_list="score_list" />
+      <!-- <foot-ball-stats v-if="detail_info.csid==1 &&detail_info.ms>0" :detail_info="detail_info" :score_list="score_list" /> -->
        <!-- 足球分析页图表 -->
        <!-- <basket-ball-stats  v-if="detail_info.csid==2 &&detail_info.ms>0" :detail_info="detail_info" :score_list="score_list" /> -->
       <!-- 选择哪队会赢组件 -->
@@ -70,6 +63,7 @@ onMounted(()=>{
 const get_detail_info = (mid)=>{
   console.log(111111, MatchDataWarehouseInstance.get_quick_mid_obj(mid))
   detail_info.value = MatchDataWarehouseInstance.get_quick_mid_obj(mid)
+  console.log(111111, detail_info.value)
 }
 // const show_page = ref(false)
 // watch(()=>props.detail_info,val=>{

@@ -254,6 +254,7 @@ function set_base_data_init () {
 	if (menu_root == 3) return;
 	// 赛事列表 卡片数据
 	// 设置列表数据仓库
+	console.log('matchs_list', matchs_list);
 	MatchListData.set_list(
 		matchs_list,
 	);
