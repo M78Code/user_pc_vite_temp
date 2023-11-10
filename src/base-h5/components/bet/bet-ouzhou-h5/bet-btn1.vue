@@ -4,8 +4,8 @@
 -->
 <template>
   <div class="bet_content_bottom">
-    <p class="bet_cancel" @click="bet_retract">Save</p>
-    <p class="place_bet"  @click="place_bet">
+    <p class="bet_cancel"  @touchmove.prevent>Save</p>
+    <p class="place_bet"   @touchmove.prevent>
       <span>Ok</span>
     </p>
   </div>
