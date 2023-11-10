@@ -9,7 +9,6 @@
 import lodash_ from "lodash";
 import { ref } from "vue";
 import BaseData from "src/core/base-data/base-data.js";
-import { api_common, api_analysis } from "src/api";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import {MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/";
 import MatchFold from 'src/core/match-fold';
@@ -25,8 +24,8 @@ class MenuData {
     this.destroy = () => {
       this.update && this.update.cancel()
     }
-    this.current_lv_1_menu_i = '';
-    this.current_lv_2_menu_i = ''
+    this.current_lv_1_menu_i = '1';
+    this.current_lv_2_menu_i = 0;
     this.menu_lv_mi_lsit = []
     // 赛果 日期/赛中
     this.result_menu_api_params = {}
@@ -50,6 +49,7 @@ class MenuData {
     const top_events_list =  BaseData.mew_menu_list_res.filter((item)=>{return item.mi==5000})?.[0].sl || [];
     this.menu_list = menu_list;
     this.top_events_list = top_events_list;
+    this.update()
   }
   /**
    * 请求赛事列表

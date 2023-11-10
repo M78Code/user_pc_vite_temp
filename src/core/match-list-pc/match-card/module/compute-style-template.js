@@ -272,6 +272,7 @@ export const compute_style_template_by_matchinfo = (match, template_id, is_ouzho
 		MATCH_LIST_TEMPLATE_CONFIG[`template_${template_id}_config`][
 			"match_template_config"
 		] || {};
+
 	// 赛事样式对象
 	let style_obj = {
 		// 显示等级
@@ -314,11 +315,8 @@ export const compute_style_template_by_matchinfo = (match, template_id, is_ouzho
 	style_obj.csid = match.csid;
 	// style_obj.data_tpl_id = match.data_tpl_id;
 	style_obj.is_show_card = true;
-	if (is_ouzhou) {
-		return template_config.main_handicap_height;
-	}
-	// 0号模板设置角球玩法数据
-	else if (template_id == 1) {
+
+	if (template_id == 1) {
 		let obj = compute_style_template_by_matchinfo_template0_zuqiu(
 			match,
 			template_config
@@ -355,5 +353,8 @@ export const compute_style_template_by_matchinfo = (match, template_id, is_ouzho
 		style_obj.add_handicap_height +
 		style_obj.tab_play_total_height +
 		6;
+	if (is_ouzhou) {
+		style_obj.total_height -= 6;
+	}
 	return style_obj;
 };

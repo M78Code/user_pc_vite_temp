@@ -229,7 +229,6 @@ function init_page_when_base_data_first_loaded() {
   set_base_data_init();
   //释放试图 
   load_data_state.value ='data'
-
   check_match_last_update_timer_id = setInterval(
     check_match_last_update_time(),
     30000
@@ -261,6 +260,7 @@ function mounted_fn() {
 	useMittOn(MITT_TYPES.EMIT_API_BYMIDS, api_bymids);
 	useMittOn(MITT_TYPES.EMIT_MX_COLLECT_MATCH, mx_collect_match);
 	useMittOn(MITT_TYPES.EMIT_MiMATCH_LIST_SHOW_MIDS_CHANGE, show_mids_change);
+	init_page_when_base_data_first_loaded()
 	useMittOn(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA, init_page_when_base_data_first_loaded);
 	load_video_resources();
 }

@@ -34,7 +34,7 @@ const tab_change = (val)=>{
 const itemFilter = (obj)=>{
 
  const orderStatus = current_tab.value=='settled'?1:0
- // tableRef.value.getTableData({...obj,orderStatus})
+ tableRef.value.getTableData({...obj,orderStatus})
 }
 
 </script>

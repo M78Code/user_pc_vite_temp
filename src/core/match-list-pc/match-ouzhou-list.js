@@ -49,7 +49,7 @@ class MatchListOuzhouClass {
             home: '', //主队名称
             away: '', //客队名称
           }] // 投注信息
-          this.current_check_betId= null
+          this.current_check_betId = ref(null)
           this.betFooterInfo= {
             bet_state: false, // 投注状态 是否投注
             state: false, // 投注框底部状态
