@@ -25,8 +25,8 @@ class MenuData {
     this.destroy = () => {
       this.update && this.update.cancel()
     }
-    this.current_lv_1_menu_i = '';
-    this.current_lv_2_menu_i = ''
+    this.current_lv_1_menu_i = '1';
+    this.current_lv_2_menu_i = '1011'
     this.menu_lv_mi_lsit = []
     // 赛果 日期/赛中
     this.result_menu_api_params = {}
