@@ -115,6 +115,8 @@ import details from "src/core/match-list-pc/details-class/details.js"
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import { i18n_t, compute_local_project_file_path } from "src/core/index.js";
 import { useRouter } from "vue-router";
+import {get_main_score} from 'src/core/match-list-pc/match-handle-data.js'
+
 const router = useRouter()
 const props = defineProps({
   match: {
@@ -151,38 +153,7 @@ const handicap_num = computed(() => {
     return i18n_t('match_info.more')
   }
 })
-const scroe_list = set_main_score(props.match)
-/**
-     * @description 设置总比分
-     * @param  {object} match  当场赛事信息
-     * @return {undefined} undefined
-     */
-function set_main_score(match) {
-  let _home_score = ""
-  let _away_score = ""
-  if (get_match_status(match.ms)) {
-    let key = "S1"
-    _home_score = "0"
-    _away_score = "0"
-    // 足球 | 手球
-    if ([1, 11].includes(Number(match.csid))) {
-      // S7:加时赛比分
-      if ([32, 33, 41, 42, 110].includes(Number(match.mmp))) {
-        key = "S7"
-      }
-      // S170:点球大战比分
-      else if ([34, 50, 120].includes(Number(match.mmp))) {
-        key = "S170"
-      }
-    }
-    let main_score = match.msc_obj[key]
-    if (main_score) {
-      _home_score = lodash.get(main_score, "home")
-      _away_score = lodash.get(main_score, "away")
-    }
-  }
-  return [_home_score, _away_score]
-}
+const scroe_list = get_main_score(props.match)
 const play_name_obj = computed(() => {
   let play_name_obj = {
     key: 'main',

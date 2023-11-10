@@ -41,6 +41,7 @@ import { MatchFooterScoreFullVersionWapper as MatchFooterScore } from "src/base-
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import BetData from 'src/core/bet/class/bet-data-class.js'
 import { compute_sport_id } from 'src/core/constant/index.js'
+import {get_match_to_map_obj} from 'src/core/match-list-pc/match-handle-data.js'
 const props = defineProps({
   // 盘口列表
   handicap_list: {
@@ -72,10 +73,10 @@ let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.match.mid)
 // 赛事模板宽度
 const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`].width_config
 let MatchListDataInfo = MatchListData
-let many_obj = MatchListData.get_match_to_map_obj(props.match.mid)
+let many_obj = get_match_to_map_obj(props.match.mid)
 watch(() => MatchListData.data_version.version, () => {
   MatchListDataInfo = MatchListData;
-  many_obj = MatchListData.get_match_to_map_obj(props.match.mid)
+  many_obj = get_match_to_map_obj(props.match.mid)
 })
 // 组件是否已挂载
 const is_mounted = ref(true);

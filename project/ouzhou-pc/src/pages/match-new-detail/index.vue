@@ -38,7 +38,7 @@
         <div class="detail-head-leagal">
           <span class="match-detail-head-name">{{ detail_info.tn }}</span>
           <img
-            :src="neutral"
+            :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/neutral.png`"
             alt=""
             srcset=""
             style="margin: 0 10px; height: 14px"
