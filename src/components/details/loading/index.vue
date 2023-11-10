@@ -1,6 +1,6 @@
 <template>
   <div class="loading_page">
-    <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/gif/loading.gif`"  alt="">
+    <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/gif/loding.gif`"  alt="">
     <div class="text">LOADING <span class="dot"> </span> </div>
   </div>
 </template>

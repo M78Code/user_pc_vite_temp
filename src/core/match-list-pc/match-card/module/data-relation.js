@@ -1,10 +1,10 @@
-import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/core/index.js";
+import { MatchDataWarehouse_PC_List_Common as MatchListData, PROJECT_NAME } from "src/core/index.js";
 import MatchListCardData from "./match-list-card-data-class.js";
 import lodash from "lodash";
-import { compute_sport_id } from "src/core/constant/index.js";
 import { compute_match_list_style_obj_and_match_list_mapping_relation_obj_type1 } from "./data-relation-type-1.js";
 import { compute_match_list_style_obj_and_match_list_mapping_relation_obj_type2 } from "./data-relation-type-2.js";
-import { compute_match_list_style_obj_and_match_list_mapping_relation_obj_type5 } from "./data-relation-type-3.js";
+import { compute_match_list_style_obj_and_match_list_mapping_relation_obj_type3 } from "./data-relation-type-3.js";
+import { compute_match_list_style_obj_and_match_list_mapping_relation_obj_type5 } from "./data-relation-type-5.js";
 import PageSourceData from "src/core/page-source/page-source.js";
 import { MATCH_LIST_TEMPLATE_CONFIG } from "src/core/match-list-pc/list-template/index.js";
 import { conpute_match_list_card_offset } from "./card-show-offset.js";
@@ -23,6 +23,7 @@ const set_match_list_mapping_relation_obj_type = () => {
    * 5. 冠军赛事列表            区分赛种
    * 6. 冠军赛事列表            只有联赛
    * 7. 列表数据类型为赛事列表   只有联赛
+   * 8. 欧洲版pc列表  单一模板 单一计算
    * "details",
       'match-play-common' , // 滚球 常规
       'match-play-esports' ,// 滚球 电竞
@@ -84,6 +85,10 @@ const set_match_list_mapping_relation_obj_type = () => {
     type = 3;
   } else {
     type = 1;
+  }
+  // 欧洲版也不区分赛种 且需要一个新的计算逻辑 so
+  if (PROJECT_NAME == 'ouzhou-pc') {
+    type = 8
   }
   MatchListCardData.match_list_mapping_relation_obj_type = type;
 };
@@ -180,6 +185,11 @@ export const compute_match_list_style_obj_and_match_list_mapping_relation_obj =
       [2, 4, 7].includes(MatchListCardData.match_list_mapping_relation_obj_type)
     ) {
       compute_match_list_style_obj_and_match_list_mapping_relation_obj_type2(
+        match_list,
+        is_ws_call
+      );
+    } else if ([8].includes(MatchListCardData.match_list_mapping_relation_obj_type)) {
+      compute_match_list_style_obj_and_match_list_mapping_relation_obj_type3(
         match_list,
         is_ws_call
       );

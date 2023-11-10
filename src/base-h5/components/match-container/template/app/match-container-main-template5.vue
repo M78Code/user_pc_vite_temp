@@ -9,10 +9,18 @@
       <div class="match-status-fixed flex items-center" v-if="match.is_show_no_play">
         <img src='../../../../../base-h5/assets/match-list/icon_notstarted.png' />
 
-        <span class="din-regular">
-          {{ $t('list.match_no_start') }}&nbsp;&nbsp;<span v-show="no_start_total">(0)</span>
-        </span>
-      </div>
+              <span class="din-regular">
+                {{ $t('list.match_no_start') }}&nbsp;&nbsp;<span v-show="no_start_total">(0)</span>
+              </span>
+          </div>
+          <!-- 已开赛标题  -->
+            <!-- <div class="match-status-fixed flex items-center" v-else>
+              <img src='../../../../../base-h5/assets/match-list/icon_started.svg' />
+            <span class="din-regular">
+              {{ $t('list.match_start') }}&nbsp;&nbsp;
+                  <span v-show="in_progress_total">(0)</span>
+                </span>
+              </div> -->
       <!--体育类别 -- 标题  menuType 1:滚球 2:即将开赛 3:今日 4:早盘 11:串关 -->
       <div v-if="get_sport_show" @click="handle_ball_seed_fold" :class="['sport-title match-indent', { first: i == 0 }]">
         <span class="score-inner-span"> {{ match_of_list.csna }}{{ '(' + menu_lv2.ct + ')' }} </span>

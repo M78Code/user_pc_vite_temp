@@ -7,10 +7,24 @@
     <template v-if="match" >
       <!-- 体育类别 -->
       <header class="match-header" v-if="show_sport_title">
-        <div class="ht-slide-box">
-            <div v-for="(item, index) in [0,1,2,3,4,5,6,3,4,5,6]" @click="slideHandle(index, $event)" :class="['slide-item',  currentSlideValue === index && 'slide-item-active']" :key="'ht-slide-' + index">
-                <span>{{ item }}</span>
-            </div>
+        <div>
+          <!-- <sport_icon size="24" :status="false" :sport_id="match_of_list.icon" /> -->
+          <span>{{ match.csna }}</span>
+        </div>
+        <div class="select_time">
+          <span @click.stop>
+            <q-btn-dropdown flat outline  style="color: #FF7000"  padding="0" label="Fulltime Result" 
+              dropdown-icon="expand_more" content-class="select_time_style">
+              <q-list>
+                <q-item v-for="item in hps_play_data" :key="item.hpid" @click.stop="on_select_play(item)"
+                   :class="{active: select_play === item.hpid}" clickable v-close-popup >
+                  <q-item-section>
+                    <q-item-label>{{ item.hpn }}</q-item-label>
+                  </q-item-section>
+                </q-item>
+              </q-list>
+            </q-btn-dropdown>
+          </span>
         </div>
       </header>
       <!-- 缓冲容器， 避免滚动时骨架屏漏光问题 -->
@@ -234,7 +248,7 @@ import PageSourceData  from  "src/core/page-source/page-source.js";
 import { i18n_t, compute_img_url, compute_css_obj  } from "src/core/index.js"
 import { format_time_zone } from "src/core/format/index.js"
 import { have_collect_ouzhou, no_collect_ouzhou} from 'src/base-h5/core/utils/local-image.js'
-import { scrollMenuEvent } from "src/base-h5/components/menu/app-h5-menu/utils.js"
+
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 
 import { lang, standard_edition, theme } from 'src/base-h5/mixin/userctr.js'
@@ -266,14 +280,6 @@ export default {
     const select_play = ref('1')
     const score_length = ref(3)
     const hps_play_data = ref([])
-    const currentSlideValue = ref(0)
-
-    const slideHandle = (val, e) => {
-      currentSlideValue.value = val
-      scrollMenuEvent(e, ".ht-slide-box", ".slide-item-active");
-    }
-
-    console.log(ctx)
 
     // 是否显示球种标题
     const show_sport_title = computed(() => {
@@ -321,7 +327,7 @@ export default {
     return { 
       lang, theme, i18n_t, compute_img_url, format_time_zone, GlobalAccessConfig, footer_menu_id,LOCAL_PROJECT_FILE_PREFIX, have_collect_ouzhou,
       is_hot, menu_type, menu_lv2, is_detail, is_export, is_results, standard_edition, compute_css_obj, show_sport_title, no_collect_ouzhou,
-      PageSourceData, get_match_panel, hps_play_data, on_select_play, select_play, score_length, slideHandle, currentSlideValue
+      PageSourceData, get_match_panel, hps_play_data, on_select_play, select_play, score_length
     }
   }
 }
@@ -1359,36 +1365,6 @@ export default {
     }
   }
 }
-
-
-
-.ht-slide-box {
-    display: flex;
-    justify-content: space-between;
-    // padding: .14rem .15rem;
-    width: 100%;
-    overflow-x: scroll;
-    // border-bottom: .08rem solid var(--q-gb-bg-c-11);
-
-    .slide-item-active {
-        span {
-            background: #FF7000;
-            border-radius: .26rem;
-            color: var(--q-gb-t-c-14);
-        }
-    }
-    .slide-item {
-        flex:0 0 .47rem;
-        span {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: .12rem;
-            height: .26rem;
-        }
-    }
-}
-
 /* **************日期********************** -E*/
 
 /* ********赛事容器相关********** -E*/

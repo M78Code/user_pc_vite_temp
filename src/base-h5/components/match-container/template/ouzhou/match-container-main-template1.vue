@@ -293,7 +293,11 @@ export default {
       const hpid = MatchResponsive.match_hpid.value
       const hps_item = hps.find(t => t.hpid == hpid)
 
-      const target_item = hps_play_data.value.find(t => t.hpid == hpid)
+      let target_item = [];
+      if(hps_play_data.value){
+        target_item = hps_play_data.value.find(t => t.hpid == hpid)
+      }
+      // const target_item = hps_play_data.value.find(t => t.hpid == hpid)
       const target_ol = lodash.get(target_item, 'hl[0].ol')
       score_length.value = lodash.get(target_ol, 'length', 3)
 
@@ -306,7 +310,7 @@ export default {
       let target_hps = []
       const { csid } = ctx.match_of_list
       target_hps = MatchResponsive.ball_seed_play_methods.value[`hps_csid_${csid}`]
-      hps_play_data.value = target_hps
+      hps_play_data.value = target_hps || []
     }
 
     watch(() => ctx.match_of_list.hps, () => {
@@ -1225,6 +1229,9 @@ export default {
   .timer-wrapper-c {
     height: 100%;
     color: #999;
+    .counting-down-wrap{
+      font-size: 13px;
+    }
 
     &.newer {
       margin-left: 0;
