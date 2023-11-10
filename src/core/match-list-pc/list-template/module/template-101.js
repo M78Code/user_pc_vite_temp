@@ -3,7 +3,7 @@
  */
 import * as TemplateCommon from "./template-common.js"
 
-
+// , { empty: 1 } 空模板
  // 欧洲版 足球 赔率模板 全量赔率
  export const template_101={
   main_handicap_list: [
@@ -16,10 +16,10 @@ import * as TemplateCommon from "./template-common.js"
       ],
     },
     {
-      _hpid: 4, ols: [{ _hpid: 4, ot: "1" }, { _hpid: 4, ot: "2" }, { empty: 1 }],
+      _hpid: 4, ols: [{ _hpid: 4, ot: "1" }, { _hpid: 4, ot: "2" }],
     },
     {
-      _hpid: 2, ols: [{ _hpid: 2, ot: "Over" }, { _hpid: 2, ot: "Under" }, { empty: 1 }],
+      _hpid: 2, ols: [{ _hpid: 2, ot: "Over" }, { _hpid: 2, ot: "Under" }],
     },
     {
       _hpid: 17,
@@ -30,10 +30,10 @@ import * as TemplateCommon from "./template-common.js"
       ],
     },
     {
-      _hpid: 19, ols: [{ _hpid: 19, ot: "1" }, { _hpid: 19, ot: "2" }, { empty: 1 }],
+      _hpid: 19, ols: [{ _hpid: 19, ot: "1" }, { _hpid: 19, ot: "2" }],
     },
     {
-      _hpid: 18, ols: [{ _hpid: 18, ot: "Over" }, { _hpid: 18, ot: "Under" }, { empty: 1 }],
+      _hpid: 18, ols: [{ _hpid: 18, ot: "Over" }, { _hpid: 18, ot: "Under" }],
     },
   ],
 }

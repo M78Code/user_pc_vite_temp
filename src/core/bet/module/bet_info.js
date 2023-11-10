@@ -9,7 +9,7 @@ import { get_query_bet_amount_common } from "src/core/bet/class/bet-box-submit.j
 import {compute_value_by_cur_odd_type} from  "src/core/format/module/format-odds-conversion-mixin.js"
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import UserCtr from  "src/core/user-config/user-ctr.js";
-
+import { api_betting } from "src/api/index.js";
 
 
 
@@ -123,7 +123,7 @@ export const get_bet_amount = async obj => {
   }
   let res = await api_betting.query_bet_amount(params);
 
-  let obj_info = res.data.data.betAmountInfo[0]
+  let obj_info = res.data.betAmountInfo[0]
 
   let bet_info = {
     // betAmount:'1008',

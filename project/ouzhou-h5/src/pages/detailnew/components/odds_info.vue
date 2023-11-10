@@ -42,6 +42,7 @@ import temp5 from "./template/tem5.vue";
 import tem_other from "./template/tem_other.vue";
 import { storage_bet_info } from "src/core/bet/module/bet_info.js"; //#TODO core/index.js not export storage_bet_info
 // import EMITTER from "src/global/mitt.js";
+import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import { LOCAL_PROJECT_FILE_PREFIX } from "src/core";
 const props = defineProps({
   match_odds_info: {
@@ -82,7 +83,7 @@ const expend_toggle = (item) => {
   }
 }
 const bet_click_ = (data) => {
-  active.value = data.ol.oid;
+  active.value = +data.ol.oid;
   // console.log("data", data);
   storage_bet_info({
     payload: {
@@ -98,6 +99,7 @@ const bet_click_ = (data) => {
       ov: get_oddv(data.ol.ov / 100000)
     },
   })
+  useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX,true)
   // EMITTER.emit("show_bet_dialog", true);
 }
 // 处理赔率截取两位小数点

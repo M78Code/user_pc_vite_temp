@@ -12,6 +12,7 @@ export default {
     },
     created () {
         this.init_process() 
+        
       },
       methods: {
        async init_process() {
@@ -50,6 +51,7 @@ export default {
           base_data.init();
           // 投注信息 初始化
           BetData.init_core();
+         
           // 设置设备类型 2 pc
           BetData.set_device_type(2);
           BetViewDataClass.init();
