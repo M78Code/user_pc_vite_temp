@@ -36,18 +36,18 @@
           <template v-slot:before>
             <div :style="{ height: MatchListCardDataClass.sticky_top.fixed_header_height }"></div>
           </template>
-        <div
-          v-for="card_key in match_list_card_key_arr"
-          :key="card_key" 
-          :card_key="card_key" 
-          :data-card-key="card_key"
-          :class="`card_key   ${card_key}`"
-        >
-          <match-list-card 
+          <div
+            v-for="card_key in match_list_card_key_arr"
+            :key="card_key" 
             :card_key="card_key" 
-            use_component_key="MatchListCard_2"
-          />
-        </div>  
+            :data-card-key="card_key"
+            :class="`card_key_${card_key}`"
+          >
+            <match-list-card 
+              :card_key="card_key" 
+              use_component_key="MatchListCard_2"
+            />
+          </div>  
           <template v-slot:after>
             <div style="height:15px"></div>
             <div class="pager-wrap row justify-end">
@@ -160,7 +160,6 @@ export default {
 
     onMounted(() => {
       mounted_fn();
-      console.log('asdasdasd');
       init_home_matches()
       MatchListCardDataClass_match_list_card_key_arr()
     });
