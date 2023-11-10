@@ -1,10 +1,3 @@
-/*
- * @Author: rise
- * @Date: 2023-11-03 16:37:52
- * @LastEditors: rise
- * @LastEditTime: 2023-11-08 13:42:14
- * @Description:  
- */
 import { createRouter, createWebHashHistory } from "vue-router";
 const router = createRouter({
   history: createWebHashHistory(),
@@ -12,7 +5,7 @@ const router = createRouter({
     {
       path: "/",
       redirect: {
-        name: 'matchList'
+        name: 'home'
       },
       name: "main",
       component: () => import("../layouts/index.vue"),
@@ -100,7 +93,7 @@ const router = createRouter({
           // },
           // 常规赛事和电竞赛事详情页,赛事id必传，玩法集id可选
         {
-          path: "/details/:mid/:mcid?/:csid?",
+          path: "/details/:mid/:csid?/:mcid?",
           name: "category",
           component: () => import("../pages/detailnew/index.vue"),
           // children: [

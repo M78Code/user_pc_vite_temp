@@ -41,6 +41,7 @@
       <template v-else-if="card_type == 'league_container'">
         <!-- 数据加载状态 -->
         <!-- 赛事列表 -->
+        {{ mids_arr }}
         <match-card
           v-for="mid in mids_arr"
           :key="mid"

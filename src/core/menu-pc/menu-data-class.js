@@ -318,6 +318,7 @@ class MenuData {
         version: Date.now(),
       };
     }
+    console.log('get_match_tpl_number', this.get_match_tpl_number());
     MATCH_LIST_TEMPLATE_CONFIG[`template_${this.get_match_tpl_number()}_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'))
     if ([2, 3].includes(Number(obj.root))) {
       // 角球

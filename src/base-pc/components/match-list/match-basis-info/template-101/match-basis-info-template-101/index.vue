@@ -9,7 +9,8 @@
           <i class="icon-star q-icon c-icon"></i>
         </div>
         <!-- 比赛进程 -->
-        <match-process v-if="match" :match="match" source='match_list' show_page="match-list" :rows="2" />
+        <match-process v-if="match" :match="match" source='match_list' show_page="match-list" :rows="1"
+        periodColor="gray" />
       </div>
       <!-- 玩法数量 -->
       <div class="right-handle-box flex flex-start items-center">
@@ -236,6 +237,7 @@ onUnmounted(() => {
     margin-bottom: 7px;
     .icon-star {
       margin-top: -3px;
+      margin-right: 12px;
     }
     .bet-num {
       margin-left: 12px;

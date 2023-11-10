@@ -3,7 +3,7 @@
  */
 import * as TemplateCommon from "./template-common.js"
 
-
+// , { empty: 1 } 空模板
  // 欧洲版 足球 赔率模板 全量赔率
  export const template_101={
   main_handicap_list: [
@@ -16,10 +16,10 @@ import * as TemplateCommon from "./template-common.js"
       ],
     },
     {
-      _hpid: 4, ols: [{ _hpid: 4, ot: "1" }, { _hpid: 4, ot: "2" }, { empty: 1 }],
+      _hpid: 4, ols: [{ _hpid: 4, ot: "1" }, { _hpid: 4, ot: "2" }],
     },
     {
-      _hpid: 2, ols: [{ _hpid: 2, ot: "Over" }, { _hpid: 2, ot: "Under" }, { empty: 1 }],
+      _hpid: 2, ols: [{ _hpid: 2, ot: "Over" }, { _hpid: 2, ot: "Under" }],
     },
     {
       _hpid: 17,
@@ -30,10 +30,10 @@ import * as TemplateCommon from "./template-common.js"
       ],
     },
     {
-      _hpid: 19, ols: [{ _hpid: 19, ot: "1" }, { _hpid: 19, ot: "2" }, { empty: 1 }],
+      _hpid: 19, ols: [{ _hpid: 19, ot: "1" }, { _hpid: 19, ot: "2" }],
     },
     {
-      _hpid: 18, ols: [{ _hpid: 18, ot: "Over" }, { _hpid: 18, ot: "Under" }, { empty: 1 }],
+      _hpid: 18, ols: [{ _hpid: 18, ot: "Over" }, { _hpid: 18, ot: "Under" }],
     },
   ],
 }
@@ -72,12 +72,9 @@ export const  width_config ={
    * @Description 设置模板table宽度
    * @param {number} total_width 列表总宽度
   */
-  export  const set_template_width=(total_width)=>{
+  export  const set_template_width=(total_width= 1180)=>{
     let base_config=  TemplateCommon.set_template_width_base(total_width, width_config)
-
     // 加工 base_config 
-
-
     return base_config
   }
 
