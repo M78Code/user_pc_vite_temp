@@ -202,6 +202,7 @@ export const set_template_width_base = (
   } else {
     config.team_width = config.process_team_width - 77;
   }
+  console.log('config', config);
   return config;
 };
 
