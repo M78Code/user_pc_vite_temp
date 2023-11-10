@@ -293,7 +293,11 @@ export default {
       const hpid = MatchResponsive.match_hpid.value
       const hps_item = hps.find(t => t.hpid == hpid)
 
-      const target_item = hps_play_data.value.find(t => t.hpid == hpid)
+      let target_item = [];
+      if(hps_play_data.value){
+        target_item = hps_play_data.value.find(t => t.hpid == hpid)
+      }
+      // const target_item = hps_play_data.value.find(t => t.hpid == hpid)
       const target_ol = lodash.get(target_item, 'hl[0].ol')
       score_length.value = lodash.get(target_ol, 'length', 3)
 

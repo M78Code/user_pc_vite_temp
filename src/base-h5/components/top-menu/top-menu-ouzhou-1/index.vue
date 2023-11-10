@@ -19,7 +19,7 @@
   <template v-else>
     <div class="top_header">
       <div class="top_info">
-        <template v-if="get_route_name == 'details'">
+        <template v-if="get_route_name == 'category'">
           <detail-top-info />
         </template>
         
