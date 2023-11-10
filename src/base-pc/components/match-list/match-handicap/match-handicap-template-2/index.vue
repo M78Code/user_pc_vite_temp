@@ -13,9 +13,7 @@
         <div :class="['bet-item-wrap-ouzhou', ]" v-for="(ol_data, ol_index) in deal_width_handicap_ols(col.ols)"
           :key="ol_index">
           <!-- 投注项组件 -->
-          <template v-if="match_style_obj.data_tpl_id != 'esports' || (match_style_obj.data_tpl_id == 'esports' && getCurState(ol_data._hipo))">
-            <bet-item v-if="is_mounted && ol_data && ol_data._hpid" :ol_data="ol_data" />
-          </template>
+          <bet-item v-if="is_mounted && ol_data && ol_data._hpid" :ol_data="ol_data" />
         </div>
       </div>
     </div>
@@ -65,6 +63,7 @@ const props = defineProps({
 let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.match.mid)
 // 赛事模板宽度
 const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`].width_config
+console.log('match_list_tpl_size', match_list_tpl_size);
 let MatchListDataInfo = MatchListData
 
 watch(() => MatchListData.data_version.version, () => {
