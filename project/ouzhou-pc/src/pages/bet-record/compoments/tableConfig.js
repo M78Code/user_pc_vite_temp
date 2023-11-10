@@ -10,12 +10,14 @@ import { ref, onMounted } from "vue";
 import { api_match_list } from "src/api";
 import store from "src/store-redux/index.js";
 import { responseData } from "./mock";
+import { UserCtr } from '../../../../../../src/core/index.js'
 export function useGetOrderList() {
   const { get_order_list } = api_match_list; // 接口
 
   let state = store.getState();
 
-  const userInfo = state.userReducer?.userInfo || {}; // 用户数据
+  // const userInfo = state.userReducer?.userInfo || {}; // 用户数据
+  const {user_info:userInfo} = UserCtr; // 用户数据
   const tableData = ref([]);
   const total = ref(0)
   const loading = ref(false)
@@ -81,9 +83,9 @@ export function useGetOrderList() {
           ...obj
       }
        let res = await get_order_list(params);
-       tableData.value = res.data.data?.records||[]
+       tableData.value = res.data?.records||[]
      
-       total.value = res.data.data?.total
+       total.value = res.data?.total
     } catch (error) {
       console.error(error);
     } 

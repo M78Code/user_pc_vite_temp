@@ -71,6 +71,8 @@ class MenuData {
       mi_1: 0,
       mi_500: 0,
     };
+    //是否收藏模式
+    this.is_collect=false;
     // 中间 菜单的 整体输出
     this.mid_menu_result = {};
     //列表菜单  各种 组件 的显示

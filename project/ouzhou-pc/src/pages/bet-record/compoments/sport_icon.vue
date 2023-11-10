@@ -129,7 +129,7 @@
 
 <style lang="scss" scoped>
 .img36 {
-  //background-image:url('../assets/images/icon_sports.png');
+  background-image: url($SCSSPROJECTPATH+"/image/image/icon_sports.png");
 }
 .c-icon {
   &:before {
