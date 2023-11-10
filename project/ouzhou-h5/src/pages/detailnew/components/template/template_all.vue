@@ -29,7 +29,7 @@ import { onMounted, ref, computed } from "vue";
 const props = defineProps({
   match_info: {
     type: Object,
-    default: () => ({})
+    default: () => {}
   },
 })
 

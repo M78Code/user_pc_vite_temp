@@ -55,8 +55,7 @@ import { onMounted, ref, computed } from "vue";
 const emit = defineEmits(["bet_click_"]);
 const props = defineProps({
   item_data: {
-    type: Object,
-    default: () => ({}),
+    type: Object || Array
   },
   active: {
     type: Number,

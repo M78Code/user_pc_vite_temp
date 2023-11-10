@@ -1,12 +1,3 @@
-<!--
- * @Author         : lane jstylane@itcom888.com
- * @Date           : 2023-07-15 19:17:42
- * @LastEditors: nico
- * @LastEditTime: 2023-07-17 12:22:38
- * @FilePath: \user-pc-vue3\src\components\matches_header\matches_header.vue
- * @Description    : 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
--->
-
 <template>
 	<div class="matches_header_wrap">
 		<div class="matches_header">
@@ -28,7 +19,7 @@
 </template>
 
 <script setup>
-
+// 菜单的 root 节点   root ： 1 首页  2 滚球  3 my bets   4 左侧赛种
 import { ref,onMounted,onUnmounted } from 'vue';
 import { useRouter } from "vue-router";
 import _ from "lodash"
