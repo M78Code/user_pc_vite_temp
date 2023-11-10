@@ -21,14 +21,14 @@
       <div class="analysis-switch-main">
         <div class="analysis-switch">
           <div class="analysis-switch-l to-collect">
-            <q-img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/no_shoucan.png`" class="q-img" />
+            <!-- <q-img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/no_shoucan.png`" class="q-img" /> -->
             <span>46%</span>
           </div>
           <div class="analysis-switch-r to-collect">
             <span>54%</span>
-            <q-img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/shoucan.png`" class="q-img" />
+            <!-- <q-img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/shoucan.png`" class="q-img" /> -->
           </div>
-          <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/to_vs.png`" alt="" class="switch-img" />
+          <!-- <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/to_vs.png`" alt="" class="switch-img" /> -->
         </div>
         <div class="analysis-btn">
           <div class="analysis-btn-box mr-8">

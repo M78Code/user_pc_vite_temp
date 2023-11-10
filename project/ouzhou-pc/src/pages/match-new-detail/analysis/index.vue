@@ -70,6 +70,7 @@ onMounted(()=>{
 const get_detail_info = (mid)=>{
   console.log(111111, MatchDataWarehouseInstance.get_quick_mid_obj(mid))
   detail_info.value = MatchDataWarehouseInstance.get_quick_mid_obj(mid)
+  console.log(111111, detail_info.value)
 }
 // const show_page = ref(false)
 // watch(()=>props.detail_info,val=>{

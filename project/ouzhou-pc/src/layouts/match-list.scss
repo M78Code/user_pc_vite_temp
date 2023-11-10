@@ -3,7 +3,19 @@ body {
   /* 列表 */
   .yb-match-list {
     .match-tpl-101 {
-      
+      .c-match-handicap-ouzhou {
+        height: 100%;
+      }
     }
+  }
+}
+.handicap-col-ouzhou {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  .bet-item-wrap-ouzhou {
+    cursor: pointer;
+    text-align: center;
   }
 }

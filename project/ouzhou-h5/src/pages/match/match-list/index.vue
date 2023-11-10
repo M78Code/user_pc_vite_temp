@@ -11,37 +11,33 @@
       <!-- 非收藏页 -->
       <NoData class="data-get-empty1" v-if='match_is_empty && !is_collcte_page' which='noMatch' height='400'></NoData>
       <!-- 收藏页 -->
-        <NoData class="data-get-empty2" v-if='match_is_empty && is_collcte_page'
-          :which='menu_type === 28 ? "noMatch" : "collect"' height='400'></NoData>
-      </template>
+      <NoData class="data-get-empty2" v-if='match_is_empty && is_collcte_page'
+        :which='menu_type === 28 ? "noMatch" : "collect"' height='400'></NoData>
+    </template>
 
-      <SecondaryDescription />
-    </div>
+    <SecondaryDescription />
+  </div>
 </template>
- 
+   
 <script setup>
-import { ref, watch, onMounted, computed } from "vue";
-import lodash from "lodash";
+import { ref, onMounted, computed } from "vue";
 import { useRoute } from "vue-router";
 import { compute_css_variables } from "src/core/css-var/index.js"
-import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt";
+import { useMittOn, MITT_TYPES } from "src/core/mitt";
 
 import MatchPage from "src/core/match-list-h5/match-class/match-page.js";
 import MatchListCard from "src/core/match-list-h5/match-card/match-list-card-class";
-import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 
-import { is_hot } from 'src/base-h5/mixin/menu.js'
 
 import NoData from "src/base-h5/components/common/no-data.vue"; // 无网络展示组件
 
-// yazhou-h5 赛事列表
-import MatchList1 from './components/match-list1.vue'
-// app-h5 赛事列表
-import MatchList2 from './components/match-list2.vue'
+// // yazhou-h5 赛事列表
+// import MatchList1 from './components/match-list1.vue'
+// // app-h5 赛事列表
+// import MatchList2 from './components/match-list2.vue'
 // ouzhou-h5 赛事列表
-import MatchList3 from './components/match-list3.vue'
+import MatchList from './match-list-ouzhou.vue'
 
-import MatchListOuZhou from './components/match-list-ouzhou.vue'
 
 
 import { PROJECT_NAME } from "src/core/index.js"
@@ -49,7 +45,7 @@ import { PROJECT_NAME } from "src/core/index.js"
 // 次要玩法描述组件
 import SecondaryDescription from "src/base-h5/components/match-list/components/secondary-description.vue";
 
-import './styles/index.variables.scss'
+import 'src/base-h5/components/match-list/styles/index.variables.scss'
 
 const props = defineProps({
   invok_source: String,
@@ -82,10 +78,9 @@ onMounted(() => {
 })
 
 const config = {
-  'app-h5': MatchList2,
-  'yazhou-h5': MatchList1,
-  'ouzhou-h5': MatchList3,
-  // 'ouzhou-h5': MatchListOuZhou
+  // 'app-h5': MatchList2,
+  // 'yazhou-h5': MatchList1,
+  'ouzhou-h5': MatchList,
 }
 
 const target_com = computed(() => {
@@ -126,7 +121,7 @@ const clear_timer = () => {
 
 
 </script>
- 
+   
 <style scoped lang="scss">
 .match-list-container {
   overflow: hidden;
