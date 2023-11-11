@@ -13,7 +13,7 @@
 				</div>
 			</div>
 		</div>
-		<MatchesFilterTab v-show="(current_value == 'top_events' && redux_menu.menu_root == 1 && !coom_soon_state) || redux_menu.menu_root == 2 "  />
+		<MatchesFilterTab v-show="(current_value == 'top_events' && !coom_soon_state) "  />
 		<MatchesDateTab v-show="redux_menu.menu_root == 4 && current_value == 'matches'" />
 	</div>
 </template>
@@ -27,7 +27,7 @@ import MatchListOuzhouClass from 'src/core/match-list-pc/match-ouzhou-list.js'
 
 import MatchesFilterTab from "./matches_filter_tab_ball_species.vue";
 import MatchesDateTab from "./matches_filter_tab.vue";
-
+import { MenuData, UserCtr } from "src/core/index.js"
 // import { use_new_menu } from "@/components/menus/menu.js"
 // import store from "src/store-redux-vuex/redux_menu.js";
 // import { useMenuI18n } from "src/base-pc/components/menus/base_data";
@@ -114,6 +114,7 @@ const sport_ball = {
 onMounted(()=>{
   const { menu_root } = MatchListOuzhouClass?.redux_menu
   set_header_tab(menu_root)
+  console.error(MenuData,"MenuData===")
 })
 
 // // 菜单切换 右侧背景图片变化
