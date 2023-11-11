@@ -39,6 +39,8 @@ class MenuData {
     this.menu_lv_mi_lsit = []
     // 赛果 日期/赛中
     this.result_menu_api_params = {}
+    //赛事列表 日期
+    this.menu_match_date_api_config= {}
     this.menu_list = []; //常规球种 101...
     this.top_events_list = []; //热门球种
     this.menu_mi = ref(''); //常规球种选中
@@ -102,7 +104,27 @@ class MenuData {
     this.current_lv_2_menu_i = `${mi}${this.menu_type.value}`;
     this.update()
   }
+  /**
+   * 设置时间 并且设置时间请求参数
+   * @param {*} time 
+   * @param {*} type  0今日 1早盘
+   */
+  set_date_time(time,type){
+    this.data_time = time;
+    this.set_menu_match_date(type)
+  }
 
+  // 设置时间请求参数
+  set_menu_match_date(type){
+    let config = {
+      api:"get_matches_list",
+      params: {
+        md: this.data_time ,
+        type: !type? 3 : 4, 
+      }
+    }
+    this.menu_match_date_api_config = config
+  }
   // 设置收藏列表
   set_collect_list (list) {
     this.collect_list = list

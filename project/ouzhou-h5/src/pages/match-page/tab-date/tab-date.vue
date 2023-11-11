@@ -33,12 +33,11 @@
         <!-- 七天时间 -->
         <div class="date_time" v-if="tabActive == 'matches'">
             <q-virtual-scroll ref="scrollRef" :items="week" virtual-scroll-horizontal v-slot="{ item, index }">
-                <div @click="changeDatetab(item, index)" class="week" :class="second_tab_index == item ? 'active' : ''">
-                    <span v-if="index == '0'">{{ "Today" }}</span>
-                    <span v-else-if="index == '1'">{{ "Tomorrow" }}</span>
-                    <span v-else>
-                        <span>{{ month[new Date().getMonth()] }}</span>
-                        <span class="din_font">{{ new Date().getDate() + index }}</span>
+                <div @click="changeDatetab(item, index)" class="week" :class="second_tab_index == index ? 'active' : ''">
+                    <span>
+                        <!-- <span>{{ month[new Date().getMonth()] }}</span> -->
+                        <!-- <span class="din_font">{{ new Date().getDate() + index }}</span> -->
+                        <span>{{ item.name }}</span>
                     </span>
                     <span class="border_right"></span>
                 </div>
@@ -58,34 +57,22 @@
 import {
     ref,
     reactive,
+    watch,
     defineEmits
 } from "vue";
+import { dateWeekMatchesFormat } from './utils';
+import { MenuData  } from "src/core/";
 const emit = defineEmits(["changeDate", "changeTab"]);
 const tabActive = ref("matches");//tab
 const tabModel = ref(false);//下拉框
 const dateIndex = ref(0);//下拉框选择
 const scrollRef = ref(null);
 const scrollRefArea = ref(null);
-let second_tab_index = ref(1);//单日选择
+let second_tab_index = ref(0);//单日选择
 let area_tab_index = ref(0);//地区选择
 const current_menu_mi = ref("102");
-// 月份数组
-const month = reactive([
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
-]);
+const week = dateWeekMatchesFormat();
 // 七天时间
-const week = reactive(["1", "2", "3", "4", "5", "6", "7"]);
 // 地区集合
 const areaList = reactive([
     "Europ",
@@ -135,8 +122,14 @@ const changeDatetab = (item, index) => {
     tabModel.value = false;
     const move_index = week.findIndex((t, _index) => _index === index);
     scrollRef.value.scrollTo(move_index - 2, "start-force");
-    second_tab_index.value = item;
+    second_tab_index.value =index;
+    MenuData.set_date_time(item.val,item.type);
+    console.log(MenuData.menu_match_date_api_config)
 };
+watch(()=>MenuData.menu_mi.value,()=>{
+    //球种改变设置今日
+    MenuData.set_date_time(week[0].val);
+})
 /**
  * 地区选择tab
  * @param {*} index 

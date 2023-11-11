@@ -270,4 +270,7 @@ ServerTime.get_server_time()
 .rightMenu {
   -webkit-overflow-scrolling: unset !important;
 }
+.bw3 {
+  height: inherit;
+}
 </style>
