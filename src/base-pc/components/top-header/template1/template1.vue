@@ -43,6 +43,7 @@ import _ from "lodash"
 // import right_head from "./right_head.vue";
 // import logo from "src/assets/images/logo.png";
 import { useRouter, useRoute } from 'vue-router'
+import MatchListOuzhouClass from 'src/core/match-list-pc/match-ouzhou-list.js'
 
 // import store from "src/store-redux-vuex/redux_menu";
 
@@ -69,6 +70,9 @@ export default defineComponent({
     )
 
     const nav_click = (item) => {
+      //页面中间头部导航显示处理
+      MatchListOuzhouClass.redux_menu.menu_root = item.id
+      MatchListOuzhouClass.update_version()
       current_id.value = item.id;
       switch (item.id) {
         case 1:
