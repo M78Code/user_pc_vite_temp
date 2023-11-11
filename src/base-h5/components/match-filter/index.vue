@@ -392,7 +392,6 @@ function select_btn_click() {
 }
 // @Description:单个选择
 function select_li_ctr(li_item) {
-  console.log(8787378278378287,li_item.select)
   if (li_item.select) {
     select_num.value -= li_item.num;
   } else {
