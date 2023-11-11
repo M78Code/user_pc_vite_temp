@@ -19,7 +19,10 @@
       <setect-league @closedHandle="state.select_dialog = false" @finishHandle="selectFinishHandle"></setect-league>
     </div>
     <!-- 收藏 -->
-    <match-container />
+    <scroll-menu menu_type="1" :is_show_badge="false"  v-if="MenuData.menu_list.length" />
+    <div class="match-container">
+        <match-container />
+    </div>
 
   </div>
 </template>
@@ -63,5 +66,10 @@ const set_menu_lv1 = item => {
 .collect-wap {
   width: 100%;
   height: 100%;
+}
+.match-container{
+    height: calc(100% - 1.71rem);
+    overflow: hidden;
+    overflow-y: auto;
 }
 </style>
