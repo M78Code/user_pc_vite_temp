@@ -1,6 +1,6 @@
 <template>
-    <scroll-list menu_type="28" :is_show_badge="false" :current_mi="state.current_mi" :menuList="state.slideMenu_sport" @changeMenu="changeMenu"/>
-    <div class="match-container">
+    <scroll-result menu_type="28" :is_show_badge="false" :current_mi="state.current_mi" :menuList="state.slideMenu_sport" @changeMenu="changeMenu"/>
+    <div class="match-result">
         <date-tab v-if="state.slideMenu" :defaultVal="state.currentSlideValue"  :dateList="state.slideMenu" @changeDate="changeDate"/>
         <match-container />
     </div>
@@ -127,9 +127,12 @@ onMounted(()=>{
 </script>
 <style scoped lang="scss">
 @import "./index.scss";
-.match-container{
-    height: calc(100% - 1.71rem);
+.match-result{
+    height: calc(100% - 1.73rem);
     overflow: hidden;
     overflow-y: auto;
+    .match-list-container{
+        height: calc(100% - 45px);
+    }
 }
 </style>

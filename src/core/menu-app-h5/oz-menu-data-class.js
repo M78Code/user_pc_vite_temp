@@ -240,7 +240,7 @@ class MenuData {
    *  mi [number|string] 要比对的值
   */
   is_results(mi) {
-    return this._is_cur_mi(29, mi)
+    return this._is_cur_mi(28, mi)
   }
   /**
    * 是否选中了早盘

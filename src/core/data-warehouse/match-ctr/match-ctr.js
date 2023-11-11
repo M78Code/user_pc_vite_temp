@@ -32,7 +32,6 @@
 import MatchDataBaseWS from  "./match-ctr-ws.js"
 import { reactive } from 'vue'
 import {other_play_name_to_playid} from 'src/core/constant/config/data-class-ctr/other-play-id.js'
-import {get_match_template_id} from 'src/core/match-list-pc/match-handle-data.js'
 export default class MatchDataBase
 {
   /**
@@ -476,7 +475,6 @@ init(){
    * @param {object} match 赛事对象
   */
   get_tab_play_keys(match) {
-
     let tab_play_keys = []
     let play_keys = Object.keys(other_play_name_to_playid)
     lodash.each(play_keys,key=>{
