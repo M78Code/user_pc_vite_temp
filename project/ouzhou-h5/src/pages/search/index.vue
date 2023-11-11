@@ -508,6 +508,8 @@ li {
 
 	li {
 		border-radius: 6px;
+		display: flex;
+		justify-content: space-between;
 	}
 
 	img {
@@ -526,9 +528,6 @@ li {
 	}
 }
 
-// .list li:nth-child(3), .list li:nth-child(9) {
-// 	margin-top: 0;
-// }
 .teams {
 
 
