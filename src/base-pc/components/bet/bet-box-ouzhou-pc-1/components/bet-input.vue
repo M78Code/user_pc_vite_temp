@@ -2,7 +2,7 @@
 
 <template>
     <div>
-        <input class="bet-input"  v-model="ref_data.money" type="number" @input="set_win_money"
+        <input class="bet-input" v-model="ref_data.money" type="number" @input="set_win_money"
         :placeholder="`Limits ${ref_data.min_money} ~ ${ref_data.max_money}`" maxLength="11" />
     </div>
 </template>
@@ -20,8 +20,8 @@ const props = defineProps({
 })
 
 const ref_data = reactive({
-    min_money: 10, // 最小投注金额
-    max_money: 8888, // 最大投注金额
+    min_money: '', // 最小投注金额
+    max_money: '', // 最大投注金额
     win_money: 0.00, // 最高可赢
     money: '', // 投注金额
     keyborard: true, // 是否显示 最高可赢 和 键盘
@@ -30,6 +30,7 @@ const ref_data = reactive({
 
 
 onMounted(() => {
+    // set_ref_data_bet_money()
     // 监听 限额变化
     useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money).on
 })
@@ -41,6 +42,7 @@ onUnmounted(() => {
 
 // 限额改变 修改限额内容
 const set_ref_data_bet_money = () => {
+    console.error('ssss')
     let value = props.items.playOptionsId
     // 串关获取 复试连串
     if (!BetData.is_bet_single) {
@@ -149,5 +151,12 @@ const set_win_money = () => {
         align-itemss: center;
         color: #8A8986;
     }
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none !important;
+}
+input[type='number'] {
+  -moz-appearance: textfield;
 }
 </style>
