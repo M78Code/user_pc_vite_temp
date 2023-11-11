@@ -63,6 +63,7 @@ import sportIcon from "./sport-icon.vue";
 import BaseData from "src/core/base-data/base-data.js";
 import { MenuData } from 'src/core/';
 import { useRouter } from "vue-router";
+import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 const router = useRouter();
 const emits = defineEmits(['isLeftDrawer']);
 const leftDataList = ref([]);
@@ -95,7 +96,12 @@ const set_menu_obj = (data) => {
 const change_current_menu = (item) => {
   MenuData.set_current_lv1_menu("2");
   MenuData.set_menu_mi(item.mi);
+
+  // 设置菜单对应源数据
+  MatchMeta.set_origin_match_data()
+
   emits('isLeftDrawer')
+  
   router.push("/match");//跳转今日列表
 }
 watch(MenuData.update_time,()=>{

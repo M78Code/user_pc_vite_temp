@@ -88,7 +88,7 @@ const set_match_list_mapping_relation_obj_type = () => {
   }
   // 欧洲版也不区分赛种 且需要一个新的计算逻辑 so
   if (PROJECT_NAME == 'ouzhou-pc') {
-    type = 8
+    // type = 2
   }
   MatchListCardData.match_list_mapping_relation_obj_type = type;
 };
