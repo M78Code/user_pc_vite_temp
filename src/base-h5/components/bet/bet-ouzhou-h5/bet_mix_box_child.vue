@@ -38,7 +38,7 @@
                     <!-- 合并单关  -->
                     <div class="scroll-box scroll-box-center" ref="scroll_box" :style="{ 'max-height': `${max_height1}px` }"
                         @touchmove="touchmove_handle($event)" @touchstart="touchstart_handle($event)">
-                        <bet-mix-box-child2 :item="BetData.bet_single_list"></bet-mix-box-child2>
+                        <bet-mix-box-child2></bet-mix-box-child2>
                     </div>
                 </div>
             </div>

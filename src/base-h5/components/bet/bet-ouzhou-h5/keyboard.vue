@@ -6,7 +6,7 @@
   <div class="keyboard" @click.stop="_handleKeyPress($event)" style="opacity: 1;" @touchmove.prevent>
     <div class="key-row row">
       <div class="key-cell" data-num="qon">
-        <span>+</span>10
+        <span>+</span>{{addnum.qon}}
       </div>
       <div class="key-cell" data-num="1">1</div>
       <div class="key-cell" data-num="2">2</div>
@@ -14,7 +14,7 @@
     </div>
     <div class="key-row row">
       <div class="key-cell" data-num="qtw">
-        <span>+</span>50
+        <span>+</span>{{addnum.qtw}}
       </div>
       <div class="key-cell" data-num="4">4</div>
       <div class="key-cell" data-num="5">5</div>
@@ -22,7 +22,7 @@
     </div>
     <div class="key-row row">
       <div class="key-cell" data-num="qth">
-        <span>+</span>100
+        <span>+</span>{{addnum.qth}}
       </div>
       <div class="key-cell" data-num="7">7</div>
       <div class="key-cell" data-num="8">8</div>
@@ -159,10 +159,10 @@ const _handleKeyPress = (e) => {
 
 // 小数点 .
 const _handleDecimalPoint = () => {
-  //超过最大金额  显示最大金额
+  //超过最大金额  显示最大金额 
   let old = BetData.bet_keyboard_config.playOptionsId
   let max_money = BetViewDataClass.bet_min_max_money[old].max_money
-  let money_ = money.value
+
   //超过最大金额时不让输入
   if (money_ && money_*1 >= max_money*1) return
   //如果包含小数点，直接返回
@@ -194,6 +194,7 @@ const _handleDeleteKey = () => {
   money.value = s.substring(0, s.length - 1);
   BetData.set_bet_amount(money.value )
 }
+
 // 数字建
 const _handleNumberKey = (num) => {
   
@@ -227,8 +228,9 @@ const _handleNumberKey = (num) => {
     ol_type = 'id'
   }
   ol_id = lodash_.get(BetData.bet_keyboard_config,ol_type)
-  let max_money = lodash_.get(BetViewDataClass,'bet_min_max_money[ol_id].max_money')
-
+  // let max_money = lodash_.get(BetViewDataClass,'bet_min_max_money[ol_id].max_money')
+  let max_money = BetViewDataClass.bet_min_max_money[ol_id].max_money
+  
   // 显示最大金额
   if (money_ && +money_ >= +max_money) {
     money_ = max_money
