@@ -1,5 +1,6 @@
 <template>
   <div class="ouzhou-match-league"
+  :style="`height:${match_list_tpl_size.league_title_height}px !important;`"
     v-if="lodash.get(card_style_obj, 'league_obj.csid')">
     <!-- 第一行 -->
     <div v-show="false">{{ MatchListCardData.list_version }}</div>
@@ -176,7 +177,14 @@ function set_fold() {
     display: flex;
     width: 100%;
     height: 100%;
+    background: #F5F5F5;
+    border-bottom: 1px solid #e2e2e2;
     cursor: pointer;
+    .leagues-wrap {
+      padding-left: 5px;
+      display: flex;
+      justify-content: flex-start;
+    }
     .tr-match-head {
       display: flex;
     }
