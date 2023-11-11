@@ -65,6 +65,9 @@ export default defineComponent({
     watch(() => route.path, (newVal) => {
       // 根据当前路由路径判断给当前current_id赋值
       current_id.value = navList.value.find(item => item.path == newVal)?.id
+      //页面中间头部导航显示处理
+      MatchListOuzhouClass.redux_menu.menu_root = navList.value.find(item => item.path == newVal)?.id
+      MatchListOuzhouClass.update_version()
     },
       { immediate: true }
     )

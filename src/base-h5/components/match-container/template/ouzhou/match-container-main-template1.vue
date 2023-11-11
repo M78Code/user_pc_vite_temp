@@ -35,30 +35,35 @@
         <!--联赛标题 -->
         <div @click="handle_league_fold" v-if="match.is_show_league || (is_hot && get_league_show(i))"
           :class="[('league match-indent hairline-border'), { 'no-radius': show_sport_title, 'no-border': !collapsed}]">
-          <div class="league-t-wrap">
-          <!-- <div class="league-t-tubiao"></div> -->
-            <!-- 联赛收藏 -->
-            <div v-if="![3000, 900].includes(menu_type)" class="favorited-icon" @click.stop="handle_league_collect">
-              <!-- 未收藏 compute_img_url('icon-favorite')-->
-              <img v-if="!league_collect_state" :src="no_collect_ouzhou" alt="">
-              <!-- 收藏图标 compute_img_url('icon-favorite-s')-->
-              <img v-if='league_collect_state' :src="have_collect_ouzhou">
-            </div>
-            <span class="league-title-text row justify-between">
-              <span :class="['league-t-wrapper', { 'league-t-main-wrapper': menu_type !== 28, export: is_export }]">
-                <span class="match-league ellipsis-2-lines" :class="{ 'match-main-league': menu_type !== 28 }">
-                  {{ match.tn }}
+          <div :class="['league-t-wrap', { 'league-collapsed': !collapsed }]">
+            <!-- <div class="league-t-tubiao"></div> -->
+            <div :class="['league-title']">
+              <!-- 联赛收藏 -->
+              <div v-if="![3000, 900].includes(menu_type)" class="favorited-icon" @click.stop="handle_league_collect">
+                <!-- 未收藏 compute_img_url('icon-favorite')-->
+                <img v-if="!league_collect_state" :src="no_collect_ouzhou" alt="">
+                <!-- 收藏图标 compute_img_url('icon-favorite-s')-->
+                <img v-if='league_collect_state' :src="have_collect_ouzhou">
+              </div>
+              <span class="league-title-text row justify-between">
+                <span :class="['league-t-wrapper', { 'league-t-main-wrapper': menu_type !== 28, export: is_export }]">
+                  <span class="match-league ellipsis-2-lines" :class="{ 'match-main-league': menu_type !== 28 }">
+                    {{ match.tn }}
+                  </span>
                 </span>
               </span>
+            </div>
+            <!-- 玩法标题 -->
+            <div class="play-title">
               <template v-if="collapsed">
-                <div class="play_title">
+                <div class="title">
                   <span v-for="p in get_match_panel" :key="p">{{ p }}</span>
                 </div>
               </template>
               <template v-else>
-                <span class="number" style="text-align: right;">{{ get_match_count }}</span>
+                <span class="number">{{ get_match_count }}</span>
               </template>
-            </span>
+            </div>
           </div>
           
         </div>
@@ -97,6 +102,7 @@
                             </div>
 
                             <!--即将开赛 ms = 110-->
+                            
                             <div class="coming-soon" v-if="match.ms" v-show="match.ms == 110">
                               {{ i18n_t(`ms[${match.ms}]`) }}
                             </div>
@@ -618,52 +624,47 @@ export default {
       display: flex;
       align-items: center;
       flex-wrap: nowrap;
-      //padding-left: 0.08rem;
-      .esport {
-        margin: 0.01rem 0.07rem 0 0rem;
-        position: relative;
-        --per: -0.32rem;
-        display: block;
-        width: auto;
-        height: 0.22rem;
-        width: 0.22rem;
-        background-position: 0 0;
-        background-size: 0.22rem 18.88rem;
+      > div {
+        flex: 1;
         flex-shrink: 0;
-        img {
-          width: 0.22rem;
-          height: 0.22rem;
-          position: absolute;
-          top: 0;
-          left: 0;
+        .title{
+          flex: 1;
+          display: flex;
+          align-items: center;
+          font-size: 14px;
+          font-weight: 600;
+          > span {
+            flex: 1;
+            text-align: center;
+          }
         }
-      }
-      .league-t-tubiao {
-        height: 0.15rem;
-        width: 0.02rem;
-        background-color:var(--q-gb-bg-c-13);
-        border-radius: 10px;
-        width: 200px; 
-      }
-      .league-collapse-dir {
-        width: 0.12rem;
-        height: 0.06rem;
-        position: relative;
-        right: 0.1rem;
-
-        &.collapsed {
-          transform: rotateZ(180deg);
-        }
-      }
-      .favorited-icon{
-        width: 15px;
-        height: 14px;
-        margin: 0 10px 0 0;
-        position: relative;
-        flex-shrink: 0;
-        > img {
+        .number{
           width: 100%;
-          height: 100%;
+          text-align: right;
+          font-size: 14px;
+          font-weight: 600;
+          padding-right: 27px;
+          display: inline-block;
+        }
+      }
+      .league-title{
+        display: flex;
+        align-items: center;
+         .favorited-icon{
+          width: 15px;
+          height: 14px;
+          margin: 0 10px 0 0;
+          position: relative;
+          flex-shrink: 0;
+          > img {
+            width: 100%;
+            height: 100%;
+          }
+        } 
+      }
+      &.league-collapsed{
+        > div {
+          flex: auto;
         }
       }
     }
@@ -785,15 +786,6 @@ export default {
         min-width: 1.1rem;
       }
     }
-    .play_title{
-      flex: 1;
-      display: flex;
-      align-items: center;
-      > span {
-        flex: 1;
-        text-align: center;
-      }
-    }
      // 添加 line-height: 0.14rem 解决42682 生产BUG--malick
     .match-league {
       max-width: 2.8rem;
@@ -813,18 +805,6 @@ export default {
     margin-right: 0.04rem;
     transition: opacity 0.2s;
     opacity: 1;
-  }
-}
-
-.league-collapse-dir {
-  width: 0.12rem;
-  height: 0.06rem;
-  position: relative;
-  right: 0.1rem;
-  transition: all 0.3s ease-in;
-
-  &.collapsed {
-    transform: rotateZ(180deg);
   }
 }
 

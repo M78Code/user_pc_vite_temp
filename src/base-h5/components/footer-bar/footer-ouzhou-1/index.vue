@@ -22,14 +22,15 @@
 <script setup>
 import { defineComponent, ref, reactive, watch,computed  } from "vue";
 import { useRouter, useRoute } from "vue-router";
+import { MenuData } from 'src/core/'
 const router = useRouter();
 // 底部菜单集合
 const tab_list = reactive([
-  { label: 'In-Play', value: 'rollball', route: '/inPlay' },
+  { label: 'In-Play', value: 'rollball', route: '/inPlay', type: 1 },
   { label: 'MyBets', value: 'bet', route: '/betting_history' },
-  { label: 'Home-Page', value: 'home_page', route: '/home' },
-  { label: 'Results', value: 'results', route: '/matchResults' },
-  { label: 'Favorites', value: 'favorites', route: '/collect' },
+  { label: 'Home-Page', value: 'home_page', route: '/home', type: 1 },
+  { label: 'Results', value: 'results', route: '/matchResults', type: 29 },
+  { label: 'Favorites', value: 'favorites', route: '/collect', type: 50000 },
 ])
 const get_route_path = computed(() => {
   return  router.currentRoute.value.path;
@@ -39,7 +40,8 @@ const tab_active = ref(get_route_path);
 const jump_page = (item) => {
   tab_active.value = item.route
   router.push(item.route)
-
+  // 设置一级菜单
+  item.type && MenuData.set_current_lv1_menu(item.type)
 }
 
 </script>

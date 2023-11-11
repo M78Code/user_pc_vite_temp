@@ -27,20 +27,31 @@ const ref_data = reactive({
     money: '', // 投注金额
     keyborard: true, // 是否显示 最高可赢 和 键盘
     seriesOdds: '', // 赔率
-    
+    show_quick: false, // 显示快捷金额
 })
-
 
 onMounted(() => {
     // set_ref_data_bet_money()
     // 监听 限额变化
     useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money).on
+    useMittOn(MITT_TYPES.EMIT_SET_QUICK_AMOUNT, set_quick_money).on
 })
 
 onUnmounted(() => {
     useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money).off
+    useMittOn(MITT_TYPES.EMIT_SET_QUICK_AMOUNT, set_quick_money).off
 })
 
+// 设置快捷金额
+const set_quick_money = () => {
+    // 输入金额 不能大于最大金额
+    if( BetData.bet_amount > ref_data.max_money ){
+        ref_data.money = ref_data.max_money
+    }else{
+        ref_data.money = BetData.bet_amount
+    }
+   
+}
 
 // 限额改变 修改限额内容
 const set_ref_data_bet_money = () => {
@@ -67,6 +78,10 @@ const set_ref_data_bet_money = () => {
     ref_data.seriesOdds = seriesOdds
     // 限额改变 重置投注金额
     ref_data.money = ''
+
+    if(ref_data.show_quick){
+        show_quick_amount(ref_data.show_quick)
+    }
 }
 
 // 输入判断
@@ -85,6 +100,7 @@ const set_win_money = () => {
 
 // 快捷金额 state true   false
 const show_quick_amount = state => {
+    ref_data.show_quick = state
     let money_list = []
     if(state){
         if (BetData.bet_is_single) {

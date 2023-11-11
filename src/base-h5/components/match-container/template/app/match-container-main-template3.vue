@@ -69,7 +69,7 @@
 
                     <!--即将开赛 ms = 110-->
                     <div class="coming-soon" v-if="match.ms" v-show="match.ms == 110">
-                      {{ $t(`ms[${match.ms}]`) }}
+                      {{ i18n_t(`ms[${match.ms}]`) }}
                     </div>
 
                     <!--开赛日期 ms != 110 (不为即将开赛)  subMenuType = 13网球(进行中不显示，赛前需要显示)-->

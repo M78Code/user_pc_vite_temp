@@ -59,6 +59,7 @@ const set_menu_lv1 = item => {
   // MenuData.get_results_menu();
   setTimeout(() => {
     MatchMeta.get_results_match()
+    MatchMeta.get_collect_match()
   }, 2000)
 }
 </script>

@@ -197,7 +197,8 @@ function key_down(event) {
     }
 }
 .screenModal{
-    height: 9rem;
+    min-height: 8.4rem;
+    height: auto;
 }
 </style>
   

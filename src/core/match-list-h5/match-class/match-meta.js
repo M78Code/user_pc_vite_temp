@@ -413,7 +413,7 @@ class MatchMeta {
       ...params,
       category,
       md,
-      type: 28, // 默认是29 我改成了28 
+      type: 29,
       euid,
       showem: 1, // 新增的参数
     })
