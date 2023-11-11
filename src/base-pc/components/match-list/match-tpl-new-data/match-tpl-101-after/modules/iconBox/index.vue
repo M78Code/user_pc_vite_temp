@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-start items-center">
+    <div class="flex flex-start items-center ouzhou-icon-block">
         <!-- 中立图片 -->
         <div class="sr-link-icon-w">
             <div :style="compute_css_obj({key: 'pc-home-neutral'})"></div>
@@ -19,6 +19,9 @@ import { compute_css_obj } from 'src/core/server-img/index.js'
 
 </script>
 <style>
+.ouzhou-icon-block {
+    margin-left: 24px;
+}
 .sr-link-icon-w  div{
     width: 12px;
     height: 12px;
