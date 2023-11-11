@@ -71,6 +71,7 @@ const props = defineProps({
         color: #FF7000;
         font-weight: 500;
         padding: 0 12px;
+        height: 21px;
         :deep(.q-icon){
           position: relative;
           top: 1px;
