@@ -8,7 +8,7 @@
 <template>
   <div class="featured-matched-card-wrap">
     <!-- 当热门赛事超过四条 展示右侧滚动按钮 -->
-    <template2 :is_show_btn="matches_featured_list?.length >= 4">
+    <template2 :is_show_btn="matches_featured_list.length >= 4">
       <div 
         class="featured-matched-card" 
         v-for="(item, index) in matches_featured_list" 
@@ -49,16 +49,12 @@
 
 <script setup>
 
-  import { ref } from 'vue';
+  import { ref, watch } from 'vue';
   import _ from 'lodash';
-
-
-  // import store from 'src/store-redux-vuex/index.js';
-  // import { storage_bet_info, storage_bet_id } from 'src/utils/bet_info.js'
+  import { storage_bet_info, storage_bet_id } from 'src/core/bet/module/bet_info.js'
+  import MatchListOuzhouClass from 'src/core/match-list-pc/match-ouzhou-list.js'
 
   import template2 from './template2.vue';
-  
-  // let state = store.getState();
 
   const props = defineProps({
     matches_featured_list: {
@@ -122,13 +118,15 @@
   }
 
 
-  // const current_check_betId = ref(state.betInfoReducer.current_check_betId)
+  const current_check_betId = ref(MatchListOuzhouClass.current_check_betId.value)
 
-  // // 监听 当前投注项ID的变化
-  // store.subscribe(() => {
-  //   state = store.getState()
-  //   current_check_betId.value = state.betInfoReducer.current_check_betId;
-  // });
+  // 监听 当前投注项ID的变化
+  watch(
+      MatchListOuzhouClass.current_check_betId,
+      () => {
+        current_check_betId.value= MatchListOuzhouClass.current_check_betId.value
+      },
+    )
 
   // // 选中当前td 使td高亮 且将投注信息存储到数据仓库中
   const checked_current_td = payload => {
@@ -136,10 +134,10 @@
     if (payload.hps.hs) {
       return;
     }
-    // if (payload.ol.oid !== current_check_betId.value) {
-    //   storage_bet_info(payload);
-    // }
-    // storage_bet_id(payload.ol.oid);
+    if (payload.ol.oid !== current_check_betId.value) {
+      storage_bet_info(payload);
+    }
+    storage_bet_id(payload.ol.oid);
   }
 
 </script>

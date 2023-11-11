@@ -1,11 +1,4 @@
-<!--
- * @Author         : lane jstylane@itcom888.com
- * @Date           : 2023-07-15 19:17:42
- * @LastEditors    : lane jstylane@itcom888.com
- * @LastEditTime   : 2023-07-16 19:45:50
- * @FilePath       : \user-pc-vue3\src\project-ouzhou\pages\detail\analysis\index.vue
- * @Description    : 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
--->
+
 <!--
  * @Author: cooper
  * @Date: 2023-06-06 14:13:55
@@ -15,7 +8,7 @@
   <div>
     <div class="analysis-body">
       <!-- 动画比分榜 -->
-      <!-- <venue_box v-show="detail_info.ms>0" :score_list="score_list" :detail_info="detail_info"  /> -->
+      <venue_box v-show="detail_info.ms>0" :score_list="score_list" :detail_info="detail_info"  />
   
       <!-- <div class="analysis-top">
         <div class="analysis-top-l">

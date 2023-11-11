@@ -22,6 +22,7 @@ import lodash from "lodash";
 import axios from "axios";
 import { uid } from 'quasar';
 import { i18n_t, i18n } from "..";
+import BaseData from 'src/core/base-data/base-data.js'
 
 const axios_instance = axios.create();
 const { htmlVariables = {} } = window.BUILDIN_CONFIG;
@@ -258,7 +259,7 @@ class UserCtr {
     this.is_user_no_handle = val;
   }
 
-  async get_user_info(token) {
+  async get_user_info(token, callback) {
     let res = await api_account.get_user_info({
       token,
     });
@@ -267,6 +268,7 @@ class UserCtr {
     this.set_user_info(obj);
     this.update()
     this.get_balance()
+    callback && callback(obj);
   }
 
   // 获取用户余额
@@ -942,6 +944,8 @@ class UserCtr {
           languageName: obj.languageName,
           userMarketPrefer: obj.userMarketPrefer,
         };
+        // 设置国际化语言
+        this.set_lang(lodash.get(obj,'languageName'));
         LocalStorage.set(this.local_storage_key, JSON.stringify(data));
       } catch (error) {
         console.error("userCtr  set_user_base_info() 错误:", error);

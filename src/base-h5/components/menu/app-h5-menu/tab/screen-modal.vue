@@ -232,6 +232,7 @@ function get_search_result() {
   //内容样式
   .content {
     padding: 0 0.1rem;
+    height: 100%;
     .all_select {
       width: 2.68rem;
       height: 0.32rem;

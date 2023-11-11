@@ -30,6 +30,7 @@
 <script setup>
 import { onMounted, ref,watch ,nextTick} from "vue";
 import { api_match_list } from "src/api";
+import video  from "src/core/video/video.js"
 import loading from '../../../components/loading/index.vue'
 import _ from 'lodash'
 
@@ -37,6 +38,10 @@ const props = defineProps({
     detail_info: {  // 赛事详情
         type: Object,
         default: () => { }
+    },
+    show_type: {  // 播放类型，视频|动画
+        type: String,
+        default: ''
     },
    
 })
@@ -49,8 +54,12 @@ watch(()=>props.detail_info,val=>{
 
 )
 onMounted(()=>{
-
-  get_animation_url()
+  console.log(111111111,props.show_type)
+  if (props.show_type=='video') {
+    get_video_url()
+  }else{
+    get_animation_url()
+  }
   iframe_loading.value = true
   // nextTick(()=>{
     const iframe = document.querySelector('#video-iframe')
@@ -69,6 +78,23 @@ onMounted(()=>{
 const url =
   "http://bokong3-imgs.oss-cn-hongkong.aliyuncs.com/lmt_img/1679405069349_97_9.png";
   const media_src = ref('')
+
+  /**
+  * @Description:获取视频播放地址
+  * @Author Cable
+  * @param {object} match  赛事信息
+  * @param {function} callback  回调函数
+  */
+  const get_video_url = ()=>{
+    // play_type  数据源类型 1 ：源视频 2：动画 3 ：演播室 4 ：主播 5：专题
+
+      // 目标赛事视频url相关信息获取
+      video.get_video_url(props.detail_info,{params:{play_type:1}}, (show_type,media_src) => {
+       console.log(111111111,show_type)
+       console.log(111111111,media_src)
+      })
+
+  }
 
 
 

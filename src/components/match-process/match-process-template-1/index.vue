@@ -43,6 +43,7 @@
         :rows="date_rows"
         v-if="computed_show_date"
         :match="match"
+        :date_show_type="date_show_type"
         class="date-wrap"
       />
       
@@ -96,6 +97,11 @@ const props = defineProps({
   date_rows: {
     type: Number,
     default: 1,
+  },
+  // 日期是否换行
+  date_show_type: {
+    type: String,
+    default: 'br',
   },
   // 场次颜色
   periodColor: {

@@ -28,7 +28,6 @@
   "analysis_football_matches": {
     "analysis_data": "အချက်အလက်",
     "away_win": "A အနိုင်",
-    "bench_lineup": "လူစာရင်း",
     "big": "ကြီး",
     "age": "အသက်",
     "big_ball": "အပေါ်",
@@ -54,7 +53,8 @@
     "historical_war": "ထိပ်တိုက်ပွဲ",
     "home_win1": "အိမ်အသင်းအနိုင်",
     "Initial_offer": "ကနဦးကမ်းလှမ်းချက်",
-    "Injury_situation": "ဒဏ်ရာအခြေအနေ",
+    "bench_lineup": "ခုံတန်းလျားစာရင်း",
+    "Injury_situation": "ဒဏ်ရာစာရင်း",
     "intelligence": "ထောက်လှမ်းရေး",
     "league": "လိဂ်",
     "integral": "ရမှတ်",

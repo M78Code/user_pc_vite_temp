@@ -56,12 +56,8 @@
   page_style.value = compute_css_variables({ category: 'component', module: 'cathectic' })
     
   onMounted(() => {
-    setTimeout(() => {
-      provided_.value = [2,3]
-    }, 2000)
     // 查询待确认中的提前结算单
     api_betting.query_order_pre_settle_confirm().then(res => {
-      provided_.value = []
       let { code, data } = res || {}
       if (code == 200 && data) {
         // 待确认中的提前结算单
