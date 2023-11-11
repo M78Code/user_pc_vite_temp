@@ -290,6 +290,7 @@ class MenuData {
    * lv2_mi
    */
   set_left_menu_result(obj) {
+    console.log('set_left_menu_result',obj)
     this.menu_root = obj.root;
     this.menu_root_show_shoucang = obj.root;
     // 设置 列表接口类型
