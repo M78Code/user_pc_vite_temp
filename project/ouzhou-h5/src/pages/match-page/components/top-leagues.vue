@@ -2,7 +2,7 @@
  * @Author: land land@itcom888.com
  * @Date: 2023-11-11 15:03:04
  * @LastEditors: land land@itcom888.com
- * @LastEditTime: 2023-11-11 17:21:36
+ * @LastEditTime: 2023-11-11 17:55:05
  * @FilePath: \user-pc-vite\project\ouzhou-h5\src\pages\match-page\components\top-leagues.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -47,6 +47,8 @@ import { have_collect_ouzhou, no_collect_ouzhou } from 'src/base-h5/core/utils/l
 import collapse from "../../home/components/collapse.vue"
 
 import default_mixin from 'src/base-h5/components/match-container/mixins/default.mixin.js'
+
+import { defineEmits } from 'vue'
 export default {
   name: "top-leagues",
   // mixins: [default_mixin],
@@ -62,9 +64,11 @@ export default {
   },
   setup(props) {
     const { leagues_matchs } = props
+    const emit = defineEmits(['onCollect', 'leagueChange'])
     //联赛点击
-    const onLeagueChange = (league) => {
-      console.log(e)
+    const onLeagueChange = (league, game) => {
+      console.log('league, game: ', league, game);
+      emit('leagueChange', league, game)
     }
 
 
