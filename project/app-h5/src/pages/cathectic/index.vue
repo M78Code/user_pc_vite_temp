@@ -46,13 +46,12 @@
   let { cathecticReducer, userInfoReducer, themeReducer } = store.getState()
   const store_cathectic = ref(cathecticReducer)
   
-  // 待确认中的提前结算订单
-  provide('queryorderpresettleconfirm_data', '')
-
   // 延时器
   const timer_1 = ref(null)
   // 待确认中的提前结算单
-  const provided_ = ref({})
+  const provided_ = ref(null)
+  // 待确认中的提前结算订单
+  provide('queryorderpresettleconfirm_data', provided_)
 
   const tabs = ref([
     { title: i18n_t('bet_record.no_account'), componentName: shallowRef(unsettle) },
@@ -96,7 +95,7 @@
       let { code, data } = res || {}
       if (code == 200 && data) {
         // 待确认中的提前结算单
-        provided_.value = { queryorderpresettleconfirm_data: data }
+        provided_.value = data
       }
       // 弹窗显示接口获取列表后延迟
       // timer_1.value = setTimeout(() => {
@@ -175,7 +174,7 @@
       line-height: 0.34rem;
       width: 30%;
       &.active-p {
-        background: var(--q-gb-bg-c-9);
+        background: var(--q-gb-bg-c-13);
         color: var(--q-gb-bg-c-15);
       }
     }

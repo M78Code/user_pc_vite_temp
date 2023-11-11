@@ -1,7 +1,7 @@
 <template>
   <div ref='details_tab' :class="['details-tab',{'tab-fixed':get_tab_fix}]" v-cloak>
     <div class="fat-btn" @click="change_btn()">
-      <div class="tab-btn"></div>
+      <div class="tab-btn" :class="{collapsed:get_fewer != 2}"></div>
     </div>
     <span class="menu-third"></span>
     <div class="menu-s" ref="reset_scroll_dom">
@@ -244,15 +244,15 @@ export default defineComponent({
   width: 0.12rem;
   height: 0.12rem;
   margin-top: 0.09rem;
-  background-image: url($SCSSPROJECTPATH + "/image/svg/tab_up_btn.svg");
+  background-image: url($SCSSPROJECTPATH + "/image/svg/tab_up_btn_off.svg");
+  
   background-size: 100% 100%;
-  transform: rotateZ(180deg);
+  // transform: rotateZ(180deg);
   transition: transform 0.3s;
   // @include webkit(transition, transform 0.3s);
 
   &.collapsed {
-    transform: rotateZ(0);
-    transition: transform 0.3s
+    background-image: url($SCSSPROJECTPATH + "/image/svg/tab_up_btn.svg");
     // @include webkit(transition, transform 0.3s);
   }
 }

@@ -96,6 +96,13 @@
 <!--      <Pagination v-if="tableData.length > 0" class="record-pagination" :count="total" :betTotalAmount="40"-->
 <!--        @pageChange="changePage(arguments)">-->
 <!--      </Pagination>-->
+      <pagination-wrapper
+        v-if="tableData.length > 0"
+        class="record-pagination"
+        :count="total"
+        @pageChange="changePage"
+        :is_bet_record="false"
+      ></pagination-wrapper>
 
 
     </div>
@@ -108,10 +115,11 @@ import { useGetOrderList } from "./tableConfig";
 import { formatTime } from "src/core/format/index.js"
 import { UserCtr, format_balance, LOCAL_PROJECT_FILE_PREFIX } from 'src/core/index.js'
 // import Pagination from "src/components/Pagination.vue";
+import { PaginationWrapper } from "src/components/pagination/index.js";
 // import football_icon from 'src/assets/images/football_icon.png'
 // import no_data from 'src/assets/images/no_data.png'
 // import bet_copy from 'src/assets/images/bet_copy.png'
-// import sport_icon from "src/components/sport_icon.vue";
+import sport_icon from "./sport_icon.vue";
 import store from "src/store-redux/index.js";
 
 const props = defineProps({

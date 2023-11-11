@@ -57,8 +57,8 @@ const cancle_pre_order = () => {
 .cancel-btn {
   margin: 0 0.14rem;
     text-align: center;
-    border: 1px solid var(--q-gb-bg-c-9);
-    color: var(--q-gb-bg-c-9);
+    border: 1px solid var(--q-gb-bg-c-13);
+    color: var(--q-gb-bg-c-13);
     line-height: 0.4rem;
     border-radius: 0.1rem;
     font-size: 0.14rem;

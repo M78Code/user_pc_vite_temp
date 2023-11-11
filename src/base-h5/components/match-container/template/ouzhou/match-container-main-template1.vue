@@ -219,7 +219,9 @@
                       </div>
                     </div>
                     <!-- 右边盘口组件 -->
-                    <ScoreList :match_info="match_of_list" :score_length="score_length"></ScoreList>
+                    <template v-if="match_of_list">
+                      <ScoreList :match_info="match_of_list" :score_length="score_length"></ScoreList>
+                    </template>
                   </div>
                 </div>
               </div>
@@ -237,17 +239,17 @@ import { ref, computed, watch, nextTick, onMounted } from 'vue'
 import { LOCAL_PROJECT_FILE_PREFIX } from  "src/core"
 
 import { IconWapper } from 'src/components/icon'
-import ScoreList from './components/score-list.vue';
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import CountingDownSecond from 'src/base-h5/components/common/counting-down.vue';
 import CountingDownStart from 'src/base-h5/components/common/counting-down-start.vue';
 import OddListWrap from 'src/base-h5/components/match-list/components/odd-list-wrap.vue';
+import ScoreList from 'src/base-h5/components/match-container/template/ouzhou/components/score-list.vue';
 import ImageCacheLoad from "src/base-h5/components/match-list/components/public-cache-image.vue";
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import PageSourceData  from  "src/core/page-source/page-source.js";
 import { i18n_t, compute_img_url, compute_css_obj  } from "src/core/index.js"
 import { format_time_zone } from "src/core/format/index.js"
-import { have_collect_ouzhou, no_collect_ouzhou} from 'src/base-h5/core/utils/local-image.js'
+import { have_collect_ouzhou, no_collect_ouzhou } from 'src/base-h5/core/utils/local-image.js'
 
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 
@@ -291,9 +293,13 @@ export default {
      
       const hps = ctx.match_of_list.hps
       const hpid = MatchResponsive.match_hpid.value
-      const hps_item = hps.find(t => t.hpid == hpid)
+      const hps_item = hps && hps.find(t => t.hpid == hpid)
 
-      const target_item = hps_play_data.value.find(t => t.hpid == hpid)
+      let target_item = [];
+      if(hps_play_data.value){
+        target_item = hps_play_data.value.find(t => t.hpid == hpid)
+      }
+      // const target_item = hps_play_data.value.find(t => t.hpid == hpid)
       const target_ol = lodash.get(target_item, 'hl[0].ol')
       score_length.value = lodash.get(target_ol, 'length', 3)
 
@@ -897,7 +903,7 @@ export default {
     }
 
     .team-wrapper {
-      padding-right:10px;
+      padding-right:5px;
       border-right: 1px solid rgba(88,88,88,.1);
 
       &.simple {

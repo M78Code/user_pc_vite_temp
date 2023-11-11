@@ -84,8 +84,10 @@
     </div>
     <div class="foot-main">
       <item-footer :data_f=data_b></item-footer>
-      <!-- 未结算列表 => 投注记录页提前结算的按钮、滑块、提前结算详情 -->
-      <early-settle :item_data="data_b"></early-settle>
+      <!-- 未结算列表 => 投注记录页提前结算的按钮、滑块 -->
+      <early-settle v-if="BetRecordClass.selected == 0" :item_data="data_b"></early-settle>
+      <!-- 已结算列表 => 提前兑现详情 -->
+      <early-settled-detail v-if="BetRecordClass.selected == 1" :item_data="data_b" />
       <item-order :data_o=data_b></item-order>
     </div>
     

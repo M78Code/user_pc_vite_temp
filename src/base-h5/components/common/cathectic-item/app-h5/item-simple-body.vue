@@ -37,7 +37,7 @@
       <p><label>{{ i18n_t('app_h5.cathectic.bet_number') }}：</label> <span>{{data_b.orderNo}}</span></p>
       <p><label>{{i18n_t('bet_record.bet_time')}}：</label> <span>{{formatTime(+data_b.betTime, 'YYYY-mm-DD HH:MM')}}</span></p>
       <p><label>[{{Item.sportName}}] {{Item.matchName}}</label></p>
-      <p><label>{{i18n_t('bet_record.bet_val')}}：</label> <span>{{format_money2(data_b.orderAmountTotal)}}</span></p>
+      <p><label>{{i18n_t('bet_record.bet_val')}}：</label> <span>{{format_money2(data_b.orderAmountTotal)}}{{ i18n_t('common.unit') }}</span></p>
       <template>
         <!-- orderStatus 订单状态(0:未结算,1:已结算,2:注单无效,3:确认中,4:投注失败) -->
         <!-- 在未结算页 -->
@@ -45,18 +45,18 @@
           <label>{{ i18n_t('app_h5.cathectic.winnable') }}：</label> 
           <template v-if="data_b.orderStatus == 1 || data_b.orderStatus == 2 || data_b.orderStatus == 4">
             <span>
-              <template v-if="data_b.backAmount !== null">{{format_money2(data_b.backAmount)}}</template>
-              <template v-else>{{format_money2(data_b.orderAmountTotal)}}</template>
+              <template v-if="data_b.backAmount !== null">{{format_money2(data_b.backAmount)}}{{ i18n_t('common.unit') }}</template>
+              <template v-else>{{format_money2(data_b.orderAmountTotal)}}{{ i18n_t('common.unit') }}</template>
             </span>
           </template>
           <template v-else>
-            <span>{{format_money2(data_b.maxWinAmount)}}</span>
+            <span>{{format_money2(data_b.maxWinAmount)}}{{ i18n_t('common.unit') }}</span>
           </template>
         </p>
         <!-- 在已结算页 -->
         <p v-else class="acount">
           <label>{{ i18n_t('app_h5.cathectic.settle') }}：</label> 
-          <span>{{format_money2(data_b.backAmount)}}</span>
+          <span>{{format_money2(data_b.backAmount)}}{{ i18n_t('common.unit') }}</span>
         </p>
       </template>
       <p>
@@ -69,8 +69,9 @@
             <template v-else>{{i18n_t('pre_record.booking')}}</template>
           </span>
           <!-- 未结算、已结算页 -->
-          <span v-else :class="BetRecordClass.calc_text(data_b).color"> 
-            {{ BetRecordClass.calc_text(data_b).text }} 
+          <!-- <span v-else :class="calc_text(data_b).color">  -->
+          <span v-else> 
+            {{ calc_text(data_b).text }} 
           </span>
         </template>
       </p>
@@ -81,7 +82,7 @@
 <script setup>
 import lodash from 'lodash'
 import { ref, onMounted, onUnmounted, computed } from 'vue'
-import BetRecordClass from "src/core/bet-record/bet-record.js";
+import { default as BetRecordClass, calc_text } from "src/core/bet-record/bet-record.js";
 import { i18n_t } from "src/boot/i18n.js";;
 import { project_name } from 'src/core'
 import { formatTime, format_money2 } from 'src/core/format/index.js'
@@ -204,7 +205,7 @@ template {
   }
   .body-info {
     text-align: center;
-    background-color: var(--q-gb-bg-c-9);
+    background-color: var(--q-gb-bg-c-13);
     padding: 0.1rem;
     border-radius: 0.1rem;
     color: var(--q-gb-t-c-14);
@@ -221,7 +222,7 @@ template {
       display: flex;
       justify-content: space-between;
       &.acount {
-        color: var(--q-gb-bg-c-9);
+        color: var(--q-gb-bg-c-13);
       }
     }
   }

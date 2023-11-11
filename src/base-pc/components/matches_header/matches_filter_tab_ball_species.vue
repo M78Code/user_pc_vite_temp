@@ -1,17 +1,3 @@
-<!--
- * @Author         : lane jstylane@itcom888.com
- * @Date           : 2023-07-15 19:17:42
- * @LastEditors: lowen pmtylowen@itcom888.com
- * @LastEditTime: 2023-11-08 19:21:01
- * @FilePath: \user-pc-vue3\src\components\matches_header\matches_filter_tab_ball_species.vue
- * @Description    : 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
--->
-<!--
- * @Author: lockie
- * @Date: 2023-07-03 16:29:15
- * @FilePath: \user-pc-vue3\src\components\matches_header\matches_filter_tab_ball_species.vue
- * @Description: 
--->
 <template>
   <div class="current-filter-wrap">
     <div class="current-filter-list" @scroll="on_scroll">
@@ -26,7 +12,7 @@
               <div class="filter-count">{{ item.count }}</div>
             </div>
             <div :class="{ checked_text: current_choose_tab == item.mi }" class="label-text">
-              <!-- {{ (menus_i18n_map || {} )[item.mi] || "" }} -->
+              {{ (BaseData.menus_i18n_map || {} )[item.mi] || "" }}
             </div>
           </div>
           <img class="current-mark" :class="{ 'show-mark': current_choose_tab == item.mi }" src="../../../assets/images/mask_group.png" alt="">
@@ -56,7 +42,10 @@ import MatchListOuzhouClass from 'src/core/match-list-pc/match-ouzhou-list.js'
 import sport_icon from "src/base-pc/components/sport_icon.vue";
 import { use_base_data } from "src/base-pc/components/menus/base_data";
 import _ from "lodash"
+import BaseData from "src/core/base-data/base-data.js";
+
 const { compute_sport_id,mi_euid_map_res } = use_base_data()
+
 
 // 国际化
 // const { data:menus_i18n_map } = useMenuI18n()
@@ -83,10 +72,9 @@ const menu_tab_list = ref([])
 onMounted(() => {
   area_obj = document.querySelector('.current-filter-list');
   area_obj_wrap = document.querySelector('.current-filter-wrap');
-  if (area_obj.scrollWidth >= area_obj_wrap.clientWidth) {
+  if (area_obj?.scrollWidth >= area_obj_wrap?.clientWidth) {
     show_right_btn.value = true;
   }
-  console.log('lockie_test_console', area_obj.scrollWidth);
   top_events.value = MatchListOuzhouClass.redux_menu.in_play;
   current_choose_tab.value = MatchListOuzhouClass.redux_menu.mid_tab_menu_type;
 })

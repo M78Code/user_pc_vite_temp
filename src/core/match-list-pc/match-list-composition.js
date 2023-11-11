@@ -24,8 +24,8 @@ import { set_base_data_init } from './match-list-metadata.js';
 import store from "src/store-redux/index.js";
 import ServerTime from 'src/core/server-time/server-time.js';
 import filterHeader from 'src/core/filter-header/filter-header.js'
+import get_match_list_params from './match-list-params.js'
 // const route = router.currentRoute.value
-let state = store.getState();
 const { page_source } = PageSourceData;
 const { mx_use_list_res, mx_list_res, mx_collect_match } = process_composable_fn();
 const { update_collect_data, mx_collect_count, collect_count, mx_collect } = collect_composable_fn();
@@ -39,6 +39,7 @@ const is_show_hot = ref(false);
 // 是否继续请求
 const is_loading = ref(true);
 
+
 let show_refresh_mask = ref(false);
 const timer_obj = ref({});
 const api_error_count = ref(0);
@@ -50,35 +51,29 @@ let axios_debounce_timer2;
 let virtual_list_timeout_id;
 let switch_timer_id
 
-watch(() => MenuData.match_list_version.value, () => {
-	fetch_match_list()
+let tid_match_list;
+useMittOn(MITT_TYPES.EMIT_MATCH_LIST_UPDATE, () => {
+	console.log("EMIT_MATCH_LIST_UPDATE")
+	clearTimeout(tid_match_list)
+	tid_match_list = setTimeout(() => {
+		fetch_match_list()
+	}, 20);
 })
-
-const match_tpl_component = computed(() => {
-	let match_tpl;
-	let lv2_mi;
-	// 这里判断是从左侧菜单点击的vr 还是中间菜单
-	if (MenuData.left_menu_result.sports == "vr") {
-		lv2_mi = MenuData.left_menu_result.lv2_mi;
-	} else if (MenuData.mid_menu_result.sports == "vr") {
-		lv2_mi = MenuData.mid_menu_result.mi;
-	}
-	// 1001-足球 1002-赛狗 1004-篮球 1007-泥地赛车 1008-卡丁车 1009-泥地摩托车 1010-摩托车 1011-赛马 1012-虚拟马车赛
-	// 足球(1001) | 篮球(1004)  足球菜单ID（30054）篮球菜单ID（30056） 使用 tpl1
-	if ([1001, 1004, 30054, 30056, 31001].includes(+lv2_mi)) {
-		match_tpl = "virtual-match-tpl1";
-	} else {
-		match_tpl = "virtual-match-tpl2";
-	}
-	return match_tpl;
-});
+watch(() => MenuData.match_list_version.value, () => {
+	// clearTimeout(tid_match_list)
+	// tid_match_list = setTimeout(() => {
+		// fetch_match_list()
+	// }, 20);
+})
 /**
- * @description 请求数据
- * @param  {boolean} is_socket   是否 socket 调用
- * @param  {boolean} cut   是否 切换右侧详情  true 不切换
- * @param {Object} params 其他参数
- */
+* @description 请求数据
+* @param  {boolean} is_socket   是否 socket 调用
+* @param  {boolean} cut   是否 切换右侧详情  true 不切换
+* @param {Object} params 其他参数
+*/
 function fetch_match_list(is_socket = false, cut) {
+	const match_list_params = get_match_list_params();
+	console.log('match_list_params', match_list_params,PageSourceData.page_source)
 	// 设置当前为赛事列表
 	// 如果有拉列表定时器 清除定时器
 	if (!is_socket && get_match_list_timeid) {
@@ -114,7 +109,7 @@ function fetch_match_list(is_socket = false, cut) {
 		// 设置列表滚动条scrollTop
 		MatchListScrollClass.set_scroll_top(0);
 	}
-	let match_api = MenuData.match_list_api_config.match_list || {};
+	let match_api = match_list_params.match_list || {};
 	// 设置列表接口 和 参数
 	let api = api_match[match_api.api_name];
 	let _params = lodash.clone(match_api.params) || {};
@@ -134,6 +129,7 @@ function fetch_match_list(is_socket = false, cut) {
 		/**返回数据处理************/
 		api && api(_params)
 			.then((res) => {
+
 				// 组件和路由不匹配 菜单id不匹配aa
 				// if ((page_source != "details") || _params.euid != match_api.params.euid) return;
 				api_error_count.value = 0;
@@ -181,10 +177,12 @@ function fetch_match_list(is_socket = false, cut) {
 	if (match_list_debounce_cache && match_list_debounce_cache["ENABLED"]) {
 		let info = match_list_debounce_cache.can_send_request(_params);
 		if (info.can_send) {
+
 			//直接发请求    单次数 请求的方法
 			send_match_list_request();
 		} else {
 			// 记录timer
+
 			current_hash_code = 0;
 			clearTimeout(axios_debounce_timer2);
 			axios_debounce_timer2 = setTimeout(() => {
@@ -198,6 +196,8 @@ function fetch_match_list(is_socket = false, cut) {
 		send_match_list_request();
 	}
 };
+
+
 function handle_destroyed() {
 	clearTimeout(axios_debounce_timer);
 	clearTimeout(axios_debounce_timer2);
@@ -225,21 +225,20 @@ function handle_destroyed() {
 	timer_obj.value = {};
 }
 function init_page_when_base_data_first_loaded() {
-    // 元数据 
-  set_base_data_init();
-  //释放试图 
-  load_data_state.value ='data'
-
-  check_match_last_update_timer_id = setInterval(
-    check_match_last_update_time(),
-    30000
-  );
+	// 元数据 
+	set_base_data_init();
+	//释放试图 
+	load_data_state.value = 'data'
+	check_match_last_update_timer_id = setInterval(
+		check_match_last_update_time(),
+		30000
+	);
 }
 function mounted_fn() {
 	// fetch_match_list();
-// 开启自动化测试功能
-	 // this.DOM_ID_SHOW = window.BUILDIN_CONFIG.DOM_ID_SHOW;
-	 // 列表数据仓库
+	// 开启自动化测试功能
+	// this.DOM_ID_SHOW = window.BUILDIN_CONFIG.DOM_ID_SHOW;
+	// 列表数据仓库
 	MatchListData.init();
 	timer_obj.value = {};
 	store.dispatch({
@@ -261,6 +260,7 @@ function mounted_fn() {
 	useMittOn(MITT_TYPES.EMIT_API_BYMIDS, api_bymids);
 	useMittOn(MITT_TYPES.EMIT_MX_COLLECT_MATCH, mx_collect_match);
 	useMittOn(MITT_TYPES.EMIT_MiMATCH_LIST_SHOW_MIDS_CHANGE, show_mids_change);
+	init_page_when_base_data_first_loaded()
 	useMittOn(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA, init_page_when_base_data_first_loaded);
 	load_video_resources();
 }
@@ -418,14 +418,7 @@ function socket_remove_match(match) {
 		mx_autoset_active_match({ mid: match.mid });
 	}
 };
-/**
- * @Description 设置数据加载状态
- * @param {string} 数据加载状态
- * @param {undefined} undefined
- */
-function set_load_data_state(data) {
-	load_data_state.value = data;
-};
+
 /**
  * @Description 每30秒检查一次可视区域赛事数据最后更新时间，如果超过1分钟未更新数据  调用bymids接口更新数据
  * @param {undefined} undefined
@@ -442,7 +435,7 @@ function check_match_last_update_time() {
 		// 更新时间间隔
 		let api_time_dif = 0,
 			ws_time_dif = 0;
-		let match = MatchListData.list_to_obj.mid_obj[mid+'_'] || {};
+		let match = MatchListData.list_to_obj.mid_obj[mid + '_'] || {};
 		if (match.api_update_time) {
 			api_time_dif = now_time - match.api_update_time;
 		}
@@ -466,7 +459,34 @@ function check_match_last_update_time() {
 function emit_site_tab_active() {
 	fetch_match_list(true);
 };
-export  default function(){
+export default function () {
+
+	/**
+	 * @Description 设置数据加载状态
+	 * @param {string} 数据加载状态
+	 * @param {undefined} undefined
+	 */
+	function set_load_data_state(data) {
+		load_data_state.value = data;
+	};
+	const match_tpl_component = computed(() => {
+		let match_tpl;
+		let lv2_mi;
+		// 这里判断是从左侧菜单点击的vr 还是中间菜单
+		if (MenuData.left_menu_result.sports == "vr") {
+			lv2_mi = MenuData.left_menu_result.lv2_mi;
+		} else if (MenuData.mid_menu_result.sports == "vr") {
+			lv2_mi = MenuData.mid_menu_result.mi;
+		}
+		// 1001-足球 1002-赛狗 1004-篮球 1007-泥地赛车 1008-卡丁车 1009-泥地摩托车 1010-摩托车 1011-赛马 1012-虚拟马车赛
+		// 足球(1001) | 篮球(1004)  足球菜单ID（30054）篮球菜单ID（30056） 使用 tpl1
+		if ([1001, 1004, 30054, 30056, 31001].includes(+lv2_mi)) {
+			match_tpl = "virtual-match-tpl1";
+		} else {
+			match_tpl = "virtual-match-tpl2";
+		}
+		return match_tpl;
+	});
 	return {
 		is_loading,
 		match_tpl_component,

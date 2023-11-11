@@ -32,8 +32,6 @@
       </button>
     </div>
   </div>
-  <!-- 提前兑现详情 -->
-  <early-settled-detail v-if="details_show_btn" :orderNo="item_data.orderNo" />
 </template>
 
 <script setup>
@@ -65,8 +63,6 @@ let status = ref(1)
 let slider_show = ref(false)
 // 提前结算详情列表是否显示
 let details_show = ref(false)
-// 展开 提前结算详情列表 的按钮是否显示
-let details_show_btn = ref(false)
 // 0  100
 let percentage = ref(100)
 // 0-提前结算金额已包含本金  1-提前结算申请未通过  2-功能暂停中，请稍后再试  3-提前结算金额调整中，请再试一次
@@ -74,7 +70,7 @@ let tips = ref(0)
 // 提前结算详情数据
 let presettleorderdetail_data = ref([])
 // orderVOS 里面的第一条数据，只考虑单关
-let ordervos_ = ref({})
+let ordervos_ = null
 // 接口返回的正在确认中的金额，当 [2, 3, 4, 6] 4种情况时，也用于赋值锁定金额
 let front_settle_amount = ref('')
 // 根据轮询获取的最新预计返还金额
@@ -143,33 +139,29 @@ watch(() => expected_profit.value, (_new, _old) => {
   }
 })
 
-
-ordervos_ = lodash.get(props.item_data, "orderVOS[0]", {});
-// 接口：当 enablePreSettle=true && hs = 0  提前结算显示高亮， 当 enablePreSettle=true && hs != 0  显示置灰， 当 enablePreSettle=false 不显示，
-if (ordervos_.hs != 0) {
-  status.value = 5;
-}
-// 设置哪些注单处于确认中的状态
-if (Array.isArray(queryorderpresettleconfirm_data) && BetRecordClass.select == 0) {
-  queryorderpresettleconfirm_data.forEach((item) => {
-    if (item.orderNo == props.item_data.orderNo && item.preSettleOrderStatus == 0) {
-      status.value = 3
-      front_settle_amount.value = item.frontSettleAmount
-    }
-  });
-}
-onMounted(() => {
-  // 已发生过提前结算或者提前结算取消
-  if (props.item_data.preBetAmount > 0 || [3, 4, 5].includes(props.item_data.settleType)) {
-    details_show_btn.value = true;
+// provide 进来的 待确认中的提前结算单
+watch(() => queryorderpresettleconfirm_data.value, (_new) => {
+    // 设置哪些注单处于确认中的状态
+    if (Array.isArray(_new) && BetRecordClass.select == 0) {
+      _new.forEach((item) => {
+      if (item.orderNo == props.item_data.orderNo && item.preSettleOrderStatus == 0) {
+        status.value = 3
+        front_settle_amount.value = item.frontSettleAmount
+      }
+    });
   }
+}, { immediate: true })
+
+onMounted(() => {
+  ordervos_ = lodash.get(props.item_data, "orderVOS[0]", {});
+  // 接口：当 enablePreSettle=true && hs = 0  提前结算显示高亮， 当 enablePreSettle=true && hs != 0  显示置灰， 当 enablePreSettle=false 不显示，
+  if (ordervos_.hs != 0) {
+    status.value = 5;
+  }
+
   if (is_only_fullbet.value) {
     // 剩余的金额小于最低限额时，只支持全额结算
     status.value = 6;
-  }
-  // 该注单支持提前结算，或者做过提前结算的话，需要打个标记
-  if (calc_show.value || details_show_btn.value) {
-    props.item_data.is_show_early_settle = true
   }
 
   /**

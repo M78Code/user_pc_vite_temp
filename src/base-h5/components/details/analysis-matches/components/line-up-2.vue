@@ -294,7 +294,7 @@
               v-if="!lodash.isEmpty(detail_data)"
               :type="0"
               :csid="detail_data.csid"
-              :url="lodash.get(detail_data,'mhlu[0]')"
+              :url="lodash.get(detail_data,'malu[0]')"
               :fr="MenuData.get_menu_type() != 3000 ? lodash.get(detail_data,'frmhn[0]') : detail_data.frmhn"
               :size="44"
             ></team-img>
@@ -305,7 +305,7 @@
               v-if="!lodash.isEmpty(detail_data)"
               :type="0"
               :csid="detail_data.csid"
-              :url="lodash.get(detail_data,'malu[0]')"
+              :url="lodash.get(detail_data,'mhlu[0]')"
               :fr="MenuData.get_menu_type() != 3000 ? lodash.get(detail_data,'frmhn[0]') : detail_data.frmhn"
               :size="44"
             ></team-img>
@@ -380,7 +380,7 @@
                 v-if="!lodash.isEmpty(detail_data)"
                 :type="0"
                 :csid="detail_data.csid"
-                :url="lodash.get(detail_data,'mhlu[0]')"
+                :url="lodash.get(detail_data,'malu[0]')"
                 :fr="MenuData.get_menu_type() != 3000 ? lodash.get(detail_data,'frmhn[0]') : detail_data.frmhn"
                 :size="44"
               ></team-img>
@@ -391,7 +391,7 @@
                 v-if="!lodash.isEmpty(detail_data)"
                 :type="0"
                 :csid="detail_data.csid"
-                :url="lodash.get(detail_data,'malu[0]')"
+                :url="lodash.get(detail_data,'mhlu[0]')"
                 :fr="MenuData.get_menu_type() != 3000 ? lodash.get(detail_data,'frmhn[0]') : detail_data.frmhn"
                 :size="44"
               ></team-img>
@@ -559,7 +559,8 @@ import { LOCAL_PROJECT_FILE_PREFIX, MenuData } from 'src/core'
       try {
         // sonMenuId： 旧版 基本面是1 
         let parameter = {
-          standardMatchId: match_id.value, //2274159, //2274159 ,//2079863足球测试id
+          // standardMatchId: match_id.value, //2274159, //2274159 ,//2079863足球测试id
+          standardMatchId: 2385166,
           parentMenuId: 2,
           sonMenuId: 1
         }
@@ -701,8 +702,8 @@ import { LOCAL_PROJECT_FILE_PREFIX, MenuData } from 'src/core'
   }
   // 刷新 当前赛事分析信息
   const refresh_match_analysis = () => {
-    get_list(1)
-    get_list(2)
+    get_list(1) // 传 1 是主队
+    get_list(2) // 传 2 客队
     get_data_list()
   }
   onUnmounted(() => {

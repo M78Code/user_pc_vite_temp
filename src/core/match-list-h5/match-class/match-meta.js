@@ -4,7 +4,7 @@
  */
 import { ref } from 'vue'
 import lodash from 'lodash'
-import { api_common } from "src/api/index.js";
+import { api_common, api_match_list } from "src/api/index.js";
 import BaseData from 'src/core/base-data/base-data.js'
 import MatchPage from 'src/core/match-list-h5/match-class/match-page'
 import UserCtr from 'src/core/user-config/user-ctr.js'
@@ -15,7 +15,8 @@ import PageSourceData from "src/core/page-source/page-source.js";
 import VirtualList from './virtual-list'
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 import { MATCH_LIST_TEMPLATE_CONFIG } from "src/core/match-list-h5/match-card/template"
-import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, useMittEmit, MITT_TYPES,project_name,MenuData } from 'src/core'
+import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, useMittEmit, MITT_TYPES,project_name, MenuData, 
+  MatchDataWarehouse_ouzhou_PC_l5mins_List_Common as MatchDataBasel5minsH5, MatchDataWarehouse_ouzhou_PC_hots_List_Common as MatchDataBaseHotsH5 } from 'src/core'
 
 class MatchMeta {
 
@@ -59,7 +60,8 @@ class MatchMeta {
       menu_lv_v1_sl = lodash.get(MenuData.current_lv_1_menu, 'sl')
       menu_lv_v2_sl = lodash.get(MenuData.current_lv_2_menu, 'sl')
     }else{
-      // 菜单 ID 对应的 元数据赛事 mids
+      // 菜单 ID 对应的 元数据赛事 mids   
+      // 先写死
       menu_lv_v1 = MenuData.current_lv_1_menu_i
       menu_lv_v2 = MenuData.current_lv_2_menu_i
       menu_lv_v1_sl = MenuData.get_menu_lvmi_list(menu_lv_v1)
@@ -438,6 +440,45 @@ class MatchMeta {
     const list = lodash.get(res, 'data', [])
     this.handler_match_list_data(list)
   }
+
+  /**
+   * @description 获取欧洲版首页热门赛事
+   */
+  async get_ouzhou_home_data () {
+    const res = await api_match_list.get_home_matches({ type: 1 })
+    const p15 = lodash.get(res, 'data.p15', [])
+    const hots = lodash.get(res, 'data.hots', [])
+    const dataList = lodash.get(res, 'data.dataList', [])
+    if (+res.code !== 200) return
+    // 15分钟玩法赛事数据
+    const p15_list = this.assemble_15_minute_data(p15)
+    MatchDataBasel5minsH5.set_list(p15_list)
+    // 热门赛事数据
+    MatchDataBaseHotsH5.set_list(hots)
+    // 首页滚球赛事
+    const length = lodash.get(dataList, 'length', 0)
+    if (length > 0) {
+      const match_list = MatchUtils.get_home_in_play_data(dataList)
+      this.handler_match_list_data(match_list, 2)
+    }
+    return { p15_list, hots, dataList }
+  }
+
+    /**
+   * @description 获取最近一组15分玩法数据
+   * @param {*} payload 正在比赛的数据
+   */
+    assemble_15_minute_data = (payload) => {
+      return payload.map((item) => {
+        const { ms, mst } = item
+        const { title, isLock } = MatchUtils.get_match_15_minute_stage(ms, mst)
+        return {
+          title,
+          isLock,
+          ...item,
+        }
+      })
+    }
 
   /**
    * @description 获取收藏赛事

@@ -40,7 +40,7 @@
           <div class="menu_item" :class="[
             'menu_item_' + item.mi,
             // { active: meta_data_store.current_menu.mi == item.mi },
-          ]" v-for="item in MenuData.menu_list" :key="item.mi" @click="change_current_menu(item)"
+          ]" v-for="item in leftDataList" :key="item.mi" @click="change_current_menu(item)"
             :data-id="item.mi">
             <sport-icon size="18" :sport_id="item.mi" />
             <!-- 有电竟体育时展示电竞体育2000  Esports  -->
@@ -58,13 +58,15 @@
   </div>
 </template>
 <script setup>
-import { reactive, defineEmits} from "vue";
+import {ref , reactive, defineEmits,watch} from "vue";
 import sportIcon from "./sport-icon.vue";
 import BaseData from "src/core/base-data/base-data.js";
 import { MenuData } from 'src/core/';
 import { useRouter } from "vue-router";
+import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 const router = useRouter();
 const emits = defineEmits(['isLeftDrawer']);
+const leftDataList = ref([]);
 /**
  * vr 电竞
  */
@@ -94,9 +96,17 @@ const set_menu_obj = (data) => {
 const change_current_menu = (item) => {
   MenuData.set_current_lv1_menu("2");
   MenuData.set_menu_mi(item.mi);
+
+  // 设置菜单对应源数据
+  MatchMeta.set_origin_match_data()
+
   emits('isLeftDrawer')
+  
   router.push("/match");//跳转今日列表
 }
+watch(MenuData.update_time,()=>{
+  leftDataList.value = MenuData.menu_list;
+})
 </script>
 <style lang="scss" scoped>
 .menu_container {

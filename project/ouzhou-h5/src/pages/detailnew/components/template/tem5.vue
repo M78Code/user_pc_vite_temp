@@ -27,7 +27,7 @@
         v-for="(value, key) in matchInfo"
         :key="key"
         class="temp_grid ol_on"
-      >
+        >
         <!-- <div class="temp5-hv">{{ value.hv || key }}</div> -->
         <!-- <div >
           <div
@@ -40,15 +40,15 @@
           </div>
         </div>
         <div></div> -->
-        <div v-if="value.length==1" @click="go_betting({ ol: value, hl: item_data.hl[0], payload: item_data })"   :class="{ 'is-active': value[0].oid === active, 'temp_grid_item': true, 'ol_ov': true }">
+        <div v-if="value.length==1" @click="go_betting(value)"   :class="{ 'is-active': value[0].oid === active, 'temp_grid_item': true, 'ol_ov': true }">
           <span class="o_hv">{{ value.hv || key }}</span>
-          <span>{{ get_oddv(value.ov/100000) }}</span>
+          <span>{{ get_oddv(value?.ov/100000) }}</span>{{value.ov}}
         </div>
         <template v-else>
           <div v-for="o in value" :class="{'temp_grid_item': true, 'is-active': o.oid == active, 'ol_ov': true }" :key="o.oid"
-            @click="go_betting({ ol: o, hl: item_data.hl[0], payload: item_data })">
+            @click="go_betting( o)">
             <span class="o_hv">{{ o.on || key }}</span>
-            <span>{{ get_oddv(o.ov/100000) }}</span>
+            <span>{{ get_oddv(o?.ov/100000) }}</span>
           </div>
         </template>
       </div>
@@ -57,7 +57,7 @@
     <template v-else>
       <div v-for="ol in item_data.hl[0].ol" :key="ol.oid" class="ol_on">
         <div
-          @click="go_betting({ ol, hl: item_data.hl[0], payload: item_data })"
+          @click="go_betting(ol)"
           :class="[{ 'is-active': ol.oid == active }, 'ol_ov']"
         >
           <span class="ol-on-text">{{ ol.on }}</span>
@@ -77,7 +77,7 @@ const emit = defineEmits(["bet_click_"]);
 const props = defineProps({
   item_data: {
     type: Object,
-    default: () => ({}),
+    default: () => {},
   },
   active: {
     type: Number,

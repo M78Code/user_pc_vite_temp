@@ -74,7 +74,7 @@ function get_vue_hidden_run() {
         // 发送ws连接状态(0-断开,1-连接,2-断网续连状态)
         window.postMessage({event: 'WS', cmd:`WS_STATUS_CHANGE_EVENT`, data},'*');
         // console.log('---未在当前网站--关闭WS---',_.get(window.ws,'ws.url'));
-        WsMan.ws && window.ws.retInitData(true);
+        // WsMan.ws && window.ws.retInitData(true);
       }
     }, DOCUMENT_HIDDEN_WS_CLOSE_TIME);
   } else {

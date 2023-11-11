@@ -2,6 +2,7 @@ import lodash from 'lodash'
 import BaseData from 'src/core/base-data/base-data.js'
 import MenuData from "src/core/menu-app-h5/menu-data-class.js"
 import PageSourceData from "src/core/page-source/page-source.js";
+import { playingMethods_15 } from "src/core/constant/config/15-minute.js";
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 
 class MatchUtils {
@@ -171,6 +172,63 @@ class MatchUtils {
       const matchs = list.filter(list => list.csid === t)
       MatchResponsive.set_ball_seed_count(`${key}_csid_${t}`, matchs.length)
     })
+  }
+   /**
+   * @description 15分钟玩法赛事阶段 ms 1 滚球
+   * @param { Number } ms
+   * @param { Number } mst
+   */
+   // 
+  get_match_15_minute_stage (ms, mst)  {
+    let isLock = false
+    let title = ''
+    if (ms !== 1) {
+      title = playingMethods_15[0].title
+    } else {
+      const difference = Math.floor(Number(mst) / 60)
+      const residue = Math.floor(difference / 15)
+      if (difference > 0 && difference <= 90) {
+        title = playingMethods_15.find(p => p.value === residue).title
+      }
+      if (difference < 0) {
+        isLock = true
+        title = playingMethods_15[0].title
+      }
+      if (difference > 90) {
+        isLock = true
+        title = playingMethods_15[playingMethods_15.length - 1].title
+      }
+    }
+    return { isLock, title }
+  }
+
+  /**
+   * @description 获取 欧洲版 首页 in-play 赛事
+   * @remarks
+   *  1. 默认足篮网，足球最多展示10场赛事，篮球与网球最多展示5场赛事，按开赛时间排序展示，最多展示20场
+   *  2. 如果不足20场按菜单球种排序补充上，直到展示20场数据。
+   */
+  get_home_in_play_data (list) {
+    const match_data = list.sort((a,b) => +a.csid - +b.csid)
+    const csid_obj = {}
+    const result = []
+    match_data.some(t => {
+      const { csid } = t
+      t.is_virtual = true
+      const key = `csid_${csid}`
+      if (csid_obj[key]) {
+        csid_obj[key]++
+      } else {
+        csid_obj[key] = 1
+      }
+      if (result.length >= 20) return true
+      if (csid == 1 &&  csid_obj[key] < 11) {
+        result.push(t)
+      } else {
+        if (csid_obj[key] < 6) result.push(t)
+      }
+    })
+    return result
   }
 }
 

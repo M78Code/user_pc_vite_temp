@@ -178,7 +178,9 @@ const detail_tabs_change = (tab_item) => {
   tab_selected_obj.value = tab_item;
   const { plays } = tab_item;
   const m_plays = [];
-  const list = get_match_odds_info.value?.filter(item => {
+  let arr = lodash.cloneDeep(get_match_odds_info.value)
+  console.log(arr,'arr');
+  const list = arr?.filter(item => {
     let play = item.topKey;
     let topKeyArr = item.topKey.split("-");
     if (topKeyArr.length > 0) {
@@ -267,11 +269,13 @@ const get_matchDetail_getMatchOddsInfo = (params) => {
       } else {
         match_odds_info.value = res.data;
       }
+      MatchDataWarehouseInstance.set_match_details(MatchDataWarehouseInstance.get_quick_mid_obj(params.mid), match_odds_info.value);
     });
 
   // get_match_odds_info.value = get_match_odds_info_mock.data;
   // match_odds_info.value = get_match_odds_info_mock.data
 };
+
 /**
  *@description 获取详情页面玩法集接口(/v1/m/category/getCategoryList)
  *@param {obj} params 请求参数
@@ -310,7 +314,7 @@ const get_matchDetail_MatchInfo = (params) => {
         router.replace("/");
       }
       // detail_store.get_detail_params
-      MatchDataWarehouseInstance.set_match_details(match_detail.value);
+      MatchDataWarehouseInstance.set_match_details(match_detail.value,[]);
       // console.log("get_matchDetail_MatchInfo", res);
     });
 
@@ -364,7 +368,7 @@ onMounted(() => {
   loading.value = true;
   setTimeout(() => {
     detail_init();
-    timer_s_interval(4000);
+    // timer_s_interval(4000);
   }, 10);
 
 });

@@ -18,14 +18,14 @@
             }}</span>
           </div>
           
-          <div v-for="ol in item_data.hl[0].ol" :key="ol.oid" class="ol_on">
-            <template v-if="ol.otd === opt.otd">
+          <div v-for="ol in item_data.hl[0].ol" :key="ol?.oid" class="ol_on">
+            <template v-if="ol?.otd === opt?.otd">
               <!-- <div>{{ ol.on }}</div> -->
               
-              <div @click="go_betting({ol,hl: item_data.hl[0],payload:item_data})" :class="[{ 'is-active': ol.oid == active }, 'ol_ov']" >
+              <div @click="go_betting(ol)" :class="[{ 'is-active': ol?.oid == active }, 'ol_ov']" >
                   <!-- {{ (ol.ov/100000).toFixed(2) }} -->
-                  <span class="ol-on-text">{{ ol.on || ol.ott }}</span>
-                  <span class="ol-ov-text">{{ get_oddv(ol.ov/100000) }}</span>
+                  <span class="ol-on-text">{{ ol?.on || ol?.ott }}</span>
+                  <span class="ol-ov-text">{{ get_oddv(ol?.ov/100000) }}</span>
               </div>
             </template>
           </div>
@@ -33,10 +33,10 @@
       </template>
 
       <template v-else>
-        <div v-for="ol in item_data.hl[0].ol" :key="ol.oid" class="ol_on">
-          <div @click="go_betting({ol,hl: item_data.hl[0],payload:item_data})" :class="[{ 'is-active': ol.oid == active }, 'ol_ov']" >
-              <span class="ol-on-text">{{ ol.on || ol.ott }}</span>
-              <span class="ol-ov-text">{{ get_oddv(ol.ov/100000) }}</span>
+        <div v-for="ol in item_data.hl[0].ol" :key="ol?.oid" class="ol_on">
+          <div @click="go_betting(ol)" :class="[{ 'is-active': ol?.oid == active }, 'ol_ov']" >
+              <span class="ol-on-text">{{ ol?.on || ol?.ott }}</span>
+              <span class="ol-ov-text">{{ get_oddv(ol?.ov/100000) }}</span>
           </div>
         </div>
       </template>
@@ -55,7 +55,7 @@ const props = defineProps({
     default: () => ({}),
   },
   active: {
-    type: Number|String,
+    type: Number || String,
     default: () => 0,
   },
 });

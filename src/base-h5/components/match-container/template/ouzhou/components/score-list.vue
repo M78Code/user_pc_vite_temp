@@ -24,6 +24,10 @@ import { compute_value_by_cur_odd_type } from "src/core/index.js"
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 
 const props = defineProps({
+  height: {
+    type: String,
+    default: () => '58px'
+  },
   score_length: {
     type: Number,
     default: () => 3
@@ -40,7 +44,7 @@ const active_score = ref('')
 const score_data = computed(() => {
   const hps = props.match_info.hps
   const hpid = MatchResponsive.match_hpid.value
-  const hps_item = hps.find(t => t.hpid == hpid)
+  const hps_item = hps && hps.find(t => t.hpid == hpid)
   const ol = lodash.get(hps_item, 'hl[0].ol', Array.from({ length: props.score_length }, (i) => { return {  oid: i } }))
   return ol
 })
@@ -51,6 +55,7 @@ const get_odd_os = (ov) => {
 }
 
 const set_old_submit = (ol) => {
+  if (ol.os !== 1) return
   active_score.value = `${props.match_info.id}${ol.oid}`
   const {oid,_hid,_hn,_mid } = ol
   let params = {
@@ -93,14 +98,14 @@ const set_old_submit = (ol) => {
       color: #FF7000;
       text-align: center;
       font-weight: 500;
-      height: 58px;
-      line-height: 58px;
+      height: v-bind(height);
+      line-height: v-bind(height)
     }
     .lock{
       width: 16px;
       height: 16px;
       position: relative;
-    top: 2px;
+      top: 2px;
   }
 }
 </style>
