@@ -30,10 +30,10 @@
 <script setup>
 import { onMounted, ref,watch ,nextTick} from "vue";
 import { api_match_list } from "src/api";
+import { LOCAL_PROJECT_FILE_PREFIX } from "src/core/index.js";
 import video  from "src/core/video/video.js"
 import loading from '../../../components/loading/index.vue'
 import _ from 'lodash'
-
 const props = defineProps({
     detail_info: {  // 赛事详情
         type: Object,
@@ -90,6 +90,12 @@ const url =
 
       // 目标赛事视频url相关信息获取
       video.get_video_url(props.detail_info,{params:{play_type:1}}, (show_type,media_src) => {
+         // 未登录
+         if(media_src === true && show_type === 'no-login'){
+              // this.is_limited = true
+              // this.show_type = show_type
+              return
+            }
        console.log(111111111,show_type)
        console.log(111111111,media_src)
       })
@@ -119,17 +125,18 @@ const url =
     }
       post_video_url(params).then( res => {
       let animationUrl = ''
+      console.log(111111111111,res)
       // 足篮棒网使用3.0动画  其他使用2.0
       if([1,2,3,5].includes(match.csid*1)){
         let style = 'day' 
-        let animation3Url = _.get(res, "data.data.animation3Url") || []
+        let animation3Url = _.get(res, "data.animation3Url") || []
         animation3Url.forEach( item =>{
           if(item.styleName.indexOf(style) >= 0){
             animationUrl = item.path
           }
         })
        }
-      animationUrl = animationUrl || _.get(res, "data.data.animationUrl")
+      animationUrl = animationUrl || _.get(res, "data.animationUrl")
       if (animationUrl) {
         // 移除 http(s)
         animationUrl = animationUrl.replace(/https?:/, "")
