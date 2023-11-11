@@ -311,7 +311,13 @@ export default {
 
       const ol = lodash.get(hps_item, 'hl[0].ol', Array.from({ length: score_length.value }, () => '{}'))
 
-      return ol.length === 3 ? ['1', 'X', '2'] : ['1', '2']
+      let ol_data = undefined
+      if (ol && ol[0] && ol[0].otd) {
+        ol.sort((a, b) => a.otd - b.otd)
+        ol_data = ol.map(t => t.ot)
+      }
+
+      return ol_data ? ol_data : ol.length === 3 ? ['1', 'X', '2'] : ['1', '2']
     })
     // 计算有玩法的hps
     const get_hps_play_data = () => {

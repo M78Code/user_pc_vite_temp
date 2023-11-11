@@ -6,7 +6,7 @@
   <div class="score-list">
     <template v-if="score_data.length > 0">
       <span v-for="s in score_data" :key="s" @click="set_old_submit(s)" :class="{active: active_score === `${match_info.id}${s.oid}` }">
-        <span v-if="s.os === 1">{{ get_odd_os(s.ov) }}</span>
+        <span v-if="s.os === 1"> <span class="hpn" v-if="show_hpn">{{ get_item_hpn(s) }}</span> {{ get_odd_os(s.ov) }}</span>
         <img v-else class="lock" :src="odd_lock_ouzhou" alt="lock">
       </span>
     </template>
@@ -35,6 +35,10 @@ const props = defineProps({
   match_info: {
     type: Object,
     default: () => {}
+  },
+  show_hpn: {
+    type: Boolean,
+    default: () => false
   }
 })
 
@@ -52,6 +56,10 @@ const score_data = computed(() => {
 // 显示的赔率
 const get_odd_os = (ov) => {
   return  compute_value_by_cur_odd_type(ov,'','',props.match_info.csid)
+}
+
+const get_item_hpn = (s) => {
+  return s.ot
 }
 
 const set_old_submit = (ol) => {
@@ -91,6 +99,10 @@ const set_old_submit = (ol) => {
       color: #fff;
       background: #FF7000;
       border-radius: 2px;
+      .hpn{
+        position: relative;
+        top: 1px;
+      }
     }
     > span {
       flex: 1;
@@ -99,7 +111,10 @@ const set_old_submit = (ol) => {
       text-align: center;
       font-weight: 500;
       height: v-bind(height);
-      line-height: v-bind(height)
+      line-height: v-bind(height);
+      .hpn{
+        color: #8A8986
+      }
     }
     .lock{
       width: 16px;
