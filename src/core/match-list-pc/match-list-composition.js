@@ -338,7 +338,7 @@ function get_hot_match_list(backend_run = false) {
 			let code = lodash.get(res, "data.code");
 			// 赛事列表
 			let match_list = lodash.get(res, "data.data") || [];
-			if (MenuData.is_esports()) {
+			if (MenuData.is_export()) {
 				match_list = lodash.get(res, "data.data.data") || [];
 			}
 			if (code == 200 && match_list.length > 0) {

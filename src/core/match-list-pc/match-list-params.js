@@ -53,10 +53,9 @@ const api_params = {
  */
 function match_list_all_params() {
     const { menu_root, left_menu_result, mid_menu_result, match_list_api_config, is_collect } = MenuData
-    let { csid, tid, md, index, euid } = mid_menu_result || {};
-    let { lv2_mi, lv1_mi, jinri_zaopan, } = left_menu_result || {};
     // 父级euid
-    let guanjun = '';
+    let { csid, tid, md, index, euid, sports, guanjun } = mid_menu_result || {};
+    let { lv2_mi, lv1_mi, jinri_zaopan, } = left_menu_result || {};
     let apiType = 1;
     let api_name = api_params.other.match;
     // 前端控制是否禁用收藏功能
@@ -74,7 +73,7 @@ function match_list_all_params() {
         is_collect,
         route: "list",
         root: menu_root,
-        sports: "",
+        sports,
         guanjun,
         match_list: {
             api_name,

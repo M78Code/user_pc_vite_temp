@@ -453,7 +453,7 @@ const virtual_disable_follow_filter = () => {
  *@param init_footer_menulist_data 是否重置footer_menulist数据
  */
 const set_footer_menulist = (init_footer_menulist_data = true) => {
-  let is_virtual = MenuData.is_virtual_sport(); //虚拟体育
+  let is_virtual = MenuData.is_vr(); //虚拟体育
   // 赛果虚拟体育
   let is_result_virtual = MenuData.is_results_virtual_sports();
   let is_saiguo_gz = MenuData.is_results() &&

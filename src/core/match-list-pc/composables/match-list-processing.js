@@ -77,7 +77,7 @@ const deal_with_list_data = (data) => {
 		})
 	})
 
-	// if (MenuData.is_guanjun()) {
+	// if (MenuData.is_kemp()) {
   //   MatchListData.set_list(mid_arr)
 	// }
 }
@@ -99,7 +99,7 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 	let all_league_list = [];
 	all_league_list.push(...lodash.get(res_data, "livedata", []));
 	all_league_list.push(...lodash.get(res_data, "nolivedata", []));
-  if (MenuData.is_guanjun()) {
+  if (MenuData.is_kemp()) {
     all_league_list.push(...lodash.get(res_data, "data", []));
   }
       deal_with_list_data(all_league_list);
@@ -189,10 +189,10 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 				sportId: first_league.csid,
 			};
 		} else {
-			if (MenuData.is_guanjun()) {
+			if (MenuData.is_kemp()) {
 				// 冠军玩法 调用接口切换右侧
 				// this.mx_autoset_active_match();
-			} else if (!MenuData.is_esports()) {
+			} else if (!MenuData.is_export()) {
 				// 非电竞切换右侧 为列表第一场赛事
 				let first_league = all_league_list[0];
 				let mids = first_league.mids.split(",");
@@ -264,7 +264,7 @@ const mx_use_list_res_when_code_200_and_list_length_gt_0 = ({match_list, collect
 		if (!is_virtual || is_search) {
 			// 非虚拟体育——设置赛事列表选中赛事
 			if (
-				MenuData.is_guanjun() ||
+				MenuData.is_kemp() ||
 				MenuData.menu_root == 400
 			) {
 				// this.mx_autoset_active_match();

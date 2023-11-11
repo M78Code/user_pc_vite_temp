@@ -157,7 +157,7 @@ const use_featch_fn = () => {
     },
     callback
   ) => {
-    let panduan_1 = MenuData.is_virtual_sport();
+    let panduan_1 = MenuData.is_vr();
     let panduan_2 = ["details", "video"].includes(page_source);
     let first_load_time;
     if ((panduan_1 && page_source !== "search") || panduan_2) {
@@ -232,7 +232,7 @@ const use_featch_fn = () => {
     }
     let api;
     // 电竞
-    if (MenuData.is_esports() && page_source !== "search") {
+    if (MenuData.is_export() && page_source !== "search") {
       api = api_websocket.get_esports_by_mids;
       params = {
         mids: mids.join(","),
@@ -262,7 +262,7 @@ const use_featch_fn = () => {
           // if (page_source == "details" && page_source != "details") return;
           //更新电竞右侧视频
           if (
-            MenuData.is_esports() &&
+            MenuData.is_export() &&
             page_source !== "search" &&
             !is_first_load
           ) {
