@@ -8,7 +8,7 @@
             <layout-header />
         </div>
         <div style="display: none;"> {{ LayOutMain_pc.layout_version }}-{{ BetData.bet_data_class_version }}</div>
-        <div class="flex">
+        <div class="flex full-content">
             <div :style="{
                 height: LayOutMain_pc.layout_content_height + 'px',
                 width: (LayOutMain_pc.layout_content_width + parseFloat(LayOutMain_pc.layout_left_width)) + 'px'
@@ -145,5 +145,10 @@ onMounted(() => {
 :deep(.ty-bet-box) {
     width: 100%;
     height: 100%;
+}
+.full-content{
+    flex-wrap: nowrap;
+    width: 1440px;
+    margin: 0 auto;
 }
 </style>

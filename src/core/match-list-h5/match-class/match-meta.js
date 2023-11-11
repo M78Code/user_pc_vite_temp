@@ -157,7 +157,10 @@ class MatchMeta {
    * @description 非元数据处理
    * @param { list } 赛事 list
    */
-    handler_match_list_data(list, type = 2) {
+    handler_match_list_data(config) {
+
+      const { list, type = 2, is_virtual = true } = config
+
       const length = lodash.get(list, 'length', 0)
       if (length < 1) return this.set_page_match_empty_status(true);
       // 赛事全量数据
@@ -175,11 +178,11 @@ class MatchMeta {
       const result_mids = target_data.map(t => t.mid)
 
       this.complete_matchs = target_data
-      this.match_mids = lodash.uniq(result_mids)
+      if (!is_virtual) this.match_mids = lodash.uniq(result_mids)
       this.complete_mids = lodash.uniq(result_mids)
 
       // 计算所需渲染数据
-      this.compute_page_render_list(0, type)
+      is_virtual && this.compute_page_render_list(0, type)
 
       this.set_page_match_empty_status(false)
 
@@ -413,11 +416,15 @@ class MatchMeta {
       ...params,
       category,
       md,
-      type: 29,
-      euid,
+      type: 28,
+      euid: '1',
       showem: 1, // 新增的参数
     })
-    this.handle_custom_matchs(res)
+    if (+res.code !== 200) return
+    const list = lodash.get(res, 'data', [])
+    const length = lodash.get(list, 'length', 0)
+    if (length < 1) return
+    this.handler_match_list_data({ list: list })
   }
 
   /**
@@ -438,7 +445,7 @@ class MatchMeta {
     })
     if (+res.code !== 200) return this.set_page_match_empty_status(true);
     const list = lodash.get(res, 'data', [])
-    this.handler_match_list_data(list)
+    this.handler_match_list_data({ list: list })
   }
 
   /**
@@ -502,7 +509,7 @@ class MatchMeta {
     const res = await api_common.get_collect_matches(params)
     if (res.code !== '200') return this.set_page_match_empty_status(true);
     const list = lodash.get(res, 'data', [])
-    this.handler_match_list_data(list, 1)
+    this.handler_match_list_data({ list: list, type: 1, is_virtual: false })
   }
 
   /**

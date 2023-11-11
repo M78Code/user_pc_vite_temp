@@ -24,7 +24,7 @@
     </div>
 </template>
 <script setup>
-import { onMounted, ref ,computed } from "vue"
+import { ref ,computed } from "vue"
 import sportIcon from "../components/left-menu/sport-icon.vue"
 import BaseData from "src/core/base-data/base-data.js";
 import { MenuData  } from "src/core/";
@@ -66,14 +66,6 @@ const dataList = computed(() =>{
 const playValue = ref(props.current_mi);
 const scrollRef = ref(null);
 /**
- * id设为滚球
- */
-onMounted(() => {
-    // MenuData.set_current_lv1_menu(props.menu_type);
-    // MenuData.set_menu_mi(dataList.value[0]?.mi);
-    // MenuData.get_match_render_list();
-})
-/**
  * 滚球选择
  * @param {*} item 
  * @param {*} index 
@@ -82,10 +74,8 @@ const on_change_play = (item) => {
     if(playValue.value == item.mi)return;
     playValue.value = item.mi;
     emits('changeMenu',item)
-    // MenuData.set_menu_mi(item.mi)
     const index = dataList.value.findIndex(n=>n.mi == item.mi);
     scrollRef.value.scrollTo(index-2, 'start-force')
-    // MenuData.get_match_render_list();
 }
 
 </script>

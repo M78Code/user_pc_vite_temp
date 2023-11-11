@@ -178,7 +178,7 @@ const goto_top = () => {
 }
 
 const get_is_static = () => {
-  return is_kemp.value || is_results.value || is_collect.value
+  return is_kemp.value || is_collect.value
 }
 // 计算每个赛事id 对应的 容器高度 top 值
 const get_match_top_by_mid1 = (mid) => {

@@ -205,7 +205,6 @@ import { i18n_t } from "src/boot/i18n.js";;
       }
 
       .col1 {
-        flex: 1;
         justify-content: center !important;
 
         &.flex_start {

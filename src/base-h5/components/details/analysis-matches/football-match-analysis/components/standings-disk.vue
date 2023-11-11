@@ -227,13 +227,11 @@ import lodash from "lodash"
       }
 
       .col1 {
-        flex: 1;
-
-        flex: 1;
+        // flex: 1;
       }
 
       .col3 {
-        width: 0.3rem;
+        // width: 0.3rem;
       }
 
       .col4 {

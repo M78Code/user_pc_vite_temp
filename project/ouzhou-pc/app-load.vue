@@ -9,6 +9,7 @@
     <div class="error-data">{{ GlobalSwitchClass.error_data }}</div>
     <div style="display:none">{{ GlobalSwitchClass.global_switch_version.version }}</div>
     <div id="v-tooltip"></div>
+    <Toast />
   </div>
 </template>
 <script setup>
@@ -26,6 +27,7 @@ import { useRouter,useRoute } from "vue-router";
 import WsMan from "src/core/data-warehouse/ws/ws-ctr/ws-man.js"
 import { compute_css_variables } from "src/core/css-var/index.js"
 import ws from "src/core/data-warehouse/ws/ws-ctr/ws.vue"
+import Toast from "src/components/toast/index.vue"
 const { NODE_ENV, CURRENT_ENV, DEFAULT_VERSION_NAME } = window.BUILDIN_CONFIG;
 const router = useRouter();
 const route= useRoute();

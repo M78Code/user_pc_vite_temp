@@ -352,7 +352,7 @@
           background:  var(--q-analysis-text-color-27);
         }
   
-        div {
+        >div {
           display: flex;
           align-items: center;
           justify-content: center;
@@ -362,7 +362,7 @@
       }
   
       .col1 {
-        flex: 1;
+        
   
         > img {
           width: 0.36rem;
@@ -382,10 +382,8 @@
       }
   
       .col4 {
-        flex: 1;
   
         &.end-btn > span {
-          width: 0.54rem;
           height: 0.2rem;
           line-height: 0.18rem;
           letter-spacing: 0;

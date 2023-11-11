@@ -84,17 +84,11 @@ export default {
         MenuData.set_left_menu_result({
             root: 1,
             lv1_mi: "",
-            lv2_mi: 30002,
+            lv2_mi: "",
             sports: "",
             guanjun: "",
             mid_menu_show: { list_filter: true },
             has_mid_menu: true,
-        });
-        //设置 中间 菜单输出
-        MenuData.set_mid_menu_result({
-            sports: "",
-            guanjun: "",
-            euid: 30002,
         });
         const match_list_card_key_arr = ref([])
         const coom_soon_state = ref(false)
