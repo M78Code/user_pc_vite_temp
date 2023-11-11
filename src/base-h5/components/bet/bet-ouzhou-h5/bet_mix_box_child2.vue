@@ -6,7 +6,7 @@
 <template>
     <div class="bet-mix-show">
 
-      <div v-for="(items, index) in item" :key="index">
+      <div v-for="(items, index) in BetData.bet_single_list" :key="index">
         <div class="nonebox4-content">
           <div class="nonebox4-content-left">
               <div class="nonebox4-content-left-content">
@@ -19,7 +19,7 @@
                     </div>
                     <div>
                         <div class="nonebox4-content-right">
-                            <div class="nonebox4-content-right-profit" v-if="type != 4">{{compute_value_by_cur_odd_type(item.odds,'','',item.sportId)}}</div>
+                            <div class="nonebox4-content-right-profit" v-if="type != 4">{{compute_value_by_cur_odd_type(items.odds,'','',items.sportId)}}</div>
                             <div v-if="type == 2" class="content-right-duo"></div>
                             <div v-else-if="type == 3" class="content-right-shao"></div>
                             <div v-else-if="type == 4" class="content-right-closed">closed</div>
@@ -30,22 +30,17 @@
           </div>
         </div>
         <!-- 输入框 -->
-        <bet-input-info></bet-input-info>
+        <bet-input-info :item="items" :index="index" ></bet-input-info>
+        <key-board></key-board>
       </div>
       <!-- 合并单关最下面的多个输入框 -->
-      <div>
-        <!-- 输入框 -->
-        <bet-input-info></bet-input-info>
-        <!-- 输入框 -->
-        <bet-input-info></bet-input-info>
-        <!-- 输入框 -->
-        <bet-input-info></bet-input-info>
-      </div>
+    
       
     </div>
   </template>
 <script setup>
   import betInputInfo from "./bet_input_info.vue";
+  import BetData from "src/core/bet/class/bet-data-class.js";
   const type = 4;//1:不涨也不少    2：增长     3：减少   4:注单失效
    const props = defineProps({
     item:{}

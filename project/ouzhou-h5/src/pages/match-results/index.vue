@@ -1,6 +1,6 @@
 <template>
     <scroll-result menu_type="28" :is_show_badge="false" :current_mi="state.current_mi" :menuList="state.slideMenu_sport" @changeMenu="changeMenu"/>
-    <div class="match-container">
+    <div class="match-result">
         <date-tab v-if="state.slideMenu" :defaultVal="state.currentSlideValue"  :dateList="state.slideMenu" @changeDate="changeDate"/>
         <match-container />
     </div>
@@ -68,8 +68,8 @@ const switchHandle = async ()=> {
     const res = await  api_analysis.get_result_menu();
     //获取 赛果菜单
     // api_analysis.get_match_result_menu( {menuType:0} ).then( ( res = {} ) => {
-        if(res.code == 200){
-            let scroll_data = res.data.map( item => {
+        if(res?.code == 200){
+            let scroll_data = res.data.filter((n)=>{return n.sportId != '0'}).map( item => {
                 // <100常规 >3000电竞  vr不处理 冠军400
                 const mi = item.menuType<100?100+item.sportId*1 + '':item.menuType>3000?`${'2'}${item.sportId}`:item.menuType==100?400:item.sportId
                 return {
@@ -127,9 +127,12 @@ onMounted(()=>{
 </script>
 <style scoped lang="scss">
 @import "./index.scss";
-.match-container{
-    height: calc(100% - 1.71rem);
+.match-result{
+    height: calc(100% - 1.73rem);
     overflow: hidden;
     overflow-y: auto;
+    .match-list-container{
+        height: calc(100% - 45px);
+    }
 }
 </style>

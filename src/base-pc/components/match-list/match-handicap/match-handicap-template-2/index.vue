@@ -256,6 +256,8 @@ function getCurState (hipo) {
 
         .odds {
             color: #FF7000;
+            font-weight: 500;
+            font-size: 14px;
         }
     }
 </style>

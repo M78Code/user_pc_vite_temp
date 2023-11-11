@@ -330,11 +330,10 @@
         display: flex;
         text-align: center;
         line-height: 0.32rem;
-        padding: 0 0.1rem;
         background-color: var(--q-gb-bg-c-15);
         color:  var(--q-analysis-text-color-22);
         border-bottom: 1px solid  var(--q-analysis-text-color-26);
-        border-top: 1px solid var(--q-analysis-text-color-26);
+        // border-top: 1px solid var(--q-analysis-text-color-26);
         > div {
           color: var(--q-analysis-text-color-14);
           font-size: 0.1rem;
@@ -344,7 +343,6 @@
       .team-item {
         display: flex;
         align-items: center;
-        padding: 0 0 0 0.1rem;
         font-size: 0.13rem;
         height: 0.48rem;
         text-align: center;
@@ -353,7 +351,7 @@
           background:  var(--q-analysis-text-color-27);
         }
   
-        div {
+        >div {
           display: flex;
           align-items: center;
           justify-content: center;
@@ -363,7 +361,7 @@
       }
   
       .col1 {
-        flex: 1;
+        
   
         > img {
           width: 0.36rem;
@@ -383,10 +381,8 @@
       }
   
       .col4 {
-        flex: 1;
   
         &.end-btn > span {
-          width: 0.54rem;
           height: 0.2rem;
           line-height: 0.18rem;
           letter-spacing: 0;

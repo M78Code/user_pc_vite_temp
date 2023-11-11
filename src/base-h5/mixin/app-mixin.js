@@ -10,7 +10,7 @@ import { throttle } from "lodash";
 const BUILDIN_CONFIG = window.BUILDIN_CONFIG;
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
 import STANDARD_KEY from "src/core/standard-key";
-import { enter_params, compute_css_variables } from "src/core/index.js";
+import { enter_params, compute_css_variables, PROJECT_NAME } from "src/core/index.js";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import MenuData from "src/core/menu-h5/menu-data-class.js";
@@ -63,9 +63,10 @@ export default {
         // http初始化方法 会调用 setApiDomain
         // ws和http域名切换逻辑
         http.setApiDomain();
-  
+        console.log(11111111)
         enter_params(async(user)=>{
-          await loadLanguageAsync(user?.languageName);
+          const lang = PROJECT_NAME === 'ouzhou-h5' ? 'en' : user?.languageName
+          await loadLanguageAsync(lang);
           MenuData.init();
           BetData.init_core()
           BetViewDataClass.init()

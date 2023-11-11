@@ -78,6 +78,7 @@ switch (PROJECT_NAME) {
   default:
     break;
 }
+
 const MatchListCard = IS_PC ? MatchListCard_PC : MatchListCard_H5;
 const MatchListCardData = IS_PC ? MatchListCardData_PC : MatchListCardData_H5;
 

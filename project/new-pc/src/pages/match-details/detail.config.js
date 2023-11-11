@@ -10,7 +10,7 @@ import {
 // api文件
 import { api_details } from "src/api/index";
 import { useMittEmit, useMittOn, MITT_TYPES ,useMittEmitterGenerator} from "src/core/mitt/";
-import { useGetGlobal } from "./global_mixin";
+import { useGetGlobal } from  "src/core/global/mixin/global_mixin.js"
 import lodash from "lodash";
 import details from "src/core/match-detail/match-detail-pc/match-detail";
 import  { computed_background } from  "src/core/constant/config/csid.js"
