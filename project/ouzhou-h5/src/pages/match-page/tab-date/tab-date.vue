@@ -58,6 +58,7 @@ import {
     ref,
     reactive,
     watch,
+    onMounted,
     defineEmits
 } from "vue";
 import { dateWeekMatchesFormat } from './utils';
@@ -124,11 +125,16 @@ const changeDatetab = (item, index) => {
     scrollRef.value.scrollTo(move_index - 2, "start-force");
     second_tab_index.value =index;
     MenuData.set_date_time(item.val,item.type);
-    console.log(MenuData.menu_match_date_api_config)
+    console.log(MenuData.menu_match_date_params)
 };
 watch(()=>MenuData.menu_mi.value,()=>{
     //球种改变设置今日
     MenuData.set_date_time(week[0].val);
+    console.log(MenuData.menu_match_date_params)
+})
+onMounted(() => {
+    MenuData.set_date_time(week[0].val);
+    console.log(MenuData.menu_match_date_params)
 })
 /**
  * 地区选择tab
