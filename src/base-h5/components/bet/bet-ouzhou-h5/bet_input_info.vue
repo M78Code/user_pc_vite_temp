@@ -4,8 +4,9 @@
        <div class="info_left">
        <div class="size_16 color_a1a1">single bet</div>
         <div class="size_14">
+           
             <span>Highest Win</span>
-            <span class="margin_left_4">{{}}</span>
+            <span class="margin_left_4">{{}} </span>
         </div>
        </div>
        <div class="info_right size_14">
@@ -30,9 +31,14 @@ import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js"
 
 const props = defineProps({
-    item:{},
+    item: {
+        default:()=>{},
+        type:Object,
+    },
     index:{}
 })
+
+
 
 // 光标
 const money_span = ref(null)
@@ -54,14 +60,15 @@ onMounted(()=>{
 })
 
 onUnmounted(()=>{
-    useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY).off
+    useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY,set_ref_data_bet_money).off
+    useMittOn(MITT_TYPES.EMIT_INPUT_BET_MONEY_SINGLE, change_money_handle).off
 })
 
 /**
  *@description 金额改变事件
  *@param {Number} new_money 最新金额值
  */
- const change_money_handle = (new_money) => {
+ const change_money_handle = (new_money = {}) => {
   ref_data.money = new_money.money
 }
 
@@ -90,7 +97,6 @@ const set_ref_data_bet_money = () => {
     ref_data.seriesOdds = seriesOdds
     // 限额改变 重置投注金额
     ref_data.money = ''
-
     // 设置键盘设置的限额和数据
     BetData.set_bet_keyboard_config({playOptionsId:props.item.playOptionsId})
 }
