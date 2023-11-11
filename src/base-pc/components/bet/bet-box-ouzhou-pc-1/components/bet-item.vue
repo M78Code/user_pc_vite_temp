@@ -53,7 +53,6 @@
         </div>
         <ul class="bet-bet-money f-b-c" v-show="ref_data.show_money">
             <li class="bet-money-li f-c-c font14" @click="set_bet_money(obj)"  v-for="(obj, index) in ref_data.money_list" :key="obj" :class="!(ref_data.max_money < obj && index != 'max') ? '' : 'disabled'">
-                {{!(ref_data.max_money < obj && index != 'max')}}
                 {{index == 'max' ? '' : '+' }} {{ obj }}
             </li>
         </ul>
@@ -63,7 +62,7 @@
 <script setup>
 
 import { onMounted, onUnmounted, reactive } from "vue"
-import {LOCAL_PROJECT_FILE_PREFIX,compute_value_by_cur_odd_type,useMittOn,MITT_TYPES } from "src/core/"
+import {LOCAL_PROJECT_FILE_PREFIX,compute_value_by_cur_odd_type,useMittOn,MITT_TYPES,useMittEmit } from "src/core/"
 import BetData from 'src/core/bet/class/bet-data-class.js'
 import BetViewDataClass from 'src/core/bet/class/bet-view-data-class.js'
 import mathJs from 'src/core/bet/common/mathjs.js'
@@ -94,6 +93,26 @@ const set_show_quick_money = (obj = {}) => {
     obj.money_list.max = 'MAX'
     ref_data.money_list = obj.money_list
     ref_data.max_money = obj.max_money
+}
+
+// 快捷金额
+const set_bet_money = obj => {
+    // 获取当前投注金额
+    let money = BetData.bet_amount
+    let money_ = obj
+    // 设置最大投注金额
+    if(obj == "MAX"){
+        money_ = ref_data.max_money
+    }
+    // 计算投注金额
+    let money_amount = mathJs.add(money,money_)
+    // 投注金额 不能大于最大投注金额
+    if(money_amount > ref_data.max_money){
+        BetData.set_bet_amount(ref_data.max_money)
+    }else{
+        BetData.set_bet_amount(mathJs.add(money,money_))
+    }
+    useMittEmit(MITT_TYPES.EMIT_SET_QUICK_AMOUNT)
 }
 
 const set_delete = () => {
