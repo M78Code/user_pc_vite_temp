@@ -62,6 +62,8 @@ export const get_current_odds_list = ({ first_hpid, second_hpid }) => {
 export const  width_config ={
   ...TemplateCommon.width_config_template,
   bet_col_count: 9,
+  team_width: 338,
+  play_icon_width: 0,
 }
 
 

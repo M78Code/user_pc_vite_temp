@@ -60,8 +60,11 @@ class MenuData {
     // this.top_category_label = "play";
     //左侧菜单的 整体输出
     this.left_menu_result = {
-      lv1_mi: "", //一级菜单
-      lv2_mi: "", // 二级菜单
+      lv1_mi: "", //一级菜单 足球/篮球 各种球
+      lv2_mi: "", // 二级菜单 波胆  角球 等其他玩法
+      sports: '',
+      guanjun: "",
+      has_mid_menu: true,
     };
     // 左侧菜单的 root 节点   root ：  1 滚球  2 今日   3  早盘   500 热门赛事  400 冠军   300 VR  电竞 2000
     this.menu_root = 1;
@@ -393,6 +396,15 @@ class MenuData {
     this.set_multi_column();
     useMittEmit(MITT_TYPES.EMIT_MATCH_LIST_UPDATE)
   }
+    /**
+   * @description: 设置是否收藏
+   * @param {*} menu_obj
+   * @return {*}
+   */
+    set_is_collect(is_collect) {
+      this.is_collect=is_collect
+      useMittEmit(MITT_TYPES.EMIT_MATCH_LIST_UPDATE)
+    }
   /**
    * 定义中间菜单    点击 输出 请求  列表结构  API 参数的   模板
    */

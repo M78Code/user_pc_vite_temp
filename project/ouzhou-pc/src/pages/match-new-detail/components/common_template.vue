@@ -7,7 +7,7 @@
 <template>
   <div v-if="[10].includes(match_info.hpt)" class="temp-simple">
     <div class="temp_grid" :style="{ gridTemplateColumns: columnTotal(item) }">
-      <div v-for="o in match_info.hl[0].ol" :key="o.oid" :class="{ 'temp-active': o.oid == current_ol.oid, 'temp': true }"
+      <div v-for="o in match_info.hl[0].ol" :key="o?.oid" :class="{ 'temp-active': o.oid == current_ol.oid, 'temp': true }"
         @click="betItemClick(match_info.hl[0], o)">
         <div :style="{ color: o.oid == current_ol.oid ? '#ffffff' : '#ff7000' }" class="oid-width" :title="o.ott">{{ o.ott
         }} <span>{{ o.on }}
@@ -24,7 +24,7 @@
   <div v-else class="temp-simple">
     <div v-for="item in match_info.hl" :key="item.hid">
       <div class="temp_grid" :style="{ gridTemplateColumns: columnTotal(item) }">
-        <div v-for="o in item.ol" :key="o.oid" :class="{ 'temp': true, 'temp-active': o.oid == current_ol.oid }"
+        <div v-for="o in item.ol" :key="o?.oid" :class="{ 'temp': true, 'temp-active': o.oid == current_ol.oid }"
           @click="betItemClick(item, o)">
           <!-- hpt 为1  不需要给颜色 -->
           <div style="font-weight:500;display: flex; align-items: center;width:100%"  v-show="!item.hs">

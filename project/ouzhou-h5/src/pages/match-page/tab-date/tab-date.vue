@@ -2,13 +2,13 @@
     <div class="flex-center">
         <div class="tabs">
             <div class="matches" :class="tabActive == 'matches' ? 'active' : ''
-                ">
-                <span @click="changetab('matches')">{{
+            ">
+                <span @click="changeTab('matches', 0)">{{
                     "Matches"
                 }}</span>
             </div>
             <div class="league" :class="tabActive == 'league' ? 'active' : ''
-                    " @click="changetab('league')">
+            " @click="changeTab('league', 1)">
                 <span>{{ "League" }}</span>
             </div>
             <!-- league的下拉项 -->
@@ -22,7 +22,7 @@
                 <ul class="option-list">
                     <template v-for="(item, index) in selectOptions" :key="index">
                         <li :class="dateIndex == index ? 'active' : ''
-                            " @click="changeDate(index)">
+                        " @click="changeDate(index)">
                             {{ item.label }}
                         </li>
                     </template>
@@ -33,12 +33,11 @@
         <!-- 七天时间 -->
         <div class="date_time" v-if="tabActive == 'matches'">
             <q-virtual-scroll ref="scrollRef" :items="week" virtual-scroll-horizontal v-slot="{ item, index }">
-                <div @click="changeDatetab(item, index)" class="week" :class="second_tab_index == item ? 'active' : ''">
-                    <span v-if="index == '0'">{{ "Today" }}</span>
-                    <span v-else-if="index == '1'">{{ "Tomorrow" }}</span>
-                    <span v-else>
-                        <span>{{ month[new Date().getMonth()] }}</span>
-                        <span class="din_font">{{ new Date().getDate() + index }}</span>
+                <div @click="changeDatetab(item, index)" class="week" :class="second_tab_index == index ? 'active' : ''">
+                    <span>
+                        <!-- <span>{{ month[new Date().getMonth()] }}</span> -->
+                        <!-- <span class="din_font">{{ new Date().getDate() + index }}</span> -->
+                        <span>{{ item.name }}</span>
                     </span>
                     <span class="border_right"></span>
                 </div>
@@ -46,7 +45,7 @@
         </div>
         <div class="date_time" v-if="tabActive == 'league'">
             <q-virtual-scroll ref="scrollRefArea" :items="areaList" virtual-scroll-horizontal v-slot="{ item, index }">
-                <div @click="areaListChange(index)"  class="week" :class="area_tab_index == index ? 'active' : ''">
+                <div @click="areaListChange(index)" class="week" :class="area_tab_index == index ? 'active' : ''">
                     {{ item }}
                 </div>
             </q-virtual-scroll>
@@ -57,8 +56,13 @@
 <script setup>
 import {
     ref,
-    reactive
+    reactive,
+    watch,
+    defineEmits
 } from "vue";
+import { dateWeekMatchesFormat } from './utils';
+import { MenuData  } from "src/core/";
+const emit = defineEmits(["changeDate", "changeTab"]);
 const tabActive = ref("matches");//tab
 const tabModel = ref(false);//下拉框
 const dateIndex = ref(0);//下拉框选择
@@ -67,23 +71,8 @@ const scrollRefArea = ref(null);
 let second_tab_index = ref(0);//单日选择
 let area_tab_index = ref(0);//地区选择
 const current_menu_mi = ref("102");
- // 月份数组
-const month = reactive([
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
-]);
- // 七天时间
-const week = reactive(["1", "2", "3", "4", "5", "6", "7"]);
+const week = dateWeekMatchesFormat();
+// 七天时间
 // 地区集合
 const areaList = reactive([
     "Europ",
@@ -93,7 +82,7 @@ const areaList = reactive([
     "South America",
     "Oceania",
 ]);
- // 下拉选
+// 下拉选
 const selectOptions = reactive([
     { label: "Next 12 Hours", time: "12hours" },
     { label: "Next 24 Hours", time: "24hours" },
@@ -104,9 +93,10 @@ const selectOptions = reactive([
  * tab点击
  * @param {*} name 
  */
- const changetab = (name) => {
+const changeTab = (name, index) => {
     tabActive.value = name;
     tabModel.value = false;
+    emit("changeTab", index);
 }
 /**
  * 下拉框
@@ -121,23 +111,30 @@ const toggerModel = () => {
 const changeDate = (index) => {
     dateIndex.value = index;
     tabModel.value = false;
+    emit("changeDate", selectOptions[index].time);
 }
- /**
-  * 时间选择tab
-  * @param {*} item 
-  * @param {*} index 
-  */
+/**
+ * 时间选择tab
+ * @param {*} item 
+ * @param {*} index 
+ */
 const changeDatetab = (item, index) => {
     tabModel.value = false;
     const move_index = week.findIndex((t, _index) => _index === index);
     scrollRef.value.scrollTo(move_index - 2, "start-force");
-    second_tab_index.value = item;
+    second_tab_index.value =index;
+    MenuData.set_date_time(item.val,item.type);
+    console.log(MenuData.menu_match_date_api_config)
 };
+watch(()=>MenuData.menu_mi.value,()=>{
+    //球种改变设置今日
+    MenuData.set_date_time(week[0].val);
+})
 /**
  * 地区选择tab
  * @param {*} index 
  */
- const areaListChange = (index) => {
+const areaListChange = (index) => {
     tabModel.value = false;
     const move_index = areaList.findIndex((t, _index) => _index === index);
     scrollRefArea.value.scrollTo(move_index - 2, "start-force");
@@ -251,6 +248,7 @@ const changeDatetab = (item, index) => {
         padding-left: 2px;
         overflow-y: hidden;
         font-size: 14px;
+
         &::-webkit-scrollbar {
             display: none;
             /* Chrome Safari */
@@ -551,5 +549,6 @@ const changeDatetab = (item, index) => {
             height: calc(100% - 105px);
         }
     }
-}</style>
+}
+</style>
   

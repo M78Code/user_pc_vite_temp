@@ -126,7 +126,6 @@
         let mids_arr = league_obj.mids.split(',')
 
         match_status_type_match_count += mids_arr.length
-        console.log('ouzhou_match_status_title_card_template', ouzhou_match_status_title_card_template);
         // 如果是第一个联赛 并且列表类型是1 有已开赛、未开赛区分，  添加一个已开赛、未开赛标题卡片
         if(league_index == 0 && MatchListCardData.match_list_mapping_relation_obj_type == 1){
           // 已开赛、未开赛标题卡片处理
@@ -215,7 +214,6 @@
           let match_style_obj = compute_style_template_by_matchinfo(match, template_id, true)
           all_card_obj[mid+'_'] = match_style_obj
           league_card_total_height += match_style_obj.total_height
-          console.log('match_style_obj', match_style_obj);
           // 设置父级卡片key
           match_style_obj.parent_card_key = card_key
         })
@@ -236,6 +234,7 @@
           all_card_obj[card_key].is_league_fold = is_league_fold
           all_card_obj[card_key].is_show_card = !is_league_fold
           // 设置赛事数据加载状态
+          console.log('is_league_fold', is_league_fold);
           all_card_obj[card_key].load_data_status = is_league_fold ?'loading' : 'loaded'
         }else{
           // 是ws调用
