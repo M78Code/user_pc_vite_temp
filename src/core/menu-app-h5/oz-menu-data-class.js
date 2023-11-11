@@ -43,6 +43,10 @@ class MenuData {
     this.top_events_list = []; //热门球种
     this.menu_mi = ref(''); //常规球种选中
     this.menu_type = ref(2); //id   2今日(左侧抽屉) 1滚球(滚动tab) 3早盘 8VR() 7电竞() 28赛果() 500热门
+
+
+    //----------------------------------- 收藏 --------------------------------------//
+    this.collect_list = []
   }
 
   get_menu_lv_2_mi_list(mi){
@@ -98,6 +102,12 @@ class MenuData {
     this.current_lv_2_menu_i = `${mi}${this.menu_type.value}`;
     this.update()
   }
+
+  // 设置收藏列表
+  set_collect_list (list) {
+    this.collect_list = list
+  }
+
   // 根据菜单id获取下级菜单id 二级菜单
   // mid 顶级菜单id
   get_menu_lvmi_list(mid){
