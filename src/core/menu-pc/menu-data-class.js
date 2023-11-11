@@ -899,7 +899,7 @@ class MenuData {
     if (mi) {
       return this._is_cur_mi(400, mi)
     }
-    return this._is_cur_mi(400, mi)(this.match_list_api_config.guanjun || "").includes("guanjun")
+    return this._is_cur_mi(400, mi)||(this.match_list_api_config.guanjun || "").includes("guanjun")
   }
 
   /**
