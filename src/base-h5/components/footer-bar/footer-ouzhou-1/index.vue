@@ -30,7 +30,7 @@ const tab_list = reactive([
   { label: 'MyBets', value: 'bet', route: '/betting_history' },
   { label: 'Home-Page', value: 'home_page', route: '/home', type: 1 },
   { label: 'Results', value: 'results', route: '/matchResults', type: 29 },
-  { label: 'Favorites', value: 'favorites', route: '/collect', type: 50000 },
+  { label: 'Favorites', value: 'favorites', route: '/collect', type: 1 },
 ])
 const get_route_path = computed(() => {
   return  router.currentRoute.value.path;

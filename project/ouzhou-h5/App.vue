@@ -18,4 +18,8 @@ export default {
   }
 };
 </script>
-<style lang="scss"></style>
+<style lang="scss">
+  #q-app {
+    height: inherit;
+  }
+</style>

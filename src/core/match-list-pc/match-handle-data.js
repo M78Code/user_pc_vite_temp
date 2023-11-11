@@ -4,40 +4,49 @@
 
 
 import { csid_to_tpl_id } from 'src/core/constant/util/csid-util.js'
-import { MenuData,get_match_status } from 'src/core/index.js'
+import { MenuData, get_match_status, PageSourceData } from 'src/core/index.js'
+import BaseData from "src/core/base-data/base-data.js";
 
-
+/**
+   * @Description  根据菜单ID 获取一个菜单对象
+   * @param {number} menu_id 菜单ID
+   * @param {undefined} undefined
+  */
+function get_menu_obj_by_menu_id(menu_id) {
+    return BaseData.get_menu_list(menu_id) || { count: 0, subList: [], topMenuList: [] }
+}
 /**
    * @Description 获取当前列表模板编号  
    * @param {undefined} undefined
   */
 function get_match_tpl_number(is_hot) {
+    const { left_menu_result = {}, mid_menu_result = {} } = MenuData;
     let match_tpl_number = -1
     // 玩法菜单
-    let play_menu = this.get_menu_obj_by_menu_id(this.menu_data.cur_level3_menu)
+    let play_menu = get_menu_obj_by_menu_id(lodash.get(left_menu_result,"lv1_mi"))
     // 详情页热门赛事 或者 搜索 或者列表强力推荐
-    if (window.vue.$route.name == 'details' || window.vue.$route.name == 'search' || is_hot) {
+    if (PageSourceData.route_name == 'details' || PageSourceData.route_name == 'search' || is_hot) {
         match_tpl_number = -1
         //搜索13列玩法
-        if (lodash.get(vue, '$route.query.csid', -1) === '1' && this.menu_data.is_multi_column && store.getters.get_unfold_multi_column) {
+        //&& store.getters.get_unfold_multi_column
+        if (lodash.get(vue, '$route.query.csid', -1) === '1' && MenuData.is_multi_column) {
             match_tpl_number = 13
         }
     }
     // 竟足赛事 12模板
-    else if (this.menu_data.cur_level2_menu == 30101) {
+    else if (mid_menu_result.mi == 30101) {
         match_tpl_number = 12
     }
     // 冠军聚合页  或者电竞冠军 18模板 
-    else if (this.menu_data.cur_level1_menu == 'winner_top' || this.menu_data.is_esports_champion) {
+    else if (MenuData.is_kemp() || MenuData.is_esports_champion()) {
         match_tpl_number = 18
     }
     // 电竞常规赛事
-    else if (this.menu_data.is_esports) {
+    else if (MenuData.is_export()) {
         match_tpl_number = 'esports'
-
     }
-    //13列玩法菜单
-    else if (this.menu_data.is_multi_column && store.getters.get_unfold_multi_column && store.getters.get_layout_cur_page.cur == 'home') {
+    //13列玩法菜单 && store.getters.get_unfold_multi_column
+    else if (MenuData.is_multi_column && PageSourceData.page_source == 'home') {
         match_tpl_number = 13
     }
     // 取玩法菜单
@@ -46,12 +55,15 @@ function get_match_tpl_number(is_hot) {
     }
     return match_tpl_number
 }
+
 /**
  * @Description 获取赛事模板ID
  * @param {number} csid 球种类型
 */
 export function get_match_template_id({ csid }) {
-    let tpl_id = get_match_tpl_number(menu_data)
+    let tpl_id = get_match_tpl_number()
+    console.log(tpl_id, 'get_match_tpl_number')
+
     // 虚拟足球1001、虚拟篮球1004
     if ([1001, 1004].includes(+csid)) {
         tpl_id = csid
@@ -64,6 +76,7 @@ export function get_match_template_id({ csid }) {
     else if (tpl_id == -1) {
         tpl_id = csid_to_tpl_id(csid)
     }
+    console.log(tpl_id, 'get_match_tpl_number1')
     return tpl_id
 }
 

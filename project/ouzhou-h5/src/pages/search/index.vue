@@ -9,10 +9,10 @@
 			<span class="close_btn" @click="to_home">Close</span>
 		</div>
 		<!-- 搜索 历史 -->
-		<div class="content" v-show="(show_history && history_data.length > 0) && !input_value">
+		<div class="content" v-show="(show_history && history_data.length > 0) || !input_value">
 			<div class="middle_info_tab">EXAMPLE SEARCHES</div>
 			<ul class="list1">
-				<li v-for="(item, index) in history_data" :key="item.cuid" @click="get_search_data(1, 1, item.keyword)">
+				<li v-for="(item, index) in history_data" :key="item.cuid" @click="get_search_data(0, 1, item.keyword)">
 					{{ item.keyword }}<img :src="compute_local_project_file_path('image/svg/right_arrow.svg')" alt="">
 				</li>
 			</ul>
@@ -21,17 +21,17 @@
 			<div class='searchHot' v-show="show_hot && 
 				(hot_list && hot_list.length > 0) &&
 				!(search_data.teamH5 && search_data.teamH5.length > 0) &&
-				!(search_data.league && search_data.league.length > 0) &&
-				!(search_data.bowling)">
+				!(search_data.league && search_data.league.length > 0) ||
+				!input_value">
 				<div class="q-mx-md">
 					<div class="text-bol half-border-bottom">
 						<!-- 热门搜索 -->
-						{{ $t('search_hot') }}
+						searchHot
 					</div>
 					<!-- 热门内容 -->
 					<div class="row">
 						<div class="col-6 hotItem" v-for="(item, index) in hot_list" :key="index"
-							@click="get_search_data(1, 1, item.keyWord)">
+							@click="get_search_data(0, 1, item.keyWord)">
 							<span class="defaultText" :class="{ redText: index <= 2, 'normal-1': index > 2 }">
 								{{ index + 1 }}.
 							</span>
@@ -43,25 +43,29 @@
 		</div>
 
 		<!-- 搜索展示 -->
-		<div class="content" v-show="search_data.bowling || search_data.league || search_data.teamH5">
+		<div class="content" v-show="(search_data.teamH5 && search_data.teamH5.length > 0) ||
+			(search_data.league && search_data.league.length > 0)">
 			<!-- 球类 tabs -->
 			<div class="middle_info_tab" ref="tab_growp">
 				<div v-for="(item, index) in sport_kind_data" :key="item.id" @click="get_search_data(index, item.id)"
 					:class="['tab', tabIndex === index ? 'active' : '']">{{ item.sportName }}</div>
 			</div>
 			<ul class="list">
-				<div class="title">{{ $t('View all soccer') }}</div>
-				<div class="middle_info_tab diff">
-					<div class="color">{{ $t('TEAMS') }}</div>
-				</div>
+				<div class="title">View all soccer</div>
+				<!-- <div class="middle_info_tab diff">
+					<div class="color">TEAMS</div>
+				</div> -->
 				<!-- 滚球 -->
 				<div v-show="search_data.bowling">
+					<div class="middle_info_tab diff">
+						<div class="color">UNDERWAY</div>
+					</div>
 					<li v-for="(item, index) in search_data.bowling" :key="index" @click="suggestion_bowling_click(item)">
 						<div class="list_top">
 							<span>{{ item.tn }}</span><img :src="compute_local_project_file_path('image/svg/right_arrow.svg')" alt="">
 						</div>
 						<div class="list_bottom">
-							<div style="width: 60%;">
+							<div style="width: 60%; word-break: break-all">
 								<p>
 									<span class="home" v-html="red_color(item.mhn)"></span>
 									<span class="middle">v</span>
@@ -70,7 +74,7 @@
 										<span class="middle">v</span>
 										<span class="away">{{ item.man }}</span> -->
 								</p>
-								<p>{{ (new Date(+item.mgt)).Format($t('time4')) }}</p>
+								<p>{{ (new Date(+item.mgt)).Format('MM/dd hh:mm') }}</p>
 							</div>
 							<div>
 								<div>
@@ -86,26 +90,26 @@
 				<!-- 搜索 联赛 -->
 				<div v-show="search_data.league && search_data.league.length > 0">
 					<div class="middle_info_tab diff">
-						<div class="color">{{ $t('COMPETITIONS') }}</div>
+						<div class="color">COMPETITIONS</div>
 					</div>
 					<li v-for="(item, index) in search_data.league" :key="index"
 						@click="default_method_jump(item.leagueName, item.matchList[index])">
 						<div class="list_top">
 							<!-- 联赛icon -->
-							<img class="match_logo"
+							<!-- <img class="match_logo"
 								:src="item.matchList[0] ? get_server_file_path(item.matchList[0].lurl) : compute_img_url('match-cup')"
-								@error="league_icon_error" />
+								@error="league_icon_error" /> -->
 							<span>{{ item.leagueName }}</span><img :src="compute_local_project_file_path('image/svg/right_arrow.svg')"
 								alt="">
 						</div>
 						<div class="list_bottom" v-for="(i, idx) in item.matchList">
-							<div style="width: 60%;">
+							<div style="width: 60%; word-break: break-all">
 								<p>
-									<span class="home" v-html="i.mhn"></span>
+									<span class="home" v-html="red_color(i.mhn)"></span>
 									<span class="middle">v</span>
-									<span class="away" v-html="i.man"></span>
+									<span class="away" v-html="red_color(i.man)"></span>
 								</p>
-								<p>{{ (new Date(+i.mgt)).Format($t('time4')) }}</p>
+								<p>{{ (new Date(+i.mgt)).Format('MM/dd hh:mm') }}</p>
 							</div>
 							<div>
 								<div>
@@ -127,13 +131,13 @@
 							</div>
 						</div>
 						<div class="list_bottom">
-							<div style="width: 60%;">
+							<div style="width: 60%; word-break: break-all">
 								<p>
-									<span class="home" v-html="item.mhn"></span>
+									<span class="home" v-html="red_color(item.mhn)"></span>
 									<span class="middle">v</span>
-									<span class="away" v-html="item.man"></span>
+									<span class="away" v-html="red_color(item.man)"></span>
 								</p>
-								<p>{{ (new Date(+item.mgt)).Format($t('time4')) }}</p>
+								<p>{{ (new Date(+item.mgt)).Format('MM/dd hh:mm') }}</p>
 							</div>
 							<div>
 								<div>
@@ -149,14 +153,15 @@
 			</ul>
 		</div>
 		<!-- 搜索 无结果 -->
-		<div class="content" v-show="!(search_data.teamH5 && search_data.teamH5.length > 0) &&
+		<div class="content" v-show="(!(search_data.teamH5 && search_data.teamH5.length > 0) &&
 			!(search_data.league && search_data.league.length > 0) &&
-			!(show_history && history_data.length > 0) &&
-			!(search_data.bowling)">
-			<div class="middle_info_tab">{{ $t('No results found. please try a different search term.') }}</div>
+			(!show_hot || 
+			!show_history))"
+		>
+			<div class="middle_info_tab">No results found. please try a different search term.</div>
 			<div class="not_found">
 				<img :src="compute_local_project_file_path('image/png/not_found.png')" alt="">
-				<p>{{ $t('No results') }}</p>
+				<p>No results</p>
 			</div>
 		</div>
 	</div>
@@ -173,10 +178,11 @@ import { api_search } from 'src/api/';
 const { get_insert_history, get_fetch_hot_search } = api_search || {};
 
 const input_value = ref('');
-const tabIndex = ref(1);
+const tabIndex = ref(0);
 const tab_growp = ref(null);
 const show_history = ref(true);
 const show_hot = ref(true);
+const uid = UserCtr.get_uid();
 
 //定时器
 let go_detail_or_result_timer;
@@ -194,14 +200,13 @@ const to_home = () => {
 const history_data = ref([]);
 const get_history = () => {
 	let params = {
-		// cuid: UserCtr.get_uid(),
-		cuid: '509823602117100010',
+		cuid: uid,
+		// cuid: '509823602117100010',
 		isPc: 0
 	}
 	get_history_search(params).then(res => {
 		let data = lodash.get(res, "data") || [];
 		if (data.length > 0) {
-			console.log('his_data', data);
 			history_data.value = data;
 			show_history.value = true;
 		}
@@ -212,15 +217,14 @@ const get_search_txt = SearchData.search_txt;
 const get_menu_type = MenuData.menu_type;
 //  文字特殊处理，颜色操作
 const red_color = (item) => {
-	const reg = new RegExp(get_search_txt, "ig");
-	let i_color = 'var(--qq-gb-t-c-1)';
-	return item.replace(reg, `<span style="color:${i_color}">${get_search_txt.toUpperCase()}</span>`)
+	const reg = new RegExp(input_value.value, "ig");
+	let i_color = 'red';
+	return item?.replace(reg, `<span style="color:${i_color}">${input_value.value}</span>`)
 }
 
 // 搜索
 const search_data = ref([]);
-const get_search_data = (index = 1, sport_id = 1, keyword) => {
-	// console.log('id', index, sport_id, keyword);
+const get_search_data = (index = 0, sport_id = 1, keyword) => {
 	show_history.value = false;
 	show_hot.value = false;
 	tabIndex.value = index;
@@ -229,7 +233,7 @@ const get_search_data = (index = 1, sport_id = 1, keyword) => {
 		input_value.value = keyword
 	}
 	let params = {
-		cuid: UserCtr.get_uid(),
+		cuid: uid,
 		device: 'v2_h5_st',
 		keyword: input_value.value,
 		searchSportType: sport_id || 1,
@@ -238,12 +242,11 @@ const get_search_data = (index = 1, sport_id = 1, keyword) => {
 	if (!input_value.value) {
 		show_history.value = true;
 		show_hot.value = true;
+		search_data.value = [];
 		return;
 	}
-	// console.log('params',params);
 	get_search_result(params).then(res => {
 		if (res.code === '200') {
-			console.log('sear_data', res.data.data);
 			search_data.value = res.data.data;
 		}
 	});
@@ -268,7 +271,6 @@ function league_icon_error($event) {
 
 // 联赛 和 队名 默认跳转方法,去到详情页
 function default_method_jump(name, item) {
-	// console.log('item', item);
 	if (!item) return;
 
 	if (item.mid) {
@@ -339,7 +341,6 @@ const hot_list = ref([]);  //热门搜索列表
 function get_hot_search() {
 	get_fetch_hot_search().then(({ data }) => {
 		hot_list.value = data || [];
-		console.log('hot', hot_list.value);
 	})
 }
 
@@ -358,7 +359,7 @@ watch(
 	() => input_value.value,
 	(val) => {
 		let trimVal = val.trim();
-		get_search_data(trimVal);
+		get_search_data(0, 1, trimVal);
 	}
 )
 </script>
