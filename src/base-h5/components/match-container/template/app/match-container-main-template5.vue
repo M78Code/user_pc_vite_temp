@@ -10,14 +10,14 @@
         <img src='../../../../../base-h5/assets/match-list/icon_notstarted.png' />
 
               <span class="din-regular">
-                {{ $t('list.match_no_start') }}&nbsp;&nbsp;<span v-show="no_start_total">(0)</span>
+                {{ i18n_t('list.match_no_start') }}&nbsp;&nbsp;<span v-show="no_start_total">(0)</span>
               </span>
           </div>
           <!-- 已开赛标题  -->
             <!-- <div class="match-status-fixed flex items-center" v-else>
               <img src='../../../../../base-h5/assets/match-list/icon_started.svg' />
             <span class="din-regular">
-              {{ $t('list.match_start') }}&nbsp;&nbsp;
+              {{ i18n_t('list.match_start') }}&nbsp;&nbsp;
                   <span v-show="in_progress_total">(0)</span>
                 </span>
               </div> -->
@@ -116,7 +116,7 @@
 
                     <!--即将开赛 ms = 110-->
                     <div class="coming-soon" v-if="match.ms" v-show="match.ms == 110">
-                      {{ $t(`ms[${match.ms}]`) }}
+                      {{ i18n_t(`ms[${match.ms}]`) }}
                     </div>
 
                     <!--开赛日期 ms != 110 (不为即将开赛)  subMenuType = 13网球(进行中不显示，赛前需要显示)-->

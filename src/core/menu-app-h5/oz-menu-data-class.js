@@ -20,7 +20,7 @@ const menu_type_config = {
   6: 11,
   2000: 3000,
   50000: 50000,
-  28:28,
+  28:28
 }
 class MenuData {
   constructor() {
@@ -43,6 +43,10 @@ class MenuData {
     this.top_events_list = []; //热门球种
     this.menu_mi = ref(''); //常规球种选中
     this.menu_type = ref(2); //id   2今日(左侧抽屉) 1滚球(滚动tab) 3早盘 8VR() 7电竞() 28赛果() 500热门
+
+
+    //----------------------------------- 收藏 --------------------------------------//
+    this.collect_list = []
   }
 
   get_menu_lv_2_mi_list(mi){
@@ -98,6 +102,12 @@ class MenuData {
     this.current_lv_2_menu_i = `${mi}${this.menu_type.value}`;
     this.update()
   }
+
+  // 设置收藏列表
+  set_collect_list (list) {
+    this.collect_list = list
+  }
+
   // 根据菜单id获取下级菜单id 二级菜单
   // mid 顶级菜单id
   get_menu_lvmi_list(mid){
@@ -129,12 +139,48 @@ class MenuData {
   }
   /**
    * 获取 euid
+   * arg_mi 如果传值 则获取特定值euid 如果没有就是二级菜单的euis
+   * */
+  get_euid(arg_mi) {
+    let mi = arg_mi || this.current_lv_2_menu_i;
+    // 全部
+    if (mi == 0) {
+      let mid_list = []
+      let euid = ''
+      // 获取滚球全部的 菜单id
+      this.menu_lv_mi_lsit.forEach(item=>{
+        if( ![0,50000].includes(item.mi)){
+          mid_list.push(item.mi)
+        }
+      })
+      // 根据 菜单id 获取euid
+      mid_list.forEach(item=>{
+        euid += BaseData.mi_euid_map_res[item] && BaseData.mi_euid_map_res[item].h + ','
+      })
+      return euid
+    }
+    // 赛果
+    if (this.is_results()) return mi;
+    if (BaseData.mi_euid_map_res && BaseData.mi_euid_map_res[mi]) {
+      return BaseData.mi_euid_map_res[mi].h;
+    } else {
+      // 电竞无旧菜单id处理
+      return {
+        2100: 41002,
+        2101: 41001,
+        2102: 41004,
+        2103: 41003,
+      }[mi];
+    }
+  }
+  /**
+   * 获取 euid
    * 
    * */
-  get_euid(menu_type) {
-    const menuId = menu_type || this.menu_type.value;
-    return BaseData.mi_euid_map_res?.[this.menu_mi.value+menuId]?.h || "";
-  }
+  // get_euid(menu_type) {
+  //   const menuId = menu_type || this.menu_type.value;
+  //   return BaseData.mi_euid_map_res?.[this.menu_mi.value+menuId]?.h || "";
+  // }
   //内部方法
   _is_cur_mi(mi, param) {
     if (param) {
@@ -163,7 +209,7 @@ class MenuData {
    *  mi [number|string] 要比对的值
   */
   is_results(mi) {
-    return this._is_cur_mi(28, mi)
+    return this._is_cur_mi(29, mi)
   }
   /**
    * 是否选中了早盘

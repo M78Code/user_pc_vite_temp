@@ -20,7 +20,7 @@
         <!-- 未开赛 -->
         <template v-else>
           <div>
-            <img :src="not_begin" /> <span class="din-regular"> {{ $t('list.match_no_start') }}</span>
+            <img :src="not_begin" /> <span class="din-regular"> {{ i18n_t('list.match_no_start') }}</span>
           </div>
           <img :class="['expand_item', {collapsed: collapsed}]" :src="expand_item" alt="">
         </template>
@@ -105,7 +105,7 @@
 
                     <!--即将开赛 ms = 110-->
                     <div class="coming-soon" v-if="match.ms" v-show="match.ms == 110">
-                      {{ $t(`ms[${match.ms}]`) }}
+                      {{ i18n_t(`ms[${match.ms}]`) }}
                     </div>
 
                     <!--开赛日期 ms != 110 (不为即将开赛)  subMenuType = 13网球(进行中不显示，赛前需要显示)-->
@@ -129,7 +129,7 @@
 
                   <!-- 电竞串关标识 -->
                   <div v-if="menu_type == 3000 && match.ispo" class="flag-chuan"
-                    :class="{ 'special-lang': ['zh', 'tw'].includes(get_lang) }">{{ $t('match_info.match_parlay') }}
+                    :class="{ 'special-lang': ['zh', 'tw'].includes(get_lang) }">{{ i18n_t('match_info.match_parlay') }}
                   </div>
                 </div>
                 <!--玩法数量-->
@@ -169,7 +169,7 @@
                         <!-- 进球动画 -->
                         <div class="yb-flex-center" v-if="is_show_home_goal && is_new_init2 && (!is_show_away_goal)">
                           <div class="yb-goal-gif" :class="{ 'yb-goal-yo': theme.includes('y0') }"></div>
-                          <div class="gif-text">{{ $t('match_result.goal') }}</div>
+                          <div class="gif-text">{{ i18n_t('match_result.goal') }}</div>
                         </div>
                         <span class='score-punish' v-show="home_red_score"
                           :class="{ flash: is_show_home_red && !is_results }">
@@ -203,7 +203,7 @@
                         <div class="yb-flex-center" v-if="is_show_away_goal && is_new_init2 && (!is_show_home_goal)">
 
                       <div class="yb-goal-gif yb-goal-yo"></div>
-                      <div class="gif-text">{{ $t('match_result.goal') }}</div>
+                      <div class="gif-text">{{ i18n_t('match_result.goal') }}</div>
                     </div>
                     <!--进行中的赛事显示比分-->
                     <span class='score-punish' v-show="away_red_score"

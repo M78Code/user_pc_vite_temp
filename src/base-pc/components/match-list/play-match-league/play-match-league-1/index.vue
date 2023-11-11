@@ -18,7 +18,7 @@
         <div class="ellipsis-wrap">
           <div class="absolute-full">
             <!-- 联赛数量 -->
-            <span class="ellipsis allow-user-select" v-tooltip="{ content: card_style_obj.league_obj.tn, overflow: 1 }">
+            <span class="ellipsis allow-user-select leagues-name" v-tooltip="{ content: card_style_obj.league_obj.tn, overflow: 1 }">
               {{ card_style_obj.league_obj.tn || card_style_obj.league_obj.tid }}
             </span>
           </div>
@@ -179,11 +179,15 @@ function set_fold() {
     height: 100%;
     background: #F5F5F5;
     border-bottom: 1px solid #e2e2e2;
+    font-weight: 500;
     cursor: pointer;
     .leagues-wrap {
       padding-left: 5px;
       display: flex;
       justify-content: flex-start;
+      .leagues-name {
+        margin-top: 3px;
+      }
     }
     .tr-match-head {
       display: flex;

@@ -193,12 +193,6 @@ const betItemClick = (item, ol) => {
 
   }
 }
-// 事件执行函数
-
-const active = ref(1)
-
-
-
 
 onMounted(() => {
 

@@ -27,10 +27,8 @@ import { onMounted, ref } from "vue";
 import record_head from "./compoments/record_head.vue";
 import record_select from "./compoments/record_select.vue";
 import record_table from "./compoments/record_table.vue";
-import layoutHeader from "../../layouts/layout-header.vue";
-
+import layoutHeader from "project_path/src/layouts/layout-header.vue";
 const current_tab = ref('unsettled')
-
 const tableRef = ref(null)
 
 //  tab 切换
@@ -39,7 +37,6 @@ const tab_change = (val)=>{
 }
 
 const itemFilter = (obj)=>{
-
  const orderStatus = current_tab.value=='settled'?1:0
  tableRef.value.getTableData({...obj,orderStatus})
 }

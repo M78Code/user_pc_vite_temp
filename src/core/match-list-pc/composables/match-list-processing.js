@@ -1,5 +1,5 @@
 import { ref } from 'vue';
-
+import { useRoute } from 'vue-router';
 import lodash from 'lodash';
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import store from "src/store-redux/index.js";
@@ -18,7 +18,7 @@ const { mx_collect_count, set_collect_count } = collect_composable_fn();
 const { virtual_list_timeout_id, is_vr_numer } = virtual_composable_fn();
 const { show_mids_change } = ws_composable_fn();
 const { api_bymids, set_league_list_obj } = use_featch_fn();
-
+const route=useRoute()
 const vx_filter_select_obj = ref([])
 
 
