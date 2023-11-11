@@ -373,48 +373,86 @@
           {{ i18n_t('app_h5.detail.not_data_substitute') }}
         </div>
         <template v-else>
-          <!-- 头部 -->
-          <div class="header">
-            <div>
-              <team-img
-                v-if="!lodash.isEmpty(detail_data)"
-                :type="0"
-                :csid="detail_data.csid"
-                :url="lodash.get(detail_data,'malu[0]')"
-                :fr="MenuData.get_menu_type() != 3000 ? lodash.get(detail_data,'frmhn[0]') : detail_data.frmhn"
-                :size="44"
-              ></team-img>
-              <span>{{detail_data.man}}</span>
+          <div class="line-down-wrap">
+            <div class="team-home item">
+              <!-- 主队头部 -->
+              <div class="header">
+                <div>
+                  <team-img
+                    v-if="!lodash.isEmpty(detail_data)"
+                    :type="0"
+                    :csid="detail_data.csid"
+                    :url="lodash.get(detail_data,'malu[0]')"
+                    :fr="MenuData.get_menu_type() != 3000 ? lodash.get(detail_data,'frmhn[0]') : detail_data.frmhn"
+                    :size="44"
+                  ></team-img>
+                  <span>{{detail_data.man}}</span>
+                </div>
+              </div>
+              <!-- 主队替补名单列表 -->
+              <div class="team-item" v-for="(item, i) in line_up_data_away.down" :key="i+'b'">
+                <div class="col1">
+                  <!-- 联赛icon -->
+                  <img class="match_logo"
+                      :src=" item.thirdPlayerPicUrl ? get_server_file_path(item.thirdPlayerPicUrl) : default_url"
+                      @error="league_icon_error"
+                  />
+                </div>
+                <div class="content">
+                  <div class="position-name">{{ item.positionName || '-' }}</div>
+                  <div class="player-name ellipsis">
+                    {{ item.thirdPlayerName}}
+                  </div>
+                </div>
+                <div class="col4 end-btn">
+                  <span>{{ item.shirtNumber }}</span>
+                </div>
+              </div>
+
             </div>
-            <div>
-              <team-img
-                v-if="!lodash.isEmpty(detail_data)"
-                :type="0"
-                :csid="detail_data.csid"
-                :url="lodash.get(detail_data,'mhlu[0]')"
-                :fr="MenuData.get_menu_type() != 3000 ? lodash.get(detail_data,'frmhn[0]') : detail_data.frmhn"
-                :size="44"
-              ></team-img>
-              <span>{{detail_data.mhn}}</span>
+            <!-- 分隔线 -->
+            <div class="separate"></div>
+            <div class="team-away item">
+              <!-- 客队头部 -->
+              <div class="header">
+                <div>
+                  <team-img
+                    v-if="!lodash.isEmpty(detail_data)"
+                    :type="0"
+                    :csid="detail_data.csid"
+                    :url="lodash.get(detail_data,'mhlu[0]')"
+                    :fr="MenuData.get_menu_type() != 3000 ? lodash.get(detail_data,'frmhn[0]') : detail_data.frmhn"
+                    :size="44"
+                  ></team-img>
+                  <span>{{detail_data.mhn}}</span>
+                </div>
+              </div>
+              <!-- 客队替补名单列表 -->
+              <div class="team-item" v-for="(item, i) in line_up_data_away.down" :key="i+'b'">
+                <div class="col1">
+                  <!-- 联赛icon -->
+                  <img class="match_logo"
+                      :src=" item.thirdPlayerPicUrl ? get_server_file_path(item.thirdPlayerPicUrl) : default_url"
+                      @error="league_icon_error"
+                  />
+                </div>
+                <div class="content">
+                  <div class="position-name">{{ item.positionName || '-' }}</div>
+                  <div class="player-name ellipsis">
+                    {{ item.thirdPlayerName}}
+                  </div>
+                </div>
+                <div class="col4 end-btn">
+                  <span>{{ item.shirtNumber }}</span>
+                </div>
+              </div>
+              
             </div>
           </div>
+          
           <!-- 主内容 -->
-          <div class="team-item" v-for="(item, i) in line_up_data_home.down" :key="i+'b'">
-            <div class="col1">
-              <!-- 联赛icon -->
-              <img class="match_logo"
-                  :src=" item.thirdPlayerPicUrl ? get_server_file_path(item.thirdPlayerPicUrl) : default_url"
-                  @error="league_icon_error"
-              />
-            </div>
-            <div class="col2">{{ item.positionName || '-' }}</div>
-            <div class="col3 ellipsis">
-              {{ item.thirdPlayerName.split(6, '...') || '-' }}
-            </div>
-            <div class="col4 end-btn">
-              <span>{{ item.shirtNumber }}</span>
-            </div>
-        </div>
+          {{ console.log("-------------------------------------line-up-2.vue",line_up_data_home,line_up_data_away)}}
+          
         </template>
         
         
@@ -722,6 +760,7 @@ import { LOCAL_PROJECT_FILE_PREFIX, MenuData } from 'src/core'
   position: sticky;
   top: 0.44rem;
   z-index: 80;
+  padding: 0 0.05rem;
   .icon-name {
     display: flex;
     align-items: center;
@@ -752,7 +791,7 @@ import { LOCAL_PROJECT_FILE_PREFIX, MenuData } from 'src/core'
         color: #303442;
         font-size: 0.12rem;
         &:first-child {
-          border-right: 0.005rem solid #f2f2f6;
+          // border-right: 0.005rem solid #f2f2f6;
           padding-right: 0;
         }
         &:nth-child(2) {
@@ -968,5 +1007,51 @@ import { LOCAL_PROJECT_FILE_PREFIX, MenuData } from 'src/core'
 .header {
   // z-index:99999 !important;
   top:0.8rem !important;
+}
+.line-up{
+  .line-down-wrap{
+    display: flex;
+    padding: 0 0.08rem;
+    .separate{
+      width: .5px;
+      margin: 0 0.04rem;
+      background-color: var(--q-gb-bg-c-18); //#TODO
+    }
+    .item{
+      flex: 1;
+      .team-item{
+        background-color: var(--q-gb-bg-c-18);
+        padding-right: 0.08rem;
+        border-radius: .04rem;
+        margin-bottom: 0.06rem;
+        .content{
+          flex: 10;
+          display: flex;
+          flex-direction: column-reverse;
+          align-items: flex-start;
+          width: 0;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          .player-name{
+            width: 100%;
+            text-align: left;
+            font-size: 0.12rem;
+            color: #303442; //#TODO css var
+          }
+          .position-name{
+            font-size: 0.10rem;
+            color: #AFB3C8; //#TODO css var
+          }
+        }
+
+        .end-btn{
+          color: #179CFF !important; //#TODO css var
+          justify-content: flex-end;
+          text-align: right;
+          width: 0.21rem;
+        }
+      }
+    }
+  }
 }
 </style>
