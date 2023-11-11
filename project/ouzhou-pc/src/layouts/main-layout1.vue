@@ -55,7 +55,6 @@
       <bet-box-wapper use_component_key="BetBoxOuZhouPC_1"  />
     </div>
   </Vue3DraggableResizable>
-
   </div>
 </template>
 <script setup>
