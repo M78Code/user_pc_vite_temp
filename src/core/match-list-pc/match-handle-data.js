@@ -20,10 +20,10 @@ function get_menu_obj_by_menu_id(menu_id) {
    * @param {undefined} undefined
   */
 function get_match_tpl_number(is_hot) {
-    const { left_menu_result, mid_menu_result } = MenuData;
+    const { left_menu_result = {}, mid_menu_result } = MenuData;
     let match_tpl_number = -1
     // 玩法菜单
-    let play_menu = get_menu_obj_by_menu_id(left_menu_result.lv1_mi)
+    let play_menu = get_menu_obj_by_menu_id(lodash.get(left_menu_result,lv1_mi))
     // 详情页热门赛事 或者 搜索 或者列表强力推荐
     if (PageSourceData.route_name == 'details' || PageSourceData.route_name == 'search' || is_hot) {
         match_tpl_number = -1
@@ -55,13 +55,14 @@ function get_match_tpl_number(is_hot) {
     }
     return match_tpl_number
 }
+
 /**
  * @Description 获取赛事模板ID
  * @param {number} csid 球种类型
 */
 export function get_match_template_id({ csid }) {
     let tpl_id = get_match_tpl_number()
-    console.log(tpl_id,'get_match_tpl_number')
+    console.log(tpl_id, 'get_match_tpl_number')
 
     // 虚拟足球1001、虚拟篮球1004
     if ([1001, 1004].includes(+csid)) {
@@ -75,7 +76,7 @@ export function get_match_template_id({ csid }) {
     else if (tpl_id == -1) {
         tpl_id = csid_to_tpl_id(csid)
     }
-    console.log(tpl_id,'get_match_tpl_number1')
+    console.log(tpl_id, 'get_match_tpl_number1')
     return tpl_id
 }
 
