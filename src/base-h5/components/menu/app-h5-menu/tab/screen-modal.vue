@@ -56,14 +56,14 @@
           <img
             class="select_img"
             v-show="!is_all_checked"
-            @click="is_all_checked = !is_all_checked"
+            @click="all_select"
             src="/src/base-h5/components/menu/app-h5-menu/tab/img/icon_checkbox_nor.svg"
             alt
           />
           <img
             class="img"
             v-show="is_all_checked"
-            @click="is_all_checked = !is_all_checked"
+            @click="all_select"
             src="/src/base-h5/components/menu/app-h5-menu/tab/img/icon_checkbox_sel.svg"
             alt
           />
@@ -120,8 +120,7 @@
   </div>
 </template>
 <script setup>
-import { SearchData } from "src/core/";
-import { reactive, toRefs, ref, onMounted, watch, nextTick } from "vue";
+import {  ref, watch } from "vue";
 import search from "src/core/search-class/search.js";
 import { api_search } from "src/api/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
@@ -129,7 +128,7 @@ defineOptions({
   name: "screen-modal" // 设置组件名称
 });
 //输入框值
-const input_text = ref("V");
+const input_text = ref("");
 //是否全选
 const is_all_checked = ref(false);
 //日间夜间
@@ -144,21 +143,22 @@ let rem_1 = (window.innerWidth * 100) / 375;
 const bounced_high = {
   height: window.innerHeight - rem_1 + 50 + "px !important"
 };
-watch(
-  () => is_all_checked,
-  val => {
-    //联赛全选
-    list_data.value = list_data.value.map(item => {
-      item.checked = val._value;
+/**
+ * @Description:全选反选
+ * @param {string}
+ * @return {Undefined} Undefined
+ */
+function all_select() {
+  is_all_checked.value = !is_all_checked.value
+     list_data.value = list_data.value.map(item => {
+      item.checked = is_all_checked;
       item.matchList = item.matchList.map(v => {
-        v.checked = val._value;
+        v.checked = is_all_checked.value;
         return v;
       });
       return item;
     });
-  },
-  { deep: true }
-);
+}
 /**
  * @Description:联赛选中
  * @param {string}
@@ -183,6 +183,9 @@ function league_select(val) {
  */
 function match_select(item) {
   item.checked = !item.checked;
+  if (!item.checked){
+    is_all_checked.value = false
+  }
 }
 /**
  * @Description:获取搜索结果数据
