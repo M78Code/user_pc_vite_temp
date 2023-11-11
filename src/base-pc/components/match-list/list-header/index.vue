@@ -296,148 +296,150 @@ function on_change_list_type (type) {
   if (type == vx_layout_list_type.value) {
     return
   }
-  let { lv2_mi, lv1_mi, jinri_zaopan, root, guanjun } = menu_config.left_menu_result
-  let apiType = 1
-  const api_params = {
-    2000: {
-      match: "post_fetch_esports_matchs",
-      colloet: "post_collect_list_es"
-    },  //
-    400: {
-      match: "post_champion_list",
-      colloet: "post_fetch_collect_list"
-    },
-    1: {
-      match: "post_fetch_match_list",
-      colloet: "post_fetch_collect_list"
-    },
-    500: {
-      match: "post_fetch_match_list",
-      colloet: "post_fetch_collect_list"
-    },
-    other: {
-      match: "post_league_list",
-      colloet: "post_fetch_collect_list"
-    }
-  }
-  let api_name = api_params.other.match
-  if ([1, 500, 300, 400, 2000].includes(Number(root))) {
-    api_name = api_params[root].match
-  }
-  if (type === "collect") {
-    // 前端开    后台开       >开
-    // 前端开    后台关       >关
-    // 前端关    后台开       >关
-    // 前端关    后台关       >关
-    if (!enable_collect_api || !GlobalAccessConfig.get_collectSwitch()) {
-      return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, t("msg.msg_09"));
-    }
-    apiType = 2
-    api_name = api_params.other.colloet
-    if ([1, 500, 300, 2000].includes(Number(root))) {
-      api_name = api_params[root].colloet
-    }
-  }
-  // 调用列表接口
-  // 当前 pid 和 orpt
-  let lv2_mi_info = BaseData.mi_info_map[`mi_${lv2_mi}`];
-  // 父级euid
-  let euid;
-  if ([2, 3].includes(Number(root))) {
-    // 今日 早盘 常规赛事
-    if (lv1_mi == 118) {
-      // 娱乐下只有冠军 直接写死
-      euid = root == 3 ? '3020212' : '3020112'
-    } else {
-      euid = BaseData.mi_info_map[`mi_${lv1_mi}${jinri_zaopan}`].euid
-    }
-    lv2_mi_info = {
-      apiType,
-      "orpt": "0",
-      "pids": "",
-      ...lv2_mi_info,
-      euid,
-    }
-    if (root == 3) {
-      // 早盘获取选中的时间
-      let { match_list: { params: { md, index } } } = menu_config.match_list_api_config
-      lv2_mi_info.md = md
-      lv2_mi_info.index = index || 0 // 早盘收藏 切换后回到原来的
-    }
-  } else if (root == 400) {
-    guanjun = "guanjun"
-    // 冠军
-    let { mid_menu_result } = menu_config
-    lv2_mi_info = {
-      ...lv2_mi_info,
-      apiType,
-      "sportId": (1 * mid_menu_result.mi - 400) || '',
-      "outrightMatches": 1,
-      "orpt": 18,
-    }
-  } else if (root == 2000) {
-    // 电子竞技
-    let dianjing_sublist = BaseData.dianjing_sublist
-    let current_menu = dianjing_sublist.find(item => item.mi == lv2_mi) || {}
-    lv2_mi_info = {
-      ...lv2_mi_info,
-      "category": 1,
-      "csid": current_menu.csid,
-      "collect": 1,
-      apiType,
-      md: (menu_config.match_list_api_config.match_list || {}).params.md,
-    }
-  } else if (root == 500) {
-    let { mid_menu_result } = menu_config
-    euid = mid_menu_result.euid
-    // 没有就重新获取
-    if (!mid_menu_result.euid) {
-      // 热门默认赛事
-      let mi_500_obj = BaseData.mew_menu_list_res.find((x) => x.mi == 500) || {
-        sl: [],
-      };
-      // 热门赛事有值的
-      let { mi } = mi_500_obj['sl'].find(item => item.ct)
-      let mi_info = BaseData.mi_info_map[`mi_${mi}`] || {};
-      euid = mi_info.euid
-    }
-    // 热门赛事
-    lv2_mi_info = {
-      ...lv2_mi_info,
-      apiType,
-      hotMatches: euid == "30199" ? '1' : '', // 热门赛事 全部/赛事 才是1
-      euid,
-      "orpt": euid == "30101" ? '12' : '-1',  // 热门赛事 竞足 12，其他-1
-      pids: euid == "30101" ? -999 : '',
-    }
-  } else if (root == 1) {
-    // 滚球赛事
-    let { mid_menu_result } = menu_config
-    lv2_mi_info = {
-      ...lv2_mi_info,
-      apiType,
-      euid: mid_menu_result.euid,
-      "orpt": "-1",
-      tid: ""
-    }
-  }
-  let config = {
-    begin_request: true,
-    is_collect: type == "collect",
-    route: "list",
-    root: "",
-    sports: "",
-    guanjun,  // 常规赛种下 冠军
-    match_list: {
-      api_name,
-      params: {
-        "cuid": UserCtr.get_uid || '',
-        "sort": vx_match_sort.value,
-        "selectionHour": filterHeader. open_select_time,
-        ...lv2_mi_info,
-      },
-    }
-  }
+  vx_layout_list_type.value=type
+  // let { lv2_mi, lv1_mi, jinri_zaopan, root, guanjun } = menu_config.left_menu_result
+  // let apiType = 1
+  // const api_params = {
+  //   2000: {
+  //     match: "post_fetch_esports_matchs",
+  //     colloet: "post_collect_list_es"
+  //   },  //
+  //   400: {
+  //     match: "post_champion_list",
+  //     colloet: "post_fetch_collect_list"
+  //   },
+  //   1: {
+  //     match: "post_fetch_match_list",
+  //     colloet: "post_fetch_collect_list"
+  //   },
+  //   500: {
+  //     match: "post_fetch_match_list",
+  //     colloet: "post_fetch_collect_list"
+  //   },
+  //   other: {
+  //     match: "post_league_list",
+  //     colloet: "post_fetch_collect_list"
+  //   }
+  // }
+  // let api_name = api_params.other.match
+  // if ([1, 500, 300, 400, 2000].includes(Number(root))) {
+  //   api_name = api_params[root].match
+  // }
+  // if (type === "collect") {
+  //   // 前端开    后台开       >开
+  //   // 前端开    后台关       >关
+  //   // 前端关    后台开       >关
+  //   // 前端关    后台关       >关
+  //   if (!enable_collect_api || !GlobalAccessConfig.get_collectSwitch()) {
+  //     return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, t("msg.msg_09"));
+  //   }
+  //   apiType = 2
+  //   api_name = api_params.other.colloet
+  //   if ([1, 500, 300, 2000].includes(Number(root))) {
+  //     api_name = api_params[root].colloet
+  //   }
+  // }
+  // // 调用列表接口
+  // // 当前 pid 和 orpt
+  // let lv2_mi_info = BaseData.mi_info_map[`mi_${lv2_mi}`];
+  // // 父级euid
+  // let euid;
+  // if ([2, 3].includes(Number(root))) {
+  //   // 今日 早盘 常规赛事
+  //   if (lv1_mi == 118) {
+  //     // 娱乐下只有冠军 直接写死
+  //     euid = root == 3 ? '3020212' : '3020112'
+  //   } else {
+  //     euid = BaseData.mi_info_map[`mi_${lv1_mi}${jinri_zaopan}`].euid
+  //   }
+  //   lv2_mi_info = {
+  //     apiType,
+  //     "orpt": "0",
+  //     "pids": "",
+  //     ...lv2_mi_info,
+  //     euid,
+  //   }
+  //   if (root == 3) {
+  //     // 早盘获取选中的时间
+  //     let { match_list: { params: { md, index } } } = menu_config.match_list_api_config
+  //     lv2_mi_info.md = md
+  //     lv2_mi_info.index = index || 0 // 早盘收藏 切换后回到原来的
+  //   }
+  // } else if (root == 400) {
+  //   guanjun = "guanjun"
+  //   // 冠军
+  //   let { mid_menu_result } = menu_config
+  //   lv2_mi_info = {
+  //     ...lv2_mi_info,
+  //     apiType,
+  //     "sportId": (1 * mid_menu_result.mi - 400) || '',
+  //     "outrightMatches": 1,
+  //     "orpt": 18,
+  //   }
+  // } else if (root == 2000) {
+  //   // 电子竞技
+  //   let dianjing_sublist = BaseData.dianjing_sublist
+  //   let current_menu = dianjing_sublist.find(item => item.mi == lv2_mi) || {}
+  //   lv2_mi_info = {
+  //     ...lv2_mi_info,
+  //     "category": 1,
+  //     "csid": current_menu.csid,
+  //     "collect": 1,
+  //     apiType,
+  //     md: (menu_config.match_list_api_config.match_list || {}).params.md,
+  //   }
+  // } else if (root == 500) {
+  //   let { mid_menu_result } = menu_config
+  //   euid = mid_menu_result.euid
+  //   // 没有就重新获取
+  //   if (!mid_menu_result.euid) {
+  //     // 热门默认赛事
+  //     let mi_500_obj = BaseData.mew_menu_list_res.find((x) => x.mi == 500) || {
+  //       sl: [],
+  //     };
+  //     // 热门赛事有值的
+  //     let { mi } = mi_500_obj['sl'].find(item => item.ct)
+  //     let mi_info = BaseData.mi_info_map[`mi_${mi}`] || {};
+  //     euid = mi_info.euid
+  //   }
+  //   // 热门赛事
+  //   lv2_mi_info = {
+  //     ...lv2_mi_info,
+  //     apiType,
+  //     hotMatches: euid == "30199" ? '1' : '', // 热门赛事 全部/赛事 才是1
+  //     euid,
+  //     "orpt": euid == "30101" ? '12' : '-1',  // 热门赛事 竞足 12，其他-1
+  //     pids: euid == "30101" ? -999 : '',
+  //   }
+  // } else if (root == 1) {
+  //   // 滚球赛事
+  //   let { mid_menu_result } = menu_config
+  //   lv2_mi_info = {
+  //     ...lv2_mi_info,
+  //     apiType,
+  //     euid: mid_menu_result.euid,
+  //     "orpt": "-1",
+  //     tid: ""
+  //   }
+  // }
+  // let config = {
+  //   begin_request: true,
+  //   is_collect: type == "collect",
+  //   route: "list",
+  //   root: "",
+  //   sports: "",
+  //   guanjun,  // 常规赛种下 冠军
+  //   match_list: {
+  //     api_name,
+  //     params: {
+  //       "cuid": UserCtr.get_uid || '',
+  //       "sort": vx_match_sort.value,
+  //       "selectionHour": filterHeader. open_select_time,
+  //       ...lv2_mi_info,
+  //     },
+  //   }
+  // }
+  menu_config.set_is_collect(type === "collect")
   // menu_config.set_match_list_api_config(config);
 }
 </script>

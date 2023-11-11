@@ -4,6 +4,7 @@ import lodash from "lodash";
 import { compute_match_list_style_obj_and_match_list_mapping_relation_obj_type1 } from "./data-relation-type-1.js";
 import { compute_match_list_style_obj_and_match_list_mapping_relation_obj_type2 } from "./data-relation-type-2.js";
 import { compute_match_list_style_obj_and_match_list_mapping_relation_obj_type3 } from "./data-relation-type-3.js";
+import { compute_match_list_style_obj_and_match_list_mapping_relation_obj_type4 } from "./data-relation-type-4.js";
 import { compute_match_list_style_obj_and_match_list_mapping_relation_obj_type5 } from "./data-relation-type-5.js";
 import PageSourceData from "src/core/page-source/page-source.js";
 import { MATCH_LIST_TEMPLATE_CONFIG } from "src/core/match-list-pc/list-template/index.js";
@@ -86,9 +87,16 @@ const set_match_list_mapping_relation_obj_type = () => {
   } else {
     type = 1;
   }
-  // 欧洲版也不区分赛种 且需要一个新的计算逻辑 so
+  // 欧洲版也不区分赛种 且需要一个新的计算逻辑 但是因为接口结构不一样 所以需要有两套计算逻辑
   if (PROJECT_NAME == 'ouzhou-pc') {
-    // type = 2
+    if (
+      (page_source == "hot" && MenuData.match_list_api_params.euid != 30199) ||
+      ["today", "early", "bet"].includes(page_source)
+    ) {
+      type = 9
+    } else {
+      type = 8
+    }
   }
   MatchListCardData.match_list_mapping_relation_obj_type = type;
 };
@@ -190,6 +198,11 @@ export const compute_match_list_style_obj_and_match_list_mapping_relation_obj =
       );
     } else if ([8].includes(MatchListCardData.match_list_mapping_relation_obj_type)) {
       compute_match_list_style_obj_and_match_list_mapping_relation_obj_type3(
+        match_list,
+        is_ws_call
+      );
+    } else if ([9].includes(MatchListCardData.match_list_mapping_relation_obj_type)) {
+      compute_match_list_style_obj_and_match_list_mapping_relation_obj_type4(
         match_list,
         is_ws_call
       );

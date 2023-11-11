@@ -10,7 +10,6 @@
 </template>
   
 <script setup>
-import { onMounted, ref } from "vue";
 import { dateWeekFormat } from "../utils.js";
 const props = defineProps({
     reverse: {
@@ -46,17 +45,6 @@ const time_tab = (item) => {
     // 设置日期
     // MenuData.set_date_time(props.dataList[i].val)
 }
-
-// const set_menu_match_date = () => {
-//         // 获取菜单中的数据 进去接口请求
-//         const { menu_match_date_api_config:{ api,params } } = MenuData
-//         api_common[api](params).then(res => {
-//             // if(res.code == 200 ){
-//                 useMittEmit(MITT_TYPES.EMIT_SCROLL_DATE_TIME_CHANGE,res.data || {})
-//             // }
-//         })
-//     }   
-// onMounted(() => { console.log(props.dateList)});
 </script>
   
 <style lang="scss" scoped>

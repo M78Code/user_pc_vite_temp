@@ -2,9 +2,10 @@
 
 <template>
     <div>
-        <input class="bet-input" v-model="ref_data.money" type="number" @input="set_win_money"
-        :placeholder="`Limits ${ref_data.min_money} ~ ${ref_data.max_money}`" maxLength="11" />
+        <input class="bet-input" v-model="ref_data.money" type="number" @input="set_win_money" @click="show_quick_amount(true)"
+        :placeholder="`Limits ${ref_data.min_money} ~ ${ref_data.max_money}`" maxLength="11"  />
     </div>
+
 </template>
 
 <script setup> 
@@ -13,7 +14,7 @@ import lodash_ from 'lodash'
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import mathJs from 'src/core/bet/common/mathjs.js'
-import { useMittOn,MITT_TYPES } from "src/core/"
+import { useMittEmit,useMittOn,MITT_TYPES,UserCtr } from "src/core/"
 
 const props = defineProps({
     items:{},
@@ -26,6 +27,7 @@ const ref_data = reactive({
     money: '', // 投注金额
     keyborard: true, // 是否显示 最高可赢 和 键盘
     seriesOdds: '', // 赔率
+    
 })
 
 
@@ -79,6 +81,24 @@ const set_win_money = () => {
     BetData.set_bet_amount(ref_data.money)
     // 计算最高可赢金额
     // ref_data.win_money = ref_data.money * props.item.oddFinally
+}
+
+// 快捷金额 state true   false
+const show_quick_amount = state => {
+    let money_list = []
+    if(state){
+        if (BetData.bet_is_single) {
+           money_list = lodash.get(UserCtr, 'cvo.series', { qon: 10, qtw: 50, qth: 100, qfo: 200 })
+        } else {
+           money_list = lodash.get(UserCtr, 'cvo.single', { qon: 100, qtw: 500, qth: 1000, qfo: 2000 })
+        }
+    }
+    let obj = {
+        show: state,    
+        money_list,
+        max_money: ref_data.max_money,
+    }
+    useMittEmit(MITT_TYPES.EMIT_SHOW_QUICK_AMOUNT, obj)
 }
 
 </script>

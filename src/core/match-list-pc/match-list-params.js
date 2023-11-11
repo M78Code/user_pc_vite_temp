@@ -110,7 +110,7 @@ function match_list_all_params() {
             // 娱乐下只有冠军 直接写死
             euid = menu_root == 3 ? '3020212' : '3020112'
         } else {
-            euid = BaseData.mi_info_map[`mi_${lv1_mi}${menu_root}`].euid
+            euid = lodash.get(BaseData.mi_info_map, `mi_${lv1_mi}${menu_root}`, {}).euid
         }
         lv2_mi_info = {
             apiType,
