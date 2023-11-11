@@ -57,12 +57,9 @@
 <script setup>
 import {
     ref,
-    reactive
+    reactive,
+    defineEmits
 } from "vue";
-import { MenuData } from 'src/core/';
-import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
-
-
 const emit = defineEmits(["changeDate", "changeTab"]);
 const tabActive = ref("matches");//tab
 const tabModel = ref(false);//下拉框
@@ -135,13 +132,10 @@ const changeDate = (index) => {
  * @param {*} index 
  */
 const changeDatetab = (item, index) => {
-    console.log(item)
     tabModel.value = false;
     const move_index = week.findIndex((t, _index) => _index === index);
     scrollRef.value.scrollTo(move_index - 2, "start-force");
     second_tab_index.value = item;
-    // MenuData.set_current_lv1_menu("2");
-    // MatchMeta.set_origin_match_data()
 };
 /**
  * 地区选择tab
