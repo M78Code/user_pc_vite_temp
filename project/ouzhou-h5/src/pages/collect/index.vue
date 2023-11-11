@@ -27,7 +27,7 @@
   </div>
 </template>
 <script setup>
-import { watch, onMounted, onBeforeMount, reactive } from "vue";
+import { watch, onMounted, onBeforeMount, reactive, nextTick } from "vue";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import setectLeague from 'src/base-h5/components/setect-league/index.vue'
 import { scrollMenuEvent } from "src/base-h5/components/menu/app-h5-menu/utils.js"
@@ -50,18 +50,18 @@ const selectFinishHandle = (val) => {
 }
 
 onMounted(() => {
-  set_menu_lv1({mi:50000})
+  MatchMeta.get_collect_match()
 })
 
-const set_menu_lv1 = item => {
-  MenuData.set_current_lv1_menu(item.mi);
-  MenuData.get_menu_lvmi_list(item.mi)
-  // MenuData.get_results_menu();
-  setTimeout(() => {
-    MatchMeta.get_results_match()
-    MatchMeta.get_collect_match()
-  }, 2000)
-}
+// const set_menu_lv1 = item => {
+//   MenuData.set_current_lv1_menu(item.mi);
+//   MenuData.get_menu_lvmi_list(item.mi)
+//   // MenuData.get_results_menu();
+//   setTimeout(() => {
+//     MatchMeta.get_results_match()
+//     MatchMeta.get_collect_match()
+//   }, 2000)
+// }
 </script>
 <style scoped lang="scss">
 .collect-wap {
