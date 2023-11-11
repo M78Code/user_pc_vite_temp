@@ -25,7 +25,7 @@
           />
            <!-- 视频图标 -->
           <img
-            v-if="cur_video_icon.type=='video'"
+            v-if="cur_video_icon.type"
             :src="show_type=='video'?video_active: video"
 
             alt=""
