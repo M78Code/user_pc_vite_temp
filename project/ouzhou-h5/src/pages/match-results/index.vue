@@ -38,19 +38,25 @@ const state = reactive({
     select_dialog:false,
     currentSlideValue:"",
     slideMenu:[],
-    slideMenu_date: [], // 时间
     slideMenu_sport: [], // 赛种
 })
 const selectFinishHandle = (val) => {
     console.log('选择完成')
     state.select_dialog = false
 }
+/**
+ * 时间点击
+ * @param {*} item 
+ */
 const changeDate = (item) =>{
     if (state.currentSlideValue === item.val) return
     state.currentSlideValue = item.val
-    // set_scroll_data_list(item.sportList)
-     getData(state.slideMenu_sport.filter((item)=>{return item.mi === state.current_mi})[0],lodash_.get(item.subList,'[0].field1', ''))
+     getData(state.slideMenu_sport.filter((n)=>{return n.mi === state.current_mi})[0],item.val)
 }
+/**
+ * 球种点击
+ * @param {*} item 
+ */
 const changeMenu = (item) =>{
     if (state.current_mi === item.mi) return
     state.current_mi = item.mi;
@@ -63,8 +69,6 @@ const switchHandle = async ()=> {
     //获取 赛果菜单
     // api_analysis.get_match_result_menu( {menuType:0} ).then( ( res = {} ) => {
         if(res.code == 200){
-            console.log(222222)
-            console.log(res)
             let scroll_data = res.data.map( item => {
                 return {
                     mi: 100+item.sportId*1 + '',
@@ -83,39 +87,20 @@ const switchHandle = async ()=> {
             state.current_mi = scroll_data[0].mi
             state.slideMenu = scroll_data[0].subList
             state.currentSlideValue = lodash_.get(scroll_data[0].subList,'[0].field1', '')
-            // 设置赛种数据
-            // set_scroll_data_list(lodash_.get(res.data,'[0].subList', []))
             getData( scroll_data[0],lodash_.get(scroll_data[0].subList,'[0].field1', ''))
         }
     // })
 }
-// 设置赛种列表
-const set_scroll_data_list = (data_list = []) => {
-    // let scroll_data = data_list.map( item => {
-    //     return {
-    //         mi: 100+item.sportId*1 + '',
-    //         ct: item.count,
-    //         md: item.date,
-    //         sport: item.sportId,
-    //     }
-    // })
-    // state.slideMenu_sport = scroll_data
-    // state.current_mi = scroll_data[0].mi
-    // state.slideMenu = data_list.map((item)=>{
-    //     return {
-    //         val:item.field1,
-    //         ...item
-    //     }
-    // })
-    // // 设置时间默认选中
-    // state.currentSlideValue = lodash_.get(data_list,'[0].field1', '')
-    MenuData.set_result_menu_api_params(scroll_data[0])
-    MatchMeta.get_results_match()
-}
+/**
+ * 请求
+ * @param {*} item 
+ * @param {*} date 
+ */
 const getData = (item,date) =>{
     let params = {
         mi:item.mi,
-        md:date
+        md:date,
+        sport:item.sport
     }
     MenuData.set_result_menu_api_params(params)
     MatchMeta.get_results_match()
