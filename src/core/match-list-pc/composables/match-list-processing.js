@@ -27,6 +27,7 @@ let hot_match_list_timeout;
 let vx_layout_list_type = 'match'
 // 是否虚拟体育
 let is_virtual = MenuData.is_virtual_sport;
+const { route_name } = PageSourceData;
 //
 let is_search = PageSourceData.is_search();
 let is_show_hot = ref(false);
@@ -249,7 +250,6 @@ const mx_list_res = (data, backend_run, cut, collect) => {
  */
 const mx_use_list_res_when_code_200_and_list_length_gt_0 = ({match_list, collect, backend_run}) => {
 	is_show_hot.value = false;
-	console.log('lockie-3', match_list);
   MatchListData.set_list(match_list)
 	// 计算赛事卡片
 	MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
@@ -270,7 +270,7 @@ const mx_use_list_res_when_code_200_and_list_length_gt_0 = ({match_list, collect
 				// this.mx_autoset_active_match();
 			}
 			// 非详情页 切换右侧为列表第一场赛事
-			else if (route.name != "details") {
+			else if (route_name != "details") {
 				let first_match = match_list[0];
 				let params = {
 					media_type: "auto",
@@ -278,7 +278,7 @@ const mx_use_list_res_when_code_200_and_list_length_gt_0 = ({match_list, collect
 					tid: first_match.tid,
 					sportId: first_match.csid,
 				};
-				regular_events_set_match_details_params(cut, params);
+				// regular_events_set_match_details_params(cut, params);
 			}
 		}
 	} else {
@@ -323,7 +323,7 @@ const mx_use_list_res_when_code_error_or_list_length_0 = (match_list) => {
 		// 如果是滚球并且不是全部  把当前菜单数量设为0  并自动切换菜单
 		let match_list_api_config = MenuData.match_list_api_config;
 		if (
-			route.name == "home" &&
+			route_name == "home" &&
 			MenuData.menu_root == "1" &&
 			match_list_api_config.sports != "quanbu-gunqiu"
 		) {
@@ -333,7 +333,7 @@ const mx_use_list_res_when_code_error_or_list_length_0 = (match_list) => {
 			};
 			MenuData.set_current_mi_0_and_change_menu();
 		} else if (
-			route.name == "home" &&
+			route_name == "home" &&
 			MenuData.menu_root != "500" &&
 			vx_layout_list_type !== "collect"
 		) {

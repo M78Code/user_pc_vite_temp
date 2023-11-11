@@ -27,7 +27,7 @@
       <div :style="`width:${match_list_tpl_size.play_icon_width}px !important;`"></div>
       <!-- 玩法名称 -->
       <div class="play-name-ouzhou">
-        <div 
+        <!-- <div 
           class="play-name-title-box"
           v-for="(item, col_index) in match_tpl_info.get_current_odds_list(current_choose_oid)" 
           :key="col_index" 
@@ -37,7 +37,7 @@
             :key="item_index">
             {{ item_title.ot }}
           </div>
-        </div>
+        </div> -->
       </div>
       <div class="action-col" style="width:60px" v-if="match_style_obj.data_tpl_id == 12"></div>
     </div>
@@ -80,7 +80,7 @@ const props = defineProps({
 let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(lodash.get(props, 'card_style_obj.mid'))
 const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`].width_config
 const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`]
-const current_choose_oid = ref({ first_hpid: '1', second_hpid: "2" });
+// const current_choose_oid = ref({ first_hpid: choose_config[match.csid][0], second_hpid: choose_config[match.csid][1] });
 // 获取菜单类型
 if (!lodash.get(props, 'card_style_obj.league_obj.csid') && ['1', '500'].includes(menu_config.menu_root)) {
   useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST)
