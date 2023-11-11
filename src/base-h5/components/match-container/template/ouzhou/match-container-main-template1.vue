@@ -219,7 +219,9 @@
                       </div>
                     </div>
                     <!-- 右边盘口组件 -->
-                    <ScoreList :match_info="match_of_list" :score_length="score_length"></ScoreList>
+                    <template v-if="match_of_list">
+                      <ScoreList :match_info="match_of_list" :score_length="score_length"></ScoreList>
+                    </template>
                   </div>
                 </div>
               </div>
@@ -291,7 +293,7 @@ export default {
      
       const hps = ctx.match_of_list.hps
       const hpid = MatchResponsive.match_hpid.value
-      const hps_item = hps.find(t => t.hpid == hpid)
+      const hps_item = hps && hps.find(t => t.hpid == hpid)
 
       let target_item = [];
       if(hps_play_data.value){
@@ -901,7 +903,7 @@ export default {
     }
 
     .team-wrapper {
-      padding-right:10px;
+      padding-right:5px;
       border-right: 1px solid rgba(88,88,88,.1);
 
       &.simple {

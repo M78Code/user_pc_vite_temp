@@ -130,7 +130,7 @@ onMounted(() => {
 async function get_date_menu_list() {
   let params = compute_get_date_menu_list_params();
   let api_fn_name = ''
-  if (MenuData.is_esports()) {
+  if (MenuData.is_export()) {
     //电竞
     api_fn_name = "get_esports_date_menu"
 
@@ -312,7 +312,7 @@ function handle_click_menu_mi_3_date (detail = {}) {
   // 设置      中间 菜单输出
   MenuData.set_mid_menu_result(params);
   // 设置   请求  列表结构  API 参数的  值
-  MenuData.set_match_list_api_config(config);
+  // MenuData.set_match_list_api_config(config);
 }
 
 /**

@@ -24,8 +24,10 @@
               <FeaturedMatches :featured_matches="featured_matches" />
             </template>
             <!-- 赛事列表 -->
-            <HeaderTitle title="In-Play"></HeaderTitle>
-            <MatchContainer />
+           <template v-if="MatchMeta.match_mids.length > 0">
+              <HeaderTitle title="In-Play"></HeaderTitle>
+              <MatchPlay />
+           </template>
             <!-- 特色赛事 -->
              <!-- 特色赛事 -->
              <template v-if="featured_matches.length > 0">
@@ -60,12 +62,13 @@ import TimeEvents from './components/time-events.vue'
 import HeaderTitle from './components/header-title.vue'
 import TopLeagues from './components/top-leagues.vue'
 import FeaturedMatches from './components/feature-matches.vue'
+import MatchPlay from './components/match-play.vue'
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import MatchUtils from 'src/core/match-list-h5/match-class/match-utils';
 import MatchContainer from "src/base-h5/components/match-list/index.vue";
 import scrollMenu from 'src/base-h5/components/top-menu/top-menu-ouzhou-1/scroll-menu/scroll-menu.vue';
 import { MenuData, MatchDataWarehouse_ouzhou_PC_l5mins_List_Common as MatchDataBasel5minsH5, 
-  MatchDataWarehouse_ouzhou_PC_hots_List_Common as MatchDataBaseHotsH5 } from "src/core/index.js";
+  MatchDataWarehouse_ouzhou_PC_hots_List_Common as MatchDataBaseHotsH5, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/index.js";
 
 import { de_img, dk_img, be_img, fr_img } from 'src/base-h5/core/utils/local-image.js'
 
@@ -73,6 +76,7 @@ watch(() => MenuData.update_time.value, () => {
   console.log("菜单id-球类id-对应euid",`${MenuData.menu_type.value}-${MenuData.menu_mi.value}-${MenuData.get_euid()}`)
 })
 
+const play_matchs = ref([])
 const time_events = ref([])
 const featured_matches = ref([])
 
@@ -80,12 +84,20 @@ onMounted(async () => {
   get_ouzhou_home_data()
 })
 
+// 获取首页数据
 const get_ouzhou_home_data = async () => {
-  const { p15_list, hots } = await MatchMeta.get_ouzhou_home_data()
+  const { p15_list, hots, dataList } = await MatchMeta.get_ouzhou_home_data()
+  // 15 分
   time_events.value = p15_list.map(t => {
     const match = MatchDataBasel5minsH5.get_quick_mid_obj(t.mid)
     return match
   })
+  // 滚球赛事
+  // play_matchs.value = dataList.map(t => {
+  //   const match = MatchDataBaseH5.get_quick_mid_obj(t.mid)
+  //   return match
+  // })
+  // 热门赛事
   featured_matches.value = hots.map(t => {
     const match = MatchDataBaseHotsH5.get_quick_mid_obj(t.mid)
     const { home_score, away_score } = MatchUtils.get_match_score(match)
@@ -169,7 +181,7 @@ const on_update = () => {
   height: 100%;
   overflow: hidden;
   .header_tabs{
-    border-bottom: 1px solid #FF7000;
+    border-bottom: 2px solid #FF7000;
     :deep(.q-tabs--dense){
       .scroll--mobile{
         height: 50px;

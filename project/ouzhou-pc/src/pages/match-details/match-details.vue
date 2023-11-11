@@ -229,7 +229,7 @@ let back_to_timer =null
     } else if (route.name == "search") {
       is_esports_val = false;
     } else {
-      is_esports_val = MenuData.is_esports() //todo
+      is_esports_val = MenuData.is_export() //todo
 
     }
 

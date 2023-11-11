@@ -29,14 +29,14 @@ export const set_sticky_top = () => {
     };
   }
   // 非滚球电竞
-  else if (MenuData.is_esports() && !["hot", "play"].includes(page_source)) {
+  else if (MenuData.is_export() && !["hot", "play"].includes(page_source)) {
     obj = {
       type: 196,
       league: 196,
     };
   }
   // 冠军 并且不是早盘
-  else if (MenuData.is_guanjun() && page_source != "match-early-common") {
+  else if (MenuData.is_kemp() && page_source != "match-early-common") {
     obj = {
       type: 40,
       league: 40,
@@ -62,7 +62,7 @@ export const set_sticky_top = () => {
     //   };
     // }
     //虚拟体育
-    if (MenuData.is_virtual_sport()) {
+    if (MenuData.is_vr()) {
       // 虚拟足球
       if (MenuData.cur_level2_menu == "30054") {
         obj = {
@@ -117,14 +117,14 @@ export const set_sticky_top = () => {
       league: 74,
     };
     // 电竞收藏
-    if (MenuData.is_esports()) {
+    if (MenuData.is_export()) {
       obj = {
         type: 196,
         league: 196,
       };
     }
     // 冠军收藏
-    else if (MenuData.is_guanjun() && page_source != "winner_top") {
+    else if (MenuData.is_kemp() && page_source != "winner_top") {
       obj = {
         type: 40,
         league: 40,

@@ -90,7 +90,7 @@ import common_template from './common_template.vue'
 // import { storage_bet_info } from 'src/utils/bet_info'
 // import down_arrow_fold from 'src/assets/images/down_arrow_fold.png'
 // import close_thehand_icap from 'src/assets/images/close_the_handicap.png'//无盘口数据提示图片
-
+import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js" 
 const props = defineProps({
   matchDetail: {
     type: Array,
@@ -172,16 +172,25 @@ const betItemClick = (item, ol) => {
   }
   if (ol.cds) {
     current_ol.value = ol
-    const payload = {
-      ...props.detail_info,
-      hps:props.matchDetail
-    }
-    const params = {
-      payload,
-      hps: item,
-      ol
-    }
-    //  storage_bet_info(params)
+    let params = {
+    oid: ol.oid, // 投注项id ol_obj
+    _hid: ol._hid, // hl_obj 
+    _hn: ol._hn,  // hn_obj
+    _mid: ol._mid,  //赛事id mid_obj
+  }
+  console.log("odds_info.vue", ol, params);
+  let other = {
+    is_detail: true,
+    // 投注类型 “vr_bet”， "common_bet", "guanjun_bet", "esports_bet"
+    // 根据赛事纬度判断当前赛事属于 那种投注类型
+    bet_type: 'common_bet',
+    // 设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备
+    device_type: 2, 
+    // 数据仓库类型
+    match_data_type: "pc_detail", // h5_detail
+  }
+  set_bet_obj_config(params,other)
+
   }
 }
 // 事件执行函数

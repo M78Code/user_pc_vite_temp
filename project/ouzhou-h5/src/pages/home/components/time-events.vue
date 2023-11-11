@@ -17,7 +17,9 @@
           <div>{{ item.mhn }}</div>
           <div>{{ item.man}}</div>
         </div>
-        <ScoreList :match_info="item" :score_length="3" height="39" />
+        <template v-if="item">
+          <ScoreList :match_info="item" :score_length="3" height="39" />
+        </template>
       </div>
     </section>
   </div>

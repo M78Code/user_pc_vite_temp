@@ -18,7 +18,7 @@
         >
           <!-- 主程序 start -->
           <div
-            @click="go_betting({ ol: ol_item, hl: item_data.hl[0], payload: item_data })"
+            @click="go_betting(ol_item)"
             :class="[
               { 'is-active': ol_item.oid == active },
               'ol_ov',

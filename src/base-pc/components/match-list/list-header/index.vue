@@ -47,7 +47,7 @@
       </div>
       <!-- 即将开赛筛选 -->
       <!-- 今日有 收藏没有 冠军没有 -->
-      <com-select v-else-if="menu_config.menu_root == 2 && vx_layout_list_type != 'collect' && !menu_config.is_guanjun()"
+      <com-select v-else-if="menu_config.menu_root == 2 && vx_layout_list_type != 'collect' && !menu_config.is_kemp()"
         :options="time_list" v-model="filterHeader.open_select_time" showKey="title" @input="select_time_change">
         <template #prefix><span class="fg1">{{ $t("common.match_soon_filtr") }}</span></template>
       </com-select>
@@ -438,7 +438,7 @@ function on_change_list_type (type) {
       },
     }
   }
-  menu_config.set_match_list_api_config(config);
+  // menu_config.set_match_list_api_config(config);
 }
 </script>
 <style lang="scss" scoped>

@@ -92,9 +92,9 @@ const mx_collect_count = (data) => {
   if (
     !enable_collect_api.value ||
     !collect_switch.value ||
-    MenuData.is_virtual_sport() ||
+    MenuData.is_vr() ||
     PageSourceData.page_source == "search" ||
-    (PageSourceData.page_source == "play" && MenuData.is_esports())
+    (PageSourceData.page_source == "play" && MenuData.is_export())
   ) {
     return;
   }
@@ -106,7 +106,7 @@ const mx_collect_count = (data) => {
   let match_list_api_config = MenuData.match_list_api_config.match_list;
   let _params = lodash.clone(match_list_api_config.params) || {};
   // 电竞
-  if (MenuData.is_esports()) {
+  if (MenuData.is_export()) {
     api = api_match.post_collect_count_es;
   } else {
     api = api_match.post_fetch_collect_count;
@@ -182,7 +182,7 @@ const mx_collect_leagues = (match, is_champion) => {
             // 移除联赛卡片
             MatchListCard.remove_league(match.tid);
             let match_length;
-            if (MenuData.is_esports()) {
+            if (MenuData.is_export()) {
               match_length =
                 lodash.get(MatchListData.league_list_obj, "livedata.length", 0) +
                 lodash.get(MatchListData.league_list_obj, "nolivedata.length", 0);
@@ -240,7 +240,7 @@ const update_collect_data = (params) => {
           let mid = mids[i];
           let match = MatchListData.list_to_obj.mid_obj[mid+'_'] || {};
           //冠军联赛收藏
-          if (MenuData.is_guanjun()) {
+          if (MenuData.is_kemp()) {
             MatchListCard.update_league_collect_data(mid);
           } else {
             match.mf = 1;
@@ -272,7 +272,7 @@ const mx_collect = ({ type = "match", match, match_index }) => {
   if (!enable_collect_api.value || !collect_switch.value) {
     return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, t("msg.msg_09"));
   }
-  if (MenuData.is_guanjun()) {
+  if (MenuData.is_kemp()) {
     type = "champion";
   }
   // 联赛收藏

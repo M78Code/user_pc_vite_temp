@@ -58,7 +58,8 @@ import { defineComponent, onMounted, onBeforeUnmount, ref, defineProps } from "v
     } else {
       show_left_btn.value = false;
     }
-    if (scrollLeft == area_obj.scrollWidth - area_obj.clientWidth) {
+    if (!area_obj) return;
+    if (scrollLeft == area_obj?.scrollWidth - area_obj?.clientWidth) {
       show_right_btn.value = false;
     } else {
       show_right_btn.value = true;
@@ -69,7 +70,7 @@ import { defineComponent, onMounted, onBeforeUnmount, ref, defineProps } from "v
   // type  left左移   right右移
   const click_move = (type) => {
     clearInterval(interval_id);
-    let scrollLeft = area_obj.scrollLeft;
+    let scrollLeft = area_obj?.scrollLeft;
     for_count = 0;
     // 滚动动画
     interval_id = setInterval(() => {

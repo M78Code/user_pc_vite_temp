@@ -12,7 +12,7 @@
     <div class="hairline-border" v-if="item_data.title && item_data.title.length > 0">
       <div class="temp1-ol" :style="{ gridTemplateColumns: 'repeat(3, 1fr)' }">
       <div v-for="ol in item_data.hl[0].ol" :key="ol.oid" class="temp1_ol_on">
-        <div @click="go_betting({ol,hl: item_data.hl[0],payload:item_data})" :class="[{ 'is-active': ol.oid == active }, 'temp1_ol_ov']" >
+        <div @click="go_betting(ol)" :class="[{ 'is-active': ol.oid == active }, 'temp1_ol_ov']" >
             <span class="temp1_ol-on-text">{{ ol.ot || ol.on }}</span>
             <span class="temp1_ol-ov-text">{{ get_oddv(ol.ov/100000) }}</span>
         </div>
