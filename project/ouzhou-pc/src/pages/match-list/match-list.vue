@@ -131,6 +131,7 @@ export default {
     ConmingSoon
   },
   setup() {
+
     // 15分钟赛事数据
     const matches_15mins_list = ref([]);
     // 热推数据
@@ -138,6 +139,8 @@ export default {
 
     const match_list_card_key_arr = ref([])
     const coom_soon_state =ref(false)
+
+    const match_list_top = ref('76px')
 
     const { proxy } = getCurrentInstance()
 
@@ -198,7 +201,8 @@ export default {
       compute_css_obj,
       MatchListCardDataClass   ,
       load_data_state,
-      coom_soon_state
+      coom_soon_state,
+      match_list_top
     };
   },
 };

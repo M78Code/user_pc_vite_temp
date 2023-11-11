@@ -14,7 +14,7 @@
   
             <span class="money-span" ref="money_span" :style="{ opacity:  '1' }"></span>
             
-            <span class="yb_fontsize14 limit-txt" v-show="!ref_data.money">{{ i18n_t('app_h5.bet.limit')}} {{ ref_data.min_money }}-{{ ref_data.max_money }}</span>
+            <span class="yb_fontsize14 limit-txt" v-show="!ref_data.money">Limts {{ ref_data.min_money }}-{{ ref_data.max_money }}</span>
           
           </div>
           

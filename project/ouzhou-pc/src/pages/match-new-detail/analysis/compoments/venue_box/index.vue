@@ -14,6 +14,7 @@
           <span class="analysis-top-txt">{{ detail_info.tn }}</span>
         </div>
         <div class="analysis-top-right">
+           <!-- 动画图标 -->
           <img
             v-if="detail_info.mvs > -1"
             :src="animal_key ? animal_active : animal"
@@ -22,14 +23,17 @@
             style="margin-right: 15px"
             @click="tab_click('animal')"
           />
+           <!-- 视频图标 -->
           <img
             v-if="cur_video_icon.type=='video'"
             :src="video"
+
             alt=""
             srcset=""
             style="margin-right: 15px"
             @click="tab_click('video')"
           />
+           <!-- 比分榜图标 -->
           <img
             :src="score_key ? score_active : score"
             alt=""
@@ -38,8 +42,8 @@
           />
         </div>
       </div>
-      <!-- 动画 -->
-      <!-- <animal_box v-if="animal_key"  :detail_info="detail_info" /> -->
+      <!-- 动画视频 -->
+      <animal_box v-if="animal_key" :show_type="show_type"  :detail_info="detail_info" />
       <!-- 比分 -->
       <score_info
         v-show="score_key"
@@ -81,6 +85,10 @@ const props = defineProps({
     default: () => {},
   },
 });
+
+const animal_key = ref(false);
+const score_key = ref(true);
+const show_type = ref('');
 
 watch(
   () => props.detail_info,
@@ -144,11 +152,10 @@ const cur_video_icon = computed(() => {
   return cur_video_icon;
 });
 
-const animal_key = ref(false);
-const score_key = ref(true);
 
 const tab_click = (type) => {
-  if (type == "animal") {
+  show_type.value = type
+  if (type == "animal"||type == "video") {
     animal_key.value = true;
     score_key.value = false;
   } else {

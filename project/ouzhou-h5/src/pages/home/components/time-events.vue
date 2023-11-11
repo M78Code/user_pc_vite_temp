@@ -5,7 +5,6 @@
 
 <template>
   <div class="time_play_page">
-    <header>15 Mins</header>
     <section>
       <div class="item" v-for="item in time_events" :key="item.mid">
         <!-- 标题 -->
@@ -38,15 +37,6 @@ const props = defineProps({
 
 <style scoped lang="scss">
 .time_play_page{
-  header {
-    height: 47px;
-    line-height: 55px;
-    padding: 0 15px;
-    color: #1A1A1A;
-    font-size: 16px;
-    font-weight: 500;
-    background: #E2E2E2;
-  }
   section {
     height: 126px;
     padding: 8px 0 2px;

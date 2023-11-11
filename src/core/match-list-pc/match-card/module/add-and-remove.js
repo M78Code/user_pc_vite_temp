@@ -15,7 +15,7 @@ const MenuData = {
   },
 };
 
-const { page_source } = PageSourceData;
+const { page_source, route_name } = PageSourceData;
 const { league_list_obj } = use_featch_fn();
 
 /**
@@ -213,7 +213,7 @@ const remove_match_when_match_list_mapping_relation_obj_type_other = (
  * @param {}  callback 特定状态回调
  */
 export const remove_match = (remove_mid, callback) => {
-  if (window.vue.$route.name == "search") {
+  if (route_name == "search") {
     return;
   }
   if ([1, 3].includes(MatchListCardData.match_list_mapping_relation_obj_type)) {

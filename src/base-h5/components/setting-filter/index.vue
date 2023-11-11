@@ -5,11 +5,11 @@
 <template>
   <div class="setting-filter">
     <div class="setting-top setting-item">
-      <div class="title" @click="searchClick">
+      <div class="title">
         联赛筛选
         <span>(已选16)</span>
       </div>
-      <div class="more">更多></div>
+      <div class="more"  @click="searchClick">更多></div>
     </div>
     <div class="setting-list">
       <div class="setting-item border" v-for="item in setting_list" :key="item.name">
@@ -118,9 +118,7 @@ const closedHandle = () => {
 const searchClick = () => {
     // console.log(`搜索足球`)
     // 派发首页设置菜单展开事件
-    useMittEmit(MITT_TYPES.EMIT_CHANGE_SETTING_SHOW, {
-      open: false,
-    });
+    emit("closedHandle");
     useMittEmit(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, {
       open: true,
     });
@@ -204,6 +202,7 @@ const activity_handle = item => {
   bottom: 0;
   background: var(--q-gb-bg-c-15);
   backdrop-filter: blur(5px);
+  z-index: 99;
 
   .setting-top.setting-item {
     border-bottom: 0.08rem solid var(--q-gb-t-c-8);

@@ -62,8 +62,8 @@ class MatchMeta {
     }else{
       // 菜单 ID 对应的 元数据赛事 mids   
       // 先写死
-      menu_lv_v1 = MenuData.current_lv_1_menu_i || '1'
-      menu_lv_v2 = MenuData.current_lv_2_menu_i || '1011'
+      menu_lv_v1 = MenuData.current_lv_1_menu_i
+      menu_lv_v2 = MenuData.current_lv_2_menu_i
       menu_lv_v1_sl = MenuData.get_menu_lvmi_list(menu_lv_v1)
       menu_lv_v2_sl = MenuData.get_menu_lv_2_mi_list(menu_lv_v2)
     }
