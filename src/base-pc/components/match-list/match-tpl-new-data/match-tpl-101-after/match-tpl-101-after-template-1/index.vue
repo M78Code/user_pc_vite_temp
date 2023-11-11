@@ -57,7 +57,6 @@ const props = defineProps({
   }
 })
 let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.mid)
-match_style_obj.data_tpl_id = 101; //调试用
 const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].width_config
 const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`]
 const current_choose_oid = ref({ first_hpid: '1', second_hpid: "2" });

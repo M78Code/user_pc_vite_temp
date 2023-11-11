@@ -9,6 +9,13 @@
         联赛筛选
         <span>(已选16)</span>
       </div>
+      <div>
+       <img
+            class="league-icon"
+            :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/league_icon.svg`"
+            alt=""
+          />
+      </div>
       <div class="more"  @click="searchClick">更多></div>
     </div>
     <div class="setting-list">
@@ -41,6 +48,7 @@
 import { i18n_t, compute_css_obj } from "src/core/index.js";
 import { useRouter, useRoute } from "vue-router";
 import { useMittEmit, MITT_TYPES,SessionStorage } from "src/core/index.js";
+
 import {
   ref,
   watch,
