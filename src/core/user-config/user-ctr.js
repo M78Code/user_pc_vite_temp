@@ -1452,7 +1452,7 @@ class UserCtr {
   */
   get_user_url_parames(obj={}){
     let res = {}
-    const get_value =function(name){
+    const get_value =function(key){
       res = SessionStorage.get(key) || LocalStorage.getItem(key);
       return res;
     }
@@ -1461,7 +1461,7 @@ class UserCtr {
     // token 令牌
     res.token = this.user_token || get_value('token');
     // gr分组
-    res.gr = lodash.get(this.user_info,'gr') || get_value('gr', '');
+    res.gr = lodash.get(this.user_info,'gr') || get_value('gr');
     // theme主题
     res.theme = this.theme || get_value('theme');
     // 语言
