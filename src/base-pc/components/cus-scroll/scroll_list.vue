@@ -8,7 +8,6 @@
     <!-- 滚动区域 -->
     <div
       class="list-scrollbar router_scroll_layout"
-      :style="{ right: utils_info.is_iframe ? '1px' : '3px' }"
       ref="area"
       @scroll="on_scroll"
     >
