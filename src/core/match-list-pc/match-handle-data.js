@@ -23,7 +23,7 @@ function get_match_tpl_number(is_hot) {
     const { left_menu_result = {}, mid_menu_result } = MenuData;
     let match_tpl_number = -1
     // 玩法菜单
-    let play_menu = get_menu_obj_by_menu_id(lodash.get(left_menu_result,lv1_mi))
+    let play_menu = get_menu_obj_by_menu_id(lodash.get(left_menu_result,"lv1_mi"))
     // 详情页热门赛事 或者 搜索 或者列表强力推荐
     if (PageSourceData.route_name == 'details' || PageSourceData.route_name == 'search' || is_hot) {
         match_tpl_number = -1
