@@ -109,6 +109,8 @@ const menus_i18n_map = ref(menu_i18n_default.data)
   console.log(mi_100_list, 'mi_100_list')
   //常规体育
   mi_100_arr.value = mi_100_list;
+  // 默认选中当前第一个tab
+  current_choose_tab.value = mi_100_list.length ? mi_100_list[0].mif : 101
   //电竞
   mi_2000_arr.value = mi_2000_list;
   //  VR  体育的

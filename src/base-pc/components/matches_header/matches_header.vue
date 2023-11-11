@@ -195,11 +195,11 @@ const checked_current_tab = payload => {
 	if (['top_events', 'league'].includes(payload.value)) {
 		// 修改菜单数据
 		MatchListOuzhouClass.coom_soon.value = true
-
-		
+		coom_soon_state.value = true
 	}else{
 		// 修改菜单数据
 		MatchListOuzhouClass.coom_soon.value = false
+		coom_soon_state.value = true
 	}
 
 	redux_menu.mid_tab_type = payload.value
