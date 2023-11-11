@@ -30,7 +30,7 @@ import lodash from "lodash";
 import MenuData from "src/core/menu-pc/menu-data-class.js";
 import { update_match_parent_card_style } from "./utils.js";
 
-import { league_title_card_template } from "../config/card-template-config.js";
+import { league_title_card_template, ouzhou_league_title_template } from "../config/card-template-config.js";
 import { MATCH_LIST_TEMPLATE_CONFIG } from "../../list-template/index.js";
 /**
  * @Description 获取其他玩法盘口高度
@@ -244,13 +244,13 @@ export const fold_tab_play = (mid) => {
  * @param {number} template_id 赛事模板编号
  * @param {undefined} undefined
  */
-export const get_league_title_card_height = (template_id) => {
+export const get_league_title_card_height = (template_id, is_ouzhou) => {
 	let height;
 	// 个别模板有两行玩法标题
 	if ([3, 5, 21, 22].includes(+template_id)) {
 		height = 56;
 	} else {
-		height = league_title_card_template.league_nofold_height;
+		height = is_ouzhou ? ouzhou_league_title_template.league_nofold_height : league_title_card_template.league_nofold_height;
 	}
 	return height;
 };

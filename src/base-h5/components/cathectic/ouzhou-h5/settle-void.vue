@@ -8,7 +8,7 @@
   <div class="settle-void" @touchmove.prevent>
     <!-- <div class="img-s" :style="compute_css_obj('no-record')"></div> -->
     <img :src="compute_local_project_file_path('/image/bet/no-data.png')">
-    <p>No data</p>
+    <p>{{i18n_t('common.no_data')}}</p>
   </div>
 </template>
 

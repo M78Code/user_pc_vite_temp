@@ -20,7 +20,7 @@
 
 <script setup>
 // 菜单的 root 节点   root ： 1 首页  2 滚球  3 my bets   4 左侧赛种
-import { ref,onMounted,onUnmounted } from 'vue';
+import { ref,onMounted,onUnmounted, watch } from 'vue';
 import { useRouter } from "vue-router";
 import _ from "lodash"
 import MatchListOuzhouClass from 'src/core/match-list-pc/match-ouzhou-list.js'
@@ -28,6 +28,8 @@ import MatchListOuzhouClass from 'src/core/match-list-pc/match-ouzhou-list.js'
 import MatchesFilterTab from "./matches_filter_tab_ball_species.vue";
 import MatchesDateTab from "./matches_filter_tab.vue";
 import { MenuData, UserCtr } from "src/core/index.js"
+import menu_i18n_default from "src/core/base-data/config/menu-i18n.json";
+
 // import { use_new_menu } from "@/components/menus/menu.js"
 // import store from "src/store-redux-vuex/redux_menu.js";
 // import { useMenuI18n } from "src/base-pc/components/menus/base_data";
@@ -62,6 +64,9 @@ const current_value = ref('featured');
 const match_list_top = ref('80px')
 
 const b_menu_root = ref(0)
+
+// 菜单多语言
+const menus_i18n_map = ref(menu_i18n_default.data)
 
 let menu_info = MatchListOuzhouClass?.redux_menu || {}
 const redux_menu = ref(menu_info);
@@ -116,6 +121,16 @@ onMounted(()=>{
   set_header_tab(menu_root)
   console.error(MenuData,"MenuData===")
 })
+
+watch(
+	MatchListOuzhouClass.version,
+	(version) => {
+		console.log(MatchListOuzhouClass, 'MatchListOuzhouClass', redux_menu)
+		redux_menu.value = MatchListOuzhouClass?.redux_menu
+		const { menu_root } = MatchListOuzhouClass?.redux_menu
+		set_header_tab(menu_root)
+	}
+)
 
 // // 菜单切换 右侧背景图片变化
 let un_subscribe = () => {
