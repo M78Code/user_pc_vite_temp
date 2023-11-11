@@ -5,21 +5,24 @@
 
 <template>
     <div class="bet-mix-show">
-      <div v-if="type == 2">
+
+      <div v-for="(items, index) in item" :key="index">
         <div class="nonebox4-content">
           <div class="nonebox4-content-left">
               <div class="nonebox4-content-left-content">
                   <div class="nonebox4-content-left-content-xian">删</div>
                   <div class="nonebox4-content-left-info">
                     <div class="nonebox4-content-left-content-text">
-                      <div class="nonebox4-content-left-content-text-one">Sevilla Futbol Club <span class="text-one-span">0.25</span></div>
-                      <div class="nonebox4-content-left-content-text-two">[In-play] <span class="text-two-span">1X2</span></div>
-                      <div class="nonebox4-content-left-content-text-three">Sevilla Futbol Club</div>
+                      <div class="nonebox4-content-left-content-text-one">{{items.handicap}} <span class="text-one-span">0.25</span></div>
+                      <div class="nonebox4-content-left-content-text-two">{{items.matchType == 2?'[In-play]':''}} <span class="text-two-span">{{items.playName}}</span></div>
+                      <div class="nonebox4-content-left-content-text-three">{{items.home}} v {{items.away}}</div>
                     </div>
                     <div>
                         <div class="nonebox4-content-right">
-                            <div class="nonebox4-content-right-profit" v-if="type != 4">123</div>
-                            <div class="content-right-duo"></div>
+                            <div class="nonebox4-content-right-profit" v-if="type != 4">{{compute_value_by_cur_odd_type(item.odds,'','',item.sportId)}}</div>
+                            <div v-if="type == 2" class="content-right-duo"></div>
+                            <div v-else-if="type == 3" class="content-right-shao"></div>
+                            <div v-else-if="type == 4" class="content-right-closed">closed</div>
                         </div>
                     </div>
                   </div>
@@ -29,81 +32,6 @@
         <!-- 输入框 -->
         <bet-input-info></bet-input-info>
       </div>
-
-      <div v-if="type == 3">
-        <div class="nonebox4-content">
-          <div class="nonebox4-content-left">
-              <div class="nonebox4-content-left-content">
-                  <div class="nonebox4-content-left-content-xian">删</div>
-                  <div class="nonebox4-content-left-info">
-                    <div class="nonebox4-content-left-content-text">
-                      <div class="nonebox4-content-left-content-text-one">Sevilla Futbol Club <span class="text-one-span">0.25</span></div>
-                      <div class="nonebox4-content-left-content-text-two">[In-play] <span class="text-two-span">1X2</span></div>
-                      <div class="nonebox4-content-left-content-text-three">Sevilla Futbol Club</div>
-                    </div>
-                    <div>
-                        <div class="nonebox4-content-right">
-                            <div class="nonebox4-content-right-profit" v-if="type != 4">123</div>
-                            <div class="content-right-shao"></div>
-                        </div>
-                    </div>
-                  </div>
-              </div>
-          </div>
-        </div>
-        <!-- 输入框 -->
-        <bet-input-info></bet-input-info>
-      </div>
-
-      <div v-if="type == 4">
-        <div class="nonebox4-content">
-          <div class="nonebox4-content-left">
-              <div class="nonebox4-content-left-content">
-                  <div class="nonebox4-content-left-content-xian">删</div>
-                  <div class="nonebox4-content-left-info">
-                    <div class="nonebox4-content-left-content-text">
-                      <div class="nonebox4-content-left-content-text-one">Sevilla Futbol Club <span class="text-one-span">0.25</span></div>
-                      <div class="nonebox4-content-left-content-text-two">[In-play] <span class="text-two-span">1X2</span></div>
-                      <div class="nonebox4-content-left-content-text-three">Sevilla Futbol Club</div>
-                    </div>
-                    <div>
-                        <div class="nonebox4-content-right">
-                            <div class="nonebox4-content-right-profit" v-if="type != 4">123</div>
-                            <div class="content-right-closed">closed</div>
-                        </div>
-                    </div>
-                  </div>
-              </div>
-          </div>
-        </div>
-        <!-- 输入框 -->
-        <bet-input-info></bet-input-info>
-      </div>
-
-      <div v-if="type == 1">
-        <div class="nonebox4-content">
-          <div class="nonebox4-content-left">
-              <div class="nonebox4-content-left-content">
-                  <div class="nonebox4-content-left-content-xian">删</div>
-                  <div class="nonebox4-content-left-info">
-                    <div class="nonebox4-content-left-content-text">
-                      <div class="nonebox4-content-left-content-text-one">Sevilla Futbol Club <span class="text-one-span">0.25</span></div>
-                      <div class="nonebox4-content-left-content-text-two">[In-play] <span class="text-two-span">1X2</span></div>
-                      <div class="nonebox4-content-left-content-text-three">Sevilla Futbol Club</div>
-                    </div>
-                    <div>
-                        <div class="nonebox4-content-right">
-                            <div class="nonebox4-content-right-profit" v-if="type != 4">123</div>
-                        </div>
-                    </div>
-                  </div>
-              </div>
-          </div>
-        </div>
-        <!-- 输入框 -->
-        <bet-input-info></bet-input-info>
-      </div>
-
       <!-- 合并单关最下面的多个输入框 -->
       <div>
         <!-- 输入框 -->
@@ -119,6 +47,10 @@
 <script setup>
   import betInputInfo from "./bet_input_info.vue";
   const type = 4;//1:不涨也不少    2：增长     3：减少   4:注单失效
+   const props = defineProps({
+    item:{}
+  })
+
 </script>
   
   <style lang="scss" scoped>

@@ -14,7 +14,7 @@
         <button class="dropbtn">Betting Type</button>
         <div class="dropdown-content">
           <a href="#" :class="BetData.is_bet_single?'dropdown-content-che':''" @click.stop="set_is_bet_single(true)">Betting Type</a>
-          <a href="#" :class="type==2?'dropdown-content-che':''">Multi Singles</a>
+          <a href="#" :class="type==2?'dropdown-content-che':''" @click.stop="set_is_bet_merge">Multi Singles</a>
           <a href="#" :class="!BetData.is_bet_single?'dropdown-content-che':''" @click.stop="set_is_bet_single(false)">System</a>
         </div>
       </div>
@@ -31,6 +31,10 @@
   const set_is_bet_single = (type) =>{
     BetData.set_is_bet_single()
     useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX, type);
+  }
+  const set_is_bet_merge = () => {
+    BetData.set_is_bet_merge()
+    // useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX, type);
   }
 </script>
 
