@@ -13,7 +13,7 @@
 				</div>
 			</div>
 		</div>
-		<MatchesFilterTab v-show="(current_value == 'top_events' && !coom_soon_state) "  />
+		<MatchesFilterTab v-show="(current_value == 'top_events' && redux_menu.menu_root == 1 && !coom_soon_state) || redux_menu.menu_root == 2 "  />
 		<MatchesDateTab v-show="redux_menu.menu_root == 4 && current_value == 'matches'" />
 	</div>
 </template>
