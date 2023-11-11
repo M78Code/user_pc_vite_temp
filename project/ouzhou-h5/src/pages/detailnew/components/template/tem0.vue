@@ -39,10 +39,10 @@
       </div>
     </div> -->
     <div class="temp0-ol" :style="{ gridTemplateColumns: 'repeat(3, 1fr)' }">
-      <div v-for="ol in item_data.hl[0].ol" :key="ol.oid" class="temp0_ol_on">
-        <div @click="go_betting({ol,hl: item_data.hl[0],payload:item_data})" :class="[{ 'is-active': ol.oid == active }, 'temp0_ol_ov']" >
-            <span class="temp0_ol-on-text">{{ ol.on || ol.ott }}</span>
-            <span class="temp0_ol-ov-text">{{ get_oddv(ol.ov/100000) }}</span>
+      <div v-for="ol in item_data.hl[0].ol" :key="ol?.oid" class="temp0_ol_on">
+        <div @click="go_betting(ol)" :class="[{ 'is-active': ol?.oid == active }, 'temp0_ol_ov']" >
+            <span class="temp0_ol-on-text">{{ ol?.on || ol?.ott }}</span>
+            <span class="temp0_ol-ov-text">{{ get_oddv(ol?.ov/100000) }}</span>
         </div>
       </div>
     </div>
