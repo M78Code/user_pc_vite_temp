@@ -15,8 +15,9 @@
       "
     >
         <span style="min-width: 60px"
-          >{{ computed_today_early_date[0] }}<br
-        /></span>
+          >{{ computed_today_early_date[0] }}
+          <br v-if="date_show_type === 'br'" />
+        </span>
         <span>{{ computed_today_early_date[1] }}</span>
     </template>
     <!-- 1小时内开赛(mcg:2) && !1小时内开赛超时-->
@@ -87,6 +88,11 @@ export default {
     rows: {
       type: Number,
       default: 1,
+    },
+     // 日期是否换行
+    date_show_type: {
+      type: String,
+      default: 'br',
     },
     match_list_data: Object, // 传入赛事数据 15分钟玩法计算时段需要
   },
