@@ -24,10 +24,7 @@
 				!(search_data.league && search_data.league.length > 0) ||
 				!input_value">
 				<div class="q-mx-md">
-					<div class="text-bol half-border-bottom">
-						<!-- 热门搜索 -->
-						searchHot
-					</div>
+					<div class="text-bol half-border-bottom">SEARCHHot</div>
 					<!-- 热门内容 -->
 					<div class="row">
 						<div class="col-6 hotItem" v-for="(item, index) in hot_list" :key="index"
@@ -76,13 +73,8 @@
 								</p>
 								<p>{{ (new Date(+item.mgt)).Format('MM/dd hh:mm') }}</p>
 							</div>
-							<div>
-								<div>
-									1
-								</div>
-								<div>
-									2
-								</div>
+							<div style="flex: 1">
+								<ScoreList :match_info="item"></ScoreList>
 							</div>
 						</div>
 					</li>
@@ -111,13 +103,8 @@
 								</p>
 								<p>{{ (new Date(+i.mgt)).Format('MM/dd hh:mm') }}</p>
 							</div>
-							<div>
-								<div>
-									1
-								</div>
-								<div>
-									2
-								</div>
+							<div style="flex: 1">
+								<ScoreList :match_info="item"></ScoreList>
 							</div>
 						</div>
 					</li>
@@ -139,13 +126,8 @@
 								</p>
 								<p>{{ (new Date(+item.mgt)).Format('MM/dd hh:mm') }}</p>
 							</div>
-							<div>
-								<div>
-									1
-								</div>
-								<div>
-									2
-								</div>
+							<div style="flex: 1">
+								<ScoreList :match_info="item"></ScoreList>
 							</div>
 						</div>
 					</li>
@@ -174,6 +156,8 @@ import router from "../../router";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt";
 import { get_history_search, get_search_result, get_search_sport } from "src/api/module/search/index.js";
 import { api_search } from 'src/api/';
+import ScoreList from 'src/base-h5/components/match-container/template/ouzhou/components/score-list.vue';
+import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 
 const { get_insert_history, get_fetch_hot_search } = api_search || {};
 
@@ -248,6 +232,7 @@ const get_search_data = (index = 0, sport_id = 1, keyword) => {
 	get_search_result(params).then(res => {
 		if (res.code === '200') {
 			search_data.value = res.data.data;
+			get_match_base_hps()
 		}
 	});
 }
@@ -343,6 +328,14 @@ function get_hot_search() {
 		hot_list.value = data || [];
 	})
 }
+
+// 获取赔率
+const scroll_timer = ref(0)
+const get_match_base_hps = lodash.debounce(() => {
+  MatchMeta.get_match_base_hps_by_mids()
+  clearTimeout(scroll_timer.value)
+  scroll_timer.value = null
+}, 600)
 
 onMounted(() => {
 	get_hot_search();

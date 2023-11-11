@@ -36,7 +36,7 @@
       </div>
     </div>
     <!-- <div class="sl-filter-content"> -->
-    <match-filter ref="match_com" :search_val="search_val"></match-filter>
+    <match-filter ref="matchRef" :search_val="search_val"></match-filter>
     <!-- </div> -->
   </div>
 </template>
@@ -58,7 +58,7 @@ const state = reactive({
   search_val: ""
 });
 //组件数据
-const match_com = ref();
+const matchRef = ref();
 let { search_val } = toRefs(state);
 
 let rem_1 = (window.innerWidth * 100) / 375;
@@ -72,14 +72,15 @@ const closedHandle = () => {
 };
 
 const finishHandle = () => {
+  console.log('matchRefmatchRef',matchRef)
   let filter_data = [];
-  filter_data = [match_com.value || []].filter(v => v.select);
+  filter_data = [matchRef.value.list || []].filter(v => v.select);
   emit("closedHandle", filter_data);
   // 派发首页设置菜单展开事件
   useMittEmit(MITT_TYPES.EMIT_CHANGE_SETTING_SHOW, {
     open: true
   });
-  console.log("match_filter", match_com.value);
+  
   // emit("finishHandle");
 };
 defineProps({});
