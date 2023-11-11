@@ -65,7 +65,7 @@ export default {
         http.setApiDomain();
   
         enter_params(async(user)=>{
-          await loadLanguageAsync(user.languageName);
+          await loadLanguageAsync(user?.languageName);
           MenuData.init();
           BetData.init_core()
           BetViewDataClass.init()

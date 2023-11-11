@@ -1,11 +1,10 @@
 <!--
-* @Author: Dolphin
 * @Description: 顶级赛事 -- 国家
 -->
 
 <template>
   <div class="top_leagues_page">
-    <collapse v-for="item, index in leaguesInfo" :key="index" :title="item.national" v-model="item.visible">
+    <collapse v-for="item, index in leagues_matchs" :key="index" :title="item.national" v-model="item.visible">
       <!-- 图片 -->
       <template v-slot:title_icon>
         <img class="national_icon" :src="item.nationalIcon" alt="">
@@ -28,7 +27,7 @@
 import { have_collect_ouzhou, no_collect_ouzhou } from 'src/base-h5/core/utils/local-image.js'
 import collapse from "./collapse.vue"
 const props = defineProps({
-  leaguesInfo: {
+  leagues_matchs: {
     type: Array,
     default: () => [],
     required: true

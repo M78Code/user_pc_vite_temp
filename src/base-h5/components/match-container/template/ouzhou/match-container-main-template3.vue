@@ -219,7 +219,7 @@
                         </div>
                       </div>
                     </div>
-                    <div class="mcmt-text">
+                    <div class="mcmt-text" @click='goto_details(match)'>
                       {{i18n_t('list.go_to_details')}}
                       <img :class="['arrow']" alt="" />
                     </div>

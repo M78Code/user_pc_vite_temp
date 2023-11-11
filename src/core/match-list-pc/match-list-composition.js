@@ -53,16 +53,17 @@ let switch_timer_id
 
 let tid_match_list;
 useMittOn(MITT_TYPES.EMIT_MATCH_LIST_UPDATE, () => {
-	clearTimeout(tid_match_list)
-	tid_match_list = setTimeout(() => {
-		// fetch_match_list()
-	}, 20);
-})
-watch(() => MenuData.match_list_version.value, () => {
+	console.log("EMIT_MATCH_LIST_UPDATE")
 	clearTimeout(tid_match_list)
 	tid_match_list = setTimeout(() => {
 		fetch_match_list()
 	}, 20);
+})
+watch(() => MenuData.match_list_version.value, () => {
+	// clearTimeout(tid_match_list)
+	// tid_match_list = setTimeout(() => {
+		// fetch_match_list()
+	// }, 20);
 })
 /**
 * @description 请求数据
@@ -108,7 +109,7 @@ function fetch_match_list(is_socket = false, cut) {
 		// 设置列表滚动条scrollTop
 		MatchListScrollClass.set_scroll_top(0);
 	}
-	let match_api = MenuData.match_list_api_config.match_list || {};
+	let match_api = match_list_params.match_list || {};
 	// 设置列表接口 和 参数
 	let api = api_match[match_api.api_name];
 	let _params = lodash.clone(match_api.params) || {};

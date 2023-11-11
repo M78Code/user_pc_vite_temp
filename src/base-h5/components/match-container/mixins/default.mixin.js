@@ -356,8 +356,9 @@ export default {
      * @description 球种折叠
      */
     handle_ball_seed_fold () {
-      const { csid, start_flag = '' }  = this.match_of_list
+      const { csid, is_virtual = false, start_flag = '' }  = this.match_of_list
       MatchFold.set_ball_seed_match_fold(csid, start_flag)
+      if (is_virtual) return
       MatchMeta.compute_page_render_list(0, 2)
       MatchMeta.get_match_base_hps_by_mids()
     },
@@ -365,9 +366,11 @@ export default {
      * @description 联赛折叠
      */
     handle_league_fold () {
+      const { tid, is_virtual = false }  = this.match_of_list
       // 首页热门，详情页，不需要用到折叠
       if (is_hot.value || is_detail.value) return;
-      MatchFold.set_league_fold(this.match_of_list.tid)
+      MatchFold.set_league_fold(tid)
+      if (is_virtual) return
       MatchMeta.compute_page_render_list(0, 2)
       MatchMeta.get_match_base_hps_by_mids()
     },
