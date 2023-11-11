@@ -12,7 +12,7 @@
               <div class="filter-count">{{ item.count }}</div>
             </div>
             <div :class="{ checked_text: current_choose_tab == item.mi }" class="label-text">
-              {{ (BaseData.menus_i18n_map || {} )[item.mi] || "" }}
+              {{ (menus_i18n_map || {} )[item.mi] || "" }}
             </div>
           </div>
           <img class="current-mark" :class="{ 'show-mark': current_choose_tab == item.mi }" src="../../../assets/images/mask_group.png" alt="">
@@ -42,7 +42,8 @@ import MatchListOuzhouClass from 'src/core/match-list-pc/match-ouzhou-list.js'
 import sport_icon from "src/base-pc/components/sport_icon.vue";
 import { use_base_data } from "src/base-pc/components/menus/base_data";
 import _ from "lodash"
-import BaseData from "src/core/base-data/base-data.js";
+import menu_i18n_default from "src/core/base-data/config/menu-i18n.json";
+
 
 const { compute_sport_id,mi_euid_map_res } = use_base_data()
 
@@ -66,6 +67,9 @@ const show_left_btn = ref(false);
 const show_right_btn = ref(false);
 // tab页面数据
 const menu_tab_list = ref([])
+
+// 菜单多语言
+const menus_i18n_map = ref(menu_i18n_default.data)
 
 // const top_events = ref([ 101, 102, 105, 107, 110, 108, 103, 109, 111, 112, 113, 116, 115,114, 104, 106, 118, 400, 300,]);
 

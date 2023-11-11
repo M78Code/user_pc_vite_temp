@@ -15,7 +15,7 @@
         :key="col_index" 
         :style="{ 'width': match_list_tpl_size.bet_width + 'px' }"
       >
-        <div :class="['bet-item-wrap-ouzhou', ]" v-for="(ol_data, ol_index) in deal_width_handicap_ols(col.ols)"
+        <div :class="['bet-item-wrap-ouzhou', deal_width_handicap_ols(col.ols).length ===2 && 'bet-item-wrap-ouzhou-bigger']" v-for="(ol_data, ol_index) in deal_width_handicap_ols(col.ols)"
           :key="ol_index">
           <!-- 投注项组件 -->
           <bet-item v-if="is_mounted && ol_data && ol_data._hpid" :ol_data="ol_data" />
@@ -33,7 +33,7 @@ import { utils_info } from 'src/core/utils/module/match-list-utils.js';
 import { get_match_status } from 'src/core/utils/index'
 import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/core/index.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
-import betItem from "src/base-pc/components/bet-item/bet-item-list-new-data.vue"
+import betItem from "src/base-pc/components/bet-item/bet-item-list-ouzhou-data.vue"
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import BetData from 'src/core/bet/class/bet-data-class.js'
 
@@ -68,7 +68,6 @@ const props = defineProps({
 let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.match.mid)
 // 赛事模板宽度
 const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`].width_config
-console.log('match_list_tpl_size', match_style_obj);
 let MatchListDataInfo = MatchListData
 
 watch(() => MatchListData.data_version.version, () => {
@@ -233,14 +232,26 @@ function getCurState (hipo) {
         border-radius: 2px;
         justify-content: center;
         align-items: center;
+        &.bet-item-wrap-ouzhou-bigger {
+          width: 133px;
+        }
 
         &:hover {
             background: rgba(255, 112, 0, 0.1);
         }
+        .c-bet-item.active {
+          background: #FF7000;
+          .handicap-value, .handicap-value-text {
+            color: #ffe2cc;
+          }
+          .odds {
+            color: #fff;
+          }
+
+        }
 
         div {
             color: #8A8986;
-            margin-right: 5px;
         }
 
         .odds {

@@ -413,7 +413,7 @@ class MatchMeta {
       ...params,
       category,
       md,
-      type: 28, // 默认是29 我改成了28 
+      type: 29,
       euid,
       showem: 1, // 新增的参数
     })
@@ -448,13 +448,20 @@ class MatchMeta {
     const res = await api_match_list.get_home_matches({ type: 1 })
     const p15 = lodash.get(res, 'data.p15', [])
     const hots = lodash.get(res, 'data.hots', [])
+    const dataList = lodash.get(res, 'data.dataList', [])
     if (+res.code !== 200) return
     // 15分钟玩法赛事数据
     const p15_list = this.assemble_15_minute_data(p15)
     MatchDataBasel5minsH5.set_list(p15_list)
     // 热门赛事数据
     MatchDataBaseHotsH5.set_list(hots)
-    return { p15_list, hots }
+    // 首页滚球赛事
+    const length = lodash.get(dataList, 'length', 0)
+    if (length > 0) {
+      const match_list = MatchUtils.get_home_in_play_data(dataList)
+      this.handler_match_list_data(match_list, 2)
+    }
+    return { p15_list, hots, dataList }
   }
 
     /**

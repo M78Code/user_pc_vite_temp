@@ -431,6 +431,7 @@ const submit_handle = type => {
             }
             // 用户赔率分组
             obj.marketLevel = lodash_.get(UserCtr.user_info,'marketLevel','0');
+            obj.esMarketLevel =  lodash_.get(UserCtr.user_info,'esMarketLevel','0');
             WsMan.skt_send_bat_handicap_odds(obj);
             // 通知页面更新 
         }else{

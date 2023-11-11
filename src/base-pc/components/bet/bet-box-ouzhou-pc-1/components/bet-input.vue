@@ -2,9 +2,10 @@
 
 <template>
     <div>
-        <input class="bet-input"  v-model="ref_data.money" type="number" @input="set_win_money"
-        :placeholder="`Limits ${ref_data.min_money} ~ ${ref_data.max_money}`" maxLength="11" />
+        <input class="bet-input" v-model="ref_data.money" type="number" @input="set_win_money" @click="show_quick_amount(true)"
+        :placeholder="`Limits ${ref_data.min_money} ~ ${ref_data.max_money}`" maxLength="11"  />
     </div>
+
 </template>
 
 <script setup> 
@@ -13,34 +14,48 @@ import lodash_ from 'lodash'
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import mathJs from 'src/core/bet/common/mathjs.js'
-import { useMittOn,MITT_TYPES } from "src/core/"
+import { useMittEmit,useMittOn,MITT_TYPES,UserCtr } from "src/core/"
 
 const props = defineProps({
     items:{},
 })
 
 const ref_data = reactive({
-    min_money: 10, // 最小投注金额
-    max_money: 8888, // 最大投注金额
+    min_money: '', // 最小投注金额
+    max_money: '', // 最大投注金额
     win_money: 0.00, // 最高可赢
     money: '', // 投注金额
     keyborard: true, // 是否显示 最高可赢 和 键盘
     seriesOdds: '', // 赔率
+    show_quick: false, // 显示快捷金额
 })
 
-
 onMounted(() => {
+    // set_ref_data_bet_money()
     // 监听 限额变化
     useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money).on
+    useMittOn(MITT_TYPES.EMIT_SET_QUICK_AMOUNT, set_quick_money).on
 })
 
 onUnmounted(() => {
     useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money).off
+    useMittOn(MITT_TYPES.EMIT_SET_QUICK_AMOUNT, set_quick_money).off
 })
 
+// 设置快捷金额
+const set_quick_money = () => {
+    // 输入金额 不能大于最大金额
+    if( BetData.bet_amount > ref_data.max_money ){
+        ref_data.money = ref_data.max_money
+    }else{
+        ref_data.money = BetData.bet_amount
+    }
+   
+}
 
 // 限额改变 修改限额内容
 const set_ref_data_bet_money = () => {
+    console.error('ssss')
     let value = props.items.playOptionsId
     // 串关获取 复试连串
     if (!BetData.is_bet_single) {
@@ -63,6 +78,10 @@ const set_ref_data_bet_money = () => {
     ref_data.seriesOdds = seriesOdds
     // 限额改变 重置投注金额
     ref_data.money = ''
+
+    if(ref_data.show_quick){
+        show_quick_amount(ref_data.show_quick)
+    }
 }
 
 // 输入判断
@@ -77,6 +96,25 @@ const set_win_money = () => {
     BetData.set_bet_amount(ref_data.money)
     // 计算最高可赢金额
     // ref_data.win_money = ref_data.money * props.item.oddFinally
+}
+
+// 快捷金额 state true   false
+const show_quick_amount = state => {
+    ref_data.show_quick = state
+    let money_list = []
+    if(state){
+        if (BetData.bet_is_single) {
+           money_list = lodash.get(UserCtr, 'cvo.series', { qon: 10, qtw: 50, qth: 100, qfo: 200 })
+        } else {
+           money_list = lodash.get(UserCtr, 'cvo.single', { qon: 100, qtw: 500, qth: 1000, qfo: 2000 })
+        }
+    }
+    let obj = {
+        show: state,    
+        money_list,
+        max_money: ref_data.max_money,
+    }
+    useMittEmit(MITT_TYPES.EMIT_SHOW_QUICK_AMOUNT, obj)
 }
 
 </script>
@@ -149,5 +187,12 @@ const set_win_money = () => {
         align-itemss: center;
         color: #8A8986;
     }
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none !important;
+}
+input[type='number'] {
+  -moz-appearance: textfield;
 }
 </style>

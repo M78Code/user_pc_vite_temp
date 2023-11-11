@@ -97,7 +97,7 @@
 
                             <!--即将开赛 ms = 110-->
                             <div class="coming-soon" v-if="match.ms" v-show="match.ms == 110">
-                              {{ $t(`ms[${match.ms}]`) }}
+                              {{ i18n_t(`ms[${match.ms}]`) }}
                             </div>
 
                             <!--开赛日期 ms != 110 (不为即将开赛)  subMenuType = 13网球(进行中不显示，赛前需要显示)-->
@@ -121,7 +121,7 @@
 
                           <!-- 电竞串关标识 -->
                           <div v-if="menu_type == 3000 && match.ispo" class="flag-chuan"
-                            :class="{ 'special-lang': ['zh', 'tw'].includes(get_lang) }">{{ $t('match_info.match_parlay') }}
+                            :class="{ 'special-lang': ['zh', 'tw'].includes(get_lang) }">{{ i18n_t('match_info.match_parlay') }}
                           </div>
                         </div>
                         <!--玩法数量-->
@@ -171,7 +171,7 @@
                           <!-- 进球动画 -->
                           <div class="yb-flex-center" v-if="is_show_home_goal && is_new_init2 && (!is_show_away_goal)">
                             <div class="yb-goal-gif" :class="{ 'yb-goal-yo': theme.includes('y0') }"></div>
-                            <div class="gif-text">{{ $t('match_result.goal') }}</div>
+                            <div class="gif-text">{{ i18n_t('match_result.goal') }}</div>
                           </div>
                         </div>
                         <!--进行中的赛事显示比分 ,如果是比分判定中，则不显示比分-->
@@ -209,7 +209,7 @@
                           <!-- 进球动画 -->
                           <div class="yb-flex-center" v-if="is_show_away_goal && is_new_init2 && (!is_show_home_goal)">
                             <div class="yb-goal-gif yb-goal-yo"></div>
-                            <div class="gif-text">{{ $t('match_result.goal') }}</div>
+                            <div class="gif-text">{{ i18n_t('match_result.goal') }}</div>
                           </div>
                         </div>
                         <!--进行中的赛事显示比分 ,如果是比分判定中，则不显示比分-->
@@ -219,7 +219,7 @@
                         </div>
                       </div>
                     </div>
-                    <div class="mcmt-text">
+                    <div class="mcmt-text" @click='goto_details(match)'>
                       {{i18n_t('list.go_to_details')}}
                       <img :class="['arrow']" alt="" />
                     </div>

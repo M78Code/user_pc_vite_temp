@@ -12,6 +12,16 @@ import BaseData from "src/core/base-data/base-data.js";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import {MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/";
 import MatchFold from 'src/core/match-fold';
+const menu_type_config = {
+  1: 1,
+  2: 3,
+  3: 4,
+  400: 100,
+  6: 11,
+  2000: 3000,
+  50000: 50000,
+  28:28
+}
 class MenuData {
   constructor() {
     const that = this;
@@ -50,6 +60,10 @@ class MenuData {
     this.menu_list = menu_list;
     this.top_events_list = top_events_list;
     this.update()
+  }
+  //设置赛果参数
+  set_result_menu_api_params(val){
+    this.result_menu_api_params = val
   }
   /**
    * 请求赛事列表
@@ -100,13 +114,63 @@ class MenuData {
     return menu_lv_mi_lsit
   }
   /**
+   *一级菜单顶层菜单的 菜单类型  ，没有则是0
+   * */
+   get_menu_type() {
+    return this.menu_type.value || 0;
+  }
+   /**
+   * 兼容老的菜单ID?
+  */
+   menu_id_map(mi, menu_arr = false) {
+    return menu_arr
+      ? Object.values(menu_type_config)[mi]
+      : menu_type_config[mi];
+  }
+  /**
+   * 获取 euid
+   * arg_mi 如果传值 则获取特定值euid 如果没有就是二级菜单的euis
+   * */
+  get_euid(arg_mi) {
+    let mi = arg_mi || this.current_lv_2_menu_i;
+    // 全部
+    if (mi == 0) {
+      let mid_list = []
+      let euid = ''
+      // 获取滚球全部的 菜单id
+      this.menu_lv_mi_lsit.forEach(item=>{
+        if( ![0,50000].includes(item.mi)){
+          mid_list.push(item.mi)
+        }
+      })
+      // 根据 菜单id 获取euid
+      mid_list.forEach(item=>{
+        euid += BaseData.mi_euid_map_res[item] && BaseData.mi_euid_map_res[item].h + ','
+      })
+      return euid
+    }
+    // 赛果
+    if (this.is_results()) return mi;
+    if (BaseData.mi_euid_map_res && BaseData.mi_euid_map_res[mi]) {
+      return BaseData.mi_euid_map_res[mi].h;
+    } else {
+      // 电竞无旧菜单id处理
+      return {
+        2100: 41002,
+        2101: 41001,
+        2102: 41004,
+        2103: 41003,
+      }[mi];
+    }
+  }
+  /**
    * 获取 euid
    * 
    * */
-  get_euid(menu_type) {
-    const menuId = menu_type || this.menu_type.value;
-    return BaseData.mi_euid_map_res?.[this.menu_mi.value+menuId]?.h || "";
-  }
+  // get_euid(menu_type) {
+  //   const menuId = menu_type || this.menu_type.value;
+  //   return BaseData.mi_euid_map_res?.[this.menu_mi.value+menuId]?.h || "";
+  // }
   //内部方法
   _is_cur_mi(mi, param) {
     if (param) {
@@ -135,7 +199,7 @@ class MenuData {
    *  mi [number|string] 要比对的值
   */
   is_results(mi) {
-    return this._is_cur_mi(28, mi)
+    return this._is_cur_mi(29, mi)
   }
   /**
    * 是否选中了早盘

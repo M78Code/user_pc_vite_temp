@@ -53,16 +53,17 @@ let switch_timer_id
 
 let tid_match_list;
 useMittOn(MITT_TYPES.EMIT_MATCH_LIST_UPDATE, () => {
-	clearTimeout(tid_match_list)
-	tid_match_list = setTimeout(() => {
-		// fetch_match_list()
-	}, 20);
-})
-watch(() => MenuData.match_list_version.value, () => {
+	console.log("EMIT_MATCH_LIST_UPDATE")
 	clearTimeout(tid_match_list)
 	tid_match_list = setTimeout(() => {
 		fetch_match_list()
 	}, 20);
+})
+watch(() => MenuData.match_list_version.value, () => {
+	// clearTimeout(tid_match_list)
+	// tid_match_list = setTimeout(() => {
+		// fetch_match_list()
+	// }, 20);
 })
 /**
 * @description 请求数据
@@ -72,7 +73,7 @@ watch(() => MenuData.match_list_version.value, () => {
 */
 function fetch_match_list(is_socket = false, cut) {
 	const match_list_params = get_match_list_params();
-	console.log('match_list_params', match_list_params,PageSourceData.page_source)
+	console.log('match_list_params', match_list_params,MenuData.match_list_api_config)
 	// 设置当前为赛事列表
 	// 如果有拉列表定时器 清除定时器
 	if (!is_socket && get_match_list_timeid) {
@@ -108,7 +109,7 @@ function fetch_match_list(is_socket = false, cut) {
 		// 设置列表滚动条scrollTop
 		MatchListScrollClass.set_scroll_top(0);
 	}
-	let match_api = MenuData.match_list_api_config.match_list || {};
+	let match_api = match_list_params.match_list || {};
 	// 设置列表接口 和 参数
 	let api = api_match[match_api.api_name];
 	let _params = lodash.clone(match_api.params) || {};
@@ -337,7 +338,7 @@ function get_hot_match_list(backend_run = false) {
 			let code = lodash.get(res, "data.code");
 			// 赛事列表
 			let match_list = lodash.get(res, "data.data") || [];
-			if (MenuData.is_esports()) {
+			if (MenuData.is_export()) {
 				match_list = lodash.get(res, "data.data.data") || [];
 			}
 			if (code == 200 && match_list.length > 0) {

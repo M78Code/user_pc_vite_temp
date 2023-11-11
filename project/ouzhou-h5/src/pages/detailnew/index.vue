@@ -269,6 +269,7 @@ const get_matchDetail_getMatchOddsInfo = (params) => {
       } else {
         match_odds_info.value = res.data;
       }
+      MatchDataWarehouseInstance.set_match_details(MatchDataWarehouseInstance.get_quick_mid_obj(params.mid), match_odds_info.value);
     });
 
   // get_match_odds_info.value = get_match_odds_info_mock.data;
@@ -313,7 +314,7 @@ const get_matchDetail_MatchInfo = (params) => {
         router.replace("/");
       }
       // detail_store.get_detail_params
-      MatchDataWarehouseInstance.set_match_details(match_detail.value);
+      MatchDataWarehouseInstance.set_match_details(match_detail.value,[]);
       // console.log("get_matchDetail_MatchInfo", res);
     });
 

@@ -22,6 +22,7 @@
     import {
       match_status_title_card_template,
       league_title_card_template,
+      ouzhou_league_title_template,
       fold_template,
       league_container_card_template,
    

@@ -43,6 +43,7 @@
 </template>
 <script>
 import { onMounted, onUnmounted, ref, watch, getCurrentInstance } from "vue";
+import MatchesHeader from "src/base-pc/components/matches_header/matches_header.vue";
 import { IconWapper } from 'src/components/icon'
 import LoadData from 'src/components/load_data/load_data.vue';
 import { MatchListCardFullVersionWapper as MatchListCard } from "src/base-pc/components/match-list/match-list-card/index.js"; //赛事列表
@@ -62,7 +63,7 @@ import useMatchListMx from "src/core/match-list-pc/match-list-composition.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import { PageSourceData, compute_css_obj } from 'src/core/index.js';
 import { MatchDataWarehouse_PC_List_Common as MatchListData, GlobalAccessConfig } from "src/core/index.js";
-import MatchesHeader from "src/base-pc/components/matches_header/matches_header.vue";
+
 import "../match-list/match_list.scss";
 
 const { mounted_fn, load_data_state, collect_count, is_show_hot, on_refresh } = useMatchListMx();
@@ -79,11 +80,11 @@ export default {
         ConmingSoon
     },
     setup() {
-            // 设置 左侧菜单
+        // 设置 左侧菜单
         MenuData.set_left_menu_result({
             root: 1,
             lv1_mi: "",
-            lv2_mi: 1,
+            lv2_mi: 30002,
             sports: "",
             guanjun: "",
             mid_menu_show: { list_filter: true },
@@ -91,34 +92,10 @@ export default {
         });
         //设置 中间 菜单输出
         MenuData.set_mid_menu_result({
-            root: 1,
-            lv1_mi: "",
-            lv2_mi: 1,
             sports: "",
             guanjun: "",
+            euid: 30002,
         });
-        // MenuData.set_match_list_api_config({
-        //     begin_request: false,
-        //     is_collect: false,
-        //     route: "list",
-        //     root: "2000",
-        //     sports: "",
-        //     guanjun: "",
-        //     // 列表队列 接口
-        //     match_list: {
-        //         api_name: "post_fetch_esports_matchs",
-        //         api_type: "",
-        //         params: {},
-        //     },
-        //     //
-        //     bymids: {
-        //         api_name: "",
-        //         api_type: "",
-        //         params: {},
-        //     },
-        // });
-
-
         const match_list_card_key_arr = ref([])
         const coom_soon_state = ref(false)
         const { proxy } = getCurrentInstance()

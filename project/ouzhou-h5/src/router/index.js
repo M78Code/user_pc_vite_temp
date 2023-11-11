@@ -27,14 +27,6 @@ const router = createRouter({
           },
         },
         {
-          path: "/match2",
-          name: "matchList",
-          component: () => import("../pages/match/index.vue"),
-          meta: {
-            keepAlive: true, // 需要缓存
-          },
-        },
-        {
           path: "/handicap",
           name: "handicapTutorial",
           component: () => import("../pages/handicap-tutorial/index.vue"),

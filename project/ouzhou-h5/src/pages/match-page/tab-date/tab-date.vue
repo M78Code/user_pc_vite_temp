@@ -59,12 +59,14 @@ import {
     ref,
     reactive
 } from "vue";
+import { MenuData } from 'src/core/';
+import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 const tabActive = ref("matches");//tab
 const tabModel = ref(false);//下拉框
 const dateIndex = ref(0);//下拉框选择
 const scrollRef = ref(null);
 const scrollRefArea = ref(null);
-let second_tab_index = ref(0);//单日选择
+let second_tab_index = ref(1);//单日选择
 let area_tab_index = ref(0);//地区选择
 const current_menu_mi = ref("102");
  // 月份数组
@@ -128,10 +130,13 @@ const changeDate = (index) => {
   * @param {*} index 
   */
 const changeDatetab = (item, index) => {
+    console.log(item)
     tabModel.value = false;
     const move_index = week.findIndex((t, _index) => _index === index);
     scrollRef.value.scrollTo(move_index - 2, "start-force");
     second_tab_index.value = item;
+    // MenuData.set_current_lv1_menu("2");
+    // MatchMeta.set_origin_match_data()
 };
 /**
  * 地区选择tab

@@ -28,9 +28,9 @@
             <div class="date-number">
             </div>
             <div class="title-i-w row items-center">
-              <div>{{ $t('virtual_sports.champion')}}</div>
-              <div>{{ $t('virtual_sports.runner_up')}}</div>
-              <div>{{ $t('virtual_sports.third_place')}}</div>
+              <div>{{ i18n_t('virtual_sports.champion')}}</div>
+              <div>{{ i18n_t('virtual_sports.runner_up')}}</div>
+              <div>{{ i18n_t('virtual_sports.third_place')}}</div>
             </div>
             <div class="date-number">
             </div>

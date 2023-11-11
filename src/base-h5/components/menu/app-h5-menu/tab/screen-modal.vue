@@ -67,48 +67,51 @@
               src="/src/base-h5/components/menu/app-h5-menu/tab/img/icon_checkbox_sel.svg"
               alt
             />
-          <!-- <p>
-            <img :src="`/${project_name}image/svg/Vector.svg`" alt class="icon-delete" />
-          </p>-->
         </section>
-        <!-- 列表 -->
-        <section class="league_list">
-          <p class="league_title">
-            热门联赛
-            <span class="league_num">{{list_data.length}}</span>
+        <!-- 联赛 -->
+        <section class="league_list" v-for="(type_item,type_index) in list_data.league" :key='type_index'>
+          <p class="league_title row justify-between items-center">
+            {{type_item.leagueName}}
+            <span class="league_num">{{type_item.matchList.length}}</span>
+            <img
+            class="select_img"
+            v-show="!type_item.checked"
+            @click="league_select(type_item)"
+            src="/src/base-h5/components/menu/app-h5-menu/tab/img/icon_checkbox_nor.svg"
+            alt
+          />
+            <img
+              class="img"
+               v-show="type_item.checked"
+              @click="league_select(type_item)"
+              src="/src/base-h5/components/menu/app-h5-menu/tab/img/icon_checkbox_sel.svg"
+              alt
+            />
           </p>
           <ul class="list_info">
-           <!-- 类型 -->
-            <li class="list_data"
-                v-for="(type_item,type_index) in list_data" :key='type_index'>
-                <!-- 赛事 -->
-                 <div v-for="(match_item,match_index) in type_item.data" :key='match_index'>
-                 <!-- 联赛 -->
-                      <div v-for="(league_item,league_index) in match_item.league" :key='league_index'
-                           class="row items-center justify-between">
-                          <p class="league_name row items-center">
+            <li class="list_data row items-center justify-between"
+            v-for="(match_item,league_index) in type_item.matchList" :key='league_index'>
+                      <p class="league_name row items-center">
                         <img
                             class="img"
-                            :src="league_item.lurl"
+                            :src="match_item.lurl"
                             alt/>
-                            {{league_item.leagueName}}
+                            {{match_item.man}} V {{match_item.mhn}}
                         </p>
                         <img
                           class="select_img"
-                          v-show="!league_item.is_active"
-                          @click="league_item.is_active = true"
+                          v-show="!match_item.checked"
+                          @click="match_select(match_item)"
                           src="/src/base-h5/components/menu/app-h5-menu/tab/img/icon_checkbox_nor.svg"
                           alt
                         />
                           <img
                             class="img"
-                            v-show="league_item.is_active"
-                            @click="league_item.is_active = false"
+                            v-show="match_item.checked"
+                            @click="match_select(match_item)"
                             src="/src/base-h5/components/menu/app-h5-menu/tab/img/icon_checkbox_sel.svg"
                             alt
                           />
-                      </div>
-                 </div>
             </li>
           </ul>
         </section>
@@ -118,8 +121,10 @@
 </template>
 <script setup>
 import { SearchData } from "src/core/";
-import { reactive, toRefs, ref,onMounted,watch} from "vue";
+import { reactive, toRefs, ref,onMounted,watch, nextTick} from "vue";
 import search from "src/core/search-class/search.js"
+import { api_search } from "src/api/index.js";
+import UserCtr from "src/core/user-config/user-ctr.js";
 defineOptions({
   name: "screen-modal" // 设置组件名称
 });
@@ -136,15 +141,45 @@ onMounted(()=>{
   get_search_result()
 })
 watch(()=>is_all_checked,(val)=>{
-  list_data = list_data.map(item=>{
-      item.children.forEach(sub => {
-        sub.children.forEach(sitem=>{
-          sitem.is_active = val
-        })
-      });
-      return item
+  console.log('val',val)
+  //联赛全选
+  list_data.league = list_data.league.map(item=>{
+    item.checked = val._value
+    item.matchList = item.matchList.map(v=> {
+      v.checked = val._value
+      return v
+    })
+    return item
   })
-})
+},{deep:true})
+/**
+ * @Description:联赛选中
+ * @param {string}
+ * @return {Undefined} Undefined
+ */
+function league_select(val) {
+    list_data.league = list_data.league.map(item=>{
+      if (item.leagueName === val.leagueName){
+      val.checked = !val.checked;
+      item.matchList = item.matchList.map(v=> {
+        v.checked = val.checked
+        return v
+      })
+      }
+    return item
+  })
+}
+/**
+ * @Description:赛事选中
+ * @param {string} 
+ * @return {Undefined} Undefined
+ */
+function match_select(item) {
+  nextTick(()=>{
+    item.checked = !item.checked;
+  })
+  console.log('item',item)
+}
 /**
  * @Description:获取搜索结果数据
  * @param {string} keyword 搜索关键字
@@ -153,19 +188,50 @@ watch(()=>is_all_checked,(val)=>{
 function clear_search() {
   input_text.value = "";
 }
-
+  /**
+  * @Description:获取搜索结果
+  * @param {string} keyword 搜索关键词
+  * @param {number} csid 球种ID
+  * @return {undefined} undefined
+  */
+function get_search_result (){
+      const params = {
+        keyword:'V',
+        cuid:UserCtr.get_uid(),
+        pageNumber:1,
+        rows:200,
+        isPc:false,
+        searchSportType:1
+      }
+      api_search.get_search_result(params).then( res => {
+        const {code, data} = res
+         if (code === '200'){
+          list_data = data?.data || {}
+          list_data.league = data?.data.league.map(item=>{
+            item.checked = false
+            item.matchList = item.matchList.map(v=> {
+              v.checked = false
+              return v
+            })
+            return item
+          })
+         }
+      }).catch((err) => {
+        console.log('err',err)
+      })
+  }
 /**
  * @Description:获取搜索结果数据
  * @param {string} keyword 搜索关键字
  * @return {Undefined} Undefined
  */
-function get_search_result() {
-    //调用接口获取获取搜索结果数据
-    search.get_search_result(input_text.value, '').then(res => {
-        const { state, list } = res
-        list_data.value = list
-    })
-}
+// function get_search_result() {
+//     //调用接口获取获取搜索结果数据
+//     search.get_search_result(input_text.value, '').then(res => {
+//         const { state, list } = res
+//         list_data.value = list
+//     })
+// }
 </script>
 <style scoped lang="scss">
 .setting-filter {
