@@ -1,8 +1,8 @@
 <template>
     <div class="date-tab">
-        <section>
+        <section>{{currentSlideValue}}
             <div v-for="item in dateList" :key="item.val" class="time-list-item">
-                <div @click="time_tab(item)" :class="[{ 'time_active': time_active == item.val }, 'item-text']">{{ item.name }}
+                <div @click="time_tab(item)" :class="[{ 'time_active': defaultVal == item.val }, 'item-text']">{{ item.name }}
                 </div>
             </div>
         </section>
@@ -16,20 +16,47 @@ const props = defineProps({
     reverse: {
         type: Boolean,
         default: false
+    },
+    dateList:{
+        type: Array,
+        default: []
+    },
+    defaultVal:{
+        type: String,
+        default: ""
+    },
+    changeDate:{
+        type: Function,
+        default: ()=>{}
     }
 })
+const emits = defineEmits(['changeDate']);
+// console.log(props.dateList)
 //时间列表
-const dateList = dateWeekFormat(new Date(), props.reverse);
-const time_active = ref(dateList[0].val);
+// const dateListNav = props.dateList || dateWeekFormat(new Date(), props.reverse);
+// const time_active = ref(props.defaultVal);
 /**
  * 时间选择
  * @param {*} item 
  */
 const time_tab = (item) => {
-    if(time_active.value === item.val)return;
-    time_active.value = item.val;
+    // if(time_active.value === item.val)return;
+    // time_active.value = item.val;
+    emits('changeDate',item)
+    // 设置日期
+    // MenuData.set_date_time(props.dataList[i].val)
 }
-onMounted(() => { });
+
+// const set_menu_match_date = () => {
+//         // 获取菜单中的数据 进去接口请求
+//         const { menu_match_date_api_config:{ api,params } } = MenuData
+//         api_common[api](params).then(res => {
+//             // if(res.code == 200 ){
+//                 useMittEmit(MITT_TYPES.EMIT_SCROLL_DATE_TIME_CHANGE,res.data || {})
+//             // }
+//         })
+//     }   
+// onMounted(() => { console.log(props.dateList)});
 </script>
   
 <style lang="scss" scoped>
