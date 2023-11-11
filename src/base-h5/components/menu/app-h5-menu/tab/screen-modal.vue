@@ -56,62 +56,62 @@
           <img
             class="select_img"
             v-show="!is_all_checked"
-            @click="is_all_checked = true"
+            @click="all_select"
             src="/src/base-h5/components/menu/app-h5-menu/tab/img/icon_checkbox_nor.svg"
             alt
           />
-            <img
-              class="img"
-              v-show="is_all_checked"
-              @click="is_all_checked = false"
-              src="/src/base-h5/components/menu/app-h5-menu/tab/img/icon_checkbox_sel.svg"
-              alt
-            />
+          <img
+            class="img"
+            v-show="is_all_checked"
+            @click="all_select"
+            src="/src/base-h5/components/menu/app-h5-menu/tab/img/icon_checkbox_sel.svg"
+            alt
+          />
         </section>
         <!-- 联赛 -->
-        <section class="league_list" v-for="(type_item,type_index) in list_data.league" :key='type_index'>
+        <section class="league_list" v-for="(type_item,type_index) in list_data" :key="type_index">
           <p class="league_title row justify-between items-center">
             {{type_item.leagueName}}
             <span class="league_num">{{type_item.matchList.length}}</span>
             <img
-            class="select_img"
-            v-show="!type_item.checked"
-            @click="league_select(type_item)"
-            src="/src/base-h5/components/menu/app-h5-menu/tab/img/icon_checkbox_nor.svg"
-            alt
-          />
+              class="select_img"
+              v-show="!type_item.checked"
+              @click="league_select(type_item)"
+              src="/src/base-h5/components/menu/app-h5-menu/tab/img/icon_checkbox_nor.svg"
+              alt
+            />
             <img
               class="img"
-               v-show="type_item.checked"
+              v-show="type_item.checked"
               @click="league_select(type_item)"
               src="/src/base-h5/components/menu/app-h5-menu/tab/img/icon_checkbox_sel.svg"
               alt
             />
           </p>
           <ul class="list_info">
-            <li class="list_data row items-center justify-between"
-            v-for="(match_item,league_index) in type_item.matchList" :key='league_index'>
-                      <p class="league_name row items-center">
-                        <img
-                            class="img"
-                            :src="match_item.lurl"
-                            alt/>
-                            {{match_item.man}} V {{match_item.mhn}}
-                        </p>
-                        <img
-                          class="select_img"
-                          v-show="!match_item.checked"
-                          @click="match_select(match_item)"
-                          src="/src/base-h5/components/menu/app-h5-menu/tab/img/icon_checkbox_nor.svg"
-                          alt
-                        />
-                          <img
-                            class="img"
-                            v-show="match_item.checked"
-                            @click="match_select(match_item)"
-                            src="/src/base-h5/components/menu/app-h5-menu/tab/img/icon_checkbox_sel.svg"
-                            alt
-                          />
+            <li
+              class="list_data row items-center justify-between"
+              v-for="match_item in type_item.matchList"
+              :key="match_item.mid"
+            >
+              <p class="league_name row items-center">
+                <img class="img" :src="match_item.lurl" alt />
+                <span>{{match_item.man}} V {{match_item.mhn}}</span>
+              </p>
+              <img
+                class="select_img"
+                v-show="!match_item.checked"
+                @click="match_select(match_item)"
+                src="/src/base-h5/components/menu/app-h5-menu/tab/img/icon_checkbox_nor.svg"
+                alt
+              />
+              <img
+                class="img"
+                v-show="match_item.checked"
+                @click="match_select(match_item)"
+                src="/src/base-h5/components/menu/app-h5-menu/tab/img/icon_checkbox_sel.svg"
+                alt
+              />
             </li>
           </ul>
         </section>
@@ -120,9 +120,8 @@
   </div>
 </template>
 <script setup>
-import { SearchData } from "src/core/";
-import { reactive, toRefs, ref,onMounted,watch, nextTick} from "vue";
-import search from "src/core/search-class/search.js"
+import {  ref, watch } from "vue";
+import search from "src/core/search-class/search.js";
 import { api_search } from "src/api/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 defineOptions({
@@ -130,55 +129,63 @@ defineOptions({
 });
 //输入框值
 const input_text = ref("");
-//联赛的数据
-let list_data = reactive([]);
 //是否全选
 const is_all_checked = ref(false);
 //日间夜间
-const get_y0_suffix = ''
+const get_y0_suffix = "";
 
-onMounted(()=>{
-  get_search_result()
-})
-watch(()=>is_all_checked,(val)=>{
-  console.log('val',val)
-  //联赛全选
-  list_data.league = list_data.league.map(item=>{
-    item.checked = val._value
-    item.matchList = item.matchList.map(v=> {
-      v.checked = val._value
-      return v
-    })
-    return item
-  })
-},{deep:true})
+//列表数据
+const list_data = ref([])
+//选中的数据
+const select_data = ref([])
+
+let rem_1 = (window.innerWidth * 100) / 375;
+const bounced_high = {
+  height: window.innerHeight - rem_1 + 50 + "px !important"
+};
+/**
+ * @Description:全选反选
+ * @param {string}
+ * @return {Undefined} Undefined
+ */
+function all_select() {
+  is_all_checked.value = !is_all_checked.value
+     list_data.value = list_data.value.map(item => {
+      item.checked = is_all_checked;
+      item.matchList = item.matchList.map(v => {
+        v.checked = is_all_checked.value;
+        return v;
+      });
+      return item;
+    });
+}
 /**
  * @Description:联赛选中
  * @param {string}
  * @return {Undefined} Undefined
  */
 function league_select(val) {
-    list_data.league = list_data.league.map(item=>{
-      if (item.leagueName === val.leagueName){
-      val.checked = !val.checked;
-      item.matchList = item.matchList.map(v=> {
-        v.checked = val.checked
-        return v
-      })
-      }
-    return item
-  })
+  list_data.value = list_data.value.map(item => {
+    if (item.leagueName === val.leagueName) {
+      item.checked = !val.checked;
+      item.matchList = item.matchList.map(v => {
+        v.checked = item.checked;
+        return v;
+      });
+    }
+    return item;
+  });
 }
 /**
  * @Description:赛事选中
- * @param {string} 
+ * @param {string}
  * @return {Undefined} Undefined
  */
 function match_select(item) {
-  nextTick(()=>{
-    item.checked = !item.checked;
-  })
-  console.log('item',item)
+  item.checked = !item.checked;
+  if (!item.checked){
+    is_all_checked.value = false
+  }
 }
 /**
  * @Description:获取搜索结果数据
@@ -188,50 +195,49 @@ function match_select(item) {
 function clear_search() {
   input_text.value = "";
 }
-  /**
-  * @Description:获取搜索结果
-  * @param {string} keyword 搜索关键词
-  * @param {number} csid 球种ID
-  * @return {undefined} undefined
-  */
-function get_search_result (){
-      const params = {
-        keyword:'V',
-        cuid:UserCtr.get_uid(),
-        pageNumber:1,
-        rows:200,
-        isPc:false,
-        searchSportType:1
-      }
-      api_search.get_search_result(params).then( res => {
-        const {code, data} = res
-         if (code === '200'){
-          list_data = data?.data || {}
-          list_data.league = data?.data.league.map(item=>{
-            item.checked = false
-            item.matchList = item.matchList.map(v=> {
-              v.checked = false
-              return v
-            })
-            return item
-          })
-         }
-      }).catch((err) => {
-        console.log('err',err)
-      })
-  }
 /**
- * @Description:获取搜索结果数据
+ * @Description:被选中的数据
  * @param {string} keyword 搜索关键字
  * @return {Undefined} Undefined
  */
-// function get_search_result() {
-//     //调用接口获取获取搜索结果数据
-//     search.get_search_result(input_text.value, '').then(res => {
-//         const { state, list } = res
-//         list_data.value = list
-//     })
-// }
+function select_confirm() {
+  select_data.value = list_data.value.map(item => {
+    item.matchList = item.matchList.filter(v => v.checked);
+    return item;
+  });
+}
+/**
+ * @Description:获取搜索结果
+ * @param {string} keyword 搜索关键词
+ * @param {number} csid 球种ID
+ * @return {undefined} undefined
+ */
+async function get_search_result() {
+  try {
+    const params = {
+      keyword: input_text.value,
+      cuid: UserCtr.get_uid(),
+      pageNumber: 1,
+      rows: 200,
+      isPc: false,
+      searchSportType: 1
+    };
+    let res = await api_search.get_search_result(params);
+    const { code, data } = res;
+    if (code === "200") {
+        list_data.value = data?.data.league.map(item => {
+        item.checked = false;
+        item.matchList = item.matchList.map(v => {
+          v.checked = false;
+          return v;
+        });
+        return item;
+      });
+    }
+  } catch (error) {
+    console.error(error);
+  }
+}
 </script>
 <style scoped lang="scss">
 .setting-filter {
@@ -317,29 +323,29 @@ function get_search_result (){
     }
   }
   //联赛列表
-  .league_list{
-    .league_title{
+  .league_list {
+    .league_title {
       font-size: 0.14rem;
       color: #303442;
       font-weight: 500;
       padding: 0.1rem 0;
-      border-top: 0.01rem solid #E4E6ED;
-       .league_num{
+      border-top: 0.01rem solid #e4e6ed;
+      .league_num {
         display: inline-block;
-        width:  0.19rem;
-        height:  0.15rem;
+        width: 0.19rem;
+        height: 0.15rem;
         border-radius: 0.8rem;
-        background: #EBD3A8;
+        background: #ebd3a8;
         font-size: 0.1rem;
         line-height: 0.15rem;
         text-align: center;
       }
     }
-    .list_info{
-      .list_data{
-        .league_name{
-          .img{
-             margin-right: 0.04rem;
+    .list_info {
+      .list_data {
+        .league_name {
+          .img {
+            margin-right: 0.04rem;
           }
         }
       }

@@ -40,7 +40,7 @@ class MenuData {
     // 赛果 日期/赛中
     this.result_menu_api_params = {}
     //赛事列表 日期
-    this.menu_match_date_api_config= {}
+    this.menu_match_date_params= {}
     this.menu_list = []; //常规球种 101...
     this.top_events_list = []; //热门球种
     this.menu_mi = ref(''); //常规球种选中
@@ -62,7 +62,16 @@ class MenuData {
   set_init_menu_list(){
     //常规球种
     const menu_list =  BaseData.mew_menu_list_res.filter((item)=>{return +item.mi<300});
-    const top_events_list =  BaseData.mew_menu_list_res.filter((item)=>{return item.mi==5000})?.[0].sl || [];
+    //热门球种
+    let top_events_list =  BaseData.mew_menu_list_res.filter((item)=>{return item.mi==5000})?.[0].sl || [];
+    top_events_list = top_events_list.map((item)=>{
+      return {
+        ...item,
+        mi:`${+item.mi-4900}`,
+        defaultMi:item.mi,
+        csid:`${+item.mi-5000}`,
+      }
+    })
     this.menu_list = menu_list;
     this.top_events_list = top_events_list;
     this.update()
@@ -116,14 +125,14 @@ class MenuData {
 
   // 设置时间请求参数
   set_menu_match_date(type){
-    let config = {
-      api:"get_matches_list",
-      params: {
-        md: this.data_time ,
-        type: !type? 3 : 4, 
-      }
+    //2 今日  3早盘
+    let menu_mi =  this.menu_mi.value?`${this.menu_mi.value}${!type? 2 : 3}`:'0';
+    let params = {
+      md: this.data_time ,
+      euid: this.get_euid(menu_mi),
+      type: !type? 3 : 4, //
     }
-    this.menu_match_date_api_config = config
+    this.menu_match_date_params = params
   }
   // 设置收藏列表
   set_collect_list (list) {
@@ -231,7 +240,7 @@ class MenuData {
    *  mi [number|string] 要比对的值
   */
   is_results(mi) {
-    return this._is_cur_mi(29, mi)
+    return this._is_cur_mi(28, mi)
   }
   /**
    * 是否选中了早盘

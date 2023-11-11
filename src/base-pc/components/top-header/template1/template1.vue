@@ -18,7 +18,7 @@
   <div class="header-main">
     <div class="header-content">
       <div class="logo">
-        <!-- <img :src="logo" alt="" srcset="" class="" /> -->
+        <img :src="logo" alt="" srcset="" class="" />
       </div>
       <div class="header-right">
         <!-- 头部菜单 -->
@@ -41,7 +41,7 @@
 import { defineComponent, onMounted, ref, watch } from "vue";
 import _ from "lodash"
 // import right_head from "./right_head.vue";
-// import logo from "src/assets/images/logo.png";
+import logo from "src/assets/images/logo.png";
 import { useRouter, useRoute } from 'vue-router'
 import MatchListOuzhouClass from 'src/core/match-list-pc/match-ouzhou-list.js'
 
@@ -77,6 +77,7 @@ export default defineComponent({
       MatchListOuzhouClass.redux_menu.menu_root = item.id
       MatchListOuzhouClass.update_version()
       current_id.value = item.id;
+      console.error()
       switch (item.id) {
         case 1:
           userRouter.push({
@@ -119,7 +120,7 @@ export default defineComponent({
 
     };
     return {
-      // logo,
+      logo,
       current_id,
       navList,
       nav_click,

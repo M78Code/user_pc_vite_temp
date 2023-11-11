@@ -24,7 +24,7 @@ export const dateWeekMatchesFormat = (day) => {
     Date.prototype.getMonthDay = function (i) {
         let dateVal = i === 0?'Today':i === 1?'Tomorrow':month[this.getMonth()] + ' ' + this.getDate();
         return {
-          val:new Date(this.setHours(12, 0, 0, 0)).getTime(),
+          val:i === 0?"":new Date(this.setHours(12, 0, 0, 0)).getTime(),
           name:dateVal,
           type:i === 0?0:1
         };
