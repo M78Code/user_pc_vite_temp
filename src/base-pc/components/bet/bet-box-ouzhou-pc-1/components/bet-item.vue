@@ -1,7 +1,7 @@
 
 <template>
     <div class="bet-list">
-        <div v-show="false">{{BetViewDataClass.bet_view_version}}</div>
+        <div v-show="false">{{BetViewDataClass.bet_view_version}}-{{BetData.bet_data_class_version}}</div>
         <div class="f-b-s bet-content">
             <div class="fw-s-s bet-left">
                 <div class="w-100 f-s-c text-1a1 h15">
@@ -26,7 +26,7 @@
                 </div>
                 <div class="font12 h12 mt-4">
                     <span class="font400 mr-4 text-8a8">Highest Win</span>
-                    <span class="text-1a1 font500"> {{ highest_win }} </span>
+                    <span class="text-1a1 font500"> {{ mathJs.subtract(mathJs.multiply(BetData.bet_amount,items.oddFinally), BetData.bet_amount) || '0.00' }} </span>
                 </div>
             </div>
 
@@ -63,9 +63,11 @@
 <script setup>
 
 import {LOCAL_PROJECT_FILE_PREFIX,compute_value_by_cur_odd_type } from "src/core/"
+import BetData from 'src/core/bet/class/bet-data-class.js'
 import BetViewDataClass from 'src/core/bet/class/bet-view-data-class.js'
-import BetInput from "./bet-input.vue"  // 投注输入框
+import mathJs from 'src/core/bet/common/mathjs.js'
 
+import BetInput from "./bet-input.vue"  // 投注输入框
 const props = defineProps({
     items:{}
 })

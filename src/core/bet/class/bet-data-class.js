@@ -570,6 +570,7 @@ this.bet_appoint_ball_head= null */
   // 设置投注金额
   set_bet_amount(val) {
     this.bet_amount = val;
+    this.set_bet_data_class_version()
     // console.error("投注金额", val)
   }
   /**
