@@ -42,7 +42,7 @@ const set_match_list_mapping_relation_obj_type = () => {
   const page_source = PageSourceData.page_source;
   // 列表页强力推荐
   if (PageSourceData.is_show_hot) {
-    type = MenuData.is_esports() ? 7 : 2;
+    type = MenuData.is_export() ? 7 : 2;
   }
   // 详情页强力推荐
   else if (page_source == "details") {
@@ -53,7 +53,7 @@ const set_match_list_mapping_relation_obj_type = () => {
     type = 4;
   }
   // 电竞收藏
-  else if (MenuData.is_esports() && page_source == "collect") {
+  else if (MenuData.is_export() && page_source == "collect") {
     type = 7;
   }
   // 冠军聚合页
@@ -81,14 +81,14 @@ const set_match_list_mapping_relation_obj_type = () => {
     }
   }
   // 早盘 和 电竞只有未开赛  不区分赛种
-  else if ( page_source == "early" || (MenuData.is_esports() && page_source != "hot") ) {
+  else if ( page_source == "early" || (MenuData.is_export() && page_source != "hot") ) {
     type = 3;
   } else {
     type = 1;
   }
   // 欧洲版也不区分赛种 且需要一个新的计算逻辑 so
   if (PROJECT_NAME == 'ouzhou-pc') {
-    type = 8
+    // type = 2
   }
   MatchListCardData.match_list_mapping_relation_obj_type = type;
 };

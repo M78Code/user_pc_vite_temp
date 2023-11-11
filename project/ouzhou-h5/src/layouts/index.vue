@@ -95,13 +95,7 @@ const calc_bottom = () => {
   let rem_1 = (window.innerWidth * 100) / 375;
   return "-" + window.innerHeight - rem_1 + "px";
 };
-const show_bet = () => {
-  useMittOn(MITT_TYPES.EMIT_SET_SCROLL_TOP, true);
-};
-/**
- * @description 投注记录显示开关
- * @param {Boolean} val
- * @return {Undefined} undefined
+
 
 /**
  * @description 获取服务器当前时间
@@ -123,15 +117,6 @@ onMounted(() => {
   // 阻止双指放大
   document.addEventListener("gesturestart", gesturestart_event_fun);
   init_local_server_time()
-  // 开启注单历史弹窗
-  useMittOn(MITT_TYPES.EMIT_CHANGE_RECORD_SHOW, (val) => {
-    // footer中点击，传过来的是对象，根据settle值确定显示未结注单还是已结注单
-    if(typeof(val) === 'object') {
-      const num = val.settle ? 3 : 0;
-      BetRecordClass.set_selected(num);
-    }
-    change_settle_status(Boolean(val));
-  });
   // 设置设备类型
   BetData.set_device_type(1)
 });

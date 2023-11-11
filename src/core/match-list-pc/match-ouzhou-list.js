@@ -24,6 +24,7 @@ class MatchListOuzhouClass {
             mid_right_bg: 0 , // header 右上角对应的赛种
         }
         this.coom_soon = ref(false)
+        this.version = ref("0")
 
         // 15mins
 
@@ -63,6 +64,10 @@ class MatchListOuzhouClass {
 
     set_menu (state) {
         this.redux_menu = state
+    }
+
+    update_version() {
+        this.version.value = Date.now();
     }
 
 }
