@@ -8,7 +8,7 @@
       <layout-header />
     </div>
     <div style="display: none;"> {{ LayOutMain_pc.layout_version }}-{{BetData.bet_data_class_version}}</div>
-    <div class="flex">
+    <div class="flex full-content">
       <!-- 左侧 菜单 -->
       <div :style="{ height: LayOutMain_pc.layout_content_height + 'px' , width:LayOutMain_pc.layout_left_width }" class="layout_main_left">
         <layout-left />
@@ -154,5 +154,10 @@ const show_move_video = computed(()=>{
 :deep(.ty-bet-box){
    width:100%;
   height:100%;
+}
+.full-content{
+    flex-wrap: nowrap;
+    width: 1440px;
+    margin: 0 auto;
 }
 </style>
