@@ -95,7 +95,7 @@
       </q-table>
       <!--分页组件-->
 
-      <Pagination v-if="tableData.length > 0" class="record-pagination" :count="500" :betTotalAmount="40"
+      <Pagination v-if="tableData.length > 0" class="record-pagination" :count="total" :betTotalAmount="40"
         @pageChange="changePage">
       </Pagination>
 <!--      <pagination-wrapper-->
@@ -116,7 +116,7 @@ import { onMounted, ref, watch } from "vue";
 import { useGetOrderList } from "./tableConfig";
 import { formatTime } from "src/core/format/index.js"
 import { UserCtr, format_balance, LOCAL_PROJECT_FILE_PREFIX } from 'src/core/index.js'
-import Pagination from "../../../components/Pagination.vue";
+import Pagination from "project_path/src/components/Pagination.vue";
 // import { PaginationWrapper } from "src/components/pagination/index.js";
 // import football_icon from 'src/assets/images/football_icon.png'
 // import no_data from 'src/assets/images/no_data.png'
@@ -124,6 +124,7 @@ import Pagination from "../../../components/Pagination.vue";
 import sport_icon from "./sport_icon.vue";
 import store from "src/store-redux/index.js";
 import { copyToClipboard } from 'quasar'
+import GlobalSwitchClass from "src/core/global/global.js";
 const emit = defineEmits(['itemFilter'])
 
 const props = defineProps({
@@ -179,6 +180,7 @@ const changePage = (arv) => {
 }
 const hand_copy = (data) => {
   copyToClipboard(data);
+  GlobalSwitchClass.set_tip_show_state(true)
   return ;
   let oInput = document.createElement("input");
   oInput.value = data;
