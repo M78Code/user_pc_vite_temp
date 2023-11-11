@@ -59,8 +59,10 @@ import {
     ref,
     reactive
 } from "vue";
-import { MenuData } from 'src/core/';
+import { api_common } from "src/api/"
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
+import { MenuData,MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/";
+import MatchFold from 'src/core/match-fold'
 const tabActive = ref("matches");//tab
 const tabModel = ref(false);//下拉框
 const dateIndex = ref(0);//下拉框选择
@@ -130,14 +132,18 @@ const changeDate = (index) => {
   * @param {*} index 
   */
 const changeDatetab = (item, index) => {
-    console.log(item)
     tabModel.value = false;
     const move_index = week.findIndex((t, _index) => _index === index);
     scrollRef.value.scrollTo(move_index - 2, "start-force");
     second_tab_index.value = item;
-    // MenuData.set_current_lv1_menu("2");
-    // MatchMeta.set_origin_match_data()
+    set_menu_match_date();
+    
 };
+const set_menu_match_date = () => {
+        MatchDataBaseH5.init()
+        MatchFold.clear_fold_info()
+        MatchMeta.set_origin_match_data()
+    }  
 /**
  * 地区选择tab
  * @param {*} index 
