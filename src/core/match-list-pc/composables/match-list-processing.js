@@ -1,5 +1,5 @@
 import { ref } from 'vue';
-
+import { useRoute } from 'vue-router';
 import lodash from 'lodash';
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import store from "src/store-redux/index.js";
@@ -18,7 +18,7 @@ const { mx_collect_count, set_collect_count } = collect_composable_fn();
 const { virtual_list_timeout_id, is_vr_numer } = virtual_composable_fn();
 const { show_mids_change } = ws_composable_fn();
 const { api_bymids, set_league_list_obj } = use_featch_fn();
-
+const route=useRoute()
 const vx_filter_select_obj = ref([])
 
 
@@ -270,7 +270,7 @@ const mx_use_list_res_when_code_200_and_list_length_gt_0 = ({match_list, collect
 				// this.mx_autoset_active_match();
 			}
 			// 非详情页 切换右侧为列表第一场赛事
-			else if (route.name != "details") {
+			else if (route?.name != "details") {
 				let first_match = match_list[0];
 				let params = {
 					media_type: "auto",
@@ -278,7 +278,7 @@ const mx_use_list_res_when_code_200_and_list_length_gt_0 = ({match_list, collect
 					tid: first_match.tid,
 					sportId: first_match.csid,
 				};
-				regular_events_set_match_details_params(cut, params);
+				// regular_events_set_match_details_params(cut, params);
 			}
 		}
 	} else {

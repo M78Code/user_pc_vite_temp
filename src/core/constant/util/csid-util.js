@@ -57,7 +57,7 @@ export const compute_sport_id = (mi) => {
     switch(csid){
       case 1: // 足球
       case 11:// 手球
-        tpl_id = 0
+        tpl_id = 1
         break
       case 2: // 篮球
         tpl_id = 7
