@@ -3,7 +3,7 @@
     <q-scroll-area ref="scrollAreaRef" :visible="false" style="height: 100%;"> 
       <!-- 用户名称 --> 
       <header> 
-        <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/avatar.png`" alt="" />  Hi, Dafsghtyuh
+        <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/avatar.png`" alt="" />  Hi, {{user_info.nickName}}
       </header> 
       <!-- 用户信息 -->
       <div class="info"> 
@@ -12,7 +12,8 @@
           <img v-if="show" @click="on_show_money(false)" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/show.png`" alt="" />
           <img v-else @click="on_show_money(true)" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/hide.png`" alt="" />
         </div> 
-        <div class="amount">{{ showMount }}</div> 
+        <div class="amount" v-if="show">{{ format_money2(showMount) }}</div> 
+        <div class="amount"  v-else>{{format_money2(showMount).replace(/[\d.,]/g, '*') }} </div> 
       </div> 
       <div class="bg_line"> 
         <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/tips.png`" alt="" @click="goto_announcement" /> 
@@ -65,14 +66,18 @@ import { useRouter } from "vue-router"
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { api_account } from 'src/api/index';
 import { loadLanguageAsync, useMittEmit, MITT_TYPES} from "src/core/index.js";
-import {LOCAL_PROJECT_FILE_PREFIX } from "src/core";
+import {LOCAL_PROJECT_FILE_PREFIX,format_money2 } from "src/core";
+//语言设置
 const lang = ref(UserCtr.lang)
 const router = useRouter();
-const mount = UserCtr.balance.toString()
+//金额
+const mount = ref(UserCtr.balance)
 const showMount = ref(mount)
 const l_visible = ref(false)
 const s_visible = ref(true)
 const show = ref()
+// 用户信息
+const user_info = ref(UserCtr.user_info)
 const languages = [{
   key: 'zh',
   language: '简体中文',
@@ -122,13 +127,13 @@ const settingData = ref([{
 }])
 
 onMounted(() => {
+  //初始化金额隐藏
   on_show_money(UserCtr.show_balance)
 })
 
 // 金额显示与隐藏
 const on_show_money = (flag) => {
   show.value = flag
-  showMount.value = flag ? mount : mount.replace(/[0-9]/g, '*')
 }
 // 切换语言
 const on_change_lang = (key) => {

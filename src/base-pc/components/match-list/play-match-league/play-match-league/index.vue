@@ -13,7 +13,7 @@
         <!-- 联赛图标 -->
         <div class="league-icon-wrap">
             <span class="soprts_id_icon"
-            v-if="menu_config.is_esports()"
+            v-if="menu_config.is_export()"
             :style="compute_css_obj({key:'pc-left-menu-bg-image', position: `item_${BaseData.compute_sport_id(card_style_obj.league_obj.csid)}` })"></span>
           <img v-else v-img="[lodash.get(card_style_obj, 'league_obj.lurl')]" />
         </div>
@@ -74,7 +74,7 @@
       <div class="yb-flex-center" :style="`width:${match_list_tpl_size.media_width - 3}px !important;`">
         <!-- 联赛是否收藏 -->
         <div @click.stop="mx_collect({ type: 'leagues', match: card_style_obj.league_obj })"
-          class="icon-wrap m-star-wrap-league" v-if="!menu_config.is_esports() && GlobalAccessConfig.get_collectSwitch">
+          class="icon-wrap m-star-wrap-league" v-if="!menu_config.is_export() && GlobalAccessConfig.get_collectSwitch">
           <i class="icon-star q-icon c-icon" :class="card_style_obj.league_obj.tf && 'active'"></i>
         </div>
       </div>
@@ -251,7 +251,7 @@ function is_highlighted (csid){
 */
 function set_fold() {
   // 如果当前联赛是折叠的 并且是今日、早盘  调用bymids接口拉数据
-  if (props.card_style_obj.is_league_fold && ([2, 3].includes(menu_config.menu_root) || menu_config.is_esports())) {
+  if (props.card_style_obj.is_league_fold && ([2, 3].includes(menu_config.menu_root) || menu_config.is_export())) {
     // 设置赛事基础数据
     MatchListCardData.set_match_basic_data(props.card_style_obj)
     let params = {

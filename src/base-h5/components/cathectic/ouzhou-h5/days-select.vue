@@ -14,12 +14,16 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from "vue"
 import { IconWapper } from 'src/components/icon'
+import { i18n_t } from "src/boot/i18n.js";
 let showList = ref(false)
 let _index = ref(0)
+// 展示多长时间的注单记录  (1:今天 2:昨日 3:七日内 4:一月内)
+const [day, yestoday, week, month] = i18n_t('bet_record.bet_date_list');
 const list = ref([
-    { title: 'Today', val: 0 },
-    { title: 'Week', val: 3 },
-    { title: 'Month', val: 4 },
+    { title: day, val: 1 },
+    { title: yestoday, val: 2 },
+    { title: week, val: 3 },
+    { title: month, val: 4 },
 ])
 
 const emit = defineEmits(['changeDays'])
@@ -34,10 +38,10 @@ const close = () => {
 }
 
 onMounted(() => {
-    document.addEventListener('click', close)
+    document.addEventListener('click', close, true)
 })
 onUnmounted(() => {
-    document.removeEventListener('click', close)
+    document.removeEventListener('click', close, true)
 })
 </script>
 <style lang="scss" scoped>
@@ -58,8 +62,8 @@ onUnmounted(() => {
         left: -0.1rem;
         top: 0.5rem;
         background: var(--q-gb-bg-c-15);
-        width: 100%;
-        padding-left: 0.1rem;
+        padding: 0 0.1rem;
+        box-shadow: 2px 2px 4px var(--q-gb-bg-c-8);
         li {
             font-size: 0.14rem;
             line-height: 2.5;

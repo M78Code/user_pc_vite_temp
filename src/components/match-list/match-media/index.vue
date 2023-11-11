@@ -3,15 +3,15 @@
     <!-- 无直播源 -->
     <div v-tooltip="{ content: t('common.score_board') }" class="icon-wrap after_tpl0 relative-position"
       :class="vx_detail_params.mid == match.mid && vx_play_media.media_type == 'info' && 'active'"
-      @click="on_switch_match('auto')" v-if="!menu_config.is_esports() || route.name == 'search'">
+      @click="on_switch_match('auto')" v-if="!menu_config.is_export() || route.name == 'search'">
       <div class="v-icon switch-icon"
         :style="compute_css_obj('pc-img-match-list-switch')"
         :class="vx_detail_params.mid == match.mid && vx_play_media.media_type == 'info' && 'active'"></div>
     </div>
-    <div class="yb-flex-center" :class="{ 'flex-center': menu_config.is_esports() }">
+    <div class="yb-flex-center" :class="{ 'flex-center': menu_config.is_export() }">
       <!-- 收藏 -->
       <div
-        v-if="menu_config.is_esports() && (![1, 500].includes(menu_config.menu_root)) && route.name != 'search' && GlobalAccessConfig.get_collectSwitch()"
+        v-if="menu_config.is_export() && (![1, 500].includes(menu_config.menu_root)) && route.name != 'search' && GlobalAccessConfig.get_collectSwitch()"
         class="yb-flex-center yb-hover-bg play-count-wrap" @click.stop="collect">
         <i aria-hidden="true" class="icon-star q-icon c-icon" :class="{ 'active': (match.mf == 1 || match.mf == true) }"></i>
       </div>
@@ -20,7 +20,7 @@
         :style="compute_css_obj('pc-img-match-list-video')"
         v-tooltip="{ content: cur_video_icon.text }" class="icon-wrap relative-position">
         <div
-          :class="['v-icon', `${cur_video_icon.type}-icon`, { 'active': vx_detail_params.mid == match.mid && (vx_play_media.media_type == cur_video_icon.type || (menu_config.is_esports() && route.name != 'search')) }]">
+          :class="['v-icon', `${cur_video_icon.type}-icon`, { 'active': vx_detail_params.mid == match.mid && (vx_play_media.media_type == cur_video_icon.type || (menu_config.is_export() && route.name != 'search')) }]">
         </div>
       </div>
     </div>
@@ -34,7 +34,7 @@
     </div>
     <!-- 盘口数量 -->
     <div class="play-count-wrap no-wrap yb-flex-center" @click="on_go_detail" style="margin-top:10px;"
-      v-if="menu_config.is_esports() && route.name != 'search'">
+      v-if="menu_config.is_export() && route.name != 'search'">
       <span class="count">{{ handicap_num }}</span>
       <div class="yb-flex-center" style="margin-left:5px">
         <div class="yb-icon-arrow"></div>
@@ -98,7 +98,7 @@ const cur_video_icon = computed(() => {
     text: "",
   }
   //电竞
-  let is_esports = menu_config.is_esports()
+  let is_esports = menu_config.is_export()
   //滚球状态
   let is_play = get_match_status(ms)
   // 包含的语言

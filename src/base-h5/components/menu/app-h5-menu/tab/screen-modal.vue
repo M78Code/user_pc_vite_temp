@@ -74,7 +74,48 @@
         <!-- 列表 -->
         <section class="league_list">
           <p class="league_title">
-            热门联赛
+            联赛
+            <span class="league_num">{{list_data.length}}</span>
+          </p>
+          <ul class="list_info">
+           <!-- 类型 -->
+            <li class="list_data"
+                v-for="(type_item,type_index) in list_data" :key='type_index'>
+                <!-- 赛事 -->
+                 <div v-for="(match_item,match_index) in type_item.data" :key='match_index'>
+                 <!-- 联赛 -->
+                      <div v-for="(league_item,league_index) in match_item.league" :key='league_index'
+                           class="row items-center justify-between">
+                          <p class="league_name row items-center">
+                        <img
+                            class="img"
+                            :src="league_item.lurl"
+                            alt/>
+                            {{league_item.leagueName}}
+                        </p>
+                        <img
+                          class="select_img"
+                          v-show="!league_item.is_active"
+                          @click="league_item.is_active = true"
+                          src="/src/base-h5/components/menu/app-h5-menu/tab/img/icon_checkbox_nor.svg"
+                          alt
+                        />
+                          <img
+                            class="img"
+                            v-show="league_item.is_active"
+                            @click="league_item.is_active = false"
+                            src="/src/base-h5/components/menu/app-h5-menu/tab/img/icon_checkbox_sel.svg"
+                            alt
+                          />
+                      </div>
+                 </div>
+            </li>
+          </ul>
+        </section>
+        <!-- 列表 -->
+        <section class="league_list">
+          <p class="league_title">
+            赛事
             <span class="league_num">{{list_data.length}}</span>
           </p>
           <ul class="list_info">
@@ -120,6 +161,8 @@
 import { SearchData } from "src/core/";
 import { reactive, toRefs, ref,onMounted,watch} from "vue";
 import search from "src/core/search-class/search.js"
+import { api_search } from "src/api/index.js";
+import UserCtr from "src/core/user-config/user-ctr.js";
 defineOptions({
   name: "screen-modal" // 设置组件名称
 });
@@ -153,19 +196,42 @@ watch(()=>is_all_checked,(val)=>{
 function clear_search() {
   input_text.value = "";
 }
-
+  /**
+  * @Description:获取搜索结果
+  * @param {string} keyword 搜索关键词
+  * @param {number} csid 球种ID
+  * @return {undefined} undefined
+  */
+function get_search_result (){
+      const params = {
+        keyword:'V',
+        cuid:UserCtr.get_uid(),
+        pageNumber:1,
+        rows:200,
+        isPc:false,
+        searchSportType:1
+      }
+      api_search.get_search_result(params).then( res => {
+        const {code, data} = res
+         if (code === 200){
+          list_data.value = data
+         }
+      }).catch((err) => {
+        console.log('err',err)
+      })
+  }
 /**
  * @Description:获取搜索结果数据
  * @param {string} keyword 搜索关键字
  * @return {Undefined} Undefined
  */
-function get_search_result() {
-    //调用接口获取获取搜索结果数据
-    search.get_search_result(input_text.value, '').then(res => {
-        const { state, list } = res
-        list_data.value = list
-    })
-}
+// function get_search_result() {
+//     //调用接口获取获取搜索结果数据
+//     search.get_search_result(input_text.value, '').then(res => {
+//         const { state, list } = res
+//         list_data.value = list
+//     })
+// }
 </script>
 <style scoped lang="scss">
 .setting-filter {
