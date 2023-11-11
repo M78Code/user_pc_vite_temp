@@ -393,6 +393,15 @@ class MenuData {
     this.set_multi_column();
     useMittEmit(MITT_TYPES.EMIT_MATCH_LIST_UPDATE)
   }
+    /**
+   * @description: 设置是否收藏
+   * @param {*} menu_obj
+   * @return {*}
+   */
+    set_is_collect(is_collect) {
+      this.is_collect=is_collect
+      useMittEmit(MITT_TYPES.EMIT_MATCH_LIST_UPDATE)
+    }
   /**
    * 定义中间菜单    点击 输出 请求  列表结构  API 参数的   模板
    */
@@ -861,8 +870,10 @@ class MenuData {
    * 没有传递对比当前菜单
   */
   is_vr(mi) {
-    // (this.match_list_api_config || {}).sports == "vr"
-    return this._is_cur_mi(300, mi)
+    if (mi) {
+      return this._is_cur_mi(300, mi)
+    }
+    return this._is_cur_mi(300, mi) || (this.match_list_api_config.guanjun || "").includes("vr")
   }
   /**
    * 是否选中了赛果
@@ -900,7 +911,7 @@ class MenuData {
     if (mi) {
       return this._is_cur_mi(400, mi)
     }
-    return this._is_cur_mi(400, mi)||(this.match_list_api_config.guanjun || "").includes("guanjun")
+    return this._is_cur_mi(400, mi) || (this.match_list_api_config.guanjun || "").includes("guanjun")
   }
 
   /**

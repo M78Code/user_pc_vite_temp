@@ -1,6 +1,7 @@
 <!-- 单关，串关，投注金额输入框 -->
 <template>
-    <div class="bet_input_info flex_input">
+    <div>
+        <div class="bet_input_info flex_input">
        <div class="info_left">
        <div class="size_16 color_a1a1">single bet</div>
         <div class="size_14">
@@ -23,6 +24,7 @@
           
        </div>
        <key-board v-if="BetData.bet_keyboard_show" :config="ref_data.key_board_config" ></key-board>
+    </div>
     </div>
 </template>
 

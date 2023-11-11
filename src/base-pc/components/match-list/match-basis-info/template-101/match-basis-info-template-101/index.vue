@@ -237,7 +237,7 @@ onUnmounted(() => {
     margin-bottom: 7px;
     .icon-star {
       margin-top: -3px;
-      margin-right: 12px;
+      margin-right: 14px;
     }
     .bet-num {
       margin-left: 12px;
