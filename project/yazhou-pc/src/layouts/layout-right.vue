@@ -14,7 +14,7 @@
     <!-- 虚拟体育 -->
     <!-- <virtual-right
       v-if="
-        MenuData.is_virtual_sport() &&
+        MenuData.is_vr() &&
         route.name != 'search' &&
         route.name != 'details'
       "

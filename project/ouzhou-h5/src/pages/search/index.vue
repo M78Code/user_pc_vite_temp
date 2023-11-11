@@ -9,265 +9,125 @@
 			<span class="close_btn" @click="to_home">Close</span>
 		</div>
 		<!-- 搜索 历史 -->
-		<div class="content" v-if="history_data.length > 0 || !search_data">
+		<div class="content" v-show="show_history && history_data.length > 0">
 			<div class="middle_info_tab">EXAMPLE SEARCHES</div>
-			<ul class="list">
-				<li v-for="(item, index) in history_data" :key="item.cuid">
+			<ul class="list1">
+				<li v-for="(item, index) in history_data" :key="item.cuid" @click="get_search_data(1, 1, item.keyword)">
 					{{ item.keyword }}<img :src="compute_local_project_file_path('image/svg/right_arrow.svg')" alt="">
 				</li>
 			</ul>
 		</div>
-		<!-- 搜索 队伍 -->
-		<div class="content" v-if="search_data.length > 0">
+		<!-- 搜索展示 -->
+		<div class="content" v-show="search_data.bowling || search_data.league || search_data.teamH5">
+			<!-- 球类 tabs -->
 			<div class="middle_info_tab" ref="tab_growp">
 				<div v-for="(item, index) in sport_kind_data" :key="item.id" @click="get_search_data(index, item.id)" :class="['tab', tabIndex === index ? 'active' : '']"     
 				 >{{ item.sportName }}</div>
 			</div>
 			<ul class="list">
-				<li>
-					<div class="list_top">
-						<span>T20 Blast </span><img :src="compute_local_project_file_path('image/svg/right_arrow.svg')" alt="">
-					</div>
-					<div class="list_bottom">
-						<div>
-							<p>Man City v Inter Milan</p>
-							<p>Sun 11 Jun 03:00</p>
+				<div class="title">View all soccer</div>
+				<div class="middle_info_tab diff">
+					<div class="color">TEAMS</div>
+				</div>
+				<!-- 滚球 -->
+				<div v-show="search_data.bowling">
+					<li v-for="(item, index) in search_data.bowling" :key="index" @click="suggestion_bowling_click(item)">
+						<div class="list_top">
+							<span>{{ item.tn }}</span><img :src="compute_local_project_file_path('image/svg/right_arrow.svg')" alt="">
 						</div>
-						<div>
-							<div>
-								1
+						<div class="list_bottom">
+							<div style="width: 60%;">
+									<p>
+										<span class="home" v-html="red_color(item.mhn)"></span>
+										<span class="middle">v</span>
+										<span class="away" v-html="red_color(item.man)"></span>
+										<!-- <span class="home">{{ item.mhn }}</span>
+										<span class="middle">v</span>
+										<span class="away">{{ item.man }}</span> -->
+									</p>
+								<p>{{ (new Date(+item.mgt)).Format($t('time4')) }}</p>
 							</div>
 							<div>
-								2
+								<div>
+									1
+								</div>
+								<div>
+									2
+								</div>
 							</div>
 						</div>
+					</li>
+				</div>
+				<!-- 搜索 联赛 -->
+				<div v-show="search_data.league && search_data.league.length > 0">
+					<div class="middle_info_tab diff">
+						<div class="color">COMPETITIONS</div>
 					</div>
-				</li>
-				<li>
-					<div class="list_top">
-						<span>T20 Blast </span><img :src="compute_local_project_file_path('image/svg/right_arrow.svg')" alt="">
-					</div>
-					<div class="list_bottom">
-						<div>
-							<p>Man City v Inter Milan</p>
-							<p>Sun 11 Jun 03:00</p>
+					<li v-for="(item, index) in search_data.league" :key="index" @click="default_method_jump(item.leagueName, item.matchList[index])">
+						<div class="list_top"> 
+							<!-- 联赛icon -->
+							<img class="match_logo"
+								:src="item.matchList[0] ? get_server_file_path(item.matchList[0].lurl) : compute_img_url('match-cup')"
+								@error="league_icon_error" />
+							<span>{{ item.leagueName }}</span><img :src="compute_local_project_file_path('image/svg/right_arrow.svg')" alt="">
 						</div>
-						<div>
-							<div>
-								1
-							</div>
-							<div>
-								2
-							</div>
-						</div>
-					</div>
-				</li>
-				<li>
-					<div class="list_top">
-						<span>T20 Blast </span><img :src="compute_local_project_file_path('image/svg/right_arrow.svg')" alt="">
-					</div>
-					<div class="list_bottom">
-						<div>
-							<p>Man City v Inter Milan</p>
-							<p>Sun 11 Jun 03:00</p>
-						</div>
-						<div>
-							<div>
-								1
+						<div class="list_bottom" v-for="(i, idx) in item.matchList">
+							<div style="width: 60%;">
+								<p>
+									<span class="home" v-html="i.mhn"></span>
+									<span class="middle">v</span>
+									<span class="away" v-html="i.man"></span>
+								</p>
+								<p>{{ (new Date(+i.mgt)).Format($t('time4')) }}</p>
 							</div>
 							<div>
-								2
+								<div>
+									1
+								</div>
+								<div>
+									2
+								</div>
 							</div>
 						</div>
-					</div>
-				</li>
+					</li>
+				</div>
+				<!-- 搜索 队伍 -->
+				<div v-show="search_data.teamH5 && search_data.teamH5.length > 0">
+					<li v-for="(item, index) in search_data.teamH5" :key="index" @click="default_method_jump(item.name, item)">
+						<div v-if="item.tn">
+							<div class="list_top">
+								<span>{{ item.tn }}</span><img :src="compute_local_project_file_path('image/svg/right_arrow.svg')" alt="">
+							</div>
+						</div>
+						<div class="list_bottom">
+							<div style="width: 60%;">
+								<p>
+									<span class="home" v-html="item.mhn"></span>
+									<span class="middle">v</span>
+									<span class="away" v-html="item.man"></span>
+								</p>
+								<p>{{ (new Date(+item.mgt)).Format($t('time4')) }}</p>
+							</div>
+							<div>
+								<div>
+									1
+								</div>
+								<div>
+									2
+								</div>
+							</div>
+						</div>
+					</li>
+				</div>
 			</ul>
 		</div>
-		<!-- 搜索 联赛 -->
-		<div class="content" v-if="0">
-			<div class="middle_info_tab">
-				<div @click="tabIndex = 1" :class="['tab', tabIndex === 1 ? 'active' : '']">Soccer</div>
-				<div @click="tabIndex = 2" :class="['tab', tabIndex === 2 ? 'active' : '']">Gaming</div>
-			</div>
-			<div class="teams">
-				<div class="title">View all soccer</div>
-				<div class="middle_info_tab">TEAMS</div>
-				<ul class="list1">
-					<li>
-						<div class="list_top">
-							<span>T20 Blast </span><img :src="compute_local_project_file_path('image/svg/right_arrow.svg')" alt="">
-						</div>
-						<div class="list_bottom">
-							<div>
-								<p>Man City v Inter Milan</p>
-								<p>Sun 11 Jun 03:00</p>
-							</div>
-							<div>
-								<div>
-									1
-								</div>
-								<div>
-									2
-								</div>
-							</div>
-						</div>
-					</li>
-					<li>
-						<div class="list_top">
-							<span>T20 Blast </span><img :src="compute_local_project_file_path('image/svg/right_arrow.svg')" alt="">
-						</div>
-						<div class="list_bottom">
-							<div>
-								<p>Man City v Inter Milan</p>
-								<p>Sun 11 Jun 03:00</p>
-							</div>
-							<div>
-								<div>
-									1
-								</div>
-								<div>
-									2
-								</div>
-							</div>
-						</div>
-					</li>
-					<li>
-						<div class="list_top">
-							<span>T20 Blast </span><img :src="compute_local_project_file_path('image/svg/right_arrow.svg')" alt="">
-						</div>
-						<div class="list_bottom">
-							<div>
-								<p>Man City v Inter Milan</p>
-								<p>Sun 11 Jun 03:00</p>
-							</div>
-							<div>
-								<div>
-									1
-								</div>
-								<div>
-									2
-								</div>
-							</div>
-						</div>
-					</li>
-				</ul>
-			</div>
-			<div class="teams">
-				<div class="middle_info_tab">TEAMS</div>
-				<ul class="list1">
-					<li>
-						<div class="list_top">
-							<span>T20 Blast </span><img :src="compute_local_project_file_path('image/svg/right_arrow.svg')" alt="">
-						</div>
-						<div class="list_bottom">
-							<div>
-								<p>Man City v Inter Milan</p>
-								<p>Sun 11 Jun 03:00</p>
-							</div>
-							<div>
-								<div>
-									1
-								</div>
-								<div>
-									2
-								</div>
-							</div>
-						</div>
-						<div class="list_top">
-							<span>T20 Blast </span><img :src="compute_local_project_file_path('image/svg/right_arrow.svg')" alt="">
-						</div>
-						<div class="list_bottom">
-							<div>
-								<p>Man City v Inter Milan</p>
-								<p>Sun 11 Jun 03:00</p>
-							</div>
-							<div>
-								<div>
-									1
-								</div>
-								<div>
-									2
-								</div>
-							</div>
-						</div>
-					</li>
-					<li>
-						<div class="list_top">
-							<span>T20 Blast </span><img :src="compute_local_project_file_path('image/svg/right_arrow.svg')" alt="">
-						</div>
-						<div class="list_bottom">
-							<div>
-								<p>Man City v Inter Milan</p>
-								<p>Sun 11 Jun 03:00</p>
-							</div>
-							<div>
-								<div>
-									1
-								</div>
-								<div>
-									2
-								</div>
-							</div>
-						</div>
-						<div class="list_top">
-							<span>T20 Blast </span><img :src="compute_local_project_file_path('image/svg/right_arrow.svg')" alt="">
-						</div>
-						<div class="list_bottom">
-							<div>
-								<p>Man City v Inter Milan</p>
-								<p>Sun 11 Jun 03:00</p>
-							</div>
-							<div>
-								<div>
-									1
-								</div>
-								<div>
-									2
-								</div>
-							</div>
-						</div>
-					</li>
-					<li>
-						<div class="list_top">
-							<span>T20 Blast </span><img :src="compute_local_project_file_path('image/svg/right_arrow.svg')" alt="">
-						</div>
-						<div class="list_bottom">
-							<div>
-								<p>Man City v Inter Milan</p>
-								<p>Sun 11 Jun 03:00</p>
-							</div>
-							<div>
-								<div>
-									1
-								</div>
-								<div>
-									2
-								</div>
-							</div>
-						</div>
-						<div class="list_top">
-							<span>T20 Blast </span><img :src="compute_local_project_file_path('image/svg/right_arrow.svg')" alt="">
-						</div>
-						<div class="list_bottom">
-							<div>
-								<p>Man City v Inter Milan</p>
-								<p>Sun 11 Jun 03:00</p>
-							</div>
-							<div>
-								<div>
-									1
-								</div>
-								<div>
-									2
-								</div>
-							</div>
-						</div>
-					</li>
-				</ul>
-			</div>
-		</div>
 		<!-- 搜索 无结果 -->
-		<div class="content" v-if="!search_data">
+		<div class="content"	
+			v-show="!(search_data.teamH5 && search_data.teamH5.length > 0) && 
+			!(search_data.league && search_data.league.length > 0) && 
+			!(show_history && history_data.length > 0) &&
+			!search_data.bowling"
+		>
 			<div class="middle_info_tab">No results found. please try a different search term.</div>
 			<div class="not_found">
 				<img :src="compute_local_project_file_path('image/png/not_found.png')" alt="">
@@ -277,15 +137,23 @@
 	</div>
 </template>
 <script setup>
-import { onMounted, ref, watch } from 'vue';
-import { compute_local_project_file_path, utils } from "src/core/";
+import { onMounted, ref, watch, onBeforeUnmount } from 'vue';
+import { UserCtr, compute_local_project_file_path, utils, compute_img_url, SearchData, MenuData } from "src/core/";
+import { get_server_file_path } from "src/core/file-path/file-path.js";
 import router from "../../router";
-import UserCtr from "src/core/user-config/user-ctr.js";
+import { useMittEmit,useMittOn, MITT_TYPES } from "src/core/mitt";
 import { get_history_search, get_search_result, get_search_sport } from "src/api/module/search/index.js";
+import { api_search } from 'src/api/';
+
+const { get_insert_history } = api_search || {}
 
 const input_value = ref('');
 const tabIndex = ref(1);
 const tab_growp = ref(null);
+const show_history = ref(true);
+
+//定时器
+let go_detail_or_result_timer;
 
 const clear_value = () => {
 	input_value.value = '';
@@ -293,8 +161,6 @@ const clear_value = () => {
 const to_home = () => {
 	router.push('/')
 }
-// /hotSearch/queryHistory 搜索历史 pramas: {isPC: 0; cuid: 509823602117100010; t: 1699586846419}
-// /hotSearch/hotSelect3 搜索 pramas: {isPC: 0; searchSportType: 1; keyword: 英国; device: v2_h5_st; cuid: 509823602117100010; t: 1699586846419}
 
 /**
  * @Description:获取搜索历史数据
@@ -302,60 +168,158 @@ const to_home = () => {
 const history_data = ref([]);
 const get_history = () => {
 	let params = {
-		cuid: UserCtr.get_uid(),
+		// cuid: UserCtr.get_uid(),
+		cuid: '509823602117100010',
 		isPc: 0
 	}
 	get_history_search(params).then(res => {
 		let data = lodash.get(res, "data") || [];
 		if (data.length > 0) {
 			// console.log('his_data', data);
-			history_data.value = data
+			history_data.value = data;
+			show_history.value = true;
 		}
 	});
 }
+
+const get_search_txt = SearchData.search_txt;
+const get_menu_type = MenuData.menu_type;
+//  文字特殊处理，颜色操作
+const red_color = (item) => {
+  const reg = new RegExp(get_search_txt, "ig");
+  let i_color = 'var(--qq-gb-t-c-1)';
+  return item.replace(reg, `<span style="color:${i_color}">${get_search_txt.toUpperCase()}</span>`)
+}
+
 // 搜索
 const search_data = ref([]);
-const get_search_data = (index = 1, sport_id = '') => {
+const get_search_data = (index = 1, sport_id = 1, keyword) => {
+	// console.log('id', index, sport_id, keyword);
+	show_history.value = false;
 	tabIndex.value = index;
 	utils.tab_move2(index, tab_growp.value);
-	if (!input_value.value) {
-		return;
+	if (keyword) {
+		input_value.value = keyword
 	}
 	let params = {
-		cuid: UserCtr.get_uid(),
-		isPc: 0,
-		searchSportType: sport_id || 1,
-		keyword: input_value.value || '',
-		device: 'v2_h5_st'
+		 cuid: UserCtr.get_uid(),
+			device: 'v2_h5_st',
+			keyword: input_value.value,
+			searchSportType: sport_id || 1,
+			isPc: false
 	}
+	if(!input_value.value) {
+		return;
+	}
+		// console.log('params',params);
 	get_search_result(params).then(res => {
-		let data = lodash.get(res, "data") || [];
-		if (data.length > 0) {
-			// console.log('sear_data', data.data);
-			search_data.value = data.data
+		if (res.code === '200') {
+			// console.log('sear_data', res.data.data);
+			search_data.value = res.data.data;
 		}
 	});
 }
+
 // 获取球赛的种类
 const sport_kind_data = ref([]);
 const get_sport_kind = () => {
 	get_search_sport().then(res => {
 		let data = lodash.get(res, "data") || [];
 		if (data.length > 0) {
-			// console.log('spo_data', data);
 			sport_kind_data.value = data
 		}
 	});
 }
+
+// 图标出错时
+function league_icon_error($event) {
+  $event.target.src =compute_img_url('match-cup')
+  $event.target.onerror = null
+}
+
+// 联赛 和 队名 默认跳转方法,去到详情页
+function default_method_jump(name, item) {
+  // console.log('item', item);
+  if (!item) return;
+
+  if (item.mid) {
+    //set_goto_detail_matchid(item.mid);
+  } else {
+    //set_goto_detail_matchid(item.matchList[0].mid);
+  }
+
+  get_insert_history({ word: item ? name : '', }).then(({ data }) => { })
+
+  // 手机键盘收起动画完成后才跳转
+  clearTimeout(go_detail_or_result_timer)
+  go_detail_or_result_timer = setTimeout(() => {
+    //set_details_item(0);
+    SearchData.set_search_term(get_search_txt)
+    go_detail_or_reslut(item)
+    useMittEmit(MITT_TYPES.EMIT_CHANGE_SELECT_DIALOG, false)
+  }, 200)
+}
+
+// 滚球跳转
+function suggestion_bowling_click(item) {
+  let item_name;
+
+  if (item.type == 'tour') {
+    item_name = item.tn
+  } else {
+    item_name = item.name
+  }
+
+  get_insert_history({ word: item ? item_name : '', }).then(({ data }) => { })
+
+  // 手机键盘收起动画完成后才跳转
+  clearTimeout(go_detail_or_result_timer)
+  go_detail_or_result_timer = setTimeout(() => {
+    //set_goto_detail_matchid(item.mid);
+    //set_details_item(0);
+    SearchData.set_search_term(get_search_txt)
+    go_detail_or_reslut(item)
+    useMittEmit(MITT_TYPES.EMIT_CHANGE_SELECT_DIALOG, false)
+  }, 200)
+}
+
+// 跳转到 详情页 或者 赛果页面
+function go_detail_or_reslut(item) {
+  if (get_menu_type.value == 28) {
+    router.push({
+      name: 'match_result',
+      params: {
+        mid: item.mid ? item.mid : item.matchList[0].mid,
+        index: '0'
+      },
+      query: {
+        search_term: get_search_txt
+      }
+    })
+  } else {
+    router.push({
+      name: 'category',
+      params: { mid: item.mid },
+      query: { search_term: get_search_txt }
+    })
+  }
+}
+
 onMounted(() => {
 	get_history();
 	get_sport_kind();
+})
+
+onBeforeUnmount(() => {
+  clearTimeout(go_detail_or_result_timer)
+  go_detail_or_result_timer = null
 })
 //监听输入框内容改变
 watch(
 	() => input_value.value,
 	(val) => {
 		let trimVal = val.trim();
+		get_search_data(trimVal);
 	}
 )
 </script>
@@ -437,6 +401,10 @@ watch(
 		flex-shrink: 0;
 		padding: 3px 10px;
 
+		// &:first-child {
+		// 	padding-left: 0;
+		// }
+
 		&:last-child {
 			margin-right: 0;
 		}
@@ -445,23 +413,34 @@ watch(
 			background-color: #FF7000;
 			color: #fff;
 		}
+
+	}
+	// &.diff {    
+	// 	position: absolute;
+  //   width: 100%;
+  //   left: 0;
+  //   padding: 9px 0 9px 20px
+	// }		
+	.color {
+		color: #FF7000;
 	}
 }
 
 li {
-	margin: 8px 0;
+	margin-bottom: 8px;
 	padding: 14px 10px;
 	background-color: #fff;
-	border-radius: 6px;
+	// border-radius: 6px;
 	font-size: 14px;
 
-	// img {
-	// 	vertical-align: text-top;
-	// }
 	.list_top {
 		margin-bottom: 19px;
 		font-size: 14px;
 		font-weight: 500;
+
+		img {
+			margin-left: 5px;
+		}
 	}
 
 	.list_bottom {
@@ -474,31 +453,38 @@ li {
 		div p:last-child {
 			color: #8A8986;
 		}
+		.middle {
+			color: red; 
+			margin: 0 5px;
+		}
 	}
 }
 
 .list1 {
-	margin-bottom: 8px;
+	padding: 10px;
 
 	li {
-		margin: 0;
-		border-radius: 0;
+		border-radius: 6px;
+	}
+	img {
+		margin-left: 10px;
 	}
 }
 
 .list {
-	padding: 0 10px;
-	height: 100vh;
-}
-
-.teams {
 	.title {
 		height: 36px;
 		line-height: 36px;
-		padding-left: 18px;
+		padding-left: 20px;
 		font-weight: 500;
 		font-size: 14px;
 	}
+}
+// .list li:nth-child(3), .list li:nth-child(9) {
+// 	margin-top: 0;
+// }
+.teams {
+	
 
 	.middle_info_tab {
 		font-size: 12px;

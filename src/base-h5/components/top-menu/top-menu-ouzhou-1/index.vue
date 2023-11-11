@@ -71,7 +71,7 @@ import detailTopInfo from "./detail-top/detail-top.vue";
 import { MenuData } from 'src/core/';
 const router = useRouter();
 const route = useRoute()
-const amount = ref('')
+const amount = ref(UserCtr.balance)
 
 const leftDrawerOpen = ref(false)
 const emit = defineEmits(["change"]);

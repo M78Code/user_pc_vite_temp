@@ -10,20 +10,20 @@
       <!-- 未结算 cashout 按钮 -->
       <div v-if="UserCtr.user_info.settleSwitch == 1 && BetRecordClass.selected === 0 && !lodash.isEmpty(BetRecordClass.list_data)" 
       :class="['cashout', 'unsellteCashout', BetRecordClass.is_early ? 'active': '']"
-      @click="BetRecordClass.set_is_early(!BetRecordClass.is_early)">Cashout</div>
+      @click="BetRecordClass.set_is_early(!BetRecordClass.is_early)">{{ i18n_t('early.btn2') }}</div>
       <!-- BetRecordClass.bet_record_version -->
       <div style="display: none;">{{ BetRecordClass.bet_record_version }}</div>
       <!-- 已结算筛选按钮 -->
       <div class="settled-select flex" v-if="BetRecordClass.selected === 1">
           <div class="select flex">
-            <span :class="{'active': sort_active === 2}" @click="sortChange(2)">Settled Time</span>
-            <span :class="{'active': sort_active === 1}" @click="sortChange(1)">Bet Time</span>
+            <span :class="{'active': sort_active === 2}" @click="sortChange(2)">{{ i18n_t('bet_record.settle_time') }}</span>
+            <span :class="{'active': sort_active === 1}" @click="sortChange(1)">{{ i18n_t('bet_record.bet_time') }}</span>
           </div>
           <div 
             :class="['cashout', BetRecordClass.is_early ? 'active': '']" 
             @click="BetRecordClass.set_is_early(!BetRecordClass.is_early)"
             v-if="UserCtr.user_info.settleSwitch == 1 && !lodash.isEmpty(BetRecordClass.list_data)"
-            >Cashout</div>
+            >{{ i18n_t('early.btn2') }}</div>
       </div>
       <template v-if="!lodash.isEmpty(BetRecordClass.early_money_list)">
         <!-- 订单内容 -->
@@ -64,6 +64,7 @@ import { ref, watch, computed, onMounted, onUnmounted } from 'vue'
 import UserCtr from "src/core/user-config/user-ctr.js";
 import {useMittEmit, useMittOn, MITT_TYPES} from  "src/core/mitt/index.js"
 import { formatTime } from 'src/core/format/index.js'
+import { i18n_t } from "src/boot/i18n.js";
 // 锚点
 const myScroll = ref(null)
 //是否在加载中
@@ -76,8 +77,8 @@ const is_hasnext = ref(false)
 const is_limit = ref(false)
 // 按什么排序  2-默认排序（结算时间） 1-投注时间  3-开赛时间
 const sort_active = ref(2)
-// 展示多长时间的注单记录  1天(0)  7天(3)  30天(4)
-const timeType = ref(0)
+// 展示多长时间的注单记录  (1:今天 2:昨日 3:七日内 4:一月内)
+const timeType = ref(1)
 //需要查绚提前结算金额的订单集合
 const orderNumberItemList = ref([])
 let useMitt = null
@@ -338,10 +339,10 @@ template {
   }
 }
 .cashout {
-    font-size: 0.16rem;
+    font-size: 0.15rem;
     background-color: var(--q-gb-bg-c-15);
-    height: 0.38rem;
-    line-height: 0.38rem;
+    height: 0.36rem;
+    line-height: 0.36rem;
     width: 1rem;
     text-align: center;
     border-radius: 0.5rem;
@@ -353,7 +354,7 @@ template {
     }
     &.unsellteCashout {
       position: absolute;
-      top: 0.1rem;
+      top: 0.12rem;
       right: 0.1rem;
     }
 }

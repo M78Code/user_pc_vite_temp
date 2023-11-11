@@ -17,7 +17,9 @@
         <div> <span>{{ item.man }}</span> <span class="span">{{ item.away_score }}</span> </div>
       </div>
       <!-- 比分 -->
-      <ScoreList :match_info="item" :score_length="3" height="39px" />
+      <template v-if="item">
+        <ScoreList :match_info="item" :score_length="3" height="39px" />
+      </template>
     </div>
   </div>
 </template>

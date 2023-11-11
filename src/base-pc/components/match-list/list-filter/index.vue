@@ -67,7 +67,7 @@
         >
           <div class="icon-wrap list-filter menu-inline">
             <span class="soprts_id_icon"
-            v-if="menu_config.is_esports()"
+            v-if="menu_config.is_export()"
             :style="compute_css_obj({key:'pc-left-menu-bg-image', position: `item_${BaseData.compute_sport_id(item.mif)}` })"></span>
             <!-- 是否新上玩法 -->
             <!-- <img  class="menu-new-icon" v-if="menu.coppertone == 1" :src="`${LOCAL_PROJECT_FILE_PREFIX}/img/yabo/svg/virtual/menu_new.svg`"/> -->
@@ -216,7 +216,7 @@
         >
           <div class="icon-wrap list-filter menu-inline">
             <span class="soprts_id_icon"
-            v-if="menu_config.is_esports()"
+            v-if="menu_config.is_export()"
             :style="compute_css_obj({key:'pc-left-menu-bg-image', position: `item_${compute_mi_400_sl_mi_csid(item.mi)}` })"></span>
             <!-- <sport-icon
               :sport_id="compute_mi_400_sl_mi_csid(item.mi)"
@@ -593,7 +593,7 @@ function handle_click_menu_mi_1(detail = {}) {
   // 设置      中间 菜单输出
   menu_config.set_mid_menu_result(params);
   // 设置   请求  列表结构  API 参数的  值
-  menu_config.set_match_list_api_config(config);
+  // menu_config.set_match_list_api_config(config);
 }
 /**
  * 单个菜单按钮点击  冠军的
@@ -644,6 +644,7 @@ function handle_click_menu_mi_400(detail = {}) {
       cuid: UserCtr.get_cuid(),
       selectionHour: null,
       apiType: 1,
+      guanjun,
       sort: GlobalAccessConfig.get_sortCut(),
     };
     // 冠军全部后端没有做过滤 前端进行过滤处理
@@ -662,6 +663,7 @@ function handle_click_menu_mi_400(detail = {}) {
     params = {
       ...mi_info,
       mi,
+      guanjun,
       csid: "" + (1 * mi - 400), //冠军常规体育类型的 菜单计算覆写
       orpt: 18,
       root: 400,
@@ -687,7 +689,7 @@ function handle_click_menu_mi_400(detail = {}) {
   // 设置      中间 菜单输出
   menu_config.set_mid_menu_result(params);
   // 设置   请求  列表结构  API 参数的  值
-  menu_config.set_match_list_api_config(config);
+  // menu_config.set_match_list_api_config(config);
 }
 </script>
 <style lang="scss" scoped>

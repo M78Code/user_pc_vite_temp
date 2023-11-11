@@ -1,10 +1,13 @@
 <template>
   <div class="category relative-position" ref="category">
     <!-- loading效果 -->
+    <!-- loading组件原本有以下style逻辑
+      :style="get_is_hengping ? 'left: unset;width: 2.8rem;' : ''" 
+      该样式导致47446，loading不居中
+    -->
     <loading
         v-if="is_loading"
         :top="get_is_hengping ? '50%' : '58%'"
-        :style="get_is_hengping ? 'left: unset;width: 2.8rem;' : ''"
     ></loading>
     <!--无盘口数据时,赛事推荐-->
     <div class="match-recommend-wrapper" v-if="show_recommend">
