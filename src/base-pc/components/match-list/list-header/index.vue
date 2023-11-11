@@ -438,7 +438,7 @@ function on_change_list_type (type) {
       },
     }
   }
-  menu_config.set_match_list_api_config(config);
+  // menu_config.set_match_list_api_config(config);
 }
 </script>
 <style lang="scss" scoped>
