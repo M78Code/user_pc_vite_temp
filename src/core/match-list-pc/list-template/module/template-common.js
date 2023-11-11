@@ -224,6 +224,8 @@ export const set_ouzhou_template_width_base = (
   middle_fn(config);
   // 设置投注项宽度
   config.bet_width = 330;
+  // 联赛标题高度
+  config.league_title_height = 40;
   return config;
 };
 
