@@ -1,6 +1,10 @@
 import { reactive, ref } from "vue";
 import {debounce} from "lodash";
 
+// 全局toast默认值
+const defaultGlobalToastTxt = 'Replicating Success'
+// 全局toast定时器
+let globalToastTimer = null;
 class UseGlobal {
   constructor() {}
   init() {
@@ -9,6 +13,11 @@ class UseGlobal {
 
     // 赛事列表排序 1:按联赛排序 2:按时间排序
     this.match_sort = 1;
+    // 全局toast
+    this.tip_show_state = { 
+      isShow: false,
+      text: defaultGlobalToastTxt
+    };
 
     //全局点击事件数
     this.global_click = 0;
@@ -74,7 +83,36 @@ class UseGlobal {
   set_global_click(){
     this.global_click++
   }
-   // 设置全局开关版本变更
+  set_tip_show_state(bool = false, o){
+    const {
+      text = defaultGlobalToastTxt,
+      timer = 3000
+    } = o || {}
+    if(globalToastTimer){
+      // 存在 先清除 然后给默认值
+      clearTimeout(globalToastTimer)
+      globalToastTimer = null
+      this.tip_show_state = {
+        isShow: false,
+        text: defaultGlobalToastTxt
+      };
+    }
+    // 设置打开toast
+    this.tip_show_state = {
+      isShow: bool,
+      text: text
+    };
+    this.set_global_data_version()
+    // 设置倒计时关闭
+    globalToastTimer = setTimeout(() => {
+      this.tip_show_state = {
+        isShow: false,
+        text: defaultGlobalToastTxt
+      };
+      this.set_global_data_version()
+    }, timer);
+  }
+  // 设置全局开关版本变更
   set_global_data_version=debounce(()=>{
     this.global_switch_version.version = Date.now()
   },10)

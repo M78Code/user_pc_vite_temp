@@ -3,21 +3,22 @@
     <div class="current-filter-list" @scroll="on_scroll">
       <div
         class="current-filter-tab"
-        v-for="(item, index) in top_events" :key="index"
+        v-for="(item, index) in mi_100_arr" :key="index"
       >
-        <div class="filter-label" @click="choose_filter_tab(item.mi)" :class="{ checked: current_choose_tab == item.mi }">
+        <div class="filter-label" @click="choose_filter_tab(item.mif)" :class="{ checked: current_choose_tab == item.mi }">
           <div class="filter-tab-item">
             <div class="filter-icon">
-              <sport_icon :sport_id="compute_sport_id(item.mi)" :status="current_choose_tab == item.i"  size="24px" class="icon" />
-              <div class="filter-count">{{ item.count }}</div>
+              <sport_icon :sport_id="compute_sport_id(item.mif)" :status="current_choose_tab == item.mif"  size="24px" class="icon" />
+              <!-- <span class="soprts_id_icon" :style="compute_css_obj({key:'pc-left-menu-bg-image', position: `item_${BaseData.compute_sport_id(item.mif)}` })"></span> -->
+              <div class="filter-count">{{ item.ct || 0 }}</div>
             </div>
-            <div :class="{ checked_text: current_choose_tab == item.mi }" class="label-text">
-              {{ (menus_i18n_map || {} )[item.mi] || "" }}
+            <div :class="{ checked_text: current_choose_tab == item.mif }" class="label-text">
+              {{ BaseData.menus_i18n_map[item.mif] || "" }}
             </div>
           </div>
-          <img class="current-mark" :class="{ 'show-mark': current_choose_tab == item.mi }" src="../../../assets/images/mask_group.png" alt="">
+          <img class="current-mark" :class="{ 'show-mark': current_choose_tab == item.mif }" src="../../../assets/images/mask_group.png" alt="">
         </div>
-        <div class="filter-tab-split-line" v-show="index != top_events.length - 1"></div>
+        <div class="filter-tab-split-line" v-show="index != mi_100_arr.length - 1"></div>
       </div>
     </div>
     <div class="prev-btn-box" v-show="show_left_btn" @click="filter_tab_scroll('prev')">
@@ -43,6 +44,8 @@ import sport_icon from "src/base-pc/components/sport_icon.vue";
 import { use_base_data } from "src/base-pc/components/menus/base_data";
 import _ from "lodash"
 import menu_i18n_default from "src/core/base-data/config/menu-i18n.json";
+import BaseData from "src/core/base-data/base-data.js";
+import { compute_css_obj } from "src/core/index.js";
 
 
 const { compute_sport_id,mi_euid_map_res } = use_base_data()
@@ -51,7 +54,7 @@ const { compute_sport_id,mi_euid_map_res } = use_base_data()
 // 国际化
 // const { data:menus_i18n_map } = useMenuI18n()
 
-const top_events = ref(MatchListOuzhouClass.redux_menu.in_play)
+// const top_events = ref(MatchListOuzhouClass.redux_menu.in_play)
 
 let area_obj = null;
 let area_obj_wrap = null;
@@ -67,11 +70,50 @@ const show_left_btn = ref(false);
 const show_right_btn = ref(false);
 // tab页面数据
 const menu_tab_list = ref([])
+//常规体育
+const mi_100_arr = ref([]);
+//电竞
+const mi_2000_arr = ref([]);
 
 // 菜单多语言
 const menus_i18n_map = ref(menu_i18n_default.data)
 
 // const top_events = ref([ 101, 102, 105, 107, 110, 108, 103, 109, 111, 112, 113, 116, 115,114, 104, 106, 118, 400, 300,]);
+
+/**
+ * 解析 新接口返回值     常规 +电竞
+ */
+ function resolve_mew_menu_res_mi_100_2000() {
+  //过滤常规球类
+  let mi_100_list = [];
+  let mi_2000_list = [];
+  // 遍历 新菜单数据
+  BaseData.mew_menu_list_res.map((x) => {
+    // 拿到 基础赛种 id
+    let mif = 1 * x.mi;
+    //常规体育
+    if (BaseData.left_menu_base_mi_arr.includes(mif)) {
+      // 滚球对象
+      let item = (x["sl"] || []).find((y) => y.mi == `${mif}1`) || {};
+      item.mif = mif;
+      mi_100_list.push(item);
+    }
+    //电竞
+    if (BaseData.sports_mi.includes(mif)) {
+      // 滚球对象
+      let item = (x["sl"] || []).find((y) => y.mi == `${mif}1`) || {};
+      item.mif = mif;
+      mi_2000_arr.value.push(item);
+    }
+  });
+  console.log(mi_100_list, 'mi_100_list')
+  //常规体育
+  mi_100_arr.value = mi_100_list;
+  //电竞
+  mi_2000_arr.value = mi_2000_list;
+  //  VR  体育的
+  // vr_menu_obj.value = BaseData.vr_mi_config || [];
+}
 
 onMounted(() => {
   area_obj = document.querySelector('.current-filter-list');
@@ -79,8 +121,9 @@ onMounted(() => {
   if (area_obj?.scrollWidth >= area_obj_wrap?.clientWidth) {
     show_right_btn.value = true;
   }
-  top_events.value = MatchListOuzhouClass.redux_menu.in_play;
-  current_choose_tab.value = MatchListOuzhouClass.redux_menu.mid_tab_menu_type;
+  // top_events.value = MatchListOuzhouClass.redux_menu.in_play;
+  // current_choose_tab.value = MatchListOuzhouClass.redux_menu.mid_tab_menu_type;
+  resolve_mew_menu_res_mi_100_2000()
 })
 
 // 监听左侧变化
