@@ -63,6 +63,8 @@ import collapse from "src/base-h5/components/personal/components/collapse.vue"
 import { onMounted, ref } from "vue"
 import { useRouter } from "vue-router"
 import UserCtr from "src/core/user-config/user-ctr.js";
+import { api_account } from 'src/api/index';
+import { loadLanguageAsync, useMittEmit, MITT_TYPES} from "src/core/index.js";
 import {LOCAL_PROJECT_FILE_PREFIX } from "src/core";
 const lang = ref(UserCtr.lang)
 const router = useRouter();
@@ -131,7 +133,17 @@ const on_show_money = (flag) => {
 // 切换语言
 const on_change_lang = (key) => {
   lang.value = key
-  UserCtr.set_lang(lang.value) 
+  api_account.set_user_lang({ token: UserCtr.get_user_token(), languageName: lang.value }).then(res => {
+      let code = lodash.get(res, 'code');
+      if (code == 200) {
+          // 设置国际化语言
+          loadLanguageAsync(lang.value).then().finally(() => {
+            UserCtr.set_lang(lang.value) 
+          })
+      } else if (code == '0401038') {
+          useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t("common.code_empty"))
+      }
+  })
 }
 // 跳转规则界面
 const jumpRules = () => {

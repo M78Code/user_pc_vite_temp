@@ -83,7 +83,7 @@ export default {
         MenuData.set_left_menu_result({
             root: 1,
             lv1_mi: "",
-            lv2_mi: 1,
+            lv2_mi: 30002,
             sports: "",
             guanjun: "",
             mid_menu_show: { list_filter: true },
@@ -91,11 +91,9 @@ export default {
         });
         //设置 中间 菜单输出
         MenuData.set_mid_menu_result({
-            root: 1,
-            lv1_mi: "",
-            lv2_mi: 1,
             sports: "",
             guanjun: "",
+            euid:30002,
         });
         // MenuData.set_match_list_api_config({
         //     begin_request: false,

@@ -8,7 +8,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";
 const token_key = STANDARD_KEY.get("token");
 
 // 初始化
-export const enter_params = () => {
+export const enter_params = (callback) => {
   // 获取 缓存token
   let token = SessionStorage.get(token_key);
   // 获取 参数token
@@ -17,5 +17,5 @@ export const enter_params = () => {
   if (url_token) {
     SessionStorage.set(token_key, url_token || token);
   }
-  UserCtr.get_user_info(url_token || token)
+  UserCtr.get_user_info(url_token || token, callback);
 };
