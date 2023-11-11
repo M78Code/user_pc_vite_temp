@@ -5,20 +5,21 @@
 
 <template>
     <div class="bet-mix-show">
-      <div>
-        <div class="nonebox4-content" v-for="(items, index) in list" :key=index>
+
+      <div v-for="(item, index) in items" :key=index>
+        <div class="nonebox4-content">
             <div class="nonebox4-content-left">
                 <div class="nonebox4-content-left-content">
                     <div class="nonebox4-content-left-content-xian">删</div>
                     <div class="nonebox4-content-left-info">
                       <div class="nonebox4-content-left-content-text">
-                        <div class="nonebox4-content-left-content-text-one">{{items.handicap}} <span class="text-one-span">0.25</span></div>
-                        <div class="nonebox4-content-left-content-text-two">{{items.matchType == 2?'[In-play]':''}} <span class="text-two-span">{{items.playName}}</span></div>
-                        <div class="nonebox4-content-left-content-text-three">{{items.home}} v {{items.away}}</div>
+                        <div class="nonebox4-content-left-content-text-one">{{item.handicap}} <span class="text-one-span">0.25</span></div>
+                        <div class="nonebox4-content-left-content-text-two">{{item.matchType == 2?'[In-play]':''}} <span class="text-two-span">{{item.playName}}</span></div>
+                        <div class="nonebox4-content-left-content-text-three">{{item.home}} v {{item.away}}</div>
                       </div>
                       <div>
                           <div class="nonebox4-content-right">
-                              <div class="nonebox4-content-right-profit">{{compute_value_by_cur_odd_type(items.odds,'','',items.sportId)}}</div>
+                              <div class="nonebox4-content-right-profit">{{compute_value_by_cur_odd_type(item.odds,'','',item.sportId)}}</div>
                           </div>
                       </div>
                     </div>
@@ -27,10 +28,9 @@
         </div>
 
         <div>
-          <bet-input-info1 :item="items" :index="index" ></bet-input-info1>
+          <bet-input-info1 :item="item" :index="index" ></bet-input-info1>
         </div>
       </div>
-      
      
     </div>
   </template>
@@ -39,7 +39,7 @@
     import { compute_value_by_cur_odd_type } from "src/core/index.js"
 
     const props = defineProps({
-      list:{}
+      items:{}
     })
   </script>
   
@@ -116,9 +116,6 @@
   }
   .nonebox4-content-right{
     display: flex;
-  }
-  .bet-mix-show{
-    margin-bottom: 0.5rem;
   }
   </style>
   

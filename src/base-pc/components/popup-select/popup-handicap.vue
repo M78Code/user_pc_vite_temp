@@ -91,7 +91,7 @@ function on_popup() {
         ["winner_top"].includes(type_name) ||
         (is_winner && type_name != 'virtual_sport') ||
         /** 判断是电竞 */
-        (MenuData.is_esports() &&
+        (MenuData.is_export() &&
         /** true: 单关投注 false: 串关投注 */
         !BetData.is_bet_single) ||
         MenuData.is_esports_champion()

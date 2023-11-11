@@ -48,9 +48,10 @@
                 <!-- 串关投注项列表  -->
                 <div class="scroll-box scroll-box-center" ref="scroll_box" :style="{ 'max-height': `${max_height1}px` }"
                     @touchmove="touchmove_handle($event)" @touchstart="touchstart_handle($event)">
-                    <bet-mix-box-child3 :items="BetData.bet_s_list"></bet-mix-box-child3>
-                    <bet-mix-box-child6></bet-mix-box-child6>
+                    <bet-mix-box-child3 :items="BetData.bet_s_list" v-if="BetViewDataClass.bet_order_status == 1"></bet-mix-box-child3>
+                    <bet-mix-box-child6 v-else></bet-mix-box-child6>
                 </div>
+                
                 <bet-info></bet-info>
             </div>
 

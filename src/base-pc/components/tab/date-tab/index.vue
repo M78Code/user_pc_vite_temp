@@ -130,7 +130,7 @@ onMounted(() => {
 async function get_date_menu_list() {
   let params = compute_get_date_menu_list_params();
   let api_fn_name = ''
-  if (MenuData.is_esports()) {
+  if (MenuData.is_export()) {
     //电竞
     api_fn_name = "get_esports_date_menu"
 

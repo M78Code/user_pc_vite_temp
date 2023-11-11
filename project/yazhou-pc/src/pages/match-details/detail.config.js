@@ -692,7 +692,7 @@ export const useGetConfig = (router,cur_menu_type,details_params,play_media) => 
     if (!get_lang_change.value) {
       if (
         is_eports_csid(route.params.csid) ||
-        menu_config.is_virtual_sport()
+        menu_config.is_vr()
       ) {
         virtual_common.upd_bet_obj( timestap, state.mid); //TODO
       } else {

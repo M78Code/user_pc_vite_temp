@@ -33,7 +33,7 @@ function get_match_list_by_mid_for_base_data_res (mid, csid, type) {
 	let matchs_list = [];
 
 	let current_type = type
-	if (MenuData.is_guanjun()) {
+	if (MenuData.is_kemp()) {
 		current_type = csid;
 	}
 	// 常规赛种/联赛  滚球 ld  未开赛 nd
@@ -82,7 +82,7 @@ function set_base_data_init () {
 		csid = parseInt(mi) - 400;
 	}
 	// 常规赛种下的冠军
-	if ([2, 3].includes(menu_root) && MenuData.is_guanjun()) {
+	if ([2, 3].includes(menu_root) && MenuData.is_kemp()) {
 		csid = parseInt(lv2_mi) - 400;
 	}
 	let data = {
@@ -102,7 +102,7 @@ function set_base_data_init () {
 		return;
 	}
 	// 常规赛种
-	if ([2, 3].includes(menu_root) && !MenuData.is_guanjun()) {
+	if ([2, 3].includes(menu_root) && !MenuData.is_kemp()) {
 		// 根据联赛-赛事接口 拿到 mid 去赛事列表里面匹配数据
 		if (!mid) return;
 		// 常规赛种/联赛   滚球 ld
@@ -139,7 +139,7 @@ function set_base_data_init () {
 				let mid_1 = midf + jinri_zaopan + ("" + midf).substring(1);
 				matchs_list = get_match_list_by_mid_for_base_data_res( mid_1, csid, "ld" );
 			}
-		} else if (MenuData.is_guanjun()) {
+		} else if (MenuData.is_kemp()) {
 
 			if (mi == 400) {
 				let mi_400_arr = [];
