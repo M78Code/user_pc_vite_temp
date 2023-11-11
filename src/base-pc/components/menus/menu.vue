@@ -69,6 +69,7 @@ import sport_icon from "src/base-pc/components/sport_icon.vue";
 // 菜单配置
 import { MenuData, UserCtr } from "src/core/index.js"
 import { useLoadMapping } from './load_mapping.js';
+import MatchListOuzhouClass from 'src/core/match-list-pc/match-ouzhou-list.js'
 
 const { load_mapping } = useLoadMapping()
 
@@ -104,7 +105,7 @@ onMounted(() => {
   // init()
   console.error(left_menu_list, "left_menu_list====")
   left_menu_list.value = BaseData.left_menu_base_mi_arr;
-  jump_func()
+  // jump_func()
   console.error(MenuData, "MenuData====")
 })
 
@@ -136,7 +137,6 @@ const go_to_favouritse = () => {
  * @returns {undefind} 无返回值
  */
 const jump_func = payload => {
-
   current_menu_id.value = payload
 
   let euid = (load_mapping[payload + '2'] || {}).h || ''
@@ -165,6 +165,11 @@ const jump_func = payload => {
     sports: '',
     guanjun: "",
   })
+  //页面中间头部导航显示处理
+  MatchListOuzhouClass.redux_menu.menu_root = 4
+  MatchListOuzhouClass.redux_menu.menu_left = payload
+  MatchListOuzhouClass.update_version()
+
   MenuData.set_mid_menu_result({
     euid: payload,
   })

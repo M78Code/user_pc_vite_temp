@@ -11,8 +11,8 @@ import * as TemplateCommon from "./template-common.js"
       _hpid: 1,
       ols: [
         { _hpid: 1, ot: "1" },
-        { _hpid: 1, ot: "2" },
         { _hpid: 1, ot: "X" },
+        { _hpid: 1, ot: "2" },
       ],
     },
     {
@@ -56,7 +56,6 @@ export const get_current_odds_list = ({ first_hpid, second_hpid }) => {
   })
   return [ first_odds_list, second_odds_list ]
 }
- 
 
 
 //   列表宽度计算模板
@@ -64,6 +63,7 @@ export const  width_config ={
   ...TemplateCommon.width_config_template,
   bet_col_count: 9,
   team_width: 338,
+  play_icon_width: 0,
 }
 
 

@@ -20,10 +20,10 @@
     import {set_new_sport_title_card_fold} from "./add-and-remove.js"
     import {set_new_league_fold} from  "./fold-tid.js"
     import {
-      match_status_title_card_template,
-      league_title_card_template,
+      ouzhou_match_status_title_card_template,
+      ouzhou_league_title_template,
       fold_template,
-      league_container_card_template,
+      ouzhou_league_container_template,
    
     } from "../config/card-template-config.js"
     import MenuData from "src/core/menu-pc/menu-data-class.js";
@@ -92,7 +92,7 @@
     // 是否联赛折叠
     let is_league_fold = false
 
-    let league_nofold_height = get_league_title_card_height(template_id)
+    let league_nofold_height = get_league_title_card_height(template_id, true);
 
     // 临时卡片对象变量
     let temp_card_obj
@@ -126,7 +126,6 @@
         let mids_arr = league_obj.mids.split(',')
 
         match_status_type_match_count += mids_arr.length
-
         // 如果是第一个联赛 并且列表类型是1 有已开赛、未开赛区分，  添加一个已开赛、未开赛标题卡片
         if(league_index == 0 && MatchListCardData.match_list_mapping_relation_obj_type == 1){
           // 已开赛、未开赛标题卡片处理
@@ -136,11 +135,12 @@
 
           // 打入已开赛、未开赛标题卡片特征
           all_card_obj[card_key] = {
-            ...match_status_title_card_template,
+            ...ouzhou_match_status_title_card_template,
             // 卡片索引
             card_index,
             // 卡片类型
             card_type: card_key,
+            test: 1,
           }
           temp_match_status_title_card_obj = all_card_obj[card_key]
           // 如果不是ws调用  设置折叠数据
@@ -169,7 +169,7 @@
         }
         // 打入联赛标题卡片特征
         all_card_obj[card_key] = {
-          ...league_title_card_template,
+          ...ouzhou_league_title_template,
           // 卡片索引
           card_index,
           card_type:league_title_card_type,
@@ -214,13 +214,12 @@
           let match_style_obj = compute_style_template_by_matchinfo(match, template_id, true)
           all_card_obj[mid+'_'] = match_style_obj
           league_card_total_height += match_style_obj.total_height
-          console.log('match_style_obj', match_style_obj);
           // 设置父级卡片key
           match_style_obj.parent_card_key = card_key
         })
         // 打入联赛容器卡片特征
         all_card_obj[card_key] = {
-          ...league_container_card_template,
+          ...ouzhou_league_container_template,
           // 卡片索引
           card_index,
           // 对应的联赛标题卡片key
@@ -235,6 +234,7 @@
           all_card_obj[card_key].is_league_fold = is_league_fold
           all_card_obj[card_key].is_show_card = !is_league_fold
           // 设置赛事数据加载状态
+          console.log('is_league_fold', is_league_fold);
           all_card_obj[card_key].load_data_status = is_league_fold ?'loading' : 'loaded'
         }else{
           // 是ws调用
@@ -281,7 +281,7 @@
       // 设置联赛标题卡片
       if(league_title_card_obj.is_league_fold){
         // 联赛折叠 设置高度为折叠的高度
-        league_title_card_obj.card_total_height_back = league_title_card_template.league_fold_height
+        league_title_card_obj.card_total_height_back = ouzhou_league_title_template.league_fold_height
         // league_title_card_obj.mid = 0
       }else{
         // 联赛未折叠 设置高度为未折叠的高度

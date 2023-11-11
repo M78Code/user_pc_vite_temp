@@ -1,7 +1,7 @@
 
 <template>
     <div class="bet-list">
-        <div v-show="false">{{BetViewDataClass.bet_view_version}}</div>
+        <div v-show="false">{{BetViewDataClass.bet_view_version}}-{{BetData.bet_data_class_version}}</div>
         <div class="f-b-s bet-content">
             <div class="fw-s-s bet-left">
                 <div class="w-100 f-s-c text-1a1 h15">
@@ -26,7 +26,7 @@
                 </div>
                 <div class="font12 h12 mt-4">
                     <span class="font400 mr-4 text-8a8">Highest Win</span>
-                    <span class="text-1a1 font500"> {{ highest_win }} </span>
+                    <span class="text-1a1 font500"> {{ mathJs.subtract(mathJs.multiply(BetData.bet_amount,items.oddFinally), BetData.bet_amount) || '0.00' }} </span>
                 </div>
             </div>
 
@@ -51,25 +51,50 @@
             </div>
            
         </div>
-        <ul class="bet-bet-money f-b-c" v-show="items.show_money">
-            <!-- <li class="bet-money-li f-c-c font14" v-for="(obj, index) in money_list" @click="set_bet_money(obj)"
-                :key="obj.label">
-                {{ money_list.length == index + 1 ? '' : '+' }}{{ obj.label }}
-            </li> -->
+        <ul class="bet-bet-money f-b-c" v-show="ref_data.show_money">
+            <li class="bet-money-li f-c-c font14" @click="set_bet_money(obj)"  v-for="(obj, index) in ref_data.money_list" :key="obj" :class="!(ref_data.max_money < obj && index != 'max') ? '' : 'disabled'">
+                {{!(ref_data.max_money < obj && index != 'max')}}
+                {{index == 'max' ? '' : '+' }} {{ obj }}
+            </li>
         </ul>
     </div>
 </template>
 
 <script setup>
 
-import {LOCAL_PROJECT_FILE_PREFIX,compute_value_by_cur_odd_type } from "src/core/"
+import { onMounted, onUnmounted, reactive } from "vue"
+import {LOCAL_PROJECT_FILE_PREFIX,compute_value_by_cur_odd_type,useMittOn,MITT_TYPES } from "src/core/"
+import BetData from 'src/core/bet/class/bet-data-class.js'
 import BetViewDataClass from 'src/core/bet/class/bet-view-data-class.js'
+import mathJs from 'src/core/bet/common/mathjs.js'
+
 import BetInput from "./bet-input.vue"  // 投注输入框
 
 const props = defineProps({
     items:{}
 })
 
+
+const ref_data = reactive({
+    show_money: false, // 显示快捷金额
+    max_money: 0, // 最大限额
+})
+
+onMounted(()=>{
+    useMittOn(MITT_TYPES.EMIT_SHOW_QUICK_AMOUNT, set_show_quick_money).on
+})
+
+onUnmounted(()=>{
+    useMittOn(MITT_TYPES.EMIT_SHOW_QUICK_AMOUNT, set_show_quick_money).off
+})
+
+// 快捷金额 显示隐藏
+const set_show_quick_money = (obj = {}) => {
+    ref_data.show_money = obj.show
+    obj.money_list.max = 'MAX'
+    ref_data.money_list = obj.money_list
+    ref_data.max_money = obj.max_money
+}
 
 const set_delete = () => {
 
@@ -143,6 +168,9 @@ const set_delete = () => {
 
             &:hover {
                 border: 1px solid #FF7000;
+            }
+            &.disabled{
+                background: #A4A4A4;
             }
         }
     }

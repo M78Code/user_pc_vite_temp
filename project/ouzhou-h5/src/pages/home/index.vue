@@ -29,12 +29,11 @@
               <MatchPlay />
            </template>
             <!-- 特色赛事 -->
-             <!-- 特色赛事 -->
-             <template v-if="featured_matches.length > 0">
+            <!-- <template v-if="featured_matches.length > 0">
               <HeaderTitle title="ATP/WTA Rome"></HeaderTitle>
               <FeaturedMatches :featured_matches="featured_matches" />
-            </template>
-            <!-- <matches :matchesInfo="atpMatchesInfo" /> -->
+            </template> -->
+            <!-- 5大联赛 -->
             <template v-if="leagues_matchs.length > 0">
               <HeaderTitle title="Top Leagues"></HeaderTitle>
               <TopLeagues :leagues_matchs="leagues_matchs" />
@@ -71,10 +70,6 @@ import { MenuData, MatchDataWarehouse_ouzhou_PC_l5mins_List_Common as MatchDataB
   MatchDataWarehouse_ouzhou_PC_hots_List_Common as MatchDataBaseHotsH5, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/index.js";
 
 import { de_img, dk_img, be_img, fr_img } from 'src/base-h5/core/utils/local-image.js'
-
-watch(() => MenuData.update_time.value, () => {
-  console.log("菜单id-球类id-对应euid",`${MenuData.menu_type.value}-${MenuData.menu_mi.value}-${MenuData.get_euid()}`)
-})
 
 const play_matchs = ref([])
 const time_events = ref([])

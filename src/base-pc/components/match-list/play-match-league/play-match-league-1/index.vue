@@ -1,5 +1,6 @@
 <template>
   <div class="ouzhou-match-league"
+  :style="`height:${match_list_tpl_size.league_title_height}px !important;`"
     v-if="lodash.get(card_style_obj, 'league_obj.csid')">
     <!-- 第一行 -->
     <div v-show="false">{{ MatchListCardData.list_version }}</div>
@@ -9,7 +10,7 @@
         <div class="yb-flex-center" :style="`width:${match_list_tpl_size.media_width - 3}px !important;`">
           <!-- 联赛是否收藏 -->
           <div @click.stop="mx_collect({ type: 'leagues', match: card_style_obj.league_obj })"
-            class="icon-wrap m-star-wrap-league" v-if="!menu_config.is_esports() && GlobalAccessConfig.get_collectSwitch">
+            class="icon-wrap m-star-wrap-league" v-if="!menu_config.is_export() && GlobalAccessConfig.get_collectSwitch">
             <i class="icon-star q-icon c-icon" :class="card_style_obj.league_obj.tf && 'active'"></i>
           </div>
         </div>
@@ -23,9 +24,20 @@
           </div>
         </div>
       </div>
+      <div :style="`width:${match_list_tpl_size.play_icon_width}px !important;`"></div>
       <!-- 玩法名称 -->
-      <div class="play-name row col">
-        
+      <div class="play-name-ouzhou">
+        <div 
+          class="play-name-title-box"
+          v-for="(item, col_index) in match_tpl_info.get_current_odds_list(current_choose_oid)" 
+          :key="col_index" 
+          :style="{ 'width': match_list_tpl_size.bet_width + 'px' }"
+        >
+          <div class="play-name-item" v-for="(item_title, item_index) in item.ols"
+            :key="item_index">
+            {{ item_title.ot }}
+          </div>
+        </div>
       </div>
       <div class="action-col" style="width:60px" v-if="match_style_obj.data_tpl_id == 12"></div>
     </div>
@@ -67,16 +79,13 @@ const props = defineProps({
 
 let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(lodash.get(props, 'card_style_obj.mid'))
 const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`].width_config
+const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`]
+const current_choose_oid = ref({ first_hpid: '1', second_hpid: "2" });
 // 获取菜单类型
 if (!lodash.get(props, 'card_style_obj.league_obj.csid') && ['1', '500'].includes(menu_config.menu_root)) {
   useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST)
 }
 
-
-
-const is_HDP = computed(() => {
-  return [1, 20, 24, 13, 25].includes(+match_style_obj.data_tpl_id)
-})
 
 /**
  * @Description 投注项名称
@@ -145,63 +154,11 @@ const bet_title = computed(() => {
 })
 
 /**
-   * @Description 获取高亮标题
-   * @param {Boolean} is_double 是否双行标题
-   * @param {Number} key 标题第几个
-   * @param {NUmber}  i(0|1)  双行标题第几个
-  */
-function get_highlight_title(is_double, key, i) {
-  let highlight = [3, 4, 5].includes(key) && [0, 13, 25].includes(+match_style_obj.data_tpl_id)
-  if (is_double) {
-    highlight = (highlight && i === 1)
-  }
-  return highlight
-}
-/**
- * @Description 获取22模板标题宽度
- * @param {undefined} undefined
-*/
-function get_title_style() {
-  return `width: ${(match_list_tpl_size.bet_width + 5) * 3}px !important; flex:auto`
-}
-/**
-  * @Description 获取模板标题宽度
-  * @param {Number} index 第几个标题索引
- */
-function get_bet_width(index) {
-  let bet_width = match_list_tpl_size.bet_width
-  let flex = 'none'
-  if (is_HDP && match_style_obj.data_tpl_id != 13 && index == 5) {
-    flex = 1
-  }
-  let style = `width:${bet_width}px !important; flex: ${flex};`
-  if (is_HDP && utils_info.is_iframe) {
-    if ([0, 3].includes(index)) {
-      bet_width = match_list_tpl_size.bet_width - 4
-    } else {
-      bet_width = match_list_tpl_size.bet_width + 2
-    }
-    style = `width:${bet_width}px !important; flex: none;`
-  }
-  return style
-}
-/**
- * @Description 是否高亮标题
- * @param {String} csid 球种id
-*/
-function is_highlighted (csid){
-  if (is_HDP || menu_config.is_eports_csid(csid)) {
-    return true
-  } else {
-    return false
-  }
-}
-/**
  * @Description 设置联赛折叠
 */
 function set_fold() {
   // 如果当前联赛是折叠的 并且是今日、早盘  调用bymids接口拉数据
-  if (props.card_style_obj.is_league_fold && ([2, 3].includes(menu_config.menu_root) || menu_config.is_esports())) {
+  if (props.card_style_obj.is_league_fold && ([2, 3].includes(menu_config.menu_root) || menu_config.is_export())) {
     // 设置赛事基础数据
     MatchListCardData.set_match_basic_data(props.card_style_obj)
     let params = {
@@ -215,139 +172,21 @@ function set_fold() {
 }
 
 </script>
-<style lang="scss" scoped>
-.match-tplesports {
-  .sport-img {
-    background-image: url($SCSSPROJECTPATH+"/image/common/png/sport_old_icon.png");
-  }
-}
-
-.league-icon-wrap {
-  .sport-img {
-    background-image: url($SCSSPROJECTPATH+"/image/common/png/sport_old_icon.png");
-  }
-}
-
-.c-match-league {
-  height: 34px;
-
-  &.match-tpl13 {
-    .tr-match-head {
-      .play-name {
-        .col {
-
-          &.bet-col2,
-          &.bet-col4 {
-            border-left: 0 !important;
-          }
-        }
-      }
-    }
-
-  }
-}
-
-.tr-match-head {
-  display: flex;
-  height: 34px;
-  line-height: 34px;
-  cursor: pointer;
-
-  .leagues-wrap {
+<style lang="scss">
+  .ouzhou-match-league{
     display: flex;
-    align-items: center;
-    padding: 0 13px;
-
-    .icon-arrow {
-      font-size: 20px;
-      margin-right: 20px;
-      left: 10px;
-      top: -1px;
-      transition: transform 0.3s;
-    }
-
-    .league-icon-wrap {
-      width: 18px;
-      height: 18px;
-      margin-right: 10px;
-      line-height: 18px;
-
-      img {
-        width: 100%;
-        height: 100%;
-      }
-    }
-
-    .ellipsis-wrap {
-      font-size: 13px;
-    }
-
-    .league-match-count {
-      margin-left: 10px;
-      display: none;
-    }
-  }
-
-  .play-name {
-    text-align: center;
-    line-height: 32px;
-
-    .col2 {
-      flex: 20000 1 0%;
-    }
-
-    .col {
-      height: 100%;
-      max-height: 100%;
-
-      .double-row {
-        font-size: 12px;
-        height: 100%;
-        padding: 1px 0;
-        line-height: 15px;
-      }
-    }
-  }
-
-  .m-star-wrap-league {
+    width: 100%;
+    height: 100%;
+    background: #F5F5F5;
+    border-bottom: 1px solid #e2e2e2;
     cursor: pointer;
-  }
-}
-
-.tr-col-name {
-  display: flex;
-  height: 24px;
-
-  .play-name {
-    text-align: center;
-    line-height: 24px;
-  }
-}
-
-/*  联赛折叠样式 */
-.leagues-pack {
-  .tr-match-head {
     .leagues-wrap {
-      .icon-arrow {
-        transform: rotate(180deg);
-      }
+      padding-left: 5px;
+      display: flex;
+      justify-content: flex-start;
     }
-
-     /* .play-name div {
-       display: none;
-     } */
-
-    .league-match-count {
-      display: block;
+    .tr-match-head {
+      display: flex;
     }
   }
-
-  .tr-col-name {
-    display: none;
-  }
-}
-.soprts_id_icon {
-  width: 18px;
-  height: 18px;
-}
 </style>

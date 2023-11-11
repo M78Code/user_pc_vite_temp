@@ -17,7 +17,7 @@
            <!-- 动画图标 -->
           <img
             v-if="detail_info.mvs > -1"
-            :src="animal_key ? animal_active : animal"
+            :src="show_type&&show_type=='animal' ? animal_active : animal"
             alt=""
             srcset=""
             style="margin-right: 15px"
@@ -25,13 +25,12 @@
           />
            <!-- 视频图标 -->
           <img
-            v-if="cur_video_icon.type=='video'"
-            :src="video"
-
+            v-if="cur_video_icon.type"
+            :src="show_type&&show_type!='animal'?video_active: video"
             alt=""
             srcset=""
             style="margin-right: 15px"
-            @click="tab_click('video')"
+            @click="tab_click(cur_video_icon.type)"
           />
            <!-- 比分榜图标 -->
           <img
@@ -46,7 +45,7 @@
       <animal_box v-if="animal_key" :show_type="show_type"  :detail_info="detail_info" />
       <!-- 比分 -->
       <score_info
-        v-show="score_key"
+        v-show="score_key&&score_list.length>0"
         :score_list="score_list"
         :detail_info="detail_info"
       />
@@ -71,6 +70,7 @@ const animal = `${LOCAL_PROJECT_FILE_PREFIX}/image/png/video/animal.png`;
 const animal_active = `${LOCAL_PROJECT_FILE_PREFIX}/image/png/video/animal_active.png`;
 const score = `${LOCAL_PROJECT_FILE_PREFIX}/image/png/video/score.png`;
 const score_active = `${LOCAL_PROJECT_FILE_PREFIX}/image/png/video/score_active.png`;
+const video_active = `${LOCAL_PROJECT_FILE_PREFIX}/image/png/video/video_active.png`;
 const video = `${LOCAL_PROJECT_FILE_PREFIX}/image/png/video/video.png`;
 
 const props = defineProps({
@@ -154,7 +154,9 @@ const cur_video_icon = computed(() => {
 
 
 const tab_click = (type) => {
-  show_type.value = type
+
+  show_type.value = type=='score'?'':type
+
   if (type == "animal"||type == "video") {
     animal_key.value = true;
     score_key.value = false;

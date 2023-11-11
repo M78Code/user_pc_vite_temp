@@ -4,7 +4,7 @@
     <!-- 头部信息 -->
     <betTitle />
     <!-- 展开项 -->
-    <div  v-show="BetData.bet_state_show" class="bet-box-content">
+    <div v-show="BetData.bet_state_show" class="bet-box-content">
      
       <!-- 单关 投注 -->
       <template v-if="BetData.is_bet_single">
@@ -14,7 +14,7 @@
       </template>
 
       <!-- 底部投注信息 -->
-      <betFooter />
+      <betFooter v-show="BetData.bet_single_list.length || BetData.bet_s_list.length"/>
       
     </div>
   </div>

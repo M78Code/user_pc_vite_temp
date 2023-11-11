@@ -164,7 +164,7 @@ const sun_ol = (ol, item) => {
   }
   return result
 }
-//  投注项点击
+//  投注项点击投注,
 const betItemClick = (item, ol) => {
   
   if (item.hs) {
@@ -193,12 +193,6 @@ const betItemClick = (item, ol) => {
 
   }
 }
-// 事件执行函数
-
-const active = ref(1)
-
-
-
 
 onMounted(() => {
 

@@ -9,12 +9,13 @@ import {
   MITT_TYPES,
 } from "src/core/index.js"
 
-import {utils} from "src/core/index.js";
+import { utils } from "src/core/index.js";
 import store from "src/store-redux/index.js";
-import { compute_sport_id  } from 'src/core/constant/index.js'
+import { compute_sport_id } from 'src/core/constant/index.js'
 import { LayOutMain_pc } from "src/core/index.js";
 import { ref } from "vue";
 import lodash from 'lodash';
+
 
 const state = store.getState();
 // 热门除了50199-30199  赛事、50101-30101 竞足外，
@@ -72,7 +73,7 @@ class MenuData {
       mi_500: 0,
     };
     //是否收藏模式
-    this.is_collect=false;
+    this.is_collect = false;
     // 中间 菜单的 整体输出
     this.mid_menu_result = {};
     //列表菜单  各种 组件 的显示
@@ -102,13 +103,13 @@ class MenuData {
     this.menu_data_version = ref('12')
     // 当前菜单类型 play 滚球  hot热门赛事   virtual_sport虚拟体育   winner_top冠军聚合页 today 今日   early早盘 bet串关
     this.cur_menu_type = {
-      type_name:'',
-      pre_name:''
+      type_name: '',
+      pre_name: ''
     }
   }
 
   // 设置 菜单的版本变化
-  set_menu_data_version(){
+  set_menu_data_version() {
     useMittEmit(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA)
     this.menu_data_version.value = Date.now()
   }
@@ -216,27 +217,27 @@ class MenuData {
     ) {
       val = "match_list";
     }
-    console.error('set_match_list_api_type',obj)
+    console.error('set_match_list_api_type', obj)
 
-    const { jinri_zaopan,guanjun } = obj
+    const { jinri_zaopan, guanjun } = obj
     let text = 'match-today-common'
     // 今日
-    if(jinri_zaopan == 2){
+    if (jinri_zaopan == 2) {
       text = 'match-today-common'
     }
     // 早盘
-    if(jinri_zaopan == 3){
+    if (jinri_zaopan == 3) {
       text = 'match-early-common'
     }
     // 常规赛种下的冠军
-    if(guanjun == 'common-guanjun'){
+    if (guanjun == 'common-guanjun') {
       text = 'match-common-champion'
     }
     // 冠军下面的常规赛事
-    if(guanjun == 'guanjun-common'){
+    if (guanjun == 'guanjun-common') {
       text = 'match-champion'
     }
-    if(this.menu_root == 1) {
+    if (this.menu_root == 1) {
       text = 'match-play-common'
     }
     PageSource.set_page_source(text)
@@ -256,10 +257,10 @@ class MenuData {
     // }
   }
 
-   /**
-   * 获取当前的列表的默认的 模板配置
-   */
-   get_match_tpl_number() {
+  /**
+  * 获取当前的列表的默认的 模板配置
+  */
+  get_match_tpl_number() {
     let euid = lodash.get(this.left_menu_result, 'lv2_mi');
     // 根据当前的菜单id 取到对应的模板id
     let current_template_id = computed_menu_to_match_templte(euid)
@@ -270,7 +271,7 @@ class MenuData {
     //   r = 1
     // }
     // // 电竞常规赛事
-    // if (this.is_esports()) {
+    // if (this.is_export()) {
     //   r = "esports";
     // }
     // //搜索13列玩法
@@ -290,7 +291,7 @@ class MenuData {
    * lv2_mi
    */
   set_left_menu_result(obj) {
-    console.log('set_left_menu_result',obj)
+    console.log('set_left_menu_result', obj)
     this.menu_root = obj.root;
     this.menu_root_show_shoucang = obj.root;
     // 设置 列表接口类型
@@ -392,6 +393,15 @@ class MenuData {
     this.set_multi_column();
     useMittEmit(MITT_TYPES.EMIT_MATCH_LIST_UPDATE)
   }
+    /**
+   * @description: 设置是否收藏
+   * @param {*} menu_obj
+   * @return {*}
+   */
+    set_is_collect(is_collect) {
+      this.is_collect=is_collect
+      useMittEmit(MITT_TYPES.EMIT_MATCH_LIST_UPDATE)
+    }
   /**
    * 定义中间菜单    点击 输出 请求  列表结构  API 参数的   模板
    */
@@ -542,9 +552,9 @@ class MenuData {
    */
   set_bet_category() {
     let type;
-    if (this.is_virtual_sport()) {
+    if (this.is_vr()) {
       type = 2; // 虚拟体育
-    } else if (this.is_esports()) {
+    } else if (this.is_export()) {
       type = 3; // 电竞
     } else {
       type = 1; // 标准赛事
@@ -559,31 +569,8 @@ class MenuData {
 
     // store.dispatch("virtual_bet_clear");
   }
-  /**
-   * @description 判断是电竞
-   * @param {undefined} undefined
-   * @return {undefined} undefined
-   */
-  is_esports() {
-    // this.$utils.is_eports_csid(this.$route.params.csid)
-    return (
-      this.menu_root == 2000 ||
-      (this.match_list_api_config || {}).sports == "dianjing"
-    );
-  }
-  /**
-   * @description 判断是虚拟体育
-   * @param {undefined} undefined
-   * @return {undefined} undefined
-   */
-  is_virtual_sport() {
-    return (
-      this.menu_root == 300 || (this.match_list_api_config || {}).sports == "vr"
-    );
-  }
-  is_esports_champion() {
-    return (this.match_list_api_config || {}).guanjun == "dianjing-guanjun";
-  }
+
+
 
   // is_multi_column(){
   //   return   this.match_list_api_config.is_multi_column ||false
@@ -632,7 +619,7 @@ class MenuData {
     this.is_multi_column =
       is_multi_column &&
       !window.frames.length != parent.frames.length
-      // && state.layoutReducer.is_unfold_multi_column;
+    // && state.layoutReducer.is_unfold_multi_column;
     // store.dispatch("set_unfold_multi_column", this.is_multi_column);
     // console.warn('this.is_multi_column ',this.is_multi_column )
   }
@@ -658,8 +645,8 @@ class MenuData {
    * 计算当前菜单 是否显示  联赛过滤
    */
   compute_if_can_show_league_fliter() {
-    let state = !this.is_esports() && !this.is_virtual_sport();
-    // vx_layout_list_type!='collect' && !is_search_page &&!this.is_esports() && !menu_data.is_virtual_sport && !is_show_hot && get_global_switch.filter_switch
+    let state = !this.is_export() && !this.is_vr();
+    // vx_layout_list_type!='collect' && !is_search_page &&!this.is_export() && !menu_data.is_virtual_sport && !is_show_hot && get_global_switch.filter_switch
     return state;
   }
   /**
@@ -667,11 +654,11 @@ class MenuData {
    * @returns
    */
   compute_if_can_show_sort() {
-    ////  console.warn("冠军 ",this.is_guanjun() )
-    ////  console.warn("电子竞技 ",this.is_esports() )
-    ////  console.warn("vr ",this.is_virtual_sport() )
-    let state = !this.is_esports() && !this.is_virtual_sport();
-    // !is_search_page && !this.is_esports() && !menu_data.is_virtual_sport && !is_show_hot &&!vx_show_filter_popup
+    ////  console.warn("冠军 ",this.is_kemp() )
+    ////  console.warn("电子竞技 ",this.is_export() )
+    ////  console.warn("vr ",this.is_vr() )
+    let state = !this.is_export() && !this.is_vr();
+    // !is_search_page && !this.is_export() && !menu_data.is_virtual_sport && !is_show_hot &&!vx_show_filter_popup
     return state;
   }
   /**
@@ -701,9 +688,9 @@ class MenuData {
 
     //当前 列表的  体育标签
     this.match_list_sports_label = match_list_api_config.sports;
- 
+
     this.match_list_version.value = Date.now();
-    
+
     // 设置投注类别
     this.set_bet_category();
 
@@ -729,10 +716,8 @@ class MenuData {
   update_menu_version() {
     base_data_instance.menu_version = Date.now();
   }
- 
-  is_guanjun() {
-    return (this.match_list_api_config.guanjun || "").includes("guanjun");
-  }
+
+
   // 新菜单规律核心参照表
   /**
    * 新菜单规律核心参照表  根据这个表 设计
@@ -853,11 +838,99 @@ class MenuData {
    * @return {*}
    */
   set_cur_menu_type(menu_obj) {
-    Object.assign(this.cur_menu_type,menu_obj)
+    Object.assign(this.cur_menu_type, menu_obj)
     //暂不确定用哪一个驱动更新
   }
   static cl_1() {
     // console.error("cl_1");
+  }
+
+  is_esports_champion() {
+    return (this.match_list_api_config || {}).guanjun == "dianjing-guanjun";
+  }
+  //root ：  1 滚球  2 今日   3  早盘   500 热门赛事  400 冠军   300 VR  电竞 2000
+  //内部方法
+  _is_cur_mi(mi, param) {
+    if (param) {
+      return mi == param
+    }
+    return this.menu_root == mi
+  }
+  /**
+   * 是否选中了 热门
+   * mi [number|string] 要比对的值
+   * 没有传递对比当前菜单
+  */
+  is_hot(mi) {
+    return this._is_cur_mi(500, mi)
+  }
+  /**
+   * 是否选中了VR 
+   * mi [number|string] 要比对的值
+   * 没有传递对比当前菜单
+  */
+  is_vr(mi) {
+    if (mi) {
+      return this._is_cur_mi(300, mi)
+    }
+    return this._is_cur_mi(300, mi) || (this.match_list_api_config.guanjun || "").includes("vr")
+  }
+  /**
+   * 是否选中了赛果
+   *  mi [number|string] 要比对的值
+  */
+  is_results(mi) {
+    return this._is_cur_mi(28, mi)
+  }
+  /**
+   * 是否选中了早盘
+   *  mi [number|string] 要比对的值
+  */
+  is_zaopan(mi) {
+    return this._is_cur_mi(3, mi)
+  }
+  /**
+   * 是否选中了今日
+   *  mi [number|string] 要比对的值
+  */
+  is_today(mi) {
+    return this._is_cur_mi(2, mi)
+  }
+  /**
+   * 是否选中了滚球
+   *  mi [number|string] 要比对的值
+  */
+  is_scroll_ball(mi) {
+    return this._is_cur_mi(1, mi)
+  }
+  /**
+   * 是否选中了冠军
+   *  mi [number|string] 要比对的值
+  */
+  is_kemp(mi) {
+    if (mi) {
+      return this._is_cur_mi(400, mi)
+    }
+    return this._is_cur_mi(400, mi) || (this.match_list_api_config.guanjun || "").includes("guanjun")
+  }
+
+  /**
+   * 是否选中了电竞
+   *  mi [number|string] 要比对的值
+  */
+  is_export(mi) {
+    // return (
+    //   this.menu_root == 2000 ||
+    //   (this.match_list_api_config || {}).sports == "dianjing"
+    // );
+    return this._is_cur_mi(2000, mi)
+  }
+  /**
+   * 是否选中了串关
+   *  mi [number|string] 要比对的值 没有传递对比当前菜单
+  */
+  is_mix(mi) {
+    return this._is_cur_mi(6, mi)
   }
 }
 

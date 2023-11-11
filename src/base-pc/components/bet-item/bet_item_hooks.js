@@ -245,7 +245,7 @@ export const useGetItem = ({ props }) => {
     }
     let sport_id = lodash.get(state.ol_data_item, "csid");
     // 电竞赔率精度处理
-    if (lodash.isUndefined(sport_id) && menu_config.is_esports()) {
+    if (lodash.isUndefined(sport_id) && menu_config.is_export()) {
       sport_id = "101";
     }
     state.match_odds = compute_value_by_cur_odd_type(
@@ -263,7 +263,7 @@ export const useGetItem = ({ props }) => {
    * @return {undefined} undefined
    */
   const set_odds_lift = (cur, old) => {
-    if (menu_config.is_virtual_sport()) {
+    if (menu_config.is_vr()) {
       return;
     }
     let _odds_lift = "";

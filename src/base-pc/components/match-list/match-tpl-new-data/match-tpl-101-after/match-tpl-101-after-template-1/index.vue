@@ -3,14 +3,16 @@
     <div v-show="false">{{ MatchListData.data_version.version }}</div>
     <div v-show="false">{{ MatchListCardData.list_version }}</div>
       <!-- 赛事基础信息 -->
-      <div class="basic-col" :style="`width:${match_list_tpl_size.team_width}px !important;height:80px !important;`">
+      <div class="basic-col" :style="`width:${match_list_tpl_size.process_team_width}px !important;height:80px !important;`">
         <!-- 比赛进程 -->
           <basis-info101 v-if="match"  :match="match" show_type="all" />
       </div>
       <!-- 竖线 -->
       <div class="vertical-line"></div>
       <!-- 图标信息 -->
-      <icon-box></icon-box>
+      <div :style="`width:${match_list_tpl_size.play_icon_width}px !important;`">
+        <icon-box></icon-box>
+      </div>
       <!-- 投注信息 -->
       <match-handicap 
         v-if="match" 
@@ -105,7 +107,6 @@ onMounted(() => {
     width: 1px;
     height: 60px;
     background: #e2e2e2;
-    margin-right: 24px;
   }
 }
 .other-play-tab {

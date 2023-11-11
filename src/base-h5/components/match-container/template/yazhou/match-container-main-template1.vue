@@ -38,7 +38,7 @@
     <div class="match-status-fixed flex items-center" v-if="match.is_show_no_play">
       <img src='image/list/list-red.svg' />
       <span class="din-regular">
-        {{ $t('list.match_no_start') }}&nbsp;&nbsp;<span v-show="no_start_total">(0)</span>
+        {{ i18n_t('list.match_no_start') }}&nbsp;&nbsp;<span v-show="no_start_total">(0)</span>
       </span>
     </div>
     <!-- 首页热门才有的样式  -->
@@ -133,7 +133,7 @@
 
                     <!--即将开赛 ms = 110-->
                     <div class="coming-soon" v-if="match.ms" v-show="match.ms == 110">
-                      {{ $t(`ms[${match.ms}]`) }}
+                      {{ i18n_t(`ms[${match.ms}]`) }}
                     </div>
 
                     <!--开赛日期 ms != 110 (不为即将开赛)  subMenuType = 13网球(进行中不显示，赛前需要显示)-->
@@ -163,12 +163,12 @@
 
                   <!-- 电竞串关标识 -->
                   <div v-if="menu_type == 3000 && match.ispo" class="flag-chuan"
-                    :class="{ 'special-lang': ['zh', 'tw'].includes(get_lang) }">{{ $t('match_info.match_parlay') }}
+                    :class="{ 'special-lang': ['zh', 'tw'].includes(get_lang) }">{{ i18n_t('match_info.match_parlay') }}
                   </div>
                 </div>
                 <!-- 标准版 比分组件 -->
                 <!-- 电竞中，如果是比分判定中，则不显示该比分 -->
-                <div class="eports_scoring_tip" v-if="eports_scoring">{{ $t('mmp.eports_scoring') }}</div>
+                <div class="eports_scoring_tip" v-if="eports_scoring">{{ i18n_t('mmp.eports_scoring') }}</div>
                 <score-list v-else-if="!is_hot" :match="match"></score-list>
               </div>
               <!-- 下边的模块，左方是  队名和 队比分,  右面是  盘口  模块 -->
@@ -200,7 +200,7 @@
                         <!-- 进球动画 -->
                         <div class="yb-flex-center" v-if="is_show_home_goal && is_new_init2 && (!is_show_away_goal)">
                           <div class="yb-goal-gif" :class="{ 'yb-goal-yo': theme.includes('y0') }"></div>
-                          <div class="gif-text">{{ $t('match_result.goal') }}</div>
+                          <div class="gif-text">{{ i18n_t('match_result.goal') }}</div>
                         </div>
                         <!-- 主队红牌 -->
                         <span class='score-punish' v-show="home_red_score"
@@ -240,7 +240,7 @@
                         <div class="yb-flex-center" v-if="is_show_away_goal && is_new_init2 && (!is_show_home_goal)">
 
                       <div class="yb-goal-gif yb-goal-yo"></div>
-                      <div class="gif-text">{{ $t('match_result.goal') }}</div>
+                      <div class="gif-text">{{ i18n_t('match_result.goal') }}</div>
                     </div>
                   </div>
                   <!--进行中的赛事显示比分 ,如果是比分判定中，则不显示比分-->
@@ -317,7 +317,7 @@
                       <div class="go-to-d-detail-w">
                         <div @click="goto_details(match)" class="go-to-i-detail-i row items-center justify-center">
                           <div class='word'>
-                            {{ $t('list.go_to_details') }}
+                            {{ i18n_t('list.go_to_details') }}
                           </div>
                           <div>
                             <img class="go-to-d-icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/m-list-way-more.svg`" />
@@ -361,7 +361,7 @@
                   <div class="timer-wrapper-c newer">
                     <!--即将开赛 ms = 110-->
                     <div class="coming-soon" v-show="match.ms == 110">
-                      {{ $t(`ms[${match.ms}]`) }}
+                      {{ i18n_t(`ms[${match.ms}]`) }}
                     </div>
                     <!--开赛日期 ms != 110 (不为即将开赛)  subMenuType = 13网球(进行中不显示，赛前需要显示)-->
                     <div class="date-time" v-show="match.ms != 110 && !show_start_counting_down(match) && !show_counting_down(match)">
@@ -414,7 +414,7 @@
                 </div>
                 <!-- 简版 比分组件 -->
                 <!-- 电竞中，如果是比分判定中，则不显示该比分 -->
-                <div class="eports_scoring_tip" v-if="eports_scoring">{{ $t('mmp.eports_scoring') }}</div>
+                <div class="eports_scoring_tip" v-if="eports_scoring">{{ i18n_t('mmp.eports_scoring') }}</div>
               </div>
               <!--角球，罚牌，晋级，加时赛，点球大战玩法-->
               <!-- cisd:1 足球， 2 篮球， 5 网球， 7 斯诺克， 8 乒乓球 -->

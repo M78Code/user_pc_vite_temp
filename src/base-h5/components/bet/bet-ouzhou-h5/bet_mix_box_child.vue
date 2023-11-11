@@ -38,7 +38,7 @@
                     <!-- 合并单关  -->
                     <div class="scroll-box scroll-box-center" ref="scroll_box" :style="{ 'max-height': `${max_height1}px` }"
                         @touchmove="touchmove_handle($event)" @touchstart="touchstart_handle($event)">
-                        <bet-mix-box-child2></bet-mix-box-child2>
+                        <bet-mix-box-child2 :item="BetData.bet_single_list"></bet-mix-box-child2>
                     </div>
                 </div>
             </div>
@@ -48,9 +48,15 @@
                 <!-- 串关投注项列表  -->
                 <div class="scroll-box scroll-box-center" ref="scroll_box" :style="{ 'max-height': `${max_height1}px` }"
                     @touchmove="touchmove_handle($event)" @touchstart="touchstart_handle($event)">
-                    <bet-mix-box-child3 :items="BetData.bet_s_list"></bet-mix-box-child3>
-                    <bet-mix-box-child6></bet-mix-box-child6>
+                    <div v-if="BetViewDataClass.bet_order_status == 1">
+                        <bet-mix-box-child3 :items="BetData.bet_s_list"></bet-mix-box-child3>
+                       <template v-if="BetData.bet_s_list.length > 1 && !BetData.is_bet_single">
+                          <bet-input-info1></bet-input-info1>
+                       </template>
+                    </div>
+                    <bet-mix-box-child6 v-else></bet-mix-box-child6>
                 </div>
+                
                 <bet-info></bet-info>
             </div>
 
@@ -76,6 +82,7 @@
 </template>
 
 <script setup>
+import betInputInfo1 from "./bet_input_info1.vue";
 import betInfo from "./bet_info.vue";
 import betBtn from './bet-btn.vue';
 import betBtn1 from './bet-btn1.vue';
@@ -364,7 +371,7 @@ background: var(--q-gb-t-c-3) !important;
   bottom: -1px;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 600;
+  z-index: 1600;
   overflow: hidden;
   width: 100%;
   -webkit-overflow-scrolling: touch;
@@ -389,7 +396,7 @@ background: var(--q-gb-t-c-3) !important;
   position: fixed;
   top: 0;
   bottom: 0;
-  z-index: 550;
+  z-index: 1100;
   backdrop-filter: blur(5px);
   background: rgba(0, 0, 0, 0.5);
 }

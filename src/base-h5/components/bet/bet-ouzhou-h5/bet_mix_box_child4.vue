@@ -26,7 +26,7 @@
                     </div>
                     <div>
                         <div class="nonebox4-content-right">
-                           <div class="nonebox4-content-right-profit">100</div>
+                           <div class="nonebox4-content-right-profit">{{items.oddsValues}}</div>
                         </div>
                         <div class="nonebox4-content-right-bot" :class="BetViewDataClass.bet_order_status == 3?'green-color':BetViewDataClass.bet_order_status==4?'red-color':''">Bet Placed</div>
                     </div>
@@ -36,8 +36,8 @@
       </div>
      
       <div class="total">
-        <div>Highest Win<span class="total-left">72.40</span></div>
-        <div>Stake<span class="total-right">10.00</span></div>
+        <div>Highest Win<span class="total-left">{{ format_currency(parseFloat(item.maxWinMoney)/100) }}</span></div>
+        <div>Stake<span class="total-right">{{ format_currency(parseFloat(item.betMoney)/100) }}</span></div>
       </div>
       </div>
     </div>
