@@ -5,7 +5,7 @@
         class="current-filter-tab"
         v-for="(item, index) in mi_100_arr" :key="index"
       >
-        <div class="filter-label" @click="choose_filter_tab(item.mif)" :class="{ checked: current_choose_tab == item.mi }">
+        <div class="filter-label" @click="choose_filter_tab(item)" :class="{ checked: current_choose_tab == item.mi }">
           <div class="filter-tab-item">
             <div class="filter-icon">
               <sport_icon :sport_id="compute_sport_id(item.mif)" :status="current_choose_tab == item.mif"  size="24px" class="icon" />
@@ -46,7 +46,7 @@ import _ from "lodash"
 import menu_i18n_default from "src/core/base-data/config/menu-i18n.json";
 import BaseData from "src/core/base-data/base-data.js";
 import { compute_css_obj } from "src/core/index.js";
-
+import SportsDataClass from "src/base-pc/components/match-list/list-filter/sports-data-class.js"
 
 const { compute_sport_id,mi_euid_map_res } = use_base_data()
 
@@ -80,43 +80,6 @@ const menus_i18n_map = ref(menu_i18n_default.data)
 
 // const top_events = ref([ 101, 102, 105, 107, 110, 108, 103, 109, 111, 112, 113, 116, 115,114, 104, 106, 118, 400, 300,]);
 
-/**
- * 解析 新接口返回值     常规 +电竞
- */
- function resolve_mew_menu_res_mi_100_2000() {
-  //过滤常规球类
-  let mi_100_list = [];
-  let mi_2000_list = [];
-  // 遍历 新菜单数据
-  BaseData.mew_menu_list_res.map((x) => {
-    // 拿到 基础赛种 id
-    let mif = 1 * x.mi;
-    //常规体育
-    if (BaseData.left_menu_base_mi_arr.includes(mif)) {
-      // 滚球对象
-      let item = (x["sl"] || []).find((y) => y.mi == `${mif}1`) || {};
-      item.mif = mif;
-      mi_100_list.push(item);
-    }
-    //电竞
-    if (BaseData.sports_mi.includes(mif)) {
-      // 滚球对象
-      let item = (x["sl"] || []).find((y) => y.mi == `${mif}1`) || {};
-      item.mif = mif;
-      mi_2000_arr.value.push(item);
-    }
-  });
-  console.log(mi_100_list, 'mi_100_list')
-  //常规体育
-  mi_100_arr.value = mi_100_list;
-  // 默认选中当前第一个tab
-  current_choose_tab.value = mi_100_list.length ? mi_100_list[0].mif : 101
-  //电竞
-  mi_2000_arr.value = mi_2000_list;
-  //  VR  体育的
-  // vr_menu_obj.value = BaseData.vr_mi_config || [];
-}
-
 onMounted(() => {
   area_obj = document.querySelector('.current-filter-list');
   area_obj_wrap = document.querySelector('.current-filter-wrap');
@@ -125,34 +88,39 @@ onMounted(() => {
   }
   // top_events.value = MatchListOuzhouClass.redux_menu.in_play;
   // current_choose_tab.value = MatchListOuzhouClass.redux_menu.mid_tab_menu_type;
-  resolve_mew_menu_res_mi_100_2000()
+  let { mi_100_list, mi_2000_list, vr_menu_obj } = SportsDataClass.resolve_mew_menu_res_mi_100_2000()
+  //常规体育
+  mi_100_arr.value = mi_100_list;
+  // 默认选中当前第一个tab
+  current_choose_tab.value = mi_100_list.length ? mi_100_list[0].mif : 101
+  //电竞
+  mi_2000_arr.value = mi_2000_list;
+  
 })
-
-// 监听左侧变化
-// store.subscribe(() => {
-//   state = store.getState()
-//   console.error('ssasda',state.menusReducer.redux_menu.in_play)
-// });
 
 /**
  * 
- * @param {Number} payload 
+ * @param {Number} item.mif 
  * @description 当前选择的tab高亮 通过id属性映射
  */
 
  
-const choose_filter_tab = payload => {
-
-  current_choose_tab.value = payload;
-
+const choose_filter_tab = item => {
+  current_choose_tab.value = item.mif;
   // 获取最新的 数据
   let redux_menu = _.cloneDeep(MatchListOuzhouClass.redux_menu) 
   // 修改菜单数据  header tab切换对应的 
-  redux_menu.mid_tab_menu_type = payload
+  redux_menu.mid_tab_menu_type = item.mif
   // 存储
   MatchListOuzhouClass.set_menu(redux_menu)
-
- 
+  // 中间导航菜单设置
+  SportsDataClass.handle_click_menu_mi_1({
+    mi: item.mi,
+    root: '1',
+    mif: item.mif,
+    sports: 'common',
+    guanjun: '',
+  })
 };
 
 /**
