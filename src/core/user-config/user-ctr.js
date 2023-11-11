@@ -10,7 +10,8 @@ import { ref } from "vue";
 import { get_server_file_path } from "src/core/file-path/file-path.js";
 import pako_pb from "src/core/pb-decode/custom_pb_pako.js";
 import { infoUpload } from "src/core/http/";
-import { LocalStorage, ServerTime } from "src/core/";
+import { ServerTime } from "src/core/";
+import { LocalStorage, SessionStorage } from "src/core/utils/module/web-storage.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import { default_theme_key } from "src/core/theme/"
 
@@ -268,6 +269,8 @@ class UserCtr {
     this.set_user_info(obj);
     this.update()
     this.get_balance()
+    const gr = lodash.get(this.user_info,'gr');
+    gr && SessionStorage.set('gr', gr);
     callback && callback(obj);
   }
 
@@ -1424,6 +1427,55 @@ class UserCtr {
         // }
       }
     }, 1000)
+  }
+
+  /**
+  * @description: api参数域名加密(专用)
+  * @param {*} api 加密字符串
+  * @return {*}  明码字符串
+  */
+   api_encrypt(api_str){
+    // 解密url 内 api 字段使用的 key
+    const DECRYPT_KEY_URL_API = CryptoJS.enc.Utf8.parse("OBTY20220712OBTY");
+    let res = '';
+  	if(api_str){
+      var encrypt = CryptoJS.AES.encrypt(api_str, DECRYPT_KEY_URL_API, {mode:CryptoJS.mode.ECB,padding: CryptoJS.pad.Pkcs7});
+      res = encrypt.toString();
+  	}
+    return res;
+  }
+
+  /**
+    * 获取用url跳转必须的参数:token,gr,theme,api等
+    */
+  /**
+   *@description 获取用url跳转必须的参数:token,gr,theme,api等
+   *@param {Object} obj 外部传参对象 
+   *@return {Srting} url参数字符串(没有?号): token=8c0c99da8b66a35f6e7971c9207c4525d7a5fded&gr=common&theme=theme-2&api=vymDTv0iHMiYDktoWIswpIRpkRguppwnCb55aDoef0A=
+  */
+  get_user_url_parames(obj={}){
+    let res = {}
+    const get_value =function(name){
+      res = SessionStorage.get(key) || LocalStorage.getItem(key);
+      return res;
+    }
+    // 参数合并
+    Object.assign(res, obj)
+    // token 令牌
+    res.token = this.user_token || get_value('token');
+    // gr分组
+    res.gr = lodash.get(this.user_info,'gr') || get_value('gr', '');
+    // theme主题
+    res.theme = this.theme || get_value('theme');
+    // 语言
+    res.lang = this.lang || get_value('lang');
+    // api 获取默认最快域名进行加密
+    res.api = this.api_encrypt(BUILDIN_CONFIG.DOMAIN_RESULT.first_one || get_value('best_api'));
+    // 参数累加
+    const searchParams = new URLSearchParams(res);
+    // url编码转换
+    res = decodeURIComponent(searchParams.toString());
+    return res;
   }
 }
 
