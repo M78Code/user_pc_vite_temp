@@ -1446,16 +1446,13 @@ class UserCtr {
   }
 
   /**
-    * 获取用url跳转必须的参数:token,gr,theme,api等
-    */
-  /**
-   *@description 获取用url跳转必须的参数:token,gr,theme,api等
+   *@description 获取url跳转必须的参数链接字符串(包括token,gr,lang,theme,api等)
    *@param {Object} obj 外部传参对象 
    *@return {Srting} url参数字符串(没有?号): token=8c0c99da8b66a35f6e7971c9207c4525d7a5fded&gr=common&theme=theme-2&api=vymDTv0iHMiYDktoWIswpIRpkRguppwnCb55aDoef0A=
   */
   get_user_url_parames(obj={}){
     let res = {}
-    const get_value =function(name){
+    const get_value =function(key){
       res = SessionStorage.get(key) || LocalStorage.getItem(key);
       return res;
     }
@@ -1464,7 +1461,7 @@ class UserCtr {
     // token 令牌
     res.token = this.user_token || get_value('token');
     // gr分组
-    res.gr = lodash.get(this.user_info,'gr') || get_value('gr', '');
+    res.gr = lodash.get(this.user_info,'gr') || get_value('gr');
     // theme主题
     res.theme = this.theme || get_value('theme');
     // 语言
