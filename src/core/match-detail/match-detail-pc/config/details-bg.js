@@ -1,4 +1,4 @@
-import { compute_local_project_file_path } from "scr/core";
+import { compute_local_project_file_path } from "src/core";
 const detail_csid_config= {
   CSID_1: {
     csid: '1',

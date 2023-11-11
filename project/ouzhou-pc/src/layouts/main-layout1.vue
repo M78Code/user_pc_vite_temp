@@ -52,7 +52,7 @@
       v-if="BetData.bet_box_draggable.show"
     >
     <div  class="ty-bet-box">
-      <!-- <bet-box-wapper use_component_key="BetBoxOuZhouPC_1"  /> -->
+      <bet-box-wapper use_component_key="BetBoxOuZhouPC_1"  />
     </div>
   </Vue3DraggableResizable>
 
@@ -73,7 +73,7 @@ import layoutRight from "./layout-right.vue";
 import toastComponents from "src/base-pc/components/toast/toast.vue";
 import alertComponents from "src/base-pc/components/toast/alert.vue";
 import confirmComponents from "src/base-pc/components/toast/confirm.vue";
-// import { BetBoxWapper } from "src/base-pc/components/bet";
+import { BetBoxWapper } from "src/base-pc/components/bet";
 // import moveVideo from 'src/base-pc/components/video-replay/move-video.vue'
 import { compute_css_variables } from "src/core/css-var/index.js"
 import BetData from 'src/core/bet/class/bet-data-class.js'

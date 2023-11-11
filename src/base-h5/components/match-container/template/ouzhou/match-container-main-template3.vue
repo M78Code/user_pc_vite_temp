@@ -37,12 +37,12 @@
           <div class="league-t-wrap">
           <!-- <div class="league-t-tubiao"></div> -->
             <!-- 联赛收藏 -->
-            <div v-if="![3000, 900].includes(menu_type)" class="favorited-icon" @click.stop="handle_league_collect">
+            <!-- <div v-if="![3000, 900].includes(menu_type)" class="favorited-icon" @click.stop="handle_league_collect"> -->
               <!-- 未收藏 compute_img_url('icon-favorite')-->
-              <img v-if="!league_collect_state" :src="no_collect_ouzhou" alt="">
+              <!-- <img v-if="!league_collect_state" :src="no_collect_ouzhou" alt=""> -->
               <!-- 收藏图标 compute_img_url('icon-favorite-s')-->
-              <img v-if='league_collect_state' :src="have_collect_ouzhou">
-            </div>
+              <!-- <img v-if='league_collect_state' :src="have_collect_ouzhou"> -->
+            <!-- </div> -->
             <span class="league-title-text row justify-between">
               <span :class="['league-t-wrapper', { 'league-t-main-wrapper': menu_type !== 28, export: is_export }]">
                 <span class="match-league ellipsis-2-lines" :class="{ 'match-main-league': menu_type !== 28 }">
@@ -71,7 +71,6 @@
                 <!-- 下边的模块，左方是  队名和 队比分,  右面是  盘口  模块 -->
                 <div class="odd-list match-indent" :class="{ 'simple': show_newer_edition, result: is_results }">
                   <div class="odd-list-inner odd" :class="{ 'n-s-edition': !show_newer_edition, result: is_results }">
-                    {{ console.log(match) }}
                     <!--  左边 图片和名称  和 比分 和 视频图标 -->
                     <div @click='goto_details(match)' :class="['team-wrapper', { simple: standard_edition == 1, team_title: is_results }]">
                       <!-- 上边的 赛事日期标准版,包含 比分组件 -->

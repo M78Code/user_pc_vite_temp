@@ -226,4 +226,25 @@ function getCurState (hipo) {
     height: 100%;
   }
 }
+::v-deep.bet-item-wrap-ouzhou {
+        display: flex;
+        width: 78px;
+        height: 48px;
+        border-radius: 2px;
+        justify-content: center;
+        align-items: center;
+
+        &:hover {
+            background: rgba(255, 112, 0, 0.1);
+        }
+
+        div {
+            color: #8A8986;
+            margin-right: 5px;
+        }
+
+        .odds {
+            color: #FF7000;
+        }
+    }
 </style>

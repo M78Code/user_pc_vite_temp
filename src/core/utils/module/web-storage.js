@@ -32,7 +32,13 @@ const WebStorage = class WebStorage {
     this.timeout = timeout;
   }
   getKey(key) {
-    return `${this.prefixKey}${key}`.toUpperCase();
+    let res = '';
+    if(key && key.startsWith(this.prefixKey)){
+      res = `${key}`.toUpperCase();
+    } else {
+      res = `${this.prefixKey}${key}`.toUpperCase();
+    }
+    return res;
   }
 
   /**

@@ -52,7 +52,7 @@ export default {
     // 这里最好是 url 内的 语种 ，不过 兜底语言是中文 因此 这里设置中文
     // 后面如果确实有需要就自己处理 。目前这个是兼容某些异常场景下 接口先返回来回
     // 文件后返回回来 的显示异常，不管 前端缓存，资源文件丢失的场景，生产无此场景
-     await  loadLanguageAsync() 
+    // await  loadLanguageAsync() 
       // 实例化域名检测类对象
       AllDomain.create( () => {
         // data参数说明: {type:'domain_api',status:0 ,list:[]}
@@ -63,13 +63,14 @@ export default {
         // http初始化方法 会调用 setApiDomain
         // ws和http域名切换逻辑
         http.setApiDomain();
-    
-        MenuData.init();
-        BetData.init_core()
-        BetViewDataClass.init()
   
-        enter_params()
-        this.set_init_load(true);
+        enter_params(async(user)=>{
+          await loadLanguageAsync(user?.languageName);
+          MenuData.init();
+          BetData.init_core()
+          BetViewDataClass.init()
+          this.set_init_load(true);
+        })
       });
       // 启动域名检测功能
       AllDomain.run();

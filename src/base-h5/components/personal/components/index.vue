@@ -9,8 +9,8 @@
       <div class="info"> 
         <div class="name"> 
           <span>Money</span> 
-          <img v-if="!show" @click="on_show_money(true)" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/show.png`" alt="" />
-          <img v-else @click="on_show_money(false)" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/hide.png`" alt="" />
+          <img v-if="show" @click="on_show_money(false)" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/show.png`" alt="" />
+          <img v-else @click="on_show_money(true)" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/hide.png`" alt="" />
         </div> 
         <div class="amount">{{ showMount }}</div> 
       </div> 
@@ -63,6 +63,8 @@ import collapse from "src/base-h5/components/personal/components/collapse.vue"
 import { onMounted, ref } from "vue"
 import { useRouter } from "vue-router"
 import UserCtr from "src/core/user-config/user-ctr.js";
+import { api_account } from 'src/api/index';
+import { loadLanguageAsync, useMittEmit, MITT_TYPES} from "src/core/index.js";
 import {LOCAL_PROJECT_FILE_PREFIX } from "src/core";
 const lang = ref(UserCtr.lang)
 const router = useRouter();
@@ -120,19 +122,28 @@ const settingData = ref([{
 }])
 
 onMounted(() => {
-  console.log(UserCtr,"----UserCtr",UserCtr.lang)
   on_show_money(UserCtr.show_balance)
 })
 
 // 金额显示与隐藏
 const on_show_money = (flag) => {
   show.value = flag
-  showMount.value = flag ? mount.replace(/[0-9]/g, '*') : mount
+  showMount.value = flag ? mount : mount.replace(/[0-9]/g, '*')
 }
 // 切换语言
 const on_change_lang = (key) => {
   lang.value = key
-  UserCtr.set_lang(lang.value) 
+  api_account.set_user_lang({ token: UserCtr.get_user_token(), languageName: lang.value }).then(res => {
+      let code = lodash.get(res, 'code');
+      if (code == 200) {
+          // 设置国际化语言
+          loadLanguageAsync(lang.value).then().finally(() => {
+            UserCtr.set_lang(lang.value) 
+          })
+      } else if (code == '0401038') {
+          useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t("common.code_empty"))
+      }
+  })
 }
 // 跳转规则界面
 const jumpRules = () => {
@@ -169,7 +180,7 @@ const goto_announcement = () => {
     position: relative;
     border-radius: 8px 8px 0 0;
     background-repeat: no-repeat;
-    background-image: url('./images/bg.png');
+    background-image: url($SCSSPROJECTPATH + '/image/personal/bg.png');
     background-size: cover;
     .name{
       display: flex;
@@ -195,7 +206,7 @@ const goto_announcement = () => {
     margin-top: -40px;
     position: relative;
     background-repeat: no-repeat;
-    background-image: url("./images/bg_line.png");
+    background-image: url($SCSSPROJECTPATH + "/image/personal/bg_line.png");
     background-size: cover;
     > img {
       width: 343px;
@@ -308,7 +319,7 @@ const goto_announcement = () => {
   width: 17px;
   height: 13px;
   margin-right: 10px;
-  background: url('./images/lang.png') no-repeat;
+  background: url($SCSSPROJECTPATH + '/image/personal/lang.png') no-repeat;
   background-size: calc(3.2px * 5) calc(36.4px * 5);
   
 }

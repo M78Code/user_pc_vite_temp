@@ -518,6 +518,12 @@ class MenuData {
     }
     return this.get_menu_type() == mi
   }
+  _is_cur_mi_special(mi, param) {
+    if (param) {
+      return mi == param
+    }
+    return false;
+  }
   /**
    * 是否选中了 热门
    * mi [number|string] 要比对的值
@@ -589,6 +595,13 @@ class MenuData {
   */
   is_jinzu(mi) {
     return this._is_cur_mi(30, mi)
+  }
+   /**
+   * 是否选中了收藏
+   *  mi [number|string] 要比对的值
+  */
+  is_collect(mi) {
+    return this._is_cur_mi_special(50000, mi)
   }
   //- 三级菜单 日期 (只有 串关，早盘，赛果，电竞，才有) -->
   get_is_show_three_menu(mi) {
