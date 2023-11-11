@@ -337,7 +337,8 @@ class MenuData {
     // 设置全屏
     this.set_multi_column();
 
-    this.set_menu_data_version()
+    this.set_menu_data_version();
+    useMittEmit(MITT_TYPES.EMIT_MATCH_LIST_UPDATE)
   }
   /**
    * 中间菜单显示配置 默认的
@@ -388,6 +389,7 @@ class MenuData {
     );
     // 设置全屏
     this.set_multi_column();
+    useMittEmit(MITT_TYPES.EMIT_MATCH_LIST_UPDATE)
   }
   /**
    * 定义中间菜单    点击 输出 请求  列表结构  API 参数的   模板
@@ -700,6 +702,7 @@ class MenuData {
     this.match_list_sports_label = match_list_api_config.sports;
  
     this.match_list_version.value = Date.now();
+    
     // 设置投注类别
     this.set_bet_category();
 
