@@ -20,17 +20,32 @@
 </template>
 
 <script setup>
+import BetData from 'src/core/bet/class/bet-data-class.js'
 import BetViewDataClass from 'src/core/bet/class/bet-view-data-class.js'
 import { submit_handle } from "src/core/bet/class/bet-box-submit.js"
-
+import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 // 提交投注信息
 const set_bet_submit = () => {
     submit_handle()
 }
+// 取消投注
+const set_bet_cancel = () => {
+    BetData.set_clear_bet_info()
+}
 
-const set_bet_cancel = () => {}
-const set_retain_selection = () => {}
-const set_confirm = () => {}
+// 保留投注项
+const set_retain_selection = () => {
+    BetViewDataClass.set_bet_order_status(1)
+    setTimeout(() => {
+        useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY)
+    }, 200);
+}
+
+// 清空投注项 和投注后的内容
+const set_confirm = () => {
+    BetData.set_clear_bet_info()
+    BetViewDataClass.set_clear_bet_view_config()
+}
 
 </script>
 

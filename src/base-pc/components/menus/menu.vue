@@ -69,6 +69,7 @@ import sport_icon from "src/base-pc/components/sport_icon.vue";
 // 菜单配置
 import { MenuData, UserCtr } from "src/core/index.js"
 import { useLoadMapping } from './load_mapping.js';
+import MatchListOuzhouClass from 'src/core/match-list-pc/match-ouzhou-list.js'
 
 const { load_mapping } = useLoadMapping()
 
@@ -165,6 +166,10 @@ const jump_func = payload => {
     sports: '',
     guanjun: "",
   })
+  //页面中间导航显示处理
+  MatchListOuzhouClass.redux_menu.menu_root = 4
+  MatchListOuzhouClass.update_version()
+
   MenuData.set_mid_menu_result({
     euid: payload,
   })
