@@ -103,7 +103,7 @@ const bet_click_ = (data) => {
   let params = {
     oid: data.ol.oid, // 投注项id ol_obj
     _hid: data.hl.hid, // hl_obj 
-    _hn: data.hl.hn,  // hn_obj
+    _hn: data.hl.hn||"",  // hn_obj
     _mid: data.payload.mid,  //赛事id mid_obj
   }
   console.log("odds_info.vue", data, params);
@@ -116,6 +116,7 @@ const bet_click_ = (data) => {
     device_type: 1, 
     // 数据仓库类型
     match_data_type: "h5_detail", // h5_detail
+    // match_data_type: "h5_list", // h5_detail
   }
   set_bet_obj_config(params,other)
 }

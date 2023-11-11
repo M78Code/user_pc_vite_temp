@@ -52,9 +52,10 @@ const api_params = {
  * @return {undefined} undefined
  */
 function match_list_all_params() {
-    let { lv2_mi, lv1_mi, jinri_zaopan, menu_root } = MenuData.left_menu_result;
-    let { mid_menu_result, match_list_api_config, is_collect } = MenuData
-    const { csid, tid, md, index } = mid_menu_result || {};
+    const { menu_root, left_menu_result, mid_menu_result, match_list_api_config, is_collect } = MenuData
+    let { csid, tid, md, index, euid } = mid_menu_result || {};
+    let { lv2_mi, lv1_mi, jinri_zaopan, } = left_menu_result || {};
+    // 父级euid
     let guanjun = '';
     let apiType = 1;
     let api_name = api_params.other.match;
@@ -80,6 +81,7 @@ function match_list_all_params() {
             params: {
                 "cuid": UserCtr.get_uid() || '',
                 "sort": UserCtr.sort_type,
+                euid,
                 "selectionHour": filterHeader.open_select_time,
             },
         }
@@ -103,15 +105,13 @@ function match_list_all_params() {
     // 调用列表接口
     // 当前 pid 和 orpt
     let lv2_mi_info = BaseData.mi_info_map[`mi_${lv2_mi}`];
-    // 父级euid
-    let euid;
     if ([2, 3].includes(Number(menu_root))) {
         // 今日 早盘 常规赛事
         if (lv1_mi == 118) {
             // 娱乐下只有冠军 直接写死
             euid = menu_root == 3 ? '3020212' : '3020112'
         } else {
-            euid = BaseData.mi_info_map[`mi_${lv1_mi}${jinri_zaopan}`].euid
+            euid = BaseData.mi_info_map[`mi_${lv1_mi}${menu_root}`].euid
         }
         lv2_mi_info = {
             apiType,
@@ -171,8 +171,6 @@ function match_list_all_params() {
             pids: euid == "30101" ? -999 : '',
         }
     } else if (menu_root == 1) {
-        // 滚球赛事
-        let { mid_menu_result } = menu_config
         lv2_mi_info = {
             ...lv2_mi_info,
             apiType,
@@ -194,7 +192,7 @@ function match_list_all_params() {
             bymids: {},
         }
     }
-    config.guanjun - guanjun;
+    config.guanjun = guanjun;
     lodash.merge(
         config.match_list,
         {
@@ -467,7 +465,7 @@ function handle_click_menu_mi_1(detail = {}) {
 function get_match_list_params() {
     //侧菜单的 root 节点   root ：  1 滚球  2 今日   3  早盘   500 热门赛事  400 冠军   300 VR  电竞 2000
     let params = match_list_all_params();
-    // MenuData.set_match_list_api_config(params)
+    MenuData.set_match_list_api_config(params)
     return params
 }
 export default get_match_list_params

@@ -219,7 +219,9 @@
                       </div>
                     </div>
                     <!-- 右边盘口组件 -->
-                    <ScoreList :match_info="match_of_list" :score_length="score_length"></ScoreList>
+                    <template v-if="match_of_list">
+                      <ScoreList :match_info="match_of_list" :score_length="score_length"></ScoreList>
+                    </template>
                   </div>
                 </div>
               </div>
