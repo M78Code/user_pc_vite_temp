@@ -10,7 +10,9 @@
       <!-- 竖线 -->
       <div class="vertical-line"></div>
       <!-- 图标信息 -->
-      <icon-box></icon-box>
+      <div :style="`width:${match_list_tpl_size.play_icon_width}px !important;`">
+        <icon-box></icon-box>
+      </div>
       <!-- 投注信息 -->
       <match-handicap 
         v-if="match" 
@@ -55,7 +57,6 @@ const props = defineProps({
   }
 })
 let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.mid)
-match_style_obj.data_tpl_id = 101; //调试用
 const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].width_config
 const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`]
 const current_choose_oid = ref({ first_hpid: '1', second_hpid: "2" });
@@ -106,7 +107,6 @@ onMounted(() => {
     width: 1px;
     height: 60px;
     background: #e2e2e2;
-    margin-right: 24px;
   }
 }
 .other-play-tab {

@@ -361,7 +361,7 @@ template {
       justify-content: space-around;
       align-items: center;
       background-color: var(--q-gb-bg-c-14);
-      border: 2px solid var(--q-gb-bg-c-12);
+      border: 1px solid var(--q-gb-bg-c-12);
       width: 100%;
       height: 0.5rem;
       line-height: 0.5rem;

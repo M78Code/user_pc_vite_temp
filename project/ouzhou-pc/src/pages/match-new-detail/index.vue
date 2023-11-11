@@ -44,9 +44,9 @@
             style="margin: 0 10px; height: 14px"
             v-if="sportId == 1"
           />
-          <span class="leagal-time" v-if="sportId == 1 && detail_info.ms == 0">
+          <!-- <span class="leagal-time" v-if="sportId == 1 && detail_info.ms == 0">
             {{ detail_info.mgt }}</span
-          >
+          > -->
         </div>
         <div>
           <q-expansion-item

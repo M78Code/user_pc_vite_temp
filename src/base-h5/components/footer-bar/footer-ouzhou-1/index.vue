@@ -56,7 +56,7 @@ const jump_page = (item) => {
   bottom: 0;
   width: 100%;
   background-color: rgba(255, 255, 255, 1);
-  z-index: 100;
+  z-index: 1000;
 
   // 半弧样式
   .arc {

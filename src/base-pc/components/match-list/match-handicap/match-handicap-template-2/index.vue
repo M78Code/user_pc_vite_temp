@@ -33,7 +33,7 @@ import { utils_info } from 'src/core/utils/module/match-list-utils.js';
 import { get_match_status } from 'src/core/utils/index'
 import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/core/index.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
-import betItem from "src/base-pc/components/bet-item/bet-item-list-new-data.vue"
+import betItem from "src/base-pc/components/bet-item/bet-item-list-ouzhou-data.vue"
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import BetData from 'src/core/bet/class/bet-data-class.js'
 
@@ -236,6 +236,16 @@ function getCurState (hipo) {
 
         &:hover {
             background: rgba(255, 112, 0, 0.1);
+        }
+        .c-bet-item.active {
+          background: #FF7000;
+          .handicap-value, .handicap-value-text {
+            color: #ffe2cc;
+          }
+          .odds {
+            color: #fff;
+          }
+
         }
 
         div {

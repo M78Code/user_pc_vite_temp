@@ -481,7 +481,7 @@ export default {
       let hsw = lodash.get(play_data, `hl._play.hsw`) || "";
       let sport_id = lodash.get(props.match_of_list, "csid");
       // 电竞赔率精度处理
-      // if (lodash.isUndefined(sport_id) && menu_config.is_esports()) {
+      // if (lodash.isUndefined(sport_id) && menu_config.is_export()) {
       //   sport_id = "101";
       // }
       const match_odds = compute_value_by_cur_odd_type(

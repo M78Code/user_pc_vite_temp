@@ -4,7 +4,7 @@
   <div
     class="c-esports-header"
     :style="compute_css_obj(`pc-img-esports-${current_menu.csid}-banner`)"
-    v-show="MenuData.is_esports()"
+    v-show="MenuData.is_export()"
   >
     <!-- 游戏种类列表 -->
     <div class="sport-tab">
@@ -94,7 +94,7 @@ function sport_click(item) {
   // 设置     中间 菜单输出
   MenuData.set_mid_menu_result(params);
   // 设置   请求  列表结构  API 参数的  值
-  MenuData.set_match_list_api_config(config);
+  // MenuData.set_match_list_api_config(config);
 }
 
 watch(MenuData.menu_data_version,()=>{
