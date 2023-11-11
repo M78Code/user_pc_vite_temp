@@ -84,27 +84,28 @@ const expend_toggle = (item) => {
   }
 }
 const bet_click_ = (data) => {
-  active.value = +data.ol.oid;
-  storage_bet_info({
-    payload: {
-      ...data.payload,
-      ...props.match_detail,
-    },
-    ol: {
-      ...data.ol,
-      hps: {
-        ...data.payload
-      },
-      ...data.hl,
-      ov: get_oddv(data.ol.ov / 100000)
-    },
-  })
+  console.log(data,'data');
+  active.value = +data.oid;
+  // storage_bet_info({
+  //   payload: {
+  //     ...data.payload,
+  //     ...props.match_detail,
+  //   },
+  //   ol: {
+  //     ...data.ol,
+  //     hps: {
+  //       ...data.payload
+  //     },
+  //     ...data.hl,
+  //     ov: get_oddv(data.ol.ov / 100000)
+  //   },
+  // })
   // useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX,true)
   let params = {
-    oid: data.ol.oid, // 投注项id ol_obj
-    _hid: data.hl.hid, // hl_obj 
-    _hn: data.hl.hn,  // hn_obj
-    _mid: data.payload.mid,  //赛事id mid_obj
+    oid: data.oid, // 投注项id ol_obj
+    _hid: data._hid, // hl_obj 
+    _hn: data._hn,  // hn_obj
+    _mid: data._mid,  //赛事id mid_obj
   }
   console.log("odds_info.vue", data, params);
   let other = {
