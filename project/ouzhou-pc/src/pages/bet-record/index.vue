@@ -4,15 +4,20 @@
  * @Description: 注单历史
 -->
 <template>
-  <div class="record-page">
-    <div class="record-page-main">
-       <!-- 注单历史头部 -->
-    <record_head @tab_change = "tab_change" />
-    <!-- 注单历史筛选区域 -->
-    <record_select :current_tab="current_tab" @itemFilter="itemFilter" />
-    <!-- 注单历史表格组件 -->
-    <record_table :current_tab="current_tab" ref="tableRef" />
+  <div class="cont">
+    <div class="header">
+      <layout-header />
+    </div>
+    <div class="record-page">
+      <div class="record-page-main">
+        <!-- 注单历史头部 -->
+        <record_head @tab_change = "tab_change" />
+        <!-- 注单历史筛选区域 -->
+        <record_select :current_tab="current_tab" @itemFilter="itemFilter" />
+        <!-- 注单历史表格组件 -->
+        <record_table :current_tab="current_tab" ref="tableRef"  @itemFilter="itemFilter" />
 
+      </div>
     </div>
   </div>
 </template>
@@ -22,6 +27,8 @@ import { onMounted, ref } from "vue";
 import record_head from "./compoments/record_head.vue";
 import record_select from "./compoments/record_select.vue";
 import record_table from "./compoments/record_table.vue";
+import layoutHeader from "../../layouts/layout-header.vue";
+
 const current_tab = ref('unsettled')
 
 const tableRef = ref(null)
@@ -40,8 +47,16 @@ const itemFilter = (obj)=>{
 </script>
 
 <style lang="scss" scoped>
+.cont{
+  min-height: 100vh;
+  background-color: #E2E2E2;
+}
+.header{
+  margin-bottom: 10px;
+}
  .record-page{
   // width: 100vw;
+   width: 1430px;
   height: 100%;
   background-color: #e2e2e2;
   margin: 0 auto;
