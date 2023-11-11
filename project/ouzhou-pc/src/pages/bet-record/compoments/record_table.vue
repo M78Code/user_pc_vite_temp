@@ -19,9 +19,11 @@
           <div class="detail-loading" v-if="loading">
             <q-circular-progress indeterminate rounded size="80px" :thickness="0.1" color="opt-basic" class="q-ma-md" />
           </div>
-          <div class="no-data">
-            <img class="no-data-icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/no-data.svg`" alt="" srcset="">
-            <div style="text-align: center;color:#A1A3A5;font-weight: 500;">No Data</div>
+          <div class="no-data" style="height:calc(100vh - 17rem)">
+            <div class="c">
+              <img class="no-data-icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/no-data.svg`" alt="" srcset="">
+              <div style="text-align: center;color:#A1A3A5;font-weight: 500;">No Data</div>
+            </div>
           </div>
         </template>
         <template v-slot:body="props">
@@ -93,16 +95,16 @@
       </q-table>
       <!--分页组件-->
 
-<!--      <Pagination v-if="tableData.length > 0" class="record-pagination" :count="total" :betTotalAmount="40"-->
-<!--        @pageChange="changePage(arguments)">-->
-<!--      </Pagination>-->
-      <pagination-wrapper
-        v-if="tableData.length > 0"
-        class="record-pagination"
-        :count="total"
-        @pageChange="changePage"
-        :is_bet_record="false"
-      ></pagination-wrapper>
+      <Pagination v-if="tableData.length > 0" class="record-pagination" :count="500" :betTotalAmount="40"
+        @pageChange="changePage">
+      </Pagination>
+<!--      <pagination-wrapper-->
+<!--        v-if="tableData.length > 0"-->
+<!--        class="record-pagination"-->
+<!--        :count="500"-->
+<!--        @pageChange="changePage"-->
+<!--        :is_bet_record="false"-->
+<!--      ></pagination-wrapper>-->
 
 
     </div>
@@ -114,13 +116,15 @@ import { onMounted, ref, watch } from "vue";
 import { useGetOrderList } from "./tableConfig";
 import { formatTime } from "src/core/format/index.js"
 import { UserCtr, format_balance, LOCAL_PROJECT_FILE_PREFIX } from 'src/core/index.js'
-// import Pagination from "src/components/Pagination.vue";
-import { PaginationWrapper } from "src/components/pagination/index.js";
+import Pagination from "../../../components/Pagination.vue";
+// import { PaginationWrapper } from "src/components/pagination/index.js";
 // import football_icon from 'src/assets/images/football_icon.png'
 // import no_data from 'src/assets/images/no_data.png'
 // import bet_copy from 'src/assets/images/bet_copy.png'
 import sport_icon from "./sport_icon.vue";
 import store from "src/store-redux/index.js";
+import { copyToClipboard } from 'quasar'
+const emit = defineEmits(['itemFilter'])
 
 const props = defineProps({
   current_tab: {
@@ -169,9 +173,13 @@ const getTableData = (params)=>{
 defineExpose({getTableData})
 // 页码变化
 const changePage = (arv) => {
-  //  console.log(1111111111,arv)
+  const { current } = arv
+   console.log(1111111111,arv)
+  emit('itemFilter', { page: current })
 }
 const hand_copy = (data) => {
+  copyToClipboard(data);
+  return ;
   let oInput = document.createElement("input");
   oInput.value = data;
   document.body.appendChild(oInput);
@@ -236,8 +244,13 @@ const hand_copy = (data) => {
     position: fixed;
     bottom: 0;
     left: 50%;
-    width: 1442px;
+    width: 1430px;
     transform: translate(-50%, 0);
+    background-color: #fff;
+    box-shadow: 0 -4px 8px #f5f5f5;
+    :deep(.q-pagination .q-btn-item.q-btn--standard){
+      background-color: #ff7000!important;
+    }
   }
 
 }
@@ -287,11 +300,16 @@ const hand_copy = (data) => {
 }
 
 .no-data {
-  // width: 100%;
-  position: absolute;
-  left: 50%;
-  top: 200%;
-  transform: translate(-50%, 0);
+  position: relative;
+   width: 100%;
+  //margin-left: 50%;
+  //transform: translate(-50%, 0);
+  .c{
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
 }
 
 // .my-sticky-header-table{
