@@ -12,7 +12,7 @@
 		<div class="content" v-show="(show_history && history_data.length > 0) || !input_value">
 			<div class="middle_info_tab">EXAMPLE SEARCHES</div>
 			<ul class="list1">
-				<li v-for="(item, index) in history_data" :key="item.cuid" @click="get_search_data(1, 1, item.keyword)">
+				<li v-for="(item, index) in history_data" :key="item.cuid" @click="get_search_data(0, 1, item.keyword)">
 					{{ item.keyword }}<img :src="compute_local_project_file_path('image/svg/right_arrow.svg')" alt="">
 				</li>
 			</ul>
@@ -31,7 +31,7 @@
 					<!-- 热门内容 -->
 					<div class="row">
 						<div class="col-6 hotItem" v-for="(item, index) in hot_list" :key="index"
-							@click="get_search_data(1, 1, item.keyWord)">
+							@click="get_search_data(0, 1, item.keyWord)">
 							<span class="defaultText" :class="{ redText: index <= 2, 'normal-1': index > 2 }">
 								{{ index + 1 }}.
 							</span>
@@ -178,7 +178,7 @@ import { api_search } from 'src/api/';
 const { get_insert_history, get_fetch_hot_search } = api_search || {};
 
 const input_value = ref('');
-const tabIndex = ref(1);
+const tabIndex = ref(0);
 const tab_growp = ref(null);
 const show_history = ref(true);
 const show_hot = ref(true);
@@ -207,7 +207,6 @@ const get_history = () => {
 	get_history_search(params).then(res => {
 		let data = lodash.get(res, "data") || [];
 		if (data.length > 0) {
-			console.log('his_data', data);
 			history_data.value = data;
 			show_history.value = true;
 		}
@@ -225,8 +224,7 @@ const red_color = (item) => {
 
 // 搜索
 const search_data = ref([]);
-const get_search_data = (index = 1, sport_id = 1, keyword) => {
-	// console.log('id', index, sport_id, keyword);
+const get_search_data = (index = 0, sport_id = 1, keyword) => {
 	show_history.value = false;
 	show_hot.value = false;
 	tabIndex.value = index;
@@ -247,10 +245,8 @@ const get_search_data = (index = 1, sport_id = 1, keyword) => {
 		search_data.value = [];
 		return;
 	}
-	// console.log('params',params);
 	get_search_result(params).then(res => {
 		if (res.code === '200') {
-			// console.log('sear_data', res.data.data);
 			search_data.value = res.data.data;
 		}
 	});
@@ -275,7 +271,6 @@ function league_icon_error($event) {
 
 // 联赛 和 队名 默认跳转方法,去到详情页
 function default_method_jump(name, item) {
-	// console.log('item', item);
 	if (!item) return;
 
 	if (item.mid) {
@@ -346,7 +341,6 @@ const hot_list = ref([]);  //热门搜索列表
 function get_hot_search() {
 	get_fetch_hot_search().then(({ data }) => {
 		hot_list.value = data || [];
-		// console.log('hot', hot_list.value);
 	})
 }
 
@@ -365,7 +359,7 @@ watch(
 	() => input_value.value,
 	(val) => {
 		let trimVal = val.trim();
-		get_search_data(trimVal);
+		get_search_data(0, 1, trimVal);
 	}
 )
 </script>
@@ -373,8 +367,6 @@ watch(
 .search-container {
 	background-color: #E2E2E2;
 	padding-bottom: 8px;
-	height: 100%;
-	// height: 100vh;
 }
 
 .top_info_search {
