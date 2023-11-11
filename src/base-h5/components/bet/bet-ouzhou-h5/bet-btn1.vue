@@ -5,15 +5,21 @@
 <template>
   <div class="bet_content_bottom">
     <p class="bet_cancel"  @touchmove.prevent>Save</p>
-    <p class="place_bet"   @touchmove.prevent>
+    <p class="place_bet" @click.self="pack_up">
       <span>Ok</span>
     </p>
   </div>
 </template>
 
 <script setup>
+import { useMittEmit, MITT_TYPES  } from "src/core/index.js";
 
-
+const pack_up = (val) => {
+  // TODO: 临时调试用
+  useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX, false);
+  // BetData.set_clear_bet_info()
+  // BetViewDataClass.set_clear_bet_view_config()
+}
 </script>
 
 <style lang="scss" scoped>
