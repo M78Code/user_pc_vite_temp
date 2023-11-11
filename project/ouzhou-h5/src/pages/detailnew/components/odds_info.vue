@@ -84,7 +84,6 @@ const expend_toggle = (item) => {
   }
 }
 const bet_click_ = (data) => {
-  console.log(data,'data');
   active.value = +data.oid;
   // storage_bet_info({
   //   payload: {
@@ -117,6 +116,7 @@ const bet_click_ = (data) => {
     device_type: 1, 
     // 数据仓库类型
     match_data_type: "h5_detail", // h5_detail
+    // match_data_type: "h5_list", // h5_detail
   }
   set_bet_obj_config(params,other)
 }

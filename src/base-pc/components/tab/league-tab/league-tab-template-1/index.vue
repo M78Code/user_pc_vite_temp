@@ -183,7 +183,7 @@ tid  ,
 menu_config.set_mid_menu_result(params);
 
 // 设置   请求  列表结构  API 参数的  值
-menu_config.set_match_list_api_config(config);
+// menu_config.set_match_list_api_config(config);
 }
 /**
  * @Description:切换选项

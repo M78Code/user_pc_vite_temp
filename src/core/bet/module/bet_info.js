@@ -192,7 +192,7 @@ export const bet_click = (item,obj_hp,obj_hl) =>{
  */
 export const storage_bet_id = payload => {
   // 如果当前点击的td处于高亮状态则取消高亮
-  if (payload === current_check_betId) {
+  if (payload === MatchListOuzhouClass.current_check_betId.value) {
     MatchListOuzhouClass.orderDetailList = MatchListOuzhouClass.orderDetailList.filter(item => item.playOptionsId !== payload)
     MatchListOuzhouClass.current_check_betId.value = ""
   } else {

@@ -104,7 +104,7 @@ onMounted(() => {
   // init()
   console.error(left_menu_list, "left_menu_list====")
   left_menu_list.value = BaseData.left_menu_base_mi_arr;
-
+  jump_func()
   console.error(MenuData, "MenuData====")
 })
 
@@ -141,7 +141,7 @@ const jump_func = payload => {
 
   let euid = (load_mapping[payload + '2'] || {}).h || ''
   let ealy_euid = (load_mapping[payload + '3'] || {}).h || ''
-  BaseData.compute_current_mi_match_list(payload);
+  // BaseData.compute_current_mi_match_list(payload);
   console.error(BaseData, "当前选中的菜单")
   let val = ''
   let lv2_mi = ''
@@ -159,11 +159,14 @@ const jump_func = payload => {
   }
 
   MenuData.set_left_menu_result({
-    root: payload,
-    lv1_mi: '',
-    lv2_mi:payload,
+    root: 2,
+    lv1_mi: payload,//一级菜单
+    lv2_mi: '',//二级菜单 次要玩法
     sports: '',
     guanjun: "",
+  })
+  MenuData.set_mid_menu_result({
+    euid: payload,
   })
 }
 
