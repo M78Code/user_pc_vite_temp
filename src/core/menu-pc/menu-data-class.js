@@ -861,8 +861,10 @@ class MenuData {
    * 没有传递对比当前菜单
   */
   is_vr(mi) {
-    // (this.match_list_api_config || {}).sports == "vr"
-    return this._is_cur_mi(300, mi)
+    if (mi) {
+      return this._is_cur_mi(300, mi)
+    }
+    return this._is_cur_mi(300, mi) || (this.match_list_api_config.guanjun || "").includes("vr")
   }
   /**
    * 是否选中了赛果
@@ -900,7 +902,7 @@ class MenuData {
     if (mi) {
       return this._is_cur_mi(400, mi)
     }
-    return this._is_cur_mi(400, mi)||(this.match_list_api_config.guanjun || "").includes("guanjun")
+    return this._is_cur_mi(400, mi) || (this.match_list_api_config.guanjun || "").includes("guanjun")
   }
 
   /**
