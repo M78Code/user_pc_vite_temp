@@ -17,7 +17,7 @@
       <i class="icon-arrow q-icon c-icon" size="14px" ></i>
         <!-- 联赛图标 -->
         <div class="league-icon-wrap">
-          <!-- <sport-icon v-if="menu_config.is_esports()" :sport_id="card_style_obj.league_obj.csid" status="2" size="18px" is_esports /> -->
+          <!-- <sport-icon v-if="menu_config.is_export()" :sport_id="card_style_obj.league_obj.csid" status="2" size="18px" is_esports /> -->
           <!-- <img v-else v-img="[lodash.get(card_style_obj.league_obj,'lurl')]" /> -->
         </div>
         <!-- 联赛名称 -->
@@ -30,8 +30,8 @@
         <div
           class="icon-wrap"
           :class="card_style_obj.league_obj.tf && 'active'"
-          v-if="!menu_config.is_esports() && GlobalAccessConfig.get_collectSwitch()"
-          @click.stop="mx_collect({type: menu_config.is_esports() ? 'leagues' : 'champion', match: card_style_obj.league_obj})"
+          v-if="!menu_config.is_export() && GlobalAccessConfig.get_collectSwitch()"
+          @click.stop="mx_collect({type: menu_config.is_export() ? 'leagues' : 'champion', match: card_style_obj.league_obj})"
         >
           <i class="icon-star q-icon c-icon" :class="card_style_obj.league_obj.tf && 'active'"></i>
         </div>

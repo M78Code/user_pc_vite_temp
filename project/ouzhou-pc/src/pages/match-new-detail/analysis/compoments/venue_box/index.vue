@@ -26,7 +26,7 @@
            <!-- 视频图标 -->
           <img
             v-if="cur_video_icon.type=='video'"
-            :src="video"
+            :src="show_type=='video'?video_active: video"
 
             alt=""
             srcset=""
@@ -46,7 +46,7 @@
       <animal_box v-if="animal_key" :show_type="show_type"  :detail_info="detail_info" />
       <!-- 比分 -->
       <score_info
-        v-show="score_key"
+        v-show="score_key&&score_list.length>0"
         :score_list="score_list"
         :detail_info="detail_info"
       />
@@ -71,6 +71,7 @@ const animal = `${LOCAL_PROJECT_FILE_PREFIX}/image/png/video/animal.png`;
 const animal_active = `${LOCAL_PROJECT_FILE_PREFIX}/image/png/video/animal_active.png`;
 const score = `${LOCAL_PROJECT_FILE_PREFIX}/image/png/video/score.png`;
 const score_active = `${LOCAL_PROJECT_FILE_PREFIX}/image/png/video/score_active.png`;
+const video_active = `${LOCAL_PROJECT_FILE_PREFIX}/image/png/video/video_active.png`;
 const video = `${LOCAL_PROJECT_FILE_PREFIX}/image/png/video/video.png`;
 
 const props = defineProps({

@@ -25,6 +25,7 @@
 </template>
 <script setup>
   import BetData from "src/core/bet/class/bet-data-class.js";
+  import { useMittEmit, MITT_TYPES  } from "src/core/index.js";
   const type = 1//1:Betting Type  2:  3:System
   // 单关 串关切换
   const set_is_bet_single = (type) =>{

@@ -7,7 +7,7 @@
 <template>
   <div class="loading_wrap">
     <div class="loading_box">
-      <img src="" alt="">
+      <img :src="loading_img" alt="">
       <div>
         LOADING...
       </div>
@@ -16,6 +16,8 @@
 </template>
 
 <script setup>
+import { LOCAL_PROJECT_FILE_PREFIX } from "src/core/index.js";
+const loading_img = `${LOCAL_PROJECT_FILE_PREFIX}/image/gif/loading1.gif`;
   // import loading_img from 'src/assets/images/loading.gif';
 
 </script>

@@ -37,12 +37,12 @@
           <div class="league-t-wrap">
           <!-- <div class="league-t-tubiao"></div> -->
             <!-- 联赛收藏 -->
-            <div v-if="![3000, 900].includes(menu_type)" class="favorited-icon" @click.stop="handle_league_collect">
+            <!-- <div v-if="![3000, 900].includes(menu_type)" class="favorited-icon" @click.stop="handle_league_collect"> -->
               <!-- 未收藏 compute_img_url('icon-favorite')-->
-              <img v-if="!league_collect_state" :src="no_collect_ouzhou" alt="">
+              <!-- <img v-if="!league_collect_state" :src="no_collect_ouzhou" alt=""> -->
               <!-- 收藏图标 compute_img_url('icon-favorite-s')-->
-              <img v-if='league_collect_state' :src="have_collect_ouzhou">
-            </div>
+              <!-- <img v-if='league_collect_state' :src="have_collect_ouzhou"> -->
+            <!-- </div> -->
             <span class="league-title-text row justify-between">
               <span :class="['league-t-wrapper', { 'league-t-main-wrapper': menu_type !== 28, export: is_export }]">
                 <span class="match-league ellipsis-2-lines" :class="{ 'match-main-league': menu_type !== 28 }">
@@ -219,7 +219,7 @@
                         </div>
                       </div>
                     </div>
-                    <div class="mcmt-text">
+                    <div class="mcmt-text" @click='goto_details(match)'>
                       {{i18n_t('list.go_to_details')}}
                       <img :class="['arrow']" alt="" />
                     </div>

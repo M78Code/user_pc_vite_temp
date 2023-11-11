@@ -707,7 +707,7 @@ const lv_2_click_wapper_4 = (detail = {}) => {
   MenuData.set_left_menu_result(config);
 
   // // 设置   请求  列表结构  API 参数的  值
-  MenuData.set_match_list_api_config(mid_menu_refer_params);
+  // MenuData.set_match_list_api_config(mid_menu_refer_params);
 };
 /**
  * 二级菜单点击

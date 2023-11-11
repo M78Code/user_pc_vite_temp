@@ -8,7 +8,7 @@
   <div>
     <div class="analysis-body">
       <!-- 动画比分榜 -->
-      <!-- <venue_box v-show="detail_info.ms>0" :score_list="score_list" :detail_info="detail_info"  /> -->
+      <venue_box v-show="detail_info.ms>0" :score_list="score_list" :detail_info="detail_info"  />
   
       <!-- <div class="analysis-top">
         <div class="analysis-top-l">
@@ -63,7 +63,7 @@ onMounted(()=>{
 const get_detail_info = (mid)=>{
   console.log(111111, MatchDataWarehouseInstance.get_quick_mid_obj(mid))
   detail_info.value = MatchDataWarehouseInstance.get_quick_mid_obj(mid)
-  console.log(111111, detail_info.value)
+  console.log(11111133, detail_info.value)
 }
 // const show_page = ref(false)
 // watch(()=>props.detail_info,val=>{

@@ -127,7 +127,7 @@ function on_click_lang(lang_) {
                 }
             }
             if (!lodash.isEmpty(ids)) {
-                if (MenuData.is_esports()) {
+                if (MenuData.is_export()) {
                     type = 2;
                 }
                 let params = {

@@ -140,7 +140,7 @@ onMounted(()=>{
 <style scoped lang="scss">
 @import "./index.scss";
 .match-container{
-    height: calc(100% - 2.16rem);
+    height: calc(100% - 1.71rem);
     overflow: hidden;
     overflow-y: auto;
 }
