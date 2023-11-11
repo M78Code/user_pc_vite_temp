@@ -17,7 +17,7 @@
            <!-- 动画图标 -->
           <img
             v-if="detail_info.mvs > -1"
-            :src="animal_key ? animal_active : animal"
+            :src="show_type&&show_type=='animal' ? animal_active : animal"
             alt=""
             srcset=""
             style="margin-right: 15px"
@@ -26,12 +26,11 @@
            <!-- 视频图标 -->
           <img
             v-if="cur_video_icon.type"
-            :src="show_type=='video'?video_active: video"
-
+            :src="show_type&&show_type!='animal'?video_active: video"
             alt=""
             srcset=""
             style="margin-right: 15px"
-            @click="tab_click('video')"
+            @click="tab_click(cur_video_icon.type)"
           />
            <!-- 比分榜图标 -->
           <img
@@ -155,7 +154,9 @@ const cur_video_icon = computed(() => {
 
 
 const tab_click = (type) => {
-  show_type.value = type
+
+  show_type.value = type=='score'?'':type
+
   if (type == "animal"||type == "video") {
     animal_key.value = true;
     score_key.value = false;
