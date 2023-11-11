@@ -7,7 +7,7 @@
 // 发送websocket命令时使用
 import { WsSend } from "src/core/data-warehouse/ws/ws-ctr/ws-ctr.js";
 import { mapGetters } from "vuex";
-import global_mixin from "src/public/mixins/global/global_mixin.js";
+import global_mixin from "src/core/global/mixin/global_mixin.js";
 import betting from "src/public/mixins/betting/betting.js";
 export default {
   mixins: [global_mixin,betting],
