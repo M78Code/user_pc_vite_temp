@@ -6,7 +6,6 @@
 <template>
   <div class="box-bc">
     <div class="iframe_box">
-      {{ iframe_loading }}
       <iframe
         id="video-iframe"
         class="video-iframe fit"

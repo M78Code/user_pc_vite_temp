@@ -45,7 +45,7 @@
       <animal_box v-if="animal_key" :show_type="show_type"  :detail_info="detail_info" />
       <!-- 比分 -->
       <score_info
-        v-show="score_key&&score_list.length>0"
+        v-show="score_key&&!lodash_.isEmpty(score_list)"
         :score_list="score_list"
         :detail_info="detail_info"
       />
@@ -60,11 +60,8 @@ import animal_box from "./animal_box.vue";
 import score_info from "./score_info.vue";
 import { LOCAL_PROJECT_FILE_PREFIX } from "src/core/index.js";
 import { get_match_status } from "src/core/utils/index";
-// import animal from 'src/assets/images/video/animal.png'
-// import animal_active from 'src/assets/images/video/animal_active.png'
-// import score from 'src/assets/images/video/score.png'
-// import score_active from 'src/assets/images/video/score_active.png'
-// import sport_icon from "./sport_icon.vue";
+import lodash_ from "lodash";
+
 
 const animal = `${LOCAL_PROJECT_FILE_PREFIX}/image/png/video/animal.png`;
 const animal_active = `${LOCAL_PROJECT_FILE_PREFIX}/image/png/video/animal_active.png`;
@@ -154,7 +151,6 @@ const cur_video_icon = computed(() => {
 
 
 const tab_click = (type) => {
-
   show_type.value = type=='score'?'':type
 
   if (type == "animal"||type == "video") {
