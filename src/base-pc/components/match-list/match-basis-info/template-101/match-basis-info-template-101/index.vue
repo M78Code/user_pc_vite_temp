@@ -9,7 +9,7 @@
           <i class="icon-star q-icon c-icon"></i>
         </div>
         <!-- 比赛进程 -->
-        <match-process v-if="match" :match="match" source='match_list' show_page="match-list" :rows="1"
+        <match-process v-if="match" :match="match" source='match_list' show_page="match-list" :rows="1" :date_rows="1" date_show_type="inline"
         periodColor="gray" />
       </div>
       <!-- 玩法数量 -->
