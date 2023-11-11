@@ -129,12 +129,48 @@ class MenuData {
   }
   /**
    * 获取 euid
+   * arg_mi 如果传值 则获取特定值euid 如果没有就是二级菜单的euis
+   * */
+  get_euid(arg_mi) {
+    let mi = arg_mi || this.current_lv_2_menu_i;
+    // 全部
+    if (mi == 0) {
+      let mid_list = []
+      let euid = ''
+      // 获取滚球全部的 菜单id
+      this.menu_lv_mi_lsit.forEach(item=>{
+        if( ![0,50000].includes(item.mi)){
+          mid_list.push(item.mi)
+        }
+      })
+      // 根据 菜单id 获取euid
+      mid_list.forEach(item=>{
+        euid += BaseData.mi_euid_map_res[item] && BaseData.mi_euid_map_res[item].h + ','
+      })
+      return euid
+    }
+    // 赛果
+    if (this.is_results()) return mi;
+    if (BaseData.mi_euid_map_res && BaseData.mi_euid_map_res[mi]) {
+      return BaseData.mi_euid_map_res[mi].h;
+    } else {
+      // 电竞无旧菜单id处理
+      return {
+        2100: 41002,
+        2101: 41001,
+        2102: 41004,
+        2103: 41003,
+      }[mi];
+    }
+  }
+  /**
+   * 获取 euid
    * 
    * */
-  get_euid(menu_type) {
-    const menuId = menu_type || this.menu_type.value;
-    return BaseData.mi_euid_map_res?.[this.menu_mi.value+menuId]?.h || "";
-  }
+  // get_euid(menu_type) {
+  //   const menuId = menu_type || this.menu_type.value;
+  //   return BaseData.mi_euid_map_res?.[this.menu_mi.value+menuId]?.h || "";
+  // }
   //内部方法
   _is_cur_mi(mi, param) {
     if (param) {
