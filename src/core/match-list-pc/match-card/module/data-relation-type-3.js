@@ -234,7 +234,6 @@
           all_card_obj[card_key].is_league_fold = is_league_fold
           all_card_obj[card_key].is_show_card = !is_league_fold
           // 设置赛事数据加载状态
-          console.log('is_league_fold', is_league_fold);
           all_card_obj[card_key].load_data_status = is_league_fold ?'loading' : 'loaded'
         }else{
           // 是ws调用
