@@ -70,9 +70,10 @@ const switchHandle = async ()=> {
     // api_analysis.get_match_result_menu( {menuType:0} ).then( ( res = {} ) => {
         if(res.code == 200){
             let scroll_data = res.data.map( item => {
-                // console.log( 100+item.sportId*1 + '')
+                // <100常规 >3000电竞  vr不处理 冠军400
+                const mi = item.menuType<100?100+item.sportId*1 + '':item.menuType>3000?`${'2'}${item.sportId}`:item.menuType==100?400:item.sportId
                 return {
-                    mi: 100+item.sportId*1 + '',
+                    mi: mi,
                     ct: item.count,
                     sport: item.sportId,
                     name:item.name,
