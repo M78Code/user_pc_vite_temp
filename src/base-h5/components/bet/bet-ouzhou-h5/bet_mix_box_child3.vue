@@ -27,15 +27,15 @@
             </div>
         </div>
 
-        <div>
+        <!-- <div>
           <bet-input-info1 :item="item" :index="index" ></bet-input-info1>
-        </div>
+        </div> -->
       </div>
      
     </div>
   </template>
   <script setup>
-    import betInputInfo1 from "./bet_input_info1.vue";
+    // import betInputInfo1 from "./bet_input_info1.vue";
     import { compute_value_by_cur_odd_type } from "src/core/index.js"
 
     const props = defineProps({
