@@ -23,9 +23,20 @@
           </div>
         </div>
       </div>
+      <div :style="`width:${match_list_tpl_size.play_icon_width}px !important;`"></div>
       <!-- 玩法名称 -->
-      <div class="play-name row col">
-        
+      <div class="play-name-ouzhou">
+        <div 
+          class="play-name-title-box"
+          v-for="(item, col_index) in match_tpl_info.get_current_odds_list(current_choose_oid)" 
+          :key="col_index" 
+          :style="{ 'width': match_list_tpl_size.bet_width + 'px' }"
+        >
+          <div class="play-name-item" v-for="(item_title, item_index) in item.ols"
+            :key="item_index">
+            {{ item_title.ot }}
+          </div>
+        </div>
       </div>
       <div class="action-col" style="width:60px" v-if="match_style_obj.data_tpl_id == 12"></div>
     </div>
@@ -67,16 +78,14 @@ const props = defineProps({
 
 let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(lodash.get(props, 'card_style_obj.mid'))
 const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`].width_config
+const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`]
+console.log('match_tpl_info', match_tpl_info.get_current_odds_list({ first_hpid: '1', second_hpid: "2" }));
+const current_choose_oid = ref({ first_hpid: '1', second_hpid: "2" });
 // 获取菜单类型
 if (!lodash.get(props, 'card_style_obj.league_obj.csid') && ['1', '500'].includes(menu_config.menu_root)) {
   useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST)
 }
 
-
-
-const is_HDP = computed(() => {
-  return [1, 20, 24, 13, 25].includes(+match_style_obj.data_tpl_id)
-})
 
 /**
  * @Description 投注项名称
@@ -145,58 +154,6 @@ const bet_title = computed(() => {
 })
 
 /**
-   * @Description 获取高亮标题
-   * @param {Boolean} is_double 是否双行标题
-   * @param {Number} key 标题第几个
-   * @param {NUmber}  i(0|1)  双行标题第几个
-  */
-function get_highlight_title(is_double, key, i) {
-  let highlight = [3, 4, 5].includes(key) && [0, 13, 25].includes(+match_style_obj.data_tpl_id)
-  if (is_double) {
-    highlight = (highlight && i === 1)
-  }
-  return highlight
-}
-/**
- * @Description 获取22模板标题宽度
- * @param {undefined} undefined
-*/
-function get_title_style() {
-  return `width: ${(match_list_tpl_size.bet_width + 5) * 3}px !important; flex:auto`
-}
-/**
-  * @Description 获取模板标题宽度
-  * @param {Number} index 第几个标题索引
- */
-function get_bet_width(index) {
-  let bet_width = match_list_tpl_size.bet_width
-  let flex = 'none'
-  if (is_HDP && match_style_obj.data_tpl_id != 13 && index == 5) {
-    flex = 1
-  }
-  let style = `width:${bet_width}px !important; flex: ${flex};`
-  if (is_HDP && utils_info.is_iframe) {
-    if ([0, 3].includes(index)) {
-      bet_width = match_list_tpl_size.bet_width - 4
-    } else {
-      bet_width = match_list_tpl_size.bet_width + 2
-    }
-    style = `width:${bet_width}px !important; flex: none;`
-  }
-  return style
-}
-/**
- * @Description 是否高亮标题
- * @param {String} csid 球种id
-*/
-function is_highlighted (csid){
-  if (is_HDP || menu_config.is_eports_csid(csid)) {
-    return true
-  } else {
-    return false
-  }
-}
-/**
  * @Description 设置联赛折叠
 */
 function set_fold() {
@@ -219,6 +176,7 @@ function set_fold() {
   .ouzhou-match-league{
     display: flex;
     width: 100%;
+    height: 100%;
     .tr-match-head {
       display: flex;
     }
