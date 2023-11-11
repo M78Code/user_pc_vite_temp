@@ -29,8 +29,8 @@ const tab_list = reactive([
   { label: 'In-Play', value: 'rollball', route: '/inPlay', type: 1 },
   { label: 'MyBets', value: 'bet', route: '/betting_history' },
   { label: 'Home-Page', value: 'home_page', route: '/home', type: 1 },
-  { label: 'Results', value: 'results', route: '/matchResults', type: 29 },
-  { label: 'Favorites', value: 'favorites', route: '/collect', type: 1 },
+  { label: 'Results', value: 'results', route: '/matchResults', type: 28 },
+  { label: 'Favorites', value: 'favorites', route: '/collect', type: 50000 },
 ])
 const get_route_path = computed(() => {
   return  router.currentRoute.value.path;
@@ -40,7 +40,7 @@ const tab_active = ref(get_route_path);
 const jump_page = (item) => {
   tab_active.value = item.route
   router.push(item.route)
-  // 设置一级菜单
+  // 设置一级菜单 注： 普通赛果是28, 投注赛果是29， 欧洲版不考虑投注
   item.type && MenuData.set_current_lv1_menu(item.type)
 }
 
