@@ -80,7 +80,6 @@ const props = defineProps({
 let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(lodash.get(props, 'card_style_obj.mid'))
 const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`].width_config
 const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`]
-console.log('match_tpl_info', match_tpl_info.get_current_odds_list({ first_hpid: '1', second_hpid: "2" }));
 const current_choose_oid = ref({ first_hpid: '1', second_hpid: "2" });
 // 获取菜单类型
 if (!lodash.get(props, 'card_style_obj.league_obj.csid') && ['1', '500'].includes(menu_config.menu_root)) {
@@ -180,6 +179,7 @@ function set_fold() {
     height: 100%;
     background: #F5F5F5;
     border-bottom: 1px solid #e2e2e2;
+    cursor: pointer;
     .leagues-wrap {
       padding-left: 5px;
       display: flex;

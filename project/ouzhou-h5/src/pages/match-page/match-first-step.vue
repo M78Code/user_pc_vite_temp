@@ -16,7 +16,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import TopLeagues from '/project/ouzhou-h5/src/pages/home/components/top-leagues.vue'
+import TopLeagues from './components/top-leagues.vue'
 import { de_img, dk_img, be_img, fr_img } from 'src/base-h5/core/utils/local-image.js'
 
 

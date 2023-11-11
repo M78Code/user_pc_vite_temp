@@ -70,11 +70,13 @@ const switchHandle = async ()=> {
     // api_analysis.get_match_result_menu( {menuType:0} ).then( ( res = {} ) => {
         if(res.code == 200){
             let scroll_data = res.data.map( item => {
+                // <100常规 >3000电竞  vr不处理 冠军400
+                const mi = item.menuType<100?100+item.sportId*1 + '':item.menuType>3000?`${'2'}${item.sportId}`:item.menuType==100?400:item.sportId
                 return {
-                    mi: 100+item.sportId*1 + '',
+                    mi: mi,
                     ct: item.count,
-                    md: item.date,
                     sport: item.sportId,
+                    name:item.name,
                     subList:item.subList.map((n)=>{
                         return {
                             val:n.field1,
@@ -83,6 +85,7 @@ const switchHandle = async ()=> {
                     })
                 }
             })
+            
             state.slideMenu_sport = scroll_data
             state.current_mi = scroll_data[0].mi
             state.slideMenu = scroll_data[0].subList
