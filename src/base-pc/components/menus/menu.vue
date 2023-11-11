@@ -159,9 +159,9 @@ const jump_func = payload => {
   }
 
   MenuData.set_left_menu_result({
-    root: payload,
-    lv1_mi: '',
-    lv2_mi:payload,
+    root: '2',
+    lv1_mi: payload,//一级菜单
+    lv2_mi: '',//二级菜单 次要玩法
     sports: '',
     guanjun: "",
   })

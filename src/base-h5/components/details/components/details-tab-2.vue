@@ -244,15 +244,15 @@ export default defineComponent({
   width: 0.12rem;
   height: 0.12rem;
   margin-top: 0.09rem;
-  background-image: url($SCSSPROJECTPATH + "/image/svg/tab_up_btn.svg");
+  background-image: url($SCSSPROJECTPATH + "/image/svg/tab_up_btn_off.svg");
+  
   background-size: 100% 100%;
-  transform: rotateZ(180deg);
+  // transform: rotateZ(180deg);
   transition: transform 0.3s;
   // @include webkit(transition, transform 0.3s);
 
   &.collapsed {
-    transform: rotateZ(0);
-    transition: transform 0.3s
+    background-image: url($SCSSPROJECTPATH + "/image/svg/tab_up_btn.svg");
     // @include webkit(transition, transform 0.3s);
   }
 }

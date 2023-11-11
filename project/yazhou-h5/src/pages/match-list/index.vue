@@ -104,7 +104,7 @@ watch(() => MenuData.footer_sub_menu_id, () => {
 );
 
 // 新手版标准版切换
-watch(() => standard_edition.value, () => {
+watch(() => standard_edition.value, (n) => {
   // 虚拟体育
   if (menu_type.value == 900) return
   // 如果是简版

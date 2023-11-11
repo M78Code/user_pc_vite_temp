@@ -7,9 +7,10 @@
   <div class="boss-box">
     <!--  筛选骨架屏  -->
     <SFilter v-if="list_data_loading" />
+    <!-- 全选 -->
       <div class="scroll-setect-all">
-          <span>全选</span>
-          <div class="scroll-setect-options sso-active"></div>
+          <span>{{ $t('common.all_select') }}</span>
+          <div @click="all_checked_click" class="scroll-setect-options" :class="all_checked ? 'sso-active' : ''"></div>
         </div>
     <!-- 中间滚动选择项 -->
     <q-scroll-area class="scroll-area" v-if="!no_find_content && !list_data_loading" ref="scrollArea">
@@ -22,7 +23,8 @@
               <span>{{ item.title }}</span>
             </div>
             <div class="scroll-setect">
-              <div class="scroll-setect-options"></div>
+              <div class="scroll-setect-options" :class="item.checked ? 'sso-active':'' "
+                   @click="type_select(item)"></div>
             </div>
           </div>
           <!-- 联赛名称部分 -->
@@ -30,14 +32,15 @@
             <div v-if="!item.hide">
               <div :key="index + 'League-name'" class="row  items-center content_box1">
                 <div class="row justify-between items-center content_box2"
-                  :class="{ 'content_box3': item.title && item.spell }" @click.stop.prevent="select_li_ctr(item)">
+                  :class="{ 'content_box3': item.title && item.spell }">
                   <div class="name-overhide">{{ item.nameText }}</div>
                   <div>
                     <div class="nums"
                         v-show="!(type == 28 && [1001, 1002, 1004, 1011, 1010, 1009].includes(get_curr_sub_menu_type))">
                         （{{ item.num }}）
                         <!-- <img class="icon-search" :src="compute_img_url(item.select ? 'checkbox-box-s' : 'checkbox-box')" /> -->
-                        <div class="scroll-setect-options"></div>
+                        <div class="scroll-setect-options" :class="item.select ? 'sso-active':'' "
+                             @click="select_li_ctr(item)"></div>
                       </div>
                   </div>
                 </div>
@@ -357,6 +360,7 @@ function all_checked_click() {
   let number_of_filters = 0;
   list.value.forEach(item => {
     item.select = check_value;
+    item.checked = check_value;
     number_of_filters += item.num
   });
   //设置全选//反选 数量 
@@ -388,12 +392,23 @@ function select_btn_click() {
 }
 // @Description:单个选择
 function select_li_ctr(li_item) {
+  console.log(8787378278378287,li_item.select)
   if (li_item.select) {
     select_num.value -= li_item.num;
   } else {
     select_num.value += li_item.num;
   }
   li_item.select = !li_item.select;
+}
+// @Description:字母选择
+function type_select(li_item) {
+  li_item.checked = !li_item.checked;
+  list.value = (list.value || []).map(i => {
+    if (i.spell === li_item.title){
+       i.select = li_item.checked
+    }
+     return i
+  }); // 初始化select
 }
 // 获取筛选数据外层列表
 function fetch_filter_match() {
@@ -500,6 +515,8 @@ function filter_alphabet(arr) {
     // 如果数组只有一个的话
     if (arr.length == 1) {
       arr[i].spell == "HOT" ? arr[i].title = i18n_t('search.hot_league') : arr[i].title = arr[i].spell[0]
+       //补充一个状态 做字母全选
+      arr[i].checked = false
       return arr[i].title
     } else {
       // 如果数组大于一个以上
@@ -509,6 +526,8 @@ function filter_alphabet(arr) {
           // 如果第一个和后边的其中一个相等，并且 第一个和上一个相比，不一样，title 塞进当前元素
           if ((arr[i].spell == arr[j].spell) && (arr[i].spell !== arr[i - 1].spell)) {
             arr[i].title = arr[i].spell
+            //补充一个状态 做字母全选
+            arr[i].checked = false
           }
         } else { // 代表第0个元素，
           arr[i].title = arr[i].spell == "HOT" ? i18n_t('search.hot_league') :
@@ -517,7 +536,6 @@ function filter_alphabet(arr) {
       }
     }
   }
-  console.log('arrarrarr',arr)
 }
 // 动态生成有联赛的字母，并非A - Z 全量字母；
 function dynamic_letters(arr) {
@@ -844,6 +862,7 @@ if (type.value == 30) {
   .scroll-title {
     height: .4rem;
     background-color: var(--q-gb-bd-c-5);
+     -background: #7981A4;
     display: flex;
     align-items: center;
     justify-content: space-between;
