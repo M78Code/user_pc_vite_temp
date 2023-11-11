@@ -72,6 +72,7 @@
   .nonebox4-content-left-content-text-one{
     font-size: 0.18rem;
     font-weight: 600;
+   
   }
   .nonebox4-content-left-info{
     display: flex;

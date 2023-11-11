@@ -8,7 +8,7 @@ import { WsSend } from "src/core/data-warehouse/ws/ws-ctr/ws-ctr.js";
 import { mapGetters } from "vuex";
 import lodash from 'lodash';
 
-import global_mixin from "src/public/mixins/global/global_mixin.js";
+import global_mixin from "src/core/global/mixin/global_mixin.js";
 import betting from "src/public/mixins/betting/betting.js";
 import ws_debounce from "src/public/mixins/websocket/data/ws_debounce.js"
 import play_mapping from "src/public/config/mapping/play_mapping";

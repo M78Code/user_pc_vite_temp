@@ -592,9 +592,7 @@ init(){
     match.tab_play_keys = this.get_tab_play_keys(match);
     // 是否有其他玩法
     match.has_other_play = match.tab_play_keys&&String(match.tab_play_keys).split(',').length > 0; // 该值设置取决于match.tab_play_keys字段,可以删除
-    
-    //模板ID
-    match.tpl_id = get_match_template_id(match);
+
     // 默认比分数据
     // match.score_obj = utils.serialized_score([],true)
     // 当前局比分 

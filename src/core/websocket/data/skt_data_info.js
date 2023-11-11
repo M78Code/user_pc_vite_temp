@@ -5,10 +5,13 @@
  */
 import { WsSend } from "src/core/data-warehouse/ws/ws-ctr/ws-ctr.js";
 import { mapGetters, mapActions } from "vuex";
-import global_mixin from "src/public/mixins/global/global_mixin.js";
+import global_mixin from "src/core/global/mixin/global_mixin.js";
 import betting from "src/public/mixins/betting/betting.js";
-import lodash from 'lodash';
-
+import {
+  useMittOn,
+  useMittEmit,
+  MITT_TYPES,
+} from "src/core/index.js";
 export default {
   mixins: [global_mixin, betting],
   data() {
@@ -21,7 +24,7 @@ export default {
   },
   created() {
     //赛事详情订阅
-    this.$root.$on(this.emit_cmd.EMIT_MATCH_DETAIL_SUBSCRIBE,this.sendSocketInitCmd);
+    useMittOn(MITT_TYPES.EMIT_MATCH_DETAIL_SUBSCRIBE,this.sendSocketInitCmd)
     //C8指令节流1秒
     this.SCMD_C8 = this.debounce(this.SCMD_C8,1000);
     //C112指令节流2秒
