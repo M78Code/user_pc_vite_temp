@@ -9,7 +9,6 @@
           <div class="filter-tab-item">
             <div class="filter-icon">
               <sport_icon :sport_id="compute_sport_id(item.mif)" :status="current_choose_tab == item.mif"  size="24px" class="icon" />
-              <!-- <span class="soprts_id_icon" :style="compute_css_obj({key:'pc-left-menu-bg-image', position: `item_${BaseData.compute_sport_id(item.mif)}` })"></span> -->
               <div class="filter-count">{{ item.ct || 0 }}</div>
             </div>
             <div :class="{ checked_text: current_choose_tab == item.mif }" class="label-text">
