@@ -8,7 +8,7 @@
   <div>
     <div class="analysis-body">
       <!-- 动画比分榜 -->
-      <!-- <venue_box v-show="detail_info.ms>0" :score_list="score_list" :detail_info="detail_info"  /> -->
+      <venue_box v-show="detail_info.ms>0" :score_list="score_list" :detail_info="detail_info"  />
   
       <!-- <div class="analysis-top">
         <div class="analysis-top-l">
