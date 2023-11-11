@@ -15,7 +15,7 @@
         :key="col_index" 
         :style="{ 'width': match_list_tpl_size.bet_width + 'px' }"
       >
-        <div :class="['bet-item-wrap-ouzhou', ]" v-for="(ol_data, ol_index) in deal_width_handicap_ols(col.ols)"
+        <div :class="['bet-item-wrap-ouzhou', deal_width_handicap_ols(col.ols).length ===2 && 'bet-item-wrap-ouzhou-bigger']" v-for="(ol_data, ol_index) in deal_width_handicap_ols(col.ols)"
           :key="ol_index">
           <!-- 投注项组件 -->
           <bet-item v-if="is_mounted && ol_data && ol_data._hpid" :ol_data="ol_data" />
@@ -233,6 +233,9 @@ function getCurState (hipo) {
         border-radius: 2px;
         justify-content: center;
         align-items: center;
+        &.bet-item-wrap-ouzhou-bigger {
+          width: 133px;
+        }
 
         &:hover {
             background: rgba(255, 112, 0, 0.1);
@@ -250,7 +253,6 @@ function getCurState (hipo) {
 
         div {
             color: #8A8986;
-            margin-right: 5px;
         }
 
         .odds {

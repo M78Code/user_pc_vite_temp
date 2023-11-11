@@ -3,7 +3,7 @@
     <div v-show="false">{{ MatchListData.data_version.version }}</div>
     <div v-show="false">{{ MatchListCardData.list_version }}</div>
       <!-- 赛事基础信息 -->
-      <div class="basic-col" :style="`width:${match_list_tpl_size.team_width}px !important;height:80px !important;`">
+      <div class="basic-col" :style="`width:${match_list_tpl_size.process_team_width}px !important;height:80px !important;`">
         <!-- 比赛进程 -->
           <basis-info101 v-if="match"  :match="match" show_type="all" />
       </div>

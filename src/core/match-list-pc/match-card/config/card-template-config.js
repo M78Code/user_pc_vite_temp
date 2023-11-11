@@ -211,7 +211,7 @@ export const ouzhou_sport_title_card_template = {
   // 卡片索引
   card_index:0,
   // 卡片类型
-  card_type:'ouzhou_sport_title',
+  card_type:'sport_title',
   // 球种名称
   csna:'',
   // 球种ID
@@ -236,8 +236,8 @@ export const ouzhou_sport_title_card_template = {
 export const ouzhou_league_title_template = {
   // 卡片索引
   card_index:0,
-  // 卡片类型 ouzhou_league_title 或者 champion_league_title
-  card_type:'ouzhou_league_title',
+  // 卡片类型 league_title 或者 champion_league_title
+  card_type:'league_title',
   // 卡片总高度 即当前页面渲染的高度
   card_total_height:40,
   // 卡片总高度备份 用于折叠展开后还原卡片高度
@@ -280,7 +280,7 @@ export const ouzhou_league_container_template = {
   // 卡片索引
   card_index:0,
   // 卡片类型
-  card_type:'ouzhou_league_container',
+  card_type:'league_container',
   // 卡片总高度  联赛内容所有赛事高度
   card_total_height:0,
   // 卡片总高度备份 用于折叠展开还原卡片高度
