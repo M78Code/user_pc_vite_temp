@@ -22,6 +22,7 @@
 <script setup>
 import { defineComponent, ref, reactive, watch,computed  } from "vue";
 import { useRouter, useRoute } from "vue-router";
+import { MenuData } from 'src/core/'
 const router = useRouter();
 // 底部菜单集合
 const tab_list = reactive([
