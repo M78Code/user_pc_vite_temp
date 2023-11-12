@@ -125,7 +125,7 @@ const changeDate = (index) => {
 const changeDatetab = (item, index) => {
     tabModel.value = false;
     const move_index = week.findIndex((t, _index) => _index === index);
-    scrollRef.value.scrollTo(move_index - 2, "start-force");
+    scrollRef.value && scrollRef.value.scrollTo(move_index - 2, "start-force");
     second_tab_index.value = index;
     MenuData.set_date_time(item.val, item.type);
     //根据时间筛选列表
@@ -164,7 +164,7 @@ watch(() => route.fullPath, () => {
 
 watch(() => MenuData.current_lv_2_menu_mi.value, () => {
     setDefaultData()
-})
+}, { immediate: true })
 
 onMounted(() => {
     // setDefaultData()
@@ -174,10 +174,10 @@ onMounted(() => {
  * @param {*} index 
  */
 const areaListChange = (index) => {
-    tabModel.value = false;
-    const move_index = areaList.findIndex((t, _index) => _index === index);
-    scrollRefArea.value.scrollTo(move_index - 2, "start-force");
-    area_tab_index.value = index;
+    // tabModel.value = false;
+    // const move_index = areaList.findIndex((t, _index) => _index === index);
+    // scrollRefArea.value.scrollTo(move_index - 2, "start-force");
+    // area_tab_index.value = index;
 }
 </script>
   
