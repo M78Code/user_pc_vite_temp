@@ -46,7 +46,7 @@
           <div v-if="BetData.is_bet_single">
             <!-- 单关投注项列表 -->
             <bet-mix-box-child3 :item="BetData.bet_single_list[0]" :key='0'></bet-mix-box-child3>
-            <betInfoList></betInfoList>
+<!--            <betInfoList></betInfoList>-->
           </div>
           <div v-else>
             <!-- 串关投注项列表 -->

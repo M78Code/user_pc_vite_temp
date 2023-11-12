@@ -20,7 +20,7 @@ export function useGetOrderList () {
   const columns = ref([
     {
       name: 'sn',
-      label: 'Sn',
+      label: i18n_t("bet_record.number"),
       align: 'center',
       field: 'sn',
       headerStyle: 'width: 18px',
@@ -30,32 +30,32 @@ export function useGetOrderList () {
     {
       name: 'datails',
       align: 'left',
-      label: 'Datails',
+      label: i18n_t("ouzhou.record.datails"),
       field: 'datails',
       sortable: true
     },
     {
       name: 'bettingType',
-      label: 'Betting Type',
+      label: i18n_t("bet_record.betting_play"),
       align: 'left',
       field: 'bettingType'
     },
     { name: 'detail', label: 'Detail', align: 'left', field: 'detail' },
     {
       name: 'totalStake',
-      label: 'Total Stake',
+      label: i18n_t("bets_forehead.bets_forehead"),
       align: 'left',
       field: 'totalStake'
     },
     {
       name: 'highestWin',
-      label: 'Highest Win',
+      label: i18n_t("common.maxn_amount_val"),
       align: 'left',
       field: 'highestWin'
     },
     {
       name: 'status',
-      label: 'Status',
+      label: i18n_t("bet_record.status"),
       align: 'left',
       field: 'status'
       // sortable: true,

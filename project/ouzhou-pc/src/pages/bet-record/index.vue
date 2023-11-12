@@ -54,7 +54,7 @@ const itemFilter = (obj) => {
 .record-page {
   // width: 100vw;
   width: 1430px;
-  height: 100%;
+  height: calc(100vh - 78px);
   background-color: #e2e2e2;
   margin: 0 auto;
 
