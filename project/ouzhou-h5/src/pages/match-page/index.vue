@@ -1,11 +1,3 @@
-<!--
- * @Author: land land@itcom888.com
- * @Date: 2023-11-10 13:53:40
- * @LastEditors: land land@itcom888.com
- * @LastEditTime: 2023-11-12 19:51:30
- * @FilePath: \user-pc-vite\project\ouzhou-h5\src\pages\match-page\index.vue
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
--->
 <template>
   <!-- 返回上一级 -->
 <!-- <div class="back" v-if="isClickDetail && curTab === 1 || true">
