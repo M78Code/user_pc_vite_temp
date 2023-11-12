@@ -13,7 +13,7 @@ import video from "src/core/video/video.js";
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 import { useRouter, useRoute } from "vue-router";
 import filterHeader from "src/core/filter-header/filter-header.js";
-import { MatchDetailCalss, LayOutMain_pc,GlobalSwitchClass,MenuData,userCtr } from "src/core"; 
+import { MatchDetailCalss, LayOutMain_pc,GlobalSwitchClass,MenuData,userCtr,SearchPCClass,UserCtr } from "src/core"; 
 //投注类
 import BetData from "src/core/bet/class/bet-data-class.js";
 export const useGetGlobal = ({  back_to }) => {
@@ -98,32 +98,52 @@ export const useGetGlobal = ({  back_to }) => {
    );  
    
   // 登录是否失效
-  const is_invalid = ref(userCtr.is_invalid) 
+  const is_invalid = ref(UserCtr.is_invalid) 
   // 获取用户信息      
-  const get_user = ref(userCtr.get_user)       
-          // 获取联赛关键字
-          // vx_related_keyword: "get_related_keyword", todo
-          // 选择的筛选数据
-          // vx_filter_select_obj: "get_filter_select_obj",  todo
-          // 获取选中的赛事数量(列表右上角赛选功能)
-          // vx_get_checked_count: "get_checked_count", todo
+  const get_user = ref(UserCtr.get_user)  
+  const get_uid = ref(UserCtr.get_uid());       
+  watch(()=>UserCtr.user_version,(val)=>{
+    if(val){
+      get_user.value =UserCtr.get_user()
+      get_uid.value = UserCtr.get_uid()
+      is_invalid.value = UserCtr.is_invalid
+    }
+   })     
+  // 获取联赛关键字 
+  const related_keyword = ref(SearchPCClass.related_keyword) 
   /*
-  **监听布局类的版本号
+  **监听筛选类的版本号
   */
   watch(
-    () => LayOutMain_pc.layout_version,
+    () => SearchPCClass.update_time.value,
     (val) => {
       if (val) {
-        layout_cur_page.value = LayOutMain_pc.layout_current_path
+        related_keyword.value = SearchPCClass.related_keyword
       }
     },
     { deep: true }
-  );
+  );  
+  
+  // 选择的筛选数据
+  const filter_select_obj = ref(filterHeader.filter_select_obj) 
+  // 获取选中的赛事数量(列表右上角赛选功能)
+  const checked_count = ref(filterHeader.checked_count) 
+  /*
+  **监听筛选类的版本号
+  */
+  watch(
+    () => filterHeader.filter_header_version.value,
+    (val) => {
+      if (val) {
+        filter_select_obj.value = filterHeader.filter_select_obj
+        checked_count.value = checked_count.checked_count
+      }
+    },
+    { deep: true }
+  );  
 
-  const get_uid = UserCtr.get_uid();
   // 获取当前页路由信息
   const layout_cur_page = ref(LayOutMain_pc.layout_current_path);
-
   /*
   **监听布局类的版本号
   */
@@ -137,9 +157,6 @@ export const useGetGlobal = ({  back_to }) => {
     { deep: true }
   );
 
-
-  // 保存联想搜索关键字
-  const related_keyword = ref({});
   // 监听状态变化
   // let un_subscribe = store.subscribe(() => {
   //   let state_data = store.getState();
@@ -151,7 +168,6 @@ export const useGetGlobal = ({  back_to }) => {
   // onUnmounted(() => {
   //   un_subscribe();
   // });
-
   /**
    * 设置赛事列表/详情选中赛事
    * @param  {number} remove_mid - 被移除赛事的ID
