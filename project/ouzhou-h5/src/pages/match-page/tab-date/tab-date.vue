@@ -1,5 +1,5 @@
 <template>
-    <div class="header" :style="{ height: tabActive == 'league' ? '0.59rem' : '1.04rem' }">
+    <div class="header" :style="{ height: tabActive == 'league' ? '0.56rem' : '1.0rem' }">
         <div class="tabs">
             <div class="matches" :class="tabActive == 'matches' ? 'active' : ''
             ">
@@ -36,21 +36,12 @@
             <q-virtual-scroll ref="scrollRef" :items="week" virtual-scroll-horizontal v-slot="{ item, index }">
                 <div @click="changeDatetab(item, index)" class="week" :class="second_tab_index == index ? 'active' : ''">
                     <span>
-                        <!-- <span>{{ month[new Date().getMonth()] }}</span> -->
-                        <!-- <span class="din_font">{{ new Date().getDate() + index }}</span> -->
                         <span>{{ item.name }}</span>
                     </span>
                     <span class="border_right"></span>
                 </div>
             </q-virtual-scroll>
         </div>
-        <!-- <div class="date_time" v-if="tabActive == 'league'">
-            <q-virtual-scroll ref="scrollRefArea" :items="areaList" virtual-scroll-horizontal v-slot="{ item, index }">
-                <div @click="areaListChange(index)" class="week" :class="area_tab_index == index ? 'active' : ''">
-                    {{ item }}
-                </div>
-            </q-virtual-scroll>
-        </div> -->
     </div>
 </template>
   
@@ -137,9 +128,14 @@ const changeDatetab = (item, index) => {
     scrollRef.value.scrollTo(move_index - 2, "start-force");
     second_tab_index.value = index;
     MenuData.set_date_time(item.val, item.type);
-    emit('changeMatchDate', item?.val)
-    // 设置菜单对应源数据
-    MatchMeta.set_origin_match_data()
+    //根据时间筛选列表
+    if (!item?.val) {
+        // 设置菜单对应源数据
+        MatchMeta.set_origin_match_data()
+    } else {
+        //根据时间筛选列表
+        MatchMeta.filter_match_by_time(item.val) 
+    }
 };
 watch(() => MenuData.menu_mi.value, () => {
     //球种改变设置今日
@@ -189,7 +185,7 @@ const areaListChange = (index) => {
 .header {
     font-size: 16px;
     font-family: Roboto;
-    height: 1.04rem;
+   
 
     // 头部tab样式
     .tabs {
@@ -381,6 +377,9 @@ const areaListChange = (index) => {
     .tabs,
     .date_time {
         background-color: rgba(255, 255, 255, 1);
+        :deep(.q-virtual-scroll__content){
+            border-bottom: 10px solid #E2E2E2;
+        }
     }
 
     // 头部球类背景图 --- 不同机型像素转换大小不一样采用百分比部分未调整

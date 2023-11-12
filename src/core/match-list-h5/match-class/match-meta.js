@@ -343,6 +343,7 @@ class MatchMeta {
       })
       target_mids = lodash.uniq(arr_mids)
     }
+    this.match_mids = target_mids
     this.get_origin_match_by_mids(target_mids)
   }
 
