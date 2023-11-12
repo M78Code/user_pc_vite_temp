@@ -166,10 +166,6 @@ const jump_func = payload => {
   MatchListOuzhouClass.redux_menu.menu_root = 4
   MatchListOuzhouClass.redux_menu.menu_left = payload
   MatchListOuzhouClass.update_version()
-
-  MenuData.set_mid_menu_result({
-    euid: payload,
-  })
 }
 
 onUnmounted(() => {

@@ -130,9 +130,9 @@ onMounted(() => {
   let { mi_100_list, mi_2000_list, vr_menu_obj } = SportsDataClass.resolve_mew_menu_res_mi_100_2000()
   console.log(mi_100_list,mi_2000_list, vr_menu_obj )
   //常规体育
-  mi_100_arr.value = mi_100_list;
+  mi_100_arr.value = filter_ct_list(mi_100_list);
   //电竞
-  mi_2000_arr.value = mi_2000_list;
+  mi_2000_arr.value = filter_ct_list(mi_2000_list);
   //vr
   vr_menu_data.value = vr_menu_obj
   //判断接口是否正常返回数据
@@ -165,7 +165,17 @@ onMounted(() => {
  */
 
 const filter_min_mi_300 = (originalArray)=>{
-  return originalArray.filter(item => parseInt(item.mi) < 300);
+  return originalArray.filter(item => parseInt(item.mi) < 300&&item.ct>0);
+}
+
+/**
+ * 
+ * @param {Number} item.mi
+ * @description 过滤ct=0的列表数据
+ */
+
+ const filter_ct_list = (originalArray)=>{
+  return originalArray.filter(item => item.ct>0);
 }
 /**
  * 

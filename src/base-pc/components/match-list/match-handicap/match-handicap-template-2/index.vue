@@ -20,7 +20,7 @@
           v-for="(ol_data, ol_index) in deal_width_handicap_ols(col.ols)"
           :key="ol_index">
           <!-- 投注项组件 -->
-          <bet-item @update_score="update_score" :active_score="active_score" v-if="is_mounted && ol_data && ol_data._hpid"  :ol_data="ol_data" />
+          <bet-item @update_score="update_score" :active_score="active_score" v-if="is_mounted && ol_data && ol_data._hpid && ol_data.ov"  :ol_data="ol_data" />
         </div>
       </div>
     </div>
@@ -231,20 +231,25 @@ function getCurState (hipo) {
     height: 100%;
   }
 }
-::v-deep.bet-item-wrap-ouzhou {
+::v-deep.bet-item-wrap-ouzhou  {
         display: flex;
         width: 78px;
         height: 48px;
         border-radius: 2px;
         justify-content: center;
         align-items: center;
+        cursor: default;
+        .c-bet-item {
+          cursor: pointer;
+        }
+        .c-bet-item:hover {
+            background: rgba(255, 112, 0, 0.1);
+        }
+        
         &.bet-item-wrap-ouzhou-bigger {
           width: 133px;
         }
 
-        &:hover {
-            background: rgba(255, 112, 0, 0.1);
-        }
         .c-bet-item.active {
           background: #FF7000;
           .handicap-value, .handicap-value-text {

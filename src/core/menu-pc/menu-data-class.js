@@ -1,12 +1,14 @@
 import base_data_instance from "src/core/base-data/base-data.js";
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import { computed_menu_to_match_templte } from 'src/core/match-list-pc/list-template/pc-menu-match-template.js'
+import { computed_menu_to_match_templte_ouzhou } from 'src/core/match-list-pc/list-template/ouzhou-pc-menu-match-template.js'
 import PageSource from 'src/core/page-source/page-source.js'
 import {
   useMittOn,
   useMittEmit,
   useMittEmitterGenerator,
   MITT_TYPES,
+  PROJECT_NAME
 } from "src/core/index.js"
 
 import { utils } from "src/core/index.js";
@@ -265,7 +267,12 @@ class MenuData {
   get_match_tpl_number() {
     let euid = lodash.get(this.left_menu_result, 'lv1_mi');
     // 根据当前的菜单id 取到对应的模板id
-    let current_template_id = computed_menu_to_match_templte(euid)
+    let current_template_id;
+    if (PROJECT_NAME == 'ouzhou-pc') {
+      current_template_id = computed_menu_to_match_templte_ouzhou(euid)
+    } else {
+      current_template_id = computed_menu_to_match_templte(euid)    
+    }
     return current_template_id
 
     // let r = (match_list.params || {}).orpt || 1;
@@ -293,7 +300,7 @@ class MenuData {
    * lv2_mi
    */
   set_left_menu_result(obj) {
-    console.log('set_left_menu_result', obj)
+    console.log('MENUDATA.set_left_menu_result', obj)
     this.menu_root = obj.root;
     this.menu_root_show_shoucang = obj.root;
     // 设置 列表接口类型
@@ -324,7 +331,7 @@ class MenuData {
         version: Date.now(),
       };
     }
-    MATCH_LIST_TEMPLATE_CONFIG[`template_${this.get_match_tpl_number()}_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'))
+    MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'))
     if ([2, 3].includes(Number(obj.root))) {
       // 角球
       if ([101210, 101310].includes(+obj.lv2_mi)) {
@@ -341,7 +348,7 @@ class MenuData {
     this.set_multi_column();
 
     this.set_menu_data_version();
-    useMittEmit(MITT_TYPES.EMIT_MATCH_LIST_UPDATE)
+    // useMittEmit(MITT_TYPES.EMIT_MATCH_LIST_UPDATE)
   }
   /**
    * 中间菜单显示配置 默认的
@@ -380,17 +387,17 @@ class MenuData {
    *
    */
   set_mid_menu_result(obj) {
+    
     this.mid_menu_result = {
       ...obj,
       version: Date.now(),
     };
-    this.menu_root_show_shoucang = obj.root;
-    console.log('objobjobjobj', obj);
-    MATCH_LIST_TEMPLATE_CONFIG[`template_${this.get_match_tpl_number()}_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'))
-    console.error(
-      "set_mid_menu_result-------",
+    console.log(
+      "MENUDATA.set_mid_menu_result-------",
       JSON.stringify(this.mid_menu_result)
     );
+    this.menu_root_show_shoucang = obj.root;
+    MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'))
     // 设置全屏
     this.set_multi_column();
     useMittEmit(MITT_TYPES.EMIT_MATCH_LIST_UPDATE)

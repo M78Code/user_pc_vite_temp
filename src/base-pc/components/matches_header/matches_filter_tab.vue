@@ -1,7 +1,7 @@
 <template>
   <div class="current-filter-wrap">
     <div class="current-filter-tab" v-for="(item, index) in current_filter_list" :key="item.value">
-      <div class="filter-label" @click="choose_filter_tab(item, index)" :class="{ 'checked': current_choose_tab == item.value }">
+      <div class="filter-label" @click="choose_filter_tab(item)" :class="{ 'checked': current_choose_tab == item.value }">
         {{ item.label }}
         <div class="current-mark" :class="{'show-mark': current_choose_tab == item.value}"></div>
       </div>
@@ -11,12 +11,13 @@
 </template>
 
 <script setup>
-  import { ref,onMounted,onUnmounted, watch, nextTick } from 'vue';
+  import { ref,onMounted,onUnmounted, watch } from 'vue';
   import _ from "lodash"
   import MatchListOuzhouClass from 'src/core/match-list-pc/match-ouzhou-list.js'
   import BaseData from "src/core/base-data/base-data.js";
   import { UserCtr,MenuData } from 'src/core/index.js'
   import { api_common } from "src/api/index.js";
+  import DateTabClass from "src/base-pc/components/tab/date-tab/date-tab-class.js"
 
   const current_choose_tab = ref('');
 
@@ -50,53 +51,11 @@ let un_subscribe = () => {
 };
 
 /**
- * 计算 日期 接口 请求参数
- */
- function compute_get_date_menu_list_params() {
-  let params = {};
-  let left_menu_result = MenuData.left_menu_result;
-  let {
-    lv1_mi,
-    lv2_mi,
-    euid,
-    tid = "",
-  } = left_menu_result;
-  if (lv1_mi == 2000) {
-    //  早盘 或者 今日的  电竞
-    let csid = parseInt(lv2_mi) - 2000;
-    params = {
-      csid,
-      device: "PC_PRO",
-    };
-  } else {
-    // 早盘 的 请求 euid 是 赛种  +3 对应的 euid 不是 玩法对应的
-    let mi_euid = BaseData.mi_info_map[`mi_${lv1_mi}3`] || {};
-    // orpt // pis
-    let mi_info = BaseData.mi_info_map[`mi_${lv2_mi}`] || {};
-    if (lv1_mi == 118) {
-      euid = '3020212'
-    }
-    // 早盘的 其他 常规赛种
-    params = {
-      apiType: 1,
-      cuid: UserCtr.get_uid(), //用户 id
-      device: "PC",
-      ...mi_info,
-      euid: mi_euid.euid || euid, // lv2_mi 找到 euid
-      md: '',
-      selectionHour: null,
-      sort: 1,
-      tid,
-    };
-  }
-  return params;
-}
-/**
 * 获取 日期 菜单
 * nu/getDateMenuList
 */
 async function get_date_menu_list() {
-  let params = compute_get_date_menu_list_params();
+  let params =  DateTabClass.compute_get_date_menu_list_params();
   let api_fn_name = ''
   if (MenuData.is_export()) {
     //电竞
@@ -119,27 +78,16 @@ async function get_date_menu_list() {
     });
   }
   current_filter_list.value = [{label:"Today",value:""}, ...arr]
-  handle_click_menu_mi_3_date(current_filter_list.value[0], 0)
+  DateTabClass.handle_click_menu_mi_3_date(current_filter_list.value[0])
 }
 
 watch(MenuData.menu_data_version,()=>{
-  nextTick(()=>{
-    get_date_menu_list()
-  })
+  get_date_menu_list()
 })
-  /**
- * 
- * @param {Number} item.mi
- * @description 过滤mi<300
- */
-
-const filter_min_mi_300 = (originalArray)=>{
-  return originalArray.filter(item => parseInt(item.mi) < 300);
-}
   /**
    * @param
    */
-  const choose_filter_tab = (item, index) => {
+  const choose_filter_tab = item => {
     // 获取最新的 数据
     let redux_menu = _.cloneDeep(MatchListOuzhouClass.redux_menu) 
     // 修改菜单数据
@@ -149,31 +97,8 @@ const filter_min_mi_300 = (originalArray)=>{
 
     current_choose_tab.value = item.value
 
-    handle_click_menu_mi_3_date(item, index)
+    DateTabClass.handle_click_menu_mi_3_date(item)
   }
-
-  /**
- *  早盘 的 日期 菜单点击
- */
-function handle_click_menu_mi_3_date (detail = {}) {
-  let { md, index } = detail;
-  let root = MenuData.menu_root;
-  let { lv2_mi, lv1_mi } = MenuData.left_menu_result
-  // 当前 pid 和 orpt
-  let lv2_mi_info = BaseData.mi_info_map[`mi_${lv2_mi}`];
-  // 父级euid
-  let euid;
-  if (root != 2000) {
-    // 娱乐
-    if (lv1_mi == 118) {
-      euid = '3020212' || BaseData.mi_info_map[`mi_${lv2_mi}`].euid;
-    } else {
-      euid = BaseData.mi_info_map[`mi_${lv1_mi}${root}`]?.euid
-    }
-  }
-  let params = { ...lv2_mi_info, lv2_mi, md, euid };
-  MenuData.set_mid_menu_result(params);
-}
 
   onUnmounted(()=>{
     un_subscribe()
