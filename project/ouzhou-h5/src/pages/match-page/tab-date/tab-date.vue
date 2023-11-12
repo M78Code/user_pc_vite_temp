@@ -1,57 +1,57 @@
 <template>
-            <div class="header" :style="{ height: tabActive == 'league' ? '0.59rem' : '1.04rem' }">
-                <div class="tabs">
-                    <div class="matches" :class="tabActive == 'matches' ? 'active' : ''
-                    ">
-                        <span @click="changeTab('matches', 0)">{{
-                            "Matches"
-                        }}</span>
-                    </div>
-                    <div class="league" :class="tabActive == 'league' ? 'active' : ''
-                    " @click="changeTab('league', 1)">
-                        <span>{{ "League" }}</span>
-                    </div>
-                    <!-- league的下拉项 -->
-                    <div class="select" v-if="tabActive == 'league'">
-                        <span class="select-text">{{
-                            // selectOptions[0].label
-                            curSelectedOption.label
-                        }}</span>
-                        <span class="down_arrow" @click="toggerModel"></span>
-                    </div>
-                    <template v-if="tabModel && tabActive == 'league'">
-                        <ul class="option-list">
-                            <template v-for="(item, index) in selectOptions" :key="index">
-                                <li :class="dateIndex == index ? 'active' : ''
-                                " @click="changeDate(index)">
-                                    {{ item.label }}
-                                </li>
-                            </template>
-                        </ul>
+    <div class="header" :style="{ height: tabActive == 'league' ? '0.59rem' : '1.04rem' }">
+        <div class="tabs">
+            <div class="matches" :class="tabActive == 'matches' ? 'active' : ''
+            ">
+                <span @click="changeTab('matches', 0)">{{
+                    "Matches"
+                }}</span>
+            </div>
+            <div class="league" :class="tabActive == 'league' ? 'active' : ''
+            " @click="changeTab('league', 1)">
+                <span>{{ "League" }}</span>
+            </div>
+            <!-- league的下拉项 -->
+            <div class="select" v-if="tabActive == 'league'">
+                <span class="select-text">{{
+                    // selectOptions[0].label
+                    curSelectedOption.label
+                }}</span>
+                <span class="down_arrow" @click="toggerModel"></span>
+            </div>
+            <template v-if="tabModel && tabActive == 'league'">
+                <ul class="option-list">
+                    <template v-for="(item, index) in selectOptions" :key="index">
+                        <li :class="dateIndex == index ? 'active' : ''
+                        " @click="changeDate(index)">
+                            {{ item.label }}
+                        </li>
                     </template>
+                </ul>
+            </template>
+        </div>
+        <div class="menu_list_top_tab_background" :class="'current_menu_mi_' + current_menu_mi"></div>
+        <!-- 七天时间 -->
+        <div class="date_time" v-if="tabActive == 'matches'">
+            <q-virtual-scroll ref="scrollRef" :items="week" virtual-scroll-horizontal v-slot="{ item, index }">
+                <div @click="changeDatetab(item, index)" class="week" :class="second_tab_index == index ? 'active' : ''">
+                    <span>
+                        <!-- <span>{{ month[new Date().getMonth()] }}</span> -->
+                        <!-- <span class="din_font">{{ new Date().getDate() + index }}</span> -->
+                        <span>{{ item.name }}</span>
+                    </span>
+                    <span class="border_right"></span>
                 </div>
-                <div class="menu_list_top_tab_background" :class="'current_menu_mi_' + current_menu_mi"></div>
-                <!-- 七天时间 -->
-                <div class="date_time" v-if="tabActive == 'matches'">
-                    <q-virtual-scroll ref="scrollRef" :items="week" virtual-scroll-horizontal v-slot="{ item, index }">
-                        <div @click="changeDatetab(item, index)" class="week" :class="second_tab_index == index ? 'active' : ''">
-                            <span>
-                                <!-- <span>{{ month[new Date().getMonth()] }}</span> -->
-                                <!-- <span class="din_font">{{ new Date().getDate() + index }}</span> -->
-                                <span>{{ item.name }}</span>
-                            </span>
-                            <span class="border_right"></span>
-                        </div>
-                    </q-virtual-scroll>
-                </div>
-                <!-- <div class="date_time" v-if="tabActive == 'league'">
+            </q-virtual-scroll>
+        </div>
+        <!-- <div class="date_time" v-if="tabActive == 'league'">
             <q-virtual-scroll ref="scrollRefArea" :items="areaList" virtual-scroll-horizontal v-slot="{ item, index }">
                 <div @click="areaListChange(index)" class="week" :class="area_tab_index == index ? 'active' : ''">
                     {{ item }}
                 </div>
             </q-virtual-scroll>
         </div> -->
-            </div>
+    </div>
 </template>
   
 <script setup>
@@ -65,7 +65,9 @@ import {
 import { dateWeekMatchesFormat } from './utils';
 import { MenuData } from "src/core/";
 import dayjs from "dayjs";
-
+import { useRoute } from "vue-router";
+const route = useRoute();
+const sportId = route.query.sportId;
 const emit = defineEmits(["changeDate", "changeTab"]);
 const tabActive = ref("matches");//tab
 const tabModel = ref(false);//下拉框
@@ -143,6 +145,28 @@ watch(() => MenuData.menu_mi.value, () => {
 })
 onMounted(() => {
     MenuData.set_date_time(week[0].val);
+    second_tab_index.value = index;
+    MenuData.set_date_time(item.val, item.type);
+    emit("changeDate", MenuData.menu_match_date_params);
+})
+/**
+ * 默认请求今日数据
+ * @param {*} mi 
+ */
+const setDefaultData = (mi) => {
+    MenuData.set_current_lv1_menu("2");
+    MenuData.set_menu_mi(mi);
+    //球种改变设置今日
+    MenuData.set_date_time(week[0].val);
+    changeDatetab(week[0], 0)
+}
+watch(() => route.fullPath, () => {
+    if (route.name === 'matchList') {
+        setDefaultData(sportId)
+    }
+})
+onMounted(() => {
+    setDefaultData(sportId)
 })
 /**
  * 地区选择tab
@@ -170,7 +194,7 @@ const areaListChange = (index) => {
         display: flex;
         align-items: center;
         justify-content: flex-start;
-        border-bottom:1px solid  #FF7000;
+        border-bottom: 1px solid #FF7000;
         position: relative;
 
         div {

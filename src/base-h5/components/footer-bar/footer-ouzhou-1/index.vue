@@ -23,6 +23,7 @@
 import { defineComponent, ref, reactive, watch,computed  } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { MenuData } from 'src/core/'
+import VirtualList from 'src/core/match-list-h5/match-class/virtual-list'
 const router = useRouter();
 // 底部菜单集合
 const tab_list = reactive([
@@ -41,6 +42,7 @@ const jump_page = (item) => {
   tab_active.value = item.route
   router.push(item.route)
   // 设置一级菜单 注： 普通赛果是28, 投注赛果是29， 欧洲版不考虑投注
+  if (item.route === '/matchResults') VirtualList.set_is_show_ball(false)
   item.type && MenuData.set_current_lv1_menu(item.type)
 }
 

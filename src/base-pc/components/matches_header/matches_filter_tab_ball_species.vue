@@ -40,7 +40,7 @@
         <div class="filter-tab-split-line"></div>
       </div>
        <!-- vr -->
-       <div
+       <!-- <div
         class="current-filter-tab"
         v-for="(item, index) in vr_menu_data" :key="index"
       >
@@ -57,7 +57,7 @@
           <img class="current-mark" :class="{ 'show-mark': current_choose_tab == item.mif }" src="../../../assets/images/mask_group.png" alt="">
         </div>
         <div class="filter-tab-split-line" v-show="index != vr_menu_data.length - 1"></div>
-      </div>
+      </div> -->
 
     </div>
     <div class="prev-btn-box" v-show="show_left_btn" @click="filter_tab_scroll('prev')">
@@ -107,8 +107,6 @@ let interval_id = null;
 const show_left_btn = ref(false);
 // 是否显示右边按钮
 const show_right_btn = ref(false);
-// tab页面数据
-const menu_tab_list = ref([])
 //常规体育
 const mi_100_arr = ref([]);
 //电竞
@@ -133,15 +131,42 @@ onMounted(() => {
   console.log(mi_100_list,mi_2000_list, vr_menu_obj )
   //常规体育
   mi_100_arr.value = mi_100_list;
-  // 默认选中当前第一个tab
-  current_choose_tab.value = mi_100_list.length ? mi_100_list[0].mif : 101
   //电竞
   mi_2000_arr.value = mi_2000_list;
   //vr
   vr_menu_data.value = vr_menu_obj
-  
+  //判断接口是否正常返回数据
+  if (mi_100_list.length) {
+    // 默认选中当前第一个tab
+    current_choose_tab.value = mi_100_list[0].mif
+    SportsDataClass.handle_click_menu_mi_1({
+      mi: mi_100_list[0].mi,
+      root: '1',
+      mif: mi_100_list[0].mif,
+      sports: 'common',
+      guanjun: '',
+    })
+  } else {
+    // 默认选中当前第一个tab
+    current_choose_tab.value = 101
+    SportsDataClass.handle_click_menu_mi_1({
+      mi: '"1011"',
+      root: '1',
+      mif: 101,
+      sports: 'common',
+      guanjun: '',
+    })
+  }
 })
+/**
+ * 
+ * @param {Number} item.mi
+ * @description 过滤mi<300
+ */
 
+const filter_min_mi_300 = (originalArray)=>{
+  return originalArray.filter(item => parseInt(item.mi) < 300);
+}
 /**
  * 
  * @param {Number} item.mif 

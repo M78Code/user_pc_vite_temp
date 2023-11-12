@@ -52,6 +52,7 @@
  *
  */
 import MatchListCardData from "./module/match-list-card-data-class.js";
+import {get_match_template_id} from '../match-handle-data.js'
 // import { recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_tid_zhedie } from "./module/fold-tid.js";
 import { set_match_basic_data } from "./module/match-base-data.js";
 import {
@@ -199,6 +200,7 @@ class MatchListCardInfo {
    * 计算 当前的 赛事列表 级别 的 卡片 数据
    */
   compute_match_list_style_obj_and_match_list_mapping_relation_obj(match_list) {
+   
     compute_match_list_style_obj_and_match_list_mapping_relation_obj(match_list);
   }
   /**

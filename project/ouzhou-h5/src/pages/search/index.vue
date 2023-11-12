@@ -72,8 +72,15 @@
 								</p>
 								<p>{{ (new Date(+item.mgt)).Format('MM/dd hh:mm') }}</p>
 							</div>
-							<div style="flex: 1">
-								<ScoreList :match_info="item"></ScoreList>
+							<div style="display: flex;flex-direction: row;">
+								<!-- item?.hps[0].hl.hpid === '1' && item?.hps[0].hl[0].ol[0].os -->
+								<div>
+									<div>1</div>
+									<div>2</div>
+								</div>
+								<!-- <div>
+									<img class="lock" :src="odd_lock_ouzhou" alt="lock">
+								</div> -->
 							</div>
 						</div>
 					</li>
@@ -102,8 +109,9 @@
 								</p>
 								<p>{{ (new Date(+i.mgt)).Format('MM/dd hh:mm') }}</p>
 							</div>
-							<div style="flex: 1">
-								<ScoreList :match_info="item"></ScoreList>
+							<div>
+								<div>1</div>
+								<div>2</div>
 							</div>
 						</div>
 					</li>
@@ -125,8 +133,9 @@
 								</p>
 								<p>{{ (new Date(+item.mgt)).Format('MM/dd hh:mm') }}</p>
 							</div>
-							<div style="flex: 1">
-								<ScoreList :match_info="item"></ScoreList>
+							<div>
+								<div>1</div>
+								<div>2</div>
 							</div>
 						</div>
 					</li>
@@ -145,9 +154,12 @@
 					:class="['tab', tabIndex === index ? 'active' : '']">{{ item.sportName }}</div>
 			</div>
 			<div class="middle_info_tab diff">No results found. please try a different search term.</div>
-			<div class="not_found">
+			<!-- <div class="not_found">
 				<img :src="compute_local_project_file_path('image/png/not_found.png')" alt="">
 				<p>No results</p>
+			</div> -->
+			<div class="not_found">
+			<no-data :code="400"></no-data>
 			</div>
 		</div>
 	</div>
@@ -162,7 +174,7 @@ import { get_history_search, get_search_result, get_search_sport } from "src/api
 import { api_search } from 'src/api/';
 import ScoreList from 'src/base-h5/components/match-container/template/ouzhou/components/score-list.vue';
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
-
+import NoData from './components/no-data.vue'// 无数据组件
 const { get_insert_history, get_fetch_hot_search } = api_search || {};
 
 const input_value = ref('');
@@ -236,9 +248,7 @@ const get_search_data = (index = 0, sport_id = 1, keyword) => {
 	get_search_result(params).then(res => {
 		if (res.code === '200') {
 			search_data.value = res.data.data;
-			get_match_base_hps()
-		}else{
-			search_data.value = [];
+			get_match_base_hps_by_mids()
 		}
 	});
 }
@@ -338,10 +348,90 @@ function get_hot_search() {
 // 获取赔率
 const scroll_timer = ref(0)
 const get_match_base_hps = lodash.debounce(() => {
-  MatchMeta.get_match_base_hps_by_mids()
+  get_match_base_hps_by_mids()
   clearTimeout(scroll_timer.value)
   scroll_timer.value = null
 }, 600)
+
+
+/**
+ * @description 获取赛事赔率
+ */
+let match_mid_Arr = [];
+const get_match_base_hps_by_mids = async () => {
+	if (!(search_data.value.teamH5 && search_data.value.teamH5.length > 0) &&
+			!(search_data.value.league && search_data.value.league.length > 0) && 
+			!(search_data.value.bowling && search_data.value.bowling.length > 0) 
+			) return;
+	// 拿到所有滚球，联赛，队伍 mid
+	search_data.value.teamH5.forEach((item, index) => {
+		match_mid_Arr.push(item.mid)
+	})
+	search_data.value.league.forEach((item, index) => {
+		item.matchList.forEach((i, idx) => {
+			match_mid_Arr.push(i.mid)
+		})
+	})
+	search_data.value.bowling.forEach((item, index) => {
+		match_mid_Arr.push(item.mid)
+	})
+	if (match_mid_Arr.length < 1) return;
+	const match_mids = match_mid_Arr.join(',')
+	console.log('match_mids', match_mids);
+	// 竞足409 不需要euid
+	const params = {
+		mids: match_mids,
+		cuid: uid,
+		sort: 1,
+		device: ['', 'v2_h5', 'v2_h5_st'][UserCtr.standard_edition],
+	};
+	await api_common.get_match_base_info_by_mids(params).then((res) => {
+		console.log('res', res);
+		if(res.code === '200') {
+			const { data } = res;
+			for(let i = 0; i < data.length; i++) {
+				for(let j = 0; j < search_data.value.teamH5.length; j++) {
+					if(data[i].mid === search_data.value.teamH5[j].mid) {
+						// item?.hps[0].hl.hpid === '1' && item?.hps[0].hl[0].ol[0].os
+						search_data.value.teamH5[j] = data[i]
+						console.log(search_data.value.teamH5[j], data[i]);
+						break;
+					}
+				}
+				for(let k = 0; k < search_data.value.league.length; k++) {
+					search_data.value[k].matchList.forEach((item, index) => {
+						if(data[i].mid === search_data.value.league[index].mid) {
+							search_data.value.league[index] = data[i]
+							console.log(search_data.value.league[k][index], data[i]);
+						}
+					})
+				}
+				for(let l = 0; l < search_data.value.bowling.length; l++) {
+					if(data[i].mid === search_data.value.bowling[l].mid) {
+						// item?.hps[0].hl.hpid === '1' && item?.hps[0].hl[0].ol[0].os
+						search_data.value.bowling[l] = data[i]
+						console.log(search_data.value.bowling[l], data[i]);
+						break;
+					}
+				}
+				break;
+			}
+		}
+	})
+	// let res = ''
+	// // 赛果
+	// if (MenuData.is_export()) {
+	// 	res = await api_common.get_esports_match_by_mids(params)
+	// } else {
+	// 	res = await api_common.get_match_base_info_by_mids(params)
+	// }
+	// if (!res) return
+	// const { code, data } = res
+	// if (+code !== 200) return
+	// const list = MatchPage.get_obj(data)
+	// // 设置仓库渲染数据
+	// this.handle_update_match_info(list, 'cover')
+}
 
 onMounted(() => {
 	get_hot_search();
@@ -436,7 +526,7 @@ watch(
 	position: fixed;
 	width: 100%;
 	z-index: 1;
-
+	color: #1A1A1A;
 	.tab {
 		background-color: #FFf;
 		border-radius: 40px;
@@ -500,6 +590,10 @@ li {
 		.middle {
 			color: red;
 			margin: 0 5px;
+		}
+		.lock {
+			width: 16px;
+			height: 16px;
 		}
 	}
 }

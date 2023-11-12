@@ -79,5 +79,8 @@ onMounted(() => {
     height: calc(100% - 1.71rem);
     overflow: hidden;
     overflow-y: auto;
+    .match-list-container{
+      background: #fff !important;
+    }
 }
 </style>

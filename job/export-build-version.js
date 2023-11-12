@@ -24,8 +24,10 @@ const PROJECT_MAP = {
 };
 //布局名字
 const PROJECT_NAME = PROJECT_MAP[PROJECT];
+//所有资源项目级别目录
+const ALL_PROJECT = [...Object.values(PROJECT_MAP),'activity']
 //删除布局资源数组
-const NEED_DELETE_PROJECT = Object.values(PROJECT_MAP).filter(x=>x!=PROJECT_NAME)
+const NEED_DELETE_PROJECT = ALL_PROJECT.filter(x=>x!=PROJECT_NAME)
 
 
 //参数内环境和代码内环境映射
@@ -64,7 +66,7 @@ function format_date(value) {
 }
 const BUILD_VERSION = format_date(new Date().getTime());
 
- 
+const BUILD_DIR_NAME = 'self-use-version'
 
 const config = {
   BUILD_VERSION: IS_DEV ? "" : BUILD_VERSION,
@@ -76,8 +78,9 @@ const config = {
   PROJECT_NAME,
   NEED_DELETE_PROJECT,
   IS_PC: PROJECT_NAME.includes('pc'),
+  BUILD_DIR_NAME,
   PUCK_UP_TIME,
- 
+  
   OSS_FILE_NAME
  
 };

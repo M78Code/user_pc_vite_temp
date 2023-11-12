@@ -20,12 +20,12 @@
     <MatchesHeader />
     <div class="match-list-scroll scroll" v-show="!coom_soon_state">
       <!-- 头部15 Mins模块 -->
-      <div v-show="matches_15mins_list.length">
+      <div v-show="matches_15mins_list.length && is_display">
         <CurrentMatchTitle :title_value="'15 Mins'" :show_more_icon="false" />
         <MatchCardList15Mins :matches_15mins_list="matches_15mins_list" />
       </div>
       <!-- 头部Featured Matches模块 -->
-      <div v-show="matches_featured_list.length">
+      <div v-show="matches_featured_list.length && is_display">
         <CurrentMatchTitle :title_value="'Featured Matches'" :show_more_icon="false" />
         <FeaturedMatches :matches_featured_list="matches_featured_list" />
       </div>
@@ -138,6 +138,9 @@ export default {
     const matches_featured_list = ref([]);
 
     const match_list_card_key_arr = ref([])
+
+    const is_display = ref(true)
+
     const coom_soon_state =ref(false)
 
     const match_list_top = ref('76px')
@@ -179,12 +182,20 @@ export default {
     )
 
     watch(
+      MatchListOuzhouClass.version,
+      () => {
+        is_display.value= MatchListOuzhouClass.redux_menu.menu_root === 1 ? true : false
+      },
+    )
+
+    watch(
       MatchListOuzhouClass.coom_soon,
       () => {
         coom_soon_state.value= MatchListOuzhouClass.coom_soon.value
         proxy?.$forceUpdate()
       },
     )
+
 
     return {
       menu_config,
@@ -202,7 +213,8 @@ export default {
       MatchListCardDataClass   ,
       load_data_state,
       coom_soon_state,
-      match_list_top
+      match_list_top,
+      is_display
     };
   },
 };

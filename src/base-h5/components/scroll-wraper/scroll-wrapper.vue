@@ -41,6 +41,7 @@
 </template>
 
 <script setup>
+import { useRoute } from 'vue-router';
 import { ref, onMounted, watch, computed, onUnmounted } from 'vue' 
 import lodash from 'lodash'
 import store from "src/store-redux/index.js";
@@ -177,8 +178,10 @@ const goto_top = () => {
   RouterScroll.scroll_list_wrapper_by(0);
 }
 
+// 是否虚拟计算逻辑
 const get_is_static = () => {
-  return is_kemp.value || is_collect.value
+  const route = useRoute()
+  return is_kemp.value || is_collect.value || route?.name === 'collect'
 }
 // 计算每个赛事id 对应的 容器高度 top 值
 const get_match_top_by_mid1 = (mid) => {
@@ -287,7 +290,7 @@ onUnmounted(() => {
       top: 0;
       left: 0;
       &.last{
-        padding-bottom: 0.01rem;
+        // padding-bottom: 0.01rem;
         .match-container{
           padding-bottom: 0rem !important;
         }
