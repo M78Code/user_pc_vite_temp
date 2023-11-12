@@ -217,7 +217,12 @@ export default {
     get_match_count () {
       const { csid, start_flag } = this.match_of_list
       const key = start_flag === 1 ? `progress_csid_${csid}` : `not_csid_${csid}`
-      return lodash.get(MatchResponsive.ball_seed_count.value, `${key}`, 0)
+      return lodash.get(MatchResponsive.ball_seed_count.value, `${key}`, 1)
+    },
+     // 获取联赛赛事数量
+    get_ball_seed_league_count () {
+      const { tid } = this.match_of_list
+      return lodash.get(MatchResponsive.ball_seed_league_count.value, `tid_${tid}`, 1)
     },
     // 是否有角球
     get_corner_kick () {

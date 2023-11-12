@@ -11,6 +11,7 @@ import { ref } from "vue";
 import BaseData from "src/core/base-data/base-data.js";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import {MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/";
+import { MITT_TYPES,useMittEmit } from "src/core/mitt/index.js" 
 import MatchFold from 'src/core/match-fold';
 const menu_type_config = {
   1: 1,
@@ -74,7 +75,8 @@ class MenuData {
     })
     this.menu_list = menu_list;
     this.top_events_list = top_events_list;
-    this.update()
+    useMittEmit(MITT_TYPES.EMIT_UPDATE_INIT_DATA);
+
   }
   //设置赛果参数
   set_result_menu_api_params(val){

@@ -45,10 +45,12 @@
       <animal_box v-if="animal_key" :show_type="show_type"  :detail_info="detail_info" />
       <!-- 比分 -->
       <score_info
-        v-show="score_key&&!lodash_.isEmpty(score_list)&&detail_info.ms>0"
+        v-show="score_key&&!lodash_.isEmpty(score_list)&&detail_info.ms==1"
         :score_list="score_list"
         :detail_info="detail_info"
       />
+     <!-- 即将开赛 -->
+      <comming-soon v-show="detail_info.ms!=1&&score_key"  :detail_info="detail_info"></comming-soon>
       
     </div>
   </div>
@@ -59,6 +61,7 @@ import { onMounted, ref, computed, watch } from "vue";
 import animal_box from "./animal_box.vue";
 
 import score_info from "./score_info.vue";
+import commingSoon from "./comming-soon.vue";
 import { LOCAL_PROJECT_FILE_PREFIX } from "src/core/index.js";
 import { get_match_status } from "src/core/utils/index";
 import lodash_ from "lodash";

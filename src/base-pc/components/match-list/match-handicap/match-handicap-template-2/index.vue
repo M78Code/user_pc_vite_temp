@@ -15,10 +15,12 @@
         :key="col_index" 
         :style="{ 'width': match_list_tpl_size.bet_width + 'px' }"
       >
-        <div :class="['bet-item-wrap-ouzhou', deal_width_handicap_ols(col.ols).length ===2 && 'bet-item-wrap-ouzhou-bigger']" v-for="(ol_data, ol_index) in deal_width_handicap_ols(col.ols)"
+        <div 
+          :class="['bet-item-wrap-ouzhou', deal_width_handicap_ols(col.ols).length ===2 && 'bet-item-wrap-ouzhou-bigger']" 
+          v-for="(ol_data, ol_index) in deal_width_handicap_ols(col.ols)"
           :key="ol_index">
           <!-- 投注项组件 -->
-          <bet-item v-if="is_mounted && ol_data && ol_data._hpid" :ol_data="ol_data" />
+          <bet-item @update_score="update_score" :active_score="active_score" v-if="is_mounted && ol_data && ol_data._hpid"  :ol_data="ol_data" />
         </div>
       </div>
     </div>
@@ -67,9 +69,12 @@ const props = defineProps({
 
 let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.match.mid)
 // 赛事模板宽度
-const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`].width_config
+const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].width_config
 let MatchListDataInfo = MatchListData
-
+const active_score = ref('')
+const update_score = (res)=>{
+  active_score.value = res;
+}
 watch(() => MatchListData.data_version.version, () => {
   MatchListDataInfo = MatchListData
 })

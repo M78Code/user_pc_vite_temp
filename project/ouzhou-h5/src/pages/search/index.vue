@@ -205,9 +205,12 @@
 					:class="['tab', tabIndex === index ? 'active' : '']">{{ item.sportName }}</div>
 			</div>
 			<div class="middle_info_tab diff">No results found. please try a different search term.</div>
-			<div class="not_found">
+			<!-- <div class="not_found">
 				<img :src="compute_local_project_file_path('image/png/not_found.png')" alt="">
 				<p>No results</p>
+			</div> -->
+			<div class="not_found">
+			<no-data :code="400"></no-data>
 			</div>
 		</div>
 	</div>
@@ -223,7 +226,7 @@ import { api_search } from 'src/api/';
 import { compute_value_by_cur_odd_type } from "src/core/index.js";
 import { api_common, api_match_list } from "src/api/index.js";
 import { odd_lock_ouzhou } from 'src/base-h5/core/utils/local-image.js'
-
+import NoData from './components/no-data.vue'// 无数据组件
 const { get_insert_history, get_fetch_hot_search } = api_search || {};
 
 const input_value = ref('');
@@ -560,7 +563,7 @@ watch(
 	position: fixed;
 	width: 100%;
 	z-index: 1;
-
+	color: #1A1A1A;
 	.tab {
 		background-color: #FFf;
 		border-radius: 40px;

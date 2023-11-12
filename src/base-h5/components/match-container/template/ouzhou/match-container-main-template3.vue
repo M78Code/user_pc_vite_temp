@@ -2,7 +2,7 @@
  * @Description: app-h5 赛事组件，用于赛事列表展示赛事信息
 -->
 <template>
-  <div :class="['match-container']" 
+  <div :class="['match-container m-3']" 
     :style="{ marginTop: is_hot ? '0' : '' }">
     <template v-if="match">
       
@@ -124,7 +124,7 @@
                           <div class='team-t-title-w' :class="{
                             'is-handicap': match.handicap_index == 1,
                             'is-handicap-1': match.handicap_index == 2,
-                          }">
+                          }" style="margin: 5px 0 2px;">
                             {{ match.mhn }}
                           </div>
                           <!-- 进球动画 -->
@@ -554,7 +554,7 @@ export default {
     border-radius: 0;
     display: flex;
     height: 36px;
-    padding-left: 10px;
+    padding-left: 25px;
     color: #1a1a1a;
     background: #F1F1F1 !important;
     // padding: 0 0.1rem;
@@ -735,7 +735,7 @@ export default {
       line-height: 1;
       min-width: 1.18rem;
       display: flex;
-      font-size: .12rem;
+      font-size: 14px;
       &.export {
         min-width: 1.1rem;
       }
@@ -845,8 +845,8 @@ export default {
       }
 
       &.result {
-        padding-top: 0.1rem;
-        padding-bottom: 0.1rem;
+        padding-top: 8px;
+        padding-bottom:8px;
       }
     }
 
@@ -915,6 +915,7 @@ export default {
           line-height: 0.14rem;
           display: flex;
           align-items: center;
+          font-size: 14px;
 
           /*图标*/
           .team-icon {
@@ -956,7 +957,7 @@ export default {
           }
 
           .team-t-title-w {
-            font-size: 14px;
+            font-size: 15px;
             height: 24px;
             line-height: 24px;
             width: 100%;
@@ -966,7 +967,7 @@ export default {
             text-overflow: ellipsis;
             white-space: nowrap;
             font-weight: 500;
-            color: #8a8986;
+            color: #1A1A1A;
             &.visiting {
               // color: #8a8986;
             }

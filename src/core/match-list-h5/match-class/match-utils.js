@@ -190,7 +190,7 @@ class MatchUtils {
       const difference = Math.floor(Number(mst) / 60)
       const residue = Math.floor(difference / 15)
       if (difference > 0 && difference <= 90) {
-        title = playingMethods_15.find(p => p.value === residue).title
+        title = playingMethods_15.find(p => p.value === residue)?.title
       }
       if (difference < 0) {
         isLock = true
@@ -198,7 +198,7 @@ class MatchUtils {
       }
       if (difference > 90) {
         isLock = true
-        title = playingMethods_15[playingMethods_15.length - 1].title
+        title = playingMethods_15[playingMethods_15.length - 1]?.title
       }
     }
     return { isLock, title }
