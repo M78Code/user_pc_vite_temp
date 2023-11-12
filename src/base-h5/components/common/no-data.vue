@@ -30,7 +30,7 @@ import { useRoute } from 'vue-router'
 
 import { i18n_t ,} from "src/boot/i18n.js";
 import { useMittEmit,compute_css_obj, MITT_TYPES, LOCAL_PROJECT_FILE_PREFIX, PROJECT_NAME } from "src/core/index.js"
-import { no_data_img, no_data_app, no_data_collect, no_data_ouzhou } from 'src/base-h5/core/utils/local-image.js'
+import { no_data_img, no_data_app, no_data_collect, no_data_ouzhou, coming_soon } from 'src/base-h5/core/utils/local-image.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { is_collect } from 'src/base-h5/mixin/menu.js'
 
@@ -51,6 +51,11 @@ import { is_collect } from 'src/base-h5/mixin/menu.js'
 // TODO: 临时用
 
 const arr_const = {
+    comingSoon: {
+        key:'coming-soon',
+        // '暂无关注的赛事哦',
+        txt: i18n_t('msg.msg_nodata_23'),
+    },
     collect: {
         key:'no-collect',
         // '暂无关注的赛事哦',
@@ -109,6 +114,9 @@ onMounted(init)
 
 const no_data_icon = computed(() => {
     if (PROJECT_NAME === 'ouzhou-h5') {
+        if (props.which === 'comingSoon') {
+            return coming_soon
+        }
         return no_data_ouzhou
     } else {
         if (is_collect.value) {
