@@ -43,10 +43,10 @@
   import _ from 'lodash';
 
   // import store from 'src/store-redux-vuex/index.js';
-  import { storage_bet_info, storage_bet_id } from 'src/core/bet/module/bet_info.js'
   import MatchListOuzhouClass from 'src/core/match-list-pc/match-ouzhou-list.js'
   import sport_icon from "src/base-pc/components/match-list/sport_icon.vue";
   import { get_15mins_odds_list } from "src/core/match-list-pc/list-template/module/template-101.js"
+  import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
 
   // let state = store.getState();
   const props = defineProps({
@@ -74,14 +74,22 @@
   // 选中当前td 使td高亮 且将投注信息存储到数据仓库中
   const checked_current_td = payload => {
     console.log(payload)
-    // 锁盘状态不高亮
-    if (payload.hps.hs) {
-      return;
+    // // 锁盘状态不高亮
+    // if (payload.hps.hs) {
+    //   return;
+    // }
+    // if (payload.ol.oid !== current_check_betId.value) {
+    //   storage_bet_info(payload);
+    // }
+    // storage_bet_id(payload.ol.oid);
+    MatchListOuzhouClass.current_check_betId.value = payload.ol.oid
+    let params = {
+      oid: payload.ol.oid, // 投注项id ol_obj
+      _hid: payload.hps.hid, // hl_obj 
+      _hn: payload.hps.hn,  // hn_obj
+      _mid: payload.payload.mid  //赛事id mid_obj
     }
-    if (payload.ol.oid !== current_check_betId.value) {
-      storage_bet_info(payload);
-    }
-    storage_bet_id(payload.ol.oid);
+    set_bet_obj_config(params,{})
   }
   
 </script>

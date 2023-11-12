@@ -27,9 +27,13 @@
             :data-mid="item.mid"
           >
             <!-- 灰色背景部分 -->
-            <div
+            <!--<div
               class="row text-center new-dialog-item-main"
-              :class="detail_data.mid == item.mid ? 'details-dialog-bg' : ''"
+              :class="detail_data.mid == item.mid ? 'details-dialog-bg' : 'details-dialog-bg_blue'"
+            >-->
+            <div
+                class="row text-center new-dialog-item-main"
+                :class="detail_data.mid == item.mid ? 'details-dialog-bg_blue' : 'details-dialog-bg'"
             >
               <!-- 单项赛事的左侧队伍 -->
               <div class="col">
@@ -277,6 +281,9 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 @import 'src/base-h5/components/details/styles/details-theme/details-dialog.scss';
+.details-dialog-bg_blue{
+  background: #71c5ff !important;
+}
 .details-dialog {
   max-width: 100%;
   width: 100%;

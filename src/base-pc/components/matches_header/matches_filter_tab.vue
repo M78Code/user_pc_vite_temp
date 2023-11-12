@@ -11,7 +11,7 @@
 </template>
 
 <script setup>
-  import { ref,onMounted,onUnmounted, watch, nextTick } from 'vue';
+  import { ref,onMounted,onUnmounted, watch } from 'vue';
   import _ from "lodash"
   import MatchListOuzhouClass from 'src/core/match-list-pc/match-ouzhou-list.js'
   import BaseData from "src/core/base-data/base-data.js";
@@ -82,9 +82,7 @@ async function get_date_menu_list() {
 }
 
 watch(MenuData.menu_data_version,()=>{
-  nextTick(()=>{
-    get_date_menu_list()
-  })
+  get_date_menu_list()
 })
   /**
    * @param
