@@ -168,7 +168,7 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 		set_league_list_obj(res_data)
 		 
 	// 计算列表卡片样式
-	console.log('lockie-1');
+	console.log('lockie-1', res_data);
 		MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
 			res_data,
 		);

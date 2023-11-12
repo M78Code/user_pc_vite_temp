@@ -166,7 +166,7 @@ function fetch_match_list(is_socket = false, cut) {
 					// 重复拉列表的次数小于5   3秒后再次拉接口
 					if (api_error_count.value < 5) {
 						get_match_list_timeid = setTimeout(() => {
-							fetch_match_list();
+							// fetch_match_list();
 						}, 3000);
 					} else {
 						load_data_state.value = "refresh";

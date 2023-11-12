@@ -91,6 +91,7 @@ export const odd_lock_ouzhou = compute_local_project_file_path('/image/list/lock
 export const slide_icon_0 = compute_local_project_file_path('/image/common/slide_icon_y0.svg')
 export const slide_icon_1 = compute_local_project_file_path('/image/common/slide_icon.svg')
 
+export const mask_group = compute_local_project_file_path('/image/list/mask_group.svg')
 
 export const de_img = compute_local_project_file_path('/image/national/DE.png')
 export const be_img = compute_local_project_file_path('/image/national/BE.png')
