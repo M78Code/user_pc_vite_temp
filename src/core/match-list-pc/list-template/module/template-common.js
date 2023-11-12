@@ -202,7 +202,6 @@ export const set_template_width_base = (
   } else {
     config.team_width = config.process_team_width - 77;
   }
-  console.log('config', config);
   return config;
 };
 
@@ -268,4 +267,9 @@ export const get_current_odds_list = (main_handicap_list, { first_hpid, second_h
     }
   })
   return [ first_odds_list, second_odds_list ]
+}
+
+// 获取hots赔率模板
+export const get_hots_odds_list = (main_handicap_list) => {
+  return main_handicap_list[0].ols
 }

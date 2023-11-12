@@ -5,21 +5,24 @@ import * as TemplateCommon from "./template-common.js"
 
 // , { empty: 1 } 空模板
  // 欧洲版 (羽毛球 || 乒乓球 || 沙滩排球 || 排球 || 斯诺克)-让球与大小 赔率模板 全量赔率
- export const template_104={
+ export const template_111={
   main_handicap_list: [
     {
+      _hpid: 153,
       ols: [
         {  _hpid: 153, ot: '1', class: 'no-handicap' },
         {  _hpid: 153, ot: '2', class: 'no-handicap' },
       ],
     },
     {
+      _hpid: 172,
       ols: [
         {  _hpid: 172, ot: '1' },
         {  _hpid: 172, ot: '2' },
       ],
     },
     {
+      _hpid: 173,
       ols: [
         {  _hpid: 173, ot: 'Over' },
         {  _hpid: 173, ot: 'Under' },
@@ -34,7 +37,7 @@ import * as TemplateCommon from "./template-common.js"
 // 用于 拿取当前 用户选择的赔率模板
 // 这里传入的 是我们的玩法id
 export const get_current_odds_list = ({ first_hpid, second_hpid }) => {
-  let odds_list =  TemplateCommon.get_current_odds_list(template_104.main_handicap_list, { first_hpid, second_hpid })
+  let odds_list =  TemplateCommon.get_current_odds_list(template_111.main_handicap_list, { first_hpid, second_hpid })
   return odds_list
 }
 

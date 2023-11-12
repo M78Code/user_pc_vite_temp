@@ -156,7 +156,6 @@ export const compute_match_list_style_obj_and_match_list_mapping_relation_obj =
       MatchListCardData.is_run_card_function = true;
     }
   MatchListCardData.match_list_mapping_relation_obj_type = set_match_list_mapping_relation_obj_type();
-  console.log('match_list_mapping_relation_obj_type',MatchListCardData.match_list_mapping_relation_obj_type)
     // 非ws调用  清空卡片数据
     if (!is_ws_call) {
       MatchListCardData.match_list_render_key++;
