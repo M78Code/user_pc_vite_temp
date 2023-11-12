@@ -82,6 +82,7 @@
     "calculatorjs": "^1.1.2",
     "clipboard": "^2.0.11",
     "current-device": "^0.10.2",
+    "dayjs": "^1.11.10",
     "dexie": "^3.2.4",
     "licia": "^1.38.2",
     "lodash": "^4.17.21",

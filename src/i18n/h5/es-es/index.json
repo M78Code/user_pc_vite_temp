@@ -1870,7 +1870,9 @@
     "msg_nodata_17": "Registro no encontrado",
     "msg_nodata_22": "Demasiado tráfico, por favor inténtelo más tarde",
     "msg_nodata_21": "No se preocupe, haga clic en \"Actualizar\" para recuperar~",
-    "msg_nodata_20": "Hola, desafortunadamente, la página se ha perdido"
+    "msg_nodata_20": "Hola, desafortunadamente, la página se ha perdido",
+    "msg_nodata_23": "Tenondeve"
+
   },
   "myScroll": {
     "msg1": "Tire para actualizar",

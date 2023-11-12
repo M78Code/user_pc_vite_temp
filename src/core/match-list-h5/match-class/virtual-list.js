@@ -109,7 +109,6 @@ class VirtualList {
       // 联赛不显示 赛事显示
       total += main_handicap_height
     }
-    
     return total
   }
 
@@ -119,6 +118,7 @@ class VirtualList {
    * @returns 
    */
   compute_current_page_render_list (scrollTop = 0) {
+    this.clear_virtual_info()
     // 计算总高度
     this.compute_container_total_height()
     // 可视区高度
@@ -184,6 +184,15 @@ class VirtualList {
    */
   get_match_height_key (mid) {
     return `mid_height_${mid}`
+  }
+
+  /**
+   * @description 清除折叠信息
+   */
+  clear_virtual_info () {
+    this.mid_top_map = {}
+    this.container_total_height = 0
+    this.match_mid_map_height.value = {}
   }
 
   // 计算 容器 总高度

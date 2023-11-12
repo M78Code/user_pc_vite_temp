@@ -1,5 +1,5 @@
 <template>
-    <div class="flex-center" :style="{height:tabActive == 'league'?'0.59rem':'1.04rem'}">
+    <div class="header" :style="{ height: tabActive == 'league' ? '0.59rem' : '1.04rem' }">
         <div class="tabs">
             <div class="matches" :class="tabActive == 'matches' ? 'active' : ''
             ">
@@ -63,7 +63,8 @@ import {
     defineEmits
 } from "vue";
 import { dateWeekMatchesFormat } from './utils';
-import { MenuData  } from "src/core/";
+import { MenuData } from "src/core/";
+import dayjs from "dayjs";
 import { useRoute } from "vue-router";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 
@@ -89,15 +90,16 @@ const areaList = reactive([
     "South America",
     "Oceania",
 ]);
+
 // 下拉选
 const selectOptions = reactive([
-    { label: "Next 12 Hours", time: "12hours" },
-    { label: "Next 24 Hours", time: "24hours" },
-    { label: "3 Day", time: "3day" },
-    { label: "7 Day", time: "7day" },
+    { label: "Next 12 Hours", time: "12hours", timestamp: dayjs().add(12, 'hour').valueOf() }, //12小时后的时间戳
+    { label: "Next 24 Hours", time: "24hours", timestamp: dayjs().add(24, 'hour').valueOf() },
+    { label: "3 Day", time: "3day", timestamp: dayjs().add(3, 'day').valueOf() },
+    { label: "7 Day", time: "7day", timestamp: dayjs().add(7, 'day').valueOf() },
 ]);
 
-const curSelectedOption=ref(selectOptions[0])
+const curSelectedOption = ref(selectOptions[0])
 /**
  * tab点击
  * @param {*} name 
@@ -120,8 +122,8 @@ const toggerModel = () => {
 const changeDate = (index) => {
     dateIndex.value = index;
     tabModel.value = false;
-    emit("changeDate", selectOptions[index].time);
-    curSelectedOption.value=selectOptions[index]
+    emit("changeDate", selectOptions[index].timestamp);
+    curSelectedOption.value = selectOptions[index]
     console.log('selectOptions[index]: ', selectOptions[index]);
 }
 /**
@@ -141,6 +143,13 @@ const changeDatetab = (item, index) => {
     MatchMeta.set_origin_match_data()
 
 };
+watch(() => MenuData.menu_mi.value, () => {
+    //球种改变设置今日
+    MenuData.set_date_time(week[0].val);
+})
+onMounted(() => {
+    MenuData.set_date_time(week[0].val);
+})
 /**
  * 默认请求今日数据
  * @param {*} mi 
@@ -151,9 +160,9 @@ const setDefaultData = () =>{
     // MenuData.set_menu_mi(mi);
     //球种改变设置今日
     MenuData.set_date_time(week[0].val);
-    changeDatetab(week[0],0)
+    changeDatetab(week[0], 0)
 }
-watch(()=>route.fullPath,()=>{
+watch(() => route.fullPath, () => {
     if (route.name === 'matchList') {
         setDefaultData()
     }
@@ -179,11 +188,10 @@ const areaListChange = (index) => {
 </script>
   
 <style lang="scss" scoped>
-.flex-center {
+.header {
     font-size: 16px;
     font-family: Roboto;
     height: 1.04rem;
-    background: #e2e2e2;
 
     // 头部tab样式
     .tabs {
@@ -193,7 +201,7 @@ const areaListChange = (index) => {
         display: flex;
         align-items: center;
         justify-content: flex-start;
-        border-bottom: 0.01rem solid #ff7000;
+        border-bottom: 1px solid #FF7000;
         position: relative;
 
         div {
@@ -266,13 +274,13 @@ const areaListChange = (index) => {
     }
 
     .menu_list_top_tab_background {
-        width: 140px;
+        width: 100px;
         height: 49px;
         position: absolute;
         top: 50px;
         right: 0;
-        background-image: url("./menu_list_top_background_icon.png");
-        background-size: 140px;
+        background: url("./menu_list_top_background_icon.png") no-repeat;
+        background-size: cover;
     }
 
     // 七天时间tabs样式
@@ -546,44 +554,42 @@ const areaListChange = (index) => {
     }
 }
 
-.flex-center {
-    .top_events_page {
-        :deep(.ball_tab) {
-            height: unset;
+.top_events_page {
+    :deep(.ball_tab) {
+        height: unset;
 
-            div:first-child {
-                display: none;
-            }
-        }
-
-        :deep(.game_page) {
-            padding-bottom: 45px;
-            height: 100%;
-
-            :deep(section:first-child) {
-                height: 100%;
-            }
-        }
-
-        :deep(.game_item) {
-            height: 100%;
-        }
-
-        :deep(.game_page_list_content) {
-            height: calc(100% - 48px);
-            overflow: hidden;
-            overflow-y: auto;
-        }
-
-        section {
-            padding: 16px 18px 15px 10px;
+        div:first-child {
+            display: none;
         }
     }
 
-    .top_event {
-        :deep(.empty_page) {
-            height: calc(100% - 105px);
+    :deep(.game_page) {
+        padding-bottom: 45px;
+        height: 100%;
+
+        :deep(section:first-child) {
+            height: 100%;
         }
+    }
+
+    :deep(.game_item) {
+        height: 100%;
+    }
+
+    :deep(.game_page_list_content) {
+        height: calc(100% - 48px);
+        overflow: hidden;
+        overflow-y: auto;
+    }
+
+    section {
+        padding: 16px 18px 15px 10px;
+    }
+}
+
+.top_event {
+    :deep(.empty_page) {
+        height: calc(100% - 105px);
     }
 }
 </style>
