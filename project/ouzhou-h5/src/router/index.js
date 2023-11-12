@@ -103,35 +103,6 @@ const router = createRouter({
           //   },
           // ],
         },
-        // 赛果详情页
-        {
-          path: "/result_details",
-          name: "result_details",
-          component: () => import("../pages/details/result-details.vue"),
-          children: [
-            {
-              path: "/result_details/:index",
-              name: "match_result",
-              component: () =>
-                import("../pages/details/components/result-fat-tab.vue"),
-            },
-          ],
-        },
-        //   // 虚拟赛事详情页
-        {
-          path: "/virtual_sports_details",
-          name: "virtual_sports_details",
-          component: () =>
-            import("../pages/details/virtual-sports-details.vue"),
-          children: [
-            {
-              path: "virtual_sports_category/:id?",
-              name: "virtual_sports_category",
-              component: () =>
-                import("../pages/details/children/virtual-sports-category.vue"),
-            },
-          ],
-        },
         // 投注列表
         {
           path: "/betting_history",

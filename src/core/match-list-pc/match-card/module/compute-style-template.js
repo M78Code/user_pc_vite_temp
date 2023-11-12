@@ -353,7 +353,7 @@ export const compute_style_template_by_matchinfo = (match, template_id, is_ouzho
 		style_obj.tab_play_total_height +
 		6;
 	if (is_ouzhou) {
-		style_obj.total_height -= 6;
+		style_obj.total_height -= 5;
 	}
 	return style_obj;
 };

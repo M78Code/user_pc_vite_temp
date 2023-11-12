@@ -54,18 +54,18 @@ let switch_timer_id
 
 let tid_match_list;
 useMittOn(MITT_TYPES.EMIT_MATCH_LIST_UPDATE, () => {
-	console.log("EMIT_MATCH_LIST_UPDATE")
 	clearTimeout(tid_match_list)
 	tid_match_list = setTimeout(() => {
+		console.log('EMIT_MATCH_LIST_UPDATE')
 		fetch_match_list()
-	}, 20);
+	},80);
 })
-watch(() => MenuData.match_list_version.value, () => {
-	// clearTimeout(tid_match_list)
-	// tid_match_list = setTimeout(() => {
-		// fetch_match_list()
-	// }, 20);
-})
+// watch(() => MenuData.match_list_version.value, () => {
+// 	clearTimeout(tid_match_list)
+// 	tid_match_list = setTimeout(() => {
+// 		fetch_match_list()
+// 	}, 20);
+// })
 /**
 * @description 请求数据
 * @param  {boolean} is_socket   是否 socket 调用
@@ -166,7 +166,7 @@ function fetch_match_list(is_socket = false, cut) {
 					// 重复拉列表的次数小于5   3秒后再次拉接口
 					if (api_error_count.value < 5) {
 						get_match_list_timeid = setTimeout(() => {
-							fetch_match_list();
+							// fetch_match_list();
 						}, 3000);
 					} else {
 						load_data_state.value = "refresh";

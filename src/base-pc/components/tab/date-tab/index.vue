@@ -4,7 +4,10 @@
       <!-- 所有日期  -->
       <template v-for="(item, index) in list" :key="item.menuName + '_' + index">
         <div class="tab-item yb-flex-center" :class="[{ active: final_index == index }]"
-           @click.stop="handle_click_menu_mi_3_date({ ...item, index })"
+           @click.stop="() => {
+              final_index.value = index;
+              DateTabClass.handle_click_menu_mi_3_date({ ...item })
+           }"
           @mouseenter="tabs_enter(index)" @mouseleave="tabs_leave(index)">
           <!-- <img v-if="item.img_src" v-check-img="{src: val.img_src, default: `/image/common/activity_banner/gift_package.png`}" /> -->
           <!--   电竞 不显示赛事数量  早盘常规体育显示-->
@@ -46,6 +49,7 @@ import lodash from "lodash";
 import { api_common } from "src/api/index.js";
 import BaseData from "src/core/base-data/base-data.js";
 import { UserCtr,MenuData } from 'src/core/index.js'
+import DateTabClass from "src/base-pc/components/tab/date-tab/date-tab-class.js"
 
 const props = defineProps({
   //item盒子左右padding
@@ -128,7 +132,7 @@ onMounted(() => {
 * nu/getDateMenuList
 */
 async function get_date_menu_list() {
-  let params = compute_get_date_menu_list_params();
+  let params = DateTabClass.compute_get_date_menu_list_params();
   let api_fn_name = ''
   if (MenuData.is_export()) {
     //电竞
@@ -164,7 +168,8 @@ async function get_date_menu_list() {
     index_info = (match_list.params || {}).index || 0
     final_index.value = index_info
   }
-  handle_click_menu_mi_3_date({ md: md_info, index: index_info })
+  final_index.value = index_info;
+  DateTabClass.handle_click_menu_mi_3_date({ md: md_info })
   console.log('match_list_api_config', match_list_api_config);
 }
 watch(MenuData.menu_data_version,()=>{
@@ -172,148 +177,6 @@ watch(MenuData.menu_data_version,()=>{
     get_date_menu_list()
   })
 })
-
-/**
- * 计算 日期 接口 请求参数
- */
-function compute_get_date_menu_list_params() {
-  let params = {};
-  let left_menu_result = MenuData.left_menu_result;
-  let {
-    lv1_mi,
-    lv2_mi,
-    euid,
-    tid = "",
-  } = left_menu_result;
-  if (lv1_mi == 2000) {
-    //  早盘 或者 今日的  电竞
-    let csid = parseInt(lv2_mi) - 2000;
-    params = {
-      csid,
-      device: "PC_PRO",
-    };
-  } else {
-    // 早盘 的 请求 euid 是 赛种  +3 对应的 euid 不是 玩法对应的
-    let mi_euid = BaseData.mi_info_map[`mi_${lv1_mi}3`] || {};
-    // orpt // pis
-    let mi_info = BaseData.mi_info_map[`mi_${lv2_mi}`] || {};
-    if (lv1_mi == 118) {
-      euid = '3020212'
-    }
-    // 早盘的 其他 常规赛种
-    params = {
-      apiType: 1,
-      cuid: UserCtr.get_uid(), //用户 id
-      device: "PC",
-      ...mi_info,
-      euid: mi_euid.euid || euid, // lv2_mi 找到 euid
-      md: final_date_menu.value.field1,
-      selectionHour: null,
-      sort: 1,
-      tid,
-    };
-  }
-  return params;
-}
-
-/**
- *  早盘 的 日期 菜单点击
- */
-function handle_click_menu_mi_3_date (detail = {}) {
-  let { md, index } = detail;
-  final_index.value = index;
-  let root = MenuData.menu_root;
-  let guanjun = "";
-  let sports = "common-date";
-  let route = "list";
-  let { lv2_mi, lv1_mi } = MenuData.left_menu_result
-  // 当前 pid 和 orpt
-  let lv2_mi_info = BaseData.mi_info_map[`mi_${lv2_mi}`];
-  // 父级euid
-  let euid;
-  if (root != 2000) {
-    // 娱乐
-    if (lv1_mi == 118) {
-      euid = '3020212' || BaseData.mi_info_map[`mi_${lv2_mi}`].euid;
-    } else {
-      euid = BaseData.mi_info_map[`mi_${lv1_mi}${root}`].euid
-    }
-  }
-  let params = { ...lv2_mi_info, lv2_mi, md, euid };
-  // 是否收藏
-  let is_collect = false;
-  // 列表队列 接口
-  let match_list = {
-    api_name: "api 方法名字   api_match 的 子方法名字",
-    params: {},
-  };
-  // bymids 接口  基本参数
-  let bymids = {
-    api_name: "api 方法名字   api_match 的 子方法名字",
-    params: {},
-  };
-
-  let base_params = {
-    cuid: UserCtr.get_uid(),
-    selectionHour: null,
-    sort: 1,
-  }
-
-  //设置当前的root
-  // root = MenuData.menu_root
-  // euid  早盘今日  玩法级别 传参 传 euid 为 父级的
-  // 今日 早盘
-  let api_name = 'post_league_list'
-  if ([1, 2, 3].includes(Number(root))) {
-    if (lv1_mi == 118) {
-      euid = '3020212'
-    }
-    base_params = {
-      apiType: 1,
-      orpt: -1,
-      ...base_params,
-      ...params,
-      md,
-    }
-  }
-  if (root == 2000) {
-    api_name = 'post_fetch_esports_matchs'
-    base_params = {
-      tid: "",
-      ...base_params,
-      ...params,
-      category: 1,
-      csid: ('' + lv2_mi).substring(1),
-      md
-    }
-    // 电竞 日期冠军 
-    if (md == 100) {
-      base_params.category = 1
-      base_params.md = ''
-    }
-  }
-  match_list = {
-    api_name,
-    params: {
-      ...base_params,
-      index: final_index.value, // 当前选中的时间 接口用不上 只是存储下一使用
-    },
-  };
-  let config = {
-    begin_request: true,
-    is_collect,
-    route,
-    root,
-    sports,
-    guanjun,
-    match_list,
-    bymids,
-  };
-  // 设置      中间 菜单输出
-  MenuData.set_mid_menu_result(params);
-  // 设置   请求  列表结构  API 参数的  值
-  // MenuData.set_match_list_api_config(config);
-}
 
 /**
  * @Description:切换选项

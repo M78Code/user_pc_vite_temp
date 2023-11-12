@@ -1,10 +1,3 @@
-<!--
- * @Author: lockie
- * @Date: 2023-07-01 13:38:48
- * @LastEditors: Please set LastEditors
- * @LastEditTime: 2023-07-17 14:45:30
- * @FilePath: \user-pc-vue3\src\components\match_list\match_card_list_15mins\matches_card_15mins.vue
--->
 <template>
   <div class="sport">
     <div class="competing-time">
@@ -20,7 +13,7 @@
       {{ current_tab.man }}
     </div>
     <div class="odds-box din_font">
-      <div class="odds-box-item" 
+      <!-- <div class="odds-box-item" 
         v-for="item in (current_tab.current_ol[0] || {}).ol || []" 
         :key="item.oid"
         @click="checked_current_td({payload: current_tab, hps: current_tab.current_ol[0], ol: item, is15mins: true})"
@@ -28,7 +21,7 @@
       >
         <span>{{ item.ot }}</span>
         <span>{{ Math.floor(item.ov / 1000) / 100 }}</span>
-      </div>
+      </div> -->
     </div>
     <!-- <div class="odds-box din_font">
       <div class="odds-box-item" 
