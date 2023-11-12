@@ -26,7 +26,6 @@
         @click="jump_to_details()">
       <div class="score-board"
         :style="compute_css_obj({key: 'pc-home-score-board'})">
-        oooo
       </div>
     </div>
   </div>
