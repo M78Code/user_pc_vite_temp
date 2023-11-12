@@ -159,9 +159,6 @@ class MatchMeta {
    */
     handler_match_list_data(config) {
 
-      // 重置
-      this.init()
-
       const { list, type = 2, is_virtual = true } = config
 
       const length = lodash.get(list, 'length', 0)
@@ -541,9 +538,6 @@ class MatchMeta {
    * @param { res } 接口返回对象
    */
   handle_custom_matchs (res) {
-
-    // 重置
-    this.init()
 
     if (+res.code !== 200) return
     const list = lodash.get(res, 'data', [])
