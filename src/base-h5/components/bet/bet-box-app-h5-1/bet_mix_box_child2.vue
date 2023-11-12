@@ -46,13 +46,15 @@
           <div v-if="BetData.is_bet_single">
             <!-- 单关投注项列表 -->
             <bet-mix-box-child3 :item="BetData.bet_single_list[0]" :key='0'></bet-mix-box-child3>
-            <betInfoList></betInfoList>
           </div>
           <div v-else>
             <!-- 串关投注项列表 -->
             <bet-conflict-tips v-for="(item,index) in BetData.bet_s_list" :item="item" :key='index'></bet-conflict-tips>
           </div>
       </div>
+
+      <!-- 投注详情 不论成功失败都会显示 -->
+<!--      <betInfoList v-if="get_bet_status != 1"></betInfoList>-->
 
       <!-- 串关输入框 -->
       <template v-if="BetData.bet_s_list.length > 1 && !BetData.is_bet_single &&  BetViewDataClass.bet_order_status == 1 ">
@@ -164,7 +166,7 @@ import betAfterStatus from './bet-after-status.vue';
 import betMixBoxChild7 from './bet_mix_box_child7.vue';
 import betMixBoxChild8 from './bet_mix_box_child8.vue';
 
-// import betInfoList from "./bet_info_list.vue";
+import betInfoList from "./bet_info_list.vue";
 
 
 import betMixShow from './bet_mix_show3.vue';
