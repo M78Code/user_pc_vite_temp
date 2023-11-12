@@ -340,7 +340,7 @@ const handle_match_render_data = () => {
  * 三级菜单事件
  */
 function set_menu_lv3(item, index, type = "click") {
-  console.log(item)
+  console.log('set_menu_lv3', item)
   //点击当前 就不做什么
   if (MenuData.current_lv_3_menu && MenuData.current_lv_3_menu.menuId == item.menuId) {
     return;
