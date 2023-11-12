@@ -30,7 +30,7 @@
         <FeaturedMatches :matches_featured_list="matches_featured_list" />
       </div>
     <!-- 列表容器 -->
-      <load-data :state="'data'" limit_height="1000" >  <!--此处先写死高度用来调试UI -->
+      <load-data :state="'data'" limit_height="10000" >  <!--此处先写死高度用来调试UI -->
         <!-- 滚球其他列表 -->
         <scroll-list  v-if="menu_config.menu_root_show_shoucang != 300">
           <div
