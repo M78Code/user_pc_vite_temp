@@ -2,7 +2,7 @@
  * @Author: land land@itcom888.com
  * @Date: 2023-11-11 14:01:08
  * @LastEditors: land land@itcom888.com
- * @LastEditTime: 2023-11-11 17:45:09
+ * @LastEditTime: 2023-11-12 13:55:34
  * @FilePath: \user-pc-vite\project\ouzhou-h5\src\pages\match-page\match-first-step.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -19,7 +19,7 @@ import { ref, defineEmits } from 'vue'
 import TopLeagues from './components/top-leagues.vue'
 import { de_img, dk_img, be_img, fr_img } from 'src/base-h5/core/utils/local-image.js'
 
-
+const emit = defineEmits(['leagueChange'])
 
 // 国家赛事
 const leagues_matchs = ref([{
@@ -82,6 +82,8 @@ const leagues_matchs = ref([{
 
 const onLeagueChange = (league, game) => {
     console.log('league, game: ', league, game);
+    emit('leagueChange', league, game)
+
 }
 </script>
 
