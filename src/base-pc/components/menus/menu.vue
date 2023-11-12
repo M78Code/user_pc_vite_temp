@@ -103,10 +103,8 @@ const router = useRouter();
 
 onMounted(() => {
   // init()
-  console.error(left_menu_list, "left_menu_list====")
   left_menu_list.value = BaseData.left_menu_base_mi_arr;
   // jump_func()
-  console.error(MenuData, "MenuData====")
 })
 
 // 监听左侧变化
