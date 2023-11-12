@@ -14,21 +14,21 @@
               <!-- 冠军玩法 -->
               <template v-if="is_kemp">
                 <MatchContainerMainTemplate2
-                  :i="index" 
+                  :i="index"
                   :match_of_list="match_item">
                 </MatchContainerMainTemplate2>
               </template>
               <!-- 赛果玩法 -->
               <template v-else-if="is_results">
                 <MatchContainerMainTemplate3
-                  :i="index" 
+                  :i="index"
                   :match_of_list="match_item">
                 </MatchContainerMainTemplate3>
               </template>
               <!-- 赛果玩法 -->
               <template v-else-if="is_results && is_kemp">
                 <MatchContainerMainTemplate6
-                  :i="index" 
+                  :i="index"
                   :match_of_list="match_item">
                 </MatchContainerMainTemplate6>
               </template>
