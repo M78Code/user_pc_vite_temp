@@ -155,10 +155,10 @@ export default {
         // 处理返回数据 将扁平化数组更改为页面适用数据
         MatchDataWarehouse_ouzhou_PC_l5mins_List_Common.set_list(res.p15)
         MatchDataWarehouse_ouzhou_PC_hots_List_Common.set_list(res.hots)
-        matches_15mins_list.value = MatchDataWarehouse_ouzhou_PC_l5mins_List_Common.match_list
-        matches_featured_list.value =MatchDataWarehouse_ouzhou_PC_hots_List_Common.match_list
-        // matches_15mins_list.value = filter_15mins_func(MatchDataWarehouse_ouzhou_PC_l5mins_List_Common.match_list);
-        // matches_featured_list.value = filter_featured_list(MatchDataWarehouse_ouzhou_PC_hots_List_Common.match_list);
+        // matches_15mins_list.value = MatchDataWarehouse_ouzhou_PC_l5mins_List_Common.match_list
+        // matches_featured_list.value =MatchDataWarehouse_ouzhou_PC_hots_List_Common.match_list
+        matches_15mins_list.value = filter_15mins_func(MatchDataWarehouse_ouzhou_PC_l5mins_List_Common.match_list);
+        matches_featured_list.value = filter_featured_list(MatchDataWarehouse_ouzhou_PC_hots_List_Common.match_list);
       });
     }
 
