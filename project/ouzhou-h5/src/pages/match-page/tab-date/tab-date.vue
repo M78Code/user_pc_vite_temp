@@ -125,7 +125,7 @@ const changeDate = (index) => {
     console.log('selectOptions[index]: ', selectOptions[index]);
 }
 /**
- * 时间选择tab
+ * 时间选择tab-赛事列表筛选
  * @param {*} item 
  * @param {*} index 
  */
@@ -135,9 +135,7 @@ const changeDatetab = (item, index) => {
     scrollRef.value.scrollTo(move_index - 2, "start-force");
     second_tab_index.value = index;
     MenuData.set_date_time(item.val, item.type);
-    // emit("changeDate", MenuData.menu_match_date_params);
-    console.log('item: ', item);
-
+    emit('changeMatchDate', item?.val)
 };
 watch(() => MenuData.menu_mi.value, () => {
     //球种改变设置今日
