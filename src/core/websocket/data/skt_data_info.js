@@ -55,6 +55,7 @@ export default {
     //发送启动命令
     this.sendSocketInitCmd();
     //ws存在
+    
     if (window.ws) {
       // 注册当前页面的socket添加到消息队列  
       let socket_name = this.socket_name || "skt_data_info";    
