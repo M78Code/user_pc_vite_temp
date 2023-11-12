@@ -266,6 +266,9 @@ export const get_current_odds_list = (main_handicap_list, { first_hpid, second_h
       second_odds_list = item
     }
   })
+  if (!first_odds_list || !second_odds_list) {
+    return null
+  }
   return [ first_odds_list, second_odds_list ]
 }
 

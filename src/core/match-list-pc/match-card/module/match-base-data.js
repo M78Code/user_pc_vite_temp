@@ -91,7 +91,6 @@ import {get_match_template_id} from '../../match-handle-data.js'
       if(match_list.length > 0){
         match_list?.forEach(match=>{
           match.tpl_id=get_match_template_id(match)
-          console.log('tpl_id',match.tpl_id)
         })
         // 设置列表数据仓库
         MatchListData.set_list(match_list,true)

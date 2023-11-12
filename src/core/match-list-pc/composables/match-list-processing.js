@@ -253,8 +253,7 @@ const mx_use_list_res_when_code_200_and_list_length_gt_0 = ({match_list, collect
 	console.log('lockie-3', match_list);
 	match_list?.forEach(match=>{
 		match.tpl_id=get_match_template_id(match)
-		console.log('tpl_id',match.tpl_id)
-	  })
+	})
   MatchListData.set_list(match_list)
 	// 计算赛事卡片
 	MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(

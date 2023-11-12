@@ -270,7 +270,6 @@ const use_featch_fn = () => {
           let ts1 = res.ts
           match_list?.forEach(match=>{
             match.tpl_id=get_match_template_id(match)
-            console.log('tpl_id',match.tpl_id)
           })
           MatchListData.set_list(
             match_list,

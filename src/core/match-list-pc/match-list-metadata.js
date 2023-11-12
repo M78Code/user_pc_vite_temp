@@ -12,6 +12,7 @@ import { useMittEmit, MITT_TYPES, useMittOn } from "src/core/mitt/index.js";
 // import { set_sticky_top } from 'src/core/match-list-pc/match-card/module/sticky-top.js'
 import MatchListScrollClass from 'src/core/match-list-pc/match-scroll.js'
 import MatchListCardClass from "src/core/match-list-pc/match-card/match-list-card-class.js";
+import { get_match_template_id} from './match-handle-data.js'
 // import video from "src/core/video/video.js";
 import { pre_load_video } from 'src/core/pre-load/module/pre-load-video.js'
 import MenuData from "src/core/menu-pc/menu-data-class.js";
@@ -254,7 +255,9 @@ function set_base_data_init () {
 	if (menu_root == 3) return;
 	// 赛事列表 卡片数据
 	// 设置列表数据仓库
-	console.log('matchs_list', matchs_list);
+	matchs_list.forEach(match=>{
+		match.tpl_id=get_match_template_id(match)
+	})
 	MatchListData.set_list(
 		matchs_list,
 	);
