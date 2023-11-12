@@ -5,7 +5,7 @@
 <template>
   <div class="cathectic">
     <!-- 加载中 -->
-    <loading v-if="!is_loading" />
+    <loading v-if="is_loading" />
     <scroll ref="myScroll" :on-pull="onPull">
       <!-- 未结算 cashout 按钮 -->
       <div v-if="UserCtr.user_info.settleSwitch == 1 && BetRecordClass.selected === 0 && !lodash.isEmpty(BetRecordClass.list_data)" 
