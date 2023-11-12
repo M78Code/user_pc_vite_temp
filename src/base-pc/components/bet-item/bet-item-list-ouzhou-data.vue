@@ -264,7 +264,13 @@ const bet_click_ol = () => {
     _hn,  // hn_obj
     _mid,  //赛事id mid_obj
   }
-  emit('update_score', `${_mid}${oid}`)
+  
+  //点击后再次点击，取消选中状态
+  if(props.active_score){
+    emit('update_score', '')
+  }else {
+    emit('update_score', `${_mid}${oid}`)
+  }
    set_bet_obj_config(params,{})
 };
 
