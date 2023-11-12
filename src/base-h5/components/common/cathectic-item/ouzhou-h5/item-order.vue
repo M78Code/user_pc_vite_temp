@@ -83,6 +83,6 @@ import BetRecordClass from "src/core/bet-record/bet-record.js";
 }
 .title {
   color: var(--q-gb-bg-c-8);
-  margin-right: 0.1rem;
+  margin-right: 0.04rem;
 }
 </style>
