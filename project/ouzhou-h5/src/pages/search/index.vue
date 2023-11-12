@@ -42,8 +42,10 @@
 		</div>
 
 		<!-- 搜索展示 -->
-		<div class="content" v-show="(search_data.teamH5 && search_data.teamH5.length > 0) ||
+		<div style="height: 100%; overflow-y: auto;" v-show="(search_data.teamH5 && search_data.teamH5.length > 0) ||
 			(search_data.league && search_data.league.length > 0)">
+
+			<div class="content">
 			<!-- 球类 tabs -->
 			<div class="middle_info_tab" ref="tab_growp">
 				<div v-for="(item, index) in sport_kind_data" :key="item.id" @click="get_search_data(index, item.id)"
@@ -192,6 +194,7 @@
 					</li>
 				</div>
 			</ul>
+		</div>
 		</div>
 		<!-- 搜索 无结果 -->
 		<div class="content" v-show="(!(search_data.teamH5 && search_data.teamH5.length > 0) &&
@@ -492,7 +495,8 @@ watch(
 <style lang="scss" scoped>
 .search-container {
 	background-color: #E2E2E2;
-	padding-bottom: 8px;
+	height: inherit;
+	overflow: hidden;
 }
 
 .top_info_search {
@@ -679,7 +683,7 @@ li {
 }
 
 .not_found {
-	height: 100vh;
+	height: calc(100% - 90px);
 	text-align: center;
 	margin: 86px 0;
 
