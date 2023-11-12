@@ -6,13 +6,13 @@
 <template>
   <div class="main">
     <div class="content">
-        <div>
+        <div class="content-item">
             <span>{{ detail_info.mhn }}</span>
         </div>
-        <div>
+        <div class="content-time">
            Soon
         </div>
-        <div>
+        <div class="content-item">
             <span>{{ detail_info.man }}</span>
         </div>
     </div>
@@ -63,8 +63,25 @@ watch(
     display: flex;
   
   align-items: center;
-  justify-content: space-around;
-  color:#ffffff
+//   justify-content: space-between;
+  color:#ffffff;
+  .content-item{
+    width: 42%;
+    max-height: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    word-break: break-word;
+    &:nth-child(3){
+       text-align: right;
+
+    }
+  }
+  .content-time{
+    width: 16%;
+  }
   }
 }
 </style>
