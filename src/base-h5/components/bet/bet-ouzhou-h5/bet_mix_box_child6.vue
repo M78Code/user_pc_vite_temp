@@ -7,7 +7,7 @@
     <div class="bet-mix-show">
 
       <div>
-        <div class="nonebox4-content" v-for="(i, index) in 3" :key="index">
+        <div class="nonebox4-content" v-for="(item, index) in BetViewDataClass.orderNo_bet_obj" :key="index">
           <div class="nonebox4-content-xian">
             <div v-for="item in 4" :key="item" class="nonebox4-content-left-content-dian" :class="type == 2?'green-nei':type == 3?'red-nei':''" v-if="index>0"></div>
             <div class="nonebox4-content-left-content-xian" :class="index>0?'top0':''" v-if="type == 1">
@@ -19,21 +19,21 @@
             <div class="nonebox4-content-left-content-xian red" :class="index>0?'top0':''" v-if="type == 3">
               <div class="nonebox4-content-left-content-nei red-nei"></div>
             </div>
-            <div v-for="item in 13" :key="item" class="nonebox4-content-left-content-dian" :class="type == 2?'green-nei':type == 3?'red-nei':''" v-if="index<2"></div>
+            <div v-for="item in 13" :key="item" class="nonebox4-content-left-content-dian" :class="type == 2?'green-nei':type == 3?'red-nei':''" v-if="index<BetViewDataClass.orderNo_bet_obj.length"></div>
           </div>
           <div class="nonebox4-content-left">
               <div class="nonebox4-content-left-content">
                 <div class="nonebox4-content-left-info">
                   <div class="nonebox4-content-left-content-text">
-                    <div class="nonebox4-content-left-content-text-one">Sevilla Futbol Club <span class="text-one-span">0.25</span></div>
-                    <div class="nonebox4-content-left-content-text-two">[In-play] <span class="text-two-span">1X2</span></div>
-                    <div class="nonebox4-content-left-content-text-three">Sevilla Futbol Club</div>
-                  </div>
+                      <div class="nonebox4-content-left-content-text-one">{{item.matchName}} <span class="text-one-span">0.25</span></div>
+                      <div class="nonebox4-content-left-content-text-two">{{item.matchType == 2?'[In-play]':''}} <span class="text-two-span">{{item.playName}}</span></div>
+                      <div class="nonebox4-content-left-content-text-three">{{item.matchInfo}}</div>
+                    </div>
                   <div>
                       <div class="nonebox4-content-right">
                           <div class="nonebox4-content-right-profit">123</div>
                       </div>
-                      <div class="nonebox4-content-right-bot" :class="type == 2?'green-color':type==3?'red-color':''">Bet Placed</div>
+                      <div class="nonebox4-content-right-bot" :class="BetViewDataClass.bet_order_status == 3?'green-color':BetViewDataClass.bet_order_status==4?'red-color':''">Bet Placed</div>
                   </div>
                 </div>
               </div>
@@ -134,6 +134,7 @@
   .nonebox4-content-left-content-text-one{
     font-size: 0.18rem;
     font-weight: 600;
+    display: flex;
   }
   .nonebox4-content-left-info{
     display: flex;
