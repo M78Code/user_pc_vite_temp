@@ -42,7 +42,7 @@
           </q-input>
         </div>
         <div class="record-query" @click="search">
-          Query
+          {{i18n_t("bet_record.query")}}
         </div>
       </div>
     </div>
@@ -65,9 +65,9 @@ const current_time = ref(1)
 const date = ref({ from: '2023/07/01', to: '2023/07/17' })
 const date_value = ref('')
 const select_options = [
-  { value: 'Sort by settled time', label: i18n_t("ouzhou.record.settled_time"), id: 2 },
-  { value: 'Sort by bet time', label: i18n_t("ouzhou.record.bet_time"), id: 1 },
-  { value: 'Sort by match time', label: i18n_t("ouzhou.record.match_time"), id: 3 }
+  { value: i18n_t("bet_record.sort_by_settled_time"), label: i18n_t("ouzhou.record.settled_time"), id: 2 },
+  { value: i18n_t("bet_record.sort_by_bet_time"), label: i18n_t("ouzhou.record.bet_time"), id: 1 },
+  { value: i18n_t("bet_record.sort_by_match_time"), label: i18n_t("ouzhou.record.match_time"), id: 3 }
 ]
 const tabChange = ref(false)
 onMounted(() => {
@@ -76,7 +76,7 @@ onMounted(() => {
   date_value.value = data + '-' + data
   date.value = { from: data, to: data }
 })
-const select_value = ref('Bet time')
+const select_value = ref(i18n_t("bet_record.bet_time"))
 let params = {
   enablePreSettle: false,
   timeType: 1,
@@ -116,7 +116,7 @@ const options = [
 ]
 const btn_options = [
   { label: i18n_t("ouzhou.record.today"), value: 1 },
-  { label: i18n_t("ouzhou.record.Yesterday"), value: 2 },
+  { label: i18n_t("ouzhou.record.yesterday"), value: 2 },
   { label: i18n_t("ouzhou.record.7_days"), value: 3 },
   { label: i18n_t("ouzhou.record.30_days"), value: 4 }
 ]
