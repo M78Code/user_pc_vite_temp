@@ -170,6 +170,7 @@ const get_query_bet_amount_common = (obj) => {
 
     // 获取额度接口合并
     api_betting.query_bet_amount(params).then((res = {}) => {
+        console.error('sss')
         if (res.code == 200) {
             BetViewDataClass.set_bet_min_max_money(res.data)
             // 通知页面更新 
@@ -208,6 +209,7 @@ const get_query_bet_amount_esports_or_vr = () => {
     // 获取最大值和最小值接口
     api_betting.post_getBetMinAndMaxMoney(params).then((res = {}) => {
         if (res.code == 200) {
+            console.error('aaa')
             BetViewDataClass.set_bet_min_max_money(res.data,'min_max')
             // 通知页面更新 
             // 串关不更新
@@ -250,7 +252,9 @@ const get_query_bet_amount_pre = () => {
 
     // 获取额度接口合并
     api_betting.query_pre_bet_amount(params).then((res = {}) => {
+        console.error('aaaaasdasdas')
         if (res.code == 200) {
+           
             BetViewDataClass.set_bet_min_max_money(res.data)
             // 通知页面更新 
             useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY)
@@ -569,7 +573,6 @@ const set_bet_obj_config = (params = {}, other = {}) => {
     }
     // 设置投注内容 
     BetData.set_bet_read_write_refer_obj(bet_obj)
-
     // 判断获取限额接口类型
     if(["C01","B03","O01"].includes(bet_obj.dataSource) || [2,4].includes(Number(bet_obj.mbmty)) ||  ['esports_bet','vr_bet'].includes(other.bet_type)){
         // C01/B03/O01  电竞/电竞冠军/VR体育
@@ -578,6 +581,7 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         // 获取限额 常规
         get_query_bet_amount_common(bet_obj)
     }
+
 }
 
 // h5 投注选择 数据仓库

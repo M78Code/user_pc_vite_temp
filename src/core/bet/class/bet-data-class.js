@@ -174,9 +174,10 @@ this.bet_appoint_ball_head= null */
       x: window.innerWidth * 0.6,
       y: window.innerHeight * 0.7,
       isActive: false,
-      height: 'auto',
       show: false,
     }
+    // console.error('window.innerWidth',window.innerWidth);
+    // console.error('window.innerWidth',window.innerWidth);
     // 默认展开 投注弹窗
     this.bet_state_show = true
     // ---------------------------------- H5 ------------------------------------------------------------------------------------------
