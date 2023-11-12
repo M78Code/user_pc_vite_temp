@@ -421,7 +421,10 @@
     "successful_betting": "投注成功",
     "total_bet_amount": "投注总金额",
     "total_winable_amount": "可赢总金额",
-    "result_score": "赛果比分"
+    "result_score": "赛果比分",
+    "number": "注单数",
+    "bet": "投注额",
+    "l/w": "输/赢"
   },
   "pre_record": {
     "book_one": "预",

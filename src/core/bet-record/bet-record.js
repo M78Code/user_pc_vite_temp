@@ -90,7 +90,7 @@ export const calc_text = (data_b) => {
 }
 
 // 根据状态，过滤数据，显示提前结算的列表
-const filter_early_money_list = (list_data, bol) => {
+const filter_early_list = (list_data, bol) => {
   let all_list = lodash.cloneDeep(list_data)
   if(bol) {
     lodash.forEach(all_list, (list_data, key) => {
@@ -137,14 +137,14 @@ class BetRecord {
   // 更新列表
   set_list_data(value) {
     this.list_data = value
-    this.early_money_list = filter_early_money_list(value, this.is_early)
+    this.early_money_list = filter_early_list(value, this.is_early)
     this.set_bet_record_version()
   }
 
   // 设置提前结算按钮
   set_is_early(value) {
     this.is_early = value
-    this.early_money_list = filter_early_money_list(this.list_data, value)
+    this.early_money_list = filter_early_list(this.list_data, value)
     this.set_bet_record_version()
   }
 

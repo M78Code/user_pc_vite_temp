@@ -279,7 +279,10 @@
     "successful_betting": "Bet Placed",
     "total_bet_amount": "Total Stake",
     "total_winable_amount": "To Return",
-    "result_score": "Results"
+    "result_score": "Results",
+    "number": "Number",
+    "bet": "Bet",
+    "l/w": "Lose/Win"
   },
   "pre_record": {
     "book_one": "Book",
