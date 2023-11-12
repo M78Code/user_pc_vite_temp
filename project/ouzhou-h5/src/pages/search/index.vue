@@ -5,7 +5,9 @@
 			<input ref="input_ref" type="search" maxlength="15" placeholder="Search" v-model="input_value"
 				@keyup.enter="get_search_data(input_value)" />
 			<img :src="compute_local_project_file_path('image/home/top_seach.png')" alt="" />
-			<span class="clear_value" @click="clear_value">X</span>
+            <img :src="compute_local_project_file_path('image/svg/bet_close3.svg')" alt=""
+			class="clear_value"
+			  @click.stop.prevent.self="clear_value" v-show="input_value.length > 0"/>
 			<span class="close_btn" @click="to_home">Close</span>
 		</div>
 		<!-- 搜索 历史 -->
@@ -233,6 +235,8 @@ const get_search_data = (index = 0, sport_id = 1, keyword) => {
 		if (res.code === '200') {
 			search_data.value = res.data.data;
 			get_match_base_hps()
+		}else{
+			search_data.value = [];
 		}
 	});
 }
@@ -400,10 +404,10 @@ watch(
 
 	.clear_value {
 		position: absolute;
-		right: 70px;
-		top: 0px;
+		top: 20px;
 		color: #fff;
 		font-size: 14px;
+		left: 290px;
 	}
 
 	.close_btn {

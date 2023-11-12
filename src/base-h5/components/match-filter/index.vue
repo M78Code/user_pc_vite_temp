@@ -74,7 +74,7 @@
         :style="{ lineHeight: ['vi', 'en', 'th', 'ms', 'ad'].includes(get_lang) ? '1' : 'unset' }">
         <img class="icon-search" @click="all_checked_click"
           :src="compute_img_url(all_checked ? 'checkbox-box-s' : 'checkbox-box')" />
-        <span class="txt ellipsis-2-lines" @click="all_checked_click">{{ $t('common.all_select') }}</span>
+        <  class="txt ellipsis-2-lines" @click="all_checked_click">{{ $t('common.all_select') }}</span>
         <span class="txt ellipsis-3-lines" @click="select_btn_click">{{ $t('filter.reverse_election') }}</span>
       </div>
       <div class="right-box" @click="search_btn">
