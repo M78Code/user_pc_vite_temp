@@ -385,7 +385,7 @@ class MenuData {
       version: Date.now(),
     };
     this.menu_root_show_shoucang = obj.root;
-    console.log('objobjobjobj', obj);
+    console.error('objobjobjobj', obj);
     MATCH_LIST_TEMPLATE_CONFIG[`template_${this.get_match_tpl_number()}_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'))
     console.error(
       "set_mid_menu_result-------",
