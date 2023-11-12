@@ -5,13 +5,15 @@
 			<input ref="input_ref" type="search" maxlength="15" placeholder="Search" v-model="input_value"
 				@keyup.enter="get_search_data(input_value)" />
 			<img :src="compute_local_project_file_path('image/home/top_seach.png')" alt="" />
-            <img :src="compute_local_project_file_path('image/svg/bet_close3.svg')" alt=""
-			class="clear_value"
+			<img :src="compute_local_project_file_path('image/svg/bet_close3.svg')" alt=""
+				class="clear_value"
 			  @click.stop.prevent.self="clear_value" v-show="input_value.length > 0"/>
 			<span class="close_btn" @click="to_home">Close</span>
 		</div>
 		<!-- 搜索 历史 -->
-		<div class="content" v-show="(show_history && history_data.length > 0) || !input_value">
+		<div class="content" v-show="(show_history && history_data.length &&
+				!(search_data.teamH5 && search_data.teamH5.length > 0) &&
+				!(search_data.league && search_data.league.length > 0) > 0) || !input_value">
 			<div class="middle_info_tab">EXAMPLE SEARCHES</div>
 			<ul class="list1">
 				<li v-for="(item, index) in history_data" :key="item.cuid" @click="get_search_data(0, 1, item.keyword)">
@@ -213,7 +215,7 @@
 				<p>No results</p>
 			</div> -->
 			<div class="not_found">
-			<no-data :code="400"></no-data>
+				<no-data :code="400"></no-data>
 			</div>
 		</div>
 	</div>
@@ -279,6 +281,7 @@ const red_color = (item) => {
 
 // 搜索
 const search_data = ref([]);
+const loadding = ref(false);
 let sport_kind_id = null;
 const get_search_data = (index = 0, sport_id = 1, keyword) => {
 	show_history.value = false;
@@ -305,8 +308,11 @@ const get_search_data = (index = 0, sport_id = 1, keyword) => {
 	get_search_result(params).then(res => {
 		if (res.code === '200') {
 			search_data.value = res.data.data;
+			sessionStorage.removeItem('search_txt');
 			get_match_base_hps_by_mids()
 		}
+	}).catch((e) => {
+		console.log(e);
 	});
 }
 
@@ -374,6 +380,7 @@ function suggestion_bowling_click(item) {
 
 // 跳转到 详情页 或者 赛果页面
 function go_detail_or_reslut(item) {
+	sessionStorage.setItem('search_txt', input_value.value);
 	if (get_menu_type.value == 28) {
 		router.push({
 			name: 'match_result',
@@ -477,6 +484,10 @@ onMounted(() => {
 	get_hot_search();
 	get_history();
 	get_sport_kind();
+	if(sessionStorage.getItem('search_txt')) {
+		const search_txt = sessionStorage.getItem('search_txt')
+		input_value.value = search_txt
+	}
 })
 
 onBeforeUnmount(() => {
