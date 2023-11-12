@@ -33,9 +33,6 @@
       <load-data :state="'data'" limit_height="1000" >  <!--此处先写死高度用来调试UI -->
         <!-- 滚球其他列表 -->
         <scroll-list  v-if="menu_config.menu_root_show_shoucang != 300">
-          <template v-slot:before>
-            <div :style="{ height: MatchListCardDataClass.sticky_top.fixed_header_height }"></div>
-          </template>
           <div
             v-for="card_key in match_list_card_key_arr"
             :key="card_key" 

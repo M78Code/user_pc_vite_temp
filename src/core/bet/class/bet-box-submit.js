@@ -360,8 +360,9 @@ const submit_handle = type => {
     }
     // 投注内容
     params.seriesOrders = seriesOrders
-    BetViewDataClass.set_bet_order_status(5)
-    return
+    // 测试投注失败
+    // BetViewDataClass.set_bet_order_status(5)
+    // return
     api_betting.post_submit_bet_list(params).then(res => {
 
 

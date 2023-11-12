@@ -85,11 +85,27 @@
             </q-td>
             <!-- 返回金额 return -->
             <q-td key="return" :props="props">
-              <span> {{ format_balance(props.row.maxWinAmount) }}</span>
+               <span
+                 :class="{'win-color': [4,5].includes(props.row.outcome)}"
+                 v-if="current_tab==='settled'"
+               >
+                 {{ format_balance(tool_selected === 'settled' ? props.row.maxWinAmount : props.row.backAmount) }}
+               </span>
+              <span v-else>- -</span>
             </q-td>
             <!-- 状态 -->
             <q-td key="status" :props="props">
-              <span>Bet Placed</span>
+              <!--
+                   0:待处理,1:已处理,2:取消交易,3:待确认,4:已拒绝
+                   0、3未结算
+                   1、2、4已结算
+                 -->
+              <span :class="status_class(props.row.orderStatus)">{{ order_status(props.row.orderStatus) }}</span>
+              <!--显示部分提前结算或者全额提前结算-->
+              <!--              <span v-if="tool_selected=='settled'" class="bet-pre-color">-->
+              <!--                      <template v-if="props.row.settleType==4">{{$root.$t('bet_record.settlement_pre_part2')}}</template>-->
+              <!--                      <template v-else-if="props.row.settleType==5">{{$root.$t('bet_record.settlement_pre_all2')}}</template>-->
+              <!--                    </span>-->
             </q-td>
           </q-tr>
         </template>
@@ -130,9 +146,9 @@ const props = defineProps({
   }
 })
 const match_type = {
-  1: 'Prematch',
-  2: 'In-Play',
-  3: 'Outrights'
+  1: i18n_t("bet.morning_session"),
+  2: i18n_t("list.list_today_play_title"),
+  3: i18n_t("menu.match_winner")
 }
 const { columns, tableData, total, loading, handle_fetch_order_list } = useGetOrderList()
 const labelClick = (row) => {
@@ -144,7 +160,7 @@ watch(() => props.current_tab, (newVal) => {
   if (newVal == 'settled') {
     columns.value[5] = {
       name: 'return',
-      label: 'Return',
+      label: i18n_t("common.donate_win"),
       align: 'center',
       field: 'return'
     }
@@ -152,7 +168,7 @@ watch(() => props.current_tab, (newVal) => {
   } else {
     columns.value[5] = {
       name: 'highestWin',
-      label: 'Highest Win',
+      label: i18n_t("common.maxn_amount_val"),
       align: 'center',
       field: 'highestWin'
     }
@@ -163,6 +179,50 @@ const getTableData = (params) => {
   handle_fetch_order_list(params)
 }
 defineExpose({ getTableData })
+const status_class = (orderStatus) => {
+  let str = "";
+  switch (parseInt(orderStatus)) {
+    case 0:
+      str = ""; //"投注成功";
+      break;
+    case 1:
+      str = ""; //"投注成功";
+      break;
+    case 2:
+      str = "lose-color"; //"注单无效";
+      break;
+    case 3:
+      str = ""; //确认中
+      break;
+    case 4:
+      str = "win-color"; //投注失败
+      break;
+    default:
+      break;
+  }
+  return str;
+}
+const order_status = (orderStatus) => {
+  let str = ''
+  switch (parseInt(orderStatus)) {
+    case 0:
+    case 1:
+      str = 'Bet Placed' //"投注成功";
+      break
+    case 2:
+      str = 'Bet Voided' //"注单无效";
+      break
+    case 3:
+      str = 'Processing' //"确认中";
+      break
+    case 4:
+      str = 'Betting Failed' //"投注失败";
+      break
+    default:
+      break
+  }
+  return str
+}
 // 页码变化
 const changePage = (arv) => {
   const { current } = arv
@@ -176,6 +236,10 @@ const hand_copy = (data) => {
 </script>
 
 <style lang="scss" scoped>
+.win-color {
+  color: #FF4646
+}
+
 .no-data-icon {
   width: 200px;
   height: 200px;
