@@ -131,6 +131,7 @@ export default{
     const route = useRoute();
     const expansion_ref = ref(null);
     const refresh_data = ref(false);
+    const sportId = route.params.csid
     console.log(route);
     const {
       tabList,
@@ -138,7 +139,7 @@ export default{
       current_key,
       detail_loading,
       detail_info,
-      sportId,
+      // sportId,
       all_hl_item,
       init,
       show_close_thehand,
@@ -364,7 +365,7 @@ export default{
 .sport_bg {
   width: 226px;
   height: 80px;
-  // background-image: url('src/assets/images/icon_sport_bg.png');
+  background-image:url($SCSSPROJECTPATH + "/image/png/icon_sport_bg.png"); 
   background-size: 226px;
   position: absolute;
   top: 0;
