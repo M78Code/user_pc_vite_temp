@@ -46,7 +46,7 @@ export function usedetailData(route) {
   //const userInfo = state.userReducer.userInfo; // 用户数据
   const {user_info} = UserCtr; // 用户数据
 
-  const current_id = ref()
+  const current_id = ref() // 赛事id
 
   let sportId =1, mid=2858623,tid
 
@@ -157,7 +157,6 @@ export function usedetailData(route) {
         };
         const res = await getMatchDetailByTournamentId(params);
         matchDetailList.value = res.data
-      //  console.log(1111111111111,res)
       } catch (error) {}
     };
 
@@ -232,6 +231,7 @@ export function usedetailData(route) {
     sportId = route.params.csid
     mid = route.params.mid
     tid = route.params.tid
+    current_id.value = route.params.mid
 
     init();
     timer = setInterval(async () => {
@@ -250,6 +250,7 @@ export function usedetailData(route) {
     sportId = route.params.csid
     mid = route.params.mid
     tid = route.params.tid 
+    current_id.value = route.params.mid
    current_id.value = mid
    init();
   }
