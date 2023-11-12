@@ -18,12 +18,15 @@
                     </div>
                     <div class="ann-item" v-for="(item, i) of announce_list" :key="i">
                         <div class="ann-title" v-show="index == 0">[{{ item.noticeTypeName }}]</div>
-                        <div class="ann-content"> <span class="aaa">*</span> {{ item.sendTime }} {{ item.context }}</div>
+                        <div class="ann-content"> 
+                            <span class="reads" v-show="readalls">*</span> 
+                            {{ item.sendTime }} {{ item.context }}
+                        </div>
                         <div class="ann-time">
                         <div>
                             {{ timestr(item.sendTimeOther) }}
                         </div>
-                        <button class="announce-btn" @click="read">Read</button>
+                        <button class="announce-btn" @click="read(i)">Read</button>
                         </div>
                     </div>
                     <load-data state="notice-empty" :no_data_msg="i18n_t('common.notice_no_data')"
@@ -69,6 +72,15 @@ const current_title = ref('')
 const index = ref(0)
 /** 接口请求完成 */
 const loadd_finish = ref(false)
+const readalls = ref(true)
+
+const readall = () => {
+    readalls.value = false
+}
+
+const read = (i) => {
+    console.log("已读")
+}
 
 /**
 * @Description:切换菜单
@@ -208,7 +220,7 @@ onMounted(get_list)
             border-bottom: 1px solid #d0d8de;
             margin: 5px 0;
             padding:0px 30px;
-            .aaa{
+            .reads{
                 position: absolute;
                 left: 20px;
                 color: red;
