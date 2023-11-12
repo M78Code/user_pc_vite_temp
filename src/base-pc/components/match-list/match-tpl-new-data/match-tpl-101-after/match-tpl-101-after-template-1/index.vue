@@ -15,8 +15,8 @@
       </div>
       <!-- 投注信息 -->
       <match-handicap 
-        v-if="match && match_tpl_info.get_current_odds_list(current_choose_oid)" 
-        :handicap_list="match_tpl_info.get_current_odds_list(current_choose_oid)" 
+        v-if="match" 
+        :handicap_list="handicap_list" 
         :match="match"
         use_component_key="MatchHandicap2"
       />
@@ -65,15 +65,14 @@ let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.mid)
 let match = MatchListData.list_to_obj.mid_obj[props.mid+'_'];
 let match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`].width_config
 let match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`]
-let default_hpid = null
-let current_choose_oid = ref({});
+let handicap_list = ref([]);
 watch(() => MatchListData.data_version.version, (new_value, old_value) => {
   match = MatchListData.list_to_obj.mid_obj[props.mid+'_'];
-  console.log('match.tpl_id', match.tpl_id);
   match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match.tpl_id}_config`].width_config
   match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${match.tpl_id}_config`]
-  default_hpid = choose_config[match.csid][0]
-  current_choose_oid.value = { first_hpid: default_hpid[0], second_hpid: default_hpid[1] }
+  let default_hpid = choose_config[match.csid][0]
+  handicap_list.value = match_tpl_info.get_current_odds_list({ first_hpid: default_hpid[0], second_hpid: default_hpid[1] })
+  console.log('handicap_list111', handicap_list.value);
 })
 function jump_to_details (payload)  {
     if (is_in_play && payload) {

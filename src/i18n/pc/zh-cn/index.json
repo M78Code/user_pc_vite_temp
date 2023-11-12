@@ -1,4 +1,20 @@
 {
+  "ouzhou": {
+    "record": {
+      "my_bet": "注单历史",
+      "unsettled": "未结算",
+      "settled": "已结算",
+      "unpaid_bets": "该记录将显示所有未支付的投注",
+      "settled_time": "结算时间",
+      "bet_time": "投注时间",
+      "match_time": "比赛时间",
+      "today": "今天",
+      "yesterday": "昨天",
+      "7_days": "七天内",
+      "30_days": "30天内",
+      "datails": "数据"
+    }
+  },
   "analysis": {
     "age": "年龄",
     "away_win": "客胜",
@@ -321,6 +337,7 @@
   },
   "collect": {},
   "common": {
+    "mission_center": "任务中心",
     "in_box": "抽盒中......",
     "collect_toast": "收藏失败，请稍后再试",
     "account": "账户",

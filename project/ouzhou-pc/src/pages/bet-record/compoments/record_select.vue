@@ -8,7 +8,7 @@
     <!-- 未结算 -->
     <div class="record-select-main" v-if="current_tab == 'unsettled'">
       <q-option-group v-model="cash_value" type="checkbox" :options="options" color="opt-basic" />
-      <span style="font-size: 12px;color:#8A8986;">This record will show all unpaid bets</span>
+      <span style="font-size: 12px;color:#8A8986;">{{i18n_t("ouzhou.record.unpaid_bets")}}</span>
     </div>
     <!-- 已结算 -->
     <div v-else class="record-settled">
@@ -65,9 +65,9 @@ const current_time = ref(1)
 const date = ref({ from: '2023/07/01', to: '2023/07/17' })
 const date_value = ref('')
 const select_options = [
-  { value: 'Sort by settled time', label: 'Settled time', id: 2 },
-  { value: 'Sort by bet time', label: 'Bet time', id: 1 },
-  { value: 'Sort by match time', label: 'Match time', id: 3 }
+  { value: 'Sort by settled time', label: i18n_t("ouzhou.record.settled_time"), id: 2 },
+  { value: 'Sort by bet time', label: i18n_t("ouzhou.record.bet_time"), id: 1 },
+  { value: 'Sort by match time', label: i18n_t("ouzhou.record.match_time"), id: 3 }
 ]
 const tabChange = ref(false)
 onMounted(() => {
@@ -110,15 +110,15 @@ watch(cash_value, (newVal) => {
 })
 const options = [
   {
-    label: 'Cash Out',
+    label: i18n_t("bet_record.settlement_pre"),
     value: 'op1'
   }
 ]
 const btn_options = [
-  { label: 'Today', value: 1 },
-  { label: 'Yesterday', value: 2 },
-  { label: 'Last 7 Days', value: 3 },
-  { label: 'In 30 Days', value: 4 }
+  { label: i18n_t("ouzhou.record.today"), value: 1 },
+  { label: i18n_t("ouzhou.record.Yesterday"), value: 2 },
+  { label: i18n_t("ouzhou.record.7_days"), value: 3 },
+  { label: i18n_t("ouzhou.record.30_days"), value: 4 }
 ]
 // 时间筛选点击
 const time_click = (item) => {
