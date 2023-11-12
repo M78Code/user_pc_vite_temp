@@ -19,7 +19,7 @@
       <setect-league @closedHandle="state.select_dialog = false" @finishHandle="selectFinishHandle"></setect-league>
     </div>
     <!-- 收藏 -->
-    <scroll-menu menu_type="1" :is_show_badge="false"  v-if="MenuData.menu_list.length" />
+    <scroll-menu menu_type="1" :is_show_badge="false"  v-if="MenuData.menu_list.length" @changeMenu="changeMenu"/>
     <div class="match-container">
         <match-container />
     </div>
@@ -48,9 +48,16 @@ const selectFinishHandle = (val) => {
   console.log('选择完成')
   state.select_dialog = false
 }
-
-onMounted(() => {
+/**
+ * 球种点击
+ * @param {*} mi 
+ */
+const changeMenu = (mi) =>{
+  console.log("euid",MenuData.get_euid())
   MatchMeta.get_collect_match()
+}
+onMounted(() => {
+  changeMenu("40003")
 })
 
 // const set_menu_lv1 = item => {
