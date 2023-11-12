@@ -28,7 +28,7 @@
         </router-view>
       </div>
       <!-- 右侧 视频  动画 比分板 详情 -->
-      <div :style="{ height: LayOutMain_pc.layout_content_height + 'px' , width:LayOutMain_pc.layout_right_width +'px' }" class="layout_main_right">
+      <div v-if="show_right" :style="{ height: LayOutMain_pc.layout_content_height + 'px' , width:LayOutMain_pc.layout_right_width +'px' }" class="layout_main_right">
         <layout-right />
       </div>
     </div>
@@ -81,6 +81,17 @@ const page_style = ref('')
 page_style.value = compute_css_variables({ category: 'component', module: 'layout' })
 
 const route = useRoute();
+
+// 控制首页不展示右侧区域
+const show_right = ref(false);
+watch(
+  () => route.name,
+  () => {
+    show_right.value = ["details", "in_play"].includes(route.name);
+  },
+  { immediate: true }
+);
+
 //重新计算高度
 const mitt_offs = [
   // useMittOn(MITT_TYPES.EMIT_LAYOUT_RESIZE, debounce(resize, 150)).off,
