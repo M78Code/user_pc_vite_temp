@@ -6,7 +6,7 @@
  * @Description:  
 -->
 <template>
-    <scroll-menu menu_type="1"  v-if="MenuData.menu_list.length" />
+    <scroll-menu menu_type="1"  v-if="MenuData.menu_list.length" @changeMenu="changeMenu"/>
     <!-- 赛事列表 -->
     <div class="match_page">
       <MatchContainer />
@@ -16,6 +16,13 @@
 import scrollMenu from 'src/base-h5/components/top-menu/top-menu-ouzhou-1/scroll-menu/scroll-menu.vue';
 import MatchContainer from "src/base-h5/components/match-list/index.vue";
 import { MenuData } from "src/core/index.js";
+/**
+ * 球种点击
+ * @param {*} mi 
+ */
+const changeMenu = (mi) =>{
+  MenuData.get_match_render_list();
+}
 </script>
 <style lang="scss" scoped>
   .match_page{

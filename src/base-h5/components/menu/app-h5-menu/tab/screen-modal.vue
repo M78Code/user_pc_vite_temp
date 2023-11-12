@@ -115,12 +115,16 @@
             </li>
           </ul>
         </section>
+        <section class="btn row items-center justify-between">
+          <div class="confirm_btn" @click="select_confirm">确定</div>
+          <div class="cancel_btn" @click="select_cancel">取消</div>
+        </section>
       </div>
     </div>
   </div>
 </template>
 <script setup>
-import {  ref, watch } from "vue";
+import { ref, watch } from "vue";
 import search from "src/core/search-class/search.js";
 import { api_search } from "src/api/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
@@ -135,9 +139,9 @@ const is_all_checked = ref(false);
 const get_y0_suffix = "";
 
 //列表数据
-const list_data = ref([])
+const list_data = ref([]);
 //选中的数据
-const select_data = ref([])
+const select_data = ref([]);
 
 let rem_1 = (window.innerWidth * 100) / 375;
 const bounced_high = {
@@ -149,15 +153,15 @@ const bounced_high = {
  * @return {Undefined} Undefined
  */
 function all_select() {
-  is_all_checked.value = !is_all_checked.value
-     list_data.value = list_data.value.map(item => {
-      item.checked = is_all_checked;
-      item.matchList = item.matchList.map(v => {
-        v.checked = is_all_checked.value;
-        return v;
-      });
-      return item;
+  is_all_checked.value = !is_all_checked.value;
+  list_data.value = list_data.value.map(item => {
+    item.checked = is_all_checked;
+    item.matchList = item.matchList.map(v => {
+      v.checked = is_all_checked.value;
+      return v;
     });
+    return item;
+  });
 }
 /**
  * @Description:联赛选中
@@ -183,13 +187,13 @@ function league_select(val) {
  */
 function match_select(item) {
   item.checked = !item.checked;
-  if (!item.checked){
-    is_all_checked.value = false
+  if (!item.checked) {
+    is_all_checked.value = false;
   }
 }
 /**
  * @Description:获取搜索结果数据
- * @param {string} keyword 搜索关键字
+ * @param {string}
  * @return {Undefined} Undefined
  */
 function clear_search() {
@@ -197,7 +201,7 @@ function clear_search() {
 }
 /**
  * @Description:被选中的数据
- * @param {string} keyword 搜索关键字
+ * @param {string}
  * @return {Undefined} Undefined
  */
 function select_confirm() {
@@ -205,6 +209,15 @@ function select_confirm() {
     item.matchList = item.matchList.filter(v => v.checked);
     return item;
   });
+  console.log('select_data.value',select_data.value)
+}
+/**
+ * @Description:取消
+ * @param {string}
+ * @return {Undefined} Undefined
+ */
+function select_cancel() {
+  console.log('取消')
 }
 /**
  * @Description:获取搜索结果
@@ -225,7 +238,7 @@ async function get_search_result() {
     let res = await api_search.get_search_result(params);
     const { code, data } = res;
     if (code === "200") {
-        list_data.value = data?.data.league.map(item => {
+      list_data.value = data?.data.league.map(item => {
         item.checked = false;
         item.matchList = item.matchList.map(v => {
           v.checked = false;
@@ -349,6 +362,30 @@ async function get_search_result() {
           }
         }
       }
+    }
+  }
+  .btn{
+    position: fixed;
+    bottom: 0.5rem;
+    div{
+      width: 1.29rem;
+      height: 0.36rem;
+      padding: 0.08rem 0.24rem;
+      border-radius: 0.12rem;
+      background: #179CFF;
+      font-size: 0.14rem;
+      text-align: center;
+      line-height: 0.22rem;
+      color: #ffffff;
+      font-weight: 400;
+      letter-spacing: 0.04rem;
+    }
+    .cancel_btn{
+      background: linear-gradient(0deg, #F8F9FA, #F8F9FA),
+       linear-gradient(0deg, #E4E6ED, #E4E6ED);
+       border: 1px solid #E4E6ED;
+       color: #AFB3C8;
+       margin-left: 0.06rem;
     }
   }
 }
