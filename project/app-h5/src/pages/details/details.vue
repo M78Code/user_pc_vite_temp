@@ -51,19 +51,19 @@
                 :ripple="false"
                 label="首发"
                />
-         
+
               <!-- 根据中文，繁体、聊天室ID不为空以及 chatRoomSwitch 打开 才显示聊天室Tab -->
               <q-tab
                 v-if="get_event_list.length>0"
                 name="playback"
                 :ripple="false"
                 label="精彩回放"
-               />          
+               />
             </q-tabs>
             <!-- 玩法集展示内容 -->
-            <details-tab 
-            v-show="viewTab === 'bet' || get_is_hengping" 
-            :data_list="data_list" 
+            <details-tab
+            v-show="viewTab === 'bet' || get_is_hengping"
+            :data_list="data_list"
             :scroller_scroll_top="scroller_scroll_top"
             :get_details_item="get_details_item"
             :new_match_detail_ctr="new_match_detail_ctr"

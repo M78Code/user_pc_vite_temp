@@ -69,6 +69,7 @@ const props = defineProps({
 
 let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.match.mid)
 // 赛事模板宽度
+console.log('handicap_list', props.handicap_list);
 const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].width_config
 let MatchListDataInfo = MatchListData
 const active_score = ref('')
