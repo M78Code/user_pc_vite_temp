@@ -5,6 +5,7 @@ import { quasar, transformAssetUrls } from "@quasar/vite-plugin";
 import path from "path";
 
 console.log("-------------__dirname---------", __dirname);
+console.log("-------------__dirname---------", __dirname);
  
 let project ='activity'
  
@@ -20,6 +21,9 @@ if (!project) {
   console.log('本地开发需要打开全路径：');
   console.log(`http://localhost:29300/project/${project}/index.html`);
   console.log('');
+  console.log('');
+  console.log('');
+  console.log('活动相关的组件代码需要在  project/activity  内   素材在  public/activity 内');
   console.log('');
   console.log('');
 }
