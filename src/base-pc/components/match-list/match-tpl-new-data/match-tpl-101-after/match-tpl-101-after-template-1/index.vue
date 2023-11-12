@@ -21,7 +21,7 @@
         use_component_key="MatchHandicap2"
       />
       <!-- 比分板 -->
-    <div v-tooltip="{ content: t('common.score_board') }"
+    <div v-tooltip="{ content: i18n_t('common.score_board') }"
       @click="jump_to_details()">
       <div class="score-board"
         :style="compute_css_obj({key: 'pc-home-early-settlement'})"></div>

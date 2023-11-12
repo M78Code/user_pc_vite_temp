@@ -21,9 +21,9 @@
             {{ MatchListCardDataClass.list_version }}-- {{ load_data_state }}-- length--- {{ match_list_card_key_arr.length
             }}
         </div>
-        <div class="match-list-scroll scroll">
+        <div class="match-list-scroll scroll" >
             <!-- 列表容器 -->
-            <load-data :state="'data'" limit_height="1000"> <!--此处先写死高度用来调试UI -->
+            <load-data :state="'data'" limit_height="10000"> <!--此处先写死高度用来调试UI -->
                 <!-- 滚球其他列表 -->
                 <scroll-list v-if="MenuData.menu_root_show_shoucang != 300">
                     <template v-slot:before>
