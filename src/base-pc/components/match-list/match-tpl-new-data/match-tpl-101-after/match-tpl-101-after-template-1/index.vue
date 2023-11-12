@@ -20,10 +20,12 @@
         :match="match"
         use_component_key="MatchHandicap2"
       />
-      <!-- 最右侧图标 -->
-      <!-- <div class="score-data-box" @click="jump_to_details(match)">
-        <i aria-hidden="true" class="icon-signal q-icon c-icon"></i>
-      </div> -->
+      <!-- 比分板 -->
+    <div v-tooltip="{ content: t('common.score_board') }"
+      @click="jump_to_details()">
+      <div class="score-board"
+        :style="compute_css_obj({key: 'pc-home-early-settlement'})"></div>
+    </div>
   </div>
 </template>
 
@@ -46,6 +48,7 @@ import { MatchBasisInfo101FullVersionWapper as BasisInfo101 } from 'src/base-pc/
 import IconBox from '../modules/iconBox/index.vue'
 import { MatchHandicapFullVersionWapper as MatchHandicap } from 'src/base-pc/components/match-list/match-handicap/index.js'
 import MatchMedia from 'src/base-pc/components/match-list/match-media/index.vue'
+import { compute_css_obj } from 'src/core/server-img/index.js'
 
 const props = defineProps({
   mid: {
@@ -163,5 +166,11 @@ onMounted(() => {
   .bet-item-wrap:last-child{
     border-right: none !important;
   }
+}
+
+.score-board {
+  width: 16px;
+  height: 12px;
+  background-size: 100%;
 }
 </style>
