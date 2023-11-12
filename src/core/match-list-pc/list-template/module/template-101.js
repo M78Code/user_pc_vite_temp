@@ -56,6 +56,7 @@ export const get_15mins_odds_list = () => {
 // 获取hots赔率模板
 export const get_hots_odds_list = () => {
   let hots_odds_list = TemplateCommon.get_hots_odds_list(template_101.main_handicap_list)
+  return hots_odds_list;
 }
 
 //   列表宽度计算模板
