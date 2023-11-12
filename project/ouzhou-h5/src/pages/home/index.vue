@@ -177,7 +177,12 @@ const leagues_matchs = ref([{
 
 const tabValue = ref('featured');
 // tabs 切换
-const on_update = () => {
+const on_update = (val) => {
+  if (val === 'featured') {
+    get_ouzhou_home_data()
+  } else {
+    MatchMeta.get_top_events_match()
+  }
 }
 
 </script>
