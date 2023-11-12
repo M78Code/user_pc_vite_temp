@@ -25,9 +25,8 @@
         <div class="popular">
           <h5>POPULAR</h5>
           <div class="item" :class="[
-            item.className,
             // { active: meta_data_store.current_menu.mi == item.mi },
-          ]" v-for="(item, index) in popular" :key="item.mi" @click="change_current_menu(item)">
+          ]" v-for="(item, index) in popularList" :key="item.mi" @click="change_current_menu(item)">
             <sport-icon size="18" :sport_id="item.mi" />
             <div>{{ BaseData.menus_i18n_map[item.mi] }}</div>
           </div>
@@ -38,7 +37,6 @@
         <div class="menu_container">
           <h5>ALL SPORTS</h5>
           <div class="menu_item" :class="[
-            'menu_item_' + item.mi,
             // { active: meta_data_store.current_menu.mi == item.mi },
           ]" v-for="item in leftDataList" :key="item.mi" @click="change_current_menu(item)"
             :data-id="item.mi">
@@ -58,12 +56,14 @@
   </div>
 </template>
 <script setup>
-import {ref , reactive, defineEmits,watch} from "vue";
+import {ref ,reactive, defineEmits,onMounted,onUnmounted } from "vue";
 import sportIcon from "./sport-icon.vue";
 import BaseData from "src/core/base-data/base-data.js";
 import { MenuData } from 'src/core/';
 import { useRouter } from "vue-router";
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
+import { LocalStorage } from "src/core/index.js";
+import { useMittOn,MITT_TYPES } from "src/core/mitt/index.js" 
 const router = useRouter();
 const emits = defineEmits(['isLeftDrawer']);
 const leftDataList = ref([]);
@@ -75,13 +75,59 @@ const sportsGenre = reactive([
   { name: "VR Sports", className: "vr-sports", mi: "300",route: '/virtual' },
 ])
 /**
- * 热门
+ * 默认所有球种
  */
-const popular = reactive([
-  { name: "Football", className: "football", mi: "101" },
-  { name: "Basketball", className: "basketball", mi: "102" },
-  { name: "Tennis", className: "tennis", mi: "105" },
+const defaultSports = reactive([
+  { name: "Football", mi: "101" },
+  { name: "Basketball", mi: "102" },
+  { name: "eFootball", mi: "190" },
+  { name: "eBasketball", mi: "191" },
+  { name: "Tennis", mi: "105" },
+  { name: "Snooker", mi: "107" },
+  { name: "Badminton", mi: "110" },
+  { name: "Table Tennis", mi: "108" },
+  { name: "Baseball", mi: "103" },
+  { name: "Volleyball", mi: "109" },
+  { name: "Handball", mi: "111" },
+  { name: "Boxing/Fighting", mi: "112" },
+  { name: "Beach Volleyball", mi: "113" },
+  { name: "Water Polo", mi: "116" },
+  { name: "Hockey", mi: "115" },
+  { name: "Rugby Union", mi: "114" },
+  { name: "Ice Hockey", mi: "104" },
+  { name: "American Football", mi: "106" },
+  { name: "Entertainment", mi: "118" },
 ])
+const popularList = ref([]);//点击排序
+/**
+ * 排序
+ * @param {*} arr 
+ */
+const popularListSort = (arr) =>{
+  const tem = new Map();
+  arr = arr.sort((n,m)=>{return m.num - n.num});
+  arr = [...arr,...leftDataList.value]
+  const mergeArr = arr.filter((item) => !tem.has(item.mi) && tem.set(item.mi, 1))
+  return mergeArr.slice(0,3);
+}
+/**
+ * 本地存储popular
+ * @param {*} mi 
+ */
+const setPopularSort = (mi) =>{
+  const popularSortListH5 = LocalStorage.get("popularSortListH5") ||[];
+  const index = popularSortListH5.findIndex((item)=>item.mi === mi);
+  if(index !== -1){
+    popularSortListH5[index].num += 1;
+  }else{
+    popularSortListH5.push({
+      mi:mi,
+      num:1
+    })
+  }
+  popularList.value = popularListSort(popularSortListH5);
+  LocalStorage.set("popularSortListH5",popularSortListH5)
+}
 /**
  * 电竞 vr点击
  * @param {*} data 
@@ -96,16 +142,26 @@ const set_menu_obj = (data) => {
 const change_current_menu = (item) => {
   MenuData.set_current_lv1_menu("2");
   MenuData.set_menu_mi(item.mi);
-
+  setPopularSort(item.mi);
   // 设置菜单对应源数据
   MatchMeta.set_origin_match_data()
-
-  emits('isLeftDrawer')
-  
+  emits('isLeftDrawer');
   router.push("/match");//跳转今日列表
 }
-watch(MenuData.update_time,()=>{
-  leftDataList.value = MenuData.menu_list;
+/**
+ * 初始化
+ */
+const get_init_data = () =>{
+  leftDataList.value = MenuData.menu_list && MenuData.menu_list.length?MenuData.menu_list:defaultSports;
+  const popularSortListH5 = LocalStorage.get("popularSortListH5") ||[];
+  popularList.value = popularListSort(popularSortListH5);
+}
+onMounted(()=>{
+  get_init_data();
+  useMittOn(MITT_TYPES.EMIT_UPDATE_INIT_DATA, get_init_data)
+})
+onUnmounted(()=>{
+  useMittOn(MITT_TYPES.EMIT_UPDATE_INIT_DATA).off
 })
 </script>
 <style lang="scss" scoped>
