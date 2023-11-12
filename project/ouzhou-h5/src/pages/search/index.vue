@@ -159,7 +159,7 @@
 				<p>No results</p>
 			</div> -->
 			<div class="not_found">
-			<no-data :code="200"></no-data>
+			<no-data :code="400"></no-data>
 			</div>
 		</div>
 	</div>
