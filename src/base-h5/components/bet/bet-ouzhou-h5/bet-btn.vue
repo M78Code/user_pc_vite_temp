@@ -4,9 +4,9 @@
 -->
 <template>
   <div class="bet_content_bottom">
-    <p class="bet_cancel" @click="bet_retract">Bet Retract</p>
+    <p class="bet_cancel" @click="pack_up">Bet Retract</p>
     <p class="place_bet"  @click="place_bet">
-      <span>Place Bet</span>
+      <span>Place Bet</span> 
       <span class="right_amount">{{BetData.bet_amount}}</span>
     </p>
   </div>
@@ -16,11 +16,17 @@
 <script setup>
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { submit_handle } from "src/core/bet/class/bet-box-submit.js" 
+import { useMittEmit, MITT_TYPES  } from "src/core/index.js";
 
 const place_bet = () => {
   submit_handle()
 }
-
+const pack_up = (val) => {
+  // TODO: 临时调试用
+  useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX, false);
+  // BetData.set_clear_bet_info()
+  // BetViewDataClass.set_clear_bet_view_config()
+}
 </script>
 
 <style lang="scss" scoped>
