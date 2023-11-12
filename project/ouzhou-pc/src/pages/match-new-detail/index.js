@@ -52,7 +52,7 @@ export function usedetailData(route) {
 
   // 监听分类切换数据
   watch(current_key, (val) => {
-    getDetailData(val);
+    get_match_detail(val);
   });
     // 监听分类切换数据
     // watch(()=>route.query, (val) => {
@@ -66,7 +66,7 @@ export function usedetailData(route) {
     // );
 
   //  根据分类id 过滤数据
-  const getDetailData = (value) => {
+  const get_match_detail  = (value) => {
     const plays = category_list.value.find(
       (item) => item.orderNo == value
     ).plays;
@@ -223,7 +223,7 @@ export function usedetailData(route) {
       current_key.value = current_key.value
         ? current_key.value
         : tabList.value[0].value;
-      getDetailData(current_key.value);
+        get_match_detail(current_key.value);
     } catch (error) {}
   };
 
@@ -262,6 +262,9 @@ export function usedetailData(route) {
     current_key,
     detail_loading,
     detail_info,
+    refresh,
+    get_match_detail,
+
 
     sportId,
     all_hl_item,
