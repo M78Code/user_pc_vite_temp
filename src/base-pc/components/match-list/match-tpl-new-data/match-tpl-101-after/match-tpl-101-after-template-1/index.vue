@@ -34,7 +34,7 @@
 import { ref, watch, onMounted } from 'vue';
 import lodash from 'lodash'
 
-import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/core/index.js";
+import { MatchDataWarehouse_PC_List_Common as MatchListData, t } from "src/core/index.js";
 import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card-class.js'
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import choose_config from 'src/core/constant/config/ouzhou-pc-choose-config.js'
