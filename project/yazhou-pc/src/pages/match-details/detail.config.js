@@ -214,7 +214,7 @@ export const useGetConfig = (router,cur_menu_type,details_params,play_media) => 
     }, 50);
   };
 
-  const { mx_autoset_active_match } = useGetGlobal({ details_params, back_to });
+  const { mx_autoset_active_match } = useGetGlobal({  back_to });
   /**
    * @description 赛事详情比分板数据
    * @param {string} mid 赛事id

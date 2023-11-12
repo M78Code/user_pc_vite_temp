@@ -42,7 +42,7 @@
         </q-tab-panel>
         <!-- top Events page -->
         <q-tab-panel name="top_events">
-          <scroll-menu menu_type="1" :is_show_badge="false"  v-if="MenuData.menu_list.length" />
+          <scroll-list menu_type="5000" :is_show_badge="false" :current_mi="state.current_mi" :menuList="MenuData.top_events_list" @changeMenu="changeMenu"/>
           <!-- 赛事列表 -->
           <section class="match-page-section">
             <MatchContainer />
@@ -54,7 +54,7 @@
 </template>
  
 <script setup> 
-import { onMounted, ref } from "vue";
+import { onMounted, ref ,reactive } from "vue";
 import { watch } from "vue";
 
 import TimeEvents from './components/time-events.vue'
@@ -65,7 +65,7 @@ import MatchPlay from './components/match-play.vue'
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import MatchUtils from 'src/core/match-list-h5/match-class/match-utils';
 import MatchContainer from "src/base-h5/components/match-list/index.vue";
-import scrollMenu from 'src/base-h5/components/top-menu/top-menu-ouzhou-1/scroll-menu/scroll-menu.vue';
+import scrollList from 'src/base-h5/components/top-menu/top-menu-ouzhou-1/scroll-menu/scroll-list.vue';
 import { MenuData, MatchDataWarehouse_ouzhou_PC_l5mins_List_Common as MatchDataBasel5minsH5, 
   MatchDataWarehouse_ouzhou_PC_hots_List_Common as MatchDataBaseHotsH5, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/index.js";
 
@@ -74,9 +74,20 @@ import { de_img, dk_img, be_img, fr_img } from 'src/base-h5/core/utils/local-ima
 const play_matchs = ref([])
 const time_events = ref([])
 const featured_matches = ref([])
-
+const state = reactive({
+    current_mi:"",
+})
+/**
+ * 球种点击
+ */
+const changeMenu = (item) =>{
+  state.current_mi = item.mi;
+  console.log("热门球种csid",item.csid)
+}
 onMounted(async () => {
   get_ouzhou_home_data()
+  state.current_mi = MenuData.top_events_list[0]?.mi;
+  console.log("默认球种csid",MenuData.top_events_list[0]?.csid)
 })
 
 // 获取首页数据

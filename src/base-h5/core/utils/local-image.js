@@ -92,6 +92,14 @@ export const be_img = compute_local_project_file_path('/image/national/BE.png')
 export const dk_img = compute_local_project_file_path('/image/national/DK.png')
 export const fr_img = compute_local_project_file_path('/image/national/FR.png')
 
+export const football_bg = compute_local_project_file_path('/image/featured/football_bg.png')
+export const basketball_bg = compute_local_project_file_path('/image/featured/basketball_bg.png')
+export const volleyball_bg = compute_local_project_file_path('/image/featured/volleyball_bg.png')
+export const tennis_bg = compute_local_project_file_path('/image/featured/tennis_bg.png') 
+export const table_tennis_bg = compute_local_project_file_path('/image/featured/table_tennis_bg.png')
+export const badminton_bg = compute_local_project_file_path('/image/featured/badminton_bg.png')
+export const baseball_bg = compute_local_project_file_path('/image/featured/baseball_bg.png')
+
 //弹出框菜单图片
 export const popup_menu = {
   refesh: compute_local_project_file_path('/image/menu/refesh.svg'),

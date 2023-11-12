@@ -8,12 +8,12 @@
       <!-- 体育类别 -->
       <header class="match-header" v-if="show_sport_title">
         <div>
-          <!-- <sport_icon size="24" :status="false" :sport_id="match_of_list.icon" /> -->
+          <SportIcon size="20"  :status="false" :sport_id="String(Number(match.csid ) + 100)" />
           <span>{{ match.csna }}</span>
         </div>
         <div class="select_time">
           <span @click.stop>
-            <q-btn-dropdown flat outline  style="color: #FF7000"  padding="0" label="Fulltime Result" 
+            <q-btn-dropdown disabled flat outline  style="color: #FF7000"  padding="0" label="Fulltime Result" 
               dropdown-icon="expand_more" content-class="select_time_style">
               <q-list>
                 <q-item v-for="item in hps_play_data" :key="item.hpid" @click.stop="on_select_play(item)"
@@ -249,6 +249,7 @@ import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import CountingDownSecond from 'src/base-h5/components/common/counting-down.vue';
 import CountingDownStart from 'src/base-h5/components/common/counting-down-start.vue';
 import OddListWrap from 'src/base-h5/components/match-list/components/odd-list-wrap.vue';
+import SportIcon from "src/base-h5/components/top-menu/top-menu-ouzhou-1/components/left-menu/sport-icon.vue"
 import ScoreList from 'src/base-h5/components/match-container/template/ouzhou/components/score-list.vue';
 import ImageCacheLoad from "src/base-h5/components/match-list/components/public-cache-image.vue";
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
@@ -277,6 +278,7 @@ export default {
     main_source:String,
   },
   components: {
+    SportIcon,
     ScoreList,
     IconWapper,
     OddListWrap,
@@ -301,17 +303,19 @@ export default {
       const hpid = MatchResponsive.match_hpid.value
       const hps_item = hps && hps.find(t => t.hpid == hpid)
 
-      let target_item = [];
-      if(hps_play_data.value){
-        target_item = hps_play_data.value.find(t => t.hpid == hpid)
-      }
-      // const target_item = hps_play_data.value.find(t => t.hpid == hpid)
-      const target_ol = lodash.get(target_item, 'hl[0].ol')
-      score_length.value = lodash.get(target_ol, 'length', 3)
-
       const ol = lodash.get(hps_item, 'hl[0].ol', Array.from({ length: score_length.value }, () => '{}'))
 
-      return ol.length === 3 ? ['1', 'X', '2'] : ['1', '2']
+      let ol_data = undefined
+      if (ol && ol[0] && ol[0].otd) {
+        ol.sort((a, b) => a.otd - b.otd)
+        ol_data = ol.map(t => t.ot)
+      }
+
+      const result = ol_data ? ol_data : ol.length === 3 ? ['1', 'X', '2'] : ['1', '2']
+
+      score_length.value = lodash.get(result, 'length')
+
+      return result
     })
     // 计算有玩法的hps
     const get_hps_play_data = () => {
@@ -329,11 +333,10 @@ export default {
 
     // 切换玩法赔率
     const on_select_play = (item) => {
-      console.log(item)
-      // game.selectTitle = item.hpn
       select_play.value = item.hpid
       MatchResponsive.set_match_hpid(item.hpid)
-      // item.panel = handle_odds_data(item)
+      // const length = lodash.get(item.hl[0].ol, 'length', 3)
+      // score_length.value = length
     }
 
     return { 

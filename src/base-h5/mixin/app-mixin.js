@@ -63,7 +63,6 @@ export default {
         // http初始化方法 会调用 setApiDomain
         // ws和http域名切换逻辑
         http.setApiDomain();
-        console.log(11111111)
         enter_params(async(user)=>{
           const lang = PROJECT_NAME === 'ouzhou-h5' ? 'en' : user?.languageName
           await loadLanguageAsync(lang);
