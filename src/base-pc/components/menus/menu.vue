@@ -165,11 +165,10 @@ const jump_func = payload => {
   //页面中间头部导航显示处理
   MatchListOuzhouClass.redux_menu.menu_root = 4
   MatchListOuzhouClass.redux_menu.menu_left = payload
-  MatchListOuzhouClass.update_version()
-
   MenuData.set_mid_menu_result({
     euid: payload,
   })
+  MatchListOuzhouClass.update_version()
 }
 
 onUnmounted(() => {
