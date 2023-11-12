@@ -35,8 +35,10 @@ class MenuData {
     this.destroy = () => {
       this.update && this.update.cancel()
     }
-    this.current_lv_1_menu_i = '1';
+    // 欧洲版 h5 默认 今日
+    this.current_lv_1_menu_i = 2;
     this.current_lv_2_menu_i = 0;
+    this.current_lv_2_menu_mi = ref('0');
     this.menu_lv_mi_lsit = []
     // 赛果 日期/赛中
     this.result_menu_api_params = {}
@@ -114,6 +116,11 @@ class MenuData {
     this.menu_mi.value = mi;
     this.current_lv_2_menu_i = `${mi}${this.menu_type.value}`;
     this.update()
+  }
+  // 设置二级菜单 id
+  set_menu_lv2_mi(val){
+    this.current_lv_2_menu_i = val
+    this.current_lv_2_menu_mi.value = val
   }
   /**
    * 设置时间 并且设置时间请求参数
