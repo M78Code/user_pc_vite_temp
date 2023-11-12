@@ -73,10 +73,12 @@ let match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data
 let handicap_list = ref([]);
 watch(() => MatchListData.data_version.version, (new_value, old_value) => {
   match = MatchListData.list_to_obj.mid_obj[props.mid+'_'];
-  match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match.tpl_id}_config`].width_config
-  match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${match.tpl_id}_config`]
-  let default_hpid = choose_config[match.csid][0]
-  handicap_list.value = match_tpl_info.get_current_odds_list({ first_hpid: default_hpid[0], second_hpid: default_hpid[1] })
+  if(match){
+    match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match.tpl_id}_config`].width_config
+    match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${match.tpl_id}_config`]
+    let default_hpid = choose_config[match.csid][0]
+    handicap_list.value = match_tpl_info.get_current_odds_list({ first_hpid: default_hpid[0], second_hpid: default_hpid[1] })
+  }
 })
 function jump_to_details ()  {
     router.push({

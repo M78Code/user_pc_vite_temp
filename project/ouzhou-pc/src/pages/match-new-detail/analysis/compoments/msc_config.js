@@ -12,25 +12,25 @@ export function useMscData(detail_info) {
 
   const statsList = ref([
     {
-      value: "Assault",
+      value: i18n_t("common.assault"),
       value_key: "S104",
     },
     {
-      value: "dangerous attack",
+      value: i18n_t("common.dangerous_assault"),
       value_key: "S8",
     },
     {
-      value: "ball right",
+      value: i18n_t("common.possession_ball"),
       value_key: "S105",
     },
   ]);
   const sliderList = ref([
     {
-      title: "Shot On Goal",
+      title: i18n_t("common.shots_on_goal"),
       value_key: "S18",
     },
     {
-      title: "Shot Wide Goal",
+      title: i18n_t("common.shot_wide_goal"),
       value_key: "S17",
     },
   ]);

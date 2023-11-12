@@ -1,3 +1,4 @@
+// 假数据
 export const sport_columns = {
     1:[
         {
@@ -106,6 +107,7 @@ export const sport_columns = {
          * @赛事阶段
          * 
          */
+        // 假数据
 export const socre_dict = (csid)=> {
     // 3棒、4冰、5网、6美足、7斯诺克、8乒乓、9排球、10羽毛球
     var dict = {
