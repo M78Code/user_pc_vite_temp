@@ -9,28 +9,29 @@
 
 <template>
   <div class="top_leagues_page">
-      <collapse v-for="(item, index) in leagues_matchs" :key="index" :title="item.national" v-model="item.visible">
-        <!-- 图片 -->
-        <template v-slot:title_icon>
-          <img class="national_icon" :src="item.nationalIcon" alt="" @click.stop="onCollect(item)" />
-        </template>
-        <!-- 右侧 -->
-        <template v-slot:title_right>
-          <span v-show="!item.visible">{{ item.children.length }}</span>
-        </template>
-        <template v-slot:content>
-          <div class="game" v-for="(game, index) in item.children" :key="index" @click.stop="onLeagueChange(item, game)">
-            <!-- <span> <img :src="no_collect_ouzhou" alt=""> {{ game.title }} </span> -->
-            <span>
-              <!-- 联赛收藏 -->
-              <template v-if="![3000, 900].includes(menu_type)" @click.stop="handle_league_collect">
-                <img v-if="!league_collect_state" class="favorited-icon"
-                  src="/src/base-h5/assets/match-list/ico_fav_nor.png" alt="" @click.stop="handle_league_collect(game.value)" />
-                <img v-if="league_collect_state" class="favorited-icon" src="/src/base-h5/assets/match-list/ico_fav_sel.png"
-                  @click.stop="handle_league_collect(game)" />
-              </template>
-              {{ game.title }}
-            </span>
+    <collapse v-for="(item, index) in leagues_matchs" :key="index" :title="item.national" v-model="item.visible">
+      <!-- 图片 -->
+      <template v-slot:title_icon>
+        <img class="national_icon" :src="item.nationalIcon" alt="" @click.stop="onCollect(item)" />
+      </template>
+      <!-- 右侧 -->
+      <template v-slot:title_right>
+        <span v-show="!item.visible">{{ item.children.length }}</span>
+      </template>
+      <template v-slot:content>
+        <div class="game" v-for="(game, index) in item.children" :key="index" @click.stop="onLeagueChange(item, game)">
+          <!-- <span> <img :src="no_collect_ouzhou" alt=""> {{ game.title }} </span> -->
+          <span>
+            <!-- 联赛收藏 -->
+            <template v-if="![3000, 900].includes(menu_type)" @click.stop="handle_league_collect">
+              <img v-if="!league_collect_state" class="favorited-icon"
+                src="/src/base-h5/assets/match-list/ico_fav_nor.png" alt=""
+                @click.stop="handle_league_collect(game.value)" />
+              <img v-if="league_collect_state" class="favorited-icon" src="/src/base-h5/assets/match-list/ico_fav_sel.png"
+                @click.stop="handle_league_collect(game)" />
+            </template>
+            {{ game.title }}
+          </span>
           <span>{{ game.value }}</span>
         </div>
       </template>
@@ -41,12 +42,12 @@
 <script>
 import { have_collect_ouzhou, no_collect_ouzhou } from 'src/base-h5/core/utils/local-image.js'
 import collapse from "../../home/components/collapse.vue"
+import { defineEmits } from 'vue'
 
 import default_mixin from 'src/base-h5/components/match-container/mixins/default.mixin.js'
 import MatchCollect from 'src/core/match-collect'
 import useLeagueAndMatchCollect from 'src/base-h5/hooks/useLeagueAndMatchCollect.js'
 
-import { defineEmits } from 'vue'
 export default {
   name: "top-leagues",
   //  mixins: [default_mixin],
@@ -60,14 +61,13 @@ export default {
   components: {
     collapse
   },
-  setup(props) {
+  setup(props, { emit }) {
     const { leagues_matchs } = props
-    const emit = defineEmits(['onCollect', 'leagueChange'])
+    // const emit = defineEmits(['onCollect', 'leagueChange'])
     const { handle_league_collect,
       handle_match_collect, } = useLeagueAndMatchCollect()
     //联赛点击
     const onLeagueChange = (league, game) => {
-      console.log('league, game: ', league, game);
       emit('leagueChange', league, game)
     }
 

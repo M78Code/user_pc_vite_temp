@@ -6,9 +6,9 @@
         </simple-header>
         <div class="announce-content">
             <!-- 左侧菜单开始 -->
-            <left-menu :data="announce_title" @tabs_click="tabs_click" class="relative-position" />
+            <top-menu :data="announce_title" @tabs_click="tabs_click"  />
             <!-- 左侧菜单结束 -->
-            <q-scroll-area class="col rule-scroll-area" visible>
+            <q-scroll-area class="announce-area" visible>
                 <div class="main-page">
                     <div class="announce-title">{{ current_title }}</div>
                     <div class="ann-item" v-for="(item, i) of announce_list" :key="i">
@@ -29,7 +29,7 @@ import { ref, reactive, onMounted, onUnmounted } from 'vue'
 import lodash from 'lodash'
 import { i18n_t } from "src/boot/i18n.js"
 import { SimpleHeaderWapper as simpleHeader} from "src/components/common/simple-header/index.js";
-import leftMenu from "./left-menu.vue";
+import topMenu from "./top-menu.vue";
 import loadData from "src/components/load_data/load_data.vue"
 import { api_home } from "src/api/index.js"
 import { format_str } from "src/core/format/index.js";
@@ -136,6 +136,10 @@ onMounted(get_list)
 </script>
 
 <style lang="scss" scoped>
+.announce-area{
+    width: 100%;
+    height: 100%;
+}
 .announce-wrap {
     width: 100%;
     height: 100vh;
@@ -149,8 +153,6 @@ onMounted(get_list)
 .announce-content {
     width: 100%;
     height: 100%;
-    display: flex;
-    justify-content: space-between;
     background: #fff;
 
     .main-page {
