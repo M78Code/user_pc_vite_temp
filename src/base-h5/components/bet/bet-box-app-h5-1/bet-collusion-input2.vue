@@ -6,7 +6,13 @@
 
   <div class="list-view" :class="type != 1?'list-view-hui':''">
     <div class="list">
-      <div class="disflex">1 串 2 <span class="list-num">x10</span><span class="list-sub" :class="type != 1?'list-view-hui':''">{{type==1?'注单已确认':'注单失败'}}</span></div> 
+      <div class="disflex">
+        1 串 2
+        <span class="list-num">x10</span>
+        <span class="list-sub" :class="type != 1?'list-view-hui':''">
+          {{type==1?'注单已确认':'注单失败'}}
+        </span>
+      </div>
       <span class="money-span1" @click.stop="input_click(item,index,$event)">
         <span class="money-span" ref="money_span_single" :style="{ opacity:  '1' }"></span>
         <!-- <span v-if="item.money" class="yb_fontsize20 money-number" @click.stop="input_click(item,index,$event)">{{  item.money }}</span> -->

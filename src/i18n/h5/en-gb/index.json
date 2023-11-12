@@ -1787,7 +1787,8 @@
     "msg_nodata_19": "Book",
     "msg_nodata_20": "Hi, unluckily, the page got lost",
     "msg_nodata_21": "Don't worry, click \"Refresh\" to retrieve~",
-    "msg_nodata_22": "Too much traffic, please try again later"
+    "msg_nodata_22": "Too much traffic, please try again later",
+    "msg_nodata_23": "Coming soon"
   },
   "myScroll": {
     "msg1": "Pull to refresh",

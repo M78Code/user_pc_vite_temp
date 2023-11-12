@@ -38,7 +38,7 @@ let  DEV_TARGET_VERSION = ''
 
 //----------------------------------分割线  复刻版-H5-KYAPP  app-h5  5 -------------------------------------------
 // 测试环境  
-DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1699770473836-test";
+// DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1699770473836-test";
 // 试玩环境  
 // DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1699510585384-shiwan";
 // 隔离环境  
@@ -59,7 +59,7 @@ DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1699770473836-test";
 
 //----------------------------------欧洲版-PC  ouzhou-pc 7-------------------------------------------
 // 测试环境  
-  // DEV_TARGET_VERSION = "project_7-6544b0f3fb906b00ad5e8733-1699598524474-test";
+  DEV_TARGET_VERSION = "project_7-6544b0f3fb906b00ad5e8733-1699598524474-test";
 // 试玩环境  
 // DEV_TARGET_VERSION = "project_7-6544b0f3fb906b00ad5e8733-1699003372610-shiwan";
 // 生产环境
@@ -75,10 +75,46 @@ DEV_TARGET_VERSION = "project_5-652e267f1ca49737811219ef-1699770473836-test";
 // DEV_TARGET_VERSION = "project_8-6544b116720143009a2f282d-1699003368156-online";
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// 活动单页面单独项目 专用的  
+let DEV_ACTIVITY_TARGET_ENV=''
+//开发
+DEV_ACTIVITY_TARGET_ENV='dev'
+//测试
+DEV_ACTIVITY_TARGET_ENV='test'
+//隔离
+DEV_ACTIVITY_TARGET_ENV='geli'
+//压测
+DEV_ACTIVITY_TARGET_ENV='mini'
+//试玩
+DEV_ACTIVITY_TARGET_ENV='shiwan'
+//生产
+DEV_ACTIVITY_TARGET_ENV='online'
+
+
+
 export {
  
  
-  DEV_TARGET_VERSION
+  DEV_TARGET_VERSION,
+  DEV_ACTIVITY_TARGET_ENV
  
  
 };
