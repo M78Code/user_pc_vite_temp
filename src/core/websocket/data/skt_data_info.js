@@ -29,7 +29,7 @@ export default {
     this.SCMD_C8 = lodash.debounce(this.SCMD_C8,1000);
     //C112指令节流2秒
     this.SCMD_C112 = lodash.debounce(this.SCMD_C112,2000);
-  },
+  }, 
   computed: {
     ...mapGetters({
       // 用户信息
