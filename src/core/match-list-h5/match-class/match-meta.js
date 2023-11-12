@@ -4,7 +4,7 @@
  */
 import { ref } from 'vue'
 import lodash from 'lodash'
-import { api_common, api_match_list } from "src/api/index.js";
+import { api_common, api_match_list, api_match } from "src/api/index.js";
 import BaseData from 'src/core/base-data/base-data.js'
 import MatchPage from 'src/core/match-list-h5/match-class/match-page'
 import UserCtr from 'src/core/user-config/user-ctr.js'
@@ -39,7 +39,7 @@ class MatchMeta {
     this.prev_scroll = null
     // 是否需要赛事归类操作
     this.is_classify = false
-    // 重置折叠对象
+    // 重置折叠对象https://test-user-pc-new.sportxxxifbdxm2.com/?ignore_iframe_pc=1&env=line1&pb=1&api=vEtkQtmX6wF8fAGV5b4UDx2mPRca2zMHLMj/YELjSwxjyhV5t0ifZDD6I0iwkpzJ&token=49cda8d77b3af2c9f7c8601606a587786f610032&gr=common#/
     MatchFold.clear_fold_info()
     // 重置收藏对象
     MatchCollect.clear_collect_info()
@@ -162,7 +162,7 @@ class MatchMeta {
    */
     handler_match_list_data(config) {
 
-      const { list, type = 2, is_virtual = true } = config
+      const { list, type = 1, is_virtual = true } = config
 
       // 清除联赛下得赛事数量
       MatchResponsive.clear_ball_seed_league_count()
@@ -197,8 +197,8 @@ class MatchMeta {
       // 欧洲版首页热门赛事
       if (!is_virtual) {
         // 不需要调用赔率接口
-        type === 1 && this.handle_update_match_info(match_list.filter((t) => t.mid))
-        type === 2 && this.handle_submit_warehouse(match_list.filter((t) => t.mid))
+        type === 2 && this.handle_update_match_info(match_list.filter((t) => t.mid))
+        type === 1 && this.handle_submit_warehouse(match_list.filter((t) => t.mid))
         
       } else {
         // 计算所需渲染数据
@@ -439,7 +439,7 @@ class MatchMeta {
     const list = lodash.get(res, 'data', [])
     const length = lodash.get(list, 'length', 0)
     if (length < 1) return
-    this.handler_match_list_data({ list: list })
+    this.handler_match_list_data({ list: list, type: 2 })
   }
 
   /**
@@ -461,6 +461,25 @@ class MatchMeta {
     if (+res.code !== 200) return this.set_page_match_empty_status(true);
     const list = lodash.get(res, 'data', [])
     this.handler_match_list_data({ list: list })
+  }
+
+  /**
+   *@description 获取 to events 赛事
+   */
+  get_top_events_match() {
+    // 菜单没数据先写死
+    const params = {
+      euid: "30002",
+      sort: 1,
+      apiType: 1,
+      orpt: -1,
+      cuid: UserCtr.get_cuid(),
+    }
+    api_match.post_fetch_match_list(params).then((res) => {
+      if (+res.code !== 200) return
+      const list = lodash.get(res, 'data', [])
+      this.handler_match_list_data({ list: list })
+    })
   }
 
   /**
@@ -486,7 +505,7 @@ class MatchMeta {
     return { p15_list, hots, dataList }
   }
 
-    /**
+  /**
    * @description 获取最近一组15分玩法数据
    * @param {*} payload 正在比赛的数据
    */

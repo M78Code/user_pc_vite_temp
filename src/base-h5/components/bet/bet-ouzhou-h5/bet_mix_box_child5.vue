@@ -5,84 +5,32 @@
 
 <template>
     <div class="bet-mix-show">
-      <div v-if="type == 1">
+
+      <div v-for="(item, index) in BetViewDataClass.orderNo_bet_obj" :key="index">
         <div class="nonebox4-content">
           <div class="nonebox4-content-left">
               <div class="nonebox4-content-left-content">
-                  <div class="nonebox4-content-left-content-xian">
+                  <div class="nonebox4-content-left-content-xian" v-if="BetViewDataClass.bet_order_status == 5">
                     <div class="nonebox4-content-left-content-nei"></div>
                   </div>
-                  <div class="nonebox4-content-left-info">
-                    <div class="nonebox4-content-left-content-text">
-                      <div class="nonebox4-content-left-content-text-one">Sevilla Futbol Club <span class="text-one-span">0.25</span></div>
-                      <div class="nonebox4-content-left-content-text-two">[In-play] <span class="text-two-span">1X2</span></div>
-                      <div class="nonebox4-content-left-content-text-three">Sevilla Futbol Club</div>
-                    </div>
-                    <div>
-                        <div class="nonebox4-content-right">
-                            <div class="nonebox4-content-right-profit">123</div>
-                        </div>
-                        <div class="nonebox4-content-right-bot">Bet Placed</div>
-                    </div>
-                  </div>
-              </div>
-          </div>
-        </div>
-      
-        <div class="total">
-          <div>Highest Win<span class="total-left">72.40</span></div>
-          <div>Stake<span class="total-right">10.00</span></div>
-        </div>
-      </div>
-
-      <div v-if="type == 2">
-        <div class="nonebox4-content">
-          <div class="nonebox4-content-left">
-              <div class="nonebox4-content-left-content">
-                  <div class="nonebox4-content-left-content-xian green">
+                  <div class="nonebox4-content-left-content-xian green" v-if="BetViewDataClass.bet_order_status == 3">
                     <div class="nonebox4-content-left-content-nei green-nei"></div>
                   </div>
-                  <div class="nonebox4-content-left-info">
-                    <div class="nonebox4-content-left-content-text">
-                      <div class="nonebox4-content-left-content-text-one">Sevilla Futbol Club <span class="text-one-span">0.25</span></div>
-                      <div class="nonebox4-content-left-content-text-two">[In-play] <span class="text-two-span">1X2</span></div>
-                      <div class="nonebox4-content-left-content-text-three">Sevilla Futbol Club</div>
-                    </div>
-                    <div>
-                        <div class="nonebox4-content-right">
-                            <div class="nonebox4-content-right-profit">123</div>
-                        </div>
-                        <div class="nonebox4-content-right-bot green-color">Bet Placed</div>
-                    </div>
-                  </div>
-              </div>
-          </div>
-        </div>
-      
-        <div class="total">
-          <div>Highest Win<span class="total-left">72.40</span></div>
-          <div>Stake<span class="total-right">10.00</span></div>
-        </div>
-      </div>
-
-      <div v-if="type == 3">
-        <div class="nonebox4-content">
-          <div class="nonebox4-content-left">
-              <div class="nonebox4-content-left-content">
-                  <div class="nonebox4-content-left-content-xian red">
+                  <div class="nonebox4-content-left-content-xian red" v-if="BetViewDataClass.bet_order_status == 4">
                     <div class="nonebox4-content-left-content-nei red-nei"></div>
                   </div>
+
                   <div class="nonebox4-content-left-info">
                     <div class="nonebox4-content-left-content-text">
-                      <div class="nonebox4-content-left-content-text-one">Sevilla Futbol Club <span class="text-one-span">0.25</span></div>
-                      <div class="nonebox4-content-left-content-text-two">[In-play] <span class="text-two-span">1X2</span></div>
-                      <div class="nonebox4-content-left-content-text-three">Sevilla Futbol Club</div>
+                      <div class="nonebox4-content-left-content-text-one">{{item.matchName}} <span class="text-one-span">0.25</span></div>
+                      <div class="nonebox4-content-left-content-text-two">{{item.matchType == 2?'[In-play]':''}} <span class="text-two-span">{{item.playName}}</span></div>
+                      <div class="nonebox4-content-left-content-text-three">{{item.matchInfo}}</div>
                     </div>
                     <div>
                         <div class="nonebox4-content-right">
-                            <div class="nonebox4-content-right-profit">123</div>
+                            <div class="nonebox4-content-right-profit">{{item.oddsValues}}</div>
                         </div>
-                        <div class="nonebox4-content-right-bot red-color">Bet Placed</div>
+                        <div class="nonebox4-content-right-bot" :class="BetViewDataClass.bet_order_status == 3?'green-color':BetViewDataClass.bet_order_status==4?'red-color':''">Bet Placed</div>
                     </div>
                   </div>
               </div>
@@ -90,15 +38,18 @@
         </div>
       
         <div class="total">
-          <div>Highest Win<span class="total-left">72.40</span></div>
-          <div>Stake<span class="total-right">10.00</span></div>
+          <div>Highest Win<span class="total-left">{{ format_currency(parseFloat(item.maxWinMoney)/100) }}</span></div>
+          <div>Stake<span class="total-right">{{ format_currency(parseFloat(item.betMoney)/100) }}</span></div>
         </div>
       </div>
 
     </div>
   </template>
   <script setup>
-    const type = 2//1:等待   2：成功    3：失败
+  import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
+  import { compute_value_by_cur_odd_type } from "src/core/index.js"
+  import { format_currency } from "src/core/format/index.js"
+  const type = 2//1:等待   2：成功    3：失败
   </script>
   
   <style lang="scss" scoped>
@@ -134,26 +85,8 @@
     justify-content: space-between;
     font-size: 0.14rem;
   }
-  .content-right-duo{
-    display: inline-block;
-    background: url($SCSSPROJECTPATH+"/image/bet/select_b.svg") no-repeat center / contain;
-    width: 0.14rem;
-    height: 0.2rem;
-    margin-top: 0.05rem;
-  }
-  .content-right-shao{
-    display: inline-block;
-    background: url($SCSSPROJECTPATH+"/image/bet/select_b.svg") no-repeat center / contain;
-    width: 0.14rem;
-    height: 0.2rem;
-    margin-top: 0.05rem;
-  }
   .text-one-span{
     color: var(--q-gb-t-c-11);
-  }
-  .nonebox4-content-left-content-text-three{
-    font-size: 0.16rem;
-    color: var(--q-gb-bg-c-8);
   }
   .nonebox4-content-left-content-text-two{
     color: var(--q-gb-t-c-1);
@@ -162,10 +95,6 @@
   .text-two-span{
     color: var(--q-gb-t-c-18);
     font-weight: 400;
-  }
-  .nonebox4-content-left-content-text-one{
-    font-size: 0.18rem;
-    font-weight: 600;
   }
   .nonebox4-content-left-info{
     display: flex;
@@ -218,6 +147,46 @@
     font-size: 0.12rem;
     font-weight: bold;
     color: var(--q-gb-bg-c-12);
+  }
+  .content-right-duo{
+    display: inline-block;
+    background: url($SCSSPROJECTPATH+"/image/bet/select_b.svg") no-repeat center / contain;
+    width: 0.14rem;
+    height: 0.2rem;
+    margin-top: 0.05rem;
+  }
+  .content-right-shao{
+    display: inline-block;
+    background: url($SCSSPROJECTPATH+"/image/bet/select_b.svg") no-repeat center / contain;
+    width: 0.14rem;
+    height: 0.2rem;
+    margin-top: 0.05rem;
+  }
+  .nonebox4-content-left-content-text-three{
+    font-size: 0.16rem;
+    color: var(--q-gb-bg-c-8);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .nonebox4-content-left-content-text-one{
+    font-size: 0.18rem;
+    font-weight: 600;
+    display: flex;
+  }
+  .nonebox4-content-left-content-text{
+      line-height: 0.25rem;
+      margin-top: 0.02rem;
+      width: calc(100% - 0.85rem);
+  }
+  .nonebox4-content-right-profit{
+      font-size: 0.2rem;
+      font-weight: bold;
+      color: var(--q-gb-t-c-11);
+  }
+  .nonebox4-content-right{
+    display: flex;
+    flex-direction: row-reverse;
   }
   </style>
   
