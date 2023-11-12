@@ -29,10 +29,10 @@
 
 <script setup>
 
-import { ref, computed, watch, onMounted, nextTick } from 'vue';
+import { ref, watch, onMounted } from 'vue';
 import lodash from 'lodash'
 
-import { t, get_match_status, MatchDataWarehouse_PC_List_Common as MatchListData, UserCtr, compute_local_project_file_path } from "src/core/index.js";
+import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/core/index.js";
 import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card-class.js'
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import choose_config from 'src/core/constant/config/ouzhou-pc-choose-config.js'
@@ -57,20 +57,15 @@ const props = defineProps({
     default: () => false
   }
 })
-let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.mid)
-const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`].width_config
-const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`]
-console.log('match_tpl_info', match_style_obj.data_tpl_id);
-
 let match = MatchListData.list_to_obj.mid_obj[props.mid+'_'];
-const current_choose_oid = ref({ first_hpid: 1, second_hpid: 2 });
-const is_mounted = ref(true);
-
+const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match.tpl_id}_config`].width_config
+const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${match.tpl_id}_config`]
+const default_hpid = choose_config[match.csid][0]
+const current_choose_oid = ref({ first_hpid: default_hpid[0], second_hpid: default_hpid[1] });
 watch(() => MatchListData.data_version.version, (new_value, old_value) => {
   match = MatchListData.list_to_obj.mid_obj[props.mid+'_'];
 })
-
-const jump_to_details = payload => {
+function jump_to_details (payload)  {
     if (is_in_play && payload) {
       // score_img.value =  switch_active_icon;
       emitter.emit('set_detail_info', payload)
@@ -88,10 +83,6 @@ const jump_to_details = payload => {
       query: params,
     })
   }
-
-
-
-
 
 
 onMounted(() => {

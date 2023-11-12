@@ -56,12 +56,13 @@ const dataList = () =>{
         return get_cont(item);
     }) || []
 } 
-const playValue = ref(dataList()[0]?.mi||'');
+const playValue = ref('');
 const scrollRef = ref(null);
 const get_init_data = () =>{
     leftDataList.value = MenuData.menu_list;
     MenuData.set_current_lv1_menu(props.menu_type);
     MenuData.set_menu_mi(dataList()[0]?.mi);
+    playValue.value = dataList()[0]?.mi;
     emits('changeMenu',dataList()[0]?.mi)
 }
 onMounted(()=>{

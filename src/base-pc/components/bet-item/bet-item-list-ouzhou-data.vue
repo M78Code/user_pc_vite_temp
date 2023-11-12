@@ -4,10 +4,10 @@
     class="c-bet-item yb-flex-center relative-position yb-family-odds"
     :class="[
       ol_data.class,
-      odds_state,
       `csid${ol_data.csid}`,
       odds_lift,
       { 'show-odds-icon': odds_state != 'seal' },
+      active_score === `${ol_data._mid}${ol_data.oid}` ? 'active' : ''
     ]"
     @click.stop="bet_click_ol"
     :id="`list-${ol_data.oid}`"
@@ -81,14 +81,20 @@ const odds_lift = ref("");
 // 是否红升绿降中
 const odds_lift_show = ref(false);
 
+const emit = defineEmits(['update_score'])
+
+
 // 定时器对象
 let timer_obj = {};
-
 const props = defineProps({
   ol_data: {
     type: [Object, Array],
     default: () => {},
   },
+  active_score: {
+    type: String,
+    default: () => { }
+  }
 });
 
 //玩法比分
@@ -258,7 +264,7 @@ const bet_click_ol = () => {
     _hn,  // hn_obj
     _mid,  //赛事id mid_obj
   }
-  odds_state.value = odds_state.value === 'active' ? '' : 'active'
+  emit('update_score', `${_mid}${oid}`)
    set_bet_obj_config(params,{})
 };
 
