@@ -55,6 +55,7 @@ function match_list_all_params() {
     const { menu_root, left_menu_result, mid_menu_result, match_list_api_config, is_collect } = MenuData
     // 父级euid
     let { csid, tid, md, index, euid, sports, guanjun } = mid_menu_result || {};
+    console.log('mid_menu_result1',mid_menu_result)
     let { lv2_mi, lv1_mi, jinri_zaopan, } = left_menu_result || {};
     let apiType = 1;
     let api_name = api_params.other.match;
@@ -110,7 +111,7 @@ function match_list_all_params() {
             // 娱乐下只有冠军 直接写死
             euid = menu_root == 3 ? '3020212' : '3020112'
         } else {
-            euid = lodash.get(BaseData.mi_info_map, `mi_${lv1_mi}${menu_root}`, {}).euid
+            euid = lodash.get(BaseData.mi_info_map, `mi_${lv1_mi}`, {}).euid
         }
         lv2_mi_info = {
             apiType,
@@ -191,6 +192,8 @@ function match_list_all_params() {
             bymids: {},
         }
     }
+    console.log('mid_menu_result2',config.match_list.params)
+
     config.guanjun = guanjun;
     lodash.merge(
         config.match_list,
