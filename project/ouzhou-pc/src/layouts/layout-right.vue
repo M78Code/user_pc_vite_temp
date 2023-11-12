@@ -41,7 +41,7 @@ const show_right = ref(false);
 watch(
   () => route.name,
   () => {
-    show_right.value = ["details", "in_play"].includes(route.name);
+    show_right.value = ["details", "in_play",'home'].includes(route.name);
   },
   { immediate: true }
 );
