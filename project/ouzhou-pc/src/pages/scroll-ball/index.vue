@@ -5,7 +5,14 @@
 -->
 <template>
     <div class="yb-match-list full-height   relative-position" :data-version="MatchListCardDataClass.list_version">
-        <MatchesHeader />
+        <div>
+            <MatchesHeader />
+            <div class="leagues-tabs leagues-bg" v-if="MenuData.mid_menu_result?.mi == '1001'">
+                <!-- 联赛菜单 -->
+                <LeagueTab current_mi="1001"/>
+            </div>
+            <LeagueTab current_mi="1001"/>
+        </div>
         <div class="test-info-wrap" v-if="GlobalAccessConfig.other.wsl">
             <div>{{ MenuData.mid_menu_result.match_tpl_number }}</div>
             <div class="fold-btn" @click="match_list_card.unfold_all_league()">展开联赛</div>
@@ -42,9 +49,11 @@
     </div>
 </template>
 <script>
+import { LeagueTabFullVersionWapper as LeagueTab } from "src/base-pc/components/tab/league-tab/index.js"; //联赛菜单
 import { onMounted, onUnmounted, ref, watch, getCurrentInstance } from "vue";
 import MatchesHeader from "src/base-pc/components/matches_header/matches_header.vue";
 import { IconWapper } from 'src/components/icon'
+import tab from 'src/components/common/tab/tab-1/index.vue'
 import LoadData from 'src/components/load_data/load_data.vue';
 import { MatchListCardFullVersionWapper as MatchListCard } from "src/base-pc/components/match-list/match-list-card/index.js"; //赛事列表
 import { PlayVirtualMatchTypeFullVersionWapper as PlayVirtualMatchType } from "src/base-pc/components/match-list/play-virtual-match-type/index.js";//赛事列表头部——滚球——赛事类型
@@ -70,6 +79,7 @@ const { mounted_fn, load_data_state, collect_count, is_show_hot, on_refresh } = 
 const { page_source } = PageSourceData;
 export default {
     components: {
+        LeagueTab,
         MatchesHeader,
         MatchListCard,
         PlayVirtualMatchType,

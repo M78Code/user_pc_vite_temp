@@ -4,30 +4,7 @@
 <template>
   <div :class="['match-container']" 
     :style="{ marginTop: is_hot ? '0' : '' }">
-    <template v-if="match" >
-      <!-- 体育类别 -->
-      <!-- <header class="match-header" v-if="show_sport_title">
-        <div>
-          <span>{{ match.csna }}</span>
-        </div>
-        <div class="select_time">
-          <span @click.stop>
-            <q-btn-dropdown flat outline  style="color: #FF7000"  padding="0" label="Fulltime Result" 
-              dropdown-icon="expand_more" content-class="select_time_style">
-              <q-list>
-                <q-item v-for="item in hps_play_data" :key="item.hpid" @click.stop="on_select_play(item)"
-                   :class="{active: select_play === item.hpid}" clickable v-close-popup >
-                  <q-item-section>
-                    <q-item-label>{{ item.hpn }}</q-item-label>
-                  </q-item-section>
-                </q-item>
-              </q-list>
-            </q-btn-dropdown>
-          </span>
-        </div>
-      </header> -->
-      <!-- 缓冲容器， 避免滚动时骨架屏漏光问题 -->
-      <!-- <div class="buffer-container" v-if="match.is_show_league && !is_show_opening_title && i !== 0"></div> -->
+    <template v-if="match">
       
       <!-- 最核心的div模块     标题 + 倒计时 + 比分 + 赔率盘口模块 -->
       <div :class="['match-inner-container', {'collapsed': !collapsed}]">
@@ -35,35 +12,18 @@
         <div @click="handle_league_fold" v-if="match.is_show_league || (is_hot && get_league_show(i))"
           :class="[('league match-indent hairline-border'), { 'no-radius': show_sport_title, 'no-border': !collapsed}]">
           <div class="league-t-wrap">
-          <!-- <div class="league-t-tubiao"></div> -->
-            <!-- 联赛收藏 -->
-            <!-- <div v-if="![3000, 900].includes(menu_type)" class="favorited-icon" @click.stop="handle_league_collect"> -->
-              <!-- 未收藏 compute_img_url('icon-favorite')-->
-              <!-- <img v-if="!league_collect_state" :src="no_collect_ouzhou" alt=""> -->
-              <!-- 收藏图标 compute_img_url('icon-favorite-s')-->
-              <!-- <img v-if='league_collect_state' :src="have_collect_ouzhou"> -->
-            <!-- </div> -->
             <span class="league-title-text row justify-between">
               <span :class="['league-t-wrapper', { 'league-t-main-wrapper': menu_type !== 28, export: is_export }]">
                 <span class="match-league ellipsis-2-lines" :class="{ 'match-main-league': menu_type !== 28 }">
                   {{ match.tn }}
                 </span>
               </span>
-              <!-- <template v-if="collapsed">
-                <div class="play_title">
-                  <span v-for="p in get_match_panel" :key="p">{{ p }}</span>
-                </div>
-              </template>
-              <template v-else>
-                <span class="number" style="text-align: right;">{{ get_match_count }}</span>
-              </template> -->
             </span>
           </div>
           
         </div>
         <div :class="['league-line', {'collapsed': !collapsed}]"></div>
         <!-- 卡片主内容 -->
-        <!-- <q-slide-transition> -->
           <div style="width: 100%;" v-if="collapsed">
             <!--  一整块赛事的 div 内容 ： 1. 左边 【时间，队名，比分】   2. 右边 【赔率 模块】  -->
             <div :class="['match-odds-container study_height_s hairline-border']">
@@ -165,7 +125,6 @@
                             'is-handicap': match.handicap_index == 1,
                             'is-handicap-1': match.handicap_index == 2,
                           }">
-                          {{  console.log(match)  }}
                             {{ match.mhn }}
                           </div>
                           <!-- 进球动画 -->
@@ -223,14 +182,11 @@
                       {{i18n_t('list.go_to_details')}}
                       <img :class="['arrow']" alt="" />
                     </div>
-                    <!-- 右边盘口组件 -->
-                    <!-- <ScoreList :match_info="match_of_list" :score_length="score_length"></ScoreList> -->
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        <!-- </q-slide-transition> -->
       </div>
     </template>
   </div>
