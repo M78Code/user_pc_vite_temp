@@ -25,7 +25,7 @@ import store from "src/store-redux/index.js";
 import ServerTime from 'src/core/server-time/server-time.js';
 import filterHeader from 'src/core/filter-header/filter-header.js'
 import get_match_list_params from './match-list-params.js'
-import {get_match_template_id} from './match-handle-data.js'
+import {match_list_handle_set} from './match-handle-data.js'
 // const route = router.currentRoute.value
 const { page_source } = PageSourceData;
 const { mx_use_list_res, mx_list_res, mx_collect_match } = process_composable_fn();
@@ -344,9 +344,7 @@ function get_hot_match_list(backend_run = false) {
 			}
 			if (code == 200 && match_list.length > 0) {
 				is_show_hot.value = true;
-				match_list.forEach(match=>{
-					match.tpl_id=get_match_template_id(match)
-				})
+				match_list_handle_set(match_list)
 				// 设置列表数据仓库
 				MatchListData.set_list(
 					match_list,

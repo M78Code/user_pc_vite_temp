@@ -64,8 +64,7 @@ const orderNumberItemList = ref([])
 let useMitt = null
 
 // 延时器
-const timer_1 = ref(null)
-const timer_2 = ref(null)
+const timer = ref(null)
 
 onMounted(() => {
   // 首次进入获取数据
@@ -89,8 +88,8 @@ const init_data = (_index) => {
 
   // 未结算时，轮询获取提前结算列表金额
   if(_index === 0) {
-    clearInterval(timer_2.value)
-    timer_2.value = setInterval(() => {
+    clearInterval(timer.value)
+    timer.value = setInterval(() => {
       if (document.visibilityState == 'visible') {
         check_early_order()
       }
@@ -262,8 +261,7 @@ const onPull = () => {
 }
 
 onUnmounted(() => {
-  clearTimeout(timer_1.value)
-  clearInterval(timer_2.value)
+  clearInterval(timer.value)
   useMitt && useMitt()
 })
 </script>

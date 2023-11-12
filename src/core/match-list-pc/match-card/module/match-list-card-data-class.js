@@ -86,6 +86,7 @@ class MatchListCardDataClass {
   }
   //获取单个卡片对象
   get_card_obj_bymid(mid) {
+    console.log(this.all_card_obj,mid)
     return this.all_card_obj[mid] || this.all_card_obj[mid + '_'] || {}
   }
 }

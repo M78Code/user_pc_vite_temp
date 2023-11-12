@@ -1787,7 +1787,8 @@
     "msg_nodata_17": "Nenhuma mensagem",
     "msg_nodata_22": "Demasiado tráfico, por favor inténtelo más tarde",
     "msg_nodata_21": "Não se preocupe, basta clicar em \"Refrescar\" para recuperá-lo!",
-    "msg_nodata_20": "Olá, infelizmente, a página está perdida"
+    "msg_nodata_20": "Olá, infelizmente, a página está perdida",
+    "msg_nodata_23": "Venha logo"
   },
   "myScroll": {
     "msg1": "Desça para refrescar",

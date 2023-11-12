@@ -2,10 +2,10 @@
  * @Description: 投注想列表
 -->
 <template>
-  <div class="odd-list-wrap" 
+  <div class="odd-list-wrap"
        :class="{
           standard: !show_newer_edition,
-          special_play: [18].includes(+ lodash.get(current_tab_item, 'id')), 
+          special_play: [18].includes(+ lodash.get(current_tab_item, 'id')),
           five_special_play: lodash.get(current_tab_item, 'id') === 19,
           five_no_data: !lodash.size(lodash.get(five_minutes_all_list, 'hl[0].ol'))
        }
@@ -27,9 +27,9 @@
         v-for="(ol_item,i) of ol_list"
         :key="i"
         @select_change="select_column_change_handle"
-        :odd_item_i="i" 
-        :match="match" 
-        :odd_field="hp_item" 
+        :odd_item_i="i"
+        :match="match"
+        :odd_field="hp_item"
         :hl_hs="hl_hs"
       />
       <template v-if="!ol_list || !ol_list.length">
@@ -101,9 +101,9 @@
       <div class="hps-bold-main-container">
         <div class="hps-bold-container" :key="hp_i+'hp_i_i_bold'" v-for="(hp_item,hp_i) of bold_all_list">
           <div class="hps-bold-other-left" :key="main_i+'main_i_bold'" v-for="(main_item,main_i) of get_bold_ol_list(hp_item,hp_i)">
-            <div class="odd-wrap-hps-bold-other" 
-                 :key="ol_item_i+'ol_item_i_bold'" 
-                 v-for="(ol_item,ol_item_i) of main_item" 
+            <div class="odd-wrap-hps-bold-other"
+                 :key="ol_item_i+'ol_item_i_bold'"
+                 v-for="(ol_item,ol_item_i) of main_item"
                  :class="{hold_other:ol_item.otd == -1}"
             >
               <odd-column-item
@@ -122,7 +122,7 @@
     </div>
     <!-- 标准版 5分钟 盘口赔率组件 -->
     <div v-else-if="[19].includes(+lodash.get(current_tab_item, 'id'))" class="five-minutes-to-play">
-      <div class="odd-wrap-hps-bold-other" 
+      <div class="odd-wrap-hps-bold-other"
            :key="ol_item_i_five+'ol_item_i_five'" v-for="(ol_item,ol_item_i_five) of get_five_minutes_ol_list(five_minutes_all_list)"
            :class="{
              lastBestTwoOddWraps:[1172,1192].includes(+lodash.get(ol_item, 'otd')),
@@ -151,9 +151,9 @@
           {{[1,2,7,10].includes(+match['ms']) ? i18n_t('football_playing_way.minutes_of_the_Xth_goal', {goalnr: minutes_of_the_Xth_goal}) : i18n_t('football_playing_way.any_goal')}}
         </span>
       </div>
-      
+
     </div>
-  
+
   </div>
 </template>
  
