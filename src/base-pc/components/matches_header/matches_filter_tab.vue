@@ -168,7 +168,7 @@ function handle_click_menu_mi_3_date (detail = {}) {
     if (lv1_mi == 118) {
       euid = '3020212' || BaseData.mi_info_map[`mi_${lv2_mi}`].euid;
     } else {
-      euid = BaseData.mi_info_map[`mi_${lv1_mi}${root}`].euid
+      euid = BaseData.mi_info_map[`mi_${lv1_mi}${root}`]?.euid
     }
   }
   let params = { ...lv2_mi_info, lv2_mi, md, euid };

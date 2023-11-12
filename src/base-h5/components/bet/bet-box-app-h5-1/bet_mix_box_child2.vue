@@ -5,14 +5,14 @@
 <template>
   <div class="bet-mix-box-child2">
     <!-- 多注顶部蒙层 -->
-   
+
     <div v-if="false" class="full-shadow" @click.self="pack_up" @touchmove.prevent></div>
     <div class="full-shadow" @click.self="pack_up" @touchmove.prevent></div>
     <!-- 投注中的蒙层，所有不能点击 -->
     <div v-if="get_bet_status == 2" class="fixed full-shadow2" @touchmove.prevent></div>
 
     <div style="display: none;">{{ BetData.bet_data_class_version }} {{BetViewDataClass.bet_view_version}}</div>
-   
+
     <div class="content-box">
       <div>
         <!-- 头部 -->
@@ -46,6 +46,7 @@
           <div v-if="BetData.is_bet_single">
             <!-- 单关投注项列表 -->
             <bet-mix-box-child3 :item="BetData.bet_single_list[0]" :key='0'></bet-mix-box-child3>
+            <betInfoList></betInfoList>
           </div>
           <div v-else>
             <!-- 串关投注项列表 -->
@@ -57,7 +58,7 @@
       <template v-if="BetData.bet_s_list.length > 1 && !BetData.is_bet_single &&  BetViewDataClass.bet_order_status == 1 ">
         <bet-collusion-input></bet-collusion-input>
       </template>
-      
+
       <!-- 投注前 -->
       <div v-if="BetViewDataClass.bet_order_status == 1 && BetData.is_bet_single">
         <!-- 单关金额输入框 v-bind="$attrs"-->
@@ -66,7 +67,7 @@
 
         <!-- 键盘 -->
         <key-board v-if="BetData.bet_keyboard_show" :config="BetData.bet_single_list[0]" :index="0"></key-board>
-     
+
         <div class="dele-wrap yb_px12 yb_py10 row"  @touchmove.prevent>
           <!-- 右 自动接受跟好赔率 -->
           <span>
@@ -150,7 +151,7 @@
 
         <!--投注后的 确定按钮 -->
         <div v-else @click="set_clear()" class="nonebox4-sub">{{ i18n_t('app_h5.bet.confirm')}}</div>
-      
+
     </div>
   </div>
 </template>
@@ -163,6 +164,9 @@ import betAfterStatus from './bet-after-status.vue';
 import betMixBoxChild7 from './bet_mix_box_child7.vue';
 import betMixBoxChild8 from './bet_mix_box_child8.vue';
 
+// import betInfoList from "./bet_info_list.vue";
+
+
 import betMixShow from './bet_mix_show3.vue';
 import keyBoard from './/bet-keyboard.vue';
 import ballSpin from './/ball-spin.vue';
@@ -172,6 +176,7 @@ import betConflictTips from './bet-conflict-tips.vue'
 import betCollusionInput from './bet-collusion-input.vue'
 import betCollusionInput1 from './bet-collusion-input1.vue'
 import betCollusionInput2 from './bet-collusion-input2.vue'
+
 
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";

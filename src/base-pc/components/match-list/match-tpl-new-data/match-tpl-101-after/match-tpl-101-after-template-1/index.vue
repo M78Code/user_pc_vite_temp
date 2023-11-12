@@ -15,7 +15,7 @@
       </div>
       <!-- 投注信息 -->
       <match-handicap 
-        v-if="match" 
+        v-if="match && match_tpl_info.get_current_odds_list(current_choose_oid)" 
         :handicap_list="match_tpl_info.get_current_odds_list(current_choose_oid)" 
         :match="match"
         use_component_key="MatchHandicap2"
@@ -31,10 +31,10 @@
 
 <script setup>
 
-import { ref, computed, watch, onMounted, nextTick } from 'vue';
+import { ref, watch, onMounted } from 'vue';
 import lodash from 'lodash'
 
-import { t, get_match_status, MatchDataWarehouse_PC_List_Common as MatchListData, UserCtr, compute_local_project_file_path } from "src/core/index.js";
+import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/core/index.js";
 import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card-class.js'
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import choose_config from 'src/core/constant/config/ouzhou-pc-choose-config.js'
@@ -60,21 +60,27 @@ const props = defineProps({
     default: () => false
   }
 })
+
 let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.mid)
-const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`].width_config
-const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`]
-console.log('match_tpl_info', match_style_obj.data_tpl_id);
-
 let match = MatchListData.list_to_obj.mid_obj[props.mid+'_'];
-const current_choose_oid = ref({ first_hpid: 1, second_hpid: 2 });
-const is_mounted = ref(true);
-
+let match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`].width_config
+let match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`]
+let default_hpid = null
+let current_choose_oid = ref({});
 watch(() => MatchListData.data_version.version, (new_value, old_value) => {
   match = MatchListData.list_to_obj.mid_obj[props.mid+'_'];
+  console.log('match.tpl_id', match.tpl_id);
+  match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match.tpl_id}_config`].width_config
+  match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${match.tpl_id}_config`]
+  default_hpid = choose_config[match.csid][0]
+  current_choose_oid.value = { first_hpid: default_hpid[0], second_hpid: default_hpid[1] }
 })
-
-const jump_to_details = () => {
-    return; //待会写
+function jump_to_details (payload)  {
+    if (is_in_play && payload) {
+      // score_img.value =  switch_active_icon;
+      emitter.emit('set_detail_info', payload)
+      return;
+    }
     const {mid, csid} = card_info
     const params = {
       sportId: csid,
@@ -87,10 +93,6 @@ const jump_to_details = () => {
       query: params,
     })
   }
-
-
-
-
 
 
 onMounted(() => {

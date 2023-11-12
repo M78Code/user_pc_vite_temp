@@ -4,7 +4,7 @@
 <template>
   <div :class="['match-list-container', { empty_page: match_is_empty }]" :style="page_style">
 
-    <template v-if="!match_is_empty">
+    <template v-if="!match_is_empty ">
       <component :is="target_com"></component>
     </template>
 
@@ -12,7 +12,7 @@
       <!-- 非收藏页 -->
       <NoData class="data-get-empty1" v-if='match_is_empty && !is_collcte_page' which='noMatch' height='400'></NoData>
       <!-- 收藏页 -->
-      <NoData class="data-get-empty2" v-if='match_is_empty && is_collcte_page' :which='menu_type === 28 ? "noMatch" : "collect"' height='400'></NoData>
+      <NoData class="data-get-empty2" v-if='match_is_empty && is_collcte_page' :which='menu_type === 28 ? "noMatch" : "comingSoon"' height='400'></NoData>
     </template>
 
     <SecondaryDescription />
@@ -30,7 +30,7 @@ import MatchPage from "src/core/match-list-h5/match-class/match-page.js";
 import MatchListCard from "src/core/match-list-h5/match-card/match-list-card-class";
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 
-import { is_hot } from 'src/base-h5/mixin/menu.js'
+import { is_hot, is_collect } from 'src/base-h5/mixin/menu.js'
 
 import NoData from "src/base-h5/components/common/no-data.vue"; // 无网络展示组件
 
@@ -45,6 +45,7 @@ import MatchListOuZhou from './components/match-list-ouzhou.vue'
 
 
 import { PROJECT_NAME } from "src/core/index.js"
+
 
 // 次要玩法描述组件
 import SecondaryDescription from "src/base-h5/components/match-list/components/secondary-description.vue";
@@ -96,7 +97,6 @@ const target_com = computed(() => {
  * @description: 赛事列表为空通知事件函数
  */
 const upd_match_is_empty = (result) => {
-  console.log(result)
   // 当是赛果菜单,三级菜单数据没有时,发送列表赛事数据为空消息,收到消息后页面显示为空页面
   match_is_empty.value = result;
 }

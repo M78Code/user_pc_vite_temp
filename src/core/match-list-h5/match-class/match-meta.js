@@ -161,6 +161,7 @@ class MatchMeta {
    * @param { list } 赛事 list
    */
     handler_match_list_data(config) {
+
       const { list, type = 2, is_virtual = true } = config
 
       // 清除联赛下得赛事数量
@@ -196,7 +197,9 @@ class MatchMeta {
       // 欧洲版首页热门赛事
       if (!is_virtual) {
         // 不需要调用赔率接口
-        type === 1 && MatchDataBaseH5.set_list(match_list.filter((t) => t.mid))
+        type === 1 && this.handle_update_match_info(match_list.filter((t) => t.mid))
+        type === 2 && this.handle_submit_warehouse(match_list.filter((t) => t.mid))
+        
       } else {
         // 计算所需渲染数据
         this.compute_page_render_list(0, type)
@@ -522,7 +525,7 @@ class MatchMeta {
     const res = await api_common.get_collect_matches(params)
     if (res.code !== '200') return this.set_page_match_empty_status(true);
     const list = lodash.get(res, 'data', [])
-    this.handler_match_list_data({ list: list})
+    this.handler_match_list_data({ list: list, is_virtual: false })
   }
 
   /**
@@ -647,7 +650,6 @@ class MatchMeta {
     this.match_mids = match_datas.map(t => {
       return t.mid
     })
-
     // 不获取赔率
     if (type === 2) return this.handle_update_match_info(match_datas)
 
