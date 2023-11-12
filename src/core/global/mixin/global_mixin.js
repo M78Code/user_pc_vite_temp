@@ -12,22 +12,138 @@ import details from "src/core/match-detail/match-detail-pc/match-detail";
 import video from "src/core/video/video.js";
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 import { useRouter, useRoute } from "vue-router";
-import UserCtr from "src/core/user-config/user-ctr.js";
 import filterHeader from "src/core/filter-header/filter-header.js";
-import { MatchDetailCalss, LayOutMain_pc } from "src/core"; 
-export const useGetGlobal = ({ details_params, back_to }) => {
+import { MatchDetailCalss, LayOutMain_pc,GlobalSwitchClass,MenuData,userCtr,SearchPCClass,UserCtr } from "src/core"; 
+//投注类
+import BetData from "src/core/bet/class/bet-data-class.js";
+export const useGetGlobal = ({  back_to }) => {
   const route = useRoute();
   const router = useRouter();
   const state = reactive({
     latest_match_params_pre: "",
     default_select_all: true,
   });
+  // 左侧详情参数
+  const details_params = ref(MatchDetailCalss.params)
+ //播放类型
+   const play_media = ref(MatchDetailCalss.play_media)
+  /**
+   * @description: 监听详情类版本号
+   * @return {*}
+   */  
+  watch(
+    () => MatchDetailCalss.details_data_version.version,
+    (val) => {
+      if (val) {
+        details_params.value = MatchDetailCalss.params
+        play_media.value = MatchDetailCalss.play_media
+      }
+    },
+    { deep: true }
+  )
+  
+  // 获取当前盘口类型
+  const cur_odd = ref(BetData.cur_odd)
+   // 是否是单关投注
+   const is_bet_single = ref(BetData.is_bet_single)
+   // 单关 是否正在处理投注
+   const is_single_handle = ref(BetData.is_single_handle)
+  // 是否正在处理投注
+  const is_handle = ref(BetData.is_handle)
+    
+  /**
+   * @description: 监听投注类版本号
+   * @return {*}
+   */  
+  watch(
+      () => BetData.bet_data_class_version.value,
+      (val) => {
+        if (val) {
+          cur_odd.value = BetData.cur_odd
+          is_bet_single.value = BetData.is_bet_single
+          is_single_handle.value = BetData.is_single_handle
+          is_handle.value = BetData.is_handle
+        }
+      },
+      { deep: true }
+  ) 
+   // 赛事列表排序 1:按联赛排序 2:按时间排序
+  const match_sort =  ref(GlobalSwitchClass.match_sort)
+  /*
+  ** 监听GlobalSwitchClass的版本号  获取最新的全局状态
+  */
+  watch(
+    () => GlobalSwitchClass.global_switch_version.version,
+    (val) => {
+      if (val) {
+        match_sort.value = GlobalSwitchClass.match_sort
+      }
+    },
+    { deep: true }
+   );   
+    
+   // 获取当前菜单类型
+   const  cur_menu_type = ref(MenuData.cur_menu_type) 
+  /*
+    ** 监听菜单类的版本号
+  */
+  watch(
+    () => MenuData.menu_data_version.value,
+    (val) => {
+      if (val) {
+        cur_menu_type.value = MenuData.cur_menu_type
+      }
+    },
+    { deep: true }
+   );  
+   
+  // 登录是否失效
+  const is_invalid = ref(UserCtr.is_invalid) 
+  // 获取用户信息      
+  const get_user = ref(UserCtr.get_user)  
+  const get_uid = ref(UserCtr.get_uid());       
+  watch(()=>UserCtr.user_version,(val)=>{
+    if(val){
+      get_user.value =UserCtr.get_user()
+      get_uid.value = UserCtr.get_uid()
+      is_invalid.value = UserCtr.is_invalid
+    }
+   })     
+  // 获取联赛关键字 
+  const related_keyword = ref(SearchPCClass.related_keyword) 
+  /*
+  **监听筛选类的版本号
+  */
+  watch(
+    () => SearchPCClass.update_time.value,
+    (val) => {
+      if (val) {
+        related_keyword.value = SearchPCClass.related_keyword
+      }
+    },
+    { deep: true }
+  );  
+  
+  // 选择的筛选数据
+  const filter_select_obj = ref(filterHeader.filter_select_obj) 
+  // 获取选中的赛事数量(列表右上角赛选功能)
+  const checked_count = ref(filterHeader.checked_count) 
+  /*
+  **监听筛选类的版本号
+  */
+  watch(
+    () => filterHeader.filter_header_version.value,
+    (val) => {
+      if (val) {
+        filter_select_obj.value = filterHeader.filter_select_obj
+        checked_count.value = checked_count.checked_count
+      }
+    },
+    { deep: true }
+  );  
 
-
-  const get_uid = UserCtr.get_uid();
   // 获取当前页路由信息
   const layout_cur_page = ref(LayOutMain_pc.layout_current_path);
-
   /*
   **监听布局类的版本号
   */
@@ -41,15 +157,6 @@ export const useGetGlobal = ({ details_params, back_to }) => {
     { deep: true }
   );
 
-  // 赛事列表排序 1:按联赛排序 2:按时间排序
-  const match_sort = ref({});
-  // //播放类型
-  const play_media = ref({});
-
-  // 保存联想搜索关键字
-  const related_keyword = ref({});
-  //当前菜单类型
-  const cur_menu_type = ref(LayOutMain_pc.layout_current_path )
   // 监听状态变化
   // let un_subscribe = store.subscribe(() => {
   //   let state_data = store.getState();
@@ -61,7 +168,6 @@ export const useGetGlobal = ({ details_params, back_to }) => {
   // onUnmounted(() => {
   //   un_subscribe();
   // });
-
   /**
    * 设置赛事列表/详情选中赛事
    * @param  {number} remove_mid - 被移除赛事的ID
@@ -112,7 +218,7 @@ export const useGetGlobal = ({ details_params, back_to }) => {
 
     if (cur_page == "details") {
       let { tid: _tid, csid: _csid } = route.params;
-      let { tid, csid } = details_params;
+      let { tid, csid } = details_params.value;
       if (_tid) {
         tid = _tid;
         csid = _csid;
@@ -200,7 +306,7 @@ export const useGetGlobal = ({ details_params, back_to }) => {
         }
 
         // 切换右侧赛事
-        let playId = details_params.play_id;
+        let playId = details_params.value.play_id;
         MatchDetailCalss.set_match_details_params({
           mid,
           tid,

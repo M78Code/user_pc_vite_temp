@@ -9,7 +9,7 @@
       <div class="item" v-for="item in time_events" :key="item.mid">
         <!-- 标题 -->
         <div class="title">
-          <!-- <sport_icon size="14" :status="true" :sport_id="item.icon" /> -->
+          <SportIcon size="13" :sport_id="item.icon" />
           <span class="span">{{ item.title }}</span>
         </div>
         <!-- 赛事名称 -->
@@ -18,15 +18,14 @@
           <div>{{ item.man}}</div>
         </div>
         <template v-if="item">
-          <ScoreList :match_info="item" :score_length="3" height="39" />
+          <ScoreList :match_info="item" :score_length="3" height="39" :show_hpn="true" />
         </template>
       </div>
     </section>
   </div>
 </template>
-
 <script setup>
-// import sport_icon from "src/project-ouzhou/components/common/sport_icon.vue"
+import SportIcon from "src/base-h5/components/top-menu/top-menu-ouzhou-1/components/left-menu/sport-icon.vue"
 import ScoreList from 'src/base-h5/components/match-container/template/ouzhou/components/score-list.vue';
 const props = defineProps({
   time_events: {
@@ -71,6 +70,7 @@ const props = defineProps({
         color: #FF7000;
         font-weight: 500;
         padding: 0 12px;
+        height: 21px;
         :deep(.q-icon){
           position: relative;
           top: 1px;

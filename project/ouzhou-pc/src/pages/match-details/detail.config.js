@@ -10,7 +10,7 @@ import {
 // api文件
 import { api_details } from "src/api/index";
 import { useMittEmit, useMittOn, MITT_TYPES ,useMittEmitterGenerator} from "src/core/mitt/";
-import { useGetGlobal } from "./global_mixin";
+import { useGetGlobal } from  "src/core/global/mixin/global_mixin.js"
 import lodash from "lodash";
 import details from "src/core/match-detail/match-detail-pc/match-detail";
 import  { computed_background } from  "src/core/constant/config/csid.js"
@@ -214,7 +214,7 @@ export const useGetConfig = (router,cur_menu_type,details_params,play_media) => 
     }, 50);
   };
 
-  const { mx_autoset_active_match } = useGetGlobal({ details_params, back_to });
+  const { mx_autoset_active_match } = useGetGlobal({  back_to });
   /**
    * @description 赛事详情比分板数据
    * @param {string} mid 赛事id

@@ -8,7 +8,7 @@
       <layout-header />
     </div>
     <div style="display: none;"> {{ LayOutMain_pc.layout_version }}-{{BetData.bet_data_class_version}}</div>
-    <div class="flex">
+    <div class="flex full-content">
       <!-- 左侧 菜单 -->
       <div :style="{ height: LayOutMain_pc.layout_content_height + 'px' , width:LayOutMain_pc.layout_left_width }" class="layout_main_left">
         <layout-left />
@@ -43,7 +43,6 @@
     <Vue3DraggableResizable
       v-model:x="BetData.bet_box_draggable.x"
       v-model:y="BetData.bet_box_draggable.y"
-      v-model:h="BetData.bet_box_draggable.height"
       v-model:active="BetData.bet_box_draggable.isActive"
       :draggable="true"
       :parent="true"
@@ -52,6 +51,7 @@
       v-if="BetData.bet_box_draggable.show"
     >
     <div  class="ty-bet-box">
+      <!-- {{BetData.bet_box_draggable}} -->
       <bet-box-wapper use_component_key="BetBoxOuZhouPC_1"  />
     </div>
   </Vue3DraggableResizable>
@@ -81,7 +81,6 @@ const page_style = ref('')
 page_style.value = compute_css_variables({ category: 'component', module: 'layout' })
 
 const route = useRoute();
-console.error(route);
 //重新计算高度
 const mitt_offs = [
   // useMittOn(MITT_TYPES.EMIT_LAYOUT_RESIZE, debounce(resize, 150)).off,
@@ -153,5 +152,10 @@ const show_move_video = computed(()=>{
 :deep(.ty-bet-box){
    width:100%;
   height:100%;
+}
+.full-content{
+    flex-wrap: nowrap;
+    min-width: 1440px;
+    margin: 0 auto;
 }
 </style>

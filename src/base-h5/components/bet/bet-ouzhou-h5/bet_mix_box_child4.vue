@@ -20,13 +20,13 @@
                   </div>
                   <div class="nonebox4-content-left-info">
                     <div class="nonebox4-content-left-content-text">
-                      <div class="nonebox4-content-left-content-text-one">items.handicap <span class="text-one-span">0.25</span></div>
+                      <div class="nonebox4-content-left-content-text-one">{{item.matchName}} <span class="text-one-span">0.25</span></div>
                       <div class="nonebox4-content-left-content-text-two">{{item.matchType == 2?'[In-play]':''}} <span class="text-two-span">{{item.playName}}</span></div>
                       <div class="nonebox4-content-left-content-text-three">{{item.matchInfo}}</div>
                     </div>
                     <div>
                         <div class="nonebox4-content-right">
-                           <div class="nonebox4-content-right-profit">{{items.oddsValues}}</div>
+                           <div class="nonebox4-content-right-profit">{{item.oddsValues}}</div>
                         </div>
                         <div class="nonebox4-content-right-bot" :class="BetViewDataClass.bet_order_status == 3?'green-color':BetViewDataClass.bet_order_status==4?'red-color':''">Bet Placed</div>
                     </div>
@@ -46,6 +46,7 @@
   
     import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
       import { compute_value_by_cur_odd_type } from "src/core/index.js"
+      import { format_currency } from "src/core/format/index.js"
 
   const props = defineProps({
     items:{}

@@ -10,6 +10,7 @@
       <span class="right_amount">{{BetData.bet_amount}}</span>
     </p>
   </div>
+  <div style="display: none;">{{ BetData.bet_data_class_version }}</div>
 </template>
 
 <script setup>

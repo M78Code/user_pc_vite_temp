@@ -23,22 +23,22 @@
             <div v-if="BetData.is_bet_single">
                 <!-- 单关单注  -->
                 <div v-if="!BetData.is_bet_merge">
-                  <div v-if="BetViewDataClass.bet_order_status == 1">
+                  <div v-if="BetViewDataClass.bet_order_status == 1 && BetData.bet_single_list.length ">
                        <!-- 单关投注项列表  -->
-                        <bet-mix-box-child1 :items="BetData.bet_single_list[0]" ></bet-mix-box-child1>
+                        <bet-mix-box-child1 :items="BetData.bet_single_list[0]" :index="0"></bet-mix-box-child1>
                       <!-- 单关的输入框 -->
-                      <bet-input-info :item="BetData.bet_single_list[0]" index="0" ></bet-input-info>
+                      <bet-input-info :item="BetData.bet_single_list[0]" ></bet-input-info>
                       <!-- 键盘 -->
                       <key-board></key-board>
                   </div>
-                  <bet-mix-box-child4 v-else :item="BetData.bet_single_list[0]" index="0" ></bet-mix-box-child4>
+                  <bet-mix-box-child4 v-else :item="BetData.bet_single_list[0]" :index="0" ></bet-mix-box-child4>
                 </div>
                 <!-- 单关合并 -->
                 <div v-else>
                     <!-- 合并单关  -->
                     <div class="scroll-box scroll-box-center" ref="scroll_box" :style="{ 'max-height': `${max_height1}px` }"
                         @touchmove="touchmove_handle($event)" @touchstart="touchstart_handle($event)">
-                        <bet-mix-box-child2 :item="BetData.bet_single_list"></bet-mix-box-child2>
+                        <bet-mix-box-child2></bet-mix-box-child2>
                     </div>
                 </div>
             </div>
@@ -116,13 +116,11 @@ const award_total = ref()
 const bet_list_data = ref([])
 const tips_msg = ref('失效')  // 提示信息
 
-let bet_show_single = ref(true)  // 单关显示
 const get_bet_status = ref(0) // 投注状态
 const btn_show = ref(0) // 投注状态2
 const max_height1 = ref(250) // 投注赛事高度
 const get_mix_bet_flag = ref(false) // 最小投注开关
 const exist_code = ref(555)
-const bet_amount = ref(0)
 
 const hide_bet_series_but = () => {
   let res = false;
@@ -233,25 +231,13 @@ const calc_class = computed(() => {
     || btn_show.value == 5;
   return flag
 })
-// 投注金额赋值
-const change_money_handle = (val) => {
-  bet_amount.value = format_money2(val.money)
-  // console.log("投注金额",bet_amount.value)
-}
+
 onMounted(() => {
-  useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money)
-  useMittOn(MITT_TYPES.EMIT_INPUT_BET_MONEY, change_money_handle)
   let munu_type = true
   if (munu_type) {
     // get_query_bet_amount_common()
   }
 })
-
-const set_ref_data_bet_money = () => {
-  // let markInfo = lodash.get(BetData, 'bet_single_list')
-  console.error('bet_single_list', BetData.bet_single_list);
-  bet_show_single.value = true
-}
 
 // 清空数据
 const set_clear = () => {
@@ -261,10 +247,6 @@ const set_clear = () => {
   BetViewDataClass.set_clear_bet_view_config()
 }
 
-onUnmounted(() => {
-  useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money).off
-  useMittOn(MITT_TYPES.EMIT_INPUT_BET_MONEY, change_money_handle).off
-})
 </script>
 <style lang="scss" scoped>
 .yb_delete{

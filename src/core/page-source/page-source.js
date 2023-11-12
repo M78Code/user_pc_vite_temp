@@ -121,7 +121,6 @@ class PageSourceData {
    * @param {*} page_source
    */
   set_page_source(page_source) {
-    console.error("set_page_source",page_source)
     this.page_source = page_source;
     //初始化 页面根据  page_source 计算出来的 一些参照值
     this.rebase_other_property();

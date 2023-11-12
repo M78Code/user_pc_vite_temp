@@ -60,8 +60,11 @@ class MenuData {
     // this.top_category_label = "play";
     //左侧菜单的 整体输出
     this.left_menu_result = {
-      lv1_mi: "", //一级菜单
-      lv2_mi: "", // 二级菜单
+      lv1_mi: "", //一级菜单 足球/篮球 各种球
+      lv2_mi: "", // 二级菜单 波胆  角球 等其他玩法
+      sports: '',
+      guanjun: "",
+      has_mid_menu: true,
     };
     // 左侧菜单的 root 节点   root ：  1 滚球  2 今日   3  早盘   500 热门赛事  400 冠军   300 VR  电竞 2000
     this.menu_root = 1;
@@ -217,7 +220,6 @@ class MenuData {
     ) {
       val = "match_list";
     }
-    console.error('set_match_list_api_type', obj)
 
     const { jinri_zaopan, guanjun } = obj
     let text = 'match-today-common'

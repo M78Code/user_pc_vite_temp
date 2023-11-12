@@ -157,7 +157,10 @@ class MatchMeta {
    * @description 非元数据处理
    * @param { list } 赛事 list
    */
-    handler_match_list_data(list, type = 2) {
+    handler_match_list_data(config) {
+
+      const { list, type = 2, is_virtual = true } = config
+
       const length = lodash.get(list, 'length', 0)
       if (length < 1) return this.set_page_match_empty_status(true);
       // 赛事全量数据
@@ -175,11 +178,11 @@ class MatchMeta {
       const result_mids = target_data.map(t => t.mid)
 
       this.complete_matchs = target_data
-      this.match_mids = lodash.uniq(result_mids)
+      if (!is_virtual) this.match_mids = lodash.uniq(result_mids)
       this.complete_mids = lodash.uniq(result_mids)
 
       // 计算所需渲染数据
-      this.compute_page_render_list(0, type)
+      is_virtual && this.compute_page_render_list(0, type)
 
       this.set_page_match_empty_status(false)
 
@@ -285,12 +288,6 @@ class MatchMeta {
     // 虚拟列表计算
     VirtualList.set_match_mid_map_base_info(match, template_config.match_template_config)
 
-    // 赛事收藏处理
-    // MatchCollect.handle_collect_state(match)
-    // // 初始化赛事收藏
-    // MatchCollect.set_match_collect_state(t)
-    // // 初始化联赛收藏状态
-    // MatchCollect.set_league_collect_state(t.tid)
   }
 
   /**
@@ -400,7 +397,7 @@ class MatchMeta {
   }
 
   /**
-   * @description 赛果不走元数据， 直接掉接口 不需要走模板计算以及获取赔率
+   * @description 赛果不走元数据， 直接掉接口 不需要走模板计算以及获取赔率，需要虚拟列表计算
    */
   async get_results_match () {
     const md = lodash.get(MenuData.result_menu_api_params, 'md')
@@ -413,11 +410,15 @@ class MatchMeta {
       ...params,
       category,
       md,
-      type: 29,
-      euid,
+      type: 28,
+      euid: '1',
       showem: 1, // 新增的参数
     })
-    this.handle_custom_matchs(res)
+    if (+res.code !== 200) return
+    const list = lodash.get(res, 'data', [])
+    const length = lodash.get(list, 'length', 0)
+    if (length < 1) return
+    this.handler_match_list_data({ list: list })
   }
 
   /**
@@ -438,7 +439,7 @@ class MatchMeta {
     })
     if (+res.code !== 200) return this.set_page_match_empty_status(true);
     const list = lodash.get(res, 'data', [])
-    this.handler_match_list_data(list)
+    this.handler_match_list_data({ list: list })
   }
 
   /**
@@ -476,6 +477,7 @@ class MatchMeta {
           title,
           isLock,
           ...item,
+          icon: String(Number(item.csid ) + 100)
         }
       })
     }
@@ -502,7 +504,7 @@ class MatchMeta {
     const res = await api_common.get_collect_matches(params)
     if (res.code !== '200') return this.set_page_match_empty_status(true);
     const list = lodash.get(res, 'data', [])
-    this.handler_match_list_data(list, 1)
+    this.handler_match_list_data({ list: list, type: 1, is_virtual: false })
   }
 
   /**
@@ -536,6 +538,7 @@ class MatchMeta {
    * @param { res } 接口返回对象
    */
   handle_custom_matchs (res) {
+
     if (+res.code !== 200) return
     const list = lodash.get(res, 'data', [])
     const length = lodash.get(list, 'length', 0)
