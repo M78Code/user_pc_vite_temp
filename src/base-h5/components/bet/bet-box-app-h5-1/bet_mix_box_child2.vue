@@ -164,7 +164,7 @@ import betAfterStatus from './bet-after-status.vue';
 import betMixBoxChild7 from './bet_mix_box_child7.vue';
 import betMixBoxChild8 from './bet_mix_box_child8.vue';
 
-import betInfoList from "./bet_info_list.vue";
+// import betInfoList from "./bet_info_list.vue";
 
 
 import betMixShow from './bet_mix_show3.vue';
