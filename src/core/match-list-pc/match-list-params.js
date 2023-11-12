@@ -447,6 +447,7 @@ function handle_click_menu_mi_1(detail = {}) {
             },
         };
     }
+    console.log('asdasdasdasdas', params);
     // 设置      中间 菜单输出
     menu_config.set_mid_menu_result(params);
 

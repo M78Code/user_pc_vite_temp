@@ -12,6 +12,7 @@ import { useMittEmit, MITT_TYPES, useMittOn } from "src/core/mitt/index.js";
 // import { set_sticky_top } from 'src/core/match-list-pc/match-card/module/sticky-top.js'
 import MatchListScrollClass from 'src/core/match-list-pc/match-scroll.js'
 import MatchListCardClass from "src/core/match-list-pc/match-card/match-list-card-class.js";
+import { get_match_template_id} from './match-handle-data.js'
 // import video from "src/core/video/video.js";
 import { pre_load_video } from 'src/core/pre-load/module/pre-load-video.js'
 import MenuData from "src/core/menu-pc/menu-data-class.js";
