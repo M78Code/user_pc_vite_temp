@@ -8,7 +8,7 @@
   <div>
     <div class="analysis-body">
       <!-- 动画/视频/比分榜 -->
-      <venue-box :score_list="score_list" :detail_info="detail_info"  />
+      <venue-box :score_list="score_list" :detail_info="detail_info" v-show="!lodash_.isEmpty(detail_info)" />
   
       <!-- <div class="analysis-top">
         <div class="analysis-top-l">
@@ -42,7 +42,7 @@ import { onMounted, ref,computed,watch } from "vue";
 import switchTeam from './compoments/switch-team.vue'
 
 import venueBox from './compoments/venue-box/index.vue'
-import _ from 'lodash'
+import lodash_ from 'lodash'
 import { useMittOn, MITT_TYPES } from "src/core/mitt"
 import { MatchDataWarehouse_PC_Detail_Common as MatchDataWarehouseInstance,MenuData,UserCtr } from "src/core/index"; 
 
