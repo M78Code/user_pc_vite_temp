@@ -15,6 +15,7 @@ import { scrollMenuEvent } from "src/base-h5/components/menu/app-h5-menu/utils.j
 import matchContainer from "src/base-h5/components/match-list/index.vue";
 import { i18n_t, compute_css_obj, MenuData } from "src/core/index.js";
 import { is_results, is_kemp } from 'src/base-h5/mixin/menu.js'
+import VirtualList from 'src/core/match-list-h5/match-class/virtual-list'
 import scrollList from 'src/base-h5/components/top-menu/top-menu-ouzhou-1/scroll-menu/scroll-list.vue';
 import dateTab from 'src/base-h5/components/top-menu/top-menu-ouzhou-1/date-tab/date-tab.vue';
 import { api_analysis } from "src/api/"
@@ -96,7 +97,9 @@ const getData = (item,date) =>{
     MatchMeta.get_results_match()
 }
 onMounted(()=>{
-    // set_menu_lv1({mi:28})
+    
+    VirtualList.set_is_show_ball(false)
+    MenuData.set_current_lv1_menu(28)
     switchHandle()
 })
 
