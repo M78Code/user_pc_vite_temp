@@ -113,6 +113,33 @@
       // 已开赛、未开赛的赛事数量计算
       let match_status_type_match_count = 0
 
+      // 如果当前赛种 不等于上一个赛种  需要添加一个球种标题卡片
+      if(MatchListCardData.match_list_mapping_relation_obj_type == 8 && match.csid != pre_match_csid){
+        pre_match_csid = match.csid
+        card_key = `sport_title_${match.csid}`
+        // 判断球种标题卡片是否创建过，防止傻逼后台返回傻逼数据， 有可能会出现重复球种标题卡片
+        if(!csid_to_card_key_obj[csid_key].includes(card_key)){
+          // 球种标题卡片处理
+          card_index += 1
+          match_list_card_key_arr.push(card_key)
+          csid_to_card_key_obj[csid_key].push(card_key)
+          // 打入球种标题卡片特征
+          all_card_obj[card_key] = {
+            ...sport_title_card_template,
+            // 卡片索引
+            card_index,
+            // 球种名称
+            csna:match.csna,
+            // 球种ID
+            csid:match.csid,
+          }
+          // 如果不是ws调用  设置折叠数据
+          if(!is_ws_call){
+            Object.assign(all_card_obj[card_key],fold_template)
+          }
+        }
+
+      }
       // 遍历联赛列表
       let league_list = lodash.get(all_league_obj,match_status_type,[])
       league_list.forEach( (league_obj,league_index) => {
