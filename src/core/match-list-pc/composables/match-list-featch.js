@@ -14,7 +14,7 @@ import MenuData from "src/core/menu-pc/menu-data-class.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import * as api_websocket from "src/api/module/socket/socket_api.js";
 import filterHeader from 'src/core/filter-header/filter-header.js'
-import {get_match_template_id} from '../match-handle-data'
+import {match_list_handle_set} from '../match-handle-data'
 const { page_source } = PageSourceData;
 
 /**
@@ -268,10 +268,9 @@ const use_featch_fn = () => {
           let code = res.code
           let match_list = lodash.get(res, "data.data") || [];
           let ts1 = res.ts
-          match_list?.forEach(match=>{
-            match.tpl_id=get_match_template_id(match)
-            console.log('tpl_id',match.tpl_id)
-          })
+
+				match_list_handle_set(match_list)
+
           MatchListData.set_list(
             match_list,
           );
