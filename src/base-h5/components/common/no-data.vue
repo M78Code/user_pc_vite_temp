@@ -1,7 +1,6 @@
 <!-- @Description: 网络不给力，空空如也这些信息展示 -->
 <template>
-    <div class="no-data"
-        :style="{ 'min-height': top_height + 'px', paddingTop: is_detail && top_height < 500 ? '.6rem' : '0px' }">
+    <div class="no-data" :style="{ 'min-height': top_height + 'px', paddingTop: is_detail && top_height < 500 ? '.6rem' : '0px' }">
 
         <!-- <template v-if="['暂无,此处逻辑产品暂时说放弃'].includes(which)">
             <div class="empty-favorite-bg"
@@ -21,7 +20,7 @@
         <!-- <div class="empty-favorite-bg" :style="compute_css_obj(lodash.get(arr_const[which], 'key'))"> </div> -->
         <img class="no_data_img" :src="no_data_icon" alt="">
          <!-- 有消息用消息 没有信息 用默认信息 -->
-        <!-- <p> {{ msg ? $t(msg) : lodash.get(arr_const[which], 'txt') }} </p> -->
+        <p> {{ msg ? $t(msg) : lodash.get(arr_const[which], 'txt') }} </p>
     </div>
 </template>
 
@@ -30,10 +29,11 @@ import { watch, ref, onMounted, computed } from 'vue'
 import { useRoute } from 'vue-router'
 
 import { i18n_t ,} from "src/boot/i18n.js";
-import { useMittEmit,compute_css_obj, MITT_TYPES, LOCAL_PROJECT_FILE_PREFIX } from "src/core/index.js"
-import { no_data_img, no_data_app, no_data_collect } from 'src/base-h5/core/utils/local-image.js'
+import { useMittEmit,compute_css_obj, MITT_TYPES, LOCAL_PROJECT_FILE_PREFIX, PROJECT_NAME } from "src/core/index.js"
+import { no_data_img, no_data_app, no_data_collect, no_data_ouzhou } from 'src/base-h5/core/utils/local-image.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { is_collect } from 'src/base-h5/mixin/menu.js'
+
 // const noMatch2 = () => import(`${LOCAL_PROJECT_FILE_PREFIX}/image/png/noMatch2.png`)
 
 // ==========图片===============
@@ -108,10 +108,14 @@ function init() {
 onMounted(init)
 
 const no_data_icon = computed(() => {
-    if (is_collect.value) {
-        return no_data_collect
+    if (PROJECT_NAME === 'ouzhou-h5') {
+        return no_data_ouzhou
     } else {
-        return no_data_app
+        if (is_collect.value) {
+            return no_data_collect
+        } else {
+            return no_data_app
+        }
     }
 })
 
@@ -140,10 +144,22 @@ function refresh_data() {
 
 <style lang="scss" scoped>
 .no-data {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
     border-bottom: 1px solid transparent;
     min-height: 100%;
     text-align: center;
     color: #a5a9b3;
+    animation: an_scale 0.25s;
+
+    .no_data_img{
+        width: 200px;
+        height: 200px;
+    }
 
     .empty-favorite-bg {
         width: 1.8rem;
@@ -194,6 +210,14 @@ function refresh_data() {
             color: #ffb001;
             border: 1px solid #ffb001;
         }
+    }
+    @keyframes an_scale {
+      0% {
+        transform: scale(0.6);
+      }
+      100% {
+        transform: scale(1);
+      }
     }
 }
 </style>

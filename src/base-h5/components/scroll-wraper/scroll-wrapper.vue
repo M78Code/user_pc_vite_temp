@@ -178,7 +178,7 @@ const goto_top = () => {
 }
 
 const get_is_static = () => {
-  return is_kemp.value
+  return is_kemp.value || is_collect.value
 }
 // 计算每个赛事id 对应的 容器高度 top 值
 const get_match_top_by_mid1 = (mid) => {
@@ -287,7 +287,7 @@ onUnmounted(() => {
       top: 0;
       left: 0;
       &.last{
-        padding-bottom: 0.01rem;
+        // padding-bottom: 0.01rem;
         .match-container{
           padding-bottom: 0rem !important;
         }

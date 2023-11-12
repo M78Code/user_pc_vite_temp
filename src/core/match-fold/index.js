@@ -76,7 +76,6 @@ class MatchFold {
       this.set_match_fold(key, { show_card })
     })
     if (csid) {
-      debugger
       let flag = true
       Object.values(this.match_mid_fold_obj.value).forEach(item => {
         if (!item.show_card) flag = false

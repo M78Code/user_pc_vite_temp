@@ -45,10 +45,11 @@
       <animal_box v-if="animal_key" :show_type="show_type"  :detail_info="detail_info" />
       <!-- 比分 -->
       <score_info
-        v-show="score_key&&!lodash_.isEmpty(score_list)"
+        v-show="score_key&&!lodash_.isEmpty(score_list)&&detail_info.ms>0"
         :score_list="score_list"
         :detail_info="detail_info"
       />
+      
     </div>
   </div>
 </template>
