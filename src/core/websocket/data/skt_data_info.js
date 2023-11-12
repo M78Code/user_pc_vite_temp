@@ -4,20 +4,20 @@
  * @Description: websocket数据页面数据接入 ---- 赛事详情
  */
 import { WsSend } from "src/core/data-warehouse/ws/ws-ctr/ws-ctr.js";
-import { mapGetters, mapActions } from "vuex";
-import global_mixin from "src/core/global/mixin/global_mixin.js";
-import betting from "src/public/mixins/betting/betting.js";
+import {useGetGlobal} from "src/core/global/mixin/global_mixin.js";
+// import betting from "src/public/mixins/betting/betting.js";
 import {
   useMittOn,
   useMittEmit,
   MITT_TYPES,
+  MenuData
 } from "src/core/index.js";
 export default {
-  mixins: [global_mixin, betting],
+  // mixins: [global_mixin, betting],
   data() {
     return {
       // 菜单数据
-      menu_data: $menu.menu_data,
+      menu_data: MenuData,
       // 定时器集合
       timeout_obj: {} 
     }
@@ -29,27 +29,27 @@ export default {
     this.SCMD_C8 = lodash.debounce(this.SCMD_C8,1000);
     //C112指令节流2秒
     this.SCMD_C112 = lodash.debounce(this.SCMD_C112,2000);
-  },
+  }, 
   computed: {
-    ...mapGetters({
-      // 用户信息
-      vx_get_user: "get_user",
-      // socket状态
-      socket_status: 'get_socket_status',
-      // socket对象
-      socket_data: 'get_socket_obj',
-      // 串关是否正在处理
-      get_is_handle: "get_is_handle", // 有使用不在文件
-      // 当前页面
-      vx_layout_cur_page: "get_layout_cur_page", 
-      // 单关是否正在处理
-      vx_get_is_single_handle: "get_is_single_handle",
-      // 获取服务器时间和本地时间差
-      vx_get_timestamp: "get_timestamp",
-      // 当前菜单类型
-      vx_cur_menu_type: "get_cur_menu_type",
-      get_var_event_i18n: "get_var_event_i18n"
-    }),
+    // ...mapGetters({
+    //   // 用户信息
+    //   vx_get_user: "get_user",
+    //   // socket状态
+    //   socket_status: 'get_socket_status',
+    //   // socket对象
+    //   socket_data: 'get_socket_obj',
+    //   // 串关是否正在处理
+    //   get_is_handle: "get_is_handle", // 有使用不在文件
+    //   // 当前页面
+    //   vx_layout_cur_page: "get_layout_cur_page", 
+    //   // 单关是否正在处理
+    //   vx_get_is_single_handle: "get_is_single_handle",
+    //   // 获取服务器时间和本地时间差
+    //   vx_get_timestamp: "get_timestamp",
+    //   // 当前菜单类型
+    //   vx_cur_menu_type: "get_cur_menu_type",
+    //   get_var_event_i18n: "get_var_event_i18n"
+    // }),
   },
   mounted() {  
     //发送启动命令
@@ -61,18 +61,19 @@ export default {
       window.ws.addQueueViewObj(socket_name, this);
     }
     // 节流2s get_match_detail_throttle方法
-    this.get_match_detail_throttle= this.throttle(this.get_match_detail_throttle, 2000, {leading:true, trailing:true});
+    // lodash.throttle(()=>{this.get_match_detail_throttle()}, 2000, {leading:true, trailing:true});
   },
   methods: {
-    ...mapActions({
-      //保存详情右侧参数(mid: "", 赛事id tid: "", // 联赛 id	sportId: "", //球类id media_type: "auto", // 直播类型) 信息
-      set_match_details_params: 'set_match_details_params'
-    }),
+    // ...mapActions({
+    //   //保存详情右侧参数(mid: "", 赛事id tid: "", // 联赛 id	sportId: "", //球类id media_type: "auto", // 直播类型) 信息
+    //   set_match_details_params: 'set_match_details_params'
+    // }),
     /**
      * 拉取详情接口
      */
     get_match_detail_throttle(){
       // 调用页面详情接口，并标识为ws调用
+      debugger
       this.get_match_detail(true);
     },
     /**

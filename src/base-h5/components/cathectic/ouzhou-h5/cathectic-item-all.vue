@@ -5,7 +5,7 @@
 <template>
   <div class="cathectic">
     <!-- 加载中 -->
-    <!-- <SRecord v-if="is_loading" /> -->
+    <loading v-if="is_loading" />
     <scroll ref="myScroll" :on-pull="onPull">
       <!-- 未结算 cashout 按钮 -->
       <div v-if="UserCtr.user_info.settleSwitch == 1 && BetRecordClass.selected === 0 && !lodash.isEmpty(BetRecordClass.list_data)" 
@@ -32,12 +32,12 @@
             <template>
               <div class="date-header flex">
                 <span class="date"><span>{{ formatTime(new Date(name).getTime(), 'mm/DD')}}</span></span>
-                <!-- 第一项显示 cashout按钮、 已结算信息 -->
-                <!-- <div class="settled-date" v-if="BetRecordClass.selected === 1 && index === 0">
-                  Number <span>2</span>
-                  Bet <span>20</span>
-                  Lose/Win <span class="oringe">+20.00</span>
-                </div> -->
+                <!-- 当前日期的已结算信息总和 -->
+                <div class="settled-date" v-if="BetRecordClass.selected === 1">
+                  {{ i18n_t('bet_record.number') }} <span>{{value.totalOrders}}</span>
+                  {{ i18n_t('bet_record.bet') }} <span>{{value.betAmount}}</span>
+                  {{ i18n_t('bet_record.l/w') }} <span class="oringe">{{value.profit}}</span>
+                </div>
               </div>
               <div v-for="(item2, key) in value.data" :key="item2.betTime" class="cathectic-item">
                 <item-multiple-body :data_b="item2"></item-multiple-body>
@@ -59,12 +59,12 @@ import BetRecordClass from "src/core/bet-record/bet-record.js";
 import { itemMultipleBody } from "src/base-h5/components/common/cathectic-item/ouzhou-h5/index";
 import settleVoid from "src/base-h5/components/cathectic/ouzhou-h5/settle-void.vue";
 import scroll from "src/base-h5/components/common/record-scroll/scroll.vue";
-import SRecord from "src/base-h5/components/skeleton/record.vue";
 import { ref, watch, computed, onMounted, onUnmounted } from 'vue'
 import UserCtr from "src/core/user-config/user-ctr.js";
 import {useMittEmit, useMittOn, MITT_TYPES} from  "src/core/mitt/index.js"
 import { formatTime } from 'src/core/format/index.js'
 import { i18n_t } from "src/boot/i18n.js";
+import loading from "src/base-h5/components/common/loading.vue"
 // 锚点
 const myScroll = ref(null)
 //是否在加载中
@@ -146,10 +146,10 @@ const init_params_api = (_index) => {
 }
 
 // 已结算页面，排序改变  2-默认排序（结算时间） 1-投注时间
-const sortChange = (index) => {
+const sortChange = (index, reset) => {
   if(index === sort_active.value) return
   sort_active.value = index
-  init_data(1)
+  !reset && init_data(1)
 }
 
 /**
@@ -157,7 +157,7 @@ const sortChange = (index) => {
  */
 const search_early_money = () => {
   let params = { orderNo: orderNumberItemList.value.join(',') }
-  if (orderNumberItemList.value.length === 0) { return }
+  if (orderNumberItemList.value.length === 0) return
   api_betting.get_cashout_max_amount_list(params).then(reslut => {
     let res = reslut.status ? reslut.data : reslut
     if (res.code == 200 && res.data) {
@@ -204,17 +204,15 @@ const get_order_list = (_index, params, url_api) => {
       let { record, hasNext } = lodash.get(res, "data");
       is_hasnext.value = hasNext
       is_loading.value = false;
-      // record为空时
-      if (lodash.isEmpty(record)) {
-        return;
-      }
+      // record 为null时 => 赋值为空对象
+      if(!record) record = {}
       for (let item of Object.values(record)) {
         size += item.data.length
       }
       last_record.value = lodash.findLastKey(record);
       // 给列表赋值
       BetRecordClass.set_list_data(record)
-      // 如果是未结算页面, 先获取提前结算列表金额
+      // 如果是未结算页面, 获取提前结算列表金额
       _index === 0 && check_early_order()
     } else if (res.code == '0401038') {
       is_limit.value = true
@@ -274,7 +272,8 @@ onUnmounted(() => {
 
 defineExpose({
   timeType,
-  init_data
+  init_data,
+  sortChange
   })
 </script>
     

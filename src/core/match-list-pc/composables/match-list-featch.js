@@ -14,10 +14,7 @@ import MenuData from "src/core/menu-pc/menu-data-class.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import * as api_websocket from "src/api/module/socket/socket_api.js";
 import filterHeader from 'src/core/filter-header/filter-header.js'
-import store from "src/store-redux/index.js";
-
-let state = store.getState();
-
+import {match_list_handle_set} from '../match-handle-data'
 const { page_source } = PageSourceData;
 
 /**
@@ -158,9 +155,9 @@ const use_featch_fn = () => {
     callback
   ) => {
     let panduan_1 = MenuData.is_vr();
-    let panduan_2 = ["details", "video"].includes(page_source);
+    let panduan_2 = ["details", "video"].includes(PageSourceData.page_source);
     let first_load_time;
-    if ((panduan_1 && page_source !== "search") || panduan_2) {
+    if ((panduan_1 && PageSourceData.page_source !== "search") || panduan_2) {
       return;
     }
 
@@ -221,7 +218,7 @@ const use_featch_fn = () => {
       params.tabs = tabs;
     }
     // 非滚球传 玩法ID
-    if (MenuData.menu_root != "1" && page_source != "search") {
+    if (MenuData.menu_root != "1" && PageSourceData.page_source != "search") {
       params.pids = _params.pids;
     }
     //today：今日  early：早盘 角球玩法
@@ -232,7 +229,7 @@ const use_featch_fn = () => {
     }
     let api;
     // 电竞
-    if (MenuData.is_export() && page_source !== "search") {
+    if (MenuData.is_export() &&PageSourceData.page_source !== "search") {
       api = api_websocket.get_esports_by_mids;
       params = {
         mids: mids.join(","),
@@ -263,7 +260,7 @@ const use_featch_fn = () => {
           //更新电竞右侧视频
           if (
             MenuData.is_export() &&
-            page_source !== "search" &&
+            PageSourceData.page_source !== "search" &&
             !is_first_load
           ) {
             useMittEmit(MITT_TYPES.EMIT_GET_ESPORTS_VIDEO_LIST);
@@ -271,6 +268,9 @@ const use_featch_fn = () => {
           let code = res.code
           let match_list = lodash.get(res, "data.data") || [];
           let ts1 = res.ts
+
+				match_list_handle_set(match_list)
+
           MatchListData.set_list(
             match_list,
           );
@@ -337,7 +337,7 @@ const use_featch_fn = () => {
         });
     };
     // 虚拟体育不用拉最新信息合并
-    if (page_source !== "virtual_sport") {
+    if (PageSourceData.page_source !== "virtual_sport") {
       const by_mids_debounce_cache =
         axios_debounce_cache.get_match_base_info_by_mids;
       if (by_mids_debounce_cache && by_mids_debounce_cache["ENABLED"]) {

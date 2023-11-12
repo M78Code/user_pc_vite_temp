@@ -51,9 +51,6 @@
 			</div>
 			<ul class="list">
 				<div class="title">View all soccer</div>
-				<!-- <div class="middle_info_tab diff">
-					<div class="color">TEAMS</div>
-				</div> -->
 				<!-- 滚球 -->
 				<div v-show="search_data.bowling && search_data.bowling.length > 0">
 					<div class="middle_info_tab diff">
@@ -72,8 +69,28 @@
 								</p>
 								<p>{{ (new Date(+item.mgt)).Format('MM/dd hh:mm') }}</p>
 							</div>
-							<div style="flex: 1">
-								<ScoreList :match_info="item"></ScoreList>
+							<div style="display: flex;flex-direction: row; flex: 1">
+								<div style="flex: 1" v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
+									<div class="center">1</div>
+									<div class="red">{{ get_odd_os(item?.hps?.[0].hl?.[0].ol?.[0]?.ov) }}</div>
+								</div>
+								<div style="flex: 1" v-else>
+									<img class="lock" :src="odd_lock_ouzhou" alt="lock">
+								</div>
+								<div style="flex: 1" v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
+									<div class="center">X</div>
+									<div class="red">{{ get_odd_os(item?.hps?.[0].hl?.[0].ol?.[1]?.ov) }}</div>
+								</div>
+								<div style="flex: 1" v-else>
+									<img class="lock" :src="odd_lock_ouzhou" alt="lock">
+								</div>
+								<div style="flex: 1" v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
+									<div class="center">2</div>
+									<div class="red">{{ get_odd_os(item?.hps?.[0].hl?.[0].ol?.[2]?.ov) }}</div>
+								</div>
+								<div style="flex: 1" v-else>
+									<img class="lock" :src="odd_lock_ouzhou" alt="lock">
+								</div>
 							</div>
 						</div>
 					</li>
@@ -102,14 +119,37 @@
 								</p>
 								<p>{{ (new Date(+i.mgt)).Format('MM/dd hh:mm') }}</p>
 							</div>
-							<div style="flex: 1">
-								<ScoreList :match_info="item"></ScoreList>
+							<div style="display: flex;flex-direction: row; flex: 1">
+								<div style="flex: 1" v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
+									<div class="center">1</div>
+									<div class="red">{{ get_odd_os(item?.hps?.[0].hl?.[0].ol?.[0]?.ov) }}</div>
+								</div>
+								<div style="flex: 1" v-else>
+									<img class="lock" :src="odd_lock_ouzhou" alt="lock">
+								</div>
+								<div style="flex: 1" v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
+									<div class="center">X</div>
+									<div class="red">{{ get_odd_os(item?.hps?.[0].hl?.[0].ol?.[1]?.ov) }}</div>
+								</div>
+								<div style="flex: 1" v-else>
+									<img class="lock" :src="odd_lock_ouzhou" alt="lock">
+								</div>
+								<div style="flex: 1" v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
+									<div class="center">2</div>
+									<div class="red">{{ get_odd_os(item?.hps?.[0].hl?.[0].ol?.[2]?.ov) }}</div>
+								</div>
+								<div style="flex: 1" v-else>
+									<img class="lock" :src="odd_lock_ouzhou" alt="lock">
+								</div>
 							</div>
 						</div>
 					</li>
 				</div>
 				<!-- 搜索 队伍 -->
 				<div v-show="search_data.teamH5 && search_data.teamH5.length > 0">
+					<div class="middle_info_tab diff">
+						<div class="color">TEAMS</div>
+					</div>
 					<li v-for="(item, index) in search_data.teamH5" :key="index" @click="default_method_jump(item.name, item)">
 						<div v-if="item.tn">
 							<div class="list_top">
@@ -125,8 +165,28 @@
 								</p>
 								<p>{{ (new Date(+item.mgt)).Format('MM/dd hh:mm') }}</p>
 							</div>
-							<div style="flex: 1">
-								<ScoreList :match_info="item"></ScoreList>
+							<div style="display: flex;flex-direction: row; flex: 1">
+								<div style="flex: 1" v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
+									<div class="center">1</div>
+									<div class="red">{{ get_odd_os(item?.hps?.[0].hl?.[0].ol?.[0]?.ov) }}</div>
+								</div>
+								<div style="flex: 1" v-else>
+									<img class="lock" :src="odd_lock_ouzhou" alt="lock">
+								</div>
+								<div style="flex: 1" v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
+									<div class="center">X</div>
+									<div class="red">{{ get_odd_os(item?.hps?.[0].hl?.[0].ol?.[1]?.ov) }}</div>
+								</div>
+								<div style="flex: 1" v-else>
+									<img class="lock" :src="odd_lock_ouzhou" alt="lock">
+								</div>
+								<div style="flex: 1" v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
+									<div class="center">2</div>
+									<div class="red">{{ get_odd_os(item?.hps?.[0].hl?.[0].ol?.[2]?.ov) }}</div>
+								</div>
+								<div style="flex: 1" v-else>
+									<img class="lock" :src="odd_lock_ouzhou" alt="lock">
+								</div>
 							</div>
 						</div>
 					</li>
@@ -145,9 +205,12 @@
 					:class="['tab', tabIndex === index ? 'active' : '']">{{ item.sportName }}</div>
 			</div>
 			<div class="middle_info_tab diff">No results found. please try a different search term.</div>
-			<div class="not_found">
+			<!-- <div class="not_found">
 				<img :src="compute_local_project_file_path('image/png/not_found.png')" alt="">
 				<p>No results</p>
+			</div> -->
+			<div class="not_found">
+			<no-data :code="400"></no-data>
 			</div>
 		</div>
 	</div>
@@ -160,9 +223,10 @@ import router from "../../router";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt";
 import { get_history_search, get_search_result, get_search_sport } from "src/api/module/search/index.js";
 import { api_search } from 'src/api/';
-import ScoreList from 'src/base-h5/components/match-container/template/ouzhou/components/score-list.vue';
-import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
-
+import { compute_value_by_cur_odd_type } from "src/core/index.js";
+import { api_common, api_match_list } from "src/api/index.js";
+import { odd_lock_ouzhou } from 'src/base-h5/core/utils/local-image.js'
+import NoData from './components/no-data.vue'// 无数据组件
 const { get_insert_history, get_fetch_hot_search } = api_search || {};
 
 const input_value = ref('');
@@ -212,10 +276,12 @@ const red_color = (item) => {
 
 // 搜索
 const search_data = ref([]);
+let sport_kind_id = null;
 const get_search_data = (index = 0, sport_id = 1, keyword) => {
 	show_history.value = false;
 	show_hot.value = false;
 	tabIndex.value = index;
+	sport_kind_id = sport_id;
 	utils.tab_move2(index, tab_growp.value);
 	if (keyword) {
 		input_value.value = keyword
@@ -236,9 +302,7 @@ const get_search_data = (index = 0, sport_id = 1, keyword) => {
 	get_search_result(params).then(res => {
 		if (res.code === '200') {
 			search_data.value = res.data.data;
-			get_match_base_hps()
-		}else{
-			search_data.value = [];
+			get_match_base_hps_by_mids()
 		}
 	});
 }
@@ -338,10 +402,73 @@ function get_hot_search() {
 // 获取赔率
 const scroll_timer = ref(0)
 const get_match_base_hps = lodash.debounce(() => {
-  MatchMeta.get_match_base_hps_by_mids()
+  get_match_base_hps_by_mids()
   clearTimeout(scroll_timer.value)
   scroll_timer.value = null
 }, 600)
+
+
+/**
+ * @description 获取赛事赔率
+ */
+let match_mid_Arr = [];
+const get_match_base_hps_by_mids = async () => {
+	if (!(search_data.value.teamH5 && search_data.value.teamH5.length > 0) &&
+			!(search_data.value.league && search_data.value.league.length > 0) && 
+			!(search_data.value.bowling && search_data.value.bowling.length > 0) 
+			) return;
+	// 拿到所有滚球，联赛，队伍 mid
+	search_data.value.teamH5.forEach((item, index) => {
+		match_mid_Arr.push(item.mid)
+	})
+	search_data.value.league.forEach((item, index) => {
+		item.matchList.forEach((i, idx) => {
+			match_mid_Arr.push(i.mid)
+		})
+	})
+	search_data.value.bowling.forEach((item, index) => {
+		match_mid_Arr.push(item.mid)
+	})
+	if (match_mid_Arr.length < 1) return;
+	match_mid_Arr = Array.from(new Set(match_mid_Arr))
+	const match_mids = match_mid_Arr.join(',')
+	// 竞足409 不需要euid
+	const params = {
+		mids: match_mids,
+		cuid: uid,
+		sort: 1,
+		device: ['', 'v2_h5', 'v2_h5_st'][UserCtr.standard_edition],
+	};
+	await api_common.get_match_base_info_by_mids(params).then((res) => {
+		if(res.code === '200') {
+			const { data } = res;
+			for(let i = 0; i < data.length; i++) {
+				for(let j = 0; j < search_data.value.teamH5.length; j++) {
+					if(data[i].mid === search_data.value.teamH5[j].mid) {
+						search_data.value.teamH5[j] = data[i]
+					}
+				}
+				for(let k = 0; k < search_data.value.league.length; k++) {
+					search_data.value.league[k].matchList.forEach((item, index) => {
+						if(data[i].mid === item.mid) {
+							search_data.value.league[k].matchList[index] = data[i]
+						}
+					})
+				}
+				for(let l = 0; l < search_data.value.bowling.length; l++) {
+					if(data[i].mid === search_data.value.bowling[l].mid) {
+						search_data.value.bowling[l] = data[i]
+					}
+				}
+			}
+		}
+	})
+}
+
+// 显示的赔率
+const get_odd_os = (ov) => {
+  return  compute_value_by_cur_odd_type(ov,'','',sport_kind_id)
+}
 
 onMounted(() => {
 	get_hot_search();
@@ -436,7 +563,7 @@ watch(
 	position: fixed;
 	width: 100%;
 	z-index: 1;
-
+	color: #1A1A1A;
 	.tab {
 		background-color: #FFf;
 		border-radius: 40px;
@@ -500,6 +627,16 @@ li {
 		.middle {
 			color: red;
 			margin: 0 5px;
+		}
+		.lock {
+			width: 16px;
+			height: 16px;
+		}
+		.center {
+			margin-left: 8px;
+		}
+		.red {
+			color: #FF7000;
 		}
 	}
 }

@@ -1775,7 +1775,8 @@
     "msg_nodata_19": "去預約",
     "msg_nodata_20": "Hi，真不巧，頁面走丟了",
     "msg_nodata_21": "別緊張，點“刷新”馬上找回~",
-    "msg_nodata_22": "當前訪問人數過多，請稍後再試"
+    "msg_nodata_22": "當前訪問人數過多，請稍後再試",
+    "msg_nodata_23": "即將推出"
   },
   "myScroll": {
     "msg1": "下拉刷新",

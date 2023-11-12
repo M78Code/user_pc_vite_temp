@@ -65,9 +65,14 @@ export const video_icon = compute_local_project_file_path('/image/list/video_ico
 // 日期
 export const icon_date = compute_local_project_file_path('/image/list/icon_date.png')
 export const expand_item = compute_local_project_file_path('/image/list/expand_item.png')
+
 export const no_data_img = compute_local_project_file_path('/image/png/no_data.png')
 export const no_data_app = compute_local_project_file_path('/image/png/no_data_app.png')
+
+export const no_data_ouzhou = compute_local_project_file_path('/image/png/no_data3.png')
+
 export const no_data_collect = compute_local_project_file_path('/image/png/no_data_collect.png')
+export const coming_soon = compute_local_project_file_path('/image/png/coming_soon.png')
 // 角球图标
 export const corner_icon = compute_local_project_file_path('/image/list/corner_icon.svg')
 // app-h5 提前结算

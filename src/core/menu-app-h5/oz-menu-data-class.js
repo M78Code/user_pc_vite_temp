@@ -11,6 +11,7 @@ import { ref } from "vue";
 import BaseData from "src/core/base-data/base-data.js";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import {MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/";
+import { MITT_TYPES,useMittEmit } from "src/core/mitt/index.js" 
 import MatchFold from 'src/core/match-fold';
 const menu_type_config = {
   1: 1,
@@ -34,8 +35,10 @@ class MenuData {
     this.destroy = () => {
       this.update && this.update.cancel()
     }
-    this.current_lv_1_menu_i = '1';
+    // 欧洲版 h5 默认 今日
+    this.current_lv_1_menu_i = 2;
     this.current_lv_2_menu_i = 0;
+    this.current_lv_2_menu_mi = ref('0');
     this.menu_lv_mi_lsit = []
     // 赛果 日期/赛中
     this.result_menu_api_params = {}
@@ -74,7 +77,8 @@ class MenuData {
     })
     this.menu_list = menu_list;
     this.top_events_list = top_events_list;
-    this.update()
+    useMittEmit(MITT_TYPES.EMIT_UPDATE_INIT_DATA);
+
   }
   //设置赛果参数
   set_result_menu_api_params(val){
@@ -112,6 +116,11 @@ class MenuData {
     this.menu_mi.value = mi;
     this.current_lv_2_menu_i = `${mi}${this.menu_type.value}`;
     this.update()
+  }
+  // 设置二级菜单 id
+  set_menu_lv2_mi(val){
+    this.current_lv_2_menu_i = val
+    this.current_lv_2_menu_mi.value = val
   }
   /**
    * 设置时间 并且设置时间请求参数

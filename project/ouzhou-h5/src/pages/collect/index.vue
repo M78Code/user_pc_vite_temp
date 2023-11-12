@@ -6,27 +6,20 @@
  * @Description:  
 -->
 <template>
-  <div class="collect-wap">
-    <!-- <TopHeader :title="i18n_t('menu_itme_name.esports')">
-        <template #right>
-            <div>111</div>
-        </template>
-      </TopHeader> -->
-
-    <div v-if="state.select_dialog" position="bottom" class="select-mask" :style="`height:${inner_height}px`">
-      <div style="height:100%;width: 100%" @click="state.select_dialog = false"></div>
-      <!-- 搜索联赛 -->
-      <setect-league @closedHandle="state.select_dialog = false" @finishHandle="selectFinishHandle"></setect-league>
+  
+    <div class="collect-wap">
+      <NoData class="data-get-empty2" which='comingSoon' height='400'></NoData>
+      <!-- 收藏 -->
+      <!-- <scroll-menu menu_type="1" :is_show_badge="false"  v-if="MenuData.menu_list.length" @changeMenu="changeMenu"/>
+      <div class="match-container">
+          <match-container />
+      </div> -->
     </div>
-    <!-- 收藏 -->
-    <scroll-menu menu_type="1" :is_show_badge="false"  v-if="MenuData.menu_list.length" @changeMenu="changeMenu"/>
-    <div class="match-container">
-        <match-container />
-    </div>
-
-  </div>
 </template>
 <script setup>
+import NoData from "src/base-h5/components/common/no-data.vue"; // 无网络展示组件
+
+
 import { watch, onMounted, onBeforeMount, reactive, nextTick } from "vue";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import setectLeague from 'src/base-h5/components/setect-league/index.vue'
@@ -53,31 +46,27 @@ const selectFinishHandle = (val) => {
  * @param {*} mi 
  */
 const changeMenu = (mi) =>{
-  console.log("euid",MenuData.get_euid())
   MatchMeta.get_collect_match()
 }
-onMounted(() => {
-  changeMenu("40003")
-})
-
-// const set_menu_lv1 = item => {
-//   MenuData.set_current_lv1_menu(item.mi);
-//   MenuData.get_menu_lvmi_list(item.mi)
-//   // MenuData.get_results_menu();
-//   setTimeout(() => {
-//     MatchMeta.get_results_match()
-//     MatchMeta.get_collect_match()
-//   }, 2000)
-// }
 </script>
 <style scoped lang="scss">
 .collect-wap {
   width: 100%;
-  height: 100%;
+  height: calc(100% - 106px);
+  .data-get-empty2{
+    :deep(.no_data_img){
+      width: 140px;
+      height: 140px;
+    }
+  }
 }
+
 .match-container{
     height: calc(100% - 1.71rem);
     overflow: hidden;
     overflow-y: auto;
+    .match-list-container{
+      background: #fff !important;
+    }
 }
 </style>

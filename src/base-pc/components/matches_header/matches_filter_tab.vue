@@ -119,7 +119,7 @@ async function get_date_menu_list() {
     });
   }
   current_filter_list.value = [{label:"Today",value:""}, ...arr]
-  console.log(current_filter_list.value, 'arr111')
+  handle_click_menu_mi_3_date(current_filter_list.value[0], 0)
 }
 
 watch(MenuData.menu_data_version,()=>{
@@ -127,7 +127,15 @@ watch(MenuData.menu_data_version,()=>{
     get_date_menu_list()
   })
 })
-  
+  /**
+ * 
+ * @param {Number} item.mi
+ * @description 过滤mi<300
+ */
+
+const filter_min_mi_300 = (originalArray)=>{
+  return originalArray.filter(item => parseInt(item.mi) < 300);
+}
   /**
    * @param
    */
@@ -160,7 +168,7 @@ function handle_click_menu_mi_3_date (detail = {}) {
     if (lv1_mi == 118) {
       euid = '3020212' || BaseData.mi_info_map[`mi_${lv2_mi}`].euid;
     } else {
-      euid = BaseData.mi_info_map[`mi_${lv1_mi}${root}`].euid
+      euid = BaseData.mi_info_map[`mi_${lv1_mi}${root}`]?.euid
     }
   }
   let params = { ...lv2_mi_info, lv2_mi, md, euid };

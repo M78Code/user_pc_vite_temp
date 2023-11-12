@@ -424,7 +424,10 @@
     "successful_betting": "投注成功",
     "total_bet_amount": "投注总金额",
     "total_winable_amount": "可赢总金额",
-    "result_score": "赛果比分"
+    "result_score": "赛果比分",
+    "number": "注单数",
+    "bet": "投注额",
+    "l/w": "输/赢"
   },
   "pre_record": {
     "book_one": "预",
@@ -1919,7 +1922,8 @@
     "msg_nodata_19": "去预约",
     "msg_nodata_20": "Hi，真不巧，页面走丢了",
     "msg_nodata_21": "别紧张，点“刷新”马上找回~",
-    "msg_nodata_22": "当前访问人数过多，请稍后再试"
+    "msg_nodata_22": "当前访问人数过多，请稍后再试",
+    "msg_nodata_23": "即将推出"
   },
   "myScroll": {
     "msg1": "下拉刷新",
