@@ -16,8 +16,8 @@
         <div class="btn-group">
           <div v-for="item in btn_options" :key="item.value" class="btn-group-item" @click="time_click(item)">
             <span :class="{ 'btn-group-item-ls': true, 'btn-group-item-ls-active': current_time == item.value }">{{
-              item.label
-            }}</span>
+                item.label
+              }}</span>
           </div>
         </div>
         <q-option-group v-model="cash_value" type="checkbox" :options="options" color="opt-basic" />
@@ -25,7 +25,7 @@
       <div class="record-settled-l">
         <div style="width:180px;">
           <q-select outlined v-model="select_value" @update:model-value="selectInput" :options="select_options"
-            option-label="value" :dense="false" :options-dense="false" map-options>
+                    option-label="value" :dense="false" :options-dense="false" map-options>
           </q-select>
         </div>
         <div class="q-pa-md time-select">
@@ -50,10 +50,8 @@
 </template>
 
 <script setup>
-import { onMounted, ref, watch } from "vue";
-import { formatTime } from "src/core/format/index.js"
-
-
+import { onMounted, ref, watch } from 'vue'
+import { formatTime } from 'src/core/format/index.js'
 const props = defineProps({
   current_tab: {
     type: String,
@@ -69,56 +67,47 @@ const date_value = ref('')
 const select_options = [
   { value: 'Sort by settled time', label: 'Settled time', id: 2 },
   { value: 'Sort by bet time', label: 'Bet time', id: 1 },
-  { value: 'Sort by match time', label: 'Match time', id: 3 },
+  { value: 'Sort by match time', label: 'Match time', id: 3 }
 ]
-
 const tabChange = ref(false)
 onMounted(() => {
   cash_value.value = ['']
   const data = formatTime(new Date().getTime(), 'yyyy/mm/dd')
   date_value.value = data + '-' + data
-  date.value = {from:data,to:data}
+  date.value = { from: data, to: data }
 })
 const select_value = ref('Bet time')
-
 let params = {
   enablePreSettle: false,
   timeType: 1,
-  orderBy: 1,
- 
+  orderBy: 1
 }
-
-watch(()=>props.current_tab, (newVal) => {
+watch(() => props.current_tab, (newVal) => {
   tabChange.value = true
- params = {
-  enablePreSettle: false,
-  timeType: 1,
-  orderBy: 1,
- }
+  params = {
+    enablePreSettle: false,
+    timeType: 1,
+    orderBy: 1
+  }
   const data = formatTime(new Date().getTime(), 'yyyy/mm/dd')
   date_value.value = data + '-' + data
-   date.value = {from:data,to:data}
-   setTimeout(() => {
+  date.value = { from: data, to: data }
+  setTimeout(() => {
     tabChange.value = false
-   }, 500);
+  }, 500)
   cash_value.value = ['']
 })
-
-
-
 watch(date, (newVal) => {
   date_value.value = newVal.from + '-' + newVal.to
 })
-
 const emit = defineEmits(['itemFilter'])
 watch(cash_value, (newVal) => {
   if (!tabChange.value) {
     params.enablePreSettle = newVal[1] == 'op1'
-  emitClick()
+    emitClick()
   }
   // emit('itemFilter',{enablePreSettle:newVal[1] == 'op1'})
 })
-
 const options = [
   {
     label: 'Cash Out',
@@ -140,27 +129,26 @@ const time_click = (item) => {
 const emitClick = () => {
   emit('itemFilter', params)
 }
-
 const selectInput = (v) => {
   select_value.value = v.label
   params.orderBy = v.id
   emit('itemFilter', params)
 }
-
-const search = ()=>{
-  const beginTime = date.value.from.split('/').join('-')
-  const endTime = date.value.to.split('/').join('-')
-  params.beginTime = new Date(beginTime).getTime()-28800000
-  params.endTime = new Date(endTime).getTime()+57599000
-   emit('itemFilter', params)
-
+const search = () => {
+  const beginTime = date.value.from.split('/')
+    .join('-')
+  const endTime = date.value.to.split('/')
+    .join('-')
+  params.beginTime = new Date(beginTime).getTime() - 28800000
+  params.endTime = new Date(endTime).getTime() + 57599000
+  emit('itemFilter', params)
 }
 
 
 </script>
 
 <style lang="scss">
-div.q-menu{
+div.q-menu {
   box-shadow: 0 1px 5px #0003, 0 2px 2px #00000024, 0 3px 1px -2px #0000001f;
   background: #fff;
 }

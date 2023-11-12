@@ -8,7 +8,7 @@
     <div>
 
       <q-table :rows="tableData" style="max-height:calc(100vh - 17rem)" :rows-per-page-options="[0]" :columns="columns"
-        row-key="orderNo
+               row-key="orderNo
 " separator="cell" hide-pagination :table-header-style="{
   backgroundColor: '#F1F1F1',
   height: '28px',
@@ -35,11 +35,12 @@
             <!-- 投注详情 -->
             <q-td key="datails" :props="props">
               <span>{{
-                formatTime(props.row.betTime, "yyyy-mm-dd hh:MM:ss")
-              }}</span>
+                  formatTime(props.row.betTime, 'yyyy-mm-dd hh:MM:ss')
+                }}</span>
               <div>
                 <span class="datails-order">{{ props.row.orderNo }}</span>
-                <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/image/bet_copy.png`"  alt="" class="copy_icon" title="copy" @click="hand_copy(props.row.orderNo)">
+                <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/image/bet_copy.png`" alt="" class="copy_icon"
+                     title="copy" @click="hand_copy(props.row.orderNo)">
                 <!-- <img :src="bet_copy" alt="" class="copy_icon" title="copy"  @click="utils.copy(props.row.orderNo)" > -->
                 <!-- <i class="icon-icon_copy copy" color="red" @copy_iconclick="utils.copy(props.row.orderNo)"></i> -->
               </div>
@@ -96,15 +97,15 @@
       <!--分页组件-->
 
       <Pagination v-if="tableData.length > 0" class="record-pagination" :count="total" :betTotalAmount="40"
-        @pageChange="changePage">
+                  @pageChange="changePage">
       </Pagination>
-<!--      <pagination-wrapper-->
-<!--        v-if="tableData.length > 0"-->
-<!--        class="record-pagination"-->
-<!--        :count="500"-->
-<!--        @pageChange="changePage"-->
-<!--        :is_bet_record="false"-->
-<!--      ></pagination-wrapper>-->
+      <!--      <pagination-wrapper-->
+      <!--        v-if="tableData.length > 0"-->
+      <!--        class="record-pagination"-->
+      <!--        :count="500"-->
+      <!--        @pageChange="changePage"-->
+      <!--        :is_bet_record="false"-->
+      <!--      ></pagination-wrapper>-->
 
 
     </div>
@@ -112,17 +113,16 @@
 </template>
 
 <script setup>
-import { onMounted, ref, watch } from "vue";
-import { useGetOrderList } from "./tableConfig";
-import { formatTime } from "src/core/format/index.js"
+import { onMounted, ref, watch } from 'vue'
+import { useGetOrderList } from './tableConfig'
+import { formatTime } from 'src/core/format/index.js'
 import { UserCtr, format_balance, LOCAL_PROJECT_FILE_PREFIX } from 'src/core/index.js'
-import Pagination from "project_path/src/components/Pagination.vue";
+import Pagination from 'project_path/src/components/Pagination.vue'
 // import { PaginationWrapper } from "src/components/pagination/index.js";
 // import football_icon from 'src/assets/images/football_icon.png'
 import { copyToClipboard } from 'quasar'
-import GlobalSwitchClass from "src/core/global/global.js";
+import GlobalSwitchClass from 'src/core/global/global.js'
 const emit = defineEmits(['itemFilter'])
-
 const props = defineProps({
   current_tab: {
     type: String,
@@ -132,59 +132,55 @@ const props = defineProps({
 const match_type = {
   1: 'Prematch',
   2: 'In-Play',
-  3: 'Outrights',
+  3: 'Outrights'
 }
-
-const { columns, tableData, total, loading, handle_fetch_order_list } = useGetOrderList();
+const { columns, tableData, total, loading, handle_fetch_order_list } = useGetOrderList()
 const labelClick = (row) => {
-  console.log(row);
-};
+  console.log(row)
+}
 // 监听tab 切换表格头数据
 watch(() => props.current_tab, (newVal) => {
   tableData.value = []
   if (newVal == 'settled') {
     columns.value[5] = {
-      name: "return",
-      label: "Return",
-      align: "center",
-      field: "return",
+      name: 'return',
+      label: 'Return',
+      align: 'center',
+      field: 'return'
     }
-    handle_fetch_order_list({orderStatus:1})
+    handle_fetch_order_list({ orderStatus: 1 })
   } else {
     columns.value[5] = {
-      name: "highestWin",
-      label: "Highest Win",
-      align: "center",
-      field: "highestWin",
+      name: 'highestWin',
+      label: 'Highest Win',
+      align: 'center',
+      field: 'highestWin'
     }
-    handle_fetch_order_list({orderStatus:0})
-
+    handle_fetch_order_list({ orderStatus: 0 })
   }
 })
-
-const getTableData = (params)=>{
+const getTableData = (params) => {
   handle_fetch_order_list(params)
 }
-
-
-defineExpose({getTableData})
+defineExpose({ getTableData })
 // 页码变化
 const changePage = (arv) => {
   const { current } = arv
-   console.log(1111111111,arv)
+  console.log(1111111111, arv)
   emit('itemFilter', { page: current })
 }
 const hand_copy = (data) => {
-  copyToClipboard(data);
+  copyToClipboard(data)
   GlobalSwitchClass.set_tip_show_state(true)
 }
 </script>
 
 <style lang="scss" scoped>
-.no-data-icon{
+.no-data-icon {
   width: 200px;
   height: 200px;
 }
+
 .record-table {
   position: relative;
   margin-top: 10px;
@@ -230,8 +226,9 @@ const hand_copy = (data) => {
     transform: translate(-50%, 0);
     background-color: #fff;
     box-shadow: 0 -4px 8px #f5f5f5;
-    :deep(.q-pagination .q-btn-item.q-btn--standard){
-      background-color: #ff7000!important;
+
+    :deep(.q-pagination .q-btn-item.q-btn--standard) {
+      background-color: #ff7000 !important;
     }
   }
 
@@ -283,10 +280,10 @@ const hand_copy = (data) => {
 
 .no-data {
   position: relative;
-   width: 100%;
+  width: 100%;
   //margin-left: 50%;
   //transform: translate(-50%, 0);
-  .c{
+  .c {
     position: absolute;
     top: 20%;
     left: 50%;
