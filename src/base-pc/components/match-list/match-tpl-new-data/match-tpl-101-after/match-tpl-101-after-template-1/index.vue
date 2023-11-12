@@ -11,7 +11,7 @@
       <div class="vertical-line"></div>
       <!-- 图标信息 -->
       <div :style="`width:${match_list_tpl_size.play_icon_width}px !important;`">
-        <icon-box></icon-box>
+        <icon-box :match="match"></icon-box>
       </div>
       <!-- 投注信息 -->
       <match-handicap 
@@ -35,6 +35,7 @@ import lodash from 'lodash'
 import { t, get_match_status, MatchDataWarehouse_PC_List_Common as MatchListData, UserCtr, compute_local_project_file_path } from "src/core/index.js";
 import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card-class.js'
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
+import choose_config from 'src/core/constant/config/ouzhou-pc-choose-config.js'
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
 // useRegistPropsHelper(component_symbol, need_register_props)
@@ -57,10 +58,12 @@ const props = defineProps({
   }
 })
 let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.mid)
-const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].width_config
+const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`].width_config
 const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`]
-const current_choose_oid = ref({ first_hpid: '1', second_hpid: "2" });
+console.log('match_tpl_info', match_style_obj.data_tpl_id);
+
 let match = MatchListData.list_to_obj.mid_obj[props.mid+'_'];
+const current_choose_oid = ref({ first_hpid: 1, second_hpid: 2 });
 const is_mounted = ref(true);
 
 watch(() => MatchListData.data_version.version, (new_value, old_value) => {

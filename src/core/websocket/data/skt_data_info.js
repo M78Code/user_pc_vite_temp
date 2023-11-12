@@ -26,10 +26,10 @@ export default {
     //赛事详情订阅
     useMittOn(MITT_TYPES.EMIT_MATCH_DETAIL_SUBSCRIBE,this.sendSocketInitCmd)
     //C8指令节流1秒
-    this.SCMD_C8 = this.debounce(this.SCMD_C8,1000);
+    this.SCMD_C8 = lodash.debounce(this.SCMD_C8,1000);
     //C112指令节流2秒
-    this.SCMD_C112 = this.debounce(this.SCMD_C112,2000);
-  },
+    this.SCMD_C112 = lodash.debounce(this.SCMD_C112,2000);
+  }, 
   computed: {
     ...mapGetters({
       // 用户信息

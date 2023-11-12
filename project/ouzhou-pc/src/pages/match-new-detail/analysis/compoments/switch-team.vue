@@ -1,12 +1,4 @@
 <!--
- * @Author         : lane jstylane@itcom888.com
- * @Date           : 2023-07-15 19:17:42
- * @LastEditors    : lane jstylane@itcom888.com
- * @LastEditTime   : 2023-07-17 10:49:36
- * @FilePath       : \user-pc-vue3\src\project-ouzhou\pages\detail\analysis\compoments\switch_team.vue
- * @Description    : 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
--->
-<!--
  * @Author: cooper
  * @Date: 2023-06-013 14:13:55
  * @Description: 赛事分析页哪队能赢
@@ -21,14 +13,14 @@
       <div class="analysis-switch-main">
         <div class="analysis-switch">
           <div class="analysis-switch-l to-collect">
-            <!-- <q-img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/no_shoucan.png`" class="q-img" /> -->
+            <q-img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/no_shoucan.png`" class="q-img" />
             <span>46%</span>
           </div>
           <div class="analysis-switch-r to-collect">
             <span>54%</span>
-            <!-- <q-img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/shoucan.png`" class="q-img" /> -->
+            <q-img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/shoucan.png`" class="q-img" />
           </div>
-          <!-- <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/to_vs.png`" alt="" class="switch-img" /> -->
+          <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/to_vs.png`" alt="" class="switch-img" />
         </div>
         <div class="analysis-btn">
           <div class="analysis-btn-box mr-8">
@@ -42,7 +34,7 @@
         </div>
       </div>
     </div>
-    <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/trophy.png`" alt="" />
+    <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/trophy.png`" alt="" />
   </div>
   <div class="analysis-bottom">
     <div class="analysis-bottom-title">
@@ -57,6 +49,7 @@
 
 <script setup>
 import { onMounted, ref } from "vue";
+import { LOCAL_PROJECT_FILE_PREFIX } from "src/core";
 // import trophy_img from "src/assets/images/trophy.png";
 // import to_vs from "src/assets/images/to_vs.png";
 // import no_shoucan from "src/assets/images/no_shoucan.png";

@@ -1,8 +1,8 @@
 <!--
  * @Author         : lane jstylane@itcom888.com
  * @Date           : 2023-07-15 19:17:42
- * @LastEditors: cooper cooper@123.com
- * @LastEditTime: 2023-07-17 20:20:33
+ * @LastEditors: lowen pmtylowen@itcom888.com
+ * @LastEditTime: 2023-11-12 15:55:46
  * @FilePath: \user-pc-vue3\src\project-ouzhou\pages\detail\index.vue
  * @Description    : 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -44,9 +44,9 @@
             style="margin: 0 10px; height: 14px"
             v-if="sportId == 1"
           />
-          <!-- <span class="leagal-time" v-if="sportId == 1 && detail_info.ms == 0">
-            {{ detail_info.mgt }}</span
-          > -->
+          <span class="leagal-time" v-if="sportId == 1 && detail_info.ms == 0">
+            {{ formatTime(detail_info.mgt, 'dd/mm hh:MM')  }}</span
+          >
         </div>
         <div>
           <q-expansion-item
@@ -118,92 +118,111 @@
     </div> -->
 </template>
 
-<script setup>
+<script>
 import { onMounted, ref, provide } from "vue";
 import { utils, MenuData, LOCAL_PROJECT_FILE_PREFIX } from "src/core/index.js";
-// import neutral from 'src/assets/images/neutral.png'
 import odds_info from "./components/odds_info.vue";
 import analysis from "./analysis/index.vue";
 import tabs from "./components/tabs.vue";
 import breadcrumbs from "./components/breadcrumbs.vue";
 import { usedetailData } from "./index";
-// import down_arrow_fold from 'src/assets/images/down_arrow_fold.png'
-// import detail_top from 'src/assets/images/detail-top.png'
-// import detail_refresh from 'src/assets/images/detail-fresh.png'
-// import { formatTime } from "src/public/utils/time_format";
+import { formatTime } from 'src/core/format/index.js'
 import loading from "./components/loading/index.vue";
-// import store from "src/store-redux-vuex/index.js";
-
 import { useRouter, useRoute } from "vue-router";
+export default{
+  // mixins: [default_mixin],
+  components: {
+    tabs,
+    breadcrumbs,
+    analysis,
+    odds_info,
+    loading
+  },
+  setup(ctx){
+    const router = useRouter();
+    const route = useRoute();
+    const expansion_ref = ref(null);
+    const refresh_data = ref(false);
+    console.log(route);
+    const {
+      tabList,
+      detail_list,
+      current_key,
+      detail_loading,
+      detail_info,
+      sportId,
+      all_hl_item,
+      init,
+      show_close_thehand,
+      matchDetailList,
+      current_id,
+      refresh,
+    } = usedetailData(route);
 
-const router = useRouter();
-const route = useRoute();
-const expansion_ref = ref(null);
-const refresh_data = ref(false);
+    provide("all_hl_item", all_hl_item);
 
-console.log(route);
+    const match_click = (item) => {
+      console.log(111111, item);
+      current_id.value = item.mid;
+      const { mid, tid, csid } = item;
+      const params = {
+        mid,
+        tid,
+        csid,
+      };
 
-const {
-  tabList,
-  detail_list,
-  current_key,
-  detail_loading,
-  detail_info,
-  sportId,
-  all_hl_item,
-  init,
-  show_close_thehand,
-  matchDetailList,
-  current_id,
-  refresh,
-} = usedetailData(route);
+      router.push({
+        name: "details",
+        params,
+      });
+      expansion_ref.value.hide();
+      setTimeout(() => {
+        refresh();
+      }, 200);
+    };
 
-provide("all_hl_item", all_hl_item);
+    const refresh_click = () => {
+      refresh_data.value = true;
+      init();
+      setTimeout(() => {
+        refresh_data.value = false;
+      }, 1000);
+    };
 
-const match_click = (item) => {
-  console.log(111111, item);
-  current_id.value = item.mid;
-  const { mid, tid, csid } = item;
-  const params = {
-    mid,
-    tid,
-    csid,
-  };
+    const sport_ball_type = {
+      1: 0,
+      2: 90,
+      3: 450,
+      5: 540,
+      7: 1170,
+      8: 180,
+      9: 270,
+    };
+    return{
+      tabList,
+      detail_list,
+      current_key,
+      detail_loading,
+      detail_info,
+      sportId,
+      all_hl_item,
+      init,
+      show_close_thehand,
+      matchDetailList,
+      current_id,
+      refresh,
+      sport_ball_type,
+      expansion_ref,
+      refresh_data,
+      LOCAL_PROJECT_FILE_PREFIX,
+      formatTime,
+      match_click,
+      refresh_click
+    }
+  }
+}
 
-  router.push({
-    name: "details",
-    params,
-  });
-  expansion_ref.value.hide();
-  setTimeout(() => {
-    refresh();
-  }, 200);
-};
 
-const refresh_click = () => {
-  refresh_data.value = true;
-  init();
-  setTimeout(() => {
-    refresh_data.value = false;
-  }, 1000);
-};
-
-const sport_ball_type = {
-  1: 0,
-  2: 90,
-  3: 450,
-  5: 540,
-  7: 1170,
-  8: 180,
-  9: 270,
-};
-// const go_analyse = () => {
-//       store.dispatch({
-//         type: "TIP_SHOW_STATE",
-//         data: true,
-//     })
-
-//     }
 </script>
 
 <style lang="scss" scoped>

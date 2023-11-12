@@ -7,8 +7,8 @@
 <template>
   <div>
     <div class="analysis-body">
-      <!-- 动画比分榜 -->
-      <venue_box v-show="detail_info.ms>0" :score_list="score_list" :detail_info="detail_info"  />
+      <!-- 动画/视频/比分榜 -->
+      <venue-box :score_list="score_list" :detail_info="detail_info"  />
   
       <!-- <div class="analysis-top">
         <div class="analysis-top-l">
@@ -28,7 +28,7 @@
        <!-- 篮球分析页图表 -->
        <basket-ball-stats  v-if="detail_info.csid==2 &&detail_info.ms>0" :detail_info="detail_info" :score_list="score_list" />
       <!-- 选择哪队会赢组件 -->
-      <switch_team />
+      <switch-team />
     </div>
   </div>
 </template>
@@ -39,9 +39,9 @@ import { onMounted, ref,computed,watch } from "vue";
 
  import FootBallStats from './compoments/football_stats.vue'
 // import BasketBallStats from './compoments/basketball_stats.vue'
-import switch_team from './compoments/switch_team.vue'
+import switchTeam from './compoments/switch-team.vue'
 
-import venue_box from './compoments/venue_box/index.vue'
+import venueBox from './compoments/venue-box/index.vue'
 import _ from 'lodash'
 import { useMittOn, MITT_TYPES } from "src/core/mitt"
 import { MatchDataWarehouse_PC_Detail_Common as MatchDataWarehouseInstance,MenuData,UserCtr } from "src/core/index"; 
@@ -61,9 +61,8 @@ onMounted(()=>{
 
 // 获取数据
 const get_detail_info = (mid)=>{
-  console.log(111111, MatchDataWarehouseInstance.get_quick_mid_obj(mid))
   detail_info.value = MatchDataWarehouseInstance.get_quick_mid_obj(mid)
-  console.log(11111133, detail_info.value)
+
 }
 // const show_page = ref(false)
 // watch(()=>props.detail_info,val=>{

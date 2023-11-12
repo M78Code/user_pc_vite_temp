@@ -1,5 +1,5 @@
 <template>
-    <div class="flex-center">
+    <div class="flex-center" :style="{height:tabActive == 'league'?'0.59rem':'1.04rem'}">
         <div class="tabs">
             <div class="matches" :class="tabActive == 'matches' ? 'active' : ''
             ">
@@ -44,13 +44,13 @@
                 </div>
             </q-virtual-scroll>
         </div>
-        <div class="date_time" v-if="tabActive == 'league'">
+        <!-- <div class="date_time" v-if="tabActive == 'league'">
             <q-virtual-scroll ref="scrollRefArea" :items="areaList" virtual-scroll-horizontal v-slot="{ item, index }">
                 <div @click="areaListChange(index)" class="week" :class="area_tab_index == index ? 'active' : ''">
                     {{ item }}
                 </div>
             </q-virtual-scroll>
-        </div>
+        </div> -->
     </div>
 </template>
   
@@ -64,6 +64,9 @@ import {
 } from "vue";
 import { dateWeekMatchesFormat } from './utils';
 import { MenuData  } from "src/core/";
+import { useRoute } from "vue-router";
+const route = useRoute();
+const sportId = route.query.sportId;
 const emit = defineEmits(["changeDate", "changeTab"]);
 const tabActive = ref("matches");//tab
 const tabModel = ref(false);//下拉框
@@ -130,16 +133,26 @@ const changeDatetab = (item, index) => {
     scrollRef.value.scrollTo(move_index - 2, "start-force");
     second_tab_index.value =index;
     MenuData.set_date_time(item.val,item.type);
-    console.log(MenuData.menu_match_date_params)
+    emit("changeDate", MenuData.menu_match_date_params);
 };
-watch(()=>MenuData.menu_mi.value,()=>{
+/**
+ * 默认请求今日数据
+ * @param {*} mi 
+ */
+const setDefaultData = (mi) =>{
+    MenuData.set_current_lv1_menu("2");
+    MenuData.set_menu_mi(mi);
     //球种改变设置今日
     MenuData.set_date_time(week[0].val);
-    console.log(MenuData.menu_match_date_params)
+    changeDatetab(week[0],0)
+}
+watch(()=>route.fullPath,()=>{
+    if (route.name === 'matchList') {
+        setDefaultData(sportId)
+    }
 })
 onMounted(() => {
-    MenuData.set_date_time(week[0].val);
-    console.log(MenuData.menu_match_date_params)
+    setDefaultData(sportId)
 })
 /**
  * 地区选择tab

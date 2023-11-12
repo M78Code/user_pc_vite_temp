@@ -250,3 +250,22 @@ export const match_style_template_ouzhou = {
   // 主盘口高度
   main_handicap_height:80,
 }
+
+// 因为我们的欧洲版 
+// 赔率模板是不固定的 
+// 所以需要抛出一个方法  
+// 用于 拿取当前 用户选择的赔率模板
+// 这里传入的 是我们的玩法id
+export const get_current_odds_list = (main_handicap_list, { first_hpid, second_hpid }) => {
+  let first_odds_list = null;
+  let second_odds_list = null;
+  main_handicap_list.forEach(item => {
+    if (first_hpid == item._hpid) {
+      first_odds_list = item
+    }
+    if (second_hpid == item._hpid) {
+      second_odds_list = item
+    }
+  })
+  return [ first_odds_list, second_odds_list ]
+}
