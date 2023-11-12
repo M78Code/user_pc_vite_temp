@@ -119,10 +119,6 @@ import { UserCtr, format_balance, LOCAL_PROJECT_FILE_PREFIX } from 'src/core/ind
 import Pagination from "project_path/src/components/Pagination.vue";
 // import { PaginationWrapper } from "src/components/pagination/index.js";
 // import football_icon from 'src/assets/images/football_icon.png'
-// import no_data from 'src/assets/images/no_data.png'
-// import bet_copy from 'src/assets/images/bet_copy.png'
-import sport_icon from "./sport_icon.vue";
-import store from "src/store-redux/index.js";
 import { copyToClipboard } from 'quasar'
 import GlobalSwitchClass from "src/core/global/global.js";
 const emit = defineEmits(['itemFilter'])
@@ -181,22 +177,6 @@ const changePage = (arv) => {
 const hand_copy = (data) => {
   copyToClipboard(data);
   GlobalSwitchClass.set_tip_show_state(true)
-  return ;
-  let oInput = document.createElement("input");
-  oInput.value = data;
-  document.body.appendChild(oInput);
-  oInput.select();
-  // this.toast = true;
-  // clearTimeout(this.timeout_toast);
-  // this.timeout_toast = setTimeout(() => {
-  //   this.toast = false;
-  // }, 1500);
-  document.execCommand("Copy");
-  oInput.remove();
-  store.dispatch({
-    type: "TIP_SHOW_STATE",
-    data: true,
-  })
 }
 </script>
 
