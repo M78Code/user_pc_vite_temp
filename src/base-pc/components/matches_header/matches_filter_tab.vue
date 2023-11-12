@@ -127,7 +127,15 @@ watch(MenuData.menu_data_version,()=>{
     get_date_menu_list()
   })
 })
-  
+  /**
+ * 
+ * @param {Number} item.mi
+ * @description 过滤mi<300
+ */
+
+const filter_min_mi_300 = (originalArray)=>{
+  return originalArray.filter(item => parseInt(item.mi) < 300);
+}
   /**
    * @param
    */

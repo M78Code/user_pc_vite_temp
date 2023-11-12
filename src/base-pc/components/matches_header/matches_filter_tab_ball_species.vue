@@ -158,7 +158,15 @@ onMounted(() => {
     })
   }
 })
+/**
+ * 
+ * @param {Number} item.mi
+ * @description 过滤mi<300
+ */
 
+const filter_min_mi_300 = (originalArray)=>{
+  return originalArray.filter(item => parseInt(item.mi) < 300);
+}
 /**
  * 
  * @param {Number} item.mif 
