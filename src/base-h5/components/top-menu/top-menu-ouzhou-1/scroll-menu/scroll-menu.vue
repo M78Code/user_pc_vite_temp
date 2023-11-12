@@ -8,7 +8,7 @@
 <template>
     <div class="top_events_page">
         <header class="ball_tab">
-            <q-virtual-scroll ref="scrollRef" v-if="MenuData.menu_list.length" :items="MenuData.menu_list"
+            <q-virtual-scroll ref="scrollRef" v-if="leftDataList.length" :items="leftDataList"
                 virtual-scroll-horizontal v-slot="{ item, index }">
                 <div v-if="!['118', '400'].includes(item.mi) && get_cont(item)" @click="on_change_play(item)"
                     :key="index" dense clickable :class="['play_item', { active: item.mi === playValue }]">
@@ -24,10 +24,11 @@
     </div>
 </template>
 <script setup>
-import { onMounted, ref } from "vue"
+import { onMounted, ref ,onUnmounted} from "vue"
 import sportIcon from "../components/left-menu/sport-icon.vue"
 import BaseData from "src/core/base-data/base-data.js";
 import { MenuData  } from "src/core/";
+import { useMittOn,MITT_TYPES } from "src/core/mitt/index.js" 
 const props = defineProps({
     menu_type: {
         type: String,
@@ -38,6 +39,7 @@ const props = defineProps({
         default: true
     },
 })
+const leftDataList = ref([]);
 const emits = defineEmits(['changeMenu'])
 /**
  * 获取滚球数量
@@ -50,21 +52,24 @@ const emits = defineEmits(['changeMenu'])
  * 列表数据
  */
 const dataList = () =>{
-    return MenuData.menu_list.filter((item)=>{
+    return leftDataList.value.filter((item)=>{
         return get_cont(item);
     }) || []
 } 
 const playValue = ref(dataList()[0]?.mi||'');
 const scrollRef = ref(null);
-
-/**
- * id设为滚球
- */
-onMounted(() => {
+const get_init_data = () =>{
+    leftDataList.value = MenuData.menu_list;
     MenuData.set_current_lv1_menu(props.menu_type);
     MenuData.set_menu_mi(dataList()[0]?.mi);
     emits('changeMenu',dataList()[0]?.mi)
-    // MenuData.get_match_render_list();
+}
+onMounted(()=>{
+    get_init_data();
+    useMittOn(MITT_TYPES.EMIT_UPDATE_INIT_DATA, get_init_data)
+})
+onUnmounted(()=>{
+  useMittOn(MITT_TYPES.EMIT_UPDATE_INIT_DATA).off
 })
 /**
  * 滚球选择

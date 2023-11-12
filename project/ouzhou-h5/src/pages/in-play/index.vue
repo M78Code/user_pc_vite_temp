@@ -6,7 +6,7 @@
  * @Description:  
 -->
 <template>
-    <scroll-menu menu_type="1"  v-if="MenuData.menu_list.length" @changeMenu="changeMenu"/>
+    <scroll-menu menu_type="1" @changeMenu="changeMenu"/>
     <!-- 赛事列表 -->
     <div class="match_page">
       <MatchContainer />

@@ -5,6 +5,7 @@ import { quasar, transformAssetUrls } from "@quasar/vite-plugin";
 import path from "path";
 
 console.log("-------------__dirname---------", __dirname);
+console.log("-------------__dirname---------", __dirname);
  
 let project ='activity'
  
@@ -22,11 +23,14 @@ if (!project) {
   console.log('');
   console.log('');
   console.log('');
+  console.log('活动相关的组件代码需要在  project/activity  内   素材在  public/activity 内');
+  console.log('');
+  console.log('');
 }
 
 const  IS_DEV= process.env.NODE_ENV=='development'
 // 本次打包的 客户端版本
-import BUILD_VERSION_CONFIG from "../../job/output/version/build-version-activity.js";
+import BUILD_VERSION_CONFIG from "../../job/output/version/build-version.js";
 let BUILD_VERSION = BUILD_VERSION_CONFIG.BUILD_VERSION;
 
 const outDir= "dist/activity/"+BUILD_VERSION

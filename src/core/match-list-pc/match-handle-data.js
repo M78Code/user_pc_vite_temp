@@ -4,7 +4,7 @@
 
 
 import { csid_to_tpl_id } from 'src/core/constant/util/csid-util.js'
-import { MenuData, get_match_status, PageSourceData } from 'src/core/index.js'
+import { MenuData, get_match_status, PageSourceData, PROJECT_NAME } from 'src/core/index.js'
 import BaseData from "src/core/base-data/base-data.js";
 
 /**
@@ -61,6 +61,16 @@ function get_match_tpl_number(is_hot) {
  * @param {number} csid 球种类型
 */
 export function get_match_template_id({ csid }) {
+    // 这里的话 
+    // 因为我们会有多个版本  
+    // 需要映射到不同的赔率模板 
+    // 所以加一个配置  
+    // 欧洲版从100开始  
+    // 亚洲版从0开始
+    const different_version_config = {
+        "ouzhou-pc": 100,
+        "yazhou-pc": 0,
+    }
     let tpl_id = get_match_tpl_number()
     // 虚拟足球1001、虚拟篮球1004
     if ([1001, 1004].includes(+csid)) {
@@ -74,6 +84,8 @@ export function get_match_template_id({ csid }) {
     else if (tpl_id == -1) {
         tpl_id = csid_to_tpl_id(csid)
     }
+    tpl_id = Number(tpl_id) + Number(different_version_config[PROJECT_NAME])
+    console.log(tpl_id,'get_match_tpl_number1')
     return tpl_id
 }
 

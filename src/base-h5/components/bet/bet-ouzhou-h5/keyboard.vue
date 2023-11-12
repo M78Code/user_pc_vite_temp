@@ -158,10 +158,12 @@ const _handleKeyPress = (e) => {
 }
 
 // 小数点 .
-const _handleDecimalPoint = () => {
+const _handleDecimalPoint = () => {   
   //超过最大金额  显示最大金额 
   let old = BetData.bet_keyboard_config.playOptionsId
   let max_money = BetViewDataClass.bet_min_max_money[old].max_money
+
+  let money_ = BetData.bet_amount
 
   //超过最大金额时不让输入
   if (money_ && money_*1 >= max_money*1) return

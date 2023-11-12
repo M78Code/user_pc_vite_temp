@@ -693,7 +693,6 @@ if (type.value == 30) {
 .scroll-setect-all {
   display: flex;
   justify-content: flex-end;
-  font-size: 0.16rem;
   padding: 0 0.26rem 0 0.4rem;
   height: .4rem;
   align-items: center;
@@ -701,6 +700,7 @@ if (type.value == 30) {
   color: var(--q-gb-bg-c-6);
   span {
     margin-right: .04rem;
+    color: #AFB3C8;
   }
 }
 
