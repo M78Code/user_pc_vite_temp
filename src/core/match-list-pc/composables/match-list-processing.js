@@ -304,7 +304,7 @@ const mx_use_list_res_when_code_200_and_list_length_gt_0 = ({match_list, collect
 /***
  * 当接口状态为异常状态时  调用此方法
  */
-const mx_use_list_res_when_code_error_or_list_length_0 = (match_list) => {
+const mx_use_list_res_when_code_error_or_list_length_0 = ({match_list, collect, backend_run}) => {
 	if (is_virtual && !is_search) {
 		// 右侧切换
 		// MatchListDetailMiddleware.set_vsport_params({
@@ -389,7 +389,7 @@ const mx_use_list_res = (data, backend_run, cut, collect) => {
 	if (code == 200 && match_list) {
 		mx_use_list_res_when_code_200_and_list_length_gt_0({match_list, collect, backend_run});
 	} else {
-		mx_use_list_res_when_code_error_or_list_length_0();
+		mx_use_list_res_when_code_error_or_list_length_0({match_list, collect, backend_run});
 	}
 };
 
