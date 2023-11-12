@@ -140,13 +140,13 @@ const set_menu_obj = (data) => {
  * @param {*} m_data 
  */
 const change_current_menu = (item) => {
-  MenuData.set_current_lv1_menu("2");
-  MenuData.set_menu_mi(item.mi);
+  // MenuData.set_current_lv1_menu("2");
+  // MenuData.set_menu_mi(item.mi);
   setPopularSort(item.mi);
   // 设置菜单对应源数据
-  MatchMeta.set_origin_match_data()
+  // MatchMeta.set_origin_match_data()
   emits('isLeftDrawer');
-  router.push("/match");//跳转今日列表
+  router.push({path:"/match",query:{sportId:item.mi}});//跳转今日列表
 }
 /**
  * 初始化
