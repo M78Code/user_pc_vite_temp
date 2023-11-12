@@ -160,8 +160,6 @@ const use_featch_fn = () => {
     if ((panduan_1 && PageSourceData.page_source !== "search") || panduan_2) {
       return;
     }
-    debugger
-
     // 联赛结构类型列表 首次加载拉前12场赛事
     if (is_league_first) {
       mids = get_first_unfold_mids();

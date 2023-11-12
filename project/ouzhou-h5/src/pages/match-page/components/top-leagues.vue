@@ -1,12 +1,3 @@
-<!--
- * @Author: land land@itcom888.com
- * @Date: 2023-11-11 15:03:04
- * @LastEditors: land land@itcom888.com
- * @LastEditTime: 2023-11-11 18:49:53
- * @FilePath: \user-pc-vite\project\ouzhou-h5\src\pages\match-page\components\top-leagues.vue
- * @Description: 顶级赛事 -- 国家
--->
-
 <template>
   <div class="top_leagues_page">
     <collapse v-for="(item, index) in leagues_matchs" :key="index" :title="item.national" v-model="item.visible">

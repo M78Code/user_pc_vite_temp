@@ -121,7 +121,7 @@ function fetch_match_list(is_socket = false, cut) {
 	// 近期开赛
 	// console.error('MenuData.menu_root',MenuData.menu_root)
 	if (MenuData.menu_root == 2) {
-		_params.selectionHour = filterHeader.open_select_time;
+		// _params.selectionHour = filterHeader.open_select_time;
 	} else {
 		_params.selectionHour = null;
 	}

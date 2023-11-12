@@ -1,10 +1,3 @@
-<!--
- * @Author: lockie
- * @Date: 2023-07-01 14:05:36
- * @LastEditors: Please set LastEditors
- * @LastEditTime: 2023-07-15 23:24:12
- * @FilePath: \user-pc-vue3\src\components\match_list\match_card_list_15mins\matches_card_list_15mins.vue
--->
 <template>
   <div class="matches-card-list-wrap">
 		<template v-for="(item, index) in matches_15mins_list" :key="item.id">
