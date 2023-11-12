@@ -32,12 +32,12 @@
             <template>
               <div class="date-header flex">
                 <span class="date"><span>{{ formatTime(new Date(name).getTime(), 'mm/DD')}}</span></span>
-                <!-- 第一项显示 cashout按钮、 已结算信息 -->
-                <!-- <div class="settled-date" v-if="BetRecordClass.selected === 1 && index === 0">
-                  Number <span>2</span>
-                  Bet <span>20</span>
-                  Lose/Win <span class="oringe">+20.00</span>
-                </div> -->
+                <!-- 当前日期的已结算信息总和 -->
+                <div class="settled-date" v-if="BetRecordClass.selected === 1">
+                  {{ i18n_t('bet_record.number') }} <span>{{value.totalOrders}}</span>
+                  {{ i18n_t('bet_record.bet') }} <span>{{value.betAmount}}</span>
+                  {{ i18n_t('bet_record.l/w') }} <span class="oringe">{{value.profit}}</span>
+                </div>
               </div>
               <div v-for="(item2, key) in value.data" :key="item2.betTime" class="cathectic-item">
                 <item-multiple-body :data_b="item2"></item-multiple-body>
@@ -210,7 +210,6 @@ const get_order_list = (_index, params, url_api) => {
         size += item.data.length
       }
       last_record.value = lodash.findLastKey(record);
-      console.log(record);
       // 给列表赋值
       BetRecordClass.set_list_data(record)
       // 如果是未结算页面, 获取提前结算列表金额
