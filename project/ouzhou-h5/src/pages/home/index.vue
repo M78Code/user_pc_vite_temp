@@ -177,7 +177,12 @@ const leagues_matchs = ref([{
 
 const tabValue = ref('featured');
 // tabs 切换
-const on_update = () => {
+const on_update = (val) => {
+  if (val === 'featured') {
+    get_ouzhou_home_data()
+  } else {
+    MatchMeta.get_top_events_match()
+  }
 }
 
 </script>
@@ -194,7 +199,7 @@ const on_update = () => {
         background: #fff;
         padding: 0 10px;
         background-repeat: no-repeat;
-        // background-image: url("src/assets/images/featured/mask.png");
+        background-image:url($SCSSPROJECTPATH + "/image/list/mask_group.png");
         background-size: contain;
         background-position: right;
         .q-tab{
