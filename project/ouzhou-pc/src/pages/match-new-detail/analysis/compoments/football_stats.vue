@@ -84,17 +84,17 @@ const props =  defineProps({
 })
 const statsList = ref([
   {
-    value: "Assault",
+    value: i18n_t("common.assault"),
     value_key:'S104'
    
   },
   {
-    value: "dangerous attack",
+    value: i18n_t("common.dangerous_assault"),
     value_key:'S8'
   
   },
   {
-    value: "ball right",
+    value: i18n_t("common.possession_ball"),
     value_key:'S105'
   
   },
@@ -114,18 +114,18 @@ const value = ref(50);
 const standard = ref(15)
 const sliderList = ref([
   {
-    title: "Shot On Goal",
+    title: i18n_t("common.shots_on_goal"),
     value_key:'S18'
   },
   {
-    title: "Shot Wide Goal",
+    title: i18n_t("common.shot_wide_goal"),
     value_key:'S17'
   },
 
 ])
 const tab = ref("mails");
 const tabList = ref([
-  { label: "Stats", id: 1 },
+  { label: i18n_t("common.panel_total"), id: 1 },
   { label: "Timeline", id: 2 },
 ]);
 const active = ref(1);
