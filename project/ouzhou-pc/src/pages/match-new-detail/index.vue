@@ -1,16 +1,3 @@
-<!--
- * @Author         : lane jstylane@itcom888.com
- * @Date           : 2023-07-15 19:17:42
- * @LastEditors: lowen pmtylowen@itcom888.com
- * @LastEditTime: 2023-11-12 15:55:46
- * @FilePath: \user-pc-vue3\src\project-ouzhou\pages\detail\index.vue
- * @Description    : 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
--->
-<!--
- * @Author: cooper
- * @Date: 2023-05-17 14:13:55
- * @Description: 赛事详情页
--->
 <template>
   <div class="detail-page">
     <div class="match-detail-container">
@@ -129,8 +116,9 @@ import { usedetailData } from "./index";
 import { formatTime } from 'src/core/format/index.js'
 import loading from "./components/loading/index.vue";
 import { useRouter, useRoute } from "vue-router";
+import  skt_data_info  from "src/core/websocket/data/skt_data_info.js";
 export default{
-  // mixins: [default_mixin],
+  mixins: [skt_data_info],
   components: {
     tabs,
     breadcrumbs,
@@ -157,6 +145,7 @@ export default{
       matchDetailList,
       current_id,
       refresh,
+      get_match_detail
     } = usedetailData(route);
 
     provide("all_hl_item", all_hl_item);

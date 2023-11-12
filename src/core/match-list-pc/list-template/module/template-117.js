@@ -5,27 +5,31 @@ import * as TemplateCommon from "./template-common.js"
 
 // , { empty: 1 } 空模板
  // 欧洲版 棒球 赔率模板 全量赔率
- export const template_107={
+ export const template_117={
   main_handicap_list: [
     {
+      _hpid: 242,
       ols: [
         { _hpid: 242, ot: "1", class: "no-handicap" },
         { _hpid: 242, ot: "2", class: "no-handicap" },
       ],
     },
     {
+      _hpid: 243,
       ols: [
         { _hpid: 243, ot: "1" },
         { _hpid: 243, ot: "2" },
       ],
     },
     {
+      _hpid: 244,
       ols: [
         { _hpid: 244, ot: "Over" },
         { _hpid: 244, ot: "Under" },
       ],
     },
     {
+      _hpid: 247,
       ols: [
         { _hpid: 247, ot: "Odd" },
         { _hpid: 247, ot: "Even" },
@@ -40,7 +44,7 @@ import * as TemplateCommon from "./template-common.js"
 // 用于 拿取当前 用户选择的赔率模板
 // 这里传入的 是我们的玩法id
 export const get_current_odds_list = ({ first_hpid, second_hpid }) => {
-  let odds_list =  TemplateCommon.get_current_odds_list(template_107.main_handicap_list, { first_hpid, second_hpid })
+  let odds_list =  TemplateCommon.get_current_odds_list(template_117.main_handicap_list, { first_hpid, second_hpid })
   return odds_list
 }
 
