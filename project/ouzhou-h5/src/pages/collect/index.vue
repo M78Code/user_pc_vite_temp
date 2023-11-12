@@ -6,27 +6,32 @@
  * @Description:  
 -->
 <template>
-  <div class="collect-wap">
+    <NoData class="data-get-empty2" which='comingSoon' height='400'></NoData>
+
+  <!-- <div class="collect-wap"> -->
     <!-- <TopHeader :title="i18n_t('menu_itme_name.esports')">
         <template #right>
             <div>111</div>
         </template>
       </TopHeader> -->
 
-    <div v-if="state.select_dialog" position="bottom" class="select-mask" :style="`height:${inner_height}px`">
+    <!-- 搜索联赛 -->
+    <!-- <div v-if="state.select_dialog" position="bottom" class="select-mask" :style="`height:${inner_height}px`">
       <div style="height:100%;width: 100%" @click="state.select_dialog = false"></div>
-      <!-- 搜索联赛 -->
       <setect-league @closedHandle="state.select_dialog = false" @finishHandle="selectFinishHandle"></setect-league>
-    </div>
+    </div> -->
     <!-- 收藏 -->
-    <scroll-menu menu_type="1" :is_show_badge="false"  v-if="MenuData.menu_list.length" @changeMenu="changeMenu"/>
+    <!-- <scroll-menu menu_type="1" :is_show_badge="false"  v-if="MenuData.menu_list.length" @changeMenu="changeMenu"/>
     <div class="match-container">
         <match-container />
-    </div>
+    </div> -->
 
-  </div>
+  <!-- </div> -->
 </template>
 <script setup>
+import NoData from "src/base-h5/components/common/no-data.vue"; // 无网络展示组件
+
+
 import { watch, onMounted, onBeforeMount, reactive, nextTick } from "vue";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import setectLeague from 'src/base-h5/components/setect-league/index.vue'
