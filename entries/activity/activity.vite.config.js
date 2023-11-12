@@ -26,7 +26,7 @@ if (!project) {
 
 const  IS_DEV= process.env.NODE_ENV=='development'
 // 本次打包的 客户端版本
-import BUILD_VERSION_CONFIG from "../../job/output/version/build-version-activity.js";
+import BUILD_VERSION_CONFIG from "../../job/output/version/build-version.js";
 let BUILD_VERSION = BUILD_VERSION_CONFIG.BUILD_VERSION;
 
 const outDir= "dist/activity/"+BUILD_VERSION
