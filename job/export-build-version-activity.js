@@ -67,23 +67,31 @@ function format_date(value) {
 const BUILD_VERSION = format_date(new Date().getTime());
 
  
+const BUILD_DIR_NAME = 'activity'
 
-const config = {
-  BUILD_VERSION: IS_DEV ? "" : BUILD_VERSION,
-  IS_DEV,
-  IS_PROD: !IS_DEV,
-  NODE_ENV: IS_DEV ? "development" : "production",
-  ACTIVITY_TARGET_ENV,
-  CURRENT_ENV,
-  PROJECT_NAME,
-  NEED_DELETE_PROJECT,
-  OSS_FILE_NAME,
-};
-// console.log(config);
+ 
+  const config = {
+    BUILD_VERSION: IS_DEV ? "" : BUILD_VERSION,
+    IS_DEV,
+    IS_PROD: !IS_DEV,
+    NODE_ENV: IS_DEV ? "development" : "production",
+    
+    CURRENT_ENV,
+    PROJECT_NAME,
+    NEED_DELETE_PROJECT,
+    OSS_FILE_NAME,
+    BUILD_DIR_NAME
+  };
+  // console.log(config);
 let str = `export default  ${JSON.stringify(config)} `;
 // 输出目录
 let write_folder = "./job/output/version";
 //确保配置 输出目录存在
 ensure_write_folder_exist(write_folder);
-let full_path = `${write_folder}/build-version-activity.js`;
+let full_path = `${write_folder}/build-version.js`;
 write_file(full_path, str);
+
+ 
+
+
+ 

@@ -66,7 +66,7 @@ function format_date(value) {
 }
 const BUILD_VERSION = format_date(new Date().getTime());
 
- 
+const BUILD_DIR_NAME = 'self-use-version'
 
 const config = {
   BUILD_VERSION: IS_DEV ? "" : BUILD_VERSION,
@@ -78,8 +78,9 @@ const config = {
   PROJECT_NAME,
   NEED_DELETE_PROJECT,
   IS_PC: PROJECT_NAME.includes('pc'),
+  BUILD_DIR_NAME,
   PUCK_UP_TIME,
- 
+  
   OSS_FILE_NAME
  
 };
