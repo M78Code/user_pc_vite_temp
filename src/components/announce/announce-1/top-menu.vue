@@ -1,13 +1,13 @@
 <!-- @Description: 公告栏、体育规则 top菜单组件 -->
 <template>
     <!-- top菜单内容 -->
-    <div class="top-menu-content" :style="page_style">
+    <div class="top-menu-content">
         <q-tabs class="fit rule-scroll-area">
             <q-tab class="cursor-pointer" v-for="(item, index) in data" :key="index" @click="tabs_click(item, index)">
                 <div class="top-menu-title"
                     :class="{ active: tab_index == index, 'no-subtab': !item.subtab || item.subtab.length == 0 }">
+                    <span class="reads" v-show="item.isShuf == 0">*</span> 
                     <div>{{ item.title }}</div>
-                    <q-icon v-icon="{ 'keyboard_arrow_up': 'icon-triangle', }" name="keyboard_arrow_up"></q-icon>
                 </div>
                 <!-- top菜单列表 -->
                 <div class="top-menu-list" :class="tab_index == index && 'active'">
@@ -23,8 +23,7 @@
 </template>
   
 <script setup>
-import { ref } from 'vue'
-import { compute_css_variables } from "src/core/css-var/index.js"
+import { ref , onMounted} from 'vue'
 
 const props = defineProps({
     data: {
@@ -32,13 +31,10 @@ const props = defineProps({
         default: [],
     }
 })
-
+onMounted(() => {
+})
 const emits = defineEmits(['tabs_click', 'sub_click'])
-
-const page_style = ref('')
-
-page_style.value = compute_css_variables({ category: 'component', module: 'rule-left-menu' })
-
+const showhot = ref(true)
 /** 一级菜单选择索引 */
 const tab_index = ref(0)
 /** 二级菜单选择索引 */
@@ -54,6 +50,7 @@ const sub_index = ref(0)
 function tabs_click(item, index) {
     tab_index.value = index;
     sub_index.value = 0;
+    item.isShuf = 1
     emits("tabs_click", item, index);
 }
 /**
@@ -76,7 +73,6 @@ function sub_click(item, index) {
     border-top: 1px solid var(--q-announce-left-menu-color-2);
     background: var(--q-gb-bg-c-11);
     color: var(--q-gb-t-c-6);
-
     &:after {
         content: "";
         position: absolute;
@@ -86,7 +82,9 @@ function sub_click(item, index) {
         right: 0;
         background-color: #e2e2e2;
     }
-
+        ::v-deep .q-tab__indicator{
+            display: none;
+        }
     .top-menu-title {
         display: flex;
         justify-content: space-between;
@@ -97,38 +95,11 @@ function sub_click(item, index) {
                 display: none;
             }
         }
-        
-        .q-icon {
-            font-size: 16px;
-            transition: transform 0.15s;
-            transform: rotate(180deg);
-            opacity: 0.5;
-        }
-        &:hover {
-            background: var(--q-gb-bg-c-20);
-            // color: var(--q-gb-t-c-16);
-        }
-
-        .q-icon {
-            font-size: 16px;
-            transition: transform 0.15s;
-            transform: rotate(180deg);
-            opacity: 0.5;
-            color: var(--q-announce-left-menu-color-1);
-        }
-
         &.active {
             font-weight: 600;
             color: var(--q-gb-t-c-6);
-
-            .q-icon {
-                transform: rotate(0deg);
-                opacity: 1;
-                color: var(--q-gb-t-c-6);
-            }
         }
     }
-
     .top-menu-list {
         overflow: hidden;
         max-height: 0px;
@@ -152,6 +123,12 @@ function sub_click(item, index) {
                 font-weight: 600;
             }
         }
+    }
+    .reads{
+        position: absolute;
+        color: red;
+        top: 10px;
+        right: 5px;
     }
 }
 </style>
