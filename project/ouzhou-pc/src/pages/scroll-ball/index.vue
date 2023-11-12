@@ -105,7 +105,6 @@ export default {
         const { proxy } = getCurrentInstance()
         const MatchListCardDataClass_match_list_card_key_arr = () => {
             match_list_card_key_arr.value = MatchListCardDataClass.match_list_card_key_arr
-            console.log('MatchListCardDataClass.match_list_card_key_arr', MatchListCardDataClass.match_list_card_key_arr)
         }
         onMounted(() => {
             mounted_fn();

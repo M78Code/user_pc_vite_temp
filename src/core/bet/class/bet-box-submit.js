@@ -170,7 +170,6 @@ const get_query_bet_amount_common = (obj) => {
 
     // 获取额度接口合并
     api_betting.query_bet_amount(params).then((res = {}) => {
-        console.error('sss')
         if (res.code == 200) {
             BetViewDataClass.set_bet_min_max_money(res.data)
             // 通知页面更新 
@@ -209,7 +208,6 @@ const get_query_bet_amount_esports_or_vr = () => {
     // 获取最大值和最小值接口
     api_betting.post_getBetMinAndMaxMoney(params).then((res = {}) => {
         if (res.code == 200) {
-            console.error('aaa')
             BetViewDataClass.set_bet_min_max_money(res.data,'min_max')
             // 通知页面更新 
             // 串关不更新
@@ -362,8 +360,10 @@ const submit_handle = type => {
     }
     // 投注内容
     params.seriesOrders = seriesOrders
-
+    BetViewDataClass.set_bet_order_status(5)
+    return
     api_betting.post_submit_bet_list(params).then(res => {
+
 
         if (res.code == 200) {
             useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD,{
@@ -452,11 +452,26 @@ const submit_handle = type => {
     })
 }
 
+// 设置错误信息 
+const set_error_message_config = (obj ={}) => {
+    // if()
+    useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD,{
+        code: res.code,
+        msg: res.message
+    })
+    // 获取限额失败的信息
+    BetData.set_bet_before_message({
+        code: res.code,
+        msg: res.message
+    })
+}
+
 // 选择投注项数据 
 // params 各种id 用于查找数据对应的值 
 // other 灵活数据
 // const set_bet_obj_config = (mid_obj,hn_obj,hl_obj,ol_obj) =>{
 const set_bet_obj_config = (params = {}, other = {}) => {
+    console.error('s',UserCtr)
     // console.log('投注项需要数据', params, 'other', other);
     // 切换投注状态
     BetViewDataClass.set_bet_order_status(1)

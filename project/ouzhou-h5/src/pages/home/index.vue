@@ -42,7 +42,7 @@
         </q-tab-panel>
         <!-- top Events page -->
         <q-tab-panel name="top_events">
-          <scroll-list menu_type="5000" :is_show_badge="false" :current_mi="state.current_mi" :menuList="MenuData.top_events_list" @changeMenu="changeMenu"/>
+          <scroll-list menu_type="5000" v-if="MenuData.top_events_list.length" :is_show_badge="false" :current_mi="state.current_mi" :menuList="MenuData.top_events_list" @changeMenu="changeMenu"/>
           <!-- 赛事列表 -->
           <section class="match-page-section">
             <MatchContainer />

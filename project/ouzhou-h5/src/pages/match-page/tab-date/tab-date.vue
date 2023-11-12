@@ -66,6 +66,8 @@ import { dateWeekMatchesFormat } from './utils';
 import { MenuData } from "src/core/";
 import dayjs from "dayjs";
 import { useRoute } from "vue-router";
+import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
+
 const route = useRoute();
 const sportId = route.query.sportId;
 const emit = defineEmits(["changeDate", "changeTab"]);
@@ -136,6 +138,8 @@ const changeDatetab = (item, index) => {
     second_tab_index.value = index;
     MenuData.set_date_time(item.val, item.type);
     emit('changeMatchDate', item?.val)
+    // 设置菜单对应源数据
+    MatchMeta.set_origin_match_data()
 };
 watch(() => MenuData.menu_mi.value, () => {
     //球种改变设置今日
@@ -148,20 +152,26 @@ onMounted(() => {
  * 默认请求今日数据
  * @param {*} mi 
  */
-const setDefaultData = (mi) => {
-    MenuData.set_current_lv1_menu("2");
-    MenuData.set_menu_mi(mi);
+const setDefaultData = () => {
+    MenuData.set_current_lv1_menu(2);
+
+    // MenuData.set_menu_mi(mi);
     //球种改变设置今日
     MenuData.set_date_time(week[0].val);
     changeDatetab(week[0], 0)
 }
 watch(() => route.fullPath, () => {
     if (route.name === 'matchList') {
-        setDefaultData(sportId)
+        setDefaultData()
     }
 })
+
+watch(() => MenuData.current_lv_2_menu_mi.value, () => {
+    setDefaultData()
+})
+
 onMounted(() => {
-    setDefaultData(sportId)
+    // setDefaultData()
 })
 /**
  * 地区选择tab

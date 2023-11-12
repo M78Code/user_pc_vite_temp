@@ -9,19 +9,19 @@
 <template>
   <!-- 返回上一级 -->
   <!-- <div class="back" v-if="isClickDetail && curTab === 1 || true">
-                            <div class="menu_list_top_tab_background"></div>
-                            <span> {{ curCountry }}</span>
-                            <IconWapper color="#888" name="icon-triangle1" size="14px" class="icon-wapper-more" />
-                            <span> {{ curLeague }}</span>
-                          </div>
-                          <tab-date v-else @changeTab="onTabChange" @changeDate="onDateChange" /> -->
+                              <div class="menu_list_top_tab_background"></div>
+                              <span> {{ curCountry }}</span>
+                              <IconWapper color="#888" name="icon-triangle1" size="14px" class="icon-wapper-more" />
+                              <span> {{ curLeague }}</span>
+                            </div>
+                            <tab-date v-else @changeTab="onTabChange" @changeDate="onDateChange" /> -->
   <div class="back">
     <div class="menu_list_top_tab_background"></div>
     <span> {{ curCountry?.national }}</span>
     <IconWapper color="#888" name="icon-triangle1" size="14px" class="icon-wapper-more" />
     <span> {{ curLeague?.title }}</span>
   </div>
-      <tab-date @changeTab="onTabChange" @changeMatchDate="onMatchDateChange" />
+  <tab-date @changeTab="onTabChange" @changeMatchDate="onMatchDateChange" />
   <!--二级赛事列表-->
   <div class="match-list-page">
     <match-container v-if="curTab === 0 || isClickDetail && curTab === 1" />
@@ -95,7 +95,7 @@ const goback = () => {
   flex-shrink: 0;
   display: flex;
   align-items: center;
-  position: relative;
+  position: absolute;
 
   .menu_list_top_tab_background {
     width: 100px;
