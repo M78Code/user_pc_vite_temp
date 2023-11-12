@@ -9,13 +9,13 @@
 <template>
     <div>
             <template v-if="leagues_matchs.length > 0">
-                            <TopLeagues :leagues_matchs="leagues_matchs"  @leagueChange="onLeagueChange"/>
-                    </template>
-            </div>
+                <TopLeagues :leagues_matchs="leagues_matchs" @leagueChange="onLeagueChange" />
+            </template>
+        </div>
 </template>
 
 <script setup>
-import { ref, defineEmits  } from 'vue'
+import { ref, defineEmits } from 'vue'
 import TopLeagues from './components/top-leagues.vue'
 import { de_img, dk_img, be_img, fr_img } from 'src/base-h5/core/utils/local-image.js'
 

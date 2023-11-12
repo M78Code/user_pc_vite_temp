@@ -184,6 +184,8 @@ class MatchUtils {
     let title = ''
     if (ms !== 1) {
       title = playingMethods_15[0].title
+    } else if (mst == 0) {
+      title = playingMethods_15[0].title
     } else {
       const difference = Math.floor(Number(mst) / 60)
       const residue = Math.floor(difference / 15)

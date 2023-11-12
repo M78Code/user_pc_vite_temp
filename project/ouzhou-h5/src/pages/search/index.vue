@@ -55,13 +55,13 @@
 					<div class="color">TEAMS</div>
 				</div> -->
 				<!-- 滚球 -->
-				<div v-show="search_data.bowling">
+				<div v-show="search_data.bowling && search_data.bowling.length > 0">
 					<div class="middle_info_tab diff">
 						<div class="color">UNDERWAY</div>
 					</div>
 					<li v-for="(item, index) in search_data.bowling" :key="index" @click="suggestion_bowling_click(item)">
 						<div class="list_top">
-							<span>{{ item.tn }}</span><img :src="compute_local_project_file_path('image/svg/right_arrow.svg')" alt="">
+							<span v-html="red_color(item.tn)"></span><img :src="compute_local_project_file_path('image/svg/right_arrow.svg')" alt="">
 						</div>
 						<div class="list_bottom">
 							<div style="width: 60%; word-break: break-all">
@@ -69,9 +69,6 @@
 									<span class="home" v-html="red_color(item.mhn)"></span>
 									<span class="middle">v</span>
 									<span class="away" v-html="red_color(item.man)"></span>
-									<!-- <span class="home">{{ item.mhn }}</span>
-										<span class="middle">v</span>
-										<span class="away">{{ item.man }}</span> -->
 								</p>
 								<p>{{ (new Date(+item.mgt)).Format('MM/dd hh:mm') }}</p>
 							</div>
@@ -93,7 +90,7 @@
 							<!-- <img class="match_logo"
 								:src="item.matchList[0] ? get_server_file_path(item.matchList[0].lurl) : compute_img_url('match-cup')"
 								@error="league_icon_error" /> -->
-							<span>{{ item.leagueName }}</span><img :src="compute_local_project_file_path('image/svg/right_arrow.svg')"
+							<span v-html="red_color(item.leagueName)"></span><img :src="compute_local_project_file_path('image/svg/right_arrow.svg')"
 								alt="">
 						</div>
 						<div class="list_bottom" v-for="(i, idx) in item.matchList">
@@ -116,7 +113,7 @@
 					<li v-for="(item, index) in search_data.teamH5" :key="index" @click="default_method_jump(item.name, item)">
 						<div v-if="item.tn">
 							<div class="list_top">
-								<span>{{ item.tn }}</span><img :src="compute_local_project_file_path('image/svg/right_arrow.svg')" alt="">
+								<span v-html="red_color(item.tn)"></span><img :src="compute_local_project_file_path('image/svg/right_arrow.svg')" alt="">
 							</div>
 						</div>
 						<div class="list_bottom">
@@ -142,7 +139,12 @@
 			(!show_hot || 
 			!show_history))"
 		>
-			<div class="middle_info_tab">No results found. please try a different search term.</div>
+			<!-- 球类 tabs -->
+			<div class="middle_info_tab" ref="tab_growp">
+				<div v-for="(item, index) in sport_kind_data" :key="item.id" @click="get_search_data(index, item.id)"
+					:class="['tab', tabIndex === index ? 'active' : '']">{{ item.sportName }}</div>
+			</div>
+			<div class="middle_info_tab diff">No results found. please try a different search term.</div>
 			<div class="not_found">
 				<img :src="compute_local_project_file_path('image/png/not_found.png')" alt="">
 				<p>No results</p>
@@ -367,7 +369,8 @@ watch(
 }
 
 .top_info_search {
-	position: relative;
+	position: fixed;
+	z-index: 1;
 	padding-left: 20px;
 	height: 50px;
 	line-height: 50px;
@@ -419,6 +422,7 @@ watch(
 
 .content {
 	color: #1A1A1A;
+	padding-top: 50px;
 }
 
 .middle_info_tab {
@@ -429,7 +433,9 @@ watch(
 	font-size: 14px;
 	font-weight: 500;
 	overflow-x: scroll;
-	box-sizing: border-box;
+	position: fixed;
+	width: 100%;
+	z-index: 1;
 
 	.tab {
 		background-color: #FFf;
@@ -454,12 +460,10 @@ watch(
 
 	}
 
-	// &.diff {    
-	// 	position: absolute;
-	//   width: 100%;
-	//   left: 0;
-	//   padding: 9px 0 9px 20px
-	// }		
+	&.diff {
+	  padding: 9px 0 9px 20px;
+		position: unset;
+	}		
 	.color {
 		color: #FF7000;
 	}
@@ -502,6 +506,7 @@ li {
 
 .list1 {
 	padding: 10px;
+	padding-top: 50px;
 
 	li {
 		border-radius: 6px;
@@ -516,6 +521,7 @@ li {
 
 .list {
 	overflow-y: scroll;
+	padding-top: 40px;
 	.title {
 		height: 36px;
 		line-height: 36px;
@@ -589,6 +595,7 @@ li {
 			}
 		}
 	}
-}</style>
+}
+</style>
   
   

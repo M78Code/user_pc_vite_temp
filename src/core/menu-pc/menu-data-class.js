@@ -220,7 +220,6 @@ class MenuData {
     ) {
       val = "match_list";
     }
-    console.error('set_match_list_api_type', obj)
 
     const { jinri_zaopan, guanjun } = obj
     let text = 'match-today-common'

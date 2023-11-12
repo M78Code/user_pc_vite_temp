@@ -5,7 +5,7 @@
 
 <template>
   <div class="matches_page">
-    <div class="item" v-for="item, index in featured_matches" :key="index">
+    <div class="item" v-for="item, index in featured_matches" :key="index" :style="{backgroundImage: `url(${get_amtch_bg_image(item.csid)})`}">
       <!-- 标题 -->
       <div class="title">
         <span class="name">{{ item.tn }}</span>
@@ -18,7 +18,7 @@
       </div>
       <!-- 比分 -->
       <template v-if="item">
-        <ScoreList :match_info="item" :score_length="3" height="39px" />
+        <ScoreList :match_info="item" :score_length="3" height="39px" :show_hpn="true" />
       </template>
     </div>
   </div>
@@ -27,12 +27,45 @@
 <script setup>
 import ScoreList from 'src/base-h5/components/match-container/template/ouzhou/components/score-list.vue';
 
+import { football_bg, basketball_bg, volleyball_bg, tennis_bg, table_tennis_bg, badminton_bg, baseball_bg } from 'src/base-h5/core/utils/local-image.js'
+
 const props = defineProps({
   featured_matches: {
     type: Array,
     default: () => []
   }
 })
+
+const matchBgImage = [{
+  value: '1',
+  image: football_bg,
+}, {
+  value: '5',
+  image: tennis_bg,
+}, {
+  value: '2',
+  image: basketball_bg,
+}, {
+  value: '9',
+  image: volleyball_bg,
+}, {
+  value: '10',
+  image: badminton_bg,
+}, {
+  value: '3',
+  image: baseball_bg,
+}, {
+  value: '8',
+  image: table_tennis_bg,
+}, {
+  value: '6',
+  image: football_bg,
+}]
+
+const get_amtch_bg_image = (csid) => {
+  const item = matchBgImage.find(t => t.value == csid)
+  return item?.image
+}
 
 </script>
  
@@ -56,7 +89,7 @@ const props = defineProps({
     margin-right: 10px;
     border-radius: 3px;
     background-repeat: no-repeat;
-    background-size: 90px;
+    background-size: 75px;
     background-position: top right; 
     
     .title{
