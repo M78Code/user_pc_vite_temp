@@ -5,7 +5,9 @@
 			<input ref="input_ref" type="search" maxlength="15" placeholder="Search" v-model="input_value"
 				@keyup.enter="get_search_data(input_value)" />
 			<img :src="compute_local_project_file_path('image/home/top_seach.png')" alt="" />
-			<span class="clear_value" @click="clear_value">X</span>
+            <img :src="compute_local_project_file_path('image/svg/bet_close3.svg')" alt=""
+			class="clear_value"
+			  @click.stop.prevent.self="clear_value" v-show="input_value.length > 0"/>
 			<span class="close_btn" @click="to_home">Close</span>
 		</div>
 		<!-- 搜索 历史 -->
@@ -53,13 +55,13 @@
 					<div class="color">TEAMS</div>
 				</div> -->
 				<!-- 滚球 -->
-				<div v-show="search_data.bowling">
+				<div v-show="search_data.bowling && search_data.bowling.length > 0">
 					<div class="middle_info_tab diff">
 						<div class="color">UNDERWAY</div>
 					</div>
 					<li v-for="(item, index) in search_data.bowling" :key="index" @click="suggestion_bowling_click(item)">
 						<div class="list_top">
-							<span>{{ item.tn }}</span><img :src="compute_local_project_file_path('image/svg/right_arrow.svg')" alt="">
+							<span v-html="red_color(item.tn)"></span><img :src="compute_local_project_file_path('image/svg/right_arrow.svg')" alt="">
 						</div>
 						<div class="list_bottom">
 							<div style="width: 60%; word-break: break-all">
@@ -67,14 +69,18 @@
 									<span class="home" v-html="red_color(item.mhn)"></span>
 									<span class="middle">v</span>
 									<span class="away" v-html="red_color(item.man)"></span>
-									<!-- <span class="home">{{ item.mhn }}</span>
-										<span class="middle">v</span>
-										<span class="away">{{ item.man }}</span> -->
 								</p>
 								<p>{{ (new Date(+item.mgt)).Format('MM/dd hh:mm') }}</p>
 							</div>
-							<div style="flex: 1">
-								<ScoreList :match_info="item"></ScoreList>
+							<div style="display: flex;flex-direction: row;">
+								<!-- item?.hps[0].hl.hpid === '1' && item?.hps[0].hl[0].ol[0].os -->
+								<div>
+									<div>1</div>
+									<div>2</div>
+								</div>
+								<!-- <div>
+									<img class="lock" :src="odd_lock_ouzhou" alt="lock">
+								</div> -->
 							</div>
 						</div>
 					</li>
@@ -91,7 +97,7 @@
 							<!-- <img class="match_logo"
 								:src="item.matchList[0] ? get_server_file_path(item.matchList[0].lurl) : compute_img_url('match-cup')"
 								@error="league_icon_error" /> -->
-							<span>{{ item.leagueName }}</span><img :src="compute_local_project_file_path('image/svg/right_arrow.svg')"
+							<span v-html="red_color(item.leagueName)"></span><img :src="compute_local_project_file_path('image/svg/right_arrow.svg')"
 								alt="">
 						</div>
 						<div class="list_bottom" v-for="(i, idx) in item.matchList">
@@ -103,8 +109,9 @@
 								</p>
 								<p>{{ (new Date(+i.mgt)).Format('MM/dd hh:mm') }}</p>
 							</div>
-							<div style="flex: 1">
-								<ScoreList :match_info="item"></ScoreList>
+							<div>
+								<div>1</div>
+								<div>2</div>
 							</div>
 						</div>
 					</li>
@@ -114,7 +121,7 @@
 					<li v-for="(item, index) in search_data.teamH5" :key="index" @click="default_method_jump(item.name, item)">
 						<div v-if="item.tn">
 							<div class="list_top">
-								<span>{{ item.tn }}</span><img :src="compute_local_project_file_path('image/svg/right_arrow.svg')" alt="">
+								<span v-html="red_color(item.tn)"></span><img :src="compute_local_project_file_path('image/svg/right_arrow.svg')" alt="">
 							</div>
 						</div>
 						<div class="list_bottom">
@@ -126,8 +133,9 @@
 								</p>
 								<p>{{ (new Date(+item.mgt)).Format('MM/dd hh:mm') }}</p>
 							</div>
-							<div style="flex: 1">
-								<ScoreList :match_info="item"></ScoreList>
+							<div>
+								<div>1</div>
+								<div>2</div>
 							</div>
 						</div>
 					</li>
@@ -140,7 +148,12 @@
 			(!show_hot || 
 			!show_history))"
 		>
-			<div class="middle_info_tab">No results found. please try a different search term.</div>
+			<!-- 球类 tabs -->
+			<div class="middle_info_tab" ref="tab_growp">
+				<div v-for="(item, index) in sport_kind_data" :key="item.id" @click="get_search_data(index, item.id)"
+					:class="['tab', tabIndex === index ? 'active' : '']">{{ item.sportName }}</div>
+			</div>
+			<div class="middle_info_tab diff">No results found. please try a different search term.</div>
 			<div class="not_found">
 				<img :src="compute_local_project_file_path('image/png/not_found.png')" alt="">
 				<p>No results</p>
@@ -156,8 +169,9 @@ import router from "../../router";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt";
 import { get_history_search, get_search_result, get_search_sport } from "src/api/module/search/index.js";
 import { api_search } from 'src/api/';
-import ScoreList from 'src/base-h5/components/match-container/template/ouzhou/components/score-list.vue';
-import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
+// import ScoreList from 'src/base-h5/components/match-container/template/ouzhou/components/score-list.vue';
+import { api_common, api_match_list } from "src/api/index.js";
+import { odd_lock_ouzhou } from 'src/base-h5/core/utils/local-image.js'
 
 const { get_insert_history, get_fetch_hot_search } = api_search || {};
 
@@ -232,7 +246,7 @@ const get_search_data = (index = 0, sport_id = 1, keyword) => {
 	get_search_result(params).then(res => {
 		if (res.code === '200') {
 			search_data.value = res.data.data;
-			get_match_base_hps()
+			get_match_base_hps_by_mids()
 		}
 	});
 }
@@ -332,10 +346,90 @@ function get_hot_search() {
 // 获取赔率
 const scroll_timer = ref(0)
 const get_match_base_hps = lodash.debounce(() => {
-  MatchMeta.get_match_base_hps_by_mids()
+  get_match_base_hps_by_mids()
   clearTimeout(scroll_timer.value)
   scroll_timer.value = null
 }, 600)
+
+
+/**
+ * @description 获取赛事赔率
+ */
+let match_mid_Arr = [];
+const get_match_base_hps_by_mids = async () => {
+	if (!(search_data.value.teamH5 && search_data.value.teamH5.length > 0) &&
+			!(search_data.value.league && search_data.value.league.length > 0) && 
+			!(search_data.value.bowling && search_data.value.bowling.length > 0) 
+			) return;
+	// 拿到所有滚球，联赛，队伍 mid
+	search_data.value.teamH5.forEach((item, index) => {
+		match_mid_Arr.push(item.mid)
+	})
+	search_data.value.league.forEach((item, index) => {
+		item.matchList.forEach((i, idx) => {
+			match_mid_Arr.push(i.mid)
+		})
+	})
+	search_data.value.bowling.forEach((item, index) => {
+		match_mid_Arr.push(item.mid)
+	})
+	if (match_mid_Arr.length < 1) return;
+	const match_mids = match_mid_Arr.join(',')
+	console.log('match_mids', match_mids);
+	// 竞足409 不需要euid
+	const params = {
+		mids: match_mids,
+		cuid: uid,
+		sort: 1,
+		device: ['', 'v2_h5', 'v2_h5_st'][UserCtr.standard_edition],
+	};
+	await api_common.get_match_base_info_by_mids(params).then((res) => {
+		console.log('res', res);
+		if(res.code === '200') {
+			const { data } = res;
+			for(let i = 0; i < data.length; i++) {
+				for(let j = 0; j < search_data.value.teamH5.length; j++) {
+					if(data[i].mid === search_data.value.teamH5[j].mid) {
+						// item?.hps[0].hl.hpid === '1' && item?.hps[0].hl[0].ol[0].os
+						search_data.value.teamH5[j] = data[i]
+						console.log(search_data.value.teamH5[j], data[i]);
+						break;
+					}
+				}
+				for(let k = 0; k < search_data.value.league.length; k++) {
+					search_data.value[k].matchList.forEach((item, index) => {
+						if(data[i].mid === search_data.value.league[index].mid) {
+							search_data.value.league[index] = data[i]
+							console.log(search_data.value.league[k][index], data[i]);
+						}
+					})
+				}
+				for(let l = 0; l < search_data.value.bowling.length; l++) {
+					if(data[i].mid === search_data.value.bowling[l].mid) {
+						// item?.hps[0].hl.hpid === '1' && item?.hps[0].hl[0].ol[0].os
+						search_data.value.bowling[l] = data[i]
+						console.log(search_data.value.bowling[l], data[i]);
+						break;
+					}
+				}
+				break;
+			}
+		}
+	})
+	// let res = ''
+	// // 赛果
+	// if (MenuData.is_export()) {
+	// 	res = await api_common.get_esports_match_by_mids(params)
+	// } else {
+	// 	res = await api_common.get_match_base_info_by_mids(params)
+	// }
+	// if (!res) return
+	// const { code, data } = res
+	// if (+code !== 200) return
+	// const list = MatchPage.get_obj(data)
+	// // 设置仓库渲染数据
+	// this.handle_update_match_info(list, 'cover')
+}
 
 onMounted(() => {
 	get_hot_search();
@@ -363,7 +457,8 @@ watch(
 }
 
 .top_info_search {
-	position: relative;
+	position: fixed;
+	z-index: 1;
 	padding-left: 20px;
 	height: 50px;
 	line-height: 50px;
@@ -400,10 +495,10 @@ watch(
 
 	.clear_value {
 		position: absolute;
-		right: 70px;
-		top: 0px;
+		top: 20px;
 		color: #fff;
 		font-size: 14px;
+		left: 290px;
 	}
 
 	.close_btn {
@@ -415,6 +510,7 @@ watch(
 
 .content {
 	color: #1A1A1A;
+	padding-top: 50px;
 }
 
 .middle_info_tab {
@@ -425,7 +521,9 @@ watch(
 	font-size: 14px;
 	font-weight: 500;
 	overflow-x: scroll;
-	box-sizing: border-box;
+	position: fixed;
+	width: 100%;
+	z-index: 1;
 
 	.tab {
 		background-color: #FFf;
@@ -450,12 +548,10 @@ watch(
 
 	}
 
-	// &.diff {    
-	// 	position: absolute;
-	//   width: 100%;
-	//   left: 0;
-	//   padding: 9px 0 9px 20px
-	// }		
+	&.diff {
+	  padding: 9px 0 9px 20px;
+		position: unset;
+	}		
 	.color {
 		color: #FF7000;
 	}
@@ -493,11 +589,16 @@ li {
 			color: red;
 			margin: 0 5px;
 		}
+		.lock {
+			width: 16px;
+			height: 16px;
+		}
 	}
 }
 
 .list1 {
 	padding: 10px;
+	padding-top: 50px;
 
 	li {
 		border-radius: 6px;
@@ -512,6 +613,7 @@ li {
 
 .list {
 	overflow-y: scroll;
+	padding-top: 40px;
 	.title {
 		height: 36px;
 		line-height: 36px;
@@ -585,6 +687,7 @@ li {
 			}
 		}
 	}
-}</style>
+}
+</style>
   
   

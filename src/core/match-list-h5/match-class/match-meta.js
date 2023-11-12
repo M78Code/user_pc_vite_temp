@@ -161,7 +161,6 @@ class MatchMeta {
    * @param { list } 赛事 list
    */
     handler_match_list_data(config) {
-
       const { list, type = 2, is_virtual = true } = config
 
       // 清除联赛下得赛事数量
@@ -430,7 +429,7 @@ class MatchMeta {
       category,
       md,
       type: 28,
-      euid: '1',
+      euid: euid,
       showem: 1, // 新增的参数
     })
     if (+res.code !== 200) return
@@ -523,7 +522,7 @@ class MatchMeta {
     const res = await api_common.get_collect_matches(params)
     if (res.code !== '200') return this.set_page_match_empty_status(true);
     const list = lodash.get(res, 'data', [])
-    this.handler_match_list_data({ list: list, type: 1, is_virtual: false })
+    this.handler_match_list_data({ list: list})
   }
 
   /**

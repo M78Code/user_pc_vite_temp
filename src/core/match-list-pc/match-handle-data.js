@@ -62,8 +62,6 @@ function get_match_tpl_number(is_hot) {
 */
 export function get_match_template_id({ csid }) {
     let tpl_id = get_match_tpl_number()
-    console.log(tpl_id, 'get_match_tpl_number')
-
     // 虚拟足球1001、虚拟篮球1004
     if ([1001, 1004].includes(+csid)) {
         tpl_id = csid
@@ -76,7 +74,6 @@ export function get_match_template_id({ csid }) {
     else if (tpl_id == -1) {
         tpl_id = csid_to_tpl_id(csid)
     }
-    console.log(tpl_id, 'get_match_tpl_number1')
     return tpl_id
 }
 

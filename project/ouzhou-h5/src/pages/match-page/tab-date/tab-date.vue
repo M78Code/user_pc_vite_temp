@@ -1,5 +1,5 @@
 <template>
-    <div class="flex-center">
+    <div class="flex-center" :style="{height:tabActive == 'league'?'0.59rem':'1.04rem'}">
         <div class="tabs">
             <div class="matches" :class="tabActive == 'matches' ? 'active' : ''
             ">
@@ -14,7 +14,8 @@
             <!-- league的下拉项 -->
             <div class="select" v-if="tabActive == 'league'">
                 <span class="select-text">{{
-                    selectOptions[0].label
+                    // selectOptions[0].label
+                    curSelectedOption.label
                 }}</span>
                 <span class="down_arrow" @click="toggerModel"></span>
             </div>
@@ -43,13 +44,13 @@
                 </div>
             </q-virtual-scroll>
         </div>
-        <div class="date_time" v-if="tabActive == 'league'">
+        <!-- <div class="date_time" v-if="tabActive == 'league'">
             <q-virtual-scroll ref="scrollRefArea" :items="areaList" virtual-scroll-horizontal v-slot="{ item, index }">
                 <div @click="areaListChange(index)" class="week" :class="area_tab_index == index ? 'active' : ''">
                     {{ item }}
                 </div>
             </q-virtual-scroll>
-        </div>
+        </div> -->
     </div>
 </template>
   
@@ -90,6 +91,8 @@ const selectOptions = reactive([
     { label: "3 Day", time: "3day" },
     { label: "7 Day", time: "7day" },
 ]);
+
+const curSelectedOption=ref(selectOptions[0])
 /**
  * tab点击
  * @param {*} name 
@@ -113,6 +116,8 @@ const changeDate = (index) => {
     dateIndex.value = index;
     tabModel.value = false;
     emit("changeDate", selectOptions[index].time);
+    curSelectedOption.value=selectOptions[index]
+    console.log('selectOptions[index]: ', selectOptions[index]);
 }
 /**
  * 时间选择tab

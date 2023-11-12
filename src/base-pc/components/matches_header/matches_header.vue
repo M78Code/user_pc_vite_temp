@@ -119,13 +119,11 @@ const sport_ball = {
 onMounted(()=>{
   const { menu_root } = MatchListOuzhouClass?.redux_menu
   set_header_tab(menu_root)
-  console.error(MenuData,"MenuData===")
 })
 
 watch(
 	MatchListOuzhouClass.version,
 	(version) => {
-		console.log(MatchListOuzhouClass, 'MatchListOuzhouClass', redux_menu)
 		redux_menu.value = MatchListOuzhouClass?.redux_menu
 		const { menu_root } = MatchListOuzhouClass?.redux_menu
 		set_header_tab(menu_root)
@@ -207,7 +205,6 @@ const checked_current_tab = payload => {
 	MatchListOuzhouClass.set_menu(redux_menu)
 
 	current_value.value = payload.value;
-	
 	// 判断头部高度
 	if (['featured','league','top_events'].includes( payload.value) ) {
 		match_list_top.value = '80px'
@@ -216,7 +213,6 @@ const checked_current_tab = payload => {
 	} else {
 		match_list_top.value = '146px'
 	}
-	
 	// set_mid_menu_top_result.value = data
 };
 
