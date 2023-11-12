@@ -85,7 +85,6 @@ export function get_match_template_id({ csid }) {
         tpl_id = csid_to_tpl_id(csid)
     }
     tpl_id = Number(tpl_id) + Number(different_version_config[PROJECT_NAME])
-    console.log(tpl_id, 'get_match_tpl_number1')
     if ('ouzhou-pc' == PROJECT_NAME)
         return 101
     return tpl_id
