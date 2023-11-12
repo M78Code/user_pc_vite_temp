@@ -54,18 +54,18 @@ let switch_timer_id
 
 let tid_match_list;
 useMittOn(MITT_TYPES.EMIT_MATCH_LIST_UPDATE, () => {
-	console.log("EMIT_MATCH_LIST_UPDATE")
 	clearTimeout(tid_match_list)
 	tid_match_list = setTimeout(() => {
+		console.log('EMIT_MATCH_LIST_UPDATE')
 		fetch_match_list()
-	}, 20);
+	},80);
 })
-watch(() => MenuData.match_list_version.value, () => {
-	// clearTimeout(tid_match_list)
-	// tid_match_list = setTimeout(() => {
-		// fetch_match_list()
-	// }, 20);
-})
+// watch(() => MenuData.match_list_version.value, () => {
+// 	clearTimeout(tid_match_list)
+// 	tid_match_list = setTimeout(() => {
+// 		fetch_match_list()
+// 	}, 20);
+// })
 /**
 * @description 请求数据
 * @param  {boolean} is_socket   是否 socket 调用
