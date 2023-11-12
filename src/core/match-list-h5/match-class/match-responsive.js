@@ -14,6 +14,8 @@ class MatchResponsive {
     this.ball_seed_count = ref({})
     // 球种对应的下拉玩法  ouzhou-h5 
     this.ball_seed_play_methods = ref({})
+    // 球种下联赛对应的数量
+    this.ball_seed_league_count = ref({})
   }
 
   /**
