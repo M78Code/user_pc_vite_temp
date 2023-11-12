@@ -14,7 +14,8 @@
             <!-- league的下拉项 -->
             <div class="select" v-if="tabActive == 'league'">
                 <span class="select-text">{{
-                    selectOptions[0].label
+                    // selectOptions[0].label
+                    curSelectedOption.label
                 }}</span>
                 <span class="down_arrow" @click="toggerModel"></span>
             </div>
@@ -90,6 +91,8 @@ const selectOptions = reactive([
     { label: "3 Day", time: "3day" },
     { label: "7 Day", time: "7day" },
 ]);
+
+const curSelectedOption=ref(selectOptions[0])
 /**
  * tab点击
  * @param {*} name 
@@ -113,6 +116,8 @@ const changeDate = (index) => {
     dateIndex.value = index;
     tabModel.value = false;
     emit("changeDate", selectOptions[index].time);
+    curSelectedOption.value=selectOptions[index]
+    console.log('selectOptions[index]: ', selectOptions[index]);
 }
 /**
  * 时间选择tab
