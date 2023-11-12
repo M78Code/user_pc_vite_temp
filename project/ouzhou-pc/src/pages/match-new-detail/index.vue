@@ -44,9 +44,9 @@
             style="margin: 0 10px; height: 14px"
             v-if="sportId == 1"
           />
-          <!-- <span class="leagal-time" v-if="sportId == 1 && detail_info.ms == 0">
-            {{ detail_info.mgt }}</span
-          > -->
+          <span class="leagal-time" v-if="sportId == 1 && detail_info.ms == 0">
+            {{ formatTime(detail_info.mgt, 'dd/mm hh:MM')  }} {{ detail_info.mgt }}</span
+          >
         </div>
         <div>
           <q-expansion-item
@@ -130,7 +130,7 @@ import { usedetailData } from "./index";
 // import down_arrow_fold from 'src/assets/images/down_arrow_fold.png'
 // import detail_top from 'src/assets/images/detail-top.png'
 // import detail_refresh from 'src/assets/images/detail-fresh.png'
-// import { formatTime } from "src/public/utils/time_format";
+import { formatTime } from 'src/core/format/index.js'
 import loading from "./components/loading/index.vue";
 // import store from "src/store-redux-vuex/index.js";
 
