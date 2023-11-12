@@ -40,10 +40,12 @@ const tab_active = ref(get_route_path);
 
 const jump_page = (item) => {
   tab_active.value = item.route
-  router.push(item.route)
+  
   // 设置一级菜单 注： 普通赛果是28, 投注赛果是29， 欧洲版不考虑投注
-  if (item.route === '/matchResults') VirtualList.set_is_show_ball(false)
+  VirtualList.set_is_show_ball(item.route === '/matchResults' ? false : true)
   item.type && MenuData.set_current_lv1_menu(item.type)
+  
+  router.push(item.route)
 }
 
 </script>

@@ -1,7 +1,7 @@
 import { MatchDataWarehouse_PC_List_Common as MatchListData } from 'src/core/index.js'
 import MatchListCardData from "./match-list-card-data-class.js";
 import MatchListCardClass from '../match-list-card-class.js';
-import {get_match_template_id} from '../../match-handle-data.js'
+import {match_list_handle_set} from '../../match-handle-data.js'
 
 
   /**
@@ -89,10 +89,7 @@ import {get_match_template_id} from '../../match-handle-data.js'
         }
       })
       if(match_list.length > 0){
-        match_list?.forEach(match=>{
-          match.tpl_id=get_match_template_id(match)
-          console.log('tpl_id',match.tpl_id)
-        })
+        match_list_handle_set(match_list)
         // 设置列表数据仓库
         MatchListData.set_list(match_list,true)
         // 重新计算赛事样式
