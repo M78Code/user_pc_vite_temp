@@ -183,7 +183,7 @@ onMounted(() => {
     expected_profit.value =  Math.round(_maxCashout * _percentage * 100) / 100
   }).off;
 
-  // 处理ws订单状态推送
+  // 处理ws订单状态推送 (并没有推送事件源？)
   mitt_c201_handle = useMittOn(MITT_TYPES.EMIT_C201_HANDLE, c201_handle).off;
   mitt_c210_handle = useMittOn(MITT_TYPES.EMIT_C210_HANDLE, c210_handle).off;
 })

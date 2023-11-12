@@ -189,10 +189,8 @@ const get_order_list = (_index, params, url_api) => {
       let { record, hasNext } = lodash.get(res, "data");
       is_hasnext.value = hasNext
       is_loading.value = false;
-      // record为空时
-      if (lodash.isEmpty(record)) {
-        return;
-      }
+      // record 为null时 => 赋值为空对象
+      if(!record) record = {}
       for (let item of Object.values(record)) {
         size += item.data.length
         // 如果是预约中、已失效，数据多余处理下

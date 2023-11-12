@@ -57,7 +57,7 @@ const changeMenu = (mi) =>{
   MatchMeta.get_collect_match()
 }
 onMounted(() => {
-  MatchMeta.get_collect_match()
+  changeMenu("40003")
 })
 
 // const set_menu_lv1 = item => {

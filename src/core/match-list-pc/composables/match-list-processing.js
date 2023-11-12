@@ -12,14 +12,14 @@ import ws_composable_fn from "./match-list-ws.js";
 import PageSourceData  from  "src/core/page-source/page-source.js";
 import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/core/index.js";
 import MatchListCardClass from "src/core/match-list-pc/match-card/match-list-card-class.js";
-import filterHeader from 'src/core/filter-header/filter-header.js'
-let state = store.getState();
+import {get_match_template_id} from '../match-handle-data.js'
 const { mx_collect_count, set_collect_count } = collect_composable_fn();
 const { virtual_list_timeout_id, is_vr_numer } = virtual_composable_fn();
 const { show_mids_change } = ws_composable_fn();
 const { api_bymids, set_league_list_obj } = use_featch_fn();
 const route=useRoute()
 const vx_filter_select_obj = ref([])
+
 
 
 const load_data_state = ref(null);
@@ -250,6 +250,11 @@ const mx_list_res = (data, backend_run, cut, collect) => {
  */
 const mx_use_list_res_when_code_200_and_list_length_gt_0 = ({match_list, collect, backend_run}) => {
 	is_show_hot.value = false;
+	console.log('lockie-3', match_list);
+	match_list?.forEach(match=>{
+		match.tpl_id=get_match_template_id(match)
+		console.log('tpl_id',match.tpl_id)
+	  })
   MatchListData.set_list(match_list)
 	// 计算赛事卡片
 	MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(

@@ -1,5 +1,5 @@
 <template>
-    <div class="flex-center">
+    <div class="flex-center" :style="{height:tabActive == 'league'?'0.59rem':'1.04rem'}">
         <div class="tabs">
             <div class="matches" :class="tabActive == 'matches' ? 'active' : ''
             ">
@@ -44,13 +44,13 @@
                 </div>
             </q-virtual-scroll>
         </div>
-        <div class="date_time" v-if="tabActive == 'league'">
+        <!-- <div class="date_time" v-if="tabActive == 'league'">
             <q-virtual-scroll ref="scrollRefArea" :items="areaList" virtual-scroll-horizontal v-slot="{ item, index }">
                 <div @click="areaListChange(index)" class="week" :class="area_tab_index == index ? 'active' : ''">
                     {{ item }}
                 </div>
             </q-virtual-scroll>
-        </div>
+        </div> -->
     </div>
 </template>
   

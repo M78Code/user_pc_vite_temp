@@ -72,8 +72,6 @@ export function get_match_template_id({ csid }) {
         "yazhou-pc": 0,
     }
     let tpl_id = get_match_tpl_number()
-    console.log(tpl_id, 'get_match_tpl_number')
-
     // 虚拟足球1001、虚拟篮球1004
     if ([1001, 1004].includes(+csid)) {
         tpl_id = csid

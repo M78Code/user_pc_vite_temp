@@ -24,8 +24,10 @@ const PROJECT_MAP = {
 };
 //布局名字
 const PROJECT_NAME = PROJECT_MAP[PROJECT];
+//所有资源项目级别目录
+const ALL_PROJECT = [...Object.values(PROJECT_MAP),'activity']
 //删除布局资源数组
-const NEED_DELETE_PROJECT = Object.values(PROJECT_MAP).filter(x=>x!=PROJECT_NAME)
+const NEED_DELETE_PROJECT = ALL_PROJECT.filter(x=>x!=PROJECT_NAME)
 
 
 //参数内环境和代码内环境映射

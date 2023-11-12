@@ -9,10 +9,9 @@
 import { ref, onMounted, watch, onUnmounted } from "vue";
 import { api_match_list } from "src/api";
 // import { useRoute } from "vue-router";
-import {match_info,categoryList,matchDetail} from './mock'
 // import store from "src/store-redux-vuex/index.js";
 import { MatchDataWarehouse_PC_Detail_Common as MatchDataWarehouseInstance,MenuData,UserCtr } from "src/core/index"; 
-import { filter_odds_func, handle_course_data, format_mst_data } from './matches_list'
+import { filter_odds_func, handle_course_data, format_mst_data } from 'src/core/utils/matches_list.js'
 
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 
@@ -47,7 +46,7 @@ export function usedetailData(route) {
   //const userInfo = state.userReducer.userInfo; // 用户数据
   const {user_info} = UserCtr; // 用户数据
 
-  const current_id = ref()
+  const current_id = ref() // 赛事id
 
   let sportId =1, mid=2858623,tid
 
@@ -116,7 +115,7 @@ export function usedetailData(route) {
    */
   const init = async () => {
     // all_list_toggle = {}
-    // detail_loading.value = true;
+     detail_loading.value = true;
     await get_category();
     get_detail();
     await get_detail_lists();
@@ -158,7 +157,6 @@ export function usedetailData(route) {
         };
         const res = await getMatchDetailByTournamentId(params);
         matchDetailList.value = res.data
-      //  console.log(1111111111111,res)
       } catch (error) {}
     };
 
@@ -221,7 +219,7 @@ export function usedetailData(route) {
       const res = await get_detail_list(params);
       all_list.value = res.data || [];
        all_list.value.forEach(item=>item.expanded = true)
-      // detail_loading.value = false;
+       detail_loading.value = false;
       current_key.value = current_key.value
         ? current_key.value
         : tabList.value[0].value;
@@ -233,6 +231,7 @@ export function usedetailData(route) {
     sportId = route.params.csid
     mid = route.params.mid
     tid = route.params.tid
+    current_id.value = route.params.mid
 
     init();
     timer = setInterval(async () => {
@@ -251,6 +250,7 @@ export function usedetailData(route) {
     sportId = route.params.csid
     mid = route.params.mid
     tid = route.params.tid 
+    current_id.value = route.params.mid
    current_id.value = mid
    init();
   }

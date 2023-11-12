@@ -57,7 +57,6 @@ import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import { utils_info } from 'src/core/utils/module/match-list-utils.js';
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
-import store from 'src/store-redux/index.js'
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import useMatchListMx from "src/core/match-list-pc/match-list-composition.js";
 import menu_config from "src/core/menu-pc/menu-data-class.js";
@@ -65,7 +64,6 @@ import menu_config from "src/core/menu-pc/menu-data-class.js";
 // const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
 
 const { mx_collect } = useMatchListMx();
-
 const props = defineProps({
   card_style_obj: {
     type: Object,
@@ -78,9 +76,9 @@ const props = defineProps({
 })
 
 let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(lodash.get(props, 'card_style_obj.mid'))
-const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`].width_config
 const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`]
-// const current_choose_oid = ref({ first_hpid: choose_config[match.csid][0], second_hpid: choose_config[match.csid][1] });
+const match_list_tpl_size =lodash.get(match_tpl_info,'width_config')
+const current_choose_oid = ref({ first_hpid: '1', second_hpid: "2" });
 // 获取菜单类型
 if (!lodash.get(props, 'card_style_obj.league_obj.csid') && ['1', '500'].includes(menu_config.menu_root)) {
   useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST)

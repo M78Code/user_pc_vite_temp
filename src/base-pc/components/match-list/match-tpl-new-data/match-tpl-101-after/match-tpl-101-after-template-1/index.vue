@@ -11,7 +11,7 @@
       <div class="vertical-line"></div>
       <!-- 图标信息 -->
       <div :style="`width:${match_list_tpl_size.play_icon_width}px !important;`">
-        <icon-box></icon-box>
+        <icon-box :match="match"></icon-box>
       </div>
       <!-- 投注信息 -->
       <match-handicap 
