@@ -10,9 +10,9 @@
         :top="get_is_hengping ? '50%' : '58%'"
     ></loading>
     <!--无盘口数据时,赛事推荐-->
-    <div class="match-recommend-wrapper" v-if="show_recommend">
+    <div class="match-recommend-wrapper" v-if="show_recommend" style="">
       <!-- 无数据背景图  :src="get_is_hengping ? (`/image/wwwassets/bw3/svg/full_screen_match_odds_closed.svg`) : `/image/wwwassets/bw3/svg/match_odds_closed.svg`"-->
-      <img :src="compute_local_project_file_path('image/svg/match_odds_closed.svg')" />
+      <img :src="compute_local_project_file_path('image/details/def_marketclose.png')" style="height: 2rem;display: block;position: relative" />
       <!-- 背景下面文字说明 -->
       <div class="empty-m-list-w">
         <!-- 当前赛事盘口已全部关闭-->
@@ -97,7 +97,7 @@ import detailMatchList from 'src/base-h5/components/details/components/detail-ma
 import uid from "src/core/uuid/index.js"
 import lodash from "lodash";
 import { useRouter, useRoute } from "vue-router";
-import { useMittOn, useMittEmit, MITT_TYPES,compute_local_project_file_path } from  "src/core/"
+import { useMittOn, useMittEmit, MITT_TYPES,compute_local_project_file_path, compute_img_url } from  "src/core/"
 // import { Level_one_detail_odd_info } from "../category-list.js";
 import { category_info } from "./category.js"
 import { reactive, nextTick, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
@@ -316,6 +316,7 @@ export default defineComponent({
       set_detail_data_storage,
       remove_session_storage,
       remove_detail_storage,
+      compute_img_url
     }
   }
 })
@@ -343,7 +344,11 @@ export default defineComponent({
     .empty-m-list-w {
       text-align: center;
       color: var(--q-color-com-fs-color-49);
+      /*
+      2023.11.12 bevis取消
       position: absolute;
+      */
+
       width: 100%;
       top: 0.8rem;
       font-size: 0.14rem;

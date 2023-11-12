@@ -118,7 +118,7 @@ class BetRecord {
     // 提前结算图标是否选中
     this.is_early = false
     // 提前结算列表
-    this.early_money_list = []
+    this.early_money_list = {}
     // 投注记录版本变更
     this.bet_record_version = ref('1111')
   }
