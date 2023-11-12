@@ -95,7 +95,7 @@ const set_match_list_mapping_relation_obj_type = () => {
     ) {
       type = 9
     } else {
-      type = 9
+      type = 8
     }
   }
   MatchListCardData.match_list_mapping_relation_obj_type = type;
