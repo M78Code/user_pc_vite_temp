@@ -27,7 +27,7 @@
       <div :style="`width:${match_list_tpl_size.play_icon_width}px !important;`"></div>
       <!-- 玩法名称 -->
       <div class="play-name-ouzhou">
-        <div 
+        <!-- <div 
           class="play-name-title-box"
           v-for="(item, col_index) in match_tpl_info.get_current_odds_list(current_choose_oid)" 
           :key="col_index" 
@@ -37,7 +37,7 @@
             :key="item_index">
             {{ item_title.ot }}
           </div>
-        </div>
+        </div> -->
       </div>
       <div class="action-col" style="width:60px" v-if="match_style_obj.data_tpl_id == 12"></div>
     </div>

@@ -9,10 +9,8 @@ import path from "node:path";
 
 // 本次打包的 客户端版本
 import BUILD_VERSION_CONFIG from "./output/version/build-version.js";
-let {BUILD_VERSION ,PROJECT_NAME} = BUILD_VERSION_CONFIG;
-// 本次打包的 目录
-import BUILD_DIR_CONFIG from "./output/dir/index.js";
-let BUILD_DIR_NAME = BUILD_DIR_CONFIG.BUILD_DIR_NAME;
+let {BUILD_VERSION ,PROJECT_NAME ,BUILD_DIR_NAME} = BUILD_VERSION_CONFIG;
+ 
 
  
 
