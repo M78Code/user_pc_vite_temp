@@ -1,3 +1,6 @@
+<script setup>
+
+</script>
 
 <template>
   <ul class="bet-info-list">
@@ -15,3 +18,7 @@
     </li>
   </ul>
 </template>
+
+<style scoped lang="scss">
+
+</style>
