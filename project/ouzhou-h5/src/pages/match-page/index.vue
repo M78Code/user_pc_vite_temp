@@ -54,7 +54,7 @@ const onDateChange = e => {
   //根据时间筛选列表
   MatchMeta.filter_match_by_time(e)
   curDate.value = e.md
-  console.log("请求params", params)
+  // console.log("请求params", params)
 }
 const onLeagueChange = (league, game) => {
   console.log('league, game: ', league, game);
@@ -96,7 +96,7 @@ const goback = () => {
   flex-shrink: 0;
   display: flex;
   align-items: center;
-  position: relative;
+  position: absolute;
 
   .menu_list_top_tab_background {
     width: 100px;
