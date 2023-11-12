@@ -411,7 +411,7 @@ class MatchMeta {
       category,
       md,
       type: 28,
-      euid: '1',
+      euid: euid,
       showem: 1, // 新增的参数
     })
     if (+res.code !== 200) return
