@@ -40,7 +40,7 @@
         <div class="filter-tab-split-line"></div>
       </div>
        <!-- vr -->
-       <div
+       <!-- <div
         class="current-filter-tab"
         v-for="(item, index) in vr_menu_data" :key="index"
       >
@@ -57,7 +57,7 @@
           <img class="current-mark" :class="{ 'show-mark': current_choose_tab == item.mif }" src="../../../assets/images/mask_group.png" alt="">
         </div>
         <div class="filter-tab-split-line" v-show="index != vr_menu_data.length - 1"></div>
-      </div>
+      </div> -->
 
     </div>
     <div class="prev-btn-box" v-show="show_left_btn" @click="filter_tab_scroll('prev')">
