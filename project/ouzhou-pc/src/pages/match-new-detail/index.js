@@ -1,3 +1,11 @@
+/*
+ * @Author: cooper cooper@123.com
+ * @Date: 2023-07-09 16:21:30
+ * @LastEditors: lowen pmtylowen@itcom888.com
+ * @LastEditTime: 2023-11-08 18:25:18
+ * @FilePath: \user-pc-vue3\src\project-ouzhou\pages\detail\index.js
+ * @Description: 详情页相关接口数据处理
+ */
 import { ref, onMounted, watch, onUnmounted } from "vue";
 import { api_match_list } from "src/api";
 // import { useRoute } from "vue-router";
@@ -44,7 +52,7 @@ export function usedetailData(route) {
 
   // 监听分类切换数据
   watch(current_key, (val) => {
-    get_match_detail(val);
+    getDetailData(val);
   });
     // 监听分类切换数据
     // watch(()=>route.query, (val) => {
@@ -58,7 +66,7 @@ export function usedetailData(route) {
     // );
 
   //  根据分类id 过滤数据
-  const get_match_detail = (value) => {
+  const getDetailData = (value) => {
     const plays = category_list.value.find(
       (item) => item.orderNo == value
     ).plays;
@@ -215,7 +223,7 @@ export function usedetailData(route) {
       current_key.value = current_key.value
         ? current_key.value
         : tabList.value[0].value;
-      get_match_detail(current_key.value);
+      getDetailData(current_key.value);
     } catch (error) {}
   };
 
@@ -261,7 +269,6 @@ export function usedetailData(route) {
     show_close_thehand,
     matchDetailList,
     current_id,
-    refresh,
-    get_match_detail
+    refresh
   };
 }
