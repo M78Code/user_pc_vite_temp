@@ -53,22 +53,8 @@ const selectFinishHandle = (val) => {
  * @param {*} mi 
  */
 const changeMenu = (mi) =>{
-  console.log("euid",MenuData.get_euid())
   MatchMeta.get_collect_match()
 }
-onMounted(() => {
-  changeMenu("40003")
-})
-
-// const set_menu_lv1 = item => {
-//   MenuData.set_current_lv1_menu(item.mi);
-//   MenuData.get_menu_lvmi_list(item.mi)
-//   // MenuData.get_results_menu();
-//   setTimeout(() => {
-//     MatchMeta.get_results_match()
-//     MatchMeta.get_collect_match()
-//   }, 2000)
-// }
 </script>
 <style scoped lang="scss">
 .collect-wap {
