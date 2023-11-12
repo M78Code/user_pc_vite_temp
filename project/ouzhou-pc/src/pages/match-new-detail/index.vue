@@ -45,7 +45,7 @@
             v-if="sportId == 1"
           />
           <span class="leagal-time" v-if="sportId == 1 && detail_info.ms == 0">
-            {{ formatTime(detail_info.mgt, 'dd/mm hh:MM')  }} {{ detail_info.mgt }}</span
+            {{ formatTime(detail_info.mgt, 'dd/mm hh:MM')  }}</span
           >
         </div>
         <div>
