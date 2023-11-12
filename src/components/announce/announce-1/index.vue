@@ -19,14 +19,14 @@
                     <div class="ann-item" v-for="(item, i) of announce_list" :key="i">
                         <div class="ann-title" v-show="index == 0">[{{ item.noticeTypeName }}]</div>
                         <div class="ann-content"> 
-                            <span class="reads" v-show="readalls">*</span> 
+                            <span class="reads" v-show="item.isShuf == 1">*</span> 
                             {{ item.sendTime }} {{ item.context }}
                         </div>
                         <div class="ann-time">
                         <div>
                             {{ timestr(item.sendTimeOther) }}
                         </div>
-                        <button class="announce-btn" @click="read(i)">Read</button>
+                        <button class="announce-btn" @click="read(item)">Read</button>
                         </div>
                     </div>
                     <load-data state="notice-empty" :no_data_msg="i18n_t('common.notice_no_data')"
@@ -75,11 +75,14 @@ const loadd_finish = ref(false)
 const readalls = ref(true)
 
 const readall = () => {
-    readalls.value = false
+    announce_list.value = announce_list.value.map(ls=>{
+        ls.isShuf = 0
+        return ls
+    })
 }
 
-const read = (i) => {
-    console.log("已读")
+const read = (data) => {
+    data.isShuf = 0
 }
 
 /**
@@ -141,11 +144,15 @@ function get_list() {
             data.nt.unshift({
                 id: 0,
                 type: i18n_t('common.all_notice'),
+                isShuf: 0,
             });
             for (let i in data.nt) {
                 data.nt[i].title = data.nt[i].type;
             }
             announce_title.value = data.nt; //左侧菜单
+            announce_title.value =  announce_title.value.map((item) => {
+                return Object.assign(item,{isShuf:0})
+            })
             class_list = data.nl; //分类
             res_list = data.nb;
             announce_list.value = data.nb; //大列表

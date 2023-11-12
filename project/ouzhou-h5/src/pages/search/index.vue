@@ -42,8 +42,10 @@
 		</div>
 
 		<!-- 搜索展示 -->
-		<div class="content" v-show="(search_data.teamH5 && search_data.teamH5.length > 0) ||
-			(search_data.league && search_data.league.length > 0)">
+		<div style="height: 100%; overflow-y: auto;" v-show="(search_data?.teamH5 && search_data?.teamH5.length > 0) ||
+			(search_data?.league && search_data?.league.length > 0)">
+
+			<div class="content">
 			<!-- 球类 tabs -->
 			<div class="middle_info_tab" ref="tab_growp">
 				<div v-for="(item, index) in sport_kind_data" :key="item.id" @click="get_search_data(index, item.id)"
@@ -52,11 +54,11 @@
 			<ul class="list">
 				<div class="title">View all soccer</div>
 				<!-- 滚球 -->
-				<div v-show="search_data.bowling && search_data.bowling.length > 0">
+				<div v-show="search_data?.bowling && search_data?.bowling.length > 0">
 					<div class="middle_info_tab diff">
 						<div class="color">UNDERWAY</div>
 					</div>
-					<li v-for="(item, index) in search_data.bowling" :key="index" @click="suggestion_bowling_click(item)">
+					<li v-for="(item, index) in search_data?.bowling" :key="index" @click="suggestion_bowling_click(item)">
 						<div class="list_top">
 							<span v-html="red_color(item.tn)"></span><img :src="compute_local_project_file_path('image/svg/right_arrow.svg')" alt="">
 						</div>
@@ -96,11 +98,11 @@
 					</li>
 				</div>
 				<!-- 搜索 联赛 -->
-				<div v-show="search_data.league && search_data.league.length > 0">
+				<div v-show="search_data?.league && search_data?.league.length > 0">
 					<div class="middle_info_tab diff">
 						<div class="color">COMPETITIONS</div>
 					</div>
-					<li v-for="(item, index) in search_data.league" :key="index"
+					<li v-for="(item, index) in search_data?.league" :key="index"
 						@click="default_method_jump(item.leagueName, item.matchList[index])">
 						<div class="list_top">
 							<!-- 联赛icon -->
@@ -146,11 +148,11 @@
 					</li>
 				</div>
 				<!-- 搜索 队伍 -->
-				<div v-show="search_data.teamH5 && search_data.teamH5.length > 0">
+				<div v-show="search_data?.teamH5 && search_data.teamH5?.length > 0">
 					<div class="middle_info_tab diff">
 						<div class="color">TEAMS</div>
 					</div>
-					<li v-for="(item, index) in search_data.teamH5" :key="index" @click="default_method_jump(item.name, item)">
+					<li v-for="(item, index) in search_data?.teamH5" :key="index" @click="default_method_jump(item.name, item)">
 						<div v-if="item.tn">
 							<div class="list_top">
 								<span v-html="red_color(item.tn)"></span><img :src="compute_local_project_file_path('image/svg/right_arrow.svg')" alt="">
@@ -193,9 +195,10 @@
 				</div>
 			</ul>
 		</div>
+		</div>
 		<!-- 搜索 无结果 -->
-		<div class="content" v-show="(!(search_data.teamH5 && search_data.teamH5.length > 0) &&
-			!(search_data.league && search_data.league.length > 0) &&
+		<div class="content" v-show="(!(search_data?.teamH5 && search_data.teamH5?.length > 0) &&
+			!(search_data?.league && search_data.league?.length > 0) &&
 			(!show_hot || 
 			!show_history))"
 		>
@@ -413,20 +416,20 @@ const get_match_base_hps = lodash.debounce(() => {
  */
 let match_mid_Arr = [];
 const get_match_base_hps_by_mids = async () => {
-	if (!(search_data.value.teamH5 && search_data.value.teamH5.length > 0) &&
-			!(search_data.value.league && search_data.value.league.length > 0) && 
-			!(search_data.value.bowling && search_data.value.bowling.length > 0) 
+	if (!(search_data.value?.teamH5 && search_data.value?.teamH5.length > 0) &&
+			!(search_data.value?.league && search_data.value?.league.length > 0) && 
+			!(search_data.value?.bowling && search_data.value?.bowling.length > 0) 
 			) return;
 	// 拿到所有滚球，联赛，队伍 mid
-	search_data.value.teamH5.forEach((item, index) => {
+	search_data.value?.teamH5.forEach((item, index) => {
 		match_mid_Arr.push(item.mid)
 	})
-	search_data.value.league.forEach((item, index) => {
+	search_data.value?.league.forEach((item, index) => {
 		item.matchList.forEach((i, idx) => {
 			match_mid_Arr.push(i.mid)
 		})
 	})
-	search_data.value.bowling.forEach((item, index) => {
+	search_data.value?.bowling.forEach((item, index) => {
 		match_mid_Arr.push(item.mid)
 	})
 	if (match_mid_Arr.length < 1) return;
@@ -492,7 +495,8 @@ watch(
 <style lang="scss" scoped>
 .search-container {
 	background-color: #E2E2E2;
-	padding-bottom: 8px;
+	height: inherit;
+	overflow: hidden;
 }
 
 .top_info_search {
@@ -679,7 +683,7 @@ li {
 }
 
 .not_found {
-	height: 100vh;
+	height: calc(100% - 90px);
 	text-align: center;
 	margin: 86px 0;
 
