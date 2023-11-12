@@ -11,9 +11,9 @@
           <div class="nonebox4-content-left">
               <div class="nonebox4-content-left-content">
                   <div class="nonebox4-content-left-content-xian">删</div>
-                  <div class="nonebox4-content-left-info">
+                  <div class="nonebox4-content-left-info"> 
                     <div class="nonebox4-content-left-content-text">
-                      <div class="nonebox4-content-left-content-text-one">{{items.handicap}} <span class="text-one-span">0.25</span></div>
+                      <div class="nonebox4-content-left-content-text-one"><div class="nonebox4-content-left-content-text-one-tit">{{items.handicap}}</div> <span class="text-one-span">0.25</span></div>
                       <div class="nonebox4-content-left-content-text-two">{{items.matchType == 2?'[In-play]':''}} <span class="text-two-span">{{items.playName}}</span></div>
                       <div class="nonebox4-content-left-content-text-three">{{items.home}} v {{items.away}}</div>
                     </div>
@@ -49,17 +49,10 @@
 </script>
   
   <style lang="scss" scoped>
-  .content-right-closed{
-    width: 0.6rem;
-    height: 0.15rem;
-    font-size: 0.12rem;
-    border-radius: 0.01rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--q-gb-t-c-4);
-    color: var(--q-gb-t-c-3);
-    margin-top: 0.05rem;
+  .nonebox4-content-left-content-text-one-tit{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
   .content-right-duo{
     display: inline-block;
@@ -81,6 +74,9 @@
   .nonebox4-content-left-content-text-three{
     font-size: 0.16rem;
     color: var(--q-gb-bg-c-8);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
   .nonebox4-content-left-content-text-two{
     color: var(--q-gb-t-c-1);
@@ -93,6 +89,7 @@
   .nonebox4-content-left-content-text-one{
     font-size: 0.18rem;
     font-weight: 600;
+    display: flex;
   }
   .nonebox4-content-left-info{
     display: flex;
@@ -124,7 +121,8 @@
   }
   .nonebox4-content-left-content-text{
       line-height: 0.25rem;
-        margin-top: 0.02rem;
+      margin-top: 0.02rem;
+      width: calc(100% - 0.85rem);
   }
   .nonebox4-content-right-profit{
       font-size: 0.2rem;
@@ -133,6 +131,7 @@
   }
   .nonebox4-content-right{
     display: flex;
+    flex-direction: row-reverse;
   }
   </style>
   

@@ -12,8 +12,7 @@ import ws_composable_fn from "./match-list-ws.js";
 import PageSourceData  from  "src/core/page-source/page-source.js";
 import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/core/index.js";
 import MatchListCardClass from "src/core/match-list-pc/match-card/match-list-card-class.js";
-import filterHeader from 'src/core/filter-header/filter-header.js'
-let state = store.getState();
+import {get_match_template_id} from '../match-handle-data.js'
 const { mx_collect_count, set_collect_count } = collect_composable_fn();
 const { virtual_list_timeout_id, is_vr_numer } = virtual_composable_fn();
 const { show_mids_change } = ws_composable_fn();
@@ -22,11 +21,13 @@ const route=useRoute()
 const vx_filter_select_obj = ref([])
 
 
+
 const load_data_state = ref(null);
 let hot_match_list_timeout;
 let vx_layout_list_type = 'match'
 // 是否虚拟体育
 let is_virtual = MenuData.is_virtual_sport;
+const { route_name } = PageSourceData;
 //
 let is_search = PageSourceData.is_search();
 let is_show_hot = ref(false);
@@ -250,6 +251,10 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 const mx_use_list_res_when_code_200_and_list_length_gt_0 = ({match_list, collect, backend_run}) => {
 	is_show_hot.value = false;
 	console.log('lockie-3', match_list);
+	match_list?.forEach(match=>{
+		match.tpl_id=get_match_template_id(match)
+		console.log('tpl_id',match.tpl_id)
+	  })
   MatchListData.set_list(match_list)
 	// 计算赛事卡片
 	MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
@@ -270,7 +275,7 @@ const mx_use_list_res_when_code_200_and_list_length_gt_0 = ({match_list, collect
 				// this.mx_autoset_active_match();
 			}
 			// 非详情页 切换右侧为列表第一场赛事
-			else if (route?.name != "details") {
+			else if (route_name != "details") {
 				let first_match = match_list[0];
 				let params = {
 					media_type: "auto",
@@ -323,7 +328,7 @@ const mx_use_list_res_when_code_error_or_list_length_0 = (match_list) => {
 		// 如果是滚球并且不是全部  把当前菜单数量设为0  并自动切换菜单
 		let match_list_api_config = MenuData.match_list_api_config;
 		if (
-			route.name == "home" &&
+			route_name == "home" &&
 			MenuData.menu_root == "1" &&
 			match_list_api_config.sports != "quanbu-gunqiu"
 		) {
@@ -333,7 +338,7 @@ const mx_use_list_res_when_code_error_or_list_length_0 = (match_list) => {
 			};
 			MenuData.set_current_mi_0_and_change_menu();
 		} else if (
-			route.name == "home" &&
+			route_name == "home" &&
 			MenuData.menu_root != "500" &&
 			vx_layout_list_type !== "collect"
 		) {

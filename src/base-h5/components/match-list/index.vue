@@ -3,6 +3,7 @@
 -->
 <template>
   <div :class="['match-list-container', { empty_page: match_is_empty }]" :style="page_style">
+
     <template v-if="!match_is_empty">
       <component :is="target_com"></component>
     </template>
@@ -11,11 +12,10 @@
       <!-- 非收藏页 -->
       <NoData class="data-get-empty1" v-if='match_is_empty && !is_collcte_page' which='noMatch' height='400'></NoData>
       <!-- 收藏页 -->
-        <NoData class="data-get-empty2" v-if='match_is_empty && is_collcte_page'
-          :which='menu_type === 28 ? "noMatch" : "collect"' height='400'></NoData>
-      </template>
+      <NoData class="data-get-empty2" v-if='match_is_empty && is_collcte_page' :which='menu_type === 28 ? "noMatch" : "collect"' height='400'></NoData>
+    </template>
 
-      <SecondaryDescription />
+    <SecondaryDescription />
     </div>
 </template>
  
@@ -96,6 +96,7 @@ const target_com = computed(() => {
  * @description: 赛事列表为空通知事件函数
  */
 const upd_match_is_empty = (result) => {
+  console.log(result)
   // 当是赛果菜单,三级菜单数据没有时,发送列表赛事数据为空消息,收到消息后页面显示为空页面
   match_is_empty.value = result;
 }
@@ -135,6 +136,7 @@ const clear_timer = () => {
 
 .empty_page {
   height: 100%;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;

@@ -12,9 +12,10 @@
       <router-view />
 
       <!-- 投注框 -->
-      <BetBoxWapper use_component_key="BetOuzhouH5">123456789</BetBoxWapper>
+      <BetBoxWapper use_component_key="BetOuzhouH5"></BetBoxWapper>
+      
 
-     
+       <bet-bar class="bar-top"></bet-bar>
       <FooterWapper />
 
     </q-page-container>
@@ -34,6 +35,8 @@ import {
 } from "vue";
 
 
+import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
+import betBar from "src/base-h5/components/bet/bet-ouzhou-h5/bet-bar.vue";
 import { MenuWapper } from "src/base-h5/components/menu";
 import { TopMenuWapper } from "src/base-h5/components/top-menu/"
 import { BetBoxWapper } from "src/base-h5/components/bet";
@@ -180,6 +183,18 @@ if (UserCtr.get_user_token()) {
 }
 </script>
 <style lang="scss" scoped>
+.bar-top{
+  position: relative;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    height: 56px;
+    box-shadow: 0px -2px 4px 0px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    bottom: 56px;
+    width: 100%;
+    z-index: 900;
+}
 .select-mask {
   position: fixed;
   width: 100vw;

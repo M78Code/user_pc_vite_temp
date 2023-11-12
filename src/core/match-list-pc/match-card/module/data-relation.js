@@ -91,14 +91,14 @@ const set_match_list_mapping_relation_obj_type = () => {
   if (PROJECT_NAME == 'ouzhou-pc') {
     if (
       (page_source == "hot" && MenuData.match_list_api_params.euid != 30199) ||
-      ["today", "early", "bet"].includes(page_source)
+      ["today", "early", "bet",'match-play-common'].includes(page_source)
     ) {
       type = 9
     } else {
       type = 8
     }
   }
-  MatchListCardData.match_list_mapping_relation_obj_type = type;
+  return   type
 };
 
 /**
@@ -149,13 +149,14 @@ export const compute_match_list_style_obj_and_match_list_mapping_relation_obj =
   (match_list, is_ws_call, is_remove_call) => {
     let current_csid = MenuData.left_menu_result.lv1_mi;
     // 虚拟体育 不走卡片逻辑
-    if (MenuData.menu_root == 300) {
+    if (MenuData.is_vr()) {
       MatchListCardData.is_run_card_function = false;
       return;
     } else {
       MatchListCardData.is_run_card_function = true;
     }
-    set_match_list_mapping_relation_obj_type();
+  MatchListCardData.match_list_mapping_relation_obj_type = set_match_list_mapping_relation_obj_type();
+  console.log('match_list_mapping_relation_obj_type',MatchListCardData.match_list_mapping_relation_obj_type)
     // 非ws调用  清空卡片数据
     if (!is_ws_call) {
       MatchListCardData.match_list_render_key++;
