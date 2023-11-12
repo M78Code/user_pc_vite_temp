@@ -159,6 +159,9 @@ class MatchMeta {
    */
     handler_match_list_data(config) {
 
+      // 重置
+      this.init()
+
       const { list, type = 2, is_virtual = true } = config
 
       const length = lodash.get(list, 'length', 0)
@@ -288,12 +291,6 @@ class MatchMeta {
     // 虚拟列表计算
     VirtualList.set_match_mid_map_base_info(match, template_config.match_template_config)
 
-    // 赛事收藏处理
-    // MatchCollect.handle_collect_state(match)
-    // // 初始化赛事收藏
-    // MatchCollect.set_match_collect_state(t)
-    // // 初始化联赛收藏状态
-    // MatchCollect.set_league_collect_state(t.tid)
   }
 
   /**
@@ -403,7 +400,7 @@ class MatchMeta {
   }
 
   /**
-   * @description 赛果不走元数据， 直接掉接口 不需要走模板计算以及获取赔率
+   * @description 赛果不走元数据， 直接掉接口 不需要走模板计算以及获取赔率，需要虚拟列表计算
    */
   async get_results_match () {
     const md = lodash.get(MenuData.result_menu_api_params, 'md')
@@ -544,6 +541,10 @@ class MatchMeta {
    * @param { res } 接口返回对象
    */
   handle_custom_matchs (res) {
+
+    // 重置
+    this.init()
+
     if (+res.code !== 200) return
     const list = lodash.get(res, 'data', [])
     const length = lodash.get(list, 'length', 0)
