@@ -130,9 +130,9 @@ const props = defineProps({
   }
 })
 const match_type = {
-  1: 'Prematch',
-  2: 'In-Play',
-  3: 'Outrights'
+  1: i18n_t("bet.morning_session"),
+  2: i18n_t("list.list_today_play_title"),
+  3: i18n_t("menu.match_winner")
 }
 const { columns, tableData, total, loading, handle_fetch_order_list } = useGetOrderList()
 const labelClick = (row) => {
@@ -144,7 +144,7 @@ watch(() => props.current_tab, (newVal) => {
   if (newVal == 'settled') {
     columns.value[5] = {
       name: 'return',
-      label: 'Return',
+      label: i18n_t("common.donate_win"),
       align: 'center',
       field: 'return'
     }
@@ -152,7 +152,7 @@ watch(() => props.current_tab, (newVal) => {
   } else {
     columns.value[5] = {
       name: 'highestWin',
-      label: 'Highest Win',
+      label: i18n_t("common.maxn_amount_val"),
       align: 'center',
       field: 'highestWin'
     }

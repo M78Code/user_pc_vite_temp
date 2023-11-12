@@ -1,5 +1,21 @@
 
 {
+    "ouzhou": {
+        "record": {
+            "my_bet": "My Bets",
+            "unsettled": "Unsettled",
+            "settled": "settled",
+            "unpaid_bets": "This record will show all unpaid bets",
+            "settled_time": "Settled time",
+            "bet_time": "Bet time",
+            "match_time": "Match time",
+            "today": "Today",
+            "yesterday": "Yesterday",
+            "7_days": "Last 7 Days",
+            "30_days": "In 30 Days",
+            "datails": "Datails"
+        }
+    },
     "analysis": {
         "age": "age",
         "away_win": "Away",
@@ -322,6 +338,7 @@
     },
     "collect": {},
     "common": {
+        "mission_center": "mission center",
         "in_box": "In the box......",
         "collect_toast":"Failed to add to favourites, please try again later",
         "account": "Account",

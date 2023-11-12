@@ -326,7 +326,7 @@ function init_site_header(type = null) {
   if (activityList && activityList.length > 0 && UserCtr.lang == 'zh' && globalAccessConfig.get_activitySwitch()) {
     site_header_data.hasActivity = true;
     // 向顶部导航栏添加活动入口
-    let tab = { id: 9, tab_name: "任务中心", img_src: '', class: "activity_center animate-activity-entry activity_dot_bonus", path: "/activity", _blank: true };
+    let tab = { id: 9, tab_name: i18n_t("common.mission_center"), img_src: '', class: "activity_center animate-activity-entry activity_dot_bonus", path: "/activity", _blank: true };
     // 获取活动入口的图片
     let imgUrl = activityList.find(item => item.pcUrl != '');
     if (imgUrl) {
