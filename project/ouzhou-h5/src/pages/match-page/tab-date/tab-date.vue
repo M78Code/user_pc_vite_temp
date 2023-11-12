@@ -147,7 +147,7 @@ onMounted(() => {
     MenuData.set_date_time(week[0].val);
     second_tab_index.value = index;
     MenuData.set_date_time(item.val, item.type);
-    emit("changeDate", MenuData.menu_match_date_params);
+    // emit("changeDate", MenuData.menu_match_date_params);
 })
 /**
  * 默认请求今日数据
