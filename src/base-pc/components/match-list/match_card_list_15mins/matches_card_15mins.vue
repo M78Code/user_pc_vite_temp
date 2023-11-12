@@ -1,10 +1,3 @@
-<!--
- * @Author: lockie
- * @Date: 2023-07-01 13:38:48
- * @LastEditors: Please set LastEditors
- * @LastEditTime: 2023-07-17 14:45:30
- * @FilePath: \user-pc-vue3\src\components\match_list\match_card_list_15mins\matches_card_15mins.vue
--->
 <template>
   <div class="sport">
     <div class="competing-time">
@@ -20,7 +13,7 @@
       {{ current_tab.man }}
     </div>
     <div class="odds-box din_font">
-      <div class="odds-box-item" 
+      <!-- <div class="odds-box-item" 
         v-for="item in (current_tab.current_ol[0] || {}).ol || []" 
         :key="item.oid"
         @click="checked_current_td({payload: current_tab, hps: current_tab.current_ol[0], ol: item, is15mins: true})"
@@ -28,21 +21,32 @@
       >
         <span>{{ item.ot }}</span>
         <span>{{ Math.floor(item.ov / 1000) / 100 }}</span>
-      </div>
+      </div> -->
     </div>
+    <!-- <div class="odds-box din_font">
+      <div class="odds-box-item" 
+        v-for="(item, index) in ols" 
+        :key="index"
+        @click="checked_current_td({payload: current_tab, hps: current_tab.current_ol[0], ol: item, is15mins: true})"
+        :class="{checked: item.oid == current_check_betId }"
+      >
+        <span>{{ item.ot }}</span>
+        <span>{{ Math.floor(item.ov / 1000) / 100 }}</span>
+      </div>
+    </div> -->
   </div>
 </template>
 
 <script setup>
 
-  import { ref, watch } from 'vue';
+  import { onMounted, ref, watch } from 'vue';
   import _ from 'lodash';
 
   // import store from 'src/store-redux-vuex/index.js';
   import { storage_bet_info, storage_bet_id } from 'src/core/bet/module/bet_info.js'
   import MatchListOuzhouClass from 'src/core/match-list-pc/match-ouzhou-list.js'
-
   import sport_icon from "src/base-pc/components/match-list/sport_icon.vue";
+  import { get_15mins_odds_list } from "src/core/match-list-pc/list-template/module/template-101.js"
 
   // let state = store.getState();
   const props = defineProps({
@@ -51,8 +55,13 @@
       default: () => {},
     },
   });
-  
   const current_check_betId = ref(MatchListOuzhouClass.current_check_betId.value);
+  const ols = ref([])
+
+  onMounted(() => {
+    ols.value = get_15mins_odds_list().ols
+    console.log(ols.value, 'get_15mins_odds_list', props)
+  })
 
   // // 监听 当前投注项ID的变化
   watch(
@@ -64,6 +73,7 @@
 
   // 选中当前td 使td高亮 且将投注信息存储到数据仓库中
   const checked_current_td = payload => {
+    console.log(payload)
     // 锁盘状态不高亮
     if (payload.hps.hs) {
       return;

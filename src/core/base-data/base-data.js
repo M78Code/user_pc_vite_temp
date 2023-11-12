@@ -61,7 +61,7 @@ class BaseData {
     this.mids_arr = [];
     //赛事基础数据  map
     this.mids_map = {};
-    //菜单版本
+    //菜单版本set_vr_mi_config
     this.menu_version = 1;
     // 菜单 国际化 数据  map
     this.menus_i18n_map = [];
@@ -529,7 +529,7 @@ class BaseData {
         this.is_mi_300_open = true;
       }
 
-      // console.warn('left_menu',left_menu)
+      // console.warn('left_menu',left_menu)get_virtual_menuvr
       // console.warn('菜单数据处理完成-----')
       // 数据对比替换
 
@@ -565,13 +565,10 @@ class BaseData {
 
     //   let mi_300_obj =  this.mew_menu_list_res.find(x=>x.mi==300)
     // let sl= mi_300_obj['sl']||[]
-
     // let res_obj ={}
     //     sl.map(x=>{
     //       let xmi= x.mi
-
     //       x.csid=  xmi.substring(1)
-
     //       res_obj[`mi_${xmi}`]=x
     //     })
     //     console.error("set_vr_mi_config----------", res_obj);

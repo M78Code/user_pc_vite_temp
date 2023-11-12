@@ -1,11 +1,3 @@
-<!--
- * @Author         : lane jstylane@itcom888.com
- * @Date           : 2023-07-15 19:17:42
- * @LastEditors    : lane jstylane@itcom888.com
- * @LastEditTime   : 2023-07-16 21:06:06
- * @FilePath       : \user-pc-vue3\src\components\matches_header\matches_filter_tab.vue
- * @Description    : 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
--->
 <template>
   <div class="current-filter-wrap">
     <div class="current-filter-tab" v-for="(item, index) in current_filter_list" :key="item.value">
@@ -19,11 +11,13 @@
 </template>
 
 <script setup>
-  import { api_base_data } from "src/api/index.js";
-  import { ref,onMounted,onUnmounted } from 'vue';
+  import { ref,onMounted,onUnmounted, watch, nextTick } from 'vue';
   import _ from "lodash"
-  import { utils } from "src/base-pc/utils/utils";
   import MatchListOuzhouClass from 'src/core/match-list-pc/match-ouzhou-list.js'
+  import BaseData from "src/core/base-data/base-data.js";
+  import { UserCtr,MenuData } from 'src/core/index.js'
+  import { api_common } from "src/api/index.js";
+  import DateTabClass from "src/base-pc/components/tab/date-tab/date-tab-class.js"
 
   const current_choose_tab = ref('');
 
@@ -35,11 +29,10 @@
     let redux_menu = _.cloneDeep(MatchListOuzhouClass.redux_menu) 
     // 修改菜单数据
     //redux_menu.mid_tab_menu_type = ''
-
     MatchListOuzhouClass.set_menu(redux_menu)
+    get_date_menu_list()
   })
  
- const set_time = ref(0) 
  const menu_id = ref(0)
 
   // 监听 tab切换变化
@@ -53,78 +46,60 @@ let un_subscribe = () => {
   // 左侧菜单切换 并且 赛种id不能相同
   if( menu_root == 4 && (menu_id.value != menu_left )){
     menu_id.value = menu_left
-    clearTimeout(set_time.value)
-    // 节流
-    set_time.value = setTimeout(() => {
-      get_sport_ealy_date(menu_id_euid_ealy)
-    }, 800);
   }
 
 };
 
-
 /**
- * 接口返回数据的 wapper
- */
-const set_ses_wapper = (res, default_value) => {
-  let result = default_value;
-  let data = (res || {}).data;
-  if (data && (data.code == "0000000" || data.code == "200")) {
-    result = data.data;
+* 获取 日期 菜单
+* nu/getDateMenuList
+*/
+async function get_date_menu_list() {
+  let params =  DateTabClass.compute_get_date_menu_list_params();
+  let api_fn_name = ''
+  if (MenuData.is_export()) {
+    //电竞
+    api_fn_name = "get_esports_date_menu"
+  } else {
+    api_fn_name = "post_date_menu"
   }
-  return result;
+  let res = await api_common[api_fn_name](params);
+  let data = res.data;
+  let arr = [];
+  if (Array.isArray(data)) {
+    data.map((x) => {
+      if(x.field1){
+        arr.push({
+          count: x.count,
+          value: x.field1,
+          label: x.menuName,
+        });
+     }
+    });
+  }
+  current_filter_list.value = [{label:"Today",value:""}, ...arr]
+  DateTabClass.handle_click_menu_mi_3_date(current_filter_list.value[0])
 }
 
-const get_sport_ealy_date = async euid => {
-
-  let result = []
-  const _obj = {
-    axios_api: api_base_data.post_date_menu,
-    error_codes:['0401038'],
-    params: { euid },
-    time:2000,
-    max_loop:1,
-    fun_then: res => {
-      result = _.get(res, "data.data");
-      const date_list = []
-      
-      result.forEach(item=>{
-        if(item.field1){
-          date_list.push({
-            value:item.field1,
-            label:item.menuName,
-            count: item.count
-          })
-        }
-      })
-
-      current_filter_list.value = [{label:"Today",value:""},...date_list]
-
-    },
-    fun_catch: err => {
-      // 连续3次请求无响应则返回列表页
-      current_filter_list.value = [{label:"Today",value:""}]
-    }
-  }
-
-  utils.axios_api_loop(_obj);
-  
-}
-
-  
+watch(MenuData.menu_data_version,()=>{
+  nextTick(()=>{
+    get_date_menu_list()
+  })
+})
   /**
    * @param
    */
-  const choose_filter_tab = payload => {
+  const choose_filter_tab = item => {
     // 获取最新的 数据
     let redux_menu = _.cloneDeep(MatchListOuzhouClass.redux_menu) 
     // 修改菜单数据
-    redux_menu.mid_tab_menu_type = payload.value
+    redux_menu.mid_tab_menu_type = item.value
 
     MatchListOuzhouClass.set_menu(redux_menu)
 
-    current_choose_tab.value = payload.value
-    
+    current_choose_tab.value = item.value
+
+    DateTabClass.handle_click_menu_mi_3_date(item)
   }
 
   onUnmounted(()=>{

@@ -23,10 +23,20 @@ class VirtualList {
     this.match_mid_map_height = ref({})
     // 容器总高度
     this.container_total_height = 0;
+    // 是否需要显示球种类别 (欧洲版 有的需要，有的不需要， 默认需要， 不需要得页面需提前设置)
+    this.is_show_ball = true
 
     this.already_folded = 0;
     this.mid_dom_height_dict = {};
     this.match_height_map_list = []
+  }
+
+  /** 
+   * @description  设置是否需要显示球种类别
+   * @param { Boolean } val
+   */
+  set_is_show_ball (val) {
+    this.is_show_ball = val
   }
   /**
    * @description 设置 赛事 mid 虚拟高度 映射
@@ -76,6 +86,7 @@ class VirtualList {
     // 模板预设高度
     const { reduce_buffer_height, match_stage_height, show_league_height, playing_title_height, main_handicap_height, ball_title_height } 
       = template_config.match_template_config
+
     // 要减去的缓冲高度 
     const buffer_height = 2
     // --------- 以下是赛事高度计算逻辑  只要有改动均需看下其他 H5 项目有没有影响 改动需谨慎； 特别配置去模板默认配置加上 ------------------------------------
@@ -85,7 +96,7 @@ class VirtualList {
     // 显示开赛、未开赛 match_stage_height - 缓冲高度
     if (match_stage_height && [1, 2].includes(+start_flag)) total += match_overlap_height
     // 显示球种类别
-    if (is_show_ball_title) total += ball_title_height
+    if (this.is_show_ball && is_show_ball_title) total += ball_title_height
     // 本来应该是 联赛高度 show_league_height + 缓存容器高度 5 = 31； 
     // 但是并不需要那么高的间隙（赛事之间的间隙， 取缓存容器的高度） 所以减去 buffer_height ； 赛事之间相叠避免漏光
     if (is_show_league && show_card) {
@@ -107,6 +118,7 @@ class VirtualList {
    * @returns 
    */
   compute_current_page_render_list (scrollTop = 0) {
+    this.clear_virtual_info()
     // 计算总高度
     this.compute_container_total_height()
     // 可视区高度
@@ -172,6 +184,15 @@ class VirtualList {
    */
   get_match_height_key (mid) {
     return `mid_height_${mid}`
+  }
+
+  /**
+   * @description 清除折叠信息
+   */
+  clear_virtual_info () {
+    this.mid_top_map = {}
+    this.container_total_height = 0
+    this.match_mid_map_height.value = {}
   }
 
   // 计算 容器 总高度

@@ -50,7 +50,7 @@ const score_data = computed(() => {
   const hpid = MatchResponsive.match_hpid.value
   const hps_item = hps && hps.find(t => t.hpid == hpid)
   const ol = lodash.get(hps_item, 'hl[0].ol', Array.from({ length: props.score_length }, (i) => { return {  oid: i } }))
-  return ol
+  return ol.sort((a, b) => a.otd - b.otd)
 })
 
 // 显示的赔率

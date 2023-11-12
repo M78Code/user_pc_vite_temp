@@ -12,7 +12,7 @@
             <template #right>
                 <div class="main-menu-right">
                     <!-- <span class="main-menu-right-symbol">￥</span> -->
-                    <img :src="compute_local_project_file_path('/image/svg/home/coin.svg')" alt="">
+                    <img :src="compute_local_project_file_path('/image/svg/home/coin.svg')" alt="" style="margin-right: 4px;">
                     <span class="main-menu-right-money">{{ format_money2(balance) }}</span>
                 </div>
             </template>

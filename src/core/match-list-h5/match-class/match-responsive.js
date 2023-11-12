@@ -14,6 +14,8 @@ class MatchResponsive {
     this.ball_seed_count = ref({})
     // 球种对应的下拉玩法  ouzhou-h5 
     this.ball_seed_play_methods = ref({})
+    // 联赛对应的数量
+    this.ball_seed_league_count = ref({})
   }
 
   /**
@@ -52,6 +54,27 @@ class MatchResponsive {
     !this.ball_seed_play_methods.value[key] && Object.assign(this.ball_seed_play_methods.value, {
       [key]: value
     })
+  }
+
+  /**
+   * @description 设置联赛对应的数量
+   * @param {string} tid 
+   */
+  set_ball_seed_league_count (tid) {
+    const key = `tid_${tid}`
+    if (this.ball_seed_league_count.value[key]) {
+      this.ball_seed_league_count.value[key]++
+    } else {
+      Object.assign(this.ball_seed_league_count.value, {
+        [key]: 1
+      })
+    }
+  }
+  /**
+   * @description 清除联赛对应的数量
+   */
+  clear_ball_seed_league_count () {
+    this.ball_seed_league_count.value = {}
   }
 }
 

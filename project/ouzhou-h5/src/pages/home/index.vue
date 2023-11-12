@@ -42,7 +42,7 @@
         </q-tab-panel>
         <!-- top Events page -->
         <q-tab-panel name="top_events">
-          <scroll-list menu_type="5000" :is_show_badge="false" :current_mi="state.current_mi" :menuList="MenuData.top_events_list" @changeMenu="changeMenu"/>
+          <scroll-list menu_type="5000" v-if="MenuData.top_events_list.length" :is_show_badge="false" :current_mi="state.current_mi" :menuList="MenuData.top_events_list" @changeMenu="changeMenu"/>
           <!-- 赛事列表 -->
           <section class="match-page-section">
             <MatchContainer />
@@ -177,7 +177,12 @@ const leagues_matchs = ref([{
 
 const tabValue = ref('featured');
 // tabs 切换
-const on_update = () => {
+const on_update = (val) => {
+  if (val === 'featured') {
+    get_ouzhou_home_data()
+  } else {
+    MatchMeta.get_top_events_match()
+  }
 }
 
 </script>
@@ -194,7 +199,7 @@ const on_update = () => {
         background: #fff;
         padding: 0 10px;
         background-repeat: no-repeat;
-        // background-image: url("src/assets/images/featured/mask.png");
+        background-image:url($SCSSPROJECTPATH + "/image/list/mask_group.png");
         background-size: contain;
         background-position: right;
         .q-tab{

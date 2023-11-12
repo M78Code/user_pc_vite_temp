@@ -109,7 +109,6 @@
     let cus_tid = ''
     // 遍历所有赛事数据
     let match_status_type_arr = ['livedata','nolivedata']
-    
     match_status_type_arr.forEach(match_status_type => {
       // 已开赛、未开赛的赛事数量计算
       let match_status_type_match_count = 0
@@ -239,7 +238,6 @@
           // 是ws调用
           delete all_card_obj[card_key].load_data_status
         }
-
       })
       // 设置赛事数量
       if(match_status_type_match_count > 0){
@@ -249,6 +247,7 @@
     // MatchListCardData.set_all_card_obj(all_card_obj)
     // 合并所有卡片样式对象
     // 已开赛 到卡片key的 映射对象
+    console.log('match_list_card_key_arr', match_list_card_key_arr);
     MatchListCardData.set_all_card_obj({
       // 合并所有卡片样式对象
         all_card_obj,

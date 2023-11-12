@@ -8,11 +8,11 @@
 <template>
   <div class="detail-top-info">
     <div class="sport-info" @click="toHome">
-      <span>Football</span>
+      <span>{{BaseData.menus_i18n_map[MenuData.menu_mi.value]}}</span>
       <img class="bakc-icon" src="../img/back.png" alt="" />
     </div>
-    <div class="detail-select">
-      <div class="detail-select-nav">
+    <div class="detail-select" v-if="drop_down_list.length">
+      <div class="detail-select-nav" >
         <q-btn class="label" >
         <span class="btn-label">{{ drop_down_list[active].name }}</span>
         <q-menu class="detail-top-pop">
@@ -60,36 +60,41 @@
 import { ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import { useMittEmit, MITT_TYPES } from "src/core";
+import BaseData from "src/core/base-data/base-data.js";
+import { MenuData } from 'src/core/';
 const router = useRouter();
 const refresh_is_active = ref(false);
 const active = ref(0);
 const show_list = ref(false);
 const detail_top_pop = ref(null);
+/**
+ * 联赛数据
+ */
 const drop_down_list = ref([
-  {
-    mid:1,
-    name:"联赛联赛11111",
-    mhn:"美国",
-    man:"日本"
-  },
-  {
-    mid:2,
-    name:"联赛联赛22222",
-    mhn:"美国",
-    man:"日本"
-  },
-  {
-    mid:3,
-    name:"联赛联赛33333",
-    mhn:"美国",
-    man:"日本"
-  },
-  {
-    mid:4,
-    name:"联赛联赛44444",
-    mhn:"美国",
-    man:"日本"
-  }
+  // {
+  //   mid:1,
+  //   name:"联赛联赛11111",
+  //   mhn:"美国",
+  //   man:"日本"
+  // },
+  // {
+  //   mid:2,
+  //   name:"联赛联赛22222",
+  //   mhn:"美国",
+  //   man:"日本"
+  // },
+  // {
+  //   mid:3,
+  //   name:"联赛联赛33333",
+  //   mhn:"美国",
+  //   man:"日本"
+  // },
+  // {
+  //   mid:4,
+  //   name:"联赛联赛44444",
+  //   mhn:"美国",
+  //   man:"日本"
+  // }
 ]);
 // /**
 //  * @description: 返回上一页
@@ -148,11 +153,23 @@ const refresh = () => {
   .sport-info {
     color: #ffd5b2;
     width: 18%;
+    span{
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      width: 80%;
+      display: inline-block;
+      height: 100%;
+      line-height: 100%;
+      vertical-align: middle;
+      margin-top: -2px;
+    }
     .bakc-icon {
       width: 5px;
       height: 8px;
       vertical-align: middle;
       margin-left: 6px;
+      margin-top: -2px;
     }
   }
   .detail-select {

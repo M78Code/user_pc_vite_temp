@@ -96,16 +96,9 @@
       if (code == 200 && data) {
         // 待确认中的提前结算单
         provided_.value = data
-      }
-      // 弹窗显示接口获取列表后延迟
-      // timer_1.value = setTimeout(() => {
-      //   let el = unsettle_child.value
-      //   el.check_early_order()
-      //   el.search_early_money()
-      // }, 800);    
+      }  
     })
   })
-  //   ...mapMutations(['set_main_item']),
   /**
    *@description 高度计算
    *@return {Undefined} undefined
@@ -138,9 +131,6 @@
   }
   onUnmounted(() => {
     store.dispatch({ type: "SET_MAIN_ITEM", data: 0 })
-    // for (const key in $data) {
-    //     $data[key] = null
-    //   }
   })
   </script>
   

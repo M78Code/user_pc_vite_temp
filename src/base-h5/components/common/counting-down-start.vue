@@ -3,7 +3,7 @@
   <!--凡是小于一个小时开赛的都显示为 * 分钟后开赛-->
         <div v-show="show && +start_minutes > 0" :mid="match.mid" style="color:#7d87a5">
           <div :class="{ 'counting-down-start': get_lang != 'en' }">
-            {{ i18n_t('list.after_time_start', [+start_minutes]) }}
+            {{ i18n_tc('list.after_time_start', [+start_minutes]) }}
     </div>
   </div>
 </template>
@@ -11,7 +11,7 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount, watch } from 'vue'
 import { useMittEmit, MITT_TYPES } from "src/core/mitt"
-import { i18n_t } from "src/boot/i18n.js";
+import { i18n_t, i18n_tc } from "src/boot/i18n.js";
 import PageSourceData from "src/core/page-source/page-source.js";
 
 const props = defineProps({

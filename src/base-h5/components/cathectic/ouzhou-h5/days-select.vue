@@ -6,7 +6,7 @@
         </span>
         <q-slide-transition>
             <ul v-if="showList" @click.stop>
-                <li v-for="(item, index) in list" :key="index" @click="change(index)">{{ item.title }}</li>
+                <li v-for="(item, index) in list" :key="index" :class="{'active': index === _index}" @click="change(index)">{{ item.title }}</li>
             </ul>
         </q-slide-transition>
     </div>
@@ -67,6 +67,15 @@ onUnmounted(() => {
         li {
             font-size: 0.14rem;
             line-height: 2.5;
+            text-wrap: nowrap;
+            padding: 0 0.08rem;
+            border-bottom: 1px solid var(--q-gb-bg-c-11);
+            &:last-child {
+                border-bottom: none;
+            }
+            &.active {
+                color: var(--q-gb-bg-c-12);
+            }
         }
     }
 }

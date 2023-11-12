@@ -42,10 +42,10 @@ watch(() => route.path, (newVal) => {
 )
 
 const jumpTo = ()=>{
-
+// console.log(111111,route)
  
   router.push({
-    path:route.query.resource
+    name:'home'
   })
 }
 

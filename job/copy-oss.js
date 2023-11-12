@@ -17,10 +17,8 @@ import { import_json_data } from "./util.js";
 
 // 本次打包的 客户端版本
 import BUILD_VERSION_CONFIG from "./output/version/build-version.js";
-const { BUILD_VERSION, CURRENT_ENV } = BUILD_VERSION_CONFIG;
-// 本次打包的 目录
-import BUILD_DIR_CONFIG from "./output/dir/index.js";
-let BUILD_DIR_NAME = BUILD_DIR_CONFIG.BUILD_DIR_NAME;
+const { BUILD_VERSION, CURRENT_ENV,BUILD_DIR_NAME } = BUILD_VERSION_CONFIG;
+ 
 // 命令行参数
 const argv_param = ("" + process.argv[2]).trim();
 // is_dist  是 true 则 则 目录在 dist/spa 下生成oss 目录

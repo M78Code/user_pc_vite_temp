@@ -62,20 +62,19 @@
       if (code == 200 && data) {
         // 待确认中的提前结算单
         provided_.value = data
-      }
-      // 弹窗显示接口获取列表后延迟
-      // timer_1.value = setTimeout(() => {
-      //   let el = unsettle_child.value
-      //   el.check_early_order()
-      //   el.search_early_money()
-      // }, 800);    
+      } 
     })
   })
-  //   ...mapMutations(['set_main_item']),
   
   const change_record = (key) => {
     //已选中状态下不能点击
     if (BetRecordClass.selected === key) return;
+    // 已结算页面切换=>未结算页面，重置未结算页面筛选条件
+    if(key === 0) {
+      const $el = cathecticItem.value
+      $el.timeType = 1
+      $el.sortChange(2, true)
+    }
     BetRecordClass.set_selected(key);  
   }
   </script>

@@ -1749,7 +1749,8 @@
     "msg_nodata_19": "Đặt hẹn",
     "msg_nodata_20": "Hi, thật không may, mất trang rồi",
     "msg_nodata_21": "Đừng lo, click “làm mới” tìm lại ngay",
-    "msg_nodata_22": "Đang có quá nhiều khách truy cập, mời thử lại sau"
+    "msg_nodata_22": "Đang có quá nhiều khách truy cập, mời thử lại sau",
+    "msg_nodata_23": "Sắp ra mắt"
   },
   "myScroll": {
     "msg1": "Kéo xuống để làm mới",

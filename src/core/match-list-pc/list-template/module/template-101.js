@@ -44,19 +44,20 @@ import * as TemplateCommon from "./template-common.js"
 // 用于 拿取当前 用户选择的赔率模板
 // 这里传入的 是我们的玩法id
 export const get_current_odds_list = ({ first_hpid, second_hpid }) => {
-  let first_odds_list = null;
-  let second_odds_list = null;
-  template_101.main_handicap_list.forEach(item => {
-    if (first_hpid == item._hpid) {
-      first_odds_list = item
-    }
-    if (second_hpid == item._hpid) {
-      second_odds_list = item
-    }
-  })
-  return [ first_odds_list, second_odds_list ]
+  let odds_list =  TemplateCommon.get_current_odds_list(template_101.main_handicap_list, { first_hpid, second_hpid })
+  return odds_list
 }
 
+export const get_15mins_odds_list = () => {
+  // 这里拿到的是15分钟赔率模板  目前应该是默认展示第一个1 X 2
+  let hps15mins_data = TemplateCommon.hps_15_minute;
+  return hps15mins_data[0];
+}
+// 获取hots赔率模板
+export const get_hots_odds_list = () => {
+  let hots_odds_list = TemplateCommon.get_hots_odds_list(template_101.main_handicap_list)
+  return hots_odds_list;
+}
 
 //   列表宽度计算模板
 export const  width_config ={
@@ -72,7 +73,7 @@ export const  width_config ={
    * @Description 设置模板table宽度
    * @param {number} total_width 列表总宽度
   */
-  export  const set_template_width=(total_width= 1180)=>{
+  export  const set_template_width=(total_width)=>{
     let base_config=  TemplateCommon.set_ouzhou_template_width_base(total_width, width_config)
     // 加工 base_config 
     return base_config

@@ -58,7 +58,7 @@
               <IconWapper color="#c9c9c9" name="icon-arrow" size="15px" :class="['icon-wapper', {'close': collapsed}]" />
             </span>
           </div>
-          
+
         </div>
         <!-- 卡片主内容 -->
         <!-- <q-slide-transition> -->
@@ -117,7 +117,7 @@
                       <CountingDownStart :match="match" :index="i" :mgt_time="match.mgt"></CountingDownStart>
                     </div>
                     <!--倒计时或正计时-->
-                    <div v-if="match.ms != 110 && show_counting_down(match)" 
+                    <div v-if="match.ms != 110 && show_counting_down(match)"
                       :class="['counting-down-up-container relative-position', { 'special-match-container': match.mfo || [0, 31].includes(+match.mmp) }]">
                       <!--足球csid:1 冰球csid:4 橄榄球csid:14 DotaCsid:101 累加 排球csid:9 倒计时-->
                       <CountingDownSecond ref="counting-down-second" :title="mmp_map_title" :mmp="match.mmp"

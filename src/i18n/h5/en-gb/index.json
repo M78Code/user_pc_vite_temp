@@ -247,6 +247,7 @@
     "bet_sum_val": "Stake",
     "bet_suopan_info": "The odds are being updated, please wait a second !",
     "bet_time": "Betting Time",
+    "settle_time": "settled Time",
     "bet_val": "Place Bet",
     "bet_val2": "Bet Amount",
     "bet_win": "Win",
@@ -278,7 +279,10 @@
     "successful_betting": "Bet Placed",
     "total_bet_amount": "Total Stake",
     "total_winable_amount": "To Return",
-    "result_score": "Results"
+    "result_score": "Results",
+    "number": "Number",
+    "bet": "Bet",
+    "l/w": "Lose/Win"
   },
   "pre_record": {
     "book_one": "Book",
@@ -1783,7 +1787,8 @@
     "msg_nodata_19": "Book",
     "msg_nodata_20": "Hi, unluckily, the page got lost",
     "msg_nodata_21": "Don't worry, click \"Refresh\" to retrieve~",
-    "msg_nodata_22": "Too much traffic, please try again later"
+    "msg_nodata_22": "Too much traffic, please try again later",
+    "msg_nodata_23": "Coming soon"
   },
   "myScroll": {
     "msg1": "Pull to refresh",

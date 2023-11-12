@@ -6,7 +6,7 @@
     :style="{ marginTop: is_hot ? '0' : '' }">
     <template v-if="match" >
       <!-- 体育类别 -->
-      <header class="match-header" v-if="show_sport_title">
+      <header class="match-header" v-if="show_sport_title" @click.stop="handle_ball_seed_fold">
         <div>
           <SportIcon size="20"  :status="false" :sport_id="String(Number(match.csid ) + 100)" />
           <span>{{ match.csna }}</span>
@@ -61,7 +61,7 @@
                 </div>
               </template>
               <template v-else>
-                <span class="number">{{ get_match_count }}</span>
+                <span class="number">{{ get_ball_seed_league_count }}</span>
               </template>
             </div>
           </div>
@@ -1134,6 +1134,11 @@ export default {
       align-items: center;
     }
   }
+  :deep(.start-counting-down){
+    .counting-down-start{
+      font-size: 13px;
+    }
+  }
 
   &.simple {
     height: 0.34rem;
@@ -1293,6 +1298,9 @@ export default {
       height: .14rem;
       :deep(.counting-down-wrap){
         width: auto !important;
+        .title-space-1{
+          font-size: 13px;
+        }
       }
 
       &.intermission {

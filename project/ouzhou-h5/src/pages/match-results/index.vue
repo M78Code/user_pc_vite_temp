@@ -4,15 +4,6 @@
         <date-tab v-if="state.slideMenu" :defaultVal="state.currentSlideValue"  :dateList="state.slideMenu" @changeDate="changeDate"/>
         <match-container />
     </div>
-    <!--  弹窗  -->
-    <div v-if="state.select_dialog" position="bottom" class="select-mask" :style="`height:${inner_height}px`">
-        <div style="height:100%;width: 100%" @click="state.select_dialog = false"></div>
-        <!-- 搜索联赛 -->
-        <setect-league @closedHandle="state.select_dialog = false" @finishHandle="selectFinishHandle"></setect-league>
-    </div>
-
-    <!-- 设置 -->
-    <!-- <match-container2 /> -->
 
 </template>
 <script setup>
@@ -24,14 +15,11 @@ import { scrollMenuEvent } from "src/base-h5/components/menu/app-h5-menu/utils.j
 import matchContainer from "src/base-h5/components/match-list/index.vue";
 import { i18n_t, compute_css_obj, MenuData } from "src/core/index.js";
 import { is_results, is_kemp } from 'src/base-h5/mixin/menu.js'
+import VirtualList from 'src/core/match-list-h5/match-class/virtual-list'
 import scrollList from 'src/base-h5/components/top-menu/top-menu-ouzhou-1/scroll-menu/scroll-list.vue';
 import dateTab from 'src/base-h5/components/top-menu/top-menu-ouzhou-1/date-tab/date-tab.vue';
 import { api_analysis } from "src/api/"
-// watch(() => MenuData.update_time.value, () => {
-//   console.log("菜单id-球类id-对应euid",`${MenuData.menu_type.value}-${MenuData.menu_mi.value}-${MenuData.get_euid()}`)
-// })
 
-// import matchContainer2 from "src/base-h5/components/match-list/components/match-container-2.vue";
 const inner_height = window.innerHeight;  // 视口高度
 const props = defineProps({})
 const state = reactive({
@@ -109,21 +97,12 @@ const getData = (item,date) =>{
     MatchMeta.get_results_match()
 }
 onMounted(()=>{
-    // set_menu_lv1({mi:28})
+    
+    VirtualList.set_is_show_ball(false)
+    MenuData.set_current_lv1_menu(28)
     switchHandle()
 })
 
-// const set_menu_lv1 = item => {
-//     MenuData.set_current_lv1_menu(item.mi);
-//     MenuData.get_menu_lvmi_list(item.mi)
-//     // MenuData.get_results_menu();
-//     setTimeout(() => {
-//         MatchMeta.get_results_match()
-//     }, 2000)
-// }
-
-// onBeforeMount(() => {
-// })
 </script>
 <style scoped lang="scss">
 @import "./index.scss";

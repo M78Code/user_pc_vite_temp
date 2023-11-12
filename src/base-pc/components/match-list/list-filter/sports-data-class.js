@@ -73,13 +73,13 @@ class SportsDataClass {
         mi = (mi_100_arr.value[0] || {}).mi;
         sports = "common";
       }
-        current_menu.value = mi;
+        this.current_menu.value = mi;
         // vr 使用 自定义 mi
         if (root == 300) {
-            current_menu.value = menu;
+            this.current_menu.value = menu;
         }
         if (mi != 1) {
-            menu_mi.value = mi;
+            this.menu_mi.value = mi;
         }
         let route = "list";
         let mi_info = BaseData.mi_info_map[`mi_${mi}`] || {};
@@ -88,9 +88,7 @@ class SportsDataClass {
         let obj = {};
         //全部
         if (GlobalAccessConfig.get_playAllShow()) {
-            obj = compute_quanbu_euid(mi_100_list, mi_2000_list);
-        } else {
-            BaseData.mi_info_map[`mi_${mi}`] || {};
+            obj = this.compute_quanbu_euid(mi_100_list, mi_2000_list);
         }
         //滚球
         if (mi == 1) {
@@ -103,7 +101,7 @@ class SportsDataClass {
             root, //root 菜单
             sports,
             route,
-            guanjun: "",
+            guanjun: guanjun,
         };
         } else {
         params = {
@@ -113,91 +111,11 @@ class SportsDataClass {
             route,
             mi,
             mif,
-            guanjun: "",
+            guanjun: guanjun,
         };
         }
-        //发起请求
-        let begin_request = true;
-        // 是否收藏
-        let is_collect = false;
-        // 列表队列 接口
-        let match_list = {
-        api_name: "api 方法名字   api_match 的 子方法名字",
-        params: {},
-        };
-        // bymids 接口  基本参数
-        let bymids = {
-        api_name: "api 方法名字   api_match 的 子方法名字",
-        params: {},
-        };
-        //基础参数
-        let base_params = {
-        cuid: UserCtr.get_cuid(),
-        selectionHour: null,
-        sort: GlobalAccessConfig.get_sortCut(),
-        apiType: 1,
-        orpt: -1,
-        tid: "",
-        };
-        if (sports == "quanbu-gunqiu") {
-        //滚球    全部
-        match_list = {
-            api_name: "post_fetch_match_list",
-            params: {
-            ...base_params,
-            euid: obj.euid,
-            },
-        };
-        } else if (sports == "common") {
-        //滚球    常规体育
-        match_list = {
-            api_name: "post_fetch_match_list",
-            params: {
-            ...base_params,
-            apiType: 1,
-            orpt: -1,
-            euid: mi_info.euid,
-            },
-        };
-        } else if (sports == "dianjing") {
-        //滚球    电竞
-        match_list = {
-            api_name: "post_fetch_esports_play_matchs",
-            params: {
-            ...base_params,
-            category: 1,
-            csid: ("" + mif).substring(1),
-            isLive: 1,
-            },
-        };
-        } else if (sports == "vr") {
-        //滚球    虚拟体育
-        let vr_obj = BaseData.vr_mi_config.find((item) => mi == item.menuId) || {};
-        let vr_tid = vr_obj.subList[0].field1 || "";
-        match_list = {
-            api_name: "post_fetch_virtual_matchs",
-            params: {
-            csid: vr_obj.menuId,
-            isLive: 1,
-            selectionHour: null,
-            tid: vr_tid,
-            },
-        };
-        }
-        let config = {
-            begin_request,
-            is_collect,
-            route,
-            root,
-            sports,
-            guanjun: guanjun || "",
-            match_list,
-            bymids,
-        };
         // 设置      中间 菜单输出
         menu_config.set_mid_menu_result(params);
-        // 设置   请求  列表结构  API 参数的  值
-        // menu_config.set_match_list_api_config(config);
   }
     /**
      * 滚球 全部 euid 计算

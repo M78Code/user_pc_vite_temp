@@ -27,4 +27,7 @@ export default {
   'h5-no-data-ky-bg': {
     default: "h5-no-data-ky-bg",
   },
+  'h5-close-handicip-bg': {
+    default: "h5-close-handicip-bg",
+  },
 }

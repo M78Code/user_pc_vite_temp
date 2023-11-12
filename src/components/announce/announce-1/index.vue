@@ -6,15 +6,28 @@
         </simple-header>
         <div class="announce-content">
             <!-- 左侧菜单开始 -->
-            <left-menu :data="announce_title" @tabs_click="tabs_click" class="relative-position" />
+            <top-menu :data="announce_title" @tabs_click="tabs_click"  />
             <!-- 左侧菜单结束 -->
-            <q-scroll-area class="col rule-scroll-area" visible>
+            <q-scroll-area class="announce-area" visible>
                 <div class="main-page">
-                    <div class="announce-title">{{ current_title }}</div>
+                    <div class="announce-header">
+                    <div class="announce-title">
+                        {{ current_title }}
+                    </div>
+                        <button class="announce-allbtn" @click="readall">Read All</button>
+                    </div>
                     <div class="ann-item" v-for="(item, i) of announce_list" :key="i">
                         <div class="ann-title" v-show="index == 0">[{{ item.noticeTypeName }}]</div>
-                        <div class="ann-content" v-html="item.context"></div>
-                        <div class="ann-time">{{ timestr(item.sendTimeOther) }}</div>
+                        <div class="ann-content"> 
+                            <span class="reads" v-show="item.isShuf == 1">*</span> 
+                            {{ item.sendTime }} {{ item.context }}
+                        </div>
+                        <div class="ann-time">
+                        <div>
+                            {{ timestr(item.sendTimeOther) }}
+                        </div>
+                        <button class="announce-btn" @click="read(item)">Read</button>
+                        </div>
                     </div>
                     <load-data state="notice-empty" :no_data_msg="i18n_t('common.notice_no_data')"
                         v-if="lodash.get(announce_list, 'length', 0) <= 0 && loadd_finish"></load-data>
@@ -29,7 +42,7 @@ import { ref, reactive, onMounted, onUnmounted } from 'vue'
 import lodash from 'lodash'
 import { i18n_t } from "src/boot/i18n.js"
 import { SimpleHeaderWapper as simpleHeader} from "src/components/common/simple-header/index.js";
-import leftMenu from "./left-menu.vue";
+import topMenu from "./top-menu.vue";
 import loadData from "src/components/load_data/load_data.vue"
 import { api_home } from "src/api/index.js"
 import { format_str } from "src/core/format/index.js";
@@ -59,6 +72,18 @@ const current_title = ref('')
 const index = ref(0)
 /** 接口请求完成 */
 const loadd_finish = ref(false)
+const readalls = ref(true)
+
+const readall = () => {
+    announce_list.value = announce_list.value.map(ls=>{
+        ls.isShuf = 0
+        return ls
+    })
+}
+
+const read = (data) => {
+    data.isShuf = 0
+}
 
 /**
 * @Description:切换菜单
@@ -119,11 +144,15 @@ function get_list() {
             data.nt.unshift({
                 id: 0,
                 type: i18n_t('common.all_notice'),
+                isShuf: 0,
             });
             for (let i in data.nt) {
                 data.nt[i].title = data.nt[i].type;
             }
             announce_title.value = data.nt; //左侧菜单
+            announce_title.value =  announce_title.value.map((item) => {
+                return Object.assign(item,{isShuf:0})
+            })
             class_list = data.nl; //分类
             res_list = data.nb;
             announce_list.value = data.nb; //大列表
@@ -136,6 +165,10 @@ onMounted(get_list)
 </script>
 
 <style lang="scss" scoped>
+.announce-area{
+    width: 100%;
+    height: 100%;
+}
 .announce-wrap {
     width: 100%;
     height: 100vh;
@@ -149,13 +182,11 @@ onMounted(get_list)
 .announce-content {
     width: 100%;
     height: 100%;
-    display: flex;
-    justify-content: space-between;
     background: #fff;
 
     .main-page {
         color: #5a6074;
-        padding: 30px;
+        padding-top: 14px;
 
         :deep(.load-data-wrap ) {
             height: 75vh !important;
@@ -167,19 +198,42 @@ onMounted(get_list)
             }
         }
 
-        .announce-title {
+        .announce-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 30px;
+            border-bottom: 1px solid #ff7000;
+        }
+        .announce-title{
             font-size: 16px;
             color: #191c24;
             font-weight: 600;
         }
+        .announce-allbtn{
+            padding: 2px 12px;
+            border: 0.5px solid #ff7000;
+            border-radius: 12px;
+            background: none;
+        }
+        .announce-btn{
+            padding: 2px 15.5px;
+            border: 0.5px solid #dbdbdb;
+            border-radius: 12px;
+            background: none;
+        }
 
         .ann-item {
             border-bottom: 1px solid #d0d8de;
-            margin-bottom: 5px;
-
+            margin: 5px 0;
+            padding:0px 30px;
+            .reads{
+                position: absolute;
+                left: 20px;
+                color: red;
+            }
             .ann-title {
                 color: #191c24;
-                margin-top: 15px;
                 font-weight: 600;
             }
 
@@ -192,7 +246,10 @@ onMounted(get_list)
                 margin-top: 8px;
                 margin-bottom: 10px;
                 color: #99a3b1;
+                display: flex;
+                justify-content: space-between;
             }
+
         }
     }
 }

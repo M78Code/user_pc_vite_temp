@@ -108,6 +108,7 @@ defineProps({});
     .sl-btn {
       font-size: 0.16rem;
       color: var(--q-gb-t-c-1);
+      color: #74C4FF;
     }
   }
   .sl-search {
@@ -146,6 +147,9 @@ defineProps({});
         border: none;
         width: 100%;
         font-size: 0.14rem;
+        &::placeholder{
+          color: #C9CDDB;
+        }
       }
     }
   }

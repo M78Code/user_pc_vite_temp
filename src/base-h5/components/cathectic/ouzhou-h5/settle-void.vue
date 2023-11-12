@@ -35,7 +35,6 @@ template {
   }
   p {
     font-size: 0.16rem;
-    font-weight: bold;
   }
 }
 

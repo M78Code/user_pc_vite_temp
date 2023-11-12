@@ -147,7 +147,6 @@ const first_change = ref(false);
 
 
 onMounted(() => {
-  console.error('进入了',BaseData);
   handle_click_jinri_zaopan(2)
 })
 

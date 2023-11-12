@@ -20,22 +20,19 @@
     <MatchesHeader />
     <div class="match-list-scroll scroll" v-show="!coom_soon_state">
       <!-- 头部15 Mins模块 -->
-      <div v-show="matches_15mins_list.length">
+      <div v-show="matches_15mins_list.length && is_display">
         <CurrentMatchTitle :title_value="'15 Mins'" :show_more_icon="false" />
         <MatchCardList15Mins :matches_15mins_list="matches_15mins_list" />
       </div>
       <!-- 头部Featured Matches模块 -->
-      <div v-show="matches_featured_list.length">
+      <div v-show="matches_featured_list.length && is_display">
         <CurrentMatchTitle :title_value="'Featured Matches'" :show_more_icon="false" />
         <FeaturedMatches :matches_featured_list="matches_featured_list" />
       </div>
     <!-- 列表容器 -->
-      <load-data :state="'data'" limit_height="1000" >  <!--此处先写死高度用来调试UI -->
+      <load-data :state="'data'" limit_height="10000" >  <!--此处先写死高度用来调试UI -->
         <!-- 滚球其他列表 -->
         <scroll-list  v-if="menu_config.menu_root_show_shoucang != 300">
-          <template v-slot:before>
-            <div :style="{ height: MatchListCardDataClass.sticky_top.fixed_header_height }"></div>
-          </template>
           <div
             v-for="card_key in match_list_card_key_arr"
             :key="card_key" 
@@ -105,6 +102,7 @@ import MatchCardList15Mins from 'src/base-pc/components/match-list/match_card_li
 import FeaturedMatches from 'src/base-pc/components/match-list/featured_matches/featured_matches_card.vue';
 import MatchesHeader from "src/base-pc/components/matches_header/matches_header.vue";
 import { get_home_matches, map_matches_list, filter_15mins_func, filter_featured_list } from './featch_matches';
+import { MatchDataWarehouse_ouzhou_PC_l5mins_List_Common, MatchDataWarehouse_ouzhou_PC_hots_List_Common } from "src/core"
 import "./match_list.scss";
 
 const { mounted_fn, load_data_state, show_refresh_mask, collect_count, is_show_hot, on_refresh } = useMatchListMx();
@@ -138,6 +136,9 @@ export default {
     const matches_featured_list = ref([]);
 
     const match_list_card_key_arr = ref([])
+
+    const is_display = ref(true)
+
     const coom_soon_state =ref(false)
 
     const match_list_top = ref('76px')
@@ -152,8 +153,12 @@ export default {
       }
       get_home_matches(params).then(res => {
         // 处理返回数据 将扁平化数组更改为页面适用数据
-        matches_15mins_list.value = filter_15mins_func(res.p15 || []);
-        matches_featured_list.value = filter_featured_list(res.hots || []);
+        MatchDataWarehouse_ouzhou_PC_l5mins_List_Common.set_list(res.p15)
+        MatchDataWarehouse_ouzhou_PC_hots_List_Common.set_list(res.hots)
+        // matches_15mins_list.value = MatchDataWarehouse_ouzhou_PC_l5mins_List_Common.match_list
+        // matches_featured_list.value =MatchDataWarehouse_ouzhou_PC_hots_List_Common.match_list
+        matches_15mins_list.value = filter_15mins_func(MatchDataWarehouse_ouzhou_PC_l5mins_List_Common.match_list);
+        matches_featured_list.value = filter_featured_list(MatchDataWarehouse_ouzhou_PC_hots_List_Common.match_list);
       });
     }
 
@@ -179,12 +184,20 @@ export default {
     )
 
     watch(
+      MatchListOuzhouClass.version,
+      () => {
+        is_display.value= MatchListOuzhouClass.redux_menu.menu_root === 1 ? true : false
+      },
+    )
+
+    watch(
       MatchListOuzhouClass.coom_soon,
       () => {
         coom_soon_state.value= MatchListOuzhouClass.coom_soon.value
         proxy?.$forceUpdate()
       },
     )
+
 
     return {
       menu_config,
@@ -202,7 +215,8 @@ export default {
       MatchListCardDataClass   ,
       load_data_state,
       coom_soon_state,
-      match_list_top
+      match_list_top,
+      is_display
     };
   },
 };

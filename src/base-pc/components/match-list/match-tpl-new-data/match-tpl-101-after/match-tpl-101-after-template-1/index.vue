@@ -11,30 +11,35 @@
       <div class="vertical-line"></div>
       <!-- 图标信息 -->
       <div :style="`width:${match_list_tpl_size.play_icon_width}px !important;`">
-        <icon-box></icon-box>
+        <icon-box :match="match"></icon-box>
       </div>
       <!-- 投注信息 -->
       <match-handicap 
         v-if="match" 
-        :handicap_list="match_tpl_info.get_current_odds_list(current_choose_oid)" 
+        :handicap_list="handicap_list" 
         :match="match"
         use_component_key="MatchHandicap2"
       />
-      <!-- 最右侧图标 -->
-      <!-- <div class="score-data-box" @click="jump_to_details(match)">
-        <i aria-hidden="true" class="icon-signal q-icon c-icon"></i>
-      </div> -->
+      <!-- 比分板 -->
+    <div v-tooltip="{ content: t('common.score_board') }"
+      v-if="!menu_config.is_export()"
+        @click="jump_to_details()">
+      <div class="score-board"
+        :style="compute_css_obj({key: 'pc-home-score-board'})">
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup>
 
-import { ref, computed, watch, onMounted, nextTick } from 'vue';
+import { ref, watch, onMounted } from 'vue';
 import lodash from 'lodash'
 
-import { t, get_match_status, MatchDataWarehouse_PC_List_Common as MatchListData, UserCtr, compute_local_project_file_path } from "src/core/index.js";
+import { MatchDataWarehouse_PC_List_Common as MatchListData, t } from "src/core/index.js";
 import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card-class.js'
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
+import choose_config from 'src/core/constant/config/ouzhou-pc-choose-config.js'
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
 // useRegistPropsHelper(component_symbol, need_register_props)
@@ -45,6 +50,9 @@ import { MatchBasisInfo101FullVersionWapper as BasisInfo101 } from 'src/base-pc/
 import IconBox from '../modules/iconBox/index.vue'
 import { MatchHandicapFullVersionWapper as MatchHandicap } from 'src/base-pc/components/match-list/match-handicap/index.js'
 import MatchMedia from 'src/base-pc/components/match-list/match-media/index.vue'
+import { compute_css_obj } from 'src/core/server-img/index.js'
+import menu_config from "src/core/menu-pc/menu-data-class.js";
+import { useRouter } from 'vue-router';
 
 const props = defineProps({
   mid: {
@@ -56,39 +64,30 @@ const props = defineProps({
     default: () => false
   }
 })
-let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.mid)
-const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].width_config
-const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`]
-const current_choose_oid = ref({ first_hpid: '1', second_hpid: "2" });
-let match = MatchListData.list_to_obj.mid_obj[props.mid+'_'];
-const is_mounted = ref(true);
+const router = useRouter()
 
+let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.mid)
+let match = MatchListData.list_to_obj.mid_obj[props.mid+'_'];
+let match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`].width_config
+let match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`]
+let handicap_list = ref([]);
 watch(() => MatchListData.data_version.version, (new_value, old_value) => {
   match = MatchListData.list_to_obj.mid_obj[props.mid+'_'];
+  match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match.tpl_id}_config`].width_config
+  match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${match.tpl_id}_config`]
+  let default_hpid = choose_config[match.csid][0]
+  handicap_list.value = match_tpl_info.get_current_odds_list({ first_hpid: default_hpid[0], second_hpid: default_hpid[1] })
 })
-
-const jump_to_details = payload => {
-    if (is_in_play && payload) {
-      // score_img.value =  switch_active_icon;
-      emitter.emit('set_detail_info', payload)
-      return;
-    }
-    const {mid, csid} = card_info
-    const params = {
-      sportId: csid,
-      mid,
-      resource:route.path
-    }
-
+function jump_to_details ()  {
     router.push({
-      path: '/details',
-      query: params,
+      name: 'details',
+      params: {
+        mid: props.mid,
+        tid: match.tid,
+        csid: match.csid
+      }
     })
-  }
-
-
-
-
+}
 
 
 onMounted(() => {
@@ -163,5 +162,12 @@ onMounted(() => {
   .bet-item-wrap:last-child{
     border-right: none !important;
   }
+}
+
+.score-board {
+  width: 16px;
+  height: 12px;
+  cursor: pointer;
+  background-size: 100%;
 }
 </style>

@@ -75,7 +75,7 @@ if (all_env) {
   // 命令行参数
   if (ALL_ENV_ARR.includes(argv_version)) {
     export_env_config(argv_version);
-  } else if (BUILD_VERSION_CONFIG.MODULE_SDK_VERSION) {
+  } else {
     //模块化打包  构建 zip
     let current_env = BUILD_VERSION_CONFIG.CURRENT_ENV;
     export_env_config(current_env);

@@ -54,8 +54,11 @@ const bet_order_status_active = computed(()=>{
     letter-spacing: 0;
     width: 100%;
     padding: 0.08rem 0;
+    // 注单失败颜色样式
+    color: #AFB3C8;
     &.active{
-      color: var(--q-gb-t-c-1)
+      color: var(--q-gb-t-c-1);
+
     }
   }
 }

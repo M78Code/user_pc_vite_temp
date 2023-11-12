@@ -24,4 +24,7 @@ export const EMIT_MATCH_LIST_UPDATE = "EMIT_MATCH_LIST_UPDATE";
 
 //  元数据的  赛事 基础信息 加载完成 
 export const EMIT_UPDATE_CURRENT_LIST_METADATA = "EMIT_UPDATE_CURRENT_LIST_METADATA";
+
+//初始化数据加载
+export const EMIT_UPDATE_INIT_DATA = "EMIT_UPDATE_INIT_DATA";
 //------------------------------------------------------------------命令定义-E-------------------------------------------------------------------------------------

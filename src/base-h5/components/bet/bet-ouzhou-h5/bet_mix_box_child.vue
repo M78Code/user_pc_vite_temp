@@ -11,7 +11,7 @@
     <div v-if="get_bet_status == 2" class="fixed full-shadow2" @touchmove.prevent></div>
 
     <div style="display: none;">{{ BetData.bet_data_class_version }} {{BetViewDataClass.bet_view_version}}</div>
-   
+
    <div class="content-box">
         <!-- 头部 -->
         <bet-bar @click="pack_up"></bet-bar>
@@ -42,7 +42,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <!-- 串关 -->
             <div v-if="!BetData.is_bet_single">
                 <!-- 串关投注项列表  -->
@@ -56,11 +56,11 @@
                     </div>
                     <bet-mix-box-child6 v-else></bet-mix-box-child6>
                 </div>
-                
+
                 <bet-info></bet-info>
             </div>
 
- 
+
             <!-- <div v-if="state == 4">
               <bet-mix-box-child4></bet-mix-box-child4>
             </div>

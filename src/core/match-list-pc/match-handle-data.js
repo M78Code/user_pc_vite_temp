@@ -4,7 +4,7 @@
 
 
 import { csid_to_tpl_id } from 'src/core/constant/util/csid-util.js'
-import { MenuData, get_match_status, PageSourceData } from 'src/core/index.js'
+import { MenuData, get_match_status, PageSourceData, PROJECT_NAME } from 'src/core/index.js'
 import BaseData from "src/core/base-data/base-data.js";
 
 /**
@@ -23,7 +23,7 @@ function get_match_tpl_number(is_hot) {
     const { left_menu_result = {}, mid_menu_result = {} } = MenuData;
     let match_tpl_number = -1
     // 玩法菜单
-    let play_menu = get_menu_obj_by_menu_id(lodash.get(left_menu_result,"lv1_mi"))
+    let play_menu = get_menu_obj_by_menu_id(lodash.get(left_menu_result, "lv1_mi"))
     // 详情页热门赛事 或者 搜索 或者列表强力推荐
     if (PageSourceData.route_name == 'details' || PageSourceData.route_name == 'search' || is_hot) {
         match_tpl_number = -1
@@ -61,9 +61,17 @@ function get_match_tpl_number(is_hot) {
  * @param {number} csid 球种类型
 */
 export function get_match_template_id({ csid }) {
+    // 这里的话 
+    // 因为我们会有多个版本  
+    // 需要映射到不同的赔率模板 
+    // 所以加一个配置  
+    // 欧洲版从100开始  
+    // 亚洲版从0开始
+    const different_version_config = {
+        "ouzhou-pc": 100,
+        "yazhou-pc": 0,
+    }
     let tpl_id = get_match_tpl_number()
-    console.log(tpl_id, 'get_match_tpl_number')
-
     // 虚拟足球1001、虚拟篮球1004
     if ([1001, 1004].includes(+csid)) {
         tpl_id = csid
@@ -76,7 +84,9 @@ export function get_match_template_id({ csid }) {
     else if (tpl_id == -1) {
         tpl_id = csid_to_tpl_id(csid)
     }
-    console.log(tpl_id, 'get_match_tpl_number1')
+    tpl_id = Number(tpl_id) + Number(different_version_config[PROJECT_NAME])
+    if ('ouzhou-pc' == PROJECT_NAME)
+        return 101
     return tpl_id
 }
 
@@ -84,7 +94,7 @@ export function get_match_template_id({ csid }) {
 /**
      * @description 获取总比分
      * @param  {object} match  当场赛事信息
-     * @return {[主,客]]} [主，客]
+     * @return {[主,客]} [主，客]
      */
 export function get_main_score(match) {
     let _home_score = ""
@@ -268,3 +278,10 @@ export function get_match_to_map_obj(match, key_arr) {
     return map_obj;
 }
 
+
+/*额外给赛事添加对象*/
+export function match_list_handle_set(match_list) {
+    match_list.forEach(match => {
+        match.tpl_id = get_match_template_id(match)
+    })
+}

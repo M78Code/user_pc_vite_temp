@@ -64,8 +64,7 @@ const orderNumberItemList = ref([])
 let useMitt = null
 
 // 延时器
-const timer_1 = ref(null)
-const timer_2 = ref(null)
+const timer = ref(null)
 
 onMounted(() => {
   // 首次进入获取数据
@@ -89,8 +88,8 @@ const init_data = (_index) => {
 
   // 未结算时，轮询获取提前结算列表金额
   if(_index === 0) {
-    clearInterval(timer_2.value)
-    timer_2.value = setInterval(() => {
+    clearInterval(timer.value)
+    timer.value = setInterval(() => {
       if (document.visibilityState == 'visible') {
         check_early_order()
       }
@@ -189,10 +188,8 @@ const get_order_list = (_index, params, url_api) => {
       let { record, hasNext } = lodash.get(res, "data");
       is_hasnext.value = hasNext
       is_loading.value = false;
-      // record为空时
-      if (lodash.isEmpty(record)) {
-        return;
-      }
+      // record 为null时 => 赋值为空对象
+      if(!record) record = {}
       for (let item of Object.values(record)) {
         size += item.data.length
         // 如果是预约中、已失效，数据多余处理下
@@ -264,8 +261,7 @@ const onPull = () => {
 }
 
 onUnmounted(() => {
-  clearTimeout(timer_1.value)
-  clearInterval(timer_2.value)
+  clearInterval(timer.value)
   useMitt && useMitt()
 })
 </script>

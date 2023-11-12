@@ -2,8 +2,14 @@
  
 
 import {import_json_data} from "./util.js"
-
-const  final_merchant_config  = await import_json_data( "./output/merchant/config.json")
+let   final_merchant_config  ={}
+//活动等其他单独项目打包不存在这个
+try {
+  final_merchant_config  = await import_json_data( "./output/merchant/config.json")
+} catch (error) {
+  console.log('活动等其他单独项目打包不存在这个' );
+}
+ 
 // 本次打包的 客户端版本
 import BUILD_VERSION_CONFIG from "./output/version/build-version.js";
 const { BUILD_VERSION, PROJECT_NAME ,MODULE_SDK_VERSION} = BUILD_VERSION_CONFIG;
