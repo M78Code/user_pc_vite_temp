@@ -127,7 +127,7 @@ const changeDate = (index) => {
     console.log('selectOptions[index]: ', selectOptions[index]);
 }
 /**
- * 时间选择tab
+ * 时间选择tab-赛事列表筛选
  * @param {*} item 
  * @param {*} index 
  */
@@ -135,13 +135,11 @@ const changeDatetab = (item, index) => {
     tabModel.value = false;
     const move_index = week.findIndex((t, _index) => _index === index);
     scrollRef.value.scrollTo(move_index - 2, "start-force");
-    second_tab_index.value =index;
-    MenuData.set_date_time(item.val,item.type);
-    emit("changeDate", MenuData.menu_match_date_params);
-
+    second_tab_index.value = index;
+    MenuData.set_date_time(item.val, item.type);
+    emit('changeMatchDate', item?.val)
     // 设置菜单对应源数据
     MatchMeta.set_origin_match_data()
-
 };
 watch(() => MenuData.menu_mi.value, () => {
     //球种改变设置今日
@@ -154,7 +152,7 @@ onMounted(() => {
  * 默认请求今日数据
  * @param {*} mi 
  */
-const setDefaultData = () =>{
+const setDefaultData = () => {
     MenuData.set_current_lv1_menu(2);
 
     // MenuData.set_menu_mi(mi);
@@ -168,7 +166,7 @@ watch(() => route.fullPath, () => {
     }
 })
 
-watch(()=> MenuData.current_lv_2_menu_mi.value,()=> {
+watch(() => MenuData.current_lv_2_menu_mi.value, () => {
     setDefaultData()
 })
 

@@ -266,7 +266,6 @@ class MenuData {
     let euid = lodash.get(this.left_menu_result, 'lv1_mi');
     // 根据当前的菜单id 取到对应的模板id
     let current_template_id = computed_menu_to_match_templte(euid)
-    console.log('current_template_id', this.mid_menu_result);
     return current_template_id
 
     // let r = (match_list.params || {}).orpt || 1;
