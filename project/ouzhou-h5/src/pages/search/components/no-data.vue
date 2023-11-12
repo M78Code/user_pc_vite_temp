@@ -3,7 +3,7 @@
     <div class="no-data">
     <section v-for="item in arr_const" :key="item.key">
         <div v-if="code === item.code" class="no-data_centent">
-        <img class="no_data_img" :src="compute_local_project_file_path('image/png/not_found.png')" alt="">
+        <img class="no_data_img" :src="compute_local_project_file_path(item.url)" alt="">
         <p class="title">{{item.txt}}</p>
         </div>
         </section>
@@ -19,19 +19,19 @@ const arr_const = [
      {
         key:'No Data',
         txt: 'No Data',
-        url: "image/png/not_found.png",
+        url: "image/png/no_data_new.png",
         code: 100 
     },
     { 
         key:'No network',
         txt: 'No network',
-        url: "image/png/not_found.png",
+        url: "image/png/no_network.png",
         code: 200 
     },
     {
         key:'404',
         txt: '404',
-        url: "image/png/not_found.png",
+        url: "image/png/no_found_new.png",
         code: 300 
     },
     {
@@ -43,16 +43,19 @@ const arr_const = [
     {
         key:'Lock disc',
         txt: 'Lock disc',
+        url: "image/png/lock-disc.png",
         code: 500 
     },
     {
         key:'coming soon',
         txt: 'coming soon',
+        url: "image/png/coming_soon.png",
         code: 600 
     },
     {
         key:'Close the Handicap',
         txt: 'Close the Handicap',
+        url: "image/png/close_Handicap.png",
         code: 700 
     }
 ]
