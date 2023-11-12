@@ -105,6 +105,7 @@ import MatchCardList15Mins from 'src/base-pc/components/match-list/match_card_li
 import FeaturedMatches from 'src/base-pc/components/match-list/featured_matches/featured_matches_card.vue';
 import MatchesHeader from "src/base-pc/components/matches_header/matches_header.vue";
 import { get_home_matches, map_matches_list, filter_15mins_func, filter_featured_list } from './featch_matches';
+import { MatchDataWarehouse_ouzhou_PC_l5mins_List_Common, MatchDataWarehouse_ouzhou_PC_hots_List_Common } from "src/core"
 import "./match_list.scss";
 
 const { mounted_fn, load_data_state, show_refresh_mask, collect_count, is_show_hot, on_refresh } = useMatchListMx();
@@ -155,8 +156,12 @@ export default {
       }
       get_home_matches(params).then(res => {
         // 处理返回数据 将扁平化数组更改为页面适用数据
-        matches_15mins_list.value = filter_15mins_func(res.p15 || []);
-        matches_featured_list.value = filter_featured_list(res.hots || []);
+        MatchDataWarehouse_ouzhou_PC_l5mins_List_Common.set_list(res.p15)
+        MatchDataWarehouse_ouzhou_PC_hots_List_Common.set_list(res.hots)
+        matches_15mins_list.value = MatchDataWarehouse_ouzhou_PC_l5mins_List_Common.match_list
+        matches_featured_list.value =MatchDataWarehouse_ouzhou_PC_hots_List_Common.match_list
+        // matches_15mins_list.value = filter_15mins_func(MatchDataWarehouse_ouzhou_PC_l5mins_List_Common.match_list);
+        // matches_featured_list.value = filter_featured_list(MatchDataWarehouse_ouzhou_PC_hots_List_Common.match_list);
       });
     }
 
