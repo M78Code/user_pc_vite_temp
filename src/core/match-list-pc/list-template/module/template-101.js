@@ -48,6 +48,15 @@ export const get_current_odds_list = ({ first_hpid, second_hpid }) => {
   return odds_list
 }
 
+export const get_15mins_odds_list = () => {
+  // 这里拿到的是15分钟赔率模板  目前应该是默认展示第一个1 X 2
+  let hps15mins_data = TemplateCommon.hps_15_minute;
+  return hps15mins_data[0];
+}
+// 获取hots赔率模板
+export const get_hots_odds_list = () => {
+  let hots_odds_list = TemplateCommon.get_hots_odds_list(template_101.main_handicap_list)
+}
 
 //   列表宽度计算模板
 export const  width_config ={
