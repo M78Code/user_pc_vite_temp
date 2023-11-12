@@ -69,7 +69,6 @@ const page_style = ref('')
 page_style.value = compute_css_variables({ category: 'component', module: 'layout' })
 
 const route = useRoute();
-console.error(route);
 //重新计算高度
 const mitt_offs = [
     // useMittOn(MITT_TYPES.EMIT_LAYOUT_RESIZE, debounce(resize, 150)).off,
@@ -148,7 +147,7 @@ onMounted(() => {
 }
 .full-content{
     flex-wrap: nowrap;
-    width: 1440px;
+    min-width: 1440px;
     margin: 0 auto;
 }
 </style>
