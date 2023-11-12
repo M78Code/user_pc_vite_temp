@@ -1,24 +1,24 @@
-<!-- @Description: 公告栏、体育规则 左侧菜单组件 -->
+<!-- @Description: 公告栏、体育规则 top菜单组件 -->
 <template>
-    <!-- 左侧菜单内容 -->
-    <div class="left-menu-content" :style="page_style">
-        <q-scroll-area class="fit rule-scroll-area">
-            <div class="cursor-pointer" v-for="(item, index) in data" :key="index" @click="tabs_click(item, index)">
-                <div class="left-menu-title"
+    <!-- top菜单内容 -->
+    <div class="top-menu-content" :style="page_style">
+        <q-tabs class="fit rule-scroll-area">
+            <q-tab class="cursor-pointer" v-for="(item, index) in data" :key="index" @click="tabs_click(item, index)">
+                <div class="top-menu-title"
                     :class="{ active: tab_index == index, 'no-subtab': !item.subtab || item.subtab.length == 0 }">
                     <div>{{ item.title }}</div>
                     <q-icon v-icon="{ 'keyboard_arrow_up': 'icon-triangle', }" name="keyboard_arrow_up"></q-icon>
                 </div>
-                <!-- 左侧菜单列表 -->
-                <div class="left-menu-list" :class="tab_index == index && 'active'">
-                    <div class="left-menu-li" v-for="(items, idx) in item.subtab" :key="idx"
+                <!-- top菜单列表 -->
+                <div class="top-menu-list" :class="tab_index == index && 'active'">
+                    <div class="top-menu-li" v-for="(items, idx) in item.subtab" :key="idx"
                         :class="{ 'active': sub_index == idx }" @click.stop="sub_click(items, idx)">
                         <div class="point"></div>
                         <span class>{{ items.title }}</span>
                     </div>
                 </div>
-            </div>
-        </q-scroll-area>
+            </q-tab>
+        </q-tabs>
     </div>
 </template>
   
@@ -71,9 +71,8 @@ function sub_click(item, index) {
 </script>
   
 <style lang="scss" scoped>
-.left-menu-content {
-    width: 169px;
-    padding-right: 14px;
+.top-menu-content {
+    height: 50px;
     border-top: 1px solid var(--q-announce-left-menu-color-2);
     background: var(--q-gb-bg-c-11);
     color: var(--q-gb-t-c-6);
@@ -81,37 +80,21 @@ function sub_click(item, index) {
     &:after {
         content: "";
         position: absolute;
-        width: 14px;
-        height: 100%;
-        top: 0;
+        width: 100%;
+        height: 14px;
+        top: 111px;
         right: 0;
-        border-left: 1px solid var(--q-announce-left-menu-color-2);
-        border-right: 1px solid var(--q-announce-left-menu-color-2);
-        background-color: var(--q-gb-bg-c-21);
+        background-color: #e2e2e2;
     }
 
-    :deep(.q-scrollarea__thumb) {
-        width: 7px;
-        right: -11px;
-        background-color: var(--q-announce-left-menu-color-2) !important;
-    }
-
-    .left-menu-title {
+    .top-menu-title {
         display: flex;
         justify-content: space-between;
         align-items: center;
         padding: 0 15px;
-        height: 34px;
-        text-align: left;
-        border-bottom: 1px solid var(--q-announce-left-menu-color-2);
-
         &.no-subtab {
             .q-icon {
                 display: none;
-            }
-            &.active {
-                border-right: 2px solid var(--q-gb-bd-c-11);
-                background: var(--q-announce-left-menu-color-3);
             }
         }
         
@@ -123,7 +106,7 @@ function sub_click(item, index) {
         }
         &:hover {
             background: var(--q-gb-bg-c-20);
-            color: var(--q-gb-t-c-16);
+            // color: var(--q-gb-t-c-16);
         }
 
         .q-icon {
@@ -146,7 +129,7 @@ function sub_click(item, index) {
         }
     }
 
-    .left-menu-list {
+    .top-menu-list {
         overflow: hidden;
         max-height: 0px;
         transition: max-height 0.15s;
@@ -160,18 +143,7 @@ function sub_click(item, index) {
             }
         }
 
-        &.active {
-            max-height: 400px;
-            border-right: 2px solid var(--q-gb-bd-c-11);
-            background: var(--q-announce-left-menu-color-3);
-            color: var(--q-gb-t-c-6);
-
-            .point {
-                background: var(--q-gb-bg-c-17);
-            }
-        }
-
-        .left-menu-li {
+        .top-menu-li {
             display: flex;
             align-items: center;
             height: 34px;
@@ -179,18 +151,6 @@ function sub_click(item, index) {
             &.active {
                 font-weight: 600;
             }
-
-            .point {
-                margin: 0 15px;
-                width: 4px;
-                height: 4px;
-                border-radius: 50%;
-            }
-        }
-
-        /* 滚动条 */
-        .rule-scroll-area .q-scrollarea__thumb {
-            background: rgba(60, 63, 76, 0.3);
         }
     }
 }
