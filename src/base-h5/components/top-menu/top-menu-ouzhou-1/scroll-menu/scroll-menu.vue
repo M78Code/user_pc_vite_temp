@@ -38,6 +38,7 @@ const props = defineProps({
         default: true
     },
 })
+const emits = defineEmits(['changeMenu'])
 /**
  * 获取滚球数量
  * @param {*} item 
@@ -62,7 +63,8 @@ const scrollRef = ref(null);
 onMounted(() => {
     MenuData.set_current_lv1_menu(props.menu_type);
     MenuData.set_menu_mi(dataList()[0]?.mi);
-    MenuData.get_match_render_list();
+    emits('changeMenu',dataList()[0]?.mi)
+    // MenuData.get_match_render_list();
 })
 /**
  * 滚球选择
@@ -75,7 +77,8 @@ const on_change_play = (item) => {
     MenuData.set_menu_mi(item.mi)
     const index = dataList().findIndex(n=>n.mi == item.mi);
     scrollRef.value.scrollTo(index-2, 'start-force')
-    MenuData.get_match_render_list();
+    // MenuData.get_match_render_list();
+    emits('changeMenu',item.mi)
 }
 
 </script>
