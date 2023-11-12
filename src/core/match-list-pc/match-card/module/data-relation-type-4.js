@@ -30,14 +30,13 @@
     } from "../config/card-template-config.js"
     import { compute_sport_id  } from 'src/core/constant/index.js'
     import MenuData from "src/core/menu-pc/menu-data-class.js";
-
+import {get_match_template_id} from '../../match-handle-data.js'
   /**
    * @Description 计算所有卡片样式数据 2. 全部赛种 不区分 是否开赛  4. 列表数据类型为赛事列表   单一赛种，有未开赛 已开赛 ，不区分赛种
    * @param {Array} match_list 赛事列表
    * @param {boolean} is_ws_call 是否ws调用
   */
   export const compute_match_list_style_obj_and_match_list_mapping_relation_obj_type4=(match_list,is_ws_call)=>{
-    let template_id = MenuData.get_match_tpl_number()
     // 已开赛 到卡片key的 映射对象
     let play_to_card_key_arr = ['play_title']
     // 未开赛 到卡片key的 映射对象
@@ -84,6 +83,7 @@
         card_index,
       }
     }
+
     // 遍历所有赛事列表
     lodash.each(match_list, _match => {
       let match = MatchListData.list_to_obj.mid_obj[_match.mid + '_']
@@ -233,11 +233,8 @@
       // 联赛卡片下的所有赛事ID列表
       league_card_mids_arr[card_key] = league_card_mids_arr[card_key] || []
       league_card_mids_arr[card_key].push(match.mid)
-
       // 赛事表征数据
-      let match_style_obj =  compute_style_template_by_matchinfo(match,template_id)
-      all_card_obj[match.mid+'_'] = match_style_obj
-
+      all_card_obj[match.mid+'_'] =  compute_style_template_by_matchinfo(match, get_match_template_id(match))
     })
 
     // 设置赛事状态标题卡片下的赛事数量
