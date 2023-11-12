@@ -119,7 +119,7 @@ async function get_date_menu_list() {
     });
   }
   current_filter_list.value = [{label:"Today",value:""}, ...arr]
-  console.log(current_filter_list.value, 'arr111')
+  handle_click_menu_mi_3_date(current_filter_list.value[0], 0)
 }
 
 watch(MenuData.menu_data_version,()=>{
