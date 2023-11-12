@@ -12,8 +12,8 @@
         <!-- 早盘||串关 主列表顶部日期后显示赛事数量 -->
         <span v-if="is_list_top_menu" class="match-count">({{ val.count }})</span>
 
-        <template v-if="val.tab_name2">
-          <br />{{ val.tab_name2 }}
+        <template v-if="val.tab_name2||val.name">
+          <br />{{ val.tab_name2 ||val.name}}
         </template>
       </div>
       <template v-if="currentIndex !== -1 && width > 0 && is_show_line">
