@@ -2,7 +2,7 @@
  * @Author: land land@itcom888.com
 -->
 <template>
-  <tab-date @changeTab="onTabChange" @changeMatchDate="onMatchDateChange" />
+  <tab-date @changeTab="onTabChange" @changeMatchDate="onMatchDateChange" @changeDate="onChangeDate"/>
   <!--二级赛事列表-->
   <div class="match-list-page">
     <match-container v-if="curTab === 0 || isClickDetail && curTab === 1" />
@@ -10,7 +10,7 @@
   </div>
 </template>
 <script setup>
-import { ref } from "vue"
+import { onMounted, ref } from "vue"
 import tabDate from './tab-date/tab-date.vue';
 import MatchFirstStep from "./match-first-step.vue";
 import MatchContainer from "src/base-h5/components/match-list/index.vue";
@@ -27,7 +27,12 @@ const curDate = ref('')
 const curLeague = ref({})
 
 const onTabChange = e => {
+  // console.log('onTabChange', MatchMeta.get_four_leagues_list())
   curTab.value = e
+}
+// 当为matches时 切换时间后 监听方法
+const onChangeDate = e => {
+  MatchMeta.get_four_leagues_list()
 }
 
 const onMatchDateChange = e => {
@@ -40,8 +45,11 @@ const onLeagueChange = (league, game) => {
 
 const goback = () => {
   isClickDetail.value = false
-
 }
+
+onMounted(() => {
+  // MatchMeta.get_four_leagues_list()
+})
 
 </script>
 <style scoped lang="scss">
