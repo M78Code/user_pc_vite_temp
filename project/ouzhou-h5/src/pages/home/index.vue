@@ -181,7 +181,9 @@ const on_update = (val) => {
   if (val === 'featured') {
     get_ouzhou_home_data()
   } else {
-    MatchMeta.get_top_events_match()
+    MenuData.set_current_lv1_menu('2')
+    MenuData.set_menu_lv2_mi('1012')
+    MatchMeta.set_origin_match_data()
   }
 }
 

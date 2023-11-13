@@ -39,7 +39,7 @@ class MatchMeta {
     this.prev_scroll = null
     // 是否需要赛事归类操作
     this.is_classify = false
-    // 重置折叠对象https://test-user-pc-new.sportxxxifbdxm2.com/?ignore_iframe_pc=1&env=line1&pb=1&api=vEtkQtmX6wF8fAGV5b4UDx2mPRca2zMHLMj/YELjSwxjyhV5t0ifZDD6I0iwkpzJ&token=49cda8d77b3af2c9f7c8601606a587786f610032&gr=common#/
+    // 重置折叠对象
     MatchFold.clear_fold_info()
     // 重置收藏对象
     MatchCollect.clear_collect_info()
@@ -55,20 +55,20 @@ class MatchMeta {
     let menu_lv_v2 = ''
     let menu_lv_v1_sl = []
     let menu_lv_v2_sl = []
-    if(project_name == 'yazhou-h5'){
+    if (project_name == 'yazhou-h5') {
       // 菜单 ID 对应的 元数据赛事 mids
       menu_lv_v1 = lodash.get(MenuData.current_lv_1_menu, 'mi')
       menu_lv_v2 = lodash.get(MenuData.current_lv_2_menu, 'mi')
       menu_lv_v1_sl = lodash.get(MenuData.current_lv_1_menu, 'sl')
       menu_lv_v2_sl = lodash.get(MenuData.current_lv_2_menu, 'sl')
-    }else{
+    } else {
       // 菜单 ID 对应的 元数据赛事 mids   
-      // 先写死
       menu_lv_v1 = MenuData.current_lv_1_menu_i
       menu_lv_v2 = MenuData.current_lv_2_menu_i
       menu_lv_v1_sl = MenuData.get_menu_lvmi_list(menu_lv_v1)
       menu_lv_v2_sl = MenuData.get_menu_lv_2_mi_list(menu_lv_v2)
     }
+    
     // 滚球全部
     if (+menu_lv_v1 === 1 && menu_lv_v2 == 0) return this.get_origin_match_mids_by_mis(menu_lv_v1_sl)
 
