@@ -19,7 +19,6 @@
       {{ MatchListCardDataClass.list_version }}--   {{ load_data_state }}-- length---  {{ match_list_card_key_arr.length }}
     </div>
     <MatchesHeader />
-    <div class="match-list-scroll scroll" v-show="!coom_soon_state">
       <!-- 头部15 Mins模块 -->
       <div v-show="matches_15mins_list.length && is_display">
         <CurrentMatchTitle :title_value="'15 Mins'" :show_more_icon="false" />
@@ -29,9 +28,8 @@
       <div v-show="matches_featured_list.length && is_display">
         <CurrentMatchTitle :title_value="'Featured Matches'" :show_more_icon="false" />
         <FeaturedMatches :matches_featured_list="matches_featured_list" />
-      </div>
     <!-- 列表容器 -->
-      <load-data :state="'data'" limit_height="10000" >  <!--此处先写死高度用来调试UI -->
+      <load-data :state="'data'" limit_height="1000">  <!--此处先写死高度用来调试UI -->
         <!-- 滚球其他列表 -->
         <scroll-list  v-if="menu_config.menu_root_show_shoucang != 300">
           <div
@@ -259,7 +257,6 @@ export default {
 }
 .scroll {
   overflow-y: scroll; 
-  height: calc(100vh - v-bind('match_list_top'));
   padding-right: 3px;
   /* 火狐滚动条无法自定义宽度，只能通过此属性使滚动条宽度变细 */
   &::-webkit-scrollbar {
@@ -271,18 +268,7 @@ export default {
     border-radius: 4px;
   }
 }
-.match-list-scroll {
-  box-sizing: border-box;
-  height: calc(100vh - v-bind('match_list_top'));
-  &::-webkit-scrollbar {
-    width: 4px;
-  }
 
-  &::-webkit-scrollbar-thumb {
-    background-color: #cccccc;
-    border-radius: 4px;
-  }
-}
 .leagues-tabs {
   height: 40px;
   position: sticky;

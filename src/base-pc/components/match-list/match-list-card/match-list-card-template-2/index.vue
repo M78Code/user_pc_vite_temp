@@ -107,8 +107,6 @@ onUnmounted(() => {
 </script>
 <style lang="scss" scoped>
 .list-card-wrap {
-  overflow: hidden;
-
   .list-card-inner {
     position: absolute;
     width: 100%;

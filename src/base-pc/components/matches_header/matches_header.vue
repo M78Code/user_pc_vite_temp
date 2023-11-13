@@ -1,6 +1,6 @@
 <template>
 	<div class="matches_header_wrap">
-		<div v-show="false">{{MenuData.router_root_version}} ---{{MenuData.router_root_lv_1}}-{{MenuData.router_root_lv_2}}-{{MenuData.router_root_lv_3}}</div>
+		<div v-show="false">{{MenuData.router_root_version}} -{{MenuData.left_menu_mi.value}}--{{MenuData.router_root_lv_1}}-{{MenuData.router_root_lv_2}}-{{MenuData.router_root_lv_3}}</div>
 		<div class="matches_header">
 			<div class="header_banne header_banner" :style="`background-position:0 -${current_ball_type}px`"></div>
 			<div class="matches-title">
@@ -8,14 +8,14 @@
 				<div class="match_all_matches" v-if="MenuData.router_root_lv_1 == 2">All Matches</div>
 				<div v-else class="matches_tab" >
 					<div v-for="item in tab_list" :key="item.value" @click="checked_current_tab(item)"
-						:class="{ 'checked': item.value == current_value }">
+						:class="{ 'checked': item.value == MenuData.router_root_lv_2 }">
 						{{ item.label }}
 					</div>
 				</div>
 			</div>
 		</div>
 		<MatchesFilterTab v-if="(MenuData.router_root_lv_1 == 2 && MenuData.router_root_lv_2 == 1002 ) || MenuData.router_root_lv_1 == 2"  />
-		<MatchesDateTab  v-if="MenuData.router_root_lv_2 == 4000 && MenuData.router_root_lv_3 == 4001" />
+		<MatchesDateTab  v-if="MenuData.router_root_lv_1 == 4" />
 	</div>
 </template>
 
@@ -28,6 +28,7 @@ import lodash_ from "lodash"
 import MatchesFilterTab from "./matches_filter_tab_ball_species.vue";
 import MatchesDateTab from "./matches_filter_tab.vue";
 import { MenuData, UserCtr } from "src/core/index.js"
+import BaseData from "src/core/base-data/base-data.js";
 import menu_i18n_default from "src/core/base-data/config/menu-i18n.json";
 
 const router = useRouter();
@@ -41,18 +42,25 @@ const current_value = ref(i18n_t("ouzhou.match.featured"));
 
 
 onMounted(()=>{
-	set_tab_list(MenuData.router_root_lv_1)
+	set_tab_list(MenuData.router_root_lv_1,MenuData.left_menu_mi.value)
 })
 
-watch(()=>MenuData.router_root,(news_)=>{
+// 顶部菜单 切换
+watch(()=>MenuData.router_root.value,(news_)=>{
 	set_tab_list(news_)
 })
 
+// 左侧菜单切
+watch(()=>MenuData.left_menu_mi.value,(news_)=>{
+	set_tab_list(4,news_)
+})
+
 // 设置 头部信息配置
-const set_tab_list = (news_) =>{
+const set_tab_list = (news_,sport_mi) =>{
 	// 首页
 	if(news_ == 1 ){
 		tab_list.value = lodash_.get(MenuData.ouzhou_filter_config,'home_tab', [])  
+		matches_header_title.value = "Matches"
 	}
 	// 滚球
 	if( news_ ==2 ){
@@ -61,6 +69,8 @@ const set_tab_list = (news_) =>{
 	// 左侧菜单
 	if(news_ ==4){
 		tab_list.value = lodash_.get(MenuData.ouzhou_filter_config,'sport_tab', [])  
+		// 设置赛种名称
+		matches_header_title.value = BaseData.menus_i18n_map[sport_mi] 
 	}
 }
 

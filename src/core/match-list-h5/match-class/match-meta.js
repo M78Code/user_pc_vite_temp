@@ -567,6 +567,30 @@ class MatchMeta {
   }
 
   /**
+   * @description 获取四大联赛列表
+   */
+  async get_four_leagues_list () {
+    // 四大联赛 tid 写死 西甲 320 英超 180 意甲 239 德甲 276
+    // 只有足球 euid 40203
+    // 热门 type 12
+    const tid = ['320', '180', '239', '276']
+    const euid = '40203'
+    const type = '12'
+    const params = this.get_base_params(euid)
+    const res = await api_match_list.get_matches_list({
+      ...params,
+      md: MenuData.data_time,
+      tid: tid.toString(),
+      euid,
+      type
+    })
+    console.log(res)
+    if (res.code !== '200') return this.set_page_match_empty_status(true);
+    const list = lodash.get(res, 'data', [])
+    this.handler_match_list_data({ list: list, is_virtual: false })
+  }
+
+  /**
    * @description 设置页面是否为空
    * @param {*} state 
    */

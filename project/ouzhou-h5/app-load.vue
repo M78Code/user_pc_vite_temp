@@ -86,7 +86,7 @@ onBeforeMount(() => {
     vue_hidden_run_flg = true;
   }, 4000);
 
-  let url_search = new URLSearchParams(location.search);
+  let url_search = SEARCH_PARAMS.param;
   let vlg = url_search.get("vlg");
   if (vlg) {
     sessionStorage.setItem("vlg", vlg);
