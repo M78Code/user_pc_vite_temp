@@ -119,7 +119,15 @@ function handle_hpid_choose(item) {
     position: absolute;
     left: 0;
     top: 100%;
+    background: #ffffff;
     z-index: 9999;
+    div {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      height: 40px;
+      border-bottom: 1px solid #E2E2E2;
+    }
   }
 }
 </style>

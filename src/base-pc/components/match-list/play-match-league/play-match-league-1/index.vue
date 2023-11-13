@@ -54,6 +54,7 @@ import GlobalAccessConfig from "src/core/access-config/access-config.js"
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import { utils_info } from 'src/core/utils/module/match-list-utils.js';
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
+import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card-class.js'
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import useMatchListMx from "src/core/match-list-pc/match-list-composition.js";
 import menu_config from "src/core/menu-pc/menu-data-class.js";
