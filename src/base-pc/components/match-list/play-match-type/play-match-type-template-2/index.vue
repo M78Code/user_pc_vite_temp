@@ -74,7 +74,7 @@ const cur_title_info = computed(() => {
 
 const current_csid_hpids = ref(MatchListCardDataClass.get_csid_current_hpids(props.card_style_obj.csid))
 function handle_hpid_choose(item) {
-  show_list.value=false
+  show_list.value = false
   current_csid_hpids.value = item
   MatchListCardDataClass.set_csid_current_hpids(props.card_style_obj.csid, item)
 }
@@ -116,18 +116,28 @@ function handle_hpid_choose(item) {
   position: relative;
   cursor: pointer;
   margin-right: 30px;
+
   .choose-list {
     position: absolute;
     right: 0;
-    top: 100%;
-    background: #ffffff;
-    z-index: 9999;
+    top: 32px;
+    min-width: 300px;
+    line-height: 40px;
+    padding: 12px 16px;
+    border-radius: 2px;
+    background: #FFF;
+    box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, 0.25);
+    z-index: 99;
+
     div {
       display: flex;
       align-items: center;
-      width: 100%;
       height: 40px;
       border-bottom: 1px solid #E2E2E2;
+
+      &:last-child {
+        border-bottom: none;
+      }
     }
   }
 }
