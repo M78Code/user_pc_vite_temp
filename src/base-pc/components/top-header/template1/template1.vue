@@ -62,13 +62,15 @@ export default defineComponent({
     const nav_click = (item = {}) => {
       //页面中间头部导航显示处理
       MenuData.set_router_root_lv_1(item.id)
+
       current_id.value = item.id;
 
       switch (item.id) {
         case 1:
           LayOutMain_pc.set_oz_show_right(false)
           LayOutMain_pc.set_oz_show_left(true)
-          
+          // 默认设置 fetured
+          MenuData.set_router_root_lv_2(1001)
           userRouter.push({name: 'home'})
 
           break;
