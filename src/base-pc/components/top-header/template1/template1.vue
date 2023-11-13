@@ -52,7 +52,7 @@ export default defineComponent({
       // 根据当前路由路径判断给当前current_id赋值
       current_id.value = navList.value.find(item => item.path == newVal)?.id
       //页面中间头部导航显示处理
-      MatchListOuzhouClass.redux_menu.menu_root = navList.value.find(item => item.path == newVal)?.id
+      MatchListOuzhouClass.redux_menu.menu_root = navList.value.find(item => item.path == newVal)?.id || 1
       MatchListOuzhouClass.update_version()
     },
       { immediate: true }
@@ -60,7 +60,7 @@ export default defineComponent({
 
     const nav_click = (item) => {
       //页面中间头部导航显示处理
-      MatchListOuzhouClass.redux_menu.menu_root = item.id
+      MatchListOuzhouClass.redux_menu.menu_root = item.id || 1
       MatchListOuzhouClass.update_version()
       current_id.value = item.id;
 

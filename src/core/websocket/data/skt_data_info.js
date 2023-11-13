@@ -26,9 +26,9 @@ export default {
     //赛事详情订阅
     useMittOn(MITT_TYPES.EMIT_MATCH_DETAIL_SUBSCRIBE,this.sendSocketInitCmd)
     //C8指令节流1秒
-    this.SCMD_C8 = lodash.debounce(this.SCMD_C8,1000);
+    // this.SCMD_C8 = lodash.debounce(this.SCMD_C8,1000);
     //C112指令节流2秒
-    this.SCMD_C112 = lodash.debounce(this.SCMD_C112,2000);
+    // this.SCMD_C112 = lodash.debounce(this.SCMD_C112,2000);
   }, 
   computed: {
     // ...mapGetters({
@@ -381,7 +381,7 @@ export default {
       if (!obj || this.match_info_ctr.match_obj.mid != obj.cd.mid) {
         return;
       }
-      if(_.isUndefined(obj.cd.mhs) && _.isNull(obj.cd.mhs)) {
+      if(lodash.isUndefined(obj.cd.mhs) && lodash.isNull(obj.cd.mhs)) {
         this.match_info_ctr.set_match_mhs_status(obj.cd.mhs);
       }
       let skt_data = obj.cd.hls;
@@ -407,7 +407,7 @@ export default {
                 if (obj1.hs == 2) {
                   // 滚球自动转手动时，不发C104只发C105的处理处理玩法全部关闭
                   let is_empty = this.match_info_ctr.list.every(item => {
-                    return _.isEmpty(_.get(item, 'hl')) || _.get(item, 'hl.0.hs') == 2;
+                    return lodash.isEmpty(lodash.get(item, 'hl')) || lodash.get(item, 'hl.0.hs') == 2;
                   });
 
                   if(is_empty){
@@ -445,7 +445,7 @@ export default {
                     let score_type = item.hps.split('|')[0]; 
                     // 检查比分主队客队是否为空
                     check_score =  (score_arr instanceof Array) &&  score_arr.length==2 &&  score_arr[0]!='' && score_arr[1]!='';
-                    let hid = _.get(item, 'hl[0].hid','');
+                    let hid = lodash.get(item, 'hl[0].hid','');
                     if(
                       obj1.hid == hid &&
                       check_score && 
@@ -500,7 +500,7 @@ export default {
       //console.log('-----------------赛事详情C107------------obj:' + JSON.stringify(obj));
       let skt_data = obj.cd;
       let cur_match = this.match_info_ctr.match_obj;
-      if(_.isObject(skt_data)){
+      if(lodash.isObject(skt_data)){
         let cur_obj = {}
          for (const key in skt_data) {
           if (skt_data[key] || skt_data[key] === 0 ) {
@@ -591,7 +591,7 @@ export default {
         for(let i = 0; i < len; i++) {
           let id = skt_data.mcid[i];
           // 查找要变更的玩法集
-          let find_index = _.findIndex(this.match_info_ctr.plays_menu_list, item => item.id==id);
+          let find_index = lodash.findIndex(this.match_info_ctr.plays_menu_list, item => item.id==id);
           if(find_index>0) {
             fag = true;
             break;
@@ -607,7 +607,7 @@ export default {
       if((!fag && skt_data.mcms==2) || (fag && skt_data.mcms==3)) {
         this.get_category_list(() => {
           //玩法集返回非空数据再调取玩法列表
-          if(_.get(this.match_info_ctr.plays_menu_list,"[0].id") !=undefined) {
+          if(lodash.get(this.match_info_ctr.plays_menu_list,"[0].id") !=undefined) {
             //删除 当前玩法集
             if(fag && skt_data.mcms==3 && skt_data.mcid.includes(this.mcid)) {
               this.mcid = 0;
@@ -720,7 +720,7 @@ export default {
       // cufm 详情用LM列表为L 
       obj.cufm = "LM";
       // 盘口级别，从userInfo接口获取后存在于vuex的get_user
-      obj.marketLevel = _.get(this.vx_get_user, 'marketLevel', '0');
+      obj.marketLevel = lodash.get(this.vx_get_user, 'marketLevel', '0');
       //处理逻辑
       WsSend.sktSendMatchStatus(window.ws, obj);
     },
