@@ -1,57 +1,55 @@
 
 <template>
   <div class="page-main full-height" :style="page_style" id="parent">
-    <div :style="{ height: LayOutMain_pc.layout_top_height  }">
+    <div :style="{ height: LayOutMain_pc.layout_top_height }">
       <!-- 搜索 -->
       <search-wapper />
       <!-- 页面头部容器-->
       <layout-header />
     </div>
-    <div style="display: none;"> {{ LayOutMain_pc.layout_version }}-{{BetData.bet_data_class_version}}</div>
+    <div style="display: none;"> {{ LayOutMain_pc.layout_version }}-{{ BetData.bet_data_class_version }}</div>
     <div class="flex full-content">
       <!-- 左侧 菜单 -->
-      <div class="layout_main_left" :style="`width:${LayOutMain_pc.oz_left_width}px`"  v-if="LayOutMain_pc.oz_show_left">
+      <div class="layout_main_left" :style="`width:${LayOutMain_pc.oz_left_width}px`" v-if="LayOutMain_pc.oz_show_left">
         <layout-left />
       </div>
-      <div class="layout_main_center" :style="`width:${LayOutMain_pc.oz_layout_content -(LayOutMain_pc.oz_right_width + LayOutMain_pc.oz_left_width)}px`">
+      <div class="layout_main_center" :style="{
+        width: `${LayOutMain_pc.oz_layout_content - (LayOutMain_pc.oz_right_width + LayOutMain_pc.oz_left_width)}px`,
+        height: LayOutMain_pc.layout_content_height + 'px'
+      }">
         <!-- 中间区域 -->
         <router-view></router-view>
-          
+
       </div>
       <!-- 右侧 视频  动画 比分板 详情 -->
-      <div v-if="LayOutMain_pc.oz_show_right" :style="`width:${LayOutMain_pc.oz_right_width}px`" class="layout_main_right">
+      <div v-if="LayOutMain_pc.oz_show_right" :style="`width:${LayOutMain_pc.oz_right_width}px`"
+        class="layout_main_right">
         <layout-right />
       </div>
     </div>
-      <!-- 视频画中画组件 -->
-      <!-- <moveVideo v-if="show_move_video"></moveVideo> -->
+    <!-- 视频画中画组件 -->
+    <!-- <moveVideo v-if="show_move_video"></moveVideo> -->
     <!-- toast 消息提示 -->
     <toast-components />
     <confirm-components />
     <alert-components />
 
 
-    <Vue3DraggableResizable
-      v-model:x="BetData.bet_box_draggable.x"
-      v-model:y="BetData.bet_box_draggable.y"
-      v-model:active="BetData.bet_box_draggable.isActive"
-      :draggable="true"
-      :resizable="false"
-      parent="#parent"
-      v-if="BetData.bet_box_draggable.show"
-    >
-    <div  class="ty-bet-box">
-      <!-- {{BetData.bet_box_draggable}} -->
-      <bet-box-wapper use_component_key="BetBoxOuZhouPC_1"  />
-    </div>
-  </Vue3DraggableResizable>
+    <Vue3DraggableResizable v-model:x="BetData.bet_box_draggable.x" v-model:y="BetData.bet_box_draggable.y"
+      v-model:active="BetData.bet_box_draggable.isActive" :draggable="true" :resizable="false" parent="#parent"
+      v-if="BetData.bet_box_draggable.show">
+      <div class="ty-bet-box">
+        <!-- {{BetData.bet_box_draggable}} -->
+        <bet-box-wapper use_component_key="BetBoxOuZhouPC_1" />
+      </div>
+    </Vue3DraggableResizable>
   </div>
 </template>
 <script setup>
-import { ref, computed,watch, onMounted } from "vue";
+import { ref, computed, watch, onMounted } from "vue";
 import Vue3DraggableResizable from 'vue3-draggable-resizable' //拖拽组件
 import { useRoute } from "vue-router";
-import { LayOutMain_pc,UserCtr } from "src/core/index.js";
+import { LayOutMain_pc, UserCtr } from "src/core/index.js";
 
 import layoutHeader from "./layout-header.vue";
 import layoutLeft from "./layout-left.vue";
@@ -68,12 +66,12 @@ page_style.value = compute_css_variables({ category: 'component', module: 'layou
 
 const route = useRoute();
 
- // 屏蔽视频移动组件(视频回播功能)
-const show_move_video = computed(()=>{
-  return lodash.get(UserCtr.get_user(),"merchantEventSwitchVO.eventSwitch") 
+// 屏蔽视频移动组件(视频回播功能)
+const show_move_video = computed(() => {
+  return lodash.get(UserCtr.get_user(), "merchantEventSwitchVO.eventSwitch")
 })
 
-onMounted(()=>{
+onMounted(() => {
   let obj = {
     x: window.innerWidth * 0.6,
     y: window.innerHeight * 0.7,
@@ -95,6 +93,7 @@ onMounted(()=>{
   display: flex;
   flex-direction: column;
   background: var(--q-gb-bg-c-22);
+
   .video_page {
     position: fixed;
     top: 0;
@@ -110,27 +109,31 @@ onMounted(()=>{
   padding-top: 10px;
   padding-right: 10px;
 }
+
 .layout_main_center {
   padding: 10px 0 0;
 }
+
 .layout_main_right {
   padding-top: 10px;
   margin-left: 10px;
 }
 
 
-:deep(.vdr-container){
+:deep(.vdr-container) {
   width: 438px;
   border: none;
   z-index: 30000;
 }
-:deep(.ty-bet-box){
-   width:100%;
-  height:100%;
+
+:deep(.ty-bet-box) {
+  width: 100%;
+  height: 100%;
 }
-.full-content{
-    flex-wrap: nowrap;
-    min-width: 1440px;
-    margin: 0 auto;
+
+.full-content {
+  flex-wrap: nowrap;
+  min-width: 1440px;
+  margin: 0 auto;
 }
 </style>
