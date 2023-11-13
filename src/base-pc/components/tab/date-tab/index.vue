@@ -5,7 +5,7 @@
       <template v-for="(item, index) in list" :key="item.menuName + '_' + index">
         <div class="tab-item yb-flex-center" :class="[{ active: final_index == index }]"
            @click.stop="() => {
-              final_index.value = index;
+              final_index = index;
               handle_click_menu_mi_3_date({ ...item })
            }"
           @mouseenter="tabs_enter(index)" @mouseleave="tabs_leave(index)">
@@ -56,7 +56,8 @@ import {
   hand_cilck_move,
   final_index,
   date_menu_version,
-  item_wrap_left
+  item_wrap_left,
+  list
 } from "src/base-pc/components/tab/date-tab/index.js"
 
 const props = defineProps({
@@ -79,7 +80,6 @@ const props = defineProps({
   },
 })
 
-const list = ref([]) //tab模板文件key
 const key = ref(0) //tab模板文件key
 const left = ref(0) //下划线left
 const width = ref(0) //下划线宽度
@@ -379,7 +379,7 @@ onBeforeUnmount(() => {
     height: 100%;
     z-index: 99;
     align-items: center;
-
+    height: 45px;
     .tab-item {
       cursor: pointer;
       padding: 0 15px;
