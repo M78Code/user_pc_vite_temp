@@ -72,7 +72,7 @@
     <div v-else class="close_thehand_icap">
       <div>
       <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/close_the_handicap.png`" alt="" srcset="">
-      <div style="text-align: center;color:#A1A3A5;font-weight: 500;">Close the Handicap</div>
+      <div style="text-align: center;color:#A1A3A5;font-weight: 500;">{{ i18n_t("ouzhou.detail.close_handicap") }}</div>
       </div>
     </div>
 

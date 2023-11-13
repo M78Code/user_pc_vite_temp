@@ -14,8 +14,8 @@
       <!-- 投注框 -->
       <BetBoxWapper use_component_key="BetOuzhouH5"></BetBoxWapper>
       
-      <div>{{route}}</div>
-       <bet-bar class="bar-top" v-if="route.path == '/home' || route.path == '/inplay' || route.path == '/match'"></bet-bar>>
+      <!-- <div>{{route}}</div> -->
+       <!-- <bet-bar class="bar-top" v-if="route.path == '/home' || route.path == '/inplay' || route.path == '/match'"></bet-bar>> -->
       <FooterWapper />
 
     </q-page-container>

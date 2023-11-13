@@ -300,7 +300,7 @@ class MenuData {
    * lv2_mi
    */
   set_left_menu_result(obj) {
-    console.log('set_left_menu_result', obj)
+    console.log('MENUDATA.set_left_menu_result', obj)
     this.menu_root = obj.root;
     this.menu_root_show_shoucang = obj.root;
     // 设置 列表接口类型
@@ -348,7 +348,7 @@ class MenuData {
     this.set_multi_column();
 
     this.set_menu_data_version();
-    useMittEmit(MITT_TYPES.EMIT_MATCH_LIST_UPDATE)
+    // useMittEmit(MITT_TYPES.EMIT_MATCH_LIST_UPDATE)
   }
   /**
    * 中间菜单显示配置 默认的
@@ -387,16 +387,17 @@ class MenuData {
    *
    */
   set_mid_menu_result(obj) {
+    
     this.mid_menu_result = {
       ...obj,
       version: Date.now(),
     };
-    this.menu_root_show_shoucang = obj.root;
-    MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'))
-    console.error(
-      "set_mid_menu_result-------",
+    console.log(
+      "MENUDATA.set_mid_menu_result-------",
       JSON.stringify(this.mid_menu_result)
     );
+    this.menu_root_show_shoucang = obj.root;
+    MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'))
     // 设置全屏
     this.set_multi_column();
     useMittEmit(MITT_TYPES.EMIT_MATCH_LIST_UPDATE)

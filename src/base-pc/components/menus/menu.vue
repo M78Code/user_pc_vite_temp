@@ -14,7 +14,7 @@
       <ul class="menu-list menu-favouritse">
         <li class="f-s-c" @click="go_to_favouritse">
           <i class="icon-star q-icon c-icon icon"></i>
-          Favorites
+          {{ i18n_t("ouzhou.menu.collect") }}
         </li>
       </ul>
     </div>
@@ -22,7 +22,7 @@
     <div class="menu-nav-line" />
 
     <div class="menu-nav-li">
-      <p>POPULAR</p>
+      <p>{{ i18n_t("ouzhou.menu.collect") }}</p>
       <ul class="menu-list">
         <li class="f-s-c" :class="{ 'menu_checked': current_menu_id == item }" v-for="item in popular" :key="item"
           @click="jump_func(item)">
@@ -165,9 +165,6 @@ const jump_func = payload => {
   //页面中间头部导航显示处理
   MatchListOuzhouClass.redux_menu.menu_root = 4
   MatchListOuzhouClass.redux_menu.menu_left = payload
-  MenuData.set_mid_menu_result({
-    euid: payload,
-  })
   MatchListOuzhouClass.update_version()
 }
 
