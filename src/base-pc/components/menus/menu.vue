@@ -1,11 +1,3 @@
-<!--
- * @Author         : lane jstylane@itcom888.com
- * @Date           : 2023-07-05 13:21:41
- * @LastEditors: Please set LastEditors
- * @LastEditTime: 2023-07-17 19:43:42
- * @FilePath: \user-pc-vue3\src\components\menus\menu.vue
- * @Description    : 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
--->
 
 <template>
   <div class="left-container">
@@ -26,7 +18,7 @@
       <ul class="menu-list">
         <li class="f-s-c" :class="{ 'menu_checked': current_menu_id == item }" v-for="item in popular" :key="item"
           @click="jump_func(item)">
-          <!-- <sport_icon :sport_id="compute_sport_id(item)" size="18px" class="icon" /> -->
+          <sport_icon :sport_id="BaseData.compute_sport_id(item)" size="18px" class="icon" />
           {{ (BaseData.menus_i18n_map || {})[item] || "" }}
         </li>
       </ul>
@@ -39,7 +31,7 @@
       <ul class="menu-list">
         <li class="f-s-c" :class="{ 'menu_checked': current_menu_id == item }" v-for="item in (left_menu_list || menu)"
           :key="item" @click="jump_func(item)">
-          <!-- <sport_icon :sport_id="compute_sport_id(item)" size="18px" class="icon" /> -->
+          <sport_icon :sport_id="BaseData.compute_sport_id(item)" size="18px" class="icon" />
           {{ (BaseData.menus_i18n_map || {})[item] || "" }}
         </li>
       </ul>
