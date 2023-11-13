@@ -73,6 +73,20 @@ class LayOutMain {
     this.cur_expand_layout = "match-list"
     //是否展开多列玩法
     this.is_unfold_multi_column = false; 
+
+    // ------------------------------------------ 欧洲版 pc 专用 --------------------------------------------------------------------------------------------
+    // 显示左侧菜单
+    this.oz_show_left = true
+    // 左侧宽度
+    this.oz_left_width = 250
+    // 显示右侧详情
+    this.oz_show_right = false
+     // 左侧宽度
+     this.oz_right_width = 407
+    // 区域大小
+    this.oz_layout_content = 1430
+
+    // ------------------------------------------ 欧洲版 pc 专用 --------------------------------------------------------------------------------------------
   }
 
   // 初始化
@@ -184,6 +198,27 @@ class LayOutMain {
     if (page_source == 'ouzhou-home') {
       this.layout_right_width = 0
     }
+  }
+
+  // 设置左侧菜单显示
+  set_oz_show_left(val) {
+    this.oz_show_left = val
+    if(val){
+      this.oz_left_width = 250
+    }else{
+      this.oz_left_width = 0
+    }
+    this.set_layout_version()
+  }
+  // 设置右侧详情显示
+  set_oz_show_right(val) {
+    this.oz_show_right = val
+    if(val){
+      this.oz_right_width = 407
+    }else{
+      this.oz_right_width = 0
+    }
+    this.set_layout_version()
   }
 }
 
