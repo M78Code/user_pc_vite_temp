@@ -52,11 +52,11 @@ const api_params = {
  * @return {undefined} undefined
  */
 function match_list_all_params() {
-    const { menu_root, left_menu_result, mid_menu_result, match_list_api_config, is_collect } = MenuData
+    const { menu_root, left_menu_result, mid_menu_result, is_collect,get_mid_for_euid } = MenuData
     // 父级euid
-    let { csid, tid, md, index, euid, sports, guanjun } = mid_menu_result || {};
+    let { csid, tid, md, index, sports, guanjun, mi, mif } = mid_menu_result || {};
     console.log('mid_menu_result1',mid_menu_result)
-    let { lv2_mi, lv1_mi, jinri_zaopan, } = left_menu_result || {};
+    let { lv2_mi, lv1_mi, jinri_zaopan, mid_menu_show:{ list_filter } } = left_menu_result || {};
     let apiType = 1;
     let api_name = api_params.other.match;
     // 前端控制是否禁用收藏功能
@@ -81,7 +81,7 @@ function match_list_all_params() {
             params: {
                 "cuid": UserCtr.get_uid() || '',
                 "sort": UserCtr.sort_type,
-                euid,
+                euid: get_mid_for_euid(mi),
                 "selectionHour": filterHeader.open_select_time,
             },
         }
@@ -103,15 +103,21 @@ function match_list_all_params() {
         }
     }
     // 调用列表接口
+    let euid_mi = lv2_mi
+    if(menu_root == 1){
+        euid_mi = mi
+    }
     // 当前 pid 和 orpt
-    let lv2_mi_info = BaseData.mi_info_map[`mi_${lv2_mi}`];
+    let lv2_mi_info = BaseData.mi_info_map[`mi_${euid_mi}`];
+    delete lv2_mi_info.h5_euid
+    
     if ([2, 3].includes(Number(menu_root))) {
         // 今日 早盘 常规赛事
         if (lv1_mi == 118) {
             // 娱乐下只有冠军 直接写死
             euid = menu_root == 3 ? '3020212' : '3020112'
         } else {
-            euid = lodash.get(BaseData.mi_info_map, `mi_${lv1_mi}${menu_root}`, {}).euid
+            euid = get_mid_for_euid(euid_mi)
         }
         lv2_mi_info = {
             apiType,
@@ -149,7 +155,7 @@ function match_list_all_params() {
             md,
         }
     } else if (menu_root == 500) {
-        euid = mid_menu_result.euid
+        euid = get_mid_for_euid(euid_mi)
         // 没有就重新获取
         if (!mid_menu_result.euid) {
             // 热门默认赛事
@@ -174,7 +180,7 @@ function match_list_all_params() {
         lv2_mi_info = {
             ...lv2_mi_info,
             apiType,
-            euid: mid_menu_result.euid,
+            euid: get_mid_for_euid(euid_mi),
             "orpt": "-1",
             tid: ""
         }

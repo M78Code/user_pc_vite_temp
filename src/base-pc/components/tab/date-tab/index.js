@@ -146,6 +146,7 @@ const get_date_menu_matches_list = async () => {
       });
     }
     current_filter_list.value = [{label:"Today",value:""}, ...arr]
+    final_index.value = current_filter_list.value[0].value
     handle_click_menu_mi_3_date(current_filter_list.value[0])
 }
 
