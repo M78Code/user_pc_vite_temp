@@ -27,6 +27,8 @@ class MatchListCardDataClass {
     this.play_to_card_key_arr = [];
     // 未开赛 到卡片key的 映射对象
     this.no_start_to_card_key_arr = [];
+    // 当前选中的玩法id对象
+    this.current_choose_hpid = {};
     /**
      * 哪种列表类型
      * 1. 列表数据类型为联赛列表   有未开赛 已开赛
