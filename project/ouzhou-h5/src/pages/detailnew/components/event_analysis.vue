@@ -66,7 +66,7 @@
       </template>
       <template v-else>
         <img class="no-data" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/coming_soon.png`"  alt="">
-        <div class="no-data-text">Coming Soon</div>
+        <div class="no-data-text">{{ i18n_t("ouzhou.no_data.coming_soon") }}</div>
       </template>
     </div>
   </div>

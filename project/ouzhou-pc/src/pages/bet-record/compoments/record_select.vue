@@ -62,7 +62,7 @@ const date_value = ref('')
 const select_options = [
   { value: i18n_t("bet_record.sort_by_settled_time"), label: i18n_t("ouzhou.record.settled_time"), id: 2 },
   { value: i18n_t("bet_record.sort_by_bet_time"), label: i18n_t("ouzhou.record.bet_time"), id: 1 },
-  { value: i18n_t("bet_record.sort_by_match_time"), label: i18n_t("ouzhou.record.match_time"), id: 3 }
+  { value: i18n_t("bet_record.sort_by_match_time"), label: i18n_t("bet_record.match_time"), id: 3 }
 ]
 const tabChange = ref(false)
 onMounted(() => {
