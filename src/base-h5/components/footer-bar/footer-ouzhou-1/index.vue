@@ -27,11 +27,11 @@ import VirtualList from 'src/core/match-list-h5/match-class/virtual-list'
 const router = useRouter();
 // 底部菜单集合
 const tab_list = reactive([
-  { label: 'In-Play', value: 'rollball', route: '/inPlay', type: 1 },
-  { label: 'MyBets', value: 'bet', route: '/betting_history' },
+  { label: i18n_t("menu_itme_name.inplay"), value: 'rollball', route: '/inPlay', type: 1 },
+  { label: i18n_t("ouzhou.menu.my_bets"), value: 'bet', route: '/betting_history' },
   { label: 'Home-Page', value: 'home_page', route: '/home', type: 1 },
-  { label: 'Results', value: 'results', route: '/matchResults', type: 28 },
-  { label: 'Favorites', value: 'favorites', route: '/collect', type: 50000 },
+  { label: i18n_t("menu_itme_name.results"), value: 'results', route: '/matchResults', type: 28 },
+  { label: i18n_t("ouzhou.match.favorites"), value: 'favorites', route: '/collect', type: 50000 },
 ])
 const get_route_path = computed(() => {
   return  router.currentRoute.value.path;

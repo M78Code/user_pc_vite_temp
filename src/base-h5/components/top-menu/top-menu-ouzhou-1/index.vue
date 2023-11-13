@@ -10,10 +10,10 @@
   <template v-if="is_rule_page">
     <div class="top_header_rule" @click="go_back">
       <img src="./img/back.png" alt="" />
-      <span>Personal</span>
+      <span>{{ i18n_t("ouzhou.setting_menu.personal") }}</span>
       <span class="line"></span>
       <!-- <span class="f_weight">Announcement</span> -->
-      <span class="f_weight">Rules</span>
+      <span class="f_weight">{{ i18n_t("setting_menu.rule_description") }}</span>
     </div>
   </template>
   <template v-else>
@@ -27,7 +27,7 @@
         <template v-else-if="is_personal_page">
           <div class="back" @click="go_back">
             <img src="./img/back.png" alt="" />
-            Back</div>
+            {{ i18n_t("ouzhou.setting_menu.back") }}</div>
         </template>
         <!-- home 头部 -->
         <template v-else>
@@ -39,7 +39,7 @@
 
           <!-- 搜索 -->
           <div class="top_info_search">
-            <input type="search" maxlength="15" placeholder="Search" @input="search_match" @focus="to_search_page" />
+            <input type="search" maxlength="15" :placeholder="`${i18n_t('search.search_title')}`" @input="search_match" @focus="to_search_page" />
             <img src="./img/top_seach.png" alt="" />
           </div>
           <!-- 头像 -->

@@ -2,7 +2,7 @@
 	<div class='search-container'>
 		<!-- 头部搜索 -->
 		<div class="top_info_search">
-			<input ref="input_ref" type="search" maxlength="15" placeholder="Search" v-model="input_value"
+			<input ref="input_ref" type="search" maxlength="15" :placeholder="`${i18n_t('search.search_title')}`" v-model="input_value"
 				@keyup.enter="get_search_data(input_value)" />
 			<img :src="compute_local_project_file_path('image/home/top_seach.png')" alt="" />
 			<img :src="compute_local_project_file_path('image/svg/bet_close3.svg')" alt=""
