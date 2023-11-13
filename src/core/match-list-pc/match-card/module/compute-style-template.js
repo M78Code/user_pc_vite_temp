@@ -355,6 +355,5 @@ export const compute_style_template_by_matchinfo = (match, template_id, is_ouzho
 	if (is_ouzhou) {
 		style_obj.total_height -= 5;
 	}
-	console.log('style_obj', style_obj);
 	return style_obj;
 };
