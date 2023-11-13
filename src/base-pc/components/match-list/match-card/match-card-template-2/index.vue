@@ -5,7 +5,7 @@
   <div
     class="c-match-card relative-position"
     :id="`list-mid-${mid}`"
-    :style="`height:${lodash.get(match_style_obj, `total_height`)}px !important;width:${LayOutMain_pc.layout_content_width - 15}px  !important;`"
+    :style="`height:${lodash.get(match_style_obj, `total_height`)}px !important;width:${LayOutMain_pc.oz_layout_content - 15}px  !important;`"
   >
   <!--改成101用来打包调试--> 
     <component
