@@ -29,7 +29,7 @@
       <div class="play-name-ouzhou">
         <div 
           class="play-name-title-box"
-          v-for="(item, col_index) in match_tpl_info.get_current_odds_list(current_choose_oid)" 
+          v-for="(item, col_index) in match_tpl_info.get_current_odds_list({})" 
           :key="col_index" 
           :style="{ 'width': match_list_tpl_size.bet_width + 'px' }"
         >
