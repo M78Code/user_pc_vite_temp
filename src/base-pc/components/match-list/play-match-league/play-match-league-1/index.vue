@@ -29,7 +29,7 @@
       <div class="play-name-ouzhou">
 
         <div class="play-name-title-box"
-          v-for="(item, col_index) in match_tpl_info.get_current_odds_list(MatchListCardDataClass.get_csid_current_hpids(lodash.get(card_style_obj, 'league_obj.csid')))"
+          v-for="(item, col_index) in match_tpl_info.get_current_odds_list(MatchListCardDataClass.get_csid_current_hpids(csid))"
           :key="col_index" :style="{ 'width': match_list_tpl_size.bet_width + 'px' }">
           <div class="play-name-item" v-for="(item_title, item_index) in item.ols" :key="item_index">
             {{ item_title.ot }}
@@ -37,7 +37,6 @@
           </div>
         </div>
       </div>
-      <div class="action-col" style="width:60px" v-if="data_tpl_id == 12"></div>
     </div>
   </div>
 </template>
@@ -73,16 +72,14 @@ const props = defineProps({
     default: () => ''
   }
 })
-
-let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(lodash.get(props, 'card_style_obj.mid'))
-let data_tpl_id = get_ouzhou_data_tpl_id(match_style_obj.csid)
+const csid = lodash.get(props.card_style_obj, 'league_obj.csid')
+let data_tpl_id = get_ouzhou_data_tpl_id(csid)
 const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${data_tpl_id}_config`]
 const match_list_tpl_size = lodash.get(MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`], 'width_config')
 // 获取菜单类型
-if (!lodash.get(props, 'card_style_obj.league_obj.csid') && ['1', '500'].includes(menu_config.menu_root)) {
+if (!csid && ['1', '500'].includes(menu_config.menu_root)) {
   useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST)
 }
-
 /**
  * @Description 设置联赛折叠
 */
