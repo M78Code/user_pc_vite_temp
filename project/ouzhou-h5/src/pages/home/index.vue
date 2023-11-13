@@ -3,8 +3,8 @@
     <!-- tab 切换 -->
     <div class="header_tabs">
       <q-tabs v-model="tabValue" dense class="bg-grey-3" align="justify" narrow-indicator @update:modelValue="on_update">
-        <q-tab name="featured" label="Featured" />
-        <q-tab name="top_events" label="Top Events" />
+        <q-tab name="featured" :label="`${i18n_t('ouzhou.match.featured')}`" />
+        <q-tab name="top_events" :label="`${i18n_t('ouzhou.match.top_events')}`" />
       </q-tabs>
     </div>
     <!-- 主内容区 -->

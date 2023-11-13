@@ -26,7 +26,7 @@
         <div class="segmentation"></div>
         <!-- POPULAR 热门赛事-->
         <div class="popular">
-          <h5>POPULAR</h5>
+          <h5>{{ i18n_t("ouzhou.menu.popular") }}</h5>
           <div
             class="item"
             :class="[
@@ -45,7 +45,7 @@
         <div class="segmentation"></div>
         <!-- 赛事球类 -->
         <div class="menu_container">
-          <h5>ALL SPORTS</h5>
+          <h5>{{ i18n_t("ouzhou.menu.all_sports")}}</h5>
           <div
             class="menu_item"
             :class="[
@@ -61,7 +61,7 @@
             <sport_icon size="18" :sport_id="item.mi" />
             <div>
               {{
-                item.mi == "2000" ? "Esports" : state.menu_name_list[item.mi]
+                item.mi == "2000" ? i18n_t("menu_itme_name.esports") : state.menu_name_list[item.mi]
               }}
             </div>
           </div>
@@ -86,13 +86,13 @@ export default defineComponent({
     const router = useRouter();
     const route = useRoute();
     const sportsGenre = reactive([
-      { name: "Esports", className: "esports", mi: "2000" },
-      { name: "VR Sports", className: "vr-sports", mi: "300" },
+      { name: i18n_t("menu_itme_name.esports"), className: "esports", mi: "2000" },
+      { name: i18n_t("common.virtual_sports"), className: "vr-sports", mi: "300" },
     ]);
     const popular = reactive([
-      { name: "Football", className: "football", mi: "101" },
-      { name: "Basketball", className: "basketball", mi: "102" },
-      { name: "Tennis", className: "tennis", mi: "105" },
+      { name: i18n_t("sport.football"), className: "football", mi: "101" },
+      { name: i18n_t("sport.basketball"), className: "basketball", mi: "102" },
+      { name: i18n_t("sport.tennis"), className: "tennis", mi: "105" },
     ]);
     const set_menu_obj = (data) => {
       router.push("/coming_soon");
