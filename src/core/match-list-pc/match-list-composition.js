@@ -5,7 +5,7 @@ import {
 } from "vue";
 import lodash from "lodash";
 import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache.js";
-import { PageSourceData, MatchDataWarehouse_PC_List_Common as MatchListData,UserCtr } from "src/core/index.js";
+import { PageSourceData, MatchDataWarehouse_PC_List_Common as MatchListData, UserCtr } from "src/core/index.js";
 import { api_match } from "src/api/index.js";
 import { useMittEmit, MITT_TYPES, useMittOn } from "src/core/mitt/index.js";
 // import { set_sticky_top } from 'src/core/match-list-pc/match-card/module/sticky-top.js'
@@ -25,7 +25,7 @@ import { set_base_data_init } from './match-list-metadata.js';
 import ServerTime from 'src/core/server-time/server-time.js';
 // import filterHeader from 'src/core/filter-header/filter-header.js'
 import get_match_list_params from './match-list-params.js'
-import {match_list_handle_set} from './match-handle-data.js'
+import { match_list_handle_set } from './match-handle-data.js'
 // const route = router.currentRoute.value
 const { page_source } = PageSourceData;
 const { mx_use_list_res, mx_list_res, mx_collect_match } = process_composable_fn();
@@ -58,7 +58,7 @@ useMittOn(MITT_TYPES.EMIT_MATCH_LIST_UPDATE, () => {
 	tid_match_list = setTimeout(() => {
 		console.log('EMIT_MATCH_LIST_UPDATE')
 		fetch_match_list()
-	},80);
+	}, 80);
 })
 // watch(() => MenuData.match_list_version.value, () => {
 // 	clearTimeout(tid_match_list)
@@ -74,7 +74,7 @@ useMittOn(MITT_TYPES.EMIT_MATCH_LIST_UPDATE, () => {
 */
 function fetch_match_list(is_socket = false, cut) {
 	const match_list_params = get_match_list_params();
-	console.error('match_list_params', match_list_params,MenuData.match_list_api_config)
+	console.log("diff params", MenuData.match_list_api_config.match_list, match_list_params)
 	// 设置当前为赛事列表
 	// 如果有拉列表定时器 清除定时器
 	if (!is_socket && get_match_list_timeid) {
@@ -110,7 +110,8 @@ function fetch_match_list(is_socket = false, cut) {
 		// 设置列表滚动条scrollTop
 		MatchListScrollClass.set_scroll_top(0);
 	}
-	let match_api = match_list_params.match_list || {};
+	// let match_api = match_list_params.match_list || {};
+	let match_api = MenuData.match_list_api_config.match_list || {};
 	// 设置列表接口 和 参数
 	let api = api_match[match_api.api_name];
 	let _params = lodash.clone(match_api.params) || {};

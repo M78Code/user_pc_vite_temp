@@ -10,7 +10,7 @@
             <span>{{ detail_info.mhn }}</span>
         </div>
         <div class="content-time">
-           Soon
+           {{i18n_t("common.match_soon")}}
         </div>
         <div class="content-item">
             <span>{{ detail_info.man }}</span>
@@ -66,7 +66,7 @@ watch(
 //   justify-content: space-between;
   color:#ffffff;
   .content-item{
-    width: 42%;
+    width: 40%;
     max-height: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -80,7 +80,7 @@ watch(
     }
   }
   .content-time{
-    width: 16%;
+    width: 20%;
   }
   }
 }

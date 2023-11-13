@@ -5,7 +5,7 @@
         <div class="f-b-c bet-content">
             <div class="f-s-c">
                 <div class="f-c-c bet-count" >{{ BetData.bet_single_list.length }}</div>
-                <div class="bet-slip">Bet Slip</div>
+                <div class="bet-slip">{{ i18n_t("common.bets_single") }}</div>
             </div>
             <div class="f-e-c">
                 <div class="f-c-c bet-money">{{ format_money2(UserCtr.balance) }}</div>

@@ -400,7 +400,6 @@ class MenuData {
     MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'))
     // 设置全屏
     this.set_multi_column();
-    useMittEmit(MITT_TYPES.EMIT_MATCH_LIST_UPDATE)
   }
     /**
    * @description: 设置是否收藏
@@ -705,6 +704,7 @@ class MenuData {
 
     // 菜单数据缓存
     this.set_local_1_500_count();
+    useMittEmit(MITT_TYPES.EMIT_MATCH_LIST_UPDATE)
   }
 
   /**

@@ -14,6 +14,25 @@
             "7_days": "Last 7 Days",
             "30_days": "In 30 Days",
             "datails": "Datails"
+        },
+        "detail": {
+            "which_team": "Which team will",
+            "keno_lottery": "keno lottery",
+            "exciting_different": "Exciting and different",
+            "close_handicap": "Close the Handicap"
+        },
+        "bet": {
+            "place_bet": "Place Bet"
+        },
+        "menu": {
+            "collect": "Favourites",
+            "popular": "POPULAR",
+            "all_sports": "ALL SPORTS"
+        },
+        "metch": {
+            "favorites": "Favorites",
+            "matches": "Matches",
+            "league": "League"
         }
     },
     "analysis": {

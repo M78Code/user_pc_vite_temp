@@ -1,10 +1,11 @@
 
 const routes = [
   {
-    path: '/',
-    component: () => import('layouts/MainLayout.vue'),
+    path: '/project/activity/index.html',
+    component: () => import('project/activity/src/layouts/MainLayout.vue'),
+    redirect: '',
     children: [
-      { path: '', component: () => import('pages/IndexPage.vue') }
+      { path: '', component: () => import('project/activity/src/pages/IndexPage.vue') }
     ]
   },
 
@@ -12,7 +13,7 @@ const routes = [
   // but you can also remove it
   {
     path: '/:catchAll(.*)*',
-    component: () => import('pages/ErrorNotFound.vue')
+    component: () => import('project/activity/src/pages/ErrorNotFound.vue')
   }
 ]
 

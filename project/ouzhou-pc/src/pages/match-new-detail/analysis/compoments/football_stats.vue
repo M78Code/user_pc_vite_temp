@@ -1,11 +1,4 @@
-<!--
- * @Author         : lane jstylane@itcom888.com
- * @Date           : 2023-07-15 19:17:42
- * @LastEditors: cooper cooper@123.com
- * @LastEditTime: 2023-07-17 17:28:47
- * @FilePath       : \user-pc-vue3\src\project-ouzhou\pages\detail\analysis\compoments\football_stats.vue
- * @Description    : 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
--->
+
 <!--
  * @Author: cooper
  * @Date: 2023-06-013 14:13:55
@@ -84,17 +77,17 @@ const props =  defineProps({
 })
 const statsList = ref([
   {
-    value: "Assault",
+    value: i18n_t("common.assault"),
     value_key:'S104'
    
   },
   {
-    value: "dangerous attack",
+    value: i18n_t("common.dangerous_assault"),
     value_key:'S8'
   
   },
   {
-    value: "ball right",
+    value: i18n_t("common.possession_ball"),
     value_key:'S105'
   
   },
@@ -114,19 +107,19 @@ const value = ref(50);
 const standard = ref(15)
 const sliderList = ref([
   {
-    title: "Shot On Goal",
+    title: i18n_t("common.shots_on_goal"),
     value_key:'S18'
   },
   {
-    title: "Shot Wide Goal",
+    title: i18n_t("common.shot_wide_goal"),
     value_key:'S17'
   },
 
 ])
 const tab = ref("mails");
 const tabList = ref([
-  { label: "Stats", id: 1 },
-  { label: "Timeline", id: 2 },
+  { label: i18n_t("common.panel_total"), id: 1 },
+  // { label: "Timeline", id: 2 },
 ]);
 const active = ref(1);
 const tabClick = (item) => {
@@ -153,7 +146,7 @@ const tabClick = (item) => {
 }
 
 .tabs-item {
-  margin-right: 40px;
+  // margin-right: 40px;
   display: block;
   //  min-width: 50px;
   font-weight: 400;
