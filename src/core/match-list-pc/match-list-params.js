@@ -56,7 +56,7 @@ function match_list_all_params() {
     // 父级euid
     let { csid, tid, md, index, sports, guanjun, mi, mif } = mid_menu_result || {};
     console.log('mid_menu_result1',mid_menu_result)
-    let { lv2_mi, lv1_mi, jinri_zaopan, mid_menu_show:{ list_filter } } = left_menu_result || {};
+    let { lv2_mi, lv1_mi, } = left_menu_result || {};
     let apiType = 1;
     let api_name = api_params.other.match;
     // 前端控制是否禁用收藏功能
