@@ -29,10 +29,15 @@
             "popular": "POPULAR",
             "all_sports": "ALL SPORTS"
         },
-        "metch": {
+        "match": {
             "favorites": "Favorites",
             "matches": "Matches",
-            "league": "League"
+            "featured": "Featured",
+            "top_events": "Top Events",
+            "home": "Home"
+        },
+        "no_data": {
+            "coming_soon": "Coming Soon"
         }
     },
     "analysis": {

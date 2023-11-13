@@ -166,8 +166,6 @@
         }else{
           is_league_fold = true
         }
-        console.log('is_league_fold', is_league_fold);
-
         // 打入联赛标题卡片特征
         all_card_obj[card_key] = {
           ...ouzhou_league_title_template,

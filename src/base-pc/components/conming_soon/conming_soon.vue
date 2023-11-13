@@ -9,7 +9,7 @@
   <div class="coming_soon_wrap">
     <div class="coming_soon_box">
       <img class="coming_soon_img" :src="coming_soon" alt="">
-      <div class="description">Coming Soon</div>
+      <div class="description">{{ i18n_t("ouzhou.no_data.coming_soon") }}</div>
     </div>
   </div>
     </div>

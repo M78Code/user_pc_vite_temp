@@ -41,3 +41,6 @@ export const upload_url_info = (params, config={}, url = "/url_info/createOrUpda
 
 // 当时平板电脑访问时上报信息
 export const upload_tablet_comput = (params, config={}, url = "/tablet_comput/create") => http.post(`${prifix_url}${url}`, params, config);
+
+//获取用户是否登录
+export const post_check_login = (params, config = {}, url = "/v1/w/isLogin") => http.post(`${prefix}${url}`, params);

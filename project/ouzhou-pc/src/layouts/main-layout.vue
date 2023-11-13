@@ -115,6 +115,7 @@ onMounted(()=>{
 }
 .layout_main_right {
   padding-top: 10px;
+  margin-left: 10px;
 }
 
 

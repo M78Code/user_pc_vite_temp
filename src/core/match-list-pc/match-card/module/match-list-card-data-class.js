@@ -23,6 +23,8 @@ class MatchListCardDataClass {
     this.csid_to_card_key_obj = {
       // 'csid_1':[ 'card_0', 'card_1' ]
     };
+    //当前赛中选中的要显示赔率
+    this.csid_current_hpids = {}
     // 已开赛 到卡片key的 映射对象
     this.play_to_card_key_arr = [];
     // 未开赛 到卡片key的 映射对象
@@ -80,9 +82,19 @@ class MatchListCardDataClass {
     this.match_list_style_info.value = payload;
     this.set_list_version()
   }
-
+  /**
+   * 当前赛中选中的要显示赔率
+   * 
+  */
+  set_csid_current_hpids(csid, csid_current_hpids) {
+    this.csid_current_hpids[csid] = csid_current_hpids
+    this.set_list_version()
+  }
   set_list_version() {
     this.list_version.value = Date.now();
+  }
+  get_csid_current_hpids(csid){
+    return this.csid_current_hpids[csid];
   }
   //获取单个卡片对象
   get_card_obj_bymid(mid) {

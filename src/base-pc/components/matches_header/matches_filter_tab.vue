@@ -1,12 +1,14 @@
 <template>
   <div class="current-filter-wrap">
-    <div class="current-filter-tab" v-for="(item, index) in current_filter_list" :key="item.value">
-      <div class="filter-label" @click="choose_filter_tab(item)" :class="{ 'checked': current_choose_tab == item.value }">
-        {{ item.label }}
-        <div class="current-mark" :class="{'show-mark': current_choose_tab == item.value}"></div>
+    <!-- <div class="current-filter-list" @scroll="on_scroll"> -->
+      <div class="current-filter-tab" v-for="(item, index) in current_filter_list" :key="item.value">
+        <div class="filter-label" @click="choose_filter_tab(item)" :class="{ 'checked': current_choose_tab == item.value }">
+          {{ item.label }}
+          <div class="current-mark" :class="{'show-mark': current_choose_tab == item.value}"></div>
+        </div>
+        <div class="filter-tab-split-line" v-show="index != current_filter_list.length - 1"></div>
       </div>
-      <div class="filter-tab-split-line" v-show="index != current_filter_list.length - 1"></div>
-    </div>
+    <!-- </div> -->
   </div>
 </template>
 
@@ -17,12 +19,15 @@
   import BaseData from "src/core/base-data/base-data.js";
   import { UserCtr,MenuData } from 'src/core/index.js'
   import { api_common } from "src/api/index.js";
-  import DateTabClass from "src/base-pc/components/tab/date-tab/date-tab-class.js"
+  import {
+    handle_click_menu_mi_3_date,
+    get_date_menu_matches_list,
+    current_filter_list
+  } from "src/base-pc/components/tab/date-tab/index.js"
 
   const current_choose_tab = ref('');
 
-  // 日期
-  const current_filter_list = ref([{label:"Today",value:""}])
+  
 
   onMounted(()=>{
     // 获取最新的 数据
@@ -30,7 +35,8 @@
     // 修改菜单数据
     //redux_menu.mid_tab_menu_type = ''
     MatchListOuzhouClass.set_menu(redux_menu)
-    get_date_menu_list()
+    get_date_menu_matches_list()
+
   })
  
  const menu_id = ref(0)
@@ -50,39 +56,8 @@ let un_subscribe = () => {
 
 };
 
-/**
-* 获取 日期 菜单
-* nu/getDateMenuList
-*/
-async function get_date_menu_list() {
-  let params =  DateTabClass.compute_get_date_menu_list_params();
-  let api_fn_name = ''
-  if (MenuData.is_export()) {
-    //电竞
-    api_fn_name = "get_esports_date_menu"
-  } else {
-    api_fn_name = "post_date_menu"
-  }
-  let res = await api_common[api_fn_name](params);
-  let data = res.data;
-  let arr = [];
-  if (Array.isArray(data)) {
-    data.map((x) => {
-      if(x.field1){
-        arr.push({
-          count: x.count,
-          value: x.field1,
-          label: x.menuName,
-        });
-     }
-    });
-  }
-  current_filter_list.value = [{label:"Today",value:""}, ...arr]
-  DateTabClass.handle_click_menu_mi_3_date(current_filter_list.value[0])
-}
-
 watch(MenuData.menu_data_version,()=>{
-  get_date_menu_list()
+  get_date_menu_matches_list()
 })
   /**
    * @param
@@ -97,7 +72,7 @@ watch(MenuData.menu_data_version,()=>{
 
     current_choose_tab.value = item.value
 
-    DateTabClass.handle_click_menu_mi_3_date(item)
+    handle_click_menu_mi_3_date(item)
   }
 
   onUnmounted(()=>{
