@@ -53,14 +53,13 @@
 </template>
   
 <script setup>
-import { ref, onMounted, onUnmounted } from "vue";
+import { ref, onMounted, onUnmounted, nextTick } from "vue";
 import { useRouter } from "vue-router";
 import BaseData from "src/core/base-data/base-data.js";
 import sport_icon from "src/base-pc/components/sport_icon.vue";
 // import { use_base_data,useMenuData,useMenuI18n } from "./base_data";
 // 菜单配置
-import { MenuData, UserCtr } from "src/core/index.js"
-
+import { MenuData, UserCtr,useMittEmit,MITT_TYPES } from "src/core/index.js"
 
 const popular = ([101, 102, 105])
 const menu = [
@@ -93,7 +92,6 @@ const go_to_favouritse = () => {
  * @returns {undefind} 无返回值
  */
 const jump_func = payload => {
-
   let obj = {
     lv1_mi : payload,
     root: 2, // 左侧菜单 默认今日
@@ -107,6 +105,10 @@ const jump_func = payload => {
   MenuData.set_left_menu_mi(payload)
   MenuData.set_left_menu_result(obj)
   MenuData.set_router_root_lv_2(4001)
+
+  nextTick(()=>{
+    useMittEmit(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE)
+  })
   
 }
 
