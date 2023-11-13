@@ -7,7 +7,11 @@ import { api_common } from "src/api/index.js";
 const final_index = ref(0) //下划线left
 const date_menu_version = ref(1) //日期菜单数据版本
 const item_wrap_left = ref(0) //item包裹left
+const list = ref([]) //tab模板文件key
 
+
+// matches日期
+const current_filter_list = ref([{label: i18n_t("menu.match_today"),value:""}])
 
 /**
  * 计算 日期 接口 请求参数
@@ -76,17 +80,13 @@ const handle_click_menu_mi_3_date = (detail = {}) => {
     MenuData.set_mid_menu_result(params);
 }
 
-/**
-* 获取 日期 菜单
-* nu/getDateMenuList
-*/
-const get_date_menu_list = async () => {
+// 获取日期菜单数据
+const get_data_menu_result = async () => {
     let params = compute_get_date_menu_list_params();
     let api_fn_name = ''
     if (MenuData.is_export()) {
       //电竞
       api_fn_name = "get_esports_date_menu"
-  
     } else {
       api_fn_name = "post_date_menu"
     }
@@ -102,7 +102,15 @@ const get_date_menu_list = async () => {
         });
       });
     }
-    list.value = arr;
+    return arr
+}
+
+/**
+* 获取 日期 菜单
+* nu/getDateMenuList
+*/
+const get_date_menu_list = async () => {
+    list.value = await get_data_menu_result();
     date_menu_version.value = Date.now()
     let index_info = 0, md_info = ''
     const { left_menu_result, match_list_api_config = {} } = MenuData
@@ -117,6 +125,30 @@ const get_date_menu_list = async () => {
     final_index.value = index_info;
     handle_click_menu_mi_3_date({ md: md_info })
 }
+
+/**
+* 获取 日期 菜单
+* nu/getDateMenuList
+*/
+const get_date_menu_matches_list = async () => {
+    let data = await get_data_menu_result();
+    console.log(data, 'data')
+    let arr = [];
+    if (Array.isArray(data)) {
+      data.map((x) => {
+        if(x.md){
+          arr.push({
+            count: x.count,
+            value: x.md,
+            label: x.menuName,
+          });
+       }
+      });
+    }
+    current_filter_list.value = [{label:"Today",value:""}, ...arr]
+    handle_click_menu_mi_3_date(current_filter_list.value[0])
+}
+
 
 
 /**
@@ -171,5 +203,8 @@ export {
     hand_cilck_move,
     final_index,
     date_menu_version,
-    item_wrap_left
+    item_wrap_left,
+    list,
+    get_date_menu_matches_list,
+    current_filter_list
 }
