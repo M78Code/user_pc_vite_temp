@@ -1,5 +1,6 @@
 import { reactive, ref } from "vue";
 import lodash from 'lodash';
+import choose_config from 'src/core/constant/config/ouzhou-pc-choose-config.js'
 
 /**
  * 列表表征数据存放实例
@@ -27,6 +28,8 @@ class MatchListCardDataClass {
     this.play_to_card_key_arr = [];
     // 未开赛 到卡片key的 映射对象
     this.no_start_to_card_key_arr = [];
+    // 当前选中的玩法id对象
+    this.csid_current_hpids = {};
     /**
      * 哪种列表类型
      * 1. 列表数据类型为联赛列表   有未开赛 已开赛
@@ -80,9 +83,19 @@ class MatchListCardDataClass {
     this.match_list_style_info.value = payload;
     this.set_list_version()
   }
-
+  /**
+   * 当前赛中选中的要显示赔率
+   * 
+  */
+  set_csid_current_hpids(csid, csid_current_hpids) {
+    this.csid_current_hpids[csid] = csid_current_hpids
+    this.set_list_version()
+  }
   set_list_version() {
     this.list_version.value = Date.now();
+  }
+  get_csid_current_hpids(csid) {
+    return this.csid_current_hpids[csid] || choose_config[csid][0];
   }
   //获取单个卡片对象
   get_card_obj_bymid(mid) {

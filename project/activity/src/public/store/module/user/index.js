@@ -7,7 +7,7 @@ import { reactive } from 'vue';
 import { api_account } from "project/activity/src/public/api/index";
 import { uid } from 'quasar';
 import BaseUserInfo from "project/activity/src/public/utils/user/base_user_info"
-import Fp from 'project/activity/src/public/api/module/fingerprint/fp-sdk-1.0.0';
+// import Fp from 'project/activity/src/public/api/module/fingerprint/fp-sdk-1.0.0';
 import { loadLanguageAsync } from 'project/activity/src/boot/i18n'
 import langs from "project/activity/src/i18n/langs/index";
 import userCtr from 'project/activity/src/public/utils/user/userCtr';
@@ -182,17 +182,17 @@ export default {
 
                   let fingerprint = window.localStorage.getItem('fingerprint');
                   // 若指纹信息不存在则通过api获取
-                  if(!fingerprint) {
-                    Fp.getFp(function(fpId, components, version) {
-                      api_account.save_finger_print({fpId, components, version}).then(res=>{
-                        const data = _.get(res, "data.data");
-                        const code = _.get(res, "data.code");
-                        if(code==200) {
-                          window.localStorage.setItem('fingerprint', JSON.stringify({fpId, components, version}));
-                        }
-                      });
-                    });
-                  }
+                  // if(!fingerprint) {
+                  //   Fp.getFp(function(fpId, components, version) {
+                  //     api_account.save_finger_print({fpId, components, version}).then(res=>{
+                  //       const data = _.get(res, "data.data");
+                  //       const code = _.get(res, "data.code");
+                  //       if(code==200) {
+                  //         window.localStorage.setItem('fingerprint', JSON.stringify({fpId, components, version}));
+                  //       }
+                  //     });
+                  //   });
+                  // }
                 }
                 api_account.check_balance({ uid :data.userId}).then(res => {
                   const rs = _.get(res, "data.data");

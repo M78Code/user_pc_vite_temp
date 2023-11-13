@@ -23,7 +23,7 @@
         <div class="segmentation"></div>
         <!-- POPULAR 热门赛事-->
         <div class="popular">
-          <h5>POPULAR</h5>
+          <h5>{{ i18n_t("ouzhou.menu.popular") }}</h5>
           <div class="item" :class="[
             // { active: meta_data_store.current_menu.mi == item.mi },
           ]" v-for="(item, index) in popularList" :key="item.mi" @click="change_current_menu(item)">
@@ -35,7 +35,7 @@
         <div class="segmentation"></div>
         <!-- 赛事球类 -->
         <div class="menu_container">
-          <h5>ALL SPORTS</h5>
+          <h5>{{ i18n_t("ouzhou.menu.all_sports")}}</h5>
           <div class="menu_item" :class="[
             // { active: meta_data_store.current_menu.mi == item.mi },
           ]" v-for="item in leftDataList" :key="item.mi" @click="change_current_menu(item)"
@@ -73,8 +73,8 @@ const leftDataList = ref([]);
  * vr 电竞
  */
 const sportsGenre = reactive([
-  { name: "Esports", className: "esports", mi: "2000",route: '/esports'},
-  { name: "VR Sports", className: "vr-sports", mi: "300",route: '/virtual' },
+  { name: i18n_t("menu_itme_name.esports"), className: "esports", mi: "2000",route: '/esports'},
+  { name: i18n_t("common.virtual_sports"), className: "vr-sports", mi: "300",route: '/virtual' },
 ])
 /**
  * 默认所有球种
@@ -144,7 +144,7 @@ const set_menu_obj = (data) => {
 const change_current_menu = (item) => {
 
   // MenuData.set_menu_mi(item.mi);
-  // setPopularSort(item.mi);
+  setPopularSort(item.mi);
   // 设置菜单对应源数据
   // MatchMeta.set_origin_match_data()
   emits('isLeftDrawer');

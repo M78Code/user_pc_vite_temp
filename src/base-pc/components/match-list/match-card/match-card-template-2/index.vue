@@ -74,6 +74,7 @@ export default {
 <style lang="scss" scoped>
 .c-match-card {
   overflow: hidden;
+  border-bottom: 1px solid #e2e2e2;
   .test {
     position: absolute;
     color: red;

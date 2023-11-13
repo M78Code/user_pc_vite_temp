@@ -214,6 +214,7 @@ export const set_ouzhou_template_width_base = (
   config,
   more_width
 ) => {
+  console.log('more_width', more_width);
   // 基础信息宽度
   config.process_team_width = 340;
   // 视频按钮区域宽度
