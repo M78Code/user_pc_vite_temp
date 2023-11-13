@@ -61,13 +61,13 @@ const arr_const = [
 ]
 
 const props = defineProps({
-    which: {
-        type: String,
-        required: true
-    },
-    height: {
-        required: true
-    },
+    // which: {
+    //     type: String,
+    //     required: true
+    // },
+    // height: {
+    //     required: true
+    // },
     code:{
         type: Number,
         required: true

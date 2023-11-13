@@ -10,25 +10,16 @@
     <div style="display: none;"> {{ LayOutMain_pc.layout_version }}-{{BetData.bet_data_class_version}}</div>
     <div class="flex full-content">
       <!-- 左侧 菜单 -->
-      <div :style="{ height: LayOutMain_pc.layout_content_height + 'px' , width:LayOutMain_pc.layout_left_width }" class="layout_main_left">
+      <div class="layout_main_left" v-if="LayOutMain_pc.oz_show_left">
         <layout-left />
       </div>
-      <div :style="{ height: LayOutMain_pc.layout_content_height + 'px' , width:LayOutMain_pc.layout_content_width + 'px' }" class="layout_main_center">
+      <div class="layout_main_center" :style="`width:${LayOutMain_pc.oz_layout_content -(LayOutMain_pc.oz_right_width + LayOutMain_pc.oz_left_width)}px`">
         <!-- 中间区域 -->
-        <router-view
-            class="col"
-            :class="{
-              video_page: route.params.video_size == 1,
-            }"
-            v-slot="{Component}"
-          >
-          <keep-alive include="matchListRouter" max="1">
-            <component :is="Component" />
-          </keep-alive>
-        </router-view>
+        <router-view></router-view>
+          
       </div>
       <!-- 右侧 视频  动画 比分板 详情 -->
-      <div v-if="show_right" :style="{ height: LayOutMain_pc.layout_content_height + 'px' , width:LayOutMain_pc.layout_right_width +'px' }" class="layout_main_right">
+      <div v-if="LayOutMain_pc.oz_show_right" class="layout_main_right">
         <layout-right />
       </div>
     </div>
@@ -45,7 +36,6 @@
       v-model:y="BetData.bet_box_draggable.y"
       v-model:active="BetData.bet_box_draggable.isActive"
       :draggable="true"
-      :parent="true"
       :resizable="false"
       parent="#parent"
       v-if="BetData.bet_box_draggable.show"
@@ -58,14 +48,12 @@
   </div>
 </template>
 <script setup>
-import { ref, computed,onBeforeUnmount,watch, onMounted } from "vue";
+import { ref, computed,watch, onMounted } from "vue";
 import Vue3DraggableResizable from 'vue3-draggable-resizable' //拖拽组件
 import { useRoute } from "vue-router";
 import { LayOutMain_pc,UserCtr } from "src/core/index.js";
 import "./main-layout.js"; //初始化数据
-// import { debounce } from "lodash";
-/**组件*/
-// import { SearchWapper } from 'src/components/search'
+
 import layoutHeader from "./layout-header.vue";
 import layoutLeft from "./layout-left.vue";
 import layoutRight from "./layout-right.vue";
@@ -73,7 +61,6 @@ import toastComponents from "src/base-pc/components/toast/toast.vue";
 import alertComponents from "src/base-pc/components/toast/alert.vue";
 import confirmComponents from "src/base-pc/components/toast/confirm.vue";
 import { BetBoxWapper } from "src/base-pc/components/bet";
-// import moveVideo from 'src/base-pc/components/video-replay/move-video.vue'
 import { compute_css_variables } from "src/core/css-var/index.js"
 import BetData from 'src/core/bet/class/bet-data-class.js'
 
@@ -82,36 +69,12 @@ page_style.value = compute_css_variables({ category: 'component', module: 'layou
 
 const route = useRoute();
 
-// 控制首页不展示右侧区域
-const show_right = ref(false);
-watch(
-  () => route.name,
-  () => {
-    show_right.value = ["details", "in_play"].includes(route.name);
-  },
-  { immediate: true }
-);
-
-//重新计算高度
-const mitt_offs = [
-  // useMittOn(MITT_TYPES.EMIT_LAYOUT_RESIZE, debounce(resize, 150)).off,
-];
-
-// resize();
  // 屏蔽视频移动组件(视频回播功能)
- const  get_user = ref(UserCtr.get_user())
 const show_move_video = computed(()=>{
-    return  lodash.get(get_user.value,"merchantEventSwitchVO.eventSwitch") 
-  } )
-  /* Í监听user版本号 */
- watch(()=>UserCtr.user_version,(val)=>{
-  if(val){
-    get_user.value =UserCtr.get_user()
-  }
- }) 
+  return lodash.get(UserCtr.get_user(),"merchantEventSwitchVO.eventSwitch") 
+})
 
-
- onMounted(()=>{
+onMounted(()=>{
   let obj = {
     x: window.innerWidth * 0.6,
     y: window.innerHeight * 0.7,
@@ -120,7 +83,7 @@ const show_move_video = computed(()=>{
     show: true,
   }
   BetData.set_bet_box_draggable(obj)
- })
+})
 </script>
 <style lang="scss">
 @import url(./content-layout.scss);
@@ -146,9 +109,10 @@ const show_move_video = computed(()=>{
 
 .layout_main_left {
   padding-top: 5px;
+  padding-right: 10px;
 }
 .layout_main_center {
-  padding: 5px 10px 0 10px;
+  padding: 5px 0 0;
 }
 .layout_main_right {
   padding-top: 5px;

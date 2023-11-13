@@ -71,7 +71,7 @@ import match_list_card from "src/core/match-list-pc/match-card/match-list-card-c
 import MenuData from "src/core/menu-pc/menu-data-class.js";
 import useMatchListMx from "src/core/match-list-pc/match-list-composition.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
-import { PageSourceData, compute_css_obj } from 'src/core/index.js';
+import { PageSourceData, compute_css_obj,LayOutMain_pc } from 'src/core/index.js';
 import { MatchDataWarehouse_PC_List_Common as MatchListData, GlobalAccessConfig } from "src/core/index.js";
 
 import "../match-list/match_list.scss";
@@ -92,6 +92,8 @@ export default {
         ConmingSoon
     },
     setup() {
+        LayOutMain_pc.set_oz_show_right(true)
+        LayOutMain_pc.set_oz_show_left(false)
         // 设置 左侧菜单
         MenuData.set_left_menu_result({
             root: 1,

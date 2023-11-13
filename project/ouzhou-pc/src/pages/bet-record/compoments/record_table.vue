@@ -129,14 +129,14 @@
 </template>
 
 <script setup>
-import { onMounted, ref, watch } from 'vue'
+import { onMounted, reactive, ref, watch } from 'vue'
 import { useGetOrderList } from './tableConfig'
 import { formatTime } from 'src/core/format/index.js'
-import { UserCtr, format_balance, LOCAL_PROJECT_FILE_PREFIX } from 'src/core/index.js'
+import { UserCtr, format_balance, LOCAL_PROJECT_FILE_PREFIX,i18n_t } from 'src/core/index.js'
 import Pagination from 'project_path/src/components/Pagination.vue'
 // import { PaginationWrapper } from "src/components/pagination/index.js";
 // import football_icon from 'src/assets/images/football_icon.png'
-import { copyToClipboard } from 'quasar'
+// import { copyToClipboard } from 'quasar'
 import GlobalSwitchClass from 'src/core/global/global.js'
 const emit = defineEmits(['itemFilter'])
 const props = defineProps({
@@ -145,6 +145,7 @@ const props = defineProps({
     default: ''
   }
 })
+
 const match_type = {
   1: i18n_t("bet.morning_session"),
   2: i18n_t("list.list_today_play_title"),
@@ -230,7 +231,7 @@ const changePage = (arv) => {
   emit('itemFilter', { page: current })
 }
 const hand_copy = (data) => {
-  copyToClipboard(data)
+  // copyToClipboard(data)
   GlobalSwitchClass.set_tip_show_state(true)
 }
 </script>
