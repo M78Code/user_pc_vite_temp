@@ -11,7 +11,6 @@
     </div>
     <div class="choose-csid-hpids" v-if="card_style_obj?.card_type == 'sport_title'">
       <div @click="show_list = !show_list">
-        {{ current_csid_hpids.second_hpid }}
         {{ $t(`csid_${card_style_obj.csid}_${current_csid_hpids.first_hpid}`) }} & {{
           $t(`csid_${card_style_obj.csid}_${current_csid_hpids.second_hpid}`) }}
       </div>

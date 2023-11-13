@@ -79,7 +79,7 @@ watch(() => MatchListData.data_version.version, (new_value, old_value) => {
     handicap_list.value = match_tpl_info.get_current_odds_list(MatchListCardDataClass.get_csid_current_hpids(lodash.get(match, 'csid')))
   }
 })
-watch(() => MatchListCardDataClass.list_version, (new_value, old_value) => {
+watch(() => MatchListCardDataClass.list_version.value, (new_value, old_value) => {
   if(match){
     handicap_list.value = match_tpl_info.get_current_odds_list(MatchListCardDataClass.get_csid_current_hpids(lodash.get(match, 'csid')))
   }

@@ -53,11 +53,13 @@ const api_params = {
  */
 function match_list_all_params() {
     const { menu_root, left_menu_result, mid_menu_result, is_collect,get_mid_for_euid } = MenuData
-    // 父级euid
+   
     let { csid, tid, md, index, sports, guanjun, mi, mif } = mid_menu_result || {};
     console.log('mid_menu_result1',mid_menu_result)
     let { lv2_mi, lv1_mi, } = left_menu_result || {};
     let apiType = 1;
+     // 父级euid
+    let euid = ''
     let api_name = api_params.other.match;
     // 前端控制是否禁用收藏功能
     // 前端配置写死，世界杯后删除
