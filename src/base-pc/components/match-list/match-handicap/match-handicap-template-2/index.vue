@@ -69,8 +69,7 @@ const props = defineProps({
 
 let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.match.mid)
 // 赛事模板宽度
-console.log('handicap_list', props.handicap_list);
-const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].width_config
+let match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].width_config
 let MatchListDataInfo = MatchListData
 const active_score = ref('')
 const update_score = (res)=>{
@@ -78,6 +77,7 @@ const update_score = (res)=>{
 }
 watch(() => MatchListData.data_version.version, () => {
   MatchListDataInfo = MatchListData
+  match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].width_config
 })
 // 组件是否已挂载
 const is_mounted = ref(true);

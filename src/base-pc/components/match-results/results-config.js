@@ -382,7 +382,7 @@ export const useGetResultConfig = () => {
           // 添加【全部】选项
           state.champion_sport_type.unshift(i18n_t("select.all"));
           state.api_sport_type = data;
-          console.log(state.api_sport_type,'state.api_sport_type');
+          // console.log(state.api_sport_type,'state.api_sport_type');
           const _name = i18n_t("select.all");
           // 如果求种id存在，则显示对应的求种id
           if (state.sport_id) {
@@ -1173,7 +1173,7 @@ export const useGetResultConfig = () => {
    * 修改当前选中的赛种名字
    */
   const setSport = ({ currentItem, isChampion }) => {
-    console.log(state.api_sport_type,'state.api_sport_type22');
+    // console.log(state.api_sport_type,'state.api_sport_type22');
     state.is_highlights = false;
     if (state.results_params.sportType == "1" && state.is_highlights) {
       state.results_params.isPlayBack = 1;
