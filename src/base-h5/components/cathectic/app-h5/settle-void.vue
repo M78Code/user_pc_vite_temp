@@ -13,10 +13,12 @@
       <p class="centerText" v-else-if="BetRecordClass.selected == 1">{{i18n_t("app_h5.cathectic.no_data_pre")}}</p>
       <p class="centerText" v-else-if="BetRecordClass.selected == 2">{{i18n_t("app_h5.cathectic.no_data_invalid")}}</p>
       <p class="centerText" v-else="BetRecordClass.selected == 3">{{i18n_t("app_h5.cathectic.no_data_settle")}}</p>
+      <!--
       <p class="centerText">
         如需查询历史记录，请访问
         <a @click="toRecords()" >投注记录</a>
       </p>
+      -->
     </template>
   </div>
 </template>
