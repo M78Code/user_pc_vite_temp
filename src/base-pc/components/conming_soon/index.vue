@@ -10,7 +10,7 @@
                 <div class="header_banner"></div>
                 <div class="matches-title">
                     <div class="current_match_title ">
-                      Favorites
+                      {{i18n_t("ouzhou.match.favorites")}}
                     </div>
                 </div>
             </div>

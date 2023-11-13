@@ -21,7 +21,8 @@ import base_data from "src/core/base-data/base-data.js";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import './src/css/common.scss';
-
+import app_mixin from "src/base-pc/mixin/app-mixin.js";
+// defineOptions({ mixins: [app_mixin]})
 const { DEFAULT_VERSION_NAME } = window.BUILDIN_CONFIG;
 
 const init_load = ref(false); //用于加载是否完成
