@@ -38,7 +38,7 @@
           <span
             @click.stop.prevent.self="clear_search"
             v-show="input_text.length > 0"
-            :class="[`icon-delete ${get_y0_suffix}`, { 'input-without-word': !input_text.length }]"
+            :class="{ 'input-without-word': !input_text.length }"
           ></span>
         </template>
       </q-input>
@@ -70,9 +70,11 @@
         </section>
         <!-- 联赛 -->
         <section class="league_list" v-for="(type_item,type_index) in list_data" :key="type_index">
-          <p class="league_title row justify-between items-center">
-            {{type_item.leagueName}}
-            <span class="league_num">{{type_item.matchList.length}}</span>
+          <div class="league_title row justify-between items-center">
+            <p class="text row justify-between items-center">
+              <span>{{type_item.leagueName}}</span>
+              <span class="league_num">{{type_item.matchList.length}}</span>
+            </p>
             <img
               class="select_img"
               v-show="!type_item.checked"
@@ -87,7 +89,7 @@
               src="/src/base-h5/components/menu/app-h5-menu/tab/img/icon_checkbox_sel.svg"
               alt
             />
-          </p>
+          </div>
           <ul class="list_info">
             <li
               class="list_data row items-center justify-between"
@@ -116,7 +118,7 @@
           </ul>
         </section>
       </div>
-         <section class="btn row items-center justify-between">
+         <section v-if="list_data.length>1" class="btn row items-center justify-between">
           <div class="confirm_btn" @click="select_confirm">确定</div>
           <div class="cancel_btn" @click="select_cancel">取消</div>
         </section>
@@ -163,7 +165,7 @@ const bounced_high = {
 function all_select() {
   is_all_checked.value = !is_all_checked.value;
   list_data.value = list_data.value.map(item => {
-    item.checked = is_all_checked;
+    item.checked = is_all_checked.value;
     item.matchList = item.matchList.map(v => {
       v.checked = is_all_checked.value;
       return v;
@@ -353,8 +355,13 @@ async function get_search_result() {
       font-weight: 500;
       padding: 0.1rem 0;
       border-top: 0.01rem solid #e4e6ed;
-      .league_num {
+      .text{
+        width: 86%;
+        span{
         display: inline-block;
+        }
+      }
+      .league_num {
         width: 0.19rem;
         height: 0.15rem;
         border-radius: 0.8rem;
@@ -367,6 +374,7 @@ async function get_search_result() {
     .list_info {
       .list_data {
         .league_name {
+          min-width: 2rem;
           .img {
             margin-right: 0.04rem;
           }

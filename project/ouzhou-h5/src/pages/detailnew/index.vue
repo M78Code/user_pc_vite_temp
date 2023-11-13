@@ -80,7 +80,6 @@ import odds_info from "./components/odds_info.vue";
 import loading_page from 'src/components/details/loading/index.vue'
 import event_analysis from "./components/event_analysis.vue";
 import { details_main } from "./details.js";
-import  skt_data_info  from "src/core/websocket/data/skt_data_info.js";
 export default {
   components:{
     detail_header_tem0,
@@ -93,10 +92,10 @@ export default {
     loading_page,
     event_analysis
   },
-  mixins:[skt_data_info],
   setup(ctx){
     const router = useRouter();
     const route = useRoute();
+    const mid = ref(route?.params?.mid)
     const {
       detail_store,
      match_odds_info,
@@ -145,7 +144,8 @@ export default {
       touchend,
       touchstart,
       detail_tabs_change,
-      changeHeader
+      changeHeader,
+      mid
      }
   } 
 }

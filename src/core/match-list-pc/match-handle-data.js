@@ -90,6 +90,35 @@ export function get_match_template_id({ csid }) {
     return tpl_id
 }
 
+/**
+ * 
+ * @param {Number | String} csid 
+ * @returns 数据模板id
+ * @description 获取欧洲版 不同球种的数据模板id
+ */
+export function get_ouzhou_data_tpl_id (csid) {
+    switch (Number(csid)) {
+        case 1:
+            return 101
+        case 2:
+            return 102;
+        case 5:
+            return 109;
+        case 7:
+        case 10:
+        case 8:
+        case 9:
+        case 13:
+            return 111;
+        case 3:
+            return 117;
+        case 12:
+            return 119;
+        default:
+            return 101;
+      }
+}
+
 
 /**
      * @description 获取总比分
