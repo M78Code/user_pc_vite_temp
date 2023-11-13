@@ -235,11 +235,6 @@ const get_odds_state = (mhs, hs, os) => {
     state = STATE[_active];
   } else {
     let selected_class;
-    if (this.vx_get_is_virtual_bet) {
-      selected_class = this.virtual_bet_item_select(id);
-    } else {
-      selected_class = this.bet_item_select(id);
-    }
     state = selected_class ? "active" : "normal";
   }
   // 当赔率对应的欧赔小于1.01时 ！！！！！！！！！！！！！！！！并且当前不在关盘状态，强制转换成封盘的状态 对盘口加锁

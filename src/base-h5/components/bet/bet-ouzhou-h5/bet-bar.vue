@@ -12,7 +12,7 @@
     <div class="nonebox4-first">
         <div class="nonebox4-first-left">
             <div class="nonebox4-first-left-img">1</div>
-            <div class="nonebox4-first-left-text">Bet slip</div>
+            <div class="nonebox4-first-left-text">{{i18n_t("bet.bet_record")}}</div>
         </div>
         <div class="nonebox4-first-right">
             <div class="nonebox4-first-right-window" @click.stop="get_balance">

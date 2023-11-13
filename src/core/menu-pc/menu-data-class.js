@@ -17,6 +17,7 @@ import { compute_sport_id } from 'src/core/constant/index.js'
 import { LayOutMain_pc } from "src/core/index.js";
 import { ref } from "vue";
 import lodash from 'lodash';
+import BaseData from "src/core/base-data/base-data.js"
 
 
 const state = store.getState();
@@ -111,6 +112,69 @@ class MenuData {
       type_name: '',
       pre_name: ''
     }
+
+    // ---------------------------- 欧洲版-pc 专用 --------------------------------
+    this.ouzhou_filter_config = {
+      home_tab: [
+        { label: 'Featured', value: 'featured' },
+        { label: 'Top Events', value: 'top_events' },
+      ], // 首页
+      sport_tab: [
+        { label: 'Matches', value: 'matches' },
+        { label: 'League', value: 'league' },
+      ], // 左侧菜单
+      inplay:{
+        title: 'In-Play',
+        name: 'All Matches'
+      }
+    }
+    // 菜单的 router_root 节点   router_root ： 1 首页  2 滚球  3 my bets   4000 左侧赛种  
+    this.router_root_lv_1 = 1
+    this.router_root = ref(1)
+    //  1001 fetured  10002 top events  
+    this.router_root_lv_2 = 1001
+    // 4001 matches  4002 langue 
+    this.router_root_lv_3 = 4001
+
+    this.router_root_version = ref('')
+
+    // ---------------------------- 欧洲版-pc 专用 --------------------------------
+  }
+
+  // 设置一级菜单id
+  set_menu_root(val) {
+    this.menu_root = val
+  }
+
+  // 设置 欧洲版头部配置信息
+  set_ouzhou_filter_config(obj) {
+    this.ouzhou_filter_config = {
+      ... this.ouzhou_filter_config,
+      ...obj,
+    }
+  }
+
+  // 设置 菜单的 router_root 节点
+  set_router_root_lv_1(val) {
+    this.router_root_lv_1 = val
+    this.router_root.value = val
+    // 首页 滚球 设置 menu_root 1
+    if([1,2].includes(val*1)){
+      this.set_menu_root(1)
+    }
+    this.router_root_version.value = Date.now()
+    
+  }
+  // 设置 菜单的 router_root 节点
+  set_router_root_lv_2(val) {
+    this.router_root_lv_2 = val
+    this.router_root_version.value = Date.now()
+  }
+
+  // 设置 菜单的 router_root 节点
+  set_router_root_lv_3(val) {
+    this.router_root_lv_3 = val
+    this.router_root_version.value = Date.now()
   }
 
   // 设置 菜单的版本变化
@@ -300,7 +364,7 @@ class MenuData {
    * lv2_mi
    */
   set_left_menu_result(obj) {
-    console.log('MENUDATA.set_left_menu_result', obj)
+    console.log('MENUDATA.set_left_menu_result', this.is_scroll_ball())
     this.menu_root = obj.root;
     this.menu_root_show_shoucang = obj.root;
     // 设置 列表接口类型
@@ -331,7 +395,7 @@ class MenuData {
         version: Date.now(),
       };
     }
-    MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'))
+    MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'), this.is_scroll_ball())
     if ([2, 3].includes(Number(obj.root))) {
       // 角球
       if ([101210, 101310].includes(+obj.lv2_mi)) {
@@ -397,7 +461,7 @@ class MenuData {
       JSON.stringify(this.mid_menu_result)
     );
     this.menu_root_show_shoucang = obj.root;
-    MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'))
+    MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'), this.is_scroll_ball())
     // 设置全屏
     this.set_multi_column();
   }
@@ -685,25 +749,14 @@ class MenuData {
    * 定义  设置 请求  列表结构  API 参数的   值
    */
   set_match_list_api_config(config) {
-    let match_list_api_config = JSON.parse(JSON.stringify(config));
-
-    //  //菜单切换是筛选数据置空
-    // store.dispatch("set_filter_select_obj", []);
-    this.match_list_api_config = match_list_api_config;
-
+   
     // 更新列表数据类型
     this.set_match_list_api_type(config);
-
-    //当前 列表的  体育标签
-    this.match_list_sports_label = match_list_api_config.sports;
-
-    this.match_list_version.value = Date.now();
 
     // 设置投注类别
     this.set_bet_category();
 
     // 菜单数据缓存
-    this.set_local_1_500_count();
     useMittEmit(MITT_TYPES.EMIT_MATCH_LIST_UPDATE)
   }
 
@@ -725,7 +778,11 @@ class MenuData {
   update_menu_version() {
     base_data_instance.menu_version = Date.now();
   }
-
+  // 根据菜单id 获取对应的euid
+  get_mid_for_euid(mi) {
+    let obj = lodash.get(BaseData.mi_euid_map_res,`[${mi}]`, {})
+    return obj.p || 0
+  }
 
   // 新菜单规律核心参照表
   /**

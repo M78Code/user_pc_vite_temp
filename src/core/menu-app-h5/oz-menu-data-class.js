@@ -68,18 +68,27 @@ class MenuData {
     //热门球种
     let top_events_list =  BaseData.mew_menu_list_res.filter((item)=>{return item.mi==5000})?.[0].sl || [];
     //热门球种不存在取常规球种
-    top_events_list = top_events_list.length?top_events_list.map((item)=>{
-      return {
-        ...item,
-        mi:`${+item.mi-4900}`,
-        defaultMi:item.mi,
-        csid:`${+item.mi-5000}`,
-      }
-    }):menu_list.map((item)=>{
+    // top_events_list = top_events_list.length?top_events_list.map((item)=>{
+    //   return {
+    //     ...item,
+    //     mi:`${+item.mi-4900}`,
+    //     defaultMi:item.mi,
+    //     csid:`${+item.mi-5000}`,
+    //   }
+    // }):menu_list.map((item)=>{
+    //   return {
+    //     ...item,
+    //     defaultMi:item.mi,
+    //     csid:`${+item.mi-100}`,
+    //   }
+    // });
+    //取常规球种 数量取热门球种
+    top_events_list = menu_list.map((item)=>{
       return {
         ...item,
         defaultMi:item.mi,
         csid:`${+item.mi-100}`,
+        ct:top_events_list.find((n)=>{return +item.mi === +n.mi-4900})?.ct
       }
     });
     this.menu_list = menu_list;

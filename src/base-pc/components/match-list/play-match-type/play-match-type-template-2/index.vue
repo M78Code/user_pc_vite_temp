@@ -1,6 +1,7 @@
 <template>
   <!-- 滚球盘 标题-->
-  <div :class="['ouzhou-match-type yb-flex-between']" @click="MatchListCardData[cur_title_info.func_name](card_style_obj)">
+  <div :class="['ouzhou-match-type yb-flex-between']"
+    @click="MatchListCardData[cur_title_info.func_name](card_style_obj)">
     <div class="yb-flex-between">
       <!-- 滚球盘 -->
       {{ cur_title_info.name }}
@@ -72,7 +73,7 @@ const cur_title_info = computed(() => {
   return title_obj[card_type];
 })
 
-const current_csid_hpids = ref(MatchListCardDataClass.set_csid_current_hpids(props.card_style_obj.csid) || choose_config[props.card_style_obj.csid][0])
+const current_csid_hpids = ref(MatchListCardDataClass.get_csid_current_hpids(props.card_style_obj.csid))
 function handle_hpid_choose(item) {
   current_csid_hpids.value = item
   MatchListCardDataClass.set_csid_current_hpids(props.card_style_obj.csid, item)
