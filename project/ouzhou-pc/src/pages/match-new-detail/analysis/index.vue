@@ -21,14 +21,18 @@
         </div>
       </div> -->
       <!-- 分析页动画 -->
-      <!-- <venue_box /> -->
-      <!-- <score_info :score_list="score_list" :detail_info="detail_info" /> -->
+      <div class="tabs-wrap">
+      <span v-for="item in tabList" :key="item.id" @click="tabClick(item)"
+        :class="[{ 'is-active': item.id === active }, 'tabs-item']">{{ item.label }}
+      </span>
+    </div>
+     
        <!-- 足球分析页图表 -->
       <foot-ball-stats v-if="detail_info.csid==1 &&detail_info.ms>0" :detail_info="detail_info" :score_list="score_list" />
        <!-- 篮球分析页图表 -->
        <basket-ball-stats  v-if="detail_info.csid==2 &&detail_info.ms>0" :detail_info="detail_info" :score_list="score_list" />
       <!-- 选择哪队会赢组件 -->
-      <switch-team />
+      <switch-team v-if="false" />
     </div>
   </div>
 </template>
@@ -38,7 +42,7 @@ import { onMounted, ref,computed,watch } from "vue";
 // import {LOCAL_PROJECT_FILE_PREFIX } from 'src/core/index.js';
 
  import FootBallStats from './compoments/football_stats.vue'
-// import BasketBallStats from './compoments/basketball_stats.vue'
+ import BasketBallStats from './compoments/basketball_stats.vue'
 import switchTeam from './compoments/switch-team.vue'
 
 import venueBox from './compoments/venue-box/index.vue'
@@ -54,6 +58,11 @@ import { MatchDataWarehouse_PC_Detail_Common as MatchDataWarehouseInstance,MenuD
 // })
 
 let detail_info = ref({})
+const active = ref(1);
+const tabList = ref([
+  { label: i18n_t("common.panel_total"), id: 1 },
+  // { label: "Timeline", id: 2 },
+]);
 
 onMounted(()=>{
   useMittOn(MITT_TYPES.EMIT_SHOW_DETAILS,get_detail_info)
@@ -149,4 +158,47 @@ const get_detail_info = (mid)=>{
     }
   }
 }
+
+
+.tabs-wrap {
+height: 50px;
+display: flex;
+justify-content: center;
+align-items: center;
+background: #ffffff;
+// padding-bottom: 10px;
+border-bottom: 1px solid #e2e2e2;
+}
+.tabs-item {
+  // margin-right: 40px;
+  display: block;
+  //  min-width: 50px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  text-transform: capitalize;
+  color: #1a1a1a;
+  cursor: pointer;
+}
+.is-active {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  text-transform: capitalize;
+  color: #1a1a1a;
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    bottom: -14px;
+    left: 5%;
+    right: 5%;
+    width: 90%;
+    height: 2px;
+    background: #ff7000;
+  }
+}
+
+
 </style>

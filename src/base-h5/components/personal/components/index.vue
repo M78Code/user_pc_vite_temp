@@ -8,7 +8,7 @@
       <!-- 用户信息 -->
       <div class="info"> 
         <div class="name"> 
-          <span>Money</span> 
+          <span>{{ i18n_t("ouzhou.setting_menu.money") }}</span> 
           <img v-if="show" @click="on_show_money(false)" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/show.png`" alt="" />
           <img v-else @click="on_show_money(true)" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/hide.png`" alt="" />
         </div> 
@@ -21,14 +21,14 @@
       <!-- 设置 -->
       <section> 
         <!-- Rules -->
-        <collapse :disabled="true" title="Rules" @click="jumpRules"> 
+        <collapse :disabled="true" :title="`${i18n_t('setting_menu.rule_description')}`" @click="jumpRules"> 
           <!-- 图片 -->
           <template v-slot:title_icon>
             <img class="icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/rule.png`" alt="" />
           </template>
         </collapse>
         <!-- Language -->
-        <collapse v-model="l_visible" title="Language">  
+        <collapse v-model="l_visible" :title="`${i18n_t('ouzhou.setting_menu.language')}`">  
           <template v-slot:title_icon>
             <img class="icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/language.png`" alt="" />
           </template>
@@ -40,7 +40,7 @@
           </template>
         </collapse>
         <!-- Odds Settings -->
-        <collapse v-model="s_visible" title="Odds Settings">
+        <collapse v-model="s_visible" :title="`${i18n_t('ouzhou.setting_menu.odds_setting')}`">
           <template v-slot:title_icon>
             <img class="icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/setting.png`" alt="" />
           </template>
@@ -113,17 +113,17 @@ const languages = [{
   language: 'Korean',
 }]
 const settingData = ref([{
-  title: 'Odds Display',
-  index: 'DEC',
-  params: ['DEC', 'HK']
+  title: i18n_t("ouzhou.setting_menu.odds_display"),
+  index: i18n_t("ouzhou.setting_menu.dec"),
+  params: [i18n_t("ouzhou.setting_menu.dec"), i18n_t("ouzhou.setting_menu.hk")]
 }, {
-  title: 'Bet Slip',
-  index: 'ANY',
-  params: ['ANY', 'HIG']
+  title: i18n_t("pre_record.odds"),
+  index: i18n_t("ouzhou.setting_menu.any"),
+  params: [i18n_t("ouzhou.setting_menu.any"), i18n_t("ouzhou.setting_menu.hig")]
 }, {
-  title: 'Version',
-  index: 'EURO',
-  params: ['EURO', 'ASIA']
+  title: i18n_t("ouzhou.setting_menu.version"),
+  index: i18n_t("ouzhou.setting_menu.euro"),
+  params: [i18n_t("ouzhou.setting_menu.euro"), i18n_t("ouzhou.setting_menu.asia")]
 }])
 
 onMounted(() => {

@@ -3,7 +3,7 @@
     <slot name="image">
     </slot>
     <slot name="title">
-      <span class="d_title">Coming Soon</span>
+      <span class="d_title">{{ i18n_t("ouzhou.no_data.coming_soon") }}</span>
     </slot>
   </div>
 </template>

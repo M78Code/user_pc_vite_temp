@@ -1,5 +1,5 @@
 <template>
-  <div class="detail-page">
+  <div class="detail-page" v-show="!detail_loading">
     <div class="match-detail-container">
       <div class="match-detail-bread">
         <!-- 详情页面包屑 -->
@@ -100,9 +100,9 @@
       <analysis :detail_info="detail_info || {}" />
     </div> -->
   </div>
-  <!-- <div class="detail-loading" v-show="detail_loading">
+  <div class="detail-loading" v-show="detail_loading">
       <loading></loading>
-    </div> -->
+    </div>
 </template>
 
 <script>
@@ -410,7 +410,13 @@ export default{
   }
 }
 .detail-loading {
+
   height: 100%;
+  &::v-deep{
+    .loading_box {
+      padding-top: 330px;
+    }
+  }
 }
 .match-name-list {
   background-color: #7b7b7b;

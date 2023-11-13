@@ -36,8 +36,8 @@ const tab_list = ref([])
 // 获取当前header展示背景图
 const current_ball_type = ref(630)
 
-const matches_header_title = ref('Matches');
-const current_value = ref('featured');
+const matches_header_title = ref(i18n_t("ouzhou.match.matches"));
+const current_value = ref(i18n_t("ouzhou.match.featured"));
 
 
 onMounted(()=>{

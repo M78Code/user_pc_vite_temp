@@ -40,7 +40,7 @@ export function useGetOrderList () {
       align: 'left',
       field: 'bettingType'
     },
-    { name: 'detail', label: 'Detail', align: 'left', field: 'detail' },
+    { name: 'detail', label: i18n_t("bet_record.options"), align: 'left', field: 'detail' },
     {
       name: 'totalStake',
       label: i18n_t("bet_record.bets_forehead"),

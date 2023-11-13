@@ -18,7 +18,9 @@
 <script setup>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import { LOCAL_PROJECT_FILE_PREFIX,i18n_t,useMittEmit,MITT_TYPES } from "src/core/index.js";
+import { LOCAL_PROJECT_FILE_PREFIX,useMittEmit,MITT_TYPES } from "src/core/index.js";
+import { i18n_t } from "src/boot/i18n.js";;
+import { UserCtr } from "src/core/";
 // 路由
 const router = useRouter();
 
@@ -47,7 +49,7 @@ const footer_list = [
     settle: true,
     id: 4
   },{
-    title: i18n_t('footer_menu.refresh'),
+    title: UserCtr.daily_activities ? '每日活动' : i18n_t('footer_menu.refresh'),
     icon: `${LOCAL_PROJECT_FILE_PREFIX}/image/footer/tabbar_05_nor.png`,
     id: 5
   }
@@ -83,9 +85,13 @@ const menu_item_click = (item = {}) => {
 
     // 刷新
     case 5:
-      useMittEmit(MITT_TYPES.EMIT_MENU_CHANGE_FOOTER_CMD, {
-        text: "footer-refresh",
-      });
+      if (UserCtr.daily_activities){
+        console.log('每日活动')
+      }else {
+        useMittEmit(MITT_TYPES.EMIT_MENU_CHANGE_FOOTER_CMD, {
+          text: "footer-refresh",
+        });
+      }
       break;
   }
 }
