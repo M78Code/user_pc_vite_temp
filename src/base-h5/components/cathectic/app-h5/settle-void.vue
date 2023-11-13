@@ -9,16 +9,13 @@
     <!-- <div class="img-s" :style="compute_css_obj('no-record')"></div> -->
     <img :src="compute_local_project_file_path('/image/bet/no-data.png')">
     <template>
-      <p class="centerText" v-if="BetRecordClass.selected === 0">{{i18n_t("app_h5.cathectic.no_data_unsettle")}}</p>
-      <p class="centerText" v-else-if="BetRecordClass.selected == 1">{{i18n_t("app_h5.cathectic.no_data_pre")}}</p>
-      <p class="centerText" v-else-if="BetRecordClass.selected == 2">{{i18n_t("app_h5.cathectic.no_data_invalid")}}</p>
-      <p class="centerText" v-else="BetRecordClass.selected == 3">{{i18n_t("app_h5.cathectic.no_data_settle")}}</p>
       <!--
-      <p class="centerText">
-        如需查询历史记录，请访问
-        <a @click="toRecords()" >投注记录</a>
-      </p>
+      <p class="centerText" v-if="BetRecordClass.selected === 0">{{ i18n_t("app_h5.cathectic.no_data_unsettle") }}</p>
+      <p class="centerText" v-else-if="BetRecordClass.selected == 1">{{ i18n_t("app_h5.cathectic.no_data_pre") }}</p>
+      <p class="centerText" v-else-if="BetRecordClass.selected == 2">{{ i18n_t("app_h5.cathectic.no_data_invalid") }}</p>
+      <p class="centerText" v-else>{{i18n_t("app_h5.cathectic.no_data_settle")}}</p>
       -->
+      <p class="centerText">{{ i18n_t( 'app_h5.cathectic.' + formatInternationalText(BetRecordClass.selected) ) }}</p>
     </template>
   </div>
 </template>
@@ -27,9 +24,17 @@
 import BetRecordClass from "src/core/bet-record/bet-record.js";
 import { utils, i18n_t, compute_css_obj, compute_local_project_file_path } from 'src/core/index.js'
 
-const toRecords = function ():void{
-  console.log("目前不知道跳转什么地方")
+const formatInternationalText = function (status:number):string{
+  const formatInternationalTextObj = {
+    0: 'no_data_unsettle',
+    1: 'no_data_pre',
+    2: 'no_data_invalid',
+    others: 'no_data_settle'
+  }
+  let message = formatInternationalTextObj[status] ?? 'no_data_settle'
+  return message
 }
+
 </script>
 
 <style lang="scss" scoped>

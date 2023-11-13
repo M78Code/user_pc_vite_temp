@@ -22,12 +22,21 @@ function url_param_ctr_set(obj={}){
   }
   sessionStorage.setItem('LOCATION_SEARCH', decodeURIComponent(search_params.toString()))
 }
+// 删除局部参数到sessionStorage中location.search参数字符串中
+function url_param_ctr_delete(keys=[]){
+  // 全局获取url参数值使用
+  const search_params = window.SEARCH_PARAMS.param;
+  for (var key of search_params.keys()) {
+    keys.includes(key) && search_params.delete(key);
+  }
+  sessionStorage.setItem('LOCATION_SEARCH', decodeURIComponent(search_params.toString()))
+}
 
 // 获取当前url(删除所有参数)
 function get_url_no_param(){
   let url = location.href;
   try {
-    if(url){
+    if(url && url.indexOf('token')>-1){
       let hash = location.hash;
       if(hash && hash.indexOf('?') > -1){
         hash = hash.substring(0,hash.indexOf('?'));
@@ -44,7 +53,7 @@ function get_url_no_param(){
 // 同步局部参数到sessionStorage中location.search参数字符串中,并进行参数获取分流操作
 function url_param_init() {
   // 允许在url中直接累加的参数key
-  const PARAM_ADD_KEY = ['wsl', 'pb'];
+  const PARAM_ADD_KEY = ['wsl', 'pb', 'vlg'];
   // 获取url参数
   let location_search = location.search;
   let hash = location.hash;
@@ -90,6 +99,10 @@ const search_params_obj = {};
 search_params_obj.href = location.href;
 // 当前最新href和session中的参数集合
 search_params_obj.param = url_param_init();
+// 删除方法
+search_params_obj.fun_del = url_param_ctr_delete;
+// 增加方法 
+search_params_obj.fun_set = url_param_ctr_set;
 
 // 全局获取url参数值使用
 window.SEARCH_PARAMS = search_params_obj;
