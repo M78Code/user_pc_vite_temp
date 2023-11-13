@@ -51,8 +51,8 @@ export default defineConfig({
 
     quasar({
       // sassVariables: `app/project/${project}/src/css/quasar-variables.scss`,
-      sassVariables: `app/job/output/css/variables.scss`,
-      
+      // sassVariables: `app/job/output/css/variables.scss`,
+      // sassVariables: path.resolve(__dirname, '../../project/activity/src/css/quasar-variables.scss')
     }),
   ],
   css:{
@@ -83,8 +83,9 @@ export default defineConfig({
       src: path.resolve(process.cwd(), "./src"),
       app: path.resolve(process.cwd(), "./"),
       dist: path.resolve(process.cwd(), "./dist"),
+      project: path.resolve(__dirname, '../../project'),
       node_modules: path.resolve(process.cwd(), "./node_modules"),
-    
+      public: path.resolve(__dirname, '../../public')
     },
   },
   server: {

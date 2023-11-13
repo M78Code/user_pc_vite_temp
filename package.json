@@ -9,12 +9,10 @@
     "dev-self-use-version-inner": "vite    --config  ./entries/self-use-version/self-use-version.vite.config.js",
     "dev-self-use-version": "run-s remove-output  env-dev  export-build-version-dev   remove-dist  copy-oss-3   copy-oss  export-merchant-config  export-build-in-config  resolve-merchant-config export-full-version-close  dev-self-use-version-inner",
     "build-self-use-version-inner": "vite  build  --config  ./entries/self-use-version/self-use-version.vite.config.js   --mode  production",
-    "dev-activity-inner":"vite    --config  ./entries/activity/activity.vite.config.js",
-    "build-activity-inner":"vite    --config  ./entries/activity/activity.vite.config.js  --mode  production",
-
-    "dev-activity":"run-s remove-output  env-dev  export-build-version-activity-dev   remove-dist copy-oss-3   copy-oss  export-build-in-config dev-activity-inner",
-    "build-activity":"run-s remove-output env-prod  export-build-version-activity-prod   remove-dist copy-oss-3   copy-oss export-build-in-config build-activity-inner copy-html copy-oss-2  remove-dist-assets",
-
+    "dev-activity-inner": "vite    --config  ./entries/activity/activity.vite.config.js",
+    "build-activity-inner": "vite    --config  ./entries/activity/activity.vite.config.js  --mode  production",
+    "dev-activity": "run-s remove-output  env-dev  export-build-version-activity-dev   remove-dist copy-oss-3   copy-oss  export-build-in-config dev-activity-inner",
+    "build-activity": "run-s remove-output env-prod  export-build-version-activity-prod   remove-dist copy-oss-3   copy-oss export-build-in-config build-activity-inner copy-html copy-oss-2  remove-dist-assets",
     "copy-oss": "node ./job/copy-oss.js output",
     "copy-oss-2": "node ./job/copy-oss.js dist",
     "copy-oss-3": "node ./job/copy-oss.js backup",
@@ -25,7 +23,6 @@
     "export-build-version-prod": "node ./job/export-build-version.js prod",
     "export-build-version-activity-dev": "node ./job/export-build-version-activity.js dev",
     "export-build-version-activity-prod": "node ./job/export-build-version-activity.js prod",
- 
     "copy-html": "node ./job/copy-html.js",
     "build-self-use-version": "run-s remove-output env-prod  export-build-version-prod   remove-dist  copy-oss-3 copy-oss   export-merchant-config  export-build-in-config resolve-merchant-config  export-full-version-close build-self-use-version-inner  copy-html copy-oss-2  remove-dist-assets ",
     "export-build-in-config": "node ./job/export-build-in-config.js",
@@ -58,7 +55,6 @@
     "dev-postmessage-test": "vite    --config  ./entries/postmessage-test/postmessage-test.vite.config.js",
     "export-full-version-open": "node ./job/export-full-version-config.js full",
     "export-full-version-close": "node ./job/export-full-version-config.js",
-    
     "divider-line": "echo \" 此命令无用,用于分割区块 。 上面的是语义化全命令，下面是简写命令。不要混着写。 \" && exit 0",
     "dev": "npm run dev-self-use-version",
     "dev-a": "npm run dev-activity",
@@ -85,6 +81,7 @@
     "dayjs": "^1.11.10",
     "dexie": "^3.2.4",
     "licia": "^1.38.2",
+    "licia-es": "^1.38.2",
     "lodash": "^4.17.21",
     "md5": "^2.3.0",
     "mitt": "^3.0.1",

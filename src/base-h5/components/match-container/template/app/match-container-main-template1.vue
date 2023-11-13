@@ -34,7 +34,7 @@
           {{ match_of_list.csna }} ({{ get_match_count }})
         </span>
       </div>
-      
+
       <!-- 最核心的div模块     标题 + 倒计时 + 比分 + 赔率盘口模块 -->
       <div :class="['match-inner-container', {'collapsed': !collapsed}]">
         <!--联赛标题 -->
