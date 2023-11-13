@@ -465,14 +465,16 @@ class MatchMeta {
 
   /**
    *@description 获取 to events 赛事
+   *@param {csid}
    */
-  get_top_events_match() {
+  get_top_events_match(csid) {
     // 菜单没数据先写死
     const params = {
-      euid: "30002",
+      euid: "30199",
       sort: 1,
       apiType: 1,
       orpt: -1,
+      csid,
       cuid: UserCtr.get_cuid(),
     }
     api_match.post_fetch_match_list(params).then((res) => {

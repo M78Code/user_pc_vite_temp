@@ -25,6 +25,16 @@
       <div>
        
         <div class="detail-statsic" v-if="score_list">
+      
+    <!-- <q-knob
+      v-model="value"
+      size="50px"
+      :thickness="0.22"
+      color="orange"
+      track-color="grey-3"
+      class="q-ma-md"
+    /> -->
+
           <div v-for="item in statsList" :key="item.value">
             <div class="detail-statsic-title">{{ item.value }}</div>
             <div class="detail-statsic-chart" v-if="score_list[item.value_key]" >
@@ -36,7 +46,7 @@
                 size="50px"
                 :thickness="0.4"
                 color="amber-7" 
-                :track-color="score_list[item.value_key].percentage==0?'basic-track':'indigo-12'"
+                :track-color="score_list[item.value_key].percentage==0?'grey-3':'indigo-12'"
                 class="q-ma-md"
               />
               <span>{{score_list[item.value_key].away }}</span>
@@ -93,7 +103,7 @@ const statsList = ref([
   },
 ]);
 onMounted(()=>{
- 
+ console.log(1111111,props.score_list)
 
  
  

@@ -17,7 +17,10 @@
   import BaseData from "src/core/base-data/base-data.js";
   import { UserCtr,MenuData } from 'src/core/index.js'
   import { api_common } from "src/api/index.js";
-  import DateTabClass from "src/base-pc/components/tab/date-tab/date-tab-class.js"
+  import {
+    compute_get_date_menu_list_params,
+    handle_click_menu_mi_3_date
+  } from "src/base-pc/components/tab/date-tab/index.js"
 
   const current_choose_tab = ref('');
 
@@ -55,7 +58,7 @@ let un_subscribe = () => {
 * nu/getDateMenuList
 */
 async function get_date_menu_list() {
-  let params =  DateTabClass.compute_get_date_menu_list_params();
+  let params =  compute_get_date_menu_list_params();
   let api_fn_name = ''
   if (MenuData.is_export()) {
     //电竞
@@ -77,8 +80,8 @@ async function get_date_menu_list() {
      }
     });
   }
-  current_filter_list.value = [{label: i18n_t("menu.match_today"),value:""}, ...arr]
-  DateTabClass.handle_click_menu_mi_3_date(current_filter_list.value[0])
+  current_filter_list.value = [{label:"Today",value:""}, ...arr]
+  handle_click_menu_mi_3_date(current_filter_list.value[0])
 }
 
 watch(MenuData.menu_data_version,()=>{
@@ -97,7 +100,7 @@ watch(MenuData.menu_data_version,()=>{
 
     current_choose_tab.value = item.value
 
-    DateTabClass.handle_click_menu_mi_3_date(item)
+    handle_click_menu_mi_3_date(item)
   }
 
   onUnmounted(()=>{
