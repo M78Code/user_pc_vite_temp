@@ -9,7 +9,7 @@
                     <span class="bet-market mx-4 text-ff7">{{ items.marketValue }}</span>
                 </div>
                 <div class="w-100 h15 f-s-c my-4">
-                    <span class="mr-4 text-009" v-if="items.matchType == 2">[In-play]</span>
+                    <span class="mr-4 text-009" v-if="items.matchType == 2">{{'[' + i18n_t("bet.bowls") + ']'}}</span>
                     <span class="text-a1a text-flow-none font400">{{ items.playName }}</span>
                 </div>
                 <div class="w-100 text-8a8 fon12 font400">{{ items.home }} <span class="mx-4">v</span> {{ items.away }}

@@ -9,12 +9,12 @@
             </div>
         </div>
         <div class="f-b-c bet-content" v-if="BetViewDataClass.bet_order_status == 1">
-            <div class="font16 font400 f-c-c bet-bet-cancel" @click="set_bet_cancel">Bet Cancel</div>
-            <div class="font16 font600 f-c-c bet-place-bet" @click="set_bet_submit">Place Bet</div>
+            <div class="font16 font400 f-c-c bet-bet-cancel" @click="set_bet_cancel">{{ i18n_t("bet.bet_cancel") }}</div>
+            <div class="font16 font600 f-c-c bet-place-bet" @click="set_bet_submit">{{ i18n_t("ouzhou.bet.place_bet") }}</div>
         </div>
         <div class="f-b-c bet-content" v-else>
-            <div class="font16 font400 f-c-c bet-bet-cancel" @click="set_retain_selection">Retain Selection</div>
-            <div class="font16 font600 f-c-c bet-place-bet" @click="set_confirm">Confirm</div>
+            <div class="font16 font400 f-c-c bet-bet-cancel" @click="set_retain_selection">{{ i18n_t("bet.save_item") }}</div>
+            <div class="font16 font600 f-c-c bet-place-bet" @click="set_confirm">{{ i18n_t("common.confirm") }}</div>
         </div>
     </div>
 </template>

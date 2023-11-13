@@ -43,7 +43,7 @@ export function useGetOrderList () {
     { name: 'detail', label: 'Detail', align: 'left', field: 'detail' },
     {
       name: 'totalStake',
-      label: i18n_t("bets_forehead.bets_forehead"),
+      label: i18n_t("common.maxn_amount_val"),
       align: 'left',
       field: 'totalStake'
     },

@@ -325,7 +325,7 @@ export default {
   /* ************** 球类模板穿透 *************** -S */
  
     :deep(.table-header) {
-      border-bottom: 1px solid #d0d8de;
+      // border-bottom: 1px solid #d0d8de;
       .table-col:first-child {
         padding-left: 20px;
       }
@@ -357,7 +357,8 @@ export default {
         }
         .table-col {
           height: 58px;
-          border-right: 1px solid #d0d8de;
+          // border-right: 1px solid #d0d8de;
+          
           & > div {
             height: 29px;
             line-height: 29px;

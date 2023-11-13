@@ -12,6 +12,7 @@
     </div> -->
     <div class="test-info-wrap" v-if="GlobalAccessConfig.other.wsl">
       <div>{{ menu_config.mid_menu_result.match_tpl_number }}</div>
+      <!-- 临时调试用 -->
       <div class="fold-btn" @click="match_list_card.unfold_all_league()">展开联赛</div>
       <div class="fold-btn" @click="match_list_card.fold_all_league()">折叠联赛</div>
       <div class="fold-btn" @click="match_list_card.test_log_data()">打印数据</div>
@@ -102,7 +103,7 @@ import MatchCardList15Mins from 'src/base-pc/components/match-list/match_card_li
 import FeaturedMatches from 'src/base-pc/components/match-list/featured_matches/featured_matches_card.vue';
 import MatchesHeader from "src/base-pc/components/matches_header/matches_header.vue";
 import { get_home_matches, map_matches_list, filter_15mins_func, filter_featured_list } from './featch_matches';
-import { MatchDataWarehouse_ouzhou_PC_l5mins_List_Common, MatchDataWarehouse_ouzhou_PC_hots_List_Common } from "src/core"
+import { MatchDataWarehouse_ouzhou_PC_l5mins_List_Common, MatchDataWarehouse_ouzhou_PC_hots_List_Common,LayOutMain_pc } from "src/core"
 import "./match_list.scss";
 
 const { mounted_fn, load_data_state, show_refresh_mask, collect_count, is_show_hot, on_refresh } = useMatchListMx();
@@ -167,6 +168,9 @@ export default {
     }
 
     onMounted(() => {
+      LayOutMain_pc.set_oz_show_right(false)
+      LayOutMain_pc.set_oz_show_left(true)
+
       mounted_fn();
       init_home_matches()
       MatchListCardDataClass_match_list_card_key_arr()
