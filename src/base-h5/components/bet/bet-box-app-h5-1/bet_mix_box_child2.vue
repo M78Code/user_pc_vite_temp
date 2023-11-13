@@ -17,8 +17,17 @@
       <div>
         <!-- 头部 -->
         <bet-bar @click="pack_up" v-if="BetViewDataClass.bet_order_status == 1"></bet-bar>
-        <!-- 投注后的状态 -->
-        <bet-after-status v-else></bet-after-status>
+        <!--
+          ** 投注后的状态 单||串 成功失败与否 提示信息样式不同
+          单关投注 BetData.is_bet_single
+            原组件 --  bet-after-status
+          串关投注 BetData.bet_s_list
+            新增组件 --
+        -->
+        <div v-else>
+          <bet-after-status v-if="!!BetData.is_bet_single"></bet-after-status>
+          <bevisBetedStatus v-else></bevisBetedStatus>
+        </div>
       </div>
 
 
@@ -167,6 +176,7 @@ import betMixBoxChild7 from './bet_mix_box_child7.vue';
 import betMixBoxChild8 from './bet_mix_box_child8.vue';
 
 import betInfoList from "./bet_info_list.vue";
+import bevisBetedStatus from "./bevis-beted_status.vue"
 
 
 import betMixShow from './bet_mix_show3.vue';

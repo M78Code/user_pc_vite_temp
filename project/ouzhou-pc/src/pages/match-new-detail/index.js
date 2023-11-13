@@ -14,6 +14,7 @@ import { MatchDataWarehouse_PC_Detail_Common as MatchDataWarehouseInstance,MenuD
 import { filter_odds_func, handle_course_data, format_mst_data } from 'src/core/utils/matches_list.js'
 
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
+import { LayOutMain_pc } from "src/core/"
 
 export function usedetailData(route) {
   // const route = useRoute();
@@ -232,6 +233,7 @@ export function usedetailData(route) {
     mid = route.params.mid
     tid = route.params.tid
     current_id.value = route.params.mid
+    LayOutMain_pc.set_oz_show_right(true)  // 显示右侧
 
     init();
     timer = setInterval(async () => {
