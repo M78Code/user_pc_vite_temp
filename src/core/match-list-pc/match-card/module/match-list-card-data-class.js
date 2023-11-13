@@ -23,12 +23,12 @@ class MatchListCardDataClass {
     this.csid_to_card_key_obj = {
       // 'csid_1':[ 'card_0', 'card_1' ]
     };
-    //当前赛中选中的要显示赔率
-    this.csid_current_hpids = {}
     // 已开赛 到卡片key的 映射对象
     this.play_to_card_key_arr = [];
     // 未开赛 到卡片key的 映射对象
     this.no_start_to_card_key_arr = [];
+    // 当前选中的玩法id对象
+    this.csid_current_hpids = {};
     /**
      * 哪种列表类型
      * 1. 列表数据类型为联赛列表   有未开赛 已开赛
