@@ -210,10 +210,6 @@
 					:class="['tab', tabIndex === index ? 'active' : '']">{{ item.sportName }}</div>
 			</div>
 			<div class="middle_info_tab diff">No results found. please try a different search term.</div>
-			<!-- <div class="not_found">
-				<img :src="compute_local_project_file_path('image/png/not_found.png')" alt="">
-				<p>No results</p>
-			</div> -->
 			<div class="not_found">
 				<no-data :code="400"></no-data>
 			</div>
@@ -322,6 +318,15 @@ const get_search_data = (index = 0, sport_id = 1, keyword) => {
 		console.log(e);
 	});
 }
+
+//监听输入框内容改变，并搜索
+watch(
+	() => input_value.value,
+	(val) => {
+		let trimVal = val.trim();
+		get_search_data(0, 1, trimVal);
+	}
+)
 
 // 获取球赛的种类
 const sport_kind_data = ref([]);
@@ -448,9 +453,11 @@ const get_match_base_hps_by_mids = async () => {
 		sort: 1,
 		device: ['', 'v2_h5', 'v2_h5_st'][UserCtr.standard_edition],
 	};
+	// 获取所有搜索结果的赔率信息
 	await api_common.get_match_base_info_by_mids(params).then((res) => {
 		if(res.code === '200') {
 			const { data } = res;
+			// 使用获得比分的 mid 和搜索结果的 mid 做比较，将赔率信息返回给搜索结果
 			for(let i = 0; i < data.length; i++) {
 				for(let j = 0; j < search_data.value.teamH5.length; j++) {
 					if(data[i].mid === search_data.value.teamH5[j].mid) {
@@ -495,14 +502,6 @@ onBeforeUnmount(() => {
 	clearTimeout(go_detail_or_result_timer)
 	go_detail_or_result_timer = null
 })
-//监听输入框内容改变，并搜索
-watch(
-	() => input_value.value,
-	(val) => {
-		let trimVal = val.trim();
-		get_search_data(0, 1, trimVal);
-	}
-)
 </script>
 <style lang="scss" scoped>
 .search-container {

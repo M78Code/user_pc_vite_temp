@@ -1,6 +1,6 @@
 <template>
   <!-- 滚球盘 标题-->
-  <div :class="['ouzhou-match-type ']" @click="MatchListCardData[cur_title_info.func_name](card_style_obj)">
+  <div :class="['ouzhou-match-type yb-flex-between']" @click="MatchListCardData[cur_title_info.func_name](card_style_obj)">
     <div class="yb-flex-between">
       <!-- 滚球盘 -->
       {{ cur_title_info.name }}
