@@ -19,7 +19,8 @@
         <div class="scroll-area1" v-for="(item, index) in list" :key="index" ref="scroll_area1">
           <div class="bg-f6f7f8 scroll-title" ref="bg_f6f7f8" v-if="item.title">
             <div class="scroll-title-text">
-              <div class="scroll-title-icon"></div>
+              <!-- <img class="scroll-title-icon" :src="compute_local_project_file_path('image/list/league-collapse-icon.svg')" alt=""> -->
+              <img class="scroll-title-icon" :src="compute_local_project_file_path('/image/list/league-collapse-icon-top.svg')" alt="">
               <span>{{ item.title }}</span>
             </div>
             <div class="scroll-setect">
@@ -95,12 +96,14 @@ import { api_filter } from "src/api/index.js";
 import NoData from "src/base-h5/components/common/no-data.vue";
 import SFilter from "src/base-h5/components/skeleton/filter.vue";
 import lodash from 'lodash';
-import {LOCAL_PROJECT_FILE_PREFIX} from 'src/core';
+import {LOCAL_PROJECT_FILE_PREFIX,compute_local_project_file_path} from 'src/core';
 import PageSourceData from "src/core/page-source/page-source.js";
 
 import { i18n_t, MITT_TYPES, compute_css_obj, useMittEmit, MenuData, compute_img_url, UserCtr, get_server_file_path } from 'src/core/'
 import { ref, watch, computed, nextTick, onBeforeUnmount, onMounted, toRefs } from 'vue';
 import search from "src/core/search-class/search.js"
+import { api_search } from 'src/api/'
+
 const default_url = `${LOCAL_PROJECT_FILE_PREFIX}/image/svg/match_cup.svg` //默认图片地址
 // 无联赛logo图标黑色版
 const none_league_icon_black = `${LOCAL_PROJECT_FILE_PREFIX}/image/svg/match_cup_black.svg`
@@ -872,7 +875,7 @@ if (type.value == 30) {
       .scroll-title-icon {
         width: .16rem;
         height: .16rem;
-        background-color: var(--q-gb-t-c-1);
+        -background-color: var(--q-gb-t-c-1);
         margin-right: .12rem;
       }
     }
