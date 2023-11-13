@@ -276,13 +276,15 @@ class userCtr {
         if(window.env.config.gr != gr){
 
 
-          let url_search = SEARCH_PARAMS.param;
+          let url_search = new URLSearchParams(location.search);
         //  重置 rdm 到最新的 时间戳  ，没有就 相当于新设置 ，有就相当于重置
         url_search.set("rdm", new Date().getTime());
         // 删除  api
         url_search.delete('api')
+        SEARCH_PARAMS.fun_del(['api']);
         // 增加GR 参数
         url_search.set("gr", gr);
+        SEARCH_PARAMS.fun_set({gr})
 
         console.log("new url 1", new URL(location.href));
         // 旧的哈希  兼容   #/home?rdm=1660636891118 这种形式处理

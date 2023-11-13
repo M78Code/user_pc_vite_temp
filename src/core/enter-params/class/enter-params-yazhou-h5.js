@@ -85,7 +85,7 @@ class EnterParamsYazhouH5 {
    */
   get_url_param_key_obj(arr_key) {
     let obj = {};
-    let url_search = SEARCH_PARAMS.param;
+    let url_search = new URLSearchParams(location.search);
     arr_key.forEach((element) => {
       obj[element] = url_search.get(element);
     });
@@ -156,6 +156,7 @@ class EnterParamsYazhouH5 {
     let goto_home = window.location.href.includes("homeIndex") ? false : true;
     try {
       // 获取指定key值参数数组的url参数对象
+      // hanmar需求确认
       let params_obj = this.get_url_param_key_obj([
         "m",
         "s",

@@ -761,7 +761,7 @@ const utils = {
    * @return {*} url
    */
   remove_url_param(key_arr){
-    let url_search = SEARCH_PARAMS.param;
+    let url_search = new URLSearchParams(location.search);
     // 删除  api
     if(key_arr){
       key_arr.forEach(key => {
