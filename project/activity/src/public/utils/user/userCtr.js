@@ -276,7 +276,7 @@ class userCtr {
         if(window.env.config.gr != gr){
 
 
-          let url_search = new URLSearchParams(location.search);
+          let url_search = SEARCH_PARAMS.param;
         //  重置 rdm 到最新的 时间戳  ，没有就 相当于新设置 ，有就相当于重置
         url_search.set("rdm", new Date().getTime());
         // 删除  api

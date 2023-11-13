@@ -553,7 +553,7 @@ let  BUILD_VERSION=  window.env.config.BUILD_VERSION
     // GA 埋点开关开启---照常统计，和生产环境保持一致
     window.gtag_run = 1;
     try {
-      let url_search = new URLSearchParams(location.search);
+      let url_search = SEARCH_PARAMS.param;
       // 获取诸葛埋点开关
       let gtag = url_search.get('gtag');
       if(gtag){
@@ -723,7 +723,7 @@ let  BUILD_VERSION=  window.env.config.BUILD_VERSION
     // 设置默认启动参数
     window.zhuge_run = (mid && this.get_zhuge_config_obj().mid.includes(mid));
     try {
-      let url_search = new URLSearchParams(location.search);
+      let url_search = SEARCH_PARAMS.param;
       // 获取诸葛埋点开关
       let zhuge = url_search.get('zhuge');
       if(zhuge){

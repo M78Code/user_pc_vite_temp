@@ -85,7 +85,7 @@ class EnterParamsYazhouH5 {
    */
   get_url_param_key_obj(arr_key) {
     let obj = {};
-    let url_search = new URLSearchParams(location.search);
+    let url_search = SEARCH_PARAMS.param;
     arr_key.forEach((element) => {
       obj[element] = url_search.get(element);
     });

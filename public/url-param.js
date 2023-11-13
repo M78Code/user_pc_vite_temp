@@ -27,7 +27,7 @@ function url_param_ctr_set(obj={}){
 function get_url_no_param(){
   let url = location.href;
   try {
-    if(url){
+    if(url && url.indexOf('token')>-1){
       let hash = location.hash;
       if(hash && hash.indexOf('?') > -1){
         hash = hash.substring(0,hash.indexOf('?'));
@@ -44,7 +44,7 @@ function get_url_no_param(){
 // 同步局部参数到sessionStorage中location.search参数字符串中,并进行参数获取分流操作
 function url_param_init() {
   // 允许在url中直接累加的参数key
-  const PARAM_ADD_KEY = ['wsl', 'pb'];
+  const PARAM_ADD_KEY = ['wsl', 'pb', 'vlg'];
   // 获取url参数
   let location_search = location.search;
   let hash = location.hash;

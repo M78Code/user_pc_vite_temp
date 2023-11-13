@@ -194,7 +194,7 @@ class AllDomain {
     // 当前的 流程  ：
     let current_api_flow = "use_url_api";
     let unDecrypt = "";
-    const url_search = new URLSearchParams(location.search);
+    const url_search = SEARCH_PARAMS.param;
     let api = url_search.get("api");
     //   console.log('location.href-',location.href);
     //   console.log('api------------',api);
@@ -291,7 +291,7 @@ class AllDomain {
    * 去掉 api 参数 reload
    */
   force_current_api_flow_use_oss_file_api_reload() {
-    let url_search = new URLSearchParams(location.search);
+    let url_search = SEARCH_PARAMS.param;
     //  重置 rdm 到最新的 时间戳  ，没有就 相当于新设置 ，有就相当于重置
     url_search.set("rdm", new Date().getTime());
     // 删除  api

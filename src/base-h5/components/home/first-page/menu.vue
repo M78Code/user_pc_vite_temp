@@ -183,7 +183,7 @@ const change_menu = (item, index) => {
       name: "matchList",
       query: {
         m: mi,
-        token: UserCtr.user_token,
+        // token: UserCtr.user_token,
       },
     },
     7: {
@@ -191,7 +191,7 @@ const change_menu = (item, index) => {
       name: "matchList",
       query: {
         m: mi,
-        token: UserCtr.user_token,
+        // token: UserCtr.user_token,
       },
     },
   };
@@ -214,7 +214,7 @@ const to_list = (item, index) => {
       query: {
         m: menu_type.value,
         s: index,
-        token: UserCtr.user_token,
+        // token: UserCtr.user_token,
       },
     });
   } else {
