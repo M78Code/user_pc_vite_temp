@@ -25,7 +25,6 @@
                     <img class="img" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/back.svg`" alt="" />
                 </div>
             </slot> -->
-           
             <div class="main-menu-container">
                 <template v-for="(item, index) in menu_list" :key="lodash_.get(item, 'code')">
                     <div class="m-menu-item" :class="{ current: lodash_.get(item, 'mi') == MenuData.current_lv_1_menu_mi.value }">
@@ -41,7 +40,6 @@
                 <span class="main-menu-right-money">{{ format_money2(balance) }}</span>
             </div>
         </div>
-      
     </div>
 </template>
 <script setup>

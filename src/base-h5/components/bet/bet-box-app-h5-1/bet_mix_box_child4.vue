@@ -17,7 +17,7 @@
         </div>
         <div class="nonebox4-content-result">
             <div class="nonebox4-content-result-left">{{i18n_t('bet.order_no')}}</div>
-            <div class="nonebox4-content-result-left">{{item.orderNo}}</div>
+            <div class="nonebox4-content-result-left orderNumber">{{item.orderNo}}</div>
         </div>
     </div>
   </div>
@@ -62,5 +62,7 @@ import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
     background-color: #2394fc;
     border-radius: 6px;
 }
-
+.orderNumber{
+  font-size: 14px;
+}
 </style>

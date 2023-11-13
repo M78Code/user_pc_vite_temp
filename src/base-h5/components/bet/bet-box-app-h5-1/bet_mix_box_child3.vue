@@ -67,7 +67,7 @@
   }
   .nonebox4-content-left-content-text{
       font-size: 12px;
-      color: #999;
+      color: #7981A4;
       line-height: 23px;
   }
   .nonebox4-content-right-profit{
