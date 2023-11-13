@@ -5,7 +5,7 @@
     :class="{ 'activity_bonus': has_bonus_type, 'is-iframe': is_iframe }"
     :style="page_style">
     <div>
-      <template1/>
+      <TemHeader />
     </div>
     <!-- <site-header v-bind="site_header_data" @navigate="navigate" />
     <div style="display:none">{{SearchPCClass.update_time}}</div>
@@ -20,12 +20,11 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, onUnmounted, watch } from 'vue'
+import { ref, reactive, onMounted, onUnmounted, } from 'vue'
 import lodash from 'lodash'
 import { useRoute, useRouter } from "vue-router";
 
-import store from 'src/store-redux/index.js'
-import { SessionStorage, utils,SearchPCClass } from 'src/core/index.js'
+import { SessionStorage, utils } from 'src/core/index.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
 import globalAccessConfig from "src/core/access-config/access-config.js"
 import { i18n_t } from "src/boot/i18n.js"
@@ -33,16 +32,12 @@ import { get_server_file_path } from "src/core/file-path/file-path.js"
 import { api_activity, api_account } from "src/api/index";
 import { useMittOn, MITT_TYPES } from "src/core/mitt/"
 
-/** 组件 */
-import siteHeader from 'src/base-pc/components/site-header/site-header.vue'
-import headerSearch from 'src/base-pc/components/site-header/header-search.vue'
-import marqueeCst from "src/base-pc/components/marquee/marquee-cst.vue";
-import headerSelect from 'src/base-pc/components/site-header/header-select.vue'
+
 // import timer from "src/base-pc/components/site-header/timer.vue"
 import gift_package from '/ouzhou-pc/image/common/activity_banner/gift_package.png'
 import { compute_css_variables } from "src/core/css-var/index.js"
 import BaseData from "src/core/base-data/base-data.js";
-import template1 from "src/base-pc/components/top-header/template1/template1.vue";
+import TemHeader from "src/base-pc/components/top-header/template1/template1.vue";
 const page_style = ref('')
 page_style.value = compute_css_variables({ category: 'component', module: 'site-header' })
 
@@ -65,17 +60,6 @@ const route = useRoute()
 /** 路由实例 */
 const router = useRouter()
 
-/** stroe仓库 */
-// const store_data = store.getState() || {}
-// const { searchReducer: {} } = store_data
-/** 
-* 是否显示搜索组件 default: false
-* 路径: project_path\src\store\module\search.js
-*/
-/** 
- * 选择的选项 menu_obj
- * 路径: src\store-redux\module\betInfo.js
- */
 
 const menu_obj = ref({})
 //  const { menu_obj } = betReducer
@@ -522,11 +506,7 @@ function navigate(obj) {
       );
     }
   }
-  /** 保存显示搜索组件状态 */
-const set_show_login_popup = (data) => store.dispatch({
-    type: 'SET_SHOW_LOGIN_POPUP',
-    data
-})
+
 </script>
 
 <!-- <style lang="scss" scoped>
