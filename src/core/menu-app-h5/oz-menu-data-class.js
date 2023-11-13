@@ -67,14 +67,21 @@ class MenuData {
     const menu_list =  BaseData.mew_menu_list_res.filter((item)=>{return +item.mi<300});
     //热门球种
     let top_events_list =  BaseData.mew_menu_list_res.filter((item)=>{return item.mi==5000})?.[0].sl || [];
-    top_events_list = top_events_list.map((item)=>{
+    //热门球种不存在取常规球种
+    top_events_list = top_events_list.length?top_events_list.map((item)=>{
       return {
         ...item,
         mi:`${+item.mi-4900}`,
         defaultMi:item.mi,
         csid:`${+item.mi-5000}`,
       }
-    })
+    }):menu_list.map((item)=>{
+      return {
+        ...item,
+        defaultMi:item.mi,
+        csid:`${+item.mi-100}`,
+      }
+    });
     this.menu_list = menu_list;
     this.top_events_list = top_events_list;
     useMittEmit(MITT_TYPES.EMIT_UPDATE_INIT_DATA);
