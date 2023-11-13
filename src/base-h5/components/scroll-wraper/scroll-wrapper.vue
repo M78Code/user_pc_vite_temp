@@ -37,6 +37,9 @@
         <div style="color:#AAAEB8;font-size:.12rem;"> {{ $t("scroll_wrapper.is_footer") }} </div>
       </div>
     </div>
+    <div class="err_box" v-if="!MatchMeta.match_mids">
+       <img class="scroll-title-icon" :src="compute_local_project_file_path('/image/png/no_data_app.png')" alt="">
+    </div>
   </div>
 </template>
 
@@ -53,7 +56,7 @@ import VirtualList from "src/core/match-list-h5/match-class/virtual-list.js";
 import RouterScroll from "src/core/match-list-h5/match-class/router-scroll.js";
 import { use_defer_render } from "src/core/match-list-h5/match-class/match-hooks.js";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt";
-import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from 'src/core'
+import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5,compute_local_project_file_path } from 'src/core'
 import { menu_type, menu_lv2, is_kemp, is_hot, is_detail, is_results, is_export, is_collect } from 'src/base-h5/mixin/menu.js'
 import { standard_edition } from 'src/base-h5/mixin/userctr.js'
 
@@ -341,5 +344,12 @@ onUnmounted(() => {
     justify-content: center;
     width: 100%;
   }
+}
+.err_box{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <!-- 滚球盘 标题-->
-  <div :class="['ouzhou-match-type yb-flex-between']"
-    @click="MatchListCardData[cur_title_info.func_name](card_style_obj)">
+  <!-- @click="MatchListCardData[cur_title_info.func_name](card_style_obj)" -->
+  <div :class="['ouzhou-match-type yb-flex-between']">
     <div class="yb-flex-between">
       <!-- 滚球盘 -->
       {{ cur_title_info.name }}
@@ -9,16 +9,15 @@
       <span v-if="cur_title_info.show_num" class="match-number">{{ cur_title_info.match_count }}</span>
     </div>
     <div class="choose-csid-hpids" v-if="card_style_obj?.card_type == 'sport_title'">
-      <div @click="show_list = !show_list">
-        {{ current_csid_hpids.second_hpid }}
-        {{ $t(`csid_${card_style_obj.csid}_${current_csid_hpids.first_hpid}`) }} & {{
-          $t(`csid_${card_style_obj.csid}_${current_csid_hpids.second_hpid}`) }}
+      <div @click.stop="show_list = !show_list">
+        {{ $t(`${card_style_obj.csid}_${current_csid_hpids.first_hpid}`) }} & {{
+          $t(`${card_style_obj.csid}_${current_csid_hpids.second_hpid}`) }}
       </div>
       <div class="choose-list" v-show="show_list">
-        <span v-for="item in choose_config[card_style_obj.csid || '1']" @click="handle_hpid_choose(item)">
-          {{ $t(`csid_${card_style_obj.csid}_${item.first_hpid}`) }} & {{
-            $t(`csid_${card_style_obj.csid}_${item.second_hpid}`) }}
-        </span>
+        <div v-for="item in choose_config[card_style_obj.csid || '1']" @click.stop="handle_hpid_choose(item)">
+          {{ $t(`${card_style_obj.csid}_${item.first_hpid}`) }} & {{
+            $t(`${card_style_obj.csid}_${item.second_hpid}`) }}
+        </div>
       </div>
     </div>
   </div>
@@ -75,6 +74,7 @@ const cur_title_info = computed(() => {
 
 const current_csid_hpids = ref(MatchListCardDataClass.get_csid_current_hpids(props.card_style_obj.csid))
 function handle_hpid_choose(item) {
+  show_list.value=false
   current_csid_hpids.value = item
   MatchListCardDataClass.set_csid_current_hpids(props.card_style_obj.csid, item)
 }
@@ -114,12 +114,21 @@ function handle_hpid_choose(item) {
   font-size: 14px;
   font-weight: 500;
   position: relative;
-
+  cursor: pointer;
+  margin-right: 30px;
   .choose-list {
     position: absolute;
-    left: 0;
+    right: 0;
     top: 100%;
-    z-index: 1;
+    background: #ffffff;
+    z-index: 9999;
+    div {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      height: 40px;
+      border-bottom: 1px solid #E2E2E2;
+    }
   }
 }
 </style>

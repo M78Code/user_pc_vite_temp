@@ -116,26 +116,26 @@ class MenuData {
     // ---------------------------- 欧洲版-pc 专用 --------------------------------
     this.ouzhou_filter_config = {
       home_tab: [
-        { label: 'Featured', value: 'featured' },
-        { label: 'Top Events', value: 'top_events' },
+        { label: 'Featured', value: '1001' },
+        { label: 'Top Events', value: '1002' },
       ], // 首页
       sport_tab: [
-        { label: 'Matches', value: 'matches' },
-        { label: 'League', value: 'league' },
+        { label: 'Matches', value: '4001' },
+        { label: 'League', value: '4002' },
       ], // 左侧菜单
       inplay:{
         title: 'In-Play',
         name: 'All Matches'
       }
     }
-    // 菜单的 router_root 节点   router_root ： 1 首页  2 滚球  3 my bets   4000 左侧赛种  
+    // 菜单的 router_root 节点   router_root ： 1 首页  2 滚球  3 my bets   4 左侧赛种  
     this.router_root_lv_1 = 1
     this.router_root = ref(1)
-    //  1001 fetured  10002 top events  
+    // 左侧菜单id
+    this.left_menu_mi = ref('')
+    //  1001 fetured  10002 top events   // 4001 matches  4002 langue 
     this.router_root_lv_2 = 1001
-    // 4001 matches  4002 langue 
-    this.router_root_lv_3 = 4001
-
+    
     this.router_root_version = ref('')
 
     // ---------------------------- 欧洲版-pc 专用 --------------------------------
@@ -145,13 +145,18 @@ class MenuData {
   set_menu_root(val) {
     this.menu_root = val
   }
-
+  
   // 设置 欧洲版头部配置信息
   set_ouzhou_filter_config(obj) {
     this.ouzhou_filter_config = {
       ... this.ouzhou_filter_config,
       ...obj,
     }
+  }
+
+  // 设置左侧菜单id
+  set_left_menu_mi(val) {
+    this.left_menu_mi.value = val
   }
 
   // 设置 菜单的 router_root 节点
@@ -166,14 +171,9 @@ class MenuData {
     
   }
   // 设置 菜单的 router_root 节点
+  //  1001 fetured  10002 top events   // 4001 matches  4002 langue 
   set_router_root_lv_2(val) {
     this.router_root_lv_2 = val
-    this.router_root_version.value = Date.now()
-  }
-
-  // 设置 菜单的 router_root 节点
-  set_router_root_lv_3(val) {
-    this.router_root_lv_3 = val
     this.router_root_version.value = Date.now()
   }
 
@@ -364,7 +364,7 @@ class MenuData {
    * lv2_mi
    */
   set_left_menu_result(obj) {
-    console.log('MENUDATA.set_left_menu_result', obj)
+    console.log('MENUDATA.set_left_menu_result', this.is_scroll_ball())
     this.menu_root = obj.root;
     this.menu_root_show_shoucang = obj.root;
     // 设置 列表接口类型
@@ -395,7 +395,7 @@ class MenuData {
         version: Date.now(),
       };
     }
-    MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'))
+    MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'), this.is_scroll_ball())
     if ([2, 3].includes(Number(obj.root))) {
       // 角球
       if ([101210, 101310].includes(+obj.lv2_mi)) {
@@ -461,7 +461,7 @@ class MenuData {
       JSON.stringify(this.mid_menu_result)
     );
     this.menu_root_show_shoucang = obj.root;
-    MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'))
+    MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'), this.is_scroll_ball())
     // 设置全屏
     this.set_multi_column();
   }

@@ -2,7 +2,7 @@
   <div class="ouzhou-match-league" :style="`height:${match_list_tpl_size.league_title_height}px !important;`"
     v-if="lodash.get(card_style_obj, 'league_obj.csid')">
     <!-- 第一行 -->
-    <div v-show="false">{{ MatchListCardData.list_version }}</div>
+    <div v-show="false">{{ MatchListCardDataClass.list_version }}</div>
     <div class="tr-match-head" @click="set_fold">
       <!-- 联赛信息 -->
       <div class="leagues-wrap" :style="`width:${match_list_tpl_size.process_team_width}px !important;`">
@@ -27,11 +27,13 @@
       <div :style="`width:${match_list_tpl_size.play_icon_width}px !important;`"></div>
       <!-- 玩法名称 -->
       <div class="play-name-ouzhou">
+
         <div class="play-name-title-box"
           v-for="(item, col_index) in match_tpl_info.get_current_odds_list(MatchListCardDataClass.get_csid_current_hpids(lodash.get(card_style_obj, 'league_obj.csid')))"
           :key="col_index" :style="{ 'width': match_list_tpl_size.bet_width + 'px' }">
           <div class="play-name-item" v-for="(item_title, item_index) in item.ols" :key="item_index">
             {{ item_title.ot }}
+
           </div>
         </div>
       </div>
@@ -42,7 +44,6 @@
 
 <script setup>
 // import sportIcon from "src/public/components/sport_icon/sport_icon.vue"
-import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card-class.js'
 import lodash from 'lodash';
 import { ref, computed } from 'vue';
 import sprite_img from "src/core/server-img/sprite-img/index.js"
@@ -53,6 +54,7 @@ import GlobalAccessConfig from "src/core/access-config/access-config.js"
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import { utils_info } from 'src/core/utils/module/match-list-utils.js';
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
+import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card-class.js'
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import useMatchListMx from "src/core/match-list-pc/match-list-composition.js";
 import menu_config from "src/core/menu-pc/menu-data-class.js";
