@@ -1,7 +1,8 @@
 <template>
   <!-- 滚球盘 标题-->
+    <!-- @click="MatchListCardData[cur_title_info.func_name](card_style_obj)" -->
   <div :class="['ouzhou-match-type yb-flex-between']"
-    @click="MatchListCardData[cur_title_info.func_name](card_style_obj)">
+    >
     <div class="yb-flex-between">
       <!-- 滚球盘 -->
       {{ cur_title_info.name }}
@@ -15,10 +16,10 @@
           $t(`csid_${card_style_obj.csid}_${current_csid_hpids.second_hpid}`) }}
       </div>
       <div class="choose-list" v-show="show_list">
-        <span v-for="item in choose_config[card_style_obj.csid || '1']" @click="handle_hpid_choose(item)">
+        <div v-for="item in choose_config[card_style_obj.csid || '1']" @click="handle_hpid_choose(item)">
           {{ $t(`csid_${card_style_obj.csid}_${item.first_hpid}`) }} & {{
             $t(`csid_${card_style_obj.csid}_${item.second_hpid}`) }}
-        </span>
+        </div>
       </div>
     </div>
   </div>
@@ -114,12 +115,12 @@ function handle_hpid_choose(item) {
   font-size: 14px;
   font-weight: 500;
   position: relative;
-
+  cursor: pointer;
   .choose-list {
     position: absolute;
     left: 0;
     top: 100%;
-    z-index: 1;
+    z-index: 9999;
   }
 }
 </style>
