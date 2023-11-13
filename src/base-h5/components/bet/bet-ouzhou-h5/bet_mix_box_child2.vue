@@ -23,24 +23,23 @@
                             <div v-if="type == 2" class="content-right-duo"></div>
                             <div v-else-if="type == 3" class="content-right-shao"></div>
                             <div v-else-if="type == 4" class="content-right-closed">closed</div>
-                        </div>
+                        </div> 
                     </div>
                   </div>
               </div>
           </div>
         </div>
         <!-- 输入框 -->
-        <bet-input-info :item="items" :index="index" ></bet-input-info>
-        <key-board></key-board>
+        <bet-input-info1 :item="items" :index="index" ></bet-input-info1>
       </div>
       <!-- 合并单关最下面的多个输入框 -->
-    
-      
+
     </div>
   </template>
 <script setup>
-  import betInputInfo from "./bet_input_info.vue";
+  import betInputInfo1 from "./bet_input_info1.vue";
   import BetData from "src/core/bet/class/bet-data-class.js";
+  import keyBoard from './keyboard.vue';
   const type = 4;//1:不涨也不少    2：增长     3：减少   4:注单失效
    const props = defineProps({
     item:{}

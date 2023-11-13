@@ -1,4 +1,60 @@
 {
+  "ouzhou": {
+    "record": {
+        "my_bet": "My Bets",
+        "unsettled": "Unsettled",
+        "settled": "settled",
+        "unpaid_bets": "This record will show all unpaid bets",
+        "settled_time": "Settled time",
+        "bet_time": "Bet time",
+        "match_time": "Match time",
+        "today": "Today",
+        "yesterday": "Yesterday",
+        "7_days": "Last 7 Days",
+        "30_days": "In 30 Days",
+        "datails": "Datails"
+    },
+    "detail": {
+        "which_team": "Which team will",
+        "keno_lottery": "keno lottery",
+        "exciting_different": "Exciting and different",
+        "close_handicap": "Close the Handicap"
+    },
+    "bet": {
+        "place_bet": "Place Bet"
+    },
+    "menu": {
+        "collect": "Favourites",
+        "popular": "POPULAR",
+        "all_sports": "ALL SPORTS",
+        "my_bets": "MyBets"
+    },
+    "match": {
+        "favorites": "Favorites",
+        "matches": "Matches",
+        "featured": "Featured",
+        "top_events": "Top Events",
+        "home": "Home"
+    },
+    "setting_menu": {
+      "personal": "Personal",
+      "back": "Back",
+      "money": "Money",
+      "language": "Language",
+      "odds_setting": "Odds Settings",
+      "odds_display": "Odds Display",
+      "dec": "DEC",
+      "hk": "HK",
+      "any": "ANY",
+      "hig": "HIG",
+      "version": "Version",
+      "euro": "EURO",
+      "asia": "ASIA"
+    },
+    "no_data": {
+        "coming_soon": "Coming Soon"
+    }
+},
   "ac_rules": {
     "auto": "Automatically accept higher odds",
     "understand": "I know"

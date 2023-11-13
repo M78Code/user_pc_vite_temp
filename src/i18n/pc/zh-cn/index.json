@@ -12,7 +12,7 @@
       "yesterday": "昨天",
       "7_days": "七天内",
       "30_days": "30天内",
-      "datails": "数据"
+      "datails": "投注详情"
     },
     "detail": {
       "which_team": "哪支球队",
@@ -31,7 +31,12 @@
      "match": {
          "favorites": "收藏",
          "matches": "赛事",
-         "league": "联盟"
+         "featured": "精选",
+         "top_events": "热门赛事",
+         "home": "首页"
+     },
+     "no_data": {
+         "coming_soon": "即将推出"
      }
   },
   "analysis": {

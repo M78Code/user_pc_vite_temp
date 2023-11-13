@@ -2,19 +2,13 @@
   
     <div class="top-menu-content">
         <!-- 体育 -->
-        <!-- <span class="label">{{ i18n_t("results.sport") }}</span>
+        <!-- <span class="label">{{ i18n_t("results.sport") }}</span> -->
         <Select-Wrapper
           :sportType="sport"
           :options="sport_type"
           :isChampion="0"
           use_component_key="Select_n"
-        ></Select-Wrapper> -->
-
-        <q-tabs>
-          <q-tab v-for="(item , index) in sport_type" :key="index">
-            <div>{{ item }}</div>
-          </q-tab>
-        </q-tabs>
+        ></Select-Wrapper>
       </div>
       <div class="search-header">
     <div class="wrap-select">
@@ -244,7 +238,7 @@ const  showBtn = ref(props.is_show)
 .search-header {
   display: flex;
   align-items: center;
-  padding: 24px 20px;
+  padding: 28px 20px 14px 20px;
 
   /* ************** select *************** -S */
   .wrap-select {

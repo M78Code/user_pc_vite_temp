@@ -199,10 +199,21 @@
                       src="/src/base-h5/assets/match-list/ico_fav_sel.png" @click.stop="handle_match_collect" />
               </div>
               <div class="bet_btn">
-                <div v-for="item in curMatchOdds" :key="item.oid" class="item">
-                  <div v-if='item.onb || item.on' class='on'>{{ item.onb || item.on }}</div>
-                  <div class='num'>{{ format_odds_value(item) }}</div>
-                </div>
+
+                  <template v-if="curMatchOdds?.length">
+                    <div v-for="item in curMatchOdds" :key="item.oid" class="item">
+                    <div v-if='item.onb || item.on' class='on'>{{ item.onb || item.on }}</div>
+                    <div class='num'>{{ format_odds_value(item) }}</div>
+                  </div>
+                  </template>
+                  <template v-else>
+                    <div v-for="item in 3" :key="item.oid" class="item">
+                    <div class='num'>
+            <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
+
+                    </div>
+                  </div>
+                  </template>
               </div>
             </div>
 
@@ -287,17 +298,17 @@ export default {
 
     const check_url = (url, which) => {
       // // 本地代码连接 调试 时，打开此注释即可播放视频------勿删除此注释
-      let data = {
-        media_src: url,
-        active: 'muUrl',
-      };
-      MatchDetailCalss.set_video_url(data);
-      useMittEmit(MITT_TYPES.EMIT_SET_SHOW_VIDEO, true);
-      MatchDetailCalss.set_iframe_onload(false);
-      setTimeout(() => {
-        MatchDetailCalss.set_iframe_onload(true);
-      }, 2000)
-      return
+      // let data = {
+      //   media_src: url,
+      //   active: 'muUrl',
+      // };
+      // MatchDetailCalss.set_video_url(data);
+      // useMittEmit(MITT_TYPES.EMIT_SET_SHOW_VIDEO, true);
+      // MatchDetailCalss.set_iframe_onload(false);
+      // setTimeout(() => {
+      //   MatchDetailCalss.set_iframe_onload(true);
+      // }, 2000)
+      // return
       api_common.get_full_url(url).then((v) => {
         if (v) {
           let data = {
@@ -476,7 +487,7 @@ export default {
    * @return {undefined} undefined
    */
     const format_odds = (ov, obv) => {
-      const play_data = props.match_of_list?.hps?.[0] || {}
+      const play_data = props.match_of_list?.hps?.[4] || {}
       // 列表取 hsw
       let hsw = lodash.get(play_data, `hl._play.hsw`) || "";
       let sport_id = lodash.get(props.match_of_list, "csid");

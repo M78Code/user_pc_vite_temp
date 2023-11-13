@@ -10,7 +10,7 @@
       <!-- 头部 banner 图 -->
       <div class="top-banner">
         <img
-          src="~public/yazhou-pc/image/common/activity_banner/banner_slot.jpg"
+          src="~project/activity/src/assets/activity_banner/banner_slot.jpg"
           alt=""
           width="100%"
         />
@@ -32,19 +32,19 @@
               <span class="tips">
                 <img
                   v-if="v.period == 2"
-                  src="~public/yazhou-pc/image/activity_imgs/imgs/processing.png"
+                  src="~project/activity/src/assets/activity_imgs/imgs/processing.png"
                   alt=""
                   width="100%"
                 />
                 <img
                   v-if="v.period == 1"
-                  src="~public/yazhou-pc/image/activity_imgs/imgs/waiting.png"
+                  src="~project/activity/src/assets/activity_imgs/imgs/waiting.png"
                   alt=""
                   width="100%"
                 />
                 <img
                   v-if="v.period == 3"
-                  src="~public/yazhou-pc/image/activity_imgs/imgs/finished.png"
+                  src="~project/activity/src/assets/activity_imgs/imgs/finished.png"
                   alt=""
                   width="100%"
                 />
@@ -615,7 +615,7 @@ p {
       padding-left: 30px;
     }
     .q-item--active {
-      background-image: url("~public/yazhou-pc/image/activity_imgs/imgs/got.svg") !important;
+      background-image: url("~project/activity/src/assets/activity_imgs/imgs/got.svg") !important;
       background-repeat: no-repeat;
       background-size: 16px;
       background-position-x: 7px;

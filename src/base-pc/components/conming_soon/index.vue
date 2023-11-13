@@ -20,7 +20,7 @@
   <div class="coming_soon_wrap">
     <div class="coming_soon_box">
       <img class="coming_soon_img" :style="compute_css_obj({key: 'pc-home-coming-soon'})" alt="">
-      <div class="description">Coming Soon</div>
+      <div class="description">{{ i18n_t("ouzhou.no_data.coming_soon") }}</div>
     </div>
   </div>
     </div>
