@@ -29,7 +29,8 @@
         <CurrentMatchTitle :title_value="'Featured Matches'" :show_more_icon="false" />
         <FeaturedMatches :matches_featured_list="matches_featured_list" />
     <!-- 列表容器 -->
-      <load-data :state="'data'" limit_height="1000">  <!--此处先写死高度用来调试UI -->
+    {{ match_list_card_key_arr }}
+      <load-data :state="'data'">  <!--此处先写死高度用来调试UI -->
         <!-- 滚球其他列表 -->
         <scroll-list  v-if="menu_config.menu_root_show_shoucang != 300">
           <div
