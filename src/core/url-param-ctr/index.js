@@ -33,6 +33,10 @@ const url_param_ctr_init = (vue_that)=>{
   const PROJECT_NAME = window.BUILDIN_CONFIG.PROJECT_NAME;
   // 全局获取url参数值使用
   const search_params= window.SEARCH_PARAMS;
+  if(!sessionStorage.getItem('LOCATION_SEARCH')){
+    // 参数持久化
+    sessionStorage.setItem('LOCATION_SEARCH', decodeURIComponent(search_params.toString()));
+  }
   switch (PROJECT_NAME) {
     case 'yazhou-h5':
       
