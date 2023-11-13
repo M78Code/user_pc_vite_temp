@@ -11,7 +11,7 @@
                 <!-- 联赛菜单 -->
                 <LeagueTab current_mi="1001"/>
             </div>
-            <ListFilter current_mi="1001"/>
+            <!-- <ListFilter current_mi="1001"/> -->
         </div>
         <div class="test-info-wrap" v-if="GlobalAccessConfig.other.wsl">
             <div>{{ MenuData.mid_menu_result.match_tpl_number }}</div>
@@ -22,35 +22,33 @@
             {{ MatchListCardDataClass.list_version }}-- {{ load_data_state }}-- length--- {{ match_list_card_key_arr.length
             }}
         </div>
-        <div class="match-list-scroll scroll" >
-            <!-- 列表容器 -->
-            <load-data :state="'data'" limit_height="10000"> <!--此处先写死高度用来调试UI -->
-                <!-- 滚球其他列表 -->
-                <scroll-list v-if="MenuData.menu_root_show_shoucang != 300">
-                    <template v-slot:before>
-                        <div :style="{ height: MatchListCardDataClass.sticky_top.fixed_header_height }"></div>
-                    </template>
-                    <div v-for="card_key in match_list_card_key_arr" :key="card_key" :card_key="card_key"
-                        :data-card-key="card_key" :class="`card_key   ${card_key}`">
-                        <match-list-card :card_key="card_key" use_component_key="MatchListCard_2" />
-                    </div>
-                    <template v-slot:after>
-                        <div style="height:15px"></div>
-                        <div class="pager-wrap row justify-end">
-                            <div class="go-top-btn yb-flex-center" @click="on_go_top">
-                                <icon-wapper name="icon-go_top" size="14px" />
-                                <div class="msg">{{ $t("common.back_top") || "" }}</div>
-                            </div>
+        <!-- 列表容器 -->
+        <load-data :state="'data'"> <!--此处先写死高度用来调试UI -->
+            <!-- 滚球其他列表 -->
+            <scroll-list v-if="MenuData.menu_root_show_shoucang != 300">
+                <template v-slot:before>
+                    <div :style="{ height: MatchListCardDataClass.sticky_top.fixed_header_height }"></div>
+                </template>
+                <div v-for="card_key in match_list_card_key_arr" :key="card_key" :card_key="card_key"
+                    :data-card-key="card_key" :class="`card_key   ${card_key}`">
+                    <match-list-card :card_key="card_key" use_component_key="MatchListCard_2" />
+                </div>
+                <template v-slot:after>
+                    <div style="height:15px"></div>
+                    <div class="pager-wrap row justify-end">
+                        <div class="go-top-btn yb-flex-center" @click="on_go_top">
+                            <icon-wapper name="icon-go_top" size="14px" />
+                            <div class="msg">{{ $t("common.back_top") || "" }}</div>
                         </div>
-                    </template>
-                </scroll-list>
-            </load-data>
-        </div>
-        <ConmingSoon v-show="coom_soon_state" />
+                    </div>
+                </template>
+            </scroll-list>
+        </load-data>
+        <!-- <ConmingSoon v-show="coom_soon_state" /> -->
     </div>
 </template>
 <script>
-import ListFilter from 'src/base-pc/components/match-list/list-filter/index.vue'
+// import ListFilter from 'src/base-pc/components/match-list/list-filter/index.vue'
 import { LeagueTabFullVersionWapper as LeagueTab } from "src/base-pc/components/tab/league-tab/index.js"; //联赛菜单
 import { onMounted, onUnmounted, ref, watch, getCurrentInstance } from "vue";
 import MatchesHeader from "src/base-pc/components/matches_header/matches_header.vue";
@@ -80,7 +78,7 @@ const { mounted_fn, load_data_state, collect_count, is_show_hot, on_refresh } = 
 const { page_source } = PageSourceData;
 export default {
     components: {
-        ListFilter,
+        // ListFilter,
         LeagueTab,
         MatchesHeader,
         MatchListCard,
@@ -185,7 +183,6 @@ export default {
 
 .scroll {
     overflow-y: scroll;
-    height: calc(100vh - v-bind('match_list_top'));
     padding-right: 3px;
 
     /* 火狐滚动条无法自定义宽度，只能通过此属性使滚动条宽度变细 */
@@ -199,19 +196,7 @@ export default {
     }
 }
 
-.match-list-scroll {
-    box-sizing: border-box;
-    height: calc(100vh - v-bind('match_list_top'));
 
-    &::-webkit-scrollbar {
-        width: 4px;
-    }
-
-    &::-webkit-scrollbar-thumb {
-        background-color: #cccccc;
-        border-radius: 4px;
-    }
-}
 
 .leagues-tabs {
     height: 40px;

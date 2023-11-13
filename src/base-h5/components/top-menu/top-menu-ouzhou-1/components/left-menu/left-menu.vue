@@ -144,7 +144,7 @@ const set_menu_obj = (data) => {
 const change_current_menu = (item) => {
 
   // MenuData.set_menu_mi(item.mi);
-  // setPopularSort(item.mi);
+  setPopularSort(item.mi);
   // 设置菜单对应源数据
   // MatchMeta.set_origin_match_data()
   emits('isLeftDrawer');

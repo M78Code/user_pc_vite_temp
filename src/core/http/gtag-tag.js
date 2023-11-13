@@ -7,7 +7,7 @@ function gtag_config_send(user_id) {
   // GA 埋点开关开启---照常统计，和生产环境保持一致
   window.gtag_run = 1;
   try {
-    let url_search = new URLSearchParams(location.search);
+    let url_search = SEARCH_PARAMS.param;
     // 获取诸葛埋点开关
     let gtag = url_search.get("gtag");
     if (gtag) {

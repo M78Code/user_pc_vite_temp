@@ -1,14 +1,15 @@
 <template>
+  {{MenuData.menu_root}} ---
   <div
     class="c-match-list-filter"
     :class="{
-      'date-filter': menu_config.menu_root == 3,
-      early: menu_config.menu_root == 3,
+      'date-filter': MenuData.menu_root == 3,
+      early: MenuData.menu_root == 3,
     }"
   >
     <!-- 滚球 -->
     <drag-scroll
-      v-if="menu_config.menu_root == 1"
+      v-if="MenuData.menu_root == 1"
       class="item-wrap filter-sports"
       :class="$q.platform.is.ie && 'ie-browser'"
       ref="drag_scroll"
@@ -29,18 +30,9 @@
         class="item yb-flex-center"
       >
         <div class="icon-wrap list-filter menu-inline">
-          <!-- <sport-icon :sport_id="0" size="20px" class="icon" /> -->
           <span class="soprts_id_icon"
             :style="compute_css_obj({key:'pc-left-menu-bg-image', position: `item_0` })"></span>
           <!-- 是否新上玩法 -->
-          <!-- <img  class="menu-new-icon" v-if="menu.coppertone == 1" :src="`${LOCAL_PROJECT_FILE_PREFIX}/img/yabo/svg/virtual/menu_new.svg`"/> -->
-        </div>
-        <div
-          class="name menu-inline name-margin-left"
-          v-tooltip="{ content: i18n_t('common.all'), overflow: 1 }"
-        >
-          <span>{{ i18n_t("common.all") }}</span>
-          <span class="count-text">{{ compute_quanbu_num_mi_1() }}</span>
         </div>
       </div>
       <!-- 常规球类 -->
@@ -67,7 +59,7 @@
         >
           <div class="icon-wrap list-filter menu-inline">
             <span class="soprts_id_icon"
-            v-if="menu_config.is_export()"
+            v-if="MenuData.is_export()"
             :style="compute_css_obj({key:'pc-left-menu-bg-image', position: `item_${BaseData.compute_sport_id(item.mif)}` })"></span>
             <!-- 是否新上玩法 -->
             <!-- <img  class="menu-new-icon" v-if="menu.coppertone == 1" :src="`${LOCAL_PROJECT_FILE_PREFIX}/img/yabo/svg/virtual/menu_new.svg`"/> -->
@@ -161,8 +153,8 @@
     </drag-scroll>
     <!-- 冠军-球种  -->
     <drag-scroll
-      v-if="menu_config.menu_root == 400"
-      :data-id="menu_config.menu_root"
+      v-if="MenuData.menu_root == 400"
+      :data-id="MenuData.menu_root"
       class="item-wrap filter-sports"
       :class="$q.platform.is.ie && 'ie-browser'"
       ref="drag_scroll"
@@ -216,7 +208,7 @@
         >
           <div class="icon-wrap list-filter menu-inline">
             <span class="soprts_id_icon"
-            v-if="menu_config.is_export()"
+            v-if="MenuData.is_export()"
             :style="compute_css_obj({key:'pc-left-menu-bg-image', position: `item_${compute_mi_400_sl_mi_csid(item.mi)}` })"></span>
             <!-- <sport-icon
               :sport_id="compute_mi_400_sl_mi_csid(item.mi)"
@@ -244,7 +236,7 @@
 </template>
 <script setup>
 import BaseData from "src/core/base-data/base-data.js";
-import menu_config from "src/core/menu-pc/menu-data-class.js";
+import MenuData from "src/core/menu-pc/menu-data-class.js";
 import DragScroll from "src/base-pc/components/cus-scroll/drag_scroll.vue";
 import GlobalAccessConfig from "src/core/access-config/access-config.js";
 import { compute_css_obj } from "src/core/index.js";
@@ -257,6 +249,8 @@ import { compute_css_obj } from "src/core/index.js";
      compute_quanbu_num_mi_1,
     handle_click_menu_mi_400, handle_click_menu_mi_1, compute_mi_400_sl_mi_csid, compute_quanbu_num_mi_400, 
   } from './index.js'
+
+
 </script>
 <style lang="scss" scoped>
 .c-match-list-filter {
