@@ -13,9 +13,9 @@ function get_session_storage_location_search()
 }
 
 // 同步局部参数到sessionStorage中location.search参数字符串中
-function url_param_ctr_set(obj={}){
+function location_href_param_set(obj={}){
   // 全局获取url参数值使用
-  const search_params = window.SEARCH_PARAMS.param;
+  const search_params = window.SEARCH_PARAMS.init_param;
   for (const key in obj) {
     // 增加数据
     obj[key] && search_params.set(key, obj[key]);
@@ -23,9 +23,9 @@ function url_param_ctr_set(obj={}){
   sessionStorage.setItem('LOCATION_SEARCH', decodeURIComponent(search_params.toString()))
 }
 // 删除局部参数到sessionStorage中location.search参数字符串中
-function url_param_ctr_delete(keys=[]){
+function location_href_param_del(keys=[]){
   // 全局获取url参数值使用
-  const search_params = window.SEARCH_PARAMS.param;
+  const search_params = window.SEARCH_PARAMS.init_param;
   for (var key of search_params.keys()) {
     keys.includes(key) && search_params.delete(key);
   }
@@ -49,22 +49,27 @@ function get_url_no_param(){
   }
   return url;
 }
-
-// 同步局部参数到sessionStorage中location.search参数字符串中,并进行参数获取分流操作
-function url_param_init() {
-  // 允许在url中直接累加的参数key
-  const PARAM_ADD_KEY = ['wsl', 'pb', 'vlg'];
+// 获取url中的所有参数
+function get_url_param(url){
+  let url_temp = new URL(url);
   // 获取url参数
-  let location_search = location.search;
-  let hash = location.hash;
+  let location_search = url_temp.search;
+  let hash = url_temp.hash;
   // hash后面的参数处理
   if(hash && hash.indexOf('?')>-1){
     hash = hash.substring(hash.indexOf('?')+1);
     location_search = location_search+'&'+hash;
   }
-  // 新参数数据
   const search_params_new = new URLSearchParams(location_search);
+  return search_params_new;
+}
 
+// 同步局部参数到sessionStorage中location.search参数字符串中,并进行参数获取分流操作
+function get_location_href_param() {
+  // 允许在url中直接累加的参数key
+  const PARAM_ADD_KEY = ['wsl', 'pb', 'vlg'];
+  // 获取url参数
+  let search_params_new = get_url_param(location.href);
   // 旧参数数据
   const search_params_old = get_session_storage_location_search();
 
@@ -98,15 +103,17 @@ const search_params_obj = {};
 // 当前最新的href
 search_params_obj.href = location.href;
 // 当前最新href和session中的参数集合
-search_params_obj.param = url_param_init();
+search_params_obj.init_param = get_location_href_param();
 // 删除方法
-search_params_obj.fun_del = url_param_ctr_delete;
+search_params_obj.init_param_del = location_href_param_del;
 // 增加方法 
-search_params_obj.fun_set = url_param_ctr_set;
+search_params_obj.init_param_set = location_href_param_set;
+// 获取指定url中的所有参数 
+search_params_obj.get_url_param = get_url_param;
 
 // 全局获取url参数值使用
 window.SEARCH_PARAMS = search_params_obj;
 // 获取清除参数的url
-let url = get_url_no_param();
+// let url = get_url_no_param();
 // 清除页面url参数
 // window.history.replaceState('', '', url);

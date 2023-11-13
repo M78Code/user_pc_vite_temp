@@ -16,7 +16,7 @@ import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import MenuData from "src/core/menu-h5/menu-data-class.js";
 import { http, AllDomain } from "src/core/http/";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
-import url_param_ctr_init from "src/core/url-param-ctr/index.js";
+import {url_param_ctr_init, watch_route_fun} from "src/core/url-param-ctr/index.js";
 
 export default {
   data() {
@@ -50,6 +50,11 @@ export default {
     }, 11000);
 
 
+  },
+  watch: {
+    '$route'(to, from) {
+      watch_route_fun(to, from);
+    },
   },
   async beforeMount () {
     // 这里最好是 url 内的 语种 ，不过 兜底语言是中文 因此 这里设置中文
