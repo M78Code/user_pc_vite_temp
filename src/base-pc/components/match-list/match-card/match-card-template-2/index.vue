@@ -38,6 +38,7 @@ export default {
   setup(props) {
     // 赛事样式对象
     let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.mid)
+    console.log('match_style_obj', match_style_obj);
     // 组件是否加载完成
     const is_mounted = ref(true);
 

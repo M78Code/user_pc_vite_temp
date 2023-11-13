@@ -26,7 +26,13 @@
         },
         "menu": {
             "collect": "Favourites",
-            "popular": "POPULAR"
+            "popular": "POPULAR",
+            "all_sports": "ALL SPORTS"
+        },
+        "metch": {
+            "favorites": "Favorites",
+            "matches": "Matches",
+            "league": "League"
         }
     },
     "analysis": {

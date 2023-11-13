@@ -1,12 +1,5 @@
 
-<!--
- * @Author: cooper cooper@123.com
- * @Date: 2023-06-18 15:20:44
- * @LastEditors: nico
- * @LastEditTime: 2023-07-17 10:41:07
- * @FilePath: \user-pc-vue3\src\components\header\top-header\template1\right_head.vue
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
--->
+
 <!--
  * @Description: 顶部 搜索+ 个人头像组件
 -->
@@ -34,11 +27,11 @@
     </div> -->
     <div class="h-right">
       <div class="user-info">
-        <span style="font-weight: 500;">{{ utils.format_balance(amount) }}</span>
-        <span style="font-size: 14px;font-weight: 400;opacity: 0.8;">{{ userInfo.nickName }}</span>
+        <span style="font-weight: 500;">  {{ format_balance(UserCtr.balance) }} </span>
+        <span style="font-size: 14px;font-weight: 400;opacity: 0.8;">{{ UserCtr.nickName }}</span>
       </div>
       <q-avatar size="40px"  @click="change_input">
-       <img :src="avator" alt="" srcset="">
+        <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/avator.png`" alt="" srcset="" />
       </q-avatar>
     </div>
   </div>
@@ -46,18 +39,13 @@
 
 <script>
 import { defineComponent, onMounted, ref,watch } from "vue";
-import store from "src/store-redux-vuex/index.js";
-import { api_match } from "src/api/index.js";
-import { utils } from "src/public/utils/utils";
+import { format_balance,UserCtr,LOCAL_PROJECT_FILE_PREFIX } from "src/core/"
 import { useRouter, useRoute } from 'vue-router'
-import avator from 'src/assets/images/avator.png'
 export default defineComponent({
   name: "RightHead",
   setup() {
     const userRouter = useRouter()
     const route = useRoute()
-    let userInfo = ref({});
-    const amount = ref(0)
     const text = ref('')
     const is_search = ref(false)
     watch(() => route.path, (newVal) => {
@@ -67,64 +55,26 @@ export default defineComponent({
     )
     onMounted(() => {
       compute_userInfo();
-      //     store.subscribe(() => {
-      //       compute_userInfo();
-      // });
+     
     });
+
     const compute_userInfo = () => {
-      let state = store.getState();
-      userInfo.value = state.userReducer.userInfo;
-      get_balance(userInfo.value)
+    
 
     };
-    //  获取用户余额
-    const get_balance = async (userinfo) => {
-      try {
-        let uid = userinfo.userinfo;
-        const res = await api_match.check_balance({ uid, t: new Date().getTime() })
-        let obj = res?.data?.data || {};
-        amount.value = obj.amount
-        // 将用户余额保存于公共仓库
-        store.dispatch({
-          type: "SETAMOUNT",
-          amount: obj.amount,
-        });
-      } catch (error) {
-
-      }
-    };
+   
     // 搜索
     const change_input = () => {
-      store.dispatch({
-        type: "TIP_SHOW_STATE",
-        data: true,
-    })
   
-
-      // is_search.value = true
-      // userRouter.push({
-      //   path: '/search',
-      //   query: {}
-      // })
     }
 
-    
-    // 监听变化
-    store.subscribe(() => {
-      let state = store.getState()
-      amount.value = state.userReducer.amount;
-      userInfo.value = state.userReducer.userInfo;
-    });
-
-
     return {
-      userInfo,
-      amount,
-      utils,
       text,
       change_input,
       is_search,
-      avator
+      format_balance,
+      UserCtr,
+      LOCAL_PROJECT_FILE_PREFIX
     };
   },
 });
