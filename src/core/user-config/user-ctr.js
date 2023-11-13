@@ -11,6 +11,7 @@ import { get_server_file_path } from "src/core/file-path/file-path.js";
 import pako_pb from "src/core/pb-decode/custom_pb_pako.js";
 import { infoUpload } from "src/core/http/";
 import { ServerTime } from "src/core/";
+
 import { LocalStorage, SessionStorage } from "src/core/utils/module/web-storage.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import { default_theme_key } from "src/core/theme/"
@@ -117,6 +118,28 @@ class UserCtr {
     // 常规体育的 图片地址 
     this.common_img_domain = ''
 
+    // 角球开关盘标识
+    this.corner_oc_change = ''
+    // 次要玩法数据更新
+    this.c303_data_change = ''
+    // 次要玩法盘口状态变化
+    this.c305_data_change = ''
+
+  }
+  
+  // 角球开关盘标识
+  set_corner_oc_change (val) {
+    this.corner_oc_change = val
+  }
+
+  // 次要玩法数据更新
+  set_c303_data_change (val) {
+    this.c303_data_change = val
+  }
+
+  // 次要玩法盘口状态变化
+  set_c305_data_change (val) {
+    this.c305_data_change = val
   }
 
   /**
@@ -288,6 +311,7 @@ class UserCtr {
         console.error(err);
       });
   }
+  
   /**
    * 设置版本 简易版还是 标准版
    * 2标准 1简易
@@ -1306,7 +1330,6 @@ class UserCtr {
   set_show_balance(state) {
     this.show_balance = state
     this.set_user_version()
-    console.error("ssss",this.show_balance)
   }
   /**
     * 更新用户信息版本 显示
