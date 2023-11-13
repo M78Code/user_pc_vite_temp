@@ -66,8 +66,8 @@
   const ols = ref([])
 
   onMounted(() => {
-    ols.value = get_15mins_odds_list().ols
-    console.log(ols.value, 'get_15mins_odds_list', props)
+    // ols.value = get_15mins_odds_list().ols
+    // console.log(ols.value, 'get_15mins_odds_list', props)
   })
 
   // // 监听 当前投注项ID的变化
