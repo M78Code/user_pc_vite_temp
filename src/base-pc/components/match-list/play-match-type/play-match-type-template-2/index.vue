@@ -1,13 +1,13 @@
 <template>
   <!-- 滚球盘 标题-->
-  <div :class="['ouzhou-match-type']"
-    @click="MatchListCardData[cur_title_info.func_name](card_style_obj)">
+  <div :class="['ouzhou-match-type yb-flex-between']" @click="MatchListCardData[cur_title_info.func_name](card_style_obj)">
     <div class="yb-flex-between">
       <!-- 滚球盘 -->
-      In-Play
+      {{ cur_title_info.name }}
       <!-- 赛事数量 -->
       <span v-if="cur_title_info.show_num" class="match-number">{{ cur_title_info.match_count }}</span>
     </div>
+    <div v-if="card_style_obj?.card_type == 'sport_title'">切换盘口</div>
   </div>
 </template>
   
@@ -28,7 +28,7 @@ const route = useRoute()
 const props = defineProps({
   card_style_obj: {
     type: Object,
-    default: () => {},
+    default: () => { },
   },
 })
 const cur_title_info = computed(() => {
@@ -81,6 +81,7 @@ const cur_title_info = computed(() => {
     }
   }
 }
+
 .ouzhou-match-type {
   font-family: Roboto;
   font-size: 18px;

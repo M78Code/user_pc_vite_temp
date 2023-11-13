@@ -37,7 +37,7 @@
                 <div v-else>
                     <!-- 合并单关  -->
                     <div class="scroll-box scroll-box-center" ref="scroll_box" :style="{ 'max-height': `${max_height1}px` }"
-                        @touchmove="touchmove_handle($event)" @touchstart="touchstart_handle($event)">
+                        @touchmove="touchmove_handle($event)">
                         <bet-mix-box-child2></bet-mix-box-child2>
                     </div>
                 </div>
@@ -47,7 +47,7 @@
             <div v-if="!BetData.is_bet_single">
                 <!-- 串关投注项列表  -->
                 <div class="scroll-box scroll-box-center" ref="scroll_box" :style="{ 'max-height': `${max_height1}px` }"
-                    @touchmove="touchmove_handle($event)" @touchstart="touchstart_handle($event)">
+                    @touchmove="touchmove_handle($event)">
                     <div v-if="BetViewDataClass.bet_order_status == 1">
                         <bet-mix-box-child3 :items="BetData.bet_s_list"></bet-mix-box-child3>
                        <template v-if="BetData.bet_s_list.length > 1 && !BetData.is_bet_single">
@@ -60,6 +60,9 @@
                 <bet-info></bet-info>
             </div>
 
+            <template v-if="BetData.bet_s_list.length > 1 && !BetData.is_bet_single &&  BetViewDataClass.bet_order_status == 1 ">
+              <bet-input-info1></bet-input-info1>
+            </template>
 
             <!-- <div v-if="state == 4">
               <bet-mix-box-child4></bet-mix-box-child4>

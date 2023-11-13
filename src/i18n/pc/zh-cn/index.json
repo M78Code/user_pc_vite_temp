@@ -12,8 +12,32 @@
       "yesterday": "昨天",
       "7_days": "七天内",
       "30_days": "30天内",
-      "datails": "数据"
-    }
+      "datails": "投注详情"
+    },
+    "detail": {
+      "which_team": "哪支球队",
+      "keno_lottery": "基诺彩票",
+      "exciting_different": "令人兴奋且与众不同",
+      "close_handicap": "关闭让分盘"
+     },
+     "bet": {
+         "place_bet": "下注"
+     },
+     "menu": {
+         "collect": "收藏",
+         "popular": "热门",
+         "all_sports": "全部"
+     },
+     "match": {
+         "favorites": "收藏",
+         "matches": "赛事",
+         "featured": "精选",
+         "top_events": "热门赛事",
+         "home": "首页"
+     },
+     "no_data": {
+         "coming_soon": "即将推出"
+     }
   },
   "analysis": {
     "age": "年龄",

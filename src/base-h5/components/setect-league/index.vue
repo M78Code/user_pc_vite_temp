@@ -14,7 +14,7 @@
         <div class="sl-icon-left">
           <img
             class="search-icon"
-            :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/search.svg`"
+            :src="compute_local_project_file_path('/image/list/league-search-icon.svg')"
             alt=""
           />
         </div>
@@ -29,7 +29,7 @@
           <img
             v-if="search_val.length > 0"
             class="clear-icon"
-            :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/delete.svg`"
+            :src="compute_local_project_file_path('/image/list/league-close-icon.svg')"
             alt=""
           />
         </div>
@@ -46,6 +46,7 @@ import { useRouter, useRoute } from "vue-router";
 import matchFilter from "src/base-h5/components/match-filter/index.vue";
 import { reactive, toRefs, ref } from "vue";
 import { useMittEmit, MITT_TYPES } from "src/core/index.js";
+import {LOCAL_PROJECT_FILE_PREFIX,compute_local_project_file_path} from 'src/core';
 
 defineOptions({
   name: "selectLeague" // 设置组件名称

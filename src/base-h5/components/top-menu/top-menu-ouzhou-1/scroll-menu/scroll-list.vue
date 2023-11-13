@@ -8,13 +8,13 @@
 <template>
     <div class="top_events_page">
         <header class="ball_tab">
-            <q-virtual-scroll ref="scrollRef" v-if="dataList" :items="dataList"
+            <q-virtual-scroll ref="scrollRef" v-if="menuList" :items="menuList"
                 virtual-scroll-horizontal v-slot="{ item, index }">
-                <div v-if="!['118', '400'].includes(item.mi) && get_cont(item)" @click="on_change_play(item)"
+                <div @click="on_change_play(item,index)"
                     :key="index" dense clickable :class="['play_item', { active: item.mi === current_mi }]">
                     <span class="icon">
                         <sport-icon size="24" :status="item.mi === current_mi" :sport_id="item.mi" />
-                        <span class="badge" v-if="props.is_show_badge"><q-badge rounded :label="get_cont(item)" /></span>
+                        <span class="badge" v-if="props.is_show_badge"><q-badge rounded :label="item.ct || 0" /></span>
                     </span>
                     <div class="label">{{ item.name || BaseData.menus_i18n_map[item.mi] }} </div>
                     <span class="round"></span>
@@ -27,7 +27,7 @@
 import { ref ,computed } from "vue"
 import sportIcon from "../components/left-menu/sport-icon.vue"
 import BaseData from "src/core/base-data/base-data.js";
-import { MenuData  } from "src/core/";
+// import { MenuData  } from "src/core/";
 const emits = defineEmits(['changeMenu']);
 const props = defineProps({
     menu_type: {
@@ -48,21 +48,21 @@ const props = defineProps({
         default: true
     },
 })
-/**
- * 获取滚球数量
- * @param {*} item 
- */
- const get_cont = (item) => {
-    return item.ct||item.sl.filter((n) => { return n.mi == `${item.mi}${props.menu_type}` })?.[0]?.ct || 0;
-}
-/**
- * 列表数据
- */
-const dataList = computed(() =>{
-    return props.menuList?props.menuList:MenuData.menu_list.filter((item)=>{
-        return get_cont(item);
-    }) || []
-})
+// /**
+//  * 获取滚球数量
+//  * @param {*} item 
+//  */
+//  const get_cont = (item) => {
+//     return item.ct||item.sl.filter((n) => { return n.mi == `${item.mi}${props.menu_type}` })?.[0]?.ct || 0;
+// }
+// /**
+//  * 列表数据
+//  */
+// const dataList = computed(() =>{
+//     return props.menuList?props.menuList:MenuData.menu_list.filter((item)=>{
+//         return get_cont(item);
+//     }) || []
+// })
 const playValue = ref(props.current_mi);
 const scrollRef = ref(null);
 /**
@@ -70,11 +70,11 @@ const scrollRef = ref(null);
  * @param {*} item 
  * @param {*} index 
  */
-const on_change_play = (item) => {
+const on_change_play = (item,index) => {
     if(playValue.value == item.mi)return;
     playValue.value = item.mi;
     emits('changeMenu',item)
-    const index = dataList.value.findIndex(n=>n.mi == item.mi);
+    // const index = dataList.value.findIndex(n=>n.mi == item.mi);
     scrollRef.value.scrollTo(index-2, 'start-force')
 }
 

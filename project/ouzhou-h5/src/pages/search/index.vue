@@ -279,15 +279,21 @@ const red_color = (item) => {
 	return item?.replace(reg, `<span style="color:${i_color}">${input_value.value}</span>`)
 }
 
-// 搜索
+/**
+ * @description 搜索
+ * pramas
+ * index: tab 下标
+ * sport_id: 球类id
+ * keyword搜索的关键字
+ */
 const search_data = ref([]);
-const loadding = ref(false);
 let sport_kind_id = null;
 const get_search_data = (index = 0, sport_id = 1, keyword) => {
 	show_history.value = false;
 	show_hot.value = false;
 	tabIndex.value = index;
 	sport_kind_id = sport_id;
+	// tab 默认居中及移动动画
 	utils.tab_move2(index, tab_growp.value);
 	if (keyword) {
 		input_value.value = keyword
@@ -308,6 +314,7 @@ const get_search_data = (index = 0, sport_id = 1, keyword) => {
 	get_search_result(params).then(res => {
 		if (res.code === '200') {
 			search_data.value = res.data.data;
+			// 搜索前清空会话仓库数据
 			sessionStorage.removeItem('search_txt');
 			get_match_base_hps_by_mids()
 		}
@@ -409,15 +416,6 @@ function get_hot_search() {
 	})
 }
 
-// 获取赔率
-const scroll_timer = ref(0)
-const get_match_base_hps = lodash.debounce(() => {
-  get_match_base_hps_by_mids()
-  clearTimeout(scroll_timer.value)
-  scroll_timer.value = null
-}, 600)
-
-
 /**
  * @description 获取赛事赔率
  */
@@ -440,6 +438,7 @@ const get_match_base_hps_by_mids = async () => {
 		match_mid_Arr.push(item.mid)
 	})
 	if (match_mid_Arr.length < 1) return;
+	// match_mid_Arr 数组去重
 	match_mid_Arr = Array.from(new Set(match_mid_Arr))
 	const match_mids = match_mid_Arr.join(',')
 	// 竞足409 不需要euid
@@ -484,6 +483,8 @@ onMounted(() => {
 	get_hot_search();
 	get_history();
 	get_sport_kind();
+	// 从详情返回时原搜索结果会丢失
+	// 所以需要从会话仓库拿到搜索字段，重新搜索
 	if(sessionStorage.getItem('search_txt')) {
 		const search_txt = sessionStorage.getItem('search_txt')
 		input_value.value = search_txt
@@ -494,7 +495,7 @@ onBeforeUnmount(() => {
 	clearTimeout(go_detail_or_result_timer)
 	go_detail_or_result_timer = null
 })
-//监听输入框内容改变
+//监听输入框内容改变，并搜索
 watch(
 	() => input_value.value,
 	(val) => {

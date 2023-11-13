@@ -11,10 +11,10 @@
                 <!-- 联赛菜单 -->
                 <LeagueTab current_mi="1001"/>
             </div>
-            <LeagueTab current_mi="1001"/>
         </div>
         <div class="test-info-wrap" v-if="GlobalAccessConfig.other.wsl">
             <div>{{ MenuData.mid_menu_result.match_tpl_number }}</div>
+            <!-- 临时调试 -->
             <div class="fold-btn" @click="match_list_card.unfold_all_league()">展开联赛</div>
             <div class="fold-btn" @click="match_list_card.fold_all_league()">折叠联赛</div>
             <div class="fold-btn" @click="match_list_card.test_log_data()">打印数据</div>
@@ -53,7 +53,6 @@ import { LeagueTabFullVersionWapper as LeagueTab } from "src/base-pc/components/
 import { onMounted, onUnmounted, ref, watch, getCurrentInstance } from "vue";
 import MatchesHeader from "src/base-pc/components/matches_header/matches_header.vue";
 import { IconWapper } from 'src/components/icon'
-import tab from 'src/components/common/tab/tab-1/index.vue'
 import LoadData from 'src/components/load_data/load_data.vue';
 import { MatchListCardFullVersionWapper as MatchListCard } from "src/base-pc/components/match-list/match-list-card/index.js"; //赛事列表
 import { PlayVirtualMatchTypeFullVersionWapper as PlayVirtualMatchType } from "src/base-pc/components/match-list/play-virtual-match-type/index.js";//赛事列表头部——滚球——赛事类型
@@ -70,7 +69,7 @@ import match_list_card from "src/core/match-list-pc/match-card/match-list-card-c
 import MenuData from "src/core/menu-pc/menu-data-class.js";
 import useMatchListMx from "src/core/match-list-pc/match-list-composition.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
-import { PageSourceData, compute_css_obj } from 'src/core/index.js';
+import { PageSourceData, compute_css_obj,LayOutMain_pc } from 'src/core/index.js';
 import { MatchDataWarehouse_PC_List_Common as MatchListData, GlobalAccessConfig } from "src/core/index.js";
 
 import "../match-list/match_list.scss";
@@ -90,6 +89,8 @@ export default {
         ConmingSoon
     },
     setup() {
+        LayOutMain_pc.set_oz_show_right(true)
+        LayOutMain_pc.set_oz_show_left(false)
         // 设置 左侧菜单
         MenuData.set_left_menu_result({
             root: 1,
