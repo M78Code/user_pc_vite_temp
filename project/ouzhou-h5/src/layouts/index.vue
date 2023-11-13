@@ -14,8 +14,7 @@
       <!-- 投注框 -->
       <BetBoxWapper use_component_key="BetOuzhouH5"></BetBoxWapper>
       
-      <!-- <div>{{route}}</div> -->
-       <!-- <bet-bar class="bar-top" v-if="route.path == '/home' || route.path == '/inplay' || route.path == '/match'"></bet-bar>> -->
+       <bet-bar class="bar-top" v-if="is_show"></bet-bar>>
       <FooterWapper />
 
     </q-page-container>
@@ -65,6 +64,14 @@ const toggleLeftDrawer = () => {
   leftDrawerOpen.value = !leftDrawerOpen.value;
 };
 
+//判断是否显示最下面那个
+const is_show = () =>{
+  if(route.path == '/home' || route.path == '/inplay' || route.path == '/match'){
+    return true
+  }else{
+    return false
+  }
+}
 
 /**
  * @description: touchstart事件方法体

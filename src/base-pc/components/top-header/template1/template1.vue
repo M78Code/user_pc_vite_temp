@@ -1,19 +1,4 @@
-<!--
- * @Author         : lane jstylane@itcom888.com
- * @Date           : 2023-06-30 11:28:37
- * @LastEditors: Please set LastEditors
- * @LastEditTime: 2023-07-15 21:28:19
- * @FilePath: \user-pc-vue3\src\components\header\top-header\template1\template1.vue
- * @Description    : 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
--->
-<!--
- * @Author: cooper cooper@123.com
- * @Date: 2023-06-11 15:30:41
- * @LastEditors: cooper cooper@123.com
- * @LastEditTime: 2023-07-04 12:15:21
- * @FilePath: \user-pc-vue3\src\components\header\top-header\template1\template1.vue
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
--->
+
 <template>
   <div class="header-main">
     <div class="header-content">
@@ -29,9 +14,9 @@
           </div>
         </div>
         <!-- 右侧 -->
-        <!-- <div>
+        <div>
           <right_head />
-        </div> -->
+        </div>
 
       </div>
     </div>
@@ -40,17 +25,18 @@
 <script>
 import { defineComponent, onMounted, ref, watch } from "vue";
 import _ from "lodash"
-// import right_head from "./right_head.vue";
+import right_head from "./right_head.vue";
 import logo from "src/assets/images/logo.png";
 import { useRouter, useRoute } from 'vue-router'
 import MatchListOuzhouClass from 'src/core/match-list-pc/match-ouzhou-list.js'
+import { LayOutMain_pc } from "src/core/"
 
 // import store from "src/store-redux-vuex/redux_menu";
 
 export default defineComponent({
   name: "TopHeaderTemplate1",
   components: {
-    // right_head,
+    right_head,
   },
   props: {},
   setup(props, context) {
@@ -58,9 +44,9 @@ export default defineComponent({
     const route = useRoute()
     const current_id = ref(1);
     const navList = ref([
-      { label: "Home", id: 1, path: '/home' },
-      { label: "In-Play", id: 2, path: '/in_play' },
-      { label: "My Bets", id: 3, path: '/bet_record' },
+      { label: i18n_t("ouzhou.match.home"), id: 1, path: '/home' },
+      { label: i18n_t("menu.match_playing"), id: 2, path: '/in_play' },
+      { label: i18n_t("common.betting_record"), id: 3, path: '/bet_record' },
     ]);
     watch(() => route.path, (newVal) => {
       // 根据当前路由路径判断给当前current_id赋值
@@ -77,25 +63,28 @@ export default defineComponent({
       MatchListOuzhouClass.redux_menu.menu_root = item.id || 1
       MatchListOuzhouClass.update_version()
       current_id.value = item.id;
-      console.error()
+
       switch (item.id) {
         case 1:
-          userRouter.push({
-            path: '/home',
-            query: {}
-          })
+          LayOutMain_pc.set_oz_show_right(false)
+          LayOutMain_pc.set_oz_show_left(true)
+        
+          userRouter.push({name: 'home'})
+
           break;
         case 2:
-          userRouter.push({
-            path: '/in_play',
-            query: {}
-          })
+          LayOutMain_pc.set_oz_show_right(true)
+          LayOutMain_pc.set_oz_show_left(false)
+
+          userRouter.push({name: 'in_play'})
+         
           break;
         case 3:
-          userRouter.push({
-            path: '/bet_record',
-            query: {}
-          })
+          LayOutMain_pc.set_oz_show_right(false)
+          LayOutMain_pc.set_oz_show_left(false)
+          
+          userRouter.push({name: 'bet_record'})
+
           break;
 
         default:

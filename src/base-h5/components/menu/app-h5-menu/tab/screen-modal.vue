@@ -142,6 +142,8 @@ const get_y0_suffix = "";
 const list_data = ref([]);
 //选中的数据
 const select_data = ref([]);
+//抛出去的事件
+const emits = defineEmits(['select_change'])
 
 let rem_1 = (window.innerWidth * 100) / 375;
 const bounced_high = {
@@ -209,6 +211,8 @@ function select_confirm() {
     item.matchList = item.matchList.filter(v => v.checked);
     return item;
   });
+  
+  emits('select_change',select_data.value);
   console.log('select_data.value',select_data.value)
 }
 /**

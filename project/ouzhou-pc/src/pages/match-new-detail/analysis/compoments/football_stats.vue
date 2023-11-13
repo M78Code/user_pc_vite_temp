@@ -1,11 +1,4 @@
-<!--
- * @Author         : lane jstylane@itcom888.com
- * @Date           : 2023-07-15 19:17:42
- * @LastEditors: cooper cooper@123.com
- * @LastEditTime: 2023-07-17 17:28:47
- * @FilePath       : \user-pc-vue3\src\project-ouzhou\pages\detail\analysis\compoments\football_stats.vue
- * @Description    : 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
--->
+
 <!--
  * @Author: cooper
  * @Date: 2023-06-013 14:13:55
@@ -32,6 +25,16 @@
       <div>
        
         <div class="detail-statsic" v-if="score_list">
+      
+    <!-- <q-knob
+      v-model="value"
+      size="50px"
+      :thickness="0.22"
+      color="orange"
+      track-color="grey-3"
+      class="q-ma-md"
+    /> -->
+
           <div v-for="item in statsList" :key="item.value">
             <div class="detail-statsic-title">{{ item.value }}</div>
             <div class="detail-statsic-chart" v-if="score_list[item.value_key]" >
@@ -43,7 +46,7 @@
                 size="50px"
                 :thickness="0.4"
                 color="amber-7" 
-                :track-color="score_list[item.value_key].percentage==0?'basic-track':'indigo-12'"
+                :track-color="score_list[item.value_key].percentage==0?'grey-3':'indigo-12'"
                 class="q-ma-md"
               />
               <span>{{score_list[item.value_key].away }}</span>
@@ -100,7 +103,7 @@ const statsList = ref([
   },
 ]);
 onMounted(()=>{
- 
+ console.log(1111111,props.score_list)
 
  
  
@@ -126,7 +129,7 @@ const sliderList = ref([
 const tab = ref("mails");
 const tabList = ref([
   { label: i18n_t("common.panel_total"), id: 1 },
-  { label: "Timeline", id: 2 },
+  // { label: "Timeline", id: 2 },
 ]);
 const active = ref(1);
 const tabClick = (item) => {
@@ -153,7 +156,7 @@ const tabClick = (item) => {
 }
 
 .tabs-item {
-  margin-right: 40px;
+  // margin-right: 40px;
   display: block;
   //  min-width: 50px;
   font-weight: 400;

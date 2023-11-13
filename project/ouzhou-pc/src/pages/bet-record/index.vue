@@ -1,13 +1,5 @@
-<!--
- * @Author: cooper
- * @Date: 2023-06-24 17:13:55
- * @Description: 注单历史
--->
 <template>
   <div class="cont">
-    <div class="header">
-      <layout-header />
-    </div>
     <div class="record-page">
       <div class="record-page-main">
         <!-- 注单历史头部 -->
@@ -27,7 +19,8 @@ import { onMounted, ref } from 'vue'
 import record_head from './compoments/record_head.vue'
 import record_select from './compoments/record_select.vue'
 import record_table from './compoments/record_table.vue'
-import layoutHeader from 'project_path/src/layouts/layout-header.vue'
+import { LayOutMain_pc } from "src/core/index.js";
+
 const current_tab = ref('unsettled')
 const tableRef = ref(null)
 //  tab 切换
@@ -39,6 +32,10 @@ const itemFilter = (obj) => {
   tableRef.value.getTableData({ ...obj, orderStatus })
 }
 
+onMounted(()=>{
+  LayOutMain_pc.set_oz_show_right(false)
+  LayOutMain_pc.set_oz_show_left(false)
+})
 </script>
 
 <style lang="scss" scoped>
@@ -53,7 +50,7 @@ const itemFilter = (obj) => {
 
 .record-page {
   // width: 100vw;
-  width: 1430px;
+  width: 100%;
   height: calc(100vh - 78px);
   background-color: #e2e2e2;
   margin: 0 auto;

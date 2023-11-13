@@ -269,7 +269,6 @@ const use_featch_fn = () => {
           let ts1 = res.ts
 
 				match_list_handle_set(match_list)
-
           MatchListData.set_list(
             match_list,
           );
@@ -313,9 +312,7 @@ const use_featch_fn = () => {
           }
         })
         .catch((err) => {
-          console.log('asdasdasdasd', err);
           set_home_loading_time_record("err");
-          // console.error(err)
           // 如果是第一次加载设置数据加载状态
           if (is_league_first) {
             load_data_state.value = "data";

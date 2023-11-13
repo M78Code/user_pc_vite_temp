@@ -21,7 +21,7 @@
     /> -->
       <!-- v-else -->
       <!-- 右侧数据分析 -->
-      <analysis></analysis>
+      <analysis ></analysis>
       <!-- <match-details-right  class="page-match-detail fit" /> -->
     </div>
   </div>
@@ -41,6 +41,7 @@ const show_right = ref(false);
 watch(
   () => route.name,
   () => {
+    console.log(1111111,route)
     show_right.value = ["details", "in_play"].includes(route.name);
   },
   { immediate: true }
