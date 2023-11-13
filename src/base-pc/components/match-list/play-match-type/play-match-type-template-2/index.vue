@@ -1,28 +1,39 @@
 <template>
   <!-- 滚球盘 标题-->
-  <div :class="['ouzhou-match-type yb-flex-between']" @click="MatchListCardData[cur_title_info.func_name](card_style_obj)">
+  <div :class="['ouzhou-match-type ']" @click="MatchListCardData[cur_title_info.func_name](card_style_obj)">
     <div class="yb-flex-between">
       <!-- 滚球盘 -->
       {{ cur_title_info.name }}
       <!-- 赛事数量 -->
       <span v-if="cur_title_info.show_num" class="match-number">{{ cur_title_info.match_count }}</span>
     </div>
-    <div v-if="card_style_obj?.card_type == 'sport_title'">切换盘口</div>
+    <div class="choose-csid-hpids" v-if="card_style_obj?.card_type == 'sport_title'">
+      <div @click="show_list = !show_list">
+        {{ current_csid_hpids.second_hpid }}
+        {{ $t(`csid_${card_style_obj.csid}_${current_csid_hpids.first_hpid}`) }} & {{
+          $t(`csid_${card_style_obj.csid}_${current_csid_hpids.second_hpid}`) }}
+      </div>
+      <div class="choose-list" v-show="show_list">
+        <span v-for="item in choose_config[card_style_obj.csid || '1']" @click="handle_hpid_choose(item)">
+          {{ $t(`csid_${card_style_obj.csid}_${item.first_hpid}`) }} & {{
+            $t(`csid_${card_style_obj.csid}_${item.second_hpid}`) }}
+        </span>
+      </div>
+    </div>
   </div>
 </template>
   
 <script setup>
-
+import choose_config from 'src/core/constant/config/ouzhou-pc-choose-config.js'
 import { computed, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import lodash from 'lodash';
-
 import MenuData from 'src/core/menu-pc/menu-data-class.js'
+import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card-class.js'
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
 import { t } from "src/core/index.js";
-
 const route = useRoute()
 // const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
 const props = defineProps({
@@ -31,6 +42,7 @@ const props = defineProps({
     default: () => { },
   },
 })
+const show_list = ref(false)
 const cur_title_info = computed(() => {
   let { card_type = 'no_start_title', csna, match_count } = props.card_style_obj;
   let func_name = 'recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_zaopan_gunqiu_zhedie'
@@ -60,6 +72,11 @@ const cur_title_info = computed(() => {
   return title_obj[card_type];
 })
 
+const current_csid_hpids = ref(MatchListCardDataClass.set_csid_current_hpids(props.card_style_obj.csid) || choose_config[props.card_style_obj.csid][0])
+function handle_hpid_choose(item) {
+  current_csid_hpids.value = item
+  MatchListCardDataClass.set_csid_current_hpids(props.card_style_obj.csid, item)
+}
 </script>
 <style lang="scss" scoped>
 .match-type {
@@ -89,6 +106,20 @@ const cur_title_info = computed(() => {
   line-height: 21px;
   letter-spacing: 0px;
   text-align: left;
+}
+
+.choose-csid-hpids {
+  color: #ff7000;
+  font-size: 14px;
+  font-weight: 500;
+  position: relative;
+
+  .choose-list {
+    position: absolute;
+    left: 0;
+    top: 100%;
+    z-index: 1;
+  }
 }
 </style>
  
