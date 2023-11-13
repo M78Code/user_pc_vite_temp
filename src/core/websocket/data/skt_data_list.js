@@ -19,7 +19,6 @@ export default {
       change_queue:[],
       // 订阅的赛事信息对象
       matchIds:{},
-      menu_type: '1'
     }
   },
   computed: {
@@ -27,8 +26,6 @@ export default {
       get_var_event_i18n: 'get_var_event_i18n',
       // websocket是否正常连接
       socket_status: 'get_socket_status',
-      // 当前选中的菜单
-      current_menu:'get_current_menu',
       //当前是否投注项列表
       get_bet_list: 'get_bet_list',
       // 用户信息,用户金额,userId 需要监听变化
@@ -58,6 +55,11 @@ export default {
       window.ws.addQueueViewObj(key,this);
     }
 
+    if (project_name == 'yazhou-h5') {
+      this.menu_type = lodash.get(MenuData.current_lv_1_menu, 'mi')
+    } else {
+      this.menu_type = lodash.get(MenuData, 'current_lv_1_menu_i')
+    }
   },
   methods: {
     /**
@@ -652,17 +654,11 @@ export default {
     //主副盘变更(C304)
     RCMD_C304(obj) {
 
-      let current_menu = ''
       if(this.menu_type == 28){ //赛果
         return;
       }
-      if (project_name == 'yazhou-h5') {
-        current_menu = lodash.get(MenuData.current_lv_1_menu, 'mi')
-      } else {
-        current_menu = lodash.get(MenuData, 'current_lv_1_menu_i')
-      }
 
-      if(this.menu_type == 3000 && current_menu == 100){
+      if([100, 3000].includes(this.menu_type)){
         this.RCMD_C109(obj);
         return;
       }

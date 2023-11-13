@@ -186,9 +186,7 @@ const on_update = (val) => {
     MenuData.set_menu_mi('101');
     get_ouzhou_home_data()
   } else {
-    MenuData.set_current_lv1_menu(2);
-    MenuData.set_menu_mi(MenuData.top_events_list[0]?.mi);
-    MatchMeta.set_origin_match_data()
+    MatchMeta.get_top_events_match()
   }
 }
 
