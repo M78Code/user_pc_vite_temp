@@ -279,7 +279,13 @@ const red_color = (item) => {
 	return item?.replace(reg, `<span style="color:${i_color}">${input_value.value}</span>`)
 }
 
-// 搜索
+/**
+ * @description 搜索
+ * pramas
+ * index: tab 下标
+ * sport_id: 球类id
+ * keyword搜索的关键字
+ */
 const search_data = ref([]);
 let sport_kind_id = null;
 const get_search_data = (index = 0, sport_id = 1, keyword) => {
