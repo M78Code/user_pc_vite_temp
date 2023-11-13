@@ -22,7 +22,7 @@
   const current_choose_tab = ref('');
 
   // 日期
-  const current_filter_list = ref([{label:"Today",value:""}])
+  const current_filter_list = ref([{label: i18n_t("menu.match_today"),value:""}])
 
   onMounted(()=>{
     // 获取最新的 数据
@@ -77,7 +77,7 @@ async function get_date_menu_list() {
      }
     });
   }
-  current_filter_list.value = [{label:"Today",value:""}, ...arr]
+  current_filter_list.value = [{label: i18n_t("menu.match_today"),value:""}, ...arr]
   DateTabClass.handle_click_menu_mi_3_date(current_filter_list.value[0])
 }
 
