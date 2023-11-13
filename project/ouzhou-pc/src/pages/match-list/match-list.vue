@@ -19,19 +19,17 @@
       {{ MatchListCardDataClass.list_version }}--   {{ load_data_state }}-- length---  {{ match_list_card_key_arr.length }}
     </div>
     <MatchesHeader />
-    <div class="match-list-scroll scroll" v-show="!coom_soon_state">
       <!-- 头部15 Mins模块 -->
-      <div v-show="matches_15mins_list.length && is_display">
+      <div v-show="matches_15mins_list.length && router_root === 1">
         <CurrentMatchTitle :title_value="'15 Mins'" :show_more_icon="false" />
         <MatchCardList15Mins :matches_15mins_list="matches_15mins_list" />
       </div>
       <!-- 头部Featured Matches模块 -->
-      <div v-show="matches_featured_list.length && is_display">
+      <div v-show="matches_featured_list.length && router_root === 1">
         <CurrentMatchTitle :title_value="'Featured Matches'" :show_more_icon="false" />
         <FeaturedMatches :matches_featured_list="matches_featured_list" />
-      </div>
     <!-- 列表容器 -->
-      <load-data :state="'data'" limit_height="10000" >  <!--此处先写死高度用来调试UI -->
+      <load-data :state="'data'" limit_height="1000">  <!--此处先写死高度用来调试UI -->
         <!-- 滚球其他列表 -->
         <scroll-list  v-if="menu_config.menu_root_show_shoucang != 300">
           <div
@@ -74,7 +72,7 @@ import { onMounted, onUnmounted, ref, watch, getCurrentInstance } from "vue";
 import { IconWapper } from 'src/components/icon'
 import LoadData from 'src/components/load_data/load_data.vue';
 import { LeagueTabFullVersionWapper as LeagueTab } from "src/base-pc/components/tab/league-tab/index.js"; //联赛菜单
-import listFilter from "src/base-pc/components/match-list/list-filter/index.vue"; //赛事列表筛选：滚球-球种、早盘-日期
+// import listFilter from "src/base-pc/components/match-list/list-filter/index.vue"; //赛事列表筛选：滚球-球种、早盘-日期
 import ListFilterHot from "src/base-pc/components/match-list/list-filter-hot/index.vue"; //热门赛事列表 头部筛选
 import listFilterDate from "src/base-pc/components/match-list/list-filter-date/index.vue"; //热门赛事列表  早盘-日期
 import { MatchListCardFullVersionWapper as MatchListCard } from "src/base-pc/components/match-list/match-list-card/index.js"; //赛事列表
@@ -104,6 +102,7 @@ import FeaturedMatches from 'src/base-pc/components/match-list/featured_matches/
 import MatchesHeader from "src/base-pc/components/matches_header/matches_header.vue";
 import { get_home_matches, map_matches_list, filter_15mins_func, filter_featured_list } from './featch_matches';
 import { MatchDataWarehouse_ouzhou_PC_l5mins_List_Common, MatchDataWarehouse_ouzhou_PC_hots_List_Common,LayOutMain_pc } from "src/core"
+import MenuData from "src/core/menu-pc/menu-data-class.js"
 import "./match_list.scss";
 
 const { mounted_fn, load_data_state, show_refresh_mask, collect_count, is_show_hot, on_refresh } = useMatchListMx();
@@ -111,7 +110,7 @@ const { page_source } = PageSourceData;
 export default {
   components: {
     LeagueTab,
-    listFilter,
+    // listFilter,
     listFilterDate,
     MatchListCard,
     ListFilterHot,
@@ -137,8 +136,6 @@ export default {
     const matches_featured_list = ref([]);
 
     const match_list_card_key_arr = ref([])
-
-    const is_display = ref(true)
 
     const coom_soon_state =ref(false)
 
@@ -188,13 +185,6 @@ export default {
     )
 
     watch(
-      MatchListOuzhouClass.version,
-      () => {
-        is_display.value= MatchListOuzhouClass.redux_menu.menu_root === 1 ? true : false
-      },
-    )
-
-    watch(
       MatchListOuzhouClass.coom_soon,
       () => {
         coom_soon_state.value= MatchListOuzhouClass.coom_soon.value
@@ -220,7 +210,7 @@ export default {
       load_data_state,
       coom_soon_state,
       match_list_top,
-      is_display
+      router_root: MenuData.router_root
     };
   },
 };
@@ -259,7 +249,6 @@ export default {
 }
 .scroll {
   overflow-y: scroll; 
-  height: calc(100vh - v-bind('match_list_top'));
   padding-right: 3px;
   /* 火狐滚动条无法自定义宽度，只能通过此属性使滚动条宽度变细 */
   &::-webkit-scrollbar {
@@ -271,18 +260,7 @@ export default {
     border-radius: 4px;
   }
 }
-.match-list-scroll {
-  box-sizing: border-box;
-  height: calc(100vh - v-bind('match_list_top'));
-  &::-webkit-scrollbar {
-    width: 4px;
-  }
 
-  &::-webkit-scrollbar-thumb {
-    background-color: #cccccc;
-    border-radius: 4px;
-  }
-}
 .leagues-tabs {
   height: 40px;
   position: sticky;

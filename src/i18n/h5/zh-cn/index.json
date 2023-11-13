@@ -1,7 +1,60 @@
 {
   "ouzhou": {
-    
+    "record": {
+      "my_bet": "注单历史",
+      "unsettled": "未结算",
+      "settled": "已结算",
+      "unpaid_bets": "该记录将显示所有未支付的投注",
+      "settled_time": "结算时间",
+      "bet_time": "投注时间",
+      "match_time": "比赛时间",
+      "today": "今天",
+      "yesterday": "昨天",
+      "7_days": "七天内",
+      "30_days": "30天内",
+      "datails": "投注详情"
     },
+    "detail": {
+      "which_team": "哪支球队",
+      "keno_lottery": "基诺彩票",
+      "exciting_different": "令人兴奋且与众不同",
+      "close_handicap": "关闭让分盘"
+     },
+     "bet": {
+         "place_bet": "下注"
+     },
+     "menu": {
+         "collect": "收藏",
+         "popular": "热门",
+         "all_sports": "全部",
+         "my_bets": "注单记录"
+     },
+     "match": {
+         "favorites": "收藏",
+         "matches": "赛事",
+         "featured": "精选",
+         "top_events": "热门赛事",
+         "home": "首页"
+     },
+     "setting_menu": {
+      "personal": "个人",
+      "back": "返回",
+      "money": "余额",
+      "language": "语言",
+      "odds_setting": "赔率设置",
+      "odds_display": "赔率盘口",
+      "dec": "欧洲盘",
+      "hk": "香港盘",
+      "any": "任何赔率",
+      "hig": "最佳赔率",
+      "version": "版本",
+      "euro": "欧洲版",
+      "asia": "亚洲版"
+    },
+     "no_data": {
+         "coming_soon": "即将推出"
+     }
+  },
   "app_h5": {
     "cathectic": {
       "handicap_tutorial":"盘口教程",
@@ -393,6 +446,7 @@
     "bet_suopan_info": "赔率更新中，请稍后",
     "bet_time": "投注时间",
     "settle_time": "结算时间",
+    "time": "时间",
     "bet_val": "投注额",
     "bet_val2": "投注",
     "bet_win": "赢",

@@ -110,8 +110,8 @@ function fetch_match_list(is_socket = false, cut) {
 		// 设置列表滚动条scrollTop
 		MatchListScrollClass.set_scroll_top(0);
 	}
-	// let match_api = match_list_params.match_list || {};
-	let match_api = MenuData.match_list_api_config.match_list || {};
+	let match_api = match_list_params.match_list || {};
+	// let match_api = MenuData.match_list_api_config.match_list || {};
 	// 设置列表接口 和 参数
 	let api = api_match[match_api.api_name];
 	let _params = lodash.clone(match_api.params) || {};
@@ -291,6 +291,7 @@ function mounted_fn() {
  * // 处理服务器返回的 列表 数据   fetch_match_list
  */
 export function handle_match_list_request_when_ok(data, is_socket, cut, collect) {
+	console.log('123123');
 	let {
 		match_list_api_config,
 		menu_root,

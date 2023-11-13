@@ -5,7 +5,7 @@
  */
 
 // 允许在url中直接累加的参数key
-const PARAM_ADD_KEY = ['wsl', 'pb'];
+const PARAM_ADD_KEY = ['wsl', 'pb', 'vlog'];
 
 // 获取sessionStorage中的location_search数据
 function get_session_storage_location_search()
@@ -29,7 +29,7 @@ const url_param_ctr_set = (obj={})=>{
 const get_url_no_param = ()=>{
   let url = location.href;
   try {
-    if(url){
+    if(url && url.indexOf('token')>-1){
       let hash = location.hash;
       if(hash && hash.indexOf('?') > -1){
         hash = hash.substring(0,hash.indexOf('?'));
@@ -55,11 +55,11 @@ const url_param_ctr_init = (vue_that)=>{
     // 参数持久化
     sessionStorage.setItem('LOCATION_SEARCH', decodeURIComponent(search_params.toString()));
   }
-  // let url = get_url_no_param();
+  let url = get_url_no_param();
   // window.history.replaceState('', '', url);
   switch (PROJECT_NAME) {
     case 'yazhou-h5':
-      
+      // window.history.replaceState('', '', url);
       break;
     case 'app-h5':
     

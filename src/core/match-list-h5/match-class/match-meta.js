@@ -68,6 +68,8 @@ class MatchMeta {
       menu_lv_v1_sl = MenuData.get_menu_lvmi_list(menu_lv_v1)
       menu_lv_v2_sl = MenuData.get_menu_lv_2_mi_list(menu_lv_v2)
     }
+
+    this.get_real_match_data()
     // 滚球全部
     if (+menu_lv_v1 === 1 && menu_lv_v2 == 0) return this.get_origin_match_mids_by_mis(menu_lv_v1_sl)
 
@@ -464,6 +466,21 @@ class MatchMeta {
   }
 
   /**
+   * @description 获取真实赛事
+   */
+  async get_real_match_data () {
+    const params = this.get_base_params()
+    const res = await api_common.post_match_full_list({
+      ...params,
+    })
+    if (+res.code !== 200) return
+    const list = lodash.get(res, 'data', [])
+    const length = lodash.get(list, 'length', 0)
+    if (length < 1) return
+    this.handler_match_list_data({ list: list })
+  }
+
+  /**
    *@description 获取 to events 赛事
    *@param {csid}
    */
@@ -544,6 +561,30 @@ class MatchMeta {
     }
     const params = this.get_base_params(euid)
     const res = await api_common.get_collect_matches(params)
+    if (res.code !== '200') return this.set_page_match_empty_status(true);
+    const list = lodash.get(res, 'data', [])
+    this.handler_match_list_data({ list: list, is_virtual: false })
+  }
+
+  /**
+   * @description 获取四大联赛列表
+   */
+  async get_four_leagues_list () {
+    // 四大联赛 tid 写死 西甲 320 英超 180 意甲 239 德甲 276
+    // 只有足球 euid 40203
+    // 热门 type 12
+    const tid = ['320', '180', '239', '276']
+    const euid = '40203'
+    const type = '12'
+    const params = this.get_base_params(euid)
+    const res = await api_match_list.get_matches_list({
+      ...params,
+      md: MenuData.data_time,
+      tid: tid.toString(),
+      euid,
+      type
+    })
+    console.log(res)
     if (res.code !== '200') return this.set_page_match_empty_status(true);
     const list = lodash.get(res, 'data', [])
     this.handler_match_list_data({ list: list, is_virtual: false })
@@ -738,6 +779,15 @@ class MatchMeta {
     MatchDataBaseH5.set_list(list)
     // 获取赛事赔率
     this.get_match_base_hps_by_mids()
+  }
+
+   /**
+   * @description 提交元数据更新仓库
+   * @param { list } 赛事数据
+   */
+  handle_base_match_data (list) {
+    // 设置仓库渲染数据
+    MatchDataBaseH5.set_list(list)
   }
 }
 
