@@ -180,9 +180,7 @@ const set_header_tab = val => {
 		if(menus_i18n_map.value){
 			matches_header_title.value = (menus_i18n_map || {}).value[menu_left]
 		}
-		
 	}
-
 	checked_current_tab(obj)
 }
 
@@ -206,7 +204,7 @@ const checked_current_tab = payload => {
 
 	current_value.value = payload.value;
 	// 判断头部高度
-	if (['featured','league','top_events'].includes( payload.value) ) {
+	if (['featured','league','top_events'].includes(payload.value) ) {
 		match_list_top.value = '80px'
 	} else if(['matches'].includes(payload.value)){
 		match_list_top.value = '134px'
