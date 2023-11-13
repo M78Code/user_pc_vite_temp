@@ -42,7 +42,7 @@
           ></span>
         </template>
       </q-input>
-      <div class="content">
+      <div class="content" v-if="list_data.length>0">
         <!-- 全选 -->
         <section class="all_select row justify-between items-center">
           <p class="row all_select_left">
@@ -115,12 +115,16 @@
             </li>
           </ul>
         </section>
-        <section class="btn row items-center justify-between">
+      </div>
+         <section class="btn row items-center justify-between">
           <div class="confirm_btn" @click="select_confirm">确定</div>
           <div class="cancel_btn" @click="select_cancel">取消</div>
         </section>
-      </div>
+       <!-- 无数据展示 -->
+    <no-data v-if="list_data.length<1" which="noMatch" style="margin-top: 0.26rem" :height="100"
+      ></no-data>
     </div>
+ 
   </div>
 </template>
 <script setup>
@@ -128,6 +132,8 @@ import { ref, watch } from "vue";
 import search from "src/core/search-class/search.js";
 import { api_search } from "src/api/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
+// 无网络展示组件
+import NoData from "src/base-h5/components/common/no-data.vue";
 defineOptions({
   name: "screen-modal" // 设置组件名称
 });
@@ -370,7 +376,10 @@ async function get_search_result() {
   }
   .btn{
     position: fixed;
-    bottom: 0.5rem;
+    bottom: 0;
+    height: 1rem;
+    width: 100%;
+    background: #ffffff;
     div{
       width: 1.29rem;
       height: 0.36rem;
@@ -389,7 +398,6 @@ async function get_search_result() {
        linear-gradient(0deg, #E4E6ED, #E4E6ED);
        border: 1px solid #E4E6ED;
        color: #AFB3C8;
-       margin-left: 0.06rem;
     }
   }
 }
