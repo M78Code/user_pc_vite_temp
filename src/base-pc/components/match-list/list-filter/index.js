@@ -192,244 +192,29 @@ function compute_mi_400_sl_mi_csid(mi) {
  * 单个菜单按钮点击   滚球 的
  */
 function handle_click_menu_mi_1(detail = {}) {
-    handle_click_menu_mi_pre_process();
-    // { mi:'',   root:'',   sports:'',  guanjun:'' }
-    let {
-        mif,
-        mi, //当前的菜单
-        root, //root 菜单
-        sports,
-        menu,
-        guanjun,
-    } = detail;
-    resolve_mew_menu_res_mi_100_2000();
-    // 滚球全部关闭的情况下 顺移到下一个
-    if (mi == 1 && !GlobalAccessConfig.get_playAllShow()) {
-        // resolve_mew_menu_res_mi_100_2000();
-        mi = (mi_100_arr.value[0] || {}).mi;
-        sports = "common";
+    let obj = {
+        md: detail.md,
+        mi: detail.mi,
+        mif: detail.mif
     }
-    current_menu.value = mi;
-    // vr 使用 自定义 mi
-    if (root == 300) {
-        current_menu.value = menu;
-    }
-    if (mi != 1) {
-        menu_mi.value = mi;
-    }
-    let route = "list";
-    let mi_info = BaseData.mi_info_map[`mi_${mi}`] || {};
-    //     请求  列表结构  API 参数的   模板
-    let params = {};
-    let obj = {};
-    //全部
-    if (GlobalAccessConfig.get_playAllShow()) {
-        obj = compute_quanbu_euid();
-    } else {
-        BaseData.mi_info_map[`mi_${mi}`] || {};
-    }
-    //滚球
-    if (mi == 1) {
-        params = {
-            csid: obj.csid,
-            quanbu: obj,
-            mi: 1,
-            is_quanbu: 1,
-            euid: obj.euid,
-            root, //root 菜单
-            sports,
-            route,
-            guanjun: "",
-        };
-    } else {
-        params = {
-            ...mi_info,
-            root, //root 菜单
-            sports,
-            route,
-            mi,
-            mif,
-            guanjun: "",
-        };
-    }
-    //发起请求
-    let begin_request = true;
-    // 是否收藏
-    let is_collect = false;
-    // 列表队列 接口
-    let match_list = {
-        api_name: "api 方法名字   api_match 的 子方法名字",
-        params: {},
-    };
-    // bymids 接口  基本参数
-    let bymids = {
-        api_name: "api 方法名字   api_match 的 子方法名字",
-        params: {},
-    };
-    //基础参数
-    let base_params = {
-        cuid: UserCtr.get_cuid(),
-        selectionHour: null,
-        sort: GlobalAccessConfig.get_sortCut(),
-        apiType: 1,
-        orpt: -1,
-        tid: "",
-    };
-    if (sports == "quanbu-gunqiu") {
-        //滚球    全部
-        match_list = {
-            api_name: "post_fetch_match_list",
-            params: {
-                ...base_params,
-                euid: obj.euid,
-            },
-        };
-    } else if (sports == "common") {
-        //滚球    常规体育
-        match_list = {
-            api_name: "post_fetch_match_list",
-            params: {
-                ...base_params,
-                apiType: 1,
-                orpt: -1,
-                euid: mi_info.euid,
-            },
-        };
-    } else if (sports == "dianjing") {
-        //滚球    电竞
-        match_list = {
-            api_name: "post_fetch_esports_play_matchs",
-            params: {
-                ...base_params,
-                category: 1,
-                csid: ("" + mif).substring(1),
-                isLive: 1,
-            },
-        };
-    } else if (sports == "vr") {
-        //滚球    虚拟体育
-        let vr_obj = BaseData.vr_mi_config.find((item) => mi == item.menuId) || {};
-        let vr_tid = vr_obj.subList[0].field1 || "";
-        match_list = {
-            api_name: "post_fetch_virtual_matchs",
-            params: {
-                csid: vr_obj.menuId,
-                isLive: 1,
-                selectionHour: null,
-                tid: vr_tid,
-            },
-        };
-    }
-    let config = {
-        begin_request,
-        is_collect,
-        route,
-        root,
-        sports,
-        guanjun: guanjun || "",
-        match_list,
-        bymids,
-    };
-    // 设置      中间 菜单输出
-    menu_config.set_mid_menu_result(params);
+    // 设置 中间 菜单输出
+    menu_config.set_mid_menu_result(obj);
     // 设置   请求  列表结构  API 参数的  值
-    menu_config.set_match_list_api_config(config);
+    menu_config.set_match_list_api_config(obj);
 }
 /**
  * 单个菜单按钮点击  冠军的
  */
 function handle_click_menu_mi_400(detail = {}) {
-    handle_click_menu_mi_pre_process();
-    let {
-        mi, //当前的菜单
-        root, //root 菜单
-        sports,
-        guanjun,
-    } = detail;
-    let route = "list";
-    let mi_info = BaseData.mi_info_map[`mi_${mi}`] || {};
-    current_menu.value = mi;
-    let params = {
-        ...detail,
-        mi,
-    };
-    let base_params = {
-        cuid: UserCtr.get_cuid(),
-        selectionHour: null,
-        sort: GlobalAccessConfig.get_sortCut(),
-        apiType: 1,
-        orpt: -1,
-        orpt: 18,
-        sportId: "",
-    };
-    // 是否收藏
-    let is_collect = false;
-    // 列表队列 接口
-    let match_list = {
-        api_name: "api 方法名字   api_match 的 子方法名字",
-        params: {},
-    };
-    // bymids 接口  基本参数
-    let bymids = {
-        api_name: "api 方法名字   api_match 的 子方法名字",
-        params: {},
-    };
-    //冠军   全部
-    if (mi == 400) {
-        // 全部
-        params = {
-            mi: 400,
-            sportId: "",
-            orpt: 18,
-            cuid: UserCtr.get_cuid(),
-            selectionHour: null,
-            apiType: 1,
-            guanjun,
-            sort: GlobalAccessConfig.get_sortCut(),
-        };
-        // 冠军全部后端没有做过滤 前端进行过滤处理
-        // let sportId = this.mi_400_obj['sl'].map(item=> (1 * item.mi - 400)) || []
-        // // 当前有冠军赛事的赛种id集合
-        // params.sportId = sportId.join(',')
-        // 注释上面代码 前端增加对应球种参数，返回的结果排序是乱的 后端为冠军全部做赛事过滤
-        match_list = {
-            api_name: "post_champion_list",
-            params: {
-                ...params,
-            },
-        };
-    } else {
-        let csid = "" + (1 * mi - 400);
-        params = {
-            ...mi_info,
-            mi,
-            guanjun,
-            csid: "" + (1 * mi - 400), //冠军常规体育类型的 菜单计算覆写
-            orpt: 18,
-            root: 400,
-        };
-        match_list = {
-            api_name: "post_champion_list",
-            params: {
-                ...base_params,
-                sportId: csid,
-            },
-        };
+    let obj = {
+        md: detail.md,
+        mi: detail.mi,
+        mif: detail.mif
     }
-    let config = {
-        begin_request: true,
-        is_collect,
-        route,
-        root,
-        sports,
-        guanjun,
-        match_list,
-        bymids,
-    };
-    // 设置      中间 菜单输出
-    menu_config.set_mid_menu_result(params);
+    // 设置 中间 菜单输出
+    menu_config.set_mid_menu_result(obj);
     // 设置   请求  列表结构  API 参数的  值
-    menu_config.set_match_list_api_config(config);
+    menu_config.set_match_list_api_config(obj);
 }
 
 export {

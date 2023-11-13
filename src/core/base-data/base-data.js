@@ -716,7 +716,7 @@ class BaseData {
       obj[`mi_${i}`] = {
         euid: item.p || "", // 旧的菜单ID
         h5_euid: item.h,
-        orpt: "" + item.t, // 模板ID
+        orpt: item.t || "", // 模板ID
         pids: item.s || "", // 玩法ID
       };
     }
