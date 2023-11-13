@@ -2,9 +2,9 @@
   <div class="current-filter-wrap">
     <div class="current-filter-list" @scroll="on_scroll">
       <div class="current-filter-tab" v-for="(item, index) in current_filter_list" :key="item.value">
-        <div class="filter-label" @click="choose_filter_tab(item)" :class="{ 'checked': current_choose_tab == item.value }">
+        <div class="filter-label" @click="choose_filter_tab(item)" :class="{ 'checked': final_index == item.value }">
           {{ item.label }}
-          <div class="current-mark" :class="{'show-mark': current_choose_tab == item.value}"></div>
+          <div class="current-mark" :class="{'show-mark': final_index == item.value}"></div>
         </div>
         <div class="filter-tab-split-line" v-show="index != current_filter_list.length - 1"></div>
       </div>
@@ -35,10 +35,9 @@
   import {
     handle_click_menu_mi_3_date,
     get_date_menu_matches_list,
-    current_filter_list
+    current_filter_list,
+    final_index
   } from "src/base-pc/components/tab/date-tab/index.js"
-
-  const current_choose_tab = ref('');
 
     // 是否显示左边按钮
   const show_left_btn = ref(false);
@@ -72,7 +71,7 @@ let un_subscribe = () => {
 
   // 切换赛种后 初始化
   if(!mid_tab_menu_type){
-    current_choose_tab.value = ''
+    final_index.value = ''
   }
   // 左侧菜单切换 并且 赛种id不能相同
   if( menu_root == 4 && (menu_id.value != menu_left )){
@@ -139,7 +138,7 @@ watch(MenuData.menu_data_version,()=>{
 
     MatchListOuzhouClass.set_menu(redux_menu)
 
-    current_choose_tab.value = item.value
+    final_index.value = item.value
 
     handle_click_menu_mi_3_date(item)
   }
