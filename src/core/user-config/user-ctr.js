@@ -1499,6 +1499,11 @@ class UserCtr {
     res = decodeURIComponent(searchParams.toString());
     return res;
   }
+
+  async get_system_time () {
+    let res = await api_common.get_time_server()
+    return res.ts
+  }
 }
 
 const instance = new UserCtr();

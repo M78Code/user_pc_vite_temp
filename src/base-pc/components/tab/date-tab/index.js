@@ -75,7 +75,7 @@ const handle_click_menu_mi_3_date = (detail = {}) => {
       }
     }
     let params = { ...lv2_mi_info, lv2_mi, md, euid };
-    console.log(params)
+    console.log(params, 'xxxx')
     // 设置      中间 菜单输出
     MenuData.set_mid_menu_result(params);
 }
