@@ -161,7 +161,6 @@
           // 未开赛 到卡片key的 映射对象
           no_start_to_card_key_arr.push(card_key)
         }
-
         if(unfold_match_count < 12){
           is_league_fold = false
         }else{
@@ -232,7 +231,7 @@
         if(!is_ws_call){
           Object.assign(all_card_obj[card_key],fold_template)
           all_card_obj[card_key].is_league_fold = is_league_fold
-          all_card_obj[card_key].is_show_card = !is_league_fold
+          all_card_obj[card_key].is_show_card = true
           // 设置赛事数据加载状态
           all_card_obj[card_key].load_data_status = is_league_fold ?'loading' : 'loaded'
         }else{
@@ -248,7 +247,6 @@
     // MatchListCardData.set_all_card_obj(all_card_obj)
     // 合并所有卡片样式对象
     // 已开赛 到卡片key的 映射对象
-    console.log('match_list_card_key_arr', match_list_card_key_arr);
     MatchListCardData.set_all_card_obj({
       // 合并所有卡片样式对象
         all_card_obj,

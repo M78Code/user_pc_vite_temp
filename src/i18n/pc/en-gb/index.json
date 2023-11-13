@@ -26,7 +26,18 @@
         },
         "menu": {
             "collect": "Favourites",
-            "popular": "POPULAR"
+            "popular": "POPULAR",
+            "all_sports": "ALL SPORTS"
+        },
+        "match": {
+            "favorites": "Favorites",
+            "matches": "Matches",
+            "featured": "Featured",
+            "top_events": "Top Events",
+            "home": "Home"
+        },
+        "no_data": {
+            "coming_soon": "Coming Soon"
         }
     },
     "analysis": {
