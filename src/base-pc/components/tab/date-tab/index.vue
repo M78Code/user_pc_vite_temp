@@ -5,8 +5,8 @@
       <template v-for="(item, index) in list" :key="item.menuName + '_' + index">
         <div class="tab-item yb-flex-center" :class="[{ active: final_index == index }]"
            @click.stop="() => {
-              final_index.value = index;
-              DateTabClass.handle_click_menu_mi_3_date({ ...item })
+              final_index = index;
+              handle_click_menu_mi_3_date({ ...item })
            }"
           @mouseenter="tabs_enter(index)" @mouseleave="tabs_leave(index)">
           <!-- <img v-if="item.img_src" v-check-img="{src: val.img_src, default: `/image/common/activity_banner/gift_package.png`}" /> -->
@@ -49,7 +49,16 @@ import lodash from "lodash";
 import { api_common } from "src/api/index.js";
 import BaseData from "src/core/base-data/base-data.js";
 import { UserCtr,MenuData } from 'src/core/index.js'
-import DateTabClass from "src/base-pc/components/tab/date-tab/date-tab-class.js"
+import { 
+  handle_click_menu_mi_3_date,
+  get_date_menu_list,
+  set_mid_menu_result,
+  hand_cilck_move,
+  final_index,
+  date_menu_version,
+  item_wrap_left,
+  list
+} from "src/base-pc/components/tab/date-tab/index.js"
 
 const props = defineProps({
   //item盒子左右padding
@@ -71,15 +80,11 @@ const props = defineProps({
   },
 })
 
-const list = ref([]) //tab模板文件key
-const final_index = ref(0) //下划线left
 const key = ref(0) //tab模板文件key
 const left = ref(0) //下划线left
 const width = ref(0) //下划线宽度
-const date_menu_version = ref(1) //日期菜单数据版本
 const final_date_menu = ref({}) //最终的选中的菜单数据
 const sizes = ref([]) //下划线初始大小
-const item_wrap_left = ref(0) //item包裹left
 const item_wrap_width = ref(0) //item包裹宽度
 const item_total_width = ref(0) //所有item的宽度
 const clientX = ref(null);
@@ -127,51 +132,6 @@ onMounted(() => {
   })
 })
 
-/**
-* 获取 日期 菜单
-* nu/getDateMenuList
-*/
-async function get_date_menu_list() {
-  let params = DateTabClass.compute_get_date_menu_list_params();
-  let api_fn_name = ''
-  if (MenuData.is_export()) {
-    //电竞
-    api_fn_name = "get_esports_date_menu"
-
-  } else {
-    api_fn_name = "post_date_menu"
-  }
-  let res = await api_common[api_fn_name](params);
-  let data = res.data;
-  let arr = [];
-  if (Array.isArray(data)) {
-    data.map((x) => {
-      arr.push({
-        count: x.count,
-        md: x.field1,
-        menuName: x.menuName,
-      });
-    });
-  }
-  list.value = arr;
-  date_menu_version.value = Date.now()
-
-  let index_info = 0, md_info = ''
-  const { left_menu_result, match_list_api_config = {} } = MenuData
-
-
-  // 收藏返回还是当前数据
-  if (left_menu_result.root == 3) {
-    // 早盘获取选中的时间
-    const { match_list = {} } = match_list_api_config
-    md_info = (match_list.params || {}).md || ''
-    index_info = (match_list.params || {}).index || 0
-    final_index.value = index_info
-  }
-  final_index.value = index_info;
-  DateTabClass.handle_click_menu_mi_3_date({ md: md_info })
-  console.log('match_list_api_config', match_list_api_config);
-}
 watch(MenuData.menu_data_version,()=>{
   nextTick(()=>{
     get_date_menu_list()
@@ -195,53 +155,8 @@ function onclick(index, item) {
       hand_cilck_move(-50 + item_wrap_left.value);
     }
   }
-
   final_date_menu.value = item;
   set_mid_menu_result();
-}
-
-/**
- * 设置 中间菜单的输出
- */
-function set_mid_menu_result() {
-  //     请求  列表结构  API 参数的   模板
-  let { config, description } =
-    MenuData.get_match_list_api_config_tepmlate_and_description();
-  let params = {};
-  let left_menu_result = MenuData.left_menu_result;
-  let { lv1_mi, lv2_mi, euid } = left_menu_result;
-  if (lv1_mi == 2000) {
-    //  早盘 或者 今日的  电竞
-    let csid = parseInt(lv2_mi) - 2000;
-    //电竞
-    params = {
-      mi: lv2_mi,
-      csid,
-    };
-  } else {
-    // 早盘的 其他 常规赛种
-    params = {
-      mi: lv2_mi,
-      euid: euid, // lv2_mi 找到 euid
-      md: final_date_menu.value.field1,
-      index: final_index.value, // 当前选中的时间 接口用不上 只是存储下一使用
-    };
-  }
-  // 设置      中间 菜单输出
-  MenuData.set_mid_menu_result(params);
-  // 设置   请求  列表结构  API 参数的  值
-  MenuData.get_match_list_api_config_tepmlate_and_description(config);
-}
-
-function hand_cilck_move(left) {
-  if (!props.is_drag) return;
-  let max_left = 0 - (item_total_width.value - item_wrap_width.value + 50);
-  if (left >= 0) {
-    left = 0;
-  } else if (left < max_left) {
-    left = max_left;
-  }
-  item_wrap_left.value = left;
 }
 
 /**
@@ -464,7 +379,7 @@ onBeforeUnmount(() => {
     height: 100%;
     z-index: 99;
     align-items: center;
-
+    height: 45px;
     .tab-item {
       cursor: pointer;
       padding: 0 15px;

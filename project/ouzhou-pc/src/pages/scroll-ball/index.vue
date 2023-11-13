@@ -11,6 +11,7 @@
                 <!-- 联赛菜单 -->
                 <LeagueTab current_mi="1001"/>
             </div>
+            <ListFilter current_mi="1001"/>
         </div>
         <div class="test-info-wrap" v-if="GlobalAccessConfig.other.wsl">
             <div>{{ MenuData.mid_menu_result.match_tpl_number }}</div>
@@ -49,6 +50,7 @@
     </div>
 </template>
 <script>
+import ListFilter from 'src/base-pc/components/match-list/list-filter/index.vue'
 import { LeagueTabFullVersionWapper as LeagueTab } from "src/base-pc/components/tab/league-tab/index.js"; //联赛菜单
 import { onMounted, onUnmounted, ref, watch, getCurrentInstance } from "vue";
 import MatchesHeader from "src/base-pc/components/matches_header/matches_header.vue";
@@ -78,6 +80,7 @@ const { mounted_fn, load_data_state, collect_count, is_show_hot, on_refresh } = 
 const { page_source } = PageSourceData;
 export default {
     components: {
+        ListFilter,
         LeagueTab,
         MatchesHeader,
         MatchListCard,

@@ -5,7 +5,7 @@
        <div class="info_left">
        <div class="size_16 color_a1a1">single bet</div>
         <div class="size_14">
-            <span>Highest Win</span>
+            <span>Highest Win----{{BetData.bet_keyboard_show}}</span>
             <span class="margin_left_4">{{}}</span>
         </div>
        </div>
@@ -23,8 +23,8 @@
           </div>
           
        </div>
-       <key-board v-if="BetData.bet_keyboard_show" :config="ref_data.key_board_config" ></key-board>
     </div>
+       <key-board v-if="BetData.bet_keyboard_show" :config="ref_data.key_board_config" ></key-board>
     </div>
 </template>
 
@@ -34,6 +34,7 @@ import { computed, onMounted, onUnmounted, reactive,ref } from "vue"
 import {MITT_TYPES,useMittOn } from "src/core/"
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js"
+import keyBoard from './keyboard.vue';
 
 const props = defineProps({
     item:{},
@@ -61,8 +62,8 @@ const ref_data = reactive({
     min_money: '',  // 最小投注金额
     max_money: '', // 最大投注金额
     seriesOdds: '', // 串关复式投注赔率
+    keyborard: true, // 是否显示 最高可赢 和 键盘
     money: '', // 投注金额
-
 })
 
 onMounted(()=>{
