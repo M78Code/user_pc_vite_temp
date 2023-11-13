@@ -77,7 +77,7 @@ const props = defineProps({
 
 let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(lodash.get(props, 'card_style_obj.mid'))
 const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`]
-const match_list_tpl_size =lodash.get(match_tpl_info,'width_config')
+const match_list_tpl_size =lodash.get(MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`],'width_config')
 const current_choose_oid = ref({ first_hpid: '1', second_hpid: "2" });
 // 获取菜单类型
 if (!lodash.get(props, 'card_style_obj.league_obj.csid') && ['1', '500'].includes(menu_config.menu_root)) {

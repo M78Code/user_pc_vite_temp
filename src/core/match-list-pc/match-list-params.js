@@ -469,7 +469,8 @@ function handle_click_menu_mi_1(detail = {}) {
 function get_match_list_params() {
     //侧菜单的 root 节点   root ：  1 滚球  2 今日   3  早盘   500 热门赛事  400 冠军   300 VR  电竞 2000
     let params = match_list_all_params();
-    MenuData.set_match_list_api_config(params)
+    console.log('match_list_all_params',params)
+    // MenuData.set_match_list_api_config(params)
     return params
 }
 export default get_match_list_params
