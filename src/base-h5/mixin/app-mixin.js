@@ -64,8 +64,7 @@ export default {
         // ws和http域名切换逻辑
         http.setApiDomain();
         enter_params(async(user)=>{
-          const lang = PROJECT_NAME === 'ouzhou-h5' ? 'en' : user?.languageName
-          await loadLanguageAsync(lang);
+          await loadLanguageAsync(user?.languageName);
           MenuData.init();
           BetData.init_core()
           BetViewDataClass.init()
