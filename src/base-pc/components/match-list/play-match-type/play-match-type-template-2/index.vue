@@ -10,15 +10,14 @@
     </div>
     <div class="choose-csid-hpids" v-if="card_style_obj?.card_type == 'sport_title'">
       <div @click="show_list = !show_list">
-        {{ current_csid_hpids.second_hpid }}
         {{ $t(`csid_${card_style_obj.csid}_${current_csid_hpids.first_hpid}`) }} & {{
           $t(`csid_${card_style_obj.csid}_${current_csid_hpids.second_hpid}`) }}
       </div>
       <div class="choose-list" v-show="show_list">
-        <span v-for="item in choose_config[card_style_obj.csid || '1']" @click="handle_hpid_choose(item)">
+        <div v-for="item in choose_config[card_style_obj.csid || '1']" @click="handle_hpid_choose(item)">
           {{ $t(`csid_${card_style_obj.csid}_${item.first_hpid}`) }} & {{
             $t(`csid_${card_style_obj.csid}_${item.second_hpid}`) }}
-        </span>
+        </div>
       </div>
     </div>
   </div>
