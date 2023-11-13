@@ -18,7 +18,8 @@
 <script setup>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import { LOCAL_PROJECT_FILE_PREFIX,i18n_t,useMittEmit,MITT_TYPES } from "src/core/index.js";
+import { LOCAL_PROJECT_FILE_PREFIX,useMittEmit,MITT_TYPES } from "src/core/index.js";
+import { i18n_t } from "src/boot/i18n.js";;
 // 路由
 const router = useRouter();
 
