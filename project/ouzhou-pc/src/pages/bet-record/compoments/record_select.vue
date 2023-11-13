@@ -165,6 +165,7 @@ div.q-menu {
 
   &:deep(.q-checkbox__inner) {
     font-size: 30px;
+    color: #ff7000;
   }
 
 }
@@ -234,7 +235,7 @@ div.q-menu {
 
 .btn-group {
   height: 34px;
-  width: 330px;
+  //width: 330px;
   background: #E2E2E2;
   border-radius: 16px;
   box-sizing: border-box;
