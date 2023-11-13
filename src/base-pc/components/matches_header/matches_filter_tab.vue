@@ -28,13 +28,14 @@
 <script setup>
   import { ref,onMounted,onUnmounted, watch } from 'vue';
   import BaseData from "src/core/base-data/base-data.js";
-  import { UserCtr,MenuData } from 'src/core/index.js'
+  import { UserCtr,MenuData, useMittOn, useMittEmit,MITT_TYPES } from 'src/core/index.js'
   import {
     handle_click_menu_mi_3_date,
     get_date_menu_matches_list,
     current_filter_list,
     final_index
   } from "src/base-pc/components/tab/date-tab/index.js"
+
 
     // 是否显示左边按钮
   const show_left_btn = ref(false);
@@ -52,7 +53,14 @@
     if (area_obj?.scrollWidth >= area_obj_wrap?.clientWidth) {
       show_right_btn.value = true;
     }
+    useMittOn(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE,set_menu_change)
+  })
 
+  onUnmounted(()=>{
+    useMittOn(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE,set_menu_change).off
+  })
+
+  const set_menu_change = () => {
     let obj = {
       ...MenuData.left_menu_result,
       lv2_mi: MenuData.left_menu_mi.value + '2',
@@ -60,10 +68,7 @@
     MenuData.set_left_menu_result(obj)
 
     MenuData.set_match_list_api_config(obj)
-
-
-
-  })
+  }
  
  const menu_id = ref(0)
 

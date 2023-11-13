@@ -110,9 +110,8 @@ function match_list_all_params() {
         euid_mi = mi
     }
     // 当前 pid 和 orpt
-    let lv2_mi_info = BaseData.mi_info_map[`mi_${euid_mi}`];
-    // delete lv2_mi_info.h5_euid
-    
+    let lv2_mi_info = BaseData.mi_info_map[`mi_${euid_mi}`] || {};
+    delete lv2_mi_info.h5_euid
     if ([2, 3].includes(Number(menu_root))) {
         // 今日 早盘 常规赛事
         if (lv1_mi == 118) {
