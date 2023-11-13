@@ -82,12 +82,15 @@ const state = reactive({
  */
 const changeMenu = (item) =>{
   state.current_mi = item.mi;
+  MenuData.set_menu_mi(item.mi)
   console.log("热门球种csid",item.csid)
+  MatchMeta.set_origin_match_data()
 }
 onMounted(async () => {
+  MenuData.set_current_lv1_menu(1);
+  MenuData.set_menu_mi('101');
   get_ouzhou_home_data()
   state.current_mi = MenuData.top_events_list[0]?.mi;
-  console.log("默认球种csid",MenuData.top_events_list[0]?.csid)
 })
 
 // 获取首页数据
@@ -179,10 +182,12 @@ const tabValue = ref('featured');
 // tabs 切换
 const on_update = (val) => {
   if (val === 'featured') {
+    MenuData.set_current_lv1_menu(1);
+    MenuData.set_menu_mi('101');
     get_ouzhou_home_data()
   } else {
-    MenuData.set_current_lv1_menu('2')
-    MenuData.set_menu_lv2_mi('1012')
+    MenuData.set_current_lv1_menu(2);
+    MenuData.set_menu_mi(MenuData.top_events_list[0]?.mi);
     MatchMeta.set_origin_match_data()
   }
 }
