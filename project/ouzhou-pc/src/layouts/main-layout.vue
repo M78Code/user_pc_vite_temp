@@ -10,7 +10,7 @@
     <div style="display: none;"> {{ LayOutMain_pc.layout_version }}-{{BetData.bet_data_class_version}}</div>
     <div class="flex full-content">
       <!-- 左侧 菜单 -->
-      <div class="layout_main_left" v-if="LayOutMain_pc.oz_show_left">
+      <div class="layout_main_left" :style="`width:${LayOutMain_pc.oz_left_width}px`"  v-if="LayOutMain_pc.oz_show_left">
         <layout-left />
       </div>
       <div class="layout_main_center" :style="`width:${LayOutMain_pc.oz_layout_content -(LayOutMain_pc.oz_right_width + LayOutMain_pc.oz_left_width)}px`">
@@ -19,7 +19,7 @@
           
       </div>
       <!-- 右侧 视频  动画 比分板 详情 -->
-      <div v-if="LayOutMain_pc.oz_show_right" class="layout_main_right">
+      <div v-if="LayOutMain_pc.oz_show_right" :style="`width:${LayOutMain_pc.oz_right_width}px`" class="layout_main_right">
         <layout-right />
       </div>
     </div>
@@ -52,7 +52,6 @@ import { ref, computed,watch, onMounted } from "vue";
 import Vue3DraggableResizable from 'vue3-draggable-resizable' //拖拽组件
 import { useRoute } from "vue-router";
 import { LayOutMain_pc,UserCtr } from "src/core/index.js";
-import "./main-layout.js"; //初始化数据
 
 import layoutHeader from "./layout-header.vue";
 import layoutLeft from "./layout-left.vue";
@@ -108,14 +107,14 @@ onMounted(()=>{
 }
 
 .layout_main_left {
-  padding-top: 5px;
+  padding-top: 10px;
   padding-right: 10px;
 }
 .layout_main_center {
-  padding: 5px 0 0;
+  padding: 10px 0 0;
 }
 .layout_main_right {
-  padding-top: 5px;
+  padding-top: 10px;
 }
 
 
