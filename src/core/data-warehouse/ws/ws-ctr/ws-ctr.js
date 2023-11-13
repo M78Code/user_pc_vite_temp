@@ -6,6 +6,7 @@ import WsCmd from "./ws-cmd.js";
 /**
  * @Description:ws接收消息类
  */
+import { useMittEmit,MITT_TYPES } from "src/core/index";
 export class WsRev {
   /**
    * @Description:接收消息
@@ -40,6 +41,7 @@ export class WsRev {
 
       case WsCmd.R_CMD_HANDICAP_STATUS:
         //盘口状态、赔率C105
+        useMittEmit(MITT_TYPES.EMIT_DATAWARE_DETAIL_UPDATE,{type:"oddinfo",parmas:{},datawarename:""})
         ws.push_ws_queue_msg(json_data);
         break;
       case WsCmd.R_CMD_BET_LIST_ODDS:
@@ -83,7 +85,7 @@ export class WsRev {
 
         // 据赛事id,玩法id,盘口id查询盘口信息(david)  /v1/w/getHandicapByHid
         break;
-      case WsCmd.R_CMD_HANDICAP_STATUS:
+      case WsCmd.R_CMD_MATCH_FILL_TIME:
         // 赛事时间补充
         ws.push_ws_queue_msg(json_data);
         break;
