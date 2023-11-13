@@ -1,6 +1,6 @@
 <template>
 	<div class="matches_header_wrap">
-		<div v-show="true">{{MenuData.router_root_version}} -{{MenuData.left_menu_mi.value}}--{{MenuData.router_root_lv_1}}-{{MenuData.router_root_lv_2}}-{{MenuData.router_root_lv_3}}</div>
+		<div v-show="false">{{MenuData.router_root_version}} -{{MenuData.left_menu_mi.value}}--{{MenuData.router_root_lv_1}}-{{MenuData.router_root_lv_2}}-{{MenuData.router_root_lv_3}}</div>
 		<div class="matches_header">
 			<div class="header_banne header_banner" :style="`background-position:0 -${current_ball_type}px`"></div>
 			<div class="matches-title">

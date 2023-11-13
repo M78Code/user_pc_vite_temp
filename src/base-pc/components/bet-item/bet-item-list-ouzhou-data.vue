@@ -284,10 +284,11 @@ const bet_click_ol = () => {
   }
   
   //点击后再次点击，取消选中状态
-  if(props.active_score){
+  const current_id = `${_mid}${oid}`;
+  if(props.active_score === current_id){
     emit('update_score', '')
   }else {
-    emit('update_score', `${_mid}${oid}`)
+    emit('update_score', current_id)
   }
    set_bet_obj_config(params,{})
 };

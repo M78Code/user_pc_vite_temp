@@ -1,5 +1,5 @@
 <!--
- * @Description: app-h5 赛事组件，用于赛事列表展示赛事信息
+ * @Description: ouzhou-h5 联赛组件，用于赛事列表展示赛事信息
 -->
 <template>
   <div :class="['match-container']" 
@@ -13,7 +13,7 @@
         </div>
         <div class="select_time">
           <span @click.stop>
-            <q-btn-dropdown flat outline  style="color: #FF7000"  padding="0" label="Match (Regular Time)" 
+            <q-btn-dropdown flat outline  style="color: #FF7000"  padding="0" label="Fulltime Result" 
               dropdown-icon="expand_more" content-class="select_time_style">
               <q-list>
                 <q-item v-for="item in hps_play_data" :key="item.hpid" @click.stop="on_select_play(item)"
