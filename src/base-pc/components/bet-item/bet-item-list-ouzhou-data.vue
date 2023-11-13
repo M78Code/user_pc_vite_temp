@@ -70,6 +70,7 @@ import { format_odds_value } from 'src/core/format/module/format-odds.js';
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
 import { compute_value_by_cur_odd_type } from "src/core/format/module/format-odds-conversion-mixin.js";
 import menu_config from "src/core/menu-pc/menu-data-class.js";
+import { useGetItem } from "./bet_item_hooks.js";
 
 const is_mounted = ref(true);
 // 盘口状态 active:选中 lock:锁盘 seal:封盘 close:关盘
@@ -96,6 +97,12 @@ const props = defineProps({
     default: () => { }
   }
 });
+
+
+const {
+  bet_click
+} = useGetItem({ props });
+
 
 //玩法比分
 const score = computed(() => {
@@ -130,16 +137,16 @@ onMounted(() => {
 // })  
 
 // 监听投注项赔率变化
-// watch(props.ol_data.ov, (cur, old) => {
-//   // 赔率值处理
-//   format_odds(cur, 1);
-//   if (props.ol_data) {
-//     let { _mhs, _hs, os } = props.ol_data;
-//     odds_state.value = get_odds_state(_mhs, _hs, os);
-//   }
-//   // 红升绿降变化
-//   set_odds_lift(cur, old);
-// })  
+watch(props.ol_data.ov, (cur, old) => {
+  // 赔率值处理
+  format_odds(cur, 1);
+  if (props.ol_data) {
+    let { _mhs, _hs, os } = props.ol_data;
+    odds_state.value = get_odds_state(_mhs, _hs, os);
+  }
+  // 红升绿降变化
+  set_odds_lift(cur, old);
+})  
 
 /**
  * 赔率转换
@@ -219,6 +226,21 @@ const is_odds_seal = () => {
 };
 
 /**
+   * @description: 检查是否选中
+   * @param {String} 对象id
+   * @return {Boolean} 是否包含
+   */
+   const bet_item_select = (id) => {
+    if (BetData.is_bet_single) {
+      // 检查单关是否选中
+      return BetData.bet_single_list.includes(id);
+    } else {
+      // 检查串关是否选中
+      return BetData.bet_list.includes(id);
+    }
+  };
+  
+/**
  * @description 获得最新的盘口状态
  * @param  {number} mhs  赛事级 0：开 1：封 2：关 11：锁
  * @param  {number} hs   盘口级 0：开 1：封 2：关 11：锁
@@ -241,11 +263,7 @@ const get_odds_state = (mhs, hs, os) => {
     state = STATE[_active];
   } else {
     let selected_class;
-    if (this.vx_get_is_virtual_bet) {
-      selected_class = this.virtual_bet_item_select(id);
-    } else {
-      selected_class = this.bet_item_select(id);
-    }
+    selected_class = bet_item_select(id);
     state = selected_class ? "active" : "normal";
   }
   // 当赔率对应的欧赔小于1.01时 ！！！！！！！！！！！！！！！！并且当前不在关盘状态，强制转换成封盘的状态 对盘口加锁

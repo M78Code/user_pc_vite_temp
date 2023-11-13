@@ -41,13 +41,23 @@ export default defineComponent({
   props: {},
   setup(props, context) {
     const userRouter = useRouter()
-
+    const route = useRoute()
+    
     const current_id = ref(1);
     const navList = ref([
       { label: i18n_t("ouzhou.match.home"), id: 1, path: '/home' },
       { label: i18n_t("menu.match_playing"), id: 2, path: '/in_play' },
       { label: i18n_t("common.betting_record"), id: 3, path: '/bet_record' },
     ]);
+
+    watch(() => route.path, (newVal) => {
+      // 根据当前路由路径判断给当前current_id赋值
+      current_id.value = navList.value.find(item => item.path == newVal)?.id
+      //页面中间头部导航显示处理
+      MenuData.set_router_root_lv_1(navList.value.find(item => item.path == newVal)?.id || 1)
+    },
+      { immediate: true }
+    )
 
     const nav_click = (item = {}) => {
       //页面中间头部导航显示处理
