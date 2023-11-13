@@ -3,11 +3,11 @@
     <div class="bet-result" >
         <div class="w-100 fw-s-b">
             <div class="w-100 bet-result-info fw-b-c">
-                <div class="font12 font400 bet-returm f-s-c">Total Stake</div>
+                <div class="font12 font400 bet-returm f-s-c">{{ i18n_t("bet.total_bet")}}</div>
                 <div class="font12 font500 bet-money f-s-c">{{ (items.betMoney).toFixed(2) || '0.00' }}</div>
             </div>
             <div class="w-100 bet-result-info fw-b-c mt-8">
-                <div class="font12 font400 bet-returm f-s-c">Highest Win</div>
+                <div class="font12 font400 bet-returm f-s-c">{{ i18n_t("common.maxn_amount_val") }}</div>
                 <div class="font12 font500 bet-money f-s-c">{{ (items.maxWinMoney).toFixed(2) || '0.00' }}</div>
             </div>
         </div>

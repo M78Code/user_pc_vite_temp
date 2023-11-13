@@ -7,8 +7,8 @@
   <div class="analysis-team">
     <div class="analysis-team-l">
       <div>
-        <span>Which team will</span>
-        <span style="color: #ff7000"> WIN</span>
+        <span>{{ i18n_t("ouzhou.detail.which_team") }}Which team will</span>
+        <span style="color: #ff7000"> {{ i18n_t("analysis.win_plate") }}</span>
       </div>
       <div class="analysis-switch-main">
         <div class="analysis-switch">
@@ -38,8 +38,8 @@
   </div>
   <div class="analysis-bottom">
     <div class="analysis-bottom-title">
-      <span>keno lottery</span>
-      <span>Exciting and different</span>
+      <span>{{ i18n_t("ouzhou.detail.keno_lottery") }}</span>
+      <span>{{ i18n_t("ouzhou.detail.exciting_different") }}</span>
     </div>
     <div class="analysis-bottom-btn">
         Go In

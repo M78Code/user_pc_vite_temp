@@ -13,7 +13,20 @@
       "7_days": "七天内",
       "30_days": "30天内",
       "datails": "数据"
-    }
+    },
+    "detail": {
+      "which_team": "哪支球队",
+      "keno_lottery": "基诺彩票",
+      "exciting_different": "令人兴奋且与众不同",
+      "close_handicap": "关闭让分盘"
+     },
+     "bet": {
+         "place_bet": "下注"
+     },
+     "menu": {
+         "collect": "收藏",
+         "popular": "热门"
+     }
   },
   "analysis": {
     "age": "年龄",

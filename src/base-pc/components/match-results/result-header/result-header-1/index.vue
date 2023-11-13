@@ -1,16 +1,24 @@
 <template>
-  <div class="search-header">
-    <div class="wrap-select">
-      <div class="r-select">
+  
+    <div class="top-menu-content">
         <!-- 体育 -->
-        <span class="label">{{ i18n_t("results.sport") }}</span>
+        <!-- <span class="label">{{ i18n_t("results.sport") }}</span>
         <Select-Wrapper
           :sportType="sport"
           :options="sport_type"
           :isChampion="0"
           use_component_key="Select_n"
-        ></Select-Wrapper>
+        ></Select-Wrapper> -->
+
+        <q-tabs>
+          <q-tab v-for="(item , index) in sport_type" :key="index">
+            <div>{{ item }}</div>
+          </q-tab>
+        </q-tabs>
       </div>
+      <div class="search-header">
+    <div class="wrap-select">
+      
       <!-- 冠军球种才展示这个下拉选择框 -->
       <div class="r-select ball-games" v-if="current_sport_id == '0'">
         <!-- 球种 -->
@@ -201,7 +209,7 @@ const props = defineProps({
     type:String
   }
 });
-const show_play_back=   computed(()=>{
+  const show_play_back=   computed(()=>{
   return !!(lodash.get(UserCtr,"user_info.merchantEventSwitchVO") && lodash.get(UserCtr,"user_info.merchantEventSwitchVO.eventSwitch"))
 })
 const confirmDate=()=>{
@@ -214,12 +222,29 @@ const  showBtn = ref(props.is_show)
 
 <style  lang="scss" scoped>
 @import "./result-header.scss";
+.top-menu-content {
+    height: 50px;
+    border-top: 1px solid var(--q-announce-left-menu-color-2);
+    background: var(--q-gb-bg-c-11);
+    color: var(--q-gb-t-c-6);
+    &:after {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 14px;
+        top: 111px;
+        right: 0;
+        background-color: #e2e2e2;
+    }
+    ::v-deep .q-tab__indicator{
+            display: none;
+        }
+  };
 /* ************** 筛选条件 *************** -S */
 .search-header {
   display: flex;
   align-items: center;
-
-  padding: 10px 0;
+  padding: 24px 20px;
 
   /* ************** select *************** -S */
   .wrap-select {
@@ -380,12 +405,11 @@ const  showBtn = ref(props.is_show)
   /* ************** select *************** -E */
   /* ************** 日期、单选框、搜索 *************** -S */
   .wrap-handel {
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 415px;
-    flex: 1;
-
+    margin-left: 20px;
     .r-select {
       display: flex;
       align-items: center;
