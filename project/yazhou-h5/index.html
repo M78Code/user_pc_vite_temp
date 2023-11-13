@@ -431,6 +431,7 @@
         }
       }
     </style>
+    <script src="/url-param.js"></script>
     <script src="%VITE_APP_BUILD_VERSION%/lib/js/crypto-js.min.js"></script>
  
 
@@ -512,7 +513,7 @@
             !location.search.includes("keep_url") ||
             token != sessionStorage.h5_token
           ) {
-            sessionStorage.clear();
+            // sessionStorage.clear();
           }
           sessionStorage.setItem("h5_token", token);
         }

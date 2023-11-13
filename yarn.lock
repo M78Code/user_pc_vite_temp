@@ -947,6 +947,11 @@
   "resolved" "https://registry.npmjs.org/json-parse-better-errors/-/json-parse-better-errors-1.0.2.tgz"
   "version" "1.0.2"
 
+"licia-es@^1.38.2":
+  "integrity" "sha512-Iqsi/gkXiGl44tVvZa1RsqhyTbH1WNmrc0YQsWOS3lz4kqriZA32XOp15Xkgw3/pWbnIrh9bA77cqJlkh5d88w=="
+  "resolved" "https://registry.npmjs.org/licia-es/-/licia-es-1.38.2.tgz"
+  "version" "1.38.2"
+
 "licia@^1.38.2":
   "integrity" "sha512-QsX3fZt88e1KaNdZXTSXqGYNHFXMV8xgfwa3eCTYdv8k4OLQimxwjTdXXej11BdSyUUp0rCZROI8rcTvnZRZ7w=="
   "resolved" "https://registry.npmjs.org/licia/-/licia-1.38.2.tgz"

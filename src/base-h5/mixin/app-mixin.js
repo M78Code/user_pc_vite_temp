@@ -16,6 +16,7 @@ import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import MenuData from "src/core/menu-h5/menu-data-class.js";
 import { http, AllDomain } from "src/core/http/";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
+import url_param_ctr_init from "src/core/url-param-ctr/index.js";
 
 export default {
   data() {
@@ -32,6 +33,8 @@ export default {
     };
   },
   created() {
+    // 参数控制处理和跳转逻辑
+    url_param_ctr_init(this);
     // 设置wslog 默认函数防止提前调用报错
     window.wslog = { sendMsg: () => {} };
     // 设置商户分割信息

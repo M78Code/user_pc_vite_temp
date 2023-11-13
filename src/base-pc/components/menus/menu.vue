@@ -14,7 +14,7 @@
     <div class="menu-nav-line" />
 
     <div class="menu-nav-li">
-      <p>{{ i18n_t("ouzhou.menu.collect") }}</p>
+      <p>{{ i18n_t("ouzhou.menu.popular") }}</p>
       <ul class="menu-list">
         <li class="f-s-c" :class="{ 'menu_checked': current_menu_id == item }" v-for="item in popular" :key="item"
           @click="jump_func(item)">
@@ -27,7 +27,7 @@
     <div class="menu-nav-line" />
 
     <div class="menu-nav-li">
-      <p>ALL SPORTS</p>
+      <p>{{ i18n_t("ouzhou.menu.all_sports")}}</p>
       <ul class="menu-list">
         <li class="f-s-c" :class="{ 'menu_checked': current_menu_id == item }" v-for="item in (left_menu_list || menu)"
           :key="item" @click="jump_func(item)">

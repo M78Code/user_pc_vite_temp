@@ -1,11 +1,8 @@
 <template>
   <div class="ty-bet-after-status">
-    {{BetViewDataClass.bet_order_status}}---
     <div v-show="false">{{BetViewDataClass.bet_view_version}}</div>
     <img :src="set_bet_order_status(BetViewDataClass.bet_order_status)" alt="" />
-    <div class="ty-bet-after-status-title" :class="{
-      active: bet_order_status_active
-    }">{{title}}</div>
+    <div class="ty-bet-after-status-title" :class="{active: bet_order_status_active}">{{title}}</div>
   </div>
 </template>
 
@@ -49,7 +46,7 @@ const bet_order_status_active = computed(()=>{
   flex-wrap: wrap;
   .ty-bet-after-status-title{
     font-size: .16rem;
-    font-weight: 500;
+    font-weight: 600;
     line-height: .24rem;
     letter-spacing: 0;
     width: 100%;
@@ -58,7 +55,6 @@ const bet_order_status_active = computed(()=>{
     color: #AFB3C8;
     &.active{
       color: var(--q-gb-t-c-1);
-
     }
   }
 }

@@ -25,7 +25,13 @@
      },
      "menu": {
          "collect": "收藏",
-         "popular": "热门"
+         "popular": "热门",
+         "all_sports": "全部"
+     },
+     "match": {
+         "favorites": "收藏",
+         "matches": "赛事",
+         "league": "联盟"
      }
   },
   "analysis": {
