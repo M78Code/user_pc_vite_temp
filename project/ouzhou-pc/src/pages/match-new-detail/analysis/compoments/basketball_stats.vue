@@ -83,6 +83,7 @@ const props =  defineProps({
   },
 })
 
+
 const value = ref(50);
 const standard = ref(15)
 const sliderList = ref([
@@ -99,20 +100,7 @@ const sliderList = ref([
     value_key:'S106'
   },
 ])
-const statsList = ref([
-  {
-    value: `2 ${i18n_t("common.score")}`,
-    value_key:'S107'
-  },
-  {
-    value: `3 ${i18n_t("common.score")}`,
-    value_key:'S108'
-  },
-  {
-    value: i18n_t("common.foul"),
-    value_key:'S106'
-  },
-]);
+
 const tab = ref("mails");
 
 const tabClick = (item) => {

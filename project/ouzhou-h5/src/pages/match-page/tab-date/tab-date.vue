@@ -146,6 +146,7 @@ const changeDatetab = (item, index) => {
         //根据时间筛选列表
         MatchMeta.filter_match_by_time(item.val)
     }
+    emit("changeDate", item.val);
 };
 watch(() => MenuData.menu_mi.value, () => {
     //球种改变设置今日

@@ -20,12 +20,12 @@
     </div>
     <MatchesHeader />
       <!-- 头部15 Mins模块 -->
-      <div v-show="matches_15mins_list.length && is_display">
+      <div v-show="matches_15mins_list.length && router_root === 1">
         <CurrentMatchTitle :title_value="'15 Mins'" :show_more_icon="false" />
         <MatchCardList15Mins :matches_15mins_list="matches_15mins_list" />
       </div>
       <!-- 头部Featured Matches模块 -->
-      <div v-show="matches_featured_list.length && is_display">
+      <div v-show="matches_featured_list.length && router_root === 1">
         <CurrentMatchTitle :title_value="'Featured Matches'" :show_more_icon="false" />
         <FeaturedMatches :matches_featured_list="matches_featured_list" />
     <!-- 列表容器 -->
@@ -102,6 +102,7 @@ import FeaturedMatches from 'src/base-pc/components/match-list/featured_matches/
 import MatchesHeader from "src/base-pc/components/matches_header/matches_header.vue";
 import { get_home_matches, map_matches_list, filter_15mins_func, filter_featured_list } from './featch_matches';
 import { MatchDataWarehouse_ouzhou_PC_l5mins_List_Common, MatchDataWarehouse_ouzhou_PC_hots_List_Common,LayOutMain_pc } from "src/core"
+import MenuData from "src/core/menu-pc/menu-data-class.js"
 import "./match_list.scss";
 
 const { mounted_fn, load_data_state, show_refresh_mask, collect_count, is_show_hot, on_refresh } = useMatchListMx();
@@ -135,8 +136,6 @@ export default {
     const matches_featured_list = ref([]);
 
     const match_list_card_key_arr = ref([])
-
-    const is_display = ref(true)
 
     const coom_soon_state =ref(false)
 
@@ -186,13 +185,6 @@ export default {
     )
 
     watch(
-      MatchListOuzhouClass.version,
-      () => {
-        is_display.value= MatchListOuzhouClass.redux_menu.menu_root === 1 ? true : false
-      },
-    )
-
-    watch(
       MatchListOuzhouClass.coom_soon,
       () => {
         coom_soon_state.value= MatchListOuzhouClass.coom_soon.value
@@ -218,7 +210,7 @@ export default {
       load_data_state,
       coom_soon_state,
       match_list_top,
-      is_display
+      router_root: MenuData.router_root
     };
   },
 };
