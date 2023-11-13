@@ -4,6 +4,7 @@ import { loadLanguageAsync, LayOutMain_pc,MatchDetailCalss,GlobalSwitchClass } f
 import base_data from "src/core/base-data/base-data.js";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
+import url_param_ctr_init from "src/core/url-param-ctr/index.js";
 export default {
     data() {
         return {
@@ -11,6 +12,8 @@ export default {
         }
     },
     created () {
+        // 参数控制处理和跳转逻辑
+        url_param_ctr_init(this);
         this.init_process() 
         
       },

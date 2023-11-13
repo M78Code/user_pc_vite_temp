@@ -28,7 +28,7 @@
        <!-- 篮球分析页图表 -->
        <basket-ball-stats  v-if="detail_info.csid==2 &&detail_info.ms>0" :detail_info="detail_info" :score_list="score_list" />
       <!-- 选择哪队会赢组件 -->
-      <switch-team />
+      <switch-team v-if="false" />
     </div>
   </div>
 </template>

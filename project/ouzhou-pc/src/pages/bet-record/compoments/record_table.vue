@@ -1,8 +1,3 @@
-<!--
- * @Author: cooper
- * @Date: 2023-06-27 16:43:55
- * @Description: 注单历史表格组件部分
--->
 <template>
   <div class="record-table">
     <div>

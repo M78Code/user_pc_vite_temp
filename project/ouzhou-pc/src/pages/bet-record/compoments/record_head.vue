@@ -1,8 +1,3 @@
-<!--
- * @Author: cooper
- * @Date: 2023-06-24 17:43:55
- * @Description: 注单历史头部
--->
 <template>
   <div class="record-head">
     <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/image/settled.png`" alt="" srcset="" class="record-bc" />

@@ -39,14 +39,14 @@ const router = useRouter();
 
 // 首页 header menu_root  == 1
 const home_tab = [
-	{ label: 'Featured', value: 'featured' },
-	{ label: 'Top Events', value: 'top_events' },
+	{ label: i18n_t("ouzhou.match.featured"), value: 'featured' },
+	{ label: i18n_t("ouzhou.match.top_events"), value: 'top_events' },
 ]
 
 // 左侧菜单 header menu_root  == 4
 const sport_tab = [
-	{ label: 'Matches', value: 'matches' },
-	{ label: 'League', value: 'league' },
+	{ label: i18n_t("ouzhou.match.matches"), value: 'matches' },
+	{ label: i18n_t("analysis.league"), value: 'league' },
 ]
 
 const tab_list = ref(home_tab)
@@ -57,8 +57,8 @@ const tab_list = ref(home_tab)
 // 获取当前header展示背景图
 const current_ball_type = ref(630)
 
-const matches_header_title = ref('Matches');
-const current_value = ref('featured');
+const matches_header_title = ref(i18n_t("ouzhou.match.matches"));
+const current_value = ref(i18n_t("ouzhou.match.featured"));
 
 // 头部高度 包含 teb切换
 const match_list_top = ref('80px')
@@ -165,11 +165,11 @@ const set_header_tab = val => {
 		tab_list.value = home_tab
 		obj = home_tab[0]
 		current_ball_type.value = 630
-		matches_header_title.value = 'Matches'
+		matches_header_title.value = i18n_t("ouzhou.match.matches")
 	}
 	if (val == 2 ) {
 		current_ball_type.value = 0
-		matches_header_title.value = 'In-Play'
+		matches_header_title.value = i18n_t("menu.match_playing")
 	}
 	if (val == 4) {
 		tab_list.value = sport_tab

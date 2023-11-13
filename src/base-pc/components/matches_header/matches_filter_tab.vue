@@ -25,7 +25,7 @@
   const current_choose_tab = ref('');
 
   // 日期
-  const current_filter_list = ref([{label:"Today",value:""}])
+  const current_filter_list = ref([{label: i18n_t("menu.match_today"),value:""}])
 
   onMounted(()=>{
     // 获取最新的 数据

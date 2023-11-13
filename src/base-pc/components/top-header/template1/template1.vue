@@ -44,9 +44,9 @@ export default defineComponent({
     const route = useRoute()
     const current_id = ref(1);
     const navList = ref([
-      { label: "Home", id: 1, path: '/home' },
-      { label: "In-Play", id: 2, path: '/in_play' },
-      { label: "My Bets", id: 3, path: '/bet_record' },
+      { label: i18n_t("ouzhou.match.home"), id: 1, path: '/home' },
+      { label: i18n_t("menu.match_playing"), id: 2, path: '/in_play' },
+      { label: i18n_t("common.betting_record"), id: 3, path: '/bet_record' },
     ]);
     watch(() => route.path, (newVal) => {
       // 根据当前路由路径判断给当前current_id赋值

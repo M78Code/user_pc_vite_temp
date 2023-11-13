@@ -1,8 +1,3 @@
-<!--
- * @Author: cooper
- * @Date: 2023-06-24 17:13:55
- * @Description: 注单历史
--->
 <template>
   <div class="cont">
     <div class="record-page">
