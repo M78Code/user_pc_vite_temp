@@ -16,7 +16,8 @@
                     {{ item.name }}
                 </li>
             </ul>
-            <div class="search-tab-content-img" @click="drawerRight = !drawerRight">
+            <div class="search-tab-content-img" @click="drawerRight = !drawerRight"
+             >
                 <img :src="search" />
             </div>
             <!-- <div class="search-tab-content-img" @click="searchClick">
@@ -33,7 +34,7 @@
             elevated
         >
         <q-scroll-area class="fit">
-            <screenModal class="screenModal"></screenModal>
+            <screenModal class="screenModal" @select_change="select_change"></screenModal>
         </q-scroll-area>
       </q-drawer>
         </div>
@@ -95,6 +96,16 @@ const props = defineProps({
 });
 const drawerRight = ref(false)
 const activeOn = ref(props.defaultVal || 0);//默认值
+const league_data = ref([])
+
+/**
+ * 选中的数据
+ * @param {*} val 
+ */
+const select_change = (value) => {
+    // drawerRight = !drawerRight
+    console.log('valuevalue',value)
+}
 /**
  * 选中事件
  * @param {*} val 
