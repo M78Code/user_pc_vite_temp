@@ -136,6 +136,7 @@
       _hn: payload.hps.hn,  // hn_obj
       _mid: payload.payload.mid  //赛事id mid_obj
     }
+    console.log(payload, params, 'params')
     set_bet_obj_config(params,{})
   }
 
