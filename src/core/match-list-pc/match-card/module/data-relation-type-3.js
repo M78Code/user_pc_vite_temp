@@ -69,7 +69,6 @@
   */
   export const  compute_match_list_style_obj_and_match_list_mapping_relation_obj_type3 =(all_league_obj,is_ws_call,is_remove_call)=>{
     let template_id = MenuData.get_match_tpl_number()
-    console.log('template_id', template_id);
     // 赛事模板ID
 
     // 已开赛 到卡片key的 映射对象
@@ -234,7 +233,7 @@
         if(!is_ws_call){
           Object.assign(all_card_obj[card_key],fold_template)
           all_card_obj[card_key].is_league_fold = is_league_fold
-          all_card_obj[card_key].is_show_card = !is_league_fold
+          all_card_obj[card_key].is_show_card = true
           // 设置赛事数据加载状态
           all_card_obj[card_key].load_data_status = is_league_fold ?'loading' : 'loaded'
         }else{
