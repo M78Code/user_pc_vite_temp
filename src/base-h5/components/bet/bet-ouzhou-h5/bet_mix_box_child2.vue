@@ -5,12 +5,12 @@
 
 <template>
     <div class="bet-mix-show">
-
+      <div v-if="false">{{BetData.bet_single_list}}</div>
       <div v-for="(items, index) in BetData.bet_single_list" :key="index">
         <div class="nonebox4-content">
           <div class="nonebox4-content-left">
               <div class="nonebox4-content-left-content">
-                  <div class="nonebox4-content-left-content-xian">删</div>
+                  <div class="nonebox4-content-left-content-xian" @click.stop="BetData.bet_list_remove(items.marketId)">删</div>
                   <div class="nonebox4-content-left-info"> 
                     <div class="nonebox4-content-left-content-text">
                       <div class="nonebox4-content-left-content-text-one"><div class="nonebox4-content-left-content-text-one-tit">{{items.handicap}}</div> <span class="text-one-span">0.25</span></div>
@@ -20,9 +20,9 @@
                     <div>
                         <div class="nonebox4-content-right">
                             <div class="nonebox4-content-right-profit" v-if="type != 4">{{compute_value_by_cur_odd_type(items.odds,'','',items.sportId)}}</div>
-                            <div v-if="type == 2" class="content-right-duo"></div>
+                            <!-- <div v-if="type == 2" class="content-right-duo"></div>
                             <div v-else-if="type == 3" class="content-right-shao"></div>
-                            <div v-else-if="type == 4" class="content-right-closed">closed</div>
+                            <div v-else-if="type == 4" class="content-right-closed" @click.stop="BetData.bet_list_remove(items.id)">closed</div> -->
                         </div> 
                     </div>
                   </div>

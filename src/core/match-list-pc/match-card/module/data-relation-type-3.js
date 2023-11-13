@@ -101,7 +101,7 @@
 
     // 联赛标题卡片类型
     // let league_title_card_type = MenuData.menu_data.is_esports_champion ? 'champion_league_title' : 'league_title'
-    let league_title_card_type = false ? 'champion_league_title' : 'league_title'
+    let league_title_card_type = MenuData.is_esports_champion() ? 'champion_league_title' : 'league_title'
 
     // 同样联赛出现次数  用于生成自定义联赛ID
     let league_repeat_count_obj = {}

@@ -9,30 +9,30 @@
       <div class="match-status-fixed flex items-center" v-if="match.is_show_no_play">
         <img src='../../../../../base-h5/assets/match-list/icon_notstarted.png' />
 
-              <span class="din-regular">
-                {{ i18n_t('list.match_no_start') }}&nbsp;&nbsp;<span v-show="no_start_total">(0)</span>
-              </span>
-          </div>
-          <!-- 已开赛标题  -->
-            <!-- <div class="match-status-fixed flex items-center" v-else>
+            <span class="din-regular">
+              {{ i18n_t('list.match_no_start') }}&nbsp;&nbsp;<span v-show="no_start_total">(0)</span>
+            </span>
+    </div>
+    <!-- 已开赛标题  -->
+    <!-- <div class="match-status-fixed flex items-center" v-else>
               <img src='../../../../../base-h5/assets/match-list/icon_started.svg' />
             <span class="din-regular">
               {{ i18n_t('list.match_start') }}&nbsp;&nbsp;
-                  <span v-show="in_progress_total">(0)</span>
-                </span>
-              </div> -->
-      <!--体育类别 -- 标题  menuType 1:滚球 2:即将开赛 3:今日 4:早盘 11:串关 -->
-      <div v-if="get_sport_show" @click="handle_ball_seed_fold" :class="['sport-title match-indent', { first: i == 0 }]">
-        <span class="score-inner-span"> {{ match_of_list.csna }}{{ '(' + menu_lv2.ct + ')' }} </span>
-      </div>
+                              <span v-show="in_progress_total">(0)</span>
+                            </span>
+                          </div> -->
+          <!--体育类别 -- 标题  menuType 1:滚球 2:即将开赛 3:今日 4:早盘 11:串关 -->
+          <div v-if="get_sport_show" @click="handle_ball_seed_fold" :class="['sport-title match-indent', { first: i == 0 }]">
+            <span class="score-inner-span"> {{ match_of_list.csna }}{{ '(' + menu_lv2.ct + ')' }} </span>
+          </div>
 
-      <!-- 最核心的div模块     标题 + 倒计时 + 比分 + 赔率盘口模块 -->
-      <div :class="['match-inner-container', { 'collapsed': !collapsed }]">
-        <!--联赛标题 -->
-        <div @click="handle_league_fold" v-if="match.is_show_league || (is_hot && get_league_show(i))"
-          :class="[(' match-indent league')]">
-          <div class="league-t-wrap right-border">
-            <!-- 联赛收藏 -->
+          <!-- 最核心的div模块     标题 + 倒计时 + 比分 + 赔率盘口模块 -->
+          <div :class="['match-inner-container', { 'collapsed': !collapsed }]">
+            <!--联赛标题 -->
+            <div @click="handle_league_fold" v-if="match.is_show_league || (is_hot && get_league_show(i))"
+              :class="[(' match-indent league')]">
+              <div class="league-t-wrap right-border">
+                <!-- 联赛收藏 -->
                 <template v-if="![3000, 900].includes(menu_type)" @click.stop="handle_league_collect">
                   <img v-if="!league_collect_state" class="favorited-icon"
                     src="/src/base-h5/assets/match-list/ico_fav_nor.png" alt="" @click.stop="handle_league_collect" />
@@ -62,43 +62,23 @@
             </div>
             <!-- 赛事内容 -->
             <div class="match-content" v-if="collapsed">
-              <!-- TODO match -->
               <!-- 比分版 | 视频 icon | 赛事阶段 | 比分| 盘口 -->
               <div class="title-details">
                 <div class="details">
                   <!-- 图标 -->
                   <div class="operate-icon">
-              <!-- 直播 主播 视频 动画  icon 栏目   -->
-              <!-- 正常的 优先级 ： lvs 直播   muUrl 视频  animationUrl 动画 -->
-              <!-- <div class="live-i-b-wrap  v-mode-span row items-center" v-if="media_button_state_obj.icon_path"
-                  @click="media_button_handle()">
-                                                                                            <slot></slot>
-                        <img class="live-icon-btn" :src='video_play_app' />
-                      </div> -->
-                    <!-- 
-                                                                                    <img v-if="media_button_state_obj.icon_path" class="live-icon-btn" src='/src/base-h5/assets/match-list/ico_live_nor.png'
-                                                                                      @click="media_button_handle()" /> -->
-
-              <!-- 足篮球展示赛事分析图标 -->
-                    <!-- <img :src="compute_img_url('data-analysis')" alt="" class="analysis"
-                                                                                      v-if="[1, 2].includes(+match.csid) && GlobalAccessConfig.get_statisticsSwitch()"
-                                                                                      @click='goto_details(match, 1)' /> -->
-              <!-- </div> -->
-                    <!-- 此赛事支持提前结算 -->
-                    <!-- <img :src="mearlys_icon" alt="" style="width:0.2rem" class="settlement"
-                    v-if="match_of_list.mearlys == 1" /> -->
-              <!--  match["lvs"] == 2，显示直播按钮 i18n_t('match_info.lvs')是国际化取值 -->
-                    <!-- <match-icon v-if="show_lvs" class="fl" which="lvs" icon_class="lvs"
-                                                                                    :text="lodash.get(match, 'lss') == 1 ? i18n_t('match_info.lvs') : i18n_t('match_info.topic')">
-                                                                                  </match-icon> -->
-
+                <!-- 直播 主播 视频 动画  icon 栏目   -->
+                <!-- 正常的 优先级 ： lvs 直播   muUrl 视频  animationUrl 动画 -->
 
 
                     <!-- mvs动画状态：-1：没有配置动画源 | 0 ：已配置，但是不可用 | 1：已配置，可用，播放中 | 2：已配置，可用，播放中 -->
                     <template v-if="match.mvs > -1 || (match.mms > 1 && [1, 2, 7, 10, 110].includes(match.ms * 1))">
                       <!-- 动画状态大于-1时，显示动画按钮 i18n_t('match_info.animation')是国际化取值 -->
+
+                      <!-- icon_click_animationUrl media_button_handle -->
                       <img v-if="match.mvs > -1" class="" src='/src/base-h5/assets/match-list/ico_animate_nor.png'
-                        @click="icon_click_animationUrl" />
+                        @click="icon_click_animationUrl"
+                         />
                       <!-- 视频状态大于1时，显示视频按钮 i18n_t('match_info.video')是国际化取值 -->
                       <img v-if="match.mms > 1" class="live-icon-btn" src='/src/base-h5/assets/match-list/ico_live_nor.png'
                         @click="icon_click_muUrl" />
@@ -130,8 +110,9 @@
                     </div>
                     <!--倒计时或正计时-->
                     <div v-if="match.ms != 110 && show_counting_down(match)"
-                      :class="['counting-down-up-container relative-position', { 'special-match-container': match.mfo || [0, 31].includes(+match.mmp) }]"
-                      :style="{ width: counting_down_up_wrapper_width === 'auto' ? 'auto' : match.mfo ? 'auto' : counting_down_up_wrapper_width + 'rem' }">
+                      :class="['counting-down-up-container relative-position', { 'special-match-container': match.mfo || [0, 31].includes(+match.mmp) }]">
+                      <!-- :style="{ width: counting_down_up_wrapper_width === 'auto' ? 'auto' : match.mfo ? 'auto' : counting_down_up_wrapper_width + 'rem' }" -->
+
                       <!--足球csid:1 冰球csid:4 橄榄球csid:14 DotaCsid:101 累加 排球csid:9 倒计时-->
                       <CountingDownSecond ref="counting-down-second" :title="mmp_map_title" :mmp="match.mmp"
                         :is_add="[1, 4, 11, 14, 100, 101, 102, 103].includes(+match.csid)" :m_id="match.mid"
@@ -197,22 +178,22 @@
                       src="/src/base-h5/assets/match-list/ico_fav_nor.png" alt="" @click.stop="handle_match_collect" />
                     <img v-if='match_collect_state' class="favorited-icon"
                       src="/src/base-h5/assets/match-list/ico_fav_sel.png" @click.stop="handle_match_collect" />
-              </div>
-              <div class="bet_btn">
-
-                  <template v-if="curMatchOdds?.length">
-                    <div v-for="item in curMatchOdds" :key="item.oid" class="item">
-                    <div v-if='item.onb || item.on' class='on'>{{ item.onb || item.on }}</div>
-                    <div class='num'>{{ format_odds_value(item) }}</div>
                   </div>
-                  </template>
-                  <template v-else>
-                    <div v-for="item in 3" :key="item.oid" class="item">
-                    <div class='num'>
-            <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
+                  <div class="bet_btn">
 
-                    </div>
-                  </div>
+                    <template v-if="curMatchOdds?.length">
+                      <div v-for="item in curMatchOdds" :key="item.oid" class="item">
+                        <div v-if='item.onb || item.on' class='on'>{{ item.onb || item.on }}</div>
+                        <div class='num'>{{ format_odds_value(item) }}</div>
+                      </div>
+                    </template>
+                    <template v-else>
+                      <div v-for="item in 3" :key="item.oid" class="item">
+                        <div class='num'>
+                          <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
+
+                        </div>
+                      </div>
                   </template>
               </div>
             </div>
@@ -260,6 +241,7 @@ import video from "src/core/video/video.js"   // 视频相关公共方法
 import uid from "src/core/uuid/index.js"
 import { MatchDetailCalss, useMittEmit, MITT_TYPES, LOCAL_PROJECT_FILE_PREFIX } from "src/core/index.js"
 import { useRoute } from 'vue-router';
+import { compute_css_obj } from 'src/core/server-img/index.js'
 
 export default {
   name: "match-container-main-template8",
@@ -529,6 +511,21 @@ export default {
 <style scoped lang="scss">
 /* ********赛事容器相关********** -S*/
 
+.counting-down-up-container {
+  width: 0.8rem;
+
+  :deep(.counting-down-wrap) {
+    /* width: auto !important; */
+    gap: 4px;
+
+    /* width:0.9rem!important; */
+    >span {
+      display: inline-block;
+      white-space: nowrap;
+    }
+  }
+}
+
 .match-container {
   width: 100%;
   height: auto;
@@ -540,19 +537,6 @@ export default {
     display: flex;
     align-items: center;
     height: 25px;
-  }
-
-  .counting-down-up-container {
-    :deep(.counting-down-wrap) {
-      width: auto !important;
-      gap: 4px;
-
-      /* width:0.9rem!important; */
-      >span {
-        display: inline-block;
-        white-space: nowrap;
-      }
-    }
   }
 
   .match-inner-container {
@@ -570,23 +554,24 @@ export default {
   }
 
   .favorite-icon-top {
-      width: 0.14rem;
-      height: 0.14rem;
-      flex-shrink: 0;
-      margin-right:22px;
-      /* position: relative;
-      top: 1px; */
-      img {
-        width: 100%;
-        height: 100%;
-        /* vertical-align: middle;
-        margin-top: -2px; */
-      }
+    width: 0.14rem;
+    height: 0.14rem;
+    flex-shrink: 0;
+    margin-right: 22px;
 
-      .f-icon {
-        display: none;
-      }
+    /* position: relative;
+      top: 1px; */
+    img {
+      width: 100%;
+      height: 100%;
+      /* vertical-align: middle;
+        margin-top: -2px; */
     }
+
+    .f-icon {
+      display: none;
+    }
+  }
 
   .date-container {
     background-color: var(--q-color-com-bg-color-12);
@@ -677,6 +662,12 @@ export default {
 
       .goto-detail {
         .count_span {
+          color: var(--sys-brand-secodary-secondary-300, #AFB3C8);
+          text-align: right;
+          font-family: Akrobat;
+          font-size: 10px;
+          font-weight: 500;
+
           .mc-n {
             width: 0.14rem;
           }
@@ -1074,5 +1065,6 @@ export default {
   }
 }
 
-/* ********赛事容器相关********** -E*/</style>
+/* ********赛事容器相关********** -E*/
+</style>
   

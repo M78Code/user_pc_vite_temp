@@ -96,6 +96,7 @@ watch(
   (val) => {
     animal_key.value = false;
     score_key.value = true;
+    show_type.value = ''
   }
 );
 
