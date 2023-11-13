@@ -19,19 +19,22 @@
       {{ MatchListCardDataClass.list_version }}--   {{ load_data_state }}-- length---  {{ match_list_card_key_arr.length }}
     </div>
     <MatchesHeader />
-      <!-- 头部15 Mins模块 -->
-      <div v-show="matches_15mins_list.length && router_root === 1">
-        <CurrentMatchTitle :title_value="'15 Mins'" :show_more_icon="false" />
-        <MatchCardList15Mins :matches_15mins_list="matches_15mins_list" />
-      </div>
-      <!-- 头部Featured Matches模块 -->
-      <div v-show="matches_featured_list.length && router_root === 1">
-        <CurrentMatchTitle :title_value="'Featured Matches'" :show_more_icon="false" />
-        <FeaturedMatches :matches_featured_list="matches_featured_list" />
     <!-- 列表容器 -->
-      <load-data :state="'data'" limit_height="1000">  <!--此处先写死高度用来调试UI -->
+      <load-data :state="'data'">  <!--此处先写死高度用来调试UI -->
         <!-- 滚球其他列表 -->
-        <scroll-list  v-if="menu_config.menu_root_show_shoucang != 300">
+            <scroll-list  v-if="menu_config.menu_root_show_shoucang != 300">
+              <template v-slot:before>
+                <!-- 头部15 Mins模块 -->
+          <div v-show="matches_15mins_list.length && router_root === 1">
+            <CurrentMatchTitle :title_value="'15 Mins'" :show_more_icon="false" />
+            <MatchCardList15Mins :matches_15mins_list="matches_15mins_list" />
+          </div>
+          <!-- 头部Featured Matches模块 -->
+          <div v-show="matches_featured_list.length && router_root === 1">
+            <CurrentMatchTitle :title_value="'Featured Matches'" :show_more_icon="false" />
+            <FeaturedMatches :matches_featured_list="matches_featured_list" />
+          </div>
+          </template>
           <div
             v-for="card_key in match_list_card_key_arr"
             :key="card_key" 
@@ -55,7 +58,7 @@
           </template>
         </scroll-list>
       </load-data>
-    </div>
+ 
     <!-- 联赛筛选层 -->
     <!-- <leagues-filter v-if="vx_show_filter_popup" /> -->
     <!-- 点击头部刷新弹出 loading 蒙层 -->
