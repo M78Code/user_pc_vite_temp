@@ -129,6 +129,9 @@ const go_to_favouritse = () => {
 const jump_func = payload => {
   current_menu_id.value = payload
 
+  // 设置左侧菜单
+  MenuData.set_router_root_lv_2(4000)
+
   let euid = (load_mapping[payload + '2'] || {}).h || ''
   let ealy_euid = (load_mapping[payload + '3'] || {}).h || ''
   // BaseData.compute_current_mi_match_list(payload);

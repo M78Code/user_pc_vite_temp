@@ -1,5 +1,6 @@
 import { reactive, ref } from "vue";
 import lodash from 'lodash';
+import choose_config from 'src/core/constant/config/ouzhou-pc-choose-config.js'
 
 /**
  * 列表表征数据存放实例
@@ -93,8 +94,8 @@ class MatchListCardDataClass {
   set_list_version() {
     this.list_version.value = Date.now();
   }
-  get_csid_current_hpids(csid){
-    return this.csid_current_hpids[csid];
+  get_csid_current_hpids(csid) {
+    return this.csid_current_hpids[csid] || choose_config[csid][0];
   }
   //获取单个卡片对象
   get_card_obj_bymid(mid) {
