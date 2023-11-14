@@ -28,7 +28,7 @@
           </template>
         </collapse>
         <!-- Language -->
-        <collapse v-model="l_visible" :title="`${i18n_t('ouzhou.setting_menu.language')}`">  
+        <collapse v-if="false" v-model="l_visible" :title="`${i18n_t('ouzhou.setting_menu.language')}`">  
           <template v-slot:title_icon>
             <img class="icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/language.png`" alt="" />
           </template>
@@ -40,7 +40,7 @@
           </template>
         </collapse>
         <!-- Odds Settings -->
-        <collapse v-model="s_visible" :title="`${i18n_t('ouzhou.setting_menu.odds_setting')}`">
+        <collapse v-if="false" v-model="s_visible" :title="`${i18n_t('ouzhou.setting_menu.odds_setting')}`">
           <template v-slot:title_icon>
             <img class="icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/setting.png`" alt="" />
           </template>

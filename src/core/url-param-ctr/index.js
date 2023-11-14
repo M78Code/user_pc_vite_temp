@@ -195,12 +195,12 @@ const to_corresponding_router_app_h5 = (that, params_obj) => {
     console.error(error)
   }
   // 默认跳转到home页面
-  if(goto_home){
-    that.$router.replace({
-      name: 'home',
-      query: that.$router.query
-    });
-  }
+  // if(goto_home){
+  //   that.$router.replace({
+  //     name: 'home',
+  //     query: that.$router.query
+  //   });
+  // }
 }
 let timer = 0;
 const watch_route_fun = (to, from)=>{

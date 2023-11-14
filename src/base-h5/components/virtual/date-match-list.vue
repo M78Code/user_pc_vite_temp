@@ -451,7 +451,7 @@ export default {
             height: 0.16rem;
             overflow: hidden;
 
-            & ::v-deep .team-img {
+            &:deep(.team-img) {
               width: 100%;
               height: 100%;
 
@@ -528,7 +528,7 @@ export default {
           .row {
             width: 50%;
 
-            & ::v-deep .team-img-s {
+            & :deep(.team-img-s) {
               margin: 0;
             }
 
