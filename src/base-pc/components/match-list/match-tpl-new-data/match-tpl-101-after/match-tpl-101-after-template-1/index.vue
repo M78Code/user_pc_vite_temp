@@ -22,10 +22,11 @@
       />
       <!-- 比分板 -->
     <div v-tooltip="{ content: t('common.score_board') }"
-      v-if="!menu_config.is_export()"
         @click="jump_to_details()">
+        <!-- 图片资源有问题，先用文字替代  -->
       <div class="score-board"
         :style="compute_css_obj({key: 'pc-home-score-board'})">
+        比分板 
       </div>
     </div>
   </div>
@@ -85,12 +86,14 @@ watch(() => MatchListCardDataClass.list_version.value, (new_value, old_value) =>
   }
 })
 function jump_to_details ()  {
+  const {tid , csid} = match;
+  //比分板跳转到详情页
     router.push({
       name: 'details',
       params: {
         mid: props.mid,
-        tid: match.tid,
-        csid: match.csid
+        tid: tid,
+        csid: csid
       }
     })
 }
@@ -171,9 +174,10 @@ onMounted(() => {
 }
 
 .score-board {
-  width: 16px;
-  height: 12px;
+  // width: 16px;
+  // height: 12px;
   cursor: pointer;
+  margin-left: 50px;
   background-size: 100%;
 }
 </style>
