@@ -89,9 +89,9 @@ const router = createRouter({
         //   name: 'category_loading',
         //   component: () => import("。。/pages/details/category-loading.vue")
         // },
-        // 常规赛事和电竞赛事详情页,赛事id必传，玩法集id可选
+        // 常规赛事和电竞赛事详情页,赛事id必传，玩法集id可选, 添加tid(联赛id)用于服务联赛筛选功能
         {
-          path: "/details/:mid/:csid?/:mcid?",
+          path: "/details/:mid/:tid/:csid?/:mcid?",
           name: "category",
           component: () => import("../pages/detailnew/index.vue"),
           // children: [
