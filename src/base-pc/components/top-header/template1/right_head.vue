@@ -96,6 +96,7 @@ export default defineComponent({
   name: "RightHead",
   setup() {
     const text = ref('')
+    const route=useRoute()
     const is_search = ref(false)
     const visible = ref(false)
     //语言设置
