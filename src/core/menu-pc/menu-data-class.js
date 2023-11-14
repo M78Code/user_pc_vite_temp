@@ -781,7 +781,7 @@ class MenuData {
   // 根据菜单id 获取对应的euid
   get_mid_for_euid(mi) {
     let obj = lodash.get(BaseData.mi_euid_map_res,`[${mi}]`, {})
-    return obj.p || 0
+    return obj.p || 30001
   }
 
   // 新菜单规律核心参照表
