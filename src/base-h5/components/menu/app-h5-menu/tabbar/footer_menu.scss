@@ -38,4 +38,11 @@
     background-color: var(--q-color-com-bg-color-8);
     box-shadow: var(--q-color-com-border-color-6);
   }
+  .refresh_animation{
+    transform-origin: 50% 50%;
+    transition: all 0.3s ease;
+  }
+  .refresh_animation:hover{
+    transform: rotate(360);
+  }
 }
