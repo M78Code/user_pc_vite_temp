@@ -154,6 +154,7 @@ const use_featch_fn = () => {
     },
     callback
   ) => {
+    console.log('进来了几次1');
     let panduan_1 = MenuData.is_vr();
     let panduan_2 = ["details", "video"].includes(PageSourceData.page_source);
     let first_load_time;
