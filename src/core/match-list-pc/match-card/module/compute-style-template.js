@@ -24,7 +24,7 @@
  *
  */
 
-import { MatchDataWarehouse_PC_List_Common as MatchListData } from 'src/core/index.js'
+import { MatchDataWarehouse_PC_List_Common as MatchListData, PROJECT_NAME } from 'src/core/index.js'
 import MatchListCardData from "./match-list-card-data-class.js";
 import lodash from "lodash";
 import MenuData from "src/core/menu-pc/menu-data-class.js";
@@ -352,8 +352,9 @@ export const compute_style_template_by_matchinfo = (match, template_id, is_ouzho
 		style_obj.add_handicap_height +
 		style_obj.tab_play_total_height +
 		6;
-	if (is_ouzhou) {
-		style_obj.total_height -= 5;
+		console.log('is_ouzhou', is_ouzhou);
+	if (is_ouzhou || PROJECT_NAME == 'ouzhou-pc') {
+		style_obj.total_height = 80;
 	}
 	return style_obj;
 };

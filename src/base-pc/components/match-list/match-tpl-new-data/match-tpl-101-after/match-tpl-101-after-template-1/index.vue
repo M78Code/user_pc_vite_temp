@@ -177,7 +177,7 @@ onMounted(() => {
   // width: 16px;
   // height: 12px;
   cursor: pointer;
-  margin-left: 50px;
+  // margin-left: 50px;
   background-size: 100%;
   &:hover {
     color: #FF7000;
