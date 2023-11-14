@@ -81,6 +81,7 @@ const deal_with_list_data = (data) => {
 	// if (MenuData.is_kemp()) {
 	//   MatchListData.set_list(mid_arr)
 	// }
+	MatchListData.set_list(mid_arr)
 }
 /**
  * @description 专业处理服务器返回的 列表 数据---联赛结构
@@ -281,9 +282,9 @@ const mx_use_list_res_when_code_200_and_list_length_gt_0 = ({ match_list, collec
 				let first_match = match_list[0];
 				let params = {
 					media_type: "auto",
-					mid: first_match.mid,
-					tid: first_match.tid,
-					sportId: first_match.csid,
+					mid: first_match?.mid,
+					tid: first_match?.tid,
+					sportId: first_match?.csid,
 				};
 				if(first_match){
 					MatchDataWarehouse_PC_Detail_Common.set_match_details(first_match, [])
