@@ -5,7 +5,7 @@
  * @Description: 篮球赛事分析页
 -->
 <template>
-  <div class="detail-tab" v-if="!_.isEmpty(score_list)">
+  <div class="detail-tab" v-if="!lodash.isEmpty(score_list)">
     <div>
       <div class="detail-tab-team">
         <div class="detail-tab-team-pos">
@@ -36,11 +36,11 @@
         <div class="detail-score-more">
           <div class="row justify-center">
             <div class="score-more-title"> 
-              <span>{{ score_list['S111']['home']+'%' }}</span>
+              <span>{{ score_list['S111']['home']+'%'}}</span>
               <span>{{ score_list['S110']['home'] }}</span>
             </div>
             <div class="score-more-r-title">
-              <span>{{ score_list['S110']['away'] }}</span>
+              <span>{{ score_list['S110']['away']}}</span>
                <span>{{ score_list['S111']['away']+'%' }}</span>
             </div>
           </div>
@@ -48,7 +48,7 @@
             <div class="home-stop stop">
               <span class="dot dot-h" v-for="item in  5" :key="item"></span>
             </div>
-            <div class="slider-main">
+            <div class="slider-main" >
               <q-slider readonly reverse :model-value="score_list['S111']['home']+'%'" :min="0" :max="50" track-size="5px" color="amber-7"
                 :thumb-size="0" style="margin-right:6px" />
               <q-slider readonly :model-value="score_list['S111']['away']+'%'" :min="0" :max="50" track-size="5px" color="indigo-12"
@@ -71,7 +71,7 @@
 
 <script setup>
 import { onMounted, ref } from "vue";
-import _ from "lodash"
+import lodash from "lodash"
 const props =  defineProps({
   detail_info: {  // 赛事详情
     type: Object,
