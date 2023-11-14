@@ -35,3 +35,4 @@ public/yazhou-pc/server-resource/*
 public/yazhou-h5/server-resource/*
 public/new-pc/server-resource/*
 public/app-h5/server-resource/*
+/yarn.lock
