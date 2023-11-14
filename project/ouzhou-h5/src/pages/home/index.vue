@@ -36,7 +36,7 @@
             <!-- 5大联赛 -->
             <template v-if="leagues_matchs.length > 0">
               <HeaderTitle title="Top Leagues"></HeaderTitle>
-              <MatchLeagues />
+              <MatchLeagues :fiveLeagues_Matches="five_league_match"/>
             </template>
           </section>
         </q-tab-panel>
@@ -74,6 +74,7 @@ import { de_img, dk_img, be_img, fr_img } from 'src/base-h5/core/utils/local-ima
 const play_matchs = ref([])
 const time_events = ref([])
 const featured_matches = ref([])
+const five_league_match = ref([])
 const state = reactive({
     current_mi:"",
 })
@@ -89,6 +90,7 @@ onMounted(async () => {
   MenuData.set_current_lv1_menu(1);
   MenuData.set_menu_mi('101');
   get_ouzhou_home_data()
+  got_five_league_matchs()
   state.current_mi = MenuData.top_events_list[0]?.mi;
 })
 
@@ -121,7 +123,7 @@ const get_ouzhou_home_data = async () => {
  * @description 获取五大联赛赛事   不放  match 仓库
  */
 const got_five_league_matchs = async () => {
-  const list = await MatchMeta.get_four_leagues_list()
+  const list = await MatchMeta.get_five_leagues_list()
   five_league_match.value = list.map(t => {
     const match = MatchDataBaseFiveLeagueH5.get_quick_mid_obj(t.mid)
     return match

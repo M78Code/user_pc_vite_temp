@@ -34,34 +34,40 @@
       <q-avatar size="40px"  @click="change_input">
         <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/avator.png`" alt="" srcset="" />
       </q-avatar>
-      <q-menu class="personal-menu">
-          <q-list class="personal-list" style="min-width: 200px">
-            <q-item clickable>
+      <q-menu style="background:#fff;border-radius:2px;">
+          <q-list class="personal-list" style="min-width: 280px;">
+            <q-item clickable @click="goto_announcement">
               <q-item-section>
-                <div>Announcement</div>
+                <div class="flex title">
+                  <img class="icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/notice.png`" alt="" />
+                  <div>Announcement</div>
+                </div>
+              </q-item-section>
+            </q-item>
+            <q-item clickable @click="goto_results">
+              <q-item-section>
+                <div class="flex title">
+                  <img class="icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/results.png`" alt="" />
+                  <div>Results</div>
+                </div>
               </q-item-section>
             </q-item>
             <q-item clickable>
               <q-item-section>
-                <div>Results</div>
-              </q-item-section>
-            </q-item>
-            <q-item clickable>
-              <q-item-section>
-                <div class="flex">
-                <img class="icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/rule.png`" alt="" />
-                <div>Sport Rules</div>
+                <div class="flex title">
+                  <img class="icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/rule.png`" alt="" />
+                  <div>Sport Rules</div>
               </div>
               </q-item-section>
             </q-item>
             <!--国际化语言-->
             <q-item clickable  @click="onExpend">
               <q-item-section class="personal-content">
-                <div class="flex">
+                <div class="flex title">
                   <img class="icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/language.png`" alt="" />
-                <div>language</div>
+                  <div>language</div>
                 </div>
-                <img class="arrow" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/arrow.png`" alt="" />
+                <img :class="['arrow', { expend: visible }]" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/arrow.png`" alt="" />
               </q-item-section>
             </q-item>
             <q-separator />
@@ -76,6 +82,17 @@
               </q-slide-transition>
             </q-item>
             <!--国际化语言结束-->
+            <q-item>
+              <q-item-section>
+                <div class="setting_item" v-for="setting in settingData" :key="setting.title">
+                <span class="title">{{ setting.title }}</span>
+                <div class="switch"> 
+                  <span class="bg" :style="{left: setting.index === setting.params[0] ? 0 : '50px'}"></span>
+                  <span v-for="s in setting.params" :key="s" @click="setting.index = s" :class="{active: setting.index === s}">{{ s }}</span>
+                </div>  
+              </div> 
+              </q-item-section>
+            </q-item>
           </q-list>
       </q-menu>
     </div>
@@ -89,7 +106,6 @@ import { useRouter, useRoute } from 'vue-router'
 import store from "src/store-redux/index.js";
 import globalAccessConfig from "src/core/access-config/access-config.js"
 import SearchHotPush from "src/core/search-class/search_hot_push.js";
-console.log(globalAccessConfig,'globalAccessConfig');
 import { api_account } from 'src/api/index';
 import { loadLanguageAsync, useMittEmit, MITT_TYPES} from "src/core/index.js";;
 import SearchPCClass from 'src/core/search-class/seach-pc-ouzhou-calss.js';
@@ -141,28 +157,42 @@ export default defineComponent({
           key: 'hy',
           language: 'Korean',
         }]
-    watch(() => route.path, (newVal) => {
-      is_search.value = newVal=='/search'
-    },
-      { immediate: true }
-    )
+    // watch(() => route.path, (newVal) => {
+    //   is_search.value = newVal=='/search'
+    // },
+    //   { immediate: true }
+    // )
+    const settingData = ref([{
+          title: 'Odds Display',
+          index: 'DEC',
+          params: ['DEC', 'HK']
+        }, {
+          title: 'Bet Slip',
+          index: 'ANY',
+          params: ['ANY', 'HIG']
+        }, {
+          title: 'Version',
+          index: 'EURO',
+          params: ['EURO', 'ASIA']
+        }])
     onMounted(() => {
       compute_userInfo();
-
     });
-
-    const compute_userInfo = () => {
-    
-
-    };
     /**
      * 是否显示搜索组件 default: false
      * 路径: project_path\src\store\module\search.js
     */
     const search_isShow = ref(SearchPCClass.search_isShow)
+    const compute_userInfo = () => {};
     // 搜索
-    const change_input = () => {
+    const change_input = () => {}
+    //公告
+    const goto_announcement = () => {
+      userRouter.push("/announce")
+    }
 
+    const goto_results = () => {
+      userRouter.push("/match_results")
     }
     const onExpend = () => {
       visible.value = !visible.value
@@ -210,7 +240,19 @@ export default defineComponent({
 
     return {
       text, change_input, is_search, format_balance, UserCtr, LOCAL_PROJECT_FILE_PREFIX, SearchPCClass, show_search, search_hot_push, search_isShow, 
-      on_change_lang, lang, languages, onExpend, visible,
+      change_input,
+      on_change_lang,
+      lang,
+      languages,
+      onExpend,
+      settingData,
+      visible,
+      is_search,
+      goto_results,
+      goto_announcement,
+      format_balance,
+      UserCtr,
+      LOCAL_PROJECT_FILE_PREFIX
     };
   },
 });
@@ -221,7 +263,6 @@ export default defineComponent({
   display: flex;
   margin-left: 40px;
   // margin-right: 100px;
-
   .user-info {
     display: flex;
     flex-direction: column;
@@ -229,19 +270,19 @@ export default defineComponent({
     margin-right: 10px;
     font-family: "DIN";
   }
- 
+  
 }
-.personal-menu{
-  background: #fff;
+.q-item{
+  padding: 8px 0 !important;
+  .title{
+    padding: 0 16px;
+  }
 }
+
 .icon{
   width: 20px;
   height: 20px;
   margin-right: 10px;
-}
-.arrow{
-  width: 18px;
-  height: 18px;
 }
 .personal-content{
   display: flex;
@@ -253,7 +294,7 @@ export default defineComponent({
   display: flex;
   height: 50px;
   align-items: center;
-  padding: 0 45px 0 27px;
+  padding: 0 18px 0 16px;
   transition: all 0.25s;
   justify-content: space-between;
   &.active{
@@ -275,6 +316,15 @@ export default defineComponent({
   color: #FF7000;
   background: #FFF1E6;
 }
+.arrow{
+  width: 18px;
+  height: 18px;
+  margin-right: 18px;
+  transition: transform 0.3s ease;
+  &.expend{
+    transform: rotate(90deg)
+  }
+}
 .lang-icon{
   width: 17px;
   height: 13px;
@@ -283,10 +333,6 @@ export default defineComponent({
   background-size: calc(3.2px * 5) calc(36.4px * 5);
   
 }
-.currpon{
-  cursor: pointer;
-}
-
 
 /*语言国旗图标*/
 @each $code, $index in (zh: 0, en: 1, tw: 2, vi: 3, th: 4, ms: 5, ad: 6, md: 7, ry: 8, pty: 9, hy: 10) {
@@ -296,6 +342,49 @@ export default defineComponent({
   }
 }
 /* ************** 切换语言前面的图标 ************** -E */
+.setting_item{
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 14px;
+  > span {
+    height: 26px;
+  }
+  .switch{
+    position: relative;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    background: #E2E2E2;
+    border-radius: 20px;
+    justify-content: space-between;
+    margin-right: 16px;
+    cursor: pointer;
+    > span {
+      width: 50px;
+      height: 100%;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.25s;
+      color: #8A8986;
+      &.active{
+        color: #000;
+        background: #fff;
+        border-radius: 20px;
+      }
+    }
+    .bg{
+      position: absolute;
+      top: 0;
+      border-radius: 20px;
+      border: 1px solid #FF7000;
+      transition: all 0.25s;
+    }
+  }
+}
 .s-input {
   width: 200px;
   transition: all 0.3s linear;
@@ -316,7 +405,6 @@ export default defineComponent({
     color:#FFFFFF
   }
 }
-
 .search-click .s-input {
   width: 500px;
   &:deep(.q-field) {
@@ -324,12 +412,10 @@ export default defineComponent({
 
   }
 }
-
 .icon-search,
 .icon-close {
   font-size: 14px;
   cursor: pointer;
-
   &::before {
     color: #ffffff;
   }

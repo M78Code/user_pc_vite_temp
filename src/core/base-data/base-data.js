@@ -216,7 +216,7 @@ class BaseData {
       this.handle_base_data(res)
     }).catch((err) => {
       this.set_default_base_data()
-      console.err('err:', '元数据接口请求超时')
+      console.error('err:', '元数据接口请求超时')
     })
   }
 
