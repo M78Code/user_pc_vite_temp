@@ -4,9 +4,9 @@
 -->
 <template>
   <div class="bet_content_bottom">
-    <p class="bet_cancel" @click="pack_up">Bet Retract</p>
+    <p class="bet_cancel" @click="pack_up">{{$t('bet.bet_retract')}}</p>
     <p class="place_bet"  @click="place_bet">
-      <span>Place Bet</span> 
+      <span>{{$t('bet_record.bet_val')}}</span> 
       <span class="right_amount">{{BetData.bet_amount}}</span>
     </p>
   </div>

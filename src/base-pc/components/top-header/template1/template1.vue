@@ -17,7 +17,6 @@
         <div>
           <right_head />
         </div>
-
       </div>
     </div>
   </div>

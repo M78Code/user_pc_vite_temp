@@ -131,6 +131,7 @@ class MenuData {
   set_menu_mi(mi){
     this.menu_mi.value = mi;
     this.current_lv_2_menu_i = `${mi}${this.menu_type.value}`;
+    this.current_lv_2_menu_mi.value = `${mi}${this.menu_type.value}`;
     this.update()
   }
   // 设置二级菜单 id
@@ -182,7 +183,7 @@ class MenuData {
   /**
    *一级菜单顶层菜单的 菜单类型  ，没有则是0
    * */
-   get_menu_type() {
+  get_menu_type() {
     return this.menu_type.value || 0;
   }
    /**

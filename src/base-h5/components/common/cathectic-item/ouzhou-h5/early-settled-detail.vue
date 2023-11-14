@@ -87,7 +87,7 @@ onMounted(() => {
  *@description 复制订单号
   *@param {Object} evt 事件对象
   */
-  const copy = (evt) => {
+const copy = (evt) => {
   let orderno = props.item_data.orderNo
   const clipboard = new ClipboardJS(".text-left", {
     text: () => orderno
