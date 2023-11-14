@@ -1,4 +1,4 @@
-<script setup name="bevis-beted_status" lang="ts">
+<script setup name="bevis-beted_status">
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 
 import { IconWapper } from "src/components/icon/index.js";
@@ -6,7 +6,7 @@ import { IconWapper } from "src/components/icon/index.js";
 import { defineProps, ref } from "vue"
 
 // 1-投注状态,2-投注中状态,3-投注成功状态(主要控制完成按钮),4-投注失败状态,5-投注项失效
-const filterTitle = function (status:string|number):object{
+const filterTitle = function (status){
 
   const titleObj = {
     1: '投注状态',
