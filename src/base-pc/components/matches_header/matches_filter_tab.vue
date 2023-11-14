@@ -52,14 +52,14 @@
     if (area_obj?.scrollWidth >= area_obj_wrap?.clientWidth) {
       show_right_btn.value = true;
     }
-    useMittOn(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE,set_menu_change)
     let time = await UserCtr.get_system_time()
     update_time(time)
     // get_date_menu_matches_list()
   })
-
+    
+  // const mitt_list=[useMittOn(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE,set_menu_change)]
   onUnmounted(()=>{
-    useMittOn(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE,set_menu_change).off
+    // useMittOn(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE,set_menu_change).off
   })
 
     // 左侧菜单切

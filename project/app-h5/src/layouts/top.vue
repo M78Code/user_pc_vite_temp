@@ -29,7 +29,7 @@
         <setect-league @closedHandle="select_dialog = false"></setect-league>
     </div>
   </template>
- 
+
 </template>
 
 <script setup> 
