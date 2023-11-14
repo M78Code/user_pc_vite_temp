@@ -70,9 +70,9 @@ const tabList = ref([
 onMounted(()=>{
   useMittOn(MITT_TYPES.EMIT_SHOW_DETAILS,get_detail_info)
 })
-onUnmounted(()=>{
-    useMittOn(MITT_TYPES.EMIT_SHOW_DETAILS).off
-  })
+// onUnmounted(()=>{
+//     useMittOn(MITT_TYPES.EMIT_SHOW_DETAILS).off
+//   })
 
 
 // 获取数据
