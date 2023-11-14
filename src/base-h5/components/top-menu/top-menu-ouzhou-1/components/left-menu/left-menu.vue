@@ -9,8 +9,8 @@
   <div class="left_drawer_page">
     <q-list>
       <q-item-label header class="q-list-content">
-        <!-- Esports---VR Sports 电竞  VR 1期隐藏 -->
-        <!-- <div class="sports-genre">
+        <!-- Esports---VR Sports 电竞  VR-->
+        <div class="sports-genre">
           <div class="item" :class="[
             item.className,
             // { active: meta_data_store.current_menu.mi == item.mi },
@@ -18,7 +18,7 @@
             <sport-icon size="20" :sport_id="item.mi" />
             <div>{{ BaseData.menus_i18n_map[item.mi]}}</div>
           </div>
-        </div> -->
+        </div>
         <!-- 分割线 -->
         <div class="segmentation"></div>
         <!-- POPULAR 热门赛事-->
@@ -142,14 +142,14 @@ const set_menu_obj = (data) => {
  * @param {*} m_data 
  */
 const change_current_menu = (item) => {
-
-  // MenuData.set_menu_mi(item.mi);
+  MenuData.set_current_lv1_menu('2');
+  MenuData.set_menu_mi(item.mi);
   setPopularSort(item.mi);
   // 设置菜单对应源数据
   // MatchMeta.set_origin_match_data()
   emits('isLeftDrawer');
 
-  MenuData.set_menu_lv2_mi(item.mi+''+2)
+  // MenuData.set_menu_lv2_mi(item.mi+''+2)
 
   // 当前页面不做跳转
   // MenuData.set_current_lv1_menu(2);
