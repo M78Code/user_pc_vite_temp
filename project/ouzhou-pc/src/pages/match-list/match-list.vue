@@ -235,10 +235,10 @@ export default {
       proxy?.$forceUpdate();
     });
 
-    watch(MatchListOuzhouClass.coom_soon, () => {
-      coom_soon_state.value = MatchListOuzhouClass.coom_soon.value;
-      proxy?.$forceUpdate();
-    });
+    // watch(MenuData.coom_soon, () => {
+    //   coom_soon_state.value = MenuData.coom_soon.value;
+    //   proxy?.$forceUpdate();
+    // });
 
     return {
       menu_config,

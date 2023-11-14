@@ -14,7 +14,7 @@
 				</div>
 			</div>
 		</div>
-		<MatchesFilterTab v-if="(MenuData.router_root_lv_1 == 2 && MenuData.router_root_lv_2 == 1002 ) || MenuData.router_root_lv_1 == 2"  />
+		<MatchesFilterTab v-if="(MenuData.router_root_lv_2 == 1002 && MenuData.router_root_lv_1 == 1 && !coom_soon_state) || MenuData.router_root_lv_1 == 2"  />
 		<MatchesDateTab  v-if="MenuData.router_root_lv_1 == 4" />
 	</div>
 </template>
@@ -29,9 +29,7 @@ import MatchesFilterTab from "./matches_filter_tab_ball_species.vue";
 import MatchesDateTab from "./matches_filter_tab.vue";
 import { MenuData, UserCtr } from "src/core/index.js"
 import BaseData from "src/core/base-data/base-data.js";
-import menu_i18n_default from "src/core/base-data/config/menu-i18n.json";
 
-const router = useRouter();
 const tab_list = ref([])
 
 // 获取当前header展示背景图
@@ -40,6 +38,11 @@ const current_ball_type = ref(630)
 const matches_header_title = ref(i18n_t("ouzhou.match.matches"));
 const current_value = ref(i18n_t("ouzhou.match.featured"));
 
+
+// 头部高度 包含 teb切换
+const match_list_top = ref('80px') 
+
+const coom_soon_state =ref(false)
 
 onMounted(()=>{
 	set_tab_list(MenuData.router_root_lv_1,MenuData.left_menu_mi.value)
@@ -78,13 +81,17 @@ const set_tab_list = (news_,sport_mi) =>{
 	}
 }
 
-
-// 头部高度 包含 teb切换
-const match_list_top = ref('80px') 
-
-const coom_soon_state =ref(false)
-
 const checked_current_tab = payload => {
+
+	// 暂时不做 
+	if (['1002', '4002'].includes(payload.value)) {
+		// 修改菜单数据
+		MenuData.coom_soon.value = true
+	}else{
+		// 修改菜单数据
+		MenuData.coom_soon.value = false
+	}
+	coom_soon_state.value = MenuData.coom_soon.value
       // 判断头部高度
 	if (['1001','1002','4002'].includes(payload.value) ) {
         match_list_top.value = '80px'

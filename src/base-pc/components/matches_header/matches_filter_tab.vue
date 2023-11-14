@@ -75,7 +75,6 @@
     let value = ''
    for (let i = 0; i <=6; i++) {
     value = i === 0 ? time : time + day * i
-    console.log(value, 'valuevalue', time + day * i, day * i)
     label = i === 0 ? "Today" :  i === 1 ? "Tomorrow" : `${format_M_D_PC(value)}`
     arr.push({
       label,
