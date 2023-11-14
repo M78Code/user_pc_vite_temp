@@ -51,15 +51,19 @@ export default defineComponent({
       MenuData.set_router_root_lv_1(item.id)
       switch (item.id) {
         case 1:
-          MenuData.set_menu_root(2); 
+          MenuData.set_menu_root(0);  
           // 默认设置 fetured
           MenuData.set_router_root_lv_2(1001)
+          break;
+        case 2:
+          MenuData.set_menu_root(1); 
           break;
         case 3:
          
           break;
       }
       userRouter.push({name: item.name})
+      MenuData.set_menu_data_version() 
       // let state = store.getState()
       // // 获取最新的 数据
       // let redux_menu = _.cloneDeep(state.menusReducer.redux_menu)
