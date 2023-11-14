@@ -39,6 +39,8 @@ class MatchMeta {
     this.prev_scroll = null
     // 是否需要赛事归类操作
     this.is_classify = false
+    // 日期
+    this.params_md = ''
     // 重置折叠对象
     MatchFold.clear_fold_info()
     // 重置收藏对象
@@ -47,9 +49,9 @@ class MatchMeta {
 
   /**
    * @description 设置 赛事 元数据
-   * @param { mi } 菜单类型
+   * @param { Number } md 时间
    */
-  async set_origin_match_data() {
+  async set_origin_match_data(md) {
     this.init()
     let menu_lv_v1 = ''
     let menu_lv_v2 = ''
@@ -69,7 +71,11 @@ class MatchMeta {
       menu_lv_v2_sl = MenuData.get_menu_lv_2_mi_list(menu_lv_v2)
     }
 
-    this.get_real_match_data()
+    this.params_md = md
+
+    // 刷新页面 二级菜单丢失， 暂时放在这里 获取真实数据
+    this.get_target_match_data()
+
     // 滚球全部
     if (+menu_lv_v1 === 1 && menu_lv_v2 == 0) return this.get_origin_match_mids_by_mis(menu_lv_v1_sl)
 
@@ -80,15 +86,17 @@ class MatchMeta {
     if (typeof menu_lv_v2 !== 'string') return
     // 电竞、赛果 return
     if (MenuData.is_export() || MenuData.is_results()) return
+
     this.get_origin_match_mids_by_mi(menu_lv_v2)
   }
+
   /**
    * @description 获取 对应 全部赛事 mids
    * @remarks 滚球全部、今日对应球种（滚球 + 早盘）
    */
   get_origin_match_mids_by_mis (sl) {
     const length = lodash.get(sl, 'length', 0)
-    if (length < 1) return this.set_page_match_empty_status(true);
+    if (length < 1) return
     const match_mids_list = []
     sl.forEach(t => {
       const mids = this.get_match_mids_by_mi(t.mi)
@@ -135,10 +143,10 @@ class MatchMeta {
    * @param { mids } 赛事 mids
    */
   get_origin_match_by_mids(mids) {
-    
-    // 显示空数据页面
+
     const result_mids = lodash.uniq(mids)
     const length = lodash.get(result_mids, 'length', 0)
+    // 显示空数据页面
     if (length < 1) return this.set_page_match_empty_status(true);
     // 赛事全量数据
     const match_list = result_mids.map((t, index) => {
@@ -149,66 +157,17 @@ class MatchMeta {
       // 设置赛事默认参数
       const params = this.set_match_default_properties(match, index, result_mids)
       // 赛事最终数据
-      const target = Object.assign(match, params, template)
-      //  赛事操作
+      const target = Object.assign(match, template, params)
+      // 赛事其他操作
       this.match_assistance_operations(target)
       return target
     })
-    this.set_match_mids(result_mids, match_list)
+
+    // 元数据不作为最终渲染数据 所以不走虚拟计算
+    // 元数据只作用域切换菜单时快速显示， 最终显示还是根据接口来
+    this.match_mids = lodash.uniq(mids.slice(0, 20))
+    this.set_match_mids(result_mids.slice(0, 20), match_list.slice(0, 20), false)
   }
-
-    /**
-   * @description 非元数据处理
-   * @param { list } 赛事 list
-   */
-    handler_match_list_data(config) {
-
-      const { list, type = 1, is_virtual = true } = config
-
-      // 清除联赛下得赛事数量
-      MatchResponsive.clear_ball_seed_league_count()
-
-      const length = lodash.get(list, 'length', 0)
-      if (length < 1) return this.set_page_match_empty_status(true);
-      // 赛事全量数据
-      const match_list = list.map((match, index) => {
-        // 设置联赛下的赛事数量， 不能是虚拟计算过后得
-        MatchResponsive.set_ball_seed_league_count(match.tid)
-        const is_show_ball_title = MatchUtils.get_match_is_show_ball_title(index, list)
-        Object.assign(match, {
-          is_show_ball_title,
-          is_show_league: index === 0 ? true : list[index].tid !== list[index - 1].tid
-        })
-        //  赛事操作
-        this.match_assistance_operations(match)
-        return match
-      })
-
-      // 赛事归类(开赛-未开赛) / 欧洲版不需要
-      const target_data = MatchUtils.handler_match_classify_by_ms(match_list).filter((t) => t.mid)
-
-      const result_mids = target_data.map(t => t.mid)
-
-      this.match_mids = lodash.uniq(result_mids)
-
-      this.complete_matchs = target_data
-      
-      this.complete_mids = lodash.uniq(result_mids)
-
-      // 欧洲版首页热门赛事
-      if (!is_virtual) {
-        // 不需要调用赔率接口
-        type === 2 && this.handle_update_match_info(match_list.filter((t) => t.mid))
-        type === 1 && this.handle_submit_warehouse(match_list.filter((t) => t.mid))
-        
-      } else {
-        // 计算所需渲染数据
-        this.compute_page_render_list(0, type)
-      }
-
-      this.set_page_match_empty_status(false)
-
-    }
 
   /**
    * @description 设置赛事默认模板 输出最终赛事完整数据 更新仓库
@@ -344,7 +303,6 @@ class MatchMeta {
       })
       target_mids = lodash.uniq(arr_mids)
     }
-    this.match_mids = target_mids
     this.get_origin_match_by_mids(target_mids)
   }
 
@@ -466,18 +424,25 @@ class MatchMeta {
   }
 
   /**
-   * @description 获取真实赛事
+   * @description 获取实际渲染赛事
+   * @param { Boolean } is_classify 是否需要进行 开赛 / 未开赛归类
+   *  app-h5: 需要
+   *  ouzhou-h5 不需要
+   *  yazhou-h5 需要
    */
-  async get_real_match_data () {
+  async get_target_match_data (is_classify = false) {
     const params = this.get_base_params()
-    const res = await api_common.post_match_full_list({
+    const res = await api_common.post_match_full_list({ 
       ...params,
-    })
+      md: this.params_md
+     })
     if (+res.code !== 200) return
     const list = lodash.get(res, 'data', [])
     const length = lodash.get(list, 'length', 0)
-    if (length < 1) return
-    this.handler_match_list_data({ list: list })
+    if (length < 1) return this.set_page_match_empty_status(true);
+    // 获取赛 事收藏状态 该接口还没发到试玩
+    MatchCollect.get_collect_match_data()
+    this.handler_match_list_data({ list: list, is_classify })
   }
 
   /**
@@ -509,7 +474,7 @@ class MatchMeta {
     const p15 = lodash.get(res, 'data.p15', [])
     const hots = lodash.get(res, 'data.hots', [])
     const dataList = lodash.get(res, 'data.dataList', [])
-    if (+res.code !== 200) return
+    if (+res.code !== 200) return { p15_list: [], hots: [], dataList: [] }
     // 15分钟玩法赛事数据
     const p15_list = this.assemble_15_minute_data(p15)
     MatchDataBasel5minsH5.set_list(p15_list)
@@ -584,7 +549,6 @@ class MatchMeta {
       euid,
       type
     })
-    console.log(res)
     if (res.code !== '200') return this.set_page_match_empty_status(true);
     const list = lodash.get(res, 'data', [])
     this.handler_match_list_data({ list: list, is_virtual: false })
@@ -624,11 +588,11 @@ class MatchMeta {
     MatchDataBaseH5.upd_data_version()
   }
 
-  /**
+   /**
    * @description 处理非元数据赛事, 不需要走 模版计算以及获取赔率
    * @param { res } 接口返回对象
    */
-  handle_custom_matchs (res) {
+   handle_custom_matchs (res) {
 
     if (+res.code !== 200) return
     const list = lodash.get(res, 'data', [])
@@ -652,20 +616,79 @@ class MatchMeta {
     // 不需要调用赔率接口
     MatchDataBaseH5.set_list(target_list)
   }
+
+  /**
+   * @description 非元数据处理
+   * @param { list } 赛事 list
+   * @param { type } 是否获取赔率
+   * @param { is_virtual } 是否走虚拟计算
+   * @param { is_classify } 是否进行开赛、未开赛归类
+   */
+  handler_match_list_data(config) {
+    const { list, type = 1, is_virtual = true, is_classify = false } = config
+    // 清除联赛下得赛事数量
+    MatchResponsive.clear_ball_seed_league_count()
+
+    const length = lodash.get(list, 'length', 0)
+    if (length < 1) return this.set_page_match_empty_status(true);
+    // 赛事全量数据
+    const match_list = list.map((match, index) => {
+      // 设置联赛下的赛事数量， 不能是虚拟计算过后得
+      MatchResponsive.set_ball_seed_league_count(match.tid)
+      // 设置赛事默认参数
+      const params = this.set_match_default_properties(match, index, list.map(t => t.mid))
+      const is_show_ball_title = MatchUtils.get_match_is_show_ball_title(index, list)
+      Object.assign(match, params, {
+        is_show_ball_title,
+        is_show_league: index === 0 ? true : list[index].tid !== list[index - 1].tid
+      })
+      //  赛事操作
+      this.match_assistance_operations(match)
+      return match
+    })
+
+    let target_data = list
+    if (is_classify) {
+      // 赛事归类(开赛-未开赛) 里面包含了球种归类
+      target_data = MatchUtils.handler_match_classify_by_ms(match_list).filter((t) => t.mid)
+    } else {
+      // 球种归类
+      const arr_data = MatchUtils.handler_match_classify_by_csid(target_data)
+      // 联赛归类
+      target_data = MatchUtils.handler_match_classify_by_tid(arr_data).filter((t) => t.mid)
+    }
+    const result_mids = target_data.map(t => t.mid)
+    this.match_mids = lodash.uniq(result_mids)
+    this.complete_matchs = target_data
+    this.complete_mids = lodash.uniq(result_mids)
+
+   
+    if (!is_virtual) {
+      // 欧洲版首页热门赛事
+      this.on_submit_matchs(type, match_list.filter((t) => t.mid)) 
+    } else {
+      // 计算所需渲染数据
+      this.compute_page_render_list(0, type) 
+    }
+
+    // 重置数据为空状态
+    this.set_page_match_empty_status(false)
+
+  }
      
   /**
-   * @description 设置 match_mids
+   * @description 元数据 处理 设置 match_mids
    * @param { mids } 全量 赛事 mids 
    * @param { match_list } 全量 赛事 match
    */
-  set_match_mids (mids = [], match_list = []) {
+  set_match_mids (mids = [], match_list = [], is_compute = true) {
 
     this.complete_mids = mids
 
     // 清除联赛下得赛事数量
     MatchResponsive.clear_ball_seed_league_count()
 
-    // 赛事归类
+    // 赛事归类开赛、未开赛
     const target_data = this.is_classify ? MatchUtils.handler_match_classify_by_ms(match_list).filter((t) => t.mid) : match_list
     // 过滤赛事 
     this.complete_matchs = target_data.map((t, index) => {
@@ -678,16 +701,13 @@ class MatchMeta {
     })
 
     const length = lodash.get(this.complete_matchs, 'length', 0)
-
     this.set_page_match_empty_status(length > 0 ? false : true);
 
     // 计算所需渲染数据
-    this.compute_page_render_list()
-
-    // 获取赛 事收藏状态 该接口还没发到试玩
-    MatchCollect.get_collect_match_data()
+    is_compute ? this.compute_page_render_list() : this.on_submit_matchs(2, this.complete_matchs)
 
   }
+
 
   /**
    * @description 计算所需渲染数据
@@ -712,11 +732,8 @@ class MatchMeta {
     this.match_mids = match_datas.map(t => {
       return t.mid
     })
-    // 不获取赔率
-    if (type === 2) return this.handle_update_match_info(match_datas)
-
-    // 获取赔率
-    if (type === 1) return this.handle_submit_warehouse(match_datas)
+    
+    this.on_submit_matchs(type, match_datas)
   
   }
 
@@ -751,11 +768,23 @@ class MatchMeta {
     this.handle_update_match_info(list, 'cover')
   }
 
+  /**
+   * @description 提交元数据更新仓库
+   * @param { list } 赛事数据
+   */
+  on_submit_matchs (type, list) {
+    // 不获取赔率
+    if (type === 2) return this.handle_update_match_info(list)
+
+    // 获取赔率
+    if (type === 1) return this.handle_submit_warehouse(list)
+  }
+
 
   /**
    * @description 更新对应赛事
    * @param { list } 赛事数据 
-   * @param { type } 接口请求时， 以接口数据为准， 反之已上一次的数据为准
+   * @param { type } 接口请求时， 以接口数据为准， 反之已上一次的数据为准 避免赔率闪动
    */
   handle_update_match_info(list, type) {
     // 合并前后两次赛事数据
@@ -772,22 +801,12 @@ class MatchMeta {
   /**
    * @description 提交更新仓库
    * @param { list } 赛事数据
-   * @param { type } 是否获取赔率
    */
-  handle_submit_warehouse(list, type = 'mids') {
+  handle_submit_warehouse(list) {
     // 设置仓库渲染数据
     MatchDataBaseH5.set_list(list)
     // 获取赛事赔率
     this.get_match_base_hps_by_mids()
-  }
-
-   /**
-   * @description 提交元数据更新仓库
-   * @param { list } 赛事数据
-   */
-  handle_base_match_data (list) {
-    // 设置仓库渲染数据
-    MatchDataBaseH5.set_list(list)
   }
 }
 

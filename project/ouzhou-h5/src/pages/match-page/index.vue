@@ -29,14 +29,13 @@ const curLeague = ref({})
 const onTabChange = e => {
   curTab.value = e
   if(!e) {
-    MatchMeta.get_four_leagues_list()
+    // MatchMeta.get_four_leagues_list()
   }
 }
 // 当为matches时 切换时间后 监听方法
 const onChangeDate = e => {
-  console.log('curTab, curDate, curLeague', curTab.value, curDate.value, curLeague.value)
   if (curTab.value) return
-  MatchMeta.get_four_leagues_list()
+  // MatchMeta.get_four_leagues_list()
 }
 
 const onMatchDateChange = e => {
