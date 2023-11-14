@@ -30,7 +30,7 @@ import { match_list_handle_set } from './match-handle-data.js'
 const { page_source } = PageSourceData;
 const { mx_use_list_res, mx_list_res, mx_collect_match } = process_composable_fn();
 const { update_collect_data, mx_collect_count, collect_count, mx_collect } = collect_composable_fn();
-const { show_mids_change } = ws_composable_fn();
+const { show_mids_change, ws_destroyed } = ws_composable_fn();
 const { api_bymids } = use_featch_fn();
 const { load_video_resources } = pre_load_video
 // 数据请求状态
@@ -203,6 +203,8 @@ function handle_destroyed() {
 	clearTimeout(axios_debounce_timer);
 	clearTimeout(axios_debounce_timer2);
 	clearInterval(check_match_last_update_timer_id);
+	// 销毁 ws message通信
+	ws_destroyed();
 	for (let key in timer_obj.value) {
 		clearTimeout(timer_obj.value[key]);
 	}
@@ -254,6 +256,7 @@ function mounted_fn() {
 	]
 	
 	load_video_resources();
+	
 }
 // watch(MenuData.match_list_api_config.version, (cur) => {
 // 		// bug 版本没有变化 也可以进入
