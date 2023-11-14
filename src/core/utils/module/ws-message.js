@@ -1,3 +1,20 @@
+
+/*
+ * @Author: hanmar
+ * @Date: 2023-11-13 17:13:55
+ * @Description: ws消息监听处理函数
+ * 
+ *  // 引入
+    import * as ws_message_listener from "src/core/utils/module/ws-message.js";
+    // 增加监听接受返回的监听函数
+    this.message_fun = ws_message_listener.ws_add_message_listener((cmd,data)=>{
+      console.error('cmd:',cmd,data);
+    })
+    // 组件销毁时销毁监听函数
+    ws_message_listener.ws_remove_message_listener(this.message_fun)
+ * 
+ */
+
 /**
  * @description: 增加ws消息监听
  * @param {function} callback 需要回调的方法
