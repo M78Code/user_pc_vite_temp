@@ -1041,7 +1041,7 @@ export const useGetResultConfig = () => {
    * @description: 搜索
    */
   const sub_search = () => {
-    state.cancel = new Date().getTime();
+        state.cancel = new Date().getTime();
     if (!test_time()) {
       return;
     }
@@ -1141,7 +1141,7 @@ export const useGetResultConfig = () => {
    * @param {Array} tableData 分页组件传过来的值
    */
   const changePage = (tableData) => {
-    state.results_params.page = {
+        state.results_params.page = {
       size: tableData[0], //每页条数
       current: tableData[2], //当前页码
     };

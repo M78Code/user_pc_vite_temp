@@ -76,7 +76,7 @@ let handicap_list = ref([]);
 watch(() => MatchListData.data_version.version, (new_value, old_value) => {
   match = MatchListData.list_to_obj.mid_obj[props.mid+'_'];
   if(match){
-    match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match.tpl_id}_config`].width_config
+    match_list_tpl_size = match && MATCH_LIST_TEMPLATE_CONFIG[`template_${match.tpl_id}_config`].width_config
     match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${match.tpl_id}_config`]
     handicap_list.value = match_tpl_info.get_current_odds_list(MatchListCardDataClass.get_csid_current_hpids(lodash.get(match, 'csid')))
   }

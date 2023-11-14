@@ -431,7 +431,7 @@ const  showBtn = ref(props.is_show)
         height: 28px;
         outline: medium;
         background: transparent;
-        border: 1px solid transparent;
+        border: 1px solid #d0d8de;
         color: #5a6074;
         border-radius: 2px;
         padding-left: 15px;

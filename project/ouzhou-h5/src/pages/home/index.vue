@@ -66,7 +66,7 @@ import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import MatchUtils from 'src/core/match-list-h5/match-class/match-utils';
 import MatchContainer from "src/base-h5/components/match-list/index.vue";
 import scrollList from 'src/base-h5/components/top-menu/top-menu-ouzhou-1/scroll-menu/scroll-list.vue';
-import { MenuData, MatchDataWarehouse_ouzhou_PC_l5mins_List_Common as MatchDataBasel5minsH5, 
+import { MenuData, MatchDataWarehouse_ouzhou_PC_l5mins_List_Common as MatchDataBasel5minsH5, MatchDataWarehouse_ouzhou_PC_five_league_List_Common as MatchDataBaseFiveLeagueH5,
   MatchDataWarehouse_ouzhou_PC_hots_List_Common as MatchDataBaseHotsH5, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/index.js";
 
 import { de_img, dk_img, be_img, fr_img } from 'src/base-h5/core/utils/local-image.js'
@@ -114,6 +114,17 @@ const get_ouzhou_home_data = async () => {
       home_score, 
       away_score, 
      }
+  })
+}
+
+/**
+ * @description 获取五大联赛赛事   不放  match 仓库
+ */
+const got_five_league_matchs = async () => {
+  const list = await MatchMeta.get_four_leagues_list()
+  five_league_match.value = list.map(t => {
+    const match = MatchDataBaseFiveLeagueH5.get_quick_mid_obj(t.mid)
+    return match
   })
 }
 
