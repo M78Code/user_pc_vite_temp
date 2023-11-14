@@ -154,7 +154,7 @@ const checked_current_tab = payload => {
 <style lang="scss" scoped>
 .matches_header_wrap {
 	height: v-bind('match_list_top');
-	padding-right: 7px;
+	// padding-right: 7px;
 	box-sizing: border-box;
 }
 
