@@ -8,7 +8,7 @@
     <!--  筛选骨架屏  -->
     <SFilter v-if="list_data_loading" />
     <!-- 全选 -->
-      <div class="scroll-setect-all">
+      <div class="scroll-setect-all" v-if="!no_find_content && !list_data_loading">
           <span>{{ $t('common.all_select') }}</span>
           <div @click="all_checked_click" class="scroll-setect-options" :class="all_checked ? 'sso-active' : ''"></div>
         </div>
@@ -479,7 +479,6 @@ function fetch_filter_match() {
       list.value = (data || []).map(i => ({ ...i, select: i.id in selected.value })); // 初始化select
       // 筛选时，把首字母相同的集合 放在第一个item 上,
       filter_alphabet(list.value)
-      console.log('list.valuelist.valuelist.valuelist.value',list.value)
       // 动态生成有联赛的字母，并非A - Z 全量字母；
       dynamic_letters(list.value)
       scroll_obj_fn(-1);
