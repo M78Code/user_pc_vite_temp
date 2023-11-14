@@ -40,11 +40,11 @@ const matches_header_title = ref(i18n_t("ouzhou.match.matches"));
 const match_list_top = ref('80px') 
 const coom_soon_state =ref(false)
 onMounted(()=>{
-	set_tab_list(MenuData.router_root_lv_1,MenuData.left_menu_mi.value)
+	set_tab_list(MenuData.menu_root,MenuData.left_menu_mi.value)
 })
 // 左侧菜单切
 watch(MenuData.menu_data_version,(news_)=>{ 
-	console.log(MenuData.menu_root, MenuData.is_scroll_ball(), 'menu_root')
+	console.log(MenuData.menu_root, MenuData.is_scroll_ball(), MenuData.is_zaopan(), 'menu_root')
 	// if(MenuData.is_today() || MenuData.is_zaopan()){
 	// 	set_tab_list(4, MenuData.left_menu_mi.value);
 	// } else {
@@ -58,6 +58,7 @@ const set_tab_list = (news_,sport_mi) =>{
 	// 首页
 	if(news_ == 0 ){
 		tab_list.value = lodash_.get(MenuData.ouzhou_filter_config,'home_tab', [])  
+		console.log(tab_list.value, 'tab_list.value')
 		matches_header_title.value = "Matches"
 	}
 	// 滚球
@@ -71,6 +72,7 @@ const set_tab_list = (news_,sport_mi) =>{
 		// 设置赛种名称
 		matches_header_title.value = BaseData.menus_i18n_map[sport_mi] 
 	}
+	console.log(tab_list.value, 'tab_list.value', lodash_.get(MenuData.ouzhou_filter_config,'home_tab', []) )
 	if (tab_list.value.length) {
 		checked_current_tab(tab_list.value[0])
 	}
