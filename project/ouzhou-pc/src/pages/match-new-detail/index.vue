@@ -150,7 +150,6 @@ export default{
     provide("all_hl_item", all_hl_item);
 
     const match_click = (item) => {
-      console.log(111111, item);
       current_id.value = item.mid;
       const { mid, tid, csid } = item;
       const params = {

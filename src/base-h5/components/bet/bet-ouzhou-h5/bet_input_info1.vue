@@ -5,7 +5,7 @@
        <div class="info_left">
        <div class="size_16 color_a1a1">single bet</div>
         <div class="size_14">
-            <span>Highest Win----{{BetData.bet_keyboard_show}}</span>
+            <span>Highest Win</span>
             <span class="margin_left_4">{{}}</span>
         </div>
        </div>

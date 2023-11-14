@@ -48,7 +48,7 @@
       </span>
       <div
         class="odds-arrows-wrap"
-        v-if="odds_state != 'seal' && !menu_config.is_virtual_sport"
+        v-if="odds_state != 'seal' && !menu_config.is_vr()"
       >
         <!-- 红升、绿降 -->
         <div class="odds-icon odds-up"></div>
@@ -71,6 +71,7 @@ import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
 import { compute_value_by_cur_odd_type } from "src/core/format/module/format-odds-conversion-mixin.js";
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 import { useGetItem } from "./bet_item_hooks.js";
+import BetData from "src/core/bet/class/bet-data-class.js";// project/yazhou-h5/src/components/common/toast.vue
 
 const is_mounted = ref(true);
 // 盘口状态 active:选中 lock:锁盘 seal:封盘 close:关盘
@@ -166,7 +167,7 @@ const format_odds = () => {
     1
   );
   console.log('match_odds_info', props.ol_data);
-  match_odds.value = format_odds_value(match_odds_info);
+  match_odds.value = format_odds_value(match_odds_info,props.ol_data.csid);
 };
 
 /**
