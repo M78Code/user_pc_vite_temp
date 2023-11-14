@@ -21,12 +21,13 @@
         use_component_key="MatchHandicap2"
       />
       <!-- 比分板 -->
-    <div v-tooltip="{ content: t('common.score_board') }"
+    <div v-tooltip="{ content: t('common.score_board') }" class="score-board"
+      :style="`width:${match_list_tpl_size.media_width}px !important;`"
         @click="jump_to_details()">
         <!-- 图片资源有问题，先用文字替代  -->
-      <div class="score-board"
+      <div 
         :style="compute_css_obj({key: 'pc-home-score-board'})">
-        比分板 
+        比分
       </div>
     </div>
   </div>
@@ -177,8 +178,9 @@ onMounted(() => {
   // width: 16px;
   // height: 12px;
   cursor: pointer;
-  margin-left: 50px;
   background-size: 100%;
+  text-align: center;
+  margin-left: auto;
   &:hover {
     color: #FF7000;
   }

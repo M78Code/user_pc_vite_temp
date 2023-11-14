@@ -38,7 +38,7 @@
                             <!-- <span>{{ sun_ov(ol) }}</span> -->
 
                           </div>
-                          <div style="text-align: center;width:100%" class="tem4" v-show="item.hl[0].hs">
+                          <div  class="tem4"  style="justify-content: center;align-items: center;width:100%" v-show="item.hl[0].hs">
                             <img class="vector" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/vector.png`" alt="" >
                           </div>
                            
