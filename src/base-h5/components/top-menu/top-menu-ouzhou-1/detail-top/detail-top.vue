@@ -14,7 +14,7 @@
     <div class="detail-select" v-if="drop_down_list.length">
       <div class="detail-select-nav" >
         <q-btn class="label" >
-        <span class="btn-label">{{ drop_down_list[active].name }}</span>
+        <span class="btn-label">{{ drop_down_list[active].tn }}</span>
         <q-menu class="detail-top-pop">
           <div class="detail-top-pop-content" ref="detail_top_pop">
             <div class="match_detail_top_list">
@@ -56,10 +56,11 @@
   </div>
 </template>
 
-<script setup>
-import { ref, watch } from "vue";
-import { useRouter } from "vue-router";
+<script lang="ts" setup>
+import { ref, watch,Ref } from "vue";
+import { useRoute, useRouter } from "vue-router";
 import { useMittEmit, MITT_TYPES } from "src/core";
+import { api_common } from "src/api/index";
 import BaseData from "src/core/base-data/base-data.js";
 import { MenuData } from 'src/core/';
 const router = useRouter();
@@ -67,35 +68,30 @@ const refresh_is_active = ref(false);
 const active = ref(0);
 const show_list = ref(false);
 const detail_top_pop = ref(null);
-/**
- * 联赛数据
- */
-const drop_down_list = ref([
-  // {
-  //   mid:1,
-  //   name:"联赛联赛11111",
-  //   mhn:"美国",
-  //   man:"日本"
-  // },
-  // {
-  //   mid:2,
-  //   name:"联赛联赛22222",
-  //   mhn:"美国",
-  //   man:"日本"
-  // },
-  // {
-  //   mid:3,
-  //   name:"联赛联赛33333",
-  //   mhn:"美国",
-  //   man:"日本"
-  // },
-  // {
-  //   mid:4,
-  //   name:"联赛联赛44444",
-  //   mhn:"美国",
-  //   man:"日本"
-  // }
-]);
+
+
+getDropDownList()
+
+/** @type {Ref<Array<API.MatchDetail>>} */
+const drop_down_list:Ref<Array<{
+  tn:string,
+  mid:string,
+  mhn:string,
+  man:string,
+}>> = ref([]);
+
+/** 获取下拉列表 */
+function getDropDownList(){
+  api_common.get_matchDetail_getMatchDetailByTournamentId({
+    tId:"2645", //#TODO 拿到当前赛事的tid
+  }).then(res=>{
+    console.log(res)
+    drop_down_list.value = res.data
+  }).catch(err=>{
+    console.error(err)
+  })
+}
+
 // /**
 //  * @description: 返回上一页
 //  * @param {*}
@@ -110,16 +106,15 @@ watch(() => detail_top_pop.value,
 })
 /**
  * @description: 点击切换
- * @param {item} item循环参数
+ * @param {*} item 循环参数
  * @return {*}
  */
-const change_active = (item,index) => {
+function change_active(item,index){
   if(active.value === index)return;
     active.value = index;
 }
 /**
  * @description: 刷新
- * @param {}
  * @return {*}
  */
 const refresh = () => {

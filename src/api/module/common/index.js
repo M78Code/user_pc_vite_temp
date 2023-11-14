@@ -153,7 +153,14 @@ export const get_virtual_matchResult = (params,config, url = "/v1/m/matchDetail/
   });
 };
  
-// 详情页下拉列表
+/** 详情页下拉列表
+ * @description 详情页下拉列表
+ * @param {Object} params
+ * @param {String} params.tId 联赛 id
+ * @param {*} [config]
+ * @param {*} [url]
+ * @returns {Promise<API.MatchDetails>}
+ */
 export const get_matchDetail_getMatchDetailByTournamentId = (params, config, url = "/v1/m/matchDetail/getMatchDetailByTournamentIdPB") => http.get(`${prefix}${url}`, params, config)
 
 // 赛事详情页面接口（christion）
