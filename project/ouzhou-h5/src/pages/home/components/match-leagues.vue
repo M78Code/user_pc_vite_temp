@@ -2,8 +2,8 @@
 * @Description: 四大联赛
 -->
 <template>
-    <!-- <div style="display: none;">{{ MatchDataBaseH5.data_version.version }}</div> -->
-    <!-- <section class="match-play-page">
+    <div style="display: none;">{{ MatchDataBaseFiveLeagueH5.data_version.version }}</div>
+    <section class="match-play-page">
       <div class="match-item" v-for="item, index in fiveLeagues_Matches" :key="mid">
        <template v-if="item">
          <MatchContainerMainTemplate1
@@ -12,7 +12,7 @@
         </MatchContainerMainTemplate1>
        </template>
       </div>
-    </section> -->
+    </section>
   </template>
    
 <script setup>
@@ -28,15 +28,6 @@ const props = defineProps({
     default: () => []
   }
 })
-
-const get_match_item = (mid) => {
-  return MatchDataBaseFiveLeagueH5.get_quick_mid_obj(mid)
-}
-
-
-// onMounted(() => {
-//     MatchMeta.get_four_leagues_list()
-// })
 </script>
    
 <style scoped lang="scss"></style>

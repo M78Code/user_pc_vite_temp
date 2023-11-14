@@ -67,6 +67,12 @@ function getDropDownList() {
   }).then(res => {
     if(res.code == '200' || res.code == "0000000"){
       drop_down_list.value = res.data
+      const mid = route.params.mid
+      res.data.forEach((item,index)=>{
+        if(item.mid == mid){
+          active.value = index
+        }
+      })
     }else {
       console.error(res)
     }
@@ -102,20 +108,16 @@ function change_active(item, index) {
   */
   const params = { mid: item.mid, csid: item.csid, tid:item.tid }
   router.replace({ name: 'category', params});
-  nextTick(()=>{
-    refresh()
-  })
+  refresh(params)
 }
 /**
  * @description: 刷新
  * @return {*}
  */
-const refresh = () => {
+const refresh = (params = {}) => {
   refresh_is_active.value = true;
-  useMittEmit(MITT_TYPES.EMIT_REFRESH_DETAILS)
-  setTimeout(() => {
-    refresh_is_active.value = false;
-  }, 1000);
+  useMittEmit(MITT_TYPES.EMIT_REFRESH_DETAILS,params)
+  refresh_is_active.value = false;
 }
 </script>
 
