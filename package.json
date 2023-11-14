@@ -4,27 +4,26 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "env-dev": "cross-env NODE_ENV=development",
-    "env-prod": "cross-env NODE_ENV=production",
-    "dev-self-use-version-inner": "vite    --config  ./entries/self-use-version/self-use-version.vite.config.js",
-    "dev-self-use-version": "run-s remove-output  env-dev  export-build-version-dev   remove-dist  copy-oss-3   copy-oss  export-merchant-config  export-build-in-config  resolve-merchant-config export-full-version-close  dev-self-use-version-inner",
-    "build-self-use-version-inner": "vite  build  --config  ./entries/self-use-version/self-use-version.vite.config.js   --mode  production",
-    "dev-activity-inner": "vite    --config  ./entries/activity/activity.vite.config.js",
-    "build-activity-inner": "vite    --config  ./entries/activity/activity.vite.config.js  --mode  production",
-    "dev-activity": "run-s remove-output  env-dev  export-build-version-activity-dev   remove-dist copy-oss-3   copy-oss  export-build-in-config dev-activity-inner",
-    "build-activity": "run-s remove-output env-prod  export-build-version-activity-prod   remove-dist copy-oss-3   copy-oss export-build-in-config build-activity-inner copy-html copy-oss-2  remove-dist-assets",
+
+    "divider--1--1":"echo  -------------------------通用基础命令  开始----------------------------- ",
+    "export-node-env":"node ./job/export-node-env.js",
+    "env-dev": "node ./job/export-node-env.js development",
+    "env-prod": "node ./job/export-node-env.js production",
     "copy-oss": "node ./job/copy-oss.js output",
     "copy-oss-2": "node ./job/copy-oss.js dist",
     "copy-oss-3": "node ./job/copy-oss.js backup",
     "remove-output": "node ./job/remove-output.js",
     "remove-dist": "node ./job/remove-dist.js",
     "remove-dist-assets": "node ./job/remove-dist-assets.js",
-    "export-build-version-dev": "node ./job/export-build-version.js dev",
-    "export-build-version-prod": "node ./job/export-build-version.js prod",
-    "export-build-version-activity-dev": "node ./job/export-build-version-activity.js dev",
-    "export-build-version-activity-prod": "node ./job/export-build-version-activity.js prod",
     "copy-html": "node ./job/copy-html.js",
-    "build-self-use-version": "run-s remove-output env-prod  export-build-version-prod   remove-dist  copy-oss-3 copy-oss   export-merchant-config  export-build-in-config resolve-merchant-config  export-full-version-close build-self-use-version-inner  copy-html copy-oss-2  remove-dist-assets ",
+    "divider--1--2":"echo  -------------------------通用基础命令  结束----------------------------- ",
+
+
+ 
+
+
+    "divider--2--1":"echo  -------------------------服务端配置拆分命令  开始----------------------------- ",
+
     "export-build-in-config": "node ./job/export-build-in-config.js",
     "export-full-doc": "node ./job/export-full-doc.js",
     "export-merchant-config": "node ./job/export-merchant-config.js",
@@ -35,6 +34,44 @@
     "export-assets-config": "node ./job/export-assets-config.js",
     "export-js-config": "node ./job/export-js-config.js",
     "resolve-merchant-config": "run-s export-merchant-config export-theme-config export-i18n-config export-component-config  export-js-config  export-css-config  export-assets-config",
+    "divider--2--2":"echo  --------------------------服务端配置拆分命令  结束----------------------------- ",
+
+
+
+    "divider--11--1":"echo  -------------------------常规客户端项目  开始----------------------------- ",
+    "export-build-version-client": "node ./job/export-build-version-client.js",
+    "dev-self-use-version-inner": "vite    --config  ./entries/self-use-version/self-use-version.vite.config.js",
+    "build-self-use-version-inner": "vite  build  --config  ./entries/self-use-version/self-use-version.vite.config.js   --mode  production",
+    "dev-self-use-version": "run-s remove-output  env-dev  export-build-version-client   remove-dist  copy-oss-3   copy-oss  export-merchant-config  export-build-in-config  resolve-merchant-config export-full-version-close  dev-self-use-version-inner",
+    "build-self-use-version": "run-s remove-output env-prod  export-build-version-client   remove-dist  copy-oss-3 copy-oss   export-merchant-config  export-build-in-config resolve-merchant-config  export-full-version-close build-self-use-version-inner  copy-html copy-oss-2  remove-dist-assets ",
+    "divider--11--2":"echo  -------------------------常规客户端项目  结束----------------------------- ",
+
+
+    "divider--12--1":"echo  -------------------------活动项目  开始----------------------------- ",
+    "export-build-version-activity": "node ./job/export-build-version-activity.js",
+    "dev-activity-inner": "vite    --config  ./entries/activity/activity.vite.config.js",
+    "build-activity-inner": "vite    --config  ./entries/activity/activity.vite.config.js  --mode  production",
+    "dev-activity": "run-s remove-output  env-dev  export-build-version-activity   remove-dist copy-oss-3   copy-oss  export-build-in-config dev-activity-inner",
+    "build-activity": "run-s remove-output env-prod  export-build-version-activity   remove-dist copy-oss-3   copy-oss export-build-in-config build-activity-inner copy-html copy-oss-2  remove-dist-assets",
+    "divider--12--2":"echo  -------------------------活动项目  结束----------------------------- ",
+
+
+    "divider--13--1":"echo  -------------------------动画项目  开始----------------------------- ",
+    "export-build-version-animation": "node ./job/export-build-version-animation.js dev",
+    "dev-animation-inner": "vite    --config  ./entries/animation/animation.vite.config.js",
+    "build-animation-inner": "vite    --config  ./entries/animation/animation.vite.config.js  --mode  production",
+    "dev-animation": "run-s remove-output  env-dev  export-build-version-animation   remove-dist copy-oss-3   copy-oss  export-build-in-config dev-animation-inner",
+    "build-animation": "run-s remove-output env-prod  export-build-version-animation   remove-dist copy-oss-3   copy-oss export-build-in-config build-animation-inner copy-html copy-oss-2  remove-dist-assets",
+    "divider--13--2":"echo  -------------------------动画项目  结束----------------------------- ",
+     
+
+
+
+
+
+
+  
+    "divider--111--1":"echo  -------------------------其他辅助项目  开始----------------------------- ",
     "dev-development-document-inner": "vite    --config  ./entries/development-document/development-document.vite.config.js",
     "dev-development-document-alert": "echo \"请注意：项目内部开发文档必须前置执行生成全量文档json 命令 : export-full-doc,确保代码内有最新文档\"",
     "dev-development-document": "run-s dev-development-document-alert  export-full-doc dev-development-document-inner",
@@ -55,6 +92,8 @@
     "dev-postmessage-test": "vite    --config  ./entries/postmessage-test/postmessage-test.vite.config.js",
     "export-full-version-open": "node ./job/export-full-version-config.js full",
     "export-full-version-close": "node ./job/export-full-version-config.js",
+    "divider--111--2":"echo  -------------------------其他辅助项目  结束----------------------------- ",
+
     "divider-line": "echo \" 此命令无用,用于分割区块 。 上面的是语义化全命令，下面是简写命令。不要混着写。 \" && exit 0",
     "dev": "npm run dev-self-use-version",
     "dev-a": "npm run dev-activity",

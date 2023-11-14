@@ -30,7 +30,8 @@
                                 </ul>
                             </template>
                         </div>
-                        <div class="menu_list_top_tab_background" :class="'current_menu_mi_' + current_menu_mi"></div>
+                        <!-- :class="'current_menu_mi_' + current_menu_mi" -->
+                        <div :style="{backgroundPositionY: `${farmatSportImg(current_menu_mi)}px`}" class="menu_list_top_tab_background" ></div>
                         <!-- 七天时间 -->
                         <div class="date_time" v-if="tabActive == 'matches'">
                             <q-virtual-scroll ref="scrollDateRef" :items="week" virtual-scroll-horizontal v-slot="{ item, index }">
@@ -64,7 +65,7 @@ import {
     onMounted,
     defineEmits
 } from "vue";
-import { dateWeekMatchesFormat } from './utils';
+import { dateWeekMatchesFormat ,farmatSportImg } from './utils';
 import { MenuData } from "src/core/";
 import dayjs from "dayjs";
 import { useRoute } from "vue-router";
@@ -161,8 +162,8 @@ onMounted(() => {
  * @param {*} mi 
  */
 const setDefaultData = (val) => {
+    if(val) current_menu_mi.value = val;
     MenuData.set_current_lv1_menu(2);
-    current_menu_mi.value = val;
     // MenuData.set_menu_mi(mi);
     //球种改变设置今日
     MenuData.set_date_time(week[0].val);
@@ -271,7 +272,7 @@ const areaListChange = (item,index) => {
     }
 
     .menu_list_top_tab_background {
-        width: 100px;
+        width: 140px;
         height: 49px;
         position: absolute;
         top: 50px;
@@ -387,173 +388,6 @@ const areaListChange = (item,index) => {
         }
     }
 
-    // 头部球类背景图 --- 不同机型像素转换大小不一样采用百分比部分未调整
-    .menu_list_top_tab_background.current_menu_mi_101 {
-        background-position: 0px 0px;
-    }
-
-    .menu_list_top_tab_background.current_menu_mi_102 {
-        background-position: 0px -99.6%;
-    }
-
-    .current_menu_mi_108 {
-        background-position: 0px -97.3%;
-    }
-
-    .current_menu_mi_109 {
-        background-position: 0px -94.9%;
-    }
-
-    .current_menu_mi_110 {
-        background-position: 0px -92.6%;
-    }
-
-    .current_menu_mi_103 {
-        background-position: 0px -90.3%;
-    }
-
-    .current_menu_mi_105 {
-        background-position: 0px -88%;
-    }
-
-    .current_menu_mi_140 {
-        background-position: 0px -85.8%;
-    }
-
-    .current_menu_mi_106 {
-        background-position: 0px -83.5%;
-    }
-
-    .current_menu_mi_112 {
-        background-position: 0px -80.9%;
-    }
-
-    .current_menu_mi_104 {
-        background-position: 0px -78.9%;
-    }
-
-    .current_menu_mi_26 {
-        background-position: 0px -76.6%;
-    }
-
-    .current_menu_mi_111 {
-        background-position: 0px -74%;
-    }
-
-    .current_menu_mi_107 {
-        background-position: 0px -71.6%;
-    }
-
-    .current_menu_mi_113 {
-        background-position: 0px -69.4%;
-    }
-
-    .current_menu_mi_114 {
-        background-position: 0px -67%;
-    }
-
-    .current_menu_mi_115 {
-        background-position: 0px -64.7%;
-    }
-
-    .current_menu_mi_123 {
-        background-position: 0px -62.8%;
-    }
-
-    .current_menu_mi_124 {
-        background-position: 0px -60.5%;
-    }
-
-    .current_menu_mi_125 {
-        background-position: 0px -58.2%;
-    }
-
-    // 跳一个
-    .current_menu_mi_116 {
-        background-position: 0px -53.1%;
-    }
-
-    .current_menu_mi_119 {
-        background-position: 0px -51.3%;
-    }
-
-    .current_menu_mi_22 {
-        background-position: 0px -49%;
-    }
-
-    .current_menu_mi_128 {
-        background-position: 0px -46.7%;
-    }
-
-    .current_menu_mi_38 {
-        background-position: 0px -44.4%;
-    }
-
-    .current_menu_mi_37 {
-        background-position: 0px -42.1%;
-    }
-
-    .current_menu_mi_120 {
-        background-position: 0px -39.8%;
-    }
-
-    .current_menu_mi_129 {
-        background-position: 0px -37.5%;
-    }
-
-    .current_menu_mi_30 {
-        background-position: 0px -35.2%;
-    }
-
-    .current_menu_mi_32 {
-        background-position: 0px -32.9%;
-    }
-
-    .current_menu_mi_31 {
-        background-position: 0px -30.6%;
-    }
-
-    .current_menu_mi_27 {
-        background-position: 0px -28.3%;
-    }
-
-    .current_menu_mi_2100 {
-        background-position: 0px -26%;
-    }
-
-    .current_menu_mi_2102 {
-        background-position: 0px -23.7%;
-    }
-
-    // 跳两个
-    .current_menu_mi_118 {
-        background-position: 0px -19.1%;
-    }
-
-    // 跳两个
-    .current_menu_mi_35 {
-        background-position: 0px -14.5%;
-    }
-
-    .current_menu_mi_36 {
-        background-position: 0px -12.2%;
-    }
-
-    .current_menu_mi_400 {
-        background-position: 0px -9.9%;
-    }
-
-    .current_menu_mi_121 {
-        background-position: 0px -7.6%;
-    }
-
-    .current_menu_mi_27 {
-        background-position: 0px -5.3%;
-    }
-
-    .current_menu_mi_33 {
-        background-position: 0px -3%;
-    }
 }
 
 .top_events_page {

@@ -4,8 +4,8 @@
 		<div class="matches_header">
 			<div class="header_banne header_banner" :style="`background-position:0 -${current_ball_type}px`"></div>
 			<div class="matches-title">
-				<div class="current_match_title" :class="MenuData.router_root_lv_1 == 2 ?'all_matches':''">{{ matches_header_title }}</div>
-				<div class="match_all_matches" v-if="MenuData.router_root_lv_1 == 2">All Matches</div>
+				<div class="current_match_title" :class="MenuData.is_scroll_ball() ?'all_matches':''">{{ matches_header_title }}</div>
+				<div class="match_all_matches" v-if="MenuData.is_scroll_ball()">All Matches</div>
 				<div v-else class="matches_tab" >
 					<div v-for="item in tab_list" :key="item.value" @click="checked_current_tab(item)"
 						:class="{ 'checked': item.value == MenuData.router_root_lv_2 }">
@@ -14,8 +14,8 @@
 				</div>
 			</div>
 		</div>
-		<MatchesFilterTab v-if="(MenuData.router_root_lv_2 == 1002 && MenuData.router_root_lv_1 == 1 && !coom_soon_state) || MenuData.router_root_lv_1 == 2"  />
-		<MatchesDateTab  v-if="MenuData.router_root_lv_1 == 4" />
+		<MatchesFilterTab v-if=" MenuData.is_scroll_ball() || MenuData.is_hot()"  />
+		<MatchesDateTab  v-if="MenuData.is_today() || MenuData.is_zaopan()" />
 	</div>
 </template>
 
@@ -36,42 +36,37 @@ const tab_list = ref([])
 const current_ball_type = ref(630)
 
 const matches_header_title = ref(i18n_t("ouzhou.match.matches"));
-const current_value = ref(i18n_t("ouzhou.match.featured"));
-
-
 // 头部高度 包含 teb切换
 const match_list_top = ref('80px') 
-
 const coom_soon_state =ref(false)
-
 onMounted(()=>{
 	set_tab_list(MenuData.router_root_lv_1,MenuData.left_menu_mi.value)
 })
-
-// 顶部菜单 切换
-watch(()=>MenuData.router_root.value,(news_)=>{
-	set_tab_list(news_)
-})
-
 // 左侧菜单切
-watch(()=>MenuData.left_menu_mi.value,(news_)=>{
-	set_tab_list(4,news_)
+watch(MenuData.menu_data_version,(news_)=>{ 
+	console.log(MenuData.menu_root, MenuData.is_scroll_ball(), 'menu_root')
+	// if(MenuData.is_today() || MenuData.is_zaopan()){
+	// 	set_tab_list(4, MenuData.left_menu_mi.value);
+	// } else {
+	// 	set_tab_list(MenuData.menu_root, MenuData.left_menu_mi.value);
+	// }
+	set_tab_list(MenuData.menu_root, MenuData.left_menu_mi.value);
 })
 
 // 设置 头部信息配置
 const set_tab_list = (news_,sport_mi) =>{
 	// 首页
-	if(news_ == 1 ){
+	if(news_ == 0 ){
 		tab_list.value = lodash_.get(MenuData.ouzhou_filter_config,'home_tab', [])  
 		matches_header_title.value = "Matches"
 	}
 	// 滚球
-	if( news_ ==2 ){
+	if( news_ == 1 ){
 		matches_header_title.value = "In Play"
         match_list_top.value = '146px'
 	}
 	// 左侧菜单
-	if(news_ ==4){
+	if(MenuData.is_today() || MenuData.is_zaopan()){
 		tab_list.value = lodash_.get(MenuData.ouzhou_filter_config,'sport_tab', [])  
 		// 设置赛种名称
 		matches_header_title.value = BaseData.menus_i18n_map[sport_mi] 

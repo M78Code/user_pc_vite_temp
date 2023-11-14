@@ -75,6 +75,11 @@ onMounted(() => {
   }).off;
 })
 
+onUnmounted(() => {
+  clearInterval(timer.value)
+  useMitt && useMitt()
+})
+
 /**
    * @description 初始请求注单记录数据
    * @param {Undefined} Undefined
@@ -259,11 +264,6 @@ const onPull = () => {
     }
   }).catch(err => { console.error(err) });
 }
-
-onUnmounted(() => {
-  clearInterval(timer.value)
-  useMitt && useMitt()
-})
 </script>
     
 <style lang="scss" scoped>
