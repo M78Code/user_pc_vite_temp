@@ -33,7 +33,7 @@
           </div>
         </div>
         <!-- 犯规条 篮球赛事才有 -->
-        <div class="detail-score-more" v-if="!lodash.isEmpty(score_list['S111'])">
+        <div class="detail-score-more">
           <div class="row justify-center">
             <div class="score-more-title"> 
               <span>{{ score_list['S111']['home']+'%'}}</span>

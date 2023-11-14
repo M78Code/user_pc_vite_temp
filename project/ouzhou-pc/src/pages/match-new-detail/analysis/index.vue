@@ -21,17 +21,17 @@
         </div>
       </div> -->
       <!-- 分析页动画 -->
-      <div v-if="!lodash_.isEmpty(score_list)">
-        <div class="tabs-wrap" v-if="detail_info.ms>0">
+      <div v-if="!lodash_.isEmpty(score_list)&&detail_info.ms>0">
+    <div class="tabs-wrap">
       <span v-for="item in tabList" :key="item.id" @click="tabClick(item)"
         :class="[{ 'is-active': item.id === active }, 'tabs-item']">{{ item.label }}
       </span>
     </div>
      
        <!-- 足球分析页图表 -->
-      <foot-ball-stats v-if="detail_info.csid==1 &&detail_info.ms>0" :detail_info="detail_info" :score_list="score_list" />
+      <foot-ball-stats v-if="detail_info.csid==1" :detail_info="detail_info" :score_list="score_list" />
        <!-- 篮球分析页图表 -->
-       <basket-ball-stats  v-if="detail_info.csid==2 &&detail_info.ms>0" :detail_info="detail_info" :score_list="score_list" />
+       <basket-ball-stats  v-if="detail_info.csid==2" :detail_info="detail_info" :score_list="score_list" />
 
       </div>
       <!-- 选择哪队会赢组件 -->
@@ -41,7 +41,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref,computed,watch } from "vue";
+import { onMounted, onUnmounted,ref,computed,watch } from "vue";
 // import {LOCAL_PROJECT_FILE_PREFIX } from 'src/core/index.js';
 
  import FootBallStats from './compoments/football_stats.vue'
@@ -70,6 +70,10 @@ const tabList = ref([
 onMounted(()=>{
   useMittOn(MITT_TYPES.EMIT_SHOW_DETAILS,get_detail_info)
 })
+onUnmounted(()=>{
+    useMittOn(MITT_TYPES.EMIT_SHOW_DETAILS).off
+  })
+
 
 // 获取数据
 const get_detail_info = (mid)=>{
