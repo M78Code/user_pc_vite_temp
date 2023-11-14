@@ -69,14 +69,8 @@ let queryorderpresettleconfirm_data = inject('queryorderpresettleconfirm_data')
 let status = ref(1)
 // 滑块是否显示
 let slider_show = ref(false)
-// 提前结算详情列表是否显示
-let details_show = ref(false) 
 // 0  100
 let percentage = ref(100)
-// 0-提前结算金额已包含本金  1-提前结算申请未通过  2-功能暂停中，请稍后再试  3-提前结算金额调整中，请再试一次
-let tips = ref(0)
-// 提前结算详情数据
-let presettleorderdetail_data = ref([])
 // orderVOS 里面的第一条数据，只考虑单关
 let ordervos_ = null
 // 接口返回的正在确认中的金额，当 [2, 3, 4, 6] 4种情况时，也用于赋值锁定金额
@@ -88,7 +82,6 @@ let expected_profit = ref(0)
 // 接口调用次数计数 // 概率，用于计算钮下的预计返还（盈利），注意，查询订单记录接口是直接返回的金额，而ws推送返回的是概率，所以概率更新了需要重新计算钮下的预计返还（盈利）
 // 延时器
 let timer = null
-let timer4 = null
 
 let mitt_c201_handle = null
 let mitt_c210_handle = null
@@ -343,7 +336,6 @@ const submit_click = () => {
 // 批量清除定时器
 const clear_timer = () => {
   clearTimeout(timer)
-  clearInterval(timer4)
 }
 </script>
 <style lang="scss" scoped>

@@ -28,19 +28,13 @@
   <script setup>
   import BetRecordClass from "src/core/bet-record/bet-record.js";
   import { api_betting } from "src/api/index.js";
-  //   import { mapGetters, mapMutations } from "vuex"
   import cathecticItemAll from "src/base-h5/components/cathectic/app-h5/cathectic-item-all.vue"
-  import unsettle from "src/base-h5/components/cathectic/app-h5/unsettle.vue"
-  import settle from "src/base-h5/components/cathectic/app-h5/settle.vue"
-  import preRecord from "src/base-h5/components/cathectic/app-h5/pre-record.vue"
-  import invalid from "src/base-h5/components/cathectic/app-h5/invalid.vue"
   import { onMounted, onUnmounted, ref, shallowRef, computed, provide, watch, nextTick } from 'vue'
   import lodash from 'lodash'
   import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
   import store from 'src/store-redux/index.js'
   import UserCtr from "src/core/user-config/user-ctr.js";
   import { i18n_t } from "src/boot/i18n.js";
-  import {compute_css_obj} from "src/core/index.js"
   import { compute_css_variables } from "src/core/css-var/index.js"
   
   let { cathecticReducer, userInfoReducer, themeReducer } = store.getState()
@@ -54,10 +48,10 @@
   provide('queryorderpresettleconfirm_data', provided_)
 
   const tabs = ref([
-    { title: i18n_t('bet_record.no_account'), componentName: shallowRef(unsettle) },
-    { title: "预约中", componentName: shallowRef(preRecord) },
-    { title: "已失效", componentName: shallowRef(invalid) },
-    { title: "已结算", componentName: shallowRef(settle) }
+    { title: i18n_t('bet_record.no_account') },
+    { title: i18n_t('pre_record.booking') },
+    { title: i18n_t('pre_record.expired') },
+    { title: i18n_t('bet_record.account') }
   ])
   // 锚点
   const unsettle_child = ref(null)
