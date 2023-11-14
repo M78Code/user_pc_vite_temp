@@ -9,12 +9,6 @@
     <!-- <div class="img-s" :style="compute_css_obj('no-record')"></div> -->
     <img :src="compute_local_project_file_path('/image/bet/no-data.png')">
     <template>
-      <!--
-      <p class="centerText" v-if="BetRecordClass.selected === 0">{{ i18n_t("app_h5.cathectic.no_data_unsettle") }}</p>
-      <p class="centerText" v-else-if="BetRecordClass.selected == 1">{{ i18n_t("app_h5.cathectic.no_data_pre") }}</p>
-      <p class="centerText" v-else-if="BetRecordClass.selected == 2">{{ i18n_t("app_h5.cathectic.no_data_invalid") }}</p>
-      <p class="centerText" v-else>{{i18n_t("app_h5.cathectic.no_data_settle")}}</p>
-      -->
       <p class="centerText">{{ i18n_t( 'app_h5.cathectic.' + formatInternationalText(BetRecordClass.selected) ) }}</p>
     </template>
   </div>
@@ -26,10 +20,10 @@ import { utils, i18n_t, compute_css_obj, compute_local_project_file_path } from 
 
 const formatInternationalText = function (status){
   const formatInternationalTextObj = {
-    0: 'no_data_unsettle',
-    1: 'no_data_pre',
-    2: 'no_data_invalid',
-    others: 'no_data_settle'
+    0: 'no_data_unsettle',  //未结算
+    1: 'no_data_pre', //预约中
+    2: 'no_data_invalid',  //已失效
+    3: 'no_data_settle' //已结算
   }
   let message = formatInternationalTextObj[status] ?? 'no_data_settle'
   return message

@@ -18,9 +18,9 @@
               <img src='../../../../../base-h5/assets/match-list/icon_started.svg' />
             <span class="din-regular">
               {{ i18n_t('list.match_start') }}&nbsp;&nbsp;
-                                  <span v-show="in_progress_total">(0)</span>
-                                </span>
-                              </div> -->
+                                              <span v-show="in_progress_total">(0)</span>
+                                            </span>
+                                          </div> -->
       <!--体育类别 -- 标题  menuType 1:滚球 2:即将开赛 3:今日 4:早盘 11:串关 -->
       <div v-if="get_sport_show" @click="handle_ball_seed_fold" :class="['sport-title match-indent', { first: i == 0 }]">
         <span class="score-inner-span"> {{ match_of_list.csna }}{{ '(' + menu_lv2.ct + ')' }} </span>
@@ -181,9 +181,10 @@
                   src="/src/base-h5/assets/match-list/ico_fav_sel.png" @click.stop="handle_match_collect" />
               </div>
               <div class="bet_btn">
-
+                <!-- {{match}} -->
                 <template v-if="curMatchOdds?.length">
-                  <div v-for="item in curMatchOdds" :key="item.oid" class="item" @click="go_to_bet(item)">
+                  <div v-for="item in curMatchOdds" :key="item.oid" class="item"
+                    :class="{active: active_score === `${item._mid}${item.oid}`}" @click="go_to_bet(item)">
                     <div v-if='item.onb || item.on' class='on'>{{ item.onb || item.on }}</div>
                     <div class='num'>{{ format_odds_value(item) }}</div>
                   </div>
@@ -270,6 +271,8 @@ export default {
     const { detailsReducer } = store.getState()
     const hd_sd = ref(detailsReducer.hd_sd)
 
+    const active_score = ref(null)
+
     const ButtonTypes = {
       lvs: 'lvs',
       muUrl: 'muUrl',
@@ -281,19 +284,17 @@ export default {
     const match_id = computed(() => route.params.mid || match_of_list.mid)
 
     const go_to_bet = (ol) => {
-      // console.log('ol_item: ', ol_item);
-      // useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX, true);
-
       if (ol.os !== 1) return
-      // active_score.value = `${match_of_list.id}${ol.oid}`
+      active_score.value = `${ol._mid}${ol.oid}`
+      console.log(' active_score.value: ', active_score.value);
       const { oid, _hid, _hn, _mid } = ol
-      let params = {
+      const params = {
         oid, // 投注项id ol_obj
         _hid, // hl_obj 
         _hn,  // hn_obj
         _mid,  //赛事id mid_obj
       }
-      let other = {
+      const other = {
         is_detail: false,
         // 投注类型 “vr_bet”， "common_bet", "guanjun_bet", "esports_bet"
         // 根据赛事纬度判断当前赛事属于 那种投注类型
@@ -303,7 +304,6 @@ export default {
         // 数据仓库类型
         match_data_type: "h5_list", // h5_detail
       }
-      console.log('score-list.vue ', params)
       set_bet_obj_config(params, other)
 
     };
@@ -530,6 +530,7 @@ export default {
 
     }
     return {
+      active_score,
       go_to_bet,
       ButtonTypes,
       icon_click_lvs,
@@ -999,6 +1000,10 @@ export default {
           gap: 2px;
           justify-content: center;
 
+          .active {
+            background: var(--sys-neutral-white-white, #FFF);
+          }
+
           .item {
             padding: 2px 0px;
             flex: 1;
@@ -1010,6 +1015,10 @@ export default {
             display: flex;
             flex-direction: column;
             justify-content: center;
+
+            &.active {
+              background: var(--sys-brand-secodary-secondary-200, #C9CDDB);
+            }
 
             .on {
               color: var(--sys-brand-secodary-secondary-300, #AFB3C8);

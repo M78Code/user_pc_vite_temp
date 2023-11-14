@@ -18,7 +18,7 @@ import { i18n_t } from "src/boot/i18n.js";
 let showList = ref(false)
 let _index = ref(0)
 // 展示多长时间的注单记录  (1:今天 2:昨日 3:七日内 4:一月内)
-const [day, yestoday, week, month] = i18n_t('bet_record.bet_date_list');
+const [day, yestoday, week, month] = i18n_t('bet_record.bet_date_list') || Array(4).fill('');
 const list = ref([
     { title: day, val: 1 },
     { title: yestoday, val: 2 },
