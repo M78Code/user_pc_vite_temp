@@ -7,7 +7,7 @@
   <div class="h-right">
     <div :class="[is_search ? 'search-click' : 'search']">
       <div class="s-input s-input-click">
-        <q-input borderless rounded :readonly="!is_search" @click="change_input" v-model="text" label-color="primary"
+        <q-input borderless rounded @click="show_search" v-model="text" label-color="primary"
           placeholder="Enter league or team">
           <template v-slot:prepend>
             <i class="icon-search q-icon c-icon" size="10px"></i>
@@ -85,13 +85,16 @@
 import { defineComponent, onMounted, ref,watch } from "vue";
 import { format_balance,UserCtr,LOCAL_PROJECT_FILE_PREFIX } from "src/core/"
 import { useRouter, useRoute } from 'vue-router'
+import store from "src/store-redux/index.js";
+import { SearchPCClass } from 'src/core/index.js'
+import globalAccessConfig from "src/core/access-config/access-config.js"
+import SearchHotPush from "src/core/search-class/search_hot_push.js";
+console.log(globalAccessConfig,'globalAccessConfig');
 import { api_account } from 'src/api/index';
 import { loadLanguageAsync, useMittEmit, MITT_TYPES} from "src/core/index.js";
 export default defineComponent({
   name: "RightHead",
   setup() {
-    const userRouter = useRouter()
-    const route = useRoute()
     const text = ref('')
     const is_search = ref(false)
     const visible = ref(false)
@@ -145,10 +148,14 @@ export default defineComponent({
     
 
     };
-   
+    /**
+     * 是否显示搜索组件 default: false
+     * 路径: project_path\src\store\module\search.js
+    */
+    const search_isShow = ref(SearchPCClass.search_isShow)
     // 搜索
     const change_input = () => {
-  
+
     }
     const onExpend = () => {
       visible.value = !visible.value
@@ -170,8 +177,31 @@ export default defineComponent({
       })
     }
 
+    /** 搜索热推赛事 */
+    const search_hot_push = ref(new SearchHotPush());
+
+    /** 保存显示搜索组件状态 */
+    const set_search_status = (data) => (store.dispatch({
+      type: "SET_SEARCH_STATUS",
+      data,
+    }))
+
+    /** 展开搜索 */
+    function show_search() {
+      // if (!globalAccessConfig.get_searchSwitch()) {
+      if (!globalAccessConfig.config.searchSwitch) {
+        return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t("msg.msg_09"));
+      }
+      set_search_status(true);
+    }
+    /** 初始化 */
+    function init() {
+      set_search_status(false);
+    }
+    onMounted(init);
+
     return {
-      text,
+      text, change_input, is_search, format_balance, UserCtr, LOCAL_PROJECT_FILE_PREFIX, SearchPCClass, show_search, search_hot_push, search_isShow, 
       change_input,
       on_change_lang,
       lang,
@@ -271,7 +301,7 @@ export default defineComponent({
   width: 200px;
   transition: all 0.3s linear;
   :deep(.q-field) {
-    background: rgba(255, 255, 255, 0.1);
+    background-color: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.4);
     border-radius: 20px;
     padding-left: 10px;
