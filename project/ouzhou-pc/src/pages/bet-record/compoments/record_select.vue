@@ -25,7 +25,7 @@
         </div>
         <div class="q-pa-md time-select">
           <!-- 日期 -->
-          <span>Date&nbsp;</span>
+          <span>{{i18n_t('bet_record.date')}}&nbsp;</span>
           <q-input filled v-model="date_value" readonly bg-color="white" @click="qDateProxy.show()">
             <template v-slot:append>
               <q-icon name="event" class="cursor-pointer">
