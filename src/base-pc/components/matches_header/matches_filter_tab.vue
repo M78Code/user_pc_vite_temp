@@ -62,8 +62,13 @@
     useMittOn(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE,set_menu_change).off
   })
 
+    // 左侧菜单切
+  watch(()=>MenuData.left_menu_mi.value,async (news_)=>{
+    let time = await UserCtr.get_system_time()
+    update_time(time)
+  })
+
   const update_time = (time) => {
-    console.log(time, 'timexxxx')
     let arr = []
     let day = 24 * 60 * 60 * 1000
     let label = ''
@@ -77,7 +82,6 @@
       value
     })
    }
-   console.log(arr)
    current_filter_list.value = arr
    final_index.value = 0
   }

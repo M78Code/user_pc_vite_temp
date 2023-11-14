@@ -26,7 +26,7 @@ export const format_odds = function (val, csid) {
 };
 
 // 赔率格式化
-export const format_odds_value = () => {
+export const format_odds_value = (val) => {
   if (val == "" || val == undefined) {
     return "";
   }

@@ -8,16 +8,17 @@
  */
 import { ref, onMounted, watch, onUnmounted } from "vue";
 import { api_match_list } from "src/api";
-// import { useRoute } from "vue-router";
+import { useRouter } from "vue-router";
 // import store from "src/store-redux-vuex/index.js";
 import { MatchDataWarehouse_PC_Detail_Common as MatchDataWarehouseInstance,MenuData,UserCtr } from "src/core/index"; 
 import { filter_odds_func, handle_course_data, format_mst_data } from 'src/core/utils/matches_list.js'
 
 import { useMittEmit, MITT_TYPES ,useMittOn} from "src/core/mitt/index.js";
 import { LayOutMain_pc } from "src/core/"
+import lodash_ from 'lodash'
 
 export function usedetailData(route) {
-  // const route = useRoute();
+  const router = useRouter();
   const category_list = ref([]); //分类数据
   const detail_list = ref([]); //玩法数据
   const all_list = ref([]); //  所有玩法数据
@@ -133,6 +134,13 @@ export function usedetailData(route) {
       };
       detail_loading.value = true;
       const res = await get_detail_data(params);
+       // 空赛事数据跳转回首页
+      if (lodash_.isEmpty(res.data)) {
+        router.push({
+          name: "home",
+        });
+        return
+      }
 
      
       getMatchDetailList(res.data)
