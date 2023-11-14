@@ -80,7 +80,7 @@ const scrollDateRef = ref(null);
 const scrollRefArea = ref(null);
 let second_tab_index = ref(0);//单日选择
 let area_tab_index = ref(0);//地区选择
-const current_menu_mi = ref("102");
+const current_menu_mi = ref("101");
 const week = dateWeekMatchesFormat();
 // 七天时间
 // 地区集合
@@ -138,6 +138,8 @@ const changeDatetab = (item, index) => {
     scrollDateRef.value && scrollDateRef.value.scrollTo(move_index - 2, "start-force");
     second_tab_index.value = index;
     MenuData.set_date_time(item.val, item.type);
+    MenuData.set_current_lv1_menu(item.type?'3':'2');
+    MenuData.set_menu_mi(current_menu_mi.value);
     //根据时间筛选列表
     if (!item?.val) {
         // 设置菜单对应源数据
@@ -148,10 +150,6 @@ const changeDatetab = (item, index) => {
     }
     emit("changeDate", item.val);
 };
-watch(() => MenuData.menu_mi.value, () => {
-    //球种改变设置今日
-    MenuData.set_date_time(week[0].val);
-})
 onMounted(() => {
     MenuData.set_date_time(week[0].val);
 })
@@ -159,27 +157,18 @@ onMounted(() => {
  * 默认请求今日数据
  * @param {*} mi 
  */
-const setDefaultData = () => {
+const setDefaultData = (val) => {
     MenuData.set_current_lv1_menu(2);
-
+    current_menu_mi.value = val;
     // MenuData.set_menu_mi(mi);
     //球种改变设置今日
     MenuData.set_date_time(week[0].val);
     changeDatetab(week[0], 0)
 }
-watch(() => route.fullPath, () => {
-    if (route.name === 'matchList') {
-        setDefaultData()
-    }
-})
-
-watch(() => MenuData.current_lv_2_menu_mi.value, () => {
-    setDefaultData()
+watch(() => MenuData.menu_mi.value, () => {
+    setDefaultData(MenuData.menu_mi.value)
 }, { immediate: true })
 
-onMounted(() => {
-    // setDefaultData()
-})
 /**
  * 地区选择tab
  * @param {*} index 

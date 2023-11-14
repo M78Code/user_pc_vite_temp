@@ -113,11 +113,13 @@
       // 赛事搜索框
       .search {
         .ipt {
-          border-color: var(--q-match-result-boreder-1) !important;
-          background-color: var(--q-gb-bg-c-11) !important;
+          // border-color: var(--q-match-result-boreder-1) !important;
+          border-color:#d0d8de;
+          // background-color: var(--q-gb-bg-c-11) !important;
           &:hover,
           &:focus {
-            border-color: var(--q-gb-bd-c-13) !important;
+            // border-color: var(--q-gb-bd-c-13) !important;
+            border-color:#ff7000 ;
           }
         }
       }
