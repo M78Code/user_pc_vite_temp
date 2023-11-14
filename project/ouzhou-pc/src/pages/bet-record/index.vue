@@ -15,7 +15,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, onActivated } from 'vue'
 import record_head from './compoments/record_head.vue'
 import record_select from './compoments/record_select.vue'
 import record_table from './compoments/record_table.vue'
@@ -32,7 +32,11 @@ const itemFilter = (obj) => {
   tableRef.value.getTableData({ ...obj, orderStatus })
 }
 
-onMounted(()=>{
+onMounted(() => {
+  LayOutMain_pc.set_oz_show_right(false)
+  LayOutMain_pc.set_oz_show_left(false)
+})
+onActivated(() => {
   LayOutMain_pc.set_oz_show_right(false)
   LayOutMain_pc.set_oz_show_left(false)
 })

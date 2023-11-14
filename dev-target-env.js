@@ -1,11 +1,3 @@
-/*
- * @Author: jamison pmtyjamison@itcom888.com
- * @Date: 2023-09-22 13:27:10
- * @LastEditors: jamison pmtyjamison@itcom888.com
- * @LastEditTime: 2023-11-07 20:21:15
- * @FilePath: \user-pc-vite\dev-target-env.js
- * @Description: 
- */
 /**
  * 此文件 仅仅用于本地开发 作为 环境指定 使用
  */
@@ -92,20 +84,20 @@ let  DEV_TARGET_VERSION = ''
 
 
 
-// 活动单页面单独项目 专用的  
-let DEV_ACTIVITY_TARGET_ENV=''
+// 其他项目 非客户端H5 PC 项目 专用的  
+let DEV_TARGET_ENV=''
 //开发
-DEV_ACTIVITY_TARGET_ENV='dev'
+DEV_TARGET_ENV='dev'
 //测试
-DEV_ACTIVITY_TARGET_ENV='test'
+DEV_TARGET_ENV='test'
 //隔离
-DEV_ACTIVITY_TARGET_ENV='geli'
+DEV_TARGET_ENV='geli'
 //压测
-DEV_ACTIVITY_TARGET_ENV='mini'
+DEV_TARGET_ENV='mini'
 //试玩
-DEV_ACTIVITY_TARGET_ENV='shiwan'
+DEV_TARGET_ENV='shiwan'
 //生产
-DEV_ACTIVITY_TARGET_ENV='online'
+DEV_TARGET_ENV='online'
 
 
 
@@ -113,7 +105,7 @@ export {
  
  
   DEV_TARGET_VERSION,
-  DEV_ACTIVITY_TARGET_ENV
+  DEV_TARGET_ENV
  
  
 };

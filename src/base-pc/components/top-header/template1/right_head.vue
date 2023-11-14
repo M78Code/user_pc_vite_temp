@@ -73,7 +73,7 @@
             <q-separator />
             <q-item  v-show="visible">
               <q-slide-transition >
-                <q-item-section class="currpon">
+                <q-item-section>
                   <div :class="['language_item', {active: lang === key}]" v-for="{ key, language } in languages" :key="key" @click="on_change_lang(key)">
                     <span> <span class="lang-icon" :class="`lang-${key}`"></span> {{ language }} </span>
                     <img class="lang" v-if="lang === key" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/vector.png`" alt="">
@@ -101,10 +101,10 @@
 
 <script>
 import { defineComponent, onMounted, ref,watch } from "vue";
-import { format_balance,UserCtr,LOCAL_PROJECT_FILE_PREFIX } from "src/core/"
-import { useRouter, useRoute } from 'vue-router'
+import { format_balance,UserCtr,LOCAL_PROJECT_FILE_PREFIX } from "src/core/";
+import { useRouter, useRoute } from 'vue-router';
 import store from "src/store-redux/index.js";
-import globalAccessConfig from "src/core/access-config/access-config.js"
+import globalAccessConfig from "src/core/access-config/access-config.js";
 import SearchHotPush from "src/core/search-class/search_hot_push.js";
 import { api_account } from 'src/api/index';
 import { loadLanguageAsync, useMittEmit, MITT_TYPES} from "src/core/index.js";;
@@ -119,6 +119,7 @@ export default defineComponent({
   setup() {
     const text = ref('')
     const route=useRoute()
+    const userRouter=useRouter()
     const is_search = ref(false)
     const visible = ref(false)
     //语言设置
@@ -190,7 +191,7 @@ export default defineComponent({
     const goto_announcement = () => {
       userRouter.push("/announce")
     }
-
+    //赛果
     const goto_results = () => {
       userRouter.push("/match_results")
     }
@@ -229,7 +230,7 @@ export default defineComponent({
       // if (!globalAccessConfig.config.searchSwitch) {
       //   return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t("msg.msg_09"));
       // }
-      set_search_status(true);
+      SearchPCClass.set_search_isShow(true);
       console.log('isShow',SearchPCClass.search_isShow);
     }
     /** 初始化 */
@@ -239,7 +240,11 @@ export default defineComponent({
     // onMounted(init);
 
     return {
-      text, change_input, is_search, format_balance, UserCtr, LOCAL_PROJECT_FILE_PREFIX, SearchPCClass, show_search, search_hot_push, search_isShow, 
+      text, 
+      SearchPCClass, 
+      show_search, 
+      search_hot_push, 
+      search_isShow, 
       change_input,
       on_change_lang,
       lang,
@@ -254,7 +259,8 @@ export default defineComponent({
       UserCtr,
       LOCAL_PROJECT_FILE_PREFIX
     };
-  },
+  
+}
 });
 </script>
 <style lang="scss" scoped>
