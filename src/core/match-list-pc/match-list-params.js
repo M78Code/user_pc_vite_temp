@@ -199,7 +199,7 @@ function match_list_all_params() {
             bymids: {},
         }
     }
-    console.log('mid_menu_result2',config.match_list.params)
+    console.log('mid_menu_result2',config.match_list, config.match_list.params)
 
     config.guanjun = guanjun;
     lodash.merge(
@@ -338,7 +338,7 @@ function match_list_hot_params() {
  * 单个菜单按钮点击 滚球 的
  */
 function handle_click_menu_mi_1(detail = {}) {
-    handle_click_menu_mi_pre_process();
+    // handle_click_menu_mi_pre_process();
     // { mi:'',   root:'',   sports:'',  guanjun:'' }
     // let {
     //     mif,
@@ -458,7 +458,7 @@ function handle_click_menu_mi_1(detail = {}) {
             },
         };
     }
-    console.log('asdasdasdasdas', params);
+    console.log('asdasdasdasdas', match_list);
     // 设置      中间 菜单输出
     menu_config.set_mid_menu_result(params);
 

@@ -31,7 +31,7 @@
   import { UserCtr,MenuData, useMittOn, useMittEmit,MITT_TYPES } from 'src/core/index.js'
   import {
     handle_click_menu_mi_3_date,
-    get_date_menu_matches_list,
+    // get_date_menu_matches_list,
     // current_filter_list,
     final_index
   } from "src/base-pc/components/tab/date-tab/index.js"
@@ -55,15 +55,20 @@
     useMittOn(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE,set_menu_change)
     let time = await UserCtr.get_system_time()
     update_time(time)
-    get_date_menu_matches_list()
+    // get_date_menu_matches_list()
   })
 
   onUnmounted(()=>{
     useMittOn(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE,set_menu_change).off
   })
 
+    // 左侧菜单切
+  watch(()=>MenuData.left_menu_mi.value,async (news_)=>{
+    let time = await UserCtr.get_system_time()
+    update_time(time)
+  })
+
   const update_time = (time) => {
-    console.log(time, 'timexxxx')
     let arr = []
     let day = 24 * 60 * 60 * 1000
     let label = ''
@@ -77,9 +82,8 @@
       value
     })
    }
-   console.log(arr)
    current_filter_list.value = arr
-   final_index.value = 0
+   choose_filter_tab(arr[0], 0)
   }
 
   const set_menu_change = () => {

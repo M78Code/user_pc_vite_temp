@@ -30,17 +30,6 @@
         <span>{{ Math.floor(item.ov / 1000) / 100 }}</span>
       </div>
     </div>
-    <!-- <div class="odds-box din_font">
-      <div class="odds-box-item" 
-        v-for="(item, index) in ols" 
-        :key="index"
-        @click="checked_current_td({payload: current_tab, hps: current_tab.current_ol[0], ol: item, is15mins: true})"
-        :class="{checked: item.oid == current_check_betId }"
-      >
-        <span>{{ item.ot }}</span>
-        <span>{{ Math.floor(item.ov / 1000) / 100 }}</span>
-      </div>
-    </div> -->
   </div>
 </template>
 
@@ -48,14 +37,11 @@
 
   import { onMounted, ref, watch } from 'vue';
   import _ from 'lodash';
-
-  // import store from 'src/store-redux-vuex/index.js';
   import MatchListOuzhouClass from 'src/core/match-list-pc/match-ouzhou-list.js'
   import sport_icon from "src/base-pc/components/match-list/sport_icon.vue";
-  import { get_15mins_odds_list } from "src/core/match-list-pc/list-template/module/template-101.js"
+  // import { get_15mins_odds_list } from "src/core/match-list-pc/list-template/module/template-101.js"
   import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
 
-  // let state = store.getState();
   const props = defineProps({
     current_tab: {
       type: [ Object, Array ],
@@ -80,15 +66,6 @@
 
   // 选中当前td 使td高亮 且将投注信息存储到数据仓库中
   const checked_current_td = payload => {
-    console.log(payload)
-    // // 锁盘状态不高亮
-    // if (payload.hps.hs) {
-    //   return;
-    // }
-    // if (payload.ol.oid !== current_check_betId.value) {
-    //   storage_bet_info(payload);
-    // }
-    // storage_bet_id(payload.ol.oid);
     MatchListOuzhouClass.current_check_betId.value = payload.ol.oid
     let params = {
       oid: payload.ol.oid, // 投注项id ol_obj

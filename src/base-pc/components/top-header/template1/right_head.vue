@@ -28,11 +28,55 @@
     <div class="h-right">
       <div class="user-info">
         <span style="font-weight: 500;">  {{ format_balance(UserCtr.balance) }} </span>
-        <span style="font-size: 14px;font-weight: 400;opacity: 0.8;">{{ UserCtr.nickName }}</span>
+        <span style="font-size: 14px;font-weight: 400;opacity: 0.8;">{{ UserCtr.user_info.nickName }}</span>
       </div>
       <q-avatar size="40px"  @click="change_input">
         <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/avator.png`" alt="" srcset="" />
       </q-avatar>
+      <q-menu class="personal-menu">
+          <q-list class="personal-list" style="min-width: 200px">
+            <q-item clickable>
+              <q-item-section>
+                <div>Announcement</div>
+              </q-item-section>
+            </q-item>
+            <q-item clickable>
+              <q-item-section>
+                <div>Results</div>
+              </q-item-section>
+            </q-item>
+            <q-item clickable>
+              <q-item-section>
+                <div class="flex">
+                <img class="icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/rule.png`" alt="" />
+                <div>Sport Rules</div>
+              </div>
+              </q-item-section>
+            </q-item>
+            <!--国际化语言-->
+            <q-item clickable  @click="onExpend">
+              <q-item-section class="personal-content">
+                <div class="flex">
+                  <img class="icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/language.png`" alt="" />
+                <div>language</div>
+                </div>
+                <img class="arrow" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/arrow.png`" alt="" />
+              </q-item-section>
+            </q-item>
+            <q-separator />
+            <q-item  v-show="visible">
+              <q-slide-transition >
+                <q-item-section class="currpon">
+                  <div :class="['language_item', {active: lang === key}]" v-for="{ key, language } in languages" :key="key" @click="on_change_lang(key)">
+                    <span> <span class="lang-icon" :class="`lang-${key}`"></span> {{ language }} </span>
+                    <img class="lang" v-if="lang === key" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/vector.png`" alt="">
+                  </div>
+                </q-item-section>
+              </q-slide-transition>
+            </q-item>
+            <!--国际化语言结束-->
+          </q-list>
+      </q-menu>
     </div>
   </div>
 </template>
@@ -41,6 +85,8 @@
 import { defineComponent, onMounted, ref,watch } from "vue";
 import { format_balance,UserCtr,LOCAL_PROJECT_FILE_PREFIX } from "src/core/"
 import { useRouter, useRoute } from 'vue-router'
+import { api_account } from 'src/api/index';
+import { loadLanguageAsync, useMittEmit, MITT_TYPES} from "src/core/index.js";
 export default defineComponent({
   name: "RightHead",
   setup() {
@@ -48,6 +94,43 @@ export default defineComponent({
     const route = useRoute()
     const text = ref('')
     const is_search = ref(false)
+    const visible = ref(false)
+    //语言设置
+    const lang = ref(UserCtr.lang)
+    const languages = [{
+          key: 'zh',
+          language: '简体中文',
+        }, {
+          key: 'en',
+          language: 'English',
+        }, {
+          key: 'tw',
+          language: '繁體中文',
+        }, {
+          key: 'vi',
+          language: 'Tiếng Việt',
+        }, {
+          key: 'th',
+          language: 'ไทย',
+        }, {
+          key: 'ms',
+          language: 'Melayu',
+        }, {
+          key: 'ad',
+          language: 'Indonesia',
+        }, {
+          key: 'md',
+          language: 'Burmese',
+        }, {
+          key: 'ry',
+          language: 'Japanese',
+        }, {
+          key: 'pty',
+          language: 'Portuguese',
+        }, {
+          key: 'hy',
+          language: 'Korean',
+        }]
     watch(() => route.path, (newVal) => {
       is_search.value = newVal=='/search'
     },
@@ -55,7 +138,7 @@ export default defineComponent({
     )
     onMounted(() => {
       compute_userInfo();
-     
+
     });
 
     const compute_userInfo = () => {
@@ -67,10 +150,34 @@ export default defineComponent({
     const change_input = () => {
   
     }
+    const onExpend = () => {
+      visible.value = !visible.value
+    }
+
+    // 切换语言
+    const on_change_lang = (key) => {
+      lang.value = key
+      api_account.set_user_lang({ token: UserCtr.get_user_token(), languageName: lang.value }).then(res => {
+          let code = lodash.get(res, 'code');
+          if (code == 200) {
+              // 设置国际化语言
+              loadLanguageAsync(lang.value).then().finally(() => {
+                UserCtr.set_lang(lang.value) 
+              })
+          } else if (code == '0401038') {
+              useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t("common.code_empty"))
+          }
+      })
+    }
 
     return {
       text,
       change_input,
+      on_change_lang,
+      lang,
+      languages,
+      onExpend,
+      visible,
       is_search,
       format_balance,
       UserCtr,
@@ -93,8 +200,73 @@ export default defineComponent({
     margin-right: 10px;
     font-family: "DIN";
   }
+ 
+}
+.personal-menu{
+  background: #fff;
+}
+.icon{
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
+.arrow{
+  width: 18px;
+  height: 18px;
+}
+.personal-content{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+}
+.language_item{
+  display: flex;
+  height: 50px;
+  align-items: center;
+  padding: 0 45px 0 27px;
+  transition: all 0.25s;
+  justify-content: space-between;
+  &.active{
+    color: #FF7000;
+    background: #FFF1E6;
+  }
+  > span {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    font-weight: 400;
+  }
+  .lang{
+    width: 12px;
+    height: 9px;
+  }
+}
+.language_item:hover{
+  color: #FF7000;
+  background: #FFF1E6;
+}
+.lang-icon{
+  width: 17px;
+  height: 13px;
+  margin-right: 10px;
+  background: url($SCSSPROJECTPATH + '/image/personal/lang.png') no-repeat;
+  background-size: calc(3.2px * 5) calc(36.4px * 5);
+  
+}
+.currpon{
+  cursor: pointer;
 }
 
+
+/*语言国旗图标*/
+@each $code, $index in (zh: 0, en: 1, tw: 2, vi: 3, th: 4, ms: 5, ad: 6, md: 7, ry: 8, pty: 9, hy: 10) {
+  .lang-#{$code} {
+    $position:-17px * $index;
+    background-position: 0 calc(#{$position});
+  }
+}
+/* ************** 切换语言前面的图标 ************** -E */
 .s-input {
   width: 200px;
   transition: all 0.3s linear;

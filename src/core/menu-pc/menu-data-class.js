@@ -179,6 +179,7 @@ class MenuData {
 
   // 设置 菜单的版本变化
   set_menu_data_version() {
+    console.log('进来了几次');
     useMittEmit(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA)
     this.menu_data_version.value = Date.now()
   }
@@ -463,6 +464,7 @@ class MenuData {
     this.menu_root_show_shoucang = obj.root;
     MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'), this.is_scroll_ball())
     // 设置全屏
+    this.set_menu_data_version();
     this.set_multi_column();
   }
     /**
@@ -781,7 +783,7 @@ class MenuData {
   // 根据菜单id 获取对应的euid
   get_mid_for_euid(mi) {
     let obj = lodash.get(BaseData.mi_euid_map_res,`[${mi}]`, {})
-    return obj.p || 0
+    return obj.p || 30001
   }
 
   // 新菜单规律核心参照表
