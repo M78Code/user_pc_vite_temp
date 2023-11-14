@@ -5,7 +5,7 @@ import {
 } from "vue";
 import lodash from "lodash";
 import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache.js";
-import { PageSourceData, MatchDataWarehouse_PC_List_Common as MatchListData, UserCtr } from "src/core/index.js";
+import { PageSourceData, MatchDataWarehouse_PC_List_Common as MatchListData, MatchDataWarehouse_PC_Detail_Common } from "src/core/index.js";
 import { api_match } from "src/api/index.js";
 import { useMittEmit, MITT_TYPES, useMittOn } from "src/core/mitt/index.js";
 // import { set_sticky_top } from 'src/core/match-list-pc/match-card/module/sticky-top.js'
@@ -355,12 +355,16 @@ function get_hot_match_list(backend_run = false) {
 					api_bymids({ is_first_load: true });
 					// 切换右侧赛事
 					let first_match = match_list[0];
-					let params = {
-						media_type: "auto",
-						mid: first_match.mid,
-						tid: first_match.tid,
-						sportId: first_match.csid,
-					};
+					// let params = {
+					// 	media_type: "auto",
+					// 	mid: first_match.mid,
+					// 	tid: first_match.tid,
+					// 	sportId: first_match.csid,
+					// };
+					if(first_match){
+						MatchDataWarehouse_PC_Detail_Common.set_match_details(first_match, [])
+						useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, first_match.mid)
+					}
 					// this.regular_events_set_match_details_params(null, params);
 				} else {
 					// 更新可视区域赛事盘口数据

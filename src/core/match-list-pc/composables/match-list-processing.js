@@ -279,12 +279,12 @@ const mx_use_list_res_when_code_200_and_list_length_gt_0 = ({ match_list, collec
 			// 非详情页 切换右侧为列表第一场赛事
 			else if (route_name != "details") {
 				let first_match = match_list[0];
-				let params = {
-					media_type: "auto",
-					mid: first_match.mid,
-					tid: first_match.tid,
-					sportId: first_match.csid,
-				};
+				// let params = {
+				// 	media_type: "auto",
+				// 	mid: first_match.mid,
+				// 	tid: first_match.tid,
+				// 	sportId: first_match.csid,
+				// };
 				if(first_match){
 					MatchDataWarehouse_PC_Detail_Common.set_match_details(first_match, [])
 					useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, first_match.mid)
