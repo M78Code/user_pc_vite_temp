@@ -48,7 +48,7 @@
 import { i18n_t, compute_css_obj } from "src/core/index.js";
 import { useRouter, useRoute } from "vue-router";
 import { useMittEmit, MITT_TYPES,SessionStorage } from "src/core/index.js";
-
+import {LOCAL_PROJECT_FILE_PREFIX} from 'src/core';
 import {
   ref,
   watch,
@@ -216,10 +216,14 @@ const activity_handle = item => {
     border-bottom: 0.08rem solid var(--q-gb-t-c-8);
     padding: 0.14rem;
     margin: 0;
+    height: 0.5rem;
+    .league-icon{
+     margin-top: 0.08rem;
+     margin-left: 0.96rem;
+    }
   }
 
   .setting-item {
-    height: 0.5rem;
     display: flex;
     justify-content: space-between;
     align-items: center;

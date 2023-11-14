@@ -262,7 +262,6 @@ function mounted_fn() {
 	useMittOn(MITT_TYPES.EMIT_API_BYMIDS, api_bymids);
 	useMittOn(MITT_TYPES.EMIT_MX_COLLECT_MATCH, mx_collect_match);
 	useMittOn(MITT_TYPES.EMIT_MiMATCH_LIST_SHOW_MIDS_CHANGE, show_mids_change);
-	init_page_when_base_data_first_loaded()
 	useMittOn(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA, init_page_when_base_data_first_loaded);
 	load_video_resources();
 }
@@ -454,6 +453,7 @@ function check_match_last_update_time() {
 		}
 	});
 	if (mids.length > 0) {
+		console.log('进来了几次1');
 		api_bymids({ mids });
 	}
 };
