@@ -197,20 +197,22 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 				// 非电竞切换右侧 为列表第一场赛事
 				let first_league = all_league_list[0];
 				let mids = first_league.mids.split(",");
-				let params = {
-					media_type: "auto",
-					mid: mids[0],
-					tid: first_league.tid,
-					sportId: first_league.csid,
-				};
+				// let params = {
+				// 	media_type: "auto",
+				// 	mid: mids[0],
+				// 	tid: first_league.tid,
+				// 	sportId: first_league.csid,
+				// };
 				console.log('进来了几次1');
 				//触发右侧详情更新
-				useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, params);
+				// useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, params);
 				callback_func = () => {
 					// lockie
 					const match = MatchListData.get_quick_mid_obj(Number(mids[0]));
-					MatchDataWarehouse_PC_Detail_Common.set_match_details(match, [])
-					useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, mids[0])
+					if(match){
+						MatchDataWarehouse_PC_Detail_Common.set_match_details(match, [])
+						useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, mids[0])
+					}
 					// this.regular_events_set_match_details_params(cut, params);
 				};
 			}
@@ -283,9 +285,10 @@ const mx_use_list_res_when_code_200_and_list_length_gt_0 = ({ match_list, collec
 					tid: first_match.tid,
 					sportId: first_match.csid,
 				};
-				const match = MatchListData.get_quick_mid_obj(first_match.mid);
-				MatchDataWarehouse_PC_Detail_Common.set_match_details(match, [])
-				useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, first_match.mid)
+				if(first_match){
+					MatchDataWarehouse_PC_Detail_Common.set_match_details(first_match, [])
+					useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, first_match.mid)
+				}
 				// regular_events_set_match_details_params(cut, params);
 			}
 		}
