@@ -21,11 +21,13 @@
         use_component_key="MatchHandicap2"
       />
       <!-- 比分板 -->
-    <div v-tooltip="{ content: t('common.score_board') }"
-      v-if="!menu_config.is_export()"
+    <div v-tooltip="{ content: t('common.score_board') }" class="score-board"
+      :style="`width:${match_list_tpl_size.media_width}px !important;`"
         @click="jump_to_details()">
-      <div class="score-board"
+        <!-- 图片资源有问题，先用文字替代  -->
+      <div 
         :style="compute_css_obj({key: 'pc-home-score-board'})">
+        比分
       </div>
     </div>
   </div>
@@ -85,12 +87,14 @@ watch(() => MatchListCardDataClass.list_version.value, (new_value, old_value) =>
   }
 })
 function jump_to_details ()  {
+  const {tid , csid} = match;
+  //比分板跳转到详情页
     router.push({
       name: 'details',
       params: {
         mid: props.mid,
-        tid: match.tid,
-        csid: match.csid
+        tid: tid,
+        csid: csid
       }
     })
 }
@@ -171,9 +175,14 @@ onMounted(() => {
 }
 
 .score-board {
-  width: 16px;
-  height: 12px;
+  // width: 16px;
+  // height: 12px;
   cursor: pointer;
   background-size: 100%;
+  text-align: center;
+  margin-left: auto;
+  &:hover {
+    color: #FF7000;
+  }
 }
 </style>

@@ -7,10 +7,10 @@
     <!-- 加载中 -->
     <!-- <loading v-if="is_loading" /> -->
     <scroll ref="myScroll" :on-pull="onPull">
-      <!-- 未结算 cashout 按钮 -->
-      <div v-if="UserCtr.user_info.settleSwitch == 1 && BetRecordClass.selected === 0 && !lodash.isEmpty(BetRecordClass.list_data)" 
+      <!-- 未结算 cashout 按钮 1期隐藏 -->
+      <!-- <div v-if="UserCtr.user_info.settleSwitch == 1 && BetRecordClass.selected === 0 && !lodash.isEmpty(BetRecordClass.list_data)" 
       :class="['cashout', 'unsellteCashout', BetRecordClass.is_early ? 'active': '']"
-      @click="BetRecordClass.set_is_early(!BetRecordClass.is_early)">{{ i18n_t('early.btn2') }}</div>
+      @click="BetRecordClass.set_is_early(!BetRecordClass.is_early)">{{ i18n_t('early.btn2') }}</div> -->
       <!-- BetRecordClass.bet_record_version -->
       <div style="display: none;">{{ BetRecordClass.bet_record_version }}</div>
       <!-- 已结算筛选按钮 -->
@@ -84,8 +84,7 @@ const orderNumberItemList = ref([])
 let useMitt = null
 
 // 延时器
-const timer_1 = ref(null)
-const timer_2 = ref(null)
+const timer = ref(null)
 
 onMounted(() => {
   // 首次进入获取数据
@@ -94,6 +93,11 @@ onMounted(() => {
   useMitt = useMittOn(MITT_TYPES.EMIT_BET_RECORD_SELECTED_CHANGE, function (val) {
     init_data(val)
   }).off;
+})
+
+onUnmounted(() => {
+  clearInterval(timer.value)
+  useMitt && useMitt()
 })
 
 /**
@@ -109,8 +113,8 @@ const init_data = (_index) => {
 
   // 未结算时，轮休获取提前结算列表金额
   if(_index === 0) {
-    clearInterval(timer_2.value)
-    timer_2.value = setInterval(() => {
+    clearInterval(timer.value)
+    timer.value = setInterval(() => {
       if (document.visibilityState == 'visible') {
         check_early_order()
       }
@@ -120,7 +124,7 @@ const init_data = (_index) => {
 // 根据索引获取当前接口的api和params
 const init_params_api = (_index) => {
   let params = {}
-  let url_api = null;
+  let url_api = new Promise();
   switch (_index) {
     case 0:
       params = {
@@ -248,7 +252,7 @@ const onPull = () => {
   //加载中
   ele.setState(4);
   api_info.url_api(api_info.params).then(res => {
-    //加载完成
+    //加载完成timer_2
     ele.setState(5);
     let { record, hasNext } = lodash.get(res, "data", {});
     is_hasnext.value = hasNext
@@ -263,12 +267,6 @@ const onPull = () => {
     }
   }).catch(err => { console.error(err) });
 }
-
-onUnmounted(() => {
-  clearTimeout(timer_1.value)
-  clearInterval(timer_2.value)
-  useMitt && useMitt()
-})
 
 defineExpose({
   timeType,

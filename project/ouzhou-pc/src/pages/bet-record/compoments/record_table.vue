@@ -44,7 +44,13 @@
             <q-td key="bettingType" :props="props">
               <template v-for="(item, index) in props.row.orderVOS">
                 <div>{{ match_type[item.matchType] }}</div>
-                <span>{{ item.playName }}</span>
+                <span>
+                  {{ item.playName }}
+                  <span
+                    v-if="item.matchType != 1 && item.scoreBenchmark && item.playId != '334'"
+                    :key="index"
+                  >({{format_score(item.scoreBenchmark) }})</span>
+                </span>
               </template>
             </q-td>
             <!-- 投注选项 -->
