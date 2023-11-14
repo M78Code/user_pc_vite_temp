@@ -133,11 +133,11 @@ class MenuData {
     this.router_root = ref(1)
     // 左侧菜单id
     this.left_menu_mi = ref('')
-    //  1001 fetured  10002 top events   // 4001 matches  4002 langue 
+    //  1001 fetured  1002 top events   // 4001 matches  4002 langue 
     this.router_root_lv_2 = 1001
     
     this.router_root_version = ref('')
-
+    // 1002 4002
     this.coom_soon = ref(false)
 
     // ---------------------------- 欧洲版-pc 专用 --------------------------------
