@@ -23,7 +23,7 @@ if (!project) {
   console.log('');
   console.log('');
   console.log('');
-  console.log('活动相关的组件代码需要在  project/animation  内   素材在  public/animation 内');
+  console.log('相关的组件代码需要在  project/animation  内   素材在  public/animation 内');
   console.log('');
   console.log('');
 }
@@ -89,7 +89,7 @@ export default defineConfig({
     },
   },
   server: {
-    port: 29300,
+    port: 29400,
      open: `../../project/${project}/index.html`,
     // open:    "../../project/yazhou-pc/index.html" ,
     hmr: true,
