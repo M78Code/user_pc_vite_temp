@@ -13,7 +13,7 @@
         </div>
         <div class="select_time">
           <span @click.stop>
-            <q-btn-dropdown disabled flat outline  style="color: #FF7000"  padding="0" label="Fulltime Result" 
+            <q-btn-dropdown flat outline  style="color: #FF7000"  padding="0" label="Match (Regular Time)" 
               dropdown-icon="expand_more" content-class="select_time_style">
               <q-list>
                 <q-item v-for="item in hps_play_data" :key="item.hpid" @click.stop="on_select_play(item)"
@@ -399,6 +399,7 @@ export default {
           color: #333;
           font-size: 14px;
           margin-left: 5px;
+          display: none;
         }
       }
       .q-ripple{

@@ -1,47 +1,58 @@
 <template>
-    <div class="header" :style="{ height: tabActive == 'league' ? '0.56rem' : '1.0rem' }">
-        <div class="tabs">
-            <div class="matches" :class="tabActive == 'matches' ? 'active' : ''
-            ">
-                <span @click="changeTab('matches', 0)">{{
-                    "Matches"
-                }}</span>
-            </div>
-            <div class="league" :class="tabActive == 'league' ? 'active' : ''
-            " @click="changeTab('league', 1)">
-                <span>{{ "League" }}</span>
-            </div>
-            <!-- league的下拉项 -->
-            <div class="select" v-if="tabActive == 'league'">
-                <span class="select-text">{{
-                    // selectOptions[0].label
-                    curSelectedOption.label
-                }}</span>
-                <span class="down_arrow" @click="toggerModel"></span>
-            </div>
-            <template v-if="tabModel && tabActive == 'league'">
-                <ul class="option-list">
-                    <template v-for="(item, index) in selectOptions" :key="index">
-                        <li :class="dateIndex == index ? 'active' : ''
-                        " @click="changeDate(index)">
-                            {{ item.label }}
-                        </li>
-                    </template>
-                </ul>
-            </template>
-        </div>
-        <div class="menu_list_top_tab_background" :class="'current_menu_mi_' + current_menu_mi"></div>
-        <!-- 七天时间 -->
-        <div class="date_time" v-if="tabActive == 'matches'">
-            <q-virtual-scroll ref="scrollRef" :items="week" virtual-scroll-horizontal v-slot="{ item, index }">
-                <div @click="changeDatetab(item, index)" class="week" :class="second_tab_index == index ? 'active' : ''">
-                    <span>
-                        <span>{{ item.name }}</span>
-                    </span>
-                    <span class="border_right"></span>
+        <!-- <div class="header" :style="{ height: tabActive == 'league' ? '0.56rem' : '1.0rem' }"> -->
+        <div class="header" >
+            <div class="tabs">
+                <div class="matches" :class="tabActive == 'matches' ? 'active' : ''
+                ">
+                    <span @click="changeTab('matches', 0)">{{
+                        "Matches"
+                    }}</span>
                 </div>
-            </q-virtual-scroll>
-        </div>
+                <div class="league" :class="tabActive == 'league' ? 'active' : ''
+                " @click="changeTab('league', 1)">
+                    <span>{{ "League" }}</span>
+                </div>
+                <!-- league的下拉项 -->
+                <div class="select" v-if="tabActive == 'league'">
+                                <span class="select-text">{{
+                                    curSelectedOption.label
+                                }}</span>
+                                <span class="down_arrow" @click="toggerModel"></span>
+                            </div>
+                            <template v-if="tabModel && tabActive == 'league'">
+                                <ul class="option-list">
+                                    <template v-for="(item, index) in selectOptions" :key="index">
+                                        <li :class="dateIndex == index ? 'active' : ''
+                                        " @click="changeDate(index)">
+                                            {{ item.label }}
+                                        </li>
+                                    </template>
+                                </ul>
+                            </template>
+                        </div>
+                        <div class="menu_list_top_tab_background" :class="'current_menu_mi_' + current_menu_mi"></div>
+                        <!-- 七天时间 -->
+                        <div class="date_time" v-if="tabActive == 'matches'">
+                            <q-virtual-scroll ref="scrollDateRef" :items="week" virtual-scroll-horizontal v-slot="{ item, index }">
+                                <div @click="changeDatetab(item, index)" class="week" :class="second_tab_index == index ? 'active' : ''">
+                                    <span>
+                                        <span>{{ item.name }}</span>
+                                    </span>
+                                    <span class="border_right"></span>
+                                </div>
+                            </q-virtual-scroll>
+                        </div>
+                        <!-- 联赛的区域选择 -->
+                        <div class="date_time" v-if="tabActive == 'league'">
+                            <q-virtual-scroll ref="scrollRefArea" :items="areaList" virtual-scroll-horizontal v-slot="{ item, index }">
+                                <div @click="areaListChange(item, index)" class="week" :class="area_tab_index == index ? 'active' : ''">
+                                    <span>
+                                        <span>{{ item }}</span>
+                                    </span>
+                                    <span class="border_right"></span>
+                                </div>
+                            </q-virtual-scroll>
+                        </div>
     </div>
 </template>
   
@@ -65,7 +76,7 @@ const emit = defineEmits(["changeDate", "changeTab"]);
 const tabActive = ref("matches");//tab
 const tabModel = ref(false);//下拉框
 const dateIndex = ref(0);//下拉框选择
-const scrollRef = ref(null);
+const scrollDateRef = ref(null);
 const scrollRefArea = ref(null);
 let second_tab_index = ref(0);//单日选择
 let area_tab_index = ref(0);//地区选择
@@ -77,7 +88,7 @@ const areaList = reactive([
     "Europ",
     "Africa",
     "Asia",
-    "North Amerrica",
+    "North America",
     "South America",
     "Oceania",
 ]);
@@ -115,7 +126,6 @@ const changeDate = (index) => {
     tabModel.value = false;
     emit("changeDate", selectOptions[index].timestamp);
     curSelectedOption.value = selectOptions[index]
-    console.log('selectOptions[index]: ', selectOptions[index]);
 }
 /**
  * 时间选择tab-赛事列表筛选
@@ -125,7 +135,7 @@ const changeDate = (index) => {
 const changeDatetab = (item, index) => {
     tabModel.value = false;
     const move_index = week.findIndex((t, _index) => _index === index);
-    scrollRef.value && scrollRef.value.scrollTo(move_index - 2, "start-force");
+    scrollDateRef.value && scrollDateRef.value.scrollTo(move_index - 2, "start-force");
     second_tab_index.value = index;
     MenuData.set_date_time(item.val, item.type);
     //根据时间筛选列表
@@ -134,8 +144,9 @@ const changeDatetab = (item, index) => {
         MatchMeta.set_origin_match_data()
     } else {
         //根据时间筛选列表
-        MatchMeta.filter_match_by_time(item.val) 
+        MatchMeta.filter_match_by_time(item.val)
     }
+    emit("changeDate", item.val);
 };
 watch(() => MenuData.menu_mi.value, () => {
     //球种改变设置今日
@@ -173,11 +184,11 @@ onMounted(() => {
  * 地区选择tab
  * @param {*} index 
  */
-const areaListChange = (index) => {
-    // tabModel.value = false;
-    // const move_index = areaList.findIndex((t, _index) => _index === index);
-    // scrollRefArea.value.scrollTo(move_index - 2, "start-force");
-    // area_tab_index.value = index;
+const areaListChange = (item,index) => {
+    tabModel.value = false;
+    const move_index = areaList.findIndex((t, _index) => _index === index);
+    scrollRefArea.value.scrollTo(move_index - 2, "start-force");
+    area_tab_index.value = index;
 }
 </script>
   
@@ -185,7 +196,7 @@ const areaListChange = (index) => {
 .header {
     font-size: 16px;
     font-family: Roboto;
-   
+
 
     // 头部tab样式
     .tabs {
@@ -279,6 +290,7 @@ const areaListChange = (index) => {
 
     // 七天时间tabs样式
     .date_time {
+        /* height:44px; */
         min-width: 100%;
         display: flex;
         align-items: center;
@@ -377,7 +389,8 @@ const areaListChange = (index) => {
     .tabs,
     .date_time {
         background-color: rgba(255, 255, 255, 1);
-        :deep(.q-virtual-scroll__content){
+
+        :deep(.q-virtual-scroll__content) {
             border-bottom: 10px solid #E2E2E2;
         }
     }

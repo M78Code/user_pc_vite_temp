@@ -175,6 +175,8 @@ class BaseData {
    */
   async get_all_base_data () {
 
+    this.set_default_base_data()
+
     // 获取 用户信息
     await this.init_user_info();
 
@@ -213,11 +215,18 @@ class BaseData {
       localStorage.setItem('base_data', JSON.stringify(res))
       this.handle_base_data(res)
     }).catch((err) => {
-      const base_data = localStorage.getItem('base_data')
-      const res = base_data && JSON.parse(base_data)
-      res ? this.handle_base_data(res) : console.err('err:', '元数据接口请求超时')
+      this.set_default_base_data()
+      console.err('err:', '元数据接口请求超时')
     })
   }
+
+  // 从缓存读取默认数据
+  set_default_base_data () {
+    const base_data = localStorage.getItem('base_data')
+    const res = base_data && JSON.parse(base_data)
+    res && this.handle_base_data(res)
+  }
+
   // 元数据处理
   handle_base_data (res) {
     if (!(res instanceof Array)) return
@@ -716,7 +725,7 @@ class BaseData {
       obj[`mi_${i}`] = {
         euid: item.p || "", // 旧的菜单ID
         h5_euid: item.h,
-        orpt: "" + item.t, // 模板ID
+        orpt: item.t || "", // 模板ID
         pids: item.s || "", // 玩法ID
       };
     }

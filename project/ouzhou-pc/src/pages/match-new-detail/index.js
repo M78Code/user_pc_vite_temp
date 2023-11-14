@@ -2,7 +2,7 @@
  * @Author: cooper cooper@123.com
  * @Date: 2023-07-09 16:21:30
  * @LastEditors: lowen pmtylowen@itcom888.com
- * @LastEditTime: 2023-11-08 18:25:18
+ * @LastEditTime: 2023-11-13 22:35:42
  * @FilePath: \user-pc-vue3\src\project-ouzhou\pages\detail\index.js
  * @Description: 详情页相关接口数据处理
  */
@@ -13,7 +13,8 @@ import { api_match_list } from "src/api";
 import { MatchDataWarehouse_PC_Detail_Common as MatchDataWarehouseInstance,MenuData,UserCtr } from "src/core/index"; 
 import { filter_odds_func, handle_course_data, format_mst_data } from 'src/core/utils/matches_list.js'
 
-import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
+import { useMittEmit, MITT_TYPES ,useMittOn} from "src/core/mitt/index.js";
+import { LayOutMain_pc } from "src/core/"
 
 export function usedetailData(route) {
   // const route = useRoute();
@@ -131,7 +132,6 @@ export function usedetailData(route) {
         t: new Date().getTime(),
       };
       detail_loading.value = true;
-      // console.log(1111111111111,match_info)
       const res = await get_detail_data(params);
 
      
@@ -139,11 +139,16 @@ export function usedetailData(route) {
       detail_loading.value = false;
       detail_info.value ={...detail_info.value,...res.data}
       detail_info.value['course'] = handle_course_data(detail_info.value);
+
+      LayOutMain_pc.set_oz_show_right(detail_info.value.ms>0)  // 显示右侧
       //存取赛事详情基础信息
       MatchDataWarehouseInstance.set_match_details(detail_info.value,[])
       useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, mid);
       use_polling_mst(detail_info.value);
-    } catch (error) {}
+    } catch (error) {
+      console.error('get_detail_data', error)
+
+    }
   };
 
     /**
@@ -157,7 +162,9 @@ export function usedetailData(route) {
         };
         const res = await getMatchDetailByTournamentId(params);
         matchDetailList.value = res.data
-      } catch (error) {}
+      } catch (error) {
+        console.error('getMatchDetailByTournamentId', error)
+      }
     };
 
   
@@ -202,7 +209,9 @@ export function usedetailData(route) {
         label: item.marketName,
         value: item.orderNo,
       }));
-    } catch (error) {}
+    } catch (error) {
+      console.error('get_detail_category', error)
+    }
   };
   /**
    * 获取赛事列表数据
@@ -224,7 +233,9 @@ export function usedetailData(route) {
         ? current_key.value
         : tabList.value[0].value;
         get_match_detail(current_key.value);
-    } catch (error) {}
+    } catch (error) {
+      console.error('get_detail_list', error)
+    }
   };
 
   onMounted(() => {
@@ -232,6 +243,7 @@ export function usedetailData(route) {
     mid = route.params.mid
     tid = route.params.tid
     current_id.value = route.params.mid
+     LayOutMain_pc.set_oz_show_right(true)  // 显示右侧
 
     init();
     timer = setInterval(async () => {
@@ -239,7 +251,11 @@ export function usedetailData(route) {
       await get_detail_lists();
     }, 5000);
   });
+  //todo mitt 触发ws更新
+  const {off} = useMittOn(MITT_TYPES.EMIT_DATAWARE_DETAIL_UPDATE,(res)=>{
+  })
   onUnmounted(() => {
+    off()
     clearInterval(timer);
     clearInterval(mst_timer);
   });

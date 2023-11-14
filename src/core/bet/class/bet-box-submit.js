@@ -250,7 +250,6 @@ const get_query_bet_amount_pre = () => {
 
     // 获取额度接口合并
     api_betting.query_pre_bet_amount(params).then((res = {}) => {
-        console.error('aaaaasdasdas')
         if (res.code == 200) {
            
             BetViewDataClass.set_bet_min_max_money(res.data)
@@ -361,11 +360,9 @@ const submit_handle = type => {
     // 投注内容
     params.seriesOrders = seriesOrders
     // 测试投注失败
-    // BetViewDataClass.set_bet_order_status(2)
+    // BetViewDataClass.set_bet_order_status(5)
     // return
     api_betting.post_submit_bet_list(params).then(res => {
-
-
         if (res.code == 200) {
             useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD,{
                 code: res.code,

@@ -38,11 +38,11 @@
           <span
             @click.stop.prevent.self="clear_search"
             v-show="input_text.length > 0"
-            :class="[`icon-delete ${get_y0_suffix}`, { 'input-without-word': !input_text.length }]"
+            :class="{ 'input-without-word': !input_text.length }"
           ></span>
         </template>
       </q-input>
-      <div class="content">
+      <div class="content" v-if="list_data.length>0">
         <!-- 全选 -->
         <section class="all_select row justify-between items-center">
           <p class="row all_select_left">
@@ -70,9 +70,11 @@
         </section>
         <!-- 联赛 -->
         <section class="league_list" v-for="(type_item,type_index) in list_data" :key="type_index">
-          <p class="league_title row justify-between items-center">
-            {{type_item.leagueName}}
-            <span class="league_num">{{type_item.matchList.length}}</span>
+          <div class="league_title row justify-between items-center">
+            <p class="text row justify-between items-center">
+              <span>{{type_item.leagueName}}</span>
+              <span class="league_num">{{type_item.matchList.length}}</span>
+            </p>
             <img
               class="select_img"
               v-show="!type_item.checked"
@@ -87,7 +89,7 @@
               src="/src/base-h5/components/menu/app-h5-menu/tab/img/icon_checkbox_sel.svg"
               alt
             />
-          </p>
+          </div>
           <ul class="list_info">
             <li
               class="list_data row items-center justify-between"
@@ -115,12 +117,16 @@
             </li>
           </ul>
         </section>
-        <section class="btn row items-center justify-between">
+      </div>
+         <section v-if="list_data.length>1" class="btn row items-center justify-between">
           <div class="confirm_btn" @click="select_confirm">确定</div>
           <div class="cancel_btn" @click="select_cancel">取消</div>
         </section>
-      </div>
+       <!-- 无数据展示 -->
+    <no-data v-if="list_data.length<1" which="noMatch" style="margin-top: 0.26rem" :height="100"
+      ></no-data>
     </div>
+ 
   </div>
 </template>
 <script setup>
@@ -128,6 +134,8 @@ import { ref, watch } from "vue";
 import search from "src/core/search-class/search.js";
 import { api_search } from "src/api/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
+// 无网络展示组件
+import NoData from "src/base-h5/components/common/no-data.vue";
 defineOptions({
   name: "screen-modal" // 设置组件名称
 });
@@ -142,6 +150,8 @@ const get_y0_suffix = "";
 const list_data = ref([]);
 //选中的数据
 const select_data = ref([]);
+//抛出去的事件
+const emits = defineEmits(['select_change'])
 
 let rem_1 = (window.innerWidth * 100) / 375;
 const bounced_high = {
@@ -155,7 +165,7 @@ const bounced_high = {
 function all_select() {
   is_all_checked.value = !is_all_checked.value;
   list_data.value = list_data.value.map(item => {
-    item.checked = is_all_checked;
+    item.checked = is_all_checked.value;
     item.matchList = item.matchList.map(v => {
       v.checked = is_all_checked.value;
       return v;
@@ -209,6 +219,8 @@ function select_confirm() {
     item.matchList = item.matchList.filter(v => v.checked);
     return item;
   });
+  
+  emits('select_change',select_data.value);
   console.log('select_data.value',select_data.value)
 }
 /**
@@ -343,8 +355,13 @@ async function get_search_result() {
       font-weight: 500;
       padding: 0.1rem 0;
       border-top: 0.01rem solid #e4e6ed;
-      .league_num {
+      .text{
+        width: 86%;
+        span{
         display: inline-block;
+        }
+      }
+      .league_num {
         width: 0.19rem;
         height: 0.15rem;
         border-radius: 0.8rem;
@@ -357,6 +374,7 @@ async function get_search_result() {
     .list_info {
       .list_data {
         .league_name {
+          min-width: 2rem;
           .img {
             margin-right: 0.04rem;
           }
@@ -366,7 +384,10 @@ async function get_search_result() {
   }
   .btn{
     position: fixed;
-    bottom: 0.5rem;
+    bottom: 0;
+    height: 1rem;
+    width: 100%;
+    background: #ffffff;
     div{
       width: 1.29rem;
       height: 0.36rem;
@@ -385,7 +406,6 @@ async function get_search_result() {
        linear-gradient(0deg, #E4E6ED, #E4E6ED);
        border: 1px solid #E4E6ED;
        color: #AFB3C8;
-       margin-left: 0.06rem;
     }
   }
 }

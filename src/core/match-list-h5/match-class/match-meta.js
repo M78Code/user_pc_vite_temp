@@ -39,7 +39,7 @@ class MatchMeta {
     this.prev_scroll = null
     // 是否需要赛事归类操作
     this.is_classify = false
-    // 重置折叠对象https://test-user-pc-new.sportxxxifbdxm2.com/?ignore_iframe_pc=1&env=line1&pb=1&api=vEtkQtmX6wF8fAGV5b4UDx2mPRca2zMHLMj/YELjSwxjyhV5t0ifZDD6I0iwkpzJ&token=49cda8d77b3af2c9f7c8601606a587786f610032&gr=common#/
+    // 重置折叠对象
     MatchFold.clear_fold_info()
     // 重置收藏对象
     MatchCollect.clear_collect_info()
@@ -55,20 +55,21 @@ class MatchMeta {
     let menu_lv_v2 = ''
     let menu_lv_v1_sl = []
     let menu_lv_v2_sl = []
-    if(project_name == 'yazhou-h5'){
+    if (project_name == 'yazhou-h5') {
       // 菜单 ID 对应的 元数据赛事 mids
       menu_lv_v1 = lodash.get(MenuData.current_lv_1_menu, 'mi')
       menu_lv_v2 = lodash.get(MenuData.current_lv_2_menu, 'mi')
       menu_lv_v1_sl = lodash.get(MenuData.current_lv_1_menu, 'sl')
       menu_lv_v2_sl = lodash.get(MenuData.current_lv_2_menu, 'sl')
-    }else{
+    } else {
       // 菜单 ID 对应的 元数据赛事 mids   
-      // 先写死
       menu_lv_v1 = MenuData.current_lv_1_menu_i
       menu_lv_v2 = MenuData.current_lv_2_menu_i
       menu_lv_v1_sl = MenuData.get_menu_lvmi_list(menu_lv_v1)
       menu_lv_v2_sl = MenuData.get_menu_lv_2_mi_list(menu_lv_v2)
     }
+
+    this.get_real_match_data()
     // 滚球全部
     if (+menu_lv_v1 === 1 && menu_lv_v2 == 0) return this.get_origin_match_mids_by_mis(menu_lv_v1_sl)
 
@@ -465,15 +466,32 @@ class MatchMeta {
   }
 
   /**
-   *@description 获取 to events 赛事
+   * @description 获取真实赛事
    */
-  get_top_events_match() {
+  async get_real_match_data () {
+    const params = this.get_base_params()
+    const res = await api_common.post_match_full_list({
+      ...params,
+    })
+    if (+res.code !== 200) return
+    const list = lodash.get(res, 'data', [])
+    const length = lodash.get(list, 'length', 0)
+    if (length < 1) return
+    this.handler_match_list_data({ list: list })
+  }
+
+  /**
+   *@description 获取 to events 赛事
+   *@param {csid}
+   */
+  get_top_events_match(csid) {
     // 菜单没数据先写死
     const params = {
-      euid: "30002",
+      euid: "30199",
       sort: 1,
       apiType: 1,
       orpt: -1,
+      csid,
       cuid: UserCtr.get_cuid(),
     }
     api_match.post_fetch_match_list(params).then((res) => {
@@ -546,6 +564,30 @@ class MatchMeta {
     if (res.code !== '200') return this.set_page_match_empty_status(true);
     const list = lodash.get(res, 'data', [])
     this.handler_match_list_data({ list: list, is_virtual: false })
+  }
+
+  /**
+   * @description 获取四大联赛列表
+   */
+  async get_four_leagues_list () {
+    // 四大联赛 tid 写死 西甲 320 英超 180 意甲 239 德甲 276
+    // 只有足球 euid 40203
+    // 热门 type 12
+    const tid = ['320', '180', '239', '276']
+    const euid = '40203'
+    const type = '12'
+    const params = this.get_base_params(euid)
+    const res = await api_match_list.get_matches_list({
+      ...params,
+      md: MenuData.data_time,
+      tid: tid.toString(),
+      euid,
+      type
+    })
+    console.log(res)
+    if (res.code !== '200') return this.set_page_match_empty_status(true);
+    const list = lodash.get(res, 'data', [])
+    this.handler_match_list_data({ list: list })
   }
 
   /**
@@ -737,6 +779,15 @@ class MatchMeta {
     MatchDataBaseH5.set_list(list)
     // 获取赛事赔率
     this.get_match_base_hps_by_mids()
+  }
+
+   /**
+   * @description 提交元数据更新仓库
+   * @param { list } 赛事数据
+   */
+  handle_base_match_data (list) {
+    // 设置仓库渲染数据
+    MatchDataBaseH5.set_list(list)
   }
 }
 

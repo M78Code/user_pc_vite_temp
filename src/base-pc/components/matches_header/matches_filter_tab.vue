@@ -1,108 +1,121 @@
 <template>
   <div class="current-filter-wrap">
-    <div class="current-filter-tab" v-for="(item, index) in current_filter_list" :key="item.value">
-      <div class="filter-label" @click="choose_filter_tab(item)" :class="{ 'checked': current_choose_tab == item.value }">
-        {{ item.label }}
-        <div class="current-mark" :class="{'show-mark': current_choose_tab == item.value}"></div>
+    <div class="current-filter-list" @scroll="on_scroll">
+      <div class="current-filter-tab" v-for="(item, index) in current_filter_list" :key="item.value">
+        <div class="filter-label" @click="choose_filter_tab(item, index)" :class="{ 'checked': final_index == index }">
+          {{ item.label }}
+          <div class="current-mark" :class="{'show-mark': final_index == index}"></div>
+        </div>
+        <div class="filter-tab-split-line" v-show="index != current_filter_list.length - 1"></div>
       </div>
-      <div class="filter-tab-split-line" v-show="index != current_filter_list.length - 1"></div>
+    </div>
+
+    <div class="prev-btn-box" v-show="show_left_btn" @click="filter_tab_scroll('prev')">
+      <div class="prev-btn">
+        <img src="../../../assets/images/tr_right_arrow.png" alt="">
+      </div>
+      <div class="shadow-box"></div>
+    </div>
+    <div class="next-btn-box" v-show="show_right_btn" @click="filter_tab_scroll('next')">
+      <div class="shadow-box"></div>
+      <div class="next-btn">
+        <img src="../../../assets/images/tr_right_arrow.png" alt="">
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
   import { ref,onMounted,onUnmounted, watch } from 'vue';
-  import _ from "lodash"
-  import MatchListOuzhouClass from 'src/core/match-list-pc/match-ouzhou-list.js'
   import BaseData from "src/core/base-data/base-data.js";
-  import { UserCtr,MenuData } from 'src/core/index.js'
-  import { api_common } from "src/api/index.js";
-  import DateTabClass from "src/base-pc/components/tab/date-tab/date-tab-class.js"
+  import { UserCtr,MenuData, useMittOn, useMittEmit,MITT_TYPES } from 'src/core/index.js'
+  import {
+    handle_click_menu_mi_3_date,
+    get_date_menu_matches_list,
+    // current_filter_list,
+    final_index
+  } from "src/base-pc/components/tab/date-tab/index.js"
+  import { format_M_D_PC } from "src/core/format"
 
-  const current_choose_tab = ref('');
+    // 是否显示左边按钮
+  const show_left_btn = ref(false);
+  // 是否显示右边按钮
+  const show_right_btn = ref(false);
 
-  // 日期
-  const current_filter_list = ref([{label:"Today",value:""}])
+  const current_filter_list = ref([])
 
-  onMounted(()=>{
-    // 获取最新的 数据
-    let redux_menu = _.cloneDeep(MatchListOuzhouClass.redux_menu) 
-    // 修改菜单数据
-    //redux_menu.mid_tab_menu_type = ''
-    MatchListOuzhouClass.set_menu(redux_menu)
-    get_date_menu_list()
+  let area_obj = null;
+  let area_obj_wrap = null;
+  onMounted(async ()=>{
+    area_obj = document.querySelector('.current-filter-list');
+    area_obj_wrap = document.querySelector('.current-filter-wrap');
+    if (area_obj?.scrollWidth >= area_obj_wrap?.clientWidth) {
+      show_right_btn.value = true;
+    }
+    useMittOn(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE,set_menu_change)
+    let time = await UserCtr.get_system_time()
+    update_time(time)
+    get_date_menu_matches_list()
   })
- 
- const menu_id = ref(0)
-
-  // 监听 tab切换变化
-let un_subscribe = () => {
-  const { menu_id_euid_ealy,mid_tab_menu_type,menu_root,menu_left } = MatchListOuzhouClass.redux_menu
-
-  // 切换赛种后 初始化
-  if(!mid_tab_menu_type){
-    current_choose_tab.value = ''
-  }
-  // 左侧菜单切换 并且 赛种id不能相同
-  if( menu_root == 4 && (menu_id.value != menu_left )){
-    menu_id.value = menu_left
-  }
-
-};
-
-/**
-* 获取 日期 菜单
-* nu/getDateMenuList
-*/
-async function get_date_menu_list() {
-  let params =  DateTabClass.compute_get_date_menu_list_params();
-  let api_fn_name = ''
-  if (MenuData.is_export()) {
-    //电竞
-    api_fn_name = "get_esports_date_menu"
-  } else {
-    api_fn_name = "post_date_menu"
-  }
-  let res = await api_common[api_fn_name](params);
-  let data = res.data;
-  let arr = [];
-  if (Array.isArray(data)) {
-    data.map((x) => {
-      if(x.field1){
-        arr.push({
-          count: x.count,
-          value: x.field1,
-          label: x.menuName,
-        });
-     }
-    });
-  }
-  current_filter_list.value = [{label:"Today",value:""}, ...arr]
-  DateTabClass.handle_click_menu_mi_3_date(current_filter_list.value[0])
-}
-
-watch(MenuData.menu_data_version,()=>{
-  get_date_menu_list()
-})
-  /**
-   * @param
-   */
-  const choose_filter_tab = item => {
-    // 获取最新的 数据
-    let redux_menu = _.cloneDeep(MatchListOuzhouClass.redux_menu) 
-    // 修改菜单数据
-    redux_menu.mid_tab_menu_type = item.value
-
-    MatchListOuzhouClass.set_menu(redux_menu)
-
-    current_choose_tab.value = item.value
-
-    DateTabClass.handle_click_menu_mi_3_date(item)
-  }
 
   onUnmounted(()=>{
-    un_subscribe()
+    useMittOn(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE,set_menu_change).off
   })
+
+  const update_time = (time) => {
+    console.log(time, 'timexxxx')
+    let arr = []
+    let day = 24 * 60 * 60 * 1000
+    let label = ''
+    let value = ''
+   for (let i = 0; i <=6; i++) {
+    value = i === 0 ? time : time + day * i
+    console.log(value, 'valuevalue', time + day * i, day * i)
+    label = i === 0 ? "Today" :  i === 1 ? "Tomorrow" : `${format_M_D_PC(value)}`
+    arr.push({
+      label,
+      value
+    })
+   }
+   console.log(arr)
+   current_filter_list.value = arr
+   final_index.value = 0
+  }
+
+  const set_menu_change = () => {
+    let obj = {
+      ...MenuData.left_menu_result,
+      lv2_mi: MenuData.left_menu_mi.value + '2',
+    }
+    MenuData.set_left_menu_result(obj)
+
+    MenuData.set_match_list_api_config(obj)
+  }
+ 
+ const choose_filter_tab = (item ,index) => {
+  final_index.value = index
+  handle_click_menu_mi_3_date(item)
+ }
+
+
+/**
+ * 
+ * @param {Element} e
+ * @description 滚动条滚动事件 
+ */
+ const on_scroll = (e) => {
+  let scrollLeft = e.target.scrollLeft;
+  if(scrollLeft > 0){
+    show_left_btn.value = true;
+  }else{
+    show_left_btn.value = false;
+  }
+  if(scrollLeft == (area_obj.scrollWidth - area_obj.clientWidth)){
+    show_right_btn.value = false;
+  }else{
+    show_right_btn.value = true;
+  }
+}
 
 </script>
 
@@ -114,9 +127,22 @@ watch(MenuData.menu_data_version,()=>{
     width: 100%;
     height: 44px;
     background: #FFFFFF;
-    padding-left: 18.25px;
+    padding: 0px 18.25px;
+    position: relative;
   }
-
+  .current-filter-list {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    background: #FFFFFF;
+    box-sizing: border-box;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
   .current-filter-tab {
     height: 100%;
     display: flex;
@@ -157,6 +183,42 @@ watch(MenuData.menu_data_version,()=>{
     margin-left: -4px;
     background: #FF7000;
     clip-path: circle(50% at 50% 100%);
+  }
+  .prev-btn-box, .next-btn-box {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    .shadow-box {
+      width: 10px;
+      height: 44px;
+      background: linear-gradient(270deg, #D9D9D9 0%, rgba(217, 217, 217, 0) 100%);
+      opacity: 0.1;
+    }
+  }
+  .prev-btn, .next-btn {
+    background: #FFFFFF;
+    width: 16px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    img {
+      width: 5px;
+      height: 8px;
+    }
+  }
+  .prev-btn-box {
+    left: 0;
+    .prev-btn {
+      img {
+        transform: rotate(180deg);
+      }
+    }
+  }
+  .next-btn-box {
+    right: 0;
   }
   .show-mark {
     display: block;

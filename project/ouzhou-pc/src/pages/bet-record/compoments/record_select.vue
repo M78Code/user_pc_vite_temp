@@ -1,8 +1,3 @@
-<!--
- * @Author: cooper
- * @Date: 2023-06-27 16:43:55
- * @Description: 注单历史筛选组件部分
--->
 <template>
   <div class="record-select">
     <!-- 未结算 -->
@@ -67,7 +62,7 @@ const date_value = ref('')
 const select_options = [
   { value: i18n_t("bet_record.sort_by_settled_time"), label: i18n_t("ouzhou.record.settled_time"), id: 2 },
   { value: i18n_t("bet_record.sort_by_bet_time"), label: i18n_t("ouzhou.record.bet_time"), id: 1 },
-  { value: i18n_t("bet_record.sort_by_match_time"), label: i18n_t("ouzhou.record.match_time"), id: 3 }
+  { value: i18n_t("bet_record.sort_by_match_time"), label: i18n_t("bet_record.match_time"), id: 3 }
 ]
 const tabChange = ref(false)
 onMounted(() => {
@@ -170,6 +165,7 @@ div.q-menu {
 
   &:deep(.q-checkbox__inner) {
     font-size: 30px;
+    color: #ff7000;
   }
 
 }
@@ -239,7 +235,7 @@ div.q-menu {
 
 .btn-group {
   height: 34px;
-  width: 330px;
+  //width: 330px;
   background: #E2E2E2;
   border-radius: 16px;
   box-sizing: border-box;

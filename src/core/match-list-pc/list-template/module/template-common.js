@@ -212,17 +212,16 @@ export const set_template_width_base = (
 export const set_ouzhou_template_width_base = (
   total_width,
   config,
-  middle_fn = () => {}
+  more_width
 ) => {
+  console.log('more_width', more_width);
   // 基础信息宽度
   config.process_team_width = 340;
   // 视频按钮区域宽度
   config.media_width = 46;
   config.play_icon_width = 115;
-  //  中间方法
-  middle_fn(config);
   // 设置投注项宽度
-  config.bet_width = 330;
+  config.bet_width = more_width ? 264 : 330;
   // 联赛标题高度
   config.league_title_height = 40;
   return config;
@@ -248,6 +247,7 @@ export const match_style_template = {
 export const match_style_template_ouzhou = {
   // 主盘口高度
   main_handicap_height:80,
+  is_dynamic_compute_height: true
 }
 
 // 因为我们的欧洲版 

@@ -7,7 +7,7 @@ const routes = [
     redirect: {
       name: "home",
     },
-    component: () => import('../layouts/main-layout1.vue'),
+    component: () => import('../layouts/main-layout.vue'),
     children: [
       // 首页
       {

@@ -53,7 +53,7 @@ class EnterParamsYazhouPc {
     // 首屏loading动画是否显示使用的延时器
     this.loading_is_show_timer = 0;
     try {
-      let qsInfo = new URLSearchParams(location.search);
+      let qsInfo = SEARCH_PARAMS.init_param;
       //解析URL参数
       //计算token
       let token = qsInfo.get("token") || LocalStorage.get("TOKEN") || "";

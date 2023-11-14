@@ -1,11 +1,4 @@
-<!--
- * @Author         : lane jstylane@itcom888.com
- * @Date           : 2023-07-15 19:17:42
- * @LastEditors: cooper cooper@123.com
- * @LastEditTime: 2023-07-17 17:28:47
- * @FilePath       : \user-pc-vue3\src\project-ouzhou\pages\detail\analysis\compoments\football_stats.vue
- * @Description    : 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
--->
+
 <!--
  * @Author: cooper
  * @Date: 2023-06-013 14:13:55
@@ -13,11 +6,6 @@
 -->
 <template>
   <div class="detail-tab" v-if="!_.isEmpty(score_list)">
-    <div class="tabs-wrap">
-      <span v-for="item in tabList" :key="item.id" @click="tabClick(item)"
-        :class="[{ 'is-active': item.id === active }, 'tabs-item']">{{ item.label }}
-      </span>
-    </div>
     <div>
       <div class="detail-tab-team">
         <div class="detail-tab-team-pos">
@@ -32,6 +20,7 @@
       <div>
        
         <div class="detail-statsic" v-if="score_list">
+
           <div v-for="item in statsList" :key="item.value">
             <div class="detail-statsic-title">{{ item.value }}</div>
             <div class="detail-statsic-chart" v-if="score_list[item.value_key]" >
@@ -43,7 +32,7 @@
                 size="50px"
                 :thickness="0.4"
                 color="amber-7" 
-                :track-color="score_list[item.value_key].percentage==0?'basic-track':'indigo-12'"
+                :track-color="score_list[item.value_key].percentage==0?'grey-3':'indigo-12'"
                 class="q-ma-md"
               />
               <span>{{score_list[item.value_key].away }}</span>
@@ -100,7 +89,7 @@ const statsList = ref([
   },
 ]);
 onMounted(()=>{
- 
+ console.log(1111111,props.score_list)
 
  
  
@@ -124,14 +113,7 @@ const sliderList = ref([
 
 ])
 const tab = ref("mails");
-const tabList = ref([
-  { label: i18n_t("common.panel_total"), id: 1 },
-  { label: "Timeline", id: 2 },
-]);
-const active = ref(1);
-const tabClick = (item) => {
-  active.value = item.id;
-};
+
 </script>
 
 <style lang="scss" scoped>
@@ -140,48 +122,6 @@ const tabClick = (item) => {
   background: #ffffff;
   padding-bottom: 15px;
   margin-bottom: 10px;
-}
-
-.tabs-wrap {
-
-  height: 50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  // padding-bottom: 10px;
-  border-bottom: 1px solid #e2e2e2;
-}
-
-.tabs-item {
-  margin-right: 40px;
-  display: block;
-  //  min-width: 50px;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 20px;
-  text-transform: capitalize;
-  color: #1a1a1a;
-  cursor: pointer;
-}
-
-.is-active {
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 20px;
-  text-transform: capitalize;
-  color: #1a1a1a;
-  position: relative;
-
-  &::before {
-    content: "";
-    position: absolute;
-    bottom: -14px;
-    left: 5%;
-    right: 5%;
-    width: 90%;
-    height: 2px;
-    background: #ff7000;
-  }
 }
 
 .detail-tab-team {

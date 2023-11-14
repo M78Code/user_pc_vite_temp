@@ -1,11 +1,4 @@
-<!--
- * @Author         : lane jstylane@itcom888.com
- * @Date           : 2023-07-15 19:17:42
- * @LastEditors    : lane jstylane@itcom888.com
- * @LastEditTime   : 2023-07-17 10:51:44
- * @FilePath       : \user-pc-vue3\src\project-ouzhou\pages\detail\analysis\compoments\basketball_stats.vue
- * @Description    : 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
--->
+
 <!--
  * @Author: cooper
  * @Date: 2023-06-013 14:13:55
@@ -13,11 +6,6 @@
 -->
 <template>
   <div class="detail-tab" v-if="!_.isEmpty(score_list)">
-    <div class="tabs-wrap">
-      <span v-for="item in tabList" :key="item.id" @click="tabClick(item)"
-        :class="[{ 'is-active': item.id === active }, 'tabs-item']">{{ item.label }}
-      </span>
-    </div>
     <div>
       <div class="detail-tab-team">
         <div class="detail-tab-team-pos">
@@ -95,6 +83,7 @@ const props =  defineProps({
   },
 })
 
+
 const value = ref(50);
 const standard = ref(15)
 const sliderList = ref([
@@ -111,26 +100,9 @@ const sliderList = ref([
     value_key:'S106'
   },
 ])
-const statsList = ref([
-  {
-    value: `2 ${i18n_t("common.score")}`,
-    value_key:'S107'
-  },
-  {
-    value: `3 ${i18n_t("common.score")}`,
-    value_key:'S108'
-  },
-  {
-    value: i18n_t("common.foul"),
-    value_key:'S106'
-  },
-]);
+
 const tab = ref("mails");
-const tabList = ref([
-  { label: i18n_t("common.panel_total"), id: 1 },
-  { label: "Timeline", id: 2 },
-]);
-const active = ref(1);
+
 const tabClick = (item) => {
   active.value = item.id;
 };
@@ -145,49 +117,6 @@ const tabClick = (item) => {
      border-radius: 0;
     }
 }
-
-.tabs-wrap {
-
-  height: 50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  // padding-bottom: 10px;
-  border-bottom: 1px solid #e2e2e2;
-}
-
-.tabs-item {
-  margin-right: 40px;
-  display: block;
-  //  min-width: 50px;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 20px;
-  text-transform: capitalize;
-  color: #1a1a1a;
-  cursor: pointer;
-}
-
-.is-active {
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 20px;
-  text-transform: capitalize;
-  color: #1a1a1a;
-  position: relative;
-
-  &::before {
-    content: "";
-    position: absolute;
-    bottom: -14px;
-    left: 5%;
-    right: 5%;
-    width: 90%;
-    height: 2px;
-    background: #ff7000;
-  }
-}
-
 .detail-tab-team {
   display: flex;
   justify-content: space-between;

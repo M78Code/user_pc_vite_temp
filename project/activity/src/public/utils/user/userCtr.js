@@ -281,8 +281,10 @@ class userCtr {
         url_search.set("rdm", new Date().getTime());
         // 删除  api
         url_search.delete('api')
+        SEARCH_PARAMS.init_param_del(['api']);
         // 增加GR 参数
         url_search.set("gr", gr);
+        SEARCH_PARAMS.init_param_set({gr})
 
         console.log("new url 1", new URL(location.href));
         // 旧的哈希  兼容   #/home?rdm=1660636891118 这种形式处理

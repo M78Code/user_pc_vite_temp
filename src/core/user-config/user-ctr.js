@@ -11,6 +11,7 @@ import { get_server_file_path } from "src/core/file-path/file-path.js";
 import pako_pb from "src/core/pb-decode/custom_pb_pako.js";
 import { infoUpload } from "src/core/http/";
 import { ServerTime } from "src/core/";
+
 import { LocalStorage, SessionStorage } from "src/core/utils/module/web-storage.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import { default_theme_key } from "src/core/theme/"
@@ -117,6 +118,28 @@ class UserCtr {
     // 常规体育的 图片地址 
     this.common_img_domain = ''
 
+    // 角球开关盘标识
+    this.corner_oc_change = ''
+    // 次要玩法数据更新
+    this.c303_data_change = ''
+    // 次要玩法盘口状态变化
+    this.c305_data_change = ''
+
+  }
+  
+  // 角球开关盘标识
+  set_corner_oc_change (val) {
+    this.corner_oc_change = val
+  }
+
+  // 次要玩法数据更新
+  set_c303_data_change (val) {
+    this.c303_data_change = val
+  }
+
+  // 次要玩法盘口状态变化
+  set_c305_data_change (val) {
+    this.c305_data_change = val
   }
 
   /**
@@ -288,6 +311,7 @@ class UserCtr {
         console.error(err);
       });
   }
+  
   /**
    * 设置版本 简易版还是 标准版
    * 2标准 1简易
@@ -545,14 +569,15 @@ class UserCtr {
       //  if(window.BUILDIN_CONFIG.gr != gr){
       if (window.BUILDIN_CONFIG.DOMAIN_RESULT.gr != gr) {
         // #TODO
-        let url_search = new URLSearchParams(location.search);
+        let url_search = SEARCH_PARAMS.init_param;
         //  重置 rdm 到最新的 时间戳  ，没有就 相当于新设置 ，有就相当于重置
         url_search.set("rdm", new Date().getTime());
         // 删除  api
         url_search.delete("api");
+        SEARCH_PARAMS.init_param_del(['api']);
         // 增加GR 参数
         url_search.set("gr", gr);
-
+        SEARCH_PARAMS.init_param_set({gr});
         console.log("new url 1", new URL(location.href));
         // 旧的哈希  兼容   #/home?rdm=1660636891118 这种形式处理
         let old_hash = location.hash;
@@ -1164,14 +1189,15 @@ class UserCtr {
         JSON.stringify({ token: sessionStorage.getItem("h5_token"), gr })
       );
       if (window.BUILDIN_CONFIG.gr != gr) {
-        let url_search = new URLSearchParams(location.search);
+        let url_search = SEARCH_PARAMS.init_param;
         //  重置 rdm 到最新的 时间戳  ，没有就 相当于新设置 ，有就相当于重置
         url_search.set("rdm", new Date().getTime());
         // 删除  api
         url_search.delete("api");
+        SEARCH_PARAMS.init_param_del(['api']);
         // 增加GR 参数
         url_search.set("gr", gr);
-
+        SEARCH_PARAMS.init_param_set({gr});
         console.log("new url 1", new URL(location.href));
         // 旧的哈希  兼容   #/home?rdm=1660636891118 这种形式处理
         let old_hash = location.hash;
@@ -1306,7 +1332,6 @@ class UserCtr {
   set_show_balance(state) {
     this.show_balance = state
     this.set_user_version()
-    console.error("ssss",this.show_balance)
   }
   /**
     * 更新用户信息版本 显示
@@ -1473,6 +1498,11 @@ class UserCtr {
     // url编码转换
     res = decodeURIComponent(searchParams.toString());
     return res;
+  }
+
+  async get_system_time () {
+    let res = await api_common.get_time_server()
+    return res.ts
   }
 }
 

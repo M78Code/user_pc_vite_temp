@@ -4,6 +4,8 @@
  * @Description: 赛事主列表相关 样式
  */
 .yb-match-list {
+  display: flex;
+  flex-direction: column;
   .c-match-item {
     display: flex;
     &.tpl-9,

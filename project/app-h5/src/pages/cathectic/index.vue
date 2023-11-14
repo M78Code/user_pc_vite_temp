@@ -8,15 +8,15 @@
     <div class="settle-dialog" :style="page_style">
       <div v-if="BetRecordClass.selected != 3" class="row items-center yb_fontsize16 head-top" @touchmove.prevent>
         <div class="row col items-center justify-center">
-          <p v-for="(item, index) in tabs.slice(0, 3)" 
-            :key="index" 
-            @click="change_record(index)" 
+          <p v-for="(item, index) in tabs.slice(0, 3)"
+            :key="index"
+            @click="change_record(index)"
             :class="BetRecordClass.selected == index && 'active-p'"
             > {{ item.title }}
           </p>
         </div>
       </div>
-  
+
       <div class="content-m" ref="record_box">
         <!-- 未结注单(未结算、预约中、已失效)、已结算注单 -->
         <cathectic-item-all />
