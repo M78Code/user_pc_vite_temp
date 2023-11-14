@@ -298,12 +298,13 @@ export const details_main = (router,route) => {
     }, 10);
   });
   // // 监听顶部刷新功能
-  // const { off } = useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS, detail_init);
+  const { off :refreshOff } = useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS, detail_init);
     //todo mitt 触发ws更新
     const {off} = useMittOn(MITT_TYPES.EMIT_DATAWARE_DETAIL_UPDATE,(res)=>{
     })
   onUnmounted(() => {
     clear_all_timer();
+    refreshOff()
     off();
   });
   return {
