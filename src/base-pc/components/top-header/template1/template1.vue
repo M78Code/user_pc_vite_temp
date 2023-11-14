@@ -48,7 +48,7 @@ export default defineComponent({
     ]);
     const nav_click = (item = {}) => {
       //页面中间头部导航显示处理
-      // MenuData.set_router_root_lv_1(item.id)
+      MenuData.set_router_root_lv_1(item.id)
       switch (item.id) {
         case 1:
           MenuData.set_menu_root(2); 
