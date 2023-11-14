@@ -179,6 +179,7 @@ const set_mid_menu_result = () => {
         index: final_index.value, // 当前选中的时间 接口用不上 只是存储下一使用
       };
     }
+    console.log('params', params);
     // 设置      中间 菜单输出
     MenuData.set_mid_menu_result(params);
     // 设置   请求  列表结构  API 参数的  值

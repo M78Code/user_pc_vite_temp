@@ -454,6 +454,7 @@ function check_match_last_update_time() {
 		}
 	});
 	if (mids.length > 0) {
+		console.log('进来了几次1');
 		api_bymids({ mids });
 	}
 };
