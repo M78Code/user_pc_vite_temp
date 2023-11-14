@@ -52,24 +52,14 @@ export default defineComponent({
       switch (item.id) {
         case 1:
           MenuData.set_menu_root(2); 
-          LayOutMain_pc.set_oz_show_right(false)
-          LayOutMain_pc.set_oz_show_left(true)
           // 默认设置 fetured
           MenuData.set_router_root_lv_2(1001)
-          userRouter.push({name: item.name})
-          break;
-        case 2:
-          LayOutMain_pc.set_oz_show_right(true)
-          LayOutMain_pc.set_oz_show_left(false)
-          // 设置滚球
-          userRouter.push({name: item.name})
           break;
         case 3:
-          LayOutMain_pc.set_oz_show_right(false)
-          LayOutMain_pc.set_oz_show_left(false)
-          userRouter.push({name: item.name})
+         
           break;
       }
+      userRouter.push({name: item.name})
       // let state = store.getState()
       // // 获取最新的 数据
       // let redux_menu = _.cloneDeep(state.menusReducer.redux_menu)
