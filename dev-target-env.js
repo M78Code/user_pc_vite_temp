@@ -92,20 +92,20 @@ DEV_TARGET_VERSION = "project_8-6544b116720143009a2f282d-1699000607498-test";
 
 
 
-// 活动单页面单独项目 专用的  
-let DEV_ACTIVITY_TARGET_ENV=''
+// 其他项目 非客户端H5 PC 项目 专用的  
+let DEV_TARGET_ENV=''
 //开发
-DEV_ACTIVITY_TARGET_ENV='dev'
+DEV_TARGET_ENV='dev'
 //测试
-DEV_ACTIVITY_TARGET_ENV='test'
+DEV_TARGET_ENV='test'
 //隔离
-DEV_ACTIVITY_TARGET_ENV='geli'
+DEV_TARGET_ENV='geli'
 //压测
-DEV_ACTIVITY_TARGET_ENV='mini'
+DEV_TARGET_ENV='mini'
 //试玩
-DEV_ACTIVITY_TARGET_ENV='shiwan'
+DEV_TARGET_ENV='shiwan'
 //生产
-DEV_ACTIVITY_TARGET_ENV='online'
+DEV_TARGET_ENV='online'
 
 
 
@@ -113,7 +113,7 @@ export {
  
  
   DEV_TARGET_VERSION,
-  DEV_ACTIVITY_TARGET_ENV
+  DEV_TARGET_ENV
  
  
 };

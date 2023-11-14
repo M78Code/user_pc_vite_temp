@@ -8,11 +8,10 @@ import { RESOLVE_BUILD_VERSION_COMMON_FN } from "./build-version-common.js";
 let ENV_TARGET_ENV = (process.env.TARGET_ENV || "").trim();
 //最终计算的 目标环境 参数
 let ENVSTR = ENV_TARGET_ENV || DEV_TARGET_ENV;
-
 //项目
-const PROJECT ='activity'
+const PROJECT ='animation'
  //构建目录名字
-const BUILD_DIR_NAME = 'activity'
+const BUILD_DIR_NAME = 'animation'
 //构建版本基础参数
 const BUILD_VERSION_COMMON = RESOLVE_BUILD_VERSION_COMMON_FN({PROJECT,ENVSTR })
  //最终基础配置
@@ -28,11 +27,3 @@ let write_folder = "./job/output/version";
 ensure_write_folder_exist(write_folder);
 let full_path = `${write_folder}/build-version.js`;
 write_file(full_path, str);
-
-
- 
- 
- 
-
-
- 
