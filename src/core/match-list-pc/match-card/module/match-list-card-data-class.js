@@ -95,7 +95,13 @@ class MatchListCardDataClass {
     this.list_version.value = Date.now();
   }
   get_csid_current_hpids(csid) {
-    return this.csid_current_hpids[csid] || choose_config[csid][0];
+    //如果保存过模板旧使用保存的
+    const tpl_odds = this.csid_current_hpids[csid]
+    if (tpl_odds) return tpl_odds
+    //默认使用第一个
+    if (choose_config[csid]) return choose_config[csid][0]
+    console.error("默认模板没有配置")
+    return {};
   }
   //获取单个卡片对象
   get_card_obj_bymid(mid) {

@@ -66,8 +66,8 @@
 import { ref, reactive, onMounted, onUnmounted, defineComponent,watch } from "vue";
 import lodash from "lodash";
 import { useRoute } from "vue-router";
-import { useMittOn, MITT_TYPES } from 'src/core/mitt'
-import { utils, MenuData, LayOutMain_pc, GlobalSwitchClass,SearchPCClass } from 'src/core/index.js'
+import { useMittOn, MITT_TYPES } from 'src/core/mitt';
+import SearchPCClass from 'src/core/search-class/seach-pc-ouzhou-calss.js';
 
 //-------------------- 对接参数 prop 注册  开始  -------------------- 
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
@@ -150,8 +150,8 @@ onUnmounted(off)
 
 const click_fun = () => set_search_status(false);
 // TODO:
-onMounted(() => document.addEventListener('click', click_fun))
-onUnmounted(() => document.removeEventListener('click', click_fun))
+// onMounted(() => document.addEventListener('click', click_fun))
+// onUnmounted(() => document.removeEventListener('click', click_fun))
 
 /** 
  * 浏览器 宽高等数据 default: object
