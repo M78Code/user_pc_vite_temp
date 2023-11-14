@@ -198,9 +198,11 @@ export default {
         // 处理返回数据 将扁平化数组更改为页面适用数据
         MatchDataWarehouse_ouzhou_PC_l5mins_List_Common.set_list(res.p15);
         MatchDataWarehouse_ouzhou_PC_hots_List_Common.set_list(res.hots);
-        MatchDataWarehouse_PC_List_Common.set_list(res.dataList);
+        let sort_list = res.dataList.sort((x, y) => x.csid - y.csid)
+        // 将球种排序
+        MatchDataWarehouse_PC_List_Common.set_list(sort_list);
         MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
-          res.dataList,
+          sort_list,
         );
         // matches_15mins_list.value = MatchDataWarehouse_ouzhou_PC_l5mins_List_Common.match_list
         // matches_featured_list.value =MatchDataWarehouse_ouzhou_PC_hots_List_Common.match_list
@@ -235,10 +237,10 @@ export default {
       proxy?.$forceUpdate();
     });
 
-    watch(MatchListOuzhouClass.coom_soon, () => {
-      coom_soon_state.value = MatchListOuzhouClass.coom_soon.value;
-      proxy?.$forceUpdate();
-    });
+    // watch(MenuData.coom_soon, () => {
+    //   coom_soon_state.value = MenuData.coom_soon.value;
+    //   proxy?.$forceUpdate();
+    // });
 
     return {
       menu_config,
