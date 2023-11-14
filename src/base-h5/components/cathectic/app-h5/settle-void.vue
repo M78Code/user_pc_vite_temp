@@ -20,11 +20,11 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import BetRecordClass from "src/core/bet-record/bet-record.js";
 import { utils, i18n_t, compute_css_obj, compute_local_project_file_path } from 'src/core/index.js'
 
-const formatInternationalText = function (status:number):string{
+const formatInternationalText = function (status){
   const formatInternationalTextObj = {
     0: 'no_data_unsettle',
     1: 'no_data_pre',
