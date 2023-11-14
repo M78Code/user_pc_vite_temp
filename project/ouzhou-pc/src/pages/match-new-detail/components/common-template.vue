@@ -7,113 +7,162 @@
 <template>
   <div v-if="[10].includes(match_info.hpt)" class="temp-simple">
     <div class="temp_grid" :style="{ gridTemplateColumns: columnTotal(item) }">
-      <div v-for="o in match_info.hl[0].ol" :key="o?.oid" :class="{ 'temp-active': o.oid == current_ol.oid, 'temp': true }"
-        @click="betItemClick(match_info.hl[0], o)">
-        <div :style="{ color: o.oid == current_ol.oid ? '#ffffff' : '#ff7000' }" class="oid-width" :title="o.ott">{{ o.ott
-        }} <span>{{ o.on }}
-          </span></div>
-        <div  v-show="!match_info.hl[0].hs">{{ Math.floor(o.ov / 1000) / 100 }} </div>
-        <div style="text-align: center;width:100%" v-show="match_info.hl[0].hs">
-          <img class="vector" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/vector.png`" alt="" >
+      <div
+        v-for="o in match_info.hl[0].ol"
+        :key="o?.oid"
+        :class="{ 'temp-active': o.oid == current_ol.oid, temp: true }"
+        @click="betItemClick(match_info.hl[0], o)"
+      >
+        <div
+          v-show="!match_info.hl[0].hs"
+          :style="{ color: o.oid == current_ol.oid ? '#ffffff' : '#ff7000' }"
+          class="oid-width"
+          :title="o.ott"
+        >
+          {{ o.ott }} <span>{{ o.on }} </span>
         </div>
-
+        <div v-show="!match_info.hl[0].hs">
+          {{ Math.floor(o.ov / 1000) / 100 }}
+        </div>
+        <div
+          style="text-align: center; width: 100%"
+          v-show="match_info.hl[0].hs"
+        >
+          <img
+            class="vector"
+            :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/vector.png`"
+            alt=""
+          />
+        </div>
       </div>
     </div>
-
   </div>
   <div v-else class="temp-simple">
     <div v-for="item in match_info.hl" :key="item.hid">
-      <div class="temp_grid" :style="{ gridTemplateColumns: columnTotal(item) }">
-        <div v-for="o in item.ol" :key="o?.oid" :class="{ 'temp': true, 'temp-active': o.oid == current_ol.oid }"
-          @click="betItemClick(item, o)">
+      <div
+        class="temp_grid"
+        :style="{ gridTemplateColumns: columnTotal(item) }"
+      >
+        <div
+          v-for="(o, index) in item.ol"
+          :key="o?.oid"
+          :class="{
+            temp: true,
+            'temp-active': o.oid == current_ol.oid,
+            'temp-right':
+              item.ol.length % 2 !== 0 &&
+              index == item.ol.length - 1 &&
+              columnNum == 2,
+          }"
+          @click="betItemClick(item, o)"
+        >
           <!-- hpt 为1  不需要给颜色 -->
-          <div style="font-weight:500;display: flex; align-items: center;width:100%"  v-show="!item.hs">
-            <span class="oid-width" :title="o.ott"> {{ o.ott }}</span>
+          <div
+            style="
+              font-weight: 500;
+              display: flex;
+              align-items: center;
+              width: 100%;
+            "
+            v-show="!item.hs"
+          >
+            <span class="oid-width" :title="o.ott"> {{ o.ott }} </span>
 
-            <span v-if="[0].includes(match_info.hpt) && match_info.title.length > 0" v-html="getOn(match_info, o)"></span>
-            <span v-else :style="{ color: [1].includes(match_info.hpt) ? '' : '#1A1A1A' }" class="temp-on oid-width">{{
-              o.on
-            }}</span>
+            <span
+              v-if="[0].includes(match_info.hpt) && match_info.title.length > 0"
+              v-html="getOn(match_info, o)"
+            ></span>
+            <span
+              v-else
+              :style="{ color: [1].includes(match_info.hpt) ? '' : '#1A1A1A' }"
+              class="temp-on oid-width"
+              >{{ o.on }}</span
+            >
           </div>
-          <div v-show="!item.hs" class="temp-on" :style="{ color: '#ff7000' }" style="font-weight: 500;">{{ Math.floor(o.ov / 1000) / 100 }}
+          <div
+            v-show="!item.hs"
+            class="temp-on"
+            :style="{ color: '#ff7000' }"
+            style="font-weight: 500"
+          >
+            {{ Math.floor(o.ov / 1000) / 100 }}
           </div>
 
-          <div style="text-align: center;width:100%" v-show="item.hs">
-          <img class="vector" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/vector.png`" alt="" >
-        </div>
+          <div style="text-align: center; width: 100%" v-show="item.hs">
+            <img
+              class="vector"
+              :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/vector.png`"
+              alt=""
+            />
+          </div>
         </div>
       </div>
     </div>
-
   </div>
 </template>
 
 <script setup>
 import { onMounted, ref, computed, watch } from "vue";
-import { LOCAL_PROJECT_FILE_PREFIX } from 'src/core/index.js';
-const bet_oid = ref('')
+import { LOCAL_PROJECT_FILE_PREFIX } from "src/core/index.js";
+const bet_oid = ref("");
 
 const props = defineProps({
   match_info: {
     type: Object,
-    default: () => ({})
+    default: () => ({}),
   },
   current_ol: {
     type: Object,
-    default: () => { }
-  }
-})
-const emit = defineEmits(['betItemClick'])
-
+    default: () => {},
+  },
+});
+const emit = defineEmits(["betItemClick"]);
+const columnNum = ref(0)  // 获取当前分成几列展示
 
 const columnTotal = (item) => {
   let total;
-  const { match_info } = props
+  const { match_info } = props;
   if (match_info.title.length > 0 && match_info.hpt !== 0) {
     if (match_info.hpt === 10) {
-      total = 3
+      total = 3;
     } else {
-      if (['362'].includes(match_info.hpid)) {
-        total = 2
+      if (["362"].includes(match_info.hpid)) {
+        total = 2;
       } else {
-        total = match_info.title.length
+        total = match_info.title.length;
       }
-
     }
   } else {
-    total = 2
+    total = 2;
   }
-  return `repeat(${total}, 1fr)`
-}
+  columnNum.value = total
+  return `repeat(${total}, 1fr)`;
+};
 
 const betItemClick = (item, o) => {
-  bet_oid.value = o.oid
-  emit('betItemClick', item, o)
-
-}
+  bet_oid.value = o.oid;
+  emit("betItemClick", item, o);
+};
 //  模板hpt0 数字 需要给颜色
 const getOn = (match_info, o) => {
-  let result = ''
-  if (match_info && match_info.hl[0].hv && match_info.hpt == 0 && match_info.title.length > 0) {
-    const hv = match_info.hl[0].hv
-    result = o.on.replace(hv, `<span>${hv}</span>`)
+  let result = "";
+  if (
+    match_info &&
+    match_info.hl[0].hv &&
+    match_info.hpt == 0 &&
+    match_info.title.length > 0
+  ) {
+    const hv = match_info.hl[0].hv;
+    result = o.on.replace(hv, `<span>${hv}</span>`);
   }
-  return result
-}
-
-
-
+  return result;
+};
 
 // 事件执行函数
 
-const active = ref(1)
+const active = ref(1);
 
-
-
-
-onMounted(() => {
-
-});
+onMounted(() => {});
 </script>
 
 <style lang="scss" scoped>
@@ -131,29 +180,35 @@ onMounted(() => {
   display: grid;
   text-align: center;
 
-  &>div {
+  & > div {
     cursor: pointer;
     min-height: 45px;
     line-height: 45px;
     //  border-top: 1px solid #E2E2E2;
-    border-left: 1px solid #E2E2E2;
-    border-bottom: 1px solid #E2E2E2;
+    border-left: 1px solid #e2e2e2;
+    border-bottom: 1px solid #e2e2e2;
 
     &:hover {
-      background: #FFF1E6;
+      background: #fff1e6;
     }
   }
 
-  &>div:last-child {
-    border-right: none;
+  & > div:last-child {
+    // border-right: none;
   }
+}
+
+// 两列展示最后一列为左边的数据的话应给加一个有边框
+.temp-right {
+  border-right: 1px solid #e2e2e2;
+  margin-right: -1px;
 }
 
 .temp-simple {
   margin-left: -1px;
 
-  &>div:first-child {
-    border-top: 1px solid #E2E2E2;
+  & > div:first-child {
+    border-top: 1px solid #e2e2e2;
   }
 }
 
@@ -164,7 +219,6 @@ onMounted(() => {
   &:hover {
     background: #ff7000 !important;
     color: #ffffff;
-
   }
 
   .temp-on {
@@ -188,5 +242,5 @@ onMounted(() => {
 .vector {
   width: 16px;
   height: 16px;
-}</style>
-
+}
+</style>

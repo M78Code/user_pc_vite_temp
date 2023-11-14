@@ -10,7 +10,7 @@
       <div class="analysis-top">
         <div class="analysis-top-l">
           <!-- <div class="v-icon switch-icon"></div> -->
-          <!-- <sport_icon :sport_id="detail_info.csid" :status="false" size="18px" class="icon" style="margin:0 10px"/> -->
+          <sport_icon :sport_id="detail_info.csid" :status="false" size="18px" class="icon" style="margin:0 10px"/>
           <span class="analysis-top-txt">{{ detail_info.tn }}</span>
         </div>
         <div class="analysis-top-right">
@@ -59,7 +59,7 @@
 <script setup>
 import { onMounted, ref, computed, watch } from "vue";
 import animal_box from "./animal_box.vue";
-
+import sport_icon from "src/base-pc/components/sport_icon.vue";
 import score_info from "./score_info.vue";
 import commingSoon from "./comming-soon.vue";
 import { LOCAL_PROJECT_FILE_PREFIX } from "src/core/index.js";
@@ -96,6 +96,7 @@ watch(
   (val) => {
     animal_key.value = false;
     score_key.value = true;
+    show_type.value = ''
   }
 );
 

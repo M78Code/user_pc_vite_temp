@@ -1,20 +1,25 @@
 <template>
   <!-- 滚球盘 标题-->
   <!-- @click="MatchListCardData[cur_title_info.func_name](card_style_obj)" -->
-  <div :class="['ouzhou-match-type yb-flex-between']">
-    <div class="yb-flex-between">
+  <div class="play-match-type-2">
+    <div class="left-box">
+      <sport_icon v-if="card_style_obj?.card_type == 'sport_title'" :data-id="card_style_obj.csid"
+        :sport_id="card_style_obj.csid" size="18px" class="icon" />
       <!-- 滚球盘 -->
-      {{ cur_title_info.name }}
+      <span>{{ cur_title_info.name }}</span>
       <!-- 赛事数量 -->
-      <span v-if="cur_title_info.show_num" class="match-number">{{ cur_title_info.match_count }}</span>
     </div>
+    <span v-if="cur_title_info.show_num" class="match-number">{{ cur_title_info.match_count }}</span>
     <div class="choose-csid-hpids" v-if="card_style_obj?.card_type == 'sport_title'">
-      <div @click.stop="show_list = !show_list">
+      <div class="active" @click.stop="show_list = !show_list">
         {{ $t(`${card_style_obj.csid}_${current_csid_hpids.first_hpid}`) }} & {{
           $t(`${card_style_obj.csid}_${current_csid_hpids.second_hpid}`) }}
       </div>
       <div class="choose-list" v-show="show_list">
-        <div v-for="item in choose_config[card_style_obj.csid || '1']" @click.stop="handle_hpid_choose(item)">
+        <div class="choose-list-item" v-for="item in choose_config[card_style_obj.csid || '1']"
+          @click.stop="handle_hpid_choose(item)" :class="{
+            active: JSON.stringify(current_csid_hpids) == JSON.stringify(item)
+          }">
           {{ $t(`${card_style_obj.csid}_${item.first_hpid}`) }} & {{
             $t(`${card_style_obj.csid}_${item.second_hpid}`) }}
         </div>
@@ -25,12 +30,14 @@
   
 <script setup>
 import choose_config from 'src/core/constant/config/ouzhou-pc-choose-config.js'
+import sport_icon from "src/base-pc/components/sport_icon.vue";
 import { computed, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import lodash from 'lodash';
 import MenuData from 'src/core/menu-pc/menu-data-class.js'
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card-class.js'
+import { get_ouzhou_data_tpl_id } from 'src/core/match-list-pc/match-handle-data.js'
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
 import { t } from "src/core/index.js";
@@ -74,62 +81,79 @@ const cur_title_info = computed(() => {
 
 const current_csid_hpids = ref(MatchListCardDataClass.get_csid_current_hpids(props.card_style_obj.csid))
 function handle_hpid_choose(item) {
-  show_list.value=false
+  show_list.value = false
   current_csid_hpids.value = item
   MatchListCardDataClass.set_csid_current_hpids(props.card_style_obj.csid, item)
 }
 </script>
 <style lang="scss" scoped>
-.match-type {
-  padding: 0 15px 0 10px;
-  height: 34px;
-  line-height: 34px;
-  font-size: 14px;
-  cursor: pointer;
-
+.play-match-type-2 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: Roboto;
+  font-weight: 500;
+  line-height: 39px;
+  height: 40px;
+  line-height: 40px;
+  text-align: left;
+  border-bottom: 1px solid #ff7000;
+  background-color: #fff;
+  padding: 0 16px 0 20px;
+  color: #1A1A1A;
+  font-size: 13px;
+  .left-box {
+    display: flex;
+    align-items: center;
+  }
   .match-number {
     margin-left: 5px;
   }
+  .icon {
+    width: 16px;
+    height: 16;
+    margin-right: 8px;
+  }
 
-  &.text-left {
-    &.yb-flex-between {
-      border-radius: 0 0 6px 6px;
-      border: 1px solid var(--q-gb-bd-c-6);
-      border-top: 0;
+  .choose-csid-hpids {
+    font-size: 14px;
+    font-weight: 500;
+    position: relative;
+    cursor: pointer;
+    .active {
+      color: #ff7000;
+    }
+    .choose-list {
+      position: absolute;
+      right: 0;
+      top: 41px;
+      min-width: 300px;
+      line-height: 40px;
+      padding: 12px 0;
+      border-radius: 2px;
+      background: #FFF;
+      box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, 0.25);
+      z-index: 99;
+
+      &-item {
+        padding: 0 16px;
+        height: 40px;
+
+        &:hover {
+          background-color: #fff1e6;
+        }
+      }
+
+      div {
+        border-bottom: 1px solid #E2E2E2;
+
+        &:last-child {
+          border-bottom: none;
+        }
+      }
     }
   }
-}
 
-.ouzhou-match-type {
-  font-family: Roboto;
-  font-size: 18px;
-  font-weight: 500;
-  line-height: 21px;
-  letter-spacing: 0px;
-  text-align: left;
-}
-
-.choose-csid-hpids {
-  color: #ff7000;
-  font-size: 14px;
-  font-weight: 500;
-  position: relative;
-  cursor: pointer;
-  margin-right: 30px;
-  .choose-list {
-    position: absolute;
-    right: 0;
-    top: 100%;
-    background: #ffffff;
-    z-index: 9999;
-    div {
-      display: flex;
-      align-items: center;
-      width: 100%;
-      height: 40px;
-      border-bottom: 1px solid #E2E2E2;
-    }
-  }
 }
 </style>
  

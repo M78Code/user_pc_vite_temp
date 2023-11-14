@@ -14,7 +14,7 @@
 				</div>
 			</div>
 		</div>
-		<MatchesFilterTab v-if="(MenuData.router_root_lv_1 == 2 && MenuData.router_root_lv_2 == 1002 ) || MenuData.router_root_lv_1 == 2"  />
+		<MatchesFilterTab v-if="(MenuData.router_root_lv_2 == 1002 && MenuData.router_root_lv_1 == 1 && !coom_soon_state) || MenuData.router_root_lv_1 == 2"  />
 		<MatchesDateTab  v-if="MenuData.router_root_lv_1 == 4" />
 	</div>
 </template>
@@ -29,9 +29,7 @@ import MatchesFilterTab from "./matches_filter_tab_ball_species.vue";
 import MatchesDateTab from "./matches_filter_tab.vue";
 import { MenuData, UserCtr } from "src/core/index.js"
 import BaseData from "src/core/base-data/base-data.js";
-import menu_i18n_default from "src/core/base-data/config/menu-i18n.json";
 
-const router = useRouter();
 const tab_list = ref([])
 
 // 获取当前header展示背景图
@@ -40,6 +38,11 @@ const current_ball_type = ref(630)
 const matches_header_title = ref(i18n_t("ouzhou.match.matches"));
 const current_value = ref(i18n_t("ouzhou.match.featured"));
 
+
+// 头部高度 包含 teb切换
+const match_list_top = ref('80px') 
+
+const coom_soon_state =ref(false)
 
 onMounted(()=>{
 	set_tab_list(MenuData.router_root_lv_1,MenuData.left_menu_mi.value)
@@ -65,6 +68,7 @@ const set_tab_list = (news_,sport_mi) =>{
 	// 滚球
 	if( news_ ==2 ){
 		matches_header_title.value = "In Play"
+        match_list_top.value = '146px'
 	}
 	// 左侧菜单
 	if(news_ ==4){
@@ -72,64 +76,31 @@ const set_tab_list = (news_,sport_mi) =>{
 		// 设置赛种名称
 		matches_header_title.value = BaseData.menus_i18n_map[sport_mi] 
 	}
+	if (tab_list.value.length) {
+		checked_current_tab(tab_list.value[0])
+	}
 }
 
+const checked_current_tab = payload => {
 
-// 头部高度 包含 teb切换
-const match_list_top = ref('80px')
-
-const b_menu_root = ref(0)
-
-// 菜单多语言
-const menus_i18n_map = ref(menu_i18n_default.data)
-
-
-const coom_soon_state =ref(false)
-
-// const { set_mid_menu_top_result } = use_new_menu()
-
-const sport_ball = {
-	0:7,
-	1:0,
-	2:1,
-	3:5,
-	4:10,
-	5:6,
-	6:8,
-	7:13,
-	8:2,
-	9:3,
-	10:4,
-	11:12,
-	12:9,
-	13:14,
-	14:15,
-	15:16,
-	16:21,
-	17:20,
-	18:'',
-	19:12,
-	20:25,
-	21:13,
-	22:1,
-	23:1,
-	24:1,
-	25:1,
-	26:1,
-	27:1,
-	28:1,
-	29:1,
-	30:1,
-	31:1,
-	32:1,
-	37:1,
-	38:1,
-	100:1,
-	101:1,
-	102:1,
-	103:1,
+	// 暂时不做 
+	if (['1002', '4002'].includes(payload.value)) {
+		// 修改菜单数据
+		MenuData.coom_soon.value = true
+	}else{
+		// 修改菜单数据
+		MenuData.coom_soon.value = false
+	}
+	coom_soon_state.value = MenuData.coom_soon.value
+      // 判断头部高度
+	if (['1001','1002','4002'].includes(payload.value) ) {
+        match_list_top.value = '80px'
+    } else if(['4001'].includes(payload.value)){
+        match_list_top.value = '134px'
+    } else {
+        match_list_top.value = '146px'
+    }
 }
-
 
 
 
@@ -139,7 +110,7 @@ const sport_ball = {
 <style lang="scss" scoped>
 .matches_header_wrap {
 	height: v-bind('match_list_top');
-	padding-right: 7px;
+	// padding-right: 7px;
 	box-sizing: border-box;
 }
 

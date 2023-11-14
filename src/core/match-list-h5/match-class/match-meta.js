@@ -15,8 +15,10 @@ import PageSourceData from "src/core/page-source/page-source.js";
 import VirtualList from 'src/core/match-list-h5/match-class/virtual-list'
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 import { MATCH_LIST_TEMPLATE_CONFIG } from "src/core/match-list-h5/match-card/template"
-import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, useMittEmit, MITT_TYPES,project_name, MenuData, 
-  MatchDataWarehouse_ouzhou_PC_l5mins_List_Common as MatchDataBasel5minsH5, MatchDataWarehouse_ouzhou_PC_hots_List_Common as MatchDataBaseHotsH5 } from 'src/core'
+import { useMittEmit, MITT_TYPES,project_name, MenuData,
+  MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, MatchDataWarehouse_ouzhou_PC_hots_List_Common as MatchDataBaseHotsH5,
+  MatchDataWarehouse_ouzhou_PC_five_league_List_Common as MatchDataBaseFiveLeagueH5, MatchDataWarehouse_ouzhou_PC_l5mins_List_Common as MatchDataBasel5minsH5, 
+} from 'src/core'
 
 class MatchMeta {
 
@@ -41,6 +43,8 @@ class MatchMeta {
     this.is_classify = false
     // 日期
     this.params_md = ''
+    // 赛事仓库
+    this.common_match_base = null
     // 重置折叠对象
     MatchFold.clear_fold_info()
     // 重置收藏对象
@@ -534,11 +538,11 @@ class MatchMeta {
   /**
    * @description 获取四大联赛列表
    */
-  async get_four_leagues_list () {
-    // 四大联赛 tid 写死 西甲 320 英超 180 意甲 239 德甲 276
+  async get_five_leagues_list () {
+    // 四大联赛 tid 写死 西甲 320 英超 180 意甲 239 德甲 276 法甲 79
     // 只有足球 euid 40203
     // 热门 type 12
-    const tid = ['320', '180', '239', '276']
+    const tid = ['320', '180', '239', '276', '79']
     const euid = '40203'
     const type = '12'
     const params = this.get_base_params(euid)
@@ -551,7 +555,8 @@ class MatchMeta {
     })
     if (res.code !== '200') return this.set_page_match_empty_status(true);
     const list = lodash.get(res, 'data', [])
-    this.handler_match_list_data({ list: list, is_virtual: false })
+    this.handler_match_list_data({ list: list, base: MatchDataBaseFiveLeagueH5 })
+    return list
   }
 
   /**

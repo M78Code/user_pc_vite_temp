@@ -463,7 +463,7 @@
 
       try {
         //解析URL参数
-        let url_search = SEARCH_PARAMS.param;
+        let url_search = SEARCH_PARAMS.init_param;
         // 获取清除缓存参数
         let clearcache = url_search.get("clearcache");
         if (clearcache == "1") {
@@ -556,7 +556,7 @@
       // document.querySelector('#loading-root-ele').className ="loading "+current_theme
     }
     //对接app跳转需求，当Url地址有传入 token 字段时，认定是初次进入，手动清除掉缓存
-    let url_search = SEARCH_PARAMS.param;
+    let url_search = SEARCH_PARAMS.init_param;
 
     // 设置 loading 动画 主题
     set_root_loading_theme(url_search);

@@ -2,7 +2,7 @@ import { LocalStorage } from "./web-storage.js";
 export function initData() {
   try {
     //解析URL参数
-    let qsInfo = SEARCH_PARAMS.param;
+    let qsInfo = SEARCH_PARAMS.init_param;
     //计算token
     let token = qsInfo.get("token") || LocalStorage.get("TOKEN") || "";
     if (token) {

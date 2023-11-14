@@ -36,7 +36,7 @@
             <!-- 5大联赛 -->
             <template v-if="leagues_matchs.length > 0">
               <HeaderTitle title="Top Leagues"></HeaderTitle>
-              <TopLeagues :leagues_matchs="leagues_matchs" />
+              <MatchLeagues :fiveLeagues_Matches="five_league_match"/>
             </template>
           </section>
         </q-tab-panel>
@@ -59,14 +59,14 @@ import { watch } from "vue";
 
 import TimeEvents from './components/time-events.vue'
 import HeaderTitle from './components/header-title.vue'
-import TopLeagues from './components/top-leagues.vue'
+import MatchLeagues from './components/match-leagues.vue'
 import FeaturedMatches from './components/feature-matches.vue'
 import MatchPlay from './components/match-play.vue'
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import MatchUtils from 'src/core/match-list-h5/match-class/match-utils';
 import MatchContainer from "src/base-h5/components/match-list/index.vue";
 import scrollList from 'src/base-h5/components/top-menu/top-menu-ouzhou-1/scroll-menu/scroll-list.vue';
-import { MenuData, MatchDataWarehouse_ouzhou_PC_l5mins_List_Common as MatchDataBasel5minsH5, 
+import { MenuData, MatchDataWarehouse_ouzhou_PC_l5mins_List_Common as MatchDataBasel5minsH5, MatchDataWarehouse_ouzhou_PC_five_league_List_Common as MatchDataBaseFiveLeagueH5,
   MatchDataWarehouse_ouzhou_PC_hots_List_Common as MatchDataBaseHotsH5, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/index.js";
 
 import { de_img, dk_img, be_img, fr_img } from 'src/base-h5/core/utils/local-image.js'
@@ -74,6 +74,7 @@ import { de_img, dk_img, be_img, fr_img } from 'src/base-h5/core/utils/local-ima
 const play_matchs = ref([])
 const time_events = ref([])
 const featured_matches = ref([])
+const five_league_match = ref([])
 const state = reactive({
     current_mi:"",
 })
@@ -89,6 +90,7 @@ onMounted(async () => {
   MenuData.set_current_lv1_menu(1);
   MenuData.set_menu_mi('101');
   get_ouzhou_home_data()
+  got_five_league_matchs()
   state.current_mi = MenuData.top_events_list[0]?.mi;
 })
 
@@ -114,6 +116,17 @@ const get_ouzhou_home_data = async () => {
       home_score, 
       away_score, 
      }
+  })
+}
+
+/**
+ * @description 获取五大联赛赛事   不放  match 仓库
+ */
+const got_five_league_matchs = async () => {
+  const list = await MatchMeta.get_five_leagues_list()
+  five_league_match.value = list.map(t => {
+    const match = MatchDataBaseFiveLeagueH5.get_quick_mid_obj(t.mid)
+    return match
   })
 }
 

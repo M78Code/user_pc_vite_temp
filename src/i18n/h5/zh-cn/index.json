@@ -414,7 +414,8 @@
     "wanwan": "亿",
     "wanyi": "万亿",
     "total_bet": "总投注",
-    "total_income": "预计总收益"
+    "total_income": "预计总收益",
+    "bet_retract": "赌注收回"
   },
   "bet_record": {
     "30day": "30天",
@@ -446,6 +447,7 @@
     "bet_suopan_info": "赔率更新中，请稍后",
     "bet_time": "投注时间",
     "settle_time": "结算时间",
+    "time": "时间",
     "bet_val": "投注额",
     "bet_val2": "投注",
     "bet_win": "赢",

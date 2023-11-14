@@ -4,7 +4,7 @@
 <template>
   <div :class="['match-list-container', { empty_page: match_is_empty }]" :style="page_style">
 
-    <template v-if="!match_is_empty ">
+    <template v-if="!match_is_empty">
       <component :is="target_com"></component>
     </template>
 
@@ -12,7 +12,12 @@
       <!-- 非收藏页 -->
       <NoData class="data-get-empty1" v-if='match_is_empty && !is_collcte_page' which='noMatch' height='400'></NoData>
       <!-- 收藏页 -->
-      <NoData class="data-get-empty2" v-if='match_is_empty && is_collcte_page' :which='menu_type === 28 ? "noMatch" : "comingSoon"' height='400'></NoData>
+      <NoData class="data-get-empty2" v-else-if='match_is_empty && is_collcte_page' :which='menu_type === 28 ? "noMatch" : "comingSoon"' height='400'></NoData>
+      <!--
+        bevis 修改
+        46949 【SIT】【H5新版复刻】【H5】虚拟体育列表页无数据返回，页面展示空白
+      -->
+      <NoData class="data-get-empty2" v-else :which='menu_type === 28 ? "noMatch" : "comingSoon"' height='400'></NoData>
     </template>
 
     <SecondaryDescription />
@@ -43,9 +48,7 @@ import MatchList3 from './components/match-list3.vue'
 
 import MatchListOuZhou from './components/match-list-ouzhou.vue'
 
-
 import { PROJECT_NAME } from "src/core/index.js"
-
 
 // 次要玩法描述组件
 import SecondaryDescription from "src/base-h5/components/match-list/components/secondary-description.vue";

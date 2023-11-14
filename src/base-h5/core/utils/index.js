@@ -305,7 +305,7 @@ const utils = {
     // 设置默认启动参数
     // GA 埋点开关开启---照常统计，和生产环境保持一致
     window.gtag_run = 1;
-    let url_search = SEARCH_PARAMS.param;
+    let url_search = SEARCH_PARAMS.init_param;
     // 获取诸葛埋点开关
     let gtag = url_search.get('gtag');
     if(gtag){
@@ -476,7 +476,7 @@ const utils = {
     // 设置默认启动参数
     window.zhuge_run = (mid && this.get_zhuge_config_obj().mid.includes(mid));
     try {
-      let url_search = SEARCH_PARAMS.param;
+      let url_search = SEARCH_PARAMS.init_param;
       // 获取诸葛埋点开关
       let zhuge = url_search.get('zhuge');
       if(zhuge){

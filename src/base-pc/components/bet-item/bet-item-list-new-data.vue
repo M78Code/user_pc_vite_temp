@@ -153,7 +153,7 @@ const format_odds = () => {
     1
   );
   console.log('match_odds_info', props.ol_data);
-  match_odds.value = format_odds_value(match_odds_info);
+  match_odds.value = format_odds_value(match_odds_info,props.ol_data.csid);
 };
 
 /**

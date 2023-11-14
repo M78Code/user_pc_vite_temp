@@ -436,6 +436,7 @@ export default {
      * @return {Undefined} Undefined
      */
     media_button_handle () {
+      // debugger
       // 计算真正回落的点击按钮   直播 视频  动画
       let { final_button_type } = this.media_button_button_type_check();
       switch (final_button_type) {
@@ -449,7 +450,37 @@ export default {
         default:
           break;
       }
-      store.dispatch({ type: 'matchReducer/set_is_in_play',  payload: final_button_type });
+      store.dispatch({
+        type: "matchReducer/set_is_in_play",
+        payload: final_button_type,
+      });
+      this.goto_details(this.match_of_list);
+    },
+
+
+        
+    /**
+     * @description:  直播 视频  动画 点击跳转详情播放
+     * @param {String} button_type lvs 直播   muUrl 视频  animationUrl 动画
+     * @return {Undefined} Undefined
+     */
+    media_button_handle_by_type (final_button_type) {
+      // 计算真正回落的点击按钮   直播 视频  动画
+      switch (final_button_type) {
+        case "lvs":
+          break;
+        case "muUrl":
+          this.media_button_handle_when_muUrl();
+          break;
+        case "animationUrl":
+          break;
+        default:
+          break;
+      }
+      store.dispatch({
+        type: "matchReducer/set_is_in_play",
+        payload: final_button_type,
+      });
       this.goto_details(this.match_of_list);
     },
     /**
@@ -524,7 +555,6 @@ export default {
         store.dispatch({ type: 'matchReducer/set_video_url',  payload: video_url });
       }
       // 代表 播放正常视频 标识, 在 match_icon.vue 组件 watch 监听，监听点击直播事件,触发详情页视频直接播放
-      set_is_in_play('muUrl');
       //在 match_icon.vue 组件 watch 监听
       store.dispatch({ type: 'matchReducer/set_play_video',  payload: true });
       store.dispatch({ type: 'matchReducer/set_show_video',  payload: true });
@@ -864,6 +894,8 @@ export default {
     /**
      * @description: 跳转至详情
      * @param {Object} item 赛事
+     * @param {String} item.mid
+     * @param {String} item.csid
      * @param {*} flag 有值时候代表要去到赛事分析页
      * @return {String}
      */

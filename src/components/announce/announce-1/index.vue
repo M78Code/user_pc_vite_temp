@@ -5,9 +5,9 @@
             <!-- <span>{{ i18n_t('common.notice') }}</span> -->
         </simple-header>
         <div class="announce-content">
-            <!-- 左侧菜单开始 -->
+            <!-- 头部菜单开始 -->
             <top-menu :data="announce_title" @tabs_click="tabs_click"  />
-            <!-- 左侧菜单结束 -->
+            <!-- 头部菜单结束 -->
             <q-scroll-area class="announce-area" visible>
                 <div class="main-page">
                     <div class="announce-header">

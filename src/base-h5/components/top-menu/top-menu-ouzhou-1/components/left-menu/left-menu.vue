@@ -142,13 +142,13 @@ const set_menu_obj = (data) => {
  * @param {*} m_data 
  */
 const change_current_menu = (item) => {
-
-  // MenuData.set_menu_mi(item.mi);
+  MenuData.set_current_lv1_menu('2');
+  MenuData.set_menu_mi(item.mi);
   setPopularSort(item.mi);
   // 设置菜单对应源数据
   emits('isLeftDrawer');
 
-  MenuData.set_menu_lv2_mi(item.mi+''+2)
+  // MenuData.set_menu_lv2_mi(item.mi+''+2)
 
   // 当前页面不做跳转
   // MenuData.set_current_lv1_menu(2);

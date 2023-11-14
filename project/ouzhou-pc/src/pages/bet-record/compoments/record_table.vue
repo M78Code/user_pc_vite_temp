@@ -44,7 +44,13 @@
             <q-td key="bettingType" :props="props">
               <template v-for="(item, index) in props.row.orderVOS">
                 <div>{{ match_type[item.matchType] }}</div>
-                <span>{{ item.playName }}</span>
+                <span>
+                  {{ item.playName }}
+                  <span
+                    v-if="item.matchType != 1 && item.scoreBenchmark && item.playId != '334'"
+                    :key="index"
+                  >({{format_score(item.scoreBenchmark) }})</span>
+                </span>
               </template>
             </q-td>
             <!-- 投注选项 -->
@@ -63,13 +69,19 @@
                       <span>
                           <span v-if="item.matchType != 3 && ![1001,1002,1009,1010,1011].includes(item.sportId*1)">{{matchType(item.matchType, props.row.langCode)}}</span>
                         {{ item.playName }}
-                      </span>
+                        <!-- （1-1） -->
+                          <span v-if="item.matchType != 1 && item.scoreBenchmark && item.playId != '334'">({{format_score(item.scoreBenchmark)}})</span>
+                        <!-- [欧洲盘]-->
+                          <span>[{{marketType(item.marketType, props.row.langCode)}}]</span>                      </span>
                       <div>
                         <span>{{ item.marketValue }}</span>
                         <span style="margin-left:15px;color:#ff7000">{{ item.oddFinally }}</span>
                       </div>
 
-
+                      <div class="play-type settle-score" v-if="current_tab === 'settled' && item.settleScore">
+                        <!-- 赛果比分 -->
+                        <span>{{item.settleScore}}</span>
+                      </div>
                       <!-- 10/20 15:30 -->
                       <span
                         class="time"
@@ -97,25 +109,66 @@
 <!--                      win-->
 <!--                    </span>-->
                       <!-- 未结算串关、已结算串关 -->
-<!--                      <template v-if="['0','1'].includes(props.row.orderStatus) && props.row.seriesType != '1'">-->
-<!--                        &lt;!&ndash; betstatus无效 &ndash;&gt;-->
-<!--                        <template v-if="[3, 4].includes(item.betStatus)">-->
-<!--                              <span-->
-<!--                                v-if="[1, 2, 3, 4, 5, 6, 17, 20].includes(item.cancelType)"-->
-<!--                                class="bet-result lose-color"-->
-<!--                              >-->
-<!--                                {{ item_cancelType(item.cancelType) }}-->
-<!--                              </span>-->
-<!--                          <span v-else class="bet-result lose-color">{{ $root.$t('bet.invalid') }}</span>-->
-<!--                        </template>-->
-<!--                        &lt;!&ndash; 其他 &ndash;&gt;-->
-<!--                        <span-->
-<!--                          v-if="item.betStatus==1"-->
-<!--                          class="bet-result"-->
-<!--                          :class="item_class(item.betResult)"-->
-<!--                        >{{ item_status(item.betResult) }}</span>-->
-<!--                      </template>-->
+                      <template v-if="['0','1'].includes(props.row.orderStatus) && props.row.seriesType != '1'">
+                        <!-- betstatus无效 -->
+                        <template v-if="[3, 4].includes(item.betStatus)">
+                            <span
+                              v-if="[1, 2, 3, 4, 5, 6, 17, 20].includes(item.cancelType)"
+                              class="bet-result lose-color"
+                            >
+                              {{item_cancelType(item.cancelType)}}
+                            </span>
+                          <span v-else class="bet-result lose-color">{{i18n_t("bet.invalid")}}</span>
+                        </template>
+                        <!-- 其他 -->
+                        <span
+                          v-if="item.betStatus==1"
+                          class="bet-result"
+                          :class="item_class(item.betResult)"
+                        >{{item_status(item.betResult)}}</span>
+                      </template>
                       <!-- 未结算串关、已结算串关 -->
+
+                      <!-- 已结算 单关 betresult字段显示(2-走水，3-输，4-赢，5-半赢，6-半输) -->
+                      <template v-if="props.row.preBetAmount>0">
+                          <span
+                            v-if="props.row.orderStatus=='1' && props.row.seriesType =='1'"
+                            class="bet-result"
+                            :class="item_class(props.row.outcome)"
+                          >{{item_status(props.row.outcome)}}</span>
+                      </template>
+                      <template v-else>
+                          <span
+                            v-if="props.row.orderStatus=='1' && props.row.seriesType =='1'"
+                            class="bet-result"
+                            :class="item_class(item.betResult)"
+                          >{{item_status(item.betResult)}}</span>
+                      </template>
+                      <!-- 已结算 单关 betresult字段显示(2-走水，3-输，4-赢，5-半赢，6-半输) -->
+
+                      <!-- 已结算注单无效 -->
+                      <template v-if="props.row.orderStatus=='2'">
+                        <template v-if="[3, 4].includes(item.betStatus)">
+                            <span
+                              v-if="[1, 2, 3, 4, 5, 6, 17, 20].includes(item.cancelType)"
+                              class="bet-result lose-color"
+                            >
+                              {{item_cancelType(item.cancelType)}}
+                            </span>
+                          <span v-else class="bet-result lose-color">{{props.row.seriesType =='1'?'':`${i18n_t("bet.invalid")}`}}</span>
+                        </template>
+                        <template v-if="item.betStatus ==1">
+                            <span
+                              v-if="[7,8,11,12,15].includes(item.betResult)"
+                              class="bet-result lose-color"
+                            >{{item_status(item.betResult)}}</span>
+                          <span
+                            v-else
+                            class="bet-result lose-color"
+                          >{{props.row.seriesType =='1'?'':`${i18n_t("bet.invalid")}`}}</span>
+                        </template>
+                      </template>
+                      <!-- 已结算注单无效 -->
                     </div>
                   </div>
                 </div>
@@ -134,11 +187,10 @@
             <q-td key="return" :props="props">
                <span
                  :class="{'win-color': [4,5].includes(props.row.outcome)}"
-                 v-if="current_tab==='settled'"
                >
-                 {{ format_balance(tool_selected === 'settled' ? props.row.maxWinAmount : props.row.backAmount) }}
+                 {{ format_balance(current_tab === 'unsettled' ? props.row.maxWinAmount : props.row.backAmount) }}
                </span>
-              <span v-else>- -</span>
+<!--              <span v-else>- -</span>-->
             </q-td>
             <!-- 状态 -->
             <q-td key="status" :props="props">
@@ -149,9 +201,9 @@
                  -->
               <span :class="status_class(props.row.orderStatus)">{{ order_status(props.row.orderStatus) }}</span>
               <!--显示部分提前结算或者全额提前结算-->
-              <!--              <span v-if="tool_selected=='settled'" class="bet-pre-color">-->
-              <!--                      <template v-if="props.row.settleType==4">{{$root.$t('bet_record.settlement_pre_part2')}}</template>-->
-              <!--                      <template v-else-if="props.row.settleType==5">{{$root.$t('bet_record.settlement_pre_all2')}}</template>-->
+              <!--              <span v-if="current_tab=='settled'" class="bet-pre-color">-->
+              <!--                      <template v-if="props.row.settleType==4">{{i18n_t('bet_record.settlement_pre_part2')}}</template>-->
+              <!--                      <template v-else-if="props.row.settleType==5">{{i18n_t('bet_record.settlement_pre_all2')}}</template>-->
               <!--                    </span>-->
             </q-td>
           </q-tr>
@@ -255,6 +307,148 @@ const status_class = (orderStatus) => {
   return str
 }
 /**
+ * 比分格式设置
+ */
+const format_score = (res) => {
+  let str = "";
+  if (res.indexOf("|") != -1) {
+    let arr = res.split("|");
+    str = arr[1].split(":");
+  } else if (res.indexOf(":") != -1) {
+    str = res.split(":");
+  }
+  return `${str[0]} - ${str[1]}`;
+}
+/**
+ * @输赢状态calss
+ * @param betResult: records.orderVOS.betResult
+ */
+const item_class = (betResult) => {
+  switch (parseInt(betResult)) {
+    case 2:
+      return "lose-color"; //"走水";
+    case 3:
+      return "lose-color"; //输
+    case 4:
+      return "win-color"; //赢
+    case 5:
+      return "win-color"; //"赢半";
+    case 6:
+      return "lose-color"; //"输半";
+    case 7:
+      return "lose-color"; //"赛事取消";
+    case 8:
+      return "lose-color"; //"赛事延期";
+    case 11:
+      return "lose-color"; //"比赛延迟";
+    case 12:
+      return "lose-color"; //"比赛中断";
+    case 13:
+      return "lose-color"; //"无效";
+    case 16:
+      return "lose-color"; //"无效";
+    case 15:
+      return "lose-color"; //"比赛放弃";
+  }
+  return "";
+}
+/**
+ * @description: 取消原因
+ * @param {srting} cancelType: 取消类型
+ * @return {string}
+ */
+const item_cancelType = (cancelType) =>{
+  switch (parseInt(cancelType)) {
+    case 1:
+      return i18n_t("bet_record.match_cancel2"); //"比赛取消";;
+    case 2:
+      return i18n_t("bet_record.match_delay"); //"比赛延期";
+    case 3:
+      return i18n_t("bet_record.match_interrupt"); //"比赛中断";
+    case 4:
+      return i18n_t("bet_record.match_rematch"); //比赛重赛
+    case 5:
+      return i18n_t("bet_record.match_waist"); //"比赛腰斩";
+    case 6:
+      return i18n_t("bet_record.match_give_up"); //"比赛放弃";
+    case 17:
+      return i18n_t("bet_record.match_advance"); //"赛事提前";
+    case 20:
+      return i18n_t("bet_record.match_delay2"); //"比赛延迟";
+    default:
+      return i18n_t("bet.invalid") //注单无效
+  }
+}
+/**
+ * @description:输赢状态
+ * @param {srting} type: records.orderVOS.betResult
+ * @return{string} 盘口类型
+ */
+const item_status =(type) => {
+  switch (parseInt(type)) {
+    case 2:
+      return i18n_t("bet_record.effective_water_"); //"走水";
+    case 3:
+      return i18n_t("bet_record.lose"); //输
+
+    case 4:
+      return i18n_t("bet_record.win"); //赢
+    case 5:
+      return i18n_t("bet_record.win_half"); //"赢半";
+    case 6:
+      return i18n_t("bet_record.lose_half"); //"输半";
+    case 7:
+      return i18n_t("bet_record.match_cancel2"); //"赛事取消";
+    case 8:
+      return i18n_t("bet_record.match_delay"); //"赛事延期";
+    case 11:
+      return i18n_t("bet_record.match_delay2"); //"比赛延迟";
+    case 12:
+      return i18n_t("bet_record.match_interrupt"); //"比赛中断";
+    case 13:
+      return i18n_t("bet.invalid"); //"无效";
+    case 16:
+      return i18n_t("bet.invalid"); //"无效";
+    case 15:
+      return i18n_t("bet_record.match_give_up"); //"比赛放弃";
+  }
+}
+/**
+ * @description:盘口类型
+ * @param {sting} type: records.marketType字段
+ * @param {sting} langCode: 多语言 默认是中文
+ * @return{string} 盘口类型
+ */
+const marketType = (type, langCode='zh') => {
+  var res = "";
+  if(type && langCode) {
+    switch (type) {
+      case "EU":
+        res = i18n_t(`odds.EU`); //"欧洲盘";
+        break;
+      case "HK":
+        res = i18n_t(`odds.HK`); //"香港盘";
+        break;
+      case "US":
+        res = i18n_t(`odds.US`); //"美式盘";
+        break;
+      case "ID":
+        res = i18n_t(`odds.ID`); //"印尼盘";
+        break;
+      case "MY":
+        res = i18n_t(`odds.MY`); //"马来盘";
+        break;
+      case "GB":
+        res = i18n_t(`odds.GB`); //"英式盘";
+        break;
+      default:
+        res = "";
+        break;
+    }
+  }
+  return res;
+}
+/**
  * @下注赛事阶段
  * @param type: records.matchType
  */
@@ -270,16 +464,16 @@ const order_status = (orderStatus) => {
   switch (parseInt(orderStatus)) {
     case 0:
     case 1:
-      str = 'Bet Placed' //"投注成功";
-      break
+      str = i18n_t("bet.bet_suc"); //"投注成功";
+      break;
     case 2:
-      str = 'Bet Voided' //"注单无效";
-      break
+      str = i18n_t("bet.betting_cancel"); //"注单无效";
+      break;
     case 3:
-      str = 'Processing' //"确认中";
-      break
+      str = i18n_t("bet.bet_loading"); //"确认中";
+      break;
     case 4:
-      str = 'Betting Failed' //"投注失败";
+      str = i18n_t("bet.bet_fail"); //"投注失败";
       break
     default:
       break
