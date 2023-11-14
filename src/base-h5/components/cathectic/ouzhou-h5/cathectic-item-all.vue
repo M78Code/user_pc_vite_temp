@@ -7,10 +7,10 @@
     <!-- 加载中 -->
     <!-- <loading v-if="is_loading" /> -->
     <scroll ref="myScroll" :on-pull="onPull">
-      <!-- 未结算 cashout 按钮 -->
-      <div v-if="UserCtr.user_info.settleSwitch == 1 && BetRecordClass.selected === 0 && !lodash.isEmpty(BetRecordClass.list_data)" 
+      <!-- 未结算 cashout 按钮 1期隐藏 -->
+      <!-- <div v-if="UserCtr.user_info.settleSwitch == 1 && BetRecordClass.selected === 0 && !lodash.isEmpty(BetRecordClass.list_data)" 
       :class="['cashout', 'unsellteCashout', BetRecordClass.is_early ? 'active': '']"
-      @click="BetRecordClass.set_is_early(!BetRecordClass.is_early)">{{ i18n_t('early.btn2') }}</div>
+      @click="BetRecordClass.set_is_early(!BetRecordClass.is_early)">{{ i18n_t('early.btn2') }}</div> -->
       <!-- BetRecordClass.bet_record_version -->
       <div style="display: none;">{{ BetRecordClass.bet_record_version }}</div>
       <!-- 已结算筛选按钮 -->

@@ -9,8 +9,8 @@
   <div class="left_drawer_page">
     <q-list>
       <q-item-label header class="q-list-content">
-        <!-- Esports---VR Sports 电竞  VR-->
-        <div class="sports-genre">
+        <!-- Esports---VR Sports 电竞  VR 1期隐藏 -->
+        <!-- <div class="sports-genre">
           <div class="item" :class="[
             item.className,
             // { active: meta_data_store.current_menu.mi == item.mi },
@@ -18,7 +18,7 @@
             <sport-icon size="20" :sport_id="item.mi" />
             <div>{{ BaseData.menus_i18n_map[item.mi]}}</div>
           </div>
-        </div>
+        </div> -->
         <!-- 分割线 -->
         <div class="segmentation"></div>
         <!-- POPULAR 热门赛事-->
