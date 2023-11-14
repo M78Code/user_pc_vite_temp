@@ -4,9 +4,9 @@
 -->
 <template>
   <div class="bet_content_bottom">
-    <p class="bet_cancel"  @touchmove.prevent>Save</p>
+    <p class="bet_cancel"  @touchmove.prevent>{{$t('bet.save')}}</p>
     <p class="place_bet" @click.self="pack_up">
-      <span>Ok</span>
+      <span>{{$t('bet.understand')}}</span>
     </p>
   </div>
 </template>

@@ -281,7 +281,7 @@ init(){
   /**
    * @description: 获取快速查询对象中的指定mid赛事对象
    * @param {String} mid 赛事mid
-   * @return {Object} 赛事
+   * @return {TYPES.MatchDetail} 赛事
    */
   get_quick_mid_obj(mid){
     // 获取指定mid的赛事

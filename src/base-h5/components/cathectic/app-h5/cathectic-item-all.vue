@@ -99,7 +99,7 @@ const init_data = (_index) => {
 // 根据索引获取当前接口的api和params
 const init_params_api = (_index) => {
   let params = {}
-  let url_api = null;
+  let url_api = new Promise();
   switch (_index) {
     case 0: //未结算
       params = {

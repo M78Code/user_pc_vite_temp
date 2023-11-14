@@ -68,6 +68,7 @@ export const expand_item = compute_local_project_file_path('/image/list/expand_i
 
 export const no_data_img = compute_local_project_file_path('/image/png/no_data.png')
 export const no_data_app = compute_local_project_file_path('/image/png/no_data_app.png')
+export const no_data_new_app= compute_local_project_file_path('/image/png/no_data_new_app.png')
 
 export const no_data_ouzhou = compute_local_project_file_path('/image/png/no_data3.png')
 

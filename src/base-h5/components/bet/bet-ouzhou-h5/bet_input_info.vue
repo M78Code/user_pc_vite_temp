@@ -2,10 +2,10 @@
 <template>
     <div class="bet_input_info flex_input">
        <div class="info_left">
-       <div class="size_16 color_a1a1">single bet</div>
+       <div class="size_16 color_a1a1">{{$t('bet.bet')}}</div>
         <div class="size_14">
            
-            <span>Highest Win</span>
+            <span>{{$t('bet.total_win2')}}</span>
             <span class="margin_left_4">{{}} </span>
         </div>
        </div>
@@ -15,7 +15,7 @@
   
             <span class="money-span" ref="money_span" :style="{ opacity:  '1' }"></span>
             
-            <span class="yb_fontsize14 limit-txt" v-show="!ref_data.money">Limts {{ ref_data.min_money }}-{{ ref_data.max_money }}</span>
+            <span class="yb_fontsize14 limit-txt" v-show="!ref_data.money">{{ i18n_t('app_h5.bet.limit')}} {{ ref_data.min_money }}-{{ ref_data.max_money }}</span>
           
           </div>
           
