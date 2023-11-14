@@ -6,7 +6,8 @@
       'play_title',
       'no_start_title',
     ].includes(card_type),
-  }" :style="`height:${card_style_obj?.card_total_height}px  !important;width:${LayOutMain_pc.oz_layout_content - (LayOutMain_pc.oz_right_width + LayOutMain_pc.oz_left_width)
+  }" :style="`height:${card_style_obj?.card_total_height}px  !important;
+  width:${LayOutMain_pc.oz_layout_content - (LayOutMain_pc.oz_right_width + LayOutMain_pc.oz_left_width)
   }px  !important;${card_style}`">
     <div v-show="false">{{ MatchListCardDataClass.list_version }}{{ LayOutMain_pc.layout_version }}</div>
 

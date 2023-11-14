@@ -1,5 +1,6 @@
 import { UserCtr,MenuData } from 'src/core/index.js'
 import BaseData from "src/core/base-data/base-data.js";
+import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import { ref } from 'vue';
 import { api_common } from "src/api/index.js";
 
@@ -75,7 +76,8 @@ const handle_click_menu_mi_3_date = (detail = {}) => {
       }
     }
     let params = { ...lv2_mi_info, lv2_mi, md, euid };
-    console.log(params, 'xxxx')
+    useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST)
+
     // 设置      中间 菜单输出
     MenuData.set_mid_menu_result(params);
 }
@@ -179,6 +181,7 @@ const set_mid_menu_result = () => {
         index: final_index.value, // 当前选中的时间 接口用不上 只是存储下一使用
       };
     }
+    console.log('params', config);
     // 设置      中间 菜单输出
     MenuData.set_mid_menu_result(params);
     // 设置   请求  列表结构  API 参数的  值

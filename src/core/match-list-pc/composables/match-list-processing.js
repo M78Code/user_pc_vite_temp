@@ -9,15 +9,15 @@ import collect_composable_fn from "./match-list-collect.js";
 import virtual_composable_fn from './match-list-virtual.js'
 import use_featch_fn from "./match-list-featch.js";
 import ws_composable_fn from "./match-list-ws.js";
-import PageSourceData  from  "src/core/page-source/page-source.js";
-import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/core/index.js";
+import PageSourceData from "src/core/page-source/page-source.js";
+import { MatchDataWarehouse_PC_List_Common as MatchListData, MatchDataWarehouse_PC_Detail_Common } from "src/core/index.js";
 import MatchListCardClass from "src/core/match-list-pc/match-card/match-list-card-class.js";
-import {match_list_handle_set} from '../match-handle-data.js'
+import { match_list_handle_set } from '../match-handle-data.js'
 const { mx_collect_count, set_collect_count } = collect_composable_fn();
 const { virtual_list_timeout_id, is_vr_numer } = virtual_composable_fn();
 const { show_mids_change } = ws_composable_fn();
 const { api_bymids, set_league_list_obj } = use_featch_fn();
-const route=useRoute()
+const route = useRoute()
 const vx_filter_select_obj = ref([])
 
 
@@ -64,22 +64,22 @@ const merge_same_league = (league_obj) => {
 
 
 const deal_with_list_data = (data) => {
-  let mid_arr = []
-  data.forEach(item => {
-    // mids 为  123,44344,1231232, 格式的mids字符串 转化为 mid层级
-    let mid = item.mids.split(',');
-    mid.forEach(option => {
-      let mid_info = {
-        ...item,
-        mid: option,
-      }
-      delete mid_info.mids;
-      mid_arr.push(mid_info)
+	let mid_arr = []
+	data.forEach(item => {
+		// mids 为  123,44344,1231232, 格式的mids字符串 转化为 mid层级
+		let mid = item.mids.split(',');
+		mid.forEach(option => {
+			let mid_info = {
+				...item,
+				mid: option,
+			}
+			delete mid_info.mids;
+			mid_arr.push(mid_info)
 		})
 	})
 
 	// if (MenuData.is_kemp()) {
-  //   MatchListData.set_list(mid_arr)
+	//   MatchListData.set_list(mid_arr)
 	// }
 }
 /**
@@ -93,21 +93,21 @@ const deal_with_list_data = (data) => {
 const mx_list_res = (data, backend_run, cut, collect) => {
 	let code = lodash.get(data, "code");
 	let res_data = lodash.get(data, "data");
-  // 将全量数据接口 切割成含有mid元素的对象数组
+	// 将全量数据接口 切割成含有mid元素的对象数组
 	let callback_func = null;
 	clearTimeout(virtual_list_timeout_id);
 	// 所有联赛列表
 	let all_league_list = [];
 	all_league_list.push(...lodash.get(res_data, "livedata", []));
 	all_league_list.push(...lodash.get(res_data, "nolivedata", []));
-  if (MenuData.is_kemp()) {
-    all_league_list.push(...lodash.get(res_data, "data", []));
-  }
-      deal_with_list_data(all_league_list);
+	if (MenuData.is_kemp()) {
+		all_league_list.push(...lodash.get(res_data, "data", []));
+	}
+	deal_with_list_data(all_league_list);
 	if (code == 200 && all_league_list.length > 0) {
 		is_show_hot.value = false;
 		// 设置收藏数量
-    // lockie
+		// lockie
 		if (vx_filter_select_obj.value.length > 0) {
 			// 只有预加载会传 true
 			if (!collect) {
@@ -166,9 +166,9 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 		}
 		// 设置数据仓库 联赛列表对象
 		set_league_list_obj(res_data)
-		 
-	// 计算列表卡片样式
-	console.log('lockie-1', res_data);
+
+		// 计算列表卡片样式
+		console.log('lockie-1', res_data);
 		MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
 			res_data,
 		);
@@ -197,17 +197,22 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 				// 非电竞切换右侧 为列表第一场赛事
 				let first_league = all_league_list[0];
 				let mids = first_league.mids.split(",");
-				let params = {
-					media_type: "auto",
-					mid: mids[0],
-					tid: first_league.tid,
-					sportId: first_league.csid,
-				};
-				console.log('进来了几次');
+				// let params = {
+				// 	media_type: "auto",
+				// 	mid: mids[0],
+				// 	tid: first_league.tid,
+				// 	sportId: first_league.csid,
+				// };
+				console.log('进来了几次1');
 				//触发右侧详情更新
-				useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, params);
+				// useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, params);
 				callback_func = () => {
-          // lockie
+					// lockie
+					const match = MatchListData.get_quick_mid_obj(Number(mids[0]));
+					if(match){
+						MatchDataWarehouse_PC_Detail_Common.set_match_details(match, [])
+						useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, mids[0])
+					}
 					// this.regular_events_set_match_details_params(cut, params);
 				};
 			}
@@ -239,7 +244,7 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 		set_league_list_obj(res_data);
 		console.log('lockie-2');
 
-	// 计算列表卡片样式
+		// 计算列表卡片样式
 		MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
 			res_data,
 		);
@@ -248,11 +253,11 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 /***
  * @description 当接口状态为成功且有数据时 调用此方法
  */
-const mx_use_list_res_when_code_200_and_list_length_gt_0 = ({match_list, collect, backend_run}) => {
+const mx_use_list_res_when_code_200_and_list_length_gt_0 = ({ match_list, collect, backend_run }) => {
 	is_show_hot.value = false;
 	console.log('lockie-3', match_list);
 	match_list_handle_set(match_list)
-  MatchListData.set_list(match_list)
+	MatchListData.set_list(match_list)
 	// 计算赛事卡片
 	MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
 		match_list,
@@ -280,6 +285,10 @@ const mx_use_list_res_when_code_200_and_list_length_gt_0 = ({match_list, collect
 					tid: first_match.tid,
 					sportId: first_match.csid,
 				};
+				if(first_match){
+					MatchDataWarehouse_PC_Detail_Common.set_match_details(first_match, [])
+					useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, first_match.mid)
+				}
 				// regular_events_set_match_details_params(cut, params);
 			}
 		}
@@ -301,7 +310,7 @@ const mx_use_list_res_when_code_200_and_list_length_gt_0 = ({match_list, collect
 /***
  * 当接口状态为异常状态时  调用此方法
  */
-const mx_use_list_res_when_code_error_or_list_length_0 = ({match_list, collect, backend_run}) => {
+const mx_use_list_res_when_code_error_or_list_length_0 = ({ match_list, collect, backend_run }) => {
 	if (is_virtual && !is_search) {
 		// 右侧切换
 		// MatchListDetailMiddleware.set_vsport_params({
@@ -384,19 +393,19 @@ const mx_use_list_res = (data, backend_run, cut, collect) => {
 		match_list = virtual_sport_format(match_list);
 	}
 	if (code == 200 && match_list) {
-		mx_use_list_res_when_code_200_and_list_length_gt_0({match_list, collect, backend_run});
+		mx_use_list_res_when_code_200_and_list_length_gt_0({ match_list, collect, backend_run });
 	} else {
-		mx_use_list_res_when_code_error_or_list_length_0({match_list, collect, backend_run});
+		mx_use_list_res_when_code_error_or_list_length_0({ match_list, collect, backend_run });
 	}
 };
 
 const process_composable_fn = () => {
-  return {
-    // 处理服务器返回的 列表 数据 ---滚球
-    mx_use_list_res,
-    // 处理服务器返回的 列表 数据 ---联赛结构
-    mx_list_res
+	return {
+		// 处理服务器返回的 列表 数据 ---滚球
+		mx_use_list_res,
+		// 处理服务器返回的 列表 数据 ---联赛结构
+		mx_list_res
 
-  }
+	}
 }
 export default process_composable_fn
