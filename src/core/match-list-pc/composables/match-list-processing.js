@@ -286,7 +286,7 @@ const mx_use_list_res_when_code_200_and_list_length_gt_0 = ({ match_list, collec
 					sportId: first_match.csid,
 				};
 				if(first_match){
-					MatchDataWarehouse_PC_Detail_Common.set_match_details(first_match.mid, [])
+					MatchDataWarehouse_PC_Detail_Common.set_match_details(first_match, [])
 					useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, first_match.mid)
 				}
 				// regular_events_set_match_details_params(cut, params);
