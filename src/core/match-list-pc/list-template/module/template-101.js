@@ -65,6 +65,7 @@ export const  width_config ={
   bet_col_count: 9,
   team_width: 338,
   play_icon_width: 0,
+  score_board_width: 100
 }
 
 
