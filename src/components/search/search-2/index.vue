@@ -66,19 +66,8 @@
 import { ref, reactive, onMounted, onUnmounted, defineComponent,watch } from "vue";
 import lodash from "lodash";
 import { useRoute } from "vue-router";
-import { useMittOn, MITT_TYPES } from 'src/core/mitt'
-import { utils, MenuData, LayOutMain_pc, GlobalSwitchClass,SearchPCClass } from 'src/core/index.js'
-
-//-------------------- 对接参数 prop 注册  开始  -------------------- 
-import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
-// import { component_symbol, need_register_props } from "src/components/search/config/index.js"
-useRegistPropsHelper(component_symbol, need_register_props)
-const props = defineProps({})
-// const computed_props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
-// const tableClass_computed = useComputed.tableClass_computed(props)
-// const title_computed = useComputed.title_computed(props)
-//-------------------- 对接参数 prop 注册  结束  -------------------- 
-
+import { useMittOn, MITT_TYPES } from 'src/core/mitt';
+import SearchPCClass from 'src/core/search-class/seach-pc-ouzhou-calss.js';
 import store from "src/store-redux/index.js";
 // 搜索输入框组件
 import searchInput from "./search-input.vue"
@@ -96,6 +85,16 @@ import { TabWapper as Tab } from "src/components/common/tab"
 import { api_search } from "src/api/index.js";
 
 import { compute_css_variables } from "src/core/css-var/index.js"
+
+//-------------------- 对接参数 prop 注册  开始  -------------------- 
+import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
+// import { component_symbol, need_register_props } from "src/components/search/config/index.js"
+useRegistPropsHelper(component_symbol, need_register_props)
+const props = defineProps({})
+// const computed_props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
+// const tableClass_computed = useComputed.tableClass_computed(props)
+// const title_computed = useComputed.title_computed(props)
+//-------------------- 对接参数 prop 注册  结束  -------------------- 
 
 const page_style = ref('')
 page_style.value = compute_css_variables({ category: 'component', module: 'header-search' })
@@ -150,8 +149,8 @@ onUnmounted(off)
 
 const click_fun = () => set_search_status(false);
 // TODO:
-onMounted(() => document.addEventListener('click', click_fun))
-onUnmounted(() => document.removeEventListener('click', click_fun))
+// onMounted(() => document.addEventListener('click', click_fun))
+// onUnmounted(() => document.removeEventListener('click', click_fun))
 
 /** 
  * 浏览器 宽高等数据 default: object

@@ -9,7 +9,7 @@
         <!-- 头部菜单 -->
         <div class="header-nav">
           <div v-for="item in navList" :key="item.id" @click="nav_click(item)"
-            :class="{ 'active-nav': current_id == item.id }">
+            :class="{ 'active-nav': route.name == item.name }">
             <span class="header-nav-title"> {{ item.label }}</span>
           </div>
         </div>
@@ -41,59 +41,35 @@ export default defineComponent({
   setup(props, context) {
     const userRouter = useRouter()
     const route = useRoute()
-    
-    const current_id = ref(1);
     const navList = ref([
-      { label: i18n_t("ouzhou.match.home"), id: 1, path: '/home' },
-      { label: i18n_t("menu.match_playing"), id: 2, path: '/in_play' },
-      { label: i18n_t("common.betting_record"), id: 3, path: '/bet_record' },
+      { label: i18n_t("ouzhou.match.home"), id:1, name: 'home' },
+      { label: i18n_t("menu.match_playing"), id:2, name: 'in_play' },
+      { label: i18n_t("common.betting_record"), id: 3, name: 'bet_record' },
     ]);
-
-    watch(() => route.path, (newVal) => {
-      // 根据当前路由路径判断给当前current_id赋值
-      current_id.value = navList.value.find(item => item.path == newVal)?.id
-      //页面中间头部导航显示处理
-      MenuData.set_router_root_lv_1(navList.value.find(item => item.path == newVal)?.id || 1)
-    },
-      { immediate: true }
-    )
-
     const nav_click = (item = {}) => {
       //页面中间头部导航显示处理
       MenuData.set_router_root_lv_1(item.id)
-
-      current_id.value = item.id;
-
       switch (item.id) {
         case 1:
+          MenuData.set_menu_root(2); 
           LayOutMain_pc.set_oz_show_right(false)
           LayOutMain_pc.set_oz_show_left(true)
           // 默认设置 fetured
           MenuData.set_router_root_lv_2(1001)
-          userRouter.push({name: 'home'})
-
+          userRouter.push({name: item.name})
           break;
         case 2:
           LayOutMain_pc.set_oz_show_right(true)
           LayOutMain_pc.set_oz_show_left(false)
-
           // 设置滚球
-          MenuData.set_menu_root(1)
-         
-          userRouter.push({name: 'in_play'})
-         
+          userRouter.push({name: item.name})
           break;
         case 3:
           LayOutMain_pc.set_oz_show_right(false)
           LayOutMain_pc.set_oz_show_left(false)
-          
-          userRouter.push({name: 'bet_record'})
-          break;
-
-        default:
+          userRouter.push({name: item.name})
           break;
       }
-
       // let state = store.getState()
       // // 获取最新的 数据
       // let redux_menu = _.cloneDeep(state.menusReducer.redux_menu)
@@ -113,9 +89,8 @@ export default defineComponent({
     };
     return {
       logo,
-      current_id,
       navList,
-      nav_click,
+      nav_click,route
     };
   },
 });

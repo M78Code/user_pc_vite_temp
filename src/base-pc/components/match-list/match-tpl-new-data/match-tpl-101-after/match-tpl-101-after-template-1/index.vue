@@ -54,27 +54,29 @@ const props = defineProps({
   }
 })
 const router = useRouter()
-
 let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.mid)
 let match = MatchListData.list_to_obj.mid_obj[props.mid + '_'];
-let match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].width_config
+//101号模板 默认就是 101的宽高配置 不会改变
+let match_list_tpl_size = lodash.get(MATCH_LIST_TEMPLATE_CONFIG, 'template_101_config.width_config', {})
 let match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`]
 let handicap_list = ref([]);
-watch(() => MatchListData.data_version.version, (new_value, old_value) => {
+watch(() => [MatchListData.data_version.version,MatchListCardDataClass.list_version], (new_value, old_value) => {
   match = MatchListData.list_to_obj.mid_obj[props.mid + '_'];
   if (match) {
     const csid = lodash.get(match, 'csid')
-    const tpl_id = get_ouzhou_data_tpl_id(csid)
-    match_list_tpl_size = match && MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].width_config
-    match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${ tpl_id }_config`]
+    //获取欧洲要显示的数据
+    const tpl_id =  get_ouzhou_data_tpl_id(csid)
+    //101 数据模板 却是对应不同的数据模板ID 所以要重新取
+    match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${tpl_id}_config`]
+    //获取要展示的赔率数据
     handicap_list.value = match_tpl_info.get_current_odds_list(MatchListCardDataClass.get_csid_current_hpids(csid))
   }
 })
-watch(() => MatchListCardDataClass.list_version.value, (new_value, old_value) => {
-  if (match) {
-    handicap_list.value = match_tpl_info.get_current_odds_list(MatchListCardDataClass.get_csid_current_hpids(lodash.get(match, 'csid')))
-  }
-})
+// watch(() => MatchListCardDataClass.list_version.value, (new_value, old_value) => {
+//   if (match) {
+//     handicap_list.value = match_tpl_info.get_current_odds_list(MatchListCardDataClass.get_csid_current_hpids(lodash.get(match, 'csid')))
+//   }
+// })
 function jump_to_details() {
   const { tid, csid } = match;
   //比分板跳转到详情页
@@ -187,4 +189,5 @@ onMounted(() => {
   &:hover {
     color: #FF7000;
   }
-}</style>
+}
+</style>

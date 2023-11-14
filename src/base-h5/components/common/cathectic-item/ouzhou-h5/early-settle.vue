@@ -181,7 +181,7 @@ onMounted(() => {
 })
 onUnmounted(() => {
   // 清除定时器 和 ws推送
-  clear_timer()
+  clearTimeout(timer)
   mitt_c201_handle()
   mitt_c210_handle()
   mitt_expected_profit()
@@ -323,10 +323,6 @@ const submit_click = () => {
   }
 }
 
-// 批量清除定时器
-const clear_timer = () => {
-  clearTimeout(timer)
-}
 </script>
 <style lang="scss" scoped>
 template {
