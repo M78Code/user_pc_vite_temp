@@ -138,6 +138,8 @@ class MenuData {
     
     this.router_root_version = ref('')
 
+    this.coom_soon = ref(false)
+
     // ---------------------------- 欧洲版-pc 专用 --------------------------------
   }
 

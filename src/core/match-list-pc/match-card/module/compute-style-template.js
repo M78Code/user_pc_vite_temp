@@ -293,7 +293,7 @@ export const compute_style_template_by_matchinfo = (match, template_id) => {
 		// 附加盘高度
 		add_handicap_height: 0,
 		// 是否需要动态计算高度
-		is_dynamic_compute_height: template_config.is_dynamic_compute_height,
+		is_dynamic_compute_height: template_config.is_dynamic_compute_height || true,
 		// 卡片总高度
 		total_height: 0,
 		// 主盘口高度
@@ -309,10 +309,10 @@ export const compute_style_template_by_matchinfo = (match, template_id) => {
 	};
 	// 如果没有赛事信息
 	if (!match || !match.mid) {
+		console.log('asdasdasdasdasdsa', match);
 		return style_obj;
 	}
 	style_obj.csid = match.csid;
-	// style_obj.data_tpl_id = match.data_tpl_id;
 	style_obj.is_show_card = true;
 
 	if (template_id == 1) {

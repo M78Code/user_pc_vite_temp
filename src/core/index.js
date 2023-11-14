@@ -143,6 +143,14 @@ const MatchDataWarehouse_ouzhou_PC_l5mins_List_Common = new MatchDataBase({
 });
 
 /**
+ * 欧洲版 PC/H5 数据仓库 五大联赛 仓库
+ */
+
+const MatchDataWarehouse_ouzhou_PC_five_league_List_Common = new MatchDataBase({
+  name_code: "MatchDataWarehouse_ouzhou_PC_five_league_List_Common",
+});
+
+/**
  * 欧洲版 PC/H5 数据仓库 热推 顶部列表
  */
 
@@ -294,6 +302,7 @@ export {
   MatchDataWarehouse_H5_Detail_Jingxuan,
   MatchDataWarehouse_ouzhou_PC_l5mins_List_Common,
   MatchDataWarehouse_ouzhou_PC_hots_List_Common,
+  MatchDataWarehouse_ouzhou_PC_five_league_List_Common,
   MatchDataWarehouse_ouzhou_PC_List_Common,
   LayOutMain_pc,
   compute_css_variables,

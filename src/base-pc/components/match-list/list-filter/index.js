@@ -36,7 +36,6 @@ function set_init() {
         return handle_click_menu_mi_400({ ...obj, guanjun: "guanjun" });
     } else if (menu_config.menu_root == 1) {
         let sports = menu_mi.value == 1 ? "quanbu-gunqiu" : "common";
-        console.log("menu_config.menu_root", obj, menu_mi);
         handle_click_menu_mi_1({ ...obj, sports });
     }
 }

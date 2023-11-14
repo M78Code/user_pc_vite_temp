@@ -102,6 +102,7 @@ import ListFilterHot from "src/base-pc/components/match-list/list-filter-hot/ind
 import listFilterDate from "src/base-pc/components/match-list/list-filter-date/index.vue"; //热门赛事列表  早盘-日期
 import { MatchListCardFullVersionWapper as MatchListCard } from "src/base-pc/components/match-list/match-list-card/index.js"; //赛事列表
 import { PlayVirtualMatchTypeFullVersionWapper as PlayVirtualMatchType } from "src/base-pc/components/match-list/play-virtual-match-type/index.js"; //赛事列表头部——滚球——赛事类型
+import MatchListCardClass from "src/core/match-list-pc/match-card/match-list-card-class.js";
 import ListHeader from "src/base-pc/components/match-list/list-header/index.vue"; //头部
 import ScrollList from "src/base-pc/components/cus-scroll/scroll_list.vue";
 import refresh from "src/components/refresh/refresh.vue";
@@ -137,6 +138,7 @@ import {
 import {
   MatchDataWarehouse_ouzhou_PC_l5mins_List_Common,
   MatchDataWarehouse_ouzhou_PC_hots_List_Common,
+  MatchDataWarehouse_PC_List_Common,
   LayOutMain_pc,
 } from "src/core";
 import MenuData from "src/core/menu-pc/menu-data-class.js";
@@ -196,6 +198,12 @@ export default {
         // 处理返回数据 将扁平化数组更改为页面适用数据
         MatchDataWarehouse_ouzhou_PC_l5mins_List_Common.set_list(res.p15);
         MatchDataWarehouse_ouzhou_PC_hots_List_Common.set_list(res.hots);
+        let sort_list = res.dataList.sort((x, y) => x.csid - y.csid)
+        // 将球种排序
+        MatchDataWarehouse_PC_List_Common.set_list(sort_list);
+        MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
+          sort_list,
+        );
         // matches_15mins_list.value = MatchDataWarehouse_ouzhou_PC_l5mins_List_Common.match_list
         // matches_featured_list.value =MatchDataWarehouse_ouzhou_PC_hots_List_Common.match_list
         matches_15mins_list.value = filter_15mins_func(
@@ -229,10 +237,10 @@ export default {
       proxy?.$forceUpdate();
     });
 
-    watch(MatchListOuzhouClass.coom_soon, () => {
-      coom_soon_state.value = MatchListOuzhouClass.coom_soon.value;
-      proxy?.$forceUpdate();
-    });
+    // watch(MenuData.coom_soon, () => {
+    //   coom_soon_state.value = MenuData.coom_soon.value;
+    //   proxy?.$forceUpdate();
+    // });
 
     return {
       menu_config,

@@ -464,16 +464,16 @@ const order_status = (orderStatus) => {
   switch (parseInt(orderStatus)) {
     case 0:
     case 1:
-      str = 'Bet Placed' //"投注成功";
-      break
+      str = i18n_t("bet.bet_suc"); //"投注成功";
+      break;
     case 2:
-      str = 'Bet Voided' //"注单无效";
-      break
+      str = i18n_t("bet.betting_cancel"); //"注单无效";
+      break;
     case 3:
-      str = 'Processing' //"确认中";
-      break
+      str = i18n_t("bet.bet_loading"); //"确认中";
+      break;
     case 4:
-      str = 'Betting Failed' //"投注失败";
+      str = i18n_t("bet.bet_fail"); //"投注失败";
       break
     default:
       break
