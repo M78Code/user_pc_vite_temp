@@ -229,7 +229,7 @@ export default defineComponent({
       // if (!globalAccessConfig.config.searchSwitch) {
       //   return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t("msg.msg_09"));
       // }
-      set_search_status(true);
+      SearchPCClass.set_search_isShow(true);
       console.log('isShow',SearchPCClass.search_isShow);
     }
     /** 初始化 */
