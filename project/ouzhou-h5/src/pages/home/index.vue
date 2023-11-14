@@ -36,7 +36,7 @@
             <!-- 5大联赛 -->
             <template v-if="leagues_matchs.length > 0">
               <HeaderTitle title="Top Leagues"></HeaderTitle>
-              <TopLeagues :leagues_matchs="leagues_matchs" />
+              <MatchLeagues />
             </template>
           </section>
         </q-tab-panel>
@@ -59,7 +59,7 @@ import { watch } from "vue";
 
 import TimeEvents from './components/time-events.vue'
 import HeaderTitle from './components/header-title.vue'
-import TopLeagues from './components/top-leagues.vue'
+import MatchLeagues from './components/match-leagues.vue'
 import FeaturedMatches from './components/feature-matches.vue'
 import MatchPlay from './components/match-play.vue'
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';

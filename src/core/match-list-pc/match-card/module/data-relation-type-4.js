@@ -234,7 +234,7 @@ import {get_match_template_id} from '../../match-handle-data.js'
       league_card_mids_arr[card_key] = league_card_mids_arr[card_key] || []
       league_card_mids_arr[card_key].push(match.mid)
       // 赛事表征数据
-      all_card_obj[match.mid+'_'] =  compute_style_template_by_matchinfo(match, get_match_template_id(match))
+      all_card_obj[match.mid+'_'] =  compute_style_template_by_matchinfo(match, get_match_template_id(match), true)
     })
 
     // 设置赛事状态标题卡片下的赛事数量
