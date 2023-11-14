@@ -5,7 +5,12 @@
     <div class="navigation-bar" :style="{borderBottomColor: borderBottomNoShow && 'transparent'}">
         <div class="navigation-bar-left">
             <div class="navigation-bar-close" @click="set_back">
-                <div class="img" :style="compute_css_obj('menu-go-back-icon')"></div>
+                <!-- <div class="img" :style="compute_css_obj('menu-go-back-icon')"></div> -->
+                    <img
+                    class="img"
+                    :src="compute_local_project_file_path('/image/svg/go-back-icon.svg')"
+                    alt=""
+                />
             </div>
         </div>
         <div v-if="centerContentType === 'text'" class="navigation-bar-center font-weight-bold text-no-wrap">
@@ -22,6 +27,7 @@
 <script setup>
 import { i18n_t, compute_css_obj } from "src/core/index.js";
 import { useRouter,useRoute } from "vue-router";
+import {compute_local_project_file_path} from 'src/core';
 
 defineOptions({
     name: 'navigationBar' // 设置组件名称
@@ -71,9 +77,8 @@ const set_back = () => {
         height: 100%;
         padding-left: .14rem;
         .img {
-            height: .20rem;
-            width: .12rem;
-            background-color: var(--q-gb-t-c-1);
+            height: .14rem;
+            width: .08rem;
         }
     }
     &-center, &-left, &-right {
