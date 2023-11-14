@@ -11,7 +11,7 @@
     </div>
     <div class="del-info">
       <div class="dropdown">
-        <button class="dropbtn">{{$t('bet.bet')}}</button>
+        <button class="dropbtn">{{$t('bet.single_more')}}</button>
         <div class="dropdown-content">
           <a href="#" :class="(BetData.is_bet_single && !BetData.is_bet_merge)?'dropdown-content-che':''" @click.stop="set_is_bet_single(true)">{{$t('bet.bet')}}</a>
           <a href="#" :class="BetData.is_bet_merge?'dropdown-content-che':''" @click.stop="set_is_bet_merge">{{ $t('bet.single_more') }}</a>
@@ -32,15 +32,29 @@
     BetData.set_clear_bet_info()
   }
 
+  const dropbtnName = () =>{
+    if(BetData.is_bet_merge){
+      return this.i18n_t('bet.single_more')
+    }else if(BetData.is_bet_single){
+      return this.$t('bet.bet')
+    }else{
+      return this.$t('bet.kushikatsu')
+    }
+  }
+
   // 单关 串关切换
   const set_is_bet_single = (type) =>{
     BetData.set_is_bet_single()
-    // if(BetData.is_bet_merge){
-    //   BetData.set_is_bet_merge()
-    // }
+    if(BetData.is_bet_merge){
+      BetData.set_is_bet_merge()
+    }
     useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX, type);
   }
   const set_is_bet_merge = () => {
+    if(BetData.is_bet_merge){
+      BetData.set_is_bet_single()
+      useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX, false);
+    }
     BetData.set_is_bet_merge()
     // useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX, type);
   }

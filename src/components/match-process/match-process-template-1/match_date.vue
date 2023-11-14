@@ -30,6 +30,7 @@
           timer_ms: 1000,
           on_time_change: before_start_timer_change,
         }"
+        :date_show_type="date_show_type"
       />
     </template>
 
@@ -46,6 +47,7 @@
           timer_ms: 1000,
           on_time_change: inplay_timer_change,
         }"
+        :date_show_type="date_show_type"
       />
 
       <!-- 显示:00:00 || 节制  -->
