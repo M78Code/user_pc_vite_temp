@@ -65,6 +65,7 @@ const set_tab_list = (news_,sport_mi) =>{
 	// 滚球
 	if( news_ ==2 ){
 		matches_header_title.value = "In Play"
+        match_list_top.value = '146px'
 	}
 	// 左侧菜单
 	if(news_ ==4){
