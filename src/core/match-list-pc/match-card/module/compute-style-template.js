@@ -24,7 +24,7 @@
  *
  */
 
-import { MatchDataWarehouse_PC_List_Common as MatchListData } from 'src/core/index.js'
+import { MatchDataWarehouse_PC_List_Common as MatchListData, PROJECT_NAME } from 'src/core/index.js'
 import MatchListCardData from "./match-list-card-data-class.js";
 import lodash from "lodash";
 import MenuData from "src/core/menu-pc/menu-data-class.js";
@@ -243,13 +243,13 @@ export const fold_tab_play = (mid) => {
  * @param {number} template_id 赛事模板编号
  * @param {undefined} undefined
  */
-export const get_league_title_card_height = (template_id, is_ouzhou) => {
+export const get_league_title_card_height = (template_id) => {
 	let height;
 	// 个别模板有两行玩法标题
 	if ([3, 5, 21, 22].includes(+template_id)) {
 		height = 56;
 	} else {
-		height = is_ouzhou ? ouzhou_league_title_template.league_nofold_height : league_title_card_template.league_nofold_height;
+		height = PROJECT_NAME == 'ouzhou-pc' ? ouzhou_league_title_template.league_nofold_height : league_title_card_template.league_nofold_height;
 	}
 	return height;
 };
@@ -262,7 +262,7 @@ export const get_league_title_card_height = (template_id, is_ouzhou) => {
  * @returns
  */
 
-export const compute_style_template_by_matchinfo = (match, template_id, is_ouzhou) => {
+export const compute_style_template_by_matchinfo = (match, template_id) => {
 	if (template_id == 13) {
 		template_id = 1;
 	}
@@ -352,8 +352,8 @@ export const compute_style_template_by_matchinfo = (match, template_id, is_ouzho
 		style_obj.add_handicap_height +
 		style_obj.tab_play_total_height +
 		6;
-	if (is_ouzhou) {
-		style_obj.total_height -= 5;
+	if (PROJECT_NAME == 'ouzhou-pc') {
+		style_obj.total_height = 80;
 	}
 	return style_obj;
 };

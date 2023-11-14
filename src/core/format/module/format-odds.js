@@ -1,4 +1,6 @@
 import { i18n_t } from "src/boot/i18n.js";
+import {is_eports_csid} from "src/core/index"; 
+
 /**
  *@description 赔率展示优化，见优化单 13807,电竞不走这个逻辑
  *@param {Number|String} val 最终赔率 30.40 100.00
@@ -26,13 +28,13 @@ export const format_odds = function (val, csid) {
 };
 
 // 赔率格式化
-export const format_odds_value = (val) => {
+export const format_odds_value = (val,csid) => {
   if (val == "" || val == undefined) {
     return "";
   }
   val = (val || "0").toString();
   let ret = val;
-  if (!this.$utils.is_eports_csid(this.ol_data.csid) && val.includes(".")) {
+  if (!is_eports_csid(csid) && val.includes(".")) {
     if (val >= 100) {
       if (val.split(".")[1] == "00") {
         ret = val.split(".")[0];
