@@ -21,7 +21,8 @@
         </div>
       </div> -->
       <!-- 分析页动画 -->
-      <div class="tabs-wrap" v-if="detail_info.ms>0">
+      <div v-if="!lodash_.isEmpty(score_list)">
+        <div class="tabs-wrap" v-if="detail_info.ms>0">
       <span v-for="item in tabList" :key="item.id" @click="tabClick(item)"
         :class="[{ 'is-active': item.id === active }, 'tabs-item']">{{ item.label }}
       </span>
@@ -31,6 +32,8 @@
       <foot-ball-stats v-if="detail_info.csid==1 &&detail_info.ms>0" :detail_info="detail_info" :score_list="score_list" />
        <!-- 篮球分析页图表 -->
        <basket-ball-stats  v-if="detail_info.csid==2 &&detail_info.ms>0" :detail_info="detail_info" :score_list="score_list" />
+
+      </div>
       <!-- 选择哪队会赢组件 -->
       <switch-team v-if="false" />
     </div>
