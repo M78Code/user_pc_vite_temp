@@ -3,7 +3,7 @@
     <div class="floating-menu">
       <div class="footer-menu-item" @click="menu_item_click(item)" v-for="(item, k) of footer_menu_list" :key="k">
         <div class="m-item-inner">
-          <div class="item-img-wrapper">
+          <div class="item-img-wrapper" :class="item.id === 5 ?'refresh_animation':''">
             <img class="menu-item-img" :src="item.icon" alt="" />
           </div>
           <div class="menu-item-title" >
