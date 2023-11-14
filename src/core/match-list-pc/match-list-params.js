@@ -42,7 +42,8 @@ const api_params = {
     },
     other: {
         match: "post_league_list",
-        colloet: "post_fetch_collect_list"
+        colloet: "post_fetch_collect_list",
+        home: "get_home_matches",
     }
 }
 /**
@@ -55,7 +56,6 @@ function match_list_all_params() {
     const { menu_root, left_menu_result, mid_menu_result, is_collect,get_mid_for_euid } = MenuData
    
     let { csid, tid, md, index, sports, guanjun, mi, mif } = mid_menu_result || {};
-    console.log('mid_menu_result1',mid_menu_result)
     let { lv2_mi, lv1_mi, } = left_menu_result || {};
     let apiType = 1;
      // 父级euid

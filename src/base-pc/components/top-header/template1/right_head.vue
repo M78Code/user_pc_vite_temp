@@ -89,13 +89,13 @@ import store from "src/store-redux/index.js";
 import { SearchPCClass } from 'src/core/index.js'
 import globalAccessConfig from "src/core/access-config/access-config.js"
 import SearchHotPush from "src/core/search-class/search_hot_push.js";
-console.log(globalAccessConfig,'globalAccessConfig');
 import { api_account } from 'src/api/index';
 import { loadLanguageAsync, useMittEmit, MITT_TYPES} from "src/core/index.js";
 export default defineComponent({
   name: "RightHead",
   setup() {
     const text = ref('')
+    const route=useRoute()
     const is_search = ref(false)
     const visible = ref(false)
     //语言设置
@@ -134,11 +134,11 @@ export default defineComponent({
           key: 'hy',
           language: 'Korean',
         }]
-    watch(() => route.path, (newVal) => {
-      is_search.value = newVal=='/search'
-    },
-      { immediate: true }
-    )
+    // watch(() => route.path, (newVal) => {
+    //   is_search.value = newVal=='/search'
+    // },
+    //   { immediate: true }
+    // )
     onMounted(() => {
       compute_userInfo();
 
