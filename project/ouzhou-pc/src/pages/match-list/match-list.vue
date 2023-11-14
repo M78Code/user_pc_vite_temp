@@ -188,6 +188,40 @@ export default {
 
     const { proxy } = getCurrentInstance();
 
+    const filter_20_match = (data)=>{
+      const result = [];
+      // 足球最多10个
+      const max_football_count = 5;
+      let football_count = 0;
+      // 别的球种5个
+      const max_other_count = 2;
+
+      //用来跟踪每种球种的数量
+      const sport_counts = {}
+
+      for(const item of data){
+        if(item.csid === '1' && football_count < max_football_count){
+          result.push(item);
+          football_count++;
+        }else if(item.csid !== '1'){
+          //当前球种数量
+          const current_count = sport_counts[item.name] || 0;
+          // 当前球种数量小于5时，推入result
+          if(current_count < max_other_count){
+            result.push(item);
+            sport_counts[item.name] = current_count + 1;
+          }
+        }
+        // 大于20条时，跳出循环
+        if(result.length >= 10){
+          break;
+        }
+      }
+      console.log('resultt', result);
+      
+      return result;
+    }    
+
     const init_home_matches = () => {
       const params = {
         type: 1,
@@ -198,9 +232,12 @@ export default {
         // 处理返回数据 将扁平化数组更改为页面适用数据
         MatchDataWarehouse_ouzhou_PC_l5mins_List_Common.set_list(res.p15);
         MatchDataWarehouse_ouzhou_PC_hots_List_Common.set_list(res.hots);
-        MatchDataWarehouse_PC_List_Common.set_list(res.dataList);
+        // res.dataList = filter_20_match(res.dataList);
+        let sort_list = res.dataList.sort((x, y) => x.csid - y.csid)
+        // 将球种排序
+        MatchDataWarehouse_PC_List_Common.set_list(sort_list);
         MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
-          res.dataList,
+          sort_list,
         );
         // matches_15mins_list.value = MatchDataWarehouse_ouzhou_PC_l5mins_List_Common.match_list
         // matches_featured_list.value =MatchDataWarehouse_ouzhou_PC_hots_List_Common.match_list
@@ -235,10 +272,10 @@ export default {
       proxy?.$forceUpdate();
     });
 
-    watch(MatchListOuzhouClass.coom_soon, () => {
-      coom_soon_state.value = MatchListOuzhouClass.coom_soon.value;
-      proxy?.$forceUpdate();
-    });
+    // watch(MenuData.coom_soon, () => {
+    //   coom_soon_state.value = MenuData.coom_soon.value;
+    //   proxy?.$forceUpdate();
+    // });
 
     return {
       menu_config,

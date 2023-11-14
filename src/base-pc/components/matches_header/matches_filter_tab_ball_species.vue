@@ -6,7 +6,7 @@
         class="current-filter-tab"
         v-for="(item, index) in mi_100_arr" :key="index"
       >
-        <div class="filter-label" @click="choose_filter_tab(item, '1')" :class="{ checked: current_choose_tab == item.mi }">
+        <div class="filter-label" @click="choose_filter_tab(item)" :class="{ checked: current_choose_tab == item.mi }">
           <div class="filter-tab-item">
             <div class="filter-icon">
               <sport_icon :sport_id="compute_sport_id(item.mif)" :status="current_choose_tab == item.mi"  size="24px" class="icon" />
@@ -25,7 +25,7 @@
         class="current-filter-tab"
         v-for="(item, index) in mi_2000_arr" :key="index"
       >
-        <div class="filter-label" @click="choose_filter_tab(item, '2000')" :class="{ checked: current_choose_tab == item.mi }">
+        <div class="filter-label" @click="choose_filter_tab(item)" :class="{ checked: current_choose_tab == item.mi }">
           <div class="filter-tab-item">
             <div class="filter-icon">
               <sport_icon :sport_id="compute_sport_id(item.mif)" :status="current_choose_tab == item.mi"  size="24px" class="icon" />
@@ -146,7 +146,7 @@ const filter_min_mi_300 = (originalArray)=>{
  */
 
  
-const choose_filter_tab = (item, root) => {
+const choose_filter_tab = (item) => {
   current_choose_tab.value = item.mi;
   // 获取最新的 数据
   handle_click_menu_mi_1(item)
