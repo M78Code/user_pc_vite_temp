@@ -4,8 +4,8 @@
 		<div class="matches_header">
 			<div class="header_banne header_banner" :style="`background-position:0 -${current_ball_type}px`"></div>
 			<div class="matches-title">
-				<div class="current_match_title" :class="MenuData.router_root_lv_1 == 2 ?'all_matches':''">{{ matches_header_title }}</div>
-				<div class="match_all_matches" v-if="MenuData.router_root_lv_1 == 2">All Matches</div>
+				<div class="current_match_title" :class="MenuData.is_scroll_ball() ?'all_matches':''">{{ matches_header_title }}</div>
+				<div class="match_all_matches" v-if="MenuData.is_scroll_ball()">All Matches</div>
 				<div v-else class="matches_tab" >
 					<div v-for="item in tab_list" :key="item.value" @click="checked_current_tab(item)"
 						:class="{ 'checked': item.value == MenuData.router_root_lv_2 }">
@@ -14,8 +14,8 @@
 				</div>
 			</div>
 		</div>
-		<MatchesFilterTab v-if="(MenuData.router_root_lv_2 == 1002 && MenuData.router_root_lv_1 == 1 && !coom_soon_state) || MenuData.router_root_lv_1 == 2"  />
-		<MatchesDateTab  v-if="MenuData.router_root_lv_1 == 4" />
+		<MatchesFilterTab v-if=" MenuData.is_scroll_ball() || MenuData.is_hot()"  />
+		<MatchesDateTab  v-if="MenuData.is_today() || MenuData.is_zaopan()" />
 	</div>
 </template>
 
@@ -36,26 +36,17 @@ const tab_list = ref([])
 const current_ball_type = ref(630)
 
 const matches_header_title = ref(i18n_t("ouzhou.match.matches"));
-const current_value = ref(i18n_t("ouzhou.match.featured"));
-
-
 // 头部高度 包含 teb切换
 const match_list_top = ref('80px') 
-
 const coom_soon_state =ref(false)
-
 onMounted(()=>{
 	set_tab_list(MenuData.router_root_lv_1,MenuData.left_menu_mi.value)
 })
-
-// 顶部菜单 切换
-watch(()=>MenuData.router_root.value,(news_)=>{
-	set_tab_list(news_)
-})
-
 // 左侧菜单切
-watch(()=>MenuData.left_menu_mi.value,(news_)=>{
-	set_tab_list(4,news_)
+watch(MenuData.menu_data_version,(news_)=>{
+	if(MenuData.is_today()||MenuData.is_zaopan()){
+		set_tab_list(4,news_);
+	}
 })
 
 // 设置 头部信息配置

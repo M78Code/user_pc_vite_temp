@@ -92,8 +92,7 @@
   </div>
 </template>
 <script>
-import { onMounted, onUnmounted, ref, watch, getCurrentInstance } from "vue";
-
+import { onMounted,onActivated, onUnmounted, ref, watch, getCurrentInstance } from "vue";
 import { IconWapper } from "src/components/icon";
 import LoadData from "src/components/load_data/load_data.vue";
 import { LeagueTabFullVersionWapper as LeagueTab } from "src/base-pc/components/tab/league-tab/index.js"; //联赛菜单
@@ -254,10 +253,10 @@ export default {
       match_list_card_key_arr.value =
         MatchListCardDataClass.match_list_card_key_arr;
     };
-
     onMounted(() => {
       LayOutMain_pc.set_oz_show_right(false);
       LayOutMain_pc.set_oz_show_left(true);
+      MenuData.set_menu_root(0)
 
       mounted_fn();
       init_home_matches();
@@ -266,6 +265,11 @@ export default {
     onUnmounted(() => {
       // handle_destroyed()
     });
+    onActivated(()=>{
+      LayOutMain_pc.set_oz_show_right(false);
+      LayOutMain_pc.set_oz_show_left(true);
+      MenuData.set_menu_root(0)
+    })
 
     watch(MatchListCardDataClass.list_version, (list_version) => {
       MatchListCardDataClass_match_list_card_key_arr();
