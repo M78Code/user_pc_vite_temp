@@ -52,14 +52,14 @@
     if (area_obj?.scrollWidth >= area_obj_wrap?.clientWidth) {
       show_right_btn.value = true;
     }
-    useMittOn(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE,set_menu_change)
     let time = await UserCtr.get_system_time()
     update_time(time)
     // get_date_menu_matches_list()
   })
-
+    
+  // const mitt_list=[useMittOn(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE,set_menu_change)]
   onUnmounted(()=>{
-    useMittOn(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE,set_menu_change).off
+    // useMittOn(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE,set_menu_change).off
   })
 
     // 左侧菜单切
@@ -75,7 +75,6 @@
     let value = ''
    for (let i = 0; i <=6; i++) {
     value = i === 0 ? time : time + day * i
-    console.log(value, 'valuevalue', time + day * i, day * i)
     label = i === 0 ? "Today" :  i === 1 ? "Tomorrow" : `${format_M_D_PC(value)}`
     arr.push({
       label,

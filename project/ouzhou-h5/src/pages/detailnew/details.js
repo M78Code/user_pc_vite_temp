@@ -178,14 +178,13 @@ export const details_main = (router,route) => {
    *@param {obj} params 请求参数
    *@return {obj}
    */
-  const get_matchDetail_getMatchOddsInfo = (params) => {
+  const get_matchDetail_getMatchOddsInfo = (params,init=false) => {
     //赛果页面调用赛果玩法详情接口
     // match_odds_info.value = get_match_odds_info.value;
     api_match_list.get_detail_list(params).then((res) => {
-      setTimeout(() => {
-        loading.value = false;
-      }, 1000);
-      // console.log("get_matchDetail_getMatchOddsInfo", res);
+      // setTimeout(() => {
+        
+      // }, 1000);
       get_match_odds_info.value = res.data;
       if (tab_selected_obj.value.marketName) {
         detail_tabs_change(tab_selected_obj.value);
@@ -196,7 +195,9 @@ export const details_main = (router,route) => {
         MatchDataWarehouseInstance.get_quick_mid_obj(params.mid),
         match_odds_info.value
       );
-    });
+      // 第一次加载显示进度条
+       loading.value = !init;
+    }).catch((err)=>console.log(err))
 
     // get_match_odds_info.value = get_match_odds_info_mock.data;
     // match_odds_info.value = get_match_odds_info_mock.data
@@ -215,7 +216,13 @@ export const details_main = (router,route) => {
       if (!tab_selected_obj.value.id) {
         tab_selected_obj.value = lodash.get(res, "data[0]", {});
       }
-    });
+      get_matchDetail_getMatchOddsInfo({
+        mcid: 0,
+        cuid: cuid.value,
+        mid:params.mid,
+        newUser: 0,
+      },true);
+    }).catch((err)=>console.log(err))
   };
   /**
    *@description 赛事详情页面接口(/v1/m/matchDetail/getMatchDetailPB)
@@ -242,6 +249,11 @@ export const details_main = (router,route) => {
       // detail_store.get_detail_params
       MatchDataWarehouseInstance.set_match_details(match_detail.value, []);
       // console.log("get_matchDetail_MatchInfo", res);
+      const { mid, csid } = route.params;
+      get_category_list_info({
+        sportId: csid,
+        mid,
+      });
     });
 
     // mock Start
@@ -258,20 +270,13 @@ export const details_main = (router,route) => {
    */
   const detail_init = () => {
     const { mid, csid } = route.params;
-    get_matchDetail_getMatchOddsInfo({
-      mcid: 0,
-      cuid: cuid.value,
-      mid,
-      newUser: 0,
-    });
-    get_category_list_info({
-      sportId: csid,
-      mid,
-    });
     get_matchDetail_MatchInfo({
       mid,
       cuid: cuid.value,
     });
+
+  
+  
   };
   const timer_s_interval = (time = 4000) => {
     clear_all_timer();
@@ -292,20 +297,32 @@ export const details_main = (router,route) => {
   };
   onMounted(() => {
     loading.value = true;
-    setTimeout(() => {
       detail_init();
       // timer_s_interval(4000);
-    }, 10);
   });
   // // 监听顶部刷新功能
   const { off :refreshOff } = useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS, detail_init);
     //todo mitt 触发ws更新
-    const {off} = useMittOn(MITT_TYPES.EMIT_DATAWARE_DETAIL_UPDATE,(res)=>{
-    })
+  const {off:off_ws} = useMittOn(MITT_TYPES.EMIT_DATAWARE_DETAIL_UPDATE,(params)=>{
+    switch (params.type) {
+      case "oddinfo":
+      const { mid, csid } = route.params;
+       get_matchDetail_getMatchOddsInfo({
+        mcid: 0,
+        cuid: cuid.value,
+        mid,
+        newUser: 0,
+      },true);
+        break;
+    
+      default:
+        break;
+    }
+  })
   onUnmounted(() => {
     clear_all_timer();
     refreshOff()
-    off();
+    off_ws()
   });
   return {
      detail_store,

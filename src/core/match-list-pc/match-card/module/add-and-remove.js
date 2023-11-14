@@ -1,5 +1,6 @@
 import { update_match_parent_card_style } from "./utils.js";
 import { compute_style_template_by_matchinfo } from "./compute-style-template.js";
+import {get_match_template_id} from '../../match-handle-data.js'
 import { conpute_match_list_card_offset } from "./card-show-offset.js";
 import { compute_match_list_style_obj_and_match_list_mapping_relation_obj } from "./data-relation.js";
 import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/core/index.js";
@@ -73,11 +74,11 @@ export const recompute_match_list_style_obj_and_match_list_mapping_relation_obj_
       // 原来的样式数据
       let old_match_style_obj = MatchListCardData.all_card_obj[mid+'_'] || {};
       // 判断是否需要动态计算高度
-      if ( lodash.get(old_match_style_obj, 'is_dynamic_compute_height') ||lodash.get(old_match_style_obj, 'card_total_height') ) {
+      if ( true||lodash.get(old_match_style_obj, 'card_total_height') ) {
         let match = MatchListData.list_to_obj.mid_obj[mid+'_'];
         let match_style_obj = compute_style_template_by_matchinfo(
           match,
-          old_match_style_obj.data_tpl_id
+          get_match_template_id(match)
         );
         // 更新赛事表征数据
         Object.assign(old_match_style_obj, match_style_obj);

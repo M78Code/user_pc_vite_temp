@@ -7,7 +7,7 @@
   <div class="h-right">
     <div :class="[is_search ? 'search-click' : 'search']">
       <div class="s-input s-input-click">
-        <q-input borderless rounded :readonly="!is_search" @click="change_input" v-model="text" label-color="primary"
+        <q-input borderless rounded @focus="show_search" v-model="text" label-color="primary"
           placeholder="Enter league or team">
           <template v-slot:prepend>
             <i class="icon-search q-icon c-icon" size="10px"></i>
@@ -16,6 +16,7 @@
             <i class="icon-close" size="10px" style="margin-right:10px" v-if="text.length" @click="text = ''"></i>
           </template>
         </q-input>
+        <searchCom v-if="SearchPCClass.search_isShow" />
       </div>
     </div>
     <!-- <div class="s-input-active">
@@ -33,40 +34,46 @@
       <q-avatar size="40px"  @click="change_input">
         <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/avator.png`" alt="" srcset="" />
       </q-avatar>
-      <q-menu class="personal-menu">
-          <q-list class="personal-list" style="min-width: 200px">
-            <q-item clickable>
+      <q-menu style="background:#fff;border-radius:2px;">
+          <q-list class="personal-list" style="min-width: 280px;">
+            <q-item clickable @click="goto_announcement">
               <q-item-section>
-                <div>Announcement</div>
+                <div class="flex title">
+                  <img class="icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/notice.png`" alt="" />
+                  <div>Announcement</div>
+                </div>
+              </q-item-section>
+            </q-item>
+            <q-item clickable @click="goto_results">
+              <q-item-section>
+                <div class="flex title">
+                  <img class="icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/results.png`" alt="" />
+                  <div>Results</div>
+                </div>
               </q-item-section>
             </q-item>
             <q-item clickable>
               <q-item-section>
-                <div>Results</div>
-              </q-item-section>
-            </q-item>
-            <q-item clickable>
-              <q-item-section>
-                <div class="flex">
-                <img class="icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/rule.png`" alt="" />
-                <div>Sport Rules</div>
+                <div class="flex title">
+                  <img class="icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/rule.png`" alt="" />
+                  <div>Sport Rules</div>
               </div>
               </q-item-section>
             </q-item>
             <!--国际化语言-->
             <q-item clickable  @click="onExpend">
               <q-item-section class="personal-content">
-                <div class="flex">
+                <div class="flex title">
                   <img class="icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/language.png`" alt="" />
-                <div>language</div>
+                  <div>language</div>
                 </div>
-                <img class="arrow" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/arrow.png`" alt="" />
+                <img :class="['arrow', { expend: visible }]" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/arrow.png`" alt="" />
               </q-item-section>
             </q-item>
             <q-separator />
             <q-item  v-show="visible">
               <q-slide-transition >
-                <q-item-section class="currpon">
+                <q-item-section>
                   <div :class="['language_item', {active: lang === key}]" v-for="{ key, language } in languages" :key="key" @click="on_change_lang(key)">
                     <span> <span class="lang-icon" :class="`lang-${key}`"></span> {{ language }} </span>
                     <img class="lang" v-if="lang === key" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/vector.png`" alt="">
@@ -75,6 +82,17 @@
               </q-slide-transition>
             </q-item>
             <!--国际化语言结束-->
+            <q-item>
+              <q-item-section>
+                <div class="setting_item" v-for="setting in settingData" :key="setting.title">
+                <span class="title">{{ setting.title }}</span>
+                <div class="switch"> 
+                  <span class="bg" :style="{left: setting.index === setting.params[0] ? 0 : '50px'}"></span>
+                  <span v-for="s in setting.params" :key="s" @click="setting.index = s" :class="{active: setting.index === s}">{{ s }}</span>
+                </div>  
+              </div> 
+              </q-item-section>
+            </q-item>
           </q-list>
       </q-menu>
     </div>
@@ -83,16 +101,25 @@
 
 <script>
 import { defineComponent, onMounted, ref,watch } from "vue";
-import { format_balance,UserCtr,LOCAL_PROJECT_FILE_PREFIX } from "src/core/"
-import { useRouter, useRoute } from 'vue-router'
+import { format_balance,UserCtr,LOCAL_PROJECT_FILE_PREFIX } from "src/core/";
+import { useRouter, useRoute } from 'vue-router';
+import store from "src/store-redux/index.js";
+import globalAccessConfig from "src/core/access-config/access-config.js";
+import SearchHotPush from "src/core/search-class/search_hot_push.js";
 import { api_account } from 'src/api/index';
-import { loadLanguageAsync, useMittEmit, MITT_TYPES} from "src/core/index.js";
+import { loadLanguageAsync, useMittEmit, MITT_TYPES} from "src/core/index.js";;
+import SearchPCClass from 'src/core/search-class/seach-pc-ouzhou-calss.js';
+import searchCom from 'src/components/search/search-2/index.vue';
+
 export default defineComponent({
   name: "RightHead",
+  components: {
+    searchCom
+  },
   setup() {
-    const userRouter = useRouter()
-    const route = useRoute()
     const text = ref('')
+    const route=useRoute()
+    const userRouter=useRouter()
     const is_search = ref(false)
     const visible = ref(false)
     //语言设置
@@ -131,24 +158,42 @@ export default defineComponent({
           key: 'hy',
           language: 'Korean',
         }]
-    watch(() => route.path, (newVal) => {
-      is_search.value = newVal=='/search'
-    },
-      { immediate: true }
-    )
+    // watch(() => route.path, (newVal) => {
+    //   is_search.value = newVal=='/search'
+    // },
+    //   { immediate: true }
+    // )
+    const settingData = ref([{
+          title: 'Odds Display',
+          index: 'DEC',
+          params: ['DEC', 'HK']
+        }, {
+          title: 'Bet Slip',
+          index: 'ANY',
+          params: ['ANY', 'HIG']
+        }, {
+          title: 'Version',
+          index: 'EURO',
+          params: ['EURO', 'ASIA']
+        }])
     onMounted(() => {
       compute_userInfo();
-
     });
-
-    const compute_userInfo = () => {
-    
-
-    };
-   
+    /**
+     * 是否显示搜索组件 default: false
+     * 路径: project_path\src\store\module\search.js
+    */
+    const search_isShow = ref(SearchPCClass.search_isShow)
+    const compute_userInfo = () => {};
     // 搜索
-    const change_input = () => {
-  
+    const change_input = () => {}
+    //公告
+    const goto_announcement = () => {
+      userRouter.push("/announce")
+    }
+    //赛果
+    const goto_results = () => {
+      userRouter.push("/match_results")
     }
     const onExpend = () => {
       visible.value = !visible.value
@@ -170,20 +215,52 @@ export default defineComponent({
       })
     }
 
+    /** 搜索热推赛事 */
+    const search_hot_push = ref(new SearchHotPush());
+
+    /** 保存显示搜索组件状态 */
+    const set_search_status = (data) => (store.dispatch({
+      type: "SET_SEARCH_STATUS",
+      data,
+    }))
+
+    /** 展开搜索 */
+    function show_search() {
+      // if (!globalAccessConfig.get_searchSwitch()) {
+      // if (!globalAccessConfig.config.searchSwitch) {
+      //   return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t("msg.msg_09"));
+      // }
+      SearchPCClass.set_search_isShow(true);
+      console.log('isShow',SearchPCClass.search_isShow);
+    }
+    /** 初始化 */
+    // function init() {
+    //   set_search_status(false);
+    // }
+    // onMounted(init);
+
     return {
-      text,
+      text, 
+      SearchPCClass, 
+      show_search, 
+      search_hot_push, 
+      search_isShow, 
       change_input,
       on_change_lang,
       lang,
       languages,
       onExpend,
+      settingData,
       visible,
       is_search,
+      goto_results,
+      goto_announcement,
       format_balance,
       UserCtr,
       LOCAL_PROJECT_FILE_PREFIX
     };
-  },
+  
+}
 });
 </script>
 <style lang="scss" scoped>
@@ -192,7 +269,6 @@ export default defineComponent({
   display: flex;
   margin-left: 40px;
   // margin-right: 100px;
-
   .user-info {
     display: flex;
     flex-direction: column;
@@ -200,19 +276,19 @@ export default defineComponent({
     margin-right: 10px;
     font-family: "DIN";
   }
- 
+  
 }
-.personal-menu{
-  background: #fff;
+.q-item{
+  padding: 8px 0 !important;
+  .title{
+    padding: 0 16px;
+  }
 }
+
 .icon{
   width: 20px;
   height: 20px;
   margin-right: 10px;
-}
-.arrow{
-  width: 18px;
-  height: 18px;
 }
 .personal-content{
   display: flex;
@@ -224,7 +300,7 @@ export default defineComponent({
   display: flex;
   height: 50px;
   align-items: center;
-  padding: 0 45px 0 27px;
+  padding: 0 18px 0 16px;
   transition: all 0.25s;
   justify-content: space-between;
   &.active{
@@ -246,6 +322,15 @@ export default defineComponent({
   color: #FF7000;
   background: #FFF1E6;
 }
+.arrow{
+  width: 18px;
+  height: 18px;
+  margin-right: 18px;
+  transition: transform 0.3s ease;
+  &.expend{
+    transform: rotate(90deg)
+  }
+}
 .lang-icon{
   width: 17px;
   height: 13px;
@@ -254,10 +339,6 @@ export default defineComponent({
   background-size: calc(3.2px * 5) calc(36.4px * 5);
   
 }
-.currpon{
-  cursor: pointer;
-}
-
 
 /*语言国旗图标*/
 @each $code, $index in (zh: 0, en: 1, tw: 2, vi: 3, th: 4, ms: 5, ad: 6, md: 7, ry: 8, pty: 9, hy: 10) {
@@ -267,11 +348,54 @@ export default defineComponent({
   }
 }
 /* ************** 切换语言前面的图标 ************** -E */
+.setting_item{
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 14px;
+  > span {
+    height: 26px;
+  }
+  .switch{
+    position: relative;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    background: #E2E2E2;
+    border-radius: 20px;
+    justify-content: space-between;
+    margin-right: 16px;
+    cursor: pointer;
+    > span {
+      width: 50px;
+      height: 100%;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.25s;
+      color: #8A8986;
+      &.active{
+        color: #000;
+        background: #fff;
+        border-radius: 20px;
+      }
+    }
+    .bg{
+      position: absolute;
+      top: 0;
+      border-radius: 20px;
+      border: 1px solid #FF7000;
+      transition: all 0.25s;
+    }
+  }
+}
 .s-input {
   width: 200px;
   transition: all 0.3s linear;
   :deep(.q-field) {
-    background: rgba(255, 255, 255, 0.1);
+    background-color: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.4);
     border-radius: 20px;
     padding-left: 10px;
@@ -287,7 +411,6 @@ export default defineComponent({
     color:#FFFFFF
   }
 }
-
 .search-click .s-input {
   width: 500px;
   &:deep(.q-field) {
@@ -295,12 +418,10 @@ export default defineComponent({
 
   }
 }
-
 .icon-search,
 .icon-close {
   font-size: 14px;
   cursor: pointer;
-
   &::before {
     color: #ffffff;
   }

@@ -252,6 +252,7 @@
         "bet_max_booked_odds":"It has reached the max booked odds, please readjust"
     },
     "bet_record": {
+        "date": "date",
         "bet_time": "Bet time",
         "bets_forehead": "Total Stake",
         "bets_invalid": "Bet Voided",

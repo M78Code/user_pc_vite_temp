@@ -5,7 +5,7 @@ import {
 } from "vue";
 import lodash from "lodash";
 import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache.js";
-import { PageSourceData, MatchDataWarehouse_PC_List_Common as MatchListData, UserCtr } from "src/core/index.js";
+import { PageSourceData, MatchDataWarehouse_PC_List_Common as MatchListData, MatchDataWarehouse_PC_Detail_Common } from "src/core/index.js";
 import { api_match } from "src/api/index.js";
 import { useMittEmit, MITT_TYPES, useMittOn } from "src/core/mitt/index.js";
 // import { set_sticky_top } from 'src/core/match-list-pc/match-card/module/sticky-top.js'
@@ -56,7 +56,6 @@ let tid_match_list;
 useMittOn(MITT_TYPES.EMIT_MATCH_LIST_UPDATE, () => {
 	clearTimeout(tid_match_list)
 	tid_match_list = setTimeout(() => {
-		console.log('EMIT_MATCH_LIST_UPDATE')
 		fetch_match_list()
 	}, 80);
 })
@@ -74,7 +73,6 @@ useMittOn(MITT_TYPES.EMIT_MATCH_LIST_UPDATE, () => {
 */
 function fetch_match_list(is_socket = false, cut) {
 	const match_list_params = get_match_list_params();
-	console.log("diff params", MenuData.match_list_api_config.match_list, match_list_params)
 	// 设置当前为赛事列表
 	// 如果有拉列表定时器 清除定时器
 	if (!is_socket && get_match_list_timeid) {
@@ -290,7 +288,6 @@ function mounted_fn() {
  * // 处理服务器返回的 列表 数据   fetch_match_list
  */
 export function handle_match_list_request_when_ok(data, is_socket, cut, collect) {
-	console.log('123123');
 	let {
 		match_list_api_config,
 		menu_root,
@@ -354,13 +351,18 @@ function get_hot_match_list(backend_run = false) {
 					// 调用bymids接口
 					api_bymids({ is_first_load: true });
 					// 切换右侧赛事
+					console.log('match_list', match_list);
 					let first_match = match_list[0];
-					let params = {
-						media_type: "auto",
-						mid: first_match.mid,
-						tid: first_match.tid,
-						sportId: first_match.csid,
-					};
+					// let params = {
+					// 	media_type: "auto",
+					// 	mid: first_match.mid,
+					// 	tid: first_match.tid,
+					// 	sportId: first_match.csid,
+					// };
+					if(first_match){
+						MatchDataWarehouse_PC_Detail_Common.set_match_details(first_match, [])
+						useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, first_match.mid)
+					}
 					// this.regular_events_set_match_details_params(null, params);
 				} else {
 					// 更新可视区域赛事盘口数据

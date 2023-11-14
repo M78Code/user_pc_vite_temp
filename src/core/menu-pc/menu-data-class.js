@@ -138,6 +138,8 @@ class MenuData {
     
     this.router_root_version = ref('')
 
+    this.coom_soon = ref(false)
+
     // ---------------------------- 欧洲版-pc 专用 --------------------------------
   }
 
@@ -179,9 +181,12 @@ class MenuData {
 
   // 设置 菜单的版本变化
   set_menu_data_version() {
-    console.log('进来了几次');
-    useMittEmit(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA)
-    this.menu_data_version.value = Date.now()
+    clearTimeout(this._tid)
+    this._tid=setTimeout(() => {
+      console.log('进来了几次');
+      useMittEmit(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA)
+      this.menu_data_version.value = Date.now()
+    }, 20);
   }
   /**
    * @Description 设置 api参数的版本
@@ -461,6 +466,7 @@ class MenuData {
       "MENUDATA.set_mid_menu_result-------",
       JSON.stringify(this.mid_menu_result)
     );
+    this.menu_root=obj.root;
     this.menu_root_show_shoucang = obj.root;
     MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'), this.is_scroll_ball())
     // 设置全屏

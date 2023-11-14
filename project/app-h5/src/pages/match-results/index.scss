@@ -7,6 +7,7 @@
         flex: 1;
         display: flex;
         justify-content: center;
+        color: #C9CDDB;
 
         span {
             padding: .06rem 0;
@@ -18,6 +19,8 @@
     .switch-item-active {
         span {
             border-bottom: .02rem solid var(--q-gb-t-c-1);
+            font-weight: 600;
+            color: #303442;
         }
     }
 }
