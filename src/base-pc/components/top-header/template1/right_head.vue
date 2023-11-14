@@ -7,7 +7,7 @@
   <div class="h-right">
     <div :class="[is_search ? 'search-click' : 'search']">
       <div class="s-input s-input-click">
-        <q-input borderless rounded @click="show_search" v-model="text" label-color="primary"
+        <q-input borderless rounded @focus="show_search" v-model="text" label-color="primary"
           placeholder="Enter league or team">
           <template v-slot:prepend>
             <i class="icon-search q-icon c-icon" size="10px"></i>
@@ -16,6 +16,7 @@
             <i class="icon-close" size="10px" style="margin-right:10px" v-if="text.length" @click="text = ''"></i>
           </template>
         </q-input>
+        <searchCom v-if="SearchPCClass.search_isShow" />
       </div>
     </div>
     <!-- <div class="s-input-active">
@@ -86,14 +87,19 @@ import { defineComponent, onMounted, ref,watch } from "vue";
 import { format_balance,UserCtr,LOCAL_PROJECT_FILE_PREFIX } from "src/core/"
 import { useRouter, useRoute } from 'vue-router'
 import store from "src/store-redux/index.js";
-import { SearchPCClass } from 'src/core/index.js'
 import globalAccessConfig from "src/core/access-config/access-config.js"
 import SearchHotPush from "src/core/search-class/search_hot_push.js";
 console.log(globalAccessConfig,'globalAccessConfig');
 import { api_account } from 'src/api/index';
-import { loadLanguageAsync, useMittEmit, MITT_TYPES} from "src/core/index.js";
+import { loadLanguageAsync, useMittEmit, MITT_TYPES} from "src/core/index.js";;
+import SearchPCClass from 'src/core/search-class/seach-pc-ouzhou-calss.js';
+import searchCom from 'src/components/search/search-2/index.vue';
+
 export default defineComponent({
   name: "RightHead",
+  components: {
+    searchCom
+  },
   setup() {
     const text = ref('')
     const route=useRoute()
@@ -190,29 +196,21 @@ export default defineComponent({
     /** 展开搜索 */
     function show_search() {
       // if (!globalAccessConfig.get_searchSwitch()) {
-      if (!globalAccessConfig.config.searchSwitch) {
-        return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t("msg.msg_09"));
-      }
+      // if (!globalAccessConfig.config.searchSwitch) {
+      //   return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t("msg.msg_09"));
+      // }
       set_search_status(true);
+      console.log('isShow',SearchPCClass.search_isShow);
     }
     /** 初始化 */
-    function init() {
-      set_search_status(false);
-    }
-    onMounted(init);
+    // function init() {
+    //   set_search_status(false);
+    // }
+    // onMounted(init);
 
     return {
       text, change_input, is_search, format_balance, UserCtr, LOCAL_PROJECT_FILE_PREFIX, SearchPCClass, show_search, search_hot_push, search_isShow, 
-      change_input,
-      on_change_lang,
-      lang,
-      languages,
-      onExpend,
-      visible,
-      is_search,
-      format_balance,
-      UserCtr,
-      LOCAL_PROJECT_FILE_PREFIX
+      on_change_lang, lang, languages, onExpend, visible,
     };
   },
 });
