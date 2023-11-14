@@ -30,14 +30,14 @@
           </div>
         </div>
         <!-- 输入框 -->
-        <bet-input-info1 :item="items" :index="index" ></bet-input-info1>
+        <bet-input-info :item="items" :index="index" ></bet-input-info>
       </div>
       <!-- 合并单关最下面的多个输入框 -->
 
     </div>
   </template>
 <script setup>
-  import betInputInfo1 from "./bet_input_info1.vue";
+  import betInputInfo from "./bet_input_info.vue";
   import BetData from "src/core/bet/class/bet-data-class.js";
   import keyBoard from './keyboard.vue';
   const type = 4;//1:不涨也不少    2：增长     3：减少   4:注单失效

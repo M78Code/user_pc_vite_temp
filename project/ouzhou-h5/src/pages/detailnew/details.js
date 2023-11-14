@@ -265,13 +265,14 @@ export const details_main = (router,route) => {
     // use_polling_mst(match_detail.value)
     // mock end
   };
+
+  let {mid, csid} = route.params;
   /**
    *@description 初始化
    *@param {*}
    *@return {*}
    */
   const detail_init = () => {
-    const { mid, csid } = route.params;
     get_matchDetail_MatchInfo({
       mid,
       cuid: cuid.value,
@@ -303,7 +304,11 @@ export const details_main = (router,route) => {
       // timer_s_interval(4000);
   });
   // // 监听顶部刷新功能
-  const { off :refreshOff } = useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS, detail_init);
+  const { off :refreshOff } = useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS, (params)=>{
+    mid = params.mid
+    csid = params.csid
+    detail_init()
+  });
     //todo mitt 触发ws更新
   const {off:off_ws} = useMittOn(MITT_TYPES.EMIT_DATAWARE_DETAIL_UPDATE,(params)=>{
     return

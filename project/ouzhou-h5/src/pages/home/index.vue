@@ -125,7 +125,7 @@ const get_ouzhou_home_data = async () => {
 const got_five_league_matchs = async () => {
   const list = await MatchMeta.get_five_leagues_list()
   five_league_match.value = list.map(t => {
-    const match = MatchDataBaseFiveLeagueH5.get_quick_mid_obj(t.mid)
+    const match = MatchDataBaseFiveLeagueH5.get_quick_mid_obj(t.mid) || t
     return match
   })
 }
