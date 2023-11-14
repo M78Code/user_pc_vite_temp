@@ -137,7 +137,6 @@ const get_base_data = (val) => {
   ];
   let res = "";
   if (!_.isEmpty(val) && ["1", "2", "3"].includes(detail_info.csid)) {
-    console.log(111111111111111111);
     res = get_score_result(list, val);
   } else {
     //   篮球 赛前无数据
@@ -155,7 +154,6 @@ const get_base_data = (val) => {
       });
     }
   }
-  console.log(111111111,res)
   data.value = res || [];
 };
 
