@@ -65,6 +65,7 @@ const set_tab_list = (news_,sport_mi) =>{
 	// 滚球
 	if( news_ ==2 ){
 		matches_header_title.value = "In Play"
+        match_list_top.value = '146px'
 	}
 	// 左侧菜单
 	if(news_ ==4){
@@ -72,11 +73,14 @@ const set_tab_list = (news_,sport_mi) =>{
 		// 设置赛种名称
 		matches_header_title.value = BaseData.menus_i18n_map[sport_mi] 
 	}
+	if (tab_list.value.length) {
+		checked_current_tab(tab_list.value[0])
+	}
 }
 
 
 // 头部高度 包含 teb切换
-const match_list_top = ref('80px')
+const match_list_top = ref('80px') 
 
 const b_menu_root = ref(0)
 
@@ -130,6 +134,17 @@ const sport_ball = {
 	103:1,
 }
 
+
+const checked_current_tab = payload => {
+      // 判断头部高度
+	if (['1001','1002','4002'].includes(payload.value) ) {
+        match_list_top.value = '80px'
+    } else if(['4001'].includes(payload.value)){
+        match_list_top.value = '134px'
+    } else {
+        match_list_top.value = '146px'
+    }
+}
 
 
 
