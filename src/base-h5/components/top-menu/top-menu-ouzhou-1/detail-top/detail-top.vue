@@ -56,13 +56,15 @@
   </div>
 </template>
 
-<script lang="ts" setup>
-import { ref, watch,Ref } from "vue";
+<script setup>
+import { ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useMittEmit, MITT_TYPES } from "src/core";
+import { MatchDataWarehouse_H5_Detail_Common } from 'src/core/index'
 import { api_common } from "src/api/index";
 import BaseData from "src/core/base-data/base-data.js";
 import { MenuData } from 'src/core/';
+const route = useRoute()
 const router = useRouter();
 const refresh_is_active = ref(false);
 const active = ref(0);
@@ -72,18 +74,13 @@ const detail_top_pop = ref(null);
 
 getDropDownList()
 
-/** @type {Ref<Array<API.MatchDetail>>} */
-const drop_down_list:Ref<Array<{
-  tn:string,
-  mid:string,
-  mhn:string,
-  man:string,
-}>> = ref([]);
+/** @type {Ref<Array<TYPES.MatchDetail>>} */
+const drop_down_list = ref([]);
 
 /** 获取下拉列表 */
 function getDropDownList(){
   api_common.get_matchDetail_getMatchDetailByTournamentId({
-    tId:"2645", //#TODO 拿到当前赛事的tid
+    tId: MatchDataWarehouse_H5_Detail_Common.get_quick_mid_obj(route.params.mid),
   }).then(res=>{
     console.log(res)
     drop_down_list.value = res.data
