@@ -21,23 +21,25 @@
               v-tooltip="{ content: card_style_obj.league_obj.tn, overflow: 1 }">
               {{ card_style_obj.league_obj.tn || card_style_obj.league_obj.tid }}
             </span>
-            <span class="league-match-count">{{ card_style_obj.match_count}}</span>
           </div>
         </div>
       </div>
       <div :style="`width:${match_list_tpl_size.play_icon_width}px !important;`"></div>
       <!-- 玩法名称 -->
-      <div class="play-name-ouzhou">
+      <div class="play-name-ouzhou" v-if="!card_style_obj.is_league_fold">
+          <div class="play-name-title-box"
+            v-for="(item, col_index) in match_tpl_info.get_current_odds_list(MatchListCardDataClass.get_csid_current_hpids(csid))"
+            :key="col_index" :style="{ 'width': match_list_tpl_size.bet_width + 'px' }">
+            <div class="play-name-item" v-for="(item_title, item_index) in item.ols" :key="item_index">
+              {{ item_title.ot }}
 
-        <div class="play-name-title-box"
-          v-for="(item, col_index) in match_tpl_info.get_current_odds_list(MatchListCardDataClass.get_csid_current_hpids(csid))"
-          :key="col_index" :style="{ 'width': match_list_tpl_size.bet_width + 'px' }">
-          <div class="play-name-item" v-for="(item_title, item_index) in item.ols" :key="item_index">
-            {{ item_title.ot }}
-
+            </div>
           </div>
-        </div>
       </div>
+      <!-- 赛事数量 -->
+      <div v-else class="league-match-count">
+          <span>{{ card_style_obj.match_count}}</span>
+        </div>
     </div>
   </div>
 </template>
@@ -122,6 +124,20 @@ function set_fold() {
 
   .tr-match-head {
     display: flex;
+    flex-grow: 1;
   }
+
+  .league-match-count {
+      height: 100%;
+      position: absolute;
+      right: 13px;
+      font-weight: 600;
+      color: #1a1a1a;
+      span {
+        display: flex;
+        height: 100%;
+        align-items: center;
+      }
+    }
 }
 </style>
