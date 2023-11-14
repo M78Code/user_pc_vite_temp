@@ -116,9 +116,7 @@ import { usedetailData } from "./index";
 import { formatTime } from 'src/core/format/index.js'
 import loading from "./components/loading/index.vue";
 import { useRouter, useRoute } from "vue-router";
-// import  skt_data_info  from "src/core/websocket/data/skt_data_info.js";
 export default{
-  // mixins: [skt_data_info],
   components: {
     tabs,
     breadcrumbs,
@@ -152,7 +150,6 @@ export default{
     provide("all_hl_item", all_hl_item);
 
     const match_click = (item) => {
-      console.log(111111, item);
       current_id.value = item.mid;
       const { mid, tid, csid } = item;
       const params = {

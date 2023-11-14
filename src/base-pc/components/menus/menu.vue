@@ -16,8 +16,8 @@
     <div class="menu-nav-li">
       <p>{{ i18n_t("ouzhou.menu.popular") }}</p>
       <ul class="menu-list">
-        <li class="f-s-c" :class="{ 'menu_checked': MenuData.left_menu_mi.value == item }" v-for="item in popular" :key="item"
-          @click="jump_func(item)">
+        <li class="f-s-c" :class="{ 'menu_checked': MenuData.left_menu_mi.value == item&&menu_type=='0' }" v-for="item in popular" :key="item"
+          @click="jump_func(item,'0')">
           <sport_icon :sport_id="BaseData.compute_sport_id(item)" size="18px" class="icon" />
           {{ (BaseData.menus_i18n_map || {})[item] || "" }}
         </li>
@@ -29,8 +29,8 @@
     <div class="menu-nav-li">
       <p>{{ i18n_t("ouzhou.menu.all_sports")}}</p>
       <ul class="menu-list">
-        <li class="f-s-c" :class="{ 'menu_checked': MenuData.left_menu_mi.value == item }" v-for="item in (left_menu_list || menu)"
-          :key="item" @click="jump_func(item)">
+        <li class="f-s-c" :class="{ 'menu_checked': MenuData.left_menu_mi.value == item&&menu_type=='1' }" v-for="item in (left_menu_list || menu)"
+          :key="item" @click="jump_func(item,'1')">
           <sport_icon :sport_id="BaseData.compute_sport_id(item)" size="18px" class="icon" />
           {{ (BaseData.menus_i18n_map || {})[item] || "" }}
         </li>
@@ -53,14 +53,13 @@
 </template>
   
 <script setup>
-import { ref, onMounted, onUnmounted } from "vue";
+import { ref, onMounted, onUnmounted, nextTick } from "vue";
 import { useRouter } from "vue-router";
 import BaseData from "src/core/base-data/base-data.js";
 import sport_icon from "src/base-pc/components/sport_icon.vue";
 // import { use_base_data,useMenuData,useMenuI18n } from "./base_data";
 // 菜单配置
-import { MenuData, UserCtr } from "src/core/index.js"
-
+import { MenuData, UserCtr,useMittEmit,MITT_TYPES } from "src/core/index.js"
 
 const popular = ([101, 102, 105])
 const menu = [
@@ -69,7 +68,7 @@ const menu = [
 ]
 
 const left_menu_list = ref(menu)
-
+const menu_type = ref("")
 const router = useRouter();
 
 onMounted(() => {
@@ -92,8 +91,7 @@ const go_to_favouritse = () => {
  * @description 点击菜单item 存储当前菜单信息
  * @returns {undefind} 无返回值
  */
-const jump_func = payload => {
-
+const jump_func = (payload,type) => {
   let obj = {
     lv1_mi : payload,
     root: 2, // 左侧菜单 默认今日
@@ -102,11 +100,16 @@ const jump_func = payload => {
       list_filter: true
     }
   }
+  menu_type.value = type
   //太多了 后续做优化
   MenuData.set_router_root_lv_1(4)
   MenuData.set_left_menu_mi(payload)
   MenuData.set_left_menu_result(obj)
   MenuData.set_router_root_lv_2(4001)
+
+  nextTick(()=>{
+    useMittEmit(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE)
+  })
   
 }
 

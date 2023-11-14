@@ -2,8 +2,8 @@
 function getQueryString() {
   const result = {};
   // 设置之前缓存的url参数
-  for (var key of SEARCH_PARAMS.param.keys()) {
-    result[key] = SEARCH_PARAMS.param.get(key);
+  for (var key of SEARCH_PARAMS.init_param.keys()) {
+    result[key] = SEARCH_PARAMS.init_param.get(key);
   }
   const param = window.location.href.split("?")[1];
   const search = decodeURIComponent("?" + param);

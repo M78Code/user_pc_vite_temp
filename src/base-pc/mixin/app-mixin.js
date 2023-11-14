@@ -4,7 +4,7 @@ import { loadLanguageAsync, LayOutMain_pc,MatchDetailCalss,GlobalSwitchClass } f
 import base_data from "src/core/base-data/base-data.js";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
-import url_param_ctr_init from "src/core/url-param-ctr/index.js";
+import {url_param_ctr_init, watch_route_fun} from "src/core/url-param-ctr/index.js";
 export default {
     data() {
         return {
@@ -17,6 +17,11 @@ export default {
         this.init_process() 
         
       },
+    watch: {
+      '$route'(to, from) {
+        watch_route_fun(to, from);
+      },
+    },
       methods: {
        async init_process() {
           try {

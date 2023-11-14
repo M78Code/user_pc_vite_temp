@@ -139,7 +139,7 @@ const { goPage, pagination, perPageNumOptions, pageChangeFlag, page, max, perPag
 const emit = defineEmits(['pageChange'])
 
 watch(() => pagination, val => {
-  if (!pageChangeFlag.value) {
+    if (!pageChangeFlag.value) {
     emit(
       "pageChange",
       agination.limit,
@@ -154,7 +154,7 @@ watch(() => pagination, val => {
 
  // 跳转页面
 const goToPage = (val) => {
-  if (page.value != val && val <= max.value && val > 0) page.value = val;
+    if (page.value != val && val <= max.value && val > 0) page.value = val;
   else if (val > max.value || val <= 0) goPage.value = "";
 }
 

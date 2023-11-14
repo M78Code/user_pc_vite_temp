@@ -87,6 +87,30 @@ export const format_M_D = function (payload, that) {
   format = format.replace("%month", monthes[m]);
   return format;
 };
+
+// 示例： 1 月 2 日
+/**
+ * 日期格式化
+ * @param {String} val 时间戳
+ * @return {String}
+ */
+export const format_M_D_PC = function (payload, that) {
+  // TODO:payload 如果非时间戳无法正常转换
+  if (!payload) return "";
+  let time = new Date(parseInt(payload));
+  let m = time.getMonth();
+  let d = time.getDate() + "";
+  // TODO: time.monthes  国际化不是字符串无法读取[] ----> "[]"
+  let monthes = i18n_t(`time.month_${m + 1}`);
+  let day = i18n_t(`match_info.day`);
+  let format = `${monthes} ${d}${day}`
+  // let format = i18n_t("time.time_date_1");
+  // format = format.replace("%date", d);
+  // format = format.replace("%month", monthes);
+  return format;
+};
+
+
 // 示例： 12 ：30
 export const format_H_M = function (payload) {
   if (!payload) return "";

@@ -15,8 +15,10 @@ import PageSourceData from "src/core/page-source/page-source.js";
 import VirtualList from 'src/core/match-list-h5/match-class/virtual-list'
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 import { MATCH_LIST_TEMPLATE_CONFIG } from "src/core/match-list-h5/match-card/template"
-import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, useMittEmit, MITT_TYPES,project_name, MenuData, 
-  MatchDataWarehouse_ouzhou_PC_l5mins_List_Common as MatchDataBasel5minsH5, MatchDataWarehouse_ouzhou_PC_hots_List_Common as MatchDataBaseHotsH5 } from 'src/core'
+import { useMittEmit, MITT_TYPES,project_name, MenuData,
+  MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, MatchDataWarehouse_ouzhou_PC_hots_List_Common as MatchDataBaseHotsH5,
+  MatchDataWarehouse_ouzhou_PC_five_league_List_Common as MatchDataBaseFiveLeagueH5, MatchDataWarehouse_ouzhou_PC_l5mins_List_Common as MatchDataBasel5minsH5, 
+} from 'src/core'
 
 class MatchMeta {
 
@@ -39,6 +41,8 @@ class MatchMeta {
     this.prev_scroll = null
     // 是否需要赛事归类操作
     this.is_classify = false
+    // 赛事仓库
+    this.common_match_base = null
     // 重置折叠对象
     MatchFold.clear_fold_info()
     // 重置收藏对象
@@ -163,7 +167,10 @@ class MatchMeta {
    */
     handler_match_list_data(config) {
 
-      const { list, type = 1, is_virtual = true } = config
+      const { list, type = 1, is_virtual = true, base = MatchDataBaseH5 } = config
+
+      // 设置仓库
+      this.common_match_base = base
 
       // 清除联赛下得赛事数量
       MatchResponsive.clear_ball_seed_league_count()
@@ -584,10 +591,11 @@ class MatchMeta {
       euid,
       type
     })
-    console.log(res)
     if (res.code !== '200') return this.set_page_match_empty_status(true);
     const list = lodash.get(res, 'data', [])
-    this.handler_match_list_data({ list: list, is_virtual: false })
+    this.handler_match_list_data({ list: list, base: MatchDataBaseFiveLeagueH5 })
+
+    return list
   }
 
   /**
@@ -779,15 +787,6 @@ class MatchMeta {
     MatchDataBaseH5.set_list(list)
     // 获取赛事赔率
     this.get_match_base_hps_by_mids()
-  }
-
-   /**
-   * @description 提交元数据更新仓库
-   * @param { list } 赛事数据
-   */
-  handle_base_match_data (list) {
-    // 设置仓库渲染数据
-    MatchDataBaseH5.set_list(list)
   }
 }
 

@@ -2,9 +2,9 @@
   <div class="current-filter-wrap">
     <div class="current-filter-list" @scroll="on_scroll">
       <div class="current-filter-tab" v-for="(item, index) in current_filter_list" :key="item.value">
-        <div class="filter-label" @click="choose_filter_tab(item)" :class="{ 'checked': final_index == item.value }">
+        <div class="filter-label" @click="choose_filter_tab(item, index)" :class="{ 'checked': final_index == index }">
           {{ item.label }}
-          <div class="current-mark" :class="{'show-mark': final_index == item.value}"></div>
+          <div class="current-mark" :class="{'show-mark': final_index == index}"></div>
         </div>
         <div class="filter-tab-split-line" v-show="index != current_filter_list.length - 1"></div>
       </div>
@@ -28,31 +28,64 @@
 <script setup>
   import { ref,onMounted,onUnmounted, watch } from 'vue';
   import BaseData from "src/core/base-data/base-data.js";
-  import { UserCtr,MenuData } from 'src/core/index.js'
+  import { UserCtr,MenuData, useMittOn, useMittEmit,MITT_TYPES } from 'src/core/index.js'
   import {
     handle_click_menu_mi_3_date,
-    get_date_menu_matches_list,
-    current_filter_list,
+    // get_date_menu_matches_list,
+    // current_filter_list,
     final_index
   } from "src/base-pc/components/tab/date-tab/index.js"
+  import { format_M_D_PC } from "src/core/format"
 
     // 是否显示左边按钮
   const show_left_btn = ref(false);
   // 是否显示右边按钮
   const show_right_btn = ref(false);
 
+  const current_filter_list = ref([])
+
   let area_obj = null;
   let area_obj_wrap = null;
-  // 滚动定时器
-  let interval_id = null;
-
-  onMounted(()=>{
+  onMounted(async ()=>{
     area_obj = document.querySelector('.current-filter-list');
     area_obj_wrap = document.querySelector('.current-filter-wrap');
     if (area_obj?.scrollWidth >= area_obj_wrap?.clientWidth) {
       show_right_btn.value = true;
     }
+    useMittOn(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE,set_menu_change)
+    let time = await UserCtr.get_system_time()
+    update_time(time)
+    // get_date_menu_matches_list()
+  })
 
+  onUnmounted(()=>{
+    useMittOn(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE,set_menu_change).off
+  })
+
+    // 左侧菜单切
+  watch(()=>MenuData.left_menu_mi.value,async (news_)=>{
+    let time = await UserCtr.get_system_time()
+    update_time(time)
+  })
+
+  const update_time = (time) => {
+    let arr = []
+    let day = 24 * 60 * 60 * 1000
+    let label = ''
+    let value = ''
+   for (let i = 0; i <=6; i++) {
+    value = i === 0 ? time : time + day * i
+    label = i === 0 ? "Today" :  i === 1 ? "Tomorrow" : `${format_M_D_PC(value)}`
+    arr.push({
+      label,
+      value
+    })
+   }
+   current_filter_list.value = arr
+   choose_filter_tab(arr[0], 0)
+  }
+
+  const set_menu_change = () => {
     let obj = {
       ...MenuData.left_menu_result,
       lv2_mi: MenuData.left_menu_mi.value + '2',
@@ -60,12 +93,12 @@
     MenuData.set_left_menu_result(obj)
 
     MenuData.set_match_list_api_config(obj)
-
-
-
-  })
+  }
  
- const menu_id = ref(0)
+ const choose_filter_tab = (item ,index) => {
+  final_index.value = index
+  handle_click_menu_mi_3_date(item)
+ }
 
 
 /**

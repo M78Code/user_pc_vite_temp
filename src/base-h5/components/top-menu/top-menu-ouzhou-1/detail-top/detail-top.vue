@@ -8,94 +8,83 @@
 <template>
   <div class="detail-top-info">
     <div class="sport-info" @click="toHome">
-      <span>{{BaseData.menus_i18n_map[MenuData.menu_mi.value]}}</span>
+      <span>{{ BaseData.menus_i18n_map[MenuData.menu_mi.value] }}</span>
       <img class="bakc-icon" src="../img/back.png" alt="" />
     </div>
     <div class="detail-select" v-if="drop_down_list.length">
-      <div class="detail-select-nav" >
-        <q-btn class="label" >
-        <span class="btn-label">{{ drop_down_list[active].name }}</span>
-        <q-menu class="detail-top-pop">
-          <div class="detail-top-pop-content" ref="detail_top_pop">
-            <div class="match_detail_top_list">
-              <div
-                v-for="(item, index) in drop_down_list"
-                :class="[
+      <div class="detail-select-nav">
+        <q-btn class="label">
+          <span class="btn-label">{{ drop_down_list[active].tn }}</span>
+          <q-menu class="detail-top-pop">
+            <div class="detail-top-pop-content" ref="detail_top_pop">
+              <div class="match_detail_top_list">
+                <div v-for="(item, index) in drop_down_list" :class="[
                   { active: active == index },
                   'match_detail_top_list_item',
-                ]"
-                :key="index"
-                @click="change_active(item,index)"
-                v-close-popup
-              >
-                <div class="item_team_name">{{ item.mhn }}</div>
-                <div>v</div>
-                <div class="item_team_name">{{ item.man }}</div>
+                ]" :key="index" @click="change_active(item, index)" v-close-popup>
+                  <div class="item_team_name">{{ item.mhn }}</div>
+                  <div>v</div>
+                  <div class="item_team_name">{{ item.man }}</div>
+                </div>
               </div>
             </div>
-          </div>
-        </q-menu>
-      </q-btn>
-      <img
-        :class="['down-icon', { 'up-icon': show_list }]"
-        src="../img/top-down.png"
-        alt=""
-      />
+          </q-menu>
+        </q-btn>
+        <img :class="['down-icon', { 'up-icon': show_list }]" src="../img/top-down.png" alt="" />
       </div>
-      
+
     </div>
     <div class="refresh" @click="refresh">
-      <img
-        ref="refresh_icon"
-        src="../img/refresh.png"
-        alt=""
-        srcset=""
-        :class="[{ 'refresh-active': refresh_is_active }, 'refresh-icon']"
-      />
+      <img ref="refresh_icon" src="../img/refresh.png" alt="" srcset=""
+        :class="[{ 'refresh-active': refresh_is_active }, 'refresh-icon']" />
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, watch } from "vue";
-import { useRouter } from "vue-router";
+import { onMounted, ref, watch } from "vue";
+import { useRoute, useRouter } from "vue-router";
 import { useMittEmit, MITT_TYPES } from "src/core";
+import { MatchDataWarehouse_H5_Detail_Common,MatchDataWarehouse_H5_List_Common } from 'src/core/index'
+import { api_common } from "src/api/index";
 import BaseData from "src/core/base-data/base-data.js";
 import { MenuData } from 'src/core/';
+const route = useRoute()
 const router = useRouter();
 const refresh_is_active = ref(false);
 const active = ref(0);
 const show_list = ref(false);
 const detail_top_pop = ref(null);
-/**
- * 联赛数据
- */
-const drop_down_list = ref([
-  // {
-  //   mid:1,
-  //   name:"联赛联赛11111",
-  //   mhn:"美国",
-  //   man:"日本"
-  // },
-  // {
-  //   mid:2,
-  //   name:"联赛联赛22222",
-  //   mhn:"美国",
-  //   man:"日本"
-  // },
-  // {
-  //   mid:3,
-  //   name:"联赛联赛33333",
-  //   mhn:"美国",
-  //   man:"日本"
-  // },
-  // {
-  //   mid:4,
-  //   name:"联赛联赛44444",
-  //   mhn:"美国",
-  //   man:"日本"
-  // }
-]);
+
+
+onMounted(() => {
+  getDropDownList()
+})
+
+/** @type {Ref<Array<TYPES.MatchDetail>>} */
+const drop_down_list = ref([]);
+
+/** 获取下拉列表 */
+function getDropDownList() {
+  let result = MatchDataWarehouse_H5_List_Common.get_quick_mid_obj(route.params.mid)
+  if(!result){
+    result = MatchDataWarehouse_H5_Detail_Common.get_quick_mid_obj(route.params.mid)
+  }
+  console.log("----", result)
+
+  api_common.get_matchDetail_getMatchDetailByTournamentId({
+    tId: result.tid
+  }).then(res => {
+    if(res.code == '200' || res.code == "0000000"){
+      drop_down_list.value = res.data
+    }else {
+      console.error(res)
+    }
+  }).catch(err => {
+    console.error(err)
+  })
+}
+
 // /**
 //  * @description: 返回上一页
 //  * @param {*}
@@ -105,21 +94,28 @@ const toHome = () => {
   router.go(-1);
 };
 watch(() => detail_top_pop.value,
-(newPath, oldPath) => {
-  show_list.value = newPath ? true : false;
-})
+  (newPath, oldPath) => {
+    show_list.value = newPath ? true : false;
+  })
 /**
  * @description: 点击切换
- * @param {item} item循环参数
+ * @param {TYPES.MatchDetail} item 循环参数
+ * @param {number} index
  * @return {*}
  */
-const change_active = (item,index) => {
-  if(active.value === index)return;
-    active.value = index;
+function change_active(item, index) {
+  if (active.value === index) return;
+  active.value = index;
+  /*
+  if (this.$route.name == "category") {
+    this.$router.push({ name: 'category_loading', params: { mid: item.mid } }); //缺失category_loading路由
+  }
+  else {
+  */
+  router.replace({ name: 'category', params: { mid: item.mid, csid: item.csid } });
 }
 /**
  * @description: 刷新
- * @param {}
  * @return {*}
  */
 const refresh = () => {
@@ -137,23 +133,26 @@ const refresh = () => {
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  :deep(.q-btn){
-      &::before{
-        content: "";
-        display: block;
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: 0;
-        bottom: 0;
-        border-radius: inherit;
-        box-shadow: none;
-      }
+
+  :deep(.q-btn) {
+    &::before {
+      content: "";
+      display: block;
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      border-radius: inherit;
+      box-shadow: none;
     }
+  }
+
   .sport-info {
     color: #ffd5b2;
     width: 18%;
-    span{
+
+    span {
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
@@ -164,6 +163,7 @@ const refresh = () => {
       vertical-align: middle;
       margin-top: -2px;
     }
+
     .bakc-icon {
       width: 5px;
       height: 8px;
@@ -172,84 +172,97 @@ const refresh = () => {
       margin-top: -2px;
     }
   }
+
   .detail-select {
     padding-left: 6px;
     display: flex;
     flex-wrap: nowrap;
     align-items: center;
+
     // flex: 1;
-    .detail-selec-nav{
+    .detail-selec-nav {
       margin: 0 auto;
-    .btn-label {
-      // height: 45px;
-      // line-height: 45px;
-      max-width: 200px;
-      overflow:hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      -o-text-overflow:ellipsis;
+
+      .btn-label {
+        // height: 45px;
+        // line-height: 45px;
+        max-width: 200px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        -o-text-overflow: ellipsis;
+      }
+
+      .label {
+        padding: 0;
+        color: #fff;
+        display: inline-block;
+        height: 45px;
+        line-height: 45px;
+        max-width: 200px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        -o-text-overflow: ellipsis;
+      }
+
+      .down-icon {
+        width: 10px;
+        height: 6px;
+        vertical-align: middle;
+        margin-left: 5px;
+      }
+
+      .up-icon {
+        transform: rotate(180deg);
+      }
     }
-    .label {
-      padding: 0;
-      color: #fff;
-      display: inline-block;
-      height: 45px;
-      line-height: 45px;
-      max-width: 200px;
-      overflow:hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      -o-text-overflow:ellipsis;
-    }
-    
-    .down-icon {
-      width: 10px;
-      height: 6px;
-      vertical-align: middle;
-      margin-left: 5px;
-    }
-    .up-icon {
-      transform: rotate(180deg);
-    } 
   }
-  }
+
   .refresh {
     // position: absolute;
     // right: 15px;
     height: 14px;
     width: 18%;
     text-align: right;
+
     .refresh-icon {
       width: 14px;
       height: 14px;
     }
   }
+
   .refresh-active {
     animation: line-scale 1s infinite linear;
   }
+
   /*
   * Animation
   */
   @keyframes line-scale {
-    0%{
-      transform:rotate(0deg);
-      -webkit-transform:rotate(0deg);
+    0% {
+      transform: rotate(0deg);
+      -webkit-transform: rotate(0deg);
     }
-    25%{
-      transform:rotate(90deg);
-      -webkit-transform:rotate(90deg);
+
+    25% {
+      transform: rotate(90deg);
+      -webkit-transform: rotate(90deg);
     }
-    50%{
-      transform:rotate(180deg);
-      -webkit-transform:rotate(180deg);
+
+    50% {
+      transform: rotate(180deg);
+      -webkit-transform: rotate(180deg);
     }
-    75%{
-      transform:rotate(270deg);
-      -webkit-transform:rotate(270deg);
+
+    75% {
+      transform: rotate(270deg);
+      -webkit-transform: rotate(270deg);
     }
-    100%{
-      transform:rotate(360deg);
-      -webkit-transform:rotate(360deg);
+
+    100% {
+      transform: rotate(360deg);
+      -webkit-transform: rotate(360deg);
     }
   }
 }
@@ -260,11 +273,14 @@ const refresh = () => {
   width: 100vw;
   left: 0 !important;
   max-width: 100vw !important;
+
   .q-dialog__backdrop {
     background: rgba(0, 0, 0, 0);
   }
+
   .detail-top-pop-content {
     .match_detail_top_list {
+
       // margin-top: 50px;
       .match_detail_top_list_item {
         font-size: 14px;
@@ -284,10 +300,10 @@ const refresh = () => {
           overflow: hidden;
         }
       }
+
       .active {
         color: #ff7000;
       }
     }
   }
-}
-</style>
+}</style>

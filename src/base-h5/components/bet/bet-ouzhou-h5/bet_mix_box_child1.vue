@@ -8,7 +8,7 @@
       <div class="nonebox4-content">
           <div class="nonebox4-content-left">
               <div class="nonebox4-content-left-content">
-                  <div class="nonebox4-content-left-content-xian">删</div>
+                  <div class="nonebox4-content-left-content-xian" @click.stop="BetData.bet_list_remove(0)">删</div>
                   <div class="nonebox4-content-left-info">
                     <div class="nonebox4-content-left-content-text">
                       <div class="nonebox4-content-left-content-text-one"><div class="nonebox4-content-left-content-text-one-tit">{{items.handicap}}</div> <span class="text-one-span">0.25</span></div>
@@ -31,6 +31,7 @@
   </template>
   <script setup>
   import { compute_value_by_cur_odd_type } from "src/core/index.js"
+  import BetData from "src/core/bet/class/bet-data-class.js";
 
   const props = defineProps({
     items:{}
@@ -61,6 +62,7 @@
   }
   .text-one-span{
     color: var(--q-gb-t-c-11);
+    padding-left: 0.08rem;
   }
   .nonebox4-content-left-content-text-three{
     font-size: 0.16rem;
@@ -74,7 +76,7 @@
     font-size: 0.16rem;
   }
   .text-two-span{
-    color: var(--q-gb-t-c-18);
+    color: var(--q-gb-t-c-1);
     font-weight: 400;
   }
   .nonebox4-content-left-content-text-one{

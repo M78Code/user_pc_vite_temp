@@ -9,7 +9,7 @@
     <div class="temp_grid" :style="{ gridTemplateColumns: columnTotal(item) }">
       <div v-for="o in match_info.hl[0].ol" :key="o?.oid" :class="{ 'temp-active': o.oid == current_ol.oid, 'temp': true }"
         @click="betItemClick(match_info.hl[0], o)">
-        <div :style="{ color: o.oid == current_ol.oid ? '#ffffff' : '#ff7000' }" class="oid-width" :title="o.ott">{{ o.ott
+        <div  v-show="!match_info.hl[0].hs" :style="{ color: o.oid == current_ol.oid ? '#ffffff' : '#ff7000' }" class="oid-width" :title="o.ott">{{ o.ott
         }} <span>{{ o.on }}
           </span></div>
         <div  v-show="!match_info.hl[0].hs">{{ Math.floor(o.ov / 1000) / 100 }} </div>

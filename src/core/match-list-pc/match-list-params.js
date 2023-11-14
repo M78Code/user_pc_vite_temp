@@ -42,7 +42,8 @@ const api_params = {
     },
     other: {
         match: "post_league_list",
-        colloet: "post_fetch_collect_list"
+        colloet: "post_fetch_collect_list",
+        home: "get_home_matches",
     }
 }
 /**
@@ -55,7 +56,6 @@ function match_list_all_params() {
     const { menu_root, left_menu_result, mid_menu_result, is_collect,get_mid_for_euid } = MenuData
    
     let { csid, tid, md, index, sports, guanjun, mi, mif } = mid_menu_result || {};
-    console.log('mid_menu_result1',mid_menu_result)
     let { lv2_mi, lv1_mi, } = left_menu_result || {};
     let apiType = 1;
      // 父级euid
@@ -110,9 +110,8 @@ function match_list_all_params() {
         euid_mi = mi
     }
     // 当前 pid 和 orpt
-    let lv2_mi_info = BaseData.mi_info_map[`mi_${euid_mi}`];
-    // delete lv2_mi_info.h5_euid
-    
+    let lv2_mi_info = BaseData.mi_info_map[`mi_${euid_mi}`] || {};
+    delete lv2_mi_info.h5_euid
     if ([2, 3].includes(Number(menu_root))) {
         // 今日 早盘 常规赛事
         if (lv1_mi == 118) {
@@ -200,7 +199,7 @@ function match_list_all_params() {
             bymids: {},
         }
     }
-    console.log('mid_menu_result2',config.match_list.params)
+    console.log('mid_menu_result2',config.match_list, config.match_list.params)
 
     config.guanjun = guanjun;
     lodash.merge(
@@ -339,7 +338,7 @@ function match_list_hot_params() {
  * 单个菜单按钮点击 滚球 的
  */
 function handle_click_menu_mi_1(detail = {}) {
-    handle_click_menu_mi_pre_process();
+    // handle_click_menu_mi_pre_process();
     // { mi:'',   root:'',   sports:'',  guanjun:'' }
     // let {
     //     mif,
@@ -459,7 +458,7 @@ function handle_click_menu_mi_1(detail = {}) {
             },
         };
     }
-    console.log('asdasdasdasdas', params);
+    console.log('asdasdasdasdas', match_list);
     // 设置      中间 菜单输出
     menu_config.set_mid_menu_result(params);
 

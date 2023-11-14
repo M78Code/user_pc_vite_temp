@@ -18,10 +18,12 @@
 
     import {get_league_title_card_height,compute_style_template_by_matchinfo } from  "./compute-style-template.js"
     import {set_new_sport_title_card_fold} from "./add-and-remove.js"
+    import {get_match_template_id} from '../../match-handle-data.js'
     import {set_new_league_fold} from  "./fold-tid.js"
     import {
       ouzhou_match_status_title_card_template,
       ouzhou_league_title_template,
+      ouzhou_sport_title_card_template,
       fold_template,
       ouzhou_league_container_template,
    
@@ -91,7 +93,8 @@
     let unfold_match_count = 0
     // 是否联赛折叠
     let is_league_fold = false
-
+    // 上一个赛事的赛种ID
+    let pre_match_csid = 0
     let league_nofold_height = get_league_title_card_height(template_id, true);
 
     // 临时卡片对象变量
@@ -101,7 +104,7 @@
 
     // 联赛标题卡片类型
     // let league_title_card_type = MenuData.menu_data.is_esports_champion ? 'champion_league_title' : 'league_title'
-    let league_title_card_type = false ? 'champion_league_title' : 'league_title'
+    let league_title_card_type = MenuData.is_esports_champion() ? 'champion_league_title' : 'league_title'
 
     // 同样联赛出现次数  用于生成自定义联赛ID
     let league_repeat_count_obj = {}
@@ -121,11 +124,30 @@
         // 生成自定义联赛ID
         league_repeat_count_obj[league_obj.tid]++
         cus_tid = `${league_obj.tid}_${league_repeat_count_obj[league_obj.tid]}`
-
         // 赛事ID数组
         let mids_arr = league_obj.mids.split(',')
-
         match_status_type_match_count += mids_arr.length
+        // 如果当前赛种 不等于上一个赛种  需要添加一个球种标题卡片
+        if(league_obj.csid != pre_match_csid){
+          pre_match_csid = league_obj.csid
+          card_key = `sport_title_${league_obj.csid}`
+          card_index += 1
+          match_list_card_key_arr.push(card_key)
+          // 打入球种标题卡片特征
+          all_card_obj[card_key] = {
+            ...ouzhou_sport_title_card_template,
+            // 卡片索引
+            card_index,
+            // 球种名称
+            csna:league_obj.csna,
+            // 球种ID
+            csid:league_obj.csid,
+          }
+          // 如果不是ws调用  设置折叠数据
+          if(!is_ws_call){
+            Object.assign(all_card_obj[card_key],fold_template)
+          }
+        }
         // 如果是第一个联赛 并且列表类型是1 有已开赛、未开赛区分，  添加一个已开赛、未开赛标题卡片
         if(league_index == 0 && MatchListCardData.match_list_mapping_relation_obj_type == 1){
           // 已开赛、未开赛标题卡片处理

@@ -9,7 +9,11 @@
             </div>
         </template>
         <template v-slot:right>
-            <div class="right-icon" @click="state.select_dialog = true"></div>
+                <img
+                    @click="state.select_dialog = true"
+                    :src="compute_local_project_file_path('/image/svg/navbar_icon.svg')"
+                    alt=""
+                />
         </template>
     </navigation-bar>
     <div class="slide-box">
@@ -46,7 +50,7 @@ import setectLeague from 'src/base-h5/components/setect-league/index.vue'
 import { scrollMenuEvent } from "src/base-h5/components/menu/app-h5-menu/utils.js"
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import { api_analysis } from "src/api/"
-import { useMittOn,MITT_TYPES,MenuData } from "src/core/"
+import { useMittOn,MITT_TYPES,MenuData,compute_local_project_file_path } from "src/core/"
 
 const inner_height = window.innerHeight;  // 视口高度
 const switchMenu = ['普通赛果', '冠军赛果']

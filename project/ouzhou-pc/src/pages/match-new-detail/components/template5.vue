@@ -52,6 +52,7 @@ const matchInfo = computed(() => {
     if (item && item.ol.length > 0) {
       item.ol.forEach((i) => {
         i.hs = item.hs;
+        i.on = item.hv;
         if (!obj[i.on]) {
           obj[i.on] = [];
           obj[i.on] = [i];
@@ -83,7 +84,9 @@ const betItemClick = (key, o) => {
   emit("betItemClick", obj, o);
 };
 
-onMounted(() => { });
+onMounted(() => { 
+
+});
 </script>
 
 <style lang="scss" scoped>

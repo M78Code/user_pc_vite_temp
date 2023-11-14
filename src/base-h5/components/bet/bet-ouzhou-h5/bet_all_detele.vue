@@ -5,17 +5,17 @@
 
 <template>
   <div class="bet-all-detele">
-    <div class="del-info">
+    <div class="del-info" @click.stop="clear">
       <div class="del-info-icon">删</div>
-      <div class="del-info-name">Detele All</div>
+      <div class="del-info-name">{{ $t('bet.delete_all')}}</div>
     </div>
     <div class="del-info">
       <div class="dropdown">
-        <button class="dropbtn">Betting Type</button>
+        <button class="dropbtn">{{$t('bet.bet')}}</button>
         <div class="dropdown-content">
-          <a href="#" :class="BetData.is_bet_single?'dropdown-content-che':''" @click.stop="set_is_bet_single(true)">Betting Type</a>
-          <a href="#" :class="type==2?'dropdown-content-che':''" @click.stop="set_is_bet_merge">Multi Singles</a>
-          <a href="#" :class="!BetData.is_bet_single?'dropdown-content-che':''" @click.stop="set_is_bet_single(false)">System</a>
+          <a href="#" :class="(BetData.is_bet_single && !BetData.is_bet_merge)?'dropdown-content-che':''" @click.stop="set_is_bet_single(true)">{{$t('bet.bet')}}</a>
+          <a href="#" :class="BetData.is_bet_merge?'dropdown-content-che':''" @click.stop="set_is_bet_merge">{{ $t('bet.single_more') }}</a>
+          <a href="#" :class="(!BetData.is_bet_single && !BetData.is_bet_merge)?'dropdown-content-che':''" @click.stop="set_is_bet_single(false)">{{$t('bet.kushikatsu')}}</a>
         </div>
       </div>
 
@@ -27,9 +27,17 @@
   import BetData from "src/core/bet/class/bet-data-class.js";
   import { useMittEmit, MITT_TYPES  } from "src/core/index.js";
   const type = 1//1:Betting Type  2:  3:System
+
+  const clear = () =>{
+    BetData.set_clear_bet_info()
+  }
+
   // 单关 串关切换
   const set_is_bet_single = (type) =>{
     BetData.set_is_bet_single()
+    // if(BetData.is_bet_merge){
+    //   BetData.set_is_bet_merge()
+    // }
     useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX, type);
   }
   const set_is_bet_merge = () => {

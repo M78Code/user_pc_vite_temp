@@ -194,7 +194,7 @@ class AllDomain {
     // 当前的 流程  ：
     let current_api_flow = "use_url_api";
     let unDecrypt = "";
-    const url_search = SEARCH_PARAMS.param;
+    const url_search = SEARCH_PARAMS.init_param;
     let api = url_search.get("api");
     //   console.log('location.href-',location.href);
     //   console.log('api------------',api);
