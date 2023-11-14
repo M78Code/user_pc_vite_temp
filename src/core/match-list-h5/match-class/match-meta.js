@@ -630,7 +630,11 @@ class MatchMeta {
    * @param { is_classify } 是否进行开赛、未开赛归类
    */
   handler_match_list_data(config) {
-    const { list, type = 1, is_virtual = true, is_classify = false } = config
+    const { list, type = 1, is_virtual = true, is_classify = false,  base = MatchDataBaseH5 } = config
+
+    // 设置仓库
+    this.common_match_base = base
+
     // 清除联赛下得赛事数量
     MatchResponsive.clear_ball_seed_league_count()
 
@@ -663,12 +667,13 @@ class MatchMeta {
       target_data = MatchUtils.handler_match_classify_by_tid(arr_data).filter((t) => t.mid)
     }
     const result_mids = target_data.map(t => t.mid)
-    this.match_mids = lodash.uniq(result_mids)
+   
     this.complete_matchs = target_data
     this.complete_mids = lodash.uniq(result_mids)
 
    
     if (!is_virtual) {
+      this.match_mids = lodash.uniq(result_mids)
       // 欧洲版首页热门赛事
       this.on_submit_matchs(type, match_list.filter((t) => t.mid)) 
     } else {

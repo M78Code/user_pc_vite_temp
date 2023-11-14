@@ -2,9 +2,9 @@
 * @Description: 四大联赛
 -->
 <template>
-    <!-- <div style="display: none;">{{ MatchDataBaseH5.data_version.version }}</div> -->
-    <!-- <section class="match-play-page">
-      <div class="match-item" v-for="item, index in fiveLeagues_Matches" :key="mid">
+    <div style="display: none;">{{ MatchDataBaseH5.data_version.version }}</div>
+    <section class="match-play-page">
+      <div class="match-item" v-for="item, index in fiveLeagues_Matches" :key="item.mid">
        <template v-if="item">
          <MatchContainerMainTemplate1
           :i="index"
@@ -12,7 +12,7 @@
         </MatchContainerMainTemplate1>
        </template>
       </div>
-    </section> -->
+    </section>
   </template>
    
 <script setup>
