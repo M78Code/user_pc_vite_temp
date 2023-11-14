@@ -66,14 +66,8 @@ const drop_down_list = ref([]);
 
 /** 获取下拉列表 */
 function getDropDownList() {
-  let result = MatchDataWarehouse_H5_List_Common.get_quick_mid_obj(route.params.mid)
-  if(!result){
-    result = MatchDataWarehouse_H5_Detail_Common.get_quick_mid_obj(route.params.mid)
-  }
-  console.log("----", result)
-
   api_common.get_matchDetail_getMatchDetailByTournamentId({
-    tId: result.tid
+    tId: route.params.tid
   }).then(res => {
     if(res.code == '200' || res.code == "0000000"){
       drop_down_list.value = res.data
@@ -112,7 +106,7 @@ function change_active(item, index) {
   }
   else {
   */
-  router.replace({ name: 'category', params: { mid: item.mid, csid: item.csid } });
+  router.replace({ name: 'category', params: { mid: item.mid, csid: item.csid, tid:item.tid } });
 }
 /**
  * @description: 刷新

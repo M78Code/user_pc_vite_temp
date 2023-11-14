@@ -893,9 +893,7 @@ export default {
     },
     /**
      * @description: 跳转至详情
-     * @param {Object} item 赛事
-     * @param {String} item.mid
-     * @param {String} item.csid
+     * @param {TYPES.MatchDetail} item 赛事
      * @param {*} flag 有值时候代表要去到赛事分析页
      * @return {String}
      */
@@ -926,7 +924,7 @@ export default {
           this.$router.push({ name: 'category_loading', params: { mid: item.mid } });
         }
         else {
-          this.$router.push({ name: 'category', params: { analysis: flag ? true : false, mid: item.mid, csid: item.csid } });
+          this.$router.push({ name: 'category', params: { analysis: flag ? true : false, mid: item.mid, csid: item.csid, tid: item.tid } });
         }
       }
     },
