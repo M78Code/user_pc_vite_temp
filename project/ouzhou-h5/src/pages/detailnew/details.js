@@ -7,6 +7,8 @@ import {
   useMittOn,
   MITT_TYPES,
 } from "src/core";
+import * as ws_message_listener from "src/core/utils/module/ws-message.js";
+
 export const details_main = (router,route) => {
   const detail_store = ref(MatchDetailCalss); //todo
   const match_odds_info = ref([]);
@@ -309,6 +311,7 @@ export const details_main = (router,route) => {
   });
     //todo mitt 触发ws更新
   const {off:off_ws} = useMittOn(MITT_TYPES.EMIT_DATAWARE_DETAIL_UPDATE,(params)=>{
+    return
     switch (params.type) {
       case "oddinfo":
       const { mid, csid } = route.params;
@@ -324,10 +327,17 @@ export const details_main = (router,route) => {
         break;
     }
   })
+  // 增加监听接受返回的监听函数 
+const message_fun = ws_message_listener.ws_add_message_listener((cmd,data)=>{
+  console.error('cmd:',cmd,data);
+})
+
   onUnmounted(() => {
     clear_all_timer();
     refreshOff()
     off_ws()
+    // 组件销毁时销毁监听函数
+  ws_message_listener.ws_remove_message_listener(message_fun)
   });
   return {
      detail_store,
