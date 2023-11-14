@@ -41,7 +41,7 @@ const api_params = {
         colloet: "post_fetch_collect_list"
     },
     other: {
-        match: "get_home_matches",
+        match: "post_league_list",
         colloet: "post_fetch_collect_list",
         home: "get_home_matches",
     }

@@ -67,7 +67,7 @@ class MenuData {
     const menu_list =  BaseData.mew_menu_list_res.filter((item)=>{return +item.mi<300});
     //热门球种
     let top_events_list =  BaseData.mew_menu_list_res.filter((item)=>{return item.mi==5000})?.[0].sl || [];
-    //热门球种不存在取常规球种
+    //热门球种不存在取常规球种  1
     // top_events_list = top_events_list.length?top_events_list.map((item)=>{
     //   return {
     //     ...item,
@@ -82,13 +82,22 @@ class MenuData {
     //     csid:`${+item.mi-100}`,
     //   }
     // });
-    //取常规球种 数量取热门球种
-    top_events_list = menu_list.map((item)=>{
+    //取常规球种 数量取热门球种   2
+    // top_events_list = menu_list.map((item)=>{
+    //   return {
+    //     ...item,
+    //     defaultMi:item.mi,
+    //     csid:`${+item.mi-100}`,
+    //     ct:top_events_list.find((n)=>{return +item.mi === +n.mi-4900})?.ct
+    //   }
+    // });
+    //正常取热门球种 3
+    top_events_list = top_events_list.map((item)=>{
       return {
         ...item,
+        mi:`${+item.mi-4900}`,
         defaultMi:item.mi,
-        csid:`${+item.mi-100}`,
-        ct:top_events_list.find((n)=>{return +item.mi === +n.mi-4900})?.ct
+        csid:`${+item.mi-5000}`
       }
     });
     this.menu_list = menu_list;
@@ -212,7 +221,7 @@ class MenuData {
       })
       // 根据 菜单id 获取euid
       mid_list.forEach(item=>{
-        euid += BaseData.mi_euid_map_res[item] && BaseData.mi_euid_map_res[item].h + ','
+        euid += BaseData.mi_euid_map_res?.[item] && BaseData.mi_euid_map_res?.[item]?.h + ','
       })
       return euid
     }
