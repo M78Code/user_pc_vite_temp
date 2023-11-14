@@ -464,9 +464,10 @@ class MenuData {
     };
     console.log(
       "MENUDATA.set_mid_menu_result-------",
-      JSON.stringify(this.mid_menu_result)
+      JSON.stringify(this.mid_menu_result),
+      obj
     );
-    this.menu_root=obj.root;
+    // this.menu_root=obj.root;
     this.menu_root_show_shoucang = obj.root;
     MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'), this.is_scroll_ball())
     // 设置全屏
