@@ -1,5 +1,7 @@
 import { createApp } from 'vue'
 import { Quasar } from "quasar";
+
+import "./src/css/app.scss"
 import './style.css'
 import App from './App.vue'
 import router from 'project/activity/src/router/index.js'
