@@ -154,13 +154,14 @@ const sun_ol = (ol, item) => {
     if (ele.length !== maxCount) {
       // 列数不够的话添加假数据
       for (let index = 0; index < maxCount - ele.length; index++) {
-        list.push({ otd: Number(key), on: '', oid: key + '-' + index })
+         list.push({ otd: Number(key), on: '', oid: key + '-' + index })
 
       }
     }
     obj[key] = [...obj[key], ...list]
     result = [...obj[key], ...result]
   }
+  console.log(11111111,result)
   return result
 }
 //  投注项点击投注,
@@ -283,7 +284,7 @@ onMounted(() => {
 }
 
 .tem4 {
-  min-height: 45px;
+  height: 45px;
   line-height: 45px;
   padding: 0 20px;
   display: flex;

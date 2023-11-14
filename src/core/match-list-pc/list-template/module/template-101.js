@@ -83,5 +83,7 @@ export const  width_config ={
 // 赛事模板配置
 export const match_template_config = {
     ...TemplateCommon.match_style_template_ouzhou,
+    // 是否需要动态计算高度
+    is_dynamic_compute_height:true,
   };
   

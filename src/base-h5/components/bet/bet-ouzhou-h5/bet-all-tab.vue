@@ -7,11 +7,11 @@
   <div class="bet-all-detele">
     <div class="del-info">
       <div class="del-info-icon">删</div>
-      <div class="del-info-name">Single Bet</div>
-        <div class="del-info-name">Highest Win 0.00</div>
+      <div class="del-info-name">{{$t('bet.bet')}}</div>
+        <div class="del-info-name">{{$t('bet.total_win2')}} 0.00</div>
     </div>
     <div class="del-info">
-      <div class="del-info-type">Limits</div>
+      <div class="del-info-type">{{ i18n_t('app_h5.bet.limit')}}</div>
       <div class="del-info-dui">10-9999</div>
     </div>
   </div>

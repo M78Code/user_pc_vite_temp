@@ -216,7 +216,9 @@
     "wanwan": "Trăm triệu",
     "wanyi": "Nghìn tỷ",
     "total_bet": "Tổng tiền cược",
-    "total_income": "Tổng tiền thắng dự kiến"
+    "total_income": "Tổng doanh thu ước tính",
+    "bet_retract": "Đặt cược lại"
+
   },
   "bet_record": {
     "30day": "30 ngày",

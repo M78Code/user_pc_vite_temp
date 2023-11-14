@@ -217,7 +217,10 @@
     "wanwan": "億",
     "wanyi": "萬億",
     "total_bet": "總投注",
-    "total_income": "預計總收益"
+    "total_income": "預計總收益",
+    "bet_retract": "賭注收回"
+
+    
   },
   "bet_record": {
     "30day": "30天",
