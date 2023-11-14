@@ -41,7 +41,6 @@ export class WsRev {
 
       case WsCmd.R_CMD_HANDICAP_STATUS:
         //盘口状态、赔率C105
-        useMittEmit(MITT_TYPES.EMIT_DATAWARE_DETAIL_UPDATE,{type:"oddinfo",parmas:{},datawarename:""})
         ws.push_ws_queue_msg(json_data);
         break;
       case WsCmd.R_CMD_BET_LIST_ODDS:
