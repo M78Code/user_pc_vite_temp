@@ -60,26 +60,20 @@ const compute_get_date_menu_list_params = () => {
  *  早盘 的 日期 菜单点击
 */
 const handle_click_menu_mi_3_date = (detail = {}) => {
-    let { md } = detail;
-    let root = MenuData.menu_root;
-    let { lv2_mi, lv1_mi } = MenuData.left_menu_result
-    // 当前 pid 和 orpt
-    let lv2_mi_info = BaseData.mi_info_map[`mi_${lv2_mi}`];
-    // 父级euid
-    let euid;
-    if (root != 2000) {
-      // 娱乐
-      if (lv1_mi == 118) {
-        euid = '3020212' || BaseData.mi_info_map[`mi_${lv2_mi}`].euid;
-      } else {
-        euid = BaseData.mi_info_map[`mi_${lv1_mi}${root}`].euid
-      }
+    let { label,type } = detail;
+    const { mid_menu_result,left_menu_result } = MenuData
+    let params = {
+      ...mid_menu_result,
+      md: label,
     }
-    let params = { ...lv2_mi_info, lv2_mi, md, euid };
-    useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST)
-
+    // type 早盘 今日 对赛种进行拼接
+    let current_menu = left_menu_result.lv1_mi +''+ type
+    let menu_root = 20 + '' + type
     // 设置      中间 菜单输出
     MenuData.set_mid_menu_result(params);
+    // 设置当前的一级菜单类型
+    MenuData.set_menu_root(menu_root)
+    MenuData.set_menu_current_mi(current_menu)
 }
 
 // 获取日期菜单数据

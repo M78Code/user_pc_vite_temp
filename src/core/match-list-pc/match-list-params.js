@@ -116,7 +116,7 @@ function match_list_all_params() {
     // 当前 pid 和 orpt
     let lv2_mi_info = BaseData.mi_info_map[`mi_${menu_current_mi}`] || {};
     delete lv2_mi_info.h5_euid
-    if ([2, 3].includes(Number(menu_root))) {
+    if ([2, 3, 202, 203].includes(Number(menu_root))) {
         // 今日 早盘 常规赛事
         if (lv1_mi == 118) {
             // 娱乐下只有冠军 直接写死
@@ -131,10 +131,10 @@ function match_list_all_params() {
             ...lv2_mi_info,
             euid,
         }
-        if (menu_root == 3) {
+        if ([3,203].includes(menu_root*1)) {
             // 早盘获取选中的时间
             lv2_mi_info.md = md
-            lv2_mi_info.index = index || 0 // 早盘收藏 切换后回到原来的
+            // lv2_mi_info.index = index || 0 // 早盘收藏 切换后回到原来的
         }
     } else if (menu_root == 400) {
         guanjun = "guanjun"

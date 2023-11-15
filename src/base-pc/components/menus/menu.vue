@@ -104,6 +104,12 @@ const jump_func = (payload,type) => {
   MenuData.set_menu_current_mi(obj.lv2_mi)
   MenuData.set_menu_root(202)
 
+  let mid_config = {
+    ...MenuData.mid_menu_result,
+    md: ''
+  }
+  MenuData.set_mid_menu_result(mid_config)
+
   nextTick(()=>{
     useMittEmit(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE,payload)
   })

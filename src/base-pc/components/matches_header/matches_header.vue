@@ -1,6 +1,6 @@
 <template>
 	<div class="matches_header_wrap">
-		<div v-show="true">{{MenuData.menu_data_version}}-{{MenuData.menu_root}}-{{MenuData.mid_menu_result.filter_tab }}</div>
+		<div v-show="false">{{MenuData.menu_data_version}}-{{MenuData.menu_root}}-{{MenuData.mid_menu_result.filter_tab }}</div>
 		<div class="matches_header">
 			<div class="header_banne header_banner" :style="`background-position:0 -${current_ball_type}px`"></div>
 			<div class="matches-title">
@@ -20,13 +20,12 @@
 </template>
 
 <script setup>
-import { ref,onMounted,onUnmounted, watch } from 'vue';
-import { useRouter } from "vue-router";
+import { ref,onMounted,onUnmounted } from 'vue';
 import lodash_ from "lodash"
 
 import MatchesFilterTab from "./matches_filter_tab_ball_species.vue";
 import MatchesDateTab from "./matches_filter_tab.vue";
-import { MenuData, UserCtr,useMittOn,MITT_TYPES } from "src/core/index.js"
+import { MenuData, useMittOn,MITT_TYPES } from "src/core/index.js"
 import BaseData from "src/core/base-data/base-data.js";
 
 const tab_list = ref([])
@@ -75,30 +74,20 @@ const set_tab_list = (news_) =>{
 }
 
 const checked_current_tab = payload => {
-
-	// 暂时不做 
-	if ([1002, 4002].includes(payload.value*1)) {
-		// 修改菜单数据
-		// MenuData.coom_soon.value = true
-	}else{
-		// 修改菜单数据
-		// MenuData.coom_soon.value = false
-	}
-	// coom_soon_state.value = MenuData.coom_soon.value
-      // 判断头部高度
+	// 判断头部高度
 	if ([1001,1002,4002].includes(payload.value*1) ) {
-        match_list_top.value = '80px'
-    } else if([4001].includes(payload.value*1)){
-        match_list_top.value = '134px'
-    } else {
-        match_list_top.value = '146px'
-    }
+			match_list_top.value = '80px'
+	} else if([4001].includes(payload.value*1)){
+			match_list_top.value = '134px'
+	} else {
+			match_list_top.value = '146px'
+	}
 
-		let obj = {
-			...MenuData.mid_menu_result,
-			filter_tab: payload.value*1
-		}
-		MenuData.set_mid_menu_result(obj)
+	let obj = {
+		...MenuData.mid_menu_result,
+		filter_tab: payload.value*1
+	}
+	MenuData.set_mid_menu_result(obj)
 }
 
 
