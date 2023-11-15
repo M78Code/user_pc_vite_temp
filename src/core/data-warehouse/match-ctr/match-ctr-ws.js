@@ -315,6 +315,7 @@ export default class MatchDataBaseWS
     //   "ctsp" : "1692362283954",
     //   "ld" : "BE_0af40eb520230818203803628fac7813_0_15"
     // }
+    console.log('ws_obj', ws_obj);
     if(ws_obj){
       // ws命令数据信息
       let cd_obj = lodash.get(ws_obj,'cd');
