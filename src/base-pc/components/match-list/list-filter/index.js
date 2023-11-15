@@ -192,28 +192,35 @@ function compute_mi_400_sl_mi_csid(mi) {
  */
 function handle_click_menu_mi_1(detail = {}) {
     let obj = {
-        md: detail.md,
-        mi: detail.mi,
-        mif: detail.mif
-    }
-    // 设置 中间 菜单输出
-    menu_config.set_mid_menu_result(obj);
-    // 设置   请求  列表结构  API 参数的  值
-    menu_config.set_match_list_api_config(obj);
+        // 当前赛种 菜单id
+        mid_menu_mi: detail.mi,  
+        // 当前菜单的赛种id
+        csid: (detail.mif*1 - 100), 
+        current_mi: detail.mi,  
+    } 
+    set_menu_config(obj)
 }
 /**
  * 单个菜单按钮点击  冠军的
  */
 function handle_click_menu_mi_400(detail = {}) {
     let obj = {
-        md: detail.md,
-        mi: detail.mi,
-        mif: detail.mif
+        // 当前赛种 菜单id
+        mid_menu_mi: detail.mi,  
+        // 当前菜单的赛种id
+        csid: (detail.mif*1 - 400), 
+        current_mi: detail.mi,  
     }
+    set_menu_config(obj)
+}
+
+function set_menu_config(obj = {}) {
     // 设置 中间 菜单输出
     menu_config.set_mid_menu_result(obj);
     // 设置   请求  列表结构  API 参数的  值
     menu_config.set_match_list_api_config(obj);
+    // 设置终极菜单id
+    menu_config.set_menu_current_mi(obj.current_mi)
 }
 
 export {

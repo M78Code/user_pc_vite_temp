@@ -16,7 +16,7 @@
     <div class="menu-nav-li">
       <p>{{ i18n_t("ouzhou.menu.popular") }}</p>
       <ul class="menu-list">
-        <li class="f-s-c" :class="{ 'menu_checked': MenuData.left_menu_mi.value == item&&menu_type=='0' }" v-for="item in popular" :key="item"
+        <li class="f-s-c" :class="{ 'menu_checked': MenuData.lv1_mi == item&&menu_type=='0' }" v-for="item in popular" :key="item"
           @click="jump_func(item,'0')">
           <sport_icon :sport_id="BaseData.compute_sport_id(item)" size="18px" class="icon" />
           {{ (BaseData.menus_i18n_map || {})[item] || "" }}
@@ -29,7 +29,7 @@
     <div class="menu-nav-li">
       <p>{{ i18n_t("ouzhou.menu.all_sports")}}</p>
       <ul class="menu-list">
-        <li class="f-s-c" :class="{ 'menu_checked': MenuData.left_menu_mi.value == item&&menu_type=='1' }" v-for="item in (left_menu_list || menu)"
+        <li class="f-s-c" :class="{ 'menu_checked': MenuData.lv1_mi  == item&&menu_type=='1' }" v-for="item in (left_menu_list || menu)"
           :key="item" @click="jump_func(item,'1')">
           <sport_icon :sport_id="BaseData.compute_sport_id(item)" size="18px" class="icon" />
           {{ (BaseData.menus_i18n_map || {})[item] || "" }}
@@ -94,21 +94,18 @@ const go_to_favouritse = () => {
 const jump_func = (payload,type) => {
   let obj = {
     lv1_mi : payload,
-    root: 2, // 左侧菜单 默认今日
     has_mid_menu: true, // 有中间菜单
-    mid_menu_show:{
-      list_filter: true
-    }
+    lv2_mi: payload +''+ 2, // 二级菜单id
   }
   menu_type.value = type
+
   //太多了 后续做优化
-  MenuData.set_router_root_lv_1(4)
-  MenuData.set_left_menu_mi(payload)
   MenuData.set_left_menu_result(obj)
-  MenuData.set_router_root_lv_2(4001)
+  MenuData.set_menu_current_mi(obj.lv2_mi)
+  MenuData.set_menu_root(202)
 
   nextTick(()=>{
-    useMittEmit(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE)
+    useMittEmit(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE,payload)
   })
   
 }

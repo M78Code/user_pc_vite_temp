@@ -46,27 +46,32 @@
 
   let area_obj = null;
   let area_obj_wrap = null;
+
+  let mitt_list = null
+  let time = ''
   onMounted(async ()=>{
     area_obj = document.querySelector('.current-filter-list');
     area_obj_wrap = document.querySelector('.current-filter-wrap');
     if (area_obj?.scrollWidth >= area_obj_wrap?.clientWidth) {
       show_right_btn.value = true;
     }
-    let time = await UserCtr.get_system_time()
+    time = await UserCtr.get_system_time()
     update_time(time)
+
+    mitt_list=[useMittOn(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE,set_menu_change)]
     // get_date_menu_matches_list()
   })
     
-  // const mitt_list=[useMittOn(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE,set_menu_change)]
+  
   onUnmounted(()=>{
     // useMittOn(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE,set_menu_change).off
   })
 
     // 左侧菜单切
-  watch(()=>MenuData.left_menu_mi.value,async (news_)=>{
-    let time = await UserCtr.get_system_time()
-    update_time(time)
-  })
+  // watch(()=>MenuData.left_menu_mi.value,async (news_)=>{
+  //   let time = await UserCtr.get_system_time()
+  //   update_time(time)
+  // })
 
   const update_time = (time) => {
     let arr = []
@@ -90,6 +95,8 @@
       ...MenuData.left_menu_result,
       lv2_mi: MenuData.left_menu_mi.value + '2',
     }
+    update_time(time)
+    
     MenuData.set_left_menu_result(obj)
 
     MenuData.set_match_list_api_config(obj)
