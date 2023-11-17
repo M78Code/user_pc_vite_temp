@@ -107,7 +107,7 @@ onMounted(() => {
   .vertical-line {
     width: 1px;
     height: 60px;
-    background: #e2e2e2;
+    background:  var(--q-gb-bg-c-10);
   }
 }
 
@@ -187,7 +187,7 @@ onMounted(() => {
   margin-left: auto;
 
   &:hover {
-    color: #FF7000;
+    color: var(--q-gb-bg-c-17);
   }
 }
 </style>

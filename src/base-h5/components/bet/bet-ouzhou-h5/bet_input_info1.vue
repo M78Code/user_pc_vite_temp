@@ -17,14 +17,13 @@
 
 
             <span class="money-span" v-if="BetData.active_index == index " ref="money_span_single" :style="{ opacity:  '1' }"></span>
-            <span v-if="item.money" class="yb_fontsize20 money-number" @click.stop="input_click(item,index,$event)">{{  item.money }}</span>
+            <span v-if="item.money" class="yb_fontsize20 money-number" @click.stop="input_click(item,index,$event)">{{ item.money }}</span>
             <span v-show="!item.money">{{ i18n_t('app_h5.bet.limit')}}{{ set_min_max_money(item.id,'min_money') }}-{{ set_min_max_money(item.id,'max_money')  }}</span>
           
           </div>
           
        </div>
     </div>
-       <key-board v-if="BetData.bet_keyboard_show" :config="ref_data.key_board_config" ></key-board>
     </div>
 </template>
 
@@ -42,10 +41,10 @@ const props = defineProps({
 })
 
 const input_click = (item,index,evnet) => {
-//   event.preventDefault()
-//   BetData.set_bet_keyboard_config(item)
-//   BetData.set_bet_keyboard_show(true)
-//   BetData.set_active_index(index)
+  event.preventDefault()
+  BetData.set_bet_keyboard_config(item)
+  BetData.set_bet_keyboard_show(true)
+  BetData.set_active_index(index)
 }
 
 // 设置限额
