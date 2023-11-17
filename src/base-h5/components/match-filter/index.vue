@@ -736,7 +736,7 @@ if (type.value == 30) {
   .content_box2 {
     width: 100%;
     font-size: 0.16rem;
-    margin: 0 .36rem 0 .4rem;
+    margin: 0 .6rem 0 .4rem;
     height: 100%;
     position: relative;
 
@@ -865,7 +865,7 @@ if (type.value == 30) {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 .36rem 0 .14rem;
+    padding: 0 .6rem 0 .14rem;
     .scroll-title-text {
       display: flex;
       align-items: center;
