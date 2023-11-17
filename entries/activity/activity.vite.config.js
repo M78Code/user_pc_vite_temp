@@ -6,13 +6,13 @@ import path from "path";
 
 console.log("-------------__dirname---------", __dirname);
 console.log("-------------__dirname---------", __dirname);
- 
-let project ='activity'
- 
+
+let project = 'activity'
+
 if (!project) {
-  console.error("目标项目必须设定 ----------");
-  console.error("进程结束");
-  process.exit(1)
+    console.error("目标项目必须设定 ----------");
+    console.error("进程结束");
+    process.exit(1)
 } else {
   console.log("-------------project---------", project);
   console.log('');
@@ -28,70 +28,70 @@ if (!project) {
   console.log('');
 }
 
-const  IS_DEV= process.env.NODE_ENV=='development'
+const IS_DEV = process.env.NODE_ENV == 'development'
 // 本次打包的 客户端版本
 import BUILD_VERSION_CONFIG from "../../job/output/version/build-version.js";
 let BUILD_VERSION = BUILD_VERSION_CONFIG.BUILD_VERSION;
 
-const outDir= "dist/activity/"+BUILD_VERSION
-const base =  IS_DEV?'/': `/${BUILD_VERSION}/`
+const outDir = "dist/activity/" + BUILD_VERSION
+const base = IS_DEV ? '/' : `/${BUILD_VERSION}/`
 // https://vitejs.dev/config/
 export default defineConfig({
-  base  ,
- 
-  plugins: [
-    vue({
-      template: { 
-        transformAssetUrls,
-        compilerOptions: {
-          isCustomElement: (tag) => tag == 'marquee'
-        }
-       },
-    }),
+    base,
 
-    quasar({
-      // sassVariables: `app/project/${project}/src/css/quasar-variables.scss`,
-      // sassVariables: `app/job/output/css/variables.scss`,
-      sassVariables: path.resolve(__dirname, '../../project/activity/src/css/quasar.variables.scss')
-    }),
-  ],
-  css:{
-    devSourcemap: true,
-  },
- 
-  build: {
-    outDir ,
-    rollupOptions: {
-      // external: ["vue"],
-      input: {
+    plugins: [
+        vue({
+            template: {
+                transformAssetUrls,
+                compilerOptions: {
+                    isCustomElement: (tag) => tag == 'marquee'
+                }
+            },
+        }),
 
-      index: path.resolve(__dirname, `../../project/${project}/index.html`),
-      // index: path.resolve(__dirname, `index.html`),
-     
-      },
-      output: {
-        // Provide global variables to use in the UMD build
-        // Add external deps here
-        // globals: {
-        //   // vue: "Vue",
-        // },
-      },
+        quasar({
+            // sassVariables: `app/project/${project}/src/css/quasar-variables.scss`,
+            // sassVariables: `app/job/output/css/variables.scss`,
+            sassVariables: path.resolve(__dirname, '../../project/activity/src/css/quasar.variables.scss')
+        }),
+    ],
+    css: {
+        devSourcemap: true,
     },
-  },
-  resolve: {
-    alias: {
-      src: path.resolve(process.cwd(), "./src"),
-      app: path.resolve(process.cwd(), "./"),
-      dist: path.resolve(process.cwd(), "./dist"),
-      project: path.resolve(__dirname, '../../project'),
-      node_modules: path.resolve(process.cwd(), "./node_modules"),
-      public: path.resolve(__dirname, '../../public')
+
+    build: {
+        outDir,
+        rollupOptions: {
+            // external: ["vue"],
+            input: {
+
+                index: path.resolve(__dirname, `../../project/${project}/index.html`),
+                // index: path.resolve(__dirname, `index.html`),
+
+            },
+            output: {
+                // Provide global variables to use in the UMD build
+                // Add external deps here
+                // globals: {
+                //   // vue: "Vue",
+                // },
+            },
+        },
     },
-  },
-  server: {
-    port: 29300,
-     open: `../../project/${project}/index.html`,
-    // open:    "../../project/yazhou-pc/index.html" ,
-    hmr: true,
-  },
+    resolve: {
+        alias: {
+            src: path.resolve(process.cwd(), "./src"),
+            app: path.resolve(process.cwd(), "./"),
+            dist: path.resolve(process.cwd(), "./dist"),
+            project: path.resolve(__dirname, '../../project'),
+            node_modules: path.resolve(process.cwd(), "./node_modules"),
+            public: path.resolve(__dirname, '../../public')
+        },
+    },
+    server: {
+        port: 29300,
+        open: `../../project/${project}/index.html`,
+        // open:    "../../project/yazhou-pc/index.html" ,
+        hmr: true,
+    },
 });

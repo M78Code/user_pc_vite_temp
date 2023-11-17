@@ -188,7 +188,6 @@ export default {
     onMounted(async () => {
       LayOutMain_pc.set_oz_show_right(false);
       LayOutMain_pc.set_oz_show_left(true);
-      MenuData.set_menu_root(0)
 
       mounted_fn();
       const { mins15_list= [], featured_list= [] } = await init_home_matches();
@@ -204,7 +203,6 @@ export default {
     onActivated(()=>{
       LayOutMain_pc.set_oz_show_right(false);
       LayOutMain_pc.set_oz_show_left(true);
-      MenuData.set_menu_root(0)
     })
 
     watch(MatchListCardDataClass.list_version, (list_version) => {
@@ -214,7 +212,9 @@ export default {
 
     watch(MenuData.menu_data_version, () => {
       menu_root.value = MenuData.menu_root
-    });
+    },
+    { immediate: true }
+    );
 
     return {
       menu_config,

@@ -97,10 +97,10 @@
  */
 
 import { api_common } from "project/activity/src/public/api/index.js";
-import { menu_type_to_menu_name, menu_name_arr, menu_obj_template,  NEW_PITCHES_IDS } from "src/public/utils/menuClass/menu_config.js"
-import { store } from "src/store/index.js"
-import utils from "src/public/utils/utils.js"
-import menuData from "src/public/utils/menuClass/menu.json"; // 本地配置的菜单json数据，初始化时没有缓存数据的时候，会读取该配置
+import { menu_type_to_menu_name, menu_name_arr, menu_obj_template,  NEW_PITCHES_IDS } from "project/activity/src/public/utils/menuClass/menu_config.js"
+import store from "../../store/index.js"
+import utils from "project/activity/src/public/utils/utils.js"
+import menuData from "project/activity/src/public/utils/menuClass/menu.json"; // 本地配置的菜单json数据，初始化时没有缓存数据的时候，会读取该配置
 
 class MenuClass {
   /**

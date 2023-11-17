@@ -5,10 +5,11 @@
 -->
 <template>
   <div class="h-right">
+    <div v-show="false">{{ SearchPCClass.update_time }}</div>
     <div :class="[is_search ? 'search-click' : 'search']">
       <div class="s-input s-input-click">
         <q-input borderless rounded @focus="show_search" v-model="text" label-color="primary"
-          placeholder="Enter league or team">
+          placeholder="Enter league or team" :class="is_focus ? 'change_width' : ''">
           <template v-slot:prepend>
             <i class="icon-search q-icon c-icon" size="10px"></i>
           </template>
@@ -122,6 +123,7 @@ export default defineComponent({
     const userRouter=useRouter()
     const is_search = ref(false)
     const visible = ref(false)
+    const is_focus = ref(false);
     //语言设置
     const lang = ref(UserCtr.lang)
     const languages = [{
@@ -230,9 +232,10 @@ export default defineComponent({
       // if (!globalAccessConfig.config.searchSwitch) {
       //   return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t("msg.msg_09"));
       // }
+      is_focus.value = true;
       SearchPCClass.set_search_isShow(true);
-      console.log('isShow',SearchPCClass.search_isShow);
     }
+
     /** 初始化 */
     // function init() {
     //   set_search_status(false);
@@ -257,7 +260,8 @@ export default defineComponent({
       goto_announcement,
       format_balance,
       UserCtr,
-      LOCAL_PROJECT_FILE_PREFIX
+      LOCAL_PROJECT_FILE_PREFIX,
+      is_focus
     };
   
 }
@@ -410,6 +414,10 @@ export default defineComponent({
   :deep(.q-field__native) {
     color:#FFFFFF
   }
+}
+.change_width {
+  width: 500px;
+  transform: translateX(-300px);
 }
 .search-click .s-input {
   width: 500px;

@@ -27,9 +27,8 @@ import _ from "lodash"
 import right_head from "./right_head.vue";
 import logo from "src/assets/images/logo.png";
 import { useRouter, useRoute } from 'vue-router'
+import { LayOutMain_pc,MenuData,useMittEmit,MITT_TYPES  } from "src/core/"
 import MatchListOuzhouClass from 'src/core/match-list-pc/match-ouzhou-list.js'
-import {MenuData, useMittEmit,MITT_TYPES } from "src/core/"
-
 // import store from "src/store-redux-vuex/redux_menu";
 
 export default defineComponent({
@@ -41,6 +40,7 @@ export default defineComponent({
   setup(props, context) {
     const userRouter = useRouter()
     const route = useRoute()
+
     const navList = ref([
       { label: i18n_t("ouzhou.match.home"), id:0, name: 'home' },
       { label: i18n_t("menu.match_playing"), id:1, name: 'in_play' },
@@ -48,7 +48,11 @@ export default defineComponent({
     ]);
     const nav_click = (item = {}) => {
     
-     
+      MenuData.set_menu_root(item.id); 
+      // 首页点击 首页需要 重新显示首页内容 
+      if(route.name == 'home'){
+        useMittEmit(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE,item.id)
+      }
       // 默认设置 fetured
       if(item.id == 0){
         let obj = {
@@ -56,9 +60,9 @@ export default defineComponent({
           filter_tab: 1001, //
         }
         MenuData.set_mid_menu_result(obj)
+      }else{
+        MenuData.set_menu_data_version()
       }
-
-      MenuData.set_menu_root(item.id); 
 
       //页面中间头部导航显示处理
       userRouter.push({name: item.name})
