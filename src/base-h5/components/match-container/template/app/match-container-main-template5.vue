@@ -2,7 +2,7 @@
  * @Description:  app-h5   新手版 
 -->
 <template>
-  <div :style="{ marginTop: is_hot ? '0' : '' }" class="match-container">
+  <div :style="{ marginTop: is_hot ? '0' : '' }" class="match-container" :class="{ collect: isCollectMenuTab }">
     <template v-if="match">
       <!-- <div style="display: none;">{{ MatchDataBaseH5.data_version.version }}</div> -->
       <!-- 未开赛标题  -->
@@ -12,15 +12,15 @@
         <span class="din-regular">
           {{ i18n_t('list.match_no_start') }}&nbsp;&nbsp;<span v-show="no_start_total">(0)</span>
         </span>
-    </div>
-    <!-- 已开赛标题  -->
-    <!-- <div class="match-status-fixed flex items-center" v-else>
-              <img src='../../../../../base-h5/assets/match-list/icon_started.svg' />
-            <span class="din-regular">
-              {{ i18n_t('list.match_start') }}&nbsp;&nbsp;
-                                              <span v-show="in_progress_total">(0)</span>
-                                            </span>
-                                          </div> -->
+      </div>
+      <!-- 已开赛标题  -->
+      <!-- <div class="match-status-fixed flex items-center" v-else>
+        <img src='../../../../../base-h5/assets/match-list/icon_started.svg' />
+        <span class="din-regular">
+          {{ i18n_t('list.match_start') }}&nbsp;&nbsp;
+          <span v-show="in_progress_total">(0)</span>
+        </span>
+      </div> -->
       <!--体育类别 -- 标题  menuType 1:滚球 2:即将开赛 3:今日 4:早盘 11:串关 -->
       <div v-if="get_sport_show" @click="handle_ball_seed_fold" :class="['sport-title match-indent', { first: i == 0 }]">
         <span class="score-inner-span"> {{ match_of_list.csna }}{{ '(' + menu_lv2.ct + ')' }} </span>
@@ -184,7 +184,7 @@
                 <!-- {{match}} -->
                 <template v-if="curMatchOdds?.length">
                   <div v-for="item in curMatchOdds" :key="item.oid" class="item"
-                    :class="{active: active_score === `${item._mid}${item.oid}`}" @click="go_to_bet(item)">
+                    :class="{ active: active_score === `${item._mid}${item.oid}` }" @click="go_to_bet(item)">
                     <div v-if='item.onb || item.on' class='on'>{{ item.onb || item.on }}</div>
                     <div class='num'>{{ format_odds_value(item) }}</div>
                   </div>
@@ -236,13 +236,8 @@ import default_mixin from '../../mixins/default.mixin.js'
 import _ from 'lodash'
 import { compute_value_by_cur_odd_type } from "src/core/index.js";
 import lodash from 'lodash';
-import store from "src/store-redux/index.js";
-import { computed, ref, watch } from 'vue';
-import { api_common } from 'src/api/index.js';
-import video from "src/core/video/video.js"   // 视频相关公共方法
-import uid from "src/core/uuid/index.js"
-import { MatchDetailCalss, useMittEmit, MITT_TYPES, LOCAL_PROJECT_FILE_PREFIX } from "src/core/index.js"
-import { useRoute } from 'vue-router';
+import { ref, watch, onMounted, onUnmounted } from 'vue';
+import { MITT_TYPES, LOCAL_PROJECT_FILE_PREFIX, useMittOn } from "src/core/index.js"
 import { compute_css_obj } from 'src/core/server-img/index.js'
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
 
@@ -267,10 +262,6 @@ export default {
     CountingDownSecond,
   },
   setup(props) {
-    const route = useRoute()
-    const { detailsReducer } = store.getState()
-    const hd_sd = ref(detailsReducer.hd_sd)
-
     const active_score = ref(null)
 
     const ButtonTypes = {
@@ -279,9 +270,9 @@ export default {
       animationUrl: 'animationUrl'
     }
 
-    let send_gcuuid = ''
-    const { match_of_list } = props
-    const match_id = computed(() => route.params.mid || match_of_list.mid)
+    const isCollectMenuTab = ref(false) //当前是否是收藏菜单
+
+
 
     const go_to_bet = (ol) => {
       if (ol.os !== 1) return
@@ -309,192 +300,10 @@ export default {
     };
 
 
-    /**
-     * 赛事栏目点击相关
-     */
-
-
-    const check_url = (url, which) => {
-      // // 本地代码连接 调试 时，打开此注释即可播放视频------勿删除此注释
-      // let data = {
-      //   media_src: url,
-      //   active: 'muUrl',
-      // };
-      // MatchDetailCalss.set_video_url(data);
-      // useMittEmit(MITT_TYPES.EMIT_SET_SHOW_VIDEO, true);
-      // MatchDetailCalss.set_iframe_onload(false);
-      // setTimeout(() => {
-      //   MatchDetailCalss.set_iframe_onload(true);
-      // }, 2000)
-      // return
-      api_common.get_full_url(url).then((v) => {
-        if (v) {
-          let data = {
-            media_src: url,
-            active: which ? which : 'muUrl',
-          };
-          console.error(data);
-          MatchDetailCalss.set_video_url(data);
-          // 开启视频
-          useMittEmit(MITT_TYPES.EMIT_SET_SHOW_VIDEO, true),
-            // iframe标签
-            useMittEmit(MITT_TYPES.EMIT_SET_IFRAME_ONLOAD, false),
-            timer1_.value = setTimeout(() => {
-              // iframe 标签
-              useMittEmit(MITT_TYPES.EMIT_SET_IFRAME_ONLOAD, true);
-            }, 2000)
-        } else {
-          //   set_toast({
-          //     txt: i18n_t('video.sorry'),
-          //   });
-        }
-      }).catch(() => {
-        // set_toast({
-        //   txt: i18n_t('video.sorry'),
-        // });
-      })
-    }
-    /**
-     * 点击直播
-     */
-    const icon_click_lvs = () => {
-      let params = {
-        mid: match_id.value,
-        device: 'H5'
-      };
-      api_common.getliveVideoUrl(params).then((res) => {
-        let { code, data } = res
-        console.log('点击直播---------', code, data);
-        if (code == 200) {
-          // "chatRoomId": "1001",//聊天室ID
-          // "crs": 1,  //聊天室开关 0 ：关闭  1：开启
-          // hdUrl : "rtmp://test-pull-live.wafqa2.com/live/123456"  //直播视频高清播放地址
-          // liveState : 1
-          // programPath : ""  //赛前节目播放地址
-          // referUrl : "http://testliveh5.sportxxx13ky.com"//域名
-          // sdUrl : "rtmp://test-pull-live.wafqa2.com/live/654321"  //直播视频标清地址
-          // serverTime : "1663733773446"
-          let media_src = video.get_video_url_h5(res, params.mid, 3, hd_sd.value);
-          // check_url(media_src, which);
-          check_url(media_src, 'lvs');
-
-        }
-      })
-    }
-    /**
-     * 点击视频
-     */
-    const icon_click_muUrl = () => {
-      let check = match_of_list.mms >= 2 || match_of_list.mvs > -1
-
-      if (!check) {
-        return false
-      }
-      let params = {
-        mid: match_id.value,
-        type: 'Video'
-      };
-      api_common.getMatchUserIsLogin().then(res => {
-        console.error(res);
-        // 判断用户是否登录
-        if (res && res.code == 200 && res.data.isLogin) {
-          let referUrl = lodash.get(window.BUILDIN_CONFIG, "DOMAIN_RESULT.live_domains[0]");
-          let media_src
-          if (referUrl) {
-            media_src = video.get_video_url_h5({ data: { referUrl } }, params.mid, 1);
-            check_url(media_src);
-          } else {
-            let param = {}
-            send_gcuuid = uid();
-            param.gcuuid = send_gcuuid;
-            api_common.getVideoReferurl(param).then(res => {
-              if (send_gcuuid != res.gcuuid) return;
-              media_src = video.get_video_url_h5(res, params.mid, 1);
-              check_url(media_src);
-            });
-          }
-          ;
-        } else {
-          if (lodash.get(res, 'code') == '0401038') {
-            // set_toast({
-            //   txt: i18n_t('msg.msg_nodata_22'),
-            // });
-            return;
-          }
-          let data = {};
-          data.active = 'muUrl';
-          MatchDetailCalss.set_video_url(data);
-          // 开启视频
-          useMittEmit(MITT_TYPES.EMIT_SET_SHOW_VIDEO, true)
-          let video_sorry_temp = "";
-          if (lang == 'zh') {
-            video_sorry_temp = "!";
-          }
-          // set_toast({
-          //   txt: i18n_t('video.sorry') + video_sorry_temp,
-          // });
-        }
-      }).catch(() => {
-        let video_sorry_temp = "";
-        if (lang == 'zh') {
-          video_sorry_temp = "!";
-        }
-        // set_toast({
-        //   txt: i18n_t('video.sorry') + video_sorry_temp,
-        // });
-      })
-    }
-    /**
-     * 点击动画
-     */
-    const icon_click_animationUrl = () => {
-
-      let check = match_of_list.mms >= 2 || match_of_list.mvs > -1
-
-      if (!check) {
-        return false
-      }
-
-      let params = {
-        mid: match_id.value,
-        type: 'Animation'
-      };
-      send_gcuuid = uid();
-      params.gcuuid = send_gcuuid;
-
-      api_common.videoAnimationUrl(params).then((result) => {
-        let res = {}
-        if (result.status) {
-          res = result.data
-        } else {
-          res = result
-        }
-        const { data } = res
-        if (send_gcuuid != res.gcuuid) return;
-        let animationUrl = ''
-        //足篮棒网使用3.0动画  其他使用2.0
-        console.error(res);
-        if ([1, 2, 3, 5].includes(lodash.get(match_of_list, 'csid') * 1)) {
-          let animation3Url = data.animation3Url || []
-          animation3Url.forEach(item => {
-            if (item.styleName.indexOf('day') >= 0) {
-              animationUrl = item.path
-            }
-          })
-        }
-        animationUrl = animationUrl || data.animationUrl
-        data.animationUrl = animationUrl.replace(/https?:/, "") // 动画
-        data.referUrl = data.referUrl && (data.referUrl.replace(/http:|https:/, '')) // 视频
-        data.active = 'animationUrl';
-        data.referUrl = `${location.protocol}${data.referUrl}`;
-        MatchDetailCalss.set_video_url(data);
-        // 开启视频
-        useMittEmit(MITT_TYPES.EMIT_SET_SHOW_VIDEO, true);
-      })
-    }
 
     //当前赛事比分选项
     const curMatchOdds = ref([])
+
     watch(() => props.match_of_list, (newVal) => {
       curMatchOdds.value = newVal?.hps?.[0]?.hl?.[0]?.ol || []
     }, { immediate: true })
@@ -529,13 +338,20 @@ export default {
       return format_odds(ov, obv)
 
     }
+
+    onMounted(() => {
+      useMittOn(MITT_TYPES.EMIT_SCROLL_TOP_NAV_CHANGE, e => {
+        isCollectMenuTab.value = e.mi === 50000
+      })
+    })
+
+    onUnmounted(() => {
+      useMittOn(MITT_TYPES.EMIT_SCROLL_TOP_NAV_CHANGE).off
+    })
     return {
       active_score,
       go_to_bet,
       ButtonTypes,
-      icon_click_lvs,
-      icon_click_animationUrl,
-      icon_click_muUrl,
       format_odds_value,
       curMatchOdds,
       _,
@@ -571,8 +387,10 @@ export default {
   height: auto;
   position: relative;
 
+  &.collect {}
+
   .match-status-fixed {
-    padding: 5px 0 5px 14px;
+    padding:0 0 0 14px;
     gap: 4px;
     display: flex;
     align-items: center;
