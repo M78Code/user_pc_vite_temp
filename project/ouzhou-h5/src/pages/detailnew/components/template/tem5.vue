@@ -198,7 +198,8 @@ onMounted(() => {
       }
       .is-active {
         background: #ff7000;
-        color: #fff;
+        //color: #fff;
+        color: var(--q-gb-t-c-14);
         .ol-on-text {
           padding-right: 5px;
           font-weight: 500;

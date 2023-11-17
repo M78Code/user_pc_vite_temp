@@ -121,6 +121,8 @@ class BaseData {
     // 菜单接口类型 old 旧  new 新
     this.menu_type_old_or_new = "new";
 
+    // 是否通知元数据处理完成
+    this.is_emit = true
   }
   /**
    * 初始化数据
@@ -625,7 +627,9 @@ class BaseData {
       // let res = await api_base_data.get_base_data({});
       res && await this.set_base_data_res(res);
       //  元数据加载完成 
-      useMittEmit(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA)
+      this.is_emit && useMittEmit(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA)
+
+      this.is_emit = false
       this.base_data_version.value = Date.now();
     } catch (error) {
       console.error("获取 元数据接口 error", error);

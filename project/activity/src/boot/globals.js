@@ -5,38 +5,39 @@
  */
 import lodash from "lodash";
 
-import utils from "src/public/utils/utils.js";
-import tooltip from "src/public/utils/tooltip.js"
-import matchlist from "src/public/utils/matchlist/matchlist.js"
+import utils from "project/activity/src/public/utils/utils.js";
+import tooltip from "project/activity/src/public/utils/tooltip.js"
+import matchlist from "project/activity/src/public/utils/matchlist/matchlist.js"
 
-import Icon from "src/public/components/icon/icon.vue"
-import load_data from "src/public/components/load_data/load_data.vue";
-import * as emit_cmd from "src/public/utils/http/emit_cmd.js";
-import * as error_mapping from "src/public/config/mapping/error_code_mapping.js";
-import * as yabo_common from "src/public/mixins/common/common.js";
-import * as virtual_common from "src/public/mixins/common/virtual_common.js";
+import Icon from "project/activity/src/public/components/icon/icon.vue"
+import load_data from "project/activity/src/public/components/load_data/load_data.vue";
+import * as emit_cmd from "project/activity/src/public/utils/http/emit_cmd.js";
+import * as error_mapping from "project/activity/src/public/config/mapping/error_code_mapping.js";
+import * as yabo_common from "project/activity/src/public/mixins/common/common.js";
+import * as virtual_common from "project/activity/src/public/mixins/common/virtual_common.js";
 // 该文件再 bet_item_mixin.js, bet_item_mixin.js 中使用由于最小投注单元会导致引入次数过多,因此暂时提出为公共的
-import gloable_mixin from "src/public/mixins/betting/index.js";
-import VueCurrencyInput from "vue-currency-input";
 // 导入自定义高精度计算工具js
-import math from "src/boot/mathjs"
-// import userCtr from 'src/public/utils/user/userCtr.js';
-import {get_file_path} from "src/public/utils/get_file_path.js"
+import math from "project/activity/src/boot/mathjs"
+// import userCtr from 'project/activity/src/public/utils/user/userCtr.js';
+import {get_file_path} from "project/activity/src/public/utils/get_file_path.js"
 // 加载公共样式
-require('src/css/common.scss')
+import 'project/activity/src/css/common.scss';
+
+
 let BUILD_VERSION =  process.env.NODE_ENV=='development'?'':   require('../../version.js').BUILD_VERSION;
 // 加载所有模板文件
-const require_all = require.context("project_theme", true, /\.scss$/)
-require_all.keys().forEach( item => require_all(item))
+// const require_all = require.context("project_theme", true, /\.scss$/)
+// require_all.keys().forEach( item => require_all(item))
 
 // 是否内嵌
 window.is_iframe = window.frames.length != parent.frames.length
 // const api_prefix = window.env.config.api.API_PREFIX_FILE_REAL
 
-export default async ({ Vue }) => {//app, router, store,
+export default async (app) => {//app, router, store,
 
-  Vue.prototype.set_prototype = function (key, val) {
-    Vue.prototype[key] = val
+
+  window.set_prototype = function (key, val) {
+    window[key] = val
   }
   // 目前环境信息
   const current_env = window.env.config.current_env;
@@ -113,16 +114,16 @@ export default async ({ Vue }) => {//app, router, store,
     }
   }
 
-  Vue.prototype._ = lodash;
+  window._ = lodash;
 
-  Vue.prototype.$utils = utils
-  Vue.prototype.$matchlist = matchlist
+  window.$utils = utils
+  window.$matchlist = matchlist
   // 高精度运算工具对象(例子:this.$mathjs.multiply(1.13,100000))
-  Vue.prototype.$mathjs = math;
+  window.$mathjs = math;
   // 用户相关的 全局 单实例 类
-  // Vue.prototype.userCtr = userCtr
+  // window.userCtr = userCtr
   // 全局图片路径前缀 区分本地/打包
-  Vue.prototype.$g_image_preffix = process.env.NODE_ENV === "development" ? '' : '/' + BUILD_VERSION
+  window.$g_image_preffix = process.env.NODE_ENV === "development" ? '' : '/' + BUILD_VERSION
 
   // HTMLImageElement扩展 play()和stop()， 用于控制gif播放
   if ('getContext' in document.createElement('canvas')) {
@@ -181,7 +182,7 @@ export default async ({ Vue }) => {//app, router, store,
    *        options.maxWait {number} 设置 func 允许被延迟的最大值
    *        options.trailing=true {boolean} 指定在延迟结束后调用
    */
-  Vue.prototype.debounce=(func,wait,options)=>{
+  window.debounce=(func,wait,options)=>{
     let res = null;
     if(func && (typeof(func)=='function'))
     {
@@ -200,7 +201,7 @@ export default async ({ Vue }) => {//app, router, store,
    *        options.leading=false {boolean} 指定在延迟开始前调用
    *        options.trailing=true {boolean} 指定在延迟结束后调用
    */
-  Vue.prototype.throttle=(func,wait,options)=>{
+  window.throttle=(func,wait,options)=>{
     let res = null;
     if(func && (typeof(func)=='function'))
     {
@@ -211,7 +212,7 @@ export default async ({ Vue }) => {//app, router, store,
     return res;
   }
   // lodash debounce防抖函数和throttle节流函数功能cancel函数调用
-  Vue.prototype.debounce_throttle_cancel=(fun)=>{
+  window.debounce_throttle_cancel=(fun)=>{
     if(fun && fun.cancel && (typeof(fun.cancel)=='function'))
     {
       fun.cancel();
@@ -223,13 +224,13 @@ export default async ({ Vue }) => {//app, router, store,
    * @param {String} path 图片路径
    * @return {String} csid 球种类型
    */
-  Vue.prototype.get_file_path = get_file_path
+  window.get_file_path = get_file_path
 
 
   // 获取赛事阶段国际化字符串
   // @param: mmp-比赛阶段
   // @param: sport_type-球种
-  Vue.prototype.mmpName = function (sportType, mmp) {
+  window.mmpName = function (sportType, mmp) {
     let name = `mmp.${sportType}.${mmp}`
     let ret = this.$root.$t(`mmp.${sportType}.${mmp}`);
     return name == ret ? '' : ret;
@@ -238,25 +239,25 @@ export default async ({ Vue }) => {//app, router, store,
   /** 组件  **************************/
 
   // 可变色和大小的 icon
-  Vue.component("icon", Icon);
-  Vue.component("load-data", load_data);
+  app.component("icon", Icon);
+//   app.component("load-data", load_data);
 
   /** JS  **************************/
 
   // emit 常量 ：this.emit_cmd.常量
-  Vue.prototype.emit_cmd = emit_cmd;
+  window.emit_cmd = emit_cmd;
   // 错误码异常映射
-  Vue.prototype.error_mapping = error_mapping;
+  window.error_mapping = error_mapping;
   // 公共方法映射
-  Vue.prototype.yabo_common = yabo_common;
-  Vue.prototype.virtual_common = virtual_common;
+  window.yabo_common = yabo_common;
+  window.virtual_common = virtual_common;
 
 
 
   //提示框样式
-  Vue.prototype.tooltip_style = 'background:rgba(0,0,0,0.8);padding:4px 5px;border-radius:0px;color:#fff'
+  window.tooltip_style = 'background:rgba(0,0,0,0.8);padding:4px 5px;border-radius:0px;color:#fff'
 
-  Vue.prototype.bar_style = {
+  window.bar_style = {
     width: '14px',
     backgroundColor: '#1F222B',
     opacity: 1,
@@ -265,7 +266,7 @@ export default async ({ Vue }) => {//app, router, store,
     borderBottom: 'none',
   }
 
-  Vue.prototype.thumb_style = {
+  window.thumb_style = {
     width: "7px",
     background: "#3C3F4C",
     borderRadius: "4px",
@@ -274,11 +275,9 @@ export default async ({ Vue }) => {//app, router, store,
     right: '3.5px',
     cursor: 'pointer'
   }
-
-  Vue.mixin(gloable_mixin);
   /** 指令  **************************/
 
-  Vue.directive('img', {
+  app.directive('img', {
     // 只调用一次，指令第一次绑定到元素时调用。在这里可以进行一次性的初始化设置。
     bind(el, binding) {
       el.setAttribute('data-src', binding.value[0])
@@ -318,7 +317,7 @@ export default async ({ Vue }) => {//app, router, store,
     },
   })
 
-  Vue.directive('check-img', {
+  app.directive('check-img', {
     // 只调用一次，指令第一次绑定到元素时调用。在这里可以进行一次性的初始化设置。
     bind(el, binding) {
       el.setAttribute('data-src', binding.value.src)
@@ -364,7 +363,7 @@ export default async ({ Vue }) => {//app, router, store,
   const load_img_src = function(el){
     let self_img = el.dataset.src
       // 绝对地址时直接使用，否则需要重新获取地址
-      let img_url = /^http(s)?/.test(self_img) || /^\/\//.test(self_img) ? self_img : Vue.prototype.get_file_path(self_img,el.getAttribute('data-csid'));
+      let img_url = /^http(s)?/.test(self_img) || /^\/\//.test(self_img) ? self_img : window.get_file_path(self_img,el.getAttribute('data-csid'));
       image_is_exist(img_url,el).then( res => {
         el.style.opacity = 1
         if(res) return
@@ -396,7 +395,7 @@ export default async ({ Vue }) => {//app, router, store,
    const load_img_src_common = function(el){
     let self_img = el.dataset.src
     // 绝对地址时直接使用，否则需要重新获取地址
-    let img_url = /^http(s)?/.test(self_img) ? self_img : Vue.prototype.get_file_path(self_img,el.getAttribute('data-csid'));
+    let img_url = /^http(s)?/.test(self_img) ? self_img : window.get_file_path(self_img,el.getAttribute('data-csid'));
     image_is_exist(img_url,el).then( res => {
       el.style.opacity = 1
       if(res) return
@@ -432,7 +431,7 @@ export default async ({ Vue }) => {//app, router, store,
     })
   }
   // 图片懒加载指令
-  Vue.directive('imgdef', {
+  app.directive('imgdef', {
     // 当元素被插入到DOM中时
     inserted(el, binding) {
       el.src = binding.value
@@ -485,7 +484,7 @@ export default async ({ Vue }) => {//app, router, store,
   }
 
   // 自定义悬浮气泡指令
-  Vue.directive('tooltip',{
+  app.directive('tooltip',{
     // 指令绑定
     bind(el,bind){
       el.tip_cancel = bind.value.cancel === true ? 1 : 0
@@ -518,7 +517,7 @@ export default async ({ Vue }) => {//app, router, store,
    * @Description v-icon指令，用于将quasar组件中自带的图标（Material Icon）替换为自定义的图标
    * Material Design 的图标是怎么生效的?参见：https://segmentfault.com/q/1010000002811943
    */
-  Vue.directive('icon', {
+  app.directive('icon', {
     inserted(el, binding) {
       // binding.value即为替换icon的映射对象
       // 目标组件类名
@@ -539,6 +538,4 @@ export default async ({ Vue }) => {//app, router, store,
       })
     }
   })
-
-  Vue.use(VueCurrencyInput);
 }

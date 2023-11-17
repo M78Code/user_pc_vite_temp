@@ -25,7 +25,7 @@
 </template>
  
 <script setup>
-import { ref, watch, onMounted, computed } from "vue";
+import { ref, watch, onMounted, computed, onUnmounted } from "vue";
 import lodash from "lodash";
 import { useRoute } from "vue-router";
 import { compute_css_variables } from "src/core/css-var/index.js"
@@ -34,6 +34,8 @@ import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt";
 import MatchPage from "src/core/match-list-h5/match-class/match-page.js";
 import MatchListCard from "src/core/match-list-h5/match-card/match-list-card-class";
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
+
+import * as ws_message_listener from "src/core/utils/module/ws-message.js";
 
 import { is_hot, is_collect } from 'src/base-h5/mixin/menu.js'
 
@@ -49,6 +51,7 @@ import MatchList3 from './components/match-list3.vue'
 import MatchListOuZhou from './components/match-list-ouzhou.vue'
 
 import { PROJECT_NAME } from "src/core/index.js"
+
 
 // 次要玩法描述组件
 import SecondaryDescription from "src/base-h5/components/match-list/components/secondary-description.vue";
@@ -75,6 +78,7 @@ const match_is_empty = ref(false)
 const window_scrolly = ref(0)
 const match_list_wrapper_height = ref(0)
 const is_collcte_page = ref(false)
+let message_fun = null
 
 onMounted(() => {
   // 页面css变量植入
@@ -83,6 +87,13 @@ onMounted(() => {
   off_listeners();
   // 绑定相关事件监听
   on_listeners();
+
+  // 增加监听接受返回的监听函数
+  message_fun = ws_message_listener.ws_add_message_listener((cmd,data)=>{
+    console.log('cmd:',cmd,data);
+    console.log('12313131231');
+  })
+  
 })
 
 const config = {
@@ -127,6 +138,11 @@ const clear_timer = () => {
     timer = null;
   }
 };
+
+onUnmounted(() => {
+  // 组件销毁时销毁监听函数
+  ws_message_listener.ws_remove_message_listener(message_fun)
+})
 
 
 </script>

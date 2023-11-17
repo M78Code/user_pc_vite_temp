@@ -157,14 +157,6 @@ const event_init = () => {
 };
 
 /**
- * @description 元数据请求回来 初始化赛事加载
- */
-const init_match_callback = () => {
-  if (route.name !== 'matchList') return
-  MatchMeta.set_origin_match_data()
-}
-
-/**
  * @description 综合菜单切换页面卡顿效果
  */
 const handle_menu_change = () => {
@@ -200,7 +192,7 @@ const on_listeners = () => {
     emitter_1: useMittOn(MITT_TYPES.EMIT_MENU_CHANGE_FOOTER_CMD,(v)=> MatchPage.footer_event(v)).off,
     emitter_2: useMittOn(MITT_TYPES.EMIT_MAIN_MENU_CHANGE, (v)=>MatchPage.main_menu_change(v)).off,
     emitter_7: useMittOn(MITT_TYPES.EMIT_MATCH_LIST_SCROLLING, (v)=> MatchListCard.match_list_scroll_handle(v)).off,
-    emitter_11: useMittOn(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA, init_match_callback).off,
+    // emitter_11: useMittOn(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA, init_match_callback).off,
     emitter_12: useMittOn(MITT_TYPES.EMIT_MENU_ANIMATION, handle_menu_change).off,
   };
 };
